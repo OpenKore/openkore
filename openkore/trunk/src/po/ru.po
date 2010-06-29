@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openkore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-29 04:46+0200\n"
+"POT-Creation-Date: 2010-06-29 20:36+0700\n"
 "PO-Revision-Date: 2010-06-29 05:21+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: DeniZka (all in 1)\n"
@@ -31,8 +31,7 @@ msgstr ""
 "Файлы в папке OpenKore устарели, это может вызвать конфликты.\n"
 "Пожалуйста, удалите содержимое папок OpenKore, и скачайте всё заново."
 
-#: ../../openkore.pl:146
-#: ../../openkore.pl:166
+#: ../../openkore.pl:146 ../../openkore.pl:166
 #, perl-format
 msgid ""
 "Your version of the XSTools library is too old.\n"
@@ -73,8 +72,7 @@ msgstr ""
 msgid "Bye!\n"
 msgstr "Пока-пока!\n"
 
-#: ../Actor/Item.pm:408
-#: ../Actor/Item.pm:429
+#: ../Actor/Item.pm:408 ../Actor/Item.pm:429
 msgid "Wrong equip slot specified\n"
 msgstr "Указан неверный слот экипировки.\n"
 
@@ -83,8 +81,7 @@ msgstr "Указан неверный слот экипировки.\n"
 msgid "Inventory Item: %s is already equipped in slot: %s\n"
 msgstr "Предмет из инвентаря %s уже экипирован в слот %s.\n"
 
-#: ../Actor/Item.pm:434
-#: ../Commands.pm:4699
+#: ../Actor/Item.pm:434 ../Commands.pm:4699
 #, perl-format
 msgid "No such equipped Inventory Item: %s in slot: %s\n"
 msgstr "Нет такого экипированного предмета в инвентаре: %s в слоте: %s.\n"
@@ -114,20 +111,17 @@ msgstr "Вы"
 msgid "Encounter Monster : %s\n"
 msgstr "Столкновение с мобом : %s.\n"
 
-#: ../Actor/You.pm:224
-#: ../Actor/You.pm:292
+#: ../Actor/You.pm:224 ../Actor/You.pm:292
 #, perl-format
 msgid "Auto UnEquiping [R]: %s\n"
 msgstr "Авто разэкипировка [Пр.рука]: %s.\n"
 
-#: ../Actor/You.pm:229
-#: ../Actor/You.pm:297
+#: ../Actor/You.pm:229 ../Actor/You.pm:297
 #, perl-format
 msgid "Auto Equiping [R]: %s\n"
 msgstr "Авто экипировка [Пр.рука]: %s.\n"
 
-#: ../Actor/You.pm:238
-#: ../Actor/You.pm:306
+#: ../Actor/You.pm:238 ../Actor/You.pm:306
 #, perl-format
 msgid "Auto UnEquiping [L]: %s\n"
 msgstr "Авто разэкипировка [Лев.рука]: %s.\n"
@@ -172,15 +166,11 @@ msgstr "Смена дистанции атаки на по-умолчанию: %
 msgid "Change Attack useWeapon to default : %s\n"
 msgstr "Смена 'attackUseWeapon' на по-умолчанию: %s.\n"
 
-#: ../AI/Attack.pm:111
-#: ../AI/Attack.pm:228
-#: ../AI/Attack.pm:398
+#: ../AI/Attack.pm:111 ../AI/Attack.pm:228 ../AI/Attack.pm:398
 msgid "Dropping target - you will not kill steal others\n"
 msgstr "Цель оставлена - вы не будите килл-стилить.\n"
 
-#: ../AI/Attack.pm:123
-#: ../AI/Attack.pm:164
-#: ../AI/Attack.pm:240
+#: ../AI/Attack.pm:123 ../AI/Attack.pm:164 ../AI/Attack.pm:240
 #: ../AI/Attack.pm:551
 msgid "Teleport due to dropping attack target\n"
 msgstr "Телепорт чтобы оставить атакуемую цель.\n"
@@ -206,14 +196,12 @@ msgstr "Цель потеряна, телепорт.\n"
 msgid "Target lost\n"
 msgstr "Цель потеряна.\n"
 
-#: ../AI/Attack.pm:455
-#: ../AI/Slave.pm:524
+#: ../AI/Attack.pm:455 ../AI/Slave.pm:524
 #, perl-format
 msgid "%s; moving to (%s, %s)\n"
 msgstr "%s; движение к (%s, %s)\n"
 
-#: ../AI/Attack.pm:464
-#: ../AI/Slave.pm:527
+#: ../AI/Attack.pm:464 ../AI/Slave.pm:527
 #, perl-format
 msgid "%s; no acceptable place to stand\n"
 msgstr "%s; нет подходящего места, чтобы встать.\n"
@@ -242,8 +230,7 @@ msgstr ""
 "Выбраны неверные координаты для randomWalk\n"
 "Повторная попытка..."
 
-#: ../AI/CoreLogic.pm:590
-#: ../AI/CoreLogic.pm:1931
+#: ../AI/CoreLogic.pm:590 ../AI/CoreLogic.pm:1931
 #, perl-format
 msgid "Calculating random route to: %s(%s): %s, %s\n"
 msgstr "Рассчет случайного маршрута до: %s(%s): %s, %s\n"
@@ -255,10 +242,11 @@ msgstr "Таймаут на экипирование для умения.\n"
 #: ../AI/CoreLogic.pm:785
 #, perl-format
 msgid "Failed to take %s (%s) from (%s, %s) to (%s, %s)\n"
-msgstr "Не получилось поднять %s (%s) стоя на (%s, %s) лежащий тут (%s, %s) предмет.\n"
+msgstr ""
+"Не получилось поднять %s (%s) стоя на (%s, %s) лежащий тут (%s, %s) "
+"предмет.\n"
 
-#: ../AI/CoreLogic.pm:805
-#: ../AI/CoreLogic.pm:2810
+#: ../AI/CoreLogic.pm:805 ../AI/CoreLogic.pm:2810
 #, perl-format
 msgid "Routing to (%s, %s) to take %s (%s), distance %s\n"
 msgstr "Движение к (%s, %s), чтобы поднять %s (%s), дистанция %s.\n"
@@ -297,9 +285,7 @@ msgstr "*** Вы погибли, авто отключение! ***\n"
 msgid "Auto-storaging due to excess weight\n"
 msgstr "Начато авто-складирования из-за перевеса.\n"
 
-#: ../AI/CoreLogic.pm:1110
-#: ../AI/CoreLogic.pm:1111
-#: ../AI/CoreLogic.pm:2281
+#: ../AI/CoreLogic.pm:1110 ../AI/CoreLogic.pm:1111 ../AI/CoreLogic.pm:2281
 #: ../AI/CoreLogic.pm:2282
 #, perl-format
 msgid "Disconnecting on empty %s!\n"
@@ -321,18 +307,23 @@ msgstr "Рассчет маршрута для авто-складировани
 
 #: ../AI/CoreLogic.pm:1207
 msgid "Warning storageAuto has changed. Please read News.txt\n"
-msgstr "Внимание: параметр конфига storageAuto изменён. Пожалуйста, прочитайте News.txt\n"
+msgstr ""
+"Внимание: параметр конфига storageAuto изменён. Пожалуйста, прочитайте News."
+"txt\n"
 
 #: ../AI/CoreLogic.pm:1214
 msgid "Using storage steps defined in config.\n"
-msgstr "Для доступа к складу используется диалог из параметрка конфига storageAuto_npc_steps.\n"
+msgstr ""
+"Для доступа к складу используется диалог из параметрка конфига "
+"storageAuto_npc_steps.\n"
 
 #: ../AI/CoreLogic.pm:1216
 msgid "Something is wrong with storageAuto_npc_type in your config.\n"
-msgstr "Что-то не так с параметром конфига storageAuto_npc_type. Ему присвоено неверное значение.\n"
+msgstr ""
+"Что-то не так с параметром конфига storageAuto_npc_type. Ему присвоено "
+"неверное значение.\n"
 
-#: ../AI/CoreLogic.pm:1247
-#: ../AI/CoreLogic.pm:1248
+#: ../AI/CoreLogic.pm:1247 ../AI/CoreLogic.pm:1248
 msgid "Disconnecting because storage is full!\n"
 msgstr "Отключение, ибо склад заполнен!\n"
 
@@ -354,14 +345,15 @@ msgid ""
 msgstr ""
 "OpenKore пыталась достать предмет со склада 3 раза, но безуспешно.\n"
 "Эта проблема может возникнуть из-за бага на сервере.\n"
-"Чтобы обойти проблему пропишите параметр конфига 'relogAfterStorage 1' и снова подключитесь.\n"
+"Чтобы обойти проблему пропишите параметр конфига 'relogAfterStorage 1' и "
+"снова подключитесь.\n"
 
 #: ../AI/CoreLogic.pm:1390
 msgid "Character is still overweight after storageAuto (storage is full?)\n"
-msgstr "У персонажа до сих пор перевес после авто-складирования, склад заполнен?\n"
+msgstr ""
+"У персонажа до сих пор перевес после авто-складирования, склад заполнен?\n"
 
-#: ../AI/CoreLogic.pm:1392
-#: ../AI/CoreLogic.pm:1393
+#: ../AI/CoreLogic.pm:1392 ../AI/CoreLogic.pm:1393
 msgid "Disconnecting on storage full!\n"
 msgstr "Отключение, ибо склад заполнен!\n"
 
@@ -412,8 +404,12 @@ msgid "Auto-adding stat %s\n"
 msgstr "Авто-прокачка стата %s\n"
 
 #: ../AI/CoreLogic.pm:1928
-msgid "Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n"
-msgstr "Неверные координаты определены для randomWalk (невозможно пройти там); randomWalk отключен.\n"
+msgid ""
+"Invalid coordinates specified for randomWalk (coordinates are unwalkable); "
+"randomWalk disabled\n"
+msgstr ""
+"Неверные координаты определены для randomWalk (невозможно пройти там); "
+"randomWalk отключен.\n"
 
 #: ../AI/CoreLogic.pm:1963
 #, perl-format
@@ -436,13 +432,11 @@ msgstr "Я потерял своего ведущего.\n"
 msgid "Trying to get him back\n"
 msgstr "Попытка вернуть ведущего. Он бот, шлю ему свои координаты.\n"
 
-#: ../AI/CoreLogic.pm:2036
-#: ../AI/CoreLogic.pm:2121
+#: ../AI/CoreLogic.pm:2036 ../AI/CoreLogic.pm:2121
 msgid "My master disconnected\n"
 msgstr "Мой ведущий отключился.\n"
 
-#: ../AI/CoreLogic.pm:2072
-#: ../AI/CoreLogic.pm:2149
+#: ../AI/CoreLogic.pm:2072 ../AI/CoreLogic.pm:2149
 msgid "My master teleported\n"
 msgstr "Мой ведущий телепортировался.\n"
 
@@ -509,14 +503,12 @@ msgstr "Телепорт из-за того, что нечего делать.\n
 msgid "Teleporting to avoid portal\n"
 msgstr "Телепорт, чтобы не попасть в портал.\n"
 
-#: ../AI/CoreLogic.pm:2959
-#: ../Misc.pm:1259
+#: ../AI/CoreLogic.pm:2959 ../Misc.pm:1259
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr "Текущая локация (%s) не входит в список разрешенных.\n"
 
-#: ../AI/CoreLogic.pm:2960
-#: ../Misc.pm:1260
+#: ../AI/CoreLogic.pm:2960 ../Misc.pm:1260
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr "** Текущая локация (%s) не входит в список разрешенных.\n"
@@ -564,10 +556,7 @@ msgstr "%s отошел слишком далеко (дистанция: %.2f) -
 msgid "%s can't reach or damage target, dropping target\n"
 msgstr "%s не может дойти до цели или повредить её, цель оставлена\n"
 
-#: ../AI/Slave.pm:363
-#: ../AI/Slave.pm:487
-#: ../AI/Slave.pm:622
-#: ../AI/Slave.pm:681
+#: ../AI/Slave.pm:363 ../AI/Slave.pm:487 ../AI/Slave.pm:622 ../AI/Slave.pm:681
 #, perl-format
 msgid "Teleport due to dropping %s attack target\n"
 msgstr "Телепорт, чтобы оставить атакуемую %s цель\n"
@@ -582,8 +571,7 @@ msgstr "Цель %s мертва\n"
 msgid "%s target lost\n"
 msgstr "Цель %s потеряна\n"
 
-#: ../AI/Slave.pm:483
-#: ../AI/Slave.pm:669
+#: ../AI/Slave.pm:483 ../AI/Slave.pm:669
 #, perl-format
 msgid "Dropping target - %s will not kill steal others\n"
 msgstr "Цель брошена - %s не будет килл-стилить у других\n"
@@ -598,8 +586,7 @@ msgstr "%s не имеет прямой видимости от (%d, %d) до ц
 msgid "Unable to calculate a route to %s target, dropping target\n"
 msgstr "Невозможно расчитать маршрут до цели %s, цель оставлена\n"
 
-#: ../AI/Slave.pm:763
-#: ../AI/Slave.pm:855
+#: ../AI/Slave.pm:763 ../AI/Slave.pm:855
 #, perl-format
 msgid "%s destination reached.\n"
 msgstr "Пункт назначения %s достигнут.\n"
@@ -619,8 +606,7 @@ msgstr "Авто-кормление %s (голод - %d).\n"
 msgid "Next feeding at: %d hunger.\n"
 msgstr "Следующая кормёжка Гомункула при %d голода.\n"
 
-#: ../Interface/Wx/List/ItemList/Cart.pm:14
-#: ../Interface/Wx/StatView/You.pm:23
+#: ../Interface/Wx/List/ItemList/Cart.pm:14 ../Interface/Wx/StatView/You.pm:23
 msgid "Weight"
 msgstr "Вес"
 
@@ -735,14 +721,12 @@ msgid "Reset"
 msgstr "Обнулить"
 
 #: ../Interface/Wx/StatView/Homunculus.pm:29
-#: ../Interface/Wx/StatView/Mercenary.pm:18
-#: ../Interface/Wx/StatView/You.pm:19
+#: ../Interface/Wx/StatView/Mercenary.pm:18 ../Interface/Wx/StatView/You.pm:19
 msgid "HP"
 msgstr "HP"
 
 #: ../Interface/Wx/StatView/Homunculus.pm:30
-#: ../Interface/Wx/StatView/Mercenary.pm:19
-#: ../Interface/Wx/StatView/You.pm:20
+#: ../Interface/Wx/StatView/Mercenary.pm:19 ../Interface/Wx/StatView/You.pm:20
 msgid "SP"
 msgstr "SP"
 
@@ -762,50 +746,42 @@ msgid "Hunger"
 msgstr "Голод"
 
 #: ../Interface/Wx/StatView/Homunculus.pm:34
-#: ../Interface/Wx/StatView/Mercenary.pm:21
-#: ../Interface/Wx/StatView/You.pm:31
+#: ../Interface/Wx/StatView/Mercenary.pm:21 ../Interface/Wx/StatView/You.pm:31
 msgid "Atk"
 msgstr "Атака"
 
 #: ../Interface/Wx/StatView/Homunculus.pm:35
-#: ../Interface/Wx/StatView/Mercenary.pm:22
-#: ../Interface/Wx/StatView/You.pm:32
+#: ../Interface/Wx/StatView/Mercenary.pm:22 ../Interface/Wx/StatView/You.pm:32
 msgid "Matk"
 msgstr "Маг. атака"
 
 #: ../Interface/Wx/StatView/Homunculus.pm:36
-#: ../Interface/Wx/StatView/Mercenary.pm:23
-#: ../Interface/Wx/StatView/You.pm:33
+#: ../Interface/Wx/StatView/Mercenary.pm:23 ../Interface/Wx/StatView/You.pm:33
 msgid "Hit"
 msgstr "Хит"
 
 #: ../Interface/Wx/StatView/Homunculus.pm:37
-#: ../Interface/Wx/StatView/Mercenary.pm:24
-#: ../Interface/Wx/StatView/You.pm:34
+#: ../Interface/Wx/StatView/Mercenary.pm:24 ../Interface/Wx/StatView/You.pm:34
 msgid "Critical"
 msgstr "Крит"
 
 #: ../Interface/Wx/StatView/Homunculus.pm:38
-#: ../Interface/Wx/StatView/Mercenary.pm:25
-#: ../Interface/Wx/StatView/You.pm:35
+#: ../Interface/Wx/StatView/Mercenary.pm:25 ../Interface/Wx/StatView/You.pm:35
 msgid "Def"
 msgstr "Защита"
 
 #: ../Interface/Wx/StatView/Homunculus.pm:39
-#: ../Interface/Wx/StatView/Mercenary.pm:26
-#: ../Interface/Wx/StatView/You.pm:36
+#: ../Interface/Wx/StatView/Mercenary.pm:26 ../Interface/Wx/StatView/You.pm:36
 msgid "Mdef"
 msgstr "Маг. защита"
 
 #: ../Interface/Wx/StatView/Homunculus.pm:40
-#: ../Interface/Wx/StatView/Mercenary.pm:27
-#: ../Interface/Wx/StatView/You.pm:37
+#: ../Interface/Wx/StatView/Mercenary.pm:27 ../Interface/Wx/StatView/You.pm:37
 msgid "Flee"
 msgstr "Уворот"
 
 #: ../Interface/Wx/StatView/Homunculus.pm:41
-#: ../Interface/Wx/StatView/Mercenary.pm:28
-#: ../Interface/Wx/StatView/You.pm:38
+#: ../Interface/Wx/StatView/Mercenary.pm:28 ../Interface/Wx/StatView/You.pm:38
 msgid "Aspd"
 msgstr "Скорость атаки"
 
@@ -1037,8 +1013,7 @@ msgstr "Смертельная ошибка"
 msgid "Error"
 msgstr "Ошибка"
 
-#: ../Interface/Wx.pm:410
-#: ../Interface/Wx.pm:642
+#: ../Interface/Wx.pm:410 ../Interface/Wx.pm:642
 msgid "Console"
 msgstr "Консоль"
 
@@ -1142,8 +1117,7 @@ msgstr "&Мобы"
 msgid "&NPCs"
 msgstr "&Неписи"
 
-#: ../Interface/Wx.pm:458
-#: ../Interface/Wx.pm:489
+#: ../Interface/Wx.pm:458 ../Interface/Wx.pm:489
 msgid "&Experience Report"
 msgstr "&Отчёт по опыту"
 
@@ -1175,43 +1149,35 @@ msgstr "&Лог чата"
 msgid "Show or hide the chat log."
 msgstr "Показать журнал сообщений из чата."
 
-#: ../Interface/Wx.pm:472
-#: ../Interface/Wx.pm:1128
+#: ../Interface/Wx.pm:472 ../Interface/Wx.pm:1128
 msgid "Status"
 msgstr "Состояние"
 
-#: ../Interface/Wx.pm:473
-#: ../Interface/Wx.pm:1135
+#: ../Interface/Wx.pm:473 ../Interface/Wx.pm:1135
 msgid "Homunculus"
 msgstr "Гомункул"
 
-#: ../Interface/Wx.pm:474
-#: ../Interface/Wx.pm:1142
+#: ../Interface/Wx.pm:474 ../Interface/Wx.pm:1142
 msgid "Mercenary"
 msgstr "Наёмник"
 
-#: ../Interface/Wx.pm:475
-#: ../Interface/Wx.pm:1149
+#: ../Interface/Wx.pm:475 ../Interface/Wx.pm:1149
 msgid "Pet"
 msgstr "Питомец"
 
-#: ../Interface/Wx.pm:479
-#: ../Interface/Wx.pm:1156
+#: ../Interface/Wx.pm:479 ../Interface/Wx.pm:1156
 msgid "Inventory"
 msgstr "Инвентарь"
 
-#: ../Interface/Wx.pm:480
-#: ../Interface/Wx.pm:1163
+#: ../Interface/Wx.pm:480 ../Interface/Wx.pm:1163
 msgid "Cart"
 msgstr "Телега"
 
-#: ../Interface/Wx.pm:481
-#: ../Interface/Wx.pm:1170
+#: ../Interface/Wx.pm:481 ../Interface/Wx.pm:1170
 msgid "Storage"
 msgstr "Склад"
 
-#: ../Interface/Wx.pm:485
-#: ../Interface/Wx.pm:1177
+#: ../Interface/Wx.pm:485 ../Interface/Wx.pm:1177
 msgid "Emotions"
 msgstr "Эмоции"
 
@@ -1289,7 +1255,9 @@ msgstr "Применить Wx-капчу"
 
 #: ../Interface/Wx.pm:545
 msgid "Open a dialog when receiving a captcha"
-msgstr "При получении капчи (картинки с замаскированными символами) открывается графическое окно"
+msgstr ""
+"При получении капчи (картинки с замаскированными символами) открывается "
+"графическое окно"
 
 #: ../Interface/Wx.pm:549
 msgid "Show route on map"
@@ -1331,12 +1299,8 @@ msgstr "Личный чат"
 msgid "Guild chat"
 msgstr "Гильд-чат"
 
-#: ../Interface/Wx.pm:646
-#: ../Interface/Wx.pm:927
-#: ../Interface/Wx.pm:1081
-#: ../Interface/Wx.pm:1083
-#: ../Interface/Wx.pm:1084
-#: ../Interface/Wx.pm:1095
+#: ../Interface/Wx.pm:646 ../Interface/Wx.pm:927 ../Interface/Wx.pm:1081
+#: ../Interface/Wx.pm:1083 ../Interface/Wx.pm:1084 ../Interface/Wx.pm:1095
 #: ../Interface/Wx.pm:1270
 msgid "Chat Log"
 msgstr "Лог чата"
@@ -1370,9 +1334,7 @@ msgstr "На паузе"
 msgid "You're not logged in.\n"
 msgstr "Вы не вошли в игру.\n"
 
-#: ../Interface/Wx.pm:1005
-#: ../Interface/Wx.pm:1006
-#: ../Interface/Wx.pm:1010
+#: ../Interface/Wx.pm:1005 ../Interface/Wx.pm:1006 ../Interface/Wx.pm:1010
 #: ../Interface/Wx.pm:1061
 msgid "Advanced Configuration"
 msgstr "Дополнительная настройка"
@@ -1387,7 +1349,9 @@ msgstr "&Венуть"
 
 #: ../Interface/Wx.pm:1043
 msgid "Revert settings to before you opened the selected category"
-msgstr "Возвращает значения параметрам, которые у них были перед тем, как вы открыли выбранную категорию."
+msgstr ""
+"Возвращает значения параметрам, которые у них были перед тем, как вы открыли "
+"выбранную категорию."
 
 #: ../Interface/Wx.pm:1056
 msgid "&Close"
@@ -1417,26 +1381,20 @@ msgid "Moving to %s, %s\n"
 msgstr "Движение к %s, %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:527
-#: ../Network/Receive/ServerType0.pm:463
-#: ../Network/Receive/ServerType15.pm:32
-#: ../Network/Receive/ServerType19.pm:32
-#: ../Network/Receive/ServerType20.pm:32
+#: ../Network/Receive/ServerType0.pm:463 ../Network/Receive/ServerType15.pm:32
+#: ../Network/Receive/ServerType19.pm:32 ../Network/Receive/ServerType20.pm:32
 msgid "Waiting for map to load...\n"
 msgstr "Ожидание загрузки локации...\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:538
-#: ../Network/Receive/ServerType0.pm:474
-#: ../Network/Receive/ServerType15.pm:46
-#: ../Network/Receive/ServerType19.pm:46
-#: ../Network/Receive/ServerType20.pm:46
+#: ../Network/Receive/ServerType0.pm:474 ../Network/Receive/ServerType15.pm:46
+#: ../Network/Receive/ServerType19.pm:46 ../Network/Receive/ServerType20.pm:46
 msgid "You are now in the game\n"
 msgstr "Вы в игре\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:547
-#: ../Network/Receive/ServerType0.pm:483
-#: ../Network/Receive/ServerType15.pm:54
-#: ../Network/Receive/ServerType19.pm:54
-#: ../Network/Receive/ServerType20.pm:54
+#: ../Network/Receive/ServerType0.pm:483 ../Network/Receive/ServerType15.pm:54
+#: ../Network/Receive/ServerType19.pm:54 ../Network/Receive/ServerType20.pm:54
 #, perl-format
 msgid "Your Coordinates: %s, %s\n"
 msgstr "Ваши координаты: %s, %s\n"
@@ -1464,8 +1422,7 @@ msgid "-------------------------------------------------------\n"
 msgstr "-------------------------------------------------------\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:596
-#: ../Network/Receive/ServerType0.pm:534
-#: ../Network/Receive/ServerType17.pm:46
+#: ../Network/Receive/ServerType0.pm:534 ../Network/Receive/ServerType17.pm:46
 msgid ""
 "-----------Account Info------------\n"
 "Account ID: @<<<<<<<<< @<<<<<<<<<<\n"
@@ -1482,8 +1439,7 @@ msgstr ""
 "--------------------------------------"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:620
-#: ../Network/Receive/ServerType0.pm:554
-#: ../Network/Receive/ServerType17.pm:66
+#: ../Network/Receive/ServerType0.pm:554 ../Network/Receive/ServerType17.pm:66
 msgid ""
 "--------- Servers ----------\n"
 "#   Name                  Users  IP              Port\n"
@@ -1492,43 +1448,37 @@ msgstr ""
 "#   Имя                 Игроков       IP-адрес    Порт\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:631
-#: ../Network/Receive/ServerType0.pm:565
-#: ../Network/Receive/ServerType17.pm:77
+#: ../Network/Receive/ServerType0.pm:565 ../Network/Receive/ServerType17.pm:77
 #: ../Network/XKoreProxy.pm:467
 msgid "Closing connection to Account Server\n"
 msgstr "Закрывается подключение к аккаунт-серверу.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:639
-#: ../Network/Receive/ServerType0.pm:573
-#: ../Network/Receive/ServerType17.pm:85
+#: ../Network/Receive/ServerType0.pm:573 ../Network/Receive/ServerType17.pm:85
 #: ../Network/DirectConnection.pm:462
 msgid "Please select your login server."
 msgstr "Пожалуйста, выберите ваш логин-сервер."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:641
-#: ../Network/Receive/ServerType0.pm:575
-#: ../Network/Receive/ServerType17.pm:87
+#: ../Network/Receive/ServerType0.pm:575 ../Network/Receive/ServerType17.pm:87
 #: ../Network/DirectConnection.pm:464
 msgid "Select Login Server"
 msgstr "Выберите логин-сервер"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:649
-#: ../Network/Receive/ServerType0.pm:583
-#: ../Network/Receive/ServerType17.pm:95
+#: ../Network/Receive/ServerType0.pm:583 ../Network/Receive/ServerType17.pm:95
 #, perl-format
 msgid "Forcing connect to char server %s: %s\n"
 msgstr "Принудительное подключение к чар-серверу %s: %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:652
-#: ../Network/Receive/ServerType0.pm:586
-#: ../Network/Receive/ServerType17.pm:98
+#: ../Network/Receive/ServerType0.pm:586 ../Network/Receive/ServerType17.pm:98
 #, perl-format
 msgid "Server %s selected\n"
 msgstr "Выбран сервер %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:684
-#: ../Network/Receive/ServerType0.pm:618
-#: ../Commands.pm:4094
+#: ../Network/Receive/ServerType0.pm:618 ../Commands.pm:4094
 msgid "You are sitting.\n"
 msgstr "Вы сели.\n"
 
@@ -1574,8 +1524,12 @@ msgstr "Слуга погиб: %s (%d) %s.\n"
 #: ../Network/Receive/kRO/Sakexe_0.pm:957
 #: ../Network/Receive/ServerType0.pm:890
 #, perl-format
-msgid "Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n"
-msgstr "Удалён актор с координатами за пределами локации (%d,%d)->(%d,%d), размеры локации: (%d,%d)\n"
+msgid ""
+"Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%"
+"d)\n"
+msgstr ""
+"Удалён актор с координатами за пределами локации (%d,%d)->(%d,%d), размеры "
+"локации: (%d,%d)\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1225
 #: ../Network/Receive/ServerType0.pm:1165
@@ -1667,8 +1621,7 @@ msgid "Buy failed (failure code %s).\n"
 msgstr "Покупка не удалась (код ошибки %s).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1654
-#: ../Network/Receive/ServerType0.pm:1593
-#: ../Commands.pm:715
+#: ../Network/Receive/ServerType0.pm:1593 ../Commands.pm:715
 msgid "-----Card Merge Candidates-----\n"
 msgstr "---- Вещи для вставки карты ---\n"
 
@@ -1744,8 +1697,12 @@ msgstr "Вы слишком молоды.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1960
 #: ../Network/Receive/ServerType0.pm:1898
-msgid "Character creation failed. If you didn't make any mistake, then the name you chose already exists.\n"
-msgstr "Не удалось создать персонажа. Если вы не допустили ошибок, значит такое имя уже существует.\n"
+msgid ""
+"Character creation failed. If you didn't make any mistake, then the name you "
+"chose already exists.\n"
+msgstr ""
+"Не удалось создать персонажа. Если вы не допустили ошибок, значит такое имя "
+"уже существует.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1986
 #: ../Network/Receive/ServerType0.pm:1924
@@ -1767,7 +1724,9 @@ msgstr "Персонаж удалён.\n"
 #: ../Network/Receive/kRO/Sakexe_0.pm:2015
 #: ../Network/Receive/ServerType0.pm:1953
 msgid "Character cannot be deleted. Your e-mail address was probably wrong.\n"
-msgstr "Персонаж не может быть удалён. Возможно, из-за неверно введённого e-mail адреса.\n"
+msgstr ""
+"Персонаж не может быть удалён. Возможно, из-за неверно введённого e-mail "
+"адреса.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2090
 #: ../Network/Receive/ServerType0.pm:2028
@@ -1991,14 +1950,12 @@ msgstr ""
 #: ../Network/Receive/ServerType0.pm:2464
 #: ../Network/Receive/ServerType0.pm:2468
 msgid "Critical Error: Dual login prohibited - Someone trying to login!\n"
-msgstr "Критическая ошибка: двойной вход запрещен - кто-то пытается залогиниться!\n"
+msgstr ""
+"Критическая ошибка: двойной вход запрещен - кто-то пытается залогиниться!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2522
-#: ../Network/Receive/ServerType0.pm:2465
-#: ../Misc.pm:1050
-#: ../Misc.pm:1064
-#: ../Misc.pm:3384
-#: ../Misc.pm:3405
+#: ../Network/Receive/ServerType0.pm:2465 ../Misc.pm:1050 ../Misc.pm:1064
+#: ../Misc.pm:3384 ../Misc.pm:3405
 #, perl-format
 msgid "Disconnect for %s seconds...\n"
 msgstr "Отключение через %s секунд...\n"
@@ -2021,7 +1978,8 @@ msgstr "Ошибка: вы еще слишком малы, чтобы играт
 #: ../Network/Receive/kRO/Sakexe_0.pm:2535
 #: ../Network/Receive/ServerType0.pm:2478
 msgid "Critical Error: You must pay to play this account!\n"
-msgstr "Критическая ошибка: вы должны заплатить, чтобы играть на этом аккаунте!\n"
+msgstr ""
+"Критическая ошибка: вы должны заплатить, чтобы играть на этом аккаунте!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2538
 #: ../Network/Receive/ServerType0.pm:2481
@@ -2030,8 +1988,12 @@ msgstr "Ошибка: сервер до сих пор обрабатывает �
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2540
 #: ../Network/Receive/ServerType0.pm:2483
-msgid "Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?\n"
-msgstr "Ошибка: диапозон IP-адресов этого интернет-кафе заполнен. Хотите ли заплатить за личную базу?\n"
+msgid ""
+"Error: IP capacity of this Internet Cafe is full. Would you like to pay the "
+"personal base?\n"
+msgstr ""
+"Ошибка: диапозон IP-адресов этого интернет-кафе заполнен. Хотите ли "
+"заплатить за личную базу?\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2542
 #: ../Network/Receive/ServerType0.pm:2485
@@ -2045,13 +2007,21 @@ msgstr "Ошибка: вы были принудительно отключен�
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2546
 #: ../Network/Receive/ServerType0.pm:2489
-msgid "Error: Your account has been suspended until the next maintenance period for possible use of 3rd party programs\n"
-msgstr "Ошибка: ваш аккаунт заблокирован до следующей профилактики за возможное использование посторонних программ.\n"
+msgid ""
+"Error: Your account has been suspended until the next maintenance period for "
+"possible use of 3rd party programs\n"
+msgstr ""
+"Ошибка: ваш аккаунт заблокирован до следующей профилактики за возможное "
+"использование посторонних программ.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2548
 #: ../Network/Receive/ServerType0.pm:2491
-msgid "Error: For an hour, more than 10 connections having same IP address, have made. Please check this matter.\n"
-msgstr "Ошибка: в течение часа с одного IP-адреса в игру зашло более 10 учетных записей. Пожалуйста, проверьте причину этого.\n"
+msgid ""
+"Error: For an hour, more than 10 connections having same IP address, have "
+"made. Please check this matter.\n"
+msgstr ""
+"Ошибка: в течение часа с одного IP-адреса в игру зашло более 10 учетных "
+"записей. Пожалуйста, проверьте причину этого.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2550
 #: ../Network/Receive/ServerType0.pm:2493
@@ -2121,8 +2091,11 @@ msgstr "%s хочет быть вашим другом.\n"
 #: ../Network/Receive/kRO/Sakexe_0.pm:2699
 #: ../Network/Receive/ServerType0.pm:2640
 #, perl-format
-msgid "Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
-msgstr "Введите 'friend accept' чтобы принять дружбу от %s, или 'friend reject' чтобы отказаться.\n"
+msgid ""
+"Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
+msgstr ""
+"Введите 'friend accept' чтобы принять дружбу от %s, или 'friend reject' "
+"чтобы отказаться.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2710
 #: ../Network/Receive/ServerType0.pm:2651
@@ -2177,10 +2150,12 @@ msgstr "Ваш Гомункул был воскрешен!\n"
 #: ../Network/Receive/kRO/Sakexe_0.pm:2868
 #: ../Network/Receive/ServerType0.pm:2825
 msgid ""
-"The server Denied the login because GameGuard packets where not replied correctly or too many time has been spent to send the response.\n"
+"The server Denied the login because GameGuard packets where not replied "
+"correctly or too many time has been spent to send the response.\n"
 "Please verify the version of your poseidon server and try again\n"
 msgstr ""
-"Сервер запретил вход, так как ответов от GameGuard не было получено или прошло слишком много времени перед отправкой ответа.\n"
+"Сервер запретил вход, так как ответов от GameGuard не было получено или "
+"прошло слишком много времени перед отправкой ответа.\n"
 "Пожалуйста, проверьте версию вашего Poseidon-сервера и попытайтесь снова.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2873
@@ -2339,7 +2314,9 @@ msgstr "Идентификация предмета не удалась.\n"
 #: ../Network/Receive/ServerType0.pm:3205
 #, perl-format
 msgid "Received Possible Identify List (%s item(s)) - type 'identify'\n"
-msgstr "Получен список предметов для идентификации (%s шт.) - Введите консольную команду 'identify'.\n"
+msgstr ""
+"Получен список предметов для идентификации (%s шт.) - Введите консольную "
+"команду 'identify'.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3240
 #: ../Network/Receive/ServerType0.pm:3212
@@ -2416,7 +2393,8 @@ msgstr "Вы использовали непонятный предмет №%d 
 #: ../Network/Receive/ServerType0.pm:3358
 #, perl-format
 msgid "You failed to use unknown item #%d - %d left\n"
-msgstr "У вас не получилось использовать непонятный предмет №%d - %d шт. осталось.\n"
+msgstr ""
+"У вас не получилось использовать непонятный предмет №%d - %d шт. осталось.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3383
 #: ../Network/Receive/ServerType0.pm:3364
@@ -2558,7 +2536,9 @@ msgstr "Севрер временно блокирует ваши подключ
 #: ../Network/Receive/kRO/Sakexe_0.pm:3822
 #: ../Network/Receive/ServerType0.pm:3801
 msgid "Error logging into Character Server (invalid character specified)...\n"
-msgstr "Ошибка: не получилось подключиться к чар-серверу (неверное указан персонаж)...\n"
+msgstr ""
+"Ошибка: не получилось подключиться к чар-серверу (неверное указан "
+"персонаж)...\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3849
 #: ../Network/Receive/kRO/Sakexe_0.pm:3911
@@ -2577,8 +2557,7 @@ msgid "Map Change: %s (%s, %s)\n"
 msgstr "Локация сменилась на: %s (%s, %s).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3945
-#: ../Network/Receive/ServerType0.pm:3924
-#: ../Network/XKoreProxy.pm:490
+#: ../Network/Receive/ServerType0.pm:3924 ../Network/XKoreProxy.pm:490
 msgid "Closing connection to Map Server\n"
 msgstr "Закрытие подключения к мап-серверу.\n"
 
@@ -2738,7 +2717,8 @@ msgstr "Нельзя пригласить в пати, ибо она уже по
 #: ../Network/Receive/ServerType0.pm:4516
 #, perl-format
 msgid "Join request failed: same account of %s allready joined the party.\n"
-msgstr "Нельзя пригласить в пати, ибо персонаж %s с этого же аккаунта уже в пати.\n"
+msgstr ""
+"Нельзя пригласить в пати, ибо персонаж %s с этого же аккаунта уже в пати.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4534
 #: ../Network/Receive/ServerType0.pm:4539
@@ -2894,8 +2874,7 @@ msgstr ""
 "------------------------------------------\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5008
-#: ../Network/Receive/ServerType0.pm:5015
-#: ../Network/XKoreProxy.pm:488
+#: ../Network/Receive/ServerType0.pm:5015 ../Network/XKoreProxy.pm:488
 msgid "Closing connection to Character Server\n"
 msgstr "Закрывается подключение к чар-серверу.\n"
 
@@ -2932,13 +2911,17 @@ msgstr "Вы пытались улучшить оружие (ID %s); резул�
 #: ../Network/Receive/kRO/Sakexe_0.pm:5036
 #: ../Network/Receive/ServerType0.pm:5043
 #, perl-format
-msgid "[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s points.\n"
+msgid ""
+"[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s "
+"points.\n"
 msgstr "[POINT] Рейтинг кузнеца увеличился на %s. Всего сейчас %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5042
 #: ../Network/Receive/ServerType0.pm:5048
 #, perl-format
-msgid "[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s points.\n"
+msgid ""
+"[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s "
+"points.\n"
 msgstr "[POINT] Рейтинг алхимика увеличился на %s. Всего сейчас %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5048
@@ -3002,7 +2985,8 @@ msgstr "Максимальное количество ваших SP увелич
 #: ../Network/Receive/kRO/Sakexe_0.pm:5172
 #: ../Network/Receive/ServerType0.pm:5179
 msgid "All of your Stats will stay increased for the next minute.\n"
-msgstr "Все ваши статы будут оставаться увеличенными в течении следующей минуты.\n"
+msgstr ""
+"Все ваши статы будут оставаться увеличенными в течении следующей минуты.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5174
 #: ../Network/Receive/ServerType0.pm:5181
@@ -3309,15 +3293,23 @@ msgstr ""
 #: ../Network/Receive/kRO/Sakexe_0.pm:6363
 #: ../Network/Receive/ServerType0.pm:6262
 #: ../Network/Receive/ServerType0.pm:6298
-msgid "Unable to send character password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
-msgstr "Не получилось отправить пароль для доступа к персонажу. Необходимо установить  'storageEncryptKey' в config.txt или в servers.txt.\n"
+msgid ""
+"Unable to send character password. You must set the 'storageEncryptKey' "
+"option in config.txt or servers.txt.\n"
+msgstr ""
+"Не получилось отправить пароль для доступа к персонажу. Необходимо "
+"установить  'storageEncryptKey' в config.txt или в servers.txt.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6328
 #: ../Network/Receive/kRO/Sakexe_0.pm:6364
 #: ../Network/Receive/ServerType0.pm:6263
 #: ../Network/Receive/ServerType0.pm:6299
-msgid "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
-msgstr "Не получилось отправить пароль для достпуна на склад. Необходимо установить 'storageEncryptKey' в config.txt или в servers.txt.\n"
+msgid ""
+"Unable to send storage password. You must set the 'storageEncryptKey' option "
+"in config.txt or servers.txt.\n"
+msgstr ""
+"Не получилось отправить пароль для достпуна на склад. Необходимо установить "
+"'storageEncryptKey' в config.txt или в servers.txt.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6335
 #: ../Network/Receive/kRO/Sakexe_0.pm:6356
@@ -3373,8 +3365,12 @@ msgstr "Пароль для доступа на склад был удачно �
 #: ../Network/Receive/ServerType0.pm:6383
 #: ../Network/Receive/ServerType0.pm:6409
 #: ../Network/Receive/ServerType0.pm:6422
-msgid "Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."
-msgstr "Невозможно отправить пин-код. Необходимо установить параметр 'PINEncryptKey' в файле servers.txt."
+msgid ""
+"Unable to send PIN code. You must set the 'PINEncryptKey' option in servers."
+"txt."
+msgstr ""
+"Невозможно отправить пин-код. Необходимо установить параметр 'PINEncryptKey' "
+"в файле servers.txt."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6447
 #: ../Network/Receive/ServerType0.pm:6390
@@ -3398,12 +3394,17 @@ msgstr "Пожалуйста, введите новый логин пин-код
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6475
 #: ../Network/Receive/ServerType0.pm:6418
-msgid "The login PIN code that you entered is incorrect. Please re-enter your login PIN code."
-msgstr "Введённый вами логин пин-код неверен. Пожалуйста, попробуйте снова ввести логин пин-код."
+msgid ""
+"The login PIN code that you entered is incorrect. Please re-enter your login "
+"PIN code."
+msgstr ""
+"Введённый вами логин пин-код неверен. Пожалуйста, попробуйте снова ввести "
+"логин пин-код."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6487
 #: ../Network/Receive/ServerType0.pm:6430
-msgid "You have entered 3 incorrect login PIN codes in a row. Reconnecting...\n"
+msgid ""
+"You have entered 3 incorrect login PIN codes in a row. Reconnecting...\n"
 msgstr "Вы ввели три раза неправильный логин пин-код. Реконнект...\n"
 
 #. Translation Comment: System/GM chat
@@ -3508,16 +3509,19 @@ msgstr "На данный момент в онлайне %s игроков.\n"
 #, perl-format
 msgid ""
 "%s\n"
-"#  Name                                       Type           Amount       Price\n"
+"#  Name                                       Type           Amount       "
+"Price\n"
 msgstr ""
 "%s\n"
-"#  Имя                                          Тип             Кол-во.       Цена\n"
+"#  Имя                                          Тип             Кол-"
+"во.       Цена\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6750
 #: ../Network/Receive/ServerType0.pm:6679
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (insufficient zeny).\n"
-msgstr "Неудачная покупка %s шт. предмета №%s у торговца (недостаточно зени).\n"
+msgstr ""
+"Неудачная покупка %s шт. предмета №%s у торговца (недостаточно зени).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6752
 #: ../Network/Receive/ServerType0.pm:6681
@@ -3529,21 +3533,23 @@ msgstr "Неудачная покупка %s шт. предмета №%s у т�
 #: ../Network/Receive/ServerType0.pm:6683
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (unknown code %s).\n"
-msgstr "Неудачная покупка %s шт. предмета №%s у торговца (неизвестный код %s).\n"
+msgstr ""
+"Неудачная покупка %s шт. предмета №%s у торговца (неизвестный код %s).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6771
 #: ../Network/Receive/ServerType0.pm:6701
 #, perl-format
 msgid ""
 "%s\n"
-"#  Name                                          Type        Amount       Price\n"
+"#  Name                                          Type        Amount       "
+"Price\n"
 msgstr ""
 "%s\n"
-"#  Имя                                             Тип         Кол-во         Цена\n"
+"#  Имя                                             Тип         Кол-"
+"во         Цена\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6825
-#: ../Network/Receive/ServerType0.pm:6751
-#: ../Commands.pm:5000
+#: ../Network/Receive/ServerType0.pm:6751 ../Commands.pm:5000
 msgid ""
 "----------------- Warp Portal --------------------\n"
 "#  Place                           Map\n"
@@ -3823,8 +3829,11 @@ msgstr "Окно аукциона сейчас открыто.\n"
 #: ../Network/Receive/kRO/Sakexe_0.pm:7081
 #: ../Network/Receive/ServerType0.pm:7010
 #, perl-format
-msgid "Failed (note: usable items can't be auctioned) to add item with index: %s.\n"
-msgstr "Не получилось добавить предмет с индексом (примечание: используемые предметы нельзя выставлять на аукцион): %s.\n"
+msgid ""
+"Failed (note: usable items can't be auctioned) to add item with index: %s.\n"
+msgstr ""
+"Не получилось добавить предмет с индексом (примечание: используемые предметы "
+"нельзя выставлять на аукцион): %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7084
 #: ../Network/Receive/ServerType0.pm:7013
@@ -3972,7 +3981,8 @@ msgstr "[Миссия Таэквондиста] Ваша цель : %s (%d%)\n"
 #: ../Network/Receive/kRO/Sakexe_0.pm:7180
 #: ../Network/Receive/ServerType0.pm:7110
 msgid "Your Hate and Feel targets have been resetted.\n"
-msgstr "[Ангел Солнца, Луны и Звезды] Запомненные места и монстры были сброшены.\n"
+msgstr ""
+"[Ангел Солнца, Луны и Звезды] Запомненные места и монстры были сброшены.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7190
 #: ../Network/Receive/ServerType0.pm:7120
@@ -4055,7 +4065,8 @@ msgstr "Срок существования Усыпальницы истёк; �
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7374
 #: ../Network/Receive/ServerType0.pm:7304
-msgid "The Memorial Dungeon's entry time limit expired it has been destroyed.\n"
+msgid ""
+"The Memorial Dungeon's entry time limit expired it has been destroyed.\n"
 msgstr "Лимит времени для входа в Усыпальницу истёк; она уничтожена.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7376
@@ -4065,8 +4076,10 @@ msgstr "Усыпальница удалена.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7378
 #: ../Network/Receive/ServerType0.pm:7308
-msgid "The instance windows has been removed, possibly due to party/guild leave.\n"
-msgstr "Окно Усыпальницы было закрыто, возможно из-за выхода из пати или гильдии.\n"
+msgid ""
+"The instance windows has been removed, possibly due to party/guild leave.\n"
+msgstr ""
+"Окно Усыпальницы было закрыто, возможно из-за выхода из пати или гильдии.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7400
 #: ../Network/Receive/ServerType0.pm:7330
@@ -4110,7 +4123,9 @@ msgstr "Вы не можете усыновить персонажа, состо
 #: ../Network/Receive/ServerType0.pm:7395
 #, perl-format
 msgid "%s wishes to adopt you. Do you accept?\n"
-msgstr "Игрок %s желает стать вам приёмным родителем. Согласны ли вы стать приёмым ребёнком?\n"
+msgstr ""
+"Игрок %s желает стать вам приёмным родителем. Согласны ли вы стать приёмым "
+"ребёнком?\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7473
 #: ../Network/Receive/ServerType0.pm:7404
@@ -4132,7 +4147,8 @@ msgstr "MVP-босс %s был замечен на этой локации!\n"
 #: ../Network/Receive/kRO/Sakexe_0.pm:7479
 #: ../Network/Receive/ServerType0.pm:7410
 #, perl-format
-msgid "MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n"
+msgid ""
+"MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n"
 msgstr "MVP-босс %s был убит, но появится снова через %d ч. %d мин.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7530
@@ -4147,13 +4163,11 @@ msgstr "Добавлен квест: %s.\n"
 msgid "Quest: %s has been deleted.\n"
 msgstr "Удалён квест: %s.\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7575
-#: ../Commands.pm:5340
+#: ../Network/Receive/kRO/Sakexe_0.pm:7575 ../Commands.pm:5340
 msgid "active"
 msgstr "выполняется"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7575
-#: ../Commands.pm:5340
+#: ../Network/Receive/kRO/Sakexe_0.pm:7575 ../Commands.pm:5340
 msgid "inactive"
 msgstr "не выполняется"
 
@@ -4215,8 +4229,12 @@ msgid "Join request failed: unknown error.\n"
 msgstr "Неудачное приглашение в пати, из-за непонятной ошибки.\n"
 
 #: ../Network/Receive/ServerType0.pm:4522
-msgid "Join request failed: the character is not currently online or does not exist.\n"
-msgstr "Предложение вступить в пати провалилось: указанного персонажа нет в онлайне или же его нет вообще.\n"
+msgid ""
+"Join request failed: the character is not currently online or does not "
+"exist.\n"
+msgstr ""
+"Предложение вступить в пати провалилось: указанного персонажа нет в онлайне "
+"или же его нет вообще.\n"
 
 #: ../Network/Receive/ServerType0.pm:4524
 msgid "Join request failed: ANSWER_INVALID_MAPPROPERTY.\n"
@@ -4289,8 +4307,7 @@ msgstr "Подключение к аккаунт-серверу...\n"
 msgid "Requesting permission to logon on account server...\n"
 msgstr "Запрашивается разрешение на вход на аккаунт-сервер...\n"
 
-#: ../Network/DirectConnection.pm:354
-#: ../Network/DirectConnection.pm:386
+#: ../Network/DirectConnection.pm:354 ../Network/DirectConnection.pm:386
 msgid "Secure Login...\n"
 msgstr "Безопасный вход...\n"
 
@@ -4341,8 +4358,10 @@ msgstr "Отключение от мап-сервера, выход...\n"
 
 #: ../Network/DirectConnection.pm:573
 #, perl-format
-msgid "Disconnected from Map Server, connecting to Account Server in %s seconds...\n"
-msgstr "Отключение от мап-сервера, подключение к аккаунт-серверу через %s секунд...\n"
+msgid ""
+"Disconnected from Map Server, connecting to Account Server in %s seconds...\n"
+msgstr ""
+"Отключение от мап-сервера, подключение к аккаунт-серверу через %s секунд...\n"
 
 #: ../Network/DirectConnection.pm:581
 msgid "Timeout on Map Server, "
@@ -4360,15 +4379,19 @@ msgstr "подключение к аккаунт-серверу через %s с
 #: ../Network/Receive.pm:83
 #, perl-format
 msgid "Cannot load server message parser for server type '%s'."
-msgstr "Неверный сервертип. Не получается загрузить парсер сообщений для serverType '%s'."
+msgstr ""
+"Неверный сервертип. Не получается загрузить парсер сообщений для serverType "
+"'%s'."
 
 #: ../Network/Receive.pm:87
 #, perl-format
 msgid ""
-"An error occured while loading the server message parser for server type '%s':\n"
+"An error occured while loading the server message parser for server type '%"
+"s':\n"
 "%s"
 msgstr ""
-"Возникла ошибка при загрузке обработчика сообщений от сервера с указанным сервертипом - '%s':\n"
+"Возникла ошибка при загрузке обработчика сообщений от сервера с указанным "
+"сервертипом - '%s':\n"
 "%s"
 
 #: ../Network/Receive.pm:102
@@ -4407,8 +4430,7 @@ msgstr ""
 "Единовременно возможно запустить только одну сессию X-Kore.\n"
 "Удостоверьтесь, чтобы другие сервера не занимали порт %s.\n"
 
-#: ../Network/XKore.pm:67
-#: ../Network/XKoreProxy.pm:82
+#: ../Network/XKore.pm:67 ../Network/XKoreProxy.pm:82
 msgid "X-Kore mode intialized.\n"
 msgstr "Запущен режим X-Kore.\n"
 
@@ -4490,13 +4512,11 @@ msgstr "Клиент не отвечает. Принудительно откл�
 msgid "Logon-grant packet received twice! Avoiding bug in client.\n"
 msgstr "Logon-grant пакет получен дважды! Избегание бага в клиенте.\n"
 
-#: ../Network/XKoreProxy.pm:559
-#: ../functions.pl:411
+#: ../Network/XKoreProxy.pm:559 ../functions.pl:411
 msgid "Please choose a master server to connect to."
 msgstr "Пожалуйста, выберите мастер-сервер для подключения."
 
-#: ../Network/XKoreProxy.pm:561
-#: ../functions.pl:413
+#: ../Network/XKoreProxy.pm:561 ../functions.pl:413
 msgid "Master servers"
 msgstr "Мастер-сервер"
 
@@ -4604,7 +4624,9 @@ msgstr "Ступор при поиске пути."
 
 #: ../Task/SitStand.pm:100
 msgid "Basic Skill level 3 is required in order to sit or stand."
-msgstr "Необходимо Базовое умение 3-го уровня, чтобы персонаж мог садиться и вставать с земли."
+msgstr ""
+"Необходимо Базовое умение 3-го уровня, чтобы персонаж мог садиться и "
+"вставать с земли."
 
 #: ../Task/TalkNPC.pm:113
 #, perl-format
@@ -4621,16 +4643,22 @@ msgid "The NPC did not respond."
 msgstr "Непись не отвечает."
 
 #: ../Task/TalkNPC.pm:208
-msgid "According to the given NPC instructions, the Next button must now be clicked on, but that's not possible."
+msgid ""
+"According to the given NPC instructions, the Next button must now be clicked "
+"on, but that's not possible."
 msgstr "По идее надо продолжить разговор, но это невозможно."
 
 #: ../Task/TalkNPC.pm:221
 #, perl-format
-msgid "According to the given NPC instructions, menu item %d must now be selected, but there are only %d menu items."
+msgid ""
+"According to the given NPC instructions, menu item %d must now be selected, "
+"but there are only %d menu items."
 msgstr "По идее надо выбрать вариант №%d, но в списке всего %d вариантов."
 
 #: ../Task/TalkNPC.pm:228
-msgid "According to the given NPC instructions, a menu item must now be selected, but that's not possible."
+msgid ""
+"According to the given NPC instructions, a menu item must now be selected, "
+"but that's not possible."
 msgstr "По идее надо выбрать вариант ответа, но это невозможно."
 
 #: ../Task/TalkNPC.pm:249
@@ -4643,8 +4671,7 @@ msgstr "Товар №%d не найден в магазине."
 msgid "Skill %s cannot be used because your character has no such skill."
 msgstr "Нельзя скастовать умение %s. У вашего персонажа нет такого умения."
 
-#: ../Task/UseSkill.pm:332
-#: ../Task/UseSkill.pm:348
+#: ../Task/UseSkill.pm:332 ../Task/UseSkill.pm:348
 msgid "Target lost."
 msgstr "Цель потеряна."
 
@@ -4653,8 +4680,7 @@ msgstr "Цель потеряна."
 msgid "Unable to cast skill %s in %d tries."
 msgstr "Не получилось скастовать %s за %d попыток."
 
-#: ../Task/UseSkill.pm:363
-#: ../Task/UseSkill.pm:397
+#: ../Task/UseSkill.pm:363 ../Task/UseSkill.pm:397
 #, perl-format
 msgid "Casting failed: %s (%d)"
 msgstr "Каст не удался: %s (%d)."
@@ -4701,14 +4727,12 @@ msgstr "%s %s сейчас атакует %s\n"
 msgid "Calculating route to: %s(%s): %d, %d\n"
 msgstr "Расчет маршрута до: %s(%s): %d, %d.\n"
 
-#: ../ChatQueue.pm:282
-#: ../Commands.pm:3060
+#: ../ChatQueue.pm:282 ../Commands.pm:3060
 #, perl-format
 msgid "Calculating route to: %s(%s)\n"
 msgstr "Расчет маршрута до: %s(%s).\n"
 
-#: ../ChatQueue.pm:289
-#: ../Commands.pm:3076
+#: ../ChatQueue.pm:289 ../Commands.pm:3076
 #, perl-format
 msgid "Map %s does not exist\n"
 msgstr "Локации %s не существует.\n"
@@ -4719,8 +4743,11 @@ msgstr "Тут нельзя использовать консольную ком
 
 #: ../Commands.pm:292
 #, perl-format
-msgid "Unknown command '%s'. Please read the documentation for a list of commands.\n"
-msgstr "Непонятная консольная команда '%s'. Пожалуйста, прочитайте документацию по консольным командам.\n"
+msgid ""
+"Unknown command '%s'. Please read the documentation for a list of commands.\n"
+msgstr ""
+"Непонятная консольная команда '%s'. Пожалуйста, прочитайте документацию по "
+"консольным командам.\n"
 
 #: ../Commands.pm:454
 msgid "AI sequences cleared\n"
@@ -4738,8 +4765,7 @@ msgstr "----------- Очередь ИИ -----------------\n"
 msgid "AI is already set to auto mode\n"
 msgstr "ИИ уже переведён в автоматический режим.\n"
 
-#: ../Commands.pm:477
-#: ../Commands.pm:511
+#: ../Commands.pm:477 ../Commands.pm:511
 msgid "AI set to auto mode\n"
 msgstr "ИИ переведён в автоматический режим.\n"
 
@@ -4747,13 +4773,11 @@ msgstr "ИИ переведён в автоматический режим.\n"
 msgid "AI is already set to manual mode\n"
 msgstr "ИИ уже переведён в ручной режим.\n"
 
-#: ../Commands.pm:486
-#: ../Commands.pm:507
+#: ../Commands.pm:486 ../Commands.pm:507
 msgid "AI set to manual mode\n"
 msgstr "ИИ переведён в ручной режим.\n"
 
-#: ../Commands.pm:493
-#: ../Commands.pm:503
+#: ../Commands.pm:493 ../Commands.pm:503
 msgid "AI turned off\n"
 msgstr "ИИ отключен.\n"
 
@@ -4769,26 +4793,22 @@ msgstr ""
 "Синтаксическая ошибка в консольной команде 'ai' (управление ИИ)\n"
 "Использование: ai [ clear | print | ai_v | auto | manual | off ]\n"
 
-#: ../Commands.pm:524
-#: ../Commands.pm:2027
+#: ../Commands.pm:524 ../Commands.pm:2027
 #, perl-format
 msgid "ai_seq (off) = %s\n"
 msgstr "ai_seq (отключен) = %s\n"
 
-#: ../Commands.pm:526
-#: ../Commands.pm:2029
+#: ../Commands.pm:526 ../Commands.pm:2029
 #, perl-format
 msgid "ai_seq (manual) = %s\n"
 msgstr "ai_seq (ручной режим) = %s\n"
 
-#: ../Commands.pm:528
-#: ../Commands.pm:2031
+#: ../Commands.pm:528 ../Commands.pm:2031
 #, perl-format
 msgid "ai_seq (auto) = %s\n"
 msgstr "ai_seq (авто режим) = %s\n"
 
-#: ../Commands.pm:530
-#: ../Commands.pm:2033
+#: ../Commands.pm:530 ../Commands.pm:2033
 msgid "solution\n"
 msgstr "решение\n"
 
@@ -4802,84 +4822,31 @@ msgstr "Активные задачи: %s\n"
 msgid "Inactive tasks: %s\n"
 msgstr "Неактивные задачи: %s\n"
 
-#: ../Commands.pm:537
-#: ../Commands.pm:650
-#: ../Commands.pm:660
-#: ../Commands.pm:669
-#: ../Commands.pm:691
-#: ../Commands.pm:833
-#: ../Commands.pm:840
-#: ../Commands.pm:847
-#: ../Commands.pm:857
-#: ../Commands.pm:930
-#: ../Commands.pm:942
-#: ../Commands.pm:961
-#: ../Commands.pm:1151
-#: ../Commands.pm:1246
-#: ../Commands.pm:1428
-#: ../Commands.pm:1442
-#: ../Commands.pm:1485
-#: ../Commands.pm:1520
-#: ../Commands.pm:1708
-#: ../Commands.pm:1759
-#: ../Commands.pm:1919
-#: ../Commands.pm:1931
-#: ../Commands.pm:1941
-#: ../Commands.pm:1955
-#: ../Commands.pm:2052
-#: ../Commands.pm:2091
-#: ../Commands.pm:2101
-#: ../Commands.pm:2120
-#: ../Commands.pm:2139
-#: ../Commands.pm:2158
-#: ../Commands.pm:2177
-#: ../Commands.pm:2196
-#: ../Commands.pm:2215
-#: ../Commands.pm:2237
-#: ../Commands.pm:2253
-#: ../Commands.pm:2270
-#: ../Commands.pm:2279
-#: ../Commands.pm:2295
-#: ../Commands.pm:2304
-#: ../Commands.pm:2313
-#: ../Commands.pm:2322
-#: ../Commands.pm:2337
-#: ../Commands.pm:2352
-#: ../Commands.pm:2368
-#: ../Commands.pm:2384
-#: ../Commands.pm:2484
-#: ../Commands.pm:2682
-#: ../Commands.pm:2714
-#: ../Commands.pm:2949
-#: ../Commands.pm:2981
-#: ../Commands.pm:3018
-#: ../Commands.pm:3118
-#: ../Commands.pm:3176
-#: ../Commands.pm:3262
-#: ../Commands.pm:3279
-#: ../Commands.pm:3694
-#: ../Commands.pm:3765
-#: ../Commands.pm:3785
-#: ../Commands.pm:3797
-#: ../Commands.pm:3908
-#: ../Commands.pm:3945
-#: ../Commands.pm:4012
-#: ../Commands.pm:4030
-#: ../Commands.pm:4446
-#: ../Commands.pm:4595
-#: ../Commands.pm:4639
-#: ../Commands.pm:4684
-#: ../Commands.pm:4717
-#: ../Commands.pm:4743
-#: ../Commands.pm:4768
-#: ../Commands.pm:4793
-#: ../Commands.pm:4909
-#: ../Commands.pm:4969
-#: ../Commands.pm:5089
-#: ../Commands.pm:5205
-#: ../Commands.pm:5321
-#: ../Commands.pm:5371
-#: ../Commands.pm:5394
+#: ../Commands.pm:537 ../Commands.pm:650 ../Commands.pm:660 ../Commands.pm:669
+#: ../Commands.pm:691 ../Commands.pm:833 ../Commands.pm:840 ../Commands.pm:847
+#: ../Commands.pm:857 ../Commands.pm:930 ../Commands.pm:942 ../Commands.pm:961
+#: ../Commands.pm:1151 ../Commands.pm:1246 ../Commands.pm:1428
+#: ../Commands.pm:1442 ../Commands.pm:1485 ../Commands.pm:1520
+#: ../Commands.pm:1708 ../Commands.pm:1759 ../Commands.pm:1919
+#: ../Commands.pm:1931 ../Commands.pm:1941 ../Commands.pm:1955
+#: ../Commands.pm:2052 ../Commands.pm:2091 ../Commands.pm:2101
+#: ../Commands.pm:2120 ../Commands.pm:2139 ../Commands.pm:2158
+#: ../Commands.pm:2177 ../Commands.pm:2196 ../Commands.pm:2215
+#: ../Commands.pm:2237 ../Commands.pm:2253 ../Commands.pm:2270
+#: ../Commands.pm:2279 ../Commands.pm:2295 ../Commands.pm:2304
+#: ../Commands.pm:2313 ../Commands.pm:2322 ../Commands.pm:2337
+#: ../Commands.pm:2352 ../Commands.pm:2368 ../Commands.pm:2384
+#: ../Commands.pm:2484 ../Commands.pm:2682 ../Commands.pm:2714
+#: ../Commands.pm:2949 ../Commands.pm:2981 ../Commands.pm:3018
+#: ../Commands.pm:3118 ../Commands.pm:3176 ../Commands.pm:3262
+#: ../Commands.pm:3279 ../Commands.pm:3694 ../Commands.pm:3765
+#: ../Commands.pm:3785 ../Commands.pm:3797 ../Commands.pm:3908
+#: ../Commands.pm:3945 ../Commands.pm:4012 ../Commands.pm:4030
+#: ../Commands.pm:4446 ../Commands.pm:4595 ../Commands.pm:4639
+#: ../Commands.pm:4684 ../Commands.pm:4717 ../Commands.pm:4743
+#: ../Commands.pm:4768 ../Commands.pm:4793 ../Commands.pm:4909
+#: ../Commands.pm:4969 ../Commands.pm:5089 ../Commands.pm:5205
+#: ../Commands.pm:5321 ../Commands.pm:5371 ../Commands.pm:5394
 #: ../Commands.pm:5407
 #, perl-format
 msgid "You must be logged in the game to use this command (%s)\n"
@@ -4905,9 +4872,7 @@ msgstr ""
 "Ошибка в консольной команде 'arrowcraft' (изготовление стрел)\n"
 "У персонажа нет умения Создание стрел.\n"
 
-#: ../Commands.pm:572
-#: ../Commands.pm:776
-#: ../Commands.pm:779
+#: ../Commands.pm:572 ../Commands.pm:776 ../Commands.pm:779
 #, perl-format
 msgid ""
 "Error in function 'arrowcraft forceuse #' (Create Arrows)\n"
@@ -4973,7 +4938,8 @@ msgid ""
 "Syntax Error in function 'buy' (Buy Store Item)\n"
 "Usage: buy <item #> [<amount>]\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'buy' (покупка магазинных предметов)\n"
+"Синтаксическая ошибка в консольной команде 'buy' (покупка магазинных "
+"предметов)\n"
 "Использование: buy <предмет №> [<кол-во>]\n"
 
 #: ../Commands.pm:679
@@ -4989,7 +4955,9 @@ msgstr ""
 msgid ""
 "Error in function 'bingbing' (Change look direction)\n"
 "Can't use command while not connected to server.\n"
-msgstr "Ошибка. Нельзя использовать консольную команду 'bingbing' (повернуться), если вы не вошли в игру.\n"
+msgstr ""
+"Ошибка. Нельзя использовать консольную команду 'bingbing' (повернуться), "
+"если вы не вошли в игру.\n"
 
 #: ../Commands.pm:706
 msgid "Cancelling card merge.\n"
@@ -5008,7 +4976,8 @@ msgid ""
 "Error in function 'card mergelist' (List availible card merge items)\n"
 "You are not currently in a card merge session.\n"
 msgstr ""
-"Ошибка в консольной команде 'card mergelist' (список предметов для установки карты)\n"
+"Ошибка в консольной команде 'card mergelist' (список предметов для установки "
+"карты)\n"
 "Вы не вставляете никакую карту.\n"
 
 #: ../Commands.pm:736
@@ -5017,7 +4986,8 @@ msgid ""
 "Error in function 'card merge' (Finalize card merging onto item)\n"
 "There is no item %s in the card mergelist.\n"
 msgstr ""
-"Ошибка в консольной команде 'card merge' (завершение установки карты в предмет)\n"
+"Ошибка в консольной команде 'card merge' (завершение установки карты в "
+"предмет)\n"
 "Отсутствует %s в списке предметов для установки карты.\n"
 
 #: ../Commands.pm:739
@@ -5025,7 +4995,8 @@ msgid ""
 "Error in function 'card merge' (Finalize card merging onto item)\n"
 "You are not currently in a card merge session.\n"
 msgstr ""
-"Ошибка в консольной команде 'card merge' (завершение установки карты в предмет)\n"
+"Ошибка в консольной команде 'card merge' (завершение установки карты в "
+"предмет)\n"
 "Вы не вставляете никакую карту.\n"
 
 #: ../Commands.pm:744
@@ -5034,7 +5005,8 @@ msgid ""
 "Usage: card merge <item number>\n"
 "<item number> - Merge item number. Type 'card mergelist' to get number.\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'card merge' (завершение установки карты в предмет)\n"
+"Синтаксическая ошибка в консольной команде 'card merge' (завершение "
+"установки карты в предмет)\n"
 "Использование: card merge <номер предмета>\n"
 "Напишите 'card mergelist' чтобы узнать номер.\n"
 
@@ -5049,16 +5021,19 @@ msgid ""
 "Error in function 'card use' (Request list of items for merging with card)\n"
 "Card %s does not exist.\n"
 msgstr ""
-"Ошибка в консольной команде 'card use' (список предметов, куда можно вставить карту)\n"
+"Ошибка в консольной команде 'card use' (список предметов, куда можно "
+"вставить карту)\n"
 "Карта %s отсутствует.\n"
 
 #: ../Commands.pm:760
 msgid ""
-"Syntax Error in function 'card use' (Request list of items for merging with card)\n"
+"Syntax Error in function 'card use' (Request list of items for merging with "
+"card)\n"
 "Usage: card use <item number>\n"
 "<item number> - Card inventory number. Type 'i' to get number.\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'card use' (список предметов, куда можно вставить карту)\n"
+"Синтаксическая ошибка в консольной команде 'card use' (список предметов, "
+"куда можно вставить карту)\n"
 "Использование:  card use <номер карты>\n"
 "<номер карты> - номер карты в инвентаре. Напишите 'i' чтобы узнать номер.\n"
 
@@ -5113,7 +5088,8 @@ msgid ""
 "Syntax Error in function 'cart desc' (Show Cart Item Description)\n"
 "'%s' is not a valid cart item number.\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'cart desc' (описание предмета в телеге)\n"
+"Синтаксическая ошибка в консольной команде 'cart desc' (описание предмета в "
+"телеге)\n"
 "'%s' - неверный номер предмета.\n"
 
 #: ../Commands.pm:825
@@ -5122,7 +5098,8 @@ msgid ""
 "Error in function 'cart desc' (Show Cart Item Description)\n"
 "Cart Item %s does not exist.\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'cart desc' (описание предмета в телеге)\n"
+"Синтаксическая ошибка в консольной команде 'cart desc' (описание предмета в "
+"телеге)\n"
 "Предмет %s отсутствует.\n"
 
 #: ../Commands.pm:852
@@ -5147,7 +5124,8 @@ msgid ""
 "Syntax Error in function 'cart add' (Add Item to Cart)\n"
 "Usage: cart add <item>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'cart add' (добавить предмет в телегу)\n"
+"Синтаксическая ошибка в консольной команде 'cart add' (добавить предмет в "
+"телегу)\n"
 "Использование: cart add <предмет>\n"
 
 #: ../Commands.pm:889
@@ -5164,7 +5142,8 @@ msgid ""
 "Syntax Error in function 'cart get' (Get Item from Cart)\n"
 "Usage: cart get <cart item>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'cart get' (взять предмет из телеги)\n"
+"Синтаксическая ошибка в консольной команде 'cart get' (взять предмет из "
+"телеги)\n"
 "Использование: cart get <предмет в телеге>\n"
 
 #: ../Commands.pm:917
@@ -5202,7 +5181,8 @@ msgid ""
 "Syntax Error in function 'chat bestow' (Bestow Admin in Chat)\n"
 "Usage: chat bestow <user #>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'chat bestow' (дать права админа чата)\n"
+"Синтаксическая ошибка в консольной команде 'chat bestow' (дать права админа "
+"чата)\n"
 "Использование: chat bestow <№ игрока>\n"
 
 #: ../Commands.pm:978
@@ -5220,7 +5200,8 @@ msgid ""
 "Usage: chat modify \"<title>\" [<limit #> <public flag> <password>]\n"
 msgstr ""
 "Синтаксическая ошибка в консольной команде 'chatmod' (изменение чата)\n"
-"Использование: chat modify \"<Название>\" [<Лимит> <флаг публичности> <пароль>]\n"
+"Использование: chat modify \"<Название>\" [<Лимит> <флаг публичности> "
+"<пароль>]\n"
 
 #: ../Commands.pm:1007
 msgid ""
@@ -5235,7 +5216,8 @@ msgid ""
 "Syntax Error in function 'chat kick' (Kick from Chat)\n"
 "Usage: chat kick <user #>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'chat kick' (выгнать игрока из чата)\n"
+"Синтаксическая ошибка в консольной команде 'chat kick' (выгнать игрока из "
+"чата)\n"
 "Использование: chat kick <№ пользователя>\n"
 
 #: ../Commands.pm:1013
@@ -5286,7 +5268,8 @@ msgid ""
 "Usage: chat create \"<title>\" [<limit #> <public flag> <password>]\n"
 msgstr ""
 "Синтаксическая ошибка в консольной команде 'chat create' (создать чат)\n"
-"Использование: chat create \"<Название>\" [<Лимит> <флаг публичности> <пароль>]\n"
+"Использование: chat create \"<Название>\" [<Лимит> <флаг публичности> "
+"<пароль>]\n"
 
 #: ../Commands.pm:1054
 msgid ""
@@ -5298,10 +5281,13 @@ msgstr ""
 
 #: ../Commands.pm:1075
 msgid ""
-"------------------------------- Chat Room List --------------------------------\n"
-"#   Title                                  Owner                Users   Type\n"
+"------------------------------- Chat Room List "
+"--------------------------------\n"
+"#   Title                                  Owner                Users   "
+"Type\n"
 msgstr ""
-"---------------------------- Список чатов -------------------------------------\n"
+"---------------------------- Список чатов "
+"-------------------------------------\n"
 "№  Название                                Владелец            Игроки  Тип\n"
 
 #: ../Commands.pm:1092
@@ -5341,8 +5327,7 @@ msgstr ""
 msgid "------ Chat History --------------------\n"
 msgstr "------ Лог чата ------------------------\n"
 
-#: ../Commands.pm:1145
-#: ../Commands.pm:2752
+#: ../Commands.pm:1145 ../Commands.pm:2752
 #, perl-format
 msgid "Unable to open %s\n"
 msgstr "Невозможно открыть %s\n"
@@ -5572,8 +5557,7 @@ msgstr ""
 "Использование: e <команда>\n"
 
 #. Translation Comment: List of equiped items on each slot
-#: ../Commands.pm:1515
-#: ../Commands.pm:4679
+#: ../Commands.pm:1515 ../Commands.pm:4679
 msgid "Slots:\n"
 msgstr "Слоты:\n"
 
@@ -5596,7 +5580,8 @@ msgid ""
 "Syntax Error in function 'eval' (Evaluate a Perl expression)\n"
 "Usage: eval <expression>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'eval' (выполняет выражение Perl)\n"
+"Синтаксическая ошибка в консольной команде 'eval' (выполняет выражение "
+"Perl)\n"
 "Использование: eval <выражение>\n"
 
 #: ../Commands.pm:1599
@@ -5727,8 +5712,7 @@ msgstr "%s уже является вашим другом.\n"
 msgid "Requesting %s to be your friend\n"
 msgstr "%s хочет стать вашим другом.\n"
 
-#: ../Commands.pm:1787
-#: ../Commands.pm:1814
+#: ../Commands.pm:1787 ../Commands.pm:1814
 #, perl-format
 msgid "Friend #%s does not exist\n"
 msgstr "Друг № %s отсутствует.\n"
@@ -5814,8 +5798,7 @@ msgstr ""
 "Уворот:   @>>> Скорость атаки:          @>>>   Вызовы:     @>>>\n"
 "Range:    @<<  Очки умений: @>>> Контракт истекает: @>>>>>>>>>>\n"
 
-#: ../Commands.pm:1908
-#: ../Commands.pm:3513
+#: ../Commands.pm:1908 ../Commands.pm:3513
 #, perl-format
 msgid "Statuses: %s \n"
 msgstr "Статусы: %s \n"
@@ -5825,7 +5808,8 @@ msgid "This slave can not be feeded\n"
 msgstr "Нельзя покормить Гомункула.\n"
 
 #: ../Commands.pm:1923
-msgid "Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"
+msgid ""
+"Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"
 msgstr "Ваш Гомункул не голоден. Кормление только понизит его привязанность.\n"
 
 #: ../Commands.pm:1926
@@ -5845,8 +5829,7 @@ msgstr ""
 msgid "Slave AI sequences cleared\n"
 msgstr "Очередь ИИ слуги очищена.\n"
 
-#: ../Commands.pm:1967
-#: ../Commands.pm:1974
+#: ../Commands.pm:1967 ../Commands.pm:1974
 msgid "--------- Slave AI Sequence ------------\n"
 msgstr "-------- Очередь ИИ слуги --------------\n"
 
@@ -5854,8 +5837,7 @@ msgstr "-------- Очередь ИИ слуги --------------\n"
 msgid "Slave AI is already set to auto mode\n"
 msgstr "ИИ слуги уже переведен в автоматический режим.\n"
 
-#: ../Commands.pm:1983
-#: ../Commands.pm:2017
+#: ../Commands.pm:1983 ../Commands.pm:2017
 msgid "Slave AI set to auto mode\n"
 msgstr "ИИ слуги переведён в автоматический режим.\n"
 
@@ -5863,13 +5845,11 @@ msgstr "ИИ слуги переведён в автоматический ре�
 msgid "Slave AI is already set to manual mode\n"
 msgstr "ИИ слуги уже переведен в ручной режим.\n"
 
-#: ../Commands.pm:1992
-#: ../Commands.pm:2013
+#: ../Commands.pm:1992 ../Commands.pm:2013
 msgid "Slave AI set to manual mode\n"
 msgstr "ИИ слуги переведен в ручной режим.\n"
 
-#: ../Commands.pm:1999
-#: ../Commands.pm:2009
+#: ../Commands.pm:1999 ../Commands.pm:2009
 msgid "Slave AI turned off\n"
 msgstr "ИИ слуги отключен.\n"
 
@@ -5894,8 +5874,7 @@ msgstr ""
 "------ Список умений слуги ----\n"
 "   # Название умения                LvL     SP\n"
 
-#: ../Commands.pm:2046
-#: ../Commands.pm:3939
+#: ../Commands.pm:2046 ../Commands.pm:3939
 #, perl-format
 msgid ""
 "\n"
@@ -5931,14 +5910,11 @@ msgstr ""
 "Ошибка в консольнай команде '%s skills desc' (описание умения)\n"
 "Умение %s не существует.\n"
 
-#: ../Commands.pm:2072
-#: ../Commands.pm:3965
-#: ../Misc.pm:2080
+#: ../Commands.pm:2072 ../Commands.pm:3965 ../Misc.pm:2080
 msgid "Error: No description available.\n"
 msgstr "Ошибка: описание недоступно.\n"
 
-#: ../Commands.pm:2073
-#: ../Commands.pm:3966
+#: ../Commands.pm:2073 ../Commands.pm:3966
 #, perl-format
 msgid ""
 "===============Skill Description===============\n"
@@ -5955,13 +5931,17 @@ msgid ""
 "Syntax Error in function 'slave skills' (Slave Skills Functions)\n"
 "Usage: %s skills [(<add | desc>) [<skill #>]]\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'slave skills' (команды для умений слуг)\n"
+"Синтаксическая ошибка в консольной команде 'slave skills' (команды для "
+"умений слуг)\n"
 "Использование: %s skills [(<add | desc>) [<skill #>]]\n"
 
 #: ../Commands.pm:2085
 #, perl-format
-msgid "Usage: %s <feed | s | status | move | standby | ai | aiv | skills | fire>\n"
-msgstr "Использование: %s <feed | s | status | move | standby | ai | aiv | skills | fire>\n"
+msgid ""
+"Usage: %s <feed | s | status | move | standby | ai | aiv | skills | fire>\n"
+msgstr ""
+"Использование: %s <feed | s | status | move | standby | ai | aiv | skills | "
+"fire>\n"
 
 #: ../Commands.pm:2405
 msgid "You must be logged in the game to request guild information\n"
@@ -5969,8 +5949,12 @@ msgstr "Вы должны войти в игру, чтобы запрашива�
 
 #: ../Commands.pm:2407
 #, perl-format
-msgid "Guild information is not yet available. You must login to the game and use the '%s' command first\n"
-msgstr "Информация о гильдии ещё не доступна. Вы должны сначал войти в игру и использовать консольную команду '%s'.\n"
+msgid ""
+"Guild information is not yet available. You must login to the game and use "
+"the '%s' command first\n"
+msgstr ""
+"Информация о гильдии ещё не доступна. Вы должны сначал войти в игру и "
+"использовать консольную команду '%s'.\n"
 
 #: ../Commands.pm:2411
 msgid "Requesting guild information...\n"
@@ -5978,7 +5962,8 @@ msgstr "Запроси информации о гильдии...\n"
 
 #: ../Commands.pm:2430
 msgid "Enter command to view guild information: guild <info | member>\n"
-msgstr "Чтобы просмотреть информацию по гильдии, введите: guild <info | member>\n"
+msgstr ""
+"Чтобы просмотреть информацию по гильдии, введите: guild <info | member>\n"
 
 #: ../Commands.pm:2432
 #, perl-format
@@ -6013,29 +5998,27 @@ msgstr "Союзник : %s (%s)\n"
 msgid "Enemy   : %s (%s)\n"
 msgstr "Враг   : %s (%s)\n"
 
-#: ../Commands.pm:2456
-#: ../Commands.pm:2557
+#: ../Commands.pm:2456 ../Commands.pm:2557
 msgid "No guild member information available.\n"
 msgstr "Нет доступной информации о члене гильдии.\n"
 
 #: ../Commands.pm:2460
 msgid ""
 "------------ Guild  Member ------------\n"
-"#  Name                       Job        Lv  Title                    Online\n"
+"#  Name                       Job        Lv  Title                    "
+"Online\n"
 msgstr ""
 "------------ Член гильдии -------------\n"
-"#  Имя                       Профессия   Lvl  Титул                   Online\n"
+"#  Имя                       Профессия   Lvl  Титул                   "
+"Online\n"
 
 #. Translation Comment: Guild member online
 #. Translation Comment: Is the party user on list online?
-#: ../Commands.pm:2473
-#: ../Commands.pm:3151
-#: ../Commands.pm:3158
+#: ../Commands.pm:2473 ../Commands.pm:3151 ../Commands.pm:3158
 msgid "Yes"
 msgstr "Да"
 
-#: ../Commands.pm:2473
-#: ../Commands.pm:3158
+#: ../Commands.pm:2473 ../Commands.pm:3158
 msgid "No"
 msgstr "Нет"
 
@@ -6044,7 +6027,8 @@ msgid ""
 "Syntax Error in function 'guild join' (Accept/Deny Guild Join Request)\n"
 "Usage: guild join <flag>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'guild join' (приглашение в гильдию)\n"
+"Синтаксическая ошибка в консольной команде 'guild join' (приглашение в "
+"гильдию)\n"
 "Использование: guild join <flag>\n"
 
 #: ../Commands.pm:2493
@@ -6053,7 +6037,8 @@ msgid ""
 "Can't accept/deny guild request - no incoming request.\n"
 msgstr ""
 "Ошибка в консольной команде 'guild join' (приглашение в гильдию)\n"
-"Никто не предлагал вступить в гильдию, поэтому нельзя это приглашение принять или отвергнуть.\n"
+"Никто не предлагал вступить в гильдию, поэтому нельзя это приглашение "
+"принять или отвергнуть.\n"
 
 #: ../Commands.pm:2501
 msgid "You accepted the guild join request.\n"
@@ -6068,16 +6053,15 @@ msgid ""
 "Syntax Error in function 'guild create' (Create Guild)\n"
 "Usage: guild create <name>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'guild create' (создание гильдии)\n"
+"Синтаксическая ошибка в консольной команде 'guild create' (создание "
+"гильдии)\n"
 "Использование: guild create <Имя>\n"
 
 #: ../Commands.pm:2515
 msgid "You are not in a guild.\n"
 msgstr "Вы не в гильдии.\n"
 
-#: ../Commands.pm:2520
-#: ../Commands.pm:2533
-#: ../Commands.pm:2915
+#: ../Commands.pm:2520 ../Commands.pm:2533 ../Commands.pm:2915
 #, perl-format
 msgid "Player %s does not exist.\n"
 msgstr "Игрок %s отсутствует.\n"
@@ -6088,8 +6072,11 @@ msgid "Sent guild join request to %s\n"
 msgstr "Отправка приглашения в гильдию для %s\n"
 
 #: ../Commands.pm:2528
-msgid "No guild information available. Type guild to refresh and then try again.\n"
-msgstr "Информация о гильдии недоступна. Напишите 'guild' чтобы обновить информацию и попробуйте снова.\n"
+msgid ""
+"No guild information available. Type guild to refresh and then try again.\n"
+msgstr ""
+"Информация о гильдии недоступна. Напишите 'guild' чтобы обновить информацию "
+"и попробуйте снова.\n"
 
 #: ../Commands.pm:2535
 msgid "You must be guildmaster to set an alliance\n"
@@ -6132,7 +6119,8 @@ msgid ""
 "Syntax Error in function 'guild kick' (Kick Guild Member)\n"
 "Usage: guild kick <number> <reason>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'guild kick' (исключить из гильдии)\n"
+"Синтаксическая ошибка в консольной команде 'guild kick' (исключить из "
+"гильдии)\n"
 "Использование: guild kick <Номер> <Причина>\n"
 
 #: ../Commands.pm:2589
@@ -6163,8 +6151,12 @@ msgid "---------Identify List--------\n"
 msgstr "----Список идентификации------\n"
 
 #: ../Commands.pm:2697
-msgid "The identify list is empty, please use the identify skill or a magnifier first.\n"
-msgstr "Список идентификации предметов пуст, пожалуйста, используйте сначала умение Идентификация или предмет Увеличительное стекло.\n"
+msgid ""
+"The identify list is empty, please use the identify skill or a magnifier "
+"first.\n"
+msgstr ""
+"Список идентификации предметов пуст, пожалуйста, используйте сначала умение "
+"Идентификация или предмет Увеличительное стекло.\n"
 
 #: ../Commands.pm:2700
 #, perl-format
@@ -6180,7 +6172,8 @@ msgid ""
 "Syntax Error in function 'identify' (Identify Item)\n"
 "Usage: identify [<identify #>]\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'identify' (определение предмета)\n"
+"Синтаксическая ошибка в консольной команде 'identify' (определение "
+"предмета)\n"
 "Использование: identify [<Номер>]\n"
 
 #: ../Commands.pm:2720
@@ -6196,7 +6189,8 @@ msgid ""
 "Syntax Error in function 'ihist' (Show Item History)\n"
 "Usage: ihist [<number of entries #>]\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'ihist' (показать историю предмета)\n"
+"Синтаксическая ошибка в консольной команде 'ihist' (показать историю "
+"предмета)\n"
 "Использование: ihist [<номер данных>]\n"
 
 #: ../Commands.pm:2743
@@ -6209,9 +6203,7 @@ msgstr "Инвентарь пуст\n"
 
 #. Translation Comment: Mark to tell item not identified
 #. Translation Comment: Mark to show not identified items
-#: ../Commands.pm:2793
-#: ../Commands.pm:4235
-#: ../Misc.pm:3014
+#: ../Commands.pm:2793 ../Commands.pm:4235 ../Misc.pm:3014
 msgid "Not Identified"
 msgstr "Не идентифицированно"
 
@@ -6224,10 +6216,8 @@ msgstr "----------Инвентарь------------\n"
 msgid "-- Equipment (Equipped) --\n"
 msgstr "-- Экипировка (Одетая) --\n"
 
-#. Translation Comment: Tell if the item is marked to be sold
-#: ../Commands.pm:2807
-#: ../Commands.pm:2816
-#: ../Commands.pm:2830
+#. Translation Comment: Tell if the item is marked to be sold 				
+#: ../Commands.pm:2807 ../Commands.pm:2816 ../Commands.pm:2830
 #: ../Commands.pm:2844
 msgid "Will be sold"
 msgstr "Будет продано"
@@ -6238,14 +6228,12 @@ msgid "-- Equipment (Not Equipped) --\n"
 msgstr "-- Экипировка (Не одетая) --\n"
 
 #. Translation Comment: List of non-usable items
-#: ../Commands.pm:2823
-#: ../Commands.pm:4250
+#: ../Commands.pm:2823 ../Commands.pm:4250
 msgid "-- Non-Usable --\n"
 msgstr "-- Неиспользуемый --\n"
 
 #. Translation Comment: List of usable items
-#: ../Commands.pm:2838
-#: ../Commands.pm:4263
+#: ../Commands.pm:2838 ../Commands.pm:4263
 msgid "-- Usable --\n"
 msgstr "-- Используемый --\n"
 
@@ -6315,10 +6303,12 @@ msgstr ""
 #: ../Commands.pm:2989
 msgid ""
 "-----------Monster List-----------\n"
-"#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n"
+"#   Name                        ID      DmgTo DmgFrom  Distance    "
+"Coordinates\n"
 msgstr ""
 "---------- Список мобов ----------\n"
-"#   Имя                         ID   Урон: по   от     Дистанция   Координаты\n"
+"#   Имя                         ID   Урон: по   от     Дистанция   "
+"Координаты\n"
 
 #: ../Commands.pm:3046
 msgid ""
@@ -6398,7 +6388,8 @@ msgid ""
 "Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n"
 "Usage: party join <flag>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'party join' (принять/отвергнуть приглашение)\n"
+"Синтаксическая ошибка в консольной команде 'party join' (принять/отвергнуть "
+"приглашение)\n"
 "Использование: party join <флаг>\n"
 
 #: ../Commands.pm:3194
@@ -6447,7 +6438,8 @@ msgid ""
 "Syntax Error in function 'party share' (Set Party Share EXP)\n"
 "Usage: party share <flag>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'party share' (поделить опыт на пати)\n"
+"Синтаксическая ошибка в консольной команде 'party share' (поделить опыт на "
+"пати)\n"
 "Использование: party share <флаг>\n"
 
 #: ../Commands.pm:3233
@@ -6544,42 +6536,43 @@ msgstr ""
 "Имя: %-23s  Аксессуар: %s\n"
 
 #: ../Commands.pm:3331
-msgid "Usage: pet [capture|hatch|status|info|feed|performance|return|unequip|name <name>]\n"
-msgstr "Использование: pet [capture|hatch|status|info|feed|performance|return|unequip|name <name>]\n"
+msgid ""
+"Usage: pet [capture|hatch|status|info|feed|performance|return|unequip|name "
+"<name>]\n"
+msgstr ""
+"Использование: pet [capture|hatch|status|info|feed|performance|return|"
+"unequip|name <name>]\n"
 
 #: ../Commands.pm:3337
 msgid ""
 "------------Pet List------------\n"
-"#   Name                                               Distance    Coordinates\n"
+"#   Name                                               Distance    "
+"Coordinates\n"
 msgstr ""
 "------- Список питомцев --------\n"
-"#   Имя                                               Дистанция    Координаты\n"
+"#   Имя                                               Дистанция    "
+"Координаты\n"
 
-#: ../Commands.pm:3364
-#: ../Commands.pm:3403
-#: ../Commands.pm:3521
+#: ../Commands.pm:3364 ../Commands.pm:3403 ../Commands.pm:3521
 msgid ""
 "-----------Player List-----------\n"
 "#    Name                                Sex   Lv  Job         Dist  Coord\n"
 msgstr ""
 "------- Список игроков ----------\n"
-"#    Имя                                 Пол   Ур  Профессия   Дист  Координаты\n"
+"#    Имя                                 Пол   Ур  Профессия   Дист  "
+"Координаты\n"
 
 #: ../Commands.pm:3389
 #, perl-format
 msgid "Total guild players: %s \n"
 msgstr "Всего игроков гильдии: %s \n"
 
-#: ../Commands.pm:3391
-#: ../Commands.pm:3430
-#: ../Commands.pm:3540
+#: ../Commands.pm:3391 ../Commands.pm:3430 ../Commands.pm:3540
 #, perl-format
 msgid "Total players: %s \n"
 msgstr "Всего игроков: %s \n"
 
-#: ../Commands.pm:3393
-#: ../Commands.pm:3432
-#: ../Commands.pm:3541
+#: ../Commands.pm:3393 ../Commands.pm:3432 ../Commands.pm:3541
 msgid "There are no players near you.\n"
 msgstr "Рядом с вами нет других игроков.\n"
 
@@ -6655,7 +6648,8 @@ msgid ""
 "Syntax Error in function 'plugin reload' (Reload Plugin)\n"
 "Usage: plugin reload <plugin name|plugin number#|\"all\">\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'plugin reload' (перезагрузка плагина)\n"
+"Синтаксическая ошибка в консольной команде 'plugin reload' (перезагрузка "
+"плагина)\n"
 "Использование: plugin reload <имя плагина|№ плагина|\"all\">\n"
 
 #: ../Commands.pm:3591
@@ -6674,8 +6668,7 @@ msgstr ""
 "Синтаксическая ошибка в консольной команде 'plugin load' (загрузка плагина)\n"
 "Использование: plugin load <имяФайла|\"all\">\n"
 
-#: ../Commands.pm:3617
-#: ../Commands.pm:3636
+#: ../Commands.pm:3617 ../Commands.pm:3636
 #, perl-format
 msgid "Plugin %s unloaded.\n"
 msgstr "Плагин %s выгружен.\n"
@@ -6690,7 +6683,8 @@ msgid ""
 "Syntax Error in function 'plugin unload' (Unload Plugin)\n"
 "Usage: plugin unload <plugin name|plugin number#|\"all\">\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'plugin unload' (выгрузка плагина)\n"
+"Синтаксическая ошибка в консольной команде 'plugin unload' (выгрузка "
+"плагина)\n"
 "Использование: plugin unload <имяПлагина|№ Плагина|\"all\">\n"
 
 #: ../Commands.pm:3643
@@ -6699,21 +6693,26 @@ msgid ""
 "Command:                                              Description:\n"
 " plugin                                                List loaded plugins\n"
 " plugin load <filename>                                Load a plugin\n"
-" plugin unload <plugin name|plugin number#|\"all\">      Unload a loaded plugin\n"
-" plugin reload <plugin name|plugin number#|\"all\">      Reload a loaded plugin\n"
+" plugin unload <plugin name|plugin number#|\"all\">      Unload a loaded "
+"plugin\n"
+" plugin reload <plugin name|plugin number#|\"all\">      Reload a loaded "
+"plugin\n"
 "-----------------------------------------------------\n"
 msgstr ""
 "----------- Синтаксис команд плагинов ---------------\n"
 "Команда:                                           Описание:\n"
 " plugin                                        Список загружаемых плагинов\n"
 " plugin load <имяФайла>                             Загрузить плагин\n"
-" plugin unload <назв-е плагина|№ плагина|\"all\">   Выгрузить загруженный плагин\n"
-" plugin reload <назв-е плагина|№ плагина|\"all\">   Перезагр. загруженный плагин\n"
+" plugin unload <назв-е плагина|№ плагина|\"all\">   Выгрузить загруженный "
+"плагин\n"
+" plugin reload <назв-е плагина|№ плагина|\"all\">   Перезагр. загруженный "
+"плагин\n"
 "-----------------------------------------------------\n"
 
 #: ../Commands.pm:3653
 msgid "Syntax Error in function 'plugin' (Control Plugins)\n"
-msgstr "Синтаксическая ошибка в консольной команде 'plugin' (управление плагинами)\n"
+msgstr ""
+"Синтаксическая ошибка в консольной команде 'plugin' (управление плагинами)\n"
 
 #: ../Commands.pm:3660
 msgid "-----------PM List-----------\n"
@@ -6759,7 +6758,8 @@ msgid ""
 "Syntax Error in function 'reload' (Reload Configuration Files)\n"
 "Usage: reload <name|\"all\">\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'reload' (перезагузка конфигурационных файлов)\n"
+"Синтаксическая ошибка в консольной команде 'reload' (перезагузка "
+"конфигурационных файлов)\n"
 "Использование: reload <Имя|\"all\">\n"
 
 #: ../Commands.pm:3758
@@ -6777,15 +6777,20 @@ msgstr "Попытка починить предмет: %s\n"
 
 #: ../Commands.pm:3775
 #, perl-format
-msgid "Item with index: %s does either not exist in the 'Repair List' or the list is empty.\n"
-msgstr "Предмета с индексом %s нет в списке 'Список ремонта' или же этот список совсем пуст.\n"
+msgid ""
+"Item with index: %s does either not exist in the 'Repair List' or the list "
+"is empty.\n"
+msgstr ""
+"Предмета с индексом %s нет в списке 'Список ремонта' или же этот список "
+"совсем пуст.\n"
 
 #: ../Commands.pm:3778
 msgid ""
 "Syntax Error in function 'repair' (Repair player's items.)\n"
 "Usage: repair [Repair List index]\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'repair' (починка предметов игрока)\n"
+"Синтаксическая ошибка в консольной команде 'repair' (починка предметов "
+"игрока)\n"
 "Использование: repair [индекс из списка починки]\n"
 
 #: ../Commands.pm:3807
@@ -6817,7 +6822,8 @@ msgid ""
 "       sell done\n"
 "       sell cancel\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'sell' (продать предмет инвентаря)\n"
+"Синтаксическая ошибка в консольной команде 'sell' (продать предмет "
+"инвентаря)\n"
 "Использование: sell <№ предмета> [<кол-во>]\n"
 "           sell list\n"
 "           sell done\n"
@@ -6849,7 +6855,9 @@ msgstr ""
 #: ../Commands.pm:3869
 #, perl-format
 msgid "You must be connected to the server to use this command (%s)\n"
-msgstr "Вы должны быть соединены с сервером, чтобы использовать консольную команду (%s).\n"
+msgstr ""
+"Вы должны быть соединены с сервером, чтобы использовать консольную команду (%"
+"s).\n"
 
 #: ../Commands.pm:3878
 msgid "You do not have a shop open.\n"
@@ -6859,10 +6867,12 @@ msgstr "Увас нет открытого магазина.\n"
 #, perl-format
 msgid ""
 "%s\n"
-"#  Name                                     Type         Qty       Price   Sold\n"
+"#  Name                                     Type         Qty       Price   "
+"Sold\n"
 msgstr ""
 "%s\n"
-"#  Название                                 Тип         Кол-во     Цена    Продано\n"
+"#  Название                                 Тип         Кол-во     Цена    "
+"Продано\n"
 
 #: ../Commands.pm:3897
 #, perl-format
@@ -6925,10 +6935,12 @@ msgstr ""
 #: ../Commands.pm:3979
 msgid ""
 "-----------Slave List-----------\n"
-"#   Name                                   Type        Distance    Coordinates\n"
+"#   Name                                   Type        Distance    "
+"Coordinates\n"
 msgstr ""
 "---------- Список слуг ---------\n"
-"#   Имя                                   Тип        Дистанция    Координаты\n"
+"#   Имя                                   Тип        Дистанция    "
+"Координаты\n"
 
 #: ../Commands.pm:3999
 msgid ""
@@ -7056,7 +7068,8 @@ msgstr ""
 "       storage log"
 
 #: ../Commands.pm:4207
-msgid "No information about storage; it has not been opened before in this session\n"
+msgid ""
+"No information about storage; it has not been opened before in this session\n"
 msgstr "Нет информации о складе; склад ещё ни разу не был открыт.\n"
 
 #: ../Commands.pm:4240
@@ -7087,8 +7100,7 @@ msgstr "Предмет '%s' экипирован.\n"
 msgid "Cart Item '%s' does not exist.\n"
 msgstr "Предмет '%s' отсутствует в телеге.\n"
 
-#: ../Commands.pm:4334
-#: ../Commands.pm:4350
+#: ../Commands.pm:4334 ../Commands.pm:4350
 #, perl-format
 msgid "Storage Item '%s' does not exist.\n"
 msgstr "Предмет %s отсутствует на складе.\n"
@@ -7132,7 +7144,8 @@ msgid ""
 "Syntax Error in function 'switchconf' (Switch Configuration File)\n"
 "Usage: switchconf <filename>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'switchconf' (смена файла конфига)\n"
+"Синтаксическая ошибка в консольной команде 'switchconf' (смена файла "
+"конфига)\n"
 "Использование switchconf <Имя Файла>\n"
 
 #: ../Commands.pm:4417
@@ -7141,7 +7154,8 @@ msgid ""
 "Syntax Error in function 'switchconf' (Switch Configuration File)\n"
 "File %s does not exist.\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'switchconf' (смена файла конфига)\n"
+"Синтаксическая ошибка в консольной команде 'switchconf' (смена файла "
+"конфига)\n"
 "Файл %s отсутствует.\n"
 
 #: ../Commands.pm:4421
@@ -7283,7 +7297,8 @@ msgid ""
 "Syntax Error in function 'tank' (Tank for a Player/Slave)\n"
 "Usage: tank <player #|player name|@homunculus|@mercenary>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'tank' (танковать для игрока/слуги)\n"
+"Синтаксическая ошибка в консольной команде 'tank' (танковать для игрока/"
+"слуги)\n"
 "Использование: tank <player #|player name|@homunculus|@mercenary>\n"
 
 #: ../Commands.pm:4563
@@ -7343,10 +7358,12 @@ msgstr "Таймаут '%s' равен %s.\n"
 #: ../Commands.pm:4646
 msgid ""
 "Function 'top10' (Show Top 10 Lists)\n"
-"Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n"
+"Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|"
+"pvp>\n"
 msgstr ""
 "Консольная команда 'top10' (10-ка лучших)\n"
-"Использование: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n"
+"Использование: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|"
+"taekwon|pvp>\n"
 
 #: ../Commands.pm:4657
 msgid ""
@@ -7405,7 +7422,8 @@ msgid ""
 "Syntax Error in function 'ip' (Use Item on Player)\n"
 "Usage: ip <item #> <player #>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'ip' (использование предмета на игрока)\n"
+"Синтаксическая ошибка в консольной команде 'ip' (использование предмета на "
+"игрока)\n"
 "Использование: ip <предмет> <игрок>\n"
 
 #: ../Commands.pm:4753
@@ -7440,7 +7458,8 @@ msgid ""
 "Syntax Error in function 'is' (Use Item on Yourself)\n"
 "Usage: is <item>\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'is' (использование предмета на себя)\n"
+"Синтаксическая ошибка в консольной команде 'is' (использование предмета на "
+"себя)\n"
 "Использование: is <предмет>\n"
 
 #: ../Commands.pm:4779
@@ -7466,7 +7485,8 @@ msgid ""
 "Syntax error in function 'sl' (Use Skill on Location)\n"
 "Usage: sl <skill #> <x> <y> [level]\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'sl' (использование умения по площади)\n"
+"Синтаксическая ошибка в консольной команде 'sl' (использование умения по "
+"площади)\n"
 "Использование: sl <№ умения> <x> <y> [уровень]\n"
 
 #: ../Commands.pm:4808
@@ -7482,7 +7502,8 @@ msgid ""
 "Syntax error in function 'ss' (Use Skill on Self)\n"
 "Usage: ss <skill #> [level]\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'ss' (использование умения на себя)\n"
+"Синтаксическая ошибка в консольной команде 'ss' (использование умения на "
+"себя)\n"
 "Использование: ss <№ умения> [уровень]\n"
 
 #: ../Commands.pm:4833
@@ -7490,7 +7511,8 @@ msgid ""
 "Syntax error in function 'sp' (Use Skill on Player)\n"
 "Usage: sp <skill #> <player #> [level]\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'sp' (использование умения на моба)\n"
+"Синтаксическая ошибка в консольной команде 'sp' (использование умения на "
+"моба)\n"
 "Использование: sp <№ умения> <№ игрока> [уровень]\n"
 
 #: ../Commands.pm:4839
@@ -7507,7 +7529,8 @@ msgid ""
 "Syntax error in function 'sm' (Use Skill on Monster)\n"
 "Usage: sm <skill #> <monster #> [level]\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'sm' (использование умения на моба)\n"
+"Синтаксическая ошибка в консольной команде 'sm' (использование умения на "
+"моба)\n"
 "Использование: sm <№ умения> <№ моба> [уровень]\n"
 
 #: ../Commands.pm:4855
@@ -7524,7 +7547,8 @@ msgid ""
 "Syntax error in function 'ssl' (Use Skill on Slave)\n"
 "Usage: ssl <skill #> <slave #> [level]\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'ssl' (использование умения на слугу)\n"
+"Синтаксическая ошибка в консольной команде 'ssl' (использование умения на "
+"слугу)\n"
 "Использование: ssl <№ умения> <№ слуги> [уровень]\n"
 
 #: ../Commands.pm:4871
@@ -7541,7 +7565,8 @@ msgid ""
 "Syntax error in function 'ssp' (Use Skill on Area Spell Location)\n"
 "Usage: ssp <skill #> <spell #> [level]\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'ssp' (использование умения по площади)\n"
+"Синтаксическая ошибка в консольной команде 'ssp' (использование умения по "
+"площади)\n"
 "Использование: ssp <№ умения> <№ спела> [Уровень]\n"
 
 #: ../Commands.pm:4887
@@ -7590,8 +7615,7 @@ msgstr ""
 "Ошибка в консольной команде 'warp' (открыть варп-портал)\n"
 "Использование: warp <имя локации | № локации | list>\n"
 
-#: ../Commands.pm:4980
-#: ../Commands.pm:4996
+#: ../Commands.pm:4980 ../Commands.pm:4996
 msgid "You didn't cast warp portal.\n"
 msgstr "Вы не скастовали варп-портал.\n"
 
@@ -7600,8 +7624,7 @@ msgstr "Вы не скастовали варп-портал.\n"
 msgid "Invalid map number %s.\n"
 msgstr "Неверный номер локации %s.\n"
 
-#: ../Commands.pm:4989
-#: ../Commands.pm:5016
+#: ../Commands.pm:4989 ../Commands.pm:5016
 #, perl-format
 msgid "Attempting to open a warp portal to %s (%s)\n"
 msgstr "Попытка открыть варп-портал в %s (%s).\n"
@@ -7627,14 +7650,12 @@ msgstr ""
 msgid "Weight: %s/%s (%s%)\n"
 msgstr "Вес: %s/%s (%s%)\n"
 
-#: ../Commands.pm:5042
-#: ../Commands.pm:5048
+#: ../Commands.pm:5042 ../Commands.pm:5048
 #, perl-format
 msgid "You can carry %s%s before %s overweight.\n"
 msgstr "Вы сможете положить в инвентарь %s%s до %s перевеса.\n"
 
-#: ../Commands.pm:5045
-#: ../Commands.pm:5051
+#: ../Commands.pm:5045 ../Commands.pm:5051
 #, perl-format
 msgid "You are %s overweight.\n"
 msgstr "У вас %s перевес.\n"
@@ -7671,24 +7692,24 @@ msgstr "Использование: ms <получатель> <тема> <соо
 msgid "Usage: mo <mail #>\n"
 msgstr "Использоваие: mo <номер письма>\n"
 
-#: ../Commands.pm:5112
-#: ../Commands.pm:5141
-#: ../Commands.pm:5175
+#: ../Commands.pm:5112 ../Commands.pm:5141 ../Commands.pm:5175
 #: ../Commands.pm:5189
 #, perl-format
 msgid "No mail found with index: %s. (might need to re-open mailbox)\n"
-msgstr "Не найдено письмо с индексом %s. Возможно требуется перепроверить почтовый ящик.\n"
+msgstr ""
+"Не найдено письмо с индексом %s. Возможно требуется перепроверить почтовый "
+"ящик.\n"
 
-#: ../Commands.pm:5114
-#: ../Commands.pm:5143
-#: ../Commands.pm:5177
+#: ../Commands.pm:5114 ../Commands.pm:5143 ../Commands.pm:5177
 #: ../Commands.pm:5191
 msgid "Mailbox has not been opened or is empty.\n"
 msgstr "Почтовый ящик не был открыт, или же он пуст.\n"
 
 #: ../Commands.pm:5128
 msgid "Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n"
-msgstr "Использование: mw [0|1|2] (0:написать письмо, 1:забрать предмет назад, 2:положить зени)\n"
+msgstr ""
+"Использование: mw [0|1|2] (0:написать письмо, 1:забрать предмет назад, 2:"
+"положить зени)\n"
 
 #: ../Commands.pm:5132
 msgid ""
@@ -7696,11 +7717,14 @@ msgid ""
 "Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n"
 msgstr ""
 "Синтаксическая ошибка в консольной команде 'mw' (mailbox window)\n"
-"Использование: mw [0|1|2] (0:написать письмо, 1:забрать предмет назад, 2:положить зени)\n"
+"Использование: mw [0|1|2] (0:написать письмо, 1:забрать предмет назад, 2:"
+"положить зени)\n"
 
 #: ../Commands.pm:5150
 msgid "Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n"
-msgstr "Использование: ma add [zeny <количество>]|[item <количество> (<номер предмета>|<имя предмета>)]\n"
+msgstr ""
+"Использование: ma add [zeny <количество>]|[item <количество> (<номер "
+"предмета>|<имя предмета>)]\n"
 
 #: ../Commands.pm:5159
 #, perl-format
@@ -7713,11 +7737,16 @@ msgid ""
 "Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n"
 msgstr ""
 "Синтаксическая ошибка в консольной команде 'ma' (вложения в письмо)\n"
-"Использование: ma add [zeny <количество>]|[item <количество> (<номер предмета>|<имя предмета>)]\n"
+"Использование: ma add [zeny <количество>]|[item <количество> (<номер "
+"предмета>|<имя предмета>)]\n"
 
 #: ../Commands.pm:5166
-msgid "Usage: ma (get <mail #>)|(add [zeny <amount>]|[item <amount> (<item #>|<item name>)])\n"
-msgstr "Использование: ma (get <номер письма>)|(add [zeny <количество>]|[item <количество> (<номер предмета>|<имя предмета>)])\n"
+msgid ""
+"Usage: ma (get <mail #>)|(add [zeny <amount>]|[item <amount> (<item #>|<item "
+"name>)])\n"
+msgstr ""
+"Использование: ma (get <номер письма>)|(add [zeny <количество>]|[item "
+"<количество> (<номер предмета>|<имя предмета>)])\n"
 
 #: ../Commands.pm:5172
 msgid "Usage: md <mail #>\n"
@@ -7743,16 +7772,16 @@ msgstr "Использование: auc <current price> <instant buy price> <hou
 msgid "Usage: aub <id> <price>\n"
 msgstr "Использование: aub <id> <price>\n"
 
-#: ../Commands.pm:5239
-#: ../Commands.pm:5263
-#: ../Commands.pm:5278
+#: ../Commands.pm:5239 ../Commands.pm:5263 ../Commands.pm:5278
 #, perl-format
-msgid "No auction item found with index: %s. (might need to re-open auction window)\n"
-msgstr "В аукционе не найден предмет с индексом %s. Возможно требуется заново открыть окно аукциона.\n"
+msgid ""
+"No auction item found with index: %s. (might need to re-open auction "
+"window)\n"
+msgstr ""
+"В аукционе не найден предмет с индексом %s. Возможно требуется заново "
+"открыть окно аукциона.\n"
 
-#: ../Commands.pm:5241
-#: ../Commands.pm:5265
-#: ../Commands.pm:5280
+#: ../Commands.pm:5241 ../Commands.pm:5265 ../Commands.pm:5280
 msgid "Auction window has not been opened or is empty.\n"
 msgstr "Окно аукциона не было открыто, или же оно пустое.\n"
 
@@ -7771,10 +7800,12 @@ msgstr "Использование: aue <index>\n"
 #: ../Commands.pm:5290
 msgid ""
 "Usage: aus <type> [<price>|<text>]\n"
-"      types (0:Armor 1:Weapon 2:Card 3:Misc 4:By Text 5:By Price 6:Sell 7:Buy)\n"
+"      types (0:Armor 1:Weapon 2:Card 3:Misc 4:By Text 5:By Price 6:Sell 7:"
+"Buy)\n"
 msgstr ""
 "Использование: aus <тип> [<price>|<text>]\n"
-"     где <тип> может быть (0:Armor 1:Weapon 2:Card 3:Misc 4:By Text 5:By Price 6:Sell 7:Buy)\n"
+"     где <тип> может быть (0:Armor 1:Weapon 2:Card 3:Misc 4:By Text 5:By "
+"Price 6:Sell 7:Buy)\n"
 
 #: ../Commands.pm:5298
 msgid "Usage: aus 5 <text>\n"
@@ -7794,7 +7825,9 @@ msgstr ""
 
 #: ../Commands.pm:5315
 msgid "Auction commands: aua, aur, auc, aub, aui, aud, aue, aus\n"
-msgstr "Консольные команды для работы с аукционом: aua, aur, auc, aub, aui, aud, aue, aus\n"
+msgstr ""
+"Консольные команды для работы с аукционом: aua, aur, auc, aub, aui, aud, "
+"aue, aus\n"
 
 #: ../Commands.pm:5331
 msgid "Usage: quest set <questID> <on|off>\n"
@@ -7870,22 +7903,28 @@ msgstr ""
 #: ../ErrorHandler.pm:72
 #, perl-format
 msgid ""
-"This program has encountered an unexpected problem. This is probably because\n"
+"This program has encountered an unexpected problem. This is probably "
+"because\n"
 "of a recent server update, a bug in this program, or in one of the plugins.\n"
 "We apologize for this problem. You may get support from IRC or the forums.\n"
 "\n"
 "A detailed error report has been saved to errors.txt. Before posting a bug\n"
-"report, please try out the SVN version first. If you are already using the SVN\n"
-"version, search the forums first to see if your problem had already been solved,\n"
-"or has already been reported. If you truly believe you have encountered a bug in\n"
-"the program, please include the contents of the errors.txt in your bug report,\n"
+"report, please try out the SVN version first. If you are already using the "
+"SVN\n"
+"version, search the forums first to see if your problem had already been "
+"solved,\n"
+"or has already been reported. If you truly believe you have encountered a "
+"bug in\n"
+"the program, please include the contents of the errors.txt in your bug "
+"report,\n"
 "or we may not be able to help you!\n"
 "\n"
 "The error message is:\n"
 "%s"
 msgstr ""
 "Данная программа - OpenKore, столкнулась с неожиданной проблемой. Это могло\n"
-"произойти из-за недавнего обновления на сервере, ошибки в самой программе или\n"
+"произойти из-за недавнего обновления на сервере, ошибки в самой программе "
+"или\n"
 "же в одном из её плагинов. Мы приносим извинения за эту проблему. Вы можете\n"
 "обратиться за помощью по IRC или на форуме.\n"
 "\n"
@@ -7895,8 +7934,10 @@ msgstr ""
 "2. поищите на форуме, может быть данная проблема уже была решена,\n"
 "или же хотя бы уже оформлена на форуме.\n"
 "\n"
-"Если же вы искренне уверены, что столкнулись с новой ошибкой в программе, тогда\n"
-"приложите файл errors.txt к вашему сообщению на форуме, иначе мы не сможем вам помочь!\n"
+"Если же вы искренне уверены, что столкнулись с новой ошибкой в программе, "
+"тогда\n"
+"приложите файл errors.txt к вашему сообщению на форуме, иначе мы не сможем "
+"вам помочь!\n"
 "\n"
 "Сообщение об ошибке:\n"
 "%s"
@@ -7915,11 +7956,14 @@ msgstr ""
 "%s\n"
 
 #: ../FileParsers.pm:140
-msgid "The chat_resp.txt format has changed. Please read News.txt and upgrade to the new format.\n"
-msgstr "Формат файла chat_resp.txt изменен. Пожалуйста, прочитайте News.txt и обновите до нового формата.\n"
+msgid ""
+"The chat_resp.txt format has changed. Please read News.txt and upgrade to "
+"the new format.\n"
+msgstr ""
+"Формат файла chat_resp.txt изменен. Пожалуйста, прочитайте News.txt и "
+"обновите до нового формата.\n"
 
-#: ../FileParsers.pm:287
-#: ../FileParsers.pm:1106
+#: ../FileParsers.pm:287 ../FileParsers.pm:1106
 #, perl-format
 msgid "%s: Include file not found: %s\n"
 msgstr "%s: Файл include не найден: %s\n"
@@ -7967,7 +8011,8 @@ msgstr "Была обнаружена ошибка в %s:\n"
 #: ../FileParsers.pm:472
 #, perl-format
 msgid "Please correct the above errors and type 'reload %s'.\n"
-msgstr "Пожалуйста, исправьте ошибку, указанную выше, и затем напишете 'reload %s'.\n"
+msgstr ""
+"Пожалуйста, исправьте ошибку, указанную выше, и затем напишете 'reload %s'.\n"
 
 #: ../FileParsers.pm:1181
 #, perl-format
@@ -8015,8 +8060,7 @@ msgstr "Привилегии Администратора для пользов�
 msgid "Config '%s' unset (was %s)\n"
 msgstr "Параметр конфига '%s' очищен (было %s)\n"
 
-#: ../Misc.pm:301
-#: ../Misc.pm:340
+#: ../Misc.pm:301 ../Misc.pm:340
 #, perl-format
 msgid "Config '%s' set to %s (was %s)\n"
 msgstr "Параметру конфига '%s' присвоено значение %s (было %s)\n"
@@ -8034,10 +8078,12 @@ msgstr "Таймаут '%s' установлен в %s (было %s)\n"
 #: ../Misc.pm:894
 #, perl-format
 msgid ""
-"No suitable browser detected. Please launch your favorite browser and go to:\n"
+"No suitable browser detected. Please launch your favorite browser and go "
+"to:\n"
 "%s"
 msgstr ""
-"Не найден подходящий браузер. Пожалуйста, запустите ваш любимый бразуер и перейдите на:\n"
+"Не найден подходящий браузер. Пожалуйста, запустите ваш любимый бразуер и "
+"перейдите на:\n"
 "%s"
 
 #: ../Misc.pm:939
@@ -8132,10 +8178,12 @@ msgstr "Выбор персонажа"
 #: ../Misc.pm:1191
 msgid ""
 "Please enter the desired properties for your characters, in this form:\n"
-"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]"
+"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) "
+"[(haircolor)] ] ]"
 msgstr ""
 "Пожалуйста, введите желаемые характеристики вашего персонажа в эту форму:\n"
-"(слот) \"(имя)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (тип волос) [(цвет волос)] ] ]"
+"(слот) \"(имя)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (тип волос) [(цвет "
+"волос)] ] ]"
 
 #: ../Misc.pm:1199
 msgid "You didn't specify enough parameters."
@@ -8293,10 +8341,7 @@ msgstr "%s перестали выглядеть как: %s.\n"
 msgid "%s is out of look: %s.\n"
 msgstr "%s перестал выглядеть как: %s.\n"
 
-#: ../Misc.pm:2359
-#: ../Misc.pm:2367
-#: ../Misc.pm:2373
-#: ../Misc.pm:2378
+#: ../Misc.pm:2359 ../Misc.pm:2367 ../Misc.pm:2373 ../Misc.pm:2378
 #, perl-format
 msgid "Found perfectly hidden %s\n"
 msgstr "Обнаружен игрок в перфект-хайде %s\n"
@@ -8462,18 +8507,15 @@ msgstr "-"
 msgid "location (%d, %d)"
 msgstr "координатам (%d, %d)"
 
-#: ../Misc.pm:3197
-#: ../Misc.pm:3212
+#: ../Misc.pm:3197 ../Misc.pm:3212
 msgid "use"
 msgstr "используете"
 
-#: ../Misc.pm:3197
-#: ../Misc.pm:3212
+#: ../Misc.pm:3197 ../Misc.pm:3212
 msgid "uses"
 msgstr "использует"
 
-#: ../Misc.pm:3199
-#: ../Misc.pm:3214
+#: ../Misc.pm:3199 ../Misc.pm:3214
 #, perl-format
 msgid "(Lv: %s)"
 msgstr "(%s ур.)"
@@ -8505,23 +8547,19 @@ msgstr "по координатам"
 msgid "%s are %s: %s%s\n"
 msgstr "%s %s получили статус: %s%s\n"
 
-#: ../Misc.pm:3242
-#: ../Misc.pm:3248
+#: ../Misc.pm:3242 ../Misc.pm:3248
 msgid "now"
 msgstr "сейчас"
 
-#: ../Misc.pm:3242
-#: ../Misc.pm:3248
+#: ../Misc.pm:3242 ../Misc.pm:3248
 msgid "again"
 msgstr "снова"
 
-#: ../Misc.pm:3242
-#: ../Misc.pm:3248
+#: ../Misc.pm:3242 ../Misc.pm:3248
 msgid "no longer"
 msgstr "больше не"
 
-#: ../Misc.pm:3244
-#: ../Misc.pm:3250
+#: ../Misc.pm:3244 ../Misc.pm:3250
 #, perl-format
 msgid "(Duration: %ss)"
 msgstr "(длительность: %s с)"
@@ -8589,12 +8627,13 @@ msgstr "Обработка локации %s...\n"
 #: ../Misc.pm:3472
 #, perl-format
 msgid "Wrote portals Line of Sight table to '%s'\n"
-msgstr "Записаны данные о прямой видимости (LoS) порталов в табличный файл '%s'\n"
+msgstr ""
+"Записаны данные о прямой видимости (LoS) порталов в табличный файл '%s'\n"
 
-#: ../Misc.pm:3476
-#: ../Misc.pm:3480
+#: ../Misc.pm:3476 ../Misc.pm:3480
 msgid "----------------------------Error Summary----------------------------\n"
-msgstr "-------------------------- Итог ошибок ------------------------------\n"
+msgstr ""
+"-------------------------- Итог ошибок ------------------------------\n"
 
 #: ../Misc.pm:3477
 #, perl-format
@@ -8606,13 +8645,16 @@ msgid ""
 "Note: LOS information for the above listed map(s) will be inaccurate;\n"
 "      however it is safe to ignore if those map(s) are not used\n"
 msgstr ""
-"Примечание: Информация о Линии Видимости (LOS) на данной локации может быть неточной;\n"
+"Примечание: Информация о Линии Видимости (LOS) на данной локации может быть "
+"неточной;\n"
 "      тем не менее, ничего страшного в этом нет\n"
 
 #: ../Misc.pm:3614
 #, perl-format
 msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
-msgstr "Неверная информация о неписи в параметрах конфига autoBuy, autoSell или autoStorage! (%s)\n"
+msgstr ""
+"Неверная информация о неписи в параметрах конфига autoBuy, autoSell или "
+"autoStorage! (%s)\n"
 
 #: ../Misc.pm:4089
 msgid "A shop has already been opened.\n"
@@ -8643,14 +8685,12 @@ msgstr "Не получилось открыть торговую лавку.\n"
 msgid "Shop closed.\n"
 msgstr "Торговая лавка закрыта.\n"
 
-#: ../Misc.pm:4184
-#: ../functions.pl:275
+#: ../Misc.pm:4184 ../functions.pl:275
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "Загрузка %s...\n"
 
-#: ../Misc.pm:4195
-#: ../functions.pl:281
+#: ../Misc.pm:4195 ../functions.pl:281
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
@@ -8739,13 +8779,20 @@ msgstr "Загрузка плагина %s...\n"
 
 #: ../Plugins.pm:143
 #, perl-format
-msgid "File %s does not exist. (usage ex: plugin load plugins/macro/macro.pl)\n"
-msgstr "Файл %s с плагином не существует или не найден. Пример использования: plugin load plugins/macro/macro.pl\n"
+msgid ""
+"File %s does not exist. (usage ex: plugin load plugins/macro/macro.pl)\n"
+msgstr ""
+"Файл %s с плагином не существует или не найден. Пример использования: plugin "
+"load plugins/macro/macro.pl\n"
 
 #: ../Plugins.pm:145
 #, perl-format
-msgid "The ROPP plugin (ropp.pl) is obsolete and is no longer necessary. Please remove it, or %s will not work correctly."
-msgstr "Плагин ROPP (ropp.pl) утарел и больше не нужен. Пожалуйста, удалите этот плагин, или %s будет работать неправильно."
+msgid ""
+"The ROPP plugin (ropp.pl) is obsolete and is no longer necessary. Please "
+"remove it, or %s will not work correctly."
+msgstr ""
+"Плагин ROPP (ropp.pl) утарел и больше не нужен. Пожалуйста, удалите этот "
+"плагин, или %s будет работать неправильно."
 
 #: ../Plugins.pm:157
 #, perl-format
@@ -8779,12 +8826,15 @@ msgstr "Не получается загрузить табличный файл
 #: ../functions.pl:113
 #, perl-format
 msgid ""
-"This plugin cannot be loaded because of a problem in the plugin. Please notify the plugin's author about this problem, or remove the plugin so %s can start.\n"
+"This plugin cannot be loaded because of a problem in the plugin. Please "
+"notify the plugin's author about this problem, or remove the plugin so %s "
+"can start.\n"
 "\n"
 "The error message is:\n"
 "%s"
 msgstr ""
-"Плагин не может быть загружен из-за проблемы в нём. Пожалуйста, сообщите автору плагина, или удалите плагин, тогда %s сможет запуститься.\n"
+"Плагин не может быть загружен из-за проблемы в нём. Пожалуйста, сообщите "
+"автору плагина, или удалите плагин, тогда %s сможет запуститься.\n"
 "\n"
 "Сообщение об ошибке:\n"
 "%s"
@@ -8819,8 +8869,13 @@ msgid "found new portals!\n"
 msgstr "найдены новые порталы!\n"
 
 #: ../functions.pl:368
-msgid "New portals have been added to the portals database. The portals database must be compiled before the new portals can be used. Would you like to compile portals now?\n"
-msgstr "Новые порталы добавлены в базу данных порталов. Для пользования порталами база должна быть скомпилирована. Хотите ли вы скопилировать порталы сейчас?\n"
+msgid ""
+"New portals have been added to the portals database. The portals database "
+"must be compiled before the new portals can be used. Would you like to "
+"compile portals now?\n"
+msgstr ""
+"Новые порталы добавлены в базу данных порталов. Для пользования порталами "
+"база должна быть скомпилирована. Хотите ли вы скопилировать порталы сейчас?\n"
 
 #: ../functions.pl:371
 msgid "Yes, compile now."
