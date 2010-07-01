@@ -10,10 +10,12 @@ alberta 113 60 Kafra Employee
 alberta 114 70 Cool Event Voting Staff
 alberta 117 135 Kid
 alberta 117 68 Halloween Trick Wizard#
+alberta 119 221 Shyailron
 alberta 119 70 Kafra Voting Staff#albe
 alberta 120 53 Stylish Merchant#new30
 alberta 120 60 Guide
 alberta 122 55 [Quest] Messenger Girl#
+alberta 123 221 Deadly Cargo [6]#
 alberta 127 143 Belder
 alberta 127 64 Continental Messenger#a
 alberta 131 139 Drunken old man
@@ -60,8 +62,11 @@ alberta 91 55 Second_Cash_Seller
 alberta 91 59 Odin's Cash manager#phi
 alberta 91 60 Kafra Employee#pRO_Prem
 alberta 91 70 Bad food boy
+alberta 93 174 Grandma
 alberta 97 51 Merchant
+alberta 98 202 Guard#s10
 alberta 99 60 [Quest] Elite Mercenary
+alberta_in 188 21 Weapon Dealer
 alberta_in 53 43 Merchant
 alberta_in 70 51 Guarnien
 alde_alche 24 188 Guild Dealer
@@ -219,6 +224,7 @@ gef_fild13 290 243 Jyolbriger
 gef_fild13 297 242 Soldier#277
 gef_fild13 303 243 Jyolbriger
 gef_tower 55 142 Bulletin Board#gefdun
+geffen 103 180 Magic school student#ge
 geffen 109 123 Lefrion
 geffen 109 66 Maroll Battle Recruiter
 geffen 110 117 Ford#11
@@ -267,6 +273,7 @@ geffen 173 88 Merchant#geff
 geffen 175 98 Injured Master Thief#ge
 geffen 178 72 Akkie
 geffen 181 114 Aure Dupon
+geffen 190 130 report deliverer#geffen
 geffen 193 152 Pet Groomer
 geffen 196 111 Chef Assistant
 geffen 196 167 Young Woman#sch
@@ -279,6 +286,8 @@ geffen 59 143 Lady
 geffen 61 174 Sign#M
 geffen 67 180 New_Mage_Manager#M
 geffen 67 87 Ayeepu
+geffen 73 182 Magic school student#ge
+geffen 74 159 father#geffen
 geffen 77 96 Injured Master Thief#ge
 geffen 83 189 SanShee
 geffen 90 130 Scholar
@@ -296,11 +305,16 @@ hu_fild01 140 163 Tower Keeper
 hu_fild04 235 103 Heap of Earth#mao2_obje
 hu_fild04 321 131 Traces#mao2_object02
 ice_dun02 120 105 Man in the Ice#cave
+in_moc_16 14 27 Assassin#realman
+in_moc_16 19 33 Guildsman
+in_moc_16 22 20 Sepulchral Merchant
+in_moc_16 23 27 Assassin#realgirl
 in_orcs01 20 109 Stylist
 in_sphinx2 13 146 Stone Statue#2
 in_sphinx2 13 163 Stone Statue#1
 in_sphinx2 212 267 Old Coffin#2
 in_sphinx2 259 213 Old Coffin#1
+in_sphinx4 116 120 [Quest] Mercenary Scout
 iz_dun04 129 227 Summer Ticket Girl#nk2
 izlu2dun 104 91 Bulletin Board#izlude
 izlu2dun 106 58 Kafra Employee
@@ -642,6 +656,11 @@ morocc 54 97 Guide
 morocc 60 42 Young Man#moc
 morocc 82 292 Muetro
 morocc 88 133 Volunteer-Morroc#07rhea
+pay_arche 122 100 Part-timer
+pay_arche 127 154 Sign#arc
+pay_arche 130 113 Alchemist Guildmember#t
+pay_arche 79 31 Bulletin Board#archervi
+pay_arche 85 30 Guide
 pay_gld 133 151 Hong-Roo
 pay_gld 137 160 Hong-Roo
 pay_gld 153 166 Hong-Roo
@@ -649,6 +668,7 @@ pay_gld 199 268 Jukk-Rim-Hyun
 pay_gld 291 135 Chun-Dan
 payg_cas05 273 15 Dosuhlji
 payg_cas05 283 24 Yayula
+payon 101 190  #paypuzz1
 payon 103 113 Ledrion#payon
 payon 103 63 Gaeho
 payon 115 131 KoneKone
@@ -680,16 +700,20 @@ payon 166 169 Shadow of Buddha
 payon 166 173 Garden of Heaven
 payon 166 177 Arbor of Light
 payon 173 111 moonfestivalstaff#09_mo
+payon 173 238 Jade
+payon 175 226 Kafra Employee
 payon 176 85 Young Man
 payon 177 131 Pet Groomer
 payon 178 108 Bulletin Board#payon
 payon 181 104 Kafra Employee
+payon 181 172 Bard#4
 payon 182 132 Grout'he Tuccok#hellion
 payon 186 101 An event usher#xmas_05
 payon 186 104 Smile Helper
 payon 189 105 Maroll Battle Recruiter
 payon 190 104 Kafra Employee#pRO_Prem
 payon 191 66 Wise Bull Horn
+payon 192 176 Gooho Ahn
 payon 200 113 Continental Messenger#p
 payon 200 134 Merchant#pay
 payon 206 119 Chef Assistant
@@ -697,10 +721,12 @@ payon 209 127 Servant
 payon 210 110 Drunk
 payon 214 79 Telpitz#BLS
 payon 215 102 Moohyun#job_star
+payon 236 199 Leablem
 payon 239 56 Dried Fish#paypuzz3
 payon 244 62 Moonho Ahn
 payon 65 119 Broom Grandma#07russia_
 payon 69 65 Kimeunbang
+payon 79 171 Friar#G5
 payon 82 109 Pile of Stone#paypuzz2
 payon 91 77 Bag Merchant
 payon_in01 132 62 Inn Employee
@@ -708,10 +734,14 @@ payon_in01 140 53 Gate Keeper#5
 payon_in01 142 50 PVPNarrator#5
 payon_in01 15 119 Weapon Dealer
 payon_in01 180 7 Waitress
+payon_in01 47 59 Archer Wolt
 payon_in01 5 129 Weapon Dealer
 payon_in01 5 134 Inventor Jaax
 payon_in01 5 49 Tool Dealer
+payon_in01 66 64 Archer Zakk
 payon_in01 7 119 Armor Dealer
+payon_in02 64 71 Archer Guildsman
+payon_in02 67 65 Bard Jet#tu
 prontera 101 288 Man
 prontera 102 75 First_Cash_Merchant
 prontera 102 77 Second_Cash_Merchant
@@ -791,6 +821,7 @@ prontera 167 281 New Guild Master#tu
 prontera 168 189 [Quest] Elite Mercenary
 prontera 172 282 Cherry Blossom#08spring
 prontera 172 294 Cherry Blossom#08spring
+prontera 174 203 Worldcup Manager#pronte
 prontera 174 328 Yong Man#bard_q1
 prontera 179 192 #suprise_1
 prontera 183 333 Aelle#qsk_dan02
@@ -1012,6 +1043,7 @@ xmas 146 136 Christmas clown
 xmas 147 311 Bulletin Board#toy
 xmas 152 127 Kafra Employee#pRO_Prem
 xmas 152 137 Chef Assistant
+xmas 176 236 Hairy Uncle
 yuno 109 167 Heemin
 yuno 110 171 Andlerangh
 yuno 111 156 Euslan#02
