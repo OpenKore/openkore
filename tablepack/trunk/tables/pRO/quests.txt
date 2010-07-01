@@ -4530,8 +4530,8 @@ I have completed helping Geffen Mage Hunter for today. Need to wait till 20 hour
 Find ^FF0000Mercenary Scout^000000 in the ^8B4513Sphinx^000000!!#
 
 9056#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
-^0000FFMercenary Scout^000000 : "^404040Defeat 150 Anubis^000000"#
-Kill 150 ^FF0000Anubis^000000, then you can get rewards from ^FF0000Mercenary Scout^000000!!#
+^0000FFMercenary Scout^000000 : "^404040Defeat 50 Anubis^000000"#
+Kill 50 ^FF0000Anubis^000000, then you can get rewards from ^FF0000Mercenary Scout^000000!!#
 
 9057#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
 ^0000FFElite Mercenary^000000, ^0000FFMercenary Scout^000000 : "^404040Well done! You did a good job^000000"#

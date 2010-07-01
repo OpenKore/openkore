@@ -29,6 +29,7 @@
 1035 Hunter Fly
 1036 Ghoul
 1037 Side Winder
+1038 Osiris
 1039 Baphomet
 1040 Golem
 1041 Mummy
@@ -248,6 +249,7 @@
 1309 Gajomart
 1310 Majoruros
 1311 Gullinbursti
+1312 Turtle General
 1313 Mobster
 1314 Permeter
 1315 Assulter
@@ -331,13 +333,18 @@
 1517 Tiger Guised Fiend
 1519 Green Maiden
 1520 Dumpling
+1522 Ancient Mummy
 1560 Shinobi
 1582 Deviling
 1584 Tamruan
 1586 Leaf Cat
 1587 Kraben
+1594 Freezer
 1595 Marin
 1599 Giant Whisper
+1600 Heater
+1601 Permeter
+1602 Solider
 1605 Dark Illusion
 1607 Goblin
 1608 Thiefbug
@@ -452,7 +459,10 @@
 1829 Sword Guardian
 1830 Bow Guardian
 1831 Salamander
+1832 Ifrit
 1833 Kasa
+1834 Salamander
+1835 Kasa
 1836 Magmaring
 1837 Imp
 1838 Knocker
@@ -470,6 +480,7 @@
 1882 Vavayaga
 1883 Uzhas
 1884 Mavka
+1886 Mavka Mob
 1891 Valkyrie Mob
 1905 Barricade
 1907 The first guardian ston
