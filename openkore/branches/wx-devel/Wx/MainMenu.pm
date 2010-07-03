@@ -237,7 +237,7 @@ sub onAddMenuItem {
 	if ($args->{command}) {
 		EVT_MENU($self->{frame}, $item->GetId, sub { Commands::run($args->{command}) });
 	} elsif ($args->{url}) {
-		EVT_MENU($self->{frame}, $item->GetId, sub { launchUrl($args->{url}) });
+		EVT_MENU($self->{frame}, $item->GetId, sub { launchURL($args->{url}) });
 	} elsif ($args->{sub}) {
 		EVT_MENU($self->{frame}, $item->GetId, $args->{sub});
 	}
