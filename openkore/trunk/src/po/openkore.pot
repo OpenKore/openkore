@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-29 20:37+0700\n"
+"POT-Creation-Date: 2010-07-03 18:48+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4556,7 +4556,15 @@ msgstr ""
 
 #: ../Actor.pm:484
 #, perl-format
-msgid "%s %s now attacking %s\n"
+msgid "%s %s %s\n"
+msgstr ""
+
+#: ../Actor.pm:484
+msgid "are now attacking"
+msgstr ""
+
+#: ../Actor.pm:484
+msgid "is now attacking"
 msgstr ""
 
 #: ../ChatQueue.pm:280
@@ -7657,15 +7665,15 @@ msgstr ""
 
 #: ../Misc.pm:3182
 #, perl-format
-msgid "%s %s casting %s on %s (Delay: %sms)\n"
+msgid "%s %s %s on %s (Delay: %sms)\n"
 msgstr ""
 
 #: ../Misc.pm:3184
-msgid "are"
+msgid "are casting"
 msgstr ""
 
 #: ../Misc.pm:3184
-msgid "is"
+msgid "is casting"
 msgstr ""
 
 #: ../Misc.pm:3186

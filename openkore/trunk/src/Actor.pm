@@ -481,7 +481,7 @@ sub attack {
 	
 	$self->queue('attack', \%args);
 	
-	message TF("%s %s now attacking %s\n", $self, $self->verb(T('are'), T('is')), $target);
+	message TF("%s %s %s\n", $self, $self->verb(T('are now attacking'), T('is now attacking')), $target);
 	1;
 }
 
