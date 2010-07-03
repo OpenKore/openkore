@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openkore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-29 20:36+0700\n"
+"POT-Creation-Date: 2010-07-03 18:45+0400\n"
 "PO-Revision-Date: 2010-06-29 05:21+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: DeniZka (all in 1)\n"
@@ -4710,7 +4710,7 @@ msgstr "Расчитывается маршрут для поиска ведущ
 
 #: ../Actor.pm:227
 msgid "Your "
-msgstr "Ваш"
+msgstr "Ваш "
 
 #. Translation Comment: No status effect on actor
 #: ../Actor.pm:429
@@ -4719,8 +4719,16 @@ msgstr "пусто"
 
 #: ../Actor.pm:484
 #, perl-format
-msgid "%s %s now attacking %s\n"
-msgstr "%s %s сейчас атакует %s\n"
+msgid "%s %s %s\n"
+msgstr "%s %s %s\n"
+
+#: ../Actor.pm:484
+msgid "are now attacking"
+msgstr "сейчас атакуете"
+
+#: ../Actor.pm:484
+msgid "is now attacking"
+msgstr "сейчас атакует"
 
 #: ../ChatQueue.pm:280
 #, perl-format
@@ -8491,16 +8499,16 @@ msgstr "атакует"
 
 #: ../Misc.pm:3182
 #, perl-format
-msgid "%s %s casting %s on %s (Delay: %sms)\n"
-msgstr "%s %s кастует умение %s на %s (задержка: %sмс)\n"
+msgid "%s %s %s on %s (Delay: %sms)\n"
+msgstr "%s %s умение %s на %s (задержка: %sмс)\n"
 
 #: ../Misc.pm:3184
-msgid "are"
-msgstr "-"
+msgid "are casting"
+msgstr "кастуете"
 
 #: ../Misc.pm:3184
-msgid "is"
-msgstr "-"
+msgid "is casting"
+msgstr "кастует"
 
 #: ../Misc.pm:3186
 #, perl-format
@@ -8962,6 +8970,12 @@ msgstr "%sПодключение - %s "
 #: ../functions.pl:1094
 msgid "Map loaded\n"
 msgstr "Локация загружена\n"
+
+#~ msgid "are"
+#~ msgstr "-"
+
+#~ msgid "is"
+#~ msgstr "-"
 
 #~ msgid "Found your Slave!\n"
 #~ msgstr "Ваш слуга нашeлся!\n"

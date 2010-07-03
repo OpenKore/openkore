@@ -3179,9 +3179,9 @@ sub skillCast_string {
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
 	
-	return TF("%s %s casting %s on %s (Delay: %sms)\n",
+	return TF("%s %s %s on %s (Delay: %sms)\n",
 		$source->nameString(),
-		$source->verb(T('are'), T('is')),
+		$source->verb(T('are casting'), T('is casting')),
 		$skillName,
 		($x != 0 || $y != 0) ? TF("location (%d, %d)", $x, $y) : $target->nameString($source),
 		$delay);

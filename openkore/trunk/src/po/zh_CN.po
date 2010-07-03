@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-29 20:36+0700\n"
+"POT-Creation-Date: 2010-07-03 18:34+0400\n"
 "PO-Revision-Date: 2010-06-01 14:12+0700\n"
 "Last-Translator: Richard Samuel <dewa5227@gmail.com>\n"
 "Language-Team: Lkm <lj88kc@yhaoo.com.cn>\n"
@@ -4744,7 +4744,17 @@ msgstr "无"
 
 #: ../Actor.pm:484
 #, fuzzy, perl-format
-msgid "%s %s now attacking %s\n"
+msgid "%s %s %s\n"
+msgstr "%s 有 %s "
+
+#: ../Actor.pm:484
+#, fuzzy
+msgid "are now attacking"
+msgstr "攻击: %s\n"
+
+#: ../Actor.pm:484
+#, fuzzy
+msgid "is now attacking"
 msgstr "攻击: %s\n"
 
 #: ../ChatQueue.pm:280
@@ -8446,16 +8456,18 @@ msgstr ""
 
 #: ../Misc.pm:3182
 #, fuzzy, perl-format
-msgid "%s %s casting %s on %s (Delay: %sms)\n"
+msgid "%s %s %s on %s (Delay: %sms)\n"
 msgstr "%s %s %s - 伤害: %s (delay %s)\n"
 
 #: ../Misc.pm:3184
-msgid "are"
-msgstr ""
+#, fuzzy
+msgid "are casting"
+msgstr "你已经坐下.\n"
 
 #: ../Misc.pm:3184
-msgid "is"
-msgstr ""
+#, fuzzy
+msgid "is casting"
+msgstr "%s 已经坐下.\n"
 
 #: ../Misc.pm:3186
 #, fuzzy, perl-format
