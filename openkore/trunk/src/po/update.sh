@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # This script extracts strings from the OpenKore source code,
 # updates openkore.pot and *.po, and compiles *.po to .mo.
 set -e
