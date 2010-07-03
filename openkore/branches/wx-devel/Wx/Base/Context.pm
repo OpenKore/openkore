@@ -4,6 +4,8 @@ use strict;
 use Wx ':everything';
 use Wx::Event ':everything';
 
+use Misc qw(launchURL);
+
 sub new {
 	my $self = bless {}, shift;
 	
@@ -28,9 +30,11 @@ sub add {
 			);
 			$menuItem->Check(1) if $item->{check} || $item->{radio};
 			if ($item->{callback}) {
-				EVT_MENU ($self->{menu}, $menuItem->GetId, $item->{callback});
+				EVT_MENU($self->{menu}, $menuItem->GetId, $item->{callback});
 			} elsif ($item->{command}) {
-				EVT_MENU ($self->{menu}, $menuItem->GetId, sub { Commands::run($item->{command}) });
+				EVT_MENU($self->{menu}, $menuItem->GetId, sub { Commands::run($item->{command}) });
+			} elsif ($item->{url}) {
+				EVT_MENU($self->{menu}, $menuItem->GetId, sub { launchURL($item->{url}) });
 			} elsif (!$item->{menu} || !$menuItem->GetSubMenu->GetMenuItemCount) {
 				$menuItem->Enable(0);
 			}

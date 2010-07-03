@@ -246,6 +246,7 @@ sub onRightClick {
 sub OnGetItemText {
 	my ($self, $item, $column) = @_;
 	my $actor = $self->_getActorForIndex($item);
+	return "" unless $actor;
 	my $acnam = "$actor->{name}";
 	if ($acnam eq "") {
 		$acnam = $actor->name;
