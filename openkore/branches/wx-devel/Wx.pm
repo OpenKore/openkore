@@ -176,7 +176,7 @@ sub writeOutput {
 sub title {
 	my ($self, $title) = @_;
 	
-	if (defined $title && $title ne $self->{title}) {
+	if ($self->{app} && defined $title && $title ne $self->{title}) {
 		$self->{app}{mainFrame}->SetTitle($self->{title} = $title);
 	}
 	

@@ -101,9 +101,14 @@ sub new {
 			push @tail, {title => TF('Auto Arrow Crafting'), check => $arrowcraft_items{lc $name}};
 		}
 		
+		push @tail, {};
+		push @tail, {title => T('Lookup in...'), menu => [map {{ title => $_->[0], url => do { $_->[1] =~ s/%ID%/$object->{nameID}/; $_->[1] } }} (
+			['Amesani' => 'http://ro.amesani.org/db/item-info/%ID%/'],
+			['RateMyServer' => 'http://ratemyserver.net/index.php?page=item_db&item_id=%ID%'],
+		)]};
 		if (my $control = $itemsDesc_lut{$object->{nameID}}) {
 			chomp $control;
-			push @tail, {}, {title => T('Description'), menu => [{title => $control}]};
+			push @tail, {title => T('Description'), menu => [{title => $control}]};
 		}	
 	}
 	

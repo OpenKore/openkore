@@ -275,11 +275,11 @@ sub npcResponses {
 }
 
 sub npcNumber {
-	$_[0]->_onAction ('number', 'Input a number');
+	$_[0]->_onAction ('number', 'Input number');
 }
 
 sub npcText {
-	$_[0]->_onAction ('number', 'Respond to NPC');
+	$_[0]->_onAction ('text', 'Input text');
 }
 
 sub npcClose {
