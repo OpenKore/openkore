@@ -1866,3 +1866,31 @@ Deliver the letter to him.#
 4100#Complete Message Delivery quest#SG_FEEL#QUE_NOIMAGE#
 I have completed Message Delivery quest for today. Need to wait till 20 hours pass.#
 Come back 20 hours later.#
+
+9117#Cérémonie - Première aventure#SG_FEEL#QUE_NOIMAGE#
+Vous devez compléter la première tâche pour dissiper la malédiction de ^0000FFRina^000000 à ^8B4513Prontera^000000. Quand vous êtes prêt, allez voir ^0000FFRina^000000.#
+Complétez la tâche de ^0000FFRina^000000#
+
+9118#Cérémonie - Tuer DEVIRUCHI#SG_FEEL#QUE_NOIMAGE#
+Parmi ^FF0000DEVIRUCHI^000000, ^FF0000WRAITH DEAD^000000, ^FF0000DULLAHAN^000000, ^FF0000NIGHTMARE TERROR^000000, tuez ^00640050^000000 monstres de l'une des espèces mentionnées et retournez voir ^0000FFRina^000000.#
+^0000FFTuer les monstres pour lever la malédiction^000000#
+
+9119#Cérémonie - Tuer WRAITH DEAD#SG_FEEL#QUE_NOIMAGE#
+Parmi ^FF0000DEVIRUCHI^000000, ^FF0000WRAITH DEAD^000000, ^FF0000DULLAHAN^000000, ^FF0000NIGHTMARE TERROR^000000, tuez ^00640050^000000 monstres de l'une des espèces mentionnées et retournez voir ^0000FFRina^000000.#
+^0000FFTuer les monstres pour lever la malédiction^000000#
+
+9120#Cérémonie - Tuer DULLAHAN#SG_FEEL#QUE_NOIMAGE#
+Parmi ^FF0000DEVIRUCHI^000000, ^FF0000WRAITH DEAD^000000, ^FF0000DULLAHAN^000000, ^FF0000NIGHTMARE TERROR^000000, tuez ^00640050^000000 monstres de l'une des espèces mentionnées et retournez voir ^0000FFRina^000000.#
+^0000FFTuer les monstres pour lever la malédiction^000000#
+
+9121#Cérémonie - Tuer NIGHTMARE TERROR#SG_FEEL#QUE_NOIMAGE#
+Parmi ^FF0000DEVIRUCHI^000000, ^FF0000WRAITH DEAD^000000, ^FF0000DULLAHAN^000000, ^FF0000NIGHTMARE TERROR^000000, tuez ^00640050^000000 monstres de l'une des espèces mentionnées et retournez voir ^0000FFRina^000000.#
+^0000FFTuer les monstres pour lever la malédiction^000000#
+
+9122#Cérémonie - Seconde aventure#SG_FEEL#QUE_NOIMAGE#
+Vous devez compléter la seconde tâche pour dissiper la malédiction de ^0000FFRina^000000 à ^8B4513Prontera^000000.#
+Complétez la tâche de ^0000FFRina^000000#
+
+9123#Cérémonie - Aller à Prontera~!#SG_FEEL#QUE_NOIMAGE#
+Il semble que la malédiction de ^0000FFRina^000000 ait été levée. Retournez voir Rina.#
+Retournez voir ^0000FFRina^000000#

@@ -10,6 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # fRO (France)
+# 2010-06-17aRagexe
 # Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Receive::fRO;
 

@@ -645,10 +645,10 @@ ice_dun02.rsw#Ice Cave#
 ice_dun03.rsw#Ice Cave#
 ice_dun04.rsw#Ice Cave#
 fro_foot.rsw#Football Championship#
-waiting1.rsw#Ascenceur vers l'arÃ¨ne ''Tombeau''#
-waiting2.rsw#Ascenceur vers l'arÃ¨ne ''Tombeau''#
-waiting3.rsw#Ascenceur vers l'arÃ¨ne ''Ruines''#
-waiting4.rsw#Ascenceur vers l'arÃ¨ne ''Ruines''#
+waiting1.rsw#Ascenceur vers l'arène ''Tombeau''#
+waiting2.rsw#Ascenceur vers l'arène ''Tombeau''#
+waiting3.rsw#Ascenceur vers l'arène ''Ruines''#
+waiting4.rsw#Ascenceur vers l'arène ''Ruines''#
 arug_cas01.rsw#Valfreyja Realm Guild#
 arug_cas02.rsw#Valfreyja Realm Guild#
 arug_cas03.rsw#Valfreyja Realm Guild#
@@ -665,14 +665,14 @@ rst_warp.rsw#Antre de Shiki#
 rst_main.rsw#Esprit de Kayleb#
 rst_s1.rsw#Souvenir de Kayleb#
 rst_s2.rsw#Souvenir de Kayleb#
-rst_s3.rsw#Salle de l'Ã©preuve#
+rst_s3.rsw#Salle de l'épreuve#
 rst_s4.rsw#Souvenir de Kayleb#
-hallo_mark.rsw#Chemin vers le marchÃ© de Niflheim#
-hallo_nif.rsw#MarchÃ© de Nilfheim#
+hallo_mark.rsw#Chemin vers le marché de Niflheim#
+hallo_nif.rsw#Marché de Nilfheim#
 evt_zombie.rsw#Echapper aux monstres#
 airplane_y.rsw#Airship de Veins#
 airplane_ym.rsw#Coeur de l'Airship#
-airport_v.rsw#AÃ©rogare de Veins#
+airport_v.rsw#Aérogare de Veins#
 1@cata.rsw#Catacom#
 2@cata.rsw#Sealed Shrine#
 e_tower.rsw#Misty Island#
@@ -706,13 +706,13 @@ mosk_dun01.rsw#Forest#
 mosk_dun02.rsw#Deep Forest#
 mosk_dun03.rsw#Bottomless Forest#
 cave.rsw#Cave Village#
-pri_z1.rsw#Salle de la mÃ©ditation (Prison du Valhalla)#
-pri_z2.rsw#Salle de la mÃ©ditation (Prison du Valhalla)#
-pri_z3.rsw#Salle de la mÃ©ditation (Prison du Valhalla)#
-pri_z4.rsw#Salle de la mÃ©ditation (Prison du Valhalla)#
-pri_z5.rsw#Salle de la mÃ©ditation (Prison du Valhalla)#
-pri_z6.rsw#Salle de la mÃ©ditation (Prison du Valhalla)#
-pri_z7.rsw#Salle de la mÃ©ditation (Prison du Valhalla)#
+pri_z1.rsw#Salle de la méditation (Prison du Valhalla)#
+pri_z2.rsw#Salle de la méditation (Prison du Valhalla)#
+pri_z3.rsw#Salle de la méditation (Prison du Valhalla)#
+pri_z4.rsw#Salle de la méditation (Prison du Valhalla)#
+pri_z5.rsw#Salle de la méditation (Prison du Valhalla)#
+pri_z6.rsw#Salle de la méditation (Prison du Valhalla)#
+pri_z7.rsw#Salle de la méditation (Prison du Valhalla)#
 abbeyq1.rsw#Monastery#
 abbeyq2.rsw#Monastery#
 abbeyq3.rsw#Monastery#
@@ -721,14 +721,14 @@ tak_wait.rsw#Fhlaston Paradise#
 tak_run.rsw#King Baz-Ton: Challenge#
 tak_swd.rsw#King Baz-Ton: Challenge#
 tak_warp.rsw#King Baz-Ton: Challenge#
-pol_test.rsw#Marchez avec Ã©lÃ©gance#
+pol_test.rsw#Marchez avec élégance#
 apr_maze.rsw#Passage secret sous marin#
 ij_hq.rsw#Prison labyrinthique#
 ij_und.rsw#Passage secret de la bibliotheque#
 ij_lab1.rsw#Mini-Jeu Trouve les drapeaux#
-ij_lab2.rsw#Temple cachÃ©#
+ij_lab2.rsw#Temple caché#
 ij_jail.rsw#Salle d'attente#
-pirate_ship.rsw#Navire de pÃªche d'Alberta#
+pirate_ship.rsw#Navire de pêche d'Alberta#
 11el_fhl.rsw#Fhlaston Paradise#
 11el_expl.rsw#Fhlaston Paradise#
 11el_tem.rsw#Temple Mondoshaman#
@@ -744,3 +744,11 @@ nguild_pay.rsw#Alfheim Guild#
 nguild_prt.rsw#Alfheim Guild#
 nguild_alde.rsw#Alfheim Guild#
 drp_in.rsw#Bijouterie#
+tak1_run.rsw#King Baz-Ton: Challenge#
+tak1_top.rsw#King Baz-Ton: Challenge#
+tak1_pil.rsw#King Baz-Ton: Challenge#
+waiting5.rsw#Salle d'attente#
+waiting6.rsw#Arène Spirit Extractor#
+pvp_flo.rsw#Ile du Printemps#
+ch_house.rsw#Maison des Community Helper# du Printemps#
+ch_house.rsw#Maison des Community Helper#
