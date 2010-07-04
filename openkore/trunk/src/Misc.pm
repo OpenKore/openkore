@@ -3236,20 +3236,15 @@ sub status_string {
 	my ($source, $statusName, $mode, $seconds) = @_;
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 
-	if ($source->isa('Actor::You')) {
-	return TF("%s are %s: %s%s\n",
-		$source->nameString(),
-		($mode eq 'now') ? T('now') : ($mode eq 'again') ? T('again') : ($mode eq 'no longer') ? T('no longer') : $mode,
+	# Translation Comment: "you/actor" "are/is now/again/nolonger" "status" "(duration)"
+	TF("%s %s: %s%s\n",
+		$source->nameString,
+		($mode eq 'now') ? $source->verb(T('are now'), T('is now'))
+		: ($mode eq 'again') ? $source->verb(T('are again'), T('is again'))
+		: ($mode eq 'no longer') ? $source->verb(T('are no longer'), T('is no longer')) : $mode,
 		$statusName,
-		$seconds ? ' ' . TF("(Duration: %ss)", $seconds) : '');
-	} else {
-	return TF("%s is %s: %s%s\n",
-		$source->nameString(),
-		($mode eq 'now') ? T('now') : ($mode eq 'again') ? T('again') : ($mode eq 'no longer') ? T('no longer') : $mode,
-		$statusName,
-		$seconds ? ' ' . TF("(Duration: %ss)", $seconds) : '');
-	}
-	
+		$seconds ? ' ' . TF("(Duration: %ss)", $seconds) : ''
+	)
 }
 
 #######################################

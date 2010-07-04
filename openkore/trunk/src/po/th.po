@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore Thai Edition\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-03 18:34+0400\n"
+"POT-Creation-Date: 2010-07-04 04:00+0400\n"
 "PO-Revision-Date: 2010-06-01 14:12+0700\n"
 "Last-Translator: Richard Samuel <dewa5227@gmail.com>\n"
 "Language-Team: \n"
@@ -1976,7 +1976,7 @@ msgstr "พบข้อผิดพลาดขั้นร้ายแรง: �
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2522
 #: ../Network/Receive/ServerType0.pm:2465 ../Misc.pm:1050 ../Misc.pm:1064
-#: ../Misc.pm:3384 ../Misc.pm:3405
+#: ../Misc.pm:3379 ../Misc.pm:3400
 #, perl-format
 msgid "Disconnect for %s seconds...\n"
 msgstr "หยุดการเชื่อมต่อเป็นเวลา %s วินาที\n"
@@ -8527,105 +8527,117 @@ msgstr ""
 msgid "on location"
 msgstr "ทางออก(คำตอบ)\n"
 
+#. Translation Comment: "you/actor" "are/is now/again/nolonger" "status" "(duration)"
 #: ../Misc.pm:3240
 #, fuzzy, perl-format
-msgid "%s are %s: %s%s\n"
+msgid "%s %s: %s%s\n"
 msgstr "%s มี %s "
 
-#: ../Misc.pm:3242 ../Misc.pm:3248
-msgid "now"
+#: ../Misc.pm:3242
+msgid "are now"
 msgstr ""
 
-#: ../Misc.pm:3242 ../Misc.pm:3248
-msgid "again"
+#: ../Misc.pm:3242
+msgid "is now"
 msgstr ""
 
-#: ../Misc.pm:3242 ../Misc.pm:3248
-msgid "no longer"
-msgstr ""
+#: ../Misc.pm:3243
+#, fuzzy
+msgid "are again"
+msgstr "คุณกำลังนั่งอยู่\n"
 
-#: ../Misc.pm:3244 ../Misc.pm:3250
+#: ../Misc.pm:3243
+#, fuzzy
+msgid "is again"
+msgstr "%s กำลังนั่งอยู่\n"
+
+#: ../Misc.pm:3244
+#, fuzzy
+msgid "are no longer"
+msgstr "ทำการโจมตี: %s\n"
+
+#: ../Misc.pm:3244
+#, fuzzy
+msgid "is no longer"
+msgstr "%s ถูกปลดจากการห้ามพูดคุยและใช้สกิลแล้ว\n"
+
+#: ../Misc.pm:3246
 #, perl-format
 msgid "(Duration: %ss)"
 msgstr ""
 
-#: ../Misc.pm:3246
-#, fuzzy, perl-format
-msgid "%s is %s: %s%s\n"
-msgstr "%s มี %s "
-
-#: ../Misc.pm:3341
+#: ../Misc.pm:3336
 #, perl-format
 msgid "GM %s is nearby, teleport & disconnect for %d seconds"
 msgstr "GM %s ได้ใกล้เข้ามา ทำการเทเลพอท และยุตติการเชื่อมต่อเป็นเวลา %d วินาที"
 
-#: ../Misc.pm:3346
+#: ../Misc.pm:3341
 #, perl-format
 msgid "GM %s is nearby, disconnect for %s seconds"
 msgstr "GM %s ใกล้เข้ามา หยุดการเชื่อมต่อเป็นเวลา %s วินาที"
 
-#: ../Misc.pm:3352
+#: ../Misc.pm:3347
 #, perl-format
 msgid "GM %s is nearby, teleporting"
 msgstr "GM %s ได้ใกล้เข้ามา ทำการเทเลพอท"
 
-#: ../Misc.pm:3357
+#: ../Misc.pm:3352
 #, perl-format
 msgid "GM %s is nearby, respawning"
 msgstr "GM %s ได้ใกล้เข้ามา กลับจุดเซฟ"
 
-#: ../Misc.pm:3382
+#: ../Misc.pm:3377
 #, perl-format
 msgid "%s (%s) is nearby, disconnecting...\n"
 msgstr "%s (%s) ใกล้เข้ามา ยุตติการเชื่อมต่อ...\n"
 
-#: ../Misc.pm:3383
+#: ../Misc.pm:3378
 #, perl-format
 msgid "*** Found %s (%s) nearby and disconnected ***\n"
 msgstr "*** ตรวจพบ %s (%s) ใกล้เข้ามา ทำการยกเลิกการติดต่อ ***\n"
 
-#: ../Misc.pm:3389
+#: ../Misc.pm:3384
 #, perl-format
 msgid "Teleporting to avoid player %s (%s)\n"
 msgstr "กำลังเทเลพอทหนีผู้เล่น %s (%s)\n"
 
-#: ../Misc.pm:3390
+#: ../Misc.pm:3385
 #, perl-format
 msgid "*** Found %s (%s) nearby and teleported ***\n"
 msgstr "*** ตรวจพบ %s (%s) ใกล้เข้ามา ได้ทำการเทเลพอทหนีแล้ว ***\n"
 
-#: ../Misc.pm:3403
+#: ../Misc.pm:3398
 #, perl-format
 msgid "%s is nearby, disconnecting...\n"
 msgstr "%s ใกล้เข้ามา ยุตติการเชื่อมต่อ...\n"
 
-#: ../Misc.pm:3404
+#: ../Misc.pm:3399
 #, perl-format
 msgid "*** Found %s nearby and disconnected ***\n"
 msgstr "*** ตรวจพบ %s ใกล้เข้ามา ทำการยกเลิกการติดต่อ ***\n"
 
-#: ../Misc.pm:3437
+#: ../Misc.pm:3432
 #, perl-format
 msgid "Processing map %s...\n"
 msgstr "ทำการประมวลผลแผนที่ %s...\n"
 
-#: ../Misc.pm:3472
+#: ../Misc.pm:3467
 #, perl-format
 msgid "Wrote portals Line of Sight table to '%s'\n"
 msgstr "เขียนตาราง LOS ไปยัง '%s'\n"
 
-#: ../Misc.pm:3476 ../Misc.pm:3480
+#: ../Misc.pm:3471 ../Misc.pm:3475
 msgid "----------------------------Error Summary----------------------------\n"
 msgstr ""
 "----------------------------"
 "รายงานสรุปข้อผิดพลาดที่พบ----------------------------\n"
 
-#: ../Misc.pm:3477
+#: ../Misc.pm:3472
 #, perl-format
 msgid "Missing: %s.fld\n"
 msgstr "ข้อมูลสูญหาย: %s.fld\n"
 
-#: ../Misc.pm:3478
+#: ../Misc.pm:3473
 msgid ""
 "Note: LOS information for the above listed map(s) will be inaccurate;\n"
 "      however it is safe to ignore if those map(s) are not used\n"
@@ -8633,46 +8645,46 @@ msgstr ""
 "หมายเหตุ: ข้อมูล LOS ในรายชื่อแผนที่ด้านบน อาจไม่เที่ยงตรงนัก\n"
 "      อย่างไรก็ตาม มันจะปลอดภัยกว่าที่จะไม่ใช้แผนที่ดังกล่าว\n"
 
-#: ../Misc.pm:3614
+#: ../Misc.pm:3609
 #, perl-format
 msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
 msgstr ""
 
-#: ../Misc.pm:4089
+#: ../Misc.pm:4084
 msgid "A shop has already been opened.\n"
 msgstr "ร้านได้เปิดอยู่แล้ว\n"
 
-#: ../Misc.pm:4096
+#: ../Misc.pm:4091
 msgid "You don't have the Vending skill.\n"
 msgstr "คุณไม่มีสกิลขายของ\n"
 
-#: ../Misc.pm:4101
+#: ../Misc.pm:4096
 msgid "Your shop does not have a title.\n"
 msgstr "ร้านของคุณไม่มีชื่อ\n"
 
-#: ../Misc.pm:4133
+#: ../Misc.pm:4128
 msgid "There are no items to sell.\n"
 msgstr "ไม่มีไอเท็มเหลือให้ขายแล้ว\n"
 
-#: ../Misc.pm:4148
+#: ../Misc.pm:4143
 #, perl-format
 msgid "Shop opened (%s) with %d selling items.\n"
 msgstr "ร้านเปิดแล้ว (%s) รายการขาย %d ไอเท็มสำหรับขาย\n"
 
-#: ../Misc.pm:4155
+#: ../Misc.pm:4150
 msgid "A shop has not been opened.\n"
 msgstr "ร้านยังไม่ได้เปิด\n"
 
-#: ../Misc.pm:4163
+#: ../Misc.pm:4158
 msgid "Shop closed.\n"
 msgstr "ร้านปิดลงแล้ว\n"
 
-#: ../Misc.pm:4184 ../functions.pl:275
+#: ../Misc.pm:4179 ../functions.pl:275
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "กำลังโหลด %s...\n"
 
-#: ../Misc.pm:4195 ../functions.pl:281
+#: ../Misc.pm:4190 ../functions.pl:281
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
@@ -8947,6 +8959,10 @@ msgstr "%s กำลังเชื่อมต่อ - %s"
 #: ../functions.pl:1094
 msgid "Map loaded\n"
 msgstr "แผนที่ได้ถูกโหลดแล้ว\n"
+
+#, fuzzy
+#~ msgid "%s are %s: %s%s\n"
+#~ msgstr "%s มี %s "
 
 #, fuzzy
 #~ msgid "Found your Slave!\n"
