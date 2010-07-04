@@ -168,7 +168,7 @@ msgstr "Смена 'attackUseWeapon' на по-умолчанию: %s.\n"
 
 #: ../AI/Attack.pm:111 ../AI/Attack.pm:228 ../AI/Attack.pm:398
 msgid "Dropping target - you will not kill steal others\n"
-msgstr "Цель оставлена - вы не будите килл-стилить.\n"
+msgstr "Цель оставлена - вы не будете килл-стилить.\n"
 
 #: ../AI/Attack.pm:123 ../AI/Attack.pm:164 ../AI/Attack.pm:240
 #: ../AI/Attack.pm:551
