@@ -54,8 +54,6 @@ master_version 31
 version 1
 serverType fRO
 serverEncoding Western
-secureLogin 1
-secureLogin_type 0
 
 [Indonesia - idRO: Thor - Legend - Fnc - Heroes]
 ip 202.43.167.67
