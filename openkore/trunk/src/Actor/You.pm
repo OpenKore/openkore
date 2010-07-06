@@ -27,6 +27,7 @@ use Log qw(message);
 use base qw(Actor);
 use InventoryList;
 use Translation;
+use Utils;
 
 ##
 # Skill $char->{permitSkill}
