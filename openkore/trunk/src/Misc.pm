@@ -2685,7 +2685,7 @@ sub updateDamageTables {
 						$monster, $player, $config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$player->{configPrefix}.'teleportAuto_hp'} && $player->{hpPercent} <= $config{$player->{configPrefix}.'teleportAuto_hp'}) {
+				} elsif ($config{$player->{configPrefix}.'teleportAuto_hp'} && percent_hp($player) <= $config{$player->{configPrefix}.'teleportAuto_hp'}) {
 					message TF("%s hit %s when %s HP is under %d. Teleporting...\n",
 						$monster, $player, $player->verb(T('your'), T('its')), $config{$player->{configPrefix}.'teleportAuto_hp'}), "teleport";
 					$teleport = 1;
