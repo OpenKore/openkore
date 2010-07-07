@@ -682,6 +682,7 @@ sub parseROLUT {
 		my ($id, $name) = split /$ext#/, $line, 3;
 		if ($id ne "" && $name ne "") {
 			$name =~ s/_/ /g unless ($flag == 1);
+			$name =~ s/^\s+|\s+$//g;
 			$r_hash->{$id} = $name;
 		}
 	}
