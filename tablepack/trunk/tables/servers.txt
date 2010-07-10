@@ -95,7 +95,7 @@ paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
 
 [International - iRO: Valkyrie]
-ip valkyrie-login.ragnarok.games.gravityus.com
+ip 128.241.92.163
 port 6900
 master_version 1
 version 18
