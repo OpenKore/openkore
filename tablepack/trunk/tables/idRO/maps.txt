@@ -437,9 +437,9 @@ um_fild02.rsw#Hutan Humga#
 um_fild03.rsw#Rawa-rawa Karara#
 um_fild04.rsw#Hutan Humga#
 umbala.rsw#Umbala, Desa Suku Wootan#
-//--------------ŽÏÇÃÇìÀÓ-----------
+//--------------´ÏÇÃÇìÀÓ-----------
 nif_in.rsw#Dalam Niflheim#
-yggdrasil01.rsw#Pulau Herbet Camlet (Batang Pohon Yggdrasil)#
+yggdrasil01.rsw#?Pulau Herbet Camlet (Batang Pohon Yggdrasil)#
 nif_fild02.rsw#Kubah Setan#
 nif_fild01.rsw#Skelington (Desa Terjauh Niflheim)#
 niflheim.rsw#Kota Kematian Niflheim#
@@ -729,3 +729,26 @@ tha_rwc01.rsw#Arena 9#
 tha_rwc02.rsw#Arena 10#
 tha_rwc03.rsw#Arena 11#
 tha_rwc04.rsw#Arena 12#
+
+//-------------Ep 13.2----------
+1@nyd.rsw#Gua Nydhogg#
+2@nyd.rsw#Gua Nydhogg#
+nyd_dun01.rsw#The violent's Wound#
+nyd_dun02.rsw#The violent's Wound#
+manuk.rsw#Kota Pertambangan Manuk#
+man_fild02.rsw#Manuk Field#
+man_in01.rsw#Manuk#
+splendide.rsw#Markas Rapine, Splandid#
+spl_fild01.rsw#Splandid Field#
+spl_in01.rsw#Pos Komando di Splandid#
+spl_in02.rsw#Splandid#
+
+//ric/rwc 2010
+2010rwc_01.rsw#Arena 1#
+2010rwc_02.rsw#Arena 2#
+2010rwc_03.rsw#Arena 3#
+2010rwc_04.rsw#Arena 4#
+2010rwc_05.rsw#Arena 5#
+2010rwc_06.rsw#Arena 6#
+2010rwc_07.rsw#Arena 7#
+2010rwc_08.rsw#Arena 8#
