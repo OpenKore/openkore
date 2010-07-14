@@ -4370,7 +4370,7 @@
 14308#Ardor_Scroll#
 // ------------ 2008 ｴ・ｸ 11ｿ・ｽｺﾅｩｷﾑ -----------
 14363#Heart_Scroll#
-14298#New_Year_Scroll#
+14298#Surprise_Scroll#
 // ---------- ｴ・ｸｹﾟｷｻﾅｸﾀﾎ ｽｺﾅｩｷﾑ -------------
 13941#Valentine_Scroll#
 // ------- ｴ・ｸ 2008 ｻﾘ ｽｺﾅｩｷﾑ -----------
@@ -4850,4 +4850,39 @@
 7547#Football#
 7548#Soccer_Shoes#
 5203#Tongue_Mask#
+//------- 2010ｳ・3ｺﾐｱ・ｺｻｻ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ----------------------
+5676#Scorpio_Celestial_Crown#
+5677#Scorpio_Celestial_Diadem#
+16447#Scorpio_Celestial_Crown_Box#
+16448#Scorpio_Celestial_Diadem_Box#
+15022#Swimming_Suit#
+16569#Swimming_Scroll#
+2565#Beach_Towel#
+5770#Splash_Hat#
+5761#Sloth_Hat#
+5762#Duneyrr_Hat#
+16584#Sloth_Hat_Box#
+16586#Duneyrr_Hat_Hat#
+5778#Blue_Arara_Hat#
+16601#Blue_Arara_Hat_Box#
+5580#Red_Beret#
+5680#Hawk_Eyes#
+5768#Sakura_Coronet#
+13596#Dragon_Breath_Cocktail_30_Box#
+13604#Steamed_Tongue_30_Box#
+13592#Steamed_Scorpion_30_Box#
+13572#Hwergelmir's_Tonic_30_Box#
+13578#Stew_Of_Immortality_30_Box#
+13574#Nine_Tail_Dish_30_Box#
+5359#Master's_Hat#
+14395#Master's_Hat_Box#
+5360#Whikebain's_Black_Ears#
+16240#Whikebain's_Black_Ears_Box#
+12133#Vanilla_Icecream#
+//-------ｸｺﾅﾍ ｻ邉ﾉ 4ﾂ・ﾀﾌｺ･ﾆｮ ﾃﾟｰ｡ ｺｸｻﾛ----------------
+5860#Siege_Army_Cap#
+5861#Siege_Kafra_Band#
+5862#Siege_Sweet_Gent#
+5863#Siege_Zoro_Mask#
+
 //file end

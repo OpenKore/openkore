@@ -33500,3 +33500,257 @@ Location : ^777777Mid,Lower^000000
 Weight : ^77777720^000000
 Jobs : ^777777All Jobs^000000	
 #
+
+//------- 2010ｳ・3ｺﾐｱ・ｺｻｻ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ----------------------
+5676#
+This crown honors Scorpio, the 8th astrological sign in the zodiac calendar. A topaz, its birthstone, is studded.
+ATK + 5. Increase ASPD.(Attck after delay 3%) Increase resistance against water property by 5%.
+If refined to 7, when attacking, has some chance of autocasting Mild Wind 3 lvl.
+If refined to 8, increase ASPD in addition. (Attack after delay 2%)
+If refined to 9, has some chance of autocasting Frost Nova 5 lvl.
+If refined to 10, increase ASPD in addtion. (Attack after delay 2&), ATK + 5.
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Head Position: ^777777Upper ^000000 Weight : ^77777730^000000
+Required lvl : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5677#
+This crown honors Scorpio, the 8th astrological sign in the zodiac calendar. A topaz, its birthstone, is studded.
+DEX + 2.
+If refined to 7, DEX + 1, ATK  +5.
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Head Position: ^777777Upper ^000000 Weight : ^77777730^000000
+Required lvl : ^7777771^000000
+Jobs : ^777777All^000000
+#
+16447#
+A box that contains 1 Scorpio Celestial Crown.
+Weight : ^7777771^000000
+#
+16448#
+A box that contains 1 Scorpio Celestial Diadem.
+Weight : ^7777771^000000
+#
+15022#
+Made for the best surfer.
+STR + 4, INT + 4, MDEF + 3.
+Increase 20% the resistance to water property atk.
+Class : ^777777Armor^000000 Def : ^7777771^000000
+Weight : ^77777710^000000
+Required Lv : ^7777771^000000
+Job : ^777777All^000000
+#
+16569#
+Summer package for last summer vacation! You might get something special!
+Weight : ^77777710^000000
+#
+2565#
+A colorful beach towel used as protection from the sun.
+MDEF +3, FLEE +7
+Resistance to Neutral property attacks +7%, 
+Class : ^777777Robe^000000 Def : ^7777772^000000
+Weight : ^77777710^000000
+Required Lv : ^7777771^000000
+Job : ^777777All^000000
+#
+5770#
+A cute pouring that bounces on your head.
+AGI +3
+Give the wind property into weapon for 3 min when give physical attack in a certain chance.
+Class : ^777777Headgear^000000 Def : ^7777773^000000
+Position: ^777777Upper ^000000 Weight : ^77777710^000000
+Required Lv  : ^7777771^000000
+Job : ^777777All^000000
+#
+5761#
+This cute Sloth must think you look like a tree. At least it warms the top of your head.
+AGI + 2.
+Chance to use the skill Sonic Blow lvl 5 when you attack physically in short distance .
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777780^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5762#
+A hat similar to the MVP Duneyrr.
+ALL State + 1, MDEF + 5.
+2% resistence to human and animal monsters.
+Item Class : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+16584#
+A box that contains 1 Sloth Hat.
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16586#
+A box that contains 1 Duneyrr Hat.
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+5778#
+A Blue Arara, symbol of Amazonia Forest. 
+STR + 2
+When having physical attack, it has Attack speed increase by 5% (after having attack, delay is decreased by 5%)
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs 1048575^000000
+#
+16601#
+A box that contains 1 Blue Arara Hat.
+Weight : ^7777771^000000
+#
+5580#
+This cap is symbolic of the manpower.
+Increase physical damage by 5% toward human monster.
+Decrease physical damage by 5% from human monster.
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000 Weight : ^77777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5680#
+This headgear makes you more sensitive and you could get high concentration.
+HIT + 10.
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Mid^000000 Weight : ^77777710^000000
+Required Level : ^77777710^000000
+Jobs : ^777777All Jobs^000000
+#
+5768#
+The Coronet which is pinky shining.
+MaxSP + 25.
+When you wear this with Romantic Flower you could get INT + 1, if refined lv is over 7, you could get MaxSP + 1% in every each lv.
+When you wear this with Romantic White Flower, you could get DEX + 1, if refined lv is over 5, you could get decreased skill delay by 1% in every each lv.
+When you wear this with Romantic Leaf, STR + 1, if refined lv is over 3, you would 1% decreased SP in every each lv.
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Upper ^000000 Weight : ^77777780^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+13596#
+This box has 30 INT+10 dish. It's specially protected for saving. 
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+13604#
+This box has 30 STR+10 dish. It's specially protected for saving.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+13592#
+This box has 30 AGI+10 dish. It's specially protected for saving.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+13572#
+This box has 30 DEX+10 dish. It's specially protected for saving.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+13578#
+This box has 30 VIT+10 dish. It's specially protected for saving.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+13574#
+This box has 30 LUK+10 dish. It's specially protected for saving.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+5360#
+The black ears which is used by Whikebain.
+Increase critical attack damage by 10%.
+When you magically attack monsters, you could ignore the magical def for 5 sec in high rate.
+FLEE + 10.
+Item Class : ^777777Headgear^000000    Defense : ^7777774^000000
+Location : ^777777Upper ^000000
+Weight : ^77777720^000000
+Required Level : ^77777745^000000
+Jobs : ^777777All Jobs^000000
+#
+5359#
+This hat reminds us of the brilinat pilot. 
+DEX + 1. MHP + 100. Increase long distance physical attack by 7%.
+Item Class : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper ^000000    Weight : ^77777730^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+16240#
+A box that contains 1 Whikebain's Black Ears.
+^ffffff_^000000
+The black ears which is used by Whikebain.
+Increase critical attack damage by 10%.
+When you magically attack monsters, you could ignore the magical def for 5 sec in high rate.
+FLEE + 10.
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper ^000000
+Weight : ^77777720^000000
+Required Level : ^77777745^000000
+Jobs : ^777777All Jobs^000000
+
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+14395#
+A box that contains 1 Master's Hat.
+^ffffff_^000000
+This hat reminds us of the brilinat pilot. 
+DEX + 1. MHP + 100. Increase long distance physical attack by 7%.
+Item Class : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper ^000000    Weight : ^77777730^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+12133#
+The world's best dessert, vanilla icecream with chocolate on top.
+Recover HP/SP by 50%, you can cool down a bit.
+^ffffff_^000000
+Weight : ^7777778^000000
+#
+
+//-------ｸｺﾅﾍ ｻ邉ﾉ 4ﾂ・ﾀﾌｺ･ﾆｮ ﾃﾟｰ｡ ｺｸｻﾛ----------------
+5860#
+Enhanced version of Army Cap from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class: ^777777Headgear^000000 Defense: ^7777770^000000
+Location: ^777777Upper ^000000 Weight: ^77777710^000000
+Required Level: ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+5861#
+Enhanced version of Kafra Band from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class: ^777777Headgear^000000 Defense: ^7777770^000000
+Location: ^777777Upper ^000000 Weight: ^77777710^000000
+Required Level: ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+5862#
+Enhanced version of Sweet Gent from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class: ^777777Headgear^000000 Defense: ^7777770^000000
+Location: ^777777Upper ^000000 Weight: ^77777710^000000
+Required Level: ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+5863#
+Enhanced version of Zoro Mask from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 2%
+Item Class: ^777777Headgear^000000 Defense: ^7777772^000000
+Location: ^777777Mid ^000000 Weight: ^77777710^000000
+Required Level: ^77777770^000000
+Jobs : ^777777All Jobs^000000
+#
