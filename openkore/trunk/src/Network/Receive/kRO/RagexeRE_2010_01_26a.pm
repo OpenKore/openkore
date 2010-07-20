@@ -26,7 +26,7 @@ sub new {
 	my %packets = (
 		#//0x080C,2
 		#//0x080D,3
-		#//0x080E,14
+		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]], # 14
 	);
 
 	foreach my $switch (keys %packets) {
