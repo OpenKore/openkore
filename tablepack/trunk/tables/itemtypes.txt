@@ -1,21 +1,21 @@
-0 Usable
-1 Usable
-2 Usable
-3 Non-usable
-4 Weapon
-5 Armor
+0 Usable Heal
+1 Usable Status
+2 Usable Special
+3 Event
+4 Armor
+5 Weapon
 6 Card
-7 Egg
-8 Pet Armor
+7 Quest
+8 Bow
 9 Weapon
-10 Arrows
+10 Arrow
 11 Helmet
 12 Unknown_Type_12
 13 Mask
 14 Headgear
 15 Gun
-16 Bullet
+16 Ammo
 17 Shuriken
 18 Cash Item
-19 Unknown_Type_19
-20 Unknown_Type_20
+19 Cannonball
+20 Costume
