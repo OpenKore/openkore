@@ -33303,7 +33303,7 @@ If refined to 10, increase ATK and MATK by 2% in addition.
 Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000 Weight : ^77777720^000000
 Required Level : ^7777771^000000
-Jobs : ^777777All Jobs 1048575^000000
+Jobs : ^777777All Jobs ^000000
 #
 5784#
 A hairband that attracts men.
@@ -33314,7 +33314,7 @@ If refined to 10, increase ATK and MATK by 2% in addition.
 Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000 Weight : ^77777720^000000
 Required Level : ^7777771^000000
-Jobs : ^777777All Jobs 1048575^000000
+Jobs : ^777777All Jobs ^000000
 #
 5785#
 A hairband that attracts men.
@@ -33325,7 +33325,7 @@ If refined to 10, increase ATK and MATK by 2% in addition.
 Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000 Weight : ^77777720^000000
 Required Level : ^7777771^000000
-Jobs : ^777777All Jobs 1048575^000000
+Jobs : ^777777All Jobs ^000000
 #
 16619#
 A box contains 1 Yellow Bunny Band in it.
@@ -33597,7 +33597,7 @@ When having physical attack, it has Attack speed increase by 5% (after having at
 Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
 Location : ^777777Upper ^000000 Weight : ^77777710^000000
 Required Level : ^7777771^000000
-Jobs : ^777777All Jobs 1048575^000000
+Jobs : ^777777All Jobs ^000000
 #
 16601#
 A box that contains 1 Blue Arara Hat.
@@ -33753,4 +33753,13 @@ Item Class: ^777777Headgear^000000 Defense: ^7777772^000000
 Location: ^777777Mid ^000000 Weight: ^77777710^000000
 Required Level: ^77777770^000000
 Jobs : ^777777All Jobs^000000
+#
+//------- ｰﾔﾆ・ｸﾅﾁ・ｼ･ ﾄｺﾆｮ -----------------
+7636#
+A bottle that holds magical power of monster 'Shining Plant'.
+Weight: ^7777770^000000
+#
+12774#
+A empty bottle looks like perfect for capturing monster 'Shining Plant'.
+Weight: ^7777770^000000
 #
