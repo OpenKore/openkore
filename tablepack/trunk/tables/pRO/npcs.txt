@@ -173,21 +173,28 @@ brasilis 56 224 Magician Paje#bra
 brasilis 59 226 Poring#bra
 c_tower3 10 249 Gatekeeper#Riku
 cmd_fild01 55 160 Heap of Earth
+cmd_in01 79 182 Tool Dealer
+comodo 111 163 Beach Trash#comodo17
 comodo 112 182 Munak's grandma
+comodo 129 170 Beach Trash#comodo16
 comodo 135 299 Young Man#sch
 comodo 139 184 Scholar
+comodo 142 153 Beach Trash#comodo15
 comodo 152 184 Bafhail#comodo
 comodo 163 280 Comodo alcohol
 comodo 164 291  Comodo people
+comodo 165 140 Beach Trash#comodo14
 comodo 167 146 Stylist
 comodo 170 137 Raede
 comodo 171 137 Heis
 comodo 176 350 Comodo Tour Leader
 comodo 180 153 Snowtora#1
+comodo 185 141 Beach Trash#comodo13
 comodo 185 153 Kafra Employee#pRO_Prem
 comodo 187 153 Hu La Hoop Lady
 comodo 193 151 Bor Roben#1
 comodo 195 150 Kafra Employee
+comodo 200 150 Beach Manager#comodo
 comodo 204 148 Devellin
 comodo 210 148 Bulletin Board#comodo
 comodo 210 154 Suspicious Guy
@@ -231,6 +238,7 @@ geffen 110 117 Ford#11
 geffen 110 200 Sage Welshyun
 geffen 111 104 Cindy#geffen
 geffen 111 48 Woman
+geffen 111 66 [Quest] Mage Hunter#gef
 geffen 112 129 Youlvriger
 geffen 117 37 Cool Event Voting Staff
 geffen 118 62 Guide
@@ -577,6 +585,7 @@ moc_fild12 173 215 battle_traces#2
 moc_fild12 276 165 battle_traces#3
 moc_fild12 35 303 Bastion City Santoleman
 moc_fild17 213 358 battle_traces#8
+moc_fild18 309 257 battle_traces#12
 moc_fild19 107 101 Bulletin Board#sphinx
 moc_fild20 349 179 Guard in rift
 moc_fild20 354 174 Continental Guard#12_ed
@@ -776,6 +785,7 @@ prontera 148 49 Bulletin Board#pron
 prontera 149 202 Jorlo
 prontera 150 280 Saint Gravity#im
 prontera 150 326 Wanted Notice#edq
+prontera 151 191 Festival Veteran#nk
 prontera 151 192 Summer Ticket Girl#nk
 prontera 151 29 Kafra Employee
 prontera 151 330 North Gate-Guide
@@ -855,6 +865,9 @@ prontera 29 207 Kafra Employee
 prontera 45 67  #prt_key-1-1
 prontera 48 58 Vegetable Gardener
 prontera 54 240 Terno
+prontera 58 182 Flower Girl
+prontera 64 125 Butcher
+prontera 66 111 Sagle
 prontera 73 134 Vendor from Milk Ranch
 prontera 73 140 Milk Vendor
 prontera 78 150 Dairenne

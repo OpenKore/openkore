@@ -4548,3 +4548,11 @@ Kill 100 ^FF0000Alarm^000000, then you can get rewards from ^FF0000Mercenary Sco
 9133#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
 ^0000FFElite Mercenary^000000, ^0000FFMercenary Scout^000000 : "^404040Well done! You did a good job^000000"#
 Defeated ^FF0000Alarm^000000. Now, ^8B4513Clock Tower^000000 is in a peace.#
+
+9134#Geffen Magic Shop#SG_FEEL#QUE_NOIMAGE#
+Extract '^006400Mystic Plants^000000' magic by using ^483D8B[Empty Vials]^000000.#
+Bring 3 ^800080[Mystic Vials]^000000 for Magic Merchant.#
+
+9135#Geffen Magic Shop: Present#SG_FEEL#QUE_NOIMAGE#
+Bring 3 ^800080[Mystic Vials]^000000 for Magic Merchant.#
+I have completed helping Geffen Magic Merchant for today. Need to wait till 20 hours have passed.#

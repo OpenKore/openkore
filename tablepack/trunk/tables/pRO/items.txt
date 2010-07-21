@@ -4884,5 +4884,8 @@
 5861#Siege_Kafra_Band#
 5862#Siege_Sweet_Gent#
 5863#Siege_Zoro_Mask#
+//------- ｰﾔﾆ・ｸﾅﾁ・ｼ･ ﾄｺﾆｮ -----------------
+7636#Mystic_Vial#
+12774#Empty_Vial#
 
 //file end
