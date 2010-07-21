@@ -2271,41 +2271,43 @@ sub setStatus {
 	my $verbosity = $actor->{ID} eq $accountID ? 1 : 2;
 	my $changed = 0;
 
-	foreach (keys %stateHandle) {
-		if ($opt1 == $_) {
-			if (!$actor->{statuses}{$stateHandle{$_}}) {
-				$actor->{statuses}{$stateHandle{$_}} = 1;
-				message TF("%s %s in %s state.\n", $actor->nameString, $actor->verb('are', 'is'), $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
-				$changed = 1;
-			}
-		} elsif ($actor->{statuses}{$stateHandle{$_}}) {
-			delete $actor->{statuses}{$stateHandle{$_}};
-			message TF("%s %s out of %s state.\n", $actor->nameString, $actor->verb('are', 'is'), $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
-			$changed = 1;
-		}
-	}
+	my $match_id = sub {return ($_[0] == $_[1])};
+	my $match_bitflag = sub {return (($_[0] & $_[1]) == $_[1])};
 
-=pod Replacement for two following for-s
 	for (
-		[$opt2, \%ailmentHandle],
-		[$option, \%lookHandle],
+		[$opt1, \%stateHandle, $match_id, 'handle'],
+		[$opt2, \%ailmentHandle, $match_bitflag, 'ailment'],
+		[$option, \%lookHandle, $match_bitflag, 'look'],
 	) {
-		my ($option, $handle) = @$_;
+		my ($option, $handle, $match, $name) = @$_;
 		for (keys %$handle) {
-			if ($option & $_) { # $_ == 0 isn't needed
+			if (&$match($option, $_)) {
 				unless ($actor->{statuses}{$handle->{$_}}) {
 					$actor->{statuses}{$handle->{$_}} = 1;
-					status_string($actor, $statusName{$handle->{$_}}, 'now');
+					status_string($actor, $statusName{$handle->{$_}}, 'now ' . $name);
 					$changed = 1;
 				}
 			} elsif ($actor->{statuses}{$handle->{$_}}) {
 				delete $actor->{statuses}{$handle->{$_}};
-				status_string($actor, $statusName{$handle->{$_}}, 'no longer');
+				status_string($actor, $statusName{$handle->{$_}}, 'no longer ' . $name);
 				$changed = 1;
 			}
 		}
 	}
-=cut
+=pod
+	foreach (keys %stateHandle) {
+		if ($opt1 == $_) {
+			if (!$actor->{statuses}{$stateHandle{$_}}) {
+				$actor->{statuses}{$stateHandle{$_}} = 1;
+				message TF("%s %s in %s state.\n", $actor, $actor->verb('are', 'is'), $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
+				$changed = 1;
+			}
+		} elsif ($actor->{statuses}{$stateHandle{$_}}) {
+			delete $actor->{statuses}{$stateHandle{$_}};
+			message TF("%s %s out of %s state.\n", $actor, $actor->verb('are', 'is'), $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
+			$changed = 1;
+		}
+	}
 	
 	foreach (keys %ailmentHandle) {
 		if (($opt2 & $_) == $_) {
@@ -2320,11 +2322,7 @@ sub setStatus {
 			}
 		} elsif ($actor->{statuses}{$ailmentHandle{$_}}) {
 			delete $actor->{statuses}{$ailmentHandle{$_}};
-			if ($actor->isa('Actor::You')) {
-				message TF("%s are out of ailment: %s.\n", $actor->nameString(), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
-			} else {
-				message TF("%s is out of ailment: %s.\n", $actor->nameString(), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
-			}
+			message TF("%s %s out of %s ailment.\n", $actor, $actor->verb('are', 'is'), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
 			$changed = 1;
 		}
 	}
@@ -2342,15 +2340,11 @@ sub setStatus {
 			}
 		} elsif ($actor->{statuses}{$lookHandle{$_}}) {
 			delete $actor->{statuses}{$lookHandle{$_}};
-			if ($actor->isa('Actor::You')) {
-				message TF("%s are out of look: %s.\n", $actor->nameString, $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
-			} else {
-				message TF("%s is out of look: %s.\n", $actor->nameString, $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
-			}
+			message TF("%s %s out of %s look.\n", $actor, $actor->verb('are', 'is'), $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
 			$changed = 1;
 		}
 	}
-
+=cut
 	Plugins::callHook('changed_status',{actor => $actor, changed => $changed});
 
 	# Remove perfectly hidden objects
