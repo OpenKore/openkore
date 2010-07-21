@@ -1,0 +1,681 @@
+#Тренировочные курсы, мерчант
+#http://www.sharonov.ru/ro/razdel.asp?id=3&news=497
+#В процессе прохождения квеста персонаж апнулся до 29/22.
+#пять раз дают опыт за прохождение квеста.
+#manticora
+
+macro MerchantTrainingStart {
+[
+	log Начинаем тренировку Мерчей
+	do conf include off Merchant_1
+	do conf lockMap none
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	do conf QuestPart MerchantTraining0
+]
+}
+
+
+automacro MerchantTraining0 {
+	class Merchant
+	location alberta, alberta_in
+	eval $::config{QuestPart} eq "MerchantTraining0"
+	run-once 1
+	call MerchantTraining0M
+}
+macro MerchantTraining0M {
+	log Нужная для начала квеста непись где-то рядом
+	do move alberta_in @rand(66,72) @rand(45,48)
+	pause @rand(2,4)
+	do talknpc 70 51 w2 c w2 r0 w2 c w2 c
+	log Получили задание прокачать "Увеличение носимого веса".
+	log Идем кач. Нам не впервой.
+	$s = @config(QuestDone)
+	$s = $s MerchantTraining1_
+	# Добавляем _ ибо нужно знать точно, что мы нашли MerchantTraining1, а не MerchantTraining1234
+	do conf QuestDone $s
+	do conf QuestPart Kach2
+	call autokachRelease
+}
+
+automacro MerchantTraining1 {
+	class Merchant
+	eval ($::config{QuestDone} =~ m/MerchantTraining1_/) and ($::char->getSkillLevel(new Skill(name => "Enlarge Weight Limit")) >= 4)
+	run-once 1
+	exclusive 1
+	call MerchantTraining1M
+}
+macro MerchantTraining1M {
+	log Мы вкачали нужные для продолжения квеста скилы
+	log У нас записан шаг, на котором мы остановились в прошлый раз
+	log теперь мы продолжаем и заметку стираем
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/MerchantTraining1_\s+//
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	do conf QuestDone $s
+	do conf lockMap alberta
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf QuestPart MerchantTraining2
+
+}
+
+automacro MerchantTraining2 {
+	location alberta, alberta_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining2"
+	run-once 1
+	call MerchantTraining2M
+}
+macro MerchantTraining2M {
+	do conf lockMap none
+	log Мы вкачали нужные для продолжения квеста скилы
+	do move alberta_in @rand(66,72) @rand(45,48)
+	pause @rand(2,4)
+	do talknpc 70 51 w2 c w1 c w1 c w1 c w1 c w1
+	do conf QuestPart MerchantTraining3
+}
+
+automacro MerchantTraining3 {
+	location alberta, alberta_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining3"
+	run-once 1
+	call MerchantTraining3M
+}
+macro MerchantTraining3M {
+	log Сейчас поговорим о Мамоните
+	pause @rand(2,4)
+	do talknpc 70 51 w2 c w1 c w1 c w1 c w1
+	do conf QuestPart MerchantTraining4
+}
+
+automacro MerchantTraining4 {
+	location alberta_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining4"
+	run-once 1
+	exclusive 1
+	call MerchantTraining4M
+}
+macro MerchantTraining4M {
+	log Сейчас поговорим о Скидках, нам дадут задание вкачать скилл "Скидка" на 4 лвл.
+	pause @rand(2,4)
+	do talknpc 70 51 w2 c w1 c w1 c w1 c w1 c w1
+	log Получили задание прокачать скилл "Скидка" до 4 лвл.
+	log Идем кач. Нам не впервой.
+	$s = @config(QuestDone)
+	$s = $s MerchantTraining5_
+	do conf QuestDone $s
+	do conf QuestPart Kach2
+	call autokachRelease
+}
+
+
+automacro MerchantTraining5 {
+	class Merchant
+	eval ($::config{QuestDone} =~ m/MerchantTraining5_/) and ($::char->getSkillLevel(new Skill(name => "Discount")) >= 4)
+	run-once 1
+	call MerchantTraining5M
+}
+macro MerchantTraining5M {
+	log Мы вкачали нужные для продолжения квеста скилы
+	log У нас записан шаг, на котором мы остановились в прошлый раз
+	log теперь мы продолжаем и заметку стираем
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/MerchantTraining5_\s+//
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	do conf QuestDone $s
+	do conf lockMap alberta
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf QuestPart MerchantTraining6
+}
+
+automacro MerchantTraining6 {
+	location alberta, alberta_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining6"
+	run-once 1
+	call MerchantTraining6M
+}
+macro MerchantTraining6M {
+	do conf lockMap none
+	log Мы вкачали нужный для продолжения квеста скилл "Скидка" до 4 лвл.
+	do move alberta_in @rand(66,72) @rand(45,48)
+	pause @rand(2,4)
+	do talknpc 70 51 w2 c w1 c w1
+	do conf QuestPart MerchantTraining7
+}
+
+automacro MerchantTraining7 {
+	location alberta_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining7"
+	run-once 1
+	call MerchantTraining7M
+}
+macro MerchantTraining7M {
+	log Сейчас возьмем задание: покупка самых дешевых потов в пронте
+	pause @rand(2,4)
+	do talknpc 70 51 w2 c w1 c w1 c w1 c w1 c w1 
+	pause @rand(2,4)
+	log нас телепортнули в пронту.
+	do conf QuestPart MerchantTraining8_0
+}
+
+#############################
+automacro MerchantTrainingChat {
+	location prontera, prt_in
+	class Merchant
+	eval $::config{QuestPart} =~ m/MerchantTraining8_/
+	console /^(\w+):.* (\d+) зени/
+	delay 10
+	call MerchantTrainingChatM
+}
+macro MerchantTrainingChatM {
+[
+	$s = @config(QuestVar2)
+	$i = @config(QuestVar1)
+	$s = $s $.lastMatch1 $.lastMatch2
+	$i++
+	do conf QuestVar1 $i
+	do conf QuestVar2 $s
+	do conf QuestPart MerchantTraining8_$i
+]
+}
+
+automacro MerchantTraining8_0 {
+	location prontera, prt_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining8_0"
+	run-once 1
+	call MerchantTraining8_0M
+}
+macro MerchantTraining8_0M {
+	do conf QuestVar2 none
+	do conf QuestVar1 0
+	log Джайон. prontera 247 129
+	pause @rand(2,4)
+	do move prontera @rand(240,245) @rand(128,130)
+	do talknpc 247 129 w1 c w1 r1
+}
+###
+automacro MerchantTraining8_1 {
+	location prontera, prt_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining8_1"
+	run-once 1
+	call MerchantTraining8_1M
+}
+macro MerchantTraining8_1M {
+	log Эйджи. prt_in 169 11
+	pause @rand(2,4)
+	do move prt_in 166 12
+	do talknpc 169 11 w2 c w1 c w1 r1
+}
+###
+automacro MerchantTraining8_2 {
+	location prontera, prt_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining8_2"
+	run-once 1
+	call MerchantTraining8_2M
+}
+macro MerchantTraining8_2M {
+	log Сэгль. prontera 66 111
+	pause @rand(2,4)
+	do move prontera @rand(62,64) @rand(108,117)
+	pause @rand(2,4)
+	do move prontera @rand(62,64) @rand(108,117)
+	pause @rand(2,4)
+	do talknpc 66 111 w2 c w1 c w1 r1
+}
+
+automacro MerchantTraining8_3 {
+	location prontera, prt_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining8_3"
+	run-once 1
+	call MerchantTraining8_3M
+}
+macro MerchantTraining8_3M {
+	log Мао. prt_in 251 129
+	pause @rand(2,4)
+	do move prt_in @rand(249,252) @rand(127,128)
+	do talknpc 251 129 w2 c w1 r1
+}
+	
+automacro MerchantTraining8_4 {
+	location prontera, prt_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining8_4"
+	run-once 1
+	call MerchantTraining8_4M
+}
+macro MerchantTraining8_4M {
+	log Келлион. prontera 93 330
+	pause @rand(2,4)
+	do move prontera 104 @rand(225,230)
+	pause @rand(1,2)
+	do move prontera @rand(89,97) @rand(325,329)
+	do talknpc 93 330 w2 c w1 r1
+}	
+
+automacro MerchantTraining8_5 {
+	location prontera, prt_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining8_5"
+	run-once 1
+	call MerchantTraining8_5M
+}
+macro MerchantTraining8_5M {
+	log Закончили с беготней, давай думать
+	do conf QuestPart MerchantTraining9
+}
+
+automacro MerchantTraining9 {
+	location prontera, prt_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining9"
+	run-once 1
+	call MerchantTraining9M
+}
+macro MerchantTraining9M {
+	call Parser_Patch_M
+	log Закончили с беготней, давай думать
+	log @config(QuestVar2)
+	$s = @config(QuestVar2)
+	$n1 = @arg("$s", 1)
+	$z1 = @arg("$s", 2)
+	$n2 = $n1
+	$z2 = $z1
+	$i = 2
+	:metka
+		$i++
+		$n = @arg("$s",$i)
+		$i++
+		$z = @arg("$s",$i)
+		if ($z > $z1) goto n2
+			$n2 = $n1
+			$z2 = $z1
+			$n1 = $n
+			$z1 = $z
+			goto next2
+		:n2
+		if ($z > $z2) goto next2
+			$n2 = $n
+			$z2 = $z
+		:next2
+	if ($i < 9) goto metka
+	
+	log Вторая минимальная по счету цена: $z2 у торгаша "$n2"
+	do conf QuestVar1 $n2
+	do conf QuestPart MerchantTraining10
+}
+
+
+automacro MerchantTraining10 {
+	location prontera, prt_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining10"
+	run-once 1
+	call MerchantTraining10M
+}
+macro MerchantTraining10M {
+	if (@config(QuestVar1) != "Джайон") goto VelikijDja
+		log Джайон. prontera 247 129
+		pause @rand(2,4)
+		do move prontera @rand(240,245) @rand(128,130)
+		do talknpc 247 129 w1 c w1 r0
+		goto end
+	:VelikijDja
+	if (@config(QuestVar1) != "Эйджи") goto next2
+		log Эйджи. prt_in 169 11
+		pause @rand(2,4)
+		do move prt_in 166 12
+		do talknpc 169 11 w2 c w1 c w1 r0
+		goto end
+	:next2
+	if (@config(QuestVar1) != "Сэгль") goto next3
+		log Сэгль. prontera 66 111
+		pause @rand(2,4)
+		do move prontera @rand(62,64) @rand(108,117)
+		do talknpc 66 111 w2 c w1 c w1 r0
+		goto end
+	:next3
+	if (@config(QuestVar1) != "Мао") goto China
+		log Мао. prt_in 251 129
+		pause @rand(2,4)
+		do move prt_in @rand(249,252) @rand(127,128)
+		do talknpc 251 129 w2 c w1 r0
+		goto end
+	:China
+	if (@config(QuestVar1) != "Келлион") goto OHKelly
+		log Келлион. prontera 93 330
+		pause @rand(1,2)
+		do move prontera @rand(89,97) @rand(325,329)
+		do talknpc 93 330 w2 c w1 r0
+		goto end
+	:OHKelly
+	:end
+	do conf QuestVar1 none
+	do conf QuestVar2 none
+	do conf QuestPart MerchantTraining11
+	do conf lockMap alberta
+}
+
+automacro MerchantTraining11 {
+	location alberta, alberta_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining11"
+	run-once 1
+	call MerchantTraining11M
+}
+macro MerchantTraining11M {
+	do conf lockMap none
+	log Вот та непись, которая нас заслала в пронту!
+	do move alberta_in @rand(66,72) @rand(45,48)
+	pause @rand(2,4)
+	do talknpc 70 51 w1 c w1 c
+	do conf QuestPart MerchantTraining12
+	# Гурнин: [Гурнин]
+	# Гурнин: Дайте мне взглянуть на эти Красные
+	# Гурнин: зелья. Кажется, вы исследовали рынок и нашли лучшую цену!
+	# You are now level 17
+	# You gained a level!
+	# You are now job level 10
+	# You gained a job level!
+	# Exp gained: 150/0 (13.39%/0.00%)
+	# Unknown #398573: **
+	# Auto-adding stat str
+	# Auto-adding skill Overcharge
+	# Гурнин: Type 'talk cont' to continue talking
+	# Auto-adding stat dex
+	# Auto-adding stat dex
+	# talk cont
+	# Гурнин: [Гурнин]
+	# Гурнин: Есть умение, которое мы будем
+	# Гурнин: учить после того, как выучим 'Скидку': 'Наценка'.
+	# Гурнин: Done talking	
+}
+
+
+automacro MerchantTraining12 {
+	location alberta, alberta_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining12"
+	run-once 1
+	call MerchantTraining12M
+}
+macro MerchantTraining12M {
+	do move alberta_in @rand(66,72) @rand(45,48)
+	pause @rand(2,4)
+	do talknpc 70 51 c c c c c
+	log  Нужно выучить наценку до 4 лвл
+	do conf QuestPart MerchantTraining18
+}
+
+automacro MerchantTraining18 {
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining18"
+	run-once 1
+	call MerchantTraining18M
+}
+macro MerchantTraining18M {
+[
+	log Нужно выучить наценку до 4 лвл. Идем кач. Нам не впервой.
+	$s = @config(QuestDone)
+	$s = $s MerchantTraining19_
+	do conf QuestDone $s
+	do conf QuestPart Kach2
+]
+	call autokachRelease
+}
+
+
+
+automacro MerchantTraining19 {
+	class Merchant
+	eval ($::config{QuestDone} =~ m/MerchantTraining19_/) and ($::char->getSkillLevel(new Skill(name => "Overcharge")) >= 4)
+	run-once 1
+	call MerchantTraining19M
+}
+macro MerchantTraining19M {
+	log Мы вкачали нужные для продолжения квеста скилы
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/MerchantTraining19_\s+//
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	do conf QuestDone $s
+	do conf lockMap alberta
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf QuestPart MerchantTraining20
+}
+
+
+automacro MerchantTraining20 {
+	location alberta, alberta_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining20"
+	run-once 1
+	call MerchantTraining20M
+}
+macro MerchantTraining20M {
+	do conf lockMap none
+	do move alberta_in @rand(66,72) @rand(45,48)
+	pause @rand(2,4)
+	do talknpc 70 51 w1 c w1 c 
+	do conf QuestPart MerchantTraining21
+	# Гурнин: [Гурнин]
+	# Гурнин: Так... Как продвигается изучение
+	# Гурнин: умения 'Наценка'?
+	# Гурнин: Type 'talk cont' to continue talking
+	# talk cont
+	# Гурнин: [Гурнин]
+	# Гурнин: Отличный результат!
+	# Гурнин: Не успел я попросить, как все уже
+	# Гурнин: сделано. Возьмите эту скромную
+	# Гурнин: награду.
+	# You are now level 20
+	# You gained a level!
+	# Exp gained: 0/272 (0.00%/33.92%)
+	# Unknown #398573: **
+	# Гурнин: Type 'talk cont' to continue talking
+	# Auto-adding stat vit
+	# Auto-adding stat vit
+	# Auto-adding stat vit
+	# talk cont
+	# Гурнин: [Гурнин]
+	# Гурнин: В следующий раз я расскажу вам об умении 'Телега'. Подготовьтесь к лекции, так как умение 'Телега' - одно из самых важных умений торговца.
+	# Гурнин: Done talking
+}
+
+automacro MerchantTraining21 {
+	location alberta_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining21"
+	run-once 1
+	call MerchantTraining21M
+}
+macro MerchantTraining21M {
+	pause @rand(2,4)
+	do talknpc 70 51 w2 c w1 c w1 c w1 c w1 c w1
+	log Учим телегу до 4 лвл
+	do conf QuestPart MerchantTraining22
+}
+
+automacro MerchantTraining22 {
+	location alberta_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining22"
+	run-once 1
+	call MerchantTraining22M
+}
+macro MerchantTraining22M {
+[
+	log Нужно получить права вождения телегой, 4wd
+	log Помните, что вам надо выучить 5-ый уровень умения 'Увеличение Носимого Веса',
+	log прежде чем учить умение 'Телега'. Жесть, блин. Этот нпц издевается.
+	$s = @config(QuestDone)
+	$s = $s MerchantTraining23_
+	do conf QuestDone $s
+	do conf QuestPart Kach2
+]
+	call autokachRelease
+}
+
+
+automacro MerchantTraining23 {
+	class Merchant
+	eval ($::config{QuestDone} =~ m/MerchantTraining23_/) and ($::char->getSkillLevel(new Skill(name => "Pushcart")) >= 4)
+	run-once 1
+	call MerchantTraining23M
+}
+macro MerchantTraining23M {
+	log Мы вкачали нужные для продолжения квеста скилы
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/MerchantTraining23_\s+//
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	do conf QuestDone $s
+	do conf lockMap alberta
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf QuestPart MerchantTraining24
+}
+
+automacro MerchantTraining24 {
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining24"
+	run-once 1
+	call MerchantTraining24M
+}
+macro MerchantTraining24M {
+	log Мы вкачали нужные для продолжения квеста скилы
+	do conf lockMap none
+	do move alberta_in @rand(66,72) @rand(45,48)	
+	pause @rand(2,4)
+	do talknpc 70 51 w1 c w1 c 
+	do conf QuestPart MerchantTraining25
+}
+
+automacro MerchantTraining25 {
+	location alberta_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining25"
+	run-once 1
+	call MerchantTraining25M
+}
+macro MerchantTraining25M {
+	pause @rand(2,4)
+	do talknpc 70 51 w2 c w1 c w1 c w1 c w1 c w1 c w1
+	log Учим торговлю до 4 лвл, это типа последняя его "просьба"
+	do conf QuestPart MerchantTraining26
+}
+
+automacro MerchantTraining26 {
+	location alberta_in
+	class Merchant
+	eval $::config{QuestPart} eq "MerchantTraining26"
+	run-once 1
+	call MerchantTraining26M
+}
+macro MerchantTraining26M {
+	log Нуна учить торговля 4 лвл. 
+	$s = @config(QuestDone)
+	$s = $s MerchantTraining27_
+	do conf QuestDone $s
+	do conf QuestPart Kach2
+	call autokachRelease
+}
+
+
+automacro MerchantTraining27 {
+	class Merchant
+	eval ($::config{QuestDone} =~ m/MerchantTraining27_/) and ($::char->getSkillLevel(new Skill(name => "Vending")) >= 4)
+	run-once 1
+	call MerchantTraining27M
+}
+macro MerchantTraining27M {
+[
+	log Мы вкачали нужные для продолжения квеста скилы
+	$s = @config(QuestDone)
+	$s = @eval($::config{QuestDone} =~ s/MerchantTraining27_//)
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	do conf QuestDone $s
+	do conf lockMap alberta
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf QuestPart MerchantTraining28
+]
+}
+
+automacro MerchantTraining28 {
+	class Merchant
+	location alberta, alberta_in
+	eval $::config{QuestPart} eq "MerchantTraining28"
+	run-once 1
+	call MerchantTraining28M
+}
+macro MerchantTraining28M {
+	log Мы вкачали нужные для продолжения квеста скилы
+	do conf lockMap none
+	do move alberta_in @rand(66,72) @rand(45,48)
+	pause @rand(2,4)
+	do talknpc 70 51 w1 c w1 c w1 c w1 c w1 c 
+	do conf QuestPart none
+	$s = @config(QuestDone) MerchantTrainingDone
+	do conf QuestDone $s
+	log Я вас поздравляю! Квест: тренировка мерчей - окончен.
+}
+
+# automacro TestVending {
+	# class Merchant
+	# eval $::char->getSkillLevel(new Skill(name => "Vending")) >= 1
+	# run-once 1
+	# call TestVendingM
+# }
+# macro TestVendingM {
+	# log ====================
+	# log Vending прокачан на @eval($::char->getSkillLevel(new Skill(name => "Vending")))
+	# log ====================
+# }
+
+macro Parser_Patch_M {
+	#Проверка. Если есть патч, то $s будет равно "bb", если нету патча, то "@arg("aa bb cc",$n)"
+	$n = 2
+	$s = @arg("aa bb cc",$n)
+	if ($s == "bb") goto ok
+		log Вам следует пропатчить ваш файл \Openkore\plugins\Macro\Parser.pm
+		log Находим в файле Parser.pm вот это:
+		log =================================================================
+		log  	if ($pair[0] eq 'arg') {
+		log 		return $_[0] =~ /\@(arg)\s*\(\s*(".*?",\s*\d+)\s*\)/
+		log 	}
+		log =================================================================
+		log И исправляем на вот это:
+		log =================================================================
+		log 	if ($pair[0] eq 'arg') {
+		log			return $_[0] =~ /\@(arg)\s*\(\s*(".*?",\s*(\d+|\$\.?[a-z][a-z\d]*))\s*\)/
+		log 	}
+		log =================================================================
+		$n = 15
+		:metka
+			log Через $n секунд Кора закроется. Сделайте патч.
+			pause 1
+			$n--
+		if ($n >= 1) goto metka
+		do quit
+	:ok
+}
+

@@ -1,0 +1,441 @@
+﻿# УТФ-8
+
+##########################################################################
+#############################Квест на мечника#############################
+##########################################################################
+automacro SwordQuestBegin {
+	class Novice
+	job == 10
+	location izlude_in 74 167
+	eval $::config{Job} eq "1" and $::config{QuestPart} eq ""
+	run-once 1
+	call SwordQuestBeginM
+}
+macro SwordQuestBeginM {
+	log Начинаем квест на профу мечника
+	do include off Novice
+	do include on Novice_1
+	do conf QuestPart SwordmanQuest1
+}
+
+
+automacro SwordQuestPart1 {
+	location izlude_in 74 167
+	eval $::config{QuestPart} eq "SwordmanQuest1"
+	run-once 1
+	call SwordQuestPart1M
+}
+macro SwordQuestPart1M {
+	log Говорим, чтобы начать квест
+	pause 1
+	do talknpc 74 172 w1 c w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c w1 c
+	pause @rand(2,3)
+	do conf QuestPart SwordmanQuest2
+}
+
+
+automacro SwordQuestPart2 {
+	location izlude_in
+	eval $::config{QuestPart} eq "SwordmanQuest2"
+	run-once 1
+	call SwordQuestPart2M
+}
+macro SwordQuestPart2M {
+	log Подходим ко второму члену Гильдии
+	pause 1
+	do move @rand(63,65) 170
+	log Разговариваем со вторым членом Гильдии, чтобы пройти в другую комнату
+	pause @rand(2,3)
+	do talk @npc(62 170)
+	pause @rand(2,3)
+	do conf QuestPart SwordmanQuest5
+}
+
+automacro SwordQuestPart5 {
+	location izlude_in
+	eval $::config{QuestPart} eq "SwordmanQuest5"
+	run-once 1
+	call SwordQuestPart5M
+}
+macro SwordQuestPart5M {
+	log Теперь идём к Инструктору
+	pause @rand(2,3)
+	do move 30 @rand(171,173)
+	log Общаемся с Инструктором
+	pause @rand(2,3)
+	do talknpc 30 175 w1 c w1 c w1 c w1 c
+	pause @rand(2,3)
+	do conf QuestPart SwordmanQuest6
+}
+
+
+automacro SwordQuestPart6 {
+	eval $::config{QuestPart} eq "SwordmanQuest6"
+	run-once 1
+	call SwordQuestPart6M
+}
+macro SwordQuestPart6M {
+	log Теперь к НПС, что отправит на тест
+	pause @rand(2,3)
+	do move 30 @rand(164,166)
+	log Говорим чтоб начать тест
+	pause @rand(2,3)
+	do talk @npc(30 163)
+	do conf QuestPart SwordmanQuest8
+}
+
+
+automacro SwordQuestPart8 {
+	location sword_1-1 10 245, sword_2-1 10 245, sword_3-1 10 245
+	eval $::config{QuestPart} eq "SwordmanQuest8"
+	run-once 1
+	call SwordQuestPart8M
+}
+macro SwordQuestPart8M {
+	log Первая комната
+	pause 1
+	do move 23 244
+	pause 1
+	do move 23 241
+	pause 1
+	do move 36 241
+	pause 1
+	do move 47 241
+	pause 1
+	do move 58 241
+	pause 1
+	do move 69 241
+	pause 1
+	do move 71 240
+	pause 1
+	do move 72 240
+	pause 1
+	do move 84 241
+	pause 1
+	do move 95 241
+	pause 1
+	do move 97 239
+	pause 1
+	do move 107 240
+	pause 1
+	do move 118 244
+	pause 1
+	do move 130 244
+	pause 1
+	do move 149 242
+	pause 1
+	do move 160 242
+	pause 1
+	do move 172 242
+	pause 1
+	do move 185 245
+	pause 1
+	do move 193 247
+	pause @rand(2,3)
+	do conf QuestPart SwordmanQuest9
+}
+
+
+automacro SwordQuestPart9 {
+	location sword_1-1 215 244, sword_2-1 215 244, sword_3-1 215 244
+	eval $::config{QuestPart} eq "SwordmanQuest9"
+	run-once 1
+	call SwordQuestPart9M
+}
+macro SwordQuestPart9M {
+	log Первая часть окончена
+	pause 2
+	do move 222 244
+	pause @rand(2,3)
+	do conf QuestPart SwordmanQuest10
+}
+
+
+automacro SwordQuestPart10 {
+	location sword_1-1 11 206, sword_2-1 11 206, sword_3-1 11 206
+	eval $::config{QuestPart} eq "SwordmanQuest10"
+	run-once 1
+	call SwordQuestPart10M
+}
+macro SwordQuestPart10M {
+	log Вторая комната
+	pause 1
+	do move 15 202
+	pause 1
+	do move 27 202	
+	pause 1
+	do move 38 202
+	pause 1
+	do move 49 202
+	pause 1
+	do move 60 202
+	pause 1
+	do move 71 202
+	pause 1
+	do move 82 202
+	pause 1
+	do move 89 202
+	pause 1
+	do move 99 202
+	pause 1
+	do move 115 202
+	pause 1
+	do move 126 202
+	pause 1
+	do move 137 202
+	pause 1
+	do move 148 202
+	pause 1
+	do move 159 202
+	pause 1
+	do move 170 202
+	pause 1
+	do move 181 202
+	pause 1
+	do move 187 202
+	pause 1
+	do move 193 206
+	pause @rand(2,3)
+	do conf QuestPart SwordmanQuest11
+}
+
+
+automacro SwordQuestPart11 {
+	location sword_1-1 215 205, sword_2-1 215 205, sword_3-1 215 205
+	eval $::config{QuestPart} eq "SwordmanQuest11"
+	run-once 1
+	call SwordQuestPart11M
+}
+macro SwordQuestPart11M {
+	log Вторая часть окончена
+	pause 2
+	do move 222 205
+	pause @rand(2,3)
+	do conf QuestPart SwordmanQuest12
+}
+
+
+automacro SwordQuestPart12 {
+	location sword_1-1 11 168, sword_2-1 11 168, sword_3-1 11 168
+	eval $::config{QuestPart} eq "SwordmanQuest12"
+	run-once 1
+	call SwordQuestPart12M
+}
+macro SwordQuestPart12M {
+	log Третья комната
+	pause 5
+	do move 25 168
+	pause 1
+	do move 25 165
+	pause 1
+	do move 33 165
+	pause 1
+	do move 33 166
+	pause 1
+	do move 39 166
+	pause 1
+	do move 39 164
+	pause 1
+	do move 46 164
+	pause 1
+	do move 46 166
+	pause 1
+	do move 52 166
+	pause 1
+	do move 52 164
+	pause 1
+	do move 58 164
+	pause 1
+	do move 58 166
+	pause 1
+	do move 64 166
+	pause 1
+	do move 64 164
+	pause 1
+	do move 73 164
+	pause 1
+	do move 73 167
+	pause 1
+	do move 80 167
+	pause 1
+	do move 80 163
+	pause 1
+	do move 92 163
+	pause 1
+	do move 92 167
+	pause 1
+	do move 113 167
+	pause 1
+	do move 113 164
+	pause 1
+	do move 116 164
+	pause 1
+	do move 116 166
+	pause 1
+	do move 125 166
+	pause 1
+	do move 125 164
+	pause 1
+	do move 129 164
+	pause 1
+	do move 129 162
+	pause 1
+	do move 158 164
+	pause 1
+	do move 158 167
+	pause 1
+	do move 167 167
+	pause 1
+	do move 167 165
+	pause 1
+	do move 170 165
+	pause 1
+	do move 170 170
+	pause 1
+	do move 175 170
+	pause 1
+	do move 177 171
+	pause 1
+	do move 181 171
+	pause 1
+	do move 181 172
+	pause 1
+	do move 184 172
+	pause 1
+	do move 184 168
+	pause 1
+	do move 192 168
+	pause @rand(2,3)
+	do conf QuestPart SwordmanQuest13
+}
+
+
+automacro SwordQuestPart13 {
+	location sword_1-1 215 167, sword_2-1 215 167, sword_3-1 215 167
+	eval $::config{QuestPart} eq "SwordmanQuest13"
+	run-once 1
+	call SwordQuestPart13M
+}
+macro SwordQuestPart13M {
+	log Третья часть окончена
+	pause 1
+	do move 221 167
+	pause @rand(2,3)
+	do conf QuestPart SwordmanQuest14
+}
+
+
+automacro SwordQuestPart14 {
+	location sword_1-1 221 167, sword_2-1 221 167, sword_3-1 221 167
+	eval $::config{QuestPart} eq "SwordmanQuest14"
+	run-once 1
+	call SwordQuestPart14M
+}
+macro SwordQuestPart14M {
+	log Говорим что бы закончить тест
+	pause 1
+	do talk @npc(223 167)
+	pause @rand(2,3)
+	do conf QuestPart SwordmanQuest15
+}
+
+
+automacro SwordQuestPart15 {
+	location izlude_in
+	eval $::config{QuestPart} eq "SwordmanQuest15"
+	run-once 1
+	call SwordQuestPart15M
+}
+macro SwordQuestPart15M {
+	log Подходим к члену гильдии
+	pause @rand(2,3)
+	do move izlude_in 74 168
+	log Докладываем о сдаче экзамена на мечника
+	pause @rand(2,3)
+	do talknpc 74 172 w1 c w1 r0 w1 c
+	pause @rand(2,3)
+	if ($.joblvl != 1) goto error
+		[
+		log Не нужную нубо-одежду продать нпц.
+		do iconf Novice False Eggshell 0 0 1
+		do iconf Novice Guard 0 0 1
+		do iconf Novice Main-Gauche 0 0 1
+		do iconf Novice Slippers 0 0 1
+		do iconf Somber Novice Hood 0 0 1
+		do iconf Tattered Novice Ninja Suit 0 0 1
+		log Ура! Мечник!
+		]
+		if (@inventory(Cotton Shirt) == -1) goto NoShirt
+			do eq Cotton Shirt
+		:NoShirt
+		do conf autoSwitch_default_rightHand [NONE]
+		if (@inventory(Knife [3]) == -1) goto NoKnife
+			do eq Knife [3]
+			do conf autoSwitch_default_rightHand Knife [3]
+		:NoKnife
+		goto end
+	:error 
+		log Персонаж не стал Мечником.
+		log Может быть не вкачаны Базовые скилы?
+	:end 
+
+	do conf QuestDone @config(QuestDone) SwordmanQuest
+	do conf QuestPart none
+	call SwordTrainingStart
+}
+
+
+########################################
+##Swordman Quest Anti Reconnect Macro###
+########################################
+automacro ErorNpcTalkSwordQuest {
+	class Novice
+	location sword_1-1, sword_2-1, sword_3-1, izlude_in
+	console /You are not talking to any NPC/
+	exclusive 1
+	call DFMSSQ1
+}
+automacro DisconnectedFromMapServerSwordQuest1 {
+	class Novice
+	location izlude_in
+	console /(Disconnected from Map Server|The NPC did not respond)/
+	exclusive 1
+	call DFMSSQ1	
+}
+macro DFMSSQ1 {
+	pause 1
+	do reload macro
+	release all
+	do reload conf
+	do relog 7
+	pause 4
+}
+
+automacro DisconnectedFromMapServerSwordQuest2 {
+	class Novice
+	location sword_1-1, sword_2-1, sword_3-1
+	console /Disconnected from Map Server/
+	exclusive 1
+	call FDSQ	
+}
+automacro FeltDownSwordQuest {
+	class novice
+	location sword_1-1 5 120 250 10, sword_2-1 5 120 250 10, sword_3-1 5 120 250 10
+	exclusive 1
+	run-once 1
+	call FDSQ
+}
+macro FDSQ {
+	log Мы упали с дорожки, либо нас отсоединило, пока мы бежали по дорожке
+	pause 1
+	do relog 7
+	do reload macro
+	release all
+	do conf QuestPart SwordmanQuest2
+	do reload conf
+	release FeltDownSwordQuest
+}
+
+
+
+#http://bibian.ath.cx/openkore/viewtopic.php?t=6209&start=60&postdays=0&postorder=asc&highlight=

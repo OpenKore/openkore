@@ -1,0 +1,424 @@
+# UTF-8
+# Прохождение квеста на мерчанта (руофф, рофан.ру, 03.2009, для макроса Святого Инквизирора). 
+# Основная фишка макроса и изначальный исходник - DeniZka, доработал под руофф - manticora
+
+automacro MerchantQuestBegin {
+	class Novice
+	job == 10
+	location alberta_in
+	eval $::config{Job} eq "6" and $::config{QuestPart} eq ""
+	run-once 1
+	call MerchantQuestBeginM
+}
+macro MerchantQuestBeginM {
+	do include off Novice
+	do include on Novice_1
+	do conf saveMap alberta
+	do conf saveMap_warpToBuyOrSell 0
+	do conf storageAuto 1
+	do conf storageAuto_npc alberta 113 60
+	do conf storageAuto_distance 5
+	do conf storageAuto_npc_type 1
+	do conf sellAuto 1
+	do conf sellAuto_npc alberta_in 182 97
+	do conf sellAuto_standpoint alberta_in 185 89
+	if ($.zeny < 1300) goto nozeny
+		do conf QuestPart MerchantQuest0b
+	goto end
+	:nozeny
+		do iconf Feather of Birds 0 0 1
+		do iconf Fluff 0 0 1
+		do iconf Talon 0 0 1
+		do iconf Clover 0 0 1
+		do iconf Tree Root 0 0 1
+		do iconf Knife [3] 0 0 0
+		do iconf Knife 0 0 0
+		do iconf 1201 0 0 0
+		do iconf 1202 0 0 0
+		do iconf 1203 0 0 0
+		do autosell
+		do conf QuestPart MerchantQuest0a
+	:end
+}
+
+automacro MerchantQuestPart0a {
+	eval $::config{QuestPart} eq "MerchantQuest0a"
+	run-once 1
+	call MerchantQuestPart0aM
+}
+macro MerchantQuestPart0aM {
+	if ($.zeny >= 1300) goto end 
+	[
+		log Срочно нужны зеньги на вступительный взнос,
+		log Не хватает @eval(1300 - $.zeny) зенег, поэтому идем зарабатывать
+		do conf itemsMaxWeight_sellOrStore 25
+		do conf itemsMaxNum_sellOrStore 99
+		do conf lockMap pay_fild03
+		do conf attackAuto 2
+		do conf route_randomWalk 1
+		do conf attackAuto_inLockOnly 1
+	]
+	:end
+		do conf QuestPart MerchantQuest0b
+}
+
+automacro MerchantQuestPart0b {
+	location alberta_in, alberta
+	zeny >= 1300
+	eval $::config{QuestPart} eq "MerchantQuest0b"
+	delay 10
+	run-once 1
+	call MerchantQuest0bM
+}
+macro MerchantQuest0bM {
+[
+	log Возращаем настройки на место
+	do conf itemsMaxWeight_sellOrStore 48
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf lockMap none
+	do conf sellAuto 0
+	do conf storageAuto 0
+	do conf QuestPart MerchantQuest1
+]
+}
+
+automacro MerchantQuestPart1 {
+	location alberta_in, alberta
+	eval $::config{QuestPart} eq "MerchantQuest1"
+	run-once 1
+	call MerchantQuest1M
+}
+macro MerchantQuest1M {
+	#Подойти к Торговец 53 43
+	do move alberta_in 57 43
+	pause @rand(2,4)
+	do talknpc 53 43 c r0 c c r0 c r0 c c c c c c c c c c c c
+}
+
+#Узнаём номер заказа
+automacro MerchantQuestPart1b {
+	location alberta_in
+	eval $::config{QuestPart} eq "MerchantQuest1"
+	console /Серийный номер товара (\d+)/
+	delay 10
+	run-once 1 
+	call MerchantQuestPart1bM 
+}
+macro MerchantQuestPart1bM {
+[	
+	log ====================================
+	log = Номер посылки $.lastMatch1
+	log ====================================
+	do conf QuestVar1 $.lastMatch1
+	do conf QuestPart MerchantQuest2
+]
+}
+
+automacro MerchantQuestPart2 {
+	location alberta_in, alberta
+	eval $::config{QuestPart} eq "MerchantQuest2"
+	run-once 1 
+	call MerchantQuestPart2M
+}
+macro MerchantQuestPart2M {
+[
+	log Теперь я знаю куда идти и какой номер у посылки
+	log Идем к торговцу на склад alberta_in 28 29
+	do move alberta_in 64 31 
+]
+	pause 3 
+	if (@config(QuestVar1) != 2328137) goto prt1 
+		do talknpc 28 29 c r0 c c r0 c d2328137 c r0
+		goto end
+	:prt1 
+	if (@config(QuestVar1) != 2485741) goto prt2 
+		do talknpc 28 29 c r0 c c r0 c d2485741 c r0
+		goto end
+	:prt2
+	if (@config(QuestVar1) != 2191737) goto gfn1 
+		do talknpc 28 29 c r0 c c r1 c d2191737 c r0
+		goto end
+	:gfn1
+	if (@config(QuestVar1) != 2989396) goto gfn2 
+		do talknpc 28 29 c r0 c c r1 c d2989396 c r0
+		goto end
+	:gfn2
+	if (@config(QuestVar1) != 3487372) goto mrc1 
+		do talknpc 28 29 c r0 c c r2 c d3487372 c r0
+		goto end
+	:mrc1
+	if (@config(QuestVar1) != 3012685) goto mrc2 
+		do talknpc 28 29 c r0 c c r2 c d3012685 c r0
+		goto end
+	:mrc2
+	if (@config(QuestVar1) != 3543625) goto bln1 
+		do talknpc 28 29 c r0 c c r3 c d3543625 c r0
+		goto end
+	:bln1
+	if (@config(QuestVar1) != 3318702) goto bln2 
+		do talknpc 28 29 c r0 c c r3 c d3318702 c r0
+		goto end
+	:bln2
+	:end
+	do conf QuestPart MerchantQuest3
+}
+
+automacro MerchantQuestPart3 {
+	location alberta, alberta_in
+	eval $::config{QuestPart} eq "MerchantQuest3"
+	run-once 1
+	call MerchantQuestPart3M
+}
+macro MerchantQuestPart3M {
+	if (@config(QuestVar1) == 3487372) goto mrc
+	if (@config(QuestVar1) != 3012685) goto notmrc
+	:mrc
+		log Идем в Морок
+		do move alberta 117 57 
+		pause @rand(2,4)
+		do talknpc 113 60 c r2 c r1 
+		goto end
+		#в Морроке 
+	:notmrc
+	#Если нам не в Морокк, значит нам в пронту (а из пронты в байлан и геф.)
+		log Идем в Пронту
+		do move alberta 117 57 
+		pause @rand(2,4)
+		do talknpc 113 60 c r2 c r2
+		#в Пронте 
+	:end
+	pause 3
+}
+
+automacro MerchantQuestPart4 {
+	location alberta
+	eval $::config{QuestPart} eq "MerchantQuest4"
+	run-once 1
+	call MerchantQuestPart4M
+}
+macro MerchantQuestPart4M {
+	#и получаем прфоессию 
+	log Мы в Альберте! Идем получать профу!
+	do move alberta 34 42 
+}
+
+automacro MerchantQuestPart3a {
+	location prontera
+	eval $::config{QuestPart} eq "MerchantQuest3"
+	run-once 1
+	call MerchantQuestPart3aM
+}
+macro MerchantQuestPart3aM {
+	if (@config(QuestVar1) == 2328137) goto prt
+	if (@config(QuestVar1) != 2485741) goto notprt
+	:prt
+		do move prontera 239 47 
+		pause @rand(2,4)
+		do talknpc 248 42 c c 
+		log Посылка доставлена. Идем назад в альберту
+		do conf QuestPart MerchantQuest4
+	:notprt
+	if (@config(QuestVar1) == 2191737) goto gef
+	if (@config(QuestVar1) != 2989396) goto notgef 
+	:gef
+		do move prontera 151 30 
+		pause @rand(2,4)
+		do talknpc 151 29 c r2 c r1
+		pause 3
+		#в Геффене 
+	:notgef
+	if (@config(QuestVar1) == 3543625) goto bln
+	if (@config(QuestVar1) != 3318702) goto notbln
+	:bln
+		do conf lockMap izlude
+	:notbln
+}
+
+automacro MerchantQuestPart4a {
+	location prontera
+	eval $::config{QuestPart} eq "MerchantQuest4"
+	run-once 1
+	call MerchantQuestPart4aM
+}
+macro MerchantQuestPart4aM {
+	log Возвращаемся в Альберту из Пронты
+	do move prontera 151 35  
+	pause @rand(2,4)
+	do talknpc 151 29 c r2 c r5
+	pause 3 
+	#в Альберте 
+}
+	
+automacro MerchantQuestPart3b {
+	location morocc
+	eval $::config{QuestPart} eq "MerchantQuest3"
+	run-once 1
+	call MerchantQuestPart3bM
+}
+macro MerchantQuestPart3bM {
+	do move morocc 274 269 
+	pause @rand(2,4)
+	do move 144 122 
+	pause @rand(2,4)
+	do talknpc 140 102 c c c
+	pause @rand(2,4)
+	do move morocc
+	log Посылка доставлена. Пора идти в Альберту.
+	do conf QuestPart MerchantQuest4
+}
+
+automacro MerchantQuestPart4b {
+	location morocc
+	eval $::config{QuestPart} eq "MerchantQuest4"
+	run-once 1
+	call MerchantQuestPart4bM
+}
+macro MerchantQuestPart4bM {
+	log Возвращаемся в Альберту из Морокка
+	do move morocc 161 265 
+	pause @rand(2,4)
+	do talknpc 160 258 c r2 c r2
+	pause @rand(2,4)
+}
+	
+automacro MerchantQuestPart3c {
+	location geffen
+	eval $::config{QuestPart} eq "MerchantQuest3"
+	run-once 1
+	call MerchantQuestPart3cM
+}
+macro MerchantQuestPart3cM {
+	do move geffen 61 180 
+	pause @rand(2,3) #в гильдии магов 
+	do move geffen_in 169 120 
+	pause @rand(2,3)
+	do talknpc 155 122 c c c c c w2 
+	do move geffen
+	log Посылка доставлена. Пора идти в Альберту.
+	do conf QuestPart MerchantQuest4
+}
+
+automacro MerchantQuestPart4c {
+	location geffen
+	eval $::config{QuestPart} eq "MerchantQuest4"
+	run-once 1
+	call MerchantQuestPart4cM
+}
+macro MerchantQuestPart4cM {
+	log Возвращаемся из Геффена в Пронту
+	do move geffen 120 60 
+	pause @rand(2,3)
+	do talknpc 120 62 c r2 c r0 
+	pause 3 
+	#в Пронте 
+}
+
+automacro MerchantQuestPart3d {
+	location izlude
+	eval $::config{QuestPart} eq "MerchantQuest3"
+	run-once 1
+	call MerchantQuestPart3dM
+}
+macro MerchantQuestPart3dM {
+	do conf lockMap none
+	do move izlude 195 181 
+	do talknpc 201 181 c r0 
+	pause @rand(2,4)
+	#в Байлане 
+}
+
+automacro MerchantQuestPart4d {
+	location izlude
+	eval $::config{QuestPart} eq "MerchantQuest4"
+	run-once 1
+	call MerchantQuestPart4dM
+}
+macro MerchantQuestPart4dM {
+	do move prontera
+}
+
+automacro MerchantQuestPart3e {
+	location izlu2dun
+	eval $::config{QuestPart} eq "MerchantQuest3"
+	run-once 1
+	call MerchantQuestPart3eM
+}
+macro MerchantQuestPart3eM {
+	#в Байлане 
+	pause @rand(2,4)
+	log Не забываем, что надо отдать письмо от Торгаша - Кафре...
+	do talknpc 106 58 c c r0 c
+	log Посылка доставлена на Байлан!
+	do conf QuestPart MerchantQuest4
+}
+
+automacro MerchantQuestPart4e {
+	location izlu2dun
+	eval $::config{QuestPart} eq "MerchantQuest4"
+	run-once 1
+	call MerchantQuestPart4eM
+}
+macro MerchantQuestPart4eM {
+	do move izlu2dun 107 33 
+	pause @rand(2,4)
+	do talknpc 108 27 c r0 
+	pause @rand(2,4)
+	#в Излюде 
+}
+
+automacro MerchantQuestPart4f {
+	location alberta_in
+	eval $::config{QuestPart} eq "MerchantQuest4"
+	run-once 1
+	call MerchantQuestPart4fM
+}
+macro MerchantQuestPart4fM {
+	do move alberta_in 64 31 
+	pause @rand(2,4)
+	do talknpc 28 29 c c c
+	do conf QuestPart MerchantQuest5
+}
+
+automacro MerchantQuestPart5 {
+	location alberta_in
+	eval $::config{QuestPart} eq "MerchantQuest5"
+	run-once 1
+	call MerchantQuestPart5M
+}
+macro MerchantQuestPart5M {
+	do move alberta_in 57 43 
+	pause @rand(2,4)
+	do talknpc 53 43 c w2 c w2 c w2 c w2 c w2 c
+	pause @rand(2,4)
+	[
+	if ($.joblvl != 1) goto error
+		log Не нужную нубо-одежду продать нпц.
+		do iconf Novice False Eggshell 0 0 1
+		do iconf Novice Guard 0 0 1
+		do iconf Novice Main-Gauche 0 0 1
+		do iconf Novice Slippers 0 0 1
+		do iconf Somber Novice Hood 0 0 1
+		do iconf Tattered Novice Ninja Suit 0 0 1
+		log Стали торговцем.
+		if (@inventory(Cotton Shirt) == -1) goto NoShirt
+			do eq Cotton Shirt
+		:NoShirt
+		do conf autoSwitch_default_rightHand [NONE]
+		if (@inventory(Knife [3]) == -1) goto NoKnife
+			do eq Knife [3]
+			do conf autoSwitch_default_rightHand Knife [3]
+			do iconf Knife [3] 1 0 0
+		:NoKnife
+		goto end
+	:error 
+		log Персонаж не стал Торговцем.
+	:end 
+	]
+	$s = @config(QuestDone)
+	do conf QuestDone $s MerchantQuest
+	do conf QuestPart none
+	do conf QuestVar1 none
+	
+	call MerchantTrainingStart
+}

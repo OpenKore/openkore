@@ -1,0 +1,33 @@
+﻿# УТФ-8
+
+#Нубозона
+!include ..\cfg_macros\Novice_1-Start.txt
+!include ..\cfg_macros\Novice_2-Teachers.txt
+!include ..\cfg_macros\Novice_3-ZoneSelect.txt
+!include ..\cfg_macros\Novice_4-Tests.txt
+#Квесты на первые профессии
+#!include ..\cfg_macros\Swordman_1-Quest.txt
+#!include ..\cfg_macros\Archer_1-Quest.txt
+#!include ..\cfg_macros\Thief_1-Quest.txt
+#!include ..\cfg_macros\Taekwon_1-Quest.txt
+#!include ..\cfg_macros\Merchant_1-Quest.txt
+#!include ..\cfg_macros\Acolyte_1-Quest.txt
+#!include ..\cfg_macros\Mage_1-Quest.txt
+#!include ..\cfg_macros\Ninja_1-Quest.txt
+#!include ..\cfg_macros\Gunslinger_1-Quest.txt
+
+#Сохранение в городах и настройка автосклад и т.д.
+#!include ..\cfg_macros\vedro.txt
+#Тренировка первых проф
+#!include ..\cfg_macros\Thief_2-Training.txt
+#!include ..\cfg_macros\Acolyte_2-Training.txt
+#!include ..\cfg_macros\Mage_2-Training.txt
+#!include ..\cfg_macros\Merchant_2-Training.txt
+#!include ..\cfg_macros\Archer_2-Training.txt
+#!include ..\cfg_macros\Swordman_2-Training.txt
+#Автокач-плагин. На какой локации качаться в зависимости от лвл.
+#!include autokach.mcs
+#Квесты.
+#!include ..\cfg_macros\Quest_1-SledyBoja.txt
+#!include ..\cfg_macros\Quest_2-Soki.txt
+#!include ..\cfg_macros\Quest_4-Diribabl.txt

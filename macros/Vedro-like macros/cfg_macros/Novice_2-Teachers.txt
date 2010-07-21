@@ -1,0 +1,366 @@
+﻿# УТФ-8
+
+automacro NoviceGroundPart2 {
+	location new_1-1, new_2-1, new_3-1, new_4-1, new_5-1
+	eval $::config{QuestPart} eq "NoobZone2"
+	class Novice
+	run-once 1
+	call NoviceGroundPart2M
+}
+macro NoviceGroundPart2M {
+[
+	log ================================================
+	log ====Говорим с Сионой второй раз. Лвлап.=========
+	log ================================================
+]
+	pause @rand(2,3)
+	do talknpc 53 114 w2 c w1 c
+	pause @rand(2,3)
+	do conf QuestPart NoobZone3
+}
+
+
+automacro NoviceGroundPart3 {
+	location new_1-1, new_2-1, new_3-1, new_4-1, new_5-1
+	eval $::config{QuestPart} eq "NoobZone3"
+	class Novice
+	run-once 1
+	call NoviceGroundPart3M
+}
+macro NoviceGroundPart3M {
+[
+	log ================================================
+	log ==============Теперь идём в замок===============
+	log ================================================
+]
+	do move 148 112
+	pause @rand(2,3)
+	do conf QuestPart NoobZone4
+}
+
+
+automacro NoviceGroundPart4 {
+	location new_1-2, new_2-2, new_3-2, new_4-2, new_5-2
+	eval $::config{QuestPart} eq "NoobZone4"
+	class Novice
+	run-once 1
+	call NoviceGroundPart4M
+}
+macro NoviceGroundPart4M {
+[
+	log ================================================
+	log ============Подходим к регистратору=============
+	log ================================================
+]
+	pause 1
+	do move @rand(99,101) @rand(24,26)
+[
+	log ================================================
+	log =========Говорим с регистратором================
+	log ================================================
+]
+	pause @rand(2,3)
+	do talknpc 100 29 w1 c w1 r0 w1 c w1 c
+	pause @rand(2,3)
+	do conf QuestPart NoobZone6
+}
+
+automacro NoviceGroundPart6 {
+	location new_1-2, new_2-2, new_3-2, new_4-2, new_5-2
+	eval $::config{QuestPart} eq "NoobZone6"
+	class Novice
+	run-once 1
+	call NoviceGroundPart6M
+}
+macro NoviceGroundPart6M {
+	[
+	log ================================================
+	log =======Двигаемся к Главному специалисту=========
+	log ================================================
+	]
+	pause 1
+	do move @rand(98,100) @rand(98,100)
+	[
+	log ================================================
+	log =========Говорим с Главным специалистом=========
+	log ================================================
+	]
+	pause @rand(2,3)
+	do talknpc 99 105 w2 c w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 c
+	pause @rand(2,3)
+	do eq @inventory (Tattered Novice Ninja Suit)
+	do conf QuestPart NoobZone8
+}
+
+
+automacro NoviceGroundPart8 {
+	location new_1-2, new_2-2, new_3-2, new_4-2, new_5-2
+	eval $::config{QuestPart} eq "NoobZone8"
+	class Novice
+	run-once 1
+	call NoviceGroundPart8M
+}
+macro NoviceGroundPart8M {
+	[
+	log ================================================
+	log ==Говорим с Главным специалистом. Тп к другому==
+	log ================================================
+	]
+	pause @rand(2,3)
+	do talknpc 99 105 w2 c w1 r0
+	pause @rand(2,3)
+	do conf QuestPart NoobZone9
+}
+
+automacro NoviceGroundPart9 {
+	location new_1-2, new_2-2, new_3-2, new_4-2, new_5-2
+	eval $::config{QuestPart} eq "NoobZone9"
+	class Novice
+	run-once 1
+	call NoviceGroundPart9M
+}
+
+macro NoviceGroundPart9M {
+	[
+	log ================================================
+	log ========Подходим к Специалисту по скилам========
+	log ================================================
+	]
+	pause @rand(2,3)
+	do move @rand(82,84) @rand(106,108)
+[
+	log ================================================
+	log =========Проходим курс обучения по скилам=======
+	log ================================================
+]
+	pause @rand(2,3)
+	do talknpc 83 111 w2 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 r0
+	pause @rand(2,3)
+	do conf QuestPart NoobZone11
+}
+
+
+automacro NoviceGroundPart11 {
+	location new_1-2, new_2-2, new_3-2, new_4-2, new_5-2
+	eval $::config{QuestPart} eq "NoobZone11"
+	class Novice
+	run-once 1
+	call NoviceGroundPart11M
+}
+macro NoviceGroundPart11M {
+[
+	log ================================================
+	log == Еще говорим со Специалистому по скилам. Тп ==
+	log ================================================
+]
+	pause @rand(2,3)
+	do talknpc 83 111 w2 c w1 r0
+	pause @rand(2,3)
+	do conf QuestPart NoobZone12
+}
+
+automacro NoviceGroundPart12 {
+	location new_1-2, new_2-2, new_3-2, new_4-2, new_5-2
+	eval $::config{QuestPart} eq "NoobZone12"
+	class Novice
+	run-once 1
+	call NoviceGroundPart12M
+}
+macro NoviceGroundPart12M {
+	[
+	log ================================================
+	log ================Подходим к Кафре================
+	log ================================================
+	]
+	pause 1
+	do move @rand(114,116) @rand(106,108)
+	[
+	log ================================================
+	log =======Узнаём у Кафры всё что нам нужно=========
+	log ================================================
+	]
+	pause @rand(2,3)
+	do talknpc 118 108 w1 c w1 c w1 c w1 r1 w1 c w1 r0 w1 c w1 c w1 r1 w1 c w1 c w1 c w1 c w1 c w1 r4
+	pause @rand(2,3)
+	do conf QuestPart NoobZone14
+}
+
+automacro NoviceGroundPart14 {
+	location new_1-2, new_2-2, new_3-2, new_4-2, new_5-2
+	eval $::config{QuestPart} eq "NoobZone14"
+	class Novice
+	run-once 1
+	call NoviceGroundPart14M
+}
+macro NoviceGroundPart14M {
+	[
+	log ================================================
+	log ==== Подходим к Спецу по вещам =================
+	log ================================================
+	]
+	pause 1
+	do move @rand(114,116) @rand(106,108)
+	pause @rand(3,4)
+	[
+	log ================================================
+	log ======Сложный разговор со Спецом по Вещам=======
+	log ================================================
+	]
+	pause @rand(2,3)
+	do talknpc 115 111 w2 c w2 r0 w2 c w3 a="is Novice Potion" w2 c w2 c w3 a="eq Novice Slippers" w2 c w2 a="eq Somber Novice Hood" w2 a="eq Novice False Eggshell" w2 c w2 c w2 c w2 c w2 c w2 c w2 r0 w2 c 
+	pause @rand(3,4)
+	do conf QuestPart NoobZone16
+}
+
+
+automacro NoviceGroundPart16 {
+	location new_1-2, new_2-2, new_3-2, new_4-2, new_5-2
+	eval $::config{QuestPart} eq "NoobZone16"
+	class Novice
+	run-once 1
+	call NoviceGroundPart16M
+}
+macro NoviceGroundPart16M {
+[
+	log ================================================
+	log =====Ещё разок говорим со Спецом по вещам. Тп===
+	log ================================================
+]
+	pause @rand(2,3)
+	do talknpc 115 111 w2 c w1 r0 w1 c w1 r0
+	pause @rand(2,3)
+	do conf QuestPart NoobZone17
+}
+
+automacro NoviceGroundPart17 {
+	location new_1-2, new_2-2, new_3-2, new_4-2, new_5-2
+	eval $::config{QuestPart} eq "NoobZone17"
+	class Novice
+	run-once 1
+	call NoviceGroundPart17M
+}
+macro NoviceGroundPart17M {
+	[
+	log ================================================
+	log =================Идём к Эльмину=================
+	log ================================================
+	]
+	pause 1
+	do move @rand(21,23) @rand(178,180)
+	[
+	log ================================================
+	log ==================Говорим с Эльмином============
+	log ================================================
+	]
+	pause @rand(2,3)
+	do talknpc 17 182 w2 c w1 c w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 r3
+	pause @rand(2,3)
+	do conf QuestPart NoobZone18
+}
+
+
+automacro NoviceGroundPart18 {
+	location new_1-2, new_2-2, new_3-2, new_4-2, new_5-2
+	eval $::config{QuestPart} eq "NoobZone18"
+	class Novice
+	run-once 1
+	call NoviceGroundPart18M
+}
+macro NoviceGroundPart18M {
+	[
+	log ================================================
+	log ==============Теперь топаем к Кейн==============
+	log ================================================
+	]
+	pause 1
+	do move @rand(31,33) @rand(178,180)
+	[
+	log ================================================
+	log ===Говорим с Кейн, чтобы попасть к мобам========
+	log ================================================
+	]
+	pause @rand(2,3)
+	do talknpc 38 182 w2 c w1 c w1 c w1 c w1 r0 w1 c
+	do conf QuestPart NoobZone22
+}
+
+
+automacro NoviceGroundPart22 {
+	location new_1-3, new_2-3, new_3-3, new_4-3, new_5-3
+	eval $::config{QuestPart} eq "NoobZone22"
+	class Novice
+	run-once 1
+	call NoviceGroundPart22M
+}
+macro NoviceGroundPart22M {
+	pause @rand(1,3)
+	#Бьем руками в первый раз, чтобы умереть, а не убить моба с первого удара (фабре, поринг..)
+	do conf autoSwitch_default_rightHand [NONE]
+	do conf useHP.disabled 1
+	do conf route_randomWalk 1
+	do conf attackAuto 2
+	do conf QuestPart NoobZone23
+}
+
+
+automacro NoviceGroundPart23 {
+	location new_1-2, new_2-2, new_3-2, new_4-2, new_5-2
+	eval $::config{QuestPart} eq "NoobZone23"
+	class Novice
+	run-once 1
+	call NoviceGroundPart23M
+}
+macro NoviceGroundPart23M {
+	[
+	log ================================================
+	log ===========Умерли :( ХА! Но опыт наш!===========
+	log ================================================
+	]
+	pause @rand(2,3)
+	do move @rand(31,33) @rand(178,180)
+	pause @rand(2,3)
+	do talknpc 38 182 w2 c w1 c w1 r0 w1 c
+	[
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	do conf useHP.disabled 0
+	do conf autoSwitch_default_rightHand Novice Main-Gauche
+	do eq @inventory (Novice Main-Gauche)
+	do eq @inventory (Novice Guard)
+	]
+	pause @rand(3,4)
+	do conf QuestPart NoobZone24
+}
+
+
+automacro NoviceGroundPart24 {
+	location new_1-3, new_2-3, new_3-3, new_4-3, new_5-3
+	eval $::config{QuestPart} eq "NoobZone24"
+	class Novice
+	run-once 1
+	call NoviceGroundPart24M
+}
+macro NoviceGroundPart24M {
+	log Выбираем локацию для кача.
+	release NoviceGroundPart25a
+	release NoviceGroundPart25b
+	release NoviceGroundPart25c
+	do conf QuestPart NoobZone25
+}
+
+
+automacro DeadinNoviceGround {
+	location new_1-2, new_2-2, new_3-2, new_4-2, new_5-2
+	eval $::config{QuestPart} eq "NoobZone25" or $::config{QuestPart} eq "NoobZone26" or $::config{QuestPart} eq "NoobZone27"
+	class Novice
+	run-once 1
+	call DeadinNoviceGroundM
+}
+macro DeadinNoviceGroundM {
+	log Нуба сожрали мобы, идем снова туда же, отомстим.
+	do move @rand(31,33) @rand(178,180)
+	pause @rand(2,3)
+	do talknpc 38 182 w2 c w1 c w1 r0 w2 c
+	release NoviceGroundPart24
+	do conf QuestPart NoobZone24
+}

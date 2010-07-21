@@ -1,0 +1,211 @@
+#############################
+#########  ACOLYTE ##########
+#############################
+
+automacro AcolyteQuestBegin {
+	class Novice
+	job == 10
+	location prt_church
+	eval $::config{Job} eq "2" and $::config{QuestPart} eq ""
+	run-once 1
+	call AcolyteQuestBeginM
+}
+macro AcolyteQuestBeginM {
+	log Начинаем квест на профу аколита
+	do include off Novice
+	do include on Novice_1
+	do conf QuestPart AcoQuest0
+}
+
+automacro AcolyteQuestPart0 {
+	class Novice
+	location prt_church
+	eval $::config{QuestPart} eq "AcoQuest0"
+	run-once 1
+	call AcolyteQuestPart0M
+}
+macro AcolyteQuestPart0M {
+[
+	log ================================================
+	log = Идём поговорим со священником.
+	log ================================================
+]
+	pause @rand(2,4)
+	do move prt_church 183 38
+	pause @rand(2,4)
+	do talknpc 184 41 c r0 c r0 c c c c
+}
+
+automacro AcolyteQuestPart1 {
+	class Novice
+	location prt_church
+	eval $::config{QuestPart} eq "AcoQuest0"
+	console /(Матильде|Юсуке|алькабар)/
+	run-once 1
+	delay 10
+	call AcolyteQuestPart1M
+}
+macro AcolyteQuestPart1M {
+[
+	log =================================
+	log = Знаю куда идти: $.lastMatch1
+	log =================================
+	do conf QuestVar1 $.lastMatch1
+	do conf QuestPart AcoQuest2
+]
+}
+
+automacro AcolyteQuestPart2 {
+	class Novice
+	location prontera, prt_church
+	eval $::config{QuestPart} eq "AcoQuest2"
+	run-once 1
+	call AcolyteQuestPart2M
+}
+macro AcolyteQuestPart2M {
+	log ================================================
+	log = Идём к нпц по квесту.
+	log ================================================
+	if (@config(QuestVar1) != Матильде) goto mtl
+		log ================================================
+		log = Идём к Матильде
+		log ================================================
+		do conf lockMap moc_fild07
+		pause 2
+		if (@inventory(Free Ticket for Kafra Transportation) == -1) goto end
+			log У нас есть проездной Кафры
+			do move prontera @rand(32,38) @rand(196,200)
+			log Так... где тут Кафра?
+			pause @rand(2,5)
+			log А, да вот же она!
+			pause @rand(2,3)
+			do talknpc 29 207 c r2 c r3
+		goto end
+	:mtl 
+	if (@config(QuestVar1) != Юсуке) goto ysk
+		log ================================================
+		log = Идём к Юсуке.
+		log ================================================
+		do conf lockMap prt_fild00
+		goto end
+	:ysk
+	if (@config(QuestVar1) != алькабар) goto kbr 
+		log ================================================
+		log = Идём к Рубаке
+		log ================================================
+		do conf lockMap prt_fild03
+		goto end
+	:kbr
+	:end
+#	do move @config(lockMap)
+}
+
+
+automacro AcolyteQuestPart2a {
+	class Novice
+	location moc_fild07, prt_fild00, prt_fild03
+	eval $::config{QuestPart} eq "AcoQuest2"
+	run-once 1
+	call AcolyteQuestPart2aM
+}
+macro AcolyteQuestPart2aM {
+[
+	log ================================================
+	log = Непись где-то рядом...
+	log ================================================
+]
+	if (@config(QuestVar1) != Матильде) goto mtl
+		do move moc_fild07 39 354
+		pause @rand(2,4)
+		do talknpc 41 355 c c 
+		goto end
+	:mtl 
+	if (@config(QuestVar1) != Юсуке) goto ysk
+		do move prt_fild00 207 221
+		pause @rand(2,4)
+		do talknpc 208 218 c c 
+		goto end
+	:ysk
+	if (@config(QuestVar1) != алькабар) goto kbr 
+		do move prt_fild03 365 255
+		pause @rand(2,4)
+		do talknpc 365 255 c c c c c c c
+		goto end
+	:kbr
+	:end
+	do conf lockMap prt_church
+	do conf QuestPart AcoQuest3
+}
+
+automacro AcolyteQuestPart2aa {
+	class Novice
+	location moc_fild07, morocc
+	eval $::config{QuestPart} eq "AcoQuest3"
+	delay 5
+	run-once 1
+	call AcolyteQuestPart2aaM
+}
+macro AcolyteQuestPart2aaM {
+	if (@inventory(Free Ticket for Kafra Transportation) == -1) goto end
+		log У нас есть проездной Кафры - пользуем его
+		do move morocc @rand(163,165) @rand(263,265)
+		log Так... где тут Кафра?
+		pause @rand(2,5)
+		log А, да вот же она!
+		pause @rand(2,3)
+		do talknpc 160 258 c r2 c r0
+	:end
+}
+
+
+automacro AcolyteQuestPart3 {
+	class Novice
+	location prt_church
+	eval $::config{QuestPart} eq "AcoQuest3"
+	run-once 1
+	call AcolyteQuestPart3M
+}
+macro AcolyteQuestPart3M {
+[
+	log ================================================
+	log = Возвращаемся в Пронтерску Церковь.
+	log ================================================
+]
+	do move prt_church 184 38
+[
+	log ================================================
+	log = Говорим со Священником, получаем профу.
+	log ================================================
+]
+	pause @rand(2,5)
+	do talknpc 184 41 c r0 c c c c
+	if ($.joblvl != 1) goto error
+		[
+		log Не нужную нубо-одежду продать нпц.
+		do iconf Novice False Eggshell 0 0 1
+		do iconf Novice Guard 0 0 1
+		do iconf Novice Main-Gauche 0 0 1
+		do iconf Novice Slippers 0 0 1
+		do iconf Somber Novice Hood 0 0 1
+		do iconf Tattered Novice Ninja Suit 0 0 1
+		log Не нужный ножик тоже следует продать
+		do iconf Knife 0 0 1
+		log ============================
+		log = УРА!!!! СТАЛ АКОЛИТОМ!!!
+		log ============================
+		$s = @config(QuestDone)
+		do conf QuestDone $s AcoQuest
+		do conf QuestPart none
+		do conf QuestVar1 none
+		do conf lockMap none
+		do conf autoSwitch_default_rightHand none
+		]
+		if (@inventory(Cotton Shirt) == -1) goto NoShirt
+			do eq Cotton Shirt
+		:NoShirt
+		call AcolyteTrainingStart
+		goto end
+	:error
+		log Ошибка, мы не стали Аколитом
+	:end
+}

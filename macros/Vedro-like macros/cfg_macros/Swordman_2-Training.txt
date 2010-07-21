@@ -1,0 +1,1613 @@
+#тренировка мечников
+#В процессе кача и прохождения квеста у меня апнулся до 24/17
+
+macro SwordTrainingStart {
+[
+	log Начинаем тренировку Мечников
+	do conf include off Swordman_1
+	do conf lockMap izlude_in
+	do conf lockMap_x 74
+	do conf lockMap_y 168
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	do conf QuestPart SwordTraining0
+]	
+}
+
+automacro SwordTraining0 {
+	class Swordsman
+	location izlude_in 74 168
+	eval $::config{QuestPart} eq "SwordTraining0"
+	run-once 1
+	call SwordTraining0M
+}
+macro SwordTraining0M {
+	log Нужная для начала квеста непись (Шуранк) где-то рядом.
+	pause @rand(2,3)
+	do talknpc 82 163 c c c c
+	log Получили лвл нахаляву.
+	do conf lockMap none
+	do conf lockMap_x none
+	do conf lockMap_y none
+	do conf QuestPart SwordTraining1
+}
+
+
+automacro SwordTraining1 {
+	class Swordsman
+	location izlude_in, izlude
+	eval $::config{QuestPart} eq "SwordTraining1"
+	run-once 1
+	call SwordTraining1M
+}
+macro SwordTraining1M {
+	log Идем качаться! До первого баша!
+	call autokachLock
+	do move izlude
+	do conf QuestDone @config(QuestDone) SwordTraining2_ 
+	do conf QuestPart Kach2
+	do conf saveMap izlude
+	pause 3
+	call autokachRelease
+}
+
+# nl
+# 3    Шуранк                       (82, 163)     52694
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: А, сослуживец. Позвольте
+# Шуранк: представиться. Я Шуранк Чайнлир, рыцарь на службе Пронтерской кавалерии.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Нас очень беспокоит, что современная молодежь идет в мечники, не понимая сути профессии. Они могут стать рыцарями, но какими...
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Хотите стать профессиональным
+# Шуранк: мечником? Если да, то вам надо
+# Шуранк: выучить основы, и начнем мы с
+# Шуранк: умения 'Баш'.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: *Ахает*
+# Шуранк: Какие нежные ручки! Вы не выучили 'Баш', да?! Как вы можете участвовать в битвах, не зная 'Баша'?
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Если вы хотите стать настоящим мечником, вам непременно нужен 'Баш'. Никаких вопросов: основы надо знать! Возьмите это и идите тренироваться!
+# You are now level 12
+# You gained a level!
+# Шуранк: Done talking
+
+
+#Прекращаем кач, идем в излюд
+automacro SwordTraining2 {
+	class Swordsman
+	eval ($::config{QuestDone} =~ m/SwordTraining2_/) and ($::char->getSkillLevel(new Skill(name => "Bash")) >= 1)
+	run-once 1
+	call SwordTraining2M
+}
+macro SwordTraining2M {
+	log мы качнули Баш 1 лвл, продолжаем тренировку!
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/SwordTraining2_//
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	do conf QuestDone $s
+	
+	do conf lockMap izlude
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf QuestPart SwordTraining3
+}
+
+
+#Говорим Шуранку, что мы вкачали Баш 1 лвл, получаем халявный лвл.
+automacro SwordTraining3 {
+	class Swordsman
+	location izlude_in, izlude
+	eval $::config{QuestPart} eq "SwordTraining3"
+	run-once 1
+	call SwordTraining3M
+}
+macro SwordTraining3M {
+	log Привет Шуранк!
+	do conf lockMap none
+	pause 2
+	do move izlude_in 74 161
+	pause 2
+	do talknpc 82 163 c c c c c
+	pause 2
+	do conf QuestPart SwordTraining4
+}
+
+#Идем кач дальше
+automacro SwordTraining4 {
+	class Swordsman
+	location izlude_in, izlude
+	eval $::config{QuestPart} eq "SwordTraining4"
+	run-once 1
+	call SwordTraining4M
+}
+macro SwordTraining4M {
+	log Идем качаться!
+	call autokachLock
+	do move izlude
+	do conf QuestDone @config(QuestDone) SwordTraining5_
+	do conf QuestPart Kach2
+	do conf saveMap izlude
+	pause 3
+	call autokachRelease
+}
+
+# nl
+# 3    Шуранк                       (82, 163)     52694
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: Знаете ли вы красоту 'Баша'?
+# Шуранк: 'Баш' - квинтэссенция всего искусства мечников!
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Я вижу, вы понимаете немного в
+# Шуранк: умении 'Баш'. Но не так много, как хотелось бы. Позвольте, я расскажу...
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: 'Баш' - это активное умение,
+# Шуранк: которое можно повысить до 10-го уровня. Оно позволяет сильно ударить цель. Эта атака наносит очень много урона!
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Как любое активное умение, 'Баш'
+# Шуранк: тратит ману каждый раз, как используется. Если не быть осторожным, она кончится быстрее, чем хотелось бы!
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Это все, что я хотел сказать на
+# Шуранк: эту тему. Что касается тонкостей - поймете на личном опыте.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: В ознаменование ваших достижений
+# Шуранк: позвольте мне дать вам скромную награду. Но помните, у нас еще множество невыученных основ!
+# You are now level 13
+# You gained a level!
+# Шуранк: Done talking
+# Auto-adding stat str
+# Auto-adding stat str
+
+
+#Прекращаем кач, идем в излюд
+automacro SwordTraining5 {
+	class Swordsman
+	eval ($::config{QuestDone} =~ m/SwordTraining5_/) and ($::char->getSkillLevel(new Skill(name => "Bash")) >= 5)
+	run-once 1
+	call SwordTraining5M
+}
+macro SwordTraining5M {
+	log мы качнули Баш 5 лвл, кончаем кач, продолжаем тренировку!
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/SwordTraining5_//
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	do conf QuestDone $s
+	
+	do conf lockMap izlude
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf QuestPart SwordTraining6
+}
+
+automacro SwordTraining6 {
+	class Swordsman
+	location izlude_in, izlude
+	eval $::config{QuestPart} eq "SwordTraining6"
+	run-once 1
+	call SwordTraining6M
+}
+macro SwordTraining6M {
+	log Привет Шуранк!
+	pause 2
+	do conf lockMap none
+	do move izlude_in 74 161
+	pause 2
+	do talknpc 82 163 c c c c c
+	pause 2
+	do conf QuestPart SwordTraining7
+}
+# nl
+# 3    Шуранк                       (82, 163)     52694
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: Надеюсь, вы хорошенько
+# Шуранк: потренировались в использовании
+# Шуранк: 'Баша'. Если хотите стать
+# Шуранк: настоящим мечником, вам надо быть мастером в этом умении.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Не сказал бы, что вы стали мастером, но вы очень старались.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Давайте расскажу, как пользоваться умением. Даже если вы уже слышали, нелишне будет повторить.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: 'Баш' - активное умение, которое
+# Шуранк: можно повысить до 10-го уровня. Оно позволяет сильно ударить цель. Эта атака наносит очень много урона!
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Как любое активное умение, 'Баш'
+# Шуранк: тратит ману каждый раз, как используется. Если не быть осторожным, она кончится быстрее, чем хотелось бы!..
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Возьмите эту скромную награду за
+# Шуранк: свою работу. Я надеюсь, вы понимаете важность использования 'Баша' в деле вашего развития.
+# You are now level 16
+# You gained a level!
+# Шуранк: Done talking
+# Auto-adding stat str
+# Auto-adding stat str
+
+#Идем кач дальше
+automacro SwordTraining7 {
+	class Swordsman
+	location izlude_in, izlude
+	eval $::config{QuestPart} eq "SwordTraining7"
+	run-once 1
+	call SwordTraining7M
+}
+macro SwordTraining7M {
+	log Идем качаться! Нужен Баш 10 лвл.
+	call autokachLock
+	do move izlude
+	do conf QuestDone @config(QuestDone) SwordTraining8_
+	do conf QuestPart Kach2
+	do conf saveMap izlude
+	call autokachRelease
+}
+
+
+
+#Прекращаем кач, идем в излюд
+automacro SwordTraining8 {
+	class Swordsman
+	eval ($::config{QuestDone} =~ m/SwordTraining8_/) and ($::char->getSkillLevel(new Skill(name => "Bash")) >= 10)
+	run-once 1
+	call SwordTraining8M
+}
+macro SwordTraining8M {
+	log мы качнули Баш 10 лвл, кончаем кач, продолжаем тренировку!
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/SwordTraining8_//
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	do conf QuestDone $s
+	
+	do conf lockMap izlude
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf QuestPart SwordTraining9
+}
+
+automacro SwordTraining9 {
+	class Swordsman
+	location izlude_in, izlude
+	eval $::config{QuestPart} eq "SwordTraining9"
+	run-once 1
+	call SwordTraining9M
+}
+macro SwordTraining9M {
+	log Привет Шуранк!
+	pause 2
+	do conf lockMap none
+	do move izlude_in 74 161
+	pause 2
+	do talknpc 82 163 c c w2
+	do eq Muffler
+	do conf QuestPart SwordTraining10
+}
+# nl
+# 3    Шуранк                       (82, 163)     52694
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: Если хотите владеть всей мощью
+# Шуранк: умения 'Баш', лучше поднять его
+# Шуранк: на максимум. Поверьте моему опыту
+# Шуранк: бывалого мечника.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Впечатляет! Только мастер умения
+# Шуранк: 'Баш' имеет такие мускулы. Вы молодец, мечник.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Вот скромный подарок в знак ваших
+# Шуранк: заслуг. Но не расслабляйтесь! У вас впереди все еще долгий путь к совершенству.
+# You are now level 18
+# You gained a level!
+# Item added to inventory: Muffler (38) x 1 - Armour
+# Шуранк: Done talking
+# Auto-adding stat dex
+# Auto-adding stat dex
+
+
+
+#Странный разговор. Предполагается, что мы должны были уже выучить Восстановление ХП перед этим разговором?
+automacro SwordTraining10 {
+	class Swordsman
+	location izlude_in, izlude
+	eval $::config{QuestPart} eq "SwordTraining10"
+	run-once 1
+	call SwordTraining10M
+}
+macro SwordTraining10M {
+	log Странный разговор. Предполагается, что мы должны были уже выучить Восстановление ХП перед этим разговором?
+	pause 2
+	do move izlude_in 74 161
+	pause 2
+	do talknpc 82 163 c c c c c c w2
+	do conf QuestPart SwordTraining11
+}
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: Раз 'Баш' уже выучен, пришло
+# Шуранк: время рассказать вам об остальных умениях мечника.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Вам надо познакомиться с умением
+# Шуранк: 'Восстановление HP'. Оно помогает
+# Шуранк: выстаивать в тяжелых схватках.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Судя по тому, как вы костлявы,
+# Шуранк: вы еще не приступали к изучению
+# Шуранк: умения 'Восстановление HP'!
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: 'Восстановление HP' - это
+# Шуранк: пассивное умение, которое всегда
+# Шуранк: работает и не требует затрат маны.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Оно позволяет вам восстанавливать здоровье вдвое быстрее. Возможно, это выглядит не так уж круто, но это существенно сокращает время отдыха между сражениями.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Я настаиваю, чтобы вы выучили это
+# Шуранк: умение. Несомненно, другие умения не менее важны, однако это...
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Я думаю, вы уже достаточно знаете об умении 'Восстановление HP'. В следующий раз мы поговорим о 'Провокации'.
+# Шуранк: Done talking
+
+
+
+#Шуранк дает задание поговорить с Декю в Геффене
+automacro SwordTraining11 {
+	class Swordsman
+	location izlude_in, izlude
+	eval $::config{QuestPart} eq "SwordTraining11"
+	run-once 1
+	call SwordTraining11M
+}
+macro SwordTraining11M {
+	log Шуранк дает задание поговорить с Декю в Геффене
+	pause 2
+	do move izlude_in 74 161
+	pause 2
+	do talknpc 82 163 c c c c c w2
+	do conf QuestPart SwordTraining12
+}
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: А, вернулись... Я знаю, что обещал научить вас всему о 'Провокации', но...
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Я хочу, чтобы вы нашли рыцаря по
+# Шуранк: имени Декю в Геффене. Слушайте внимательно, я расскажу, что ему передать.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Что случилось, что за убийство?
+# Шуранк: Ты узнал, кто это? И если да, то
+# Шуранк: что ты предполагаешь делать?
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Если скажете прямо так, Декю
+# Шуранк: поймет, о чем вы толкуете. Запомните его ответ и передайте мне.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Возможно, будет тяжело сражаться с монстрами по пути в Геффен. Если вы встретите кого-нибудь чересчур сильного, не стесняйтесь делать ноги.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Хотя существует корпорация Кафра,
+# Шуранк: я бы рекомендовал прогуляться ножками. Вам никогда не вырасти сильным, если не будете проверять себя каждый удобный момент!
+# Шуранк: Done talking
+
+
+	
+#Говорим с Шуранком еще раз и он нас варпает на локу слева от Геффена.
+automacro SwordTraining12 {
+	class Swordsman
+	location izlude_in, izlude
+	eval $::config{QuestPart} eq "SwordTraining12"
+	run-once 1
+	call SwordTraining12M
+}
+macro SwordTraining12M {
+	log Говорим с Шуранком еще раз и он нас варпает на локу слева от Геффена.
+	pause 2
+	do move izlude_in 74 161
+	pause 2
+	do talknpc 82 163 c c c c c w2
+	do conf lockMap geffen
+	do conf QuestPart SwordTraining13
+}
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: Я хочу, чтобы вы нашли рыцаря по
+# Шуранк: имени Декю в Геффене. Слушайте внимательно, я расскажу, что ему передать.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Что случилось, что за убийство?
+# Шуранк: Ты узнал, кто это? И если да, то
+# Шуранк: что ты предполагаешь делать?
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Если скажете прямо так, Декю
+# Шуранк: поймет, о чем вы толкуете. Запомните его ответ и передайте мне.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Возможно, будет тяжело сражаться с монстрами по пути в Геффен. Если вы встретите кого-нибудь чересчур сильного, не стесняйтесь делать ноги.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: В общем, ничего не бойтесь и идите смело. Я верю в вас, как в самого себя!
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# MAP Name: gef_fild07.gat
+# Your Coordinates: 35, 192	
+	
+	
+	
+	
+#geffen
+automacro SwordTraining13 {
+	class Swordsman
+	location geffen
+	eval $::config{QuestPart} eq "SwordTraining13"
+	run-once 1
+	call SwordTraining13M
+}
+macro SwordTraining13M {
+	log Говорим с Декю в Геффене.
+	pause 2
+	do conf lockMap none
+	do move geffen 146 130
+	pause 2
+	do talknpc 154 143 c c r1 c r0 c r1 c c c c c c w2
+	do conf QuestPart SwordTraining14
+}
+# do move geffen 146 130
+# do talknpc	
+# после разговора нас варпнули обратно в излюд! вот это сервис!
+# nl
+# 0    Декю                         (154, 143)    52590
+# talk 0
+# Декю: [Декю]
+# Декю: А!.. Вы мечник, которого прислал
+# Декю: Шуранк? Хорошо, я уже заждался...
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Скажите мне...
+# Декю: Что за послание передал мне Шуранк?
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Убийство...
+# 1  Что случилось...
+# 2  Cancel Chat
+# -------------------------------
+# Декю: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Декю: [Игрунья]
+# Декю: Что случилось, что за убийство?
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Ты узнал...
+# 1  Кто за...
+# 2  Cancel Chat
+# -------------------------------
+# Декю: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Декю: [Игрунья]
+# Декю: Ты узнал, кто это? И если да, то...
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Почему ты...
+# 1  Что ты...
+# 2  Cancel Chat
+# -------------------------------
+# Декю: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Декю: [Игрунья]
+# Декю: Что ты предполагаешь делать?
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Так Шуранк спрашивает:
+# Декю: 'Что случилось, что за убийство?
+# Декю: Ты узнал, кто это? И если да, то
+# Декю: что ты предполагаешь делать?'
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Хммм... Я понимаю его интерес.
+# Декю: Теперь, пожалуйста, дайте ему ответ.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Мы так и не нашли того, кто убил.
+# Декю: Однако у нас есть список
+# Декю: подозреваемых, и скоро мы вычислим
+# Декю: виновного.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Спасибо за беспокойство. Я награжу вас.
+# You are now level 19
+# You gained a level!
+# Декю: Type 'talk cont' to continue talking
+# Auto-adding stat dex
+# Auto-adding stat dex
+# talk cont
+# Декю: [Декю]
+# Декю: Осторожнее в пути, храбрый мечник.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# MAP Name: izlude.gat
+# Your Coordinates: 35, 78
+	
+
+#идем к шуранку, сообшаем вести из геффена. Говорим про провокацию.
+automacro SwordTraining14 {
+	class Swordsman
+	location izlude
+	eval $::config{QuestPart} eq "SwordTraining14"
+	run-once 1
+	call SwordTraining14M
+}
+macro SwordTraining14M {
+	log Идем к шуранку, сообшаем вести из геффена. Говорим про провокацию. Нас пошлют качаться.
+	pause 2
+	do move izlude_in 74 161
+	pause 2
+	do talknpc 82 163 c c c c c c c c w2
+	do conf QuestPart SwordTraining15
+}
+# nl
+# 3    Шуранк                       (82, 163)     52694
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: А, вернулись... Для неофита вы
+# Шуранк: неплохо справляетесь. Так что
+# Шуранк: там насчет сообщения от Декю?
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Вижу... Ну что ж, продолжим наше
+# Шуранк: обучение. Переходим к 'Провокации'.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Вы еще не выучили 'Провокацию'?
+# Шуранк: Тем более мне требуется поведать
+# Шуранк: вам о ее преимуществах.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Чтобы эффективно пользоваться
+# Шуранк: 'Провокацией', вам надо понять,
+# Шуранк: как она работает: 'Провокация' дразнит и бесит ваших врагов, заставляя их в ярости атаковать вас.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Спровоцированные враги получают дополнительную силу атаки, что делает их опасными, но при этом они теряют защиту, отчего их становится легче повергнуть.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: В идеале, лучше провоцировать врагов, когда они уже настолько слабы, что вы можете покончить с ними в кратчайшие сроки. Но это на ваш выбор.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Ну и, разумеется - чем выше уровень 'Провокации', тем больше она усиливает атаку и снижает защиту.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Активное умение, 'Провокация' тратит совсем немного маны, примерно как 'Баш'. Но осторожнее, а то рискуете потратить всю ману.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Теперь я прошу вас пойти
+# Шуранк: потренироваться в использовании 'Провокации'. Возвращайтесь, когда поймете всю силу этого умения.
+# Шуранк: Done talking
+
+#Идем кач дальше
+automacro SwordTraining15 {
+	class Swordsman
+	location izlude_in, izlude
+	eval $::config{QuestPart} eq "SwordTraining15"
+	run-once 1
+	call SwordTraining15M
+}
+macro SwordTraining15M {
+	log Идем качаться! Нужена Провока 5 (минимум) лвл.
+	call autokachLock
+	do move izlude
+	do conf QuestDone @config(QuestDone) SwordTraining16_
+	do conf QuestPart Kach2
+	do conf saveMap izlude
+	call autokachRelease
+}
+
+
+#Прекращаем кач, идем в излюд
+automacro SwordTraining16 {
+	class Swordsman
+	eval ($::config{QuestDone} =~ m/SwordTraining16_/) and ($::char->getSkillLevel(new Skill(name => "Provoke")) >= 5)
+	run-once 1
+	call SwordTraining16M
+}
+macro SwordTraining16M {
+	log мы качнули Провоку, кончаем кач, проходим квест дальше!
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/SwordTraining16_//
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	do conf QuestDone $s
+	
+	do conf lockMap izlude
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf QuestPart SwordTraining17
+}
+
+#Йоу, Шуранк, мы выучили провоку!
+automacro SwordTraining17 {
+	class Swordsman
+	location izlude, izlude_in
+	eval $::config{QuestPart} eq "SwordTraining17"
+	run-once 1
+	call SwordTraining17M
+}
+macro SwordTraining17M {
+	log Идем к Шуранку, говорим, что выучили провокацию
+	do conf lockMap none
+	pause 2
+	do move izlude_in 74 161
+	pause 2
+	do talknpc 82 163 w2 c w2 c w2
+	do conf QuestPart SwordTraining18
+}
+# nl
+# 3    Шуранк                       (82, 163)     52694
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: А, вернулись...
+# Шуранк: Так как проходит ваш тренинг
+# Шуранк: по использованию 'Провокации',
+# Шуранк: как дела вообще?
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк:  Я вижу, вы уже прекрасно разбираетесь в тонкостях 'Провокации'. За это вы заслуживаете награды.
+# You are now level 23
+# You gained a level!
+# Шуранк: Type 'talk cont' to continue talking
+# Auto-adding stat vit
+# Auto-adding stat vit
+# Auto-adding stat vit
+# Auto-adding stat vit
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Когда мы встретимся в следующий раз, я расскажу вам об умении 'Стойкость'. Приходите, когда подготовитесь.
+# Шуранк: Done talking
+
+automacro SwordTraining18 {
+	class Swordsman
+	location izlude, izlude_in
+	eval $::config{QuestPart} eq "SwordTraining18"
+	run-once 1
+	call SwordTraining18M
+}
+macro SwordTraining18M {
+	log Беседуем с Шуранком об Эндури. Нас просят ее выучить хотя бы на 1 лвл.
+	pause 2
+	do move izlude_in 74 161
+	pause 2
+	do talknpc 82 163 w2 c w2 c w2 c w2 c w2
+	do conf QuestPart SwordTraining19
+}
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: Пришло время рассказать вам все,
+# Шуранк: что я знаю об умении 'Стойкость'.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Как уже было сказано, получение вами повреждений заставляет споткнуться от боли, остановиться на какой-то период времени. Таким образом, если вас постоянно атакуют, вы не можете двинуться с места и избежать смерти.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Что же делать? Активируйте 'Стойкость' - и забудьте об атаках! Вы получаете урон, но атаки не останавливают вас! Вы можете атаковать в ответ или убежать - почувствуйте настоящую свободу выбора!
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Конечно, такие чудеса не вечны.
+# Шуранк: Однако чем выше уровень умения, тем дольше будет продолжаться действие. Не забудьте также о побочных эффектах - задержке после использования.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Хорошо. Я прошу вас выучить умение
+# Шуранк: 'Стойкость'. Вы станете мастером
+# Шуранк: меча, если научитесь отражать атаки врагов!
+# Шуранк: Done talking
+
+#Идем кач дальше
+automacro SwordTraining19 {
+	class Swordsman
+	location izlude_in, izlude
+	eval $::config{QuestPart} eq "SwordTraining19"
+	run-once 1
+	call SwordTraining19M
+}
+macro SwordTraining19M {
+	log Идем качаться! Берем Эндурь 2 лвл
+	call autokachLock
+	do move izlude
+	do conf QuestDone @config(QuestDone) SwordTraining20_
+	do conf QuestPart Kach2
+	do conf saveMap izlude
+	
+	call autokachRelease
+}
+
+
+#Прекращаем кач, идем в излюд
+automacro SwordTraining20 {
+	class Swordsman
+	eval ($::config{QuestDone} =~ m/SwordTraining20_/) and ($::char->getSkillLevel(new Skill(name => "Endure")) >= 1)
+	run-once 1
+	call SwordTraining20M
+}
+macro SwordTraining20M {
+	log мы качнули Эндурь, кончаем кач, проходим квест дальше!
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/SwordTraining20_//
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	do conf QuestDone $s
+	
+	do move stop
+	do conf lockMap izlude
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf QuestPart SwordTraining21
+}
+
+#Йоу, Шуранк, мы выучили эндурь!
+automacro SwordTraining21 {
+	class Swordsman
+	location izlude, izlude_in
+	eval $::config{QuestPart} eq "SwordTraining21"
+	run-once 1
+	call SwordTraining21M
+}
+macro SwordTraining21M {
+	log Идем к Шуранку, говорим, что выучили эндурь. Он нас шлет к Шуранку.
+	do conf lockMap none
+	pause 2
+	do move izlude_in 74 161
+	log Внимание - вопрос. Почему не дали опыт? 
+	pause 2
+	do talknpc 82 163 w2 c c c c c c c w2
+	do conf QuestPart SwordTraining22
+}
+# nl
+# 3    Шуранк                       (82, 163)     52694
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: Ну так что, вы уже выучили умение 'Стойкость'?
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Вижу, вы знаете, как пользоваться
+# Шуранк: 'Стойкостью'. Но, думаю, будет
+# Шуранк: нелишним, если я разъясню кое-какие моменты...
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Как уже было сказано, получение вами повреждений заставляет споткнуться от боли, остановиться на какой-то период времени. Таким образом, если вас постоянно атакуют, вы не можете двинуться с места и избежать смерти.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Что же делать? Активируйте 'Стойкость' - и забудьте об атаках! Вы получаете урон, но атаки не останавливают вас! Вы можете атаковать в ответ или убежать - почувствуйте настоящую свободу выбора!
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Конечно, такие чудеса не вечны.
+# Шуранк: Однако чем выше уровень умения, тем дольше будет продолжаться действие. Не забудьте также о побочных эффектах - задержке после использования.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Ну, раз вы уже выучили это умение, я думаю, вы уже узнали все полезные его свойства, и в дальнейшей рекламе оно не нуждается.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: А, еще одно задание.
+# Шуранк: Пожалуйста, сходите к Декю в
+# Шуранк: Геффен, мне кажется, ему есть, о чем попросить вас.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Поторопитесь встретиться с Декю и вернуться ко мне, когда закончите, вы ему зачем-то понадобились.
+# Шуранк: Done talking
+
+automacro SwordTraining22a {
+	class Swordsman
+	location izlude, izlude_in
+	eval $::config{QuestPart} eq "SwordTraining22"
+	run-once 1
+	call SwordTraining22aM
+}
+macro SwordTraining22aM {
+	log Идем в Пронту делать тп в Геффен.
+	do conf lockMap prontera
+}
+
+automacro SwordTraining22b {
+	class Swordsman
+	location prontera
+	eval $::config{QuestPart} eq "SwordTraining22"
+	run-once 1
+	call SwordTraining22bM
+}
+macro SwordTraining22bM {
+	log Мы в Пронте, делаем тп в Геффен.
+	do conf lockMap none
+	do move prontera 156 26
+	pause @rand(2,3)
+	do talknpc 151 29 c r2 c r1 w2
+}
+
+automacro SwordTraining22c {
+	class Swordsman
+	location geffen
+	eval $::config{QuestPart} eq "SwordTraining22"
+	run-once 1
+	call SwordTraining22cM
+}
+macro SwordTraining22cM {
+	log Говорим с Декю в Геффене.
+	pause 2
+	do move geffen 146 130
+	pause 2
+	do talknpc 154 143 c c c c c c c c w2
+	do conf lockMap morocc
+	do conf QuestPart SwordTraining23
+}
+# 0    Декю                         (154, 143)    52590
+# talk 0
+# Декю: [Декю]
+# Декю: О, вы здесь! Шуранк, должно быть,
+# Декю: попросил вас помочь мне.
+# Декю: Я ценю это.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Мы занимаемся расследованиями убийства. Я хочу попросить вас помочь мне узнать, кто преступник.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Что до жертвы, то это секретная информация. Вы понимаете?
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Я хочу, чтобы вы отправились в
+# Декю: Моррок и опросили четырех подозреваемых. Их имена Муэтро, Гейл, Ханс и Бэнкли. Это нетрудно.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: После того, как поговорите с ними,
+# Декю: приходите обратно. Особенно важную информацию я советую записать или запомнить. Подозреваю, даже в самом запутанном случае будут ключи.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Не забывайте, кстати, что это особая миссия ассоциации мечников. Так что все, что вы узнаете, должно храниться в секрете, понятно?
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Теперь отправляйтесь в Моррок и попытайтесь узнать что-нибудь от Муэтро, Гейла, Ханса и Бэнкли. Нам нужно как можно скорее выяснить, кто убийца!
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: А, стойте... Моррок далековато,
+# Декю: я отправлю вас так близко к нему,
+# Декю: как смогу.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# MAP Name: moc_fild07.gat
+# Your Coordinates: 359, 201
+
+automacro SwordTraining23 {
+	class Swordsman
+	location morocc, morocc_in
+	eval $::config{QuestPart} eq "SwordTraining23"
+	run-once 1
+	call SwordTraining23M
+}
+macro SwordTraining23M {
+	log Мы в Морокке, идем допрашивать подозреваемых (Муэтро, Гейла, Ханса и Бэнкли).
+	log Первый в списке - Муэтро. morocc (82, 292)
+	do conf lockMap none
+	pause 2
+	do move morocc 83 292
+	pause 2
+	do talknpc 82 292 c c w2
+	do conf QuestPart SwordTraining24
+}
+# 0    Муэтро                       (82, 292)     52592
+# talk 0
+# Муэтро: [Муэтро]
+# Муэтро: Вы просто такой же, как все.
+# Муэтро: Вы хотите выяснить шифр, который
+# Муэтро: я знаю, да?
+# Муэтро: Type 'talk cont' to continue talking
+# talk cont
+# Муэтро: [Муэтро]
+# Муэтро: ступБэннашкиепротив
+# Муэтро: Счастливы? Теперь оставьте меня и
+# Муэтро: ловите убийцу.
+# Муэтро: Done talking
+
+automacro SwordTraining24 {
+	class Swordsman
+	location morocc, morocc_in
+	eval $::config{QuestPart} eq "SwordTraining24"
+	run-once 1
+	call SwordTraining24M
+}
+macro SwordTraining24M {
+	log Второй в списке - Гейл. morocc_in (51, 101) 
+	pause 2
+	do move morocc_in 52 95
+	pause 2
+	do talknpc 51 101 c c c w2
+	do conf QuestPart SwordTraining25
+}
+# 0    Гейл                         (51, 101)     52591
+# talk 0
+# Гейл: [Гейл]
+# Гейл: Вас начальство послало? Мне так фигово! Я не убивал! Я даже не в курсе, кого убили. Я не тот, кто вам нужен!
+# Гейл: Type 'talk cont' to continue talking
+# talk cont
+# Гейл: [Гейл]
+# Гейл: Какой-то странный парень сказал
+# Гейл: мне что-то вроде кода,
+# Гейл: относящегося к делу, но и все! Это все, что я знаю! Я не убивал, я не сообщник, ничего такого!
+# Гейл: Type 'talk cont' to continue talking
+# talk cont
+# Гейл: [Гейл]
+# Гейл: ПреэтоМынеки
+# Гейл: Вот шифр. Не понимаю, как я его
+# Гейл: не забыл. В смысле я надрался,
+# Гейл: когда этот парень рассказывал мне эту штуку.
+# Гейл: Type 'talk cont' to continue talking
+# talk cont
+# Гейл: [Гейл]
+# Гейл: Что такого важного в этом шифре, что вы не можете оставить меня в покое?!
+# Гейл: Done talking
+
+automacro SwordTraining25 {
+	class Swordsman
+	location morocc, morocc_in
+	eval $::config{QuestPart} eq "SwordTraining25"
+	run-once 1
+	call SwordTraining25M
+}
+macro SwordTraining25M {
+	log Третий в списке Ханс. morocc (240, 72)
+	pause 2
+	do move morocc 234 71
+	pause 2
+	do talknpc 240 72 c c c w2
+	do conf QuestPart SwordTraining26
+}
+# 0    Ханс                         (240, 72)     52593
+# talk 0
+# Ханс: [Ханс]
+# Ханс: Помогите мне!
+# Ханс: Помогите мне!
+# Ханс: Я не убивал!
+# Ханс: Я совершенно невиновен!
+# Ханс: Type 'talk cont' to continue talking
+# talk cont
+# Ханс: [Ханс]
+# Ханс: никклилиулинего
+# Ханс: Это шифр. Мне его сказал странный
+# Ханс: человек. Также он упомянул, что
+# Ханс: позже мне это очень пригодится!
+# Ханс: Type 'talk cont' to continue talking
+# talk cont
+# Ханс: [Ханс]
+# Ханс: Он сказал, что этот шифр спасет
+# Ханс: мою жизнь. Думаю, он был психом,
+# Ханс: но я почему-то не могу забыть его.
+# Ханс: Type 'talk cont' to continue talking
+# talk cont
+# Ханс: [Ханс]
+# Ханс: Кажется, он пользовался магией или чем-то еще в этом духе. Уйдите от меня, я больше ничего не знаю!
+# Ханс: Done talking
+
+automacro SwordTraining26 {
+	class Swordsman
+	location morocc, morocc_in
+	eval $::config{QuestPart} eq "SwordTraining26"
+	run-once 1
+	call SwordTraining26M
+}
+macro SwordTraining26M {
+	log Четвертый в списке Бэнкли. morocc_in (12, 156) (он и есть убийца, скажу забегая вперед)
+	pause 2
+	do move morocc_in 20 161
+	pause 2
+	do talknpc 12 156 c c c c w2
+	do conf QuestPart SwordTraining27
+}
+# 0    Бэнкли                       (12, 156)     52594
+# talk 0
+# Бэнкли: [Бэнкли]
+# Бэнкли: Я никого не убивал!
+# Бэнкли: Я невиновен, и мне нечего скрывать!
+# Бэнкли: Type 'talk cont' to continue talking
+# talk cont
+# Бэнкли: [Бэнкли]
+# Бэнкли: Но послушайте... Если это поможет,
+# Бэнкли: позвольте мне дать вам этот код, который мне дал странный парень. Я думаю, это подсказка.
+# Бэнкли: Type 'talk cont' to continue talking
+# talk cont
+# Бэнкли: [Бэнкли]
+# Бэнкли: онглиТакБысно
+# Бэнкли: Вы понимаете, что это значит?
+# Бэнкли: Я понятия не имею, но рассказал
+# Бэнкли: вам все, что знаю!
+# Бэнкли: Type 'talk cont' to continue talking
+# talk cont
+# Бэнкли: [Бэнкли]
+# Бэнкли: Я просто в отчаянии! Когда
+# Бэнкли: выяснится, что я невиновен,
+# Бэнкли: мне выплатят компенсацию?!
+# Бэнкли: Type 'talk cont' to continue talking
+# talk cont
+# Бэнкли: [Бэнкли]
+# Бэнкли: Ладно, хватит тратить ваше время.
+# Бэнкли: Вам лучше заняться поисками
+# Бэнкли: настоящего преступника!
+# Бэнкли: Done talking
+
+automacro SwordTraining27a {
+	class Swordsman
+	location morocc, morocc_in
+	eval $::config{QuestPart} eq "SwordTraining27"
+	run-once 1
+	call SwordTraining27aM
+}
+macro SwordTraining27aM {
+	log Опрос местного населения произведен. Возвращаемся к Декю в Геффен.
+	pause 2
+	do move morocc @rand(155,162) 90
+	pause 2
+	do talknpc 156 97 c r2 c r0 w2
+}
+
+automacro SwordTraining27b {
+	class Swordsman
+	location prontera
+	eval $::config{QuestPart} eq "SwordTraining27"
+	run-once 1
+	call SwordTraining27bM
+}
+macro SwordTraining27bM {
+	log Мы в Пронте, идем в Геффен к Декю.
+	pause 2
+	do move prontera 39 195
+	pause @rand(2,3)
+	do talknpc 29 207 c r2 c r1 w2
+}
+
+automacro SwordTraining27c {
+	class Swordsman
+	location geffen
+	eval $::config{QuestPart} eq "SwordTraining27"
+	run-once 1
+	call SwordTraining27cM
+}
+macro SwordTraining27cM {
+	log Говорим с Декю в Геффене.
+	pause 2
+	do move geffen 146 130
+	pause 2
+	do talknpc 154 143 c c c w3 t="никклилиулинего" c w3 t="онглиТакБысно" c w3 t="ступБэннашкиепротив" c w3 t="ПреэтоМынеки" c w2
+	do conf QuestPart SwordTraining28
+}
+
+# talk 0
+# Декю: [Декю]
+# Декю: А, вы вернулись. Я только что
+# Декю: получил новое указание касательно
+# Декю: возможности поимки убийцы.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Все наши улики - кусочки большой
+# Декю: головоломки. Если мы сложим их вместе и расшифруем, то выясним, кто убийца.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Вы собрали все коды и все улики?
+# Декю: Для начала, скажите мне код,
+# Декю: который был у Ханса.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: Type 'talk text' (Respond to NPC)
+# talk text никклилиулинего
+# Декю: [Декю]
+# Декю: никклилиулинего?
+# Декю: Действительно странно звучит...
+# Декю: Теперь скажите код Бэнкли.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: Type 'talk text' (Respond to NPC)
+# talk text онглиТакБысно
+# Декю: [Декю]
+# Декю: онглиТакБысно...
+# Декю: Что это за ужас?..
+# Декю: Какая-то шифровка...
+# Декю: Как насчет Муэтро?
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: Type 'talk text' (Respond to NPC)
+# talk text ступБэннашкиепротив
+# Декю: [Декю]
+# Декю: стуБэннашкиепротив.
+# Декю: Ну, может быть, это и поможет нам
+# Декю: выяснить все.
+# Декю: Скажите мне код Гейла.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: Type 'talk text' (Respond to NPC)
+# talk text ПреэтоМынеки
+# Декю: [Декю]
+# Декю: ПреэтоМынеки...
+# Декю: Отлично. А теперь попробуем
+# Декю: выяснить, что это может значить.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Ну, может быть, это и правда
+# Декю: сложно. Есть идеи? Мы должны
+# Декю: выяснить истину, это единственный
+# Декю: ключ, который у нас есть...
+# Декю: Done talking
+
+
+
+automacro SwordTraining28 {
+	class Swordsman
+	location geffen
+	eval $::config{QuestPart} eq "SwordTraining28"
+	run-once 1
+	call SwordTraining28M
+}
+macro SwordTraining28M {
+	log Говорим с Декю в Геффене. Думаем, в каком порядке расставить шифры.
+	pause 2
+	do move geffen 146 130
+	pause 2
+	do talknpc 154 143 c c r2 c r0 c r0 c c c w2
+	do conf QuestPart SwordTraining29
+}
+# talk 0
+# Декю: [Декю]
+# Декю: Мне кажется, шифры должны быть упорядочены, прежде чем у нас получится выведать все секреты.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Вы поищите ключ, а я попробую проанализировать текст на его основании.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Муэтро
+# 1  Ханс
+# 2  Гейл
+# 3  Бэнкли
+# 4  Cancel Chat
+# -------------------------------
+# Декю: Type 'talk resp #' to choose a response.
+# talk resp 2
+# Декю: [Декю]
+# Декю: Хорошо, Гейла мы возьмем первым.
+# Декю: Чей код пойдет вторым?
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Муэтро
+# 1  Ханс
+# 2  Бэнкли
+# 3  Cancel Chat
+# -------------------------------
+# Декю: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Декю: [Декю]
+# Декю: Муэтро?..
+# Декю: Хорошо, кто счастливчик, чей шифр
+# Декю: мы возьмем третьим?..
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Ханс
+# 1  Бэнкли
+# 2  Cancel Chat
+# -------------------------------
+# Декю: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Декю: [Декю]
+# Декю: Гейл, Муэтро, Ханс и Бэнкли.
+# Декю: Таким образом, полный код будет...
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю:  
+# Декю: ПреэтоМынеки
+# Декю: ступБэннашкиепротив
+# Декю: никклилиулинего
+# Декю: онглиТакБысно
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Нет... Никак не могу расшифровать
+# Декю: это в таком порядке...
+# Декю: Стоп!
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Мне кажется...
+# Декю: Я что-то понял...
+# Декю: Дайте мне минутку, я сформулирую алгоритм!
+# Декю: Done talking
+
+automacro SwordTraining29 {
+	class Swordsman
+	location geffen
+	eval $::config{QuestPart} eq "SwordTraining29"
+	run-once 1
+	call SwordTraining29M
+}
+macro SwordTraining29M {
+	log Делаем вывод - что убийца Бэнкли. Получам лвл. Нас варпают к северу от Морокка.
+	pause 2
+	do move geffen 146 130
+	pause 2
+	do talknpc 154 143 c c r1 c c c w2
+	do conf lockMap morocc
+	do conf QuestPart SwordTraining30
+}
+# talk 0
+# Декю: [Декю]
+# Декю: ПреэтоМынеки
+# Декю: ступБэннашкиепротив
+# Декю: никклилиулинего
+# Декю: онглиТакБысно
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Ну, что скажете? Это шифр,
+# Декю: основанный на перемещении букв,
+# Декю: в котором спрятано имя человека. Как вы думаете, кто убийца?
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Ханс
+# 1  Бэнкли
+# 2  Гейл
+# 3  Муэтро
+# 4  Cancel Chat
+# -------------------------------
+# Декю: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Декю: [Декю]
+# Декю: Бэнкли?..
+# Декю: Эй, может, и правда...
+# Декю: Дайте-ка проверю...
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Да, тогда вы разгадали шифр и прочли все правильно...
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Хорошо! Похоже, Бэнкли и есть убийца! Хотя мы не можем быть уверены на 100%, но все указывает на то.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Отправляйтесь в Моррок и следите за Бэнкли на случай, если что-то произойдет. Если случится - расскажите мне тот же час!
+# You are now level 24
+# You gained a level!
+# Декю: Done talking
+
+automacro SwordTraining30 {
+	class Swordsman
+	location morocc, morocc_in
+	eval $::config{QuestPart} eq "SwordTraining30"
+	run-once 1
+	call SwordTraining30M
+}
+macro SwordTraining30M {
+	log Делаем вывод - что убийца Бэнкли. Получам лвл. Нас варпают к северу от Морокка.
+	do conf lockMap none
+	pause 2
+	do move morocc_in 20 161
+	pause 2
+	log А Бэнкли труп. Вот незадача.
+	do talknpc 12 156 c c w2
+	do conf QuestPart SwordTraining31
+}
+# 0    Бэнкли                       (12, 156)     52594
+# talk 0
+# Бэнкли: ...
+# Бэнкли: ......
+# Бэнкли: Type 'talk cont' to continue talking
+# talk cont
+# Бэнкли: Он мертв!
+# Бэнкли: Type 'talk cont' to continue talking
+# talk cont
+# Бэнкли: На лице Бэнкли застыло печальное
+# Бэнкли: выражение. Но, похоже, умер он недавно. Вы видите глубокую рану в его груди и окровавленный нож в правой руке.
+# Бэнкли: Done talking
+
+automacro SwordTraining31a {
+	class Swordsman
+	location morocc, morocc_in
+	eval $::config{QuestPart} eq "SwordTraining31"
+	run-once 1
+	call SwordTraining31aM
+}
+macro SwordTraining31aM {
+	log Возвращаемся опять в Геффен к Декю.
+	pause 2
+	do move morocc @rand(155,162) 90
+	pause 2
+	do talknpc 156 97 c r2 c r0 w2
+}
+
+automacro SwordTraining31b {
+	class Swordsman
+	location prontera
+	eval $::config{QuestPart} eq "SwordTraining31"
+	run-once 1
+	call SwordTraining31bM
+}
+macro SwordTraining31bM {
+	log Мы в Пронте, идем в Геффен к Декю.
+	pause 2
+	do move prontera 39 195
+	pause @rand(2,3)
+	do talknpc 29 207 c r2 c r1 w2
+}
+
+automacro SwordTraining31c {
+	class Swordsman
+	location geffen
+	eval $::config{QuestPart} eq "SwordTraining31"
+	run-once 1
+	call SwordTraining31cM
+}
+macro SwordTraining31cM {
+	log Говорим с Декю в Геффене. Нас варпают в Излюд.
+	pause 2
+	do move geffen 146 130
+	pause 2
+	do talknpc 154 143 c c c c w2
+	do conf QuestPart SwordTraining32
+}
+# talk 0
+# Декю: [Декю]
+# Декю: Хм?.. Вы не следите за Бэнкли?
+# Декю: Что случилось?
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Самоубийство?.. Серьезно?!
+# Декю: Странно... Он подозревал, что
+# Декю: попался, и поэтому покончил
+# Декю: с собой?.. Что-то тут нечисто!
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Ладно, вы хорошо потрудились.
+# Декю: Что касается остальных троих подозреваемых, то, надеюсь, они остаются под надежным наблюдением членов ассоциации мечников.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Я не думаю, что мы узнаем что-
+# Декю: нибудь новое от этих типов. Кажется, мы ничего больше не можем сделать. Еще раз благодарю за помощь.
+# Декю: Type 'talk cont' to continue talking
+# talk cont
+# Декю: [Декю]
+# Декю: Почему бы вам не вернуться с
+# Декю: отчетом к Шуранку? Я думаю, он все еще желает продолжить занятия с вами.
+# Декю: Done talking
+# MAP Name: izlude.gat
+# You are now in the game
+# Your Coordinates: 35, 78
+
+
+automacro SwordTraining32 {
+	class Swordsman
+	location izlude, izlude_in
+	eval $::config{QuestPart} eq "SwordTraining32"
+	run-once 1
+	call SwordTraining32M
+}
+macro SwordTraining32M {
+	log Родной Излюд. Шуранк рассказывает про пассивные скиллы "Владение мечом"
+	pause 2
+	do move izlude_in 74 161
+	pause 2
+	do talknpc 82 163 c c c c w2
+	do conf QuestPart SwordTraining33
+}
+
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: А, вернулись... Я только что
+# Шуранк: получил депешу от Декю. Вы хорошо поработали и набрались опыта.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Я думаю, вы извлечете много пользы из умений. Для начала я поведаю вам о мастерстве владения мечом.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Есть две техники: 'Владение
+# Шуранк: Одноручным Мечом' и 'Владение
+# Шуранк: Двуручным Мечом'. Это пассивные
+# Шуранк: умения, которые увеличивают силу атаки в зависимости от уровня развития.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: 'Владение Одноручным Мечом'
+# Шуранк: увеличивает урон от ножей и одноручных мечей, в то время как 'Владение Двуручным Мечом' увеличивает урон от двуручных мечей.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: В следующий раз я расскажу вам об
+# Шуранк: умении 'Удар Магмы'. Я буду ждать вас здесь.
+# Шуранк: Done talking
+
+
+
+
+
+automacro SwordTraining33 {
+	class Swordsman
+	location izlude, izlude_in
+	eval $::config{QuestPart} eq "SwordTraining33"
+	run-once 1
+	call SwordTraining33M
+}
+macro SwordTraining33M {
+	log Заключительная беседа с Шуранком. Получаем в подарок табельный меч Scimiter [2].
+	pause 2
+	do move izlude_in 74 161
+	pause 2
+	do talknpc 82 163 c c c c c c c c c c w2
+	do conf autoSwitch_default_leftHand Scimiter [2]
+	do eq Scimiter [2]
+	do conf QuestDone @config(QuestDone) SwordTraining
+	do conf QuestPart none 
+}
+
+
+# talk 3
+# Шуранк: [Шуранк]
+# Шуранк: Это будет моя последняя лекция.
+# Шуранк: Пожалуйста, слушайте внимательно,
+# Шуранк: и я поведаю вам об 'Ударе Магмы'.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: 'Удар Магмы' поднимается до 10-го уровня и требует 5-ый уровень 'Баша'. Он наносит урон врагам вокруг вас.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Враги, раненные 'Ударом Магмы',
+# Шуранк: отталкиваются назад и получают урон Огнем. К тому же, еще некоторое время ваше оружие несет элемент Огня.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: 'Удар Магмы' лучше всего
+# Шуранк: использовать, когда вы окружены врагами со всех сторон. Только не забывайте, что этот удар ранит и самого воина.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Это все, чему я мог научить вас. Я таю надежду, что хоть что-то задержалось в вашей голове.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Что же касается того убийства, это
+# Шуранк: больше не наше дело. Боюсь, что
+# Шуранк: на данный момент мы не можем предпринять ничего разумного.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Кстати, я бы попросил, чтобы вы
+# Шуранк: хранили полученную информацию и
+# Шуранк: то, что выучили, - это пригодится
+# Шуранк: в жизни. Все было расследовано на самом высоком уровне...
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: И ни о чем не волнуйтесь. Если нам понадобится помощь, я помню, что могу к вам обратиться.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Вы окончили обучение очень хорошо. Продолжайте тренироваться, пока не достигнете 40-го профессионального уровня, после чего вы сможете учиться дальше, став Рыцарем или Крестоносцем.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Ну... Мы солдаты и, конечно, не
+# Шуранк: знаем слов любви, но я очень рад, что мы встретились. Старайтесь, пытайтесь - и вы станете истинным мастером меча.
+# Шуранк: Type 'talk cont' to continue talking
+# talk cont
+# Шуранк: [Шуранк]
+# Шуранк: Перед тем, как вы уйдете, примите
+# Шуранк: этот скромный подарок. Надеюсь, он поможет вам стать сильнее и даст стимул учиться дальше и лучше.
+# Item added to inventory: Scimiter [2] (28) x 1 - Weapon
+# Шуранк: Done talking
+

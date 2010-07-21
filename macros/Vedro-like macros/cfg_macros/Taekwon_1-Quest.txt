@@ -1,0 +1,133 @@
+# UTF-8
+
+automacro TaekwonQuestBegin {
+	class Novice
+	job == 10
+	location payon_in02, pay_arche, payon
+	eval $::config{Job} eq "7" and $::config{QuestPart} eq ""
+	run-once 1
+	call TaekwonQuestBeginM
+}
+macro TaekwonQuestBeginM {
+	do include off Novice
+	do include on Novice_1
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf QuestPart TaekwonQuest0
+}
+
+automacro TaekwonQuest0 {
+	location payon_in02, pay_arche, payon
+	eval $::config{QuestPart} eq "TaekwonQuest0"
+	run-once 1
+	call TaekwonQuest0M
+}
+macro TaekwonQuest0M {
+	do move payon 156 147
+	pause @rand(2,3)
+	do talknpc 157 141 c c c c c r0 c c
+	do conf QuestPart TaekwonQuest1
+}
+
+
+automacro TaekwonQuestPart1 {
+	location payon
+	eval $::config{QuestPart} eq "TaekwonQuest1"
+	run-once 1
+	call TaekwonQuestPart1M
+}
+macro TaekwonQuestPart1M {
+	log Сохраняемся на кафре
+	do move payon 178 101
+	pause @rand(2,3)
+	do talknpc 181 104 w2 c w2 r0 w2
+[
+	do conf saveMap payon
+	do conf sellAuto_npc payon 159 96
+	do conf lockMap pay_fild01
+	do conf attackAuto 2
+	do conf route_randomWalk 1
+	do conf QuestPart TaekwonQuest2
+]
+}
+
+
+automacro TaekwonQuestPart2 {
+	location pay_fild01
+	console /You are now level/
+	eval $::config{QuestPart} eq "TaekwonQuest2"
+	run-once 1
+	call TaekwonQuestPart2M
+}
+macro TaekwonQuestPart2M {
+	do conf lockMap payon
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf QuestPart TaekwonQuest3
+}	
+
+
+automacro TaekwonQuestPart3 {
+	location payon
+	eval $::config{QuestPart} eq "TaekwonQuest3"
+	run-once 1
+	call TaekwonQuestPart3M
+}
+macro TaekwonQuestPart3M {
+	do conf lockMap none
+	do move payon 156 147
+	pause @rand(2,3)
+	do talknpc 157 141 c
+	do conf QuestPart TaekwonQuest4
+}
+
+automacro TaekwonQuestPart4 {
+	location payon
+	eval $::config{QuestPart} eq "TaekwonQuest4"
+	run-once 1
+	call TaekwonQuestPart4M
+}
+macro TaekwonQuestPart4M {
+	pause @rand(2,3)
+	do talknpc 157 141 c c c r0 c c c c c r2 c c c 
+	do conf QuestPart TaekwonQuest5
+}
+
+automacro TaekwonQuestPart5 {
+	location payon
+	eval $::config{QuestPart} eq "TaekwonQuest5"
+	run-once 1
+	call TaekwonQuestPart5M
+}
+macro TaekwonQuestPart5M {
+	pause @rand(2,3)
+	do talknpc 157 141 c c r0 c c c c c c
+	if ($.joblvl != 1) goto error
+		[
+		log Не нужную нубо-одежду продать нпц.
+		do iconf Novice False Eggshell 0 0 1
+		do iconf Novice Guard 0 0 1
+		do iconf Novice Main-Gauche 0 0 1
+		do iconf Novice Slippers 0 0 1
+		do iconf Somber Novice Hood 0 0 1
+		do iconf Tattered Novice Ninja Suit 0 0 1
+		log Не нужный ножик тоже следует продать
+		do iconf Knife [3] 0 0 1
+		log Ура! Тэквондила!
+		]
+		if (@inventory(Cotton Shirt) == -1) goto NoShirt
+			do eq Cotton Shirt
+		:NoShirt
+		do conf autoSwitch_default_rightHand [NONE]
+		if (@inventory(Guard) == -1) goto NoGuard
+			do eq Guard
+			do conf autoSwitch_default_leftHand Guard
+		:NoGuard
+		goto end
+	:error 
+		log Персонаж не стал Тэквондилой.
+		log Может быть не вкачаны Базовые скилы?
+	:end 
+	do conf QuestDone @config(QuestDone) TaekwonQuest
+	do conf QuestPart none
+}
