@@ -253,7 +253,7 @@ status			display homunculus status
 feed			feed your homunculus. (Food needed)
 fire			deletes your homunculus
 move <x> <y>	moves your homunculus
-standby 		akes your homunculus standby
+standby 		makes your homunculus standby
 aiv 			display current homunculus AI 
 ai				toggles AI on, off or manual 
 on 				turns homunculus AI on
