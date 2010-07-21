@@ -1,0 +1,1068 @@
+#manticora
+#ninja
+#
+automacro NinjaStart {
+	class Novice
+	job == 10
+	location alberta_in, alberta
+	eval $::config{Job} eq "8" and $::config{QuestPart} eq ""
+	run-once 1
+	call NinjaStartM
+}
+macro NinjaStartM {
+	log Начинаем прохождение квеста на получение профессии Нинзи.
+	log Для начала квеста нужно иметь в кармане: 10 Cyfar, 2 Phracon, 2000 зени.
+	do include off Novice
+	do include on Novice_1
+	#Как проверить, что у нас профа - новис? и скилы тоже надо бы проверить для понта
+	if ($.zeny < 2000) goto notok
+	if (@invamount(Cyfar) < 10) goto notok
+	if (@invamount(Phracon) < 2) goto notok
+		log Нам всего хватает, начинаем.
+		do conf lockMap alberta
+		do conf attackAuto 0
+		do conf route_randomWalk 0
+		do conf QuestPart Ninja0
+		goto end
+	:notok
+		log Нельзя пройти квест, ибо нету чего-то в карманах.
+		log Будем пробовать достать нужное.
+		do conf lockMap alberta
+		do conf attackAuto 0
+		do conf route_randomWalk 0
+		do conf QuestPart PreNinja0
+	:end
+}
+
+automacro PreNinja0 {
+	class Novice
+	location alberta, alberta_in
+	eval $::config{QuestPart} eq "PreNinja0"
+	run-once 1
+	call PreNinja0M
+}
+macro PreNinja0M {
+	log Проверяем, достаточно ли денег?
+	if ($.zeny >= 1300) goto ok
+	[
+		do conf saveMap alberta
+		do conf saveMap_warpToBuyOrSell 0
+		do conf storageAuto 1
+		do conf storageAuto_npc alberta 113 60
+		do conf storageAuto_distance 5
+		do conf storageAuto_npc_type 1
+		do conf sellAuto 1
+		do conf sellAuto_npc alberta_in 182 97
+		do conf sellAuto_standpoint alberta_in 185 89
+		#Не продавать рубашку из нубозоны.
+		do iconf Cotton Shirt 1 0 0
+		#Надо для квеста
+		do iconf Cyfar 10 0 0
+		do iconf Phracon 2 0 0
+		#Продаем лут, который обычно падает в нубозоне
+		do iconf Feather of Birds 0 0 1
+		do iconf Fluff 0 0 1
+		do iconf Talon 0 0 1
+		do iconf Clover 0 0 1
+		do iconf Tree Root 0 0 1
+		do iconf Resin 0 0 1
+		do iconf Bow 0 0 1
+		do iconf Club 0 0 1
+		do iconf Rod 0 0 1
+	]
+		do autosell
+		pause 5
+		log А теперь посмотрим, удалось ли продать лута на нужную сумму?
+		if ($.zeny >= 1300) goto ok
+		[
+			log Мы продали лут, но толку от этого было мало.
+			log Идем качаться, чтобы заработать зенег. Нам не хватает @eval(1300 - $.zeny) зенег.
+			do conf itemsMaxWeight_sellOrStore 25
+			do conf itemsMaxNum_sellOrStore 99
+			do conf lockMap pay_fild03
+			do conf attackAuto 2
+			do conf route_randomWalk 1
+			do conf attackAuto_inLockOnly 1
+		]
+			do mconf Poring 1 0 0
+			do mconf Pupa 1 0 0
+			do mconf Lunatic 1 0 0
+			do mconf Willow 1 0 0
+			do mconf Creamy 0 0 0
+			do mconf all 0 0 0
+			do conf QuestPart PreNinja1
+		goto end
+	:ok
+		log Зенег хватает для начала квеста. Надо еще проверить лут.
+		do conf QuestPart PreNinja2
+	:end
+}
+
+automacro PreNinja1 {
+	class Novice
+	location alberta, alberta_in
+	eval $::config{QuestPart} eq "PreNinja1"
+	zeny >= 1300
+	run-once 1
+	call PreNinja1M
+}
+macro PreNinja1M {
+[
+	log У нас появилось достаточно денег для начала квеста!
+	log Прекращаем качаться, возвращаем все на место.
+	do conf saveMap alberta
+	do conf saveMap_warpToBuyOrSell 0
+	do conf storageAuto 0
+	do conf storageAuto_npc none
+	do conf storageAuto_distance 5
+	do conf storageAuto_npc_type 1
+	do conf sellAuto 0
+	do conf sellAuto_npc none
+	do conf sellAuto_standpoint none
+	do conf itemsMaxWeight_sellOrStore 48
+	do conf itemsMaxNum_sellOrStore 99
+	do conf lockMap none
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf attackAuto_inLockOnly 1
+	do conf QuestPart PreNinja2
+]
+}
+
+
+automacro PreNinja2 {
+	class Novice
+	location alberta, alberta_in
+	eval $::config{QuestPart} eq "PreNinja2"
+	zeny >= 1300
+	run-once 1
+	call PreNinja1M
+}
+macro PreNinja1M {
+	log У нас хватает зенег, посмотрим, что у нас по части лута?
+	pause 2
+	#!!!!!!!!!!!!!!!!
+	if (@invamount(Phracon) < 2) goto notok
+	if (@invamount(Cyfar) >= 10) goto ok
+	:notok
+		log Чего-то из лута у нас не хватает. Пошли, посмотрим кафру.
+		pause 2
+		do move alberta @rand(99,105) 56
+		pause @rand(3,5)
+		do talknpc 113 60 w2 c w2 r1
+		pause @rand(3,5)
+		#####
+		if (@invamount(Phracon) == 0) goto noPhracon
+			do storage add Phracon
+		:noPhracon
+		if (@invamount(Cyfar) == 0) goto noCyfar
+			do storage add Cyfar
+		:noCyfar
+		if (@storamount(Phracon) == 0) goto noPhracon2
+			do storage get Phracon 2
+		:noPhracon2
+		if (@storamount(Cyfar) == 0) goto noCyfar2
+			do storage get Cyfar 10
+		:noCyfar2
+		log Закрываем склад.
+		do storage close
+
+		log Проверяем еще раз наши карманы.
+		if (@invamount(Phracon) < 2) goto notok2
+		if (@invamount(Cyfar) >= 10) goto ok
+		:notok2
+			log Блин, мы пошарили на складе, но нам всеравно не хватает лута для продолжения квеста.
+			log Надо лута, насяльника, осеня надо лута.
+			goto end
+	:ok
+		log У нас хватает лута для прохождения квеста на профу нинзи!
+		log Начинаем!
+		do conf QuestPart Ninja0
+	:end
+}
+
+
+automacro Ninja0a {
+	class Novice
+	location alberta
+	eval $::config{QuestPart} eq "Ninja0"
+	run-once 1
+	call Ninja0aM
+}
+macro Ninja0aM {
+	log Идем в Акаги, который нахаляву варпнет в Амацу.
+	pause 2
+	do move alberta 30 60
+	pause @rand(2,4)
+	do talknpc 30 65 c r1
+}
+# 1    Акаги                        (30, 65)      68186
+# Акаги: [Акаги]
+# Акаги: Хм... Наверное, вы пришли, потому
+# Акаги: что почувствовали, что здесь вас
+# Акаги: кто-то ждет. Скажите, вы ищете
+# Акаги: тропу терпения?
+# Акаги: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Нет.
+# 1  Да.
+# 2  Cancel Chat
+# -------------------------------
+# Акаги: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Акаги: [Акаги]
+# Акаги: Очень хорошо. Тогда позвольте мне
+# Акаги: отправить вас туда прямо сейчас...
+# Акаги: Done talking
+# ---------Map  Info----------
+# MAP Name: amatsu.gat
+# Your Coordinates: 139, 231
+
+automacro Ninja0b {
+	class Novice
+	location amatsu
+	eval $::config{QuestPart} eq "Ninja0"
+	run-once 1
+	call Ninja0bM
+}
+macro Ninja0bM {
+	log Сохраняемся в Аматцу
+	pause @rand(3,5)
+	do move amatsu 112 148
+	pause @rand(3,5)
+	do talknpc 102 149 c r0
+	do conf saveMap amatsu
+	do conf QuestPart Ninja1
+}
+
+
+automacro Ninja1a {
+	class Novice
+	location amatsu
+	eval $::config{QuestPart} eq "Ninja1"
+	run-once 1
+	call Ninja1aM
+}
+macro Ninja1aM {
+	log Идем в замаскированный портал
+	pause @rand(2,4)
+	do move amatsu 148 140
+	#do conf QuestPart Ninja1
+}
+
+automacro Ninja1b {
+	class Novice
+	location que_ng
+	eval $::config{QuestPart} eq "Ninja1"
+	run-once 1
+	call Ninja1bM
+}
+macro Ninja1bM {
+	log Идем в комнату с неписью, что дает квест на профу нинзи.
+	pause @rand(2,4)
+	do move que_ng 10 183
+	log Говорим с Мусаси (que_ng 30, 65)
+	pause @rand(2,4)
+	do talknpc 30 65 c c c c c c c c c c r0 c c
+	do conf QuestPart Ninja2
+}
+# 0    Мусаси                       (30, 65)      66110
+# Мусаси: [Игрунья]
+# Мусаси: Эй! Извините...
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: ...............................
+# Мусаси: Как вам это удалось?
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Игрунья]
+# Мусаси: Что? Я ничего не делал.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Как вам удалось увидеть меня?
+# Мусаси: Меня не так просто разглядеть.
+# Мусаси: А, понятно! Должно быть, Дракон
+# Мусаси: послал вас убить меня! Вам меня
+# Мусаси: не провести! Умрите!
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Игрунья]
+# Мусаси: Постойте! Я даже не знаю, что это
+# Мусаси: за Дракон! Успокойтесь, зачем же
+# Мусаси: так сразу!
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Что?.. Как вам удается уклоняться
+# Мусаси: от моих ударов? Вы определенно
+# Мусаси: обладаете какими-то удивительными
+# Мусаси: способностями!
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Игрунья]
+# Мусаси: ...............................
+# Мусаси: Я пришел, потому что хочу
+# Мусаси: стать Ниндзя.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Так вот в чем дело... Вижу, вы
+# Мусаси: очень способны, но к сожалению,
+# Мусаси: сейчас я не могу вам ничем помочь.
+# Мусаси: У меня столько врагов, мне нельзя
+# Мусаси: терять бдительность ни на секунду.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Дракон так жесток!.. Он может
+# Мусаси: напасть в любое время! Для него
+# Мусаси: все средства хороши, лишь бы
+# Мусаси: победить врага.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Хотя, подождите-ка... Мне тут
+# Мусаси: пришло в голову... Если вы
+# Мусаси: выполните мою просьбу, я научу
+# Мусаси: вас умениям Ниндзя!
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Хорошо.
+# 1  Нет, спасибо.
+# 2  Cancel Chat
+# -------------------------------
+# Мусаси: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Мусаси: [Мусаси]
+# Мусаси: Отлично! Я хотел спросить Дракона,
+# Мусаси: не согласится ли он на временное
+# Мусаси: перемирие. У нас обоих нет оружия,
+# Мусаси: сначала нужно позаботиться об этом.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Отнесите это письмо Дракону в
+# Мусаси: Эйнброх. Помните, он отлично
+# Мусаси: маскируется, так что будьте все
+# Мусаси: время настороже. Ищите его на
+# Мусаси: возвышенности.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Он всегда там прячется. Когда
+# Мусаси: отдадите ему письмо, возвращайтесь
+# Мусаси: ко мне и сообщите его ответ.
+# Мусаси: Done talking
+
+
+automacro Ninja2 {
+	class Novice
+	location que_ng
+	eval $::config{QuestPart} eq "Ninja2"
+	run-once 1
+	call Ninja2M
+}
+macro Ninja2M {
+	log Выходим из потайного домика в город, нам надо в Эйнброх.
+	pause @rand(2,4)
+	do move que_ng 37 64
+	pause @rand(2,4)
+	do move que_ng 20 138
+}
+
+automacro Ninja2b {
+	class Novice
+	location amatsu
+	eval $::config{QuestPart} eq "Ninja2"
+	run-once 1
+	call Ninja2bM
+}
+macro Ninja2bM {
+	log Идем в Альберту, оттуда в Излюд, оттуда на дирижабль и т.д.
+	do conf lockMap alberta
+}
+
+automacro Ninja2c {
+	class Novice
+	location alberta
+	eval $::config{QuestPart} eq "Ninja2"
+	run-once 1
+	call Ninja2cM
+}
+macro Ninja2cM {
+	log Нам надо в Излюд
+	if ($.zeny < 1800) goto nozeny
+		log У нас достаточно зенег останется на билет на дирижабль (надо 1200)
+		log если мы сейчас доплывем на корабле до излюда (это стоит 500).
+		do conf lockMap izlude
+		goto end
+	:nozeny
+	if (@invamount(Free Ticket for Kafra Transportation) < 1) goto noTicket
+		log У нас не хватило денег на корабль, но зато есть проездные билеты кафры.
+		log Идем в Пронту через кафру, там до излюда рукой подать, оттуда на дирижабль и т.д.
+		pause 3
+		do move alberta 119 56
+		pause 5	
+		log ТП в пронту, оттуда до Излюда.
+		do talknpc 113 60 c r2 c r2
+		goto end
+	:noTicket
+		log Плохо дело. Нам надо в Излюд, но у нас нету ни денег на корабль до туда,
+		log ни проездных билетов кафры до пронты.
+	:end
+}
+
+automacro Ninja2d {
+	class Novice
+	location prontera
+	eval $::config{QuestPart} eq "Ninja2"
+	run-once 1
+	call Ninja2dM
+}
+macro Ninja2dM {
+	log Мы в пронте, надо в излюд.
+	pause 3
+	if (@invamount(Free Ticket for Kafra Transportation) < 1) goto noTicket
+		do move prontera 150 30 
+		pause @rand(2,3)
+		do talknpc 151 29 w2 c w2 r2 w2 c w2 r0
+		goto end
+	:noTicket
+		log Билетов кафры не осталось, пойдем пешком. Тут не далеко, два шага рядом. Пойдем, покажу?
+		do conf lockMap izlude
+	:end
+}
+
+
+
+automacro Ninja2e {
+	class Novice
+	location izlude
+	eval $::config{QuestPart} eq "Ninja2"
+	run-once 1
+	call Ninja2eM
+}
+macro Ninja2eM {
+	log Из Излюда садимся на дирижабль до Юно.
+	do conf lockMap none
+	pause @rand(2,4)
+	# do move izlude 149 39
+	# pause @rand(2,4)
+	# do move izlude 200 57
+	# pause @rand(2,4)
+	if ($.zeny < 1200) goto notok
+		# do talknpc 206 55 c r0 c r0
+		do conf QuestDone @config(QuestDone) Ninja2
+		do conf QuestPart Diribabl
+		do conf QuestVar1 einbroch
+		goto end
+	:notok
+		log У нас не хватает зенег на билет на дирижабль до Юно!
+	:end
+}
+
+# Дирижабль покидает Излюд. Пункт назначения - Юно.
+# Дирижабль направляется в Юно.
+# Добро пожаловать в Юно. Надеемся, вам понравился полет на нашем дирижабле.
+# automacro Ninja2f {
+	# class Novice
+	# location airplane_01
+	# eval $::config{QuestPart} eq "Ninja2"
+	# console /Добро пожаловать в Юно/
+	# run-once 1
+	# call Ninja2fM
+# }
+# macro Ninja2fM {
+	# log Похоже, мы долетели до Юно. Делаем пересадку.
+	# pause 2
+	# do move airplane_01 243 29
+# }
+
+
+
+# automacro Ninja2g {
+	# class Novice
+	# location yuno 12 261
+	# eval $::config{QuestPart} eq "Ninja2"
+	# run-once 1
+	# call Ninja2gM
+# }
+# macro Ninja2gM {
+	# log Вот мы и в Юно. Идем в здание аэропорта, делаем пересадку.
+	# pause 2
+	# do move yuno 47 240
+	# do conf QuestPart Ninja3
+# }
+# #(243, 29) -> yuno (12, 261)
+
+ 
+
+# automacro Ninja3 {
+	# class Novice
+	# location y_airport
+	# eval $::config{QuestPart} eq "Ninja3"
+	# run-once 1
+	# call Ninja3M
+# }
+# macro Ninja3M {
+	# log  Мы в аэропорту Юно. Делаем пересадку на рейс до Эйнброха.
+	# pause 2
+	# log Говорим с сотрудницей аэропорта, чтобы попасть на рейс до эйнброха.
+	# do talknpc 145 63 c r0
+# }
+# # Сотрудница аэропорта#y_      (145, 63)     52366
+# # Сотрудница аэропорта#y_: [Сотрудница аэропорта]
+# # Сотрудница аэропорта#y_: Желаете отправиться в республику Шварцвальт?
+# # Сотрудница аэропорта#y_: Type 'talk cont' to continue talking
+# # talk cont
+# # ----------Responses-----------
+# # 0  Да
+# # -------------------------------
+# # Сотрудница аэропорта#y_: Type 'talk resp #' to choose a response.
+# # talk resp 0
+# # MAP Name: yuno.gat
+# # Your Coordinates: 59, 244
+ 
+ 
+# automacro Ninja3b {
+	# class Novice
+	# location yuno
+	# eval $::config{QuestPart} eq "Ninja3"
+	# run-once 1
+	# call Ninja3bM
+# }
+# macro Ninja3bM {
+	# log Подходим ко второму дирижаблю.
+	# pause 2
+	# do move yuno 84 260
+	# pause 2
+	# do move yuno 96 261
+# }
+
+
+# automacro Ninja3c {
+	# class Novice
+	# location airplane
+	# eval $::config{QuestPart} eq "Ninja3"
+	# console /Добро пожаловать в Эйнброх/
+	# run-once 1
+	# call Ninja3cM
+# }
+# macro Ninja3cM {
+	# log Мы прилетели в Эйнброх, выходим.
+	# pause 2
+	# do move airplane 243 29
+# }
+# #Location Airship (airplane) : 244, 58
+# #Дирижабль готовится к взлету. Пункт назначения - Эйнброх.
+# #Дирижабль направляется в Эйнброх.
+# #Скоро мы прибудем в Эйнброх.
+# #Добро пожаловать в Эйнброх. Надеемся, вам понравился полет на нашем дирижабле.
+# #попадаем einbroch.gat (92, 278)
+
+
+# automacro Ninja3d {
+	# class Novice
+	# location einbroch
+	# eval $::config{QuestPart} eq "Ninja3"
+	# run-once 1
+	# call Ninja3dM
+# }
+# macro Ninja3dM {
+	# log Идем в здание аэропорта Эйнброха.
+	# pause 2
+	# do move einbroch 64 234
+# }
+
+
+# automacro Ninja3e {
+	# class Novice
+	# location airport
+	# eval $::config{QuestPart} eq "Ninja3"
+	# run-once 1
+	# call Ninja3eM
+# }
+# macro Ninja3eM {
+	# log Мы в аэропорту Эйнброха. Выходим в город.
+	# pause 2
+	# do talknpc 126 51 c r0 c r0
+	# do conf QuestPart Ninja4
+# }
+# # Сотрудница аэропорта#ai      (126, 51)     52351
+# # Сотрудница аэропорта#ai: [Сотрудница аэропорта]
+# # Сотрудница аэропорта#ai: Добро пожаловать в аэропорт! Чем я могу вам помочь?
+# # Сотрудница аэропорта#ai: Type 'talk cont' to continue talking
+# # talk cont
+# # ----------Responses-----------
+# # #  Response
+# # 0  Покинуть аэропорт
+# # 1  Отмена
+# # 2  Cancel Chat
+# # -------------------------------
+# # Сотрудница аэропорта#ai: Type 'talk resp #' to choose a response.
+# # talk resp 0
+# # Сотрудница аэропорта#ai: [Сотрудница аэропорта]
+# # Сотрудница аэропорта#ai: Обратите внимание, что если вы захотите снова попасть в аэропорт, вам придется заплатить за вход. Вы уверены, что хотите покинуть аэропорт?
+# # Сотрудница аэропорта#ai: Type 'talk cont' to continue talking
+# # talk cont
+# # ----------Responses-----------
+# # #  Response
+# # 0  Да
+# # 1  Нет
+# # 2  Cancel Chat
+# # -------------------------------
+# # Сотрудница аэропорта#ai: Type 'talk resp #' to choose a response.
+# # talk resp 0
+# # Map Change: airport.gat (142, 40)
+# # NPC Exists: Сотрудница аэропорта#ai (143, 43) (ID 52347) 
+
+
+macro Gunslinger20M {
+	log Вот мы и долетели до Эйнброха. Идем к Мюллеру.
+	do move einbroch 137 199
+	#Location Ninja - Gunslinger map (que_ng) : 138, 167
+
+}
+
+
+automacro Ninja3 {
+	class Novice
+	location airport, einbroch
+	eval ($::config{QuestDone} =~ m/Ninja2/) and ($::config{QuestPart} eq "DiribablDone")
+	run-once 1
+	call Ninja3M
+}
+macro Ninja3M {
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/Ninja2//
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	log $s
+	do conf QuestDone $s
+	do conf QuestPart Ninja4
+}
+
+automacro Ninja4 {
+	class Novice
+	location einbroch
+	eval $::config{QuestPart} eq "Ninja4"
+	run-once 1
+	call Ninja4M
+}
+macro Ninja4M {
+	log Идем к Марко (einbroch 218, 198), пусть он нас варпнет на башню.
+	pause 2
+	do move einbroch 212 205
+	log Говорим с Марко, который пустит нас на башню.
+	do talknpc 218 198 c c c c r0 
+	do conf QuestPart Ninja5
+}
+# Марко                        (218, 198)
+# Марко: [Марко]
+# Марко: Добро пожаловать в Эйнброх.
+# Марко: Меня зовут Марко, и я могу
+# Марко: показать вам Башню Эйнброха.
+# Марко: Type 'talk cont' to continue talking
+# talk cont
+# Марко: [Марко]
+# Марко: С этой башни открывается великолепный вид на весь город. К тому же, это прекрасное место для встречи с друзьями.
+# Марко: Type 'talk cont' to continue talking
+# talk cont
+# Марко: [Марко]
+# Марко: Вход туда стоит 10 зени. Мы также проводим специальную акцию под названием 'Яблоко в подарок' - при входе в башню вы получаете яблоко.
+# Марко: Type 'talk cont' to continue talking
+# talk cont
+# Марко: [Марко]
+# Марко: Но в этом случае вход в башню
+# Марко: стоит 20 зени. Итак, что вас интересует?
+# Марко: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Вход в башню
+# 1  Яблоко в подарок
+# 2  Отмена
+# 3  Cancel Chat
+# -------------------------------
+# Марко: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Марко: [Марко]
+# Марко: Спасибо за то, что воспользовались
+# Марко: нашими услугами. Позвольте
+# Марко: проводить вас прямо на вершину
+# Марко: башни.
+# You lost 10 zeny.
+# Марко: Done talking
+# Map Change: einbroch.gat (181, 196)
+# NPC Exists: Unknown #52394 (175, 196) (ID 52394) - (0)
+ 
+ 
+automacro Ninja5 {
+	class Novice
+	location einbroch
+	eval $::config{QuestPart} eq "Ninja5"
+	run-once 1
+	call Ninja5M
+}
+macro Ninja5M {
+	log Мы попали в башню. Видим нужную непись внутри башни.
+	pause 2
+	do talknpc 184 194 c c c c c c r1
+	do conf QuestPart Ninja6
+}
+# Подозрительный человек       (184, 194)    67290
+# Подозрительный человек: [Подозрительный человек]
+# Подозрительный человек: Я путешествовал по многим странам,
+# Подозрительный человек: но нигде не видел такого высокого
+# Подозрительный человек: здания, как Эйнброхская башня.
+# Подозрительный человек: Здания в моем городе рядом с ней
+# Подозрительный человек: покажутся просто крошечными!
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Игрунья]
+# Подозрительный человек: Скажите, вы из Амацу?
+# Подозрительный человек: Я ищу человека по прозвищу Дракон.
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Подозрительный человек]
+# Подозрительный человек: Нет, вообще-то я из Излюда. Я
+# Подозрительный человек: приехал в Эйнброх за минералами.
+# Подозрительный человек: Скажите, а зачем вы разыскиваете
+# Подозрительный человек: Дракона?
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Игрунья]
+# Подозрительный человек: Мне нужно передать ему письмо и
+# Подозрительный человек: получить ответ на него. После
+# Подозрительный человек: этого я смогу стать Ниндзя.
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Подозрительный человек]
+# Подозрительный человек: Вот как? Надо подумать, кажется,
+# Подозрительный человек: я пару раз встречал его в этом
+# Подозрительный человек: городе. Но он не любит кличку
+# Подозрительный человек: Дракон, его настоящее имя - Риндзин.
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Подозрительный человек]
+# Подозрительный человек: Я бы с удовольствием помог вам
+# Подозрительный человек: его разыскать, но сначала мне
+# Подозрительный человек: нужно найти кое-какие минералы.
+# Подозрительный человек: Не могли бы вы мне помочь? А
+# Подозрительный человек: потом я скажу вам, где искать
+# Подозрительный человек: Дракона.
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Спасибо, я найду его сам.
+# 1  Конечно, я вам помогу.
+# 2  Cancel Chat
+# -------------------------------
+# Подозрительный человек: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Подозрительный человек: [Подозрительный человек]
+# Подозрительный человек: Отлично! Пожалуйста, принесите мне
+# Подозрительный человек: 5 Сайфаров и 1 Фракон.
+# Подозрительный человек: Done talking 
+ 
+
+ 
+automacro Ninja6 {
+	class Novice
+	location einbroch
+	eval $::config{QuestPart} eq "Ninja6"
+	run-once 1
+	call Ninja6M
+}
+macro Ninja6M {
+	log Отдаем лут неписи. Непись варпает нас назад в Амацу.
+	pause @rand(2,5)
+	if (@invamount(Phracon) < 2) goto notok
+	if (@invamount(Cyfar) < 10) goto notok
+		do talknpc 184 194 c c c c c c c c c c c c
+		stop
+	:notok
+		log Куда-то делся нужный лут (10 Сайфаров, 2 Фракона). Квест остановлен.
+}
+# 1    Подозрительный человек       (184, 194)    67290
+# ---------------------------------
+# talk 1
+# Подозрительный человек: [Подозрительный человек]
+# Подозрительный человек: Отлично, вы принесли минералы...
+# Подозрительный человек: Теперь моя очередь вам помочь.
+# Подозрительный человек: Ну-ка, покажите мне письмо.
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Игрунья]
+# Подозрительный человек: ?????!!
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Подозрительный человек]
+# Подозрительный человек: В чем дело? Вы же принесли мне письмо от Мусаси!
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Игрунья]
+# Подозрительный человек: Так вы... Вы Дракон?
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Подозрительный человек]
+# Подозрительный человек: Да, но я все же предпочитаю, когда
+# Подозрительный человек: меня называют по имени - Риндзин.
+# Подозрительный человек: Вас послал ко мне Мусаси, не так
+# Подозрительный человек: ли? Только он называет меня
+# Подозрительный человек: Драконом, чтобы позлить меня.
+# Подозрительный человек: Итак, вы хотите стать Ниндзя? Ну, хорошо.
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Риндзин]
+# Подозрительный человек: Если вы хотите стать Ниндзя,
+# Подозрительный человек: всегда будьте начеку и не
+# Подозрительный человек: доверяйте всем подряд. Помните,
+# Подозрительный человек: если ваши секреты будут раскрыты, никогда вам не быть ниндзя.
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Риндзин]
+# Подозрительный человек: Учитесь быстро двигаться и
+# Подозрительный человек: бесследно исчезать. Мы обладаем
+# Подозрительный человек: умением скрываться в тени...
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Игрунья]
+# Подозрительный человек: Понятно...
+# Подозрительный человек: ...........
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Риндзин]
+# Подозрительный человек: О чем же говорится в письме?..
+# Подозрительный человек: Посмотрим... Хм. Я думал, Мусаси
+# Подозрительный человек: опять хочет бросить мне вызов,
+# Подозрительный человек: а он предлагает временное
+# Подозрительный человек: перемирие! Ха-ха!
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Риндзин]
+# Подозрительный человек: Спасибо вам за помощь! Теперь
+# Подозрительный человек: у меня есть все необходимое, и
+# Подозрительный человек: я могу сделать волшебный кунай!
+# Подозрительный человек: Ха-ха-ха! Зачем мне соглашаться на перемирие, когда у меня есть такое преимущество?
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Риндзин]
+# Подозрительный человек: Ладно, я все равно напишу ему
+# Подозрительный человек: ответ. А заодно дам вам
+# Подозрительный человек: рекомендацию... Хотя мне и
+# Подозрительный человек: удалось провести вас, думаю,
+# Подозрительный человек: все же из вас получится хороший
+# Подозрительный человек: Ниндзя. Хе-хе-хе!
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Игрунья]
+# Подозрительный человек: ......
+# Подозрительный человек: .........
+# Подозрительный человек: ............
+# Подозрительный человек: Type 'talk cont' to continue talking
+# talk cont
+# Подозрительный человек: [Риндзин]
+# Подозрительный человек: Вот, отнесите, пожалуйста, это
+# Подозрительный человек: письмо Мусаси. Сейчас я отправлю
+# Подозрительный человек: вас в Амацу...
+# Inventory Item Removed: Phracon (24) x 1
+# Inventory Item Removed: Cyfar (25) x 5
+# Подозрительный человек: Done talking
+# ---------Map  Info----------
+# MAP Name: amatsu.gat
+# MAP IP: 81.177.13.27
+# MAP Port: 5000
+# -------------------------------
+# Closing connection to Map Server
+# Disconnecting (81.177.13.71:5000)...disconnected
+# Connecting to Map Server...
+# checking patchserver access control...
+# contacting patchserver...
+# patchserver grants login.
+# Connecting (81.177.13.27:5000)... connected
+# You are now in the game
+# Your Coordinates: 113, 127
+
+automacro Ninja6b {
+	class Novice
+	location amatsu, que_ng
+	eval $::config{QuestPart} eq "Ninja6"
+	run-once 1
+	delay 10
+	call Ninja6bM
+}
+macro Ninja6bM {
+	log Идем к чуваку в Амацу. Он просит принести тот же самый лут.
+	pause @rand(2,5)
+	do move amatsu 148 140
+	pause @rand(2,4)
+	do move que_ng 10 183
+	log Говорим с Мусаси (que_ng 30, 65)
+	pause @rand(2,4)
+	do talknpc 30 65 c c c c c
+	do conf QuestPart Ninja7
+}
+# Мусаси                       (30, 65)      66110
+# Мусаси: [Мусаси]
+# Мусаси: А, вы вернулись! Дракон ответил
+# Мусаси: на мое письмо? Хорошо, хорошо,
+# Мусаси: прочтите мне его скорее.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Что?! Как он посмел отвергнуть
+# Мусаси: мое предложение о перемирии?!
+# Мусаси: Это может значить только одно...
+# Мусаси: Он уже сделал себе новое оружие...
+# Мусаси: Мне нужно поторопиться! Иначе
+# Мусаси: он меня убьет!
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Послушайте, мне снова понадобится
+# Мусаси: ваша помощь. Мне нужны материалы,
+# Мусаси: чтобы сделать себе зачарованный
+# Мусаси: кунай, иначе я не смогу сражаться
+# Мусаси: с Драконом. А потом я помогу вам стать Ниндзя.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Вам нужно принести мне
+# Мусаси: 5 Сайфаров и 1 Фракон.
+# Мусаси: И прошу вас, как можно скорее!
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Игрунья]
+# Мусаси: Что? Странно, но Дракон просил
+# Мусаси: меня достать такие же материалы.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Проклятье! Получается, что вы
+# Мусаси: помогли Дракону сделать волшебный
+# Мусаси: кунай! О, нет! Я должен был раньше
+# Мусаси: об этом подумать! Теперь уже
+# Мусаси: ничего не поделаешь... Прошу
+# Мусаси: вас, поторопитесь!
+# Мусаси: Done talking
+
+
+automacro Ninja7 {
+	class Novice
+	location que_ng
+	eval $::config{QuestPart} eq "Ninja7"
+	run-once 1
+	call Ninja7M
+}
+macro Ninja7M {
+	log Приносим лут, показываем, становимся нинзя. Лут у нас не забирают :-) Дают ножик Asura [2].
+	pause @rand(2,5)
+	if (@invamount(Phracon) < 1) goto notok
+	if (@invamount(Cyfar) < 5) goto notok
+		do talknpc 30 65 c c c c c c
+		goto check
+	:notok
+		log Лута не хватает! Куда делся? Квест остановлен.
+		stop
+	:check
+	if ($.joblvl != 1) goto error
+		[
+		log Не нужную нубо-одежду продать нпц.
+		do iconf Novice False Eggshell 0 0 1
+		do iconf Novice Guard 0 0 1
+		do iconf Novice Main-Gauche 0 0 1
+		do iconf Novice Slippers 0 0 1
+		do iconf Somber Novice Hood 0 0 1
+		do iconf Tattered Novice Ninja Suit 0 0 1
+		log Не нужный ножик тоже следует продать
+		do iconf Knife 0 0 1
+		log ============================
+		log = Ура! Стал нинзей!!!
+		log ============================
+		do conf QuestDone @config(QuestDone) Ninja
+		do conf QuestPart none
+		]
+		do conf autoSwitch_default_rightHand [NONE]
+		if (@inventory(Asura [2]) == -1) goto NoAsura
+			do eq Asura [2]
+			do conf autoSwitch_default_rightHand Asura [2]
+			do iconf Asura 1 0 0
+		:NoAsura
+		if (@inventory(Cotton Shirt) == -1) goto NoShirt
+			do eq Cotton Shirt
+		:NoShirt
+		
+		goto end
+	:error
+		log Ошибка, мы не стали нинзей.
+	:end
+}
+# do talknpc 30 65 c c c c c c
+# talk 0
+# Мусаси: [Мусаси]
+# Мусаси: Вижу, вы все принесли. Вы пришли
+# Мусаси: раньше, чем я ожидал. Хорошо, я
+# Мусаси: помогу вам стать Ниндзя.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Разрешите представиться.
+# Мусаси: Я Мусаси из клана ниндзя Тога.
+# Мусаси: Я занят поисками Кадзумы.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Кадзума, который был старостой
+# Мусаси: нашей деревни, сбежал. Так
+# Мусаси: случилось из-за конфликта между
+# Мусаси: кланами ниндзя. Ситуация до
+# Мусаси: сих пор нестабильная...
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Из-за этого я сначала не хотел
+# Мусаси: принимать вас в наши ряды, но вы
+# Мусаси: доказали, что достойны звания
+# Мусаси: Ниндзя.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Судя по его письму, даже Дракон
+# Мусаси: о вас очень высокого мнения.
+# Мусаси: Только помните, что, раз вы
+# Мусаси: стали Ниндзя, то прежде всего
+# Мусаси: должны думать о деле, но при этом не забывать и о совести.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Главное - соблюдать секретность.
+# Мусаси: Вы должны хранить наши секреты
+# Мусаси: и заключать сделки по продаже
+# Мусаси: и покупке оружия Ниндзя только
+# Мусаси: с проверенными людьми. Помните
+# Мусаси: об этом.
+# Мусаси: Type 'talk cont' to continue talking
+# talk cont
+# Мусаси: [Мусаси]
+# Мусаси: Вот и все, теперь вы настоящий
+# Мусаси: Ниндзя. Будьте быстрым, как ветер,
+# Мусаси: и бесшумным, как тень.
+# You unequip Novice False Eggshell (29) - Helmet
+# You unequip Tattered Novice Ninja Suit (26) - Armour
+# You unequip Novice Guard (31) - Shield
+# You unequip Novice Main-Gauche (30) - One-Handed Weapon
+# You unequip Somber Novice Hood (28) - Cape
+# You unequip Novice Slippers (27) - Foot Wear
+# You are now job level 1
+# Exp gained: 0/0 (0.00%/0.00%)
+# Item added to inventory: Asura [2] (32) x 1 - Weapon
+# Мусаси: Done talking

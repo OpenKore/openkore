@@ -1,0 +1,337 @@
+#Квест: Дирижабль.
+#do conf QuestPart Diribabl //Активируем квест
+#do conf QuestVar1 einbroch //задаем место назначения. (izlude, rachel, yuno, hugel, lighthalzen, einbroch, ra_fild12)
+#
+#Спасибо за идею 4epT'у.	http://www.rofan.ru/viewtopic.php?f=32&t=4934
+# automacro airplane {
+# 	console /Скоро мы прибудем в (Юно|Эйнброх)/
+#	call something
+# }
+# macro something {
+# 	if ($.lastmatch1 == Юно) goto uno
+# 	if ($.lastmatch1 == Эйнброх) goto einbroch
+# :uno
+# 	do something
+# 	stop
+# :einbroch
+# 	do something
+# }
+############################################
+# В файле openkore/tables/portals.txt должны быть следующие строки:
+# #manticora@rofan.ru. Quest_4-Diribabl.txt
+# #Излюд - дирибабль
+# izlude 206 55 airplane_01 244 58 1200 c r0 c r0 
+# #Из левой посадочной площадки Юно в аэропорт. И обратно.
+# yuno 47 240 y_airport 143 53
+# y_airport 140 63 yuno 47 244 0 c r0
+# #Из правой посадочной площадки Юно в аэропорт. И обратно.
+# yuno 59 240 y_airport 143 53
+# y_airport 145 63 yuno 59 244 0 c r0
+# #Аэропорт Эйнброха. Идем на дирибабль
+# airport 143 43 airport 148 51 1200 c r0 c r0
+# #Садимся на дирибабль в рашеле.
+# ra_fild12 295 208 airplane_01 243 29 1200 c r0 c r0
+# airplane_01 243 29 yuno 12 261
+# einbroch 92 281 airplane 243 29
+# airplane 243 29 einbroch 92 278
+###########################################
+#Посадка на Дирибабль.
+#airplane_01:	Излюд - Юно - Рашель
+#						 |
+#airplane: 				Юно - Эйнброх - Лайтхальзен - Хугель
+automacro DiribablBegin {
+	location izlude, rachel, yuno, hugel, lighthalzen, einbroch, ra_fild12
+	eval ($::config{QuestPart} eq "Diribabl") and ($::config{QuestVar1} ne "")
+	run-once 1
+	delay 5
+	call DiribablBeginM
+}
+macro DiribablBeginM {
+	[
+	release DiribablAirport
+	do conf route_randomWalk 0
+	do conf autoTalkCont 0
+	do conf attackAuto 0
+	do conf portalRecord 0
+	]
+	if ($.map != izlude) goto izlude
+		log Садимся на дирибабль в излюде
+		do conf lockMap airplane_01
+		do conf QuestPart Diribabl1
+		stop
+	:izlude
+
+	if ($.map != hugel) goto hugel
+		log Садимся на дирибабль в хугеле.
+		do move hugel 178 142
+		pause 2
+		do talk cont
+		pause 2
+		do talk resp 0
+		do conf QuestPart Diribabl1
+		do conf lockMap airplane
+		pause 2
+		stop
+	:hugel
+
+	#В тех городах, в которых есть аэропорт, идем сначала в аэропорт.
+	if ($.map != yuno) goto notYuno
+		do conf lockMap y_airport
+		do conf QuestPart Diribabl1
+		stop
+	:notYuno
+	if ($.map != einbroch) goto einbroch
+		do conf lockMap airport
+		do conf QuestPart Diribabl1
+		stop
+	:einbroch
+	if ($.map == rachel) goto rachel
+	if ($.map != ra_fild12) goto notrachel
+	:rachel
+		do move ra_fild12 295 208
+		pause 2
+		do talk cont
+		pause 2
+		do talk resp 0
+		do conf QuestPart Diribabl1
+		pause 2
+		stop
+	:notrachel
+
+	if ($.map != lighthalzen) goto notl
+		do conf lockMap lhz_airport
+		do conf QuestPart Diribabl1
+		stop
+	:notl
+
+	
+	log @config(QuestVar1) - неправильное место назначения.
+	stop
+}
+
+
+automacro DiribablAirport {
+	location y_airport, airport, lhz_airport
+	eval (($::config{QuestPart} eq "Diribabl2") or ($::config{QuestPart} eq "Diribabl1")) and ($::config{QuestVar1} ne "")
+	run-once 1
+	call DiribablAirportM
+}
+macro DiribablAirportM {
+	#Если мы в аэропорту 
+	if ($.map != airport) goto einbroch
+	if (@config(QuestVar1) != einbroch) goto ein
+		log Мы прилетели в Эйнброх. Выходим из аэропорта в город.
+		if (@arg("$.pos",2) < 48) goto de
+			do move airport 138 51
+			pause 3
+			do talknpc  143 49 c r0 c r0
+			pause 3
+		:de
+			do conf lockMap none
+			do conf QuestPart Diribabl3
+			do move airport 143 14
+		stop
+	:ein
+		log Мы в аэропорту эйнброха, садимся на дирибабль
+		if (@arg("$.pos",2) > 48) goto de2
+			do move airport 148 37
+			pause 3
+			do talknpc  143 43 c r0 c r0
+			pause 3
+		:de2
+			do conf lockMap airplane
+			do conf QuestPart Diribabl2
+		stop
+	:einbroch
+
+	#lhz_airport
+	if ($.map != lhz_airport) goto lhz
+	if (@config(QuestVar1) != lighthalzen) goto light
+		log Мы прилетели в Лайт. Мы в аэропорту. Выходим в город.
+		if (@arg("$.pos",2) < 48) goto dl
+			do move lhz_airport 143 53
+			pause 2
+			do talknpc 143 49 c r0 c r0
+			pause 2
+		:dl
+			do conf lockMap none
+			do conf QuestPart Diribabl3
+			do move lhz_airport 142 13
+		stop	
+	:light
+		log Мы в аэропорту лайта, садимся на дирибабль
+		if (@arg("$.pos",2) > 48) goto dl2
+			do move 137 38
+			pause 2
+			do talknpc 143 43 c r0 c r0
+			pause 2
+		:dl2
+			do conf lockMap airplane
+			do conf QuestPart Diribabl2
+		stop
+	:lhz
+	
+	if ($.map != y_airport) goto noty
+	if (@config(QuestVar1) != yuno) goto notYuno
+		log Выходим в Юно.
+		do move y_airport 143 54
+		pause 2
+		do talknpc 143 49 c r0 c r0
+		pause 2
+		do move y_airport 143 16
+		do conf lockMap none
+		do conf QuestVar1 none
+		do conf QuestPart DiribablDone
+		goto end
+	:notYuno
+	log Мы в аэропорту Юно. Идем на посадку в дирибабль.
+	if (@config(QuestVar1) == izlude) goto airplane01
+	if (@config(QuestVar1) == rachel) goto airplane01
+	if (@config(QuestVar1) == hugel) goto airplane00
+	if (@config(QuestVar1) == lighthalzen) goto airplane00
+	if (@config(QuestVar1) == einbroch) goto airplane00
+	:airplane00
+		log Идем на посадку в дирижабль
+		if (@arg("$.pos",2) >= 40) goto skip1
+			do move y_airport 142 37
+			pause 2
+			do talknpc 143 43 c r0 c r0
+			pause 2
+		:skip1
+		do conf lockMap airplane
+		do conf QuestPart Diribabl2
+		goto end
+	:airplane01
+		log Идем на посадку в дирижабль
+		if (@arg("$.pos",2) >= 40) goto skip2
+			do move y_airport 142 37
+			pause 2
+			do talknpc 143 43 c r0 c r0
+			pause 2
+		:skip2
+		do conf lockMap airplane_01
+		do conf QuestPart Diribabl2
+		goto end
+	:noty
+
+	:end
+	release DiribablBegin
+	release DiribablEnd
+	#release DiribablAirport
+	
+}
+
+
+#Юно - Эйнброх - Лайтхальзен - Хугель
+automacro Diribabl00 {
+	location airplane
+	eval (($::config{QuestPart} eq "Diribabl2") or ($::config{QuestPart} eq "Diribabl1"))
+	console /Добро пожаловать в (Эйнброх|Юно|Лайтхайзен|Хугель)/
+	call Diribabl00M
+}
+macro Diribabl00M {
+	if (@config(lockMap) != airplane) goto air
+		do conf lockMap none
+	:air
+	if ($.lastMatch1 != "Юно") goto notAirport
+		if (@config(QuestVar1) == "izlude") goto Airport
+		if (@config(QuestVar1) == "yuno") goto Airport
+		if (@config(QuestVar1) != "rachel") goto notAirport
+		:Airport
+			log Идем в аэропорт Юно.
+			do move airplane 243 29
+			do conf QuestPart Diribabl1
+			do conf lockMap y_airport
+			release DiribablAirport
+			stop
+	:notAirport
+
+	if ($.lastMatch1 != "Эйнброх") goto notEinbroch
+		if (@config(QuestVar1) != "einbroch") goto notEinbroch
+			log Идем в аэропорт Эйнброха.
+			do move airplane 243 29
+			do conf QuestPart Diribabl1
+			do conf lockMap airport
+			release DiribablAirport
+			stop
+	:notEinbroch
+	
+	if ($.lastMatch1 != "Лайтхайзен") goto notLighthalzen
+		if (@config(QuestVar1) != "lighthalzen") goto notLighthalzen
+			log Выходим в Лайтхалзене.
+			do move airplane 243 29
+			do conf QuestPart Diribabl2
+			do conf lockMap lhz_airport
+			release DiribablAirport
+			stop
+	:notLighthalzen
+	
+	if ($.lastMatch1 != "Хугель") goto notHugel
+		if (@config(QuestVar1) != "hugel") goto notHugel
+			log Выходим в Хугеле.
+			do move airplane 243 29
+			do conf QuestPart Diribabl3
+			release DiribablAirport
+			stop
+	:notHugel
+
+}
+
+
+
+
+#airplane_01:	Излюд - Юно - Рашель
+automacro Diribabl01 {
+	location airplane_01
+	eval (($::config{QuestPart} eq "Diribabl2") or ($::config{QuestPart} eq "Diribabl1"))
+	console /Добро пожаловать в (Юно|Излюд|Рашель)/
+	call Diribabl01M
+}
+macro Diribabl01M {
+	if (@config(lockMap) != airplane_01) goto air
+		do conf lockMap none
+	:air
+	if ($.lastMatch1 != "Юно") goto notAirport
+		if (@config(QuestVar1) == "einbroch") goto Airport
+		if (@config(QuestVar1) == "hugel") goto Airport
+		if (@config(QuestVar1) == "yuno") goto Airport
+		if (@config(QuestVar1) != "lighthalzen") goto notAirport
+		:Airport
+			log Идем в аэропорт Юно.
+			do move airplane_01 243 29
+			pause 3
+			do conf QuestPart Diribabl1
+			do conf lockMap y_airport
+	:notAirport
+	
+	if ($.lastMatch1 != "Излюд") goto notIzlude
+		if (@config(QuestVar1) != "izlude") goto notIzlude
+			log Выходим в Излюде.
+			do move airplane_01 243 29
+			do conf QuestPart Diribabl3
+	:notIzlude
+	
+	if ($.lastMatch1 != "Рашель") goto notRachel
+		if (@config(QuestVar1) != "rachel") goto notRachel
+			log Выходим в Рашеле.
+			do move airplane_01 243 29
+			do conf QuestPart Diribabl3
+	:notRachel
+}
+
+# 0    lighthalzen -> airplane             (308, 76)
+# 1    lighthalzen -> lhz_airport          (294, 76)
+#lhz_airport
+automacro DiribablEnd {
+	location izlude, yuno, hugel, lighthalzen, ra_fild12, einbroch
+	eval ($::config{QuestPart} eq "Diribabl3") and ($::config{QuestVar1} ne "")
+	run-once 1
+	delay 5
+	call DiribablEndM
+}
+macro DiribablEndM {
+	log Мы прилетели в город назначения.
+	do conf lockMap none
+	do conf QuestVar1 none
+	do conf QuestPart DiribablDone
+}

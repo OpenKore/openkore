@@ -1,0 +1,647 @@
+#UTF-8
+#Прохождение квеста: тренировка воров
+#Дают опыт и ножик Main Gauche [3], у меня апнулся с 11/1 до 16/9
+#manticora
+
+macro ThiefTrainingStart {
+[
+	log Начинаем тренировку воров
+	do conf include off Thief_1
+	do conf lockMap moc_ruins
+	do conf route_randomWalk 0
+	do conf attackAuto 1
+	do conf QuestPart ThiefTraining0
+]
+}
+
+automacro ThiefTraining0 {
+	class Thief
+	location moc_ruins
+	eval $::config{QuestPart} eq "ThiefTraining0"
+	run-once 1
+	delay 5
+	call ThiefTraining0M
+}
+
+macro ThiefTraining0M {
+	log Нужная для начала квеста непись где-то рядом
+	do conf lockMap none
+	pause @rand(2,4)
+	do move moc_ruins 60 161
+	pause @rand(2,4)
+	do talknpc 66 164 c r0 c c c r1 c
+	do conf QuestPart ThiefTraining1
+}
+
+automacro ThiefTraining1 {
+	class Thief
+	location moc_ruins
+	eval $::config{QuestPart} eq "ThiefTraining1"
+	run-once 1
+	delay 5
+	call ThiefTraining1M
+}
+
+macro ThiefTraining1M {
+	log Говорим во второй раз с тренером
+	pause @rand(2,4)
+	do talknpc 66 164 c c
+	do conf QuestPart ThiefTraining2
+}
+
+automacro ThiefTraining2 {
+	class Thief
+	location moc_ruins
+	eval $::config{QuestPart} eq "ThiefTraining2"
+	run-once 1
+	delay 5
+	call ThiefTraining2M
+}
+
+macro ThiefTraining2M {
+	log Говорим в третий раз с неписью
+	pause @rand(2,4)
+	log Учим скилл Double Attack
+	do skills add 48
+	log Учим скилл Improve Dodge
+	do skills add 49
+	log А ваще, все это должно быть прописано в конфиге!
+	pause @rand(2,4)
+	do talknpc 66 164 c c c
+	do conf QuestPart ThiefTraining3
+}
+
+automacro ThiefTraining3 {
+	class Thief
+	location moc_ruins
+	eval $::config{QuestPart} eq "ThiefTraining3"
+	run-once 1
+	delay 5
+	call ThiefTraining3M
+}
+
+macro ThiefTraining3M {
+	log Говорим обо все пунктиках в беседе, получаем кучу опыта
+	pause @rand(2,4)
+	do talknpc 66 164 c r0 c c r1 c c r2 c c r3 c c c r4 c c c r5 c c c r6 c
+	do conf QuestPart ThiefTraining4
+}
+
+automacro ThiefTraining4 {
+	class Thief
+	location moc_ruins
+	eval $::config{QuestPart} eq "ThiefTraining4"
+	run-once 1
+	delay 5
+	call ThiefTraining4M
+}
+macro ThiefTraining4M {
+	log Сейчас нас пошлют на moc_fild12 бить Picky и Super Picky
+	log нам нужно набить 10 Feather of Birds
+	pause @rand(2,4)
+	do talknpc 66 164 c c
+	do conf lockMap moc_fild12
+	do conf saveMap moc_ruins
+	do conf route_randomWalk 1
+	do conf attackAuto 2
+	do mconf all 1 0 0
+	do mconf Picky 1 0 0
+	do mconf Super Picky 1 0 0
+	do pconf all 1
+	do pconf Feather of Birds 1
+	do iconf Feather of Birds 10 0 0
+	do conf QuestPart ThiefTraining5
+}
+
+
+automacro ThiefTraining5 {
+	class Thief
+	location moc_fild12, morocc
+	eval $::config{QuestPart} eq "ThiefTraining5"
+	inventory "Feather of Birds" >= 10
+	run-once 1
+	delay 5
+	call ThiefTraining5M
+}
+macro ThiefTraining5M {
+	log Мы набили достаточно Feather of Birds
+	log Возвращаемся к неписи в moc_ruins
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	do conf lockMap moc_ruins
+	#Как вариант - мона сделать тп ухом, которое нам подарили
+	#do is Butterfly Wing
+	#Но мы это ухо лучше съэкономим
+	do move moc_ruins
+}
+
+
+automacro ThiefTraining5a {
+	class Thief
+	location moc_ruins
+	eval $::config{QuestPart} eq "ThiefTraining5"
+	inventory "Feather of Birds" >= 10
+	run-once 1
+	delay 5
+	call ThiefTraining5aM
+}
+macro ThiefTraining5aM {
+	do conf lockMap none
+	do move moc_ruins @rand(60,69) @rand(159,161)
+	pause @rand(2,4)
+	do talknpc 66 164 c c r0 c
+	log Мы получили ножик Main Gauche [3], тут же его одеваем
+	do conf autoSwitch_default_rightHand Main Gauche [3]
+	do eq Main Gauche [3]
+	do iconf Main Gauche [3] 1 0 0
+	do iconf Knife [3] 0 0 1
+	do iconf Feather of Birds 0 0 1
+	do conf QuestPart ThiefTraining6
+}
+
+
+automacro ThiefTraining6 {
+	class Thief
+	location moc_ruins
+	eval $::config{QuestPart} eq "ThiefTraining6"
+	run-once 1
+	delay 5
+	call ThiefTraining6M
+}
+macro ThiefTraining6M {
+	log Нас посылают посмотреть на "следы боя"
+	pause @rand(2,4)
+	do talknpc 66 164 c c c
+#	do conf QuestDone @config(QuestDone) ThiefTraining7
+#	do conf QuestPart none
+	do conf QuestPart ThiefTraining7
+}
+# # 1. moc_fild12 166 369
+# # 2. moc_fild12 173 215
+# # 3. moc_fild12 276 165
+# # 4. moc_fild11  39 163
+# # 5. moc_fild11 205  52 
+# # 6. Где?
+# # 7. moc_fild11 184 342
+# # 8. moc_fild17 213 358
+# # 9. moc_fild17 228 274 
+# # 10. moc_fild17  34 291
+# # 11. moc_fild18 346 296
+# # 12. moc_fild18 309 257 
+# # 13. moc_fild18 177 333
+# # 14. moc_fild18 111 303
+# # 15. moc_fild18 109 197 (зеленка, зеленая трава, красный гем, одежда)
+# # 16. moc_fild18 156  96
+# Пайон: Gemstone Exchanging  
+# Базовый уровень: нет
+# Требуемый лут: 2 или больше (четное двум) гема одного цвета
+# Награда: 1 Gemstones
+# Поговорите с Jade в Пайоне (173,238). Он вам поменяет:
+# 2  Blue Gemstones на 1 Red Gemstone
+# 2  Red Gemstones на 1 Yellow Gemstone
+# 2  Yellow Gemstones на 1 Blue Gemstone
+
+
+
+
+###ЛЕГКАЯ ЧАСТЬ ЗАКОНЧИЛАСЬ###
+###СЛЕДЫ БОЯ##################
+macro ThiefTrainingStart2 {
+[
+	log Продолжаем тренировку воров. Требования: пройденная 1-ая часть,
+	log не менее 1400 зенег в кармане. 1200 - покупаем два гема синих,
+	log 80 - покупаем два пота зеленых. Также надо будет набить травки зеленой.
+	do conf lockMap none
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	#Удаляем запись о том, что мы остановились на шаге 7 и продолжаем с него
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/ThiefTraining7\s+//
+	do conf QuestDone $s
+	do conf QuestPart ThiefTraining7
+
+]
+}
+
+automacro ThiefTraining7a {
+	class Thief
+	eval $::config{QuestPart} eq "ThiefTraining7"
+	run-once 1
+	call ThiefTraining7aM
+}
+macro ThiefTraining7aM {
+	if ($.zeny < 1400) goto nozeny
+		log нам хватает зенег, собираем вещи для квеста
+		do conf lockMap morocc
+		do conf route_randomWalk 0
+		do conf attackAuto 0
+		do conf QuestPart ThiefTraining8
+	goto end
+	:nozeny
+		log Нам не хватает денег, продадим лут
+		do conf storageAuto 1
+		do conf storageAuto_npc morocc 160 258
+		do conf sellAuto 1
+		do conf sellAuto_npc morocc 151 243
+		do conf sellAuto_standpoint none
+		do conf sellAuto_distance 3
+		do autosell
+		do conf QuestPart ThiefTraining7b
+	:end
+}
+
+
+automacro ThiefTraining7b {
+	class Thief
+	eval $::config{QuestPart} eq "ThiefTraining7b"
+	run-once 1
+	call ThiefTraining7bM
+}
+macro ThiefTraining7bM {
+	if ($.zeny < 1400) goto nozeny
+		do conf QuestPart ThiefTraining8
+	goto end
+	:nozeny
+		log мы продали лут, но денег всеравно не хватает. 
+		log Прерываем прохождение квеста. 
+		log Квест продолжится автоматом, когда: мы в морокке и у нас 1400 зенег.
+		$s = @config(QuestDone)
+		do conf QuestDone $s ThiefTraining7c
+		do conf QuestPart Kach2
+		
+		# [
+		# do conf lockMap moc_fild07
+		# do conf route_randomWalk 1
+		# do conf attackAuto 2
+		# do pconf all 1
+		# do mconf all 0
+		# do mconf Drops 1
+		# do mconf Picky 1
+		# do mconf Super Picky 1
+		# do mconf PecoPeco's Egg 1
+		# do iconf all 0 1 0
+		# do iconf Shell 0 0 1
+		# do iconf Red Herb 0 0 1
+		# do iconf Phracon 0 0 1
+		# do iconf Empty Bottle 0 1 0
+		# do iconf Apple 0 0 1
+		# do iconf Jellopy 0 0 1
+		# do iconf Sticky Mucus 0 0 1
+		# do iconf Rod [4] 0 0 1
+		# do iconf Feather of Birds 0 0 1
+		# do iconf Green Herb 20 0 0
+		# do conf QuestPart ThiefTraining7c
+		# ]
+	:end
+}
+
+#Если мы качаемся, имеем достаточно денег, и незаконченный квест,
+#то прерываем кач, и продолжаем квест
+automacro ThiefTraining7c {
+	class Thief
+	zeny >= 1400
+	location morocc
+	eval ($::config{QuestDone} =~ m/ThiefTraining7c/) and ($::config{QuestPart} eq "Kach2")
+	run-once 1
+	call ThiefTraining7cM
+}
+macro ThiefTraining7cM {
+	log Заработали достаточно зенег! Можно продолжать квест.
+	do conf lockMap none
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	do mconf all 1
+	do iconf Green Herb 20 0 0
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/ThiefTraining7с//
+	do conf QuestDone $s
+	do conf QuestPart ThiefTraining8
+}
+
+#Морокк -> Пронта -> Геффен
+automacro ThiefTraining8 {
+	class Thief
+	location morocc
+	eval $::config{QuestPart} eq "ThiefTraining8"
+	run-once 1
+	call ThiefTraining8M
+}
+macro ThiefTraining8M {
+[
+	log *Морокк* -> Пронта -> Геффен
+	do conf lockMap none
+]
+	if (@invamount(Free Ticket for Kafra Transportation) > 4) goto tp
+		do conf lockMap prontera
+		goto end
+	:tp
+		do move morocc @rand(155,165) @rand(263,268)
+		pause @rand(2,3)
+		do talknpc 160 258 w2 c w2 r2 w2 c w2 r0
+	:end
+}
+
+
+automacro ThiefTraining8a {
+	class Thief
+	location prontera
+	eval $::config{QuestPart} eq "ThiefTraining8"
+	run-once 1
+	call ThiefTraining8aM
+}
+macro ThiefTraining8aM {
+	log Сохраняемся в пронте
+	do conf lockMap none
+	call savetown
+	call conftown
+	do conf QuestPart ThiefTraining9
+}
+
+
+#Пронта -> Геффен
+automacro ThiefTraining9a {
+	class Thief
+	location prontera
+	eval $::config{QuestPart} eq "ThiefTraining9"
+	run-once 1
+	call ThiefTraining9aM
+}
+macro ThiefTraining9aM {
+	log Морокк -> *Пронта* -> Геффен
+	if (@invamount(Free Ticket for Kafra Transportation) > 1) goto tp
+		do conf lockMap geffen
+		goto end
+	:tp
+		do move prontera @rand(32,38) @rand(196,200)
+		log Так... где тут Кафра?
+		pause @rand(2,5)
+		log А, да вот же она!
+		pause @rand(2,3)
+		do talknpc 29 207 c r2 c r1
+	:end
+}
+
+#Геффен, покупаем гемы и поты
+automacro ThiefTraining9c {
+	class Thief
+	location geffen, geffen_in
+	eval $::config{QuestPart} eq "ThiefTraining9"
+	run-once 1
+	call ThiefTraining9cM
+}
+macro ThiefTraining9cM {
+	log Морокк -> Пронта -> *Геффен*
+	log Мы в Геффене, покупаем два синих гема и два зеленых пота.
+	if ($.zeny >= 1400) goto ok
+		log Странно, но денег не хватает! Останавливаем проходилку.
+		goto end
+	:ok
+		log Идем покупать синие гемы (поменяем на 1 красный гем)
+		do conf lockMap none
+		pause @rand(2,4)
+		do move geffen_in 70 161
+		pause @rand(2,4)
+		do talknpc 77 173 b b0,2 e
+		do iconf Blue Gemstone 2 0 0
+		pause @rand(2,4)
+		do talknpc 77 167 b b6,2 e
+		do iconf Green Potion 2 0 0
+		do conf QuestPart ThiefTraining9g
+	:end
+}
+
+#Геффен, косим зеленую траву
+automacro ThiefTraining9g {
+	class Thief
+	location geffen, geffen_in
+	eval $::config{QuestPart} eq "ThiefTraining9g"
+	run-once 1
+	call ThiefTraining9gM
+}
+macro ThiefTraining9gM {
+	log Идем бить зеленую траву, надо будет для квеста
+	do conf route_avoidWalls 0
+	do conf lockMap gef_fild00
+	do conf attackAuto 2
+	do conf route_randomWalk 0
+	do mconf all 0 0 0 
+	do mconf Green Plant 1 0 0
+	do iconf Green Herb 20 0 0
+	do pconf Green Herb 1
+	do conf lockMap_x 55
+	do conf lockMap_y 214
+	do conf lockMap_randX 7
+	do conf lockMap_randY 7
+}
+
+#Ходим наверх и вниз, меняем полянки с травой каждые 3 минуты.
+automacro ThiefTraining9g1 {
+	location gef_fild00
+	class Thief
+	eval $::config{QuestPart} eq "ThiefTraining9g"
+	timeout 180
+	call ThiefTraining9g1M
+}
+macro ThiefTraining9g1M {
+	if (@config(lockMap_y) == 214) goto vniz
+		do conf lockMap_y 214
+	goto end
+	:vniz
+		do conf lockMap_y 187
+	:end
+	if (@invamount(Green Herb) < 20) goto end2
+		call ThiefTraining9g2M
+	:end2
+}
+
+#Хватит косить траву, го в Геффен.
+automacro ThiefTraining9g2 {
+	class Thief
+	location gef_fild00
+	inventory "Green Herb" >= 20
+	eval $::config{QuestPart} eq "ThiefTraining9g"
+	run-once 1
+	call ThiefTraining9g2M
+}
+macro ThiefTraining9g2M {
+	log Набили зеленой травы, идем в пайон менять гемы.
+	do conf route_avoidWalls 1
+	do conf lockMap none
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do mconf all 1 0 0 
+	do mconf Green Plant 0 0 0
+	do conf lockMap_x none
+	do conf lockMap_y none
+	do conf lockMap_randX none
+	do conf lockMap_randY none
+	do conf QuestPart ThiefTraining10
+}
+
+#Геффен -> Пронтера -> Пайон. Будем менять гемы.
+automacro ThiefTraining10 {
+	class Thief
+	location geffen, geffen_in, gef_fild00
+	eval $::config{QuestPart} eq "ThiefTraining10"
+	run-once 1
+	call ThiefTraining10M
+}
+macro ThiefTraining10M {
+	if (@invamount(Free Ticket for Kafra Transportation) > 0) goto tp
+		do conf lockMap prontera
+		goto end
+	:tp
+		do move geffen 213 119
+		log Так... где тут в геффене правая Кафра?
+		pause @rand(2,5)
+		log А, да вот же она!
+		pause @rand(2,3)
+		do talknpc 203 123 w1 c w1 r2 w1 c w1 r0
+	:end
+}
+
+
+automacro ThiefTraining10a {
+	class Thief
+	location prontera
+	eval $::config{QuestPart} eq "ThiefTraining10"
+	run-once 1
+	call ThiefTraining10aM
+}
+macro ThiefTraining10aM {
+	log Мы в пронте. Надо в пайон - менять камни.
+	do conf lockMap none
+	if (@invamount(Free Ticket for Kafra Transportation) > 1) goto tp
+		do conf lockMap payon
+		goto end
+	:tp
+		log Делаем ТП в пайон
+		do move @rand(32,38) @rand(196,200)
+		log Так... где тут Кафра?
+		pause @rand(2,5)
+		log А, да вот же она!
+		pause @rand(2,3)
+		do talknpc 29 207 c r2 c r2
+		goto end
+	:end
+}
+
+automacro ThiefTraining10b {
+	class Thief
+	location payon
+	eval $::config{QuestPart} eq "ThiefTraining10"
+	run-once 1
+	call ThiefTraining10bM
+}
+macro ThiefTraining10bM {
+	log Мы в Пайоне, меняемся камешками
+	pause @rand(2,4)
+	do move @rand(177,180) @rand(237,243)
+	pause @rand(2,4)
+	do talknpc 173 238 c r0 c r1 c d1
+	do iconf Blue Gemstone 0 1 0
+	do iconf Red Gemstone 1 0 0
+	log Возвращаемся с нужным лутом в Морокк для продолжения квеста!
+	if (@invamount(Free Ticket for Kafra Transportation) > 0) goto tp
+		do conf lockMap morocc
+	goto end
+	:tp
+		log Делаем ТП в морокк
+		do move payon 188 97
+		log Так... где тут Кафра?
+		pause @rand(2,5)
+		log А, да вот же она!
+		pause @rand(2,3)
+		do talknpc 181 104 c r2 c r2
+		goto end
+	:end
+}
+
+automacro ThiefTraining10c {
+	class Thief
+	location morocc
+	eval $::config{QuestPart} eq "ThiefTraining10"
+	run-once 1
+	call ThiefTraining10cM
+}
+macro ThiefTraining10cM {
+	do conf lockMap none
+	call savetown
+	call conftown
+	if (@invamount(Red Gemstone) == 0) goto notok
+	if (@invamount(Green Herb) < 20) goto notok
+	if (@invamount(Green Potion) == 0) goto notok
+		log Все ингридиенты в сборе, можно начинать "Следы боя".
+		do conf itemsGatherAuto 0
+		do conf sellAuto 0
+		do conf storageAuto 0
+		do conf QuestPart SledyBoja11_1
+		do conf lockMap moc_fild12
+		goto end
+	:notok
+		log Странно, после всей беготни чего-то не хватает.
+	:end
+}
+
+
+################Тут начинается общий кусок для магов и воров.################
+
+#Quest_1-SledyBoja.txt
+
+#######
+automacro SledyBoja29 {
+	class Thief
+	location moc_ruins
+	eval $::config{QuestPart} eq "SledyBoja29"
+	run-once 1
+	call SledyBoja29M
+}
+macro SledyBoja29M {
+	do conf lockMap none
+	do move moc_ruins @rand(60,69) @rand(159,161)
+	pause @rand(2,4)
+	do talknpc 66 164 c r2 c c c c c c c c c
+	log Получили Mantle в награду, но надо бы еше лупой распознать.
+	do iconf Mantle 0 0 0
+	do conf itemsGatherAuto 2
+	do conf sellAuto 1
+	do conf storageAuto 1
+	do conf QuestDone @config(QuestDone) ThiefTraining
+	do conf QuestPart none
+	# You gained 5,000 zeny.
+	# You are now level 18
+	# You gained a level!
+	# You are now job level 10
+	# You gained a job level!
+	# Exp gained: 1028/302 (81.59%/58.08%)	
+	call MantleM
+}
+
+macro MantleM {
+	log Распознаем Мантию.
+	do move morocc 140 240
+	pause 2
+	do talknpc 151 243 b b1,1 e
+	pause 2
+	do is @inventory(Magnifier)
+	pause 2
+	do identify 0
+	pause 2
+	do eq Mantle
+
+}
+
+#Надо распознать Мантию
+#Покупаем лупу в морокке
+#talknpc 147 102 b b1,1 e
+#talknpc 151 243 b b1,1 e
+# macro hhh {
+	# #В параметре конфига записаны все пройденные квесты,
+	# #или записан шаг, на котором прохождение квеста остановилось
+	# #Чтобы продолжить квест, надо удалить отсюда эту метку.
+	# do conf QuestVar1 NoobZone ThiefQuest ThiefTraining7
+	# $s = @config(QuestVar1)
+	# do eval $::Macro::Data::varStack{s} =~ s/ThiefTraining7//
+	# do conf QuestVar1 $s
+	# do conf QuestVar1 none
+# }

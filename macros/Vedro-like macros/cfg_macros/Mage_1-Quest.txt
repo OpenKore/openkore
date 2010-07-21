@@ -1,0 +1,472 @@
+#UTF8
+#Макрос: Квест на получение профессии Мага
+#manticora
+#
+#Ссылки на описание квеста: 
+#http://www.sharonov.ru/ro/razdel.asp?id=14&news=265
+#http://www.asgardro.com/forum/archive/index.php/t-558.html
+#
+#Описание, как работает console // и что такое lastMatchN
+#http://www.rofan.ru/viewtopic.php?t=1300&highlight=lastmatchn
+#
+#28й век, генный программист читает код ДНК человека, встречает комментарий.
+#//A vot eti geny nado bi ubrat' na xpen. Arhangel Gavriil
+
+
+automacro MagQuestBegin {
+	class Novice
+	job == 10
+	location geffen_in
+	eval $::config{Job} eq "3" and $::config{QuestPart} eq ""
+	run-once 1
+	call MagQuestBeginM
+}
+macro MagQuestBeginM {
+	log Начинаем квест на профу мага.
+	do include off Novice
+	do include on Novice_1
+	do conf QuestPart MageQuest0
+}
+
+automacro MagQuestPart0 {
+	location geffen_in
+	eval $::config{QuestPart} eq "MageQuest0"
+	run-once 1
+	call MagQuestPart0M
+}
+macro MagQuestPart0M {
+	log Идем брать квест на мага.
+	do move geffen_in @rand(160,169) @rand(120,123)
+	pause @rand(2,5)
+	do talknpc 164 124 c r0 c c r0 c c c c
+[
+	log ======================================
+	log Мы взяли квест на профу мага.
+	log ======================================
+]
+}
+
+
+##Слушаем непись, она говорит номер раствора, который нам надо приготовить. 
+automacro MagQuestPart1 {
+	location geffen_in
+	eval $::config{QuestPart} eq "MageQuest0"
+	console /Смесь №(\d)/
+	delay 10
+	run-once 1
+	call MagQuestPart1M
+}
+macro MagQuestPart1M {
+[
+	log ==========================================
+	log = Теперь я знаю, какую смесь надо готовить
+	log = Смесь №$.lastMatch1
+	log ==========================================
+	do conf QuestVar1 $.lastMatch1
+	if (@config(QuestVar1) != 1) goto next1
+		log Смесь №1. Jellopy 2 ,Fluff 3 ,Milk 1, Payon solution. Номер порошка 8472, Катализатор: желтый камень. 
+		goto end
+	:next1
+	if (@config(QuestVar1) != 2) goto next2
+		log Смесь №2. Jellopy 3, Fluff 1, Milk 1, никакого солюшена. Номер порошка 3735, Катализатор: красный камень. 
+		goto end
+	:next2
+	if (@config(QuestVar1) != 3) goto next3
+		log Смесь №3. Jellopy 6, Fluff 1, Payon Solution. Номер порошка 2750, Катализатор: синий камень. 
+		goto end
+	:next3
+	if (@config(QuestVar1) != 4) goto next4
+		log Смесь №4. Jellopy 2, Fluff 3, Morroc Solution. Номер порошка 5429, Катализатор: алмаз.
+		goto end
+	:next4
+	:end
+	do conf QuestPart MageQuest2
+]
+}
+
+#Решаем, надо ли нам идти в другой город?
+automacro MagQuestPart2 {
+	location geffen_in
+	eval $::config{QuestPart} eq "MageQuest2"
+	run-once 1
+	call MagQuestPart2M
+}
+macro MagQuestPart2M {
+	if (@config(QuestVar1) != 2) goto prontera
+		if (@inventory(Milk) == -1) goto prontera
+			log Нам никуда не надо идти. Ни за раствором, ни за молоком.
+			do conf QuestPart MageQuest3
+	goto end
+	:prontera
+		log Нам так или иначе надо ТП в пронту
+		do move geffen 202 122
+		pause @rand(2,5)
+		do talknpc 203 123 c r2 c r0
+	:end
+}
+
+##Мы в пронте. Мы могли сюда попасть по разным причинам.
+automacro MagQuestPart2a {
+	location prontera
+	eval $::config{QuestPart} eq "MageQuest2"
+	run-once 1
+	call MagQuestPart2aM
+}
+macro MagQuestPart2aM {
+	log Мы в пронте, у нас тут есть пара дел.
+	pause @rand(3,5)
+	if (@config(QuestVar1) == 1) goto milk
+	if (@config(QuestVar1) != 2) goto notmilk
+	:milk
+		if (@inventory(Milk) != -1) goto notmilk
+			log Нам нужно купить молоко у Молочницы.
+			do move prontera @rand(74,78) @rand(131,138)
+			pause @rand(2,5)
+			do talknpc 73 134 b b0,1 e
+			pause @rand(2,5)
+	:notmilk
+
+	log Решаем, куда нам идти дальше?
+	if (@config(QuestVar1) == 1) goto payon
+	if (@config(QuestVar1) != 3) goto notpayon
+	:payon
+		log Нам нужно в Пайон сходить за водичкой
+		do move @rand(32,38) @rand(196,200)
+		log Так... где тут Кафра?
+		pause @rand(2,5)
+		log А, да вот же она!
+		pause @rand(2,3)
+		do talknpc 29 207 c r2 c r2
+		goto end
+	:notpayon
+	
+	if (@config(QuestVar1) != 4) goto notmorocc
+		log Нам нужно в Морокк сходить за водичкой
+		do move @rand(32,38) @rand(196,200)
+		log Так... где тут Кафра?
+		pause @rand(2,5)
+		log А, да вот же она!
+		pause @rand(2,3)
+		do talknpc 29 207 c r2 c r3
+		goto end
+	:notmorocc
+
+	if (@config(QuestVar1) != 2) goto notgeffen
+		if (@inventory(Milk) == -1) goto notgeffen
+			log У нас есть молоко, солюшена не надо, возвращаемся в геффен.
+			do conf QuestPart MageQuest3
+			goto end
+	:notgeffen
+			log Нам нужно бы молока... но у нас его почему-то нет.
+	:end
+}
+
+##Мы в Пайоне. Нам нужно сделать Пайонский раствор.
+automacro MagQuestPart2b {
+	location payon, pay_arche
+	eval $::config{QuestPart} eq "MageQuest2"
+	run-once 1
+	call MagQuestPart2bM
+}
+macro MagQuestPart2bM {
+	log Мы пришли в пайон набрать воды
+	do move pay_arche 120 100
+	pause @rand(2,5)
+	do talknpc 122 100 c r0
+	do conf QuestPart MageQuest3
+}
+
+##Мы в Пайоне. Мы сделали Пайонский раствор, идем назад в Пронту.
+automacro MagQuestPart3b {
+	location payon, pay_arche
+	eval $::config{QuestPart} eq "MageQuest3"
+	run-once 1
+	call MagQuestPart3bM
+}
+macro MagQuestPart3bM {
+	log Мы в пайоне, все дела сделаны, идем в пронту
+	do move payon 188 97
+	log Так... где тут Кафра?
+	pause @rand(2,5)
+	log А, да вот же она!
+	pause @rand(2,3)
+	do talknpc 181 104 c r2 c r0
+}
+
+##Мы в Морокке. Нам нужно сделать Мороккский раствор.
+automacro MagQuestPart2c {
+	location morocc, moc_ruins
+	eval $::config{QuestPart} eq "MageQuest2"
+	run-once 1
+	call MagQuestPart2cM
+}
+macro MagQuestPart2cM {
+	log Мы пришли в морокк набрать воды
+	do move moc_ruins 93 153
+	pause @rand(2,5)
+	do talknpc 91 150 c r0
+	do conf QuestPart MageQuest3
+}
+
+##Мы в Морокке. Мы сделали Мороккский раствор, идем в Пронту.
+automacro MagQuestPart3c {
+	location morocc, moc_ruins
+	eval $::config{QuestPart} eq "MageQuest3"
+	run-once 1
+	call MagQuestPart3cM
+}
+macro MagQuestPart3cM {
+	log Мы в морокке, все дела сделаны, идем в пронту
+	do move morocc @rand(163,165) @rand(263,265)
+	log Так... где тут Кафра?
+	pause @rand(2,5)
+	log А, да вот же она!
+	pause @rand(2,3)
+	do talknpc 160 258 c r2 c r0
+}
+
+##Мы в Пронтере, на обратном пути в Геффен.
+automacro MagQuestPart3a {
+	location prontera
+	eval $::config{QuestPart} eq "MageQuest3"
+	run-once 1
+	call MagQuestPart3aM
+}
+macro MagQuestPart3aM {
+	log Мы в пронте, все дела сделаны, идем в Геффен
+	do move @rand(32,38) @rand(196,200)
+	log Так... где тут Кафра?
+	pause @rand(2,5)
+	log А, да вот же она!
+	pause @rand(2,3)
+	do talknpc 29 207 c r2 c r1
+}
+
+##Мы в Геффене. Молоко и раствор (если оно было надо), у нас есть.
+#Встает вопрос, а есть ли у нас остальной лут? (желлопи, пух).
+automacro MagQuestPart3d0 {
+	location geffen, geffen_in
+	run-once 1
+	eval $::config{QuestPart} eq "MageQuest3"
+	call MagQuestPart3d0M
+}
+macro MagQuestPart3d0M {
+	log Закрыть все
+	lock MagQuestPart4n1
+	lock MagQuestPart4n2
+	lock MagQuestPart4n3
+	lock MagQuestPart4n4
+	log Ну-ка, что нам надо?
+
+	if (@config(QuestVar1) != 1) goto next1
+		do conf QuestPart MageQuest8472
+		if (@invamount(Jellopy) < 2) goto gokach
+		if (@invamount(Fluff) < 3) goto gokach
+		if (@invamount(Milk) < 1) goto gokach
+		goto end
+	:next1
+
+	if (@config(QuestVar1) != 2) goto next2
+		do conf QuestPart MageQuest3735
+		if (@invamount(Jellopy) < 3) goto gokach
+		if (@invamount(Fluff) < 1) goto gokach
+		if (@invamount(Milk) < 1) goto gokach
+		goto end
+	:next2
+
+	if (@config(QuestVar1) != 3) goto next3
+		do conf QuestPart MageQuest2750
+		if (@invamount(Jellopy) < 6) goto gokach
+		if (@invamount(Fluff) < 1) goto gokach
+		goto end
+	:next3
+
+	if (@config(QuestVar1) != 4) goto next4
+		do conf QuestPart MageQuest5429
+		if (@invamount(Jellopy) < 2) goto gokach
+		if (@invamount(Fluff) < 3) goto gokach
+		goto end
+	:next4
+
+	:gokach
+[
+	log Нам не хватает лута на завершение квеста.
+	log Идем набивать лут на соседней локации.
+	do conf saveMap geffen
+	do conf saveMap_warpToBuyOrSell 0
+	do conf sellAuto 0
+	do conf sellAuto_npc none
+	do conf sellAuto_standpoint none
+	do conf storageAuto 0
+	do conf storageAuto_npc none
+	do conf storageAuto_distance 5
+	do conf storageAuto_npc_type 1
+	do conf lockMap gef_fild07
+	do conf attackAuto 2
+	do conf attackAuto_inLockOnly 1
+	do conf route_randomWalk 1
+]	
+	:end
+
+	pause @rand(2,5)
+	
+	release MagQuestPart4n1
+	release MagQuestPart4n2
+	release MagQuestPart4n3
+	release MagQuestPart4n4
+}
+
+#http://www.openkore.com/wiki/index.php/Macro_plugin_Russian
+#inventory "<имя_вещи>" <условие> <значение> [, ...] 
+#АМ запустится, когда количество <имя_вещи>, находящейся у Вас в инвентаре будет удовлетворять <условие> <значение>. 
+#Отмечу, что <имя_вещи> обязательно нужно писать в ""! 
+#Отделённые запятыми аргументы определяются как условие OR (или). 
+#Несколько строк (от двух и более) определяются как условие AND (и).
+
+#Автомакросы сработают, когда мы набьем нужное количество лута.
+automacro MagQuestPart4n1 {
+	location geffen, gef_fild07, geffen_in
+	eval $::config{QuestPart} eq "MageQuest8472"
+	inventory "Jellopy" >= 2
+	inventory "Fluff" >= 3
+	inventory "Milk" >= 1
+	inventory "Payon Solution" >= 1
+	run-once 1
+	call MagQuestPart4M
+}
+
+automacro MagQuestPart4n2 {
+	location geffen, gef_fild07, geffen_in
+	eval $::config{QuestPart} eq "MageQuest3735"
+	inventory "Jellopy" >= 3
+	inventory "Fluff" >= 1
+	inventory "Milk" >= 1
+	run-once 1
+	call MagQuestPart4M
+}
+
+automacro MagQuestPart4n3 {
+	location geffen, gef_fild07, geffen_in
+	eval $::config{QuestPart} eq "MageQuest2750"
+	inventory "Jellopy" >= 6
+	inventory "Fluff" >= 1
+	inventory "Payon Solution" >= 1
+	run-once 1
+	call MagQuestPart4M
+}
+
+automacro MagQuestPart4n4 {
+	location geffen, gef_fild07, geffen_in
+	inventory "Jellopy" >= 2
+	inventory "Fluff" >= 3
+	inventory "Morroc Solution" >= 1
+	eval $::config{QuestPart} eq "MageQuest5429"
+	run-once 1
+	call MagQuestPart4M
+}
+
+macro MagQuestPart4M {
+[
+	log Мы набили весь необходимый лут!
+	do conf lockMap none
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+]	
+	do move geffen_in 163 98
+	pause @rand(2,5)
+	do conf QuestPart MageQuest5
+}
+
+##С карманами полными нужного лута идем делать Супер-пупер раствор.
+automacro MagQuestPart5 {
+	location geffen, geffen_in
+	class Novice
+	run-once 1
+	job == 10
+	eval $::config{QuestPart} eq "MageQuest5"
+	call MagQuestPart5M
+}
+macro MagQuestPart5M {
+	log Подходим к миксеру
+	do move geffen_in 168 104
+	pause @rand(2,5)
+	log Говорим с миксером (ужас, еще бы с утюгом поговорить...)
+	if (@config(QuestVar1) != 1) goto next1
+		log Нам заказли сварить Смесь №1
+		do talknpc 164 112 c r0 c r0 r0 d2 c r1 d3 c r2 d1 c r3 c c r0 c r0 c c c d8472 c r0 c r0 c c
+		goto end
+	:next1
+	if (@config(QuestVar1) != 2) goto next2
+		log Нам заказли сварить Смесь №2
+		do talknpc 164 112 c r0 c r2 r0 d3 c r1 d1 c r2 d1 c r3 c c r0 c r0 c c c d3735 c r0 c r1 c c
+		goto end
+	:next2
+	if (@config(QuestVar1) != 3) goto next3
+		log Нам заказли сварить Смесь №3
+		do talknpc 164 112 c r0 c r0 r0 d6 c r1 d1 c r3 c c r0 c r0 c c c d2750 c r0 c r2 c c
+		goto end
+	:next3
+	if (@config(QuestVar1) != 4) goto next4
+		log Нам заказли сварить Смесь №4
+		do talknpc 164 112 c r0 c r1 r0 d2 c r1 d3 c r3 c c r0 c r0 c c c d5429 c r0 c r3 c c
+		goto end
+	:next4
+	:end
+	do conf QuestPart MageQuest6
+}
+
+##Смесь готова, идем сдаваться по квесту.
+automacro MagQuestPart6 {
+	location geffen_in
+	eval $::config{QuestPart} eq "MageQuest6"
+	run-once 1
+	call MagQuestPart6M
+}
+
+macro MagQuestPart6M {
+	log Подходим к НПЦ, чтобы получить профу
+	do move @rand(160,169) @rand(120,123)
+	pause @rand(2,5)
+	do talknpc 164 124 c c c c c
+	[
+	if ($.joblvl != 1) goto error
+		log Не нужную нубо-одежду продать нпц.
+		do iconf Novice False Eggshell 0 0 1
+		do iconf Novice Guard 0 0 1
+		do iconf Novice Main-Gauche 0 0 1
+		do iconf Novice Slippers 0 0 1
+		do iconf Somber Novice Hood 0 0 1
+		do iconf Tattered Novice Ninja Suit 0 0 1
+		log Мы взяли профу мага. И получили награду + 50з (стоимость раствора)
+		do conf lockMap none
+		do conf QuestPart none
+		do conf QuestDone @config(QuestDone) MageQuest
+		do conf QuestVar1 none
+		if (@inventory(Cotton Shirt) == -1) goto NoShirt
+			do eq Cotton Shirt
+		:NoShirt
+		do conf autoSwitch_default_rightHand [NONE]
+		if (@inventory(Knife [3]) == -1) goto NoKnife
+			do eq Knife [3]
+			do conf autoSwitch_default_rightHand Knife [3]
+		:NoKnife
+		goto end
+	:error 
+		log Персонаж не стал Магом.
+	:end 
+	]
+	call MageTrainingStart
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

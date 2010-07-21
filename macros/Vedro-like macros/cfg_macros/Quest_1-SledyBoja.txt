@@ -1,0 +1,461 @@
+#Квест: Следы боя. Для воров и магов, когда они проходят тренировку первых проф.
+automacro SledyBoja11 {
+	location moc_fild12
+	eval $::config{QuestPart} eq "SledyBoja11_1"
+	run-once 1
+	call SledyBoja11M
+}
+macro SledyBoja11M {
+	log Идем к первым следам боя
+	do move moc_fild12 @rand(160,172) @rand(363,372)
+	log Следы боя 1
+	pause @rand(2,4)
+	do talk @npc(166 369)
+	# Следы погони ведут на юг.
+	pause @rand(2,4)
+	do talk @npc(166 369)
+	# Следы битвы ведут в различных направлениях. По характерному запаху, витающему в воздухе, можно сделать вывод о том, что в бою использовался смертельный яд...	pause @rand(2,4)
+	do conf QuestPart SledyBoja12_2
+}
+
+
+automacro SledyBoja12 {
+	location moc_fild12
+	eval $::config{QuestPart} eq "SledyBoja12_2"
+	run-once 1
+	call SledyBoja12M
+}
+macro SledyBoja12M {
+	log Идем на место вторых следов боя
+	do move moc_fild12 @rand(167,176) @rand(212,218)
+	log Следы боя 2
+	pause @rand(2,4)
+	do talk @npc(173 215)
+	pause @rand(2,4)
+	do talk @npc(173 215)
+	do conf QuestPart SledyBoja13_3
+}
+
+automacro SledyBoja13 {
+	location moc_fild12
+	eval $::config{QuestPart} eq "SledyBoja13_3"
+	run-once 1
+	call SledyBoja13M
+}
+macro SledyBoja13M {
+	log Идем расследовать следы боя 3
+	# 3. moc_fild12 276 165
+	do move moc_fild12 @rand(273,275) @rand(165,170)
+	pause @rand(2,4)
+	do talk @npc(276 165)
+	pause @rand(2,4)
+	do talk @npc(276 165)
+	do conf QuestPart SledyBoja14_4
+	do conf lockMap moc_fild11
+}
+
+automacro SledyBoja14 {
+	location moc_fild11
+	eval $::config{QuestPart} eq "SledyBoja14_4"
+	run-once 1
+	call SledyBoja14M
+}
+macro SledyBoja14M {
+	log Идем расследовать следы боя 4
+	do move moc_fild11 @rand(36,38) @rand(160,166)
+	pause @rand(2,4)
+	do talk @npc(39 163)
+	pause @rand(2,4)
+	do talk @npc(39 163)
+	do conf QuestPart SledyBoja15_5
+}
+
+
+automacro SledyBoja15 {
+	location moc_fild11
+	eval $::config{QuestPart} eq "SledyBoja15_5"
+	run-once 1
+	call SledyBoja15M
+}
+macro SledyBoja15M {
+	log Идем расследовать следы боя 5
+	do move moc_fild11 @rand(200,210) @rand(53,56)
+	pause @rand(2,4)
+	do talknpc 205 52 c r0 c r1 c
+	pause @rand(2,4)
+	do talk @npc(205 52)
+	do conf QuestPart SledyBoja16_7
+}
+
+automacro SledyBoja16 {
+	location moc_fild11
+	eval $::config{QuestPart} eq "SledyBoja16_7"
+	run-once 1
+	call SledyBoja16M
+}
+macro SledyBoja16M {
+	log Идем расследовать следы боя 7, (6 - нету?)
+	do move moc_fild11 @rand(181,187) @rand(337,341)
+	pause @rand(2,4)
+	do talk @npc(184 342)
+	pause @rand(2,4)
+	do talk @npc(184 342)
+	do conf lockMap moc_fild17
+	do conf QuestPart SledyBoja17_8
+}
+
+automacro SledyBoja17 {
+	location moc_fild17
+	eval $::config{QuestPart} eq "SledyBoja17_8"
+	run-once 1
+	call SledyBoja17M
+}
+macro SledyBoja17M {
+	log Идем расследовать следы боя 8
+	do move moc_fild17 218 366
+	pause @rand(2,4)
+	do talk @npc(213 358)
+	pause @rand(2,4)
+	do talk @npc(213 358)
+	do conf lockMap_x 229
+	do conf lockMap_y 270
+	do conf lockMap_randX 6
+	do conf lockMap_randY 2
+	do conf QuestPart SledyBoja18_9
+}
+
+#Сложная часть
+#Вокруг агры - фрилдоры и др, а нам надо несколько раз
+#тыкать на нпц в середине локации, и ждать, пока нам 
+#не скажут идти на запад
+automacro SledyBoja18 {
+	location moc_fild17 223 272 235 268
+	eval $::config{QuestPart} eq "SledyBoja18_9"
+	run-once 1
+	call SledyBoja18M
+}
+macro SledyBoja18M {
+	log Расследуем следы боя 9
+	do talknpc 228 274 c c
+}
+
+automacro SledyBoja18c {
+	location moc_fild17 223 272 235 268
+	eval $::config{QuestPart} eq "SledyBoja18_9"
+	console /(Можно попробовать поискать еще|Вы находите ткань в крови)/
+	call SledyBoja18cM
+}
+macro SledyBoja18cM {
+	release SledyBoja18
+}
+
+automacro SledyBoja18a {
+	location moc_fild17 223 272 235 268
+	eval $::config{QuestPart} eq "SledyBoja18_9"
+	console /ведут на запад/
+	run-once 1
+	call SledyBoja18aM
+}
+macro SledyBoja18aM {
+	do conf QuestPart SledyBoja19_10
+	do conf lockMap moc_fild17
+	do conf lockMap_x 36
+	do conf lockMap_randX 1
+	do conf lockMap_y 291
+	do conf lockMap_randY 2
+}
+
+automacro SledyBoja18b {
+	location morocc
+	eval $::config{QuestPart} eq "SledyBoja18_9"
+	timeout 60
+	call SledyBoja18bM
+}
+macro SledyBoja18bM {
+	log Похоже, нас убило Фрилдорой или еще кем
+	release SledyBoja18
+}
+
+	# Следы боя#9: Вы не можете найти других следов. Можно попробовать поискать еще.
+	# Следы боя#9: Done talking
+	# Done talking with Следы боя#9.
+	# Talking to NPC at (228, 274) using sequence: c c
+	# Следы боя#9: Найден клочок ткани, испачканный кровью.
+	# Следы боя#9: Type 'talk cont' to continue talking
+##### Следы боя#9: Вы находите ткань в крови.
+	# Следы боя#9: Done talking
+	# Done talking with Следы боя#9.
+	# Talking to NPC at (228, 274) using sequence: c c
+	# Следы боя#9: Больше не видно странных следов, кроме тех, что ведут на запад.
+	# [macro] automacro SledyBoja18a triggered.
+	# Следы боя#9: Done talking
+	# Done talking with Следы боя#9.
+	# Moving to morocc - 231,265 
+	# Config 'QuestPart' set to SledyBoja19_10 (was SledyBoja18_9)
+	# [macro] automacro SledyBoja19 triggered.
+	# [macro][log] Идем расследовать следы боя 10
+	# Calculating route to: Sograt Desert(moc_fild17): 37, 293
+
+
+
+automacro SledyBoja19 {
+	location moc_fild17 35 293 37 289
+	eval $::config{QuestPart} eq "SledyBoja19_10"
+	timeout 15
+	call SledyBoja19M
+}
+macro SledyBoja19M {
+	log Расследуем следы боя 10
+	pause @rand(2,4)
+	do talk @npc(34 292)
+	pause @rand(2,4)
+	do talk @npc(34 292)
+}
+automacro SledyBoja19b {
+	location moc_fild17 35 293 37 289
+	eval $::config{QuestPart} eq "SledyBoja19_10"
+	run-once 1
+	console /ведут на восток/
+	call SledyBoja19bM
+}
+macro SledyBoja19bM {
+[
+	do conf QuestPart SledyBoja20_11
+	do conf lockMap moc_fild18
+	do conf lockMap_x none
+	do conf lockMap_randX none
+	do conf lockMap_y none
+	do conf lockMap_randY none
+]
+}
+
+
+automacro SledyBoja20 {
+	location moc_fild18
+	eval $::config{QuestPart} eq "SledyBoja20_11"
+	run-once 1
+	call SledyBoja20M
+}
+macro SledyBoja20M {
+	log Идем расследовать следы боя 11
+	do move moc_fild18 @rand(340,345) @rand(293,299)
+	pause @rand(2,4)
+	do talk @npc(346 296)
+	pause @rand(2,4)
+	do talk @npc(346 296)
+	do conf QuestPart SledyBoja21_12
+}
+
+
+
+automacro SledyBoja21 {
+	location moc_fild18
+	eval $::config{QuestPart} eq "SledyBoja21_12"
+	run-once 1
+	call SledyBoja21M
+}
+macro SledyBoja21M {
+	log Идем расследовать следы боя 12
+	do move moc_fild18 @rand(306,311) @rand(254,256)
+	pause @rand(2,4)
+	do talk @npc(309 257)
+	do conf QuestPart SledyBoja22_13
+}
+
+
+automacro SledyBoja22 {
+	location moc_fild18
+	eval $::config{QuestPart} eq "SledyBoja22_13"
+	run-once 1
+	call SledyBoja22M
+}
+macro SledyBoja22M {
+	log Идем расследовать следы боя 13
+	do move moc_fild18 @rand(170,184) @rand(327,332)
+	pause @rand(2,4)
+	do talk @npc(177 333)
+	pause @rand(2,4)
+	do talk @npc(177 333)
+	do conf QuestPart SledyBoja23_14
+}
+
+
+automacro SledyBoja23 {
+	location moc_fild18
+	eval $::config{QuestPart} eq "SledyBoja23_14"
+	run-once 1
+	call SledyBoja23M
+}
+macro SledyBoja23M {
+	log Идем расследовать следы боя 14
+	do move moc_fild18 @rand(105,118) @rand(297,302)
+	pause @rand(2,4)
+	do talk @npc(111 303)
+	pause @rand(2,4)
+	do talk @npc(111 303)
+	do conf QuestPart SledyBoja24_15
+}
+
+
+#Самая сложная часть. Нас травят, хз когда появится нужный диалог.
+automacro SledyBoja24 {
+	location moc_fild18
+	eval $::config{QuestPart} eq "SledyBoja24_15"
+	inventory "Green Potion" >= 1
+	inventory "Red Gemstone" >= 1
+	inventory "Green Herb" >= 2
+	run-once 1
+	call SledyBoja24M
+}
+macro SledyBoja24M {
+	log Идем расследовать следы боя 15
+	do move moc_fild18 @rand(105,112) @rand(190,196)
+	pause @rand(2,4)
+	#Надо первый раз поговорить, только потом мы попадем в ловушку
+	do talknpc 109 197 c r1
+	do conf QuestPart SledyBoja25_15
+	# Следы боя#15: Вы видите следы жестокой битвы. Опаснейший яд использовался в ней тут и там.
+	# Следы боя#15: Type 'talk cont' to continue talking
+	# talk cont
+	# ----------Responses-----------
+	# #  Response
+	# 0  Продолжить следовать.
+	# 1  Оглядеться.
+	# 2  Cancel Chat
+	# -------------------------------
+	# Следы боя#15: Type 'talk resp #' to choose a response.
+	# talk resp 1
+	# Следы боя#15: Вы видите, что в ловушках использовались различные типы яда. Все следы перемешались.
+	# Следы боя#15: Done talking
+}
+automacro SledyBoja25 {
+	location moc_fild18 105 196 112 190
+	eval $::config{QuestPart} eq "SledyBoja25_15"
+	inventory "Green Potion" >= 1
+	inventory "Red Gemstone" >= 1
+	inventory "Green Herb" >= 1
+	run-once 1
+	#Задержка нужна для того, чтобы бот успел отожраться потами после неудачных попыток
+	delay 7
+	call SledyBoja25M
+}
+macro SledyBoja25M {
+	pause @rand(2,4)
+	do talk @npc(109 197)
+}
+
+
+automacro SledyBoja25a {
+	location moc_fild18
+	eval $::config{QuestPart} eq "SledyBoja25_15"
+	console /Вы попадаете в ловушку/
+	call SledyBoja25aM
+}
+macro SledyBoja25aM {
+	log Лечимся от отравы
+	do is Green Herb
+	if (@invamount(Green Herb) < 2) goto noHerb
+		log Нас траванули! Но у нас есть трава еще.
+		release SledyBoja25
+		goto end
+	:noHerb
+		log Фсё плоха! Мы-то полечились, но травки тока на раз.
+	:end
+}
+
+automacro SledyBoja25b {
+	location moc_fild18
+	eval $::config{QuestPart} eq "SledyBoja25_15"
+	console /Вы находите странный капкан/
+	run-once 1
+	call SledyBoja25bM
+}
+macro SledyBoja25bM {
+	pause 2
+	do talk cont
+	pause 2
+	do talk resp 0
+	do conf QuestPart SledyBoja26_15
+	# Следы боя#15: Вы находите странный капкан. Не хотите полить его Зеленым зельем перед тем, как исследовать?
+	# Следы боя#15: Type 'talk cont' to continue talking
+	# talk cont
+	# ----------Responses-----------
+	# #  Response
+	# 0  Полить Зеленым зельем.
+	# 1  Сделать что-нибудь другое.
+	# 2  Cancel Chat
+	# -------------------------------
+	# Следы боя#15: Type 'talk resp #' to choose a response.
+	# talk resp 0
+	# Следы боя#15: Никакого эффекта. Может быть, попробовать что-то другое?
+	# Inventory Item Removed: Green Potion (4) x 1
+	# Следы боя#15: Done talking
+}
+
+automacro SledyBoja26 {
+	location moc_fild18
+	eval $::config{QuestPart} eq "SledyBoja26_15"
+	run-once 1
+	call SledyBoja26M
+}
+macro SledyBoja26M {
+	pause @rand(2,4)
+	do talk @npc(109 197)
+	do conf QuestPart SledyBoja27_15
+	# Следы боя#15: Вы растираете Зеленую траву в порошок и рассыпаете ее. Когда вы кладете Красный драгоценный камень в ловушку, он сияет и исчезает. Ловушка обезврежена.
+	# Inventory Item Removed: Green Herb (6) x 1
+	# Inventory Item Removed: Red Gemstone (5) x 1
+	# Следы боя#15: Done talking
+}
+
+automacro SledyBoja27 {
+	location moc_fild18
+	eval $::config{QuestPart} eq "SledyBoja27_15"
+	run-once 1
+	call SledyBoja27M
+}
+macro SledyBoja27M {
+	pause @rand(2,4)
+	do talknpc 109 197 c
+	pause @rand(2,4)
+	do talk @npc(109 197)
+	do conf QuestPart SledyBoja28_16
+	# Следы боя#15: В обезвреженной ловушке вы находите испачканный в крови клочок ткани.
+	# Следы боя#15: Type 'talk cont' to continue talking
+	# talk cont
+	# Следы боя#15: Вы нашли испачканную кровью ткань.
+	# Следы боя#15: Done talking
+	# talk 0
+	# Следы боя#15: Кажется, больше ловушек нет. Следы ведут на юг.
+	# Следы боя#15: Done talking
+	# talk 0
+	# Следы боя#15: Кажется, больше ловушек нет. Следы ведут на юг.
+	# Следы боя#15: Done talking
+}
+
+automacro SledyBoja28 {
+	location moc_fild18
+	eval $::config{QuestPart} eq "SledyBoja28_16"
+	run-once 1
+	call SledyBoja28M
+}
+macro SledyBoja28M {
+	log Идем расследовать следы боя 16, последние.
+	pause @rand(2,4)
+	do move moc_fild18 @rand(152,158) @rand(100,103)
+	pause @rand(2,4)
+	do talknpc 156 96 c c c
+	do conf lockMap moc_ruins
+	do conf QuestPart SledyBoja29
+	# Следы боя#16: Следы ведут к краю скалы. Больше никаких следов не видно.
+	# Следы боя#16: Type 'talk cont' to continue talking
+	# talk cont
+	# Следы боя#16: ...............
+	# Следы боя#16: Type 'talk cont' to continue talking
+	# talk cont
+	# Следы боя#16: Кажется, преследуемый упал со скалы. Следы преследуемого тут и там, кажется, разделяются на две цепочки.
+	# Следы боя#16: Type 'talk cont' to continue talking
+	# talk cont
+	# Следы боя#16: Кажется, пора возвращаться.
+	# Следы боя#16: Done talking	
+}

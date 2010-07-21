@@ -1,0 +1,1687 @@
+#Тренировка аколитов (программа-минимум: Mace [3])
+#http://www.sharonov.ru/ro/razdel.asp?id=3&news=494
+#manticora, www.rofan.ru
+#
+#
+#Flail [2], апается с 12/10 до 14/17, Печенька и Ухо бабочки
+macro AcolyteTrainingStart {
+[
+	log Начинаем тренировку аколитов
+	do conf include off Acolyte_1
+	do conf lockMap prt_church
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	do conf QuestPart AcolyteTrainingPart0
+]
+}
+
+automacro AcolyteTraining0 {
+	class Acolyte
+	location prt_church
+	eval $::config{QuestPart} eq "AcolyteTrainingPart0"
+	run-once 1
+	delay 5
+	call AcolyteTraining0M
+}
+macro AcolyteTraining0M {
+	log Нужная для начала квеста непись где-то рядом
+	pause @rand(2,4)
+	do conf lockMap none
+	do move prt_church @rand(172,180) 19
+	pause @rand(2,4)
+	#Praupin
+	do talknpc 179 15 c c r1 c c r0
+	[
+	#conf lockMap prt_monk		#30 250
+	log Нас телепортнули в prt_monk
+	do conf QuestPart AcolyteTrainingPart1
+	]
+}
+
+#Реакция на всякие левые диалоги
+automacro AcolyteTrainingToxoby {
+	class Acolyte
+	location prt_monk
+#	console /Эй вы! Как вы посмели прийти сюда|Звук из окна/
+	console /(#tu_monk: Type 'talk cont' to continue talking|Монах#1: Type 'talk cont' to continue talking)/
+	exclusive 1
+	call AcolyteTrainingToxobyM
+}
+macro AcolyteTrainingToxobyM {
+[
+	do move stop
+	log Какие-то посторонние неписи тусуются...
+	do talk cont
+	release all
+]
+}
+
+
+
+
+automacro AcolyteTraining1 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart1"
+	run-once 1
+	delay 5
+	call AcolyteTraining1M
+}
+macro AcolyteTraining1M {
+	log Пойдем поговорим с Эстер
+	do conf lockMap none
+	do move prt_monk @rand(224,231) @rand(96,98)
+	pause @rand(2,4)
+	do talknpc 230 106 c r1 c
+	do conf QuestPart AcolyteTrainingPart2
+}
+
+automacro AcolyteTraining2 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart2"
+	run-once 1
+	delay 5
+	call AcolyteTraining2M
+}
+macro AcolyteTraining2M {
+	log Говорим второй раз с Эстер
+	pause @rand(2,4)
+	do talknpc 230 106 c c c r1 c c c c r0 c c c
+	#r1 - карать зло, r0 - лечение
+	do conf QuestPart AcolyteTrainingPart3
+}
+
+automacro AcolyteTraining3 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart3"
+	run-once 1
+	delay 5
+	call AcolyteTraining3M
+}
+macro AcolyteTraining3M {
+	log Говорим третий раз с Эстер
+	pause @rand(2,4)
+	do talknpc 230 106 c c c c c c
+	#Мы получили дубинку, ухо, мы сохранены в монастыре
+	#В церкви с Пропином говорим "c c r0 c" - нас тп сюда.
+	#Дубинку Mace [3] надо будет вернуть
+	do iconf Decayed Nail 5 0 0
+	do conf saveMap prt_monk
+	do eq Mace [3]
+	do conf autoSwitch_default_rightHand Mace [3]
+	do conf QuestPart AcolyteTrainingPart4
+	#Теперь задача - Хил 3, Защита от демонов 5, блес 1, т.е. надо нам минимум 10 джоб
+	#И еще 5 ногтей с зомбятины из пайона.
+}
+
+automacro AcolyteTraining4 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart4"
+	run-once 1
+	delay 5
+	call AcolyteTraining4M
+}
+macro AcolyteTraining4M {
+	log Пусть нас Глория варпнет в Пронту
+	do move @rand(217,224) @rand(159,162)
+	pause @rand(2,4)
+	do talknpc 219 164 c c c c r1 c
+	log Мы в пронте.
+}
+
+automacro AcolyteTraining4a {
+	class Acolyte
+	location prontera
+	eval $::config{QuestPart} eq "AcolyteTrainingPart4"
+	run-once 1
+	delay 5
+	call AcolyteTraining4aM
+}
+macro AcolyteTraining4aM {
+	log Сохранимся в пронте
+	do move prontera @rand(32,38) @rand(196,200)
+	log Так... где тут Кафра?
+	pause @rand(2,5)
+	log А, да вот же она!
+	pause @rand(2,3)
+	do talknpc 29 207 c r0 c
+	do conf saveMap prontera
+	log Квест: тренировка Аколитов (программа-минимум) завершен.
+	do conf QuestDone @config(QuestDone) AcolyteTrainingPart5_
+	do conf QuestPart none
+	log Делать нечего, идем качаться. Как качнемся до 10 джоба, продолжим тренировку.
+	log Тренировка запускается руками командой из консоли "macro AcolyteTrainingStart2".
+	pause 7
+	call autokach
+	
+}
+
+##########################################################
+
+macro AcolyteTrainingStart2 {
+	log Пробуем продолжить тренировку аколитов.
+	$part1 = @eval($::config{QuestDone} =~ m/AcolyteTrainingPart5_/)
+	$heal = @eval($::char->getSkillLevel(new Skill(name => "Heal")))
+	$bles = @eval($::char->getSkillLevel(new Skill(name => "Blessing")))
+	#проверяем наличие Mace [3] которую надо будет вернуть.
+	if ($part1 != 1) goto notok
+	if ($heal < 3) goto notok
+	if ($bles < 1) goto notok
+		log Все условия для продолжения тренировки аколитов выполены.
+		$s = @config(QuestDone)
+		do eval $::Macro::Data::varStack{s} =~ s/\s+AcolyteTrainingPart5_//
+		log =$s=
+		if ($s != " ") goto skip
+			$s = none
+		:skip
+		[
+		do conf QuestDone $s
+		do conf attackAuto 0
+		do conf route_randomWalk 0
+		do conf lockMap prontera
+		do move stop
+		do conf QuestPart AcolyteTrainingPart5
+		]
+		goto end
+	:notok
+		log Тренировка аколитов не может быть продолжена.
+	
+	:end
+}
+
+
+
+automacro AcolyteTraining5a {
+	class Acolyte
+	location prontera, prt_church
+	eval $::config{QuestPart} eq "AcolyteTrainingPart5"
+	run-once 1
+	delay 5
+	call AcolyteTraining5aM
+}
+macro AcolyteTraining5aM {
+	log Продолжаем тренировку аколитов. Идем в церковь пронтеры. Пропин варпнет нас в монастырь.
+	do conf lockMap none
+	do move prt_church @rand(172,180) 19
+	pause @rand(2,4)
+	do talknpc 179 15 c c r0 c
+}
+
+automacro AcolyteTraining5b {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart5"
+	run-once 1
+	delay 5
+	call AcolyteTraining5bM
+}
+macro AcolyteTraining5bM {
+	log идем к леди Эстер, отдаем дубинку.
+	do move prt_monk @rand(224,231) @rand(96,98)
+	pause @rand(2,4)
+	log Дубинку надо снять и положить в инвентарь.
+	do uneq Mace [3]
+	do conf autoSwitch_default_rightHand [NONE]
+	pause @rand(2,4)
+	do talknpc 230 106 c c c r0
+	do conf QuestPart AcolyteTrainingPart6
+# talk 0
+# Эстер#tu: [Эстер]
+# Эстер#tu: О, вы уже вернулись!
+# Эстер#tu: Добро пожаловать! Я вижу, вы
+# Эстер#tu: успешно справились с заданием!
+# Эстер#tu: Молодец!
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Я хотела бы забрать обратно наш
+# Эстер#tu: жезл. Но учтите, я не очень хорошо
+# Эстер#tu: вижу, поэтому если у вас есть
+# Эстер#tu: Oдругой жезл, я могу по ошибке забрать его.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Ну что, я забираю жезл?
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Конечно.
+# 1  Одну секунду...
+# 2  Cancel Chat
+# -------------------------------
+# Эстер#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Эстер#tu: [Эстер]
+# Эстер#tu: Спасибо за то, что вернули нам наш
+# Эстер#tu: жезл. Желаю удачи.
+# [dist=10.0] Эстер#tu (0): *Heh*
+# Inventory Item Removed: Mace [3] (6) x 1
+# You are now job level 11
+# You gained a job level!
+# Exp gained: 0/0 (0.00%/0.00%)
+# You are now level 16
+# You gained a level!
+# Unknown #402581: **
+# Эстер#tu: Done talking	
+
+}
+
+automacro AcolyteTraining6 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart6"
+	run-once 1
+	delay 5
+	call AcolyteTraining6M
+}
+macro AcolyteTraining6M {
+	log Говорим еще раз. Про то, какие бывают аколиты.
+	pause @rand(2,4)
+	do talknpc 230 106 c c c c
+	do conf QuestPart AcolyteTrainingPart7
+# talk 0
+# Эстер#tu: [Эстер]
+# Эстер#tu: Я полагаю, я могу рассказать вам еще немного про профессию послушника. Вы уже знаете, что новички тренируются, усердно занимаются, а потом идут в Пронтерскую церковь, чтобы там получить свою первую профессию.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: После того, как вы вырастете и
+# Эстер#tu: станете послушником 40-го профессионального уровня, вы получите возможность получить вторую профессию - более узко специализированную.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Меняя профессию на вторую,
+# Эстер#tu: послушник может стать священником,
+# Эстер#tu: апостолом милосердия, или монахом,
+# Эстер#tu: несущим Гнев Божий.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Священники и монахи могут поменять
+# Эстер#tu: профессию на экспертную, достигнув
+# Эстер#tu: определенного уровня развития и
+# Эстер#tu: встретившись с Валькирией в Вальгалле. Священники становятся епископами, а монахи - мистиками.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Понимаете?
+# Эстер#tu: Не пытайтесь запомнить все сразу.
+# Эстер#tu: Done talking
+}
+
+
+automacro AcolyteTraining7 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart7"
+	run-once 1
+	delay 5
+	call AcolyteTraining7M
+}
+macro AcolyteTraining7M {
+	log Говорим третий раз. Нужно отнести письмо Гардрону.
+	pause @rand(2,4)
+	do talknpc 230 106 c 
+	do conf QuestPart AcolyteTrainingPart8
+# Эстер#tu: [Эстер]
+# Эстер#tu:	Игрунья, я только что получила
+# Эстер#tu: это письмо, но, кажется, это
+# Эстер#tu: ошибка. На самом деле оно
+# Эстер#tu: адресовано священнику Гардрону.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Однако я сейчас немного занята,
+# Эстер#tu: у меня много работы. Не трудно вам будет доставить его отцу Гардрону? Он находится в здании по соседству.
+# Item added to inventory: Mother's Letter (6) x 1 - Non-usable
+# Эстер#tu: Done talking
+}
+
+
+
+automacro AcolyteTraining8 {
+	class Acolyte
+	location prt_monk, monk_in
+	eval $::config{QuestPart} eq "AcolyteTrainingPart8"
+	run-once 1
+	delay 5
+	call AcolyteTraining8M
+}
+macro AcolyteTraining8M {
+	log Идем внутрь здания. У меня не были прописаны порталы. Поэтому идем по шагам.
+	do move prt_monk 245 106
+	log мы в холле здания, заходим в комнату с Гардроном
+	pause @rand(2,4)
+	do move monk_in 69 46
+	log мы в комнате с гардроном, подходим и отдаем ему письмо
+	pause @rand(2,4)
+	do move monk_in @rand(22,23) @rand(32,39)
+	pause @rand(2,4)
+	do talknpc 18 38 w2 c w2 c
+	do conf QuestPart AcolyteTrainingPart9
+#	 Священник Гардрон#tu         (18, 38)      52597
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: Хмм?.. Что такое?
+# Священник Гардрон#tu: Вы что-то от меня хотите?
+# Священник Гардрон#tu: Type 'talk cont' to continue talking
+# talk cont
+# [dist=7.8] Священник Гардрон#tu (1): *!*
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: О, это письмо от моей матери. Спасибо, что вы принесли его мне, юный послушник.
+# Священник Гардрон#tu: Type 'talk cont' to continue talking
+# talk cont
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: Я беспокоился о ней, тем более она
+# Священник Гардрон#tu: у меня старенькая, но сейчас я с
+# Священник Гардрон#tu: облегчением узнал, что с ее здоровьем все в порядке. Благослови нас всех Господь...
+# Inventory Item Removed: Mother's Letter (5) x 1
+# Священник Гардрон#tu: Done talking
+}
+
+
+
+automacro AcolyteTraining9 {
+	class Acolyte
+	location monk_in
+	eval $::config{QuestPart} eq "AcolyteTrainingPart9"
+	run-once 1
+	delay 5
+	call AcolyteTraining9M
+}
+macro AcolyteTraining9M {
+	log Говорим про зомби в пайоне. Нас варпают в Пайон.
+	pause @rand(2,4)
+	do move monk_in @rand(22,23) @rand(32,39)
+	pause @rand(2,4)
+	do talknpc 18 38 c c c c c c r0
+	do conf QuestPart AcolyteTrainingPart10
+# 1    Священник Гардрон#tu         (18, 38)      52597
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: Какое-то время назад мэр Пайона
+# Священник Гардрон#tu: прислал мне письмо. Увы, обитатели Пайона подверглись атаке зомби.
+# Священник Гардрон#tu: Type 'talk cont' to continue talking
+# talk cont
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: Он попросил у монастыря помощи, но у нас были большие проблемы. Не было людей, которые могли бы помочь...
+# Священник Гардрон#tu: Type 'talk cont' to continue talking
+# talk cont
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: ....!
+# [dist=7.8] Священник Гардрон#tu (1): *!*
+# Священник Гардрон#tu: Type 'talk cont' to continue talking
+# talk cont
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: Игрунья, могу я попросить
+# Священник Гардрон#tu: вас заняться этим вопросом?
+# Священник Гардрон#tu: Уничтожьте Скелетов и Зомби
+# Священник Гардрон#tu: на 1-ом этаже Пайонской пещеры.
+# Священник Гардрон#tu: Type 'talk cont' to continue talking
+# talk cont
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: Так как вы все еще занимаетесь
+# Священник Гардрон#tu: с Эстер, я помогу вам, если вы
+# Священник Гардрон#tu: вернетесь с 5 Ногтями мертвеца.
+# Священник Гардрон#tu: Type 'talk cont' to continue talking
+# talk cont
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: А теперь...
+# Священник Гардрон#tu: Не отправиться ли вам в Пайон?
+# Священник Гардрон#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  В Пайон!
+# 1  Дайте подготовиться.
+# 2  Cancel Chat
+# -------------------------------
+# Священник Гардрон#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: Хорошо. Я отправлю вас сражаться
+# Священник Гардрон#tu: с монстрами в Пайонскую пещеру и
+# Священник Гардрон#tu: жду возвращения с 5 Ногтями мертвеца. Благослови вас Бог...
+# Священник Гардрон#tu: Done talking
+# MAP Name: payon.gat
+}
+
+
+
+automacro AcolyteTraining10 {
+	class Acolyte
+	location payon
+	eval $::config{QuestPart} eq "AcolyteTrainingPart10"
+	run-once 1
+	delay 5
+	call AcolyteTraining10M
+}
+macro AcolyteTraining10M {
+	log Мы в Пайоне. Нужно набить 5 ногтей. Проверим ногти на складе.
+	pause @rand(2,4)
+	do move payon 188 97
+	log Посмотрим, что есть на кафре у нас.
+	pause @rand(2,5)
+	do talknpc 181 104 c r1
+	pause @rand(3,6)
+	do storage get Decayed Nail 5
+	do storage close
+	
+	if (@invamount(Decayed Nail) >= 5) goto ok
+		log Нам не хватает ногтей. Надо идти их бить в пещеры.
+		goto end
+	:ok
+		log Нам хватает ногтей, идем назад в пронтеру.
+		
+	:end
+	do conf QuestPart AcolyteTrainingPart11
+}
+
+
+automacro AcolyteTraining11a {
+	class Acolyte
+	location payon
+	eval $::config{QuestPart} eq "AcolyteTrainingPart11"
+	inventory "Decayed Nail" >= 5
+	run-once 1
+	delay 5
+	call AcolyteTraining11aM
+}
+macro AcolyteTraining11aM {
+	log Мы в Пайоне. У нас достаточно ногтей. Идем отдавать ногти.
+	pause @rand(2,4)
+	do move payon 188 97
+	pause @rand(2,4)
+	do talknpc 181 104 c r2 c r0
+}
+automacro AcolyteTraining11b {
+	class Acolyte
+	location prontera, prt_church
+	eval $::config{QuestPart} eq "AcolyteTrainingPart11"
+	inventory "Decayed Nail" >= 5
+	run-once 1
+	call AcolyteTraining11bM
+}
+macro AcolyteTraining11bM {
+	log Мы в Пронтере. У нас достаточно ногтей. Идем отдавать ногти.
+	pause @rand(2,4)
+	do move prt_church @rand(172,180) 19
+	pause @rand(2,4)
+	do talknpc 179 15 c c r0 c	
+}
+automacro AcolyteTraining11c {
+	class Acolyte
+	location prt_monk, monk_in
+	eval $::config{QuestPart} eq "AcolyteTrainingPart11"
+	inventory "Decayed Nail" >= 5
+	run-once 1
+	call AcolyteTraining11cM
+}
+macro AcolyteTraining11cM {
+	log Мы в Монастыре. У нас достаточно ногтей. Идем отдавать ногти. 
+	log Ногти, кстати, не забирают. Их надо просто показать.
+	pause @rand(2,4)
+	do move monk_in @rand(22,23) @rand(32,39)
+	pause @rand(2,4)
+	do talknpc 18 38 w2 c w2 c w1
+	do conf QuestPart AcolyteTrainingPart12
+
+# 1    Священник Гардрон#tu         (18, 38)      52597
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: О!.. Вы вернулись!
+# Священник Гардрон#tu: Посмотрим... Один...
+# Священник Гардрон#tu: Два... Три...
+# Священник Гардрон#tu: Type 'talk cont' to continue talking
+# talk cont
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: Спасибо огромное! Вы совершили
+# Священник Гардрон#tu: хорошее дело на пользу монастырю,
+# Священник Гардрон#tu: не говоря уже о том, что вы
+# Священник Гардрон#tu: защитили жителей Пайона от
+# Священник Гардрон#tu: опасности.
+# Священник Гардрон#tu: Type 'talk cont' to continue talking
+# talk cont
+# Священник Гардрон#tu: [Отец Гардрон]
+# Священник Гардрон#tu: Будьте же вечно благословенны.
+# Священник Гардрон#tu: Теперь вам надо вернуться к сестре
+# Священник Гардрон#tu: Эстер, чтобы продолжить обучение
+# Священник Гардрон#tu: послушника.
+# You are now job level 12
+# You gained a job level!
+# Exp gained: 170/311 (17.53%/44.49%)
+# You are now level 17
+# Auto-adding stat int
+# You gained a level!
+# Unknown #402581: **
+# Священник Гардрон#tu: Done talking
+# Auto-adding stat int	
+}
+
+
+
+
+
+automacro AcolyteTraining12 {
+	class Acolyte
+	location prt_monk, monk_in
+	eval $::config{QuestPart} eq "AcolyteTrainingPart12"
+	run-once 1
+	call AcolyteTraining12M
+}
+macro AcolyteTraining12M {
+	log Ногти отдали. Идем к Эстер. Нам дают Чаппи - собачий корм, идем на кладбище кормить пёсика.
+	log По идее нас посылают качать блессинг до 1 лвл хотя бы. Но мы качнули заранее.
+	pause @rand(2,4)
+	do move prt_monk @rand(224,231) @rand(96,98)
+	pause @rand(2,4)
+	do talknpc 230 106 c c c c c c c c
+	do conf QuestPart AcolyteTrainingPart13
+# Эстер#tu: [Эстер]
+# Эстер#tu: Вы отправляетесь в Пайон ради блага монастыря? Это будет нелегко...
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Благословляю вас!
+# You are now: Blessing
+
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Сейчас мы будем изучать
+# Эстер#tu: Благословение. Это святое умение, несущее нам благословение Господа. 'Благословение' временно поднимает Силу, Интеллект и Сноровку персонажа и снимает Проклятие.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Как и 'Лечение', 'Благословение'
+# Эстер#tu: можно использовать в борьбе против
+# Эстер#tu: Нежити. (SHIFT + 'Благословение').
+# Эстер#tu: 'Благословение' накладывает на
+# Эстер#tu: Нежить Проклятие.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: 'Благословение' можно выучить после того, как выучите 5-ый уровень Святой Защиты. Это умение повышает вашу устойчивость против Нежити и Демонов.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Служите Господу и благословляйте
+# Эстер#tu: окружающих на славу и гордость Божью. Это все на сегодня.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Ах, да!.. На кладбище, что к
+# Эстер#tu: северо-западу отсюда, живет
+# Эстер#tu: бездомная собачка. Хорошо бы ее покормить.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Простите, что так неожиданно, но
+# Эстер#tu: я бы попросила вас покормить ее.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: Сестра Эстер дает вам собачью еду.
+# Эстер#tu: Done talking
+}
+
+
+automacro AcolyteTraining13 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart13"
+	run-once 1
+	call AcolyteTraining13M
+}
+macro AcolyteTraining13M {
+	log Идем к Собаке, которую нужно покормить.
+	pause @rand(2,4)
+	do move prt_monk @rand(237,242) @rand(245,247)
+	pause @rand(2,4)
+	do conf QuestPart AcolyteTrainingPart14
+}
+
+
+automacro AcolyteTraining14 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart14"
+	run-once 1
+	call AcolyteTraining14M
+}
+macro AcolyteTraining14M {
+	log Длинный и тупой разговор с собакой.
+	pause @rand(2,4)
+	do talknpc 235 245 c r0 c r1 c r2 c
+	do conf QuestPart AcolyteTrainingPart15
+}
+# 1    Собачка#tu                   (235, 245)    52598
+# Собачка#tu: [Собачка]
+# Собачка#tu: Гав-гав!
+# Собачка#tu: Вуууууууу!
+# Собачка#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# 0  Дать угощение.
+# -------------------------------
+# Собачка#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Собачка#tu: [Собачка]
+# Собачка#tu: Ав-ав!
+# [dist=2] Собачка#tu (1): *Heart*
+# Собачка#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# 0  Дать угощение.
+# -------------------------------
+# Собачка#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Собачка#tu: [Собачка]
+# Собачка#tu: гррррррррр!!
+# [dist=2] Собачка#tu (1): *$!@#*
+# Собачка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Собачка#tu: Собака скалит зубы и грозно рычит.
+# Собачка#tu: Type 'talk cont' to continue talking
+# ----------Responses-----------
+# 1  Приласкать.
+# -------------------------------
+# Собачка#tu: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Собачка#tu: [Собачка]
+# Собачка#tu: Ав-ав-ав!
+# [dist=2] Собачка#tu (1): *Heart*
+# Собачка#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# 2  Ничего не делать.
+# -------------------------------
+# Собачка#tu: Type 'talk resp #' to choose a response.
+# talk resp 2
+# Собачка#tu: [Собачка]
+# Собачка#tu: Ав-ав-ав!
+# Собачка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Собачка#tu: [Игрунья]
+# Собачка#tu: Какая прелесть!
+# Собачка#tu: Done talking
+
+
+
+automacro AcolyteTraining15 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart15"
+	run-once 1
+	call AcolyteTraining15M
+}
+macro AcolyteTraining15M {
+	log Видим больную девочку.
+	pause @rand(2,4)
+	do move prt_monk 227 255
+	do talknpc 226 257 c c c c c r0 c c c c c c c
+	do conf QuestPart AcolyteTrainingPart16
+#2    Больная девочка#tu           (226, 257)    52600#
+# Больная девочка#tu: [Анжелика]
+# Больная девочка#tu: Сестричка, не уходи...
+# Больная девочка#tu: *Хлюп* *Кхххх!*
+# Больная девочка#tu: Так... больно...
+# Больная девочка#tu: Сес...тра...
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: [Анжелика]
+# Больная девочка#tu: *Хлюп...*
+# Больная девочка#tu: Вы из монастыря?
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: [Анжелика]
+# Больная девочка#tu: ...
+# Больная девочка#tu: ......
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: [Анжелика]
+# Больная девочка#tu: Спасите... мою сестру...
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: [Анжелика]
+# Больная девочка#tu: *Хлюп хлюп*
+# Больная девочка#tu: *Кххх кххх*
+# Больная девочка#tu: Больно...
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Все в порядке?
+# 1  Cancel Chat
+# -------------------------------
+# Больная девочка#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Больная девочка#tu: [Анжелика]
+# Больная девочка#tu: Моя сестра...
+# Больная девочка#tu: Она такая красивая...
+# Больная девочка#tu: Такая чудесная девочка.
+# Больная девочка#tu: Но теперь...
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: [Анжелика]
+# Больная девочка#tu: Ужасное создание спряталось в
+# Больная девочка#tu: куче мусора и атаковало ее. Ее
+# Больная девочка#tu: отравили... И ее тело стало холодным и... *Хлюп*
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: [Анжелика]
+# Больная девочка#tu: Я была с ней и тоже заболела. Я не
+# Больная девочка#tu: так сильно отравлена, но я чувствую себя ужасно, и эти кошмары...
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: [Анжелика]
+# Больная девочка#tu: *Кххх кххх!*
+# Больная девочка#tu: Я стану такой же, как сестра?
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: Девочка выглядит действительно
+# Больная девочка#tu: больной. Может, вам стоит
+# Больная девочка#tu: присмотреться к ней и понять, что не так?
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: [Игрунья]
+# Больная девочка#tu: Все в порядке?
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: **
+# Игрунья: *Omg*
+# Больная девочка#tu: [Игрунья]
+# Больная девочка#tu: Это же!..
+# Больная девочка#tu: Проклятый дух терзает бедную девочку!
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: [Игрунья]
+# Больная девочка#tu: Я вылечу тебя...
+# Больная девочка#tu: Клянусь.
+# Больная девочка#tu: Done talking
+}
+
+
+
+automacro AcolyteTraining16 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart16"
+	run-once 1
+	call AcolyteTraining16M
+}
+macro AcolyteTraining16M {
+	log Идем к Эстер советоваться, как же помочь больной девочке.
+	pause @rand(2,4)
+	do move prt_monk @rand(224,231) @rand(96,98)
+	pause @rand(2,4)
+	do talknpc 230 106 c c
+	do conf QuestPart AcolyteTrainingPart17
+# 0    Эстер#tu                     (230, 106)    52596
+# talk 0
+# Эстер#tu: [Эстер]
+# Эстер#tu: Как изгнать злого духа?
+# Эстер#tu: Ну, это же просто - так же,
+# Эстер#tu: как и снять проклятие...
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Aх... Я думаю, это испытание
+# Эстер#tu: послано вам Господом.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Вы уже знаете ответ.
+# Эстер#tu: Подумайте хорошенько - и поймете.
+# Эстер#tu: Done talking
+}
+
+
+
+automacro AcolyteTraining17 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart17"
+	run-once 1
+	call AcolyteTraining17M
+}
+macro AcolyteTraining17M {
+	log Возвращаемся к больной девочке. Будем ее лечить.
+	pause @rand(2,4)
+	do move prt_monk 227 255
+	do conf QuestPart AcolyteTrainingPart18
+}
+
+automacro AcolyteTraining18 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart18"
+	run-once 1
+	call AcolyteTraining18M
+}
+macro AcolyteTraining18M {
+	log Лечим бедненькую маленькую девочку. Щас сам заплачу, блин.
+	pause @rand(2,4)
+	do talk @npc(226 257)
+	pause 2
+	do talk cont
+	pause 2
+	do talk cont 
+	pause 2
+	do talk resp 1
+	pause 2
+	do talk cont
+}
+# 0    Больная девочка#tu           (226, 257)    52600
+# Больная девочка#tu: [Анжелика]
+# Больная девочка#tu: Сестричка, не уходи...
+# Больная девочка#tu: *Хлюп* *Кхххх!*
+# Больная девочка#tu: Так... больно...
+# Больная девочка#tu: Сес...тра...
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: Вы подходите к девочке, кладете
+# Больная девочка#tu: руки ей на спину и произносите
+# Больная девочка#tu: святую молитву...
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# 1  Благословение!
+# -------------------------------
+# Больная девочка#tu: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Больная девочка#tu: [Игрунья]
+# Больная девочка#tu: Б...
+# Больная девочка#tu: Благословение!
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: [Игрунья]
+# Больная девочка#tu: Э?.. Не работает...
+# Больная девочка#tu: Может быть, это потому, что я еще
+# Больная девочка#tu: учусь?
+# Больная девочка#tu: Done talking
+automacro AcolyteTraining18a {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart18"
+	console /Не работает/
+	delay 3
+	call AcolyteTraining18aM
+}
+macro AcolyteTraining18aM {
+	log Сила нашего Блогославления не способна была изгнать злого духа. Но мы упорны.
+	pause @rand(3,5)
+	release AcolyteTraining18
+}
+
+automacro AcolyteTraining18b {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart18"
+	console /Готово/
+	delay 3
+	call AcolyteTraining18bM
+}
+macro AcolyteTraining18bM {
+	log Мама-мама! У меня получилсь.
+	pause @rand(3,5)
+	do talk cont
+	pause 2
+	do talk cont
+	pause 2
+	do talk cont
+	pause 2
+	do conf QuestPart AcolyteTrainingPart19	
+#####################################
+# Больная девочка#tu: [Игрунья]
+# Больная девочка#tu: Б...
+# Больная девочка#tu: Благословение!
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# Больная девочка#tu: **
+# Больная девочка#tu: [Игрунья]
+# Больная девочка#tu: Я...
+# Больная девочка#tu: Готово!!
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# talk cont
+# Больная девочка#tu: Какой прекрасный шанс, чтобы
+# Больная девочка#tu: попрактиковаться в умениях! Похоже
+# Больная девочка#tu: на то, что доброе дело помогло вам многому научиться.
+# You are now job level 14
+# You gained a job level!
+# Exp gained: 880/103 (69.84%/10.86%)
+# Unknown #398573: **
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# Больная девочка#tu: [Анжелика]
+# Больная девочка#tu: А... Я...
+# Больная девочка#tu: Так хорошо...
+# Больная девочка#tu: Светлее...
+# Больная девочка#tu: Type 'talk cont' to continue talking
+# Больная девочка#tu: [Анжелика]
+# Больная девочка#tu: Это вы сделали?
+# Больная девочка#tu: Это и есть Божья сила?
+# Больная девочка#tu: Done talking
+}
+
+
+automacro AcolyteTraining19 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart19"
+	run-once 1
+	call AcolyteTraining19M
+}
+macro AcolyteTraining19M {
+	log Идем назад к Эстер, говорим, что девочку вылечили. Слушаем лекции по скилам.
+	pause @rand(2,4)
+	do move prt_monk @rand(224,231) @rand(96,98)
+	pause @rand(2,4)
+	do talknpc 230 106 c c c c c
+	do conf QuestPart AcolyteTrainingPart20
+# Эстер#tu: [Эстер]
+# Эстер#tu: Вы помните, что можете выучить
+# Эстер#tu: 'Святую Защиту' и потом уже учить
+# Эстер#tu: 'Благословение', да?
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Если вы откроете свое Дерево
+# Эстер#tu: умений, то увидите, что
+# Эстер#tu: возможность выучить Гибель
+# Эстер#tu: Демонов и Ангелус зависит от уровня вашей 'Святой Защиты'.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Гибель Демонов увеличивает силу атаки против Нежити и Демонов, потому и используется для изгнания Зла.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Как только вы выучите 'Гибель Демонов' 3-го уровня, вы сможешь приступить к изучению умения Сигнум Круцис, которое понижает защиту Нежити и Темных монстров.
+# Эстер#tu: **
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Ангелус усиливает защиту всей партии, включая вас. Его действие зависит от Живучести - чем выше Живучесть, тем эффективнее действует умение.
+# Эстер#tu: **
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Это все о 'Святой Защите'.
+# Эстер#tu: А сейчас - перемена!
+# Эстер#tu: Продолжим чуть позже.
+# Эстер#tu: Я буду ждать вас здесь.
+# Эстер#tu: Done talking
+}
+
+
+
+automacro AcolyteTraining20 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart20"
+	run-once 1
+	call AcolyteTraining20M
+}
+macro AcolyteTraining20M {
+	log Слушаем лекции по скилам.
+	pause @rand(2,4)
+	do talknpc 230 106 c c c
+	do conf QuestPart AcolyteTrainingPart21
+# Эстер#tu: [Эстер]
+# Эстер#tu: Пришло время для следующего урока.
+# Эстер#tu: Сегодня мы поговорим о Повышении
+# Эстер#tu: Ловкости, молитве, которая входит
+# Эстер#tu: в дерево умений 'Лечения'.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Вы можете выучить 'Повышение Ловкости' после того, как разовьете Лечение до 3-го уровня. Согласно своему названию, 'Повышение Ловкости' увеличивает Ловкость цели.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Помимо этого, молитва улучшает
+# Эстер#tu: шанс уворота, скорость атаки, и
+# Эстер#tu: скорость передвижения.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Попробуйте это заклинание на себе, хорошо?
+# You are now: Increase AGI
+
+# Эстер#tu: Done talking
+}
+
+
+automacro AcolyteTraining21 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart21"
+	run-once 1
+	call AcolyteTraining21M
+}
+macro AcolyteTraining21M {
+	log Слушаем лекции по скилам.
+	pause @rand(2,4)
+	do talknpc 230 106 c c c c
+	do conf QuestPart AcolyteTrainingPart22
+# Эстер#tu: [Эстер]
+# Эстер#tu: Как только вы выучите 1-ый уровень
+# Эстер#tu: 'Повышения Ловкости', вы можете
+# Эстер#tu: начать изучение Понижения Ловкости.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Как вы можете догадаться, 'Понижение Ловкости' замедляет врагов, снижая их Ловкость, скорость движения, шанс уворота и скорость атаки. Эффект противоположен 'Повышению Ловкости'.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Последнее умение ветки заклинаний, идущих от 'Лечения', - Очищение. Вы можете выучить 'Очищение' после того, как научишься 2-му уровню 'Лечения'.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: 'Очищение' снимает отрицательные
+# Эстер#tu: статусы, например, Молчание,
+# Эстер#tu: Проклятие и Каменное проклятие.
+# Эстер#tu: Если направить 'Очищение' на Нежить, монстры будут прокляты.
+# Эстер#tu: **
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Не забудьте, что 'Повышение
+# Эстер#tu: Ловкости', 'Понижение Ловкости'
+# Эстер#tu: и 'Очищение' могут быть выучены
+# Эстер#tu: только после изучения определенных уровней 'Лечения'.
+# Эстер#tu: Done talking
+}
+
+
+
+
+automacro AcolyteTraining22 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart22"
+	run-once 1
+	call AcolyteTraining22M
+}
+macro AcolyteTraining22M {
+	log Слушаем лекции по скилам.
+	pause @rand(2,4)
+	do talknpc 230 106 c c c c c c c c c c c c r1
+	do conf QuestPart AcolyteTrainingPart23
+# talk 0
+# Эстер#tu: [Эстер]
+# Эстер#tu: Вы очень быстро учитесь. Я рада,
+# Эстер#tu: что мы уже добрались до самых
+# Эстер#tu: сложных пунктов программы.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Став послушником, вы можете
+# Эстер#tu: выучить молитву 'Прозрение'.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: 'Прозрение' используется, чтобы
+# Эстер#tu: обнаружить скрытых врагов. У магов
+# Эстер#tu: есть похожее умение, называемое
+# Эстер#tu: 'Взор', но оно только обнаруживает
+# Эстер#tu: спрятанных, 'Прозрение' же наносит им небольшой урон.
+# Эстер#tu: **
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: После выученного 'Прозрения' вы
+# Эстер#tu: можете выучить Телепортацию. 'Телепортация' может переместить вас в случайное место на карте или в точку сохранения.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: После того, как научитесь 2-му
+# Эстер#tu: уровню 'Телепортации', вам
+# Эстер#tu: откроется умение Портал, с помощью
+# Эстер#tu: которого вы сможете открыть ворота к точке сохранения или заранее запомненному месту назначения. Для его использования требуется 1 Синий драгоценный камень.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Выучив заклинание на максимум, вы
+# Эстер#tu: сможете запомнить три точки
+# Эстер#tu: назначения. Используйте команду
+# Эстер#tu: /memo, но помните, что далеко не
+# Эстер#tu: везде получится сделать метку.
+# Эстер#tu: В большинстве подземелий и полей это невозможно, но рядом с городами и в них - вполне.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Что-то смущает? 'Телепортация' и
+# Эстер#tu: 'Портал' позволяю слугам Господа
+# Эстер#tu: быстро передвигаться из одного
+# Эстер#tu: места в другое.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: У меня сохранены точки у дома и у монастыря, и я могу быстро попадать туда, куда мне хочется.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: А теперь... Последнее умение ветки
+# Эстер#tu: 'Прозрения' называется 'Туман'.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: 'Туман' защищает персонажей в зоне
+# Эстер#tu: 9 клеток от удаленных атак. Если будете в партии с лучниками, используйте 'Туман' осторожно, он может блокировать их атаки.
+# Unknown #402581: **
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Если встретите Нежить, которая
+# Эстер#tu: нападет на вас издалека, защитите
+# Эстер#tu: себя 'Туманом' и атакуйте ее 'Лечением' - это самая лучшая тактика.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: На этом уроке мы прошли очень
+# Эстер#tu: сложный материал. Хотите повторить?
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Да, пожалуйста.
+# 1  Нет, все понятно.
+# 2  Cancel Chat
+# -------------------------------
+# Эстер#tu: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Эстер#tu: [Эстер]
+# Эстер#tu: Ха! Какой же вы молодец!
+# Эстер#tu: Done talking
+}
+
+automacro AcolyteTraining23 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart23"
+	run-once 1
+	call AcolyteTraining23M
+}
+macro AcolyteTraining23M {
+	log Разносим посылки
+	pause @rand(2,4)
+	do talknpc 230 106 c c c c c
+	do conf QuestPart AcolyteTrainingPart24
+# Эстер#tu: [Эстер]
+# Эстер#tu: Дорогуша!.. Все это доставлено
+# Эстер#tu: мне по недоразумению! Часть
+# Эстер#tu: посылок должна быть отправлена в Пронтерскую церковь!
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Не окажете ли мне еще услугу?
+# Эстер#tu: Пожалуйста, разнесите почту, боюсь, что у меня не будет времени на это.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Не доставите ли ее по адресам?
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Первая посылка предназначена рабочему к северу отсюда. Его зовут Вейнер. Следующая доставка - Хедрику, что возле входа в монастырь.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Третья из гильдии Кузнецов - Мастеру, делающему оружие и броню для Монахов. Четвертая - Священнику Карвену в здании неподалеку.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: И последняя - отцу Пропину,
+# Эстер#tu: священнику, который сказал вам обо
+# Эстер#tu: мне. Благодарю вас за помощь.
+# Item added to inventory: Letter from Sister (6) x 1 - Non-usable
+# Item added to inventory: Receipt (7) x 1 - Non-usable
+# Item added to inventory: Delivery Box (8) x 2 - Non-usable
+# Item added to inventory: Mother's Letter (9) x 1 - Non-usable
+# Эстер#tu: Done talking
+}
+
+
+automacro AcolyteTraining24 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart24"
+	run-once 1
+	call AcolyteTraining24M
+}
+macro AcolyteTraining24M {
+	log Разносим посылки. Вейнер (197, 228)
+	pause @rand(2,4)
+	do move prt_monk @rand(194,198) @rand(223,226)
+	pause @rand(2,4)
+	do talknpc 197 228 c c c
+	do conf QuestPart AcolyteTrainingPart25
+# Вейнер: [Вейнер]
+# Вейнер: Я так измучен...
+# Вейнер: Может, просто пойти домой?
+# Вейнер: Type 'talk cont' to continue talking
+# talk cont
+# Вейнер: [Вейнер]
+# Вейнер: Что такое? У вас есть что-то для
+# Вейнер: меня? Почему, как такое может быть?
+# Вейнер: Type 'talk cont' to continue talking
+# talk cont
+# Вейнер: [Вейнер]
+# Вейнер: Это же...
+# Вейнер: Домашний шоколад от моей зайки!
+# Вейнер: О Биби! Ты лучшая!
+# Вейнер: **
+# Вейнер: **
+# Вейнер: Type 'talk cont' to continue talking
+# talk cont
+# Вейнер: [Вейнер]
+# Вейнер: О да! Спасибо огромное за
+# Вейнер: посылочку. Я всегда так рад весточкам от моей кошечки.
+# [dist=5.8] Вейнер (0): *Thanks*
+# Inventory Item Removed: Delivery Box (8) x 1
+# Вейнер: Done talking
+}
+
+
+automacro AcolyteTraining25 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart25"
+	run-once 1
+	call AcolyteTraining25M
+}
+macro AcolyteTraining25M {
+	log Разносим посылки. Хедрик (28, 260). Нам дают печенюшку.
+	pause @rand(2,4)
+	do move prt_monk @rand(29,32) @rand(254,256)
+	pause @rand(2,4)
+	do talknpc 28 260 c c c
+	do conf QuestPart AcolyteTrainingPart26
+# Хедрик: [Хедрик]
+# Хедрик: *Фьють!*
+# Хедрик: Я так трудился сегодня!
+# Хедрик: Так тяжело, но эффективно!
+# Хедрик: Отличная работа, как обычно,
+# Хедрик: Хедрик. Ты лучший!
+# Хедрик: Type 'talk cont' to continue talking
+# talk cont
+# Хедрик: [Хедрик]
+# Хедрик: О?.. Мне письмо?
+# Хедрик: Интересно, от кого...
+# Хедрик: От мамочки!
+# Хедрик: Type 'talk cont' to continue talking
+# talk cont
+# Хедрик: [Хедрик]
+# Хедрик: Ааааа! Черт побери!
+# Хедрик: Как же я люблю мою мамочку!
+# Хедрик: **
+# Хедрик: Type 'talk cont' to continue talking
+# talk cont
+# Хедрик: [Хедрик]
+# Хедрик: Спасибо огромное! Не хотите
+# Хедрик: попробовать печеньки, которые
+# Хедрик: она мне прислала?
+# Inventory Item Removed: Mother's Letter (8) x 1
+# Item added to inventory: Well-baked Cookie (8) x 1 - Usable
+# Хедрик: Done talking
+}
+
+automacro AcolyteTraining26a {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart26"
+	run-once 1
+	call AcolyteTraining26aM
+}
+macro AcolyteTraining26aM {
+	log Разносим посылки. Торговец оружием#tu (136, 261)
+	pause @rand(2,4)
+	do move prt_monk 131 254
+# Торговец оружием#tu: [Торговец оружием]
+# Торговец оружием#tu: То, что я заказывал, наконец прибыло! Лучше пусть валяется у меня, а не черт знает где.
+# Торговец оружием#tu: Type 'talk cont' to continue talking
+# talk cont
+# Торговец оружием#tu: [Торговец оружием]
+# Торговец оружием#tu: Спасибо! Ну, и раз вы тут, может,
+# Торговец оружием#tu: купите что-нибудь?
+# Inventory Item Removed: Delivery Box (7) x 1
+# Торговец оружием#tu: Done talking
+}
+
+automacro AcolyteTraining26b {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart26"
+	console /Торговец оружием#tu: Type 'talk cont' to continue talking/
+	run-once 1
+	call AcolyteTraining26bM
+}
+macro AcolyteTraining26bM {
+	do talk cont
+}
+
+automacro AcolyteTraining26c {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart26"
+	console /купите что-нибудь/
+	run-once 1
+	call AcolyteTraining26cM
+}
+macro AcolyteTraining26cM {
+	do conf QuestPart AcolyteTrainingPart27
+}
+
+
+automacro AcolyteTraining27 {
+	class Acolyte
+	location prt_monk, monk_in
+	eval $::config{QuestPart} eq "AcolyteTrainingPart27"
+	run-once 1
+	call AcolyteTraining27M
+}
+macro AcolyteTraining27M {
+	log Разносим посылки. Карвен
+	log Идем в портал, который ведет внутрь дома
+	pause @rand(2,4)
+	do move prt_monk 245 137
+	
+	log Появляемся в точке monk_in 98 183, сразу говорим с Карвином
+	pause @rand(2,4)
+	do talknpc 103 176 c c c
+	do conf QuestPart AcolyteTrainingPart28
+# Карвен: [Карвен]
+# Карвен: Пусть вам будет покойно...
+# Карвен: Type 'talk cont' to continue talking
+# talk cont
+# Карвен: [Карвен]
+# Карвен: Я отпеваю недавно почивших.
+# Карвен: Не беспокойте меня. Приходите
+# Карвен: позже.
+# Карвен: Type 'talk cont' to continue talking
+# talk cont
+# Карвен: [Карвен]
+# Карвен: Письмо? O, должно быть, это от
+# Карвен: моей сестры. Чего она желает теперь?
+# Карвен: Type 'talk cont' to continue talking
+# talk cont
+# Карвен: [Карвен]
+# Карвен: Я надеюсь, она обратилась к
+# Карвен: Господу и вернулась к праведной
+# Карвен: жизни Спасибо огромное.
+# Inventory Item Removed: Letter from Sister (5) x 1
+# Карвен: Done talking
+}
+
+
+automacro AcolyteTraining28a {
+	class Acolyte
+	location prt_monk, monk_in
+	eval $::config{QuestPart} eq "AcolyteTrainingPart28"
+	run-once 1
+	call AcolyteTraining28aM
+}
+macro AcolyteTraining28aM {
+	log Идем к Глории, пусть она варпнет нас в пронту к Пропину.
+	do move prt_monk @rand(217,224) @rand(159,162)
+	pause @rand(2,4)
+	do talknpc 219 164 c c c c r1 c
+	log Мы в пронте.
+}
+# Глория#tu: [Глория]
+# Глория#tu: Я все еще учусь на послушника,
+# Глория#tu: и я все еще ошибаюсь!
+# Глория#tu: Type 'talk cont' to continue talking
+# talk cont
+# Глория#tu: [Глория]
+# Глория#tu: *Хлюп*
+# Глория#tu: И я ворчу все время...
+# Глория#tu: Но есть одна вещь, которая у меня
+# Глория#tu: получается!
+# Глория#tu: Type 'talk cont' to continue talking
+# talk cont
+# Глория#tu: [Глория]
+# Глория#tu: 'Портал'! Я знаю 2-ой уровень
+# Глория#tu: 'Портала'! Одна из сохраненных
+# Глория#tu: точек у меня здесь, а другая
+# Глория#tu: в Пронтере.
+# Глория#tu: Type 'talk cont' to continue talking
+# talk cont
+# Глория#tu: [Глория]
+# Глория#tu: Так что, если вам будет нужно,
+# Глория#tu: я могу отправить вас в Пронтеру.
+# Глория#tu: Просто скажите мне, хорошо?
+# Глория#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Все в порядке.
+# 1  Мне нужно в Пронтеру.
+# 2  Cancel Chat
+# -------------------------------
+# Глория#tu: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Глория#tu: [Глория]
+# Глория#tu: Правда?!
+# Глория#tu: Тогда вперед!!
+# Глория#tu: Портал!
+# Глория#tu: Done talking
+# Map Change: prontera.gat (116, 72)
+
+
+automacro AcolyteTraining28b {
+	class Acolyte
+	location prontera, prt_church
+	eval $::config{QuestPart} eq "AcolyteTrainingPart28"
+	run-once 1
+	delay 5
+	call AcolyteTraining28bM
+}
+macro AcolyteTraining28bM {
+	log Относим последнюю посылку "Священник Пропин" (179, 15)
+	log Получаем в награду  Flail [2].
+	pause @rand(2,4)
+	
+	if (@invamount(Decayed Nail) < 5) goto notok
+		log Кстати. У нас остались ногти, вернем их назад на кафру.
+		do move prontera 150 30
+		pause @rand(2,3)
+		do talknpc 151 29 w2 c w2 r1
+		pause 3
+		do storage add @inventory(Decayed Nail) 5
+		do storage close
+		pause 3
+	:notok
+	
+	
+	do move prt_church @rand(172,180) 19
+	pause @rand(2,4)
+	do talknpc 179 15 c c c c r1 
+	do eq  Flail [2]
+	do conf autoSwitch_default_rightHand Flail [2]
+	do conf QuestPart AcolyteTrainingPart29
+# Священник Пропин: [Священник Пропин]
+# Священник Пропин: О мой Бог, вы, кажется, быстро
+# Священник Пропин: растете и осваиваетесь на пути
+# Священник Пропин: послушника. Признайтесь, тяжело было?
+# Священник Пропин: Type 'talk cont' to continue talking
+# talk cont
+# Священник Пропин: [Священник Пропин]
+# Священник Пропин: Нет ли у вас чего-нибудь для меня?
+# Священник Пропин: О, да, это расписка! Мне было
+# Священник Пропин: интересно произошедшее. Благодарю
+# Священник Пропин: вас за беспокойство.
+# Священник Пропин: Type 'talk cont' to continue talking
+# talk cont
+# Священник Пропин: [Священник Пропин]
+# Священник Пропин: О Боже, Боже. Ну, пусть так.
+# Священник Пропин: Даже не представляю, что я могу
+# Священник Пропин: дать вам.
+# Священник Пропин: Type 'talk cont' to continue talking
+# talk cont
+# Священник Пропин: [Священник Пропин]
+# Священник Пропин: Может, одно из этого? Я не могу
+# Священник Пропин: многого вам предложить, но если бы
+# Священник Пропин: мне в молодости так помогли, я был бы счастлив.
+# Священник Пропин: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Посох
+# 1  Булава
+# 2  Cancel Chat
+# -------------------------------
+# Священник Пропин: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Inventory Item Removed: Receipt (5) x 1
+# Item added to inventory: Flail [2] (5) x 1 - Weapon
+# Священник Пропин: Done talking
+}
+
+
+
+automacro AcolyteTraining29a {
+	class Acolyte
+	location prt_church
+	eval $::config{QuestPart} eq "AcolyteTrainingPart29"
+	run-once 1
+	delay 5
+	call AcolyteTraining29aM
+}
+macro AcolyteTraining29aM {
+	log "Священник Пропин" (179, 15) варпает нас в монкастырь.
+	pause @rand(2,4)
+	do talknpc 179 15 c c r0
+# Священник Пропин: [Священник Пропин]
+# Священник Пропин: Сестра Эстер из монастыря Святой
+# Священник Пропин: Катарины очень добрая и искренняя женщина.
+# Священник Пропин: Type 'talk cont' to continue talking
+# talk cont
+# Священник Пропин: [Священник Пропин]
+# Священник Пропин: Ну что, хотите, чтобы я послал вас обучаться к такому человеку?
+# Священник Пропин: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Да, пожалуйста.
+# 1  Нет, спасибо.
+# 2  Cancel Chat
+# -------------------------------
+# Священник Пропин: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Священник Пропин: [Священник Пропин]
+# Священник Пропин: Пожалуйста, передайте привет
+# Священник Пропин: сестре Эстер от меня.
+# Священник Пропин: Удачного путешествия, дитя...
+# Священник Пропин: Done talking
+# Map Change: prt_monk.gat (30, 250)
+# NPC Exists: Хедрик (28, 260) (ID 52602) - (0)
+# Portal Exists: prt_monk -> prt_fild03 (22, 248) - (0)
+}
+
+
+
+automacro AcolyteTraining29b {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart29"
+	run-once 1
+	call AcolyteTraining29bM
+}
+macro AcolyteTraining29bM {
+	log Идем к Эстер.
+	pause @rand(2,4)
+	do move prt_monk @rand(224,231) @rand(96,98)
+	pause @rand(2,4)
+	do talknpc 230 106 c c c c c
+	do conf QuestPart AcolyteTrainingPart30
+# Эстер#tu: [Эстер]
+# Эстер#tu: А, все посылки доставлены?
+# Эстер#tu: Спасибо огромное! А как ко всему
+# Эстер#tu: этому отнесся отец Пропин?
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: В течение всей жизни мы заводим отношения с разными людьми, и они навсегда остаются жить в наших сердцах.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Когда вы почувствуете себя одиноко, позвольте своим воспоминаниям осветить вашу жизнь. Просто подумайте о людях, которые заботились о вас и лечили ваши печали в тяжелые времена.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Тот, кто умеет ценить настоящее, может сохранять и прежние взаимоотношения. Такой человек всегда будет счастлив и в будущем. Помните это.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: У меня есть ощущение, что вы станете хорошими друзьями с отцом Пропином. Я надеюсь, что он думает так же.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Ну хорошо, когда мы встретимся в
+# Эстер#tu: следующий раз, я дам вам мой
+# Эстер#tu: последний урок.
+# Эстер#tu: Done talking
+}
+
+
+automacro AcolyteTraining30 {
+	class Acolyte
+	location prt_monk
+	eval $::config{QuestPart} eq "AcolyteTrainingPart30"
+	run-once 1
+	call AcolyteTraining30M
+}
+macro AcolyteTraining30M {
+	log Говорим с Эстер.
+	pause @rand(2,4)
+	do talknpc 230 106 c c c c c c c
+	do conf QuestPart none
+	do conf QuestDone @config(QuestDone) AcolyteTrainingDone
+	log Квест: тренировка аколитов полностью завершен.
+# Эстер#tu: [Эстер]
+# Эстер#tu: Последнее умение, о котором я вам
+# Эстер#tu: хочу рассказать, называется Аква Бенедикта.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Вода - это очень простая вещь, но
+# Эстер#tu: мы все время забываем, что она - суть жизни. Это так просто, но так важно.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Зайдите в воду, подготовьте чашу и сосредоточьтесь на том, чтобы святая сила нисходила на вас... И тогда...
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: **
+# Эстер#tu: [Эстер]
+# Эстер#tu: Аква Бенедикта!
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Вот так и создается Святая вода. Помните, что при этом вы должны стоять в воде.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Хо-хо! Это все, чему я могла вас
+# Эстер#tu: научить. Временами это было
+# Эстер#tu: нелегко, но вы прилежный ученик.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: О, и если вы вернетесь в Пронтерскую церковь, я скажу вам - вы можете выучить секретное умение. От вас не убудет, если вы туда заглянете и проверите сами.
+# Эстер#tu: Type 'talk cont' to continue talking
+# talk cont
+# Эстер#tu: [Эстер]
+# Эстер#tu: Пожалуйста, не забудьте, что я вам сказала. Я надеюсь, что это время запомнится вам навсегда, и воспоминания будут бальзамом на ваши раны. Благослови вас Господь!
+# You are now job level 14
+# You gained a job level!
+# Exp gained: 576/103 (51.43%/10.86%)
+# Auto-adding stat int
+# You are now level 18
+# You gained a level!
+# Unknown #402581: **
+# Эстер#tu: Done talking
+# Auto-adding stat int
+}
