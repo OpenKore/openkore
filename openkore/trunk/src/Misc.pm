@@ -2271,30 +2271,32 @@ sub setStatus {
 	my $verbosity = $actor->{ID} eq $accountID ? 1 : 2;
 	my $changed = 0;
 
-	my $match_id = sub {return ($_[0] == $_[1])};
-	my $match_bitflag = sub {return (($_[0] & $_[1]) == $_[1])};
+	# turns out state is stackable as well
+	#my $match_id = sub {return ($_[0] == $_[1])};
+	#my $match_bitflag = sub {return (($_[0] & $_[1]) == $_[1])};
+	# old matcher: &$match($option, $_)
 
 	# TODO: we could possibly make the search faster (binary search?)
 	for (
-		[$opt1, \%stateHandle, $match_id, 'state'],
-		[$opt2, \%ailmentHandle, $match_bitflag, 'ailment'],
-		[$option, \%lookHandle, $match_bitflag, 'look'],
+		[$opt1, \%stateHandle, 'state'],
+		[$opt2, \%ailmentHandle,'ailment'],
+		[$option, \%lookHandle, 'look'],
 	) {
-		my ($option, $handle, $match, $name) = @$_;
-		next unless $option; # skip option 0 (no state, ailment, look has such id)
+		my ($option, $handle, $name) = @$_;
+		next unless $option; # skip option 0 (no state, ailment, look has such bitflag)
 		for (keys %$handle) {
-			if (&$match($option, $_)) {
+			if (($option & $_) == $_) {
 				unless ($actor->{statuses}{$handle->{$_}}) {
 					$actor->{statuses}{$handle->{$_}} = 1;
 					message status_string($actor, $name . ': ' . ($statusName{$handle->{$_}} || $handle->{$_}), 'now'), "parseMsg_status$name", $verbosity;
 					$changed = 1;
 				}
-				#last; # stop this for loop if found (we cannot do this because of bit flag match)
+				#last; # stop this for loop if found (we cannot do this because of bit flag match must loop all)
 			} elsif ($actor->{statuses}{$handle->{$_}}) {
 				delete $actor->{statuses}{$handle->{$_}};
 				message status_string($actor, $name . ': ' . ($statusName{$handle->{$_}} || $handle->{$_}), 'no longer'), "parseMsg_status$name", $verbosity;
 				$changed = 1;
-				#last; # stop this for loop if found (we cannot do this because of bit flag match)
+				#last; # stop this for loop if found (we cannot do this because of bit flag match must loop all)
 			}
 		}
 	}
