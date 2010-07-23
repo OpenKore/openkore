@@ -3610,7 +3610,7 @@ sub inventory_items_nonstackable {
 	$ai_v{'cart_time'} = time + 1;
 }
 
-# TODO: extract unpack string
+# TODO: test extracted unpack string
 sub inventory_items_stackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
