@@ -585,6 +585,8 @@ sub map_loaded {
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 
+	setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); # set initial status from data received from the char server (seems needed on eA, dunno about kRO)
+
 	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
 }
 
@@ -5094,6 +5096,9 @@ sub received_characters {
 		$chars[$slot]{zeny} = $zeny;
 		$chars[$slot]{exp_job} = $jobExp;
 		$chars[$slot]{lv_job} = $jobLevel;
+		$chars[$slot]{opt1} = $opt1;
+		$chars[$slot]{opt2} = $opt2;
+		$chars[$slot]{option} = $option;
 		$chars[$slot]{hp} = $hp;
 		$chars[$slot]{hp_max} = $maxHp;
 		$chars[$slot]{sp} = $sp;
