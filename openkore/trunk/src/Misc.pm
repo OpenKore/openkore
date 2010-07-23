@@ -2275,7 +2275,7 @@ sub setStatus {
 	my $match_bitflag = sub {return (($_[0] & $_[1]) == $_[1])};
 
 	for (
-		[$opt1, \%stateHandle, $match_id, 'handle'],
+		[$opt1, \%stateHandle, $match_id, 'state'],
 		[$opt2, \%ailmentHandle, $match_bitflag, 'ailment'],
 		[$option, \%lookHandle, $match_bitflag, 'look'],
 	) {
@@ -2284,12 +2284,12 @@ sub setStatus {
 			if (&$match($option, $_)) {
 				unless ($actor->{statuses}{$handle->{$_}}) {
 					$actor->{statuses}{$handle->{$_}} = 1;
-					status_string($actor, $statusName{$handle->{$_}}, 'now ' . $name);
+					message status_string($actor, $name . ': ' . ($statusName{$handle->{$_}} || $handle->{$_}), 'now'), "parseMsg_status$name", $verbosity;
 					$changed = 1;
 				}
 			} elsif ($actor->{statuses}{$handle->{$_}}) {
 				delete $actor->{statuses}{$handle->{$_}};
-				status_string($actor, $statusName{$handle->{$_}}, 'no longer ' . $name);
+				message status_string($actor, $name . ': ' . ($statusName{$handle->{$_}} || $handle->{$_}), 'no longer'), "parseMsg_status$name", $verbosity;
 				$changed = 1;
 			}
 		}
