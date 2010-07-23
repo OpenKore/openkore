@@ -1821,6 +1821,7 @@ sub cart_items_nonstackable {
 
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 
+		$local_item = $cart{inventory}[$item->{index}] = {};
 		foreach (@{$unpack->{keys}}) {
 			$local_item->{$_} = $item->{$_};
 		}
@@ -1926,7 +1927,7 @@ sub cart_items_stackable {
 
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 		
-		my $local_item = $cart{inventory}[$item->{index}] ||= {};
+		$local_item = $cart{inventory}[$item->{index}] ||= {};
 		if ($local_item->{amount}) {
 			$local_item->{amount} += $item->{amount};
 		} else {
