@@ -21,6 +21,8 @@ use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getItemPrice getStorag
 
 our ($rev) = q$Revision: 6759 $ =~ /(\d+)/;
 
+my $tempmacro = 0;
+
 # adapted config file parser
 sub parseMacroFile {
 	my ($file, $no_undef) = @_;
@@ -31,7 +33,6 @@ sub parseMacroFile {
 	}
 
 	my %block;
-	my $tempmacro = 0;
 	my $inBlock = 0;
 	my ($macro_subs, @perl_lines);
 	open my $fp, "<:utf8", $file or return 0;
