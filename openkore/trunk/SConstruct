@@ -18,6 +18,9 @@ EXTRA_LIBRARY_DIRECTORIES = []
 # stage (not during the linking stage).
 EXTRA_COMPILER_FLAGS = ['-Wall', '-g', '-O2', '-pipe']
 
+# Optimized Flags. Use only on Release.
+# EXTRA_COMPILER_FLAGS = ['-Wall', '-O3', '-pipe']
+
 ####################
 
 import os
