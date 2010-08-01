@@ -133,7 +133,7 @@ sub setFont {
 	$self->{boldFont} = $bold;
 
 	$self->{defaultStyle}->SetFont($font);
-	$self->SetBasicStyleEx($self->{defaultStyle});
+	$self->SetDefaultStyle($self->{defaultStyle});
 	$self->Refresh();
 
 	foreach my $colorName (keys %fgcolors) {
@@ -208,7 +208,7 @@ sub determineFontStyle {
 sub determineFontStyle {
 	my ($self, $type, $domain) = @_;
 
-	return unless $consoleColors{$type};
+	return { color => $self->{defaultStyle}->GetTextColour(), bold => 0 } unless $consoleColors{$type};
 	
 	my $fg = $fgcolors{$consoleColors{$type}{$domain} || $consoleColors{$type}{default}} || $fgcolors{default};
 	return $fg->[STYLE_SLOT] ||= {
@@ -228,9 +228,13 @@ sub finalizePrinting {
 
 	# Limit the number of lines in the console.
 	if ($self->GetNumberOfLines() > MAX_LINES) {
+		$self->_CaretSave(); # Save Caret and Selection position
 		my $linesToDelete = $self->GetNumberOfLines() - MAX_LINES;
 		my $pos = $self->XYToPosition(0, $linesToDelete + MAX_LINES / 10);
 		$self->Remove(0, $pos);
+		
+		$self->_CaretAdjustXY(0, 0 - ($linesToDelete + MAX_LINES / 10)); # Adjust Caret and Selection
+		$self->_CaretRestore(); # Restore Caret and Selection position
 	}
 
 	$self->ShowPosition($self->GetLastPosition()) if ($wasAtBottom);
@@ -246,6 +250,9 @@ sub add {
 	my ($self, $type, $msg, $domain) = @_;
 	my $atBottom = $self->isAtBottom();
 
+	$self->_CaretSave(); # Save Caret position
+	$self->SetInsertionPointEnd(); # Move Caret to the End
+
 	# Apply the appropriate font style, then add the text, then revert
 	# back to the previous font style.
 	my $style = $self->determineFontStyle($type, $domain);
@@ -253,18 +260,23 @@ sub add {
 		$self->BeginTextColour($style->{color});
 		$self->BeginBold() if ($style->{bold});
 	}
-	$self->AppendText($msg);
+	# $self->AppendText($msg); # AppendText is broken when compiling with MingW
+	$self->WriteText($msg);
 	if ($style) {
 		$self->EndTextColour();
 		$self->EndBold() if ($style->{bold});
 	}
 
+	$self->_CaretRestore(); # Restore Caret and Selection position
 	$self->finalizePrinting($atBottom);
 }
 
 sub addColoredText {
 	my ($self, $text) = @_;
 	my $atBottom = $self->isAtBottom();
+
+	$self->_CaretSave(); # Save Caret position
+	$self->SetInsertionPointEnd(); # Move Caret to the End
 
 	my $style = new Wx::TextAttrEx();
 	$style->SetTextColour(wxBLACK);
@@ -288,7 +300,8 @@ sub addColoredText {
 				$colorCodeEncountered = 1;
 			} else {
 				# Process text until end-of-string.
-				$self->AppendText($scanner->rest());
+				# $self->AppendText($scanner->rest()); # AppendText is broken when compiling with MingW
+				$self->WriteText($scanner->rest());
 				$scanner->terminate();
 			}
 		}
@@ -296,12 +309,51 @@ sub addColoredText {
 
 	$self->EndTextColour() if ($colorCodeEncountered);
 	$self->EndStyle();
+	$self->_CaretRestore(); # Restore Caret position
 	$self->finalizePrinting($atBottom);
 }
 
 
 #####################################
 
+# Caret Anjusting Functions
+sub _CaretSave {
+	my $self = shift;
+	my ($caret_x, $caret_y) = $self->PositionToXY($self->GetCaretPosition());
+	my $has_selection = $self->HasSelection();
+	my ($sel_st_x,$sel_st_y) = $has_selection ? $self->PositionToXY($self->GetSelectionRange()->GetStart()) : (0, 0);
+	my ($sel_end_x,$sel_end_y) = $has_selection ? $self->PositionToXY($self->GetSelectionRange()->GetEnd()) : (0, 0);
+	
+	$self->{caret} = {
+		caret_x => $caret_x,
+		caret_y => $caret_y,
+		is_selection => $has_selection,
+		selection_start_x => $sel_st_x,
+		selection_start_y => $sel_st_y,
+		selection_end_x => $sel_end_x,
+		selection_end_y => $sel_end_y,
+	};
+}
 
+sub _CaretRestore {
+	my $self = shift;
+	if ( $self->{caret}{is_selection} ) {
+		$self->SetSelection($self->XYToPosition($self->{caret}{selection_start_x}, $self->{caret}{selection_start_y}), $self->XYToPosition($self->{caret}{selection_end_x}, $self->{caret}{selection_end_y}));
+	};
+	$self->SetCaretPosition($self->XYToPosition($self->{caret}{caret_x}, $self->{caret}{caret_y}));
+}
+
+sub _CaretAdjustXY {
+	my ($self, $delta_x, $delta_y) = @_;
+
+	$self->{caret}{caret_x} = $self->{caret}{caret_x} + $delta_x >= 0 ? $self->{caret}{caret_x} + $delta_x : 0;
+	$self->{caret}{caret_y} = $self->{caret}{caret_y} + $delta_y >= 0 ? $self->{caret}{caret_y} + $delta_y : 0;
+	if ( $self->{caret}{is_selection} ) {
+		$self->{caret}{selection_start_x} = $self->{caret}{selection_start_x} + $delta_x >= 0 ? $self->{caret}{selection_start_x} + $delta_x : 0;
+		$self->{caret}{selection_start_y} = $self->{caret}{selection_start_y} + $delta_y >= 0 ? $self->{caret}{selection_start_y} + $delta_y : 0;
+		$self->{caret}{selection_end_x} = $self->{caret}{selection_end_x} + $delta_x >= 0 ? $self->{caret}{selection_end_x} + $delta_x : 0;
+		$self->{caret}{selection_end_y} = $self->{caret}{selection_end_y} + $delta_y >= 0 ? $self->{caret}{selection_end_y} + $delta_y : 0;
+	};
+}
 
 1;
