@@ -531,17 +531,17 @@ sub new {
 			type1 => {
 				len => 10,
 				types => 'v2 C2 v2',
-				keys => [qw(index nameID type identified amount equipped)],
+				keys => [qw(index nameID type identified amount type_equip)], # type_equip or equipped?
 			},
 			type2 => {
 				len => 18,
 				types => 'v2 C2 v2 a8',
-				keys => [qw(index nameID type identified amount equipped cards)],
+				keys => [qw(index nameID type identified amount type_equip cards)],
 			},
 			type3 => {
 				len => 22,
 				types => 'v2 C2 v2 a8 l',
-				keys => [qw(index nameID type identified amount equipped cards expire)],
+				keys => [qw(index nameID type identified amount type_equip cards expire)],
 			},
 		},
 	};
