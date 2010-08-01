@@ -561,7 +561,8 @@ sub map_loaded {
 	$net->setState(Network::IN_GAME);
 	undef $conState_tries;
 	$char = $chars[$config{char}];
-	assertClass($char, 'Actor::You');
+	return unless changeToInGameState();
+	# assertClass($char, 'Actor::You');
 
 	if ($net->version == 1) {
 		$net->setState(4);
