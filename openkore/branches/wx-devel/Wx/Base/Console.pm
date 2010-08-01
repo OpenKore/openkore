@@ -180,7 +180,7 @@ sub copyLastLines {
 sub determineFontStyle {
 	my ($self, $type, $domain) = @_;
 
-	return unless $consoleColors{$type};
+	return ($self->{defaultStyle}, 0) unless $consoleColors{$type};
 	
 	my $fgcolor = $consoleColors{$type}{$domain} || $consoleColors{$type}{default};
 	my ($bgcolor) = $fgcolor =~ s~/(.*)~~;
