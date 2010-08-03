@@ -16,7 +16,7 @@ package Network::XKore2::MapServer;
 
 use strict;
 use Globals qw(
-	$char $field %skillsStatus @skillsID @itemsID %items
+	$char $field %statusHandle @skillsID @itemsID %items
 	$portalsList $npcsList $monstersList $playersList $petsList
 	@friendsID %friends %pet @partyUsersID %spells
 	@chatRoomsID %chatRooms @venderListsID %venderLists $hotkeyList
