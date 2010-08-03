@@ -265,8 +265,7 @@ sub _newClient {
 	$sock->autoflush(0);
 
 	my $fd = fileno($sock);
-	my $host;
-	$sock->peerhost if ($sock->can('peerhost'));
+	my $host = $sock->peerhost if ($sock->can('peerhost'));
 	my $client = new Base::Server::Client($sock, $host, $fd);
 	my $index = $self->{BS_clients}->add($client);
 	$client->setIndex($index);
