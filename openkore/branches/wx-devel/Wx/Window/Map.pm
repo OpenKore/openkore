@@ -446,7 +446,7 @@ sub _onRightClick {
 	if ($self->{clickCb} && $self->{field}{width} && $self->{field}{height}) {
 		my ($x, $y) = $self->_viewToPosXY ($event->GetX, $event->GetY);
 		
-		my $map = $field{name};
+		my $map = $field->name;
 		AI::clear(qw/move route mapRoute/);
 		message TF("Walking to waypoint: $x, $y\n"), "success";
 		main::ai_route($map, $x, $y,
