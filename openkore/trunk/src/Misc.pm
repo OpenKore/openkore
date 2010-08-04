@@ -2281,7 +2281,7 @@ sub setStatus {
 		[$option, \%lookHandle, $match_bitflag, 'look'],
 	) {
 		my ($option, $handle, $match, $name) = @$_;
-		next unless $option; # skip option 0 (no state, ailment, look has such id or bitflag)
+		#next unless $option; # skip option 0 (no state, ailment, look has such id or bitflag) (we can't have this, the state resets its statuses using this)
 		for (keys %$handle) {
 			if (&$match($option, $_)) {
 				unless ($actor->{statuses}{$handle->{$_}}) {
