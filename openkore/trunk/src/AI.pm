@@ -149,7 +149,7 @@ sub is {
 ##########################################
 
 
-sub ai_clientSuspend { $char->clientSuspend(@_) }
+sub ai_clientSuspend { $char->clientSuspend(@_) if $char } # check for $char: its possible that we start xkore 1 with the client open telling us to relog
 
 ##
 # ai_drop(items, max)
