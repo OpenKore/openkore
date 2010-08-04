@@ -3029,7 +3029,7 @@ sub cmdMove {
 		# coordinates
 		$x = $arg1;
 		$y = $arg2;
-		$map = $field{name};
+		$map = $field->name;
 	} elsif ($arg1 =~ /^\d+$/) {
 		# coordinates and map
 		$x = $arg1;
@@ -3068,7 +3068,7 @@ sub cmdMove {
 			if ($portalsID[$map]) {
 				message TF("Move into portal number %s (%s,%s)\n", 
 					$map, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'});
-				main::ai_route($field{name}, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
+				main::ai_route($field->name, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
 			} else {
 				error T("No portals exist.\n");
 			}
@@ -3149,7 +3149,7 @@ sub cmdParty {
 			if ($partyUsersID[$i] eq $accountID) {
 				# Translation Comment: Is the party user on list online?
 				$online_string = T("Yes");
-				($map_string) = $field{name};
+				($map_string) = $field->name;
 				$coord_string = $char->{'pos'}{'x'}. ", ".$char->{'pos'}{'y'};
 				$hp_string = $char->{'hp'}."/".$char->{'hp_max'}
 						." (".int($char->{'hp'}/$char->{'hp_max'} * 100)
@@ -5058,8 +5058,8 @@ sub cmdWhere {
 		return;
 	}
 	my $pos = calcPosition($char);
-	message TF("Location %s (%s) : %d, %d\n", $maps_lut{$field{name}.'.rsw'}, 
-		$field{name}, $pos->{x}, $pos->{y}), "info";
+	message TF("Location %s (%s) : %d, %d\n", $field->descName, 
+		$field->name, $pos->{x}, $pos->{y}), "info";
 }
 
 sub cmdWho {

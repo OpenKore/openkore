@@ -456,9 +456,9 @@ sub main {
 			if ($config{attackChangeTarget} == 1) {
 				# Restart attack from processAutoAttack
 				AI::dequeue;
-				ai_route($field{name}, $best_spot->{x}, $best_spot->{y}, LOSSubRoute => 1);
+				ai_route($field->name, $best_spot->{x}, $best_spot->{y}, LOSSubRoute => 1);
 			} else {
-				ai_route($field{name}, $best_spot->{x}, $best_spot->{y});
+				ai_route($field->name, $best_spot->{x}, $best_spot->{y});
 			}
 		} else {
 			warning TF("%s; no acceptable place to stand\n", $msg);
