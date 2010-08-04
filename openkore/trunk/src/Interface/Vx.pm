@@ -541,10 +541,10 @@ sub updateHook {
 	$self->updatePos();
 	$self->{mw}->update();
 	$self->setAiText("@ai_seq");
-	#if ($field{name} eq $config{lockMap} || !$config{lockMap}) {
-	#	$self->status_update("On Map: $field{name}");
+	#if ($field->name eq $config{lockMap} || !$config{lockMap}) {
+	#	$self->status_update("On Map: $field->name");
 	#} else {
-	#	$self->status_update("On Map: $field{name} | LockMap: $config{lockMap}");
+	#	$self->status_update("On Map: $field->name | LockMap: $config{lockMap}");
 	#}
 }
 
@@ -567,7 +567,7 @@ sub updatePos {
 		my $action = AI::findAction("route");
 		if (defined $action) {
 			my $args = AI::args($action);
-			if ($args->{dest}{map} eq $field{name}) {
+			if ($args->{dest}{map} eq $field->name) {
 				my ($x,$y) = @{$args->{dest}{pos}}{'x', 'y'};
 				$self->{map}{'dest'} = $self->{map}{'canvas'}->createOval(
 					$x-2,$self->{map}{'map'}{'y'} - $y-2,
@@ -644,7 +644,7 @@ sub OpenMap {
 		my ($x,$y);
 		$self->{map} = $self->{mw}->Toplevel();
 		$self->{map}->transient($self->{mw});
-		$self->{map}->title("Map View : ".$field{name});
+		$self->{map}->title("Map View : ".$field->name);
 		$self->{map}->protocol('WM_DELETE_WINDOW', 
 			sub {
 				undef $self->{obj};
@@ -1011,7 +1011,7 @@ sub packet {
 		#Business such as movement, teleport and fly between maps inside 
 		my ($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($map_name) = $map_name =~ /([\s\S]*)\./;
-		if ($map_name ne $field{name}) {
+		if ($map_name ne $field->name) {
 			eval {
 				$field = new Field(name => $map_name);
 				if (!$config{lockMap} || $map_name eq $config{lockMap}) {

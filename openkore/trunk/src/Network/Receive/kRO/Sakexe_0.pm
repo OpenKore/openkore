@@ -1067,8 +1067,8 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::Portal();
 			$actor->{appear_time} = time;
-			my $exists = portalExists($field{name}, \%coordsTo);
-			$actor->{source}{map} = $field{name};
+			my $exists = portalExists($field->name, \%coordsTo);
+			$actor->{source}{map} = $field->name;
 			if ($exists ne "") {
 				$actor->setName("$portals_lut{$exists}{source}{map} -> " . getPortalDestName($exists));
 			}
@@ -1237,7 +1237,7 @@ sub actor_display {
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::NPC")) {
 			my $ID = $args->{ID};
-			my $location = "$field{name} $actor->{pos}{x} $actor->{pos}{y}";
+			my $location = "$field->name $actor->{pos}{x} $actor->{pos}{y}";
 			if ($npcs_lut{$location}) {
 				$actor->setName($npcs_lut{$location});
 			}
@@ -1393,7 +1393,7 @@ sub actor_info {
 			debug "NPC Info: $npc->{name} ($binID)\n", "parseMsg", 2;
 		}
 
-		my $location = "$field{name} $npc->{pos}{x} $npc->{pos}{y}";
+		my $location = "$field->name $npc->{pos}{x} $npc->{pos}{y}";
 		if (!$npcs_lut{$location}) {
 			$npcs_lut{$location} = $npc->{name};
 			updateNPCLUT(Settings::getTableFilename("npcs.txt"), $location, $npc->{name});
@@ -2888,7 +2888,7 @@ sub homunculus_info {
 			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
 		$char->{homunculus} = Actor::get($args->{ID});
 		$char->{homunculus}{state} = $state if (defined $state);
-		$char->{homunculus}{map} = $field{name};
+		$char->{homunculus}{map} = $field->name;
 		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
 			AI::SlaveManager::addSlave ($char->{homunculus});
 		}
@@ -2908,7 +2908,7 @@ sub mercenary_init {
 	my ($self, $args) = @_;
 
 	$char->{mercenary} = Actor::get ($args->{ID}); # TODO: was it added to an actorList yet?
-	$char->{mercenary}{map} = $field{name};
+	$char->{mercenary}{map} = $field->name;
 	unless ($char->{slaves}{$char->{mercenary}{ID}}) {
 		AI::SlaveManager::addSlave ($char->{mercenary});
 	}
@@ -3414,7 +3414,7 @@ sub inventory_item_added {
 		my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
 			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
 		message "$disp\n", "drop";
-		$disp .= " ($field{name})\n";
+		$disp .= " ($field->name)\n";
 		itemLog($disp);
 
 		Plugins::callHook('item_gathered',{item => $item->{name}});
@@ -5708,7 +5708,7 @@ sub skill_cast {
 			my (%vec, %pos);
 			getVector(\%vec, \%coords, $char->{pos_to});
 			moveAlongVector(\%pos, $char->{pos_to}, \%vec, distance($char->{pos_to}, \%coords));
-			ai_route($field{name}, $pos{x}, $pos{y},
+			ai_route($field->name, $pos{x}, $pos{y},
 				maxRouteDistance => $config{attackMaxRouteDistance},
 				maxRouteTime => $config{attackMaxRouteTime},
 				noMapRoute => 1);

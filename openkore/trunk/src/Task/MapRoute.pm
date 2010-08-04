@@ -274,7 +274,7 @@ sub iterate {
 			# Teleport until we're close enough to the portal
 			$self->{teleport} = $config{route_teleport} if (!defined $self->{teleport});
 
-			if ($self->{teleport} && !$cities_lut{$field->name() . ".rsw"}
+			if ($self->{teleport} && !$field->isCity
 			&& !existsInList($config{route_teleport_notInMaps}, $field->name())
 			&& ( !$config{route_teleport_maxTries} || $self->{teleportTries} <= $config{route_teleport_maxTries} )) {
 				my $minDist = $config{route_teleport_minDistance};

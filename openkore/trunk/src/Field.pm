@@ -25,11 +25,12 @@
 #
 # This class is a hash and has the following hash items:
 # `l
-# - <tt>name</tt> - The name of the field, like 'prontera'. This is not always the same as baseName.
+# - <tt>name</tt> - The name of the field, like 'prontera' and '0021@cata'. This is not always the same as baseName.
 #                   You should not access this item directly; use the $Field->name() method instead.
 # - <tt>baseName</tt> - The name of the field, which is the base name of the file without the extension.
-#             This is not always the same as name: for example, in the newbie grounds,
-#             the field 'new_1-2' has field file 'new_zone01.fld' and thus base name 'new_zone01'.
+#             This is not always the same as name: for example,
+#             descName: Training Ground, name: 'new_1-2', field file: 'new_zone01.fld', baseName: 'new_zone01'
+#             descName: Catacombs, name: '0021@cata', field file: '1@cata.fld', baseName: '1@cata'
 # - <tt>width</tt> - The field's width. You should not access this item directly; use $Field->width() instead.
 # - <tt>height</tt> - The field's height. You should not access this item directly; use $Field->width() instead.
 # - <tt>rawMap</tt> - The raw map data. Contains information about which blocks you can walk on (byte 0),
@@ -44,7 +45,7 @@ no warnings 'redefine';
 use Compress::Zlib;
 use File::Spec;
 
-use Globals qw($masterServer %field %mapAlias_lut);
+use Globals qw($masterServer %field %mapAlias_lut %maps_lut %cities_lut);
 use Modules 'register';
 use Settings;
 use FastUtils;
@@ -113,8 +114,57 @@ sub new {
 # String $Field->name()
 #
 # Returns the field's name.
+#     ex. prontera, new_1-2 (alias), 0021@cata (instance)
 sub name {
 	return $_[0]->{name};
+}
+
+##
+# String $Field->baseName()
+#
+# Returns the field's base name.
+#     ex. prontera, new_zone01 (aliased), 1@cata (instanced)
+sub baseName {
+	return $_[0]->{baseName};
+}
+
+##
+# String $Field->instanceID()
+#
+# Returns the field's instanceID
+#     ex. in 0021@cata, 002 is the instanceID
+sub instanceID {
+	return $_[0]->{instanceID};
+}
+
+##
+# String $Field->descName()
+#
+# Returns the field's descriptive name.
+#     ex.
+#			Prontera City, Capital of Rune Midgard
+#			Training Ground
+#			Catacombs
+sub descName {
+	return $maps_lut{$_[0]->{baseName}.'.rsw'}; # TODO: $maps_lut, why not drop the .rsw from what we load in kore?
+}
+
+##
+# String $Field->descString()
+#
+# Returns the field's descriptive string.
+sub descString {
+	return ($_[0]->{instanceID}) ?
+		TF("%s (%s) at instanceID %s", $_[0]->descName, $_[0]->name, $_[0]->instanceID) :
+		TF("%s (%s)", $_[0]->descName, $_[0]->name);
+}
+
+##
+# String $Field->isCity()
+#
+# Returns wether the field is a city.
+sub isCity {
+	return exists $cities_lut{$_[0]->{baseName}.'.rsw'}; # TODO: $cities_lut, why replicate string data from $maps_lut? We can just add a maptype field in $maps_lut. (we can also look at the map_property packets)
 }
 
 ##
@@ -330,7 +380,8 @@ sub loadDistanceMap {
 # and/or the distance map file.
 sub loadByName {
 	my ($self, $name, $loadDistanceMap) = @_;
-	my $file = $self->nameToBaseName($name) . ".fld";
+	($self->{baseName}, $self->{instanceID}) = $self->nameToBaseName($name);
+	my $file = $self->{baseName} . ".fld";
 
 	if ($Settings::fields_folder) {
 		$file = File::Spec->catfile($Settings::fields_folder, $file);
@@ -350,12 +401,14 @@ sub loadByName {
 # Map a field name to its field file's base name.
 sub nameToBaseName {
 	my ($self, $name) = @_;
+	
+	my ($baseName, $instanceID);
 
-	if ($name =~ /^\d{3}(\d@.*)/) { # instanced maps, ex: 0021@cata
-		$name = $1;
+	if ($name =~ /^(\d{3})(\d@.*)/) { # instanced maps, ex: 0021@cata
+		$instanceID = $1;
+		$name = $2;
 	}
 
-	my $baseName;
 	if ($baseName = $masterServer->{"field_$name"}) {
 		# Handle server-specific versions of the field from servers.txt
 	} elsif ($baseName = $mapAlias_lut{"$name"}) {
@@ -368,8 +421,8 @@ sub nameToBaseName {
 		$baseName = $name;
 	}
 
-	return $baseName;
-	
+	return ($baseName, $instanceID);
+
 	# tl;dr $name =~ s/^\d{3}(?=\d@)//; return $masterServer->{"field_$name"} || $mapAlias_lut{$name} || $name;
 }
 

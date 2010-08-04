@@ -211,12 +211,12 @@ sub ai_partyfollow {
 		$master{y} = $char->{party}{users}{$master{id}}{pos}{y};
 		($master{map}) = $char->{party}{users}{$master{id}}{map} =~ /([\s\S]*)\.gat/;
 
-		if ($master{map} ne $field{name} || $master{x} == 0 || $master{y} == 0) {
+		if ($master{map} ne $field->name || $master{x} == 0 || $master{y} == 0) {
 			delete $master{x};
 			delete $master{y};
 		}
 
-		return unless ($master{map} ne $field{name} || exists $master{x});
+		return unless ($master{map} ne $field->name || exists $master{x});
 
 		if ((exists $ai_v{master} && distance(\%master, $ai_v{master}) > 15)
 			|| $master{map} != $ai_v{master}{map}
@@ -227,7 +227,7 @@ sub ai_partyfollow {
 			$ai_v{master}{map} = $master{map};
 			$ai_v{master}{time} = time;
 
-			if ($ai_v{master}{map} ne $field{name}) {
+			if ($ai_v{master}{map} ne $field->name) {
 				message TF("Calculating route to find master: %s\n", $ai_v{master}{map}), "follow";
 			} elsif (distance(\%master, $char->{pos_to}) > $config{followDistanceMax} ) {
 				message TF("Calculating route to find master: %s (%s,%s)\n", $ai_v{master}{map}, $ai_v{master}{x}, $ai_v{master}{y}), "follow";

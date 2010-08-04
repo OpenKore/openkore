@@ -112,7 +112,7 @@ use Time::HiRes;
 use base qw(Exporter);
 
 use Modules 'register';
-use Globals qw(%config $interface %consoleColors %field %cities_lut);
+use Globals qw(%config $interface %consoleColors $field);
 use Utils::DataStructures qw(binAdd existsInList);
 use Utils qw(binAdd existsInList getFormattedDate);
 
@@ -190,7 +190,7 @@ sub processMsg {
 	# Beep on certain domains
 	$interface->beep() if existsInList($config{beepDomains}, $domain) &&
 		!(existsInList($config{beepDomains_notInTown}, $domain) &&
-		  $cities_lut{$field{name}.'.rsw'});
+		$field->isCity);
 
 	# Add timestamp if domain was specified in config.txt/showTimeDomains
 	if (existsInList($config{showTimeDomains}, $domain)) {

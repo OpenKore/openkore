@@ -18,7 +18,7 @@ sub iterate {
 	# homunculus is dead
 	} elsif ($slave->{state} & 4) {
 	# homunculus is alive
-	} elsif ($slave->{appear_time} && $field{name} eq $slave->{map}) {
+	} elsif ($slave->{appear_time} && $field->name eq $slave->{map}) {
 		# auto-feed homunculus
 		$config{homunculus_intimacyMax} = 999 if (!$config{homunculus_intimacyMax});
 		$config{homunculus_intimacyMin} = 911 if (!$config{homunculus_intimacyMin});

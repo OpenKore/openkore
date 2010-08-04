@@ -20,8 +20,8 @@ use Time::HiRes qw(time);
 
 use AI;
 use Commands;
-use Globals qw($accountID $AI %ai_v $char @chatResponses %cities_lut
-		%config %field %itemChange @monsters_Killed %maps_lut $net %overallAuth
+use Globals qw($accountID $AI %ai_v $char @chatResponses
+		%config $field %itemChange @monsters_Killed %maps_lut $net %overallAuth
 		%players %responseVars $startTime_EXP %timeout
 		$totalBaseExp $totalJobExp $messageSender
 		);
@@ -273,7 +273,7 @@ sub processChatCommand {
 		}
 
 		if ($map ne "" || ($x ne "" && $y ne "")) {
-			$map = $field{name} if ($map eq "");
+			$map = $field->name if ($map eq "");
 			my $rsw = "${map}.rsw";
 			if ($maps_lut{$rsw}) {
 				if ($x ne "" && $y ne "") {
@@ -405,10 +405,9 @@ sub processChatCommand {
 		sendMessage($messageSender, $type, getResponse("versionS"), $user) if $config{verbose};
 
 	} elsif ($switch eq "where") {
-		my $rsw = "$field{name}.rsw";
 		$vars->{x} = $char->{pos_to}{x};
 		$vars->{y} = $char->{pos_to}{y};
-		$vars->{map} = "$maps_lut{$rsw} ($field{name})";
+		$vars->{map} = "$field->baseName ($field->name)";
 		$timeout{ai_thanks_set}{time} = time;
 		sendMessage($messageSender, $type, getResponse("whereS"), $user) if $config{verbose};
 
@@ -619,7 +618,7 @@ sub processChatResponse {
 	if (defined $cmd->{reply}) {
 		$reply = $cmd->{reply};
 
-	} elsif (!$repeating && ($cmd->{type} eq "c" || $cmd->{type} eq "pm") && !$cities_lut{$field{name}.'.rsw'}) {
+	} elsif (!$repeating && ($cmd->{type} eq "c" || $cmd->{type} eq "pm") && !$field->isCity) {
 		foreach my $item (@chatResponses) {
 			my $word = quotemeta $item->{word};
 			if ($msg =~ /${wordSplitters}${word}${wordSplitters}/) {

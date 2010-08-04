@@ -1893,7 +1893,7 @@ sub manualMove {
 
 	# Stop moving if necessary
 	AI::clear(qw/move route mapRoute/);
-	main::ai_route($field{name}, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
+	main::ai_route($field->name, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
 }
 
 ##
@@ -2271,21 +2271,19 @@ sub setStatus {
 	my $verbosity = $actor->{ID} eq $accountID ? 1 : 2;
 	my $changed = 0;
 
-	# turns out state is stackable as well
-	#my $match_id = sub {return ($_[0] == $_[1])};
-	#my $match_bitflag = sub {return (($_[0] & $_[1]) == $_[1])};
-	# old matcher: &$match($option, $_)
+	my $match_id = sub {return ($_[0] == $_[1])};
+	my $match_bitflag = sub {return (($_[0] & $_[1]) == $_[1])};
 
 	# TODO: we could possibly make the search faster (binary search?)
 	for (
-		[$opt1, \%stateHandle, 'state'],
-		[$opt2, \%ailmentHandle,'ailment'],
-		[$option, \%lookHandle, 'look'],
+		[$opt1, \%stateHandle, $match_id, 'state'],
+		[$opt2, \%ailmentHandle, $match_bitflag, 'ailment'],
+		[$option, \%lookHandle, $match_bitflag, 'look'],
 	) {
-		my ($option, $handle, $name) = @$_;
-		next unless $option; # skip option 0 (no state, ailment, look has such bitflag)
+		my ($option, $handle, $match, $name) = @$_;
+		next unless $option; # skip option 0 (no state, ailment, look has such id or bitflag)
 		for (keys %$handle) {
-			if (($option & $_) == $_) {
+			if (&$match($option, $_)) {
 				unless ($actor->{statuses}{$handle->{$_}}) {
 					$actor->{statuses}{$handle->{$_}} = 1;
 					message status_string($actor, $name . ': ' . ($statusName{$handle->{$_}} || $handle->{$_}), 'now'), "parseMsg_status$name", $verbosity;
@@ -2531,12 +2529,12 @@ sub updateDamageTables {
 
 				} elsif ($config{teleportAuto_maxDmg} && $damage >= $config{teleportAuto_maxDmg}
 				      && !$char->statusActive('EFST_ILLUSION')
-				      && !($config{teleportAuto_maxDmgInLock} && $field{name} eq $config{lockMap})) {
+				      && !($config{teleportAuto_maxDmgInLock} && $field->name eq $config{lockMap})) {
 					message TF("%s hit you for more than %d dmg. Teleporting...\n",
 						$monster->{name}, $config{teleportAuto_maxDmg}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{teleportAuto_maxDmgInLock} && $field{name} eq $config{lockMap}
+				} elsif ($config{teleportAuto_maxDmgInLock} && $field->name eq $config{lockMap}
 				      && $damage >= $config{teleportAuto_maxDmgInLock}
 				      && !$char->statusActive('EFST_ILLUSION')) {
 					message TF("%s hit you for more than %d dmg in lockMap. Teleporting...\n",
@@ -2552,12 +2550,12 @@ sub updateDamageTables {
 				} elsif ($config{teleportAuto_totalDmg}
 				      && $monster->{dmgToYou} >= $config{teleportAuto_totalDmg}
 				      && !$char->statusActive('EFST_ILLUSION')
-				      && !($config{teleportAuto_totalDmgInLock} && $field{name} eq $config{lockMap})) {
+				      && !($config{teleportAuto_totalDmgInLock} && $field->name eq $config{lockMap})) {
 					message TF("%s hit you for a total of more than %d dmg. Teleporting...\n",
 						$monster->{name}, $config{teleportAuto_totalDmg}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{teleportAuto_totalDmgInLock} && $field{name} eq $config{lockMap}
+				} elsif ($config{teleportAuto_totalDmgInLock} && $field->name eq $config{lockMap}
 				      && $monster->{dmgToYou} >= $config{teleportAuto_totalDmgInLock}
 				      && !$char->statusActive('EFST_ILLUSION')) {
 					message TF("%s hit you for a total of more than %d dmg in lockMap. Teleporting...\n",
@@ -2652,12 +2650,12 @@ sub updateDamageTables {
 
 				} elsif ($config{$player->{configPrefix}.'teleportAuto_maxDmg'} && $damage >= $config{$player->{configPrefix}.'teleportAuto_maxDmg'}
 				      && !$player->statusActive('EFST_ILLUSION')
-				      && !($config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap})) {
+				      && !($config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'} && $field->name eq $config{lockMap})) {
 					message TF("%s hit %s for more than %d dmg. Teleporting...\n",
 						$monster, $player, $config{$player->{configPrefix}.'teleportAuto_maxDmg'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap}
+				} elsif ($config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'} && $field->name eq $config{lockMap}
 				      && $damage >= $config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'}
 				      && !$player->statusActive('EFST_ILLUSION')) { 
 					message TF("%s hit %s for more than %d dmg in lockMap. Teleporting...\n",
@@ -2673,12 +2671,12 @@ sub updateDamageTables {
 				} elsif ($config{$player->{configPrefix}.'teleportAuto_totalDmg'}
 				      && ($accountID eq $targetID ? $monster->{dmgToYou} : $monster->{dmgToPlayer}{$targetID}) >= $config{$player->{configPrefix}.'teleportAuto_totalDmg'}
 				      && !$player->statusActive('EFST_ILLUSION')
-				      && !($config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap})) {
+				      && !($config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'} && $field->name eq $config{lockMap})) {
 					message TF("%s hit %s for a total of more than %d dmg. Teleporting...\n",
 						$monster, $player, $config{$player->{configPrefix}.'teleportAuto_totalDmg'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap}
+				} elsif ($config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'} && $field->name eq $config{lockMap}
 				      && ($accountID eq $targetID ? $monster->{dmgToYou} : $monster->{dmgToPlayer}{$targetID}) >= $config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'}
 				      && !$player->statusActive('EFST_ILLUSION')) {
 					message TF("%s hit %s for a total of more than %d dmg in lockMap. Teleporting...\n",
@@ -3367,7 +3365,7 @@ sub avoidGM_near {
 # Checks if any of the surrounding players are on the avoid.txt avoid list.
 # Disconnects / teleports if a player is detected.
 sub avoidList_near {
-	return if ($config{avoidList_inLockOnly} && $field{name} ne $config{lockMap});
+	return if ($config{avoidList_inLockOnly} && $field->name ne $config{lockMap});
 
 	my $players = $playersList->getItems();
 	foreach my $player (@{$players}) {
@@ -3391,7 +3389,7 @@ sub avoidList_near {
 }
 
 sub avoidList_ID {
-	return if (!($config{avoidList}) || ($config{avoidList_inLockOnly} && $field{name} ne $config{lockMap}));
+	return if (!($config{avoidList}) || ($config{avoidList_inLockOnly} && $field->name ne $config{lockMap}));
 
 	my $avoidID = unpack("V", shift);
 	if ($avoid{ID}{$avoidID} && $avoid{ID}{$avoidID}{disconnect_on_sight}) {
@@ -3738,9 +3736,9 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange(defined $char->{spirits} ? $char->{spirits} : 0, $config{$prefix . "_spirit"})); }
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
-	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field{name} eq $config{lockMap}); }
+	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field->name eq $config{lockMap}); }
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($char->{sitting}); }
-	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($cities_lut{$field{name}.'.rsw'}); }
+	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($field->isCity); }
 
 	if ($config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
 		my $exists;
@@ -3822,11 +3820,11 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_inMap"}) {
-		return 0 unless (existsInList($config{$prefix . "_inMap"}, $field{name}));
+		return 0 unless (existsInList($config{$prefix . "_inMap"}, $field->name));
 	}
 
 	if ($config{$prefix."_notInMap"}) {
-		return 0 if (existsInList($config{$prefix . "_notInMap"}, $field{name}));
+		return 0 if (existsInList($config{$prefix . "_notInMap"}, $field->name));
 	}
 
 	if ($config{$prefix."_whenEquipped"}) {

@@ -130,7 +130,7 @@ sub is {
 sub iterate {
 	my $slave = shift;
 	
-	if ($slave->{appear_time} && $field{name} eq $slave->{map}) {
+	if ($slave->{appear_time} && $field->name eq $slave->{map}) {
 		my $slave_dist = blockDistance ($slave->position, $char->position);
 		
 		# auto-follow
@@ -192,7 +192,7 @@ sub iterate {
 					my $y = $slave->{pos_to}{y};
 					my $distFromGoal = $config{$slave->{configPrefix}.'followDistanceMax'};
 					$distFromGoal = MAX_DISTANCE if ($distFromGoal > MAX_DISTANCE);
-					main::ai_route($field{name}, $x, $y, distFromGoal => $distFromGoal, attackOnRoute => 1, noSitAuto => 1);
+					main::ai_route($field->name, $x, $y, distFromGoal => $distFromGoal, attackOnRoute => 1, noSitAuto => 1);
 					$slave->args->{lost_route} = 1 if $slave->action eq 'route';
 					message TF("Trying to find %s at location %d, %d (you are currently at %d, %d)\n", $slave, $x, $y, $char->{pos_to}{x}, $char->{pos_to}{y}), 'homunculus';
 				}
@@ -223,7 +223,7 @@ sub iterate {
 			&& $config{$slave->{configPrefix}.'followDistanceMax'}
 			&& $slave_dist > $config{$slave->{configPrefix}.'followDistanceMax'}
 		) {
-			main::ai_route($field{name}, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1);
+			main::ai_route($field->name, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1);
 			message TF("%s moves too far (distance: %.2f) - Moving near\n", $slave, $slave->distance), 'homunculus';
 	
 		# Main Homunculus AI
@@ -257,11 +257,11 @@ sub stopAttack {
 
 sub slave_route {
 	my $slave = shift;
-	my $map = $field{name};
+	my $map = $field->name;
 	my $x = shift;
 	my $y = shift;
 	my %param = @_;
-	debug "Slave on route to: $maps_lut{$map.'.rsw'}($map): $x, $y\n", "route";
+	debug "Slave on route to: $field->descName()($map): $x, $y\n", "route";
 
 	my %args;
 	$x = int($x) if ($x ne "");
@@ -705,8 +705,8 @@ sub processRouteAI {
 			debug "Slave route - we spent too much time; bailing out.\n", "route";
 			$slave->dequeue;
 
-		} elsif ($field{name} ne $args->{dest}{map} || $args->{mapChanged}) {
-			debug "Slave map changed: $field{name} $args->{dest}{map}\n", "route";
+		} elsif ($field->name ne $args->{dest}{map} || $args->{mapChanged}) {
+			debug "Slave map changed: $field->name $args->{dest}{map}\n", "route";
 			$slave->dequeue;
 
 		} elsif ($args->{stage} eq '') {
@@ -716,7 +716,7 @@ sub processRouteAI {
 				$args->{stage} = 'Route Solution Ready';
 				debug "Slave route Solution Ready\n", "route";
 			} else {
-				debug "Something's wrong; there is no path to $field{name}($args->{dest}{pos}{x},$args->{dest}{pos}{y}).\n", "debug";
+				debug "Something's wrong; there is no path to $field->name($args->{dest}{pos}{x},$args->{dest}{pos}{y}).\n", "debug";
 				$slave->dequeue;
 			}
 
@@ -788,7 +788,7 @@ sub processRouteAI {
 				} elsif (!$wasZero) {
 					# We're stuck
 					my $msg = TF("Slave is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).", 
-						$field{name}, $slave->{pos_to}{x}, $slave->{pos_to}{y}, $cur_x, $cur_y, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
+						$field->name, $slave->{pos_to}{x}, $slave->{pos_to}{y}, $cur_x, $cur_y, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
 					$msg .= T(" Teleporting to unstuck.") if $config{$slave->{configPrefix}.'teleportAuto_unstuck'};
 					$msg .= "\n";
 					warning $msg, "route";
@@ -945,7 +945,7 @@ sub processAutoAttack {
 	if ((($slave->isIdle || $slave->action eq 'route') && (AI::isIdle || AI::is(qw(follow sitAuto take items_gather items_take attack skill_use))))
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
 	  && timeOut($timeout{ai_homunculus_attack_auto})
-	  && (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$cities_lut{$field{name}.'.rsw'})) {
+	  && (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity)) {
 
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 		my $foundTankee;
