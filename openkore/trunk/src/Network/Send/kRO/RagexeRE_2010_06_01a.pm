@@ -7,7 +7,7 @@
 #  Basically, this means that you're allowed to modify and distribute
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
-#  See http://www.gnu.org/licenses/gpl.html for the full license.
+#  See http:#//www.gnu.org/licenses/gpl.html for the full license.
 #
 #  $Revision: 6687 $
 #  $Id: kRO.pm 6687 2009-04-19 19:04:25Z technologyguild $
@@ -15,33 +15,23 @@
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
 
-# this is an experimental class
-# this serverType is used for kRO Sakray RE
-# basically when we don't know where to put a new packet, we put it here and move it to the right class later
-
-package Network::Receive::kRO::RagexeRE_0;
+package Network::Send::kRO::RagexeRE_2010_06_01a;
 
 use strict;
-use base qw(Network::Receive::kRO::RagexeRE_2010_07_14a);
-
-use Log qw(message warning error debug);
+use base qw(Network::Send::kRO::RagexeRE_2010_04_20a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-
-	my %packets = (
-		
-	);
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
-
 =pod
-
+//2010-06-01aRagexeRE
+//0x0825,-1
+//0x0826,4
+//0x0835,-1
+//0x0836,-1
+//0x0837,3
+//0x0838,3
 =cut
 
 1;
