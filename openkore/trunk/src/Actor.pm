@@ -236,7 +236,7 @@ sub nameString {
 # Returns 'itself' for monsters, or 'himself/herself' for players.
 # ('yourself' is handled by Actor::You.nameString.)
 sub selfString {
-	return 'itself';
+	return T('itself');
 }
 
 ##
