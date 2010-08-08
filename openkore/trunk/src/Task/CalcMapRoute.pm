@@ -131,7 +131,7 @@ sub iterate {
 			next if ($entry->{source}{map} ne $field->name());
 			my $ret = Task::Route->getRoute($self->{solution}, $field, $self->{source}, $entry->{source});
 			if ($ret) {
-				foreach my $dest (keys %{$entry->{dest}}) {
+				for my $dest (grep { $entry->{dest}{$_}{enabled} } keys %{$entry->{dest}}) {
 					my $penalty = int(($entry->{dest}{$dest}{steps} ne '') ? $routeWeights{NPC} : $routeWeights{PORTAL});
 					$openlist->{"$portal=$dest"}{walk} = $penalty + scalar @{$self->{solution}};
 					$openlist->{"$portal=$dest"}{zeny} = $entry->{dest}{$dest}{cost};
@@ -270,7 +270,7 @@ sub searchStep {
 		# Get all children of each openlist.
 		foreach my $child (keys %{$portals_los{$dest}}) {
 			next unless $portals_los{$dest}{$child};
-			foreach my $subchild (keys %{$portals_lut{$child}{dest}}) {
+			foreach my $subchild (grep { $portals_lut{$child}{dest}{$_}{enabled} } keys %{$portals_lut{$child}{dest}}) {
 				my $destID = $subchild;
 				my $mapName = $portals_lut{$child}{source}{map};
 				#############################################################

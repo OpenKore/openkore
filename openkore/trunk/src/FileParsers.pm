@@ -587,6 +587,8 @@ sub parsePortals {
 			$$r_hash{$portal}{'dest'}{$dest}{'y'} = $args[5];
 			$$r_hash{$portal}{'dest'}{$dest}{'cost'} = $args[6];
 			$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $args[7];
+			$$r_hash{$portal}{dest}{$dest}{enabled} = 1; # is available permanently (can be used when calculating a route)
+			#$$r_hash{$portal}{dest}{$dest}{active} = 1; # TODO: is available right now (otherwise, wait until it becomes available)
 		}
 	}
 	close FILE;
