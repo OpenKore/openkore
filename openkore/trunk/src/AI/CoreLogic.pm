@@ -495,17 +495,17 @@ sub processPortalRecording {
 	%destPos = %{$portals{$foundID}{pos}};
 	debug "Destination portal: $destMap ($destPos{x}, $destPos{y})\n", "portalRecord";
 
-	$portals{$foundID}{name} = "$field->name -> $sourceMap";
-	$portals_old{$sourceIndex}{name} = "$sourceMap -> $field->name";
+	$portals{$foundID}{name} = "$destMap -> $sourceMap";
+	$portals_old{$sourceIndex}{name} = "$sourceMap -> $destMap";
 
 
 	my ($ID, $destName);
 
 	# Record information about destination portal
 	if ($config{portalRecord} > 1 &&
-	    !defined portalExists($field->name, $portals{$foundID}{pos})) {
-		$ID = "$field->name $destPos{x} $destPos{y}";
-		$portals_lut{$ID}{source}{map} = $field->name;
+	    !defined portalExists($destMap, $portals{$foundID}{pos})) {
+		$ID = "$destMap $destPos{x} $destPos{y}";
+		$portals_lut{$ID}{source}{map} = $destMap;
 		$portals_lut{$ID}{source}{x} = $destPos{x};
 		$portals_lut{$ID}{source}{y} = $destPos{y};
 		$destName = "$sourceMap $sourcePos{x} $sourcePos{y}";
@@ -513,9 +513,9 @@ sub processPortalRecording {
 		$portals_lut{$ID}{dest}{$destName}{x} = $sourcePos{x};
 		$portals_lut{$ID}{dest}{$destName}{y} = $sourcePos{y};
 
-		message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n", $field->name, $destPos{x}, $destPos{y}, $sourceMap, $sourcePos{x}, $sourcePos{y}), "portalRecord";
+		message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n", $destMap, $destPos{x}, $destPos{y}, $sourceMap, $sourcePos{x}, $sourcePos{y}), "portalRecord";
 		updatePortalLUT(Settings::getTableFilename("portals.txt"),
-				$field->name, $destPos{x}, $destPos{y},
+				$destMap, $destPos{x}, $destPos{y},
 				$sourceMap, $sourcePos{x}, $sourcePos{y});
 	}
 
@@ -525,15 +525,15 @@ sub processPortalRecording {
 		$portals_lut{$ID}{source}{map} = $sourceMap;
 		$portals_lut{$ID}{source}{x} = $sourcePos{x};
 		$portals_lut{$ID}{source}{y} = $sourcePos{y};
-		$destName = "$field->name $destPos{x} $destPos{y}";
-		$portals_lut{$ID}{dest}{$destName}{map} = $field->name;
+		$destName = "$destMap $destPos{x} $destPos{y}";
+		$portals_lut{$ID}{dest}{$destName}{map} = $destMap;
 		$portals_lut{$ID}{dest}{$destName}{x} = $destPos{x};
 		$portals_lut{$ID}{dest}{$destName}{y} = $destPos{y};
 
-		message TF("Recorded new portal (source): %s (%s, %s) -> %s (%s, %s)\n", $sourceMap, $sourcePos{x}, $sourcePos{y}, $field->name, $char->{pos}{x}, $char->{pos}{y}), "portalRecord";
+		message TF("Recorded new portal (source): %s (%s, %s) -> %s (%s, %s)\n", $sourceMap, $sourcePos{x}, $sourcePos{y}, $destMap, $char->{pos}{x}, $char->{pos}{y}), "portalRecord";
 		updatePortalLUT(Settings::getTableFilename("portals.txt"),
 				$sourceMap, $sourcePos{x}, $sourcePos{y},
-				$field->name, $char->{pos}{x}, $char->{pos}{y});
+				$destMap, $char->{pos}{x}, $char->{pos}{y});
 	}
 }
 
@@ -587,7 +587,7 @@ sub processEscapeUnknownMaps {
 			if (!$i) {
 				error T("Invalid coordinates specified for randomWalk\n Retrying...");
 			} else {
-				message TF("Calculating random route to: %s(%s): %s, %s\n", $field->descName, $field->name, $randX, $randY), "route";
+				message TF("Calculating random route to: %s: %s, %s\n", $field->descString(), $randX, $randY), "route";
 				ai_route($field->name, $randX, $randY,
 					 maxRouteTime => $config{route_randomWalk_maxRouteTime},
 					 attackOnRoute => 2,
@@ -676,7 +676,7 @@ sub processSkillUse {
 					# 2005-01-24 pmak: Commenting this out since it may
 					# be causing bot to attack slowly when a buff runs
 					# out.
-					#stopAttack();
+					#$char->stopAttack();
 				}
 
 				# Give an error if we don't actually possess this skill
@@ -1928,7 +1928,7 @@ sub processRandomWalk {
 			error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
 			$config{route_randomWalk} = 0;
 		} else {
-			message TF("Calculating random route to: %s(%s): %s, %s\n", $field->descName, $field->name, $randX, $randY), "route";
+			message TF("Calculating random route to: %s: %s, %s\n", $field->descString(), $randX, $randY), "route";
 			ai_route($field->name, $randX, $randY,
 				maxRouteTime => $config{route_randomWalk_maxRouteTime},
 				attackOnRoute => 2,

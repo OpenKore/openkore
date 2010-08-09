@@ -1237,7 +1237,7 @@ sub actor_display {
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::NPC")) {
 			my $ID = $args->{ID};
-			my $location = "$field->name $actor->{pos}{x} $actor->{pos}{y}";
+			my $location = $field->name . " $actor->{pos}{x} $actor->{pos}{y}";
 			if ($npcs_lut{$location}) {
 				$actor->setName($npcs_lut{$location});
 			}
@@ -1393,7 +1393,7 @@ sub actor_info {
 			debug "NPC Info: $npc->{name} ($binID)\n", "parseMsg", 2;
 		}
 
-		my $location = "$field->name $npc->{pos}{x} $npc->{pos}{y}";
+		my $location = $field->name . " $npc->{pos}{x} $npc->{pos}{y}";
 		if (!$npcs_lut{$location}) {
 			$npcs_lut{$location} = $npc->{name};
 			updateNPCLUT(Settings::getTableFilename("npcs.txt"), $location, $npc->{name});
@@ -3414,7 +3414,7 @@ sub inventory_item_added {
 		my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
 			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
 		message "$disp\n", "drop";
-		$disp .= " ($field->name)\n";
+		$disp .= " (". $field->name . ")\n";
 		itemLog($disp);
 
 		Plugins::callHook('item_gathered',{item => $item->{name}});

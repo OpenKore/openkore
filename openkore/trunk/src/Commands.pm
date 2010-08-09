@@ -5058,8 +5058,7 @@ sub cmdWhere {
 		return;
 	}
 	my $pos = calcPosition($char);
-	message TF("Location %s (%s) : %d, %d\n", $field->descName, 
-		$field->name, $pos->{x}, $pos->{y}), "info";
+	message TF("Location: %s : (baseName: %s) : %d, %d\n", $field->descString(), $field->baseName(), $pos->{x}, $pos->{y}), "info";
 }
 
 sub cmdWho {
