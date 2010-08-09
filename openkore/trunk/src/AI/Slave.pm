@@ -261,7 +261,7 @@ sub slave_route {
 	my $x = shift;
 	my $y = shift;
 	my %param = @_;
-	debug "Slave on route to: $field->descName()($map): $x, $y\n", "route";
+	debug "Slave on route to: " .$field->descString(). ": $x, $y\n", "route";
 
 	my %args;
 	$x = int($x) if ($x ne "");
@@ -716,7 +716,7 @@ sub processRouteAI {
 				$args->{stage} = 'Route Solution Ready';
 				debug "Slave route Solution Ready\n", "route";
 			} else {
-				debug "Something's wrong; there is no path to $field->name($args->{dest}{pos}{x},$args->{dest}{pos}{y}).\n", "debug";
+				debug "Something's wrong; there is no path to ".$field->name."($args->{dest}{pos}{x},$args->{dest}{pos}{y}).\n", "debug";
 				$slave->dequeue;
 			}
 
