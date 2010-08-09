@@ -50,6 +50,7 @@ use Modules 'register';
 use Settings;
 use FastUtils;
 use Utils::Exceptions;
+use Translation qw(TF);
 
 # Block types.
 use constant {
@@ -154,9 +155,7 @@ sub descName {
 #
 # Returns the field's descriptive string.
 sub descString {
-	return ($_[0]->{instanceID}) ?
-		TF("%s (%s) at instanceID %s", $_[0]->descName, $_[0]->name, $_[0]->instanceID) :
-		TF("%s (%s)", $_[0]->descName, $_[0]->name);
+	return sprintf("%s (%s)", $_[0]->descName, $_[0]->name) . ($_[0]->{instanceID} ? TF(" at instanceID %s", $_[0]->instanceID) : '');
 }
 
 ##
