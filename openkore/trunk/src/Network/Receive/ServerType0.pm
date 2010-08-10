@@ -122,7 +122,7 @@ sub new {
 		'00AF' => ['inventory_item_removed', 'v2', [qw(index amount)]],
 		'00B0' => ['stat_info', 'v V', [qw(type val)]],
 		'00B1' => ['exp_zeny_info', 'v V', [qw(type val)]],
-		'00B3' => ['switch_character'],
+		'00B3' => ['switch_character', 'C', [qw(result)]], # 3
 		'00B4' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]],
 		'00B5' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'00B6' => ['npc_talk_close', 'a4', [qw(ID)]],
@@ -132,6 +132,7 @@ sub new {
 		'00BE' => ['stats_points_needed', 'v C', [qw(type val)]],
 		'00C0' => ['emoticon', 'a4 C', [qw(ID type)]],
 		'00CA' => ['buy_result', 'C', [qw(fail)]],
+		'00CB' => ['sell_result', 'C', [qw(fail)]], # 3
 		'00C2' => ['users_online', 'V', [qw(users)]],
 		'00C3' => ['job_equipment_hair_change', 'a4 C2', [qw(ID part number)]],
 		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]],
@@ -239,6 +240,7 @@ sub new {
 		'017D' => ['card_merge_status', 'v2 C', [qw(item_index card_index fail)]],
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0181' => ['guild_opposition_result', 'C', [qw(flag)]], # clif_guild_oppositionack
+		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
 		'0184' => ['guild_unally', 'a4 V', [qw(guildID flag)]], # clif_guild_delalliance
 		'0185' => ['guild_alliance_added', 'a4 a4 Z24', [qw(opposition alliance_guildID name)]], # clif_guild_allianceadded
 		'0187' => ['sync_request', 'a4', [qw(ID)]],
@@ -307,6 +309,7 @@ sub new {
 		'01E9' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]],
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]],
+		'01EC' => ['guild_member_map_change', 'a4 a4 Z16', [qw(GDID AID mapName)]], # 26 # TODO: change vars, add sub
 		'01EE' => ['inventory_items_stackable'],
 		'01EF' => ['cart_items_stackable'],
 		'01F0' => ['storage_items_stackable'],
@@ -442,8 +445,16 @@ sub new {
 
 		# HackShield alarm
 		'0449' => ['hack_shield_alarm'],
+
+		'07D9' => ['hotkeys'], # 268 # hotkeys:38
 		
+		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
+
+		'07FA' => ['inventory_item_removed', 'v3', [qw(unknown index amount)]], #//0x07fa,8
+
 		'0800' => ['vender_items_list', 'v a4 a4', [qw(len venderID venderCID)]], # -1
+
+		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20 # TODO: test & use type
 	};
 	return $self;
 }
@@ -6459,12 +6470,6 @@ sub initialize_message_id_encryption {
 	}
 }
 
-sub switch_character {
-	# User is switching characters in X-Kore
-	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
-	$net->serverDisconnect();
-}
-
 # TODO: known prefixes (chat domains): micc | ssss | ...
 sub system_chat {
    my ($self, $args) = @_;
@@ -7522,6 +7527,37 @@ sub quit_response {
 sub GM_req_acc_name {
 	my ($self, $args) = @_;
 	message TF("The accountName for ID %s is %s.\n", $args->{targetID}, $args->{accountName}), "info";
+}
+
+# 00CB
+sub sell_result {
+	my ($self, $args) = @_;
+	if ($args->{fail}) {
+		error T("Sell failed.\n");
+	} else {
+		message T("Sell completed.\n"), "success";
+	}
+}
+
+# 018B
+sub quit_response {
+	my ($self, $args) = @_;
+	if ($args->{fail}) { # NOTDISCONNECTABLE_STATE =  0x1
+		error T("Please wait 10 seconds before trying to log out.\n"); # MSI_CANT_EXIT_NOW =  0x1f6
+	} else { # DISCONNECTABLE_STATE =  0x0
+		message T("Logged out from the server succesfully.\n"), "success";
+	}
+}
+
+# 00B3
+# TODO: add real client messages and logic?
+# ClientLogic: LoginStartMode = 5; ShowLoginScreen;
+sub switch_character {
+	my ($self, $args) = @_;
+	# User is switching characters in X-Kore
+	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
+	$net->serverDisconnect();
+	debug "result: $args->{result}\n";
 }
 
 1;
