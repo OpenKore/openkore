@@ -155,7 +155,7 @@ sub new {
 		'00B0' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'00B1' => ['exp_zeny_info', 'v V', [qw(type val)]], # 8
 		# 0x00b2 is sent packet
-		'00B3' => ['respawn_result', 'C', [qw(result)]], # 3
+		'00B3' => ['switch_character', 'C', [qw(result)]], # 3
 		'00B4' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]], # -1
 		'00B5' => ['npc_talk_continue', 'a4', [qw(ID)]], # 6
 		'00B6' => ['npc_talk_close', 'a4', [qw(ID)]], # 6
@@ -7806,9 +7806,12 @@ sub quit_response {
 # 00B3
 # TODO: add real client messages and logic?
 # ClientLogic: LoginStartMode = 5; ShowLoginScreen;
-sub respawn_result {
+sub switch_character {
 	my ($self, $args) = @_;
-	debug "respawn result: $args->{result}\n";
+	# User is switching characters in X-Kore
+	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
+	$net->serverDisconnect();
+	debug "result: $args->{result}\n";
 }
 
 1;
