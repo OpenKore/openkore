@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-06 17:57+0200\n"
+"POT-Creation-Date: 2010-08-14 21:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6103,7 +6103,7 @@ msgstr ""
 #: ../Commands.pm:3475
 #, perl-format
 msgid ""
-"------------------Player Info ------------------\n"
+"------------------ Player Info ------------------\n"
 "%s (%d)\n"
 "Account ID: %s (Hex: %s)\n"
 "Party: %s\n"
@@ -6131,6 +6131,10 @@ msgstr ""
 
 #: ../Commands.pm:3510
 msgid "Player is facing towards you.\n"
+msgstr ""
+
+#: ../Commands.pm:3512
+msgid " Statuses "
 msgstr ""
 
 #: ../Commands.pm:3553
@@ -7178,7 +7182,7 @@ msgid ""
 "the new format.\n"
 msgstr ""
 
-#: ../FileParsers.pm:287 ../FileParsers.pm:1107
+#: ../FileParsers.pm:287 ../FileParsers.pm:1109
 #, perl-format
 msgid "%s: Include file not found: %s\n"
 msgstr ""
@@ -7228,12 +7232,12 @@ msgstr ""
 msgid "Please correct the above errors and type 'reload %s'.\n"
 msgstr ""
 
-#: ../FileParsers.pm:1182
+#: ../FileParsers.pm:1184
 #, perl-format
 msgid "Saving %s...\n"
 msgstr ""
 
-#: ../FileParsers.pm:1188
+#: ../FileParsers.pm:1190
 #, perl-format
 msgid "Creating overrides for %s\n"
 msgstr ""
