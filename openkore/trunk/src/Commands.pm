@@ -5340,7 +5340,7 @@ sub cmdQuest {
 			foreach my $mobID (keys %{$quest->{missions}}) {
 				my $mission = $quest->{missions}->{$mobID};
 				$msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x30), ('<'x30)),
-					[" -", $mission->{mobName}, $mission->{count}]);
+					[" -", $mission->{mobName}, sprintf(defined $mission->{goal} ? '%d/%d' : '%d', @{$mission}{qw(count goal)})]);
 			}
 			$k++;
 		}
