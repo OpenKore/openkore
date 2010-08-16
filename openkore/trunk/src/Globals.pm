@@ -26,7 +26,7 @@ use Modules 'register';
 # Do not use any other Kore modules here. It will create circular dependancies.
 
 our %EXPORT_TAGS = (
-	config  => [qw(%arrowcraft_items %avoid @chatResponses %cities_lut %config %consoleColors %directions_lut %equipTypes_lut %equipSlot_rlut %equipSlot_lut %haircolors @headgears_lut %items_control %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %jobs_lut %maps_lut %masterServers %monsters_lut %npcs_lut %packetDescriptions %portals_lut %responses %sex_lut %shop %skillsDesc_lut %lookHandle %skillsArea %skillsEncore %spells_lut %emotions_lut %timeout $char %mon_control %priority %routeWeights %pickupitems %rpackets %itemSlots_lut %statusHandle %statusName %portals_los %stateHandle %ailmentHandle %elements_lut %mapAlias_lut %quests_lut)],
+	config  => [qw(%arrowcraft_items %avoid @chatResponses %cities_lut %config %consoleColors %directions_lut %equipTypes_lut %equipSlot_rlut %equipSlot_lut %haircolors @headgears_lut %items_control %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %jobs_lut %maps_lut %masterServers %monsters_lut %npcs_lut %packetDescriptions %portals_lut %responses %sex_lut %shop %skillsDesc_lut %lookHandle %skillsArea %skillsEncore %spells_lut %emotions_lut %timeout $char %mon_control %priority %routeWeights %pickupitems %rpackets %itemSlots_lut %statusHandle %statusName %portals_los %stateHandle %ailmentHandle %mapTypeHandle %mapPropertyTypeHandle %mapPropertyInfoHandle %elements_lut %mapAlias_lut %quests_lut)],
 	ai      => [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff %targetTimeout)],
 	state   => [qw($accountID $cardMergeIndex @cardMergeItemsID $charID @chars @chars_old %cart @friendsID %friends %incomingFriend %field $field %homunculus $itemsList @itemsID %items $monstersList @monstersID %monsters @npcsID %npcs $npcsList @playersID %players @portalsID @portalsID_old %portals %portals_old $portalsList @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %createdChatRoom %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownPlayers @unknownNPCs $useArrowCraft %currentDeal %incomingDeal %outgoingDeal @identifyID @partyUsersID %incomingParty @petsID %pets @venderItemList $venderID $venderCID @venderListsID @articles $articles %venderLists %monsters_old @monstersID_old %npcs_old %items_old %players_old @playersID_old @servers $sessionID $sessionID2 $accountSex $accountSex2 $map_ip $map_port $KoreStartTime $secureLoginKey $initSync $lastConfChangeTime $petsList $playersList $portalsList @playerNameCacheIDs %playerNameCache %pet $pvp @cashList $slavesList @slavesID %slaves)],
 	network => [qw($remote_socket $net $messageSender $charServer $conState $conState_tries $encryptVal $ipc $bus $lastPacketTime $masterServer $lastswitch $packetParser $bytesSent $bytesReceived $incomingMessages $outgoingClientMessages $enc_val1 $enc_val2 $captcha_state)],
@@ -115,7 +115,13 @@ our %shop;
 our %skillsDesc_lut;
 our %skillsArea;
 our %skillsEncore;
-our (%statusHandle, %stateHandle, %lookHandle, %ailmentHandle, %statusName);
+our (
+	# status handles
+	%statusHandle, %stateHandle, %lookHandle, %ailmentHandle,
+	%mapTypeHandle, %mapPropertyTypeHandle, %mapPropertyInfoHandle,
+	# status names
+	%statusName,
+);
 our %spells_lut;
 our %timeout;
 our %jobs_lut = (

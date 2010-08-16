@@ -256,6 +256,9 @@ sub loadDataFiles {
 		loader => [\&parseDataFile2, \%lookHandle]);
 	Settings::addTableFile('AILMENT_id_handle.txt',
 		loader => [\&parseDataFile2, \%ailmentHandle]);
+	Settings::addTableFile('MAPTYPE_id_handle.txt', loader => [\&parseDataFile2, \%mapTypeHandle]);
+	Settings::addTableFile('MAPPROPERTY_TYPE_id_handle.txt', loader => [\&parseDataFile2, \%mapPropertyTypeHandle]);
+	Settings::addTableFile('MAPPROPERTY_INFO_id_handle.txt', loader => [\&parseDataFile2, \%mapPropertyInfoHandle]);
 	Settings::addTableFile('statusnametable.txt',
 		loader => [\&parseDataFile2, \%statusName]);
 	Settings::addTableFile('skillsarea.txt',
