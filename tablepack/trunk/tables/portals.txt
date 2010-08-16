@@ -2700,3 +2700,9 @@ lou_in01 28 19 louyang 136 245
 # Mushroom Farm
 moc_ruins 141 125 job_thief1 133 333 0 c # random endpoint
 job_thief1 180 15 moc_ruins 145 117
+
+# Hugel - Lighthalzen Airship (needs additional configuration)
+#airplane 243 73 einbroch 92 278
+#airplane 243 73 hugel 181 146
+#airplane 243 73 lighthalzen 302 75
+#airplane 243 73 yuno 92 260
