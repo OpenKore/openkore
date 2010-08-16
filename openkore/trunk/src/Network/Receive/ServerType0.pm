@@ -255,7 +255,7 @@ sub new {
 		'0194' => ['character_name', 'a4 Z24', [qw(ID name)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]],
-		'0199' => ['pvp_mode1', 'v', [qw(type)]],
+		'0199' => ['map_property', 'v', [qw(type)]],
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]],
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]],
 		'019E' => ['pet_capture_process'],
@@ -298,7 +298,7 @@ sub new {
 		# OLD '01DA' => ['actor_display', 'a4 v5 C x v3 x4 v5 a4 x4 v x C a5 x3 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DA' => ['actor_display', 'a4 v9 V v5 a4 a2 v2 C2 a6 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # walking
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
-		'01D6' => ['pvp_mode2', 'v', [qw(type)]],
+		'01D6' => ['map_property2', 'v', [qw(type)]],
 		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
 		'01E0' => ['GM_req_acc_name', 'a4 Z24', [qw(targetID accountName)]],
 		'01E1' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
@@ -430,6 +430,7 @@ sub new {
 		'02DE' => ['battleground_score', 'v2', [qw(score_lion score_eagle)]],
 		# 02E1 packet unsure of dual_wield_damage needs more testing
 		'02E1' => ['actor_action', 'a4 a4 a4 V2 v x2 v x2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
+		'02E7' => ['map_property', 'v2 a*', [qw(len type info_table)]],
 		'02E8' => ['inventory_items_stackable'],
 		'02E9' => ['cart_items_stackable'],
 		'02EA' => ['storage_items_stackable'],
@@ -1418,37 +1419,12 @@ sub actor_status_active {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
-	my ($type, $ID, $flag) = @{$args}{qw(type ID flag)};
+	my ($type, $ID, $flag, $tick) = @{$args}{qw(type ID flag tick)};
 
-	my $tick = ($args->{switch} eq "043F") ? $args->{tick} : undef;
 	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
-	my $status_name = defined $statusName{$status} ? $statusName{$status} : "Unknown $type";
-	$args->{skillName} = $status;
-	my $actor = Actor::get($ID);
-	$args->{actor} = $actor;
-
-	my ($name, $is) = getActorNames($ID, 0, 'are', 'is');
-	if ($flag) {
-		# Skill activated
-		my $again = 'now';
-		if ($actor) {
-			$again = 'again' if $actor->{statuses}{$status};
-			$actor->{statuses}{$status} = 1;
-		}
-		if ($char->{party}{users}{$ID} && $char->{party}{users}{$ID}{name}) {
-			$again = 'again' if $char->{party}{users}{$ID}{statuses}{$status};
-			$char->{party}{users}{$ID}{statuses}{$status} = 1;
-		}
-		my $disp = status_string($actor, $status_name, $again, $tick/1000);
-		message $disp, "parseMsg_statuslook", ($ID eq $accountID or $char->{slaves} && $char->{slaves}{$ID}) ? 1 : 2;
-
-	} else {
-		# Skill de-activated (expired)
-		delete $actor->{statuses}{$status} if $actor;
-		delete $char->{party}{users}{$ID}{statuses}{$status} if ($char->{party}{users}{$ID} && $char->{party}{users}{$ID}{name});
-		my $disp = status_string($actor, $status_name, 'no longer');
-		message $disp, "parseMsg_statuslook", ($ID eq $accountID or $char->{slaves} && $char->{slaves}{$ID}) ? 1 : 2;
-	}
+	
+	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
+	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick);
 }
 
 sub actor_trapped {
@@ -5220,23 +5196,23 @@ sub no_teleport {
 	}
 }
 
-# TODO: add unknown modes
-sub pvp_mode1 {
+sub map_property {
 	my ($self, $args) = @_;
-	my $type = $args->{type};
-
-	if ($type == 0) {
-		$pvp = 0;
-	} elsif ($type == 1) {
-		message T("PvP Display Mode\n"), "map_event";
-		$pvp = 1;
-	} elsif ($type == 3) {
-		message T("GvG Display Mode\n"), "map_event";
-		$pvp = 2;
-	} else {
-		debug "pvp_mode1: Unknown mode: $type\n";
+	
+	$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
+	grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
+	map {[$_, defined $mapPropertyTypeHandle{$_} ? $mapPropertyTypeHandle{$_} : "UNKNOWN_MAPPROPERTY_TYPE_$_"]}
+	1 .. List::Util::max $args->{type}, keys %mapPropertyTypeHandle;
+	
+	if ($args->{info_table}) {
+		my @info_table = unpack 'C*', $args->{info_table};
+		$char->setStatus(@$_) for map {[
+			defined $mapPropertyInfoHandle{$_} ? $mapPropertyInfoHandle{$_} : "UNKNOWN_MAPPROPERTY_INFO_$_",
+			$info_table[$_],
+		]} 0 .. @info_table-1;
 	}
 	
+	$pvp = {1 => 1, 3 => 2}->{$args->{type}};
 	if ($pvp) {
 		Plugins::callHook('pvp_mode', {
 			pvp => $pvp # 1 PvP, 2 GvG
@@ -5244,25 +5220,15 @@ sub pvp_mode1 {
 	}
 }
 
-sub pvp_mode2 {
+sub map_property2 {
 	my ($self, $args) = @_;
-	my $type = $args->{type};
-
-	if ($type == 0) {
-		$pvp = 0;
-	} elsif ($type == 6) {
-		message T("PvP Display Mode\n"), "map_event";
-		$pvp = 1;
-	} elsif ($type == 8) {
-		message T("GvG Display Mode\n"), "map_event";
-		$pvp = 2;
-	} elsif ($type == 19) {
-		message T("Battleground Display Mode\n"), "map_event";
-		$pvp = 3;
-	} else {
-		debug "pvp_mode2: Unknown mode: $type\n";
-	}
 	
+	$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
+	grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
+	map {[$_, defined $mapTypeHandle{$_} ? $mapTypeHandle{$_} : "UNKNOWN_MAPTYPE_$_"]}
+	0 .. List::Util::max $args->{type}, keys %mapTypeHandle;
+	
+	$pvp = {6 => 1, 8 => 2, 19 => 3}->{$args->{type}};
 	if ($pvp) {
 		Plugins::callHook('pvp_mode', {
 			pvp => $pvp # 1 PvP, 2 GvG, 3 Battleground

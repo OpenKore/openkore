@@ -405,6 +405,32 @@ sub onUpdate {
 
 # statuses ($Actor->{statuses})
 
+sub setStatus {
+	my ($self, $handle, $flag, $tick) = @_;
+	
+	my $again;
+	if ($flag) {
+		# Skill activated
+		$again = $self->{statuses}{$handle} ? 'again' : 'now';
+		$self->{statuses}{$handle} = 1;
+		
+		if ($char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name}) {
+			$again = 'again' if $char->{party}{users}{$self->{ID}}{statuses}{$handle};
+			$char->{party}{users}{$self->{ID}}{statuses}{$handle} = 1;
+		}
+	} else {
+		# Skill de-activated (expired)
+		return unless $self->{statuses}{$handle}; # silent when "again no status"
+		$again = 'no longer';
+		delete $self->{statuses}{$handle};
+		delete $char->{party}{users}{$self->{ID}}{statuses}{$handle} if ($char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name});
+	}
+	
+	message
+		Misc::status_string($self, defined $statusName{$handle} ? $statusName{$handle} : $handle, $again, $flag && $tick/1000),
+		"parseMsg_statuslook", ($self->{ID} eq $accountID or $char->{slaves} && $char->{slaves}{$self->{ID}}) ? 1 : 2;
+}
+
 sub statusActive {
 	my ($self, $commaSeparatedStatuses) = @_;
 	
