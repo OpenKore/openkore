@@ -3083,7 +3083,12 @@ sub guild_member_online_status {
 
 sub misc_effect {
 	my ($self, $args) = @_;
-	message TF("%s uses effect: %s\n", Actor::get($args->{ID})->nameString(), $args->{effect}), "effect";
+	
+	my $actor = Actor::get($args->{ID});
+	message sprintf(
+		$actor->verb(T("%s use effect: %s\n"), T("%s uses effect: %s\n")),
+		$actor, defined $effectName{$args->{effect}} ? $effectName{$args->{effect}} : "Unknown #$args->{effect}"
+	), 'effect'
 }
 
 sub guild_members_title_list {
@@ -7318,6 +7323,7 @@ sub sound_effect {
 	my ($self, $args) = @_;
 	# $args->{type} seems like 0 => once, 1 => start, 2 => stop
 	# $args->{term} seems like duration or repeat count
+	# continuous sound effects can be implemented as actor statuses
 	
 	my $actor = exists $args->{ID} && Actor::get($args->{ID});
 	message sprintf(
