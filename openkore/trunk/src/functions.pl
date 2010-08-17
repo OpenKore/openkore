@@ -199,7 +199,7 @@ sub loadDataFiles {
 	Settings::addTableFile('cities.txt',
 		loader => [\&parseROLUT, \%cities_lut]);
 	Settings::addTableFile('commanddescriptions.txt',
-		loader => [\&parseCommandsDescription, \%descriptions]);
+		loader => [\&parseCommandsDescription, \%descriptions], mustExist => 0);
 	Settings::addTableFile('directions.txt',
 		loader => [\&parseDataFile2, \%directions_lut]);
 	Settings::addTableFile('elements.txt',
@@ -215,7 +215,7 @@ sub loadDataFiles {
 	Settings::addTableFile('items.txt',
 		loader => [\&parseROLUT, \%items_lut]);
 	Settings::addTableFile('itemsdescriptions.txt',
-		loader => [\&parseRODescLUT, \%itemsDesc_lut]);
+		loader => [\&parseRODescLUT, \%itemsDesc_lut], mustExist => 0);
 	Settings::addTableFile('itemslots.txt',
 		loader => [\&parseROSlotsLUT, \%itemSlots_lut]);
 	Settings::addTableFile('itemslotcounttable.txt',
@@ -231,7 +231,7 @@ sub loadDataFiles {
 	Settings::addTableFile('npcs.txt',
 		loader => [\&parseNPCs, \%npcs_lut]);
 	Settings::addTableFile('packetdescriptions.txt',
-		loader => [\&parseSectionedFile, \%packetDescriptions]);
+		loader => [\&parseSectionedFile, \%packetDescriptions], mustExist => 0);
 	Settings::addTableFile('portals.txt',
 		loader => [\&parsePortals, \%portals_lut]);
 	Settings::addTableFile('portalsLOS.txt',
@@ -241,33 +241,24 @@ sub loadDataFiles {
 	Settings::addTableFile('SKILL_id_handle.txt',
 		loader => \&Skill::StaticInfo::parseSkillsDatabase_id2handle);
 	Settings::addTableFile('skillnametable.txt',
-		loader => \&Skill::StaticInfo::parseSkillsDatabase_handle2name);
+		loader => \&Skill::StaticInfo::parseSkillsDatabase_handle2name, mustExist => 0);
 	Settings::addTableFile('spells.txt',
 		loader => [\&parseDataFile2, \%spells_lut]);
 	Settings::addTableFile('skillsdescriptions.txt',
-		loader => [\&parseRODescLUT, \%skillsDesc_lut]);
+		loader => [\&parseRODescLUT, \%skillsDesc_lut], mustExist => 0);
 	Settings::addTableFile('skillssp.txt',
 		loader => \&Skill::StaticInfo::parseSPDatabase);
-	Settings::addTableFile('STATUS_id_handle.txt',
-		loader => [\&parseDataFile2, \%statusHandle]);
-	Settings::addTableFile('STATE_id_handle.txt',
-		loader => [\&parseDataFile2, \%stateHandle]);
-	Settings::addTableFile('LOOK_id_handle.txt',
-		loader => [\&parseDataFile2, \%lookHandle]);
-	Settings::addTableFile('AILMENT_id_handle.txt',
-		loader => [\&parseDataFile2, \%ailmentHandle]);
+	Settings::addTableFile('STATUS_id_handle.txt', loader => [\&parseDataFile2, \%statusHandle]);
+	Settings::addTableFile('STATE_id_handle.txt', loader => [\&parseDataFile2, \%stateHandle]);
+	Settings::addTableFile('LOOK_id_handle.txt', loader => [\&parseDataFile2, \%lookHandle]);
+	Settings::addTableFile('AILMENT_id_handle.txt', loader => [\&parseDataFile2, \%ailmentHandle]);
 	Settings::addTableFile('MAPTYPE_id_handle.txt', loader => [\&parseDataFile2, \%mapTypeHandle]);
 	Settings::addTableFile('MAPPROPERTY_TYPE_id_handle.txt', loader => [\&parseDataFile2, \%mapPropertyTypeHandle]);
 	Settings::addTableFile('MAPPROPERTY_INFO_id_handle.txt', loader => [\&parseDataFile2, \%mapPropertyInfoHandle]);
-	Settings::addTableFile('statusnametable.txt',
-		loader => [\&parseDataFile2, \%statusName]);
-	Settings::addTableFile('skillsarea.txt',
-		loader => [\&parseDataFile2, \%skillsArea]);
-	Settings::addTableFile('skillsencore.txt',
-		loader => [\&parseList, \%skillsEncore]);
-	Settings::addTableFile('quests.txt',
-		loader => [\&parseROQuestsLUT, \%quests_lut],
-		mustExist => 0);
+	Settings::addTableFile('statusnametable.txt', loader => [\&parseDataFile2, \%statusName], mustExist => 0);
+	Settings::addTableFile('skillsarea.txt', loader => [\&parseDataFile2, \%skillsArea]);
+	Settings::addTableFile('skillsencore.txt', loader => [\&parseList, \%skillsEncore]);
+	Settings::addTableFile('quests.txt', loader => [\&parseROQuestsLUT, \%quests_lut], mustExist => 0);
 	Settings::addTableFile('effects.txt', loader => [\&parseDataFile2, \%effectName], mustExist => 0);
 
 	use encoding 'utf8';
