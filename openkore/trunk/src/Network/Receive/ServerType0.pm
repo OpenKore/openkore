@@ -288,7 +288,7 @@ sub new {
 		'01D0' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'01D1' => ['blade_stop', 'a4 a4 V', [qw(sourceID targetID active)]],
 		'01D2' => ['combo_delay', 'a4 V', [qw(ID delay)]],
-		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type unknown ID)]],
+		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type term ID)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
 		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]],
 		# OLD' 01D8' => ['actor_display', 'a4 v14 a4 x4 v x C a3 x2 C v',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
@@ -452,6 +452,7 @@ sub new {
 		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
 
 		'07FA' => ['inventory_item_removed', 'v3', [qw(unknown index amount)]], #//0x07fa,8
+		'07FE' => ['sound_effect', 'Z24', [qw(name)]],
 
 		'0800' => ['vender_items_list', 'v a4 a4', [qw(len venderID venderCID)]], # -1
 
@@ -7315,7 +7316,19 @@ sub font {
 # TODO
 sub sound_effect {
 	my ($self, $args) = @_;
-	debug "$args->{name} $args->{type} $args->{unknown} $args->{ID}\n", "info";
+	# $args->{type} seems like 0 => once, 1 => start, 2 => stop
+	# $args->{term} seems like duration or repeat count
+	
+	my $actor = exists $args->{ID} && Actor::get($args->{ID});
+	message sprintf(
+		$actor
+			? $args->{type} == 0
+				? $actor->verb(T("%2\$s play: %s\n"), T("%2\$s plays: %s\n"))
+				: $args->{type} == 1
+					? $actor->verb(T("%2\$s are now playing: %s\n"), T("%2\$s is now playing: %s\n"))
+					: $actor->verb(T("%2\$s stopped playing: %s\n"), T("%2\$s stopped playing: %s\n"))
+			: T("Now playing: %s\n"),
+		$args->{name}, $actor), 'effect'
 }
 
 # 019E
