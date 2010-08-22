@@ -415,12 +415,22 @@ sub processServerSettings {
 
 	# Parse server settings
 	my $master = $masterServer = $masterServers{$config{master}};
+	
+	# Check for required options
+	# TODO: add more besides serverType, if any exist
+	if (my @missingOptions = grep { $master->{$_} eq '' } qw(serverType)) {
+		$interface->errorDialog(TF("Required server options are not set: %s\n", "@missingOptions"));
+		exit;
+	}
+	
 	foreach my $serverOption ('serverType', 'chatLangCode', 'storageEncryptKey', 'gameGuard', 'charBlockSize',
 				'paddedPackets', 'paddedPackets_attackID', 'paddedPackets_skillUseID',
 				'mapServer_ip', 'mapServer_port') {
 		if ($master->{$serverOption} ne '' && $config{$serverOption} ne $master->{$serverOption}) {
 			# Delete Wite Space
+			# why only one, if deleting any?
 			$master->{$serverOption} =~ s/^\s//;
+			# can't happen due to FileParsers::parseSectionedFile
 			$master->{$serverOption} =~ s/\s$//;
 			# Set config
 			configModify($serverOption, $master->{$serverOption});
