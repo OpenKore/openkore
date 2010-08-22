@@ -1317,7 +1317,7 @@ sub onMapClick {
 		foreach my $portal (@{$self->{mapViewer}->{portals}->{$field->name()}}){
 			if (distance($portal,{x=>$x,y=>$y}) <= ($config{wx_map_portalSticking} || 5)) {
 				$x = $portal->{x};
-				$y = $portal->{y};
+				$y = $portal->{y};#{O}_{O}#
 				$self->writeOutput("message", TF("Moving to Portal %s, %s\n", $x, $y), "info");
 				$checkPortal = 1;
 				last;
