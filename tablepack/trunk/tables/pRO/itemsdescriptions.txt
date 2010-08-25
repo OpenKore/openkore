@@ -1,4 +1,4 @@
-﻿//file start
+﻿s//file start
 
 501#
 A potion which restores ^000088HP about 45^000000, made from grinded red herbs.
@@ -33762,4 +33762,16 @@ Weight: ^7777770^000000
 12774#
 A empty bottle looks like perfect for capturing monster 'Shining Plant'.
 Weight: ^7777770^000000
+#
+//----ﾁﾟｴﾜ ﾇ・螻篝・ ｿ菽､ﾀﾇ ｱﾍ ｼﾒﾄﾏ ｳﾖｴﾂ ﾀﾌｺ･ﾆｮ --------
+6396#
+A tool which is consumed for making a soket. When succeeds in the Soket Enchant, it disappears.
+Weight : ^7777771^000000
+#
+18507#
+It's known to be made after elf's ear. You can have the feeling of elves playing around under the greenwood.
+Type : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Mid^000000    Weight : ^77777710^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All jobs except Novice class^000000
 #
