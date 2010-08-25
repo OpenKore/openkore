@@ -22,6 +22,21 @@ spl_in02.rsw#Inside Splandid#
 2009rwc_08.rsw#RWC Arena#
 2009rwc_f01.rsw#RWC Arena#
 2009rwc_f02.rsw#RWC Arena#
+//2010 RWC
+guild_vs01.rsw#RWC Arena#
+guild_vs02.rsw#RWC Arena#
+guild_vs03.rsw#RWC Arena#
+guild_vs04.rsw#RWC Arena#
+2010rwc_r.rsw#RWC Arena#
+2010rwc_01.rsw#RWC Arena#
+2010rwc_02.rsw#RWC Arena#
+2010rwc_03.rsw#RWC Arena#
+2010rwc_04.rsw#RWC Arena#
+2010rwc_05.rsw#RWC Arena#
+2010rwc_06.rsw#RWC Arena#
+2010rwc_07.rsw#RWC Arena#
+2010rwc_08.rsw#RWC Arena#
+
 //Ep13
 bat_c01.rsw#Krieger von Midgards#
 bat_c02.rsw#Krieger von Midgards#
