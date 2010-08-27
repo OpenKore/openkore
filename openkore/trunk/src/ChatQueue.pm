@@ -407,7 +407,7 @@ sub processChatCommand {
 	} elsif ($switch eq "where") {
 		$vars->{x} = $char->{pos_to}{x};
 		$vars->{y} = $char->{pos_to}{y};
-		$vars->{map} = "$field->baseName ($field->name)";
+		$vars->{map} = sprintf "%s (%s)", $field->baseName, $field->name;
 		$timeout{ai_thanks_set}{time} = time;
 		sendMessage($messageSender, $type, getResponse("whereS"), $user) if $config{verbose};
 
