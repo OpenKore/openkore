@@ -2892,6 +2892,7 @@ sub processAutoTeleport {
 		foreach (@monstersID) {
 			next unless $_;
 			my $teleAuto = mon_control($monsters{$_}{name},$monsters{$_}{nameID})->{teleport_auto};
+			# TODO: check for dead should actually be for the whole autoteleport logic
 			if (($teleAuto == 1)&& !$char->{dead}) {
 				message TF("Teleporting to avoid %s\n", $monsters{$_}{name}), "teleport";
 				$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
