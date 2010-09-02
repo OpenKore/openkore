@@ -16,6 +16,7 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 2
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+addTableFolders bRO
 
 [Brazil - bRO: Thor]
 ip 200.229.49.39
@@ -30,6 +31,7 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 2
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+addTableFolders bRO
 
 [Europe - euRO]
 ip accsrv.euro-ro.net
@@ -45,6 +47,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 paddedPackets 0
 paddedPackets_attackID 0x89
 paddedPackets_skillUseID 0x113
+addTableFolders euRO
 
 ## http://www.ragnarokonline.fr
 [France - fRO]
@@ -54,6 +57,7 @@ master_version 31
 version 1
 serverType fRO
 serverEncoding Western
+addTableFolders fRO
 
 [Indonesia - idRO: Thor - Legend - Fnc - Heroes]
 ip 202.43.167.67
@@ -69,6 +73,7 @@ secureLogin_requestCode 04 02 B0 5C 1B 4B C2 73 ED 9C 39 26 F3 51 01 E4 A2 DC
 secureLogin_account 0
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
+addTableFolders idRO
 
 [International - iRO: Chaos/Loki/Iris]
 ip main-login.ragnarok.games.gravityus.com
@@ -82,6 +87,7 @@ paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
 patchserver ropatch1.gravityus.com
 patchpath /patch02
+addTableFolders iRO
 
 [International - iRO: Sakray]
 ip 128.241.92.162
@@ -93,6 +99,7 @@ serverEncoding Western
 paddedPackets 0
 paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
+addTableFolders iRO
 
 [International - iRO: Valkyrie]
 ip 128.241.92.163
@@ -106,6 +113,7 @@ paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
 patchserver ropatch1.gravityus.com
 patchpath /fpatch
+addTableFolders iRO
 
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
@@ -116,7 +124,7 @@ version 10
 serverType 7
 secureLogin 1
 serverEncoding Japanese
-addTableFolders tables/Old
+addTableFolders Old
 
 [Korea - kRO: Sara/Rangidis/Thanatos]
 ip 112.175.128.137
@@ -128,6 +136,7 @@ serverEncoding Korean
 charBlockSize 112
 storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
 gameGuard 1
+addTableFolders kRO
 
 [Korea - kRO: Sakray]
 ip 112.175.128.138
@@ -140,7 +149,8 @@ charBlockSize 128
 storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
 captcha 0
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
-#addTableFolders tables/translated/kRO_english
+#addTableFolders translated/kRO_english;kRO
+addTableFolders kRO
 
 [Malaysia - mRO: Main Server: Balder]
 ip 202.71.105.21
@@ -150,6 +160,7 @@ version 1004
 serverType mRO
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+addTableFolders mRO
 
 [Malaysia - mRO (English): Aegir/Idun]
 ip 202.71.105.23
@@ -159,6 +170,7 @@ version 1004
 serverType mRO
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+addTableFolders mRO
 
 [Malaysia - mRO (English Free Server): Prontera]
 ip 202.71.105.29
@@ -169,6 +181,7 @@ serverType mRO
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+addTableFolders mRO
 
 [Malaysia - mRO: Sakray]
 ip 202.71.105.27
@@ -178,6 +191,7 @@ version 102
 serverType mRO
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+addTableFolders mRO
 
 [Philippines - pRO: New Chaos]
 ip 202.57.118.232
@@ -194,6 +208,7 @@ patchpath /patch50
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 serverEncoding Tagalog
 charBlockSize 108
+addTableFolders pRO
 
 [Philippines - pRO: Valhalla]
 ip 202.57.118.234
@@ -211,6 +226,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 serverEncoding Tagalog
 charBlockSize 108
 gameGuard 1
+addTableFolders pRO
 
 [Philippines - pRO: Valkyrie]
 ip 202.57.118.235
@@ -229,6 +245,7 @@ serverEncoding Tagalog
 charBlockSize 108
 gameGuard 1
 recvpackets recvpackets-valkyrie.txt
+addTableFolders pRO
 
 [Philippines - pRO: Sakray]
 ip 202.57.118.232
@@ -246,6 +263,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 serverEncoding Tagalog
 charBlockSize 108
 recvpackets recvpackets-sakray.txt
+addTableFolders pRO
 
 ## http://www.raggame.ru/
 [Russia - rRO]
@@ -259,6 +277,7 @@ pauseCharServer 1
 patchserver web.raggame.ru
 patchpath /patch02
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
+addTableFolders rRO
 
 [Taiwan - twRO: Alfheim (Chaos, Loki, Aegir)]
 ip 61.220.60.11
@@ -269,6 +288,7 @@ serverType twRO
 serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets-twRO-office.txt
+addTableFolders twRO
 
 [Taiwan - twRO: Free]
 ip 220.130.113.238
@@ -280,6 +300,7 @@ serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets-twRO-free.txt
+addTableFolders twRO
 
 [Taiwan - twRO: Test]
 ip 61.220.56.47
@@ -291,6 +312,7 @@ serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets-twRO-test.txt
+addTableFolders twRO
 
 ## www.ragnarok.in.th/
 [Thailand - tRO Main server (Norse)]
@@ -306,6 +328,7 @@ gameLogin_packet 0x275
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
+addTableFolders tRO
 
 [Thailand - tRO Free life server (Alice(new), Poring)]
 ip 122.155.11.242
@@ -321,6 +344,7 @@ pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
+addTableFolders tRO
 
 [Thailand - tRO Free life server (Yoyo, Picky)]
 ip 122.155.11.241
@@ -335,6 +359,7 @@ gameLogin_packet 0x275
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
+addTableFolders tRO
 
 ## http://www.rovietnam.com.vn/
 [Vietnam - vRO: SD]
@@ -351,7 +376,7 @@ serverEncoding Western
 paddedPackets 1
 paddedPackets_attackID 0x0190
 paddedPackets_skillUseID 0x0085
-addTableFolders tables/Old
+addTableFolders Old
 
 ## http://www.rovietnam.com.vn/
 [Vietnam - vRO: Thu Thach]
@@ -368,7 +393,7 @@ serverEncoding Western
 paddedPackets 1
 paddedPackets_attackID 0x0193
 paddedPackets_skillUseID 0x0089
-addTableFolders tables/Old
+addTableFolders Old
 
 ####################
 # Private RO Servers
@@ -381,6 +406,7 @@ master_version 1
 version 20
 serverType kRO_RagexeRE_2009_11_04a
 serverEncoding Western
+addTableFolders translated/kRO_english;kRO
 
 
 # clientside: kRO_Sakexe_2009_06_17a (rmsserver-2009-06-17a.exe)
@@ -394,7 +420,7 @@ version 20
 serverType kRO_Sakexe_2009_04_08a
 serverEncoding Western
 charBlockSize 108
-addTableFolders tables/pserver/RMS;tables/translated/kRO_english
+addTableFolders pserver/RMS;translated/kRO_english;kRO
 
 
 # clientside: ? (2010-01-26aRagexeRE.exe)
@@ -409,4 +435,4 @@ serverType kRO_RagexeRE_2010_01_26a
 serverEncoding Western
 charBlockSize 112
 chatLangCode 1
-addTableFolders tables/translated/kRO_english
+addTableFolders translated/kRO_english;kRO

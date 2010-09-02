@@ -442,24 +442,6 @@ sub processServerSettings {
 	} elsif ($config{serverEncoding} eq '') {
 		configModify('serverEncoding', 'Western');
 	}
-
-	# Process adding ServerType specific table folders
-	my ($st_mode, $st_type, $st_param) = Settings::parseServerType($masterServer->{serverType}) if ($master->{serverType} && $master->{serverType} ne '') ;
-	if ($st_mode == 1) {
-		# Holder for new path
-		my @new_tables;
-		# for each table folders path we add our own, whatever it exist or not
-		foreach my $dir ( Settings::getTablesFolders() ) {
-			# If the ServerType is with sub type
-			if (defined($st_param) && $st_param ne '') {
-				push @new_tables, $dir . '/' . $st_type . '/' . $st_param;
-			}
-			push @new_tables, $dir . '/' . $st_type;
-			push @new_tables, $dir;
-		}
-		# now set up new path to table folders
-		Settings::setTablesFolders(grep -d, @new_tables);
-	}
 	
 	# Process adding Custom Table folders
 	if($masterServer->{addTableFolders}) {
