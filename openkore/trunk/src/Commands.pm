@@ -2985,32 +2985,51 @@ sub cmdMemo {
 }
 
 sub cmdMonsterList {
-	my ($dmgTo, $dmgFrom, $dist, $pos, $name, $monsters);
-	message TF("-----------Monster List-----------\n" .
-		"#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n"),	"list";
+	my (undef, $args) = @_;
+	if ($args =~ /^\d+$/) {
+		if (my $monster = $monstersList->get($args)) {
+			my $msg = TF("------------------ Monster Info ------------------\n" .
+				"%s (%d)\n" .
+				"-------------------------------------------------\n" .
+				"Walk speed: %s secs per block\n", 
+			$monster->name, $monster->{binID},
+			$monster->{walk_speed});
 
-	$monsters = $monstersList->getItems() if ($monstersList);
-	foreach my $monster (@{$monsters}) {
-		$dmgTo = ($monster->{dmgTo} ne "")
-			? $monster->{dmgTo}
-			: 0;
-		$dmgFrom = ($monster->{dmgFrom} ne "")
-			? $monster->{dmgFrom}
-			: 0;
-		$dist = distance($char->{pos_to}, $monster->{pos_to});
-		$dist = sprintf("%.1f", $dist) if (index($dist, '.') > -1);
-		$pos = '(' . $monster->{pos_to}{x} . ', ' . $monster->{pos_to}{y} . ')';
-		$name = $monster->name;
-		if ($name ne $monster->{name_given}) {
-			$name .= '[' . $monster->{name_given} . ']';
+			$msg .= center(T(" Statuses "),49,'-')."\n";
+			$msg .= TF("Statuses: %s \n", $monster->statusesString);
+			$msg .= '-' x 49 . "\n";
+			message $msg, "info";
+		} else {
+			error TF("Monster \"%s\" does not exist.\n", $args);
 		}
+	} else {
+		my ($dmgTo, $dmgFrom, $dist, $pos, $name, $monsters);
+		message TF("-----------Monster List-----------\n" .
+			"#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n"),	"list";
 
-		message(swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<< @<<<<    @<<<<<      @<<<<<<<<<<",
-			[$monster->{binID}, $name, $monster->{binType}, $dmgTo, $dmgFrom, $dist, $pos]),
-			"list");
+		$monsters = $monstersList->getItems() if ($monstersList);
+		foreach my $monster (@{$monsters}) {
+			$dmgTo = ($monster->{dmgTo} ne "")
+				? $monster->{dmgTo}
+				: 0;
+			$dmgFrom = ($monster->{dmgFrom} ne "")
+				? $monster->{dmgFrom}
+				: 0;
+			$dist = distance($char->{pos_to}, $monster->{pos_to});
+			$dist = sprintf("%.1f", $dist) if (index($dist, '.') > -1);
+			$pos = '(' . $monster->{pos_to}{x} . ', ' . $monster->{pos_to}{y} . ')';
+			$name = $monster->name;
+			if ($name ne $monster->{name_given}) {
+				$name .= '[' . $monster->{name_given} . ']';
+			}
+
+			message(swrite(
+				"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<< @<<<<    @<<<<<      @<<<<<<<<<<",
+				[$monster->{binID}, $name, $monster->{binType}, $dmgTo, $dmgFrom, $dist, $pos]),
+				"list");
+		}
+		message("----------------------------------\n", "list");
 	}
-	message("----------------------------------\n", "list");
 }
 
 sub cmdMove {
