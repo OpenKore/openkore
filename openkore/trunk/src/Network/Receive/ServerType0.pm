@@ -182,7 +182,7 @@ sub new {
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
 		'0117' => ['skill_use_location', 'v a4 v3 V', [qw(skillID sourceID lv x y tick)]],
 		'0119' => ['character_status', 'a4 v3 C', [qw(ID opt1 opt2 option karma)]],
-		'011A' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID fail)]],
+		'011A' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'011C' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
 		'011E' => ['memo_success', 'C', [qw(fail)]],
 		'011F' => ['area_spell', 'a4 a4 v2 C2', [qw(ID sourceID x y type fail)]],
@@ -685,7 +685,7 @@ sub actor_action {
 
 		$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $totalDamage == 0;
 
-		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}/10));
+		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}));
 		Plugins::callHook('packet_attack', {sourceID => $args->{sourceID}, targetID => $args->{targetID}, msg => \$msg, dmg => $totalDamage, type => $args->{type}});
 
 		my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
@@ -5546,7 +5546,7 @@ sub skill_use {
 	my $skill = new Skill(idn => $args->{skillID});
 	$args->{skill} = $skill;
 	my $disp = skillUse_string($source, $target, $skill->getName(), $args->{damage},
-		$args->{level}, ($args->{src_speed}/10));
+		$args->{level}, ($args->{src_speed}));
 
 	if ($args->{damage} != -30000 &&
 	    $args->{sourceID} eq $accountID &&
@@ -5657,7 +5657,7 @@ sub skill_use_location {
 		'y' => $y
 	});
 }
-# TODO: a skill can fail, do something with $args->{fail} == 0 (this means that the skill failed)
+# TODO: a skill can fail, do something with $args->{success} == 0 (this means that the skill failed)
 sub skill_used_no_damage {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();

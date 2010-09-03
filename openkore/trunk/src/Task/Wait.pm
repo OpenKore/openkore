@@ -72,10 +72,11 @@ sub resume {
 
 sub iterate {
 	my ($self) = @_;
-	return unless ($self->SUPER::iterate() && ( !$self->{inGame} || $net->getState() == Network::IN_GAME ));
+	$self->SUPER::iterate();
+	return unless (!$self->{inGame} || $net->getState() == Network::IN_GAME);
 
 	$self->{wait}{time} = time if (!defined $self->{wait}{time});
-	$self->setDone() if (timeOut($self->{wait}));
+	$self->setDone() if (timeOut(\%{$self->{wait}}));
 }
 
 1;

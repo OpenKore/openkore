@@ -3165,7 +3165,7 @@ sub attack_string {
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
 
-	return TF("%s %s %s (Dmg: %s) (Delay: %s)\n",
+	return TF("%s %s %s (Dmg: %s) (Delay: %sms)\n",
 		$source->nameString,
 		$source->verb(T('attack'), T('attacks')),
 		$target->nameString($source),
@@ -3198,7 +3198,7 @@ sub skillUse_string {
 		T('on'),
 		$target->nameString($source),
 		($damage != -30000) ? ' ' . TF("(Dmg: %s)", $damage || T('Miss')) : '',
-		($delay) ? ' ' . TF("(delay: %s)", $delay) : '');
+		($delay) ? ' ' . TF("(Delay: %sms)", $delay) : '');
 }
 
 sub skillUseLocation_string {

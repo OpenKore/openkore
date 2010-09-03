@@ -257,7 +257,7 @@ sub new {
 		'0117' => ['skill_use_location', 'v a4 v3 V', [qw(skillID sourceID lv x y tick)]], # 18
 		# 0x0118 is sent packet
 		'0119' => ['character_status', 'a4 v3 C', [qw(ID opt1 opt2 option karma)]], # 13
-		'011A' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID fail)]], # 15
+		'011A' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID success)]], # 15
 		# 0x011b is sent packet
 		'011C' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
 		# 0x011d is sent packet
@@ -384,7 +384,7 @@ sub new {
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]], # 9
 		# 0x0197 is sent packet
 		# 0x0198 is sent packet
-		'0199' => ['pvp_mode1', 'v', [qw(type)]], #4
+		'0199' => ['map_property', 'v', [qw(type)]], #4
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]], # 14
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]], # 10
 		# 0x019c is sent packet
@@ -445,7 +445,7 @@ sub new {
 		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type term ID)]], # 35
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]], # 6
 		# 0x01d5 is sent packet
-		'01D6' => ['pvp_mode2', 'v', [qw(type)]], # 4
+		'01D6' => ['map_property2', 'v', [qw(type)]], # 4
 		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]], # 11 # TODO: inconsistent with C structs
 		'01D8' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv)]], # 54 # standing
 		'01D9' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], # 53 # spawning
@@ -776,7 +776,7 @@ sub actor_action {
 
 		$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $totalDamage == 0;
 
-		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}/10));
+		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}));
 		Plugins::callHook('packet_attack', {sourceID => $args->{sourceID}, targetID => $args->{targetID}, msg => \$msg, dmg => $totalDamage, type => $args->{type}});
 
 		my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
@@ -1504,43 +1504,17 @@ sub actor_name_received {
 
 }
 
+# TODO: translation-friendly messages
 sub actor_status_active {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
-	my ($type, $ID, $flag) = @{$args}{qw(type ID flag)};
+	my ($type, $ID, $flag, $tick) = @{$args}{qw(type ID flag tick)};
 
-	my $tick = ($args->{switch} eq "043F") ? $args->{tick} : undef;
-	
 	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
-	my $status_name = defined $statusName{$status} ? $statusName{$status} : "Unknown $type";
 	
-	$args->{skillName} = $status;
-	my $actor = Actor::get($ID);
-	$args->{actor} = $actor;
-
-	my ($name, $is) = getActorNames($ID, 0, 'are', 'is');
-	if ($flag) {
-		# Skill activated
-		my $again = 'now';
-		if ($actor) {
-			$again = 'again' if $actor->{statuses}{$status};
-			$actor->{statuses}{$status} = 1;
-		}
-		if ($char->{party}{users}{$ID} && $char->{party}{users}{$ID}{name}) {
-			$again = 'again' if $char->{party}{users}{$ID}{statuses}{$status};
-			$char->{party}{users}{$ID}{statuses}{$status} = 1;
-		}
-		my $disp = status_string($actor, $status_name, $again, $tick/1000);
-		message $disp, "parseMsg_statuslook", ($ID eq $accountID or $char->{slaves} && $char->{slaves}{$ID}) ? 1 : 2;
-
-	} else {
-		# Skill de-activated (expired)
-		delete $actor->{statuses}{$status} if $actor;
-		delete $char->{party}{users}{$ID}{statuses}{$status} if ($char->{party}{users}{$ID} && $char->{party}{users}{$ID}{name});
-		my $disp = status_string($actor, $status_name, 'no longer');
-		message $disp, "parseMsg_statuslook", ($ID eq $accountID or $char->{slaves} && $char->{slaves}{$ID}) ? 1 : 2;
-	}
+	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
+	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick);
 }
 
 sub actor_trapped {
@@ -5357,29 +5331,6 @@ sub gospel_buff_aligned {
 	}
 }
 
-=pod
-  MAPPROPERTY_PK =  0x0,
-  MAPPROPERTY_TELEPORT =  0x1,
-  MAPPROPERTY_NOTREMEMBER =  0x2,
-  MAPPROPERTY_ITEMDROP =  0x3,
-  MAPPROPERTY_EXP =  0x4,
-  MAPPROPERTY_DISCONNECT_NOTREMEMBER =  0x5,
-  MAPPROPERTY_CALLMONSTER =  0x6,
-  MAPPROPERTY_PARTY =  0x7,
-  MAPPROPERTY_GUILD =  0x8,
-  MAPPROPERTY_SIEGE =  0x9,
-  MAPPROPERTY_PKSERVER =  0xa,
-  MAPPROPERTY_PVPSERVER =  0xb,
-  MAPPROPERTY_DENYSKILL =  0xc,
-  MAPPROPERTY_TURBOTRACK =  0xd,
-  MAPPROPERTY_DENY_BUTTERFLY =  0xe,
-  MAPPROPERTY_USE_SIMPLE_EFFECT =  0xf,
-  MAPPROPERTY_DISABLE_LOCKON =  0x10,
-  MAPPROPERTY_COUNT_PK =  0x11,
-  MAPPROPERTY_NO_PARTY_FORMATION =  0x12,
-  MAPPROPERTY_BATTLEFIELD =  0x13,
-=cut
-# TODO: add unknown modes
 sub no_teleport {
 	my ($self, $args) = @_;
 	my $fail = $args->{fail};
@@ -5394,84 +5345,39 @@ sub no_teleport {
 	}
 }
 
-=pod
-  MAPPROPERTY_NOTHING =  0x0,
-  MAPPROPERTY_FREEPVPZONE =  0x1,
-  MAPPROPERTY_EVENTPVPZONE =  0x2,
-  MAPPROPERTY_AGITZONE =  0x3,
-  MAPPROPERTY_PKSERVERZONE =  0x4,
-  MAPPROPERTY_PVPSERVERZONE =  0x5,
-  MAPPROPERTY_DENYSKILLZONE =  0x6,
-=cut
-# TODO: add unknown modes
-sub pvp_mode1 {
+sub map_property {
 	my ($self, $args) = @_;
-	my $type = $args->{type};
-
-	if ($type == 0) {
-		$pvp = 0;
-	} elsif ($type == 1) {
-		message T("PvP Display Mode\n"), "map_event";
-		$pvp = 1;
-	} elsif ($type == 3) {
-		message T("GvG Display Mode\n"), "map_event";
-		$pvp = 2;
-	} else {
-		debug "pvp_mode1: Unknown mode: $type\n";
+	
+	$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
+	grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
+	map {[$_, defined $mapPropertyTypeHandle{$_} ? $mapPropertyTypeHandle{$_} : "UNKNOWN_MAPPROPERTY_TYPE_$_"]}
+	1 .. List::Util::max $args->{type}, keys %mapPropertyTypeHandle;
+	
+	if ($args->{info_table}) {
+		my @info_table = unpack 'C*', $args->{info_table};
+		$char->setStatus(@$_) for map {[
+			defined $mapPropertyInfoHandle{$_} ? $mapPropertyInfoHandle{$_} : "UNKNOWN_MAPPROPERTY_INFO_$_",
+			$info_table[$_],
+		]} 0 .. @info_table-1;
 	}
 	
+	$pvp = {1 => 1, 3 => 2}->{$args->{type}};
 	if ($pvp) {
 		Plugins::callHook('pvp_mode', {
-			pvp => $pvp # 1 PvP, 2 GvG, 3 Battleground
+			pvp => $pvp # 1 PvP, 2 GvG
 		});
 	}
 }
 
-=pod
-  MAPTYPE_VILLAGE =  0x0,
-  MAPTYPE_VILLAGE_IN =  0x1,
-  MAPTYPE_FIELD =  0x2,
-  MAPTYPE_DUNGEON =  0x3,
-  MAPTYPE_ARENA =  0x4,
-  MAPTYPE_PENALTY_FREEPKZONE =  0x5,
-  MAPTYPE_NOPENALTY_FREEPKZONE =  0x6,
-  MAPTYPE_EVENT_GUILDWAR =  0x7,
-  MAPTYPE_AGIT =  0x8,
-  MAPTYPE_DUNGEON2 =  0x9,
-  MAPTYPE_DUNGEON3 =  0xa,
-  MAPTYPE_PKSERVER =  0xb,
-  MAPTYPE_PVPSERVER =  0xc,
-  MAPTYPE_DENYSKILL =  0xd,
-  MAPTYPE_TURBOTRACK =  0xe,
-  MAPTYPE_JAIL =  0xf,
-  MAPTYPE_MONSTERTRACK =  0x10,
-  MAPTYPE_PORINGBATTLE =  0x11,
-  MAPTYPE_AGIT_SIEGEV15 =  0x12,
-  MAPTYPE_BATTLEFIELD =  0x13,
-  MAPTYPE_PVP_TOURNAMENT =  0x14,
-  MAPTYPE_UNUSED =  0x1d,
-  MAPTYPE_LAST =  0x1e,
-=cut
-# TODO: add unknown modes
-sub pvp_mode2 {
+sub map_property2 {
 	my ($self, $args) = @_;
-	my $type = $args->{type};
-
-	if ($type == 0) {
-		$pvp = 0;
-	} elsif ($type == 6) {
-		message T("PvP Display Mode\n"), "map_event";
-		$pvp = 1;
-	} elsif ($type == 8) {
-		message T("GvG Display Mode\n"), "map_event";
-		$pvp = 2;
-	} elsif ($type == 19) {
-		message T("Battleground Display Mode\n"), "map_event";
-		$pvp = 3;
-	} else {
-		debug "pvp_mode2: Unknown mode: $type\n";
-	}
 	
+	$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
+	grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
+	map {[$_, defined $mapTypeHandle{$_} ? $mapTypeHandle{$_} : "UNKNOWN_MAPTYPE_$_"]}
+	0 .. List::Util::max $args->{type}, keys %mapTypeHandle;
+	
+	$pvp = {6 => 1, 8 => 2, 19 => 3}->{$args->{type}};
 	if ($pvp) {
 		Plugins::callHook('pvp_mode', {
 			pvp => $pvp # 1 PvP, 2 GvG, 3 Battleground
@@ -5781,7 +5687,7 @@ sub skill_use {
 	my $skill = new Skill(idn => $args->{skillID});
 	$args->{skill} = $skill;
 	my $disp = skillUse_string($source, $target, $skill->getName(), $args->{damage},
-		$args->{level}, ($args->{src_speed}/10));
+		$args->{level}, ($args->{src_speed}));
 
 	if ($args->{damage} != -30000 &&
 	    $args->{sourceID} eq $accountID &&
@@ -5892,7 +5798,7 @@ sub skill_use_location {
 		'y' => $y
 	});
 }
-# TODO: a skill can fail, do something with $args->{fail} == 0 (this means that the skill failed)
+# TODO: a skill can fail, do something with $args->{success} == 0 (this means that the skill failed)
 sub skill_used_no_damage {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
