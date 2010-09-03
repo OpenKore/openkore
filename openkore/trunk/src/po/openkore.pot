@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-22 17:15+0200\n"
+"POT-Creation-Date: 2010-09-03 13:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -459,43 +459,43 @@ msgstr ""
 msgid "Teleporting due to insufficient HP/SP or too many aggressives\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2896
+#: ../AI/CoreLogic.pm:2897
 #, perl-format
 msgid "Teleporting to avoid %s\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2906
+#: ../AI/CoreLogic.pm:2907
 #, perl-format
 msgid "Teleporting due to monster being too close %s\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2924
+#: ../AI/CoreLogic.pm:2925
 msgid "Teleporting due to idle\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2936
+#: ../AI/CoreLogic.pm:2937
 msgid "Teleporting to avoid portal\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2958 ../Misc.pm:1259
+#: ../AI/CoreLogic.pm:2959 ../Misc.pm:1259
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2959 ../Misc.pm:1260
+#: ../AI/CoreLogic.pm:2960 ../Misc.pm:1260
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2961
+#: ../AI/CoreLogic.pm:2962
 msgid "Respawning to save point.\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2962
+#: ../AI/CoreLogic.pm:2963
 msgid "** Respawning to save point.\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:3013
+#: ../AI/CoreLogic.pm:3014
 #, perl-format
 msgid "Disconnecting for 30 secs to avoid %s\n"
 msgstr ""
@@ -7982,12 +7982,12 @@ msgstr ""
 msgid "Welcome to %s."
 msgstr ""
 
-#: ../Settings.pm:432
+#: ../Settings.pm:440
 #, perl-format
 msgid "Cannot load control file %s"
 msgstr ""
 
-#: ../Settings.pm:436
+#: ../Settings.pm:444
 #, perl-format
 msgid "Cannot load table file %s"
 msgstr ""
@@ -8069,50 +8069,55 @@ msgstr ""
 msgid "Please enter your Ragnarok Online password."
 msgstr ""
 
-#: ../functions.pl:531
+#: ../functions.pl:422
+#, perl-format
+msgid "Required server options are not set: %s\n"
+msgstr ""
+
+#: ../functions.pl:523
 #, perl-format
 msgid "Next restart in %s\n"
 msgstr ""
 
-#: ../functions.pl:703
+#: ../functions.pl:695
 #, perl-format
 msgid "Packet Tokenizer: Unknown switch: %s\n"
 msgstr ""
 
-#: ../functions.pl:767
+#: ../functions.pl:759
 msgid ""
 "\n"
 "Auto-restarting!!\n"
 msgstr ""
 
-#: ../functions.pl:773
+#: ../functions.pl:765
 #, perl-format
 msgid "Sleeping for %s\n"
 msgstr ""
 
-#: ../functions.pl:814
+#: ../functions.pl:806
 #, perl-format
 msgid "Changing configuration file (from \"%s\" to \"%s\")...\n"
 msgstr ""
 
 #. Translation Comment: Interface Title with character status
-#: ../functions.pl:864
+#: ../functions.pl:856
 #, perl-format
 msgid "%s B%s (%s), J%s (%s) : w%s%s - %s"
 msgstr ""
 
 #. Translation Comment: Interface Title
-#: ../functions.pl:871
+#: ../functions.pl:863
 #, perl-format
 msgid "%sNot connected - %s"
 msgstr ""
 
 #. Translation Comment: Interface Title
-#: ../functions.pl:874
+#: ../functions.pl:866
 #, perl-format
 msgid "%sConnecting - %s"
 msgstr ""
 
-#: ../functions.pl:1089
+#: ../functions.pl:1081
 msgid "Map loaded\n"
 msgstr ""
