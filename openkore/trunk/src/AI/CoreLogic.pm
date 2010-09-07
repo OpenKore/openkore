@@ -1919,10 +1919,10 @@ sub processRandomWalk {
 		my ($randX, $randY);
 		my $i = 500;
 		do {
-			$randX = int(rand($field{width} + 1));
-			$randX = int($config{'lockMap_x'} - $config{'lockMap_randX'} + rand(2*$config{'lockMap_randX'}+1)) if ($config{'lockMap_x'} ne '' && $config{'lockMap_randX'} ne '');
-			$randY = int(rand($field{height} + 1));
-			$randY = int($config{'lockMap_y'} - $config{'lockMap_randY'} + rand(2*$config{'lockMap_randY'}+1)) if ($config{'lockMap_y'} ne '' && $config{'lockMap_randY'} ne '');
+			$randX = int(rand($field{width})) + 1;
+			$randX = int($config{'lockMap_x'} - $config{'lockMap_randX'} + rand(2*$config{'lockMap_randX'}))+1 if ($config{'lockMap_x'} ne '' && $config{'lockMap_randX'} ne '');
+			$randY = int(rand($field{height})) + 1;
+			$randY = int($config{'lockMap_y'} - $config{'lockMap_randY'} + rand(2*$config{'lockMap_randY'}))+1 if ($config{'lockMap_y'} ne '' && $config{'lockMap_randY'} ne '');
 		} while (--$i && !$field->isWalkable($randX, $randY));
 		if (!$i) {
 			error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
