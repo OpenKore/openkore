@@ -1,4 +1,4 @@
-﻿s//file start
+﻿//file start
 
 501#
 A potion which restores ^000088HP about 45^000000, made from grinded red herbs.
@@ -33774,4 +33774,25 @@ Type : ^777777Headgear^000000    Defense : ^7777770^000000
 Location : ^777777Mid^000000    Weight : ^77777710^000000
 Required Level : ^77777770^000000
 Jobs : ^777777All jobs except Novice class^000000
+#
+//-----2010 RWC ｱ箋・ﾃﾟｰ｡ ﾄｳｽｬ ｾﾆﾀﾌﾅﾛ-----
+18508#
+A hat which is very unique and rare, made from the sheet of the legendary birds feather, Garuda.
+Reduces damage from all type of monster by 5%.
+LUK + 5, HIT + 10, Reduca casting delay by 5%.
+When upgrade more than 7, there's a certain chance to get Fruit of Mastela when attaking monsters. If refined more 1 lv, increase the chance by more 1%.
+Class : ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper^000000 Weight : ^77777710^000000
+Required lv : ^77777730^000000
+Jobs : ^777777All jobs except Novices^000000
+#
+18509#
+A special cap with a neon sign above, dedicated to celebrating RWC 2010 in Indonesia.
+Increase resistance against human type monster by 10%, CRI + 10.
+Increase the healing effect of Red Potion and White Potion by 100%.
+ASPD + 1, ATK, MATK + 3%.
+Class : ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper^000000 Weight : ^77777710^000000
+Required lv : ^77777715^000000
+Jobs : ^777777 All jobs except Novices^000000
 #
