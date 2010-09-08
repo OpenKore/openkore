@@ -1,4 +1,5 @@
-﻿alberta 101 48 Captain Enforcer#albert
+﻿
+alberta 101 48 Captain Enforcer#albert
 alberta 102 80 Jhonnita
 alberta 104 60 [Quest] First Mate#Ship
 alberta 106 63 Stylist
@@ -261,6 +262,7 @@ geffen 130 45 First_Cash_Seller
 geffen 130 48 Odin's Cash manager#phi
 geffen 130 50 Second_Cash_Seller
 geffen 131 123 Merlcesdets
+geffen 131 66 [Quest] Magic Merchant#
 geffen 132 38 Bard#2
 geffen 135 53 Kafra Employee#pRO_prem
 geffen 138 30 Injured Master Thief#ge
@@ -301,6 +303,8 @@ geffen 83 189 SanShee
 geffen 90 130 Scholar
 geffen 90 67 Promotional staff
 geffen 91 36 Rogue Guild Agent#nd1
+geffen_in 109 170 Blacksmith Guildsman#ge
+geffen_in 110 172 Christopher
 geffen_in 22 171 Weapon Dealer
 geffen_in 26 178 Armor Dealer
 geffen_in 30 178 Weapon Dealer
@@ -353,6 +357,13 @@ izlude 56 139 Mercenary Merchant#Swor
 izlude 58 126 Cebalis
 izlude 94 98 Fruit Gardener
 izlude 99 136 Promotional staff
+job_cru 168 110 Create#7
+job_cru 168 115 Create#3
+job_cru 168 150 Create#4
+job_cru 168 17 DescriptionofZombie
+job_cru 168 45 Create#1
+job_cru 168 80 Create#2
+job_cru 24 187 Kight of Guardian
 lhz_dun01 225 198 #kiz01-4
 lhz_in01 110 174 Gerhart
 lhz_in01 113 150 #kiz07
@@ -779,6 +790,7 @@ prontera 146 89 Kafra Employee
 prontera 146 98 Kafra Employee#pRO_prem
 prontera 147 125 Cool Event Voting Staff
 prontera 147 305 Sign
+prontera 147 61 Piercing Expert#pa0829
 prontera 148 192 Festival Adventurer#nk
 prontera 148 326 Chief Officer#edq
 prontera 148 49 Bulletin Board#pron
@@ -835,6 +847,7 @@ prontera 174 203 Worldcup Manager#pronte
 prontera 174 328 Yong Man#bard_q1
 prontera 179 192 #suprise_1
 prontera 183 333 Aelle#qsk_dan02
+prontera 197 188 Beeyo
 prontera 202 122 Kid#sch
 prontera 202 297 Rina#Easter
 prontera 204 297 Rina's little friend#Ea
@@ -875,6 +888,11 @@ prontera 92 94 Special item mall guide
 prt_castle 107 58 Soldier#s11
 prt_castle 117 163 Inspector#prince
 prt_castle 121 168 #arm
+prt_castle 164 32 Suffering Man
+prt_castle 35 151 Knight of Guardian
+prt_castle 44 151 Rebarev Doug
+prt_castle 45 169 Leader of Crusader
+prt_castle 48 164 Crusader#mepan
 prt_castle 76 165 Minister#tu
 prt_castle 80 52 Personnel Record#hidden
 prt_castle 83 67 Recruiter for the brave
@@ -908,6 +926,9 @@ prt_fild08 159 371 Warrior Recruiter#wop
 prt_fild08 175 374 Bard#brising
 prt_gld 147 136 Lazreagues
 prt_gld 147 140 Lazreagues
+prt_in 52 140 Gate Keeper#3
+prt_in 56 140 PVPNarrator#3
+prt_in 61 141 Inn Keeper
 prt_monk 136 261 Weapon Merchant#tu
 prt_monk 28 260 Hedrick
 prt_monk 59 247 A Monk#1
