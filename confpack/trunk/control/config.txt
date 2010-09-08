@@ -225,6 +225,7 @@ teleportAuto_deadly 1
 teleportAuto_useSkill 3
 teleportAuto_useChatCommand
 teleportAuto_allPlayers 0
+teleportAuto_notPlayers
 teleportAuto_atkCount 0
 teleportAuto_atkMiss 10
 teleportAuto_unstuck 0
