@@ -20,8 +20,8 @@ sub new {
 		['packet/storage_closed',             sub { $self->onInfo; }],
 		['packet/storage_items_stackable',    sub { $self->update; }],
 		['packet/storage_items_nonstackable', sub { $self->update; }],
-		['packet/storage_item_added',         sub { $self->onItemsChanged ($_[1]{index}); }],
-		['packet/storage_item_removed',       sub { $self->onItemsChanged ($_[1]{index}); }],
+		['packet/storage_item_added',         sub { $self->onItemsChanged($_[1]{item}) }],
+		['packet/storage_item_removed',       sub { $self->onItemsChanged($_[1]{item}) }],
 	);
 	
 	$self->onInfo;
@@ -49,20 +49,23 @@ sub onInfo {
 sub onItemsChanged {
 	my $self = shift;
 	
-	$self->setItem ($_->[0], $_->[1]) foreach map { [$_, $storage{$_}] } @_;
+	$self->setItem(@$_) for map { [$_->{binID}, $_] } @_;
 }
 
 sub update {
 	my ($self, $handler, $args) = @_;
 	
 	$self->Freeze;
-	$self->setItem ($_->[0], $_->[1]) foreach map { [$storageID[$_], $storage{$storageID[$_]}] } (0 .. @storageID);
+	$self->setItem(@$_) for map { [$storage{$_}{binID}, $storage{$_}] } @storageID;
 	$self->Thaw;
 }
 
 sub clear { $_[0]->removeAllItems }
 
-sub getSelection { map { $storage{$_} } @{$_[0]{selection}} }
+sub getSelection {
+	my %storage_lut = map { $storage{$_}{binID} => $storage{$_} } @storageID;
+	map { $storage_lut{$_} } @{$_[0]{selection}}
+}
 
 sub _onRightClick {
 	my ($self) = @_;
@@ -97,7 +100,7 @@ sub _onActivate {
 	Commands::run ('storage get ' . join ',', map {$_->{binID}} $self->getSelection);
 }
 
-sub _onStorage {
+sub _onCart {
 	my ($self) = @_;
 	
 	foreach ($self->getSelection) {
