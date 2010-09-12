@@ -112,7 +112,7 @@ Fixes:
   	Syntax:
 		conf <label_name>.(<block_param> | block) [new_value]
   	Examle:
-		conf label applesEtc.block Meat
+		conf applesEtc.block Meat
 - Feature: route_avoidWalls config option.
 - Fixed: Pets are no longer being seen as monsters, support for extended pet packet(Technology)
 - Feature: Mercenary&Homun controlling (EternalHarvest)
