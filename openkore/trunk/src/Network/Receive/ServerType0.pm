@@ -4574,22 +4574,30 @@ sub party_join {
 	}
 }
 
+use constant {
+	GROUPMEMBER_DELETE_LEAVE => 0x0,
+	GROUPMEMBER_DELETE_EXPEL => 0x1,
+};
+
 sub party_leave {
 	my ($self, $args) = @_;
 	
-	unless ($args->{result}) {
-		my $ID = $args->{ID};
-		delete $char->{party}{users}{$ID};
-		binRemove(\@partyUsersID, $ID);
-		if ($ID eq $accountID) {
-			message T("You left the party\n");
-			delete $char->{party};
-			undef @partyUsersID;
-		} else {
-			message TF("%s left the party\n", bytesToString($args->{name}));
-		}
+	my $ID = $args->{ID};
+	my $actor = $char->{party}{users}{$ID}; # bytesToString($args->{name})
+	delete $char->{party}{users}{$ID};
+	binRemove(\@partyUsersID, $ID);
+	if ($ID eq $accountID) {
+		$actor = $char;
+		delete $char->{party};
+		undef @partyUsersID;
+	}
+	
+	if ($args->{result} == GROUPMEMBER_DELETE_LEAVE) {
+		message TF("%s left the party\n", $actor);
+	} elsif ($args->{result} == GROUPMEMBER_DELETE_EXPEL) {
+		message TF("%s left the party (kicked)\n", $actor);
 	} else {
-		message TF("%s failed to leave party (%d)\n", bytesToString($args->{name}), $args->{result});
+		message TF("%s left the party (unknown reason: %d)\n", $actor, $args->{result});
 	}
 }
 
