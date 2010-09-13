@@ -229,13 +229,11 @@ sub refreshGlobal {
 	$varStack{".zeny"} = $char->{zeny};
 	$varStack{".weight"} = $char->{weight};
 	$varStack{".maxweight"} = $char->{weight_max};
-	
-	my @statuses;
-	if ($char->{muted}) {push @statuses, "muted"}
-	if ($char->{dead}) {push @statuses, "dead"}
-	foreach (keys %{$char->{statuses}}) {push @statuses, $_}
-	if (@{\@statuses} > 0) {$varStack{".status"} = join ',', @statuses}
-	else {$varStack{".status"} = "none"}
+	$varStack{'.status'} = (join ',',
+		('muted')x!!$char->{muted},
+		('dead')x!!$char->{dead},
+		map { $statusName{$_} || $_ } keys %{$char->{statuses}}
+	) || 'none';
 }
 
 # get NPC array index
