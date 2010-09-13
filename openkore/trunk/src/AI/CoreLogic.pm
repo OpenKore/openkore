@@ -2366,7 +2366,14 @@ sub processPartySkillUse {
 					next if ((!$char->{slaves} || !$char->{slaves}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
 					next if (($char->{slaves}{$ID} ne $slavesList->getByID($ID)) && !$config{"partySkill_$i"."_notPartyOnly"});
 				} elsif ($playersList->getByID($ID)) {
-					next if ((!$char->{party} || !$char->{party}{users}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
+					unless ($config{"partySkill_$i"."_notPartyOnly"}) {
+						next unless $char->{party} && $char->{party}{users}{$ID};
+						
+						# party member should be online, otherwise it's another character on the same account (not in party)
+						next unless $char->{party}{users}{$ID}{online};
+					}
+					
+					# if that intended to distinguish between party members and other characters on the same accounts, then it didn't work
 					next if (($char->{party}{users}{$ID} ne $playersList->getByID($ID)) && !$config{"partySkill_$i"."_notPartyOnly"});
 				}
 				
