@@ -550,8 +550,10 @@ sub initConnectVars {
 		$char->{skills} = {};
 		delete $char->{mute_period};
 		delete $char->{muted};
+		delete $char->{party};
 	}
 	undef @skillsID;
+	undef @partyUsersID;
 	$useArrowCraft = 1;
 }
 
