@@ -33790,8 +33790,8 @@ Jobs : ^777777All jobs except Novices^000000
 A special cap with a neon sign above, dedicated to celebrating RWC 2010 in Indonesia.
 Increase resistance against human type monster by 10%, CRI + 10.
 Increase the healing effect of Red Potion and White Potion by 100%.
-ASPD + 1, ATK, MATK + 3%.
-Class : ^777777Headgear^000000 Defense : ^7777774^000000
+LUK + 5, ASPD + 1, ATK, MATK + 3%.
+Class : ^777777Headgear^000000 Defense : ^7777776^000000
 Location : ^777777Upper^000000 Weight : ^77777710^000000
 Required lv : ^77777715^000000
 Jobs : ^777777 All jobs except Novices^000000
