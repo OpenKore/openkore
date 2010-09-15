@@ -450,7 +450,9 @@ sub new {
 		'07D9' => ['hotkeys'], # 268 # hotkeys:38
 		
 		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
-
+		'07F7' => ['actor_display', 'v C a4 v3 V v5 a4 v5 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # walking
+		'07F8' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # spawning
+		'07F9' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv font name)]], # -1 # standing
 		'07FA' => ['inventory_item_removed', 'v3', [qw(unknown index amount)]], #//0x07fa,8
 		'07FE' => ['sound_effect', 'Z24', [qw(name)]],
 
@@ -970,7 +972,7 @@ sub actor_display {
 		}
 		$actor->{nameID} = $nameID;
 
-	} elsif ($args->{type} >= 1000) {
+	} elsif ($args->{type} >= 1000) { # FIXME: in rare cases RO uses a monster sprite for NPC's (JT_ZHERLTHSH = 0x4b0 = 1200) ==> use object_type ?
 		# Actor might be a monster
 		if ($args->{hair_style} == 0x64) {
 			# Actor is a pet
@@ -1070,7 +1072,7 @@ sub actor_display {
 
 	# But hair_style is used for pets, and their bodies can look different ways...
 	$actor->{hair_style} = $args->{hair_style} if (exists $args->{hair_style});
-	#$actor->{look}{body} = $args->{body_dir} if (exists $args->{body_dir});
+	$actor->{look}{body} = $args->{body_dir} if (exists $args->{body_dir});
 	$actor->{look}{head} = $args->{head_dir} if (exists $args->{head_dir});
 
 	# When stance is non-zero, character is bobbing as if they had just got hit,
@@ -1166,11 +1168,12 @@ typedef enum <unnamed-tag> {
 	if ($args->{switch} eq "0078" ||
 		$args->{switch} eq "01D8" ||
 		$args->{switch} eq "022A" ||
-		$args->{switch} eq "02EE") {
-		# Actor Exists
+		$args->{switch} eq "02EE" ||
+		$args->{switch} eq "07F9") {
+		# Actor Exists (standing)
 
 		if ($actor->isa('Actor::Player')) {
-			my $domain = existsInList($config{friendlyAID}, unpack("V1", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+			my $domain = existsInList($config{friendlyAID}, unpack("V", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Exists: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsFrom{x}, $coordsFrom{y})\n", $domain;
 
 			Plugins::callHook('player', {player => $actor});  #backwards compatibility
@@ -1200,11 +1203,12 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "01DB" ||
 		$args->{switch} eq "022B" ||
 		$args->{switch} eq "02ED" ||
-		$args->{switch} eq "01D9") {
-		# Actor Connected
+		$args->{switch} eq "01D9" ||
+		$args->{switch} eq "07F8") {
+		# Actor Connected (new)
 
 		if ($actor->isa('Actor::Player')) {
-			my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+			my $domain = existsInList($config{friendlyAID}, unpack("V", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Connected: ".$actor->name." ($actor->{binID}) Level $args->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsTo{x}, $coordsTo{y})\n", $domain;
 
 			Plugins::callHook('player', {player => $actor});  #backwards compatibailty
@@ -1215,10 +1219,11 @@ typedef enum <unnamed-tag> {
 		}
 
 	} elsif ($args->{switch} eq "007B" ||
+		$args->{switch} eq "0086" ||
 		$args->{switch} eq "01DA" ||
 		$args->{switch} eq "022C" ||
 		$args->{switch} eq "02EC" ||
-		$args->{switch} eq "0086") {
+		$args->{switch} eq "07F7") {
 		# Actor Moved
 
 		# Correct the direction in which they're looking
