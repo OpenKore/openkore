@@ -4379,3 +4379,34 @@
 12773#Worldcup_Hat_of_Victory_Box¥±#
 7547#Bola#
 7548#Sepatu_Bola#
+
+//-------------------------------------New headgear 2010---------------------------------------
+5537#Quati_Hat#
+5538#Tucan_Hat#
+5539#Jaguar_Hat#
+16192#Quati_Hat_Box#
+16193#Tucan_Hat_Box#
+16194#Jaguar_Hat_Box#
+5470#Darkness_Eyes#
+5471#Reginleif's_Wing#
+
+//-----------------------Update Headgear IM Agustus---------------------------------
+5511#Samanbaia#		
+5526#Lady_Tanee_Hat#		
+5529#Evil`s_Bone_Hat#		
+
+//----------------------------Update Independence day---------------------------------
+2867#Potongan_Bambu_Runcing#
+
+//----------Event Idul Fitri 2010----------
+2868#Sarung_Batik#
+2869#Ketupat_Warna_Warni#
+6410#Kartu_Lebaran#
+12597#Opor_Ayam#
+12598#Dendeng_Balado#
+12599#Kurma#
+16668#Kotak_Ketupat_Warna_Warni#
+
+//----------Cashitem Update September Ceria 15-09-2010----------
+5527#Lunatic_Hat#
+5509#Sting_Hat#
