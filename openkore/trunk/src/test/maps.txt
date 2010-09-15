@@ -1,0 +1,2 @@
+prontera.rsw#Prontera City#
+prt_copy.rsw#Copy of Prontera#
