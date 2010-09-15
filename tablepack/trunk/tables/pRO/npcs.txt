@@ -1,5 +1,4 @@
-﻿
-alberta 101 48 Captain Enforcer#albert
+﻿alberta 101 48 Captain Enforcer#albert
 alberta 102 80 Jhonnita
 alberta 104 60 [Quest] First Mate#Ship
 alberta 106 63 Stylist
@@ -132,6 +131,7 @@ arug_cas05 136 158 Control Device01#aru05_
 bra_dun01 87 43 Pipe#bra
 bra_dun02 67 205 recluse in cave#bra
 bra_dun02 71 200 water lily#bra
+bra_fild01 200 84 Puppy#d2
 bra_fild01 234 101 Puppy#d1
 bra_fild01 245 52 monkey#bra
 bra_fild01 260 60 Puppy#c3
@@ -164,6 +164,8 @@ brasilis 203 286 Botanist Karmen#bra
 brasilis 203 64 strange kid#bra
 brasilis 219 97 Brasilis Guide
 brasilis 221 128 Fruit Dealer#bra
+brasilis 244 243 Weapon Dealer
+brasilis 252 257 Tool Dealer
 brasilis 270 145 brasilis girl#bra
 brasilis 278 137 signpost#bra
 brasilis 297 307 Angelo#br
@@ -744,6 +746,10 @@ payon 215 102 Moohyun#job_star
 payon 236 199 Leablem
 payon 239 56 Dried Fish#paypuzz3
 payon 244 62 Moonho Ahn
+payon 246 154 Lady
+payon 246 158 Woman
+payon 248 159 Old Man#magum1
+payon 249 156 Woman
 payon 65 119 Broom Grandma#07russia_
 payon 69 65 Kimeunbang
 payon 79 171 Friar#G5
@@ -853,6 +859,7 @@ prontera 202 297 Rina#Easter
 prontera 204 297 Rina's little friend#Ea
 prontera 216 70 Stellaip
 prontera 218 211 Pet Groomer
+prontera 223 82 #prt_key-1
 prontera 223 99 Soldier
 prontera 224 307 Girl#sim
 prontera 225 303 Young man#sim
@@ -937,6 +944,8 @@ prtg_cas03 183 215 Diligo
 pvp_n_room 70 85 Fight Square Reception 
 pvp_n_room 78 85 Fight Square Reception 
 pvp_n_room 86 85 Fight Square Reception 
+pvp_y_room 46 85 Fight Square Reception brasilis 240 247 signpost#bra
+pvp_y_room 54 85 Fight Square Reception 
 pvp_y_room 62 85 Fight Square Reception 
 pvp_y_room 70 85 Fight Square Reception 
 pvp_y_room 77 85 Guild Battle Guide
