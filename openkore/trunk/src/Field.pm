@@ -163,7 +163,7 @@ sub descString {
 #
 # Returns wether the field is a city.
 sub isCity {
-	return exists $cities_lut{$_[0]->{baseName}.'.rsw'}; # TODO: $cities_lut, why replicate string data from $maps_lut? We can just add a maptype field in $maps_lut. (we can also look at the map_property packets)
+	return exists $cities_lut{$_[0]->{name}.'.rsw'}; # TODO: $cities_lut, why replicate string data from $maps_lut? We can just add a maptype field in $maps_lut. (we can also look at the map_property packets)
 }
 
 ##
