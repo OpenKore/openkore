@@ -12,6 +12,7 @@ my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest Rijnd
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
 	PluginsHookTest
 	NetworkTest
+	FieldTest
 );
 if ($^O eq 'MSWin32') {
 	push @tests, qw(HttpReaderTest);
