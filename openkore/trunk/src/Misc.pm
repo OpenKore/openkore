@@ -3846,6 +3846,10 @@ sub checkSelfCondition {
 		my $pos = calcPosition($char);
 		return 0 if ($field->getBlock($pos->{x}, $pos->{y}) != Field::WALKABLE_WATER);
 	}
+	
+	if (defined $config{$prefix.'_devotees'}) {
+		return 0 unless inRange(scalar keys %{$devotionList->{$accountID}{targetIDs}}, $config{$prefix.'_devotees'});
+	}
 
 	my %hookArgs;
 	$hookArgs{prefix} = $prefix;
