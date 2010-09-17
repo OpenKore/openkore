@@ -414,6 +414,7 @@ sub new {
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'02C9' => ['party_allow_invite', 'C', [qw(type)]],
+		'02CA' => ['login_error_game_login_server', 'C', [qw(type)]],
 		'02CB' => ['instance_window_start', 'Z61 v', [qw(name flag)]],
 		'02CC' => ['instance_window_queue', 'C', [qw(flag)]],
 		'02CD' => ['instance_window_join', 'Z61 V2', [qw(name time_remaining time_close)]],
