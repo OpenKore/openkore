@@ -488,7 +488,7 @@ sub ai_route {
 		avoidWalls => !$args{noAvoidWalls},
 		notifyUponArrival => $args{notifyUponArrival}
 	);
-	if ($args{noMapRoute}) {
+	if ($args{noMapRoute} || !defined($map)) {
 		$task = new Task::Route(@params);
 	} else {
 		$task = new Task::MapRoute(map => $map, @params);
