@@ -1570,6 +1570,12 @@ sub buy_result {
 		error T("Buy failed (insufficient weight capacity).\n");
 	} elsif ($args->{fail} == 3) {
 		error T("Buy failed (too many different inventory items).\n");
+	} elsif ($args->{fail} == 4) {
+		error T("Buy failed (item does not exist in store).\n");
+	} elsif ($args->{fail} == 5) {
+		error T("Buy failed (item cannot be exchanged).\n");
+	} elsif ($args->{fail} == 6) {
+		error T("Buy failed (invalid store).\n");
 	} else {
 		error TF("Buy failed (failure code %s).\n", $args->{fail});
 	}
