@@ -1,0 +1,19 @@
+prontera 155 190 Kriemhild#p1-1
+prontera 154 187 Guide#prt
+prontera 157 187 Smile Assistance#prt
+prontera 146 194 Swanhild#p2-1
+prontera 165 194 Gondul#p5-1
+prontera 143 203 Fadhgridh#p3-1
+prontera 149 202 YuNa#pront
+prontera 167 203 Skoegul#p4-1
+prontera 163 204 Man from Morroc
+prontera 197 188 Veeyop#magum
+prt_in 63 54 Repairman#prt
+prt_in 63 60 Hollengrhen
+prt_in 63 69 Dietrich
+prt_in 56 69 Vurewell
+prt_in 73 87 Chivalry Member#qsk_nv
+prt_in 71 91 Sir Siracuse#knt
+prt_in 75 88 Leon Von Frich#qsk_sm
+new_1-1 53 114 Shion#nv1
+new_1-1 66 114 Bulletin Board#nv

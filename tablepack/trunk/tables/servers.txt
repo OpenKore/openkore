@@ -420,7 +420,7 @@ version 20
 serverType kRO_Sakexe_2009_04_08a
 serverEncoding Western
 charBlockSize 108
-addTableFolders pserver/RMS;translated/kRO_english;kRO
+addTableFolders pserver/RMS;eA;translated/kRO_english;kRO
 
 
 # clientside: ? (2010-01-26aRagexeRE.exe)
@@ -435,4 +435,4 @@ serverType kRO_RagexeRE_2010_01_26a
 serverEncoding Western
 charBlockSize 112
 chatLangCode 1
-addTableFolders translated/kRO_english;kRO
+addTableFolders pserver/KoreRO;eA;kRO/RagexeRE_2010_01_26a;translated/kRO_english;kRO
