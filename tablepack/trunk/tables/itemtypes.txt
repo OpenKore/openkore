@@ -2,11 +2,11 @@
 1 Usable Status
 2 Usable Special
 3 Event
-4 Armor
-5 Weapon
+4 Weapon
+5 Armor
 6 Card
 7 Quest
-8 Bow
+8 Pet Armor
 9 Weapon
 10 Arrow
 11 Helmet
