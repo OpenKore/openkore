@@ -5756,54 +5756,46 @@ sub skill_used_no_damage {
 	});
 }
 
+# TODO: move @skillsID to Actor, per-actor {skills}, Skill::DynamicInfo
 sub skills_list {
 	my ($self, $args) = @_;
 	
 	return unless changeToInGameState;
 	
-	my ($slave, $owner, $hook, $msg, $newmsg);
-	
+	my ($msg, $newmsg);
 	$msg = $args->{RAW_MSG};
 	$self->decrypt(\$newmsg, substr $msg, 4);
 	$msg = substr ($msg, 0, 4) . $newmsg;
 	
-	if ($args->{switch} eq '010F') {
-		$hook = 'packet_charSkills'; $owner = Skill::OWNER_CHAR;
-		
-		undef @skillsID;
-		delete $char->{skills};
-		Skill::DynamicInfo::clear();
-		
-	} elsif ($args->{switch} eq '0235') {
-		$slave = $char->{homunculus}; $hook = 'packet_homunSkills'; $owner = Skill::OWNER_HOMUN;
-		
-	} elsif ($args->{switch} eq '029D') {
-		$slave = $char->{mercenary}; $hook = 'packet_mercSkills'; $owner = Skill::OWNER_MERC;
-	}
+	# TODO: per-actor, if needed at all
+	# Skill::DynamicInfo::clear;
 	
-	my $skillsIDref = $slave ? \@{$slave->{slave_skillsID}} : \@skillsID;
+	my ($ownerType, $hook, $actor) = @{{
+		'010F' => [Skill::OWNER_CHAR, 'packet_charSkills'],
+		'0235' => [Skill::OWNER_HOMUN, 'packet_homunSkills', $char->{homunculus}],
+		'029D' => [Skill::OWNER_MERC, 'packet_mercSkills', $char->{mercenary}],
+	}->{$args->{switch}}};
 	
-	# TODO: $slave can be undefined here
-	undef @{$slave->{slave_skillsID}};
+	my $skillsIDref = $actor ? \@{$actor->{slave_skillsID}} : \@skillsID;
+	delete @{$char->{skills}}{@$skillsIDref};
+	@$skillsIDref = ();
+	
+	# TODO: $actor can be undefined here
+	undef @{$actor->{slave_skillsID}};
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
-		my ($skillID, $targetType, $level, $sp, $range, $handle, $up)
-		= unpack 'v1 V1 v3 Z24 C1', substr $msg, $i, 37;
-		$handle = Skill->new (idn => $skillID)->getHandle unless $handle;
+		my ($ID, $targetType, $lv, $sp, $range, $handle, $up) = unpack 'v1 V1 v3 Z24 C1', substr $msg, $i, 37;
+		$handle ||= Skill->new(idn => $ID)->getHandle;
 		
-		$char->{skills}{$handle}{ID} = $skillID;
-		$char->{skills}{$handle}{sp} = $sp;
-		$char->{skills}{$handle}{range} = $range;
-		$char->{skills}{$handle}{up} = $up;
-		$char->{skills}{$handle}{targetType} = $targetType;
-		$char->{skills}{$handle}{lv} = $level unless $char->{skills}{$handle}{lv};
+		@{$char->{skills}{$handle}}{qw(ID targetType lv sp range up)} = ($ID, $targetType, $lv, $sp, $range, $up);
+		# $char->{skills}{$handle}{lv} = $lv unless $char->{skills}{$handle}{lv};
 		
-		binAdd ($skillsIDref, $handle) unless defined binFind ($skillsIDref, $handle);
-		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType, $owner);
+		binAdd($skillsIDref, $handle) unless defined binFind($skillsIDref, $handle);
+		Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $targetType, $ownerType);
 		
 		Plugins::callHook($hook, {
-			ID => $skillID,
+			ID => $ID,
 			handle => $handle,
-			level => $level,
+			level => $lv,
 		});
 	}
 }
