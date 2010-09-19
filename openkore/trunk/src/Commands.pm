@@ -4914,6 +4914,7 @@ sub cmdUseSkill {
 
 	require Task::UseSkill;
 	my $skillTask = new Task::UseSkill(
+		actor => $skill->getOwner,
 		target => $target,
 		actorList => $actorList,
 		skill => $skill,
