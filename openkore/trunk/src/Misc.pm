@@ -3864,7 +3864,13 @@ sub checkPlayerCondition {
 	my ($prefix, $id) = @_;
 	return 0 if (!$id);
 	
-	my $player = $playersList->getByID($id) || $slavesList->getByID($id);
+	my $player = Actor::get($ID);
+	return 0 unless (
+		   UNIVERSAL::isa($player, 'Actor::You')
+		|| UNIVERSAL::isa($player, 'Actor::Player')
+		|| UNIVERSAL::isa($player, 'Actor::Slave')
+	);
+	# my $player = $playersList->getByID($id) || $slavesList->getByID($id);
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}{$id}, $config{$prefix . "_timeout"}) }
 	if ($config{$prefix . "_whenStatusActive"}) {
@@ -3875,25 +3881,36 @@ sub checkPlayerCondition {
 	}
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($player->{sitting}); }
 
-	# we will have player HP info (only) if we are in the same party
-	if ($char->{party} && $char->{party}{users}{$id}) {
-		if ($config{$prefix . "_hp"}) {
+	# TODO: Optimize this
+	if ($config{$prefix . "_hp"}) {
+		# Target is Actor::You
+		if ($char->{ID} eq $id) {
 			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange(percent_hp($char->{party}{users}{$id}), $1));
+				return 0 if (!inRange($char->hp_percent, $1));
 			} else {
-				return 0 if (!inRange($char->{party}{users}{$id}{hp}, $config{$prefix . "_hp"}));
+				return 0 if (!inRange($char->{hp}, $config{$prefix."_hp"}));
 			}
-		}
-	} elsif ($char->{homunculus} && $char->{homunculus}{ID} eq $id) {
-		if ($config{$prefix . "_hp"}) {
+		# Target is Actor::Player in our Party
+		} elsif ($char->{party} && $char->{party}{users}{$id}) {
+			# Fix Heal when Target HP is not set yet.
+			return 0 if (!defined($player->{hp}) || $player->{hp} == 0);
+			# return 0 if ($char->{party}{users}{$id}{hp} == 0);
+			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
+				return 0 if (!inRange(percent_hp($player), $1));
+				# return 0 if (!inRange(percent_hp($char->{party}{users}{$id}), $1));
+			} else {
+				return 0 if (!inRange($player->{hp}, $config{$prefix . "_hp"}));
+				# return 0 if (!inRange($char->{party}{users}{$id}{hp}, $config{$prefix . "_hp"}));
+			}
+		# Target is Actor::Slave 'Homunculus' type
+		} elsif ($char->{homunculus} && $char->{homunculus}{ID} eq $id) {
 			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
 				return 0 if (!inRange(percent_hp($char->{homunculus}), $1));
 			} else {
 				return 0 if (!inRange($char->{homunculus}{hp}, $config{$prefix . "_hp"}));
 			}
-		}
-	} elsif ($char->{mercenary} && $char->{mercenary}{ID} eq $id) {
-		if ($config{$prefix . "_hp"}) {
+		# Target is Actor::Slave 'Mercenary' type
+		} elsif ($char->{mercenary} && $char->{mercenary}{ID} eq $id) {
 			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
 				return 0 if (!inRange(percent_hp($char->{mercenary}), $1));
 			} else {
@@ -3948,14 +3965,17 @@ sub checkPlayerCondition {
 		return 0 if $player->{dead};
 	}
 
+	# Note: This will always fail for Actor::Slave
 	if ($config{$prefix."_whenWeaponEquipped"}) {
 		return 0 unless $player->{weapon};
 	}
 
+	# Note: This will always fail for Actor::Slave
 	if ($config{$prefix."_whenShieldEquipped"}) {
 		return 0 unless $player->{shield};
 	}
 
+	# Note: This will always fail for Actor::Slave
 	if ($config{$prefix."_isGuild"}) {
 		return 0 unless ($player->{guild} && existsInList($config{$prefix . "_isGuild"}, $player->{guild}{name}));
 	}
