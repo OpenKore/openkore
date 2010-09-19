@@ -92,7 +92,7 @@ sub new {
 		ArgumentException->throw("No skill argument given.");
 	}
 
-	$self->{skill} = $args{skill};
+	@{$self}{qw(actor skill)} = @args{qw(actor skill)};
 	$self->{stopWhenHit} = defined($args{stopWhenHit}) ? $args{stopWhenHit} : 1;
 	if ($args{target}) {
 		if (UNIVERSAL::isa($args{target}, 'Actor') && !$args{target}->isa('Actor::You') && !$args{actorList}) {
@@ -169,21 +169,11 @@ sub resume {
 	delete $self->{interruptTime};
 }
 
-# Checks whether the caster of a skill is this character (in case of a character skill)
-# or the homunculus (in case of a Homunculus skill).
-sub casterIsCorrect {
-	my ($self, $actorID) = @_;
-	my $skill = $self->{skill};
-	return ($skill->getOwnerType() == Skill::OWNER_CHAR && $actorID eq $char->{ID})
-	    || ($skill->getOwnerType() == Skill::OWNER_HOMUN && $char->{homunculus} && $actorID eq $char->{homunculus}{ID})
-	    || ($skill->getOwnerType() == Skill::OWNER_MERC && $char->{mercenary} && $actorID eq $char->{mercenary}{ID});
-}
-
 # Called when a skill has started casting.
 sub onSkillCast {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
-	if ($self->getStatus() == Task::RUNNING && $self->casterIsCorrect($args->{sourceID})
+	if ($self->getStatus() == Task::RUNNING && $self->{actor}{ID} eq $args->{sourceID}
 	 && $self->{skill}->getIDN() == $args->{skillID}) {
 		$self->{castingStarted} = 1;
 		$self->{castFinishTimer}{time} = time;
@@ -195,7 +185,7 @@ sub onSkillCast {
 sub onSkillUse {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
-	if ($self->getStatus() == Task::RUNNING && $self->casterIsCorrect($args->{sourceID})
+	if ($self->getStatus() == Task::RUNNING && $self->{actor}{ID} eq $args->{sourceID}
 	 && $self->{skill}->getIDN() == $args->{skillID}) {
 		$self->{castingFinished} = 1;
 	}
@@ -217,7 +207,7 @@ sub onSkillFail {
 sub onSkillCancelled {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
-	if ($self->getStatus() == Task::RUNNING && $self->casterIsCorrect($args->{sourceID})) {
+	if ($self->getStatus() == Task::RUNNING && $self->{actor}{ID} eq $args->{sourceID}) {
 		$self->{castingCancelled} = 1;
 	}
 }
@@ -248,7 +238,7 @@ sub hasNecessaryEquipment {
 # Check whether the preparation conditions are satisfied.
 sub checkPreparations {
 	my ($self) = @_;
-	return !$char->{sitting} && $self->hasNecessaryEquipment();
+	return !$self->{actor}{sitting} && $self->hasNecessaryEquipment();
 }
 
 # Cast the skill, reset castWaitTimer and increment castTries.
@@ -264,7 +254,7 @@ sub castSkill {
 
 	if ($skill->getTargetType() == Skill::TARGET_SELF) {
 		# A skill which is used on the character self.
-		$messageSender->sendSkillUse($skillID, $level, $accountID);
+		$messageSender->sendSkillUse($skillID, $level, $self->{actor}{ID});
 
 	} elsif (UNIVERSAL::isa($self->{target}, 'Actor')) {
 		# The skill must be used on an actor.
@@ -296,9 +286,13 @@ sub iterate {
 
 	my $handle = $self->{skill}->getHandle();
 	if ($char->getSkillLevel($self->{skill}) == 0
-	&& !($char->{permitSkill} && $char->{permitSkill}->getHandle() eq $handle)) {
-		$self->setError(ERROR_NO_SKILL, TF("Skill %s cannot be used because your character has no such skill.",
-			$self->{skill}->getName()));
+	&& !($self->{actor}{permitSkill} && $self->{actor}{permitSkill}->getHandle eq $handle)) {
+		$self->setError(ERROR_NO_SKILL,
+			sprintf($self->{actor}->verb(
+				T('Skill %s cannot be used because %s have no such skill.'),
+				T('Skill %s cannot be used because %s has no such skill.')
+			), $self->{skill}->getName, $self->{actor})
+		);
 		debug "UseSkill - No such skill.\n", "Task::UseSkill" if DEBUG;
 		return;
 	}
@@ -306,6 +300,8 @@ sub iterate {
 	if ($self->{state} == PREPARING) {
 		if (!$self->getSubtask()) {
 			my $task = new Task::Chained(tasks => [
+				# TODO: equip here (merge with AI::CoreLogic::processSkillUse)
+				# TODO: pass $self->{actor} to Task::SitStand
 				new Task::SitStand(mode => 'stand')
 			]);
 			$self->setSubtask($task);
