@@ -137,6 +137,7 @@ sub extract {
 ### Internal Functions ###
 
 # Check value of the requested index
+# TODO: Fix it
 $validate_index = sub {
     my $index = shift;
 
@@ -145,7 +146,7 @@ $validate_index = sub {
         (int($index) != $index))
     {
         my ($method) = (caller(1))[3];
-        $method =~ s/Thread::Queue:://;
+        $method =~ s/Utils::Queue:://;
         $index = 'undef' if (! defined($index));
         error T("Invalid 'index' argument (%s) to '%s' method\n", $index, $method), "system";
     }
@@ -154,6 +155,7 @@ $validate_index = sub {
 };
 
 # Check value of the requested count
+# TODO: Fix it
 $validate_count = sub {
     my $count = shift;
 
@@ -163,7 +165,7 @@ $validate_count = sub {
         ($count < 1))
     {
         my ($method) = (caller(1))[3];
-        $method =~ s/Thread::Queue:://;
+        $method =~ s/Utils::Queue:://;
         $count = 'undef' if (! defined($count));
         error T("Invalid 'count' argument (%s) to '%s' method\n", $count, $method), "system";
     }
