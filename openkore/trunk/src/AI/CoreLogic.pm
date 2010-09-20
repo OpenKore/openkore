@@ -869,12 +869,25 @@ sub processDealAuto {
 sub processPartyAuto {
 	# partyAuto 1=refuse 2=accept
 	if ($config{'partyAuto'} && %incomingParty && timeOut($timeout{'ai_partyAuto'})) {
+		# Do not React on other settings, then 1 or 2
 		if ($config{partyAuto} == 1) {
 			message T("Auto-denying party request\n");
-		} else {
+			# JOIN_REFUSE
+			if ($incomingParty{ACK} eq '02C7' {
+				$messageSender->sendPartyJoinRequestByNameReply($incomingParty{ID}, 0);
+			} else {
+				$messageSender->sendPartyJoin($incomingParty{ID}, 0);
+			}
+		} elsif ($config{partyAuto} == 2) {
 			message T("Auto-accepting party request\n");
+			# JOIN_ACCEPT
+			$messageSender->sendPartyJoin($incomingParty{'ID'}, 1); 
+			if ($incomingParty{ACK} eq '02C7' {
+				$messageSender->sendPartyJoinRequestByNameReply($incomingParty{ID}, 1);
+			} else {
+				$messageSender->sendPartyJoin($incomingParty{ID}, 01;
+			}
 		}
-		$messageSender->sendPartyJoin($incomingParty{'ID'}, $config{'partyAuto'} - 1);
 		$timeout{'ai_partyAuto'}{'time'} = time;
 		undef %incomingParty;
 	}
