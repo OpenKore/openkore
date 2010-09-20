@@ -3024,8 +3024,8 @@ sub processAutoResponse {
 sub processAvoid {
 	##### AVOID GM OR PLAYERS #####
 	if (timeOut($timeout{ai_avoidcheck})) {
-		avoidGM_near() if ($config{avoidGM_near} && (!$field->isCity || $config{avoidGM_near_inTown}));
-		avoidList_near() if $config{avoidList};
+		avoidGM_near() if ($config{avoidGM_near} >= 1 && (!$field->isCity || $config{avoidGM_near_inTown}));
+		avoidList_near() if $config{avoidList} >= 1;
 		$timeout{ai_avoidcheck}{time} = time;
 	}
 	foreach (@monstersID) {
