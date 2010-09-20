@@ -873,7 +873,7 @@ sub processPartyAuto {
 		if ($config{partyAuto} == 1) {
 			message T("Auto-denying party request\n");
 			# JOIN_REFUSE
-			if ($incomingParty{ACK} eq '02C7' {
+			if ($incomingParty{ACK} eq '02C7') {
 				$messageSender->sendPartyJoinRequestByNameReply($incomingParty{ID}, 0);
 			} else {
 				$messageSender->sendPartyJoin($incomingParty{ID}, 0);
@@ -882,10 +882,10 @@ sub processPartyAuto {
 			message T("Auto-accepting party request\n");
 			# JOIN_ACCEPT
 			$messageSender->sendPartyJoin($incomingParty{'ID'}, 1); 
-			if ($incomingParty{ACK} eq '02C7' {
+			if ($incomingParty{ACK} eq '02C7') {
 				$messageSender->sendPartyJoinRequestByNameReply($incomingParty{ID}, 1);
 			} else {
-				$messageSender->sendPartyJoin($incomingParty{ID}, 01;
+				$messageSender->sendPartyJoin($incomingParty{ID}, 1);
 			}
 		}
 		$timeout{'ai_partyAuto'}{'time'} = time;

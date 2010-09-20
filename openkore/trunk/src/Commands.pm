@@ -3213,7 +3213,7 @@ sub cmdParty {
 		error T("Error in function 'party join' (Join/Request to Join Party)\n" .
 			"Can't accept/deny party request - no incoming request.\n");
 	} elsif ($arg1 eq "join") {
-		if ($incomingParty{ACK} eq '02C7' {
+		if ($incomingParty{ACK} eq '02C7') {
 			$messageSender->sendPartyJoinRequestByNameReply($incomingParty{ID}, $arg2);
 		} else {
 			$messageSender->sendPartyJoin($incomingParty{ID}, $arg2);
