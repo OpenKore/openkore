@@ -3864,7 +3864,7 @@ sub checkPlayerCondition {
 	my ($prefix, $id) = @_;
 	return 0 if (!$id);
 	
-	my $player = Actor::get($ID);
+	my $player = Actor::get($id);
 	return 0 unless (
 		   UNIVERSAL::isa($player, 'Actor::You')
 		|| UNIVERSAL::isa($player, 'Actor::Player')
