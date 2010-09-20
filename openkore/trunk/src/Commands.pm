@@ -3209,11 +3209,15 @@ sub cmdParty {
 	} elsif ($arg1 eq "join" && $arg2 ne "1" && $arg2 ne "0") {
 		error T("Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n" .
 			"Usage: party join <flag>\n");
-	} elsif ($arg1 eq "join" && $incomingParty{'ID'} eq "") {
+	} elsif ($arg1 eq "join" && $incomingParty{ID} eq "") {
 		error T("Error in function 'party join' (Join/Request to Join Party)\n" .
 			"Can't accept/deny party request - no incoming request.\n");
 	} elsif ($arg1 eq "join") {
-		$messageSender->sendPartyJoin($incomingParty{'ID'}, $arg2);
+		if ($incomingParty{ACK} eq '02C7' {
+			$messageSender->sendPartyJoinRequestByNameReply($incomingParty{ID}, $arg2);
+		} else {
+			$messageSender->sendPartyJoin($incomingParty{ID}, $arg2);
+		}
 		undef %incomingParty;
 
 	} elsif ($arg1 eq "request" && ( !$char->{'party'} || !%{$char->{'party'}} )) {

@@ -4494,6 +4494,7 @@ sub party_invite {
 	my ($self, $args) = @_;
 	message TF("Incoming Request to join party '%s'\n", bytesToString($args->{name}));
 	$incomingParty{ID} = $args->{ID};
+	$incomingParty{ACK} = $args->{switch} eq '02C6' ? '02C7' : '00FF';
 	$timeout{ai_partyAutoDeny}{time} = time;
 }
 

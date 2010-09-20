@@ -297,7 +297,7 @@ sub sendCloseShop {
 sub sendHomunculusCommand {
 	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0:get stats, 1:feed or 2:fire
 	my $msg = pack ('v2 C', 0x022D, $type, $command);
-	$self->sendToServer ($msg);
+	$self->sendToServer($msg);
 	debug "Sent Homunculus Command $command", "sendPacket", 2;
 }
 
@@ -961,8 +961,15 @@ sub sendPartyJoinRequestByName {
 	my $self = shift;
 	my $name = shift;
 	my $msg = pack ('C*', 0xc4, 0x02) . _binName ($name);
-	$self->sendToServer ($msg);
+	$self->sendToServer($msg);
 	debug "Sent Request Join Party (by name): $name\n", "sendPacket", 2;
+}
+
+sub sendPartyJoinRequestByNameReply {
+	my ($self, $accountID, $flag) = @_;
+	my $msg = pack('v a4 C', 0x02C7, $accountID, $flag);
+	$self->sendToServer($msg);
+	debug "Sent reply Party Invite.\n", "sendPacket", 2;
 }
 
 sub sendPartyKick {
@@ -1619,7 +1626,7 @@ sub sendMercenaryCommand {
 	# 0x2 => COMMAND_REQ_DELETE
 	
 	my $msg = pack ('v C', 0x029F, $command);
-	$self->sendToServer ($msg);
+	$self->sendToServer($msg);
 	debug "Sent Mercenary Command $command", "sendPacket", 2;
 }
 
