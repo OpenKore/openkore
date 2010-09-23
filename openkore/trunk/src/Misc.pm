@@ -3893,14 +3893,14 @@ sub checkPlayerCondition {
 		# Target is Actor::Player in our Party
 		} elsif ($char->{party} && $char->{party}{users}{$id}) {
 			# Fix Heal when Target HP is not set yet.
-			return 0 if (!defined($player->{hp}) || $player->{hp} == 0);
-			# return 0 if ($char->{party}{users}{$id}{hp} == 0);
+			# return 0 if (!defined($player->{hp}) || $player->{hp} == 0);
+			return 0 if ($char->{party}{users}{$id}{hp} == 0);
 			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange(percent_hp($player), $1));
-				# return 0 if (!inRange(percent_hp($char->{party}{users}{$id}), $1));
+				# return 0 if (!inRange(percent_hp($player), $1));
+				return 0 if (!inRange(percent_hp($char->{party}{users}{$id}), $1));
 			} else {
-				return 0 if (!inRange($player->{hp}, $config{$prefix . "_hp"}));
-				# return 0 if (!inRange($char->{party}{users}{$id}{hp}, $config{$prefix . "_hp"}));
+				# return 0 if (!inRange($player->{hp}, $config{$prefix . "_hp"}));
+				return 0 if (!inRange($char->{party}{users}{$id}{hp}, $config{$prefix . "_hp"}));
 			}
 		# Target is Actor::Slave 'Homunculus' type
 		} elsif ($char->{homunculus} && $char->{homunculus}{ID} eq $id) {
