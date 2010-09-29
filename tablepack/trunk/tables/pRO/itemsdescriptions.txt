@@ -33779,7 +33779,7 @@ Jobs : ^777777All jobs except Novice class^000000
 18508#
 A hat which is very unique and rare, made from the sheet of the legendary birds feather, Garuda.
 Reduces damage from all type of monster by 5%.
-LUK + 5, HIT + 10, Reduca casting delay by 5%.
+LUK + 5, MDEF + 3, HIT + 10, Reduca casting delay by 5%.
 When upgrade more than 7, there's a certain chance to get Fruit of Mastela when attaking monsters. If refined more 1 lv, increase the chance by more 1%.
 Class : ^777777Headgear^000000 Defense : ^7777774^000000
 Location : ^777777Upper^000000 Weight : ^77777710^000000
@@ -33795,4 +33795,24 @@ Class : ^777777Headgear^000000 Defense : ^7777776^000000
 Location : ^777777Upper^000000 Weight : ^77777710^000000
 Required lv : ^77777715^000000
 Jobs : ^777777 All jobs except Novices^000000
+#
+
+//---- 2010 ﾇﾑｱｹ ﾃﾟｼｮ ﾀﾌｺ･ﾆｮ-----
+6099#
+A grilled rice cake, looks warm and tasty.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+//---- 2010 ｺｽｸﾂﾀﾌ ﾀﾌｺ･ﾆｮ-----
+5781#
+A hairpin made by aromatic floral leaf which is known as a first symbol of spring.
+Can not be upgraded.
+MaxSp + 20, Flee +1
+If combines with 'Centimental Flower', give MaxSP + 30, INT + 1.
+If combines with 'Centimental Leaf', give Flee +2, LUK + 1.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^77777710^000000
+Required lv : ^7777770^000000
+Jobs : ^777777All Jobs^000000
 #

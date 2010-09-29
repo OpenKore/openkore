@@ -1,4 +1,9 @@
-﻿alberta 101 48 Captain Enforcer#albert
+﻿alb2trea 39 50 Sailor
+alb2trea 57 67 Richard#nk
+alb2trea 59 69 Kafra Employee
+alb2trea 75 101 Bulletin Board#sunken
+alb2trea 87 65 Tool Dealer
+alberta 101 48 Captain Enforcer#albert
 alberta 102 80 Jhonnita
 alberta 104 60 [Quest] First Mate#Ship
 alberta 106 63 Stylist
@@ -69,6 +74,9 @@ alberta 99 60 [Quest] Elite Mercenary
 alberta_in 188 21 Weapon Dealer
 alberta_in 53 43 Merchant
 alberta_in 70 51 Guarnien
+alde_alche 101 184 Master Alchemist
+alde_alche 13 15 Studying Man
+alde_alche 175 107 Fastidious Alchemist
 alde_alche 24 188 Guild Dealer
 alde_alche 27 185 Alchemist Guildsman
 alde_alche 38 184 Material Seller#alche
@@ -76,6 +84,7 @@ aldeba_in 142 238 Kafra Service
 aldeba_in 155 240 Kafra Employee#lt3
 aldeba_in 84 166 Kafra Service
 aldeba_in 96 181 Kafra Service
+aldebaran 113 70 Metalworker Manster
 aldebaran 114 56 Rogue Agent#nd0
 aldebaran 117 181 Phracon Young Man 
 aldebaran 121 231 Alchemy Guy 
@@ -164,6 +173,7 @@ brasilis 203 286 Botanist Karmen#bra
 brasilis 203 64 strange kid#bra
 brasilis 219 97 Brasilis Guide
 brasilis 221 128 Fruit Dealer#bra
+brasilis 240 247 signpost#bra
 brasilis 244 243 Weapon Dealer
 brasilis 252 257 Tool Dealer
 brasilis 270 145 brasilis girl#bra
@@ -202,9 +212,15 @@ comodo 204 148 Devellin
 comodo 210 148 Bulletin Board#comodo
 comodo 210 154 Suspicious Guy
 comodo 211 155 Wandering bard
+comodo 213 310 BBQ Boy
+comodo 215 307 BBQ MAMA
+comodo 216 310 BBQ PAPA
+comodo 218 309 Barbecue Lady
 comodo 219 158 Kachua
+comodo 221 310 Barbecue Man
 comodo 225 164 Chef Assistant
 comodo 228 159 Hair Band Girl
+comodo 237 217 Melon Dye
 comodo 322 178 Comodo Tour Leader
 e_tower 69 117 Purification Stone#102t
 e_tower 81 105 Tower Protection Stone
@@ -312,6 +328,12 @@ geffen_in 26 178 Armor Dealer
 geffen_in 30 178 Weapon Dealer
 geffen_in 34 166 Repair Man
 geffen_in 34 170 Young Man
+geffen_in 59 61 Hotel Guest
+geffen_in 61 72 Aaron
+geffen_in 63 63 Gate Keeper#4
+geffen_in 67 63 PVPNarrator#4
+geffen_in 70 64 Inn Employee
+geffen_in 70 67 Hotel Waitress
 geffen_in 74 144 Trader
 gl_prison 17 73 [Quest] Mercenary Scout
 glast_01 369 308 Bulletin Board#castle
@@ -366,6 +388,8 @@ job_cru 168 17 DescriptionofZombie
 job_cru 168 45 Create#1
 job_cru 168 80 Create#2
 job_cru 24 187 Kight of Guardian
+job_sage 116 97 Testroom#fail
+job_sage 50 165 Guide of Practical Test
 lhz_dun01 225 198 #kiz01-4
 lhz_in01 110 174 Gerhart
 lhz_in01 113 150 #kiz07
@@ -678,6 +702,18 @@ morocc 54 97 Guide
 morocc 60 42 Young Man#moc
 morocc 82 292 Muetro
 morocc 88 133 Volunteer-Morroc#07rhea
+moscovia 149 112 A man#mos13
+moscovia 152 71 Fruit Gardener
+moscovia 161 76 Moscovia Guide
+moscovia 166 145 Aunt, dissappointed#07r
+moscovia 166 53 Moscovia Publicity Rep#
+moscovia 167 97 A lady#mos6
+moscovia 168 135 A lady#mos10
+moscovia 171 71 Berbayeff#npc
+moscovia 211 215 A young man#mos12
+moscovia 213 216 Ryubaba#07russia_08
+moscovia 219 229 A middle aged man#mos3
+moscovia 223 210 Little Boy#07russia_09
 pay_arche 122 100 Part-timer
 pay_arche 127 154 Sign#arc
 pay_arche 130 113 Alchemist Guildmember#t
@@ -935,7 +971,13 @@ prt_gld 147 136 Lazreagues
 prt_gld 147 140 Lazreagues
 prt_in 52 140 Gate Keeper#3
 prt_in 56 140 PVPNarrator#3
+prt_in 56 54 Suhnbi
+prt_in 56 68 Vurewell
 prt_in 61 141 Inn Keeper
+prt_in 63 54 Repair Man
+prt_in 63 60 Hollgrehenn
+prt_in 63 69 Dietrich
+prt_in 73 87 Prontera Knight Member
 prt_monk 136 261 Weapon Merchant#tu
 prt_monk 28 260 Hedrick
 prt_monk 59 247 A Monk#1
@@ -944,7 +986,7 @@ prtg_cas03 183 215 Diligo
 pvp_n_room 70 85 Fight Square Reception 
 pvp_n_room 78 85 Fight Square Reception 
 pvp_n_room 86 85 Fight Square Reception 
-pvp_y_room 46 85 Fight Square Reception brasilis 240 247 signpost#bra
+pvp_y_room 46 85 Fight Square Reception
 pvp_y_room 54 85 Fight Square Reception 
 pvp_y_room 62 85 Fight Square Reception 
 pvp_y_room 70 85 Fight Square Reception 
@@ -1118,11 +1160,51 @@ yuno 165 283 The Juno soldier
 yuno 166 187 An event usher#xmas_01
 yuno 213 298 A sage Eschealla
 yuno 227 292 The Juno soldier
+yuno 263 320 The Juno soldier
+yuno 311 195 Historian#prt01
+yuno 327 108 Kafra Employee
+yuno 328 239 A Juno martial artist
+yuno 330 100 Knight#ss
+yuno 333 108 Stylist
+yuno 333 210 Library Master#garas
+yuno 334 182 The Juno soldier
+yuno 335 208 Dog#garas
+yuno 336 203 #garas_catch
+yuno 337 227 A granny of Juno
+yuno 343 204 #garas_eff
 yuno_fild08 69 185 Window#kh
 yuno_fild08 71 170 Grave#kh
+yuno_in02 38 61 President of Academy
 yuno_in02 88 164 Metheus Sylphe#Library
 yuno_in02 93 207 Book of Ymir
+yuno_in03 105 177 Written Tester
+yuno_in03 12 39 #ALICE
+yuno_in03 12 45 #ASSULTER
 yuno_in03 154 35 Academy Staff
+yuno_in03 169 180 Practical Tester
 yuno_in03 176 22 Scroll Merchant#yuno03
 yuno_in03 176 24 Mishuna
 yuno_in03 178 43 Shishi
+yuno_in03 18 100 #CATERPILLAR
+yuno_in03 18 104 #THIEF_BUG__
+yuno_in03 18 108 #TRI_JOINT
+yuno_in03 18 111 #ARCLOUSE
+yuno_in03 18 116 #DRAGON_TAIL
+yuno_in03 19 21 #RAYDRIC
+yuno_in03 19 27 #CHEPET
+yuno_in03 19 33 #VIOLY
+yuno_in03 20 18 Neelisis
+yuno_in03 20 96 #WANDER_MAN
+yuno_in03 26 39 Meto
+yuno_in03 32 102 Biology Professor
+yuno_in03 32 15 Guide of Monster Museum
+yuno_in03 33 21 #DEVIACE
+yuno_in03 33 27 #FUR_SEAL
+yuno_in03 33 33 #SAGEWORM
+yuno_in03 34 110 #yuno
+yuno_in03 37 44 #GALAPAGO
+yuno_in03 38 39 #PENOMANA
+yuno_in03 44 96 #OWL_DUKE
+yuno_in03 46 101 #MARINE_SPHERE
+yuno_in03 46 105 #MANDRAGORA
+yuno_in03 62 176 History Professor
