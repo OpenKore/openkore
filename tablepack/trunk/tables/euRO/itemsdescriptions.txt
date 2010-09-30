@@ -6285,7 +6285,7 @@ Portrait pictured of a girl.It is too old to recognise but the girl seems so pre
 Weight : ^77777710^000000
 #
 7015#
-Fallen Leaf hidden between pages of book.It might be a memento of someone's good memoryЎ¦
+Fallen Leaf hidden between pages of book.It might be a memento of someone's good memory¡¦
 ^ffffff_^000000
 Weight : ^7777772^000000
 #
@@ -6300,7 +6300,7 @@ Mitten used for the punishment of Death. Can sell to Trader NPC.
 Weight : ^7777773^000000
 #
 7018#
-Young Twig wich is yet pure and innocent.However it can't distinguish the Good and the Evil yetЎ¦
+Young Twig wich is yet pure and innocent.However it can't distinguish the Good and the Evil yet¡¦
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -6418,7 +6418,7 @@ Applicable Job : ^777777Priest/Sage/Taekwon Master ^000000
 #
 
 19999#
-// ---- ¶у°Ф PVP ґлИёїл ГЯ°Ў ѕЖАМЕЫ ------
+// ---- ¶ó°Ô PVP ´ëÈ¸¿ë Ãß°¡ ¾ÆÀÌÅÛ ------
 #
 
 7028#
@@ -6431,7 +6431,7 @@ Addmission Ticket for an Affair of Honor
 #
 
 19998#
-// ---- EP 2.0 і»ДЈ±ё ёуЅєЕН ГЯ°Ў ѕЖАМЕЫ -----------
+// ---- EP 2.0 ³»Ä£±¸ ¸ó½ºÅÍ Ãß°¡ ¾ÆÀÌÅÛ -----------
 #
 
 2621#
@@ -6478,7 +6478,7 @@ Applicable Job : ^777777All Jobs except Novice^000000
 Ancient Rosary
 LUK + 1 , MDEF + 3
 Weapon Class : ^777777Accessory^000000
-Defensive power : ^7777770^000000      Weight : ^77777720^000000
+Defensive power : ^7777770^000000      Weight : ^77777710^000000
 Required Lv. : ^77777790^000000
 Applicable Job : ^777777All Jobs except Novice^000000
 #
@@ -6894,7 +6894,7 @@ Weight : ^7777771^000000
 
 
 19999#
-// ---- EP 2.5 Е©ё®Ѕєё¶Ѕє -----------
+// ---- EP 2.5 Å©¸®½º¸¶½º -----------
 #
 
 7034#
@@ -7093,7 +7093,7 @@ Weight : ^77777720^000000
 #
 
 19997#
-// ---- EP 4.0 °ЕєПАМј¶ ГЯ°Ў ѕЖАМЕЫ -----------
+// ---- EP 4.0 °ÅºÏÀÌ¼¶ Ãß°¡ ¾ÆÀÌÅÛ -----------
 #
 
 544#
@@ -7657,7 +7657,7 @@ Applicable Job : ^777777Swordman Cls^000000
 #
 
 19996#
-// ---- EP 5.0 АЇіл - АТѕо№цё° °нґлАЗ АЇ»к -----------
+// ---- EP 5.0 À¯³ë - ÀÒ¾î¹ö¸° °í´ëÀÇ À¯»ê -----------
 #
 
 2110#
@@ -8216,7 +8216,7 @@ Available Job : ^777777Only for Novice^000000
 #
 
 19995#
-// ---- ¶у±ЧіЄ·ОЕ© »уїлИ­ 1БЦів ѕЖАМЕЫ -----------
+// ---- ¶ó±×³ª·ÎÅ© »ó¿ëÈ­ 1ÁÖ³â ¾ÆÀÌÅÛ -----------
 #
 
 2631#
@@ -8245,7 +8245,7 @@ Weight : ^7777771^000000
 #
 
 19994#
-// ---- ѕЖё¶Вк °ь·Г ГЯ°Ў ѕЖАМЕЫ - 01 -----------
+// ---- ¾Æ¸¶Âê °ü·Ã Ãß°¡ ¾ÆÀÌÅÛ - 01 -----------
 #
 663#
 Make a dough with rice powder and take a bite-size of dough and place fillings in the center of dough. wrap it to half moon and steam it on the pine leaves.
@@ -8384,7 +8384,7 @@ A sharp claw of a leopard. It stings when you get scrached by it.
 Weight : ^7777771^000000
 #
 
-// ЅґЖЫілєсЅєїН їюµщ ГЯ°ЎєОєР
+// ½´ÆÛ³ëºñ½º¿Í ¿þµù Ãß°¡ºÎºÐ
 
 7170#
 The formal wear of the bridegroom in the wedding ceremony. It has a very simple and fashionable cutting but sometimes the wearer is made fun and said to looked like a penguin...
@@ -8399,7 +8399,7 @@ The ring worn by the bridegroom in the wedding ceremony. It has the sparkling bl
 The ring worn by the bride in the wedding ceremony. It hasa the XXXXX-colored rim and a XXXXX-colored center that represents trust.
 ^ffffff_^000000
 #
-//-------їт№Я¶у °ь·Г ГЯ°Ў ѕЖАМЕЫ----------------
+//-------¿ò¹ß¶ó °ü·Ã Ãß°¡ ¾ÆÀÌÅÛ----------------
 #
 7183#
 The letter of sister sending to her brother.
@@ -8512,7 +8512,7 @@ black-colored stinky powder.  It explodes when lighted by a fire.
 Weight : ^7777771^000000
 #
 
-// ----- ґПЗГЗмАУ-----------
+// ----- ´ÏÇÃÇìÀÓ-----------
 
 7205#
 A small black tag that is hard to be seen in the dark
@@ -8626,7 +8626,7 @@ Weight : ^7777771^000000
 #
 
 
-// ----- Е©ё®Ѕєё¶Ѕє АМ№кЖ® 2004-----------
+// ----- Å©¸®½º¸¶½º ÀÌ¹êÆ® 2004-----------
 7174#
 Long, narrow and silky ribbon that seems useful when used to tie up gift boxes.
 ^ffffff_^000000
@@ -9084,7 +9084,7 @@ Only for Novice, A potion which restores ^000088some of your HP^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------- єОИ°АэАМєҐЖ® --------
+// ------- ºÎÈ°ÀýÀÌº¥Æ® --------
 574#
 An egg of a bird. Contains lots of mineral and it's good snack for the children.^000088Recover small amounts of HP ^000000 .
 ^ffffff_^000000
@@ -9101,7 +9101,7 @@ A photo album that contains the memory of honeymoon. You will feel the passion w
 (used by the married players.)
 #
 
-// ------БЯ±№·ОДГ¶уАМВЎ------
+// ------Áß±¹·ÎÄÃ¶óÀÌÂ¡------
 7252#
 A medicine from an eastern ancient country that is made of certain plant and animal and mixed according to the concept of Harmony.
 ^ffffff_^000000
@@ -9117,7 +9117,7 @@ Extremely dangerous poison that shapes like a skull. People who drink this poiso
 ^ffffff_^000000
 Weight : ^77777710^000000
 #
-// ------БЯ±№·ОДГ¶уАМВЎ2------
+// ------Áß±¹·ÎÄÃ¶óÀÌÂ¡2------
 7262#
 Simple tool made to generate wind. It would be useful if used on a hot summer day.
 ^ffffff_^000000
@@ -9597,7 +9597,7 @@ Weight : ^7777774^000000
 A cookie which is rumored to bring luck to whomever eats it.
 Weight : ^7777773^000000
 #
-// ------------- PVP ѕЖАМЕЫ -------------
+// ------------- PVP ¾ÆÀÌÅÛ -------------
 7420#
 A skull carrying someone's name.
 ^ffffff_^000000
@@ -11091,7 +11091,7 @@ Class: ^777777Headgear^000000    Defense: ^7777770^000000
 Location: ^777777Middle^000000    Weight: ^77777710^000000
 Jobs: ^777777All^000000
 #
-// ------¤Сmobile item -------
+// ------¤Ñmobile item -------
 2511#
 A manteau which is worn by soldier skeletons.
 STR +2, DEX +2, LUK +2.
@@ -11274,7 +11274,7 @@ Class : ^777777Headgear^000000    Defense : ^7777770^000000
 Location : ^777777Middle^000000    Weight : ^77777710^000000
 Job : ^777777Every Job except Novice^000000
 #
-// ------The Sign ДщЅєЖ®------
+// ------The Sign Äù½ºÆ®------
 
 7274#
 "The door leading to the great power can be found under the twilight sky from the tower of the heaven. 
@@ -15268,7 +15268,7 @@ A grenade launcher bullet with Water property.
 Class: ^777777Bullet^000000    ATK:^77777750^000000
 Weight:  ^7777770.5^000000      Property:^777777Water^000000
 #
-// ------------------ ґСАЪ ГЯ°Ў ------------------------
+// ------------------ ´ÑÀÚ Ãß°¡ ------------------------
 13250#
 A cross shaped dagger that is small enough to be hidden inside the hand.
 Class: ^777777Throwing Weapon^000000
@@ -15655,7 +15655,7 @@ Upon seeing all the sites and sights in Ayothaya the Rune-Midgard Tour Agency ha
 ^ffffff_^000000
 #
 
-// -------------------------- јТДПАОГ¦Ж® ЅЕ±Ф№«±вГЯ°Ў ----------------------------
+// -------------------------- ¼ÒÄÏÀÎÃ¦Æ® ½Å±Ô¹«±âÃß°¡ ----------------------------
 
 1816#
 A pair of fierce claws
@@ -16094,10 +16094,10 @@ Jobs: ^777777All Jobs^000000
 #
 
 
-// ------------------- 2006 »у№Э±в ЅЕ±ФД«µе ГЯ°Ў.-----------------------
-//їµ№®±З 11.1 їЎј­ ѕчµҐАМЖ® Б¦їЬЗП±в·О ЗХґПґЩ.
+// ------------------- 2006 »ó¹Ý±â ½Å±ÔÄ«µå Ãß°¡.-----------------------
+//¿µ¹®±Ç 11.1 ¿¡¼­ ¾÷µ¥ÀÌÆ® Á¦¿ÜÇÏ±â·Î ÇÕ´Ï´Ù.
 
-// ------------- ѕЖ·зіЄ »у№Э±в -----------
+// ------------- ¾Æ·ç³ª »ó¹Ý±â -----------
 
 7561#
 A frozen heart that
@@ -16216,7 +16216,7 @@ Acolyte Classes;
 Soul Linker Job^000000
 #
 
-//----------------------20060610 ЅЕ±ФГЯ°ЎѕЖАМЕЫ-------------------------
+//----------------------20060610 ½Å±ÔÃß°¡¾ÆÀÌÅÛ-------------------------
 5169#
 A white mask with
 red blush that is
@@ -16335,7 +16335,7 @@ Required Level: ^77777740^000000
 Jobs: ^777777All Jobs^000000
 #
 
-// -------------- 2006 ГЯ°ЎѕЖАМЕЫ -------------
+// -------------- 2006 Ãß°¡¾ÆÀÌÅÛ -------------
 
 5184#
 Once owned by a famous
@@ -16376,7 +16376,7 @@ A doll made after a Rice Ball.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------------- №М±№ ЗШАыАЗ іЇ АМєҐЖ® ѕЖАМЕЫ --------------
+// ------------- ¹Ì±¹ ÇØÀûÀÇ ³¯ ÀÌº¥Æ® ¾ÆÀÌÅÛ --------------
 7875#
 A recovered Treasure box
 that was Lost by 
@@ -16412,7 +16412,7 @@ Class : ^777777Headgear^000000    DEF: ^7777770^000000
 Location: ^777777Mid^000000    Weight: ^77777710^000000
 Job: ^777777Every Job^000000
 #
-// ------------- ЗТ·ОА© ГаБ¦ёрАЪ ---------------
+// ------------- ÇÒ·ÎÀ© ÃàÁ¦¸ðÀÚ ---------------
 5356#
 A pumpkin hat for celebrating the Halloween Festival. Let's ask for sweets with wearing this hat.
 All Stat + 3. Increase Physical and Magical Attack Strength against Devil Monster by 5%.
@@ -18309,7 +18309,7 @@ Weapon Level: ^7777774^000000
 Required Level: ^7777771^000000
 Jobs: ^777777Priest, Monk^000000
 #
-// ------------------- 2006 »у№Э±в ЅЕ±ФД«µе ГЯ°Ў.-----------------------
+// ------------------- 2006 »ó¹Ý±â ½Å±ÔÄ«µå Ãß°¡.-----------------------
 
 4332#
 ATK +5, INT +1
@@ -19157,7 +19157,7 @@ Compound on: ^777777Weapon^000000
 Weight: ^7777771^000000
 #
 
-// ------------- ГҐАР±в ----------------------
+// ------------- Ã¥ÀÐ±â ----------------------
 11000#
 A book documenting the history of Prontera.
 There's a whole chapter dedicated to Tristam III.
@@ -19242,7 +19242,7 @@ fiction author.
 Weight: ^7777771^000000
 #
 
-// ----------------------- ЕдёЈИ­»к ДщЅєЖ® ѕЖАМЕЫ ----------------------
+// ----------------------- Åä¸£È­»ê Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
 7704#
 A device that can
 measure the ground's
@@ -19264,7 +19264,7 @@ by a Geologist.
 Weight: ^7777770^000000
 #
 
-// ---------------------- ЕдёЈИ­»к ЅЕ±Ф Аеєс ѕЖАМЕЫ ----------------------
+// ---------------------- Åä¸£È­»ê ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ----------------------
 1370#
 A gigantic and
 ridiculously heavy
@@ -19575,19 +19575,19 @@ Weight : ^77777750^000000
 A group of stars that lies beautifully in night sky.
 Weight : ^77777750^000000
 #
-// ----------- ЅЕ±Ю ДщЅєЖ® ѕЖАМЕЫ --------------
+// ----------- ½Å±Þ Äù½ºÆ® ¾ÆÀÌÅÛ --------------
 7839#
 A piece of crystal that is used as a key of the assessment. It contains a rune as a charm against a bad luck towards the assessment.
 Weight : ^7777770^000000
 #
 
-// ------------ ЅЕ±Ю ДщЅєЖ® ѕЖАМЕЫ №ЯЕ°ё®АЗ ј±№° ---------------
+// ------------ ½Å±Þ Äù½ºÆ® ¾ÆÀÌÅÛ ¹ßÅ°¸®ÀÇ ¼±¹° ---------------
 7840#
 A flower from Valkyrie Wishmaiden. When it's decorated, the flower as a big festival mood.
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-// ----- Е©ё®Ѕєё¶Ѕє АМєҐЖ® »кЕё јцї° --------
+// ----- Å©¸®½º¸¶½º ÀÌº¥Æ® »êÅ¸ ¼ö¿° --------
 7908#
 A hairstyling coupon that's worth a free hairstyling service from Artist Louise during the event period. One time use only.
 ^ffffff_^000000
@@ -19646,7 +19646,7 @@ Mushroom contained pancake. People likes its light taste
 ^ffffff_^000000
 Weight : ^77777715^000000
 #
-//ё¶ё®їАіЭ
+//¸¶¸®¿À³Ý
 5141#
 A Marionette doll
 that gives you strange
@@ -20394,7 +20394,7 @@ for 3 minutes.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
-// ---------------- АОµµіЧЅГѕЖ °Ўє­їо ДіЅ¬ ѕЖАМЕЫ --------------	
+// ---------------- ÀÎµµ³×½Ã¾Æ °¡º­¿î Ä³½¬ ¾ÆÀÌÅÛ --------------	
 	
 12999#	
 A box that contains	
@@ -20843,7 +20843,7 @@ Weight : ^77777750^000000
 Required Lv. : ^77777730^000000
 Job : ^777777All^000000
 #
-// ------------- 2007 ЗТ·ОА© ГаБ¦ёрАЪ ---------------
+// ------------- 2007 ÇÒ·ÎÀ© ÃàÁ¦¸ðÀÚ ---------------
 5356#
 A pumpkin hat for
 celebrating Halloween:
@@ -20871,7 +20871,7 @@ that have shaped
 your life.							
 ^ffffff_^000000							
 #							
-// -------- 2007 АПє» ї¬ё» ДіЅ¬ѕЖАМЕЫ ----------							
+// -------- 2007 ÀÏº» ¿¬¸» Ä³½¬¾ÆÀÌÅÛ ----------							
 5380#
 A gaping fish head is made into a hat. You can smell the stench of fish when it opens the mouth.
 Adds a low chance of automatically casting Lv.1 Endow Tsunami with each physical attack.
@@ -21046,7 +21046,7 @@ outside of the machine.
 Weight : ^7777770^000000							
 #
 //----------------------- 2008 Lunar New Year Event ----------
-// ----------- ґлёё Жк ГЯ°Ў ------------------						
+// ----------- ´ë¸¸ Æê Ãß°¡ ------------------						
 9038#						
 An egg in which the						
 New Year Doll Cute						
@@ -21111,7 +21111,7 @@ LUK +21.
 ^ffffff_^000000						
 Weight: ^77777710^000000						
 #						
-//============2008 №М±№ јјАОЖ®ЖРЖ®ёЇ АМєҐЖ® ѕЖАМЕЫ============					
+//============2008 ¹Ì±¹ ¼¼ÀÎÆ®ÆÐÆ®¸¯ ÀÌº¥Æ® ¾ÆÀÌÅÛ============					
 12715#					
 [This item will be removed
 
@@ -21139,7 +21139,7 @@ A coin made of silver.
 ^ffffff_^000000					
 Weight: ^7777771^000000					
 #					
-// ---------------------- їлєґјТИЇј­ -------------------------------
+// ---------------------- ¿ëº´¼ÒÈ¯¼­ -------------------------------
 
 12153#
 Summon a 1st
@@ -21348,7 +21348,7 @@ targeted Mercenary.
 ^ffffff_^000000
 Weight: ^77777710^000000
 #
-// ------------------ їлєґїл ЖчјЗ ------------------
+// ------------------ ¿ëº´¿ë Æ÷¼Ç ------------------
 12241#
 A Concentration Potion
 for Mercenaries that
@@ -21374,7 +21374,7 @@ Attack Speed.
 Weight: ^77777710^000000
 #
 
-// ---------------- ё±·№АМ ДщЅєЖ® ѕЖАМЕЫ ------------------
+// ---------------- ¸±·¹ÀÌ Äù½ºÆ® ¾ÆÀÌÅÛ ------------------
 7730#
 A ticket proving
 that the bearer has
@@ -21499,7 +21499,7 @@ a new mission.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
-// -------------- 11.3 АвЕЫ -------------------
+// -------------- 11.3 ÀâÅÛ -------------------
 7751#
 A worn-out white
 cloth that can be
@@ -21540,7 +21540,7 @@ Merchant NPCs.
 Weight: ^7777771^000000
 #
 
-// ------------ ДщЅєЖ® ѕЖАМЕЫ -----------------
+// ------------ Äù½ºÆ® ¾ÆÀÌÅÛ -----------------
 7755#
 Much of the writing
 on this note isn't
@@ -21559,7 +21559,7 @@ Weight: ^7777771^000000
 #
 
 
-// ------------------- 11.3 ЅЕ±Ф Аеєс ѕЖАМЕЫ --------------------------
+// ------------------- 11.3 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ --------------------------
 2122#
 A magnificent
 platinum shield that
@@ -22962,7 +22962,7 @@ Required Level: ^77777770^000000
 Jobs: ^777777Gunslinger Job^000000
 #
 
-// ------------ 11.3 ДщЅєЖ® ѕЖАМЕЫ --------------
+// ------------ 11.3 Äù½ºÆ® ¾ÆÀÌÅÛ --------------
 7722#
 A loan document
 that includes the
@@ -23010,7 +23010,7 @@ seal of the King of the Rune-Midgarts Kingdom.
 Weight: ^7777770^000000
 #
 
-// ----------------- 20070808 ЅЕ±ФCard 34Бѕ -----------------
+// ----------------- 20070808 ½Å±ÔCard 34Á¾ -----------------
 4408#
 Increases Physical
 damage to Holy,
@@ -23465,7 +23465,7 @@ A fancy Autograph Book where you keep famous stars' autographs.
 Weight : ^7777771^000000
 #
 
-// ----------- ЖчёµґлАь єё»уЗ° ѕЖАМЕЫ ------------
+// ----------- Æ÷¸µ´ëÀü º¸»óÇ° ¾ÆÀÌÅÛ ------------
 2765#
 A fine figure of a Novice. By only looking at it, you feel like to be strengthened up.
 HP + 70, extra effect of HP + 30 when equipped on Novice
@@ -23522,13 +23522,13 @@ Defense : ^7777770^000000      Weight : ^7777770^000000
 Jobs : ^777777All^000000
 #
 
-// ------------- АьЕхИЦАе ---------------
+// ------------- ÀüÅõÈÖÀå ---------------
 7773#
 A badge indicating that the wearer is currently participated in the war.  It was taken off from a failure of the battle.
 ^ffffff_^000000
 #
 
-// ----------- »уЗ° ѕЖАМЕЫ ---------------
+// ----------- »óÇ° ¾ÆÀÌÅÛ ---------------
 12109#
 A wrapped box stamped^FFFFFF    ^000000 with the Poring seal. You
 can faintly hear rustling coming from inside of it.
@@ -23536,7 +23536,7 @@ can faintly hear rustling coming from inside of it.
 Weight: ^77777720^000000
 #
 
-// --------- 2008 јЦ·О АМєҐЖ® ѕЖАМЕЫ ---------------
+// --------- 2008 ¼Ö·Î ÀÌº¥Æ® ¾ÆÀÌÅÛ ---------------
 12300#
 Use this scroll and your friend Wild Rose will come and help you.
 Weight : ^7777771^000000
@@ -23552,13 +23552,13 @@ A scroll which summons a beautiful girl, Egnigem Ceniz, however, she's not as st
 Weight : ^7777771^000000
 #
 
-// ---------------- ЖчёµДЪАО -----------------
+// ---------------- Æ÷¸µÄÚÀÎ -----------------
 7539#
 A small coin with a monster Poring engraved in it.
 #
 
 // ------------- Ep. 12 ---------------
-// ------------- АьАе єё»у ѕЖАМЕЫ ---------------
+// ------------- ÀüÀå º¸»ó ¾ÆÀÌÅÛ ---------------
 13036#
 A dagger that is specialized for assassination and killing humanoids.
 STR + 1, AGI + 1
@@ -24214,7 +24214,7 @@ A sealed paper envelope. It seems to be contained important message in it.
 Weight: ^7777771^000000
 #
 
-// ------------ ёЮёрё®ѕу ґшАь єё»уЕЫ ----------------
+// ------------ ¸Þ¸ð¸®¾ó ´øÀü º¸»óÅÛ ----------------
 13412#
 One of the twin sword of Naght Sieger. The blue blade shows sharpness of this sword.
 Ignore general monster's Def by a low chance, when physical attack.
@@ -24266,7 +24266,7 @@ Required Level: ^77777770^000000
 Jobs: ^777777All Transcendent Jobs except Novice^000000
 #
 
-//ёр·ОЕ© ДБЖјіЩЕ» °Ўµе АОБхј­
+//¸ð·ÎÅ© ÄÁÆ¼³ÙÅ» °¡µå ÀÎÁõ¼­
 7826#
 It certifies this adventurer have enough power and courage to be a member of Continental Guard.
 ^ffffff_^000000
@@ -24275,7 +24275,7 @@ Continental Guard. Baloq.
 Weight: ^7777770^000000
 #
 
-// ------------ ё¶їХ ёр·ОЕ© ----------------
+// ------------ ¸¶¿Õ ¸ð·ÎÅ© ----------------
 2536#
 Lucifer's skin, cursed by devil's language. It seems threw on the back.
 MDEF + 2, MHP + 200, FLEE + 10
@@ -24369,7 +24369,7 @@ Weight: ^77777725^000000
 Jobs: ^777777Above Transcendent 2-1 Classes^000000
 #
 
-// ---------- ЗТВ¦ ЕЧЅєЖ® -----------
+// ---------- ÇÒÂ¦ Å×½ºÆ® -----------
 2129#
 A thick book contained basic skills for clerics. 
 HP, SP Recovery 3%. INT + 1.
@@ -24625,7 +24625,7 @@ Required Level : ^77777770^000000
 Jobs : ^777777Priest, Sage, Taekwon Master^000000
 #
 
-// ------------- АьАе ИЦАе ---------------
+// ------------- ÀüÀå ÈÖÀå ---------------
 7828#
 A badge that is provided to warrior who brought great honor in the Battle field. 
 ^ffffff_^000000
@@ -24635,7 +24635,7 @@ A badge that is provided to warrior who brought great honor in the Battle field.
 ^ffffff_^000000
 #
 
-// -------- єААОАЗ ЅЕАь ѕЖАМЕЫ ------------
+// -------- ºÀÀÎÀÇ ½ÅÀü ¾ÆÀÌÅÛ ------------
 6001#
 An essence of fire that is holding pure spirit of Thor, god of thunder. It has mystery force to restrain of vice and darkness.
 ^ffffff_^000000
@@ -24652,14 +24652,14 @@ A pendant that used to be use for confining wandered soul from unknown places.
 Weight: ^7777771^000000
 #
 
-// ----------------- ё¶·ВАМ ±кµз №ЩЖчёЮЖ® АОЗь -----------------
+// ----------------- ¸¶·ÂÀÌ ±êµç ¹ÙÆ÷¸ÞÆ® ÀÎÇü -----------------
 6004#
 A Doll imbued with Baphomet's curse. It seems like to be compounded with something.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 
-// ------------------- 12.1 ДщЅєЖ® ѕЖАМЕЫ ----------------------
+// ------------------- 12.1 Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
 7798#
 A dark fragment imbued with gloominess spirit. Once you stare it, you might feel absorbed into it.
 ^ffffff_^000000
@@ -24672,7 +24672,7 @@ You might feel strongly dangerous power from this crystal. When you close to it,
 Weight: ^7777771^000000
 #
 
-// --------------- ЗКё®ЗЙ АЪГјБ¦АЫ Ех±ё 7Бѕ ----
+// --------------- ÇÊ¸®ÇÉ ÀÚÃ¼Á¦ÀÛ Åõ±¸ 7Á¾ ----
 5374#
 A sorceries headgear made by goat horns.
 Increases Physical Damage from Demihuman monster by 12%.
@@ -24682,7 +24682,7 @@ Location : ^777777Upper^000000    Weight: ^77777780^000000
 Jobs: ^777777All Jobs^000000
 #
 
-// ------------------- АМєҐЖ® ѕЖАМЕЫ ------------------
+// ------------------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------------
 6000#
 A dark ash imbued with mystery magical power and darkness.
 ^ffffff_^000000
@@ -24719,7 +24719,7 @@ Stepmother - Karma in a previous life? "
 Weight: ^7777771^000000
 #
 
-// ------------------ ЗПѕЗ ЕЧЅєЖ® (јТДП)----------------
+// ------------------ ÇÏ¾Ç Å×½ºÆ® (¼ÒÄÏ)----------------
 1568#
 A book enchanted with the Water Property.
 Class : ^777777Book^000000      Attack Strength : ^77777790^000000
@@ -25083,7 +25083,7 @@ Equipped on : ^777777Upper/Mid^000000    Weight : ^777777240^000000
 Available Job : ^7777772nd Class or above^000000
 #
 
-//-----------ёрЅєДЪєсѕЖ(·ЇЅГѕЖ ·ОДГ¶уАМВЎ)------------
+//-----------¸ð½ºÄÚºñ¾Æ(·¯½Ã¾Æ ·ÎÄÃ¶óÀÌÂ¡)------------
 7760#
 It's an aged lady, Yaga's magic book which tells about how to practice the strongest  black art.
 ^ffffff_^000000
@@ -25127,7 +25127,7 @@ Defense Rate : ^7777770^000000      Weight : ^77777710^000000
 Applicable job : ^777777Every job^000000
 #
 
-//----ёрЅєДЪєсѕЖ 2Вч---------- ·ЇЅГѕЖ єТ»зЅЕ ДЪЅ¦АМ ѕЖАМЕЫ ---------------
+//----¸ð½ºÄÚºñ¾Æ 2Â÷---------- ·¯½Ã¾Æ ºÒ»ç½Å ÄÚ½¦ÀÌ ¾ÆÀÌÅÛ ---------------
 7876#
 Golden shiny Key.
 ^ffffff_^000000
@@ -25191,7 +25191,7 @@ Jobs: ^777777All Jobs^000000
 #
 
 //-------------Cash Headgear Adds----------------------------------
-// --------------- ·ЇЅГѕЖ іЄАОЗгєк ѕЖАМЕЫ --------------
+// --------------- ·¯½Ã¾Æ ³ªÀÎÇãºê ¾ÆÀÌÅÛ --------------
 5303#
 A Flower Coronet made of flowers collected on the day of Summer Solstice.  Protects the wearer from the evil with its magical power.
 MDEF + 5, MSP + 50
@@ -25201,7 +25201,7 @@ Jobs : ^777777All^000000
 #
 
 
-// ------------------ ё»·№АМЅГѕЖ ЅМ°ЎЖъ 3БЦів --------------------
+// ------------------ ¸»·¹ÀÌ½Ã¾Æ ½Ì°¡Æú 3ÁÖ³â --------------------
 5189#
 A hat made of dried fallen leaves. It gives the gloomy feeling of Autumn.
 MHP + 40, MSP + 40.
@@ -25212,7 +25212,7 @@ Jobs : ^777777All^000000
 #
 
 
-// ----- ё»·№АМЅГѕЖ №«ЅЅёІ ёрАЪ --------
+// ----- ¸»·¹ÀÌ½Ã¾Æ ¹«½½¸² ¸ðÀÚ --------
 5355#
 A traditional hat for Muslim girls.
 Reduces Casting Time by 5% when using magic.
@@ -25281,23 +25281,25 @@ A piece of crystal which sings and seems enchanted to memorize songs.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-5811#						
-A beard seeming to make you let out a guffaw						
-Increase the resistance against Animal mobs by 5%.						
-^000088Will be removed on December 31th, 2008^000000						
-Type : ^777777Helm^000000    Defense : ^7777770^000000						
-Head Position : ^777777Low^000000    Weight : ^77777710^000000						
-Job : ^777777All^000000						
-#						
-5136#				
-A hat that Atonio used to wear.
+
+5811#
+A beard seeming to make you let out a guffaw
+Increase the resistance against Animal mobs by 5%.
+^000088Will be removed on December 31th, 2008^000000
+Type : ^777777Helm^000000    Defense : ^7777770^000000
+Head Position : ^777777Low^000000    Weight : ^77777710^000000
+Job : ^777777All^000000
+#
+5136#
+A hat that Antonio used to wear.
 Increase the resistance against demi human, devil, angeli mobs by 5%.
-When you attack, it autocasts Blessing lvl 10 and Heal lvl 3 with low chances. When you kill mobs with this hat put on, they drop the Xmas presents with low chances.
+When you attack, it autocasts Blessing  lvl 10 and Heal lvl 3 with low chances. When you kill mobs with this hat put on, they drop the Xmas presents with low chances.
 ^000088Will be removed on December 31th, 2008^000000
 Type : ^777777Helm^000000    Defense : ^7777772^000000
 Head Position : ^777777Upper^000000    Weight : ^77777710^000000
 Job : ^777777All^000000
-#														
+#
+
 // ---------- 2007 Taiwan Firecracker ----------
 14546#
 A firecracker that shows 'I LOVE YOU!'. Danger, keep children away from it.
@@ -25443,7 +25445,7 @@ Beautiful long, white colored horn with the very strong magical power. It can be
 Weight : ^7777771^000000
 #
 
-// --------- EP13 ЅЕ±Ф Аеєс ѕЖАМЕЫ ---------------
+// --------- EP13 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ---------------
 5398#
 Headgear made of the skull of dregon. So hard that it does not easily break.
 STR + 2. MDEF + 5.
@@ -26033,7 +26035,7 @@ A pie covered with sweet chocolate.  This sure looks not pretty but the taste is
 ^ffffff_^000000
 Weight : ^77777730^000000
 
-// ----------- їЎЗЗјТµе 13 ppl ѕЖАМЕЫ -----------
+// ----------- ¿¡ÇÇ¼Òµå 13 ppl ¾ÆÀÌÅÛ -----------
 6051#
 Unknown mineral which is not found in Midgards.  Looks like it has some unknown magical power inside.
 ^ffffff_^000000
@@ -26135,7 +26137,7 @@ Required Level : ^7777773^000000
 Jobs : ^777777Sword Class/Merchant Class^000000
 #
 
-// ---------- Е©ё®°Е єё»у ѕЖАМЕЫ ----------
+// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ ----------
 13416#
 75% increase in Physical Attack against Demihuman monsters.
 Ignore 20% of Physical Defense of Demihuman monsters.
@@ -26703,7 +26705,7 @@ Required Level : ^77777781^000000
 Jobs : ^777777All Jobs except Novice^000000
 #
 
-// ---------- Е©ё®°Е єё»у ѕЖАМЕЫ ГЯ°Ў Defense±ё ----------
+// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ Ãß°¡ Defense±¸ ----------
 2445#
 HP, SP + 5%
 Class : ^777777Shoes^000000    Defense : ^7777770^000000
@@ -26749,7 +26751,7 @@ Defense : ^7777770^000000      Weight : ^7777770^000000
 Jobs : ^777777All Jobs except Novice^000000
 #
 
-// ----------- їЎЗЗјТµе 13 і¬ЅГ ------------
+// ----------- ¿¡ÇÇ¼Òµå 13 ³¬½Ã ------------
 2775#
 Fish lure artificially made.
 Decrease the fishing casting time by 1 seconds.
@@ -26823,7 +26825,7 @@ Defense : ^7777770^000000      Weight : ^7777770^000000
 Jobs : ^777777All^000000
 #
 
-// ----------- АМєҐЖ® ѕЖАМЕЫ ------------
+// ----------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------
 2443#
 A waterproof boots.
 Decrease fishing casting time by 2 seconds.
@@ -26851,13 +26853,13 @@ A fish called Marlin. But, it looks a bit different from what you saw in a book.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// --------- ±жµеґшАь АМєҐЖ® ѕЖАМЕЫ ---------------
+// --------- ±æµå´øÀü ÀÌº¥Æ® ¾ÆÀÌÅÛ ---------------
 6010#
 Pickaxe which can be used as an weapon.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-//------ёёїмАэ-----------
+//------¸¸¿ìÀý-----------
 12396#
 A very suspicious box. No one can guess what is happening or what is coming out of it.
 Weight : ^7777771^000000
@@ -27504,6 +27506,7 @@ When Rogue class equipped this,  enables use of Lv 1 Gangster Paradise.
 Item Class : ^777777Headgear^000000    Defense : ^7777770^000000
 Location : ^777777Lower^000000
 Weight : ^77777710^000000
+Required Level : ^77777760^000000
 Jobs : ^777777All^000000
 #
 5363#
@@ -28049,29 +28052,1146 @@ Weight : ^7777771^000000
 A box which contains a cancer crown.
 Weight : ^7777771^000000
 #
-//--------------------2009 Christmas event-------------
-7974#
-A piece that illusion left
-Weight : ^7777770^000000
+// ----------- Ep 13.2 Reward Items ------------
+
+2782#
+A ring imitating the legendary ring of the Ancient Wise King which used to communicate with an animal.
+Rune Midgards's Magical Power, Schubaltzvald's technology, and Arunafeltz's liquistic ability are put together in this ring.
+By equipping this ring, you can talk freely with the people of the Other World.
+MHP + 50, MSP + 20.
+Type : ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^77777710^000000
+Job : ^777777Every Classes^000000
 #
-12745#
-A notation that a Caroll is memorized.
-But nobody knows which song is memorized.
-Weight : ^7777770^000000
-#
-12746#
-You can get get an effect of Restore, Endure, or Wing of Butterfly.
-Weight : ^7777770^000000
-#
-12317#
-A good item to feel the winter atmosphere!
-Caution : Cannot extinguish fires with this!
+
+11018#
+Splendide Selling Item
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-12326#
-A playstuff which makes beatiful fireworks in the sky when it is lit.
+//book Folder Translated
+%f5f5dc
+^000088Splendide Selling Item^000000
+
+You can purchase following items with the Splendide Coin.
+
+^008040[Pinguicula's Fruit Jam]^000000
+Sweet Jam made out of a Pinguicula's fruit.
+Physical Attack Damage done to the monsters in Manuk Area increases by 10% for 10minutes.
+^000088(Pinguicula, Luciola Vespa, Cornus, Naga, Tendrillion)^000000
 ^ffffff_^000000
-Weight: ^7777772^000000
+Weight : ^7777775^000000
+
+^008040[Luciola's Honey Jam]^000000
+Jam made out of Luciola's Honey and Herb.
+Physical & Magical Damage from the monsters in Manuk Area decreased by 10% for 10minutes.
+^000088(Pinguicula, Luciola Vespa, Cornus, Naga, Tendrillion)^000000
+^ffffff_^000000
+Weight : ^7777775^000000
+
+^008040[Tear of Cornus]^000000
+Potion made out of Cornus' Tears. Never know how they obtained the tear drop.
+Magical Attack Damage done to the monsters in Manuk Area increases by 10% for 10minutes.
+^000088(Pinguicula, Luciola Vespa, Cornus, Naga, Tendrillion)^000000
+Weight : ^7777775^000000
+
+11019#
+Manuk Selling Item
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+//book Folder Translated
+%f5f5dc
+^000088Manuk Selling Item^000000
+
+You can purchase following items with the Manuk Coin.
+
+^008040[Manuk's Oppertunity]^000000
+Supplement made by the Manuk Research Center. It is officially recommended to the Mine Workers.
+Physical Attack Damage done to the monsters in Manuk Area increases by 10% for 10minutes.
+^000088(Nepenthes, Centipiede, CentipedeLarva, Hilsrion, Tatacho, Hardrock Mommoth)^000000
+^ffffff_^000000
+Weight : ^7777775^000000
+
+
+^008040[Manuk's Courage]^000000
+Supplement made by the Manuk Research Center. It is officially recommended to the Mine Workers.
+Physical & Magical Damage from the monsters in Manuk Area decreased by 10% for 10minutes.
+^000088(Nepenthes, Centipiede, CentipedeLarva, Hilsrion, Tatacho, Hardrock Mommoth)^000000
+^ffffff_^000000
+Weight : ^7777775^000000
+
+
+^008040[Manuk's Faith]^000000
+Supplement made by the Manuk Research Center. It is officially recommended to the Mine Workers.
+Magical Attack Damage done to the monsters in Manuk Area increases by 10% for 10minutes.
+^000088(Nepenthes, Centipiede, CentipedeLarva, Hilsrion, Tatacho, Hardrock Mommoth)^000000
+^ffffff_^000000
+Weight : ^7777775^000000
+
+6073#
+Mysterious blue mane of the dragon. It is used to decorate for its beautiful color and silky touch.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+6074#
+Slightly worn note. Becareful not to lose its pages!
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+6075#
+the one and only tear drop of the Aqua Elemental.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+6076#
+Toolbox consists of portable tools for collecting an ore or a plant.
+They include a small rockhammer and a radar.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+6077#
+Roughly collected ore.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+6078#
+Small fragments of the broken stone.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+6084#
+Fragmented Bradium's piece. Laphine were experimenting on it and it's quality is different from the refined bradium at Manuk.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+6085#
+A Muffler made out of unacquainted materials and technique. It is Manuk's Sapha tribe's favorite muffler.
+It's worn out. The name is inscripted on the tip of muffler.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+6079#
+Wild flower easily found in Alfheim.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+6080#
+Currency used in Manuk.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+6081#
+Currency used in Splendide Outpost.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+6082#
+Perfume made by distilled flowers of Alfheim. It smells cozy and nostalgic.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+12342#
+Supplement made by the Manuk Research Center. It is officially recommended to the Mine Workers.
+Physical Attack Damage done to the monsters in Manuk Area increases by 10% for 10minutes.
+^000088(Nepenthes, Centipiede, CentipedeLarva, Hilsrion, Tatacho, Hardrock Mommoth)^000000
+^ffffff_^000000
+Weight : ^7777775^000000
+#
+
+12343#
+Supplement made by the Manuk Research Center. It is officially recommended to the Mine Workers.
+Physical & Magical Damage from the monsters in Manuk Area decreased by 10% for 10minutes.
+^000088(Nepenthes, Centipiede, CentipedeLarva, Hilsrion, Tatacho, Hardrock Mommoth)^000000
+^ffffff_^000000
+Weight : ^7777775^000000
+#
+
+12344#
+Sweet Jam made out of a Pinguicula's fruit.
+Physical Attack Damage done to the monsters in Manuk Area increases by 10% for 10minutes.
+^000088(Pinguicula, Luciola Vespa, Cornus, Naga, Tendrillion)^000000
+^ffffff_^000000
+Weight : ^7777775^000000
+#
+
+12345#
+Jam made out of Luciola's Honey and Herb.
+Physical & Magical Damage from the monsters in Manuk Area decreased by 10% for 10minutes.
+^000088(Pinguicula, Luciola Vespa, Cornus, Naga, Tendrillion)^000000
+^ffffff_^000000
+Weight : ^7777775^000000
+#
+
+12346#
+Puckery unripe acorn. Better not eat this.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+12347#
+Jelly made out of an unripe acorn flour.
+Usually an acron jelly is delicately-flavored, but not this one.
+^ffffff_^000000
+Weight : ^7777775^000000
+#
+
+12348#
+Supplement made by the Manuk Research Center. It is officially recommended to the Mine Workers.
+Magical Attack Damage done to the monsters in Manuk Area increases by 10% for 10minutes.
+^000088(Nepenthes, Centipiede, CentipedeLarva, Hilsrion, Tatacho, Hardrock Mommoth)^000000
+^ffffff_^000000
+Weight : ^7777775^000000
+#
+
+12349#
+Potion made out of Cornus' Tears. Never know how they obtained the tear drop.
+Magical Attack Damage done to the monsters in Manuk Area increases by 10% for 10minutes.
+^000088(Pinguicula, Luciola Vespa, Cornus, Naga, Tendrillion)^000000
+Weight : ^7777775^000000
+#
+
+// ----------- New Combination Headgear Items ------------
+
+5436#
+Neatly made wedding corolla. Quivering huge silk ribbon is attached back of it.
+LUK + 3. MDEF + 2
+Type : ^777777Headgear^000000    Defense : ^7777771^000000
+Equip : ^777777Upper^000000    Weight : ^77777720^000000
+Job : ^777777Every Classes^000000
+#
+
+5437#
+A lotus flower which fairies wears on their head..
+INT + 1. MDEF + 1
+Damage from the Insect type monsters decreased by 5%.
+Type : ^777777Headgear^000000    Defense : ^7777771^000000
+Equip : ^777777Upper^000000    Weight : ^77777720^000000
+Job : ^777777Every Classes^000000
+#
+
+5438#
+It is used to bind one's hair and a small ribbon emphasizes the cuteness.
+SP + 20. Unrefinable.
+Type : ^777777Headgear^000000    Defense : ^7777771^000000
+Equip : ^777777Upper^000000    Weight : ^77777710^000000
+Job : ^777777Every Classes except Novice^000000
+#
+
+5439#
+It is used to bind one's hair and a small ribbon emphasizes the cuteness.
+SP + 20. Unrefinable.
+Type : ^777777Headgear^000000    Defense : ^7777771^000000
+Equip : ^777777Upper^000000    Weight : ^77777710^000000
+Job : ^777777Every Classes except Novice^000000
+#
+
+5440#
+It is used to bind one's hair and a small ribbon emphasizes the cuteness.
+SP + 20. Unrefinable.
+Type : ^777777Headgear^000000    Defense : ^7777771^000000
+Equip : ^777777Upper^000000    Weight : ^77777710^000000
+Job : ^777777Every Classes except Novice^000000
+#
+
+5441#
+It is used to bind one's hair and a small ribbon emphasizes the cuteness.
+SP + 20. Unrefinable.
+Type : ^777777Headgear^000000    Defense : ^7777771^000000
+Equip : ^777777Upper^000000    Weight : ^77777710^000000
+Job : ^777777Every Classes except Novice^000000
+#
+
+5442#
+A Tie binded to wear it on a head. 
+VIT + 1
+When equipped with [Blush], Attack Speed and Casting Speed increases by 3%.
+Hit -5. Sp Consume increases by 5%.
+Type : ^777777Headgear^000000    Defense : ^7777773^000000
+Equip : ^777777Upper^000000    Weight : ^77777710^000000
+Required Level : ^77777770^000000
+Job : ^777777Every Classes^000000
+#
+
+5443#
+Statue of peeing baby angel. It's a bit embarassing to wear it.
+MDEF + 2
+Randomly auto-casts 'Recovery Lv.1' when attacked physically.
+Type : ^777777Headgear^000000    Defense : ^7777773^000000
+Equip : ^777777Upper^000000    Weight : ^77777760^000000
+Required Level : ^77777770^000000
+Job : ^777777Every Classes^000000
+#
+
+5444#
+Red brush pinned on a head.
+CRI + 6
+Type : ^777777Headgear^000000    Defense : ^7777770^000000
+Equip : ^777777Upper^000000    Weight : ^77777710^000000
+Job : ^777777Every Classses^000000
+#
+
+5445#
+Candy Cane. Brush your teeth after eating this.
+SP + 5
+Type : ^777777Headgear^000000    Defense : ^7777770^000000
+Equip : ^777777Lower^000000    Weight : ^77777710^000000
+Job : ^777777Every Classses^000000
+#
+
+5446#
+Hairpin which resembles the shape of cat's paw.
+FLEE + 5, Complete Evade + 3.
+Type : ^777777Headgear^000000    Defense : ^7777770^000000
+Equip : ^777777Upper^000000    Weight : ^77777720^000000
+Job : ^777777Every Classses^000000
+#
+
+5447#
+A hat resembles the Frog God. Even if its the God of Frog, it looks the same as any other frogs.
+Physical and Magical Attack dagmage done to insect type monsters increases by 12%.
+MDEF + 1
+Type : ^777777Headgear^000000    Defense : ^7777773^000000
+Equip : ^777777Upper^000000    Weight : ^77777750^000000
+Required Level : ^77777770^000000
+Job : ^777777Every Classses^000000
+#
+
+5448#
+A box with a peeking hole. You can show others how you can play alone with no problem.
+Able to use 'Graffitti Lv. 1'.
+Type : ^777777Headgear^000000    Defense : ^7777770^000000
+Equip : ^777777Upper-Mid-Lower^000000    Weight : ^77777730^000000
+Job : ^777777Every Classses^000000
+#
+
+5449#
+A box with a peeking hole. You can show others how you can play alone with no problem.
+Able to use 'Graffitti Lv. 1'.
+Type : ^777777Headgear^000000    Defense : ^7777770^000000
+Equip : ^777777Upper-Mid-Lower^000000    Weight : ^77777730^000000
+Job : ^777777Every Classses^000000
+#
+
+// ----------- Newly added Ep 13.2 Items ------------
+
+1643#
+A Staff made out of magical wood. It posesses huge magical power, but it will make you look like an elder.
+INT + 4.
+INT increases by the refine Lv., but MHP and MSP will decrease.
+From the refine Lv. +6, INT 1 increases, and  MHP -200, MSP -100 .
+MATK + 15.
+Type : ^777777Staff^000000  Attack : ^777777100^000000
+Weight : ^77777710^000000
+Weapon Level : ^7777774^000000
+Required Level : ^77777770^000000
+Job : ^777777Mage Class / Acolyte Class / Soul Linker^000000
+#
+
+2783#
+A ring with small bead setted in. Feels like the bead is watching me.
+CRI + 2, MSP + 25.
+Type : ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^77777710^000000
+Required Level : ^77777770^000000
+Job : ^777777Every Classses except Novice^000000
+#
+
+6086#
+Completely withered flower. Wonder how it looked when it was at its full-bloom.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+6087#
+Brightly shining jewel with a very small size. Some of rare ones are blessed by the fairy.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+6088#
+Brightly shining jewel with a very small size. Some of rare ones are blessed by the fairy.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+6089#
+A bead keeping dusky darness inside. It feels like you could look beyond the universe through it if you look close.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+6090#
+Purified Bradium which is the Ore of the other world. It looks like an Ice, but it's warm.
+^ffffff_^000000
+Weight : ^7777775^000000
+#
+
+6091#
+A huge magical bloody-red dragon scale. Luckly, it doesn't smell fishy.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+6093#
+Draco's Egg about to be hatched. If you take a good care of it, you may have the chance to see baby draco.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+12353#
+Water close to my body. Water's so cool as if it was just taken out of the fridge.
+A Weapon becomes water-elemental for 90sec.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+// ----------- EP13.2 Newly Added Items ------------
+
+1188#
+A Sword only allowed for the master of sword to use.
+When master 'Bash', the skill's attack power increases by 50%
+When master 'Rolling Bash', the skill's attack power increases by 50%
+Str + 1, Dex + 1
+Type : ^777777Two-Handed Sword^000000    Attack : ^777777180^000000
+Weight : ^777777200^000000
+Weapon Level : ^7777774^000000
+Required Level : ^77777780^000000
+Job : ^777777Swordman Class Only^000000
+#
+
+1384#
+an Axe made out of the metal which the Ancient God of Blacksmith gave to human.
+If someone handy with metals uses this axe, it will show the incredible power. 
+Autocasts 'Magnum Break Lv. 3' when using 'Hammer Fall' by 5% probablity.
+Forging Dagger Master ATK +10
+Forging Sword Master ATK +10
+Forging Two-Handed Sword Master ATK +10
+Forging Knuckle Master ATK +10
+Forging Spear Master ATK +10
+Forging Axe Master ATK +10
+Forging Mace Master ATK +10
+Vit + 2
+Type : ^777777Two-Handed Axe^000000    Attack : ^777777250^000000
+Weight : ^777777300^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777780^000000
+Job : ^777777Merchant Classes Only^000000
+#
+
+1385#
+Stone hammer made out of the Bradium.
+Stun % increased by 5% when using Hammer Fall
+Stun % increased by 2% for every 1 refine level when using Hammer Fall
+Type : ^777777Two-Handed Axe^000000    Attack : ^777777210^000000
+Weight : ^777777270^000000
+Weapon Level : ^7777774^000000
+Required Level : ^77777775^000000
+Job : ^777777White Smith^000000
+#
+
+1548#
+Hard Hammer made out of the piece of meteorite from the space.   
+Ancient clerics said it to be blessed by God. 
+Healed amount increases by 1% every 1 level of Divine Protection.
+CRI + 2 % for every level of Mace Mastery.
+Int + 1, Luk + 1
+Type : ^777777Mace^000000    Attack : ^777777160^000000
+Weight : ^777777180^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777780^000000
+Job : ^777777Acolyte Class^000000
+#
+
+2138#
+Heavy and strong shield made out of the Bradium.
+MHP + 500
+Attack power of the skill 'Shield Boomerang' increases by 60%
+Agi - 1
+Type : ^777777Shield^000000    Defense : ^7777775^000000
+Weight : ^777777180^000000
+Required Level : ^77777765^000000
+Job : ^7777772nd Transcendent Job Classes^000000
+#
+
+2399#
+Inner wear made out of Draco's mane.
+MDEF +  3
+When equipped with Dragon Manteau,  AGI + 5 / FLEE + 15 
+Type : ^777777Armor^000000    Defense : ^7777773^000000
+Weight : ^77777750^000000
+Job : ^777777Every Transcendent Job Classes^000000
+#
+
+2450#
+Shoes made out of the stem of the Tree of Life.
+It is comfortable and gives the life energy to the wearer.
+HP recovery speed increases by 5% 
+MHP + 10%
+Recovers 30 HP every 10 seconds
+Received/used heal/recovery item's effect increased by 5%
+MDEF + 3, VIT + 2
+Type : ^777777Shoes^000000    Defense : ^7777774^000000
+Weight : ^77777750^000000
+Required Level : ^77777760^000000
+Job : ^777777Every Transcendent Job Classes except Novice Classes^000000
+#
+
+2553#
+Manteau out of Draco's mane.
+AGI + 1, MDEF + 5
+Type : ^777777Clothes^000000    Defense : ^7777775^000000
+Weight : ^777777100^000000
+Job : ^777777Every Transcendent Classes except Novice Classes^000000
+#
+
+2554#
+Cloth made out of a scale of the Nydhog's Agent. 
+Still, it posesses a strong power within.
+7% Resistance to every elemental attacks
+Level/3 + (Refine Lv.*10) of SP increases.
+With 1% probablity, recovers 1% amount of given damage to SP.
+MDEF + 3
+Type : ^777777Clothes^000000    Defense : ^7777775^000000
+Weight : ^77777740^000000
+Required Level : ^77777790^000000
+Job : ^777777Every Transcendent Job Classes except Novice Classes^000000
+#
+
+2787#
+Brooch made out of tear drops of the Aqua Elemental.
+Water Elemental Damage decreased by 5%                                                                                                                                                      MHP + 80, MDEF +  2
+Type : ^777777Accessory^000000    Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Level : ^77777775^000000
+Job : ^777777Every Transcendent Job Classes except Novice Classes^000000
+#
+
+2788#
+Warm feeling earring made out of the Bradium Ore.
+MATK + 2%, INT + 1, DEX + 1
+Type : ^777777Accessory^000000    Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Level : ^77777760^000000
+Job : ^777777Every Transcendent Job Classes except Novice Classes^000000
+#
+
+2789#
+Very hard ring made out of the Bradium Ore.
+ATK + 2%, STR + 1, VIT + 1
+Type : ^777777Accessory^000000    Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Level : ^77777760^000000
+Job : ^777777Every Transcendent Job Classes except Novice Classes^000000
+#
+
+2790#
+Brooch made out the Bradium Ore. 
+FLEE +4, Attack Speed increases by 2% , AGI + 1
+Type : ^777777Accessory^000000    Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Level : ^77777760^000000
+Job : ^777777Every Transcendent Job Classes except Novice Classes^000000
+#
+
+15000#
+Dark Plate Armor covered with sharp bones.
+When attacked, autocasts 'bleeding' around 5x5 cells the player with 1% chance.
+Ignore 10% of the DEF of the human & animal type. 
+STR + 1, MDEF + 3
+Type : ^777777Armor^000000    Defense : ^7777777^000000
+Weight : ^777777100^000000
+Required Level : ^77777785^000000
+Job : ^777777Trascendent Thief Classes^000000
+#
+
+// -----------  Ep 13.2 additional equipment items ------------
+
+1189#
+Strong looking sword which resembles the shape of Claymore. Its handgrip part is decorated in red color for the High Class Knight.
+When STR is over 95, ATK + 20.
+Type : ^777777Two-Handed Sword^000000 Attack : ^777777200^000000
+Weight : ^777777380^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Swordman Classes^000000
+#
+
+1284#
+A Katar decorated in black. It requires huge strength to just weave it.
+Damage of 'Grim Tooth' increases by 10%. Close ranged physical attack will randomly autocast 'Sonic Blow Lv. 1'. (Player's learned Lv. of skill will be activated.)
+Type : ^777777Katar^000000 Attack : ^777777120^000000
+Weight : ^777777120^000000
+Required Level : ^77777750^000000
+Job : ^777777Assassin Cross Only^000000
+#
+
+1285#
+A rare design for Katar, its design has the meaning of 'transmigration'.
+When master the Katar mastery, HIT + 10, 'Meteor Assault' 's attack power increases by 20%.
+Type : ^777777Katar^000000 Attack : ^777777130^000000
+Weight : ^777777100^000000
+Required Level : ^77777750^000000
+Job : ^777777Assassin Cross Only^000000
+#
+
+1311#
+A luxurious Axe decorated in red color. It makes a wind with an unique sound when you weave it.
+When LUK is over 90, ATK +20. When DEX is over 90, CRI +5. LUK and DEX are all over 90, additional 15% damage increased for 'Mammonite'.
+Type : ^777777One-Handed Axe^000000 Attack : ^777777140^000000
+Weight : ^777777150^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Swordman/Merchant Classes^000000
+#
+
+1387#
+This giant axe seems like it's impossible to pick up and weave.
+'Cart Termination''s attack power increases by 15%. When STR is over 95, HIT + 10, attack speed increases by 3%.
+Type : ^777777Two-Handed Axe^000000 Attack : ^777777330^000000
+Weight : ^777777400^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Swordman/Merchant Classses^000000
+#
+
+1646#
+Highclass mage's staff decorated with rich tail-feather.  It is specially treated for ice elemental magical spell, 'Stormgast'.
+MATK + 15%.
+INT + 4, MDEF +1 for every 1 refine Lv., Stormgast's damage increases by 1%. When the refine Lv. reaches +10, casting speed of 'Stormgast' increases by 8%.
+Type : ^777777Staff^000000 Attack : ^77777730^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Mage Classes^000000
+#
+
+1647#
+Official staff for High Class Clerics. It is decorated with red Prontera Cathedral Emblem.
+MATK + 15%, INT +4. Holy Elemental.
+When using 'Heal', randomly autocasts 'Blessing' to self.(Blessing skill will be casted with the player's learned skill level)
+Type : ^777777Staff^000000 Attack : ^77777730^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Acolyte Classes^000000
+#
+
+1648#
+A short, simply designed staff like a baton. A jewel with the power of justice is setted on it.
+MATK + 15%, INT +2, DEX +1.
+When master 'Dragonology', consumed SP amount decreased by 1%, INT +3.
+Type : ^777777Staff^000000 Attack : ^77777730^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Mage Classes^000000
+#
+
+1745#
+A Red Bow which resembles the look of flying falcon. It's elegant and beautiful. Specialized for using skills.
+Sharp Shooting, Double Strafing, Charge Arrow's damage increased by 10%.
+Type : ^777777Bow^000000 Attack : ^777777100^000000
+Weight : ^777777100^000000
+Required Level : ^77777750^000000
+Job : ^777777Sniper Only^000000
+#
+
+2004#
+its upper part is decorated with a golden dragon and a crystal with strong magical power compressed in it. It looks nice, but it's too heavy to carry around.
+MATK + 20%. INT +3, MHP +300.
+For every 2 refine Lv., INT +1, MHP +50.  When attack with a magical spell, MATK +12%, consumed SP increased by 20% for 5seconds with a low probability.
+Type : ^777777Two-Handed Staff^000000 Attack : ^77777730^000000
+Weight : ^777777100^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Mage Classes^000000
+#
+
+2005#
+Sacred Goddess of light is carved onto this long staff.
+MATK + 15%, INT +6, VIT +2. Holy Elemental.
+Recovers MSP 200 with a low probability when using 'Heal'.  MATK + 1% for every 1 refine Lv..
+Type : ^777777Two-Handed Staff^000000 Attack : ^77777730^000000
+Weight : ^777777100^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Acolyte Classes^000000
+#
+
+13046#
+This dagger is intended to give more pain then killing the target with its thorny shape.
+When using 'Back Stab', % of bleeding increases by 10%  and the skill damage increases by 15%.
+Type : ^777777Dagger^000000 Attack : ^777777110^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Thief Classes^000000
+#
+
+13047#
+The Name means 'War'. Its saw-shaped blade is covered with poison.
+Gives poisonous attack with 10% probability when using Ambush. When attack with close ranged physical attacks, ATK increases by 5% randomly.
+Type : ^777777Dagger^000000
+Attack : ^777777135^000000
+Weight : ^7777775^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Thief Classes^000000
+#
+
+13421#
+This short sword is improved for easy-use. It looks better with its Ruby decoration in the grip.
+When attack in close-range, 'Balling Bash' and 'Bash''s attack power increases by 20% for 15 seconds with 0.5% probability.
+Type : ^777777One-Handed Sword^000000 Attack : ^777777170^000000
+Weight : ^777777150^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Swordman/Merchant Classes^000000
+#
+
+16000#
+This mace's shape is motivated from the Snake, which is symbolizes the fountain of knowledge.
+MSP + 50.
+Attack power of 'Acid Terror' and 'Demonstration' increases by 20%. Every potion's recover amount increases by 10%.
+Type : ^777777Mace^000000
+Attack : ^777777130^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Swordman/Merchant/Acolyte Classes^000000
+#
+
+16001#
+Official Bag of the Alchemist Society. Its unique design and bright red color is pupular among womens.
+MHP +200.
+Attack power of 'Acid Terror' and 'Demonstration' increases by 20%. When STR is over 90, 5% stun % with close-ranged physical attack, when a monster is killed, it drops a potion.
+Type : ^777777Mace^000000 Attack : ^777777130^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Job : ^777777Transcendent Swordman/Merchant/Acolyte Classes^000000
+#
+
+// ------------------------Indonesia Jewel Event-------------------------
+7577#
+A jewel which shines yellow.
+^ffffff_^000000
+Weight : ^7777775^000000
+#
+7575#
+A jewel which shines red.
+^ffffff_^000000
+Weight : ^7777775^000000
+#
+7576#
+A jewel which shines blue.
+^ffffff_^000000
+Weight : ^7777775^000000
+#
+
+//HiddenSocket
+4700#
+STR+1
+^ffffff_^000000
+#
+4701#
+STR+2
+^ffffff_^000000
+#
+4702#
+STR+3
+^ffffff_^000000
+#
+4703#
+STR+4
+^ffffff_^000000
+#
+4704#
+STR+5
+^ffffff_^000000
+#
+4705#
+STR+6
+^ffffff_^000000
+#
+4706#
+STR+7
+^ffffff_^000000
+#
+4707#
+STR+8
+^ffffff_^000000
+#
+4708#
+STR+9
+^ffffff_^000000
+#
+4709#
+STR+10
+^ffffff_^000000
+#
+4710#
+INT+1
+^ffffff_^000000
+#
+4711#
+INT+2
+^ffffff_^000000
+#
+4712#
+INT+3
+^ffffff_^000000
+#
+4713#
+INT+4
+^ffffff_^000000
+#
+4714#
+INT+5
+^ffffff_^000000
+#
+4715#
+INT+6
+^ffffff_^000000
+#
+4716#
+INT+7
+^ffffff_^000000
+#
+4717#
+INT+8
+^ffffff_^000000
+#
+4718#
+INT+9
+^ffffff_^000000
+#
+4719#
+INT+10
+^ffffff_^000000
+#
+4720#DEX+1
+^ffffff_^000000
+#
+4721#
+DEX+2
+^ffffff_^000000
+#
+4722#
+DEX+3
+^ffffff_^000000
+#
+4723#
+DEX+4
+^ffffff_^000000
+#
+4724#
+DEX+5
+^ffffff_^000000
+#
+4725#
+DEX+6
+^ffffff_^000000
+#
+4726#
+DEX+7
+^ffffff_^000000
+#
+4727#
+DEX+8
+^ffffff_^000000
+#
+4728#
+DEX+9
+^ffffff_^000000
+#
+4729#
+DEX+10
+^ffffff_^000000
+#
+4730#
+AGI+1
+^ffffff_^000000
+#
+4731#
+AGI+2
+^ffffff_^000000
+#
+4732#
+AGI+3
+^ffffff_^000000
+#
+4733#
+AGI+4
+^ffffff_^000000
+#
+4734#
+AGI+5
+^ffffff_^000000
+#
+4735#
+AGI+6
+^ffffff_^000000
+#
+4736#
+AGI+7
+^ffffff_^000000
+#
+4737#AGI+8
+^ffffff_^000000
+#
+4738#
+AGI+9
+^ffffff_^000000
+#
+4739#
+AGI+10
+^ffffff_^000000
+#
+4740#
+VIT+1
+^ffffff_^000000
+#
+4741#
+VIT+2
+^ffffff_^000000
+#
+4742#
+VIT+3
+^ffffff_^000000
+#
+4743#
+VIT+4
+^ffffff_^000000
+#
+4744#
+VIT+5
+^ffffff_^000000
+#
+4745#
+VIT+6
+^ffffff_^000000
+#
+4746#
+VIT+7
+^ffffff_^000000
+#
+4747#
+VIT+8
+^ffffff_^000000
+#
+4748#
+VIT+9
+^ffffff_^000000
+#
+4749#
+VIT+10
+^ffffff_^000000
+#
+4750#
+LUK+1
+^ffffff_^000000
+#
+4751#
+LUK+2
+^ffffff_^000000
+#
+4752#
+LUK+3
+^ffffff_^000000
+#
+4753#
+LUK+4
+^ffffff_^000000
+#
+4754#
+LUK+5
+^ffffff_^000000
+#
+4755#
+LUK+6
+^ffffff_^000000
+#
+4756#
+LUK+7
+^ffffff_^000000
+#
+4757#
+LUK+8
+^ffffff_^000000
+#
+4758#
+LUK+9
+^ffffff_^000000
+#
+4759#
+LUK+10
+^ffffff_^000000
+#
+//---------------item Jan 2010--------------
+5512#
+This diadem honors Aquarius, the 11th astrological sign in the zodiac calendar. Its power increases defense from Wind attacks. 
+STR + 2, FLEE + 10, 
+Increases attack resistance to Wind property by 5%.			
+If refined to 7 or higher,
+DEF + 1, ATK + 15.
+^ffffff_^000000
+Item Class : ^777777Helm^000000
+Defense : ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Level : ^77777770^000000
+Job : ^777777All^000000
+#			
+5513#
+This crown honors Aquarius, the 11th astrological sign in the zodiac calendar. Its power increases defense from Wind attacks. 
+STR + 2, FLEE + 10, 
+Increases attack resistance to Wind property by 5%.			
+If refined to 7 or higher,
+DEF + 1, ATK + 15.	
+^ffffff_^000000
+Item Class : ^777777Helm^000000
+Defense : ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Level : ^77777770^000000
+Job : ^777777All^000000
+#			
+5514#
+This diadem honors Pisces, the 12th astrological sign in the zodiac calendar. Its power increases defense from Water attacks.
+INT + 2,MDEF +5
+Increases resistance to Water attacks by 5%.
+If refined to 7 or higher,
+DEF + 1, ATK + 15.			
+^ffffff_^000000
+Item Class : ^777777Helm^000000
+Defense : ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Level : ^77777770^000000
+Job : ^777777All^000000
+#			
+5515#
+This crown honors Pisces, the 12th astrological sign in the zodiac calendar. Its power increases defense from Water attacks.
+INT +2, MDEF +1,
+Increases resistance to Water attacks by 5%.
+If refined to 7 or higher,
+MDEF +5, MATK +2%.
+^ffffff_^000000
+Item Class : ^777777Helm^000000
+Defense : ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Level : ^77777770^000000
+Job : ^777777All^000000
+#
+5545#
+A magnificent diadem created to pay tribute to the 1st sign of the zodiac, Aries the Ram.
+Attached to the crown is a Diamond gemstone, the birthstone for those born under this sign.
+Its power increases defense from Fire attacks.
+MATK + 2%, INT +2,
+Increases resistance to Fire Property by 5%.
+If refined to 7 or higher,
+MDEF +5, Def +1.
+^ffffff_^000000
+Item Class : ^777777Helm^000000
+Defense : ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Level : ^77777770^000000
+Job : ^777777All^000000
+#
+14495#
+A box that contains an Aquarius Diadem Headgear.
+
+Weight : ^7777771^000000
+#			
+14496#
+A box that contains an Aquarius Crown Headgaer.
+
+Weight : ^7777771^000000
+#			
+14497#
+A box that contains a Pisces Diadem Headgear.
+
+Weight : ^7777771^000000
+#			
+14498#
+A box that contains a Pisces Crown Headgear.
+
+Weight : ^7777771^000000
+#
+5609#
+When you have it, you can feel a splendid aristocratic atmosphere of chung.
+LUK + 3.
+When you are under physical attack, it uses Lv5 Mammonite skill by low chance.
+(if you don't have zeny, it doesn't work.)
+Class : ^777777Headgear^000000 Defense : ^7777775^000000
+Position: ^777777Upper ^000000 Weight : ^77777750^000000
+Required level : ^77777760^000000
+Jobs : ^777777All^000000
+#
+5610#
+This is earrings which made of ice and special compound. whe you wear it, you can feel cool!
+LUK + 1.
+When you are under attack, it uses Lv5 autospell coldbolt skill by low chance.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Position: ^777777Middle ^000000 Weight : ^77777710^000000
+Required level : ^77777710^000000
+Jobs : ^777777All^000000
+#
+5611#
+The hat formed a cute turtle doll.
+AGI + 1.
+When you are under attack, it decreases Lv3 autospell agility skill by low chance.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Position: ^777777Middle ^000000 Weight : ^77777730^000000
+Required level : ^77777710^000000
+Jobs : ^777777All^000000
+#
+16410#
+A box  that contains a Chung Hairband.
+Weight : ^7777771^000000
+#
+16412#
+A box that contains an Ice wing ear.
+Weight  : ^7777770^000000
+#
+16414#
+A box that contains a Turtle hat.
+Weight  : ^7777771^000000
+#
+//-------2010 Valentine----------
+7975#
+A chocolate that you can receive from Cupid to commemorate St.Valentine.
+Only one for one person.
+Weight : ^7777770^000000
+#
+11502#	
+A potion made from	
+grinded Blue Herbs that restores about ^00008860 SP^000000.	
+^ffffff_^000000	
+Weight : ^7777771^000000	
+#
+11501#
+A white potion that
+has been condensed
+to reduce its weight
+and increase its
+effectiveness.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+//-------2010 Easter Event----------
+5852#
+A colorful egg shell that seems fragile but has mysterious power in it.
+MDEF - 7.
+Recover HP by 1% in every 10 seconds.
+If refined higher than +7, increase FLEE + 2.
+If refined higher than +9, recover SP by 1% in every 10 seconds.
+Class: ^777777Headgear^000000 Defense: ^777777-7^000000
+Head Position: ^777777Upper^000000 Weight: ^77777750^000000
+Required Level: ^77777740^000000
+Jobs : ^777777All^000000
 #
 // End of File

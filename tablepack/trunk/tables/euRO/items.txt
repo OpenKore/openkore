@@ -1301,13 +1301,13 @@
 2510#Novice_Hood#
 2352#Novice_Plate#
 
-// ---- ¶у±ЧіЄ·ОЕ© »уїлИ­ 1БЦів ±від ѕЖАМЕЫ ----------------
+// ---- ¶ó±×³ª·ÎÅ© »ó¿ëÈ­ 1ÁÖ³â ±â³ä ¾ÆÀÌÅÛ ----------------
 2631#First_Age_Ring#
 7146#Vacation_Ticket#
 7147#Jasmine#
 7148#Mother's_Letter#
 
-// ---- ѕЖё¶Вк °ь·Г ГЯ°Ў ѕЖАМЕЫ - 01 ----------------
+// ---- ¾Æ¸¶Âê °ü·Ã Ãß°¡ ¾ÆÀÌÅÛ - 01 ----------------
 
 663#Korean_Rice_Cake#
 7149#Yellow_Plate#
@@ -1324,7 +1324,7 @@
 7160#Lord_Pass_Ticket#
 551#Sushi#
 
-// ---- Дп·й °ь·Г ГЯ°Ў ѕЖАМЕЫ - 01 -----------
+// ---- Äï·é °ü·Ã Ãß°¡ ¾ÆÀÌÅÛ - 01 -----------
 552#KETUPAT#
 553#Bun#
 7161#Black_Bear's_Skin#
@@ -1344,7 +1344,7 @@
 2634#Bridegroom Ring#
 2635#Bride Ring#
 
-// ---- їт№Я¶у °ь·Г ГЯ°Ў ѕЖАМЕЫ - 01 -----------
+// ---- ¿ò¹ß¶ó °ü·Ã Ãß°¡ ¾ÆÀÌÅÛ - 01 -----------
 7183#Letter_from_Sister#
 7184#Piano_Keyboard#
 7185#Quiz_Ticket#
@@ -1368,7 +1368,7 @@
 7203#Tough_Branch#
 7204#Gunpowder#
 
-// -----ґПЗГЗмАУ-----------
+// -----´ÏÇÃÇìÀÓ-----------
 
 7205#Piece of Black Cloth#
 7206#Black Kitty Doll#
@@ -1393,7 +1393,7 @@
 7225#Pumpkin Bucket#
 7226#Pill#
 
-//Е©ё®Ѕєё¶Ѕє АМ№кЖ® 2004
+//Å©¸®½º¸¶½º ÀÌ¹êÆ® 2004
 7174#Packing_Ribbon#
 7175#Packing_Paper#
 // The Sign
@@ -1457,14 +1457,14 @@
 //New Novice training ground(2)
 569#Novice_Potion#
 
-// --------- єОИ°Аэ АМєҐЖ® ---------
+// --------- ºÎÈ°Àý ÀÌº¥Æ® ---------
 574#Egg#
 12019#Holy_Egg#
 
 //Jawaii
 681#Memory_of_Wedding#
 
-// ----- БЯ±№·ОДГ¶уАМВЎ -----
+// ----- Áß±¹·ÎÄÃ¶óÀÌÂ¡ -----
 7252#Eastern_Medicine#
 679#Gold_Pill#
 7262#Fan_of_Cat_Monster#
@@ -2442,7 +2442,7 @@
 7536#Louyang_Completed_Photo_Album#
 7537#Ayothaya_Completed_Photo_Album#
 
-// -------------------------- јТДПАОГ¦Ж® ЅЕ±Ф№«±вГЯ°Ў ----------------------------
+// -------------------------- ¼ÒÄÏÀÎÃ¦Æ® ½Å±Ô¹«±âÃß°¡ ----------------------------
 
 1816#Berserk#
 1532#Stunner#
@@ -2481,7 +2481,7 @@
 
 5356#Festival_Pumpkin_Hat#
 
-// ------------------- 2006 »у№Э±в ЅЕ±ФД«µе ГЯ°Ў.-----------------------
+// ------------------- 2006 »ó¹Ý±â ½Å±ÔÄ«µå Ãß°¡.-----------------------
 
 4332#Waste_Stove_Card#
 4333#Venomous_Card#
@@ -2560,7 +2560,7 @@
 4406#Skeggiold_Card#
 4407#Randgris_Card#
 
-// ------------- ѕЖ·зіЄ »у№Э±в -----------
+// ------------- ¾Æ·ç³ª »ó¹Ý±â -----------
 
 7561#Glacial_Heart#
 7562#Ice_Scale#
@@ -2579,7 +2579,7 @@
 587#Red_Prickly_Fruit#
 2422#High_Fashion_Sandals#
 
-// -----------------------2006 »у№Э±в Ех±ёѕЖАМЕЫ--------------------------
+// -----------------------2006 »ó¹Ý±â Åõ±¸¾ÆÀÌÅÛ--------------------------
 
 5169#Bride_Mask#
 5170#Feather_Beret#
@@ -2591,7 +2591,7 @@
 5176#Hahoe_Mask#
 5177#Mythical_Lion_Mask#
 
-// -------------- 2006 ГЯ°ЎѕЖАМЕЫ -------------
+// -------------- 2006 Ãß°¡¾ÆÀÌÅÛ -------------
 
 5184#Captain_Hat#
 12183#Holy_Arrow_Quiver#
@@ -2766,7 +2766,7 @@
 1563#Sage's_Diary#
 1623#Mighty_Staff#
 1817#Kaiser_Knuckle#
-// ---------------- ГҐАР±в --------------------
+// ---------------- Ã¥ÀÐ±â --------------------
 11000#History_book_of_Prontera#
 11001#Adventure_Story_Vol.1#
 11002#Chef_King_Orleans_Vol.1#
@@ -2778,11 +2778,11 @@
 11008#Biographical_Dictionary_Copy_Edition#
 11009#Adventure_Story_Vol.2#
 
-// ------------------- ЕдёЈИ­»к ДщЅєЖ® ѕЖАМЕЫ ---------------------
+// ------------------- Åä¸£È­»ê Äù½ºÆ® ¾ÆÀÌÅÛ ---------------------
 7704#Broken_Thermometer#
 7705#Note_of_Geologist#
 
-// ------------------- ЕдёЈИ­»к ЅЕ±Ф Аеєс ѕЖАМЕЫ ---------------------
+// ------------------- Åä¸£È­»ê ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ---------------------
 1370#Doom_Slayer#
 1371#Doom_Slayer#
 13163#Long_Barrel#
@@ -2796,13 +2796,13 @@
 2678#Ring_Of_Flame_Lord#
 2679#Ring_Of_Resonance#
 2680#Lesser_Elemental_Ring#
-// ----- Е©ё®Ѕєё¶Ѕє АМєҐЖ® »кЕё јцї° --------
+// ----- Å©¸®½º¸¶½º ÀÌº¥Æ® »êÅ¸ ¼ö¿° --------
 7908#Louise's_Beauty_Coupon#
 7909#Stolen_Cookie#
 7910#Stolen_Candy#
 7911#Yulia's_Hat#
 
-// --------------------- ·ЇЅГѕЖ »у№Э±в АМєҐЖ® ѕЖАМЕЫ -----------------------
+// --------------------- ·¯½Ã¾Æ »ó¹Ý±â ÀÌº¥Æ® ¾ÆÀÌÅÛ -----------------------
 5243#Sharfkey_Hat#
 12232#Ginger_Bread#
 12233#Kvass#
@@ -2812,7 +2812,7 @@
 593#Honey_Pancake#
 594#Sour-Cream_Pancake#
 595#Mushroom_Pancake#
-//ё¶ё®їАіЭ
+//¸¶¸®¿À³Ý
 5141#Marionette_Doll#
 
 //WoE SE
@@ -2871,15 +2871,15 @@
 13902#Fish_Head_Hat_Box#				
 13903#Santa_Poring_Box#				
 13904#Bell_Ribbon_Box#
-//-----------АЇ·ґ4БЦів ёрАЪ°шёрАь------------------------
+//-----------À¯·´4ÁÖ³â ¸ðÀÚ°ø¸ðÀü------------------------
 5395#Tiraya_Bonnet#
-//-----------АЇ·ґ ёрАЪБ¦АЫАЪАМєҐЖ®----------------------
+//-----------À¯·´ ¸ðÀÚÁ¦ÀÛÀÚÀÌº¥Æ®----------------------
 5396#Jasper_Crest#
 
 //-------- 2008 USA Jan event -------
 7912#Portable_Snowman_Machine#	
 //--------- 2008 Lunar New Year ------------
-// ----------- ґлёё Жк ГЯ°Ў ------------------				
+// ----------- ´ë¸¸ Æê Ãß°¡ ------------------				
 9038#New_Year_Doll_Egg#				
 7869#Rice_Pouch#				
 554#Mojji#								
@@ -2889,7 +2889,7 @@
 12196#Hearty_Rice_Cake#				
 12197#Salty_Rice_Cake#				
 12198#Lucky_Rice_Cake#				
-// ---------------------- їлєґјТИЇј­ -------------------------------
+// ---------------------- ¿ëº´¼ÒÈ¯¼­ -------------------------------
 
 
 12153#Bowman_Scroll_1#
@@ -2929,7 +2929,7 @@
 12242#Mercenary_Awakening_Potion#
 12243#Mercenary_Berserk_Potion#
 
-// ---------------- ё±·№АМ ДщЅєЖ® ѕЖАМЕЫ ------------------
+// ---------------- ¸±·¹ÀÌ Äù½ºÆ® ¾ÆÀÌÅÛ ------------------
 7730#Mission_Ticket_1#
 7731#Mission_Ticket_2#
 7732#Mission_Ticket_3#
@@ -2943,17 +2943,17 @@
 7740#Mission_Ticket_11#
 7741#Mission_Ticket_12#
 
-// -------------- 11.3 АвЕЫ -------------------
+// -------------- 11.3 ÀâÅÛ -------------------
 7751#Old_White_Cloth#
 7752#Clattering_Skull#
 7753#Broken_Farming_Utensil#
 7754#Broken_Crown#
 
-// ------------ ДщЅєЖ® ѕЖАМЕЫ -----------------
+// ------------ Äù½ºÆ® ¾ÆÀÌÅÛ -----------------
 7755#Research_Note#
 7756#Sealed_Book#
 
-// ------------------- 11.3 ЅЕ±Ф Аеєс ѕЖАМЕЫ --------------------------
+// ------------------- 11.3 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ --------------------------
 2122#Platinum_Shield#
 2123#Orleans's_Server#
 2124#Thorny_Buckler#
@@ -3020,14 +3020,14 @@
 1974#Carrot_Whip#
 13107#Wasteland's_Outlaw#
 13170#Lever_Action_Rifle#
-// ------------ 11.3 ДщЅєЖ® ѕЖАМЕЫ --------------
+// ------------ 11.3 Äù½ºÆ® ¾ÆÀÌÅÛ --------------
 7722#Debt_Note#
 7723#Diamond_of_Ruin#
 7724#Forbidden_Secret_Art#
 7725#Unlucky_Emerald#
 7726#Token_of_King#
 
-// ----------------- 20070808 ЅЕ±Ф_Card 34Бѕ -----------------
+// ----------------- 20070808 ½Å±Ô_Card 34Á¾ -----------------
 4408#Gloom_Under_Night_Card#
 4409#Agav_Card#
 4410#Echio_Card#
@@ -3103,19 +3103,19 @@
 2769#Archer_Figure#
 2770#Thief_Figure#
 2771#Merchant_Figure#
-// ------------- АьЕхИЦАе ---------------
+// ------------- ÀüÅõÈÖÀå ---------------
 7773#War_Badge#
-// ----------- »уЗ° ѕЖАМЕЫ ---------------
+// ----------- »óÇ° ¾ÆÀÌÅÛ ---------------
 12109#Poring_Box#
-// --------- 2008 јЦ·О АМєҐЖ® ѕЖАМЕЫ ---------------
+// --------- 2008 ¼Ö·Î ÀÌº¥Æ® ¾ÆÀÌÅÛ ---------------
 12300#Wild_Rose_Scroll#
 12301#Doppelganger_Scroll#
 12302#Egnigem_Cenia_Scroll#
-// ---------------- ЖчёµДЪАО -----------------
+// ---------------- Æ÷¸µÄÚÀÎ -----------------
 7539#Poring_Coin#
 
 // ------------- Ep. 12 ---------------
-// ------------- АьАе єё»у ѕЖАМЕЫ ---------------
+// ------------- ÀüÀå º¸»ó ¾ÆÀÌÅÛ ---------------
 13036#Assassin_Damascus#
 13037#Assassin_Damascus#
 13410#Gladiator_Blade#
@@ -3175,17 +3175,17 @@
 13859#Directive_Envelope_A#
 13860#Directive_Envelope_B#
 
-// ------------ ёЮёрё®ѕу ґшАь єё»уЕЫ ----------------
+// ------------ ¸Þ¸ð¸®¾ó ´øÀü º¸»óÅÛ ----------------
 13412#Twin_Edge_of_Naght_Sieger#
 13413#Twin_Edge_of_Naght_Sieger#
 1636#Thorn_Staff_of_Darkness#
 1185#Violet_Fear#
 2542#Flame_Manteau_of_Naght_Sieger#
 
-//ёр·ОЕ© ДБЖјіЩЕ» °Ўµе АОБхј­
+//¸ð·ÎÅ© ÄÁÆ¼³ÙÅ» °¡µå ÀÎÁõ¼­
 7826#Continental_Guard_Paper#
 
-// ------------ ё¶їХ ёр·ОЕ© ----------------
+// ------------ ¸¶¿Õ ¸ð·ÎÅ© ----------------
 2536#Skin_of_Ventus#
 2537#Diabolus_Manteau#
 2728#Cursed_Hand#
@@ -3198,7 +3198,7 @@
 2375#Diabolus_Armor#
 2433#Diabolus_Boots#
 
-// ---------- ЗТВ¦ ЕЧЅєЖ® -----------
+// ---------- ÇÒÂ¦ Å×½ºÆ® -----------
 2129#Exorcism_Bible#
 2130#Cross_Shield#
 2131#Magic_Bible_Vol1#
@@ -3227,26 +3227,26 @@
 1572#Principles_of_Magic#
 1573#Ancient_Magic#
 
-// ------------- АьАе ИЦАе ---------------
+// ------------- ÀüÀå ÈÖÀå ---------------
 7828#Bravery_Badge#
 7829#Valor_Badge#
 
-// -------- єААОАЗ ЅЕАь ѕЖАМЕЫ ------------
+// -------- ºÀÀÎÀÇ ½ÅÀü ¾ÆÀÌÅÛ ------------
 6001#Essence_of_Fire#
 6002#Token_of_Apostle#
 6003#Pendant_of_Spirit#
 
-// ----------------- ё¶·ВАМ ±кµз №ЩЖчёЮЖ® АОЗь -----------------
+// ----------------- ¸¶·ÂÀÌ ±êµç ¹ÙÆ÷¸ÞÆ® ÀÎÇü -----------------
 6004#Cursed_Baphomet_Doll#
 
-// ------------------- 12.1 ДщЅєЖ® ѕЖАМЕЫ ----------------------
+// ------------------- 12.1 Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
 7798#Fragment_of_Darkness#
 7799#Crystal_of_Darkness#
 
-// --------------- ЗКё®ЗЙ АЪГјБ¦АЫ Ех±ё 7Бѕ ----
+// --------------- ÇÊ¸®ÇÉ ÀÚÃ¼Á¦ÀÛ Åõ±¸ 7Á¾ ----
 5374#Gigantic_Magestic_Goat#
 
-// ------------------- АМєҐЖ® ѕЖАМЕЫ ------------------
+// ------------------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------------
 6000#Ashes_of_Darkness#
 //-- Ep12 Add-------------------------------------------
 7820#Piece_of_Morocc_Skin#
@@ -3254,7 +3254,7 @@
 7795#Mami's_Photo_Album#
 7796#Author's_Autograph#
 7797#Author's_Memo#
-// ------------------ ЗПѕЗ ЕЧЅєЖ® (јТДП)----------------
+// ------------------ ÇÏ¾Ç Å×½ºÆ® (¼ÒÄÏ)----------------
 1568#Book_of_Billows#
 1569#Book_of_Mother_Earth#
 1570#Book_of_Blazing_Sun#
@@ -3294,7 +3294,7 @@
 2128#Herald_of_GOD#
 2523#Undershirt#
 5353#Hat_of_the_Sun_God#
-// ----------------- ёрЅєДЪєсѕЖ(·ЇЅГѕЖ ·ОДГ¶уАМВЎ)------------------
+// ----------------- ¸ð½ºÄÚºñ¾Æ(·¯½Ã¾Æ ·ÎÄÃ¶óÀÌÂ¡)------------------
 7760#Yaga's_Magic_Book#
 7761#Magic_Gourd_Bottle#
 7762#Yaga's_Pestle#
@@ -3303,7 +3303,7 @@
 7765#Babayaga's_Secret_Medicine#
 2707#GUSLI#
 
-//----ёрЅєДЪєсѕЖ 2Вч---------- ·ЇЅГѕЖ єТ»зЅЕ ДЪЅ¦АМ ѕЖАМЕЫ ---------------
+//----¸ð½ºÄÚºñ¾Æ 2Â÷---------- ·¯½Ã¾Æ ºÒ»ç½Å ÄÚ½¦ÀÌ ¾ÆÀÌÅÛ ---------------
 7876#Golden_Key#
 7877#Red_Ring#
 7878#Lusalka's_Hair#
@@ -3316,13 +3316,13 @@
 2430#Iron_Boots#
 
 //-------------Cash Headgear Adds----------------------------------
-// --------------- ·ЇЅГѕЖ іЄАОЗгєк ѕЖАМЕЫ --------------
+// --------------- ·¯½Ã¾Æ ³ªÀÎÇãºê ¾ÆÀÌÅÛ --------------
 5303#Flower_Coronet#
 
-// ------------------ ё»·№АМЅГѕЖ ЅМ°ЎЖъ 3БЦів --------------------
+// ------------------ ¸»·¹ÀÌ½Ã¾Æ ½Ì°¡Æú 3ÁÖ³â --------------------
 5189#Fallen_Leaves#
 
-// ----- ё»·№АМЅГѕЖ №«ЅЅёІ ёрАЪ --------
+// ----- ¸»·¹ÀÌ½Ã¾Æ ¹«½½¸² ¸ðÀÚ --------
 5355#Selendang#
 // Halloween 2008
 7941#Halloween_Ticket#
@@ -3357,7 +3357,7 @@
 7947#Silver_Ring_Of_Valentine#
 5817#Valentine's_Emblem#
 //Ep13
-// ---------- їЎЗЗјТµе 13 ДщЅєЖ® ѕЖАМЕЫ ------------
+// ---------- ¿¡ÇÇ¼Òµå 13 Äù½ºÆ® ¾ÆÀÌÅÛ ------------
 6027#Crystal_Of_Feardoom#
 6028#Sealed_Scroll#
 6029#Morocc_Tracing_Log#
@@ -3371,7 +3371,7 @@
 6035#Decaying_Stem#
 14596#Pierre's_Treasurebox#
 
-// ----------- 20080521 їЎЗЗјТµе 13 ДщЅєЖ® ѕЖАМЕЫ -----------
+// ----------- 20080521 ¿¡ÇÇ¼Òµå 13 Äù½ºÆ® ¾ÆÀÌÅÛ -----------
 6036#Meeting_Invitation#
 6037#Messy_File#
 6038#Neat_Report#
@@ -3392,10 +3392,10 @@
 12321#Arunafeltz_Desert_Sandwich#
 12322#Chocolate_Pie#
 
-// ----------- їЎЗЗјТµе 13 ppl ѕЖАМЕЫ -----------
+// ----------- ¿¡ÇÇ¼Òµå 13 ppl ¾ÆÀÌÅÛ -----------
 6051#Gray_Hollow#
 
-// ---------- Е©ё®°Е єё»у ѕЖАМЕЫ ----------
+// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ ----------
 13416#Glorious_Flamberge#
 13417#Glorious_Rapier#
 13418#Glorious_Holy_Avenger#
@@ -3429,7 +3429,7 @@
 2549#Glorious_Muffler#
 2772#Glorious_Ring#
 
-// ---------- Е©ё®°Е єё»у ѕЖАМЕЫ ГЯ°Ў №жѕо±ё ----------
+// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ Ãß°¡ ¹æ¾î±¸ ----------
 2445#Glorious_Public_Shoes#
 2446#Glorious_Supplied_Shoes#
 2395#Glorious_Public_Suit#
@@ -3437,17 +3437,17 @@
 2773#Glorious_Public_Ring#
 2774#Glorious_Supplied_Ring#
 
-// ----------- їЎЗЗјТµе 13 і¬ЅГ ------------
+// ----------- ¿¡ÇÇ¼Òµå 13 ³¬½Ã ------------
 2775#Lure#
 2550#Fisher's_Muffler#
 
-// ----------- їЎЗЗјТµе 13 АвЕЫ ------------
+// ----------- ¿¡ÇÇ¼Òµå 13 ÀâÅÛ ------------
 6020#Fur#
 6021#Peaked_Hat#
 6022#Hard_Skin#
 6023#Mystic_Horn#
 
-// --------- EP13 ЅЕ±Ф Аеєс ѕЖАМЕЫ ---------------
+// --------- EP13 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ---------------
 5398#Bone_Head#
 5399#Mandragora_Cap#
 2386#Chameleon_Armor#
@@ -3486,14 +3486,14 @@
 1925#Cello#
 1926#Harp_of_Nepenthes#
 
-// ----------- АМєҐЖ® ѕЖАМЕЫ ------------
+// ----------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------
 2443#Fisher's_Boots#
 2764#Small_Fishing_Rod#
 6048#Unidentifeid_Mineral#
 6049#Marlin#
-// --------- ±жµеґшАь АМєҐЖ® ѕЖАМЕЫ ---------------
+// --------- ±æµå´øÀü ÀÌº¥Æ® ¾ÆÀÌÅÛ ---------------
 6010#Pickaxe#
-//--------ёёїмАэ-------
+//--------¸¸¿ìÀý-------
 12396#Gift_Box#
 12397#Gift_Box#
 //---------Headgear--------
@@ -3660,3 +3660,191 @@
 12746#Curious_Snowball#
 12317#Powder_Snow#
 12326#Large_Firecracker#
+
+2782#Ring_Of_Wise_King#
+6073#Dragon's_Mane#
+6074#Bazett's_Order#
+6075#Crystalized_Teardrop#
+6076#Portable_Toolbox#
+6077#Rough_Mineral#
+6078#Stone_Fragment#
+6079#Flower_Of_Alfheim#
+6080#Manuk_Coin#
+6081#Splandide_Coin#
+6082#Spirit_Of_Alfheim#
+6084#Bradium_Fragments#
+6085#Shaggy_Muffler#
+11018#Splendide_Selling_Item#
+11019#Splendide_Selling_Item#
+12342#Manuk's_Opportunity#
+12343#Manuk's_Courage#
+12344#Pinguicula's_fruit_Jam#
+12345#Luciola's_Honey_Jam#
+12346#Unripe_Acorn#
+12347#Acorn_Jelly#
+12348#Manuk's_Faith#
+12349#Cornus'_Tears#
+
+// ----------- New Combination Headgear Items ------------
+
+5436#Bride's_Corolla#
+5437#Fairy_Flower#
+5438#Green_Fillet#
+5439#Red_Fillet#
+5440#Blue_Fillet#
+5441#White_Fillet#
+5442#Necktie#
+5443#Status_Of_Baby_Angel#
+5444#Hair_Brush#
+5445#Cany_Cane_In_The_Mouth#
+5446#Catfoot_Hairpin#
+5447#Frog_Hat#
+5448#Soloplay_Box1#
+5449#Soloplay_Box2#
+
+// ----------- Newly added Ep 13.2 Items ------------
+
+1643#Dead_Tree_CaneStaff#
+2783#Eye_Stone_Ring#
+6086#Withered_Flower#
+6087#Spiritual_Crystal#
+6088#Spiritual_Crystal#
+6089#Dark_Piece#
+6090#Refined_Bradium#
+6091#Darkred_Scale_Piecd#
+12353#Small_Bottle#
+6093#Draco's_Egg#
+
+// ----------- EP13.2 Newly Added Items ------------
+
+1188#Veteran_Sword#
+1384#Veteran_Axe#
+1385#Bradium_Stonehammer#
+1548#Veteran_Hammer#
+2138#Bradium_Shield#
+2399#Dragon_Vest#
+2450#>Vital_Tree_Shoes#
+2553#Dragon_Manteau#
+2554#Piece_Of_Angent_Skin#
+2787#Waterdrop_Brooch#
+2788#Bradium_Earing#
+2789#Bradium_Ring#
+2790#Bradium_Brooch#
+15000#Bone_Plate#
+
+// -----------  Ep 13.2 additional equipment items ------------
+
+1189#Krasnaya#
+1284#Krishna#
+1285#Cakram#
+1311#Vecer_Axe#
+1387#Giant_Axe#
+1646#Staff#
+1647#Staff#
+1648#Staff#
+1745#Bow#
+2004#Kronos#
+2005#Dea_Staff#
+13046#Krieg#
+13047#Weihna#
+13421#Ruber#
+16000#Erde#
+16001#Red_Square_Bag#
+
+// ------------------------Indonesia Jewel Event-------------------------
+7575#Red_Jewel#
+7576#Blue_Jewel#
+7577#Yellow_Jewel#
+
+//HiddenSocket
+4700#STR+1#
+4701#STR+2#
+4702#STR+3#
+4703#STR+4#
+4704#STR+5#
+4705#STR+6#
+4706#STR+7#
+4707#STR+8#
+4708#STR+9#
+4709#STR+10#
+4710#INT+1#
+4711#INT+2#
+4712#INT+3#
+4713#INT+4#
+4714#INT+5#
+4715#INT+6#
+4716#INT+7#
+4717#INT+8#
+4718#INT+9#
+4719#INT+10#
+4720#DEX+1#
+4721#DEX+2#
+4722#DEX+3#
+4723#DEX+4#
+4724#DEX+5#
+4725#DEX+6#
+4726#DEX+7#
+4727#DEX+8#
+4728#DEX+9#
+4729#DEX+10#
+4730#AGI+1#
+4731#AGI+2#
+4732#AGI+3#
+4733#AGI+4#
+4734#AGI+5#
+4735#AGI+6#
+4736#AGI+7#
+4737#AGI+8#
+4738#AGI+9#
+4739#AGI+10#
+4740#VIT+1#
+4741#VIT+2#
+4742#VIT+3#
+4743#VIT+4#
+4744#VIT+5#
+4745#VIT+6#
+4746#VIT+7#
+4747#VIT+8#
+4748#VIT+9#
+4749#VIT+10#
+4750#LUK+1#
+4751#LUK+2#
+4752#LUK+3#
+4753#LUK+4#
+4754#LUK+5#
+4755#LUK+6#
+4756#LUK+7#
+4757#LUK+8#
+4758#LUK+9#
+4759#LUK+10#
+//---------------item Dec 2009-----------------
+5591#Desert_Prince#
+5667#Skull_Hood#
+5575#Onigiri_Hat#
+5738#Snowman_Hat#
+5592#Sigrun's_Wing#
+//-----------------item Jan 2010------------
+5512#Aquarius_Diadem#
+5513#Aquarius_Crown#
+5514#Pisces_Diadem#
+5515#Pisces_Crown#
+14495#Aquarius_Diadem_Box#
+14496#Aquarius_Crown_Box#
+14497#Pisces_Diadem_Box#
+14498#Pisces_Crown_Box#
+5609#Chung_Hairband#
+5610#Ice_Wing_Ear#
+5611#Turtle_Hat#
+16410#Chung_Hairband_Box#
+16412#Ice_Wing_Ear_Box#
+16414#Turtle_Hat_Box#
+//----------2010 Valentine------
+7975#Cupid_Chocolate#
+11501#Light_White_Potion#
+11502#Light_Blue_Potion#
+// --------- 2008 Spring Welcoming Event Item ---------------
+12310#Spray_Of_Flowers#
+12311#Huge_Spray_Of_Flowers#
+6009#Big_Fan_Of_Magic#
+//----------2010 Easter Event------
+5852#Easter_Egg_Shell#

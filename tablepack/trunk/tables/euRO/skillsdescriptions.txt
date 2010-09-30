@@ -2091,7 +2091,7 @@ Range : ^7777779 cells around the caster^000000
 Contents : ^777777Cast an area which increases the maximum SP and reduces the SP used for skills of party members.^000000
 #
 
-// ЅґЖЫілєсЅє №Ч їюµщ °ь·Г ГЯ°ЎєОєР 
+// ½´ÆÛ³ëºñ½º ¹× ¿þµù °ü·Ã Ãß°¡ºÎºÐ 
 
 #
 WE_MALE#
