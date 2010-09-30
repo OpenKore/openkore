@@ -8,10 +8,10 @@ Basic Skill
 [Livello 2] : Abilita l'uso di Emoticons
 ^777777Premendo Alt + i tasti da 0 a 9 Ctrl + 1, \, +, -, si possono esprimere le proprie emozioni. Premi Alt + L per una lista^000000
 [Livello 3] : Consente di Sedersi
-^777777Permette di sedersi e recuperare gli HP/SP piщ velocemente.^000000
+^777777Permette di sedersi e recuperare gli HP/SP più velocemente.^000000
 ^990000Comando:/sit o in alternativa premendo il tasto Ins^000000
 [Livello 4] : Consente di aprire una propria Chat Room
-^777777Premendo Alt + C, si puт aprire una Chat Room.^000000
+^777777Premendo Alt + C, si può aprire una Chat Room.^000000
 [Livello 5] : Consente di entrare in un Party
 ^777777Permette di unirti ad un Party.^000000
 ^990000Comando:/join [Nome Party]^000000
@@ -22,7 +22,7 @@ Basic Skill
 ^990000Comando:/organize [Nome Party]^000000
 [Livello 8] : Abilita l'utilizzo dell'Alignment System (Non Implementato)
 ^777777Permette di giudicare le altre persone con l'Alignment System.^000000
-^990000Si puт giudicare un account solo 1 volta al giorno.^000000
+^990000Si può giudicare un account solo 1 volta al giorno.^000000
 [Livello 9] : Abilita il Cambio in una 1a classe 
 ^777777Permette di cambiare il proprio Job in una 1a classe.^000000
 #
@@ -75,7 +75,7 @@ SM_BASH#
 Bash
 Tipo di Skill : ^777777Offensiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Colpisce il nemico con un poderoso colpo, se hai imparato Fatal Blow puoi dare lo stato Stun ad un nemico se il livello della tua skill и almeno 5.^000000
+Descrizione : ^777777Colpisce il nemico con un poderoso colpo, se hai imparato Fatal Blow puoi dare lo stato Stun ad un nemico se il livello della tua skill è almeno 5.^000000
 [Level 1] : ^777777Potenza di Attacco + 130%^000000
 [Level 2] : ^777777Potenza di Attacco + 160%^000000
 [Level 3] : ^777777Potenza di Attacco + 190%^000000
@@ -262,7 +262,7 @@ Descrizione : ^777777Aumenta la Difesa del party (incluso il castatore) per una 
 AL_CRUCIS#
 Signum Crucis
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Indebolisce gli Undead attorno al giocatore. Dura finchи tutti i Nemici che ne sono stati affetti sono morti. Ha effetto sugli Undead o sui Ghost.^000000
+Descrizione : ^777777Indebolisce gli Undead attorno al giocatore. Dura finchè tutti i Nemici che ne sono stati affetti sono morti. Ha effetto sugli Undead o sui Ghost.^000000
 #
 AL_BLESSING#
 Blessing
@@ -291,13 +291,13 @@ AL_INCAGI#
 Increase AGI
 Tipo di Skill : ^777777Supporto^000000
 Obiettivo : ^777777Personaggio^000000
-Descrizione : ^777777Aumenta la velocitа di attacco e di movimento di un personaggio per una durata di tempo predefinita.Alcuni HP sono consumati.^000000
+Descrizione : ^777777Aumenta la velocità di attacco e di movimento di un personaggio per una durata di tempo predefinita.Alcuni HP sono consumati.^000000
 #
 AL_DECAGI#
 Decrease AGI
 Tipo di Skill : ^777777Supporto^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Diminuisce la velocitа di attacco e di movimento del nemico per una durata di tempo predefinita.^000000
+Descrizione : ^777777Diminuisce la velocità di attacco e di movimento del nemico per una durata di tempo predefinita.^000000
 #
 AL_RUWACH#
 Ruwach
@@ -326,7 +326,7 @@ Descrizione : ^777777Apre un Portale Dimensionale per teletrasportarsi in un'alt
 [Livello 2] : ^777777Permette di Usare 1 Memo point.^000000
 [Livello 3] : ^777777Permette di Usare 2 Memo point.^000000
 [Livello 4] : ^777777Permette di Usare 3 Memo point.^000000
-^990000[Memo Point] : ^777777Area Specifica in cui Teletrasportarsi. Il Comando и /memo.^000000
+^990000[Memo Point] : ^777777Area Specifica in cui Teletrasportarsi. Il Comando è /memo.^000000
 #
 MC_INCCARRY#
 Enlarge Weight Limit
@@ -389,7 +389,7 @@ MC_VENDING#
 Vending
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Consente di aprire un Negozio, stabilendo i propri Prezzi per gli Oggetti.^000000
-^777777Permette di vendere piщ Oggetti con il Levelup.^000000
+^777777Permette di vendere più Oggetti con il Levelup.^000000
 #
 MC_MAMMONITE#
 Mammonite
@@ -457,12 +457,12 @@ Descrizione : ^777777Attacca un nemico con 9 colpi, estendendo il danno alle cas
 TF_DOUBLE#
 Double Attack
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Aumenta la possibilitа di fare un Doppio Attacco con i Pugnali. Inoltre aumenta il danno provocato dalla mano destra, in caso si usi dei Katar come armi.(vale solo se si и Assassin come job)^000000
+Descrizione : ^777777Aumenta la possibilità di fare un Doppio Attacco con i Pugnali. Inoltre aumenta il danno provocato dalla mano destra, in caso si usi dei Katar come armi.(vale solo se si è Assassin come job)^000000
 #
 TF_MISS#
 Improve Dodge
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Aumenta la probabilitа di schivare gli attacchi nemici.^000000
+Descrizione : ^777777Aumenta la probabilità di schivare gli attacchi nemici.^000000
 [Livello 1] : ^777777Dodge +3%^000000
 [Livello 2] : ^777777Dodge +6%^000000
 [Livello 3] : ^777777Dodge +9%^000000
@@ -478,12 +478,12 @@ TF_STEAL#
 Steal
 Tipo di Skill : ^777777Supporto^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Possibilitа di rubare oggetti ai Nemici.^000000
+Descrizione : ^777777Possibilità di rubare oggetti ai Nemici.^000000
 #
 TF_HIDING#
 Hiding
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Permette di mimetizzarsi per difendersi. Si puт essere Individuati da alcune Skill come il Sight del Mage.^000000
+Descrizione : ^777777Permette di mimetizzarsi per difendersi. Si può essere Individuati da alcune Skill come il Sight del Mage.^000000
 #
 TF_POISON#
 Envenom
@@ -500,7 +500,7 @@ Descrizione : ^777777Cura lo Status Poison. ^000000
 KN_SPEARMASTERY#
 Spear Mastery
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Aumenta il Danno delle Lance. C'и un bonus sull'attacco di +1 quando cavalchi un Pecopeco.^000000
+Descrizione : ^777777Aumenta il Danno delle Lance. C'è un bonus sull'attacco di +1 quando cavalchi un Pecopeco.^000000
 [Livello 1] : ^777777ATK +4^000000
 [Livello 2] : ^777777ATK +8^000000
 [Livello 3] : ^777777ATK +12^000000
@@ -542,7 +542,7 @@ Descrizione : ^777777Attacca il Nemico a distanza usando una Lancia. Utilizzabil
 KN_TWOHANDQUICKEN#
 Two Hand Quicken
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Aumenta la Velocitа di Attacco delle Spade a Due Mani.^000000
+Descrizione : ^777777Aumenta la Velocità di Attacco delle Spade a Due Mani.^000000
 [Livello 1] : ^777777Durata 30 Sec^000000
 [Livello 2] : ^777777Durata 60 Sec^000000
 [Livello 3] : ^777777Durata  1 Min^000000
@@ -574,7 +574,7 @@ Descrizione : ^777777Permette di cavalcare un Peco Peco addomesticato.^000000
 KN_CAVALIERMASTERY#
 Cavalier Mastery
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Aumenta la Velocitа di Attacco in sella ad un Peco Peco. Se masterizzi questa skill la tua velocitа di attacco sarа la stessa di quando non cavalchi un Pecopeco.^000000
+Descrizione : ^777777Aumenta la Velocità di Attacco in sella ad un Peco Peco. Se masterizzi questa skill la tua velocità di attacco sarà la stessa di quando non cavalchi un Pecopeco.^000000
 #
 PR_MACEMASTERY#
 Mace Mastery
@@ -659,7 +659,7 @@ Descrizione : ^777777Riporta in vita un Personaggio Morto.^000000
 PR_KYRIE#
 Kyrie Eleison
 Tipo di Skill : ^777777Elogio^000000
-Descrizione : ^777777Crea una Barriera Protettiva per 2 minuti. Puт essere infranta con Holy light.^000000
+Descrizione : ^777777Crea una Barriera Protettiva per 2 minuti. Può essere infranta con Holy light.^000000
 [Livello 1] : ^777777 Protegge dai colpi per il 12% MaxHP del bersaglio, Blocca 5 colpi^000000
 [Livello 2] : ^777777 Protegge dai colpi per il 14% MaxHP del bersaglio, Blocca 6 colpi^000000
 [Livello 3] : ^777777 Protegge dai colpi per il 16% MaxHP del bersaglio, Blocca 6 colpi^000000
@@ -674,7 +674,7 @@ Descrizione : ^777777Crea una Barriera Protettiva per 2 minuti. Puт essere infr
 PR_MAGNIFICAT#
 Magnificat
 Tipo di Skill : ^777777Elogio^000000
-Descrizione : ^777777Raddoppia la velocitа di recupero degli HP/SP(incluso il castatore) dei Membri del Party per tutta la durata della skill.^000000
+Descrizione : ^777777Raddoppia la velocità di recupero degli HP/SP(incluso il castatore) dei Membri del Party per tutta la durata della skill.^000000
 #
 PR_GLORIA#
 Gloria
@@ -697,7 +697,7 @@ PR_LEXAETERNA#
 Lex Aeterna
 Tipo di Skill : ^777777Esorcismo^000000
 Obiettivo : ^777777Nemico^000000 
-Descrizione : ^777777Raddoppia il danno provocato da un colpo inflitto al Nemico. Non si puт applicare ai nemici congelati o pietrificati.^000000
+Descrizione : ^777777Raddoppia il danno provocato da un colpo inflitto al Nemico. Non si può applicare ai nemici congelati o pietrificati.^000000
 #
 PR_MAGNUS#
 Magnus Exorcismus
@@ -744,7 +744,7 @@ WZ_WATERBALL#
 Waterball
 Tipo di Skill : ^777777Offensiva ^0000bb(Ice)^000000
 Obiettivo : ^777777Nemico^000000 
-Descrizione : ^777777Attacca il Nemico sfruttando l'Acqua attorno al Castatore. Se non c'и acqua non si puт usare questa skill.^000000
+Descrizione : ^777777Attacca il Nemico sfruttando l'Acqua attorno al Castatore. Se non c'è acqua non si può usare questa skill.^000000
 #
 WZ_ICEWALL#
 Icewall
@@ -780,7 +780,7 @@ WZ_QUAGMIRE#
 Quagmire
 Tipo di Skill : ^777777Supportive ^00bb00(Earth)^000000
 Obiettivo : ^777777Terreno^000000
-Descrizione : ^777777Crea un terreno Paludoso che riduce la Velocitа di Movimento, AGI e DEX dei nemici (applicabile anche ai membri del party).^000000
+Descrizione : ^777777Crea un terreno Paludoso che riduce la Velocità di Movimento, AGI e DEX dei nemici (applicabile anche ai membri del party).^000000
 #
 WZ_ESTIMATION#
 Sense
@@ -791,57 +791,57 @@ Descrizione : ^777777Mostra Informazioni Dettagliate di un Mostro.^000000
 BS_IRON#
 Iron Tempering
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Permette di Temprare il Ferro. La Possibilitа di Successo aumenta con il Livello.^000000
+Descrizione : ^777777Permette di Temprare il Ferro. La Possibilità di Successo aumenta con il Livello.^000000
 #
 BS_STEEL#
 Steel Tempering
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Permette di Temprare l'Acciaio. La Possibilitа di Successo aumenta con il Livello.^000000
+Descrizione : ^777777Permette di Temprare l'Acciaio. La Possibilità di Successo aumenta con il Livello.^000000
 #
 BS_ENCHANTEDSTONE#
 Enchanted Stone Craft
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Permette di rifinire 4 tipi di Pietre Elementali. La Possibilitа di Successo aumenta con il Livello.^000000
+Descrizione : ^777777Permette di rifinire 4 tipi di Pietre Elementali. La Possibilità di Successo aumenta con il Livello.^000000
 #
 BS_ORIDEOCON#
 Research Oridecon
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Permette di Costruire Armi di Livello 3 usando ^00bb00Oridecon^777777. La Possibilitа di Successo aumenta con il Livello.^000000
+Descrizione : ^777777Permette di Costruire Armi di Livello 3 usando ^00bb00Oridecon^777777. La Possibilità di Successo aumenta con il Livello.^000000
 #
 BS_DAGGER#
 Smith Dagger
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Permette di Costruire Pugnali. La Possibilitа di Successo aumenta con il Livello.^000000
+Descrizione : ^777777Permette di Costruire Pugnali. La Possibilità di Successo aumenta con il Livello.^000000
 #
 BS_SWORD#
 Smith Sword
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Permette di Costruire Spade ad Una Mano. La Possibilitа di Successo aumenta con il Livello.^000000
+Descrizione : ^777777Permette di Costruire Spade ad Una Mano. La Possibilità di Successo aumenta con il Livello.^000000
 #
 BS_TWOHANDSWORD#
 Smith Two-handed Sword
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Permette di Costruire Spade a Due Mani. La Possibilitа di Successo aumenta con il Livello.^000000
+Descrizione : ^777777Permette di Costruire Spade a Due Mani. La Possibilità di Successo aumenta con il Livello.^000000
 #
 BS_AXE#
 Smith Axe
 Tipo di Skill : ^000099Passiva^000000
-Descrizione :^777777Permette di Costruire Asce. La Possibilitа di Successo aumenta con il Livello.^000000
+Descrizione :^777777Permette di Costruire Asce. La Possibilità di Successo aumenta con il Livello.^000000
 #
 BS_MACE#
 Smith Mace
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Permette di Costruire Mazze. La Possibilitа di Successo aumenta con il Livello.^000000
+Descrizione : ^777777Permette di Costruire Mazze. La Possibilità di Successo aumenta con il Livello.^000000
 #
 BS_KNUCKLE#
 Smith Brass Knuckle
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Permette di Costruire Tirapugni. La Possibilitа di Successo aumenta con il Livello.^000000
+Descrizione : ^777777Permette di Costruire Tirapugni. La Possibilità di Successo aumenta con il Livello.^000000
 #
 BS_SPEAR#
 Smith Spear
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Permette di Costruire Lance. La Possibilitа di Successo aumenta con il Livello^000000
+Descrizione : ^777777Permette di Costruire Lance. La Possibilità di Successo aumenta con il Livello^000000
 #
 BS_HILTBINDING#
 Hilt Biding
@@ -851,7 +851,7 @@ Descrizione : ^777777Aggiunge un punto alla forza e 4 all'attacco. Inoltre aumen
 BS_FINDINGORE#
 Ore Discovery
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Aumenta la Probabilitа di trovare Pietre nei Mostri.^000000
+Descrizione : ^777777Aumenta la Probabilità di trovare Pietre nei Mostri.^000000
 #
 BS_WEAPONRESEARCH#
 Weaponry Research
@@ -883,7 +883,7 @@ Descrizione : ^777777Causa lo status Stun grazie alle Vibrazioni del terreno.^00
 BS_ADRENALINE#
 Adrenaline Rush
 Tipo di Skill : ^000099Supporto^000000
-Descrizione : ^777777Raddoppia la Velocitа di Attacco per una durata di tempo predefinita. Utilizzabile solo con Asce o Mazze.^000000
+Descrizione : ^777777Raddoppia la Velocità di Attacco per una durata di tempo predefinita. Utilizzabile solo con Asce o Mazze.^000000
 #
 BS_WEAPONPERFECT#
 Weapon Perfection
@@ -894,16 +894,16 @@ BS_OVERTHRUST#
 Power Thrust
 Tipo di Skill : ^000099Supporto^000000
 Descrizione : ^777777Aumenta il danno provocato dall'Arma, ma la consuma allo stesso tempo.^000000
-[Livello 1] : ^777777ATK +5%, Probabilitа di Rottura +0.1%^000000
-[Livello 2] : ^777777ATK +10%, Probabilitа di Rottura +0.1%^000000
-[Livello 3] : ^777777ATK +15%, Probabilitа di Rottura +0.1%^000000
-[Livello 4] : ^777777ATK +20%, Probabilitа di Rottura +0.1%^000000
-[Livello 5] : ^777777ATK +25%, Probabilitа di Rottura +0.1%^000000
+[Livello 1] : ^777777ATK +5%, Probabilità di Rottura +0.1%^000000
+[Livello 2] : ^777777ATK +10%, Probabilità di Rottura +0.1%^000000
+[Livello 3] : ^777777ATK +15%, Probabilità di Rottura +0.1%^000000
+[Livello 4] : ^777777ATK +20%, Probabilità di Rottura +0.1%^000000
+[Livello 5] : ^777777ATK +25%, Probabilità di Rottura +0.1%^000000
 #
 BS_MAXIMIZE#
 Maximize Power
 Tipo di Skill : ^000099Supporto^000000
-Descrizione : ^777777Sfrutta al Massimo il danno dell'Arma. Per tutta la sua durata consuma SP, и possibile cancellarla riattivandola.^000000
+Descrizione : ^777777Sfrutta al Massimo il danno dell'Arma. Per tutta la sua durata consuma SP, è possibile cancellarla riattivandola.^000000
 #
 HT_SKIDTRAP#
 Skid Trap
@@ -931,7 +931,7 @@ HT_ANKLESNARE#
 Anklesnare
 Tipo di Skill : ^000099Trappola Nascosta^000000
 Obiettivo : ^777777Terreno^000000
-Descrizione : ^777777Colloca una Trappola che blocca il Nemico. La durata и definita dall' AGI del nemico. E' necessaria ^00bb001 Trap^777777.^000000
+Descrizione : ^777777Colloca una Trappola che blocca il Nemico. La durata è definita dall' AGI del nemico. E' necessaria ^00bb001 Trap^777777.^000000
 #
 HT_FLASHER#
 Flasher
@@ -1009,7 +1009,7 @@ HT_TALKIEBOX#
 Talkie Box
 Tipo di Skill : ^000099Trappola Nascosta^000000
 Obiettivo : ^777777Terreno^000000
-Descrizione : ^777777Colloca una Trappola che mostra il Messaggio Memorizzato se calpestata (funziona anche col proprio Personaggio e coi membri del Party). La Permanenza и di 600 secondi ed и necessaria una ^00bb001 Trap^777777.^000000
+Descrizione : ^777777Colloca una Trappola che mostra il Messaggio Memorizzato se calpestata (funziona anche col proprio Personaggio e coi membri del Party). La Permanenza è di 600 secondi ed è necessaria una ^00bb001 Trap^777777.^000000
 #
 HT_BEASTBANE#
 Beastbane
@@ -1050,7 +1050,7 @@ HT_BLITZBEAT#
 Blitz Beat
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Comanda al Falco di attaccare un Nemico. A livelli alti il falco puт attaccare automaticamente (dipende dalla LUK). Raggio d'Azione : 3+(Liv Vulture's Eye)^000000
+Descrizione : ^777777Comanda al Falco di attaccare un Nemico. A livelli alti il falco può attaccare automaticamente (dipende dalla LUK). Raggio d'Azione : 3+(Liv Vulture's Eye)^000000
 #
 HT_DETECTING#
 Detect
@@ -1102,19 +1102,19 @@ Descrizione : ^777777Aumenta il Danno dei Katar.^000000
 AS_CLOAKING#
 Cloaking
 Tipo di Skill : ^000099Supporto^000000
-Descrizione : ^777777Permette di muoversi mentre si и Invisibili Al livello 1 o 2 la skill funziona solo rimanendo accostati ad un Muro. Quando ci si allontana dal Muro, si torna ad essere Visibili. Ad alti livelli invece la skill funziona ovunque, ma il personaggio sarа piщ lento quando si trova lontano da un muro. Questa skill non funziona con i Boss e con i mostri di tipo Demon o Insect.^000000
+Descrizione : ^777777Permette di muoversi mentre si è Invisibili Al livello 1 o 2 la skill funziona solo rimanendo accostati ad un Muro. Quando ci si allontana dal Muro, si torna ad essere Visibili. Ad alti livelli invece la skill funziona ovunque, ma il personaggio sarà più lento quando si trova lontano da un muro. Questa skill non funziona con i Boss e con i mostri di tipo Demon o Insect.^000000
 #
 AS_SONICBLOW#
 Sonic_Blow
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Aumenta la Velocitа di Attacco usando i Katar. Il nemico puт ricevere lo stato Stun.^000000
+Descrizione : ^777777Aumenta la Velocità di Attacco usando i Katar. Il nemico può ricevere lo stato Stun.^000000
 #
 AS_GRIMTOOTH#
 Grimtooth
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Consente di attaccare un Nemico con i Katar quando si и Invisibili. Non si possono attaccare i Nemici a distanza.^000000
+Descrizione : ^777777Consente di attaccare un Nemico con i Katar quando si è Invisibili. Non si possono attaccare i Nemici a distanza.^000000
 #
 AS_ENCHANTPOISON#
 Enchant Poison
@@ -1138,7 +1138,7 @@ AS_SPLASHER#
 Venom Splasher
 Tipo di Skill : ^777777Offensiva (Poison)^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Dopo aver colpito il Nemico lo fa esplodere, cosм che il Veleno contamini la Zona circostante. Funziona solo nel caso il Nemico sia Avvelenato e abbia meno di 1/3 degli HP.^000000
+Descrizione : ^777777Dopo aver colpito il Nemico lo fa esplodere, così che il Veleno contamini la Zona circostante. Funziona solo nel caso il Nemico sia Avvelenato e abbia meno di 1/3 degli HP.^000000
 #
 NV_FIRSTAID#
 First Aid
@@ -1161,13 +1161,13 @@ TF_SPRINKLESAND#
 Sprinkle Sand
 Tipo di Skill : ^777777Offensiva (Earth)^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Getta sabbia addosso al Nemico. Permette di fare il 125% di danno di un attacco normale e ha la possibilitа di causare lo status Blind al Nemico.^000000
+Descrizione : ^777777Getta sabbia addosso al Nemico. Permette di fare il 125% di danno di un attacco normale e ha la possibilità di causare lo status Blind al Nemico.^000000
 #
 MC_CARTREVOLUTION#
 Cart_Revolution
 Tipo di Skill : ^777777Attacco^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Sferra un Attacco che colpisce il Nemico scelto e quelli vicini. In genere il danno и pari al 150% di uno normale, ma и influenzato anche il peso del Carretto.^000000
+Descrizione : ^777777Sferra un Attacco che colpisce il Nemico scelto e quelli vicini. In genere il danno è pari al 150% di uno normale, ma è influenzato anche il peso del Carretto.^000000
 #
 AL_HOLYLIGHT#
 Holy Light
@@ -1179,7 +1179,7 @@ MG_ENERGYCOAT#
 Energy Coat
 Tipo di Skill : ^777777Supporto^000000
 Obiettivo : ^777777Castatore^000000
-Descrizione : ^777777Avvolge il personaggio con energia spirituale in grado di ridurre il danno inferto dal nemico. Il suo effetto и determinato dal numero di SP rimanenti, tuttavia consuma SP ogni volta che si viene attaccati.^000000
+Descrizione : ^777777Avvolge il personaggio con energia spirituale in grado di ridurre il danno inferto dal nemico. Il suo effetto è determinato dal numero di SP rimanenti, tuttavia consuma SP ogni volta che si viene attaccati.^000000
 #
 NV_TRICKDEAD#
 Play Dead
@@ -1190,13 +1190,13 @@ Descrizione : ^777777Permette di far finta di essere morto per sfuggire a un per
 SM_FATALBLOW#
 Fatal Blow
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Permette di infliggere al nemico lo status Stun usando la skill Bash a Liv 5 o superiore. La probabilitа di riuscita dipende dal livello del Bash.^000000
+Descrizione : ^777777Permette di infliggere al nemico lo status Stun usando la skill Bash a Liv 5 o superiore. La probabilità di riuscita dipende dal livello del Bash.^000000
 #
 AC_CHARGEARROW#
 Charged Arrow
 Tipo di Skill : ^777777Attacco^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Tende al massimo l'arco per scagliare una freccia con piщ potenza. Il Bersaglio sarа spinto indietro di 4 celle.^000000
+Descrizione : ^777777Tende al massimo l'arco per scagliare una freccia con più potenza. Il Bersaglio sarà spinto indietro di 4 celle.^000000
 #
 TF_BACKSLIDING#
 Back Slide
@@ -1213,7 +1213,7 @@ Descrizione : ^777777Cambia l'aspetto del carretto in 5 diversi tipi, disponibil
 SM_AUTOBERSERK#
 Berserk
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Quando gli HP rimasti scendono sotto il 25% del totale, fa diventare furiosi. In questo stato si ottiene l'effetto del "Provoke Liv 10", che persiste fin quando gli HP non saranno riaumentati oltre il 25% o finchи un'altra skill o situazione non cancelli lo status Provoke.^000000
+Descrizione : ^777777Quando gli HP rimasti scendono sotto il 25% del totale, fa diventare furiosi. In questo stato si ottiene l'effetto del "Provoke Liv 10", che persiste fin quando gli HP non saranno riaumentati oltre il 25% o finchè un'altra skill o situazione non cancelli lo status Provoke.^000000
 #
 TF_PICKSTONE#
 Find Stone
@@ -1225,7 +1225,7 @@ TF_THROWSTONE#
 Stone Fling
 Tipo di Skill : ^777777Attacco^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Scaglia una pietra contro il nemico infliggendogli un danno pari a 50, con probabilitа di infliggere lo status Stun. E' necessario avere una pietra.^000000
+Descrizione : ^777777Scaglia una pietra contro il nemico infliggendogli un danno pari a 50, con probabilità di infliggere lo status Stun. E' necessario avere una pietra.^000000
 #
 MC_LOUD#
 Crazy Uproar
@@ -1243,13 +1243,13 @@ GD_KAFRACONTRACT#
 Contract With Kafra
 Tipo di Skill : ^777777Passiva^000000
 Obiettivo : ^777777La Gilda^000000
-Descrizione : ^777777Firma un contratto con la Sede delle Kafra ad Al De Baran. Grazie al contratto, la gilda puт assumere un'impiegata Kafra per il proprio territorio.^000000
+Descrizione : ^777777Firma un contratto con la Sede delle Kafra ad Al De Baran. Grazie al contratto, la gilda può assumere un'impiegata Kafra per il proprio territorio.^000000
 #
 GD_GUARDRESEARCH#
 Guardian Research
 Tipo di Skill : ^777777Passiva^000000
 Obiettivo : ^777777La Gilda^000000
-Descrizione : ^777777Studia la tecnologia dei Guardiani. Grazie alla ricerca, la gilda puт assoldare dei guardiani per difendere il proprio territorio.^000000
+Descrizione : ^777777Studia la tecnologia dei Guardiani. Grazie alla ricerca, la gilda può assoldare dei guardiani per difendere il proprio territorio.^000000
 #
 GD_CHARISMA#
 Charisma
@@ -1278,66 +1278,66 @@ Snatcher
 Tipo di Skill : ^000099Attiva^000000
 Obiettivo : ^777777Nemico^000000
 Descrizone : ^777777Permette di rubare mentre si attacca un nemico.
-La possibilitа di successo и influenzata dalla skill Steal del Thief.^000000
+La possibilità di successo è influenzata dalla skill Steal del Thief.^000000
 #
 RG_STEALCOIN#
 Steal Coin
 Tipo di Skill : ^777777Supporto^000000
 Obiettivo : ^777777Mostro^000000
 Descrizone : ^777777Permette di rubare zeny dai mostri.
-Dopo aver rubato degli zeny non si puт ripetere la skill sullo stesso mostro.^000000
+Dopo aver rubato degli zeny non si può ripetere la skill sullo stesso mostro.^000000
 #
 RG_BACKSTAP#
 Back Stab
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizone : ^777777Potente attacco utilizzabile solo alle spalle del nemico. Colpisce sempre il nemico ed и impossibile da schivare.^000000
-^777777Si puт usare da nascosti, si ridiventa visibili quando si usa la skill.^000000
+Descrizone : ^777777Potente attacco utilizzabile solo alle spalle del nemico. Colpisce sempre il nemico ed è impossibile da schivare.^000000
+^777777Si può usare da nascosti, si ridiventa visibili quando si usa la skill.^000000
 #
 RG_TUNNELDRIVE#
 Tunnel Drive
 Tipo di Skill : ^000099Passiva^000000
-Descrizone : ^777777Permette dei lenti movimenti mentre si и nascosti.^000000
+Descrizone : ^777777Permette dei lenti movimenti mentre si è nascosti.^000000
 #
 RG_RAID#
 Raid
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
 Raggio : ^7777779 celle intorno il castatore^000000
-Descrizone : ^777777Attacco speciale che puт causare gli status Stun e Blind sul nemico selezionato.^000000
+Descrizone : ^777777Attacco speciale che può causare gli status Stun e Blind sul nemico selezionato.^000000
 Nota : ^777777Bisogna essere nascosti per utilizzarlo.^000000
 #
 RG_STRIPWEAPON#
 Strip Weapon
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizone : ^777777Su un giocatore in PVP, questa skill disequipaggia l'arma che sta utilizzando e per un periodo di tempo il bersagio non puт riequipaggiare l'arma.
+Descrizone : ^777777Su un giocatore in PVP, questa skill disequipaggia l'arma che sta utilizzando e per un periodo di tempo il bersagio non può riequipaggiare l'arma.
 Su un mostro, riduce l'attacco (ATK) del 10% per tutta la durata della skill.^000000
-Nota : ^777777La differenza di DEX fra castatore e del bersaglio influenza la possibilitа di successo.^000000
+Nota : ^777777La differenza di DEX fra castatore e del bersaglio influenza la possibilità di successo.^000000
 #
 RG_STRIPSHIELD#
 Strip Shield
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizone : ^777777Su un giocatore in PVP, questa skill disequipaggia lo scudo che sta utilizzando e per un periodo di tempo il bersagio non puт riequipaggiare l'arma.
+Descrizone : ^777777Su un giocatore in PVP, questa skill disequipaggia lo scudo che sta utilizzando e per un periodo di tempo il bersagio non può riequipaggiare l'arma.
 Su un mostro, riduce la difesa (DEF) del 10% per tutta la durata della skill.^000000
-Nota : ^777777La differenza di DEX fra castatore e del bersaglio influenza la possibilitа di successo.^000000
+Nota : ^777777La differenza di DEX fra castatore e del bersaglio influenza la possibilità di successo.^000000
 #
 RG_STRIPARMOR#
 Strip Armor
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizone : ^777777Su un giocatore in PVP, questa skill disequipaggia l'armatura che sta utilizzando e per un periodo di tempo il bersagio non puт riequipaggiare l'arma.
+Descrizone : ^777777Su un giocatore in PVP, questa skill disequipaggia l'armatura che sta utilizzando e per un periodo di tempo il bersagio non può riequipaggiare l'arma.
 Su un mostro, riduce la difesa (DEF) del 10% per tutta la durata della skill.^000000
-Nota : ^777777La differenza di DEX fra castatore e del bersaglio influenza la possibilitа di successo.^000000
+Nota : ^777777La differenza di DEX fra castatore e del bersaglio influenza la possibilità di successo.^000000
 #
 RG_STRIPHELM#
 Strip Helm
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizone : ^777777Su un giocatore in PVP, questa skill disequipaggia l'elmo che sta utilizzando e per un periodo di tempo il bersagio non puт riequipaggiare l'arma.
+Descrizone : ^777777Su un giocatore in PVP, questa skill disequipaggia l'elmo che sta utilizzando e per un periodo di tempo il bersagio non può riequipaggiare l'arma.
 Su un mostro, riduce la difesa (DEF) del 10% per tutta la durata della skill.^000000
-Nota : ^777777La differenza di DEX fra castatore e del bersaglio influenza la possibilitа di successo.^000000
+Nota : ^777777La differenza di DEX fra castatore e del bersaglio influenza la possibilità di successo.^000000
 #
 RG_INTIMIDATE#
 Intimidate
@@ -1345,7 +1345,7 @@ Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
 Descrizone : ^777777Quando si attacca un nemico, si viene teletrasportati in un punto casuale della mappa.
 Non funziona con i boss.
-Piщ il livello del castatore и alto e piщ il livello del bersaglio и basso, la possibilitа che la skill funzioni aumenta^000000
+Più il livello del castatore è alto e più il livello del bersaglio è basso, la possibilità che la skill funzioni aumenta^000000
 #
 RG_GRAFFITI#
 Graffiti
@@ -1386,7 +1386,7 @@ Descrizone : ^777777Permette di comprare gli item ad un prezzo minore dai negozi
 RG_PLAGIARISM#
 Plagiarism
 Tipo di Skill : ^000099Passiva^000000
-Descrizone : ^777777Permette di utilizzare qualsialsi skill d'attacco che и stata usata su di te. Il livello della skill comporta il livello della skill ke ti и stata usata contro.^000000
+Descrizone : ^777777Permette di utilizzare qualsialsi skill d'attacco che è stata usata su di te. Il livello della skill comporta il livello della skill ke ti è stata usata contro.^000000
 #
 AM_AXEMASTERY#
 Axe Mastery
@@ -1425,7 +1425,7 @@ AM_ACIDTERROR#
 Acid Terror
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Lancia una Acid Bottle al nemico. C'и una bassa probabilitа ke questa skill danneggi l'armatura del bersaglio.^000000
+Descrizione : ^777777Lancia una Acid Bottle al nemico. C'è una bassa probabilità ke questa skill danneggi l'armatura del bersaglio.^000000
 Nota : ^777777Richiede una Acid Bottle per essere usata.^000000
 #
 AM_POTIONPITCHER#
@@ -1462,28 +1462,28 @@ AM_CP_WEAPON#
 Chemical Protection Weapon
 Tipo di Skill : ^777777Supporto^000000
 Obiettivo : ^777777Personaggio^000000
-Descrizione : ^777777Fa diventare indistruttibile l'arma equipaggiata per tutta la durata della skill.Una ^0000991 Coating Bottle ^777777 и necessaria.^000000
+Descrizione : ^777777Fa diventare indistruttibile l'arma equipaggiata per tutta la durata della skill.Una ^0000991 Coating Bottle ^777777 è necessaria.^000000
 Nota : ^777777Protegge dalle skill del Rogue che disequipaggiano gli oggetti.^000000
 #
 AM_CP_SHIELD#
 Chemical Protection Shield
 Tipo di Skill : ^777777Supporto^000000
 Obiettivo : ^777777Personaggio^000000
-Descrizione : ^777777Fa diventare indistruttibile lo scudo equipaggiato per tutta la durata della skill.Una ^0000991 Coating Bottle ^777777 и necessaria.^000000
+Descrizione : ^777777Fa diventare indistruttibile lo scudo equipaggiato per tutta la durata della skill.Una ^0000991 Coating Bottle ^777777 è necessaria.^000000
 Nota : ^777777Protegge dalle skill del Rogue che disequipaggiano gli oggetti.^000000
 #
 AM_CP_ARMOR#
 Chemical Protection Armor
 Tipo di Skill : ^777777Supporto^000000
 Obiettivo : ^777777Personaggio^000000
-Descrizione : ^777777Fa diventare indistruttibile l'armatura equipaggiata per tutta la durata della skill.Una ^0000991 Coating Bottle ^777777 и necessaria.^000000
+Descrizione : ^777777Fa diventare indistruttibile l'armatura equipaggiata per tutta la durata della skill.Una ^0000991 Coating Bottle ^777777 è necessaria.^000000
 Nota : ^777777Protegge dalle skill del Rogue che disequipaggiano gli oggetti.^000000
 #
 AM_CP_HELM#
 Chemical Protection Helm
 Tipo di Skill : ^777777Supporto^000000
 Obiettivo : ^777777Personaggio^000000
-Descrizione : ^777777Fa diventare indistruttibile l'elmo equipaggiato per tutta la durata della skill.Una ^0000991 Coating Bottle ^777777 и necessaria.^000000
+Descrizione : ^777777Fa diventare indistruttibile l'elmo equipaggiato per tutta la durata della skill.Una ^0000991 Coating Bottle ^777777 è necessaria.^000000
 Nota : ^777777Protegge dalle skill del Rogue che disequipaggiano gli oggetti.^000000
 #
 AM_BIOETHICS#
@@ -1494,30 +1494,30 @@ Descrizione : ^777777Permette all'Alchemist di iniziare l'apprendimento delle sk
 AM_BIOTECHNOLOGY#
 Biotechnology
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Aumenta la probabilitа di creare un Homunculus e il Numero Massimo di HP della creatura.^000000
+Descrizione : ^777777Aumenta la probabilità di creare un Homunculus e il Numero Massimo di HP della creatura.^000000
 #
 AM_CREATECREATURE#
 Create Embryo
 Tipo di Skill : ^777777Attiva^000000
 Descrizione : ^777777Crea un Embryo.
-Il livello della skill influenza la probabilitа di successo.^000000
+Il livello della skill influenza la probabilità di successo.^000000
 #
 AM_CULTIVATION#
 Cultivation
 Tipo di Skill : ^777777Attiva^000000
 Descrizione : ^777777Crea un Homunculus.
-Il livello della skill influenza la probabilitа di successo.^000000
+Il livello della skill influenza la probabilità di successo.^000000
 Nota : ^777777Richiede un Embryo per essere usata.^000000
 #
 AM_FLAMECONTROL#
 Flame Control
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Aumenta le possibilitа di successo della skill Cultivation e la resistenza all'elemento Fire del personaggio.^000000
+Descrizione : ^777777Aumenta le possibilità di successo della skill Cultivation e la resistenza all'elemento Fire del personaggio.^000000
 #
 AM_CALLHOMUN#
 Call Homunculus
 Tipo di Skill : ^777777Attiva^000000
-Descrizione : ^777777Permette di creare un Homunculus a partire da un Germination Breed. Richiama l'Homunculus che и stato messo a riposo con Sabbath .^000000
+Descrizione : ^777777Permette di creare un Homunculus a partire da un Germination Breed. Richiama l'Homunculus che è stato messo a riposo con Sabbath .^000000
 #
 AM_REST#
 Sabbath
@@ -1544,13 +1544,13 @@ Heal Homunculus
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Homunculus^000000
 Descrizione : ^777777Cura un Homunculus.
-L'efficacia della skill и la stessa della skill Heal dell'Acolyte.^000000
+L'efficacia della skill è la stessa della skill Heal dell'Acolyte.^000000
 #
 AM_RESURRECTHOMUN#
 Resurrect Homunculus
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Homunculus^000000
-Descrizione : ^777777Riporta in vita un Homunculus che и stato ucciso da un mostro.^000000
+Descrizione : ^777777Riporta in vita un Homunculus che è stato ucciso da un mostro.^000000
 #
 CR_TRUST#
 Faith
@@ -1561,7 +1561,7 @@ CR_AUTOGUARD#
 Auto Guard
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Quando viene usato, blocca completamente gli attacchi.
-Dopo l'uso il castatore non si puт muovere per 0.3 Sec.^000000
+Dopo l'uso il castatore non si può muovere per 0.3 Sec.^000000
 ^777777Per utilizzarla devi avere uno scudo equipaggiato.^000000
 #
 CR_SHIELDCHARGE#
@@ -1569,7 +1569,7 @@ Shield Charge
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
 Descrizione : ^777777Colpisce il nemico con lo scudo.
-Colpisce e fa indietreggiare il nemico ed ha possibilitа di stordire.^000000
+Colpisce e fa indietreggiare il nemico ed ha possibilità di stordire.^000000
 Nota : ^777777Per utilizzarlo devi avere uno scudo equipaggiato.^000000
 #
 CR_SHIELDBOOMERANG#
@@ -1577,7 +1577,7 @@ Shield Boomerang
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
 Descrizione : ^777777Tira lo scudo contro un nemico.
-Scudi piщ pesanti e maggiormente potenziati faranno piщ danni.^000000
+Scudi più pesanti e maggiormente potenziati faranno più danni.^000000
 Nota : ^777777Per utilizzarlo devi avere uno scudo equipaggiato.^000000
 #
 CR_REFLECTSHIELD#
@@ -1593,22 +1593,22 @@ Holy Cross
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
 Descrizione : ^777777Colpisce il nemico con 2 potenti attacchi di elemento holy.
-C'и una possibilitа di causare lo status Blind al nemico.^000000
+C'è una possibilità di causare lo status Blind al nemico.^000000
 #
 CR_GRANDCROSS#
 Grand Cross
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Terreno^000000
 Descrizione : ^777777Crea un'area sul terreno intorno al castatore dove i nemici verranno automaticamente colpiti. Questa skill consuma il 20% degli HP e contina ad assorbire gli HP del castatore per tutta la durata della skill.^000000
-^777777Questa skill non puт essere interrotta quando la stai usando nemmeno se un nemico ti colpisce. Causerа a ciascun mostro di tipo Demon lo status Blind (ad eccezione dei BOSS monster).^000000
+^777777Questa skill non può essere interrotta quando la stai usando nemmeno se un nemico ti colpisce. Causerà a ciascun mostro di tipo Demon lo status Blind (ad eccezione dei BOSS monster).^000000
 #
 CR_DEVOTION#
 Devotion
 Tipo di Skill : ^777777Supporto^000000
 Obiettivo : ^777777I membri di Party/Gilda selezionati^000000
 Descrizione : ^777777Protegge i membri del party prendendo tutto il danno che ricevono. La differenza di livello deve essere meno di 10.^000000
-^777777Se un membro del party va fuori il raggio della skill, quest'ultima viene cancellata. Il danno che il castatore ricevere и dato dalla difesa del personaggio che sta ricevendo il danno in quel momento, la difesa del castatore non influenza il danno ricevuto.^000000
-^777777Se il castatore и nello stato ^008800Auto Guard^000000 o ^008800Defender^000000, i membri del party verranno protetti dallo stesso status.^000000
+^777777Se un membro del party va fuori il raggio della skill, quest'ultima viene cancellata. Il danno che il castatore ricevere è dato dalla difesa del personaggio che sta ricevendo il danno in quel momento, la difesa del castatore non influenza il danno ricevuto.^000000
+^777777Se il castatore è nello stato ^008800Auto Guard^000000 o ^008800Defender^000000, i membri del party verranno protetti dallo stesso status.^000000
 ^777777Consuma 25 SP e necessita di 3 secondi per attivarla.^000000
 ^777777I Crusader/Paladin nel party non possono ricevere gli effetti di questa skill.^000000
 #
@@ -1622,13 +1622,13 @@ CR_DEFENDER#
 Defender
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Quando attiva, aumenta la DEF contro gli attacchi a distanza.
-Diminuisce la velocitа del Crusader e di coloro sui quali sia stato usato Devotion.^000000
+Diminuisce la velocità del Crusader e di coloro sui quali sia stato usato Devotion.^000000
 Nota : ^777777Per utilizzarlo devi avere uno scudo equipaggiato.^000000
 #
 CR_SPEARQUICKEN#
 Spear Quicken
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Aumenta la velocitа di attacco con le lance. Il livello della skill determina la durata.^000000
+Descrizione : ^777777Aumenta la velocità di attacco con le lance. Il livello della skill determina la durata.^000000
 #
 MO_IRONHAND#
 Iron Hand
@@ -1660,12 +1660,12 @@ MO_ABSORBSPIRITS#
 Absorb Spirit
 Tipo di Skill : ^777777Attiva^000000
 Descrizione : ^777777Assorbe una Spirit Sphere per recuperare 7 SP.
-Puт essere usata sulle Spirit Sphere di un altro Monk in PVP.^000000
+Può essere usata sulle Spirit Sphere di un altro Monk in PVP.^000000
 #
 MO_TRIPLEATTACK#
 Triple Strike
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Attacca 3 volte con una bassa probabilitа Puт essere usato con Quadruple Strike.^000000
+Descrizione : ^777777Attacca 3 volte con una bassa probabilità Può essere usato con Quadruple Strike.^000000
 #
 MO_BODYRELOCATION#
 Body Relocation
@@ -1695,7 +1695,7 @@ MO_STEELBODY#
 Steel Body
 Tipo di Skill : ^777777Attiva^000000
 Descrizione : ^777777Porta la DEF e la MDEF di chi usa questa skill a 90
-La velocitа viene ridotta e le skill non potranno essere usate.
+La velocità viene ridotta e le skill non potranno essere usate.
 Non funziona con i mostri di tipo Boss.^000000
 Nota : ^777777Utilizza 5 Spirit Sphere.^000000
 #
@@ -1709,20 +1709,20 @@ Nota : ^777777Utilizza 1 Spirit Sphere.^000000
 [Level 3] : ^777777Dura 40 seconds, ^008800Investigate^000000
 [Level 4] : ^777777Dura 50 seconds, ^008800Raging Quadruple Strike^000000
 [Level 5] : ^777777Dura 60 seconds, ^008800Extreme Fist^000000
-^777777Extreme Fist и usabile solo nello stato Explosion of Spirit con 4 Spirit Spheres.^000000
+^777777Extreme Fist è usabile solo nello stato Explosion of Spirit con 4 Spirit Spheres.^000000
 #
 MO_EXPLOSIONSPIRITS#
 Explosion of Spirit
 Tipo di Skill : ^777777Attiva^000000
 Descrizione : ^777777Aumenta il Critical Rate per la durata della skill.
-Gli SP non vengono rigenerati quando questa skill и attiva.^000000
+Gli SP non vengono rigenerati quando questa skill è attiva.^000000
 Nota : ^777777Utilizza 5 Spirit Sphere.^000000
 #
 MO_EXTREMITYFIST#
 Extreme Fist
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Questa skill puт essere utilizzata solo quando Explosion of Spirit и attiva.
+Descrizione : ^777777Questa skill può essere utilizzata solo quando Explosion of Spirit è attiva.
 Utilizza tutti gli SP per danneggiare enormemente l'obiettivo.
 L'effetto di Explosion of Spirit sparisce dopo aver utilizzato questa skill.^000000
 Nota : ^777777Utilizza 5 Spirit Sphere.^000000
@@ -1738,36 +1738,36 @@ MO_COMBOFINISH#
 Combo Finish
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Puт essere utilizzata soltanto dopo un Quadruple Strike.
-Esegue un attacco finale sul nemico spingendolo indietro danneggiandolo seriamente. Puт essere usato con Extreme Fist^000000
+Descrizione : ^777777Può essere utilizzata soltanto dopo un Quadruple Strike.
+Esegue un attacco finale sul nemico spingendolo indietro danneggiandolo seriamente. Può essere usato con Extreme Fist^000000
 Nota : ^777777Utilizza 1 Spirit Sphere.^000000
 #
 SA_ADVANCEDBOOK#
 Book Mastery
 Tipo di Skill : ^000099Passiva^000000
 Descrizione : ^777777Aumenta il Potere di Attacco delle armi di tipo Libro.^000000
-[Livello 1] : ^777777Potere di Attacco +3, Velocitа di attacco + 0.5%^000000
-[Livello 2] : ^777777Potere di Attacco +6, Velocitа di attacco + 1%^000000
-[Livello 3] : ^777777Potere di Attacco +9, Velocitа di attacco + 1.5%^000000
-[Livello 4] : ^777777Potere di Attacco +12, Velocitа di attacco + 2%^000000
-[Livello 5] : ^777777Potere di Attacco +15, Velocitа di attacco + 2.5%^000000
-[Livello 6] : ^777777Potere di Attacco +18, Velocitа di attacco + 3%^000000
-[Livello 7] : ^777777Potere di Attacco +21, Velocitа di attacco + 3.5%^000000
-[Livello 8] : ^777777Potere di Attacco +24, Velocitа di attacco + 4%^000000
-[Livello 9] : ^777777Potere di Attacco +27, Velocitа di attacco + 4.5%^000000
-[Livello 10] : ^777777Potere di Attacco +30, Velocitа di attacco + 5%^000000
+[Livello 1] : ^777777Potere di Attacco +3, Velocità di attacco + 0.5%^000000
+[Livello 2] : ^777777Potere di Attacco +6, Velocità di attacco + 1%^000000
+[Livello 3] : ^777777Potere di Attacco +9, Velocità di attacco + 1.5%^000000
+[Livello 4] : ^777777Potere di Attacco +12, Velocità di attacco + 2%^000000
+[Livello 5] : ^777777Potere di Attacco +15, Velocità di attacco + 2.5%^000000
+[Livello 6] : ^777777Potere di Attacco +18, Velocità di attacco + 3%^000000
+[Livello 7] : ^777777Potere di Attacco +21, Velocità di attacco + 3.5%^000000
+[Livello 8] : ^777777Potere di Attacco +24, Velocità di attacco + 4%^000000
+[Livello 9] : ^777777Potere di Attacco +27, Velocità di attacco + 4.5%^000000
+[Livello 10] : ^777777Potere di Attacco +30, Velocità di attacco + 5%^000000
 #
 SA_CASTCANCEL#
 Cast Cancel
 Tipo di Skill : ^777777Attiva^000000
 Descrizione : ^777777Cancella una magia prima che sia terminato il cast. 
-Il consumo di SP della magia и ridotto in base al livello della Skill Cast Cancel.^000000
+Il consumo di SP della magia è ridotto in base al livello della Skill Cast Cancel.^000000
 #
 SA_FREECAST#
 Free Cast
 Tipo di Skill : ^000099Passiva^000000
 Descrizione : ^777777Rende possibile il movimento e l'attacco durante il cast delle magie.
-La velocitа di attacco e le possibilitа di movimento vengono aumentate in base al livello della skill.^000000
+La velocità di attacco e le possibilità di movimento vengono aumentate in base al livello della skill.^000000
 #
 SA_SPELLBREAKER#
 Spell Breaker
@@ -1794,24 +1794,24 @@ Descrizione : ^777777Permette di iniziare il cast di una magia mentre si sta att
 SA_MAGICROD#
 Magic Rod
 Tipo di Skill : ^777777Attiva^000000
-Descrizione : ^777777Se si и l'obiettivo di una magia, quella magia viene cancellata e gli SP usati vengono assorbiti dal Sage.^000000
-Nota : ^777777Se un Sage nemico tenta di interrompere il cast della magia con questa skill, riceverа un danno pari al 20%.^000000
+Descrizione : ^777777Se si è l'obiettivo di una magia, quella magia viene cancellata e gli SP usati vengono assorbiti dal Sage.^000000
+Nota : ^777777Se un Sage nemico tenta di interrompere il cast della magia con questa skill, riceverà un danno pari al 20%.^000000
 #
 SA_VOLCANO#
 Volcano
 Tipo di Skill : ^777777Attiva000000
 Obiettivo : ^777777Cella000000
-Descrizione : ^777777La cella prescelta assume le proprietа del fuoco.
-Qualsiasi attacco fisico o magico da questa cella avrа un potere elementale.
-Ice wall non puт essere usato in questo caso.^000000
+Descrizione : ^777777La cella prescelta assume le proprietà del fuoco.
+Qualsiasi attacco fisico o magico da questa cella avrà un potere elementale.
+Ice wall non può essere usato in questo caso.^000000
 Nota : ^777777Richiede 1 Yellow Gemstone.^000000
 #
 SA_DELUGE#
 Deluge
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Cella000000
-Descrizione : ^777777La cella prescelta assume le proprietа dell'acqua.
-Qualsiasi attacco fisico o magico da questa cella avrа un potere elementale.
+Descrizione : ^777777La cella prescelta assume le proprietà dell'acqua.
+Qualsiasi attacco fisico o magico da questa cella avrà un potere elementale.
 Le skill che richiedono acqua (come Water Ball o Aqua Benedicta ) possono essere usate su questa cella.^000000
 Nota : ^777777Richiede 1 Yellow Gemstone.^000000
 #
@@ -1819,18 +1819,18 @@ SA_VIOLENTGALE#
 Violent Gale
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Cella^000000
-Descrizione : ^777777La cella prescelta assume le proprietа del vento.
-Qualsiasi attacco fisico o magico da questa cella avrа un potere elementale.
-Il tasso di Flee di ogni personaggio in questa cella verrа aumentato.^000000
-^008800Fire Wall^777777 avrа una durata di quasi il doppio in questa area.
+Descrizione : ^777777La cella prescelta assume le proprietà del vento.
+Qualsiasi attacco fisico o magico da questa cella avrà un potere elementale.
+Il tasso di Flee di ogni personaggio in questa cella verrà aumentato.^000000
+^008800Fire Wall^777777 avrà una durata di quasi il doppio in questa area.
 Nota : ^777777Richiede 1 Yellow Gemstone.^000000
 #
 SA_BARRENZONE#
 Barren Zone
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Cella^000000
-Descrizione : ^777777La cella prescelta assume le proprietа della terra.
-Qualsiasi attacco fisico o magico da questa cella avrа un potere elementale.^000000
+Descrizione : ^777777La cella prescelta assume le proprietà della terra.
+Qualsiasi attacco fisico o magico da questa cella avrà un potere elementale.^000000
 Nota : ^777777Richiede 1 Yellow Gemstone.^000000
 #
 SA_LANDPROTECTOR#
@@ -1838,7 +1838,7 @@ Land Protector
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Cella^000000
 Descrizione : ^777777Protegge un'area dalle magie. 
-Rimuove anche il cast giа iniziato di magie con quella zona come obiettivo.^000000
+Rimuove anche il cast già iniziato di magie con quella zona come obiettivo.^000000
 Nota : ^777777Richiede 1 Yellow Gemstone e 1 Blue Gemstone.^000000
 #
 SA_FLAMELAUNCHER#
@@ -1867,7 +1867,7 @@ Seismic Weapon
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Arma^000000
 Descrizione : ^777777Incanta l'arma di un personaggio del tuo party con l'elemento terra.
-Possibilitа di distruggere l'arma.^000000
+Possibilità di distruggere l'arma.^000000
 Nota : ^777777Richiede 1 Green Live.^000000
 #
 SA_DRAGONOLOGY#
@@ -1880,7 +1880,7 @@ Dispell
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
 Descrizione : ^777777Cancella tutti gli effetti magici.
-Possibilitа di successo basata sul livello della skill.^000000
+Possibilità di successo basata sul livello della skill.^000000
 Nota : Richiede ^777777 1 Yellow Gemstone^000000.^000000
 #
 SA_ABRACADABRA#
@@ -1895,7 +1895,7 @@ Mono Cell
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
 Descrizione : ^777777Trasforma il nemico in un Poring.
-Possibilitа di successo basata sul livello della skill.^000000
+Possibilità di successo basata sul livello della skill.^000000
 #
 SA_CLASSCHANGE#
 Class Change
@@ -1920,7 +1920,7 @@ Death
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
 Descrizione : ^777777Uccide il nemico all'istante, senza che lasci oggetti e senza guadagnare esperienza.
-Possibilitа di successo basata sul livello della skill.^000000
+Possibilità di successo basata sul livello della skill.^000000
 #
 SA_FORTUNE#
 Fortune
@@ -1979,7 +1979,7 @@ La stessa Canzone non deve essere rieseguita subito.^000000
 BD_ENCORE#
 Encore
 Tipo di Skill : ^777777Attiva^000000
-Descrizione : ^777777Ripete l'ultima canzone o danza effettuata consumandone la metа degli SP.^000000
+Descrizione : ^777777Ripete l'ultima canzone o danza effettuata consumandone la metà degli SP.^000000
 #
 BD_LULLABY#
 Lullaby
@@ -2057,7 +2057,7 @@ BA_MUSICALSTRIKE#
 Musical Strike
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Scaglia una potente freccia contro il nemico. Si puт usare mentre stai suonando una canzone.^000000
+Descrizione : ^777777Scaglia una potente freccia contro il nemico. Si può usare mentre stai suonando una canzone.^000000
 Nota : ^777777Il tipo di elemento della freccia dipende dalle freccie equipaggiate.^000000
 #
 BA_DISSONANCE#
@@ -2083,7 +2083,7 @@ BA_ASSASSINCROSS#
 Assassin Cross of Sunset
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Area^000000
-Descrizione : ^777777Aumenta la velocitа d'attacco di tutti i giocatori nella zona di effetto. Non funziona su skill come Two-Hand Quicken, Adrenaline Rush o sugli attacchi a lunga gittata.^000000
+Descrizione : ^777777Aumenta la velocità d'attacco di tutti i giocatori nella zona di effetto. Non funziona su skill come Two-Hand Quicken, Adrenaline Rush o sugli attacchi a lunga gittata.^000000
 #
 BA_POEMBRAGI#
 A Poem of Bragi
@@ -2095,7 +2095,7 @@ BA_APPLEIDUN#
 The Apple of Idun
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Area^000000
-Descrizione : ^777777Aumenta la quantitа di HP di tutti i giocatori nell'area.
+Descrizione : ^777777Aumenta la quantità di HP di tutti i giocatori nell'area.
 Viene anche creata una zona di cura, ristabilendo gli HP ogni 6 secondi nella zona di effetto per una durata massima di 3 minuti.^000000
 #
 DC_DANCINGLESSON#
@@ -2144,13 +2144,13 @@ DC_DONTFORGETME#
 Please Don't Forget Me
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Area^000000
-Descrizione : ^777777Diminuisce la Velocitа di Attacco ed i Movimenti di tutti i nemici nell'area di effetto. Cancella tutte le skill che danno aumento di velocitа o di attacco.^000000
+Descrizione : ^777777Diminuisce la Velocità di Attacco ed i Movimenti di tutti i nemici nell'area di effetto. Cancella tutte le skill che danno aumento di velocità o di attacco.^000000
 #
 DC_FORTUNEKISS#
 Fortune's Kiss
 Tipo di Skill : ^777777Attiva^000000
 Obiettivo : ^777777Area^000000
-Descrizione : ^777777Aumenta la probabilitа di colpi critici di tutti i giocatori nell'area di effetto.^000000
+Descrizione : ^777777Aumenta la probabilità di colpi critici di tutti i giocatori nell'area di effetto.^000000
 #
 DC_SERVICEFORYOU#
 Service For you
@@ -2160,13 +2160,13 @@ Descrizione : ^777777Aumenta gli SP massimi di tutti i giocatori nell'area di ef
 Riduce i consumi di tutte le skill nell'area di effetto.^000000
 #
 WE_MALE#
-Io ti salverт, se sei in pericolo
+Io ti salverò, se sei in pericolo
 Skill che possono solo usare gli innamorati.
 Usi i tuoi HP per donarli al tuo compagno
 Questa skill consuma il 15% dei tuoi HP. Questa skill non la puoi usare se i tuoi HP sono meno del 15% dei tuoi HP massimi. 
 #
 WE_FEMALE#
-Mi sacrificherт per te
+Mi sacrificherò per te
 Skill che possono solo usare gli innamorati.
 Usi i tuoi SP per donarli al tuo compagno
 Questa skill consuma il 15% dei tuoi SP. Questa skill non la puoi usare se i tuoi SP sono meno del 15% dei tuoi SP massimi. 
@@ -2182,7 +2182,7 @@ LK_AURABLADE#
 Aura Blade
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Incanta l'aura di un'arma provocando maggior danno al bersaglio.
-Il danno non influisce nи sull'indice di precisione del castatore nи sulla difesa del bersaglio.^000000
+Il danno non influisce nè sull'indice di precisione del castatore nè sulla difesa del bersaglio.^000000
 [Livello 1] : ^777777Danno Aggiuntivo +20^000000
 [Livello 2] : ^777777Danno Aggiuntivo +40^000000
 [Livello 3] : ^777777Danno Aggiuntivo +60^000000
@@ -2192,23 +2192,23 @@ Il danno non influisce nи sull'indice di precisione del castatore nи sulla dif
 LK_PARRYING#
 Parry
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Blocca un attacco del nemico utilizzando una spada a due mani. Se ha successo, il castatore puт schivare un attacco del nemico ed allo stesso tempo, un attacco del castatore verrа annullato.
+Descrizione : ^777777Blocca un attacco del nemico utilizzando una spada a due mani. Se ha successo, il castatore può schivare un attacco del nemico ed allo stesso tempo, un attacco del castatore verrà annullato.
 Richiede una spada a due mani.^000000
-[Livello 1] : ^777777Possibilitа di Blocco +23%^000000
-[Livello 2] : ^777777Possibilitа di Blocco +26%^000000
-[Livello 3] : ^777777Possibilitа di Blocco +29%^000000
-[Livello 4] : ^777777Possibilitа di Blocco +32%^000000
-[Livello 5] : ^777777Possibilitа di Blocco +35%^000000
-[Livello 6] : ^777777Possibilitа di Blocco +38%^000000
-[Livello 7] : ^777777Possibilitа di Blocco +41%^000000
-[Livello 8] : ^777777Possibilitа di Blocco +44%^000000
-[Livello 9] : ^777777Possibilitа di Blocco +47%^000000
-[Livello 10] : ^777777Possibilitа di Blocco +50%^000000
+[Livello 1] : ^777777Possibilità di Blocco +23%^000000
+[Livello 2] : ^777777Possibilità di Blocco +26%^000000
+[Livello 3] : ^777777Possibilità di Blocco +29%^000000
+[Livello 4] : ^777777Possibilità di Blocco +32%^000000
+[Livello 5] : ^777777Possibilità di Blocco +35%^000000
+[Livello 6] : ^777777Possibilità di Blocco +38%^000000
+[Livello 7] : ^777777Possibilità di Blocco +41%^000000
+[Livello 8] : ^777777Possibilità di Blocco +44%^000000
+[Livello 9] : ^777777Possibilità di Blocco +47%^000000
+[Livello 10] : ^777777Possibilità di Blocco +50%^000000
 #
 LK_CONCENTRATION#
 Concentration
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Se usata, aumenta la precisione e la potenza di attacco del suo utilizzatore ed allo stesso tempo ha l'effetto della skill Endure. Tuttavia, la difesa del suo utilizzatore diminuirа per tutta la durata della skill.^000000
+Descrizione : ^777777Se usata, aumenta la precisione e la potenza di attacco del suo utilizzatore ed allo stesso tempo ha l'effetto della skill Endure. Tuttavia, la difesa del suo utilizzatore diminuirà per tutta la durata della skill.^000000
 [Livello 1] : ^777777Accuratezza +10%, ATK +5%, DEF -5%^000000
 [Livello 2] : ^777777Accuratezza +20%, ATK +10%, DEF -10%^000000
 [Livello 3] : ^777777Accuratezza +30%, ATK +15%, DEF -15%^000000
@@ -2218,23 +2218,23 @@ Descrizione : ^777777Se usata, aumenta la precisione e la potenza di attacco del
 LK_TENSIONRELAX#
 Tension Relax
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Aumenta la velocitа di recupero degli HP da seduto o mentre stai riposando.
-Questa skill consuma 12 SP ogni 10 secondi. Rialzandoti o utilizzando oggetti mentre la skill и in uso, essa verrа annullata.^000000
+Descrizione : ^777777Aumenta la velocità di recupero degli HP da seduto o mentre stai riposando.
+Questa skill consuma 12 SP ogni 10 secondi. Rialzandoti o utilizzando oggetti mentre la skill è in uso, essa verrà annullata.^000000
 #
 LK_BERSERK#
 Berserk
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Aumenta la quantitа massima di HP, la velocitа di movimento e la potenza di attacco per tutta la durata della skill. Tuttavia, diminuirа la flee del castatore.
-Inoltre, le azioni dell'utilizzatore verranno ridotte al solo attacco e movimento. Egli inoltre non potrа rigenerare gli HP con skill curative.
-Questa skill consuma 1 determinata quantitа di HP al secondo. Non puт essere utilizzata durante le WoE.
+Descrizione : ^777777Aumenta la quantità massima di HP, la velocità di movimento e la potenza di attacco per tutta la durata della skill. Tuttavia, diminuirà la flee del castatore.
+Inoltre, le azioni dell'utilizzatore verranno ridotte al solo attacco e movimento. Egli inoltre non potrà rigenerare gli HP con skill curative.
+Questa skill consuma 1 determinata quantità di HP al secondo. Non può essere utilizzata durante le WoE.
 ^000000
 #
 PA_PRESSURE#
 Pressure
 Tipo di Skill : ^777777Attiva^000000
 Descrizione : ^777777Evoca un enorme crocifisso per schiacciare i nemici.
-Il danno procurato da questa skill non dipende dalla difesa o dalla potenza di attacco, ma procura una quantitа fissa di danno in base al livello della skill.
-Questa skill non puт essere annullata in alcun modo.^777777
+Il danno procurato da questa skill non dipende dalla difesa o dalla potenza di attacco, ma procura una quantità fissa di danno in base al livello della skill.
+Questa skill non può essere annullata in alcun modo.^777777
 [Livello 1] : ^777777Danno 800^000000
 [Livello 2] : ^777777Danno 1100^000000
 [Livello 3] : ^777777Danno 1400^000000
@@ -2262,7 +2262,7 @@ Applicata su tutti i nemici e giocatori nel raggio di azione.^000000
 PA_SHIELDCHAIN#
 Rapid Smiting
 Raggio d'azione: ^7777774 celle ^000000
-Descrizione: ^777777Permette di colpire il nemico 5 volte con lo scudo durante un combattimento. L'accuratezza aumenta la possibilitа di successo nel colpire; il peso e gli upgrade allo scudo aumentano i danni inflitti. Rapid Smiting ha un secondo di casting delay e 2 secondi in cui si и vulnerabili. ^00BB00E' necessario avere uno scudo equipaggiato^777777.^000000
+Descrizione: ^777777Permette di colpire il nemico 5 volte con lo scudo durante un combattimento. L'accuratezza aumenta la possibilità di successo nel colpire; il peso e gli upgrade allo scudo aumentano i danni inflitti. Rapid Smiting ha un secondo di casting delay e 2 secondi in cui si è vulnerabili. ^00BB00E' necessario avere uno scudo equipaggiato^777777.^000000
 [Lv 1]:^777777 Danno +30%, accuratezza della skill +20, 28 SP consumati^000000
 [Lv 2]:^777777 Danno +60%, accuratezza della skill +20, 31 SP consumati^000000
 [Lv 3]:^777777 Danno +90%, accuratezza della skill +20, 34 SP consumati^000000
@@ -2272,8 +2272,8 @@ Descrizione: ^777777Permette di colpire il nemico 5 volte con lo scudo durante u
 HP_ASSUMPTIO#
 Assumptio
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Riduce il danno della metа per tutta la durata della skill.
-Non puт essere utilizzata con Kyrie Eleison allo stesso tempo. La riduzione del danno diventa dei 2/3 durante le guild war e nelle zone adibite al PvP.^000000
+Descrizione : ^777777Riduce il danno della metà per tutta la durata della skill.
+Non può essere utilizzata con Kyrie Eleison allo stesso tempo. La riduzione del danno diventa dei 2/3 durante le guild war e nelle zone adibite al PvP.^000000
 [Livello 1] : ^77777720 Sec Durata^000000
 [Livello 2] : ^77777740 Sec Durata^000000
 [Livello 3] : ^77777760 Sec Durata^000000
@@ -2285,7 +2285,7 @@ Basilica
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Blocca tutti i nemici presenti nel raggio di azione della skill, come per ogni attacco col suo raggio di azione.
 Richiede 1 Blue Gemstone, 1 Yellow Gemstone, 1 Red Gemstone e 1 Holy Water.
-Non puт essere utilizzata contro i boss e neanche durante i guild sieges. Se vi и qualche ostacolo nel raggio della skill, essa verrа annullata.^000000
+Non può essere utilizzata contro i boss e neanche durante i guild sieges. Se vi è qualche ostacolo nel raggio della skill, essa verrà annullata.^000000
 [Livello 1] : ^77777720 Sec Durata^000000
 [Livello 2] : ^77777725 Sec Durata^000000
 [Livello 3] : ^77777730 Sec Durata^000000
@@ -2295,7 +2295,7 @@ Non puт essere utilizzata contro i boss e neanche durante i guild sieges. Se vi
 HP_MEDITATIO#
 Meditation
 Tipo di Skill : ^777777Passiva^000000
-Descrizione : ^777777Aumenta la velocitа di recupero e la quantitа massima di SP.
+Descrizione : ^777777Aumenta la velocità di recupero e la quantità massima di SP.
 Influisce anche sulle skill curative di recupero HP.^000000
 [Livello 1] : ^777777Massimi SP +1%, Recupero SP + 3%^000000
 [Livello 2] : ^777777Massimi SP +2%, Recupero SP  + 6% ^000000
@@ -2335,7 +2335,7 @@ Descrizione : ^777777Aumenta gli SP massimi e recupera un certo numero di SP ogn
 HW_MAGICCRASHER#
 Magic Crasher
 Tipo di Skill : ^777777Attiva^000000
-Descrizione : ^777777Colpisce un bersaglio con un attacco fisico di tipo neutro. Il danno inflitto и affetto dalla difesa del bersaglio e dal MATK del castatore.^000000
+Descrizione : ^777777Colpisce un bersaglio con un attacco fisico di tipo neutro. Il danno inflitto è affetto dalla difesa del bersaglio e dal MATK del castatore.^000000
 #
 HW_MAGICPOWER#
 Magic Power
@@ -2355,8 +2355,8 @@ Descrizione : ^777777Amplifica temporaneamente il MATK di una skill.^000000
 CH_PALMSTRIKE#
 Raging Palm Strike
 Tipo di Skill : ^777777Attiva^000000
-Descrizione : ^777777Colpisce i nemici usando i palmi delle mani. C'и un secondo di attesa prima che l'attacco danneggi il nemico. Quanto usato inoltre spinge il nemico indietro di qualche cella.
-Si puт usare solo durante lo stato Fury.^000000
+Descrizione : ^777777Colpisce i nemici usando i palmi delle mani. C'è un secondo di attesa prima che l'attacco danneggi il nemico. Quanto usato inoltre spinge il nemico indietro di qualche cella.
+Si può usare solo durante lo stato Fury.^000000
 [Level 1] : ^777777ATK +300%^000000
 [Level 2] : ^777777ATK +400%^000000
 [Level 3] : ^777777ATK +500%^000000
@@ -2366,22 +2366,22 @@ Si puт usare solo durante lo stato Fury.^000000
 CH_TIGERFIST#
 Tiger Fist
 Tipo di Skill : ^777777Attiva^000000
-Descrizione : ^777777Skill combo che puт essere usata dopo il Quadruple Strike.
-Il nemico colpito da questa skill и congelato per un breve periodo di tempo.
+Descrizione : ^777777Skill combo che può essere usata dopo il Quadruple Strike.
+Il nemico colpito da questa skill è congelato per un breve periodo di tempo.
 Richiede 1 spirit sphere.^000000
-[Level 1] : ^777777ATK +140%, Possibilitа di Congelare 20%^000000
-[Level 2] : ^777777ATK +240%, Possibilitа di Congelare 30%^000000
-[Level 3] : ^777777ATK +340%, Possibilitа di Congelare 40%^000000
-[Level 4] : ^777777ATK +440%, Possibilitа di Congelare 50%^000000
-[Level 5] : ^777777ATK +540%, Possibilitа di Congelare 60%^000000
+[Level 1] : ^777777ATK +140%, Possibilità di Congelare 20%^000000
+[Level 2] : ^777777ATK +240%, Possibilità di Congelare 30%^000000
+[Level 3] : ^777777ATK +340%, Possibilità di Congelare 40%^000000
+[Level 4] : ^777777ATK +440%, Possibilità di Congelare 50%^000000
+[Level 5] : ^777777ATK +540%, Possibilità di Congelare 60%^000000
 #
 CH_CHAINCRUSH#
 Chain Crush Combo
 Tipo di Skill : ^777777Attiva^000000
-Descrizione : ^777777Skill combo che puт essere usata dopo Tiger Fist.
+Descrizione : ^777777Skill combo che può essere usata dopo Tiger Fist.
 Consuma 1 spirit sphere per fare danno addizionale.
-Dopo aver usato, и possibile usare Extreme Fist.
-Dopo Extreme Fist, и impossibile usare Chain Crush Combo o Tiger Fist.
+Dopo aver usato, è possibile usare Extreme Fist.
+Dopo Extreme Fist, è impossibile usare Chain Crush Combo o Tiger Fist.
 ^000000
 [Level 1] : ^777777ATK +500%^000000
 [Level 2] : ^777777ATK +600%^000000
@@ -2407,20 +2407,20 @@ Descrizione : ^777777Consuma 10 % dell'ammontare di HP per recuperare un certo n
 PF_SOULCHANGE#
 Soul Change
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Scambia gli SP rimanenti del castatore con quelli di un bersaglio. Non puт scambiare piщ dell'ammontare massimo di SP del castatore o del bersaglio.^000000
+Descrizione : ^777777Scambia gli SP rimanenti del castatore con quelli di un bersaglio. Non può scambiare più dell'ammontare massimo di SP del castatore o del bersaglio.^000000
 #
 PF_SOULBURN#
 Soul Burn
 Tipo di Skill : ^777777Attiva^000000
 Descrizione : ^777777Risucchia un ammontare di SP da un bersaglio.
-A livello 5, questa skill fа un danno pari al doppio degli SP rimanenti del castatore.
-Comunque, quando la skill fallisce, il castatore sarа danneggiato dal suo effetto.
-Puт essere usata solo in PVP e nelle WoE.^000000
-[Level 1] : ^777777Possibilitа di Successo 40%^000000
-[Level 2] : ^777777Possibilitа di Successo 50%^000000
-[Level 3] : ^777777Possibilitа di Successo 60%^000000
-[Level 4] : ^777777Possibilitа di Successo 70%^000000
-[Level 5] : ^777777Possibilitа di Successo 70%^000000
+A livello 5, questa skill fà un danno pari al doppio degli SP rimanenti del castatore.
+Comunque, quando la skill fallisce, il castatore sarà danneggiato dal suo effetto.
+Può essere usata solo in PVP e nelle WoE.^000000
+[Level 1] : ^777777Possibilità di Successo 40%^000000
+[Level 2] : ^777777Possibilità di Successo 50%^000000
+[Level 3] : ^777777Possibilità di Successo 60%^000000
+[Level 4] : ^777777Possibilità di Successo 70%^000000
+[Level 5] : ^777777Possibilità di Successo 70%^000000
 #
 ASC_KATAR#
 Advanced Katar Mastery
@@ -2435,7 +2435,7 @@ Descrizione : ^777777Aumenta il danno delle armi Katar.^000000
 ASC_BREAKER#
 Soul Destroyer
 Tipo di Skill : ^777777Attiva^000000
-Descrizione : ^777777Infligge un danno al bersaglio pari alla somma di metа della difesa fisica piщ metа della difesa magica del bersaglio.
+Descrizione : ^777777Infligge un danno al bersaglio pari alla somma di metà della difesa fisica più metà della difesa magica del bersaglio.
 L'ammontare del danno dipende anche dalla forza di attacco e dalla INT del castatore.^000000
 #
 SN_SIGHT#
@@ -2462,7 +2462,7 @@ SN_SHARPSHOOTING#
 Sharp Shooting
 Tipo di Skill : ^777777Attiva^000000
 Descrizione : ^777777Scocca una freccia con forza verso un punto.
-La freccia sarа lanciata con forza verso l'obbiettivo e in questo modo farа un grande danno al nemico.^000000
+La freccia sarà lanciata con forza verso l'obbiettivo e in questo modo farà un grande danno al nemico.^000000
 [Level 1] : ^777777ATK +150%^000000
 [Level 2] : ^777777ATK +200%^000000
 [Level 3] : ^777777ATK +250%^000000
@@ -2472,16 +2472,16 @@ La freccia sarа lanciata con forza verso l'obbiettivo e in questo modo farа un
 SN_WINDWALK#
 Wind Walk
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Aumenta la velocitа di movimento e la flee del castatore e dei membri del party.
-Non puт essere usata con altre skill con effetto simile come Increase AGI, o skill che aumentano la velocitа di movimento.
-Le skill che diminuiscono la velocitа di movimento, come Quagmire, cancelleranno questa skill.^000000
+Descrizione : ^777777Aumenta la velocità di movimento e la flee del castatore e dei membri del party.
+Non può essere usata con altre skill con effetto simile come Increase AGI, o skill che aumentano la velocità di movimento.
+Le skill che diminuiscono la velocità di movimento, come Quagmire, cancelleranno questa skill.^000000
 #
 WS_MELTDOWN#
 Melt Down
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Possibilitа di distruggere l'arma o l'armatura di un bersaglio per la durata della skill.
+Descrizione : ^777777Possibilità di distruggere l'arma o l'armatura di un bersaglio per la durata della skill.
 Se fatta sui mostri, questa skill diminuisce la forza di attacco e la difesa.
-Il livello della skill influisce sulla possibilitа di riuscita.^000000
+Il livello della skill influisce sulla possibilità di riuscita.^000000
 [Level 1] : ^777777Durata 15 secs^000000
 [Level 2] : ^777777Durata 20 secs^000000
 [Level 3] : ^777777Durata 25 secs^000000
@@ -2502,44 +2502,44 @@ Nugget Craft
 WS_CARTBOOST#
 Cart Boost
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Aumenta la velocitа di movimento del castatore mentre trasporta il carretto.
-Gli altri effetti che diminuiscono la velocitа di movimento del personaggio non possono interferire con questa skill.^000000
+Descrizione : ^777777Aumenta la velocità di movimento del castatore mentre trasporta il carretto.
+Gli altri effetti che diminuiscono la velocità di movimento del personaggio non possono interferire con questa skill.^000000
 #
 WS_SYSTEMCREATE#
 Auto Attacking Machine Craft
 #
 WS_CARTTERMINATION#
 High Speed Cart Ram
-Descrizione: ^777777Puт essere utilizzata solo durante Cart Boost.
-Spendendo un certo quantitativo di Zeny, si puт usare il carretto per infliggere danno al nemico con la possibilitа di causargli lo status stun.
-Il^FFFFFF ^777777 danno provocato da questa skill и influenzato dal livello della skill e dal peso degli oggetti^FFFFFF ^777777 contenuti nel carretto.^000000
+Descrizione: ^777777Può essere utilizzata solo durante Cart Boost.
+Spendendo un certo quantitativo di Zeny, si può usare il carretto per infliggere danno al nemico con la possibilità di causargli lo status stun.
+Il^FFFFFF ^777777 danno provocato da questa skill è influenzato dal livello della skill e dal peso degli oggetti^FFFFFF ^777777 contenuti nel carretto.^000000
 [Lv 1]:^777777 600 zeny
-5% di possibilitа di causare stun^000000
+5% di possibilità di causare stun^000000
 [Lv 2]:^777777 700 zeny
-10% di possibilitа di causare stun^000000
+10% di possibilità di causare stun^000000
 [Lv 3]:^777777 800 zeny
-15% di possibilitа di causare stun^000000
+15% di possibilità di causare stun^000000
 [Lv 4]:^777777 900 zeny
-20% di possibilitа di causare stun^000000
+20% di possibilità di causare stun^000000
 [Lv 5]:^777777 1,000 zeny
-25% Possibilitа di stordire^000000
+25% Possibilità di stordire^000000
 [Lv 6]:^777777 1,100 zeny
-30% di possibilitа di causare stun^000000
+30% di possibilità di causare stun^000000
 [Lv 7]:^777777 1,200 zeny
-35% di possibilitа di causare stun^000000
+35% di possibilità di causare stun^000000
 [Lv 8]:^777777 1,300 zeny
-40% di possibilitа di causare stun^000000
+40% di possibilità di causare stun^000000
 [Lv 9]:^777777 1,400 zeny
-45% di possibilitа di causare stun^000000
+45% di possibilità di causare stun^000000
 [Lv 10]:^777777 1,500 zeny
-50% di possibilitа di causare stun^000000
+50% di possibilità di causare stun^000000
 #
 WS_OVERTHRUSTMAX#
 Maximum Power-Thrust
 Bersaglio: ^777777Il personaggio che esegue la magia^000000
 Descrizione ^777777Aumenta il danno dell'arma spendendo un certo quantitativo di Zeny.
-Puт essere usata solamente da chi effettua la skill.
-C'и la possibilitа dello 0.1% di distruggere l'arma ogni volta che si attacca.^000000
+Può essere usata solamente da chi effettua la skill.
+C'è la possibilità dello 0.1% di distruggere l'arma ogni volta che si attacca.^000000
 [Lv 1]:^777777 ATK +20%, 3000 zeny^000000
 [Lv 2]:^777777 ATK +40%, 3500 zeny^000000
 [Lv 3]:^777777 ATK +60%, 4000 zeny^000000
@@ -2549,29 +2549,29 @@ C'и la possibilitа dello 0.1% di distruggere l'arma ogni volta che si attacca.
 ST_CHASEWALK#
 Chase Walk
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Questa skill permette al castatore di muoversi lentamente mentre и nascosto.
+Descrizione : ^777777Questa skill permette al castatore di muoversi lentamente mentre è nascosto.
 Le skill come Sight, Ruwach o Improve Concentration non possono far scoprire il castatore.
-Il castatore puт essere danneggiato da skill ad area e skill che agiscono sul terreno; inoltre lascerа delle impronte quando cammina.
-Questa skill non puт essere usata contro mostri di tipo insect, demon e boss.
-La STR verrа incrementata per 30 secondi in base al livello della skill.
-E' possibile usare questa skill nelle mappe delle Guild War, ma l'uso degli SP verrа aumentato di 5 volte.
-[Level 1] : ^777777Velocitа Movimento 70%, -12 SP per 10 secondi. Dopo 10 sec STR+1. -60 SP per 10 secondi in WoE.^000000
-[Level 2] : ^777777Velocitа Movimento 75%, -14 SP per 10 secondi. Dopo 10 sec STR+2. -70 SP per 10 secondi in WoE.^000000
-[Level 3] : ^777777Velocitа Movimento 80%, -16 SP per 10 secondi. Dopo 10 sec STR+4. -80 SP per 10 secondi in WoE.^000000
-[Level 4] : ^777777Velocitа Movimento 85%, -18 SP per 10 secondi. Dopo 10 sec STR+8. -90 SP per 10 secondi in WoE.^000000
-[Level 5] : ^777777Velocitа Movimento 90%, -20 SP per 10 secondi. Dopo 10 sec STR+16. -100 SP per 10 secondi in WoE.^000000
+Il castatore può essere danneggiato da skill ad area e skill che agiscono sul terreno; inoltre lascerà delle impronte quando cammina.
+Questa skill non può essere usata contro mostri di tipo insect, demon e boss.
+La STR verrà incrementata per 30 secondi in base al livello della skill.
+E' possibile usare questa skill nelle mappe delle Guild War, ma l'uso degli SP verrà aumentato di 5 volte.
+[Level 1] : ^777777Velocità Movimento 70%, -12 SP per 10 secondi. Dopo 10 sec STR+1. -60 SP per 10 secondi in WoE.^000000
+[Level 2] : ^777777Velocità Movimento 75%, -14 SP per 10 secondi. Dopo 10 sec STR+2. -70 SP per 10 secondi in WoE.^000000
+[Level 3] : ^777777Velocità Movimento 80%, -16 SP per 10 secondi. Dopo 10 sec STR+4. -80 SP per 10 secondi in WoE.^000000
+[Level 4] : ^777777Velocità Movimento 85%, -18 SP per 10 secondi. Dopo 10 sec STR+8. -90 SP per 10 secondi in WoE.^000000
+[Level 5] : ^777777Velocità Movimento 90%, -20 SP per 10 secondi. Dopo 10 sec STR+16. -100 SP per 10 secondi in WoE.^000000
 #
 ST_REJECTSWORD#
 Reject Sword
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Funziona solo contro i nemici che usano spade come arma.
-Para 3 colpi del nemico ricevendo metа del danno. Il livello della Skill aumenta la probabilitа di parare gli attacchi.
-Se attivata combattendo contro dei mostri, questa skill rifletterа al castatore metа danno inflitto al mostro.^000000
-[Level 1] : ^77777715% di probabilitа di parare, costo 10 SP^000000
-[Level 2] : ^77777730% di probabilitа di parare, costo 15 SP^000000
-[Level 3] : ^77777745% di probabilitа di parare, costo 20 SP^000000
-[Level 4] : ^77777760% di probabilitа di parare, costo 25 SP^000000
-[Level 5] : ^77777775% di probabilitа di parare, costo 30 SP^000000
+Para 3 colpi del nemico ricevendo metà del danno. Il livello della Skill aumenta la probabilità di parare gli attacchi.
+Se attivata combattendo contro dei mostri, questa skill rifletterà al castatore metà danno inflitto al mostro.^000000
+[Level 1] : ^77777715% di probabilità di parare, costo 10 SP^000000
+[Level 2] : ^77777730% di probabilità di parare, costo 15 SP^000000
+[Level 3] : ^77777745% di probabilità di parare, costo 20 SP^000000
+[Level 4] : ^77777760% di probabilità di parare, costo 25 SP^000000
+[Level 5] : ^77777775% di probabilità di parare, costo 30 SP^000000
 #
 CG_ARROWVULCAN#
 Arrow Vulcan
@@ -2592,7 +2592,7 @@ CG_MOONLIT#
 Sheltering Bliss
 Tipo di Skill : ^777777Combo^000000
 Descrizione : ^777777Come combo di un bard e di una dancer, crea una zona di 3*3 celle attorno ai castatori in cui gli altri personaggi ed i mostri non possono entrare.
-Ad ogni modo, quest'area impedisce solo agli altri personaggi di entrare e non protegge i castatori dagli attacchi magici o da quelli a distanza. Se nella zona prescelta c'и un ostacolo, questa skill non puт essere castata.^000000
+Ad ogni modo, quest'area impedisce solo agli altri personaggi di entrare e non protegge i castatori dagli attacchi magici o da quelli a distanza. Se nella zona prescelta c'è un ostacolo, questa skill non può essere castata.^000000
 [Livello 1] : ^777777Durata 20 secondi^000000
 [Livello 2] : ^777777Durata 25 secondi^000000
 [Livello 3] : ^777777Durata 30 secondi^000000
@@ -2602,28 +2602,28 @@ Ad ogni modo, quest'area impedisce solo agli altri personaggi di entrare e non p
 CG_MARIONETTE#
 Marionette Control
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Trasferisce ogni stat del castatore ad un membro del suo party, che non abbia piщ di 5 livelli di differenza, in piщ o in meno.
-Il membro del party riceverа metа delle stat.
-Comunque, ogni stat del membro del party, dopo aver ricevuto le stat extra, non puт superare il 99. 
-Inoltre il castatore non puт muoversi per tutta la durata della skill.
+Descrizione : ^777777Trasferisce ogni stat del castatore ad un membro del suo party, che non abbia più di 5 livelli di differenza, in più o in meno.
+Il membro del party riceverà metà delle stat.
+Comunque, ogni stat del membro del party, dopo aver ricevuto le stat extra, non può superare il 99. 
+Inoltre il castatore non può muoversi per tutta la durata della skill.
 Se il membro del party si sposta oltre le 7 celle rispetto al castatore, la skill viene cancellata.
-Non puт essere usata nelle zone delle guild war.^000000
+Non può essere usata nelle zone delle guild war.^000000
 #
 CG_LONGINGFREEDOM#
 Longing for Freedom
-Descrizione: ^777777Permette ad un Gypsy e ad un Minstrel di muoversi mentre stanno eseguendo una skill combo. Non possono perт uscire dall'area della skill.
-Se uno dei due esce dall'area, muore, oppure usa la skill Amp, questa skill verrа cancellata.
+Descrizione: ^777777Permette ad un Gypsy e ad un Minstrel di muoversi mentre stanno eseguendo una skill combo. Non possono però uscire dall'area della skill.
+Se uno dei due esce dall'area, muore, oppure usa la skill Amp, questa skill verrà cancellata.
 Consuma 3 SP ogni 3 secondi. E' possibile attaccare ed usare skill, ad eccezione delle skill combo.^000000
-[Lv 1] : ^777777Permette di muoversi e di attaccare al 60% della normale velocitа.^000000
-[Lv 2] : ^777777Permette di muoversi e di attaccare al 70% della normale velocitа.^000000
-[Lv 3] : ^777777Permette di muoversi e di attaccare al 80% della normale velocitа.^000000
-[Lv 4] : ^777777Permette di muoversi e di attaccare al 90% della normale velocitа.^000000
-[Lv 5] : ^777777Permette di muoversi e di attaccare a velocitа normale.^000000
+[Lv 1] : ^777777Permette di muoversi e di attaccare al 60% della normale velocità.^000000
+[Lv 2] : ^777777Permette di muoversi e di attaccare al 70% della normale velocità.^000000
+[Lv 3] : ^777777Permette di muoversi e di attaccare al 80% della normale velocità.^000000
+[Lv 4] : ^777777Permette di muoversi e di attaccare al 90% della normale velocità.^000000
+[Lv 5] : ^777777Permette di muoversi e di attaccare a velocità normale.^000000
 #
 CG_HERMODE#
 Hermode's Rod
-Descrizione: ^777777Puт essere usata solo vicino ai Warp portal durante le WoE.
-Cancella tutti gli status positivi ed i buff ad eccezione di Berserk per tutti i target, escluso il castatore, ed impedisce l'utilizzo di qualsiasi magia. Nessuno puт usare skill per tutta la sua durata, ma solo all'interno dell'area di questa skill. ^000000
+Descrizione: ^777777Può essere usata solo vicino ai Warp portal durante le WoE.
+Cancella tutti gli status positivi ed i buff ad eccezione di Berserk per tutti i target, escluso il castatore, ed impedisce l'utilizzo di qualsiasi magia. Nessuno può usare skill per tutta la sua durata, ma solo all'interno dell'area di questa skill. ^000000
 [Lv 1] : ^777777Durata 10 secondi^000000
 [Lv 2] : ^777777Durata 15 secondi^000000
 [Lv 3] : ^777777Durata 20 secondi^000000
@@ -2633,13 +2633,13 @@ Cancella tutti gli status positivi ed i buff ad eccezione di Berserk per tutti i
 CG_TAROTCARD#
 Tarot Card of Fate
 Descrizione: ^777777Crea un effetto casuale scelto dalle 14 carte dei tarocchi.
-Il livello di questa skill influenza la possibilitа di successo.
-Chi lancia l'incantesimo non potrа fare nulla per 3 secondi.
-[Lv 1]:^777777 8% di possibilitа di successo^000000
-[Lv 2]:^777777 16% di possibilitа di successo^000000
-[Lv 3]:^777777 24% di possibilitа di successo^000000
-[Lv 4]:^777777 32% di possibilitа di successo^000000
-[Lv 5]:^777777 40% di possibilitа di successo^000000
+Il livello di questa skill influenza la possibilità di successo.
+Chi lancia l'incantesimo non potrà fare nulla per 3 secondi.
+[Lv 1]:^777777 8% di possibilità di successo^000000
+[Lv 2]:^777777 16% di possibilità di successo^000000
+[Lv 3]:^777777 24% di possibilità di successo^000000
+[Lv 4]:^777777 32% di possibilità di successo^000000
+[Lv 5]:^777777 40% di possibilità di successo^000000
 #
 LK_SPIRALPIERCE#
 Spiral Pierce
@@ -2648,12 +2648,12 @@ Descrizione : ^777777Invia diversi attacchi a spirale al nemico.
 Il peso della Spear influisce sul numero dei danni.
 Quando viene colpito, il nemico si trova nello status frozen per un secondo.
 Il livello della skill influisce sul numero dei danni, come anche il peso della spear, ed anche
-sul tempo di cast e sul delay dopo che la skill и stata utilizzata.^000000
+sul tempo di cast e sul delay dopo che la skill è stata utilizzata.^000000
 #
 LK_HEADCRUSH#
 Head Crush
 Tipo di Skill : ^777777Attiva^000000
-Descrizione : ^777777Colpisce violentemente il mostro ed ha la possibilitа di generare l'effetto del sanguinamento.
+Descrizione : ^777777Colpisce violentemente il mostro ed ha la possibilità di generare l'effetto del sanguinamento.
 Se ha successo, il mostro riceve continuamente un danno extra per un certa durata di tempo.^000000
 [Livello 1] : ^777777ATK 140%^000000
 [Livello 2] : ^777777ATK 180%^000000
@@ -2665,7 +2665,7 @@ LK_JOINTBEAT#
 Vital Strike
 Tipo di Skill : ^777777Attiva^000000
 Descrizione : ^777777Richiede una Spear come arma. Colpisce un punto vitale del bersaglio e causa vari status anormali.
-Il livello della skill influisce sul valore di attacco e sulla possibilitа di riuscita.^000000
+Il livello della skill influisce sul valore di attacco e sulla possibilità di riuscita.^000000
 [Livello 1] : ^777777ATK 60%^000000
 [Livello 2] : ^777777ATK 70%^000000
 [Livello 3] : ^777777ATK 80%^000000
@@ -2681,24 +2681,24 @@ HW_NAPALMVULCAN#
 Napalm Vulcan
 Tipo di Skill : ^777777Attiva^bb00bb (Psicocinesi)^000000
 Obbiettivo : ^777777Nemico^000000
-Descrizione : ^777777Manda diversi attacchi a distanza a raffica al nemico ed ha la possibilitа di maledire l'obbiettivo sfruttando la psicocinesi.
+Descrizione : ^777777Manda diversi attacchi a distanza a raffica al nemico ed ha la possibilità di maledire l'obbiettivo sfruttando la psicocinesi.
 Il livello della skill influisce sul numero dei colpi a raffica che vengono inflitti.^000000
 #
 HW_GANBANTEIN#
 Ganbantein
 Bersaglio: ^777777Terreno^000000
-Descrizione: ^777777Permette di cancellare qualsiasi skill che agisce sul terreno, per un'area di 3 x 3 celle. Questa skill cancellerа Magnetic Earth sulle aree affette da tali skill. Questa skill non viene influenzata da ^FFFFFF ^777777item o skill che permettono l'uso di skill senza usare Gemstone. ^00BB00Necessita di 1 Blue Gemstone e^FFFFFF ^00BB001^FFFFFF ^00BB00Yellow Gemstone.
+Descrizione: ^777777Permette di cancellare qualsiasi skill che agisce sul terreno, per un'area di 3 x 3 celle. Questa skill cancellerà Magnetic Earth sulle aree affette da tali skill. Questa skill non viene influenzata da ^FFFFFF ^777777item o skill che permettono l'uso di skill senza usare Gemstone. ^00BB00Necessita di 1 Blue Gemstone e^FFFFFF ^00BB001^FFFFFF ^00BB00Yellow Gemstone.
 #
 HW_GRAVITATION#
 Gravitational Field
 Bersaglio: ^777777Terreno^000000
-Descrizione: ^777777Aumenta la gravitа in una zona di 5 x 5 celle e causa danni ripetuti che ignorano la difesa; inoltre diminuisce la velocitа di attacco e di movimento di chi ci si trova sopra ^FFFFFF ^777777(tranne per i Boss monster). Quando la skill и attiva, ^FFFFFF ^777777chi l'ha lanciata non puт muoversi, attaccare o usare skill.
+Descrizione: ^777777Aumenta la gravità in una zona di 5 x 5 celle e causa danni ripetuti che ignorano la difesa; inoltre diminuisce la velocità di attacco e di movimento di chi ci si trova sopra ^FFFFFF ^777777(tranne per i Boss monster). Quando la skill è attiva, ^FFFFFF ^777777chi l'ha lanciata non può muoversi, attaccare o usare skill.
 ^00BB00Richiede 1 Blue Gemstone.
-[Lv 1]:^777777 Durata 5 secondi, velocitа del nemico -5%, 400 danni/secondo^000000
-[Lv 2]:^777777 Durata 6 secondi, velocitа del nemico -10%, 600 danni/secondo^000000
-[Lv 3]:^777777 Durata 7 secondi, velocitа del nemico -15%, 800 danni/secondo^000000
-[Lv 4]:^777777 Durata 8 secondi, velocitа del nemico -20%, 1000 danni/secondo^000000
-[Lv 5]:^777777 Durata 9 secondi, velocitа del nemico -25%, 1200 danni/secondo^000000
+[Lv 1]:^777777 Durata 5 secondi, velocità del nemico -5%, 400 danni/secondo^000000
+[Lv 2]:^777777 Durata 6 secondi, velocità del nemico -10%, 600 danni/secondo^000000
+[Lv 3]:^777777 Durata 7 secondi, velocità del nemico -15%, 800 danni/secondo^000000
+[Lv 4]:^777777 Durata 8 secondi, velocità del nemico -20%, 1000 danni/secondo^000000
+[Lv 5]:^777777 Durata 9 secondi, velocità del nemico -25%, 1200 danni/secondo^000000
 #
 CH_SOULCOLLECT#
 Zen
@@ -2710,7 +2710,7 @@ Mind Breaker
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Confonde il nemico e lo conduce all'auto-negazione.
 Diminuisce la difesa magica del nemico, ma allo stesso tempo aumenta la forza dei suoi attacchi magici.
-Il livello della skill influisce sulla possibilitа di riuscita.^000000
+Il livello della skill influisce sulla possibilità di riuscita.^000000
 [Livello 1] : ^777777MATK del bersaglio +20%, MDEF -12%^000000
 [Livello 2] : ^777777MATK del bersaglio +40%, MDEF -24%^000000
 [Livello 3] : ^777777MATK del bersaglio +60%, MDEF -36%^000000
@@ -2722,35 +2722,35 @@ Memorize
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Riduce il tempo di cast di una skill per tre volte.
 A parte il limite dei 5 cast, questa skill non ha una durata precisa. Comunque, se il castatore muore, la skill viene annullata.
-Il tempo di cast del Memorize non dipende dalla DEX ed и di 8 secondi.^000000
+Il tempo di cast del Memorize non dipende dalla DEX ed è di 8 secondi.^000000
 #
 PF_FOGWALL#
 Fog_Wall
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Crea un muro di nebbia entro un'area di 5*3 celle che causa lo status blind agli altri personaggi, mostri inclusi.
-Tutti gli attacchi a distanza o magici avranno maggiore possibilitа di mancare il bersaglio e allo stesso tempo ne verrа ridotto il danno.
+Tutti gli attacchi a distanza o magici avranno maggiore possibilità di mancare il bersaglio e allo stesso tempo ne verrà ridotto il danno.
 Questa skill funziona solo sui mostri nei field normali, in PvP funziona anche contro i personaggi.^000000
 #
 PF_SPIDERWEB#
 Spider Web
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Lancia una ragnatela per bloccare il bersaglio in un punto. Puт lanciare al massimo 2 ragnatele.
-La ragnatela dura 8 secondi, la skill Demonstration dell'alchemist puт annientarla.
-Comunque, la ragnatela farа danni pari a 2.5 volte quelli della skill Demonstration mentre viene bruciata.^000000
+Descrizione : ^777777Lancia una ragnatela per bloccare il bersaglio in un punto. Può lanciare al massimo 2 ragnatele.
+La ragnatela dura 8 secondi, la skill Demonstration dell'alchemist può annientarla.
+Comunque, la ragnatela farà danni pari a 2.5 volte quelli della skill Demonstration mentre viene bruciata.^000000
 #
 PF_DOUBLECASTING#
 Double Bolt
-Descrizione: ^777777Permette di avere una certa probabilitа di castare due volte qualsiasi skill di tipo Bolt (fire, cold, lightning...) per un tempo di 90 secondi.^000000
-[Lv 1]: ^77777740% di possibilitа^000000
-[Lv 2]: ^77777750% di possibilitа^000000
-[Lv 3]: ^77777760% di possibilitа^000000
-[Lv 4]: ^77777770% di possibilitа^000000
-[Lv 5]: ^77777780% di possibilitа^000000
+Descrizione: ^777777Permette di avere una certa probabilità di castare due volte qualsiasi skill di tipo Bolt (fire, cold, lightning...) per un tempo di 90 secondi.^000000
+[Lv 1]: ^77777740% di possibilità^000000
+[Lv 2]: ^77777750% di possibilità^000000
+[Lv 3]: ^77777760% di possibilità^000000
+[Lv 4]: ^77777770% di possibilità^000000
+[Lv 5]: ^77777780% di possibilità^000000
 #
 ASC_METEORASSAULT#
 Meteor Assault
 Tipo di Skill : ^777777Attiva^000000
-Descrizione : ^777777Manda raffiche di colpi ai nemici entro 5 celle attorno al castatore. Inoltre ha la possibilitа di causare vari status anormali ai nemici.^000000
+Descrizione : ^777777Manda raffiche di colpi ai nemici entro 5 celle attorno al castatore. Inoltre ha la possibilità di causare vari status anormali ai nemici.^000000
 [Livello 1] : ^777777ATK 80%^000000
 [Livello 2] : ^777777ATK 120%^000000
 [Livello 3] : ^777777ATK 160%^000000
@@ -2767,15 +2767,15 @@ Create Deadly Poison
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Crea una bottiglia di veleno mortale usando alcuni materiali.
 I materiali sono i seguenti: 1 Poison Spore, 1 Venom Canine, 1 Cactus Needle, 1 Bee Sting, 1 Karvodailnirol, 1 Berserk Potion e 1 Empty Bottle.
-Le stat DEX e LUK del castatore influiscono sulla possibilitа di successo e, in caso di fallimento, gli HP diminuiscono del 25% rispetto al loro numero massimo.
-Se un Assassin Cross beve da questa bottiglia viene avvelenato, ma allo stesso tempo aumenta la velocitа di attacco,
+Le stat DEX e LUK del castatore influiscono sulla possibilità di successo e, in caso di fallimento, gli HP diminuiscono del 25% rispetto al loro numero massimo.
+Se un Assassin Cross beve da questa bottiglia viene avvelenato, ma allo stesso tempo aumenta la velocità di attacco,
 in caso bevano degli altri personaggi, questi muoiono immediatamente.^000000
 #
 ASC_EDP#
 Enchant Deadly Poison
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Incanta l'arma con veleno mortale ed aggiunge danni extra. Richiede 1 Deadly Poison Bottle.
-Mentre si attacca, c'и la possibilitа di avvelenare il nemico e l'ammontare degli HP dell'obbiettivo diminuisce drasticamente per un certo periodo di tempo.
+Mentre si attacca, c'è la possibilità di avvelenare il nemico e l'ammontare degli HP dell'obbiettivo diminuisce drasticamente per un certo periodo di tempo.
 Riguardo ai mostri boss, fa danni solo prima che la skill aggiunga danni extra all'arma.^000000
 #
 WE_BABY#
@@ -2798,68 +2798,68 @@ GD_LEADERSHIP#
 Great Leadership
 Tipo di Skill : ^000099Passiva^000000
 Obbiettivo : ^777777Membri della Gilda entro 5 celle attorno al Guildmaster^000000
-Descrizione : ^777777Ogni membro della Gilda entro un'area di 5*5 celle attorno al Guildmaster riceverа 5 stat point extra in STR.^000000
+Descrizione : ^777777Ogni membro della Gilda entro un'area di 5*5 celle attorno al Guildmaster riceverà 5 stat point extra in STR.^000000
 #
 GD_GLORYWOUNDS#
 Glorious Wounds
 Tipo di Skill : ^000099Passiva^000000
 Obbiettivo : ^777777Membri della Gilda entro 5 celle attorno al Guildmaster^000000
-Descrizione : ^777777Ogni membro della Gilda entro un'area di 5*5 celle attorno al Guildmaster riceverа 5 stat point extra in VIT.^000000
+Descrizione : ^777777Ogni membro della Gilda entro un'area di 5*5 celle attorno al Guildmaster riceverà 5 stat point extra in VIT.^000000
 #
 GD_SOULCOLD#
 Cold Heart
 Tipo di Skill : ^000099Passiva^000000
 Obbiettivo : ^777777Membri della Gilda entro 5 celle attorno al Guildmaster^000000
-Descrizione : ^777777Ogni membro della Gilda entro un'area di 5*5 celle attorno al Guildmaster riceverа 5 stat point extra in AGI.^000000
+Descrizione : ^777777Ogni membro della Gilda entro un'area di 5*5 celle attorno al Guildmaster riceverà 5 stat point extra in AGI.^000000
 #
 GD_HAWKEYES#
 Sharp Gaze
 Tipo di Skill : ^000099Passiva^000000
 Obbiettivo : ^777777Membri della Gilda entro 5 celle attorno al Guildmaster^000000
-Descrizione : ^777777Ogni membro della Gilda entro un'area di 5*5 celle attorno al Guildmaster riceverа 5 stat point extra in DEX.^000000
+Descrizione : ^777777Ogni membro della Gilda entro un'area di 5*5 celle attorno al Guildmaster riceverà 5 stat point extra in DEX.^000000
 #
 GD_BATTLEORDER#
 Battle Order
 Tipo di Skill : ^000099Supporto^000000
 Obbiettivo : ^777777Membri della Gilda entro 5 celle attorno al Guildmaster^000000
-Descrizione : ^777777Questa skill puт essere attivata solo durante il periodo delle WoE.
-Il Guildmaster puт aumentare di 5 stat point extra STR, INT e DEX dei membri della Gilda entro la schermata del giocatore. Questa skill dura 1 minuto ed ha un delay di 5 minuti prima di poter essere riutilizzata.^000000
+Descrizione : ^777777Questa skill può essere attivata solo durante il periodo delle WoE.
+Il Guildmaster può aumentare di 5 stat point extra STR, INT e DEX dei membri della Gilda entro la schermata del giocatore. Questa skill dura 1 minuto ed ha un delay di 5 minuti prima di poter essere riutilizzata.^000000
 #
 GD_REGENERATION#
 Regeneration
 Tipo di Skill : ^777777Supporto^000000
 Obbiettivo : ^777777Membri della Gilda entro la schermata del giocatore^000000
-Descrizione : ^777777Questa skill puт essere attivata solo durante il periodo delle WoE.
-Il Guildmaster puт aumentare la velocitа di rigenerazione di HP ed SP dei membri della Gilda entro la schermata del giocatore. Questa skill ha un delay di 5 minuti prima di poter essere riutilizzata.^000000
-[Livello 1] : ^777777HP Velocitа di Rigenerazione * 2^000000
-[Livello 2] : ^777777HP/SP Velocitа di Rigenerazione * 2^000000
-[Livello 3] : ^777777HP/SP Velocitа di Rigenerazione * 3^000000
+Descrizione : ^777777Questa skill può essere attivata solo durante il periodo delle WoE.
+Il Guildmaster può aumentare la velocità di rigenerazione di HP ed SP dei membri della Gilda entro la schermata del giocatore. Questa skill ha un delay di 5 minuti prima di poter essere riutilizzata.^000000
+[Livello 1] : ^777777HP Velocità di Rigenerazione * 2^000000
+[Livello 2] : ^777777HP/SP Velocità di Rigenerazione * 2^000000
+[Livello 3] : ^777777HP/SP Velocità di Rigenerazione * 3^000000
 #
 GD_RESTORE#
 Restoration
 Tipo di Skill : ^777777Supporto^000000
 Obbiettivo : ^777777Membri della Gilda entro la schermata del giocatore^000000
-Descrizione : ^777777Questa skill puт essere attivata solo durante il periodo delle WoE.
-Il Guildmaster puт rigenerare il 90% degli HP ed SP massimi dei membri della Gilda entro la schermata del giocatore. Questa skill ha un delay di 5 minuti prima di poter essere riutilizzata.^000000
+Descrizione : ^777777Questa skill può essere attivata solo durante il periodo delle WoE.
+Il Guildmaster può rigenerare il 90% degli HP ed SP massimi dei membri della Gilda entro la schermata del giocatore. Questa skill ha un delay di 5 minuti prima di poter essere riutilizzata.^000000
 #
 GD_EMERGENCYCALL#
 Emergency Call
 Tipo di Skill : ^777777Supporto^000000
 Obbiettivo : ^777777Tutti i membri della Gilda^000000
-Descrizione : ^777777Questa skill puт essere attivata solo durante il periodo delle WoE.
-Il Guildmaster puт richiamare tutti i membri della Gilda (che sono in gioco) vicino a lui. Questa skill ha un delay di 5 minuti prima di poter essere riutilizzata.^000000
+Descrizione : ^777777Questa skill può essere attivata solo durante il periodo delle WoE.
+Il Guildmaster può richiamare tutti i membri della Gilda (che sono in gioco) vicino a lui. Questa skill ha un delay di 5 minuti prima di poter essere riutilizzata.^000000
 #
 GD_GUARDUP#
 Strengthen Guardians
 Tipo di Skill : ^777777Passiva^000000
 Descrizione : ^777777Aumenta la forza dei guardiani.
-Il livello della Skill influenza la velocitа e la potenza di attacco dei guardiani.^000000
+Il livello della Skill influenza la velocità e la potenza di attacco dei guardiani.^000000
 #
 GD_DEVELOPMENT#
 Permanent Development
 Tipo di Skill : ^777777Passiva^000000
 Descrizione : ^777777Se sviluppata, questa skill aggiunge il 50% di chance di ottenere un +1 all'eco dell'agit.^000000
-^777777Questo significa che questa skill puт aggiungere 1 o 2 punti economia in un solo sviluppo.^000000
+^777777Questo significa che questa skill può aggiungere 1 o 2 punti economia in un solo sviluppo.^000000
 #
 
 ST_PRESERVE#
@@ -2873,37 +2873,37 @@ Full Strip
 Tipo di Skill : ^777777Supporto^000000
 Bersaglio : ^777777Nemico^000000
 Descrizione : ^777777Questa Skill permette al castatore di lanciare simultaneamente Strip Weapon, Strip Shield, Strip Armour, Strip Helm.^000000
-^777777La DEX del castatore deve essere maggiore di quella dell'avversario per aumentare la possibilitа di successo. Il livello della Skill aumenta la probabilitа di successo.^000000
-[Level 1] : ^7777777% di probabilitа di successo, costo 22 SP^000000
-[Level 2] : ^7777779% di probabilitа di successo, costo 24 SP^000000
-[Level 3] : ^77777711% di probabilitа di successo, costo 26 SP^000000
-[Level 4] : ^77777713% di probabilitа di successo, costo 28 SP^000000
-[Level 5] : ^77777715% di probabilitа di successo, costo 30 SP^000000
+^777777La DEX del castatore deve essere maggiore di quella dell'avversario per aumentare la possibilità di successo. Il livello della Skill aumenta la probabilità di successo.^000000
+[Level 1] : ^7777777% di probabilità di successo, costo 22 SP^000000
+[Level 2] : ^7777779% di probabilità di successo, costo 24 SP^000000
+[Level 3] : ^77777711% di probabilità di successo, costo 26 SP^000000
+[Level 4] : ^77777713% di probabilità di successo, costo 28 SP^000000
+[Level 5] : ^77777715% di probabilità di successo, costo 30 SP^000000
 #
 
 WS_WEAPONREFINE#
 Upgrade Weapon
 Tipo di Skill : ^777777Passiva^000000
 Descrizione : ^777777Raffina Armi.^000000
-^777777Al contrario di forgiare le armi, questa skill non и affetta dalla DEX o dalla LUK^000000
+^777777Al contrario di forgiare le armi, questa skill non è affetta dalla DEX o dalla LUK^000000
 ^777777ma dal livello del castatore.^000000
-^777777Al livello job 50, il castatore ha le stesse probabilitа come se l'arma venisse raffinata dall'NPC.^000000
-^777777Al livello job 60, il castatore ha il 5% di probabilitа in piщ rispetto all'NPC.^000000
-^777777Al livello job 70, il castatore ha il 10% di probabilitа in piщ rispetto all'NPC.^000000
-^777777Per esempio, se l'NPC ha il 50% di successo, il castatore avrebbe il 60% di possibilitа di successo.^000000
+^777777Al livello job 50, il castatore ha le stesse probabilità come se l'arma venisse raffinata dall'NPC.^000000
+^777777Al livello job 60, il castatore ha il 5% di probabilità in più rispetto all'NPC.^000000
+^777777Al livello job 70, il castatore ha il 10% di probabilità in più rispetto all'NPC.^000000
+^777777Per esempio, se l'NPC ha il 50% di successo, il castatore avrebbe il 60% di possibilità di successo.^000000
 ^777777Per raffinare armi di livello 1 serve un Phracon.^000000
 ^777777Per raffinare armi di livello 2 serve un Emvertacon.^000000
 ^777777Per raffinare armi di livello 3 serve un Oridecon.^000000
-[Level 1] : ^777777Puт raffinare qualsiasi arma fino a +1^000000
-[Level 2] : ^777777Puт raffinare qualsiasi arma fino a +2^000000
-[Level 3] : ^777777Puт raffinare qualsiasi arma fino a +3^000000
-[Level 4] : ^777777Puт raffinare qualsiasi arma fino a +4^000000
-[Level 5] : ^777777Puт raffinare qualsiasi arma fino a +5^000000
-[Level 6] : ^777777Puт raffinare qualsiasi arma fino a +6^000000
-[Level 7] : ^777777Puт raffinare qualsiasi arma fino a +7^000000
-[Level 8] : ^777777Puт raffinare qualsiasi arma fino a +8^000000
-[Level 9] : ^777777Puт raffinare qualsiasi arma fino a +9^000000
-[Level 10] : ^777777Puт raffinare qualsiasi arma fino a +10^000000
+[Level 1] : ^777777Può raffinare qualsiasi arma fino a +1^000000
+[Level 2] : ^777777Può raffinare qualsiasi arma fino a +2^000000
+[Level 3] : ^777777Può raffinare qualsiasi arma fino a +3^000000
+[Level 4] : ^777777Può raffinare qualsiasi arma fino a +4^000000
+[Level 5] : ^777777Può raffinare qualsiasi arma fino a +5^000000
+[Level 6] : ^777777Può raffinare qualsiasi arma fino a +6^000000
+[Level 7] : ^777777Può raffinare qualsiasi arma fino a +7^000000
+[Level 8] : ^777777Può raffinare qualsiasi arma fino a +8^000000
+[Level 9] : ^777777Può raffinare qualsiasi arma fino a +9^000000
+[Level 10] : ^777777Può raffinare qualsiasi arma fino a +10^000000
 #
 
 CR_SLIMPITCHER#
@@ -2935,23 +2935,23 @@ Descrizione : ^777777Questa skill funziona come se si usassero 4 tipi diversi di
 #
 CR_ACIDDEMONSTRATION#
 Acid Bomb
-Descrizione: ^777777Attacca i nemici lanciando sia una Acid Bottle che una Fire Bottle, infliggendo un danno che dipende dal livello della skill, dall'INT del castatore e dalla VIT del bersaglio. Questa skill infligge il 50% del danno sui giocatori, ma ha la possibilitа di danneggiare l'arma o l'armatura del bersaglio. 
+Descrizione: ^777777Attacca i nemici lanciando sia una Acid Bottle che una Fire Bottle, infliggendo un danno che dipende dal livello della skill, dall'INT del castatore e dalla VIT del bersaglio. Questa skill infligge il 50% del danno sui giocatori, ma ha la possibilità di danneggiare l'arma o l'armatura del bersaglio. 
 ^00BB00Ad ogni colpo la skill richiede
 1 Acid Bottle e 1 Fire Bottle.^000000
-[Lv 1]^777777 1 colpo, 1% di possibilitа di danneggiare arma o armatura^000000
-[Lv 2]^777777 2 colpi, 2% di possibilitа di danneggiare arma o armatura^000000
-[Lv 3]^777777 3 colpi, 3% di possibilitа di danneggiare arma o armatura^000000
-[Lv 4]^777777 4 colpi, 4% di possibilitа di danneggiare arma o armatura^000000
-[Lv 5]^777777 5 colpi, 5% di possibilitа di danneggiare arma o armatura^000000
-[Lv 6]^777777 6 colpi, 6% di possibilitа di danneggiare arma o armatura^000000
-[Lv 7]^777777 7 colpi, 7% di possibilitа di danneggiare arma o armatura^000000
-[Lv 8]^777777 8 colpi, 8% di possibilitа di danneggiare arma o armatura^000000
-[Lv 9]^777777 9 colpi, 9% di possibilitа di danneggiare arma o armatura^000000
-[Lv 10]^777777 10 colpi, 10% di possibilitа di danneggiare arma o armatura^000000
+[Lv 1]^777777 1 colpo, 1% di possibilità di danneggiare arma o armatura^000000
+[Lv 2]^777777 2 colpi, 2% di possibilità di danneggiare arma o armatura^000000
+[Lv 3]^777777 3 colpi, 3% di possibilità di danneggiare arma o armatura^000000
+[Lv 4]^777777 4 colpi, 4% di possibilità di danneggiare arma o armatura^000000
+[Lv 5]^777777 5 colpi, 5% di possibilità di danneggiare arma o armatura^000000
+[Lv 6]^777777 6 colpi, 6% di possibilità di danneggiare arma o armatura^000000
+[Lv 7]^777777 7 colpi, 7% di possibilità di danneggiare arma o armatura^000000
+[Lv 8]^777777 8 colpi, 8% di possibilità di danneggiare arma o armatura^000000
+[Lv 9]^777777 9 colpi, 9% di possibilità di danneggiare arma o armatura^000000
+[Lv 10]^777777 10 colpi, 10% di possibilità di danneggiare arma o armatura^000000
 #
 CR_CULTIVATION#
 Cultivate Plant
-Descrizione: ^777777Ha il 50% di possibilitа di creare un Mushroom da una Mushroom Spore, oppure una Plant da uno Stem. Questa^FFFFFF ^777777skill и disabilitata durante le WoE (Guild War).^000000
+Descrizione: ^777777Ha il 50% di possibilità di creare un Mushroom da una Mushroom Spore, oppure una Plant da uno Stem. Questa^FFFFFF ^777777skill è disabilitata durante le WoE (Guild War).^000000
 [Lv 1]: ^777777Coltiva un Mushroom, ^00BB00Richiede 1 Mushroom Spore^000000
 [Lv 2]: ^777777Coltiva una Plant, ^00BB00Richiede 1 Stem^000000
 #
@@ -2961,7 +2961,7 @@ Throwing Tomahawk
 HVAN_EXPLOSION#
 Self-Destruction
 Descrizione: ^777777Ordina all'Homunculus di autodistruggersi, infliggendo uno splash damage proporzionato agli HP massimi dell'Homunculus; il danno ignora la difesa del nemico. 
-Se l'Homunculus si autodistrugge con successo, l'intimitа fra l'Homunculus e il Master viene ridotta a 1.
+Se l'Homunculus si autodistrugge con successo, l'intimità fra l'Homunculus e il Master viene ridotta a 1.
 [Lv 1]:^777777 Danno = Max HP*1^000000
 [Lv 2]:^777777 Danno = Max HP*1,5^000000
 [Lv 3]:^777777 Danno = Max HP*2^000000
@@ -2980,25 +2980,25 @@ HVAN_CHAOTIC#
 Chaotic Blessings
 Descrizione: ^777777RRipristina gli HP di un bersaglio selezionandolo in modo casuale tra il nemico, il proprietario dell'Homunculus e l'Homunculus stesso.^000000
 [Lv 1]:^777777 Lv 1 Heal
-20% Possibilitа di curare l'Homunculus
-30% Possibilitа di curare il Master
-50% Possibilitа di curare il nemico^000000
+20% Possibilità di curare l'Homunculus
+30% Possibilità di curare il Master
+50% Possibilità di curare il nemico^000000
 [Lv 2]:^777777 Lv 1~2 Heal
-50% Possibilitа di curare l'Homunculus
-10% Possibilitа di curare il Master
-40% Possibilitа di curare il nemico^000000
+50% Possibilità di curare l'Homunculus
+10% Possibilità di curare il Master
+40% Possibilità di curare il nemico^000000
 [Lv 3]:^777777 Lv 1~3 Heal
-25% Possibilitа di curare l'Homunculus
-50% Possibilitа di curare il Master
-25% Possibilitа di curare il nemico^000000
+25% Possibilità di curare l'Homunculus
+50% Possibilità di curare il Master
+25% Possibilità di curare il nemico^000000
 [Lv 4]:^777777 Lv 1~4 Heal
-60% Possibilitа di curare l'Homunculus
-4% Possibilitа di curare il Master
-36% Possibilitа di curare il nemico^000000
+60% Possibilità di curare l'Homunculus
+4% Possibilità di curare il Master
+36% Possibilità di curare il nemico^000000
 [Lv 5]:^777777 Lv 1~5 Heal
-34% Possibilitа di curare l'Homunculus
-33% Possibilitа di curare il Master
-33% Possibilitа di curare il nemico^000000
+34% Possibilità di curare l'Homunculus
+33% Possibilità di curare il Master
+33% Possibilità di curare il nemico^000000
 #
 HVAN_CAPRICE#
 Caprice
@@ -3011,7 +3011,7 @@ Descrizione: ^777777Casta un Bolt a caso. Il livello del bolt dipende dal livell
 #
 HFLI_SBR44#
 S.B.R.44
-Descrizione: ^777777Sacrifica l'intimitа fra il Master e l'Homunculus per infliggere un grande danno al nemico.^000000
+Descrizione: ^777777Sacrifica l'intimità fra il Master e l'Homunculus per infliggere un grande danno al nemico.^000000
 [Lv 1] ^777777^000000
 [Lv 2] ^777777^000000
 [Lv 3] ^777777^000000
@@ -3027,7 +3027,7 @@ Descrizione: Aumenta temporaneamente la Flee dell'Homunculus Filir, spingendola 
 #
 HFLI_FLEET#
 Flitting
-Descrizione: ^777777Aumenta temporaneamente potere e velocitа di attacco dell'Homunculus Filir.^000000
+Descrizione: ^777777Aumenta temporaneamente potere e velocità di attacco dell'Homunculus Filir.^000000
 [Lv 1]:^777777 Aspd +3, Attacco +110%, durata 60 secondi, cast delay 60 secondi^000000
 [Lv 2]:^777777 Aspd +6, Attacco +115%, durata 55 secondi, cast delay 70 secondi^000000
 [Lv 3]:^777777 Aspd +9, Attacco +120%, durata 50 secondi, cast delay 80 secondi^000000
@@ -3036,7 +3036,7 @@ Descrizione: ^777777Aumenta temporaneamente potere e velocitа di attacco dell'H
 #
 HFLI_MOON#
 Moonlight
-Descrizione: ^777777Dа a Filir l'ordine di beccare ripetutamente un bersaglio.^000000 
+Descrizione: ^777777Dà a Filir l'ordine di beccare ripetutamente un bersaglio.^000000 
 [Lv^FFFFFF.^0000001]:^FFFFFF.^7777771 colpo, danno +220%^000000
 [Lv^FFFFFF.^0000002]:^FFFFFF.^7777772 colpi, danno +330%^000000 
 [Lv^FFFFFF.^0000003]:^FFFFFF.^7777772 colpi, danno +440%^000000
@@ -3046,18 +3046,18 @@ Descrizione: ^777777Dа a Filir l'ordine di beccare ripetutamente un bersaglio.^
 HAMI_BLOODLUST#
 Blood Lust
 Descrizione: ^777777Aumenta l'attacco dell'Homunculus per tutta la durata della skill.
-Durante lo status Blood Lust, ogni attacco avrа la possibilitа di ripristinare un'ammontare di HP dell'Homunculus pari al 20% di danno inflitto al nemico.^000000
+Durante lo status Blood Lust, ogni attacco avrà la possibilità di ripristinare un'ammontare di HP dell'Homunculus pari al 20% di danno inflitto al nemico.^000000
 [Lv 1]:^777777 1 Min Durata
 Attack Power +130%
-Possibilitа recupero HP +3%
+Possibilità recupero HP +3%
 5 Min Cast Delay^000000
 [Lv 2]:^777777 3 Min Durata
 Attack Power +140%
-Possibilitа recupero HP +6%
+Possibilità recupero HP +6%
 10 Min Cast Delay^000000
 [Lv 3]:^777777 5 Min Durata
 Attack Power +150%
-Possibilitа recupero HP +9%
+Possibilità recupero HP +9%
 15 Min Cast Delay^000000
 #
 HAMI_SKIN#
@@ -3082,17 +3082,17 @@ Descrizione: ^777777Aumenta la difesa del castatore e dell'Homunculus Amistr per
 HAMI_CASTLE#
 Castling
 Descrizione: ^777777Scambia immediatamente ^FFFFFF.^777777la posizione del castatore con quella dell'Homunculus,^000000 in modo che il mostro che sta attaccando il personaggio si metta ad attaccare l'Homunculus.
-[Lv 1]:^777777 20% Possibilitа di Successo^000000
-[Lv 2]:^777777 40% Possibilitа di Successo^000000
-[Lv 3]:^777777 60% Possibilitа di Successo^000000
-[Lv 4]:^777777 80% Possibilitа di Successo^000000
-[Lv 5]:^777777 100% Possibilitа di Successo^000000
+[Lv 1]:^777777 20% Possibilità di Successo^000000
+[Lv 2]:^777777 40% Possibilità di Successo^000000
+[Lv 3]:^777777 60% Possibilità di Successo^000000
+[Lv 4]:^777777 80% Possibilità di Successo^000000
+[Lv 5]:^777777 100% Possibilità di Successo^000000
 #
 HLIF_CHANGE#
 Mental Charge
 Descrizione: ^777777Scambia i Max SP e Max HP dell'Homunculus, per tutta la durata della skill.
-Attivando questa skill, gli HP verranno ripristinati^FFFFFF.^777777L'Homunculus infliggerа danni dipendenti dal suo MATK.
-Una volta terminata la skill, L'Homunculus rimarrа con 10 SP e 10 HP.^000000
+Attivando questa skill, gli HP verranno ripristinati^FFFFFF.^777777L'Homunculus infliggerà danni dipendenti dal suo MATK.
+Una volta terminata la skill, L'Homunculus rimarrà con 10 SP e 10 HP.^000000
 [Lv 1] ^7777771 Min Durata
 10 Min Cast Delay^000000
 [Lv 2] ^7777773 Min Durata
@@ -3112,21 +3112,21 @@ Descrizione: ^777777Modifica il cervello dell'Homunculus Lif per aumentare i suo
 #
 HLIF_AVOID#
 Urgent Escape
-Descrizione: ^777777Aumenta temporaneamente la velocitа di movimento del castatore e dell'Homunculus, in modo che possano scappare da una situazione critica.^000000
+Descrizione: ^777777Aumenta temporaneamente la velocità di movimento del castatore e dell'Homunculus, in modo che possano scappare da una situazione critica.^000000
 [Lv 1]:^777777 Durata 40 secondi,
-Velocitа di movimento +10%^000000
+Velocità di movimento +10%^000000
 [Lv 2]:^777777 Durata 35 secondi,
-Velocitа di movimento +20%^000000
+Velocità di movimento +20%^000000
 [Lv 3]:^777777 Durata 30 secondi,
-Velocitа di movimento +30%^000000
+Velocità di movimento +30%^000000
 [Lv 4]:^777777 Durata 25 secondi,
-Velocitа di movimento +40%^000000
+Velocità di movimento +40%^000000
 [Lv 5]:^777777 Durata 20 secondi,
-Velocitа di movimento +50%000000
+Velocità di movimento +50%000000
 #
 HLIF_HEAL#
 Healing Hands
-Descrizione: ^777777Ripristina gli HP del giocatore con una skill che imita Heal degli Acolyte. La quantitа di HP recuperati dipende dal livello della skill, dal livello base del castatore e dalla sua INT.
+Descrizione: ^777777Ripristina gli HP del giocatore con una skill che imita Heal degli Acolyte. La quantità di HP recuperati dipende dal livello della skill, dal livello base del castatore e dalla sua INT.
 ^00BB00Ogni cast richiede una Condensed Red Potion.^000000
 ^FFFFFF_^000000
 Consumo SP per Livello:
@@ -3140,7 +3140,7 @@ Consumo SP per Livello:
 TK_RUN#
 Sprint
 Tipo di Skill: ^777777Movimento^000000
-Descrizione: ^777777Permette di correre piщ velocemente. Dal livello 7 in poi, dа all'utilizzatore lo status 'Spurt', che incrementa la STR per 150 secondi, se si smette di correre e si и a mani nude. Lo status viene annullato se si equipaggia un'arma. Ogni livello della skill aumenta^FFFFFF  ^000000 il danno a mani nude di 10.^000000
+Descrizione: ^777777Permette di correre più velocemente. Dal livello 7 in poi, dà all'utilizzatore lo status 'Spurt', che incrementa la STR per 150 secondi, se si smette di correre e si è a mani nude. Lo status viene annullato se si equipaggia un'arma. Ogni livello della skill aumenta^FFFFFF  ^000000 il danno a mani nude di 10.^000000
 [Lv 1] ^777777Tempo di Cast 6 secondi, 100 SP^FFFFFF  ^000000 
 [Lv 2] ^777777Tempo di Cast 5 secondi, 90 SP^000000
 [Lv 3] ^777777Tempo di Cast 4 secondi, 80 SP^FFFFFF   ^000000 
@@ -3155,13 +3155,13 @@ Descrizione: ^777777Permette di correre piщ velocemente. Dal livello 7 in poi, 
 TK_READYSTORM#
 Tornado Stance
 Tipo di Skill: ^777777Stance^000000
-Descrizione: ^777777Dа il 15% di probabilitа di entrare automaticamente nello status Tornado Stance quando si colpisce un nemico. ^000000 ^FF0000 I Soul Linker non possono utilizzare questa skill.^000000
+Descrizione: ^777777Dà il 15% di probabilità di entrare automaticamente nello status Tornado Stance quando si colpisce un nemico. ^000000 ^FF0000 I Soul Linker non possono utilizzare questa skill.^000000
 [Lv 1] ^777777Tempo di Cast 0 secondi, 1 SP^000000
 #
 TK_STORMKICK#
 Tornado Kick
 Tipo di Skill: ^777777Attacco^000000
-Descrizione: ^777777L'utilizzatore deve essere nello status ^00BB00Tornado Stance^777777 per poter utilizzare questa skill. Permette di attaccare tutti i nemici in un'area di 5x5 caselle attorno a sи.^000000 
+Descrizione: ^777777L'utilizzatore deve essere nello status ^00BB00Tornado Stance^777777 per poter utilizzare questa skill. Permette di attaccare tutti i nemici in un'area di 5x5 caselle attorno a sè.^000000 
 ^FF0000I Soul Linker non possono utilizzare questa skill.^000000
 [Lv 1] ^77777714 SP, 180% ATK^000000
 [Lv 2] ^77777712 SP, 200% ATK^000000
@@ -3174,7 +3174,7 @@ Descrizione: ^777777L'utilizzatore deve essere nello status ^00BB00Tornado Stanc
 TK_READYDOWN#
 Heel Drop Stance
 Tipo di Skill: ^777777Stance^000000
-Descrizione: ^777777Dа il 15% di probabilitа di entrare automaticamente nello status Heel Drop Stance quando si colpisce un nemico.
+Descrizione: ^777777Dà il 15% di probabilità di entrare automaticamente nello status Heel Drop Stance quando si colpisce un nemico.
 ^FF0000I Soul Linker non possono utilizzare questa skill.^000000
 [Lv 1] ^777777Tempo di Cast 0 secondi, 1 SP^000000
 #
@@ -3194,13 +3194,13 @@ Descrizione: ^777777L'utilizzatore deve essere nello status ^00BB00Heel Drop Sta
 TK_READYTURN#
 Roundhouse Stance
 Tipo di Skill: ^777777Stance^000000
-Descrizione: ^777777Dа il 15% di probabilitа di entrare automaticamente nello status Roundhouse Stance quando si colpisce un nemico. ^FF0000I Soul Linker non possono utilizzare questa skill.^000000
+Descrizione: ^777777Dà il 15% di probabilità di entrare automaticamente nello status Roundhouse Stance quando si colpisce un nemico. ^FF0000I Soul Linker non possono utilizzare questa skill.^000000
 [Lv 1] ^777777Tempo di Cast 0 secondi, 1 SP^000000
 #
 TK_TURNKICK#
 Roundhouse
 Tipo di Skill: ^777777Attacco^000000
-Descrizione: ^777777L'utilizzatore deve essere nello status ^00BB00Roundhouse Stance^777777 per poter utilizzare questa skill, che infligge danno su un nemico e respinge tutti i nemici attorno a sи. I nemici respinti non subiscono danno.^000000
+Descrizione: ^777777L'utilizzatore deve essere nello status ^00BB00Roundhouse Stance^777777 per poter utilizzare questa skill, che infligge danno su un nemico e respinge tutti i nemici attorno a sè. I nemici respinti non subiscono danno.^000000
 ^FF0000I Soul Linker non possono utilizzare questa skill.^000000
 [Lv 1] ^77777714 SP, 220% ATK^000000
 [Lv 2] ^77777712 SP, 250% ATK^000000
@@ -3213,7 +3213,7 @@ Descrizione: ^777777L'utilizzatore deve essere nello status ^00BB00Roundhouse St
 TK_READYCOUNTER#
 Counter Kick Stance
 Tipo di Skill: ^777777Stance^000000
-Descrizione: ^777777Dа il 20% di probabilitа di entrare automaticamente nello status Counter Kick Stance quando si colpisce un nemico. ^FF0000I Soul Linker non possono utilizzare questa skill.^000000
+Descrizione: ^777777Dà il 20% di probabilità di entrare automaticamente nello status Counter Kick Stance quando si colpisce un nemico. ^FF0000I Soul Linker non possono utilizzare questa skill.^000000
 [Lv 1] : ^777777Tempo di Cast 0 secondi, 1 SP^000000
 #
 TK_COUNTER#
@@ -3232,17 +3232,17 @@ Descrizione: ^777777L'utilizzatore deve essere nello status ^00BB00Counter Kick 
 TK_DODGE#
 Thumbling
 Tipo di Skill: ^777777Stance^000000
-Descrizione: ^777777Dа il 20% di probabilitа di bloccare gli attacchi fisici a distanza. Quando ci si trova nello status Spurt (dopo aver utilizzato la skill Sprint a livello 7 o superiore), Thumbling avrа anche la possibilitа di bloccare altri tipi di attacchi. ^000000
+Descrizione: ^777777Dà il 20% di probabilità di bloccare gli attacchi fisici a distanza. Quando ci si trova nello status Spurt (dopo aver utilizzato la skill Sprint a livello 7 o superiore), Thumbling avrà anche la possibilità di bloccare altri tipi di attacchi. ^000000
 [Lv 1] ^777777Tempo di Cast 0 secondi, 1 SP^000000
 #
 TK_JUMPKICK#
 Flying Kick
 Tipo di Skill: ^777777Attacco^000000
-Descrizione: ^777777Attacca un nemico a distanza con un calcio che lo avvicina istantaneamente a sи.
+Descrizione: ^777777Attacca un nemico a distanza con un calcio che lo avvicina istantaneamente a sè.
 Se ci si trova nello status Thumbling, il livello base dell'utilizzatore influisce sul danno.
-Durante lo status Sprint, il danno del Flying Kick aumenterа ulteriormente, in proporzione al proprio livello base.
-Se sono attivi entrambi gli status Spurt e Sprint, questa skill infliggerа un danno ancora maggiore.
-Il Flying Kick cancellerа anche la maggior parte degli status positivi sul nemico, compresi gli status Spirit dati dal Soul Linker, One Hand Quicken, Kaahi, Kaite e l'effetto delle Berserk Potion.
+Durante lo status Sprint, il danno del Flying Kick aumenterà ulteriormente, in proporzione al proprio livello base.
+Se sono attivi entrambi gli status Spurt e Sprint, questa skill infliggerà un danno ancora maggiore.
+Il Flying Kick cancellerà anche la maggior parte degli status positivi sul nemico, compresi gli status Spirit dati dal Soul Linker, One Hand Quicken, Kaahi, Kaite e l'effetto delle Berserk Potion.
 In ogni caso, gli Stalker possono proteggersi da questo effetto con la skill Preserve.
 ^FF0000I Soul Linker non possono utilizzare questa skill.^000000
 [Lv 1] ^77777770 SP, 40% ATK^000000
@@ -3256,7 +3256,7 @@ In ogni caso, gli Stalker possono proteggersi da questo effetto con la skill Pre
 TK_HPTIME#
 Peaceful Break
 Tipo di Skill: ^777777Passiva^000000
-Descrizione: ^777777Quando due o piщ Taekwon sono seduti accanto, recupereranno HP. Il recupero HP и influenzato dalla VIT; inoltre, si recuperano ulteriori 30HP tramite il comando /doridori.^000000
+Descrizione: ^777777Quando due o più Taekwon sono seduti accanto, recupereranno HP. Il recupero HP è influenzato dalla VIT; inoltre, si recuperano ulteriori 30HP tramite il comando /doridori.^000000
  [Lv 1] ^777777HP +30^000000
  [Lv 2] ^777777HP +60^000000
  [Lv 3] ^777777HP +90^000000
@@ -3271,7 +3271,7 @@ Descrizione: ^777777Quando due o piщ Taekwon sono seduti accanto, recupereranno
 TK_SPTIME#
 Happy Break
 Tipo di Skill: ^777777Passiva^000000
-Descrizione: ^777777Quando due o piщ Taekwon sono seduti accanto, recupereranno SP. Il recupero SP и influenzato dai Max SP; inoltre, si recuperano ulteriori 3 SP tramite il comando /doridori. Questo comando farа durare lo status Happy Break per 30 minuti. Durante questo status, si avrа una bassa possibilitа di utilizzare la scroll Earth Spike; la probabilitа sarа del 10% con Happy Break a Lvl 1 e dell'1% a Lvl 10. L'utilizzo della scroll Earth Spike consumerа 10 SP. ^000000
+Descrizione: ^777777Quando due o più Taekwon sono seduti accanto, recupereranno SP. Il recupero SP è influenzato dai Max SP; inoltre, si recuperano ulteriori 3 SP tramite il comando /doridori. Questo comando farà durare lo status Happy Break per 30 minuti. Durante questo status, si avrà una bassa possibilità di utilizzare la scroll Earth Spike; la probabilità sarà del 10% con Happy Break a Lvl 1 e dell'1% a Lvl 10. L'utilizzo della scroll Earth Spike consumerà 10 SP. ^000000
 [Lv 1] ^777777SP +3^000000
 [Lv 2] ^777777SP +6^000000
 [Lv 3] ^777777SP +9^000000
@@ -3312,7 +3312,7 @@ Elemento e consumo di SP:
 TK_HIGHJUMP#
 Leap
 Tipo di Skill: ^777777Movimento^000000
-Descrizione: ^777777Salta verso la cella selezionata, entro il range della skill. Se la cella и accessibile, и possibile saltare anche ostacoli e muri. Questa skill non puт essere utilizzata dove le Fly Wing sono disabilitate, fatta eccezione per le mappe WoE (Guild War).^000000
+Descrizione: ^777777Salta verso la cella selezionata, entro il range della skill. Se la cella è accessibile, è possibile saltare anche ostacoli e muri. Questa skill non può essere utilizzata dove le Fly Wing sono disabilitate, fatta eccezione per le mappe WoE (Guild War).^000000
 ^FFFFFF_^000000
 Tempo di Cast e Range secondo il livello:
 [Lv 1] ^7777775 secondi, 2 celle^000000
@@ -3325,9 +3325,9 @@ TK_MISSION#
 Taekwon Mission
 Tipo di Skill: ^777777Ranking (/taekwon)^000000 
 Descrizione: ^FF0000Questa skill viene disabilitata una volta che il personaggio cambia in un job avanzato, come il Taekwon Master o il Soul Linker.
-^777777 Attivando questa skill, verrа visualizzato il mostro che costituisce l'obbiettivo corrente della missione.
+^777777 Attivando questa skill, verrà visualizzato il mostro che costituisce l'obbiettivo corrente della missione.
 I Taekwon guadagneranno 1 punto Taekwon Mission ogni volta che sconfiggeranno 100 mostri obbiettivo. 
-Terminando una missione,^FFFFFF ^777777 sarа possibile iniziarne una nuova con un obbiettivo generato a caso.
+Terminando una missione,^FFFFFF ^777777 sarà possibile iniziarne una nuova con un obbiettivo generato a caso.
 I Mini Boss e i Boss non verranno mai selezionati come obbiettivi. 
 I Taekwon che risultano tra i primi 10 nel Taekwon Ranking, potranno fare le combo con le skill^FFFFFF   ^777777 Tornado Kick, Roundhouse, Heel Drop e Counter Kick. 
 A livello 90, i primi 10 avranno Max HP e SP triplicati e potranno usare tutte le skill della classe Taekwon.^000000
@@ -3335,7 +3335,7 @@ A livello 90, i primi 10 avranno Max HP e SP triplicati e potranno usare tutte l
 SG_FEEL#
 Solar, Lunar and Stellar Perception
 Tipo di Skill: ^777777Designazione^000000
-Descrizione: ^777777Assegna alla mappa corrente uno degli allineamenti cosmici (Solare, Lunare o Stellare), per poter utilizzare le relative skill. L'allineamento cosmico per una mappa, una volta assegnato, non puт piщ essere cambiato. Utilizzando questa skill su una mappa giа allineata, verrа visualizzata una lista delle designazioni assegnate.^000000
+Descrizione: ^777777Assegna alla mappa corrente uno degli allineamenti cosmici (Solare, Lunare o Stellare), per poter utilizzare le relative skill. L'allineamento cosmico per una mappa, una volta assegnato, non può più essere cambiato. Utilizzando questa skill su una mappa già allineata, verrà visualizzata una lista delle designazioni assegnate.^000000
 [Lv 1] ^777777Assegna alla mappa corrente l'allineamento Solare^000000
 [Lv 2] ^777777Assegna alla mappa corrente l'allineamento Lunare^000000
 [Lv 3] ^777777Assegna alla mappa corrente l'allineamento Stellare^000000
@@ -3343,7 +3343,7 @@ Descrizione: ^777777Assegna alla mappa corrente uno degli allineamenti cosmici (
 SG_SUN_WARM#
 Solar Heat
 Tipo di Skill: ^777777Attacco^000000
-Descrizione: ^777777Questa skill и disponibile solo nelle ^00BB00Aree Solari^777777. Infligge danno, assorbe 2 SP e respinge i mostri attorno all'utilizzatore. Sugli altri giocatori, questa skill avrа solamente ^FFFFFF.^777777l'effetto di respingerli e di assorbire continuamente SP.
+Descrizione: ^777777Questa skill è disponibile solo nelle ^00BB00Aree Solari^777777. Infligge danno, assorbe 2 SP e respinge i mostri attorno all'utilizzatore. Sugli altri giocatori, questa skill avrà solamente ^FFFFFF.^777777l'effetto di respingerli e di assorbire continuamente SP.
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^77777720 SP, 10 sec^000000
@@ -3353,7 +3353,7 @@ Consumo di SP e durata per livello:
 SG_MOON_WARM#
 Lunar Heat
 Tipo di Skill: ^777777Attacco^000000
-Descrizione: ^777777Questa skill и disponibile solo nelle ^00BB00Aree Lunari^777777. Infligge danno, assorbe 2 SP e respinge i mostri attorno all'utilizzatore. Sugli altri giocatori, questa skill avrа solamente ^FFFFFF.^777777l'effetto di respingerli e di assorbire continuamente SP.
+Descrizione: ^777777Questa skill è disponibile solo nelle ^00BB00Aree Lunari^777777. Infligge danno, assorbe 2 SP e respinge i mostri attorno all'utilizzatore. Sugli altri giocatori, questa skill avrà solamente ^FFFFFF.^777777l'effetto di respingerli e di assorbire continuamente SP.
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^77777720 SP, 10 sec^000000
@@ -3363,7 +3363,7 @@ Consumo di SP e durata per livello:
 SG_STAR_WARM#
 Stellar Heat
 Tipo di Skill: ^777777Attacco^000000
-Descrizione: ^777777Questa skill и disponibile solo nelle ^00BB00Aree Stellari^777777. Infligge danno, assorbe 2 SP e respinge i mostri attorno all'utilizzatore. Sugli altri giocatori, questa skill avrа solamente ^FFFFFF.^777777l'effetto di respingerli e di assorbire continuamente SP.
+Descrizione: ^777777Questa skill è disponibile solo nelle ^00BB00Aree Stellari^777777. Infligge danno, assorbe 2 SP e respinge i mostri attorno all'utilizzatore. Sugli altri giocatori, questa skill avrà solamente ^FFFFFF.^777777l'effetto di respingerli e di assorbire continuamente SP.
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^77777710 SP, 10 sec^000000
@@ -3374,12 +3374,12 @@ SG_HATE#
 Solar, Lunar and Stellar Opposition
 Tipo di Skill: ^777777Designazione^000000
 Descrizione: ^777777Assegna all'obbiettivo uno degli allineamenti cosmici (Solare, Lunare o Stellare), per poter utilizzare le relative skill.
-L'allineamento cosmico per un solo obbiettivo, una volta assegnato, non puт piщ essere cambiato. Utilizzando questa skill su un obbiettivo giа allineato, verrа visualizzata una lista delle designazioni assegnate.^000000
-Utilizzando questa skill su un mostro giа allineato, verrа visualizzata una^FFFFFF.^777777lista^FFFFFF.^777777dei mostri designati.^000000
+L'allineamento cosmico per un solo obbiettivo, una volta assegnato, non può più essere cambiato. Utilizzando questa skill su un obbiettivo già allineato, verrà visualizzata una lista delle designazioni assegnate.^000000
+Utilizzando questa skill su un mostro già allineato, verrà visualizzata una^FFFFFF.^777777lista^FFFFFF.^777777dei mostri designati.^000000
 [Lv 1] ^777777Designa un mostro con l'allineamento Solare. Limitato a^FFFFFF ^777777mostri di taglia piccola.^000000
-[Lv 2] ^777777Designa un mostro con l'allineamento Lunare. Limitato a^FFFFFF ^777777mostri di taglia media con 6.000 o piщ HP.^000000
-[Lv 3] ^777777Designa un mostro con l'allineamento Stellare. Limitato a^FFFFFF ^777777mostri di taglia grande con 20.000 o piщ HP.^000000
-^777777Sugli altri giocatori, и possibile effettuare la designazione senza limitazioni di taglia o Max HP.^000000
+[Lv 2] ^777777Designa un mostro con l'allineamento Lunare. Limitato a^FFFFFF ^777777mostri di taglia media con 6.000 o più HP.^000000
+[Lv 3] ^777777Designa un mostro con l'allineamento Stellare. Limitato a^FFFFFF ^777777mostri di taglia grande con 20.000 o più HP.^000000
+^777777Sugli altri giocatori, è possibile effettuare la designazione senza limitazioni di taglia o Max HP.^000000
 #
 SG_SUN_ANGER#
 Solar Wrath
@@ -3427,7 +3427,7 @@ Stellar Protection
 Tipo di Skill: ^777777Supporto^000000
 Descrizione: ^777777Questa skill viene abilitata solamente nei ^00BB00giorni Stellari
 (multipli di 5)^777777  e nelle ^00BB00Aree Stellari^777777. 
-Aumenta la velocitа di attacco di un valore calcolato usando questa formula [(Livello Base + DEX + LUK) / 10%].^000000
+Aumenta la velocità di attacco di un valore calcolato usando questa formula [(Livello Base + DEX + LUK) / 10%].^000000
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^77777770 SP, 80 secondi^000000
@@ -3470,7 +3470,7 @@ Solar, Lunar and Stellar Shadow
 Tipo di Skill: ^777777Passiva^000000
 Descrizione: ^777777Aumenta l'Attack Speed, al costo di perdere permanentemente la vista.^000000
 ^777777L'effetto di questa skill funziona solamente sui personaggi con Job Livello 50.
-Aumentando il livello di skill^FFFFFF   ^777777 si aumenterа permanentemente la velocitа di attacco a discapito dell'area di visione, 
+Aumentando il livello di skill^FFFFFF   ^777777 si aumenterà permanentemente la velocità di attacco a discapito dell'area di visione, 
 con un effetto molto simile a quello dello status ^FFFFFF   ^777777 Blind.
 [Lv 1] ^777777Aspd +3%^000000
 [Lv 2] ^777777Aspd +6%^000000
@@ -3486,15 +3486,15 @@ con un effetto molto simile a quello dello status ^FFFFFF   ^777777 Blind.
 SG_FRIEND#
 Solar, Lunar and Stellar Team-Up
 Tipo di Skill: ^777777Passiva^000000
-Obbiettivo: ^777777Membri del Party di classe Monk^000000 Descrizione: ^777777Aumenta la possibilitа di utilizzare Triple Strike per il Monk, quando il Taekwon Master utilizza Counter Kick; viceversa, il Combo Finish del Monk aumenterа la possibilitа di utilizzare Counter Kick per il Taekwon Master.
-[Lv 1] ^777777Possibilitа +100%^000000
-[Lv 2] ^777777Possibilitа +150%^000000
-[Lv 3] ^777777Possibilitа +200%^000000
+Obbiettivo: ^777777Membri del Party di classe Monk^000000 Descrizione: ^777777Aumenta la possibilità di utilizzare Triple Strike per il Monk, quando il Taekwon Master utilizza Counter Kick; viceversa, il Combo Finish del Monk aumenterà la possibilità di utilizzare Counter Kick per il Taekwon Master.
+[Lv 1] ^777777Possibilità +100%^000000
+[Lv 2] ^777777Possibilità +150%^000000
+[Lv 3] ^777777Possibilità +200%^000000
 #
 SG_KNOWLEDGE#
 Solar, Lunar and Stellar Courier 
 Tipo di Skill: ^777777Passiva^000000
-Se vengono utilizzate le designazioni del Taekwon Master, e l'opposizione Solare, Lunare e Stellare и troppo confusa, и possibile assegnare punti alle skill del Taekwon.
+Se vengono utilizzate le designazioni del Taekwon Master, e l'opposizione Solare, Lunare e Stellare è troppo confusa, è possibile assegnare punti alle skill del Taekwon.
 Descrizione: ^777777Aumenta il Peso Massimo Trasportabile nelle aree Solari, Lunari e Stellari. L'effetto di questa skill ^FFFFFF.^777777svanisce quando si lasciano tali Aree.^000000
 [Lv 1] ^777777Peso Massimo +10%^000000
 [Lv 2] ^777777Peso Massimo +20%^000000
@@ -3510,12 +3510,12 @@ Descrizione: ^777777Aumenta il Peso Massimo Trasportabile nelle aree Solari, Lun
 SG_FUSION#
 Solar, Lunar and Stellar Union 
 Tipo di Skill: ^777777Risveglio^000000
-Descrizione: ^777777Risveglia per 10 minuti il potenziale nascosto del personaggio, permettendogli di fare attacchi con il 100%^FFFFFF.^777777di accuratezza e ignorando la difesa del nemico; inoltre aumenta la velocitа di movimento. Perт, ad ogni attacco verso i mostri verrа perso il 2% di HP^FFFFFF.^777777, mentre attaccando gli altri giocatori si perderа l'8%. In^FFFFFF.^777777questo status, attaccare avendo meno del 20% dei Max HP causerа la morte istantanea dell'utilizzatore.^000000
+Descrizione: ^777777Risveglia per 10 minuti il potenziale nascosto del personaggio, permettendogli di fare attacchi con il 100%^FFFFFF.^777777di accuratezza e ignorando la difesa del nemico; inoltre aumenta la velocità di movimento. Però, ad ogni attacco verso i mostri verrà perso il 2% di HP^FFFFFF.^777777, mentre attaccando gli altri giocatori si perderà l'8%. In^FFFFFF.^777777questo status, attaccare avendo meno del 20% dei Max HP causerà la morte istantanea dell'utilizzatore.^000000
 #
 SL_ALCHEMIST#
 Alchemist Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito dell'Alchimista piщ famoso di tutti i tempi e lo infonde in un Alchemist, aumentando
+Descrizione: ^777777Invoca lo spirito dell'Alchimista più famoso di tutti i tempi e lo infonde in un Alchemist, aumentando
 l'efficacia della skill ^FFFFFF.^777777Potion Pitcher, secondo il livello base, e attivando l'utilizzo delle skill Aid Berserk Potion e Spiritual Creation Potion.^000000
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
@@ -3528,18 +3528,18 @@ Consumo di SP e durata per livello:
 AM_BERSERKPITCHER#
 Aid Berserk Potion
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Permette di far utilizzare una Berserk Potion a qualsiasi classe. Perт, l'aumento dell'Attack Speed durerа soltanto la metа^FFFFFF.^777777rispetto ad una^FFFFFF.^777777Berserk Potion.
+Descrizione: ^777777Permette di far utilizzare una Berserk Potion a qualsiasi classe. Però, l'aumento dell'Attack Speed durerà soltanto la metà^FFFFFF.^777777rispetto ad una^FFFFFF.^777777Berserk Potion.
 ^00BB00Richiede 2 Berserk Potion per ogni cast.^000000
 #
 AM_TWILIGHT1#
 Spiritual Potion Creation
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Consuma 200 SP per effettuare 200 tentativi di^FFFFFF.^777777creare una White Potion, uno ogni 0.005 secondi. Questa skill ha la^FFFFFF.^777777stessa probabilitа di successo della skill Pharmacy e ha un delay di 3 secondi che non viene influenzato dalla DEX. ^00BB00Ogni cast richiede materiale sufficiente per preparare 200 White Potion.^000000
+Descrizione: ^777777Consuma 200 SP per effettuare 200 tentativi di^FFFFFF.^777777creare una White Potion, uno ogni 0.005 secondi. Questa skill ha la^FFFFFF.^777777stessa probabilità di successo della skill Pharmacy e ha un delay di 3 secondi che non viene influenzato dalla DEX. ^00BB00Ogni cast richiede materiale sufficiente per preparare 200 White Potion.^000000
 #
 AM_TWILIGHT2#
 Spiritual Potion Creation
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Questa skill viene attivata solo attraverso il potere dell'Angelo Protettore del Super Novice. Consuma 200 SP per effettuare 200 tentativi di creare una White Potion, uno ogni 0.005 secondi. Questa skill puт far guadagnare punti ranking all'Alchemist e ha la stessa probabilitа di successo della skill Pharmacy, cosм come^FFFFFF.^777777i^FFFFFF.^7777773^FFFFFF.^777777secondi di tempo di cast, che non vengono ridotti dalla DEX. Ogni cast richiede materiale sufficiente per^FFFFFF.^777777creare 200 White Potion.^000000
+Descrizione: ^777777Questa skill viene attivata solo attraverso il potere dell'Angelo Protettore del Super Novice. Consuma 200 SP per effettuare 200 tentativi di creare una White Potion, uno ogni 0.005 secondi. Questa skill può far guadagnare punti ranking all'Alchemist e ha la stessa probabilità di successo della skill Pharmacy, così come^FFFFFF.^777777i^FFFFFF.^7777773^FFFFFF.^777777secondi di tempo di cast, che non vengono ridotti dalla DEX. Ogni cast richiede materiale sufficiente per^FFFFFF.^777777creare 200 White Potion.^000000
 #
 AM_TWILIGHT3#
 Spiritual Potion Creation
@@ -3549,7 +3549,7 @@ Descrizione: ^777777Questa skill viene attivata soltanto attraverso il potere de
 SL_MONK#
 Monk Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito del Monk piщ forte della storia e lo infonde temporaneamente in un Monk, auentando l'efficacia della skill Combo Finish in modo che infligga uno splash damage in un'area di 5x5 celle. Lo spirito del Monk permette anche di ^FFFFFF.^777777ridurre gli SP utilizzati per le skill Combo e di recuperare SP nello status Explosion of Spirit.^000000 ^FFFFFF ^000000
+Descrizione: ^777777Invoca lo spirito del Monk più forte della storia e lo infonde temporaneamente in un Monk, auentando l'efficacia della skill Combo Finish in modo che infligga uno splash damage in un'area di 5x5 celle. Lo spirito del Monk permette anche di ^FFFFFF.^777777ridurre gli SP utilizzati per le skill Combo e di recuperare SP nello status Explosion of Spirit.^000000 ^FFFFFF ^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^777777460 SP, 150 secondi^000000
 [Lv 2] ^777777360 SP, 200 secondi^000000
@@ -3560,7 +3560,7 @@ Consumo di SP e durata per livello:
 SL_STAR#
 Taekwon Master Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito del^FFFFFF.^777777Taekwon Master piщ potente della storia e lo infonde temporaneamente in un Taekwon Master, permettendogli di utilizzare la skill Solar, Lunar e Stellar Union.^000000 ^FFFFFF ^000000
+Descrizione: ^777777Invoca lo spirito del^FFFFFF.^777777Taekwon Master più potente della storia e lo infonde temporaneamente in un Taekwon Master, permettendogli di utilizzare la skill Solar, Lunar e Stellar Union.^000000 ^FFFFFF ^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^777777460 SP, 150 secondi^000000
 [Lv 2] ^777777360 SP, 200 secondi^000000
@@ -3571,7 +3571,7 @@ Consumo di SP e durata per livello:
 SL_SAGE#
 Sage Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito del Sage piщ colto della storia e lo infonde temporaneamente in un Sage, aumentando l'efficacia della skill Autocast, in modo che sia possibile castare ^777777i Bolt a livello piщ alto.^000000
+Descrizione: ^777777Invoca lo spirito del Sage più colto della storia e lo infonde temporaneamente in un Sage, aumentando l'efficacia della skill Autocast, in modo che sia possibile castare ^777777i Bolt a livello più alto.^000000
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^777777460 SP, 150 secondi^000000
@@ -3583,7 +3583,7 @@ Consumo di SP e durata per livello:
 SL_CRUSADER#
 Crusader Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito del Crusader piщ coraggioso della storia e lo infonde temporaneamente in un Crusader; per tutta la durata della skill, il danno della skill Shield Boomerang sarа raddoppiato e non mancherа mai il bersaglio.
+Descrizione: ^777777Invoca lo spirito del Crusader più coraggioso della storia e lo infonde temporaneamente in un Crusader; per tutta la durata della skill, il danno della skill Shield Boomerang sarà raddoppiato e non mancherà mai il bersaglio.
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^777777460 SP, 150 secondi^000000
@@ -3595,8 +3595,8 @@ Consumo di SP e durata per livello:
 SL_SUPERNOVICE#
 Super Novice Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito del Super^FFFFFF ^777777Novice piщ spettacolare della storia e lo infonde temporaneamente in un Super Novice.
-Per tutta la durata della skill, il Super Novice avrа una bassa probabilitа di invocare l'Angelo Protettore, che avrа il potere di cancellare tutte le morti precedenti.
+Descrizione: ^777777Invoca lo spirito del Super^FFFFFF ^777777Novice più spettacolare della storia e lo infonde temporaneamente in un Super Novice.
+Per tutta la durata della skill, il Super Novice avrà una bassa probabilità di invocare l'Angelo Protettore, che avrà il potere di cancellare tutte le morti precedenti.
 I Super Novice a livello 90 o superiore potranno equipaggiare qualsiasi Headgear, 
 mentre a livello 96^FFFFFF ^777777o^FFFFFF ^777777superiore, potranno equipaggiare alcune armi di Livello 4, come
  ^FFFFFF ^777777One^FFFFFF ^777777Handed Swords, Mace, Axe, Staff and Dagger.
@@ -3611,7 +3611,7 @@ Consumo di SP e durata per livello:
 SL_KNIGHT#
 Knight Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito del Knight piщ valoroso della storia e lo infonde temporaneamente in un Knight. Per tutta la durata della skill, il Knight potrа utilizzare One Handed Quicken, se la skill Two Handed Quicken и stata imparata a livello massimo.
+Descrizione: ^777777Invoca lo spirito del Knight più valoroso della storia e lo infonde temporaneamente in un Knight. Per tutta la durata della skill, il Knight potrà utilizzare One Handed Quicken, se la skill Two Handed Quicken è stata imparata a livello massimo.
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^777777460 SP, 150 secondi^000000
@@ -3623,7 +3623,7 @@ Consumo di SP e durata per livello:
 SL_WIZARD#
 Wizard Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito del Wizard piщ potente della storia e lo infonde temporaneamente in un Wizard. Per tutta la durata della skill, il Wizard potrа usare alcune skill senza consumare Gemstone.
+Descrizione: ^777777Invoca lo spirito del Wizard più potente della storia e lo infonde temporaneamente in un Wizard. Per tutta la durata della skill, il Wizard potrà usare alcune skill senza consumare Gemstone.
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^777777460 SP, 150 secondi^000000
@@ -3635,7 +3635,7 @@ Consumo di SP e durata per livello:
 SL_PRIEST#
 Priest Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito del Priest piщ religioso della storia e lo infonde temporaneamente in un Priest. Per tutta la ^FFFFFF ^777777durata della skill, l'attacco e il costo in SP della skill Holy Light saranno^FFFFFF ^777777moltiplicati per cinque.^000000
+Descrizione: ^777777Invoca lo spirito del Priest più religioso della storia e lo infonde temporaneamente in un Priest. Per tutta la ^FFFFFF ^777777durata della skill, l'attacco e il costo in SP della skill Holy Light saranno^FFFFFF ^777777moltiplicati per cinque.^000000
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^777777460 SP, 150 secondi^000000
@@ -3647,8 +3647,8 @@ Consumo di SP e durata per livello:
 SL_BARDDANCER#
 Bard and Dancer Spirits
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito del danzatore piщ amato della storia e lo infonde temporaneamente in un Bard o in una Dancer.
-^FFFFFF ^777777Per tutta la durata della skill, il Bardo e^FFFFFF ^777777la Dancer avranno velocitа di movimento aumentata ed inoltre potranno sfruttare gli effetti delle proprie dance skill come gli altri membri del party.
+Descrizione: ^777777Invoca lo spirito del danzatore più amato della storia e lo infonde temporaneamente in un Bard o in una Dancer.
+^FFFFFF ^777777Per tutta la durata della skill, il Bardo e^FFFFFF ^777777la Dancer avranno velocità di movimento aumentata ed inoltre potranno sfruttare gli effetti delle proprie dance skill come gli altri membri del party.
 ^FFFFFF ^777777Inoltre, potranno effettuare le combo con le skill:
  Whistle, Humming,^FFFFFF ^777777 Assassin Cross of Sunset, Please Don't Forget Me, A Poem of Bragi, Fortune's Kiss, The Apple of Idun e Service For you.
 ^FFFFFF_^000000
@@ -3662,7 +3662,7 @@ Consumo di SP e durata per livello:
 SL_ROGUE#
 Rogue Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito del Rogue piщ silenzioso della storia^FFFFFF ^777777e lo infonde temporaneamente in un Rogue, aumentando ^FFFFFF ^777777la velocitа di movimento e il bonus STR durante stealth. Per tutta la durata della skill, il rogue sarа immune alle skill che provocano dispell^FFFFFF ^777777e riceverа piщ HP e SP dalle pozioni create da uno dei primi 10 Alchemist.
+Descrizione: ^777777Invoca lo spirito del Rogue più silenzioso della storia^FFFFFF ^777777e lo infonde temporaneamente in un Rogue, aumentando ^FFFFFF ^777777la velocità di movimento e il bonus STR durante stealth. Per tutta la durata della skill, il rogue sarà immune alle skill che provocano dispell^FFFFFF ^777777e riceverà più HP e SP dalle pozioni create da uno dei primi 10 Alchemist.
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^777777460 SP, 150 secondi^000000
@@ -3674,7 +3674,7 @@ Consumo di SP e durata per livello:
 SL_ASSASIN#
 Assassin Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito dell'Assassin piщ misterioso della storia e lo infonde temporaneamente in un Assassin. Per tutta la durata della skill, il danno di Sonic Blow verrа aumentato del 100% e il suo tempo di cast sarа ridotto.
+Descrizione: ^777777Invoca lo spirito dell'Assassin più misterioso della storia e lo infonde temporaneamente in un Assassin. Per tutta la durata della skill, il danno di Sonic Blow verrà aumentato del 100% e il suo tempo di cast sarà ridotto.
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^777777460 SP, 150 secondi^000000
@@ -3686,10 +3686,10 @@ Consumo di SP e durata per livello:
 SL_BLACKSMITH#
 Blacksmith Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito del Blackmith piщ abile della storia e lo infonde temporaneamente in un Blacksmith. 
-Per tutta la durata della skill, verrа attivata ^FFFFFF ^777777Advanced Adrenaline Rush, se il Blacksmith ha imparato Adrenaline Rush a livello massimo. 
-Advanced Adrenaline Rush puт essere utilizzata su tutte le armi, tranne i Bow,
- ma non potrа essere utilizzata assieme a skill simili, come
+Descrizione: ^777777Invoca lo spirito del Blackmith più abile della storia e lo infonde temporaneamente in un Blacksmith. 
+Per tutta la durata della skill, verrà attivata ^FFFFFF ^777777Advanced Adrenaline Rush, se il Blacksmith ha imparato Adrenaline Rush a livello massimo. 
+Advanced Adrenaline Rush può essere utilizzata su tutte le armi, tranne i Bow,
+ ma non potrà essere utilizzata assieme a skill simili, come
  Two Hand Quicken, Adrenaline Rush, One Hand Quicken, Solar Lunar and Stellar Shadow o Protection, Spear^FFFFFF ^777777 Quicken o Assassin Cross of Sunset^000000
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
@@ -3702,12 +3702,12 @@ Consumo di SP e durata per livello:
 BS_ADRENALINE2#
 Advanced Adrenaline Rush
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Aumenta l'attack speed di qualsiasi arma, eccetto i Bow. Non puт essere utilizzata assieme a skill simili, come Two Hand Quicken, Adrenaline Rush, One Hand Quicken, Solar Lunar and Stellar Shadow o Protection, Spear Quicken o Assassin Cross of Sunset. Consuma 64 SP e ha una durata di 150 secondi.^000000
+Descrizione: ^777777Aumenta l'attack speed di qualsiasi arma, eccetto i Bow. Non può essere utilizzata assieme a skill simili, come Two Hand Quicken, Adrenaline Rush, One Hand Quicken, Solar Lunar and Stellar Shadow o Protection, Spear Quicken o Assassin Cross of Sunset. Consuma 64 SP e ha una durata di 150 secondi.^000000
 #
 SL_HUNTER#
 Hunter Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito dell'hunter piщ popolare della storia e lo infonde temporaneamente in un Hunter, aumentando l'efficacia della skill Beast Bane secondo la STR dell'Hunter.^000000
+Descrizione: ^777777Invoca lo spirito dell'hunter più popolare della storia e lo infonde temporaneamente in un Hunter, aumentando l'efficacia della skill Beast Bane secondo la STR dell'Hunter.^000000
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^777777460 SP, 150 secondi^000000
@@ -3719,7 +3719,7 @@ Consumo di SP e durata per livello:
 SL_SOULLINKER#
 Soul Linker Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Invoca lo spirito del Soul Linker piщ abile della storia e lo infonde temporaneamente in un Soul Linker, permettendo l'utilizzo delle skill di tipo [Ka-] su ogni personaggio.
+Descrizione: ^777777Invoca lo spirito del Soul Linker più abile della storia e lo infonde temporaneamente in un Soul Linker, permettendo l'utilizzo delle skill di tipo [Ka-] su ogni personaggio.
 ^FFFFFF_^000000
 Consumo di SP e durata per livello:
 [Lv 1] ^777777460 SP, 150 secondi^000000
@@ -3731,11 +3731,11 @@ Consumo di SP e durata per livello:
 SL_KAIZEL#
 Kaizel
 Tipo di Skill: ^777777Supporto^000000
-Categoria [Ka-]: ^777777Puт essere utilizzata solo sui membri della famiglia o su altri Soul Linker^000000
+Categoria [Ka-]: ^777777Può essere utilizzata solo sui membri della famiglia o su altri Soul Linker^000000
 Descrizione: ^777777
 Riporta in vita automaticamente un personaggio quando muore, dandogli Kyrie Eleison per 3 secondi.
 Questa skill dura 30 minuti e viene cancellata quando il target viene riportato in vita.
-La skill и disabilitata durante le WoE.^000000
+La skill è disabilitata durante le WoE.^000000
 ^FFFFFF_^000000
 Consumo di SP, tempo di cast e HP recuperati:
 [Lv 1] ^777777120 SP
@@ -3756,7 +3756,7 @@ Consumo di SP, tempo di cast e HP recuperati:
 SL_KAAHI#
 Kaahi
 Tipo di Skill: ^777777Supporto^000000
-Categoria [Ka-]: ^777777Puт essere utilizzata solo sui membri della famiglia o su altri Soul Linker^000000
+Categoria [Ka-]: ^777777Può essere utilizzata solo sui membri della famiglia o su altri Soul Linker^000000
 Descrizione: 
 ^777777Consuma un certo ammontare di SP per recuperare HP, ogni volta che^FFFFFF ^777777il nemico utilizza un attacco fisico.
 ^000000SP consumati per ogni attacco: ^7777775~35^000000
@@ -3765,11 +3765,11 @@ HP recuperati: ^777777200~1,400^000000
 SL_KAUPE#
 Kaupe
 Tipo di Skill: ^777777Supporto^000000
-Categoria [Ka-]: ^777777Puт essere utilizzata solo sui membri della famiglia o su altri Soul Linker^000000
+Categoria [Ka-]: ^777777Può essere utilizzata solo sui membri della famiglia o su altri Soul Linker^000000
 Descrizione: 
-^777777Lo status Kaupe dа la possibilitа di schivare un attacco fisico di un nemico; la skill dura 10 minuti, oppure fino a quando si riesce a schivare l'attacco con successo.
+^777777Lo status Kaupe dà la possibilità di schivare un attacco fisico di un nemico; la skill dura 10 minuti, oppure fino a quando si riesce a schivare l'attacco con successo.
 ^FFFFFF_^000000
-Consumo di SP e probabilitа di schivata per livello:
+Consumo di SP e probabilità di schivata per livello:
 [Lv 1] ^77777720 SP, Schivata +33%^000000
 [Lv 2] ^77777730 SP, Schivata +66%^000000
 [Lv 3] ^77777740 SP, Schivata +100%^000000
@@ -3777,7 +3777,7 @@ Consumo di SP e probabilitа di schivata per livello:
 SL_KAITE#
 Kaite
 Tipo di Skill: ^777777Supporto^000000
-Categoria [Ka-]: ^777777Puт essere utilizzata solo sui membri della famiglia o su altri Soul Linker^000000
+Categoria [Ka-]: ^777777Può essere utilizzata solo sui membri della famiglia o su altri Soul Linker^000000
 Descrizione:
 ^777777Riflette la maggior parte delle magie, restituendo il danno al castatore. Le magie di tipo curativo non verranno restituite. Le magie di alto livello dei mostri non potranno essere riflesse, mentre quelle degli altri giocatori verranno riflesse al 100%, indipendentemente dal livello.^000000
 [Lv 1] ^7777771 riflessione, Tempo di cast 6 secondi, Durata 1 minuto^000000
@@ -3805,8 +3805,8 @@ Efficacia di Happy Break e bonus dei Max SP per livello:
 SL_STIN#
 Estin
 Tipo di Skill: ^777777Attacco Magico^000000
-Categoria [Es-]: ^777777Puт essere usata solo sui mostri.^000000
-Descrizione: ^777777Respinge un mostro di 2 celle. Solo i mostri di taglia piccola vengono danneggiati da questa skill; la skill prende l'elemento di Mild Wind, se attiva. Nei 3 secondi seguenti l'utilizzo di Estin a livello 7, c'и la possibilitа di castare la skill Esma.^000000
+Categoria [Es-]: ^777777Può essere usata solo sui mostri.^000000
+Descrizione: ^777777Respinge un mostro di 2 celle. Solo i mostri di taglia piccola vengono danneggiati da questa skill; la skill prende l'elemento di Mild Wind, se attiva. Nei 3 secondi seguenti l'utilizzo di Estin a livello 7, c'è la possibilità di castare la skill Esma.^000000
 [Lv 1] ^77777718 SP, Danno 10%^000000
 [Lv 2] ^77777720 SP, Danno 20%^000000
 [Lv 3] ^77777722 SP, Danno 30%^000000
@@ -3818,8 +3818,8 @@ Descrizione: ^777777Respinge un mostro di 2 celle. Solo i mostri di taglia picco
 SL_STUN#
 Estun
 Tipo di Skill: ^777777Attacco Magico^000000
-Categoria [Es-]: ^777777Puт essere usata solo sui mostri.^000000
-Descrizione: ^777777Respinge un mostro di 2 celle. Solo i mostri di taglia media vengono danneggiati da questa skill; la skill prende l'elemento di Mild Wind, se attiva. Nei 3 secondi seguenti l'utilizzo di Estun a livello 7, c'и la possibilitа di castare la skill Esma.^000000
+Categoria [Es-]: ^777777Può essere usata solo sui mostri.^000000
+Descrizione: ^777777Respinge un mostro di 2 celle. Solo i mostri di taglia media vengono danneggiati da questa skill; la skill prende l'elemento di Mild Wind, se attiva. Nei 3 secondi seguenti l'utilizzo di Estun a livello 7, c'è la possibilità di castare la skill Esma.^000000
 [Lv 1] ^77777718 SP, Danno 5%^000000
 [Lv 2] ^77777720 SP, Danno 10%^000000
 [Lv 3] ^77777722 SP, Danno 15%^000000
@@ -3831,8 +3831,8 @@ Descrizione: ^777777Respinge un mostro di 2 celle. Solo i mostri di taglia media
 SL_SMA#
 Esma
 Tipo di Skill: ^777777Attacco Magico^000000
-Categoria [Es-]: ^777777Puт essere usata solo sui mostri.^000000
-Descrizione: ^777777Questa skill puт essere attivata entro 3 secondi dall'utilizzo di Estin, Estun o Eske. Un colpo infligge un danno calcolato in questo modo: (40 + Livello Base)% rispetto ad un attacco normale. L'attacco prenderа l'elemento di Mild Wind, se attiva.^000000
+Categoria [Es-]: ^777777Può essere usata solo sui mostri.^000000
+Descrizione: ^777777Questa skill può essere attivata entro 3 secondi dall'utilizzo di Estin, Estun o Eske. Un colpo infligge un danno calcolato in questo modo: (40 + Livello Base)% rispetto ad un attacco normale. L'attacco prenderà l'elemento di Mild Wind, se attiva.^000000
 ^FFFFFF_^000000
 Consumo di SP e numero di colpi:
 [Lv 1]:^777777 8 SP, 1 Colpo^000000
@@ -3849,8 +3849,8 @@ Consumo di SP e numero di colpi:
 SL_SWOO#
 Eswoo
 Tipo di Skill: ^777777Status Magico^000000
-Categoria [Es-]: ^777777Puт essere usata solo sui mostri.^000000
-Descrizione: ^777777Restringe temporaneamente un mostro, per ridurre la sua velocitа di movimento. I Boss monster verranno ridotti soltanto per 1/5 del tempo. Se la skill viene utilizzata su un^FFFFFF ^777777mostro che и giа ristretto, all'utilizzatore verrа inflitto lo status Stun e il bersaglio ritornerа allo status normale piщ velocemente. ^000000
+Categoria [Es-]: ^777777Può essere usata solo sui mostri.^000000
+Descrizione: ^777777Restringe temporaneamente un mostro, per ridurre la sua velocità di movimento. I Boss monster verranno ridotti soltanto per 1/5 del tempo. Se la skill viene utilizzata su un^FFFFFF ^777777mostro che è già ristretto, all'utilizzatore verrà inflitto lo status Stun e il bersaglio ritornerà allo status normale più velocemente. ^000000
 ^FFFFFF_^000000
 Consumo SP e durata della skill per livello:
 [Lv 1]:^777777 75 SP, 1 secondo^000000
@@ -3864,8 +3864,8 @@ Consumo SP e durata della skill per livello:
 SL_SKE#
 Eske
 Tipo di Skill: ^777777Status Magico^000000
-Categoria [Es-]: ^777777Puт essere usata solo sui mostri.^000000
-Descrizione: ^777777Quadruplica il potere di attacco del mostro, ma ne dimezza la difesa. Questa skill ha 3 secondi delay, durante i quali и possibile utilizzare la skill ^00BB00Esma^777777.^000000
+Categoria [Es-]: ^777777Può essere usata solo sui mostri.^000000
+Descrizione: ^777777Quadruplica il potere di attacco del mostro, ma ne dimezza la difesa. Questa skill ha 3 secondi delay, durante i quali è possibile utilizzare la skill ^00BB00Esma^777777.^000000
 [Lv 1]:^777777 45 SP, Tempo di cast 3 secondi, Durata 10 secondi^000000
 [Lv 2]:^777777 30 SP, Tempo di cast 2 secondi, Durata 20 secondi^000000
 [Lv 3]:^777777 15 SP, Tempo di cast 1 secondo, Durata 30 secondi^000000
@@ -3873,7 +3873,7 @@ Descrizione: ^777777Quadruplica il potere di attacco del mostro, ma ne dimezza l
 SL_SKA#
 Eska
 Tipo di Skill: ^777777Status Magico^000000
-Categoria [Es-]: ^777777Puт essere usata solo sui mostri.^000000
+Categoria [Es-]: ^777777Può essere usata solo sui mostri.^000000
 Descrizione: ^777777Forza il mostro in uno stato simile a Steel Body, in cui il movimento e l'attack speed sono ridotti, ma la difesa fisica e magica sono^FFFFFF ^777777aumentate temporaneamente.^000000
 [Lv 1]:^777777 100 SP, Tempo di cast 3 secondi, Durata 10 secondi^000000
 [Lv 2]:^777777 80 SP, Tempo di cast 2 secondi, Durata 20 secondi^000000
@@ -3882,7 +3882,7 @@ Descrizione: ^777777Forza il mostro in uno stato simile a Steel Body, in cui il 
 SL_HIGH#
 1st Transcendent Spirit
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Richiama gli spiriti dei guerrieri piщ valorosi delle Classi Trascendenti, in modo che possano prestare i propri poteri ai loro successori. Questa skill aumenterа ogni stat dei personaggi rinati, secondo il loro livello base; in ogni caso, il bonus non potrа superare +50.^000000
+Descrizione: ^777777Richiama gli spiriti dei guerrieri più valorosi delle Classi Trascendenti, in modo che possano prestare i propri poteri ai loro successori. Questa skill aumenterà ogni stat dei personaggi rinati, secondo il loro livello base; in ogni caso, il bonus non potrà superare +50.^000000
 ^FFFFFF_^000000
 Consumo SP e durata della skill per livello:
 [Lv 1]:^777777 460 SP, 150 secondi^000000
@@ -3894,7 +3894,7 @@ Consumo SP e durata della skill per livello:
 KN_ONEHAND#
 One Hand Quicken
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Aumenta l'Attack Speed quando viene utilizzata un'arma di tipo One Handed Sword. Attivando questa skill verranno cancellati gli effetti delle pozioni che aumentano l'attack speed, perт sarа possibile riutilizzarle dopo aver attivato la skill. Disequipaggiando l'arma, questa skill verrа annullata.^000000
+Descrizione: ^777777Aumenta l'Attack Speed quando viene utilizzata un'arma di tipo One Handed Sword. Attivando questa skill verranno cancellati gli effetti delle pozioni che aumentano l'attack speed, però sarà possibile riutilizzarle dopo aver attivato la skill. Disequipaggiando l'arma, questa skill verrà annullata.^000000
 #
 HT_POWER#
 Beast Charge
@@ -3907,12 +3907,12 @@ Charge Attack
 Tipo di Skill: ^777777Attiva^000000
 Obbiettivo: ^777777Nemico^000000
 Descrizione: ^777777
-Riduce istantaneamente la distanza tra il personaggio e il nemico per infliggere un attacco a corto raggio. Il danno della skill e il tempo di cast и maggiore^FFFFFF ^000000 con l'aumentare della distanza tra il giocatore e l'obbiettivo.^000000
+Riduce istantaneamente la distanza tra il personaggio e il nemico per infliggere un attacco a corto raggio. Il danno della skill e il tempo di cast è maggiore^FFFFFF ^000000 con l'aumentare della distanza tra il giocatore e l'obbiettivo.^000000
 #
 CR_SHRINK#
 Shrink
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Shrink dev'essere usata assieme alla skill Guard per avere effetto. Quando un nemico attacca ^777777e attiva l'effetto di Guard, questa skill aggiunge una possibilitа di respingere il nemico due celle indietro. La percentuale di successo и del 5% per Guard Lvl 1, e aumenta del 5% per ogni ulteriore livello. Con Guard Lvl 10, la percentuale di successo и del 50%. Shrink ha una durata di 5 minuti e viene cancellata se castata una seconda volta.^000000
+Descrizione: ^777777Shrink dev'essere usata assieme alla skill Guard per avere effetto. Quando un nemico attacca ^777777e attiva l'effetto di Guard, questa skill aggiunge una possibilità di respingere il nemico due celle indietro. La percentuale di successo è del 5% per Guard Lvl 1, e aumenta del 5% per ogni ulteriore livello. Con Guard Lvl 10, la percentuale di successo è del 50%. Shrink ha una durata di 5 minuti e viene cancellata se castata una seconda volta.^000000
 #
 AS_SONICACCEL#
 Sonic Acceleration
@@ -3935,12 +3935,12 @@ WZ_SIGHTBLASTER#
 Sight Blaster
 Tipo di Skill: ^777777Attiva^000000
 Obbiettivo: ^777777Utilizzatore^000000
-Descrizione: ^777777Invoca una palla di fuoco che circonda l'utilizzatore per 2 minuti. Quando un nemico si avvicina, la skill infliggerа un danno^FFFFFF   ^777777 dipendente dal MATK dell'utilizzatore e respingerа il nemico; quindi, la skill verrа annullata. L'effetto di repulsione di Sight Blaster и disabilitato durante le WoE.^000000
+Descrizione: ^777777Invoca una palla di fuoco che circonda l'utilizzatore per 2 minuti. Quando un nemico si avvicina, la skill infliggerà un danno^FFFFFF   ^777777 dipendente dal MATK dell'utilizzatore e respingerà il nemico; quindi, la skill verrà annullata. L'effetto di repulsione di Sight Blaster è disabilitato durante le WoE.^000000
 #
 SA_CREATECON#
 Create Elemental Converter
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Consuma determinati oggetti per creare un Elemental Converter, che renderа elementali i propri attacchi. Ci sono 4 tipi differenti di Elemental Converter.
+Descrizione: ^777777Consuma determinati oggetti per creare un Elemental Converter, che renderà elementali i propri attacchi. Ci sono 4 tipi differenti di Elemental Converter.
 ^FFFFFF ^000000
 Oggetti richiesti
 Fire Converter: ^7777773 Scorpion
@@ -3956,26 +3956,26 @@ SA_ELEMENTWATER#
 Elemental Change - Water
 Tipo di Skill: ^777777Attiva^000000
 Obbiettivo: ^777777Nemico^000000
-Descrizione: ^777777Consuma un Elemental Converter (proprietа Water) per cercare di cambiare l'elemento del nemico in Water. Questa skill^FFFFFF   ^777777 richiede un Elemental Converter dell'elemento corretto,^FFFFFF  ^777777e ha una certa possibilitа di fallire.^000000
+Descrizione: ^777777Consuma un Elemental Converter (proprietà Water) per cercare di cambiare l'elemento del nemico in Water. Questa skill^FFFFFF   ^777777 richiede un Elemental Converter dell'elemento corretto,^FFFFFF  ^777777e ha una certa possibilità di fallire.^000000
 #
 SA_ELEMENTGROUND#
 Elemental Change - Ground
 Tipo di Skill: ^777777Attiva^000000
 Obbiettivo: ^777777Nemico^000000
-Descrizione: ^777777Consuma un Elemental Converter (proprietа Earth) per cercare di cambiare l'elemento del nemico in Earth. Questa skill^FFFFFF   ^777777 richiede un Elemental Converter dell'elemento corretto,^FFFFFF  ^777777e ha una certa possibilitа di fallire.^000000
+Descrizione: ^777777Consuma un Elemental Converter (proprietà Earth) per cercare di cambiare l'elemento del nemico in Earth. Questa skill^FFFFFF   ^777777 richiede un Elemental Converter dell'elemento corretto,^FFFFFF  ^777777e ha una certa possibilità di fallire.^000000
 #
 SA_ELEMENTFIRE#
 Elemental Change - Fire
 Tipo di Skill: ^777777Attiva^000000
 Obbiettivo: ^777777Nemico^000000
-Descrizione: ^777777Consuma un Elemental Converter (proprietа Fire) per cercare di cambiare l'elemento del nemico in Fire. Questa skill^FFFFFF   ^777777 richiede un Elemental Converter dell'elemento corretto,^FFFFFF  ^777777e ha una certa possibilitа di fallire.^000000
+Descrizione: ^777777Consuma un Elemental Converter (proprietà Fire) per cercare di cambiare l'elemento del nemico in Fire. Questa skill^FFFFFF   ^777777 richiede un Elemental Converter dell'elemento corretto,^FFFFFF  ^777777e ha una certa possibilità di fallire.^000000
 #
 SA_ELEMENTWIND#
 Elemental Change - Wind
 Tipo di Skill: ^777777Attiva^000000
 Obbiettivo: ^777777Nemico^000000
 Obbiettivo: ^777777Nemico^000000
-Descrizione: ^777777Consuma un Elemental Converter (proprietа Wind) per cercare di cambiare l'elemento del nemico in Wind. Questa skill^FFFFFF   ^777777 richiede un Elemental Converter dell'elemento corretto,^FFFFFF  ^777777e ha una certa possibilitа di fallire.^000000
+Descrizione: ^777777Consuma un Elemental Converter (proprietà Wind) per cercare di cambiare l'elemento del nemico in Wind. Questa skill^FFFFFF   ^777777 richiede un Elemental Converter dell'elemento corretto,^FFFFFF  ^777777e ha una certa possibilità di fallire.^000000
 #
 HT_PHANTASMIC#
 Phantasmic Arrow
@@ -3987,16 +3987,16 @@ BA_PANGVOICE#
 Pang Voice
 Tipo di Skill: ^777777Attiva^000000
 Obbiettivo: ^777777Nemico^000000
-Descrizione: ^777777Lancia un grido in direzione del nemico, per infliggere lo status Chaos. Pang Voice non puт essere usata contro i mostri Boss.^000000
+Descrizione: ^777777Lancia un grido in direzione del nemico, per infliggere lo status Chaos. Pang Voice non può essere usata contro i mostri Boss.^000000
 #
 DC_WINKCHARM#
 Charming Wink
 Tipo di Skill: ^777777Supporto^000000
 Obbiettivo: ^777777Nemico^000000
 Descrizione: ^777777Fa l'occhiolino al nemico, per impedirgli di attaccare l'utilizzatore per 10 secondi.
-La percentuale di successo della skill и maggiore quando il livello dell'utilizzatore и piщ alto^FFFFFF  ^777777di quello del target. 
-Quando viene utilizzata contro altri giocatori, questa^FFFFFF   ^777777skill infligge lo status Chaos con bassa probabilitа.
-Charming Wink^FFFFFF  ^777777puт essere utilizzata solo contro i mostri di tipo Angel, Demon e Demihuman;^FFFFFF   ^777777non puт comunque essere utilizzata contro i mostri Boss.^000000
+La percentuale di successo della skill è maggiore quando il livello dell'utilizzatore è più alto^FFFFFF  ^777777di quello del target. 
+Quando viene utilizzata contro altri giocatori, questa^FFFFFF   ^777777skill infligge lo status Chaos con bassa probabilità.
+Charming Wink^FFFFFF  ^777777può essere utilizzata solo contro i mostri di tipo Angel, Demon e Demihuman;^FFFFFF   ^777777non può comunque essere utilizzata contro i mostri Boss.^000000
 #
 BS_UNFAIRLYTRICK#
 Dubious Salesmanship
@@ -4007,13 +4007,13 @@ BS_GREED#
 Greed
 Tipo di Skill: ^777777Supporto^000000
 Obbiettivo: ^7777772 celle attorno all'utilizzatore^000000
-Descrizione: ^777777Raccoglie automaticamente tutti gli oggetti nel raggio di 2 celle attorno a sи. Questa skill non puт essere utilizzata nelle cittа, nelle mappe PvP o in WoE.^000000
+Descrizione: ^777777Raccoglie automaticamente tutti gli oggetti nel raggio di 2 celle attorno a sè. Questa skill non può essere utilizzata nelle città, nelle mappe PvP o in WoE.^000000
 #
 PR_REDEMPTIO#
 Redemptio
 Tipo di Skill: ^777777Supporto^000000
 Obbiettivo: ^777777Membri del Party^000000
-Description : ^777777Sacrifica se stessi per riportare in vita tutti i membri del party presenti nella propria schermata; ripristina il 50% dei Max HP. La perdita di EXP per l'utilizzatore diminuisce quanti piщ membri del party vengono riportati in vita. Se l'utilizzatore ha meno dell'1% di EXP per il livello base corrente,^FFFFFF     ^777777 allora la skill non puт essere utilizzata.^000000
+Description : ^777777Sacrifica se stessi per riportare in vita tutti i membri del party presenti nella propria schermata; ripristina il 50% dei Max HP. La perdita di EXP per l'utilizzatore diminuisce quanti più membri del party vengono riportati in vita. Se l'utilizzatore ha meno dell'1% di EXP per il livello base corrente,^FFFFFF     ^777777 allora la skill non può essere utilizzata.^000000
 #
 MO_KITRANSLATION#
 Spiritual Bestowment
@@ -4025,7 +4025,7 @@ MO_BALKYOUNG#
 Excruciating Palm
 Tipo di Skill: ^777777Attiva^000000
 Obbiettivo: ^777777Nemico^000000
-Descrizione: ^777777Colpisce un nemico con il palmo della mano, infliggendo un danno del 300%, respingendo il nemico e causandogli lo status Stun per 2 secondi. Ogni cast consuma una piccola quantitа di HP.^000000
+Descrizione: ^777777Colpisce un nemico con il palmo della mano, infliggendo un danno del 300%, respingendo il nemico e causandogli lo status Stun per 2 secondi. Ogni cast consuma una piccola quantità di HP.^000000
 #
 // X.4 Hugel - Ninja & Gunslinger
 NJ_TOBIDOUGU#
@@ -4072,7 +4072,7 @@ Tipo di Skill: ^777777Attacco^000000
 Descrizione: ^777777Lancia un Giant Shuriken per colpire il bersaglio e gli altri nemici attorno 
 a lui. 
 Il livello della skill influenza il numero degli attacchi fatti per ogni singolo utilizzo. 
-Il danno totale verrа diviso tra il numero di nemici colpiti da questa skill.^000000
+Il danno totale verrà diviso tra il numero di nemici colpiti da questa skill.^000000
 [Livello 1] : ^777777ATK 300%^000000
 [Livello 2] : ^777777ATK 450%^000000
 [Livello 3] : ^777777ATK 600%^000000
@@ -4082,7 +4082,7 @@ Il danno totale verrа diviso tra il numero di nemici colpiti da questa skill.^0
 NJ_ZENYNAGE#
 Throw Coins
 Tipo di Skill: ^777777Attacco^000000
-Descrizione: ^777777Lancia degli Zeny al nemico, provocando un danno che ignora la difesa ed и 
+Descrizione: ^777777Lancia degli Zeny al nemico, provocando un danno che ignora la difesa ed è 
 proporzionale agli zeny utilizzati per l'attacco. 
 Tuttavia, il danno di questa skill viene ridotto se usata in PvP o contro mostri di tipo Boss. 
 Dopo ogni utilizzo ci sono 5 secondi di delay.^000000
@@ -4101,8 +4101,8 @@ NJ_TATAMIGAESHI#
 Flip Tatami
 Tipo di Skill: ^777777Attacco^000000
 Descrizione: ^777777Rovescia il tatami in un area di 4x4 celle attorno al Ninja. 
-Quando il tatami colpisce il nemico, questo verrа spinto indietro di 3 celle. 
-Le celle in cui il tatami и stato rovesciato non lasceranno passare gli attacchi a distanza per
+Quando il tatami colpisce il nemico, questo verrà spinto indietro di 3 celle. 
+Le celle in cui il tatami è stato rovesciato non lasceranno passare gli attacchi a distanza per
  3 secondi. 
 Dopo l'uso di questa skill ci sono 3 secondi di delay.^000000
 [Livello 1] : ^777777Raggio d'Attacco: 1 cella, ATK 110%^000000
@@ -4115,7 +4115,7 @@ NJ_SHADOWJUMP#
 Shadow Leap
 Tipo di Skill: ^777777Supporto^000000
 Descrizione: ^777777Fa spostare sulla casella selezionata mentre ci si trova in Hiding.
-Shadow Leap puт essere usata per superare gli ostacoli.^000000
+Shadow Leap può essere usata per superare gli ostacoli.^000000
 [Livello 1] : ^777777Raggio: 5 celle^000000
 [Livello 2] : ^777777Raggio: 6 celle^000000
 [Livello 3] : ^777777Raggio: 7 celle^000000
@@ -4142,7 +4142,7 @@ Shadow Slash
 Tipo di Skill: ^777777Attacco^000000
 Descrizione: ^777777Attacca un bersaglio mentre ci si trova in Hiding. 
 Il range della skill equivale a quello di Shadow Leap. 
-Subito dopo aver attaccato il nemico, l'Hiding verrа cancellato.^000000
+Subito dopo aver attaccato il nemico, l'Hiding verrà cancellato.^000000
 [Livello 1] : ^777777ATK 100%, Critico +30%^000000
 [Livello 2] : ^777777ATK 200%, Critico +35%^000000
 [Livello 3] : ^777777ATK 300%, Critico +40%^000000
@@ -4152,10 +4152,10 @@ Subito dopo aver attaccato il nemico, l'Hiding verrа cancellato.^000000
 NJ_UTSUSEMI#
 Cicada Skin Shed
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Utilizzando questa skill, il Ninja entrerа nello status 'Cicada Skin Shed' 
+Descrizione: ^777777Utilizzando questa skill, il Ninja entrerà nello status 'Cicada Skin Shed' 
 che permette di schivare un certo numero di attacchi e di retrocedere di 7 celle per ogni 
 schivata. 
-Quando il numero degli attacchi schivati raggiunge il limite della skill, lo status verrа 
+Quando il numero degli attacchi schivati raggiunge il limite della skill, lo status verrà 
 automaticamente cancellato.^000000
 [Livello 1] : ^777777Durata 20 sec, 1 Attacco^000000
 [Livello 2] : ^777777Durata 30 sec, 1 Attacco^000000
@@ -4169,7 +4169,7 @@ Tipo di Skill: ^777777Supporto^000000
 Descrizione: ^777777Crea un'immagine illusoria che permette di schivare un certo numero di attacchi. 
 Questa skill difende il Ninja da attacchi fisici sia ravvicinati che a distanza, ma non ferma gli 
 attacchi magici. 
-Puт essere usata solo quando si и nello status 'Ninja Aura' e consuma 1 Shadow Orb ad ogni 
+Può essere usata solo quando si è nello status 'Ninja Aura' e consuma 1 Shadow Orb ad ogni 
 utilizzo.^000000
 [Livello 1] : ^7777771 Attacco Schivato, Durata 60 secondi^000000
 [Livello 2] : ^7777771 Attacco Schivato, Durata 80 secondi^000000
@@ -4185,7 +4185,7 @@ utilizzo.^000000
 NJ_NINPOU#
 Ninja Mastery
 Tipo di Skill: ^777777Passiva^000000
-Descrizione: ^777777Aumenta la velocitа di recupero degli SP. 
+Descrizione: ^777777Aumenta la velocità di recupero degli SP. 
 L'ammontare di SP recuperati con questa skill dipende dagli SP totali.^000000
 [Livello 1] : ^777777SP +3 / 10 secondi^000000
 [Livello 2] : ^777777SP +6 / 10 secondi^000000
@@ -4209,7 +4209,7 @@ NJ_KAENSIN#
 Blaze Shield
 Tipo di Skill: ^777777Attacco ^bb0000(Fire)^000000
 Descrizione: ^777777Evoca una tempesta di fuoco di 5*5 celle attorno al Ninja, che colpisce i 
-nemici piщ volte fintanto che si trovano nel raggio d'azione. 
+nemici più volte fintanto che si trovano nel raggio d'azione. 
 Dura 20 secondi e viene automaticamente cancellata non appena la tempesta di fuoco infligge il 
 numero massimo di attacchi. 
 Consuma 1 Flame Stone per ogni utilizzo.^000000
@@ -4241,18 +4241,18 @@ Freezing Spear
 Tipo di Skill: ^777777Attacco ^0000bb(Water)^000000
 Descrizione: ^777777Evoca una lancia di ghiaccio dal terreno per attaccare il nemico.
 Il livello della skill influisce sul numero di attacchi della lancia di ghiaccio.
-La lancia di ghiaccio farа 3 attacchi a livello 1 e 12 attacchi a livello 10. 
+La lancia di ghiaccio farà 3 attacchi a livello 1 e 12 attacchi a livello 10. 
 Il danno inflitto ad ogni attacco corrisponde al 70% del MATK del Ninja.^000000
 #
 NJ_SUITON#
 Watery Evasion
 Tipo di Skill: ^777777Supporto ^0000bb(Water)^000000
-Descrizione: ^777777Crea una pozza d'acqua nel terreno che diminuisce del 50% la velocitа dei 
+Descrizione: ^777777Crea una pozza d'acqua nel terreno che diminuisce del 50% la velocità dei 
 nemici che vi entrano e la loro AGI.
-Dentro questa pozza d'acqua si puт usare Water Ball e Aqua Benedicta, inoltre Freezing Spear farа 
-piщ danni se lanciata in quest'area. 
+Dentro questa pozza d'acqua si può usare Water Ball e Aqua Benedicta, inoltre Freezing Spear farà 
+più danni se lanciata in quest'area. 
 Consuma 1 Ice Stone.
-Nessun Ninja, compreso chi utilizza questa skill, subirа i malus al movimento o all'AGI.^000000
+Nessun Ninja, compreso chi utilizza questa skill, subirà i malus al movimento o all'AGI.^000000
 [Livello 1] : ^777777Raggio: 3*3 celle, Durata: 15 sec^000000
 [Livello 2] : ^777777Raggio: 3*3 celle, Durata: 20 sec, AGI - 3^000000
 [Livello 3] : ^777777Raggio: 3*3 celle, Durata: 25 sec, AGI - 3^000000
@@ -4270,11 +4270,11 @@ Tipo di Skill: ^777777Attacco ^0000bb(Water)^000000
 Descrizione: ^777777Evoca un enorme blocco di ghiaccio dal cielo che colpisce i nemici che si 
 trovano in un area di 7*7 celle attorno al Ninja. 
 Consuma 1 Ice Stone.^000000
-[Livello 1] : ^777777MATK +150%, Possibilitа di Freeze: 20%^000000
-[Livello 2] : ^777777MATK +200%, Possibilitа di Freeze: 30%^000000
-[Livello 3] : ^777777MATK +250%, Possibilitа di Freeze: 40%^000000
-[Livello 4] : ^777777MATK +300%, Possibilitа di Freeze: 50%^000000
-[Livello 5] : ^777777MATK +350%, Possibilitа di Freeze: 60%^000000
+[Livello 1] : ^777777MATK +150%, Possibilità di Freeze: 20%^000000
+[Livello 2] : ^777777MATK +200%, Possibilità di Freeze: 30%^000000
+[Livello 3] : ^777777MATK +250%, Possibilità di Freeze: 40%^000000
+[Livello 4] : ^777777MATK +300%, Possibilità di Freeze: 50%^000000
+[Livello 5] : ^777777MATK +350%, Possibilità di Freeze: 60%^000000
 #
 NJ_HUUJIN#
 Wind Blade
@@ -4307,7 +4307,7 @@ Consuma 1 Wind Stone.^000000
 NJ_KAMAITACHI#
 First Wind
 Tipo di Skill: ^777777Attacco ^bbbb00(Wind)^000000
-Descrizione: ^777777Evoca una spada di vento che trapasserа tutti i nemici tra il Ninja e il 
+Descrizione: ^777777Evoca una spada di vento che trapasserà tutti i nemici tra il Ninja e il 
 bersaglio.
 Consuma 1 Wind Stone.^000000
 [Livello 1] : ^777777MATK +200%, Raggio: 5 celle^000000
@@ -4320,10 +4320,10 @@ NJ_NEN#
 Ninja Aura
 Tipo di Skill: ^777777Supporto ^bb00bb(Psicocinesi)^000000
 Descrizione: ^777777Il Ninja focalizza la sua energia spirituale, diventando rosso ed entrando 
-cosм nello status Ninja Aura.
+così nello status Ninja Aura.
 Durante questo status, la INT e la STR del Ninja aumenteranno.
-Lo status Ninja Aura и un requisito per utilizzare Mirror Image e Killing Strike.
-Dopo l'utilizzo di una di queste due skill, lo status verrа automaticamente cancellato.^000000
+Lo status Ninja Aura è un requisito per utilizzare Mirror Image e Killing Strike.
+Dopo l'utilizzo di una di queste due skill, lo status verrà automaticamente cancellato.^000000
 [Livello 1] : ^777777STR, INT +1, Durata 30 secondi^000000
 [Livello 2] : ^777777STR, INT +2, Durata 45 secondi^000000
 [Livello 3] : ^777777STR, INT +3, Durata 60 secondi^000000
@@ -4341,9 +4341,9 @@ Gli HP del Ninja scenderanno a 1 dopo aver usato questa Skill.^000000
 GS_GLITTERING#
 Coin Flip
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Lancia una moneta. Se esce testa, si otterrа 1 moneta d'oro; se invece esce 
-croce, si perderа 1 moneta. 
-Si possono ottenere al massimo 10 monete; il livello della skill aumenta la probabilitа che 
+Descrizione: ^777777Lancia una moneta. Se esce testa, si otterrà 1 moneta d'oro; se invece esce 
+croce, si perderà 1 moneta. 
+Si possono ottenere al massimo 10 monete; il livello della skill aumenta la probabilità che 
 esca testa. 
 Viene consumato 1 zeny per ogni utilizzo.^000000
 #
@@ -4351,8 +4351,8 @@ GS_FLING#
 Coin Fling
 Tipo di Skill: ^777777Attacco^000000
 Descrizione: ^777777Utilizza le monete per attaccare un nemico e per indebolirne la difesa. 
-L'utilizzo della skill puт far spendere fino a 5 monete. 
-Spendere piщ monete farа aumentare la diminuzione della difesa del nemico.^000000
+L'utilizzo della skill può far spendere fino a 5 monete. 
+Spendere più monete farà aumentare la diminuzione della difesa del nemico.^000000
 #
 GS_TRIPLEACTION#
 Triple Action
@@ -4363,7 +4363,7 @@ attacco.^000000
 GS_BULLSEYE#
 Bull's Eye
 Tipo di Skill: ^777777Attacco^000000
-Descrizione: ^777777Infligge una grande quantitа di danno su mostri di tipo Demi-Human o Brute. 
+Descrizione: ^777777Infligge una grande quantità di danno su mostri di tipo Demi-Human o Brute. 
 Questa skill consuma 1 moneta per infliggere il 500% del danno di un attacco normale al nemico e 
 causa lo status Coma allo 0.1%. 
 I mostri Boss non saranno affetti dallo status Coma.^000000
@@ -4372,8 +4372,8 @@ GS_MADNESSCANCEL#
 Last Stand
 Tipo di Skill: ^777777Supporto^000000
 Descrizione: ^777777Consuma 4 monete per attivare lo status Last Stand, in cui il castatore ha 
-ATK +100 e Velocitа d'Attacco +20% ma и immobilizzato per 15 secondi. 
-Gunslinger's Panic non puт essere utilizzato assieme a questa skill.^000000
+ATK +100 e Velocità d'Attacco +20% ma è immobilizzato per 15 secondi. 
+Gunslinger's Panic non può essere utilizzato assieme a questa skill.^000000
 #
 GS_ADJUSTMENT#
 Gunslinger's Panic
@@ -4381,7 +4381,7 @@ Tipo di Skill: ^777777Supporto^000000
 Descrizione: ^777777Consuma 2 monete per attivare lo status Gunslinger's Panic, in cui il 
 castatore ha Hit -30 e Flee +30, ma riceve il 20% in meno di danno dagli attacchi fisici a lunga 
 distanza per 20 secondi. 
-Last Stand non puт essere utilizzata assieme a questa skill.^000000
+Last Stand non può essere utilizzata assieme a questa skill.^000000
 #
 GS_INCREASING#
 Increase Accuracy
@@ -4392,24 +4392,24 @@ minuto.^000000
 GS_MAGICALBULLET#
 Magicial Bullet
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Consuma 1 moneta per sparare un colpo magico che in realtа non utilizza alcun 
-proiettile, infliggendo una quantitа di danno di elemento Ghost equivalente all'ATK+MATK 
+Descrizione: ^777777Consuma 1 moneta per sparare un colpo magico che in realtà non utilizza alcun 
+proiettile, infliggendo una quantità di danno di elemento Ghost equivalente all'ATK+MATK 
 dell'utilizzatore.^000000
 #
 GS_CRACKER#
 Cracker
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777Consuma 1 moneta per sparare un colpo che stordirа il nemico, causando 
+Descrizione: ^777777Consuma 1 moneta per sparare un colpo che stordirà il nemico, causando 
 lo status Stun. 
-La possibilitа di infliggere Stun aumenta quanto piщ il castatore si avvicina al 
+La possibilità di infliggere Stun aumenta quanto più il castatore si avvicina al 
 bersaglio.^000000
 #
 GS_SINGLEACTION#
 Single Action
 Tipo di Skill: ^777777Passiva^000000
 Descrizione: ^777777Skill essenziale del Gunslinger che permette di sparare con le loro armi 
-piщ velocemente ed accuratamente. 
-Il livello della skill incide sulla propria Hit e Velocitа d'Attacco.^000000
+più velocemente ed accuratamente. 
+Il livello della skill incide sulla propria Hit e Velocità d'Attacco.^000000
 [Level 1] : ^777777Hit +2, Atk Speed + 1%^000000
 [Level 2] : ^777777Hit +4, Atk Speed + 1%^000000
 [Level 3] : ^777777Hit +6, Atk Speed + 2%^000000
@@ -4439,15 +4439,15 @@ Descrizione: ^777777Aumenta la gittata e l'accuratezza delle Pistole.^000000
 GS_CHAINACTION#
 Chain Action
 Tipo di Skill: ^777777Passiva^000000
-Descrizione: ^777777Dа la possibilitа di sparare 2 proiettili contro un nemico in un singolo 
-attacco utilizzando una Pistola; la possibilitа di sparare 2 proiettili cresce con l'aumentare 
+Descrizione: ^777777Dà la possibilità di sparare 2 proiettili contro un nemico in un singolo 
+attacco utilizzando una Pistola; la possibilità di sparare 2 proiettili cresce con l'aumentare 
 del livello della skill.^000000
 #
 GS_TRACKING#
 Tracking
 Tipo di Skill: ^777777Attacco^000000
 Descrizione: ^777777Infligge un danno devastante prendendo accuratamente la mira contro un 
-bersaglio; il tempo di cast ed il danno aumentano sempre piщ con l'aumentare del livello 
+bersaglio; il tempo di cast ed il danno aumentano sempre più con l'aumentare del livello 
 della skill. 
 Richiede una Pistola o un Fucile.^000000
 [Level 1] : ^777777ATK 300%, Tempo di Cast: 1.2 sec^000000
@@ -4464,24 +4464,24 @@ Richiede una Pistola o un Fucile.^000000
 GS_DISARM#
 Disarm
 Tipo di Skill: ^777777Attacco^000000
-Descrizione: ^777777Prende la mira verso una estremitа del bersaglio per renderlo incapace 
+Descrizione: ^777777Prende la mira verso una estremità del bersaglio per renderlo incapace 
 di attaccare. 
-Il bersaglio non puт essere piщ distante di 7 caselle ed il livello della skill aumenta la 
+Il bersaglio non può essere più distante di 7 caselle ed il livello della skill aumenta la 
 percentuale di successo. 
-Sui mostri, questa skill ridurrа l'ATK del 25% sebbene i mostri Boss ne siano immuni. 
+Sui mostri, questa skill ridurrà l'ATK del 25% sebbene i mostri Boss ne siano immuni. 
 Richiede una Pistola o un Fucile.^000000
 #
 GS_PIERCINGSHOT#
 Wounding Shot
 Tipo di Skill: ^777777Attacco^000000
-Descrizione: ^777777Infligge un danno in grado di penetrare la difesa; ha la possibilitа di 
+Descrizione: ^777777Infligge un danno in grado di penetrare la difesa; ha la possibilità di 
 causare lo status Bleeding sul bersaglio.
 Richiede una Pistola o un Fucile.^000000
-[Level 1] : ^777777ATK 120%, Probabilitа di Bleed: 3%^000000
-[Level 2] : ^777777ATK 140%, Probabilitа di Bleed: 6%^000000
-[Level 3] : ^777777ATK 160%, Probabilitа di Bleed: 9%^000000
-[Level 4] : ^777777ATK 180%, Probabilitа di Bleed: 12%^000000
-[Level 5] : ^777777ATK 200%, Probabilitа di Bleed: 15%^000000
+[Level 1] : ^777777ATK 120%, Probabilità di Bleed: 3%^000000
+[Level 2] : ^777777ATK 140%, Probabilità di Bleed: 6%^000000
+[Level 3] : ^777777ATK 160%, Probabilità di Bleed: 9%^000000
+[Level 4] : ^777777ATK 180%, Probabilità di Bleed: 12%^000000
+[Level 5] : ^777777ATK 200%, Probabilità di Bleed: 15%^000000
 #
 GS_RAPIDSHOWER#
 Trigger Happy Shot
@@ -4519,9 +4519,9 @@ Richiede una Pistola e consuma 10 proiettili per ogni utilizzo.^000000
 GS_GATLINGFEVER#
 Gatling Fever
 Tipo di Skill: ^777777Supporto^000000
-Descrizione: ^777777L'attivazione di Gatling Fever aumenterа temporaneamente l'Atk Speed 
-ed il danno, al costo di diminuire la flee e la velocitа di movimento. 
-Un secondo cast della skill ne cancellerа automaticamente gli effetti. 
+Descrizione: ^777777L'attivazione di Gatling Fever aumenterà temporaneamente l'Atk Speed 
+ed il danno, al costo di diminuire la flee e la velocità di movimento. 
+Un secondo cast della skill ne cancellerà automaticamente gli effetti. 
 Richiede una Mitragliatrice.^000000
 [Level 1] : ^777777Danno +30, Atk Speed +2%, Flee -5%, Durata 30 sec^000000
 [Level 2] : ^777777Danno +40, Atk Speed +4%, Flee -10%, Durata 45 sec^000000
@@ -4537,7 +4537,7 @@ Richiede una Mitragliatrice.^000000
 GS_DUST#
 Crowd Control Shot
 Tipo di Skill: ^777777Attacco^000000
-Descrizione: ^777777Spara un colpo ravvicinato che respingerа il nemico di 5 caselle. 
+Descrizione: ^777777Spara un colpo ravvicinato che respingerà il nemico di 5 caselle. 
 Richiede un Fucile da Caccia.^000000
 [Level 1] : ^777777ATK 150%^000000
 [Level 2] : ^777777ATK 200%^000000
@@ -4555,7 +4555,7 @@ Full Blast
 Tipo di Skill: ^777777Attacco^000000
 Descrizione: ^777777Spara tutti i proiettili contenuti nel caricatore per infliggere un 
 danno devastante al nemico. 
-Questa skill ha una piccola probabilitа di causare lo status Blind all'utilizzatore. 
+Questa skill ha una piccola probabilità di causare lo status Blind all'utilizzatore. 
 Richiede un Fucile da Caccia e consuma fino a 10 proiettili per utilizzo.^000000
 [Level 1] : ^777777ATK 400%, Consuma 2 Proiettili^000000
 [Level 2] : ^777777ATK 500%, Consuma 2 Proiettili^000000
@@ -4621,7 +4621,7 @@ MS_BASH#
 Bash
 Tipo di Skill : ^777777Offensiva^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Colpisce il nemico con un poderoso colpo, se hai imparato Fatal Blow puoi dare lo stato Stun ad un nemico se il livello della tua skill и almeno 5.^000000
+Descrizione : ^777777Colpisce il nemico con un poderoso colpo, se hai imparato Fatal Blow puoi dare lo stato Stun ad un nemico se il livello della tua skill è almeno 5.^000000
 [Level 1] : ^777777Potenza di Attacco + 130%^000000
 [Level 2] : ^777777Potenza di Attacco + 160%^000000
 [Level 3] : ^777777Potenza di Attacco + 190%^000000
@@ -4675,7 +4675,7 @@ MER_DECAGI#
 Decrease AGI
 Tipo di Skill : ^777777Supporto^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Diminuisce la velocitа di attacco e di movimento del nemico per una durata di tempo predefinita.^000000
+Descrizione : ^777777Diminuisce la velocità di attacco e di movimento del nemico per una durata di tempo predefinita.^000000
 #
 MA_DOUBLE#
 Double Strafe
@@ -4707,7 +4707,7 @@ Descrizione : ^777777Colpisce il nemico con estremo vigore. E' possibile utilizz
 MER_QUICKEN#
 Weapon Quicken
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Aumenta la Velocitа di Attacco.^000000
+Descrizione : ^777777Aumenta la Velocità di Attacco.^000000
 [Livello 1] : ^777777Durata 30 Sec^000000
 [Livello 2] : ^777777Durata 60 Sec^000000
 [Livello 3] : ^777777Durata  1 Min^000000
@@ -4765,7 +4765,7 @@ MER_MAGNIFICAT#
 Magnificat
 Tipo di Skill : ^777777Supporto^000000
 Target: ^777777Giocatore, Mercenario^000000
-Descrizione : ^777777Raddoppia la velocitа di recupero degli SP(incluso il castatore) dei Membri del Party per tutta la durata della skill.^000000
+Descrizione : ^777777Raddoppia la velocità di recupero degli SP(incluso il castatore) dei Membri del Party per tutta la durata della skill.^000000
 #
 MER_LEXDIVINA#
 Lex Divina
@@ -4833,7 +4833,7 @@ MER_CRASH#
 Crash
 Tipo di skill: ^000099Offensiva^000000
 Target: ^777777Nemico^000000
-Descrizione: ^777777Aumenta il danno inflitto e aggiunge la possibilitа di infliggere lo status stun al nemico.^000000
+Descrizione: ^777777Aumenta il danno inflitto e aggiunge la possibilità di infliggere lo status stun al nemico.^000000
 [Lv.1]: ^777777Atk 110%, 6% Stun Rate^000000
 [Lv.2]: ^777777Atk 120%, 12% Stun Rate^000000
 [Lv.3]: ^777777Atk 130%, 18% Stun Rate^000000
@@ -4844,18 +4844,18 @@ MA_CHARGEARROW#
 Charged Arrow
 Tipo di Skill : ^777777Attacco^000000
 Obiettivo : ^777777Nemico^000000
-Descrizione : ^777777Tende al massimo l'arco per scagliare una freccia con piщ potenza. Il Bersaglio sarа spinto indietro di 4 celle.^000000
+Descrizione : ^777777Tende al massimo l'arco per scagliare una freccia con più potenza. Il Bersaglio sarà spinto indietro di 4 celle.^000000
 #
 MER_AUTOBERSERK#
 Berserk
 Tipo di Skill : ^000099Passiva^000000
-Descrizione : ^777777Quando gli HP rimasti scendono sotto il 25% del totale, fa diventare furiosi. In questo stato si ottiene l'effetto del "Provoke Liv 10", che persiste fin quando gli HP non saranno riaumentati oltre il 25% o finchи un'altra skill o situazione non cancelli lo status Provoke.^000000
+Descrizione : ^777777Quando gli HP rimasti scendono sotto il 25% del totale, fa diventare furiosi. In questo stato si ottiene l'effetto del "Provoke Liv 10", che persiste fin quando gli HP non saranno riaumentati oltre il 25% o finchè un'altra skill o situazione non cancelli lo status Provoke.^000000
 #
 ML_AUTOGUARD#
 Auto Guard
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Quando viene usato, blocca completamente gli attacchi.
-Dopo l'uso il castatore non si puт muovere per 0.3 Sec.^000000
+Dopo l'uso il castatore non si può muovere per 0.3 Sec.^000000
 ^777777Per utilizzarla devi avere uno scudo equipaggiato.^000000
 #
 MS_REFLECTSHIELD#
@@ -4871,8 +4871,8 @@ Devotion
 Tipo di Skill : ^777777Supporto^000000
 Obiettivo : ^777777I membri di Party/Gilda selezionati^000000
 Descrizione : ^777777Protegge i membri del party prendendo tutto il danno che ricevono. La differenza di livello deve essere meno di 10.^000000
-^777777Se un membro del party va fuori il raggio della skill, quest'ultima viene cancellata. Il danno che il castatore ricevere и dato dalla difesa del personaggio che sta ricevendo il danno in quel momento, la difesa del castatore non influenza il danno ricevuto.^000000
-^777777Se il castatore и nello stato ^008800Auto Guard^000000 o ^008800Defender^000000, i membri del party verranno protetti dallo stesso status.^000000
+^777777Se un membro del party va fuori il raggio della skill, quest'ultima viene cancellata. Il danno che il castatore ricevere è dato dalla difesa del personaggio che sta ricevendo il danno in quel momento, la difesa del castatore non influenza il danno ricevuto.^000000
+^777777Se il castatore è nello stato ^008800Auto Guard^000000 o ^008800Defender^000000, i membri del party verranno protetti dallo stesso status.^000000
 ^777777Consuma 25 SP e necessita di 3 secondi per attivarla.^000000
 ^777777I Crusader nel party non possono ricevere gli effetti di questa skill.^000000
 #
@@ -4880,31 +4880,31 @@ ML_DEFENDER#
 Defender
 Tipo di Skill : ^777777Supporto^000000
 Descrizione : ^777777Quando attiva, aumenta la DEF contro gli attacchi a distanza.
-Diminuisce la velocitа del Crusader e di coloro sui quali sia stato usato Devotion.^000000
+Diminuisce la velocità del Crusader e di coloro sui quali sia stato usato Devotion.^000000
 Nota : ^777777Per utilizzarlo devi avere uno scudo equipaggiato.^000000
 #
 MS_PARRYING# 
 Parry
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Blocca un attacco del nemico utilizzando una spada a due mani. Se ha successo, il castatore puт schivare un attacco del nemico ed allo stesso tempo, un attacco del castatore verrа annullato.
+Descrizione : ^777777Blocca un attacco del nemico utilizzando una spada a due mani. Se ha successo, il castatore può schivare un attacco del nemico ed allo stesso tempo, un attacco del castatore verrà annullato.
 Richiede una spada a due mani.^000000
-[Livello 1] : ^777777Possibilitа di Blocco +23%^000000
-[Livello 2] : ^777777Possibilitа di Blocco +26%^000000
-[Livello 3] : ^777777Possibilitа di Blocco +29%^000000
-[Livello 4] : ^777777Possibilitа di Blocco +32%^000000
-[Livello 5] : ^777777Possibilitа di Blocco +35%^000000
-[Livello 6] : ^777777Possibilitа di Blocco +38%^000000
-[Livello 7] : ^777777Possibilitа di Blocco +41%^000000
-[Livello 8] : ^777777Possibilitа di Blocco +44%^000000
-[Livello 9] : ^777777Possibilitа di Blocco +47%^000000
-[Livello 10] : ^777777Possibilitа di Blocco +50%^000000
+[Livello 1] : ^777777Possibilità di Blocco +23%^000000
+[Livello 2] : ^777777Possibilità di Blocco +26%^000000
+[Livello 3] : ^777777Possibilità di Blocco +29%^000000
+[Livello 4] : ^777777Possibilità di Blocco +32%^000000
+[Livello 5] : ^777777Possibilità di Blocco +35%^000000
+[Livello 6] : ^777777Possibilità di Blocco +38%^000000
+[Livello 7] : ^777777Possibilità di Blocco +41%^000000
+[Livello 8] : ^777777Possibilità di Blocco +44%^000000
+[Livello 9] : ^777777Possibilità di Blocco +47%^000000
+[Livello 10] : ^777777Possibilità di Blocco +50%^000000
 #
 MS_BERSERK#
 Berserk
 Tipo di Skill : ^777777Supporto^000000
-Descrizione : ^777777Aumenta la quantitа massima di HP, la velocitа di movimento e la potenza di attacco per tutta la durata della skill. Tuttavia, diminuirа la flee del castatore.
-Inoltre, le azioni dell'utilizzatore verranno ridotte al solo attacco e movimento. Egli inoltre non potrа rigenerare gli HP con skill curative.
-Questa skill consuma 1 determinata quantitа di HP al secondo. Non puт essere utilizzata durante le WoE.
+Descrizione : ^777777Aumenta la quantità massima di HP, la velocità di movimento e la potenza di attacco per tutta la durata della skill. Tuttavia, diminuirà la flee del castatore.
+Inoltre, le azioni dell'utilizzatore verranno ridotte al solo attacco e movimento. Egli inoltre non potrà rigenerare gli HP con skill curative.
+Questa skill consuma 1 determinata quantità di HP al secondo. Non può essere utilizzata durante le WoE.
 ^000000
 #
 MER_SCAPEGOAT#
@@ -4916,7 +4916,7 @@ MA_SHARPSHOOTING#
 Sharp Shooting
 Tipo di Skill : ^777777Attiva^000000
 Descrizione : ^777777Scocca una freccia con forza verso un punto.
-La freccia sarа lanciata con forza verso l'obbiettivo e in questo modo farа un grande danno al nemico.^000000
+La freccia sarà lanciata con forza verso l'obbiettivo e in questo modo farà un grande danno al nemico.^000000
 [Level 1] : ^777777ATK +150%^000000
 [Level 2] : ^777777ATK +200%^000000
 [Level 3] : ^777777ATK +250%^000000
@@ -4930,7 +4930,7 @@ Descrizione : ^777777Invia diversi attacchi a spirale al nemico.
 Il peso della Spear influisce sul numero dei danni.
 Quando viene colpito, il nemico si trova nello status frozen per un secondo.
 Il livello della skill influisce sul numero dei danni, come anche il peso della spear, ed anche
-sul tempo di cast e sul delay dopo che la skill и stata utilizzata.^000000
+sul tempo di cast e sul delay dopo che la skill è stata utilizzata.^000000
 #
 //Episodio 12
 GM_SANDMAN#
