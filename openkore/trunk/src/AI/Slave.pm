@@ -459,6 +459,8 @@ sub processAttack {
 				next if $config{"${prefix}_maxUses"} && $target->{skillUses}{$skill->getHandle()} >= $config{"${prefix}_maxUses"};
 				next if $config{"${prefix}_target"} && !existsInList($config{"${prefix}_target"}, $target->{name});
 				
+				# Donno if $char->getSkillLevel is the right place to look at.
+				# my $lvl = $config{"${prefix}_lvl"} || $char->getSkillLevel($party_skill{skillObject});
 				my $lvl = $config{"${prefix}_lvl"};
 				my $maxCastTime = $config{"${prefix}_maxCastTime"};
 				my $minCastTime = $config{"${prefix}_minCastTime"};

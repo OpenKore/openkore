@@ -592,7 +592,7 @@ sub main {
 			if (!ai_getSkillUseType($skill->getHandle())) {
 				ai_skillUse(
 					$skill->getHandle(),
-					$config{"attackSkillSlot_${slot}_lvl"},
+					$config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
 					$config{"attackSkillSlot_${slot}_maxCastTime"},
 					$config{"attackSkillSlot_${slot}_minCastTime"},
 					$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $accountID : $ID,
@@ -605,7 +605,7 @@ sub main {
 				my $pos = calcPosition($config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target);
 				ai_skillUse(
 					$skill->getHandle(),
-					$config{"attackSkillSlot_${slot}_lvl"},
+					$config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
 					$config{"attackSkillSlot_${slot}_maxCastTime"},
 					$config{"attackSkillSlot_${slot}_minCastTime"},
 					$pos->{x},
@@ -616,8 +616,8 @@ sub main {
 					"attackSkillSlot_${slot}");
 			}
 			$args->{monsterID} = $ID;
-
-			debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $config{"attackSkillSlot_${slot}_lvl"})\n~, "ai_attack";
+			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
+			debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
 
 		} elsif ($args->{attackMethod}{type} eq "combo") {
 			my $slot = $args->{attackMethod}{comboSlot};
@@ -629,7 +629,7 @@ sub main {
 				my $targetID = ($isSelfSkill) ? $accountID : $ID;
 				ai_skillUse(
 					$skill,
-					$config{"attackComboSlot_${slot}_lvl"},
+					$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
 					$config{"attackComboSlot_${slot}_maxCastTime"},
 					$config{"attackComboSlot_${slot}_minCastTime"},
 					$targetID,
@@ -641,7 +641,7 @@ sub main {
 				my $pos = ($isSelfSkill) ? $char->{pos_to} : $target->{pos_to};
 				ai_skillUse(
 					$skill,
-					$config{"attackComboSlot_${slot}_lvl"},
+					$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
 					$config{"attackComboSlot_${slot}_maxCastTime"},
 					$config{"attackComboSlot_${slot}_minCastTime"},
 					$pos->{x},

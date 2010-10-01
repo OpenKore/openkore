@@ -2318,7 +2318,7 @@ sub processAutoSkillUse {
 					configModify("useSelf_skill_${i}_disabled", 1);
 					next;
 				}
-				$self_skill{lvl} = $config{"useSelf_skill_$i"."_lvl"};
+				$self_skill{lvl} = $config{"useSelf_skill_$i"."_lvl"} || $char->getSkillLevel($self_skill{skillObject});
 				$self_skill{maxCastTime} = $config{"useSelf_skill_$i"."_maxCastTime"};
 				$self_skill{minCastTime} = $config{"useSelf_skill_$i"."_minCastTime"};
 				$self_skill{prefix} = "useSelf_skill_$i";
@@ -2413,7 +2413,7 @@ sub processPartySkillUse {
 					&& checkSelfCondition("partySkill_$i")
 				){
 					$party_skill{ID} = $party_skill{skillObject}->getHandle;
-					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"};
+					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"} || $char->getSkillLevel($party_skill{skillObject});
 					$party_skill{target} = $player->{name};
 					my $pos = $player->position;
 					$party_skill{x} = $pos->{x};
@@ -2513,7 +2513,7 @@ sub processMonsterSkillUse {
 					next if $config{"${prefix}_maxUses"} && $monster->{skillUses}{$skill->getHandle()} >= $config{"${prefix}_maxUses"};
 					next if $config{"${prefix}_target"} && !existsInList($config{"${prefix}_target"}, $monster->{name});
 
-					my $lvl = $config{"${prefix}_lvl"};
+					my $lvl = $config{"${prefix}_lvl"} || $char->getSkillLevel($skill);
 					my $maxCastTime = $config{"${prefix}_maxCastTime"};
 					my $minCastTime = $config{"${prefix}_minCastTime"};
 					debug "Auto-monsterSkill on $monster->{name} ($monster->{binID}): ".$skill->getName()." (lvl $lvl)\n", "monsterSkill";
