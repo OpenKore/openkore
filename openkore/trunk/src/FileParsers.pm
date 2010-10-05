@@ -704,8 +704,9 @@ sub parseRODescLUT {
 	undef %{$r_hash};
 	my $ID;
 	my $IDdesc;
-	open FILE, "< $file";
-	foreach (<FILE>) {
+	my $reader = Utils::TextReader->new($file);
+	until ($reader->eof) {
+		$_ = $reader->readLine;
 		s/\r//g;
 		if (/^#/) {
 			$$r_hash{$ID} = $IDdesc;
@@ -719,7 +720,6 @@ sub parseRODescLUT {
 			$IDdesc =~ s/_/--------------/g;
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -753,8 +753,9 @@ sub parseROQuestsLUT {
 	
 	undef %{$r_hash};
 	my ($data, $flag);
-	open my $fp, '<', $file;
-	foreach (<$fp>) {
+	my $reader = Utils::TextReader->new($file);
+	until ($reader->eof) {
+		$_ = $reader->readLine;
 		s/\r//g;
 		if (/^(\d+)#([^#]*)#([A-Z_]*)#([A-Z_]*)#/) {
 			$data = {
