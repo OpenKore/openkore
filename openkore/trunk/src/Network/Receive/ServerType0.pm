@@ -445,7 +445,8 @@ sub new {
 		# status timers (eA has 12 unknown bytes)
 		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]],
 
-		# HackShield alarm
+		# '0446' => ['actor_quest_effect', 'a4 v4', [qw(ID x y effect type)]],
+
 		'0449' => ['hack_shield_alarm'],
 
 		'07D9' => ['hotkeys'], # 268 # hotkeys:38
@@ -455,10 +456,19 @@ sub new {
 		'07F8' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # spawning
 		'07F9' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv font name)]], # -1 # standing
 		'07FA' => ['inventory_item_removed', 'v3', [qw(unknown index amount)]], #//0x07fa,8
+		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait dispose)]],
+		# '07FD' => ['special_item_obtain'],
 		'07FE' => ['sound_effect', 'Z24', [qw(name)]],
+		# '07FF' => ['re_features_enabled', 'v V', [qw(len flag)]],
 
 		'0800' => ['vender_items_list', 'v a4 a4', [qw(len venderID venderCID)]], # -1
-
+		# '0803' => ['booking_register', 'v', [qw(result)]],
+		# '0805' => ['booking_search'],
+		# '0807' => ['booking_unregister', 'v', [qw(result)]],
+		# '0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
+		# '080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
+		# '080B' => ['booking_delete', 'V', [qw(index)]],
+		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20 # TODO: test & use type
 	};
 	return $self;
@@ -5389,6 +5399,9 @@ sub show_eq_msg_self {
 	}
 }
 
+
+# TODO:
+# Add 'dispose' support
 sub skill_cast {
 	my ($self, $args) = @_;
 
