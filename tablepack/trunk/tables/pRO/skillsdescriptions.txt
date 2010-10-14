@@ -322,24 +322,16 @@ MG_SAFETYWALL#
 Safety Wall
 MAX Lv : 10
 2^777777Skill Requirements : Napalm Beat 7, Soul Strike 5^000000
-9^777777Skill Requirements : Napalm Beat 7, Soul Strike 5^000000
-4010^777777Skill Requirements : Napalm Beat 7, Sould Strike 5^000000
-3^777777Skill Requirements : Napalm Beat 7, Soul Strike 5^000000
 8^777777Skill Requirements : Aspersio 4, Sanctuary 3^000000
-4009^777777Skill Requirements : Aspersio 4, Sanctuary 3^000000
 Skill Form: ^777777Supportive
 Property: ^bb00bbSpiritual^000000
 Target: ^777777Ground^000000
-Description: ^777777Create a magic
-barrier on a targeted spot that will block short range melee
-attacks for the duration of the Safety Wall. Each cast requires
-^BB00BB1 Blue Gemstone^777777.^000000
+Descrioption : ^777777 Creates a magical wall  on a selected ground. This magical wall can block a number of enemy attacks within its durability. The wall disappears when its durability reaches zero, or its time duration is up. It only can block the close-range melee attacks and it required one ^bb00bbBlue Gemstone^777777 to cast.^000000 
 #
 AL_DP#
 Divine Protection
 MAX Lv : 10
 14^777777Skill Requirements : Cure 1^000000
-4015^777777Skill Requirements : Cure 1^000000
 Skill Form: ^000099Passive^000000
 Description: ^777777Increase Defense against Demon and Undead
 monsters. Base level affects strength of increased Defense.^000000
@@ -409,8 +401,7 @@ Curse and Stone Curse.^000000
 AL_HEAL#
 Heal
 MAX Lv : 10
-^777777Skill Requirements : Faith 10, Demon Bane 5^000000
-4015^777777Skill Requirements : Faith 10, Demon Bane 5^000000
+14^777777Skill Requirements : Faith 10, Demon Bane 5^000000
 Skill Form: ^777777Recovery^000000
 Target: ^777777Player^000000
 Description: ^777777Restore a
@@ -427,12 +418,8 @@ while standing in water.^000000
 AL_CURE#
 Cure
 MAX Lv : 1
-4^777777Skill Requirements : Heal 2^000000
-8^777777Skill Requirements : Heal 2^000000
-4009^777777Skill Requirements : Heal 2^000000
-23^777777Skill Requirements : Heal 2^000000
+4^777777Skill Requirements : Heal 2 ^000000
 14^777777Skill Requirements : Faith 5^000000
-4015^777777Skill Requirements : Faith 5^000000
 Skill Form: ^777777Recovery^000000
 Target: ^777777Player^000000
 Description: ^777777Cancel various
@@ -641,6 +628,7 @@ AC_VULTURE#
 Vulture's Eye
 MAX Lv : 10
 ^777777Skill Requirements : Owl's Eye 3^000000
+17^777777kill Requirements : Owl's Eye 10^000000
 Skill Form: ^000099Passive^000000
 Description: ^777777Increase Attack
 Range and Accuracy Rate
@@ -668,7 +656,6 @@ AC_DOUBLE#
 Double Strafe
 MAX Lv : 10
 17^777777Skill Requirements : Vulture's Eye 10^000000
-4018^777777Skill Requirements : Vulture's Eye 10^000000
 Skill Form: ^777777Offensive^000000
 Target: ^777777Enemy^000000
 Description: ^777777Inflict double
@@ -930,7 +917,7 @@ Duration by Skill Level
 #
 PR_BENEDICTIO#
 B.S Sacramenti 
-MAX Lv : 1
+MAX Lv : 5
 ^777777Skill Requirements : Aspersio 5, Gloria 3^000000
 Skill Form: ^777777Blessing^000000
 Target: ^777777Ground^000000
@@ -1008,7 +995,7 @@ Barrier can Block by Skill Level [Lv 1]: ^777777Max HP 12%, 5 Attacks^000000
 #
 PR_MAGNIFICAT#
 Magnificat
-MAX Lv : 4
+MAX Lv : 5
 Skill Form: ^777777Eulogy^000000
 Description: ^777777Double the
 caster and party members'
@@ -1076,10 +1063,18 @@ MAX Lv : 10
 Skill Form: ^777777Offensive^000000
 Property: ^bb0000Fire^000000
 Target: ^777777Ground^000000
-Description: ^777777Summon a pillar
-of flame on a targeted spot that will damage enemies that come
-into contact with it. At ^00BB00levels 6 and above^777777, each cast will
-require ^00BB001 Blue Gemstone^777777.^000000
+Description : ^777777 Summon a flame tower on a selected ground to attack enemies. ^000000
+[Lv 1]:^777777 3 Hits, 3 sec cast time^000000
+[Lv 2]:^777777 4 Hits, 2.7 sec cast time^000000
+[Lv 3]:^777777 5 Hits, 2.4 sec cast time^000000
+[Lv 4]:^777777 6 Hits, 2.1 sec cast time^000000
+[Lv 5]:^777777 7 Hits, 1.8 sec cast time^000000
+[Lv 6]:^777777 8 Hits, 1.5 sec cast time^000000
+[Lv 7]:^777777 9 Hits, 1.2 sec cast time^000000
+[Lv 8]:^777777 10 Hits, 0.9 sec cast time^000000
+[Lv 9]:^777777 11 Hits, 0.6 sec cast time^000000
+[Lv 10]:^777777 12 Hits, 0.3 sec cast time^000000
+
 #
 WZ_SIGHTRASHER#
 Sightrasher
@@ -1189,9 +1184,7 @@ WZ_EARTHSPIKE#
 Earth Spike
 MAX Lv : 5
 9^777777Skill Requirements : Stone Curse 1^000000
-4010^777777Skill Requirements : Stone Curse 1^000000
-16^777777Skill Requirements : Endow Quake 1^000000
-4017^777777Skill Requirements : Endow Quake 1^000000
+16^777777Skill Requirements : Seismic Weapon 1^000000
 Skill Form: ^777777Offensive^000000
 Property: ^00bb00Earth Property^000000
 Target: ^777777Enemy^000000 
@@ -1203,9 +1196,7 @@ WZ_HEAVENDRIVE#
 Heaven's Drive
 MAX Lv : 5
 9^777777Skill Requirements : Earth Spike 3^000000
-4010^777777Skill Requirements : Earth Spike 3^000000
 16^777777Skill Requirements : Earth Spike 1^000000
-4017^777777Skill Requirements : Earth Spike 1^000000
 Skill Form: ^777777Offensive^000000
 Property: ^00BB00Earth Property^000000
 Target: ^777777Ground^000000
@@ -1630,9 +1621,7 @@ HT_REMOVETRAP#
 Remove Trap
 MAX Lv : 1
 11^777777Skill Requirements : Land Mine 1^000000
-4012^777777Skill Requirements : Land Mine 1^000000
 17^777777Skill Requirements : Double Strafe 10^000000
-4018^777777Skill Requirements : Double Strafe 10^000000
 Skill Form: ^000099Supportive^000000
 Target: ^777777Trap^000000
 Description: ^777777Remove a
@@ -1864,15 +1853,7 @@ MAX Lv : 10
 Skill Form: ^777777Offensive^000000
 Property: ^777777Poison^000000
 Target: ^777777Enemy^000000
-Description: ^777777This skill
-will only work once the
-target's HP is 1/3 or less
-of its Max HP. When struck
-by this skill, the target will explode and damage other
-enemies in its vicinity.
-^00BB00Each cast requires
-1 Red Gemstone.^000000
-#
+Description : ^777777 Consumes 1 Red Gemstone and use a poison on a target. This posion will explode momentarily. Exploded poison will be affect other enemies around the target and spread.^000000#
 NV_FIRSTAID#
 First Aid
 ^777777Skill Requirements : Finish Quest^000000
@@ -2141,7 +2122,8 @@ This skill never misses its
 target, but the target will
 face the user after it is hit. When used with a Bow, this
 skill's damage is reduced
-by half. Back Stab can be
+by half.  Chance of stunning a target will be added by the skill level.
+Back Stab can be
 used when in Hiding status,
 but it will cancel Hiding.^000000
 #
@@ -2161,14 +2143,7 @@ MAX Lv : 5
 ^777777Skill Requirements : Stalk 2, Back Stab 2^000000
 Skill Form: ^777777Active^000000
 Range: ^7777779 cells around the caster^000000
-Description: ^777777Sightless
-Mind is only usable while
-in ^00BB00Hiding^777777 status and will
-cancel Hiding once used.
-This attack has a chance
-of causing the Stun and
-Blind effects on targets
-within the skill's range.^000000
+Description : ^777777 Only usable in 'Hiding' condition. Splash damage to enemies within the range and also there's a chance of enemies fall in 'stun' and 'darkness' states. Target hit by the skill will receive 20% more damage for the number of times. However, Boss Monsters wil receive 10% more damage. Caster's 'Hiding' will be revealed after using the skill.^000000
 #
 RG_STRIPWEAPON#
 Divest Weapon
@@ -2332,12 +2307,10 @@ character Job Classes can
 be copied with Intimidate.^000000
 #
 AM_AXEMASTERY#
-Axe Mastery
+Axe & One-Handed Sword Mastery
 MAX Lv : 10
 Skill Form: ^000099Passive^000000
-Description: ^777777Increase
-damage inflicted with
-Axe Class Weapons.^000000
+Description : ^777777 Increases an axe or an one-handed sword's ATK.^000000
 [Lv 1]: ^777777Atk +3^000000
 [Lv 2]: ^777777Atk +6^000000
 [Lv 3]: ^777777Atk +9^000000
@@ -2688,11 +2661,7 @@ MAX Lv : 10
 ^777777Skill Requirements : Faith 7^000000
 Skill Form: ^777777Offensive^000000
 Target: ^777777Enemy^000000
-Description: ^777777Attack an
-enemy with a double hit
-Holy attack that has the
-chance of causing the
-Blind status.^000000
+Description : ^777777 2 repeated attacks with a holy cross. Chance of 'Blind' status adds. ATK increases when use with a two-handed spear.^000000
 #
 CR_GRANDCROSS#
 Grand Cross
@@ -2766,12 +2735,8 @@ Spear Quicken
 MAX Lv : 10
 ^777777Skill Requirements : Spear Mastery 10^000000
 Skill Form: ^777777Active^000000
-Description: ^777777Increase
-Attack Speed when using
-a Spear weapon. Skill's level affects skill duration and the
-increase in Attack Speed.
-Requires Two Handed
-Spear Class Weapon.^000000
+Description : ^777777Increases ATK Speed of a spear. Higher level of 'Spear Quiken' will give you higher ATK speed and a skill duration. Also increases a Critical Attack % and a Flee %.^000000
+^777777 Usable when equipped a spear, and the skill's effect will disspear with a spear unequipped.^000000
 #
 MO_IRONHAND#
 Iron Fists
@@ -2948,14 +2913,7 @@ Fury
 MAX Lv : 5
 ^777777Skill Requirements : Spiritual Sphere Absorbtion 1^000000
 Skill Form: ^777777Supportive^000000
-Description: ^777777Temporarily
-increase caster's Critical
-Attack rate for the skill's
-duration. During the Fury
-status, natural restoration
-of SP is diabled. Each cast
-requires 5 Spirit Spheres.^000000
-^777777Requires 5 Spirit Spheres.^000000
+Description : ^777777 Increases the chance of critical attacks for a certain time. During the Critical Explosion status, the natural SP recovery speed will be reduced to 50%. Each cast requires 5 Spirit Spheres. ^000000
 #
 MO_EXTREMITYFIST#
 Guillotine Fist
@@ -3131,8 +3089,7 @@ Description: ^777777Enchant
 an area on the ground
 so that it will amplify all
 Fire attacks, as well as
-the Fire property targets'
-Attack Power, in its range.
+the Attack Power, in its range.
 Ice Wall and Sage skills
 that target the ground
 can't be cast over Volcano.
@@ -3150,8 +3107,7 @@ Description: ^777777Enchant
 an area on the ground
 so that it will amplify all
 Water attacks and the
-Max HP of Water property
-targets in its range. This
+Max HP of targets in its range. This
 area will also enable the
 use of ^000099Water Ball^777777 and ^000099Aqua
 Benedicta^777777. Other Sage skills
@@ -3171,8 +3127,7 @@ Description: ^777777Enchant
 an area on the ground
 so that it will amplify all
 Wind attacks and the
-Flee Rate of Wind property
-targets in its range. This
+Flee Rate of targets in its range. This
 area will also increase
 the duration of Fire Wall
 so that it lasts 1.5 times
@@ -3203,6 +3158,7 @@ and 1 Yellow Gemstone.^000000
 SA_FLAMELAUNCHER#
 Endow Blaze
 MAX Lv : 5
+^777777Requirements : Fire Bolt 1, Advanced Book 5^000000
 Skill Form: ^777777Supportive^000000
 Property: ^bb0000Fire^000000
 Target: ^777777Party Member^000000
@@ -3478,10 +3434,7 @@ MAX Lv : 5
 Skill Form: ^000099Ensemble Skill^000000
 Range: ^7777779 cells
 around the caster^000000
-Description: ^777777Cast an area
-that will amplify Level 4
-Weapon damage for Party
-Members within its range.^000000
+Description : ^777777Party member's weapons within the skill range will be more effective.^000000
 #
 BD_ROKISWEIL#
 Classical Pluck
@@ -3756,7 +3709,7 @@ Skill Form: ^777777Supportive^000000
 Range: ^7777775 cells
 around the caster^000000
 Description: ^777777Increase the
-Max HP of Party Members
+Max SP of Party Members
 within this skill's range,
 as well as reduce their
 SP consumption for skills.^000000
@@ -3861,7 +3814,7 @@ Atk +25%, DEF -25%^000000
 LK_TENSIONRELAX#
 Relax
 MAX Lv : 1
-^777777Skill Requirements : Provoke 5, Increase HP Recovery 5, Endure 3^000000
+^777777Requirements : Provoke 5, Advanced HP Recovery 10, Endure 3^000000
 Skill Form: ^777777Supportive^000000
 Description: ^777777Increase
 HP restoration speed
@@ -3948,12 +3901,9 @@ Assumptio
 MAX Lv : 5
 ^777777Skill Requirements : Angelus 1, Improved SP Recovery 3, Impositio Manus 3^000000
 Skill Form: ^777777Supportive^000000
-Description: ^777777Temporarily
-reduce damage from monsters
-to 1/3 and damage from other
-players in PvP and WoE areas
-to 2/3 of the original damage. Cannot be used in conjunction
-with the Kyrie Eleison skill.^000000 [Lv^FFFFFF ^0000001]: ^77777720 sec duration^000000
+Description : ^777777 By the blessings of an Angel, a target's DEF increases 100% for a certain time duration.
+Does not overlap with 'Kyrie Eleison'.  DEF will increase to 35% when used in a Siege Mode or a PVP zone.^000000
+[Lv 1]: ^77777720 sec duration^000000
 [Lv 2]: ^77777740 sec duration^000000
 [Lv 3]: ^77777760 sec duration^000000
 [Lv 4]: ^77777780 sec duration^000000
@@ -4139,15 +4089,10 @@ by the skill's level.^000000
 #
 PF_SOULCHANGE#
 Soul Exhale
-MAX Lv : 5
+MAX Lv : 1
 ^777777Skill Requirements : Magic Rod 3, Spell Breaker 2^000000
 Skill Form: ^777777Supportive^000000
-Description: ^777777Exchange
-caster's remaining SP
-with target's remaining
-SP. The SP that the caster
-receives cannot exceed
-the caster's Max SP limit.^000000
+Description: ^777777 Exchange own Sp with the target's SP. Player will receive 50% of exchanged amount of SP.  The amount of SP exchanged cannot exceed the amount of MaxSP.^000000
 #
 PF_SOULBURN#
 Soul Siphon
@@ -4319,9 +4264,8 @@ WS_SYSTEMCREATE#
 Battle Machine Craft
 #
 ST_REJECTSWORD#
-Counter Instinct
+Sword Reject
 MAX Lv : 5
-^777777Skill Requirements : Divest Weapon 1^000000
 Skill Form: ^777777Supportive^000000
 Description: ^777777If an enemy
 is using a Sword Class
@@ -4401,7 +4345,7 @@ away from the caster.^000000
 LK_SPIRALPIERCE#
 Clashing Spiral
 MAX Lv : 5
-^777777Skill Requirements : Spear Mastery 10, Pierce 5, Peco Peco Riding 1, Spear Stab 5^000000
+^777777Skill Requirements :  Spear Mastery 5, Pierce 5, Riding 1, Spear Stab 5^000000
 Skill Form: ^777777Aggressive^000000
 Description: ^777777Hit an enemy
 with spiraling strikes that
@@ -4884,8 +4828,7 @@ Skill Form: ^777777Passive^000000
 Description: ^777777Increase
 Attack Power based on the
 number of Party Members on
-the same map. Normal attacks, and^FFFFFF ^777777skills with 500% power,
-inflict an amount of additional according to the skill's level.^000000
+the same map. Normal attack gives the damage of (100 x Increasement%) + 100% to the enemies.^000000
 ^FFFFFF_^000000
 Additional Damage by Level
 [Lv 1] ^777777+(Party Member*2%)^000000
@@ -5230,15 +5173,16 @@ character's vision, similarly^FFFFFF   ^777777 to the Blind effect.^000000
 increase Attack Speed; at
 Job Level 50, this skill will^FFFFFF   ^777777 permanently reduce sight,
 similarly to the Blind effect.^FFFFFF  ^000000 [Lv 1] ^777777Aspd +3%^000000
-[Lv 2] ^777777Aspd +6%^000000
-[Lv 3] ^777777Aspd +9%^000000
-[Lv 4] ^777777Aspd +12%^000000
-[Lv 5] ^777777Aspd +15%^000000
-[Lv 6] ^777777Aspd +18%^000000
-[Lv 7] ^777777Aspd +21%^000000
-[Lv 8] ^777777Aspd +24%^000000
-[Lv 9] ^777777Aspd +27%^000000
-[Lv 10] ^777777Aspd +30%^000000
+ [Lv 1] ^777777Attack Speed 2% ^000000
+ [Lv 2] ^777777Attack Speed 3% ^000000
+ [Lv 3] ^777777Attack Speed 4% ^000000
+ [Lv 4] ^777777Attack Speed 5% ^000000
+ [Lv 5] ^777777Attack Speed 6% ^000000
+ [Lv 6] ^777777Attack Speed 7% ^000000
+ [Lv 7] ^777777Attack Speed 8% ^000000
+ [Lv 8] ^777777Attack Speed 9% ^000000
+ [Lv 9] ^777777Attack Speed 10%^000000
+ [Lv 10] ^777777Attack Speed 11%^000000
 #
 SG_FRIEND#
 Solar, Lunar and Stellar Team-Up
@@ -5298,9 +5242,7 @@ each attack on other players. In^FFFFFF ^777777this status, attacking when
 the caster's remaining HP is
 less that 20% of Max HP will
 instantly kill the caster.
-caster's remaining HP is
-less that 20% of Max HP
-instantly kill the caster.^000000
+In the status of waking up natural recovery is impossible and gets all the recorvery effects only by 1/4 of the original ones.^000000
 #
 SL_ALCHEMIST#
 Alchemist Spirit
@@ -5523,7 +5465,7 @@ the spirit of history's most
 powerful Wizard and endow
 its abilities upon the Wizard targeted by this skill. For the
 skill's duration, the targeted Wizard can use certain skills
-without consuming Gemstones.
+without consuming Gemstones.While having the wizard's soul, when using magic without consuming a gem stone the skill consuming SP and the casting time increases by 50% .
 ^FFFFFF_^000000
 SP Consumption
 & Duration by Level
@@ -5569,7 +5511,7 @@ when performing Play or Dance skills,^FFFFFF ^777777and are able to combo
 skills with Perfect Tablature, Focus^FFFFFF ^777777Ballet, Impressive Riff,
 Slow Grace, Magic Strings,
 Lady Luck, Song of Lutie
-and Gypsy's Kiss.
+and Gypsy's Kiss. The skill which is linked with Bard and Dancer's Soul's consumed amount increases by 50%.
 ^FFFFFF_^000000
 SP Consumption
 & Duration by Level
@@ -5591,7 +5533,7 @@ this skill, enhancing Stealth status's^FFFFFF ^777777Movement Speed
 and STR increase. For this
 skill's duration, this Rogue
 will be unaffected by dispell skills^FFFFFF ^777777and will receive more
-HP and SP from potions
+HP from potions
 created by a Top Ten
 Ranking Alchemist.
 ^FFFFFF_^000000
@@ -5616,6 +5558,7 @@ the skill's duration, Sonic
 Blow will have a 100%
 increase in damage
 and reduced cast delay.
+When the assassin who's got a soul from a soul linker uses Sonic Blow, the skill's sp consume increases by 100%.^000000
 ^FFFFFF_^000000
 SP Consumption
 & Duration by Level
@@ -5805,7 +5748,9 @@ high level monsters cannot
 be reflected, although this
 skill has a 100% chance of
 reflecting spells from other
-players regardless of level.^000000
+players regardless of level.
+It's not doubled with Assumptio and at this state, a caster gets all the physical damage by 400% more.
+The soul linker's,who got a soul from soullinker, Kite skill's magical reflection rate becomes 50% and cannot reflect the magic which targets the ground. Also the caster is in the state where getting all the physical damage 400% more.^000000
 [Lv 1] ^7777771 Reflection
 6 sec cast, 1 min duration^000000
 [Lv 2] ^7777771 Reflection
@@ -6284,6 +6229,8 @@ chemical protection.
 #
 ITM_TOMAHAWK#
 Tomahawk Throwing
+Description:^777777By throwing an axe, inflicts damages
+enemies in a long ranged distance.^000000
 #
 ST_CHASEWALK#
 Stealth
@@ -6402,27 +6349,16 @@ Description: ^777777Increase
 the gravity in a 5*5 cell area around a targeted spot which
 will decrease the Movement
 and Attack Speeds of enemies
-within range, as well as cause continuous damage that will
-pierce Defense. This skill's
-effect on Movement and Attack Speeds^FFFFFF ^777777does not apply to Boss
+within range, While the skill is in effect, enemies within the skill range will receive a DEF ignoring damage every 0.5 sec and their attack speed will decrease.
+This skill's effect on Movement and Attack Speeds^FFFFFF ^777777does not apply to Boss
 monsters. When skill is active, ^FFFFFF ^777777the caster's movement and
 attacks are disabled. ^00BB00Each cast requires 1 Blue Gemstone.^777777
 2 second Cast Delay.^000000
-[Lv 1]:^777777 5 Sec Duration
-Enemy Speed -5%
-400 Damage/Sec^000000
-[Lv 2]:^777777 6 Sec Duration
-Enemy Speed -10%
-600 Damage/Sec^000000
-[Lv 3]:^777777 7 Sec Duration
-Enemy Speed -15%
-800 Damage/Sec^000000
-[Lv 4]:^777777 8 Sec Duration
-Enemy Speed -20%
-1,000 Damage/Sec^000000
-[Lv 5]:^777777 9 Sec Duration
-Enemy Speed -25%
-1,200 Damage/Sec^000000
+[Lv 1] : ^777777 600 damage every 0.5 sec., movement speed decrease 5% , duration 5 sec.^000000
+[Lv 2] : ^777777 700 damage every 0.5 sec., movement speed decrease 10%, duration 6 sec.^000000
+[Lv 3] : ^777777 800 damage every 0.5 sec., movement speed decrease 15%, duration 7 sec.^000000
+[Lv 4] : ^777777 900 damage every 0.5 sec., movement speed decrease 20%, duration 8 sec.^000000
+[Lv 5] : ^777777 1000 damage every 0.5 sec., movement speed decrease 25%, duration 9 sec.^000000
 #
 WS_CARTTERMINATION#
 High Speed Cart Ram
@@ -6949,14 +6885,7 @@ Close Confine
 ^777777Skill Requirements : Finish Quest^000000
 Skill Form: ^777777Active^000000
 Target: ^777777Enemy^000000
-Description: ^777777Immobilize
-an enemy for 15 seconds
-at the cost of also freezing
-the movements of the caster.
-The caster's Dodge Rate is
-increased by 10 during this
-skill's duration. This skill is canceled if caster or enemy
-dies or is teleported.^000000
+Description: ^777777Immobilize an enemy for 10 seconds at the cost of also freezing the movements of the caster. The caster's Dodge Rate is increased by + 10 during this skill's duration. Skill is canceled if the distance of caster and enemy gets farther by teleports (fly wings and butterfly wings) or knock back. Nullified to use on MVP monsters. ^000000
 #
 WZ_SIGHTBLASTER#
 Sight Blaster
@@ -7101,9 +7030,7 @@ Skill Form: ^777777Supportive^000000
 Target: ^7777772 cells around the Caster^000000
 Description: ^777777Automatically
 pick up every item within
-2 cells of the caster. This
-skill cannot be used within
-towns, PvP maps, or in WoE.^000000
+2 cells of the caster. Can not be used in villages.^000000
 #
 PR_REDEMPTIO#
 Redemptio
@@ -7200,17 +7127,8 @@ NJ_HUUMA#
 Throw Huuma Shuriken
 MAX Lv : 5
 ^777777Skill Requirements : Dagger Throwing Practice 5, Throw Kunai 5^000000
-Skill Form:^777777Offensive^000000
-Description: ^777777Requires a
-Huuma Class Weapon. Throw
-a Huuma Shuriken that will
-damage its target and any
-nearby enemies. The total
-amount of damage is divided
-among the enemies damaged
-by this skill. Raising this
-skill's level increases
-its number of strikes.^000000
+Skill Form:^777777 Flip tatami to cause the 4*4cells around the caster to ignore long ranged physical damage for 3 seconds. Each cast is followed by a 3 second delay, and has the chance to damage and push enemies 5 cells backward if they are in the skill's attack range.
+It's not canceled even when attacked while casting.^000000
 Total Amount of
 Damage by Skill Level
 [Lv 1]: ^777777300% Atk^000000
@@ -7259,7 +7177,7 @@ for 3 seconds. Each
 cast is followed by a
 3 second cast delay, and
 has the chance to damage
-and push enemies 3 cells
+and push enemies 5 cells
 backward if they are within
 the skill's attack range.^000000
 Attack Range &
@@ -7573,10 +7491,7 @@ Lightning Jolt
 MAX Lv : 5
 ^777777Skill Requirements : Wind Blade^000000
 Skill Form:^777777Offensive^bbbb00(Lightning)^000000
-Description: ^777777Summon
-lightning bolts around the
-caster to damage enemies
-within the skill's range. Each^FFFFFF  ^777777 cast consumes 1 Wind Stone.^000000
+Description: ^777777 Summon lighting bolts on selected area to damage enemies within the skill's range. Each cast consumes 1 Wind Stone.^000000
 Damage & Range
 by Skill Level
 [Lv 1]: ^777777+200% Matk, 5*5 cells^000000
@@ -7609,11 +7524,7 @@ Ninja Aura
 MAX Lv : 5
 ^777777Skill Requirements : Ninja Mastery 5^000000
 Skill Form:^777777Supportive^bb00bb(Psychokinesis)^000000
-Description: ^777777Focus
-spritual energy to
-enter Ninja Aura status,
-which endows the caster
-with INT and STR bonuses.
+Description: ^777777Gathers ghosts and becomes red. In the state of Ghosts the intellect and power increases. When using 5% of MHP is consumed.
 Ninja Aura status enables
 the use of the Mirror Image
 and Killing Strike skills,
@@ -7638,8 +7549,7 @@ HP to inflict devastating
 damage to the targeted
 enemy. The amount of
 remaining HP affects the
-damage inflicted, and each
-cast of this skill will always^FFFFFF  ^777777 reduce the caster's HP to 1.^000000
+damage inflicted, and each cast of this skill will reduce the caster's HP to 1%. If 'Mirror Image' skill was in effect, numbers of the mirror image will affect the number of hit and damage.^000000
 #
 GS_GLITTERING#
 Coin Flip
@@ -7868,20 +7778,19 @@ Defense piercing damage
 that has the chance of
 causing the Bleeding
 effect on its target.
-Requires a Pistol
-or Rifle Class Weapon.^000000
+Requires a Pistol or Rifle to use the skill. Skill's attack power increases when using a Rifle.^000000
 Damage, Bleeding
 Chance by Level
-[Lv 1]: ^777777120% Atk, 3%^000000
-[Lv 2]: ^777777140% Atk, 6%^000000
-[Lv 3]: ^777777160% Atk, 9%^000000
-[Lv 4]: ^777777180% Atk, 12%^000000
-[Lv 5]: ^777777200% Atk, 15%^000000
+[Level 1] : ^777777Attack power 120%(180%), Bleeding Chance 3%^000000
+[Level 2] : ^777777Attack power 140%(210%), Bleeding Chance 6%^000000
+[Level 3] : ^777777Attack power 160%(240%), Bleeding Chance 9%^000000
+[Level 4] : ^777777Attack power 180%(270%), Bleeding Chance 12%^000000
+[Level 5] : ^777777Attack power 200%(300%), Bleeding Chance 15%^000000
 #
 GS_RAPIDSHOWER#
 Trigger Happy Shot
 MAX Lv : 10
-^777777Skill Requirements :  Chain Action^000000
+^777777Skill Requirements :  Chain Action 3^000000
 Skill Form:^777777Offensive^000000
 Description: ^777777Consume
 5 bullets to perform
@@ -7935,26 +7844,16 @@ damage at the cost of reducing^FFFFFF  ^777777 Flee Rate and Movement Speed.
 Gatling Fever status is canceled when this skill is double cast.
 Requires Gatling Gun
 Class Weapon.^000000
-[Lv 1]: ^777777+30 Atk, +2% Aspd^000000
-^777777-5% Flee, 30 sec. duration^000000
-[Lv 2]: ^777777+40 Atk, +4% Aspd^000000
-^777777-10% Flee, 45 sec. duration^000000
-[Lv 3]: ^777777+50 Atk, +6% Aspd^000000
-^777777-15% Flee, 60 sec. duration^000000
-[Lv 4]: ^777777+60 Atk, +8% Aspd^000000
-^777777-20% Flee, 75 sec. duration^000000
-[Lv 5]: ^777777+70 Atk, +10% Aspd^000000
-^777777-25% Flee, 90 sec. duration^000000
-[Lv 6]: ^777777+80 Atk, +12% Aspd^000000
-^777777-30% Flee, 105 sec. duration^000000
-[Lv 7]: ^777777+90 Atk, +14% Aspd^000000
-^777777-35% Flee, 120 sec. duration^000000
-[Lv 8]: ^777777+100 Atk, +16% Aspd^000000
-^777777-40% Flee, 135 sec. duration^000000
-[Lv 9]: ^777777+110 Atk, +18% Aspd^000000
-^777777-45% Flee, 150 sec. duration^000000
-[Lv 10]: ^777777+120 Atk, +20% Aspd^000000
-^777777-50% Flee, 165 sec. duration^000000
+[Level 1] : ^777777Damage +30, Attack Speed +1%, Flee -5, Duration 30sec.^000000
+[Level 2] : ^777777Damage +40, Attack Speed +2%, Flee -10, Duration 45sec.^000000
+[Level 3] : ^777777Damage +50, Attack Speed +3%, Flee -15, Duration 60sec.^000000
+[Level 4] : ^777777Damage +60, Attack Speed +4%, Flee -20, Duration 75sec.^000000
+[Level 5] : ^777777Damage +70, Attack Speed +5%, Flee -25, Duration 90sec.^000000
+[Level 6] : ^777777Damage +80, Attack Speed +6%, Flee -30, Duration 105sec.^000000
+[Level 7] : ^777777Damage +90, Attack Speed +7%, Flee -35, Duration 120sec.^000000
+[Level 8] : ^777777Damage +100, Attack Speed +8%, Flee -40, Duration 135sec.^000000
+[Level 9] : ^777777Damage +110, Attack Speed +9%, Flee -45, Duration 150sec.^000000
+[Level 10] : ^777777Damage +120, Attack Speed +10%, Flee -50, Duration 165sec.^000000
 #
 GS_DUST#
 Crowd Control Shot
@@ -8009,45 +7908,34 @@ Spread Shot
 MAX Lv : 10
 ^777777Skill Requirements : Full Blast 5^000000
 Skill Form:^777777Offensive^000000
-Description: ^777777Consume
-5 bullets to spread damage
-over a large area. Requires
-a Shotgun Class Weapon.^000000
-[Lv 1]: ^777777100% Atk, 3*3 cells^000000
-[Lv 2]: ^777777120% Atk, 3*3 cells^000000
-[Lv 3]: ^777777140% Atk, 3*3 cells^000000
-[Lv 4]: ^777777160% Atk, 5*5 cells^000000
-[Lv 5]: ^777777180% Atk, 5*5 cells^000000
-[Lv 6]: ^777777200% Atk, 5*5 cells^000000
-[Lv 7]: ^777777220% Atk, 7*7 cells^000000
-[Lv 8]: ^777777240% Atk, 7*7 cells^000000
-[Lv 9]: ^777777260% Atk, 7*7 cells^000000
-[Lv 10]: ^777777280% Atk, 9*9 cells^000000
+Decription : ^777777 Consumes 5 bullets to spread damage over a large area. Requires a Shotgun or a Grenade Launcher.^000000
+[Level 1] : ^777777Attack Power 220%, Range 3*3 cells^000000
+[Level 2] : ^777777Attack Power 240%, Range 3*3 cells^000000
+[Level 3] : ^777777Attack Power 260%, Range 3*3 cells^000000
+[Level 4] : ^777777Attack Power 280%, Range 5*5 cells^000000
+[Level 5] : ^777777Attack Power 300%, Range 5*5 cells^000000
+[Level 6] : ^777777Attack Power 320%, Range 5*5 cells^000000
+[Level 7] : ^777777Attack Power 340%, Range 7*7 cells^000000
+[Level 8] : ^777777Attack Power 360%, Range 7*7 cells^000000
+[Level 9] : ^777777Attack Power 380%, Range 7*7 cells^000000
+[Level 10] : ^777777Attack Power 400%, Range 9*9 cells^000000
 #
 GS_GROUNDDRIFT#
 Gunslinger Mine
 MAX Lv : 10
 ^777777Skill Requirements : Full Blast 5, Spread Shot 7^000000
 Skill Form:^777777Offensive^000000
-Description: ^777777Plant
-Bullet Spheres into the
-ground that will explode
-upon enemy approach.
-The explosion's effect
-varies according to the type
-of bullet planted. Requires a^FFFFFF   ^777777 Grenade Launcher Class Weapon.^000000
-Attack Bonus & Mine
-Duration by Skill Level
-[Lv 1]: ^777777+50 Atk, 3 Sec.^000000
-[Lv 2]: ^777777+100 Atk, 6 Sec^000000
-[Lv 3]: ^777777+150 Atk, 9 Sec.^000000
-[Lv 4]: ^777777+200 Atk, 12 Sec.^000000
-[Lv 5]: ^777777+250 Atk, 15 Sec.^000000
-[Lv 6]: ^777777+300 Atk, 18 Sec.^000000
-[Lv 7]: ^777777+350 Atk, 21 Sec.^000000
-[Lv 8]: ^777777+400 Atk, 24 Sec.^000000
-[Lv 9]: ^777777+450 Atk, 27 Sec.^000000
-[Lv 10]: ^777777+500 Atk, 30 Sec.^000000
+Description : ^777777 Plant Bullet Spheres into the ground that will explode upon enemy approach. The explosion's effect varies according to the type of bullet planted. Requires a Grenade Launcher.^000000
+[Level 1] : ^777777Damage 220%, Duration 3sec.^000000
+[Level 2] : ^777777Damage 240%, Duration 6sec.^000000
+[Level 3] : ^777777Damage 260%, Duration 9sec.^000000
+[Level 4] : ^777777Damage 280%, Duration 12sec.^000000
+[Level 5] : ^777777Damage 300%, Duration 15sec.^000000
+[Level 6] : ^777777Damage 320%, Duration 18sec.^000000
+[Level 7] : ^777777Damage 340%, Duration 21sec.^000000
+[Level 8] : ^777777Damage 360%, Duration 24sec.^000000
+[Level 9] : ^777777Damage 380%, Duration 27sec.^000000
+[Level 10] : ^777777Damage 400%, Duration 30sec.^000000
 #
 ALL_INCCARRY#			
 Enlarge Weight Limit			

@@ -21,6 +21,7 @@ alberta 120 53 Stylish Merchant#new30
 alberta 120 60 Guide
 alberta 122 55 [Quest] Messenger Girl#
 alberta 123 221 Deadly Cargo [6]#
+alberta 124 67 Eden Teleport Officer#4
 alberta 127 143 Belder
 alberta 127 64 Continental Messenger#a
 alberta 131 139 Drunken old man
@@ -29,12 +30,15 @@ alberta 148 53 Cool Event Employee#Giv
 alberta 148 60 Cool Event Employee#Giv
 alberta 165 83 Fastidious Old Man
 alberta 167 135 Chef Assistant
+alberta 184 143 Guide#03alberta
 alberta 188 173 Deadly Cargo [1]#
 alberta 189 151 Sailor
 alberta 190 173 Phelix
 alberta 195 151 Paul
+alberta 196 133 Bard#job_min
 alberta 196 146 Crusader#megin2
 alberta 214 77 Captain Janssen
+alberta 215 111 Funfi
 alberta 23 238 Guide
 alberta 232 104 Deadly Cargo [2]#
 alberta 232 106 Gusangs
@@ -209,6 +213,8 @@ comodo 193 151 Bor Roben#1
 comodo 195 150 Kafra Employee
 comodo 200 150 Beach Manager#comodo
 comodo 204 148 Devellin
+comodo 204 172 Canell#qsk_dan01
+comodo 209 305 Camping Young Lady
 comodo 210 148 Bulletin Board#comodo
 comodo 210 154 Suspicious Guy
 comodo 211 155 Wandering bard
@@ -282,12 +288,14 @@ geffen 130 50 Second_Cash_Seller
 geffen 131 123 Merlcesdets
 geffen 131 66 [Quest] Magic Merchant#
 geffen 132 38 Bard#2
+geffen 132 66 Eden Teleport Officer#3
 geffen 135 53 Kafra Employee#pRO_prem
 geffen 138 30 Injured Master Thief#ge
 geffen 140 54 [Quest] Elite Mercenary
 geffen 143 126 Kris#edu
 geffen 143 133 Ernie#edu
 geffen 145 130 Sheila#edu
+geffen 146 132 Ancellia
 geffen 146 148 Backalley Merchant
 geffen 147 163 Injured Master Thief#ge
 geffen 151 44 Young Man
@@ -352,6 +360,7 @@ in_sphinx2 212 267 Old Coffin#2
 in_sphinx2 259 213 Old Coffin#1
 in_sphinx4 116 120 [Quest] Mercenary Scout
 iz_dun04 129 227 Summer Ticket Girl#nk2
+iz_dun04 43 46 paratam Callandiva#para
 izlu2dun 104 91 Bulletin Board#izlude
 izlu2dun 106 58 Kafra Employee
 izlu2dun 108 27 Sailor
@@ -369,6 +378,8 @@ izlude 135 78 Charfri
 izlude 150 118 Dega
 izlude 150 143 Kylick
 izlude 164 138 Pet Groomer
+izlude 171 127 Magazine Dealer Kenny#a
+izlude 171 133 Bullet Dealer Tony#airp
 izlude 171 185 Marriage Staff#Izlude I
 izlude 182 186 Edgar
 izlude 186 57 Scamp
@@ -757,6 +768,7 @@ payon 166 165 Red Palace
 payon 166 169 Shadow of Buddha
 payon 166 173 Garden of Heaven
 payon 166 177 Arbor of Light
+payon 168 314 Lospii#payon
 payon 173 111 moonfestivalstaff#09_mo
 payon 173 238 Jade
 payon 175 226 Kafra Employee
@@ -781,6 +793,7 @@ payon 214 79 Telpitz#BLS
 payon 215 102 Moohyun#job_star
 payon 236 199 Leablem
 payon 239 56 Dried Fish#paypuzz3
+payon 240 160 Vat#paypuzz4
 payon 244 62 Moonho Ahn
 payon 246 154 Lady
 payon 246 158 Woman
@@ -820,9 +833,11 @@ prontera 116 82 Traveler#01Easter
 prontera 123 102 Merchant#pron
 prontera 123 83 Maroll Battle Recruiter
 prontera 124 297 Tialfi
+prontera 124 76 Eden Teleport Officer#1
 prontera 132 125 Bossnia staff
 prontera 134 125 #suprise_12
 prontera 140 304 Old Soldier
+prontera 141 97 Warmhearted woman#job_m
 prontera 143 203 Lazrigs
 prontera 144 301 Mage#tu
 prontera 146 101 Cupid#prontera
@@ -868,8 +883,10 @@ prontera 159 284 Romeo#prontera2
 prontera 160 133 Norby
 prontera 160 29 South Gate-Guide
 prontera 160 330 Guard
+prontera 161 192 Ashvacum warfÀÎ
 prontera 162 188 [Quest] Odin's Knight#n
 prontera 162 191 Happy Citizen
+prontera 163 178 Magic Gear Master
 prontera 163 194 Traveler#02Easter
 prontera 163 204 Man from Morroc
 prontera 163 53 Promotional staff

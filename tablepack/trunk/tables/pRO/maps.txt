@@ -1,4 +1,31 @@
-﻿//-------------Ep13.2----------
+﻿//renewal
+dicastes01.rsw#El Dicastes, the Capital of Sapha#
+dicastes02.rsw#Brumbeld Jorhi Forest#
+dic_in01.rsw#Inside of Dicastes#
+dic_fild01.rsw#Kamidal in the Skirts of Mountain#
+dic_fild02.rsw#Kamidal in the Skirts of Mountain#
+dic_dun01.rsw#Kamidal Tunnel#
+dic_dun02.rsw#Skarava Hall#
+job3_gen01.rsw#Generic Lab#
+s_atelier.rsw#Shadow Workshop#
+moc_para01.rsw#Inside of Paradise Group Building in Morocc#
+job3_arch01.rsw#Waiting room for Arch Bishop Job Change#
+job3_arch02.rsw#Odin Temple#
+job3_arch03.rsw#Waiting room for Arch Bishop Job Change#
+job3_guil01.rsw#Secret Tavern#
+job3_guil02.rsw#Inside of Old Warehouse#
+job3_guil03.rsw#An isolated mansion#
+job3_rang01.rsw#Waiting room for Ranger Job Change#
+job3_rang02.rsw#Test room for Ranger Job Change#
+job3_rune01.rsw#Inside of Rune knight Templar#
+job3_rune02.rsw#Test room for Rune Knight Job Change#
+job3_rune03.rsw#Test room for Rune Knight Job Change#
+job3_war01.rsw#Test room for Warlock Job Change#
+job3_war02.rsw#Test room for Warlock Job Change#
+jupe_core2.rsw#The centre of Juperos#
+
+
+//-------------Ep13.2----------
 1@nyd.rsw#Nydhogg Nest#
 2@nyd.rsw#Nydhogg Nest#
 nyd_dun01.rsw#The violent's Wound#
