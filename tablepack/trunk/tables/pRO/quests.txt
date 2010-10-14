@@ -367,7 +367,7 @@ A druken man confesses that the ore found in Einbech is the piece of Ymir's hear
 Return to Shinokas.#
 
 2078#Cursed Property#SG_FEEL#QUE_NOIMAGE#
-The ore is identified but Shinokas was already assaulted by suspicious guys. He leaves a messages. 'They... wer...." and dies.#
+The ore is identified but Shinokas was already assaulted by suspicious guys. He leaves a messages. 'They... wer....' and dies.#
 Return to Buender Hikeman.#
 
 2079#The past went wrong#SG_FEEL#QUE_NOIMAGE#
@@ -635,18 +635,6 @@ Bard Ayealo asks me to follow a song after him. If I am following to sing exactl
 Bard Ayealo asks to collect 60 Trunks for the last test. If I bring them I will become a bard and get a souvenir from him.#
 Bring 60 Trunks# 
 
-
-3006#Job Changes to Crusader - Qualification#SG_FEEL#QUE_NOIMAGE#
-"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFDecayed Nail, Stinky Scale, Worn Out Prison Uniform, Daenggie^000000"#
-10 Decayed Nail, 10 Stinky Scale, 10 Worn Out Prison Uniform, 10 Daenggie#
-
-3007#Job Changes to Crusader - Qualification#SG_FEEL#QUE_NOIMAGE#
-"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFSkel Bone, Orc Claw, Manacles, Short Daenggie^000000"#
-10 Skel Bone, 10 Orc Claw, 10 Manacles, 10 Short Daenggie#
-
-3008#Job Changes to Crusader - Qualification#SG_FEEL#QUE_NOIMAGE#
-"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFHorrendous Mouth, Rotten Bandage, Lantern, Pumpkin Head^000000"#
-10 Horrendous Mouth, 10 Rotten Bandage, 10 Lantern, 10 Pumpkin Head#
 
 3009#Job Changes to Crusader - Murnak Myjol#SG_FEEL#QUE_NOIMAGE#
 "I can see you potential as a crusader. Meet with ^0000FFMurnak Myjol^000000. He is in the underground prison of Prontera Palace. Talk to him first."#
@@ -4222,28 +4210,6 @@ I think don't need to explain more.#
 Anori looks busy with something else. Let's help him later.#
 24 Hours later from complete this quest.#
 
-// 오현석------ Strange Hydra-------------------
-9028#Strange Hydra#SG_FEEL#QUE_NOIMAGE#
-Strange Hydra has appeared at ^8B4513Brasilis^000000. Use ^006400Hydra Ball^000000 which can get from Lucia, capture ^FF0000Strange Hydra^000000 safely.#
-Let's get ^006400변한 Hydra Ball^000000 ^FF0000Strange Hydra^000000를 잡아 !#
-
-9029#Strange Hydra: Current Status#SG_FEEL#QUE_NOIMAGE#
-Message of ^0000FFLucia^000000 in ^8B4513Brasilis^000000 : "^404040Thanks for your help. I'm sorry but, I can offer you a new ^006400Hydra Ball^404040 tomorrow.^000000"#
-If you want to do this ^FF0000Strange Hydra^000000 quest again, please go to ^0000FF루시아^000000 after 24 hours later.#
-
-//이범수
-9030#Find my dog#SG_FEEL#QUE_NOIMAGE#
-You have to send back the dogs in brasilis field to town.#
-#
-
-9031#Find my dog#SG_FEEL#QUE_NOIMAGE#
-You have to go back to Angelo after send back 3 dogs.#
-#
-
-9032#Find my dog#SG_FEEL#QUE_NOIMAGE#
-Now it looks fine. Let's go to find them again after 24 hours.#
-#
-
 //========Brasilis============
 2192#Guarana Quest#SG_FEEL#QUE_NOIMAGE#
 Candy maker says go to museum and learn about Guarana Fruit from Cherto, if you want to taste Guarana candy.#
@@ -4556,3 +4522,1380 @@ Bring 3 ^800080[Mystic Vials]^000000 for Magic Merchant.#
 9135#Geffen Magic Shop: Present#SG_FEEL#QUE_NOIMAGE#
 Bring 3 ^800080[Mystic Vials]^000000 for Magic Merchant.#
 I have completed helping Geffen Magic Merchant for today. Need to wait till 20 hours have passed.#
+
+//--------- renewal ----------------
+// 아루나펠츠를 위하여
+2129#For Arunafeltz #SG_FEEL#QUE_NOIMAGE#
+A merchant who comes from a foreign country feels pain because of a drink that is sold by a merchant showing up around Oasis.#
+Find a merchant selling drink around Oasis#
+
+2130#For Arunafeltz #SG_FEEL#QUE_NOIMAGE#
+You got a well known drink and decided to go back to a merchant met at first.#
+Conversation with foreign merchant.#
+
+2131#For Arunafeltz#SG_FEEL#QUE_NOIMAGE#
+You got a Jed's telegram from a foreign merchant.#
+Conversation with a Jed pontiff of Rahel.#
+
+2132#For Arunafeltz#SG_FEEL#QUE_NOIMAGE#
+Jed said he needs a Niren's help to borrow a power of a pope.#
+Conversation with Niren pontiff.#
+
+2133#For Arunafeltz#SG_FEEL#QUE_NOIMAGE#
+Niren shows his distrust against pontiffs with strong attitude.#
+Go back to Jed#
+
+2134#For Arunafeltz#SG_FEEL#QUE_NOIMAGE#
+You got a letter for Niren from Jed.#
+Delivery a Jed's letter to Niren#
+
+2135#For Arunafeltz#SG_FEEL#QUE_NOIMAGE#
+Niren demands to meet a pope and dig an information about a newly-appointed official carefully.#
+Conversation with a pope#
+
+2136#For Arunafeltz#SG_FEEL#QUE_NOIMAGE#
+The pope who have not seen over the long haul was afflicted at newly-appointed officials caring the pope can't see their family for a long time.#
+Go back to Niren.#
+
+2137#For Arunafeltz#SG_FEEL#QUE_NOIMAGE#
+Niren hands over documents and ask for giving it to Ismael who lives in a north native village.#
+Conversation with Ismael#
+
+2138#For Arunafeltz#SG_FEEL#QUE_NOIMAGE#
+Ismael said he loses writing instruments and needs some materials to make that again.#
+Sadonix 1#
+
+2139#For Arunafeltz#SG_FEEL#QUE_NOIMAGE#
+You got a document that includes a fake paper of vacation from Ismael.#
+Go back to Niren#
+
+2140#For Arunafeltz#SG_FEEL#QUE_NOIMAGE#
+Niren said all ready is completed and you come to a sky garden where the pope is in with Jed.#
+After talking with Jed, move to a sky garden#
+
+2141#For Arunafeltz#SG_FEEL#QUE_NOIMAGE#
+The pope shows an aspect as a mature pope of a religious nation by riding of a mask for a young monarch. And he promises to tie into acting for a peace of Arunapeltz.#
+Conversation with Niren#
+
+2142#For Arunafeltz#SG_FEEL#QUE_NOIMAGE#
+Niren promises reflect on his silence caring the pope with Jed.#
+Conversation with Jed#
+
+
+
+2187#Archbi shop job changing quest#SG_FEEL#QUE_NOIMAGE#
+A minister of Prontera church meet Dayan prist in Umbalra and say "I come here for a pilgrimage to the Holy Land" with loud voice.#
+Conversation with dayan prist in Umbalra#
+
+2188#Archbi shop job changing quest#SG_FEEL#QUE_NOIMAGE#
+Dayan prist say that you have to have a mass in a spring of Yggdrasilberry's branch. You can get a information about a mass through conversation with prist.#
+After having a mass in a spring of Hubergelmir, conversation with Dayan prist#
+
+2189#Archbi shop job changing quest#SG_FEEL#QUE_NOIMAGE#
+Dayan prist said that let you meet Vinue nun in huige.#
+Conversation with Vinue nun in huigel nun#
+
+2190#Archbi shop job changing quest#SG_FEEL#QUE_NOIMAGE#
+You decide to investgate about Valkyrie in Odin shrine for Vinue nun.#
+Investgation of Odin shrine#
+
+2191#Archbi shop job changing quest#SG_FEEL#QUE_NOIMAGE#
+Guarding Valkyrie, you have to collect horn pipes.#
+#
+
+
+////==============변경 되는 부분이므로 client_edit 파일과 재확인해볼것!! =======================
+
+3006#Job changes to Crewsaider - requirement#SG_FEEL#QUE_NOIMAGE#
+"We have to check your will and effort that can be a Crewsaider. ^3355FFyou have to get ^000000a rotten bandage, a lantern."#
+rotten bandage 10, lantern 10#
+
+3007#Job changes to Crewsaider - requirement#SG_FEEL#QUE_NOIMAGE#
+"We have to check your will and effort that can be a Crewsaider. ^3355FFyou have to get ^000000a rotten bandage, a lantern."#
+rotten bandage 10, lantern 10#
+
+3008#Job changes to Crewsaider - requirement#SG_FEEL#QUE_NOIMAGE#
+"We have to check your will and effort that can be a Crewsaider. ^3355FFyou have to get ^000000a rotten bandage, a lantern."#
+rotten bandage 10, lantern 10#
+
+////==========================================================================변경끝==============
+
+
+3200#Job changes to Rune knight - Recommendation for Rune knight#SG_FEEL#QUE_NOIMAGE#
+You are recommanded to become a Rune knight from Manuel who called as Rune knight of hui by himself. He suggest that you'd better go to Rune knight in exit of Glast heim for changing job.#
+  #
+
+3201#Job changes to Rune knight - Secret rendezvous of Rune knigh#SG_FEEL#QUE_NOIMAGE#
+The secret rendezvous is inside of Glast heim Knights. you have to find a staff who welcomes you in front of a secret rendezvous's entrance.#
+  #
+
+3202#Job changes to Rune knight - The first test#SG_FEEL#QUE_NOIMAGE#
+The captain of Rune knight's rendezvous,Teaglease,allows the test of changing job to Rune knight and let Rune knight Runaria who manage the first test prepare a test.#
+  #
+
+3203#Job changes to Rune knight - The first test#SG_FEEL#QUE_NOIMAGE#
+Runaria,the Rune knight of space-time,directs to move an examination room and finish all enemy you can see off as a first test.#
+  #
+
+3204#Job changes to Rune knight - Pass the first test#SG_FEEL#QUE_NOIMAGE#
+Runaria,the Rune knight of space-time,recognizes your success of first test and directs to go back to captain Teaglease for progressing next test.#
+  #
+
+3205#Job changes to Rune knight - The second test#SG_FEEL#QUE_NOIMAGE#
+Captain Teaglease let you prepare the second test and directs to continue progressing the test with Rune knight Renoa.#
+  #
+
+3206#Job changes to Rune knight - The second test#SG_FEEL#QUE_NOIMAGE#
+Runaria,the Rune knight of space-time, directs to go to a study for taking a test ^0000FFRune and Rune knight^000000 , ^0000FFprincipal and a class of Rune^000000, ^0000FFproducuction and using of Rune stone and^000000 and read whole books.#
+  #
+
+3207#Job changes to Rune knight - The second test#SG_FEEL#QUE_NOIMAGE#
+Runaria,the Rune knight of space-time,directs to meet a wise man Serpione who is a master of all Rune knight and an assistant of Rune knight that create Rune magic.#
+  #
+
+3208#Job changes to Rune knight - The second test#SG_FEEL#QUE_NOIMAGE#
+A wise man Serpione cast spells to accumulate magic energy in body of external creatures as a preparatory stage of using a Rune magic. Let's accumulate magic energy from hunting allotted monsters.#
+ #
+
+3209#Job changes to Rune knight - Accumulation of magic energy1#SG_FEEL#QUE_NOIMAGE#
+Let's accumulate magic energy from hunting allotted monsters.#
+  ^0000FFDullahan 10^000000 remove#
+
+3210#Job changes to Rune knight - Accumulation of magic energy2#SG_FEEL#QUE_NOIMAGE#
+Let's accumulate magic energy from hunting allotted monsters.#
+  ^0000FFDisguise 10^000000 remove#
+
+3211#Job changes to Rune knight - Accumulation of magic energy3#SG_FEEL#QUE_NOIMAGE#
+Let's accumulate magic energy from hunting allotted monsters.#
+  ^0000FFquve 10^000000 remove#
+
+3212#Job changes to Rune knight - Accumulation of magic energy4#SG_FEEL#QUE_NOIMAGE#
+Let's accumulate magic energy from hunting allotted monsters.#
+  ^0000FFHylozoist 10^000000 remove#
+
+
+3213#Job changes to Rune knight - The second test#SG_FEEL#QUE_NOIMAGE#
+Now you finished whole thing that directed by a wise man Serpeone. let's go back to Rune knight Renoa.#
+ #
+
+3214#Job changes to Rune knight - The second test#SG_FEEL#QUE_NOIMAGE#
+Then, let's make a Rune stone using a Rune heater in behind of Rune kight Renoa as you read a book. you have to make 20 Rune stones.#
+ #
+
+3215#Job changes to Rune knight - Pass the second test#SG_FEEL#QUE_NOIMAGE#
+You passed the second test. Go back to captain Teaglease and wait his direction.#
+ #
+
+3216#Job changes to Rune knight - The final test#SG_FEEL#QUE_NOIMAGE#
+You have to take a test from Berpino who is Rune kight of a pitch-dark.#
+ #
+
+3217#Job changes to Rune knight - The final test#SG_FEEL#QUE_NOIMAGE#
+Berpino,rune kight of a pitch-dark,says that if you remove 3 of monsters as using only Rune stone in an examination room, you will success in the test.#
+ #
+
+3218#Job changes to Rune knight - Pass the final test#SG_FEEL#QUE_NOIMAGE#
+You remove 3 of monsters and pass the final test. inform to Berpino who is Rune kight of a pitch-dark.#
+ #
+
+3219#Job changes to Rune knight - The end of all tes#SG_FEEL#QUE_NOIMAGE#
+Finally, all test are finished.  the thing remained is only changing job to Rune knight as going back to captain Teaglease.#
+ #
+
+3220#Job changes to Rune knight - Waiting time of test#SG_FEEL#QUE_NOIMAGE#
+A cadet entering an examination room once can't enter an examination room for 10 min. After 10 min, try to enter again.#
+  #
+
+3250#Request - Is this bandage for what?#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should remove 30 more mummys in pyramid and get 20 more rotten bandages.#
+  ^0000FFmummy 30^000000 remove,^0000FFrotten bandage 20^000000 collect#
+
+3251#Request - An alligator of Counterattack#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should remove 30 more alligators in a swamp of komodo village.#
+  ^0000FFalligator 30^000000 remove#
+
+3252#Request - My mermaid don't do like this way!#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should remove 30 more mermans in dungeon of Izrude.#
+  ^0000FFmerman 30^000000 remove#
+
+3253#Request - Missing occult mania#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should rescue a missing boy in the first floor of geffen dungeon.#
+#
+
+3265#Request - Missing occult mania#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You found a missing boy in the first floor of geffen dungeon, so go back to a place taking request for reporting.#
+#
+
+3254#Request - A country wants you#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should collect 10 more fine sand and 30 of grits.#
+ ^0000FFfine sand 10, grit 30^000000 collect#
+
+3255#Request - A wild boar subjugate operation#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should remove 30 more savages in field of payon.#
+ ^0000FFsavage 30^000000 remove#
+
+3256#Request - Ready for waiting summer#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should collect 30 more sticky webfoots from tharafrog.#
+ ^0000FFsticky webfoot 30^000000 collect#
+
+3257#Request - A grudge of women#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should remove 30 more sohee in payon dungeon.#
+ ^0000FFsohee 30^000000 remove#
+
+3258#Request - A material of delicacy#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should collect 40 more great leafs. It can be collected easily in leafcat of ayothaya dungeon.#
+ ^0000FFgreat leaf 40^000000 collect#
+
+3259#Request - A agony of a doll maste#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should remove 30 more marionettes in geffen dungeon and a wreck and collect 30 more golden hair.#
+  ^0000FFmarionette 30^000000 remove,^0000FFgolden hair 30^000000 collect#
+
+3260#Request - Tiresome flies#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should remove 30 more hunter flies in geffen dungeon.#
+ ^0000FFhunter fly 30^000000 remove#
+
+3261#Request - Unclean girl#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should remove 30 more munaks in payon dungeon.#
+ ^0000FFmunak 30^000000 remove#
+
+3262#Request - Queer hobby#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should collect 40 more blossom of maneaters. It can be collected easily in flora of southern komodo.#
+ ^0000FFblossom of maneater 40^000000 collect#
+
+3263#Request - A mallet of goblin#SG_FEEL#QUE_NOIMAGE#
+A request from a place taking request. You should remove 30 more dokkaebi horns and wooden blocks. It can be collected from dokkaebi and greatest general in payon dungeon.#
+ ^0000FFdokkaebi horn 30, wooden block 3^000000 collect#
+
+//--- Guillotine cross job changing quest
+7091#An advice of Diora 01#SG_FEEL#QUE_NOIMAGE#
+You'd better try to do legwork. I can pick Madele in a wine shop, Trovan in a squad of patrolmen, Crave in a middleman up as peaple are quick in visual learning, and they will be helpful. Crave will be in a tool shop.#
+#
+
+7092#An advice of Diora 02#SG_FEEL#QUE_NOIMAGE#
+then you have to find a helper. there is a girl who named Melissa in a place can see a street of village. Melissa has a very specail gift. she will be helpful.#
+#
+
+7093#An advice of Diora 03#SG_FEEL#QUE_NOIMAGE#
+You can see an alley to go north when you go east of village. That's maybe a blind alley that Melissa said. find her around that alley.#
+#
+
+7094#An advice of Diora 04#SG_FEEL#QUE_NOIMAGE#
+If you want to kow about that key, see to an artisan of key in Rahel. An artisan of key is famous so that one of villagers know about that artisan.#
+#
+
+7095#An advice of Diora 05#SG_FEEL#QUE_NOIMAGE#
+I'm sure that a villa will be around Veins. that is a field located in northwest of Veins and there is a ravine directed to northeast. maybe that will be a way you want.#
+#
+
+7096#A proof of new requirement#SG_FEEL#QUE_NOIMAGE#
+A certificate of qualification for being a guillotine cross acknowledged by Mayscell. A class of coping with a task 'A'#
+Show it to Bercasell#
+
+7097#A proof of new requirement#SG_FEEL#QUE_NOIMAGE#
+A certificate of qualification for being a guillotine cross acknowledged by Mayscell. A class of coping with a task 'B'#
+Show it to Bercasell#
+
+7098#A proof of new requirement#SG_FEEL#QUE_NOIMAGE#
+A certificate of qualification for being a guillotine cross acknowledged by Mayscell. A class of coping with a task 'C'#
+Show it to Bercasell#
+
+7099#A proof of new requirement#SG_FEEL#QUE_NOIMAGE#
+A certificate of qualification for being a guillotine cross acknowledged by Mayscell. A class of coping with a task 'S'#
+Show it to Bercasell#
+
+7100#A message of Bercascell#SG_FEEL#QUE_NOIMAGE#
+It's trival but we'll offer this equipment belonged to a guild. Don't forget to get it later.... but I'm not sure when it'll be ready... I'll give you . don't forget.#
+sometines meet Bercascell.#
+
+7101#Special task of an assassin guild  1#SG_FEEL#QUE_NOIMAGE#
+You start to do a task solicited by Arcat who met at an underground pub where is a branch of morroc assassin guild. #
+Visiting a branch of Veins assassin guild#
+
+7102#Special task of an assassin guild  2#SG_FEEL#QUE_NOIMAGE#
+You meet Diora for finding a branch of Veins assassin guild. If you want to start to do a task, You have to meet Mayscell in the room of inside alley.#
+Conversation with Mayscell#
+
+7103#Special task of an assassin guild  3#SG_FEEL#QUE_NOIMAGE#
+Finally, It's start to do a special task of assassin guild. To find a foreigner from Veins is ths first task.#
+#
+
+7104#Special task of an assassin guild  4#SG_FEEL#QUE_NOIMAGE#
+You got a information of Estillda from Melissa. she said that Estillda will pass by a blind alley a hour later.#
+Encounter Estillda#
+
+7105#Special task of an assassin guild  4#SG_FEEL#QUE_NOIMAGE#
+You miss Estillda. but she will be back here again, you'd better wait for a while and come back. It'll be fine to wait for 10 min.#
+Encounter Estillda# 
+
+7106#Special task of an assassin guild  5#SG_FEEL#QUE_NOIMAGE#
+You meet Estillda. you maybe get a lot of information from Estillda... now she is in a pub of Veins.#
+#
+
+7107#Special task of an assassin guild  6#SG_FEEL#QUE_NOIMAGE#
+You got a information about a man wearing black clothes from Estillda. You are supposed to meet her in the basement storage after 3 hours later.#
+#
+
+7108#Special task of an assassin guild  7#SG_FEEL#QUE_NOIMAGE#
+You got a key with a splendid pattern from an adulterer of Dandelion. When you trace a key, you can see a real target.#
+Find the identity of key out#
+
+7109#Special task of an assassin guild  8#SG_FEEL#QUE_NOIMAGE#
+The key is for a villa of a newly-appointed official in Veins. they said when you go to the villa, you can meet a helper of guild who is waiting.#
+#
+
+7110#Special task of an assassin guild  9#SG_FEEL#QUE_NOIMAGE#
+Renjark said the final target is in this mansion.  Be prompt to sneak into this mansion and reove a target.#
+Remove a newly-appointed official who is disappeared.#
+
+7111#Special task of an assassin guild  10#SG_FEEL#QUE_NOIMAGE#
+You complete your task as removing the final target of guild. Go back to a branch and report.#
+#
+
+7112#Information of Madelle#SG_FEEL#QUE_NOIMAGE#
+One late night, a man look like totally exausted camen in here and buy something to eat. he looks like a newly-appointed official and It was first time to see him.#
+#
+
+7113#Information of Crave#SG_FEEL#QUE_NOIMAGE#
+There is a girl who buy the necessities of life regularly, but nobody knows her address. who is she?#
+#
+
+7114#Information of Trovan#SG_FEEL#QUE_NOIMAGE#
+In these days, there is one guy who bring a lot of stuff, but we don't know who he is. he is not a guest in a hotel, so we keep an eyes on him.#
+#
+
+7115#Information of a peddler#SG_FEEL#QUE_NOIMAGE#
+There is a girl who buy fresh and expensive thing to eat every single day improperly and her place of residence is not clear.#
+#
+
+7116#Information of a old man#SG_FEEL#QUE_NOIMAGE#
+I saw a girl who buy the necessities of life a little,but I don't know who she is. um...I see often her in these days.. moved here..?#
+#
+
+//-----------2009 A training place for novice
+7117#The first step to Ragnarok#SG_FEEL#QUE_NOIMAGE#
+When you cross the bridge, you can see a castle where is used as a training place. I'll wait for you in that place, come to that castle by yourself.#
+Conversation with spraki who is in a training place#
+
+7118#A training place for novice - 1#SG_FEEL#QUE_NOIMAGE#
+It must get down to start a course of training. Brade,an instructor of a training place, will introduce a next step.#
+Conversation with Brade#
+
+7119#A training place for novice - 2#SG_FEEL#QUE_NOIMAGE#
+You got equipments from Brade. Brade let you wear all equipments given by Brade.#
+Put your equipments on.#
+
+7120#A training place for novice - 3#SG_FEEL#QUE_NOIMAGE#
+In this room, ^4d4dffJinha^000000is in here. find Jinha ^4d4dff[first aid]^000000is the skill you should learn.#
+Learn about first aid#
+
+7121#A training place for novice - 4#SG_FEEL#QUE_NOIMAGE#
+In the city and village, there are a lot of people, and also you can find people who are helpful to you. see, let's listen to their talking about their part.#
+Conversation with kafra, zonda, a soldier guides#
+
+7122#First battle -hunt poring#SG_FEEL#QUE_NOIMAGE#
+It's an actual battle. can you hunt poring?#
+Hunting 1 poring#
+
+7123#The basic of battle -1#SG_FEEL#QUE_NOIMAGE#
+Can you remove 2 of picky? Use 'bash' skill in a manual for swordman. picky is not a easy enemy, and you can move to place where picky show up through pman.#
+Remove 2 of picky#
+
+7124#The basic of battle -2#SG_FEEL#QUE_NOIMAGE#
+Can you remove lunartic using bolt magic? Use 'firebolt' skill in a manual for magician.#
+Remove 5 of lunartic#
+
+7125#not used#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+7126#My special skill#SG_FEEL#QUE_NOIMAGE#
+Reselling items to merchant with high price, ^5d5dff 300 zeny^000000should be made. Use 'over charge' and 'discount' skill in a manual for merchant.#
+making 300zeny#
+
+7127#The basic of battle -3#SG_FEEL#QUE_NOIMAGE#
+Can you remove 5 of wilow? If you put a manual for shif, you can use 'double attack' skill. you can move to place where wilow show up through [pman].#
+Remove 5 of wilow#
+
+
+//-------- Paradise team supporting equipments quest
+
+7128#Training course 'conquest a desert!' -start#SG_FEEL#QUE_NOIMAGE#
+You attend training for novice of paradise team. The destination is center of southeast Oasis in moroc. you should meet a talking dog in Sograt.#
+Conversation with a big tailkin dog#
+
+7129#The training course 'conquer a desert!' - A real battle1#SG_FEEL#QUE_NOIMAGE#
+Above all, let's clean out that a baldhead bird flying. then people can use this desert. go and remove 10 more condors.#
+Remove 10 of condors#
+
+7130#The training course 'conquer a desert!' - A real battle2#SG_FEEL#QUE_NOIMAGE#
+This trainig is for removing babies of wolf that will bite person's head when they grow up! go and remove 10 more babies of wolf!#
+Remove 10 of desert wolf babies#
+
+7131#The training course 'conquer a desert!' - A real battle3#SG_FEEL#QUE_NOIMAGE#
+You are going to remove scorpion that sting a person passing by in sand ! this training will be last battle so you just kill only 5 scorpions.#
+Go win against 5 of scorpions.#
+
+7132#The training course 'conquer a desert!' - Complete a quest#SG_FEEL#QUE_NOIMAGE#
+You completed all task given by a talking dog. You completed all task given by a talking dog. go back and report to a paradise team office.#
+Report to Boya of a paradise team office#
+
+7133#The training course 'conquer a culvert!' - Start#SG_FEEL#QUE_NOIMAGE#
+You attend a traning for novice paradise team. the destination is a culvert. first of all, go to the Knights of prontera and sigh up a punitive force for a culvert. when you arrive at a culvert, you are supposed to find a cat.#
+Conversation with a cat standing on 2 feet.#
+
+7134#The training course 'conquer a culvert!' - A real battle1#SG_FEEL#QUE_NOIMAGE#
+You are here for a battle training! remove that thief bugs! more than 10 !#
+Remove 10 of the thief bugs#
+
+7135#The training course 'conquer a culvert!' - A real battle2#SG_FEEL#QUE_NOIMAGE#
+Remove tarou that is a symbol of dirty and make a clean place here...other members need tarou for hunting. so remove only 10 of tarous.#
+Remove 10 of tarous#
+
+7136#The training course 'conquer a culvert!' - A real battle3#SG_FEEL#QUE_NOIMAGE#
+As they are growing you can see more dreadful thing. for this time, let's remove farmiliar for hunting before you meet dreadful thing. farmiliar id doing an evil deed like bite first, so you can have only 5 times to fight.#
+Fighting with 5 of farmiliar. go win.#
+
+7137#The training course 'conquer a culvert!' - Complete a quest#SG_FEEL#QUE_NOIMAGE#
+You complete a tsk given by a timid cat. go back and report to a paradise team office.#
+Report to Boya of a paradise team office#
+
+7138#The training course 'conquer a haunted cave!' - Start#SG_FEEL#QUE_NOIMAGE#
+You attend a traning for no0vice paradise team. the destination is a cave in the archer village on north of payon. You are supposed to meet a delegation of paradise team around an entrance.#
+Conversation with Sanho belonged to a paradise team#
+
+7139#The training course 'conquer a haunted cave!' - A real battle1#SG_FEEL#QUE_NOIMAGE#
+Let's conquer this haunted cave. Remove a skeleton moving inside. We call a skeleton the moving thing.Let's remove 15 of skeletons.#
+Remove 15 of skeletons#
+
+7140#The training course 'conquer a haunted cave!' - A real battle2#SG_FEEL#QUE_NOIMAGE#
+The next step is poporing, you couls see this one when you were removing a skeleton.also, you witness that something green run away with a trophy...and it will be last thing to do in payon dungeon.#
+Remove 10 of poporings.#
+
+7141#The training course 'conquer a haunted cave!' - Complete a quest#SG_FEEL#QUE_NOIMAGE#
+You completed all task given by Sanho. go back and report to a paradise team office.#
+Report to Boya of a paradise team office#
+
+7142#The training course 'conquer an ant hell!' - Start#SG_FEEL#QUE_NOIMAGE#
+You attend a traning for novice paradise team. the destination is an ant hell located in north of Sandarman fortress.. You have to find a man who will send you to Sandarman fortress in south of moroc. You are supposed to meet a delegation of paradise team when you enter an ant hell.#
+Conversation with Clode in an ant hell#
+
+7143#The training course 'conquer an ant hell!' - A real battle1#SG_FEEL#QUE_NOIMAGE#
+There are a lot of ant crowding in here. ok, remove 15 of 'pierre' worker ants that is weakest ant. be careful cause they attack to you together.#
+Remove 15 of pierre.#
+
+7144#The training course 'conquer an ant hell!' - A real battle2#SG_FEEL#QUE_NOIMAGE#
+The second target is Andre, is stronger than Pierre. If you can not see properly, It's fine to go the second floor. for sure, you have to be careful against Maya.#
+Remove 15 of Andre#
+
+7145#The training course 'conquer an ant hell!' - A real battle3#SG_FEEL#QUE_NOIMAGE#
+The next target is... vitata as you expect ! If you remove vitata caring an egg of ant, nobody get threatened in an ant hell. let's remove 10 of vitata.#
+Remove 10 of vitata#
+
+7146#The training course 'conquer an ant hell!' - Complete a quest#SG_FEEL#QUE_NOIMAGE#
+You complete a tsk given by Clode. go back and report to a paradise team office.#
+Report to Boya of a paradise team office#
+
+7147#The training course 'conquer a orc village!' - start#SG_FEEL#QUE_NOIMAGE#
+You attend a traning for novice paradise team. the destination is an orc village. there will be a delegation in a building opening with kafra. You can move easily through kafra service in geffen or prontera..#
+Meet Huksha woh is a member of paradise team.#
+
+7148#The training course 'conquer a orc village!' - A real battle1#SG_FEEL#QUE_NOIMAGE#
+Let's remove orc warrior that can be threatening.you don have to have a sympathy because it's just orc.maybe.#
+Remove 10 of orc babies#
+
+7149#The training course 'conquer a orc village!' - A real battle2#SG_FEEL#QUE_NOIMAGE#
+The next enemy is an orc warrior. an orc baby become an orc warrior as growing up. let's remove 10 of orc warriors.#
+Remove 10 of orc warriors#
+
+7150#The training course 'conquer a orc village!' - A real battle3#SG_FEEL#QUE_NOIMAGE#
+You want to conquer an orc village, you have to eliminate a birth of an orc. the next target is an orc lady. but you don't have to have a right to destroy completely an orc, you just remove 10 of orc ladies.#
+Remove 10 of orc ladies#
+
+7151#The training course 'conquer a orc village!' - Complete a quest#SG_FEEL#QUE_NOIMAGE#
+You completed all task given by Huksha. go back and report to a paradise team office.#
+Report to Boya of a paradise team office#
+
+7152#bThe training course 'conquer a orc dungeon!' - start#SG_FEEL#QUE_NOIMAGE#
+You attend a traning for novice paradise team. the destination is an orc village. there will be a delegation in a building opening with kafra. You can move easily through kafra service in geffen or prontera..#
+Conversation with Huksha who is a member of paradise team.#
+
+7153#The training course 'conquer a orc dungeon!' - A real battle1#SG_FEEL#QUE_NOIMAGE#
+In underground Undead show up often, we're going to watch your ability of living to counter Undead. do you mind remove 20 of orc zombie in underground?#
+Remove 20 of orc zombies#
+
+7154#The training course 'conquer a orc dungeon!'- A real battle2#SG_FEEL#QUE_NOIMAGE#
+The next target is an orc skeleton poping up with orc zombies. can you remove 20 of orc zombies?#
+Remove 20 of orc skeletons#
+
+7155#The training course 'conquer a orc dungeon!' - complete a quest#SG_FEEL#QUE_NOIMAGE#
+You completed all task given by Huksha. go back and report to a paradise team office.#
+Report to Boya of a paradise team office#
+
+7156#The training course 'conquer an undersea city!' - start#SG_FEEL#QUE_NOIMAGE#
+You attend a traning for novice paradise team. the destination is the lowermost story of an undersea cave in Baiaran island. you can go there taking a boat in Izrude harbor.#
+Conversation with Callandiba who is a member of paradise team#
+
+7157#The training course 'conquer an undersea city!' - A real battle1#SG_FEEL#QUE_NOIMAGE#
+Can you see a merman who grabing a lance? his name is Merman, he is very skillful soldier. here we go, win against 15 of Mermans.#
+Win against 15 of Mermans.#
+
+7158#The training course 'conquer an undersea city!' - A real battle2#SG_FEEL#QUE_NOIMAGE#
+The next target is wizard strouf who grabing a lane and a bubble with his trace.! It's a real battle of wizard! go find and fight with strouf in 10 times!#
+Go find and fight with strouf in 10 times#
+
+7159#The training course 'conquer an undersea city!' - Complete a quest#SG_FEEL#QUE_NOIMAGE#
+You completed all task given by Callandiba. go back and report to a paradise team office.#
+Report to Boya of a paradise team office#
+
+
+
+// Ranger job changing quest (3-1_ranger.sc)
+
+8254#with a light heart and body#SG_FEEL#QUE_NOIMAGE#
+Before you chang you job, you should check to your ability that reach a ultimate stage. Is it possible because of your item? to watch that fact, I'm going to evaluate your ability~#
+Make youe weight '0' and then go to Resque in a turtle island#
+
+8255#The test of power for existence#SG_FEEL#QUE_NOIMAGE#
+If you pass this exam for testing your power of existence, you could get a qualification to take a practical technique test~" I'm going to tell you a detail story after you get a qualification to take a practical technique test~ If you want to feel like having a test , then talk to me again.#
+Talk with Resque in a turtle island#
+
+8256#The test of power for existence#SG_FEEL#QUE_NOIMAGE#
+With the item given, ^0000ffin direction of 11 o'clock, there is a place for taking a practical technique test and finding there^000000is all of the test of power for existence~ You have to be careful because you don't have equipments~#
+Go to a place for taking a practical technique test in direction of 11 o'clock#
+
+8257#Providing food of Teardrop#SG_FEEL#QUE_NOIMAGE#
+The basic method for living is needed a strong body ,and also a power for living to provide food. In this a turtle island, Go get one ^0000ffdragontail^000000, and get one dragon fly wing^000000now.#
+Get one dragontail and one dragon fly wing and then see to Teardrop in a turtle island#
+
+8258#Providing food of Teardrop#SG_FEEL#QUE_NOIMAGE#
+Good, now you are qualified for taking a practical technique test. ok, Can you hand over that a dragon fly wing to me? Did you hear that  A loaf of bread is better than the song of many birds?#
+Talk with Teardrop in a turtle island#
+
+8259#to a place for taking a practical technique test#SG_FEEL#QUE_NOIMAGE#
+the test is composed of 3 parts. when you enter an examination room, there will be a member for preparing. then you enter a room that is made by a member by preparing, and wait. The test will be progressed in one a one time. so you'll be waiting, I'll wish your luck, see you soon when you become a Ranger.#
+You enter an examination room through Teardrop of a turtle island, you take 3 tests#
+
+8260#Mission! Documents delivery#SG_FEEL#QUE_NOIMAGE#
+You have to deliver this dociment to Coution directer. he doen't take this document when I deliver..#
+Taking the 2nd practical technique test, you hand over this document toy Coution directer#
+
+8261#When you play the flute,then the wolf show up!#SG_FEEL#QUE_NOIMAGE#
+The 3rd test is for testing a skill to use a wolf that will be learned when you became a Rangeryeah-yo! take this a pipe for summon a wolf, and talk to me after you summon a wolf.yo!#
+After you summon a wolf, talk with Prize who is a directer of the 3rd practical technique test#
+
+8262#Ranger master never again#SG_FEEL#QUE_NOIMAGE#
+Congratulation! you passed all rough practical technique test! you have enough rough experience. before you change a job, ^0000ffrevoke a Palcon^000000,and ^0000ffdid you click your job skill?^000000 check it out.#
+Revoke a Placon, check all job skill is clicked, and talk with neveragain#
+
+
+// 2009 hacshield reward event (09hack_sorry.sc)
+
+8265#One time a one hour!#SG_FEEL#QUE_NOIMAGE#
+Overdo a game will be harmful ! #
+you can't game with Yohean in a one hour.#
+
+
+// 26 ~ 40 Level tutorial quest
+
+8266#Hunting poison spore!#SG_FEEL#QUE_NOIMAGE#
+Hunt 10 of poison spores and when you complete, find Sponiac in geffen. The location of poison spore : The 1st floor in geffen dungeon, The field in northeast geffen, The 3rd floor in a culvert, The 1st floor in a wreck etc.#
+Hunt 10 of poison spores!#
+
+8267#Hunting smokie!#SG_FEEL#QUE_NOIMAGE#
+Hunt 10 of smokies,and when you complete your task, go find to Sponiac in geffen. The location of smokie : the field in northeast geffen, The field in northwest geffen, The field in east of Ayotaya etc.#
+Hunt 10 of smokies!#
+
+8268#Hunt elder wilow!#SG_FEEL#QUE_NOIMAGE#
+Hunt 10 of elder wilow, nd when you complete your task, go find to Sponiac in geffen. The location of elder wilow  : the field in north of northeast geffen, The field in easteast payon, The field in southsouthwestwest of prontera etc.#
+Hunt 10 of elder wilow!#
+
+8269#Hunt coco!#SG_FEEL#QUE_NOIMAGE#
+Hunt 10 of coco, and when you complete your task, go find to Sponiac in geffen. The location of coco : the field in easteast payon, The field in southsouthwestwest of prontera, The field in east Ayotaya etc.#
+Hunt 10 of coco!#
+
+8270#Hunt tharafrog!#SG_FEEL#QUE_NOIMAGE#
+Hunt 10 of tharafrog, and when you complete your task, go find to Sponiac in geffen. The location of tharafrog  : The Mao cave in east komodo, the field of a turtle island etc.#
+Hunt 10 of tharafrog!#
+
+8271#Toxic sprays delivery!#SG_FEEL#QUE_NOIMAGE#
+You take a stuff from Daisin man in moroc pyramid, and then deliver it to a zoologist in the field eastnorth payon.#
+Deliver toxic sprays!#
+
+8272#Deliver a honey!#SG_FEEL#QUE_NOIMAGE#
+You take a stuff from Daisin man in moroc pyramid, deliver a honey to an entomologist in the west field of Saint Capitolina abbey and the eastnortheast field of prontera.#
+Deliver a honey!#
+
+8273#Deliver a  blanket!#SG_FEEL#QUE_NOIMAGE#
+You take a stuff from Daisin man in moroc pyramid, and then deliver it to a biologist in the south field of Rutie.#
+Deliver a  blanket!#
+
+8274#Collect bones!#SG_FEEL#QUE_NOIMAGE#
+Deliver '10 bones' collected to Dasa in payon. a bones drop monster : skeleton / the location of monster : the 1st floor in payon dungeon etc#
+Collect '10 bones', and deliver to Dasa in payon#
+
+8275#Collect feet!#SG_FEEL#QUE_NOIMAGE#
+Collect '10 feet' and '5 animal skins', and deliver to Dasa in payon. A bear and animal skin drop monster : Big foot / the location of monster : the northnorth field in geffen, the eastsouth field of payon etc#
+Collect '10 feet of bear' and '5 animal skins', and deliver to Dasa in payon#
+
+8276#Collect scell!#SG_FEEL#QUE_NOIMAGE#
+Collect '20 scell' and '20 Garlet', and deliver to Dasa in payon. scell, garlet drop monster : Pierre, Andre, Deniro etc / the location of monster : the 1st floor, 2nd floor in an ant hell dungeon etc#
+Collect '20 scell' and '20 Garlet', and deliver to Dasa in payon#
+
+8277#Collect tails!#SG_FEEL#QUE_NOIMAGE#
+Collect '10 monkey tails', '10 acorns' and '10 leaf of raccoon' and then deliver to Dasa in payon. monkey tail drop monster : yoyo, acorn drop monster : coco, leaf of raccoon drop monster : smokie / the location of monster : the east field of Ayotaya etc#
+Collect '10 monkey tails', '10 acorns' and '10 leaf of raccoon' and then deliver to Dasa in payon#
+
+8278#Collect cookies!#SG_FEEL#QUE_NOIMAGE#
+Collect 5 well-baked cookies, 1 piece of cake and then deliver to Dasa in payon. well-baked cookie drop monster : cookie, piece of cake drop monster : Mistcase / the location of monster : the 1st,2nd floor in toy dungeon of Rutie etc#
+Collect 5 well-baked cookies, 1 piece of cake and then deliver to Dasa in payon#
+
+8279#Collect mustache!#SG_FEEL#QUE_NOIMAGE#
+Collect 5 mustache of a mole, 3 nail of a mole and then deliver to Dasa in payon. mustache of a mole, nail of a mole drop monster : Martin / the location of monster :the 1st,2nd floor of an abandoned mine etc#
+Collect 5 mustache of a mole, 3 nail of a mole and then deliver to Dasa in payon#
+
+
+//문상연
+//------------------------------Announce event No.1----------------------------------
+9024#An errand boy of Ainbroc#SG_FEEL#QUE_NOIMAGE#
+Help an errand who comes to prontera from Ainbroc for finding jellopy.#
+Collect 100 jellopy and go back to 'an errand'.#
+
+// 오현석------ strange mouse-------------------
+9028#strange mouse#SG_FEEL#QUE_NOIMAGE#
+Strange mouse shows up at ^8B4513Brasilis^000000. Using ^006400leaf cat ball^000000given by Lucia, handle a^FF0000strange mouse^000000.#
+Catch a^FF0000strange mouse^000000, and get a^006400leaf cat ball changed^000000!#
+
+9029#Strange mouse : present conditions#SG_FEEL#QUE_NOIMAGE#
+In ^8B4513Brasilis^000000, there is a message of^0000FFLucia^000000: "^404040thanks to your help.Unfortunately,I can supply new ^006400leaf cat ball^404040to you tomorrow.^000000"#
+If you remove a^FF0000strange mouse^000000 again, you should go to ^0000FFLucia^00000024hours later.#
+
+//이범수
+9030#Find a puppy#SG_FEEL#QUE_NOIMAGE#
+You have to send a puppy in a field back to a village.#
+#
+
+9031#Find a puppy#SG_FEEL#QUE_NOIMAGE#
+You send 3 puppies back , and you go back to Angelo in village .#
+#
+
+9032#Find a puppy#SG_FEEL#QUE_NOIMAGE#
+Now, It's ok. one day later, If puppies escape again, let's go to find again.#
+#
+
+
+10090#Job changes to Michenic#SG_FEEL#QUE_NOIMAGE#
+You heard a story about Michenic from Chainheart.#
+Keep listening to Chainheart.#
+
+10091#Job changes to Michenic#SG_FEEL#QUE_NOIMAGE#
+You heard a detail story about Michenic from Chainheart.#
+Keep talking with Chainheart.#
+
+10092#Job changes to Michenic#SG_FEEL#QUE_NOIMAGE#
+You heard a hint to be a Michenic from Chainheart.#
+Let's go to Uperos.#
+
+10093#Job changes to Michenic#SG_FEEL#QUE_NOIMAGE#
+You got a convenient facilities to go to Uperos.#
+Let's go to Uperos.#
+
+10094#Job changes to Michenic#SG_FEEL#QUE_NOIMAGE#
+You heard that memory story when a ghost fire was a human.#
+Go to a ghost fire of eastside, Listen to the other memory story.#
+
+10095#Job changes to Michenic#SG_FEEL#QUE_NOIMAGE#
+You heard that memory story when a ghost fire of westside was a human.#
+Go to a ghost fire of eastside, Listen to the other memory story.#
+
+10096#Job changes to Michenic#SG_FEEL#QUE_NOIMAGE#
+You heard a memory of story from all ghost fire.#
+Go to a place in front of a human sculpture in west.#
+
+10097#Job changes to Michenic#SG_FEEL#QUE_NOIMAGE#
+Instead of abstracted magical powers in front of a human sculpture in west, you get a knowledge.#
+Go find to a human sculpture in east pierced the door. #
+
+10098#Job changes to Michenic#SG_FEEL#QUE_NOIMAGE#
+Instead of abstracted magical powers in front of a human sculpture in east, you get a knowledge.#
+Go to a sunny spot.#
+
+10099#Job changes to Michenic#SG_FEEL#QUE_NOIMAGE#
+You heard a unidentified revelation.#
+Let's go to the scaffold southside.#
+
+10100#Job changes to Michenic#SG_FEEL#QUE_NOIMAGE#
+Instead of Michenic and Mado institute, you got a knowledge in the scaffold southside.#
+Let's think about getting out of here. Go back to a ghost fire of northside.#
+
+10101#Job changes to Michenic#SG_FEEL#QUE_NOIMAGE#
+The ghost fire who was a human before send you to Yuno.#
+Let's go to Chainheart who made you come here.#
+
+10102#To client - the chapter of the sphinx dungeon#SG_FEEL#QUE_NOIMAGE#
+You got a request on 71~85level requested board of paradise team.#
+Let's go to Meidi who is client in moroc.#
+
+10103#To client - the chapter of Glast heim#SG_FEEL#QUE_NOIMAGE#
+You got a request on 71~85level requested board of paradise team.#
+Let's go to Ancellian who is client in geffen.#
+
+10104#To client - the chapter of Yuno#SG_FEEL#QUE_NOIMAGE#
+You got a request on 71~85level requested board of paradise team.#
+Let's go to Jinbai who is client in Aldebalan.#
+
+10105#To client - the chapter of a clock tower#SG_FEEL#QUE_NOIMAGE#
+You got a request on 71~85level requested board of paradise team.#
+Let's go to Risingseter who is client in Aldebalan.#
+
+10106#To client - the chapter of localizing #SG_FEEL#QUE_NOIMAGE#
+You got a request on 71~85level requested board of paradise team.#
+Let's go to Penpi who is client in Aberta.#
+
+10107#A sphinx dungeon - Requiem#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Meidi#
+Remove 10 Requiem.#
+
+10108#A sphinx dungeon - Marduk#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Meidi.#
+Remove 10 Marduk.#
+
+10109#A sphinx dungeon - Pasana#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Meidi.#
+Remove 10 Pasana.#
+
+10110#Glast heim - Dark prame#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Ancellia.#
+Remove 10 Dark prame.#
+
+10111#Glast heim - Evil druid#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Ancellia.#
+Remove 10 Evil druid.#
+
+10112#Glast heim -Raith#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Ancellia.#
+Remove 10 Evil Raith.#
+
+10113#Glast heim -Radric archer#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Ancellia.#
+Remove 10 Radric archer.#
+
+10114#Yuno -Grand peko#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Jinbai.#
+Remove 20 Grand Peko.#
+
+10115#Yuno -slipper#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Jinbai.#
+Remove 20 sleeper.#
+
+10116#Yuno -Goat#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Jinbai.#
+Remove 20 goat.#
+
+10117#Yuno -Hapi#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Jinbai.#
+Remove 20 hapi.#
+
+10118#A clock tower -Clock#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Risingseter.#
+Remove 15 Clock.#
+
+10119#A clock tower - Punk#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Risingseter.#
+Remove 15 Punk.#
+
+10120#A clock tower - Rideword#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Risingseter.#
+Remove 15 Rideword.#
+
+10121#Localizing - Woojass#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Punpi#
+Remove 15 Uzhas.#
+
+10122#Localizing - Miyabe doll#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Punpi#
+Remove 15 Miyabe doll.#
+
+10123#Localizing - Incease soil#SG_FEEL#QUE_NOIMAGE#
+You got a request of removing monster from Punpi#
+Remove 15 increase soil.#
+
+
+11106#Job changing to Worlock#SG_FEEL#QUE_NOIMAGE#
+Human, go to the boy looks like a tangerine top. He will let you know what to do.#
+Talk with a fairy having a ponytail.#
+
+11107#Job changing to Worlock#SG_FEEL#QUE_NOIMAGE#
+go get a^000077Shining crytal^000000and ^000077giant Bradium piece^000000. then you can get it from a^000077monster in magical powers^000000. for reference, if you don't be equipped a^000077stone in magical powers^000000, It doesn't work.#
+Go to the Yub's lab with Shining crytal and giant Bradium piece .#
+
+11108#Job changing to Worlock#SG_FEEL#QUE_NOIMAGE#
+While I'm making a ^000077Ruby colored rainbow^000000, you go back to Master.#
+Go back to guild master.#
+
+11109#Job changing to Worlock#SG_FEEL#QUE_NOIMAGE#
+Shez, take this guy a room of magical powers.#
+Go to Shez, he will take you a room of magical powers.#
+
+11110#Job changing to Worlock#SG_FEEL#QUE_NOIMAGE#
+Test isn't too hard. go to a room of magical powers,and make a ^000077stone of magical powers^000000. if you are careful about monsters that are for a magical powers.#
+Clear a test of Worlock job changing.#
+
+11111#Job changing to Worlock#SG_FEEL#QUE_NOIMAGE#
+For 5 min you save a room against a monster that is for a piece of magical powers. and in 10 min, you should crystallize a stone of null.#
+Complete a test and go back to Shez.#
+
+11112#Job changing to Worlock#SG_FEEL#QUE_NOIMAGE#
+Now, all of the test is finished, go to master. I feel safe as long as you stay with me.#
+Go to guild master.#
+
+11113#Until radering is functioning#SG_FEEL#QUE_NOIMAGE#
+I think radering isn't functioning. It's better waiting more.#
+maybe It'll be tomorrow?#
+
+11114#Request : Hunt Honet#SG_FEEL#QUE_NOIMAGE#
+Go hunt 10  ^4d4dff'honet'^000000of westnorth in prontera.#
+#
+
+11115#Request : Hunt Condor#SG_FEEL#QUE_NOIMAGE#
+Go hunt 20 ^4d4dff'condor'^000000of south in moroc.#
+#
+
+11116#Request : Hunt grasshopper's leg#SG_FEEL#QUE_NOIMAGE#
+Go hunt 10  ^4d4dff'loker'^000000 and get 10  ^4d4dffgrasshopper's leg^000000 of southwest in prontera.#
+#
+
+11117#Request : Hunt Worm tail#SG_FEEL#QUE_NOIMAGE#
+Go hunt 20  ^4d4dff'Worm tail'^000000 of eastsouth in payon#
+#
+
+11118#Request : Hunt Spore#SG_FEEL#QUE_NOIMAGE#
+Go hunt 30 ^4d4dff'spore'^000000 of easteast in payon.#
+#
+
+11119#Request : Pest control#SG_FEEL#QUE_NOIMAGE#
+Go hunt 20  ^4d4dffThief bug's egg^000000in westhern culvert of prontera and get 10 ^4d4dffchrysalis^000000 .#
+#
+
+11120#Request : Hunt Muka#SG_FEEL#QUE_NOIMAGE#
+Go hunt 20  ^4d4dff'Muka'^000000in southsouth prontera .#
+#
+
+11121#Request : Hunt Farmiliar#SG_FEEL#QUE_NOIMAGE#
+Go hunt 20 ^4d4dffFarmiliar^000000in westhern culvert prontera.#
+#
+
+11122#Request : Collect feather#SG_FEEL#QUE_NOIMAGE#
+Go hunt 30 ^4d4dff'Pekopeko'^000000in suothsouth prontera.#
+#
+
+11123#Request : Collect Poison spore#SG_FEEL#QUE_NOIMAGE#
+Go hunt 30 ^4d4dffPoison spore^000000in northeast geffen and get 5 ^4d4dffPoison spore^000000.#
+#
+
+11124#Request : Hunt honet - Complete#SG_FEEL#QUE_NOIMAGE#
+Request is completed. you can't take a same request for a while.#
+#
+
+11125#Request : Hunt condor - Complete#SG_FEEL#QUE_NOIMAGE#
+Request is completed. you can't take a same request for a while.#
+#
+
+11126#Request : Hunt grasshopper's leg - Complete료#SG_FEEL#QUE_NOIMAGE#
+Request is completed. you can't take a same request for a while.#
+#
+
+11127#Request : Hunt Worm tail - Complete#SG_FEEL#QUE_NOIMAGE#
+Request is completed. you can't take a same request for a while.#
+#
+
+11128#Request : Hunt spore - Complete#SG_FEEL#QUE_NOIMAGE#
+Request is completed. you can't take a same request for a while.#
+#
+
+11129#Request : Pest control - Complete#SG_FEEL#QUE_NOIMAGE#
+Request is completed. you can't take a same request for a while.#
+#
+
+11130#Request : Hunt muka - Complete#SG_FEEL#QUE_NOIMAGE#
+Request is completed. you can't take a same request for a while.#
+#
+
+11131#Request : Hunt Farmiliar - Complete#SG_FEEL#QUE_NOIMAGE#
+Request is completed. you can't take a same request for a while.#
+#
+
+11132#Request : Collect feather - Complete#SG_FEEL#QUE_NOIMAGE#
+Request is completed. you can't take a same request for a while.#
+#
+
+11133#Request : Collect Poison spore - Complete#SG_FEEL#QUE_NOIMAGE#
+Request is completed. you can't take a same request for a while.#
+#
+
+11134#A mopping-up operation of bloody devil#SG_FEEL#QUE_NOIMAGE#
+go hunt ^4d4dff'button man of devil'^000000walking around village.#
+#
+
+
+12072#Hunt tharafrog#SG_FEEL#QUE_NOIMAGE#
+Did you ever see a red frog? that name is thara frog and It's rare. we investgate its habitat. go hunt 20 tharafrog.#
+Hunt 20 tharafrogs#
+
+12073#Remove Cruiser#SG_FEEL#QUE_NOIMAGE#
+Toy doll attack people. It can't be happened! you are really going to give that what-for, It will be enough as 15.#
+Remove 15 Cruiser#
+
+12074#Remove Kukre#SG_FEEL#QUE_NOIMAGE#
+Inside of sea, there was a burglary. Kukre is pointed out as a suspect. go remove 30 kukre.#
+Hunt 30 Kukre#
+
+12075#Remove orcbaby#SG_FEEL#QUE_NOIMAGE#
+Orc are getting more increase. It can be a little bit cruel,but we should cut off thier generation. handle it.#
+Remove 15 orcbaby#
+
+12076#Remove orcwarroir#SG_FEEL#QUE_NOIMAGE#
+Only hunting orcbaby is not enough. can you remove orcwarrior together? It can be enough as 20.#
+Remove 20 orcwarroir#
+
+12077#Hunt vadon#SG_FEEL#QUE_NOIMAGE#
+You maybe have an experience to see a crab with thick shell. they are Vadon. I want you to hunt about 15.#
+Hunt 15 Vadon#
+
+12078#Hunt Megalodon#SG_FEEL#QUE_NOIMAGE#
+The fisher pick up a dead fish, so It can be a problem. sorry to ask you but will you remove 30 of them?#
+Hunt 30 megalodon#
+
+12079#Hunt Mars#SG_FEEL#QUE_NOIMAGE#
+Will you hunt mars? I don't know exact habitat, but you can find as your ability. hunt 15 of them. #
+Hunt 15 mars#
+
+12080#Hunt Cornutus#SG_FEEL#QUE_NOIMAGE#
+A government official of this city get injured because of Cornutus in beach. we got a order to remove. hunt 20 of them#
+Hunt 20 Cornutus#
+
+12081#Remove Mist#SG_FEEL#QUE_NOIMAGE#
+In these days, lots of people who live in this village ger scary because of ghost.A ghost named Mist doesn't have a form. can you hunt 15 of them?#
+Remove 15 Mist#
+
+12082#Hunt shellfish#SG_FEEL#QUE_NOIMAGE#
+Don't ask me why. someone request that hunt 30 of shellfish. do that, please.#
+Hunt 30 shellfish#
+
+12083#Hunt Marine spere#SG_FEEL#QUE_NOIMAGE#
+Marine spere? do you know what is marine spere? we got a request to remove 15 of them#
+Hunt 15 Marine spere#
+
+12084#Hunt Phen#SG_FEEL#QUE_NOIMAGE#
+A goverment official who wants to eat yummy fish dish request to hunt 20 of phen. will you do that?#
+Hunt 20 Phen#
+
+12085#Remove orcskeleton#SG_FEEL#QUE_NOIMAGE#
+It's a trouble of palace because the dead orc relive again. the soldier went to there for subjugating but they need more force..can you do that? you can hunt only 15.#
+remove 15 orcskeleton#
+
+12086#Remove Zenorc#SG_FEEL#QUE_NOIMAGE#
+We got a quest to remove 30 of strange creature. go for it#
+Remove 30 Zenorc#
+
+12087#Remove mummy#SG_FEEL#QUE_NOIMAGE#
+It's a dreadful request. they want you to remove 15 of mummy. ewww~~ that's horrible. I don't want to go close. you handle that.#
+Remove 15 mummy#
+
+12088#Accomplishing a request#SG_FEEL#QUE_NOIMAGE#
+You are accomplishing a request of request board.#
+Be accomplishing a request#
+
+//--- 3-2 Generic Wanderer Job change
+2209#Generic Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+You select a Bigibigi grass for the experiment material. When you select it, you can test it on the table.#
+#
+2210#Generic Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+You select a Muka tree for the experiment material. When you select it, you can test it on the table.#
+#
+2211#Generic Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+You select a Bogi bine for the experiment material. When you select it, you can test it on the table.#
+#
+2212#Generic Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+You select a Aoletura for the experiment material. When you select it, you can test it on the table.#
+#
+2213#Generic Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+You select a Kongra for the experiment material. When you select it, you can test it on the table.#
+#
+2214#Generic Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+You select a sticky grass for the experiment material. When you select it, you can test it on the table.#
+#
+2215#Generic Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+Alchemist Guild introduced you De Bris, a good Generic in Lighthalzen.#
+#
+2216#Generic Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+De Bris tells you to see Demi Calburin till the feedback for your study comes back from the guild.#
+#
+2217#Generic Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+Demi Calburin requested you to find missing parts around here.#
+Collect 10 small metall pieces#
+2218#Wanderer Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+The performance manager requested you to find the Song Guitar around Comodo to continue the performance.#
+Talk with Song Guitar#
+2219#Wanderer Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+Song Guitar told you that Dancer Kim unilaterally broke up the team and he might be in Hugel.#
+Talk with Dancer Kim#
+2220#Wanderer Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+Dancer Kim proposed you to train together in the abyss lake field in the southern west of Hugel.#
+#
+2221#Wanderer Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+On impulse, you compete to kill 50 Novus in a limited time around the abyss lake filed.#
+Hunt 50 yellow Novuses in a limited time.#
+2222#Wanderer Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+Dancer Kim asked you to tell Guitar Song that <Nolio> has been reunited and then come back Lutie.#
+#
+2223#Generic Job Change Quest#SG_FEEL#QUE_NOIMAGE#
+Demi Calburin told you that it would be best to swing the cart at something to accustom to use a cart.#
+Slay 100 Poison Spores in the cage.#
+
+//--- Shadow Chaser Job change quest
+7160#Mysterious Cryptogram#SG_FEEL#QUE_NOIMAGE#
+Received Mysterious Cryptogram from Urpa of Rogue Guild. If you are able to decrypt it, you get a clue for the hidden treasure. The cryptograms is [ 43231114345243 / 11441531241542 / 2433 / 3542343344154211 ].#
+#
+
+7161#Mysterious Cryptogram - 2nd#SG_FEEL#QUE_NOIMAGE#
+Received a new cryptogram from Graham. The cryptogram is [ 5 15 24 8 / 9 12 21 8 / 12 17 / 23 24 21 23 15 8 / 12 22 15 4 17 7 / 23 11 12 21 7 / 9 15 18 18 21 ] [Keyword : 3]#
+#
+
+7162#Mysterious Cryptogram - 2nd#SG_FEEL#QUE_NOIMAGE#
+Received a new cryptogram from Graham. The cryptogram is [ 6 16 25 9 / 10 13 22 9 / 13 18 / 24 25 22 24 16 9 / 13 23 16 5 18 8 / 24 12 13 22 8 / 10 16 19 19 22 ] [Keyword : 4]#
+#
+
+7163#Mysterious Cryptogram - 2nd#SG_FEEL#QUE_NOIMAGE#
+Received a new cryptogram from Graham. The cryptogram is [ 7 17 26 10 / 11 14 23 10 / 14 19 / 25 26 23 25 17 10 / 14 24 17 6 19 9 / 25 13 14 23 9 / 11 17 20 20 23 ] [Keyword : 5]#
+#
+
+7164#Hunt for shadow of deception#SG_FEEL#QUE_NOIMAGE#
+The flame of Turtle island seems strongly related to shadow of deception. To cut this connection, you have to slay the shadow of deception.#
+Slay the shadow of deception#
+
+7165#Key of deception#SG_FEEL#QUE_NOIMAGE#
+It was not a treasure but a small key that I found at the secret place in Turtle island. First, go back to Graham and report him what was found.#
+#
+
+7166#Rachel Branch of Shadow Workshop#SG_FEEL#QUE_NOIMAGE#
+Saying that the rachel branch manager has the same cryptogram, Graham, the prontera branch manager of shadow Workshop, told me to investigater more with the clue from him.#
+Go to see Rachel branch manager of shadow Workshop#
+
+7167#Mysterious Cryptogram - 3rd#SG_FEEL#QUE_NOIMAGE#
+What does the cryptogram that Paul, the rachel branch manager, showed you mean? The cryptogram is [R-E-N-N-N-D / L-N-N-W-W-N-D ]. When you find it, talk with Paul.#
+#
+
+7168#Mysterious Cryptogram - 3rd#SG_FEEL#QUE_NOIMAGE#
+You received the cryptogram and keyword that Paul had. [R-E-N-N-N-D / L-N-N-W-W-N-D ] These cryptograms seem to indicate the place name and direction. The separate keyword is [SEED]#
+Find the place where the crytogram indicates.#
+
+7169#Mysterious Cryptogram - 3rd#SG_FEEL#QUE_NOIMAGE#
+Received the cryptogram and keyword that Paul had. [R-E-N-N-N-D / L-N-N-W-W-N-D ] These cryptogram seems indicate the place name and direction. The separate keyword is [FOOT]#
+Find the place where the crytogram indicates.#
+
+7170#Mysterious Cryptogram - 3rd#SG_FEEL#QUE_NOIMAGE#
+You received the cryptogram and keyword that Paul had. [R-E-N-N-N-D / L-N-N-W-W-N-D ] These cryptogram seems indicate the place name and direction. The separate keyword is [COLD]#
+Find the place where the crytogram indicates.#
+
+7171#Hunt for shadow of delusion#SG_FEEL#QUE_NOIMAGE#
+Like deception, you found the flame strongly connected. To cut this connection, you have to slay the shadow of delusion.#
+Slay the shadow of delusion#
+
+7172#Key of delusion#SG_FEEL#QUE_NOIMAGE#
+It was the key of delusion that you found deep in the ice dungeon. But the treasure was not hidden, either. Return and report paul.#
+#
+
+7173#Message to Halled from Paul#SG_FEEL#QUE_NOIMAGE#
+Paul was very disappointed that it was not treasure and told you to go to Halled, the Juno branch manager, who has another clue. Unless he hels you, he told you to say this to him. Message from Paul:^4d4dffI know what you did last summer!^000000#
+To Halled, the Juno branch manager of shadow Workshop..#
+
+7174#Mysterious Cryptogram - 4th#SG_FEEL#QUE_NOIMAGE#
+The clue that Halled had was a short song. I need to find the place this song indicate. [^4d4dffEnd of thin roots from the Life tree / Tears of all the living / Sigh of all the dead / They were but were not us / People of the forgotten night / Midnight Waltz.#
+#
+
+7175#Hunft for shadow of gaiety#SG_FEEL#QUE_NOIMAGE#
+A flame faded after swaying remarkably and showing a young woman. Perhaps I need to slay down the shadow of gaiety.#
+Hunt for the shadow of gaiety#
+
+7176#Key of Gaiety#SG_FEEL#QUE_NOIMAGE#
+It is a key again, not a treasure that I found this time! Where on earth is the treasure? First, go to Halled and report.#
+#
+
+7177#A young guy in Lighthalzen#SG_FEEL#QUE_NOIMAGE#
+Halled got enaged by the fact that his clue did not reveal the place where the treasure was buried and told me to go to see Vicente, the Lighthalzen branch manager, who has the last clue.#
+#
+
+7178#Destination of Deception, Delusion and Gaiety#SG_FEEL#QUE_NOIMAGE#
+3 keys of deception, delusion and gaiety are for the hidden status in Thanatos tower. The place in the 1st floor of Thanatos tower where the light post appears..#
+#
+
+7179#Vicente, you dare!#SG_FEEL#QUE_NOIMAGE#
+Finding the place ith the information from Vicente, I opened the status with hope and found the hair pencil. It was not a treasure again. I need to see Vicente right now!#
+Give me a treasure. I feel dizzy#
+
+7180#Message from Doomk#SG_FEEL#QUE_NOIMAGE#
+The supplies will be given from the guild in the near future. But, I don't know when. Anyway, when they are given, I will take yours too. So, don't forget to stop by sometime.#
+#
+
+//-- generic sorcerer rewards
+7181#Karakas's ring#SG_FEEL#QUE_NOIMAGE#
+I received the ring of Karakass, which was available for sometime.#
+#
+
+9024#An errand boy from Einbroch#SG_FEEL#QUE_NOIMAGE#
+Help ^0000FFan errand boy^000000 who come to find ^8B4513Prontera^000000.#
+Collect ^006400100 Jellopies^000000 and go back to ^0000FFthe errand boy^000000에게 돌아가자.#
+
+//-- 민스트럴
+11135#Looking for Minstrel Song#SG_FEEL#QUE_NOIMAGE#
+Can you go to ^000077Prontera^000000and collect ^000077 'the information about Minstrel Song^000000. I have something to investigate in Alberta.#
+Go to Prontera, collect the information about Minstrel Song and come back to Alberta.#
+
+11136#Looking for Minstrel Song#SG_FEEL#QUE_NOIMAGE#
+Ah, this song! Ask ^000077a boy near the gate, who wear glasses^000000. I heard that he would make the list of 100 latest pop song. He seems to know about it.#
+Get some information from a person near the gate.#
+
+11137#Looking for Minstrel Song#SG_FEEL#QUE_NOIMAGE#
+I also heard the other stories from  ^000077a lady in front of the tool shop^000000 so you'd better ask her.#
+Get more informatino from a lady in front of the tool shop.#
+
+11138#Looking for Minstrel Song#SG_FEEL#QUE_NOIMAGE#
+Do you know where Minstrel Song is? I believe that he must be Minstrel Song.#
+He just heard that Mr song is the man he've cared so far. Let's go back to Alberta.#
+
+11139#Looking for Minstrel Song#SG_FEEL#QUE_NOIMAGE#
+As far as we've tracking out, the boar which minstral song took was towards to hugel.#
+let's take the plane to go to Hugel through izlude.#
+
+11140#The sky, plane and travel sickness.#SG_FEEL#QUE_NOIMAGE#
+Please, let me be as I am...#
+It's better not to force me......#
+
+11141#Human & gossip is towarding to the bar#SG_FEEL#QUE_NOIMAGE#
+If it's ^000077the bar^000000... There would be useful into.#
+Let's go back to the bar and collect the available info.#
+
+11142#Fearful metalic sound#SG_FEEL#QUE_NOIMAGE#
+before he leaves here, he just listen to my song.#
+We've got ^000077metalic sound'^000000 info. Let's go back to the inn.#
+
+11143#Thanatos tower#SG_FEEL#QUE_NOIMAGE#
+I don't know why ^000077minstrel song'^000000is going to ^000077Thanatos tower^000000.#
+Let's go back to thanatos tower.#
+
+11144#Juno manager : click#SG_FEEL#QUE_NOIMAGE#
+Please exchange this recipt while visiting the shop. Juno manager : click#
+Let's acquire the info around the juno squre.#
+
+11145#I want to get the #SG_FEEL#QUE_NOIMAGE#
+There's place which the bear doll living between einbroch & lighthalzen. If you go there, couldn't you find something??#
+Once we hunting 33 bears, we could merge with karien in lighthalzen.#
+
+11146#to ice tunnel...#SG_FEEL#QUE_NOIMAGE#
+I've heard that there're dolls piled up inside the hotel room, and produce the fur outfit frm the bear. And they are aheading to ice tunnel.#
+Let's go back to the ice tunnel.#
+
+11147#Lared's dew#SG_FEEL#QUE_NOIMAGE#
+the drops from his eyes became dew.#
+She just lose her concsiousness when acquired the info about ^000077Lared's dew'^000000.#
+
+11148#Toward Comodo with the bow#SG_FEEL#QUE_NOIMAGE#
+There's no boat to commute, and  there's ferry when you go to the souther part of veins…#
+Minstrel Song must go to Comodo. Let's go back to the souther part of veins.#
+
+11149#Just pour the water. Pour! Pour!...#SG_FEEL#QUE_NOIMAGE#
+Pour the water and water…but I think it's quite challenging!#
+while we going there, there's some leaking…but we could arrive there.#
+
+11150#Looking for Minstrel Song#SG_FEEL#QUE_NOIMAGE#
+Should I ask the people around the village?#
+Let's get the info from the people.#
+
+11151#Looking for Minstrel Song#SG_FEEL#QUE_NOIMAGE#
+The landlord madam is very good at acknowleging people. That's the one of the skill for better trading!?#
+Let's ask it to the madam.#
+
+11152#to the quiet place!...#SG_FEEL#QUE_NOIMAGE#
+I've just finished up the whole barbecue, that's why she definatly recognize me!#
+Minstrel song is going ahead morocc southern east part! Let's find the building looks mysterious.#
+
+11153#Missing watch top#SG_FEEL#QUE_NOIMAGE#
+The acquired reciept in front of Thanatos tower and the lyrics one man show me in Hugel, and the poet on the paper! All of them are same!#
+They just recognized the paper inside the sand, and karian suddenly say that he wants to see the clock top in Aldebaran.#
+
+11154#I will remember the memories with you....#SG_FEEL#QUE_NOIMAGE#
+Here's the place my cherished friend likes. Whenever we are quite exhausted, we look at the clock and getting rested. I can't forget the memories when we entered prontera southern gate once we finished the tough journey.#
+Let's get back to prontera. Karian has the memories when he had entered to prontera souther gate.#
+
+//- 수라 전직 퀘스트
+11155#undefinable battler#SG_FEEL#QUE_NOIMAGE#
+what's that strengh? We've punched out those big guys…That's the never experienced skill.#
+let's know about him.#
+
+11156#annoying homework#SG_FEEL#QUE_NOIMAGE#
+Ah… he's really tiring guy…ok! Please catch out ^f57d7ddesert worf 10. Then I would consider it.#
+Let's catch out desert wolf 100.#
+
+11157#Helmes valley #SG_FEEL#QUE_NOIMAGE#
+This isn't the promise which is intended... Please go to the valley ^f57d7d which is located southern east Juno^000000. Maybe my priest buddy is on meditation.#
+Let's meet him on helmes valley.#
+
+11158#On the way for meditation#SG_FEEL#QUE_NOIMAGE#
+I am also on meditation, so that I can't answer you right, but I could introduce you to my priest. He hate noise, so wait in the room please.#
+Let's wait him in the room.#
+
+//--- 3-2차 전직
+12090#Mysterious guy#SG_FEEL#QUE_NOIMAGE#
+The guy called lyoda seemingly knows quite important issue. Let's have a conversation one more time.#
+mysterious man#
+
+12091#Just save the burning heart#SG_FEEL#QUE_NOIMAGE#
+Lyoda is asking the the burning heart. He doen't seem to give us the story before we do his favor.#
+Let's save the buring heart.#
+
+12092#Long lasting story#SG_FEEL#QUE_NOIMAGE#
+We've dedicated all the heart Lyonda has asked so far. Now let's listen to his story.#
+Long lasting story#
+
+12093#the record the intelligence Lyoda left#SG_FEEL#QUE_NOIMAGE#
+We have given the holly power inside glast castle to detect the loyal guard. If  [^008855he^000000] is the given person, he could catch out the holly power.If he is just normal like us, he couldn't get it.#
+the record the intelligence Lyoda left#
+
+12094#The damaged shield letter#SG_FEEL#QUE_NOIMAGE#
+You are the man who has the holly power....#
+It's quite hard to decipher!#
+
+//-- 소서러
+12096#Towards Karakas#SG_FEEL#QUE_NOIMAGE#
+Let's get into Karakas in the middle of geffen.#
+Towards Karakas#
+
+12097#Basic preparation#SG_FEEL#QUE_NOIMAGE#
+Redblood3. Wind_Of_Verdure3. Green Live3. Crystal blue3.#
+Basic preparation#
+
+12098#Tour of dungeon#SG_FEEL#QUE_NOIMAGE#
+Ice Tunel, volcano of thor, Myornil closed mine farm. Culun dungeon .. There's each of detectors on those places. If threre needed more things, youd't better keep more than 1..#
+4 dungeons#
+
+
+//---- Paradise Group Quest added
+12217#Request - Traces of wild boar hunt#SG_FEEL#QUE_NOIMAGE#
+As it seems ineffective only to raid Savages, we need a special operation. Slay living and fresh savages, come back to me with 30 manes of savages. I will warn them by spreading it on the road that they use to attack.#
+Collect 30 mane of wild boars#
+
+//--- Warlock Extrem Magical Book Quest
+12218#How to make lava elixir#SG_FEEL#QUE_NOIMAGE#
+Have to refine 20 blazing hearts by strong power in the hottest place of the 2nd floor of Thor Volcano Dungeon. This is the elixir for the magic commit.#
+around thor_v02 163 104#
+
+
+12219#How to creat flame elixir#SG_FEEL#QUE_NOIMAGE#
+The flame elixir can be refined in the stable ground of Thor Volcano Dungeon. I need 10 live coals. For the perfect magic, the other 3 elixirs should exist together.#
+around thor_v01 185 91#
+
+
+12220#How to create glaicer elixir#SG_FEEL#QUE_NOIMAGE#
+I have successfully refined the glacier elixir deep inside the Ice Dungeon. Therefore, I wirte, "10 ice hearts are necessary and for the perfect magic, the other 3 elixirs should exist together.#
+around ice_dun03 137 148#
+
+
+12221#How to create fossil elixir#SG_FEEL#QUE_NOIMAGE#
+It was possible to refine the fossil elixir between old rocks in the 2nd floor of Mine Dungeon. I needed to use 10 Jubilees. For the perfect magic, the other 3 elixirs should exist together.#
+around ein_dun02 181 124#
+
+
+12222#How to create storm elixir#SG_FEEL#QUE_NOIMAGE#
+I visited the Chess Plate of hermits to refine the storm elixir. I can easily feel the energy of winds so that it was easy to refine it. 10 dragon fangs were used. For the perfect magic, the other 3 elixirs should exist together .#
+arounnd gon_dun02 252 198#
+
+//----------추석이벤트-----------------------------
+
+1120#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Recieve Grilled Rice Cake from travel guide in Izlude.#
+Talk to travel guide#
+
+1121#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Deliver Grilled Rice Cake to Belte Malang in Payon.#
+Talk to Belte Malang#
+
+1122#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Find Ingeolmi eating monkeys! Slay 50 Yoyos in vicinity of Ayothaya.#
+Talk to Belte Malang#
+
+1123#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Stop looking for hometown.#
+Able to request again after 1 day#
+
+1124#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Meet Ganggangsulae Expert in Kunlun!#
+Talk to Ganggangsulae Expert#
+
+1125#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Talk to Ganggangsulae Expert after collecting 50 festival masks.#
+Talk to Ganggangsulae Expert#
+
+1126#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Acquire information on homeless cat duo. Would it be related to Belte & Hamel Malang?#
+Talk to Belte Malang#
+
+1127#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Investigate scribblings on Tiger Statue in Longzhicheng.#
+Investigate Tiger Statue#
+
+1128#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+It seems like Dancing Janitor has cleened up the scribblings. Ask him about the scribblings.#
+Talk to Dancing Janitor#
+
+1129#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Erase a scribble near A boy beside fences inside Longzhicheng.#
+Investigate around A boy beside fences#
+
+1130#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Erased a scribble telling that rice cake basket has been deliver to Longzhicheng Pub.#
+Talk to Dancing Janitor#
+
+1131#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Erase a scribble near A Bull beside an old tree inside Longzhicheng.#
+Investigate around A Bull beside an old tree#
+
+1132#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Erased a scribble conspiring to steal rice cake basket.#
+Talk to Dancing Janitor#
+
+1133#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Erase a scribble near Wall Fairy inside Longzhicheng.#
+Invetigate around Wall Fairy#
+
+1134#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Erased a scribble telling to meet in front of Tiger Statue at midnight to steal rice cake basket.#
+Talk to Dancing Janitor#
+
+1135#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Erase a scribble near Gate Captain.#
+Investigate aroung Gate Captain#
+
+1136#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Erased a scribble written 'Why haven't you shown up, I'll proceed with the plan by myself'.#
+Talk to Dancing Janitor#
+
+1137#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Erase a scribble in the back of Enlightened One's head.#
+Investigate the back of Enlightened One's head#
+
+1138#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Erased a scribble resenting the traitor.#
+Talk to Dancing Janitor#
+
+1139#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Found out the hidden past of homeless cat duo. But for everlasting friendship between them, decided to bury the truth.#
+Final report to Belte Malang#
+
+1140#Somewhere far, far away, where Belte Malang was born!#SG_FEEL#QUE_NOIMAGE#
+Finished looking for hometown of Belte Malang.# 
+Able to request again after 1 day#
+
+//----------2010 봄맞이 이벤트-------------------
+7204#Spring Flowers#SG_FEEL#QUE_NOIMAGE#
+Bomi wants to see spring flowers. Let's bring her bunch of flowers. 5 Huge Spray Of Flowers would be enough..#
+Let's show her that spring is actually coming#

@@ -568,3 +568,406 @@ ALL_ODINS_RECALL#Odin's_Recall#
 ALL_PARTYFLEE#Blow_Flowerwind#
 ALL_REVERSEORCISH#Reverse_Orchish#
 ALL_WEWISH#Holy_Knight#
+
+MB_FIGHTING#Munak Fighting#
+MB_NEUTRAL#Bongun Neutral#			
+MB_TAIMING_PUTI#Pet Friend#
+MB_WHITEPOTION#White Potion Delivery#
+MB_MENTAL#Mental Delivery#
+MB_CARDPITCHER#Card Fling#
+MB_PETPITCHER#Pet Fling#
+MB_BODYSTUDY#Body Study#
+MB_BODYALTER#Body Altering#
+MB_PETMEMORY#Pet Memory#
+MB_M_TELEPORT#Munak Teleport#
+MB_B_GAIN#Bongun Gain#
+MB_M_GAIN#Munak Gain#			
+MB_MISSION#Tame Mission#
+MB_MUNAKKNOWLEDGE#Tame Mastery#
+MB_MUNAKBALL#Munak Ball#			
+MB_SCROLL#Bongun Scroll#
+MB_B_GATHERING#Bongun Gathering#
+MB_M_GATHERING#Munak Gathering#
+MB_B_EXCLUDE#Bongun Exclude#
+MB_B_DRIFT#Bongun Drift#
+MB_B_WALLRUSH#Bongun Wall Rush#
+MB_M_WALLRUSH#Munak Wall Rush#
+MB_B_WALLSHIFT#Bongun Wall Shift#
+MB_M_WALLCRASH#Munak Wall Crash#
+MB_M_REINCARNATION#Munak Reincarnation#
+MB_B_EQUIP#Bongun Almighty#
+
+SL_DEATHKNIGHT#Death Knight Spirit#
+SL_COLLECTOR#Dark Collector Spirit#
+SL_NINJA#Ninja Spirit#
+SL_GUNNER#Gunslinger Spirit#
+AM_TWILIGHT4#Twilight Pharmacy#
+DE_BERSERKAIZER#Berserkaizer#
+DA_DARKPOWER#Dark Soul Power#
+
+DE_PASSIVE#Death Passive#
+DE_PATTACK#Death Attack Passive#
+DE_PSPEED#Death Speed Passive#
+DE_PDEFENSE#Death Defense Passive# 
+DE_PCRITICAL#Death Critical Passive# 
+DE_PHP#Death Recovery Passive#
+DE_PSP#Death Magic Passive#	
+DE_RESET#Death Optimize#
+DE_RANKING#Death Ranking Passive#
+DE_PTRIPLE#Death Triple Passive#
+DE_ENERGY#Death Energy#
+DE_NIGHTMARE#Death Nightmare#
+DE_SLASH#Death Slash#
+DE_COIL#Death Coil#
+DE_WAVE#Death Wave#
+DE_REBIRTH#Death Reverse Energy#
+DE_AURA#Death Aura#
+DE_FREEZER#Death Freezer#
+DE_CHANGEATTACK#Death Attack Change#
+DE_PUNISH#Death Punish#
+DE_POISON#Death Poison Slash#
+DE_INSTANT#Death Instant Barrier#
+DE_WARNING#Death Warning#
+DE_RANKEDKNIFE#Death Knife#
+DE_RANKEDGRADIUS#Death Gradius#
+DE_GAUGE#Mighty Gauge#
+DE_GTIME#Mighty Time Charge#
+DE_GPAIN#Mighty Pain Charge#
+DE_GSKILL#Mighty Skill Charge#
+DE_GKILL#Mighty Kill Charge#
+DE_ACCEL#Dead Acceleration#
+DE_BLOCKDOUBLE#Double Blocking#
+DE_BLOCKMELEE#Near Blocking#
+DE_BLOCKFAR#Distant Blocking#
+DE_FRONTATTACK#Dead Rush Attack#
+DE_DANGERATTACK#Dangerous Attack#
+DE_TWINATTACK#Twin Attack#
+DE_WINDATTACK#Storm Attack#
+DE_WATERATTACK#Water Attack#
+
+DA_ENERGY#Dark Energy#			
+DA_CLOUD#Dark Cloud#				
+DA_FIRSTSLOT#Dark First Fantasy#			
+DA_HEADDEF#Dark Head Defense#		
+DA_SPACE#Dark Twilight#
+DA_TRANSFORM#Dark Transformation#		
+DA_EXPLOSION#Dark Explosion#			
+DA_REWARD#Dark Reward#				
+DA_CRUSH#Dark Crush#			
+DA_ITEMREBUILD#Dark Item Rebuild#	
+DA_ILLUSION#Dark Illusion#		
+DA_NUETRALIZE#Dark Neutralization#			
+DA_RUNNER#Dark Runner#				
+DA_TRANSFER#Dark Transfer#		
+DA_WALL#Dark Wall#		
+DA_REVENGE#Dark Revenge#			
+DA_EARPLUG#Dark Ear Plug#
+DA_CONTRACT#Black Gemstone Contract#		
+DA_BLACK#Black Gemstone Magic#
+DA_DREAM#Black Gemstone Dream#			
+DA_MAGICCART#Magic Cart#							
+DA_COPY#Copy#			
+DA_CRYSTAL#Crystal#
+DA_EXP#EXP#			
+DA_CARTSWING#Magical Cart Swing#				
+DA_REBUILD#Human Rebuild#			
+DA_JOBCHANGE#Novice Job Change#		
+DA_EDARKNESS#Emperium Darkness#
+DA_EGUARDIAN#Emperium Guardian#		
+DA_TIMEOUT#Time Out#			
+ALL_TIMEIN#Time In#			
+DA_ZENYRANK#Ranking#
+DA_ACCESSORYMIX#Accessory Mix#	
+
+/////////////////
+
+RK_ENCHANTBLADE#Enchant Blade#
+RK_SONICWAVE#Sonic Wave#
+RK_DEATHBOUND#Death Bound#
+RK_HUNDREDSPEAR#Hundred Spears#
+RK_WINDCUTTER#Wind Cutter#
+RK_IGNITIONBREAK#Ignition Break#
+RK_DRAGONTRAINING#Dragon Training#
+RK_DRAGONBREATH#Dragon Breath#
+RK_DRAGONHOWLING#Dragon Howling#
+RK_RUNEMASTERY#Rune Mastery#
+RK_MILLENNIUMSHIELD#Millenium Shield#
+RK_CRUSHSTRIKE#Crushing Strike#
+RK_REFRESH#Refresh#
+RK_GIANTGROWTH#Giant Cross#
+RK_STONEHARDSKIN#Stonehard Skin#
+RK_VITALITYACTIVATION#Vitality Activation#
+RK_STORMBLAST#Storm Blast#
+RK_FIGHTINGSPIRIT#Fighting Spirit#
+RK_ABUNDANCE#Abundance#
+RK_PHANTOMTHRUST#Phantom Thrust#
+
+AB_JUDEX#Judex#
+AB_ANCILLA#Ancilla#
+AB_ADORAMUS#Adoramus#
+AB_CLEMENTIA#Clementia#
+AB_CANTO#Cantocandidus#
+AB_CHEAL#Coluseo Heal#
+AB_EPICLESIS#Epiclesis#
+AB_PRAEFATIO#Praefation#
+AB_ORATIO#Oratio#
+AB_LAUDAAGNUS#Laudaagnus#
+AB_LAUDARAMUS#Laudaramus#
+AB_EUCHARISTICA#Eucharistica#
+AB_RENOVATIO#Renovatio#
+AB_HIGHNESSHEAL#High Heal#
+AB_CLEARANCE#Clearance#
+AB_EXPIATIO#Expiatio#
+AB_DUPLELIGHT#Duple Light#
+AB_DUPLELIGHT_MELEE#Duple Light#
+AB_DUPLELIGHT_MAGIC#Duple Light#
+AB_SILENTIUM#Silentium#
+AB_SECRAMENT#Secrament#
+
+GC_VENOMIMPRESS#Venom Impression#
+GC_CROSSIMPACT#Cross Impact#
+GC_DARKILLUSION#Dark Illusion#
+GC_RESEARCHNEWPOISON#New Poison Research#
+GC_CREATENEWPOISON#New Poison Creation#
+GC_ANTIDOTE#Anti Dote#
+GC_POISONINGWEAPON#Poisonous Weapon#
+GC_WEAPONBLOCKING#Weapon Blocking#
+GC_COUNTERSLASH#Counter Slash#
+GC_WEAPONCRUSH#Weapon Crush#
+GC_VENOMPRESSURE#Venom Pressure#
+GC_POISONSMOKE#Poisonous Smoke#
+GC_CLOAKINGEXCEED#Cloaking Exceed#
+GC_PHANTOMMENACE#Phantom Menace#
+GC_HALLUCINATIONWALK#Hallucination Walk#
+GC_ROLLINGCUTTER#Rolling Cutter#
+GC_CROSSRIPPERSLASHER#Cross Ripper Slasher#
+
+RA_AIMEDBOLT#Aimed Bolt#
+RA_RESEARCHTRAP#Trap Research#
+RA_RANGERMAIN#Main Ranger#
+RA_ELECTRICSHOCKER#Electric Shock#
+RA_WUGMASTERY#Wug Mastery#
+RA_ARROWSTORM#Arrow Storm#
+RA_CLUSTERBOMB#Bomb Cluster#
+RA_DETONATOR#Detonator#
+RA_CAMOUFLAGE#Camouflage#
+RA_TOOTHOFWUG#Wug Teeth#
+RA_WUGRIDER#Wug Rider#
+RA_FEARBREEZE#Fear Breeze#
+RA_MAGENTATRAP#Magenta Trap#
+RA_FIRINGTRAP#Fire Trap#
+RA_ICEBOUNDTRAP#Ice Trap#
+RA_SENSITIVEKEEN#Keen Nose#
+RA_WUGSTRIKE#Wug Strike#
+RA_WUGDASH#Wug Dash#
+RA_COBALTTRAP#Cobalt Trap#
+RA_WUGBITE#Wug Bite#
+RA_MAIZETRAP#Maze Trap#
+RA_VERDURETRAP#Verdure Trap#
+
+WL_MARSHOFABYSS#Marsh Of Abyss#
+WL_RADIUS#Radius#
+WL_SUMMONFB#Call Fire Ball#
+WL_SUMMONWB#Call Water Ball#
+WL_SUMMONBL#Call Ball Lightening#
+WL_SUMMONSTONE#Call Stone#
+WL_DRAINLIFE#Drain Life#
+WL_RELEASE#Release#
+WL_CRIMSONROCK#Crimson Rock#
+WL_FROSTMISTY#Frost Misty#
+WL_CHAINLIGHTNING#Chain Lightning#
+WL_SIENNAEXECRATE#Sienna Execrate#
+WL_SOULEXPANSION#Soul Expansion#
+WL_STASIS#Stasis#
+WL_HELLINFERNO#Hell Inferno#
+WL_JACKFROST#Jack Frost#
+WL_EARTHSTRAIN#Earth Strain#
+WL_WHITEIMPRISON#White Imprison#
+WL_COMET#Comet#
+WL_RECOGNIZEDSPELL#Recognized Spell#
+WL_TETRAVORTEX#Tetra Vortex#
+
+WL_FREEZE_SP#Freezing Spell#
+WL_READING_SB#Reading Spell Book#
+
+ALL_REVERSEORCISH#Reverse Orcish#
+ALL_WEWISH#Holy Night#
+
+SC_FATALMENACE#Fatal Manace#
+SC_REPRODUCE#Reproduce#
+SC_AUTOSHADOWSPELL#Shadow Spell#
+SC_SHADOWFORM#Shadow Formation#
+SC_TRIANGLESHOT#Triangle Shot#
+SC_STRIPACCESSARY#Divest Accessory#
+SC_BODYPAINT#Body Painting#
+SC_INVISIBILITY#Invisibility#
+SC_DEADLYINFECT#Deadly Infection#
+SC_ENERVATION#Masquerade-Enervation#
+SC_GROOMY#Masquerade-Groomy#
+SC_IGNORANCE#Masquerade-Ignorance#
+SC_LAZINESS#Masquerade-Laziness#
+SC_UNLUCKY#Masquerade-Unlucky#
+SC_WEAKNESS#Masquerade-Weakness#
+SC_MANHOLE#Manhole#
+SC_DIMENSIONDOOR#Dimension Door#
+SC_CHAOSPANIC#Chaos Panic#
+SC_MAELSTROM#Maelstrom#
+SC_BLOODYLUST#Bloody Lust#
+SC_FEINTBOMB#Feint Bomb#
+
+NC_MADOLICENCE#Madogear License#
+NC_BOOSTKNUCKLE#Nuckle Boost#
+NC_PILEBUNKER#Pile Bunker#
+NC_VULCANARM#Vulcan Arm#
+NC_FLAMELAUNCHER#Flame Launcher#
+NC_COLDSLOWER#Cold Slower#
+NC_ARMSCANNON#Arm Cannon#
+NC_ACCELERATION#Acceleration#
+NC_HOVERING#Hover#
+NC_F_SIDESLIDE#Front Slide#
+NC_B_SIDESLIDE#Back Slide#
+NC_MAINFRAME#Remodel Mainframe#
+NC_SELFDESTRUCTION#Suicidal Destruction#
+NC_SHAPESHIFT#Shift Shape#
+NC_EMERGENCYCOOL#Cool Emergency#
+NC_INFRAREDSCAN#Infra Red Scan#
+NC_ANALYZE#Analyze#
+NC_MAGNETICFIELD#Magnetic Field#
+NC_NEUTRALBARRIER#Neutral Barrier#
+NC_STEALTHFIELD#Stealth Field#
+NC_REPAIR#Repair#
+NC_TRAININGAXE#Axe Mastery#
+NC_RESEARCHFE#Fire Earth Research#
+NC_AXEBOOMERANG#Axe Boomerang#
+NC_POWERSWING#Power Swing#
+NC_AXETORNADO#Axe Tornado#
+NC_SILVERSNIPER#FAW Silver Sniper#
+NC_MAGICDECOY#FAW Magic Decoy#
+NC_DISJOINT#FAW divest#
+
+WA_SWING_DANCE#Swing Dance#
+WA_SYMPHONY_OF_LOVER#Lover Symphony#
+WA_MOONLIT_SERENADE#Moonlight Serenade#
+MI_RUSH_WINDMILL#Rush To Windmill#
+MI_ECHOSONG#Echo Song#
+MI_HARMONIZE#Harmonize#
+WM_LESSON#Lesson#
+WM_METALICSOUND#Metalic Sound#
+WM_REVERBERATION#Reverberation#
+WM_DOMINION_IMPULSE#Dominion Impulse#
+WM_SEVERE_RAINSTORM#Severe Rainstorm#
+WM_POEMOFNETHERWORLD#Despair Song#
+WM_VOICEOFSIREN#Voice Of Siren#
+WM_DEADHILLHERE#At Dead Hill#
+WM_LULLABY_DEEPSLEEP#Lullaby#
+WM_SIRCLEOFNATURE#Circling Nature#
+WM_RANDOMIZESPELL#Formless Spell#
+WM_GLOOMYDAY#Gloomy Shyness#
+WM_GREAT_ECHO#Great Echo#
+WM_SONG_OF_MANA#Song Of Mana#
+WM_DANCE_WITH_WUG#Dance With Wug#
+WM_SOUND_OF_DESTRUCTION#Destruction Song#
+WM_SATURDAY_NIGHT_FEVER#Saturday Fever#
+WM_LERADS_DEW#Lerad's Dew#
+WM_MELODYOFSINK#Sinking Melody#
+WM_BEYOND_OF_WARCRY#Beyound Cry#
+WM_UNLIMITED_HUMMING_VOICE#Infinite Humming#
+
+SR_DRAGONCOMBO#Dragon Combo#
+SR_SKYNETBLOW#Sky Blow#
+SR_EARTHSHAKER#Earth Shaker#
+SR_RAMPAGEBLASTER#Rampage Blast#
+SR_KNUCKLEARROW#Nuckle Arrow#
+SR_FALLENEMPIRE#Fallen Empire#
+SR_TIGERCANNON#Tiger Cannon#
+SR_GATEOFHELL#Hell Gate#
+SR_CRESCENTELBOW#Crescent Elbow#
+SR_WINDMILL#Wind Mill#
+SR_CURSEDCIRCLE#Cursed Circle#
+SR_LIGHTNINGWALK#Lightning Walk#
+SR_RAISINGDRAGON#Rising Dragon#
+SR_GENTLETOUCH_QUIET#Gentle Touch-Silence#
+SR_GENTLETOUCH_CURE#Gentle Touch-Speed#
+SR_GENTLETOUCH_ENERGYGAIN#Gentle Touch-Save#
+SR_GENTLETOUCH_CHANGE#Gentle Touch-Opposite#
+SR_GENTLETOUCH_REVITALIZE#Gentle Touch-Alive#
+SR_ASSIMILATEPOWER#Power Absorb#
+SR_POWERVELOCITY#Power Implantation#
+SR_HOWLINGOFLION#Lion Howling#
+SR_RIDEINLIGHTNING#Lightning Ride#
+
+LG_MOONSLASHER#Moon Slasher#
+LG_BANISHINGPOINT#Banishing Point#	
+LG_OVERBRAND#Over Brand#
+LG_PINPOINTATTACK#Pinpoint Attack#	
+LG_CANNONSPEAR#Cannon Spear#
+LG_EXEEDBREAK#Exceed Break#
+LG_BANDING#Banding#
+LG_FORCEOFVANGUARD#Vanguard Force#
+LG_RAGEBURST#Burst Attack#
+LG_TRAMPLE#Trample#
+LG_PRESTIGE#Prestige#
+LG_HESPERUSLIT#Hesperus Lit#	
+LG_RAYOFGENESIS#Genesis Ray#
+LG_INSPIRATION#Inspiration#
+LG_PIETY#Piety#
+LG_REFLECTDAMAGE#Reflect Damage#
+LG_EARTHDRIVE#Earth Drive#
+LG_SHIELDPRESS#Shield Press#
+LG_SHIELDSPELL#Shield Spell#
+
+ALL_ODINS_RECALL#Odin's Call#
+RETURN_TO_ELDICASTES#To El Dicastes#
+
+GN_TRAINING_SWORD#Sword Mastery#
+GN_REMODELING_CART#Cart Remodeling#
+GN_CART_TORNADO#Cart Tornado#
+GN_CARTCANNON#Cart Cannon#
+GN_CARTBOOST#Cart Boost#
+GN_THORNS_TRAP#Thorns Trap#
+GN_BLOOD_SUCKER#Blood Sucker#
+GN_SPORE_EXPLOSION#Spore Explosion#
+GN_WALLOFTHORN#Wall Of Thorn#
+GN_CRAZYWEED#Crazy Weed#
+GN_DEMONIC_FIRE#Demonic Fire#
+GN_FIRE_EXPANSION#Fire Expansion#
+GN_HELLS_PLANT#Hell Plant#
+GN_MANDRAGORA#Mandragora Howling#
+GN_SLINGITEM#Item Sling#
+GN_CHANGEMATERIAL#Change Material#
+GN_MIX_COOKING#Mixed Cooking#
+GN_MAKEBOMB#Bomb Creation#
+GN_S_PHARMACY#Special Pharmacy#
+
+SO_FIREWALK#Fire Walk#
+SO_ELECTRICWALK#Electric Walk#
+SO_SPELLFIST#Fist Spell#
+SO_VACUUM_EXTREME#Extreme Vacuum#
+SO_PSYCHIC_WAVE#Psychic Wave#
+SO_CLOUD_KILL#Killing Cloud#
+SO_POISON_BUSTER#Poison Burst#
+SO_STRIKING#Striking#
+SO_EARTHGRAVE#Earth Grave#
+SO_DIAMONDDUST#Diamond Dust#
+SO_WARMER#Warmer#
+SO_VARETYR_SPEAR#Varetyr Spear#
+SO_ARRULLO#Arrullo#
+
+SO_EL_CONTROL#Spirit Control#
+SO_SUMMON_AGNI#Call Agni#
+SO_SUMMON_AQUA#Call Aqua#
+SO_SUMMON_VENTUS#Call Ventus#
+SO_SUMMON_TERA#Call Tera#
+
+
+
+
+
+
+
+
+
+
+
+
+

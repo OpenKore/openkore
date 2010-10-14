@@ -169,6 +169,7 @@
 1195 Rideword
 1196 Skel Prisoner
 1197 Zombie Prisoner
+1198 Dark Priest
 1199 Punk
 1200 Zherlthsh
 1201 Rybio
