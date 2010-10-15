@@ -26,6 +26,7 @@ use Exporter;
 use base qw(Exporter);
 use encoding 'utf8';
 use Carp;
+use Text::Balanced qw(extract_quotelike);
 
 use Utils;
 use Utils::TextReader;
@@ -488,7 +489,16 @@ sub parseItemsControl {
 		next if ($line =~ /^#/);
 		$line =~ s/[\r\n]//g;
 		$line =~ s/\s+$//g;
-		($key, $args_text) = lc($line) =~ /([\s\S]+?) (\d+[\s\S]*)/;
+		if ($line =~ tr/"// eq 2) {
+			$key = extract_quotelike($line);
+			$args_text = $line;
+			$args_text =~ s/$key//gs;
+			$args_text =~ s/^\s//gs;
+			$key =~ s/"//g;
+		} else {
+			$line =~ s/"//g;
+			($key, $args_text) = $line =~ /^([\s\S]+?) (\d+[\s\S]*)/i;
+		}
 		next if ($key eq "");
 
 		if ($cache{$args_text}) {
