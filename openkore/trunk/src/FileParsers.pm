@@ -24,9 +24,9 @@ use strict;
 use File::Spec;
 use Exporter;
 use base qw(Exporter);
-use encoding 'utf8';
+#use encoding 'utf8';
 use Carp;
-use Text::Balanced qw(extract_quotelike);
+use Text::Balanced qw(extract_delimited);
 
 use Utils;
 use Utils::TextReader;
@@ -477,44 +477,25 @@ sub parseShopControl {
 }
 
 sub parseItemsControl {
-	my $file = shift;
-	my $r_hash = shift;
+	my ($file, $r_hash) = @_;
 	undef %{$r_hash};
 	my ($key, $args_text, %cache);
-
+	
 	my $reader = new Utils::TextReader($file);
-	while (!$reader->eof()) {
-		my $line = $reader->readLine();
-		$line =~ s/\x{FEFF}//g;
-		next if ($line =~ /^#/);
-		$line =~ s/[\r\n]//g;
-		$line =~ s/\s+$//g;
-		if ($line =~ tr/"// eq 2) {
-			$key = extract_quotelike($line);
-			$args_text = $line;
-			$args_text =~ s/$key//gs;
-			$args_text =~ s/^\s//gs;
-			$key =~ s/"//g;
+	until ($reader->eof) {
+		$_ = lc $reader->readLine;
+		next if /^#/;
+		if (($key, $args_text) = extract_delimited and $key) {
+			$key =~ s/^.|.$//g;
+			$args_text =~ s/^\s+//;
 		} else {
-			$line =~ s/"//g;
-			($key, $args_text) = $line =~ /^([\s\S]+?) (\d+[\s\S]*)/i;
+			($key, $args_text) = /([\s\S]+?)\s(\d+[\s\S]*)/;
 		}
-		next if ($key eq "");
-
-		if ($cache{$args_text}) {
-			$r_hash->{$key} = $cache{$args_text};
-		} else {
-			my @args = split / /, $args_text;
-			my %item = (
-				keep => $args[0],
-				storage => $args[1],
-				sell => $args[2],
-				cart_add => $args[3],
-				cart_get => $args[4]
-			);
-			# Cache similar entries to save memory.
-			$r_hash->{$key} = $cache{$args_text} = \%item;
-		}
+		
+		next if $key =~ /^$/;
+		my @args = split /\s+/, $args_text;
+		# Cache similar entries to save memory.
+		$r_hash->{$key} = $cache{$args_text} ||= { map {$_ => shift @args} qw(keep storage sell cart_add cart_get) };
 	}
 	return 1;
 }
