@@ -11,6 +11,7 @@ my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest Rijnd
 	SetTest SkillTest InventoryListTest
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
 	PluginsHookTest
+	FileParsersTest
 	NetworkTest
 	FieldTest
 );

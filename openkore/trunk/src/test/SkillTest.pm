@@ -1,5 +1,6 @@
 # Unit test for Skill
 package SkillTest;
+use strict;
 
 use Test::More;
 use Skill;

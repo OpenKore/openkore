@@ -1,5 +1,6 @@
 # Unit test for Field
 package FieldTest;
+use strict;
 
 use Test::More;
 use Field;
