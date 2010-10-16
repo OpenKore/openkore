@@ -42,7 +42,6 @@ sub testServerTypeTree {
 		ServerType22
 		bRO
 		bRO::Thor
-		euRO
 		fRO
 		idRO
 		iRO
