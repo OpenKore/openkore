@@ -562,6 +562,7 @@ sub ai_skillUse {
 #
 # should be converted to use this helper function. Note that this
 # function uses objects instead of IDs for the skill and target.
+# NOTE: waitBeforeUse is missing, used by attackComboSlot
 sub ai_skillUse2 {
 	my ($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix) = @_;
 
