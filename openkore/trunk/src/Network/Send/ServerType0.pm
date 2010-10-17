@@ -1318,6 +1318,12 @@ sub sendLoginPinCode {
 	}
 }
 
+sub sendSkillSelect {
+	my ($self, $skillID, $why) = @_;
+	$_[0]->sendToServer(pack 'C2 V v', 0x43, 0x04, $why, $skillID);
+	debug sprintf("Sent Skill Select (skillID: %d, why: %d)", $skillID, $why), 'sendPacket', 2;
+}
+
 sub sendSuperNoviceDoriDori {
 	my $msg = pack("C*", 0xE7, 0x01);
 	$_[0]->sendToServer($msg);

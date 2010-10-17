@@ -283,7 +283,7 @@ sub new {
 		'01C5' => ['cart_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'v2 a4 v C', [qw(index itemID ID remaining success)]],
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]],
-		'01CD' => ['sage_autospell'],
+		'01CD' => ['sage_autospell', 'a*', 'skills_list'],
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]],
 		'01D0' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'01D1' => ['blade_stop', 'a4 a4 V', [qw(sourceID targetID active)]],
@@ -445,6 +445,7 @@ sub new {
 		# status timers (eA has 12 unknown bytes)
 		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]],
 
+		'0442' => ['sage_autospell', 'v V a*', 'len why skills_list'],
 		# '0446' => ['actor_quest_effect', 'a4 v4', [qw(ID x y effect type)]],
 
 		'0449' => ['hack_shield_alarm'],
@@ -5130,10 +5131,23 @@ sub resurrection {
 
 sub sage_autospell {
 	# Sage Autospell - list of spells availible sent from server
-	# TODO: and where is that list of spells?
+	my ($self, $args) = @_;
+	
+	my @skills = unpack 'V*', $args->{skills_list};
+	debug "Available skills: @skills\n", 'skill';
+	
 	if ($config{autoSpell}) {
 		my $skill = new Skill(auto => $config{autoSpell});
-		$messageSender->sendAutoSpell($skill->getIDN());
+		if (List::Util::first { $_ == $skill->getIDN } @skills) {
+			if (defined $args->{why}) {
+				$messageSender->sendSkillSelect($skill->getIDN, $args->{why});
+			} else {
+				# was sent without checking if skill is available
+				$messageSender->sendAutoSpell($skill->getIDN);
+			}
+		} else {
+			warning "Configured autoSpell is not available.\n", 'skill';
+		}
 	}
 }
 
