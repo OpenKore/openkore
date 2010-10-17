@@ -283,7 +283,7 @@ sub new {
 		'01C5' => ['cart_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'v2 a4 v C', [qw(index itemID ID remaining success)]],
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]],
-		'01CD' => ['sage_autospell', 'a*', 'skills_list'],
+		'01CD' => ['sage_autospell', 'a*', [qw(skills_list)]],
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]],
 		'01D0' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'01D1' => ['blade_stop', 'a4 a4 V', [qw(sourceID targetID active)]],
