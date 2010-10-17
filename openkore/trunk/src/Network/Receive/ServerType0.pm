@@ -5133,7 +5133,7 @@ sub resurrection {
 sub sage_autospell {
 	my ($self, $args) = @_;
 	
-	my @skills = unpack 'V*', $args->{skills_list};
+	my @skills = unpack 'v*', $args->{skills_list};
 	debug "Available skills: @skills\n", 'skill';
 	
 	if ($config{autoSpell}) {
