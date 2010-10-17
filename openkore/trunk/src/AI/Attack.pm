@@ -622,13 +622,13 @@ sub main {
 		} elsif ($args->{attackMethod}{type} eq "combo") {
 			my $slot = $args->{attackMethod}{comboSlot};
 			my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
-			my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"})->getHandle;
+			my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"});
 			delete $args->{attackMethod};
 
 			if (!ai_getSkillUseType($skill)) {
 				my $targetID = ($isSelfSkill) ? $accountID : $ID;
 				ai_skillUse(
-					$skill,
+					$skill->getHandle,
 					$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
 					$config{"attackComboSlot_${slot}_maxCastTime"},
 					$config{"attackComboSlot_${slot}_minCastTime"},
@@ -640,7 +640,7 @@ sub main {
 			} else {
 				my $pos = ($isSelfSkill) ? $char->{pos_to} : $target->{pos_to};
 				ai_skillUse(
-					$skill,
+					$skill->getHandle,
 					$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
 					$config{"attackComboSlot_${slot}_maxCastTime"},
 					$config{"attackComboSlot_${slot}_minCastTime"},
