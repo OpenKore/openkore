@@ -357,6 +357,9 @@ sub processClientSuspend {
 
 		# Client suspended, do not continue with AI
 		$result = 1;
+	} elsif (AI::action eq "clientSuspend") { # Should be called only if AI Suspend itself. (this mode used in AI::CoreLogic::processItemsTake and AI::CoreLogic::processAllowedMaps)
+		# Client suspended, do not continue with AI
+		$result = 1;
 	}
 	return $result;
 }
