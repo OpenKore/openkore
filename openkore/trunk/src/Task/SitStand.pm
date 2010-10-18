@@ -59,7 +59,7 @@ sub new {
 	$self->{mode} = $args{mode};
 	$self->{wait}{timeout} = $args{wait};
 	$self->{retry}{timeout} = $timeout{ai_stand_wait}{timeout} || 1;
-	$self->{sitSkill} = new Skill(handle => 'NV_BASIC');
+	# $self->{sitSkill} = new Skill(handle => 'NV_BASIC');
 
 	return $self;
 }
@@ -96,7 +96,7 @@ sub iterate {
 		$self->setDone();
 		$timeout{ai_sit}{time} = $timeout{ai_sit_wait}{time} = 0;
 
-	} elsif ($char->getSkillLevel($self->{sitSkill}) < 3) {
+	} elsif ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 3 && ($char->{jobID} == 0 || $char->{jobID} == 161)) {  # Check NV_BASIC skill only for Novice and High Novice
 		$self->setError(NO_SIT_STAND_SKILL, T("Basic Skill level 3 is required in order to sit or stand."));
 
 	} elsif (timeOut($self->{wait}) && timeOut($self->{retry})) {

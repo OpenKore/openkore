@@ -579,7 +579,7 @@ sub ai_skillUse2 {
 # Returns 1 if it is time to perform storageAuto sequence.
 # Returns 0 otherwise.
 sub ai_storageAutoCheck {
-	return 0 if ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 6);
+	return 0 if ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 6  && ($char->{jobID} == 0 || $char->{jobID} == 161)); # Check NV_BASIC skill only for Novice and High Novice
 	if ($config{minStorageZeny}) {
 		return 0 if ($char->{zeny} < $config{minStorageZeny});
 	}
