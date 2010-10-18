@@ -28,6 +28,8 @@ use strict;
 use warnings;
 use Carp;
 
+use Field;
+
 use XSTools;
 use Modules 'register';
 XSTools::bootModule("PathFinding");
@@ -82,17 +84,22 @@ sub reset {
 	my %args = @_;
 
 	# Check arguments
-	croak "Required arguments missing, specify 'field' or 'distance_map' and 'width' and 'height'\n"
-		unless $args{field} || ($args{distance_map} && $args{width} && $args{height});
+	croak "Required arguments missing or wrong, specify correct 'field' or 'distance_map' and 'width' and 'height'\n"
+		unless ($args{field} && UNIVERSAL::isa($args{field}, 'Field')) || ($args{distance_map} && $args{width} && $args{height});
 	croak "Required argument 'start' missing\n" unless $args{start};
 	croak "Required argument 'dest' missing\n" unless $args{dest};
+
+	# Rebuild 'field' arg temporary here, to avoid that stupid bug, when dstMap not available
+	if ($args{field} && UNIVERSAL::isa($args{field}, 'Field') && !$args{field}{dstMap}) {
+		$args{field}->loadByName($args{field}->{name}, 1);
+	}
 
 	# Default optional arguments
 	$args{distance_map} = \$args{field}{dstMap} unless $args{distance_map};
 	$args{width} = $args{field}{width} unless $args{width};
 	$args{height} = $args{field}{height} unless $args{height};
 	$args{timeout} = 1500 unless $args{timeout};
-die if (!$args{field}{dstMap});
+
 	return $class->_reset($args{distance_map}, $args{weights}, $args{width}, $args{height},
 		$args{start}{x}, $args{start}{y},
 		$args{dest}{x}, $args{dest}{y},
