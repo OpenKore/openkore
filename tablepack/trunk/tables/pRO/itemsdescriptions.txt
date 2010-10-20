@@ -1867,7 +1867,7 @@ The one-handed sword of Arthurian Legend.
 By its own will, Excalibur selects an owner to wield its holy powers.
 INT +5
 LUK +10
-DEX -1
+DEX-1
 Weapon Class : ^777777Sword^000000      Attack Strength : ^777777150^000000
 Weight : ^777777120^000000     Property : ^777777Holy^000000
 Weapon lvl : ^7777774^000000
@@ -2069,7 +2069,7 @@ Oriental Sword that is the greatest masterpiece of an ancient Japanese craftsman
 Flee rate +30
 Decreases all defenses applied on its owner by 1/3.
 Attack Speed +2
-STR -5
+STR-5
 Weapon Class : ^777777Two-handed Sword^000000  Attack Strength : ^777777200^000000
 Weight : ^777777100^000000
 Weapon lvl : ^7777774^000000
@@ -2828,7 +2828,7 @@ Applicable Job : ^777777Swordman Class^000000
 1414#
 A spear with Earth Property.
 Maximum HP + 800
-Maximum SP - 50
+Maximum SP-50
 Weapon Class : ^777777Spear^000000      Attack Strength : ^777777145^000000
 Weight : ^77777770^000000       Property : ^777777Earth^000000
 Weapon lvl : ^7777774^000000
@@ -6186,7 +6186,7 @@ Weight : ^7777771^000000
 #
 4123#
 Enable to ^008800Endure^000000 all the time.
-Maximum HP -25 %
+Maximum HP-25 %
 Item Class : ^777777Card^000000
 Compound on : ^777777Shoes^000000
 Weight : ^7777771^000000
@@ -6339,7 +6339,7 @@ Weight : ^7777771^000000
 #
 4147#
 Weapon does Area of Effect damage 9 cells around the target when Normal physical attacks except for skills.
-Accuracy -10.
+Accuracy-10.
 Item Class : ^777777Card^000000
 Compound on : ^777777Weaponry^000000
 Weight : ^7777771^000000
@@ -6351,7 +6351,7 @@ Compound on : ^777777HeadGear^000000
 Weight : ^7777771^000000
 #
 
-//---- Episode 1.5 Item ------
+//---- Episode 1.5 Item------
 
 1753#
 An arrow made out of powerful steel.
@@ -6607,7 +6607,7 @@ Applicable Job : ^777777Priest, Sage^000000
 
 
 
-// ---- ｶﾔ PVP ｴ・ｸｿ・ﾃﾟｰ｡ ｾﾆﾀﾌﾅﾛ ------
+//---- ｶﾔ PVP ｴ・ｸｿ・ﾃﾟｰ｡ ｾﾆﾀﾌﾅﾛ------
 #
 7028#
 A invitation for a duel. A Battle of Honor.
@@ -6620,7 +6620,7 @@ A admission for a duel. A Battle of Honor.
 Weight : ^7777770^000000
 #
 
-// ---- EP 2.0 Pet System Item -----------
+//---- EP 2.0 Pet System Item-----------
 #
 2621#
 An ancient ring.
@@ -6918,13 +6918,13 @@ Weight : ^7777770^000000
 #
 9007#
 An egg that carries a Steel Chonchon Cute Pet. Can be hatched by using a ^33CC33Pet Incubator^000000.
-If intimacy is higher than friendly, then it gives FLEE + 6, AGI - 1.
+If intimacy is higher than friendly, then it gives FLEE + 6, AGI-1.
 Class : ^777777Monster Egg^000000
 Weight : ^7777770^000000
 #
 9008#
 An egg containing a Hunter Fly Cute Pet. Can be hatched by using a ^33CC33Pet Incubator^000000.
-If intimacy is higher than friendly, then it gives perfect dodge + 2, FLEE - 5.
+If intimacy is higher than friendly, then it gives perfect dodge + 2, FLEE-5.
 Class : ^777777Monster Egg^000000
 Weight : ^7777770^000000
 #
@@ -6948,7 +6948,7 @@ Weight : ^7777770^000000
 #
 9012#
 An egg containing a Spore Cute Pet, Can be hatched by using a ^33CC33Pet Incubator^000000.
-If intimacy is higher than friendly, then it gives HIT + 5, ATK -2.
+If intimacy is higher than friendly, then it gives HIT + 5, ATK-2.
 Class : ^777777Monster Egg^000000
 Weight : ^7777770^000000
 #
@@ -6960,7 +6960,7 @@ Weight : ^7777770^000000
 #
 9014#
 An egg containing a Peco Peco Cute Pet. Can be hatched by using a ^33CC33Pet Incubator^000000.
-If intimacy is higher than friendly, then it gives MHP + 150, MSP - 10.
+If intimacy is higher than friendly, then it gives MHP + 150, MSP-10.
 Class : ^777777Monster Egg^000000
 Weight : ^7777770^000000
 #
@@ -6972,13 +6972,13 @@ Weight : ^7777770^000000
 #
 9016#
 An egg containing a Yoyo Cute Pet. Can be hatched by using a ^33CC33Pet Incubator^000000.
-If intimacy is higher than friendly, then it gives CRI + 3, LUK - 1.
+If intimacy is higher than friendly, then it gives CRI + 3, LUK-1.
 Class : ^777777Monster Egg^000000
 Weight : ^7777770^000000
 #
 9017#
 An egg containing an Orc Warrior Cute Pet. Can be hatched by using a ^33CC33Pet Incubator^000000.
-If intimacy is higher than friendly, then it gives ATK + 10, DEF - 3.
+If intimacy is higher than friendly, then it gives ATK + 10, DEF-3.
 Class : ^777777Monster Egg^000000
 Weight : ^7777770^000000
 #
@@ -6990,7 +6990,7 @@ Weight : ^7777770^000000
 #
 9019#
 An egg containing a Dokebi Cute Pet Dokebi. Can be hatched by using a ^33CC33Pet Incubator^000000. 
-If intimacy is higher than friendly, then it gives MATK + 1%, ATK - 1%.
+If intimacy is higher than friendly, then it gives MATK + 1%, ATK-1%.
 Class : ^777777Monster Egg^000000
 Weight : ^7777770^000000
 #
@@ -7002,19 +7002,19 @@ Weight : ^7777770^000000
 #
 9021#
 An egg containing an Isis Cute Pet. Can be hatched by using a ^33CC33Pet Incubator^000000.
-If intimacy is higher than friendly, then it gives ATK + 1%, MATK - 1%.
+If intimacy is higher than friendly, then it gives ATK + 1%, MATK-1%.
 Class : ^777777Monster Egg^000000
 Weight : ^7777770^000000
 #
 9022#
 An egg containing a Green Petite Cute Pet. Can be hatched by using a ^33CC33Pet Incubator^000000.
-If intimacy is higher than friendly, then it gives ASPD + 1%, DEF/MDEF -2.
+If intimacy is higher than friendly, then it gives ASPD + 1%, DEF/MDEF-2.
 Class : ^777777Monster Egg^000000
 Weight : ^7777770^000000
 #
 9023#
 An egg containing a Deviruchi Cute Pet. Can be hatched by using a ^33CC33Pet Incubator^000000.
-If intimacy is higher than friendly, then it gives ATK + 1%, MATK + 1%, MHP/MSP -3%.
+If intimacy is higher than friendly, then it gives ATK + 1%, MATK + 1%, MHP/MSP-3%.
 Class : ^777777Monster Egg^000000
 Weight : ^7777770^000000
 #
@@ -7180,7 +7180,7 @@ Weight : ^77777710^000000
 #
 
 
-// ---- Ep 3.0 Comodo ----------------
+//---- Ep 3.0 Comodo----------------
 #
 
 7038#
@@ -7351,7 +7351,7 @@ Can be used by : ^777777Swordman Class, Rogue, Mage, Wizard and Merchant Class^0
 
 
 
-// ---- EP 4.0 Turtle Island -----------
+//---- EP 4.0 Turtle Island-----------
 #
 
 544#
@@ -7936,7 +7936,7 @@ Available Job : ^777777Swordman Class^000000
 #
 
 19996#
-// ---- EP 5.0 Yuno -----------//description by: Promagnum (iRO)
+//---- EP 5.0 Yuno-----------//description by: Promagnum (iRO)
 #
 
 2110#
@@ -8013,7 +8013,7 @@ Impossible to refine this item.  VIT + 10.
 ^3CB371Survivor's Manteau^000000
 ^3CB371Survivor's Rod [1]^000000
 MHP + 300.
-MATK -5%, MATK will be increased by % unit for each refine Lv. of a Staff.
+MATK-5%, MATK will be increased by % unit for each refine Lv. of a Staff.
 Torelance to None-Property added as much as the Mateau's refine Lv. * 3 .
 (However, increased MATK and Torelance will be limited to refine Lv. 10.)
 Class : ^777777Robe^000000    DEF : ^77777710^000000
@@ -8613,7 +8613,7 @@ A letter written with loving words by a warm hearted mother to her children.
 Weight : ^7777771^000000
 #
 
-// ------ﾀﾏｺｻｷﾎﾄﾃｶﾌﾂ｡------
+//------ﾀﾏｺｻｷﾎﾄﾃｶﾌﾂ｡------
 
 7149#
 A polished plate made out of yellow clay.
@@ -8677,7 +8677,7 @@ An authorized ticket which allows its owner to enter a prohibited area.
 Weight : ^7777771^000000
 #
 
-// ------ｴ・ｸｷﾎﾄﾃｶﾌﾂ｡------
+//------ｴ・ｸｷﾎﾄﾃｶﾌﾂ｡------
 
 7161#
 A bad smelling piece of skin peeled from a black bear.
@@ -8759,7 +8759,7 @@ A royal congratulatory certificate given in recognition of defeating monsters.
 Weight : ^7777771^000000
 #
 
-// ------2004 The sign------
+//------2004 The sign------
 
 7177#
 Pieces of sobbing starlight. It might be possible to assemble them together.
@@ -8810,7 +8810,7 @@ A ticket that is needed to participate in an OX quiz.
 Weight : ^7777771^000000
 #
 
-// ------ｿﾟｶ・-----
+//------ｿﾟｶ・-----
 
 7186#
 A thin trunk which is used by people to climb up to higher places.
@@ -8838,7 +8838,7 @@ An insect husk that seems very hard and stout.
 Weight : ^7777771^000000
 #
 
-// ------ｴ・ｸｾﾆﾀﾌﾅﾛｰ・?------
+//------ｴ・ｸｾﾆﾀﾌﾅﾛｰ・?------
 
 7191#
 A beautiful lamp made with red paper.
@@ -8851,7 +8851,7 @@ A vane with sharp blades suspected to be used for assassinations.
 Weight : ^7777771^000000
 #
 
-// ------ｿﾟｶ・------
+//------ｿﾟｶ・------
 
 7193#
 A sprout grown out of a vegetable seed.
@@ -8914,7 +8914,7 @@ Explosive powder.
 Weight : ^7777771^000000
 #
 
-// ------ｴﾏﾇﾃﾇ・ﾓ------
+//------ｴﾏﾇﾃﾇ・ﾓ------
 
 7205#
 A piece of jet black cloth that cannot be seen in the dark.
@@ -9023,7 +9023,7 @@ Weight : ^7777771^000000
 #
 
 
-// -----ﾄｺﾆｮｾﾆﾀﾌﾅﾛｰ・PPL------
+//-----ﾄｺﾆｮｾﾆﾀﾌﾅﾛｰ・PPL------
 
 7226#
 A small, round pill that looks like it will taste bitter.
@@ -9042,7 +9042,7 @@ Bring this to the NPC named <Bossnia staff> in Prontera, Payon, Geffen, Morroc, 
 Weight : ^7777771^000000
 #
 
-// ------2004 ｹﾟｷｻﾅｸﾀﾎﾀﾌｺ･ﾆｮ------
+//------2004 ｹﾟｷｻﾅｸﾀﾎﾀﾌｺ･ﾆｮ------
 
 //560#
 //White chocolate which is used to propose to a girl by a boy during White Day.
@@ -9051,7 +9051,7 @@ Weight : ^7777771^000000
 //#
 560#
 A loving note can barely say all we felt that magic day. A heartful thanks is sent to you for your presence and thoughful wishes, too.
-^000088 - Mr. and Mrs. Gameboss ^000000
+^000088-Mr. and Mrs. Gameboss ^000000
 ^ffffff_^000000
 Weight : ^7777778^000000
 #
@@ -9061,7 +9061,7 @@ A white cacao.
 Weight : ^7777778^000000
 #
 
-// ------ﾈｭﾀﾌﾆｮｽｺｹﾌｽｺ ｱﾝｱｫ ﾁｦﾁｶｰ・ﾃ ｾﾆﾀﾌﾅﾛ------
+//------ﾈｭﾀﾌﾆｮｽｺｹﾌｽｺ ｱﾝｱｫ ﾁｦﾁｶｰ・ﾃ ｾﾆﾀﾌﾅﾛ------
 
 7228#
 A bar of pure gold which can be used as currency.
@@ -9139,7 +9139,7 @@ A skeleton shaped bottle which contains deadly poison.
 Weight : ^77777710^000000
 #
 
-// ------ｱ豬蟶ｱｷｹﾀﾌ ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ------
+//------ｱ豬蟶ｱｷｹﾀﾌ ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ------
 
 7234#
 A statue which stands for the comraderie of guildsmen.
@@ -9232,7 +9232,7 @@ A statue which signifies the spirit of emerging victorious.
 Weight : ^7777771^000000
 #
 
-// ------ﾁﾟｱｹｷﾎﾄﾃｶﾌﾂ｡------
+//------ﾁﾟｱｹｷﾎﾄﾃｶﾌﾂ｡------
 
 7252#
 An herbal medicine which is used in the eastern countries.
@@ -9250,7 +9250,7 @@ An herbal medicine from an old eastern country that is rumored to cure every ill
 Weight : ^77777730^000000
 #
 
-// ------HP PPL------
+//------HP PPL------
 
 7254#
 A small, square shaped paper which has ^000088"www.op.co.kr"^000000 written on it.
@@ -9263,7 +9263,7 @@ A book documenting the history of Prontera. There's a whole chapter dedicated to
 Weight : ^7777770^000000
 #
 
-// ------ｵｵｹﾌｳ・ﾇﾀﾚ PPL------
+//------ｵｵｹﾌｳ・ﾇﾀﾚ PPL------
 
 562#
 kRO event item.
@@ -9276,7 +9276,7 @@ kRO event item.
 Weight : ^77777715^000000
 #
 
-// ------ﾁﾟｱｹｷﾎﾄﾃｶﾌﾂ｡2------
+//------ﾁﾟｱｹｷﾎﾄﾃｶﾌﾂ｡2------
 
 7262#
 A folding fan which is very useful in summer.
@@ -9324,7 +9324,7 @@ Milk that is bottled for infants.
 Weight : ^7777771^000000
 #
 
-// ------2004 ｸﾓｸｮｾﾆﾀﾌﾅﾛ ｴ・ｮ ｾ･ﾀﾌﾆｮ------
+//------2004 ｸﾓｸｮｾﾆﾀﾌﾅﾛ ｴ・ｮ ｾ･ﾀﾌﾆｮ------
 
 5057#
 A hairband with tiny little black ears attached. It's a copy of the hairband of Wickebine in Morroc.
@@ -9621,7 +9621,7 @@ Required lvl : ^77777755^000000
 Available Job : ^777777Every Job except Novice^000000
 #
 
-// ------2004 ｾ鋠ﾌｳｯﾀﾌｺ･ﾆｮ------
+//------2004 ｾ鋠ﾌｳｯﾀﾌｺ･ﾆｮ------
 
 680#
 A carnation which is given to parents or teachers on special occassions.
@@ -9635,7 +9635,7 @@ A picture album of memories of the wedding ceremony or honeymoon.
 Weight : ^7777771^000000
 #
 
-// ------2004ﾁﾟﾈｭｱﾇﾀﾌｺ･ﾆｮ------
+//------2004ﾁﾟﾈｭｱﾇﾀﾌｺ･ﾆｮ------
 
 682#
 A magical drink which increases attack strength when it is taken.
@@ -9685,7 +9685,7 @@ Weight : ^7777771^000000
 #
 
 
-// ------The Sign ﾄｺﾆｮ------
+//------The Sign ﾄｺﾆｮ------
 
 7274#
 "The door leading to the great power can be found under the twilight sky from the tower of the heaven. 
@@ -9724,7 +9724,7 @@ kRO event item.
 Weight : ^7777771^000000
 #
 
-// ------ｾ錥ﾅｸｶｽｺﾅｩ ｱｸﾇ・-----
+//------ｾ錥ﾅｸｶｽｺﾅｩ ｱｸﾇ・-----
 
 5096#
 A dark mask worn by assassinators.
@@ -9734,7 +9734,7 @@ Required lvl : ^77777770^000000
 Available Job : ^777777Assassin, Priest^000000
 #
 
-// ------2ﾁﾖｳ簑ﾌｺ･ﾆｮｿﾍ ﾄ鈆﨧ｹｺｼｷ郛ﾇ------
+//------2ﾁﾖｳ簑ﾌｺ･ﾆｮｿﾍ ﾄ鈆﨧ｹｺｼｷ郛ﾇ------
 
 5097#
 A party hat created to celebrate the 2 year anniversary of kRO.
@@ -9777,7 +9777,7 @@ ATK + 10, MATK + 10
 Weight : ^77777730^000000
 #
 
-// ------ｸﾙﾀﾏｾﾆﾀﾌﾅﾛｰ・4ｷｹｺｧｹｫｱ・-----
+//------ｸﾙﾀﾏｾﾆﾀﾌﾅﾛｰ・4ｷｹｺｧｹｫｱ・-----
 
 2415#
 A pair of slippers which enhances a girl's cuteness. Secretly worn by pretty boys.
@@ -9820,7 +9820,7 @@ Available Job : ^777777Every Job^000000
 #
 
 
-// ------ﾅﾂｱｹｷﾎﾄﾃｶﾌﾂ｡------
+//------ﾅﾂｱｹｷﾎﾄﾃｶﾌﾂ｡------
 
 7285#
 A skein of threads which possesses a holy power within.
@@ -9861,7 +9861,7 @@ A solid, beautiful engagement ring which a word 'Slave of Love' is etched within
 Weight : ^7777771^000000
 #
 
-// ------ﾀﾏｺｻDVDｾﾆﾀﾌﾅﾛ------
+//------ﾀﾏｺｻDVDｾﾆﾀﾌﾅﾛ------
 
 5099#
 A cute cat-looking hat which enhances its wearer's look.
@@ -9875,7 +9875,7 @@ Requirement : ^777777None^000000
 Job : ^777777Every Job^000000
 #
 
-// ------4ｷｹｺｧｹｫｱ籠ｺﾆｮ------
+//------4ｷｹｺｧｹｫｱ籠ｺﾆｮ------
 
 7289#
 A gemstone which is also called as 'Olivine'.
@@ -9933,7 +9933,7 @@ Weight : ^77777710^000000
 #
 
 
-// ------ﾅﾂｱｹｷﾎﾄﾃｶﾌﾂ｡2------
+//------ﾅﾂｱｹｷﾎﾄﾃｶﾌﾂ｡2------
 
 7298#
 An emergency clothes made with two giant leaves.
@@ -9969,7 +9969,7 @@ Weight : ^77777730^000000
 #
 
 
-// ------ﾅ･ﾆ・ﾟｰ｡------
+//------ﾅ･ﾆ・ﾟｰ｡------
 
 9026#
 An egg of a monster Zealotus. Can hatch a Zealotus with a [Pet Incubator].
@@ -9991,7 +9991,7 @@ Weight : ^7777771^000000
 #
 
 
-// ------ｽﾅｺﾇ ｽｺﾅｩｷﾑ------
+//------ｽﾅｺﾇ ｽｺﾅｩｷﾑ------
 
 686#
 A spell scroll which was made by the essence of ancient magic.
@@ -10109,7 +10109,7 @@ Weight : ^7777771^000000
 #
 
 
-// ------ｽﾅｺﾆﾀﾌﾅﾛ------
+//------ｽﾅｺﾆﾀﾌﾅﾛ------
 
 662#
 A badge made out of bronze that was used in an ancient asian country.
@@ -10179,7 +10179,7 @@ A quiver which contains 500 rusty arrows within.
 Weight : ^77777725^000000
 #
 
-// ------2005ﾁﾟﾈｭｱﾇﾀﾌｺ･ﾆｮ------
+//------2005ﾁﾟﾈｭｱﾇﾀﾌｺ･ﾆｮ------
 
 570#
 A candy which is rumored to bring luck to whomever eats it.
@@ -10196,7 +10196,7 @@ A cookie which is rumored to bring luck to whomever eats it.
 Weight : ^7777773^000000
 #
 
-// ------ｾﾋｵ･ｹﾙｶﾍｺｸﾆｮｷ｢------
+//------ｾﾋｵ･ｹﾙｶﾍｺｸﾆｮｷ｢------
 
 12016#
 A potion which increases the moving speed of a character for a duration.
@@ -10209,7 +10209,7 @@ A potion which decreases the moving speed of a character for a duration.
 Weight : ^77777710^000000
 #
 
-// ------ｼｳｳｯﾀﾌｺ･ﾆｮ------
+//------ｼｳｳｯﾀﾌｺ･ﾆｮ------
 
 12018#
 A playstuff which makes beatiful fireworks in the sky when it is lit.
@@ -10222,7 +10222,7 @@ A bag made out of straw that is used to store rince within.
 Weight : ^77777780^000000
 #
 
-// ------ ﾄｫｵ蟠・ｮｾ･ﾀﾌﾆｮ ------
+//------ ﾄｫｵ蟠・ｮｾ･ﾀﾌﾆｮ------
 
 4149#
 Gargoyle Card.
@@ -10388,7 +10388,7 @@ Weight : ^7777771^000000
 #
 4169#
 Dark Illusion Card.
-Max HP, Max SP -10%.
+Max HP, Max SP-10%.
 Reduce spell floating casting time by 10%.
 If the user is equipped with an item compounded to the Dark Lord card,
 it reduces floating casting time by 20%.
@@ -10786,7 +10786,7 @@ Weight : ^7777771^000000
 #
 4218#
 Succubus Card.
-VIT -3, Max HP +1000 and HP natural recovery -20%.
+VIT-3, Max HP +1000 and HP natural recovery-20%.
 If the user is equipped with an item compounded to the Inccubus card,
 it adds VIT +4 and HP natural recovery +30%.
 Class : ^777777Card^000000
@@ -11192,7 +11192,7 @@ Weight : ^7777771^000000
 #
 4269#
 Incubus Card.
-INT -3, Max SP +150 and SP natural recovery -20%.
+INT-3, Max SP +150 and SP natural recovery-20%.
 If the user is equipped with an item compounded to the Succubus card,
 it adds INT +4 and SP natural recovery +30%.
 Class : ^777777Card^000000
@@ -11454,7 +11454,7 @@ Weight : ^7777771^000000
 #
 4302#
 Tao Gunka Card.
-Max HP + 100%, DEF - 50 and MDEF - 50.
+Max HP + 100%, DEF-50 and MDEF-50.
 Class : ^777777Card^000000
 Slot : ^777777Armor^000000
 Weight : ^7777771^000000
@@ -11698,18 +11698,18 @@ Slot : ^777777Accessory^000000
 Weight : ^7777771^000000
 #
 
-// ------ｹﾟｷｻﾅｸﾀﾎﾀﾌｺ･ﾆｮ------
+//------ｹﾟｷｻﾅｸﾀﾎﾀﾌｺ･ﾆｮ------
 573#
 A kind of drink made from chocolate and milk from one of the Royal Court Dessert Specialist's recipes. Although the Dessert Chef wishes for people to drink this treat elegantly, it's usually gulped down, enjoyed with hand sloppily placed on the waist.
 ^ffffff_^000000
 weight : ^77777715^000000
 #
 
-// ------､ﾑmobile item -------
+//------､ﾑmobile item-------
 2511#
 A manteau which is worn by soldier skeletons.
 STR +2, DEX +2, LUK +2.
-INT -3, VIT -3, AGI -4.
+INT-3, VIT-3, AGI-4.
 Class : ^777777Garment^000000    Defense : ^7777773^000000
 Weight : ^77777770^000000
 Requirement : ^77777775^000000
@@ -11732,14 +11732,14 @@ Location : ^777777Upper^000000    Weight : ^77777780^000000
 Requirement : ^77777775^000000
 Job : ^777777Every Job^000000
 #
-// ------- 2005 ﾀﾏｺｻDVDﾇﾑﾁ､ ｾﾆﾀﾌﾅﾛ -----
+//------- 2005 ﾀﾏｺｻDVDﾇﾑﾁ､ ｾﾆﾀﾌﾅﾛ-----
 5101#
 Eyeshade of Magician Takiyo. This Blinker is said to have certain relationship with her growth.
 Item class : ^777777Headgear^000000    Defense : ^7777770^000000
 Head Position : ^777777Middle^000000    Weight : ^77777710^000000
 Equipped by : ^777777All^000000
 #
-// ------- ｺﾎﾈｰﾀﾀﾌｺ･ﾆｮ --------
+//------- ｺﾎﾈｰﾀﾀﾌｺ･ﾆｮ--------
 574#
 An egg from a bird. It's full of nutrition, making it an ideal food for growing children.^000088Recover a small amount of HP ^000000.
 ^ffffff_^000000
@@ -11750,7 +11750,7 @@ A decorative egg, traditionally exchanged with other people, which symbolizes re
 ^ffffff_^000000
 Weight : ^77777715^000000
 #
-// ------- 2005 RBOｴｫｵｿﾀﾚ ｾﾆﾀﾌﾅﾛ -----
+//------- 2005 RBOｴｫｵｿﾀﾚ ｾﾆﾀﾌﾅﾛ-----
 5102#
 A special item that was bundled with the Ragnarok Battle Package.
 Makes its wearer look absent-minded.
@@ -11758,7 +11758,7 @@ Class : ^777777Headgear^000000    Defense : ^7777770^000000
 Location : ^777777Middle^000000    Weight : ^77777710^000000
 Job : ^777777Every Job^000000
 #
-// ------- 2005 The sign 3ｺﾎ -----
+//------- 2005 The sign 3ｺﾎ-----
 2642#
 A beautiful gold ring with words 'Celebrating Serin's 17th birthday' carved within.
 Class : ^777777Accessory^000000
@@ -11831,7 +11831,7 @@ A bottled cursed water.
 Weight : ^7777773^000000
 #
 
-// ------- 2005 City of Steel, Einbroch -----
+//------- 2005 City of Steel, Einbroch-----
 7310#
 A ticket which enables its user to rent a Peco Peco once for free.  (Dragon Available.)
 ^ffffff_^000000
@@ -11908,7 +11908,7 @@ A flashlight attached to a mine hat that enables its wearer to see better in the
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------- 2005 ｸﾙﾀﾏｾﾆﾀﾌﾅﾛ ｵｵｵﾏﾆ・-----
+//------- 2005 ｸﾙﾀﾏｾﾆﾀﾌﾅﾛ ｵｵｵﾏﾆ・----
 5103#
 A hat with a sunflower which is good to confuse enemies.
 AGI+2, Critical + 5%
@@ -11936,7 +11936,7 @@ Weapon level : ^7777774^000000
 Requirement : ^77777755^000000
 Job : ^777777Thief Class, Ninja^000000
 #
-// ------- ﾅﾂｱｹ 2005 ｼﾛｲ・ﾀﾌｺ･ﾆｮ --------
+//------- ﾅﾂｱｹ 2005 ｼﾛｲ・ﾀﾌｺ･ﾆｮ--------
 7328#
 A scroll that the legend of Songkran is written with a forgotten ancient language.
 Nobody can read the language nowadays.
@@ -11949,7 +11949,7 @@ A small bronze key.
 Weight : ^7777771^000000
 #
 
-// ------- ｴ・ｸ 2005 ｾ鋕ﾓｴﾏ ﾀﾌｺ･ﾆｮ --------
+//------- ｴ・ｸ 2005 ｾ鋕ﾓｴﾏ ﾀﾌｺ･ﾆｮ--------
 
 2646#
 A bunch of Carnation that is made to thank to mothers.
@@ -11958,7 +11958,7 @@ Class : ^777777Accessory^000000
 Defense : ^7777770^000000      Weight : ^77777710^000000
 Job : ^777777Every Job^000000
 #
-// ------- 2005 ｰｭﾃｶｵｵｽﾃ ﾃﾟｰ｡ ｾﾆﾀﾌﾅﾛ -------
+//------- 2005 ｰｭﾃｶｵｵｽﾃ ﾃﾟｰ｡ ｾﾆﾀﾌﾅﾛ-------
 5104#
 A blinkers that was enchanted by a dark magic.
 Never be blinded. Tolerance against Stun effect+2%.
@@ -11977,7 +11977,7 @@ Beef that is deliciously marinaded with soy souce.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------- China 1st and 2nd anniversary event items --------
+//------- China 1st and 2nd anniversary event items--------
 
 7255#
 A red orb with a word 'Hsien' engraved on, which is told to be from East Sea God's Territory. 
@@ -12253,7 +12253,7 @@ Equipped On : ^777777Upper^000000    Weight : ^77777720^000000
 Applicable Job : ^777777Every Job^000000
 #
 
-// ------- China 2005 Dano Festival ------
+//------- China 2005 Dano Festival------
 12025#
 An egg which seems to hold something within.
 When one successfully stands the egg lenghwise without a support, the custom says that it brings good luck.
@@ -12266,7 +12266,7 @@ When one successfully stands the egg lenghwise without a support, the custom say
 ^ffffff_^000000
 Weight : ^77777720^000000
 #
-// --------- New weapon ----------
+//--------- New weapon----------
 
 1262#
 Double bladed katar that leaves uncurable wounds when cut.
@@ -12627,7 +12627,7 @@ Required Level : ^77777765^000000
 Available Jobs : ^777777Dancer^000000
 #
 
-// ---------- Additional weapons and armors ----------
+//---------- Additional weapons and armors----------
 2113#
 A cute shield for Novice class, which is made out of a special metal.
 Reduce 20% of All Property Damage except Neutral one.
@@ -12933,7 +12933,7 @@ Required Level : ^77777730^000000
 Available Jobs : ^777777Novice Class^000000
 #
 
-// ---------- New helmets -----------
+//---------- New helmets-----------
 
 5107#
 A headgear simulated a crunch toast that could be a good breakfast.
@@ -13054,7 +13054,7 @@ Required Level : ^77777770^000000
 Available Jobs : ^777777Every Job except Novice^000000
 #
 
-// -------- Taiwan Event 2005 -------
+//-------- Taiwan Event 2005-------
 
 7338#
 A card that allows its owner to use Kafra Teleport Service one time free.
@@ -13064,7 +13064,7 @@ A card that allows its user to use Kafra Teleport Service free for a limited amo
 #
 
 
-// ------- New weapons and armors --------
+//------- New weapons and armors--------
 
 
 5122#
@@ -13164,7 +13164,7 @@ Required Level : ^77777730^000000
 Jobs : ^777777Dancer^000000
 #
 
-// -------- Lighthalzen, the Corporation City-State----------
+//-------- Lighthalzen, the Corporation City-State----------
 
 576#
 A thorned tree fruit with fresh scent. Restores a small amount of HP and SP.
@@ -13234,7 +13234,7 @@ Defense : ^7777770^000000      Weight : ^77777710^000000
 Available Jobs : ^777777Every Job^000000
 #
 
-// -------- Anicient Relics, Juperos ---------- 
+//-------- Anicient Relics, Juperos---------- 
 
 
 7352#
@@ -13269,7 +13269,7 @@ Weight : ^7777771^000000
 A piece of an ancient creset. It has many spiky thorns nailed on the back, no one knows its use however.
 Weight : ^7777771^000000
 #
-// --- effect box ---
+//--- effect box---
 
 12027#
 Restores an amount
@@ -13330,7 +13330,7 @@ user for 30 seconds.
 ^ffffff_^000000
 Weight : ^77777720^000000
 #
-// ---------- Juperos ----------
+//---------- Juperos----------
 2659#
 An object which seems
 to be part of the Vesper. Possesses a mysterious
@@ -13398,19 +13398,19 @@ A solid tablet that is cold to the touch.
 Weight: ^7777771^000000
 #
 7333#
-'In the town of Prontera I fell sick, I needed something from the land of trees to make my blood thick....' - The First Man
+'In the town of Prontera I fell sick, I needed something from the land of trees to make my blood thick....'-The First Man
 Weight: ^7777771^000000
 #
 7334#
-'We're on our way now, soon we will venture to the desert in high spirits...' - The Second Man
+'We're on our way now, soon we will venture to the desert in high spirits...'-The Second Man
 Weight: ^7777771^000000
 #
 7335#
-'There is a strange feeling in the air here...almost as if I can do magic myself...' - The Third Man
+'There is a strange feeling in the air here...almost as if I can do magic myself...'-The Third Man
 Weight: ^7777771^000000
 #
 7336#
-'We ventured just North of the giant beautiful Jolnir flower...and that's where our journey began...' - The Fourth Man
+'We ventured just North of the giant beautiful Jolnir flower...and that's where our journey began...'-The Fourth Man
 Weight: ^7777771^000000
 #
 7337#
@@ -13431,7 +13431,7 @@ random food item.
 ^FFFFFF ^000000
 Weight: ^77777720^000000
 #
-// ------------- 2005 Mobile Acolyte ------------
+//------------- 2005 Mobile Acolyte------------
 2356#
 A blessed holy robe
 that protects its wearer from being tainted by
@@ -13481,7 +13481,7 @@ Weight: ^77777710^000000
 Required Level: ^777777N/A^000000
 Jobs: ^777777All^000000
 #
-// -------------- Main Quest ---------------
+//-------------- Main Quest---------------
 7416#
 A well written letter
 of recommendation
@@ -13531,7 +13531,7 @@ the drinker the feeling^FFFFFF  ^000000 of lounging on the beach.
 ^FFFFFF ^000000
 Weight: ^77777710^000000
 #
-// -----------Prize Items ---------------
+//-----------Prize Items---------------
 12103#
 An ancient, gnarled
 branch with a contract
@@ -13600,7 +13600,7 @@ Potion item.^000000
 ^FFFFFF ^000000
 Weight: ^77777720^000000
 #
-// -------------- Additional Skill Item --------------
+//-------------- Additional Skill Item--------------
 1771#
 A throwing knife
 laced with toxin that
@@ -13688,7 +13688,7 @@ property for the potion's active duration.
 Weight: ^7777771^000000
 #
 
-// ------------- PvP item -------------
+//------------- PvP item-------------
 7420#
 A skull in which
 someone's name
@@ -13697,7 +13697,7 @@ has been carved.
 Weight: ^7777771^000000
 #
 
-// ----------- Cooking Recipe 60 ------------
+//----------- Cooking Recipe 60------------
 12041#
 A dish that is easy
 and convenient for
@@ -14203,7 +14203,7 @@ luck on those fortunate enough to eat it. LUK +10
 ^FFFFFF ^000000
 Weight: ^77777750^000000
 #
-// ------------- 10.3 Quest Items ----------------
+//------------- 10.3 Quest Items----------------
 7421#
 A thin, transparent,
 and shining red key.
@@ -14290,7 +14290,7 @@ Author: Pisrik Quve.
 ^FFFFFF ^000000
 Weight: ^7777771^000000
 #
-// -------------10.3 Item ---------------
+//-------------10.3 Item---------------
 7435#
 A beautiful golden
 ornament that seems
@@ -14568,7 +14568,7 @@ sublimely delicious.
 ^FFFFFF ^000000
 Weight: ^7777777^000000
 #
-// ------------Cooking --------------
+//------------Cooking--------------
 
 7472#
 Level 1 Recipes
@@ -15101,7 +15101,7 @@ cooking vessel covered
 by a lid with a handle. ^FFFFFF    ^000000
 Weight: ^7777771^000000
 #
-// ------------ Mobile Archer -------------
+//------------ Mobile Archer-------------
 5135#
 A unique eye
 protector that
@@ -15141,7 +15141,7 @@ Weapon Level: ^7777774^000000
 Required Level: ^77777770^000000
 Job: ^777777Hunter/Bard/Dancer^000000
 #
-// ------------ Korean SAT item -----------------
+//------------ Korean SAT item-----------------
 12131#
 A drink that is
 already past its
@@ -15151,7 +15151,7 @@ potency. Or does it?
 ^FFFFFF ^000000
 Weight: ^77777710^000000
 #
-// ---------- oversea event item ----------
+//---------- oversea event item----------
 
 7483#
 The key that can
@@ -15422,7 +15422,7 @@ If intimacy is higher than friendly, then it gives HP + 30, increases resistance
 Item Class : ^777777Monster's egg^000000
 #
 
-// ----------------- ﾄｳｽｬ ｾﾆﾀﾌﾅﾛ ﾃﾟｰ｡ -------------------
+//----------------- ﾄｳｽｬ ｾﾆﾀﾌﾅﾛ ﾃﾟｰ｡-------------------
 12202#
 An excellent dish that originated from Louyang. Apart from the fact that it is too expensive, it has superb taste.
 STR + 10. 30 minutes duration.
@@ -15497,7 +15497,7 @@ Weight : ^7777771^000000
 A stick that shines when the switch is used. People who see the light seem to lose part of their memory.
 Resets the skill tree and gives corresponding points. Needs to be used in towns with 0 weight.
 ^ffffff_^000000
-Weight : ^7777771^000000
+Weight : ^7777770^000000
 #
 12214#
 A clean convex mirror.
@@ -15542,7 +15542,7 @@ Weight : ^7777771^000000
 12221#
 A suspicious looking machinery.
 It allows server-wide broadcasting.
-Caution! - Item option will be disappeared if there is no message during 3 minutes after its consumption.
+Caution!-Item option will be disappeared if there is no message during 3 minutes after its consumption.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -15570,7 +15570,7 @@ Weight : ^7777771^000000
 12900#
 A box with 10 field manual books inside.
 ^ffffff_^000000
-Field Manual - The EXP rate is increased to 150% for 30 minutes.
+Field Manual-The EXP rate is increased to 150% for 30 minutes.
 ^ffffff_^000000
 ^ff0000This item is not refunable.^000000
 Weight : ^7777771^000000
@@ -15578,14 +15578,14 @@ Weight : ^7777771^000000
 12901#
 A box with 10 life insurances inside
 ^ffffff_^000000
-Life insurance - Does not lose exp when killed within the 30 minutes duration. Valid only once.
+Life insurance-Does not lose exp when killed within the 30 minutes duration. Valid only once.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 12902#
 A box with 10 tasty bubble gums.
 ^ffffff_^000000
-Bubble gum - The item's drop rate increases by 100% for 30 minutes.
+Bubble gum-The item's drop rate increases by 100% for 30 minutes.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -15622,21 +15622,21 @@ Weight : ^7777771^000000
 12909#
 A box with 10 Kafra name cards.
 ^ffffff_^000000
-Kafra name card - A Kafra will be in service when used.
+Kafra name card-A Kafra will be in service when used.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 12910#
 A light box containing 10 giant fly wings.
 ^ffffff_^000000
-Giant fly wing - It allows to teleport many people at once to random areas when used by the party master.
+Giant fly wing-It allows to teleport many people at once to random areas when used by the party master.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 12911#
 A box with 1 shining stick inside. Fragile!
 ^ffffff_^000000
-Shining stick - Resets the skill tree and gives corresponding points.
+Shining stick-Resets the skill tree and gives corresponding points.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -15682,28 +15682,28 @@ Weight : ^7777771^000000
 12919#
 A box with 10 megaphones.
 ^ffffff_^000000
-Megaphone - Allows server-wide broadcasting.
+Megaphone-Allows server-wide broadcasting.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 12920#
 A box with 1 concentrated eluniums.
 ^ffffff_^000000
-Concentrated elunium - The rate of refining an armor without breaking it will increase.
+Concentrated elunium-The rate of refining an armor without breaking it will increase.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 12921#
 A box with 1 concentrated oridecon.
 ^ffffff_^000000
-Concentrated oridecon - The rate of refining a weapon without breaking it will increase.
+Concentrated oridecon-The rate of refining a weapon without breaking it will increase.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 12922#
 A box containing 10 tokens of Ziegfried.
 ^ffffff_^000000
-Token of Ziegfried - Revives the dead character when used.
+Token of Ziegfried-Revives the dead character when used.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -15750,7 +15750,7 @@ Required Level : ^77777720^000000
 Jobs : ^777777All except Novice^000000
 #
 
-// --------------- Kyel Hyre's Cottage Quest ----------------
+//--------------- Kyel Hyre's Cottage Quest----------------
 7487#
 A bottle of culinary wine with very sweet scent that is from the Juno pub.
 ^ffffff_^000000
@@ -15855,7 +15855,7 @@ A luxurious key in rainbow color which enables its user to freely enter Kyel Hyr
 A flat and transparent key in green color which enables its user to open a secret safe.
 ^ffffff_^000000
 #
-// ------------- 4th quarter items --------------
+//------------- 4th quarter items--------------
 2357#
 A shining white armor of Valkyres, the battle maidens of Odin.
 All Stats + 1.
@@ -15908,7 +15908,7 @@ An old silver pocket watch.
 ^ffffff_^000000
 Weight:  ^7777771^000000
 #
-// -------------- Monster Race -----------------
+//-------------- Monster Race-----------------
 7514#
 A certificate that is given to the participants of Monster Race games.
 Enables its owner to check his betting monster number.
@@ -15920,15 +15920,15 @@ A mysterious medal made out of a special metal that is only produced within Huge
 Cannot be traded.
 ^ffffff_^000000
 #
-// --------------- 4the quarter event---------------
+//--------------- 4the quarter event---------------
 7526#
 A part of Joshua's missing menuscript that has a meaningful content.
 ^ffffff_^000000
 #
-// ---------- Additional Class- Gunslinger -----------
+//---------- Additional Class- Gunslinger-----------
 13100#
 A six-chambered revolver which is the most basic weapon for Gunslingers.
-Hit - 10.
+Hit-10.
 Class: ^777777Revolver^000000
 ATK:^77777730^000000
 Weight:  ^77777740^000000
@@ -15938,7 +15938,7 @@ Job:^777777Gunslinger^000000
 #
 13101#
 A six-chambered revolver which is the most basic weapon for Gunslingers.
-Hit - 10.
+Hit-10.
 Class: ^777777Revolver^000000
 ATK:^77777730^000000
 Weight:  ^77777740^000000
@@ -15948,7 +15948,7 @@ Job:^777777Gunslinger^000000
 #
 13102#
 A bloody red revolver that is rumored to be cursed.
-Hit - 10.
+Hit-10.
 Class: ^777777Revolver^000000
 ATK:^77777745^000000
 Weight:  ^77777745^000000
@@ -15958,7 +15958,7 @@ Job:^777777Gunslinger^000000
 #
 13103#
 A bloody red revolver that is rumored to be cursed.
-Hit - 10.
+Hit-10.
 Class: ^777777Revolver^000000
 ATK:^77777745^000000
 Weight:  ^77777745^000000
@@ -15969,7 +15969,7 @@ Job:^777777Gunslinger^000000
 13104#
 A rare revolver that is only produced when it is specially ordered. 
 The gun is authenticated by its creator's name engraved on the body.
-Hit - 10.
+Hit-10.
 Class: ^777777Revolver^000000
 ATK:^77777770^000000
 Weight:  ^77777750^000000
@@ -15980,7 +15980,7 @@ Job:^777777Gunslinger^000000
 13105#
 A rare revolver that is only produced when it is specially ordered. 
 The gun is authenticated by its creator's name engraved on the body.
-Hit - 10.
+Hit-10.
 Class: ^777777Revolver^000000
 ATK:^77777770^000000
 Weight:  ^77777750^000000
@@ -15992,7 +15992,7 @@ Job:^777777Gunslinger^000000
 A decorative gold revolver that brings its seer's attention with its beauty.
 Has a low chance of auto casting Coin Flip when attacking an enemy. 
 (The auto casting skill level equals to its user's original skill level.)
-Hit - 10.
+Hit-10.
 Class: ^777777Revolver^000000
 ATK:^77777720^000000
 Weight:  ^77777750^000000
@@ -16170,7 +16170,7 @@ A grenade launcher bullet with Water property.
 Class: ^777777Bullet^000000    ATK:^77777750^000000
 Weight:  ^7777770.5^000000      Property:^777777Water^000000
 #
-// ------------------ ｴﾑﾀﾚ ﾃﾟｰ｡ ------------------------
+//------------------ ｴﾑﾀﾚ ﾃﾟｰ｡------------------------
 13250#
 A cross shaped dagger that is small enough to be hidden inside the hand.
 Class: ^777777Throwing Weapon^000000
@@ -16357,7 +16357,7 @@ Job:^777777Ninja^000000
 #
 13300#
 A famous Huuma Ninja weapon that is shaped like a wing.
-AGI - 1, DEX - 2.
+AGI-1, DEX-2.
 Class: ^777777Huuma^000000    ATK:^777777150^000000
 Weight:  ^777777300^000000     Property:^777777Wind^000000
 Weapon Level: ^7777774^000000
@@ -16385,7 +16385,7 @@ Job:^777777Ninja^000000
 13303#
 A Huuma shuriken of Fire property that gives off sparks like a spectacular firework when used.
 Has a low chance of auto casting level 5 Fire Ball when doing short range physical attacks.
-DEX - 2.
+DEX-2.
 Class: ^777777Huuma^000000    ATK:^777777185^000000
 Weight:  ^777777150^000000     Property:^777777Fire^000000
 Weapon Level: ^7777774^000000
@@ -16428,7 +16428,7 @@ Weight:  ^77777715^000000
 Required Level: ^77777750^000000
 Job:^777777Ninja^000000
 #
-// ------------ Gunslinger bullets -------------
+//------------ Gunslinger bullets-------------
 12144#
 A cartridge which contains 500 Lighting Spheres within.
 ^ffffff_^000000
@@ -16469,7 +16469,7 @@ A cartridge which contains 500 Silver Bullets within.
 ^ffffff_^000000
 Weight:  ^77777725^000000
 #
-// --------- Hugel Odeng Quest
+//--------- Hugel Odeng Quest
 584#
 A bowl filled with
 hot, hearty fish
@@ -16975,7 +16975,7 @@ A mysterious blue box that seems to hold something inside, but you'll have to op
 Weight: ^77777720^000000
 #
 
-// -------------- Thai 2nd Cach item --------------
+//-------------- Thai 2nd Cach item--------------
 13538#
 A box containing scroll which enables using LV 10 Meteor Storm skill. You can feel the great magical force from the box. 
 ^ffffff_^000000
@@ -17055,7 +17055,7 @@ Weight : ^7777771^000000
 13553#
 A box containing scroll with dungeon map coordiations written on it. You will be move to the designated place by using the scroll. 
 You can choose from "Nogg Road" "Mjolnir Dead Pit" "Umbala Dungeon" "Einbroch Mine Dungeon" "Payon Dungeon" "Toy Dungeon" "Glast Heim Underprison" "Louyang Dungeon" "Hermit's Checkers" "Izlude Dungeon" "Turtle Island Dungeon" "Clock Tower B3f" "Clock Tower 3f" "Glast Heim Culvert 2f" "Sphinx Dungeon 4f" "Inside Pyramid 4f" "Prontera Culvert 3f" "Amatsu Dungeon 1f (Tatami Maze)" "Somatology Laboratory 1st floor" "Ayothya Ancient Shrine 2nd floor" 
-Warining - After usuing it, unless you choose the destination in 1 minute, it will get useless.
+Warining-After usuing it, unless you choose the destination in 1 minute, it will get useless.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -17141,7 +17141,7 @@ Weight : ^7777771^000000
 14527#
 A scroll with lots of dungeon coordination written on it. You can go to the place you want by tearing the paper into pieces.
 You can choose from "Nogg Road" "Mjolnir Dead Pit" "Umbala Dungeon" "Einbroch Mine Dungeon" "Payon Dungeon" "Toy Dungeon" "Glast Heim Underprison" "Louyang Dungeon" "Hermit's Checkers" "Izlude Dungeon" "Turtle Island Dungeon" "Clock Tower B3f" "Clock Tower 3f" "Glast Heim Culvert 2f" "Sphinx Dungeon 4f" "Inside Pyramid 4f" "Prontera Culvert 3f" "Amatsu Dungeon 1f (Tatami Maze)" "Somatology Laboratory 1st floor" "Ayothya Ancient Shrine 2nd floor" 
-Warining - After usuing it, unless you choose the destination in 1 minute, it will get useless.
+Warining-After usuing it, unless you choose the destination in 1 minute, it will get useless.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -17157,7 +17157,7 @@ Jobs : All
 Item to celebrate 4th anniversary of RO in the Philippines
 
 //--------------------11.1 Rachel------------------------
-// -------------------------- ｼﾒﾄﾏﾀﾎﾃｦﾆｮ ｽﾅｱﾔｹｫｱ篥ﾟｰ｡ ----------------------------
+//-------------------------- ｼﾒﾄﾏﾀﾎﾃｦﾆｮ ｽﾅｱﾔｹｫｱ篥ﾟｰ｡----------------------------
 
 1816#
 A pair of fierce claws
@@ -17585,10 +17585,10 @@ Jobs: ^777777All Jobs^000000
 #
 
 
-// ------------------- 2006 ｻﾝｱ・ｽﾅｱﾔﾄｫｵ・ﾃﾟｰ｡.-----------------------
+//------------------- 2006 ｻﾝｱ・ｽﾅｱﾔﾄｫｵ・ﾃﾟｰ｡.-----------------------
 //ｿｵｹｮｱﾇ 11.1 ｿ｡ｼｭ ｾ･ﾀﾌﾆｮ ﾁｦｿﾜﾇﾏｱ箙ﾎ ﾇﾕｴﾏｴﾙ.
 
-// ------------- ｾﾆｷ邉ｪ ｻﾝｱ・-----------
+//------------- ｾﾆｷ邉ｪ ｻﾝｱ・----------
 
 7561#
 A frozen heart that
@@ -17792,7 +17792,7 @@ Careful though, it
 doesn't mask your
 voice. Adds 5%
 tolerance to Curse.
-MDEF +1, Accuracy -5
+MDEF +1, Accuracy-5
 Class: ^777777Helmet^000000
 Defense: ^7777770^000000
 Head Position: ^777777Mid^000000
@@ -17826,7 +17826,7 @@ Required Level: ^77777740^000000
 Jobs: ^777777All Jobs^000000
 #
 
-// -------------- 2006 ﾃﾟｰ｡ｾﾆﾀﾌﾅﾛ -------------
+//-------------- 2006 ﾃﾟｰ｡ｾﾆﾀﾌﾅﾛ-------------
 
 5184#
 Once owned by a famous
@@ -18534,7 +18534,7 @@ Jobs : ^777777All Jobs^000000
 #
 
 
-// ---------------- ﾇ・ｺﾀ・ﾈｸｿﾇ -----------------
+//---------------- ﾇ・ｺﾀ・ﾈｸｿﾇ-----------------
 13710#
 A box containing a Gym Membership Card.
 If you give this Gym Membership Card to the special NPC, NPC teaches you a skill that increases your Maximum Weight Capacity.
@@ -18550,7 +18550,7 @@ Increases 200 weight per a skill level and level 10 is the maximum you can learn
 Weight : ^7777771^000000
 #
 
-// ---------------- ﾄｳｽｬｾﾆﾀﾌﾅﾛ 20070702 -----------------
+//---------------- ﾄｳｽｬｾﾆﾀﾌﾅﾛ 20070702-----------------
 13711#
 A box containing 10 Small Life Potions.
 Heals 5% of Maximum HP in every 5 seconds for 10 minutes.
@@ -18630,7 +18630,7 @@ Weight : ^7777771^000000
 13721#
 A box containing 10 scrolls with dungeon map coordiations written on it. You will be move to the designated place by using the scroll. 
 You can choose from "Nogg Road" "Mjolnir Dead Pit" "Umbala Dungeon" "Einbroch Mine Dungeon" "Payon Dungeon" "Toy Dungeon" "Glast Heim Underprison" "Louyang Dungeon" "Hermit's Checkers" "Izlude Dungeon" "Turtle Island Dungeon" "Clock Tower B3f" "Clock Tower 3f" "Glast Heim Culvert 2f" "Sphinx Dungeon 4f" "Inside Pyramid 4f" "Prontera Culvert 3f" "Amatsu Dungeon 1f (Tatami Maze)" "Somatology Laboratory 1st floor" "Ayothya Ancient Shrine 2nd floor" 
-Warining - After usuing it, unless you choose the destination in 1 minute, it will get useless.
+Warining-After usuing it, unless you choose the destination in 1 minute, it will get useless.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -18663,7 +18663,7 @@ When player's character becomes combat ineffective, the item buff effect will we
 Weight : ^7777771^000000
 #
 
-// ---------------- ﾄｳｽｬｾﾆﾀﾌﾅﾛ 20070801 -----------------
+//---------------- ﾄｳｽｬｾﾆﾀﾌﾅﾛ 20070801-----------------
 13738#
 A box containing 5 Glasses of Illustion.
 Increases Perfect Dodge by 20 and has 5 minutes of cool time after use.
@@ -18845,7 +18845,7 @@ When player's character becomes combat ineffective, the item buff effect will we
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ---------------- ﾀﾎｵｵｳﾗｽﾃｾﾆ ｰ｡ｺｭｿ・ﾄｳｽｬ ｾﾆﾀﾌﾅﾛ --------------
+//---------------- ﾀﾎｵｵｳﾗｽﾃｾﾆ ｰ｡ｺｭｿ・ﾄｳｽｬ ｾﾆﾀﾌﾅﾛ--------------
 
 12999#
 A box containing 10 Dead Branches. It is radiating some dangerous energy.
@@ -19210,7 +19210,7 @@ Allows to teleport to Rachel.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ---------- ﾇﾊｸｮﾇﾉ ｽﾂｸｮﾀﾇ ｳｯｰｳ -----------------
+//---------- ﾇﾊｸｮﾇﾉ ｽﾂｸｮﾀﾇ ｳｯｰｳ-----------------
 5357#
 A hair ornament made from Valkyrie's Feathers and precious gems. Rumored to protect it's wearer from any harm.
 Mdef + 10
@@ -19224,7 +19224,7 @@ A hairpin designed to resemble a popular monster, Angeling.
 It makes a wearer lightened. FLEE + 5.
 If putting it on with wearing 'a dress of angel', Luk + 6, Flee +5, Int +2 will be given.
 #
-// ------------- ﾇﾒｷﾎﾀｩ ﾃ狠ｦｸﾚ ---------------
+//------------- ﾇﾒｷﾎﾀｩ ﾃ狠ｦｸﾚ---------------
 5356#
 A pumpkin hat for celebrating the Halloween Festival. Let's ask for sweets with wearing this hat.
 Increase Physical and Magical Attack Strength against Devil Monster by 5%.
@@ -19238,7 +19238,7 @@ A new type of ROK Star badge.
 Weight : ^77777710^000000
 #
 
-// ------------------- 2006 ｻﾝｱ・ｽﾅｱﾔﾄｫｵ・ﾃﾟｰ｡.-----------------------
+//------------------- 2006 ｻﾝｱ・ｽﾅｱﾔﾄｫｵ・ﾃﾟｰ｡.-----------------------
 
 4332#
 ATK +5, INT +1
@@ -19257,7 +19257,7 @@ each physical attack.
 Guillotine Fist Damage +10%
 Monk Class Bonus:
 Uninterruptable Cast
-SP consumpion -10%.
+SP consumpion-10%.
 
 Item Class: ^777777Card^000000            
 Compound on: ^777777Armor^000000
@@ -19305,7 +19305,7 @@ Compound on: ^777777Helmet^000000
 Weight: ^7777771^000000
 #
 4337#
-ATK +25, DEF -5
+ATK +25, DEF-5
 Item Class: ^777777Card^000000            
 Compound on: ^777777Armor^000000
 Weight: ^7777771^000000
@@ -19318,7 +19318,7 @@ Compound on: ^777777Armor^000000
 Weight: ^7777771^000000
 #
 4339#
-ATK -25, DEF+3
+ATK-25, DEF+3
 Item Class: ^777777Card^000000            
 Compound on: ^777777Armor^000000
 Weight: ^7777771^000000
@@ -19535,7 +19535,7 @@ Compound on: ^777777Helmet^000000
 Weight: ^7777771^000000
 #
 4358#
-STR -6. Adds an
+STR-6. Adds an
 amount of STR equal
 to the compounded^FFFFFF         ^000000 helmet's upgrade level.
 Item Class: ^777777Card^000000            
@@ -19627,7 +19627,7 @@ increase Magic Attack
 Strength by 2%.
 ^FFFFFF_^000000
 Cast Time with card=
-Original Cast Time -
+Original Cast Time-
 (Original Cast Time *^FFFFFF    ^000000 Helmet Upgrade Level/100)
 Item Class: ^777777Card^000000            
 Compound on: ^777777Helmet^000000
@@ -19662,7 +19662,7 @@ Compound on: ^777777Armor^000000
 Weight: ^7777771^000000
 #
 4370#
-VIT -5.
+VIT-5.
 The compounded armor's
 upgrade level affects
 this card's VIT bonus.
@@ -19706,7 +19706,7 @@ Compound on: ^777777Helmet^000000
 Weight: ^7777771^000000
 #
 4373#
-LUK -5. Adds an
+LUK-5. Adds an
 amount of LUK and CRIT
 equal to the coumpounded
 garment's upgrade level. (However, the critical level is increased up to the upgrade +10)
@@ -19876,7 +19876,7 @@ Weight: ^7777771^000000
 #
 4386#
 [Not Yet Implemented]
-MDEF -20.
+MDEF-20.
 Adds a chance of
 autocasting Lv. 1
 Magnetic Earth each
@@ -19970,7 +19970,7 @@ Compound on: ^777777Weapon^000000
 Weight: ^7777771^000000
 #
 4396#
-AGI -5. Adds an
+AGI-5. Adds an
 amount of AGI equal
 to the compounded
 Shoes's upgrade level.
@@ -19979,7 +19979,7 @@ Compound on: ^777777Shoes^000000
 Weight: ^7777771^000000
 #
 4397#
-INT -6. Adds an
+INT-6. Adds an
 amount of INT equal
 to the compounded
 Shield's upgrade level.^FFFFFF   ^000000 Item Class: ^777777Card^000000
@@ -19999,7 +19999,7 @@ Weight: ^7777771^000000
 Enchants compounded
 weapon with the Occult
 Impaction skill effect.^FFFFFF   ^000000 Each attack drains 1 SP.
-DEF -30, Flee -30.
+DEF-30, Flee-30.
 Item Class: ^777777Card^000000
 Compound on: ^777777Weapon^000000
 Weight: ^7777771^000000
@@ -20019,7 +20019,7 @@ Compound on: ^777777Armor^000000
 Weight: ^7777771^000000
 #
 4401#
-Flee +10, DEF -5
+Flee +10, DEF-5
 Item Class: ^777777Card^000000
 Compound on: ^777777Armor^000000
 Weight: ^7777771^000000
@@ -20098,7 +20098,7 @@ Compound on: ^777777Weapon^000000
 Weight: ^7777771^000000
 #
 
-// ------------- ﾃ･ﾀﾐｱ・----------------------
+//------------- ﾃ･ﾀﾐｱ・---------------------
 11000#
 A book documenting the history of Prontera.
 There's a whole chapter dedicated to Tristam III.
@@ -20183,7 +20183,7 @@ fiction author.
 Weight: ^7777771^000000
 #
 
-// ----------------------- ﾅ荳｣ﾈｭｻ・ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ ----------------------
+//----------------------- ﾅ荳｣ﾈｭｻ・ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ----------------------
 7704#
 A device that can
 measure the ground's
@@ -20205,7 +20205,7 @@ by a Geologist.
 Weight: ^7777770^000000
 #
 
-// ---------------------- ﾅ荳｣ﾈｭｻ・ｽﾅｱﾔ ﾀ蠎・ｾﾆﾀﾌﾅﾛ ----------------------
+//---------------------- ﾅ荳｣ﾈｭｻ・ｽﾅｱﾔ ﾀ蠎・ｾﾆﾀﾌﾅﾛ----------------------
 1370#
 A gigantic and
 ridiculously heavy
@@ -20261,7 +20261,7 @@ A sniping rifle with
 a lengthened barrel
 for improved accuracy.
 Critical +20%, Attack
-Speed -3%. Adds a low
+Speed-3%. Adds a low
 chance of autocasting
 Lv. 5 Tracking with
 each physical attack.
@@ -20278,7 +20278,7 @@ A sniping rifle with
 a lengthened barrel
 for improved accuracy.
 Critical +20%, Attack
-Speed -3%. Adds a low
+Speed-3%. Adds a low
 chance of autocasting
 Lv. 5 Tracking with
 each physical attack.
@@ -20353,7 +20353,7 @@ A sawed off shotgun
 that fires shots more
 rapidly like a pistol
 at the cost of reduced
-accuracy. HIT -5.
+accuracy. HIT-5.
 Splash damage.
 Increases Attack
 Speed by 20%.
@@ -20370,7 +20370,7 @@ A sawed off shotgun
 that fires shots more
 rapidly like a pistol
 at the cost of reduced
-accuracy. HIT -5.
+accuracy. HIT-5.
 Splash damage.
 Increases Attack
 Speed by 20%.
@@ -20458,7 +20458,7 @@ Defense: ^7777770^000000      Weight: ^77777710^000000
 Jobs: ^777777All^000000
 #
 
-// -------- Reward Hunter event ---------
+//-------- Reward Hunter event---------
 
 12713#
 A crystal that glares fearfully. If the one has a courage to break it, it shall grant the power of monster to the one.
@@ -20466,7 +20466,7 @@ A crystal that glares fearfully. If the one has a courage to break it, it shall 
 Weight : ^7777771^000000
 #
 
-// ------------- ﾇﾊｸｮﾇﾉ ｹﾚｽｺ ﾆﾐﾅｰﾁ・ｾﾆﾀﾌﾅﾛ ------------------
+//------------- ﾇﾊｸｮﾇﾉ ｹﾚｽｺ ﾆﾐﾅｰﾁ・ｾﾆﾀﾌﾅﾛ------------------
 13871#
 A 'Powerful Wizard' card package for Magician job classes. Contains 'Bloody Butterfly', 'Parasite', 'Harpy', 'Miyabi Ningyo', 'Wicked Nymph' and 'Loli Ruri' card.
 ^ffffff_^000000
@@ -20611,7 +20611,7 @@ A box containing 10 Earth Elemental Converters for your weapon.
 Weight : ^7777771^000000
 #
 
-// -------- 2007 ﾀﾏｺｻ ｿｬｸｻ ﾄｳｽｬｾﾆﾀﾌﾅﾛ ----------
+//-------- 2007 ﾀﾏｺｻ ｿｬｸｻ ﾄｳｽｬｾﾆﾀﾌﾅﾛ----------
 5380#
 A gaping fish head is made into a hat. You can smell the stench of fish when it opens the mouth.
 Adds a low chance of automatically casting Lv.1 Endow Tsunami with each physical attack.
@@ -20639,7 +20639,7 @@ Jobs : ^777777All^000000
 
 13902#
 A box that contains 1 Fish Head Hat in it.
-Fish Head Hat - A gaping fish head is made into a hat. You can smell the stench of fish when it opens the mouth.
+Fish Head Hat-A gaping fish head is made into a hat. You can smell the stench of fish when it opens the mouth.
 Adds a low chance of automatically casting Lv.1 Endow Tsunami with each physical attack.
 Class : ^777777Helmet^000000    Defense : ^7777771^000000
 Head Position : ^777777Upper^000000    Weight : ^77777740^000000
@@ -20650,7 +20650,7 @@ Weight : ^7777771^000000
 
 13903#
 A box that contains 1 Santa Poring Hat in it.
-Santa Poring Hat - A cute hat made of hopping poring wearing a Santa's Hat.
+Santa Poring Hat-A cute hat made of hopping poring wearing a Santa's Hat.
 Adds 3% additional Darkness property damage to monsters, and reduces Darkness property attacks from enemies by 3%.
 MDEF + 2. Impossible to upgrade.
 Class : ^777777Helmet^000000    Defense : ^7777772^000000
@@ -20662,7 +20662,7 @@ Weight : ^7777771^000000
 
 13904#
 A box that contains 1 Bell Ribbon in it.
-Bell Ribbon - A cute ribbon that has little jingling bells.
+Bell Ribbon-A cute ribbon that has little jingling bells.
 Enables use of Lv.1 Angelus. VIT +1.
 Class : ^777777Helmet^000000    Defense : ^7777773^000000
 Head Position : ^777777Upper^000000    Weight : ^77777720^000000
@@ -20671,7 +20671,7 @@ Jobs : ^777777All^000000
 Weight : ^7777771^000000
 #
 
-// ----- ﾅｩｸｮｽｺｸｶｽｺ ﾀﾌｺ･ﾆｮ ｻ・ｸ ｼｰ --------
+//----- ﾅｩｸｮｽｺｸｶｽｺ ﾀﾌｺ･ﾆｮ ｻ・ｸ ｼｰ--------
 5811#
 A beard seeming to make you let out a guffaw
 Type : ^777777Helm^000000    Defense : ^7777770^000000
@@ -20739,7 +20739,7 @@ Mushroom contained pancake. People likes its light taste
 Weight : ^77777715^000000
 #
 
-// --------------- ﾇﾊｸｮﾆﾇ ﾀﾚﾃｼﾁｦﾀﾛ Headgear 7ﾁｾ -------------
+//--------------- ﾇﾊｸｮﾆﾇ ﾀﾚﾃｼﾁｦﾀﾛ Headgear 7ﾁｾ-------------
 5372#
 A magical kitty hat which shows various expressions in its face.
 Reduces Cast Delay of all skills by 3 %.
@@ -20877,7 +20877,7 @@ Jobs : ^777777All^000000
 Weight : ^7777771^000000
 #
 
-// ------------- ｺ・・ﾀﾌｺ･ﾆｮ ---------------
+//------------- ｺ・・ﾀﾌｺ･ﾆｮ---------------
 5145#
 A hat especially designed for Carnival festival.
 All Stats + 3.
@@ -20887,7 +20887,7 @@ Location : ^777777Upper^000000    Weight : ^77777710^000000
 Jobs : ^777777All^000000
 #
 
-// ------------------ ｺ・・ｰ｡ｹﾟ ｽﾃｸｮﾁ・-----------------------
+//------------------ ｺ・・ｰ｡ｹﾟ ｽﾃｸｮﾁ・----------------------
 5273#
 Wig with Green, White and Red Colors
 Increase moving speed when equiped
@@ -20928,7 +20928,7 @@ Location : ^777777Upper, Mid^000000    Weight : ^77777710^000000
 Jobs : ^777777All^000000
 #
 
-// -------------- ﾀﾏｺｻ Headgear 12ﾁｾ -----------------
+//-------------- ﾀﾏｺｻ Headgear 12ﾁｾ-----------------
 5294#
 Shaped like a whisper. It feels like massaged on a face. No sure that it is good for skin.
 AGI + 3. Increase  ghost damage by 10%.
@@ -21063,7 +21063,7 @@ Head Position : ^777777Upper^000000
 Job : ^777777All^000000
 #
 
-// ---------- 2007 ｴ・ｸ ﾆﾗ ｻﾚ----------
+//---------- 2007 ｴ・ｸ ﾆﾗ ｻﾚ----------
 13804#
 A box with 10 'I LOVE YOU!' Fire crackers inside.
 ^ffffff_^000000 Phrase 'I LOVE YOU!' pops out with Fire cracker.
@@ -21095,7 +21095,7 @@ A box with 10 'MERRY CHRISTMAS!' Fire crackers inside.
 Weight : ^7777771^000000
 #
 
-// ----------- ｴ・ｸ ﾆ・ﾃﾟｰ｡ ------------------
+//----------- ｴ・ｸ ﾆ・ﾃﾟｰ｡------------------
 9032#
 An egg that has Cute-pet Knife Goblin sleeping in it.  You can wake it with [Pet Incubator].
 Class : ^777777Monster Egg^000000
@@ -21198,26 +21198,26 @@ Weight : ^7777771^000000
 #
 13821#
 A box with 10 Green Apples inside. 
-Green Apple - A tasty green apple. Great food for Goblin.
+Green Apple-A tasty green apple. Great food for Goblin.
 Weight : ^7777771^000000
 #
 13822#
 A box with 10 Barbeques inside.
-Barbeque - A wildly barbecued meat. Great food for Deleter.
+Barbeque-A wildly barbecued meat. Great food for Deleter.
 Weight : ^7777771^000000
 #
 13823#
 A box with 10 Meat Skewer inside.
-Meat Skewer - Well grilled meat skewer. It's looking delicious. Great food for Diabolic.
+Meat Skewer-Well grilled meat skewer. It's looking delicious. Great food for Diabolic.
 Weight : ^7777771^000000
 #
 13824#
 A box with 10 Spirit Liquors inside.
-Spirit Liquor - A drink for the departed soul to outlive in human world. Great drink for Wanderer.
+Spirit Liquor-A drink for the departed soul to outlive in human world. Great drink for Wanderer.
 Weight : ^7777771^000000
 #
 
-// ---------- 2007 ｴ・ｸ ﾆﾗ ----------
+//---------- 2007 ｴ・ｸ ﾆﾗ----------
 14546#
 Phrase 'I LOVE YOU!' pops out with Fire cracker.
 Flammable. Keep out of reach of children.
@@ -21249,7 +21249,7 @@ Flammable. Keep out of reach of children.
 Weight : ^7777772^000000
 #
 
-// ------------------ ﾅﾂｱｹ ﾆﾐﾅｰﾁ・Headgear ｾﾆﾀﾌﾅﾛ ------------------
+//------------------ ﾅﾂｱｹ ﾆﾐﾅｰﾁ・Headgear ｾﾆﾀﾌﾅﾛ------------------
 5310#
 A Hairband which is attached an electric bulb. It doesn't look dangerous even in the dark.
 10% tolerance against Dark status. It can use level 1 sight.
@@ -21301,7 +21301,7 @@ Required Level : ^77777735^000000
 Jobs : ^777777All Jobs^000000
 #
 
-// --------------------- ｷｯｽﾃｾﾆ ｻﾝｱ・ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ -----------------------
+//--------------------- ｷｯｽﾃｾﾆ ｻﾝｱ・ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ-----------------------
 5243#
 A hat which is made by fur of many kinds of animals. It has earplugs which protect ears against cold weather. It is known as a traditional hat from some frigid regions.
 10% tolerance against the Frozen.
@@ -21310,7 +21310,7 @@ Head Position : ^777777Upper, Middle^000000    Weight : ^77777780^000000
 Jobs : ^777777All Jobs^000000
 #
 
-// ----------- ﾇﾊｸｮﾇﾉ ﾄｫｵ・ｹﾚｽｺ ---------------
+//----------- ﾇﾊｸｮﾇﾉ ﾄｫｵ・ｹﾚｽｺ---------------
 13926#
 A gift box with cards only for Crusaders.
 Contains 'Archdam', 'Permeter', 'Freezer' and 'Heater' Card.
@@ -21373,13 +21373,13 @@ A box containing 4 'Pitman' Cards.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// --- Easter 2008
+//--- Easter 2008
 7605#
 Egg of a kind of bird species. Tasty, nutritious and is very suitable for kid's meal.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ---------- ﾇﾊｸｮﾇﾉ 3ｿ・ｹﾚｽｺ ﾆﾐﾅｰﾁ・----------------
+//---------- ﾇﾊｸｮﾇﾉ 3ｿ・ｹﾚｽｺ ﾆﾐﾅｰﾁ・---------------
 13987#
 A box with 5 Rough Oridecons inside.
 ^ffffff_^000000
@@ -21395,7 +21395,7 @@ A box with 10 Fire Bottles and 10 Acid Bottles inside.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------------- ｺ・・ﾇﾊｸｮﾇﾉ ﾃｶ,ｰｭﾃｶ,ｼｮﾅｺｻﾚ ----------------
+//------------- ｺ・・ﾇﾊｸｮﾇﾉ ﾃｶ,ｰｭﾃｶ,ｼｮﾅｺｻﾚ----------------
 13970#
 A box containing 10 Irons.
 ^ffffff_^000000
@@ -21416,7 +21416,7 @@ A box containing 30 poison bottles. Handle with care.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ----------- ﾇﾊｸｮﾇﾉ ｵｶｾ犲ｴ ｻﾚ ﾃﾟｰ｡ ------------
+//----------- ﾇﾊｸｮﾇﾉ ｵｶｾ犲ｴ ｻﾚ ﾃﾟｰ｡------------
 14004#
 A box containing 10 Poison Bottles.
 ^ffffff_^000000
@@ -21429,7 +21429,7 @@ A box containing 5 Poison Bottles.
 Weight : ^7777771^000000
 #
 
-// ------------- ﾇﾊｸｮﾇﾉ ﾅｬｸｰｾ・ﾀﾌｺ･ﾆｮ ---------------
+//------------- ﾇﾊｸｮﾇﾉ ﾅｬｸｰｾ・ﾀﾌｺ･ﾆｮ---------------
 2441#
 A sandals received as a gift from Comodo Environmental Commission.
 It seems to match perfect with Comodo beach.
@@ -21450,7 +21450,7 @@ Class : ^777777Garment^000000      DEF : ^7777770^000000
 Weight : ^77777760^000000
 Job : ^777777All^000000
 #
-// ---------- ﾇﾊｸｮﾇﾉ 4ｿ・ｹﾚｽｺ ﾆﾐﾅｰﾁ・----------------
+//---------- ﾇﾊｸｮﾇﾉ 4ｿ・ｹﾚｽｺ ﾆﾐﾅｰﾁ・---------------
 13994#
 A box containing 5 Speed Potions.
 ^ff0000This item is not refundable.^000000
@@ -21497,24 +21497,24 @@ Weight : ^7777771^000000
 
 14001#
 A box containing 25 Siege White Potions and 10 Siege Blue Potions.
-Siege White Potion - Heals 400~500  Hit Point. HP Affected by Regeneration Potion.
-Siege Blue Potion - Restores 50-70 SP
+Siege White Potion-Heals 400~500  Hit Point. HP Affected by Regeneration Potion.
+Siege Blue Potion-Restores 50-70 SP
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 
 14002#
 A box containing 50 Siege White Potions and 20 Siege Blue Potions.
-Siege White Potion - Heals 400~500  Hit Point. HP Affected by Regeneration Potion.
-Siege Blue Potion - Restores 50-70 SP
+Siege White Potion-Heals 400~500  Hit Point. HP Affected by Regeneration Potion.
+Siege Blue Potion-Restores 50-70 SP
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 
 14003#
 A box containing 100 Siege White Potions and 50 Siege Blue Potions.
-Siege White Potion - Heals 400~500  Hit Point. HP Affected by Regeneration Potion.
-Siege Blue Potion - Restores 50-70 SP
+Siege White Potion-Heals 400~500  Hit Point. HP Affected by Regeneration Potion.
+Siege Blue Potion-Restores 50-70 SP
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -21534,11 +21534,11 @@ Weight : ^77777710^000000
 
 13571#
 A light box containing 100 Giant Fly Wings.
-^ffffff_^000000 Giant Fly Wing - Enables instant teleportation of a party to random areas when used by a Party Master. ^ffffff_^000000
+^ffffff_^000000 Giant Fly Wing-Enables instant teleportation of a party to random areas when used by a Party Master. ^ffffff_^000000
 Weight : ^7777771^000000
 #
 
-// ---------------------- ｿ・ｴｼﾒﾈｯｼｭ -------------------------------
+//---------------------- ｿ・ｴｼﾒﾈｯｼｭ-------------------------------
 
 12153#
 Summon a 1st
@@ -21747,7 +21747,7 @@ targeted Mercenary.
 ^ffffff_^000000
 Weight: ^77777710^000000
 #
-// ------------------ ｿ・ｴｿ・ﾆﾇ ------------------
+//------------------ ｿ・ｴｿ・ﾆﾇ------------------
 12241#
 A Concentration Potion
 for Mercenaries that
@@ -21773,7 +21773,7 @@ Attack Speed.
 Weight: ^77777720^000000
 #
 
-// ---------------- ｸｱｷｹﾀﾌ ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ ------------------
+//---------------- ｸｱｷｹﾀﾌ ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ------------------
 7730#
 A ticket proving
 that the bearer has
@@ -21898,7 +21898,7 @@ a new mission.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
-// -------------- 11.3 ﾀ簀ﾛ -------------------
+//-------------- 11.3 ﾀ簀ﾛ-------------------
 7751#
 A worn-out white
 cloth that can be
@@ -21939,7 +21939,7 @@ Merchant NPCs.
 Weight: ^7777771^000000
 #
 
-// ------------ ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ -----------------
+//------------ ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ-----------------
 7755#
 Much of the writing
 on this note isn't
@@ -21958,7 +21958,7 @@ Weight: ^7777771^000000
 #
 
 
-// ------------------- 11.3 ｽﾅｱﾔ ﾀ蠎・ｾﾆﾀﾌﾅﾛ --------------------------
+//------------------- 11.3 ｽﾅｱﾔ ﾀ蠎・ｾﾆﾀﾌﾅﾛ--------------------------
 2122#
 A magnificent
 platinum shield that
@@ -23019,7 +23019,7 @@ it wasn't completed.
 Maybe the demon
 changed his mind?
 MATK +15%, STR +3,
-INT +3, LUK -20.
+INT +3, LUK-20.
 Has a certain chance
 of inflicting the Coma
 status to Demihuman
@@ -23366,7 +23366,7 @@ Required Level: ^77777770^000000
 Jobs: ^777777Gunslinger Job^000000
 #
 
-// ------------ 11.3 ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ --------------
+//------------ 11.3 ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ--------------
 7722#
 A loan document
 that includes the
@@ -23414,7 +23414,7 @@ seal of the King of the Rune-Midgarts Kingdom.
 Weight: ^7777770^000000
 #
 
-// ----------------- 20070808 ｽﾅｱﾔCard 34ﾁｾ -----------------
+//----------------- 20070808 ｽﾅｱﾔCard 34ﾁｾ-----------------
 4408#
 Increases Physical
 damage to Holy,
@@ -23425,7 +23425,7 @@ Slot: ^777777Armor^000000
 Weight: ^7777771^000000
 #
 4409#
-MATK +5%, DEF -10,
+MATK +5%, DEF-10,
 and Max SP +100 if
 wearer is a Mage
 class character.
@@ -23716,7 +23716,7 @@ Weight: ^7777771^000000
 #
 4438#
 Max SP +100 and
-Max HP -100 if the
+Max HP-100 if the
 wearer is a Mage
 class character.
 Increases damage of
@@ -23759,7 +23759,7 @@ Item Class: ^777777Card^000000
 Slot: ^777777Shoes^000000
 Weight: ^7777771^000000
 #
-//---------------- 2008 Easter ----------------------------
+//---------------- 2008 Easter----------------------------
 7605#
 An egg that was
 laid by a chicken,
@@ -23770,7 +23770,7 @@ it's been cooked.
 Weight : ^7777771^000000
 #
 
-// --------- ﾀｯｷｴ ｺｹｼ・2006 --------
+//--------- ﾀｯｷｴ ｺｹｼ・2006--------
 7594#
 ﾇﾒｸﾓｴﾏ ｿ･ｸｶｿ｡ｰﾔ ｺｸｳｻｴﾂ ｼﾒｴﾏｾﾆﾀﾇ ﾆ暿・
 ^ffffff_^000000
@@ -23797,7 +23797,7 @@ Item Class : ^777777Headgear^000000    Defense : ^7777770^000000
 Location : ^777777Upper^000000    Weight : ^77777730^000000
 Available Job : ^777777All^000000
 #
-//--------------------- ｷﾎﾀﾌﾅｩｶ・ﾀﾌｺ･ﾆｮ -----------------------------
+//--------------------- ｷﾎﾀﾌﾅｩｶ・ﾀﾌｺ･ﾆｮ-----------------------------
 5206#
 A tiny romantic white flower.
 Reduces damage from Plant monsters by 3%.
@@ -23805,7 +23805,7 @@ Item Class : ^777777Headgear^000000    Defense : ^7777770^000000
 Location : ^777777Lower^000000    Weight : ^77777710^000000
 Available Job : ^777777Every Job except Novice Class^000000
 #
-// -------------------------- ﾄｺﾆｮｺﾏ ｾﾆﾀﾌﾅﾛ ------------------------------
+//-------------------------- ﾄｺﾆｮｺﾏ ｾﾆﾀﾌﾅﾛ------------------------------
 5259#
 ｵｿｹ貘ﾇ ﾇﾑ ｳｪｶ｡ ｻ・ﾙｴﾂ ﾄｿｴﾙｶ・ﾁ・ﾂﾀｻ ｺｻ ｵ・ｸｸｵ・ｸﾚ.
 ｸﾀｺ ﾅｩﾁｸ ｼﾏｰ・ﾄ｣ﾀﾇﾏｴﾙ. ｱ・ﾄﾚｷﾎ ｹｰﾀｻ ｻ｡ｾﾆｵ鯀ｩ ｳﾐﾀｺ ｹ・ｧｿ｡ ｻ・ﾑｴﾙ.
@@ -23843,7 +23843,7 @@ Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
 Location : ^777777Upper^000000    Weight : ^77777750^000000
 Jobs : ^777777All^000000
 #
-// ----------------------------2007 ﾁﾟｱｹ ｿｩｼｺﾀﾇ ｳｯ -------------------------
+//----------------------------2007 ﾁﾟｱｹ ｿｩｼｺﾀﾇ ｳｯ-------------------------
 5800#
 A blushing impression of a bridegroom.
 Reduces damage from Demihuman monsters by 3%.
@@ -23860,7 +23860,7 @@ Class : ^777777Headgear^000000    Defense : ^7777775^000000
 Location : ^777777Upper^000000    Weight : ^77777710^000000
 Job : ^777777All^000000
 #
-// ------------------------ ﾀﾎｵｵ ｾﾆｹﾇｳｯ ﾀﾌｺ･ﾆｮ -----------------------
+//------------------------ ﾀﾎｵｵ ｾﾆｹﾇｳｯ ﾀﾌｺ･ﾆｮ-----------------------
 5154#
 Father's sunglasses. It seems elegant and dignified when worn.
 Item Class : ^777777Headgear^000000    Defense : ^7777773^000000
@@ -23881,7 +23881,7 @@ Item Class : ^777777Headgear^000000    Defense : ^7777770^000000
 Location : ^777777Lower^000000    Weight : ^77777710^000000
 Available Job : ^777777All^000000
 #
-// ------------------ 2006 ｶﾗｳｪｷﾎﾅｩ ｹﾙﾀﾌｺ・-----------------
+//------------------ 2006 ｶﾗｳｪｷﾎﾅｩ ｹﾙﾀﾌｺ・----------------
 5208#
 A hat made in the image of a scary magical book which attacks human.
 Enable a 5% chance of gaining 8% of the damage inflicted on an enemy as HP with each attack.
@@ -23893,14 +23893,14 @@ Location : ^777777Upper^000000    Weight : ^77777730^000000
 Required Level : ^77777740^000000
 Available Job : ^777777Every Job except Novice Class^000000
 #
-// ----------------- 2006 ﾅﾂｱｹ ｾﾆｹﾇ ｳｯ --------------
+//----------------- 2006 ﾅﾂｱｹ ｾﾆｹﾇ ｳｯ--------------
 5209#
 A yellow basball cap worn to keep the sun from your eyes.
 Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
 Location : ^777777Upper^000000    Weight : ^77777730^000000
 Available Job : ^777777Every Job except Novice Class^000000
 #
-// ------------------ ﾈ｣ﾁﾖ ｱｹｱ・ｸﾚ ------------------------
+//------------------ ﾈ｣ﾁﾖ ｱｹｱ・ｸﾚ------------------------
 5264#
 A spirit of Austrailia.
 All Status + 2
@@ -23908,14 +23908,14 @@ Item Class : ^777777Headgear^000000    Defense : ^7777774^000000
 Location : ^777777Upper^000000    Weight : ^77777750^000000
 Available Job : ^777777All^000000
 #
-// ------------------- ﾅﾂｱｹ ｼﾛｲ・ｾﾆﾀﾌﾅﾛ --------------------
+//------------------- ﾅﾂｱｹ ｼﾛｲ・ｾﾆﾀﾌﾅﾛ--------------------
 5802#
 An animal representing Thailand. It's huge but very innocent and kind to human.
 Item Class : ^777777Headgear^000000    Defense : ^7777773^000000
 Location : ^777777Upper^000000    Weight : ^77777750^000000
 Available Job : ^777777All^000000
 #
-// -------------------------- ﾀｽｿeadgear --------------------
+//-------------------------- ﾀｽｿeadgear--------------------
 12244#
 ｾ牴｣ ｿﾀｷ｡ｵﾇｾ・ｺｸﾀﾌｴﾂ ｼｱｹｰｻﾚ. ｹｫｾ｡ ﾀｯｼｭｱ暲ｺ ｼｱｹｰﾀﾌ ｵ鮴鋿ﾖﾁ・ｾﾊﾀｻｱ・ｽﾍｴﾙ.
 ^ffffff_^000000
@@ -23944,7 +23944,7 @@ Location : ^777777Upper-Mid^000000
 Weight : ^77777750^000000
 Available Job : ^777777All^000000
 #
-// --------- India Battle Manual
+//--------- India Battle Manual
 14545#
 A manual that explains the effective way of the battle.
 It is a very detailed and well composed manual.
@@ -23959,7 +23959,7 @@ Weight : ^7777771^000000
 #
 13764#
 A box with 5 Novice Battle Manual inside.
-Novice Battle Manual - If you give this manual to the special NPC, you can get Triple Exp.
+Novice Battle Manual-If you give this manual to the special NPC, you can get Triple Exp.
 Requires Base Level no higher than 40.
 Weight : ^7777771^000000
 #
@@ -23976,7 +23976,7 @@ A chunk of memory from Thanatos.
 Weight : ^77777710^000000
 #
 
-// ---------- ﾇﾊｸｮﾇﾉ ﾆｵﾄﾉﾀﾌﾅｩ ｸﾆﾁﾖｸﾚ -----------
+//---------- ﾇﾊｸｮﾇﾉ ﾆｵﾄﾉﾀﾌﾅｩ ｸﾆﾁﾖｸﾚ-----------
 5415#
 A special hat created to celebrate 5th year anniversary of RO in the Philippines
 (Item feature will disappear after September 30, 2008.)
@@ -23993,14 +23993,14 @@ Available Job : ^777777All^000000
 5416#
 Taste of beer after a shower? Wow~!
 Drinking is prohibited for minors!
-Hit -10, Cri+5, Perfect Dodge + 5, 
+Hit-10, Cri+5, Perfect Dodge + 5, 
 Inflict 7% more damage with Critical Attack. 10 % additional tolerance to FREEZE status.
 Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
 Location : ^777777Upper^000000    Weight : ^77777760^000000
 Required Lv. : ^77777718^000000
 Available Job : ^777777Every Job except Novice Class^000000
 #
-// ---------- ﾇﾊｸｮﾇﾉ 5ｿ・ｹﾚｽｺ ﾆﾐﾅｰﾁ・----------------
+//---------- ﾇﾊｸｮﾇﾉ 5ｿ・ｹﾚｽｺ ﾆﾐﾅｰﾁ・---------------
 14284#
 A box that contains 1 'Muffler' in it. Available for 1 week.
 A scarf, usually worn around the neck and shoulders for warmth.
@@ -24086,7 +24086,7 @@ Required Level : ^77777795^000000
 Jobs : ^777777All Transcendent Jobs except Novice^000000
 #
 
-// --------------- ﾇﾊｸｮﾆﾇ ﾀﾚﾃｼﾁｦﾀﾛ Headgear ﾀﾌﾇﾁｸｮﾆｮ -------------
+//--------------- ﾇﾊｸｮﾆﾇ ﾀﾚﾃｼﾁｦﾀﾛ Headgear ﾀﾌﾇﾁｸｮﾆｮ-------------
 5421#
 A headgear which imitates an ears of Ifrit, the spiritual owner of fire.
 STR + 1, Mdef + 3
@@ -24147,7 +24147,7 @@ Jobs : ^777777Every Job except Novice Class^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// --------------- 2008-07 ﾇﾊｸｮﾆﾇ Headgear 6ﾁｾ -------------
+//--------------- 2008-07 ﾇﾊｸｮﾆﾇ Headgear 6ﾁｾ-------------
 5325#
 Unusual item, probably made from outer space somewhere. Weird beams emerges around eyes when worn.
 ATK, MATK + 2%, Dex + 1
@@ -24282,8 +24282,8 @@ Weight : ^7777771^000000
 #
 
 
-// ------------- Ep. 12 ---------------
-// ------------- ﾀ・・ｺｸｻ・ｾﾆﾀﾌﾅﾛ ---------------
+//------------- Ep. 12---------------
+//------------- ﾀ・・ｺｸｻ・ｾﾆﾀﾌﾅﾛ---------------
 13036#
 A dagger that is specialized for assassination and killing humanoids.
 STR + 1, AGI + 1
@@ -24661,7 +24661,7 @@ Jobs: ^777777Thief Classes,Archer^000000
 13108#
 A Pistol made for short and medium ranged battles against humanoids.
 It seems to be capable to give damage through the bulletproof vest.
-Dex + 2, Accuracy - 10
+Dex + 2, Accuracy-10
 Increases Physical Attack Strength to Demihuman monster by 55%.
 Ignores physical defense from Demihuman monster by 20%.
 When attacking, and weapon awakening in consistent probability, Has a chance of Increasing Attack Speed by 100% for 3 seconds.
@@ -24944,7 +24944,7 @@ A sealed paper envelope. It seems to be contained important message in it.
 Weight: ^7777771^000000
 #
 
-// ------------ ｸﾞｸｮｾ・ｴ・ｺｸｻﾛ ----------------
+//------------ ｸﾞｸｮｾ・ｴ・ｺｸｻﾛ----------------
 13412#
 One of the twin sword of Naght Sieger. The blue blade shows sharpness of this sword.
 When attacking there is a chance that for 5 seconds you will completely disregard the defense of the opponent.
@@ -25005,7 +25005,7 @@ Continental Guard. Baloq.
 Weight: ^7777770^000000
 #
 
-// ------------ ｸｶｿﾕ ｸﾎﾅｩ ----------------
+//------------ ｸｶｿﾕ ｸﾎﾅｩ----------------
 2536#
 Lucifer's skin, cursed by devil's language. It seems threw on the back.
 MDEF + 2, MHP + 200, FLEE + 10
@@ -25101,7 +25101,7 @@ Weight: ^77777725^000000
 Jobs: ^777777Above Transcendent 2-1 Classes^000000
 #
 
-// ---------- ﾇﾒﾂｦ ﾅﾗｽｺﾆｮ -----------
+//---------- ﾇﾒﾂｦ ﾅﾗｽｺﾆｮ-----------
 2129#
 A thick book contained basic skills for clerics. 
 HP, SP Recovery 3%. INT + 1.
@@ -25340,7 +25340,7 @@ Jobs : ^777777Assassin Cross^000000
 #
 1572#
 This helps students study and build a stroung foundation of using magic. 
-If you're having trouble with using... - Author : Sage Shawn.
+If you're having trouble with using...-Author : Sage Shawn.
 MATK + 160, INT + 3, Increase in SP Recovery Rate by 5%.
 Item Class : ^777777Book^000000      ATK : ^77777760^000000
 Weight : ^77777730^000000      Property : ^777777Neutral^000000
@@ -25360,7 +25360,7 @@ Required Level : ^77777770^000000
 Jobs : ^777777Priest, Sage, Taekwon Master^000000
 #
 
-// ------------- ﾀ・・ﾈﾖﾀ・---------------
+//------------- ﾀ・・ﾈﾖﾀ・--------------
 7828#
 A badge that is provided to warrior who brought great honor in the Battle field. 
 ^ffffff_^000000
@@ -25370,7 +25370,7 @@ A badge that is provided to warrior who brought great honor in the Battle field.
 ^ffffff_^000000
 #
 
-// -------- ｺﾀﾀﾎﾀﾇ ｽﾅﾀ・ｾﾆﾀﾌﾅﾛ ------------
+//-------- ｺﾀﾀﾎﾀﾇ ｽﾅﾀ・ｾﾆﾀﾌﾅﾛ------------
 6001#
 An essence of fire that is holding pure spirit of Thor, god of thunder. It has mystery force to restrain of vice and darkness.
 ^ffffff_^000000
@@ -25387,14 +25387,14 @@ A pendant that used to be use for confining wandered soul from unknown places.
 Weight: ^7777771^000000
 #
 
-// ----------------- ｸｶｷﾂﾀﾌ ｱ・・ｹﾙﾆﾞﾆｮ ﾀﾎﾇ・-----------------
+//----------------- ｸｶｷﾂﾀﾌ ｱ・・ｹﾙﾆﾞﾆｮ ﾀﾎﾇ・----------------
 6004#
 A Doll imbued with Baphomet's curse. It seems like to be compounded with something.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 
-// ------------------- 12.1 ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ ----------------------
+//------------------- 12.1 ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ----------------------
 7798#
 A dark fragment imbued with gloominess spirit. Once you stare it, you might feel absorbed into it.
 ^ffffff_^000000
@@ -25407,7 +25407,7 @@ You might feel strongly dangerous power from this crystal. When you close to it,
 Weight: ^7777771^000000
 #
 
-// --------------- ﾇﾊｸｮﾇﾉ ﾀﾚﾃｼﾁｦﾀﾛ ﾅｸ 7ﾁｾ ----
+//--------------- ﾇﾊｸｮﾇﾉ ﾀﾚﾃｼﾁｦﾀﾛ ﾅｸ 7ﾁｾ----
 5374#
 A headgear made from the horns of Baphomet.
 Inflicts 12% more damage to Demi-Human.
@@ -25417,7 +25417,7 @@ Location : ^777777Upper^000000    Weight : ^77777780^000000
 Jobs : ^777777All^000000
 #
 
-// ------------------- ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ ------------------
+//------------------- ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ------------------
 6000#
 A dark ash imbued with mystery magical power and darkness.
 ^ffffff_^000000
@@ -25447,14 +25447,14 @@ You can recognize he is poorly bad at handwriting.
 Weight: ^7777771^000000
 #
 7797#
-"Ancient weapon - Unknown motivity.
-Seclusion - The letter from lady disciple.
-Stepmother - Karma in a previous life? "
+"Ancient weapon-Unknown motivity.
+Seclusion-The letter from lady disciple.
+Stepmother-Karma in a previous life? "
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 
-// ------------------ ﾇﾏｾﾇ ﾅﾗｽｺﾆｮ (ｼﾒﾄﾏ)----------------
+//------------------ ﾇﾏｾﾇ ﾅﾗｽｺﾆｮ (ｼﾒﾄﾏ)----------------
 1568#
 A book enchanted with the Water Property.
 Class : ^777777Book^000000      Attack Strength : ^77777790^000000
@@ -25862,7 +25862,7 @@ Defense Rate : ^7777770^000000      Weight : ^77777710^000000
 Applicable job : ^777777Every job^000000
 #
 
-//----ｸｺﾄﾚｺﾆ 2ﾂ・--------- ｷｯｽﾃｾﾆ ｺﾒｻ鄂ﾅ ﾄﾚｽｦﾀﾌ ｾﾆﾀﾌﾅﾛ ---------------
+//----ｸｺﾄﾚｺﾆ 2ﾂ・--------- ｷｯｽﾃｾﾆ ｺﾒｻ鄂ﾅ ﾄﾚｽｦﾀﾌ ｾﾆﾀﾌﾅﾛ---------------
 7876#
 Golden shiny Key.
 ^ffffff_^000000
@@ -25924,7 +25924,7 @@ Item Class: ^777777Shoes^000000
 Defense : ^7777775^000000      Weight : ^77777780^000000
 Jobs: ^777777All Jobs^000000
 #
-// ------------- ｽﾅｱﾔ ｽﾅｱﾞ ｾﾆﾀﾌﾅﾛ --------------
+//------------- ｽﾅｱﾔ ｽﾅｱﾞ ｾﾆﾀﾌﾅﾛ--------------
 2383#
 Brynhild is one of the valiant valkyries, meaning 'the warrior's armor'.		
 Base level*20 MHP increase. Base Lv*5 MSP increase.		
@@ -25985,7 +25985,7 @@ Weight :  ^77777750^000000
 An essence of myriads stars which were twinkling in the night sky.
 Weight :  ^77777750^000000
 #
-// ----------- QuestItem for God items --------------		
+//----------- QuestItem for God items--------------		
 7839#		
 A piece of crystal that is used as a key of the assessment. It contains a rune as a charm against a bad luck towards the assessment.		
 Weight : ^7777770^000000		
@@ -26259,7 +26259,7 @@ If you give it to RWC event NPC, you would get some gifts.
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-//----2008ｳ・10ｿ・ﾃﾟﾃｵ ﾄｳｽｬ --------
+//----2008ｳ・10ｿ・ﾃﾟﾃｵ ﾄｳｽｬ--------
 
 5401#
 A dark-colored plastic frame glasses. Why don't you try this on?
@@ -26376,7 +26376,7 @@ Weight : ^7777771^000000
 #
 13990#
 A box with 10 pieces of Job Manual inside.
-Job Manual - Job Exp rate is increased to 50% for 30 minutes.
+Job Manual-Job Exp rate is increased to 50% for 30 minutes.
 ^ff0000This item is not refundable.^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
@@ -26384,7 +26384,7 @@ Weight : ^7777771^000000
 13695#
 A box with 10 pieces of Basic Field Manual inside.
 ^ffffff_^000000
-Basic Field Manual - EXP when hunting monsters is increased by 1.25 for 30 minutes.
+Basic Field Manual-EXP when hunting monsters is increased by 1.25 for 30 minutes.
 ^ff0000This item is not refundable.^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
@@ -26392,7 +26392,7 @@ Weight : ^7777771^000000
 13696#
 A box with 10 pieces of Advanced Field Manual inside.
 ^ffffff_^000000
-Advanced Field Manual - EXP when hunting monsters is increased by 2 for 30 minutes.
+Advanced Field Manual-EXP when hunting monsters is increased by 2 for 30 minutes.
 ^ff0000This item is not refundable.^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
@@ -26454,10 +26454,10 @@ The mark of foolish deed like a tag with zombies. You can exchange it for a gift
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-//---- MVP ｽｺﾅｩｷﾑ -----
+//---- MVP ｽｺﾅｩｷﾑ-----
 14602#
 A Scroll that imbued with great force of Monster Tao Gunka.
-Increase MaxHP +100% for 3 minutes. Def -50, Mdef -50.
+Increase MaxHP +100% for 3 minutes. Def-50, Mdef-50.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -26483,7 +26483,7 @@ Weight : ^7777771^000000
 14359#
 A box that contains 10 'Tao Gunka Scroll' in it.
 A Scroll that imbued with great force of Monster Tao Gunka.
-Increase MaxHP +100% for 3 minutes. Def -50, Mdef -50
+Increase MaxHP +100% for 3 minutes. Def-50, Mdef-50
 ^ff0000This item is not refundable.^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
@@ -26513,7 +26513,7 @@ Reflects 30% of all physical damage taken for 3 minutes.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-//---Ep12 ｾ･ﾀﾌﾆｮ ﾈﾄ ｾ嶸・ｾﾆﾀﾌﾅﾛｵ・----
+//---Ep12 ｾ･ﾀﾌﾆｮ ﾈﾄ ｾ嶸・ｾﾆﾀﾌﾅﾛｵ・---
 12983#
 A box that contains
 1 Pet Egg Scroll
@@ -26687,7 +26687,7 @@ contained inside it.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
-// --------------11ｿﾇﾊｸｮﾇﾉ ｿ菘ｻ ﾄｳｽﾃｾﾆﾀﾌﾅﾛ -----------------
+//--------------11ｿﾇﾊｸｮﾇﾉ ｿ菘ｻ ﾄｳｽﾃｾﾆﾀﾌﾅﾛ-----------------
 5431#
 Chicken is on your head! It might have alarm option for waking you up in the morning.
 Autocasts Crazy Uproar by a certain rate when physical attack.
@@ -26853,13 +26853,13 @@ A box containing 1 'Anubis Headgear' in it.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ---------------- ﾀ蠎ｮﾁﾖｹｮｼｭ_ -----------------
+//---------------- ﾀ蠎ｮﾁﾖｹｮｼｭ_-----------------
 14587#
 A scroll which enables using LV 1 Repair Weapon skill.  It has some mysterious letters written on the scroll.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-//-------2008ｳ・ﾅｩｸｮｽｺｸｶｽｺ ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ ----------
+//-------2008ｳ・ﾅｩｸｮｽｺｸｶｽｺ ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ----------
 2784#
 A cute music box which contain the singing crystal in it. Listen carefully, and you can hear Carols.
 Type : ^777777Accessory^000000
@@ -26933,7 +26933,7 @@ Defense : ^7777770^000000      Weight : ^77777720^000000
 Required Level : ^77777775^000000
 Jobs : ^777777All Jobs except Novice^000000
 #
-//----------ｾﾆﾆｼｾﾆﾆｼﾇﾑ ﾀﾌｺ･ﾆｮ 2009 New item / 2010ｳ・ｾ･ﾀﾌﾆｮ (30ﾀﾏ ﾀﾓｴ・ﾎ) ---------
+//----------ｾﾆﾆｼｾﾆﾆｼﾇﾑ ﾀﾌｺ･ﾆｮ 2009 New item / 2010ｳ・ｾ･ﾀﾌﾆｮ (30ﾀﾏ ﾀﾓｴ・ﾎ)---------
 5814#
 An headgear which is made of many kinds of property rings. It looks very luxurious and charming. Reduce all damage from Demi-humans by 10%, 
 Reduce damage from Water, Fire, Wind by 5%, Reduce damage from Ghost property monsters by 10%, Increase damage against Ghost property Demi-humans by 50%. 
@@ -26948,7 +26948,7 @@ A box contains 1 New Pagdayaw in it.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------------- ﾇﾊｸｮﾇﾉ ﾀﾌｸｧｺｯｰ・ﾄ枻・----------------
+//------------- ﾇﾊｸｮﾇﾉ ﾀﾌｸｧｺｯｰ・ﾄ枻・---------------
 13960#
 A box containing 1 Ticket of Identification.
 ^ffffff_^000000
@@ -26959,7 +26959,7 @@ New name for new adventure! A ticket for Name Change Service.
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-// --------------1ｿﾇﾊｸｮﾇﾉ ｿ菘ｻ ﾄｳｽﾃｾﾆﾀﾌﾅﾛ -----------------
+//--------------1ｿﾇﾊｸｮﾇﾉ ｿ菘ｻ ﾄｳｽﾃｾﾆﾀﾌﾅﾛ-----------------
 5367#
 A Monster Hyegun's hat. It looks nasty and tattered but it has better defense than what you thought.
 10 % resistance against demon monsters.
@@ -27096,7 +27096,7 @@ Item Class : ^777777Armor^000000    Defense : ^7777775^000000
 Weight : ^777777100^000000
 Jobs : ^777777All Jobs^000000
 #
-// -------- 2009 ﾀ・ｼｰ・ｹﾟｷｻﾅｸﾀﾎ ﾀﾌｺ･ﾆｮ ----------
+//-------- 2009 ﾀ・ｼｰ・ｹﾟｷｻﾅｸﾀﾎ ﾀﾌｺ･ﾆｮ----------
 12742#
 A box containing a ring which is an exchanging gift for Valentine's Day.
 ^ffffff_^000000
@@ -27154,7 +27154,7 @@ Location : ^777777Upper^000000 Weight : ^77777780^000000
 Required Level : ^77777750^000000
 Jobs : ^777777All Jobs^000000
 #
-//----- 3ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ -----
+//----- 3ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ-----
 13905#			
 A box containing Field Manuals, Bubble Gums and Life Insurances 10 each.			
 ^ff0000This item is not refundable.^000000			
@@ -27566,14 +27566,14 @@ Increase certain amount of EXP and Job EXP.
 ^ffffff_^000000			
 Weight : ^7777770^000000			
 #			
-// --- ｿ｣ｵ蟶ｮｽｺ ﾅｸﾀﾌｸﾓ ｸｮｼﾂ ---
+//--- ｿ｣ｵ蟶ｮｽｺ ﾅｸﾀﾌｸﾓ ｸｮｼﾂ---
 6127#
 A purity stone that can remove the aftereffect of the Endless Tower at a time. 
 You can enter the Endless Tower without any restriction with it.
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-// ------ JRo ﾆﾐﾅｰﾁ・ｾﾆﾀﾌﾅﾛ---------
+//------ JRo ﾆﾐﾅｰﾁ・ｾﾆﾀﾌﾅﾛ---------
 5466#
 A cap of post man who delivers letters with heart. Magic in the cap protects the wearer not to lose their way.
 AGI + 2
@@ -27622,7 +27622,7 @@ A box containing 1 Hairband Of Reginleif in it.
 Weight : ^7777771^000000
 #
 
-//----- 2009ｳ・ｸｸｿ・ -------------
+//----- 2009ｳ・ｸｸｿ・-------------
 12396#
 A very suspicious box. No one can guess what is happening or what is coming out of it.
 Weight : ^7777771^000000
@@ -27796,7 +27796,7 @@ Item Class: ^777777Headgear^000000    Defense : ^7777773^000000
 Location : ^777777Upper^000000    Weight : ^77777750^000000
 Jobs : ^777777All Jobs^000000
 #
-//------2009 ﾇﾊｸｮﾇﾉ ｶﾗｸｮﾅﾏﾁ・ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ --------------
+//------2009 ﾇﾊｸｮﾇﾉ ｶﾗｸｮﾅﾏﾁ・ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ--------------
 2141#
 ^000088Rental Item^000000
 A spiritual shield granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
@@ -28196,7 +28196,7 @@ Beautiful long, white colored horn with the very strong magical power. It can be
 Weight : ^7777771^000000
 #
 
-// --------- EP13 ｽﾅｱﾔ ﾀ蠎・ｾﾆﾀﾌﾅﾛ ---------------
+//--------- EP13 ｽﾅｱﾔ ﾀ蠎・ｾﾆﾀﾌﾅﾛ---------------
 5398#
 Headgear made of the skull of dregon. So hard that it does not easily break.
 STR + 2. MDEF + 5.
@@ -28389,7 +28389,7 @@ Jobs : ^777777Stalker^000000
 
 2748#
 A mechanic who was born under the cursed star made this necklace to protect himself.  It is enchanted with various magical spells to seal the power of curse.
-DEX + 2, LUK - 1, MDEF + 3
+DEX + 2, LUK-1, MDEF + 3
 When equipped, 50 HP is consumed every 10 sec. and 300 HP gets consumed when unequip. 
 When physically attack at a distance, curses the enemy at a rate of 2%.  When equipped with Cursed Lyre, ATK +25 and additional 2% chance of curse are added.
 Class : ^777777Accessory^000000
@@ -28437,7 +28437,7 @@ Jobs : ^777777Transcendent Swordman Class^000000
 
 1484#
 Two handed spear which looks just like a miniature of a pillar from the ancient temples.
-Aspd -10%, decrease in attack speed(Delay after attacking increases by 10%)
+Aspd-10%, decrease in attack speed(Delay after attacking increases by 10%)
 additional increase in Def according to the Refining Level.
 Class : ^777777Spear^000000      Attack : ^777777150^000000
 Weight : ^777777560^000000
@@ -28468,7 +28468,7 @@ Jobs : ^777777Sniper^000000
 1741#
 A cursed bow that once killed a hero of an oriental nation long ago. 
 This bow itself is cursed, therefore, it also takes the luck away from the wearer.
-luk - 2
+luk-2
 When physically attack at a distance, curses the enemy by the chance of 4%.
 Class : ^777777Bow^000000      Attack : ^777777125^000000
 Weight : ^777777125^000000
@@ -28594,7 +28594,7 @@ Required Level : ^77777760^000000
 Jobs : ^777777Clown Jobs^000000
 #
 
-// ---------- Ep 13 Quest Items ------------
+//---------- Ep 13 Quest Items------------
 
 6027#
 A crystal bearing strong force of darkness.  Blood stain on the surface looks full of darkness.  It gives the feeling of evil.
@@ -28671,7 +28671,7 @@ Weight : ^77777710^000000
 #
 
 
-// ----------- 20080521 Ep 13 Quest Items -----------
+//----------- 20080521 Ep 13 Quest Items-----------
 6036#
 Rune-Midgard's investigator, Ryosen has filled out this Meeting Invitation.  The agenda and the schedule of the meeting are written. 
 ^ffffff_^000000
@@ -28789,7 +28789,7 @@ A pie covered with sweet chocolate.  This sure looks not pretty but the taste is
 ^ffffff_^000000
 Weight : ^77777730^000000
 #
-// ----------- ｿ｡ﾇﾇｼﾒｵ・13 ppl ｾﾆﾀﾌﾅﾛ -----------
+//----------- ｿ｡ﾇﾇｼﾒｵ・13 ppl ｾﾆﾀﾌﾅﾛ-----------
 6051#
 Unknown mineral which is not found in Midgards.  Looks like it has some unknown magical power inside.
 ^ffffff_^000000
@@ -28891,7 +28891,7 @@ Required Level : ^7777773^000000
 Jobs : ^777777Sword Class/Merchant Class^000000
 #
 
-// ---------- ﾅｩｸｮｰﾅ ｺｸｻ・ｾﾆﾀﾌﾅﾛ ----------
+//---------- ﾅｩｸｮｰﾅ ｺｸｻ・ｾﾆﾀﾌﾅﾛ----------
 13416#
 75% increase in Physical Attack against Demihuman monsters.
 Ignore 20% of Physical Defense of Demihuman monsters.
@@ -28917,7 +28917,7 @@ MATK +80
 Increases Int based on refine level.
 Indestructible.
 * Additional Weapon Refining Level Option
-+(Refining Degree - 5) Int. Increase
++(Refining Degree-5) Int. Increase
 +6 Refining
 SP consume reduces by 10%.
 +9 Refining
@@ -28934,7 +28934,7 @@ INT + 6
 MATK + 80
 Increases Int based on refine level.
 * Additional Weapon Refining Level Option
-+(Refining Degree - 5) Int Increase
++(Refining Degree-5) Int Increase
 +6 Refining
 SP Consume reduces by 10%  
 +9 Refining
@@ -29461,7 +29461,7 @@ Required Level : ^77777781^000000
 Jobs : ^777777All Jobs except Novice^000000
 #
 
-// ---------- ﾅｩｸｮｰﾅ ｺｸｻ・ｾﾆﾀﾌﾅﾛ ﾃﾟｰ｡ Defenseｱｸ ----------
+//---------- ﾅｩｸｮｰﾅ ｺｸｻ・ｾﾆﾀﾌﾅﾛ ﾃﾟｰ｡ Defenseｱｸ----------
 2445#
 HP, SP + 5%
 Class : ^777777Shoes^000000    Defense : ^7777770^000000
@@ -29507,7 +29507,7 @@ Defense : ^7777770^000000      Weight : ^7777770^000000
 Jobs : ^777777All Jobs except Novice^000000
 #
 
-// ----------- ｿ｡ﾇﾇｼﾒｵ・13 ｳｬｽﾃ ------------
+//----------- ｿ｡ﾇﾇｼﾒｵ・13 ｳｬｽﾃ------------
 2775#
 Fish lure artificially made.
 Decrease the fishing casting time by 1 seconds.
@@ -29582,7 +29582,7 @@ Defense : ^7777770^000000      Weight : ^7777770^000000
 Jobs : ^777777All^000000
 #
 
-// ----------- ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ ------------
+//----------- ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ------------
 2443#
 A waterproof boots.
 Decrease fishing casting time by 2 seconds.
@@ -29610,7 +29610,7 @@ A fish called Marlin. But, it looks a bit different from what you saw in a book.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// --------- ｱ豬蟠・ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ ---------------
+//--------- ｱ豬蟠・ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ---------------
 6010#
 Pickaxe which can be used as an weapon.
 ^ffffff_^000000
@@ -29618,7 +29618,7 @@ Weight : ^7777771^000000
 #
 	
 	
-// --------- 2008 ｼﾖｷﾎ ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ ---------------	
+//--------- 2008 ｼﾖｷﾎ ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ---------------	
 12300#	
 Use this scroll and your friend Wild Rose will come and help you.	
 Weight : ^7777771^000000	
@@ -29634,12 +29634,12 @@ A scroll which summons a beautiful girl, Egnigem Ceniz, however, she's not as st
 Weight : ^7777771^000000	
 #	
 	
-// ---------------- ﾆｵﾄﾚﾀﾎ -----------------	
+//---------------- ﾆｵﾄﾚﾀﾎ-----------------	
 7539#	
 A small coin with a monster Poring engraved in it.	
 #	
 	
-// ------------- ﾀ・ﾖﾀ・---------------	
+//------------- ﾀ・ﾖﾀ・--------------	
 7773#	
 A badge indicating that the wearer is currently participated in the war.  It was taken off from a failure of the battle.	
 ^ffffff_^000000	
@@ -29983,10 +29983,10 @@ A ball which is useful to kill wild rats.
 Weight : ^7777770^000000
 #
 
-//--------2009ｳ・7ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ --------
+//--------2009ｳ・7ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ--------
 5363#
 A helm of abyss knight. It has tolerance to strong attacks but is weirdly week to normal attacks.
-Damage received from the Boss Monsters - 10%
+Damage received from the Boss Monsters-10%
 Damage received from the Normal Monsters + 10%
 Item Class : ^777777Headgear^000000    Defense : ^7777774^000000
 Location : ^777777Upper^000000    Weight : ^777777100^000000
@@ -30106,7 +30106,7 @@ A Box with a Sting Hat inside.
 Weight : ^7777771^000000
 #
 
-//--------2009ｳ・8ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ --------
+//--------2009ｳ・8ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ--------
 5395#
 A big bonnet. Nobody knows how to use it.
 MHP + 100. LUK + 3.
@@ -30209,7 +30209,7 @@ A Box with a Wild Rose Hat inside.
 Weight : ^7777771^000000
 #
 
-//--------2009ｳ・ﾇﾁｸｮｹﾌｾ・ｼｭｺｺ_ｿﾀｵﾇ ｸｮﾄﾝ ｾﾆﾀﾌﾅﾛ --------
+//--------2009ｳ・ﾇﾁｸｮｹﾌｾ・ｼｭｺｺ_ｿﾀｵﾇ ｸｮﾄﾝ ｾﾆﾀﾌﾅﾛ--------
 2833#
 ^000088Rental Item^000000
 An awesome ring that is only given to the members of the Order of Odin.
@@ -30230,7 +30230,7 @@ A Box with a Odin's Recall inside.
 30 days Rental Item.
 Weight : ^7777771^000000
 #
-//----- 2009 ｺｽｸﾂﾀﾌ ﾀﾌｺ･ﾆｮ ------
+//----- 2009 ｺｽｸﾂﾀﾌ ﾀﾌｺ･ﾆｮ------
 12310#
 a branch of cherry blossom Tree with full-blown cherry blossoms. It feels like your body lightens with rich scent of a flower when you wave it.
 Increases Flee by 10 points for 5 minutes
@@ -30250,7 +30250,7 @@ Magical Fan that can stir up a strong wind. Let's try it under the cherry blosso
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-// ------------- 2008 ｴ・ｸ RWC ｿ・ﾂﾀﾚ ﾀ・・ｸ ---------------	
+//------------- 2008 ｴ・ｸ RWC ｿ・ﾂﾀﾚ ﾀ・・ｸ---------------	
 5451#	
 A legendary Dragon helm, inspired god of Dragon. Only RPC Top guild members can have this special helm.	
 Increases Attack Speed by 10%. ALL STATUS + 3	
@@ -30281,13 +30281,13 @@ Item Position : ^777777Upper^000000    Weight : ^777777250^000000
 Jobs : ^777777All Jobs^000000	
 #	
 
-// ------------ 2008 ｴ・ｸ 10ｿ・ｽｺﾅｩｷﾑ -----------
+//------------ 2008 ｴ・ｸ 10ｿ・ｽｺﾅｩｷﾑ-----------
 14345#
 Various animals are inside of it! Please handle with care, you might get bit!
 ^ffffff_^000000
 Weight : ^7777771^000000
 #	
-// -------- 2009 ﾃﾟｼｮ ﾀﾌｺ･ﾆｮ ------------
+//-------- 2009 ﾃﾟｼｮ ﾀﾌｺ･ﾆｮ------------
 5457#
 It looks like a pet rabbit that you can put on your head. Quite soft!
 ATK, MATK + 5.
@@ -30336,7 +30336,7 @@ This is a popular food in traditional Korean festivals. It's made by filling a w
 Restore 10% of Max HP.
 Weight : ^7777771^000000
 #
-//----2009 ﾇﾒｷﾎﾀｩ ﾀﾌｺ･ﾆｮ ---------
+//----2009 ﾇﾒｷﾎﾀｩ ﾀﾌｺ･ﾆｮ---------
 5668#
 A pumpkin hat for Halloween event.
 It has the mysterious power that brings cookies.
@@ -30475,7 +30475,7 @@ Weight : ^7777771^000000
 An Halloween Scroll. It is very suspicious Scroll... You should keep it secret.
 Weight : ^7777771^000000
 #
-// ------------ ｴ・ｸ 7ｿ・ｽｺﾅｩｷﾑ -----------
+//------------ ｴ・ｸ 7ｿ・ｽｺﾅｩｷﾑ-----------
 14306#
 RWC special scroll, it is quite collectable.
 ^ffffff_^000000
@@ -30493,7 +30493,7 @@ An Ardor Scroll that inspires you to be brave and have a passion.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------------ 2008 ｴ・ｸ 11ｿ・ｽｺﾅｩｷﾑ -----------
+//------------ 2008 ｴ・ｸ 11ｿ・ｽｺﾅｩｷﾑ-----------
 14363#
 A heart shaped scroll. You will feel warm heart once you open it.
 ^ffffff_^000000
@@ -30504,27 +30504,27 @@ Everyone likes surprises. You might be surprised once you open it.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ---------- ｴ・ｸｹﾟｷｻﾅｸﾀﾎ ｽｺﾅｩｷﾑ -------------
+//---------- ｴ・ｸｹﾟｷｻﾅｸﾀﾎ ｽｺﾅｩｷﾑ-------------
 13941#
 A random item scroll.
 ^ff0000This item is not refundable.^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------- ｴ・ｸ 2008 ｻﾘ ｽｺﾅｩｷﾑ -----------
+//------- ｴ・ｸ 2008 ｻﾘ ｽｺﾅｩｷﾑ-----------
 13925#
 A mouse scroll that captured mouse's nimbleness.
 ^ff0000This item is not refundable.^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------------ 2008 ｴ・ｸ 8ｿ・ｽｺﾅｩｷﾑ -----------
+//------------ 2008 ｴ・ｸ 8ｿ・ｽｺﾅｩｷﾑ-----------
 14316#
 Love Scroll. If you are waiting for love, you definitely need this scroll.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------------ 2008 ｴ・ｸ 12ｿ・1ｿ・ｽｺﾅｩｷﾑ -----------
+//------------ 2008 ｴ・ｸ 12ｿ・1ｿ・ｽｺﾅｩｷﾑ-----------
 14407#
 Fancy, beautiful decorated scroll. We can feel Christmas is coming!
 ^ffffff_^000000
@@ -30535,7 +30535,7 @@ Solar Scroll that symbolized the glaring sun.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ---------- ﾀﾏｺｻ ｸｮｺｻ 2006 --------------
+//---------- ﾀﾏｺｻ ｸｮｺｻ 2006--------------
 5191#
 A long piece of black satin tied together into a neat little ribbon that wards off harmful magic.
 INT + 1.
@@ -30609,7 +30609,7 @@ Weight : ^77777710^000000
 #
 
 //---- Ep13.2-------------
-// ----------- Ep 13.2 Reward Items ------------
+//----------- Ep 13.2 Reward Items------------
 
 2782#
 A ring imitating the legendary ring of the Ancient Wise King which used to communicate with an animal.
@@ -30820,7 +30820,7 @@ Magical Attack Damage done to the monsters in Manuk Area increases by 10% for 10
 Weight : ^7777775^000000
 #
 
-// ----------- New Combination Headgear Items ------------
+//----------- New Combination Headgear Items------------
 
 5436#
 Neatly made wedding corolla. Quivering huge silk ribbon is attached back of it.
@@ -30875,7 +30875,7 @@ Job : ^777777Every Classes except Novice^000000
 A Tie binded to wear it on a head. 
 VIT + 1
 When equipped with [Blush], Attack Speed Increases(Delay after attacking reduces by 3%),Floating Casting Speed reduces by 3%.
-Hit -5. Sp Consume increases by 5%.
+Hit-5. Sp Consume increases by 5%.
 Type : ^777777Headgear^000000    Defense : ^7777776^000000
 Equip : ^777777Upper^000000    Weight : ^77777710^000000
 Required Level : ^77777770^000000
@@ -30942,13 +30942,13 @@ Equip : ^777777Upper-Mid-Lower^000000    Weight : ^77777730^000000
 Job : ^777777Every Classses^000000
 #
 
-// ----------- Newly added Ep 13.2 Items ------------
+//----------- Newly added Ep 13.2 Items------------
 
 1643#
 A Staff made out of magical wood. It posesses huge magical power, but it will make you look like an elder.
 INT + 4.
 INT increases by the refine Lv., but MHP and MSP will decrease.
-From the refine Lv. +6, INT 1 increases, and  MHP -200, MSP -100 .
+From the refine Lv. +6, INT 1 increases, and  MHP-200, MSP-100 .
 Matk + 155.
 Type : ^777777Staff^000000  Attack : ^777777100^000000
 Weight : ^77777710^000000
@@ -31015,7 +31015,7 @@ A Weapon becomes water-elemental for 90sec.
 Weight : ^7777771^000000
 #
 
-// ----------- EP13.2 Newly Added Items ------------
+//----------- EP13.2 Newly Added Items------------
 
 1188#
 A Sword only allowed for the master of sword to use.
@@ -31076,7 +31076,7 @@ Job : ^777777Acolyte Class^000000
 Heavy and strong shield made out of the Bradium.
 MHP + 500
 Attack power of the skill 'Shield Boomerang' increases by 60%
-Agi - 1
+Agi-1
 Type : ^777777Shield^000000    Defense : ^77777798^000000
 Weight : ^777777180^000000
 Required Level : ^77777765^000000
@@ -31175,7 +31175,7 @@ Required Level : ^77777785^000000
 Job : ^777777Trascendent Thief Classes^000000
 #
 
-// -----------  Ep 13.2 additional equipment items ------------
+//-----------  Ep 13.2 additional equipment items------------
 
 1189#
 Strong looking sword which resembles the shape of Claymore. Its handgrip part is decorated in red color for the High Class Knight.
@@ -31346,7 +31346,7 @@ Weapon Level:^7777773^000000
 Required Level : ^77777750^000000
 Job : ^777777Transcendent Swordman/Merchant/Acolyte Classes^000000
 #
-// ------------------------Indonesia Jewel Event-------------------------
+//------------------------Indonesia Jewel Event-------------------------
 7577#
 A jewel which shines yellow.
 ^ffffff_^000000
@@ -31363,13 +31363,13 @@ A jewel which shines blue.
 Weight : ^7777775^000000
 #
 
-// ----------- ﾆ・ppl ｾﾆﾀﾌﾅﾛ -----------
+//----------- ﾆ・ppl ｾﾆﾀﾌﾅﾛ-----------
 6083#
 A tiny capsule which contains a cute doll.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ----------- 2008-12-12 ｿ｡ﾇﾇｼﾒｵ・ppl ｾﾆﾀﾌﾅﾛ -----------
+//----------- 2008-12-12 ｿ｡ﾇﾇｼﾒｵ・ppl ｾﾆﾀﾌﾅﾛ-----------
 6101#
 This attendance card can not be replaced with cash.
 ^ffffff_^000000
@@ -31387,7 +31387,7 @@ Every details about Manuk were written.
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-// -------- 2009-02-20 ----------
+//-------- 2009-02-20----------
 //HiddenSocket
 4700#
 STR+1
@@ -32028,7 +32028,7 @@ Weight : ^7777771^000000
 5465#
 A clear and wide sky is motivated. if you wear this hat in a gloomy day, you can feel refresh.
 LUK + 2
-If refined to 5 or higher, increase LUK additional with -5 refine level .
+If refined to 5 or higher, increase LUK additional with-5 refine level .
 Class: ^777777Headgear^000000   DEF: ^7777773^000000
 Location : ^777777Upper^000000    Weight : ^77777750^000000
 Required Level : ^77777740^000000
@@ -32046,7 +32046,7 @@ Jobs: ^777777All Jobs^000000
 #
 
 5474#
- -Away From Keyboard-
+-Away From Keyboard-
 It shows that nobody is around computer. If you are unavailable, you can show this message to your peers.
 Class: ^777777Headgear^000000   DEF: ^7777772^000000
 Location : ^777777Upper^000000    Weight : ^77777770^000000
@@ -32102,13 +32102,13 @@ What will happen if the seal is undone?
 ^ffffff_^000000
 Weight: ^7777775^000000
 #
-//-------2009ｳ・12ｿ・3ﾀﾏ ﾇﾊｸｮﾇﾉ ｳ・ﾇｾ・ﾇﾁｷﾎｸ・ﾀﾌｺ･ﾆｮ ------------
+//-------2009ｳ・12ｿ・3ﾀﾏ ﾇﾊｸｮﾇﾉ ｳ・ﾇｾ・ﾇﾁｷﾎｸ・ﾀﾌｺ･ﾆｮ------------
 2464#
 Let the ass-kicking commence!
 STR + 1, INt + 1, DEX + 1.
 Increase MaxHP +10%, Increase MaxSP +5%
 Reduce damage from Demi-Humans by 2%
-When worn with No Fear Underwear and No Fear Belt - Cannot be frozen, Increase EXP Gain by 5%.
+When worn with No Fear Underwear and No Fear Belt-Cannot be frozen, Increase EXP Gain by 5%.
 Item Class : ^777777Shoes^000000 Defense : ^7777776^000000
 Weight : ^7777770^000000
 Required Level : ^77777720^000000
@@ -32118,7 +32118,7 @@ Jobs : ^777777All Jobs^000000
 Strap this on and shut them up!
 MDEF + 2, ATK + 5%, MATK  +5%.
 Reduce damage from Demi-Humans by 2%
-When worn with No Fear Shoes and No Fear Underwear - Cannot be frozen, Increase EXP Gain by 5%.
+When worn with No Fear Shoes and No Fear Underwear-Cannot be frozen, Increase EXP Gain by 5%.
 Item Class : ^777777Accessory^000000 Defense : ^7777772^000000
 Weight : ^7777770^000000
 Required Level : ^77777720^000000
@@ -32129,7 +32129,7 @@ It's what's inside the man that makes him who he really is. Got the Balls for it
 STR + 1, INT + 1, DEX + 1.
 MaxHP + 700.
 Reduce damage from Demi-Humans by 2%
-When worn with No Fear Shoes and No Fear Belt - Cannot be frozen, Increase EXP Gain by 5%.
+When worn with No Fear Shoes and No Fear Belt-Cannot be frozen, Increase EXP Gain by 5%.
 Item Class : ^777777Headgear^000000 Defense : ^77777710^000000
 Location : ^777777Upper ^000000 Weight : ^7777770^000000
 Required Level : ^77777720^000000
@@ -32175,7 +32175,7 @@ Location : ^777777Upper^000000    Weight : ^77777730^000000
 Jobs : ^777777All Jobs^000000
 #
 
-// ----------------------- ｴ・ｸ ﾀﾌｸﾓﾀ・ﾃﾄﾝ ｾﾆﾀﾌﾅﾛ ------------------------
+//----------------------- ｴ・ｸ ﾀﾌｸﾓﾀ・ﾃﾄﾝ ｾﾆﾀﾌﾅﾛ------------------------
 12965#
 A box containing Level 1 Emergency Call Scroll.
 Enable to summon 7 online Guild Member. Only applicable for Guild Leader.
@@ -32279,9 +32279,9 @@ A box that cotains 1 Snowman Hat inside.
 ^ff0000This item is not refundable.^000000
 Weight : ^7777771^000000
 #
-//---------2009ｳ・ｿｬｸｻﾀﾌｺ･ﾆｮ - ｽｺﾅﾝｸｮｼﾂ ﾇﾊｸｮﾇﾉ-----------------
+//---------2009ｳ・ｿｬｸｻﾀﾌｺ･ﾆｮ-ｽｺﾅﾝｸｮｼﾂ ﾇﾊｸｮﾇﾉ-----------------
 6320#
-People are saying that if you give this Shard of Odin to Reno Reset NPC, you can get Stat Reset Service.
+People are saying that if you give this Shard of Odin to The Great Alchemist NPC, you can get Stat Reset Service.
 Weight : ^7777770^000000
 #
 16555#
@@ -32310,7 +32310,7 @@ Warning: You can not turn off the lights with this!
 Weight : ^7777771^000000
 #
 
-//---------2010ｳ・ﾇﾊｸｮﾇﾉ ｽｺﾅｩｷﾑ -------------------------------
+//---------2010ｳ・ﾇﾊｸｮﾇﾉ ｽｺﾅｩｷﾑ-------------------------------
 16564#
 A scroll that imbued with Drangon spirit.
 ^ff0000This item is not refundable.^000000
@@ -32325,7 +32325,7 @@ A scroll that imbued with spirit of legendary Phoenix from Rune-Midgard Kingdom.
 Weight : ^7777771^000000
 #
 
-// ------------- ﾇﾑｱｹ ﾀﾌｺ･ﾆｮ ﾆ・ｰ・ﾃ --------------
+//------------- ﾇﾑｱｹ ﾀﾌｺ･ﾆｮ ﾆ・ｰ・ﾃ--------------
 9055#
 An egg containing a Cute-pet Succubus sleeping in it. Can be hatched by using a ^33CC33Pet Incubator^000000.
 If intimacy is higher than friendly, regain 5% of the damage done on an enemy as HP by a low chance.
@@ -32618,7 +32618,7 @@ Weight : ^7777771^000000
 
 5476#		
 A hair ornament made by Grand peco's feathers. Only gallant patriarch is allowed to wear it.		
-STR + 2. MHP - 10%		
+STR + 2. MHP-10%		
 Increased 15% damage to Orc Warrior, Orc Lady, Orc Baby, High Orc, Orc Archer, Orc Skeleton and Orc Zombie.		
 Item Class : ^777777Headgear^000000    Defense : ^7777772^000000		
 Location : ^777777Upper, Mid ^000000 Weight : ^77777780^000000		
@@ -32664,13 +32664,13 @@ Jobs : ^777777All Jobs Except Novice^000000
 
 Weight : ^7777771^000000
 #
-//-----2010 ｹﾟｷｻﾅｸﾀﾎ ﾀﾌｺ･ﾆｮ ------
+//-----2010 ｹﾟｷｻﾅｸﾀﾎ ﾀﾌｺ･ﾆｮ------
 7975#
 A chocolate that you can receive from Cupid to commemorate St.Valentine.
 Only one for one person.
 Weight : ^7777770^000000
 #
-//------2010 ｰﾔﾆ・ｵ･ﾀﾏｸｮ 3ﾁｾ ﾄｺﾆｮ -------------
+//------2010 ｰﾔﾆ・ｵ･ﾀﾏｸｮ 3ﾁｾ ﾄｺﾆｮ-------------
 5829#
 An ordinary armor, nobody knows that it can be refined or not.
 Item Class : ^777777Armor^000000 Defense : ^7777770^000000
@@ -32734,7 +32734,7 @@ A box contains 1 Red Bunny Band in it.
 ^ff0000This item is not refundable.^000000
 Weight : ^7777771^000000
 #
-//-------------- ﾇﾊｸｮﾇﾉ ｻ邉ﾉﾀﾌｺ･ﾆｮ 1ｿ・-----------------------------
+//-------------- ﾇﾊｸｮﾇﾉ ｻ邉ﾉﾀﾌｺ･ﾆｮ 1ｿ・----------------------------
 5830#
 Enhanced version of Sakkat from the Midgard Crowd Control event.
 Reduce damage from Demi-Human by 10%
@@ -32828,7 +32828,7 @@ Mercenary Badge given out during the Midgard Crowd Control Event.
 Save this up to trade for headgears with the quest NPC.
 Weight : ^7777770^000000
 #
-// -------------- 2006 ﾇﾁｶ釭ｺﾀﾌｺ･ﾆｮ -----------------
+//-------------- 2006 ﾇﾁｶ釭ｺﾀﾌｺ･ﾆｮ-----------------
 5180#
 A hat made for a national holiday of somewhere in western country.
 VIT + 1.
@@ -32893,7 +32893,7 @@ Jobs : ^777777All Jobs^000000
 #
 5655#
 A hat that Dark Snake Lord wears. Feels like being a king when wear this. 
-INT + 2, AGI + 2, DEX - 2.
+INT + 2, AGI + 2, DEX-2.
 When do magical attack, have some chance of decreasing the casting time by 50% for 5 seconds and FLEE + 30.
 Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
 Location : ^777777Upper^000000 Weight : ^77777750^000000
@@ -32918,7 +32918,7 @@ Location : ^777777Upper^000000 Weight : ^77777750^000000
 Required Level : ^7777770^000000
 Jobs : ^777777All Jobs^000000
 #
-//-----Ep13.2 ﾀﾎﾃｦﾆｮ ﾀｯｷ睚ｭ -------------
+//-----Ep13.2 ﾀﾎﾃｦﾆｮ ﾀｯｷ睚ｭ-------------
 6242#
 A coin published by Rune-Midgard Kingdom, it is made of pure gold 24k and used for special purpose. Keep the coin, it will be very useful someday.
 Weight : ^7777771^000000
@@ -32928,7 +32928,7 @@ A box contains 1 Rune-Midgard Coin in it.
 ^ff0000This item is not refundable.^000000
 Weight : ^7777771^000000
 #
-//------- 2010 ｺ・弴ｮｽｺ ﾆﾐﾄ｡ -------------
+//------- 2010 ｺ・弴ｮｽｺ ﾆﾐﾄ｡-------------
 6237#
 It's a famous berry for desert. It has maden into ice-cream or juice during hot summer.
 Weight : ^7777770^000000
@@ -32969,7 +32969,7 @@ Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
 Location :  ^777777Upper^000000 Weight : ^7777770^000000
 Jobs : ^777777All Jobs^000000
 #
-//---------- 3ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ ---------------
+//---------- 3ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ---------------
 5656#
 An equipment for safe when you ride a scooter. It's too strong to be broken.
 Indestructible.
@@ -33123,7 +33123,7 @@ Weight : ^7777771^000000
 //------------2010 ｺﾎﾈｰﾀ----------------
 5852#
 A colorful egg shell that seems fragile but has mysterious power in it.
-MDEF - 7.
+MDEF-7.
 Recover HP by 1% in every 10 seconds.
 If refined higher than +7, increase FLEE + 2.
 If refined higher than +9, recover SP by 1% in every 10 seconds.
@@ -33157,7 +33157,7 @@ Location : ^777777Upper^000000 Weight : ^77777750^000000
 Required Level : ^77777795^000000
 Jobs : ^777777All Jobs^000000
 #
-//-------2010ｳ・2ｺﾐｱ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ ----------------------
+//-------2010ｳ・2ｺﾐｱ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ----------------------
 16409#
 A chrysanthemum scroll that represents of beautiful fall season.
 Weight : ^7777771^000000
@@ -33224,7 +33224,7 @@ Weight : ^7777771^000000
 A box has one Leo Diadem.
 Weight : ^7777771^000000
 #
-// ------------ ｺ・・1ﾂ・ﾆﾐﾅｰﾁ・ｻﾚ --------------
+//------------ ｺ・・1ﾂ・ﾆﾐﾅｰﾁ・ｻﾚ--------------
 13945#
 A collecting gift box for Knight.
 Full Plate[1], Shield[1], Boots[1], Manteau[1], Pupa Card 1, Raydric Card 1, Clip 2, Helm[1], Iron Cain 1.
@@ -33330,7 +33330,7 @@ Attack and Moving Speed increases for 15mins.
 Weight : ^77777715^000000
 #
 
-// ------------- 2008 ｴ・ｸ ｺｹｿ鋓ﾎﾀ・---------------
+//------------- 2008 ｴ・ｸ ｺｹｿ鋓ﾎﾀ・--------------
 12327#
 Do you need a luck? Use this lucky charm. All the fortune will follow after you.
 LUK + 20 for an hour.
@@ -33344,7 +33344,7 @@ All stats + 10 for 20 seconds.
 ^ffffff_^000000
 Weight : ^77777710^000000
 #
-// ----------------- ｴ・ｸ ｺ｣ｻ酣ｩﾀﾇｳｯ ﾀﾌｺ･ﾆｮ-----------------
+//----------------- ｴ・ｸ ｺ｣ｻ酣ｩﾀﾇｳｯ ﾀﾌｺ･ﾆｮ-----------------
 7553#
 A fragrant pink flower that represents awareness and naivety.
 ^ffffff_^000000
@@ -33357,7 +33357,7 @@ A red and white striped candle.
 A green aromatic stick.
 ^ffffff_^000000
 #
-// --------------- ｸｻｷｹﾀﾌｽﾃｾﾆ ｳ・ｿﾀ ﾀﾌｺ･ﾆｮ --------------
+//--------------- ｸｻｷｹﾀﾌｽﾃｾﾆ ｳ・ｿﾀ ﾀﾌｺ･ﾆｮ--------------
 5302#
 A lotus blossom shaped hat. It is sophisticated and elegant.
 Item Class : ^777777Headgear^000000    Defense : ^7777771^000000
@@ -33365,7 +33365,7 @@ Location : ^777777Upper^000000    Weight : ^77777710^000000
 Required Level : ^77777730^000000
 Jobs : ^777777All Jobs^000000
 #
-//------ 2010 ﾇﾊｸｮﾇﾉ ｽ貂ﾓ ﾆ菴ｺﾆｼｹ・ﾀﾌｺ･ﾆｮ ---------------
+//------ 2010 ﾇﾊｸｮﾇﾉ ｽ貂ﾓ ﾆ菴ｺﾆｼｹ・ﾀﾌｺ･ﾆｮ---------------
 5851#
 ^00008830 days Rental Item.^000000
 A hat that holds spirit of sun. 
@@ -33391,7 +33391,7 @@ Very very sticky trash. It smells so bad.
 Let's clean it up.
 Weight : ^7777770^000000
 #
-// ------ 2010 ﾇﾊｸｮﾇﾉ ﾁｦｴﾏｼﾒｸ・ﾀﾌｺ･ﾆｮ (ｱ簔ｸｾﾆﾀﾌﾅﾛ ﾀ・ｻ鄙・ --------
+//------ 2010 ﾇﾊｸｮﾇﾉ ﾁｦｴﾏｼﾒｸ・ﾀﾌｺ･ﾆｮ (ｱ簔ｸｾﾆﾀﾌﾅﾛ ﾀ・ｻ鄙・--------
 7606#
 Legendary coin bestowed by the gods as a reward for heroic deeds. 
 It is the only type of bribe accepted by Heimdall guardian of the Rainbow Bridge to Asgard, the realm of the gods.
@@ -33415,7 +33415,7 @@ An enchanted medicine that made by roots of dream flower.
 Weight : ^7777770^000000
 #
 
-//--------- 2010 ﾅ莎｢ｸﾓｸｮｶ・ﾁｦｷﾃ ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ ---------------------
+//--------- 2010 ﾅ莎｢ｸﾓｸｮｶ・ﾁｦｷﾃ ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ---------------------
 5783#
 A hairband that attracts men.
 You can wear it when you want to look sexy. Your sexyness increases to 100 %
@@ -33464,7 +33464,7 @@ A box contains 1 Green Bunny Band in it.
 ^ff0000This item is not refundable.^000000
 Weight : ^7777771^000000
 #
-//--------2010 ｾﾆｹﾇ ｳｯ --------------
+//--------2010 ｾﾆｹﾇ ｳｯ--------------
 7632#
 The happiness isn't related to the scores.  It explains that you are a quite troublemaker.
 If you are a cold city student, it's not that serious score!
@@ -33479,7 +33479,7 @@ weight : ^7777770^000000
 There's one rose which is the present for father!
 weight : ^7777770^000000
 #
-//-------2010 RWC ｾﾆﾀﾌﾅﾛﾀﾎｵ･ ﾇﾊｸｮﾇﾉ ﾅｬｶ｡ ｾﾂｰﾅ ----------
+//-------2010 RWC ｾﾆﾀﾌﾅﾛﾀﾎｵ･ ﾇﾊｸｮﾇﾉ ﾅｬｶ｡ ｾﾂｰﾅ----------
 5364#
 The hat of Dark Snake Lord. When put this cap on, feels like an emperor.
 STR + 1, INT + 1, AGI + 2
@@ -33528,7 +33528,7 @@ Location: ^777777Lower^000000    Weight: ^77777710^000000
 Job: ^777777Every Job^000000
 #
 
-//-----2010 ｿ蠧ﾅ ﾀﾌｺ･ﾆｮ -----------------
+//-----2010 ｿ蠧ﾅ ﾀﾌｺ･ﾆｮ-----------------
 5856#
 A hat which makes you feel the air of festivity.
 Play all over the ground with amazing vitality!!
@@ -33876,7 +33876,7 @@ Location: ^777777Mid ^000000 Weight: ^77777710^000000
 Required Level: ^77777770^000000
 Jobs : ^777777All Jobs^000000
 #
-//------- ｰﾔﾆ・ｸﾅﾁ・ｼ･ ﾄｺﾆｮ -----------------
+//------- ｰﾔﾆ・ｸﾅﾁ・ｼ･ ﾄｺﾆｮ-----------------
 7636#
 A bottle that holds magical power of monster 'Shining Plant'.
 Weight: ^7777770^000000
@@ -33885,7 +33885,7 @@ Weight: ^7777770^000000
 A empty bottle looks like perfect for capturing monster 'Shining Plant'.
 Weight: ^7777770^000000
 #
-//----ﾁﾟｴﾜ ﾇ・螻篝・ ｿ菽､ﾀﾇ ｱﾍ ｼﾒﾄﾏ ｳﾖｴﾂ ﾀﾌｺ･ﾆｮ --------
+//----ﾁﾟｴﾜ ﾇ・螻篝・ ｿ菽､ﾀﾇ ｱﾍ ｼﾒﾄﾏ ｳﾖｴﾂ ﾀﾌｺ･ﾆｮ--------
 6396#
 A tool which is consumed for making a soket. When succeeds in the Soket Enchant, it disappears.
 Weight : ^7777771^000000
@@ -33920,7 +33920,7 @@ Jobs : ^777777 All jobs except Novices^000000
 #
 
 
-//--------------- Renewal Update -----------------
+//--------------- Renewal Update-----------------
 1745#
 A Red bow that looks like a flying falcon. It's elegant and beautiful.  It's specialized for skill use.
 + 10% Damage of Sharp shooting, Double straping and Charge Arrow.
@@ -34018,20 +34018,20 @@ Weight : ^77777715^000000
 
 6225#
 It has been compressed for a very long time that the density and solidity got heightened. It seems that it becomes more difficult for Defense Weapon Upgrade.
-When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets -1)
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets-1)
 Weight : ^7777771^000000
 #
 
 6226#
 The density and solidity has been heightened by repeated experiments of Midgard's scholars. It seems that it becomes more difficult for weapon upgrade.
-When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets -1)
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets-1)
 Weight : ^7777771^000000
 #
 
 16258#
 A box which contains 5 high density bradiums.
 The density and solidity has been heightened by repeated experiments of Midgard's scholars. It seems that it becomes more difficult for weapon upgrade.
-When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets -1)
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets-1)
 Weight : ^7777771^000000
 ^ff0000This item is excluded from subscription withdrawal or refund.^000000
 Weight : ^7777771^000000
@@ -34040,7 +34040,7 @@ Weight : ^7777771^000000
 16259#
 A box which contains 5 high density carniums.
 The density and solidity has been heightened by repeated experiments of Midgard's scholars. It seems that it becomes more difficult for weapon upgrade.
-When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets -1)
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets-1)
 Weight : ^7777771^000000
 ^ff0000This item is excluded from subscription withdrawal or refund.^000000
 Weight : ^7777771^000000
@@ -34049,7 +34049,7 @@ Weight : ^7777771^000000
 16260#
 A box which contains 10 high density bradiums.
 The density and solidity has been heightened by repeated experiments of Midgard's scholars. It seems that it becomes more difficult for weapon upgrade.
-When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets -1)
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets-1)
 Weight : ^7777771^000000
 ^ff0000This item is excluded from subscription withdrawal or refund.^000000
 Weight : ^7777771^000000
@@ -34058,7 +34058,7 @@ Weight : ^7777771^000000
 16261#
 A box which contains 10 high density carniums.
 It has been compressed for a very long time that the density and solidity got heightened. It seems that it becomes more difficult for Defense Weapon Upgrade.
-When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets -1)
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets-1)
 Weight : ^7777771^000000
 ^ff0000This item is excluded from subscription withdrawal or refund.^000000
 Weight : ^7777771^000000
@@ -34067,7 +34067,7 @@ Weight : ^7777771^000000
 16262#
 A box which contains 5 high density bradiums.
 The density and solidity has been heightened by repeated experiments of Midgard's scholars. It seems that it becomes more difficult for weapon upgrade.
-When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets -1)
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets-1)
 Weight : ^7777771^000000
 ^ff0000This item is excluded from subscription withdrawal or refund.^000000
 Weight : ^7777771^000000
@@ -34076,7 +34076,7 @@ Weight : ^7777771^000000
 16263#
 A box which contains 5 high density carniums.
 It has been compressed for a very long time that the density and solidity got heightened. It seems that it becomes more difficult for Defense Weapon Upgrade.
-When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets -1)
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets-1)
 Weight : ^7777771^000000
 ^ff0000This item is excluded from subscription withdrawal or refund.^000000
 Weight : ^7777771^000000
@@ -34085,7 +34085,7 @@ Weight : ^7777771^000000
 16264#
 A box which contains 10 high density bradiums.
 The density and solidity has been heightened by repeated experiments of Midgard's scholars. It seems that it becomes more difficult for weapon upgrade.
-When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets -1)
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets-1)
 Weight : ^7777771^000000
 ^ff0000This item is excluded from subscription withdrawal or refund.^000000
 Weight : ^7777771^000000
@@ -34093,7 +34093,7 @@ Weight : ^7777771^000000
 
 16265#
 It has been compressed for a very long time that the density and solidity got heightened. It seems that it becomes more difficult for Defense Weapon Upgrade.
-When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets -1)
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed or disappear. (When the upgrade fails, upgrade level gets-1)
 Weight : ^7777771^000000
 ^ff0000This item is excluded from subscription withdrawal or refund.^000000
 Weight : ^7777771^000000
@@ -34279,7 +34279,7 @@ Jobs : ^777777Novice/SwordmanWeapon Class/Magician Weapon Class/Archer Weapon Cl
 
 13112#
 A revolver that is made by Paradise Team itself., For anyone who is a Gunslinger can handle it.
- Hit - 5.
+ Hit-5.
 cannot be upgraded.
 Weapon Class : ^777777Pistol^000000 Attack Strength : ^77777744^000000
 Weight : ^7777770^000000
@@ -34290,7 +34290,7 @@ Jobs : ^777777Gunslinger^000000
 
 13113#
 A revolver that is made by Paradise Team itself. It's suitable for an intermediate.
-Hit - 5.
+Hit-5.
 cannot be upgraded.
 Weapon Class : ^777777Pistol^000000 Attack Strength : ^77777760^000000
 Weight : ^7777770^000000
@@ -34528,7 +34528,7 @@ Weight : ^77777710^000000
 
 12717#
 A poison that paralyzes senses.
-It continues for 300 seconds and decreases Attack speed(After attack delay increases for 10%), - 10% of Dodge, movement speed cuts in half. 
+It continues for 300 seconds and decreases Attack speed(After attack delay increases for 10%),-10% of Dodge, movement speed cuts in half. 
 ^ffffff_^000000
 Weight : ^7777772^000000
 #
@@ -36091,7 +36091,7 @@ A box with a bomb capsule. When you use a bomb poring is summoned. Flammable!.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-//------ ｸｮｴｺｾ・ﾆ暿 (ﾇﾊｸｮﾇﾉｿ｡ ｾﾂ ﾅｬｶ・ ----------
+//------ ｸｮｴｺｾ・ﾆ暿 (ﾇﾊｸｮﾇﾉｿ｡ ｾﾂ ﾅｬｶ・----------
 2777#
 A ring worn only by those belonging to the Shaman order.
 It can teleport it's wearer in Glast Heim with the help of Sapphires.
@@ -36257,7 +36257,7 @@ Jobs : ^777777All^000000
 5481#
 A cap worn by a desert assassin who fought with incredible speed.
 Aspd +10%,
-Atk -20, Matk -10%.
+Atk-20, Matk-10%.
 Class: ^777777Headgear^000000
 Location: ^777777Upper^000000
 Defense: ^7777771^000000
@@ -36267,7 +36267,7 @@ Jobs: ^777777All^000000
 #
 5483#
 A mask worn once worn by Odin during a fierce battle between the gods and humans.
-Hit -10,
+Hit-10,
 Increases damage to Demihuman monsters by 6%.
 Class: ^777777Headgear^000000
 Location: ^777777Middle & Lower^000000
@@ -36328,14 +36328,14 @@ Weight: ^7777771^000000
 16267#
 A box containing 10 High Efficiency Battle Manuals.
 ^ffffff_^000000
-High Efficiency Battle Manual - This well written, detailed manual explains High Efficiency battle methods.
+High Efficiency Battle Manual-This well written, detailed manual explains High Efficiency battle methods.
 ^000088EXP rate increases to 200% for 15 minutes.^000000
 Weight: ^7777771^000000
 
 16268#
 A box containing 10 High Efficiency Bubble Gums.
 ^ffffff_^000000
-High Efficiency Bubble Gum - ^000088Item drop rate increases by 200% for 15 minutes.^000000
+High Efficiency Bubble Gum-^000088Item drop rate increases by 200% for 15 minutes.^000000
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
@@ -36404,3 +36404,627 @@ Location : ^777777Upper^000000 Weight : ^77777710^000000
 Required lv : ^7777770^000000
 Jobs : ^777777All Jobs^000000
 #
+
+//------- 2010 ﾇﾒｷﾎﾀｩ ﾀﾌｺ･ﾆｮ-------
+6424#
+a spirit which should have gone to beyond the grave became a crystal due of the seal.
+weight : ^7777770^000000
+#
+6425#
+recieved a proof that have liberated a spirit. You can get  rewards if brings to the magician
+weight : ^7777770^000000
+#
+12192#
+a kind of pumpkin made by a cook who have a mind to make the best quality of pimpkin food
+^000088recovering a part of Hp and  SP^000000 
+weight : ^7777771^000000
+#
+18527#
+There's something wavering in the eyes. Is it possible to wear in head?
+when killing monsters, get a pumpkin pie at the regular drop rate.
+During Event  All State + 2, MDEF + 5, and
+Get bonus effect if it is equipped with Smile,Hahoe mask,Alarm mask, Phantom of opera.
+class : ^777777headgear^000000 defence : ^7777775^000000
+location: ^777777upper ^000000 weight : ^77777750^000000
+required level : ^77777745^000000
+Jobs : ^777777all^000000
+#
+
+//------4ｺﾐｱ・ﾃﾟﾃｵ ﾄｳｽｬ ｾﾆﾀﾌﾅﾛ-----
+16631#
+2010 winter collection, Aributa Scroll. Limited edition only!
+Weight : ^7777771^000000
+# 
+16652#
+2010 winter collection, Flame Scroll. Limited edition only!
+Weight : ^7777771^000000
+#
+5765#
+Dark neat black ribbon.
+Mdef + 5.
+Resistance to Neutral property attacks +5%. Resistance to Range attacks+ 5%.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Required lv : ^77777710^000000
+Jobs : ^777777All Jobs^000000
+#
+5766#
+Smooth fluffy cap inspired by Homunculus' Amistr.
+Vit + 5. 
+When receiving physical attack, all damage decrease by 20% for 2 seconds(random chance), Mdef decrease by 20%.
+Class : ^777777Headgear^000000
+Defense : ^7777774^000000
+Location : ^777777Upper^000000
+Weight : ^77777750^000000
+Required lv : ^77777750^000000
+Jobs : ^777777All Jobs^000000
+#
+5767#
+Amatsu warrior Samurai wearing mask during the War time.
+Increase pysical attack damage + 1%.
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Location : ^777777Lower^000000
+Weight : ^77777730^000000
+Required lv : ^77777750^000000
+Jobs : ^777777All Jobs^000000
+#
+2855#
+Morocc twon Hyuke's black tail style. It doesn't seem to be moving.
+ASPD + 3%, Critical + 7.
+Equip with [Whikebain's Black Ears], extra critical attack damage + 10%.
+Equip with [Whikebain's Black Ears], Critical +5 if [Whikebain's Black Ears]'s refined more than +7
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required lv : ^77777745^000000
+Jobs : ^777777All Jobs^000000
+#
+5789#
+Thanatos Mal wore mask. Cute design with high def rate.
+Vit + 1.
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Location : ^777777Mid-Lower ^000000
+Weight : ^77777710^000000
+Required lv : ^77777730^000000
+Jobs : ^777777All Jobs^000000
+#
+5790#
+A hat full of love from Holy Mom. Sacrifice itself to bless you.
+Damage from Demi-Human monsters, Undead Monsters + 5%.
+With physical attack, activate [Blessing Lv1] with random percentage.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Upper-Mid ^000000
+Weight : ^77777750^000000
+Required lv : ^77777745^000000
+Jobs : ^777777All Jobs^000000
+#
+5776#
+Blazing small Sun. Much powerful than it looks. Eye protection recommended.
+Skill [Fire Bolt], [Fire Ball] casting time- 5%, Damage + 5%.
+Skill [Fire Wall], [Meteo Storm] Damage + 3%.
+Skill using SP + 5%.
+Refine unavailable.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^77777750^000000
+Jobs : ^777777All Jobs^000000
+#
+5662#
+DEX  +3, 7% Resistance to wind attack
+When refine level is above 7, gives MATK + 3%.
+
+When refine level is above 9 and physical attack damaged, activate Frost Nova with a low chance.
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+16436#
+A box contains the Libra Crown.
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+5663#
+DEX+3, ATK + 7.
+If refined to 7 or higher, chance to use TK_SEVENWIND in lvl 2 when attacking.
+If refined to 9 or higher, FLEE +5 and ATK +3%.
+
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+16438#
+A box contains the Libra Diadem.
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+5598#
+A crowm that represents Virgo which is the 6th sign of Zodiac. An sapphire, the birthstone, is embedded on it.
+DEF+3, Dex+2, ASPD +1%. If refined to 7 or higher, +3% resistance to Earth property.
+
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5599#
+A diadem that represents Virgo which is the 6th sign of Zodiac.  An sapphire, the birtstone, is embedded on it. 
+ASPD +1%, +5% resistance to Earth property.
+If refined to 7 or higher, give certain chance to use MO_BALKYOUNG when attacking.
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+16368#
+A box contains the Virgo Crown.
+Weight : ^7777771^000000
+#
+16397#
+A box contains the Virgo Diadem.
+Weight : ^7777771^000000
+#
+5740#
+A diadem that represents Sagittarius which is the 9th sign of Zodiac.  An zircon, the birtstone, is embedded on it. 
+DEX + 2, MDEF + 3, +7% resistance to Fire property.
+If refine to 7 or higher, decrease the casting time by 3%. When magical attacking, has a low chance of auto casting WZ_SIGHTRASHER lvl 1.
+If refine to 9 or higher, increase MATK by +3%.
+
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5739#
+A crowm that represents Sagittarius which is the 9th sign of Zodiac. An zircon, the birthstone, is embedded on it.
+DEX + 2, +7% resistance to Fire property.
+If refine to 7 or more, ASPD +2%, increase the long distance attack damage by +3%
+If refine to 9 or more, when physically attacking, has a low chance of increasing DEX +3 , AGI+3 for 10 seconds
+
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+16548#
+A box contains the Sagittarius Crown.
+Weight : ^7777771^000000
+#
+16549#
+A box contains the Sagittarius Diadem.
+Weight : ^7777771^000000
+#
+
+//-------- ﾇﾑｱｹ 5ｿ・ﾄｳｽﾃ--------
+5396#
+Beautiful shining crest with gold and jewelry decorated.
+DEX + 1 , 5% additional damage to imortal monsters, 5% additional damage to undead monsters.
+With refine Lv is lower than 6, player takes Blind by low chance when attacking.  With refine Lv over 9 additional DEX+2.
+Class : ^777777Headgear^000000    Defense : ^7777776^000000
+Location : ^777777Upper^000000    Weight : ^77777770^000000
+Jobs : ^777777All Jobs^000000
+#
+5573#
+Baby Dokkaebi's strong firm horn. Some say this brings you wealth.
+Drops jewelry when killing monsters with low chance, with physical attack activates mammonite Lv5 by certain chance.(Spends zeny when activating, not available without zeny.)
+Class : ^777777Headgear^000000 Defense : ^7777776^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Required Level : ^7777770^000000
+Jobs : ^777777All Jobs^000000
+#
+12405#
+Seed from unriped Yggdrasil fruit. Fruit ready to eat.
+Recover each HP, SP for 30%, Self Blessing 3Lv.
+Weight : ^7777775^000000
+#
+12406#
+Scroll enables character type as fire for 10 seconds. Effect lasts after player's death.
+Weight : ^7777771^000000
+#
+15008#
+Flaming fire style armor. Fire Property.
+Reduces damage from earth type monsters for 5%. MDEF + 1.
+Class : ^777777Armor^000000 Defense : ^77777725^000000
+Weight : ^777777100^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+12578#
+Potion contains verious recovery herb juice. Effective for faster wound healing.
+Recovers 6% of MHP every 3 seconds for 10 minutes.
+Not available in berserk condition.
+^000088When player's character becomes combat ineffective, the item buff effect will wear off.^000000
+Weight : ^7777771^000000
+#
+16655#
+A box contains 10 Rapid Life Potions in it.
+
+Potion contains verious recovery herb juice. Effective for faster wound healing.
+Recovers 6% of MHP every 3 seconds for 10 minutes.
+Not available in berserk condition.
+^000088When player's character becomes combat ineffective, the item buff effect will wear off.^000000
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+5793#
+^000088Rental item^000000
+Yellow, green matching cute ribbon item.
+INT + 1, MDEF + 2.
+Increase the effect of the Heal that its wearer casts by 2%.
+
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Middle ^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+16638#
+A box contains 1 Life Ribbon in it. 1 hour duration.
+^000088Rental item^000000
+Yellow, green matching cute ribbon item.
+INT + 1, MDEF + 2.
+Increase the effect of the Heal that its wearer casts by 2%.
+
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Middle ^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16639#
+A box contains 1 Life Ribbon in it. 2 hours duration.
+^000088Rental item^000000
+Yellow, green matching cute ribbon item.
+INT + 1, MDEF + 2.
+Increase the effect of the Heal that its wearer casts by 2%.
+
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Middle ^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16640#
+A box contains 1 Life Ribbon in it. 4 hours duration.
+^000088Rental item^000000
+Yellow, green matching cute ribbon item.
+INT + 1, MDEF + 2.
+Increase the effect of the Heal that its wearer casts by 2%.
+
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Middle ^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+5597#
+^000088Rental item^000000
+Huge balloon looking bubble gum. You can even blow it much bigger!
+Caution : May seem ghetto to others.
+ATK + 5, MATK + 5. MDEF + 2.
+
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+16374#
+A box contains 1 Bubble Gum In Mouth in it. 1 hour duration.
+^000088Rental item^000000
+Huge balloon looking bubble gum. You can even blow it much bigger!
+Caution : May seem ghetto to others.
+ATK + 5, MATK + 5. MDEF + 2.
+
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16389#
+A box contains 1 Bubble Gum In Mouth in it. 2 hours duration.
+^000088Rental item^000000
+Huge balloon looking bubble gum. You can even blow it much bigger!
+Caution : May seem ghetto to others.
+ATK + 5, MATK + 5. MDEF + 2.
+
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16390#
+A box contains 1 Bubble Gum In Mouth in it. 4 hours duration.
+^000088Rental item^000000
+Huge balloon looking bubble gum. You can even blow it much bigger!
+Caution : May seem ghetto to others.
+ATK + 5, MATK + 5. MDEF + 2.
+
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+//---------- 2009ｳ・8ｿ・PCｹ・ ｹｫｰﾔｼ､----------
+5596#
+^000088Rental item^000000
+Fresh leaf smell Four leaf Clover item.
+I feel lucky today~
+ATK + 5, MATK + 5,  MDEF + 2.
+
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+16372#
+A box contains 1 Four Leaf Clover In Mouth in it. 1 hour duration.
+^000088Rental item^000000
+Fresh leaf smell Four leaf Clover item.
+I feel lucky today~
+ATK + 5, MATK + 5, MDEF + 2.
+
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16385#
+A box contains 1 Four Leaf Clover In Mouth in it. 2 hours duration.
+^000088Rental item^000000
+Fresh leaf smell Four leaf Clover item.
+I feel lucky today~
+ATK + 5, MATK + 5, MDEF + 2.
+
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16386#
+A box contains 1 Four Leaf Clover In Mouth in it. 4 hours duration.
+^000088Rental item^000000
+Fresh leaf smell Four leaf Clover item.
+I feel lucky today~
+ATK + 5, MATK + 5, MDEF + 2.
+
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+12596#
+This fun candy won't stop poping in your mouth. Make sure to brush your teeth afterwards.
+For 1 minute MATK + 30, Hold casting reduce 70%, Casting doesn't end. SP goes down 90 in every 10 seconds.
+3 minutes cool down time.
+(Hold Casting % effect is only for maximum effect. Reuse delay time is same as Sparkling Candy.)
+When player's character becomes combat ineffective, the item buff effect will wear off.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+16666#
+A box contains 10 Magic Candy in it.
+
+This fun candy won't stop poping in your mouth. Make sure to brush your teeth afterwards.
+For 1 minute MATK + 30, Hold casting reduce 70%, Casting doesn't end. SP goes down 90 in every 10 seconds.
+3 minutes cool down time.
+(Hold Casting % effect is only for maximum effect. Reuse delay time is same as Sparkling Candy.)
+When player's character becomes combat ineffective, the item buff effect will wear off.
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+14591#
+Scroll contains whole lot of castle map locations. Tear up the Scroll to move to certain seige map location.
+"Neuschwanstein", "Hohenschwangau", "Nurnberg ", "Wurzburg", 
+"Rothenburg", "Repherion", "Eeyorbriggar", "Yesnelph", "Bergel", 
+"Mersetzdeitz", "Bright Arbor", "Sacred Altar", "Holy Shadow", "Scarlet Palace", "Bamboo Grove Hill", 
+"Kriemhild", "Swanhild", "Fadhgridh", "Skoegul", "Gondul"
+Caution-After activating, transfer effect does not work if not chose certain map for 1 minute.
+Weight : ^7777771^000000
+#
+13940#
+A box contains 10 Siege Teleport Scroll Gold in it.
+
+Scroll contains whole lot of castle map locations. Tear up the Scroll to move to certain seige map location.
+"Neuschwanstein", "Hohenschwangau", "Nurnberg ", "Wurzburg", 
+"Rothenburg", "Repherion", "Eeyorbriggar", "Yesnelph", "Bergel", 
+"Mersetzdeitz", "Bright Arbor", "Sacred Altar", "Holy Shadow", "Scarlet Palace", "Bamboo Grove Hill", 
+"Kriemhild", "Swanhild", "Fadhgridh", "Skoegul", "Gondul"
+Caution-After activating, transfer effect does not work if not chose certain map for 1 minute.
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16378#
+A box contains 30 Siege Teleport Scroll Gold in it.
+
+Scroll contains whole lot of castle map locations. Tear up the Scroll to move to certain seige map location.
+"Neuschwanstein", "Hohenschwangau", "Nurnberg ", "Wurzburg", 
+"Rothenburg", "Repherion", "Eeyorbriggar", "Yesnelph", "Bergel", 
+"Mersetzdeitz", "Bright Arbor", "Sacred Altar", "Holy Shadow", "Scarlet Palace", "Bamboo Grove Hill", 
+"Kriemhild", "Swanhild", "Fadhgridh", "Skoegul", "Gondul"
+Caution-After activating, transfer effect does not work if not chose certain map for 1 minute.
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+12415#
+Scroll contains whole lot of castle map locations. Tear up the Scroll to move to certain seige map location.
+"Mardol", "Syr", "Horn", "Gepun", "Banadis", "Heemin", "Andlerangh", "Bidblind", "Hueluid", "Schatirnil"
+Caution-After activating, transfer effect does not work if not chose certain map for 1 minute.
+Weight : ^7777771^000000
+#
+16379#
+A box contains 10 Siege Teleport Scroll Silver in it.
+
+Scroll contains whole lot of castle map locations. Tear up the Scroll to move to certain seige map location.
+"Mardol", "Syr", "Horn", "Gepun", "Banadis", "Heemin", "Andlerangh", "Bidblind", "Hueluid", "Schatirnil"
+Caution-After activating, transfer effect does not work if not chose certain map for 1 minute.
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16380#
+A box contains 30 Siege Teleport Scroll Silver in it.
+
+Scroll contains whole lot of castle map locations. Tear up the Scroll to move to certain seige map location.
+"Mardol", "Syr", "Horn", "Gepun", "Banadis", "Heemin", "Andlerangh", "Bidblind", "Hueluid", "Schatirnil"
+Caution-After activating, transfer effect does not work if not chose certain map for 1 minute.
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+12404#
+Boost your condition for temporary battle power up. 1.5L pack will be out soon.
+For 2 minutes, ATK, MATK + 2%. Heal and item recovery effect +10%
+Effect goes away when player goes down or Dispell the item effect.
+Weight : ^7777771^000000
+#
+16254#
+A box contains 5 Energizing Potion in it.
+Boost your condition for temporary battle power up. 1.5L pack will be out soon.
+For 2 minutes, ATK, MATK + 2%. Heal and item recovery effect +10%
+Effect goes away when player goes down or Dispell the item effect.
+^ffffff_^000000
+
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+
+//--------- ﾇﾑｱｹ 8ｿ・ﾄｳｽﾃﾁｦｷﾃ----------
+6240#
+Sensitive ore guarantees your equipment's safety.
+-When refining weapon with refine Lv over +7, weapon won't vanish even if your refine fails! But, Refining over +10 is not allowed.-
+(When fail in refine, 1 refine rate goes down.)
+Weight : ^7777771^000000
+#
+6241#
+Sensitive ore guarantees your equipment's safety.
+-When refining armor with refine Lv over +7, armor won't vanish even if your refine fails! But, Refining over +10 is not allowed.-
+(When fail in refine, 1 refine rate goes down.)
+Weight : ^7777771^000000
+#
+16393#
+A box contains 5 HE Oridecon in it.
+
+Sensitive ore guarantees your equipment's safety.
+-When refining weapon with refine Lv over +7, weapon won't vanish even if your refine fails! But, Refining over +10 is not allowed.-
+(When fail in refine, 1 refine rate goes down.)
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16394#
+A box contains 10 HE Oridecon in it.
+
+Sensitive ore guarantees your equipment's safety.
+-When refining weapon with refine Lv over +7, weapon won't vanish even if your refine fails! But, Refining over +10 is not allowed.-
+(When fail in refine, 1 refine rate goes down.)
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16395#
+A box contains 5 HE Elunium in it.
+
+Sensitive ore guarantees your equipment's safety.
+-When refining armor with refine Lv over +7, armor won't vanish even if your refine fails! But, Refining over +10 is not allowed.-
+(When fail in refine, 1 refine rate goes down.)
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16396#
+A box contains 10 HE Elunium in it.
+
+Sensitive ore guarantees your equipment's safety.
+-When refining armor with refine Lv over +7, armor won't vanish even if your refine fails! But, Refining over +10 is not allowed.-
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+//--------- ﾇﾑｱｹ 6ｿ・ﾁｦｷﾃｸｮｴｺｾ・--------
+6223#
+One of hardest metal in Midgard continent. Has outstanding solidity, but kind of too hard for proper refining.
+Weight : ^77777715^000000
+#
+6224#
+A strong metal found in Ash Vacuum. Was too hard for proper refining, but now available for weapon refining through recent research.
+Weight : ^77777715^000000
+#
+6225#
+Compressed through long distant of time with very high density and solidity. 
+Became difficult for proper armor refining.
+-When refining armor with refine Lv over +7, armor won't vanish even if your refine fails! But, Refining over +10 is not allowed.-
+(When fail in refine, 1 refine rate goes down.)
+Weight : ^7777771^000000
+#
+6226#
+Through many researches by Midgard scientists, this metal has much higher density and solidity. 
+Became difficult for proper weapon refining.
+-When refining weapon with refine Lv over +7, weapon won't vanish even if your refine fails! But, Refining over +10 is not allowed.-
+(When fail in refine, 1 refine rate goes down.)
+Weight : ^7777771^000000
+#
+16258#
+A box contains 5 HD Bradium in it.
+Through many researches by Midgard scientists, this metal has much higher density and solidity. 
+Became difficult for proper weapon refining.
+-When refining weapon with refine Lv over +7, weapon won't vanish even if your refine fails! But, Refining over +10 is not allowed.-
+(When fail in refine, 1 refine rate goes down.)
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16259#
+A box contains 5 HD Carnium in it.
+Compressed through long distant of time with very high density and solidity. 
+Became difficult for proper armor refining.
+-When refining armor with refine Lv over +7, armor won't vanish even if your refine fails! But, Refining over +10 is not allowed.-
+(When fail in refine, 1 refine rate goes down.)
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16260#
+A box contains 10 HD Bradium in it.
+Through many researches by Midgard scientists, this metal has much higher density and solidity. 
+Became difficult for proper weapon refining.
+-When refining weapon with refine Lv over +7, weapon won't vanish even if your refine fails! But, Refining over +10 is not allowed.-
+(When fail in refine, 1 refine rate goes down.)
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16261#
+A box contains 10 HD Carnium in it.
+Compressed through long distant of time with very high density and solidity. 
+Became difficult for proper armor refining.
+-When refining armor with refine Lv over +7, armor won't vanish even if your refine fails! But, Refining over +10 is not allowed.-
+(When fail in refine, 1 refine rate goes down.)
+Weight : ^7777771^000000
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+

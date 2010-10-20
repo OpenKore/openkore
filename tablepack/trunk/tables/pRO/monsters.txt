@@ -143,6 +143,7 @@
 1158 Phen
 1160 Piere
 1161 Plankton
+1162 Rafflesia
 1163 Raydric
 1164 Requiem
 1165 Sand Man
@@ -271,6 +272,7 @@
 1370 Succubus
 1371 Fake Angel
 1372 Goat
+1373 Lord of Death
 1374 Incubus
 1375 The Paper
 1376 Harpy
@@ -304,11 +306,18 @@
 1416 Wicked Nymph
 1417 Zipper Bear
 1427 Nightmare
+1428 Poison Spore
 1431 Barphomet
 1433 Deviruchi
 1438 Khalitzburg
+1446 hallucination
 1474 Mimic
 1477 Arclouse
+1478 Magazine
+1479 It can't be true
+1480 hallucination
+1483 Just Imagination
+1490 Wanderer
 1492 Incantation Samurai
 1493 Dryad
 1494 Beetle
@@ -340,6 +349,7 @@
 1584 Tamruan
 1586 Leaf Cat
 1587 Kraben
+1592 Gangster
 1594 Freezer
 1595 Marin
 1599 Giant Whisper
@@ -411,6 +421,9 @@
 1705 Despero of Thanatos
 1706 Maero of Thanatos
 1707 Dolor of Thanatos
+1708 Memory of Thanatos
+1710 Despero of Thanatos
+1711 Maero of Thanatos
 1713 Acidus
 1714 Ferus
 1715 Novus
@@ -451,6 +464,7 @@
 1782 Roween
 1783 Galion
 1784 Stapo
+1785 Atroce
 1786 Agav
 1787 Echio
 1789 Iceicle
@@ -483,6 +497,7 @@
 1884 Mavka
 1886 Mavka Mob
 1891 Valkyrie Mob
+1904 BOMBPORING
 1905 Barricade
 1907 The first guardian ston
 1918 Incarnation of Morocc Angel
@@ -507,6 +522,9 @@
 1999 Centipede Larva
 2024 Bradium Golem
 2025 Wild Gift Box
+2034 Desert Wolf Baby 
+2037 Valkyrie
+2038 Valkyrie
 2057 Sticky Rat
 2068 Boitata
 2069 Iara
@@ -515,5 +533,10 @@
 2072 Jaguar
 2073 Toucan
 2074 Curupira
+2076 Shadow of Deception
+2077 Shadow of Illusion
+2078 Shadow of Pleasure
 2081 Weirdo Hydra
 2082 Piranha
+2118 Aqua
+2120 Ventus

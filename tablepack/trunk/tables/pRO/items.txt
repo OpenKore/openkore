@@ -5246,4 +5246,89 @@
 //---- 2010 ｺｽｸﾂﾀﾌ ﾀﾌｺ･ﾆｮ-----
 5781#Persica#
 
+// ------- ﾇﾑｱｹ 7ｿ・ｽﾅｱﾔﾄｫｵ・-------
+4442#Tatacho_Card#
+4443#Aqua_Elemental_Card#
+4444#Draco_Card#
+4445#Luciola_Vespa_Card#
+4447#Centipede_Card#
+4448#Cornus_Card#
+4449#Dark_Shadow_Card#
+4450#Banshee_Master_Card#
+4451#Ant_Buyanne_Card#
+4452#Centipede_Larva_Card#
+4453#Hilsrion_Card#
+//------- 2010 ﾇﾒｷﾎﾀｩ ﾀﾌｺ･ﾆｮ -------
+6424#Halloween_Spiritpiece#
+6425#Halloween_Certificate#
+12192#Pumpkin_Pie#
+18527#Gloomy_Pumpkin_Hat#
+//------4ｺﾐｱ・ﾃﾟﾃｵ ﾄｳｽｬ ｾﾆﾀﾌﾅﾛ-----
+16631#Aributa_Scroll#
+16652#Flame_Scroll#
+5765#Black_Tail_Ribbon#
+5766#Amistr_Cap#
+5767#Samurai_Mask#
+2855#Whikebain's_Black_Tail#
+5789#Thanatos's_Mal_Mask#
+5790#Holy_Mom_Love#
+5776#Blazing_Sun#
+5662#Libra_Crown#
+5663#Libra_Diadem#
+16436#Libra_Crown_Box#
+16438#Libra_Diadem_Box#
+5598#Virgo_Crown#
+5599#Virgo_Diadem#
+16368#Virgo_Crown_Box#
+16397#Virgo_Diadem_Box#
+5740#Sagittarius_Diadem#
+5739#Sagittarius_Crown#
+16548#Sagittarius_Crown_Box#
+16549#Sagittarius_Diadem_Box#
+5396#Jasper_Crest#
+5573#Dokkaebi_Horn#
+12405#Unripe_Yggdrasil_Seed#
+12406#Psychic_Armor_Scroll#
+15008#Flame_Armor#
+12578#Rapid_Life_Potion#
+16655#Rapid_Life_Potion_10_Box#
+5793#Life_Ribbon#
+16638#Life_Ribbon_Box#
+16639#Life_Ribbon_Box2#
+16640#Life_Ribbon_Box3#
+5597#Bubble_Gum_In_Mouth#
+16374#Bubble_Gum_In_Mouth_Box#
+16389#Bubble_Gum_In_Mouth_Box2#
+16390#Bubble_Gum_In_Mouth_Box3#
+5596#Four_Leaf_Clover_In_Mouth#
+16372#Four_Leaf_Clover_In_Mouth_Box#
+16385#Four_Leaf_Clover_In_Mouth_Box2#
+16386#Four_Leaf_Clover_In_Mouth_Box3#
+12596#Magic_Candy#
+16666#Magic_Candy_10Box#
+14591#Siege_Teleport_Scroll_Gold#
+13940#Siege_Teleport_Scroll_Gold_10Box#
+16378#Siege_Teleport_Scroll_Gold_30Box#
+12415#Siege_Teleport_Scroll_Silver#
+16379#Siege_Teleport_Scroll_Silver_10Box#
+16380#Siege_Teleport_Scroll_Silver_30Box#
+12404#Energizing_Potion#
+16254#Energizing_Potion_Box#
+// --------- ﾇﾑｱｹ 8ｿ・ﾄｳｽﾃﾁｦｷﾃ ----------
+6240#HE_Oridecon#
+6241#HE_Elunium#
+16393#HE_Oridecon_Box5#
+16394#HE_Oridecon_Box10#
+16395#HE_Elunium_Box5#
+16396#HE_Elunium_Box10#
+// --------- ﾇﾑｱｹ 6ｿ・ｿﾀｹｦｷﾃ ---------
+6223#Carnium#
+6224#Bradium#
+6225#HD_Carnium#
+6226#HD_Bradium#
+16258#HD_Bradium_Box5#
+16259#HD_Carnium_Box5#
+16260#HD_Bradium_Box10#
+16261#HD_Carnium_Box10#
+
 //file end

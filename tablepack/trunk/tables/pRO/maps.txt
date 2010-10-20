@@ -834,3 +834,4 @@ bra_in01.rsw#Inside Brasilis#
 bra_fild01.rsw#Brasilis Field#
 bra_dun01.rsw#Cave behind Waterfall#
 bra_dun02.rsw#Cave behind Waterfall#
+evt_hello.rsw#Halloween Field#

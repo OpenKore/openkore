@@ -1079,3 +1079,7 @@ job3_war02.gnd#job3_war01.gnd#
 job3_war02.gat#job3_war01.gat#
 job3_war02.rsw#job3_war01.rsw#
 ﾀｯﾀ惕ﾎﾅﾍﾆ菎ﾌｽｺ\map\job3_war02.bmp#ﾀｯﾀ惕ﾎﾅﾍﾆ菎ﾌｽｺ\map\job3_war01.bmp#
+evt_hello.gnd#pay_dun03.gnd#
+evt_hello.gat#pay_dun03.gat#
+evt_hello.rsw#pay_dun03.rsw#
+ﾀｯﾀ惕ﾎﾅﾍﾆ菎ﾌｽｺ\map\evt_hello.bmp#ﾀｯﾀ惕ﾎﾅﾍﾆ菎ﾌｽｺ\map\pay_dun03.bmp#

@@ -5899,3 +5899,9 @@ Able to request again after 1 day#
 7204#Spring Flowers#SG_FEEL#QUE_NOIMAGE#
 Bomi wants to see spring flowers. Let's bring her bunch of flowers. 5 Huge Spray Of Flowers would be enough..#
 Let's show her that spring is actually coming#
+
+// ---- 2010 ｴ・ｸ ﾃﾊｱ篳ｭ ﾀﾌｺ･ﾆｮ
+
+9166#Stat Reset : Present Condition#SG_FEEL#QUE_NOIMAGE#
+You can get a Stat Reset Service if you have [Shard of Odin].#
+Come back ^FF000020 hours^000000 later.#
