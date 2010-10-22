@@ -114,6 +114,7 @@ paddedPackets_skillUseID 0xF5
 patchserver ropatch1.gravityus.com
 patchpath /fpatch
 addTableFolders iRO
+charBlockSize 112
 
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
