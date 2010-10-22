@@ -34,12 +34,12 @@ sub cHook {
    my $message = shift;
    
    if ($message =~ /Calculating lockMap route/ &&
-     existsInList($config{autoWarp_from}, $field{name}) &&
+     existsInList($config{autoWarp_from}, $field->baseName) &&
      $char->{skills}{AL_WARP} && $char->{skills}{AL_WARP}{lv} > 0) {
       AI::queue("autowarp");
       AI::args->{timeout} = 5;
       AI::args->{time} = time;
-      AI::args->{map} = $field{name};
+      AI::args->{map} = $field->baseName;
       message "Preparing to cast a warp portal to $config{autoWarp_to}\n";
    }
 }
@@ -48,7 +48,7 @@ sub AI_hook {
    my $hookName = shift;
 
    if (AI::action eq "autowarp") {
-      if ($field{name} ne AI::args->{map}) {
+      if ($field->baseName ne AI::args->{map} || $field->name ne AI::args->{map}) {
          AI::dequeue;
          return;
       }
@@ -81,7 +81,7 @@ sub casting_hook {
    # it's our warp portal! ok lets go in
    if ($args->{sourceID} eq $accountID && $args->{skillID} eq 27) {
       message "Moving into warp portal at $args->{x} $args->{y}\n";
-      main::ai_route($field{name}, $args->{x}, $args->{y},
+      main::ai_route($field->baseName, $args->{x}, $args->{y},
          noSitAuto => 1,
          attackOnRoute => 0);
    }

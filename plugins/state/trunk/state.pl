@@ -21,12 +21,12 @@ my $hook = Plugins::addHook('mainLoop_post', sub {
 		my $f;
 		$AI::Timeouts::stateUpdate = time;
 
-		if ($field{name} && $net->getState() == Network::IN_GAME) {
+		if ($field && $net->getState() == Network::IN_GAME) {
 			my $pos = calcPosition($char);
 			%state = (
 				connectionState => 'in game',
-				fieldName => $field{name},
-				fieldBaseName => $field{baseName},
+				fieldName => $field->name,
+				fieldBaseName => $field->baseName,
 				charName => $char->{name},
 				x => $pos->{x},
 				y => $pos->{y}

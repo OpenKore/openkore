@@ -45,11 +45,11 @@ my $hook = Plugins::addHook('mainLoop_post', sub {
 			Network::IN_GAME_BUT_UNINITIALIZED  => 'in game (uninitialized)',
 		}->{$net->getState}],
 		
-		$char && $field{name} && $net->getState == Network::IN_GAME ? (
+		$char && $field->name && $net->getState == Network::IN_GAME ? (
 			[field =>
-				[name =>$field{name}],
-				[baseName => $field{baseName}],
-				-f cwd . "/map/$field{baseName}.png" ? ['image' => cwd . "/map/$field{baseName}.png"] : (),
+				[name => $field->name],
+				[baseName => $field->baseName],
+				-f cwd . "/map/" . $field->baseName . ".png" ? ['image' => cwd . "/map/" . $field->baseName . ".png"] : (),
 			],
 			[char =>
 				[name => $char->{name}],

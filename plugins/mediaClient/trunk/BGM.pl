@@ -4,6 +4,7 @@ use strict;
 use Plugins;
 use Globals;
 use Log qw(message warning error);
+use Field;
 my $dataDir = $Plugins::current_plugin_folder;
 use FindBin qw($RealBin);
 use lib "$RealBin/plugins/mediaClient";
@@ -37,6 +38,7 @@ sub onMapChange {
 		$field = $args->{mapName};
 	}
 	$field =~ s/.gat//;
+	($field, undef) = Field::nameToBaseName(undef, $field); # Clean Up Instance ID
 	
 	if (!$previousField) {
 		$previousField = $field;

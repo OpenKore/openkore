@@ -133,7 +133,7 @@ sub locationSkill {
 			if ((checkCoordsCondition($prefix.$i."_coords",\%skill)) &&
 				main::timeOut($delay{$prefix.$skillObj->handle."_skillDelay"}) &&
 				(($inRange || (!$config{$prefix.$i."_whenAtCoords"}))) && 
-				(($map eq $field{'name'}) || !$map)
+				(($map eq $field->name || $map eq $field->baseName) || !$map)
 			) {
 				$skill{'handle'} = $skillObj->handle;
 				$skill{'lvl'} = ($config{$prefix.$i."_lvl"}) || 10;

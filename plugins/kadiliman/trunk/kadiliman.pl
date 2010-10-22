@@ -145,7 +145,7 @@
 
                     if ($packet eq 'packet/public_chat' && $config{$prefix.$i."_onPublicChat"}) {
              #return if bot isn't at lockmap
-             return if (($config{$prefix.$i."_inLockOnly"} > 0) && ($field{name} ne $config{lockMap}));
+             return if (($config{$prefix.$i."_inLockOnly"} > 0) && ($field->baseName ne $config{lockMap}));
              $reply = $bot{$i}->transform($chatMsg);
                             $type = "c";
                     } elsif ($packet eq 'packet/system_chat' && $config{$prefix.$i."_onSystemChat"}) {

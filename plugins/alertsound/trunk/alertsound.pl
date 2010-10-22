@@ -150,8 +150,8 @@ sub alertSound {
         for (my $i = 0; exists $config{"alertSound_".$i."_eventList"}; $i++) {
                 next if (!$config{"alertSound_".$i."_eventList"});
                 if (Utils::existsInList($config{"alertSound_".$i."_eventList"}, $event)
-                && (!$config{"alertSound_".$i."_notInTown"} || !$cities_lut{$field->name().'.rsw'})
-                && (!$config{"alertSound_".$i."_inLockOnly"} || $field->name() eq $config{'lockMap'})) {
+                && (!$config{"alertSound_".$i."_notInTown"} || !$cities_lut{$field->baseName().'.rsw'})
+                && (!$config{"alertSound_".$i."_inLockOnly"} || $field->baseName() eq $config{'lockMap'})) {
                         message "Sound alert: $event\n", "alertSound";
                         Utils::Win32::playSound($config{"alertSound_".$i."_play"});
                         return;

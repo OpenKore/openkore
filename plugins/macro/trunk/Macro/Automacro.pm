@@ -69,7 +69,7 @@ sub checkLoc {
 		return 0 unless exists $varStack{$var};
 		$map = $varStack{$var}
 	}
-	if ($map eq $field->name) {
+	if ($map eq $field->baseName || $map eq $field->name) {
 		if ($x1 && $y1) {
 			my $pos = calcPosition($char);
 			return 0 unless defined $pos->{x} && defined $pos->{y};
@@ -497,7 +497,7 @@ sub checkSpellsID {
 			$varStack{".areaActor"} = $actor;
 			$varStack{".areaSourceName"} = $owner;
 			$varStack{".areaSourceID"} = $ID;
-			$varStack{".areaPos"} = sprintf("%d %d %s", $spell->{'pos'}{'x'}, $spell->{'pos'}{'y'}, $field->{name});
+			$varStack{".areaPos"} = sprintf("%d %d %s", $spell->{'pos'}{'x'}, $spell->{'pos'}{'y'}, $field->baseName);
 			$varStack{".areaDist"} = $dist1;
 			return cmpr($dist1, $cond, $dist)
 		}
@@ -538,7 +538,7 @@ sub checkMonster {
 			my $mypos = calcPosition($char);
 			my $pos = calcPosition($monsters{$_});
 			my $dist = sprintf("%.1f",distance($pos, $mypos));
-			my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field->{name});
+			my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field->baseName);
 			$varStack{".lastMonster"} = $monsters{$_}->{name};
 			$varStack{".lastMonsterPos"} = $val;
 			$varStack{".lastMonsterDist"} = $dist;
@@ -550,7 +550,7 @@ sub checkMonster {
 				my $mypos = calcPosition($char);
 				my $pos = calcPosition($monsters{$_});
 				my $dist = sprintf("%.1f", distance($mypos, $pos));
-				my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field->{name});
+				my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field->baseName);
 				$varStack{".lastMonster"} = $monsters{$_}->{name};
 				$varStack{".lastMonsterPos"} = $val;
 				$varStack{".lastMonsterDist"} = $dist;
@@ -636,7 +636,7 @@ sub consoleCheckWrapper {
 
 # checks for map change
 sub checkMapChange {
-	return ($_[0] eq 'any' || $_[0] eq '*' || existsInList($_[0], $field->name))?1:0
+	return ($_[0] eq 'any' || $_[0] eq '*' || existsInList($_[0], $field->baseName))?1:0
 }
 
 # checks for eval
@@ -767,7 +767,7 @@ sub automacroCheck {
 			} else {next CHKAM}
 		}
 
-		next CHKAM if (defined $automacro{$am}->{map}    && $automacro{$am}->{map} ne $field->name);
+		next CHKAM if (defined $automacro{$am}->{map}    && $automacro{$am}->{map} ne $field->baseName);
 		next CHKAM if (defined $automacro{$am}->{class}  && !checkClass($automacro{$am}->{class}));
 		next CHKAM if (defined $automacro{$am}->{notMonster} && !checkNotMonster($automacro{$am}->{notMonster}));
 		next CHKAM if (defined $automacro{$am}->{eval} && !checkEval($automacro{$am}->{eval}));
