@@ -194,7 +194,7 @@ sub new {
 		'0125' => ['cart_item_removed', 'v V', [qw(index amount)]],
 		'012C' => ['cart_add_failed', 'C', [qw(fail)]],
 		'012D' => ['shop_skill', 'v', [qw(number)]],
-		'0131' => ['vender_found', 'a4 A30', [qw(ID title)]],
+		'0131' => ['vender_found', 'a4 A80', [qw(ID title)]],
 		'0132' => ['vender_lost', 'a4', [qw(ID)]],
 		'0133' => ['vender_items_list', 'v a4', [qw(len venderID)]],
 		'0135' => ['vender_buy_fail', 'v2 C', [qw(index amount fail)]],
