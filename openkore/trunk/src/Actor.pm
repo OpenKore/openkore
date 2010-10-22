@@ -346,16 +346,16 @@ sub deepCopy {
 	# them in a temporary place.
 	my %deepCopyFields;
 	my %hashCopies;
-	foreach my $field ('onNameChange', 'onUpdate') {
-		$deepCopyFields{$field} = $self->{$field};
-		delete $self->{$field};
+	foreach my $param ('onNameChange', 'onUpdate') {
+		$deepCopyFields{$param} = $self->{$param};
+		delete $self->{$param};
 	}
 	# $actor->{casting} may be a hash which contains a reference to another
 	# Actor object.
-	foreach my $field ('casting') {
-		if ($self->{$field}) {
-			$hashCopies{$field} = $self->{$field};
-			delete $self->{$field};
+	foreach my $param ('casting') {
+		if ($self->{$param}) {
+			$hashCopies{$param} = $self->{$param};
+			delete $self->{$param};
 		}
 	}
 
@@ -372,13 +372,13 @@ sub deepCopy {
 
 	# Restore the deleted fields in the original object,
 	# and assign manually-created deep copies to the clone.
-	foreach my $field (keys %deepCopyFields) {
-		$self->{$field} = $deepCopyFields{$field};
-		$copy->{$field} = $deepCopyFields{$field}->deepCopy;
+	foreach my $param (keys %deepCopyFields) {
+		$self->{$param} = $deepCopyFields{$param};
+		$copy->{$param} = $deepCopyFields{$param}->deepCopy;
 	}
-	foreach my $field (keys %hashCopies) {
-		$self->{$field} = $hashCopies{$field};
-		$copy->{$field} = {%{$hashCopies{$field}}};
+	foreach my $param (keys %hashCopies) {
+		$self->{$param} = $hashCopies{$param};
+		$copy->{$param} = {%{$hashCopies{$param}}};
 	}
 
 	return $copy;

@@ -424,7 +424,7 @@ sub processPortalRecording {
 	my $first = 1;
 	my ($foundID, $smallDist, $dist);
 
-	if (!$field->name) {
+	if (!$field->baseName) {
 		debug "Field name not known - abort\n", "portalRecord";
 		return;
 	}
@@ -481,11 +481,11 @@ sub processPortalRecording {
 		debug "No destination portal found.\n", "portalRecord";
 		return;
 	}
-	#if (defined portalExists($field->name, $portals{$foundID}{pos})) {
+	#if (defined portalExists($field->baseName, $portals{$foundID}{pos})) {
 	#	debug "Destination portal is already in portals.txt\n", "portalRecord";
 	#	last PORTALRECORD;
 	#}
-	if (defined portalExists2($sourceMap, \%sourcePos, $field->name, $portals{$foundID}{pos})) {
+	if (defined portalExists2($sourceMap, \%sourcePos, $field->baseName, $portals{$foundID}{pos})) {
 		debug "This portal is already in portals.txt\n", "portalRecord";
 		return;
 	}
@@ -493,7 +493,7 @@ sub processPortalRecording {
 
 	# And finally, record the portal information
 	my ($destMap, $destID, %destPos);
-	$destMap = $field->name;
+	$destMap = $field->baseName;
 	$destID = $portals{$foundID}{nameID};
 	%destPos = %{$portals{$foundID}{pos}};
 	debug "Destination portal: $destMap ($destPos{x}, $destPos{y})\n", "portalRecord";
@@ -552,7 +552,7 @@ sub processEscapeUnknownMaps {
 			AI::dequeue;
 			if ($portalsID[0]) {
 				message T("Escaping to into nearest portal.\n");
-				main::ai_route($field->name, $portals{$portalsID[0]}{'pos'}{'x'},
+				main::ai_route($field->baseName, $portals{$portalsID[0]}{'pos'}{'x'},
 					$portals{$portalsID[0]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
 				$skip = 1;
 
@@ -560,7 +560,7 @@ sub processEscapeUnknownMaps {
 			     my $spell = $spells{$spellsID[0]};
 				if (getSpellName($spell->{type}) eq "Warp Portal" ){
 					message T("Found warp portal escaping into warp portal.\n");
-					main::ai_route($field->name, $spell->{pos}{x},
+					main::ai_route($field->baseName, $spell->{pos}{x},
 						$spell->{pos}{y}, attackOnRoute => 1, noSitAuto => 1);
 					$skip = 1;
 				}else{
@@ -591,7 +591,7 @@ sub processEscapeUnknownMaps {
 				error T("Invalid coordinates specified for randomWalk\n Retrying...");
 			} else {
 				message TF("Calculating random route to: %s: %s, %s\n", $field->descString(), $randX, $randY), "route";
-				ai_route($field->name, $randX, $randY,
+				ai_route($field->baseName, $randX, $randY,
 					 maxRouteTime => $config{route_randomWalk_maxRouteTime},
 					 attackOnRoute => 2,
 					 noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0) );
@@ -806,7 +806,7 @@ sub processTake {
 			} else {
 				my $pos = $item->{pos};
 				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
-				ai_route($field->name, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
+				ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
 			}
 
 		} elsif (timeOut($timeout{ai_take})) {
@@ -1181,7 +1181,7 @@ sub processAutoStorage {
 			}
 
 			# Determine whether we have to move to the NPC
-			if ($field{'name'} ne $args->{npc}{map}) {
+			if ($field->baseName ne $args->{npc}{map}) {
 				$do_route = 1;
 			} else {
 				my $distance = distance($args->{npc}{pos}, $char->{pos_to});
@@ -1197,7 +1197,7 @@ sub processAutoStorage {
 
 				# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
 				if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
-				    && !$field->isCity && $config{'saveMap'} ne $field->name) {
+				    && !$field->isCity && $config{'saveMap'} ne $field->baseName) {
 					$args->{warpedToSave} = 1;
 					# If we still haven't warped after a certain amount of time, fallback to walking
 					$args->{warpStart} = time unless $args->{warpStart};
@@ -1462,7 +1462,7 @@ sub processAutoSell {
 		}
 
 		undef $ai_v{'temp'}{'do_route'};
-		if ($field{'name'} ne $args->{'npc'}{'map'}) {
+		if ($field->baseName ne $args->{'npc'}{'map'}) {
 			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
 			$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
@@ -1477,7 +1477,7 @@ sub processAutoSell {
 			}
 
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{'warpedToSave'}
-			&& !$field->isCity && $config{'saveMap'} ne $field->name) {
+			&& !$field->isCity && $config{'saveMap'} ne $field->baseName) {
 				$args->{'warpedToSave'} = 1;
 				# If we still haven't warped after a certain amount of time, fallback to walking
 				$args->{warpStart} = time unless $args->{warpStart};
@@ -1626,7 +1626,7 @@ sub processAutoBuy {
 		}
 
 		undef $ai_v{'temp'}{'do_route'};
-		if ($field{'name'} ne $args->{'npc'}{'map'}) {
+		if ($field->baseName ne $args->{'npc'}{'map'}) {
 			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
 			$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
@@ -1643,7 +1643,7 @@ sub processAutoBuy {
 			}
 
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
-			&& !$field->isCity && $config{'saveMap'} ne $field->name) {
+			&& !$field->isCity && $config{'saveMap'} ne $field->baseName) {
 				$args->{warpedToSave} = 1;
 				if ($needitem ne "") {
 					$msgneeditem = "Auto-buy: $needitem\n";
@@ -1778,7 +1778,7 @@ sub processAutoCart {
 sub processLockMap {
 	if (AI::isIdle && $config{'lockMap'}
 		&& !$ai_v{'sitAuto_forcedBySitCommand'}
-		&& ($field{'name'} ne $config{'lockMap'}
+		&& ($field->baseName ne $config{'lockMap'}
 			|| ($config{'lockMap_x'} && ($char->{pos_to}{x} < $config{'lockMap_x'} - $config{'lockMap_randX'} || $char->{pos_to}{x} > $config{'lockMap_x'} + $config{'lockMap_randX'}))
 			|| ($config{'lockMap_y'} && ($char->{pos_to}{y} < $config{'lockMap_y'} - $config{'lockMap_randY'} || $char->{pos_to}{y} > $config{'lockMap_y'} + $config{'lockMap_randY'}))
 	)) {
@@ -1796,11 +1796,11 @@ sub processLockMap {
 					$i = 500;
 					if ($config{'lockMap_x'} || $config{'lockMap_y'}) {
 						do {
-							$lockX = int(rand($field{'width'} + 1)) if (!$config{'lockMap_x'} && $config{'lockMap_y'});
+							$lockX = int(rand($field->width + 1)) if (!$config{'lockMap_x'} && $config{'lockMap_y'});
 							$lockX = int($config{'lockMap_x'}) if ($config{'lockMap_x'});
 							$lockX += (int(rand(2*$config{'lockMap_randX'} + 1) - $config{'lockMap_randX'})) if ($config{'lockMap_x'} && $config{'lockMap_randX'});
 
-							$lockY = int(rand($field{'width'} + 1)) if (!$config{'lockMap_y'} && $config{'lockMap_x'});
+							$lockY = int(rand($field->width + 1)) if (!$config{'lockMap_y'} && $config{'lockMap_x'});
 							$lockY = int($config{'lockMap_y'}) if ($config{'lockMap_y'});
 							$lockY += (int(rand(2*$config{'lockMap_randY'} + 1) - $config{'lockMap_randY'})) if ($config{'lockMap_y'} && $config{'lockMap_randY'});
 						} while (--$i && !$lockField->isWalkable($lockX, $lockY));
@@ -1931,13 +1931,13 @@ sub processAutoSkillsRaise {
 sub processRandomWalk {
 	if (AI::isIdle && (AI::SlaveManager::isIdle()) && $config{route_randomWalk} && !$ai_v{sitAuto_forcedBySitCommand}
 		&& (!$field->isCity || $config{route_randomWalk_inTown})
-		&& length($field{rawMap}) ) {
+		&& length($field->{rawMap}) ) {
 		my ($randX, $randY);
 		my $i = 500;
 		do {
-			$randX = int(rand($field{width})) + 1;
+			$randX = int(rand($field->width)) + 1;
 			$randX = int($config{'lockMap_x'} - $config{'lockMap_randX'} + rand(2*$config{'lockMap_randX'}))+1 if ($config{'lockMap_x'} ne '' && $config{'lockMap_randX'} ne '');
-			$randY = int(rand($field{height})) + 1;
+			$randY = int(rand($field->height)) + 1;
 			$randY = int($config{'lockMap_y'} - $config{'lockMap_randY'} + rand(2*$config{'lockMap_randY'}))+1 if ($config{'lockMap_y'} ne '' && $config{'lockMap_randY'} ne '');
 		} while (--$i && !$field->isWalkable($randX, $randY));
 		if (!$i) {
@@ -1945,7 +1945,7 @@ sub processRandomWalk {
 			$config{route_randomWalk} = 0;
 		} else {
 			message TF("Calculating random route to: %s: %s, %s\n", $field->descString(), $randX, $randY), "route";
-			ai_route($field->name, $randX, $randY,
+			ai_route($field->baseName, $randX, $randY,
 				maxRouteTime => $config{route_randomWalk_maxRouteTime},
 				attackOnRoute => 2,
 				noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0) );
@@ -2005,7 +2005,7 @@ sub processFollow {
 				if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
 					$args->{move_timeout} = time;
 					if ( $dist > 15 || ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $player->{pos_to})) ) {
-						ai_route($field->name, $player->{pos_to}{x}, $player->{pos_to}{y},
+						ai_route($field->baseName, $player->{pos_to}{x}, $player->{pos_to}{y},
 							attackOnRoute => 1,
 							distFromGoal => $config{followDistanceMin});
 					} else {
@@ -2140,7 +2140,7 @@ sub processFollow {
 			my $pos = $ai_v{'temp'}{'warp_pos'};
 
 			if ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $pos)) {
-				ai_route($field->name, $pos->{x}, $pos->{y},
+				ai_route($field->baseName, $pos->{x}, $pos->{y},
 					attackOnRoute => 0); #distFromGoal => 0);
 			} else {
 				my (%vec, %pos_to);
@@ -2175,7 +2175,7 @@ sub processFollow {
 				if ($portals{$portalID} && !$args->{'follow_lost_portal_tried'}) {
 					$args->{'follow_lost_portal_tried'} = 1;
 					%{$ai_v{'temp'}{'pos'}} = %{$portals{$args->{'follow_lost_portalID'}}{'pos'}};
-					ai_route($field{'name'}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
+					ai_route($field->baseName, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
 						attackOnRoute => 1);
 				}
 			} else {
@@ -2831,7 +2831,7 @@ sub processItemsGather {
 				my $item = $items{$ID};
 				my $pos = $item->{pos};
 				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
-				ai_route($field->name, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
+				ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
 			}
 
 		} else {
@@ -2846,7 +2846,7 @@ sub processAutoTeleport {
 	my $safe = 0;
 
 	if (!$field->isCity && !AI::inQueue("storageAuto", "buyAuto") && $config{teleportAuto_allPlayers}
-	    && ($config{'lockMap'} eq "" || $field->name eq $config{'lockMap'})
+	    && ($config{'lockMap'} eq "" || $field->baseName eq $config{'lockMap'})
 	 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
 
 		my $ok;
@@ -2895,11 +2895,11 @@ sub processAutoTeleport {
 		|| (
 			$config{teleportAuto_minAggressives}
 			&& scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}
-			&& !($config{teleportAuto_minAggressivesInLock} && $field->name eq $config{'lockMap'})
+			&& !($config{teleportAuto_minAggressivesInLock} && $field->baseName eq $config{'lockMap'})
 		) || (
 			$config{teleportAuto_minAggressivesInLock}
 			&& scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressivesInLock}
-			&& $field->name eq $config{'lockMap'}
+			&& $field->baseName eq $config{'lockMap'}
 		)
 	   )
 	  && !$char->{dead}
@@ -2953,7 +2953,7 @@ sub processAutoTeleport {
 	}
 
 	if ($safe && $config{teleportAuto_portal}
-	  && ($config{'lockMap'} eq "" || $config{lockMap} eq $field->name)
+	  && ($config{'lockMap'} eq "" || $config{lockMap} eq $field->baseName)
 	  && timeOut($timeout{ai_teleport_portal})
 	  && !AI::inQueue("storageAuto", "buyAuto", "sellAuto")) {
 		if (scalar(@portalsID)) {
@@ -2974,13 +2974,13 @@ sub processAllowedMaps {
 	#
 	# Here, we only check for respawn. (Disconnect is handled in
 	# packets 0091 and 0092.)
-	if ($field->name &&
+	if ($field->baseName &&
 	    $config{allowedMaps} && $config{allowedMaps_reaction} == 0 &&
 		timeOut($timeout{ai_teleport}) &&
-		!existsInList($config{allowedMaps}, $field->name) &&
+		!existsInList($config{allowedMaps}, $field->baseName) &&
 		$ai_v{temp}{allowedMapRespawnAttempts} < 3) {
-		warning TF("The current map (%s) is not on the list of allowed maps.\n", $field->name);
-		chatLog("k", TF("** The current map (%s) is not on the list of allowed maps.\n", $field->name));
+		warning TF("The current map (%s) is not on the list of allowed maps.\n", $field->baseName);
+		chatLog("k", TF("** The current map (%s) is not on the list of allowed maps.\n", $field->baseName));
 		ai_clientSuspend(0, 5);
 		message T("Respawning to save point.\n");
 		chatLog("k", T("** Respawning to save point.\n"));
@@ -3054,7 +3054,7 @@ sub processAutoShopOpen {
 		$timeout{ai_shop}{time} = time;
 	}
 	if ($config{'shopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && !$shopstarted
-	  && $field->name eq $config{'lockMap'}) {
+	  && $field->baseName eq $config{'lockMap'}) {
 		openShop();
 	}
 }
@@ -3062,7 +3062,7 @@ sub processAutoShopOpen {
 sub processDcOnPlayer {
 	# Disconnect when a player is detected
 	if (!$field->isCity && !AI::inQueue("storageAuto", "buyAuto") && $config{dcOnPlayer}
-	    && ($config{'lockMap'} eq "" || $field->name eq $config{'lockMap'})
+	    && ($config{'lockMap'} eq "" || $field->baseName eq $config{'lockMap'})
 	    && !isSafe() && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
 
 		$quit = 1;

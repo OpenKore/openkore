@@ -514,7 +514,7 @@ sub updateStatus {
 			$mapTitle, $field->name, $char->{pos}{x}, $char->{pos}{y}, $args->{name});
 	} else {
 		if ('' ne ($i = Utils::DataStructures::binFindReverse (\@AI::ai_seq, 'route')) and $args = AI::args ($i)) {
-			if ($args->{dest}{map} eq $field->name) {
+			if ($args->{dest}{map} eq $field->baseName) {
 				$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => (@*,@*)",
 					$mapTitle, $field->name, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
 			} elsif (!defined $args->{dest}{pos}{x}) {

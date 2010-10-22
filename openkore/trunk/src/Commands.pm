@@ -3048,7 +3048,7 @@ sub cmdMove {
 		# coordinates
 		$x = $arg1;
 		$y = $arg2;
-		$map = $field->name;
+		$map = $field->baseName;
 	} elsif ($arg1 =~ /^\d+$/) {
 		# coordinates and map
 		$x = $arg1;
@@ -3087,7 +3087,7 @@ sub cmdMove {
 			if ($portalsID[$map]) {
 				message TF("Move into portal number %s (%s,%s)\n", 
 					$map, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'});
-				main::ai_route($field->name, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
+				main::ai_route($field->baseName, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
 			} else {
 				error T("No portals exist.\n");
 			}

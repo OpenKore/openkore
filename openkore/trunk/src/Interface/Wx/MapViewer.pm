@@ -111,8 +111,8 @@ sub onMapChange {
 sub set {
 	my ($self, $map, $x, $y, $field, $look) = @_;
 
-	$self->{field}{width} = $field->width() if ($field && $field->width());
-	$self->{field}{height} = $field->height() if ($field && $field->height());
+	$self->{field}{width} = $field->width if ($field && $field->width);
+	$self->{field}{height} = $field->height if ($field && $field->height);
 
 	if ($map && $map ne $self->{field}{name}) {
 		# Map changed
@@ -355,7 +355,7 @@ sub _onRightClick {
 	if ($self->{clickCb} && $self->{field}{width} && $self->{field}{height}) {
 		my ($x, $y) = $self->_viewToPosXY ($event->GetX, $event->GetY);
 		
-		my $map = $field->name;
+		my $map = $field->baseName;
 		AI::clear(qw/move route mapRoute/);
 		message TF("Walking to waypoint: %s, %s\n", $x, $y), "success";
 		main::ai_route($map, $x, $y,
@@ -463,7 +463,7 @@ sub _f {
 sub _loadMapImage {
 	my $self = shift;
 	my $field = shift;
-	my $name = $field->{baseName};
+	my $name = $field->baseName;
 
 	if (-f $self->_map("$name.jpg")) {
 		return _loadImage($self->_map("$name.jpg"), $self->{zoom});
@@ -476,7 +476,7 @@ sub _loadMapImage {
 		my $file = _f(File::Spec->tmpdir(), "map.xpm");
 		return unless (open(F, ">", $file));
 		binmode F;
-		print F Utils::xpmmake($field->width(), $field->height(), $field->{rawMap});
+		print F Utils::xpmmake($field->width, $field->height, $field->{rawMap});
 		close F;
 		my $bitmap = _loadImage($file, $self->{zoom});
 		unlink $file;

@@ -691,7 +691,7 @@ sub createSplitterContent {
 	$mapView->onMapChange(\&onMap_MapChange, $mapDock);
 	$mapView->parsePortals(Settings::getTableFilename("portals.txt"));
 	if ($field && $char) {
-		$mapView->set($field->name(), $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
+		$mapView->set($field->baseName, $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
 	}
 
 	my $position;
@@ -815,7 +815,7 @@ sub updateMapViewer {
 	my $myPos;
 	$myPos = calcPosition($char);
 
-	$map->set($field->name(), $myPos->{x}, $myPos->{y}, $field, $char->{look});
+	$map->set($field->baseName, $myPos->{x}, $myPos->{y}, $field, $char->{look});
 	
 	my ($i, $args, $routeTask, $solution);
 	if (
@@ -1311,10 +1311,10 @@ sub onMapClick {
 	my $noMove = 0;
 	delete $self->{mouseMapText};
 	if ($self->{mapViewer} && $self->{mapViewer}->{portals}
-		&& $self->{mapViewer}->{portals}->{$field->name()}
-		&& @{$self->{mapViewer}->{portals}->{$field->name()}}){
+		&& $self->{mapViewer}->{portals}->{$field->baseName}
+		&& @{$self->{mapViewer}->{portals}->{$field->baseName}}){
 
-		foreach my $portal (@{$self->{mapViewer}->{portals}->{$field->name()}}){
+		foreach my $portal (@{$self->{mapViewer}->{portals}->{$field->baseName}}){
 			if (distance($portal,{x=>$x,y=>$y}) <= ($config{wx_map_portalSticking} || 5)) {
 				$x = $portal->{x};
 				$y = $portal->{y};#{O}_{O}#
@@ -1344,7 +1344,7 @@ sub onMapClick {
 	unless ($noMove) {
 		$self->writeOutput("message", TF("Moving to %s, %s\n", $x, $y), "info") unless $checkPortal;
 		AI::clear("mapRoute", "route", "move");
-		main::ai_route($field->name(), $x, $y, attackOnRoute => 1);
+		main::ai_route($field->baseName, $x, $y, attackOnRoute => 1);
 	}
 	$self->{inputBox}->SetFocus;
 }
@@ -1352,7 +1352,7 @@ sub onMapClick {
 sub onMap_MapChange {
 #vcl code	my (undef, undef, undef, $mapDock) = @_;
 	my ($mapDock) = @_;
-	$mapDock->title($field->name());
+	$mapDock->title($field->baseName);
 	$mapDock->Fit;
 }
 

@@ -208,7 +208,7 @@ sub npcName {
 	
 	my $mapDisplay = '';
 	if (my $npc = $npcsList->getByID ($ID)) {
-		$mapDisplay = join ' ', $field->name, $npc->{pos}{x}, $npc->{pos}{y};
+		$mapDisplay = join ' ', $field->baseName, $npc->{pos}{x}, $npc->{pos}{y};
 	}
 	
 	$self->{nameLabel}->SetLabel ($nameDisplay);

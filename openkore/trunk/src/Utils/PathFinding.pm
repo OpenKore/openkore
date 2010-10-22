@@ -90,12 +90,12 @@ sub reset {
 	croak "Required argument 'dest' missing\n" unless $args{dest};
 
 	# Rebuild 'field' arg temporary here, to avoid that stupid bug, when dstMap not available
-	if ($args{field} && UNIVERSAL::isa($args{field}, 'Field') && !$args{field}{dstMap}) {
-		$args{field}->loadByName($args{field}->{name}, 1);
+	if ($args{field} && UNIVERSAL::isa($args{field}, 'Field') && !$args{field}->{dstMap}) {
+		$args{field}->loadByName($args{field}->name, 1);
 	}
 
 	# Default optional arguments
-	$args{distance_map} = \$args{field}{dstMap} unless $args{distance_map};
+	$args{distance_map} = \($args{field}->{dstMap}) unless $args{distance_map};
 	$args{width} = $args{field}{width} unless $args{width};
 	$args{height} = $args{field}{height} unless $args{height};
 	$args{timeout} = 1500 unless $args{timeout};
