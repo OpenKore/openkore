@@ -45,7 +45,7 @@ sub write_player {
 
    open FILE, ">>:utf8", $file;
    my $time=localtime time;
-   print FILE "[$time] $field{name}\t$targetId $targetName\n";
+   print FILE "[$time] " . $field->baseName . "\t$targetId $targetName\n";
    close FILE;
 }
 

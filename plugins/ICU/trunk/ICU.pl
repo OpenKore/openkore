@@ -61,7 +61,7 @@ sub teleportDetect {
 		$allowedTeleport = 0;
 		return;
 	}
-	logEvent("Unauthorized/Forced teleport detected (From ".$oldmap." to ".$field{'name'}." \n");
+	logEvent("Unauthorized/Forced teleport detected (From ".$oldmap." to ".$field->name." \n");
 	playSound("teleport") if $config{'icu_0_teleportSound'};
 	runCommands("teleport") if ($config{'icu_0_teleportCommands'});
 }
@@ -112,7 +112,7 @@ sub runCommands {
 sub logEvent {
 	return if (!$config{'icu_0_log'});
 	my $string = shift;
-	chatLog("k", "*** ".$string." (Our location: ".$field{name}." x:".$position->{x}." y:".$position->{y}.") ***");
+	chatLog("k", "*** ".$string." (Our location: ".$field->name." x:".$position->{x}." y:".$position->{y}.") ***");
 }
 
 sub playSound {

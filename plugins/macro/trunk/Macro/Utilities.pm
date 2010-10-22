@@ -218,7 +218,7 @@ sub refreshGlobal {
 	
 	return unless $net && $net->getState == Network::IN_GAME;
 	
-	$varStack{".map"} = (defined $field)?$field->name:"undef";
+	$varStack{".map"} = (defined $field)?$field->baseName:"undef";
 	my $pos = calcPosition($char); $varStack{".pos"} = sprintf("%d %d", $pos->{x}, $pos->{y});
 	
 	$varStack{".hp"} = $char->{hp};

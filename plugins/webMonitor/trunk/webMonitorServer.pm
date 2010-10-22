@@ -213,7 +213,7 @@ sub request {
 		'characterWalkSpeed' => $char->{walk_speed},
 		'characterLocationX' => $char->position()->{x},
 		'characterLocationY' => $char->position()->{y},
-		'characterLocationMap' => $field{name},
+		'characterLocationMap' => $field->name,
 		'lastConsoleMessage' => $messages[-1],
 		'skin' => 'default', # TODO: replace with config.txt entry for the skin
 		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,

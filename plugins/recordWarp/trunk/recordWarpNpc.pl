@@ -58,7 +58,7 @@ sub cmdWarprec {
 	my ($arg1) = $args =~ /^(\w+)/;
 	if ($info{recording}){
 		if ($arg1 eq 'save') {
-			saveDest({map=>$field{name},x=>$char->{pos}{x},y=>$char->{pos}{y}});
+			saveDest({map=>$field->baseName,x=>$char->{pos}{x},y=>$char->{pos}{y}});
 		} else {
 			message "Warpnpc Recording OFF.\n",'recordWarpNpc';
 			%info = undef;
@@ -83,7 +83,7 @@ sub onMapChanged {
 
 sub onMapLoaded {
 	return 1 unless $info{recording};
-	saveDest({map=>$field{name},x=>$char->{pos}{x},y=>$char->{pos}{y}});
+	saveDest({map=>$field->baseName,x=>$char->{pos}{x},y=>$char->{pos}{y}});
 }
 
 sub cmdTalk {
@@ -96,9 +96,9 @@ sub cmdTalk {
 
 	if ($arg1 =~ /^\d+$/ && exists $npcsID[$arg1]){
 		 open NPC, ">>$pluginDir/warpnpcs.txt";
-		 print NPC "$field{name} $npcs{$npcsID[$arg1]}{pos}{x} $npcs{$npcsID[$arg1]}{pos}{y}\n";
+		 print NPC $field->baseName . " $npcs{$npcsID[$arg1]}{pos}{x} $npcs{$npcsID[$arg1]}{pos}{y}\n";
 		 close NPC;
-		 debug "Warpnpc added: $field{name} $npcs{$npcsID[$arg1]}{pos}{x} $npcs{$npcsID[$arg1]}{pos}{y}\n",'recordWarpNpc',2;
+		 debug "Warpnpc added: " . $field->baseName . " $npcs{$npcsID[$arg1]}{pos}{x} $npcs{$npcsID[$arg1]}{pos}{y}\n",'recordWarpNpc',2;
 	} elsif ($arg1 eq "resp" && $arg2 ne "") {
 		$info{seq} .= " r$arg2";
 		debug "Added conversation seq: r$arg2, compl:$info{seq}\n",'recordWarpNpc',2;

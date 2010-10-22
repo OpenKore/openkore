@@ -95,7 +95,7 @@ sub exchange {
 			$args{'steps'} = $config{$prefix.$i."_steps"};
 			$args{'requiredAmount'} = $config{$prefix.$i."_requiredAmount"};
 			$args{'invIndex'} = $invIndex;
-			$args{'stage'} = ($field{'name'} eq $args{'npc'}{'map'}) ? 'talk' : 'route';
+			$args{'stage'} = ($field->baseName eq $args{'npc'}{'map'} || $field->name eq $args{'npc'}{'map'}) ? 'talk' : 'route';
 			AI::queue('itemExchange', \%args);
 			last;
 		}
