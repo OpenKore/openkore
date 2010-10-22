@@ -852,7 +852,7 @@ sub mainLoop_initialized {
 		$basePercent = sprintf("%.2f", $char->{exp} / $char->{exp_max} * 100) if ($char->{exp_max});
 		$jobPercent = sprintf("%.2f", $char->{exp_job} / $char->{exp_job_max} * 100) if ($char->{exp_job_max});
 		$weight = int($char->{weight} / $char->{weight_max} * 100) . "%" if ($char->{weight_max});
-		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name() if ($char->{pos_to} && $field);
+		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
 
 		# Translation Comment: Interface Title with character status
 		$title = TF("%s B%s (%s), J%s (%s) : w%s%s - %s",

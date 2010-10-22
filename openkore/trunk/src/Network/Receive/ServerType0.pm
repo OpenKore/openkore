@@ -970,8 +970,8 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::Portal();
 			$actor->{appear_time} = time;
-			my $exists = portalExists($field->name, \%coordsTo);
-			$actor->{source}{map} = $field->name;
+			my $exists = portalExists($field->baseName, \%coordsTo);
+			$actor->{source}{map} = $field->baseName;
 			if ($exists ne "") {
 				$actor->setName("$portals_lut{$exists}{source}{map} -> " . getPortalDestName($exists));
 			}
@@ -1164,7 +1164,7 @@ typedef enum <unnamed-tag> {
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::NPC")) {
 			my $ID = $args->{ID};
-			my $location = $field->name . " $actor->{pos}{x} $actor->{pos}{y}";
+			my $location = $field->baseName . " $actor->{pos}{x} $actor->{pos}{y}";
 			if ($npcs_lut{$location}) {
 				$actor->setName($npcs_lut{$location});
 			}
@@ -1320,7 +1320,7 @@ sub actor_info {
 			debug "NPC Info: $npc->{name} ($binID)\n", "parseMsg", 2;
 		}
 
-		my $location = $field->name . " $npc->{pos}{x} $npc->{pos}{y}";
+		my $location = $field->baseName . " $npc->{pos}{x} $npc->{pos}{y}";
 		if (!$npcs_lut{$location}) {
 			$npcs_lut{$location} = $npc->{name};
 			updateNPCLUT(Settings::getTableFilename("npcs.txt"), $location, $npc->{name});
@@ -2722,7 +2722,7 @@ sub homunculus_info {
 			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
 		$char->{homunculus} = Actor::get($args->{ID});
 		$char->{homunculus}{state} = $state if (defined $state);
-		$char->{homunculus}{map} = $field->name;
+		$char->{homunculus}{map} = $field->baseName;
 		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
 			AI::SlaveManager::addSlave ($char->{homunculus});
 		}
@@ -2742,7 +2742,7 @@ sub mercenary_init {
 	my ($self, $args) = @_;
 
 	$char->{mercenary} = Actor::get ($args->{ID}); # TODO: was it added to an actorList yet?
-	$char->{mercenary}{map} = $field->name;
+	$char->{mercenary}{map} = $field->baseName;
 	unless ($char->{slaves}{$char->{mercenary}{ID}}) {
 		AI::SlaveManager::addSlave ($char->{mercenary});
 	}
@@ -3293,7 +3293,7 @@ sub inventory_item_added {
 		my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
 			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
 		message "$disp\n", "drop";
-		$disp .= " (". $field->name . ")\n";
+		$disp .= " (". $field->baseName . ")\n";
 		itemLog($disp);
 
 		Plugins::callHook('item_gathered',{item => $item->{name}});
@@ -3833,18 +3833,18 @@ sub map_change {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 
-	my $oldMap = $field ? $field->name() : undef;
+	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
 	my ($map) = $args->{map} =~ /([\s\S]*)\./;
+	my $map_noinstance;
+	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
 
-	checkAllowedMap($map);
+	checkAllowedMap($map_noinstance);
 	if (!$field || $map ne $field->name()) {
 		eval {
 			$field = new Field(name => $map);
-			# Temporary backwards compatibility code.
-			%field = %{$field};
 		};
 		if (my $e = caught('FileNotFoundException', 'IOException')) {
-			error TF("Cannot load field %s: %s\n", $map, $e);
+			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
 			undef $field;
 		} elsif ($@) {
 			die $@;
@@ -3876,12 +3876,7 @@ sub map_change {
 		ai_clientSuspend(0, 10);
 	} else {
 		$messageSender->sendMapLoaded();
-		# Sending sync packet. Perhaps not only for server types 13 and 11
-		my $serverType = $masterServer->{serverType};
-		if ($serverType == 11 || $serverType == 12 || $serverType == 13 || $serverType == 14 || $serverType == 15
-		 || $serverType == 16 || $serverType == 17 || $serverType == 18 || $serverType == 19 || $serverType == 20) {
-			$messageSender->sendSync(1);
-		}
+		# $messageSender->sendSync(1);
 		$timeout{ai}{time} = time;
 	}
 
@@ -3896,17 +3891,18 @@ sub map_changed {
 	my ($self, $args) = @_;
 	$net->setState(4);
 
-	my $oldMap = $field ? $field->name() : undef;
+	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
 	my ($map) = $args->{map} =~ /([\s\S]*)\./;
-	checkAllowedMap($map);
+	my $map_noinstance;
+	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
+
+	checkAllowedMap($map_noinstance);
 	if (!$field || $map ne $field->name()) {
 		eval {
 			$field = new Field(name => $map);
-			# Temporary backwards compatibility code.
-			%field = %{$field};
 		};
 		if (my $e = caught('FileNotFoundException', 'IOException')) {
-			error TF("Cannot load field %s: %s\n", $map, $e);
+			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
 			undef $field;
 		} elsif ($@) {
 			die $@;
@@ -4831,7 +4827,7 @@ sub public_chat {
 	}
 
 	my $position = sprintf("[%s %d, %d]",
-		$field ? $field->name() : T("Unknown field,"),
+		$field ? $field->baseName : T("Unknown field,"),
 		$char->{pos_to}{x}, $char->{pos_to}{y});
 	my $distInfo;
 	if ($actor) {
@@ -5013,15 +5009,15 @@ sub received_character_ID_and_Map {
 		$masterServer = $masterServers{$config{master}} if ($config{master} ne "");
 	}
 
-	my ($map) = $args->{mapName} =~ /([\s\S]*)\./;
+	my ($map) = $args->{mapName} =~ /([\s\S]*)\./; # cut off .gat
+	my $map_noinstance;
+	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
 	if (!$field || $map ne $field->name()) {
 		eval {
 			$field = new Field(name => $map);
-			# Temporary backwards compatibility code.
-			%field = %{$field};
 		};
 		if (my $e = caught('FileNotFoundException', 'IOException')) {
-			error TF("Cannot load field %s: %s\n", $map, $e);
+			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
 			undef $field;
 		} elsif ($@) {
 			die $@;
@@ -5038,8 +5034,7 @@ sub received_character_ID_and_Map {
 		"MAP Port: %s\n" .
 		"-----------------------------\n", getHex($charID), unpack("V1", $charID),
 		$args->{mapName}, $map_ip, $map_port), "connection";
-	($map) = $args->{mapName} =~ /([\s\S]*)\./;
-	checkAllowedMap($map);
+	checkAllowedMap($map_noinstance);
 	message(T("Closing connection to Character Server\n"), "connection") unless ($net->version == 1);
 	$net->serverDisconnect();
 	main::initStatVars();
@@ -5520,7 +5515,7 @@ sub skill_cast {
 			my (%vec, %pos);
 			getVector(\%vec, \%coords, $char->{pos_to});
 			moveAlongVector(\%pos, $char->{pos_to}, \%vec, distance($char->{pos_to}, \%coords));
-			ai_route($field->name, $pos{x}, $pos{y},
+			ai_route($field->baseName, $pos{x}, $pos{y},
 				maxRouteDistance => $config{attackMaxRouteDistance},
 				maxRouteTime => $config{attackMaxRouteTime},
 				noMapRoute => 1);

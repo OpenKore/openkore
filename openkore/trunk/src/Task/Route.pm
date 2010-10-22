@@ -89,7 +89,7 @@ sub new {
 		}
 	}
 
-	$self->{dest}{map} = $field->name();
+	$self->{dest}{map} = $field->baseName;
 	$self->{dest}{pos}{x} = $args{x};
 	$self->{dest}{pos}{y} = $args{y};
 	if ($config{'route_avoidWalls'}) {
@@ -154,8 +154,8 @@ sub iterate {
 		debug "Route - we spent too much time; bailing out.\n", "route";
 		$self->setError(TOO_MUCH_TIME, "Too much time spent on walking.");
 
-	} elsif ($field->name() ne $self->{dest}{map} || $self->{mapChanged}) {
-		debug "Map changed: " . $field->name() . " $self->{dest}{map}\n", "route";
+	} elsif ($field->baseName ne $self->{dest}{map} || $self->{mapChanged}) {
+		debug "Map changed: " . $field->baseName . " $self->{dest}{map}\n", "route";
 		$self->setDone();
 
 	} elsif ($self->{stage} eq '') {
@@ -172,7 +172,7 @@ sub iterate {
 			}
 
 		} else {
-			debug "Something's wrong; there is no path to " . $field->name() . "($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "debug";
+			debug "Something's wrong; there is no path to " . $field->baseName . "($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "debug";
 			$self->setError(CANNOT_CALCULATE_ROUTE, "Unable to calculate a route.");
 		}
 
@@ -258,7 +258,7 @@ sub iterate {
 				# FIXME: this code looks ugly!
 				# We're stuck
 				my $msg = TF("Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).",
-					$field->name(), $char->{pos_to}{x}, $char->{pos_to}{y},
+					$field->baseName, $char->{pos_to}{x}, $char->{pos_to}{y},
 					$cur_x, $cur_y, $self->{dest}{pos}{x}, $self->{dest}{pos}{y});
 				$msg .= T(" Teleporting to unstuck.") if ($config{teleportAuto_unstuck});
 				$msg .= "\n";

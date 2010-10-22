@@ -456,9 +456,9 @@ sub main {
 			if ($config{attackChangeTarget} == 1) {
 				# Restart attack from processAutoAttack
 				AI::dequeue;
-				ai_route($field->name, $best_spot->{x}, $best_spot->{y}, LOSSubRoute => 1);
+				ai_route($field->baseName, $best_spot->{x}, $best_spot->{y}, LOSSubRoute => 1);
 			} else {
-				ai_route($field->name, $best_spot->{x}, $best_spot->{y});
+				ai_route($field->baseName, $best_spot->{x}, $best_spot->{y});
 			}
 		} else {
 			warning TF("%s; no acceptable place to stand\n", $msg);
@@ -479,7 +479,7 @@ sub main {
 		# Find the distance value of the block that's farthest away from a wall
 		my $highest;
 		foreach (@blocks) {
-			my $dist = ord(substr($field{dstMap}, $_->{y} * $field{width} + $_->{x}));
+			my $dist = ord(substr($field->{dstMap}, $_->{y} * $field->width + $_->{x}));
 			if (!defined $highest || $dist > $highest) {
 				$highest = $dist;
 			}
@@ -491,14 +491,14 @@ sub main {
 		use constant AVOID_WALLS => 4;
 		for (my $i = 0; $i < @blocks; $i++) {
 			# We want to avoid walls (so we don't get cornered), if possible
-			my $dist = ord(substr($field{dstMap}, $blocks[$i]{y} * $field{width} + $blocks[$i]{x}));
+			my $dist = ord(substr($field->{dstMap}, $blocks[$i]{y} * $field->width + $blocks[$i]{x}));
 			if ($highest >= AVOID_WALLS && $dist < AVOID_WALLS) {
 				delete $blocks[$i];
 				next;
 			}
 
 			$pathfinding->reset(
-				field => \%field,
+				field => $field,
 				start => $myPos,
 				dest => $blocks[$i]);
 			my $ret = $pathfinding->runcount;
@@ -537,7 +537,7 @@ sub main {
 		debug "Target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
 			"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
 
-		my $result = ai_route($field{'name'}, $pos->{x}, $pos->{y},
+		my $result = ai_route($field->baseName, $pos->{x}, $pos->{y},
 			maxRouteTime => $config{'attackMaxRouteTime'},
 			attackID => $ID,
 			noMapRoute => 1,

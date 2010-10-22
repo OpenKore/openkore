@@ -57,10 +57,10 @@ sub initMapGUI {
 sub paintMap {
 	my $self = shift;
 	
-	$map_name = $field->name();
+	$map_name = $field->baseName;
 	$r_field = $field;
 	
-	$self->{mw}->Resize($field->width(),$field->height()+30);
+	$self->{mw}->Resize($field->width, $field->height +30);
     $W = $self->{mw}->ScaleWidth;
     $H = $self->{mw}->ScaleHeight;
     $DC = $self->{mw}->GetDC;
@@ -69,8 +69,8 @@ sub paintMap {
     $DC2->SelectObject($bit);
     
 	my ($mvw_x,$mvw_y);
-	$mvw_x = $field->width();
-	$mvw_y = $field->height();
+	$mvw_x = $field->width;
+	$mvw_y = $field->height;
     
 	for (my $j = 0; $j < $mvw_x; $j++) {
 		for (my $k = 0; $k < $mvw_y; $k++) {
@@ -122,7 +122,7 @@ sub paintPos {
 			$self->paintMap();
 		}
 
-		$self->{mw}->Caption("Map View: " . $field->name() . " ($x,$y)");
+		$self->{mw}->Caption("Map View: " . $field->baseName . " ($x,$y)");
 		#$DC = $self->{mw}->GetDC;
 		$C = new Win32::GUI::Pen(
             -color => [0,0,255], 

@@ -273,7 +273,7 @@ sub processChatCommand {
 		}
 
 		if ($map ne "" || ($x ne "" && $y ne "")) {
-			$map = $field->name if ($map eq "");
+			$map = $field->baseName if ($map eq "");
 			my $rsw = "${map}.rsw";
 			if ($maps_lut{$rsw}) {
 				if ($x ne "" && $y ne "") {

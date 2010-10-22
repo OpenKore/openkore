@@ -72,10 +72,11 @@ sub new {
 		ArgumentException->throw(error => "Invalid arguments.");
 	}
 
-	$self->{source}{map} = defined($args{sourceMap}) ? $args{sourceMap} : $field->name();
+	$self->{source}{map} = defined($args{sourceMap}) ? $args{sourceMap} : $field->baseName;
 	$self->{source}{x} = defined($args{sourceX}) ? $args{sourceX} : $char->{pos_to}{x};
 	$self->{source}{y} = defined($args{sourceY}) ? $args{sourceY} : $char->{pos_to}{y};
-	$self->{dest}{map} = $args{map};
+	($self->{dest}{map}, undef) = Field::nameToBaseName(undef, $args{map}); # Hack to clean up InstanceID
+	# $self->{dest}{map} = $args{map};
 	$self->{dest}{pos}{x} = $args{x};
 	$self->{dest}{pos}{y} = $args{y};
 	if ($args{budget} ne '') {
@@ -128,7 +129,7 @@ sub iterate {
 		# Initializes the openlist with portals walkable from the starting point.
 		foreach my $portal (keys %portals_lut) {
 			my $entry = $portals_lut{$portal};
-			next if ($entry->{source}{map} ne $field->name());
+			next if ($entry->{source}{map} ne $field->baseName);
 			my $ret = Task::Route->getRoute($self->{solution}, $field, $self->{source}, $entry->{source});
 			if ($ret) {
 				for my $dest (grep { $entry->{dest}{$_}{enabled} } keys %{$entry->{dest}}) {
@@ -158,7 +159,7 @@ sub iterate {
 			my $destpos = "$self->{dest}{pos}{x},$self->{dest}{pos}{y}";
 			$destpos = "($destpos)" if ($destpos ne "");
 			$self->setError(CANNOT_CALCULATE_ROUTE, TF("Cannot calculate a route from %s (%d,%d) to %s %s",
-				$field->name(), $self->{source}{x}, $self->{source}{y},
+				$field->baseName, $self->{source}{x}, $self->{source}{y},
 				$self->{dest}{map}, $destpos));
 			debug "CalcMapRoute failed.\n", "route";
 		}

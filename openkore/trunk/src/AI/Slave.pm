@@ -130,7 +130,7 @@ sub is {
 sub iterate {
 	my $slave = shift;
 	
-	if ($slave->{appear_time} && $field->name eq $slave->{map}) {
+	if ($slave->{appear_time} && $field->baseName eq $slave->{map}) {
 		my $slave_dist = blockDistance ($slave->position, $char->position);
 		
 		# auto-follow
@@ -192,7 +192,7 @@ sub iterate {
 					my $y = $slave->{pos_to}{y};
 					my $distFromGoal = $config{$slave->{configPrefix}.'followDistanceMax'};
 					$distFromGoal = MAX_DISTANCE if ($distFromGoal > MAX_DISTANCE);
-					main::ai_route($field->name, $x, $y, distFromGoal => $distFromGoal, attackOnRoute => 1, noSitAuto => 1);
+					main::ai_route($field->baseName, $x, $y, distFromGoal => $distFromGoal, attackOnRoute => 1, noSitAuto => 1);
 					$slave->args->{lost_route} = 1 if $slave->action eq 'route';
 					message TF("Trying to find %s at location %d, %d (you are currently at %d, %d)\n", $slave, $x, $y, $char->{pos_to}{x}, $char->{pos_to}{y}), 'homunculus';
 				}
@@ -223,7 +223,7 @@ sub iterate {
 			&& $config{$slave->{configPrefix}.'followDistanceMax'}
 			&& $slave_dist > $config{$slave->{configPrefix}.'followDistanceMax'}
 		) {
-			main::ai_route($field->name, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1);
+			main::ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1);
 			message TF("%s moves too far (distance: %.2f) - Moving near\n", $slave, $slave->distance), 'homunculus';
 	
 		# Main Homunculus AI
@@ -257,7 +257,7 @@ sub stopAttack {
 
 sub slave_route {
 	my $slave = shift;
-	my $map = $field->name;
+	my $map = $field->baseName;
 	my $x = shift;
 	my $y = shift;
 	my %param = @_;
@@ -541,7 +541,7 @@ sub processAttack {
 			# Find the distance value of the block that's farthest away from a wall
 			my $highest;
 			foreach (@blocks) {
-				my $dist = ord(substr($field{dstMap}, $_->{y} * $field{width} + $_->{x}));
+				my $dist = ord(substr($field->{dstMap}, $_->{y} * $field->width + $_->{x}));
 				if (!defined $highest || $dist > $highest) {
 					$highest = $dist;
 				}
@@ -553,7 +553,7 @@ sub processAttack {
 			use constant AVOID_WALLS => 4;
 			for (my $i = 0; $i < @blocks; $i++) {
 				# We want to avoid walls (so we don't get cornered), if possible
-				my $dist = ord(substr($field{dstMap}, $blocks[$i]{y} * $field{width} + $blocks[$i]{x}));
+				my $dist = ord(substr($field->{dstMap}, $blocks[$i]{y} * $field->width + $blocks[$i]{x}));
 				if ($highest >= AVOID_WALLS && $dist < AVOID_WALLS) {
 					delete $blocks[$i];
 					next;
@@ -699,7 +699,7 @@ sub processRouteAI {
 		delete $slave->args->{suspended};
 	}
 
-	if ($slave->action eq "route" && $field{'name'} && $slave->{pos_to}{x} ne '' && $slave->{pos_to}{y} ne '') {
+	if ($slave->action eq "route" && $field->baseName && $slave->{pos_to}{x} ne '' && $slave->{pos_to}{y} ne '') {
 		my $args = $slave->args;
 
 		if ( $args->{maxRouteTime} && timeOut($args->{time_start}, $args->{maxRouteTime})) {
@@ -707,8 +707,8 @@ sub processRouteAI {
 			debug "Slave route - we spent too much time; bailing out.\n", "route";
 			$slave->dequeue;
 
-		} elsif ($field->name ne $args->{dest}{map} || $args->{mapChanged}) {
-			debug "Slave map changed: $field->name $args->{dest}{map}\n", "route";
+		} elsif ($field->baseName ne $args->{dest}{map} || $args->{mapChanged}) {
+			debug "Slave map changed: $field->baseName $args->{dest}{map}\n", "route";
 			$slave->dequeue;
 
 		} elsif ($args->{stage} eq '') {
@@ -718,7 +718,7 @@ sub processRouteAI {
 				$args->{stage} = 'Route Solution Ready';
 				debug "Slave route Solution Ready\n", "route";
 			} else {
-				debug "Something's wrong; there is no path to ".$field->name."($args->{dest}{pos}{x},$args->{dest}{pos}{y}).\n", "debug";
+				debug "Something's wrong; there is no path to ".$field->baseName."($args->{dest}{pos}{x},$args->{dest}{pos}{y}).\n", "debug";
 				$slave->dequeue;
 			}
 
@@ -790,7 +790,7 @@ sub processRouteAI {
 				} elsif (!$wasZero) {
 					# We're stuck
 					my $msg = TF("Slave is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).", 
-						$field->name, $slave->{pos_to}{x}, $slave->{pos_to}{y}, $cur_x, $cur_y, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
+						$field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, $cur_x, $cur_y, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
 					$msg .= T(" Teleporting to unstuck.") if $config{$slave->{configPrefix}.'teleportAuto_unstuck'};
 					$msg .= "\n";
 					warning $msg, "route";

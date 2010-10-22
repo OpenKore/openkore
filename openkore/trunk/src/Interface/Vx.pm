@@ -541,10 +541,10 @@ sub updateHook {
 	$self->updatePos();
 	$self->{mw}->update();
 	$self->setAiText("@ai_seq");
-	#if ($field->name eq $config{lockMap} || !$config{lockMap}) {
-	#	$self->status_update("On Map: $field->name");
+	#if ($field->baseName eq $config{lockMap} || !$config{lockMap}) {
+	#	$self->status_update("On Map: " . $field->baseName);
 	#} else {
-	#	$self->status_update("On Map: $field->name | LockMap: $config{lockMap}");
+	#	$self->status_update("On Map: " . $field->baseName . " | LockMap: " . $config{lockMap});
 	#}
 }
 
@@ -567,7 +567,7 @@ sub updatePos {
 		my $action = AI::findAction("route");
 		if (defined $action) {
 			my $args = AI::args($action);
-			if ($args->{dest}{map} eq $field->name) {
+			if ($args->{dest}{map} eq $field->baseName) {
 				my ($x,$y) = @{$args->{dest}{pos}}{'x', 'y'};
 				$self->{map}{'dest'} = $self->{map}{'canvas'}->createOval(
 					$x-2,$self->{map}{'map'}{'y'} - $y-2,
@@ -644,7 +644,7 @@ sub OpenMap {
 		my ($x,$y);
 		$self->{map} = $self->{mw}->Toplevel();
 		$self->{map}->transient($self->{mw});
-		$self->{map}->title("Map View : ".$field->name);
+		$self->{map}->title("Map View : ".$field->baseName);
 		$self->{map}->protocol('WM_DELETE_WINDOW', 
 			sub {
 				undef $self->{obj};
@@ -687,7 +687,7 @@ sub loadMap {
 	$self->{map}{'canvas'}->delete('map');
 	$self->{map}{'canvas'}->createText(50,20,-text =>'Processing..',-tags=>'map');
 
-	my $name = $field{baseName};
+	my $name = $field->baseName;
 	if (-f $self->_map("$name.jpg")) {
 		require Tk::JPEG;
 		$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'jpeg', -file=> $self->_map("$name.jpg"));
@@ -699,17 +699,17 @@ sub loadMap {
 	} elsif (-f $self->_map("$name.bmp")) {
 		$self->{map}{'map'} = $self->{map}{'canvas'}->Bitmap(-file => $self->_map("$name.bmp"));
 	} else {
-		$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'xpm', -data => Utils::xpmmake($field{width}, $field{height}, $field{rawMap}));
+		$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'xpm', -data => Utils::xpmmake($field->width, $field->height, $field->{rawMap}));
 	}
 
 	$self->{map}{'canvas'}->delete('map');
 	$self->{map}{'canvas'}->createImage(2,2,-image =>$self->{map}{'map'},-anchor => 'nw',-tags=>'map');
 	$self->{map}{'canvas'}->configure(
-			-width => $field{'width'},
-			-height => $field{'height'}
+			-width => $field->width,
+			-height => $field->height
 	);
-	$self->{map}{'map'}{'x'} = $field{'width'};
-	$self->{map}{'map'}{'y'} = $field{'height'};
+	$self->{map}{'map'}{'x'} = $field->width;
+	$self->{map}{'map'}{'y'} = $field->height;
 }
 
 # mouse moving over map viewer shows coordinates
@@ -718,7 +718,7 @@ sub pointchk {
 	my $self = shift;
 	my $mvcpx = $_[0];
 	my $mvcpy = $self->{map}{'map'}{'y'} - $_[1];
-	$self->{map}->title("Map View : ".$field{'name'}." \[$mvcpx , $mvcpy\]");
+	$self->{map}->title("Map View : ".$field->name." \[$mvcpx , $mvcpy\]");
 	$self->{map}->update;
 }
 
@@ -898,6 +898,7 @@ sub packet {
 		#Character selection success & map name & game IP/port
 		my ($map_name) = substr($msg, 6, 16) =~ /([\s\S]*?)\000/;
 		($map_name) = $map_name =~ /([\s\S]*)\./;
+		($map_name, undef) = Field::nameToBaseName(undef, $map_name); # Hack to clean up InstanceID
 		if (!$config{lockMap} || $map_name eq $config{lockMap}) {
 			$self->status_update("On Map : $map_name");
 		} else {
@@ -1011,10 +1012,11 @@ sub packet {
 		#Business such as movement, teleport and fly between maps inside 
 		my ($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($map_name) = $map_name =~ /([\s\S]*)\./;
-		if ($map_name ne $field->name) {
+		($map_name, undef) = Field::nameToBaseName(undef, $map_name); # Hack to clean up InstanceID
+		if ($map_name ne $field->baseName) {
 			eval {
 				$field = new Field(name => $map_name);
-				if (!$config{lockMap} || $map_name eq $config{lockMap}) {
+				if (!$config{lockMap} || $field->baseName eq $config{lockMap}) {
 					$self->status_update("On Map : $map_name");
 				} else {
 					$self->status_update("On Map : $map_name | LockMap : $config{lockMap}");
@@ -1036,12 +1038,13 @@ sub packet {
 		#Movement between
 		my ($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($map_name) = $map_name =~ /([\s\S]*)\./;
-		if ($map_name ne $field{'name'}) {
+		($map_name, undef) = Field::nameToBaseName(undef, $map_name); # Hack to clean up InstanceID
+		if ($map_name ne $field->baseName) {
 			eval {
 				$field = new Field(name => $map_name);
 				$self->loadMap() if ($self->mapIsShown());
 				$self->removeAllObj();
-				if (!$config{lockMap} || $map_name eq $config{lockMap}) {
+				if (!$config{lockMap} || $field->baseName eq $config{lockMap}) {
 					$self->status_update("On Map : $map_name");
 				} else {
 					$self->status_update("On Map : $map_name | LockMap : $config{lockMap}");

@@ -18,7 +18,7 @@ sub iterate {
 	# homunculus is dead
 	} elsif ($slave->{state} & 4) {
 	# homunculus is alive
-	} elsif ($slave->{appear_time} && $field->name eq $slave->{map}) {
+	} elsif ($slave->{appear_time} && $field->baseName eq $slave->{map}) {
 		# auto-feed homunculus
 		$config{homunculus_intimacyMax} = 999 if (!$config{homunculus_intimacyMax});
 		$config{homunculus_intimacyMin} = 911 if (!$config{homunculus_intimacyMin});
@@ -41,7 +41,7 @@ sub iterate {
 			&& timeOut($slave->{feed_time}, $slave->{feed_timeout})
 			&& $slave->{feed}
 			&& $config{homunculus_autoFeed} 
-			&& (existsInList($config{homunculus_autoFeedAllowedMaps}, $field{'name'}) || !$config{homunculus_autoFeedAllowedMaps})) {
+			&& (existsInList($config{homunculus_autoFeedAllowedMaps}, $field->baseName) || !$config{homunculus_autoFeedAllowedMaps})) {
 			
 			$slave->processFeeding();
 			message TF("Auto-feeding %s (%d hunger).\n", $slave, $slave->{hunger}), 'slave';

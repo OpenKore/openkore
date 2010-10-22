@@ -45,7 +45,7 @@ no warnings 'redefine';
 use Compress::Zlib;
 use File::Spec;
 
-use Globals qw($masterServer %field %mapAlias_lut %maps_lut %cities_lut);
+use Globals qw($masterServer %mapAlias_lut %maps_lut %cities_lut);
 use Modules 'register';
 use Settings;
 use FastUtils;

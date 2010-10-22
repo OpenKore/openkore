@@ -211,13 +211,14 @@ sub ai_partyfollow {
 		$master{y} = $char->{party}{users}{$master{id}}{pos}{y};
 		($master{map}) = $char->{party}{users}{$master{id}}{map} =~ /([\s\S]*)\.gat/;
 
-		if ($master{map} ne $field->name || $master{x} == 0 || $master{y} == 0) {
+		if ($master{map} ne $field->name || $master{x} == 0 || $master{y} == 0) { # Compare including InstanceID
 			delete $master{x};
 			delete $master{y};
 		}
 
-		return unless ($master{map} ne $field->name || exists $master{x});
+		return unless ($master{map} ne $field->name || exists $master{x}); # Compare including InstanceID
 
+		# Compare map names including InstanceID
 		if ((exists $ai_v{master} && distance(\%master, $ai_v{master}) > 15)
 			|| $master{map} != $ai_v{master}{map}
 			|| (timeOut($ai_v{master}{time}, 15) && distance(\%master, $char->{pos_to}) > $config{followDistanceMax})) {
@@ -225,18 +226,19 @@ sub ai_partyfollow {
 			$ai_v{master}{x} = $master{x};
 			$ai_v{master}{y} = $master{y};
 			$ai_v{master}{map} = $master{map};
+			($ai_v{master}{map_name}, undef) = Field::nameToBaseName(undef, $master{map}); # Hack to clean up InstanceID
 			$ai_v{master}{time} = time;
 
 			if ($ai_v{master}{map} ne $field->name) {
-				message TF("Calculating route to find master: %s\n", $ai_v{master}{map}), "follow";
+				message TF("Calculating route to find master: %s\n", $ai_v{master}{map_name}), "follow";
 			} elsif (distance(\%master, $char->{pos_to}) > $config{followDistanceMax} ) {
-				message TF("Calculating route to find master: %s (%s,%s)\n", $ai_v{master}{map}, $ai_v{master}{x}, $ai_v{master}{y}), "follow";
+				message TF("Calculating route to find master: %s (%s,%s)\n", $ai_v{master}{map_name}, $ai_v{master}{x}, $ai_v{master}{y}), "follow";
 			} else {
 				return;
 			}
 
 			AI::clear("move", "route", "mapRoute");
-			ai_route($ai_v{master}{map}, $ai_v{master}{x}, $ai_v{master}{y}, distFromGoal => $config{followDistanceMin});
+			ai_route($ai_v{master}{map_name}, $ai_v{master}{x}, $ai_v{master}{y}, distFromGoal => $config{followDistanceMin});
 
 			my $followIndex = AI::findAction("follow");
 			if (defined $followIndex) {
