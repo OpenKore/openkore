@@ -1,738 +1,2238 @@
+06guild_01.rsw#Guild Arena#
+06guild_02.rsw#Guild Arena#
+06guild_03.rsw#Guild Arena#
+06guild_04.rsw#Guild Arena#
+06guild_05.rsw#Guild Arena#
+06guild_06.rsw#Guild Arena#
+06guild_07.rsw#Guild Arena#
+06guild_08.rsw#Guild Arena#
+06guild_r.rsw#Guild Arena Waiting Room#
+1@cata.rsw#Catacombs#
+1@tower.rsw#The Infinity Tower#
+2@cata.rsw#Sealed Shrine#
+2@tower.rsw#The Infinity Tower#
+2007rwc_01.rsw#2007 Ragnarok World Championship Arena 1#
+2007rwc_02.rsw#2007 Ragnarok World Championship Arena 2#
+2007rwc_03.rsw#2007 Ragnarok World Championship Arena 3#
+2007rwc_04.rsw#2007 Ragnarok World Championship Arena 4#
+2007rwc_05.rsw#2007 Ragnarok World Championship Arena 5#
+2007rwc_06.rsw#2007 Ragnarok World Championship Arena 6#
+2007rwc_07.rsw#2007 Ragnarok World Championship Arena 7#
+2007rwc_08.rsw#2007 Ragnarok World Championship Arena 8#
+2007rwc_09.rsw#2007 Ragnarok World Championship Arena 9#
+2007rwc_10.rsw#2007 Ragnarok World Championship Arena 10#
+2007rwc_r.rsw#2007 Ragnarok World Championship Arena Waiting Room#
+3@tower.rsw#The Infinity Tower#
+4@tower.rsw#The Infinity Tower#
+5@tower.rsw#The Infinity Tower#
+6@tower.rsw#The Infinity Tower - Unknown Area#
+abbey01.rsw#Cursed Abbey Dungeon#
+abbey02.rsw#Cursed Abbey Dungeon#
+abbey03.rsw#Cursed Abbey Dungeon#
+abyss_01.rsw#Abyss Lake Underground Cave#
+abyss_02.rsw#Abyss Lake Underground Cave#
+abyss_03.rsw#Abyss Lake Underground Cave#
+afay_vilg00.rsw#Payon Village#
+afay_vilg01.rsw#Payon Village#
+agef_vilg00.rsw#Geffen Village#
+agef_vilg01.rsw#Geffen Village#
+airplane_01.rsw#Airship#
+airplane.rsw#Airship#
+airport.rsw#Airport#
+alb_ship.rsw#Alberta Ship#
+alb2trea.rsw# Alberta Island#
+alberta_d.gat#Alberta#
+alberta_in.rsw#Inside Alberta#
+alberta_x.rsw#Alberta#
+alberta.rsw#Alberta#
+alde_alche.rsw#Alchemist Realm#
+alde_dun01.rsw#Clock Tower B1f#
+alde_dun02.rsw#Clock Tower B2f#
+alde_dun03.rsw#Clock Tower B3f#
+alde_dun04.rsw#Clock Tower B4f#
+alde_gld.rsw#Luina the satellite of Al De Baran#
+aldeba_in.rsw#Inside Al De Baran#
+aldebaran.rsw# Al De Baran#
+aldeg_cas01.rsw#Luina Guild#
+aldeg_cas02.rsw#Luina Guild#
+aldeg_cas03.rsw#Luina Guild#
+aldeg_cas04.rsw#Luina Guild#
+aldeg_cas05.rsw#Luina Guild#
+ama_dun01.rsw#Tatami Maze#
+ama_dun02.rsw#Battle Field in the Underground Forest#
+ama_dun03.rsw#Amatsu Underground Shrine#
+ama_fild01.rsw#Amatsu Field#
+ama_in01.rsw#Inside Amatsu#
+ama_in02.rsw#Inside Himezi Castle#
+ama_test.rsw#Momotaro Experience Place#
+amatsu.rsw#Amatsu, the Land of Destiny#
+amoc_dugn01.rsw#Morocc Dungeon#
+amoc_dugn02.rsw#Morocc Dungeon#
+amoc_fild01.rsw#Morocc Field#
+amoc_fild02.rsw#Morocc Field#
+amoc_fild03.rsw#Morocc Field#
+amoc_fild04.rsw#Morocc Field#
+amoc_intr00.rsw#Inside Morocc#
+amoc_intr01.rsw#Inside Morocc#
+amoc_intr02.rsw#Inside Morocc#
+amoc_intr04.rsw#Inside Morocc#
+amoc_vilg00.rsw#Morocc Village#
+amoc_vilg01.rsw#Morocc Village#
+amoc_vilg02.rsw#Morocc Village#
+anothership.rsw#Another Ship#
+anthell01.rsw#Ant Hell#
+anthell02.rsw#Ant Hell#
+aprobemap.rsw#Probe Map 1#
+aprobemap02.rsw#Probe Map 2#
+aprt_cstl01.rsw#Prontera Castle#
+aprt_dugn00.rsw#Prontera Dungeon#
+aprt_dugn01.rsw#Prontera Dungeon#
+aprt_fild00.rsw#Prontera Field#
+aprt_fild01.rsw#Prontera Field#
+aprt_fild03.rsw#Prontera Field#
+aprt_fild04.rsw#Prontera Field#
+aprt_fild05.rsw#Prontera Field#
+aprt_intr01_a.rsw#Inside Prontera#
+aprt_intr01.rsw#Inside Prontera#
+aprt_intr02.rsw#Inside Prontera#
+aprt_vilg00.rsw#Prontera Village#
+aprt_vilg01.rsw#Prontera Village#
+aprt_vilg02.rsw#Prontera Village#
+arena_room.rsw#Waiting room#
+aru_gld.rsw#Arunafeltz Guild Map#
+arug_cas01.rsw#Arunafeltz Guild Castle 1#
+arug_cas02.rsw#Arunafeltz Guild Castle 2#
+arug_cas03.rsw#Arunafeltz Guild Castle 3#
+arug_cas04.rsw#Arunafeltz Guild Castle 4#
+arug_cas05.rsw#Arunafeltz Guild Castle 5#
+atank_test.rsw#Tank Test 1#
+atank_test2.rsw#Tank Test 2#
+atest.rsw#Test Map#
+auction_01.rsw#Auction Hall#
+auction_02.rsw#Auction Hall#
+ayo_dun01.rsw#Ancient Shrine Maze#
+ayo_dun02.rsw#Inside Ancient Shrine#
+ayo_fild01.rsw#Ayothaya Field#
+ayo_fild02.rsw#Ayothaya Field#
+ayo_in01.rsw#Inside Ayothaya#
+ayo_in02.rsw#Inside Ayothaya#
+ayothaya.rsw#Ayothaya#
+baby_para.rsw#Playground#
+bat_a01.rsw#Tierra Valley#
+bat_a02.rsw#Tierra Valley#
+bat_b01.rsw#Frebeus#
+bat_b02.rsw#Frebeus#
+bat_room.rsw#Battlegrounds Waiting Room#
+beach_dun.rsw#Karu, the West Cave#
+beach_dun2.rsw#Ruande, the North Cave#
+beach_dun3.rsw#Mao, the East Cave#
+bossnia_01.rsw#Bossnia#
+bossnia_02.rsw#Bossnia#
+bossnia_03.rsw#Bossnia#
+bossnia_04.rsw#Bossnia#
+c_tower1.rsw#Clock Tower F1#
+c_tower2.rsw#Clock Tower F2#
+c_tower3.rsw#Clock Tower F3#
+c_tower4.rsw#Clock Tower F4#
+cave.rsw#UNKNOWN Cave#
+cmd_fild01.rsw#Papuchicha Forest#
+cmd_fild02.rsw#Kokomo Beach#
+cmd_fild03.rsw#Zenhai Marsh#
+cmd_fild04.rsw#Kokomo Beach#
+cmd_fild05.rsw#Border of Papuchica Forest#
+cmd_fild06.rsw#Fortress Saint Darmain(West)#
+cmd_fild07.rsw#Beacon Island, Pharos#
+cmd_fild08.rsw#Fortress Saint Darmain (East)#
+cmd_fild09.rsw#Fortress Saint Darmain (South)#
+cmd_in01.rsw#Inside Comodo#
+cmd_in02.rsw#Inside Comodo#
+comodo.rsw#Beach town,Comodo#
+darkness_z.rsw#Darkness Island#
+dragon_nes2.rsw#Evil Dragon Nest#
+dragon_nest.rsw#Evil Dragon Nest#
+e_tower.rsw#Mytherial Land#
+ein_dun01.rsw#Mine Dungeon#
+ein_dun02.rsw#Mine Dungeon#
+ein_fild01.rsw#Einbroch Field#
+ein_fild02.rsw#Einbroch Field#
+ein_fild03.rsw#Einbroch Field#
+ein_fild04.rsw#Einbroch Field#
+ein_fild05.rsw#Einbroch Field#
+ein_fild06.rsw#Einbroch Field#
+ein_fild07.rsw#Einbroch Field#
+ein_fild08.rsw#Einbroch Field#
+ein_fild09.rsw#Einbroch Field#
+ein_fild10.rsw#Einbroch Field#
+ein_in01.rsw#Inside Einbroch#
+ein_polu.rsw#Indoor#
+einbech.rsw#Einbech, the Mining Village#
+einbroch.rsw#Einbroch, the City of Steel#
+force_1-1.rsw#Time Limit Fight#
+force_1-2.rsw#Time Limit Fight#
+force_1-3.rsw#Time Limit Fight#
+force_2-1.rsw#Time Limit Fight#
+force_2-2.rsw#Time Limit Fight#
+force_2-3.rsw#Time Limit Fight#
+force_3-1.rsw#Time Limit Fight#
+force_3-2.rsw#Time Limit Fight#
+force_3-3.rsw#Time Limit Fight#
+force_map1.rsw#Time Limit Fight#
+force_map2.rsw#Time Limit Fight#
+force_map3.rsw#Time Limit Fight#
+g_room1-1.rsw#Quiz Revolution#
+g_room1-2.rsw#Quiz Revolution#
+g_room1-3.rsw#Quiz Revolution#
+g_room2.rsw#Quiz Revolution#
+gef_dun00.rsw#Geffen Dungeon#
+gef_dun01.rsw#Geffen Dungeon#
+gef_dun02.rsw#Geffenia#
+gef_dun03.rsw#Geffenia#
+gef_fild00.rsw#Geffen Field#
+gef_fild01.rsw#Geffen Field#
+gef_fild02.rsw#Geffen Field#
+gef_fild03.rsw#Geffen Field#
+gef_fild04.rsw#Geffen Field#
+gef_fild05.rsw#Geffen Field#
+gef_fild06.rsw#Geffen Field#
+gef_fild07.rsw#Geffen Field#
+gef_fild08.rsw#Geffen Field#
+gef_fild09.rsw#Geffen Field#
+gef_fild10.rsw#Geffen Field#
+gef_fild11.rsw#Geffen Field#
+gef_fild12.rsw#Kordt Forest#
+gef_fild13.rsw#Britoniah#
+gef_fild14.rsw#West Orc Village#
+gef_tower.rsw#Geffen Tower#
+gefenia01.rsw#Geffenia#
+gefenia02.rsw#Geffenia#
+gefenia03.rsw#Geffenia#
+gefenia04.rsw#Geffenia#
+geffen_in.rsw#Inside Geffen#
+geffen_x.rsw#Geffen#
+geffen.rsw#Geffen#
+gefg_cas01.rsw#Britoniah Guild#
+gefg_cas02.rsw#Britoniah Guild#
+gefg_cas03.rsw#Britoniah Guild#
+gefg_cas04.rsw#Britoniah Guild#
+gefg_cas05.rsw#Britoniah Guild#
+gl_cas01.rsw#Glast Heim 1f#
+gl_cas02.rsw#Glast Heim 2f#
+gl_church.rsw#Glast Heim St. Abbey#
+gl_chyard.rsw#Glast Heim Churchyard#
+gl_dun01.rsw#The Lowest Cave in Glast Heim#
+gl_dun02.rsw#The Lowest Cave in Glast Heim#
+gl_in01.rsw#Inside Glast Heim#
+gl_knt01.rsw#Inside Glast Heim Chivalry#
+gl_knt02.rsw#Inside Glast Heim Chivalry#
+gl_prison.rsw#Glast Heim Underprison#
+gl_prison1.rsw#Glast Heim Underprison#
+gl_sew01.rsw#Glast Heim Culvert#
+gl_sew02.rsw#Glast Heim Culvert#
+gl_sew03.rsw#Glast Heim Culvert#
+gl_sew04.rsw#Glast Heim Culvert#
+gl_step.rsw#Glast Heim Staircase Dungeon#
+glast_01.rsw#Glast Heim#
+gld_dun01.rsw#Baldur Guild Dungeon#
+gld_dun02.rsw#Luina Guild Dungeon#
+gld_dun03.rsw#Valkyrie Guild Dungeon#
+gld_dun04.rsw#Britoniah Guild Dungeon#
+gon_dun01.rsw#Shrine of Gonryun Queen#
+gon_dun02.rsw#Hermit's Checkers#
+gon_dun03.rsw#Arcadia#
+gon_fild01.rsw#Gonryun Field#
+gon_in.rsw#Inside Gonryun#
+gon_test.rsw#Arena#
+gonryun.rsw#Gonryun, the Hermit Land#
+guild_room.rsw#Guild Arena Waiting Room#
+guild_rwc1.rsw#Training Room#
+guild_rwc2.rsw#Training Room#
+guild_rwc3.rsw#Training Room#
+guild_rwc4.rsw#Training Room#
+guild_rwc5.rsw#Training Room#
+guild_vs1-1.rsw#Guild Arena#
+guild_vs1-2.rsw#Guild Arena#
+guild_vs1-3.rsw#Guild Arena#
+guild_vs1-4.rsw#Guild Arena#
+guild_vs1.rsw#Guild Arena#
+guild_vs2-1.rsw#Guild Arena#
+guild_vs2-2.rsw#Guild Arena#
+guild_vs2.rsw#Guild Arena#
+guild_vs2ga.rsw#Geffen Room A#
+guild_vs2gb.rsw#Geffen Room B#
+guild_vs2gc.rsw#Geffen Room C#
+guild_vs2ia.rsw#Izlude Room A#
+guild_vs2ib.rsw#Izlude Room B#
+guild_vs2ic.rsw#Izlude Room C#
+guild_vs2ma.rsw#Morocc Room A#
+guild_vs2mb.rsw#Morocc Room B#
+guild_vs2mc.rsw#Morocc Room C#
+guild_vs2pa.rsw#Prontera Room A#
+guild_vs2pb.rsw#Prontera Room B#
+guild_vs2pc.rsw#Prontera Room C#
+guild_vs3.rsw#Guild Arena#
+guild_vs4.rsw#Guild Arena#
+guild_vs5.rsw#Guild Arena#
+himinn.rsw#Valkyrie Hall (Himinn)#
+holy_gold.rsw#Gold Sanctuary#
+holy_silver.rsw#Silver Sanctuary#
+hu_fild01.rsw#Thanatos Tower#
+hu_fild02.rsw#Hugel Field#
+hu_fild03.rsw#Hugel Field#
+hu_fild04.rsw#Hugel Field#
+hu_fild05.rsw#The Abyss Lake#
+hu_fild06.rsw#Hugel Field#
+hu_fild07.rsw#Hugel Field#
+hu_in01.rsw#Inside Hugel#
+hugel.rsw#Hugel, the Quaint Garden Village#
+hunter_1-1.rsw#Hunter Guild#
+hunter_2-1.rsw#Hunter Guild#
+hunter_3-1.rsw#Hunter Guild#
+ice_dun01.rsw#Ice Cave#
+ice_dun02.rsw#Ice Cave#
+ice_dun03.rsw#Ice Cave#
+ice_dun04.rsw#Ice Cave#
+in_hunter.rsw#Hunter Guild#
+in_moc_16.rsw#Assassin Clan#
+in_orcs01.rsw#Orc Village#
+in_rogue.rsw#Inside the Rogue Guild#
+in_sphinx1.rsw#Sphinx#
+in_sphinx2.rsw#Sphinx#
+in_sphinx3.rsw#Sphinx#
+in_sphinx4.rsw#Sphinx#
+in_sphinx5.rsw#Sphinx#
+itemmall.rsw#Itemmall#
+iz_dun00.rsw#Undersea Tunnel#
+iz_dun01.rsw#Undersea Tunnel#
+iz_dun02.rsw#Undersea Tunnel#
+iz_dun03.rsw#Undersea Tunnel#
+iz_dun04.rsw#Undersea Tunnel#
+iz_dun05.rsw#Undersea Tunnel#
+izlu2dun.rsw#Byalan Island#
+izlude_in.rsw#Inside Izlude#
+izlude_x.rsw#Izlude Town#
+izlude.rsw#Izlude Town#
+izlude07.rsw#Izlude Town#
+jawaii_in.rsw#Inside Jawaii#
+jawaii.rsw#Jawaii, the Honeymoon Island#
+job_cru.rsw#Crusader Realm#
+job_duncer.rsw#Comodo Theatre#
+job_hunte.rsw#Hunter Job Change Place#
+job_hunter.rsw#Hunter Guild#
+job_knight.rsw#The Chivalry#
+job_knt.rsw#Knight Realm#
+job_monk.rsw#Saint Capitolina Abbey#
+job_priest.rsw#The Sanctum#
+job_prist.rsw#Priest Realm#
+job_sage.rsw#Sage Realm#
+job_soul.rsw#Your Heart#
+job_star.rsw#The Sun, the Moon and the Stars#
+job_sword1.rsw#Swordman Test Hall#
+job_thief1.rsw#Mushroom Farm#
+job_wiz.rsw#Wizard Realm#
+job_wizard.rsw#Wizard Academy#
+jp_castle.rsw#Halloween Castle#
+jp_dress_a.rsw#Back Stage A#
+jp_dress_b.rsw#Back Stage B#
+jp_event02.rsw#Japanese Event 2#
+jp_event03.rsw#Japanese Event 3#
+jp_event04.rsw#Japanese Event 4#
+jp_event05.rsw#Japanese Event 5#
+jp_event06.rsw#Japanese Event 6#
+jp_magic.rsw#House of Magical#
+jp_ruins.rsw#Sandy Beach of Ruins#
+jp_stage_a.rsw#Stage A#
+jp_stage_b.rsw#Stage B#
+jupe_area1.rsw#Juperos, Restricted Zone#
+jupe_area2.rsw#Juperos, Restricted Zone#
+jupe_cave.rsw#Ruins of Juperos Entrance#
+jupe_core.rsw#Center of Juperos#
+jupe_ele_r.rsw#Juperos Elevator#
+jupe_ele.rsw#Juperos Elevator#
+jupe_gate.rsw#Juperos, Restricted Zone#
+juperos_01.rsw#Ruins of Juperos#
+juperos_02.rsw#Ruins of Juperos#
+kh_dun01.rsw#Robot Factory level 1#
+kh_dun02.rsw#Robot Factory level 2#
+kh_kiehl01.rsw#Kiehl's Room#
+kh_kiehl02.rsw#Kiehl's Room#
+kh_mansion.rsw#Kiel Hyre's Mansion#
+kh_rossi.rsw#The Rosimier's Mansion#
+kh_school.rsw#Kiel Hyre's Academy#
+kh_vila.rsw#Kiel Hyre's Cottage#
+knight_1-1.rsw#The Chivalry#
+knight_2-1.rsw#The Chivalry#
+knight_3-1.rsw#The Chivalry#
+lhz_airport.rsw#Lighthalzen Airport#
+lhz_cube.rsw#Cube Room#
+lhz_dun01.rsw#Somatology Laboratory#
+lhz_dun02.rsw#Somatology Laboratory#
+lhz_dun03.rsw#Somatology Laboratory#
+lhz_fild01.rsw#Lighthalzen Field#
+lhz_fild02.rsw#Lighthalzen Field (Grim Reaper's Valley)#
+lhz_fild03.rsw#Lighthalzen Field#
+lhz_in01.rsw#Rekenber Corporation Headquarters#
+lhz_in02.rsw#Inside Lighthalzen#
+lhz_in03.rsw#Inside Lighthalzen#
+lhz_que01.rsw#Inside Lighthalzen#
+lighthalzen.rsw#Lighthalzen, the City-State of Prosperity#
+lou_dun01.rsw#The Royal Tomb#
+lou_dun02.rsw#Inside the Royal Tomb#
+lou_dun03.rsw#Suei Long Gon#
+lou_fild01.rsw#Louyang Field#
+lou_in01.rsw#Inside Louyang#
+lou_in02.rsw#Inside Louyang#
+louyang.rsw#Louyang, the Highland#
+mag_dun01.rsw#Nogg Road#
+mag_dun02.rsw#Nogg Road#
+mjo_dun01.rsw#Mjolnir Dead Pit#
+mjo_dun02.rsw#Mjolnir Dead Pit#
+mjo_dun03.rsw#Mjolnir Dead Pit#
+mjolnir_01.rsw#Mt.Mjolnir#
+mjolnir_02.rsw#Mt.Mjolnir#
+mjolnir_03.rsw#Mt.Mjolnir#
+mjolnir_04.rsw#Mt.Mjolnir#
+mjolnir_05.rsw#Mt.Mjolnir#
+mjolnir_06.rsw#Mt.Mjolnir#
+mjolnir_07.rsw#Mt.Mjolnir#
+mjolnir_08.rsw#Mt.Mjolnir#
+mjolnir_09.rsw#Mt.Mjolnir#
+mjolnir_10.rsw#Mt.Mjolnir#
+mjolnir_11.rsw#Mt.Mjolnir#
+mjolnir_12.rsw#Mt.Mjolnir#
+moc_castle.rsw#Morroc Castle#
+moc_fild01.rsw#Sograt Desert#
+moc_fild02.rsw#Sograt Desert#
+moc_fild03.rsw#Sograt Desert#
+moc_fild04.rsw#Sograt Desert#
+moc_fild05.rsw#Sograt Desert#
+moc_fild06.rsw#Sograt Desert#
+moc_fild07.rsw#Sograt Desert#
+moc_fild08.rsw#Sograt Desert#
+moc_fild09.rsw#Sograt Desert#
+moc_fild10.rsw#Sograt Desert#
+moc_fild11.rsw#Sograt Desert#
+moc_fild12.rsw#Sograt Desert#
+moc_fild13.rsw#Sograt Desert#
+moc_fild14.rsw#Sograt Desert#
+moc_fild15.rsw#Sograt Desert#
+moc_fild16.rsw#Sograt Desert#
+moc_fild17.rsw#Sograt Desert#
+moc_fild18.rsw#Sograt Desert#
+moc_fild19.rsw#Sograt Desert#
+moc_fild20.rsw#Morocc Field (Dimensional Gorge)#
+moc_fild21.rsw#Morocc Field (Dimensional Gorge)#
+moc_fild22.rsw#Morocc Field (Dimensional Gorge)#
+moc_pryd01.rsw#Inside Pyramid#
+moc_pryd02.rsw#Inside Pyramid#
+moc_pryd03.rsw#Inside Pyramid#
+moc_pryd04.rsw#Inside Pyramid#
+moc_pryd05.rsw#Inside Pyramid#
+moc_pryd06.rsw#Inside Pyramid#
+moc_prydb1.rsw#Thief Guild#
+moc_ruins.rsw#Morroc Ruins#
+monk_in.rsw#Inside St. Abbey#
+monk_test.rsw#Saint Capitolina Abbey#
+moonlight_a.rsw#Moonlight A#
+morocc_in.rsw#Inside Morroc#
+morocc.rsw#Morroc Town#
+moscovia.rsw#Moscovia#
+mosk_dun01.rsw#Les Forest#
+mosk_dun02.rsw#Temny Forest#
+mosk_dun03.rsw#Dremuci Forest#
+mosk_fild01.rsw#Okrestnosti Of Moscovia#
+mosk_fild02.rsw#Okrestnosti of Moscovia#
+mosk_in.rsw#Inside Moscovia#
+mosk_que.rsw#Moscovia Quest#
+mosk_ship.rsw#Charabel#
+nameless_i.rsw#The Nameless Island#
+nameless_in.rsw#Inside Nameless City#
+nameless_n.rsw#The Nameless Island#
+new_1-1.rsw#Training Ground#
+new_1-2.rsw#Training Ground#
+new_1-3.rsw#Training Ground#
+new_1-4.rsw#Training Ground#
+new_2-1.rsw#Training Ground#
+new_2-2.rsw#Training Ground#
+new_2-3.rsw#Training Ground#
+new_2-4.rsw#Training Ground#
+new_3-1.rsw#Training Ground#
+new_3-2.rsw#Training Ground#
+new_3-3.rsw#Training Ground#
+new_3-4.rsw#Training Ground#
+new_4-1.rsw#Training Ground#
+new_4-2.rsw#Training Ground#
+new_4-3.rsw#Training Ground#
+new_4-4.rsw#Training Ground#
+new_5-1.rsw#Training Ground#
+new_5-2.rsw#Training Ground#
+new_5-3.rsw#Training Ground#
+new_5-4.rsw#Training Ground#
+new_zone01.rsw#Training Ground#
+new_zone02.rsw#Training Ground#
+new_zone03.rsw#Training Ground#
+new_zone04.rsw#Training Ground#
+nif_fild01.rsw#Skellington, a Solitary Village in Nifflheim#
+nif_fild02.rsw#Valley of Gyoll#
+nif_in.rsw#Inside Nifflheim#
+niflheim.rsw#Nifflheim, Realm of the Dead#
+odin_tem01.rsw#Odin Shirine#
+odin_tem02.rsw#Odin Shirine#
+odin_tem03.rsw#Odin Shirine#
+oldpay_in01.rsw#Inside Old Payon#
+oldpay_in02.rsw#Inside Old Payon#
+oldpayon.rsw#Old Payon#
+orcsdun01.rsw#Orc Dungeon#
+orcsdun02.rsw#Orc Dungeon#
+ordeal_1-1.rsw#Battle Ordeal Mode#
+ordeal_1-2.rsw#Battle Ordeal Mode#
+ordeal_1-3.rsw#Battle Ordeal Mode#
+ordeal_1-4.rsw#Battle Ordeal Mode#
+ordeal_2-1.rsw#Battle Ordeal Mode#
+ordeal_2-2.rsw#Battle Ordeal Mode#
+ordeal_2-3.rsw#Battle Ordeal Mode#
+ordeal_2-4.rsw#Battle Ordeal Mode#
+ordeal_3-1.rsw#Battle Ordeal Mode#
+ordeal_3-2.rsw#Battle Ordeal Mode#
+ordeal_3-3.rsw#Battle Ordeal Mode#
+ordeal_3-4.rsw#Battle Ordeal Mode#
+ordeal_a00.rsw#Battle Ordeal Mode#
+ordeal_a02.rsw#Battle Ordeal Mode#
+p_track01.rsw#Monster Race Arena#
+p_track02.rsw#Monster Race Arena#
+pay_arche_s.rsw#Archer Village#
+pay_arche.rsw#Archer Village#
+pay_dun00.rsw#Payon Cave#
+pay_dun01.rsw#Payon Cave#
+pay_dun02.rsw#Payon Cave#
+pay_dun03.rsw#Payon Cave#
+pay_dun04.rsw#Payon Cave#
+pay_fild01.rsw#Payon Forest#
+pay_fild02.rsw#Payon Forest#
+pay_fild03.rsw#Payon Forest#
+pay_fild04.rsw#Sograt Desert#
+pay_fild05.rsw#Payon Forest#
+pay_fild06.rsw#Payon Forest#
+pay_fild07.rsw#Payon Forest#
+pay_fild08.rsw#Payon Forest#
+pay_fild09.rsw#Payon Forest#
+pay_fild10.rsw#Payon Forest#
+pay_fild11.rsw#Payon Forest#
+pay_gld.rsw#Greenwood Lake#
+payg_cas01.rsw#Greenwood Lake Guild#
+payg_cas02.rsw#Greenwood Lake Guild#
+payg_cas03.rsw#Greenwood Lake Guild#
+payg_cas04.rsw#Greenwood Lake Guild#
+payg_cas05.rsw#Greenwood Lake Guild#
+payon_in01.rsw#Inside Payon#
+payon_in02.rsw#Inside Payon#
+payon_in03.rsw#Inside Payon#
+payon.rsw#Payon Town#
+poring_c01.rsw#Poring Waiting Room#
+poring_c02.rsw#Poring Market#
+poring_w01.rsw#Poring Waiting Room#
+poring_w02.rsw#Poring Market#
+priest_1-1.rsw#The Sanctum#
+priest_2-1.rsw#The Sanctum#
+priest_3-1.rsw#The Sanctum#
+prontera_s.rsw#Prontera City, Capital of Rune Midgard#
+prontera_x.rsw#Prontera City, Capital of Rune Midgard#
+prontera.rsw#Prontera City, Capital of Rune Midgard#
+prt_are_in.rsw#Waiting room#
+prt_are01.rsw#ARENA#
+prt_arena01.rsw#ARENA#
+prt_castle.rsw#Prontera Castle#
+prt_church_x.rsw#The Sanctuary#
+prt_church.rsw#The Sanctuary#
+prt_fild00.rsw#Prontera Field#
+prt_fild01.rsw#Prontera Field#
+prt_fild02.rsw#Prontera Field#
+prt_fild03.rsw#Prontera Field#
+prt_fild04.rsw#Prontera Field#
+prt_fild05.rsw#Prontera Field#
+prt_fild06.rsw#Prontera Field#
+prt_fild07.rsw#Prontera Field#
+prt_fild08.rsw#Prontera Field#
+prt_fild09.rsw#Prontera Field#
+prt_fild10.rsw#Prontera Field#
+prt_fild11.rsw#Prontera Field#
+prt_gld.rsw#Valkyrie Realm#
+prt_in.rsw#Inside Prontera#
+prt_maze01.rsw#Labyrinth Forest#
+prt_maze02.rsw#Labyrinth Forest#
+prt_maze03.rsw#Labyrinth Forest#
+prt_monk.rsw#St. Capitolina Abbey#
+prt_sewb1.rsw#Prontera Culvert#
+prt_sewb2.rsw#Prontera Culvert#
+prt_sewb3.rsw#Prontera Culvert#
+prt_sewb4.rsw#Prontera Culvert#
+prtg_cas01.rsw#Valkyrie Realm Guild#
+prtg_cas02.rsw#Valkyrie Realm Guild#
+prtg_cas03.rsw#Valkyrie Realm Guild#
+prtg_cas04.rsw#Valkyrie Realm Guild#
+prtg_cas05.rsw#Valkyrie Realm Guild#
+pvp_2vs2.rsw#PvP : Event Coliseum#
+pvp_2vs2b.rsw#PvP : Event Coliseum#
+pvp_2vs2c.rsw#PvP : Event Coliseum#
+pvp_c_room.rsw#PvP : Waiting Room#
+pvp_n_1-1.rsw#PvP : Room Sandwich#
+pvp_n_1-2.rsw#PvP : Room Rock On#
+pvp_n_1-3.rsw#PvP : Four Room#
+pvp_n_1-4.rsw#PvP : Room Undercross#
+pvp_n_1-5.rsw#PvP : Room Copass#
+pvp_n_2-1.rsw#PvP : Room Sandwich#
+pvp_n_2-2.rsw#PvP : Room Rock On#
+pvp_n_2-3.rsw#PvP : Four Room#
+pvp_n_2-4.rsw#PvP : Room Undercross#
+pvp_n_2-5.rsw#PvP : Room Copass#
+pvp_n_3-1.rsw#PvP : Room Sandwich#
+pvp_n_3-2.rsw#PvP : Room Rock On#
+pvp_n_3-3.rsw#PvP : Four Room#
+pvp_n_3-4.rsw#PvP : Room Undercross#
+pvp_n_3-5.rsw#PvP : Room Copass#
+pvp_n_4-1.rsw#PvP : Room Sandwich#
+pvp_n_4-2.rsw#PvP : Room Rock On#
+pvp_n_4-3.rsw#PvP : Four Room#
+pvp_n_4-4.rsw#PvP : Room Undercross#
+pvp_n_4-5.rsw#PvP : Room Copass#
+pvp_n_5-1.rsw#PvP : Room Sandwich#
+pvp_n_5-2.rsw#PvP : Room Rock On#
+pvp_n_5-3.rsw#PvP : Four Room#
+pvp_n_5-4.rsw#PvP : Room Undercross#
+pvp_n_5-5.rsw#PvP : Room Copass#
+pvp_n_6-1.rsw#PvP : Room Sandwich#
+pvp_n_6-2.rsw#PvP : Room Rock On#
+pvp_n_6-3.rsw#PvP : Four Room#
+pvp_n_6-4.rsw#PvP : Room Undercross#
+pvp_n_6-5.rsw#PvP : Room Copass#
+pvp_n_7-1.rsw#PvP : Room Sandwich#
+pvp_n_7-2.rsw#PvP : Room Rock On#
+pvp_n_7-3.rsw#PvP : Four Room#
+pvp_n_7-4.rsw#PvP : Room Undercross#
+pvp_n_7-5.rsw#PvP : Room Copass#
+pvp_n_8-1.rsw#PvP : Room Sandwich#
+pvp_n_8-2.rsw#PvP : Room Rock On#
+pvp_n_8-3.rsw#PvP : Four Room#
+pvp_n_8-4.rsw#PvP : Room Undercross#
+pvp_n_8-5.rsw#PvP : Room Copass#
+pvp_n_room.rsw#PvP : Waiting Room#
+pvp_room.rsw#PvP : Waiting Room#
+pvp_y_1-1.rsw#PvP : Room Prontera#
+pvp_y_1-2.rsw#PvP : Room Izlude#
+pvp_y_1-3.rsw#PvP : Room Payon#
+pvp_y_1-4.rsw#PvP : Room Alberta#
+pvp_y_1-5.rsw#PvP : Room Morroc#
+pvp_y_2-1.rsw#PvP : Room Prontera#
+pvp_y_2-2.rsw#PvP : Room Izlude#
+pvp_y_2-3.rsw#PvP : Room Payon#
+pvp_y_2-4.rsw#PvP : Room Alberta#
+pvp_y_2-5.rsw#PvP : Room Morroc#
+pvp_y_3-1.rsw#PvP : Room Prontera#
+pvp_y_3-2.rsw#PvP : Room Izlude#
+pvp_y_3-3.rsw#PvP : Room Payon#
+pvp_y_3-4.rsw#PvP : Room Alberta#
+pvp_y_3-5.rsw#PvP : Room Morroc#
+pvp_y_4-1.rsw#PvP : Room Prontera#
+pvp_y_4-2.rsw#PvP : Room Izlude#
+pvp_y_4-3.rsw#PvP : Room Payon#
+pvp_y_4-4.rsw#PvP : Room Alberta#
+pvp_y_4-5.rsw#PvP : Room Morroc#
+pvp_y_5-1.rsw#PvP : Room Prontera#
+pvp_y_5-2.rsw#PvP : Room Izlude#
+pvp_y_5-3.rsw#PvP : Room Payon#
+pvp_y_5-4.rsw#PvP : Room Alberta#
+pvp_y_5-5.rsw#PvP : Room Morroc#
+pvp_y_6-1.rsw#PvP : Room Prontera#
+pvp_y_6-2.rsw#PvP : Room Izlude#
+pvp_y_6-3.rsw#PvP : Room Payon#
+pvp_y_6-4.rsw#PvP : Room Alberta#
+pvp_y_6-5.rsw#PvP : Room Morroc#
+pvp_y_7-1.rsw#PvP : Room Prontera#
+pvp_y_7-2.rsw#PvP : Room Izlude#
+pvp_y_7-3.rsw#PvP : Room Payon#
+pvp_y_7-4.rsw#PvP : Room Alberta#
+pvp_y_7-5.rsw#PvP : Room Morroc#
+pvp_y_8-1.rsw#PvP : Room Prontera#
+pvp_y_8-2.rsw#PvP : Room Izlude#
+pvp_y_8-3.rsw#PvP : Room Payon#
+pvp_y_8-4.rsw#PvP : Room Alberta#
+pvp_y_8-5.rsw#PvP : Room Morroc#
+pvp_y_room.rsw#PvP : Waiting Room#
+que_ba.rsw#...#
+que_bingo.rsw#Bingo Game Room#
+que_god01.rsw#Quest Map#
+que_god02.rsw#Quest Map#
+que_hugel.rsw#Odin Shrine's Underground#
+que_job01.rsw#Private Pub#
+que_job02.rsw#Job Quest 2#
+que_job03.rsw#Job Quest 3#
+que_moc_16.rsw#Moon Palace, Mob Area#
+que_moon.rsw#Moon Palace#
+que_new01.rsw#New Year Day Place#
+que_new02.rsw#New Year Day Place#
+que_ng.rsw#Ninja - Gunslinger map#
+que_qaru01.rsw#Arunafeltz God Items Map 1#
+que_qaru02.rsw#Arunafeltz God Items Map 2#
+que_qaru03.rsw#Arunafeltz God Items Map 3#
+que_qaru04.rsw#Arunafeltz God Items Map 4#
+que_qaru05.rsw#Arunafeltz God Items Map 5#
+que_qsch01.rsw#Schwartzvalt God Items Map 1#
+que_qsch02.rsw#Schwartzvalt God Items Map 2#
+que_qsch03.rsw#Schwartzvalt God Items Map 3#
+que_qsch04.rsw#Schwartzvalt God Items Map 4#
+que_qsch05.rsw#Schwartzvalt God Items Map 5#
+que_rachel.rsw#Inside Freya's Temple#
+que_san04.rsw#Inside Freya's Temple#
+que_sign02.rsw#Valley of Gyoll#
+que_temsky.rsw#Pope's Room (Sky Garden)#
+que_thor.rsw#Thor's Volcano Dungeon#
+quiz_00.rsw#Quiz Revolution#
+quiz_01.rsw#Quiz Revolution#
+quiz_02.rsw#Quiz Arena#
+quiz_test.rsw#Quiz Hall#
+ra_fild01.rsw#Audumra Grass Land#
+ra_fild02.rsw#Oz Gorge#
+ra_fild03.rsw#Ida Plane#
+ra_fild04.rsw#Audumra Grass Land#
+ra_fild05.rsw#Audumra Grass Land#
+ra_fild06.rsw#Fortu Luna#
+ra_fild07.rsw#Oz Gorge#
+ra_fild08.rsw#Ida Plane#
+ra_fild09.rsw#Audumra Grass Land#
+ra_fild10.rsw#Oz Gorge#
+ra_fild11.rsw#Ida Plane#
+ra_fild12.rsw#Ida Plane#
+ra_fild13.rsw#Beach of Tears#
+ra_in01.rsw#Inside Rachel#
+ra_san01.rsw#Freya's Sacred Precinct#
+ra_san02.rsw#Freya's Sacred Precinct#
+ra_san03.rsw#Freya's Sacred Precinct#
+ra_san04.rsw#Freya's Sacred Precinct#
+ra_san05.rsw#Freya's Sacred Precinct#
+ra_temin.rsw#Inside Rachel Sanctuary#
+ra_temple.rsw#Freya's Grand Temple (Sesilmir)#
+ra_temsky.rsw#Pope's Room (Sky Garden)#
+rachel.rsw#Rachel, Capital of Arunafelz, the Study Nation#
+room_00.rsw#Room 0#
+room_01.rsw#Room 1#
+room_02.rsw#Room 2#
+rwc01.rsw#Ragnarok World Championship Arena 1#
+rwc02.rsw#Ragnarok World Championship Arena 2#
+rwc03.rsw#Ragnarok World Championship Arena 3#
+sch_gld.rsw#Schwarzwald Realm#
+schg_cas01.rsw#Schwaltzvalt Guild Castle 1#
+schg_cas02.rsw#Schwaltzvalt Guild Castle 2#
+schg_cas03.rsw#Schwaltzvalt Guild Castle 3#
+schg_cas04.rsw#Schwaltzvalt Guild Castle 4#
+schg_cas05.rsw#Schwaltzvalt Guild Castle 5#
+sec_in01.rsw#Inside Valhalla#
+sec_in02.rsw#Inside Valhalla#
+sec_pri.rsw#Room of Meditation (Valhalla Prison)#
+sword_1-1.rsw#Swordman Test Hall#
+sword_2-1.rsw#Swordman Test Hall#
+sword_3-1.rsw#Swordman Test Hall#
+tha_scene01.rsw#Thanatos Tower Entrance#
+tha_t01.rsw#Thanatos Tower - Lower Level#
+tha_t02.rsw#Thanatos Tower - Lower Level#
+tha_t03.rsw#Thanatos Tower - Lower Level#
+tha_t04.rsw#Thanatos Tower - Lower Level#
+tha_t05.rsw#Thanatos Tower - Upper Level#
+tha_t06.rsw#Thanatos Tower - Upper Level#
+tha_t07.rsw#Thanatos Tower - Upper Level#
+tha_t08.rsw#Thanatos Tower - Upper Level#
+tha_t09.rsw#Thanatos Tower - Upper Level#
+tha_t10.rsw#Thanatos Tower - Upper Level#
+tha_t11.rsw#Thanatos Tower - Upper Level#
+tha_t12.rsw#Thanatos Tower - Upper Level#
+thana_boss.rsw#Thanatos Tower - Unknown Area#
+thana_step.rsw#Thanatos Tower - Upper Level#
+thor_camp.rsw#Thor Camp#
+thor_v01.rsw#Thor's Volcano Dungeon#
+thor_v02.rsw#Thor's Volcano Dungeon#
+thor_v03.rsw#Thor's Volcano Dungeon#
+tower_a0.rsw#Tower A0#
+tower_a1.rsw#Tower A1#
+tower_a10.rsw#Tower A10#
+tower_a11.rsw#Tower A11#
+tower_a12.rsw#Tower A12#
+tower_a2.rsw#Tower A2#
+tower_a3.rsw#Tower A3#
+tower_a4.rsw#Tower A4#
+tower_a5.rsw#Tower A5#
+tower_a6.rsw#Tower A6#
+tower_a7.rsw#Tower A7#
+tower_a8.rsw#Tower A8#
+tower_a9.rsw#Tower A9#
+tower_b0.rsw#Tower B0#
+tower_b1.rsw#Tower B1#
+tower_b10.rsw#Tower B10#
+tower_b11.rsw#Tower B11#
+tower_b12.rsw#Tower B12#
+tower_b2.rsw#Tower B2#
+tower_b3.rsw#Tower B3#
+tower_b4.rsw#Tower B4#
+tower_b5.rsw#Tower B5#
+tower_b6.rsw#Tower B6#
+tower_b7.rsw#Tower B7#
+tower_b8.rsw#Tower B8#
+tower_b9.rsw#Tower B9#
+tower_c0.rsw#Tower C0#
+tower_c1.rsw#Tower C1#
+tower_c10.rsw#Tower C10#
+tower_c11.rsw#Tower C11#
+tower_c12.rsw#Tower C12#
+tower_c2.rsw#Tower C2#
+tower_c3.rsw#Tower C3#
+tower_c4.rsw#Tower C4#
+tower_c5.rsw#Tower C5#
+tower_c6.rsw#Tower C6#
+tower_c7.rsw#Tower C7#
+tower_c8.rsw#Tower C8#
+tower_c9.rsw#Tower C9#
+tower_d0.rsw#Tower D0#
+tower_d1.rsw#Tower D1#
+tower_d10.rsw#Tower D10#
+tower_d11.rsw#Tower D11#
+tower_d12.rsw#Tower D12#
+tower_d2.rsw#Tower D2#
+tower_d3.rsw#Tower D3#
+tower_d4.rsw#Tower D4#
+tower_d5.rsw#Tower D5#
+tower_d6.rsw#Tower D6#
+tower_d7.rsw#Tower D7#
+tower_d8.rsw#Tower D8#
+tower_d9.rsw#Tower D9#
+treasure01.rsw#Sunken Ship#
+treasure02.rsw#Sunken Ship#
+tur_dun01.rsw#Turtle Island#
+tur_dun02.rsw#Turtle Island Dungeon#
+tur_dun03.rsw#Good Turtles Village#
+tur_dun04.rsw#Turtle Palace#
+tur_dun05.rsw#Underground swamp zone#
+tur_dun06.rsw#Underground swamp zone#
+turbo_e_16.rsw#Turbo Track Stadium#
+turbo_e_4.rsw#Turbo Track Stadium#
+turbo_e_8.rsw#Turbo Track Stadium#
+turbo_n_1.rsw#Turbo Track Stadium#
+turbo_n_16.rsw#Turbo Track Stadium#
+turbo_n_4.rsw#Turbo Track Stadium#
+turbo_n_8.rsw#Turbo Track Stadium#
+turbo_room.rsw#Waiting Room#
+um_dun01.rsw#Carpenter's Shop in the Tree#
+um_dun02.rsw#Passage to a Foreign World#
+um_fild01.rsw#Luluka Forest#
+um_fild02.rsw#Hoomga Forest#
+um_fild03.rsw#Kalala Swamp#
+um_fild04.rsw#Hoomga Jungle#
+um_in.rsw#Inside Umbala#
+umbala.rsw#Wootan Tribe's Village, Umbala#
+valkyrie.rsw#Valkyrie Hall, the Hall of Honor#
+ve_fild01.rsw#Veins Field#
+ve_fild02.rsw#Veins Field#
+ve_fild03.rsw#Veins Field#
+ve_fild04.rsw#Veins Field#
+ve_fild05.rsw#Veins Field#
+ve_fild06.rsw#Veins Field#
+ve_fild07.rsw#Veins Field#
+ve_in.rsw#Inside Veins#
+ve_in02.rsw#Inside Veins#
+veins.rsw#Veins, the Desert Village#
+wizard_1-1.rsw#Wizard Academy#
+wizard_2-1.rsw#Wizard Academy#
+wizard_3-1.rsw#Wizard Academy#
+xmas_dun01.rsw#Toy Factory Warehouse#
+xmas_dun02.rsw#Toy Monitoring Room#
+xmas_fild01.rsw#Lutie Field#
+xmas_in.rsw#Inside Lutie#
+xmas_x.rsw#Lutie, the Snow Village#
+xmas.rsw#Lutie, Snow Village#
+y_airport.rsw#Juno Airport#
+yggdrasil01.rsw#Hvergelmir's Fountain (Trunk of Yggdrasil)#
+yuno_fild01.rsw#Border Posts#
+yuno_fild02.rsw#Kiel Hyre's Cottage#
+yuno_fild03.rsw#El Mes Plateau#
+yuno_fild04.rsw#El Mes Plateau#
+yuno_fild05.rsw#El Mes Plateau#
+yuno_fild06.rsw#El Mes Plateau#
+yuno_fild07.rsw#El Mes Gorge (Valley of Abyss)#
+yuno_fild08.rsw#Kiel Hyre's Academy#
+yuno_fild09.rsw#Schwaltzwald Guards Camp#
+yuno_fild10.rsw#Juno Field#
+yuno_fild11.rsw#Juno Field#
+yuno_fild12.rsw#Border Checkpoint#
+yuno_in01.rsw#Inside Juno#
+yuno_in02.rsw#Inside the Sage Castle#
+yuno_in03.rsw#Inside Juno#
+yuno_in04.rsw#Republic Library#
+yuno_in05.rsw#Power Plant of Ymir's Heart#
+yuno_pre.rsw#Schwaltzvalt Government Buildings#
+yuno.rsw#Juno, Capital of Schwarzwald Republic#
+z_agit.rsw#Z Grade Agit Point#
+1@orcs.rsw#Orc Underground Cave#
+2@orcs.rsw#Orc Underground Cave#
+arug_dun01.rsw#Arunafeltz Guild Dungeon#
+arug_que01.rsw#Stone's North#
+bat_c01.rsw#Kriger Von Midgard#
+bat_c02.rsw#Kriger Von Midgard#
+bat_c03.rsw#Kriger Von Midgard#
+man_fild01.rsw#Manuk Field#
+man_fild03.rsw#Manuk Field#
+mid_camp.rsw#Midgarts Expedition Camp#
+mid_campin.rsw#Inside Midgarts Expedition Camp#
+moc_fild22b.rsw#Crack of Dimension#
+que_dan01.rsw#Hugel Field#
+que_dan02.rsw#A desolated house in Juno#
+que_qaru01.rsw#Fallacious Okolnir#
+que_qaru02.rsw#Fallacious Okolnir#
+que_qaru03.rsw#Fallacious Okolnir#
+que_qaru04.rsw#Fallacious Okolnir#
+que_qaru05.rsw#Fallacious Okolnir#
+que_qsch02.rsw#Fallacious Okolnir#
+que_qsch03.rsw#Fallacious Okolnir#
+que_qsch04.rsw#Fallacious Okolnir#
+que_qsch05.rsw#Fallacious Okolnir#
+schg_dun01.rsw#Schwartzvald Guild Dungeon#
+schg_que01.rsw#Stone's North#
+spl_fild02.rsw#Splendid Field#
+spl_fild03.rsw#Splendid Field#
+g_room1-1.rsw#Quiz Revolution#
+g_room1-2.rsw#Quiz Revolution#
+g_room1-3.rsw#Quiz Revolution#
+//-------------------------file end
+que_moon.rsw#¤ë®c§Ê#
+que_moc_16.rsw#¤ë®c§ÊÅ]ª«¥Ğ#
+06guild_r.rsw#¤½·|¹ï§ÜÄv§Ş³õ µ¥­Ô«Ç#
+06guild_01.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_02.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_03.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_04.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_05.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_06.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_07.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_08.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+rachel.rsw#ªü¿c¯Ç¨©¯÷ ±Ğ°ê­º³£ ©Ô»®#
+ra_in01.rsw#©Ô»® ¤º³¡#
+ra_temple.rsw#µá¨Ì¶® ¤j¯«·µ(·æ´µ¶©¥§°Ç)#
+ra_temin.rsw#¯«·µ ¤º³¡#
+que_rachel.rsw#¯«·µ ¤º³¡#
+ra_temsky.rsw#±Ğ¬Ó°õ¶Ô«Ç(ªÅ¤¤®x¶é)#
+ra_fild01.rsw#ªü§Å´°©Ô ¯ó­ì#
+ra_fild02.rsw#¼Ú¯÷ ®l¨¦#
+ra_fild03.rsw#¥ì¹F ¥­­ì#
+ra_fild04.rsw#ªü§Å´°©Ô ¯ó­ì#
+ra_fild05.rsw#ªü§Å´°©Ô ¯ó­ì#
+ra_fild06.rsw#®ú°Ç¦R ¿c¯Ç#
+ra_fild07.rsw#¼Ú¯÷ ®l¨¦#
+ra_fild08.rsw#¥ì¹F ¥­­ì#
+ra_fild09.rsw#ªü§Å´°©Ô ¯ó­ì#
+ra_fild10.rsw#¼Ú¯÷ ®l¨¦#
+ra_fild11.rsw#¥ì¹F ¥­­ì#
+ra_fild12.rsw#¥ì¹F ¥­­ì#
+ra_fild13.rsw#²´²\¤§®ü©¤#
+ra_san01.rsw#¯«·µ ¸t°ì#
+ra_san02.rsw#¯«·µ ¸t°ì#
+ra_san03.rsw#¯«·µ ¸t°ì#
+ra_san04.rsw#¯«·µ ¸t°ì#
+ra_san05.rsw#¯«·µ ¸t°ì#
+ice_dun01.rsw#¦B¬}¥Ş#
+ice_dun02.rsw#¦B¬}¥Ş#
+ice_dun03.rsw#¦B¬}¥Ş#
+ice_dun04.rsw#¦B¬}¥Ş#
+hugel.rsw#¥Ğ¶é³£¥« ·´¸¯#
+hu_in01.rsw#·´¸¯ ¤º³¡#
+que_bingo.rsw#»«ªG¹CÀ¸ ÄvÁÉ³õ#
+que_hugel.rsw#¶ø¤B¯«·µ ¦a¤U#
+p_track01.rsw#Å]ª«ÁÉ¶] ÄvÁÉ³õ#
+p_track02.rsw#Å]ª«ÁÉ¶] ÄvÁÉ³õ#
+odin_tem01.rsw#¶ø¤B¯«·µ#
+odin_tem02.rsw#¶ø¤B¯«·µ#
+odin_tem03.rsw#¶ø¤B¯«·µ#
+hu_fild02.rsw#·´¸¯ ­ì³¥#
+hu_fild03.rsw#·´¸¯ ­ì³¥#
+hu_fild06.rsw#·´¸¯ ­ì³¥#
+ein_fild01.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild02.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild05.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+yuno_fild10.rsw#¦¶¿Õ ­ì³¥#
+kh_kiehl02.rsw#»ôº¸ªº³Ì«á©Ğ¶¡#
+kh_kiehl01.rsw#»ôº¸ªº©Ğ¶¡#
+kh_dun02.rsw#¾÷±ñ¤H«¬¤u¼t2¼Ó#
+kh_dun01.rsw#¾÷±ñ¤H«¬¤u¼t1¼Ó#
+kh_mansion.rsw#±Ò ®ü¥ì¬¥ ©xªó#
+kh_rossi.rsw#Ã¹§Æ¦Ì·R¼Ö®a ©xªó#
+kh_school.rsw#±Ò ®ü¥ì¬¥ ¾Ç°|#
+kh_vila.rsw#±Ò ®ü¥ì¬¥ §O¹Ö#
+auction_01.rsw#©ç½æ³õ#
+auction_02.rsw#©ç½æ³õ#
+que_job01.rsw#¯µ±K°s©±#
+abyss_01.rsw#²`²W´ò¤ô ¦a¤U¬}¥Ş#
+abyss_02.rsw#²`²W´ò¤ô ¦a¤U¬}¥Ş#
+abyss_03.rsw#²`²W´ò¤ô ¦a¤U¬}¥Ş#
+tha_t01.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤U¼h³¡#
+tha_t02.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤U¼h³¡#
+tha_t03.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤U¼h³¡#
+tha_t04.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤U¼h³¡#
+tha_t05.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t06.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t07.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t08.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t09.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t10.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t11.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t12.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+thana_step.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+thana_boss.rsw#¹F¯Ç¦«´µ ¶ğ¥x (¤£ª¾¦Wªº¦a¤è)#
+thana_scene01.rsw#¹F¯Ç¦«´µ ¶ğ¥x «e­±#
+job_soul.rsw#§Aªº¤ß#
+job_star.rsw#¤Ó¶§©M¤ë«G©M¬P¬P#
+hu_fild07.rsw#·´¸¯ ­ì³¥#
+hu_fild05.rsw#²`²W´ò¤ô#
+hu_fild04.rsw#·´¸¯ ­ì³¥#
+hu_fild01.rsw#¹F¯Ç¦«´µ ¶ğ¥x#
+yuno_fild06.rsw#º¸ÁÚ´µ Âr¹p¼w#
+quiz_02.rsw#OX ¯q´¼¹CÀ¸ÄvÁÉ³õ#
+jupe_cave.rsw#Àu°t¾İ´µ ¬}¥Ş¤J¤f#
+juperos_01.rsw#Àu°t¾İ´µ ¼o¼V#
+juperos_02.rsw#Àu°t¾İ´µ ¼o¼V#
+jupe_gate.rsw#Àu°t¾İ´µ «O¦w°Ï°ì#
+jupe_area1.rsw#Àu°t¾İ´µ «O¦w°Ï°ì#
+jupe_area2.rsw#Àu°t¾İ´µ «O¦w°Ï°ì#
+jupe_ele.rsw#Àu°t¾İ´µ ¹q±è#
+jupe_ele_r.rsw#Àu°t¾İ´µ ¹q±è«Ç#
+jupe_core.rsw#Àu°t¾İ´µ ¤¤¤ß³¡#
+lighthalzen.rsw#¥ø·~¤§³£ ¨½§Æ¶ğ¼ÖÂí#
+lhz_in01.rsw#¹p®Ú¨©°Ç Á`¤½¥q#
+lhz_in02.rsw#¨½§Æ¶ğ¼ÖÂí ¤º³¡#
+lhz_in03.rsw#¨½§Æ¶ğ¼ÖÂí ¤º³¡#
+lhz_cube.rsw#¥¿¥ß¤èÅé ©Ğ¶¡#
+lhz_que01.rsw#¨½§Æ¶ğ¼ÖÂí ¤º³¡#
+lhz_airport.rsw#¨½§Æ¶ğ¼ÖÂí ¾÷³õ#
+airplane_01.rsw#­¸ªÅ¸¥#
+lhz_dun01.rsw#¥ÍÅé¸ÕÅç ¬ã¨s©Ò#
+lhz_dun02.rsw#¥ÍÅé¸ÕÅç ¬ã¨s©Ò#
+lhz_dun03.rsw#¥ÍÅé¸ÕÅç ¬ã¨s©Ò#
+lhz_fild01.rsw#¨½§Æ¶ğ¼ÖÂí ­ì³¥#
+yuno_pre.rsw#¨qµo¯÷µo¼w ¬F©²ÆUªÙ#
+y_airport.rsw#¦¶¿Õ ¾÷³õ#
+lhz_fild03.rsw#¨½§Æ¶ğ¼ÖÂí ­ì³¥#
+lhz_fild02.rsw#¨½§Æ¶ğ¼ÖÂí ­ì³¥(¦º¯«ªº®l¨¦)#
+ein_fild04.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild03.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_dun02.rsw#Äq¤s¬}¥Ş#
+ein_dun01.rsw#Äq¤s¬}¥Ş#
+ein_fild10.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild09.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild08.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild07.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild06.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+airplane.rsw#­¸ªÅ¸¥#
+airport.rsw#¦ã­µ¥¬Ã¹§J ¾÷³õ#
+ein_in01.rsw#«Ç¤º#
+einbech.rsw#±ÄÄq§ø¸¨ ¦ã­µ¨©»®#
+einbroch.rsw#¿ûÅK¤§³£ ¦ã­µ¥¬Ã¹§J#
+turbo_e_16.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_e_8.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_e_4.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_n_16.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_n_8.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_n_4.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_n_1.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_room.rsw#Äv³t³õ¦a µ¥«İ«Ç#
+yuno_fild12.rsw#°ê¬É ÀË¬d¯¸#
+yuno_fild11.rsw#¦¶¿Õ ­ì³¥#
+yuno_fild09.rsw#¨qµo¯÷µo¼w Äµ³Æ¶¤ ÅSÀç¦a#
+yuno_fild08.rsw#±Ò ®ü¥ì¬¥ ¾Ç°|#
+yuno_fild07.rsw#º¸ÁÚ´µ ®l¨¦(²`²Wªº®l¨¦)#
+yuno_fild05.rsw#º¸ÁÚ´µ Âr¹p¼w#
+ayothaya.rsw#«u³é®õ¶®#
+ayo_in02.rsw#«u³é®õ¶® ¤º³¡#
+ayo_in01.rsw#«u³é®õ¶® ¤º³¡#
+ayo_dun02.rsw#¥j¥N¯«·µ ¤º³¡#
+ayo_dun01.rsw#¥j¥N¯«·µ °g®c#
+ayo_fild02.rsw#«u³é®õ¶® ­ì³¥#
+ayo_fild01.rsw#«u³é®õ¶® ­ì³¥#
+n_castle.rsw#¤Q¦r¬P#
+nguild_prt.rsw#¤Q¦r¬P_¥P¹Ò#
+nguild_gef.rsw#¤Q¦r¬P_¤Ñ¤U#
+que_god02.rsw#¥ô°È¦a¹Ï#
+que_god01.rsw#¥ô°È¦a¹Ï#
+quiz_test.rsw#¯q´¼¦Ò¸Õ³õ#
+gefenia04.rsw#¸¯Ìn¥§¨È#
+gefenia03.rsw#¸¯Ìn¥§¨È#
+gefenia02.rsw#¸¯Ìn¥§¨È#
+gefenia01.rsw#¸¯Ìn¥§¨È#
+himinn.rsw#¤Ú°ò¤O ¯«·µ#
+jawaii_in.rsw#¤ö«z«© ¤º³¡#
+jawaii.rsw#»e¤ë®q ¤ö«z«©#
+lou_in02.rsw#Às¤§«° ¤º³¡#
+lou_in01.rsw#Às¤§«° ¤º³¡#
+lou_dun03.rsw#¼f¨}®c#
+lou_dun02.rsw#¤ı³® ¤º³¡#
+lou_dun01.rsw#¤ı³®#
+lou_fild01.rsw#Às¤§«° ­ì³¥#
+louyang.rsw#¥j³£ Às¤§«°#
+valkyrie.rsw#¤Ú©_§Q¯«·µ (°¶¤j¾Ô¤h­Ìªº·µ°ó)#
+nif_in.rsw#¥§ªÜµá©i¤º³¡#
+yggdrasil01.rsw#¥İ¨©°Ç¶}¦Ì°Ç¤§®q (¤Ñ¦a¾ğ¸­¾ğ·F)#
+nif_fild02.rsw#°­ªº®l¨¦#
+nif_fild01.rsw#´µ³Í»â¹y (¥§ªÜµá©i °¾»·§ø¸¨)#
+niflheim.rsw#¦ºªÌ°ê®a ¥§ªÜµá©i#
+um_dun01.rsw#¾ğ¤ì¸Ìªº ¤ì¤u©Ò#
+um_dun02.rsw#¾ğ¤ì¸Ìªº ²§¬É³q¸ô#
+um_in.rsw#¨Z¤Ú©Ô¤º³¡#
+um_fild01.rsw#ÂPÂP¥d´ËªL#
+um_fild02.rsw#º­®a´ËªL#
+um_fild03.rsw#¥d©Ô©Ô´ËªL#
+um_fild04.rsw#º­®aÂOªL#
+umbala.rsw#«BÀÈ±Ú§ø¸¨ ¨Z¤Ú©Ô#
+sec_in01.rsw#¤Ú«¢©Ô®c ¤º³¡#
+sec_in02.rsw#¤Ú«¢©Ô®c ¤º³¡#
+sec_pri.rsw#¤Ú«¢©Ô®c ¤Ï¬Ùªº©Ğ¶¡(ºÊº»)#
+gon_test.rsw#¾Ô°«³õ#
+gon_dun01.rsw#¦è¤ı¥À¯«·µ#
+gon_dun02.rsw#¯«¥Pªº³ò´Ñ»O#
+gon_dun03.rsw#ªZ³®¹D°|#
+gon_fild01.rsw#±X±[­ì³¥#
+gon_in.rsw#±X±[¤º³¡#
+gonryun.rsw#¯«¥P¤§®q ±X±[#
+ama_test.rsw#¼¯¼¯¶ğ¼Ö ÅéÅç©Ò#
+ama_dun03.rsw#¤Ñ¬zËm ¦a¤U¯«ªÙ#
+ama_dun02.rsw#¦a¤U´Ë ¾Ô³õ#
+ama_dun01.rsw#ºfºf¦Ì °g®c#
+ama_fild01.rsw#¤Ñ¬zËm­ì³¥#
+ama_in02.rsw#¤Ñ¤ô¨¤¤º³¡#
+ama_in01.rsw#¤Ñ¬zËm¤º³¡#
+amatsu.rsw#¤Ñ¤ô¤§°ê ¤Ñ¬zËm#
+alde_alche.rsw#Áåª÷³N®v ÂàÂ¾©Ò#
+yuno_in05.rsw#¥ì¬ü¼Öªº¤ßÅ¦ °Ê¤O«Ç#
+yuno_in04.rsw#¦¶¿Õ ¤º³¡#
+job_duncer.rsw#§JÅ]®q ¤p¼@³õ#
+job_sage.rsw#½åªÌ ÂàÂ¾ ¦Ò¸Õ³õ#
+job_cru.rsw#¤Q¦r­x ÂàÂ¾ ¦Ò¸Õ³õ#
+job_monk.rsw#¸t ¥d²¦§Q¨º ­×¹D°|#
+monk_test.rsw#¸t ¥d²¦§Q¨º ­×¹D°|#
+in_rogue.rsw#¬yª]¤u·| ¤º³¡#
+mag_dun02.rsw#¿Õ¥iÃ¹¼w#
+mag_dun01.rsw#¿Õ¥iÃ¹¼w#
+yuno_fild04.rsw#º¸ÁÚ´µ Âr¹p¼w#
+yuno_fild03.rsw#º¸ÁÚ´µ Âr¹p¼w#
+yuno_fild02.rsw#¦N ®ü¥ì¬¥ §O¹Ö#
+yuno_fild01.rsw#°ê¬É ÀË¬d¯¸#
+yuno_in03.rsw#¦¶¿Õ ¤º³¡#
+yuno_in02.rsw#½åªÌ «°³ù¤º³¡#
+yuno_in01.rsw#¦¶¿Õ ¤º³¡#
+yuno.rsw#­×µo¯÷ ¦@©M°ê ­º³£ ¦¶¿Õ#
+job_wiz.rsw#§Å®vÂàÂ¾ ¦Ò³õ#
+job_prist.rsw#²½¥qÂàÂ¾ ¦Ò³õ#
+job_knt.rsw#ÃM¤hÂàÂ¾ ¦Ò³õ#
+job_hunte.rsw#Ây¤HÂàÂ¾ ¦Ò³õ#
+gld_dun04.rsw#¦a¤U¤u·| ±K¥Ş#
+gld_dun03.rsw#¦a¤U¤u·| ±K¥Ş#
+gld_dun02.rsw#¦a¤U¤u·| ±K¥Ş#
+gld_dun01.rsw#¦a¤U¤u·| ±K¥Ş#
+payg_cas05.rsw#«CªL´òªy ¤u·|#
+payg_cas04.rsw#«CªL´òªy ¤u·|#
+payg_cas03.rsw#«CªL´òªy ¤u·|#
+payg_cas02.rsw#«CªL´òªy ¤u·|#
+payg_cas01.rsw#«CªL´òªy ¤u·|#
+pay_gld.rsw#«CªL´òªy#
+aldeg_cas05.rsw#ÅS¨Ì¯Ç ¤u·|#
+aldeg_cas04.rsw#ÅS¨Ì¯Ç ¤u·|#
+aldeg_cas03.rsw#ÅS¨Ì¯Ç ¤u·|#
+aldeg_cas02.rsw#ÅS¨Ì¯Ç ¤u·|#
+aldeg_cas01.rsw#ÅS¨Ì¯Ç ¤u·|#
+alde_gld.rsw#¦ãº¸©¬Äõ½Ã¬P³£¥« ÅS¨Ì¯Ç#
+gefg_cas05.rsw#Ëì­ù§´§Q¨È ¤u·|#
+gefg_cas04.rsw#Ëì­ù§´§Q¨È ¤u·|#
+gefg_cas03.rsw#Ëì­ù§´§Q¨È ¤u·|#
+gefg_cas02.rsw#Ëì­ù§´§Q¨È ¤u·|#
+gefg_cas01.rsw#Ëì­ù§´§Q¨È ¤u·|#
+prtg_cas05.rsw#¤Ú°ò¤O¹p®¦ ¤u·|#
+prtg_cas04.rsw#¤Ú°ò¤O¹p®¦ ¤u·|#
+prtg_cas03.rsw#¤Ú°ò¤O¹p®¦ ¤u·|#
+prtg_cas02.rsw#¤Ú°ò¤O¹p®¦ ¤u·|#
+prtg_cas01.rsw#¤Ú°ò¤O¹p®¦ ¤u·|#
+prt_gld.rsw#¤Ú°ò¤O¹p®¦# 
+tur_dun01.rsw#¯QÀt®q#
+tur_dun02.rsw#¯QÀt®q ±K¥Ş#
+tur_dun03.rsw#¨}Àt§ø#
+tur_dun04.rsw#ÂÂ¨}®c#
+tur_dun05.rsw#¦a¤U ªh¿A¦a±a#
+tur_dun06.rsw#¦a¤U ªh¿A¦a±a#
+guild_vs5.rsw#¤u·| ¹ï§ÜÄv§Ş³õ#
+guild_vs4.rsw#¤u·| ¹ï§ÜÄv§Ş³õ#
+guild_vs3.rsw#¤u·| ¹ï§ÜÄv§Ş³õ#
+guild_vs2.rsw#¤u·| ¹ï§ÜÄv§Ş³õ#
+guild_vs1.rsw#¤u·| ¹ï§ÜÄv§Ş³õ#
+guild_room.rsw#¤u·|¹ï§ÜÄv§Ş³õ ¥ğ®§«Ç#
+quiz_00.rsw#OX¯q´¼¹CÀ¸ÄvÁÉ³õ#
+quiz_01.rsw#OX¯q´¼¹CÀ¸ÄvÁÉ³õ#
+gef_fild12.rsw#§J¯S ´ËªL#
+gef_fild13.rsw#©Æ¥ß¯SÂ÷¨È#
+gef_fild14.rsw#¦èÃä Ã~¤H§ø¸¨#
+cmd_in02.rsw#§JÅ]®q ¤º³¡#
+cmd_in01.rsw#§JÅ]®q ¤º³¡#
+comodo.rsw#®üÃä¤§³£ §JÅ]®q#
+beach_dun.rsw#¦èÃä ¬}¥Ş ¥[ÅS#
+beach_dun2.rsw#¥_Ãä ¬}¥Ş ¿c¦w¹F#
+beach_dun3.rsw#ªFÃä ¬}¥Ş °¨§^#
+cmd_fild01.rsw#¤Ú¤£¨ä¥d ´ËªL#
+cmd_fild02.rsw#§J§JÅ] ®üÃä#
+cmd_fild03.rsw#°ò¤D¨Ì ªh¿A¦a#
+cmd_fild04.rsw#§J§JÅ] ®üÃä#
+cmd_fild05.rsw#¤Ú¤£¨ä¥d ´ËªLÃä¬É#
+cmd_fild06.rsw#­n¶ë³£¥« ¤s¯S¼Ö°Ò(¦èÃä)#
+cmd_fild07.rsw#µo¼Ö´µ ¿O¶ğ®q#
+cmd_fild08.rsw#­n¶ë³£¥« ¤s¯S¼Ö°Ò(ªFÃä)#
+cmd_fild09.rsw#­n¶ë³£¥« ¤s¯S¼Ö°Ò(«nÃä)#
+xmas_in.rsw#Á¤»æ«°¤º³¡#
+xmas_dun02.rsw#ª±¨ã¤ÀÃş³õ#
+xmas_dun01.rsw#ª±¨ã¤u¼t­Ü®w#
+xmas_fild01.rsw#Á¤»æ«°­ì³¥#
+xmas.rsw#¥Õ³·§ø¸¨ Á¤»æ«°#
+mjolnir_01.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_02.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_03.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_04.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_05.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_06.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_07.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_08.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_09.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_10.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_11.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_12.rsw#§®°Ç¥§ ¤s¯ß#
+prt_fild00.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild01.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild02.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild03.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild04.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild05.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild06.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild07.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild08.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild09.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild10.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild11.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_monk.rsw#¸t¥d²¦§Q¨º ­×¹D°|#
+gef_fild00.rsw#¦Nªâ °Ï°ì#
+gef_fild01.rsw#¦Nªâ °Ï°ì#
+gef_fild02.rsw#¦Nªâ °Ï°ì#
+gef_fild03.rsw#¦Nªâ °Ï°ì#
+gef_fild04.rsw#¦Nªâ °Ï°ì#
+gef_fild05.rsw#¦Nªâ °Ï°ì#
+gef_fild06.rsw#¦Nªâ °Ï°ì#
+gef_fild07.rsw#¦Nªâ °Ï°ì#
+gef_fild08.rsw#¦Nªâ °Ï°ì#
+gef_fild09.rsw#¦Nªâ °Ï°ì#
+gef_fild10.rsw#ªFÃä Ã~¤H§ø¸¨#
+in_orcs01.rsw#Ã~¤H§ø¸¨ «Ç¤º#
+gef_fild11.rsw#¦Nªâ °Ï°ì#
+moc_fild01.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild02.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild03.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild04.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild05.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild06.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild07.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild08.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild09.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild10.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild11.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild12.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild13.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild14.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild15.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild16.rsw#Ä¬§J©Ô¯S ¨Fºz#
+in_moc_16.rsw#¨ë«È ¤u·|#
+moc_fild17.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild18.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild19.rsw#Ä¬§J©Ô¯S ¨Fºz#
+pay_fild01.rsw#´´´­ ¾ğªL#
+pay_fild02.rsw#´´´­ ¾ğªL#
+pay_fild03.rsw#´´´­ ¾ğªL#
+pay_fild04.rsw#Ä¬§J©Ô¯S ¨Fºz#
+pay_fild05.rsw#´´´­ ¾ğªL#
+pay_fild06.rsw#´´´­ ¾ğªL#
+pay_fild07.rsw#´´´­ ¾ğªL#
+pay_fild08.rsw#´´´­ ¾ğªL#
+pay_fild09.rsw#´´´­ ¾ğªL#
+pay_fild10.rsw#´´´­ ¾ğªL#
+pay_fild11.rsw#´´´­ ¾ğªL#
+new_1-1.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_2-1.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_3-1.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_4-1.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_5-1.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_1-2.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_2-2.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_3-2.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_4-2.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_5-2.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_1-3.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_2-3.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_3-3.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_4-3.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_5-3.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_1-4.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_2-4.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_3-4.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_4-4.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_5-4.rsw#ªì¾ÇªÌ ­×½m³õ#
+anthell01.rsw#¿ÂÃÆ ¦aº» ±K¥Ş#
+anthell02.rsw#¿ÂÃÆ ¦aº» ±K¥Ş#
+gef_dun00.rsw#¦Nªâ ¦a¤U ±K¥Ş#
+gef_dun01.rsw#¦Nªâ ¦a¤U ±K¥Ş#
+gef_dun02.rsw#¸¯Ìn¥§¨È ±K¥Ş#
+gef_dun03.rsw#¸¯Ìn¥§¨È ±K¥Ş#
+iz_dun00.rsw#®ü©³ ¬}¸]#
+iz_dun01.rsw#®ü©³ ¬}¸]#
+iz_dun02.rsw#®ü©³ ¬}¸]#
+iz_dun03.rsw#®ü©³ ¬}¸]#
+iz_dun04.rsw#®ü©³ ¬}¸]#
+iz_dun05.rsw#®ü©³ ¬}¸]#
+in_sphinx1.rsw#¥vªâ§J´µ ±K¥Ş#
+in_sphinx2.rsw#¥vªâ§J´µ ±K¥Ş#
+in_sphinx3.rsw#¥vªâ§J´µ ±K¥Ş#
+in_sphinx4.rsw#¥vªâ§J´µ ±K¥Ş#
+in_sphinx5.rsw#¥vªâ§J´µ ±K¥Ş#
+moc_pryd01.rsw#ª÷¦r¶ğ °g®c#
+moc_pryd02.rsw#ª÷¦r¶ğ °g®c#
+moc_pryd03.rsw#ª÷¦r¶ğ °g®c#
+moc_pryd04.rsw#ª÷¦r¶ğ °g®c#
+moc_pryd05.rsw#ª÷¦r¶ğ °g®c#
+moc_pryd06.rsw#ª÷¦r¶ğ °g®c#
+moc_prydb1.rsw#µs¸é ¤u·|#
+mjo_dun01.rsw#§®°Ç¥§ ¼o±óÄq³õ#
+mjo_dun02.rsw#§®°Ç¥§ ¼o±óÄq³õ#
+mjo_dun03.rsw#§®°Ç¥§ ¼o±óÄq³õ#
+orcsdun01.rsw#Ã~¤H¦a¤U¬}¸]#
+orcsdun02.rsw#Ã~¤H¦a¤U¬}¸]#
+pay_dun00.rsw#´´´­ ¦a¤U#
+pay_dun01.rsw#´´´­ ¦a¤U#
+pay_dun02.rsw#´´´­ ¦a¤U#
+pay_dun03.rsw#¦a¤U¼o±ó§ø¸¨#
+pay_dun04.rsw#¦a¤U¼o±ó§ø¸¨#
+prt_maze01.rsw#°gÂÃ´ËªL#
+prt_maze02.rsw#°gÂÃ´ËªL#
+prt_maze03.rsw#°gÂÃ´ËªL#
+prt_sewb1.rsw#´¶¶©¼w©Ô ¦a¤U¤ô¹D#
+prt_sewb2.rsw#´¶¶©¼w©Ô ¦a¤U¤ô¹D#
+prt_sewb3.rsw#´¶¶©¼w©Ô ¦a¤U¤ô¹D#
+prt_sewb4.rsw#´¶¶©¼w©Ô ¦a¤U¤ô¹D#
+treasure01.rsw#¨I¨S¤§²î 1¼Ó#
+treasure02.rsw#¨I¨S¤§²î 2¼Ó#
+hunter_1-1.rsw#Ây¤HÂàÂ¾©Ò#
+hunter_2-1.rsw#Ây¤HÂàÂ¾©Ò#
+hunter_3-1.rsw#Ây¤HÂàÂ¾©Ò#
+in_hunter.rsw#Ây¤HÂàÂ¾©Ò#
+knight_1-1.rsw#ÃM¤hÂàÂ¾©Ò#
+knight_2-1.rsw#ÃM¤hÂàÂ¾©Ò#
+knight_3-1.rsw#ÃM¤hÂàÂ¾©Ò#
+priest_1-1.rsw#²½¥qÂàÂ¾©Ò#
+priest_2-1.rsw#²½¥qÂàÂ¾©Ò#
+priest_3-1.rsw#²½¥qÂàÂ¾©Ò#
+sword_1-1.rsw#¼C¤hÂàÂ¾©Ò#
+sword_2-1.rsw#¼C¤hÂàÂ¾©Ò#
+sword_3-1.rsw#¼C¤hÂàÂ¾©Ò#
+job_thief1.rsw#µs¸éÂàÂ¾©Ò#
+wizard_1-1.rsw#§Å®vÂàÂ¾©Ò#
+wizard_2-1.rsw#§Å®vÂàÂ¾©Ò#
+wizard_3-1.rsw#§Å®vÂàÂ¾©Ò#
+force_1-1.rsw#­­®É¿E°«¼Ò¦¡#
+force_2-1.rsw#­­®É¿E°«¼Ò¦¡#
+force_3-1.rsw#­­®É¿E°«¼Ò¦¡#
+force_1-2.rsw#­­®É¿E°«¼Ò¦¡#
+force_2-2.rsw#­­®É¿E°«¼Ò¦¡#
+force_3-2.rsw#­­®É¿E°«¼Ò¦¡#
+force_1-3.rsw#­­®É¿E°«¼Ò¦¡#
+force_2-3.rsw#­­®É¿E°«¼Ò¦¡#
+force_3-3.rsw#­­®É¿E°«¼Ò¦¡#
+ordeal_1-1.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_2-1.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_3-1.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_1-2.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_2-2.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_3-2.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_1-3.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_2-3.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_3-3.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_1-4.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_2-4.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_3-4.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+alb_ship.rsw#¦ãº¸¨©¶ğ ²î²í¤º#
+alberta.rsw#´ä¤f¤§³£ ¦ãº¸¨©¶ğ#
+alberta_in.rsw#´ä¤f¤§³£ ¦ãº¸¨©¶ğ#
+alb2trea.rsw#¨I²îªşªñªº®qÀ¬#
+aldebaran.rsw#¹Bªe¤§³£ ¦ãº¸©¬Äõ#
+aldeba_in.rsw#¹Bªe¤§³£ ¦ãº¸©¬Äõ#
+gef_tower.rsw#¦Nªâ ¤¤¥¡¶ğ#
+geffen.rsw#Å]ªk¤§³£ ¦Nªâ#
+geffen_in.rsw#Å]ªk¤§³£ ¦Nªâ#
+moc_castle.rsw#¹ÚÃ¹§J «°¤º#
+moc_ruins.rsw#¨Fºz¤§³£ ¹ÚÃ¹§J#
+morocc.rsw#¨Fºz¤§³£ ¹ÚÃ¹§J#
+morocc_in.rsw#¨Fºz¤§³£ ¹ÚÃ¹§J#
+pay_arche.rsw#¤s©¨¤§³£ ´´´­#
+payon.rsw#¤s©¨¤§³£ ´´´­#
+payon_in01.rsw#¤s©¨¤§³£ ´´´­#
+payon_in02.rsw#¤s©¨¤§³£ ´´´­#
+payon_in03.rsw#¤s©¨¤§³£ ´´´­#
+prontera.rsw#¿c®¦ ¦Ì¼w¥[¯÷¤ı°ê ­º³£ ´¶¶©¼w©Ô#
+prt_in.rsw#¿c®¦ ¦Ì¼w¥[¯÷¤ı°ê ­º³£ ´¶¶©¼w©Ô#
+prt_castle.rsw#´¶¶©¼w©Ô «°¤º#
+prt_church.rsw#´¶¶©¼w©Ô ¸t°ó¤º#
+izlude.rsw#½Ã¬P³£¥« ¨Ì´µ¾|±o®q#
+izlude_in.rsw#½Ã¬P³£¥« ¨Ì´µ¾|±o®q#
+izlu2dun.rsw#½Ã¬P³£¥« ¨Ì´µ¾|±o®q#
+monk_in.rsw#¸t¥d²¦§Q¨º ­×¹D°|¤º#
+prt_are_in.rsw#¨È¹p¨º µ¥­Ô«Ç#
+arena_room.rsw#¨È¹p¨º µ¥­Ô«Ç#
+prt_arena01.rsw#¨È¹p¨º#
+prt_are01.rsw#¨È¹p¨º#
+glast_01.rsw#§J¹p´µ¯Sº~©i¥j«°#
+alde_dun01.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤U¼Ó¼h 1¼Ó#
+alde_dun02.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤U¼Ó¼h 2¼Ó#
+alde_dun03.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤U¼Ó¼h 3¼Ó#
+alde_dun04.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤U¼Ó¼h 4¼Ó#
+c_tower1.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤W¼Ó¼h 1¼Ó#
+c_tower2.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤W¼Ó¼h 2¼Ó#
+c_tower3.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤W¼Ó¼h 3¼Ó#
+c_tower4.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤W¼Ó¼h 4¼Ó#
+gl_cas01.rsw#§J¹p´µ¯Sº~©i¥j«° ¦a¤W¼Ó¼h 1¼Ó#
+gl_cas02.rsw#§J¹p´µ¯Sº~©i¥j«° ¦a¤W¼Ó¼h 2¼Ó#
+gl_church.rsw#§J¹p´µ¯Sº~©i¥j«° ­×¹D°|#
+gl_chyard.rsw#§J¹p´µ¯Sº~©i¥j«° ¦a¤U¤½¹Ó#
+gl_dun01.rsw#§J¹p´µ¯Sº~©i ³Ì¤U¼h ¦a¤U¬}¸]# 
+gl_dun02.rsw#§J¹p´µ¯Sº~©i ³Ì¤U¼h ¦a¤U¬}¸]# 
+gl_in01.rsw#§J¹p´µ¯Sº~©i¥j«° «Ç¤º#
+gl_knt01.rsw#§J¹p´µ¯Sº~©i ÃM¤h¹Î1¼Ó#
+gl_knt02.rsw#§J¹p´µ¯Sº~©i ÃM¤h¹Î2¼Ó#
+gl_prison.rsw#§J¹p´µ¯Sº~©i ¦a¤UºÊº»1¼Ó#
+gl_prison1.rsw#§J¹p´µ¯Sº~©i ¦a¤UºÊº»2¼Ó#
+gl_sew01.rsw#§J¹p´µ¯Sº~©i ¦a¤U¤ô¹D#
+gl_sew02.rsw#§J¹p´µ¯Sº~©i ¦a¤U¤ô¹D#
+gl_sew03.rsw#§J¹p´µ¯Sº~©i ¦a¤U¤ô¹D#
+gl_sew04.rsw#§J¹p´µ¯Sº~©i ¦a¤U¤ô¹D#
+gl_step.rsw#§J¹p´µ¯Sº~©i ¼Ó±è±K¥Ş#
+pvp_y_room.rsw#PvP : µ¥«İ«Ç#
+pvp_n_room.rsw#PvP : µ¥«İ«Ç#
+pvp_n_1-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_2-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_3-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_4-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_5-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_6-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_7-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_8-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_1-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_2-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_3-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_4-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_5-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_6-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_7-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_8-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_1-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_2-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_3-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_4-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_5-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_6-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_7-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_8-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_1-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_2-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_3-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_4-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_5-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_6-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_7-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_8-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_1-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_2-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_3-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_4-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_5-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_6-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_7-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_8-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_y_1-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_2-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_3-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_4-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_5-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_6-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_7-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_8-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_1-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_2-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_3-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_4-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_5-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_6-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_7-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_8-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_1-3.rsw#PvP : ´´´­#
+pvp_y_2-3.rsw#PvP : ´´´­#
+pvp_y_3-3.rsw#PvP : ´´´­#
+pvp_y_4-3.rsw#PvP : ´´´­#
+pvp_y_5-3.rsw#PvP : ´´´­#
+pvp_y_6-3.rsw#PvP : ´´´­#
+pvp_y_7-3.rsw#PvP : ´´´­#
+pvp_y_8-3.rsw#PvP : ´´´­#
+pvp_y_1-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_2-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_3-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_4-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_5-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_6-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_7-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_8-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_1-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_2-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_3-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_4-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_5-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_6-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_7-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_8-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_2vs2.rsw#PvP : ¬¡°Ê Äv§Ş³õ#
 //---------------------Ep 12_TW update-------------------
-//EP12 æ–°å¢åœ°åœ–
-1@cata.rsw#åœ°ä¸‹å¢“ç©´#
-2@cata.rsw#å°å°çš„ç¥æ®¿#
-e_tower.rsw#ç¥ç§˜å³¶#
-1@tower.rsw#é­”ç‰©çµ‚çµå¡”#
-2@tower.rsw#é­”ç‰©çµ‚çµå¡”#
-3@tower.rsw#é­”ç‰©çµ‚çµå¡”#
-4@tower.rsw#é­”ç‰©çµ‚çµå¡”#
-5@tower.rsw#é­”ç‰©çµ‚çµå¡”#
-6@tower.rsw#é­”ç‰©çµ‚çµå¡”ï¼ˆæœªçŸ¥çš„å€åŸŸï¼‰#
-bat_room.rsw#æˆ°å ´ç­‰å€™å®¤#
-bat_a01.rsw#æè€¶æ‹‰ å³½è°·#
-bat_a02.rsw#æè€¶æ‹‰ å³½è°·#
-bat_b01.rsw#ç€‘æ‹‰ç•¢çƒæ–¯ (å³½è°·)#
-bat_b02.rsw#ç€‘æ‹‰ç•¢çƒæ–¯ (å³½è°·)#
-mosk_fild01.rsw#é¯¨é­šå³¶#
-cave.rsw#æ´ç©´æ‘è½#
-moc_fild20.rsw#æ™‚ç©ºçš„è£‚ç¸«#
-moc_fild21.rsw#æ™‚ç©ºçš„è£‚ç¸«#
-moc_fild22.rsw#æ™‚ç©ºçš„è£‚ç¸«#
+//EP12 ·s¼W¦a¹Ï
+1@cata.rsw#¦a¤U¹Ó¥Ş#
+2@cata.rsw#«Ê¦Lªº¯«·µ#
+e_tower.rsw#¯«¯µ®q#
+1@tower.rsw#Å]ª«²×µ²¶ğ#
+2@tower.rsw#Å]ª«²×µ²¶ğ#
+3@tower.rsw#Å]ª«²×µ²¶ğ#
+4@tower.rsw#Å]ª«²×µ²¶ğ#
+5@tower.rsw#Å]ª«²×µ²¶ğ#
+6@tower.rsw#Å]ª«²×µ²¶ğ¡]¥¼ª¾ªº°Ï°ì¡^#
+bat_room.rsw#¾Ô³õµ¥­Ô«Ç#
+bat_a01.rsw#´£­C©Ô ®l¨¦#
+bat_a02.rsw#´£­C©Ô ®l¨¦#
+bat_b01.rsw#Âr©Ô²¦¯Q´µ (®l¨¦)#
+bat_b02.rsw#Âr©Ô²¦¯Q´µ (®l¨¦)#
+mosk_fild01.rsw#ÄH³½®q#
+cave.rsw#¬}¥Ş§ø¸¨#
+moc_fild20.rsw#®ÉªÅªºµõÁ_#
+moc_fild21.rsw#®ÉªÅªºµõÁ_#
+moc_fild22.rsw#®ÉªÅªºµõÁ_#
 
-moscovia.rsw#è«æ–¯ç§‘æ¯”äº#
-mosk_in.rsw#è«æ–¯ç§‘æ¯”äº å…§éƒ¨#
-mosk_ship.rsw#èˆ¹èˆ¶#
-mosk_fild01.rsw#è«æ–¯ç§‘æ¯”äº åŸé‡#
-mosk_fild02.rsw#è«æ–¯ç§‘æ¯”äº åŸé‡#
-mosk_dun01.rsw#æ£®æ—æ´ç©´#
-mosk_dun02.rsw#æ·±æ£®æ—æ´ç©´#
-mosk_dun03.rsw#æ·±æ·µæ£®æ—æ´ç©´#
+moscovia.rsw#²ö´µ¬ì¤ñ¨È#
+mosk_in.rsw#²ö´µ¬ì¤ñ¨È ¤º³¡#
+mosk_ship.rsw#²î²í#
+mosk_fild01.rsw#²ö´µ¬ì¤ñ¨È ­ì³¥#
+mosk_fild02.rsw#²ö´µ¬ì¤ñ¨È ­ì³¥#
+mosk_dun01.rsw#´ËªL¬}¥Ş#
+mosk_dun02.rsw#²`´ËªL¬}¥Ş#
+mosk_dun03.rsw#²`²W´ËªL¬}¥Ş#
 
-bossnia_01.rsw#æ³¢å£«å°¼äº#
-bossnia_02.rsw#æ³¢å£«å°¼äº#
-bossnia_03.rsw#æ³¢å£«å°¼äº#
-bossnia_04.rsw#æ³¢å£«å°¼äº#
-itemmall.rsw#å•†åŸåœ°åœ–#
-poring_w01.rsw#æ³¢åˆ©å°æ±º ç­‰å€™å®¤#
-poring_w02.rsw#æ³¢åˆ©å°æ±ºå ´#
-nameless_i.rsw#ç„¡åå³¶#
-nameless_n.rsw#ç„¡åå³¶#
-nameless_in.rsw#ç„¡åå³¶ å…§éƒ¨#
-abbey01.rsw#ä¿®é“é™¢#
-abbey02.rsw#ä¿®é“é™¢#
-abbey03.rsw#ä¿®é“é™¢#
-que_temsky.rs#æ•™çš‡åŸ·å‹¤å®¤(å¤©ç©ºåº­åœ’)#
-z_agit.rsw#Zé›†åœ˜çš„ç§˜å¯†åŸºåœ°#
-
-
-que_qsch01.rsw#è™›åƒçš„ å¥§å…‹å°¼å‹’#
-que_qsch02.rsw#è™›åƒçš„ å¥§å…‹å°¼å‹’#
-que_qsch03.rsw#è™›åƒçš„ å¥§å…‹å°¼å‹’#
-que_qsch04.rsw#è™›åƒçš„ å¥§å…‹å°¼å‹’#
-que_qsch05.rsw#è™›åƒçš„ å¥§å…‹å°¼å‹’#
-que_qaru01.rsw#è™›åƒçš„ å¥§å…‹å°¼å‹’#
-que_qaru02.rsw#è™›åƒçš„ å¥§å…‹å°¼å‹’#
-que_qaru03.rsw#è™›åƒçš„ å¥§å…‹å°¼å‹’#
-que_qaru04.rsw#è™›åƒçš„ å¥§å…‹å°¼å‹’#
-que_qaru05.rsw#è™›åƒçš„ å¥§å…‹å°¼å‹’#
-arug_cas01.rsw#ç™¼è²ä¾é›… å…¬æœƒ#
-arug_cas02.rsw#ç™¼è²ä¾é›… å…¬æœƒ#
-arug_cas03.rsw#ç™¼è²ä¾é›… å…¬æœƒ#
-arug_cas04.rsw#ç™¼è²ä¾é›… å…¬æœƒ#
-arug_cas05.rsw#ç™¼è²ä¾é›… å…¬æœƒ#
-aru_gld.rsw#ç™¼è²ä¾é›… å…¬æœƒ#
-schg_cas01.rsw#å°¼å®ƒå † å…¬æœƒ#
-schg_cas02.rsw#å°¼å®ƒå † å…¬æœƒ#
-schg_cas03.rsw#å°¼å®ƒå † å…¬æœƒ#
-schg_cas04.rsw#å°¼å®ƒå † å…¬æœƒ#
-schg_cas05.rsw#å°¼å®ƒå † å…¬æœƒ#
-sch_gld.rsw#å°¼å®ƒå † #
-
-veins.rsw#å³½è°·æ‘è½ è²éŸ³æ–¯#
-ve_in.rsw#è²éŸ³æ–¯ å…§éƒ¨#
-ve_in02.rsw#è²éŸ³æ–¯ å…§éƒ¨#
-ve_fild01.rsw#è²éŸ³æ–¯ åŸé‡#
-ve_fild02.rsw#è²éŸ³æ–¯ åŸé‡#
-ve_fild03.rsw#è²éŸ³æ–¯ åŸé‡#
-ve_fild04.rsw#è²éŸ³æ–¯ åŸé‡#
-ve_fild05.rsw#è²éŸ³æ–¯ åŸé‡#
-ve_fild06.rsw#è²éŸ³æ–¯ åŸé‡#
-ve_fild07.rsw#è²éŸ³æ–¯ åŸé‡#
-thor_camp.rsw#æ‰˜çˆ¾ç«å±± å…µç«™åŸºåœ°#
-que_thor.rsw#æ‰˜çˆ¾ç«å±± æ´ç©´#
-thor_v01.rsw#æ‰˜çˆ¾ç«å±± æ´ç©´#
-thor_v02.rsw#æ‰˜çˆ¾ç«å±± æ´ç©´#
-thor_v03.rsw#æ‰˜çˆ¾ç«å±± æ´ç©´#
+bossnia_01.rsw#ªi¤h¥§¨È#
+bossnia_02.rsw#ªi¤h¥§¨È#
+bossnia_03.rsw#ªi¤h¥§¨È#
+bossnia_04.rsw#ªi¤h¥§¨È#
+itemmall.rsw#°Ó«°¦a¹Ï#
+poring_w01.rsw#ªi§Q¹ï¨M µ¥­Ô«Ç#
+poring_w02.rsw#ªi§Q¹ï¨M³õ#
+nameless_i.rsw#µL¦W®q#
+nameless_n.rsw#µL¦W®q#
+nameless_in.rsw#µL¦W®q ¤º³¡#
+abbey01.rsw#­×¹D°|#
+abbey02.rsw#­×¹D°|#
+abbey03.rsw#­×¹D°|#
+que_temsky.rs#±Ğ¬Ó°õ¶Ô«Ç(¤ÑªÅ®x¶é)#
+z_agit.rsw#Z¶°¹Îªº¯µ±K°ò¦a#
 
 
+que_qsch01.rsw#µê¹³ªº ¶ø§J¥§°Ç#
+que_qsch02.rsw#µê¹³ªº ¶ø§J¥§°Ç#
+que_qsch03.rsw#µê¹³ªº ¶ø§J¥§°Ç#
+que_qsch04.rsw#µê¹³ªº ¶ø§J¥§°Ç#
+que_qsch05.rsw#µê¹³ªº ¶ø§J¥§°Ç#
+que_qaru01.rsw#µê¹³ªº ¶ø§J¥§°Ç#
+que_qaru02.rsw#µê¹³ªº ¶ø§J¥§°Ç#
+que_qaru03.rsw#µê¹³ªº ¶ø§J¥§°Ç#
+que_qaru04.rsw#µê¹³ªº ¶ø§J¥§°Ç#
+que_qaru05.rsw#µê¹³ªº ¶ø§J¥§°Ç#
+arug_cas01.rsw#µoµá¨Ì¶® ¤½·|#
+arug_cas02.rsw#µoµá¨Ì¶® ¤½·|#
+arug_cas03.rsw#µoµá¨Ì¶® ¤½·|#
+arug_cas04.rsw#µoµá¨Ì¶® ¤½·|#
+arug_cas05.rsw#µoµá¨Ì¶® ¤½·|#
+aru_gld.rsw#µoµá¨Ì¶® ¤½·|#
+schg_cas01.rsw#¥§¥¦°ï ¤½·|#
+schg_cas02.rsw#¥§¥¦°ï ¤½·|#
+schg_cas03.rsw#¥§¥¦°ï ¤½·|#
+schg_cas04.rsw#¥§¥¦°ï ¤½·|#
+schg_cas05.rsw#¥§¥¦°ï ¤½·|#
+sch_gld.rsw#¥§¥¦°ï #
+
+veins.rsw#®l¨¦§ø¸¨ µá­µ´µ#
+ve_in.rsw#µá­µ´µ ¤º³¡#
+ve_in02.rsw#µá­µ´µ ¤º³¡#
+ve_fild01.rsw#µá­µ´µ ­ì³¥#
+ve_fild02.rsw#µá­µ´µ ­ì³¥#
+ve_fild03.rsw#µá­µ´µ ­ì³¥#
+ve_fild04.rsw#µá­µ´µ ­ì³¥#
+ve_fild05.rsw#µá­µ´µ ­ì³¥#
+ve_fild06.rsw#µá­µ´µ ­ì³¥#
+ve_fild07.rsw#µá­µ´µ ­ì³¥#
+thor_camp.rsw#¦«º¸¤õ¤s §L¯¸°ò¦a#
+que_thor.rsw#¦«º¸¤õ¤s ¬}¥Ş#
+thor_v01.rsw#¦«º¸¤õ¤s ¬}¥Ş#
+thor_v02.rsw#¦«º¸¤õ¤s ¬}¥Ş#
+thor_v03.rsw#¦«º¸¤õ¤s ¬}¥Ş#
 
 
-que_moon.rsw#æœˆå®®å»·#
-que_moc_16.rsw#æœˆå®®å»·é­”ç‰©ç”°#
-06guild_r.rsw#å…¬æœƒå°æŠ—ç«¶æŠ€å ´ ç­‰å€™å®¤#
-06guild_01.rsw#å…¬æœƒå°æŠ—ç«¶æŠ€å ´#
-06guild_02.rsw#å…¬æœƒå°æŠ—ç«¶æŠ€å ´#
-06guild_03.rsw#å…¬æœƒå°æŠ—ç«¶æŠ€å ´#
-06guild_04.rsw#å…¬æœƒå°æŠ—ç«¶æŠ€å ´#
-06guild_05.rsw#å…¬æœƒå°æŠ—ç«¶æŠ€å ´#
-06guild_06.rsw#å…¬æœƒå°æŠ—ç«¶æŠ€å ´#
-06guild_07.rsw#å…¬æœƒå°æŠ—ç«¶æŠ€å ´#
-06guild_08.rsw#å…¬æœƒå°æŠ—ç«¶æŠ€å ´#
-rachel.rsw#é˜¿ç›§ç´è²èŒ² æ•™åœ‹é¦–éƒ½ æ‹‰èµ«#
-ra_in01.rsw#æ‹‰èµ« å…§éƒ¨#
-ra_temple.rsw#è²ä¾é›… å¤§ç¥æ®¿(ç‘Ÿæ–¯éš†å°¼å‹’)#
-ra_temin.rsw#ç¥æ®¿ å…§éƒ¨#
-que_rachel.rsw#ç¥æ®¿ å…§éƒ¨#
-ra_temsky.rsw#æ•™çš‡åŸ·å‹¤å®¤(ç©ºä¸­åº­åœ’)#
-ra_fild01.rsw#é˜¿å·«æ•¦æ‹‰ è‰åŸ#
-ra_fild02.rsw#æ­èŒ² å³½è°·#
-ra_fild03.rsw#ä¼Šé” å¹³åŸ#
-ra_fild04.rsw#é˜¿å·«æ•¦æ‹‰ è‰åŸ#
-ra_fild05.rsw#é˜¿å·«æ•¦æ‹‰ è‰åŸ#
-ra_fild06.rsw#æµ¦å‹’å ç›§ç´#
-ra_fild07.rsw#æ­èŒ² å³½è°·#
-ra_fild08.rsw#ä¼Šé” å¹³åŸ#
-ra_fild09.rsw#é˜¿å·«æ•¦æ‹‰ è‰åŸ#
-ra_fild10.rsw#æ­èŒ² å³½è°·#
-ra_fild11.rsw#ä¼Šé” å¹³åŸ#
-ra_fild12.rsw#ä¼Šé” å¹³åŸ#
-ra_fild13.rsw#çœ¼æ·šä¹‹æµ·å²¸#
-ra_san01.rsw#ç¥æ®¿ è–åŸŸ#
-ra_san02.rsw#ç¥æ®¿ è–åŸŸ#
-ra_san03.rsw#ç¥æ®¿ è–åŸŸ#
-ra_san04.rsw#ç¥æ®¿ è–åŸŸ#
-ra_san05.rsw#ç¥æ®¿ è–åŸŸ#
-ice_dun01.rsw#å†°æ´ç©´#
-ice_dun02.rsw#å†°æ´ç©´#
-ice_dun03.rsw#å†°æ´ç©´#
-ice_dun04.rsw#å†°æ´ç©´#
-hugel.rsw#ç”°åœ’éƒ½å¸‚ æ¯€è‘›#
-hu_in01.rsw#æ¯€è‘› å…§éƒ¨#
-que_bingo.rsw#è³“æœéŠæˆ² ç«¶è³½å ´#
-que_hugel.rsw#å¥§ä¸ç¥æ®¿ åœ°ä¸‹#
-p_track01.rsw#é­”ç‰©è³½è·‘ ç«¶è³½å ´#
-p_track02.rsw#é­”ç‰©è³½è·‘ ç«¶è³½å ´#
-odin_tem01.rsw#å¥§ä¸ç¥æ®¿#
-odin_tem02.rsw#å¥§ä¸ç¥æ®¿#
-odin_tem03.rsw#å¥§ä¸ç¥æ®¿#
-hu_fild02.rsw#æ¯€è‘› åŸé‡#
-hu_fild03.rsw#æ¯€è‘› åŸé‡#
-hu_fild06.rsw#æ¯€è‘› åŸé‡#
-ein_fild01.rsw#è‰¾éŸ³å¸ƒç¾…å…‹ åŸé‡#
-ein_fild02.rsw#è‰¾éŸ³å¸ƒç¾…å…‹ åŸé‡#
-ein_fild05.rsw#è‰¾éŸ³å¸ƒç¾…å…‹ åŸé‡#
-yuno_fild10.rsw#æœ±è«¾ åŸé‡#
-kh_kiehl02.rsw#é½Šçˆ¾çš„æœ€å¾Œæˆ¿é–“#
-kh_kiehl01.rsw#é½Šçˆ¾çš„æˆ¿é–“#
-kh_dun02.rsw#æ©Ÿæ¢°äººå‹å·¥å» 2æ¨“#
-kh_dun01.rsw#æ©Ÿæ¢°äººå‹å·¥å» 1æ¨“#
-kh_mansion.rsw#å•Ÿ æµ·ä¼Šæ´› å®˜é‚¸#
-kh_rossi.rsw#ç¾…å¸Œç±³æ„›æ¨‚å®¶ å®˜é‚¸#
-kh_school.rsw#å•Ÿ æµ·ä¼Šæ´› å­¸é™¢#
-kh_vila.rsw#å•Ÿ æµ·ä¼Šæ´› åˆ¥å¢…#
-auction_01.rsw#æ‹è³£å ´#
-auction_02.rsw#æ‹è³£å ´#
-que_job01.rsw#ç§˜å¯†é…’åº—#
-abyss_01.rsw#æ·±æ·µæ¹–æ°´ åœ°ä¸‹æ´ç©´#
-abyss_02.rsw#æ·±æ·µæ¹–æ°´ åœ°ä¸‹æ´ç©´#
-abyss_03.rsw#æ·±æ·µæ¹–æ°´ åœ°ä¸‹æ´ç©´#
-tha_t01.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸‹å±¤éƒ¨#
-tha_t02.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸‹å±¤éƒ¨#
-tha_t03.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸‹å±¤éƒ¨#
-tha_t04.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸‹å±¤éƒ¨#
-tha_t05.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸Šå±¤éƒ¨#
-tha_t06.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸Šå±¤éƒ¨#
-tha_t07.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸Šå±¤éƒ¨#
-tha_t08.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸Šå±¤éƒ¨#
-tha_t09.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸Šå±¤éƒ¨#
-tha_t10.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸Šå±¤éƒ¨#
-tha_t11.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸Šå±¤éƒ¨#
-tha_t12.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸Šå±¤éƒ¨#
-thana_step.rsw#é”ç´æ‰˜æ–¯ å¡”å° ä¸Šå±¤éƒ¨#
-thana_boss.rsw#é”ç´æ‰˜æ–¯ å¡”å° (ä¸çŸ¥åçš„åœ°æ–¹)#
-thana_scene01.rsw#é”ç´æ‰˜æ–¯ å¡”å° å‰é¢#
-job_soul.rsw#ä½ çš„å¿ƒ#
-job_star.rsw#å¤ªé™½å’Œæœˆäº®å’Œæ˜Ÿæ˜Ÿ#
-hu_fild07.rsw#æ¯€è‘› åŸé‡#
-hu_fild05.rsw#æ·±æ·µæ¹–æ°´#
-hu_fild04.rsw#æ¯€è‘› åŸé‡#
-hu_fild01.rsw#é”ç´æ‰˜æ–¯ å¡”å°#
-yuno_fild06.rsw#çˆ¾é‚æ–¯ ç€‘é›·å¾·#
-quiz_02.rsw#OX ç›Šæ™ºéŠæˆ²ç«¶è³½å ´#
-jupe_cave.rsw#å„ªé…æ“‚æ–¯ æ´ç©´å…¥å£#
-juperos_01.rsw#å„ªé…æ“‚æ–¯ å»¢å¢Ÿ#
-juperos_02.rsw#å„ªé…æ“‚æ–¯ å»¢å¢Ÿ#
-jupe_gate.rsw#å„ªé…æ“‚æ–¯ ä¿å®‰å€åŸŸ#
-jupe_area1.rsw#å„ªé…æ“‚æ–¯ ä¿å®‰å€åŸŸ#
-jupe_area2.rsw#å„ªé…æ“‚æ–¯ ä¿å®‰å€åŸŸ#
-jupe_ele.rsw#å„ªé…æ“‚æ–¯ é›»æ¢¯#
-jupe_ele_r.rsw#å„ªé…æ“‚æ–¯ é›»æ¢¯å®¤#
-jupe_core.rsw#å„ªé…æ“‚æ–¯ ä¸­å¿ƒéƒ¨#
-lighthalzen.rsw#ä¼æ¥­ä¹‹éƒ½ é‡Œå¸Œå¡”æ¨‚é®#
-lhz_in01.rsw#é›·æ ¹è²å‹’ ç¸½å…¬å¸#
-lhz_in02.rsw#é‡Œå¸Œå¡”æ¨‚é® å…§éƒ¨#
-lhz_in03.rsw#é‡Œå¸Œå¡”æ¨‚é® å…§éƒ¨#
-lhz_cube.rsw#æ­£ç«‹æ–¹é«” æˆ¿é–“#
-lhz_que01.rsw#é‡Œå¸Œå¡”æ¨‚é® å…§éƒ¨#
-lhz_airport.rsw#é‡Œå¸Œå¡”æ¨‚é® æ©Ÿå ´#
-airplane_01.rsw#é£›ç©ºè‰‡#
-lhz_dun01.rsw#ç”Ÿé«”è©¦é©— ç ”ç©¶æ‰€#
-lhz_dun02.rsw#ç”Ÿé«”è©¦é©— ç ”ç©¶æ‰€#
-lhz_dun03.rsw#ç”Ÿé«”è©¦é©— ç ”ç©¶æ‰€#
-lhz_fild01.rsw#é‡Œå¸Œå¡”æ¨‚é® åŸé‡#
-yuno_pre.rsw#ç§€ç™¼èŒ²ç™¼å¾· æ”¿åºœå»³èˆ#
-y_airport.rsw#æœ±è«¾ æ©Ÿå ´#
-lhz_fild03.rsw#é‡Œå¸Œå¡”æ¨‚é® åŸé‡#
-lhz_fild02.rsw#é‡Œå¸Œå¡”æ¨‚é® åŸé‡(æ­»ç¥çš„å³½è°·)#
-ein_fild04.rsw#è‰¾éŸ³å¸ƒç¾…å…‹ åŸé‡#
-ein_fild03.rsw#è‰¾éŸ³å¸ƒç¾…å…‹ åŸé‡#
-ein_dun02.rsw#ç¤¦å±±æ´ç©´#
-ein_dun01.rsw#ç¤¦å±±æ´ç©´#
-ein_fild10.rsw#è‰¾éŸ³å¸ƒç¾…å…‹ åŸé‡#
-ein_fild09.rsw#è‰¾éŸ³å¸ƒç¾…å…‹ åŸé‡#
-ein_fild08.rsw#è‰¾éŸ³å¸ƒç¾…å…‹ åŸé‡#
-ein_fild07.rsw#è‰¾éŸ³å¸ƒç¾…å…‹ åŸé‡#
-ein_fild06.rsw#è‰¾éŸ³å¸ƒç¾…å…‹ åŸé‡#
-airplane.rsw#é£›ç©ºè‰‡#
-airport.rsw#è‰¾éŸ³å¸ƒç¾…å…‹ æ©Ÿå ´#
-ein_in01.rsw#å®¤å…§#
-einbech.rsw#æ¡ç¤¦æ‘è½ è‰¾éŸ³è²èµ«#
-einbroch.rsw#é‹¼éµä¹‹éƒ½ è‰¾éŸ³å¸ƒç¾…å…‹#
-turbo_e_16.rsw#ç«¶é€Ÿå ´åœ° ç«¶è³½å ´#
-turbo_e_8.rsw#ç«¶é€Ÿå ´åœ° ç«¶è³½å ´#
-turbo_e_4.rsw#ç«¶é€Ÿå ´åœ° ç«¶è³½å ´#
-turbo_n_16.rsw#ç«¶é€Ÿå ´åœ° ç«¶è³½å ´#
-turbo_n_8.rsw#ç«¶é€Ÿå ´åœ° ç«¶è³½å ´#
-turbo_n_4.rsw#ç«¶é€Ÿå ´åœ° ç«¶è³½å ´#
-turbo_n_1.rsw#ç«¶é€Ÿå ´åœ° ç«¶è³½å ´#
-turbo_room.rsw#ç«¶é€Ÿå ´åœ° ç­‰å¾…å®¤#
-yuno_fild12.rsw#åœ‹ç•Œ æª¢æŸ¥ç«™#
-yuno_fild11.rsw#æœ±è«¾ åŸé‡#
-yuno_fild09.rsw#ç§€ç™¼èŒ²ç™¼å¾· è­¦å‚™éšŠ éœ²ç‡Ÿåœ°#
-yuno_fild08.rsw#å•Ÿ æµ·ä¼Šæ´› å­¸é™¢#
-yuno_fild07.rsw#çˆ¾é‚æ–¯ å³½è°·(æ·±æ·µçš„å³½è°·)#
-yuno_fild05.rsw#çˆ¾é‚æ–¯ ç€‘é›·å¾·#
-ayothaya.rsw#å“å–²æ³°é›…#
-ayo_in02.rsw#å“å–²æ³°é›… å…§éƒ¨#
-ayo_in01.rsw#å“å–²æ³°é›… å…§éƒ¨#
-ayo_dun02.rsw#å¤ä»£ç¥æ®¿ å…§éƒ¨#
-ayo_dun01.rsw#å¤ä»£ç¥æ®¿ è¿·å®®#
-ayo_fild02.rsw#å“å–²æ³°é›… åŸé‡#
-ayo_fild01.rsw#å“å–²æ³°é›… åŸé‡#
-n_castle.rsw#åå­—æ˜Ÿ#
-nguild_prt.rsw#åå­—æ˜Ÿ_ä»™å¢ƒ#
-nguild_gef.rsw#åå­—æ˜Ÿ_å¤©ä¸‹#
-que_god02.rsw#ä»»å‹™åœ°åœ–#
-que_god01.rsw#ä»»å‹™åœ°åœ–#
-quiz_test.rsw#ç›Šæ™ºè€ƒè©¦å ´#
-gefenia04.rsw#è‘›å¸”å°¼äº#
-gefenia03.rsw#è‘›å¸”å°¼äº#
-gefenia02.rsw#è‘›å¸”å°¼äº#
-gefenia01.rsw#è‘›å¸”å°¼äº#
-himinn.rsw#å·´åŸºåŠ› ç¥æ®¿#
-jawaii_in.rsw#çˆªå“‡å’¿ å…§éƒ¨#
-jawaii.rsw#èœœæœˆå³¶ çˆªå“‡å’¿#
-lou_in02.rsw#é¾ä¹‹åŸ å…§éƒ¨#
-lou_in01.rsw#é¾ä¹‹åŸ å…§éƒ¨#
-lou_dun03.rsw#å¯©è‰¯å®®#
-lou_dun02.rsw#ç‹é™µ å…§éƒ¨#
-lou_dun01.rsw#ç‹é™µ#
-lou_fild01.rsw#é¾ä¹‹åŸ åŸé‡#
-louyang.rsw#å¤éƒ½ é¾ä¹‹åŸ#
-valkyrie.rsw#å·´å¥‡åˆ©ç¥æ®¿ (å‰å¤§æˆ°å£«å€‘çš„æ®¿å ‚)#
-nif_in.rsw#å°¼èŠ™è²å§†å…§éƒ¨#
-yggdrasil01.rsw#ç¦¾è²å‹’é–‹ç±³å‹’ä¹‹å³¶ (å¤©åœ°æ¨¹è‘‰æ¨¹å¹¹)#
-nif_fild02.rsw#é¬¼çš„å³½è°·#
-nif_fild01.rsw#æ–¯å‡±é ˜é “ (å°¼èŠ™è²å§† åé æ‘è½)#
-niflheim.rsw#æ­»è€…åœ‹å®¶ å°¼èŠ™è²å§†#
-um_dun01.rsw#æ¨¹æœ¨è£¡çš„ æœ¨å·¥æ‰€#
-um_dun02.rsw#æ¨¹æœ¨è£¡çš„ ç•°ç•Œé€šè·¯#
-um_in.rsw#æ±¶å·´æ‹‰å…§éƒ¨#
-um_fild01.rsw#åš•åš•å¡æ£®æ—#
-um_fild02.rsw#æ»¬å®¶æ£®æ—#
-um_fild03.rsw#å¡æ‹‰æ‹‰æ£®æ—#
-um_fild04.rsw#æ»¬å®¶å¢æ—#
-umbala.rsw#é›¨æª€æ—æ‘è½ æ±¶å·´æ‹‰#
-sec_in01.rsw#å·´å“ˆæ‹‰å®® å…§éƒ¨#
-sec_in02.rsw#å·´å“ˆæ‹‰å®® å…§éƒ¨#
-sec_pri.rsw#å·´å“ˆæ‹‰å®® åçœçš„æˆ¿é–“(ç›£ç„)#
-gon_test.rsw#æˆ°é¬¥å ´#
-gon_dun01.rsw#è¥¿ç‹æ¯ç¥æ®¿#
-gon_dun02.rsw#ç¥ä»™çš„åœæ£‹è‡º#
-gon_dun03.rsw#æ­¦é™µé“é™¢#
-gon_fild01.rsw#å´‘å´™åŸé‡#
-gon_in.rsw#å´‘å´™å…§éƒ¨#
-gonryun.rsw#ç¥ä»™ä¹‹å³¶ å´‘å´™#
-ama_test.rsw#æ‘©æ‘©å¡”æ¨‚ é«”é©—æ‰€#
-ama_dun03.rsw#å¤©æ´¥ç”º åœ°ä¸‹ç¥èˆ#
-ama_dun02.rsw#åœ°ä¸‹æ£® æˆ°å ´#
-ama_dun01.rsw#æ¦»æ¦»ç±³ è¿·å®®#
-ama_fild01.rsw#å¤©æ´¥ç”ºåŸé‡#
-ama_in02.rsw#å¤©æ°´è§’å…§éƒ¨#
-ama_in01.rsw#å¤©æ´¥ç”ºå…§éƒ¨#
-amatsu.rsw#å¤©æ°´ä¹‹åœ‹ å¤©æ´¥ç”º#
-alde_alche.rsw#éŠé‡‘è¡“å¸« è½‰è·æ‰€#
-yuno_in05.rsw#ä¼Šç¾æ¨‚çš„å¿ƒè‡Ÿ å‹•åŠ›å®¤#
-yuno_in04.rsw#æœ±è«¾ å…§éƒ¨#
-job_duncer.rsw#å…‹é­”å³¶ å°åŠ‡å ´#
-job_sage.rsw#è³¢è€… è½‰è· è€ƒè©¦å ´#
-job_cru.rsw#åå­—è» è½‰è· è€ƒè©¦å ´#
-job_monk.rsw#è– å¡ç•¢åˆ©é‚£ ä¿®é“é™¢#
-monk_test.rsw#è– å¡ç•¢åˆ©é‚£ ä¿®é“é™¢#
-in_rogue.rsw#æµæ°“å·¥æœƒ å…§éƒ¨#
-mag_dun02.rsw#è«¾å¯ç¾…å¾·#
-mag_dun01.rsw#è«¾å¯ç¾…å¾·#
-yuno_fild04.rsw#çˆ¾é‚æ–¯ ç€‘é›·å¾·#
-yuno_fild03.rsw#çˆ¾é‚æ–¯ ç€‘é›·å¾·#
-yuno_fild02.rsw#å‰ æµ·ä¼Šæ´› åˆ¥å¢…#
-yuno_fild01.rsw#åœ‹ç•Œ æª¢æŸ¥ç«™#
-yuno_in03.rsw#æœ±è«¾ å…§éƒ¨#
-yuno_in02.rsw#è³¢è€… åŸå ¡å…§éƒ¨#
-yuno_in01.rsw#æœ±è«¾ å…§éƒ¨#
-yuno.rsw#ä¿®ç™¼èŒ² å…±å’Œåœ‹ é¦–éƒ½ æœ±è«¾#
-job_wiz.rsw#å·«å¸«è½‰è· è€ƒå ´#
-job_prist.rsw#ç¥­å¸è½‰è· è€ƒå ´#
-job_knt.rsw#é¨å£«è½‰è· è€ƒå ´#
-job_hunte.rsw#çµäººè½‰è· è€ƒå ´#
-gld_dun04.rsw#åœ°ä¸‹å·¥æœƒ å¯†ç©´#
-gld_dun03.rsw#åœ°ä¸‹å·¥æœƒ å¯†ç©´#
-gld_dun02.rsw#åœ°ä¸‹å·¥æœƒ å¯†ç©´#
-gld_dun01.rsw#åœ°ä¸‹å·¥æœƒ å¯†ç©´#
-payg_cas05.rsw#é’æ—æ¹–æ³Š å·¥æœƒ#
-payg_cas04.rsw#é’æ—æ¹–æ³Š å·¥æœƒ#
-payg_cas03.rsw#é’æ—æ¹–æ³Š å·¥æœƒ#
-payg_cas02.rsw#é’æ—æ¹–æ³Š å·¥æœƒ#
-payg_cas01.rsw#é’æ—æ¹–æ³Š å·¥æœƒ#
-pay_gld.rsw#é’æ—æ¹–æ³Š#
-aldeg_cas05.rsw#éœ²ä¾ç´ å·¥æœƒ#
-aldeg_cas04.rsw#éœ²ä¾ç´ å·¥æœƒ#
-aldeg_cas03.rsw#éœ²ä¾ç´ å·¥æœƒ#
-aldeg_cas02.rsw#éœ²ä¾ç´ å·¥æœƒ#
-aldeg_cas01.rsw#éœ²ä¾ç´ å·¥æœƒ#
-alde_gld.rsw#è‰¾çˆ¾å¸•è˜­è¡›æ˜Ÿéƒ½å¸‚ éœ²ä¾ç´#
-gefg_cas05.rsw#å’˜å“©å¦¥åˆ©äº å·¥æœƒ#
-gefg_cas04.rsw#å’˜å“©å¦¥åˆ©äº å·¥æœƒ#
-gefg_cas03.rsw#å’˜å“©å¦¥åˆ©äº å·¥æœƒ#
-gefg_cas02.rsw#å’˜å“©å¦¥åˆ©äº å·¥æœƒ#
-gefg_cas01.rsw#å’˜å“©å¦¥åˆ©äº å·¥æœƒ#
-prtg_cas05.rsw#å·´åŸºåŠ›é›·æ© å·¥æœƒ#
-prtg_cas04.rsw#å·´åŸºåŠ›é›·æ© å·¥æœƒ#
-prtg_cas03.rsw#å·´åŸºåŠ›é›·æ© å·¥æœƒ#
-prtg_cas02.rsw#å·´åŸºåŠ›é›·æ© å·¥æœƒ#
-prtg_cas01.rsw#å·´åŸºåŠ›é›·æ© å·¥æœƒ#
-prt_gld.rsw#å·´åŸºåŠ›é›·æ©# 
-tur_dun01.rsw#çƒé¾œå³¶#
-tur_dun02.rsw#çƒé¾œå³¶ å¯†ç©´#
-tur_dun03.rsw#è‰¯é¾œæ‘#
-tur_dun04.rsw#èˆŠè‰¯å®®#
-tur_dun05.rsw#åœ°ä¸‹ æ²¼æ¾¤åœ°å¸¶#
-tur_dun06.rsw#åœ°ä¸‹ æ²¼æ¾¤åœ°å¸¶#
-guild_vs5.rsw#å·¥æœƒ å°æŠ—ç«¶æŠ€å ´#
-guild_vs4.rsw#å·¥æœƒ å°æŠ—ç«¶æŠ€å ´#
-guild_vs3.rsw#å·¥æœƒ å°æŠ—ç«¶æŠ€å ´#
-guild_vs2.rsw#å·¥æœƒ å°æŠ—ç«¶æŠ€å ´#
-guild_vs1.rsw#å·¥æœƒ å°æŠ—ç«¶æŠ€å ´#
-guild_room.rsw#å·¥æœƒå°æŠ—ç«¶æŠ€å ´ ä¼‘æ¯å®¤#
-quiz_00.rsw#OXç›Šæ™ºéŠæˆ²ç«¶è³½å ´#
-quiz_01.rsw#OXç›Šæ™ºéŠæˆ²ç«¶è³½å ´#
-gef_fild12.rsw#å…‹ç‰¹ æ£®æ—#
-gef_fild13.rsw#æ€–ç«‹ç‰¹é›¢äº#
-gef_fild14.rsw#è¥¿é‚Š ç¸äººæ‘è½#
-cmd_in02.rsw#å…‹é­”å³¶ å…§éƒ¨#
-cmd_in01.rsw#å…‹é­”å³¶ å…§éƒ¨#
-comodo.rsw#æµ·é‚Šä¹‹éƒ½ å…‹é­”å³¶#
-beach_dun.rsw#è¥¿é‚Š æ´ç©´ åŠ éœ²#
-beach_dun2.rsw#åŒ—é‚Š æ´ç©´ ç›§å®‰é”#
-beach_dun3.rsw#æ±é‚Š æ´ç©´ é¦¬å¾#
-cmd_fild01.rsw#å·´ä¸å…¶å¡ æ£®æ—#
-cmd_fild02.rsw#å…‹å…‹é­” æµ·é‚Š#
-cmd_fild03.rsw#åŸºä¹ƒä¾ æ²¼æ¾¤åœ°#
-cmd_fild04.rsw#å…‹å…‹é­” æµ·é‚Š#
-cmd_fild05.rsw#å·´ä¸å…¶å¡ æ£®æ—é‚Šç•Œ#
-cmd_fild06.rsw#è¦å¡éƒ½å¸‚ å±±ç‰¹æ¨‚æ›¼(è¥¿é‚Š)#
-cmd_fild07.rsw#ç™¼æ¨‚æ–¯ ç‡ˆå¡”å³¶#
-cmd_fild08.rsw#è¦å¡éƒ½å¸‚ å±±ç‰¹æ¨‚æ›¼(æ±é‚Š)#
-cmd_fild09.rsw#è¦å¡éƒ½å¸‚ å±±ç‰¹æ¨‚æ›¼(å—é‚Š)#
-xmas_in.rsw#è–‘é¤…åŸå…§éƒ¨#
-xmas_dun02.rsw#ç©å…·åˆ†é¡å ´#
-xmas_dun01.rsw#ç©å…·å·¥å» å€‰åº«#
-xmas_fild01.rsw#è–‘é¤…åŸåŸé‡#
-xmas.rsw#ç™½é›ªæ‘è½ è–‘é¤…åŸ#
-mjolnir_01.rsw#å¦™å‹’å°¼ å±±è„ˆ#
-mjolnir_02.rsw#å¦™å‹’å°¼ å±±è„ˆ#
-mjolnir_03.rsw#å¦™å‹’å°¼ å±±è„ˆ#
-mjolnir_04.rsw#å¦™å‹’å°¼ å±±è„ˆ#
-mjolnir_05.rsw#å¦™å‹’å°¼ å±±è„ˆ#
-mjolnir_06.rsw#å¦™å‹’å°¼ å±±è„ˆ#
-mjolnir_07.rsw#å¦™å‹’å°¼ å±±è„ˆ#
-mjolnir_08.rsw#å¦™å‹’å°¼ å±±è„ˆ#
-mjolnir_09.rsw#å¦™å‹’å°¼ å±±è„ˆ#
-mjolnir_10.rsw#å¦™å‹’å°¼ å±±è„ˆ#
-mjolnir_11.rsw#å¦™å‹’å°¼ å±±è„ˆ#
-mjolnir_12.rsw#å¦™å‹’å°¼ å±±è„ˆ#
-prt_fild00.rsw#æ™®éš†å¾·æ‹‰ å€åŸŸ#
-prt_fild01.rsw#æ™®éš†å¾·æ‹‰ å€åŸŸ#
-prt_fild02.rsw#æ™®éš†å¾·æ‹‰ å€åŸŸ#
-prt_fild03.rsw#æ™®éš†å¾·æ‹‰ å€åŸŸ#
-prt_fild04.rsw#æ™®éš†å¾·æ‹‰ å€åŸŸ#
-prt_fild05.rsw#æ™®éš†å¾·æ‹‰ å€åŸŸ#
-prt_fild06.rsw#æ™®éš†å¾·æ‹‰ å€åŸŸ#
-prt_fild07.rsw#æ™®éš†å¾·æ‹‰ å€åŸŸ#
-prt_fild08.rsw#æ™®éš†å¾·æ‹‰ å€åŸŸ#
-prt_fild09.rsw#æ™®éš†å¾·æ‹‰ å€åŸŸ#
-prt_fild10.rsw#æ™®éš†å¾·æ‹‰ å€åŸŸ#
-prt_fild11.rsw#æ™®éš†å¾·æ‹‰ å€åŸŸ#
-prt_monk.rsw#è–å¡ç•¢åˆ©é‚£ ä¿®é“é™¢#
-gef_fild00.rsw#å‰èŠ¬ å€åŸŸ#
-gef_fild01.rsw#å‰èŠ¬ å€åŸŸ#
-gef_fild02.rsw#å‰èŠ¬ å€åŸŸ#
-gef_fild03.rsw#å‰èŠ¬ å€åŸŸ#
-gef_fild04.rsw#å‰èŠ¬ å€åŸŸ#
-gef_fild05.rsw#å‰èŠ¬ å€åŸŸ#
-gef_fild06.rsw#å‰èŠ¬ å€åŸŸ#
-gef_fild07.rsw#å‰èŠ¬ å€åŸŸ#
-gef_fild08.rsw#å‰èŠ¬ å€åŸŸ#
-gef_fild09.rsw#å‰èŠ¬ å€åŸŸ#
-gef_fild10.rsw#æ±é‚Š ç¸äººæ‘è½#
-in_orcs01.rsw#ç¸äººæ‘è½ å®¤å…§#
-gef_fild11.rsw#å‰èŠ¬ å€åŸŸ#
-moc_fild01.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild02.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild03.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild04.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild05.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild06.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild07.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild08.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild09.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild10.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild11.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild12.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild13.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild14.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild15.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild16.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-in_moc_16.rsw#åˆºå®¢ å·¥æœƒ#
-moc_fild17.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild18.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-moc_fild19.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-pay_fild01.rsw#æ–æš æ¨¹æ—#
-pay_fild02.rsw#æ–æš æ¨¹æ—#
-pay_fild03.rsw#æ–æš æ¨¹æ—#
-pay_fild04.rsw#è˜‡å…‹æ‹‰ç‰¹ æ²™æ¼ #
-pay_fild05.rsw#æ–æš æ¨¹æ—#
-pay_fild06.rsw#æ–æš æ¨¹æ—#
-pay_fild07.rsw#æ–æš æ¨¹æ—#
-pay_fild08.rsw#æ–æš æ¨¹æ—#
-pay_fild09.rsw#æ–æš æ¨¹æ—#
-pay_fild10.rsw#æ–æš æ¨¹æ—#
-pay_fild11.rsw#æ–æš æ¨¹æ—#
-new_1-1.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_2-1.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_3-1.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_4-1.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_5-1.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_1-2.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_2-2.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_3-2.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_4-2.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_5-2.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_1-3.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_2-3.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_3-3.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_4-3.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_5-3.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_1-4.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_2-4.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_3-4.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_4-4.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-new_5-4.rsw#åˆå­¸è€… ä¿®ç·´å ´#
-anthell01.rsw#èèŸ» åœ°ç„ å¯†ç©´#
-anthell02.rsw#èèŸ» åœ°ç„ å¯†ç©´#
-gef_dun00.rsw#å‰èŠ¬ åœ°ä¸‹ å¯†ç©´#
-gef_dun01.rsw#å‰èŠ¬ åœ°ä¸‹ å¯†ç©´#
-gef_dun02.rsw#è‘›å¸”å°¼äº å¯†ç©´#
-gef_dun03.rsw#è‘›å¸”å°¼äº å¯†ç©´#
-iz_dun00.rsw#æµ·åº• æ´çªŸ#
-iz_dun01.rsw#æµ·åº• æ´çªŸ#
-iz_dun02.rsw#æµ·åº• æ´çªŸ#
-iz_dun03.rsw#æµ·åº• æ´çªŸ#
-iz_dun04.rsw#æµ·åº• æ´çªŸ#
-iz_dun05.rsw#æµ·åº• æ´çªŸ#
-in_sphinx1.rsw#å²èŠ¬å…‹æ–¯ å¯†ç©´#
-in_sphinx2.rsw#å²èŠ¬å…‹æ–¯ å¯†ç©´#
-in_sphinx3.rsw#å²èŠ¬å…‹æ–¯ å¯†ç©´#
-in_sphinx4.rsw#å²èŠ¬å…‹æ–¯ å¯†ç©´#
-in_sphinx5.rsw#å²èŠ¬å…‹æ–¯ å¯†ç©´#
-moc_pryd01.rsw#é‡‘å­—å¡” è¿·å®®#
-moc_pryd02.rsw#é‡‘å­—å¡” è¿·å®®#
-moc_pryd03.rsw#é‡‘å­—å¡” è¿·å®®#
-moc_pryd04.rsw#é‡‘å­—å¡” è¿·å®®#
-moc_pryd05.rsw#é‡‘å­—å¡” è¿·å®®#
-moc_pryd06.rsw#é‡‘å­—å¡” è¿·å®®#
-moc_prydb1.rsw#ç›œè³Š å·¥æœƒ#
-mjo_dun01.rsw#å¦™å‹’å°¼ å»¢æ£„ç¤¦å ´#
-mjo_dun02.rsw#å¦™å‹’å°¼ å»¢æ£„ç¤¦å ´#
-mjo_dun03.rsw#å¦™å‹’å°¼ å»¢æ£„ç¤¦å ´#
-orcsdun01.rsw#ç¸äººåœ°ä¸‹æ´çªŸ#
-orcsdun02.rsw#ç¸äººåœ°ä¸‹æ´çªŸ#
-pay_dun00.rsw#æ–æš åœ°ä¸‹#
-pay_dun01.rsw#æ–æš åœ°ä¸‹#
-pay_dun02.rsw#æ–æš åœ°ä¸‹#
-pay_dun03.rsw#åœ°ä¸‹å»¢æ£„æ‘è½#
-pay_dun04.rsw#åœ°ä¸‹å»¢æ£„æ‘è½#
-prt_maze01.rsw#è¿·è—æ£®æ—#
-prt_maze02.rsw#è¿·è—æ£®æ—#
-prt_maze03.rsw#è¿·è—æ£®æ—#
-prt_sewb1.rsw#æ™®éš†å¾·æ‹‰ åœ°ä¸‹æ°´é“#
-prt_sewb2.rsw#æ™®éš†å¾·æ‹‰ åœ°ä¸‹æ°´é“#
-prt_sewb3.rsw#æ™®éš†å¾·æ‹‰ åœ°ä¸‹æ°´é“#
-prt_sewb4.rsw#æ™®éš†å¾·æ‹‰ åœ°ä¸‹æ°´é“#
-treasure01.rsw#æ²‰æ²’ä¹‹èˆ¹ 1æ¨“#
-treasure02.rsw#æ²‰æ²’ä¹‹èˆ¹ 2æ¨“#
-hunter_1-1.rsw#çµäººè½‰è·æ‰€#
-hunter_2-1.rsw#çµäººè½‰è·æ‰€#
-hunter_3-1.rsw#çµäººè½‰è·æ‰€#
-in_hunter.rsw#çµäººè½‰è·æ‰€#
-knight_1-1.rsw#é¨å£«è½‰è·æ‰€#
-knight_2-1.rsw#é¨å£«è½‰è·æ‰€#
-knight_3-1.rsw#é¨å£«è½‰è·æ‰€#
-priest_1-1.rsw#ç¥­å¸è½‰è·æ‰€#
-priest_2-1.rsw#ç¥­å¸è½‰è·æ‰€#
-priest_3-1.rsw#ç¥­å¸è½‰è·æ‰€#
-sword_1-1.rsw#åŠå£«è½‰è·æ‰€#
-sword_2-1.rsw#åŠå£«è½‰è·æ‰€#
-sword_3-1.rsw#åŠå£«è½‰è·æ‰€#
-job_thief1.rsw#ç›œè³Šè½‰è·æ‰€#
-wizard_1-1.rsw#å·«å¸«è½‰è·æ‰€#
-wizard_2-1.rsw#å·«å¸«è½‰è·æ‰€#
-wizard_3-1.rsw#å·«å¸«è½‰è·æ‰€#
-force_1-1.rsw#é™æ™‚æ¿€é¬¥æ¨¡å¼#
-force_2-1.rsw#é™æ™‚æ¿€é¬¥æ¨¡å¼#
-force_3-1.rsw#é™æ™‚æ¿€é¬¥æ¨¡å¼#
-force_1-2.rsw#é™æ™‚æ¿€é¬¥æ¨¡å¼#
-force_2-2.rsw#é™æ™‚æ¿€é¬¥æ¨¡å¼#
-force_3-2.rsw#é™æ™‚æ¿€é¬¥æ¨¡å¼#
-force_1-3.rsw#é™æ™‚æ¿€é¬¥æ¨¡å¼#
-force_2-3.rsw#é™æ™‚æ¿€é¬¥æ¨¡å¼#
-force_3-3.rsw#é™æ™‚æ¿€é¬¥æ¨¡å¼#
-ordeal_1-1.rsw#åœ˜é«”æˆ°é¬¥æ¨¡å¼#
-ordeal_2-1.rsw#åœ˜é«”æˆ°é¬¥æ¨¡å¼#
-ordeal_3-1.rsw#åœ˜é«”æˆ°é¬¥æ¨¡å¼#
-ordeal_1-2.rsw#åœ˜é«”æˆ°é¬¥æ¨¡å¼#
-ordeal_2-2.rsw#åœ˜é«”æˆ°é¬¥æ¨¡å¼#
-ordeal_3-2.rsw#åœ˜é«”æˆ°é¬¥æ¨¡å¼#
-ordeal_1-3.rsw#åœ˜é«”æˆ°é¬¥æ¨¡å¼#
-ordeal_2-3.rsw#åœ˜é«”æˆ°é¬¥æ¨¡å¼#
-ordeal_3-3.rsw#åœ˜é«”æˆ°é¬¥æ¨¡å¼#
-ordeal_1-4.rsw#åœ˜é«”æˆ°é¬¥æ¨¡å¼#
-ordeal_2-4.rsw#åœ˜é«”æˆ°é¬¥æ¨¡å¼#
-ordeal_3-4.rsw#åœ˜é«”æˆ°é¬¥æ¨¡å¼#
-alb_ship.rsw#è‰¾çˆ¾è²å¡” èˆ¹èˆ¶å…§#
-alberta.rsw#æ¸¯å£ä¹‹éƒ½ è‰¾çˆ¾è²å¡”#
-alberta_in.rsw#æ¸¯å£ä¹‹éƒ½ è‰¾çˆ¾è²å¡”#
-alb2trea.rsw#æ²‰èˆ¹é™„è¿‘çš„å³¶å¶¼#
-aldebaran.rsw#é‹æ²³ä¹‹éƒ½ è‰¾çˆ¾å¸•è˜­#
-aldeba_in.rsw#é‹æ²³ä¹‹éƒ½ è‰¾çˆ¾å¸•è˜­#
-gef_tower.rsw#å‰èŠ¬ ä¸­å¤®å¡”#
-geffen.rsw#é­”æ³•ä¹‹éƒ½ å‰èŠ¬#
-geffen_in.rsw#é­”æ³•ä¹‹éƒ½ å‰èŠ¬#
-moc_castle.rsw#å¤¢ç¾…å…‹ åŸå…§#
-moc_ruins.rsw#æ²™æ¼ ä¹‹éƒ½ å¤¢ç¾…å…‹#
-morocc.rsw#æ²™æ¼ ä¹‹éƒ½ å¤¢ç¾…å…‹#
-morocc_in.rsw#æ²™æ¼ ä¹‹éƒ½ å¤¢ç¾…å…‹#
-pay_arche.rsw#å±±å²³ä¹‹éƒ½ æ–æš#
-payon.rsw#å±±å²³ä¹‹éƒ½ æ–æš#
-payon_in01.rsw#å±±å²³ä¹‹éƒ½ æ–æš#
-payon_in02.rsw#å±±å²³ä¹‹éƒ½ æ–æš#
-payon_in03.rsw#å±±å²³ä¹‹éƒ½ æ–æš#
-prontera.rsw#ç›§æ© ç±³å¾·åŠ èŒ²ç‹åœ‹ é¦–éƒ½ æ™®éš†å¾·æ‹‰#
-prt_in.rsw#ç›§æ© ç±³å¾·åŠ èŒ²ç‹åœ‹ é¦–éƒ½ æ™®éš†å¾·æ‹‰#
-prt_castle.rsw#æ™®éš†å¾·æ‹‰ åŸå…§#
-prt_church.rsw#æ™®éš†å¾·æ‹‰ è–å ‚å…§#
-izlude.rsw#è¡›æ˜Ÿéƒ½å¸‚ ä¾æ–¯é­¯å¾—å³¶#
-izlude_in.rsw#è¡›æ˜Ÿéƒ½å¸‚ ä¾æ–¯é­¯å¾—å³¶#
-izlu2dun.rsw#è¡›æ˜Ÿéƒ½å¸‚ ä¾æ–¯é­¯å¾—å³¶#
-monk_in.rsw#è–å¡ç•¢åˆ©é‚£ ä¿®é“é™¢å…§#
-prt_are_in.rsw#äºé›·é‚£ ç­‰å€™å®¤#
-arena_room.rsw#äºé›·é‚£ ç­‰å€™å®¤#
-prt_arena01.rsw#äºé›·é‚£#
-prt_are01.rsw#äºé›·é‚£#
-glast_01.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§†å¤åŸ#
-alde_dun01.rsw#è‰¾çˆ¾å¸•è˜­ é˜å¡”åœ°ä¸‹æ¨“å±¤ 1æ¨“#
-alde_dun02.rsw#è‰¾çˆ¾å¸•è˜­ é˜å¡”åœ°ä¸‹æ¨“å±¤ 2æ¨“#
-alde_dun03.rsw#è‰¾çˆ¾å¸•è˜­ é˜å¡”åœ°ä¸‹æ¨“å±¤ 3æ¨“#
-alde_dun04.rsw#è‰¾çˆ¾å¸•è˜­ é˜å¡”åœ°ä¸‹æ¨“å±¤ 4æ¨“#
-c_tower1.rsw#è‰¾çˆ¾å¸•è˜­ é˜å¡”åœ°ä¸Šæ¨“å±¤ 1æ¨“#
-c_tower2.rsw#è‰¾çˆ¾å¸•è˜­ é˜å¡”åœ°ä¸Šæ¨“å±¤ 2æ¨“#
-c_tower3.rsw#è‰¾çˆ¾å¸•è˜­ é˜å¡”åœ°ä¸Šæ¨“å±¤ 3æ¨“#
-c_tower4.rsw#è‰¾çˆ¾å¸•è˜­ é˜å¡”åœ°ä¸Šæ¨“å±¤ 4æ¨“#
-gl_cas01.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§†å¤åŸ åœ°ä¸Šæ¨“å±¤ 1æ¨“#
-gl_cas02.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§†å¤åŸ åœ°ä¸Šæ¨“å±¤ 2æ¨“#
-gl_church.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§†å¤åŸ ä¿®é“é™¢#
-gl_chyard.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§†å¤åŸ åœ°ä¸‹å…¬å¢“#
-gl_dun01.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§† æœ€ä¸‹å±¤ åœ°ä¸‹æ´çªŸ# 
-gl_dun02.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§† æœ€ä¸‹å±¤ åœ°ä¸‹æ´çªŸ# 
-gl_in01.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§†å¤åŸ å®¤å…§#
-gl_knt01.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§† é¨å£«åœ˜1æ¨“#
-gl_knt02.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§† é¨å£«åœ˜2æ¨“#
-gl_prison.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§† åœ°ä¸‹ç›£ç„1æ¨“#
-gl_prison1.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§† åœ°ä¸‹ç›£ç„2æ¨“#
-gl_sew01.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§† åœ°ä¸‹æ°´é“#
-gl_sew02.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§† åœ°ä¸‹æ°´é“#
-gl_sew03.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§† åœ°ä¸‹æ°´é“#
-gl_sew04.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§† åœ°ä¸‹æ°´é“#
-gl_step.rsw#å…‹é›·æ–¯ç‰¹æ¼¢å§† æ¨“æ¢¯å¯†ç©´#
-pvp_y_room.rsw#PvP : ç­‰å¾…å®¤#
-pvp_n_room.rsw#PvP : ç­‰å¾…å®¤#
-pvp_n_1-1.rsw#PvP : ä¸‰æ˜æ²» æˆ¿é–“#
-pvp_n_2-1.rsw#PvP : ä¸‰æ˜æ²» æˆ¿é–“#
-pvp_n_3-1.rsw#PvP : ä¸‰æ˜æ²» æˆ¿é–“#
-pvp_n_4-1.rsw#PvP : ä¸‰æ˜æ²» æˆ¿é–“#
-pvp_n_5-1.rsw#PvP : ä¸‰æ˜æ²» æˆ¿é–“#
-pvp_n_6-1.rsw#PvP : ä¸‰æ˜æ²» æˆ¿é–“#
-pvp_n_7-1.rsw#PvP : ä¸‰æ˜æ²» æˆ¿é–“#
-pvp_n_8-1.rsw#PvP : ä¸‰æ˜æ²» æˆ¿é–“#
-pvp_n_1-2.rsw#PvP : é›·é”é–å®š æˆ¿é–“#
-pvp_n_2-2.rsw#PvP : é›·é”é–å®š æˆ¿é–“#
-pvp_n_3-2.rsw#PvP : é›·é”é–å®š æˆ¿é–“#
-pvp_n_4-2.rsw#PvP : é›·é”é–å®š æˆ¿é–“#
-pvp_n_5-2.rsw#PvP : é›·é”é–å®š æˆ¿é–“#
-pvp_n_6-2.rsw#PvP : é›·é”é–å®š æˆ¿é–“#
-pvp_n_7-2.rsw#PvP : é›·é”é–å®š æˆ¿é–“#
-pvp_n_8-2.rsw#PvP : é›·é”é–å®š æˆ¿é–“#
-pvp_n_1-3.rsw#PvP : å››é€šé“ æˆ¿é–“#
-pvp_n_2-3.rsw#PvP : å››é€šé“ æˆ¿é–“#
-pvp_n_3-3.rsw#PvP : å››é€šé“ æˆ¿é–“#
-pvp_n_4-3.rsw#PvP : å››é€šé“ æˆ¿é–“#
-pvp_n_5-3.rsw#PvP : å››é€šé“ æˆ¿é–“#
-pvp_n_6-3.rsw#PvP : å››é€šé“ æˆ¿é–“#
-pvp_n_7-3.rsw#PvP : å››é€šé“ æˆ¿é–“#
-pvp_n_8-3.rsw#PvP : å››é€šé“ æˆ¿é–“#
-pvp_n_1-4.rsw#PvP : ååå­— æˆ¿é–“#
-pvp_n_2-4.rsw#PvP : ååå­— æˆ¿é–“#
-pvp_n_3-4.rsw#PvP : ååå­— æˆ¿é–“#
-pvp_n_4-4.rsw#PvP : ååå­— æˆ¿é–“#
-pvp_n_5-4.rsw#PvP : ååå­— æˆ¿é–“#
-pvp_n_6-4.rsw#PvP : ååå­— æˆ¿é–“#
-pvp_n_7-4.rsw#PvP : ååå­— æˆ¿é–“#
-pvp_n_8-4.rsw#PvP : ååå­— æˆ¿é–“#
-pvp_n_1-5.rsw#PvP : ç¾…ç›¤ æˆ¿é–“#
-pvp_n_2-5.rsw#PvP : ç¾…ç›¤ æˆ¿é–“#
-pvp_n_3-5.rsw#PvP : ç¾…ç›¤ æˆ¿é–“#
-pvp_n_4-5.rsw#PvP : ç¾…ç›¤ æˆ¿é–“#
-pvp_n_5-5.rsw#PvP : ç¾…ç›¤ æˆ¿é–“#
-pvp_n_6-5.rsw#PvP : ç¾…ç›¤ æˆ¿é–“#
-pvp_n_7-5.rsw#PvP : ç¾…ç›¤ æˆ¿é–“#
-pvp_n_8-5.rsw#PvP : ç¾…ç›¤ æˆ¿é–“#
-pvp_y_1-1.rsw#PvP : æ™®éš†å¾·æ‹‰#
-pvp_y_2-1.rsw#PvP : æ™®éš†å¾·æ‹‰#
-pvp_y_3-1.rsw#PvP : æ™®éš†å¾·æ‹‰#
-pvp_y_4-1.rsw#PvP : æ™®éš†å¾·æ‹‰#
-pvp_y_5-1.rsw#PvP : æ™®éš†å¾·æ‹‰#
-pvp_y_6-1.rsw#PvP : æ™®éš†å¾·æ‹‰#
-pvp_y_7-1.rsw#PvP : æ™®éš†å¾·æ‹‰#
-pvp_y_8-1.rsw#PvP : æ™®éš†å¾·æ‹‰#
-pvp_y_1-2.rsw#PvP : ä¾æ–¯é­¯å¾—å³¶#
-pvp_y_2-2.rsw#PvP : ä¾æ–¯é­¯å¾—å³¶#
-pvp_y_3-2.rsw#PvP : ä¾æ–¯é­¯å¾—å³¶#
-pvp_y_4-2.rsw#PvP : ä¾æ–¯é­¯å¾—å³¶#
-pvp_y_5-2.rsw#PvP : ä¾æ–¯é­¯å¾—å³¶#
-pvp_y_6-2.rsw#PvP : ä¾æ–¯é­¯å¾—å³¶#
-pvp_y_7-2.rsw#PvP : ä¾æ–¯é­¯å¾—å³¶#
-pvp_y_8-2.rsw#PvP : ä¾æ–¯é­¯å¾—å³¶#
-pvp_y_1-3.rsw#PvP : æ–æš#
-pvp_y_2-3.rsw#PvP : æ–æš#
-pvp_y_3-3.rsw#PvP : æ–æš#
-pvp_y_4-3.rsw#PvP : æ–æš#
-pvp_y_5-3.rsw#PvP : æ–æš#
-pvp_y_6-3.rsw#PvP : æ–æš#
-pvp_y_7-3.rsw#PvP : æ–æš#
-pvp_y_8-3.rsw#PvP : æ–æš#
-pvp_y_1-4.rsw#PvP : è‰¾çˆ¾è²å¡”#
-pvp_y_2-4.rsw#PvP : è‰¾çˆ¾è²å¡”#
-pvp_y_3-4.rsw#PvP : è‰¾çˆ¾è²å¡”#
-pvp_y_4-4.rsw#PvP : è‰¾çˆ¾è²å¡”#
-pvp_y_5-4.rsw#PvP : è‰¾çˆ¾è²å¡”#
-pvp_y_6-4.rsw#PvP : è‰¾çˆ¾è²å¡”#
-pvp_y_7-4.rsw#PvP : è‰¾çˆ¾è²å¡”#
-pvp_y_8-4.rsw#PvP : è‰¾çˆ¾è²å¡”#
-pvp_y_1-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_2-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_3-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_4-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_5-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_6-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_7-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_8-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_2vs2.rsw#PvP : æ´»å‹• ç«¶æŠ€å ´#
+
+
+que_moon.rsw#¤ë®c§Ê#
+que_moc_16.rsw#¤ë®c§ÊÅ]ª«¥Ğ#
+06guild_r.rsw#¤½·|¹ï§ÜÄv§Ş³õ µ¥­Ô«Ç#
+06guild_01.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_02.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_03.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_04.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_05.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_06.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_07.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+06guild_08.rsw#¤½·|¹ï§ÜÄv§Ş³õ#
+rachel.rsw#ªü¿c¯Ç¨©¯÷ ±Ğ°ê­º³£ ©Ô»®#
+ra_in01.rsw#©Ô»® ¤º³¡#
+ra_temple.rsw#µá¨Ì¶® ¤j¯«·µ(·æ´µ¶©¥§°Ç)#
+ra_temin.rsw#¯«·µ ¤º³¡#
+que_rachel.rsw#¯«·µ ¤º³¡#
+ra_temsky.rsw#±Ğ¬Ó°õ¶Ô«Ç(ªÅ¤¤®x¶é)#
+ra_fild01.rsw#ªü§Å´°©Ô ¯ó­ì#
+ra_fild02.rsw#¼Ú¯÷ ®l¨¦#
+ra_fild03.rsw#¥ì¹F ¥­­ì#
+ra_fild04.rsw#ªü§Å´°©Ô ¯ó­ì#
+ra_fild05.rsw#ªü§Å´°©Ô ¯ó­ì#
+ra_fild06.rsw#®ú°Ç¦R ¿c¯Ç#
+ra_fild07.rsw#¼Ú¯÷ ®l¨¦#
+ra_fild08.rsw#¥ì¹F ¥­­ì#
+ra_fild09.rsw#ªü§Å´°©Ô ¯ó­ì#
+ra_fild10.rsw#¼Ú¯÷ ®l¨¦#
+ra_fild11.rsw#¥ì¹F ¥­­ì#
+ra_fild12.rsw#¥ì¹F ¥­­ì#
+ra_fild13.rsw#²´²\¤§®ü©¤#
+ra_san01.rsw#¯«·µ ¸t°ì#
+ra_san02.rsw#¯«·µ ¸t°ì#
+ra_san03.rsw#¯«·µ ¸t°ì#
+ra_san04.rsw#¯«·µ ¸t°ì#
+ra_san05.rsw#¯«·µ ¸t°ì#
+ice_dun01.rsw#¦B¬}¥Ş#
+ice_dun02.rsw#¦B¬}¥Ş#
+ice_dun03.rsw#¦B¬}¥Ş#
+ice_dun04.rsw#¦B¬}¥Ş#
+hugel.rsw#¥Ğ¶é³£¥« ·´¸¯#
+hu_in01.rsw#·´¸¯ ¤º³¡#
+que_bingo.rsw#»«ªG¹CÀ¸ ÄvÁÉ³õ#
+que_hugel.rsw#¶ø¤B¯«·µ ¦a¤U#
+p_track01.rsw#Å]ª«ÁÉ¶] ÄvÁÉ³õ#
+p_track02.rsw#Å]ª«ÁÉ¶] ÄvÁÉ³õ#
+odin_tem01.rsw#¶ø¤B¯«·µ#
+odin_tem02.rsw#¶ø¤B¯«·µ#
+odin_tem03.rsw#¶ø¤B¯«·µ#
+hu_fild02.rsw#·´¸¯ ­ì³¥#
+hu_fild03.rsw#·´¸¯ ­ì³¥#
+hu_fild06.rsw#·´¸¯ ­ì³¥#
+ein_fild01.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild02.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild05.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+yuno_fild10.rsw#¦¶¿Õ ­ì³¥#
+kh_kiehl02.rsw#»ôº¸ªº³Ì«á©Ğ¶¡#
+kh_kiehl01.rsw#»ôº¸ªº©Ğ¶¡#
+kh_dun02.rsw#¾÷±ñ¤H«¬¤u¼t2¼Ó#
+kh_dun01.rsw#¾÷±ñ¤H«¬¤u¼t1¼Ó#
+kh_mansion.rsw#±Ò ®ü¥ì¬¥ ©xªó#
+kh_rossi.rsw#Ã¹§Æ¦Ì·R¼Ö®a ©xªó#
+kh_school.rsw#±Ò ®ü¥ì¬¥ ¾Ç°|#
+kh_vila.rsw#±Ò ®ü¥ì¬¥ §O¹Ö#
+auction_01.rsw#©ç½æ³õ#
+auction_02.rsw#©ç½æ³õ#
+que_job01.rsw#¯µ±K°s©±#
+abyss_01.rsw#²`²W´ò¤ô ¦a¤U¬}¥Ş#
+abyss_02.rsw#²`²W´ò¤ô ¦a¤U¬}¥Ş#
+abyss_03.rsw#²`²W´ò¤ô ¦a¤U¬}¥Ş#
+tha_t01.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤U¼h³¡#
+tha_t02.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤U¼h³¡#
+tha_t03.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤U¼h³¡#
+tha_t04.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤U¼h³¡#
+tha_t05.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t06.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t07.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t08.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t09.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t10.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t11.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+tha_t12.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+thana_step.rsw#¹F¯Ç¦«´µ ¶ğ¥x ¤W¼h³¡#
+thana_boss.rsw#¹F¯Ç¦«´µ ¶ğ¥x (¤£ª¾¦Wªº¦a¤è)#
+thana_scene01.rsw#¹F¯Ç¦«´µ ¶ğ¥x «e­±#
+job_soul.rsw#§Aªº¤ß#
+job_star.rsw#¤Ó¶§©M¤ë«G©M¬P¬P#
+hu_fild07.rsw#·´¸¯ ­ì³¥#
+hu_fild05.rsw#²`²W´ò¤ô#
+hu_fild04.rsw#·´¸¯ ­ì³¥#
+hu_fild01.rsw#¹F¯Ç¦«´µ ¶ğ¥x#
+yuno_fild06.rsw#º¸ÁÚ´µ Âr¹p¼w#
+quiz_02.rsw#OX ¯q´¼¹CÀ¸ÄvÁÉ³õ#
+jupe_cave.rsw#Àu°t¾İ´µ ¬}¥Ş¤J¤f#
+juperos_01.rsw#Àu°t¾İ´µ ¼o¼V#
+juperos_02.rsw#Àu°t¾İ´µ ¼o¼V#
+jupe_gate.rsw#Àu°t¾İ´µ «O¦w°Ï°ì#
+jupe_area1.rsw#Àu°t¾İ´µ «O¦w°Ï°ì#
+jupe_area2.rsw#Àu°t¾İ´µ «O¦w°Ï°ì#
+jupe_ele.rsw#Àu°t¾İ´µ ¹q±è#
+jupe_ele_r.rsw#Àu°t¾İ´µ ¹q±è«Ç#
+jupe_core.rsw#Àu°t¾İ´µ ¤¤¤ß³¡#
+lighthalzen.rsw#¥ø·~¤§³£ ¨½§Æ¶ğ¼ÖÂí#
+lhz_in01.rsw#¹p®Ú¨©°Ç Á`¤½¥q#
+lhz_in02.rsw#¨½§Æ¶ğ¼ÖÂí ¤º³¡#
+lhz_in03.rsw#¨½§Æ¶ğ¼ÖÂí ¤º³¡#
+lhz_cube.rsw#¥¿¥ß¤èÅé ©Ğ¶¡#
+lhz_que01.rsw#¨½§Æ¶ğ¼ÖÂí ¤º³¡#
+lhz_airport.rsw#¨½§Æ¶ğ¼ÖÂí ¾÷³õ#
+airplane_01.rsw#­¸ªÅ¸¥#
+lhz_dun01.rsw#¥ÍÅé¸ÕÅç ¬ã¨s©Ò#
+lhz_dun02.rsw#¥ÍÅé¸ÕÅç ¬ã¨s©Ò#
+lhz_dun03.rsw#¥ÍÅé¸ÕÅç ¬ã¨s©Ò#
+lhz_fild01.rsw#¨½§Æ¶ğ¼ÖÂí ­ì³¥#
+yuno_pre.rsw#¨qµo¯÷µo¼w ¬F©²ÆUªÙ#
+y_airport.rsw#¦¶¿Õ ¾÷³õ#
+lhz_fild03.rsw#¨½§Æ¶ğ¼ÖÂí ­ì³¥#
+lhz_fild02.rsw#¨½§Æ¶ğ¼ÖÂí ­ì³¥(¦º¯«ªº®l¨¦)#
+ein_fild04.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild03.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_dun02.rsw#Äq¤s¬}¥Ş#
+ein_dun01.rsw#Äq¤s¬}¥Ş#
+ein_fild10.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild09.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild08.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild07.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+ein_fild06.rsw#¦ã­µ¥¬Ã¹§J ­ì³¥#
+airplane.rsw#­¸ªÅ¸¥#
+airport.rsw#¦ã­µ¥¬Ã¹§J ¾÷³õ#
+ein_in01.rsw#«Ç¤º#
+einbech.rsw#±ÄÄq§ø¸¨ ¦ã­µ¨©»®#
+einbroch.rsw#¿ûÅK¤§³£ ¦ã­µ¥¬Ã¹§J#
+turbo_e_16.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_e_8.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_e_4.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_n_16.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_n_8.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_n_4.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_n_1.rsw#Äv³t³õ¦a ÄvÁÉ³õ#
+turbo_room.rsw#Äv³t³õ¦a µ¥«İ«Ç#
+yuno_fild12.rsw#°ê¬É ÀË¬d¯¸#
+yuno_fild11.rsw#¦¶¿Õ ­ì³¥#
+yuno_fild09.rsw#¨qµo¯÷µo¼w Äµ³Æ¶¤ ÅSÀç¦a#
+yuno_fild08.rsw#±Ò ®ü¥ì¬¥ ¾Ç°|#
+yuno_fild07.rsw#º¸ÁÚ´µ ®l¨¦(²`²Wªº®l¨¦)#
+yuno_fild05.rsw#º¸ÁÚ´µ Âr¹p¼w#
+ayothaya.rsw#«u³é®õ¶®#
+ayo_in02.rsw#«u³é®õ¶® ¤º³¡#
+ayo_in01.rsw#«u³é®õ¶® ¤º³¡#
+ayo_dun02.rsw#¥j¥N¯«·µ ¤º³¡#
+ayo_dun01.rsw#¥j¥N¯«·µ °g®c#
+ayo_fild02.rsw#«u³é®õ¶® ­ì³¥#
+ayo_fild01.rsw#«u³é®õ¶® ­ì³¥#
+n_castle.rsw#¤Q¦r¬P#
+nguild_prt.rsw#¤Q¦r¬P_¥P¹Ò#
+nguild_gef.rsw#¤Q¦r¬P_¤Ñ¤U#
+que_god02.rsw#¥ô°È¦a¹Ï#
+que_god01.rsw#¥ô°È¦a¹Ï#
+quiz_test.rsw#¯q´¼¦Ò¸Õ³õ#
+gefenia04.rsw#¸¯Ìn¥§¨È#
+gefenia03.rsw#¸¯Ìn¥§¨È#
+gefenia02.rsw#¸¯Ìn¥§¨È#
+gefenia01.rsw#¸¯Ìn¥§¨È#
+himinn.rsw#¤Ú°ò¤O ¯«·µ#
+jawaii_in.rsw#¤ö«z«© ¤º³¡#
+jawaii.rsw#»e¤ë®q ¤ö«z«©#
+lou_in02.rsw#Às¤§«° ¤º³¡#
+lou_in01.rsw#Às¤§«° ¤º³¡#
+lou_dun03.rsw#¼f¨}®c#
+lou_dun02.rsw#¤ı³® ¤º³¡#
+lou_dun01.rsw#¤ı³®#
+lou_fild01.rsw#Às¤§«° ­ì³¥#
+louyang.rsw#¥j³£ Às¤§«°#
+valkyrie.rsw#¤Ú©_§Q¯«·µ (°¶¤j¾Ô¤h­Ìªº·µ°ó)#
+nif_in.rsw#¥§ªÜµá©i¤º³¡#
+yggdrasil01.rsw#¥İ¨©°Ç¶}¦Ì°Ç¤§®q (¤Ñ¦a¾ğ¸­¾ğ·F)#
+nif_fild02.rsw#°­ªº®l¨¦#
+nif_fild01.rsw#´µ³Í»â¹y (¥§ªÜµá©i °¾»·§ø¸¨)#
+niflheim.rsw#¦ºªÌ°ê®a ¥§ªÜµá©i#
+um_dun01.rsw#¾ğ¤ì¸Ìªº ¤ì¤u©Ò#
+um_dun02.rsw#¾ğ¤ì¸Ìªº ²§¬É³q¸ô#
+um_in.rsw#¨Z¤Ú©Ô¤º³¡#
+um_fild01.rsw#ÂPÂP¥d´ËªL#
+um_fild02.rsw#º­®a´ËªL#
+um_fild03.rsw#¥d©Ô©Ô´ËªL#
+um_fild04.rsw#º­®aÂOªL#
+umbala.rsw#«BÀÈ±Ú§ø¸¨ ¨Z¤Ú©Ô#
+sec_in01.rsw#¤Ú«¢©Ô®c ¤º³¡#
+sec_in02.rsw#¤Ú«¢©Ô®c ¤º³¡#
+sec_pri.rsw#¤Ú«¢©Ô®c ¤Ï¬Ùªº©Ğ¶¡(ºÊº»)#
+gon_test.rsw#¾Ô°«³õ#
+gon_dun01.rsw#¦è¤ı¥À¯«·µ#
+gon_dun02.rsw#¯«¥Pªº³ò´Ñ»O#
+gon_dun03.rsw#ªZ³®¹D°|#
+gon_fild01.rsw#±X±[­ì³¥#
+gon_in.rsw#±X±[¤º³¡#
+gonryun.rsw#¯«¥P¤§®q ±X±[#
+ama_test.rsw#¼¯¼¯¶ğ¼Ö ÅéÅç©Ò#
+ama_dun03.rsw#¤Ñ¬zËm ¦a¤U¯«ªÙ#
+ama_dun02.rsw#¦a¤U´Ë ¾Ô³õ#
+ama_dun01.rsw#ºfºf¦Ì °g®c#
+ama_fild01.rsw#¤Ñ¬zËm­ì³¥#
+ama_in02.rsw#¤Ñ¤ô¨¤¤º³¡#
+ama_in01.rsw#¤Ñ¬zËm¤º³¡#
+amatsu.rsw#¤Ñ¤ô¤§°ê ¤Ñ¬zËm#
+alde_alche.rsw#Áåª÷³N®v ÂàÂ¾©Ò#
+yuno_in05.rsw#¥ì¬ü¼Öªº¤ßÅ¦ °Ê¤O«Ç#
+yuno_in04.rsw#¦¶¿Õ ¤º³¡#
+job_duncer.rsw#§JÅ]®q ¤p¼@³õ#
+job_sage.rsw#½åªÌ ÂàÂ¾ ¦Ò¸Õ³õ#
+job_cru.rsw#¤Q¦r­x ÂàÂ¾ ¦Ò¸Õ³õ#
+job_monk.rsw#¸t ¥d²¦§Q¨º ­×¹D°|#
+monk_test.rsw#¸t ¥d²¦§Q¨º ­×¹D°|#
+in_rogue.rsw#¬yª]¤u·| ¤º³¡#
+mag_dun02.rsw#¿Õ¥iÃ¹¼w#
+mag_dun01.rsw#¿Õ¥iÃ¹¼w#
+yuno_fild04.rsw#º¸ÁÚ´µ Âr¹p¼w#
+yuno_fild03.rsw#º¸ÁÚ´µ Âr¹p¼w#
+yuno_fild02.rsw#¦N ®ü¥ì¬¥ §O¹Ö#
+yuno_fild01.rsw#°ê¬É ÀË¬d¯¸#
+yuno_in03.rsw#¦¶¿Õ ¤º³¡#
+yuno_in02.rsw#½åªÌ «°³ù¤º³¡#
+yuno_in01.rsw#¦¶¿Õ ¤º³¡#
+yuno.rsw#­×µo¯÷ ¦@©M°ê ­º³£ ¦¶¿Õ#
+job_wiz.rsw#§Å®vÂàÂ¾ ¦Ò³õ#
+job_prist.rsw#²½¥qÂàÂ¾ ¦Ò³õ#
+job_knt.rsw#ÃM¤hÂàÂ¾ ¦Ò³õ#
+job_hunte.rsw#Ây¤HÂàÂ¾ ¦Ò³õ#
+gld_dun04.rsw#¦a¤U¤u·| ±K¥Ş#
+gld_dun03.rsw#¦a¤U¤u·| ±K¥Ş#
+gld_dun02.rsw#¦a¤U¤u·| ±K¥Ş#
+gld_dun01.rsw#¦a¤U¤u·| ±K¥Ş#
+payg_cas05.rsw#«CªL´òªy ¤u·|#
+payg_cas04.rsw#«CªL´òªy ¤u·|#
+payg_cas03.rsw#«CªL´òªy ¤u·|#
+payg_cas02.rsw#«CªL´òªy ¤u·|#
+payg_cas01.rsw#«CªL´òªy ¤u·|#
+pay_gld.rsw#«CªL´òªy#
+aldeg_cas05.rsw#ÅS¨Ì¯Ç ¤u·|#
+aldeg_cas04.rsw#ÅS¨Ì¯Ç ¤u·|#
+aldeg_cas03.rsw#ÅS¨Ì¯Ç ¤u·|#
+aldeg_cas02.rsw#ÅS¨Ì¯Ç ¤u·|#
+aldeg_cas01.rsw#ÅS¨Ì¯Ç ¤u·|#
+alde_gld.rsw#¦ãº¸©¬Äõ½Ã¬P³£¥« ÅS¨Ì¯Ç#
+gefg_cas05.rsw#Ëì­ù§´§Q¨È ¤u·|#
+gefg_cas04.rsw#Ëì­ù§´§Q¨È ¤u·|#
+gefg_cas03.rsw#Ëì­ù§´§Q¨È ¤u·|#
+gefg_cas02.rsw#Ëì­ù§´§Q¨È ¤u·|#
+gefg_cas01.rsw#Ëì­ù§´§Q¨È ¤u·|#
+prtg_cas05.rsw#¤Ú°ò¤O¹p®¦ ¤u·|#
+prtg_cas04.rsw#¤Ú°ò¤O¹p®¦ ¤u·|#
+prtg_cas03.rsw#¤Ú°ò¤O¹p®¦ ¤u·|#
+prtg_cas02.rsw#¤Ú°ò¤O¹p®¦ ¤u·|#
+prtg_cas01.rsw#¤Ú°ò¤O¹p®¦ ¤u·|#
+prt_gld.rsw#¤Ú°ò¤O¹p®¦# 
+tur_dun01.rsw#¯QÀt®q#
+tur_dun02.rsw#¯QÀt®q ±K¥Ş#
+tur_dun03.rsw#¨}Àt§ø#
+tur_dun04.rsw#ÂÂ¨}®c#
+tur_dun05.rsw#¦a¤U ªh¿A¦a±a#
+tur_dun06.rsw#¦a¤U ªh¿A¦a±a#
+guild_vs5.rsw#¤u·| ¹ï§ÜÄv§Ş³õ#
+guild_vs4.rsw#¤u·| ¹ï§ÜÄv§Ş³õ#
+guild_vs3.rsw#¤u·| ¹ï§ÜÄv§Ş³õ#
+guild_vs2.rsw#¤u·| ¹ï§ÜÄv§Ş³õ#
+guild_vs1.rsw#¤u·| ¹ï§ÜÄv§Ş³õ#
+guild_room.rsw#¤u·|¹ï§ÜÄv§Ş³õ ¥ğ®§«Ç#
+quiz_00.rsw#OX¯q´¼¹CÀ¸ÄvÁÉ³õ#
+quiz_01.rsw#OX¯q´¼¹CÀ¸ÄvÁÉ³õ#
+gef_fild12.rsw#§J¯S ´ËªL#
+gef_fild13.rsw#©Æ¥ß¯SÂ÷¨È#
+gef_fild14.rsw#¦èÃä Ã~¤H§ø¸¨#
+cmd_in02.rsw#§JÅ]®q ¤º³¡#
+cmd_in01.rsw#§JÅ]®q ¤º³¡#
+comodo.rsw#®üÃä¤§³£ §JÅ]®q#
+beach_dun.rsw#¦èÃä ¬}¥Ş ¥[ÅS#
+beach_dun2.rsw#¥_Ãä ¬}¥Ş ¿c¦w¹F#
+beach_dun3.rsw#ªFÃä ¬}¥Ş °¨§^#
+cmd_fild01.rsw#¤Ú¤£¨ä¥d ´ËªL#
+cmd_fild02.rsw#§J§JÅ] ®üÃä#
+cmd_fild03.rsw#°ò¤D¨Ì ªh¿A¦a#
+cmd_fild04.rsw#§J§JÅ] ®üÃä#
+cmd_fild05.rsw#¤Ú¤£¨ä¥d ´ËªLÃä¬É#
+cmd_fild06.rsw#­n¶ë³£¥« ¤s¯S¼Ö°Ò(¦èÃä)#
+cmd_fild07.rsw#µo¼Ö´µ ¿O¶ğ®q#
+cmd_fild08.rsw#­n¶ë³£¥« ¤s¯S¼Ö°Ò(ªFÃä)#
+cmd_fild09.rsw#­n¶ë³£¥« ¤s¯S¼Ö°Ò(«nÃä)#
+xmas_in.rsw#Á¤»æ«°¤º³¡#
+xmas_dun02.rsw#ª±¨ã¤ÀÃş³õ#
+xmas_dun01.rsw#ª±¨ã¤u¼t­Ü®w#
+xmas_fild01.rsw#Á¤»æ«°­ì³¥#
+xmas.rsw#¥Õ³·§ø¸¨ Á¤»æ«°#
+mjolnir_01.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_02.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_03.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_04.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_05.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_06.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_07.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_08.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_09.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_10.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_11.rsw#§®°Ç¥§ ¤s¯ß#
+mjolnir_12.rsw#§®°Ç¥§ ¤s¯ß#
+prt_fild00.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild01.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild02.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild03.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild04.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild05.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild06.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild07.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild08.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild09.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild10.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_fild11.rsw#´¶¶©¼w©Ô °Ï°ì#
+prt_monk.rsw#¸t¥d²¦§Q¨º ­×¹D°|#
+gef_fild00.rsw#¦Nªâ °Ï°ì#
+gef_fild01.rsw#¦Nªâ °Ï°ì#
+gef_fild02.rsw#¦Nªâ °Ï°ì#
+gef_fild03.rsw#¦Nªâ °Ï°ì#
+gef_fild04.rsw#¦Nªâ °Ï°ì#
+gef_fild05.rsw#¦Nªâ °Ï°ì#
+gef_fild06.rsw#¦Nªâ °Ï°ì#
+gef_fild07.rsw#¦Nªâ °Ï°ì#
+gef_fild08.rsw#¦Nªâ °Ï°ì#
+gef_fild09.rsw#¦Nªâ °Ï°ì#
+gef_fild10.rsw#ªFÃä Ã~¤H§ø¸¨#
+in_orcs01.rsw#Ã~¤H§ø¸¨ «Ç¤º#
+gef_fild11.rsw#¦Nªâ °Ï°ì#
+moc_fild01.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild02.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild03.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild04.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild05.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild06.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild07.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild08.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild09.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild10.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild11.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild12.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild13.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild14.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild15.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild16.rsw#Ä¬§J©Ô¯S ¨Fºz#
+in_moc_16.rsw#¨ë«È ¤u·|#
+moc_fild17.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild18.rsw#Ä¬§J©Ô¯S ¨Fºz#
+moc_fild19.rsw#Ä¬§J©Ô¯S ¨Fºz#
+pay_fild01.rsw#´´´­ ¾ğªL#
+pay_fild02.rsw#´´´­ ¾ğªL#
+pay_fild03.rsw#´´´­ ¾ğªL#
+pay_fild04.rsw#Ä¬§J©Ô¯S ¨Fºz#
+pay_fild05.rsw#´´´­ ¾ğªL#
+pay_fild06.rsw#´´´­ ¾ğªL#
+pay_fild07.rsw#´´´­ ¾ğªL#
+pay_fild08.rsw#´´´­ ¾ğªL#
+pay_fild09.rsw#´´´­ ¾ğªL#
+pay_fild10.rsw#´´´­ ¾ğªL#
+pay_fild11.rsw#´´´­ ¾ğªL#
+new_1-1.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_2-1.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_3-1.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_4-1.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_5-1.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_1-2.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_2-2.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_3-2.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_4-2.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_5-2.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_1-3.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_2-3.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_3-3.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_4-3.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_5-3.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_1-4.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_2-4.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_3-4.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_4-4.rsw#ªì¾ÇªÌ ­×½m³õ#
+new_5-4.rsw#ªì¾ÇªÌ ­×½m³õ#
+anthell01.rsw#¿ÂÃÆ ¦aº» ±K¥Ş#
+anthell02.rsw#¿ÂÃÆ ¦aº» ±K¥Ş#
+gef_dun00.rsw#¦Nªâ ¦a¤U ±K¥Ş#
+gef_dun01.rsw#¦Nªâ ¦a¤U ±K¥Ş#
+gef_dun02.rsw#¸¯Ìn¥§¨È ±K¥Ş#
+gef_dun03.rsw#¸¯Ìn¥§¨È ±K¥Ş#
+iz_dun00.rsw#®ü©³ ¬}¸]#
+iz_dun01.rsw#®ü©³ ¬}¸]#
+iz_dun02.rsw#®ü©³ ¬}¸]#
+iz_dun03.rsw#®ü©³ ¬}¸]#
+iz_dun04.rsw#®ü©³ ¬}¸]#
+iz_dun05.rsw#®ü©³ ¬}¸]#
+in_sphinx1.rsw#¥vªâ§J´µ ±K¥Ş#
+in_sphinx2.rsw#¥vªâ§J´µ ±K¥Ş#
+in_sphinx3.rsw#¥vªâ§J´µ ±K¥Ş#
+in_sphinx4.rsw#¥vªâ§J´µ ±K¥Ş#
+in_sphinx5.rsw#¥vªâ§J´µ ±K¥Ş#
+moc_pryd01.rsw#ª÷¦r¶ğ °g®c#
+moc_pryd02.rsw#ª÷¦r¶ğ °g®c#
+moc_pryd03.rsw#ª÷¦r¶ğ °g®c#
+moc_pryd04.rsw#ª÷¦r¶ğ °g®c#
+moc_pryd05.rsw#ª÷¦r¶ğ °g®c#
+moc_pryd06.rsw#ª÷¦r¶ğ °g®c#
+moc_prydb1.rsw#µs¸é ¤u·|#
+mjo_dun01.rsw#§®°Ç¥§ ¼o±óÄq³õ#
+mjo_dun02.rsw#§®°Ç¥§ ¼o±óÄq³õ#
+mjo_dun03.rsw#§®°Ç¥§ ¼o±óÄq³õ#
+orcsdun01.rsw#Ã~¤H¦a¤U¬}¸]#
+orcsdun02.rsw#Ã~¤H¦a¤U¬}¸]#
+pay_dun00.rsw#´´´­ ¦a¤U#
+pay_dun01.rsw#´´´­ ¦a¤U#
+pay_dun02.rsw#´´´­ ¦a¤U#
+pay_dun03.rsw#¦a¤U¼o±ó§ø¸¨#
+pay_dun04.rsw#¦a¤U¼o±ó§ø¸¨#
+prt_maze01.rsw#°gÂÃ´ËªL#
+prt_maze02.rsw#°gÂÃ´ËªL#
+prt_maze03.rsw#°gÂÃ´ËªL#
+prt_sewb1.rsw#´¶¶©¼w©Ô ¦a¤U¤ô¹D#
+prt_sewb2.rsw#´¶¶©¼w©Ô ¦a¤U¤ô¹D#
+prt_sewb3.rsw#´¶¶©¼w©Ô ¦a¤U¤ô¹D#
+prt_sewb4.rsw#´¶¶©¼w©Ô ¦a¤U¤ô¹D#
+treasure01.rsw#¨I¨S¤§²î 1¼Ó#
+treasure02.rsw#¨I¨S¤§²î 2¼Ó#
+hunter_1-1.rsw#Ây¤HÂàÂ¾©Ò#
+hunter_2-1.rsw#Ây¤HÂàÂ¾©Ò#
+hunter_3-1.rsw#Ây¤HÂàÂ¾©Ò#
+in_hunter.rsw#Ây¤HÂàÂ¾©Ò#
+knight_1-1.rsw#ÃM¤hÂàÂ¾©Ò#
+knight_2-1.rsw#ÃM¤hÂàÂ¾©Ò#
+knight_3-1.rsw#ÃM¤hÂàÂ¾©Ò#
+priest_1-1.rsw#²½¥qÂàÂ¾©Ò#
+priest_2-1.rsw#²½¥qÂàÂ¾©Ò#
+priest_3-1.rsw#²½¥qÂàÂ¾©Ò#
+sword_1-1.rsw#¼C¤hÂàÂ¾©Ò#
+sword_2-1.rsw#¼C¤hÂàÂ¾©Ò#
+sword_3-1.rsw#¼C¤hÂàÂ¾©Ò#
+job_thief1.rsw#µs¸éÂàÂ¾©Ò#
+wizard_1-1.rsw#§Å®vÂàÂ¾©Ò#
+wizard_2-1.rsw#§Å®vÂàÂ¾©Ò#
+wizard_3-1.rsw#§Å®vÂàÂ¾©Ò#
+force_1-1.rsw#­­®É¿E°«¼Ò¦¡#
+force_2-1.rsw#­­®É¿E°«¼Ò¦¡#
+force_3-1.rsw#­­®É¿E°«¼Ò¦¡#
+force_1-2.rsw#­­®É¿E°«¼Ò¦¡#
+force_2-2.rsw#­­®É¿E°«¼Ò¦¡#
+force_3-2.rsw#­­®É¿E°«¼Ò¦¡#
+force_1-3.rsw#­­®É¿E°«¼Ò¦¡#
+force_2-3.rsw#­­®É¿E°«¼Ò¦¡#
+force_3-3.rsw#­­®É¿E°«¼Ò¦¡#
+ordeal_1-1.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_2-1.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_3-1.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_1-2.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_2-2.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_3-2.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_1-3.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_2-3.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_3-3.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_1-4.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_2-4.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+ordeal_3-4.rsw#¹ÎÅé¾Ô°«¼Ò¦¡#
+alb_ship.rsw#¦ãº¸¨©¶ğ ²î²í¤º#
+alberta.rsw#´ä¤f¤§³£ ¦ãº¸¨©¶ğ#
+alberta_in.rsw#´ä¤f¤§³£ ¦ãº¸¨©¶ğ#
+alb2trea.rsw#¨I²îªşªñªº®qÀ¬#
+aldebaran.rsw#¹Bªe¤§³£ ¦ãº¸©¬Äõ#
+aldeba_in.rsw#¹Bªe¤§³£ ¦ãº¸©¬Äõ#
+gef_tower.rsw#¦Nªâ ¤¤¥¡¶ğ#
+geffen.rsw#Å]ªk¤§³£ ¦Nªâ#
+geffen_in.rsw#Å]ªk¤§³£ ¦Nªâ#
+moc_castle.rsw#¹ÚÃ¹§J «°¤º#
+moc_ruins.rsw#¨Fºz¤§³£ ¹ÚÃ¹§J#
+morocc.rsw#¨Fºz¤§³£ ¹ÚÃ¹§J#
+morocc_in.rsw#¨Fºz¤§³£ ¹ÚÃ¹§J#
+pay_arche.rsw#¤s©¨¤§³£ ´´´­#
+payon.rsw#¤s©¨¤§³£ ´´´­#
+payon_in01.rsw#¤s©¨¤§³£ ´´´­#
+payon_in02.rsw#¤s©¨¤§³£ ´´´­#
+payon_in03.rsw#¤s©¨¤§³£ ´´´­#
+prontera.rsw#¿c®¦ ¦Ì¼w¥[¯÷¤ı°ê ­º³£ ´¶¶©¼w©Ô#
+prt_in.rsw#¿c®¦ ¦Ì¼w¥[¯÷¤ı°ê ­º³£ ´¶¶©¼w©Ô#
+prt_castle.rsw#´¶¶©¼w©Ô «°¤º#
+prt_church.rsw#´¶¶©¼w©Ô ¸t°ó¤º#
+izlude.rsw#½Ã¬P³£¥« ¨Ì´µ¾|±o®q#
+izlude_in.rsw#½Ã¬P³£¥« ¨Ì´µ¾|±o®q#
+izlu2dun.rsw#½Ã¬P³£¥« ¨Ì´µ¾|±o®q#
+monk_in.rsw#¸t¥d²¦§Q¨º ­×¹D°|¤º#
+prt_are_in.rsw#¨È¹p¨º µ¥­Ô«Ç#
+arena_room.rsw#¨È¹p¨º µ¥­Ô«Ç#
+prt_arena01.rsw#¨È¹p¨º#
+prt_are01.rsw#¨È¹p¨º#
+glast_01.rsw#§J¹p´µ¯Sº~©i¥j«°#
+alde_dun01.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤U¼Ó¼h 1¼Ó#
+alde_dun02.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤U¼Ó¼h 2¼Ó#
+alde_dun03.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤U¼Ó¼h 3¼Ó#
+alde_dun04.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤U¼Ó¼h 4¼Ó#
+c_tower1.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤W¼Ó¼h 1¼Ó#
+c_tower2.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤W¼Ó¼h 2¼Ó#
+c_tower3.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤W¼Ó¼h 3¼Ó#
+c_tower4.rsw#¦ãº¸©¬Äõ ÄÁ¶ğ¦a¤W¼Ó¼h 4¼Ó#
+gl_cas01.rsw#§J¹p´µ¯Sº~©i¥j«° ¦a¤W¼Ó¼h 1¼Ó#
+gl_cas02.rsw#§J¹p´µ¯Sº~©i¥j«° ¦a¤W¼Ó¼h 2¼Ó#
+gl_church.rsw#§J¹p´µ¯Sº~©i¥j«° ­×¹D°|#
+gl_chyard.rsw#§J¹p´µ¯Sº~©i¥j«° ¦a¤U¤½¹Ó#
+gl_dun01.rsw#§J¹p´µ¯Sº~©i ³Ì¤U¼h ¦a¤U¬}¸]# 
+gl_dun02.rsw#§J¹p´µ¯Sº~©i ³Ì¤U¼h ¦a¤U¬}¸]# 
+gl_in01.rsw#§J¹p´µ¯Sº~©i¥j«° «Ç¤º#
+gl_knt01.rsw#§J¹p´µ¯Sº~©i ÃM¤h¹Î1¼Ó#
+gl_knt02.rsw#§J¹p´µ¯Sº~©i ÃM¤h¹Î2¼Ó#
+gl_prison.rsw#§J¹p´µ¯Sº~©i ¦a¤UºÊº»1¼Ó#
+gl_prison1.rsw#§J¹p´µ¯Sº~©i ¦a¤UºÊº»2¼Ó#
+gl_sew01.rsw#§J¹p´µ¯Sº~©i ¦a¤U¤ô¹D#
+gl_sew02.rsw#§J¹p´µ¯Sº~©i ¦a¤U¤ô¹D#
+gl_sew03.rsw#§J¹p´µ¯Sº~©i ¦a¤U¤ô¹D#
+gl_sew04.rsw#§J¹p´µ¯Sº~©i ¦a¤U¤ô¹D#
+gl_step.rsw#§J¹p´µ¯Sº~©i ¼Ó±è±K¥Ş#
+pvp_y_room.rsw#PvP : µ¥«İ«Ç#
+pvp_n_room.rsw#PvP : µ¥«İ«Ç#
+pvp_n_1-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_2-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_3-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_4-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_5-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_6-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_7-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_8-1.rsw#PvP : ¤T©úªv ©Ğ¶¡#
+pvp_n_1-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_2-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_3-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_4-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_5-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_6-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_7-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_8-2.rsw#PvP : ¹p¹FÂê©w ©Ğ¶¡#
+pvp_n_1-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_2-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_3-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_4-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_5-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_6-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_7-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_8-3.rsw#PvP : ¥|³q¹D ©Ğ¶¡#
+pvp_n_1-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_2-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_3-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_4-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_5-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_6-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_7-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_8-4.rsw#PvP : ¤Ï¤Q¦r ©Ğ¶¡#
+pvp_n_1-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_2-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_3-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_4-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_5-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_6-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_7-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_n_8-5.rsw#PvP : Ã¹½L ©Ğ¶¡#
+pvp_y_1-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_2-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_3-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_4-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_5-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_6-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_7-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_8-1.rsw#PvP : ´¶¶©¼w©Ô#
+pvp_y_1-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_2-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_3-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_4-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_5-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_6-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_7-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_8-2.rsw#PvP : ¨Ì´µ¾|±o®q#
+pvp_y_1-3.rsw#PvP : ´´´­#
+pvp_y_2-3.rsw#PvP : ´´´­#
+pvp_y_3-3.rsw#PvP : ´´´­#
+pvp_y_4-3.rsw#PvP : ´´´­#
+pvp_y_5-3.rsw#PvP : ´´´­#
+pvp_y_6-3.rsw#PvP : ´´´­#
+pvp_y_7-3.rsw#PvP : ´´´­#
+pvp_y_8-3.rsw#PvP : ´´´­#
+pvp_y_1-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_2-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_3-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_4-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_5-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_6-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_7-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_8-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_1-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_2-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_3-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_4-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_5-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_6-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_7-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_8-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_2vs2.rsw#PvP : ¬¡°Ê Äv§Ş³õ#
 //----------------bein ep.11.3------------
-bossnia_01.rsw#æ³¢å£«å°¼äº#
-bossnia_02.rsw#æ³¢å£«å°¼äº#
-bossnia_03.rsw#æ³¢å£«å°¼äº#
-bossnia_04.rsw#æ³¢å£«å°¼äº#
-itemmall.rsw#å•†åŸåœ°åœ–#
-poring_w01.rsw#æ³¢åˆ©å°æ±º ç­‰å€™å®¤#
-poring_w02.rsw#æ³¢åˆ©å°æ±ºå ´#
-nameless_i.rsw#ç„¡åå³¶#
-nameless_n.rsw#ç„¡åå³¶#
-nameless_in.rsw#ç„¡åå³¶ å…§éƒ¨#
-abbey01.rsw#ä¿®é“é™¢#
-abbey02.rsw#ä¿®é“é™¢#
-abbey03.rsw#ä¿®é“é™¢#
-que_temsky.rsw#æ•™çš‡åŸ·å‹¤å®¤(å¤©ç©ºåº­åœ’)#
-z_agit.rsw#Zé›†åœ˜çš„ç§˜å¯†åŸºåœ°#rsw#PvP : è‰¾çˆ¾è²å¡”#
-pvp_y_6-4.rsw#PvP : è‰¾çˆ¾è²å¡”#
-pvp_y_7-4.rsw#PvP : è‰¾çˆ¾è²å¡”#
-pvp_y_8-4.rsw#PvP : è‰¾çˆ¾è²å¡”#
-pvp_y_1-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_2-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_3-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_4-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_5-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_6-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_7-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_y_8-5.rsw#PvP : å¤¢ç¾…å…‹#
-pvp_2vs2.rsw#PvP : æ´»å‹• ç«¶æŠ€å ´#
+bossnia_01.rsw#ªi¤h¥§¨È#
+bossnia_02.rsw#ªi¤h¥§¨È#
+bossnia_03.rsw#ªi¤h¥§¨È#
+bossnia_04.rsw#ªi¤h¥§¨È#
+itemmall.rsw#°Ó«°¦a¹Ï#
+poring_w01.rsw#ªi§Q¹ï¨M µ¥­Ô«Ç#
+poring_w02.rsw#ªi§Q¹ï¨M³õ#
+nameless_i.rsw#µL¦W®q#
+nameless_n.rsw#µL¦W®q#
+nameless_in.rsw#µL¦W®q ¤º³¡#
+abbey01.rsw#­×¹D°|#
+abbey02.rsw#­×¹D°|#
+abbey03.rsw#­×¹D°|#
+que_temsky.rsw#±Ğ¬Ó°õ¶Ô«Ç(¤ÑªÅ®x¶é)#
+z_agit.rsw#Z¶°¹Îªº¯µ±K°ò¦a#rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_6-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_7-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_8-4.rsw#PvP : ¦ãº¸¨©¶ğ#
+pvp_y_1-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_2-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_3-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_4-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_5-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_6-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_7-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_y_8-5.rsw#PvP : ¹ÚÃ¹§J#
+pvp_2vs2.rsw#PvP : ¬¡°Ê Äv§Ş³õ#
 
 //-----------ep13.1----------
-bat_c01.rsw#ç±³å¾·åŠ çˆ¾ç‰¹#
-bat_c02.rsw#ç±³å¾·åŠ çˆ¾ç‰¹#
-bat_c03.rsw#ç±³å¾·åŠ çˆ¾ç‰¹#
-mid_camp.rsw#ç±³å¾·åŠ çˆ¾ç‰¹è¯åˆç‡Ÿåœ°å…§éƒ¨#
-mid_campin.rsw#ç±³å¾·åŠ çˆ¾ç‰¹è¯åˆç‡Ÿåœ°#
-man_fild01.rsw#é­”æ€’å…‹åŸé‡#
-man_fild03.rsw#é­”æ€’å…‹åŸé‡#
-spl_fild02.rsw#åŸé‡#
-spl_fild03.rsw#åŸé‡#
-moc_fild22b.rsw#æ™‚ç©ºçš„è£‚ç¸«#
-que_dan01.rsw#æ¯€è‘› åŸé‡#
-que_dan02.rsw#æœ±è«¾å»¢æ£„å±‹å…§éƒ¨#
-schg_que01.rsw#è‰å¢#
-schg_dun01.rsw#å…¬æœƒåœ°ä¸‹å¯†ç©´#
-arug_que01.rsw#è‰å¢#
-arug_dun01.rsw#å…¬æœƒåœ°ä¸‹å¯†ç©´#
-1@orcs.rsw#ç¸äººåœ°ä¸‹æ´ç©´#
-2@orcs.rsw#ç¸äººåœ°ä¸‹æ´ç©´#
+bat_c01.rsw#¦Ì¼w¥[º¸¯S#
+bat_c02.rsw#¦Ì¼w¥[º¸¯S#
+bat_c03.rsw#¦Ì¼w¥[º¸¯S#
+mid_camp.rsw#¦Ì¼w¥[º¸¯SÁp¦XÀç¦a¤º³¡#
+mid_campin.rsw#¦Ì¼w¥[º¸¯SÁp¦XÀç¦a#
+man_fild01.rsw#Å]«ã§J­ì³¥#
+man_fild03.rsw#Å]«ã§J­ì³¥#
+spl_fild02.rsw#­ì³¥#
+spl_fild03.rsw#­ì³¥#
+moc_fild22b.rsw#®ÉªÅªºµõÁ_#
+que_dan01.rsw#·´¸¯ ­ì³¥#
+que_dan02.rsw#¦¶¿Õ¼o±ó«Î¤º³¡#
+schg_que01.rsw#¯óÂO#
+schg_dun01.rsw#¤½·|¦a¤U±K¥Ş#
+arug_que01.rsw#¯óÂO#
+arug_dun01.rsw#¤½·|¦a¤U±K¥Ş#
+1@orcs.rsw#Ã~¤H¦a¤U¬}¥Ş#
+2@orcs.rsw#Ã~¤H¦a¤U¬}¥Ş#
+
 

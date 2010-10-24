@@ -1,0 +1,749 @@
+﻿prt_fild05 270 212 地下水道 管理兵
+prt_fild05 278 220 看板#地下水道
+prt_fild05 290 221 道具商人
+prt_fild05 290 224 卡普拉服務人員
+prontera 29 207 卡普拉服務人員
+prontera 29 200 西門導遊
+moc_fild20 203 336 洲際衛隊 警衛兵#41_edq
+moc_fild20 215 336 洲際衛隊 警衛兵#42_edq
+prontera 143 203 拉茲立克斯
+prontera 149 202 佑羅
+prontera 156 212 料理材料商人
+prontera 146 232 催眠術師#2
+prontera 165 232 奈特比亞
+moc_fild20 38 174 洲際衛隊 警衛兵#21_edq
+moc_fild20 38 183 洲際衛隊 警衛兵#22_edq
+morocc 169 73 商城道具老闆#2
+morocc 169 70 商城轉蛋老闆#7
+morocc 171 73 商城頭飾老闆#12
+morocc 171 70 商城裝備老闆#17
+morocc 240 72 漢斯
+morocc 226 102 夢羅克 義工#07rhea_21
+morocc 169 76 商城裝備老闆#20
+morocc 165 82 夢羅克村民#07russia_25
+morocc 248 159 單身漢#magum1
+morocc 281 178 雪茲
+morocc 183 94 濃縮鋁達人-龍先儒
+morocc 202 110 夢羅克 義工#07rhea_11
+morocc 223 102 夢羅克 義工#07rhea_20
+lighthalzen 207 310 導遊
+lighthalzen 220 311 服務人員
+lighthalzen 220 292 服務人員
+lighthalzen 191 320 卡普拉 服務人員
+lighthalzen 198 285 少女
+lhz_fild01 76 214 愛絲娜 扣板機
+lhz_fild01 66 219 神秘的 女人#lt7
+prontera 150 326 懸賞通緝公告#edq
+prontera 148 326 保安隊長#edq
+prontera 147 305 公告文
+prontera 164 304 夢羅克洲際衛隊傳令兵#pr
+prontera 167 281 新生 公會長#tu
+prontera 151 255 鑰匙工匠#gs
+prontera 163 204 來自夢羅克的人
+prontera 167 203 司葵古
+prontera 165 194 關德
+prontera 155 190 克林希特
+prontera 154 187 導遊
+prontera 157 187 微笑小姐
+prontera 151 144 商城租賃老闆#21
+prontera 151 142 商城裝備老闆#15
+prontera 151 139 商城頭飾老闆#10
+prontera 151 136 商城轉蛋老闆#5
+prontera 160 136 重力聖人#im
+prontera 151 133 商城道具老闆
+prontera 147 125 准它投票 宣傳人員#pron
+prontera 161 101 中秋節特派員#be23
+prontera 146 92 艾莉兒
+prontera 146 89 卡普拉服務人員
+prontera 146 76 美髮設計師
+prontera 164 76 時尚改造師
+prontera 165 60 實習打洞師
+prontera 163 53 廣宣人員
+prontera 148 49 看板#普隆德拉
+prontera 151 29 卡普拉服務人員
+prontera 160 29 南門導遊
+prt_fild08 159 371 招募勇士中的波利#wop
+prt_fild08 175 374 吟遊詩人#女神頸鏈
+prontera 152 326 卡普拉服務人員
+prontera 151 330 北門導遊
+prontera 144 301 魔法師#tu
+prontera 160 133 佑比
+prontera 164 125 卡普拉投票 宣傳人員#pro
+prontera 160 330 警備兵
+prontera 146 194 斯般希特
+prt_church 103 76 卡內
+prt_church 103 71 漢森
+prontera 232 318 大嘴鳥 管理兵
+prontera 140 304 老士兵
+prt_in 234 133 納迷
+prt_in 244 135 旅館 服務生#prt01
+prt_in 251 129 瑪烏斯
+veins 196 112 中秋節特派員#be24
+veins 221 120 純樸的青年
+veins 227 127 艾依伯莉
+veins 253 133 村落小孩
+veins 263 153 村落人
+veins 270 164 村落老人
+veins 248 301 村落小孩
+new_3-3 95 30 訓練所 人員
+new_3-3 96 174 檢查人員
+new_3-2 17 182 進行人員
+new_3-2 28 185 地瓜商人
+new_3-2 38 182 入場 人員
+new_3-4 91 22 初學者 教官
+new_3-4 100 29 最後的試練場
+alberta_in 53 43 商人公會會員
+alberta_in 70 51 賈寧
+alberta_in 16 28 藥劑師爺爺
+alberta_in 28 29 商人公會會員
+alberta 46 37 商城道具老闆#3
+alberta 49 37 商城轉蛋老闆#8
+alberta 43 37 商城頭飾老闆#13
+alberta 43 49 窮困的商人
+alberta 30 65 亞卡其
+alberta 58 80 商人
+alberta 45 106 小朋友
+alberta 33 141 流浪的 美容師
+alberta 62 156 比娜
+alberta 35 241 公告文
+alberta 38 241 初學者 服務人員#3exp05
+alberta 43 244 旅客#thai
+alberta 28 229 卡普拉服務人員
+alberta 25 238 艾莉兒
+alberta 23 238 導遊
+alberta 26 229 卡普拉服務人員
+payon 215 102 武賢#job_star
+payon 214 79 鐵痞子#BLS
+payon 189 105 馬樂戰場 募兵官
+payon 186 104 微笑小姐
+payon 181 104 卡普拉服務人員
+payon 178 108 看板#斐揚
+payon 159 96 道具商人
+payon 159 129 地板下#斐揚猜謎5
+payon 115 131 克內克內
+pay_gld 153 166 紅樓
+pay_gld 143 160 紅樓
+payon 176 85 青年
+prontera 123 102 商人#普隆德拉
+prontera 106 116 女人
+prontera 78 150 呆蘭
+prontera 73 140 牛奶商人
+prontera 58 182 賣花的少女
+alberta 53 39 商人
+alberta 40 37 商城老闆#18
+alberta 52 37 商城租賃老闆#23
+alberta_in 25 63 濃縮鋁達人-龍先儒
+alberta_in 21 63 智諾普
+alberta_in 13 71 卡拉曼莉斯
+alberta_in 31 65 修理工
+alberta_in 28 58 弗雷德利
+payon 210 110 酒鬼爺爺
+payon 200 113 夢羅克洲際衛隊傳令兵#pa
+payon 198 117 艾莉兒
+payon 171 123 威爾特#be
+payon 173 123 哈梅爾 #be
+prt_castle 107 58 士兵#s11
+prt_castle 94 150 #sound_tu
+prt_castle 88 165 拉武樂
+prt_gld 147 136 拉茲立克斯
+prt_gld 158 136 拉茲立克斯
+prt_gld 147 140 拉茲立克斯
+prt_fild01 196 47 羅斯克巴
+mjolnir_09 369 279 #mj09_find_5
+mjolnir_09 38 243 #mj09_find_2
+geffen 203 116 導遊
+geffen 203 123 卡普拉服務人員
+geffen 196 111 料理材料商人
+geffen 181 114 阿歐魯的朋
+geffen 193 152 寵物商人
+geffen 168 175 公告文
+geffen 156 190 青年
+geffen 110 200 賢者 繡恩
+geffen 95 198 魔物生態 研究學者#07tai
+geffen 83 189 善司
+geffen 67 180 初級 魔法師 擔任官#M
+geffen 61 174 標示牌#M
+geffen_in 164 109 魔導師
+geffen_in 164 112 物品 調和機
+geffen_in 151 119 大魔法師
+geffen_in 155 122 公會　服務人員
+geffen_in 164 124 公會服務人員
+alberta 93 174 祖母
+alberta 118 157 子彈商人_凱尼#airplane
+alberta 118 160 子彈商人_東尼#airplane
+alberta 127 143 貝爾德
+alberta 131 139 醉漢
+alberta 117 135 小孩
+alberta 167 135 料理材料商人
+alberta 189 151 船員
+alberta 195 151 普基
+alberta 196 146 十字軍#邁勤2
+izlude 182 186 愛德嘉
+izlude 171 185 新婚服務人員#依斯魯得島
+izlude 164 138 寵物商人
+izlude 150 143 齊黎
+izlude 171 133 子彈商人_東尼#airplane
+izlude 171 127 子彈商人_凱尼#airplane
+izlude 150 118 竇加
+izlude 133 108 中秋節特派員#be1
+izlude 131 116 看板#依斯魯得島
+izlude 130 108 魔王返鄉客#be4
+izlude 129 118 微笑小姐
+izlude 127 113 導遊#be
+izlude 127 108 小丑返鄉客#be3
+izlude 134 92 艾莉兒
+izlude 134 88 卡普拉服務人員
+izlude 55 74 奔呢
+izlude 124 108 宗教狂熱返鄉客#be2
+izlude 121 108 魔法師返鄉客#be1
+izlude 121 87 導遊
+izlude 135 78 夏普立
+prt_fild09 246 17 洲際衛隊 警衛兵#man1
+prt_fild09 95 19 洲際衛隊 警衛兵#man1
+alberta 184 143 導覽員#03alberta
+alberta 196 133 吟遊詩人#job_min
+izlude 119 121 庫斯可爾
+prt_fild09 95 19 洲際衛隊 警衛兵#man1
+prt_fild09 95 19 洲際衛隊 警衛兵#man1
+einbech 67 37 艾音貝赫 解說員#einbech
+prontera 119 64 初學者 服務人員#3exp01
+prontera 124 76 伊甸園 空間移動師#1
+prontera 123 83 馬樂戰場 募兵官
+prontera 105 87 禮物商人
+prontera 120 93 旅遊卡 製作部
+payon 177 111 伊甸園 空間移動師#12
+payon 123 109 陷阱專家
+izlude 131 177 導覽員#02izlude
+izlude 201 181 船員
+izlu2dun 106 58 卡普拉 職員
+izlu2dun 104 91 看板#依斯魯得島
+izlu2dun 108 27 船員
+gon_dun01 163 53 痕跡1-3
+gonryun 153 64 崑崙宣傳使臣#3
+gonryun 169 71 介紹人員
+gonryun 147 84 道具商人
+gonryun 173 84 防御具商人
+gonryun 147 101 料理材料商人
+gonryun 159 122 卡普拉 職員
+gonryun 166 196 士兵
+gon_dun01 164 53 #getitem1-3
+gonryun 163 60 崑崙 解說員#01gonryun
+gon_dun01 133 183 痕跡1-4
+gon_dun01 134 183 #getitem1-4
+gon_dun01 148 156 start01
+geffen 110 104 狡猾的魔法師-毛小聖#ka
+geffen 119 107 微笑小姐
+geffen 128 90 夢羅克洲際衛隊傳令兵#ge
+prontera 155 40 #jmprt1
+prontera 155 49 卡利安#cmd9
+prontera 155 42 #prtjm1
+prontera 155 44 #prtjm2
+iz_dun04 43 46 伊甸園成員 卡蘭蒂芭#par
+mjolnir_02 313 289 #mj02_find_1
+mjolnir_03 76 258 #mj03_find_1
+geffen 117 37 准它投票 宣傳人員#geffe
+geffen 122 37 卡普拉投票 宣傳人員#gef
+geffen 132 38 吟遊詩人#2
+geffen 119 48 噴水池#s
+geffen 111 48 女性
+geffen 124 65 看板#吉芬
+geffen 132 66 伊甸園 空間移動師#3
+geffen 178 72 亞齊
+geffen 173 88 商人#吉芬
+mjolnir_06 275 50 #mj06_find_2
+mjolnir_07 26 373 #mj07_find_1
+mjolnir_07 214 373 #mj07_find_2
+mjolnir_03 227 204 #mj03_find_2
+aldebaran 143 116 艾莉兒
+aldebaran 146 106 看板#艾爾帕蘭
+aldebaran 146 109 馬樂戰場 募兵官
+aldebaran 143 119 卡普拉職員
+aldebaran 133 119 伊甸園 空間移動師#5
+aldebaran 146 124 村落少女
+aldebaran 136 133 看板#鐘塔
+aldebaran 135 128 夢羅克洲際衛隊傳令兵#al
+aldebaran 140 130 #jm艾爾帕蘭鐘塔前
+aldebaran 142 128 卡利安#cmd8
+aldebaran 136 135 微笑小姐
+aldebaran 143 136 鐘樓怪人
+aldebaran 165 107 料理材料商人
+aldebaran 145 102 卡普拉投票 宣傳人員#ald
+aldebaran 152 97 娜易修番斯塔引
+aldebaran 149 97 乎汗修番佳烏
+aldebaran 138 102 准它投票 宣傳人員#alde
+aldebaran 134 97 紐藍貝勒克
+aldebaran 131 97 布勒刺布勒克
+aldebaran 152 63 商人#艾爾帕蘭
+aldebaran 139 63 導覽兵#01aldebaran
+aldeba_in 94 56 道具商人
+aldeba_in 92 58 旅館服務生#alde01
+aldebaran 128 97 羅探布勒克
+aldebaran 127 138 廣宣人員
+morocc 168 265 公告文
+morocc 160 258 卡普拉 職員
+morocc 202 244 夢羅克 義工#07rhea_09
+morocc_in 141 67 武器商人
+morocc_in 141 60 防御具商人
+morocc_in 132 57 武器商人
+morocc 190 96 毒草銷售員
+morocc 176 103 洲際衛隊 行政官
+morocc 160 97 艾莉兒
+morocc 156 97 卡普拉 職員
+morocc 152 110 看板#夢羅克
+morocc 159 113 隊長 巴祿
+morocc 155 114 准它投票 宣傳人員#moroc
+morocc 150 120 管制士兵#07rhea_01
+morocc 134 111 吟遊詩人#3
+morocc 132 111 小女孩#佑樂替
+morocc 103 144 #扭曲的空間夢羅克
+morocc 88 133 夢羅克 義工#07rhea_10
+morocc 75 171 可疑男子#2
+morocc 37 287 夢羅克 義工#07rhea_15
+moc_ruins 143 43 刺客青年#07rhea_25
+moc_ruins 159 53 導覽員#01ruins
+moc_ruins 137 70 撫摸書的男子#garas
+moc_ruins 114 63 道具商人
+moc_ruins 107 62 安妮#thai
+moc_ruins 105 62 嘉克夫#thai
+morocc 54 251 青年#07rhea_19
+morocc 156 70 後街少女#sc00
+morocc 154 38 導覽員#02morocc
+moc_fild12 160 372 被打看看
+moc_fild12 160 365 艾旭#3
+moc_fild12 166 369 打鬥的 痕跡#1
+moc_fild12 173 215 打鬥的 痕跡#2
+moc_fild12 276 165 打鬥的 痕跡#3
+moc_fild11 39 163 打鬥的 痕跡#4
+moc_fild11 205 52 打鬥的 痕跡#5
+moc_fild17 213 358 打鬥的 痕跡#8
+moc_fild17 228 274 打鬥的 痕跡#9
+moc_fild17 209 235 奇特的石碑
+aldebaran 117 181 強化武器金屬-級數一青年
+aldebaran 121 231 煉金術青年
+aldebaran 144 230 陳白義
+aldebaran 135 243 導覽兵#03aldebaran
+aldebaran 168 168 連結耶誕
+payon 163 52 初學者 服務人員#3exp02
+payon 161 64 導覽員
+payon 163 64 導覽員#01payon
+payon 179 66 大夏#09tuto_rhea07
+payon 191 66 聰明的 黃牛角
+payon 103 63 葛豪
+payon 91 77 皮革袋子 販賣商
+payon 82 109 石頭堆#斐揚猜謎2
+payon 65 119 掃靶奶奶#07russia_44
+moc_fild13 32 171 洲際衛隊 警衛兵#man1
+pay_gld 271 163 天壇
+payon 221 85 導覽員#03payon
+pay_fild08 40 83 服事#tu
+pay_fild08 218 283 男子
+moc_fild17 34 292 打鬥的 痕跡#10
+moc_fild18 346 296 打鬥的 痕跡#11
+moc_fild18 177 333 打鬥的 痕跡#13
+morocc 82 292 武特羅
+morocc 180 259 商人#夢羅克
+morocc 289 230 村人
+morocc 296 213 導覽員#03morocc
+prontera 155 46 #prtjm3
+prontera 141 97 親切的阿姨#job_min
+geffen 120 60 艾莉兒
+geffen 118 62 導覽員
+geffen 120 62 卡普拉 職員
+geffen 109 66 馬樂戰場 募兵官
+geffen 122 77 妮雅#yagu
+geffen 110 117 福特#11
+geffen 109 123 雷普立溫
+geffen 112 129 耀布力格
+geffen 90 130 魔物學者
+geffen 36 123 導覽員#03geffen
+gef_fild13 73 295 易司那普
+gef_fild13 302 87 眉撒絲達刺
+gef_fild09 227 29 看板#獸人村落1
+morocc 201 30 夢羅克遊牧民
+prontera 155 48 #prtjm4
+alberta 190 173 菲歷斯
+moc_ruins 173 55 大信萬#09tuto_rhea03
+prontera 113 42 賣花的少女
+prontera 30 337 傭兵物品銷售商#槍
+prontera 41 337 傭兵公會相關人員#槍
+prontera 54 240 特諾
+moc_fild16 124 381 洲際衛隊 警衛兵#man1
+morocc 143 63 邋遢的男子#nd
+izlude 94 98 水果商人
+izlude 105 99 肉品商人
+izlude 105 92 牛奶商人
+c_tower3 10 249 守門員
+mjolnir_12 199 370 #mj12_find_1
+mjolnir_12 199 370 #mj12_find_1
+mjolnir_12 44 25 #mj12_find_2
+mjolnir_12 44 25 #mj12_find_2
+yuno 153 113 看板#朱諾
+yuno 165 111 朱諾賢者
+yuno 146 168 卡利安#cmd2
+yuno 143 170 店長金喀嚓#job_min
+yuno 158 177 娥妮#yearny01
+yuno 142 183 飛空艇 宣傳人員
+yuno 152 187 卡普拉 職員
+yuno 144 189 伊甸園 空間移動師#15
+yuno 153 191 准它投票 宣傳人員#yuno
+yuno_fild03 37 143 看板#諾可羅德
+ra_fild01 245 325 可疑的男子#ra_in01
+ice_dun01 157 15 #宮廷樂師冰洞穴1
+ice_dun01 157 23 #宮廷樂師冰洞穴2
+ice_dun01 141 41 #宮廷樂師冰洞穴3
+ice_dun01 120 35 #宮廷樂師冰洞穴4
+ice_dun01 104 30 #宮廷樂師冰洞穴5
+ice_dun01 86 23 #宮廷樂師冰洞穴6
+ice_dun01 75 19 #宮廷樂師冰洞穴7
+ice_dun01 56 12 #宮廷樂師冰洞穴8
+ice_dun01 29 26 #宮廷樂師冰洞穴9
+ice_dun01 25 46 #宮廷樂師冰洞穴10
+ice_dun01 20 66 #宮廷樂師冰洞穴11
+ice_dun01 22 85 #宮廷樂師冰洞穴12
+ice_dun01 274 274 元素精靈探測棒#1
+prontera 163 178 魔導機甲管理兵
+prontera 161 192 灰暗的塵世傳送人
+aldebaran 120 103 商城租賃老闆#24
+aldebaran 118 104 商城轉蛋老闆#9
+aldebaran 116 106 商城道具老闆#4
+aldebaran 105 116 萊敬塞特
+gl_church 148 5 模糊的痕跡#000005
+gl_church 185 72 模糊的痕跡#000006
+prontera 73 134 牛奶商人
+moc_fild11 226 235 打鬥的 痕跡#6
+moc_fild11 184 342 打鬥的 痕跡#7
+moc_fild11 189 360 洲際衛隊 警衛兵#man1
+prontera 104 49 水果商人
+prontera 202 122 小孩#sch
+prontera 125 208 七彩大嘴鳥回收兵
+prontera 130 213 巨獸管理兵
+prontera 146 218 女人#job_min
+prt_in 128 79 不知用途的機械#prt_key-
+prt_in 126 76 道具商人
+prontera 144 229 傑出的煉金術師
+yuno 162 191 卡普拉投票 宣傳人員#yun
+yuno 163 187 魔法商人
+yuno 157 87 朱諾 住民
+yuno 153 47 朱諾 導遊
+yuno 130 173 料理材料商人
+yuno 164 200 居民#G
+yuno 114 183 思凱提樂尼
+yuno 112 179 何料德
+yuno 111 175 畢得布萊因
+yuno 59 212 朱諾 解說員#yuno01
+y_airport 143 43 機場 職員#y_airport1a
+y_airport 158 43 機場 職員#y_airport1b
+y_airport 143 49 機場 職員#y_airport2a
+y_airport 158 50 機場 職員#y_airport2c
+y_airport 145 63 機場 職員#y_airport2d
+y_airport 140 63 機場 職員#y_airport2d
+yuno 88 263 飛空艇 職員#yuno02
+airplane 236 63 海倫#yusa
+airplane 238 54 旅行者
+airplane 246 47 易歐凱#decoy01
+airplane 240 64 出口#airplane1a
+airplane 247 64 出口#airplane1b
+airplane 250 58 飛空艇 工作人員#airplan
+lhz_airport 143 43 機場 職員#lhz_airport1a
+lhz_airport 143 49 機場 職員#lhz_airport2a
+lighthalzen 247 82 里希塔樂鎮 解說員#light
+lighthalzen 239 64 少女
+lighthalzen 233 82 小孩
+lighthalzen 209 80 哥倫卡史特#BLS
+lighthalzen 202 94 爺爺
+lighthalzen 220 122 牛奶商人
+lighthalzen 222 191 寵物商人
+lighthalzen 205 208 看起來 富有的男人#li_01
+lighthalzen 226 210 村民
+lighthalzen 240 216 男子#lhz_01
+lighthalzen 220 244 奶奶
+lhz_in02 28 39 少女
+lhz_in02 31 34 爺爺
+lhz_in02 31 33 奶奶
+lhz_in02 34 22 銀行 職員
+lighthalzen 205 284 F. 哈里森#gun
+yuno_fild07 254 176 博迪#job_shu
+yuno_fild07 254 176 博迪#job_shu
+yuno_in01 103 35 武器商人
+yuno_in01 112 26 防御具商人
+yuno_in01 103 35 武器商人
+yuno_in01 112 26 防御具商人
+yuno_in01 25 34 道具商人
+yuno_in01 25 34 道具商人
+yuno_in01 17 30 歪根
+yuno_in01 17 30 歪根
+yuno 184 173 朱諾 玩家
+yuno 129 156 蔡宜辛
+yuno 129 156 蔡宜辛
+yuno 111 156 游思籣#02
+yuno 111 156 游思籣#02
+morocc 106 83 伊布拉印
+yuno 131 197 粉紅小姐#misspink01
+veins 208 128 准它企劃公司職員
+veins 235 126 村子老人#3rdgc07
+veins 291 259 村落老人
+veins 218 323 村落人
+veins 210 345 菲音斯 導覽士兵
+rachel 125 33 拉赫 警衛兵
+rachel 120 47 悠閒的 市場商人#ra_in01
+rachel 138 73 無所事事的 市場商人#ra_
+rachel 127 117 小孩 信徒#2
+rachel 124 120 馬勒杜
+rachel 136 120 希樂
+rachel 138 126 霍倫
+rachel 135 131 吉本
+rachel 142 136 #em_end
+rachel 152 131 俠庫
+rachel 149 138 馬樂戰場 募兵官
+rachel 197 137 流浪詩人#aru
+rachel 268 120 拉赫 警衛兵
+ra_fild12 45 230 飛空艇 服務人員#fild
+yuno 109 167 喜民
+morocc 273 79 像個旅行者的人
+yuno 208 164 心胸寬闊的少女
+yuno_in01 99 101 醫師
+yuno_in01 104 94 go away
+yuno 257 140 看似可疑的 奶奶
+yuno 250 132 阿姨#kh
+yuno 157 205 朱諾匠人
+yuno 150 228 朱諾士兵
+yuno 165 228 朱諾士兵
+prtg_cas01 84 32 克林希特
+prtg_cas01 94 39 克林希特
+prtg_cas01 94 24 克林希特
+prt_gld 131 60 克林希特
+prt_gld 138 68 克林希特
+prt_gld 138 60 克林希特
+prt_gld 135 60 克林希特
+rachel 109 138 准它企劃公司職員
+rachel 109 138 准它企劃公司職員
+rachel 124 132 村民#1
+rachel 124 132 村民#1
+rachel 124 130 巴拿迪斯
+rachel 124 130 巴拿迪斯
+rachel 125 144 伊甸園 空間移動師#16
+rachel 125 144 伊甸園 空間移動師#16
+rachel 115 77 基爾克 撒拉#3rdgc13
+rachel 113 97 莫哈迪安
+rachel 115 77 基爾克 撒拉#3rdgc13
+ve_fild03 351 219 #ve_find_1
+ve_fild03 85 189 #ve_03
+ve_fild03 152 134 #ve_01
+ve_fild03 152 134 #ve_01
+moc_ruins 123 154 青年#07rhea_14
+moc_ruins 132 144 青年#07rhea_16
+moc_ruins 131 138 商人
+moc_ruins 141 125 行跡可疑的人
+moc_ruins 155 107 瑪倚#07rhea_24
+moc_ruins 154 86 雷亞布連
+moc_ruins 137 89 裂痕警備兵
+moc_ruins 173 70 夢羅克叔叔#07rhea_28
+ve_fild03 256 228 #ve_02
+ve_fild03 256 228 #ve_02
+payon_in01 5 49 道具商人
+moc_fild16 199 212 資深刺客#07rhea_29
+moc_fild16 206 232 #jm轉職消息
+moc_fild16 204 231 卡利安#cmd7
+moc_fild16 199 212 資深刺客#07rhea_29
+moc_fild16 204 231 卡利安#cmd7
+moc_fild16 206 232 #jm轉職消息
+moc_fild16 211 254 刺客青年#07rhea_30
+ve_fild03 223 51 #ve_find_2
+ve_fild03 223 51 #ve_find_2
+moc_fild16 211 254 刺客青年#07rhea_30
+ve_fild03 282 268 #ve_04
+ve_fild03 282 268 #ve_04
+pay_gld 137 160 紅樓
+prontera 248 212 看似忙碌的 少年#prt
+prontera 218 211 寵物商人
+prontera 197 188 比侑
+prontera 248 153 娃娃商人
+prontera 244 169 雷亞布連
+prontera 228 279 流浪漢#07russia_24
+prt_church 103 78 伊甸園 空間移動師#7
+prt_church 103 88 祈禱的神父#arch
+prt_church 173 23 主任 服事
+prt_church 179 15 普拉賓 祭司
+prt_church 184 41 聖堂　神父
+prontera 282 208 東門-導覽員
+prontera 282 200 卡普拉 職員
+payon 206 119 料理材料商人
+payon 197 125 商城轉蛋老闆#6
+payon 200 125 商城道具老闆#1
+payon 197 127 商城裝備老闆#16
+payon 200 127 商城頭飾老闆#11
+payon 203 127 商城租賃老闆#22
+payon 200 134 商人#斐揚
+payon 240 160 缸#斐揚猜謎4
+payon 246 154 純潔的女性
+payon 246 158 大嬸
+payon 248 159 老人#magum1
+payon 233 324 導覽員#04payon
+pay_arche 79 31 看板#弓箭手村落
+pay_arche 85 30 導覽員
+pay_arche 86 33 導覽員#05payon
+pay_arche 127 154 標示牌#arc
+payon_in02 64 71 工會服務人員
+payon_in02 67 65 吟遊詩人 傑弟#tu
+payon_in02 58 58 伊甸園 空間移動師#11
+pay_arche 130 113 鍊金術師 公會人員#tu
+pay_arche 55 123 卡普拉 職員
+pay_arche 39 134 看板#斐揚 洞穴
+pay_arche 41 136 伊甸園成員 杉浩#para05
+payon 209 127 村落 男佣
+payon 182 132 葛勞吾堤 特卡#海利翁
+geffen 103 42 史波尼亞#09tuto_rhea02
+geffen 91 36 流氓公會情報員#nd1
+geffen 90 67 廣宣人員
+geffen 95 68 初學者 服務人員#3exp03
+geffen 67 87 艾義僕
+gef_fild05 80 149 妙#08_hat
+yuno 110 171 安得郎克
+yuno 150 283 朱諾士兵
+yuno 165 283 朱諾士兵
+yuno_in05 49 43 依樂美的心臟
+yuno_in02 88 164 玫泰武司 西芙#圖書館
+yuno_in02 93 207 依美樂之書
+valkyrie 44 33 泰樂柏特
+valkyrie 44 39 騎士領主#巴奇利
+valkyrie 53 39 聖殿十字軍#巴奇利
+valkyrie 44 42 神官#巴奇利
+valkyrie 53 42 武術宗師#巴奇利
+valkyrie 44 47 超魔導師#巴奇利
+valkyrie 53 47 智者#巴奇利
+valkyrie 44 50 神工匠#巴奇利
+valkyrie 53 50 創造者#巴奇利
+valkyrie 53 54 搞笑藝人#巴奇利
+valkyrie 44 55 神射手#巴奇利
+valkyrie 53 56 冷豔舞姬#巴奇利
+valkyrie 44 58 十字刺客#巴奇利
+valkyrie 53 58 神行太保#巴奇利
+prontera 168 228 盧恩銷售員
+prt_in 172 130 武器商人
+prt_in 171 140 武器商人
+prt_in 172 132 防御具商人
+prt_in 165 140 武器商人
+prt_in 175 137 黑市商人
+mjolnir_09 106 36 #mj09_find_3
+mjolnir_09 106 36 #mj09_find_3
+mjolnir_07 157 25 #mj07_find_6
+mjolnir_07 157 25 #mj07_find_6
+mjolnir_07 375 233 #mj07_find_4
+mjolnir_07 375 233 #mj07_find_4
+mjolnir_07 372 355 #mj07_find_3
+mjolnir_07 372 355 #mj07_find_3
+mjolnir_08 39 239 #mj08_find_1
+mjolnir_08 39 239 #mj08_find_1
+mjolnir_08 193 62 #mj08_find_5
+mjolnir_08 193 62 #mj08_find_5
+mjolnir_09 201 355 #mj09_find_1
+mjolnir_09 201 355 #mj09_find_1
+mjolnir_09 209 341 得臥普 鐵匠#南
+mjolnir_09 209 341 得臥普 鐵匠#南
+mjolnir_09 306 36 #mj09_find_4
+mjolnir_09 306 36 #mj09_find_4
+prontera 66 111 賽伊格
+prontera 64 125 肉品商人
+prontera 66 111 賽伊格
+prontera 64 125 肉品商人
+moc_fild11 180 253 會說話的狗#para03
+mjolnir_12 220 37 #mj12_find_3
+mjolnir_12 220 37 #mj12_find_3
+mjolnir_05 219 375 #mj05_find_2
+mjolnir_05 219 375 #mj05_find_2
+izlude 99 136 廣宣人員
+geffen 151 44 青年
+geffen 146 132 安西莉亞
+geffen 131 123 眉撒絲達刺
+geffen 127 130 培勒格
+geffen 120 132 易司那普
+gef_fild08 182 182 #喚出幽靈
+gef_fild08 182 185 徬徨者
+mjolnir_05 82 171 #mj05_find_1
+mjolnir_05 82 171 #mj05_find_1
+aldebaran 180 46 東方人
+aldebaran 114 56 流氓公會情報員#nd0
+aldebaran 113 70 製煉工人曼斯特
+aldeba_in 223 121 凶悍的大叔
+pay_fild07 83 89 動物學家#09tuto_rhea04
+payon 177 131 寵物商人
+payon 192 176 安久浩
+payon 236 199 雷亞布連
+yuno_in01 17 95 斯塘酷
+veins 191 134 村落老人
+veins 191 134 村落老人
+veins 189 101 菲音斯 導覽士兵
+veins 189 101 菲音斯 導覽士兵
+veins 161 63 村落老人
+veins 161 63 村落老人
+veins 162 34 村落人
+veins 162 34 村落人
+veins 148 41 村落人
+veins 148 41 村落人
+ve_fild07 235 42 綢緞沙漠駱駝
+ve_fild07 235 42 綢緞沙漠駱駝
+veins 166 91 村落人
+veins 166 91 村落人
+rachel 138 146 拉赫 導覽員
+rachel 65 80 蔬菜商人
+rachel 76 77 拉赫 神官
+ra_in01 257 269 道具商人
+ra_in01 257 266 黑市商人
+ra_in01 263 281 陷阱專家
+einbroch 236 191 村落 青年#ein
+einbroch 229 149 斯力克
+einbroch 235 141 標示牌#einbroch22
+einbroch 228 121 村落 青年#ein-1
+einbroch 155 43 艾音布羅克 解說員#einbr
+einbroch 152 46 標示牌#einbroch11
+einbroch 253 203 標示牌
+einbroch 242 205 卡普拉 職員#ein2
+einbroch 224 207 料理材料商人
+einbroch 188 72 凱內斯厄茨
+rachel 163 152 imir3#rachel
+payon 154 170 夏珍
+payon 166 173 天壇
+payon 166 169 佛影
+payon 166 165 紅樓
+payon 181 172 吟遊詩人#4
+louyang 210 104 卡普拉 職員
+lou_fild01 224 348 小姐#萬毒門送貨員
+lou_fild01 225 350  #煙火
+lou_fild01 195 177 古炎寶#1-1
+lou_fild01 190 100 姑娘#1
+lou_in02 239 176 道具商人
+lou_in02 248 166 道具店 老闆
+louyang 224 104 宣傳使節
+payon 166 161 竹林峴
+payon 166 177 明亭
+pay_dun03 48 84 九尾狐#狐狸假面人類版本
+lou_fild01 175 173 古炎寶#1-2
+rachel 272 141 睡覺的小朋友#aru
+pay_dun04 163 186 鬼魅樹#07russia_45
+alberta 119 70 卡普拉投票 宣傳人員#alb
+alberta 114 70 准它投票 宣傳人員#alber
+alberta 113 53 微笑小姐
+alberta 111 59 看板#艾爾貝塔
+alberta 113 60 卡普拉 職員
+alberta 97 51 商人
+alberta 91 70 不良食品青年
+yuno 330 100 騎士#ss
+yuno 327 108 卡普拉 職員
+payon_in01 180 7 女作業員
+payon_in01 132 62 旅館服務生#pay01
+payon_in01 142 50 PVP解說員
+payon_in01 140 53 守門人#PVP05
+gef_fild08 211 24 看板#犬妖村落2
+veins 223 165 村落小孩
+veins 232 169 村落老人
+ve_in 243 303 道具商人
+ve_in 246 303 年輕商人#3rdgc05
+ve_in 253 304 水果商人
+ve_in 252 313 魔法商人
+ve_fild07 125 128 船#aru
+ve_fild07 128 130 秘密情報員#aru
+ve_fild07 129 132 卡利安#cmd5
+geffen_in 74 144 商人
+geffen_in 77 167 道具商人
+geffen_in 77 173 魔法商人
+rachel 31 130 拉赫 警衛兵
