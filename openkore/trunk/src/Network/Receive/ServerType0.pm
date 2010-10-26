@@ -452,6 +452,10 @@ sub new {
 
 		'07D9' => ['hotkeys'], # 268 # hotkeys:38
 		
+		'07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8
+		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
+		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5	
+		
 		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
 		'07F7' => ['actor_display', 'v C a4 v3 V v5 a4 v5 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # walking
 		'07F8' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # spawning
@@ -7577,6 +7581,47 @@ sub switch_character {
 	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
 	$net->serverDisconnect();
 	debug "result: $args->{result}\n";
+}
+
+# captcha packets from kRO::RagexeRE_2009_09_22a
+
+# 07E6
+sub captcha_session_ID {
+	my ($self, $args) = @_;
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+}
+
+# 0x07e8,-1
+# todo: debug + remove debug message
+sub captcha_image {
+	my ($self, $args) = @_;
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+	
+	my $hookArgs = {image => $args->{image}};
+	Plugins::callHook ('captcha_image', $hookArgs);
+	return 1 if $hookArgs->{return};
+	
+	my $file = $Settings::logs_folder . "/captcha.bmp";
+	open my $DUMP, '>', $file;
+	print $DUMP $args->{image};
+	close $DUMP;
+	
+	$hookArgs = {file => $file};
+	Plugins::callHook ('captcha_file', $hookArgs);
+	return 1 if $hookArgs->{return};
+	
+	warning "captcha.bmp has been saved to: " . $Settings::logs_folder . ", open it, solve it and use the command: captcha <text>\n";
+}
+
+# 0x07e9,5
+# todo: debug + remove debug message
+sub captcha_answer {
+	my ($self, $args) = @_;
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+	debug ($args->{flag} ? "good" : "bad") . " answer\n";
+	$captcha_state = $args->{flag};
+	
+	Plugins::callHook ('captcha_answer', {flag => $args->{flag}});
 }
 
 1;
