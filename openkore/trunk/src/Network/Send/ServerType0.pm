@@ -1687,17 +1687,15 @@ sub sendWeaponRefine {
 	debug "Sent Weapon Refine.\n", "sendPacket", 2;
 }
 
-# captcha packets from kRO::RagexeRE_2009_09_22a
-
-# 0x07e5,8
-# TODO: what is 0x12?
+# this is different from kRO
 sub sendCaptchaInitiate {
 	my ($self) = @_;
-	my $msg = pack('v2 a4', 0x07E5, 0x12, $accountID);
+	my $msg = pack('v2', 0x07E5, 0x0);
 	$self->sendToServer($msg);
 	debug "Sending Captcha Initiate\n";
 }
 
+# captcha packet from kRO::RagexeRE_2009_09_22a
 #0x07e7,32
 # TODO: what is 0x20?
 sub sendCaptchaAnswer {
