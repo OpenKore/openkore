@@ -451,6 +451,7 @@ sub new {
 		'0449' => ['hack_shield_alarm'],
 
 		'07D9' => ['hotkeys'], # 268 # hotkeys:38
+		'07DB' => ['homunculus_property_change', 'v V', [qw(type val)]], # 8
 		
 		'07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8
 		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
@@ -2785,6 +2786,7 @@ sub homunculus_property {
 	
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
+	# or make function in Actor class
 	if ($config{homunculus_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range} && exists $slave->{attack_range}) {
 		message TF("Autodetected attackDistance for homunculus = %s\n", $slave->{attack_range}), "success";
 		configModify('homunculus_attackDistance', $slave->{attack_range}, 1);
@@ -4640,10 +4642,17 @@ sub party_location {
 
 sub party_organize_result {
 	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		warning T("Can't organize party - party name exists\n");
-	} else {
+	
+	unless ($args->{fail}) {
 		$char->{party}{users}{$accountID}{admin} = 1 if $char->{party}{users}{$accountID};
+	} elsif ($args->{fail} == 1) {
+		warning T("Can't organize party - party name exists\n");
+	} elsif ($args->{fail} == 2) {
+		warning T("Can't organize party - you are already in a party\n");
+	} elsif ($args->{fail} == 3) {
+		warning T("Can't organize party - not allowed in current map\n");
+	} else {
+		warning TF("Can't organize party - unknown (%d)\n", $args->{fail});
 	}
 }
 
