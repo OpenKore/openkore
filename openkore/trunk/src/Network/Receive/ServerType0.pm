@@ -453,7 +453,6 @@ sub new {
 		'07D9' => ['hotkeys'], # 268 # hotkeys:38
 		'07DB' => ['homunculus_property_change', 'v V', [qw(type val)]], # 8
 		
-		'07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8
 		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
 		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5	
 		
@@ -7593,12 +7592,6 @@ sub switch_character {
 }
 
 # captcha packets from kRO::RagexeRE_2009_09_22a
-
-# 07E6
-sub captcha_session_ID {
-	my ($self, $args) = @_;
-	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-}
 
 # 0x07e8,-1
 # todo: debug + remove debug message
