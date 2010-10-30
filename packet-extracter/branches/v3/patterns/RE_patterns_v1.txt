@@ -1,0 +1,30 @@
+RE PacketLenMap function offset:
+89 ?? ?? 89 ?? ?? 89 ?? ?? 89 ?? ?? 89 ?? 8B ?? ?? 83 ?? 04 89 ?? ?? ?? ?? 89 ?? ?? E8 offset:[?? ?? ?? ??] 8B ?? ?? 8B C6
+
+Find Ref to g_PacketLen:
+8B ?? ?? 8D ?? ?? 25 FF FF 00 00 ?? ?? B9 offset:[?? ?? ?? ??]
+
+Function (0): -> __alloca_probe
+51 3D 00 10 00 00 8D 4C 24 08 72 14 81 E9 00 10 00 00 2D 00 10 00 00 85 01 3D 00 10 00 00 73 EC 2B C8 8B C4 85 01 8B E1 8B 08 8B 40 04 50 C3
+
+Function (1) [Key Function]: -> print_packet1
+55 8B EC 8B C1 8B 4D 08 8B 11 8B 4D 0C 89 10 8B 11 89 50 04 8B 49 04 89 48 08 5D C2 08 00
+
+Function (2): -> dummy
+55 8B EC 83 EC 08 53 56 8B 15 ?? ?? ?? ?? 57 8B F9 B0 01 8B 4F 04 8B F1 8B 59 04 3B DA 74 22 8B 45 0C 8B 00 89 45 F8
+
+Function (3): -> dummy
+55 8B EC 8B C1 8B 4D 08 8B 11 8B 4D 0C 89 10 8A 11 88 50 04 5D C2 08 00
+
+Function (4): -> dummy
+55 8B EC 8B C1 8B 4D 08 8B 11 89 10 8B 51 04 89 50 04 8B 49 08 89 48 08 5D C2 04 00
+
+Function (5): -> dummy
+55 8B EC 51 53 8B D9 8B 0D ?? ?? ?? ?? 56 8B 53 04 57 8B FA B0 01 8B 72 04 3B F1 74 22 8B 45 0C 8B 00 89 45 FC
+
+Function (6) [Key Function]: -> set_packet_len
+55 8B EC 8B 55 0C 8B C1 8B 4D 08 89 08 89 50 04 5D C2 08 00
+
+Function (7) [Key Function]: -> print_packet2
+55 8B EC 8B 45 0C 8B 08 8B 45 08 89 08 8B 4D 10 8B 11 89 50 04 8B 49 04 89 48 08 5D C3
+
