@@ -462,7 +462,7 @@ sub new {
 		'07F9' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv font name)]], # -1 # standing
 		'07FA' => ['inventory_item_removed', 'v3', [qw(unknown index amount)]], #//0x07fa,8
 		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait dispose)]],
-		# '07FD' => ['special_item_obtain'],
+		'07FD' => ['special_item_obtain', 'v C v v/Z a*', [qw(len type nameID holder etc)]],
 		'07FE' => ['sound_effect', 'Z24', [qw(name)]],
 		# '07FF' => ['re_features_enabled', 'v V', [qw(len flag)]],
 
@@ -7821,6 +7821,33 @@ sub captcha_answer {
 	$captcha_state = $args->{flag};
 	
 	Plugins::callHook ('captcha_answer', {flag => $args->{flag}});
+}
+
+use constant {
+	TYPE_BOXITEM => 0x0,
+	TYPE_MONSTER_ITEM => 0x1,
+};
+
+# TODO: more meaningful messages?
+sub special_item_obtain {
+	my ($self, $args) = @_;
+	
+	my $item_name = itemNameSimple($args->{nameID});
+	
+	if ($args->{type} == TYPE_BOXITEM) {
+		@{$args}{qw(box_nameID)} = unpack 'v', $args->{etc};
+		
+		my $box_item_name = itemNameSimple($args->{box_nameID});
+		message TF("%s has got %s from %s.\n", $args->{holder}, $item_name, $box_item_name), 'schat';
+		
+	} elsif ($args->{type} == TYPE_MONSTER_ITEM) {
+		@{$args}{qw(monster_name)} = unpack 'C/Z', $args->{etc};
+		
+		message TF("%s has got %s from %s.\n", $args->{holder}, $item_name, $args->{monster_name}), 'schat';
+		
+	} else {
+		warning TF("%s has got %s (from Unknown type %d).\n", $args->{holder}, $item_name, $args->{type}), 'schat';
+	}
 }
 
 1;
