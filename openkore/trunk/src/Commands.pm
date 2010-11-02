@@ -1899,10 +1899,10 @@ sub cmdSlave {
 		[$slave->{'name'}, $hp_string,
 		$slave->{actorType}, $sp_string,
 		$slave->{'level'}, $exp_string, 
-		$slave->{'atk'}, $slave->{'matk'}, $hunger_string,
+		$slave->{'atk'}, $slave->{'attack_magic_max'}, $hunger_string,
 		$slave->{'hit'}, $slave->{'critical'}, $intimacy_label, $intimacy_string,
 		$slave->{'def'}, $slave->{'mdef'}, $accessory_string,
-		$slave->{'flee'}, $slave->{'aspdDisp'}, $summons_string,
+		$slave->{'flee'}, $slave->{'attack_speed'}, $summons_string,
 		$range_string, $skillpt_string, $contractend_string]);
 		
 		$msg .= TF("Statuses: %s \n", $slave->statusesString);
