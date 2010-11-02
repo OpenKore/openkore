@@ -87,13 +87,13 @@ sub update {
 	$self->set ('intimacy', [$char->{homunculus}{intimacy}, 1000]);
 	$self->set ('hunger', [$char->{homunculus}{hunger}, 100]);
 	$self->set ('atk', $char->{homunculus}{atk});
-	$self->set ('matk', $char->{homunculus}{matk});
+	$self->set ('matk', $char->{homunculus}{attack_magic_max});
 	$self->set ('hit', $char->{homunculus}{hit});
 	$self->set ('crit', $char->{homunculus}{critical});
 	$self->set ('def', $char->{homunculus}{def});
 	$self->set ('mdef', $char->{homunculus}{mdef});
 	$self->set ('flee', $char->{homunculus}{flee});
-	$self->set ('aspd', $char->{homunculus}{aspd});
+	$self->set ('aspd', $char->{homunculus}{attack_speed});
 	$self->set ('skillPoint', $char->{homunculus}{points_skill});
 	#$self->set ('speed', sprintf '%.2f', 1 / $char->{walk_speed}) if $char->{walk_speed};
 	

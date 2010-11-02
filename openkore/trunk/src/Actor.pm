@@ -507,7 +507,7 @@ sub attack {
 	
 	$self->queue('attack', \%args);
 	
-	message TF("%s %s %s\n", $self, $self->verb(T('are now attacking'), T('is now attacking')), $target);
+	message sprintf($self->verb(T("%s are now attacking %s\n"), T("%s is now attacking %s\n")), $self, $target);
 	1;
 }
 

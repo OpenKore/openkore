@@ -2951,7 +2951,7 @@ sub slave_calcproperty_handler {
 	$slave->{hp_max}       = ($args->{hp_max} > 0) ? $args->{hp_max} : $args->{hp};
 	$slave->{sp_max}       = ($args->{sp_max} > 0) ? $args->{sp_max} : $args->{sp};
 
-	$slave->{aspdDisp}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
+	$slave->{attack_speed}     = int (200 - (($args->{attack_delay} < 10) ? 10 : ($args->{attack_delay} / 10)));
 	$slave->{hpPercent}    = ($slave->{hp} / $slave->{hp_max}) * 100;
 	$slave->{spPercent}    = ($slave->{sp} / $slave->{sp_max}) * 100;
 }
@@ -4190,9 +4190,9 @@ sub memo_success {
 		0x07 => 'sp',
 		0x08 => 'sp_max',
 		0x29 => 'atk',
-		0x2B => 'matk',
+		0x2B => 'attack_magic_max',
 		0x31 => 'hit',
-		0x35 => 'aspd',
+		0x35 => 'attack_delay',
 		0xA5 => 'flee',
 		0xBD => 'kills',
 		0xBE => 'faith',
@@ -4206,7 +4206,7 @@ sub memo_success {
 		if (my $type = $mercenaryParam{$args->{type}}) {
 			$char->{mercenary}{$type} = $args->{param};
 			
-			$char->{mercenary}{aspdDisp} = int (200 - (($char->{mercenary}{aspd} < 10) ? 10 : ($char->{mercenary}{aspd} / 10)));
+			$char->{mercenary}{attack_speed} = int (200 - (($char->{mercenary}{attack_delay} < 10) ? 10 : ($char->{mercenary}{attack_delay} / 10)));
 			$char->{mercenary}{hpPercent}    = $char->{mercenary}{hp_max} ? 100 * $char->{mercenary}{hp} / $char->{mercenary}{hp_max} : 0;
 			$char->{mercenary}{spPercent}    = $char->{mercenary}{sp_max} ? 100 * $char->{mercenary}{sp} / $char->{mercenary}{sp_max} : 0;
 			$char->{mercenary}{walk_speed}   = $char->{mercenary}{walk_speed} ? $char->{mercenary}{walk_speed}/1000 : 0.15;

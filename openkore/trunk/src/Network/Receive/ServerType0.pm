@@ -121,15 +121,15 @@ sub new {
 		'00AC' => ['unequip_item', 'v2 C', [qw(index type success)]],
 		'00AF' => ['inventory_item_removed', 'v2', [qw(index amount)]],
 		'00B0' => ['stat_info', 'v V', [qw(type val)]],
-		'00B1' => ['exp_zeny_info', 'v V', [qw(type val)]],
+		'00B1' => ['stat_info', 'v V', [qw(type val)]], # was "exp_zeny_info"
 		'00B3' => ['switch_character', 'C', [qw(result)]], # 3
 		'00B4' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]],
 		'00B5' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'00B6' => ['npc_talk_close', 'a4', [qw(ID)]],
 		'00B7' => ['npc_talk_responses'],
-		'00BC' => ['stats_added', 'v x C', [qw(type val)]],
-		'00BD' => ['stats_info', 'v C12 v14', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical karma manner)]],
-		'00BE' => ['stats_points_needed', 'v C', [qw(type val)]],
+		'00BC' => ['stats_added', 'v x C', [qw(type val)]], # actually 'v C2', 'type result val'
+		'00BD' => ['stats_info', 'v C12 v14', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical karma manner)]], # (karma manner) actually are (ASPD plusASPD)
+		'00BE' => ['stat_info', 'v C', [qw(type val)]], # was "stats_points_needed"
 		'00C0' => ['emoticon', 'a4 C', [qw(ID type)]],
 		'00CA' => ['buy_result', 'C', [qw(fail)]],
 		'00CB' => ['sell_result', 'C', [qw(fail)]], # 3
@@ -269,7 +269,7 @@ sub new {
 		'01A4' => ['pet_info2', 'C a4 V', [qw(type ID value)]],
 		'01A6' => ['egg_list'],
 		'01AA' => ['pet_emotion', 'a4 V', [qw(ID type)]],
-		'01AB' => ['actor_muted', 'a4 v V', [qw(ID duration)]],
+		'01AB' => ['stat_info', 'a4 v V', [qw(ID duration)]], # was "actor_muted"; is struct/handler correct at all?
 		'01AC' => ['actor_trapped', 'a4', [qw(ID)]],
 		'01AD' => ['arrowcraft_list'],
 		'01B0' => ['monster_typechange', 'a4 a V', [qw(ID unknown type)]],
@@ -394,7 +394,7 @@ sub new {
 			: ['mercenary_init', 'a4 v8 Z24 v V5 v V2 v',	[qw(ID atk matk hit critical def mdef flee aspd name level hp hp_max sp sp_max contract_end faith summons kills attack_range)]]
 		),
 		'029D' => ['skills_list'], # mercenary skills
-		'02A2' => ['mercenary_param_change', 'v V', [qw(type param)]],
+		'02A2' => ['stat_info', 'v V', [qw(type param)]], # was "mercenary_param_change"
 		# tRO HShield packet challenge. 
 		# Borrow sub gameguard_request because it use the same mechanic.
 		'02A6' => ['gameguard_request'],
@@ -451,7 +451,7 @@ sub new {
 		'0449' => ['hack_shield_alarm'],
 
 		'07D9' => ['hotkeys'], # 268 # hotkeys:38
-		'07DB' => ['homunculus_property_change', 'v V', [qw(type val)]], # 8
+		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
 		
 		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
 		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5	
@@ -475,6 +475,7 @@ sub new {
 		# '080B' => ['booking_delete', 'V', [qw(index)]],
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20 # TODO: test & use type
+		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
 	};
 	return $self;
 }
@@ -1384,19 +1385,6 @@ sub actor_movement_interrupted {
 	}
 	if ($char->{homunculus} && $char->{homunculus}{ID} eq $actor->{ID}) {
 		AI::clear("move");
-	}
-}
-
-sub actor_muted {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-	my $duration = $args->{duration};
-	if ($duration > 0) {
-		$duration = 0xFFFFFFFF - $duration + 1;
-		message TF("%s is muted for %d minutes\n", getActorName($ID), $duration), "parseMsg_statuslook", 2;
-	} else {
-		message TF("%s is no longer muted\n", getActorName($ID)), "parseMsg_statuslook", 2;
 	}
 }
 
@@ -2512,85 +2500,6 @@ sub errors {
 	}
 }
 
-sub exp_zeny_info {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-
-	if ($args->{type} == 1) {
-		$char->{exp_last} = $char->{exp};
-		$char->{exp} = $args->{val};
-		debug "Exp: $args->{val}\n", "parseMsg";
-		if (!$bExpSwitch) {
-			$bExpSwitch = 1;
-		} else {
-			if ($char->{exp_last} > $char->{exp}) {
-				$monsterBaseExp = 0;
-			} else {
-				$monsterBaseExp = $char->{exp} - $char->{exp_last};
-			}
-			$totalBaseExp += $monsterBaseExp;
-			if ($bExpSwitch == 1) {
-				$totalBaseExp += $monsterBaseExp;
-				$bExpSwitch = 2;
-			}
-		}
-
-	} elsif ($args->{type} == 2) {
-		$char->{exp_job_last} = $char->{exp_job};
-		$char->{exp_job} = $args->{val};
-		debug "Job Exp: $args->{val}\n", "parseMsg";
-		if ($jExpSwitch == 0) {
-			$jExpSwitch = 1;
-		} else {
-			if ($char->{exp_job_last} > $char->{exp_job}) {
-				$monsterJobExp = 0;
-			} else {
-				$monsterJobExp = $char->{exp_job} - $char->{exp_job_last};
-			}
-			$totalJobExp += $monsterJobExp;
-			if ($jExpSwitch == 1) {
-				$totalJobExp += $monsterJobExp;
-				$jExpSwitch = 2;
-			}
-		}
-		my $basePercent = $char->{exp_max} ?
-			($monsterBaseExp / $char->{exp_max} * 100) :
-			0;
-		my $jobPercent = $char->{exp_job_max} ?
-			($monsterJobExp / $char->{exp_job_max} * 100) :
-			0;
-		message TF("Exp gained: %d/%d (%.2f%%/%.2f%%)\n", $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
-		Plugins::callHook('exp_gained');
-
-	} elsif ($args->{type} == 20) {
-		my $change = $args->{val} - $char->{zeny};
-		if ($change > 0) {
-			message TF("You gained %s zeny.\n", formatNumber($change));
-		} elsif ($change < 0) {
-			message TF("You lost %s zeny.\n", formatNumber(-$change));
-			if ($config{dcOnZeny} && $args->{val} <= $config{dcOnZeny}) {
-				$interface->errorDialog(TF("Disconnecting due to zeny lower than %s.", $config{dcOnZeny}));
-				$quit = 1;
-			}
-		}
-		$char->{zeny} = $args->{val};
-		debug "zeny: $args->{val}\n", "parseMsg";
-	} elsif ($args->{type} == 22) {
-		$char->{exp_max_last} = $char->{exp_max};
-		$char->{exp_max} = $args->{val};
-		debug(TF("Required Exp: %s\n", $args->{val}), "parseMsg");
-		if (!$net->clientAlive() && $initSync && $masterServer->{serverType} == 2) {
-			$messageSender->sendSync(1);
-			$initSync = 0;
-		}
-	} elsif ($args->{type} == 23) {
-		$char->{exp_job_max_last} = $char->{exp_job_max};
-		$char->{exp_job_max} = $args->{val};
-		debug("Required Job Exp: $args->{val}\n", "parseMsg");
-		message TF("BaseExp: %s | JobExp: %s\n", $monsterBaseExp, $monsterJobExp), "info", 2 if ($monsterBaseExp);
-	}
-}
-
 sub forge_list {
 	my ($self, $args) = @_;
 
@@ -2828,13 +2737,16 @@ sub homunculus_state_handler {
 sub slave_calcproperty_handler {
 	my ($slave, $args) = @_;
 	# so we don't devide by 0
+	# wtf
+=pod
 	$slave->{hp_max}       = ($args->{hp_max} > 0) ? $args->{hp_max} : $args->{hp};
 	$slave->{sp_max}       = ($args->{sp_max} > 0) ? $args->{sp_max} : $args->{sp};
+=cut
 
-	$slave->{aspdDisp}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
-	$slave->{hpPercent}    = ($slave->{hp} / $slave->{hp_max}) * 100;
-	$slave->{spPercent}    = ($slave->{sp} / $slave->{sp_max}) * 100;
-	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
+	$slave->{attack_speed}     = int (200 - (($args->{attack_delay} < 10) ? 10 : ($args->{attack_delay} / 10)));
+	$slave->{hpPercent}    = $slave->{hp_max} ? ($slave->{hp} / $slave->{hp_max}) * 100 : undef;
+	$slave->{spPercent}    = $slave->{sp_max} ? ($slave->{sp} / $slave->{sp_max}) * 100 : undef;
+	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : undef;
 }
 
 sub gameguard_grant {
@@ -4042,42 +3954,6 @@ sub memo_success {
 		warning T("Memo Failed\n");
 	} else {
 		message T("Memo Succeeded\n"), "success";
-	}
-}
-
-{
-	my %mercenaryParam = (
-		0x00 => 'walk_speed',
-		0x05 => 'hp',
-		0x06 => 'hp_max',
-		0x07 => 'sp',
-		0x08 => 'sp_max',
-		0x29 => 'atk',
-		0x2B => 'matk',
-		0x31 => 'hit',
-		0x35 => 'aspd',
-		0xA5 => 'flee',
-		0xBD => 'kills',
-		0xBE => 'faith',
-	);
-	
-	sub mercenary_param_change {
-		my ($self, $args) = @_;
-		
-		return unless $char->{mercenary};
-		
-		if (my $type = $mercenaryParam{$args->{type}}) {
-			$char->{mercenary}{$type} = $args->{param};
-			
-			$char->{mercenary}{aspdDisp} = int (200 - (($char->{mercenary}{aspd} < 10) ? 10 : ($char->{mercenary}{aspd} / 10)));
-			$char->{mercenary}{hpPercent}    = $char->{mercenary}{hp_max} ? 100 * $char->{mercenary}{hp} / $char->{mercenary}{hp_max} : 0;
-			$char->{mercenary}{spPercent}    = $char->{mercenary}{sp_max} ? 100 * $char->{mercenary}{sp} / $char->{mercenary}{sp_max} : 0;
-			$char->{mercenary}{walk_speed}   = $char->{mercenary}{walk_speed} ? $char->{mercenary}{walk_speed}/1000 : 0.15;
-			
-			debug "Mercenary: $type = $args->{param}\n";
-		} else {
-			warning "Unknown mercenary param received (type: $args->{type}; param: $args->{param}; raw: " . unpack ('H*', $args->{RAW_MSG}) . ")\n";
-		}
 	}
 }
 
@@ -5949,115 +5825,458 @@ sub stats_info {
 		."Status Points: $char->{points_free}\n", "parseMsg";
 }
 
-sub stat_info {
-	my ($self,$args) = @_;
-	return unless changeToInGameState();
-	if ($args->{type} == 0) {
-		$char->{walk_speed} = $args->{val} / 1000;
-		debug "Walk speed: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 3) {
-		debug "Something2: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 4) {
-		if ($args->{val} == 0) {
-			delete $char->{muted};
-			delete $char->{mute_period};
-			message T("Mute period expired.\n");
+use constant {
+	VAR_SPEED => 0x0,
+	VAR_EXP => 0x1,
+	VAR_JOBEXP => 0x2,
+	VAR_VIRTUE => 0x3,
+	VAR_HONOR => 0x4,
+	VAR_HP => 0x5,
+	VAR_MAXHP => 0x6,
+	VAR_SP => 0x7,
+	VAR_MAXSP => 0x8,
+	VAR_POINT => 0x9,
+	VAR_HAIRCOLOR => 0xa,
+	VAR_CLEVEL => 0xb,
+	VAR_SPPOINT => 0xc,
+	VAR_STR => 0xd,
+	VAR_AGI => 0xe,
+	VAR_VIT => 0xf,
+	VAR_INT => 0x10,
+	VAR_DEX => 0x11,
+	VAR_LUK => 0x12,
+	VAR_JOB => 0x13,
+	VAR_MONEY => 0x14,
+	VAR_SEX => 0x15,
+	VAR_MAXEXP => 0x16,
+	VAR_MAXJOBEXP => 0x17,
+	VAR_WEIGHT => 0x18,
+	VAR_MAXWEIGHT => 0x19,
+	VAR_POISON => 0x1a,
+	VAR_STONE => 0x1b,
+	VAR_CURSE => 0x1c,
+	VAR_FREEZING => 0x1d,
+	VAR_SILENCE => 0x1e,
+	VAR_CONFUSION => 0x1f,
+	VAR_STANDARD_STR => 0x20,
+	VAR_STANDARD_AGI => 0x21,
+	VAR_STANDARD_VIT => 0x22,
+	VAR_STANDARD_INT => 0x23,
+	VAR_STANDARD_DEX => 0x24,
+	VAR_STANDARD_LUK => 0x25,
+	VAR_ATTACKMT => 0x26,
+	VAR_ATTACKEDMT => 0x27,
+	VAR_NV_BASIC => 0x28,
+	VAR_ATTPOWER => 0x29,
+	VAR_REFININGPOWER => 0x2a,
+	VAR_MAX_MATTPOWER => 0x2b,
+	VAR_MIN_MATTPOWER => 0x2c,
+	VAR_ITEMDEFPOWER => 0x2d,
+	VAR_PLUSDEFPOWER => 0x2e,
+	VAR_MDEFPOWER => 0x2f,
+	VAR_PLUSMDEFPOWER => 0x30,
+	VAR_HITSUCCESSVALUE => 0x31,
+	VAR_AVOIDSUCCESSVALUE => 0x32,
+	VAR_PLUSAVOIDSUCCESSVALUE => 0x33,
+	VAR_CRITICALSUCCESSVALUE => 0x34,
+	VAR_ASPD => 0x35,
+	VAR_PLUSASPD => 0x36,
+	VAR_JOBLEVEL => 0x37,
+	VAR_ACCESSORY2 => 0x38,
+	VAR_ACCESSORY3 => 0x39,
+	VAR_HEADPALETTE => 0x3a,
+	VAR_BODYPALETTE => 0x3b,
+	VAR_PKHONOR => 0x3c,
+	VAR_CURXPOS => 0x3d,
+	VAR_CURYPOS => 0x3e,
+	VAR_CURDIR => 0x3f,
+	VAR_CHARACTERID => 0x40,
+	VAR_ACCOUNTID => 0x41,
+	VAR_MAPID => 0x42,
+	VAR_MAPNAME => 0x43,
+	VAR_ACCOUNTNAME => 0x44,
+	VAR_CHARACTERNAME => 0x45,
+	VAR_ITEM_COUNT => 0x46,
+	VAR_ITEM_ITID => 0x47,
+	VAR_ITEM_SLOT1 => 0x48,
+	VAR_ITEM_SLOT2 => 0x49,
+	VAR_ITEM_SLOT3 => 0x4a,
+	VAR_ITEM_SLOT4 => 0x4b,
+	VAR_HEAD => 0x4c,
+	VAR_WEAPON => 0x4d,
+	VAR_ACCESSORY => 0x4e,
+	VAR_STATE => 0x4f,
+	VAR_MOVEREQTIME => 0x50,
+	VAR_GROUPID => 0x51,
+	VAR_ATTPOWERPLUSTIME => 0x52,
+	VAR_ATTPOWERPLUSPERCENT => 0x53,
+	VAR_DEFPOWERPLUSTIME => 0x54,
+	VAR_DEFPOWERPLUSPERCENT => 0x55,
+	VAR_DAMAGENOMOTIONTIME => 0x56,
+	VAR_BODYSTATE => 0x57,
+	VAR_HEALTHSTATE => 0x58,
+	VAR_RESETHEALTHSTATE => 0x59,
+	VAR_CURRENTSTATE => 0x5a,
+	VAR_RESETEFFECTIVE => 0x5b,
+	VAR_GETEFFECTIVE => 0x5c,
+	VAR_EFFECTSTATE => 0x5d,
+	VAR_SIGHTABILITYEXPIREDTIME => 0x5e,
+	VAR_SIGHTRANGE => 0x5f,
+	VAR_SIGHTPLUSATTPOWER => 0x60,
+	VAR_STREFFECTIVETIME => 0x61,
+	VAR_AGIEFFECTIVETIME => 0x62,
+	VAR_VITEFFECTIVETIME => 0x63,
+	VAR_INTEFFECTIVETIME => 0x64,
+	VAR_DEXEFFECTIVETIME => 0x65,
+	VAR_LUKEFFECTIVETIME => 0x66,
+	VAR_STRAMOUNT => 0x67,
+	VAR_AGIAMOUNT => 0x68,
+	VAR_VITAMOUNT => 0x69,
+	VAR_INTAMOUNT => 0x6a,
+	VAR_DEXAMOUNT => 0x6b,
+	VAR_LUKAMOUNT => 0x6c,
+	VAR_MAXHPAMOUNT => 0x6d,
+	VAR_MAXSPAMOUNT => 0x6e,
+	VAR_MAXHPPERCENT => 0x6f,
+	VAR_MAXSPPERCENT => 0x70,
+	VAR_HPACCELERATION => 0x71,
+	VAR_SPACCELERATION => 0x72,
+	VAR_SPEEDAMOUNT => 0x73,
+	VAR_SPEEDDELTA => 0x74,
+	VAR_SPEEDDELTA2 => 0x75,
+	VAR_PLUSATTRANGE => 0x76,
+	VAR_DISCOUNTPERCENT => 0x77,
+	VAR_AVOIDABLESUCCESSPERCENT => 0x78,
+	VAR_STATUSDEFPOWER => 0x79,
+	VAR_PLUSDEFPOWERINACOLYTE => 0x7a,
+	VAR_MAGICITEMDEFPOWER => 0x7b,
+	VAR_MAGICSTATUSDEFPOWER => 0x7c,
+	VAR_CLASS => 0x7d,
+	VAR_PLUSATTACKPOWEROFITEM => 0x7e,
+	VAR_PLUSDEFPOWEROFITEM => 0x7f,
+	VAR_PLUSMDEFPOWEROFITEM => 0x80,
+	VAR_PLUSARROWPOWEROFITEM => 0x81,
+	VAR_PLUSATTREFININGPOWEROFITEM => 0x82,
+	VAR_PLUSDEFREFININGPOWEROFITEM => 0x83,
+	VAR_IDENTIFYNUMBER => 0x84,
+	VAR_ISDAMAGED => 0x85,
+	VAR_ISIDENTIFIED => 0x86,
+	VAR_REFININGLEVEL => 0x87,
+	VAR_WEARSTATE => 0x88,
+	VAR_ISLUCKY => 0x89,
+	VAR_ATTACKPROPERTY => 0x8a,
+	VAR_STORMGUSTCNT => 0x8b,
+	VAR_MAGICATKPERCENT => 0x8c,
+	VAR_MYMOBCOUNT => 0x8d,
+	VAR_ISCARTON => 0x8e,
+	VAR_GDID => 0x8f,
+	VAR_NPCXSIZE => 0x90,
+	VAR_NPCYSIZE => 0x91,
+	VAR_RACE => 0x92,
+	VAR_SCALE => 0x93,
+	VAR_PROPERTY => 0x94,
+	VAR_PLUSATTACKPOWEROFITEM_RHAND => 0x95,
+	VAR_PLUSATTACKPOWEROFITEM_LHAND => 0x96,
+	VAR_PLUSATTREFININGPOWEROFITEM_RHAND => 0x97,
+	VAR_PLUSATTREFININGPOWEROFITEM_LHAND => 0x98,
+	VAR_TOLERACE => 0x99,
+	VAR_ARMORPROPERTY => 0x9a,
+	VAR_ISMAGICIMMUNE => 0x9b,
+	VAR_ISFALCON => 0x9c,
+	VAR_ISRIDING => 0x9d,
+	VAR_MODIFIED => 0x9e,
+	VAR_FULLNESS => 0x9f,
+	VAR_RELATIONSHIP => 0xa0,
+	VAR_ACCESSARY => 0xa1,
+	VAR_SIZETYPE => 0xa2,
+	VAR_SHOES => 0xa3,
+	VAR_STATUSATTACKPOWER => 0xa4,
+	VAR_BASICAVOIDANCE => 0xa5,
+	VAR_BASICHIT => 0xa6,
+	VAR_PLUSASPDPERCENT => 0xa7,
+	VAR_CPARTY => 0xa8,
+	VAR_ISMARRIED => 0xa9,
+	VAR_ISGUILD => 0xaa,
+	VAR_ISFALCONON => 0xab,
+	VAR_ISPECOON => 0xac,
+	VAR_ISPARTYMASTER => 0xad,
+	VAR_ISGUILDMASTER => 0xae,
+	VAR_BODYSTATENORMAL => 0xaf,
+	VAR_HEALTHSTATENORMAL => 0xb0,
+	VAR_STUN => 0xb1,
+	VAR_SLEEP => 0xb2,
+	VAR_UNDEAD => 0xb3,
+	VAR_BLIND => 0xb4,
+	VAR_BLOODING => 0xb5,
+	VAR_BSPOINT => 0xb6,
+	VAR_ACPOINT => 0xb7,
+	VAR_BSRANK => 0xb8,
+	VAR_ACRANK => 0xb9,
+	VAR_CHANGESPEED => 0xba,
+	VAR_CHANGESPEEDTIME => 0xbb,
+	VAR_MAGICATKPOWER => 0xbc,
+	VAR_MER_KILLCOUNT => 0xbd,
+	VAR_MER_FAITH => 0xbe,
+	VAR_MDEFPERCENT => 0xbf,
+	VAR_CRITICAL_DEF => 0xc0,
+	VAR_ITEMPOWER => 0xc1,
+	VAR_MAGICDAMAGEREDUCE => 0xc2,
+	VAR_STATUSMAGICPOWER => 0xc3,
+	VAR_PLUSMAGICPOWEROFITEM => 0xc4,
+	VAR_ITEMMAGICPOWER => 0xc5,
+	VAR_NAME => 0xc6,
+	VAR_FSMSTATE => 0xc7,
+	VAR_ATTMPOWER => 0xc8,
+	VAR_CARTWEIGHT => 0xc9,
+	VAR_HP_SELF => 0xca,
+	VAR_SP_SELF => 0xcb,
+	VAR_COSTUME_BODY => 0xcc,
+	VAR_RESET_COSTUMES => 0xcd,
+};
+
+our %stat_info_handlers = (
+	VAR_SPEED, sub { $_[0]{walk_speed} = $_[1] / 1000 },
+	VAR_EXP, sub {
+		my ($actor, $value) = @_;
+		
+		$actor->{exp_last} = $actor->{exp};
+		$actor->{exp} = $value;
+		
+		return unless $actor->isa('Actor::You');
+		
+		unless ($bExpSwitch) {
+			$bExpSwitch = 1;
 		} else {
-			my $val = (0xFFFFFFFF - $args->{val}) + 1;
-			$char->{mute_period} = $val * 60;
-			$char->{muted} = time;
-			if ($config{dcOnMute}) {
-				message TF("You've been muted for %s minutes, auto disconnect!\n", $val);
-				chatLog("k", TF("*** You have been muted for %s minutes, auto disconnect! ***\n", $val));
-				quit();
+			if ($actor->{exp_last} > $actor->{exp}) {
+				$monsterBaseExp = 0;
 			} else {
-				message TF("You've been muted for %s minutes\n", $val);
+				$monsterBaseExp = $actor->{exp} - $actor->{exp_last};
+			}
+			$totalBaseExp += $monsterBaseExp;
+			if ($bExpSwitch == 1) {
+				$totalBaseExp += $monsterBaseExp;
+				$bExpSwitch = 2;
 			}
 		}
-	} elsif ($args->{type} == 5) {
-		$char->{hp} = $args->{val};
-		debug "Hp: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 6) {
-		$char->{hp_max} = $args->{val};
-		debug "Max Hp: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 7) {
-		$char->{sp} = $args->{val};
-		debug "Sp: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 8) {
-		$char->{sp_max} = $args->{val};
-		debug "Max Sp: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 9) {
-		$char->{points_free} = $args->{val};
-		debug "Status Points: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 11) {
-		$char->{lv} = $args->{val};
-		message TF("You are now level %s\n", $args->{val}), "success";
-		if ($config{dcOnLevel} && $char->{lv} >= $config{dcOnLevel}) {
+		
+		# no VAR_JOBEXP next - no message?
+	},
+	VAR_JOBEXP, sub {
+		my ($actor, $value) = @_;
+		
+		$actor->{exp_job_last} = $actor->{exp_job};
+		$actor->{exp_job} = $value;
+		
+		# TODO: message for all actors
+		return unless $actor->isa('Actor::You');
+		# TODO: exp report (statistics) - no globals, move to plugin
+		
+		if ($jExpSwitch == 0) {
+			$jExpSwitch = 1;
+		} else {
+			if ($char->{exp_job_last} > $char->{exp_job}) {
+				$monsterJobExp = 0;
+			} else {
+				$monsterJobExp = $char->{exp_job} - $char->{exp_job_last};
+			}
+			$totalJobExp += $monsterJobExp;
+			if ($jExpSwitch == 1) {
+				$totalJobExp += $monsterJobExp;
+				$jExpSwitch = 2;
+			}
+		}
+		my $basePercent = $char->{exp_max} ?
+			($monsterBaseExp / $char->{exp_max} * 100) :
+			0;
+		my $jobPercent = $char->{exp_job_max} ?
+			($monsterJobExp / $char->{exp_job_max} * 100) :
+			0;
+		message TF("%s have gained %d/%d (%.2f%%/%.2f%%) Exp\n", $char, $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
+		Plugins::callHook('exp_gained');
+	},
+	#VAR_VIRTUE
+	VAR_HONOR, sub {
+		my ($actor, $value) = @_;
+		
+		if ($value > 0) {
+			my $duration = 0xffffffff - $value + 1;
+			$actor->{mute_period} = $duration * 60;
+			$actor->{muted} = time;
+			message sprintf(
+				$actor->verb(T("%s have been muted for %d minutes\n"), T("%s has been muted for %d minutes\n")),
+				$actor, $duration
+			), "parseMsg_statuslook", $actor->isa('Actor::You') ? 1 : 2;
+		} else {
+			delete $actor->{muted};
+			delete $actor->{mute_period};
+			message sprintf(
+				$actor->verb(T("%s are no longer muted."), T("%s is no longer muted.")), $actor
+			), "parseMsg_statuslook", $actor->isa('Actor::You') ? 1 : 2;
+		}
+		
+		return unless $actor->isa('Actor::You');
+		
+		if ($config{dcOnMute} && $actor->{muted}) {
+			chatLog("k", TF("*** %s have been muted for %d minutes, auto disconnect! ***\n", $actor, $actor->{mute_period}/60));
+			quit();
+		}
+	},
+	VAR_HP, sub {
+		$_[0]{hp} = $_[1];
+		$_[0]{hpPercent} = $_[0]{hp_max} ? 100 * $_[0]{hp} / $_[0]{hp_max} : undef;
+	},
+	VAR_MAXHP, sub {
+		$_[0]{hp_max} = $_[1];
+		$_[0]{hpPercent} = $_[0]{hp_max} ? 100 * $_[0]{hp} / $_[0]{hp_max} : undef;
+	},
+	VAR_SP, sub {
+		$_[0]{sp} = $_[1];
+		$_[0]{spPercent} = $_[0]{sp_max} ? 100 * $_[0]{sp} / $_[0]{sp_max} : undef;
+	},
+	VAR_MAXSP, sub {
+		$_[0]{sp_max} = $_[1];
+		$_[0]{spPercent} = $_[0]{sp_max} ? 100 * $_[0]{sp} / $_[0]{sp_max} : undef;
+	},
+	VAR_POINT, sub { $_[0]{points_free} = $_[1] },
+	#VAR_HAIRCOLOR
+	VAR_CLEVEL, sub {
+		my ($actor, $value) = @_;
+		
+		$actor->{lv} = $value;
+		
+		message sprintf($actor->verb(T("%s are now level %d\n"), T("%s is now level %d\n")), $value), "success", $actor->isa('Actor::You') ? 1 : 2;
+		
+		return unless $actor->isa('Actor::You');
+		
+		if ($config{dcOnLevel} && $actor->{lv} >= $config{dcOnLevel}) {
 			message TF("Disconnecting on level %s!\n", $config{dcOnLevel});
 			chatLog("k", TF("Disconnecting on level %s!\n", $config{dcOnLevel}));
 			quit();
 		}
-	} elsif ($args->{type} == 12) {
-		$char->{points_skill} = $args->{val};
-		debug "Skill Points: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 24) {
-		$char->{weight} = $args->{val} / 10;
-		debug "Weight: $char->{weight}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 25) {
-		$char->{weight_max} = int($args->{val} / 10);
-		debug "Max Weight: $char->{weight_max}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 41) {
-		$char->{attack} = $args->{val};
-		debug "Attack: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 42) {
-		$char->{attack_bonus} = $args->{val};
-		debug "Attack Bonus: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 43) {
-		$char->{attack_magic_max} = $args->{val};
-		debug "Magic Attack Max: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 44) {
-		$char->{attack_magic_min} = $args->{val};
-		debug "Magic Attack Min: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 45) {
-		$char->{def} = $args->{val};
-		debug "Defense: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 46) {
-		$char->{def_bonus} = $args->{val};
-		debug "Defense Bonus: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 47) {
-		$char->{def_magic} = $args->{val};
-		debug "Magic Defense: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 48) {
-		$char->{def_magic_bonus} = $args->{val};
-		debug "Magic Defense Bonus: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 49) {
-		$char->{hit} = $args->{val};
-		debug "Hit: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 50) {
-		$char->{flee} = $args->{val};
-		debug "Flee: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 51) {
-		$char->{flee_bonus} = $args->{val};
-		debug "Flee Bonus: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 52) {
-		$char->{critical} = $args->{val};
-		debug "Critical: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 53) {
-		$char->{attack_delay} = $args->{val};
-		$char->{attack_speed} = 200 - $args->{val}/10;
-		debug "Attack Speed: $char->{attack_speed}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 55) {
-		$char->{lv_job} = $args->{val};
-		message TF("You are now job level %s\n", $args->{val}), "success";
-		if ($config{dcOnJobLevel} && $char->{lv_job} >= $config{dcOnJobLevel}) {
-			message TF("Disconnecting on job level %s!\n", $config{dcOnJobLevel});
-			chatLog("k", TF("Disconnecting on job level %s!\n", $config{dcOnJobLevel}));
+	},
+	VAR_SPPOINT, sub { $_[0]{points_skill} = $_[1] },
+	#VAR_STR
+	#VAR_AGI
+	#VAR_VIT
+	#VAR_INT
+	#VAR_DEX
+	#VAR_LUK
+	#VAR_JOB
+	VAR_MONEY, sub {
+		my ($actor, $value) = @_;
+		
+		my $change = $value - $actor->{zeny};
+		$actor->{zeny} = $value;
+		
+		message sprintf(
+			$change > 0
+			? $actor->verb(T("%s gained %s zeny.\n"), T("%s gained %s zeny.\n"))
+			: $actor->verb(T("%s lost %s zeny.\n"), T("%s lost %s zeny.\n")),
+			$actor, formatNumber(abs $change)
+		), 'info', $actor->isa('Actor::You') ? 1 : 2 if $change;
+		
+		return unless $actor->isa('Actor::You');
+		
+		if ($config{dcOnZeny} && $actor->{zeny} <= $config{dcOnZeny}) {
+			$interface->errorDialog(TF("Disconnecting due to zeny lower than %s.", $config{dcOnZeny}));
+			$quit = 1;
+		}
+	},
+	#VAR_SEX
+	VAR_MAXEXP, sub {
+		$_[0]{exp_max_last} = $_[0]{exp_max};
+		$_[0]{exp_max} = $_[1];
+		
+		if (!$net->clientAlive() && $initSync && $masterServer->{serverType} == 2) {
+			$messageSender->sendSync(1);
+			$initSync = 0;
+		}
+	},
+	VAR_MAXJOBEXP, sub {
+		$_[0]{exp_job_max_last} = $_[0]{exp_job_max};
+		$_[0]{exp_job_max} = $_[1];
+		#message TF("BaseExp: %s | JobExp: %s\n", $monsterBaseExp, $monsterJobExp), "info", 2 if ($monsterBaseExp);
+	},
+	VAR_WEIGHT, sub { $_[0]{weight} = $_[1] / 10 },
+	VAR_MAXWEIGHT, sub { $_[0]{weight_max} = int($_[1] / 10) },
+	#VAR_POISON
+	#VAR_STONE
+	#VAR_CURSE
+	#VAR_FREEZING
+	#VAR_SILENCE
+	#VAR_CONFUSION
+	VAR_STANDARD_STR, sub { $_[0]{points_str} = $_[1] },
+	VAR_STANDARD_AGI, sub { $_[0]{points_agi} = $_[1] },
+	VAR_STANDARD_VIT, sub { $_[0]{points_vit} = $_[1] },
+	VAR_STANDARD_INT, sub { $_[0]{points_int} = $_[1] },
+	VAR_STANDARD_DEX, sub { $_[0]{points_dex} = $_[1] },
+	VAR_STANDARD_LUK, sub { $_[0]{points_luk} = $_[1] },
+	#VAR_ATTACKMT
+	#VAR_ATTACKEDMT
+	#VAR_NV_BASIC
+	VAR_ATTPOWER, sub { $_[0]{attack} = $_[1] },
+	VAR_REFININGPOWER, sub { $_[0]{attack_bonus} = $_[1] },
+	VAR_MAX_MATTPOWER, sub { $_[0]{attack_magic_max} = $_[1] },
+	VAR_MIN_MATTPOWER, sub { $_[0]{attack_magic_min} = $_[1] },
+	VAR_ITEMDEFPOWER, sub { $_[0]{def} = $_[1] },
+	VAR_PLUSDEFPOWER, sub { $_[0]{def_bonus} = $_[1] },
+	VAR_MDEFPOWER, sub { $_[0]{def_magic} = $_[1] },
+	VAR_PLUSMDEFPOWER, sub { $_[0]{def_magic_bonus} = $_[1] },
+	VAR_HITSUCCESSVALUE, sub { $_[0]{hit} = $_[1] },
+	VAR_AVOIDSUCCESSVALUE, sub { $_[0]{flee} = $_[1] },
+	VAR_PLUSAVOIDSUCCESSVALUE, sub { $_[0]{flee_bonus} = $_[1] },
+	VAR_CRITICALSUCCESSVALUE, sub { $_[0]{critical} = $_[1] },
+	VAR_ASPD, sub {
+		$_[0]{attack_delay} = $_[1] >= 10 ? $_[1] : 10; # at least for mercenary
+		$_[0]{attack_speed} = 200 - $_[0]{attack_delay} / 10;
+	},
+	#VAR_PLUSASPD
+	VAR_JOBLEVEL, sub {
+		my ($actor, $value) = @_;
+		
+		$actor->{lv_job} = $value;
+		message sprintf($actor->verb("%s are now job level %d\n", "%s is now job level %d\n"), $actor, $actor->{lv_job}), "success", $actor->isa('Actor::You') ? 1 : 2;
+		
+		return unless $actor->isa('Actor::You');
+		
+		if ($config{dcOnJobLevel} && $actor->{lv_job} >= $config{dcOnJobLevel}) {
+			message TF("Disconnecting on job level %d!\n", $config{dcOnJobLevel});
+			chatLog("k", TF("Disconnecting on job level %d!\n", $config{dcOnJobLevel}));
 			quit();
 		}
-	} elsif ($args->{type} == 124) {
-		debug "Something3: $args->{val}\n", "parseMsg", 2;
+	},
+	#...
+	VAR_MER_KILLCOUNT, sub { $_[0]{kills} = $_[1] },
+	VAR_MER_FAITH, sub { $_[0]{faith} = $_[1] },
+	#...
+);
+
+sub stat_info {
+	my ($self, $args) = @_;
+	
+	return unless changeToInGameState;
+	
+	my $actor = {
+		'00B0' => $char,
+		'00B1' => $char,
+		'0141' => $char,
+		'01AB' => exists $args->{ID} && Actor::get($args->{ID}),
+		'02A2' => $char->{mercenary},
+		'07DB' => $char->{homunculus},
+		#'081E' => Sorcerer's Spirit - not implemented in Kore
+	}->{$args->{switch}};
+	
+	unless ($actor) {
+		warning sprintf "Actor is unknown or not ready for stat information (switch %s)\n", $args->{switch};
+		return;
+	}
+	
+	if ($stat_info_handlers{$args->{type}}) {
+		# TODO: introduce Actor->something() to determine per-actor configurable verbosity level? (not only here)
+		debug "Stat: $args->{type} => $args->{val}\n", "parseMsg",  $_[0]->isa('Actor::You') ? 1 : 2;
+		$stat_info_handlers{$args->{type}}($actor, $args->{val});
 	} else {
-		debug "Something: $args->{val}\n", "parseMsg", 2;
+		warning sprintf "Unknown stat (%d => %d) received for %s", @{$args}{qw(type val)}, $actor;
 	}
 	
 	if (!$char->{walk_speed}) {
@@ -6069,53 +6288,30 @@ sub stat_info2 {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 	my ($type, $val, $val2) = @{$args}{qw(type val val2)};
-	if ($type == 13) {
+	if ($type == VAR_STR) {
 		$char->{str} = $val;
 		$char->{str_bonus} = $val2;
 		debug "Strength: $val + $val2\n", "parseMsg";
-	} elsif ($type == 14) {
+	} elsif ($type == VAR_AGI) {
 		$char->{agi} = $val;
 		$char->{agi_bonus} = $val2;
 		debug "Agility: $val + $val2\n", "parseMsg";
-	} elsif ($type == 15) {
+	} elsif ($type == VAR_VIT) {
 		$char->{vit} = $val;
 		$char->{vit_bonus} = $val2;
 		debug "Vitality: $val + $val2\n", "parseMsg";
-	} elsif ($type == 16) {
+	} elsif ($type == VAR_INT) {
 		$char->{int} = $val;
 		$char->{int_bonus} = $val2;
 		debug "Intelligence: $val + $val2\n", "parseMsg";
-	} elsif ($type == 17) {
+	} elsif ($type == VAR_DEX) {
 		$char->{dex} = $val;
 		$char->{dex_bonus} = $val2;
 		debug "Dexterity: $val + $val2\n", "parseMsg";
-	} elsif ($type == 18) {
+	} elsif ($type == VAR_LUK) {
 		$char->{luk} = $val;
 		$char->{luk_bonus} = $val2;
 		debug "Luck: $val + $val2\n", "parseMsg";
-	}
-}
-
-sub stats_points_needed {
-	my ($self, $args) = @_;
-	if ($args->{type} == 32) {
-		$char->{points_str} = $args->{val};
-		debug "Points needed for Strength: $args->{val}\n", "parseMsg";
-	} elsif ($args->{type}	== 33) {
-		$char->{points_agi} = $args->{val};
-		debug "Points needed for Agility: $args->{val}\n", "parseMsg";
-	} elsif ($args->{type} == 34) {
-		$char->{points_vit} = $args->{val};
-		debug "Points needed for Vitality: $args->{val}\n", "parseMsg";
-	} elsif ($args->{type} == 35) {
-		$char->{points_int} = $args->{val};
-		debug "Points needed for Intelligence: $args->{val}\n", "parseMsg";
-	} elsif ($args->{type} == 36) {
-		$char->{points_dex} = $args->{val};
-		debug "Points needed for Dexterity: $args->{val}\n", "parseMsg";
-	} elsif ($args->{type} == 37) {
-		$char->{points_luk} = $args->{val};
-		debug "Points needed for Luck: $args->{val}\n", "parseMsg";
 	}
 }
 

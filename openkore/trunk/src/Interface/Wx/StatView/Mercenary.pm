@@ -57,13 +57,13 @@ sub update {
 	$self->set ('sp', [$char->{mercenary}{sp}, $char->{mercenary}{sp_max}]) if $char->{mercenary}{sp_max};
 	$self->set ('loyalty', [$char->{mercenary}{faith}, 1000]);
 	$self->set ('atk', $char->{mercenary}{atk});
-	$self->set ('matk', $char->{mercenary}{matk});
+	$self->set ('matk', $char->{mercenary}{attack_magic_max});
 	$self->set ('hit', $char->{mercenary}{hit});
 	$self->set ('crit', $char->{mercenary}{critical});
 	$self->set ('def', $char->{mercenary}{def});
 	$self->set ('mdef', $char->{mercenary}{mdef});
 	$self->set ('flee', $char->{mercenary}{flee});
-	$self->set ('aspd', $char->{mercenary}{aspd});
+	$self->set ('aspd', $char->{mercenary}{attack_speed});
 	$self->set ('time', defined $char->{mercenary}{contract_end} ? getFormattedDate (int $char->{mercenary}{contract_end}) : 'N/A');
 	$self->set ('kills', $char->{mercenary}{kills});
 	$self->set ('summons', $char->{mercenary}{summons});
