@@ -7843,7 +7843,7 @@ sub special_item_obtain {
 	} elsif ($args->{type} == TYPE_MONSTER_ITEM) {
 		#@{$args}{qw(monster_name)} = unpack 'C/Z', $args->{etc}; # so perlpacktut did it wrong?
 		my $len = unpack 'C', $args->{etc};
-		@{$args}{qw(monster_name)} = unpack "x Z$len", $args->{etc};
+		@{$args}{qw(monster_name)} = unpack "Z$len", substr $args->{etc}, 1;
 		
 		message TF("%s has got %s from %s.\n", $args->{holder}, $item_name, $args->{monster_name}), 'schat';
 		
