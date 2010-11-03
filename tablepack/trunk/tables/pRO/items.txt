@@ -5330,5 +5330,8 @@
 16259#HD_Carnium_Box5#
 16260#HD_Bradium_Box10#
 16261#HD_Carnium_Box10#
+//---- ÇÊ¸®ÇÉ ¸ó½ºÅÍ Ä§·« ¹æ¾î ÀÌº¥Æ® -----
+18510#Bloody_Angel_Wings#
+18511#Bloody_Angel_Feathers#
 
 //file end

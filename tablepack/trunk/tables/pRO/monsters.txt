@@ -240,7 +240,7 @@
 1298 Zombie Master
 1299 Goblin Leader
 1300 Caterpillar
-1301 Am Mut#Monster
+1301 Am Mut
 1302 Dark Illusion
 1303 Giant Honet
 1304 Giant Spider
@@ -305,6 +305,7 @@
 1415 Baby Leopard
 1416 Wicked Nymph
 1417 Zipper Bear
+1418 Dark Snake Lord
 1427 Nightmare
 1428 Poison Spore
 1431 Barphomet
@@ -344,6 +345,7 @@
 1519 Green Maiden
 1520 Dumpling
 1522 Ancient Mummy
+1531 Cloud Hermit
 1560 Shinobi
 1582 Deviling
 1584 Tamruan
@@ -422,12 +424,15 @@
 1706 Maero of Thanatos
 1707 Dolor of Thanatos
 1708 Memory of Thanatos
+1709 Odium of Thanatos
 1710 Despero of Thanatos
 1711 Maero of Thanatos
-1713 Acidus
-1714 Ferus
+1712 Dolor of Thanatos
+1713 Gold Acidus
+1714 Red Ferus
 1715 Novus
-1717 Ferus
+1716 Blue Acidus
+1717 Green Ferus
 1718 Novus
 1720 Hydrolancer
 1721 Dragon Egg
@@ -439,10 +444,11 @@
 1753 Frus
 1754 Skeggiold
 1755 Skeggiold
-1757 Acidus
-1758 Ferus
-1759 Acidus
-1760 Ferus
+1756 Hydrolancer
+1757 Gold Acidus Mob
+1758 Red Ferus Mob
+1759 Blue Acidus Mob
+1760 Green Ferus Mob
 1761 Skogul
 1762 Frus
 1763 Skeggiold Mob
@@ -467,6 +473,7 @@
 1785 Atroce
 1786 Agav
 1787 Echio
+1788 Ice Titan
 1789 Iceicle
 1791 Galion Mob
 1794 Roween Mob
@@ -504,6 +511,7 @@
 1919 Incarnation of Morocc Golem
 1920 Incarnation of Morocc Human
 1921 Incarnation of Morocc Ghost
+1926 Shameless Jakk
 1958 Thorny Skeleton
 1959 Thorn of Recovery
 1960 Thorn of Magic
@@ -515,7 +523,7 @@
 1988 Nepnethes
 1989 Hillsrion
 1991 Tendrilrion
-1992 Cornus#alba03
+1992 Cornus
 1993 Naga
 1994 Luciola Vespa
 1995 Pinguicula
@@ -538,5 +546,9 @@
 2078 Shadow of Pleasure
 2081 Weirdo Hydra
 2082 Piranha
+2115 Agni
+2116 Agni
 2118 Aqua
 2120 Ventus
+2121 Ventus
+2122 Ventus
