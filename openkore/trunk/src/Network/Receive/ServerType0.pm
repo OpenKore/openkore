@@ -7789,6 +7789,45 @@ sub switch_character {
 	debug "result: $args->{result}\n";
 }
 
+use constant {
+	EXP_FROM_BATTLE => 0x0,
+	EXP_FROM_QUEST => 0x1,
+};
+
+# 07F6 (exp) doesn't change any exp information because 00B1 (exp_zeny_info) is always sent with it
+sub exp {
+	my ($self, $args) = @_;
+	
+	my $max = {VAR_EXP, $char->{exp_max}, VAR_JOBEXP, $char->{exp_job_max}}->{$args->{type}};
+	$args->{percent} = $max ? $args->{val} / $max * 100 : 0;
+	
+	if ($args->{flag} == EXP_FROM_BATTLE) {
+		if ($args->{type} == VAR_EXP) {
+			message TF("Base Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
+		} elsif ($args->{type} == VAR_JOBEXP) {
+			message TF("Job Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
+		} else {
+			message TF("Unknown (type=%d) Exp gained: %d\n", @{$args}{qw(type val)}), 'exp2', 2;
+		}
+	} elsif ($args->{flag} == EXP_FROM_QUEST) {
+		if ($args->{type} == VAR_EXP) {
+			message TF("Base Quest Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
+		} elsif ($args->{type} == VAR_JOBEXP) {
+			message TF("Job Quest Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
+		} else {
+			message TF("Unknown (type=%d) Quest Exp gained: %d\n", @{$args}{qw(type val)}), 'exp2', 2;
+		}
+	} else {
+		if ($args->{type} == VAR_EXP) {
+			message TF("Base Unknown (flag=%d) Exp gained: %d (%.2f%%)\n", @{$args}{qw(flag val percent)}), 'exp2', 2;
+		} elsif ($args->{type} == VAR_JOBEXP) {
+			message TF("Job Unknown (flag=%d) Exp gained: %d (%.2f%%)\n", @{$args}{qw(flag val percent)}), 'exp2', 2;
+		} else {
+			message TF("Unknown (type=%d) Unknown (flag=%d) Exp gained: %d\n", @{$args}{qw(type flag val)}), 'exp2', 2;
+		}
+	}
+}
+
 # captcha packets from kRO::RagexeRE_2009_09_22a
 
 # 0x07e8,-1
