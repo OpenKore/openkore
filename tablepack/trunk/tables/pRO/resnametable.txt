@@ -586,17 +586,17 @@ pvp_n_5-5.rsw#job_knight.rsw#
 pvp_n_6-5.rsw#job_knight.rsw#
 pvp_n_7-5.rsw#job_knight.rsw#
 pvp_n_8-5.rsw#job_knight.rsw#
-pvp_n_room.gnd#pvp_room.gnd#
-pvp_n_room.gat#pvp_room.gat#
-pvp_n_room.rsw#pvp_room.rsw#
+pvp_n_room.gnd#pvp_n_room.gnd#
+pvp_n_room.gat#pvp_n_room.gat#
+pvp_n_room.rsw#pvp_n_room.rsw#
 ﾀｯﾀ惕ﾎﾅﾍﾆ菎ﾌｽｺ\map\pvp_n_room.bmp#ﾀｯﾀ惕ﾎﾅﾍﾆ菎ﾌｽｺ\map\pvp_room.bmp#
-pvp_y_room.gnd#pvp_room.gnd#
-pvp_y_room.gat#pvp_room.gat#
-pvp_y_room.rsw#pvp_room.rsw#
+pvp_y_room.gnd#pvp_y_room.gnd#
+pvp_y_room.gat#pvp_y_room.gat#
+pvp_y_room.rsw#pvp_y_room.rsw#
 ﾀｯﾀ惕ﾎﾅﾍﾆ菎ﾌｽｺ\map\pvp_y_room.bmp#ﾀｯﾀ惕ﾎﾅﾍﾆ菎ﾌｽｺ\map\pvp_room.bmp#
-pvp_c_room.gnd#pvp_room.gnd#
-pvp_c_room.gat#pvp_room.gat#
-pvp_c_room.rsw#pvp_room.rsw#
+pvp_c_room.gnd#pvp_c_room.gnd#
+pvp_c_room.gat#pvp_c_room.gat#
+pvp_c_room.rsw#pvp_c_room.rsw#
 
 
 guild_room.gnd#quiz_01.gnd#

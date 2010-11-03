@@ -131,6 +131,7 @@ aldebaran 135 113 Odin's Cash manager#phi
 aldebaran 135 116 Second_Cash_Seller
 aldebaran 135 119 First_Cash_Seller
 aldebaran 135 128 Continental Messenger#a
+aldebaran 136 132 Soul Magician#alde
 aldebaran 136 133 Bulletin Board#clocktow
 aldebaran 136 135 Smile Helper
 aldebaran 137 119 Kafra Employee#pRO_Prem
@@ -305,10 +306,10 @@ gef_fild13 303 243 Jyolbriger
 gef_tower 102 24 Dismal Wizard
 gef_tower 102 34 Merito#12345
 gef_tower 105 172 Point Seller#Sorcerer
-gef_tower 107 36 Dog with white fur
 gef_tower 111 37 Magic Guildsman
 gef_tower 113 161 Karacas#123543
 gef_tower 115 36 Meow
+gef_tower 107 36 Dog with white fur
 gef_tower 116 37 Enoz
 gef_tower 118 36 Annoyed Man
 gef_tower 55 142 Bulletin Board#gefdun
@@ -330,6 +331,7 @@ geffen 120 132 Yisnelf
 geffen 120 62 Kafra Employee
 geffen 122 37 Kafra Voting Staff#geff
 geffen 122 77 Nia#yagu
+geffen 123 107 Soul Magician#gef
 geffen 124 169 Bossnia staff
 geffen 124 65 Bulletin Board#geffen
 geffen 127 115 Geffen Enforcer#geffen
@@ -344,12 +346,12 @@ geffen 130 48 Odin's Cash manager#phi
 geffen 130 50 Second_Cash_Seller
 geffen 131 123 Merlcesdets
 geffen 131 66 [Quest] Magic Merchant#
+geffen 143 126 Kris#edu
 geffen 132 38 Bard#2
 geffen 132 66 Eden Teleport Officer#3
 geffen 135 53 Kafra Employee#pRO_prem
 geffen 138 30 Injured Master Thief#ge
 geffen 140 54 [Quest] Elite Mercenary
-geffen 143 126 Kris#edu
 geffen 143 133 Ernie#edu
 geffen 145 130 Sheila#edu
 geffen 146 132 Ancellia
@@ -377,6 +379,7 @@ geffen 203 116 Guide
 geffen 203 123 Kafra Employee
 geffen 203 146 Citizen
 geffen 207 114 #Hiddne01Easter
+geffen 36 123 Guide#03geffen
 geffen 46 164 Bysliter#BLS
 geffen 59 143 Lady
 geffen 61 174 Sign#M
@@ -397,6 +400,7 @@ geffen_in 30 178 Weapon Dealer
 geffen_in 34 166 Repair Man
 geffen_in 34 170 Young Man
 geffen_in 59 61 Hotel Guest
+geffen_in 59 74 Jesqurienne
 geffen_in 61 72 Aaron
 geffen_in 63 63 Gate Keeper#4
 geffen_in 67 63 PVPNarrator#4
@@ -466,8 +470,10 @@ hugel 87 139 Maewan#hg
 hugel 88 168 Cool Event Corp. Staff
 hugel 91 152 Sign
 hugel 98 56 Hugel Guide Granny
+ice_dun01 104 30 #Minsicecave5
 ice_dun01 157 15 #Minsicecave1
 ice_dun01 157 23 #Minsicecave2
+ice_dun01 22 85 #Minsicecave12
 ice_dun01 274 274 Spirit Detecting Staff#
 ice_dun02 120 105 Man in the Ice#cave
 ice_dun02 206 223 Red Flame#sc_f02
@@ -505,6 +511,14 @@ izlude 131 116 Bulletin Board#izlude
 izlude 131 177 Guide#02izlude
 izlude 133 104 Kafra Employee#pRO_Prem
 izlude 134 88 Kafra Employee
+izlude 201 181 Sailor
+izlude 206 55 Airship Staff#izlude
+izlude 46 139 Mercenary Guild Manager
+izlude 55 74 Bonne
+izlude 56 126 Red
+izlude 56 139 Mercenary Merchant#Swor
+izlude 58 126 Cebalis
+izlude 94 98 Fruit Gardener
 izlude 135 78 Charfri
 izlude 150 118 Dega
 izlude 150 143 Kylick
@@ -514,14 +528,6 @@ izlude 171 133 Bullet Dealer Tony#airp
 izlude 171 185 Marriage Staff#Izlude I
 izlude 182 186 Edgar
 izlude 186 57 Scamp
-izlude 201 181 Sailor
-izlude 206 55 Airship Staff#izlude
-izlude 46 139 Mercenary Guild Manager
-izlude 55 74 Bonne
-izlude 56 126 Red
-izlude 56 139 Mercenary Merchant#Swor
-izlude 58 126 Cebalis
-izlude 94 98 Fruit Gardener
 izlude 99 136 Promotional staff
 izlude_in 63 165 sword_out
 izlude_in 68 162 Eden Teleport Officer#6
@@ -549,6 +555,7 @@ job3_gen01 36 45 Muka Tree#gen
 job3_gen01 36 55 Bigibigigrass#gen
 job3_gen01 42 55 Bogi vine#gen
 job3_gen01 7 50 Testing Table #gen
+job3_gen01 89 59 Scattered Stuff#gen4
 job3_gen01 74 45 Scattered Stuff#gen7
 job3_gen01 77 41 Scattered Stuff#gen2
 job3_gen01 78 57 Scattered Stuffs#gen3
@@ -558,7 +565,6 @@ job3_gen01 83 27 Scattered Stuff#gen6
 job3_gen01 83 72 Delivery Box#generic
 job3_gen01 84 45 Scattered Stuff#gen1
 job3_gen01 85 25 Opened Book#gen
-job3_gen01 89 59 Scattered Stuff#gen4
 job3_gen01 90 51 Scattered Stuff#gen5
 job3_gen01 91 48 Demi Calberine#gen
 job3_rang01 30 44 Practical Test Waiting 
@@ -1142,9 +1148,13 @@ prontera 125 208 PecoPeco Remover
 prontera 130 213 Riding Creature Master
 prontera 132 125 Bossnia staff
 prontera 134 125 #suprise_12
+prontera 139 282 Cherry Blossom#08spring
+prontera 139 294 Cherry Blossom#08spring
 prontera 140 304 Old Soldier
 prontera 140 331 Glasses-wearer#job_min
 prontera 141 97 Warmhearted woman#job_m
+prontera 142 254 Cherry Blossom#08spring
+prontera 142 264 Cherry Blossom#08spring
 prontera 143 203 Lazrigs
 prontera 144 301 Mage#tu
 prontera 146 101 Cupid#prontera
@@ -1222,6 +1232,7 @@ prontera 174 328 Yong Man#bard_q1
 prontera 179 192 #suprise_1
 prontera 179 92 Cupet Manager
 prontera 183 333 Aelle#qsk_dan02
+prontera 185 208 Valhyrie#gc_pass
 prontera 197 188 Beeyo
 prontera 202 122 Kid#sch
 prontera 202 297 Rina#Easter
@@ -1256,6 +1267,7 @@ prontera 45 67  #prt_key-1-1
 prontera 48 58 Vegetable Gardener
 prontera 54 240 Terno
 prontera 58 182 Flower Girl
+prontera 58 217 Valhyrie#rune_pass
 prontera 64 125 Butcher
 prontera 66 111 Sagle
 prontera 67 212 Cupet Manager
@@ -1339,6 +1351,10 @@ prtg_cas03 183 215 Diligo
 pvp_n_room 70 85 Fight Square Reception 
 pvp_n_room 78 85 Fight Square Reception 
 pvp_n_room 86 85 Fight Square Reception 
+pvp_room 70 85 Fight Square Reception 
+pvp_room 77 85 Guild Battle Guide
+pvp_room 78 85 Fight Square Reception 
+pvp_room 86 85 Fight Square Reception 
 pvp_y_room 46 85 Fight Square Reception
 pvp_y_room 54 85 Fight Square Reception 
 pvp_y_room 62 85 Fight Square Reception 
@@ -1563,6 +1579,7 @@ tha_scene01 140 200 #¹Î½º¿µ¼öÁõ
 tha_t01 140 78 Guide#reward
 tha_t01 149 78 Guide
 thor_v01 64 252 Spirit Detecting Staff#
+treasure01 98 119 Dirty Wall#07russia_39
 tur_dun01 156 36 Survival Instructor, Re
 tur_dun01 160 81 Skul Stone
 tur_dun01 165 29 Sailor
