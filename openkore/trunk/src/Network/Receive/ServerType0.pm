@@ -452,6 +452,7 @@ sub new {
 
 		'07D9' => ['hotkeys'], # 268 # hotkeys:38
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
+		# '07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]], # what is type?
 		
 		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
 		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5	
