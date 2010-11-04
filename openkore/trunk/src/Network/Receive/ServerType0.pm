@@ -6261,6 +6261,7 @@ sub stat_info {
 	my $actor = {
 		'00B0' => $char,
 		'00B1' => $char,
+		'00BE' => $char,
 		'0141' => $char,
 		'01AB' => exists $args->{ID} && Actor::get($args->{ID}),
 		'02A2' => $char->{mercenary},
@@ -6269,7 +6270,7 @@ sub stat_info {
 	}->{$args->{switch}};
 	
 	unless ($actor) {
-		warning sprintf "Actor is unknown or not ready for stat information (switch %s)\n", $args->{switch};
+		warning sprintf "Actor is unknown or not ready for stat information (switch %s, type %d, val %d)\n", @{$args}{qw(switch type val)};
 		return;
 	}
 	
