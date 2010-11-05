@@ -477,6 +477,8 @@ sub new {
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20 # TODO: test & use type
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
+		'0814' => ['buy_vender_found', 'a4 A80', [qw(venderID title)]],
+		'0818' => ['buy_vender_items', 'v a4 a4', [qw(len venderID venderCID)]],
 	};
 	return $self;
 }
@@ -7890,6 +7892,30 @@ sub special_item_obtain {
 		
 	} else {
 		warning TF("%s has got %s (from Unknown type %d).\n", $args->{holder}, $item_name, $args->{type}), 'schat';
+	}
+}
+
+# TODO
+sub buy_vender_items
+{
+	my($self, $args) = @_;
+
+	my $BinaryID = $args->{venderID};   
+	my $Player = Actor::get($BinaryID);
+	my $Name = $Player->name;
+
+	my $headerlen = 12;
+	my $Total = unpack('V4', substr($args->{msg}, $headerlen, 4));
+	$headerlen += 4;
+
+	for (my $i = $headerlen; $i < $args->{msg_size}; $i+=9)
+	{
+		my $Item = {};
+
+		($Item->{price},
+		$Item->{amount},
+		undef,
+		$Item->{nameID}) = unpack('V v C v', substr($args->{msg}, $i, 9));
 	}
 }
 
