@@ -1704,4 +1704,11 @@ sub sendCaptchaAnswer {
 	$self->sendToServer($msg);
 }
 
+sub sendEnteringBuyVender {
+	my ($self, $ID) = @_;
+	my $msg = pack("C*", 0x17, 0x08) . $ID;
+	$self->sendToServer($msg);
+	debug "Sent Entering Buy Vender: ".getHex($ID)."\n", "sendPacket", 2;
+}
+
 1;
