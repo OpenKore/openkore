@@ -269,7 +269,7 @@ sub new {
 		'01A4' => ['pet_info2', 'C a4 V', [qw(type ID value)]],
 		'01A6' => ['egg_list'],
 		'01AA' => ['pet_emotion', 'a4 V', [qw(ID type)]],
-		'01AB' => ['stat_info', 'a4 v V', [qw(ID duration)]], # was "actor_muted"; is struct/handler correct at all?
+		'01AB' => ['stat_info', 'a4 v V', [qw(ID type val)]], # was "actor_muted"; is struct/handler correct at all?
 		'01AC' => ['actor_trapped', 'a4', [qw(ID)]],
 		'01AD' => ['arrowcraft_list'],
 		'01B0' => ['monster_typechange', 'a4 a V', [qw(ID unknown type)]],
@@ -394,7 +394,7 @@ sub new {
 			: ['mercenary_init', 'a4 v8 Z24 v V5 v V2 v',	[qw(ID atk matk hit critical def mdef flee aspd name level hp hp_max sp sp_max contract_end faith summons kills attack_range)]]
 		),
 		'029D' => ['skills_list'], # mercenary skills
-		'02A2' => ['stat_info', 'v V', [qw(type param)]], # was "mercenary_param_change"
+		'02A2' => ['stat_info', 'v V', [qw(type val)]], # was "mercenary_param_change"
 		# tRO HShield packet challenge. 
 		# Borrow sub gameguard_request because it use the same mechanic.
 		'02A6' => ['gameguard_request'],
@@ -6277,12 +6277,12 @@ sub stat_info {
 		return;
 	}
 	
-	if ($stat_info_handlers{$args->{type}}) {
+	if (exists $stat_info_handlers{$args->{type}}) {
 		# TODO: introduce Actor->something() to determine per-actor configurable verbosity level? (not only here)
 		debug "Stat: $args->{type} => $args->{val}\n", "parseMsg",  $_[0]->isa('Actor::You') ? 1 : 2;
 		$stat_info_handlers{$args->{type}}($actor, $args->{val});
 	} else {
-		warning sprintf "Unknown stat (%d => %d) received for %s", @{$args}{qw(type val)}, $actor;
+		warning sprintf "Unknown stat (%d => %d) received for %s\n", @{$args}{qw(type val)}, $actor;
 	}
 	
 	if (!$char->{walk_speed}) {
