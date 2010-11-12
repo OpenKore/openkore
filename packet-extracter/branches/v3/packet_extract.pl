@@ -28,9 +28,14 @@ use strict;
 #   Add Nice GUI (optional)
 # ###################################################################
 
+unless (@ARGV) {
+	print "Usage: $0 <Ragexe.exe>\n";
+	exit;
+}
+
 #Innit
 my $packet_len_extractor = {};
-$packet_len_extractor->{file_name_raw} = "2010-10-25cRagAll.exe";
+$packet_len_extractor->{file_name_raw} = shift;
 $packet_len_extractor->{file} = undef;
 $packet_len_extractor->{original_extractor_name} = $RealBin . "/src/extractor.exe";
 $packet_len_extractor->{original_extractor} = undef;
