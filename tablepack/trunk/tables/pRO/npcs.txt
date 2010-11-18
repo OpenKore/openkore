@@ -306,10 +306,10 @@ gef_fild13 303 243 Jyolbriger
 gef_tower 102 24 Dismal Wizard
 gef_tower 102 34 Merito#12345
 gef_tower 105 172 Point Seller#Sorcerer
+gef_tower 107 36 Dog with white fur
 gef_tower 111 37 Magic Guildsman
 gef_tower 113 161 Karacas#123543
 gef_tower 115 36 Meow
-gef_tower 107 36 Dog with white fur
 gef_tower 116 37 Enoz
 gef_tower 118 36 Annoyed Man
 gef_tower 55 142 Bulletin Board#gefdun
@@ -346,12 +346,12 @@ geffen 130 48 Odin's Cash manager#phi
 geffen 130 50 Second_Cash_Seller
 geffen 131 123 Merlcesdets
 geffen 131 66 [Quest] Magic Merchant#
-geffen 143 126 Kris#edu
 geffen 132 38 Bard#2
 geffen 132 66 Eden Teleport Officer#3
 geffen 135 53 Kafra Employee#pRO_prem
 geffen 138 30 Injured Master Thief#ge
 geffen 140 54 [Quest] Elite Mercenary
+geffen 143 126 Kris#edu
 geffen 143 133 Ernie#edu
 geffen 145 130 Sheila#edu
 geffen 146 132 Ancellia
@@ -511,14 +511,6 @@ izlude 131 116 Bulletin Board#izlude
 izlude 131 177 Guide#02izlude
 izlude 133 104 Kafra Employee#pRO_Prem
 izlude 134 88 Kafra Employee
-izlude 201 181 Sailor
-izlude 206 55 Airship Staff#izlude
-izlude 46 139 Mercenary Guild Manager
-izlude 55 74 Bonne
-izlude 56 126 Red
-izlude 56 139 Mercenary Merchant#Swor
-izlude 58 126 Cebalis
-izlude 94 98 Fruit Gardener
 izlude 135 78 Charfri
 izlude 150 118 Dega
 izlude 150 143 Kylick
@@ -528,6 +520,14 @@ izlude 171 133 Bullet Dealer Tony#airp
 izlude 171 185 Marriage Staff#Izlude I
 izlude 182 186 Edgar
 izlude 186 57 Scamp
+izlude 201 181 Sailor
+izlude 206 55 Airship Staff#izlude
+izlude 46 139 Mercenary Guild Manager
+izlude 55 74 Bonne
+izlude 56 126 Red
+izlude 56 139 Mercenary Merchant#Swor
+izlude 58 126 Cebalis
+izlude 94 98 Fruit Gardener
 izlude 99 136 Promotional staff
 izlude_in 63 165 sword_out
 izlude_in 68 162 Eden Teleport Officer#6
@@ -555,7 +555,6 @@ job3_gen01 36 45 Muka Tree#gen
 job3_gen01 36 55 Bigibigigrass#gen
 job3_gen01 42 55 Bogi vine#gen
 job3_gen01 7 50 Testing Table #gen
-job3_gen01 89 59 Scattered Stuff#gen4
 job3_gen01 74 45 Scattered Stuff#gen7
 job3_gen01 77 41 Scattered Stuff#gen2
 job3_gen01 78 57 Scattered Stuffs#gen3
@@ -565,6 +564,7 @@ job3_gen01 83 27 Scattered Stuff#gen6
 job3_gen01 83 72 Delivery Box#generic
 job3_gen01 84 45 Scattered Stuff#gen1
 job3_gen01 85 25 Opened Book#gen
+job3_gen01 89 59 Scattered Stuff#gen4
 job3_gen01 90 51 Scattered Stuff#gen5
 job3_gen01 91 48 Demi Calberine#gen
 job3_rang01 30 44 Practical Test Waiting 
@@ -793,6 +793,7 @@ manuk 293 203 Manuk Piom#tre4
 manuk 304 195 Soldier#ep13pa0829
 manuk 99 334 Manuk Piom#tre1
 mid_camp 123 290 Otto#ep13bs
+mid_camp 129 284 Trap Specialist
 mid_camp 13 143 Camp Guard#man2
 mid_camp 143 306 Breeder Taab#ep13_alba
 mid_camp 146 306 Qpet Breeder#ep13_eden0
@@ -1156,6 +1157,9 @@ prontera 141 97 Warmhearted woman#job_m
 prontera 142 254 Cherry Blossom#08spring
 prontera 142 264 Cherry Blossom#08spring
 prontera 143 203 Lazrigs
+prontera 144 136 Cherry Blossom#08spring
+prontera 144 146 Cherry Blossom#08spring
+prontera 144 156 Cherry Blossom#08spring
 prontera 144 301 Mage#tu
 prontera 146 101 Cupid#prontera
 prontera 146 194 Svanhilt
@@ -1205,9 +1209,12 @@ prontera 158 285 [Info]Reno's Dog#pronte
 prontera 159 191 [Quest] Army Officer#nk
 prontera 159 284 Romeo#prontera2
 prontera 160 133 Norby
+prontera 160 183 Soul Magician#pron
 prontera 160 29 South Gate-Guide
 prontera 160 330 Guard
 prontera 161 192 Ashvacum warfÀÎ
+prontera 161 30 #suprise_6
+prontera 162 166 Valhyrie#arch_pass
 prontera 162 188 [Quest] Odin's Knight#n
 prontera 162 191 Happy Citizen
 prontera 163 178 Magic Gear Master
@@ -1223,8 +1230,15 @@ prontera 165 60 Apprentice Craftsman
 prontera 166 299 Mursen Dragonov#mod
 prontera 167 203 Squegle
 prontera 167 281 New Guild Master#tu
+prontera 168 136 Cherry Blossom#08spring
+prontera 168 146 Cherry Blossom#08spring
+prontera 168 156 Cherry Blossom#08spring
 prontera 168 189 [Quest] Elite Mercenary
 prontera 168 228 Rune Seller
+prontera 170 234 Cherry Blossom#08spring
+prontera 170 244 Cherry Blossom#08spring
+prontera 170 254 Cherry Blossom#08spring
+prontera 170 264 Cherry Blossom#08spring
 prontera 172 282 Cherry Blossom#08spring
 prontera 172 294 Cherry Blossom#08spring
 prontera 174 203 Worldcup Manager#pronte
@@ -1579,6 +1593,10 @@ tha_scene01 140 200 #¹Î½º¿µ¼öÁõ
 tha_t01 140 78 Guide#reward
 tha_t01 149 78 Guide
 thor_v01 64 252 Spirit Detecting Staff#
+treasure01 165 58 Old_Treasure_Box#07russ
+treasure01 24 39 Old Bed#07russia_38
+treasure01 27 115 Open_Treasure_Box#07rus
+treasure01 61 183 Old_Wooden_Box#07russia
 treasure01 98 119 Dirty Wall#07russia_39
 tur_dun01 156 36 Survival Instructor, Re
 tur_dun01 160 81 Skul Stone

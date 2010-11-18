@@ -2165,10 +2165,10 @@
 12034#Box_of_Panting#
 
 // ---------- Juperos ----------
-2659#Vesper_Core01#
-2660#Vesper_Core02#
-2661#Vesper_Core03#
-2662#Vesper_Core04#
+2659#Vesper_Core_01#
+2660#Vesper_Core_02#
+2661#Vesper_Core_03#
+2662#Vesper_Core_04#
 12040#Stone_of_Sage#
 
 //------------2nd anniversary event
@@ -2884,10 +2884,10 @@
 2693#Neo_Brooch#
 2694#Neo_Rosary#
 2695#Neo_Safety_Ring#
-2696#Neo_Vesper_Core01#
-2697#Neo_Vesper_Core02#
-2698#Neo_Vesper_Core03#
-2699#Neo_Vesper_Core04#
+2696#Neo_Vesper_Core_01#
+2697#Neo_Vesper_Core_02#
+2698#Neo_Vesper_Core_03#
+2699#Neo_Vesper_Core_04#
 5265#Neo_Apple_of_Archer#
 5266#Neo_Bunny_Band#
 5267#Neo_Sakkat#
@@ -3278,36 +3278,36 @@
 // ---------------------- ｿ・ｴｼﾒﾈｯｼｭ -------------------------------
 
 
-12153#Bowman_Scroll1#
-12154#Bowman_Scroll2#
-12155#Bowman_Scroll3#
-12156#Bowman_Scroll4#
-12157#Bowman_Scroll5#
-12158#Bowman_Scroll6#
-12159#Bowman_Scroll7#
-12160#Bowman_Scroll8#
-12161#Bowman_Scroll9#
-12162#Bowman_Scroll10#
-12163#Fencer_Scroll1#
-12164#Fencer_Scroll2#
-12165#Fencer_Scroll3#
-12166#Fencer_Scroll4#
-12167#Fencer_Scroll5#
-12168#Fencer_Scroll6#
-12169#Fencer_Scroll7#
-12170#Fencer_Scroll8#
-12171#Fencer_Scroll9#
-12172#Fencer_Scroll10#
-12173#Spearman_Scroll1#
-12174#Spearman_Scroll2#
-12175#Spearman_Scroll3#
-12176#Spearman_Scroll4#
-12177#Spearman_Scroll5#
-12178#Spearman_Scroll6#
-12179#Spearman_Scroll7#
-12180#Spearman_Scroll8#
-12181#Spearman_Scroll9#
-12182#Spearman_Scroll10#
+12153#Bowman_Scroll_1#
+12154#Bowman_Scroll_2#
+12155#Bowman_Scroll_3#
+12156#Bowman_Scroll_4#
+12157#Bowman_Scroll_5#
+12158#Bowman_Scroll_6#
+12159#Bowman_Scroll_7#
+12160#Bowman_Scroll_8#
+12161#Bowman_Scroll_9#
+12162#Bowman_Scroll_10#
+12163#Fencer_Scroll_1#
+12164#Fencer_Scroll_2#
+12165#Fencer_Scroll_3#
+12166#Fencer_Scroll_4#
+12167#Fencer_Scroll_5#
+12168#Fencer_Scroll_6#
+12169#Fencer_Scroll_7#
+12170#Fencer_Scroll_8#
+12171#Fencer_Scroll_9#
+12172#Fencer_Scroll_10#
+12173#Spearman_Scroll_1#
+12174#Spearman_Scroll_2#
+12175#Spearman_Scroll_3#
+12176#Spearman_Scroll_4#
+12177#Spearman_Scroll_5#
+12178#Spearman_Scroll_6#
+12179#Spearman_Scroll_7#
+12180#Spearman_Scroll_8#
+12181#Spearman_Scroll_9#
+12182#Spearman_Scroll_10#
 12184#Mercenary_Red_Potion#
 12185#Mercenary_Blue_Potion#
 // ------------------ Mercenary_Pot ------------------
@@ -4861,9 +4861,9 @@
 2565#Beach_Towel#
 5770#Splash_Hat#
 5761#Sloth_Hat#
-5762#Duneyrr_Hat#
+5762#LU_Live2010_Duneyrr_Hat#
 16584#Sloth_Hat_Box#
-16586#Duneyrr_Hat_Hat#
+16586#LU_Live2010_Duneyrr_Hat_Box#
 5778#Blue_Arara_Hat#
 16601#Blue_Arara_Hat_Box#
 5580#Red_Beret#
@@ -5330,7 +5330,7 @@
 16259#HD_Carnium_Box5#
 16260#HD_Bradium_Box10#
 16261#HD_Carnium_Box10#
-//---- ÇÊ¸®ÇÉ ¸ó½ºÅÍ Ä§·« ¹æ¾î ÀÌº¥Æ® -----
+//---- ﾇﾊｸｮﾇﾉ ｸｺﾅﾍ ﾄｧｷｫ ｹ貔・ﾀﾌｺ･ﾆｮ -----
 18510#Bloody_Angel_Wings#
 18511#Bloody_Angel_Feathers#
 
