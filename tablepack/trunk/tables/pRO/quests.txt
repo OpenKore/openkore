@@ -5905,7 +5905,7 @@ Let's show her that spring is actually coming#
 9166#Stat Reset : Present Condition#SG_FEEL#QUE_NOIMAGE#
 You can get a Stat Reset Service if you have [Shard of Odin].#
 Come back ^FF000020 hours^000000 later.#
-//-----------ÇÊ¸®ÇÉ 2010 ¸ó½ºÅÍ Ä§·« ¹æ¾î ÀÌº¥Æ®
+//-----------ﾇﾊｸｮﾇﾉ 2010 ｸｺﾅﾍ ﾄｧｷｫ ｹ貔・ﾀﾌｺ･ﾆｮ
 	
 9143#Defeat Skeleton Generals#SG_FEEL#QUE_NOIMAGE#
 Message from ^0000FFValkyrie Yuna A^000000: "^404040defeat 100 Skeleton Generals^000000"#
@@ -5923,7 +5923,7 @@ Kill 100 ^FF0000Gullinbursti^000000 from ^8B4513dungeon^000000!!#
 Message from ^0000FFValkyrie Yuna D^000000: "^404040defeat 100 Zombie Master^000000"#
 Kill 100 ^FF0000Zombie Master^000000 from ^8B4513dungeon^000000!!#
 
-// ------- ÇÊ¸®ÇÉ : »ç³É Äù½ºÆ® - 5Â÷ -
+// ------- ﾇﾊｸｮﾇﾉ : ｻ邉ﾉ ﾄｺﾆｮ - 5ﾂ・-
 
 9136#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
 ^0000FFElite Mercenary^000000 : "^404040Visit Mercenary Scout^000000"#
