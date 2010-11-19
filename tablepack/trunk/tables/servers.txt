@@ -323,7 +323,7 @@ addTableFolders twRO
 captcha 0
 
 [Taiwan - twRO: Free (Devil Poring, Angel Poring)]
-ip 20.130.113.222
+ip 220.130.113.222
 port 6900
 master_version 5
 version 211
