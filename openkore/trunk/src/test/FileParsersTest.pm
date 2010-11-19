@@ -35,6 +35,8 @@ sub start {
 		
 		is(items_control('Random Item')->{keep}, 9, 'all');
 		is(items_control($_)->{keep}, 2, $_) for values %$items;
+		is(items_control($_)->{keep}, 2, $_) for 'Slotted Item [1]';
+		is(items_control($_)->{keep}, 22, $_) for 'Slotted Item [2]';
 		
 		done_testing
 	};
