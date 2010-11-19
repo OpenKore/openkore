@@ -294,7 +294,7 @@ recvpackets recvpackets-twRO-office.txt
 addTableFolders twRO
 captcha 1
 
-[Taiwan - twRO: Free]
+[Taiwan - twRO: Free (Poring King, Devil King Poring)]
 ip 220.130.113.238
 port 6900
 master_version 5
@@ -306,7 +306,35 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets-twRO-free.txt
 addTableFolders twRO
-captcha 1
+captcha 0
+
+[Taiwan - twRO: Free (Poring, Baphomet, Picky, Goblin, Moonlight)]
+ip 220.130.113.221
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Traditional Chinese
+charBlockSize 112
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets-twRO-free.txt
+addTableFolders twRO
+captcha 0
+
+[Taiwan - twRO: Free (Devil Poring, Angel Poring)]
+ip 20.130.113.222
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Traditional Chinese
+charBlockSize 112
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets-twRO-free.txt
+addTableFolders twRO
+captcha 0
 
 [Taiwan - twRO: Test]
 ip 61.220.56.47
