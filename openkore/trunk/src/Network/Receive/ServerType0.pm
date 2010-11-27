@@ -2401,7 +2401,7 @@ sub cast_cancelled {
 	my $skill = $source->{casting}->{skill};
 	my $skillName = $skill ? $skill->getName() : T('Unknown');
 	my $domain = ($ID eq $accountID) ? "selfSkill" : "skill";
-	message TF("%s failed to cast %s\n", $source, $skillName), $domain;
+	message sprintf($source->verb(T("%s failed to cast %s\n"), T("%s failed to cast %s\n")), $source, $skillName), $domain;
 	Plugins::callHook('packet_castCancelled', {
 		sourceID => $ID
 	});
