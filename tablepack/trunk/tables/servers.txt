@@ -292,7 +292,7 @@ charBlockSize 112
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets-twRO-office.txt
 addTableFolders twRO
-captcha 1
+captcha 0
 
 [Taiwan - twRO: Free (Poring King, Devil King Poring)]
 ip 220.130.113.238
@@ -308,7 +308,7 @@ recvpackets recvpackets-twRO-free.txt
 addTableFolders twRO
 captcha 0
 
-[Taiwan - twRO: Free (Poring, Baphomet, Picky, Goblin, Moonlight)]
+[Taiwan - twRO: Free (巴風特Baphomet, 哥布林Goblin, 小雞Picky, 波利Poring, 月夜貓MoonLight, 惡魔波利Deviling, 天使波利Angeling, 魔王波利Poring_v, 波利之王Mastering)]
 ip 220.130.113.221
 port 6900
 master_version 5
@@ -348,7 +348,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets-twRO-test.txt
 addTableFolders twRO
-captcha 1
+captcha 0
 
 [Taiwan - twRO: Irisfree]
 ip 220.130.113.235
@@ -360,10 +360,9 @@ serverEncoding Traditional Chinese
 charBlockSize 112
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-# TODO: add "recvpackets-twRO-irisfree.txt" to tables/twRO
-recvpackets recvpackets-twRO-irisfree.txt
+recvpackets recvpackets-twRO-free.txt
 addTableFolders twRO
-captcha 1
+captcha 0
 
 ## www.ragnarok.in.th/
 [Thailand - tRO Main server (Norse)]
