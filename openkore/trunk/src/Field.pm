@@ -50,7 +50,7 @@ use Modules 'register';
 use Settings;
 use FastUtils;
 use Utils::Exceptions;
-use Translation qw(TF);
+use Translation qw(T TF);
 
 # Block types.
 use constant {
@@ -147,7 +147,8 @@ sub instanceID {
 #			Training Ground
 #			Catacombs
 sub descName {
-	return $maps_lut{$_[0]->{baseName}.'.rsw'}; # TODO: $maps_lut, why not drop the .rsw from what we load in kore?
+	# TODO: $maps_lut, why not drop the .rsw from what we load in kore?
+	return defined $maps_lut{$_[0]->{baseName}.'.rsw'} ? $maps_lut{$_[0]->{baseName}.'.rsw'} : T('Unknown Area');
 }
 
 ##
