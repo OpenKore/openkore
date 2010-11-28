@@ -3940,6 +3940,7 @@ sub login_error {
 		error T("The server is temporarily blocking your connection\n"), "connection";
 	} elsif ($args->{type} == 105) { #Phone lock
 		error T("Please dial to activate the login procedure.\n"), "connection";
+		relog(10);
 	}
 	if ($args->{type} != 5 && $versionSearch) {
 		$versionSearch = 0;
