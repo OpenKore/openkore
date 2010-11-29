@@ -20,6 +20,8 @@ use strict;
 
 use base 'Task';
 
+use Settings;
+use Network;
 use Carp::Assert;
 use Modules 'register';
 use Globals qw(%config $net $char $messageSender);
