@@ -6152,7 +6152,7 @@ our %stat_info_handlers = (
 		
 		$actor->{lv} = $value;
 		
-		message sprintf($actor->verb(T("%s are now level %d\n"), T("%s is now level %d\n")), $value), "success", $actor->isa('Actor::You') ? 1 : 2;
+		message sprintf($actor->verb(T("%s are now level %d\n"), T("%s is now level %d\n")), $actor, $value), "success", $actor->isa('Actor::You') ? 1 : 2;
 		
 		return unless $actor->isa('Actor::You');
 		
