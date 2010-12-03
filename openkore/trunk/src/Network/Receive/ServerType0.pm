@@ -7880,22 +7880,22 @@ sub special_item_obtain {
 	my ($self, $args) = @_;
 	
 	my $item_name = itemNameSimple($args->{nameID});
-	
+	my $holder =  bytesToString($args->{holder});
+	stripLanguageCode(\$holder);
 	if ($args->{type} == TYPE_BOXITEM) {
 		@{$args}{qw(box_nameID)} = unpack 'v', $args->{etc};
 		
 		my $box_item_name = itemNameSimple($args->{box_nameID});
-		message TF("%s has got %s from %s.\n", $args->{holder}, $item_name, $box_item_name), 'schat';
+		message TF("%s has got %s from %s.\n", $holder, $item_name, $box_item_name), 'schat';
 		
 	} elsif ($args->{type} == TYPE_MONSTER_ITEM) {
 		#@{$args}{qw(monster_name)} = unpack 'C/Z', $args->{etc}; # so perlpacktut did it wrong?
 		my $len = unpack 'C', $args->{etc};
 		@{$args}{qw(monster_name)} = unpack "Z$len", substr $args->{etc}, 1;
-		
-		message TF("%s has got %s from %s.\n", $args->{holder}, $item_name, $args->{monster_name}), 'schat';
+		message TF("%s has got %s from %s.\n", $holder, $item_name, $args->{monster_name}), 'schat';
 		
 	} else {
-		warning TF("%s has got %s (from Unknown type %d).\n", $args->{holder}, $item_name, $args->{type}), 'schat';
+		warning TF("%s has got %s (from Unknown type %d).\n", $holder, $item_name, $args->{type}), 'schat';
 	}
 }
 
