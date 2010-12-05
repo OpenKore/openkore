@@ -68,10 +68,4 @@ sub setItem {
 	}
 }
 
-sub removeAllItems {
-	my ($self) = @_;
-	
-	$self->{list}->DeleteAllItems;
-}
-
 1;

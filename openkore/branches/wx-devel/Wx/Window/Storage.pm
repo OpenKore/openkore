@@ -63,10 +63,11 @@ sub update {
 	
 	$self->Freeze;
 	$self->setItem(@$_) for map { [$storage{$_}{binID}, $storage{$_}] } @storageID;
+	$self->removeAllExcept(map {$storage{$_}{binID}} @storageID);
 	$self->Thaw;
 }
 
-sub clear { $_[0]->removeAllItems }
+sub clear { $_[0]->removeAll }
 
 sub getSelection {
 	my %storage_lut = map { $storage{$_}{binID} => $storage{$_} } @storageID;

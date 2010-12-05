@@ -6,9 +6,7 @@ use base 'Interface::Wx::Base::List';
 use Wx ':everything';
 
 use Globals qw/%skillsDesc_lut/;
-#use Misc qw/items_control pickupitems/;
 use Translation qw/T TF/;
-#use Utils qw/formatNumber/;
 
 sub new {
 	my ($class, $parent, $id) = (shift, shift, shift);
@@ -29,9 +27,13 @@ sub new {
 	$_ });
 	$self->{list}->InsertColumn(2, do {
 		local $_ = Wx::ListItem->new;
-		$_->SetWidth(125);
+		$_->SetWidth(18);
 	$_ });
 	$self->{list}->InsertColumn(3, do {
+		local $_ = Wx::ListItem->new;
+		$_->SetWidth(125);
+	$_ });
+	$self->{list}->InsertColumn(4, do {
 		local $_ = Wx::ListItem->new;
 		$_->SetWidth(26);
 	$_ });
@@ -54,19 +56,20 @@ sub DESTROY {
 	Plugins::delHooks ($self->{hooks});
 }
 
-sub getSelection { new Skill(idn => ${$_[0]{selection}}[0]) }
+sub getSelection { map {new Skill(idn => $_)} @{$_[0]{selection}} }
 
 sub setItem {
-	my ($self, $index, $item) = @_;
+	my ($self, $index, $skill, $up) = @_;
 	
-	if ($item) {
-		my ($level, $target) = ($item->getLevel, $item->getTargetType);
+	if ($skill) {
+		my ($level, $target) = ($skill->getLevel, $skill->getTargetType);
 		
 		$self->SUPER::setItem($index, [
 			$index,
 			$level,
-			$item->getName,
-			$target != Skill::TARGET_PASSIVE && $level && $item->getSP($level) || '',
+			$up ? '+' : '',
+			$skill->getName,
+			$target != Skill::TARGET_PASSIVE && $level && $skill->getSP($level) || '',
 		], (
 			!$level ? $self->{color}{unavailable}
 			: $target == Skill::TARGET_ENEMY ? $self->{color}{enemy}
@@ -78,12 +81,6 @@ sub setItem {
 	} else {
 		$self->SUPER::setItem($index);
 	}
-}
-
-sub removeAllItems {
-	my ($self) = @_;
-	
-	$self->{list}->DeleteAllItems;
 }
 
 1;

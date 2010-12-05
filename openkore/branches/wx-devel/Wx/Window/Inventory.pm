@@ -105,19 +105,23 @@ sub onInventoryListRemove { $_[0]->setItem ($_[2][1]) }
 sub onItemsChanged {
 	my $self = shift;
 	
-	$self->setItem ($_->{invIndex}, $_) foreach map { $char->inventory->getByServerIndex ($_) } @_;
+	$self->setItem ($_->{invIndex}, $_) for map { $char->inventory->getByServerIndex ($_) } @_;
 }
 
 sub update {
+	my ($self) = @_;
+	
 	return unless $char;
 	
-	$_[0]->Freeze;
-	$_[0]->setItem ($_->{invIndex}, $_) foreach (@{$char->inventory->getItems});
-	$_[0]->Thaw;
+	$self->Freeze;
+	my @items = @{$char->inventory->getItems};
+	$self->setItem ($_->{invIndex}, $_) for @items;
+	$self->removeAllExcept(map {$_->{invIndex}} @items);
+	$self->Thaw;
 }
 
 sub clear {
-	$_[0]->removeAllItems;
+	$_[0]->removeAll;
 	$_[0]->_removeCallbacks;
 	$_[0]->_addCallbacks;
 }

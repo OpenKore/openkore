@@ -55,18 +55,20 @@ sub onInfo {
 sub onItemsChanged {
 	my $self = shift;
 	
-	$self->setItem ($_->[0], $_->[1]) foreach map { [$_, $cart{inventory}[$_]] } @_;
+	$self->setItem ($_->[0], $_->[1]) for map { [$_, $cart{inventory}[$_]] } @_;
 }
 
 sub update {
 	my ($self, $handler, $args) = @_;
 	
 	$self->Freeze;
-	$self->setItem ($_->{index}, $_) foreach (grep defined, @{$cart{inventory}});
+	my @items = grep defined, @{$cart{inventory}};
+	$self->setItem ($_->{index}, $_) for @items;
+	$self->removeAllExcept(map {$_->{index}} @items);
 	$self->Thaw;
 }
 
-sub clear { $_[0]->removeAllItems }
+sub clear { $_[0]->removeAll }
 
 sub getSelection { map { $cart{inventory}[$_] } @{$_[0]{selection}} }
 
