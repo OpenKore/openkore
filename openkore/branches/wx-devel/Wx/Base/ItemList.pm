@@ -50,11 +50,12 @@ sub setItem {
 		$self->SUPER::setItem($index, [
 			$index,
 			$item->{amount},
+			!$item->{identified} ? TF('%s (Not identified)', $item->{name}) :
+			$item->{equipped} ? ($equipTypes_lut{$item->{equipped}}
+				? TF('%s (%s)', $item->{name}, $equipTypes_lut{$item->{equipped}})
+				: TF('%s (Equipped)', $item->{name})
+			) :
 			$item->{name}
-			. ($item->{equipped} ? (
-				$equipTypes_lut{$item->{equipped}} ? ' ('.$equipTypes_lut{$item->{equipped}}.')' : ' (Equipped)'
-			) : '')
-			. ($item->{identified} ? '' : ' (Not identified)')
 		], (
 			!$item->{identified} ? $self->{color}{notIdent}
 			: isUsable($item) ? $self->{color}{usable}

@@ -60,7 +60,7 @@ sub new {
 			) {
 				my $value = join ' ', $name,
 				map {$_ || 0} @{{%$control, @$_[0] => $control->{@$_[0]} ? 0 : 1}} {qw/keep storage sell cart_add cart_get/};
-				$value =~ s/\s+\S+\K\s+[ 0]*$//;
+				$value =~ s/\s+\d+\K\s+[ 0]*$//;
 				push @submenu, {
 					title => @$_[1], check => $control->{@$_[0]},
 					$Commands::customCommands{iconf} && (command => "iconf $value")
