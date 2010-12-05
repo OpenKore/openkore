@@ -5922,6 +5922,7 @@ sub skills_list {
 			ID => $ID,
 			handle => $handle,
 			level => $lv,
+			upgradable => $up,
 		});
 	}
 }
@@ -5949,6 +5950,7 @@ sub skill_add {
 		ID => $args->{skillID},
 		handle => $handle,
 		level => $args->{lv},
+		upgradable => 0,
 	});
 }
 
