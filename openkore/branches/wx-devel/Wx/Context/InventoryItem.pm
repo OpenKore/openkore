@@ -35,9 +35,9 @@ sub new {
 		
 		push @{$self->{head}}, {};
 		push @{$self->{head}}, {title => $canActivate, callback => sub {
-			$self->isUsable($object) ? $object->use
-			: $self->isEquip($object) ? ($object->{equipped} ? $object->unequip : $object->equip)
-			: $self->isCard($object) && Commands::run ("card use $object->{invIndex}");
+			$weak->isUsable($object) ? $object->use
+			: $weak->isEquip($object) ? ($object->{equipped} ? $object->unequip : $object->equip)
+			: $weak->isCard($object) && Commands::run ("card use $object->{invIndex}");
 		}} if $canActivate;
 		
 		# Network bugs prevent from adding multiple items at once
