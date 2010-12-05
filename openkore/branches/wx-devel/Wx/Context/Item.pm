@@ -103,8 +103,9 @@ sub new {
 		
 		push @tail, {};
 		push @tail, {title => T('Lookup in...'), menu => [map {{ title => $_->[0], url => do { $_->[1] =~ s/%ID%/$object->{nameID}/; $_->[1] } }} (
-			['Amesani' => 'http://ro.amesani.org/db/item-info/%ID%/'],
+			['iRO Wiki' => 'http://db.irowiki.org/db/item-info/%ID%/'],
 			['RateMyServer' => 'http://ratemyserver.net/index.php?page=item_db&item_id=%ID%'],
+			['RO Empire' => 'http://www.roempire.com/database/?page=items&act=view&iid=%ID%'],
 		)]};
 		if (my $control = $itemsDesc_lut{$object->{nameID}}) {
 			chomp $control;

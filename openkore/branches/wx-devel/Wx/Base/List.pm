@@ -88,6 +88,21 @@ sub setStat {
 	}
 }
 
+sub removeAll {
+	my ($self) = @_;
+	
+	$self->{list}->DeleteAllItems;
+}
+
+sub removeAllExcept {
+	my $self = shift;
+	my %lut = map {$_ => 1} @_;
+	
+	for (my $i = 0; $i < $self->{list}->GetItemCount;) {
+		$lut{$self->{list}->GetItemData($i)} ? $i++ : $self->{list}->DeleteItem($i)
+	}
+}
+
 sub _onSelectionChange {
 	my ($self) = @_;
 	

@@ -45,7 +45,7 @@ sub DESTROY {
 sub onSkillChange {
 	my ($self, $args) = @_;
 	
-	$self->setItem($args->{ID}, new Skill(handle => $args->{handle}, level => $args->{level}));
+	$self->setItem($args->{ID}, new Skill(handle => $args->{handle}, level => $args->{level}), $args->{upgradable});
 }
 
 sub onStatInfo {
@@ -60,18 +60,20 @@ sub update {
 	return unless $char;
 	
 	$self->Freeze;
-	$self->setItem($char->{skills}{$_}{ID},
-		new Skill(handle => $_, level => $char->{skills}{$_}{lv})
-	) for sort {$char->{skills}{$a}{ID} <=> $char->{skills}{$b}{ID}} keys %{$char->{skills}};
+	my @skills = sort {$char->{skills}{$a}{ID} <=> $char->{skills}{$b}{ID}} keys %{$char->{skills}};
+	$self->setItem(
+		$char->{skills}{$_}{ID},
+		new Skill(handle => $_, level => $char->{skills}{$_}{lv}),
+		$char->{skills}{$_}{up},
+	) for @skills;
+	$self->removeAllExcept(map {$char->{skills}{$_}{ID}} @skills);
 	
 	$self->onStatInfo;
 	
 	$self->Thaw;
 }
 
-sub clear {
-	$_[0]->removeAllItems;
-}
+sub clear { $_[0]->removeAll }
 
 sub _onRightClick {
 	my ($self) = @_;
