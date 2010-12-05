@@ -87,6 +87,19 @@ proc print_packet2
 	ret
 endp
 
+; Print out packet (type 3)
+proc print_packet3
+	push ebp
+	mov ebp, esp
+	mov ecx, dword [ebp+0Ch]
+	mov eax, dword [ecx] ; eax -> Packet_ID
+	mov edx, dword [ecx+04h] ; edx -> PacketLen
+	mov ecx, dword [ecx+08h] ; ecx -> PacketInnerLen
+	ccall [printf], str2, eax, edx, ecx
+	pop ebp
+	ret
+endp
+
 ; Dummy Function to replace old std::map calls
 proc dummy
 	push ebp
@@ -125,6 +138,7 @@ dd __alloca_probe
 dd set_packet_len
 dd print_packet1
 dd print_packet2
+dd print_packet3
 dd dummy
 
 str0	db '# Packet Extractor by kLabMouse',0Ah,0

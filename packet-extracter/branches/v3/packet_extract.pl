@@ -9,13 +9,14 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#  $Revision: 7546 $
-#  $Id: packet_extract.pl 7546 2010-10-22 01:19:43Z kLabMouse $
+#  $Revision: 7586 $
+#  $Id: packet_extract.pl 7586 2010-10-22 01:19:43Z kLabMouse $
 #
 #########################################################################
 
 use FindBin qw($RealBin);
-use Data::Dumper;
+use File::Basename;
+#use Data::Dumper;
 use Disassemble::X86;
 use Disassemble::X86::FormatTree;
 use strict;
@@ -23,7 +24,6 @@ use strict;
 # ###################################################################
 # todo:
 #   Add support for more target types
-#   Add command promt params
 #   Convert all this Shit to Perl Packages
 #   Add Nice GUI (optional)
 # ###################################################################
@@ -36,13 +36,15 @@ unless (@ARGV) {
 #Innit
 my $packet_len_extractor = {};
 $packet_len_extractor->{file_name_raw} = shift;
+$packet_len_extractor->{file_name} = "";
 $packet_len_extractor->{file} = undef;
 $packet_len_extractor->{original_extractor_name} = $RealBin . "/src/extractor.exe";
 $packet_len_extractor->{original_extractor} = undef;
 $packet_len_extractor->{new_extractor_name} = $RealBin . "/extractor.exe";
 $packet_len_extractor->{new_extractor} = undef;
-$packet_len_extractor->{map_version} = 3; # 1: Old 'std::map{int,int}' style; 2: Mixed style; 3: Renewal style
+$packet_len_extractor->{map_version} = 3; # 1: Old 'std::map{int,int}' style; 2: Mixed style; 3: Renewal style #1; 4: Renewal style #2;
 $packet_len_extractor->{map_pointer} = undef;
+$packet_len_extractor->{map_pointer_entry_offset} = 0;
 $packet_len_extractor->{map_function_offset} = undef;
 $packet_len_extractor->{map_function} = undef;
 $packet_len_extractor->{map_function_disassemble};
@@ -51,20 +53,35 @@ $packet_len_extractor->{stolen_function}->{space} = 204800; # Space available fo
 $packet_len_extractor->{stolen_function}->{known_calls} = {}; # Map of Known Calls
 $packet_len_extractor->{stolen_function}->{stolen_code} = undef; # Stolen Function Data
 
+# Get Just the FileName
+($packet_len_extractor->{file_name}, undef) = fileparse($packet_len_extractor->{file_name_raw});
+
+
 # debug
+# Try 'Renewal style #1'
 $packet_len_extractor->{map_pointer} = find_pattern_in_file($packet_len_extractor->{file_name_raw}, "89 ?? ?? 89 ?? ?? 89 ?? ?? 89 ?? ?? 89 ?? 8B ?? ?? 83 ?? 04 89 ?? ?? ?? ?? 89 ?? ?? E8 ?? ?? ?? ?? 8B ?? ?? 8B C6");
+$packet_len_extractor->{map_pointer_entry_offset} = 29;
+$packet_len_extractor->{map_version} = 3;
 # $packet_len_extractor->{map_pointer} = 1565170;
+
+# Try 'Renewal style #2'
+if (not defined $packet_len_extractor->{map_pointer}) {
+  $packet_len_extractor->{map_pointer} = find_pattern_in_file($packet_len_extractor->{file_name_raw}, "8B ?? 89 ?? ?? ?? E8 ?? ?? ?? ?? C7 44 24 14 ?? ?? ?? ?? 8B ?? E8 ?? ?? ?? ?? C7 44 24 14");
+  $packet_len_extractor->{map_pointer_entry_offset} = 22;
+  $packet_len_extractor->{map_version} = 4;
+  # $packet_len_extractor->{map_pointer} = 1676290;
+}
 
 open($packet_len_extractor->{file}, "<", $packet_len_extractor->{file_name_raw}) || die "can't open ".$packet_len_extractor->{file_name_raw}.": $!";
 binmode $packet_len_extractor->{file};
 if (defined $packet_len_extractor->{map_pointer}) {
 	# Get PacketLenMap function offset
-	seek($packet_len_extractor->{file}, $packet_len_extractor->{map_pointer} + 29, 0);
+	seek($packet_len_extractor->{file}, $packet_len_extractor->{map_pointer} + $packet_len_extractor->{map_pointer_entry_offset}, 0);
 	read($packet_len_extractor->{file}, $packet_len_extractor->{map_function_offset}, 4);
-	$packet_len_extractor->{map_function_offset} = tell($packet_len_extractor->{file}) + unpack("V",$packet_len_extractor->{map_function_offset}); # Plus asm comand len
+	$packet_len_extractor->{map_function_offset} = tell($packet_len_extractor->{file}) + unpack("V!",$packet_len_extractor->{map_function_offset}); # Plus asm comand len
 
 	# debug
-	# printf "Packet Len Map offset: %i -> %0.8X\n", $packet_len_extractor->{map_function_offset}, $packet_len_extractor->{map_function_offset} + 0x400000;
+	# printf "Packet Len Map offset: %i (%0.8X)-> %0.8X\n", $packet_len_extractor->{map_function_offset}, $packet_len_extractor->{map_function_offset}, $packet_len_extractor->{map_function_offset} + 0x400000;
 	
 	# Read PacketLenMap function RAW
 	my $packet_len_func;
@@ -72,6 +89,7 @@ if (defined $packet_len_extractor->{map_pointer}) {
 	read($packet_len_extractor->{file}, $packet_len_extractor->{map_function}, 204800); # Read 200kb
 
 	# Disasm and Fix
+	printf "Packet Len Map found.\nWorking...";
 	$packet_len_extractor->{map_function_disassemble} = Disassemble::X86->new( text => $packet_len_extractor->{map_function}, format => "Tree" );
 	until ( $packet_len_extractor->{map_function_disassemble}->at_end() ) {
 		my $disasm = $packet_len_extractor->{map_function_disassemble}->disasm();
@@ -101,15 +119,12 @@ if (defined $packet_len_extractor->{map_pointer}) {
 			last;
 		};
 	};
+	printf "\n";
 	
+	# Fill the rest of code space with 'nop'
 	while (length($packet_len_extractor->{stolen_function}->{stolen_code}) < $packet_len_extractor->{stolen_function}->{space}) {
 		$packet_len_extractor->{stolen_function}->{stolen_code} .= pack("C", 0x90); #Fill with 'nop'
 	}
-	
-	# ###################################################################
-	# todo:
-	#   copy source file (from what we copy code) name to target emulator
-	# ###################################################################
 	
 	# Output Extractor Binary
 	# Open Original Extractor File for read
@@ -120,10 +135,18 @@ if (defined $packet_len_extractor->{map_pointer}) {
 	open($packet_len_extractor->{new_extractor}, ">", $packet_len_extractor->{new_extractor_name}) || die "can't open ".$packet_len_extractor->{new_extractor_name}.": $!";
 	binmode $packet_len_extractor->{new_extractor};
 	my $data;
-	read($packet_len_extractor->{original_extractor}, $data, 665); # Hardcoded Value
+	read($packet_len_extractor->{original_extractor}, $data, 698); # Hardcoded Value
 	seek($packet_len_extractor->{original_extractor}, $packet_len_extractor->{stolen_function}->{space}, 1);
 	print {$packet_len_extractor->{new_extractor}} $data;
 	print {$packet_len_extractor->{new_extractor}} $packet_len_extractor->{stolen_function}->{stolen_code};
+	# Copy the Rest of File until FileName string
+	while ((! eof($packet_len_extractor->{original_extractor})) && (tell($packet_len_extractor->{original_extractor}) < 205898)) {  # Hardcoded Value
+		read($packet_len_extractor->{original_extractor}, $data, 1);
+		print {$packet_len_extractor->{new_extractor}} $data;
+	}
+	# Print out FileName
+	print {$packet_len_extractor->{new_extractor}} $packet_len_extractor->{file_name} . pack("C", 0x00);
+	seek($packet_len_extractor->{original_extractor}, length($packet_len_extractor->{file_name})+1, 1);
 	# Copy the Rest of file
 	while (! eof($packet_len_extractor->{original_extractor})) {
 		read($packet_len_extractor->{original_extractor}, $data, 1);
@@ -140,19 +163,23 @@ sub remap_function {
 	my $known_patterns = {};
 	# __alloca_probe
 	$known_patterns->{"alloca_probe"}->{pattern} = "51 3D 00 10 00 00 8D 4C 24 08 72 14 81 E9 00 10 00 00 2D 00 10 00 00 85 01 3D 00 10 00 00 73 EC 2B C8 8B C4 85 01 8B E1 8B 08 8B 40 04 50 C3";
-	$known_patterns->{"alloca_probe"}->{deltaoffset} = -157;
+	$known_patterns->{"alloca_probe"}->{deltaoffset} = -190;
 
 	# set_packet_len
 	$known_patterns->{"set_packet_len"}->{pattern} = "55 8B EC 8B 55 0C 8B C1 8B 4D 08 89 08 89 50 04 5D C2 08 00";
-	$known_patterns->{"set_packet_len"}->{deltaoffset} = -110;
+	$known_patterns->{"set_packet_len"}->{deltaoffset} = -143;
 
 	# print_packet1
 	$known_patterns->{"print_packet1"}->{pattern} = "55 8B EC 8B C1 8B 4D 08 8B 11 8B 4D 0C 89 10 8B 11 89 50 04 8B 49 04 89 48 08 5D C2 08 00";
-	$known_patterns->{"print_packet1"}->{deltaoffset} = -90;
+	$known_patterns->{"print_packet1"}->{deltaoffset} = -123;
 	
 	# print_packet2
 	$known_patterns->{"print_packet2"}->{pattern} = "55 8B EC 8B 45 0C 8B 08 8B 45 08 89 08 8B 4D 10 8B 11 89 50 04 8B 49 04 89 48 08 5D C3";
-	$known_patterns->{"print_packet2"}->{deltaoffset} = -51;
+	$known_patterns->{"print_packet2"}->{deltaoffset} = -84;
+	
+	# print_packet3
+	$known_patterns->{"print_packet3"}->{pattern} = "51 55 8B 6C 24 10 56 57 8B F9 8B 77 04 8B 46 04 80 78 19 00 B1 01 88 4C 24 0C 75 21 8B 55 00 90";
+	$known_patterns->{"print_packet3"}->{deltaoffset} = -49;
 	
 	# dummy
 	$known_patterns->{"dummy1"}->{pattern} = "55 8B EC 83 EC 08 53 56 8B 15 ?? ?? ?? ?? 57 8B F9 B0 01 8B 4F 04 8B F1 8B 59 04 3B DA 74 22 8B 45 0C 8B 00 89 45 F8";
@@ -184,7 +211,8 @@ sub remap_function {
 	# Now code should be mapped to function name, set $replace_code
 	if (defined $name) {
 		# debug
-		printf "remap call \'%s\' -> %i (delta: %i) -> %i -> %0.8X\n", $name, $stolen_code_offset, $known_patterns->{$name}->{deltaoffset}, $known_patterns->{$name}->{deltaoffset} + (0 - $stolen_code_offset - 1), $known_patterns->{$name}->{deltaoffset} + (0 - $stolen_code_offset - 1);
+		# printf "remap call \'%s\' -> %i (delta: %i) -> %i -> %0.8X\n", $name, $stolen_code_offset, $known_patterns->{$name}->{deltaoffset}, $known_patterns->{$name}->{deltaoffset} + (0 - $stolen_code_offset - 1), $known_patterns->{$name}->{deltaoffset} + (0 - $stolen_code_offset - 1);
+		# printf ".";
 		
 		my $replace_code = pack("C V", 0xE8, $known_patterns->{$name}->{deltaoffset} + (0 - $stolen_code_offset - 1));
 		return ($name, $replace_code);
