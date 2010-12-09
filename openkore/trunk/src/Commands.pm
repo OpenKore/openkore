@@ -2474,7 +2474,7 @@ sub cmdGuild {
 			$ID = unpack("V",$guild{member}[$i]{ID});
 			$charID = unpack("V",$guild{member}[$i]{charID});
 
-			$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>>  @<<<<<<<<<<<<<<<<<<<<<<< @<<",
+			$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @<< @<<<<<<<<<<<<<<<<<<<<<<< @<<",
 					[$i, $name, $job, $lvl, $title, $online, $ID, $charID]);
 		}
 		$msg .= "---------------------------------------\n";
