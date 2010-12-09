@@ -28,6 +28,7 @@ use Translation qw(T TF);
 			[radiogroup => 'ai auto', T('Auto')],
 			[radio => 'ai manual', T('Manual')],
 			[radio => 'ai off', T('Off'), sub { !$AI }],
+			[command => 'ai clear', T('Clear')],
 			[],
 			[text => undef, T('Atk: ')],
 			[radiogroup => 'conf attackAuto 2', T('Aggro')],
@@ -40,7 +41,6 @@ use Translation qw(T TF);
 			[],
 			[text => undef, T('Log: ')],
 			[config => 'showDomain', T('Domains')],
-			[config => 'verbose', T('Verbose')],
 			[],
 			[command => 'reload all', T('Reload')],
 		) {

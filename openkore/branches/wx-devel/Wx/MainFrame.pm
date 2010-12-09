@@ -191,38 +191,31 @@ sub updateStatusBar {
 		# TODO: B/J remaining time; current zeny
 		
 		$xyText = "$char->{pos_to}{x}, $char->{pos_to}{y}";
-
-		if ($AI) {
-			if (@ai_seq) {
-=pod
-				my @seqs = @ai_seq;
-				foreach (@seqs) {
-					s/^route_//;
-					s/_/ /g;
-					s/([a-z])([A-Z])/$1 $2/g;
-					$_ = lc $_;
+		
+		my @seqs = ();
+		for (@ai_seq) {
+			my $args = AI::args(scalar @seqs);
+			
+			# TODO: Tasks should provide descriptions by themselves
+			
+			if ($_ eq 'attack') {
+				if ($args->{ID} and my $actor = Actor::get($args->{ID})) {
+					push @seqs, sprintf '%s', $actor;
+					next
 				}
-				substr($seqs[0], 0, 1) = uc substr($seqs[0], 0, 1);
-				$aiText = join(', ', @seqs);
-=cut
-				my @seqs = ();
-				for (@ai_seq) {
-					push @seqs, do {
-						my $args = AI::args(scalar @seqs);
-						
-						return sprintf('%s (%s)', $_, $Macro::Data::queue->name) if /^macro$/ and (
-							$Macro::Data::queue && ref $Macro::Data::queue && $Macro::Data::queue->can('name')
-						);
-						
-						$_;
-					}
+			} elsif ($_ eq 'route') {
+				push @seqs, sprintf $args->isa('Task::MapRoute') ? '%s %s %s' : '%2$s %3$s', $args->{dest}{map}, @{$args->{dest}{pos}}{qw(x y)};
+				next
+			} elsif ($_ eq 'macro') {
+				if ($Macro::Data::queue && ref $Macro::Data::queue && $Macro::Data::queue->can('name')) {
+					push @seqs, sprintf '%s %s', $_, $Macro::Data::queue->name;
+					next
 				}
-			} else {
-				$aiText = "";
 			}
-		} else {
-			$aiText = T("Paused");
+			
+			push @seqs, $_
 		}
+		$aiText = (join ', ', @seqs) || T('Idle');
 	}
 
 	# Only set status bar text if it has changed

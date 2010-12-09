@@ -3,8 +3,9 @@ package Interface::Wx::Context::InventoryItem;
 use strict;
 use base 'Interface::Wx::Context::Item';
 
-use Globals qw/$char %storage $cardMergeIndex @cardMergeItemsID %currentDeal/;
-use Translation qw/T TF/;
+use Globals qw($char %storage $cardMergeIndex @cardMergeItemsID @identifyID %currentDeal);
+use Translation qw(T TF);
+use Utils qw(binFind);
 
 sub new {
 	my ($class, $parent, $objects) = @_;
@@ -17,28 +18,31 @@ sub new {
 		my ($object) = @$objects;
 		my $invIndex = $object->{invIndex};
 		
-		my ($canActivate, $canDrop) = (undef, 1);
-		if ($self->isUsable ($object)) {
+		my ($canActivate, $subActivate, $canDrop) = (undef, undef, 1);
+		unless ($object->{identified}) {
+			$canActivate = T('Identify') if defined (my $identifyIndex = binFind(\@identifyID, $object->{invIndex}));
+			$subActivate = sub { Commands::run("identify $identifyIndex") };
+		} elsif ($self->isUsable ($object)) {
 			$canActivate = T('Use 1 on Self');
+			$subActivate = sub { $object->use };
 		} elsif ($self->isEquip ($object)) {
 			unless ($object->{equipped}) {
 				$canActivate = T('Equip') if $object->{identified};
+				$subActivate = sub { $object->equip };
 			} else {
 				$canActivate = T('Unequip');
+				$subActivate = sub { $object->unequip };
 				$canCart = 0;
 				$canStorage = 0;
 				$canDrop = 0;
 			}
 		} elsif ($self->isCard ($object)) {
 			$canActivate = T('Request Merge List');
+			$subActivate = sub { Commands::run("card use $object->{invIndex}") };
 		}
 		
 		push @{$self->{head}}, {};
-		push @{$self->{head}}, {title => $canActivate, callback => sub {
-			$weak->isUsable($object) ? $object->use
-			: $weak->isEquip($object) ? ($object->{equipped} ? $object->unequip : $object->equip)
-			: $weak->isCard($object) && Commands::run ("card use $object->{invIndex}");
-		}} if $canActivate;
+		push @{$self->{head}}, {title => $canActivate, callback => $subActivate} if $canActivate;
 		
 		# Network bugs prevent from adding multiple items at once
 		push @{$self->{head}}, {
