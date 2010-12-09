@@ -1146,7 +1146,7 @@ sub processAutoStorage {
 
 		# Only autostorage when we're on an attack route, or not moving
 		if ((!defined($routeIndex) || $attackOnRoute > 1) && $needitem ne "" &&
-			$char->inventory->size() > 0 && ai_storageAutoCheck()) {
+			$char->inventory->size() > 0 ){
 	 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
 			AI::queue("storageAuto");
 		}
@@ -2355,11 +2355,7 @@ sub processAutoSkillUse {
 		}
 		if ($self_skill{ID}) {
 			debug qq~Auto-skill on self: $config{$self_skill{prefix}} (lvl $self_skill{lvl})\n~, "ai";
-			if (!ai_getSkillUseType($self_skill{ID})) {
-				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $self_skill{owner}{ID}, undef, undef, undef, undef, $self_skill{prefix});
-			} else {
-				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $self_skill{owner}{pos_to}{x}, $self_skill{owner}{pos_to}{y}, undef, undef, undef, $self_skill{prefix});
-			}
+			ai_skillUse2($self_skill{skillObject}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $self_skill{owner}, $self_skill{prefix});
 		}
 	}
 }
@@ -2418,6 +2414,7 @@ sub processPartySkillUse {
 					$party_skill{ID} = $party_skill{skillObject}->getHandle;
 					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"} || $char->getSkillLevel($party_skill{skillObject});
 					$party_skill{target} = $player->{name};
+					$party_skill{targetActor} = $player;
 					my $pos = $player->position;
 					$party_skill{x} = $pos->{x};
 					$party_skill{y} = $pos->{y};
@@ -2468,32 +2465,14 @@ sub processPartySkillUse {
 		}
 		if (defined $party_skill{targetID}) {
 			debug qq~Party Skill used ($party_skill{target}) Skills Used: $config{$party_skill{prefix}} (lvl $party_skill{lvl})\n~, "skill";
-			if (!ai_getSkillUseType($party_skill{ID})) {
-				ai_skillUse(
-					$party_skill{ID},
-					$party_skill{lvl},
-					$party_skill{maxCastTime},
-					$party_skill{minCastTime},
-					$party_skill{isSelfSkill} ? $party_skill{owner}{ID} : $party_skill{targetID},
-					undef,
-					undef,
-					undef,
-					undef,
-					$party_skill{prefix});
-			} else {
-				my $pos = ($party_skill{isSelfSkill}) ? $party_skill{owner}{pos_to} : \%party_skill;
-				ai_skillUse(
-					$party_skill{ID},
-					$party_skill{lvl},
-					$party_skill{maxCastTime},
-					$party_skill{minCastTime},
-					$pos->{x},
-					$pos->{y},
-					undef,
-					undef,
-					undef,
-					$party_skill{prefix});
-			}
+			ai_skillUse2(
+				$party_skill{skillObject},
+				$party_skill{lvl},
+				$party_skill{maxCastTime},
+				$party_skill{minCastTime},
+				$party_skill{isSelfSkill} ? $party_skill{owner} : $party_skill{targetActor},
+				$party_skill{prefix},
+			);
 		}
 	}
 }
