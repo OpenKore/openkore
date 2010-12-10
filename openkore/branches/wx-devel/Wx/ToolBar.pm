@@ -78,6 +78,8 @@ use Translation qw(T TF);
 			}
 		}
 		
+		$self->Realize;
+		
 		push @hooks, ['postloadfiles', sub {
 			$weak->{config}{$_}->SetValue($config{$_}) for keys %{$weak->{config}};
 			$weak->{radio}{('conf attackAuto 0', 'conf attackAuto 1', 'conf attackAuto 2')[$config{attackAuto}]}->SetValue(1);
