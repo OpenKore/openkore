@@ -4224,7 +4224,7 @@ sub cmdStorage {
 				"       storage get <storage_item> [<amount>]\n" . 
 				"       storage gettocart <storage_item> [<amount>]\n" .
 				"       storage desc <storage_item_#>\n".
-				"       storage log");
+				"       storage log\n");
 		}
 	} else {
 		error T("No information about storage; it has not been opened before in this session\n");
