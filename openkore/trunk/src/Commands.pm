@@ -3048,7 +3048,7 @@ sub cmdMove {
 		# coordinates
 		$x = $arg1;
 		$y = $arg2;
-		$map = $field->name;
+		$map = $field->baseName;
 	} elsif ($arg1 =~ /^\d+$/) {
 		# coordinates and map
 		$x = $arg1;
