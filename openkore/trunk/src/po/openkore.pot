@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-29 19:50+0100\n"
+"POT-Creation-Date: 2010-12-15 17:36+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -233,7 +233,7 @@ msgstr ""
 msgid "Failed to take %s (%s) from (%s, %s) to (%s, %s)\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:808 ../AI/CoreLogic.pm:2833
+#: ../AI/CoreLogic.pm:808 ../AI/CoreLogic.pm:2812
 #, perl-format
 msgid "Routing to (%s, %s) to take %s (%s), distance %s\n"
 msgstr ""
@@ -431,71 +431,71 @@ msgstr ""
 msgid "My master warped at (%s, %s) - moving to warp point\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2787
+#: ../AI/CoreLogic.pm:2766
 #, perl-format
 msgid "Gathering: %s (%s)\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2804
+#: ../AI/CoreLogic.pm:2783
 #, perl-format
 msgid "Failed to gather %s (%s) : Lost target\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2812
+#: ../AI/CoreLogic.pm:2791
 #, perl-format
 msgid "Failed to gather %s (%s) : No looting!\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2816
+#: ../AI/CoreLogic.pm:2795
 #, perl-format
 msgid "Failed to gather %s (%s) : Timeout\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2867
+#: ../AI/CoreLogic.pm:2846
 msgid "Teleporting to avoid all players\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2907
+#: ../AI/CoreLogic.pm:2886
 msgid "Teleporting due to insufficient HP/SP or too many aggressives\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2920
+#: ../AI/CoreLogic.pm:2899
 #, perl-format
 msgid "Teleporting to avoid %s\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2930
+#: ../AI/CoreLogic.pm:2909
 #, perl-format
 msgid "Teleporting due to monster being too close %s\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2948
+#: ../AI/CoreLogic.pm:2927
 msgid "Teleporting due to idle\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2960
+#: ../AI/CoreLogic.pm:2939
 msgid "Teleporting to avoid portal\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2982 ../Misc.pm:1259
+#: ../AI/CoreLogic.pm:2961 ../Misc.pm:1259
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2983 ../Misc.pm:1260
+#: ../AI/CoreLogic.pm:2962 ../Misc.pm:1260
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2985
+#: ../AI/CoreLogic.pm:2964
 msgid "Respawning to save point.\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:2986
+#: ../AI/CoreLogic.pm:2965
 msgid "** Respawning to save point.\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:3037
+#: ../AI/CoreLogic.pm:3016
 #, perl-format
 msgid "Disconnecting for 30 secs to avoid %s\n"
 msgstr ""
@@ -1853,7 +1853,7 @@ msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2551
 #: ../Network/Receive/ServerType0.pm:2617
-#: ../Network/Receive/ServerType0.pm:7329
+#: ../Network/Receive/ServerType0.pm:7331
 msgid "unknown"
 msgstr ""
 
@@ -1991,7 +1991,7 @@ msgid "You lost %s zeny.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2706
-#: ../Network/Receive/ServerType0.pm:6189
+#: ../Network/Receive/ServerType0.pm:6191
 #, perl-format
 msgid "Disconnecting due to zeny lower than %s."
 msgstr ""
@@ -3074,7 +3074,7 @@ msgid "Skill %s failed (%s)\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5972
-#: ../Network/Receive/ServerType0.pm:5960
+#: ../Network/Receive/ServerType0.pm:5962
 msgid "Not enough stat points to add\n"
 msgstr ""
 
@@ -3104,8 +3104,8 @@ msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6101
 #: ../Network/Receive/kRO/Sakexe_0.pm:6102
-#: ../Network/Receive/ServerType0.pm:6160
-#: ../Network/Receive/ServerType0.pm:6161
+#: ../Network/Receive/ServerType0.pm:6162
+#: ../Network/Receive/ServerType0.pm:6163
 #, perl-format
 msgid "Disconnecting on level %s!\n"
 msgstr ""
@@ -3122,34 +3122,34 @@ msgid "Disconnecting on job level %s!\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6228
-#: ../Network/Receive/ServerType0.pm:6328
+#: ../Network/Receive/ServerType0.pm:6330
 msgid "Storage closed.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6259
-#: ../Network/Receive/ServerType0.pm:6359
+#: ../Network/Receive/ServerType0.pm:6361
 #, perl-format
 msgid "Storage Item Added: %s (%d) x %s\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6271
-#: ../Network/Receive/ServerType0.pm:6371
+#: ../Network/Receive/ServerType0.pm:6373
 #, perl-format
 msgid "Storage Item Removed: %s (%d) x %s\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6404
-#: ../Network/Receive/ServerType0.pm:6475
+#: ../Network/Receive/ServerType0.pm:6477
 msgid "Storage opened.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6414
-#: ../Network/Receive/ServerType0.pm:6485
+#: ../Network/Receive/ServerType0.pm:6487
 msgid "Please enter a new character password:\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6417
-#: ../Network/Receive/ServerType0.pm:6488
+#: ../Network/Receive/ServerType0.pm:6490
 msgid ""
 "You've never set a storage password before.\n"
 "You must set a storage password before you can use the storage.\n"
@@ -3158,8 +3158,8 @@ msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6428
 #: ../Network/Receive/kRO/Sakexe_0.pm:6464
-#: ../Network/Receive/ServerType0.pm:6499
-#: ../Network/Receive/ServerType0.pm:6535
+#: ../Network/Receive/ServerType0.pm:6501
+#: ../Network/Receive/ServerType0.pm:6537
 msgid ""
 "Unable to send character password. You must set the 'storageEncryptKey' "
 "option in config.txt or servers.txt.\n"
@@ -3167,8 +3167,8 @@ msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6429
 #: ../Network/Receive/kRO/Sakexe_0.pm:6465
-#: ../Network/Receive/ServerType0.pm:6500
-#: ../Network/Receive/ServerType0.pm:6536
+#: ../Network/Receive/ServerType0.pm:6502
+#: ../Network/Receive/ServerType0.pm:6538
 msgid ""
 "Unable to send storage password. You must set the 'storageEncryptKey' option "
 "in config.txt or servers.txt.\n"
@@ -3176,47 +3176,47 @@ msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6436
 #: ../Network/Receive/kRO/Sakexe_0.pm:6457
-#: ../Network/Receive/ServerType0.pm:6507
-#: ../Network/Receive/ServerType0.pm:6528
+#: ../Network/Receive/ServerType0.pm:6509
+#: ../Network/Receive/ServerType0.pm:6530
 #, perl-format
 msgid "Storage password set to: %s\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6443
-#: ../Network/Receive/ServerType0.pm:6514
+#: ../Network/Receive/ServerType0.pm:6516
 msgid "Please enter your character password."
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6448
-#: ../Network/Receive/ServerType0.pm:6519
+#: ../Network/Receive/ServerType0.pm:6521
 #, perl-format
 msgid "Character password set to: %s\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6452
-#: ../Network/Receive/ServerType0.pm:6523
+#: ../Network/Receive/ServerType0.pm:6525
 msgid "Please enter your storage password."
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6476
-#: ../Network/Receive/ServerType0.pm:6547
+#: ../Network/Receive/ServerType0.pm:6549
 msgid "You have entered the wrong password 5 times. Please try again later.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6497
-#: ../Network/Receive/ServerType0.pm:6576
+#: ../Network/Receive/ServerType0.pm:6578
 msgid "Successfully changed storage password.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6499
 #: ../Network/Receive/kRO/Sakexe_0.pm:6503
-#: ../Network/Receive/ServerType0.pm:6578
-#: ../Network/Receive/ServerType0.pm:6582
+#: ../Network/Receive/ServerType0.pm:6580
+#: ../Network/Receive/ServerType0.pm:6584
 msgid "Error: Incorrect storage password.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6501
-#: ../Network/Receive/ServerType0.pm:6580
+#: ../Network/Receive/ServerType0.pm:6582
 msgid "Successfully entered storage password.\n"
 msgstr ""
 
@@ -3224,57 +3224,57 @@ msgstr ""
 #: ../Network/Receive/kRO/Sakexe_0.pm:6541
 #: ../Network/Receive/kRO/Sakexe_0.pm:6567
 #: ../Network/Receive/kRO/Sakexe_0.pm:6580
-#: ../Network/Receive/ServerType0.pm:6609
-#: ../Network/Receive/ServerType0.pm:6620
-#: ../Network/Receive/ServerType0.pm:6646
-#: ../Network/Receive/ServerType0.pm:6659
+#: ../Network/Receive/ServerType0.pm:6611
+#: ../Network/Receive/ServerType0.pm:6622
+#: ../Network/Receive/ServerType0.pm:6648
+#: ../Network/Receive/ServerType0.pm:6661
 msgid ""
 "Unable to send PIN code. You must set the 'PINEncryptKey' option in servers."
 "txt."
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6548
-#: ../Network/Receive/ServerType0.pm:6627
+#: ../Network/Receive/ServerType0.pm:6629
 msgid "Login PIN code has been changed successfully.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6551
-#: ../Network/Receive/ServerType0.pm:6630
+#: ../Network/Receive/ServerType0.pm:6632
 msgid "Failed to change the login PIN code. Please try again.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6554
-#: ../Network/Receive/ServerType0.pm:6633
+#: ../Network/Receive/ServerType0.pm:6635
 msgid "Please enter your old login PIN code:"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6559
-#: ../Network/Receive/ServerType0.pm:6638
+#: ../Network/Receive/ServerType0.pm:6640
 msgid "Please enter a new login PIN code:"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6576
-#: ../Network/Receive/ServerType0.pm:6655
+#: ../Network/Receive/ServerType0.pm:6657
 msgid ""
 "The login PIN code that you entered is incorrect. Please re-enter your login "
 "PIN code."
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6588
-#: ../Network/Receive/ServerType0.pm:6667
+#: ../Network/Receive/ServerType0.pm:6669
 msgid ""
 "You have entered 3 incorrect login PIN codes in a row. Reconnecting...\n"
 msgstr ""
 
 #. Translation Comment: System/GM chat
 #: ../Network/Receive/kRO/Sakexe_0.pm:6649
-#: ../Network/Receive/ServerType0.pm:6707
+#: ../Network/Receive/ServerType0.pm:6709
 #, perl-format
 msgid "[GM] %s\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6661
-#: ../Network/Receive/ServerType0.pm:6719
+#: ../Network/Receive/ServerType0.pm:6721
 #, perl-format
 msgid ""
 "============= ALCHEMIST RANK ================\n"
@@ -3283,7 +3283,7 @@ msgid ""
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6671
-#: ../Network/Receive/ServerType0.pm:6729
+#: ../Network/Receive/ServerType0.pm:6731
 #, perl-format
 msgid ""
 "============= BLACKSMITH RANK ===============\n"
@@ -3292,7 +3292,7 @@ msgid ""
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6681
-#: ../Network/Receive/ServerType0.pm:6739
+#: ../Network/Receive/ServerType0.pm:6741
 #, perl-format
 msgid ""
 "================ PVP RANK ===================\n"
@@ -3301,7 +3301,7 @@ msgid ""
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6691
-#: ../Network/Receive/ServerType0.pm:6749
+#: ../Network/Receive/ServerType0.pm:6751
 #, perl-format
 msgid ""
 "=============== TAEKWON RANK ================\n"
@@ -3310,49 +3310,49 @@ msgid ""
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6715
-#: ../Network/Receive/ServerType0.pm:6773
+#: ../Network/Receive/ServerType0.pm:6775
 #, perl-format
 msgid "You unequip %s (%d) - %s\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6728
-#: ../Network/Receive/ServerType0.pm:6786
+#: ../Network/Receive/ServerType0.pm:6788
 #, perl-format
 msgid "%s gained a level!\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6731
-#: ../Network/Receive/ServerType0.pm:6789
+#: ../Network/Receive/ServerType0.pm:6791
 #, perl-format
 msgid "%s gained a job level!\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6734
-#: ../Network/Receive/ServerType0.pm:6792
+#: ../Network/Receive/ServerType0.pm:6794
 #, perl-format
 msgid "%s failed to refine a weapon!\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6736
-#: ../Network/Receive/ServerType0.pm:6794
+#: ../Network/Receive/ServerType0.pm:6796
 #, perl-format
 msgid "%s successfully refined a weapon!\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6747
-#: ../Network/Receive/ServerType0.pm:6805
+#: ../Network/Receive/ServerType0.pm:6807
 #, perl-format
 msgid "You used Item: %s (%d) x %s\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6756
-#: ../Network/Receive/ServerType0.pm:6815
+#: ../Network/Receive/ServerType0.pm:6817
 #, perl-format
 msgid "There are currently %s users online\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6792
-#: ../Network/Receive/ServerType0.pm:6851
+#: ../Network/Receive/ServerType0.pm:6853
 #, perl-format
 msgid ""
 "%s\n"
@@ -3361,25 +3361,25 @@ msgid ""
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6851
-#: ../Network/Receive/ServerType0.pm:6910
+#: ../Network/Receive/ServerType0.pm:6912
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (insufficient zeny).\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6853
-#: ../Network/Receive/ServerType0.pm:6912
+#: ../Network/Receive/ServerType0.pm:6914
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (overweight).\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6855
-#: ../Network/Receive/ServerType0.pm:6914
+#: ../Network/Receive/ServerType0.pm:6916
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (unknown code %s).\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6872
-#: ../Network/Receive/ServerType0.pm:6932
+#: ../Network/Receive/ServerType0.pm:6934
 #, perl-format
 msgid ""
 "%s\n"
@@ -3388,59 +3388,59 @@ msgid ""
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6926
-#: ../Network/Receive/ServerType0.pm:6982 ../Commands.pm:5024
+#: ../Network/Receive/ServerType0.pm:6984 ../Commands.pm:5024
 msgid ""
 "----------------- Warp Portal --------------------\n"
 "#  Place                           Map\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6945
-#: ../Network/Receive/ServerType0.pm:7001
+#: ../Network/Receive/ServerType0.pm:7003
 msgid "There is no mail in your inbox.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6949
-#: ../Network/Receive/ServerType0.pm:7005
+#: ../Network/Receive/ServerType0.pm:7007
 #, perl-format
 msgid "You've got Mail! (%s)\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6951
-#: ../Network/Receive/ServerType0.pm:7007
+#: ../Network/Receive/ServerType0.pm:7009
 msgid "Inbox"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6954
-#: ../Network/Receive/ServerType0.pm:7010
+#: ../Network/Receive/ServerType0.pm:7012
 #, perl-format
 msgid "@> R @%s @%s @%s"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6970
-#: ../Network/Receive/ServerType0.pm:7022
+#: ../Network/Receive/ServerType0.pm:7024
 #, perl-format
 msgid "@> %s @%s @%s @%s"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6990
-#: ../Network/Receive/ServerType0.pm:7042
+#: ../Network/Receive/ServerType0.pm:7044
 msgid "Mail"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6991
-#: ../Network/Receive/ServerType0.pm:7043
+#: ../Network/Receive/ServerType0.pm:7045
 #, perl-format
 msgid "Title: @%s Sender: @%s"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6993
-#: ../Network/Receive/ServerType0.pm:7045
+#: ../Network/Receive/ServerType0.pm:7047
 #, perl-format
 msgid "Message: %s\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6995
-#: ../Network/Receive/ServerType0.pm:7047
+#: ../Network/Receive/ServerType0.pm:7049
 #, perl-format
 msgid ""
 "Item: %s %s\n"
@@ -3448,149 +3448,149 @@ msgid ""
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7006
-#: ../Network/Receive/ServerType0.pm:7058
+#: ../Network/Receive/ServerType0.pm:7060
 msgid "Successfully added attachment to inventory.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7008
-#: ../Network/Receive/ServerType0.pm:7060
+#: ../Network/Receive/ServerType0.pm:7062
 msgid "Failed to get the attachment to inventory due to your weight.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7010
-#: ../Network/Receive/ServerType0.pm:7062
+#: ../Network/Receive/ServerType0.pm:7064
 msgid "Failed to get the attachment to inventory.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7017
-#: ../Network/Receive/ServerType0.pm:7069
+#: ../Network/Receive/ServerType0.pm:7071
 msgid "Failed to send mail, the recipient does not exist.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7018
-#: ../Network/Receive/ServerType0.pm:7070
+#: ../Network/Receive/ServerType0.pm:7072
 msgid "Mail sent succesfully.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7023
-#: ../Network/Receive/ServerType0.pm:7075
+#: ../Network/Receive/ServerType0.pm:7077
 #, perl-format
 msgid "New mail from sender: %s titled: %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7030
-#: ../Network/Receive/ServerType0.pm:7082
+#: ../Network/Receive/ServerType0.pm:7084
 #, perl-format
 msgid "Failed to attach %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7030
 #: ../Network/Receive/kRO/Sakexe_0.pm:7032
-#: ../Network/Receive/ServerType0.pm:7082
-#: ../Network/Receive/ServerType0.pm:7090
+#: ../Network/Receive/ServerType0.pm:7084
+#: ../Network/Receive/ServerType0.pm:7092
 msgid "item: "
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7030
 #: ../Network/Receive/kRO/Sakexe_0.pm:7032
-#: ../Network/Receive/ServerType0.pm:7082
-#: ../Network/Receive/ServerType0.pm:7090
+#: ../Network/Receive/ServerType0.pm:7084
+#: ../Network/Receive/ServerType0.pm:7092
 msgid "zeny"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7032
-#: ../Network/Receive/ServerType0.pm:7090
+#: ../Network/Receive/ServerType0.pm:7092
 #, perl-format
 msgid "Succeeded to attach %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7039
-#: ../Network/Receive/ServerType0.pm:7097
+#: ../Network/Receive/ServerType0.pm:7099
 #, perl-format
 msgid "Failed to delete mail with ID: %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7042
-#: ../Network/Receive/ServerType0.pm:7100
+#: ../Network/Receive/ServerType0.pm:7102
 #, perl-format
 msgid "Succeeded to delete mail with ID: %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7049
-#: ../Network/Receive/ServerType0.pm:7107
+#: ../Network/Receive/ServerType0.pm:7109
 msgid "Mail window is now closed.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7052
-#: ../Network/Receive/ServerType0.pm:7110
+#: ../Network/Receive/ServerType0.pm:7112
 msgid "Mail window is now opened.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7059
-#: ../Network/Receive/ServerType0.pm:7117
+#: ../Network/Receive/ServerType0.pm:7119
 #, perl-format
 msgid "The mail with ID: %s does not exist.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7060
-#: ../Network/Receive/ServerType0.pm:7118
+#: ../Network/Receive/ServerType0.pm:7120
 #, perl-format
 msgid "The mail with ID: %s is returned to the sender.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7065
-#: ../Network/Receive/ServerType0.pm:7123
+#: ../Network/Receive/ServerType0.pm:7125
 #, perl-format
 msgid "Premium rates: exp %+i%%, death %+i%%, drop %+i%%.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7073
-#: ../Network/Receive/ServerType0.pm:7131
+#: ../Network/Receive/ServerType0.pm:7133
 msgid "You have failed to bid into the auction.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7075
-#: ../Network/Receive/ServerType0.pm:7133
+#: ../Network/Receive/ServerType0.pm:7135
 msgid "You have successfully bid in the auction.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7077
-#: ../Network/Receive/ServerType0.pm:7135
+#: ../Network/Receive/ServerType0.pm:7137
 msgid "The auction has been canceled.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7079
-#: ../Network/Receive/ServerType0.pm:7137
+#: ../Network/Receive/ServerType0.pm:7139
 msgid "An auction with at least one bidder cannot be canceled.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7081
-#: ../Network/Receive/ServerType0.pm:7139
+#: ../Network/Receive/ServerType0.pm:7141
 msgid "You cannot register more than 5 items in an auction at a time.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7083
-#: ../Network/Receive/ServerType0.pm:7141
+#: ../Network/Receive/ServerType0.pm:7143
 msgid "You do not have enough Zeny to pay the Auction Fee.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7085
-#: ../Network/Receive/ServerType0.pm:7143
+#: ../Network/Receive/ServerType0.pm:7145
 msgid "You have won the auction.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7087
-#: ../Network/Receive/ServerType0.pm:7145
+#: ../Network/Receive/ServerType0.pm:7147
 msgid "You have failed to win the auction.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7089
-#: ../Network/Receive/ServerType0.pm:7147
+#: ../Network/Receive/ServerType0.pm:7149
 msgid "You do not have enough Zeny.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7091
-#: ../Network/Receive/ServerType0.pm:7149
+#: ../Network/Receive/ServerType0.pm:7151
 msgid "You cannot place more than 5 bids at a time.\n"
 msgstr ""
 
@@ -3601,391 +3601,391 @@ msgstr ""
 #: ../Network/Receive/kRO/Sakexe_0.pm:7283
 #: ../Network/Receive/kRO/Sakexe_0.pm:7481
 #: ../Network/Receive/kRO/Sakexe_0.pm:7583
-#: ../Network/Receive/ServerType0.pm:7151
-#: ../Network/Receive/ServerType0.pm:7224
-#: ../Network/Receive/ServerType0.pm:7291
-#: ../Network/Receive/ServerType0.pm:7311
-#: ../Network/Receive/ServerType0.pm:7343
-#: ../Network/Receive/ServerType0.pm:7541
-#: ../Network/Receive/ServerType0.pm:7657
+#: ../Network/Receive/ServerType0.pm:7153
+#: ../Network/Receive/ServerType0.pm:7226
+#: ../Network/Receive/ServerType0.pm:7293
+#: ../Network/Receive/ServerType0.pm:7313
+#: ../Network/Receive/ServerType0.pm:7345
+#: ../Network/Receive/ServerType0.pm:7543
+#: ../Network/Receive/ServerType0.pm:7659
 #, perl-format
 msgid "flag: %s gave unknown results in: %s\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7106
-#: ../Network/Receive/ServerType0.pm:7163
+#: ../Network/Receive/ServerType0.pm:7165
 msgid "No item in auction.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7110
-#: ../Network/Receive/ServerType0.pm:7167
+#: ../Network/Receive/ServerType0.pm:7169
 #, perl-format
 msgid "Found %s items in auction.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7112
-#: ../Network/Receive/ServerType0.pm:7169
+#: ../Network/Receive/ServerType0.pm:7171
 msgid "Auction"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7113
 #: ../Network/Receive/kRO/Sakexe_0.pm:7144
-#: ../Network/Receive/ServerType0.pm:7170
-#: ../Network/Receive/ServerType0.pm:7203
+#: ../Network/Receive/ServerType0.pm:7172
+#: ../Network/Receive/ServerType0.pm:7205
 #, perl-format
 msgid "@%s @%s @%s @%s @%s"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7159
-#: ../Network/Receive/ServerType0.pm:7218
+#: ../Network/Receive/ServerType0.pm:7220
 msgid "You have ended the auction.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7161
-#: ../Network/Receive/ServerType0.pm:7220
+#: ../Network/Receive/ServerType0.pm:7222
 msgid "You cannot end the auction.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7163
-#: ../Network/Receive/ServerType0.pm:7222
+#: ../Network/Receive/ServerType0.pm:7224
 msgid "Bid number is incorrect.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7172
-#: ../Network/Receive/ServerType0.pm:7231
+#: ../Network/Receive/ServerType0.pm:7233
 msgid "Auction window is now closed.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7175
-#: ../Network/Receive/ServerType0.pm:7234
+#: ../Network/Receive/ServerType0.pm:7236
 msgid "Auction window is now opened.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7182
-#: ../Network/Receive/ServerType0.pm:7241
+#: ../Network/Receive/ServerType0.pm:7243
 #, perl-format
 msgid ""
 "Failed (note: usable items can't be auctioned) to add item with index: %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7185
-#: ../Network/Receive/ServerType0.pm:7244
+#: ../Network/Receive/ServerType0.pm:7246
 #, perl-format
 msgid "Succeeded to add item with index: %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7194
-#: ../Network/Receive/ServerType0.pm:7253
+#: ../Network/Receive/ServerType0.pm:7255
 msgid "Hotkeys"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7196
-#: ../Network/Receive/ServerType0.pm:7255
+#: ../Network/Receive/ServerType0.pm:7257
 msgid "Name"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7196
-#: ../Network/Receive/ServerType0.pm:7255
+#: ../Network/Receive/ServerType0.pm:7257
 msgid "Type"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7196
-#: ../Network/Receive/ServerType0.pm:7255
+#: ../Network/Receive/ServerType0.pm:7257
 msgid "Lv"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7204
-#: ../Network/Receive/ServerType0.pm:7263
+#: ../Network/Receive/ServerType0.pm:7265
 #, perl-format
 msgid "@%s @%s @%s @%s"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7206
-#: ../Network/Receive/ServerType0.pm:7265
+#: ../Network/Receive/ServerType0.pm:7267
 msgid "skill"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7206
-#: ../Network/Receive/ServerType0.pm:7265
+#: ../Network/Receive/ServerType0.pm:7267
 msgid "item"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7215
-#: ../Network/Receive/ServerType0.pm:7274
+#: ../Network/Receive/ServerType0.pm:7276
 msgid ""
 "Error: You have been forced to disconnect by a Hack Shield.\n"
 " Please check Poseidon.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7222
-#: ../Network/Receive/ServerType0.pm:7281
+#: ../Network/Receive/ServerType0.pm:7283
 msgid "Already allied.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7224
-#: ../Network/Receive/ServerType0.pm:7283
+#: ../Network/Receive/ServerType0.pm:7285
 msgid "You rejected the offer.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7226
-#: ../Network/Receive/ServerType0.pm:7285
+#: ../Network/Receive/ServerType0.pm:7287
 msgid "You accepted the offer.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7228
-#: ../Network/Receive/ServerType0.pm:7287
+#: ../Network/Receive/ServerType0.pm:7289
 msgid "They have too any alliances\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7230
-#: ../Network/Receive/ServerType0.pm:7289
+#: ../Network/Receive/ServerType0.pm:7291
 msgid "You have too many alliances.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7238
-#: ../Network/Receive/ServerType0.pm:7297
+#: ../Network/Receive/ServerType0.pm:7299
 #, perl-format
 msgid "%s's talkie box message: %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7244
-#: ../Network/Receive/ServerType0.pm:7303
+#: ../Network/Receive/ServerType0.pm:7305
 msgid "A manner point has been successfully aligned.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7246
-#: ../Network/Receive/ServerType0.pm:7305
+#: ../Network/Receive/ServerType0.pm:7307
 msgid "Chat Block has been applied by GM due to your ill-mannerous action.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7248
-#: ../Network/Receive/ServerType0.pm:7307
+#: ../Network/Receive/ServerType0.pm:7309
 msgid "Automated Chat Block has been applied due to Anti-Spam System.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7250
-#: ../Network/Receive/ServerType0.pm:7309
+#: ../Network/Receive/ServerType0.pm:7311
 msgid "You got a good point.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7259
-#: ../Network/Receive/ServerType0.pm:7318
+#: ../Network/Receive/ServerType0.pm:7320
 #, perl-format
 msgid "You have been: muted by %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7262
-#: ../Network/Receive/ServerType0.pm:7321
+#: ../Network/Receive/ServerType0.pm:7323
 #, perl-format
 msgid "You have been: unmuted by %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7271
-#: ../Network/Receive/ServerType0.pm:7331
+#: ../Network/Receive/ServerType0.pm:7333
 #, perl-format
 msgid "You have now marked: %s as Place of the %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7273
-#: ../Network/Receive/ServerType0.pm:7333
+#: ../Network/Receive/ServerType0.pm:7335
 #, perl-format
 msgid "%s is marked as Place of the %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7275
-#: ../Network/Receive/ServerType0.pm:7335
+#: ../Network/Receive/ServerType0.pm:7337
 #, perl-format
 msgid "You have now marked %s as Target of the %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7277
-#: ../Network/Receive/ServerType0.pm:7337
+#: ../Network/Receive/ServerType0.pm:7339
 #, perl-format
 msgid "%s is marked as Target of the %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7279
-#: ../Network/Receive/ServerType0.pm:7339
+#: ../Network/Receive/ServerType0.pm:7341
 msgid "[TaeKwon Mission] Target Monster : %s (%d%)\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7281
-#: ../Network/Receive/ServerType0.pm:7341
+#: ../Network/Receive/ServerType0.pm:7343
 msgid "Your Hate and Feel targets have been resetted.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7291
-#: ../Network/Receive/ServerType0.pm:7351
+#: ../Network/Receive/ServerType0.pm:7353
 msgid "You are not a guildmaster.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7294
-#: ../Network/Receive/ServerType0.pm:7354
+#: ../Network/Receive/ServerType0.pm:7356
 #, perl-format
 msgid "type: %s gave unknown results in: %s\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7297
-#: ../Network/Receive/ServerType0.pm:7357
+#: ../Network/Receive/ServerType0.pm:7359
 msgid "You are a guildmaster.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7361
-#: ../Network/Receive/ServerType0.pm:7420
+#: ../Network/Receive/ServerType0.pm:7422
 #, perl-format
 msgid "Blade Stop by %s on %s is deactivated.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7363
-#: ../Network/Receive/ServerType0.pm:7422
+#: ../Network/Receive/ServerType0.pm:7424
 #, perl-format
 msgid "Blade Stop by %s on %s is active.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7369
-#: ../Network/Receive/ServerType0.pm:7428
+#: ../Network/Receive/ServerType0.pm:7430
 #, perl-format
 msgid "%s and %s have divorced from each other.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7377
-#: ../Network/Receive/ServerType0.pm:7436
+#: ../Network/Receive/ServerType0.pm:7438
 msgid "Upgrade List"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7394
 #: ../Network/Receive/kRO/Sakexe_0.pm:7396
-#: ../Network/Receive/ServerType0.pm:7450
+#: ../Network/Receive/ServerType0.pm:7452
 #, perl-format
 msgid "Weapon upgraded: %s\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7398
-#: ../Network/Receive/ServerType0.pm:7455
+#: ../Network/Receive/ServerType0.pm:7457
 #, perl-format
 msgid "Cannot upgrade %s until you level up the upgrade weapon skill.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7400
-#: ../Network/Receive/ServerType0.pm:7457
+#: ../Network/Receive/ServerType0.pm:7459
 #, perl-format
 msgid "You lack item %s to upgrade the weapon.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7411
-#: ../Network/Receive/ServerType0.pm:7468
+#: ../Network/Receive/ServerType0.pm:7470
 msgid "Cooking List"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7420
-#: ../Network/Receive/ServerType0.pm:7477
+#: ../Network/Receive/ServerType0.pm:7479
 msgid "You can now use the 'cook' command.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7437
-#: ../Network/Receive/ServerType0.pm:7493
+#: ../Network/Receive/ServerType0.pm:7495
 #, perl-format
 msgid "Party member %s has picked up item %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7473
-#: ../Network/Receive/ServerType0.pm:7533
+#: ../Network/Receive/ServerType0.pm:7535
 msgid "The Memorial Dungeon expired it has been destroyed.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7475
-#: ../Network/Receive/ServerType0.pm:7535
+#: ../Network/Receive/ServerType0.pm:7537
 msgid ""
 "The Memorial Dungeon's entry time limit expired it has been destroyed.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7477
-#: ../Network/Receive/ServerType0.pm:7537
+#: ../Network/Receive/ServerType0.pm:7539
 msgid "The Memorial Dungeon has been removed.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7479
-#: ../Network/Receive/ServerType0.pm:7539
+#: ../Network/Receive/ServerType0.pm:7541
 msgid ""
 "The instance windows has been removed, possibly due to party/guild leave.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7501
-#: ../Network/Receive/ServerType0.pm:7561
+#: ../Network/Receive/ServerType0.pm:7563
 #, perl-format
 msgid "Battleground score - Lions: '%d' VS Eagles: '%d'\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7523
-#: ../Network/Receive/ServerType0.pm:7596
+#: ../Network/Receive/ServerType0.pm:7598
 msgid "Attempting to capture pet (slot machine).\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7536
-#: ../Network/Receive/ServerType0.pm:7609
+#: ../Network/Receive/ServerType0.pm:7611
 #, perl-format
 msgid "The '%s' item will disappear in %d minutes.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7542
-#: ../Network/Receive/ServerType0.pm:7615
+#: ../Network/Receive/ServerType0.pm:7617
 #, perl-format
 msgid "Rental item '%s' has expired!\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7555
-#: ../Network/Receive/ServerType0.pm:7628
+#: ../Network/Receive/ServerType0.pm:7630
 msgid "You cannot adopt more than 1 child.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7557
-#: ../Network/Receive/ServerType0.pm:7630
+#: ../Network/Receive/ServerType0.pm:7632
 msgid "You must be at least character level 70 in order to adopt someone.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7559
-#: ../Network/Receive/ServerType0.pm:7632
+#: ../Network/Receive/ServerType0.pm:7634
 msgid "You cannot adopt a married person.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7566
-#: ../Network/Receive/ServerType0.pm:7639
+#: ../Network/Receive/ServerType0.pm:7641
 #, perl-format
 msgid "%s wishes to adopt you. Do you accept?\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7574
-#: ../Network/Receive/ServerType0.pm:7648
+#: ../Network/Receive/ServerType0.pm:7650
 msgid "You cannot find any trace of a Boss Monster in this area.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7576
-#: ../Network/Receive/ServerType0.pm:7650
+#: ../Network/Receive/ServerType0.pm:7652
 #, perl-format
 msgid "MVP Boss %s is now on location: (%d, %d)\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7578
-#: ../Network/Receive/ServerType0.pm:7652
+#: ../Network/Receive/ServerType0.pm:7654
 #, perl-format
 msgid "MVP Boss %s has been detected on this map!\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7580
-#: ../Network/Receive/ServerType0.pm:7654
+#: ../Network/Receive/ServerType0.pm:7656
 #, perl-format
 msgid ""
 "MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7631
-#: ../Network/Receive/ServerType0.pm:7702
+#: ../Network/Receive/ServerType0.pm:7704
 #, perl-format
 msgid "Quest: %s has been added.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7653
-#: ../Network/Receive/ServerType0.pm:7723
+#: ../Network/Receive/ServerType0.pm:7725
 #, perl-format
 msgid "Quest: %s has been deleted.\n"
 msgstr ""
@@ -4004,30 +4004,30 @@ msgid "Quest: %s is now %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7683
-#: ../Network/Receive/ServerType0.pm:7765
+#: ../Network/Receive/ServerType0.pm:7767
 #, perl-format
 msgid "The accountName for ID %s is %s.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7692
-#: ../Network/Receive/ServerType0.pm:7772
+#: ../Network/Receive/ServerType0.pm:7774
 msgid "Sell failed.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7694
-#: ../Network/Receive/ServerType0.pm:7774
+#: ../Network/Receive/ServerType0.pm:7776
 msgid "Sell completed.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7702
-#: ../Network/Receive/ServerType0.pm:7757
-#: ../Network/Receive/ServerType0.pm:7782
+#: ../Network/Receive/ServerType0.pm:7759
+#: ../Network/Receive/ServerType0.pm:7784
 msgid "Please wait 10 seconds before trying to log out.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7704
-#: ../Network/Receive/ServerType0.pm:7759
-#: ../Network/Receive/ServerType0.pm:7784
+#: ../Network/Receive/ServerType0.pm:7761
+#: ../Network/Receive/ServerType0.pm:7786
 msgid "Logged out from the server succesfully.\n"
 msgstr ""
 
@@ -4113,171 +4113,171 @@ msgstr ""
 msgid "Can't organize party - unknown (%d)\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:6102
+#: ../Network/Receive/ServerType0.pm:6104
 #, perl-format
 msgid "%s have gained %d/%d (%.2f%%/%.2f%%) Exp\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:6114
+#: ../Network/Receive/ServerType0.pm:6116
 #, perl-format
 msgid "%s have been muted for %d minutes\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:6114
+#: ../Network/Receive/ServerType0.pm:6116
 #, perl-format
 msgid "%s has been muted for %d minutes\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:6121
+#: ../Network/Receive/ServerType0.pm:6123
 #, perl-format
 msgid "%s are no longer muted."
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:6121
+#: ../Network/Receive/ServerType0.pm:6123
 #, perl-format
 msgid "%s is no longer muted."
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:6128
+#: ../Network/Receive/ServerType0.pm:6130
 #, perl-format
 msgid "*** %s have been muted for %d minutes, auto disconnect! ***\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:6155
+#: ../Network/Receive/ServerType0.pm:6157
 #, perl-format
 msgid "%s are now level %d\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:6155
+#: ../Network/Receive/ServerType0.pm:6157
 #, perl-format
 msgid "%s is now level %d\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:6181
+#: ../Network/Receive/ServerType0.pm:6183
 #, perl-format
 msgid "%s gained %s zeny.\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:6182
+#: ../Network/Receive/ServerType0.pm:6184
 #, perl-format
 msgid "%s lost %s zeny.\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:6251
-#: ../Network/Receive/ServerType0.pm:6252
+#: ../Network/Receive/ServerType0.pm:6253
+#: ../Network/Receive/ServerType0.pm:6254
 #, perl-format
 msgid "Disconnecting on job level %d!\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7329
+#: ../Network/Receive/ServerType0.pm:7331
 msgid "Sun"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7329
+#: ../Network/Receive/ServerType0.pm:7331
 msgid "Moon"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7329
+#: ../Network/Receive/ServerType0.pm:7331
 msgid "Stars"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7452
+#: ../Network/Receive/ServerType0.pm:7454
 #, perl-format
 msgid "Weapon not upgraded: %s\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7583
+#: ../Network/Receive/ServerType0.pm:7585
 #, perl-format
 msgid "%2$s play: %s\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7583
+#: ../Network/Receive/ServerType0.pm:7585
 #, perl-format
 msgid "%2$s plays: %s\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7585
+#: ../Network/Receive/ServerType0.pm:7587
 #, perl-format
 msgid "%2$s are now playing: %s\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7585
+#: ../Network/Receive/ServerType0.pm:7587
 #, perl-format
 msgid "%2$s is now playing: %s\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7586
+#: ../Network/Receive/ServerType0.pm:7588
 #, perl-format
 msgid "%2$s stopped playing: %s\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7587
+#: ../Network/Receive/ServerType0.pm:7589
 #, perl-format
 msgid "Now playing: %s\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7746
+#: ../Network/Receive/ServerType0.pm:7748
 #, perl-format
 msgid "Quest %s is now active.\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7747
+#: ../Network/Receive/ServerType0.pm:7749
 #, perl-format
 msgid "Quest %s is now inactive.\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7813
+#: ../Network/Receive/ServerType0.pm:7815
 #, perl-format
 msgid "Base Exp gained: %d (%.2f%%)\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7815
+#: ../Network/Receive/ServerType0.pm:7817
 #, perl-format
 msgid "Job Exp gained: %d (%.2f%%)\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7817
+#: ../Network/Receive/ServerType0.pm:7819
 #, perl-format
 msgid "Unknown (type=%d) Exp gained: %d\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7821
+#: ../Network/Receive/ServerType0.pm:7823
 #, perl-format
 msgid "Base Quest Exp gained: %d (%.2f%%)\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7823
+#: ../Network/Receive/ServerType0.pm:7825
 #, perl-format
 msgid "Job Quest Exp gained: %d (%.2f%%)\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7825
+#: ../Network/Receive/ServerType0.pm:7827
 #, perl-format
 msgid "Unknown (type=%d) Quest Exp gained: %d\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7829
+#: ../Network/Receive/ServerType0.pm:7831
 #, perl-format
 msgid "Base Unknown (flag=%d) Exp gained: %d (%.2f%%)\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7831
+#: ../Network/Receive/ServerType0.pm:7833
 #, perl-format
 msgid "Job Unknown (flag=%d) Exp gained: %d (%.2f%%)\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7833
+#: ../Network/Receive/ServerType0.pm:7835
 #, perl-format
 msgid "Unknown (type=%d) Unknown (flag=%d) Exp gained: %d\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7888
-#: ../Network/Receive/ServerType0.pm:7895
+#: ../Network/Receive/ServerType0.pm:7891
+#: ../Network/Receive/ServerType0.pm:7897
 #, perl-format
 msgid "%s has got %s from %s.\n"
 msgstr ""
 
-#: ../Network/Receive/ServerType0.pm:7898
+#: ../Network/Receive/ServerType0.pm:7900
 #, perl-format
 msgid "%s has got %s (from Unknown type %d).\n"
 msgstr ""
@@ -6622,7 +6622,7 @@ msgid ""
 "       storage get <storage_item> [<amount>]\n"
 "       storage gettocart <storage_item> [<amount>]\n"
 "       storage desc <storage_item_#>\n"
-"       storage log"
+"       storage log\n"
 msgstr ""
 
 #: ../Commands.pm:4230
