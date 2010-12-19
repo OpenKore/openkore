@@ -146,7 +146,11 @@ sub readNext {
 			$$type = KNOWN_MESSAGE;
 		}
 
-	} elsif (defined($size) && $size == 0) {
+	} elsif (
+		defined($size)
+		and $size == 0 # old Kore convention
+		|| $size == -1 # packet extractor v3
+	) {
 		# Variable length message.
 		if (length($$buffer) >= 4) {
 			$size = unpack("v", substr($$buffer, 2, 2));
