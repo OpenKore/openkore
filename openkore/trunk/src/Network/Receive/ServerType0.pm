@@ -692,6 +692,19 @@ use constant {
 	VAR_RESET_COSTUMES => 0xcd,
 };
 
+use constant {
+	LEVELUP_EFFECT => 0x0,
+	JOBLEVELUP_EFFECT => 0x1,
+	REFINING_FAIL_EFFECT => 0x2,
+	REFINING_SUCCESS_EFFECT => 0x3,
+	GAME_OVER_EFFECT => 0x4,
+	MAKEITEM_AM_SUCCESS_EFFECT => 0x5,
+	MAKEITEM_AM_FAIL_EFFECT => 0x6,
+	LEVELUP_EFFECT2 => 0x7,
+	JOBLEVELUP_EFFECT2 => 0x8,
+	LEVELUP_EFFECT3 => 0x9,
+};
+
 #######################################
 ###### Packet handling callbacks ######
 #######################################
@@ -6784,16 +6797,18 @@ sub unit_levelup {
 	my $ID = $args->{ID};
 	my $type = $args->{type};
 	my $name = getActorName($ID);
-	if ($type == 0) {
+	if ($type == LEVELUP_EFFECT) {
 		message TF("%s gained a level!\n", $name);
 		Plugins::callHook('base_level', {name => $name});
-	} elsif ($type == 1) {
+	} elsif ($type == JOBLEVELUP_EFFECT) {
 		message TF("%s gained a job level!\n", $name);
 		Plugins::callHook('job_level', {name => $name});
-	} elsif ($type == 2) {
+	} elsif ($type == REFINING_FAIL_EFFECT) {
 		message TF("%s failed to refine a weapon!\n", $name), "refine";
-	} elsif ($type == 3) {
+	} elsif ($type == REFINING_SUCCESS_EFFECT) {
 		message TF("%s successfully refined a weapon!\n", $name), "refine";
+	} else {
+		message TF("%s unknown unit_levelup effect (%d)\n", $name, $type);
 	}
 }
 
