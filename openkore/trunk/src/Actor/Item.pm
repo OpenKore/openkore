@@ -206,6 +206,7 @@ sub scanConfigAndEquip {
 
 	debug "Scanning config and equipping: $prefix\n";
 
+	# it uses %equipSlot_lut hash keys too, unlike scanConfigAndCheck?
 	foreach my $slot (%equipSlot_lut) {
 		if ($config{"${prefix}_$slot"}){
 			$eq_list{$slot} = $config{"${prefix}_$slot"};
