@@ -31,6 +31,11 @@ sub new {
 		local $_ = Wx::ListItem->new;
 		$_->SetWidth(150);
 	$_ });
+	$self->{list}->InsertColumn(3, do {
+		local $_ = Wx::ListItem->new;
+		$_->SetAlign(wxLIST_FORMAT_RIGHT);
+		$_->SetWidth(150);
+	$_ });
 	
 	$self->{color} = {
 		usable => new Wx::Colour('DARK GREEN'),
@@ -46,16 +51,17 @@ sub new {
 sub setItem {
 	my ($self, $index, $item) = @_;
 	
-	if ($item && $item->{amount}) {
+	if ($item and my $amount = $item->{amount} || $item->{quantity}) {
 		$self->SUPER::setItem($index, [
 			$index,
-			$item->{amount},
+			$item->{sold} ? sprintf('%s/%s', $amount - $item->{sold}, $amount) : $amount,
 			!$item->{identified} ? TF('%s (Not identified)', $item->{name}) :
 			$item->{equipped} ? ($equipTypes_lut{$item->{equipped}}
 				? TF('%s (%s)', $item->{name}, $equipTypes_lut{$item->{equipped}})
 				: TF('%s (Equipped)', $item->{name})
 			) :
-			$item->{name}
+			$item->{name},
+			$item->{price} ? formatNumber($item->{price}) : '',
 		], (
 			!$item->{identified} ? $self->{color}{notIdent}
 			: isUsable($item) ? $self->{color}{usable}

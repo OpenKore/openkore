@@ -199,13 +199,30 @@ sub updateStatusBar {
 			# TODO: Tasks should provide descriptions by themselves
 			
 			if ($_ eq 'attack') {
-				if ($args->{ID} and my $actor = Actor::get($args->{ID})) {
+				if (defined $args->{ID} and my $actor = Actor::get($args->{ID})) {
 					push @seqs, sprintf '%s', $actor;
 					next
 				}
-			} elsif ($_ eq 'route') {
-				push @seqs, sprintf $args->isa('Task::MapRoute') ? '%s %s %s' : '%2$s %3$s', $args->{dest}{map}, @{$args->{dest}{pos}}{qw(x y)};
+			} elsif ($_ eq 'NPC') {
+				if ($args->{target}) {
+					push @seqs, sprintf '%s (%s)', $args->{target}, join ' ', @{$args->{steps}}
+				} else {
+					push @seqs, sprintf '%s %s (%s)', @{$args}{qw(x y sequence)}
+				}
 				next
+			} elsif ($_ eq 'route') {
+				push @seqs, sprintf(
+					$args->{dest}{map} eq (Field::nameToBaseName(undef, $field->name))[0]
+					? '%2$s %3$s'
+					: defined $args->{dest}{pos}{x} ? '%s %s %s' : '%s',
+					$args->{dest}{map}, @{$args->{dest}{pos}}{qw(x y)}
+				);
+				next
+			} elsif ($_ eq 'take') {
+				if (defined $args->{ID} and my $actor = Actor::get($args->{ID})) {
+					push @seqs, sprintf '%s', $actor;
+					next
+				}
 			} elsif ($_ eq 'macro') {
 				if ($Macro::Data::queue && ref $Macro::Data::queue && $Macro::Data::queue->can('name')) {
 					push @seqs, sprintf '%s %s', $_, $Macro::Data::queue->name;
