@@ -167,7 +167,7 @@ sub _onAction {
 	}
 	
 	$self->GetSizer->Layout;
-	$self->{chatLog}->AppendText ('');
+	#$self->{chatLog}->SetInsertionPointEnd;
 	$self->Thaw;
 }
 
@@ -193,7 +193,7 @@ sub _updateImage {
 	}
 	
 	$self->GetSizer->Layout;
-	$self->{chatLog}->AppendText ('');
+	#$self->{chatLog}->SetInsertionPointEnd;
 	$self->Thaw;
 }
 
@@ -243,7 +243,7 @@ sub npcName {
 sub npcTalk {
 	my ($self, $msg) = @_;
 	
-	#$self->_checkBefore;
+	$self->_checkBefore;
 	
 	return if $msg =~ /^\[(.+)\]$/;
 	

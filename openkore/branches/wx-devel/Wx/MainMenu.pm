@@ -128,6 +128,10 @@ sub new {
 			key => 'toggleWindow_storage', title => T('Storage'), type => 'check',
 			sub => sub { $self->{frame}->toggleWindow('storage', 'Interface::Wx::Window::Storage', 'right') },
 		},
+		{
+			key => 'toggleWindow_shop', title => T('Shop'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('shop', 'Interface::Wx::Window::Shop', 'notebook') },
+		},
 		{},
 		{
 			key => 'toggleWindow_skills', title => T('Skills')."\tAlt+S", type => 'check',
