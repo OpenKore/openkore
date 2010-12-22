@@ -38,12 +38,14 @@ sub new {
 	
 	if ($^O eq 'MSWin32') {
 		$mod = 'Interface::Console::Win32';
-	} elsif ($^O eq 'linux' || $^O eq 'darwin') {
+		
+	# manual suggests that to run on both threaded and non-threaded Perl
+	# but it creates segfault on exit (FreeBSD, threaded Perl 5.10.1)
+	# so using Console::Simple if Console::Unix doesn't work depends on user
+	# } elsif (eval 'use threads; 1') {
+	} elsif (1) {
 		$mod = 'Interface::Console::Unix';
 	} else {
-		# Other Unix. For some reason Readline doesn't work correctly
-		# on FreeBSD.
-		
 		# Load Curses, if available, because Simple has bad keyboard input handling
 		#eval 'use Curses';
 		#$mod = 'Interface::Console::Curses' unless $@;
