@@ -2427,7 +2427,7 @@ sub cmdGuild {
 		$messageSender->sendGuildRequestInfo(4);
 
 		if ($arg1 eq "") {
-			message T("Enter command to view guild information: guild <info | member>\n"), "info";
+			message T("Enter command to view guild information: guild <info | member | request | join | leave | kick | ally | create | break>\n"), "info";
 		} else {
 			message	TF("Type 'guild %s' again to view the information.\n", $args), "info";
 		}
