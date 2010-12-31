@@ -1014,6 +1014,10 @@ sub parseOutgoingClientMessage {
 			open DUMP, ">> DUMP_lines.txt";
 			print DUMP sprintf(unpack('H*', $msg) . "\n");
 			close DUMP;
+		} elsif ($config{'debugPacket_include_dumpMethod'} == 5) {
+			open DUMP, ">> DUMP_HEAD.txt";
+			print DUMP sprintf(substr(unpack('H*', $msg),0,4) . " " . length($msg) . "\n");
+			close DUMP;
 		}
 	}
 
@@ -1305,6 +1309,10 @@ sub parseIncomingMessage {
 		} elsif ($config{'debugPacket_include_dumpMethod'} == 4) {
 			open DUMP, ">> DUMP_lines.txt";
 			print DUMP sprintf(unpack('H*', $msg) . "\n");
+			close DUMP;
+		} elsif ($config{'debugPacket_include_dumpMethod'} == 5) {
+			open DUMP, ">> DUMP_HEAD.txt";
+			print DUMP sprintf(substr(unpack('H*', $msg),0,4) . " " . length($msg) . "\n");
 			close DUMP;
 		}
 	}
