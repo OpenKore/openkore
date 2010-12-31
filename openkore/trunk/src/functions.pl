@@ -1016,7 +1016,7 @@ sub parseOutgoingClientMessage {
 			close DUMP;
 		} elsif ($config{'debugPacket_include_dumpMethod'} == 5) {
 			open DUMP, ">> DUMP_HEAD.txt";
-			print DUMP sprintf(substr(unpack('H*', $msg),0,4) . " " . length($msg) . "\n");
+			print DUMP sprintf(substr(unpack('H*', $msg),2,2) . substr(unpack('H*', $msg),0,2) . " " . length($msg) . "\n");
 			close DUMP;
 		}
 	}
