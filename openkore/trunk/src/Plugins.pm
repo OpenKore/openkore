@@ -29,7 +29,7 @@ use strict;
 use warnings;
 use Time::HiRes qw(time sleep);
 use Exception::Class ('Plugin::LoadException', 'Plugin::DeniedException');
-use UNIVERSAL qw(isa);
+use UNIVERSAL;
 
 use Modules 'register';
 use Globals;
@@ -374,13 +374,13 @@ sub delHook {
 		($handle) = @_;
 	}
 
-	if (isa($handle, 'Plugins::HookHandles')) {
+	if (UNIVERSAL::isa($handle, 'Plugins::HookHandles')) {
 		foreach my $singleHandle (@{$handle}) {
 			delHook($singleHandle);
 		}
 		undef @{$handle};
 
-	} elsif (isa($handle, 'Plugins::HookHandle') && defined $handle->[HOOKNAME]) {
+	} elsif (UNIVERSAL::isa($handle, 'Plugins::HookHandle') && defined $handle->[HOOKNAME]) {
 		my $hookName = quarkToString($handle->[HOOKNAME]);
 		my $hookList = $hooks{$hookName};
 		if ($hookList) {

@@ -16,10 +16,10 @@ EXTRA_LIBRARY_DIRECTORIES = []
 
 # Extra arguments to be passed to the compiler during the compilation
 # stage (not during the linking stage).
-EXTRA_COMPILER_FLAGS = ['-Wall', '-g', '-O2', '-pipe']
+# EXTRA_COMPILER_FLAGS = ['-Wall', '-g', '-O2', '-pipe']
 
 # Optimized Flags. Use only on Release.
-# EXTRA_COMPILER_FLAGS = ['-Wall', '-O3', '-pipe']
+EXTRA_COMPILER_FLAGS = ['-Wall', '-O3', '-pipe']
 
 ####################
 
@@ -288,7 +288,8 @@ if win32:
 	perlenv['CPPDEFINES'] += Split('__MINGW32__ WIN32IO_IS_STDIO ' +
 		'_UINTPTR_T_DEFINED CHECK_FORMAT')
 	#perlenv['LIBS'] += ['perl58']
-	perlenv['LIBS'] += ['perl510']
+	#perlenv['LIBS'] += ['perl510']
+	perlenv['LIBS'] += ['perl512']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 elif not darwin:
 	# Unix (except MacOS X)
