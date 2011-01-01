@@ -15,7 +15,7 @@ package Utils::Assert;
 use strict;
 use Carp::Assert;
 use Exporter;
-use UNIVERSAL qw(isa);
+use UNIVERSAL;
 use Scalar::Util qw(blessed);
 use base qw(Exporter);
 
@@ -28,7 +28,7 @@ our @EXPORT = qw(assertClass);
 sub assertClass {
 	my ($object, $expectedClassName) = @_;
 	my $objectName = defined($object) ? $object : "(undefined)";
-	assert(isa($object, $expectedClassName), "'$objectName' must be of class '$expectedClassName'");
+	assert(UNIVERSAL::isa($object, $expectedClassName), "'$objectName' must be of class '$expectedClassName'");
 }
 
 1;
