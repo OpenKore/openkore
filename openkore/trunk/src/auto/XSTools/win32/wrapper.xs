@@ -270,7 +270,7 @@ CODE:
 	} else {
 		char utf8buffer[1024 * 4];
 		buffer[size] = 0;
-		size = WideCharToMultiByte(CP_UTF8, 0, buffer, size,
+		size = WideCharToMultiByte(CP_UTF8, MB_USEGLYPHCHARS, buffer, size,
 			utf8buffer, sizeof(utf8buffer), NULL, NULL);
 		if (size == 0) {
 			XSRETURN_UNDEF;

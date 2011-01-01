@@ -259,7 +259,7 @@ MySend (SOCKET s, char* buf, int len, int flags)
 	LeaveCriticalSection (&CS_ro);
 	ret = OriginalSendProc (s, buf, 0, flags);
 
-	if (ret != SOCKET_ERROR & len > 0) {
+	if (ret != SOCKET_ERROR && len > 0) {
 		bool isAlive;
 
 		// Is Kore running?
@@ -462,40 +462,40 @@ DoHookProcs ()
 	// about what's going on here
 
 	OriginalWSASendProc = (MyWSASendProc)
-			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "WSASend", (PROC)MyWSASend);
+			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"WSASend", (PROC)MyWSASend);
 
 	OriginalWSASendToProc = (MyWSASendToProc)
-			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "WSASendTo", (PROC)MyWSASendTo);
+			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"WSASendTo", (PROC)MyWSASendTo);
 
 	OriginalWSARecvProc = (MyWSARecvProc)
-			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "WSARecv", (PROC)MyWSARecv);
+			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"WSARecv", (PROC)MyWSARecv);
 
 	OriginalWSARecvFromProc = (MyWSARecvFromProc)
-			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "WSARecvFrom", (PROC)MyWSARecvFrom);
+			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"WSARecvFrom", (PROC)MyWSARecvFrom);
 
 	OriginalSendProc = (MySendProc)
-			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "send", (PROC)MySend);
+			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"send", (PROC)MySend);
 
 	OriginalSendToProc = (MySendToProc)
-			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "sendto", (PROC)MySendTo);
+			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"sendto", (PROC)MySendTo);
 
 	OriginalRecvProc = (MyRecvProc)
-			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "recv", (PROC)MyRecv);
+			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"recv", (PROC)MyRecv);
 
 	OriginalRecvFromProc = (MyRecvFromProc)
-			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "recvfrom", (PROC)MyRecvFrom);
+			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"recvfrom", (PROC)MyRecvFrom);
 
 	OriginalConnectProc = (MyConnectProc)
-			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "connect", (PROC)MyConnect);
+			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"connect", (PROC)MyConnect);
 
 	OriginalSelectProc = (MySelectProc)
-			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "select", (PROC)MySelect);
+			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"select", (PROC)MySelect);
 
 	OriginalWSAAsyncSelectProc = (MyWSAAsyncSelectProc)
-			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "WSAAsyncSelect", (PROC)MyWSAAsyncSelect);
+			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"WSAAsyncSelect", (PROC)MyWSAAsyncSelect);
 
 	OriginalGetProcAddressProc = (MyGetProcAddressProc)
-			HookImportedFunction( GetModuleHandle(0), "KERNEL32.DLL", "GetProcAddress", (PROC)MyGetProcAddress);
+			HookImportedFunction( GetModuleHandle(0), (PSTR)"KERNEL32.DLL", (PSTR)"GetProcAddress", (PROC)MyGetProcAddress);
 }
 
 static void

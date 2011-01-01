@@ -269,7 +269,7 @@ codepageToUTF8(unsigned int codepage, const char *str, unsigned int len, unsigne
 	/*** Convert the unicode string to UTF-8. ***/
 	
 	// Query the necessary space for the UTF-8 string.
-	result_len = WideCharToMultiByte(CP_UTF8, 0, unicode, unicode_len, NULL, 0, NULL, NULL);
+	result_len = WideCharToMultiByte(CP_UTF8, MB_USEGLYPHCHARS, unicode, unicode_len, NULL, 0, NULL, NULL);
 	if (result_len == 0) {
 		free(unicode);
 		return NULL;
@@ -277,7 +277,7 @@ codepageToUTF8(unsigned int codepage, const char *str, unsigned int len, unsigne
 
 	// Allocate the UTF-8 string and convert unicode to UTF-8.
 	result = (char *) malloc(result_len + 1);
-	if (WideCharToMultiByte(CP_UTF8, 0, unicode, unicode_len, result, result_len, NULL, NULL) == 0) {
+	if (WideCharToMultiByte(CP_UTF8, MB_USEGLYPHCHARS, unicode, unicode_len, result, result_len, NULL, NULL) == 0) {
 		free(unicode);
 		free(result);
 		return NULL;
@@ -303,14 +303,14 @@ utf8ToCodepage(unsigned int codepage, const char *str, unsigned int len, unsigne
 		return NULL;
 	}
 
-	result_len = WideCharToMultiByte(codepage, 0, unicode, unicode_len, NULL, 0, NULL, NULL);
+	result_len = WideCharToMultiByte(codepage, MB_USEGLYPHCHARS, unicode, unicode_len, NULL, 0, NULL, NULL);
 	if (result_len == 0) {
 		free(unicode);
 		return NULL;
 	}
 	
 	result = (char *) malloc(result_len + 1);
-	if (WideCharToMultiByte(codepage, 0, unicode, unicode_len, result, result_len, NULL, NULL) == 0) {
+	if (WideCharToMultiByte(codepage, MB_USEGLYPHCHARS, unicode, unicode_len, result, result_len, NULL, NULL) == 0) {
 		free(unicode);
 		free(result);
 		return NULL;

@@ -152,14 +152,14 @@ private:
 			if (header != 200) {
 				EnterCriticalSection(&self->lock);
 				self->status = HTTP_READER_ERROR;
-				self->error = "HTTP server returned error status.";
+				self->error = (char *)"HTTP server returned error status.";
 				LeaveCriticalSection(&self->lock);
 				return 0;
 			}
 		} else {
 			EnterCriticalSection(&self->lock);
 			self->status = HTTP_READER_ERROR;
-			self->error = "Cannot query HTTP status.";
+			self->error = (char *)"Cannot query HTTP status.";
 			LeaveCriticalSection(&self->lock);
 			return 0;
 		}
@@ -195,7 +195,7 @@ private:
 		} else {
 			EnterCriticalSection(&self->lock);
 			self->status = HTTP_READER_ERROR;
-			self->error = "Download failed.";
+			self->error = (char *)"Download failed.";
 			LeaveCriticalSection(&self->lock);
 		}
 
@@ -222,7 +222,7 @@ public:
 		inetHandle = InternetOpen(userAgent, INTERNET_OPEN_TYPE_PRECONFIG,
 				      NULL, NULL, 0);
 		if (inetHandle == NULL) {
-			error = "Cannot initialize the Internet library.";
+			error = (char *)"Cannot initialize the Internet library.";
 			return;
 		}
 
@@ -231,7 +231,7 @@ public:
 		unsigned short port;
 
 		if (!splitURL(url, scheme, &host, port, &uri)) {
-			error = "Invalid URL.";
+			error = (char *)"Invalid URL.";
 			return;
 		}
 		assert(host != NULL);
@@ -240,7 +240,7 @@ public:
 		connectHandle = InternetConnect(inetHandle, host, port, NULL, NULL,
 				INTERNET_SERVICE_HTTP, 0, 0);
 		if (connectHandle == NULL) {
-			error = "Cannot initialize an Internet connection object.";
+			error = (char *)"Cannot initialize an Internet connection object.";
 			free(host);
 			free(uri);
 			return;
@@ -254,16 +254,16 @@ public:
 			flags |= INTERNET_FLAG_SECURE;
 		}
 		if (postData == NULL) {
-			method = "GET";
+			method = (char *)"GET";
 		} else {
-			method = "POST";
+			method = (char *)"POST";
 		}
 		openHandle = HttpOpenRequest(connectHandle, method, uri, "HTTP/1.1",
 					     NULL, NULL, flags, 0);
 		free(host);
 		free(uri);
 		if (openHandle == NULL) {
-			error = "Cannot open a HTTP request.";
+			error = (char *)"Cannot open a HTTP request.";
 			return;
 		}
 
@@ -271,7 +271,7 @@ public:
 			const char *header = "Content-Type: application/x-www-form-urlencoded\r\n";
 			if (!HttpAddRequestHeaders(openHandle, header, strlen(header),
 			    HTTP_ADDREQ_FLAG_REPLACE | HTTP_ADDREQ_FLAG_ADD)) {
-				error = "Cannot add Content-Type HTTP request header.";
+				error = (char *)"Cannot add Content-Type HTTP request header.";
 				return;
 			}
 			if (postDataSize == -1) {
@@ -280,7 +280,7 @@ public:
 			this->postDataSize = postDataSize;
 			this->postData = (char *) malloc(postDataSize);
 			if (this->postData == NULL) {
-				error = "Cannot allocate memory for HTTP POST data.";
+				error = (char *)"Cannot allocate memory for HTTP POST data.";
 				return;
 			}
 			memcpy(this->postData, postData, postDataSize);
@@ -300,7 +300,7 @@ public:
 		DWORD threadID;
 		threadHandle = CreateThread(NULL, 0, threadEntry, this, 0, &threadID);
 		if (threadHandle == NULL) {
-			error = "Cannot create a thread.";
+			error = (char *)"Cannot create a thread.";
 			return;
 		}
 		if (errorMustBeFreed && error != NULL)
