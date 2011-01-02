@@ -184,14 +184,16 @@ moc_fild16 124 381 moc_fild20 197 24
 moc_fild16 333 380 moc_fild20 197 24
 moc_fild20 156 143 anthell01 35 263
 moc_fild20 337 315 anthell02 168 170
-moc_fild20 38 174 morocc 160 61 0 c r2 c
-moc_fild20 38 183 morocc 160 61 0 c r2 c
-moc_fild20 189 21 morocc 160 61 0 c r2 c
-moc_fild20 200 21 morocc 160 61 0 c r2 c
-moc_fild20 354 183 morocc 160 61 0 c r2 c
-moc_fild20 354 174 morocc 160 61 0 c r2 c
-moc_fild20 203 336 morocc 160 61 0 c r2 c
-moc_fild20 215 336 morocc 160 61 0 c r2 c
+moc_fild20 38 174 morocc 160 61 0 c r1 c c c c r1 c c r1
+moc_fild20 38 183 morocc 160 61 0 c r1 c c c c r1 c c r1
+moc_fild20 189 21 morocc 160 61 0 c r1 c c c c r1 c c r1
+moc_fild20 200 21 morocc 160 61 0 c r1 c c c c r1 c c r1
+moc_fild20 354 183 morocc 160 61 0 c r1 c c c c r1 c c r1
+moc_fild20 354 174 morocc 160 61 0 c r1 c c c c r1 c c r1
+moc_fild20 203 336 moc_fild01 86 32 0 c r1 c c c c r2
+moc_fild20 215 336 moc_fild01 86 32 0 c r1 c c c c r2
+moc_fild20 203 336 morocc 160 61 0 c r1 c c c c r1 c c r1
+moc_fild20 215 336 morocc 160 61 0 c r1 c c c c r1 c c r1
 morocc 299 207 moc_fild20 36 177
 prt_fild09 95 19 moc_fild20 209 333
 prt_fild09 246 17 moc_fild20 209 333
@@ -1255,7 +1257,7 @@ pay_fild01 278 14 pay_fild02 83 386
 pay_fild01 353 14 pay_fild02 167 390
 pay_fild01 379 201 pay_fild07 16 200
 pay_fild01 333 361 payon 122 27
-pay_fild02 16 175 pay_fild11 297 135
+#pay_fild02 16 175 pay_fild11 297 135
 pay_fild02 83 386 pay_fild01 278 14
 pay_fild02 134 16 pay_fild05 127 378
 pay_fild02 167 390 pay_fild01 353 14
@@ -1282,7 +1284,7 @@ pay_fild09 112 16 pay_fild10 112 382
 pay_fild10 16 290 pay_fild07 382 290
 pay_fild10 112 382 pay_fild09 112 16
 pay_fild11 38 330 moc_fild03 179 16
-pay_fild11 297 135 pay_fild02 16 175
+#pay_fild11 297 135 pay_fild02 16 175
 pay_gld 16 276 moc_fild02 378 272
 pay_gld 121 238 payg_cas01 214 44
 pay_gld 140 156 payg_cas04 252 275
@@ -2706,3 +2708,16 @@ job_thief1 180 15 moc_ruins 145 117
 #airplane 243 73 hugel 181 146
 #airplane 243 73 lighthalzen 302 75
 #airplane 243 73 yuno 92 260
+new_zone01 148 112 new_zone02 100 9
+new_zone02 126 106 new_zone02 160 171
+new_zone02 73 106 new_zone02 41 172
+pay_fild07 163 17 pay_fild03 177 275
+alde_alche 19 171 aldebaran 68 56
+airplane 243 73 lighthalzen 302 75
+airport 142 13 lighthalzen 262 75
+lighthalzen 196 46 lhz_in02 282 83
+lhz_in02 274 82 lhz_in02 270 14
+lhz_in02 288 30 lighthalzen 194 35
+lighthalzen 197 36 lhz_in02 284 30
+lhz_in02 265 14 lhz_in02 269 82
+lhz_in02 282 79 lighthalzen 194 48
