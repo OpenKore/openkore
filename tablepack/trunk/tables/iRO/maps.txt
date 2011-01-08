@@ -875,7 +875,9 @@ bat_c01.rsw#Kriger Von Midgard#
 bat_c02.rsw#Kriger Von Midgard#
 bat_c03.rsw#Kriger Von Midgard#
 man_fild01.rsw#Manuk Field#
+man_fild02.rsw#Manuk Field#
 man_fild03.rsw#Manuk Field#
+manuk.rsw#Manuk#
 mid_camp.rsw#Midgarts Expedition Camp#
 mid_campin.rsw#Inside Midgarts Expedition Camp#
 moc_fild22b.rsw#Crack of Dimension#
