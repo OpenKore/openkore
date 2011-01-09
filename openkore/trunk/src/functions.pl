@@ -1016,7 +1016,7 @@ sub parseOutgoingClientMessage {
 			close DUMP;
 		} elsif ($config{'debugPacket_include_dumpMethod'} == 5) {
 			open DUMP, ">> DUMP_HEAD.txt";
-			print DUMP sprintf(substr(unpack('H*', $msg),2,2) . substr(unpack('H*', $msg),0,2) . " " . length($msg) . " send\n");
+			print DUMP sprintf(substr(unpack('H*', $msg),2,2) . substr(unpack('H*', $msg),0,2) . " " . length($msg) . " send " . $label . " \n");
 			close DUMP;
 		}
 	}
@@ -1262,6 +1262,7 @@ sub parseOutgoingClientMessage {
 # Parse network data sent by the RO server.
 sub parseIncomingMessage {
 	my ($msg) = @_;
+	my $recvmsg = $msg;
 
 	# Determine packet switch
 	my $switch = Network::MessageTokenizer::getMessageID($msg);
@@ -1298,7 +1299,7 @@ sub parseIncomingMessage {
 		if ($config{'debugPacket_received'} == 1) {
 			debug sprintf("Received packet: %-4s    [%2d bytes]  %s\n", $switch, length($msg), $label), "parseMsg", 0;
 		} elsif ($config{'debugPacket_received'} == 2) {
-			visualDump($msg, "<< Received packet (server): $switch  $label");
+			visualDump($recvmsg, "<< Received packet (server): $switch  $label");
 		}
 		if ($config{'debugPacket_include_dumpMethod'} == 1) {
 			debug "Packet: $switch$label\n", "parseMsg", 0;
@@ -1312,7 +1313,7 @@ sub parseIncomingMessage {
 			close DUMP;
 		} elsif ($config{'debugPacket_include_dumpMethod'} == 5) {
 			open DUMP, ">> DUMP_HEAD.txt";
-			print DUMP sprintf(substr(unpack('H*', $msg),2,2) . substr(unpack('H*', $msg),0,2) . " " . length($msg) . " recv\n");
+			print DUMP sprintf(substr(unpack('H*', $msg),2,2) . substr(unpack('H*', $msg),0,2) . " " . length($msg) . " recv " . $label . " \n");
 			close DUMP;
 		}
 	}
