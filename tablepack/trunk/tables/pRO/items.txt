@@ -4833,7 +4833,8 @@
 //-------2010 RWC ｾﾆﾀﾌﾅﾛﾀﾎｵ･ ﾇﾊｸｮﾇﾉ ﾅｬｶ｡ ｾﾂｰﾅ ----------
 5364#Dark Snake Lord Hat#
 5365#Fried Egg#
-5307#Carmen Miranda's Hat#
+//5307#Carmen Miranda's Hat#
+5307#Holiday_Fruitcocktail_Hat#
 5304#Bongun_Hat#
 5305#Pirate_Dagger#
 //-----2010 ｿ蠧ﾅ ﾀﾌｺ･ﾆｮ -----------------
@@ -5333,5 +5334,21 @@
 //---- ﾇﾊｸｮﾇﾉ ｸｺﾅﾍ ﾄｧｷｫ ｹ貔・ﾀﾌｺ･ﾆｮ -----
 18510#Bloody_Angel_Wings#
 18511#Bloody_Angel_Feathers#
+
+
+
+
+
+//---- 2010 X-mas Event -----
+6446#Green Paper#
+6447#Red Paper#
+6448#White Paper#
+6449#Casual Diary#
+6450#Honest Diary#
+9058#Snow Rabbit Egg#
+
+
+
+
 
 //file end
