@@ -33501,7 +33501,7 @@ Jobs : ^777777All^000000
 A hat made of tropical fruits. It seems very fresh and eatable.
 MDEF + 3
 Has a chance to auto-cast Charming_Wink each time the wearer is attacked.
-Item Class : ^777777Helm^000000    Def : ^7777773^000000
+Item Class : ^777777Helm^000000    Def : ^7777775^000000
 Head Position : ^777777Upper^000000    Weight : ^77777740^000000
 Jobs : ^777777All^000000
 #
@@ -37045,4 +37045,35 @@ Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
 Location : ^777777Mid^000000 Weight : ^7777770^000000
 Required Level : ^77777760^000000
 Jobs : ^777777All Jobs^000000
+#
+
+
+
+
+
+//---- 2010 X-mas Event -----
+6446#
+Suspicious paper out of Strange Box.
+weight : ^7777770^000000
+#
+6447#
+A paper which Red Paper rainning on a Green Paper.
+weight : ^7777770^000000
+#
+6448#
+A paper wich White paper snowing on a Red paper.
+weight : ^7777770^000000
+#
+6449#
+Causal diary that is about ordinary daily life of average kid.
+weight : ^7777770^000000
+#
+6450#
+Honest diary that is about right things that good kid has done in a day.
+weight : ^7777770^000000
+#
+9058#
+It's an egg where cutepet Snow Rabbit has fallen asleep in. With a portable incubator, you can wake up a sleeping monster.
+During event, exp increases 5% if carried together with Snow Rabbit for hunting.
+Class : ^777777Monster Egg^000000
 #
