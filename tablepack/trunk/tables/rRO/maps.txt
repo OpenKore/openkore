@@ -1,4 +1,4 @@
-bossnia_01.rsw#Босния #
+﻿bossnia_01.rsw#Босния #
 bossnia_02.rsw#Босния #
 bossnia_03.rsw#Босния #
 bossnia_04.rsw#Босния #
@@ -672,6 +672,7 @@ cave.rsw#Пещерная деревня #
 moc_fild20.rsw#Разлом Пространства #
 moc_fild21.rsw#Разлом Пространства #
 moc_fild22.rsw#Разлом Пространства #
+moc_para01.rsw#Garden of Eden#
 //---------- WoE SE Dungeons -----------
 arug_que01.rsw#Морстонские Прерии #
 schg_que01.rsw#Морстонские Прерии #

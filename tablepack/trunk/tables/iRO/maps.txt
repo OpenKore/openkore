@@ -422,6 +422,7 @@ moc_fild19.rsw#Sograt Desert#
 moc_fild20.rsw#Morocc Field (Dimensional Gorge)#
 moc_fild21.rsw#Morocc Field (Dimensional Gorge)#
 moc_fild22.rsw#Morocc Field (Dimensional Gorge)#
+moc_para01.rsw#Garden of Eden#
 moc_pryd01.rsw#Inside Pyramid#
 moc_pryd02.rsw#Inside Pyramid#
 moc_pryd03.rsw#Inside Pyramid#
