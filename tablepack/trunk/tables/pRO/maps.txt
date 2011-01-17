@@ -23,7 +23,7 @@ job3_rune03.rsw#Test room for Rune Knight Job Change#
 job3_war01.rsw#Test room for Warlock Job Change#
 job3_war02.rsw#Test room for Warlock Job Change#
 jupe_core2.rsw#The centre of Juperos#
-
+moc_para01.rsw#Garden of Eden#
 
 //-------------Ep13.2----------
 1@nyd.rsw#Nydhogg Nest#
