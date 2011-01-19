@@ -3980,7 +3980,11 @@ sub checkPlayerCondition {
 	if ($config{$prefix."_isGuild"}) {
 		return 0 unless ($player->{guild} && existsInList($config{$prefix . "_isGuild"}, $player->{guild}{name}));
 	}
-
+	
+	if ($config{$prefix."_isNotGuild"}) {
+		return 0 if ($player->{guild} && existsInList($config{$prefix . "_isNotGuild"}, $player->{guild}{name}));
+	}
+	
 	if ($config{$prefix."_dist"}) {
 		return 0 unless inRange(distance(calcPosition($char), calcPosition($player)), $config{$prefix."_dist"});
 	}
