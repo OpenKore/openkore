@@ -1,0 +1,735 @@
+# Config.txt 中文化版
+# 中文化由DrKN漢化及提供
+#
+# 請參閱使用者手冊
+# 該手冊位於 http://openkore.sourceforge.net/manual/
+
+
+######## 登入及伺服器相關設定 ########
+master
+# 主伺服器名稱
+server
+# 遊戲伺服器編號
+username
+# 帳戶使用者名稱
+password
+# 帳戶密碼
+loginPinCode
+# 登錄密碼
+char
+# 角色編號
+
+bindIp
+# 綁定IP [ 一般為空白 ] [ 空白=自動判斷 ]
+serverType twRO
+# 伺服器類型 [ 台灣仙境傳說為 twRO ]
+
+pauseCharServer 0
+# 連接角色伺服器前等候時間 [ 秒 ]
+pauseMapServer 0
+# 連接地圖伺服器前等候時間 [ 秒 ]
+ignoreInvalidLogin 0
+# 無視登入錯誤警告 [ 0/1 ]
+secureLogin_requestCode
+# 安全登錄碼 [ HEX字串(16進制) ]
+
+message_length_max 80
+# 對話最長長度 [ 不應修改 ]
+
+
+######## XKore 相關設定 ########
+XKore 0
+# XKore 模式 [ 0: 停用此功能 1: (XKore)->(RO主程式)->(遊戲伺服器)  2: (RO主程式)->(XKore)->(遊戲伺服器) ]
+XKore_silent 1
+# XKore訊息隱藏於RO對話欄 [ 0: 不會顯示在對話欄  1: 會顯示在對話欄 ]
+XKore_bypassBotDetection 0
+# 檢測主程式是否需要加上補丁 [ 0: 不會做主程式檢測  1: 會做主程式檢測 ]
+XKore_exeName Ragxe.exe
+# RO主程式執行檔名字 [ 免費伺服器為 RagFree.exe ]
+
+# XKore 2 模式伺服器端設定
+XKore_listenIp 127.0.0.1 
+# XKore 2 模式綁定IP [ 本機IP ]
+XKore_listenPort 6901
+# XKore 2 模式綁定連接埠
+XKore_publicIp 127.0.0.1
+# XKore 2 模式綁定對外IP [ 外來連接IP ]
+
+
+######## 遠端控制相關設定 ########
+secureAdminPassword 1
+# 遠端控制開關 [ 1: 開 2: 關 ] [ XKore 模式時不建議打開 ]
+adminPassword
+# 遠端控制密碼
+callSign
+# 指令辨認字眼
+commandPrefix ;
+# XKore 模式時使用，所有對話以此開始會當作為指令執行
+
+alias_heal healme
+# 自訂快速指令 [ heal 為 指令，healme 為 觸發字眼 舉例：在公頻喊healme，此bot會自動執行指令：heal ]
+
+
+######## 主設定 ########
+allowedMaps 
+# 限制bot只能在某地圖活動
+allowedMaps_reaction 1
+# 如果不在allowedMaps，則會執行之動作 [ 0: 重生/使用技能回家  1: 關閉Kore ]
+
+
+######## 攻擊相關設定 ########
+attackAuto 2
+# 自動攻擊模式 [ 0: 不會被動/主動攻擊  1: 只會被動攻擊  2: 會被動/主動攻擊 ]
+attackAuto_party 1
+# 是否自動攻擊隊友的目標 [ 0: 不會攻擊  1: 會攻擊 ]
+attackAuto_followTarget 1
+# 是否自動攻擊跟隨目標的目標 [ 0: 不會攻擊  1: 會攻擊 ]
+attackAuto_inLockOnly 1
+# 是否只在鎖定地圖內攻擊 [ 0: 只在鎖定地圖主動攻擊  1: 在鎖定地圖外會主動攻擊 ]
+attackDistance 1.5
+# 攻擊距離 [ 近身攻擊通常為1~3 魔法/弓箭攻擊為8~15 ]
+attackDistanceAuto 0
+# 攻擊距離自動檢測 [ 0: 停用功能  1: 啟動功能 ]
+attackMaxDistance 2.5
+# 攻擊最大距離
+attackMaxRouteDistance 100
+# 攻擊前移動最大距離
+attackMaxRouteTime 4
+# 攻擊前移動最大時間值 [ 秒 ]
+attackMinPlayerDistance 2
+# 只會攻擊其他玩家距離該怪之最少距離
+attackMinPortalDistance 4
+# 只會攻擊其他玩家距離該怪之最大距離
+attackUseWeapon 1
+# 是否使用武器攻擊 [ 0: 不使用武器攻擊(法術攻擊)  1: 使用武器攻擊 ]
+attackNoGiveup 0
+# 會否放棄攻擊目標 [ 0: 會放棄  1: 不會放棄 ]
+attackCanSnipe 0
+# 會否跨牆攻擊/山玻目標 [ 0: 不會  1: 會(遠程/魔法攻擊) ]
+attackCheckLOS 0
+# 攻擊前會否檢測有否障礙物阻隔 [ 0: 不會  1: 會 ]
+attackLooters 0
+# 會否自動攻擊撿物者(ex. 波利) [ 0: 不會  1: 會 ]
+attackChangeTarget 1
+# 會否攻擊已改變攻擊目標的魔物 [ 0: 不會  1: 會 ]
+aggressiveAntiKS 0
+# 會否開啟防止搶怪模式 [ 0: 不會  1: 會 ]
+attackAuto_onlyWhenSafe 0
+# 是否會在其他玩家視線內攻擊 [ 0: 會在其他玩家視線內攻擊  1: 不會在奇他玩家視線內攻擊 ]
+
+attackEquip_topHead
+# 攻擊時自動佩帶裝備 [ 上頭飾 ]
+attackEquip_midHead
+# 攻擊時自動佩帶裝備 [ 中頭飾 ]
+attackEquip_lowHead
+# 攻擊時自動佩帶裝備 [ 下頭飾 ]
+attackEquip_leftHand
+# 攻擊時自動佩帶裝備 [ 左手 ]
+attackEquip_rightHand
+# 攻擊時自動佩帶裝備 [ 右手 ]
+attackEquip_leftAccessory
+# 攻擊時自動佩帶裝備 [ 左裝飾品 ]
+attackEquip_rightAccessory
+# 攻擊時自動佩帶裝備 [ 右裝飾品 ]
+attackEquip_robe
+# 攻擊時自動佩帶裝備 [ 披肩 ]
+attackEquip_armor
+# 攻擊時自動佩帶裝備 [ 衣服 ]
+attackEquip_shoes
+# 攻擊時自動佩帶裝備 [ 鞋子 ]
+attackEquip_arrow
+# 攻擊時自動佩帶裝備 [ 箭矢 ]
+
+
+######## 雜項設定 ########
+autoMoveOnDeath 0
+# 死後會否自動步行到指定地方 [ 0: 不會  1: 會 ]
+autoMoveOnDeath_x
+# 死後自動步行到指定地方的X坐標
+autoMoveOnDeath_y
+# 死後自動步行到指定地方的Y坐標
+autoMoveOnDeath_map
+# 死後自動步行到指定地方的地圖
+
+# autoBreakTime 可令Kore在每星期某天或每天自動登出一段時間
+# 時間：24小時制 日子：mon tue wed thu fri sat sun
+# 使用例子：
+# autoBreakTime wed,fri {
+# 	startTime 10:00
+# 	endTime 13:59
+# }
+autoBreakTime {
+	startTime
+	stopTime
+}
+
+# autoConfChange 可令Kore在某條件成立後自動轉換執行指定之config.txt
+# 使用例子：
+# autoConfChange control\config2.txt {
+# 	minTime 3600 # 最小達到此秒數才轉換
+# 	varTime 1800 # 時間隨機數 達到了minTime後在varTime所設定之數字之內隨機一個數字 [ minTime+隨機(varTime) ]
+#	lvl 30 # 只會在比此等級高才能轉換
+#	joblvl # 只會在比此等級高才能轉換
+#}
+autoConfChange {
+	minTime
+	varTime
+	lvl
+	joblvl
+}
+
+autoMakeArrows 0
+# 是否啟動自動製作箭矢 [ 0: 不會  1: 會 ] [ 需配搭arrowcraft.txt ]
+
+autoRestart 0
+# 是否啟動自動重登功能 [ 0: 不會  1: 會 ]
+autoRestartMin 10800
+# 最小達到此秒數才會重登
+autoRestartSeed 3600
+# 時間隨機數 達到autoRestartMin後在autoRestartSeed所設定之數字之內隨機一個數字 [ autoRestartMin+隨機(autoRetartSeed) ]
+autoRestartSleep 1
+# 在自動重啟功能中登出後會否待機 [ 0: 不會  1: 會 ]
+autoSleepMin 900
+# 最小達到此秒數才會登入
+autoSleepSeed 900
+# 時間隨機數 達到autoSleepMin後在autoSleepSeed所設定之數字之內隨機一個數字 [ autoSleepMin+隨機(autoSleepSeed) ]
+
+autoResponse 0
+# 是否啟動自動回覆功能 [ 0: 不會  1: 會 ] [ 需配搭chat_resp.txt ]
+
+# 指定自動唸咒技能 [ 需先行設定useSelf_skill使用 自動唸咒 技能 ]
+# 使用例子：autoSpell 火箭術
+autoSpell
+
+avoidGM_near 0
+# 是否啟動防GM功能 [ 0: 不會  1: 會 ]
+avoidGM_near_inTown 0
+avoidGM_talk 0
+avoidGM_reconnect 1800
+avoidGM_ignoreList
+
+avoidList 1
+avoidList_inLockOnly 0
+avoidList_reconnect 1800
+
+cachePlayerNames 1
+cachePlayerNames_duration 900
+cachePlayerNames_maxSize 100
+
+clientSight 20
+
+dcOnDeath 0
+dcOnDualLogin 0
+dcOnDisconnect 0
+dcOnEmptyArrow 0
+dcOnMaxReconnections 0
+dcOnMute 0
+dcOnPM 0
+dcOnZeny 0
+dcOnStorageFull 1
+dcOnPlayer 0
+
+follow 0
+followTarget
+followEmotion 1
+followEmotion_distance 4
+followFaceDirection 0
+followDistanceMax 6
+followDistanceMin 3
+followLostStep 12
+followSitAuto 0
+followBot 0
+
+itemsTakeAuto 2
+itemsTakeAuto_party 0
+itemsGatherAuto 2
+itemsMaxWeight 89
+itemsMaxWeight_sellOrStore 48
+itemsMaxNum_sellOrStore 99
+cartMaxWeight 7900
+itemsTakeAuto_new 0
+    
+
+lockMap
+lockMap_x
+lockMap_y
+lockMap_randX
+lockMap_randY
+
+route_escape_reachedNoPortal 1
+route_escape_randomWalk 1
+route_escape_shout
+route_avoidWalls 1
+route_randomWalk 1
+route_randomWalk_inTown 0
+route_randomWalk_maxRouteTime 75
+route_maxWarpFee
+route_maxNpcTries 5
+route_teleport 0
+route_teleport_minDistance 150
+route_teleport_maxTries 8
+route_teleport_notInMaps
+route_step 15
+
+runFromTarget 0
+runFromTarget_dist 6
+
+saveMap
+saveMap_warpToBuyOrSell 1
+saveMap_warpChatCommand
+
+shopAuto_open 0
+shop_random 0
+
+sitAuto_hp_lower 40
+sitAuto_hp_upper 100
+sitAuto_sp_lower 0
+sitAuto_sp_upper 0
+sitAuto_over_50 0
+sitAuto_idle 1
+sitAuto_look
+sitAuto_look_from_wall
+
+
+statsAddAuto 0
+statsAddAuto_list
+statsAddAuto_dontUseBonus 0
+statsAdd_over_99 0
+
+skillsAddAuto 0
+skillsAddAuto_list
+
+tankMode 0
+tankModeTarget
+
+teleportAuto_hp 10
+teleportAuto_sp 0
+teleportAuto_idle 0
+teleportAuto_portal 0
+teleportAuto_search 0
+teleportAuto_minAggressives 0
+teleportAuto_minAggressivesInLock 0
+teleportAuto_onlyWhenSafe 0
+teleportAuto_maxDmg 500
+teleportAuto_maxDmgInLock 0
+teleportAuto_deadly 1
+teleportAuto_useSkill 3
+teleportAuto_useChatCommand
+teleportAuto_allPlayers 0
+teleportAuto_notPlayers
+teleportAuto_atkCount 0
+teleportAuto_atkMiss 10
+teleportAuto_unstuck 0
+teleportAuto_lostTarget 0
+teleportAuto_dropTarget 0
+teleportAuto_dropTargetKS 0
+teleportAuto_attackedWhenSitting 0
+teleportAuto_totalDmg 0
+teleportAuto_totalDmgInLock 0
+teleportAuto_equip_leftAccessory
+teleportAuto_equip_rightAccessory
+teleportAuto_lostHomunculus
+teleportAuto_useItemForRespawn
+
+dealAuto 1
+dealAuto_names
+partyAuto 1
+partyAutoShare 0
+guildAutoDeny 1
+
+verbose 1
+showDomain 0
+squelchDomains
+verboseDomains
+beepDomains
+beepDomains_notInTown
+
+logChat 0
+logPrivateChat 1
+logPartyChat 1
+logGuildChat 1
+logSystemChat 1
+logEmoticons
+logConsole 0
+logAppendUsername 1
+
+chatTitleOversize 0
+shopTitleOversize 0
+
+sleepTime 10000
+
+ignoreAll 0
+itemHistory 0
+autoTalkCont 1
+noAutoSkill 0
+portalCompile 1
+portalRecord 2
+missDamage 0
+
+tankersList
+
+repairAuto 0
+repairAuto_list
+
+removeActorWithDistance
+
+######## Mercenary Support ########
+
+mercenary_attackAuto 2
+mercenary_attackAuto_party 1
+mercenary_attackAuto_notInTown 1
+mercenary_attackAuto_onlyWhenSafe 0
+mercenary_attackDistance 1.5
+mercenary_attackMaxDistance 2.5
+mercenary_attackMaxRouteTime 4
+mercenary_attackCanSnipe 0
+mercenary_attackCheckLOS 0
+mercenary_attackNoGiveup 0
+mercenary_attackChangeTarget 1
+
+mercenary_followDistanceMax 10
+mercenary_followDistanceMin 3
+
+mercenary_route_step 15
+
+mercenary_tankMode 0
+mercenary_tankModeTarget
+
+mercenary_teleportAuto_hp 10
+mercenary_teleportAuto_maxDmg 500
+mercenary_teleportAuto_maxDmgInLock 0
+mercenary_teleportAuto_deadly 1
+mercenary_teleportAuto_unstuck 0
+mercenary_teleportAuto_dropTarget 0
+mercenary_teleportAuto_dropTargetKS 0
+mercenary_teleportAuto_totalDmg 0
+mercenary_teleportAuto_totalDmgInLock 0
+
+######## Homunculus Support ########
+
+homunculus_attackAuto 2
+homunculus_attackAuto_party 1
+homunculus_attackAuto_notInTown 1
+homunculus_attackAuto_onlyWhenSafe 0
+homunculus_attackDistance 1.5
+homunculus_attackMaxDistance 2.5
+homunculus_attackMaxRouteTime 4
+homunculus_attackCanSnipe 0
+homunculus_attackCheckLOS 0
+homunculus_attackNoGiveup 0
+homunculus_attackChangeTarget 1
+
+homunculus_followDistanceMax 10
+homunculus_followDistanceMin 3
+
+homunculus_route_step 15
+
+homunculus_tankMode 0
+homunculus_tankModeTarget
+
+homunculus_teleportAuto_hp 10
+homunculus_teleportAuto_maxDmg 500
+homunculus_teleportAuto_maxDmgInLock 0
+homunculus_teleportAuto_deadly 1
+homunculus_teleportAuto_unstuck 0
+homunculus_teleportAuto_dropTarget 0
+homunculus_teleportAuto_dropTargetKS 0
+homunculus_teleportAuto_totalDmg 0
+homunculus_teleportAuto_totalDmgInLock 0
+
+# intimacyMax / Min sets a threshhold of when not to feed your homunculus
+# If intimacy is HIGHER than the minimum or LOWER/EQUAL to the max, we wont feed.
+homunculus_intimacyMax 999
+homunculus_intimacyMin 911
+
+# How long should we wait between feeding? default: random between 10 and 60 seconds
+homunculus_hungerTimeoutMax 60
+homunculus_hungerTimeoutMin 10
+
+# Turn on/off homunculus autofeeding
+homunculus_autoFeed 1
+# In Wich maps should we allow feeding? (leave empty for any map)
+homunculus_autoFeedAllowedMaps
+
+# Feed homunculus between MIN and MAX value (example: between 11 and 25)
+homunculus_hungerMin 11
+homunculus_hungerMax 24
+
+######## Block options ########
+# You can copy & paste any block multiple times. So if you want to
+# configure two attack skills, just duplicate the attackSkillSlot block.
+
+attackSkillSlot {
+	lvl 10
+	dist 1.5
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp > 10
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	previousDamage
+	stopWhenHit 0
+	inLockOnly 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	monsters
+	notMonsters
+	maxAttempts 0
+	maxUses 0
+	target_whenStatusActive
+	target_whenStatusInactive
+	target_deltaHp
+	inInventory
+	isSelfSkill 0
+	equip_topHead
+	equip_midHead
+	equip_lowHead
+	equip_leftHand
+	equip_rightHand
+	equip_leftAccessory
+	equip_rightAccessory
+	equip_robe
+	equip_armor
+	equip_shoes
+	equip_arrow
+	manualAI 0
+}
+
+attackComboSlot {
+	afterSkill
+	waitBeforeUse
+	dist 1.5
+	isSelfSkill 1
+	target_deltaHp
+}
+
+doCommand {
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout
+	disabled 0
+	inInventory
+	inCart
+	inMap
+	manualAI 0
+}
+
+
+useSelf_skill {
+	lvl 10
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	inInventory
+	manualAI 0
+}
+
+useSelf_skill_smartHeal 1
+
+
+partySkill {
+	lvl 10
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	manualAI 0
+	target
+	target_hp
+	target_isJob
+	target_isNotJob
+	target_whenStatusActive
+	target_whenStatusInactive
+	target_aggressives
+	target_monsters
+	target_timeout 0
+	target_deltaHp
+	target_dead 0
+	inInventory
+	isSelfSkill 0
+}
+
+
+autoSwitch_default_rightHand
+autoSwitch_default_leftHand
+autoSwitch_default_arrow
+
+# NOTE: In the case of two handed weapons, or no Shield,
+#       duplicate the weapon name for 'rightHand'
+# To attack with bare hands, specify "[NONE]" (without the quotes) for rightHand
+
+autoSwitch {
+	rightHand
+	leftHand
+	arrow
+	distance
+	useWeapon
+}
+
+equipAuto {
+	topHead
+	midHead
+	lowHead
+	leftHand
+	rightHand
+	leftAccessory
+	rightAccessory
+	robe
+	armor
+	shoes
+	arrow
+	monsters
+	weight 0
+	whileSitting 0
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	inInventory
+	manualAI 0
+}
+
+useSelf_item {
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout
+	disabled 0
+	inInventory
+	manualAI 0
+}
+
+######## Autostorage/autosell ########
+
+buyAuto {
+	npc
+	npc_steps
+	standpoint
+	distance 5
+	price
+	minAmount 2
+	maxAmount 3
+}
+
+sellAuto 0
+sellAuto_npc
+sellAuto_npc_steps
+sellAuto_standpoint
+sellAuto_distance 5
+
+storageAuto 0
+storageAuto_npc
+storageAuto_distance 5
+storageAuto_npc_type 1
+storageAuto_npc_steps
+storageAuto_password
+storageAuto_keepOpen 0
+storageAuto_useChatCommand
+relogAfterStorage 1
+minStorageZeny 50
+
+npcTimeResponse
+
+getAuto {
+	minAmount
+	maxAmount
+	passive
+}
+
+######## Debugging options; only useful for developers ########
+
+debug 0
+debugPacket_unparsed 0
+debugPacket_received 0
+debugPacket_ro_sent 0
+debugPacket_sent 0
+debugPacket_exclude
+debugPacket_include
+debugPacket_include_dumpMethod
+debugDomains
