@@ -7343,7 +7343,7 @@ sub GM_silence {
 # ID is monsterID
 sub taekwon_packets {
 	my ($self, $args) = @_;
-	my $string = ($args->{value} == 1) ? T("Sun") : ($args->{value} == 2) ? T("Moon") : ($args->{value} == 3) ? T("Stars") : T("unknown");
+	my $string = ($args->{value} == 1) ? T("Sun") : ($args->{value} == 2) ? T("Moon") : ($args->{value} == 3) ? T("Stars") : TF("Unknown (%d)", $args->{value});
 	if ($args->{flag} == 0) { # Info about Star Gladiator save map: Map registered
 		message TF("You have now marked: %s as Place of the %s.\n", bytesToString($args->{name}), $string), "info";
 	} elsif ($args->{flag} == 1) { # Info about Star Gladiator save map: Information
