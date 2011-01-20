@@ -6675,7 +6675,7 @@ sub login_pin_code_request {
 			quit();
 			return;
 		}
-		$messageSender->sendPinCode($config{loginPinCode}, 0, $args->{key}, 3, \@key);
+		$messageSender->sendLoginPinCode($config{loginPinCode}, 0, $args->{key}, 3, \@key);
 
 	} elsif ($args->{flag} == 5) {
 		# PIN Entered 3 times Wrong, Disconnect
