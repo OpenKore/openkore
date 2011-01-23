@@ -1715,6 +1715,12 @@ sub itemName {
 		push(@cards, $card);
 		($cards{$card} ||= 0) += 1;
 	}
+	# if ($cards[0] == 254 || $cards[0] == 255) {
+	#	my $creatorID = unpack 'V1', substr($item->{cards}, 4, 4);
+	#	# Creator's name can be requested with sendGetCharacterName (server responds with character_name)
+	#	# Needs to be implemented independently with caching and timeouts (like player names)
+	#	# (itemName isn't a place for any packet sending)
+	# }
 	if ($cards[0] == 254) {
 		# Alchemist-made potion
 		#
