@@ -1,4 +1,4 @@
-﻿NV_BASIC#基本技能#
+NV_BASIC#基本技能#
 SM_SWORD#單手劍使用熟練度#
 SM_TWOHAND#雙手劍使用熟練度#
 SM_RECOVERY#快速回復#
