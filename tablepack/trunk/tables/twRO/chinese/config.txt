@@ -1,159 +1,159 @@
-# Config.txt ����ƪ�
-# ����ƥ�DrKN�~�Ƥδ���
+# Config.txt 中文化版
+# 中文化由DrKN漢化及提供
 # 23/01/2011
-# �аѾ\�ϥΪ̤�U
-# �Ӥ�U��� http://openkore.sourceforge.net/manual/
+# 請參閱使用者手冊
+# 該手冊位於 http://openkore.sourceforge.net/manual/
 
 
-######## �n�J�Φ��A�������]�w ########
+######## 登入及伺服器相關設定 ########
 master
-# �D���A���W��
+# 主伺服器名稱
 server
-# �C�����A���s��
+# 遊戲伺服器編號
 username
-# �b��ϥΪ̦W��
+# 帳戶使用者名稱
 password
-# �b��K�X
+# 帳戶密碼
 loginPinCode
-# �n���K�X
+# 登錄密碼
 char
-# ����s��
+# 角色編號
 
 bindIp
-# �j�wIP [ �@�묰�ť� ] [ �ť�=�۰ʧP�_ ]
+# 綁定IP [ 一般為空白 ] [ 空白=自動判斷 ]
 serverType twRO
-# ���A������ [ �x�W�P�Ҷǻ��� twRO ]
+# 伺服器類型 [ 台灣仙境傳說為 twRO ]
 
 pauseCharServer 0
-# �s��������A���e���Ԯɶ� [ �� ]
+# 連接角色伺服器前等候時間 [ 秒 ]
 pauseMapServer 0
-# �s���a�Ϧ��A���e���Ԯɶ� [ �� ]
+# 連接地圖伺服器前等候時間 [ 秒 ]
 ignoreInvalidLogin 0
-# �L���n�J���~ĵ�i [ 0/1 ]
+# 無視登入錯誤警告 [ 0/1 ]
 secureLogin_requestCode
-# �w���n���X [ HEX�r��(16�i��) ]
+# 安全登錄碼 [ HEX字串(16進制) ]
 
 message_length_max 80
-# ��̪ܳ����� [ �����ק� ]
+# 對話最長長度 [ 不應修改 ]
 
 
-######## XKore �����]�w ########
+######## XKore 相關設定 ########
 XKore 0
-# XKore �Ҧ� [ 0: ���Φ��\�� 1: (XKore)->(RO�D�{��)->(�C�����A��)  2: (RO�D�{��)->(XKore)->(�C�����A��) ]
+# XKore 模式 [ 0: 停用此功能 1: (XKore)->(RO主程式)->(遊戲伺服器)  2: (RO主程式)->(XKore)->(遊戲伺服器) ]
 XKore_silent 1
-# XKore�T�����é�RO����� [ 0: ���|��ܦb�����  1: �|��ܦb����� ]
+# XKore訊息隱藏於RO對話欄 [ 0: 不會顯示在對話欄  1: 會顯示在對話欄 ]
 XKore_bypassBotDetection 0
-# �˴��D�{���O�_�ݭn�[�W�ɤB [ 0: ���|���D�{���˴�  1: �|���D�{���˴� ]
+# 檢測主程式是否需要加上補丁 [ 0: 不會做主程式檢測  1: 會做主程式檢測 ]
 XKore_exeName Ragxe.exe
-# RO�D�{�������ɦW�r [ �K�O���A���� RagFree.exe ]
+# RO主程式執行檔名字 [ 免費伺服器為 RagFree.exe ]
 
-# XKore 2 �Ҧ����A���ݳ]�w
+# XKore 2 模式伺服器端設定
 XKore_listenIp 127.0.0.1 
-# XKore 2 �Ҧ��j�wIP [ ����IP ]
+# XKore 2 模式綁定IP [ 本機IP ]
 XKore_listenPort 6901
-# XKore 2 �Ҧ��j�w�s����
+# XKore 2 模式綁定連接埠
 XKore_publicIp 127.0.0.1
-# XKore 2 �Ҧ��j�w��~IP [ �~�ӳs��IP ]
+# XKore 2 模式綁定對外IP [ 外來連接IP ]
 
 
-######## ���ݱ�������]�w ########
+######## 遠端控制相關設定 ########
 secureAdminPassword 1
-# ���ݱ���}�� [ 1: �} 2: �� ] [ XKore �Ҧ��ɤ���ĳ���} ]
+# 遠端控制開關 [ 1: 開 2: 關 ] [ XKore 模式時不建議打開 ]
 adminPassword
-# ���ݱ���K�X
+# 遠端控制密碼
 callSign
-# ���O��{�r��
+# 指令辨認字眼
 commandPrefix ;
-# XKore �Ҧ��ɨϥΡA�Ҧ���ܥH���}�l�|���@�����O����
+# XKore 模式時使用，所有對話以此開始會當作為指令執行
 
 alias_heal healme
-# �ۭq�ֳt���O [ heal �� ���O�Ahealme �� Ĳ�o�r�� �|�ҡG�b���W��healme�A��bot�|�۰ʰ�����O�Gheal ]
+# 自訂快速指令 [ heal 為 指令，healme 為 觸發字眼 舉例：在公頻喊healme，此bot會自動執行指令：heal ]
 
 
-######## �D�]�w ########
+######## 主設定 ########
 allowedMaps 
-# ����bot�u��b�Y�a�Ϭ���
+# 限制bot只能在某地圖活動
 allowedMaps_reaction 1
-# �p�G���ballowedMaps�A�h�|���椧�ʧ@ [ 0: ����/�ϥΧޯ�^�a  1: ����Kore ]
+# 如果不在allowedMaps，則會執行之動作 [ 0: 重生/使用技能回家  1: 關閉Kore ]
 
 
-######## ���������]�w ########
+######## 攻擊相關設定 ########
 attackAuto 2
-# �۰ʧ����Ҧ� [ 0: ���|�Q��/�D�ʧ���  1: �u�|�Q�ʧ���  2: �|�Q��/�D�ʧ��� ]
+# 自動攻擊模式 [ 0: 不會被動/主動攻擊  1: 只會被動攻擊  2: 會被動/主動攻擊 ]
 attackAuto_party 1
-# �O�_�۰ʧ������ͪ��ؼ� [ 0: ���|����  1: �|���� ]
+# 是否自動攻擊隊友的目標 [ 0: 不會攻擊  1: 會攻擊 ]
 attackAuto_followTarget 1
-# �O�_�۰ʧ������H�ؼЪ��ؼ� [ 0: ���|����  1: �|���� ]
+# 是否自動攻擊跟隨目標的目標 [ 0: 不會攻擊  1: 會攻擊 ]
 attackAuto_inLockOnly 1
-# �O�_�u�b��w�a�Ϥ����� [ 0: �u�b��w�a�ϥD�ʧ���  1: �b��w�a�ϥ~�|�D�ʧ��� ]
+# 是否只在鎖定地圖內攻擊 [ 0: 只在鎖定地圖主動攻擊  1: 在鎖定地圖外會主動攻擊 ]
 attackDistance 1.5
-# �����Z�� [ �񨭧����q�`��1~3 �]�k/�}�b������8~15 ]
+# 攻擊距離 [ 近身攻擊通常為1~3 魔法/弓箭攻擊為8~15 ]
 attackDistanceAuto 0
-# �����Z���۰��˴� [ 0: ���Υ\��  1: �Ұʥ\�� ]
+# 攻擊距離自動檢測 [ 0: 停用功能  1: 啟動功能 ]
 attackMaxDistance 2.5
-# �����̤j�Z��
+# 攻擊最大距離
 attackMaxRouteDistance 100
-# �����e���ʳ̤j�Z��
+# 攻擊前移動最大距離
 attackMaxRouteTime 4
-# �����e���ʳ̤j�ɶ��� [ �� ]
+# 攻擊前移動最大時間值 [ 秒 ]
 attackMinPlayerDistance 2
-# �u�|������L���a�Z���өǤ��ֶ̤Z��
+# 只會攻擊其他玩家距離該怪之最少距離
 attackMinPortalDistance 4
-# �u�|������L���a�Z���өǤ��̤j�Z��
+# 只會攻擊其他玩家距離該怪之最大距離
 attackUseWeapon 1
-# �O�_�ϥΪZ������ [ 0: ���ϥΪZ������(�k�N����)  1: �ϥΪZ������ ]
+# 是否使用武器攻擊 [ 0: 不使用武器攻擊(法術攻擊)  1: 使用武器攻擊 ]
 attackNoGiveup 0
-# �|�_�������ؼ� [ 0: �|���  1: ���|��� ]
+# 會否放棄攻擊目標 [ 0: 會放棄  1: 不會放棄 ]
 attackCanSnipe 0
-# �|�_�������/�s���ؼ� [ 0: ���|  1: �|(���{/�]�k����) ]
+# 會否跨牆攻擊/山玻目標 [ 0: 不會  1: 會(遠程/魔法攻擊) ]
 attackCheckLOS 0
-# �����e�|�_�˴����_��ê�����j [ 0: ���|  1: �| ]
+# 攻擊前會否檢測有否障礙物阻隔 [ 0: 不會  1: 會 ]
 attackLooters 0
-# �|�_�۰ʧ����ߪ���(ex. �i�Q) [ 0: ���|  1: �| ]
+# 會否自動攻擊撿物者(ex. 波利) [ 0: 不會  1: 會 ]
 attackChangeTarget 1
-# �|�_�����w���ܧ����ؼЪ��]�� [ 0: ���|  1: �| ]
+# 會否攻擊已改變攻擊目標的魔物 [ 0: 不會  1: 會 ]
 aggressiveAntiKS 0
-# �|�_�}�Ҩ���m�ǼҦ� [ 0: ���|  1: �| ]
+# 會否開啟防止搶怪模式 [ 0: 不會  1: 會 ]
 attackAuto_onlyWhenSafe 0
-# �O�_�|�b��L���a���u������ [ 0: �|�b��L���a���u������  1: ���|�b�_�L���a���u������ ]
+# 是否會在其他玩家視線內攻擊 [ 0: 會在其他玩家視線內攻擊  1: 不會在奇他玩家視線內攻擊 ]
 
 attackEquip_topHead
-# �����ɦ۰ʨرa�˳� [ �W�Y�� ]
+# 攻擊時自動佩帶裝備 [ 上頭飾 ]
 attackEquip_midHead
-# �����ɦ۰ʨرa�˳� [ ���Y�� ]
+# 攻擊時自動佩帶裝備 [ 中頭飾 ]
 attackEquip_lowHead
-# �����ɦ۰ʨرa�˳� [ �U�Y�� ]
+# 攻擊時自動佩帶裝備 [ 下頭飾 ]
 attackEquip_leftHand
-# �����ɦ۰ʨرa�˳� [ ���� ]
+# 攻擊時自動佩帶裝備 [ 左手 ]
 attackEquip_rightHand
-# �����ɦ۰ʨرa�˳� [ �k�� ]
+# 攻擊時自動佩帶裝備 [ 右手 ]
 attackEquip_leftAccessory
-# �����ɦ۰ʨرa�˳� [ ���˹��~ ]
+# 攻擊時自動佩帶裝備 [ 左裝飾品 ]
 attackEquip_rightAccessory
-# �����ɦ۰ʨرa�˳� [ �k�˹��~ ]
+# 攻擊時自動佩帶裝備 [ 右裝飾品 ]
 attackEquip_robe
-# �����ɦ۰ʨرa�˳� [ �ܪ� ]
+# 攻擊時自動佩帶裝備 [ 披肩 ]
 attackEquip_armor
-# �����ɦ۰ʨرa�˳� [ ��A ]
+# 攻擊時自動佩帶裝備 [ 衣服 ]
 attackEquip_shoes
-# �����ɦ۰ʨرa�˳� [ �c�l ]
+# 攻擊時自動佩帶裝備 [ 鞋子 ]
 attackEquip_arrow
-# �����ɦ۰ʨرa�˳� [ �b�� ]
+# 攻擊時自動佩帶裝備 [ 箭矢 ]
 
 
-######## �����]�w ########
+######## 雜項設定 ########
 autoMoveOnDeath 0
-# ����|�_�۰ʨB�����w�a�� [ 0: ���|  1: �| ]
+# 死後會否自動步行到指定地方 [ 0: 不會  1: 會 ]
 autoMoveOnDeath_x
-# ����۰ʨB�����w�a�誺X����
+# 死後自動步行到指定地方的X坐標
 autoMoveOnDeath_y
-# ����۰ʨB�����w�a�誺Y����
+# 死後自動步行到指定地方的Y坐標
 autoMoveOnDeath_map
-# ����۰ʨB�����w�a�誺�a��
+# 死後自動步行到指定地方的地圖
 
-# autoBreakTime �i�OKore�b�C�P���Y�ѩΨC�Ѧ۰ʵn�X�@�q�ɶ�
-# �ɶ��G24�p�ɨ� ��l�Gmon tue wed thu fri sat sun
-# �ϥΨҤl�G
+# autoBreakTime 可令Kore在每星期某天或每天自動登出一段時間
+# 時間：24小時制 日子：mon tue wed thu fri sat sun
+# 使用例子：
 # autoBreakTime wed,fri {
 # 	startTime 10:00
 # 	endTime 13:59
@@ -163,13 +163,13 @@ autoBreakTime {
 	stopTime
 }
 
-# autoConfChange �i�OKore�b�Y���󦨥߫�۰��ഫ������w��config.txt
-# �ϥΨҤl�G
+# autoConfChange 可令Kore在某條件成立後自動轉換執行指定之config.txt
+# 使用例子：
 # autoConfChange control\config2.txt {
-# 	minTime 3600 # �̤p�F�즹���Ƥ~�ഫ
-# 	varTime 1800 # �ɶ��H���� �F��FminTime��bvarTime�ҳ]�w���Ʀr�����H���@�ӼƦr [ minTime+�H��(varTime) ]
-#	lvl 30 # �u�|�b�񦹵��Ű��~���ഫ
-#	joblvl # �u�|�b�񦹵��Ű��~���ഫ
+# 	minTime 3600 # 最小達到此秒數才轉換
+# 	varTime 1800 # 時間隨機數 達到了minTime後在varTime所設定之數字之內隨機一個數字 [ minTime+隨機(varTime) ]
+#	lvl 30 # 只會在比此等級高才能轉換
+#	joblvl # 只會在比此等級高才能轉換
 #}
 autoConfChange {
 	minTime
@@ -179,30 +179,30 @@ autoConfChange {
 }
 
 autoMakeArrows 0
-# �O�_�Ұʦ۰ʻs�@�b�� [ 0: ���|  1: �| ] [ �ݰt�farrowcraft.txt ]
+# 是否啟動自動製作箭矢 [ 0: 不會  1: 會 ] [ 需配搭arrowcraft.txt ]
 
 autoRestart 0
-# �O�_�Ұʦ۰ʭ��n�\�� [ 0: ���|  1: �| ]
+# 是否啟動自動重登功能 [ 0: 不會  1: 會 ]
 autoRestartMin 10800
-# �̤p�F�즹���Ƥ~�|���n
+# 最小達到此秒數才會重登
 autoRestartSeed 3600
-# �ɶ��H���� �F��autoRestartMin��bautoRestartSeed�ҳ]�w���Ʀr�����H���@�ӼƦr [ autoRestartMin+�H��(autoRetartSeed) ]
+# 時間隨機數 達到autoRestartMin後在autoRestartSeed所設定之數字之內隨機一個數字 [ autoRestartMin+隨機(autoRetartSeed) ]
 autoRestartSleep 1
-# �b�۰ʭ��ҥ\�त�n�X��|�_�ݾ� [ 0: ���|  1: �| ]
+# 在自動重啟功能中登出後會否待機 [ 0: 不會  1: 會 ]
 autoSleepMin 900
-# �̤p�F�즹���Ƥ~�|�n�J
+# 最小達到此秒數才會登入
 autoSleepSeed 900
-# �ɶ��H���� �F��autoSleepMin��bautoSleepSeed�ҳ]�w���Ʀr�����H���@�ӼƦr [ autoSleepMin+�H��(autoSleepSeed) ]
+# 時間隨機數 達到autoSleepMin後在autoSleepSeed所設定之數字之內隨機一個數字 [ autoSleepMin+隨機(autoSleepSeed) ]
 
 autoResponse 0
-# �O�_�Ұʦ۰ʦ^�Х\�� [ 0: ���|  1: �| ] [ �ݰt�fchat_resp.txt ]
+# 是否啟動自動回覆功能 [ 0: 不會  1: 會 ] [ 需配搭chat_resp.txt ]
 
-# ���w�۰ʰ�G�ޯ� [ �ݥ���]�wuseSelf_skill�ϥ� �۰ʰ�G �ޯ� ]
-# �ϥΨҤl�GautoSpell ���b�N
+# 指定自動唸咒技能 [ 需先行設定useSelf_skill使用 自動唸咒 技能 ]
+# 使用例子：autoSpell 火箭術
 autoSpell
 
 avoidGM_near 0
-# �O�_�Ұʨ�GM�\�� [ 0: ���|  1: �| ]
+# 是否啟動防GM功能 [ 0: 不會  1: 會 ]
 avoidGM_near_inTown 0
 avoidGM_talk 0
 avoidGM_reconnect 1800
