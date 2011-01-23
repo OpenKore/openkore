@@ -1,161 +1,80 @@
-0 ! *!*
-1 ? *?*
-2 ho,delight *Whistling*
-3 lv,heart *Heart*
-4 swt,sweat *Sweat*
-5 ic *Idea*
-6 an,fret *$!@#*
-7 ag,ghk *Grumble*
-8 $,money *Zeny!*
-9 ... *...*
-10 pea,gawi *Peace*
-11 fst,bawi *Fist*
-12 wav,bo,qh *Wave*
-13 flg *Flag 1*
-14 lv2 *Love*
-15 thx *Thanks*
-16 wah *Wah*
-17 sry *Sorry*
-18 heh *Heh*
-19 swt2 *Sweat*
-20 hmm *Hmm*
-21 no1 *Nice One*
-22 ?? *??*
-23 omg *Omg*
-24 o,oh *O*
-25 x *X*
-26 hp *Help*
-27 go *Go*
-28 sob *Sob*
-29 gg *Good Game*
-30 kis *Kiss*
-31 kis2 *Kiss 2*
-32 pif *Pfft*
-33 ok *Ok*
-35 flg2 *Flag 2*
-36 e1,bzz,stare *Angry*
-37 e2,rice,hungry *Drool*
-38 e3,awsm,cool *2 Hearts*
-39 e4,meh,tongue *Bleks*
-40 e5,shy *Na-ah*
-41 e6,pat,goodboy *Pat Pat*
-42 e7,mp,sptime *SP*
-43 e8,slur,sexy *Horny*
-44 e9,com,comeon *Come Here*
-45 e10,yawn,sleepy *Yawn*
-46 e11,grat,congrats *Congratulations*
-47 e12,hptime *HP*
-48 flg3 *Flag 3*
-49 flg4 *Flag 4*
-50 flg5 *Flag 5*
-51 flg6 *Flag 6*
-52 e13,fsh *FlashEyes(?!)*
-53 e14,spin *SpinEyes(?!)*
-54 e15,sigh *'o'(?!)*
-55 e16,dum *Dumb(?!)*
-56 e17,crwd *( . )(?!)*
-57 e18,desp,otl *Down(?!)*
-58 dice1 *Dice#1*
-59 dice2 *Dice#2*
-60 dice3 *Dice#3*
-61 dice4 *Dice#4*
-62 dice5 *Dice#5*
-63 dice6 *Dice#6*
-64 flg7 *Flag 7*
-65 e20,here *PointingHand*
-66 flg8 *Flag 8*
-67 flg9 *Flag 9*
-68 phone *CellPhone(?!)*
-69 mail *E-Mail(?!)*
-70 rh *Unknown(RedHieroglyphs)*
-71 sp1 *Cell signal power 1/3(?!)*
-72 sp2 *Cell signal power 2/3(?!)*
-73 sp3 *Cell signal power 3/3(?!)*
-74 e27,hum *Unknown(Face w/lines)*
-75 e28,abs *Fear!(?!)*
-76 e29,oops *Oops*
-77 e30,spit *Boooring(?!)*
-78 e31,ene *BlessingLight*
-79 e32,panic *Panic!*
-80 e33,whisp *Whisp*
-0 ! *！*
-1 ? *？*
-2 ho *高興*
-3 lv *愛心*
-4 swt *流冷汗*
-5 ic *靈感*
-6 an *生氣*
-7 ag *鬱悶*
-8 $ *金錢*
-9 ... *無言*
-10 pea *剪刀*
-11 fst *石頭*
-12 wav *布*
-13 flg *韓國旗*
-14 lv2 *大愛心*
-15 thx *感謝*
-16 wah *無奈*
-17 sry *抱歉*
-18 heh *歡笑*
-19 swt2 *噴汗*
-20 hmm *迷惑*
-21 no1 *一級棒*
-22 ?? *尋找*
-23 omg *天哪！*
-24 o,oh *Ｏ*
-25 x *Ｘ*
-26 hp *救命*
-27 go *出發*
-28 sob *哭泣*
-29 gg *奸笑*
-30 kis *接吻*
-31 kis2 *輕吻*
-32 pif *呼*
-33 ok *嗯*
-34 *禁言*
-35 flg2 *印尼旗*
-36 e1,bzz *火大*
-37 e2,rice *嘴饞*
-38 e3,awsm *漂亮*
-39 e4,meh *開玩笑*
-40 e5,shy *害羞*
-41 e6,pat *摸摸*
-42 e7,mp *補SP*
-43 e8,slur *流口水*
-44 e9,com *過來*
-45 e10,yawn *好睏*
-46 e11,grat *祝賀*
-47 e12 *補hp*
-48 flg3 *菲律賓旗*
-49 flg4 *美國旗*
-50 flg5 *新加坡旗*
-51 flg6 *巴西旗*
-52 fsh *FlashEyes(?!)*
-53 spin *SpinEyes(?!)*
-54 sigh *'o'(?!)*
-55 dum *Dumb(?!)*
-56 crwd *( . )(?!)*
-57 desp *Down(?!)*
-58 dice1 *骰子#1*
-59 dice2 *骰子#2*
-60 dice3 *骰子#3*
-61 dice4 *骰子#4*
-62 dice5 *骰子#5*
-63 dice6 *骰子#6*
-64 flg7 *Flag 7*
-65 e20,here *PointingHand*
-66 flg8 *Flag 8*
-67 flg9 *Flag 9*
-68 phone *CellPhone(?!)*
-69 mail *E-Mail(?!)*
-70 rh *Unknown(RedHieroglyphs)*
-71 sp1 *Cell signal power 1/3(?!)*
-72 sp2 *Cell signal power 2/3(?!)*
-73 sp3 *Cell signal power 3/3(?!)*
-74 e27,hum *Unknown(Face w/lines)*
-75 e28,abs *Fear!(?!)*
-76 e29,oops *Oops*
-77 e30,spit *Boooring(?!)*
-78 e31,ene *BlessingLight*
-79 e32,panic *Panic!*
-80 e33,whisp *Whisp*
+1 1,? *？*
+2 2,happy *高興*
+3 3,love *愛心*
+4 4,sweat *流冷汗*
+5 5,idea *靈感*
+6 6,angry *生氣*
+7 7,boring *鬱悶*
+8 8,$ *金錢*
+9 9,... *無言*
+10 10,scissors *剪刀*
+11 11,stone *石頭*
+12 12,paper *布*
+13 13,flag1,korea *韓國旗*
+14 14,love2 *大愛心*
+15 15,thx *感謝*
+16 16,...2 *無奈*
+17 17,sry *抱歉*
+18 18,ha *歡笑*
+19 19,sweat2 *噴汗*
+20 20,huh *迷惑*
+21 21,good *一級棒*
+22 22,where *尋找*
+23 23,omg *天哪！*
+24 24,o *Ｏ*
+25 25,x *Ｘ*
+26 26,help *救命*
+27 27,go *出發*
+28 28,cry *哭泣*
+29 29,hehe *奸笑*
+30 30,kiss *接吻*
+31 31,kiss2 *輕吻*
+32 32,sigh2 *呼*
+33 33,ok *嗯*
+34 34,silence *禁言*
+35 35,flag2,indo *印尼旗*
+36 36,e1,angry2 *火大*
+37 37,e2,eat *嘴饞*
+38 38,e3,beauty *漂亮*
+39 39,e4,funny *開玩笑*
+40 40,e5,shy *害羞*
+41 41,e6,touch *摸摸*
+42 42,e7,sp *補SP*
+43 43,e8,slur *流口水*
+44 44,e9,come *過來*
+45 45,e10,zz *好睏*
+46 46,e11,congrat *祝賀*
+47 37,e12,hp *補hp*
+48 48,flag3,phili *菲律賓旗*
+49 49,flag4,usa *美國旗*
+50 50,flg5,singa *新加坡旗*
+51 51,flg6,brazil *巴西旗*
+52 52,flash *FlashEyes(?!)*
+53 53,spin *SpinEyes(?!)*
+54 54,sigh *'o'(?!)*
+55 55,dumb *Dumb(?!)*
+56 56,crwd *( . )(?!)*
+57 57,down *Down(?!)*
+58 58,dice1 *骰子#1*
+59 59,dice2 *骰子#2*
+60 60,dice3 *骰子#3*
+61 61,dice4 *骰子#4*
+62 62,dice5 *骰子#5*
+63 63,dice6 *骰子#6*
+64 64,flag7 *Flag 7*
+65 65,here *PointingHand*
+66 66,flg8 *Flag 8*
+67 67,flg9 *Flag 9*
+68 68,phone *CellPhone(?!)*
+69 69,mail *E-Mail(?!)*
+70 70,rh *Unknown(RedHieroglyphs)*
+71 71,signal1 *Cell signal power 1/3(?!)*
+72 72,signal2 *Cell signal power 2/3(?!)*
+73 73,signal3 *Cell signal power 3/3(?!)*
+74 74,e27,hum *Unknown(Face w/lines)*
+75 75,e28,fear *Fear!(?!)*
+76 76,e29,oops *Oops*
+77 77,e30,boring2 *Boooring(?!)*
+78 78,e31,bless *BlessingLight*
+79 79,e32,panic *Panic!*
+80 80,e33,whisp *Whisp*

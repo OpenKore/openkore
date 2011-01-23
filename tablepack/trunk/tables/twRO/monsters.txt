@@ -1,6 +1,4 @@
-#A default english table has been provided
-#Remove all lines below to have Kore auto-generate this table
-1001 蠍子
+﻿1001 蠍子
 1002 波利
 1003 盜蟲卵
 1004 蜂兵
@@ -1709,10 +1707,3 @@
 6044 提耶莉
 6045 史帝芬
 ################################
-1885 青冠龍2038 ?剖撌游?B
-1081 暺?
-1078 蝝?
-1794 ?
-1783 餈血
-1079 ??
-1083 ????

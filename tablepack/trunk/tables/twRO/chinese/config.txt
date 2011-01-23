@@ -1,6 +1,6 @@
 # Config.txt 中文化版
 # 中文化由DrKN漢化及提供
-#
+# 23/01/2011
 # 請參閱使用者手冊
 # 該手冊位於 http://openkore.sourceforge.net/manual/
 
