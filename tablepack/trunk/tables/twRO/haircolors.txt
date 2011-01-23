@@ -1,12 +1,3 @@
-0 Dark Brown
-1 Brown/Blond
-2 Purple
-3 Light Brown
-4 Green
-5 Blue
-6 White
-7 Dark Brown
-8 Red
 0 深棕色
 1 棕色/金色
 2 紫色
