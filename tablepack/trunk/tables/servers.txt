@@ -282,8 +282,9 @@ patchpath /patch02
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
 addTableFolders rRO
 
-[Taiwan - twRO: Alfheim (Chaos, Loki, Aegir)]
-ip 61.220.60.11
+## http://ro.gameflier.com/
+[Taiwan - twRO: Paid (Chaos, Iris)]
+ip 220.130.113.209
 port 6900
 master_version 5
 version 211
@@ -291,11 +292,26 @@ serverType twRO
 serverEncoding Traditional Chinese
 charBlockSize 112
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets-twRO-office.txt
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets_paid.txt
 addTableFolders twRO
 captcha 0
 
-[Taiwan - twRO: Free (Poring King, Devil King Poring)]
+[Taiwan - twRO: Free (ChaosFree, IrisFree)]
+ip 220.130.113.235
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Traditional Chinese
+charBlockSize 112
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets_free.txt
+addTableFolders twRO
+captcha 0
+
+[Taiwan - twRO: Free (Poring King, Devil Poring King)]
 ip 220.130.113.238
 port 6900
 master_version 5
@@ -305,11 +321,11 @@ serverEncoding Traditional Chinese
 charBlockSize 112
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets-twRO-free.txt
+recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
-[Taiwan - twRO: Free (Poring, Baphomet, Picky, Goblin, Moonlight)]
+[Taiwan - twRO: Free (Moonlight, Picky, Baphomet, Poring Goblin)]
 ip 220.130.113.221
 port 6900
 master_version 5
@@ -319,7 +335,7 @@ serverEncoding Traditional Chinese
 charBlockSize 112
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets-twRO-free.txt
+recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
@@ -333,12 +349,12 @@ serverEncoding Traditional Chinese
 charBlockSize 112
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets-twRO-free.txt
+recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
-[Taiwan - twRO: Test]
-ip 61.220.56.47
+[Taiwan - twRO: All (Prontera)]
+ip 220.130.113.208
 port 6900
 master_version 5
 version 211
@@ -347,12 +363,12 @@ serverEncoding Traditional Chinese
 charBlockSize 112
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets-twRO-test.txt
+recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
-[Taiwan - twRO: Irisfree]
-ip 220.130.113.235
+[Taiwan - twRO: Sakray]
+ip 61.220.62.26
 port 6900
 master_version 5
 version 211
@@ -361,7 +377,7 @@ serverEncoding Traditional Chinese
 charBlockSize 112
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets-twRO-free.txt
+recvpackets recvpackets_sakray.txt
 addTableFolders twRO
 captcha 0
 
