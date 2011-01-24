@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: OpenKore\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-11-29 19:50+0100\n"
-"PO-Revision-Date: 2010-11-29 20:09+0100\n"
+"PO-Revision-Date: 2011-01-24 22:14+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: manticora\n"
 "MIME-Version: 1.0\n"
@@ -3481,7 +3481,7 @@ msgid ""
 "#  Name                                       Type           Amount       Price\n"
 msgstr ""
 "%s\n"
-"#  Имя                                          Тип             Кол-во.       Цена\n"
+"#  Название предмета                          Тип            Кол-во       Цена \n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6851
 #: ../Network/Receive/ServerType0.pm:6910
