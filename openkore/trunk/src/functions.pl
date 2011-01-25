@@ -638,7 +638,7 @@ sub initMapChangeVars {
 	$timeout{ai_buyAuto}{time} = time + 5;
 	$timeout{ai_shop}{time} = time;
 
-	AI::clear("attack", "move");
+	AI::clear(qw(attack move teleport));
 	AI::SlaveManager::clear("attack", "route", "move");
 	ChatQueue::clear;
 
