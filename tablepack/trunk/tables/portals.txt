@@ -600,7 +600,7 @@ ein_fild09 328 344 ein_fild10 28 330
 ein_fild10 25 330 ein_fild09 325 344
 ein_fild10 196 371 ein_fild07 179 46
 gef_dun00 104 103 gef_tower 153 28
-gef_dun00 107 169 gef_dun01 115 240
+gef_dun00 107 168 gef_dun01 115 240
 gef_dun01 115 240 gef_dun00 107 169
 gef_dun01 197 38 gef_dun02 106 134
 gef_dun02 106 134 gef_dun01 197 38
