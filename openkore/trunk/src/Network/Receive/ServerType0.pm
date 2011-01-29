@@ -5040,8 +5040,10 @@ sub received_characters_blockSize {
 sub received_characters_unpackString {
 	if ($masterServer && $masterServer->{charBlockSize} == 112) {
 		return 'a4 V9 v V2 v14 Z24 C6 v2';
-	} else {
+	} else if ($masterServer && $masterServer->{charBlockSize} == 116) { 
 		return 'a4 V9 v17 Z24 C6 v2';
+	} else {
+		return 'a4 V9 v2 V2 v13 Z24 C6 v2';
 	}
 }
 
