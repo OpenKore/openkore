@@ -5134,7 +5134,6 @@ sub received_characters {
 
 	my $blockSize = $self->received_characters_blockSize();
 	for (my $i = $args->{RAW_MSG_SIZE} % $blockSize; $i < $args->{RAW_MSG_SIZE}; $i += $blockSize) {
-		print "$i aaaaaaaaaaaaaaa\n";
 		#exp display bugfix - chobit andy 20030129
         my $unpack_string = received_characters_unpackString();
 		my ($cID,$exp,$zeny,$jobExp,$jobLevel, $opt1, $opt2, $option, $karma, $manner, $statpt,
@@ -5152,7 +5151,6 @@ sub received_characters {
 		$chars[$slot]{hp_max} = $maxHp;
 		$chars[$slot]{sp} = $sp;
 		$chars[$slot]{sp_max} = $maxSp;
-		print "$hp            $maxHp      $sp           $maxSp\n";
 		$chars[$slot]{jobID} = $jobId;
 		$chars[$slot]{hair_style} = $hairstyle;
 		$chars[$slot]{lv} = $level;
