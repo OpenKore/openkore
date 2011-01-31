@@ -1,4 +1,4 @@
-#########################################################################
+﻿#########################################################################
 #  OpenKore - Network subsystem
 #  Copyright (c) 2006 OpenKore Team
 #
@@ -305,7 +305,7 @@ sub new {
 		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
 		##
-		#01E6 26 Some Player Name.
+		'01E6' => ['couple_name', 'c24', [qw(name)]], #TODO: PACKET_ZC_COUPLENAME
 		'01E9' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]],
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]],
@@ -329,6 +329,7 @@ sub new {
 		'0209' => ['friend_response', 'C Z24', [qw(type name)]],
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]],
 		'020E' => ['taekwon_packets', 'Z24 a4 C2', [qw(name ID value flag)]],
+		'020F' => ['pvp_point', 'V2', [qw(AID GID)]], #TODO: PACKET_CZ_REQ_PVPPOINT
 		'0215' => ['gospel_buff_aligned', 'a4', [qw(ID)]],
 		'0216' => ['adopt_reply', 'V', [qw(type)]],
 		'0219' => ['top10_blacksmith_rank'],
@@ -377,6 +378,7 @@ sub new {
 		'027B' => ['premium_rates_info', 'V3', [qw(exp death drop)]],
 		# tRO new packets, need some work on them
 		'0283' => ['account_id', 'V', [qw(accountID)]],
+		'0284' => ['GANSI_RANK', 'c24 c24 c24 c24 c24 c24 c24 c24 c24 c24 V10 v', [qw(name1 name2 name3 name4 name5 name6 name7 name8 name9 name10 pt1 pt2 pt3 pt4 pt5 pt6 pt7 pt8 pt9 pt10 switch)]], #TODO: PACKET_ZC_GANGSI_RANK
 		'0287' => ['cash_dealer'],
 		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]],
 		'028A' => ['character_status', 'a4 V3', [qw(ID option lv opt3)]],
@@ -398,6 +400,8 @@ sub new {
 		# tRO HShield packet challenge. 
 		# Borrow sub gameguard_request because it use the same mechanic.
 		'02A6' => ['gameguard_request'],
+		'02AA' => ['cash_password_request', 'v', [qw(info)]], #TODO: PACKET_ZC_REQ_CASH_PASSWORD
+		'02AC' => ['cash_password_result', 'v2', [qw(info count)]], #TODO: PACKET_ZC_RESULT_CASH_PASSWORD
 		# mRO PIN code Check
 		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]],
 		# Packet Prefix encryption Support
@@ -423,12 +427,15 @@ sub new {
 		'02D1' => ['storage_items_nonstackable'],
 		'02D2' => ['cart_items_nonstackable'],
 		'02D4' => ['inventory_item_added', 'v3 C3 a8 v C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
+		'02D5' => ['ISVR_DISCONNECT'], #TODO: PACKET_ZC_ISVR_DISCONNECT
 		'02D7' => ['show_eq', 'v Z24 v7 C', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex)]], #type is job
 		'02D9' => ['show_eq_msg_other', 'V2', [qw(unknown flag)]],
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]],
 		'02DC' => ['battleground_message', 'v a4 Z24 Z*', [qw(len ID name message)]],
 		'02DD' => ['battleground_emblem', 'a4 Z24 v', [qw(emblemID name ID)]],
 		'02DE' => ['battleground_score', 'v2', [qw(score_lion score_eagle)]],
+		'02DF' => ['battleground_position', 'a4 Z24 v3', [qw(ID name job x y)]], #TODO: PACKET_ZC_BATTLEFIELD_NOTIFY_POSITION
+		'02E0' => ['battleground_hp', 'a4 Z24 v2', [qw(ID name hp max_hp)]], #TODO: PACKET_ZC_BATTLEFIELD_NOTIFY_HP
 		# 02E1 packet unsure of dual_wield_damage needs more testing
 		'02E1' => ['actor_action', 'a4 a4 a4 V2 v x2 v x2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'02E7' => ['map_property', 'v2 a*', [qw(len type info_table)]],
@@ -441,19 +448,70 @@ sub new {
 		'02ED' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 v3',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords act lv unknown)]], # Spawning
 		'02EE' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 x v3',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords act lv unknown)]], # Standing
 		'02EF' => ['font', 'a4 v', [qw(ID fontID)]],
-
+		'02F0' => ['progress_bar', 'V2', [qw(color time)]], #TODO: PACKET_ZC_PROGRESS
+		'02F2' => ['progress_bar_stop'], #TODO: PACKET_ZC_PROGRESS_CANCEL
+		
+		'040C' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], #TODO: PACKET_ZC_BROADCAST3
+		#'040D' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'040E' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'040F' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0410' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0411' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0412' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0413' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0414' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0415' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0416' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0417' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0418' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0419' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'041A' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'041B' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'041C' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'041D' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'041E' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'041F' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0420' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0421' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0422' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0423' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0424' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0425' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0426' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0427' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0428' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0429' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'042A' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'042B' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'042C' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'042D' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'042E' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'042F' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0430' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0431' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0432' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0433' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0434' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		#'0435' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
+		
+		'043D' => ['skill_post_delay', 'v a4', [qw(ID time)]], #TODO: PACKET_ZC_SKILL_POSTDELAY
+		'043E' => ['skill_post_delaylist', 'v2 V', [qw(len id time)]],
 		# status timers (eA has 12 unknown bytes)
 		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]],
-
+		'0440' => ['millenium shield', 'a4 v2', [qw(ID num state)]], #TODO: PACKET_ZC_MILLENNIUMSHIELD
+		'0441' => ['skill_delete', 'v', [qw(ID)]], #TODO: PACKET_ZC_SKILLINFO_DELETE
 		'0442' => ['sage_autospell', 'v V a*', [qw(len why skills_list)]],
-		# '0446' => ['actor_quest_effect', 'a4 v4', [qw(ID x y effect type)]],
+		'0444' => ['cash_item_list', 'v V3 c v', [qw(len cash_point price discount_price type item_id)]], #TODO: PACKET_ZC_SIMPLE_CASH_POINT_ITEMLIST
+		'0446' => ['actor_quest_effect', 'a4 v4', [qw(ID x y effect type)]],
 
 		'0449' => ['hack_shield_alarm'],
-
+		'07D8' => ['party_setting', 'V C2', [qw(exp itempick itemdiv)]],
 		'07D9' => ['hotkeys'], # 268 # hotkeys:38
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]],
-		
+		'07E3' => ['skill_exchange_item', 'V', [qw(type)]], #TODO: PACKET_ZC_ITEMLISTWIN_OPEN
+		'07E2' => ['msg_string', 'v V', [qw(index para1)]], #TODO PACKET_ZC_MSG_VALUE        **msgtable
+		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]], #TODO: PACKET_ZC_MSG_SKILL     **msgtable
 		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
 		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5	
 		
@@ -465,20 +523,29 @@ sub new {
 		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait dispose)]],
 		'07FD' => ['special_item_obtain', 'v C v c/Z a*', [qw(len type nameID holder etc)]],
 		'07FE' => ['sound_effect', 'Z24', [qw(name)]],
-		# '07FF' => ['re_features_enabled', 'v V', [qw(len flag)]],
+		'07FF' => ['define_check', 'v V', [qw(len result)]], #TODO: PACKET_ZC_DEFINE_CHECK
 
 		'0800' => ['vender_items_list', 'v a4 a4', [qw(len venderID venderCID)]], # -1
-		# '0803' => ['booking_register', 'v', [qw(result)]],
-		# '0805' => ['booking_search'],
-		# '0807' => ['booking_unregister', 'v', [qw(result)]],
-		# '0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
-		# '080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
-		# '080B' => ['booking_delete', 'V', [qw(index)]],
+		'0803' => ['booking_register', 'v', [qw(result)]],
+		'0805' => ['booking_search', 'v c V c24 V v3', [qw(len info index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
+		'0807' => ['booking_unregister', 'v', [qw(result)]],
+		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
+		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
+		'080B' => ['booking_delete', 'V', [qw(index)]],
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
-		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20 # TODO: test & use type
+		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(item_ID type amount identified broken upgrade card1 card2 card3 card4)]], # 0x080F,20 # TODO: test & use type
+		'0810' => ['open_buying_store', 'c', [qw(amount)]], #TODO: PACKET_ZC_OPEN_BUYING_STORE
+		'0812' => ['open_buying_store_fail', 'v', [qw(result)]], #TODO: PACKET_ZC_FAILED_OPEN_BUYING_STORE_TO_BUYER     **msgtable
+		'0814' => ['buying_store_appear', 'V Z*', [qw(id name)]], #TODO: PACKET_ZC_BUYING_STORE_ENTRY
+		'081C' => ['buying_store_item_delete', 'v2 V', [qw(index amount zeny)]],
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
 		'0814' => ['buy_vender_found', 'a4 A80', [qw(venderID title)]],
+		'0816' => ['buy_vender_disappear', 'V', [qw(ID)]], #TODO: PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY
 		'0818' => ['buy_vender_items', 'v a4 a4', [qw(len venderID venderCID)]],
+		'084B' => ['item_appeared', 'a4 v2 C v2', [qw(ID nameID amount identified x y)]], # 19 TODO   provided by try71023
+		'0856' => ['actor_display', 'v C a4 v3 V v5 a4 v5 a4 a2 v V C2 a8 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023
+		'0857' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a5 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # spawning provided by try71023
+		'0858' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a5 C4 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv font name)]], # -1 # standing provided by try71023
 	};
 	return $self;
 }
@@ -1133,7 +1200,8 @@ sub actor_display {
 		$args->{switch} eq "01DA" ||
 		$args->{switch} eq "022C" ||
 		$args->{switch} eq "02EC" ||
-		$args->{switch} eq "07F7") {
+		$args->{switch} eq "07F7" ||
+		$args->{switch} eq "0856") {
 		# Actor Moved
 		makeCoordsFromTo(\%coordsFrom, \%coordsTo, $args->{coords}); # body dir will be calculated using the vector
 	} else {
@@ -1411,7 +1479,8 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "01D8" ||
 		$args->{switch} eq "022A" ||
 		$args->{switch} eq "02EE" ||
-		$args->{switch} eq "07F9") {
+		$args->{switch} eq "07F9" ||
+		$args->{switch} eq "0857") {
 		# Actor Exists (standing)
 
 		if ($actor->isa('Actor::Player')) {
@@ -1446,7 +1515,8 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "022B" ||
 		$args->{switch} eq "02ED" ||
 		$args->{switch} eq "01D9" ||
-		$args->{switch} eq "07F8") {
+		$args->{switch} eq "07F8" ||
+		$args->{switch} eq "0858") {
 		# Actor Connected (new)
 
 		if ($actor->isa('Actor::Player')) {
@@ -1465,7 +1535,8 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "01DA" ||
 		$args->{switch} eq "022C" ||
 		$args->{switch} eq "02EC" ||
-		$args->{switch} eq "07F7") {
+		$args->{switch} eq "07F7" ||
+		$args->{switch} eq "0856") {
 		# Actor Moved
 
 		# Correct the direction in which they're looking
@@ -1919,7 +1990,7 @@ sub cart_items_nonstackable {
 	} elsif ($args->{switch} eq '0297') {
 		$psize = 24;
 	} elsif ($args->{switch} eq '02D2') {
-		$psize = 26;
+		$psize = 28;
 	} else {
 		warning "cart_items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -2503,7 +2574,7 @@ sub deal_begin {
 		}
 		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
 	} elsif ($args->{type} == 5) {
-		error T("That person is in Kafra storage.\n"), "deal";
+		error T("That person is opening storage.\n"), "deal";
 	} else {
 		error TF("Deal request failed (unknown error %s).\n", $args->{type}), "deal";
 	}
@@ -3564,7 +3635,7 @@ sub inventory_items_nonstackable {
 	} elsif ($args->{switch} eq '0295') {
 		$psize = 24;
 	} elsif ($args->{switch} eq '02D0') {
-		$psize = 26;
+		$psize = 28;
 	} else {
 		warning "inventory_items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -4217,7 +4288,7 @@ sub message_string {
 		message T("View player equip request denied.\n"), "info";
 		
 	} elsif ($args->{msg_id} == 0x06AF) {
-		#  "Невозможно отправлять личные сообщения до 10 уровня."
+		#  "?迮赲郋郱邾郋迠郇郋 郋?郈?訄赲郅??? 郅邽?郇?迮 ?郋郋訇?迮郇邽? 迡郋 10 ??郋赲郇?."
 		message T("You need to be at least base level 10 to send private messages.\n"), "info";
 		
 	} else {
@@ -5063,13 +5134,13 @@ sub received_characters {
 
 	my $blockSize = $self->received_characters_blockSize();
 	for (my $i = $args->{RAW_MSG_SIZE} % $blockSize; $i < $args->{RAW_MSG_SIZE}; $i += $blockSize) {
+		print "$i aaaaaaaaaaaaaaa\n";
 		#exp display bugfix - chobit andy 20030129
         my $unpack_string = received_characters_unpackString();
 		my ($cID,$exp,$zeny,$jobExp,$jobLevel, $opt1, $opt2, $option, $karma, $manner, $statpt,
 			$hp,$maxHp,$sp,$maxSp, $walkspeed, $jobId,$hairstyle, $weapon, $level, $skillpt,$headLow, $shield,$headTop,$headMid,$hairColor,
 			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename) =
 			unpack($unpack_string, substr($args->{RAW_MSG}, $i));
-
 		$chars[$slot] = new Actor::You;
 		$chars[$slot]{ID} = $accountID;
 		$chars[$slot]{charID} = $cID;
@@ -5081,6 +5152,7 @@ sub received_characters {
 		$chars[$slot]{hp_max} = $maxHp;
 		$chars[$slot]{sp} = $sp;
 		$chars[$slot]{sp_max} = $maxSp;
+		print "$hp            $maxHp      $sp           $maxSp\n";
 		$chars[$slot]{jobID} = $jobId;
 		$chars[$slot]{hair_style} = $hairstyle;
 		$chars[$slot]{lv} = $level;
@@ -6404,7 +6476,7 @@ sub storage_items_nonstackable {
 	} elsif ($args->{switch} eq '0296') {
 		$psize = 24;
 	} elsif ($args->{switch} eq '02D1') {
-		$psize = 26;
+		$psize = 28;
 	} else {
 		warning "storage_items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -7940,6 +8012,31 @@ sub buy_vender_items
 		undef,
 		$Item->{nameID}) = unpack('V v C v', substr($args->{msg}, $i, 9));
 	}
+}
+
+sub progress_bar
+{
+	my($self, $args) = @_;
+	message TF("Progress bar loading (time: %d).\n", $args->{time}), 'info';
+}
+
+sub progress_bar_stop
+{
+	my($self, $args) = @_;
+	message TF("Progress bar finished.\n", 'info');
+}
+
+sub buying_store_item_delete {
+	my($self, $args) = @_;
+}
+sub open_buying_store {
+	my($self, $args) = @_;
+	my $number = $args->{number};
+	message TF("You can gather %d items.\n", $number);
+}
+sub actor_quest_effect {
+	my ($self, $args) = @_;
+	debug("npc: %d (%d, %d) effect: %d (type: %d)\n",$args->{ID}, $args->{x}, $args->{y},, $args->{effect}, $args->{type});
 }
 
 1;
