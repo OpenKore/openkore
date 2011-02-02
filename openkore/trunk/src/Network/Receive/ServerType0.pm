@@ -7889,6 +7889,7 @@ use constant {
 };
 
 # 07F6 (exp) doesn't change any exp information because 00B1 (exp_zeny_info) is always sent with it
+# r7643 - copy-pasted to RagexeRE_2009_10_27a.pm
 sub exp {
 	my ($self, $args) = @_;
 	
