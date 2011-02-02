@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: OpenKore\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-11-29 19:50+0100\n"
-"PO-Revision-Date: 2011-01-24 22:14+0100\n"
+"PO-Revision-Date: 2011-02-02 02:11+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: manticora\n"
 "MIME-Version: 1.0\n"
@@ -913,7 +913,7 @@ msgstr "параметр"
 
 #: ../Interface/Wx/ConfigEditor.pm:165
 msgid "Value"
-msgstr "значеие"
+msgstr "значение"
 
 #: ../Interface/Wx/ConfigEditor.pm:201
 msgid "Downloading"
@@ -1112,7 +1112,7 @@ msgstr "Выйти из программы."
 
 #: ../Interface/Wx.pm:445
 msgid "P&rogram"
-msgstr "&Программа"
+msgstr "&Бот"
 
 #: ../Interface/Wx.pm:449
 msgid "&Status"
@@ -1120,7 +1120,7 @@ msgstr "&Состояние"
 
 #: ../Interface/Wx.pm:450
 msgid "S&tatistics"
-msgstr "С&татистика"
+msgstr "С&таты персонажа"
 
 #: ../Interface/Wx.pm:451
 msgid "&Inventory"
@@ -1128,19 +1128,19 @@ msgstr "&Инвентарь"
 
 #: ../Interface/Wx.pm:452
 msgid "S&kills"
-msgstr "С&киллы"
+msgstr "Список &умений"
 
 #: ../Interface/Wx.pm:454
 msgid "&Players"
-msgstr "&Игроки"
+msgstr "Список &игроков"
 
 #: ../Interface/Wx.pm:455
 msgid "&Monsters"
-msgstr "&Мобы"
+msgstr "Список &мобов"
 
 #: ../Interface/Wx.pm:456
 msgid "&NPCs"
-msgstr "&Неписи"
+msgstr "Список &неписей"
 
 #: ../Interface/Wx.pm:458
 #: ../Interface/Wx.pm:489
@@ -1149,7 +1149,7 @@ msgstr "&Отчёт по опыту"
 
 #: ../Interface/Wx.pm:459
 msgid "I&nfo"
-msgstr "&Информация"
+msgstr "&Отчёт на консоль"
 
 #: ../Interface/Wx.pm:464
 msgid "&Map"
@@ -1237,7 +1237,7 @@ msgstr "Стирает содержимое консоли"
 
 #: ../Interface/Wx.pm:498
 msgid "&View"
-msgstr "&Вид"
+msgstr "О&ткрыть вкладку"
 
 #: ../Interface/Wx.pm:501
 msgid "&Alias"
@@ -1245,7 +1245,7 @@ msgstr "Сокр&ащения"
 
 #: ../Interface/Wx.pm:506
 msgid "&Advanced..."
-msgstr "&Дополнительная настройка"
+msgstr "&Редактор конфига"
 
 #: ../Interface/Wx.pm:506
 msgid "Edit advanced configuration options."
@@ -1375,7 +1375,7 @@ msgstr "Вы не вошли в игру.\n"
 #: ../Interface/Wx.pm:1010
 #: ../Interface/Wx.pm:1061
 msgid "Advanced Configuration"
-msgstr "Дополнительная настройка"
+msgstr "Редактор конфига"
 
 #: ../Interface/Wx.pm:1019
 msgid "All"
@@ -1383,7 +1383,7 @@ msgstr "Все параметры"
 
 #: ../Interface/Wx.pm:1042
 msgid "&Revert"
-msgstr "&Венуть"
+msgstr "&Вернуть"
 
 #: ../Interface/Wx.pm:1043
 msgid "Revert settings to before you opened the selected category"
