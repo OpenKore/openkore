@@ -1715,12 +1715,6 @@ sub itemName {
 		push(@cards, $card);
 		($cards{$card} ||= 0) += 1;
 	}
-	# if ($cards[0] == 254 || $cards[0] == 255) {
-	#	my $creatorID = unpack 'V1', substr($item->{cards}, 4, 4);
-	#	# Creator's name can be requested with sendGetCharacterName (server responds with character_name)
-	#	# Needs to be implemented independently with caching and timeouts (like player names)
-	#	# (itemName isn't a place for any packet sending)
-	# }
 	if ($cards[0] == 254) {
 		# Alchemist-made potion
 		#
@@ -2084,7 +2078,7 @@ sub printItemDesc {
 	my $itemID = shift;
 	my $itemName = itemNameSimple($itemID);
 	my $description = $itemsDesc_lut{$itemID} || T("Error: No description available.\n");
-	message TF("===============Item Description===============\nItem: %s\n\n", $itemName), "info";
+	message TF("===============Item Description===============\r\nItem: %s (ID: %s)\r\n\r\n", $itemName, $itemID), "info";
 	message($description, "info");
 	message("==============================================\n", "info");
 }
@@ -3986,11 +3980,7 @@ sub checkPlayerCondition {
 	if ($config{$prefix."_isGuild"}) {
 		return 0 unless ($player->{guild} && existsInList($config{$prefix . "_isGuild"}, $player->{guild}{name}));
 	}
-	
-	if ($config{$prefix."_isNotGuild"}) {
-		return 0 if ($player->{guild} && existsInList($config{$prefix . "_isNotGuild"}, $player->{guild}{name}));
-	}
-	
+
 	if ($config{$prefix."_dist"}) {
 		return 0 unless inRange(distance(calcPosition($char), calcPosition($player)), $config{$prefix."_dist"});
 	}

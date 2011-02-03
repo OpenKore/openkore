@@ -117,7 +117,9 @@ sub new {
 		'00A5' => ['storage_items_stackable'],
 		'00A6' => ['storage_items_nonstackable'],
 		'00A8' => ['use_item', 'v x2 C', [qw(index amount)]],
-		'00AA' => ['equip_item', 'v2 C', [qw(index type success)]],
+		'00AA' => ($rpackets{'00AA'} == 7) # or 9
+			? ['equip_item', 'v2 C', [qw(index type success)]]
+			: ['equip_item', 'v3 C', [qw(index type viewid success)]],
 		'00AC' => ['unequip_item', 'v2 C', [qw(index type success)]],
 		'00AF' => ['inventory_item_removed', 'v2', [qw(index amount)]],
 		'00B0' => ['stat_info', 'v V', [qw(type val)]],
@@ -533,7 +535,7 @@ sub new {
 		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
 		'080B' => ['booking_delete', 'V', [qw(index)]],
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
-		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(item_ID type amount identified broken upgrade card1 card2 card3 card4)]], # 0x080F,20 # TODO: test & use type
+		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade card1 card2 card3 card4)]], # 0x080F,20 # TODO: test & use type
 		'0810' => ['open_buying_store', 'c', [qw(amount)]], #TODO: PACKET_ZC_OPEN_BUYING_STORE
 		'0812' => ['open_buying_store_fail', 'v', [qw(result)]], #TODO: PACKET_ZC_FAILED_OPEN_BUYING_STORE_TO_BUYER     **msgtable
 		'0814' => ['buying_store_appear', 'V Z*', [qw(id name)]], #TODO: PACKET_ZC_BUYING_STORE_ENTRY
@@ -543,9 +545,9 @@ sub new {
 		'0816' => ['buy_vender_disappear', 'V', [qw(ID)]], #TODO: PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY
 		'0818' => ['buy_vender_items', 'v a4 a4', [qw(len venderID venderCID)]],
 		'084B' => ['item_appeared', 'a4 v2 C v2', [qw(ID nameID amount identified x y)]], # 19 TODO   provided by try71023
-		'0856' => ['actor_display', 'v C a4 v3 V v5 a4 v5 a4 a2 v V C2 a8 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023
-		'0857' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a5 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # spawning provided by try71023
-		'0858' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a5 C4 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv font name)]], # -1 # standing provided by try71023
+		'0856' => ['actor_display', 'v C a4 v3 V v5 a4 v5 a4 a2 v V C2 a8 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
+		'0857' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a5 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # spawning provided by try71023
+		'0858' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a5 C4 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 karma sex coords xSize ySize act lv font name)]], # -1 # standing provided by try71023
 	};
 	return $self;
 }
@@ -1990,7 +1992,7 @@ sub cart_items_nonstackable {
 	} elsif ($args->{switch} eq '0297') {
 		$psize = 24;
 	} elsif ($args->{switch} eq '02D2') {
-		$psize = 28;
+		$psize = (($args->{RAW_MSG_SIZE} - 4) % 28 == 0) ? 28 : 26;
 	} else {
 		warning "cart_items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -2009,7 +2011,7 @@ sub cart_items_nonstackable {
 		$item->{broken} = unpack("C1", substr($msg, $i+10, 1));
 		$item->{upgrade} = unpack("C1", substr($msg, $i+11, 1));
 		$item->{cards} = ($psize == 24) ? unpack("a12", substr($msg, $i+12, 12)) : unpack("a8", substr($msg, $i+12, 8));
-		if ($psize == 26) {
+		if ($psize == 26 || $psize == 28) {
 			my $expire =  unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
 			$item->{expire} = $expire if (defined $expire);
 			#$item->{unknown} = unpack("v1", substr($msg, $i + 24, 2));
@@ -3635,7 +3637,7 @@ sub inventory_items_nonstackable {
 	} elsif ($args->{switch} eq '0295') {
 		$psize = 24;
 	} elsif ($args->{switch} eq '02D0') {
-		$psize = 28;
+		$psize = (($args->{RAW_MSG_SIZE} - 4) % 28 == 0)? 28 : 26;
 	} else {
 		warning "inventory_items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -3659,10 +3661,11 @@ sub inventory_items_nonstackable {
 		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
 		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
 		$item->{cards} = ($psize == 24) ? unpack("a12", substr($msg, $i + 12, 12)) : unpack("a8", substr($msg, $i + 12, 8));
-		if ($psize == 26) {
-			my $expire =  unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
+		if ($psize == 26 || $psize == 28) {
+			my $expire =  unpack("V", substr($msg, $i + 20, 4));
 			$item->{expire} = $expire if (defined $expire);
-			#$item->{unknown} = unpack("v1", substr($msg, $i + 24, 2));
+			#$item->{bindOnEquipType} = unpack("v1", substr($msg, $i + 24, 2));
+			#$item->{wItemSpriteNumber} = unpack("v1", substr($msg, $i + 26, 2));
 		}
 		$item->{name} = itemName($item);
 		if ($item->{equipped}) {
@@ -6474,7 +6477,7 @@ sub storage_items_nonstackable {
 	} elsif ($args->{switch} eq '0296') {
 		$psize = 24;
 	} elsif ($args->{switch} eq '02D1') {
-		$psize = 28;
+		$psize = (($args->{RAW_MSG_SIZE} - 4) % 28 == 0)? 28 : 26;
 	} else {
 		warning "storage_items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -6493,7 +6496,7 @@ sub storage_items_nonstackable {
 		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
 		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
 		$item->{cards} = ($psize == 24) ? substr($msg, $i + 12, 12) : substr($msg, $i + 12, 8);
-		if ($psize == 26) {
+		if ($psize == 26 || $psize == 28) {
 			my $expire =  unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
 			$item->{expire} = $expire if (defined $expire);
 			#$item->{unknown} = unpack("v1", substr($msg, $i + 24, 2));
@@ -8036,6 +8039,11 @@ sub open_buying_store {
 sub actor_quest_effect {
 	my ($self, $args) = @_;
 	debug("npc: %d (%d, %d) effect: %d (type: %d)\n",$args->{ID}, $args->{x}, $args->{y},, $args->{effect}, $args->{type});
+}
+
+sub define_check {
+	my ($self, $args) = @_;
+	#TODO
 }
 
 1;
