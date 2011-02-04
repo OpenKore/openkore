@@ -930,7 +930,8 @@ sub cmdCharSelect {
 		error TF("You must be logged in the game to use this command (%s)\n", shift);
 		return;
 	}
-	
+	configModify("char",'');
+	Log::initLogFiles();
 	$messageSender->sendRestart(1);
 }
 
