@@ -84,8 +84,8 @@ our @EXPORT = (
 	storageGet
 	cardName
 	itemName
-	itemNameSimple/,
-	buyingstoreitemdelete
+	itemNameSimple
+	buyingstoreitemdelete/,
 
 	# File Parsing and Writing
 	qw/chatLog
@@ -4234,7 +4234,6 @@ sub buyingstoreitemdelete {
 
 	my $item = $char->inventory->get($invIndex);
 	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
-		# This item is not an equipped arrow
 		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;
