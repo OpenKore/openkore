@@ -85,6 +85,7 @@ our @EXPORT = (
 	cardName
 	itemName
 	itemNameSimple/,
+	buyingstoreitemdelete
 
 	# File Parsing and Writing
 	qw/chatLog
@@ -1282,7 +1283,7 @@ sub checkFollowMode {
 #
 # Checks whether a monster is "clean" (not being attacked by anyone).
 sub checkMonsterCleanness {
-	return 1 if (!$config{attackAuto});
+	return 1 if (!$config{attackAuto}||$config{attackAuto_steal});
 	my $ID = $_[0];
 	return 1 if ($playersList->getByID($ID));
 	my $monster = $monstersList->getByID($ID);
@@ -1734,6 +1735,7 @@ sub itemName {
 		my $starCrumbs = ($cards[1] >> 8) / 5;
 		$prefix .= ('V'x$starCrumbs)."S " if $starCrumbs;
 		$prefix .= "$elementName " if ($elementName ne "");
+		$suffix = "$elementName" if ($elementName ne "");
 	} elsif (@cards) {
 		# Carded item
 		#
@@ -3981,6 +3983,10 @@ sub checkPlayerCondition {
 		return 0 unless ($player->{guild} && existsInList($config{$prefix . "_isGuild"}, $player->{guild}{name}));
 	}
 
+	if ($config{$prefix."_isNotGuild"}) {
+		return 0 if ($player->{guild} && existsInList($config{$prefix . "_isNotGuild"}, $player->{guild}{name}));
+	}
+	
 	if ($config{$prefix."_dist"}) {
 		return 0 unless inRange(distance(calcPosition($char), calcPosition($player)), $config{$prefix."_dist"});
 	}
@@ -4221,6 +4227,19 @@ sub parseReload {
 
 sub MODINIT {
 	OpenKoreMod::initMisc() if (defined(&OpenKoreMod::initMisc));
+}
+
+sub buyingstoreitemdelete {
+	my ($invIndex, $amount) = @_;
+
+	my $item = $char->inventory->get($invIndex);
+	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
+		# This item is not an equipped arrow
+		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
+	}
+	$item->{amount} -= $amount;
+	$char->inventory->remove($item) if ($item->{amount} <= 0);
+	$itemChange{$item->{name}} -= $amount;
 }
 
 return 1;
