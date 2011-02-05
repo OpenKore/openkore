@@ -8016,20 +8016,24 @@ sub buy_vender_items
 	}
 }
 
-sub progress_bar
-{
+sub progress_bar {
 	my($self, $args) = @_;
 	message TF("Progress bar loading (time: %d).\n", $args->{time}), 'info';
 }
 
-sub progress_bar_stop
-{
+sub progress_bar_stop {
 	my($self, $args) = @_;
 	message TF("Progress bar finished.\n", 'info');
 }
 
 sub buying_store_item_delete {
 	my($self, $args) = @_;
+	return unless changeToInGameState();
+	my $item = $char->inventory->getByServerIndex($args->{index});
+	if ($item) {
+		buyingstoreitemdelete($item->{invIndex}, $args->{amount});
+		Plugins::callHook('buying_store_item_delete', {index => $item->{invIndex}});
+	}
 }
 sub open_buying_store {
 	my($self, $args) = @_;
@@ -8044,6 +8048,15 @@ sub actor_quest_effect {
 sub define_check {
 	my ($self, $args) = @_;
 	#TODO
+}
+
+sub buy_vender_found {
+    my($self, $args) = @_;
+    
+	Plugins::callHook('buy_vender_found', { 
+		venderID => $args->{venderID},
+		title => $args->{title},
+	});
 }
 
 1;
