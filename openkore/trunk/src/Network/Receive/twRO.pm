@@ -33,4 +33,31 @@ sub new {
 	return $self;
 }
 
+sub items_nonstackable {
+	my ($self, $args) = @_;
+
+	my $items = $self->{nested}->{items_nonstackable};
+
+	if($args->{switch} eq '00A4' || # inventory
+	   $args->{switch} eq '00A6' || # storage
+	   $args->{switch} eq '0122'    # cart
+	) {
+		return $items->{type1};
+
+	} elsif ($args->{switch} eq '0295' || # inventory
+		 $args->{switch} eq '0296' || # storage
+		 $args->{switch} eq '0297'    # cart
+	) {
+		return $items->{type2};
+
+	} elsif ($args->{switch} eq '02D0' || # inventory
+		 $args->{switch} eq '02D1' || # storage
+		 $args->{switch} eq '02D2'    # cart
+	) {
+		return $items->{type4};
+	} else {
+		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
+	}
+}
+
 1;
