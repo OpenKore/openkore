@@ -549,6 +549,50 @@ sub new {
 		'0857' => ['actor_display', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 karma sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
 		'0858' => ['actor_display', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # standing provided by try71023
 	};
+
+	# Item RECORD Struct's
+	$self->{nested} = {
+		items_nonstackable => { # EQUIPMENTITEM_EXTRAINFO
+			type1 => {
+				len => 20,
+				types => 'v2 C2 v2 C2 a8',
+				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards)],
+			},
+			type2 => {
+				len => 24,
+				types => 'v2 C2 v2 C2 a8 l',
+				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards expire)],
+			},
+			type3 => {
+				len => 26,
+				types => 'v2 C2 v2 C2 a8 l v',
+				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType)],
+			},
+			type4 => {
+				len => 28,
+				types => 'v2 C2 v2 C2 a8 l v2',
+				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType sprite_id)],
+			},
+		},
+		items_stackable => {
+			type1 => {
+				len => 10,
+				types => 'v2 C2 v2',
+				keys => [qw(index nameID type identified amount type_equip)], # type_equip or equipped?
+			},
+			type2 => {
+				len => 18,
+				types => 'v2 C2 v2 a8',
+				keys => [qw(index nameID type identified amount type_equip cards)],
+			},
+			type3 => {
+				len => 22,
+				types => 'v2 C2 v2 a8 l',
+				keys => [qw(index nameID type identified amount type_equip cards expire)],
+			},
+		},
+	};
+
 	return $self;
 }
 
@@ -773,6 +817,85 @@ use constant {
 	JOBLEVELUP_EFFECT2 => 0x8,
 	LEVELUP_EFFECT3 => 0x9,
 };
+
+######################################
+#### Packet inner struct handlers ####
+######################################
+
+# The block size in the received_characters packet varies from server to server.
+# This method may be overrided in other ServerType handlers to return
+# the correct block size.
+sub received_characters_blockSize {
+	if ($masterServer && $masterServer->{charBlockSize}) {
+		return $masterServer->{charBlockSize};
+	} else {
+		return 106;
+	}
+}
+
+sub received_characters_unpackString {
+	if ($masterServer && ($masterServer->{charBlockSize} == 112 || $masterServer->{charBlockSize} == 116)) {
+		return 'a4 V9 v V2 v14 Z24 C6 v2';
+	} else {
+		return 'a4 V9 v17 Z24 C6 v2';
+	}
+}
+
+# Override this function if you need to.
+sub items_nonstackable {
+	my ($self, $args) = @_;
+
+	my $items = $self->{nested}->{items_nonstackable};
+
+	if($args->{switch} eq '00A4' || # inventory
+	   $args->{switch} eq '00A6' || # storage
+	   $args->{switch} eq '0122'    # cart
+	) {
+		return $items->{type1};
+
+	} elsif ($args->{switch} eq '0295' || # inventory
+		 $args->{switch} eq '0296' || # storage
+		 $args->{switch} eq '0297'    # cart
+	) {
+		return $items->{type2};
+
+	} elsif ($args->{switch} eq '02D0' || # inventory
+		 $args->{switch} eq '02D1' || # storage
+		 $args->{switch} eq '02D2'    # cart
+	) {
+		return $items->{type3};
+	} else {
+		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
+	}
+}
+
+# Override this function if you need to.
+sub items_stackable {
+	my ($self, $args) = @_;
+
+	my $items = $self->{nested}->{items_stackable};
+
+	if($args->{switch} eq '00A3' || # inventory
+	   $args->{switch} eq '00A5' || # storage
+	   $args->{switch} eq '0123'    # cart
+	) {
+		return $items->{type1};
+
+	} elsif ($args->{switch} eq '01EE' || # inventory
+		 $args->{switch} eq '01F0' || # storage
+		 $args->{switch} eq '01EF'    # cart
+	) {
+		return $items->{type2};
+
+	} elsif ($args->{switch} eq '02E8' || # inventory
+		 $args->{switch} eq '02EA' || # storage
+		 $args->{switch} eq '02E9'    # cart
+	) {
+		return $items->{type3};
+	} else {
+		warning "items_stackable: unsupported packet ($args->{switch})!\n";
+	}
+}
 
 #######################################
 ###### Packet handling callbacks ######
@@ -1982,44 +2105,61 @@ sub cart_add_failed {
 
 sub cart_items_nonstackable {
 	my ($self, $args) = @_;
-	my ($newmsg, $psize);
+
+	my $newmsg;
 	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
-	if ($args->{switch} eq '0122') {
-		$psize = 20;
-	} elsif ($args->{switch} eq '0297') {
-		$psize = 24;
-	} elsif ($args->{switch} eq '02D2') {
-		$psize = ($masterServer->{charBlockSize} == 116) ? 28 : 26;
-	} else {
-		warning "cart_items_nonstackable: unsupported packet ($args->{switch})!\n";
+
+	my $unpack = items_nonstackable($self, $args);
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
+		my ($item, $local_item);
+
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+
+		$local_item = $cart{inventory}[$item->{index}] = {};
+		foreach (@{$unpack->{keys}}) {
+			$local_item->{$_} = $item->{$_};
+		}
+		$local_item->{name} = itemName($local_item);
+		$local_item->{amount} = 1;
+
+		debug "Non-Stackable Cart Item: $local_item->{name} ($local_item->{index}) x 1\n", "parseMsg";
+		Plugins::callHook('packet_cart', {index => $local_item->{index}});
 	}
 
-	for (my $i = 4; $i < $msg_size; $i += $psize) {
-		my $index = unpack("v1", substr($msg, $i, 2));
-		my $ID = unpack("v1", substr($msg, $i+2, 2));
-		my $type = unpack("C1",substr($msg, $i+4, 1));
-		my $item = $cart{inventory}[$index] = {};
-		$item->{nameID} = $ID;
-		$item->{amount} = 1;
-		$item->{index} = $index;
-		$item->{identified} = unpack("C1", substr($msg, $i+5, 1));
-		$item->{type_equip} = unpack("v1", substr($msg, $i+6, 2));
-		$item->{equip} = unpack("v1", substr($msg, $i+8, 2));
-		$item->{broken} = unpack("C1", substr($msg, $i+10, 1));
-		$item->{upgrade} = unpack("C1", substr($msg, $i+11, 1));
-		$item->{cards} = ($psize == 24) ? unpack("a12", substr($msg, $i+12, 12)) : unpack("a8", substr($msg, $i+12, 8));
-		if ($psize == 26 || $psize == 28) {
-			my $expire =  unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
-			$item->{expire} = $expire if (defined $expire);
-			#$item->{unknown} = unpack("v1", substr($msg, $i + 24, 2));
-		}
-		$item->{name} = itemName($item);
+	$ai_v{'inventory_time'} = time + 1;
+	$ai_v{'cart_time'} = time + 1;
+}
 
-		debug "Non-Stackable Cart Item: $item->{name} ($index) x 1\n", "parseMsg";
-		Plugins::callHook('packet_cart', {index => $index});
+sub cart_items_stackable {
+	my ($self, $args) = @_;
+
+	my $newmsg;
+	my $msg = $args->{RAW_MSG};
+	$self->decrypt(\$newmsg, substr($msg, 4));
+	$msg = substr($msg, 0, 4).$newmsg;
+
+	my $unpack = items_stackable($self, $args);
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
+		my ($item, $local_item);
+
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+		
+		$local_item = $cart{inventory}[$item->{index}] ||= {};
+		if ($local_item->{amount}) {
+			$local_item->{amount} += $item->{amount};
+		} else {
+			foreach (@{$unpack->{keys}}) {
+				$local_item->{$_} = $item->{$_};
+			}
+		}
+		$local_item->{name} = itemName($local_item);
+		
+		debug "Stackable Cart Item: $local_item->{name} ($local_item->{index}) x $local_item->{amount}\n", "parseMsg";
+		Plugins::callHook('packet_cart', {index => $local_item->{index}});
 	}
 
 	$ai_v{'inventory_time'} = time + 1;
@@ -2046,58 +2186,6 @@ sub cart_item_added {
 	message TF("Cart Item Added: %s (%d) x %s\n", $item->{name}, $args->{index}, $args->{amount});
 	$itemChange{$item->{name}} += $args->{amount};
 	$args->{item} = $item;
-}
-
-sub cart_items_stackable {
-	my ($self, $args) = @_;
-
-	my ($newmsg, $psize);
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $switch = $args->{switch};
-
-	$self->decrypt(\$newmsg, substr($msg, 4));
-	$msg = substr($msg, 0, 4).$newmsg;
-	if ($switch eq '0123') {
-		$psize = 10;
-	} elsif ($switch eq '01EF') {
-		$psize = 18;
-	} elsif ($switch eq '02E9') {
-		$psize = 22;
-	} else {
-		warning "cart_items_stackable: unsupported packet ($args->{switch})!\n";
-	}
-
-	for (my $i = 4; $i < $msg_size; $i += $psize) {
-		my $index = unpack("v1", substr($msg, $i, 2));
-		my $ID = unpack("v1", substr($msg, $i+2, 2));
-		my $amount = unpack("v1", substr($msg, $i+6, 2));
-
-		my $item = $cart{inventory}[$index] ||= {};
-		if ($item->{amount}) {
-			$item->{amount} += $amount;
-		} else {
-			$item->{type} = unpack("C1", substr($msg, $i+4, 1));
-			$item->{identified} = unpack("C1", substr($msg, $i+5, 1));
-			$item->{index} = $index;
-			$item->{nameID} = $ID;
-			$item->{amount} = $amount;
-			if ($psize == 18) {
-				$item->{cards} = unpack("a8", substr($msg, $i + 10, 8));
-			} elsif ($psize == 22) {
-				$item->{cards} = unpack("a8", substr($msg, $i + 10, 8));
-				my $expire = unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
-				$item->{expire} = $expire if (defined $expire);
-			}
-			$item->{name} = itemName($item);
-		}
-		debug "Stackable Cart Item: $item->{name} ($index) x $amount\n", "parseMsg";
-		Plugins::callHook('packet_cart', {index => $index});
-	}
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-
 }
 
 sub cash_dealer {
@@ -3631,58 +3719,39 @@ sub inventory_items_nonstackable {
 	my ($newmsg, $psize);
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
-	
-	if ($args->{switch} eq '00A4') {
-		$psize = 20;
-	} elsif ($args->{switch} eq '0295') {
-		$psize = 24;
-	} elsif ($args->{switch} eq '02D0') {
-		$psize = ($masterServer->{charBlockSize} == 116) ? 28 : 26;
-	} else {
-		warning "inventory_items_nonstackable: unsupported packet ($args->{switch})!\n";
-	}
 
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
-		my $index = unpack("v1", substr($msg, $i, 2));
-		my $ID = unpack("v1", substr($msg, $i + 2, 2));
-		my $item = $char->inventory->getByServerIndex($index);
-		my $add;
-		if (!$item) {
-			$item = new Actor::Item();
+	my $unpack = items_nonstackable($self, $args);
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
+		my ($item, $local_item, $add);
+
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+		
+		unless($local_item = $char->inventory->getByServerIndex($item->{index})) {
+			$local_item = new Actor::Item();
 			$add = 1;
 		}
-		$item->{index} = $index;
-		$item->{nameID} = $ID;
-		$item->{amount} = 1;
-		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
-		$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
-		$item->{type_equip} = unpack("v1", substr($msg, $i + 6, 2));
-		$item->{equipped} = unpack("v1", substr($msg, $i + 8, 2));
-		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
-		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{cards} = ($psize == 24) ? unpack("a12", substr($msg, $i + 12, 12)) : unpack("a8", substr($msg, $i + 12, 8));
-		if ($psize == 26 || $psize == 28) {
-			my $expire =  unpack("V", substr($msg, $i + 20, 4));
-			$item->{expire} = $expire if (defined $expire);
-			#$item->{bindOnEquipType} = unpack("v1", substr($msg, $i + 24, 2));
-			#$item->{wItemSpriteNumber} = unpack("v1", substr($msg, $i + 26, 2));
+
+		foreach (@{$unpack->{keys}}) {
+			$local_item->{$_} = $item->{$_};
 		}
-		$item->{name} = itemName($item);
-		if ($item->{equipped}) {
+		$local_item->{name} = itemName($local_item);
+		$local_item->{amount} = 1;
+
+		if ($local_item->{equipped}) {
 			foreach (%equipSlot_rlut){
-				if ($_ & $item->{equipped}){
+				if ($_ & $local_item->{equipped}){
 					next if $_ == 10; #work around Arrow bug
-					$char->{equipment}{$equipSlot_lut{$_}} = $item;
+					$char->{equipment}{$equipSlot_lut{$_}} = $local_item;
 				}
 			}
 		}
 
-		$char->inventory->add($item) if ($add);
+		$char->inventory->add($local_item) if ($add);
 
-		debug "Inventory: $item->{name} ($item->{invIndex}) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $item->{invIndex}});
+		debug "Inventory: $local_item->{name} ($local_item->{invIndex}) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}} - $equipTypes_lut{$local_item->{type_equip}}\n", "parseMsg";
+		Plugins::callHook('packet_inventory', {index => $local_item->{invIndex}});
 	}
-
 	$ai_v{'inventory_time'} = time + 1;
 	$ai_v{'cart_time'} = time + 1;
 }
@@ -3690,53 +3759,39 @@ sub inventory_items_nonstackable {
 sub inventory_items_stackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my ($newmsg, $psize);
+
+	my $newmsg;
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
-	if ($args->{switch} eq '00A3') {
-		$psize = 10;
-	} elsif ($args->{switch} eq '01EE') {
-		$psize = 18;
-	} elsif ($args->{switch} eq '02E8') {
-		$psize = 22;
-	} else {
-		warning "inventory_items_stackable: unsupported packet ($args->{switch})!\n";
-	}
 
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
-		my $index = unpack("v1", substr($msg, $i, 2));
-		my $ID = unpack("v1", substr($msg, $i + 2, 2));
-		my $item = $char->inventory->getByServerIndex($index);
-		my $add;
-		if (!$item) {
-			$item = new Actor::Item();
+	my $unpack = items_stackable($self, $args);
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
+		my ($item, $local_item, $add);
+
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+		
+		unless($local_item = $char->inventory->getByServerIndex($item->{index})) {
+			$local_item = new Actor::Item();
 			$add = 1;
 		}
-		$item->{index} = $index;
-		$item->{nameID} = $ID;
-		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
-		$item->{amount} = unpack("v1", substr($msg, $i + 6, 2));
-		$item->{identified} = 1;
-		if ($psize == 18) {
-			$item->{cards} = unpack("a8", substr($msg, $i + 10, 8));
-		} elsif ($psize == 22) {
-			$item->{cards} = unpack("a8", substr($msg, $i + 10, 8));
-			my $expire =  unpack("a4", substr($msg, $i + 18, 4)); #a4 or V1 unpacking?
-			$item->{expire} = $expire if (defined $expire);
-		}
-		if (defined $char->{arrow} && $index == $char->{arrow}) {
-			$item->{equipped} = 32768;
-			$char->{equipment}{arrow} = $item;
-		}
-		$item->{name} = itemName($item);
-
-		$char->inventory->add($item) if ($add);
 		
-		debug "Inventory: $item->{name} ($item->{invIndex}) x $item->{amount} - " .
-			"$itemTypes_lut{$item->{type}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $item->{invIndex}, item => $item});
-	}
+		foreach (@{$unpack->{keys}}) {
+			$local_item->{$_} = $item->{$_};
+		}
 
+		if (defined $char->{arrow} && $local_item->{index} == $char->{arrow}) {
+			$local_item->{equipped} = 32768;
+			$char->{equipment}{arrow} = $local_item;
+		}
+		$local_item->{name} = itemName($local_item);
+
+		$char->inventory->add($local_item) if ($add);
+		
+		debug "Inventory: $local_item->{name} ($local_item->{invIndex}) x $local_item->{amount} - " .
+			"$itemTypes_lut{$local_item->{type}}\n", "parseMsg";
+		Plugins::callHook('packet_inventory', {index => $local_item->{invIndex}, item => $local_item});
+	}
 	$ai_v{'inventory_time'} = time + 1;
 	$ai_v{'cart_time'} = time + 1;
 }
@@ -4206,50 +4261,6 @@ sub map_changed {
 	$timeout{ai}{time} = time;
 }
 
-# It seems that when we use this, the login won't go smooth
-# this sends a sync packet after the map is loaded
-=pod
-sub map_loaded {
-	# Note: ServerType0 overrides this function
-	my ($self, $args) = @_;
-
-	undef $conState_tries;
-	$char = $chars[$config{char}];
-	$syncMapSync = pack('V1', $args->{syncMapSync});
-
-	if ($net->version == 1) {
-		$net->setState(4);
-		message T("Waiting for map to load...\n"), "connection";
-		ai_clientSuspend(0, 10);
-		main::initMapChangeVars();
-	} else {
-		$messageSender->sendGuildMasterMemberCheck();
-
-		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		$messageSender->sendGuildRequestInfo(0);
-
-		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		$messageSender->sendGuildRequestInfo(1);
-		$messageSender->sendMapLoaded();
-		$messageSender->sendSync(1);
-		debug "Sent initial sync\n", "connection";
-		$timeout{'ai'}{'time'} = time;
-	}
-
-	if ($char && changeToInGameState()) {
-		$net->setState(Network::IN_GAME) if ($net->getState() != Network::IN_GAME);
-		$char->{pos} = {};
-		makeCoordsDir($char->{pos}, $args->{coords});
-		$char->{pos_to} = {%{$char->{pos}}};
-		message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
-		message(T("You are now in the game\n"), "connection");
-		Plugins::callHook('in_game');
-	}
-
-	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
-}
-=cut
-
 sub memo_success {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
@@ -4291,7 +4302,6 @@ sub message_string {
 		message T("View player equip request denied.\n"), "info";
 		
 	} elsif ($args->{msg_id} == 0x06AF) {
-		#  "?迮赲郋郱邾郋迠郇郋 郋?郈?訄赲郅??? 郅邽?郇?迮 ?郋郋訇?迮郇邽? 迡郋 10 ??郋赲郇?."
 		message T("You need to be at least base level 10 to send private messages.\n"), "info";
 		
 	} else {
@@ -5098,25 +5108,6 @@ sub private_message_sent {
 		warning T("Player doesn't want to receive messages\n");
 	}
 	shift @lastpm;
-}
-
-# The block size in the received_characters packet varies from server to server.
-# This method may be overrided in other ServerType handlers to return
-# the correct block size.
-sub received_characters_blockSize {
-	if ($masterServer && $masterServer->{charBlockSize}) {
-		return $masterServer->{charBlockSize};
-	} else {
-		return 106;
-	}
-}
-
-sub received_characters_unpackString {
-	if ($masterServer && ($masterServer->{charBlockSize} == 112 || $masterServer->{charBlockSize} == 116)) {
-		return 'a4 V9 v V2 v14 Z24 C6 v2';
-	} else {
-		return 'a4 V9 v17 Z24 C6 v2';
-	}
 }
 
 sub received_characters {
@@ -6467,87 +6458,60 @@ sub storage_item_removed {
 
 sub storage_items_nonstackable {
 	my ($self, $args) = @_;
-	# Retrieve list of non-stackable (weapons & armor) storage items.
-	# This packet is sent immediately after 00A5/01F0.
-	my ($newmsg, $psize);
+	
+	my $newmsg;
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
-	if ($args->{switch} eq '00A6') {
-		$psize = 20;
-	} elsif ($args->{switch} eq '0296') {
-		$psize = 24;
-	} elsif ($args->{switch} eq '02D1') {
-		$psize = ($masterServer->{charBlockSize} == 116) ? 28 : 26;
-	} else {
-		warning "storage_items_nonstackable: unsupported packet ($args->{switch})!\n";
-	}
+	
+	my $unpack = items_nonstackable($self, $args);
 
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
-		my $index = unpack("v1", substr($msg, $i, 2));
-		my $ID = unpack("v1", substr($msg, $i + 2, 2));
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
+		my ($item, $local_item);
 
-		binAdd(\@storageID, $index);
-		my $item = $storage{$index} = {};
-		$item->{index} = $index;
-		$item->{nameID} = $ID;
-		$item->{amount} = 1;
-		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
-		$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
-		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
-		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{cards} = ($psize == 24) ? substr($msg, $i + 12, 12) : substr($msg, $i + 12, 8);
-		if ($psize == 26 || $psize == 28) {
-			my $expire =  unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
-			$item->{expire} = $expire if (defined $expire);
-			#$item->{unknown} = unpack("v1", substr($msg, $i + 24, 2));
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+
+		binAdd(\@storageID, $item->{index});
+		$local_item = $storage{$item->{index}} = {};
+		
+		foreach (@{$unpack->{keys}}) {
+			$local_item->{$_} = $item->{$_};
 		}
-		$item->{name} = itemName($item);
-		$item->{binID} = binFind(\@storageID, $index);
-		debug "Storage: $item->{name} ($item->{binID})\n", "parseMsg";
+		$local_item->{name} = itemName($local_item);
+		$local_item->{amount} = 1;
+		$local_item->{binID} = binFind(\@storageID, $item->{index});
+
+		debug "Storage: $local_item->{name} ($local_item->{binID})\n", "parseMsg";
 	}
 }
 
 sub storage_items_stackable {
 	my ($self, $args) = @_;
-	# Retrieve list of stackable storage items
-	my ($newmsg, $psize);
+
+	my $newmsg;
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
+
 	undef %storage;
 	undef @storageID;
 
-	if ($args->{switch} eq '00A5') {
-		$psize = 10;
-	} elsif ($args->{switch} eq '01F0') {
-		$psize = 18;
-	} elsif ($args->{switch} eq '02EA') {
-		$psize = 22;
-	} else {
-		warning "storage_items_stackable: unsupported packet ($args->{switch})!\n";
-	}
+	my $unpack = items_stackable($self, $args);
 
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
-		my $index = unpack("v1", substr($msg, $i, 2));
-		my $ID = unpack("v1", substr($msg, $i + 2, 2));
-		binAdd(\@storageID, $index);
-		my $item = $storage{$index} = {};
-		$item->{index} = $index;
-		$item->{nameID} = $ID;
-		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
-		$item->{amount} = unpack("V1", substr($msg, $i + 6, 4)) & ~0x80000000;
-		# $item->{amount} = unpack("v1", substr($msg, $i + 6, 2));
-		# $item->{ammo} = unpack("v1", substr($msg, $i + 8, 2));
-		if ($psize == 18) {
-			$item->{cards} = unpack("a8", substr($msg, $i + 10, 8));
-		} elsif ($psize == 22) {
-			$item->{cards} = unpack("a8", substr($msg, $i + 10, 8));
-			my $expire =  unpack("a4", substr($msg, $i + 18, 4)); #a4 or V1 unpacking?
-			$item->{expire} = $expire if (defined $expire);
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
+		my ($item, $local_item);
+
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+
+		binAdd(\@storageID, $item->{index});
+		$local_item = $storage{$item->{index}} = {};
+		
+		foreach (@{$unpack->{keys}}) {
+			$local_item->{$_} = $item->{$_};
 		}
-		$item->{name} = itemName($item);
-		$item->{binID} = binFind(\@storageID, $index);
-		$item->{identified} = 1;
-		debug "Storage: $item->{name} ($item->{binID}) x $item->{amount}\n", "parseMsg";
+		$local_item->{amount} = $local_item->{amount} & ~0x80000000;
+		$local_item->{name} = itemName($local_item);
+		$local_item->{binID} = binFind(\@storageID, $local_item->{index});
+		$local_item->{identified} = 1;
+		debug "Storage: $local_item->{name} ($local_item->{binID}) x $local_item->{amount}\n", "parseMsg";
 	}
 }
 
