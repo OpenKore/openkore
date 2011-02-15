@@ -1666,7 +1666,7 @@ sub card_merge_list {
 	my $msg = $args->{RAW_MSG};
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
-	my ($len) = unpack("x2 v1", $msg);
+	my ($len) = unpack("x2 v", $msg); # TODO: remove this decrypt cruft
 
 	my $display;
 	$display .= T("-----Card Merge Candidates-----\n");
@@ -2491,7 +2491,7 @@ sub egg_list {
 	my ($self, $args) = @_;
 	message T("----- Egg Hatch Candidates -----\n"), "list";
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
-		my $index = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
+		my $index = unpack("v", substr($args->{RAW_MSG}, $i, 2));
 		my $item = $char->inventory->getByServerIndex($index);
 		message "$item->{invIndex} $item->{name}\n", "list";
 	}
@@ -5144,7 +5144,7 @@ sub received_character_ID_and_Map {
 		"MAP Name: %s\n" .
 		"MAP IP: %s\n" .
 		"MAP Port: %s\n" .
-		"-----------------------------\n", getHex($charID), unpack("V1", $charID),
+		"-----------------------------\n", getHex($charID), unpack("V", $charID),
 		$args->{mapName}, $map_ip, $map_port), "connection";
 	checkAllowedMap($map_noinstance);
 	message(T("Closing connection to Character Server\n"), "connection") unless ($net->version == 1);
