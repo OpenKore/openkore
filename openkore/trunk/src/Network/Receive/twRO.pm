@@ -15,6 +15,7 @@ package Network::Receive::twRO;
 
 use strict;
 use base qw(Network::Receive::ServerType0);
+use Log qw(warning);
 
 sub new {
 	my ($class) = @_;
