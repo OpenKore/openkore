@@ -110,9 +110,9 @@ sub _selectCategory {
 		foreach (@{$self->{categories}{$name}{keys}}) {
 			$hash{$_} = $self->{hash}{$_};
 		}
-		$editor->setConfig(\%hash);
+		$editor->setConfig(\%hash, $self);			# the $self is added for downloadManual
 	} else {
-		$editor->setConfig($self->{hash});
+		$editor->setConfig($self->{hash}, $self);	# the $self is added for downloadManual
 	}
 
 	if ($self->{revertEnableCallback}) {
@@ -164,12 +164,8 @@ sub new {
 	$grid->SetColLabelValue(0, T("Option"));
 	$grid->SetColLabelValue(1, T("Value"));
 	$grid->EnableDragRowSize(0);
-	EVT_GRID_CELL_LEFT_CLICK($grid, sub { $self->_onClick(@_); });
+	EVT_GRID_CELL_LEFT_CLICK($grid, sub { $self->_onClick(@_, $parent); }); # the $parent is added for downloadManual
 	EVT_GRID_CELL_CHANGE($grid, sub { $self->_changed(@_); });
-
-	if (!defined $manual) {
-		$self->downloadManual($parent);
-	}
 
 	my $html = $self->{html} = new Wx::HtmlWindow($splitter, wxID_ANY);
 	if ($^O ne 'MSWin32') {
@@ -183,37 +179,35 @@ sub new {
 }
 
 sub downloadManual {
-	my ($self, $parent) = @_;
+	my ($self, $parent, $name) = @_;
+	return if ($name eq '');
 	my ($file, $f, $time);
-
-	$file = Settings::getControlFilename("manual.html");
-
+	mkdir 'manual' unless (-d 'manual');
+	$name =~ s/.*?_\d+_//; # attackSkillSlot_0_aggressives --> aggressives
+	$name =~ s/_\d+$//;    # attackSkillSlot_0			   --> attackSkillSlot
+	$file = 'manual/'.$name.'.html';
 	$time = (stat($file))[9];
 	# Download manual if it hasn't been downloaded yet,
 	# or if the local copy is more than 3 days old
-	if ($file && time - $time <= 60 * 60 * 24 * 3 && open($f, "<", $file)) {
-		binmode F;
+	if ($file && time - $time <= 60 * 60 * 24 * 3 && open($f, "<:utf8", $file)) {
 		local($/);
 		$manual = <$f>;
 		close $f;
-
 	} else {
 		my $dialog = new Wx::Dialog($parent->GetGrandParent, wxID_ANY, T("Downloading"));
 		my $sizer = new Wx::BoxSizer(wxVERTICAL);
-		my $label = new Wx::StaticText($dialog, wxID_ANY, T("Downloading manual, please wait..."));
+		my $label = new Wx::StaticText($dialog, wxID_ANY, TF("Downloading help for '%s', please wait...",$name));
 		$sizer->Add($label, 1, wxGROW | wxALL, 8);
 		my $gauge = new Wx::Gauge($dialog, wxID_ANY, 100, wxDefaultPosition,
 			[0, 16], wxGA_SMOOTH | wxGA_HORIZONTAL);
 		$sizer->Add($gauge, 0, wxGROW | wxLEFT | wxRIGHT, 8);
 		my $button = new Wx::Button($dialog, 475, '&Cancel');
 		$sizer->Add($button, 0, wxALL | wxALIGN_CENTRE_HORIZONTAL, 8);
-		EVT_BUTTON($dialog, 475, sub {
-			$dialog->Close;
-		});
+		EVT_BUTTON($dialog, 475, sub { $dialog->Close; });
 		$dialog->SetSizerAndFit($sizer);
 
 		my $timer = new Wx::Timer($dialog, 476);
-		my $downloader = new StdHttpReader('http://wiki.openkore.com/index.php?title=Config.txt');
+		my $downloader = new StdHttpReader('http://openkore.com/index.php?title='.$name.'&printable=yes');
 		EVT_TIMER($dialog, 476, sub {
 			if ($downloader->getStatus() != HttpReader::CONNECTING) {
 				my $size = $downloader->getSize();
@@ -225,7 +219,6 @@ sub downloadManual {
 				}
 				$gauge->SetValue($progress);
 			}
-
 			if ($downloader->getStatus() == HttpReader::DONE) {
 				my $len;
 				$gauge->SetValue(100);
@@ -244,13 +237,22 @@ sub downloadManual {
 		$dialog->ShowModal;
 
 		if (!defined $file) {
-			my @folders = Settings::getControlFolders();
-			$file = "$folders[0]/manual.html";
+			$file = 'manual/'.$name.'.html';
 		}
-		if ($manual && open($f, ">", $file)) {
-			binmode F;
-			print $f $manual;
-			close $f;
+		if (-f $file && ($manual eq '')) {#Can not download new version, but have old in file
+			if (open($f, '<:utf8', $file)) {
+				local($/);
+				$manual = <$f>;
+				close $f;
+			}
+		} elsif ($manual) { #Write new version in file
+			($manual) = $manual =~ /<!-- start content -->\s*(.*?)\s*<!--.*?NewPP limit report/s;
+			$manual =~ s/<\/?a.*?>//gsm; #Delete all links
+			$manual =~ s/<img.*?src="\/(.*?)"/<img src="http:\/\/openkore.com\/$1"/gms;
+			if (open($f, ">:utf8", $file)) {
+				print $f $manual;
+				close $f;
+			}			
 		}
 	}
 }
@@ -266,7 +268,7 @@ sub onRevertEnable {
 }
 
 sub setConfig {
-	my ($self, $hash) = @_;
+	my ($self, $hash, $parent) = @_; # the $parent is added for downloadManual
 	my $grid = $self->{grid};
 	my @keys = sort keys %{$hash};
 
@@ -281,6 +283,7 @@ sub setConfig {
 	$grid->AutoSize;
 	$self->{config} = {%{$hash}};
 
+	$self->downloadManual($parent, $keys[0]);
 	$self->{html}->SetPage(_help($keys[0]));
 }
 
@@ -303,8 +306,11 @@ sub setValue {
 }
 
 sub _onClick {
-	my ($self, $grid, $event) = @_;
+	my ($self, $grid, $event, $parent) = @_; # the $parent is added for downloadManual
 	my $row = $event->GetRow;
+	
+	$self->downloadManual($parent, $grid->GetCellValue($row, 0));
+	
 	$self->{html}->SetPage(_help($grid->GetCellValue($row, 0)));
 	$event->Skip;
 }
@@ -325,13 +331,11 @@ sub _changed {
 
 sub _help {
 	my ($name) = @_;
-	if ($manual eq '') {
-		return T('Unable to download the manual.');
-	} else {
-		my ($found) = $manual =~ /(<span class=\"mw-headline\">$name<\/span><\/h3>.*?)<hr \/>/s;
-		$found = TF('No help available for "%s".', $name) if ($found eq '');
-		return $found;
-	}
+	return '' if ($name eq '');
+	$name =~ s/.*?_\d+_//;# attackSkillSlot_0_aggressives --> aggressives
+	$name =~ s/_\d+$//;   # attackSkillSlot_0			  --> attackSkillSlot
+	return TF('No help available for "%s".', $name) if ($manual eq '');
+	return $manual;
 }
 
 1;
