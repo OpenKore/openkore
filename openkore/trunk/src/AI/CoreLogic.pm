@@ -2399,7 +2399,7 @@ sub processPartySkillUse {
 				if (
 					( # range check
 						$party_skill{owner}{ID} eq $player->{ID}
-						|| inRange(distance($party_skill{owner}{pos_to}, $player->{pos}), $config{partySkillDistance} || "0..8")
+						|| inRange(distance($party_skill{owner}{pos_to}, $player->{pos}), $config{"partySkill_$i"."_dist"} || "0..8")
 					)
 					&& ( # target check
 						!$config{"partySkill_$i"."_target"}

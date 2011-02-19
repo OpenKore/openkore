@@ -14,9 +14,16 @@
 package Network::Receive::twRO;
 
 use strict;
+use Globals;
 use base qw(Network::Receive::ServerType0);
+<<<<<<< .mine
+use Log qw(message warning error debug);
+use Network::MessageTokenizer;
+print "testtest\n";
+=======
 use Log qw(warning);
 
+>>>>>>> .r7652
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
@@ -55,9 +62,9 @@ sub items_nonstackable {
 		 $args->{switch} eq '02D1' || # storage
 		 $args->{switch} eq '02D2'    # cart
 	) {
-		return $items->{type4};
+		return $items->{($rpackets{'00AA'} == 7)? "type3" : "type4"}; #Proved in twRO
 	} else {
-		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
+		warning("items_nonstackable: unsupported packet ($args->{switch})!\n");
 	}
 }
 
