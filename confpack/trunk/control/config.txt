@@ -480,6 +480,7 @@ useSelf_skill_smartHeal 1
 
 partySkill {
 	lvl 10
+	dist 3
 	maxCastTime 0
 	minCastTime 0
 	hp
