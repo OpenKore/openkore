@@ -3983,6 +3983,8 @@ sub checkPlayerCondition {
 		return 0 unless ($player->{guild} && existsInList($config{$prefix . "_isGuild"}, $player->{guild}{name}));
 	}
 
+	# Note: This will always be true for Actor::Slave
+	#       This will always be true for character that is not in any guild
 	if ($config{$prefix."_isNotGuild"}) {
 		return 0 if ($player->{guild} && existsInList($config{$prefix . "_isNotGuild"}, $player->{guild}{name}));
 	}
