@@ -16,14 +16,9 @@ package Network::Receive::twRO;
 use strict;
 use Globals;
 use base qw(Network::Receive::ServerType0);
-<<<<<<< .mine
 use Log qw(message warning error debug);
 use Network::MessageTokenizer;
-print "testtest\n";
-=======
-use Log qw(warning);
 
->>>>>>> .r7652
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
