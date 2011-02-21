@@ -5,7 +5,6 @@ use Wx ':everything';
 use Wx::Event qw(EVT_LISTBOX);
 use base qw(Wx::Panel);
 use Interface::Wx::ConfigEditor;
-use encoding 'utf8';
 
 use Translation qw/T TF/;
 
@@ -189,7 +188,7 @@ sub downloadManual {
 	$time = (stat($file))[9];
 	# Download manual if it hasn't been downloaded yet,
 	# or if the local copy is more than 3 days old
-	if ($file && time - $time <= 60 * 60 * 24 * 3 && open($f, "<:utf8", $file)) {
+	if ($file && time - $time <= 60 * 60 * 24 * 3 && open($f, "<", $file)) {
 		local($/);
 		$manual = <$f>;
 		close $f;
@@ -207,7 +206,8 @@ sub downloadManual {
 		$dialog->SetSizerAndFit($sizer);
 
 		my $timer = new Wx::Timer($dialog, 476);
-		my $downloader = new StdHttpReader('http://openkore.com/index.php?title='.$name.'&printable=yes');
+		# TODO: url template config/sys option
+		my $downloader = new StdHttpReader(sprintf 'http://openkore.com/index.php?title=%s&printable=yes', $name);
 		EVT_TIMER($dialog, 476, sub {
 			if ($downloader->getStatus() != HttpReader::CONNECTING) {
 				my $size = $downloader->getSize();
@@ -240,7 +240,7 @@ sub downloadManual {
 			$file = 'manual/'.$name.'.html';
 		}
 		if (-f $file && ($manual eq '')) {#Can not download new version, but have old in file
-			if (open($f, '<:utf8', $file)) {
+			if (open($f, '<', $file)) {
 				local($/);
 				$manual = <$f>;
 				close $f;
@@ -249,7 +249,7 @@ sub downloadManual {
 			($manual) = $manual =~ /<!-- start content -->\s*(.*?)\s*<!--.*?NewPP limit report/s;
 			$manual =~ s/<\/?a.*?>//gsm; #Delete all links
 			$manual =~ s/<img.*?src="\/(.*?)"/<img src="http:\/\/openkore.com\/$1"/gms;
-			if (open($f, ">:utf8", $file)) {
+			if (open($f, ">", $file)) {
 				print $f $manual;
 				close $f;
 			}			
