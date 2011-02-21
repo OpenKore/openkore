@@ -2781,7 +2781,8 @@ sub cmdInventory {
 			     $item->{type} == 6 ||
 			     $item->{type} == 10 ||
 			     $item->{type} == 16 ||
-			     $item->{type} == 17) && !$item->{equipped}) {
+				 $item->{type} == 17 ||
+			     $item->{type} == 19) && !$item->{equipped}) {
 				push @non_useable, $item->{invIndex};
 			} elsif ($item->{type} <= 2) {
 				push @useable, $item->{invIndex};
@@ -2790,8 +2791,8 @@ sub cmdInventory {
 				$eqp{index} = $item->{index};
 				$eqp{binID} = $item->{invIndex};
 				$eqp{name} = $item->{name};
+				$eqp{equipped} = ($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
 				$eqp{type} = $itemTypes_lut{$item->{type}};
-				$eqp{equipped} = ($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
 				$eqp{equipped} .= " ($item->{equipped})";
 				# Translation Comment: Mark to tell item not identified
 				$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
@@ -4250,7 +4251,8 @@ sub cmdStorage_list {
 		    $item->{type} == 6 ||
 		    $item->{type} == 10 ||
 		    $item->{type} == 16 ||
-	            $item->{type} == 17) {
+	        $item->{type} == 17 ||
+			$item->{type} == 19) {
 			push @non_useable, $item;
 		} elsif ($item->{type} <= 2) {
 			push @useable, $item;
@@ -4807,7 +4809,7 @@ sub cmdUseItemOnSelf {
 			"Inventory Item %s does not exist.\n", $args);
 		return;
 	}
-	if ($item->{type} > 2) {
+	if ($item->{type} > 2 && $item->{type} != 18) {
 		error TF("Error in function 'is' (Use Item on Yourself)\n" .
 			"Inventory Item %s is not of type Usable.\n", $item);
 		return;
