@@ -2111,7 +2111,7 @@ sub cart_items_nonstackable {
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
 
-	my $unpack = items_nonstackable($self, $args);
+	my $unpack = $self->items_nonstackable($args);
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
 		my ($item, $local_item);
@@ -2141,7 +2141,7 @@ sub cart_items_stackable {
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
 
-	my $unpack = items_stackable($self, $args);
+	my $unpack = $self->items_stackable($args);
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
 		my ($item, $local_item);
@@ -3720,7 +3720,7 @@ sub inventory_items_nonstackable {
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
 
-	my $unpack = items_nonstackable($self, $args);
+	my $unpack = $self->items_nonstackable($args);
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
 		my ($item, $local_item, $add);
@@ -3764,7 +3764,7 @@ sub inventory_items_stackable {
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 
-	my $unpack = items_stackable($self, $args);
+	my $unpack = $self->items_stackable($args);
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
 		my ($item, $local_item, $add);
@@ -6463,7 +6463,7 @@ sub storage_items_nonstackable {
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 	
-	my $unpack = items_nonstackable($self, $args);
+	my $unpack = $self->items_nonstackable($args);
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
 		my ($item, $local_item);
@@ -6494,7 +6494,7 @@ sub storage_items_stackable {
 	undef %storage;
 	undef @storageID;
 
-	my $unpack = items_stackable($self, $args);
+	my $unpack = $self->items_stackable($args);
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
 		my ($item, $local_item);
