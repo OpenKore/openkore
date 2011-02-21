@@ -926,16 +926,12 @@ sub cmdCart_get {
 }
 
 sub cmdCharSelect {
-	my ($arg1) = @_;
+	my (undef,$arg1) = @_;
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command (%s)\n", shift);
 		return;
 	}
-	if ($arg1 ne "" && ($arg1 != 0 || $arg1 != 1)){
-		error TF("Usage: charselect [<flag>]\nFlag: 0: not clear char in config\t1: clear char in config\n");
-		return;
-	}
-	if($arg1 == 1){
+	if($arg1 =~ "1"){
 		configModify("char",'');
 	}
 	Log::initLogFiles();
