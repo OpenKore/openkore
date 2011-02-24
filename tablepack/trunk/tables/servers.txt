@@ -161,6 +161,7 @@ port 6900
 master_version 16
 version 211
 serverType mRO
+charBlockSize 116
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders mRO
@@ -171,6 +172,7 @@ port 6900
 master_version 17
 version 1004
 serverType mRO
+charBlockSize 116
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders mRO
@@ -181,6 +183,7 @@ port 6900
 master_version 17
 version 211
 serverType mRO
+charBlockSize 116
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -192,6 +195,7 @@ port 6900
 master_version 16
 version 102
 serverType mRO
+charBlockSize 116
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders mRO
@@ -290,7 +294,7 @@ master_version 5
 version 211
 serverType twRO
 serverEncoding Traditional Chinese
-charBlockSize 112
+charBlockSize 116
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets_paid.txt
@@ -304,7 +308,7 @@ master_version 5
 version 211
 serverType twRO
 serverEncoding Traditional Chinese
-charBlockSize 112
+charBlockSize 116
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets_free.txt
@@ -318,7 +322,7 @@ master_version 5
 version 211
 serverType twRO
 serverEncoding Traditional Chinese
-charBlockSize 112
+charBlockSize 116
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets_free.txt
@@ -346,7 +350,7 @@ master_version 5
 version 211
 serverType twRO
 serverEncoding Traditional Chinese
-charBlockSize 112
+charBlockSize 116
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets_free.txt
@@ -360,7 +364,7 @@ master_version 5
 version 211
 serverType twRO
 serverEncoding Traditional Chinese
-charBlockSize 112
+charBlockSize 116
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets_free.txt
@@ -374,7 +378,7 @@ master_version 5
 version 211
 serverType twRO
 serverEncoding Traditional Chinese
-charBlockSize 112
+charBlockSize 116
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets_sakray.txt
