@@ -1960,6 +1960,12 @@ sub processFollow {
 	# var/flag about follow should be moved to %ai_v
 
 	return if (!$config{follow});
+	if($config{'follow_hp_sitAuto'} && percent_hp($char) < $config{'follow_hp_lower'} && $field->isCity) {
+		if(!$char->{sitting} && $char->{skills}{NV_BASIC}{lv} >= 3){
+			sit();
+		}
+		return;
+	}
 
 	my $followIndex;
 	if (($followIndex = AI::findAction("follow")) eq "") {

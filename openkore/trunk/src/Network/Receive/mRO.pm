@@ -14,7 +14,10 @@
 package Network::Receive::mRO;
 
 use strict;
+use Globals;
 use base qw(Network::Receive::ServerType0);
+use Log qw(message warning error debug);
+use Network::MessageTokenizer;
 
 sub new {
 	my ($class) = @_;
