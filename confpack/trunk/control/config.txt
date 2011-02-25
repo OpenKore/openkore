@@ -140,8 +140,6 @@ dcOnPlayer 0
 
 follow 0
 followTarget
-follow_hp_sitAuto 0
-follow_hp_lower 30
 followEmotion 1
 followEmotion_distance 4
 followFaceDirection 0
@@ -196,6 +194,7 @@ sitAuto_hp_lower 40
 sitAuto_hp_upper 100
 sitAuto_sp_lower 0
 sitAuto_sp_upper 0
+sitAuto_follow 0
 sitAuto_over_50 0
 sitAuto_idle 1
 sitAuto_look
