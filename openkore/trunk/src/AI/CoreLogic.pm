@@ -1961,7 +1961,8 @@ sub processFollow {
 
 	return if (!$config{follow});
 	if($config{'follow_hp_sitAuto'} && percent_hp($char) < $config{'follow_hp_lower'} && $field->isCity) {
-		if(!$char->{sitting} && $char->{skills}{NV_BASIC}{lv} >= 3){
+	my $action = AI::action;
+		if($action eq "sitting" && !$char->{sitting} && $char->{skills}{NV_BASIC}{lv} >= 3){
 			sit();
 		}
 		return;
