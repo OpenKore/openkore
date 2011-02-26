@@ -1168,7 +1168,7 @@ sub actor_died_or_disappeared {
 	if ($ID eq $accountID) {
 		message T("You have died\n") if (!$char->{dead});
 		Plugins::callHook('self_died');
-		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || !$AI;
+		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || $AI == AI::OFF;
 		$char->{deathCount}++;
 		$char->{dead} = 1;
 		$char->{dead_time} = time;
@@ -3609,7 +3609,7 @@ sub inventory_item_added {
 			$ai_v{'npc_talk'}{'time'} = time;
 		}
 
-		if ($AI == 2) {
+		if ($AI == AI::AUTO) {
 			# Auto-drop item
 			if (pickupitems(lc($item->{name})) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 				$messageSender->sendDrop($item->{index}, $amount);
@@ -3819,7 +3819,7 @@ sub item_appeared {
 	$itemsList->add($item) if ($mustAdd);
 
 	# Take item as fast as possible
-	if ($AI == 2 && pickupitems(lc($item->{name})) == 2
+	if ($AI == AI::AUTO && pickupitems(lc($item->{name})) == 2
 	 && ($config{'itemsTakeAuto'} || $config{'itemsGatherAuto'})
 	 && (percent_weight($char) < $config{'itemsMaxWeight'})
 	 && distance($item->{pos}, $char->{pos_to}) <= 5) {
@@ -5082,7 +5082,7 @@ sub private_message {
 		Msg => $privMsg
 	});
 
-	if ($config{dcOnPM} && $AI == 2) {
+	if ($config{dcOnPM} && $AI == AI::AUTO) {
 		chatLog("k", T("*** You were PM'd, auto disconnect! ***\n"));
 		message T("Disconnecting on PM!\n");
 		quit();
@@ -5668,7 +5668,7 @@ sub skill_cast {
 	my $monster = $monstersList->getByID($sourceID);
 	my $control;
 	$control = mon_control($monster->name,$monster->{nameID}) if ($monster);
-	if ($AI == 2 && $control->{skillcancel_auto}) {
+	if ($AI == AI::AUTO && $control->{skillcancel_auto}) {
 		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
 			message TF("Monster Skill - switch Target to : %s (%d)\n", $monster->name, $monster->{binID});
 			$char->stopAttack;
@@ -5935,7 +5935,7 @@ sub skill_used_no_damage {
 		$timeout{ai_teleport_delay}{time} = time;
 	}
 
-	if ($AI == 2 && $config{'autoResponseOnHeal'}) {
+	if ($AI == AI::AUTO && $config{'autoResponseOnHeal'}) {
 		# Handle auto-response on heal
 		my $player = $playersList->getByID($args->{sourceID});
 		if ($player && ($args->{skillID} == 28 || $args->{skillID} == 29 || $args->{skillID} == 34)) {

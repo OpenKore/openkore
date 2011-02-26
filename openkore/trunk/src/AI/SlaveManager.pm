@@ -18,7 +18,7 @@ sub addSlave {
 	$actor->{slave_ai_seq} = [];
 	$actor->{slave_ai_seq_args} = [];
 	$actor->{slave_skillsID} = [];
-	$actor->{slave_AI} = 2;
+	$actor->{slave_AI} = AI::AUTO;
 
 	if ($actor->{actorType} eq 'Homunculus') {
 		$actor->{configPrefix} = 'homunculus_';

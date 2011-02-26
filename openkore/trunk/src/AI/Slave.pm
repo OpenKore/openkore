@@ -135,7 +135,7 @@ sub iterate {
 		
 		# auto-follow
 		if (
-			$slave->{slave_AI} == 2
+			$slave->{slave_AI} == AI::AUTO
 			&& AI::action eq "move"
 			&& !$char->{sitting}
 			&& !AI::args->{mapChanged}
@@ -183,7 +183,7 @@ sub iterate {
 				message TF("Found %s!\n", $slave), 'homunculus';
 	
 			# attempt to find homunculus on it's last known coordinates
-			} elsif ($AI == 2 && !$slave->{lostRoute}) {
+			} elsif ($AI == AI::AUTO && !$slave->{lostRoute}) {
 				if ($config{teleportAuto_lostHomunculus}) {
 					message TF("Teleporting to get %s back\n", $slave), 'teleport';
 					useTeleport(1);
@@ -206,7 +206,7 @@ sub iterate {
 	 
 		# if your homunculus is idle, make it move near you
 		} elsif (
-			$slave->{slave_AI} == 2
+			$slave->{slave_AI} == AI::AUTO
 			&& $slave->isIdle
 			&& $slave_dist > ($config{$slave->{configPrefix}.'followDistanceMin'} || 3)
 			&& $slave_dist < MAX_DISTANCE
@@ -219,7 +219,7 @@ sub iterate {
 		# if you are idle, move near the homunculus
 		} elsif (
 			$slave->{actorType} eq 'Homunculus' &&
-			$AI == 2 && AI::isIdle && !$slave->isIdle
+			$AI == AI::AUTO && AI::isIdle && !$slave->isIdle
 			&& $config{$slave->{configPrefix}.'followDistanceMax'}
 			&& $slave_dist > $config{$slave->{configPrefix}.'followDistanceMax'}
 		) {
@@ -233,7 +233,7 @@ sub iterate {
 			$slave->processAttack;
 			$slave->processRouteAI;
 			$slave->processMove;
-			return unless $slave->{slave_AI} == 2;
+			return unless $slave->{slave_AI} == AI::AUTO;
 			$slave->processAutoAttack;
 		}
 	}
@@ -376,7 +376,7 @@ sub processAttack {
 			monKilled();
 
 			# Pickup loot when monster's dead
-			if ($AI == 2 && $config{itemsTakeAuto} && $monsters_old{$ID}{dmgFromPlayer}{$slave->{ID}} > 0 && !$monsters_old{$ID}{homunculus_ignore}) {
+			if ($AI == AI::AUTO && $config{itemsTakeAuto} && $monsters_old{$ID}{dmgFromPlayer}{$slave->{ID}} > 0 && !$monsters_old{$ID}{homunculus_ignore}) {
 				AI::clear("items_take");
 				AI::ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
 					$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
