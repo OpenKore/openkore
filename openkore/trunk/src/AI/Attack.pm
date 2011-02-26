@@ -587,6 +587,9 @@ sub main {
 			my $slot = $args->{attackMethod}{skillSlot};
 			delete $args->{attackMethod};
 
+			$ai_v{"attackSkillSlot_${slot}_time"} = time;
+			$ai_v{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
+
 			ai_setSuspend(0);
 			my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
 			if (!ai_getSkillUseType($skill->getHandle())) {
@@ -624,6 +627,9 @@ sub main {
 			my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
 			my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"});
 			delete $args->{attackMethod};
+
+			$ai_v{"attackComboSlot_${slot}_time"} = time;
+			$ai_v{"attackComboSlot_${slot}_target_time"}{$ID} = time;
 
 			if (!ai_getSkillUseType($skill)) {
 				my $targetID = ($isSelfSkill) ? $accountID : $ID;
