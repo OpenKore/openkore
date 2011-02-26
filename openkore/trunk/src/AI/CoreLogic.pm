@@ -2508,7 +2508,8 @@ sub processMonsterSkillUse {
 					debug "Auto-monsterSkill on $monster->{name} ($monster->{binID}): ".$skill->getName()." (lvl $lvl)\n", "monsterSkill";
 					my $target = $config{"${prefix}_isSelfSkill"} ? $char : $monster;
 					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix);
-					$ai_v{$prefix . "_time"}{$monsterID} = time;
+					$ai_v{$prefix . "_time"} = time;
+					$ai_v{$prefix . "_target_time"}{$monsterID} = time;
 					last;
 				}
 			}
