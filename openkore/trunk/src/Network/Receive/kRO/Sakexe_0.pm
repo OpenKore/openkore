@@ -5030,6 +5030,8 @@ sub received_characters_blockSize {
 sub received_characters_unpackString {
 	if ($masterServer && $masterServer->{charBlockSize} == 128) {
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16'; # 128
+	} elsif ($masterServer && $masterServer->{charBlockSize} == 116) {
+		return 'a4 V9 v V2 v14 Z24 C6 v2'; # 116 TODO: (missing 2 last bytes)
 	} elsif ($masterServer && $masterServer->{charBlockSize} == 112) {
 		return 'a4 V9 v V2 v14 Z24 C6 v2'; # 112
 	} else {
