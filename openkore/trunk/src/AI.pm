@@ -57,6 +57,12 @@ our @EXPORT = (
 	take/
 );
 
+use constant {
+	OFF => 0,
+	MANUAL => 1,
+	AUTO => 2,
+};
+
 sub action {
 	my $i = (defined $_[0] ? $_[0] : 0);
 	return $ai_seq[$i];

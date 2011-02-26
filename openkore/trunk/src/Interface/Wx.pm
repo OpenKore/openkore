@@ -920,9 +920,9 @@ sub onInputEnter {
 
 sub onMenuOpen {
 	my $self = shift;
-	$self->{mPause}->Enable($AI);
-	$self->{mManual}->Enable($AI != 1);
-	$self->{mResume}->Enable($AI != 2);
+	$self->{mPause}->Enable($AI != AI::OFF);
+	$self->{mManual}->Enable($AI != AI::MANUAL);
+	$self->{mResume}->Enable($AI != AI::AUTO);
 	$self->{infoBarToggle}->Check($self->{infoPanel}->IsShown);
 	$self->{chatLogToggle}->Check(defined $self->{notebook}->hasPage(T('Chat Log')) ? 1 : 0);
 	
@@ -952,15 +952,15 @@ sub onLoadFiles {
 }
 
 sub onEnableAI {
-	$AI = 2;
+	$AI = AI::AUTO;
 }
 
 sub onManualAI {
-	$AI = 1;
+	$AI = AI::MANUAL;
 }
 
 sub onDisableAI {
-	$AI = 0;
+	$AI = AI::OFF;
 }
 
 sub onCopyLastOutput {
