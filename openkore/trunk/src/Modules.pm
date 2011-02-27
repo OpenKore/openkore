@@ -140,6 +140,16 @@ sub addToReloadQueue {
 	}
 }
 
+sub addToReloadQueue2 {
+	my ($filename) = @_;
+	my $file = "$FindBin::RealBin/src/".$filename;
+			if (-e $file) {
+				push @queue, $file;
+			} else {
+				error(TF("Unable to reload code: %s not found\n", $file));
+	}
+}
+
 ##
 # boolean Modules::checkSyntax(String file)
 #

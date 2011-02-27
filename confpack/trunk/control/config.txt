@@ -281,6 +281,9 @@ tankersList
 repairAuto 0
 repairAuto_list
 
+status_mapProperty 0
+status_mapType 0
+
 removeActorWithDistance
 
 ######## Mercenary Support ########
