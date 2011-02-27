@@ -149,6 +149,7 @@ sub initHandlers {
 	portals            => \&cmdPortalList,
 	quit               => \&cmdQuit,
 	rc                 => \&cmdReloadCode,
+	rc2                 => \&cmdReloadCode2,
 	reload             => \&cmdReload,
 	relog              => \&cmdRelog,
 	repair             => \&cmdRepair,
@@ -3771,6 +3772,15 @@ sub cmdReloadCode {
 	my (undef, $args) = @_;
 	if ($args ne "") {
 		Modules::addToReloadQueue(parseArgs($args));
+	} else {
+		Modules::reloadFile("$FindBin::RealBin/src/functions.pl");
+	}
+}
+
+sub cmdReloadCode2 {
+	my (undef, $args) = @_;
+	if ($args ne "") {
+		Modules::addToReloadQueue2($args);
 	} else {
 		Modules::reloadFile("$FindBin::RealBin/src/functions.pl");
 	}

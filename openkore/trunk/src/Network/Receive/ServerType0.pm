@@ -5429,19 +5429,20 @@ sub no_teleport {
 sub map_property {
 	my ($self, $args) = @_;
 	
-	$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
-	grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
-	map {[$_, defined $mapPropertyTypeHandle{$_} ? $mapPropertyTypeHandle{$_} : "UNKNOWN_MAPPROPERTY_TYPE_$_"]}
-	1 .. List::Util::max $args->{type}, keys %mapPropertyTypeHandle;
-	
-	if ($args->{info_table}) {
-		my @info_table = unpack 'C*', $args->{info_table};
-		$char->setStatus(@$_) for map {[
-			defined $mapPropertyInfoHandle{$_} ? $mapPropertyInfoHandle{$_} : "UNKNOWN_MAPPROPERTY_INFO_$_",
-			$info_table[$_],
-		]} 0 .. @info_table-1;
+	if($config{'status_mapProperty'}){
+		$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
+		grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
+		map {[$_, defined $mapPropertyTypeHandle{$_} ? $mapPropertyTypeHandle{$_} : "UNKNOWN_MAPPROPERTY_TYPE_$_"]}
+		1 .. List::Util::max $args->{type}, keys %mapPropertyTypeHandle;
+		
+		if ($args->{info_table}) {
+			my @info_table = unpack 'C*', $args->{info_table};
+			$char->setStatus(@$_) for map {[
+				defined $mapPropertyInfoHandle{$_} ? $mapPropertyInfoHandle{$_} : "UNKNOWN_MAPPROPERTY_INFO_$_",
+				$info_table[$_],
+			]} 0 .. @info_table-1;
+		}
 	}
-	
 	$pvp = {1 => 1, 3 => 2}->{$args->{type}};
 	if ($pvp) {
 		Plugins::callHook('pvp_mode', {
@@ -5453,11 +5454,12 @@ sub map_property {
 sub map_property2 {
 	my ($self, $args) = @_;
 	
-	$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
-	grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
-	map {[$_, defined $mapTypeHandle{$_} ? $mapTypeHandle{$_} : "UNKNOWN_MAPTYPE_$_"]}
-	0 .. List::Util::max $args->{type}, keys %mapTypeHandle;
-	
+	if($config{'status_mapType'}){
+		$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
+		grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
+		map {[$_, defined $mapTypeHandle{$_} ? $mapTypeHandle{$_} : "UNKNOWN_MAPTYPE_$_"]}
+		0 .. List::Util::max $args->{type}, keys %mapTypeHandle;
+	}
 	$pvp = {6 => 1, 8 => 2, 19 => 3}->{$args->{type}};
 	if ($pvp) {
 		Plugins::callHook('pvp_mode', {
