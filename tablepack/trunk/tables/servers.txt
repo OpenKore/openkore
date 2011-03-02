@@ -155,8 +155,8 @@ clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 #addTableFolders translated/kRO_english;kRO
 addTableFolders kRO
 
-[Malaysia - mRO: Main Server: Balder]
-ip 202.71.105.21
+[Malaysia - mRO: Poring King]
+ip 202.71.105.25
 port 6900
 master_version 16
 version 211
@@ -166,18 +166,18 @@ serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders mRO
 
-[Malaysia - mRO (English): Aegir/Idun]
-ip 202.71.105.23
+[Malaysia - mRO: freyia - carnival]
+ip 220.130.114.212
 port 6900
 master_version 17
-version 1004
+version 211
 serverType mRO
 charBlockSize 116
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders mRO
 
-[Malaysia - mRO (English Free Server): Prontera]
+[Malaysia - mRO: Singapore Free Server]
 ip 202.71.105.29
 port 6900
 master_version 17
@@ -193,7 +193,7 @@ addTableFolders mRO
 ip 202.71.105.27
 port 6900
 master_version 16
-version 102
+version 211
 serverType mRO
 charBlockSize 116
 serverEncoding Western
