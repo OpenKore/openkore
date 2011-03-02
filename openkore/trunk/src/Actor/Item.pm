@@ -388,7 +388,7 @@ sub unequip {
 sub use {
 	my $self = shift;
 	my $target = shift;
-	return 0 unless $self->{type} <= 2;
+	return 0 unless $self->{type} <= 2 || $self->{type} == 18;
 	if (!$target || $target == $accountID) {
 		$messageSender->sendItemUse($self->{index}, $accountID);
 	}
