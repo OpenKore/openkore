@@ -17,6 +17,7 @@
 package AI;
 
 use strict;
+use Time::HiRes qw(time);
 use Globals;
 use Utils qw(binFind);
 use Log qw(message warning error debug);
