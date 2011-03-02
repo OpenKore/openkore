@@ -2785,7 +2785,8 @@ sub cmdInventory {
 				 $item->{type} == 17 ||
 			     $item->{type} == 19) && !$item->{equipped}) {
 				push @non_useable, $item->{invIndex};
-			} elsif ($item->{type} <= 2) {
+			} elsif ($item->{type} <= 2 ||
+					 $item->{type} == 18) {
 				push @useable, $item->{invIndex};
 			} else {
 				my %eqp;

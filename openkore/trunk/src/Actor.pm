@@ -452,7 +452,7 @@ sub statusesString {
 	$self->{statuses} && %{$self->{statuses}}
 	? join ', ', map { $statusName{$_} || $_ } keys %{$self->{statuses}}
 	# Translation Comment: No status effect on actor
-	: T('none');
+	: '';
 }
 
 sub cartActive {
