@@ -69,7 +69,7 @@ sub sendSkillUseLocInfo {
 # 0x0085,11,changedir,7:10
 sub sendLook {
 	my ($self, $body, $head) = @_;
-	my $msg = pack('v x5 C x4 C', 0x0085, $head, $body);
+	my $msg = pack('v x3 C x4 C', 0x0085, $head, $body);
 	$self->sendToServer($msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
 	$char->{look}{head} = $head;
