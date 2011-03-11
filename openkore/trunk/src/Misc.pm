@@ -1285,7 +1285,7 @@ sub checkFollowMode {
 sub checkMonsterCleanness {
 	return 1 if (!$config{attackAuto});
 	my $ID = $_[0];
-	return 1 if ($playersList->getByID($ID));
+	return 1 if $playersList->getByID($ID) || $slavesList->getByID($ID);
 	my $monster = $monstersList->getByID($ID);
 
 	# If party attacked monster, or if monster attacked/missed party
