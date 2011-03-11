@@ -11,8 +11,6 @@ use Translation;
 use AI::Slave::Homunculus;
 use AI::Slave::Mercenary;
 
-*debug = *message;
-
 # homunculus commands/skills can only be used
 # if the homunculus is within this range
 use constant MAX_DISTANCE => 17;
