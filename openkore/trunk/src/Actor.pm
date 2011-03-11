@@ -537,7 +537,6 @@ sub processMove {
 	if ($self->action eq "move") {
 		my $args = $self->args;
 		$args->{ai_move_giveup}{time} = time unless $args->{ai_move_giveup}{time};
-		my $move_retry = $self->isa('Actor::You') ? \$AI::Timeouts::move_retry : \$self->{slave_move_retry};
 
 		# Wait until we've stand up, if we're sitting
 		if ($self->{sitting}) {
@@ -559,10 +558,10 @@ sub processMove {
 			debug "$self move - timeout\n", "ai_move";
 			$self->dequeue;
 
-		} elsif (timeOut($$move_retry, 0.5)) {
+		} elsif (timeOut($self->{move_retry}, 0.5)) {
 			# No update yet, send move request again.
 			# We do this every 0.5 secs
-			$$move_retry = time;
+			$self->{move_retry} = time;
 			$self->sendMove(@{$args->{move_to}}{qw(x y)});
 		}
 	}
