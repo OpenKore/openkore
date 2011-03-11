@@ -11,6 +11,8 @@ use Translation;
 use AI::Slave::Homunculus;
 use AI::Slave::Mercenary;
 
+*debug = *message;
+
 # homunculus commands/skills can only be used
 # if the homunculus is within this range
 use constant MAX_DISTANCE => 17;
@@ -152,10 +154,10 @@ sub iterate {
 				$slave->args->{follow_route} = 1 if $slave->action eq 'route';
 				debug sprintf("Slave follow route (distance: %.2f)\n", $slave->distance()), 'homunculus';
 	
-			} elsif (timeOut($slave->{slave_move_retry}, 0.5)) {
+			} elsif (timeOut($slave->{move_retry}, 0.5)) {
 				# No update yet, send move request again.
 				# We do this every 0.5 secs
-				$slave->{slave_move_retry} = time;
+				$slave->{move_retry} = time;
 				# NOTE:
 				# The default LUA uses sendHomunculusStandBy() for the follow AI
 				# however, the server-side routing is very inefficient
