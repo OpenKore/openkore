@@ -76,7 +76,7 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
-	Plugins::delHook($self->{hook});
+	Plugins::delHook($self->{hook}) if $self->{hook};
 }
 
 sub iterate {
