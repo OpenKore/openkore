@@ -85,7 +85,7 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
-	Plugins::delHook($self->{mapChangedHook});
+	Plugins::delHook($self->{mapChangedHook}) if $self->{mapChangedHook};
 }
 
 # Overrided method.
