@@ -214,7 +214,7 @@ sub iterate {
 		) {
 			$slave->sendStandBy;
 			$slave->{standby_time} = time;
-			debug sprintf("Slave standby (distance: %.2f)\n", $slave->distance());
+			debug sprintf("Slave standby (distance: %.2f)\n", $slave->distance()), 'homunculus';
 	
 		# if you are idle, move near the homunculus
 		} elsif (
