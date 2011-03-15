@@ -4014,10 +4014,8 @@ sub high_jump {
 	
 	message TF("%s instantly moved to %d, %d\n", $actor->nameString, $actor->{pos_to}{x}, $actor->{pos_to}{y}), 'skill', 2;
 	
-	if ($args->{ID} eq $accountID) {
-		$char->{time_move} = time;
-		$char->{time_move_calc} = 0;
-	}
+	$actor->{time_move} = time;
+	$actor->{time_move_calc} = 0;
 }
 
 sub hp_sp_changed {
