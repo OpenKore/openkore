@@ -818,6 +818,22 @@ use constant {
 	LEVELUP_EFFECT3 => 0x9,
 };
 
+use constant {
+	ACTION_ATTACK => 0x0,
+	ACTION_ITEMPICKUP => 0x1,
+	ACTION_SIT => 0x2,
+	ACTION_STAND => 0x3,
+	ACTION_ATTACK_NOMOTION => 0x4, # eflected/absorbed damage?
+	ACTION_SPLASH => 0x5,
+	ACTION_SKILL => 0x6,
+	ACTION_ATTACK_REPEAT => 0x7,
+	ACTION_ATTACK_MULTIPLE => 0x8, # double attack
+	ACTION_ATTACK_MULTIPLE_NOMOTION => 0x9, # don't display flinch animation (endure)
+	ACTION_ATTACK_CRITICAL => 0xa,
+	ACTION_ATTACK_LUCKY => 0xb, # lucky dodge
+	ACTION_TOUCHSKILL => 0xc,
+};
+
 ######################################
 #### Packet inner struct handlers ####
 ######################################
@@ -1045,20 +1061,12 @@ sub account_server_info {
 	}
 }
 
-# type=01 pick up item
-# type=02 sit down
-# type=03 stand up
-# type=04 reflected/absorbed damage?
-# type=08 double attack
-# type=09 don't display flinch animation (endure)
-# type=0a critical hit
-# type=0b lucky dodge
 sub actor_action {
 	my ($self,$args) = @_;
 	return unless changeToInGameState();
 
 	$args->{damage} = intToSignedShort($args->{damage});
-	if ($args->{type} == 1) {
+	if ($args->{type} == ACTION_ITEMPICKUP) {
 		# Take item
 		my $source = Actor::get($args->{sourceID});
 		my $verb = $source->verb('pick up', 'picks up');
@@ -1068,7 +1076,7 @@ sub actor_action {
 		my $item = $itemsList->getByID($args->{targetID});
 		$item->{takenBy} = $args->{sourceID} if ($item);
 
-	} elsif ($args->{type} == 2) {
+	} elsif ($args->{type} == ACTION_SIT) {
 		# Sit
 		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
 		if ($args->{sourceID} eq $accountID) {
@@ -1082,7 +1090,7 @@ sub actor_action {
 		}
 		Misc::checkValidity("actor_action (take item)");
 
-	} elsif ($args->{type} == 3) {
+	} elsif ($args->{type} == ACTION_STAND) {
 		# Stand
 		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
 		if ($args->{sourceID} eq $accountID) {
@@ -1104,13 +1112,13 @@ sub actor_action {
 		my $totalDamage = $args->{damage} + $args->{dual_wield_damage};
 		if ($totalDamage == 0) {
 			$dmgdisplay = T("Miss!");
-			$dmgdisplay .= "!" if ($args->{type} == 11); # lucky dodge
+			$dmgdisplay .= "!" if ($args->{type} == ACTION_ATTACK_LUCKY); # lucky dodge
 		} else {
 			$dmgdisplay = $args->{div} > 1
 				? sprintf '%d*%d', $args->{damage} / $args->{div}, $args->{div}
 				: $args->{damage}
 			;
-			$dmgdisplay .= "!" if ($args->{type} == 10); # critical hit
+			$dmgdisplay .= "!" if ($args->{type} == ACTION_ATTACK_CRITICAL); # critical hit
 			$dmgdisplay .= " + $args->{dual_wield_damage}" if $args->{dual_wield_damage};
 		}
 
@@ -1124,7 +1132,7 @@ sub actor_action {
 		my $target = Actor::get($args->{targetID});
 		my $verb = $source->verb('attack', 'attacks');
 
-		$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $totalDamage == 0;
+		$target->{sitting} = 0 unless $args->{type} == ACTION_ATTACK_NOMOTION || $args->{type} == ACTION_ATTACK_MULTIPLE_NOMOTION || $totalDamage == 0;
 
 		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}));
 		Plugins::callHook('packet_attack', {sourceID => $args->{sourceID}, targetID => $args->{targetID}, msg => \$msg, dmg => $totalDamage, type => $args->{type}});
