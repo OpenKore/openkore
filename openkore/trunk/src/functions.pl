@@ -471,15 +471,21 @@ sub finalInitialization {
 		$taskManager->add($_->new);
 	}
 
-	# protect actor hashes from autovivification
-	require Utils::ActorHashTie;
-	tie %items, 'Tie::ActorHash';
-	tie %monsters, 'Tie::ActorHash';
-	tie %players, 'Tie::ActorHash';
-	tie %pets, 'Tie::ActorHash';
-	tie %npcs, 'Tie::ActorHash';
-	tie %portals, 'Tie::ActorHash';
-	tie %slaves, 'Tie::ActorHash';
+	if (DEBUG) {
+		# protect various stuff from autovivification
+		
+		require Utils::BlessedRefTie;
+		tie $char, 'Tie::BlessedRef';
+		
+		require Utils::ActorHashTie;
+		tie %items, 'Tie::ActorHash';
+		tie %monsters, 'Tie::ActorHash';
+		tie %players, 'Tie::ActorHash';
+		tie %pets, 'Tie::ActorHash';
+		tie %npcs, 'Tie::ActorHash';
+		tie %portals, 'Tie::ActorHash';
+		tie %slaves, 'Tie::ActorHash';
+	}
 
 	$itemsList = new ActorList('Actor::Item');
 	$monstersList = new ActorList('Actor::Monster');
