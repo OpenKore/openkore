@@ -108,21 +108,7 @@ sub process {
 
 		# Check for kill steal while moving
 		if ($monster && !Misc::checkMonsterCleanness($ID)) {
-			message T("Dropping target - you will not kill steal others\n");
-			$char->sendAttackStop;
-			$monster->{ignore} = 1;
-
-			# Right now, the queue is either
-			#   move, route, attack
-			# -or-
-			#   route, attack
-			AI::dequeue;
-			AI::dequeue;
-			AI::dequeue if (AI::action eq "attack");
-			if ($config{teleportAuto_dropTargetKS}) {
-				message T("Teleport due to dropping attack target\n");
-				useTeleport(1);
-			}
+			dropTargetWhileMoving();
 		}
 
 		# Mob-training, stop attacking the monster if it is already aggressive
