@@ -523,6 +523,7 @@ sub new {
 		'07F9' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv font name)]], # -1 # standing
 		'07FA' => ['inventory_item_removed', 'v3', [qw(unknown index amount)]], #//0x07fa,8
 		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait dispose)]],
+		'07FC' => ['party_leader', 'V2', [qw(old new)]],
 		'07FD' => ['special_item_obtain', 'v C v c/Z a*', [qw(len type nameID holder etc)]],
 		'07FE' => ['sound_effect', 'Z24', [qw(name)]],
 		'07FF' => ['define_check', 'v V', [qw(len result)]], #TODO: PACKET_ZC_DEFINE_CHECK
