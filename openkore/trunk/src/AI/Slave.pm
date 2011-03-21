@@ -253,14 +253,6 @@ sub slave_setMapChanged {
 	}
 }
 
-sub stopAttack {
-	my $slave = shift;
-	
-	#$messageSender->sendHomunculusStandBy($char->{homunculus}{ID});
-	my $pos = calcPosition($slave);
-	$slave->sendMove ($pos->{x}, $pos->{y});
-}
-
 ##### ATTACK #####
 sub processAttack {
 	my $slave = shift;
@@ -619,7 +611,7 @@ sub processAttack {
 		} elsif ($config{$slave->{configPrefix}.'tankMode'}) {
 			if ($args->{'dmgTo_last'} != $target->{dmgFromPlayer}{$slave->{ID}}) {
 				$args->{'ai_attack_giveup'}{'time'} = time;
-				$slave->stopAttack;
+				$slave->sendAttackStop;
 			}
 			$args->{'dmgTo_last'} = $target->{dmgFromPlayer}{$slave->{ID}};
 		}
@@ -631,7 +623,7 @@ sub processAttack {
 		if ((my $target = $monsters{$ID}) && !checkMonsterCleanness($ID)) {
 			$target->{homunculus_attack_failed} = time;
 			message TF("Dropping target - %s will not kill steal others\n", $slave), 'homunculus_attack';
-			$slave->stopAttack;
+			$slave->sendAttackStop;
 			$monsters{$ID}{homunculus_ignore} = 1;
 
 			# Right now, the queue is either
@@ -961,6 +953,8 @@ sub processAutoAttack {
 
 	#Benchmark::end("ai_homunculus_autoAttack") if DEBUG;
 }
+
+# Network
 
 sub sendAttack {
 	my ($slave, $targetID) = @_;

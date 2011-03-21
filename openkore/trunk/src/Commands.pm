@@ -612,7 +612,7 @@ sub cmdAttackStop {
 		my $monster = Actor::get($args->{ID});
 		if ($monster) {
 			$monster->{ignore} = 1;
-			$char->stopAttack;
+			$char->sendAttackStop;
 			message TF("Stopped attacking %s (%s)\n", 
 				$monster->{name}, $monster->{binID}), "success";
 			AI::clear("attack");

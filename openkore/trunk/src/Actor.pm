@@ -462,6 +462,8 @@ sub cartActive {
 	$self->statusActive('EFFECTSTATE_PUSHCART, EFFECTSTATE_PUSHCART2, EFFECTSTATE_PUSHCART3, EFFECTSTATE_PUSHCART4, EFFECTSTATE_PUSHCART5')
 }
 
+# AI commands
+
 ##
 # ai_clientSuspend(packet_switch, duration, args...)
 # initTimeout: a number of seconds.
@@ -557,6 +559,8 @@ sub route {
 	$self->queue('route', $task);
 }
 
+# Old AI
+
 sub processTask {
 	my $self = shift;
 	my $ai_name = shift;
@@ -608,6 +612,14 @@ sub processTask {
 			}
 		}
 	}
+}
+
+# Network
+
+sub sendAttackStop {
+	my ($self) = @_;
+	
+	$self->sendMove(@{calcPosition($self)}{qw(x y)});
 }
 
 1;
