@@ -3953,6 +3953,7 @@ sub cmdSit {
 	require Task::SitStand;
 	my $task = new Task::ErrorReport(
 		task => new Task::SitStand(
+			actor => $char,
 			mode => 'sit',
 			priority => Task::USER_PRIORITY
 		)
@@ -4056,6 +4057,7 @@ sub cmdStand {
 	require Task::SitStand;
 	my $task = new Task::ErrorReport(
 		task => new Task::SitStand(
+			actor => $char,
 			mode => 'stand',
 			priority => Task::USER_PRIORITY
 		)

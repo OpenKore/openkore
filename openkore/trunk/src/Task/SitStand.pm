@@ -23,7 +23,7 @@ use Time::HiRes qw(time);
 use Modules 'register';
 use Task;
 use base qw(Task);
-use Globals qw(%timeout $char $messageSender $net);
+use Globals qw(%timeout $net);
 use Network;
 use Skill;
 use Translation qw(T);
@@ -52,11 +52,11 @@ sub new {
 	my %args = @_;
 	my $self = $class->SUPER::new(@_, mutexes => MUTEXES);
 
-	if ($args{mode} ne 'sit' && $args{mode} ne 'stand') {
-		ArgumentException->throw("No mode specified.");
+	unless ($args{actor}->isa('Actor') and $args{mode} eq 'sit' || $args{mode} eq 'stand') {
+		ArgumentException->throw("Invalid arguments.");
 	}
 
-	$self->{mode} = $args{mode};
+	$self->{$_} = $args{$_} for qw(actor mode);
 	$self->{wait}{timeout} = $args{wait};
 	$self->{retry}{timeout} = $timeout{ai_stand_wait}{timeout} || 1;
 	# $self->{sitSkill} = new Skill(handle => 'NV_BASIC');
@@ -92,18 +92,18 @@ sub iterate {
 	$self->SUPER::iterate();
 	return unless ($net->getState() == Network::IN_GAME);
 
-	if (($self->{mode} eq 'stand' && !$char->{sitting}) || ($self->{mode} eq 'sit' && $char->{sitting})) {
+	unless ($self->{mode} eq 'sit' xor $self->{actor}{sitting}) {
 		$self->setDone();
 		$timeout{ai_sit}{time} = $timeout{ai_sit_wait}{time} = 0;
 
-	} elsif ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 3 && ($char->{jobID} == 0 || $char->{jobID} == 161)) {  # Check NV_BASIC skill only for Novice and High Novice
+	} elsif ($self->{actor}->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 3 && ($self->{actor}{jobID} == 0 || $self->{actor}{jobID} == 161)) {  # Check NV_BASIC skill only for Novice and High Novice
 		$self->setError(NO_SIT_STAND_SKILL, T("Basic Skill level 3 is required in order to sit or stand."));
 
 	} elsif (timeOut($self->{wait}) && timeOut($self->{retry})) {
 		if ($self->{mode} eq 'stand') {
-			$messageSender->sendAction(undef, 3);
+			$self->{actor}->sendStand;
 		} else {
-			$messageSender->sendAction(undef, 2);
+			$self->{actor}->sendSit;
 		}
 		$self->{retry}{time} = time;
 	}

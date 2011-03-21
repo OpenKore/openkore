@@ -134,6 +134,8 @@ sub processFollow {
 
 		if (!$self->{task}) {
 			my $task = $self->{task} = new Task::Route(
+				# FIXME
+				actor => $char,
 				x => $interceptPoint->{x},
 				y => $interceptPoint->{y},
 				maxTime => 5);

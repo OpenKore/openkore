@@ -475,40 +475,7 @@ sub ai_items_take {
 	AI::queue("items_take", \%args);
 }
 
-sub ai_route {
-	my $map = shift;
-	my $x = shift;
-	my $y = shift;
-	my %args = @_;
-	debug "On route to: $maps_lut{$map.'.rsw'}($map): $x, $y\n", "route";
-
-	# I can't use 'use' because of circular dependencies.
-	require Task::Route;
-	require Task::MapRoute;
-
-	my $task;
-	my @params = (
-		x => $x,
-		y => $y,
-		maxDistance => $args{maxRouteDistance},
-		maxTime => $args{maxRouteTime},
-		distFromGoal => $args{distFromGoal},
-		pyDistFromGoal => $args{pyDistFromGoal},
-		avoidWalls => !$args{noAvoidWalls},
-		notifyUponArrival => $args{notifyUponArrival}
-	);
-	if ($args{noMapRoute} || !defined($map)) {
-		$task = new Task::Route(@params);
-	} else {
-		$task = new Task::MapRoute(map => $map, @params);
-	}
-	$task->{attackID} = $args{attackID};
-	$task->{attackOnRoute} = $args{attackOnRoute};
-	$task->{noSitAuto} = $args{noSitAuto};
-	$task->{LOSSubRoute} = $args{LOSSubRoute};
-
-	AI::queue("route", $task);
-}
+sub ai_route { $char->route(@_) }
 
 #sellAuto for items_control - chobit andy 20030210
 sub ai_sellAutoCheck {
@@ -680,11 +647,9 @@ sub gather {
 	debug "Targeting for Gather: $items{$ID}{name} ($items{$ID}{binID})\n";
 }
 
-sub move { $char->move(@_) }
-
 sub sit {
 	require Task::SitStand;
-	my $task = new Task::SitStand(mode => 'sit', wait => $timeout{ai_sit_wait}{timeout});
+	my $task = new Task::SitStand(actor => $char, mode => 'sit', wait => $timeout{ai_sit_wait}{timeout});
 	AI::queue("sitting", $task);
 	if (defined $config{sitAuto_look} && !$config{sitAuto_look_from_wall}) {
 		Misc::look($config{sitAuto_look});
@@ -712,7 +677,7 @@ sub sit {
 
 sub stand {
 	require Task::SitStand;
-	my $task = new Task::SitStand(mode => 'stand', wait => $timeout{ai_stand_wait}{timeout});
+	my $task = new Task::SitStand(actor => $char, mode => 'stand', wait => $timeout{ai_stand_wait}{timeout});
 	AI::queue("standing", $task);
 }
 

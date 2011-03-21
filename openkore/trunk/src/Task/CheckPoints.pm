@@ -72,6 +72,8 @@ sub iterate {
 		$self->{index} += $self->{inc};
 
 		my $task = new Task::MapRoute(
+			# FIXME
+			actor => $char,
 			map => $point->{map},
 			x => $point->{x},
 			y => $point->{y},

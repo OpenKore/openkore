@@ -88,7 +88,7 @@ sub new {
 	my %args = @_;
 	my $self = $class->SUPER::new(@_, manageMutexes => 1, mutexes => ['movement', 'skill']);
 
-	if (!$args{skill}) {
+	unless ($args{actor}->isa('Actor') and $args{skill}) {
 		ArgumentException->throw("No skill argument given.");
 	}
 
@@ -301,8 +301,7 @@ sub iterate {
 		if (!$self->getSubtask()) {
 			my $task = new Task::Chained(tasks => [
 				# TODO: equip here (merge with AI::CoreLogic::processSkillUse)
-				# TODO: pass $self->{actor} to Task::SitStand
-				new Task::SitStand(mode => 'stand')
+				new Task::SitStand(actor => $self->{actor}, mode => 'stand')
 			]);
 			$self->setSubtask($task);
 			$self->{preparationTask} = $task;

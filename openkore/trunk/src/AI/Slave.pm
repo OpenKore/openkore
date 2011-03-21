@@ -136,7 +136,7 @@ sub iterate {
 		# auto-follow
 		if (
 			$slave->{slave_AI} == AI::AUTO
-			&& AI::action eq "move"
+			&& (AI::action eq "move" || AI::action eq "route")
 			&& !$char->{sitting}
 			&& !AI::args->{mapChanged}
 			&& !AI::args->{time_move} != $char->{time_move}
@@ -148,7 +148,7 @@ sub iterate {
 		) {
 			$slave->clear('move', 'route');
 			if (!checkLineWalkable($slave->{pos_to}, $char->{pos_to})) {
-				$slave->slave_route($char->{pos_to}{x}, $char->{pos_to}{y});
+				$slave->route(undef, @{$char->{pos_to}}{qw(x y)});
 				$slave->args->{follow_route} = 1 if $slave->action eq 'route';
 				debug sprintf("Slave follow route (distance: %.2f)\n", $slave->distance()), 'homunculus';
 	
@@ -231,8 +231,14 @@ sub iterate {
 			return unless $slave->{slave_AI};
 			return if $slave->processClientSuspend;
 			$slave->processAttack;
-			$slave->processRouteAI;
-			$slave->processMove;
+			$slave->processTask('route', onError => sub {
+				my ($task, $error) = @_;
+				if (!($task->isa('Task::MapRoute') && $error->{code} == Task::MapRoute::TOO_MUCH_TIME())
+				 && !($task->isa('Task::Route') && $error->{code} == Task::Route::TOO_MUCH_TIME())) {
+					error("$error->{message}\n");
+				}
+			});
+			$slave->processTask('move');
 			return unless $slave->{slave_AI} == AI::AUTO;
 			$slave->processAutoAttack;
 		}
@@ -253,50 +259,6 @@ sub stopAttack {
 	#$messageSender->sendHomunculusStandBy($char->{homunculus}{ID});
 	my $pos = calcPosition($slave);
 	$slave->sendMove ($pos->{x}, $pos->{y});
-}
-
-sub slave_route {
-	my $slave = shift;
-	my $map = $field->baseName;
-	my $x = shift;
-	my $y = shift;
-	my %param = @_;
-	debug "Slave on route to: " .$field->descString(). ": $x, $y\n", "route";
-
-	my %args;
-	$x = int($x) if ($x ne "");
-	$y = int($y) if ($y ne "");
-	$args{'dest'}{'map'} = $map;
-	$args{'dest'}{'pos'}{'x'} = $x;
-	$args{'dest'}{'pos'}{'y'} = $y;
-	$args{'maxRouteDistance'} = $param{maxRouteDistance} if exists $param{maxRouteDistance};
-	$args{'maxRouteTime'} = $param{maxRouteTime} if exists $param{maxRouteTime};
-	$args{'attackOnRoute'} = $param{attackOnRoute} if exists $param{attackOnRoute};
-	$args{'distFromGoal'} = $param{distFromGoal} if exists $param{distFromGoal};
-	$args{'pyDistFromGoal'} = $param{pyDistFromGoal} if exists $param{pyDistFromGoal};
-	$args{'attackID'} = $param{attackID} if exists $param{attackID};
-	$args{'noSitAuto'} = $param{noSitAuto} if exists $param{noSitAuto};
-	$args{'noAvoidWalls'} = $param{noAvoidWalls} if exists $param{noAvoidWalls};
-	$args{notifyUponArrival} = $param{notifyUponArrival} if exists $param{notifyUponArrival};
-	$args{'tags'} = $param{tags} if exists $param{tags};
-	$args{'time_start'} = time;
-
-	if (!$param{'_internal'}) {
-		$args{'solution'} = [];
-		$args{'mapSolution'} = [];
-	} elsif (exists $param{'_solution'}) {
-		$args{'solution'} = $param{'_solution'};
-	}
-
-	# Destination is same map and isn't blocked by walls/water/whatever
-	my $pos = calcPosition($slave);
-	require Task::Route;
-	if ($param{'_internal'} || (Task::Route->getRoute(\@{$args{solution}}, $field, $pos, $args{dest}{pos}, !$args{noAvoidWalls}))) {
-		# Since the solution array is here, we can start in "Route Solution Ready"
-		$args{'stage'} = 'Route Solution Ready';
-		debug "Slave route Solution Ready\n", "route";
-		$slave->queue("route", \%args);
-	}
 }
 
 ##### ATTACK #####
@@ -524,7 +486,7 @@ sub processAttack {
 			my $msg = TF("%s has no LOS from (%d, %d) to target (%d, %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y});
 			if ($best_spot) {
 				message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'homunculus_attack';
-				$slave->slave_route($best_spot->{x}, $best_spot->{y});
+				$slave->route(undef, @{$best_spot}{qw(x y)});
 			} else {
 				warning TF("%s; no acceptable place to stand\n", $msg);
 				$slave->dequeue;
@@ -609,7 +571,7 @@ sub processAttack {
 			debug "Slave target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
 				"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
 
-			my $result = $slave->slave_route($pos->{x}, $pos->{y},
+			my $result = $slave->route(undef, @{$pos}{qw(x y)},
 				distFromGoal => $args->{attackMethod}{distance},
 				maxRouteTime => $config{$slave->{configPrefix}.'attackMaxRouteTime'},
 				attackID => $ID,
@@ -687,186 +649,6 @@ sub processAttack {
 	}
 
 	#Benchmark::end("ai_homunculus_attack") if DEBUG;
-}
-
-####### ROUTE #######
-sub processRouteAI {
-	my $slave = shift;
-	
-	if ($slave->action eq "route" && $slave->args->{suspended}) {
-		$slave->args->{time_start} += time - $slave->args->{suspended};
-		$slave->args->{time_step} += time - $slave->args->{suspended};
-		delete $slave->args->{suspended};
-	}
-
-	if ($slave->action eq "route" && $field->baseName && $slave->{pos_to}{x} ne '' && $slave->{pos_to}{y} ne '') {
-		my $args = $slave->args;
-
-		if ( $args->{maxRouteTime} && timeOut($args->{time_start}, $args->{maxRouteTime})) {
-			# We spent too much time
-			debug "Slave route - we spent too much time; bailing out.\n", "route";
-			$slave->dequeue;
-
-		} elsif ($field->baseName ne $args->{dest}{map} || $args->{mapChanged}) {
-			debug "Slave map changed: $field->baseName $args->{dest}{map}\n", "route";
-			$slave->dequeue;
-
-		} elsif ($args->{stage} eq '') {
-			my $pos = calcPosition($slave);
-			$args->{solution} = [];
-			if (Task::Route->getRoute($args->{solution}, $field, $pos, $args->{dest}{pos})) {
-				$args->{stage} = 'Route Solution Ready';
-				debug "Slave route Solution Ready\n", "route";
-			} else {
-				debug "Something's wrong; there is no path to ".$field->baseName."($args->{dest}{pos}{x},$args->{dest}{pos}{y}).\n", "debug";
-				$slave->dequeue;
-			}
-
-		} elsif ($args->{stage} eq 'Route Solution Ready') {
-			my $solution = $args->{solution};
-			if ($args->{maxRouteDistance} > 0 && $args->{maxRouteDistance} < 1) {
-				# Fractional route motion
-				$args->{maxRouteDistance} = int($args->{maxRouteDistance} * scalar(@{$solution}));
-			}
-			splice(@{$solution}, 1 + $args->{maxRouteDistance}) if $args->{maxRouteDistance} && $args->{maxRouteDistance} < @{$solution};
-
-			# Trim down solution tree for pyDistFromGoal or distFromGoal
-			if ($args->{pyDistFromGoal}) {
-				my $trimsteps = 0;
-				$trimsteps++ while ($trimsteps < @{$solution}
-						 && distance($solution->[@{$solution} - 1 - $trimsteps], $solution->[@{$solution} - 1]) < $args->{pyDistFromGoal}
-					);
-				debug "Slave route - trimming down solution by $trimsteps steps for pyDistFromGoal $args->{'pyDistFromGoal'}\n", "route";
-				splice(@{$args->{'solution'}}, -$trimsteps) if ($trimsteps);
-			} elsif ($args->{distFromGoal}) {
-				my $trimsteps = $args->{distFromGoal};
-				$trimsteps = @{$args->{'solution'}} if $trimsteps > @{$args->{'solution'}};
-				debug "Slave route - trimming down solution by $trimsteps steps for distFromGoal $args->{'distFromGoal'}\n", "route";
-				splice(@{$args->{solution}}, -$trimsteps) if ($trimsteps);
-			}
-
-			undef $args->{mapChanged};
-			undef $args->{index};
-			undef $args->{old_x};
-			undef $args->{old_y};
-			undef $args->{new_x};
-			undef $args->{new_y};
-			$args->{time_step} = time;
-			$args->{stage} = 'Walk the Route Solution';
-
-		} elsif ($args->{stage} eq 'Walk the Route Solution') {
-
-			my $pos = calcPosition($slave);
-			my ($cur_x, $cur_y) = ($pos->{x}, $pos->{y});
-
-			unless (@{$args->{solution}}) {
-				# No more points to cover; we've arrived at the destination
-				if ($args->{notifyUponArrival}) {
- 					message TF("%s destination reached.\n", $slave), "success";
-				} else {
-					debug "Slave destination reached.\n", "route";
-				}
-				$slave->dequeue;
-
-			} elsif ($args->{old_x} == $cur_x && $args->{old_y} == $cur_y && timeOut($args->{time_step}, 3)) {
-				# We tried to move for 3 seconds, but we are still on the same spot,
-				# decrease step size.
-				# However, if $args->{index} was already 0, then that means
-				# we were almost at the destination (only 1 more step is needed).
-				# But we got interrupted (by auto-attack for example). Don't count that
-				# as stuck.
-				my $wasZero = $args->{index} == 0;
-				$args->{index} = int($args->{index} * 0.8);
-				if ($args->{index}) {
-					debug "Slave route - not moving, decreasing step size to $args->{index}\n", "route";
-					if (@{$args->{solution}}) {
-						# If we still have more points to cover, walk to next point
-						$args->{index} = @{$args->{solution}} - 1 if $args->{index} >= @{$args->{solution}};
-						$args->{new_x} = $args->{solution}[$args->{index}]{x};
-						$args->{new_y} = $args->{solution}[$args->{index}]{y};
-						$args->{time_step} = time;
-						$slave->move($args->{new_x}, $args->{new_y}, $args->{attackID});
-					}
-				} elsif (!$wasZero) {
-					# We're stuck
-					my $msg = TF("Slave is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).", 
-						$field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, $cur_x, $cur_y, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
-					$msg .= T(" Teleporting to unstuck.") if $config{$slave->{configPrefix}.'teleportAuto_unstuck'};
-					$msg .= "\n";
-					warning $msg, "route";
-					useTeleport(1) if $config{$slave->{configPrefix}.'teleportAuto_unstuck'};
-					$slave->dequeue;
-				} else {
-					$args->{time_step} = time;
-				}
-
-			} else {
-				# We're either starting to move or already moving, so send out more
-				# move commands periodically to keep moving and updating our position
-				my $solution = $args->{solution};
-				$args->{index} = $config{$slave->{configPrefix}.'route_step'} unless $args->{index};
-				$args->{index}++ if ($args->{index} < $config{$slave->{configPrefix}.'route_step'});
-
-				if (defined($args->{old_x}) && defined($args->{old_y})) {
-					# See how far we've walked since the last move command and
-					# trim down the soultion tree by this distance.
-					# Only remove the last step if we reached the destination
-					my $trimsteps = 0;
-					# If position has changed, we must have walked at least one step
-					$trimsteps++ if ($cur_x != $args->{'old_x'} || $cur_y != $args->{'old_y'});
-					# Search the best matching entry for our position in the solution
-					while ($trimsteps < @{$solution}
-							 && distance( { x => $cur_x, y => $cur_y }, $solution->[$trimsteps + 1])
-							    < distance( { x => $cur_x, y => $cur_y }, $solution->[$trimsteps])
-						) {
-						$trimsteps++;
-					}
-					# Remove the last step also if we reached the destination
-					$trimsteps = @{$solution} - 1 if ($trimsteps >= @{$solution});
-					#$trimsteps = @{$solution} if ($trimsteps <= $args->{'index'} && $args->{'new_x'} == $cur_x && $args->{'new_y'} == $cur_y);
-					$trimsteps = @{$solution} if ($cur_x == $solution->[$#{$solution}]{x} && $cur_y == $solution->[$#{$solution}]{y});
-					debug "Slave route - trimming down solution (" . @{$solution} . ") by $trimsteps steps\n", "route";
-					splice(@{$solution}, 0, $trimsteps) if ($trimsteps > 0);
-				}
-
-				my $stepsleft = @{$solution};
-				if ($stepsleft > 0) {
-					# If we still have more points to cover, walk to next point
-					$args->{index} = $stepsleft - 1 if ($args->{index} >= $stepsleft);
-					$args->{new_x} = $args->{solution}[$args->{index}]{x};
-					$args->{new_y} = $args->{solution}[$args->{index}]{y};
-
-					# But first, check whether the distance of the next point isn't abnormally large.
-					# If it is, then we've moved to an unexpected place. This could be caused by auto-attack,
-					# for example.
-					my %nextPos = (x => $args->{new_x}, y => $args->{new_y});
-					if (distance(\%nextPos, $pos) > $config{$slave->{configPrefix}.'route_step'}) {
-						debug "Slave route - movement interrupted: reset route\n", "route";
-						$args->{stage} = '';
-
-					} else {
-						$args->{old_x} = $cur_x;
-						$args->{old_y} = $cur_y;
-						$args->{time_step} = time if ($cur_x != $args->{old_x} || $cur_y != $args->{old_y});
-						debug "Slave route - next step moving to ($args->{new_x}, $args->{new_y}), index $args->{index}, $stepsleft steps left\n", "route";
-						$slave->move($args->{new_x}, $args->{new_y}, $args->{attackID});
-					}
-				} else {
-					# No more points to cover
-					if ($args->{notifyUponArrival}) {
- 						message TF("%s destination reached.\n", $slave), "success";
-					} else {
-						debug "Slave destination reached.\n", "route";
-					}
-					$slave->dequeue;
-				}
-			}
-
-		} else {
-			debug "Unexpected slave route stage [$args->{stage}] occured.\n", "route";
-			$slave->dequeue;
-		}
-	}
 }
 
 sub processClientSuspend {
