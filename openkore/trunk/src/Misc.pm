@@ -2492,7 +2492,7 @@ sub updateDamageTables {
 			if (AI::action eq "attack" && mon_control($monster->{name},$monster->{nameID})->{attack_auto} == 3 && $damage) {
 				# Mob-training, you only need to attack the monster once to provoke it
 				message TF("%s (%s) has been provoked, searching another monster\n", $monster->{name}, $monster->{binID});
-				$char->stopAttack;
+				$char->sendAttackStop;
 				$char->dequeue;
 			}
 
@@ -2720,7 +2720,7 @@ sub updateDamageTables {
 							# Change target to closer aggressive monster
 							message TF("%s %s target to aggressive %s\n",
 								$player, $player->verb(T('change'), T('changes')), $monster);
-							$player->stopAttack;
+							$player->sendAttackStop;
 							$player->dequeue;
 							$player->dequeue if $player->action eq 'route';
 							$player->dequeue;
@@ -2733,7 +2733,7 @@ sub updateDamageTables {
 
 					# Mob-training, stop attacking the monster if it has been attacking you
 					message TF("%s has been provoked, searching another monster\n", $monster);
-					$player->stopAttack;
+					$player->sendAttackStop;
 					$player->dequeue;
 				}
 				useTeleport(1, undef, 1) if ($teleport);

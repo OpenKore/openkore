@@ -190,6 +190,8 @@ sub args { shift; goto &AI::args }
 sub queue { shift; goto &AI::queue }
 sub dequeue { shift; goto &AI::dequeue }
 
+# AI commands
+
 sub attack {
 	my ($self, $targetID) = @_;
 	
@@ -350,11 +352,7 @@ sub attack {
 	} #END OF BLOCK AUTOEQUIP
 }
 
-sub stopAttack {
-	my ($self) = @_;
-	
-	$messageSender->sendMove(@{Utils::calcPosition($self)}{qw(x y)});
-}
+# Network
 
 sub sendSit { $messageSender->sendAction(undef, 2) }
 sub sendStand { $messageSender->sendAction(undef, 3) }
