@@ -33,10 +33,11 @@ use Modules 'register';
 use Task::WithSubtask;
 use base qw(Task::WithSubtask);
 use Task::SitStand;
-use Globals qw(%timeout $char $net $messageSender);
+use Globals qw(%timeout $net);
 use Plugins;
 use Network;
 use Log qw(warning debug);
+use Translation qw(T TF);
 use Utils qw(timeOut);
 use Utils::Exceptions;
 
@@ -72,12 +73,11 @@ sub new {
 	my %args = @_;
 	my $self = $class->SUPER::new(@_, autostop => 1, autofail => 1, mutexes => MUTEXES);
 
-	if ($args{x} == 0 || $args{y} == 0) {
+	unless ($args{actor}->isa('Actor') and $args{x} != 0 and $args{y} != 0) {
 		ArgumentException->throw(error => "Invalid arguments.");
 	}
 
-	$self->{x} = $args{x};
-	$self->{y} = $args{y};
+	$self->{$_} = $args{$_} for qw(actor x y);
 	$self->{retry}{timeout} = $args{retryTime} || 0.5;
 	$self->{giveup}{timeout} = $args{giveupTime} || $timeout{ai_move_giveup}{timeout} || 3;
 
@@ -125,29 +125,29 @@ sub iterate {
 	return if ($net->getState() != Network::IN_GAME);
 
 	# If we're sitting, wait until we've stood up.
-	if ($char->{sitting}) {
-		debug "Move - trying to stand\n", "move";
-		my $task = new Task::SitStand(mode => 'stand');
+	if ($self->{actor}{sitting}) {
+		debug "Move $self->{actor} - trying to stand\n", "move";
+		my $task = new Task::SitStand(actor => $self->{actor}, mode => 'stand');
 		$self->setSubtask($task);
 
 	# Stop if the map changed.
 	} elsif ($self->{mapChanged}) {
-		debug "Move - map change detected\n", "move";
+		debug "Move $self->{actor} - map change detected\n", "move";
 		$self->setDone();
 
 	# Stop if we've moved.
-	} elsif ($char->{time_move} > $self->{start_time}) {
-		debug "Move - done\n", "move";
+	} elsif ($self->{actor}{time_move} > $self->{start_time}) {
+		debug "Move $self->{actor} - done\n", "move";
 		$self->setDone();
 
 	# Stop if we've timed out.
 	} elsif (timeOut($self->{giveup})) {
-		debug "Move - timeout\n", "move";
-		$self->setError(TOO_LONG, "Tried too long to move");
+		debug "Move $self->{actor} - timeout\n", "move";
+		$self->setError(TOO_LONG, TF("%s tried too long to move", $self->{actor}));
 
 	} elsif (timeOut($self->{retry})) {
-		debug "Move - (re)trying\n", "move";
-		$messageSender->sendMove($self->{x}, $self->{y});
+		debug "Move $self->{actor} - (re)trying\n", "move";
+		$self->{actor}->sendMove(@{$self}{qw(x y)});
 		$self->{retry}{time} = time;
 	}
 }

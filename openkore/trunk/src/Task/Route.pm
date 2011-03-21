@@ -27,7 +27,7 @@ use Task::WithSubtask;
 use base qw(Task::WithSubtask);
 use Task::Move;
 
-use Globals qw($char $field $net %config);
+use Globals qw($field $net %config);
 use Log qw(message debug warning);
 use Network;
 use Field;
@@ -77,7 +77,7 @@ sub new {
 	my %args = @_;
 	my $self = $class->SUPER::new(@_, autostop => 1, autofail => 0, mutexes => ['movement']);
 
-	if ($args{x} == 0 || $args{y} == 0) {
+	unless ($args{actor}->isa('Actor') and $args{x} != 0 and $args{y} != 0) {
 		ArgumentException->throw(error => "Invalid arguments.");
 	}
 
@@ -89,10 +89,12 @@ sub new {
 		}
 	}
 
+	$self->{actor} = $args{actor};
+	# FIXME: don't use global $field in tasks
 	$self->{dest}{map} = $field->baseName;
 	$self->{dest}{pos}{x} = $args{x};
 	$self->{dest}{pos}{y} = $args{y};
-	if ($config{'route_avoidWalls'}) {
+	if ($config{$self->{actor}{configPrefix}.'route_avoidWalls'}) {
 		$self->{avoidWalls} = 1 if (!defined $self->{avoidWalls});
 	} else {$self->{avoidWalls} = 0;}
 	$self->{solution} = [];
@@ -147,11 +149,11 @@ sub resume {
 sub iterate {
 	my ($self) = @_;
 	return unless ($self->SUPER::iterate() && $net->getState() == Network::IN_GAME);
-	return unless ($field && defined($char->{pos_to}{x}) && defined($char->{pos_to}{y}));
+	return unless $field && defined $self->{actor}{pos_to} && defined $self->{actor}{pos_to}{x} && defined $self->{actor}{pos_to}{y};
 
 	if ( $self->{maxTime} && timeOut($self->{time_start}, $self->{maxTime})) {
 		# We spent too much time
-		debug "Route - we spent too much time; bailing out.\n", "route";
+		debug "Route $self->{actor} - we spent too much time; bailing out.\n", "route";
 		$self->setError(TOO_MUCH_TIME, "Too much time spent on walking.");
 
 	} elsif ($field->baseName ne $self->{dest}{map} || $self->{mapChanged}) {
@@ -159,11 +161,11 @@ sub iterate {
 		$self->setDone();
 
 	} elsif ($self->{stage} eq '') {
-		my $pos = calcPosition($char);
+		my $pos = calcPosition($self->{actor});
 		my $begin = time;
 		if ($self->getRoute($self->{solution}, $field, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
 			$self->{stage} = 'Route Solution Ready';
-			debug "Route Solution Ready!\n", "route";
+			debug "Route $self->{actor} Solution Ready!\n", "route";
 
 			if (time - $begin < 0.01) {
 				# Optimization: immediately go to the next stage if we
@@ -193,13 +195,13 @@ sub iterate {
 			$trimsteps++ while ($trimsteps < @{$solution}
 						&& distance($solution->[@{$solution} - 1 - $trimsteps], $solution->[@{$solution} - 1]) < $self->{pyDistFromGoal}
 				);
-			debug "Route - trimming down solution by $trimsteps steps for pyDistFromGoal $self->{pyDistFromGoal}\n", "route";
+			debug "Route $self->{actor} - trimming down solution by $trimsteps steps for pyDistFromGoal $self->{pyDistFromGoal}\n", "route";
 			splice(@{$self->{'solution'}}, -$trimsteps) if ($trimsteps);
 
 		} elsif ($self->{distFromGoal}) {
 			my $trimsteps = $self->{distFromGoal};
 			$trimsteps = @{$self->{solution}} if ($trimsteps > @{$self->{solution}});
-			debug "Route - trimming down solution by $trimsteps steps for distFromGoal $self->{distFromGoal}\n", "route";
+			debug "Route $self->{actor} - trimming down solution by $trimsteps steps for distFromGoal $self->{distFromGoal}\n", "route";
 			splice(@{$self->{solution}}, -$trimsteps) if ($trimsteps);
 		}
 
@@ -219,15 +221,15 @@ sub iterate {
 		}
 
 	} elsif ($self->{stage} eq 'Walk the Route Solution') {
-		my $pos = calcPosition($char);
+		my $pos = calcPosition($self->{actor});
 		my ($cur_x, $cur_y) = ($pos->{x}, $pos->{y});
 
 		if (@{$self->{solution}} == 0) {
 			# No more points to cover; we've arrived at the destination
 			if ($self->{notifyUponArrival}) {
-				message T("Destination reached.\n"), "success";
+				message TF("%s reached the destination.\n", $self->{actor}), "success";
 			} else {
-				debug "Destination reached.\n", "route";
+				debug "$self->{actor} reached the destination.\n", "route";
 			}
 			$self->setDone();
 
@@ -241,7 +243,7 @@ sub iterate {
 			my $wasZero = $self->{index} == 0;
 			$self->{index} = int($self->{index} * 0.8);
 			if ($self->{index}) {
-				debug "Route - not moving, decreasing step size to $self->{index}\n", "route";
+				debug "Route $self->{actor} - not moving, decreasing step size to $self->{index}\n", "route";
 				if (@{$self->{solution}}) {
 					# If we still have more points to cover, walk to next point
 					$self->{index} = @{$self->{solution}} - 1 if $self->{index} >= @{$self->{solution}};
@@ -249,6 +251,7 @@ sub iterate {
 					$self->{new_y} = $self->{solution}[$self->{index}]{y};
 					$self->{time_step} = time;
 					my $task = new Task::Move(
+						actor => $self->{actor},
 						x => $self->{new_x},
 						y => $self->{new_y});
 					$self->setSubtask($task);
@@ -258,12 +261,12 @@ sub iterate {
 				# FIXME: this code looks ugly!
 				# We're stuck
 				my $msg = TF("Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).",
-					$field->baseName, $char->{pos_to}{x}, $char->{pos_to}{y},
+					$field->baseName, @{$self->{actor}{pos_to}}{qw(x y)},
 					$cur_x, $cur_y, $self->{dest}{pos}{x}, $self->{dest}{pos}{y});
-				$msg .= T(" Teleporting to unstuck.") if ($config{teleportAuto_unstuck});
+				$msg .= T(" Teleporting to unstuck.") if ($config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'});
 				$msg .= "\n";
 				warning $msg, "route";
-				Misc::useTeleport(1) if $config{teleportAuto_unstuck};
+				Misc::useTeleport(1) if $config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'};
 				$self->setError(STUCK, T("Stuck during route."));
 			} else {
 				$self->{time_step} = time;
@@ -274,8 +277,8 @@ sub iterate {
 			# move commands periodically to keep moving and updating our position
 			my $begin = time;
 			my $solution = $self->{solution};
-			$self->{index} = $config{route_step} unless $self->{index};
-			$self->{index}++ if (($self->{index} < $config{route_step})
+			$self->{index} = $config{$self->{actor}{configPrefix}.'route_step'} unless $self->{index};
+			$self->{index}++ if (($self->{index} < $config{$self->{actor}{configPrefix}.'route_step'})
 			  && ($self->{old_x} != $cur_x || $self->{old_y} != $cur_y));
 
 			if (defined($self->{old_x}) && defined($self->{old_y})) {
@@ -296,7 +299,7 @@ sub iterate {
 				$trimsteps = @{$solution} - 1 if ($trimsteps >= @{$solution});
 				#$trimsteps = @{$solution} if ($trimsteps <= $self->{'index'} && $self->{'new_x'} == $cur_x && $self->{'new_y'} == $cur_y);
 				$trimsteps = @{$solution} if ($cur_x == $solution->[$#{$solution}]{x} && $cur_y == $solution->[$#{$solution}]{y});
-				debug "Route - trimming down solution (" . @{$solution} . ") by $trimsteps steps\n", "route";
+				debug "Route $self->{actor} - trimming down solution (" . @{$solution} . ") by $trimsteps steps\n", "route";
 				splice(@{$solution}, 0, $trimsteps) if ($trimsteps > 0);
 			}
 
@@ -311,16 +314,17 @@ sub iterate {
 				# If it is, then we've moved to an unexpected place. This could be caused by auto-attack,
 				# for example.
 				my %nextPos = (x => $self->{new_x}, y => $self->{new_y});
-				if (distance(\%nextPos, $pos) > $config{route_step}) {
-					debug "Route - movement interrupted: reset route\n", "route";
+				if (distance(\%nextPos, $pos) > $config{$self->{actor}{configPrefix}.'route_step'}) {
+					debug "Route $self->{actor} - movement interrupted: reset route\n", "route";
 					$self->{stage} = '';
 
 				} else {
 					$self->{old_x} = $cur_x;
 					$self->{old_y} = $cur_y;
 					$self->{time_step} = time if ($cur_x != $self->{old_x} || $cur_y != $self->{old_y});
-					debug "Route - next step moving to ($self->{new_x}, $self->{new_y}), index $self->{index}, $stepsleft steps left\n", "route";
+					debug "Route $self->{actor} - next step moving to ($self->{new_x}, $self->{new_y}), index $self->{index}, $stepsleft steps left\n", "route";
 					my $task = new Task::Move(
+						actor => $self->{actor},
 						x => $self->{new_x},
 						y => $self->{new_y});
 					$self->setSubtask($task);
@@ -334,9 +338,9 @@ sub iterate {
 			} else {
 				# No more points to cover
 				if ($self->{notifyUponArrival}) {
-					message T("Destination reached.\n"), "success";
+					message TF("%s reached the destination.\n", $self->{actor}), "success";
 				} else {
-					debug "Destination reached.\n", "route";
+					debug "$self->{actor} reached the destination.\n", "route";
 				}
 				$self->setDone();
 			}

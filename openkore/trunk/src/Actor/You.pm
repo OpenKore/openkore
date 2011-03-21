@@ -356,6 +356,8 @@ sub stopAttack {
 	$messageSender->sendMove(@{Utils::calcPosition($self)}{qw(x y)});
 }
 
+sub sendSit { $messageSender->sendAction(undef, 2) }
+sub sendStand { $messageSender->sendAction(undef, 3) }
 sub sendMove { $messageSender->sendMove(@_[1, 2]) }
 
 1;

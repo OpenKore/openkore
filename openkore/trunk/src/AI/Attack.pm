@@ -396,7 +396,7 @@ sub main {
 	} elsif (!$cleanMonster) {
 		# Drop target if it's already attacked by someone else
 		message T("Dropping target - you will not kill steal others\n"), "ai_attack";
-		$messageSender->sendMove($realMyPos->{x}, $realMyPos->{y});
+		$char->sendMove(@{$realMyPos}{qw(x y)});
 		AI::dequeue;
 		if ($config{teleportAuto_dropTargetKS}) {
 			message T("Teleporting due to dropping attack target\n"), "teleport";
@@ -456,9 +456,9 @@ sub main {
 			if ($config{attackChangeTarget} == 1) {
 				# Restart attack from processAutoAttack
 				AI::dequeue;
-				ai_route($field->baseName, $best_spot->{x}, $best_spot->{y}, LOSSubRoute => 1);
+				$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1);
 			} else {
-				ai_route($field->baseName, $best_spot->{x}, $best_spot->{y});
+				$char->route(undef, @{$best_spot}{qw(x y)});
 			}
 		} else {
 			warning TF("%s; no acceptable place to stand\n", $msg);
@@ -523,7 +523,7 @@ sub main {
 		#message "Time spent: " . (time - $begin) . "\n";
 		#debug_showSpots('runFromTarget', \@blocks, $bestBlock);
 		$args->{avoiding} = 1;
-		move($bestBlock->{x}, $bestBlock->{y}, $ID);
+		$char->move(@{$bestBlock}{qw(x y)}, $ID);
 
 	} elsif ($realMonsterDist > $args->{attackMethod}{maxDistance}
 	  && timeOut($args->{ai_attack_giveup}, 0.5)) {
@@ -537,7 +537,7 @@ sub main {
 		debug "Target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
 			"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
 
-		my $result = ai_route($field->baseName, $pos->{x}, $pos->{y},
+		my $result = $char->route(undef, @{$pos}{qw(x y)},
 			maxRouteTime => $config{'attackMaxRouteTime'},
 			attackID => $ID,
 			noMapRoute => 1,
@@ -569,7 +569,7 @@ sub main {
 			# Our recorded position might be out of sync, so try to unstuck
 			$args->{unstuck}{time} = time;
 			debug("Attack - trying to unstuck\n", "ai_attack");
-			move($myPos->{x}, $myPos->{y});
+			$char->move(@{$myPos}{qw(x y)});
 			$args->{unstuck}{count}++;
 		}
 

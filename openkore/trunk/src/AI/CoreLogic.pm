@@ -65,21 +65,21 @@ sub iterate {
 	return if processClientSuspend();
 	Benchmark::begin("AI (part 1.1)") if DEBUG;
 	processLook();
-	processTask('NPC');
+	$char->processTask('NPC');
 	processEquip();
 	processDrop();
 	processEscapeUnknownMaps();
 	Benchmark::end("AI (part 1.1)") if DEBUG;
 	Benchmark::begin("AI (part 1.2)") if DEBUG;
 	processDelayedTeleport();
-	processTask("sitting");
-	processTask("standing");
+	$char->processTask("sitting");
+	$char->processTask("standing");
 	AI::Attack::process();
 	Benchmark::end("AI (part 1.2)") if DEBUG;
 	Benchmark::begin("AI (part 1.3)") if DEBUG;
 	processSkillUse();
 	processAutoCommandUse();
-	processTask("route", onError => sub {
+	$char->processTask("route", onError => sub {
 		my ($task, $error) = @_;
 		if (!($task->isa('Task::MapRoute') && $error->{code} == Task::MapRoute::TOO_MUCH_TIME())
 		 && !($task->isa('Task::Route') && $error->{code} == Task::Route::TOO_MUCH_TIME())) {
@@ -87,7 +87,7 @@ sub iterate {
 		}
 	});
 	processTake();
-	$char->processMove;
+	$char->processTask('move');
 	Benchmark::end("AI (part 1.3)") if DEBUG;
 
 	Benchmark::begin("AI (part 1.4)") if DEBUG;
@@ -722,57 +722,6 @@ sub processSkillUse {
 	}
 }
 
-sub processTask {
-	my $ai_name = shift;
-	if (AI::action eq $ai_name) {
-		my $task = AI::args;
-		if ($task->getStatus() == Task::INACTIVE) {
-			$task->activate();
-			should($task->getStatus(), Task::RUNNING) if DEBUG;
-		}
-		if (DEBUG && $task->getStatus() != Task::RUNNING) {
-			require Scalar::Util;
-			require Data::Dumper;
-			# Make sure redundant information is not included in the error report.
-			if ($task->isa('Task::MapRoute')) {
-				delete $task->{ST_subtask}{solution};
-			} elsif ($task->isa('Task::Route') && $task->{ST_subtask}) {
-				delete $task->{solution};
-			}
-			die "Task '" . $task->getName() . "' (class " . Scalar::Util::blessed($task) . ") has status " .
-				Task::_getStatusName($task->getStatus()) .
-				", but should be RUNNING. Object details:\n" .
-				Data::Dumper::Dumper($task);
-		}
-		$task->iterate();
-		if ($task->getStatus() == Task::DONE) {
-			# We can't just dequeue the last AI sequence. Perhaps the task
-			# pushed a new AI sequence on the AI stack just before finishing.
-			# For example, the Route task does that when it's stuck.
-			# So, we must dequeue the correct sequence without affecting the
-			# others.
-			for (my $i = 0; $i < @AI::ai_seq; $i++) {
-				if ($AI::ai_seq[$i] eq $ai_name) {
-					splice(@AI::ai_seq, $i, 1);
-					splice(@AI::ai_seq_args, $i, 1);
-					last;
-				}
-			}
-			my %args = @_;
-			my $error = $task->getError();
-			if ($error) {
-				if ($args{onError}) {
-					$args{onError}->($task, $error);
-				} else {
-					error("$error->{message}\n");
-				}
-			} elsif ($args{onSuccess}) {
-				$args{onSuccess}->($task);
-			}
-		}
-	}
-}
-
 sub processTake {
 	##### TAKE #####
 
@@ -802,7 +751,7 @@ sub processTake {
 				my (%vec, %pos);
 				getVector(\%vec, $item->{pos}, $myPos);
 				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
-				move($pos{x}, $pos{y});
+				$char->move(@pos{qw(x y)});
 			} else {
 				my $pos = $item->{pos};
 				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
@@ -2022,7 +1971,7 @@ sub processFollow {
 						getVector(\%vec, $player->{pos_to}, $char->{pos_to});
 						moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - $config{followDistanceMin});
 						$timeout{ai_sit_idle}{time} = time;
-						$messageSender->sendMove($pos{x}, $pos{y});
+						$char->sendMove(@pos{qw(x y)});
 					}
 				}
 			}
@@ -2157,7 +2106,7 @@ sub processFollow {
 				getVector(\%vec, $pos, $char->{pos_to});
 				moveAlongVector(\%pos_to, $char->{pos_to}, \%vec, $dist);
 				$timeout{ai_sit_idle}{time} = time;
-				move($pos_to{x}, $pos_to{y});
+				$char->move(@pos_to{qw(x y)});
 				$pos->{x} = int $pos_to{x};
 				$pos->{y} = int $pos_to{y};
 
@@ -2174,7 +2123,7 @@ sub processFollow {
 		} elsif ($args->{'lost_stuck'}) {
 			if ($args->{'follow_lost_portalID'} eq "") {
 				moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $args->{'ai_follow_lost_vec'}, $config{'followLostStep'} / ($args->{'lost_stuck'} + 1));
-				move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
+				$char->move(@{$ai_v{temp}{pos}}{qw(x y)});
 			}
 		} else {
 			my $portalID = $args->{follow_lost_portalID};
@@ -2187,7 +2136,7 @@ sub processFollow {
 				}
 			} else {
 				moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $args->{'ai_follow_lost_vec'}, $config{'followLostStep'});
-				move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
+				$char->move(@{$ai_v{temp}{pos}}{qw(x y)});
 			}
 		}
 	}
@@ -2814,7 +2763,7 @@ sub processItemsGather {
 				my (%vec, %pos);
 				getVector(\%vec, $items{$ID}{pos}, $myPos);
 				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
-				move($pos{x}, $pos{y});
+				$char->move(@pos{qw(x y)});
 			} else {
 				my $item = $items{$ID};
 				my $pos = $item->{pos};

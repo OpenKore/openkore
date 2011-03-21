@@ -40,6 +40,7 @@ use Utils;
 use Utils::CallbackList;
 use Log qw(message error debug);
 use Misc;
+use Task;
 use Translation qw(T TF);
 use Actor::Unknown;
 
@@ -514,55 +515,97 @@ sub attack {
 sub move {
 	my ($self, $x, $y, $attackID) = @_;
 	
-	unless ($x || $y) {
-		error "BUG: Actor::move(0, 0) called!\n";
-		return;
-	}
+	require Task::Move;
 	
-	my %args = (
-		move_to => { x => $x, y => $y },
-		attackID => $attackID,
-		time_move => $self->{time_move},
-		ai_move_giveup => { timeout => $timeout{ai_move_giveup}{timeout} },
-	);
-	
-	debug sprintf("%s sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
-		$self, @{$self->{pos}}{qw(x y)}, $x, $y, Utils::distance($self->{pos}, $args{move_to})), "ai_move";
-	$self->queue("move", \%args);
+	$self->queue('move', my $task = new Task::Move(
+		actor => $self,
+		x => $x,
+		y => $y,
+	));
+	$task->{attackID} = $attackID;
 }
 
-sub processMove {
-	my ($self) = @_;
+sub route {
+	my ($self, $map, $x, $y, %args) = @_;
+	debug "$self on route to: $maps_lut{$map.'.rsw'}($map): $x, $y\n", "route";
 	
-	if ($self->action eq "move") {
-		my $args = $self->args;
-		$args->{ai_move_giveup}{time} = time unless $args->{ai_move_giveup}{time};
+	# I can't use 'use' because of circular dependencies.
+	require Task::Route;
+	require Task::MapRoute;
+	
+	# from Homunculus AI
+	($x, $y) = map { $_ ne '' ? int $_ : $_ } ($x, $y);
+	
+	my $task;
+	my @params = (
+		actor => $self,
+		x => $x,
+		y => $y,
+		maxDistance => $args{maxRouteDistance},
+		maxTime => $args{maxRouteTime},
+		avoidWalls => !$args{noAvoidWalls},
+		map { $_ => $args{$_} } qw(distFromGoal pyDistFromGoal notifyUponArrival)
+	);
+	
+	if ($map && !$args{noMapRoute}) {
+		$task = new Task::MapRoute(map => $map, @params);
+	} else {
+		$task = new Task::Route(@params);
+	}
+	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute);
+	
+	$self->queue('route', $task);
+}
 
-		# Wait until we've stand up, if we're sitting
-		if ($self->{sitting}) {
-			$args->{ai_move_giveup}{time} = 0;
-			AI::stand;
-
-		# Stop if the map changed
-		} elsif ($args->{mapChanged}) {
-			debug "$self move - map change detected\n", "ai_move";
-			$self->dequeue;
-
-		# Stop if we've moved
-		} elsif ($args->{time_move} != $self->{time_move}) {
-			debug "$self move - moving\n", "ai_move";
-			$self->dequeue;
-
-		# Stop if we've timed out
-		} elsif (timeOut($args->{ai_move_giveup})) {
-			debug "$self move - timeout\n", "ai_move";
-			$self->dequeue;
-
-		} elsif (timeOut($self->{move_retry}, 0.5)) {
-			# No update yet, send move request again.
-			# We do this every 0.5 secs
-			$self->{move_retry} = time;
-			$self->sendMove(@{$args->{move_to}}{qw(x y)});
+sub processTask {
+	my $self = shift;
+	my $ai_name = shift;
+	if ($self->action eq $ai_name) {
+		my $task = $self->args;
+		if ($task->getStatus() == Task::INACTIVE) {
+			$task->activate();
+			should($task->getStatus(), Task::RUNNING) if DEBUG;
+		}
+		if (DEBUG && $task->getStatus() != Task::RUNNING) {
+			require Scalar::Util;
+			require Data::Dumper;
+			# Make sure redundant information is not included in the error report.
+			if ($task->isa('Task::MapRoute')) {
+				delete $task->{ST_subtask}{solution};
+			} elsif ($task->isa('Task::Route') && $task->{ST_subtask}) {
+				delete $task->{solution};
+			}
+			die "Task '" . $task->getName() . "' (class " . Scalar::Util::blessed($task) . ") has status " .
+				Task::_getStatusName($task->getStatus()) .
+				", but should be RUNNING. Object details:\n" .
+				Data::Dumper::Dumper($task);
+		}
+		$task->iterate();
+		if ($task->getStatus() == Task::DONE) {
+			# We can't just dequeue the last AI sequence. Perhaps the task
+			# pushed a new AI sequence on the AI stack just before finishing.
+			# For example, the Route task does that when it's stuck.
+			# So, we must dequeue the correct sequence without affecting the
+			# others.
+			my ($ai_seq, $ai_seq_args) = $self->isa('Actor::You') ? (\@AI::ai_seq, \@AI::ai_seq_args) : (@{$self}{qw(slave_ai_seq slave_ai_seq_args)});
+			for (my $i = 0; $i < @$ai_seq; $i++) {
+				if ($ai_seq->[$i] eq $ai_name) {
+					splice(@$ai_seq, $i, 1);
+					splice(@$ai_seq_args, $i, 1);
+					last;
+				}
+			}
+			my %args = @_;
+			my $error = $task->getError();
+			if ($error) {
+				if ($args{onError}) {
+					$args{onError}->($task, $error);
+				} else {
+					error("$error->{message}\n");
+				}
+			} elsif ($args{onSuccess}) {
+				$args{onSuccess}->($task);
+			}
 		}
 	}
 }
