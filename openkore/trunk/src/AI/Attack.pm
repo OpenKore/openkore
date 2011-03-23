@@ -512,7 +512,7 @@ sub main {
 		$char->move(@{$bestBlock}{qw(x y)}, $ID);
 
 	} elsif ($realMonsterDist > $args->{attackMethod}{maxDistance}
-	  && timeOut($args->{ai_attack_giveup}, 0.5)) {
+	  && !timeOut($args->{ai_attack_giveup})) {
 		# The target monster moved; move to target
 		$args->{move_start} = time;
 		$args->{monsterPos} = {%{$monsterPos}};
