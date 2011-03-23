@@ -517,6 +517,11 @@ sub attack {
 sub move {
 	my ($self, $x, $y, $attackID) = @_;
 	
+	unless (defined $x or defined $y) {
+		error "BUG: Actor::move(undef, undef) called!\n";
+		return;
+	}
+	
 	require Task::Move;
 	
 	$self->queue('move', my $task = new Task::Move(
