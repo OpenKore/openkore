@@ -542,9 +542,9 @@ sub new {
 		'0814' => ['buying_store_appear', 'V Z*', [qw(id name)]], #TODO: PACKET_ZC_BUYING_STORE_ENTRY
 		'081C' => ['buying_store_item_delete', 'v2 V', [qw(index amount zeny)]],
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
-		'0814' => ['buy_vender_found', 'a4 A80', [qw(venderID title)]],
-		'0816' => ['buy_vender_disappear', 'V', [qw(ID)]], #TODO: PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY
-		'0818' => ['buy_vender_items', 'v a4 a4', [qw(len venderID venderCID)]],
+		'0814' => ['buyer_found', 'a4 A80', [qw(ID title)]],
+		'0816' => ['buyer_lost', 'V', [qw(ID)]], #TODO: PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY
+		'0818' => ['buyer_items', 'v a4 a4', [qw(len venderID venderCID)]],
 		'084B' => ['item_appeared', 'a4 v2 C v2', [qw(ID nameID amount identified x y)]], # 19 TODO   provided by try71023
 		'0856' => ['actor_display', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
 		'0857' => ['actor_display', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 karma sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
@@ -7971,7 +7971,7 @@ sub special_item_obtain {
 }
 
 # TODO
-sub buy_vender_items
+sub buyer_items
 {
 	my($self, $args) = @_;
 
@@ -8028,13 +8028,24 @@ sub define_check {
 	#TODO
 }
 
-sub buy_vender_found {
+sub buyer_found {
     my($self, $args) = @_;
-    
-	Plugins::callHook('buy_vender_found', { 
-		venderID => $args->{venderID},
-		title => $args->{title},
-	});
+    my $ID = $args->{ID};
+	
+	if (!$buyerLists{$ID} || !%{$buyerLists{$ID}}) {
+		binAdd(\@buyerListsID, $ID);
+		Plugins::callHook('packet_buyer', {ID => $ID});
+	}
+	$buyerLists{$ID}{title} = bytesToString($args->{title});
+	$buyerLists{$ID}{id} = $ID;
+}
+
+sub buyer_lost {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	binRemove(\@buyerListsID, $ID);
+	delete $buyerLists{$ID};
 }
 
 1;
