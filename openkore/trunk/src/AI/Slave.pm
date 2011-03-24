@@ -542,7 +542,7 @@ sub processAttack {
 			$slave->move($bestBlock->{x}, $bestBlock->{y}, $ID);
 
 		} elsif (!$config{$slave->{configPrefix}.'runFromTarget'} && $monsterDist > $args->{attackMethod}{maxDistance}
-		  && timeOut($args->{ai_attack_giveup}, 0.5)) {
+		  && !timeOut($args->{ai_attack_giveup})) {
 			# The target monster moved; move to target
 			$args->{move_start} = time;
 			$args->{monsterPos} = {%{$monsterPos}};
