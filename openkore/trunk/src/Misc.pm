@@ -1001,9 +1001,14 @@ sub actorRemoved {
 		delete $hash->{$actor->{ID}};
 		objectRemoved($type, $actor->{ID}, $actor);
 
-		if ($type eq "player") {
+		if ($type eq "player" && $venderLists{ID}) {
 			binRemove(\@venderListsID, $actor->{ID});
 			delete $venderLists{$actor->{ID}};
+		}
+		
+		if ($type eq "player" && $buyerLists{ID}) {
+			binRemove(\@buyerListsID, $actor->{ID});
+			delete $buyerLists{$actor->{ID}};
 		}
 
 		assert(scalar(keys %{$hash}) == $source->size()) if DEBUG;

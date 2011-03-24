@@ -615,6 +615,10 @@ sub initMapChangeVars {
 	undef $venderCID;
 	undef @venderListsID;
 	undef %venderLists;
+	undef $buyerID;
+	undef $buyerCID;
+	undef @buyerListsID;
+	undef %buyerLists;
 	undef %incomingGuild;
 	undef @chatRoomsID;
 	undef %chatRooms;

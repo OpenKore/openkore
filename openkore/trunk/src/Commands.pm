@@ -67,6 +67,7 @@ sub initHandlers {
 	bangbang           => \&cmdBangBang,
 	bingbing           => \&cmdBingBing,
 	bg                 => \&cmdChat,
+	bl				   => \&cmdBuyerList,
 	buy                => \&cmdBuy,
 	c                  => \&cmdChat,
 	card               => \&cmdCard,
@@ -4989,6 +4990,22 @@ sub cmdVenderList {
 		message(sprintf(
 			"%3d %-36s (%3s, %3s) %-20s\n",
 			$i, $venderLists{$venderListsID[$i]}{'title'},
+			$player->{pos_to}{x} || '?', $player->{pos_to}{y} || '?', $player->name),
+			"list");
+	}
+	message("----------------------------------\n", "list");
+}
+
+sub cmdBuyerList {
+	message T("-----------Buyer List-----------\n" .
+		"#   Title                                Coords     Owner\n"), "list";
+	for (my $i = 0; $i < @buyerListsID; $i++) {
+		next if ($buyerListsID[$i] eq "");
+		my $player = Actor::get($buyerListsID[$i]);
+		# autovivifies $obj->{pos_to} but it doesnt matter
+		message(sprintf(
+			"%3d %-36s (%3s, %3s) %-20s\n",
+			$i, $buyerLists{$buyerListsID[$i]}{'title'},
 			$player->{pos_to}{x} || '?', $player->{pos_to}{y} || '?', $player->name),
 			"list");
 	}
