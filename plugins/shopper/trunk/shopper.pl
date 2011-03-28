@@ -79,7 +79,7 @@ sub storeList {
 			)
 		{
 			message "$name found!!! Buying it for $price (max price: $maxPrice).\n";
-			$messageSender->sendBuyVender($venderID, $number, $maxAmount);
+			$messageSender->sendBuyBulkVender($venderID, [{itemIndex => $number, amount => $maxAmount}], $venderCID);
 			configModify($prefix.$i."_disabled", 1);
 		}
 		$i++;
