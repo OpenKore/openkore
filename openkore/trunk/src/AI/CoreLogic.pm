@@ -1062,12 +1062,13 @@ sub processAutoStorage {
 			}
 
 			my $item = $char->inventory->getByName($config{"getAuto_$i"});
+			my $amount = $char->inventory->sumByName($config{"getAuto_$i"}); // total amount of the same name items
 			if ($config{"getAuto_${i}_minAmount"} ne "" &&
 			    $config{"getAuto_${i}_maxAmount"} ne "" &&
 			    !$config{"getAuto_${i}_passive"} &&
 			    (!$item ||
-				 ($item->{amount} <= $config{"getAuto_${i}_minAmount"} &&
-				  $item->{amount} < $config{"getAuto_${i}_maxAmount"})
+				 ($amount <= $config{"getAuto_${i}_minAmount"} &&
+				  $amount < $config{"getAuto_${i}_maxAmount"})
 			    )
 			) {
 				if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
@@ -1302,9 +1303,10 @@ sub processAutoStorage {
 						next;
 					}
 					my $invItem = $char->inventory->getByName($itemName);
+					my $amount = $char->inventory->sumByName($itemName); // total amount of the same name items
 					$item{name} = $itemName;
 					$item{inventory}{index} = $invItem ? $invItem->{invIndex} : undef;
-					$item{inventory}{amount} = $invItem ? $invItem->{amount} : 0;
+					$item{inventory}{amount} = $invItem ? $amount : 0;
 					$item{storage}{index} = findKeyString(\%storage, "name", $item{name});
 					$item{storage}{amount} = ($item{storage}{index} ne "")? $storage{$item{storage}{index}}{amount} : 0;
 					$item{max_amount} = $config{"getAuto_$args->{index}"."_maxAmount"};

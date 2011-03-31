@@ -349,4 +349,18 @@ sub onNameChange {
 	assert(0, 'This should never be reached.') if DEBUG;
 }
 
+// total amount of the same name items
+sub sumByName {
+	my ($self, $name) = @_;
+	assert(defined $name) if DEBUG;
+	my $sum = 0;
+	foreach my $item (@{$self->getItems()}) {
+		if ($item->{name} eq $name) {
+			$sum = $sum + $item->{amount};
+		}
+	}
+
+	return $sum;
+}
+
 1;
