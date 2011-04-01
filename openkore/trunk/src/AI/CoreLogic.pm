@@ -1062,7 +1062,7 @@ sub processAutoStorage {
 			}
 
 			my $item = $char->inventory->getByName($config{"getAuto_$i"});
-			my $amount = $char->inventory->sumByName($config{"getAuto_$i"}); // total amount of the same name items
+			my $amount = $char->inventory->sumByName($config{"getAuto_$i"}); # total amount of the same name items
 			if ($config{"getAuto_${i}_minAmount"} ne "" &&
 			    $config{"getAuto_${i}_maxAmount"} ne "" &&
 			    !$config{"getAuto_${i}_passive"} &&
@@ -1303,7 +1303,7 @@ sub processAutoStorage {
 						next;
 					}
 					my $invItem = $char->inventory->getByName($itemName);
-					my $amount = $char->inventory->sumByName($itemName); // total amount of the same name items
+					my $amount = $char->inventory->sumByName($itemName); # total amount of the same name items
 					$item{name} = $itemName;
 					$item{inventory}{index} = $invItem ? $invItem->{invIndex} : undef;
 					$item{inventory}{amount} = $invItem ? $amount : 0;
