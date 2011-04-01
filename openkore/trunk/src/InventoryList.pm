@@ -349,7 +349,7 @@ sub onNameChange {
 	assert(0, 'This should never be reached.') if DEBUG;
 }
 
-// total amount of the same name items
+# total amount of the same name items
 sub sumByName {
 	my ($self, $name) = @_;
 	assert(defined $name) if DEBUG;
