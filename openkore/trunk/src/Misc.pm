@@ -2085,7 +2085,7 @@ sub printItemDesc {
 	my $itemID = shift;
 	my $itemName = itemNameSimple($itemID);
 	my $description = $itemsDesc_lut{$itemID} || T("Error: No description available.\n");
-	message TF("===============Item Description===============\r\nItem: %s (ID: %s)\r\n\r\n", $itemName, $itemID), "info";
+	message TF("===============Item Description===============\nItem: %s (ID: %s)\n\n", $itemName, $itemID), "info";
 	message($description, "info");
 	message("==============================================\n", "info");
 }

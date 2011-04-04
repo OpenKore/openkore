@@ -385,7 +385,7 @@ sub main {
 		$char->sendMove(@{$realMyPos}{qw(x y)});
 		AI::dequeue;
 		if ($config{teleportAuto_dropTargetKS}) {
-			message T("Teleporting due to dropping attack target\n"), "teleport";
+			message T("Teleport due to dropping attack target\n"), "teleport";
 			useTeleport(1);
 		}
 
