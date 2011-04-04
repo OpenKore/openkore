@@ -2405,9 +2405,9 @@ sub deal_begin {
 	my ($self, $args) = @_;
 
 	if ($args->{type} == 0) {
-		error T("That person is too far from you to trade.\n");
+		error T("That person is too far from you to trade.\n"), "deal";
 	} elsif ($args->{type} == 2) {
-		error T("That person is in another deal.\n");
+		error T("That person is in another deal.\n"), "deal";
 	} elsif ($args->{type} == 3) {
 		if (%incomingDeal) {
 			$currentDeal{name} = $incomingDeal{name};
@@ -2425,8 +2425,10 @@ sub deal_begin {
 			undef %outgoingDeal;
 		}
 		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
+	} elsif ($args->{type} == 5) {
+		error T("That person is opening storage.\n"), "deal";
 	} else {
-		error TF("Deal request failed (unknown error %s).\n", $args->{type});
+		error TF("Deal request failed (unknown error %s).\n", $args->{type}), "deal";
 	}
 }
 
@@ -7268,7 +7270,7 @@ sub GM_silence {
 # TODO test if we must use ID to know if the packets are meant for us.
 sub taekwon_packets {
 	my ($self, $args) = @_;
-	my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
+	my $string = ($args->{value} == 1) ? T("Sun") : ($args->{value} == 2) ? T("Moon") : ($args->{value} == 3) ? T("Stars") : TF("Unknown (%d)", $args->{value});
 	if ($args->{flag} == 0) { # Info about Star Gladiator save map: Map registered
 		message TF("You have now marked: %s as Place of the %s.\n", bytesToString($args->{name}), $string), "info";
 	} elsif ($args->{flag} == 1) { # Info about Star Gladiator save map: Information

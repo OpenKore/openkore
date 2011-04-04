@@ -53,27 +53,27 @@ sub exp {
    $args->{percent} = $max ? $args->{val} / $max * 100 : 0;
    if ($args->{flag} == EXP_FROM_BATTLE) {
       if ($args->{type} == VAR_EXP) {
-         message TF("Base Exp gained: %d (%.2f%%)n", @{$args}{qw(val percent)}), 'exp2', 2;
+         message TF("Base Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
       } elsif ($args->{type} == VAR_JOBEXP) {
-         message TF("Job Exp gained: %d (%.2f%%)n", @{$args}{qw(val percent)}), 'exp2', 2;
+         message TF("Job Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
       } else {
-         message TF("Unknown (type=%d) Exp gained: %dn", @{$args}{qw(type val)}), 'exp2', 2;
+         message TF("Unknown (type=%d) Exp gained: %d\n", @{$args}{qw(type val)}), 'exp2', 2;
       }
    } elsif ($args->{flag} == EXP_FROM_QUEST) {
       if ($args->{type} == VAR_EXP) {
-         message TF("Base Quest Exp gained: %d (%.2f%%)n", @{$args}{qw(val percent)}), 'exp2', 2;
+         message TF("Base Quest Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
       } elsif ($args->{type} == VAR_JOBEXP) {
-         message TF("Job Quest Exp gained: %d (%.2f%%)n", @{$args}{qw(val percent)}), 'exp2', 2;
+         message TF("Job Quest Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
       } else {
-         message TF("Unknown (type=%d) Quest Exp gained: %dn", @{$args}{qw(type val)}), 'exp2', 2;
+         message TF("Unknown (type=%d) Quest Exp gained: %d\n", @{$args}{qw(type val)}), 'exp2', 2;
       }
    } else {
       if ($args->{type} == VAR_EXP) {
-         message TF("Base Unknown (flag=%d) Exp gained: %d (%.2f%%)n", @{$args}{qw(flag val percent)}), 'exp2', 2;
+         message TF("Base Unknown (flag=%d) Exp gained: %d (%.2f%%)\n", @{$args}{qw(flag val percent)}), 'exp2', 2;
       } elsif ($args->{type} == VAR_JOBEXP) {
-         message TF("Job Unknown (flag=%d) Exp gained: %d (%.2f%%)n", @{$args}{qw(flag val percent)}), 'exp2', 2;
+         message TF("Job Unknown (flag=%d) Exp gained: %d (%.2f%%)\n", @{$args}{qw(flag val percent)}), 'exp2', 2;
       } else {
-         message TF("Unknown (type=%d) Unknown (flag=%d) Exp gained: %dn", @{$args}{qw(type flag val)}), 'exp2', 2;
+         message TF("Unknown (type=%d) Unknown (flag=%d) Exp gained: %d\n", @{$args}{qw(type flag val)}), 'exp2', 2;
       }
    }
 }
