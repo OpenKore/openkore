@@ -56,7 +56,7 @@ sub onconfigModify {
 # onstart3
 sub onstart3 {
 	&checkConfig;
-	$cfID = Settings::addControlFile($macro_file,loader => [\&parseAndHook,\%macro]);
+	$cfID = Settings::addControlFile($macro_file,loader => [\&parseAndHook,\%macro], mustExist => 0);
 	Settings::loadByHandle($cfID);
 	
 	if (
