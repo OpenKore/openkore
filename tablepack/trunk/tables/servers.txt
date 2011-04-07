@@ -76,6 +76,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 addTableFolders idRO
 charBlockSize 112
 
+# Ymir
 [International - iRO: Chaos/Loki/Iris]
 ip 128.241.92.162
 port 6900
@@ -83,9 +84,6 @@ master_version 1
 version 18
 serverType iRO
 serverEncoding Western
-paddedPackets 0
-paddedPackets_attackID 0x72
-paddedPackets_skillUseID 0xF5
 patchserver ropatch1.gravityus.com
 patchpath /patch02
 addTableFolders iRO
@@ -103,18 +101,16 @@ paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
 addTableFolders iRO
 
+# Valkyrie - the same as Ymir
 [International - iRO: Valkyrie]
-ip 128.241.92.163
+ip 128.241.92.162
 port 6900
 master_version 1
 version 18
 serverType iRO
 serverEncoding Western
-paddedPackets 0
-paddedPackets_attackID 0x72
-paddedPackets_skillUseID 0xF5
 patchserver ropatch1.gravityus.com
-patchpath /fpatch
+patchpath /patch02
 addTableFolders iRO
 charBlockSize 112
 
