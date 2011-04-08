@@ -47,4 +47,14 @@ sub sendHomunculusMove {
 	$self->sendToServer($msg);
 	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
 }
+
+sub sendBuyBulkVender {
+	my ($self, $venderID, $r_array, $venderCID) = @_;
+	my $msg = pack('v2 a4 a4', 0x0801, 12+4*@{$r_array}, $venderID, $venderCID);
+	for (my $i = 0; $i < @{$r_array}; $i++) {
+		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemIndex});
+		debug "Sent bulk buy vender: $r_array->[$i]{itemIndex} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
+	}
+	$self->sendToServer($msg);
+}
 1;
