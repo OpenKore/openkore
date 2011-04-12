@@ -2310,6 +2310,9 @@ sub processAutoSkillUse {
 			$char->{encoreSkill}->getHandle() eq $self_skill{ID}) {
 			# Use Encore skill instead if applicable
 			$self_skill{ID} = 'BD_ENCORE';
+			$self_skill{skillObject} = Skill->new(auto => 'BD_ENCORE');
+			$self_skill{owner} = $self_skill{skillObject}->getOwner();
+			$self_skill{lvl} = $char->getSkillLevel($self_skill{skillObject});
 		}
 		if ($self_skill{ID}) {
 			debug qq~Auto-skill on self: $config{$self_skill{prefix}} (lvl $self_skill{lvl})\n~, "ai";
