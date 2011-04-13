@@ -517,7 +517,8 @@ sub attack {
 sub move {
 	my ($self, $x, $y, $attackID) = @_;
 	
-	unless (defined $x or defined $y) {
+	unless ($x and $y) {
+		# that happens when called from AI::CoreLogic::processFollow
 		error "BUG: Actor::move(undef, undef) called!\n";
 		return;
 	}
