@@ -1,4 +1,4 @@
-NV_BASIC#基本技能#
+﻿NV_BASIC#基本技能#
 SM_SWORD#單手劍使用熟練度#
 SM_TWOHAND#雙手劍使用熟練度#
 SM_RECOVERY#快速回復#
@@ -840,7 +840,7 @@ GN_DEMONIC_FIRE#惡魔火焰#
 GN_FIRE_EXPANSION#火焰擴散#
 GN_HELLS_PLANT#地獄植物#
 GN_MANDRAGORA#曼陀羅魔花的尖叫#
-GN_SLINGITEM#曼陀羅魔花的尖叫#
+GN_SLINGITEM#道具投擲#
 GN_CHANGEMATERIAL#素材變化#
 GN_MIX_COOKING#調配料理#
 GN_MAKEBOMB#炸彈製造#
