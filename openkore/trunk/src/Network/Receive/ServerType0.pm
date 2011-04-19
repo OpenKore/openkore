@@ -5023,8 +5023,8 @@ sub public_chat {
 	my ($chatMsgUser, $chatMsg); # Type: String
 	my ($actor, $dist);
 
-	if ($message =~ /:/) {
-		($chatMsgUser, $chatMsg) = split /:/, $message, 2;
+	if ($message =~ / : /) {
+		($chatMsgUser, $chatMsg) = split / : /, $message, 2;
 		$chatMsgUser =~ s/ $//;
 		$chatMsg =~ s/^ //;
 		stripLanguageCode(\$chatMsg);

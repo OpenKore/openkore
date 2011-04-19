@@ -408,7 +408,7 @@ sub sendEquip {
 # Reject:0/Accept:1
 sub sendFriendListReply {
 	my ($self, $accountID, $charID, $flag) = @_;
-	my $msg = pack('v a4 a4 C', 0x0208, $accountID, $charID, $flag);
+	my $msg = pack('v a4 a4 a3', 0x0208, $accountID, $charID, $flag);
 	$self->sendToServer($msg);
 	debug "Sent Reject friend request\n", "sendPacket";
 }
