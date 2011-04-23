@@ -3272,6 +3272,18 @@ sub cmdParty {
 	} elsif ($arg1 eq "kick") {
 		$messageSender->sendPartyKick($partyUsersID[$arg2]
 				,$char->{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
+				
+	} elsif ($arg1 eq "leader" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
+		error T("Error in function 'party leader' (Change Party Leader)\n" .
+			"Can't change party leader - you're not in a party.\n");	
+	} elsif ($arg1 eq "leader" && ($arg2 eq "" || $arg2 !~ /\d/)) {
+		error T("Syntax Error in function 'party leader' (Change Party Leader)\n" . 
+			"Usage: party leader <party member #>\n");			
+		} elsif ($arg1 eq "leader" && $partyUsersID[$arg2] eq "") {
+		error TF("Error in function 'party leader' (Change Party Leader)\n" .
+			"Can't change party leader - member %s doesn't exist.\n", $arg2);
+	} elsif ($arg1 eq "leader") {
+		$messageSender->sendPartyLeader($partyUsersID[$arg2]);
 	} else {
 		error T("Syntax Error in function 'party' (Party Management)\n" .
 			"Usage: party [<create|join|request|leave|share|kick>]\n");
@@ -3782,7 +3794,7 @@ sub cmdReloadCode {
 sub cmdReloadCode2 {
 	my (undef, $args) = @_;
 	if ($args ne "") {
-		Modules::addToReloadQueue2($args);
+		($args =~ /\.pm$/)?Modules::addToReloadQueue2($args):Modules::addToReloadQueue2($args.".pm");
 	} else {
 		Modules::reloadFile("$FindBin::RealBin/src/functions.pl");
 	}
