@@ -4695,6 +4695,19 @@ sub party_exp {
 	}
 }
 
+sub party_leader {
+	my ($self, $args) = @_;
+	for (my $i = 0; $i < @partyUsersID; $i++) {
+		if (unpack("V",$partyUsersID[$i]) eq $args->{new}) {
+			$char->{party}{users}{$partyUsersID[$i]}{admin} = 1;
+			message T("New party leader: $char->{party}{users}{$partyUsersID[$i]}{name}\n"), "party", 1;
+		}
+		if (unpack("V",$partyUsersID[$i]) eq $args->{old}) {
+			$char->{party}{users}{$partyUsersID[$i]}{admin} = '';
+		}
+	}
+}
+
 sub party_hp_info {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
