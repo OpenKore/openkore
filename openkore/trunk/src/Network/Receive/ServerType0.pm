@@ -1187,7 +1187,9 @@ sub actor_died_or_disappeared {
 		$char->{deathCount}++;
 		$char->{dead} = 1;
 		$char->{dead_time} = time;
-
+		if($char->{equipment}{arrow}{type}==19){
+			delete $char->{equipment}{arrow};
+		}
 	} elsif (defined $monstersList->getByID($ID)) {
 		my $monster = $monstersList->getByID($ID);
 		if ($args->{type} == 0) {
