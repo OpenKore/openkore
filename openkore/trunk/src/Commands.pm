@@ -1560,7 +1560,7 @@ sub cmdEquip_list {
 	for my $slot (@Actor::Item::slots) {
 		my $item = $char->{equipment}{$slot};
 		my $name = $item ? $item->nameString : '-';
-		message sprintf("%-15s: %s\n", $slot, $name), "list";
+		($item->{type} == 19)?message sprintf("%-15s: %s x %s\n", $slot, $name, $item->{amount}), "list":message sprintf("%-15s: %s\n", $slot, $name), "list";
 	}
 }
 
@@ -5490,4 +5490,4 @@ sub cmdAnswerCaptcha {
 	$messageSender->sendCaptchaAnswer($_[1]);
 }
 
-return 1;
+1;
