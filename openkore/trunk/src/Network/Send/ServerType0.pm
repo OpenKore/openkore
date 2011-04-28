@@ -1719,4 +1719,11 @@ sub sendEnteringBuyVender {
 	debug "Sent Entering Buy Vender: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
+sub sendProgress {
+	my ($self) = @_;
+	my $msg = pack("C*", 0xf1, 0x02);
+	$self->sendToServer($msg);
+	debug "Sent Progress Bar Finish\n", "sendPacket", 2;
+}
+
 1;

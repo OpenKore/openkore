@@ -26,7 +26,9 @@ use Utils qw(makeCoordsDir makeCoordsXY makeCoordsFromTo);
 
 
 # from old receive.pm
-use Time::HiRes qw(time usleep);
+use Task::Wait;
+use Task::function;
+use Task::Chained;
 use encoding 'utf8';
 use Carp::Assert;
 use Scalar::Util;
@@ -8017,6 +8019,13 @@ sub buyer_items
 sub progress_bar {
 	my($self, $args) = @_;
 	message TF("Progress bar loading (time: %d).\n", $args->{time}), 'info';
+	$taskManager->add(
+		new Task::Chained(tasks => [new Task::Wait(seconds => $args->{time}),
+		new Task::Function(function => sub {
+			 $messageSender->sendProgress();
+			 message TF("Progress bar finished.\n"), 'info';
+			 $_[0]->setDone;
+		})]));
 }
 
 sub progress_bar_stop {
