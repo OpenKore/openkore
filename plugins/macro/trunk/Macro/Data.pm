@@ -75,6 +75,7 @@ our $macroKeywords =
 	"npc"          . "|" .
 	"store"        . "|" .
 	"player"       . "|" .
+	"monster"      . "|" .
 	"venderitem"   . "|" .
 	"venderprice"  . "|" .
 	"venderamount" . "|" .

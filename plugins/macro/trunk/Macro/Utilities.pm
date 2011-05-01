@@ -6,7 +6,7 @@ use strict;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(ai_isIdle q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
-	getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
+	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
 	getWord callMacro getArgFromList getListLenght sameParty);
 
@@ -262,6 +262,14 @@ sub getnpcID {
 sub getPlayerID {
 	foreach my $pl (@{$playersList->getItems()}) {
 		return $pl->{binID} if $pl->name eq $_[0]
+	}
+	return -1
+}
+
+# get monster array index
+sub getMonsterID {
+	foreach my $ml (@{$monstersList->getItems()}) {
+		return $ml->{binID} if ($ml->name eq $_[0] || $ml->{binType} eq $_[0]);
 	}
 	return -1
 }

@@ -16,7 +16,7 @@ use Log qw(message warning error);
 use Text::Balanced qw/extract_bracketed/;
 use Macro::Data;
 use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
-	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
+	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght);
 
 our ($rev) = q$Revision: 6759 $ =~ /(\d+)/;
@@ -277,6 +277,7 @@ sub parseCmd {
 		elsif ($kw eq 'storage')    {($ret) = getStorageIDs($arg)}
 		elsif ($kw eq 'Storage')    {$ret = join ',', getStorageIDs($arg)}
 		elsif ($kw eq 'player')     {$ret = getPlayerID($arg)}
+		elsif ($kw eq 'monster')    {$ret = getMonsterID($arg)}
 		elsif ($kw eq 'vender')     {$ret = getVenderID($arg)}
 		elsif ($kw eq 'venderitem') {($ret) = getItemIDs($arg, \@::venderItemList)}
 		elsif ($kw eq 'venderItem') {$ret = join ',', getItemIDs($arg, \@::venderItemList)}
