@@ -2816,6 +2816,10 @@ sub emoticon {
 		message TF("[dist=%s] %s: %s\n", $dist, $actor->nameIdx, $emotion), "emotion";
 		chatLog("e", "$name".": $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
 	}
+	Plugins::callHook('packet_emotion', {
+		emotion => $emotion,
+		ID => $args->{ID}
+	});
 }
 
 sub equip_item {
