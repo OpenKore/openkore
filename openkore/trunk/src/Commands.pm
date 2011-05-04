@@ -5045,7 +5045,7 @@ sub cmdWarp {
 
 	if ($map eq '') {
 		error T("Error in function 'warp' (Open/List Warp Portal)\n" .
-			"Usage: warp <map name | map number# | list>\n");
+			"Usage: warp <map name | map number# | list | cancel>\n");
 
 	} elsif ($map =~ /^\d+$/) {
 		if (!$char->{warp}{memo} || !@{$char->{warp}{memo}}) {
@@ -5080,6 +5080,10 @@ sub cmdWarp {
 		}
 		message("--------------------------------------------------\n", "list");
 
+	} elsif ($map eq 'cancel') {
+		message T("Attempting to cancel the warp portal\n"), 'info';
+		$messageSender->sendWarpTele(27, 'cancel');
+		
 	} elsif (!defined $maps_lut{$map.'.rsw'}) {
 		error TF("Map '%s' does not exist.\n", $map);
 
