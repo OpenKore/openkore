@@ -116,10 +116,7 @@ sub checkPersonGuild {
 	my ($guild, $trigger, $arg) = @_;
 	return 0 if !defined $guild || !defined $trigger || !defined $arg;
 	
-	my $actor;
-	
-	if ($trigger eq 'charNameUpdate') {$actor = $arg}
-	else {$actor = $arg->{player}}
+	my $actor = $arg->{player};
 	
 	return 0 unless defined $actor->{guild};
 	my $guildName = $actor->{guild}{name};

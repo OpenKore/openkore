@@ -504,8 +504,8 @@ sub charNameUpdate{
 #	$dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
 	my $datum	= strftime("%d.%m.%Y %T", localtime(time));
 
-	my $shopOwnerID = unpack("L1",$player->{ID});
-	my $shopOwner = $player->{name};
+	my $shopOwnerID = unpack("L1",$player->{player}{ID});
+	my $shopOwner = $player->{player}{name};
 	$shopOwner =~ s/\\/\\\\/g;
 	$shopOwner =~ s/'/\\'/g;
 
