@@ -1742,7 +1742,7 @@ sub actor_info {
 		$player->setName(bytesToString($args->{name}));
 		message "Player Info: " . $player->nameIdx . "\n", "parseMsg_presence", 2;
 		updatePlayerNameCache($player);
-		Plugins::callHook('charNameUpdate', $player);
+		Plugins::callHook('charNameUpdate', {player => $player});
 	}
 
 	my $monster = $monstersList->getByID($args->{ID});
@@ -1843,7 +1843,7 @@ sub actor_name_received {
 		$player->{guild}{title} = bytesToString($args->{guildTitle});
 		updatePlayerNameCache($player);
 		debug "Player Info: $player->{name} ($player->{binID})\n", "parseMsg_presence", 2;
-		Plugins::callHook('charNameUpdate', $player);
+		Plugins::callHook('charNameUpdate', {player => $player});
 	} else {
 		debug "Player Info for " . unpack("V", $args->{ID}) .
 			" (not on screen): " . bytesToString($args->{name}) . "\n",
