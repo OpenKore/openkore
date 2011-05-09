@@ -1,4 +1,4 @@
-########################################################
+﻿########################################################
 # This plugin is licensed under the GNU GPL            #
 # Copyright 2005 by isieo                              #
 # contact : - isieo <AT> *NOSPAM* G*MAIL <DOT> COM     #
@@ -25,29 +25,30 @@ Plugins::register("prec", "playerRecord", \&on_unload, \&on_reload);
 my $hook = Plugins::addHook('charNameUpdate', \&write_player, undef);
 
 sub on_unload {
-   Plugins::delHook("charNameUpdate", $hook);
+	Plugins::delHook("charNameUpdate", $hook);
 }
-
+sub on_reload {
+	message "playerRecord plugin reloading, ";
+	Plugins::delHook("charNameUpdate", $hook);
+}
 sub write_player {
-   my $hookname = shift;
-   my $args = shift;
-   my $targetId = unpack("V1",$args->{ID});
-   my $targetName = $args->{name};
-   my $aYou = Actor::get($accountID);
-   my $selfName = $char->name();
-   my $file = "$Settings::logs_folder/players_$selfName.txt";
+	my (undef, $args) = @_;
+	my $targetId = $args->{player}{nameID};
+	my $targetName = $args->{player}{name};
+	my $aYou = Actor::get($accountID);
+	my $selfName = $char->name();
+	my $file = '$Settings::logs_folder/players_$selfName.txt';
 
-   my ($uId, $name);
-   my $exist=0;
-   my $line;
+	my ($uId, $name);
+	my $exist=0;
+	my $line;
 
-   message "Player Exists: $targetName ($targetId)\n";
+	message "Player Exists: $targetName ($targetId)\n";
 
-   open FILE, ">>:utf8", $file;
-   my $time=localtime time;
-   print FILE "[$time] " . $field->baseName . "\t$targetId $targetName\n";
-   close FILE;
+	open FILE, ">>:utf8", $file;
+	my $time=localtime time;
+	print FILE "[$time] " . $field->baseName . "\t$targetId $targetName\n";
+	close FILE;
 }
 
 1;
-

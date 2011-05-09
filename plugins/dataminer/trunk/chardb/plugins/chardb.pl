@@ -57,7 +57,7 @@ my $mapTimeout=60*60*3;
 
 Plugins::register("prec", "playerRecordSQL", \&on_unload, \&on_reload);
 my $hooks = Plugins::addHooks(
-        ['charNameUpdate', \&write_player],
+	['charNameUpdate', \&write_player],
 );
 my $datadir = $Plugins::current_plugin_folder;
 
@@ -75,49 +75,48 @@ my $dbh;
 $dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
 
 sub on_unload {
-        # This plugin is about to be unloaded; remove hooks
-        Plugins::delHook("charNameUpdate", $hooks);
+	# This plugin is about to be unloaded; remove hooks
+	Plugins::delHook("charNameUpdate", $hooks);
 }
 
 sub on_reload {
 }
 
 sub write_player {
-        my $hookname = shift;
-        my $args = shift;
-		my $myId = unpack("V1",$char->{ID});
-        my $targetId = unpack("V1",$args->{ID});
-        my $targetName = quotemeta $args->{name};
-		my $targetParty = quotemeta $args->{party}{name};
-		my $targetGuild = quotemeta $args->{guild}{name};
-		my $targetGuildPos = quotemeta $args->{guild}{title};
-		my $targetPosX = $args->position()->{x};
-		my $targetPosY = $args->position()->{y};
-		my $targetMap = $field{name};
-		my $targetLevel = $args->{lv};
-		my $targetSex =$sex_lut{$args->{sex}};
-		my $targetClass =$jobs_lut{$args->{jobID}};
-		
-		my $acacid = checkAccount ($targetId);
-		return if(isTooEarly($acacid, $targetName, $targetMap));
+	my (undef, $args) = @_;
+	my $myId = unpack("V1",$char->{ID});
+	my $targetId = unpack("V1",$args->{player}{ID});
+	my $targetName = quotemeta $args->{player}{name};
+	my $targetParty = quotemeta $args->{player}{party}{name};
+	my $targetGuild = quotemeta $args->{player}{guild}{name};
+	my $targetGuildPos = quotemeta $args->{player}{guild}{title};
+	my $targetPosX = $args->{player}position()->{x};
+	my $targetPosY = $args->{player}position()->{y};
+	my $targetMap = $field->{baseName};
+	my $targetLevel = $args->{player}{lv};
+	my $targetSex =$sex_lut{$args->{player}{sex}};
+	my $targetClass =$jobs_lut{$args->{player}{jobID}};
 
-		print "[PlayerRecordSQL] " . $targetId . " - |" . $targetClass . "| " . $targetName . " (" . $targetParty . 
-			") [" . $targetGuild . " | " . $targetGuildPos . "] " . $targetPosX . "/" . $targetPosY . " - " . $targetMap . "\n";
+	my $acacid = checkAccount ($targetId);
+	return if(isTooEarly($acacid, $targetName, $targetMap));
 
-#		print "PLAYERRECORDSQL: " . $targetId . " Level: " . $targetLevel . "Name: " . $targetName . " PartyName: " . $targetParty . 
-#			" Guild: " . $targetGuild . " Position: " . $targetGuildPos . " Pos: " . $targetPosX . "/" . $targetPosY . " Map: " . $targetMap . 
-#			" Sex: " . $targetSex . " Class: " .$targetClass . " MyID: " . $myId . "\n";
-		
-		my $chchid = checkChar ($acacid, $targetName, $targetLevel, $targetSex, $targetClass);
-		my $papaid = checkParty ($chchid, $targetParty);
-		my $gigiid = checkGuild ($chchid, $targetGuild);
-		checkGuildPos($chchid, $gigiid, $targetGuildPos);
-		insSeen($chchid, $gigiid, $papaid, $targetLevel, $targetMap, $targetPosX, $targetPosY, $myId);
+	print "[PlayerRecordSQL] " . $targetId . " - |" . $targetClass . "| " . $targetName . " (" . $targetParty . 
+		") [" . $targetGuild . " | " . $targetGuildPos . "] " . $targetPosX . "/" . $targetPosY . " - " . $targetMap . "\n";
+
+#	print "PLAYERRECORDSQL: " . $targetId . " Level: " . $targetLevel . "Name: " . $targetName . " PartyName: " . $targetParty . 
+#		" Guild: " . $targetGuild . " Position: " . $targetGuildPos . " Pos: " . $targetPosX . "/" . $targetPosY . " Map: " . $targetMap . 
+#		" Sex: " . $targetSex . " Class: " .$targetClass . " MyID: " . $myId . "\n";
+
+	my $chchid = checkChar ($acacid, $targetName, $targetLevel, $targetSex, $targetClass);
+	my $papaid = checkParty ($chchid, $targetParty);
+	my $gigiid = checkGuild ($chchid, $targetGuild);
+	checkGuildPos($chchid, $gigiid, $targetGuildPos);
+	insSeen($chchid, $gigiid, $papaid, $targetLevel, $targetMap, $targetPosX, $targetPosY, $myId);
 }
 
 sub isTooEarly{
 	my($acacid, $targetName, $targetMap)=@_;
-	
+
 	my $qrSelect="select chchid from chars where chacid = $acacid and chname = '$targetName' and unix_timestamp(now()) < unix_timestamp(chtimestamp)+$checkTimeout";
 	my $sth = $dbh->prepare($qrSelect);
 	$sth->execute or die "\n" . $qrSelect . "\n" . $dbh->errstr . "\n";
@@ -128,19 +127,19 @@ sub isTooEarly{
 	$sth = $dbh->prepare($qrChid);
 	$sth->execute or die "\n" . $qrChid . "\n" . $dbh->errstr . "\n";
 	$rv = $sth->rows;
-	
+
 	return 0 if(!$rv);
-	
+
 	my @row = $sth->fetchrow_array;
 	my $chchid=@row[0];
-	
+
 	return 0 if($chchid=="");
-	
+
 	my $qrLastMap="select seseid from seen where sechid = $chchid and semap = '$targetMap' and unix_timestamp(now()) < unix_timestamp(setimestamp)+$mapTimeout";
 	$sth = $dbh->prepare($qrLastMap);
 	$sth->execute or die "\n" . $qrLastMap . "\n" . $dbh->errstr . "\n";
 	$rv = $sth->rows;
-	
+
 	return 1 if($rv);
 	return 0;
 }
@@ -170,7 +169,7 @@ sub checkAccount {
 		@row = $sth->fetchrow_array;
 		$ret=@row[0];
 	}
-	
+
 	return $ret;
 }
 
@@ -189,14 +188,14 @@ sub checkChar {
 	my $sth = $dbh->prepare($qrSelect);
 	$sth->execute or die "\n" . $qrSelect . "\n" . $dbh->errstr . "\n";
 	my $rv = $sth->rows;
-	
+
 	if ($rv){
 		@row = $sth->fetchrow_array; 
 		$ret=@row[0];
 		my $qrUpdTimestamp="update chars set chtimestamp=NULL where chchid = $ret";
 		$sth=$dbh->prepare($qrUpdTimestamp);
 		$sth->execute or die "\n" . $qrUpdTimestamp . "\n" . $dbh->errstr . "\n";
-	}else{
+	} else {
 		my $qrInsert="insert into chars(chacid, chname, chlevel, chsex, chclass) values ($acacid, '$targetName', '$targetLevel', '$targetSex', '$targetClass')";
 		my $sth = $dbh->prepare($qrInsert);
 		$sth->execute or die "\n" . $qrInsert . "\n" . $dbh->errstr . "\n";	
@@ -206,7 +205,6 @@ sub checkChar {
 		@row = $sth->fetchrow_array;
 		$ret=@row[0];
 	}
-	
 	return $ret;
 }
 sub checkParty {
@@ -221,11 +219,11 @@ sub checkParty {
 	my $sth = $dbh->prepare($qrSelect);
 	$sth->execute or die "\n" . $qrSelect . "\n" . $dbh->errstr . "\n";
 	my $rv = $sth->rows;
-	
+
 	if ($rv){
 		@row = $sth->fetchrow_array;
 		$ret=@row[0];
-	}else{
+	} else {
 		my $qrInsert="insert into party(pachid, paname) values ($chchid, '$targetParty')";
 		my $sth = $dbh->prepare($qrInsert);
 		$sth->execute or die "\n" . $qrInsert . "\n" . $dbh->errstr . "\n";	
@@ -235,7 +233,6 @@ sub checkParty {
 		@row = $sth->fetchrow_array;
 		$ret=@row[0];
 	}
-	
 	return $ret;
 }
 
@@ -251,11 +248,11 @@ sub checkGuild {
 	my $sth = $dbh->prepare($qrSelect);
 	$sth->execute or die "\n" . $qrSelect . "\n" . $dbh->errstr . "\n";
 	my $rv = $sth->rows;
-	
+
 	if ($rv){
 		@row = $sth->fetchrow_array; 
 		$ret=@row[0];
-	}else{
+	} else {
 		my $qrInsert="insert into guild(giname) values ('$targetGuild')";
 		my $sth = $dbh->prepare($qrInsert);
 		$sth->execute or die "\n" . $qrInsert . "\n" . $dbh->errstr . "\n";	
@@ -265,12 +262,12 @@ sub checkGuild {
 		@row = $sth->fetchrow_array;
 		$ret=@row[0];
 	}
-	
+
 	my $qrSelect="select c2gchid from char2guild where c2gchid = $chchid and c2ggiid = $ret";
 	my $sth = $dbh->prepare($qrSelect);
 	$sth->execute or die "\n" . $qrSelect . "\n" . $dbh->errstr . "\n";
 	my $rv = $sth->rows;
-	
+
 	if ($rv){
 	}else{
 		my $qrInsert="insert into char2guild(c2gchid, c2ggiid) values ($chchid, $ret)";
@@ -280,7 +277,6 @@ sub checkGuild {
 		$sth = $dbh->prepare($qrSelect);
 		$sth->execute or die "\n" . $qrSelect . "\n" . $dbh->errstr . "\n";
 	}
-
 	return $ret;
 }
 
@@ -297,9 +293,9 @@ sub checkGuildPos{
 	my $sth = $dbh->prepare($qrSelect);
 	$sth->execute or die "\n" . $qrSelect . "\n" . $dbh->errstr . "\n";
 	my $rv = $sth->rows;
-	
+
 	if ($rv){
-	}else{
+	} else {
 		my $qrInsert="insert into guildpos(gpposition, gpchid, gpgiid) values ('$targetGuildPos', $chchid, $gigiid)";
 		my $sth = $dbh->prepare($qrInsert);
 		$sth->execute or die "\n" . $qrInsert . "\n" . $dbh->errstr . "\n";	
@@ -314,7 +310,7 @@ sub insSeen{
 	$gigiid="-1" if($gigiid=="");
 	return if $papaid=="-1";
 	$papaid="-1" if($papaid=="");
-	
+
 	my $qrInsert="insert into seen(sechid, segiid, sepaid, semap, seposx, seposy, selevel, seseenbyacid) " .
 		"values ($chchid, $gigiid, $papaid, '$targetMap', $targetPosX, $targetPosY, $targetLevel, $myId)";
 
@@ -322,5 +318,5 @@ sub insSeen{
 	$sth->execute or die "\n" . $qrInsert . "\n" . $dbh->errstr . "\n";
 	my $rv = $sth->rows;	
 }
-		
+
 1;
