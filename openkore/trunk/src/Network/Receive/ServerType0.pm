@@ -502,7 +502,7 @@ sub new {
 		'043E' => ['skill_post_delaylist', 'v2 V', [qw(len id time)]],
 		# status timers (eA has 12 unknown bytes)
 		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]],
-		'0440' => ['millenium shield', 'a4 v2', [qw(ID num state)]], #TODO: PACKET_ZC_MILLENNIUMSHIELD
+		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]], #TODO: PACKET_ZC_MILLENNIUMSHIELD
 		'0441' => ['skill_delete', 'v', [qw(ID)]], #TODO: PACKET_ZC_SKILLINFO_DELETE
 		'0442' => ['sage_autospell', 'v V a*', [qw(len why skills_list)]],
 		'0444' => ['cash_item_list', 'v V3 c v', [qw(len cash_point price discount_price type item_id)]], #TODO: PACKET_ZC_SIMPLE_CASH_POINT_ITEMLIST
@@ -8079,6 +8079,38 @@ sub buyer_lost {
 	my $ID = $args->{ID};
 	binRemove(\@buyerListsID, $ID);
 	delete $buyerLists{$ID};
+}
+
+sub battlefield_position {
+	my ($self, $args) = @_;
+	
+	my $ID = $args->{ID};
+	my $name = $args->{name};
+}
+
+sub battlefield_hp {
+	my ($self, $args) = @_;
+	
+	my $ID = $args->{ID};
+	my $name = $args->{name};
+	
+}
+
+sub guild_member_map_change {
+	my ($self, $args) = @_;
+	debug("AID: %d (GID: %d) changed map to %s\n",$args->{AID}, $args->{GDID}, $args->{mapName});
+}
+
+sub guild_member_add {
+	my ($self, $args) = @_;
+	
+	my $name = byteToString($args->{name});
+	message TF("Guild member added: %s\n"), "guildchat";
+}
+
+sub millenium_shield {
+	my ($self, $args) = @_;
+	#useless to openkore
 }
 
 1;
