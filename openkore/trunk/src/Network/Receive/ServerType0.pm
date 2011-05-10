@@ -8104,8 +8104,8 @@ sub guild_member_map_change {
 sub guild_member_add {
 	my ($self, $args) = @_;
 	
-	my $name = byteToString($args->{name});
-	message TF("Guild member added: %s\n"), "guildchat";
+	my $name = bytesToString($args->{name});
+	message TF("Guild member added: %s\n",$name), "guildchat";
 }
 
 sub millenium_shield {
