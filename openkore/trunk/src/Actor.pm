@@ -413,11 +413,26 @@ sub setStatus {
 	if ($flag) {
 		# Skill activated
 		$again = $self->{statuses}{$handle} ? 'again' : 'now';
-		$self->{statuses}{$handle} = 1;
+		$self->{statuses}{$handle} = {};
+		
+		if ($tick) {
+			# FIXME: is it right to do this with tasks and task manager?
+			# maybe something more dedicated for scheduling stuff
+			Scalar::Util::weaken(my $weak = $self);
+			my $handle_ref = "$self->{statuses}{$handle}";
+			
+			$taskManager->add(my $task = Task::Chained->new(tasks => [
+				Task::Wait->new(seconds => $tick/1000),
+				Task::Function->new(function => sub {
+					$weak->setStatus($handle, 0) if $weak && "$weak->{statuses}{$handle}" eq $handle_ref;
+					$_[0]->setDone;
+				}),
+			]));
+		}
 		
 		if ($char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name}) {
 			$again = 'again' if $char->{party}{users}{$self->{ID}}{statuses}{$handle};
-			$char->{party}{users}{$self->{ID}}{statuses}{$handle} = 1;
+			$char->{party}{users}{$self->{ID}}{statuses}{$handle} = {};
 		}
 	} else {
 		# Skill de-activated (expired)
