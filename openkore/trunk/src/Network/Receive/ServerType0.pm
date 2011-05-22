@@ -27,7 +27,7 @@ use Utils qw(makeCoordsDir makeCoordsXY makeCoordsFromTo);
 
 # from old receive.pm
 use Task::Wait;
-use Task::function;
+use Task::Function;
 use Task::Chained;
 use encoding 'utf8';
 use Carp::Assert;
