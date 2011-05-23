@@ -43,6 +43,9 @@ use Misc;
 use Task;
 use Translation qw(T TF);
 use Actor::Unknown;
+use Task::Chained;
+use Task::Function;
+use Task::Wait;
 
 # Make it so that
 #     print $actor;
