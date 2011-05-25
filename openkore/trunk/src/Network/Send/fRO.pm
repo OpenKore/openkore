@@ -17,55 +17,7 @@ use strict;
 
 use base 'Network::Send::ServerType0';
 
-use Log qw(message warning error debug);
-use Utils::Rijndael;
-use Globals qw($masterServer);
-
-sub new {
-   my ($class) = @_;
-   return $class->SUPER::new(@_);
-}
-
-sub version {
-	return $masterServer->{version} || 1;
-}
-
-# 0x0204,18
-sub sendClientMD5Hash {
-	my ($self) = @_;
-	my $msg = pack('v H32', 0x0204, $masterServer->{clientHash});
-	$self->sendToServer($msg);
-}
-
-# 0x02b0,85
-sub sendMasterLogin {
-	my ($self, $username, $password, $master_version, $version) = @_;
-	# Little Hack by 'Technology'
-	$self->sendClientMD5Hash() if ($masterServer->{clientHash} != '');
-	my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
-	my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
-	my $in = pack('a24', $password);
-	my $rijndael = Utils::Rijndael->new();
-	$rijndael->MakeKey($key, $chain, 24, 24);
-	$password = $rijndael->Encrypt($in, undef, 24, 0);
-	# To get out local IP of our connection we need: $self->{net}->{remote_socket}->sockhost();
-	my $ip = "3139322e3136382e322e3400685f4c40";
-	# To get the MAC we need to use Net::ARPing or Net::Address::Ethernet or even Net::Ifconfig::Wrapper, that are not bundeled in Win Distro.
-	my $mac = "31313131313131313131313100";				# May-be Get it from Network Connection?
-	my $isGravityID = 0;
-	my $msg = pack('v V a24 a24 C H32 H26 C', 0x02B0, version(), $username, $password, $master_version, $ip, $mac, $isGravityID);
-	$self->sendToServer($msg);
-}
-
-# Copy from Network::Send::kRO::RagexeRE_2009_12_08a::sendBuyBulkVender
-sub sendBuyBulkVender {
-	my ($self, $venderID, $r_array, $venderCID) = @_;
-	my $msg = pack('v2 a4 a4', 0x0801, 12+4*@{$r_array}, $venderID, $venderCID); # TODO: is it the vender's charID?
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemIndex});
-		debug "Sent bulk buy vender: $r_array->[$i]{itemIndex} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
-	}
-	$self->sendToServer($msg);
-}
+*sendMasterLogin = *Network::Send::ServerType0::sendMasterHANLogin;
+*sendBuyBulkVender = *Network::Send::ServerType0::sendBuyBulkVender2;
 
 1;

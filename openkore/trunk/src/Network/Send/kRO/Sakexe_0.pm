@@ -19,6 +19,7 @@ package Network::Send::kRO::Sakexe_0;
 
 use strict;
 use base qw(Network::Send::kRO);
+use Network::Send::ServerType0;
 
 use Log qw(message warning error debug);
 use I18N qw(stringToBytes);
@@ -1597,11 +1598,7 @@ sub sendFriendRemove {
 }
 
 # 0x0204,18
-sub sendClientMD5Hash {
-	my ($self) = @_;
-	my $msg = pack('v H32', 0x0204, $masterServer->{clientHash}); # ex 82d12c914f5ad48fd96fcf7ef4cc492d (kRO sakray != kRO main)
-	$self->sendToServer($msg);
-}
+*sendClientMD5Hash = *Network::Send::ServerType0::sendClientMD5Hash;
 
 # 0x0205,26
 # 0x0206,11
