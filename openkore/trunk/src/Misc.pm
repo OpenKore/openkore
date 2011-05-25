@@ -686,20 +686,30 @@ sub checkWallLength {
 # Returns: 1 if %pos has been modified, 0 of not.
 #
 # If the position specified in $pos is walkable, this function will do nothing.
-# If it's not walkable, this function will find the closest position that is walkable (up to 2 blocks away),
+# If it's not walkable, this function will find the closest position that is walkable (up to N blocks away),
 # and modify the x and y values in $pos.
 # TODO: move to Field?
-sub closestWalkableSpot {
-	my $field = shift;
-	my $pos = shift;
+{
+	my @spots;
+	sub closestWalkableSpot {
+		my $field = shift;
+		my $pos = shift;
 
-	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0] ) {
-		next if !$field->isWalkable($pos->{x} + $z->[0], $pos->{y} + $z->[1]);
-		$pos->{x} += $z->[0];
-		$pos->{y} += $z->[1];
-		return 1;
+		unless (@spots) {
+			@spots = ([0, 0]);
+			for my $dist (1 .. 7) {
+				push @spots, map { [$_, $dist-$_], [$dist-$_, -$_], [-$_, $_-$dist], [$_-$dist, $_] } 0 .. $dist-1;
+			}
+		}
+
+		foreach my $z (@spots) {
+			next if !$field->isWalkable($pos->{x} + $z->[0], $pos->{y} + $z->[1]);
+			$pos->{x} += $z->[0];
+			$pos->{y} += $z->[1];
+			return 1;
+		}
+		return 0;
 	}
-	return 0;
 }
 
 ##
