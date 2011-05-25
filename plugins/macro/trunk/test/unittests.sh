@@ -8,4 +8,4 @@ if [ ! -d $DIR ]; then
   exit 1
 fi
 
-perl -I$DIR -I$DIR/deps unittests.pl
+perl -I$DIR -I$DIR/deps unittests
