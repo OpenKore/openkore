@@ -38,6 +38,10 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
+sub version {
+	return $masterServer->{version} || 1;
+}
+
 sub sendAddSkillPoint {
 	my ($self, $skillID) = @_;
 	my $msg = pack("C*", 0x12, 0x01) . pack("v*", $skillID);
@@ -140,6 +144,17 @@ sub sendBuyVender {
 sub sendBuyBulkVender {
 	my ($self, $venderID, $r_array) = @_;
 	my $msg = pack('v2 a4', 0x0134, 8+4*@{$r_array}, $venderID);
+	for (my $i = 0; $i < @{$r_array}; $i++) {
+		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemIndex});
+		debug "Sent bulk buy vender: $r_array->[$i]{itemIndex} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
+	}
+	$self->sendToServer($msg);
+}
+
+# 0x0801,-1,purchasereq,2:4:8:12
+sub sendBuyBulkVender2 {
+	my ($self, $venderID, $r_array, $venderCID) = @_;
+	my $msg = pack('v2 a4 a4', 0x0801, 12+4*@{$r_array}, $venderID, $venderCID); # TODO: is it the vender's charID?
 	for (my $i = 0; $i < @{$r_array}; $i++) {
 		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemIndex});
 		debug "Sent bulk buy vender: $r_array->[$i]{itemIndex} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
@@ -882,6 +897,22 @@ sub sendMasterSecureLogin {
 		$msg = pack("C*", 0xFA, 0x01) . pack("V1", $version) . pack("a24", $username) .
 					 $md5->digest . pack("C*", $master_version). pack("C1", $account);
 	}
+	$self->sendToServer($msg);
+}
+
+sub sendMasterHANLogin {
+	my ($self, $username, $password, $master_version, $version) = @_;
+	$self->sendClientMD5Hash() if ($masterServer->{clientHash} != ''); 						# this is a hack, just for testing purposes, it should be moved to the login algo later on
+	my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
+	my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
+	my $in = pack('a24', $password);
+	my $rijndael = Utils::Rijndael->new();
+	$rijndael->MakeKey($key, $chain, 24, 24);
+	$password = $rijndael->Encrypt($in, undef, 24, 0);
+	my $ip = "3139322e3136382e322e3400685f4c40";		# gibberish, ofcourse ;-)
+	my $mac = "31313131313131313131313100";				# gibberish
+	my $isGravityID = 0;
+	my $msg = pack('v V a24 a24 C H32 H26 C', 0x02B0, $self->version, $username, $password, $master_version, $ip, $mac, $isGravityID);
 	$self->sendToServer($msg);
 }
 
@@ -1724,6 +1755,13 @@ sub sendProgress {
 	my $msg = pack("C*", 0xf1, 0x02);
 	$self->sendToServer($msg);
 	debug "Sent Progress Bar Finish\n", "sendPacket", 2;
+}
+
+# 0x0204,18
+sub sendClientMD5Hash {
+	my ($self) = @_;
+	my $msg = pack('v H32', 0x0204, $masterServer->{clientHash}); # ex 82d12c914f5ad48fd96fcf7ef4cc492d (kRO sakray != kRO main)
+	$self->sendToServer($msg);
 }
 
 1;
