@@ -304,9 +304,9 @@ sub loadDataFiles {
 
 sub initNetworking {
 	our $XKore_dontRedirect = 0;
-	my $XKore_version = $config{XKore} ? $config{XKore} : $sys{XKore};
+	my $XKore_version = $config{XKore};
 	eval {
-		if ($XKore_version eq "1" || $XKore_version eq "inject") {
+		if ($XKore_version eq "1") {
 			# Inject DLL to running Ragnarok process
 			require Network::XKore;
 			$net = new Network::XKore;
@@ -316,7 +316,7 @@ sub initNetworking {
 			require Network::XKore2;
 			$net = new Network::DirectConnection;
 			Network::XKore2::start();
-		} elsif ($XKore_version eq "3" || $XKore_version eq "proxy") {
+		} elsif ($XKore_version eq "3") {
 			# Proxy Ragnarok client connection
 			require Network::XKoreProxy;
 			$net = new Network::XKoreProxy;
