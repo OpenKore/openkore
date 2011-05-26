@@ -1,8 +1,11 @@
 ActorListTest.pm
 bus-client-test.pl
 CallbackListTest.pm
+FieldTest.pm
+FileParsersTest.pm
 HttpReaderTest.pm
 InventoryListTest.pm
+NetworkTest.pm
 ObjectListTest.pm
 PluginsHookTest.pm
 RijndaelTest.pm
@@ -14,3 +17,12 @@ TaskManagerTest.pm
 TaskWithSubtaskTest.pm
 unittests.pl
 WhirlpoolTest.pm
+
+cities.txt
+items.txt
+items_control.txt
+maps.txt
+resnametable.txt
+SKILL_id_handle.txt
+skillnametable.txt
+skillssp.txt

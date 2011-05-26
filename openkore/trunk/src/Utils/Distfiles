@@ -1,6 +1,8 @@
+ActorHashTie.pm
 AppLauncher.pm
 Assert.pm
 Benchmark.pm
+BlessedRefTie.pm
 CallbackList.pm
 CRAM.pm
 Crypton.pm
