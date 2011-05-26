@@ -43,6 +43,7 @@ use base qw(Task::WithSubtask);
 
 use Utils::Exceptions;
 
+### CATEGORY: Constructor
 
 ##
 # Task::Chained->new(...)

@@ -59,6 +59,8 @@ use base qw(Task);
 use Scalar::Util;
 use Utils::Exceptions;
 
+### CATEGORY: Constructor
+
 ##
 # Task::Function->new(...)
 #

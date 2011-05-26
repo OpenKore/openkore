@@ -43,9 +43,7 @@ use Misc;
 use Task;
 use Translation qw(T TF);
 use Actor::Unknown;
-use Task::Chained;
-use Task::Function;
-use Task::Wait;
+use Task::Timeout;
 
 # Make it so that
 #     print $actor;
@@ -419,18 +417,14 @@ sub setStatus {
 		$self->{statuses}{$handle} = {};
 		
 		if ($tick) {
-			# FIXME: is it right to do this with tasks and task manager?
-			# maybe something more dedicated for scheduling stuff
-			Scalar::Util::weaken(my $weak = $self);
-			my $handle_ref = "$self->{statuses}{$handle}";
+			Scalar::Util::weaken($self->{statuses}{$handle}{_actor} = $self);
 			
-			$taskManager->add(my $task = Task::Chained->new(tasks => [
-				Task::Wait->new(seconds => $tick/1000),
-				Task::Function->new(function => sub {
-					$weak->setStatus($handle, 0) if $weak && "$weak->{statuses}{$handle}" eq $handle_ref;
-					$_[0]->setDone;
-				}),
-			]));
+			$taskManager->add(Task::Timeout->new(
+				object => $self->{statuses}{$handle},
+				weak => 1,
+				function => sub { $_[0]->{_actor}->setStatus($handle, 0) },
+				seconds => $tick / 1000,
+			));
 		}
 		
 		if ($char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name}) {
