@@ -16,6 +16,9 @@ use strict;
 use base 'Task::Chained';
 use Modules 'register';
 
+use Task::Function;
+use Task::Wait;
+
 ### CATEGORY: Constructor
 
 ##
