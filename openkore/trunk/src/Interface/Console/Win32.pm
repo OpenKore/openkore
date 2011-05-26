@@ -229,7 +229,7 @@ sub readEvents {
 				$self->{out_con}->Cursor($self->{in_pos} = 0, $self->{in_line});
 			##Left Arrow
 			} elsif ($event[3] == 37) {
-				$self->{in_pos}--;
+				$self->{in_pos}-- if ($self->{in_pos} > 0);
 				$self->{out_con}->Cursor($self->{in_pos}, $self->{in_line});
 			##Up Arrow
 			} elsif ($event[3] == 38) {
@@ -248,10 +248,8 @@ sub readEvents {
 				$self->{in_pos} = length($self->{input_part});
 			##Right Arrow
 			} elsif ($event[3] == 39) {
-				if ($self->{in_pos} + 1 <= length($self->{input_part})) {
-					$self->{in_pos}++;
+					$self->{in_pos}++ if $self->{in_pos} + 1 <= length($self->{input_part});
 					$self->{out_con}->Cursor($self->{in_pos}, $self->{in_line});
-				}
 			##Down Arrow
 			} elsif ($event[3] == 40) {
 				unless ($self->{input_offset}) {
