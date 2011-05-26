@@ -34,6 +34,7 @@ use Globals qw($net);
 use Utils qw(timeOut);
 use Network;
 
+### CATEGORY: Constructor
 
 ##
 # Task::Wait->new(options...)
