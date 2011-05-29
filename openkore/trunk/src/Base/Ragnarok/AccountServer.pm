@@ -61,7 +61,17 @@ sub login {
 
 sub process_0064 {
 	my ($self, $client, $message) = @_;
-	my ($version, $username, $password, $master_version) = unpack("x2 V Z24 Z24 C1", $message);
+	my ($switch, $version, $username, $password, $master_version) = unpack("v V Z24 a24 C1", $message);
+
+	if ($switch == 0x02B0) {
+		# TODO: merge back with sendMasterHANLogin
+		my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
+		my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
+		my $in = pack('a24', $password);
+		my $rijndael = Utils::Rijndael->new();
+		$rijndael->MakeKey($key, $chain, 24, 24);
+		$password = unpack("Z24", $rijndael->Decrypt($in, undef, 24, 0));
+	}
 
 	my $sessionID = $self->{sessionStore}->generateSessionID();
 	my %session = (
@@ -95,13 +105,13 @@ sub process_0064 {
 		$client->close();
 
 	} elsif ($result == ACCOUNT_NOT_FOUND) {
-		$client->send(pack('C*', 0x6A, 0x00, 0));
+		$client->send(pack('v C Z20', 0x006A, 0, 'x'x20));
 		$client->close();
 	} elsif ($result == PASSWORD_INCORRECT) {
-		$client->send(pack('C*', 0x6A, 0x00, 1));
+		$client->send(pack('v C Z20', 0x006A, 1, 'x'x20));
 		$client->close();
 	} elsif ($result == ACCOUNT_BANNED) {
-		$client->send(pack('C*', 0x6A, 0x00, 4));
+		$client->send(pack('v C Z20', 0x006A, 4, 'x'x20));
 		$client->close();
 	} else {
 		die "Unexpected result $result.";

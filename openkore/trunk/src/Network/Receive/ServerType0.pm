@@ -68,7 +68,7 @@ sub new {
 
 	$self->{packet_list} = {
 		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
-		'006A' => ['login_error', 'C', [qw(type)]],
+		'006A' => ['login_error', 'C Z20', [qw(type unknown)]],
 		'006B' => ['received_characters'],
 		'006C' => ['login_error_game_login_server'],
 		# OLD '006D' => ['character_creation_successful', 'a4 x4 V x62 Z24 C7', [qw(ID zeny name str agi vit int dex luk slot)]],
