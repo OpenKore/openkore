@@ -108,6 +108,9 @@ sub process_0064 {
 	}
 }
 
+# sendClientMD5Hash
+sub process_0204 {}
+
 sub unhandledMessage {
 	my ($self, $client) = @_;
 	$client->close();
