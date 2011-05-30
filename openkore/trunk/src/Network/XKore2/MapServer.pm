@@ -20,7 +20,7 @@ use Globals qw(
 	$portalsList $npcsList $monstersList $playersList $petsList
 	@friendsID %friends %pet @partyUsersID %spells
 	@chatRoomsID %chatRooms @venderListsID %venderLists $hotkeyList
-	$packetParser
+	$packetParser %config
 );
 use Base::Ragnarok::MapServer;
 use base qw(Base::Ragnarok::MapServer);
@@ -410,6 +410,10 @@ sub handleMapLoaded {
 	
    $output = pack('C15', 0x29, 0x02, 0xA7, 0x94, 0x04);
    $client->send($output);
+	
+	if ($config{verbose} && !$config{XKore_silent}) {
+		$client->send($packetParser->reconstruct({switch => '009A', message => $Settings::welcomeText}));
+	}
 }
 
 sub process_007D {
