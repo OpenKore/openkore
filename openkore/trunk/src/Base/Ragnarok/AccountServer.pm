@@ -61,7 +61,7 @@ sub login {
 
 sub process_0064 {
 	my ($self, $client, $message) = @_;
-	my ($switch, $version, $username, $password, $master_version) = unpack("v V Z24 a24 C1", $message);
+	my ($switch, $version, $username, $password, $master_version) = unpack("v V Z24 Z24 C1", $message);
 
 	if ($switch == 0x02B0) {
 		# TODO: merge back with sendMasterHANLogin
