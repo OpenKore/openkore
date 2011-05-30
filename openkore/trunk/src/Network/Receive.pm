@@ -142,6 +142,17 @@ sub reconstruct {
 		push(@vars, $args->{$varName});
 	}
 	my $packet = pack("H2 H2 $packString", substr($switch, 2, 2), substr($switch, 0, 2), @vars);
+	
+	if (exists $rpackets{$switch}) {
+		if ($rpackets{$switch} > 0) {
+			# fixed length packet, pad/truncate to the correct length
+			$packet = pack('a'.$rpackets{$switch}, $packet);
+		} else {
+			# variable length packet, store its length in the packet
+			substr($packet, 2, 2) = pack('v', length $packet);
+		}
+	}
+	
 	return $packet;
 }
 
