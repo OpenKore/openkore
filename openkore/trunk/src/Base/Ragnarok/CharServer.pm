@@ -99,7 +99,7 @@ sub process_0065 {
 				$char->{lv_job}		# job level
 			);
 
-			substr($charStructure, 42, 64) = pack('v7 x2 v x2 v x2 v4 Z24 C6 v',
+			my $data = pack(($self->charBlockSize >= 112 ? 'V2' : 'v2').' v5 x2 v x2 v x2 v4 Z24 C6 v',
 				$char->{hp},
 				$char->{hp_max},
 				$char->{sp},
@@ -122,6 +122,7 @@ sub process_0065 {
 				$char->{luk},
 				$index
 			);
+			substr($charStructure, 42, length $data) = $data;
 
 			$output .= $charStructure;
 		}
