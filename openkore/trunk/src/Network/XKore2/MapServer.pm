@@ -20,6 +20,7 @@ use Globals qw(
 	$portalsList $npcsList $monstersList $playersList $petsList
 	@friendsID %friends %pet @partyUsersID %spells
 	@chatRoomsID %chatRooms @venderListsID %venderLists $hotkeyList
+	$packetParser
 );
 use Base::Ragnarok::MapServer;
 use base qw(Base::Ragnarok::MapServer);
@@ -250,10 +251,11 @@ sub handleMapLoaded {
 		shiftPack(\$coords, $npc->{pos}{x}, 10);
 		shiftPack(\$coords, $npc->{pos}{y}, 10);
 		shiftPack(\$coords, $npc->{look}{body}, 4);
-		$output .= pack('C2 a4 x2 v4 x30 a3 x5',
-			0x78, 0x00, $npc->{ID},
-			$npc->{opt1}, $npc->{opt2}, $npc->{option},
-			$npc->{type}, $coords);
+		$output .= $packetParser->reconstruct({
+			switch => '0078',
+			coords => $coords,
+			map { $_ => $npc->{$_} } qw(ID opt1 opt2 option type)
+		});
 	}
 	$client->send($output) if (length($output) > 0);
 
