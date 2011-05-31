@@ -266,10 +266,12 @@ sub handleMapLoaded {
 		shiftPack(\$coords, $monster->{pos_to}{x}, 10);
 		shiftPack(\$coords, $monster->{pos_to}{y}, 10);
 		shiftPack(\$coords, $monster->{look}{body}, 4);
-		$output .= pack('C2 a4 v5 x30 a3 x3 v1',
-			0x78, 0x00, $monster->{ID}, $monster->{walk_speed} * 1000,
-			$monster->{opt1}, $monster->{opt2}, $monster->{option},
-			$monster->{nameID}, $coords, $monster->{lv});
+		$output .= $packetParser->reconstruct({
+			switch => '0078',
+			walk_speed => $monster->{walk_speed} * 1000,
+			coords => $coords,
+			map { $_ => $monster->{$_} } qw(ID opt1 opt2 option type lv)
+		});
 	}
 	$client->send($output) if (length($output) > 0);
 
