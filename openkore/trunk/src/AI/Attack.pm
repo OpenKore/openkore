@@ -578,32 +578,16 @@ sub main {
 
 			ai_setSuspend(0);
 			my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
-			if (!ai_getSkillUseType($skill->getHandle())) {
-				ai_skillUse(
-					$skill->getHandle(),
-					$config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
-					$config{"attackSkillSlot_${slot}_maxCastTime"},
-					$config{"attackSkillSlot_${slot}_minCastTime"},
-					$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $accountID : $ID,
-					undef,
-					"attackSkill",
-					undef,
-					undef,
-					"attackSkillSlot_${slot}");
-			} else {
-				my $pos = calcPosition($config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target);
-				ai_skillUse(
-					$skill->getHandle(),
-					$config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
-					$config{"attackSkillSlot_${slot}_maxCastTime"},
-					$config{"attackSkillSlot_${slot}_minCastTime"},
-					$pos->{x},
-					$pos->{y},
-					"attackSkill",
-					undef,
-					undef,
-					"attackSkillSlot_${slot}");
-			}
+			ai_skillUse2(
+				$skill,
+				$config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
+				$config{"attackSkillSlot_${slot}_maxCastTime"},
+				$config{"attackSkillSlot_${slot}_minCastTime"},
+				$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target,
+				"attackSkillSlot_${slot}",
+				undef,
+				"attackSkill",
+			);
 			$args->{monsterID} = $ID;
 			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
 			debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
@@ -617,31 +601,15 @@ sub main {
 			$ai_v{"attackComboSlot_${slot}_time"} = time;
 			$ai_v{"attackComboSlot_${slot}_target_time"}{$ID} = time;
 
-			if (!ai_getSkillUseType($skill)) {
-				my $targetID = ($isSelfSkill) ? $accountID : $ID;
-				ai_skillUse(
-					$skill->getHandle,
-					$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
-					$config{"attackComboSlot_${slot}_maxCastTime"},
-					$config{"attackComboSlot_${slot}_minCastTime"},
-					$targetID,
-					undef,
-					undef,
-					undef,
-					$config{"attackComboSlot_${slot}_waitBeforeUse"});
-			} else {
-				my $pos = ($isSelfSkill) ? $char->{pos_to} : $target->{pos_to};
-				ai_skillUse(
-					$skill->getHandle,
-					$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
-					$config{"attackComboSlot_${slot}_maxCastTime"},
-					$config{"attackComboSlot_${slot}_minCastTime"},
-					$pos->{x},
-					$pos->{y},
-					undef,
-					undef,
-					$config{"attackComboSlot_${slot}_waitBeforeUse"});
-			}
+			ai_skillUse2(
+				$skill,
+				$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
+				$config{"attackComboSlot_${slot}_maxCastTime"},
+				$config{"attackComboSlot_${slot}_minCastTime"},
+				$isSelfSkill ? $char : $target,
+				undef,
+				$config{"attackComboSlot_${slot}_waitBeforeUse"},
+			);
 			$args->{monsterID} = $ID;
 		}
 
