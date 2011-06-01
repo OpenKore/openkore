@@ -1304,7 +1304,7 @@ sub checkMonsterCleanness {
 	my $monster = $monstersList->getByID($ID);
 
 	# If party attacked monster, or if monster attacked/missed party
-	if ($monster->{dmgFromParty} > 0 || $monster->{dmgToParty} > 0 || $monster->{missedToParty} > 0) {
+	if ($monster->{dmgFromParty} > 0 || $monster->{missedFromParty} > 0 || $monster->{dmgToParty} > 0 || $monster->{missedToParty} > 0) {
 		return 1;
 	}
 
@@ -2771,6 +2771,10 @@ sub updateDamageTables {
 			if (existsInList($config{tankersList}, $player->{name}) || ($char->{slaves} && $char->{slaves}{$sourceID}) ||
 			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$sourceID} && %{$char->{party}{users}{$sourceID}})) {
 				$monster->{dmgFromParty} += $damage;
+				
+				if ($damage == 0) {
+					$monster->{missedFromParty}++;
+				}
 			}
 			OpenKoreMod::updateDamageTables($monster) if (defined &OpenKoreMod::updateDamageTables);
 		}
