@@ -266,6 +266,9 @@ sub getTargetType {
 		# TODO: use skillsarea.txt
 		# Do we even need this file? All the info is already given by the server.
 
+		# NOTE: value of "1" (TARGET_LOCATION) from skillsarea.txt isn't used (directly) anymore;
+		# this function (Skill->getTargetType) is used instead.
+
 		# We don't know the target type so we just assume that it's used on
 		# an enemy (which is usually correct).
 		return TARGET_ENEMY;

@@ -36,7 +36,6 @@ our @EXPORT = (
 	ai_getAggressives
 	ai_getPlayerAggressives
 	ai_getMonstersAttacking
-	ai_getSkillUseType
 	ai_mapRoute_searchStep
 	ai_items_take
 	ai_route
@@ -353,22 +352,6 @@ sub ai_getMonstersAttacking {
 	return @agMonsters;
 }
 
-##
-# ai_getSkillUseType(name)
-# name: the internal name of the skill (as found in skills.txt), such as
-# WZ_FIREPILLAR.
-# Returns: 1 if it's a location skill, 0 if it's an object skill.
-#
-# Determines whether a skill is a skill that's casted on a location, or one
-# that's casted on an object (monster/player/etc).
-# For example, Firewall is a location skill, while Cold Bolt is an object
-# skill.
-sub ai_getSkillUseType {
-	my $skill = shift;
-	return 1 if $skillsArea{$skill} == 1;
-	return 0;
-}
-
 sub ai_mapRoute_searchStep {
 	my $r_args = shift;
 
@@ -525,29 +508,24 @@ sub ai_skillUse {
 ##
 # ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $target)
 #
-# Calls ai_skillUse(), resolving $target to ($x, $y) if $skillID is an
-# area skill.
+# Calls ai_skillUse(),
+# resolving $target to ($x, $y) if $skill is an area skill,
+# or to $skill->getOwner if $skill is a self skill.
 #
-# FIXME: All code of the following structure:
-#
-# if (!ai_getSkillUseType(...)) {
-#     ai_skillUse(..., $ID);
-# } else {
-#     ai_skillUse(..., $x, $y);
-# }
-#
-# should be converted to use this helper function. Note that this
-# function uses objects instead of IDs for the skill and target.
-# NOTE: tag is missing, used by attackSkillSlot
-# NOTE: waitBeforeUse is missing, used by attackComboSlot
+# FIXME: Finish and use Task::UseSkill instead.
 sub ai_skillUse2 {
-	my ($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix) = @_;
+	my ($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix, $waitBeforeUse, $tag) = @_;
 
-	if (!ai_getSkillUseType($skill->getHandle())) {
-		ai_skillUse($skill->getHandle(), $lvl, $maxCastTime, $minCastTime, $target->{ID}, undef, undef, undef, undef, $prefix);
-	} else {
-		ai_skillUse($skill->getHandle(), $lvl, $maxCastTime, $minCastTime, $target->{pos_to}{x}, $target->{pos_to}{y}, undef, undef, undef, $prefix);
-	}
+	ai_skillUse(
+		$skill->getHandle(),
+		$lvl,
+		$maxCastTime,
+		$minCastTime,
+		$skill->getTargetType == Skill::TARGET_LOCATION ? (@{$target->{pos_to}}{qw(x y)})
+			: $skill->getTargetType == Skill::TARGET_SELF ? ($skill->getOwner->{ID}, undef)
+			: ($target->{ID}, undef),
+		$tag, undef, $waitBeforeUse, $prefix
+	)
 }
 
 ##

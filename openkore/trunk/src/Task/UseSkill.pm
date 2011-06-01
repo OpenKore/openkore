@@ -29,7 +29,7 @@ use base qw(Task::WithSubtask);
 use Task::Chained;
 use Task::SitStand;
 
-use Globals qw($net $char %skillsArea $messageSender $accountID %timeout);
+use Globals qw($net $char $messageSender $accountID %timeout);
 use Network;
 use Plugins;
 use Skill;

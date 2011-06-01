@@ -53,7 +53,7 @@ use Utils;
 # - sp - The amount of SP that this skill needs, when used at the maximum level.
 # - range - The range of this skill, in blocks.
 # - up - Whether this skill can be leveled up further.
-# - targetType - ??? Probably related to %skillsArea
+# - targetType - This skill's target type.
 # `l`
 
 ##

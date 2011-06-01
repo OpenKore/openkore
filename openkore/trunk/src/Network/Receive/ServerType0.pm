@@ -5930,6 +5930,7 @@ sub skill_used_no_damage {
 	}
 
 	# Perform trigger actions
+	# FIXME: setSkillUseTimer does many different things, so which of them "screw up monk comboing"?
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID
 		&& $skillsArea{$args->{skillHandle}} != 2); # ignore these skills because they screw up monk comboing
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
