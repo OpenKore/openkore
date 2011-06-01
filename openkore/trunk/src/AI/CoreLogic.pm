@@ -1994,7 +1994,12 @@ sub processFollow {
 		}
 	}
 
-	if (AI::action eq "follow" && $args->{'following'} && ( ( $players{$args->{'ID'}} && $players{$args->{'ID'}}{'dead'} ) || ( ( !$players{$args->{'ID'}} || !%{$players{$args->{'ID'}}} ) && $players_old{$args->{'ID'}}{'dead'}))) {
+	if (AI::action eq "follow" && $args->{'following'} && (
+		( $players{$args->{'ID'}} && $players{$args->{'ID'}}{'dead'} ) || (
+			( !$players{$args->{'ID'}} || !%{$players{$args->{'ID'}}} )
+			&& $players_old{$args->{'ID'}} && $players_old{$args->{'ID'}}{'dead'}
+		)
+	)) {
  		message T("Master died. I'll wait here.\n"), "party";
 		delete $args->{'following'};
 	} elsif ($args->{'following'} && ( !$players{$args->{'ID'}} || !%{$players{$args->{'ID'}}} )) {
@@ -2006,10 +2011,10 @@ sub processFollow {
 
 		delete $args->{'following'};
 
-		if ($players_old{$args->{'ID'}}{'disconnected'}) {
+		if ($players_old{$args->{'ID'}} && $players_old{$args->{'ID'}}{'disconnected'}) {
  			message T("My master disconnected\n"), "follow";
 
-		} elsif ($players_old{$args->{'ID'}}{'teleported'}) {
+		} elsif ($players_old{$args->{'ID'}} && $players_old{$args->{'ID'}}{'teleported'}) {
 			delete $args->{'ai_follow_lost_warped'};
 			delete $ai_v{'temp'}{'warp_pos'};
 
@@ -2046,7 +2051,7 @@ sub processFollow {
  				message T("My master teleported\n"), "follow", 1;
 			}
 
-		} elsif ($players_old{$args->{'ID'}}{'disappeared'}) {
+		} elsif ($players_old{$args->{'ID'}} && $players_old{$args->{'ID'}}{'disappeared'}) {
  			message T("Trying to find lost master\n"), "follow", 1;
 
 			delete $args->{'ai_follow_lost_char_last_pos'};
@@ -2090,7 +2095,7 @@ sub processFollow {
 			delete $args->{'ai_follow_lost'};
  			message T("Couldn't find master, giving up\n"), "follow";
 
-		} elsif ($players_old{$args->{'ID'}}{'disconnected'}) {
+		} elsif ($players_old{$args->{'ID'}} && $players_old{$args->{'ID'}}{'disconnected'}) {
 			delete AI::args->{'ai_follow_lost'};
  			message T("My master disconnected\n"), "follow";
 
@@ -2118,7 +2123,7 @@ sub processFollow {
 
  			message TF("My master warped at (%s, %s) - moving to warp point\n", $pos->{x}, $pos->{y}), "follow";
 
-		} elsif ($players_old{$args->{'ID'}}{'teleported'}) {
+		} elsif ($players_old{$args->{'ID'}} && $players_old{$args->{'ID'}}{'teleported'}) {
 			delete AI::args->{'ai_follow_lost'};
  			message T("My master teleported\n"), "follow";
 
