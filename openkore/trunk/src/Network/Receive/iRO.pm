@@ -38,15 +38,6 @@ sub new {
 	return $self;
 }
 
-# 02B5
-# note: this packet updates the objectives counters
-sub quest_update_mission_hunt {
-	my ($self, $args) = @_;
-	for (my $i = 0; $i < $args->{amount}; $i++) {
-		my ($questID, $mobID, $goal, $count) = unpack('V2 v2', substr($args->{RAW_MSG}, 6+$i*12, 12));
-		@{$questList->{$questID}{missions}{$mobID}}{qw(mobID goal count)} = ($mobID, $goal, $count);
-		debug sprintf("questID (%d) - mob(%s) count(%d/%d)\n", $questID, monsterName($mobID), $count, $goal), "info";
-	}
-}
+*quest_update_mission_hunt = *quest_update_mission_hunt_v2;
 
 1;
