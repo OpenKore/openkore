@@ -63,4 +63,6 @@ sub items_nonstackable {
 	}
 }
 
+*quest_update_mission_hunt = *quest_update_mission_hunt_v2;
+
 1;
