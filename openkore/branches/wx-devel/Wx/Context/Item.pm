@@ -18,11 +18,7 @@ sub new {
 	
 	my @tail;
 	
-	push @{$self->{head}}, {}, {
-		title => @$objects > 3
-		? TF('%d Items (%d Total)', scalar @$objects, List::Util::sum map { $_->{amount} } @$objects)
-		: join '; ', map { join ' ', @$_{'amount', 'name'} } @$objects
-	};
+	push @{$self->{head}}, {}, { title => $self->listTitle(@$objects) };
 	
 	if (@$objects == 1) {
 		my ($object) = @$objects;
@@ -115,6 +111,18 @@ sub new {
 	
 	push @{$self->{tail}}, reverse @tail;
 	return $self;
+}
+
+sub listTitle {
+	my $self = shift;
+	
+	if (@_ > 3) {
+		my $items = scalar @_;
+		my $total = List::Util::sum map { $_->{amount} } @_;
+		return TF($items < $total ? '%d Items (%d Total)' : '%d Items', $items, $total);
+	} else {
+		return join '; ', map { $_->{amount} > 1 ? "$_->{amount} x $_" : "$_" } @_;
+	}
 }
 
 1;

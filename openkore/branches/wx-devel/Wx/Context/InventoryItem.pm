@@ -14,7 +14,7 @@ sub new {
 	
 	my ($canStorage, $canCart) = (%storage && $storage{opened}, $char->cartActive);
 	
-	if (@$objects == 1) {
+	if (@$objects == 1) { # single item selected
 		my ($object) = @$objects;
 		my $invIndex = $object->{invIndex};
 		
@@ -62,7 +62,23 @@ sub new {
 		}
 		
 		push @{$self->{head}}, {title => T('Drop 1'), command => "drop $invIndex 1"} if $canDrop;
-	} else {
+		
+	} else { # multiple items selected
+		if (List::MoreUtils::all { $self->isEquip($_) } @$objects) {
+			if (my @items = grep { $self->isEquip($_) && !$_->{equipped} } @$objects) {
+				push @{$self->{head}}, {
+					title => TF('Equip %s', $self->listTitle(@items)),
+					callback => sub { $_->equip for @items },
+				}
+			}
+			if (my @items = grep { $_->{equipped} } @$objects) {
+				push @{$self->{head}}, {
+					title => TF('Unequip %s', $self->listTitle(@items)),
+					callback => sub { $_->unequip for @items },
+				}
+			}
+		}
+		
 		# TODO
 	}
 	
