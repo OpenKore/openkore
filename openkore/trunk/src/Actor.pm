@@ -409,7 +409,7 @@ sub onUpdate {
 
 sub setStatus {
 	my ($self, $handle, $flag, $tick) = @_;
-	
+
 	my $again;
 	if ($flag) {
 		# Skill activated
@@ -422,7 +422,7 @@ sub setStatus {
 			$taskManager->add(Task::Timeout->new(
 				object => $self->{statuses}{$handle},
 				weak => 1,
-				function => sub { $_[0]->{_actor}->setStatus($handle, 0) },
+				function => sub { $_[0]->{_actor}->setStatus($handle, 0) },#now
 				seconds => $tick / 1000,
 			));
 		}
@@ -438,9 +438,8 @@ sub setStatus {
 		delete $self->{statuses}{$handle};
 		delete $char->{party}{users}{$self->{ID}}{statuses}{$handle} if ($char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name});
 	}
-	
 	message
-		Misc::status_string($self, defined $statusName{$handle} ? $statusName{$handle} : $handle, $again, $flag && $tick/1000),
+		Misc::status_string($self, defined $statusName{$handle} ? $statusName{$handle} : $handle, $again, $flag ? $tick/1000 : 0),
 		"parseMsg_statuslook", ($self->{ID} eq $accountID or $char->{slaves} && $char->{slaves}{$self->{ID}}) ? 1 : 2;
 }
 
