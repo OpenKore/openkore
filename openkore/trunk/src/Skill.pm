@@ -50,6 +50,8 @@ use Modules 'register';
 use Carp::Assert;
 use Utils::TextReader;
 use Utils::Exceptions;
+use Log qw(error);
+use Translation qw(T TF);
 
 # Target type constants. See $Skill->getTargetType() for description.
 use constant {
@@ -206,7 +208,7 @@ sub getSP {
 
 	my $targetType = $self->getTargetType();
 	if (defined $targetType && $targetType == TARGET_PASSIVE) {
-		print "PASSIVE! $targetType\n";
+		error TF("Attempt to get SP required for a passive skill (%s)\n", $self->getName);
 		return 0;
 	} else {
 		my $idn = $self->{idn};
