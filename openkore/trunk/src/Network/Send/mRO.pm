@@ -47,4 +47,7 @@ sub sendHomunculusMove {
 	$self->sendToServer($msg);
 	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
 }
+
+*sendBuyBulkVender = *Network::Send::ServerType0::sendBuyBulkVender2;
+
 1;
