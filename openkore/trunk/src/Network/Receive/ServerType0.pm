@@ -1830,7 +1830,7 @@ sub actor_status_active {
 	my ($type, $ID, $flag, $tick) = @{$args}{qw(type ID flag tick)};
 	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
 	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
-	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick == 9999 ? 0 : $tick);
+	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick == 9999 ? undef : $tick);
 }
 
 sub actor_trapped {
