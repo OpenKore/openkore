@@ -456,7 +456,7 @@ sub new {
 		'02F2' => ['progress_bar_stop'], #TODO: PACKET_ZC_PROGRESS_CANCEL
 
 		'040C' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], #TODO: PACKET_ZC_BROADCAST3
-		'043D' => ['skill_post_delay', 'v a4', [qw(ID time)]], #TODO: PACKET_ZC_SKILL_POSTDELAY
+		'043D' => ['skill_post_delay', 'v V', [qw(ID time)]], #TODO: PACKET_ZC_SKILL_POSTDELAY
 		'043E' => ['skill_post_delaylist', 'v2 V', [qw(len id time)]],
 		# status timers (eA has 12 unknown bytes)
 		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]],
@@ -8082,13 +8082,10 @@ sub millenium_shield {
 
 sub skill_post_delay {
 	my ($self, $args) = @_;
-	print unpack("H2",$args->{time})."\n";
-	my $ID = $args->{ID};
-	my $time = $args->{time};
-	my $skillName = (new Skill(idn=>$ID))->getName();
+	my $skillName = (new Skill(idn => $args->{ID}))->getName;
 	my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : ' Delay';
 	
-	$char->setStatus($skillName.$status,1,$time);
+	$char->setStatus($skillName.$status, 1, $args->{time});
 }
 
 1;
