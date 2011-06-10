@@ -954,8 +954,6 @@ sub processAutoAttack {
 	#Benchmark::end("ai_homunculus_autoAttack") if DEBUG;
 }
 
-# Network
-
 sub sendAttack {
 	my ($slave, $targetID) = @_;
 	$messageSender->sendHomunculusAttack ($slave->{ID}, $targetID);
