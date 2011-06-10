@@ -4,6 +4,7 @@ Actor::Player
 Actor::You
 Actor::Item
 ActorList
+AI
 I18N
 Interface
 InventoryList

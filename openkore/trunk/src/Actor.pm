@@ -209,6 +209,143 @@ sub get {
 #
 # The time (in seconds) that the actor needs to move from $Actor->{pos} to $Actor->{pos_to}.
 
+##
+# Bytes $Actor->{lastAttackFrom}
+#
+# The ID of the actor who had done the last attack to this actor, including misses.
+
+##
+# int $Actor->{deltaHp}
+# Invariant: deltaHp <= 0
+#
+# Total amount of healed HP, minus total amount of damage done to this actor.
+#
+# deltaHp initially starts at 0.
+# When actor takes damage, the damage is subtracted from his deltaHp.
+# When actor is healed, the healed amount is added to the deltaHp.
+# If the deltaHp becomes positive, it is reset to 0.
+#
+# Someone with a lot of negative deltaHp is probably in need of healing.
+# This allows to intelligently heal non-party members.
+
+##
+# int $Actor->{dmgTo}
+#
+# Total damage done to this actor.
+
+##
+# int $Actor->{dmgFrom}
+#
+# Total damage done by this actor.
+
+##
+# int $Actor->{attackedYou}
+#
+# Number of attacks done by this actor to $char, including misses.
+
+##
+# int $Actor->{dmgToYou}
+#
+# Total damage done by this actor to $char.
+
+##
+# int $Actor->{missedYou}
+#
+# Number of misses done by this actor to $char.
+
+##
+# int $Actor->{castOnToYou}
+
+##
+# int $Actor->{numAtkFromYou}
+#
+# Number of attacks done by $char to this actor, including misses.
+
+##
+# int $Actor->{dmgFromYou}
+#
+# Total damage done by $char to this actor. 
+
+##
+# int $Actor->{missedFromYou}
+#
+# Number of misses done by $char to this actor.
+
+##
+# int $Actor->{castOnByYou}
+
+##
+# int $Actor->{dmgToParty}
+#
+# Total damage done by this actor to the party.
+
+##
+# int $Actor->{missedToParty}
+#
+# Number of misses done by this actor to the party.
+
+##
+# int $Actor->{dmgFromParty}
+#
+# Total damage done by the party to this actor.
+
+##
+# int $Actor->{missedFromParty}
+#
+# Number of misses done by the party to this actor.
+
+##
+# Hash $Actor->{dmgToPlayer}
+#
+# Total damage done by this actor to the actor whose ID is used as a hash key.
+
+##
+# Hash $Actor->{missedToPlayer}
+#
+# Number of misses done by this actor to the actor whose ID is used as a hash key.
+
+##
+# Hash $Actor->{castOnToPlayer}
+
+##
+# Hash $Actor->{dmgFromPlayer}
+#
+# Total damage done by the actor whose ID is used as a hash key to this actor.
+
+##
+# Hash $Actor->{missedFromPlayer}
+#
+# Number of misses done by the actor whose ID is used as a hash key to this actor.
+
+##
+# Hash $Actor->{castOnByPlayer}
+
+##
+# Hash $Actor->{dmgToMonster}
+#
+# Total damage done by this actor to the actor whose ID is used as a hash key.
+
+##
+# Hash $Actor->{missedToMonster}
+#
+# Number of misses done by this actor to the actor whose ID is used as a hash key.
+
+##
+# Hash $Actor->{castOnToMonster}
+
+##
+# Hash $Actor->{dmgFromMonster}
+#
+# Total damage done by the actor whose ID is used as a hash key to this actor.
+
+##
+# Hash $Actor->{missedFromMonster}
+#
+# Number of misses done by the actor whose ID is used as a hash key to this actor.
+
+##
+# Hash $Actor->{castOnByMonster}
+
 
 ### CATEGORY: Methods
 
@@ -405,8 +542,13 @@ sub onUpdate {
 	return $_[0]->{onUpdate};
 }
 
-# statuses ($Actor->{statuses})
-
+##
+# void $Actor->setStatus(String status_handle, boolean state, [float duration])
+# status_handle: handle of the status
+# state: whether to set (true) or unset (false) that status
+# duration: delay before automatically unsetting that status
+#
+# Set or unset specified status. Display the corresponding message.
 sub setStatus {
 	my ($self, $handle, $flag, $tick) = @_;
 
@@ -443,6 +585,11 @@ sub setStatus {
 		"parseMsg_statuslook", ($self->{ID} eq $accountID or $char->{slaves} && $char->{slaves}{$self->{ID}}) ? 1 : 2;
 }
 
+##
+# boolean $Actor->statusActive(String statuses)
+# statuses: comma-separated list of status handles and/or names
+#
+# Returns false if all statuses from the list are inactive, true otherwise.
 sub statusActive {
 	my ($self, $commaSeparatedStatuses) = @_;
 	
@@ -458,6 +605,20 @@ sub statusActive {
 	return;
 }
 
+##
+# boolean $Actor->cartActive()
+#
+# Returns whether the cart is present.
+sub cartActive {
+	my ($self) = @_;
+	
+	$self->statusActive('EFFECTSTATE_PUSHCART, EFFECTSTATE_PUSHCART2, EFFECTSTATE_PUSHCART3, EFFECTSTATE_PUSHCART4, EFFECTSTATE_PUSHCART5')
+}
+
+##
+# String $Actor->statusesString()
+#
+# Returns human-readable list of currently active statuses.
 sub statusesString {
 	my ($self) = @_;
 	
@@ -467,16 +628,31 @@ sub statusesString {
 	: '';
 }
 
-sub cartActive {
-	my ($self) = @_;
-	
-	$self->statusActive('EFFECTSTATE_PUSHCART, EFFECTSTATE_PUSHCART2, EFFECTSTATE_PUSHCART3, EFFECTSTATE_PUSHCART4, EFFECTSTATE_PUSHCART5')
-}
-
-# AI commands
+##
+# String $Actor->action([int index])
+#
+# Returns the name of the specified action from AI sequence.
+# With no index specified, returns the name of the current action.
 
 ##
-# ai_clientSuspend(packet_switch, duration, args...)
+# Hash* $Actor->args([int index])
+#
+# Returns arguments of the specified action from AI sequence.
+# With no index specified, returns arguments of the current action.
+
+##
+# void $Actor->queue(String name, [Hash* args])
+#
+# Adds action with specified name and arguments to AI sequence.
+# New action would become the current.
+
+##
+# void $Actor->dequeue()
+#
+# Removes the current action from AI sequence.
+
+##
+# void ai_clientSuspend(packet_switch, duration, args...)
 # initTimeout: a number of seconds.
 #
 # Freeze the AI for $duration seconds. $packet_switch and @args are only
@@ -505,6 +681,12 @@ sub setSuspend {
 	}
 }
 
+##
+# boolean $Actor->attack(Bytes target_ID)
+#
+# Instruct AI to attack the specified enemy.
+#
+# TODO: replace "Bytes target_ID" with "Actor otherActor".
 sub attack {
 	my ($self, $targetID) = @_;
 	
@@ -525,6 +707,13 @@ sub attack {
 	1;
 }
 
+##
+# void $Actor->move(int x, int y)
+#
+# Instruct AI to move to the specified point using a single motion.
+# That point should be in LOS and be relatively nearby.
+#
+# See also: $Actor->route()
 sub move {
 	my ($self, $x, $y, $attackID) = @_;
 	
@@ -544,6 +733,12 @@ sub move {
 	$task->{attackID} = $attackID;
 }
 
+##
+# void $Actor->route(String map, int x, int y)
+#
+# Instruct AI to move to the specified point using pathfinding.
+#
+# TODO: wouldn't it be better to place map in the end of arguments and make it optional?
 sub route {
 	my ($self, $map, $x, $y, %args) = @_;
 	debug "$self on route to: $maps_lut{$map.'.rsw'}($map): $x, $y\n", "route";
@@ -575,8 +770,6 @@ sub route {
 	
 	$self->queue('route', $task);
 }
-
-# Old AI
 
 sub processTask {
 	my $self = shift;
@@ -631,12 +824,34 @@ sub processTask {
 	}
 }
 
-# Network
-
+##
+# void $Actor->sendAttackStop()
+#
+# Send "stop attacking" to the server.
 sub sendAttackStop {
 	my ($self) = @_;
 	
 	$self->sendMove(@{calcPosition($self)}{qw(x y)});
 }
+
+##
+# void $Actor->sendMove(int x, int y)
+#
+# Send "move to the specified point" to the server.
+
+##
+# void $Actor->sendSit()
+#
+# Send "sit" to the server.
+
+##
+# void $Actor->sendStand()
+#
+# Send "stand" to the server.
+
+##
+# void $Actor->sendStandBy()
+#
+# Send "standby" to the server.
 
 1;

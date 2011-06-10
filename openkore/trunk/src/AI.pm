@@ -9,10 +9,15 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Helper functions for managing @ai_seq.
+##
+# MODULE DESCRIPTION: Helper functions for managing @ai_seq
 #
+# <del>
 # Eventually, @ai_seq should never be referenced directly, and then it can be
 # moved into this package.
+# </del>
+#
+# Eventually, all AI managing functions can be moved to various packages such as Actor.
 
 package AI;
 
@@ -57,11 +62,27 @@ our @EXPORT = (
 	take/
 );
 
-use constant {
-	OFF => 0,
-	MANUAL => 1,
-	AUTO => 2,
-};
+### CATEGORY: AI state constants
+
+##
+# AI::OFF
+#
+# AI is turned off.
+use constant OFF => 0;
+
+##
+# AI::MANUAL
+#
+# AI is set to manual mode.
+use constant MANUAL => 1;
+
+##
+# AI::AUTO
+#
+# AI is turned on.
+use constant AUTO => 2;
+
+### CATEGORY: Functions
 
 sub action {
 	my $i = (defined $_[0] ? $_[0] : 0);
