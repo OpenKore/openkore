@@ -69,7 +69,7 @@ sub new {
 	$self->{packet_list} = {
 		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		'006A' => ['login_error', 'C Z20', [qw(type unknown)]],
-		'006B' => ['received_characters'],
+		'006B' => ['received_characters', 'v a*', [qw(len charInfo)]], # struct varies a lot, this one is from XKore 2
 		'006C' => ['login_error_game_login_server'],
 		# OLD '006D' => ['character_creation_successful', 'a4 x4 V x62 Z24 C7', [qw(ID zeny name str agi vit int dex luk slot)]],
 		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v2', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag)]],
@@ -77,7 +77,7 @@ sub new {
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]],
-		'0072' => ['received_characters'],
+		'0072' => ['received_characters', 'v a*', [qw(len charInfo)]], # struct unknown, this one is from XKore 2
 		'0073' => ['map_loaded', 'V a3', [qw(syncMapSync coords)]],
 		'0075' => ['changeToInGameState'],
 		'0077' => ['changeToInGameState'],
@@ -503,7 +503,7 @@ sub new {
 		'0814' => ['buyer_found', 'a4 A80', [qw(ID title)]],
 		'0816' => ['buyer_lost', 'V', [qw(ID)]], #TODO: PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY
 		'0818' => ['buyer_items', 'v a4 a4', [qw(len venderID venderCID)]],
-		'082D' => ['received_characters'],
+		'082D' => ['received_characters', 'v C x2 C2 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]],
 		'084B' => ['item_appeared', 'a4 v2 C v2', [qw(ID nameID amount identified x y)]], # 19 TODO   provided by try71023
 		'0856' => ['actor_display', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
 		'0857' => ['actor_display', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
@@ -555,6 +555,43 @@ sub new {
 
 	return $self;
 }
+
+use constant {
+	REFUSE_INVALID_ID => 0x0,
+	REFUSE_INVALID_PASSWD => 0x1,
+	REFUSE_ID_EXPIRED => 0x2,
+	ACCEPT_ID_PASSWD => 0x3,
+	REFUSE_NOT_CONFIRMED => 0x4,
+	REFUSE_INVALID_VERSION => 0x5,
+	REFUSE_BLOCK_TEMPORARY => 0x6,
+	REFUSE_BILLING_NOT_READY => 0x7,
+	REFUSE_NONSAKRAY_ID_BLOCKED => 0x8,
+	REFUSE_BAN_BY_DBA => 0x9,
+	REFUSE_EMAIL_NOT_CONFIRMED => 0xa,
+	REFUSE_BAN_BY_GM => 0xb,
+	REFUSE_TEMP_BAN_FOR_DBWORK => 0xc,
+	REFUSE_SELF_LOCK => 0xd,
+	REFUSE_NOT_PERMITTED_GROUP => 0xe,
+	REFUSE_WAIT_FOR_SAKRAY_ACTIVE => 0xf,
+	REFUSE_NOT_CHANGED_PASSWD => 0x10,
+	REFUSE_BLOCK_INVALID => 0x11,
+	REFUSE_WARNING => 0x12,
+	REFUSE_NOT_OTP_USER_INFO => 0x13,
+	REFUSE_OTP_AUTH_FAILED => 0x14,
+	REFUSE_DELETED_ACCOUNT => 0x63,
+	REFUSE_ALREADY_CONNECT => 0x64,
+	REFUSE_TEMP_BAN_HACKING_INVESTIGATION => 0x65,
+	REFUSE_TEMP_BAN_BUG_INVESTIGATION => 0x66,
+	REFUSE_TEMP_BAN_DELETING_CHAR => 0x67,
+	REFUSE_TEMP_BAN_DELETING_SPOUSE_CHAR => 0x68,
+	REFUSE_USER_PHONE_BLOCK => 0x69,
+	ACCEPT_LOGIN_USER_PHONE_BLOCK => 0x6a,
+	ACCEPT_LOGIN_CHILD => 0x6b,
+	REFUSE_IS_NOT_FREEUSER => 0x6c,
+	REFUSE_INVALID_ONETIMELIMIT => 0x6d,
+	REFUSE_NOT_CHANGE_ACCOUNTID => 0xf0,
+	REFUSE_NOT_CHANGE_CHARACTERID => 0xf1,
+};
 
 use constant {
 	VAR_SPEED => 0x0,
@@ -794,6 +831,12 @@ use constant {
 	ACTION_TOUCHSKILL => 0xc,
 };
 
+use constant {
+	DEFINE__BROADCASTING_SPECIAL_ITEM_OBTAIN => 1 << 0,
+	DEFINE__RENEWAL_ADD_2                    => 1 << 1,
+	DEFINE__CHANNELING_SERVICE               => 1 << 2,
+};
+
 ######################################
 #### Packet inner struct handlers ####
 ######################################
@@ -810,16 +853,19 @@ sub received_characters_blockSize {
 }
 
 sub received_characters_unpackString {
+	# the length must exactly match charBlockSize, as it's used to construct packets
+	
 	if ($masterServer && $masterServer->{charBlockSize} == 128) {
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16'; # 128
 	} elsif ($masterServer && $masterServer->{charBlockSize} == 116) {
-		return 'a4 V9 v V2 v14 Z24 C6 v2'; # 116 TODO: (missing 2 last bytes)
+		return 'a4 V9 v V2 v14 Z24 C6 v2 x4'; # 116 TODO: (missing 2 last bytes)
 	} elsif ($masterServer && $masterServer->{charBlockSize} == 112) {
 		return 'a4 V9 v V2 v14 Z24 C6 v2'; # 112
-	} else {
+	} elsif ($masterServer && $masterServer->{charBlockSize} == 108) {
 		return 'a4 V9 v17 Z24 C6 v2'; # 108
+	} else {
+		return 'a4 V9 v17 Z24 C6 v'; # 106
 	}
-	# a4 V9 v17 Z24 C6 v # 106
 }
 
 # Override this function if you need to.
@@ -4017,7 +4063,7 @@ sub login_error {
 	my ($self, $args) = @_;
 
 	$net->serverDisconnect();
-	if ($args->{type} == 0) {
+	if ($args->{type} == REFUSE_INVALID_ID) {
 		error T("Account name doesn't exist\n"), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
 			my $username = $interface->query(T("Enter your Ragnarok Online username again."));
@@ -4030,7 +4076,7 @@ sub login_error {
 				return;
 			}
 		}
-	} elsif ($args->{type} == 1) {
+	} elsif ($args->{type} == REFUSE_INVALID_PASSWD) {
 		error T("Password Error\n"), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
 			my $password = $interface->query(T("Enter your Ragnarok Online password again."), isPassword => 1);
@@ -4043,25 +4089,25 @@ sub login_error {
 				return;
 			}
 		}
-	} elsif ($args->{type} == 3) {
+	} elsif ($args->{type} == ACCEPT_ID_PASSWD) {
 		error T("The server has denied your connection.\n"), "connection";
-	} elsif ($args->{type} == 4) {
+	} elsif ($args->{type} == REFUSE_NOT_CONFIRMED) {
 		$interface->errorDialog(T("Critical Error: Your account has been blocked."));
 		$quit = 1 unless ($net->clientAlive());
-	} elsif ($args->{type} == 5) {
+	} elsif ($args->{type} == REFUSE_INVALID_VERSION) {
 		my $master = $masterServer;
 		error TF("Connect failed, something is wrong with the login settings:\n" .
 			"version: %s\n" .
 			"master_version: %s\n" .
 			"serverType: %s\n", $master->{version}, $master->{master_version}, $config{serverType}), "connection";
 		relog(30);
-	} elsif ($args->{type} == 6) {
+	} elsif ($args->{type} == REFUSE_BLOCK_TEMPORARY) {
 		error T("The server is temporarily blocking your connection\n"), "connection";
-	} elsif ($args->{type} == 105) { #Phone lock
+	} elsif ($args->{type} == REFUSE_USER_PHONE_BLOCK) { #Phone lock
 		error T("Please dial to activate the login procedure.\n"), "connection";
 		relog(10);
 	}
-	if ($args->{type} != 5 && $versionSearch) {
+	if ($args->{type} != REFUSE_INVALID_VERSION && $versionSearch) {
 		$versionSearch = 0;
 		writeSectionedFileIntact(Settings::getTableFilename("servers.txt"), \%masterServers);
 	}
