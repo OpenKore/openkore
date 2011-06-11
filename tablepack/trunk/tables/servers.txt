@@ -497,6 +497,18 @@ serverEncoding Western
 addTableFolders translated/kRO_english;kRO
 
 
+# this is for XKore 2 client only, it won't affect XKore 2 server
+# configure serverType, serverEncoding, charBlockSize according to your server
+[XKore 2]
+ip localhost
+port 6901
+serverType
+serverEncoding Western
+addTableFolders translated/kRO_english;kRO
+charBlockSize
+clientHash 0123456789abcdef0123456789abcdef
+
+
 # clientside: kRO_Sakexe_2009_06_17a (rmsserver-2009-06-17a.exe)
 # serverside: kRO_Sakexe_2009_04_08a (eA's latest Sakexe entry)
 [RMS]

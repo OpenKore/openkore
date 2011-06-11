@@ -134,6 +134,24 @@ sub reconstruct {
 	my ($self, $args) = @_;
 
 	my $switch = $args->{switch};
+	unless ($switch =~ /^[0-9A-F]{4}$/) {
+		# lookup by handler name
+		unless (exists $self->{packet_lut}{$switch}) {
+			# alternative (if any) isn't set yet, pick the first available
+			for (keys %{$self->{packet_list}}) {
+				if ($self->{packet_list}{$_}[0] eq $switch) {
+					$self->{packet_lut}{$switch} = $_;
+					last;
+				}
+			}
+			unless (exists $self->{packet_lut}{$switch}) {
+				die "Can't construct unknown packet $switch";
+			}
+		}
+		
+		$switch = $self->{packet_lut}{$switch};
+	}
+
 	my $packet = $self->{packet_list}{$switch};
 	my ($name, $packString, $varNames) = @{$packet};
 
@@ -167,6 +185,10 @@ sub parse {
 		warning "Packet Parser: Unknown switch: $switch\n";
 		return undef;
 	}
+
+	# set this alternative (if any) as the one in use with that server
+	# TODO: permanent storage (with saving)?
+	$self->{packet_lut}{$handler->[0]} = $switch;
 
 	debug "Received packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
 

@@ -9,11 +9,13 @@ use Exception::Class qw(
 	Base::Ragnarok::AccountServer::AccountBanned
 );
 
+use Globals qw($packetParser);
 use Modules 'register';
 use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
 use Socket qw(inet_aton);
 use Utils::Exceptions;
+use Network::Receive::ServerType0; # constants only
 
 use enum qw(LOGIN_SUCCESS ACCOUNT_NOT_FOUND PASSWORD_INCORRECT ACCOUNT_BANNED);
 
@@ -80,18 +82,14 @@ sub process_0064 {
 	);
 	my $result = $self->login(\%session, $username, $password);
 	if ($result == LOGIN_SUCCESS) {
-		my $output = pack('V a4 V x30 C',
-			$session{sessionID},	# session ID
-			$session{accountID},	# account ID
-			$session{sessionID2},	# session ID 2
-			$session{sex}		# gender
-		);
+		my $output = '';
 		$self->{sessionStore}->add(\%session);
 		$session{state} = 'About to select character';
 
 		# Show list of character servers.
 		foreach my $charServer (@{$self->{charServers}}) {
 			my $host = inet_aton($charServer->getHost());
+			$host = inet_aton($client->{BSC_sock}->sockhost) if $host eq "\000\000\000\000";
 
 			$output .= pack('a4 v Z20 v C1 x3',
 				$host,				# host
@@ -101,17 +99,34 @@ sub process_0064 {
 				5				# display (5 = "don't show number of players)
 			);
 		}
-		$client->send(pack('C2 v', 0x69, 0x00, length($output) + 4) . $output);
+		
+		$client->send($packetParser->reconstruct({
+			switch => 'account_server_info',
+			sessionID => pack('V', $session{sessionID}),
+			accountID => $session{accountID},
+			sessionID2 => pack('V', $session{sessionID2}),
+			accountSex => $session{sex},
+			serverInfo => $output,
+		}));
 		$client->close();
 
 	} elsif ($result == ACCOUNT_NOT_FOUND) {
-		$client->send(pack('v C Z20', 0x006A, 0, 'x'x20));
+		$client->send($packetParser->reconstruct({
+			switch => 'login_error',
+			type => Network::Receive::ServerType0::REFUSE_INVALID_ID,
+		}));
 		$client->close();
 	} elsif ($result == PASSWORD_INCORRECT) {
-		$client->send(pack('v C Z20', 0x006A, 1, 'x'x20));
+		$client->send($packetParser->reconstruct({
+			switch => 'login_error',
+			type => Network::Receive::ServerType0::REFUSE_INVALID_PASSWD,
+		}));
 		$client->close();
 	} elsif ($result == ACCOUNT_BANNED) {
-		$client->send(pack('v C Z20', 0x006A, 4, 'x'x20));
+		$client->send($packetParser->reconstruct({
+			switch => 'login_error',
+			type => Network::Receive::ServerType0::REFUSE_NOT_CONFIRMED,
+		}));
 		$client->close();
 	} else {
 		die "Unexpected result $result.";

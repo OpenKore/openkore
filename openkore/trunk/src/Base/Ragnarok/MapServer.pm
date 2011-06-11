@@ -11,6 +11,8 @@ use Base::RagnarokServer;
 use Misc;
 use base qw(Base::RagnarokServer);
 use Utils;
+use Network::Receive::ServerType0; # constants only
+
 use constant SESSION_TIMEOUT => 120;
 use constant DUMMY_POSITION => {
 	map => 'prontera.gat',
@@ -49,22 +51,33 @@ sub handleLogin {
 		$self->{sessionStore}->remove($session);
 		$client->{session} = $session;
 
-		my $output;
-		#Note: in perl 8 == "8_4" == '8_4',  so to separate them you need to use a regular expression
-		$output = pack("C2",0x83, 0x02) if ($self->getServerType() =~ m/^8(_[1-5])$/);
-		$output .= $accountID;
+		# # TODO: use result from the server?
+		# if (exists $packetParser->{packet_lut}{define_check}) {
+		# 	$client->send($packetParser->reconstruct({
+		# 		switch => 'define_check',
+		# 		result => Network::Receive::ServerType0::DEFINE__BROADCASTING_SPECIAL_ITEM_OBTAIN | Network::Receive::ServerType0::DEFINE__RENEWAL_ADD_2,
+		# 	}));
+		# }
+
+		if (exists $packetParser->{packet_lut}{account_id}) {
+			$client->send($packetParser->reconstruct({
+				switch => 'account_id',
+				accountID => $accountID,
+			}));
+		} else {
+			$client->send($accountID);
+		}
 
 		my $charInfo = $self->getCharInfo($session);
 		my $coords = '';
 		shiftPack(\$coords, $charInfo->{x}, 10);
 		shiftPack(\$coords, $charInfo->{y}, 10);
 		shiftPack(\$coords, 0, 4);
-		$output .= pack("C2 V a3 x2",
-			0x73, 0x00,
-			int(time),	# syncMapSync
-			$coords		# character coordinates
-		);
-		$client->send($output);
+		$client->send($packetParser->reconstruct({
+			switch => 'map_loaded',
+			syncMapSync => int time,
+			coords => $coords,
+		}));
 	}
 }
 

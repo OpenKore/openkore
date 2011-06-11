@@ -239,8 +239,11 @@ sub handleMapLoaded {
 		shiftPack(\$coords, $portal->{pos}{x}, 10);
 		shiftPack(\$coords, $portal->{pos}{y}, 10);
 		shiftPack(\$coords, 0, 4);
-		$output .= pack('C2 a4 x8 v1 x30 a3 x5', 0x78, 0x00,
-			$portal->{ID}, $portal->{type}, $coords);
+		$output .= $packetParser->reconstruct({
+			switch => '0078',
+			coords => $coords,
+			map { $_ => $portal->{$_} } qw(ID type)
+		});
 	}
 	$client->send($output) if (length($output) > 0);
 
@@ -282,9 +285,12 @@ sub handleMapLoaded {
 		shiftPack(\$coords, $pet->{pos_to}{x}, 10);
 		shiftPack(\$coords, $pet->{pos_to}{y}, 10);
 		shiftPack(\$coords, $pet->{look}{body}, 4);
-		$output .= pack('C2 a4 v x6 v2 x28 a3 x3 v',
-			0x78, 0x00, $pet->{ID}, $pet->{walk_speed} * 1000,
-			$pet->{nameID}, $pet->{hair_style}, $coords, $pet->{lv});
+		$output .= $packetParser->reconstruct({
+			switch => '0078',
+			walk_speed => $pet->{walk_speed} * 1000,
+			coords => $coords,
+			map { $_ => $pet->{$_} } qw(ID type hair_style lv)
+		});
 	}
 	$client->send($output) if (length($output) > 0);
 

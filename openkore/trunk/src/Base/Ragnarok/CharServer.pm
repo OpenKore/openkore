@@ -8,7 +8,7 @@ use Modules 'register';
 use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
 use Misc;
-use Globals qw(%config);
+use Globals qw(%config $packetParser);
 
 use constant SESSION_TIMEOUT => 120;
 use constant DUMMY_CHARACTER => {
@@ -89,17 +89,20 @@ sub process_0065 {
 		foreach my $char ($self->getCharacters($session)) {
 			$index++;
 			next if (!$char);
-			my $charStructure = pack('x' . $self->charBlockSize());
 
-			substr($charStructure, 0, 18) = pack('a4 V3 v',
+			$output .= pack(
+				$packetParser->received_characters_unpackString,
 				$char->{charID},	# character ID
 				$char->{exp},		# base experience
 				$char->{zeny},		# zeny
 				$char->{exp_job},	# job experience
-				$char->{lv_job}		# job level
-			);
-
-			my $data = pack(($self->charBlockSize >= 112 ? 'V2' : 'v2').' v5 x2 v x2 v x2 v4 Z24 C6 v',
+				$char->{lv_job},
+				$char->{opt1},
+				$char->{opt2},
+				$char->{option},
+				0,
+				0,
+				$char->{points_free},
 				$char->{hp},
 				$char->{hp_max},
 				$char->{sp},
@@ -107,8 +110,11 @@ sub process_0065 {
 				$char->{walk_speed} * 1000,
 				$char->{jobID},
 				$char->{hair_style},
+				$char->{weapon}, # FIXME
 				$char->{lv},
+				$char->{points_skill},
 				$char->{headgear}{low},
+				$char->{shield}, # FIXME
 				$char->{headgear}{top},
 				$char->{headgear}{mid},
 				$char->{hair_color},
@@ -120,12 +126,11 @@ sub process_0065 {
 				$char->{int},
 				$char->{dex},
 				$char->{luk},
-				$index
+				$index,
+				1,
 			);
-			substr($charStructure, 42, length $data) = $data;
-
-			$output .= $charStructure;
 		}
+		# FIXME
         	if ($self->{serverType} == 8){
 			$output = pack('C20') . $output;
 		}
@@ -142,7 +147,17 @@ sub process_0065 {
 		if ($config{XKore_altCharServer} == 1){
 			$client->send(pack('C2 v', 0x72, 0x00, length($output) + 4) . $output);
 		}else{
-			$client->send(pack('C2 v', 0x6B, 0x00, length($output) + 4) . $output);
+			$client->send($packetParser->reconstruct({
+				switch => 'received_characters',
+				charInfo => $output,
+				
+				# "if number of characters exceed 0 on selecting window, connection to game can't not be made" (sic)
+				total_slot => $index + 1,
+				
+				# slots in premium range are displayed as "Not Available"
+				premium_start_slot => $index + 1,
+				premium_end_slot => $index + 1,
+			}));
 		}
 	}
 
@@ -166,16 +181,18 @@ sub process_0066 {
 				# We can't get the character information for some reason.
 				$client->send(pack('C*', 0x6C, 0x00, 0));
 			} else {
-				my $output = pack('C2 a4 Z16 a4 v',
-					0x71, 0x00,
-					$char->{charID},
-					$charInfo->{map},
-					inet_aton($self->{mapServer}->getHost()),
-					$self->{mapServer}->getPort()
-				);
+				my $host = inet_aton($self->{mapServer}->getHost);
+				$host = inet_aton($client->{BSC_sock}->sockhost) if $host eq "\000\000\000\000";
+				
 				$session->{charID} = $char->{charID};
 				$session->{state} = 'About to load map';
-				$client->send($output);
+				$client->send($packetParser->reconstruct({
+					switch => 'received_character_ID_and_Map',
+					charID => $char->{charID},
+					mapName => $charInfo->{map},
+					mapIP => $host,
+					mapPort => $self->{mapServer}->getPort,
+				}));
 			}
 		}
 	}
