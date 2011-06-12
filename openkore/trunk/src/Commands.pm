@@ -3286,7 +3286,7 @@ sub cmdParty {
 		$messageSender->sendPartyLeader($partyUsersID[$arg2]);
 	} else {
 		error T("Syntax Error in function 'party' (Party Management)\n" .
-			"Usage: party [<create|join|request|leave|share|kick>]\n");
+			"Usage: party [<create|join|request|leave|share|kick|leader>]\n");
 	}
 }
 
