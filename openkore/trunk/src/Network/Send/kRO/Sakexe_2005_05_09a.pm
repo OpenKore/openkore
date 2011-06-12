@@ -103,7 +103,7 @@ sub sendStorageAdd {
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
 
-# 0x009b,26,wanttoconnection,4:9:17:18:25 -> 18 has to be 21?
+# 0x009b,26,wanttoconnection,4:9:17:21:25
 sub sendMapLogin {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)

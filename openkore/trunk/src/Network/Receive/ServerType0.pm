@@ -504,6 +504,7 @@ sub new {
 		'0816' => ['buyer_lost', 'V', [qw(ID)]], #TODO: PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY
 		'0818' => ['buyer_items', 'v a4 a4', [qw(len venderID venderCID)]],
 		'082D' => ['received_characters', 'v C x2 C2 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]],
+		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
 		'084B' => ['item_appeared', 'a4 v2 C v2', [qw(ID nameID amount identified x y)]], # 19 TODO   provided by try71023
 		'0856' => ['actor_display', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
 		'0857' => ['actor_display', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
@@ -855,7 +856,11 @@ sub received_characters_blockSize {
 sub received_characters_unpackString {
 	# the length must exactly match charBlockSize, as it's used to construct packets
 	
-	if ($masterServer && $masterServer->{charBlockSize} == 128) {
+	if ($masterServer && $masterServer->{charBlockSize} == 136) {
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4 x4'; # 136
+	} elsif ($masterServer && $masterServer->{charBlockSize} == 132) {
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4'; # 132
+	} elsif ($masterServer && $masterServer->{charBlockSize} == 128) {
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16'; # 128
 	} elsif ($masterServer && $masterServer->{charBlockSize} == 116) {
 		return 'a4 V9 v V2 v14 Z24 C6 v2 x4'; # 116 TODO: (missing 2 last bytes)

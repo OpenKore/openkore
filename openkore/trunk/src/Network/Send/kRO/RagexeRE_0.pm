@@ -22,7 +22,7 @@
 package Network::Send::kRO::RagexeRE_0;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2010_07_14a);
+use base qw(Network::Send::kRO::RagexeRE_2010_11_24a);
 
 use Log qw(message warning error debug);
 use Utils::Rijndael;
@@ -38,8 +38,8 @@ sub version {
 }
 
 # TODO: move to the right location
-# 0x002B0
-*sendMasterLogin = *Network::Send::ServerType0::sendMasterHANLogin;
+# 0x02B0
+# *sendMasterLogin = *Network::Send::ServerType0::sendMasterHANLogin;
 
 sub sendGameLogin { # we hack on the sendGameLogin and add the nextMessageMightBeAccountID after it
 	my ($self) = shift;
