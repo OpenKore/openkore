@@ -25,9 +25,9 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'07F7' => ['actor_display', 'v C a4 v3 V v5 a4 v5 a4 a2 v V C2 a6 C2 v2 Z*',	[qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # walking
-		'07F8' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C2 v2 Z*',			[qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv font name)]], # -1 # spawning
-		'07F9' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 Z*',			[qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv font name)]], # -1 # standing
+		'07F7' => ['actor_display', 'v C a4 v3 V v5 a4 v5 a4 a2 v V C2 a6 C2 v2 Z*',	[qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking
+		'07F8' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C2 v2 Z*',			[qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # spawning
+		'07F9' => ['actor_display', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 Z*',			[qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # standing
 	);
 
 	foreach my $switch (keys %packets) {
@@ -57,11 +57,11 @@ sub actor_display {
 	$self->SUPER::actor_display($args);
 	my $unpacked;
 	if ($args->{switch} eq "07F7") {
-		$unpacked = "move: 07F7, " . join(', ', @{$args}{qw(len object_type _ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead _tick tophead midhead hair_color clothes_color head_dir _guildID _emblemID manner opt3 karma sex _coords xSize ySize lv font name)});
+		$unpacked = "move: 07F7, " . join(', ', @{$args}{qw(len object_type _ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead _tick tophead midhead hair_color clothes_color head_dir _guildID _emblemID manner opt3 stance sex _coords xSize ySize lv font name)});
 	} elsif ($args->{switch} eq "07F8") {
-		$unpacked = "spawn: 07F8, " . join(', ', @{$args}{qw(len object_type _ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir _guildID _emblemID manner opt3 karma sex _coords xSize ySize lv font name)});
+		$unpacked = "spawn: 07F8, " . join(', ', @{$args}{qw(len object_type _ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir _guildID _emblemID manner opt3 stance sex _coords xSize ySize lv font name)});
 	} elsif ($args->{switch} eq "07F9") {
-		$unpacked = "stand: 07F9, " . join(', ', @{$args}{qw(len object_type _ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir _guildID _emblemID manner opt3 karma sex _coords xSize ySize act lv font name)});
+		$unpacked = "stand: 07F9, " . join(', ', @{$args}{qw(len object_type _ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir _guildID _emblemID manner opt3 stance sex _coords xSize ySize act lv font name)});
 	}
 	error ("$unpacked\n");
 	error ("Actor type: $actor->{$args->{object_type}}\n");
