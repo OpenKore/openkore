@@ -6,5 +6,5 @@ Caixinha "Noite Feliz" 2
 КОКТЕЙЛЬ 'Дыхание дракона' 2
 "Bowman Scroll 1" 2
 Unknown #502 2
-Slotted Item [1] 2
-"Slotted Item [2]" -1
+Main Gauche [3] 2
+"Main Gauche [4]" -1
