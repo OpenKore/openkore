@@ -6,6 +6,8 @@ use lib "$RealBin";
 use lib "$RealBin/..";
 use lib "$RealBin/../deps";
 
+use List::MoreUtils;
+
 use Test::More qw(no_plan);
 my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest RijndaelTest
 	SetTest SkillTest InventoryListTest
