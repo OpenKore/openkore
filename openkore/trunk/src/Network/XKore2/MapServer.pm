@@ -307,7 +307,7 @@ sub handleMapLoaded {
 			$player->{jobID}, $player->{hair_style}, $player->{weapon}, $player->{shield},
 			$player->{headgear}{low}, $player->{headgear}{top}, $player->{headgear}{mid},
 			$player->{hair_color}, $player->{look}{head}, $player->{guildID}, $player->{emblemID},
-			$player->{opt3}, $player->{karma}, $player->{sex}, $coords,
+			$player->{opt3}, $player->{stance}, $player->{sex}, $coords,
 			($player->{dead}? 1 : ($player->{sitting}? 2 : 0)), $player->{lv});
 	}
 	$client->send($output) if (length($output) > 0);

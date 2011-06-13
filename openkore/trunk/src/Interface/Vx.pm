@@ -913,8 +913,8 @@ sub packet {
 	#	$self->updatePos($pos{x},$pos{y});
 
 	} elsif ($switch eq "0078" || $switch eq "01D8") {
-		#0078 <ID> l <speed> w <opt1> w <opt2> w <option> w <class> w <hair> w <weapon> w <head option bottom> w <shield> w <head option top> w <head option mid> w <hair color> w? W <head dir> w <guild> l <emblem> l <manner> w <karma> B <sex> B <X_Y_dir> 3B? B? B <sit> B <Lv> B
-		#01d8 <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.w <item id1>.w <item id2>.w <head option bottom>.w <head option top>.w <head option mid>.w <hair color>.w ?.w <head dir>.w <guild>.l <emblem>.l <manner>.w <karma>.B <sex>.B <X_Y_dir>.3B ?.B ?.B <sit>.B <Lv>.B ?.B
+		#0078 <ID> l <speed> w <opt1> w <opt2> w <option> w <class> w <hair> w <weapon> w <head option bottom> w <shield> w <head option top> w <head option mid> w <hair color> w? W <head dir> w <guild> l <emblem> l <manner> w <stance> B <sex> B <X_Y_dir> 3B? B? B <sit> B <Lv> B
+		#01d8 <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.w <item id1>.w <item id2>.w <head option bottom>.w <head option top>.w <head option mid>.w <hair color>.w ?.w <head dir>.w <guild>.l <emblem>.l <manner>.w <stance>.B <sex>.B <X_Y_dir>.3B ?.B ?.B <sit>.B <Lv>.B ?.B
 		#0078 mainly is monster , portal
 		#01D8 = npc + player for episode 4+
 		my $ID = substr($msg, 2, 4);
@@ -943,8 +943,8 @@ sub packet {
 		$self->moveObj($ID,"un",$coords{x},$coords{y}) if ($type != 45 && !$pet);
 
 	} elsif ($switch eq "0079" || $switch eq "01D9") {
-		#0079 <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.w <weapon>.w <head option bottom>.w <sheild>.w <head option top>.w <head option mid>.w <hair color>.w ?.w <head dir>.w <guild>.l <emblem>.l <manner>.w <karma>.B <sex>.B <X_Y_dir>.3B ?.B ?.B <Lv>.B
-		#01d9 <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.w <item id1>.w <item id2>.w.<head option bottom>.w <head option top>.w <head option mid>.w <hair color>.w ?.w <head dir>.w <guild>.l <emblem>.l <manner>.w <karma>.B <sex>.B <X_Y_dir>.3B ?.B ?.B <Lv>.B ?.B
+		#0079 <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.w <weapon>.w <head option bottom>.w <sheild>.w <head option top>.w <head option mid>.w <hair color>.w ?.w <head dir>.w <guild>.l <emblem>.l <manner>.w <stance>.B <sex>.B <X_Y_dir>.3B ?.B ?.B <Lv>.B
+		#01d9 <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.w <item id1>.w <item id2>.w.<head option bottom>.w <head option top>.w <head option mid>.w <hair color>.w ?.w <head dir>.w <guild>.l <emblem>.l <manner>.w <stance>.B <sex>.B <X_Y_dir>.3B ?.B ?.B <Lv>.B ?.B
 		#For boiling Character inside the indicatory range of teleport and the like, it faces and is not attached Character information? 
 		my $ID = substr($msg, 2, 4);
 		my %coords;
@@ -952,8 +952,8 @@ sub packet {
 		$self->moveObj($ID,"p",$coords{x},$coords{y});
 
 	} elsif ($switch eq "007B" || $switch eq "01DA" || $switch eq "0086") {
-		#007b <ID> l <speed> w <opt1> w <opt2> w <option> w <class> w <hair> w <weapon> w <head option bottom> w <server tick> l <shield> w <head option top> w <head option mid> w <hair color> w? W <head dir> w <guild> l <emblem> l <manner> w <karma> B <sex> B <X_Y_X_Y> 5B? B? B? B <Lv> B 
-		#01da <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.<item id1>.w <item id2>.w <head option bottom>.w <server tick>.l <head option top>.w <head option mid>.w <hair color>.w ?.w <head dir>.w <guild>.l <emblem>.l <manner>.w <karma>.B <sex>.B <X_Y_X_Y>.5B ?.B ?.B ?.B <Lv>.B ?.B
+		#007b <ID> l <speed> w <opt1> w <opt2> w <option> w <class> w <hair> w <weapon> w <head option bottom> w <server tick> l <shield> w <head option top> w <head option mid> w <hair color> w? W <head dir> w <guild> l <emblem> l <manner> w <stance> B <sex> B <X_Y_X_Y> 5B? B? B? B <Lv> B 
+		#01da <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.<item id1>.w <item id2>.w <head option bottom>.w <server tick>.l <head option top>.w <head option mid>.w <hair color>.w ?.w <head dir>.w <guild>.l <emblem>.l <manner>.w <stance>.B <sex>.B <X_Y_X_Y>.5B ?.B ?.B ?.B <Lv>.B ?.B
 		#Information of Character movement inside indicatory range
 		my $ID = substr($msg, 2, 4);
 		my (%coordsFrom, %coordsTo);
