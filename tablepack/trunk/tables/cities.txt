@@ -1,125 +1,76 @@
-airplane.rsw#
-airplane_01.rsw#
-airport.rsw#
-alb_ship.rsw#
-alb2trea.rsw#
-alberta.rsw#
-alberta_in.rsw#
-alde_alche.rsw#
-aldeba_in.rsw#
-aldebaran.rsw#
-ama_in01.rsw#
-ama_in02.rsw#
-amatsu.rsw#
-arena_room.rsw#
-auction_01.rsw#
-auction_02.rsw#
-ayo_in01.rsw#
-ayo_in02.rsw#
-ayothaya.rsw#
-bat_room.rsw#
-bra_in01.rsw#
-cmd_in01.rsw#
-cmd_in02.rsw#
-comodo.rsw#
-dew_in01.rsw#
-dic_in01.rsw#
-ein_in01.rsw#
-einbroch.rsw#
-gef_tower.rsw#
-geffen.rsw#
-geffen_in.rsw#
-gon_in.rsw#
-gonryun.rsw#
-hu_in01.rsw#
-hugel.rsw#
-in_orcs01.rsw#
-itemmall.rsw#
-izlu2dun.rsw#
-izlude.rsw#
-izlude_in.rsw#
-jawaii.rsw#
-jawaii_in.rsw#
-job3_guil01.rsw#
-job3_guil02.rsw#
-kh_mansion.rsw#
-kh_rossi.rsw#
-kh_school.rsw#
-kh_vila.rsw#
-lhz_airport.rsw#
-lhz_cube.rsw#
-lhz_in01.rsw#
-lhz_in02.rsw#
-lhz_in03.rsw#
-lhz_que01.rsw#
-lighthalzen.rsw#
-lou_in01.rsw#
-lou_in02.rsw#
-louyang.rsw#
-mal_in01.rsw#
-mal_in02.rsw#
-man_in01.rsw#
-mid_campin.rsw#
-moc_castle.rsw#
-moc_para01.rsw#
-moc_ruins.rsw#
-monk_in.rsw#
-morocc.rsw#
-morocc_in.rsw#
-moscovia.rsw#
-mosk_in.rsw#
-nameless_in.rsw#
-nif_in.rsw#
-pay_arche.rsw#
-payo1.rsw#
-payon.rsw#
-payon_in01.rsw#
-payon_in02.rsw#
-payon_in03.rsw#
-prontera.rsw#
-prt_are_in.rsw#
-prt_are01.rsw#
-prt_arena01.rsw#
-prt_castle.rsw#
-prt_church.rsw#
-prt_in.rsw#
-que_ba.rsw#
-que_bingo.rsw#
-que_dan02.rsw#
-que_god01.rsw#
-que_god02.rsw#
-que_house_s.rsw#
-que_job01.rsw#
-que_ng.rsw#
-que_rachel.rsw#
-que_sign01.rsw#
-que_thor.rsw#
-ra_in01.rsw#
-ra_temin.rsw#
-rachel.rsw#
-s_atelier.rsw#
-sec_in01.rsw#
-sec_in02.rsw#
-sec_pri.rsw#
-spl_in01.rsw#
-spl_in02.rsw#
-sword_1-1.rsw#
-sword_2-1.rsw#
-sword_3-1.rsw#
-thana_step.rsw#
-um_in.rsw#
-umbala.rsw#
-ve_in.rsw#
-ve_in02.rsw#
-veins.rsw#
-xmas.rsw#
-xmas_in.rsw#
-xmas_x.rsw#
-y_airport.rsw#
-yuno.rsw#
-yuno_in01.rsw#
-yuno_in02.rsw#
-yuno_in03.rsw#
-yuno_in04.rsw#
-yuno_in05.rsw#
-yuno_pre.rsw#
+alb_ship.rsw#Alberta Ship#
+alberta.rsw#Alberta#
+alberta_in.rsw#Inside Alberta#
+alb2trea.rsw# Alberta Island#
+aldebaran.rsw# Al De Baran#
+aldeba_in.rsw#Inside Al De Baran#
+gef_tower.rsw#Geffen Tower#
+geffen.rsw#Geffen#
+geffen_in.rsw#Inside Geffen#
+moc_castle.rsw#Morroc Castle#
+moc_ruins.rsw#Morroc Ruins#
+morocc.rsw#Morroc Town#
+morocc_in.rsw#Inside Morroc#
+pay_arche.rsw#Archer Village#
+payon.rsw#Payon Town#
+payon_in01.rsw#Inside Payon#
+payon_in02.rsw#Inside Payon#
+prontera.rsw#Prontera City#
+prt_in.rsw#Inside Prontera#
+prt_castle.rsw#Prontera Castle#
+prt_church.rsw#the Santuary#
+izlude.rsw#Izlude Town#
+izlude_in.rsw#Inside Izlude#
+izlu2dun.rsw#Byalan Island#
+monk_in.rsw#Inside St.Abbey#
+prt_are_in.rsw#Waiting room#
+arena_room.rsw#Waiting room#
+prt_arena01.rsw#ARENA#
+prt_are01.rsw#ARENA#
+comodo.rsw#Comodo#
+cmd_in01.rsw#Inside Comodo#
+cmd_in02.rsw#Inside Comodo#
+yuno.rsw#Yuno, the capital of Schwarzwald Republic#
+yuno_in01.rsw#Inside Yuno#
+yuno_in02.rsw#Inside the Sage Castle#
+yuno_in03.rsw#Inside Yuno#
+yuno_in04.rsw#Republic Library#
+yuno_in05.rsw#Power Plant of Ymir's Heart#
+amatsu.rsw#Amatsu, the Land of Destiny#
+ama_in01.rsw#Inside Amatsu#
+ama_in02.rsw#Inside Himezi Castle#
+gonryun.rsw#Gonryun, the Hermit Land#
+gon_in.rsw#Inside Gonryun#
+sec_in01.rsw#Inside Valhalla#
+sec_in02.rsw#Inside Valhalla#
+sec_pri.rsw#Room of Meditation (Valhalla Prison)#
+payo1.rsw#Neo Payon Town#
+umbala.rsw#Utan Tribe Umbala#
+um_in.rsw#Inside Umbala#
+louyang.rsw#Castle of Dragon#
+lou_in02.rsw#Inside Castle of Dragon#
+lou_in01.rsw#Inside Castle of Dragon#
+rachel.rsw#Rachel#
+ra_in01.rsw#Inside Rachel#
+lighthalzen.rsw#Lightharlzen, the City-State of Prosperity#
+lhz_in01.rsw#Rekenber Corporation Headquarters#
+lhz_in02.rsw#Inside Lighthalzen#
+lhz_in03.rsw#Inside Lighthalzen#
+einbroch.rsw#Einbroch, the City of Steel#
+ein_in01.rsw#Inside Einbroch#
+jawaii.rsw#Jawaii, the Honeymoon Island#
+jawaii_in.rsw#Inside Jawaii#
+moscovia.rsw#Moscovia#
+mosk_in.rsw#Inside Moscovia#
+ayothaya.rsw#Ayothaya#
+ayo_in01.rsw#Inside Ayothaya#
+ayo_in02.rsw#Inside Ayothaya#
+hugel.rsw#Hugel, the Quaint Garden Village#
+hu_in01.rsw#Inside Hugel#
+veins.rsw#Veins, the Desert Village#
+ve_in.rsw#Inside Veins#
+ve_in02.rsw#Inside Veins#
+xmas_in.rsw#Inside Lutie#
+xmas.rsw#Lutie, Snow Village#
+xmas_x.rsw#Lutie, the Snow Village#
+moc_para01.rsw#Eden land#
