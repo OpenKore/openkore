@@ -1,5 +1,6 @@
 ﻿NV_BASIC#
 Basic Skill
+MAX Lv : 9
 ^777777Skill related to using basic interfaces.^000000
 [Level 1] : Trade.
 ^777777Enable trade with other players.^000000
@@ -23,6 +24,7 @@ Basic Skill
 #
 SM_SWORD#
 Sword Mastery
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : ^777777Increase attack when using swords.^000000
 [Level 1] : ^777777Attack +4^000000
@@ -38,6 +40,8 @@ Description : ^777777Increase attack when using swords.^000000
 #
 SM_TWOHAND#
 2 Handed Sword Mastery
+MAX Lv : 10
+^777777Skill Requirements : Sword Mastery 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Increase attack when using two-hand swords.^000000
 [Level 1] : ^777777Attack +4^000000
@@ -53,6 +57,7 @@ Description : ^777777Increase attack when using two-hand swords.^000000
 #
 SM_RECOVERY#
 Fast Recovery
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : ^777777Increase HP recovery speed based on VIT,  the higher the VIT the more HP is recovered.^000000
 [Level 1] : ^777777HP recovery +5 every 10 seconds^000000
@@ -68,12 +73,15 @@ Description : ^777777Increase HP recovery speed based on VIT,  the higher the VI
 #
 SM_BASH#
 Bash
+MAX Lv : 10
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Attack with great might. If Fatal Blow is at Lv 5 or above,  there is possibility of stunning the enemy.^000000
 #
 SM_MAGNUM#
 Magnum Break
+MAX Lv : 10
+^777777Skill Requirements : Bash 5^000000
 If a normal attack is launched 10 seconds after the skill is activated,  the fire property attack will increases for 20%. A certain amount of HP will be deducted when it is used.
 Series : ^777777Attack^bb0000(Fire Attribute)^000000
 Target : ^777777Enemy^000000
@@ -92,6 +100,7 @@ A certain amount of HP will be deducted when it is used.^000000
 #
 SM_PROVOKE#
 Provoke
+MAX Lv : 10
 Series : ^777777Support^000000
 Target : ^777777Enemy^000000
 Description : ^777777Excite the target and decrease its defense. Useless against the undead.^000000
@@ -108,6 +117,8 @@ Description : ^777777Excite the target and decrease its defense. Useless against
 #
 SM_ENDURE#
 Endure
+MAX Lv : 10
+^777777Skill Requirements : Provoke 5^000000
 Series : ^777777Support^000000
 Description : ^777777Attack and movement not hindered in a fixed time. 
 The state of Endure will be deactivated after player is hit for 7 times. 
@@ -126,6 +137,7 @@ After player has activated Endure,  he can only activate Endure again at the tim
 #
 MG_SRECOVERY#
 Fast SP Recovery
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : Increase SP recovery speed.^000000
 [Level 1] : ^777777SP Recovery +3 every 10 seconds^000000
@@ -141,77 +153,100 @@ Description : Increase SP recovery speed.^000000
 #
 MG_SIGHT#
 Sight
+MAX Lv : 1
 Series : ^777777Support^bb0000(Fire Attribute)^000000
 Description : ^777777Find cloaking enemies.^000000
 #
 MG_FIREBOLT#
 Fire Bolt
+MAX Lv : 10
 Series : ^777777Attack^bb0000(Fire Attribute)^000000
 Target : ^777777Enemy^000000
 Description : ^777777Summon fire spears falling from the sky to attack enemies.^000000
 #
 MG_FIREBALL#
 Fire Ball
+MAX Lv : 10
+^777777Skill Requirements : Fire Bolt 4^000000
 Series : ^777777Attack^bb0000(Fire Attribute)^000000
 Target : ^777777Enemy^000000
 Description : ^777777Attack with fire ball. Damage received by the monsters around the target is 3/4 of damage received by the targetted monster. Cast time and after cast delay will be shortened after the skill reaches level 5 and above.^000000
 #
 MG_FIREWALL#
 Fire Wall
+MAX Lv : 10
+^777777Skill Requirements : Sight 1, Fire Ball 5^000000
 Series : ^777777Attack^bb0000(Fire Attribute)^000000
 Target : ^777777Ground^000000
 Description : ^777777Establish fire wall to defend enemy attacks.^000000
 #
 MG_COLDBOLT#
 Cold Bolt
+MAX Lv : 10
 Series : ^777777Attack^0000bb(Water Attribute)^000000
 Target : ^777777Enemy^000000
 Description : ^777777Summon ice spears from the sky to attack enemies.^000000
 #
 MG_FROSTDIVER#
 Frost Diver
+MAX Lv : 10
+^777777Skill Requirements : Cold Bolt 5^000000
 Series : ^777777Attack^0000bb(Water Attribute)^000000
 Target : ^777777Enemy^000000
 Description : ^777777Freeze enemies for a time period.^000000
 #
 MG_STONECURSE#
 Stone Curse
+MAX Lv : 10
 Series : ^777777Curse^00bb00(Earth Attribute)^000000
 Target : ^777777Enemy^000000
 Description : ^777777Turn one enemy to stone. Expends ^00bb00one Red Gemstone^777777 as catalyst.^000000
 #
 MG_LIGHTNINGBOLT#
 Lightning Bolt
+MAX Lv : 10
 Series : ^777777Attack^bbbb00(Wind Attribute)^000000
 Target : ^777777Enemy^000000
 Description : ^777777Summon lightning bolts from the sky to attack enemies.^000000
 #
 MG_THUNDERSTORM#
 Thunder Storm
+MAX Lv : 10
+^777777Skill Requirements : Lightning Bolt 4^000000
 Series : ^777777Attack^bbbb00(Wind Attribute)^000000
 Target : ^777777Ground^000000
 Description : ^777777Drop a thunder storm from the sky to attack enemies.^000000
 #
 MG_NAPALMBEAT#
 Napalm Beat
+MAX Lv : 10
 Series : ^777777Attack^bb00bb(Spiritual)^000000
 Target : ^777777Enemy^000000
 Description : ^777777Attack enemies directly using spiritual force.^000000
 #
 MG_SOULSTRIKE#
 Soul Strike
+MAX Lv : 10
+^777777Skill Requirements : Napalm Beat 4^000000
 Series : ^777777Attack^bb00bb(Spiritual)^000000
 Target : ^777777Enemy^000000
 Description : ^777777Summon spirits to attack. Especially effective against undead creatures.^000000
 #
 MG_SAFETYWALL#
 Safety Wall
-Series : ^777777Support^bb00bb(Spiritual)^000000
+MAX Lv : 10
+2^777777Skill Requirements : Napalm Beat 7, Soul Strike 5^000000
+8^777777Skill Requirements : Aspersio 4, Sanctuary 3^000000
+Skill Form: ^777777Supportive
+Property: ^bb00bbSpiritual^000000
 Target : ^777777Ground^000000
-Description : ^777777Form a magic shield at the chosen spot for a fixed time,  to defend against enemy attacks. Expends^bb00bb one Blue Gemstone^777777.^000000
+Descrioption : ^777777 Creates a magical wall  on a selected ground. This magical wall can block a number of enemy attacks within its durability. The wall disappears when its durability reaches zero, or its time duration is up. It only can block the close-range melee attacks and it required one ^bb00bbBlue Gemstone^777777 to cast.^000000 
 #
 AL_DP#
 Divine Protection
+MAX Lv : 10
+14^777777Skill Requirements : Cure 1^000000
+4015^777777Skill Requirements : Cure 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Reduce damage from undead and ghosts. The defense will increase as the level of the character increases.^000000
 [Level 1] : ^777777Defence +3^000000
@@ -227,6 +262,8 @@ Description : ^777777Reduce damage from undead and ghosts. The defense will incr
 #
 AL_DEMONBANE#
 Demonbane
+MAX Lv : 10
+Skill Requirements : ^777777Divine Protection 3^000000
 Series : ^000099Passive^000000
 Description : ^777777Increase damage done to undead and ghosts. The attack will increase as the level of the character increases.^000000
 [Level 1] : ^777777Attack +3^000000
@@ -242,62 +279,82 @@ Description : ^777777Increase damage done to undead and ghosts. The attack will 
 #
 AL_ANGELUS#
 Angelus
+MAX Lv : 10
+^777777Skill Requirements : Divine Protection 3^000000
 Series : ^777777Support^000000
 Description : ^777777Raise Defence of player or team member.^000000
 #
 AL_CRUCIS#
 Signum Crucis
+MAX Lv : 10
+Skill Requirements : ^777777Demon Bane 3^000000
 Series : ^777777Support^000000
 Description : ^777777Weaken Defence of undead and ghosts around the player.^000000
 #
 AL_BLESSING#
 Blessing
+MAX Lv : 10
+^777777Skill Requirements : Divine Protection 5^000000
 Series : ^777777Support^000000
 Target : ^777777Player^000000
 Description : ^777777Temporarily raise DEX,  INT and STR. Restore cursed or stoned players to normal.^000000
 #
 AL_HEAL#
 Heal
+MAX Lv : 10
 Series : ^777777Recovery^000000
 Target : ^777777Player^000000
 Description : ^777777Recover target player's HP. Higher skill level,  INT and base level of the caster will increase the amount recovered.^000000
 #
 AL_HOLYWATER#
 Aqua Benedicta
+MAX Lv : 1
 Series : ^777777Recovery^000000
 Description : ^777777Create holy water in empty bottles. Must be in a place filled with water.^000000
 #
 AL_CURE#
 Cure
+MAX Lv : 1
+4^777777Requirements : Heal 2^000000
+14^777777Requirements : Faith 5^000000
 Series : ^777777Recovery^000000
 Target : ^777777Player^000000
 Description : ^777777Remove all curses. If this is casted on undead monsters,  they will be cursed with the `Chaos' status.^000000
 #
 AL_INCAGI#
 Increase Agility
+MAX Lv : 10
+^777777Skill Requirements : Heal 3^000000
 Series : ^777777Support^000000
 Target : ^777777Player^000000
 Description : ^777777Increase player AGI for a fixed time.^000000
 #
 AL_DECAGI#
 Decrease Agility
+MAX Lv : 10
+^777777Skill Requirements : Increase Agility 1^000000
 Series : ^777777Support^000000
 Target : ^777777Enemy^000000
 Description : ^777777Decrease enemy agility for a fixed time.^000000
 #
 AL_RUWACH#
 Ruwach
+MAX Lv : 1
 Series : ^777777Support^000000
 Description : ^777777Find cloaking enemies and attack them with sacred force.^000000
 #
 AL_PNEUMA#
 Pneuma
+MAX Lv : 1
+^777777Skill Requirements : Warp Portal 4^000000
 Series : ^777777Support^000000
 Target : ^777777Ground^000000
 Description : ^777777Create a shield at the chosen spot for a fixed time,  blocking all enemy long-range attacks.^000000
 #
 AL_TELEPORT#
 Teleportation
+MAX Lv : 2
+^777777Skill Requirements : Ruwach 1^000000
 Series : ^777777Support^000000
 Description : ^777777Teleport to another area.^000000
 [Level 1] : ^777777Teleport to a random spot close by.^000000
@@ -305,6 +362,8 @@ Description : ^777777Teleport to another area.^000000
 #
 AL_WARP#
 Warp Portal
+MAX Lv : 4
+^777777Skill Requirements : Teleport 2^000000
 Series : ^777777Support^000000
 Target : ^777777Ground^000000
 Description : ^777777Teleport between different maps. Teleports a maximum of 8 player (regardless of level). Expends ^000099one Blue Gemstone^777777.^000000
@@ -316,6 +375,7 @@ Description : ^777777Teleport between different maps. Teleports a maximum of 8 p
 #
 MC_INCCARRY#
 Enlarge Weight Limit
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : ^777777Raise maximum weight the player can carry.^000000
 [Level 1] : ^777777Maximum weight +200^000000
@@ -331,6 +391,8 @@ Description : ^777777Raise maximum weight the player can carry.^000000
 #
 MC_DISCOUNT#
 Discount
+MAX Lv : 10
+^777777Skill Requirements : Enlarge Weight Limit 3^000000
 Series : ^000099Passive^000000
 Description : ^777777Get special discounts when buying items in stores.^000000
 [Level 1] : ^777777Discount of 7%^000000
@@ -346,6 +408,8 @@ Description : ^777777Get special discounts when buying items in stores.^000000
 #
 MC_OVERCHARGE#
 Overcharge
+MAX Lv : 10
+^777777Skill Requirements : Discount 3^000000
 Series : ^000099Passive^000000
 Description : Sell items with a higher price to stores.^000000
 [Level 1] : ^777777Overcharge of  7%^000000
@@ -361,6 +425,8 @@ Description : Sell items with a higher price to stores.^000000
 #
 MC_PUSHCART#
 Pushcart
+MAX Lv : 10
+^777777Skill Requirements : Enlarge Weight Limit 5^000000
 Series : ^000099Passive^000000
 Description : ^777777Allow player to use a pushcart for high carrying capacity.^000000
 ^777777Rent a pushcart from the Kapra Staff,   ^000099press Alt-W to open the pushcart window^777777 to use pushcart.^000000
@@ -368,11 +434,14 @@ Description : ^777777Allow player to use a pushcart for high carrying capacity.^
 #
 MC_IDENTIFY#
 Identify
+MAX Lv : 1
 Series : ^777777Support^000000
 Description : ^777777Identify items and find its hidden properties.^000000
 #
 MC_VENDING#
 Vending
+MAX Lv : 10
+^777777Skill Requirements : Pushcart 3^000000
 Series : ^777777Support^000000
 Description : ^777777Allow the player to open a shop anywhere.^000000
 ^777777More items can be put on sale with a higher skill level.^000000
@@ -395,6 +464,7 @@ Description : ^777777Attack a specific enemy with money.^000000
 #
 AC_OWL#
 Owl's Eye
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : ^777777Raise DEX.^000000
 [Level 1] : ^777777DEX +1^000000
@@ -410,6 +480,9 @@ Description : ^777777Raise DEX.^000000
 #
 AC_VULTURE#
 Vulture's Eye
+MAX Lv : 10
+^777777Skill Requirements : Owl's Eye 3^000000
+17^777777kill Requirements : Owl's Eye 10^000000
 Series : ^000099Passive^000000
 Description : ^777777Increase Bow range and accuracy.^000000
 [Level 1] : ^777777Bow range +1^000000
@@ -425,29 +498,37 @@ Description : ^777777Increase Bow range and accuracy.^000000
 #
 AC_CONCENTRATION#
 Attention Concentrate
+MAX Lv : 10
+^777777Skill Requirements : Vulture's Eye 1^000000
 Series : ^777777Support^000000
 Description : ^777777Temporarily increase DEX and AGI,  also detects cloaking enemies nearby.^000000
 #
 AC_DOUBLE#
 Double Strafing
+MAX Lv : 10
+17^777777Requirements : Vulture's Eye 10^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Shoot two arrows instantly,  deal 2 times the damage to the same enemy.^000000
 #
 AC_SHOWER#
 Arrow Shower
+MAX Lv : 10
+^777777Requirements : Double Strafe 5^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Shoot many arrows and attack all nearby enemies.^000000
 #
 TF_DOUBLE#
 Double Attack
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : ^777777When using weapon of dagger class, there is certain rate to launch double attack. 
 The rate of launching double attack increases according to the level. If character uses katar class weapon, damage dealt by left hand will be affected.^000000
 #
 TF_MISS#
 Increase Dodge
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : ^777777Increase dodge rate.^000000
 [Level 1] : ^777777Increase dodge rate by 3%^000000
@@ -463,29 +544,36 @@ Description : ^777777Increase dodge rate.^000000
 #
 TF_STEAL#
 Steal
+MAX Lv : 10
 Series : ^777777Support^000000
 Target : ^777777Enemy^000000
 Description : ^777777Steal items from enemies.^000000
 #
 TF_HIDING#
 Hiding
+MAX Lv : 10
+^777777Requirements : Steal 5^000000
 Series : ^777777Support^000000
 Description : ^777777Hide underground to evade enemy attacks.^000000
 #
 TF_POISON#
 Envenom
+MAX Lv : 10
 Series : ^777777Attack (Poison)^000000
 Target : ^777777Enemy^000000
 Description : ^777777Damage the enemy with poison. A fixed probability that the enemy is also poisoned.^000000
 #
 TF_DETOXIFY#
 Detoxify
+MAX Lv : 1
+^777777Requirements : Envenom 3^000000
 Series : ^777777Support (Poison)^000000
 Target : ^777777Player^000000
 Description : ^777777Remove Poison status of one player.^000000
 #
 KN_SPEARMASTERY#
 Spear Mastery
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : ^777777Increase attack when using spears. On Pecopecos,  attack gets an additional Level+1 boost.^000000
 [Level 1] : ^777777Attack +4^000000
@@ -501,6 +589,8 @@ Description : ^777777Increase attack when using spears. On Pecopecos,  attack ge
 #
 KN_PIERCE#
 Pierce
+MAX Lv : 10
+^777777Skill Requirements : Spear Mastery 1^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000 
 Description : ^777777Attack enemies with spears. Different enemy sizes are attacked different number of times. ^00bb00Must be equipped with ^777777spears.^000000
@@ -510,6 +600,8 @@ Description : ^777777Attack enemies with spears. Different enemy sizes are attac
 #
 KN_BRANDISHSPEAR#
 Brandish Spear
+MAX Lv : 10
+^777777Skill Requirements : Peco Peco Ride 1, Spear Stab 3^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000 
 Description : ^777777A powerful strike with the spear while riding Pecopecos. Must have ^00bb00Spear ^777777and ^00bb00Pecopeco ^777777.^000000
@@ -522,12 +614,16 @@ Description : ^777777Knock back enemies using the spear,  also attacks a whole r
 #
 KN_SPEARBOOMERANG#
 Spear Boomerang
+MAX Lv : 5
+^777777Skill Requirements : Pierce 3^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000 
 Description : ^777777Attack enemies from a distance with the spear. ^00bb00Must be equipped with a ^777777Spear.^000000
 #
 KN_TWOHANDQUICKEN#
 Two-hand Quicken
+MAX Lv : 10
+^777777Skill Requirements : Two Handed Sword Mastery 1^000000
 Series : ^777777Support^000000
 Description : ^777777Increase attack speed of two-hand swords for a fixed time. This skill is disabled when un-equipping the two-hand sword.^000000
 [Level 1] : ^777777Continue for  30 seconds ^000000
@@ -550,6 +646,10 @@ The counter attack will be launched in the form of critical attack.^000000
 #
 KN_BOWLINGBASH#
 Bowling Bash
+MAX Lv : 10
+^777777Skill Requirements : Bash 10, Magnum Break 3,
+Two Handed Sword Mastery 5, Two Hand Quicken 10,
+Counter Attack 5^000000 
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000 
 Description : ^777777Make enemies nearby bump into and damage each other. Has a wide attack radius.
@@ -557,6 +657,8 @@ Caused enemies to collides among each other. Can attack multiple enemies at once
 #
 KN_RIDING#
 Riding
+MAX Lv : 1
+^777777Skill Requirements : Endure 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Allow player to ride trained Pecopecos.^000000
 #
@@ -567,6 +669,7 @@ Description : ^777777Increase attack speed while riding a Pecopeco. When complet
 #
 PR_MACEMASTERY#
 Mace Mastery
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : ^777777Increase attack when using a mace.^000000
 [Level 1] : ^777777Attack +3^000000
@@ -582,6 +685,7 @@ Description : ^777777Increase attack when using a mace.^000000
 #
 PR_IMPOSITIO#
 Impositio Manus
+MAX Lv : 5
 Series : ^777777Blessing^000000
 Target : ^777777Player^000000
 Description : ^777777Bless a person with the Layign on of hands. Increase weapon attack for 1 minute.^000000
@@ -593,6 +697,8 @@ Description : ^777777Bless a person with the Layign on of hands. Increase weapon
 #
 PR_SUFFRAGIUM#
 Suffragium
+MAX Lv : 3
+^777777Skill Requirements : Impositio Manus 2^000000
 Series : ^777777Blessing^000000
 Target : ^777777Players (except caster)^000000
 Description : ^777777A sacrificial blessing skill for other people. Shortens skill cast time.^000000
@@ -602,6 +708,9 @@ Description : ^777777A sacrificial blessing skill for other people. Shortens ski
 #
 PR_ASPERSIO#
 Aspersio
+MAX Lv : 5
+^777777Skill Requirements : Aqua Benedicta 1,
+Impositio Manus 3^000000
 Series : ^777777Blessing^000000
 Target : ^777777Players (except caster)^000000
 Description : ^777777Baptize the player with holy water. Bless the weapon with Holy attribute for a fixed time (depending on level). ^00bb00Expends ^777777Holy Water.^000000
@@ -613,30 +722,41 @@ Description : ^777777Baptize the player with holy water. Bless the weapon with H
 #
 PR_BENEDICTIO#
 Benedictio Sanctissimi Sacramenti
+MAX Lv : 5
+Skill Requirements : ^777777Aspersio 5, Gloria 3^000000
 Series : ^777777Blessing^000000
 Target : ^777777Ground^000000
 Description : ^777777Benediction of the Blessed Sacrament. Endow the armor of the player standing on the choosen spot with Holy attribute. Requires two other ^00bb00priest class teammates^777777 to put the holy water on the ground.^000000
 #
 PR_SANCTUARY#
 Sanctuary
+MAX Lv : 10
+^777777Skill Requirements :  Heal 1^000000
 Series : ^777777Support^000000
 Target : ^777777Ground^000000
 Description : ^777777Endow the selected area with sacred strength. Players entering the area will recover HP,  while undead and ghosts enterings will be damaged. Needs a Blue Gemstone.^000000
 #
 PR_STRECOVERY#
 Recovery
+MAX Lv : 1
 Series : ^777777Support^000000
 Target : ^777777Player^000000
 Description : ^777777Recover players from abnormal status such as undead,  frozen and stone. When casted on undead monsters,  they will fall into darkness.^000000
 #
 PR_SLOWPOISON#
 Slow Poison
+MAX Lv : 4
+^777777Skill Requirements : Increase SP Recovery 4,
+Recovery 1^000000
 Series : ^777777Support^000000
 Target : ^777777Player^000000
 Description : ^777777Slow down the poison effect on a poisoned player.^000000
 #
 ALL_RESURRECTION#
 Resurrection
+MAX Lv : 4
+^777777Skill Requirements : Increase SP Recovery 4,
+Recovery 1^000000
 Series : ^777777Support^000000
 Target : ^777777Players unable to fight^000000
 Description : ^777777Revive players who are unable to fight. Needs a Blue Gemstone.^000000
@@ -647,6 +767,8 @@ Description : ^777777Revive players who are unable to fight. Needs a Blue Gemsto
 #
 PR_KYRIE#
 Kyrie Eleison
+MAX Lv : 10
+^777777Skill Requirements : Angelus 2^000000
 Series : ^777777Eulogy^000000
 Description : ^777777Temporary complete defence for all team members from all attacks.^000000
 [Level 1] : ^777777Lasting 10 seconds,  1 defences^000000
@@ -662,47 +784,62 @@ Description : ^777777Temporary complete defence for all team members from all at
 #
 PR_MAGNIFICAT#
 Magnificat
+MAX Lv : 5
 Series : ^777777Eulogy^000000
 Description : ^777777Increase recovery speed of HP and SP for all teammates.^000000
 #
 PR_GLORIA#
 Gloria
+MAX Lv : 5
+^777777Skill Requirements : Kyrie Eleison 4, Magnificat 3^000000
 Series : ^777777Eulogy^000000
 Description : ^777777LUK +30 for all teammates for a fixed time.^000000
 #
 PR_LEXDIVINA#
 Lex Divina
+MAX Lv : 10
+^777777Skill Requirements : Ruwach 1^000000
 Series : ^777777Exorcising^000000
 Target : ^777777Enemy^000000 
 Description : ^777777Prevent an enemy from casting spells for a fixed time.^000000
 #
 PR_TURNUNDEAD#
 Turn Undead
+MAX Lv : 10
+^777777Skill Requirements : Resurrection 1, Lex Divina 3^000000
 Series : ^777777Exorcising^000000
 Target : ^777777Enemy^000000 
 Description : ^777777A fixed probability of instant death for an undead monster. Damage is dealt in case of failure.^000000
 #
 PR_LEXAETERNA#
 Lex Aeterna
+MAX Lv : 1
+^777777Skill Requirements : Lex Divina 5^000000
 Series : ^777777Exorcising^000000
 Target : ^777777Enemy^000000 
 Description : ^777777Double the damage the enemy is going to receive. Cannot be used on frozen or stoned enemies.^000000
 #
 PR_MAGNUS#
 Magnus Exorcismus
+MX Lv : 10
+^777777Skill Requirements :  Turn Undead 3,
+Lex Aeterna 1, Safety Wall 1^000000
 Series : ^777777Exorcising^000000
 Target : ^777777Ground^000000
 Description : ^777777Draw a huge cross on the ground. Ghosts and undead monsters entering the area will be severely damaged. Needs a ^00bb00Blue Gemstone^777777 as catalyst.^000000
 #
 WZ_FIREPILLAR#
 Fire Pillar
+MAX Lv : 10
+^777777Skill Requirements : Fire Wall 1^000000
 Series : ^777777Attack^bb0000(Fire Attribute)^000000
 Target : ^777777Ground^000000
-Description : ^777777Form fire pillars on the chosen spot to attack enemies. Needs a ^00bb00Blue Gemstone^777777 as catalyst. 
-Blue gemstone is required as a media to activate the attack of Fire Pillar of level 6 and above.^000000
+Description : ^777777 Summon a flame tower on a selected ground to attack enemies. ^000000
 #
 WZ_SIGHTRASHER#
 Sight Rasher
+MAX Lv : 10
+^777777Skill Requirements : Sight 1, Lightning Bolt 1^000000
 Series : ^777777Attack^bb0000(Fire Attribute)^000000
 Description : ^00bb00Use when Sight is active. ^777777Spread fireballs to attack enemies around the caster.^000000
 #
@@ -714,54 +851,77 @@ Description : ^777777Summon free moving ivy vines of flame to attack.^000000
 #
 WZ_METEOR#
 Meteor Storm
+MAX Lv : 10
+^777777Skill Requirements : Thunder Storm 1, Sightrasher 2^000000
 Series : ^777777Attack^bb0000(Fire Attribute)^000000
 Target : ^777777Ground^000000 
 Description : ^777777Drop meteors in the chosen area to attack.^000000
 #
 WZ_JUPITEL#
 Jupitel Thunder
+MAX Lv : 10
+^777777Skill Requirements : Napalm Beat 1,
+Lightning Bolt 1^000000
 Series : ^777777Attack^bbbb00(Wind Attribute)^000000
 Target : ^777777Enemy^000000 
 Description : ^777777A thunder spell that will deal great damage to monsters.^000000
 #
 WZ_VERMILION#
 Lord of Vermilion
+MAX Lv : 10
+^777777Skill Requirements :  Thunder Storm 1,
+Jupitel Thunder 5^000000
 Series : ^777777Attack^bbbb00(Wind Attribute)^000000
 Target : ^777777Ground^000000
 Description : ^777777Strong thunderbolt attack spell. Although level does not influence power,  but higher levels take shorter to cast.^000000
 #
 WZ_WATERBALL#
 Water Ball
+MAX Lv : 5
+^777777Skill Requirements : Cold Bolt 1, Lightning Bolt 1^000000
 Series : ^777777Attack^0000bb(Water Attribute)^000000
 Target : ^777777Enemy^000000 
 Description : ^777777Attack with water. Caster must be standing in water.^000000
 #
 WZ_ICEWALL#
 Ice Wall
+MAX Lv : 10
+^777777Skill Requirements : Stone Curse 1, Frost Diver 1^000000
 Series : ^777777Support^0000bb(Water Attribute)^000000
 Target : ^777777Ground^000000
 Description : ^777777Freeze the ground to form obstacles to defend against enemies.^000000
 #
 WZ_FROSTNOVA#
 Frost Nova
+Frost Nova
+MAX Lv : 10
+^777777Skill Requirements : Frost Diver 1, Icewall 1^000000
 Series : ^777777Support^0000bb(Water Attribute)^000000
 Target : ^777777Enemy^000000
 Description : ^777777Freeze nearby enemies.^000000
 #
 WZ_STORMGUST#
 Storm Gust
+MAX Lv : 10
+^777777Skill Requirements : Frost Diver 1, Jupitel 3^000000
 Series : ^777777Attack^0000bb(Water Attribute)^000000
 Target : ^777777Ground^000000
 Description : ^777777Create a storm gust at the chosen place to attack enemies.^000000
 #
 WZ_EARTHSPIKE#
 Earth Spike
+MAX Lv : 5
+9^777777Requirements : Stone Curse 1^000000
+16^777777Requirements : Seismic Weapon 1^000000
 Series : ^777777Attack^00bb00(Earth Attribute)^000000
 Target : ^777777Enemy^000000 
 Description : ^777777Raise the ground that the enemy is standing on to attack.^000000
 #
 WZ_HEAVENDRIVE#
 Heaven's Drive
+MAX Lv : 5
+9^777777Requirements : Earth Spike 3^000000
+16^777777Requirements : Earth Spike 1^000000
 Series : ^777777Attack^00bb00(Earth Attribute)^000000
 Target : ^777777Ground^000000
 Description : ^777777Raise the ground in the chosen area to attack.^000000
@@ -769,6 +929,8 @@ Description : ^777777Raise the ground in the chosen area to attack.^000000
 
 WZ_QUAGMIRE#
 Quag Mire
+MAX Lv : 5
+^777777Skill Requirements : Heaven's Drive 1^000000
 50 units of AGI and DEX will reduced at most. Effect of this skills towards player will be halved.
 Series : ^777777Support^00bb00(Earth Attribute)^000000
 Target : ^777777Ground^000000
@@ -776,88 +938,118 @@ Description : ^777777Form a marsh on the chosen area. All players and monsters w
 #
 WZ_ESTIMATION#
 Estimation
+MAX Lv : 1
 Series : ^777777Support^000000
 Target : ^777777Monster^000000
 Description : ^777777Show information of a specific monster to teammates.^000000
 #
 BS_IRON#
 Iron
+MAX Lv : 5
 Series : ^000099Passive^000000
 Description : ^777777Making Iron. Higher level gives higher probability of success.^000000
 #
 BS_STEEL#
 Steel
+MAX Lv : 5
+^777777Skill Requirements : Iron Tempering 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Making Steel. Higher level gives higher probability of success.^000000
 #
 BS_ENCHANTEDSTONE#
 Enchanted Stone
+MAX Lv : 5
+^777777Skill Requirements : Iron Tempering 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Making Enchanted Stone of 4 different attributes. Higher level gives higher probability of success.^000000
 #
 BS_ORIDEOCON#
 Orideocon
+MAX Lv : 5
+^777777Skill Requirements : Enchanted Stone Craft 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Enable forging of level 3 weapons with ^00bb00Orideocon^777777. Higher level gives higher probability of success.^000000
 #
 BS_DAGGER#
 Dagger
+MAX Lv : 3
 Series : ^000099Passive^000000
 Description : ^777777Forge Dagger class weapons. Higher level gives higher probability of success.^000000
 #
 BS_SWORD#
 Sword
+MAX Lv : 3
+^777777Skill Requirements : Smith Dagger 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Forging Sword class weapons. Higher level gives higher probability of success.^000000
 #
 BS_TWOHANDSWORD#
 Two-hand Sword
+MAX Lv : 3
+^777777Skill Requirements : Smith Sword 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Forging two-hand sword class weapons. Higher level gives higher probability of success.^000000
 #
 BS_AXE#
 Axe
+MAX Lv : 3
+^777777Skill Requirements : Smith Sword 2^000000
 Series : ^000099Passive^000000
 Description : ^777777Forging Axe class weapons. Higher level gives higher probability of success.^000000
 #
 BS_MACE#
 Mace
+MAX Lv : 3
+^777777Skill Requirements : Smith Brass Knuckle 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Forging Mace class weapons. Higher level gives higher probability of success.^000000
 #
 BS_KNUCKLE#
 Knuckle
+MAX Lv : 3
+^777777Skill Requirements : Smith Dagger 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Forging Knuckle class weapons. Higher level gives higher probability of success.^000000
 #
 BS_SPEAR#
 Spear
+MAX Lv : 3
+^777777Skill Requirements : Smith Dagger 2^000000
 Series : ^000099Passive^000000
 Description : ^777777Forging Spear class weapons. Higher level gives higher probability of success.^000000
 #
 BS_HILTBINDING#
 Hilt Biding
+MAX Lv : 1
 Series : ^000099Passive^000000
 Description : ^777777Allow player to keep weapons held at death,  avoids dropping weapons.^000000
 #
 BS_FINDINGORE#
 Finding Ore
+MAX Lv : 1
+^777777Skill Requirements : Hilt Binding 1,
+Steel Tempering 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Finding ores from monsters with certain probabilities.^000000
 #
 BS_WEAPONRESEARCH#
 Research Weapon
+MAX Lv : 10
+^777777Skill Requirements : Hilt Binding 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Raise knowledge of weapons,  helps with wielding and forging of weapons.^000000
 #
 BS_REPAIRWEAPON#
 Repair Weapon
+MAX Lv : 1
+^777777Skill Requirements : Weaponry Research^000000
 Series : ^000099Supportive^000000
 Target : ^777777Weapons^000000
 Description : ^777777Repair damaged weapon.^000000
 #
 BS_SKINTEMPER#
 Skin Tempering
+MAX Lv : 5
 Series : ^000099Passive^000000
 Description : ^777777Raise fire attribute and defence.^000000
 [Level 1] : ^777777Defence +5%^000000
@@ -868,22 +1060,30 @@ Description : ^777777Raise fire attribute and defence.^000000
 #
 BS_HAMMERFALL#
 Hammer Fall
+MAX Lv : 5
 Series : ^000099Supportive^000000
 Target : ^777777Ground^000000
 Description : ^777777Hammering the ground at the chosen area to stun the surrounding enemies.^000000
 #
 BS_ADRENALINE#
 Adrenaline Rush
+MAX Lv : 5
+^777777Skill Requirements : Hammerfall 2^000000
 Series : ^000099Supportive^000000
 Description : ^777777Double the attack speed of Axe and Mace class weapons for a fixed time.^000000
 #
 BS_WEAPONPERFECT#
 Weapon Perfection
+MAX Lv : 5
+^777777Skill Requirements : Adrenaline Rush 2,
+Weaponry Research 2^000000
 Series : ^000099Supportive^000000
 Description : ^777777Attack monsters of all sizes with  100% damage for a fixed time.^000000
 #
 BS_OVERTHRUST#
 Over Thrust
+MAX Lv : 5
+^777777Skill Requirements : Adrenaline Rush 3^000000
 Series : ^000099Supportive^000000
 Description : ^777777Increase attack,  but weapons are more likely to be damaged.^000000
 [Level 1] : ^777777Attack increase by 5%,  weapon damage rate +0.1%^000000
@@ -894,11 +1094,14 @@ Description : ^777777Increase attack,  but weapons are more likely to be damaged
 #
 BS_MAXIMIZE#
 Maximize Power
+MAX Lv : 5
+^777777Skill Requirements : Weapon Perfection 3, Power Thrust 2^000000
 Series : ^000099Supportive^000000
 Description : ^777777Maximize power of the weapon. Drains SP continually until the status is cancelled by using this skill again.^000000
 #
 HT_SKIDTRAP#
 Skid Trap
+MAX Lv : 5
 Series : ^000099Trap (Hidden)^000000
 Target : ^777777Ground^000000
 Description : ^777777A trap that slides enemies in the direction assigned by the player. ^00bb00Requires 1^777777 Booby Trap.^000000
@@ -910,6 +1113,7 @@ Description : ^777777A trap that slides enemies in the direction assigned by the
 #
 HT_LANDMINE#
 Land Mine
+MAX Lv : 5
 Series : ^000099Trap (Hidden)^000000
 Target : ^777777Ground^000000
 Description : ^777777Trap that attacks when stepped on. ^00bb00Requires 1^777777 Booby Trap.^000000
@@ -921,12 +1125,16 @@ Description : ^777777Trap that attacks when stepped on. ^00bb00Requires 1^777777
 #
 HT_ANKLESNARE#
 Ankle Snare
+MAX Lv : 5
+^777777Skill Requirements : Skid Trap 1^000000
 Series : ^000099Trap (Hidden)^000000
 Target : ^777777Ground^000000
 Description : ^777777Holds the enemy down if stepped on. ^00bb00Requires 1^777777 Booby Trap. The time that the enemy is held down is related to enemy's AGI.^000000
 #
 HT_FLASHER#
 Flasher
+MAX lv : 5
+^777777Skill Requirements : Skid Trap 1^000000
 Series : ^000099Trap (Hidden)^000000
 Target : ^777777Ground^000000
 Description : ^777777Flashes bright light when stepped on,  making enemies loose their vision. ^00bb00Requires 2^777777 Booby Traps.^000000
@@ -938,6 +1146,8 @@ Description : ^777777Flashes bright light when stepped on,  making enemies loose
 #
 HT_SHOCKWAVE#
 Shockwave Trap
+MAX Lv : 5
+^777777Skill Requirements : Anklesnare 1^000000
 Series : ^000099Trap (Hidden)^000000
 Target : ^777777Ground^000000
 Description : ^777777Consume enemy SP if stepped on. ^00bb00Requires 2^777777 Booby Traps.^000000
@@ -949,6 +1159,8 @@ Description : ^777777Consume enemy SP if stepped on. ^00bb00Requires 2^777777 Bo
 #
 HT_SANDMAN#
 Sandman
+MAX Lv : 5
+^777777Skill Requirements : Flasher 1^000000
 Series : ^000099Trap (Hidden)^000000
 Target : ^777777Ground^000000
 Description : ^777777Put enemy and other surrounding enemies to sleep if stepped on. ^00bb00Requires 2^777777 Booby Traps.^000000
@@ -960,6 +1172,8 @@ Description : ^777777Put enemy and other surrounding enemies to sleep if stepped
 #
 HT_FREEZINGTRAP#
 Freezing Trap
+MAX Lv : 5
+^777777Skill Requirements : Flasher 1^000000
 Series : ^000099Trap (Hidden)^000000
 Target : ^777777Ground^000000
 Description : ^777777Freezes enemy if stepped on. ^00bb00Requires 2^777777 Booby Traps.^000000
@@ -971,6 +1185,8 @@ Description : ^777777Freezes enemy if stepped on. ^00bb00Requires 2^777777 Booby
 #
 HT_BLASTMINE#
 Blast Mine
+MAX Lv : 5
+^777777Skill Requirements : Sandman 1, Land Mine 1, Freezing Trap 1^000000
 Series : ^000099Trap (Visible)^000000
 Target : ^777777Ground^000000
 Description : ^777777Trap that explodes after the active time elapses. ^00bb00Requires 1^777777Booby Trap.^000000
@@ -982,6 +1198,8 @@ Description : ^777777Trap that explodes after the active time elapses. ^00bb00Re
 #
 HT_CLAYMORETRAP#
 Claymore Trap
+MAX Lv : 5
+^777777Skill Requirements : Blast Mine 1, Shockwave Trap 1^000000
 Series : ^000099Trap (Visible)^000000
 Target : ^777777Ground^000000
 Description : ^777777Trap that explodes and does area damage if stepped on. ^00bb00Requires 2^777777Booby Traps.^000000
@@ -993,18 +1211,24 @@ Description : ^777777Trap that explodes and does area damage if stepped on. ^00b
 #
 HT_REMOVETRAP#
 Remove Trap
+MAX Lv : 1
+11^777777Skill Requirements : Land Mine 1^000000
+17^777777Skill Requirements : Double Strafe 10^000000
 Series : ^000099Supportive^000000
 Target : ^777777Trap laid on the ground^000000
 Description : ^777777Remove traps laid on the ground. Also recovers the ^00bb00Booby Trap^777777 item.^000000
 #
 HT_TALKIEBOX#
 Talkie Box
+MAX Lv : 1
+^777777Skill Requirements : Remove Trap 1, Shockwave Trap 1^000000
 Series : ^000099Trap (Hidden)^000000
 Target : ^777777Ground^000000
 Description : ^777777A message window with pre-set messages will pop up for whoever steps on the trap. Active time 600 seconds . Requires ^00bb001 Booby Trap^777777.^000000
 #
 HT_BEASTBANE#
 Beast Bane
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : ^777777Increases the attack power towards monsters of Brute and Insect Class.^000000
 [Level 1] : ^777777Attack +4^000000
@@ -1020,11 +1244,15 @@ Description : ^777777Increases the attack power towards monsters of Brute and In
 #
 HT_FALCON#
 Falcon Mastery
+MAX Lv : 1
+^777777Skill Requirements : Beastbane 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Allow users to rent hunting falcons from the Hunters Guild^000000
 #
 HT_STEELCROW#
 Steel Crow
+MAX Lv : 10
+^777777Skill Requirements : Blitz Beat 5^000000
 Series : ^000099Passive^000000
 Description : ^777777Raise attack when falcon attacks.^000000
 [Level 1] : ^777777Attack +6^000000
@@ -1040,24 +1268,31 @@ Description : ^777777Raise attack when falcon attacks.^000000
 #
 HT_BLITZBEAT#
 Blitz Beat
+MAX lv : 5
+^777777Skill Requirements : Falconly Mastery 1^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Use the falcon to attack a specific enemy. Increased attack range: 3 + (Vulture's Eye).^000000
 #
 HT_DETECTING#
 Detecting
+MAX Lv : 4
+^777777Skill Requirements : Improve Concentration 1, Falconly Mastery 1^000000
 Series : ^777777Support^000000
 Target : ^777777Ground^000000
 Description : ^777777Use the falcon to detect enemy hiding in the distance.^000000
 #
 HT_SPRINGTRAP#
 Spring Trap
+MAX Lv : 5
+^777777Skill Requirements : Remove Trap 1, Falconly Mastery^000000
 Series : ^777777Support^000000
 Target : ^777777Traps laid on the ground^000000
 Description : ^777777This trap explodes either after a period of time or after taking a fixed amount of damage.^000000
 #
 AS_RIGHT#
 Right
+MAX Lv : 5
 Series : ^000099Passive^000000
 Description : ^777777Raise attack of right hand weapon when using two weapons. Recovers right hand attack to maximum of 100%.^000000
 [Level 1] : ^777777Attack 60%^000000
@@ -1068,6 +1303,7 @@ Description : ^777777Raise attack of right hand weapon when using two weapons. R
 #
 AS_LEFT#
 Left
+MAX Lv : 5
 Series : ^000099Passive^000000
 Description : ^777777Raise attack of left hand weapon when using two weapons. Recovers left hand attack to maximum of 80%.^000000
 [Level 1] : ^777777Attack 40%^000000
@@ -1078,6 +1314,7 @@ Description : ^777777Raise attack of left hand weapon when using two weapons. Re
 #
 AS_KATAR#
 Katar
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : ^777777Raise attack when using Katars.^000000
 [Level 1] : ^777777Attack +3^000000
@@ -1093,134 +1330,164 @@ Description : ^777777Raise attack when using Katars.^000000
 #
 AS_CLOAKING#
 Cloaking
+MAX Lv : 10
+^777777Skill Requirements : Hinding 2^000000
 Series : ^000099Supportive^000000
 Description : ^777777Moving invisibly in blindspots. This skill can only be used close to walls. The effect is cancelled when player is far away from a wall. When skill level is 1 or 2,  character can only use it near walls.^000000
 #
 AS_SONICBLOW#
 Sonic Blow
+MAX Lv : 10
+^777777Skill Requirements : Katar Mastery 4^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Attack an enemy with increased speed,  with a certain probability in stoning the enemy.^000000
 #
 AS_GRIMTOOTH#
 Grim Tooth
+MAX Lv : 5
+^777777Skill Requirements : Cloaking 2, Sonic Blow 5^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Attack when hidden. This skill cannot be used to attack enemies far away.^000000
 #
 AS_ENCHANTPOISON#
 Enchant Poison
+MAX Lv : 10
+^777777Skill Requirements : Envenom 1^000000
 Series : ^777777Supportive (Poison)^000000
 Target : ^777777Player^000000
 Description : ^777777Enchant chosen player's weapon with Poison attribute. When attacking enemies,  there is a fixed probability in poisoning the enemy.^000000
 #
 AS_POISONREACT#
 Poison React
+MAX Lv : 10
+^777777Skill Requirements : Enchant Poison 3^000000
 Series : ^777777Supportive (Poison)^000000
 Target : ^777777Player^000000
 Description : ^777777When a specific player is attacked with the Poison attribute,  this skill reflects the poison back to the enactor. This skill is only effective once.^000000
 #
 AS_VENOMDUST#
 Venom Dust
+MAX Lv : 10
+^777777Skill Requirements : Enchant Poison 5^000000
 Series : ^777777Supportive (Poison)^000000
 Target : ^777777Ground^000000
 Description : ^777777Spread venom in a chosen area. Requires a ^00bb00Red Gemstone^777777 as catalyst.^000000
 #
 AS_SPLASHER#
 Venom Splasher
+MAX Lv : 10
+^777777Skill Requirements : Poison React 5, Venom Dust 5^000000
 Series : ^777777Attack (Poison)^000000
 Target : ^777777Enemy^000000
-Description : ^777777Consume 1 Red Gemstone,  deals poison explosion to enemies after certain period of time. Can only be used when the HP of enemies is less than 3/4 of MHP. Deals damage to enemies in the area of effect during explosion and spead the posion.^000000
+Description : ^777777 Consumes 1 Red Gemstone and use a poison on a target. This posion will explode momentarily. Exploded poison will be affect other enemies around the target and spread.^000000
 #
 NV_FIRSTAID#
 First Aid
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Recovery^000000
 Target : ^777777Self^000000
 Description : ^777777Use 3 SP to recover 5 HP^000000
 #
 SM_MOVINGRECOVERY#
 Moving Recovery
+^777777Skill Requirements : Finish Quest^000000
 Series : ^000099Passive^000000
 Description : ^777777HP recovers automatically when moving,  and raised to 25% rate when standing still. Amount recovered is not influenced by other HP recovery skills.^000000
 #
 AC_MAKINGARROW#
 Arrow Making
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Support^000000
 Target : ^777777Item^000000
 Description : ^777777Exchange the items held into arrows. The result of the exchange will depend on the type and quantity of the items held.^000000
 #
 TF_SPRINKLESAND#
 Sprinkle Sand
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack (Ground Attribute)^000000
 Target : ^777777Enemy^000000
 Description : ^777777The attack of this skill is 130% of normal attack. There is a certain possibility of inflicting darkness or stun status towards enemy.^000000
 #
 MC_CARTREVOLUTION#
 Cart Revolution
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Run enemies over with the pushcart. Enemy is damaged repeatedly with 150% Attack. The heavier the pushcart the higher the Attack.^000000
 #
 AL_HOLYLIGHT#
 Holy Light
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack (Holy Attribute)^000000
 Target : ^777777Enemy^000000
 Description : ^777777Attack enemies with the holy light.^000000
 #
 MG_ENERGYCOAT#
 Energy Coat
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Support^000000
 Target : ^777777Self^000000
 Description : ^777777Surround oneself with spiritual energy to reduce damages from enemy attacks. The more SP available the less damage is done. SP is deducted everytime the player is attacked.^000000
 #
 NV_TRICKDEAD#
 Trick Dead
+^777777Skill Requirements : Finish Quest, Novice Only^000000
 Series : ^777777Support^000000
 Target : ^777777Self^000000
 Description : ^777777Escape danger by faking death. Using this skill again returns to normal status.^000000
 #
 SM_FATALBLOW#
 Fatal Blow
+^777777Skill Requirements : Finish Quest^000000
 Series : ^000099Passive^000000
-Description : ^777777At level 5 and above,  there's a fixed probability to stun enemies when using Bash. The stun probability is higher as Bash level increases.^000000
+Description : ^777777At level 6 and above,  there's a fixed probability to stun enemies when using Bash. The stun probability is higher as Bash level increases.^000000
 #
 AC_CHARGEARROW#
 Charge Arrow
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Shoot arrows with more strength,  but takes longer. Knocks enemy back by 4 paces.^000000
 #
 TF_BACKSLIDING#
 Back Sliding
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Support^000000
 Target : ^777777Self^000000
 Description : ^777777Move backward as if sliding. This dodges enemy attack safely. When the skill level or the level of player increases,  the stun rate will increase as well.^000000
 #
 MC_CHANGECART#
 Change Cart
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Support^000000
 Target : ^777777Self^000000
 Description : ^777777Change the pushcart into 5 different styles,  depending on the player's level.^000000
 #
 SM_AUTOBERSERK#
 Auto Berserk
-Series : ^000099Passive^000000
+^777777Skill Requirements : Finish Quest^000000
+Series : ^000099Active^000000
 Description : ^777777Go into berserk when near-death (HP less than 25%). This is the same as if Provoked. This status is cancelled when any skills that can cancel Provoke is used.^000000
 #
 TF_PICKSTONE#
 Pick Stone 
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Support^000000
 Target : ^777777Ground^000000
 Description : ^777777Pick up stones from the ground.^000000
 #
 TF_THROWSTONE#
 Throw Stone
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Throw stones. Damages 50 regardless of Defence. Requires one stone. Inflict enemies with Stun or Darkness status.^000000
 #
 MC_LOUD#
 Loud
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Support^000000
 Target : ^777777Self^000000
 Description : ^777777Shout loudly to increase strength. STR +4 for five minutes.^000000
@@ -1261,38 +1528,51 @@ Description : ^777777Increase the maximum capacity of guildsmen.^000000
 #
 RG_SNATCHER#
 Snatcher
+MAX lv : 10
+^777777Skill Requirements : Steal 1^000000
 Series : ^000099Passive^000000
 Target : ^777777Player^000000
 Description : ^777777Able to steal while attacks an enemy,  stealing accuracy depends on the  ^00bb00skill level^777777 .^000000
 #
 RG_STEALCOIN#
 Steal Coin
+MAX Lv : 10
+^777777Skill Requirements : Gank 4^000000
 Series : ^777777Support^000000
 Target : ^777777Enemy(Players excepted)^000000
 Description : ^777777Steals zenny from monsters,  unable to steal twice from the same enemy. Accurate and amount depends on skill level.^000000
 #
 RG_BACKSTAP#
 Back Stab
+MAX Lv : 10
+^777777Skill Requirements : Mug 4^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
-Description : ^777777Attack enemy from behind,  enemy are unable to avoid from back attack. ^000000
-^777777Able to cast while hidden; disable hidden when activate. Always hit the target. 
-The target of this skill will turn around after being attacked. When this skill is executed using bow,  the damage is halved.^000000
+Description: ^777777Back Stab is only usable when the caster is facing the enemy's rear.
+This skill never misses its target, but the target willface the user after it is hit. When used with a Bow, 
+this skill's damage is reduced by half.  Chance of stunning a target will be added by the skill level.
+Back Stab can be used when in Hiding status,but it will cancel Hiding.^000000
 #
 RG_TUNNELDRIVE#
 Tunnel Drive
+MAX Lv : 5
+^777777Skill Requirements : Hiding 1^000000
 Series : ^000099Passive^000000
 Target : ^777777Player^000000
 Description : ^777777Able to move while hidden,  but moving speed slower than normal.^000000
 #
 RG_RAID#
 Raid
+MAX Lv : 5
+^777777Skill Requirements : Stalk 2, Back Stab 2^000000
 Series : ^777777Attack^000000
 Target : ^7777779 Cell Around Caster^000000
-Description : ^777777Only able to cast while in hidden status. Cause damage to enemy that enters to the cast areas,  has a chance to cause Darkness. Hidden status will deactivate when the skill is cast.^000000
+Description : ^777777 Only usable in 'Hiding' condition. Splash damage to enemies within the range and also there's a chance of enemies fall in 'stun' and 'darkness' states. Target hit by the skill will receive 20% more damage for the number of times. However, Boss Monsters wil receive 10% more damage. Caster's 'Hiding' will be revealed after using the skill.^000000
 #
 RG_STRIPWEAPON#
 Strip Weapon
+MAX Lv : 5
+^777777Skill Requirements : Divest Armor 5^000000
 Series : ^777777Support^000000
 Target : ^777777Enemy^000000
 Description : ^777777Able to strips off encounter's weapon. Can cast during PVP mode and cause encounter not allowed to equip any weapon in certain period. Ineffective to monster,  but ATK will decrease 25% in certain of period. ^000000
@@ -1300,6 +1580,8 @@ Description : ^777777Able to strips off encounter's weapon. Can cast during PVP 
 #
 RG_STRIPSHIELD#
 Strip Shield
+MAX LV : 5
+^777777Skill Requirements : Divest Helm 5^000000
 Series : ^777777Support^000000
 Target : ^777777Enemy^000000
 Description : ^777777Able to strips off encounter's shield. Can cast during PVP mode and cause encounter not allowed to equip any shield in certain period. Ineffective to monster,  but DEF will decrease 15% in certain of period. ^000000
@@ -1307,6 +1589,8 @@ Description : ^777777Able to strips off encounter's shield. Can cast during PVP 
 #
 RG_STRIPARMOR#
 Strip Armor
+MAX Lv : 5
+^777777Skill Requirements : Divest Shield 5^000000
 Series : ^777777Support^000000
 Target : ^777777Enemy^000000
 Description : ^777777Able to strips off encounter's armor. Can cast during PVP mode and cause encounter not allowed to equip any armor in certain period. Ineffective to monster,  but DEF will decrease 40% in certain of period. ^000000
@@ -1314,6 +1598,8 @@ Description : ^777777Able to strips off encounter's armor. Can cast during PVP m
 #
 RG_STRIPHELM#
 Strip Helm
+MAX Lv : 5
+^777777Skill Requirements : Mug 2^000000
 Series : ^777777Support^000000
 Target : ^777777Enemy^000000
 Description : ^777777Able to strips off encounter's helm. Can cast during PVP mode and cause encounter not allowed to equip any helm in certain period. Ineffective to monster,  but DEF will decrease 40% in certain of period. ^000000
@@ -1321,12 +1607,16 @@ Description : ^777777Able to strips off encounter's helm. Can cast during PVP mo
 #
 RG_INTIMIDATE#
 Intimidate
+MAX Lv : 5
+^777777Skill Requirements : Back Stab 4, Sightless Mind 5^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Teleport to another spot within the map while attacks an encounter. Success rate depends on the skill level of caster or the target's basic Lv. ^000000
 #
 RG_GRAFFITI#
 Graffiti
+MAX Lv : 1
+^777777Skill Requirements : Piece 5^000000
 Series : ^777777Support^000000
 Target : ^777777Ground^000000
 Description : ^777777The words of graffiti will paint within the selected areas. The graffiti allowed up to 20 words. ^000000
@@ -1334,6 +1624,8 @@ Description : ^777777The words of graffiti will paint within the selected areas.
 #
 RG_FLAGGRAFFITI#
 Flag Graffiti
+MAX Lv : 5
+^777777Skill Requirements : Remover 1^000000
 Series : ^777777Support^000000
 Target : ^777777Flag^000000
 Description : ^777777Graffiti on the guild's flag. Pattern of graffiti increase depends on the skill level. ^000000
@@ -1341,17 +1633,23 @@ Description : ^777777Graffiti on the guild's flag. Pattern of graffiti increase 
 #
 RG_CLEANER#
 Cleaner
+MAX Lv : 1
+^777777Skill Requirements : Slyness^000000
 Series : ^777777Support^000000
 Target : ^777777Flag^000000
 Description : ^777777Remove the graffiti on flag. Each cleaner consume ^000099a mop^777777. (Unavailable yet)^000000
 #
 RG_GANGSTER#
 GangSter Paradise
+MAX Lv : 1
+^777777Skill Requirements : Divest Shield 3^000000
 Series : ^000099Passive^000000
 Description : ^777777One self and Rogues nearby will not get attack by monsters. Ineffective against Boss type monster. ^000000
 #
 RG_COMPULSION#
 Compulsion Discount
+MAX Lv : 5
+^777777Skill Requirements : Slyness 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Trading at the lowest price from merchant.^000000
 [Level 1] : ^777777Discount 9%^000000
@@ -1362,13 +1660,16 @@ Description : ^777777Trading at the lowest price from merchant.^000000
 #
 RG_PLAGIARISM#
 Plagiarism
+MAX Lv : 10
+^777777Skill Requirements : Snatch 5^000000
 Series : ^000099Passive^000000
 Description : ^777777Duplicates the last skill being attacked. Accuracy depends on skill level.^000000
 #
 AM_AXEMASTERY#
-Axe Mastery
+Axe & One-Handed Sword Mastery
+MAX Lv : 10
 Series : ^000099Passive^000000
-Description : ^777777Increases the strength when equip with Axe. ^000000
+Description : ^777777 Increases an axe or an one-handed sword's ATK.^000000
 [Level 1] : ^777777ATK +3^000000
 [Level 2] : ^777777ATK +6^000000
 [Level 3] : ^777777ATK +9^000000
@@ -1382,22 +1683,29 @@ Description : ^777777Increases the strength when equip with Axe. ^000000
 #
 AM_LEARNINGPOTION#
 Learning Potion
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : ^777777Increases the effect when use potion. Effective for make potion. ^000000
 #
 AM_PHARMACY#
 Pharmacy
+MAX Lv : 10
+^777777Skill Requirements : Potion Research 5^000000
 Series : ^777777Support^000000
 Description : ^777777Manufacture Potion or Medicines. You can use this with ^000099Medicine Bowl^777777 1ea. For the manufacture Potion,  pertinent ^000099Creat Book^777777 will be needed.^000000
 #
 AM_DEMONSTRATION#
 Demonstration
+MAX Lv : 5
+^777777Skill Requirements : Prepare Potion 4^000000
 Series : ^777777Attack^bb0000(Fire)^000000
 Target : ^777777Ground^000000
 Description : ^777777Cause damage to selected areas. Has a chance to cause damage on enemy's weapon. Consume one ^000099Fire Bottle ^7777771.^000000
 #
 AM_ACIDTERROR#
 Acid Terror
+MAX Lv : 5
+^777777Skill Requirements : Prepare Potion 5^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Damage enemies and inflict Wound status. There is certain rate to damage the armour. Consume one^000099Acid Bottle ^777777. ^000000
@@ -1405,6 +1713,8 @@ Description : ^777777Damage enemies and inflict Wound status. There is certain r
 #
 AM_POTIONPITCHER#
 Potion Pitcher
+MAX Lv : 5
+^777777Skill Requirements : Prepare Potion 3^000000
 Series : ^777777Support^000000
 Target : ^777777Teammate^000000
 Description : ^777777Recovers teammates' HP by pitch Potion. Effect of recovery depends on skill level and potion type. Potion type depends on skill level. ^000000
@@ -1416,6 +1726,8 @@ Description : ^777777Recovers teammates' HP by pitch Potion. Effect of recovery 
 #
 AM_CANNIBALIZE#
 Bio Cannibalize
+MAX Lv : 5
+^777777Skill Requirements : Prepare Potion 6^000000
 Series : ^777777Support^000000
 Target : ^777777Ground^000000
 Description : ^777777Summon ^000099Plant Class^777777 on selected ground for attack your enemy. The summoned monster will disappear after a period of time. The MHP of monsters differs according to the skill level. Different monsters will be summoned according to different level of skill. 
@@ -1424,36 +1736,48 @@ Player cannot summon more than one monster of the similar species. When the skil
 #
 AM_SPHEREMINE#
 Sphere Main
+MAX Lv : 5
+^777777Skill Requirements : Prepare Potion 2^000000
 Series : ^777777Support^000000
 Target : ^777777Ground^000000
 Description : ^777777Summon ^000099Maine Sphere^777777 to attack enemy. ^000099Maine Sphere ^777777 will explode when being attack. Consume one ^000099MenEater Plant Bottle ^777777.^000000
 #
 AM_CP_WEAPON#
 Chemical Protection Weapon
+MAX Lv : 5
+^777777Skill Requirements : Synthetic Armor 3^000000
 Series : ^777777Support^000000
 Target : ^777777Teammate^000000
 Description : ^777777Target's weapon turns into indestructible in certain period. Duration depends on skill level. Consume one^000099 Coating Bottle^777777.^000000
 #
 AM_CP_SHIELD#
 Chemical Protection Shield
+MAX Lv : 5
+^777777Skill Requirements : Biochemical Helm 3^000000
 Series : ^777777Support^000000
 Target : ^777777Teammate^000000
 Description : ^777777Target's shield turns into indestructible in certain period. Duration depends on skill level. Consume one ^000099 Coating Bottle ^777777.^000000
 #
 AM_CP_ARMOR#
 Chemical Protection Armor
+MAX Lv : 5
+^777777Skill Requirements : Synthesized Shield 3^000000
 Series : ^777777Support^000000
 Target : ^777777Teammate^000000
 Description : ^777777Target's armor turns into indestructible in certain period. Duration depends on skill level. Consume one^000099 Coating Bottle ^777777 1.^000000
 #
 AM_CP_HELM#
 Chemical Protection Helm
+MAX Lv : 5
+^777777Skill Requirements : Prepare Potion 2^000000
 Series : ^777777Support^000000
 Target : ^777777Teammate^000000
 Description : ^777777Target's helm turns into indestructible in certain period. Duration depends on skill level. Consume one^000099 Coating Bottle ^777777 1.^000000
 #
 AM_BIOETHICS#
 Bioethics
+Bioethics
+^777777Skill Requirements : Finish Quest^000000
 Series : ^000099Passive^000000
 Description : ^777777No special effect,  just to create bio life. But it's important for person that responsibles to prolong a life cycle. ^000000
 #
@@ -1479,12 +1803,16 @@ Description : ^777777Control reactor for creating creature. Increases Fire Attri
 #
 AM_CALLHOMUN#
 Call Homunculus
+MAX Lv : 1
+^777777Skill Requirements : Vaporize 1^000000
 Series : ^777777Support^000000
 Description : ^777777Summon the existing homunculus or create a homunculus. You need to create a homunculus before you summon it. 
 Creation of homunculus requires an 'Germination Breed' item and the homunculus must be in 'rest' status when you summon it.^000000
 #
 AM_REST#
 Rest
+MAX Lv : 1
+^777777Skill Requirements : Bioethics 1^000000
 Series : ^777777Support^000000
 Description : ^777777 Let the homunculus rest in order to gain full recovery on HP and SP. However,  
 this can only be done when the HP of homunculus is at least 80% of MHP. 
@@ -1513,24 +1841,30 @@ Description : ^777777Recovers creature's HP. The amount of recovery is similar t
 #
 AM_RESURRECTHOMUN#
 Resurrection Homunculus
+MAX Lv : 5
+^777777Skill Requirements : Call Homunculus 1^000000
 Series : ^777777Support^000000
 Target : ^777777Creature^000000
 Description : ^777777Revives creature.^000000
 #
 CR_TRUST#
 Faith
+MAX Lv : 10
 Series : ^000099Passive^000000
 Target : ^777777Creature^000000
 Description : ^777777Maximizes HP. Increases DEF towards Holy Attribution attack.^000000
 #
 CR_AUTOGUARD#
 Auto Guard
+MAX Lv : 10
 Series : ^777777Support^000000
 Description : ^777777Able to protect oneself from physic attack in certain period and distance. Must equip with a shield. ^000000
 ^777777Character will suffer 0.3 delay when using Auto Defense. When the skill level increases,  the duration of delay will reduces^000000
 #
 CR_SHIELDCHARGE#
 Shield Charge
+MAX Lv : 5
+^777777Skill Requirements : Guard 5^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Uses shield to attack. Target will slide backward to a certain distance and cause mystify. ^000000
@@ -1538,6 +1872,8 @@ Description : ^777777Uses shield to attack. Target will slide backward to a cert
 #
 CR_SHIELDBOOMERANG#
 Shield Boomerang
+MAX Lv : 5
+^777777Skill Requirements : Smite 3^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Throws the shield to attack a long-distance enemy. Damage depends on the weight of shield. ^000000
@@ -1545,18 +1881,24 @@ Description : ^777777Throws the shield to attack a long-distance enemy. Damage d
 #
 CR_REFLECTSHIELD#
 Reflect Shield
+MAX Lv : 10
+^777777Skill Requirements : Shield Boomerang 3^000000
 Series : ^777777Support^000000
 Description : ^777777Auto counter attack enemy in certain period and within a close distance. ^000000
 ^777777Must equip with a shield.^000000
 #
 CR_HOLYCROSS#
 Holy Cross
+MAX Lv : 10
+^777777Skill Requirements : Faith 7^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
-Description : ^777777Cast holy cross to attacks twice. Have a specific chance to cause Darkness. ^000000
+Description : ^777777 2 repeated attacks with a holy cross. Chance of 'Blind' status adds. ATK increases when use with a two-handed spear.^000000
 #
 CR_GRANDCROSS#
 Grand Cross
+MAX Lv : 10
+^777777Skill Requirements : Faith 10, Holy Cross 6^000000
 Series : ^777777Attack^000000
 Target : ^777777Ground^000000
 Description : ^777777Use yourself as the center of cast a huge holy cross. Extra damage given to the caster who is in 20% HP left. ^000000
@@ -1564,6 +1906,8 @@ Description : ^777777Use yourself as the center of cast a huge holy cross. Extra
 #
 CR_DEVOTION#
 Devotion
+MAX Lv : 5
+^777777Skill Requirements :  Grand Cross 4, Shield Reflect 5^000000
 Series : ^777777Support^000000
 Target : ^777777Teammate^000000
 Description : ^777777Character will receive the damage receive by the other character that is assigned by the skill. Only effective within the same map or certain distance. ^000000
@@ -1571,24 +1915,32 @@ Description : ^777777Character will receive the damage receive by the other char
 #
 CR_PROVIDENCE#
 Providence
+MAX Lv : 5
+^777777Skill Requirements : Devine Protection 5, Heal 5^000000
 Series : ^777777Support^000000
 Target : ^777777Teammate^000000
 Description : ^777777Increases DEF against Demon and Holy attacks.^000000
 #
 CR_DEFENDER#
 Defender
+MAX Lv : 5
+^777777Skill Requirements : Shield Boomerang 1^000000
 Series : ^777777Support^000000
 Description : ^777777Decreases damage from long distance physic attack. Amount of damage depends on skill level. ^000000
 ^777777Re-activate to deactivate the skill. Must equip with a shield. ^000000
 #
 CR_SPEARQUICKEN#
 Spear Quicken
+MAX Lv : 10
+^777777Skill Requirements : Spear Mastery 10^000000
 Series : ^777777Attack^000000
-Description :^777777Increases AGI when attack with two-handed spear. Agility depends on skill level. ^000000
-^777777Must equip with a two-handed spear. ^000000
+Description : ^777777Increases ATK Speed of a spear. Higher level of 'Spear Quiken' will give you higher ATK speed and a skill duration. Also increases a Critical Attack % and a Flee %.^000000
+^777777 Usable when equipped a spear, and the skill's effect will disspear with a spear unequipped.^000000
 #
 MO_IRONHAND#
 Iron Palm
+MAX Lv : 10
+^777777Skill Requirements : Demon Bane, Devine Protection 10^000000
 Series : ^000099Passive^000000
 Description : ^777777Increases STR of Claw or Fist.^000000
 [Level 1] : ^777777STR +3^000000
@@ -1604,26 +1956,36 @@ Description : ^777777Increases STR of Claw or Fist.^000000
 #
 MO_SPIRITSRECOVERY#
 Spiritual Relaxation
+MAX Lv : 5
+^777777Skill Requirements : Root 2^000000
 Series : ^000099Passive^000000
 Description : ^777777Extra HP and SP recovery when sit down for every 10 second. When weight exceed 50%,  extra HP and SP recovery for every 20 second. ^000000
 #
 MO_CALLSPIRITS#
 Spirit SPhere
+MAX Lv : 5
+^777777Skill Requirements : Iron Fists 2^000000
 Series : ^777777Support^000000
 Description : ^777777Gathers spirits that will affect you when cast a skill. ^000000
 #
 MO_ABSORBSPIRITS#
 Inhale Spirit Sphere
+MAX Lv : 1
+^777777Skill Requirements : Summon Spirit Sphere 5^000000
 Series : ^777777Support^000000
 Description : ^777777Gathers spirits that can recover SP in a sphere form. Each vigor sphere recovers 10 SP. Able to uses during PVP mode and Guild Battle. ^000000
 #
 MO_TRIPLEATTACK#
 Triple Blows
+MAX Lv : 10
+^777777Skill Requirements : Flee 5^000000
 Series : ^000099Passive^000000
 Description : ^777777Attacks with 3 continuous hits. When 'Quadruple Blows' learned,  duration required to cast 'Triple Blows'. ^000000
 #	
 MO_BODYRELOCATION#
 Dash like a bullet
+MAX Lv : 1
+^777777Skill Requirements : Spritual Cadence 2, Guillotine Fist 3, Mental Strength 3^000000
 Series : ^777777Support^000000
 Target : ^777777Ground^000000
 Description : ^777777Teleportation to the previous spots. Fail if the spot are block. ^000000
@@ -1631,11 +1993,15 @@ Description : ^777777Teleportation to the previous spots. Fail if the spot are b
 #
 MO_DODGE#
 Falling Pear Petals
+MAX Lv : 10
+^777777Skill Requirements : Iron Fists 5, Summon Spirit Sphere 5^000000 
 Series : ^000099Passive^000000
 Description : ^777777Increases FLEE rate.^000000
 #
 MO_INVESTIGATE#
 Psychic Wave
+MAX Lv : 5
+^777777Skill Requirements : Summmon Spirit Sphere 5^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Attacks by using Spirits. Damage depends on enemy's DEF,  the higher the enemy's DEF,  the higher the damage,  and vice versa. ^000000
@@ -1643,6 +2009,8 @@ Description : ^777777Attacks by using Spirits. Damage depends on enemy's DEF,  t
 #
 MO_FINGEROFFENSIVE#
 Manipulate Spirit Sphere
+MAX Lv : 5
+^777777Skill Requirements : Occult Impaction 3^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Long distance attack by using Spirits. ^000000
@@ -1650,12 +2018,16 @@ Description : ^777777Long distance attack by using Spirits. ^000000
 #
 MO_STEELBODY#
 Physical Immune
+MAX Lv : 5
+^777777Skill Requirements : Raging Thrust 3^000000
 Series : ^777777Support^000000
 Description : ^777777Maximizes caster's DEF and MDEF in certain period,  but unable to cast any skill. ^000000
 ^777777Consume 5 vigor sphere.^000000
 #
 MO_BLADESTOP#
 Dilema
+MAX Lv : 5
+^777777Skill Requirements : Flee 5^000000
 Series : ^777777Support^000000
 Description :^777777Grab and attack an enemy. Ineffective against Boss type monster. ^000000
 ^777777Consume a vigor sphere.^000000
@@ -1668,12 +2040,15 @@ Description :^777777Grab and attack an enemy. Ineffective against Boss type mons
 #
 MO_EXPLOSIONSPIRITS#
 Critic Explosion
+MAX Lv : 5
+^777777Skill Requirements : Spiritual Sphere Absorbtion 1^000000
 Series : ^777777Support^000000
-Description : ^777777Cause explosion in certain period to increases CRI rate. SP will not auto heal in 'Critic Explosion' status. ^000000
-^777777Consume 5 vigor sphere.^000000
+Description : ^777777 Increases the chance of critical attacks for a certain time. During the Critical Explosion status, the natural SP recovery speed will be reduced to 50%. Each cast requires 5 Spirit Spheres. ^000000
 #
 MO_EXTREMITYFIST#
 Asura Strike
+MAX Lv : 5
+^777777Skill Requirements : Fury 3, Throw Spirit Sphere 3^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Cause serious damage towards enemy in 'Critic Explosion' status. SP will not auto heal 'Critic Explosion' status. ^000000
@@ -1681,12 +2056,16 @@ Description : ^777777Cause serious damage towards enemy in 'Critic Explosion' st
 #
 MO_CHAINCOMBO#
 Quadruple Blows
+MAX Lv : 5
+^777777Skill Requirements : Raging Trifecta Blow 5^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Activate 'Quadruple Blows' within certain duration. The effects similar to 'Sonic Blow'. ^000000
 #
 MO_COMBOFINISH#
 The Way of the Dragon
+MAX Lv : 5
+^777777Skill Requirements : Raging Quadruple Blow 3^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Allowed to use after activate 'Quadruple Blows'. Cause serious damage and slide backward to target. ^000000
@@ -1694,6 +2073,7 @@ Description : ^777777Allowed to use after activate 'Quadruple Blows'. Cause seri
 #
 SA_ADVANCEDBOOK#
 Advanced Book
+MAX Lv : 10
 Series : ^000099Passive^000000
 Description : ^777777Increases STR,AGI when uses book as weapon.^000000
 [Level 1] : ^777777Attack Speed +0.5%^000000
@@ -1709,22 +2089,30 @@ Description : ^777777Increases STR,AGI when uses book as weapon.^000000
 #
 SA_CASTCANCEL#
 Cast Cancel
+MAX Lv : 5
+^777777Skill Requirements : Study 2^000000
 Series : ^777777Support^000000
 Description : ^777777Cancels a casting magic. Amount of consumed SP depends on skill level. ^000000
 #
 SA_FREECAST#
 Free Cast
+MAX Lv : 10
+^777777Skill Requirements : Cast Cancel 1^000000
 Series : ^000099Passive^000000
 Description : ^777777Able to move and attack while casting a magic. Moving speed and attack agility depends on skill level. ^000000
 #
 SA_SPELLBREAKER#
 Spell Breaker
+MAX Lv : 5
+^777777Skill Requirements : Magic Rod 1^000000
 Series : ^777777Support^000000
 Target : ^777777Enemy^000000
 Description : ^777777Dispels enemy magic while absorbs SP from the magic cast. ^000000
 #
 SA_AUTOSPELL#
 Auto Spell
+MAX Lv : 10
+^777777Skill Requirements : Free Cast 4^000000
 Series : ^777777Support^000000
 Description : ^777777Auto cast a magic with only spend 2/3 SP without magic casting time. Unable to cast a magic not yet learn. ^000000
 ^777777Magic depends on roulette.^000000
@@ -1742,36 +2130,63 @@ Description : ^777777Auto cast a magic with only spend 2/3 SP without magic cast
 #
 SA_MAGICROD#
 Magic Rod
+MAX Lv : 5
+^777777Skill Requirements : Study 4^000000
 Series : ^777777Support^000000
 Description : ^777777Protect oneself from any magic attack,  while able to absorb target's SP. ^000000
 ^777777If target cast Spell Breaker to dispelling a magic,  absorb target's 20% SP when cast Magic Rod. ^000000
 #
 SA_VOLCANO#
 Volcano
+MAX Lv : 5
+^777777Skill Requirements : Endow Blaze 2^000000
 Series : ^777777Support^bb0000(Fire)^000000
 Target : ^777777Ground^000000
-Description : ^777777Increases fire attribution ATK in selected areas. Fire Attribute's target will increase ATK. Unable to cast ^000099'Ice Wall' ^777777in selected areas. Unable to attach any other land skills towards selected areas. ^000000
-^777777Consume a Yellow Gemstone when character uses the skill. During the active period,  character does not need to consume any Yellow Gemstone to cast Volcano,  Deluge,  Violent Gale or any other repeating skills.^000000
+Description: ^777777Enchantan area on the ground so that it will amplify all Fire attacks, as well as
+the Attack Power, in its range. 
+Ice Wall and Sage skills that target the ground can't be cast over Volcano.
+^00BB00Initial cast requires 1 Yellow Gemstone^777777, but multiple casting of this skill will not consume Gemstones throughoutVolcano's active duration.^000000
 #
 SA_DELUGE#
 Deluge
+MAX Lv: 5
+^777777Skill Requirements : Endow Tsunami 2^000000
 Series : ^777777Support^000000
 Target : ^777777Ground^000000
-Description : ^777777Increases water attribution ATK in selected areas. Water Attribute's target will maximizes HP. Only applicable on places have ^000099 water^777777 . Unable to attach any other land skills towards selected areas. ^000000
-^777777Consume a Yellow Gemstone when character uses the skill. During the active period,  character does not need to consume any Yellow Gemstone to cast Volcano,  Deluge,  Violent Gale or any other repeating skills.^000000
+Description: ^777777Enchantan area on the ground so that it will amplify all Water attacks and the Max HP of targets 
+in its range. This area will also enable the use of ^000099Water Ball^777777 and ^000099Aqua Benedicta^777777. 
+Other Sage skills that target the ground can't be cast over Deluge.
+^00BB00Initial cast requires 1 Yellow Gemstone^777777, but multiple casting
+of this skill will not consume Gemstones throughout Deluge's active duration.^000000
 #
 SA_VIOLENTGALE#
 Violent Gale
+MAX lv : 5
+^777777Skill Requirements : Endow Tornado 2^000000
 Series : ^777777Support^000000
 Target : ^777777Ground^000000
-Description : ^777777Increases wind attribution ATK in selected areas. Wind Attribute's target will increase dodge rate. This will also increase ^000099cast time of Fire Pillar^777777 to x1.5. Unable to attach any other land skills towards selected areas. ^000000
-^777777Consume a Yellow Gemstone when character uses the skill. During the active period,  character does not need to consume any Yellow Gemstone to cast Volcano,  Deluge,  Violent Gale or any other repeating skills.^000000
+Description: ^777777Enchant
+an area on the ground
+so that it will amplify all
+Wind attacks and the
+Flee Rate of targets in its range. This
+area will also increase
+the duration of Fire Wall
+so that it lasts 1.5 times
+longer. Other Sage skills
+that target the ground can't
+be cast over Whirlwind.
+^00BB00Initial cast requires 1 Yellow Gemstone^777777, but multiple casting
+of this skill will not consume Gemstones throughout
+Whirlwind's active duration.^000000
 #
 SA_BARRENZONE#
 Barren Zone
 #
 SA_LANDPROTECTOR#
 Land Protector
+MAX Lv : 5
+^777777Skill Requirements : Volcano 3, Deluge 3, Whirlwind 3^000000
 Series : ^777777Support^000000
 Target : ^777777Ground^000000
 Description : ^777777Disable encounter and able to remove magic that casting on the selected areas. Unable to attach any other land skills towards selected areas. ^000000
@@ -1786,6 +2201,8 @@ Description : ^777777Add fire attribution towards target's weapon in certain per
 #
 SA_FROSTWEAPON#
 Frost Weapon
+MAX Lv : 5
+^777777Skill Requirements : Cold Bolt 1, Study 5^000000
 Series : ^777777Support^000000
 Target : ^777777Teammate^000000
 Description : ^777777Add water attribution towards target's weapon in certain period. Success rate depends on skill level. Weapon damage once fails. ^000000
@@ -1793,6 +2210,8 @@ Description : ^777777Add water attribution towards target's weapon in certain pe
 #
 SA_LIGHTNINGLOADER#
 Lightning Loader
+MAX Lv : 5
+^777777Skill Requirements : Lightning Bolt 1, Study 5^000000
 Series : ^777777Support^000000
 Target : ^777777Teammate^000000
 Description : ^777777Add wind attribution towards target's weapon in certain period. Success rate depends on skill level. Weapon damage once fails. ^000000
@@ -1800,6 +2219,8 @@ Description : ^777777Add wind attribution towards target's weapon in certain per
 #
 SA_SEISMICWEAPON#
 Seismic Weapon
+MAX Lv : 5
+^777777Skill Requirements : Stone Curse 1, Study 5^000000
 Series : ^777777Support^000000
 Target : ^777777Teammate^000000
 Description : ^777777Add earth attribution towards target's weapon in certain period. Success rate depends on skill level. Weapon damage once fails. ^000000
@@ -1807,12 +2228,16 @@ Description : ^777777Add earth attribution towards target's weapon in certain pe
 #
 SA_DRAGONOLOGY#
 Dragonology
+MAX Lv : 5
+^777777Skill Requirements :  Study 9^000000
 Series : ^000099Passive^000000
 Description : ^777777Increases ATK and DEF against Dragon tribe.
 When the skill level increases,  the INT increment increases for 3 unit.^000000
 #
 SA_DISPELL#
 Dispell
+MAX Lv : 5
+^777777Skill Requirements : Spell Breaker 3^000000
 Series : ^777777Support^000000
 Target : ^777777Enemy^000000
 Description : ^777777Able to dispels the magic on target. ^000000
@@ -1820,6 +2245,8 @@ Description : ^777777Able to dispels the magic on target. ^000000
 #
 SA_ABRACADABRA#
 Abracadabra
+MAX Lv : 10
+^777777Skill Requirements : Hindsight 5, Dispell 1, Magnetic Earth 1^000000
 Series : ^777777?^000000
 Target : ^777777?^000000
 Description : ^777777A roulette skill. Skill type depends on skill level. ^000000
@@ -1918,58 +2345,77 @@ Others : Only uses upon skill Abracadabra is activate.
 #
 BD_ADAPTATION#
 Adaptation To Circumstances
+MAX Lv : 1
 Series : ^777777Support^000000
 Description : ^777777Halt the dance or sing,  encore not allowed. ^000000
 #
 BD_ENCORE#
 Encore
+MAX Lv : 1
+^777777Skill Requirements : Amp 1^000000
 Series : ^777777Support^000000
 Description : ^777777Consume 1/2 SP to replay the last dance or song once again. ^000000
 #
 BD_LULLABY#
 Lullaby
+MAX Lv : 1
+^777777Skill Requirements : Perfect Tablature 10^000000
 Series : ^000099Group^000000
 Target : ^7777777 * 7 cell radius around caster^000000
 Description : ^777777Cause unconsciousness to the enemy that enters to the cast areas. Ineffective to Boss type monster. ^000000
 #
 BD_RICHMANKIM#
 Mr. Kim A Rich Man
+MAX Lv : 5
+^777777Skill Requirements : Acoustic Rhythm 3^00000
 Series : ^000099Group^000000
 Target : ^7777777 * 7 cell radius around caster^000000
 Description : ^777777Increases Exp when monster dead within the cast areas. The amount of Exp to be share depends on the skill level. ^000000
 #
 BD_ETERNALCHAOS#
 Eternal Chaos
+MAX Lv : 1
+^777777Skill Requirements : Classical Pluck 1^000000
 Series : ^000099Group^000000
 Target : ^7777777 * 7 cell radius around caster^000000
 Description : ^777777DEF of enemies (Monsters,  Character) in the area of effect will become 0.^000000
 #
 BD_DRUMBATTLEFIELD#
 The Sound Of a Drum On the Battlefield
+MAX Lv : 5
+^777777Skill Requirements : Song of Lutie 10^000000
 Series : ^000099Group^000000
 Target : ^7777777 * 7 cell radius around caster^000000
 Description : ^777777Increases teammates' ATK and DEF within the cast areas. ^000000
 #
 BD_RINGNIBELUNGEN#
 The Ring of Nibelungen
+MAX Lv : 5
+^777777Skill Requirements : Battle Theme 3^000000
 Series : ^000099Group^000000
 Target : ^7777777 * 7 cell radius around caster^000000
-Description : ^777777If the weapon level of party members in the area of effect is level 4,  the power of level 4 weapon will increases. ^000000
+Description : ^777777Party member's weapons within the skill range will be more effective.^000000
 #
 BD_ROKISWEIL#
 Loki's Weil
+MAX Lv : 1
+^777777Skill Requirements : Impressive Riff 10^000000
 Series : ^000099Group^000000
 Target : ^7777777 * 7 cell radius around caster^000000
 Description : ^777777Paralyze all the encounters within the cast areas. Boss type monster not included. ^000000
 #
 BD_INTOABYSS#
 Into The Abyss
+MAX Lv : 1
+^777777Skill Requirements : Lullaby 1^000000
 Series : ^000099Group^000000
 Target : ^7777777 * 7 cell radius around caster^000000
 Description : ^777777Able to cast the skill with teammates within the area without consume any Gemstone or Booby Trap. ^000000
 #
 BD_SIEGFRIED#
 Invulnerable Siegfried
+MAX Lv : 5
+^777777Skill Requirements : Magic Strings 10^000000
 Series : ^000099Group^000000
 Target : ^7777777 * 7 cell radius around caster^000000
 Description : ^777777Increases teammates' prevention from fire and water elemental attack that enters into the cast areas. ^000000
@@ -1999,6 +2445,8 @@ Description : ^777777Increases the effect and movement speed of ^000099Performan
 #
 BA_MUSICALSTRIKE#
 Musical Strike
+MAX Lv : 5
+^777777Skill Requirements : Music Lessons 3^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Uses instrument as weapon to fire arrow. This skill only activate when equip with an instrument. ^000000
@@ -2006,36 +2454,48 @@ Description : ^777777Uses instrument as weapon to fire arrow. This skill only ac
 #
 BA_DISSONANCE#
 Dissonance
+MAX Lv : 5
+^777777Skill Requirements : Amp 1, Music Lessons 1^000000
 Series : ^777777Attack^000000
 Target : ^7777775 * 5 cell radius around caster^000000
 Description : ^777777Cause a serious damage to the enemy that enters into the cast areas in a certain period. ^000000
 #
 BA_FROSTJOKE#
 Frost Joker
+MAX Lv : 5
+^777777Skill Requirements : Encore 1^000000
 Series : ^777777Attack^000000
 Target : ^777777Full screen coverage^000000
 Description : ^777777Everyone in screen get frost. Frost rate depends on skill level. Teammate of Dancer has a lower rate to be frost. ^000000
 #
 BA_WHISTLE#
 A Whistle
+MAX Lv : 10
+^777777Skill Requirements : Unchained Serenade 3^000000
 Series : ^777777Support^000000
 Target : ^7777775 * 5 cell radius around caster^000000
 Description : ^777777Increases the teammates' evade rate and dodge rate that enters into the cast areas. ^000000
 #
 BA_ASSASSINCROSS#
 Assassin Cross of Sunset
+MAX Lv : 10
+^777777Skill Requirements : Unchained Serenade 3^000000
 Series : ^777777Support^000000
 Target : ^7777775 * 5 cell radius around caster^000000
 Description : ^777777Increases the teammates' Agility who enters into the cast areas. Increases the Agility of Two-Handed Sword but ineffective to long-range attack. ^000000
 #
 BA_POEMBRAGI#
 A Poem of Bragi
+MAX Lv : 10
+^777777Skill Requirements : Unchained Serenade 3^000000
 Series : ^777777Support^000000
 Target : ^7777775 * 5 cell radius around caster^000000
 Description : ^777777Shorten teammates' magic casting time that enters into the cast areas. ^000000
 #
 BA_APPLEIDUN#
 The Apple of Idun
+MAX lv : 10
+^777777Skill Requirements : Unchained Serenade 3^000000
 Series : ^777777Support^000000
 Target : ^7777775 * 5 cell radius around caster^000000
 Description : ^777777Maximizes teammates' HP who enters into the cast areas. HP will automatically recover in certain of period. ^000000
@@ -2057,6 +2517,8 @@ Description : ^777777Increases the effect and movement speed of ^000099Dancing S
 #
 DC_THROWARROW#
 Throw Arrow
+MAX Lv : 5
+^777777Skill Requirements : Dance Lessons 3^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Description : ^777777Throw back the arrow by using a whip. This skill can use during music skill is activated,  but equip with whip is necessary. ^000000
@@ -2064,36 +2526,48 @@ Description : ^777777Throw back the arrow by using a whip. This skill can use du
 #
 DC_UGLYDANCE#
 Ugly Dance
+MAX Lv : 5
+^777777Skill Requirements : Amp 1, Dance Lessons 1^000000
 Series : ^777777Attack^000000
 Target : ^7777775 * 5 cell radius around caster^000000
 Description : ^777777Cause serious SP damage to enemy who enters into the cast areas in certain of period. ^000000
 #
 DC_SCREAM#
 Scream
+MAX Lv : 5
+^777777Skill Requirements : Encore 1^000000
 Series : ^777777Attack^000000
 Target : ^7777775 * 5 cell radius around caster^000000
 Description : ^777777Petrify all the enemies in screen,  petrify rate depends on skill level. Teammate of Dancer has a lower rate to be Petrify. ^000000
 #
 DC_HUMMING#
 Humming
+MAX Lv : 10
+^777777Skill Requirements : Hip Shaker 3^000000
 Series : ^777777Support^000000
 Target : ^7777775 * 5 cell radius around caster^000000
 Description : ^777777Increases the accuracy of player who enters into the cast areas. ^000000
 #
 DC_DONTFORGETME#
 Forget Me Not
+MAX Lv : 10
+^777777Skill Requirements : Hip Shaker 3^000000
 Series : ^777777Support^000000
 Target : ^7777775 * 5 cell radius around caster^000000
 Description : ^777777Decreases the agility and moving speed of enemy who enters into the cast areas. Moving speed up and agility up will deactivate when cast this skill. ^000000
 #
 DC_FORTUNEKISS#
 Fortune's kiss
+MAX Lv : 10
+^777777Skill Requirements : Hip Shaker 3^000000
 Series : ^777777Support^000000
 Target : ^7777775 * 5 cell radius around caster^000000
 Description : ^777777Increases the deathblow rate of player who enters into the cast areas. ^000000
 #
 DC_SERVICEFORYOU#
 At Your Service
+MAX Lv : 10
+^777777Skill Requirements : Hip Shaker 3^000000
 Series : ^777777Support^000000
 Target : ^7777775 * 5 cell radius around caster^000000
 Description : ^777777Maximizes teammates' SP who enters into the cast areas. SP consumption will be decrease when cast this skill. ^000000
@@ -2122,6 +2596,8 @@ There's possibly where this skill cannot be used at certain area (Guild War Map)
 
 LK_AURABLADE#
 Aura Blade
+MAX Lv : 5
+^777777Skill Requirements : Bash 5, Magnum Break 5, Two Hand Sword Mastery 5^000000
 Series : ^777777Supportive^000000
 Description : ^777777Imbue the weapon with spiritual energy (aura) to get bonus attack that pierce the enemy's DEF
 The bonus attack is not related with the hit rate and it will deal damage to the target^000000
@@ -2133,6 +2609,8 @@ The bonus attack is not related with the hit rate and it will deal damage to the
 #
 LK_PARRYING#
 Parrying 
+MAX Lv : 10
+^777777Skill Requirements : Provoke 5, Two Hand Sword Mastery 10, Two Hand Quicken 3^000000
 Series : ^777777Supportive^000000
 Description : ^777777Uses the sword to block enemy's attack. If the blocking is successful,  the character will not receive any damage but his attack will be cancelled.
 This skill can only be used when a weapon of two hand sword class is equipped^000000
@@ -2149,6 +2627,8 @@ This skill can only be used when a weapon of two hand sword class is equipped^00
 #
 LK_CONCENTRATION#
 Concentration 
+MAX Lv : 5
+^777777Skill Requirements : Increase HP Recovery 5, Spear Mastery 5, Peco Peco Riding 1^000000
 Type: ^777777Supportive^000000
 Description : ^777777When this skill is used,  the character's hit rate and attack will increase. However,  the defense of the character will be reduced while the character is under the effect of Endurance skill^000000
 [Level 1] : ^777777Hit Rate +10,  Attack +5%,  Defense -5^000000
@@ -2159,18 +2639,24 @@ Description : ^777777When this skill is used,  the character's hit rate and atta
 #
 LK_TENSIONRELAX#
 Tension Relax  
+MAX Lv : 1
+^777777Requirements : Provoke 5, Advanced HP Recovery 10, Endure 3^000000
 Series : ^777777Supportive^000000
 Description : ^777777Release the tension of muscle to increase the HP recovery rate
 The efffect will be cancelled if character stands up,  uses item or equipment.^000000
 #
 LK_BERSERK#
 Berserk
+MAX Lv : 1
+^777777Skill Requirements : Lord Knight Over Job Level 50^000000
 Series : ^777777Supportive^000000
 Description : ^777777The character is enraged and increases the amount of HP,  movement and attack speed. However,  the dodge rate is decreased and the character cannot perform other action.
 The character will not be able to use any item and Healing skill has no effect on him. As this skill continues to stay active,  HP and SP will not recover within the 5 minutes after this skill is used. ^000000
 #
 PA_PRESSURE#
 Pressure
+MAX Lv : 5
+^777777Skill Requirements : Endure 5, Faith 5, Smite 2^000000
 Series : ^777777Attack^000000
 Description : ^777777Summon a huge Cross from the air to crush the enemies.
 This skill does not depends on the caster's attack or target's defense and will deal fixed damage to the target. Target of the Pressure skill will lose a certain amount of SP.^000000
@@ -2182,6 +2668,8 @@ This skill does not depends on the caster's attack or target's defense and will 
 #
 PA_SACRIFICE#
 Sacrifice
+MAX Lv : 5
+^777777Skill Requirements : Endure 1, Sacrifice 3^000000
 Series : ^777777Attack^000000
 Description : ^777777Consumes 9% of own HP to deal damage on enemies.
 This skill deals 5 attacks. Player might be dead due to the consumption of health^000000
@@ -2193,6 +2681,8 @@ This skill deals 5 attacks. Player might be dead due to the consumption of healt
 #
 PA_GOSPEL#
 Gospel
+MAX Lv : 10
+^777777Skill Requirements : Faith 8, Devine Protection 3, Demon Bane 5^000000
 Series : ^777777Supportive^000000
 Area of Effect : ^777777 7 cells radius around caster^000000
 Description : ^777777When Gospel deals 10 types of negative status to enemies,  only 1 type of status will take effect. 
@@ -2201,11 +2691,11 @@ If the caster suffer Silence status when casting the skill of Gospel,  the skill
 #
 HP_ASSUMPTIO#
 Assumption
+MAX Lv : 5
+^777777Skill Requirements : Angelus 1, Improved SP Recovery 3, Impositio Manus 3^000000
 Series : ^777777Supportive^000000
-Description : ^777777Due to the blessing of Angel,  the damage received is reduced to 1/2 of the actual value
-The effect of this skill cannot be accumulated with the effect of Kyrie Eleison
-During Guild war of PVP,  the damage received is reduced to 2/3 of actual damage value.
-In certain period of time,  the damage dealt is reduced to 1/4 of normal damage.^000000
+Description : ^777777 By the blessings of an Angel, a target's DEF increases 100% for a certain time duration.
+Does not overlap with 'Kyrie Eleison'.  DEF will increase to 35% when used in a Siege Mode or a PVP zone.^000000
 [Level 1] : ^777777Active Duration 20 seconds^000000
 [Level 2] : ^777777Active Duration 40 seconds^000000
 [Level 3] : ^777777Active Duration 60 seconds^000000
@@ -2214,6 +2704,8 @@ In certain period of time,  the damage dealt is reduced to 1/4 of normal damage.
 #
 HP_BASILICA#
 Basilica
+MAX Lv : 5
+^777777Skill Requirements : Gloria 2, Improved SP Recovery 1, Kyrie Eleison 3^000000
 Series : ^777777Support^000000
 Description : ^777777Defense against all enemies that approach the area of effect. 
 All attacks from enemies will be blocked
@@ -2228,6 +2720,8 @@ This skill cannot be activated if there's obstacle in the are of effect^000000
 #
 HP_MEDITATIO#
 Meditation
+MAX Lv : 10
+^777777Skill Requirements : Improved SP Recovery 5, Lex Divina 5, Aspersio 3^000000
 Series : ^777777Passive^000000
 Explantion : ^777777Increase the amount of SP recovery rate and MSP through meditation. 
 When Healing skill is used,  the amount of HP recovered increases as well.^000000
@@ -2244,6 +2738,8 @@ When Healing skill is used,  the amount of HP recovered increases as well.^00000
 #
 HW_SOULDRAIN#
 Soul Drain 
+MAX Lv : 10
+^777777Skill Requirements : Improved SP Recovery 5, Soul Strike 7^000000
 Series : ^777777Passive^000000
 Description : ^777777Increment of Max SP. When the enemies is killed using single target magic or normal physical attack,  
 a certain amount of SP is absorbed according to the rate and level of the defeated enemies^000000
@@ -2260,12 +2756,15 @@ a certain amount of SP is absorbed according to the rate and level of the defeat
 #
 HW_MAGICCRASHER#
 Magic Crasher
+MAX Lv : 1
+^777777Skill Requirements : Improved SP Recovery 1^000000
 Series : ^777777Attack^000000
 Description  : ^777777Uses the Magic attack (Matk)to deal none elemental physical attack to a single enemy. 
 The damage dealt will decrease according to the DEF value of enemy.^000000
 #
 HW_MAGICPOWER#
 Magic Power
+MAX Lv : 10
 Series : ^777777Supportive^000000
 Description : ^777777After this skill is activated,  the MATK for the skill used after that will be increased^000000
 [Level 1] : ^777777MATK +5%^000000
@@ -2281,6 +2780,8 @@ Description : ^777777After this skill is activated,  the MATK for the skill used
 #
 CH_PALMSTRIKE#
 Palm Push Strike
+MAX Lv : 1
+^777777Skill Requirements : Improved SP Recovery 1^000000
 Series : ^777777Attack^000000
 Description : ^777777Perform a fist attack towards the enemy. After being attacked,  the target will get the damage after 1 second.
 This skill can only be used during the state of Critical Explosion^000000
@@ -2292,6 +2793,8 @@ This skill can only be used during the state of Critical Explosion^000000
 #
 CH_TIGERFIST#
 Tiger Knuckle Fist
+MAX Lv : 5
+^777777Skill Requirements : Iron Fists 5, Raging Trifecta Blow 5, Raging Thrust 3^000000
 Series : ^777777Attack^000000
 Description : ^777777This is another combo skill that is created after Triple Blow,  Quadruple Blow and The Way of Dragon. 
 This skill can only be used during the delay after using The Way of The Dragon
@@ -2304,6 +2807,8 @@ The action will be stopped at certain rate. This skill consumes 1 spirit sphere^
 #
 CH_CHAINCRUSH#
 Chain Crush Combo
+MAX Lv : 10
+^777777Skill Requirements : Iron Fists 5, Summon Spirit Sphere 5, Glacier Fist 2^000000
 Series : ^777777Attack^000000
 Description : ^777777This is another combo skill that is created after Triple Blow,  Quadruple Blow and The Way of Dragon. 
 Consumes 2 Vigor Sphere to deals additional damage.
@@ -2321,6 +2826,8 @@ Player can cast Asura Strike after using Chain Crush Combo. After using The Way 
 #
 PF_HPCONVERSION#
 Health Conversion
+MAX Lv : 5
+^777777Skill Requirements : Improved SP Recovery 1, Magic Rod 1^000000
 Series : ^777777Supportive^000000
 Description : ^777777Reduce 10% of the character's HP to convert it to SP^000000
 [Level 1] : ^777777 10% of the reduction amount of HP is converted to SP ^000000
@@ -2331,11 +2838,15 @@ Description : ^777777Reduce 10% of the character's HP to convert it to SP^000000
 #
 PF_SOULCHANGE#
 Soul Change
+MAX Lv : 1
+^777777Skill Requirements : Magic Rod 3, Spell Breaker 2^000000
 Series : ^777777Supportive^000000
-Description : ^777777Exchange own SP with the target's SP. The amount of SP exchanged cannot exceed the amount of MSP ^000000
+Description: ^777777 Exchange own Sp with the target's SP. Player will receive 50% of exchanged amount of SP.  The amount of SP exchanged cannot exceed the amount of MaxSP.^000000
 #
 PF_SOULBURN#
 Soul Burn
+MAX Lv : 5
+^777777Skill Requirements : Cast Cancel 5, Magic Rod 3, Dispell 3^000000
 Series : ^777777Attack^000000
 Description : ^777777Possesses certain rate to change the target's SP to 0. When the level 5 of this skill is used,  an additional damage is dealt to the enemy with the value of 2 fold of the SP remained.
 If the skill failed,  the effect will fall on the caster. Currently,  this skill can only be used during Guild War and PVP. Character needs to wait for 15 seconds to use Soul Burn again after casting Soul Burn.^000000
@@ -2347,6 +2858,8 @@ If the skill failed,  the effect will fall on the caster. Currently,  this skill
 #
 ASC_KATAR#
 Advanced Katar Research
+MAX Lv : 5
+^777777Skill Requirements : Double Attack 5, Katar Matery 7^000000
 Series : ^777777Passive^000000
 Description : ^777777Attack Increment for the Katar used by Assassin^000000
 [Level 1] : ^777777Attack +12%^000000
@@ -2357,12 +2870,22 @@ Description : ^777777Attack Increment for the Katar used by Assassin^000000
 #
 ASC_BREAKER#
 Soul Breaker
+MAX Lv : 10
+^777777Skill Requirements : Double Attack 5, Envenom 5, Cloaking 3, Enchant Poison 6^000000
 Series : ^777777Attack^000000
-Description : ^777777Deals damage to a single enemy by reducing the enemy's DEF and MDEF to 1/2 the normal value
-The damage of this skill depends on the caster ATK and INT^000000
+Description: ^777777Inflict an
+amount of damage to
+an enemy, calculated as
+half of the target's Defense
+added to half of its Magic
+Defense, that is affected
+by the caster's INT and
+Attack Power.^000000
 #
 SN_SIGHT#
 True Sight
+MAX Lv : 10
+^777777Skill Requirements : Owl's Eye 10, Vulture's Eye 10, Improve Concentration 10, Falconly Mastery 1^000000
 Series : ^777777Supportive^000000
 Description : ^777777All Status value +5,  increment of Hit Rate,  ATK and Critical ^000000
 [Level 1] : ^777777Hit Rate +3%,  Damage +2%,  Critical+1^000000
@@ -2378,6 +2901,8 @@ Description : ^777777All Status value +5,  increment of Hit Rate,  ATK and Criti
 #
 SN_FALCONASSAULT#
 Falcon Assault
+MAX Lv : 5
+^777777Skill Requirements : Vulture's Eye 5, Falconly Mastery 1, Blitz Beat 5, Steel Crow 3^000000
 Series : ^777777Attack^000000
 Description : ^777777Uses the Falcon to perform attack on enemy^000000
 [Level 1] : ^777777Damage +20%^000000
@@ -2388,6 +2913,8 @@ Description : ^777777Uses the Falcon to perform attack on enemy^000000
 #
 SN_SHARPSHOOTING#
 Sharpshooting
+MAX lv : 5
+^777777Skill Requirements : Double Strafe 5, Improve Concentration 10^000000
 Series : ^777777Attack^000000
 Description : ^777777Lock on target to deal powerful damage
 As the arrow shoots in the straight line to the target,  every enemy in the path will receive damage.
@@ -2400,6 +2927,8 @@ The critical attack rate of charcter +20 when this skill is activated.^000000
 #
 SN_WINDWALK#
 Wind Walk
+MAX Lv : 10
+^777777Skill Requirements : Improve Concentration 9^000000
 Series : ^777777Supportive^000000
 Description : ^777777Increase the movement speed and dodge rate of the character and the party member
 This skill does not stack with the effect from other agility increase skill.
@@ -2407,6 +2936,8 @@ If the character under the effect of this skill is affected by Quag Mire or othe
 #
 WS_MELTDOWN#
 Meltdown
+MAX Lv : 10
+^777777Skill Requirements : Skin Tempering 3, Hilt Binding 1, Weaponry Research 5, Power Thrust 3^000000
 Series : ^777777Supportive^000000
 Description : ^777777Under the condition of Meltdown,  the weapon and equipment of the target will has a certain rate to be damaged. When this is used on the monsters,  the attack and defense of the monsters will be reduced.
 As the skill level increases,  the damage rate increases as well^000000
@@ -2429,6 +2960,8 @@ Nugget Create
 #
 WS_CARTBOOST#
 Cart Boost
+MAX Lv : 1
+^777777Skill Requirements : Push Cart 5, Hilt Binding 1, Cart Revolution, Change Cart^000000
 Series : ^777777Supportive^000000
 Description : ^777777Under the condition of Cart Boost,  the movement speed of the push cart equipped increased. This skill will not be affected by the value of agility or effects or agility decreasing skill^000000
 #
@@ -2437,6 +2970,8 @@ Auto Attack System Create
 #
 ST_CHASEWALK#
 Chase Walk
+MAX Lv : 5
+^777777Skill Requirements : Hiding 5, Stalk 3^000000
 Series : ^777777Supportive^000000
 Description : ^777777When the character is in hiding mode,  he cannot be revealed by skills such as Sight,  Ruwah or Attention Concentrate.
 Unlike Hiding,  character in chase walk can be damaged by area attack magic. When the character moves,  he will leave footprints.
@@ -2450,6 +2985,7 @@ The SP consumption of this skill will be 5 times of normal SP consumption when t
 #
 ST_REJECTSWORD#
 Reject Sword
+MAX Lv : 5
 Series : ^777777Supportive^000000
 Description : ^777777If the opponents uses a sword class weapon,  the character can uses this skill to deflect the weapon to recieve only 1/2 of the damage
 As the skill level increases,  the deflection rate increases as well. There will be 3 times of deflection after this skill is activated. 
@@ -2462,6 +2998,8 @@ This skill can also be used against monsters to deflect 3 attacks of the monster
 #
 CG_ARROWVULCAN#
 Arrow Vulcan
+MAX Lv : 10
+^777777Skill Requirements : Double Strafe 5, Arrow Shower 5, Melody Strike 1^000000
 Series : ^777777Attack^000000
 Description : ^777777Shoots a great amount of arrow towards enemies. This skill can be used when the bard equips an instrument or a dancer equipes a whip^000000
 [Level 1] : ^777777Attack 300%^000000
@@ -2477,6 +3015,8 @@ Description : ^777777Shoots a great amount of arrow towards enemies. This skill 
 #
 CG_MOONLIT#
 A Moonlit Water Mill,  A Falling Petal
+MAX Lv : 5
+^777777Skill Requirements : Improve Concentration 5, Music(Dance) Lessons 7^000000
 Series : ^777777Group Skill^000000
 Description : ^777777This is a group skill of Bard and Dancer. When this skill is activated,  there will be a defense shield of 5x5 cell radius where nobody will be able to enter
 However,  the character in the area of effect will still received damage from magic spells and range attacks. This skill cannot be activated if there is any obstacles in the area of effect^000000
@@ -2488,6 +3028,8 @@ However,  the character in the area of effect will still received damage from ma
 #
 CG_MARIONETTE#
 Marionette Control
+MAX Lv : 1
+^777777Skill Requirements : Improve Concentration 10, Music(Dance) Lessons 5^000000
 Series : ^777777Supportive^000000
 Description : ^777777This skill can only be used on party member whose level difference with the caster is within 5 level. When this skill is activated,  all the status point of the caster will be transferred to the party member and the party member will receive increment of 1/2 the value of the caster status value.
 The status value of the targetted party member cannot exceeds 99.
@@ -2495,13 +3037,22 @@ If the distance between caster and target is more than 7 cells,  the skill effec
 #
 LK_SPIRALPIERCE#
 Spiral Pierce 
+MAX Lv : 5
+^777777Skill Requirements :  Spear Mastery 5, Pierce 5, Riding 1, Spear Stab 5^000000
 Series : ^777777Attack^000000
-Description : ^777777Launch a spinning spear attack to increase the power of piercing that possesses deadlier damage and continuous attacks.
-The damage dealt by this skill is affected by the weight of the weapon. This skill will stop the enemies for 1 second.
-When the skill level increases,  the damage increases as well. However,  the delay after the skill is performed increases too.^000000
+Description: ^777777Hit an enemy
+with spiraling strikes that
+immobilize it for a second
+and inflict an amount of
+damage determined by the
+skill's level and the weight
+of the equipped weapon.
+This skill's level also affects its cast time and delay.^000000
 #
 LK_HEADCRUSH#
 Head Crush 
+MAX Lv : 5
+^777777Skill Requirements : Spear Mastery 9, Peco Peco Riding 1^000000
 Series : ^777777Attack^000000
 Description : ^777777Deals a powerful attack on enemies that possesses certain rate to cause the enemies wounded. The wounded enemies will lose its health for every few seconds.^000000
 [Level 1] : ^777777Attack 140%^000000
@@ -2512,6 +3063,8 @@ Description : ^777777Deals a powerful attack on enemies that possesses certain r
 #
 LK_JOINTBEAT#
 Joint Beat 
+MAX Lv : 10
+^777777Skill Requirements :  Spear Mastery 9, Peco Peco Riding 1, Cavalier Mastery 3, Traumatic Blow 3^000000
 Series : ^777777Attack^000000
 Description : ^777777This skill can only be used when a spear class weapon in equipped. This skill attacks and damages the joint of enemies and deals several status effects.
 AS the skill level increases,  the attack power and status ailments rate increase as well^000000
@@ -2528,6 +3081,8 @@ AS the skill level increases,  the attack power and status ailments rate increas
 #
 HW_NAPALMVULCAN#
 Napalm Vulcan
+MAX Lv : 5
+^777777Skill Requirements : Napalm Beat 5^000000
 Series : ^777777Attack ^bb00bb(Psychic energy)^000000
 Target : ^777777Enemy^000000
 Description : ^777777Uses psychic energy to deals continuous attacks on a single enemy and at the same time possesses a low rate to put the enemies in curse status
@@ -2535,11 +3090,15 @@ As the skill level increases,  the number of continuous attacks increases as wel
 #
 CH_SOULCOLLECT#
 Dangerous Soul Collect
+MAX Lv : 1
+^777777Skill Requirements : Fury 5^000000
 Series : ^777777Supportive^000000
 Description : ^777777A dangerous skill that uses all the energy to materialize spirit energy. The character can materialize 5 spirit sphere at one time with this skill. The cast time is 2 times of cast duration for Spirit Sphere.^000000
 #
 PF_MINDBREAKER#
 Mind Breaker 
+MAX Lv : 5
+^777777Skill Requirements : Improved SP Recovery 3, Soul Siphon 2^000000
 Series : ^777777Supportive^000000
 Description : ^777777Attacks the enemies' mind to cause break down of enemies; hence increases the magic attack and decreases the magic defense of the enemies
 As the skill level increases,  the success rate increases as well^000000
@@ -2551,6 +3110,8 @@ As the skill level increases,  the success rate increases as well^000000
 #
 PF_MEMORIZE#
 Memorize
+MAX Lv : 1
+^777777Skill Requirements : Study 5, Hindsight 1, Free Cast 5^000000
 Series : ^777777Support^000000
 Description : ^777777This skills lets the cast time of the assigned spells to decreased to 1/2 of normal cast time for 5 times casting.
 If the assigned spells is not used,  the effect of Memorize will continue and will only be cancelled if the character died
@@ -2558,6 +3119,8 @@ When character uses Memorize,  cast time of skill is halved for 5 times of spell
 #
 PF_FOGWALL#
 Wall of Fog 
+MAX Lv : 1
+^777777Skill Requirements : Whirlwind 2, Deluge 2^000000
 Series : ^777777Supportive^000000
 Description : ^777777Place a wall of Fog in the 5x3 cells of area to put players and monsters into darkness status and make it difficult for them to attack.
 When the players in the area of effect try to lauch range attacks of magic attacks,  the damage dealt will be reduced and the accuracy will decrease as well.
@@ -2565,6 +3128,8 @@ This skill can only be used to monsters on field in PVP arena. When character de
 #
 PF_SPIDERWEB#
 Spider Web 
+MAX Lv : 1
+^777777Skill Requirements : Dragonology 4^000000
 Series : ^777777Supportive^000000
 Description : ^777777Skill will consume 1 Spider web item.
 If the monsters were trapped in the Spider Web,  the dodge rate of monsters will be halved. The damage it receives from Fire element attack will be doubled while the effect of Spider Web will be canceled  after it receives the attack.
@@ -2572,6 +3137,8 @@ Character can shoot at most 2 Spider Web.^000000
 #
 ASC_METEORASSAULT#
 Meteor Assault 
+MAX Lv : 10
+^777777Skill Requirements : Katar Mastery 5, Righthand Mastery 3, Sonic Blow 5, Soul Destroyer 1^0000000
 Series : ^777777Attack^000000
 Description : ^777777Deals powerful attack to enemies around the 5x5 cells radius of caster. There will be certain rate that the target of this skill will suffer Stun,  Darkness or Wounded status^000000
 [Level 1] : ^777777Attack 80%^000000
@@ -2587,6 +3154,8 @@ Description : ^777777Deals powerful attack to enemies around the 5x5 cells radiu
 #
 ASC_CDP#
 Create Deadly Poison 
+MAX Lv : 1
+^777777Skill Requirements :  Envenom 10, Detoxify 1, Enchant Poison 5^000000
 Series : ^777777Supportive^000000
 Description : ^777777Uses certain item to create deadly poison and obtain Poison Bottle x1
 The ingredients of the Poison Bottle are: Poisonous Canine,  Needle of Cactus,  Bee Sting,  Poison Spore,  Karvodailnirol,  Berserk,  Empty Bottle,  one each.
@@ -2595,6 +3164,8 @@ When the Assassin Cross take the poison,  his attack speed will increased but th
 #
 ASC_EDP#
 Enchant Deadly Poison
+MAX Lv : 5
+^777777Skill Requirements : Create Deadly Poison 1^000000 
 Series : ^777777Supportive^000000
 Description : ^777777This skill let character enchant deadly poison on the weapon
 This skill will consumes Poison Bottle x1
@@ -2686,11 +3257,15 @@ Description : ^777777 When the level increases,  there is 50% chance of bonus de
 #
 ST_PRESERVE#
 Preserve
+MAX Lv : 1
+^777777Skill Requirements : Intimidate 10^000000
 Series : ^777777Supportive^000000
 Description : ^777777If character is attacked by other skill in the duration of 10 minutes,  character will not copy the skill.^000000
 #
 ST_FULLSTRIP#
 Full Strip
+MAX Lv : 5
+^777777Skill Requirements : Divest Weapon 5^000000
 Series : ^777777Supportive^000000
 Target : ^777777Enemy^000000
 Description : ^777777Uses 4 types of Strip skills at the same time.^000000
@@ -2703,6 +3278,8 @@ Description : ^777777Uses 4 types of Strip skills at the same time.^000000
 #
 WS_WEAPONREFINE#
 Weapon Refine
+MAX Lv : 10
+^777777Skill Requirements : Weaponry Research 10^000000
 Series : ^777777Creation^000000
 Description : ^777777Refine weapon^000000
 ^777777The result of this skill is not affected by DEX and LUK value.^000000
@@ -2727,6 +3304,8 @@ Description : ^777777Refine weapon^000000
 #
 CR_SLIMPITCHER#
 Slim Pitcher
+MAX Lv : 10
+^777777Skill Requirements : Aid Potion 5^000000
 ^777777Consume 1 Slim Potion to use on target within the area of 7x7 cells.^000000
 ^777777Throw slim potion on party member to recover their health.^000000
 [Level 1] : ^777777Effect of Slim Potion 110% [Red]^000000
@@ -2742,6 +3321,8 @@ Slim Pitcher
 #
 CR_FULLPROTECTION#
 Full Chemical Protection
+MAX Lv : 5
+^777777Skill Requirements : Chemical Protection(Helm, Shield, Armor, and Weapon) 5^000000
 Series : ^777777Supportive^000000
 Description : ^777777Use 4 types of protection skill at the same time.^000000
 ^777777Consumes 1 Coating.^000000
@@ -2752,10 +3333,14 @@ Description : ^777777Use 4 types of protection skill at the same time.^000000
 [Level 5] : ^777777Duration lasts for 600 seconds^000000
 #
 ITM_TOMAHAWK#
-Throws Tomahawk
+Tomahawk Throwing
+Description:^777777By throwing an axe, inflicts damages
+enemies in a long ranged distance.^000000
 #
 PA_SHIELDCHAIN#
 Shield Chain
+MAX Lv : 5
+^777777Skill Requirements : Shield Boomerang 5^000000
 Description : ^777777Skill that can only be used when a Shield is equipped. Launches 5 continuous attacks with Shield
 Affected by the accuracy of character. Damage increases as the refine level and weight of Shield increases.
 Attack range is 4 and there is a 1 second delay.^000000
@@ -2767,6 +3352,8 @@ Attack range is 4 and there is a 1 second delay.^000000
 #
 HP_MANARECHARGE#
 Mana Recharge
+MAX Lv : 5
+^777777Skill Requirements : Mace Mastery 10, Demon Bane 10^000000
 Description : ^777777Consumption of SP reduces when character uses skills ^000000
 [Lv 1] : ^777777  4% ^000000
 [Lv 2] : ^777777  8% ^000000
@@ -2776,6 +3363,8 @@ Description : ^777777Consumption of SP reduces when character uses skills ^00000
 #
 PF_DOUBLECASTING#
 Double Casting
+MAX Lv : 5
+^777777Skill Requirements : Hindsignts 1^000000
 Description : ^777777If character uses arrow skills when Double Casting is active,
 there is certain rate that the arrow skill will be activated one more time ^000000
 [Lv 1] : ^777777Rate 40%,  duration 90seconds^000000
@@ -2786,6 +3375,8 @@ there is certain rate that the arrow skill will be activated one more time ^0000
 #
 HW_GANBANTEIN#
 Ganbantein
+MAX Lv : 1
+^777777Skill Requirements : Sense 1, Icewall 1^000000
 Description : ^777777Select a cell as target and cancel all the area spell in the area of 3x3 cells around the targetted cell.
 Consumes 1 Blue Gemstone and Yellow Gemstone each.
 If this skill is used on Land Protector,  it will cancels 3x3 cells of area with Land Protector effect.
@@ -2793,7 +3384,9 @@ This skill is not affected by gemstone consumption and item magic.
 There is 5 seconds of after cast delay^000000
 #
 HW_GRAVITATION#
-Gravitation Field
+Gravitational Field
+MAX Lv : 5
+^777777Skill Requirements : Quagmire 1, Stave Crasher 1, Mystical Amplification 10^000000
 Description : ^777777Consumes 1 Blue gemstone to select cell and increases the gravity of the 5x5 cells area around it.
 During the active duration,  this skill deals certain damage to enemies every second regardless of the enemies' defense.
 Reduces the movement speed and attack speed of enemies.
@@ -2801,14 +3394,16 @@ Since this is a high level magic,  in the period of active duration,
 the caster cannot move or perform any action.
 The movement speed and attack speed reduction of this skill has no effect on Boss class enemies but this skill will still deal damage to the Boss class enemies.
 There is a 2 seconds after cast delay^000000
-[Lv 1] : ^777777Damage per second 400,  speed reduction rate 5%,  active duration 5seconds^000000
-[Lv 2] : ^777777Damage per second 600,  speed reduction rate 10%,  active duration 6seconds^000000
-[Lv 3] : ^777777Damage per second 800,  speed reduction rate 15%,  active duration 7seconds^000000
-[Lv 4] : ^777777Damage per second 1000,  speed reduction rate 20%,  active duration 8seconds^000000
-[Lv 5] : ^777777Damage per second 1200,  speed reduction rate 25%,  active duration 9seconds^000000
+[Lv 1] : ^777777 600 damage every 0.5 sec., movement speed decrease 5% , duration 5 sec.^000000
+[Lv 2] : ^777777 700 damage every 0.5 sec., movement speed decrease 10%, duration 6 sec.^000000
+[Lv 3] : ^777777 800 damage every 0.5 sec., movement speed decrease 15%, duration 7 sec.^000000
+[Lv 4] : ^777777 900 damage every 0.5 sec., movement speed decrease 20%, duration 8 sec.^000000
+[Lv 5] : ^777777 1000 damage every 0.5 sec., movement speed decrease 25%, duration 9 sec.^000000
 #
 WS_CARTTERMINATION#
 Cart Termination
+MAX Lv : 10
+^777777Skill Requirements : Hammerfall 5, Mammonite 10, Cart Boost 1^000000
 Description : ^777777This skill can only be used when character is using a Push Cart. This skill attacks one enemy with Push Cart.
 and consumes zeny to inflict Stun status on enemies at certain rate.
 Damage dealt to enemies increases as the skill level increases. The damage differs according to the weight of the Push Cart^000000
@@ -2825,6 +3420,8 @@ Damage dealt to enemies increases as the skill level increases. The damage diffe
 #
 WS_OVERTHRUSTMAX#
 Overthrust Max
+MAX Lv : 5
+^777777Skill Requirements : Power Thrust %^000000
 Description : ^777777Skill that consumes zeny to increase the attack of weapon drastically
 This skill only takes effect on the caster
 During the active period,  there is 0.1% rate that the weapon is damaged ^000000
@@ -2836,6 +3433,8 @@ During the active period,  there is 0.1% rate that the weapon is damaged ^000000
 #
 CG_LONGINGFREEDOM#
 Longing for Freedom
+MAX Lv : 5
+^777777Skill Requirements : Marionette Control 1, Hip Shaker 3, Music(Dance) Lessons 10^000000
 Description : ^777777If this skill is used when the Gypsy and Minstrel are using a Combination skill,
 teh caster will be able to move in the area of effect for the Combination skill
 During the active duration of the combination skill,  if the Gypsy or Minstrel
@@ -2851,6 +3450,8 @@ However,  caster will not be able to use performance skills^000000
 #
 CG_HERMODE#
 Hermode's Wand
+MAX Lv : 5
+^777777Skill Requirements : Improve Concentration 10, Music(Dance) Lessons 10^000000
 Description : ^777777Can only be used when there is a warp portal nearby during the Guild War.
 In the area of effect,  all support magic except Berserk for the everyone except the caster,  will be canceled.
 The casting of spells will not be available
@@ -2864,6 +3465,8 @@ all character except the caster cannot use any skill.^000000
 #
 CG_TAROTCARD#
 Tarot Card of Fate
+MAX lv : 5
+^777777Skill Requirements : Improve Concentration 10, Hip Shaker 3^000000
 Description : ^777777When this skill is used on one enemy,  the skill will give 1 of the 14 effect towards the enemy
 Success rate depends on the skill level. There is 3 seconds of after cast delay.^000000
 [Lv 1] : ^777777Success rate  8%^000000
@@ -2874,6 +3477,8 @@ Success rate depends on the skill level. There is 3 seconds of after cast delay.
 #
 CR_ACIDDEMONSTRATION#
 Acid Demonstration
+MAX lv : 10
+^777777Skill Requirements : Bomb 5, Acid Terror 5^000000
 Description : ^777777Throw Fire Bottle and Acid Bottle at enemies at the same time (Consumes Fire Bottle x1,  Acid Bottle x1)
 Damage dealt towards enemies (Affected by INT of caster and VIT of enemies)
 When the bottle is thrown towards a character,  it will deal 50% of damage.
@@ -2892,6 +3497,7 @@ The damage dealt differs according to the level of skill.^000000
 #
 CR_CULTIVATION#
 Plant Cultivation
+MAX Lv : 2
 Description : ^777777Uses Mushroom Spore and Tough Scalelike Stem to summon Spore and Plant.
 The type of summoned Spore and Plant is random. There is 50% of success rate for summon.
 Cannot be used in Guild War.^000000
@@ -2902,6 +3508,7 @@ Cannot be used in Guild War.^000000
 //-----Ep 10.2---------051109------
 TK_RUN#
 Run
+MAX Lv : 10
 Series : ^777777Move and passive^000000
 Content :^777777When not equip with any weapon during level 7 running and suddenly break will obtains a 150 sec STR bonus increasing effect
 When equipped weapon the explosion status will be cancel, the attack power of kick will increase by 10 by not equipping weapon every each level increasing the skill of running.^000000
@@ -2918,6 +3525,8 @@ When equipped weapon the explosion status will be cancel, the attack power of ki
 #
 TK_READYSTORM#
 Ready Storm
+MAX Lv : 1
+^777777Skill Requirements : Tornado Kick 1^000000
 Series : ^777777Preparation^000000
 Explanation : ^777777When the attack hits the enemy,  there is a 15% rate to activate Ready Storm stance.
 Cannot be used by Soullinker^000000
@@ -2925,6 +3534,7 @@ Cannot be used by Soullinker^000000
 #
 TK_STORMKICK#
 Storm Kick
+MAX Lv : 7
 Series : ^777777Attack^000000
 Explanation: ^777777Can only be used when you're in Ready Storm stance
 Attack enemies withing the 5x5 cells around the caster.^000000
@@ -2938,6 +3548,8 @@ Attack enemies withing the 5x5 cells around the caster.^000000
 #
 TK_READYDOWN#
 Ready Down
+MAX Lv : 1
+^777777Skill Requirements : Heel Drop 1^000000
 Series : ^777777Preparation^000000
 Explanation : ^777777When the attack hits the enemy,  there is a 15% rate to go into Ready Down stance.
 Cannot be used by Soullinker^000000
@@ -2945,6 +3557,7 @@ Cannot be used by Soullinker^000000
 #
 TK_DOWNKICK#
 Down Kick
+MAX Lv : 7
 Series : ^777777Attack^000000
 Explanation : ^777777Can only be used when caster is in Ready Down stance.
 Deals damage and 3 seconds of stun effect on enemy^000000
@@ -2958,6 +3571,8 @@ Deals damage and 3 seconds of stun effect on enemy^000000
 #
 TK_READYTURN#
 Ready Turn
+MAX Lv : 1
+^777777Skill Requirements : Roundhouse 1^00000
 Series : ^777777Preparation^000000
 Explanation: ^777777When the attack hits enemy,  there is 15% rate to go into Ready Turn stance.
 Cannot be used by Soullinker^000000
@@ -2965,6 +3580,7 @@ Cannot be used by Soullinker^000000
 #
 TK_TURNKICK#
 Turn Kick
+MAX Lv : 7
 Series : ^777777Attack^000000
 Explanation : ^777777Can only be used when character is in Ready Turn stance
 Damage single enemy, but will not damage other enemy nearby and will pushed them away.^000000
@@ -2978,6 +3594,8 @@ Damage single enemy, but will not damage other enemy nearby and will pushed them
 #
 TK_READYCOUNTER#
 Ready Counter
+MAX Lv : 1
+^777777Skill Requirements : Counter Kick 1^000000
 Series : ^777777Preparation^000000
 Explanation : ^777777When the attack hits enemy,  there is 20% rate to go into Ready Counter stance.
 Cannot be used by Soullinker^000000
@@ -2985,6 +3603,7 @@ Cannot be used by Soullinker^000000
 #
 TK_COUNTER#
 Counter Kick
+MAX Lv : 7
 Series : ^777777Attack^000000
 Explanation : ^777777Can only be used when character is in Ready Counter stance.
 Deals 100% damage on enemy^000000
@@ -2998,12 +3617,15 @@ Deals 100% damage on enemy^000000
 #
 TK_DODGE#
 Dodge
+MAX Lv : 1
+^777777Skill Requirements : Flying Kick 7^000000
 Series : ^777777Preparation^000000
 Explanation : ^777777Will be having a 20% chances to parry enemies' range attack perfectly. When in explosion status, it will also respond to melee attack.^000000
 [Lv 1] ^777777Cast time: 0 second,  SP Consumption: 1^000000
 #
 TK_JUMPKICK#
 Jump Kick
+MAX Lv : 7
 Series : ^777777Attack^000000
 Explanation : ^777777Jumps and attacks enemy from a distant.
 When this skill is used in Dodge status,  the damage dealt will increase according to the level of the character.
@@ -3021,6 +3643,7 @@ But it will not cancel when there is Auto-Protection on that character, when usi
 #
 TK_HPTIME#
 Peaceful Break
+MAX Lv : 10
 Series : ^777777Passive^000000
 Explanation: ^777777When there is a Taekwondo character sitting beside, will receive HP regeneration even exceed 50% overweight, 
 and it the regeneration rate will increases if you have higher VIT. 
@@ -3038,6 +3661,7 @@ If you key in 'dori/dori',  recovery amount +30^000000
 #
 TK_SPTIME#
 Happy Break
+MAX Lv : 10
 Series : ^777777Passive^000000
 Explanation: ^777777When there is a Taekwondo series character sitting beside, will receive SP regeneration, and its base recovery rate is increased if you have higher INT.
 Use /doridori to increase the regeneration rate during rest, and will receive 30 mins of Happy Status
@@ -3056,10 +3680,12 @@ Consumes 10 SP. Earth Scroll will be obtained at a low rate. There's  10% drop r
 #
 TK_POWER#
 Power
-Series : ^777777Passive^000000
-Explanation : ^777777Increases attack according to the number of members in the same map.
-When character uses Normal Attack,  Damage = (100 x % of increment) + (100% Damage)
-When character uses skill with 500% attack power,  damage = (100 x % of increment) + (500% damage)^000000
+MAX Lv : 5
+Skill Form: ^777777Passive^000000
+Description: ^777777Increase Attack Power based on the number of Party Members on the same map. 
+Normal attack gives the damage of (100 x Increasement%) + 100% to the enemies.^000000
+^FFFFFF_^000000
+Additional Damage by Level
 [Lv 1] ^777777Damage increment 2%^000000
 [Lv 2] ^777777Damage increment 4%^000000
 [Lv 3] ^777777Damage increment 6%^000000
@@ -3068,6 +3694,8 @@ When character uses skill with 500% attack power,  damage = (100 x % of incremen
 #
 TK_SEVENWIND#
 Seven Wind
+MAX Lv : 7
+^777777Skill Requirements : Peaceful Break 5, Happy Break 5, Kihop 5^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Changes the element of attack to certain element ^000000
 [Lv 1] ^777777Earth (SP Consumption: 20)^000000
@@ -3080,6 +3708,7 @@ Explanation : ^777777Changes the element of attack to certain element ^000000
 #
 TK_HIGHJUMP#
 High Jump
+MAX Lv : 5
 Series : ^777777Move using High Jump.^000000
 If the landing point is not an enclosed area and is not occupied by other person, 
 character will be able to move across the obstacles such as wall.
@@ -3093,6 +3722,8 @@ When using High Jump, the cooldown duration for Emergency Call will increase by 
 #
 TK_MISSION#
 Mission
+MAX Lv : 1
+^777777Skill Requirements : Kihop 5^000000
 Series : ^777777Ranking (/taekwon)^000000
 Explanation : ^777777Cannot be used when you change to Star Gladiator or Soullinker
 When this skill is used,  the name of the target monster will be shown.
@@ -3106,6 +3737,7 @@ There is LV 90's Taekwondo's champion, MAX HP and MAX SP will increase by 3 time
 #
 SG_FEEL#
 Feelings of Sun,  moon and Star
+MAX Lv : 3
 Series : ^777777Register^000000
 Explanation : ^777777When this skill is used,  the map you're in will be registered.
 The registered map will not be altered.
@@ -3116,6 +3748,8 @@ When you use this skill to register,  it will show  the location of the register
 #
 SG_SUN_WARM#
 Warmth of Sun
+MAX Lv : 3
+^777777Skill Requirements : Solar, Lunar and Stellar Perception 1^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Can only use the skills of Sun's location
 to deal damage and knock back enemies around the character.
@@ -3127,6 +3761,8 @@ No damage to humanoid monster, but will persisted consumes SP^000000
 #
 SG_MOON_WARM#
 Warmth of Moon
+MAX Lv :3
+^777777Skill Requirements : Solar, Lunar and Stellar Perception 2^000000
 Series : ^777777Attack^000000
 Explanation : ^777777 Can only use the skills of Moon's location
 to deal damage and knock back the monsters around the character.
@@ -3138,6 +3774,8 @@ No damage to humanoid monster, but will persisted consumes SP^000000
 #
 SG_STAR_WARM#
 Warmth of Star
+MAX Lv : 3
+^777777Skill Requirements : Solar, Lunar and Stellar Perception 3^000000
 Series : ^777777Attack^000000
 Explanation : ^777777 Can only use the skills of Star's location
 to deal damage and knock back the monsters around the character.
@@ -3149,6 +3787,7 @@ No damage to humanoid monster, but will persisted consumes SP^000000
 #
 SG_HATE#
 Hatred of Sun,  Moon and Star
+MAX Lv : 3
 Series : ^777777Register^000000
 Explanation : ^777777When this skill is used,  only certain monster will be registered.
 Registered monsters will not be changed.
@@ -3160,24 +3799,32 @@ After this skill is used,  the registered monsters will be shown.^000000
 #
 SG_SUN_ANGER#
 Wrath of Sun
+MAX Lv : 3
+^777777Skill Requirements : Solar, Lunar and Stellar Opposition 1^000000
 Series : ^777777Passive^000000
 Explanation : ^777777Your attack will increase when you fight against monsters of Sun.
 Increment of attack is decided by the character's level,  skill level,  LUK and DEX value^000000
 #
 SG_MOON_ANGER#
 Wrath of Moon
+MAX Lv : 3
+^777777Skill Requirements : Solar, Lunar and Stellar Opposition 2^000000
 Series : ^777777Passive^000000
 Explanation : ^777777Your attack will increase when you fight against monsters of Moon.
 Increment of attack is decided by the character's level,  skill level and DEX value.^000000
 #
 SG_STAR_ANGER#
 Wrath of Star
+MAX Lv : 3
+^777777Skill Requirements : Solar, Lunar, and Stellar Opposition 3^000000
 Series : ^777777Passive^000000
 Explanation : ^777777Your attack will increase when you fight against monsters of Star.
 Increment of attack is decided by the character's level,  skill level and DEX value.^000000
 #
 SG_SUN_COMFORT#
 Comfort of Sun
+MAX Lv : 4
+^777777Skill Requirements : Solar, Lunar and Stellar Perception 1^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Can only be used in the Sun's location on the day of Sun (even day)
 Defense will increase according to character's level,  DEX and LUK value.
@@ -3189,6 +3836,8 @@ If the defense is altered during the active duration, the skill will be disabled
 #
 SG_MOON_COMFORT#
 Comfort of Moon
+MAX Lv : 4
+^777777Skill Requirements : Solar, Lunar and Stellar Perception 2^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Can only be used in the Moon's location on the day of Moon (odd day)
 Dodge rate will increase according to character's level,  DEX and LUK value^000000
@@ -3199,6 +3848,8 @@ Dodge rate will increase according to character's level,  DEX and LUK value^0000
 #
 SG_STAR_COMFORT#
 Comfort of Star
+MAX Lv : 4
+^777777Skill Requirements : Solar, Lunar and Stellar Perception 3^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Can only be used in the Star's location on the day of Star (multiple of 5)
 Attack speed will increase according to character's level,  DEX and LUK value^000000
@@ -3209,6 +3860,8 @@ Attack speed will increase according to character's level,  DEX and LUK value^00
 #
 SG_SUN_BLESS#
 Blessing of Sun
+MAX Lv : 5
+^777777Skill Requirements : Solar, Lunar and Stellar Perception 1, Solar, Lunar, and Stellar Opposition 1^000000
 Series : ^777777Passive^000000
 Explanation : ^777777In the day of Sun (even day),  the experience obtained will increase when you defeated a monster of Sun^000000
 [Lv 1] ^777777Experience Increment: 10%^000000
@@ -3219,6 +3872,8 @@ Explanation : ^777777In the day of Sun (even day),  the experience obtained will
 #
 SG_MOON_BLESS#
 Blessing of Moon
+MAX Lv : 5
+^777777Skill Requirements : Solar, Lunar and Stellar Perception 2, Solar, Lunar, and Stellar Opposition 2^000000
 Series : ^777777Passive^000000
 Explanation : ^777777In the day of Moon (odd day),  the experience obtained will increase when you defeated a monster of Moon^000000
 [Lv 1] ^777777Experience Increment: 10%^000000
@@ -3229,6 +3884,8 @@ Explanation : ^777777In the day of Moon (odd day),  the experience obtained will
 #
 SG_STAR_BLESS#
 Blessing of Moon
+MAX Lv : 5
+^777777Skill Requirements : Solar, Lunar and Stellar Perception 3, Solar, Lunar, and Stellar Opposition 3^000000
 Series : ^777777Passive^000000
 Explanation : ^777777In the day of Star (multiple of five),  the experience obtained will increase when you defeated a monster of Star^000000
 [Lv 1] ^777777Experience Increment: 20%^000000
@@ -3239,23 +3896,26 @@ Explanation : ^777777In the day of Star (multiple of five),  the experience obta
 #
 SG_DEVIL#
 Devil of Sun,  Moon and Star
+MAX Lv : 10
+^777777Skill Requirements : Job Level 50^000000
 Series : ^777777Passive^000000
 Explanation : ^777777The skill that can be active when JOB LV 50,
 It will be discommode cause by the blind effect and can't see the surround, 
 suggested not to choose it if possible^000000
- [Lv 1] ^777777Attack speed increment: 3%^000000
- [Lv 2] ^777777Attack speed increment: 6%^000000
- [Lv 3] ^777777Attack speed increment: 9%^000000
- [Lv 4] ^777777Attack speed increment: 12%^000000
- [Lv 5] ^777777Attack speed increment: 15% ^000000
- [Lv 6] ^777777Attack speed increment: 18% ^000000
- [Lv 7] ^777777Attack speed increment: 21% ^000000
- [Lv 8] ^777777Attack speed increment: 24% ^000000
- [Lv 9] ^777777Attack speed increment: 27% ^000000
-[Lv 10] ^777777Attack speed increment: 30% ^000000
+ [Lv 1] ^777777Attack Speed 2% ^000000
+ [Lv 2] ^777777Attack Speed 3% ^000000
+ [Lv 3] ^777777Attack Speed 4% ^000000
+ [Lv 4] ^777777Attack Speed 5% ^000000
+ [Lv 5] ^777777Attack Speed 6% ^000000
+ [Lv 6] ^777777Attack Speed 7% ^000000
+ [Lv 7] ^777777Attack Speed 8% ^000000
+ [Lv 8] ^777777Attack Speed 9% ^000000
+ [Lv 9] ^777777Attack Speed 10%^000000
+ [Lv 10] ^777777Attack Speed 11%^000000
 #
 SG_FRIEND#
 Friend of Sun,  Moon and Star
+MAX Lv : 3
 Series : ^777777Passive^000000
 Explanation: ^777777When character uses Counter,  activation rate of Monk's (party member) Triple Blows increases
 When a Monk in the party uses The Way of the Dragon,  activation rate of Star Gladiator's increases^000000
@@ -3265,6 +3925,7 @@ When a Monk in the party uses The Way of the Dragon,  activation rate of Star Gl
 #
 SG_KNOWLEDGE#
 Knowledge of Sun,  Moon and Star
+MAX Lv : 10
 Series : ^777777Passive^000000
 Explanation : ^777777Content : Weight capacity increases in the area of Sun, Moon, or Star, 
 There are dictated area in Star Gladiator's skill, if player feel that the monsters dictated skill are complicated, 
@@ -3282,13 +3943,17 @@ can be more convenient by continuously select Taekwon boy/ girl's skill. When St
 #
 SG_FUSION#
 Fusion of Sun,  Moon and Star
+^777777Skill Requirements : Solar, Lunar, and Stellar Courier 9, Sprit State^000000
 Series : ^777777Awakening^000000
-Explanation : ^777777There will be 10 min awaken to unleash the potential ability during the Soul Status, 
-but will inflict negative effect by reducing 2% HP on every attack to enemy, 
-and reduce 8% HP once attack enemy, if attack when HP is lower than 20% will immediately die.^000000
+Description: ^777777Awaken the
+caster's hidden potential for 10 minutes while in a spirit status, endowing the caster with attacks that have 100%^FFFFFF ^777777Accuracy and will ignore enemy's Defense, 
+and increased Movement Speed. However, 2% of caster's HP will be drained with^FFFFFF ^777777each attack on monsters
+and 8% will be drained with each attack on other players. In^FFFFFF ^777777this status, attacking when the caster's remaining HP is less that 20% of Max HP will instantly kill the caster.
+In the status of waking up natural recovery is impossible and gets all the recorvery effects only by 1/4 of the original ones.^000000
 #
 SL_ALCHEMIST#
 Soul of Alchemist
+MAX Lv : 5
 Series : ^777777Supportive^000000
 Explanation : ^777777Conjure the soul of the most powerful Alchemist and provides its power to your companion
 Skill of Potion Pitcher will increase (affected by the character level)
@@ -3301,6 +3966,7 @@ Able to use Berserk Pitcher and Twilight^000000
 #
 AM_BERSERKPITCHER#
 Berserk Pitcher
+^777777Skill Requirements : Spirit State^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Forcing all above BLV 85 professions to drink Berserk Potion, 
 it will consume 2 Berserk Potions when using this skill, 
@@ -3308,6 +3974,7 @@ the ASPD will increase after using Berserk Pitcher but the duration will be half
 #
 AM_TWILIGHT1#
 Twilight
+^777777Skill Requirements : Prepare Potion 10, Spirit State^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Consumes 200SP to create 200 White Potion by 0.005 second per potion.
 This skill cannot be used if character does not have enough ingredients to create 200 White Potion.
@@ -3316,6 +3983,7 @@ Please beware that it will have the possibility to fail in producing When carry 
 #
 AM_TWILIGHT2#
 Twilight 
+^777777Skill Requirements : Prepare Potion 10, Spirit State^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Skill that is obtained from the guardian angel of Super Novice
 Consumes 200 SP to create 200 Slim White Potion by 0.005 second per potion.
@@ -3325,6 +3993,7 @@ The position in the ranking board will increase as well.^000000
 #
 AM_TWILIGHT3#
 Twilight
+^777777Skill Requirements : Prepare Potion 10, Spirit State^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Skill that is obtained from the guardian angel of taekwon Series
 Consumes 200 SP to create Alcol x100,  Fire Bottle x50 and Acid Bottle x50
@@ -3333,6 +4002,7 @@ Transparent Cloth x50 + Empty Bottle x50 to use this skill^000000
 #
 SL_MONK#
 Soul of Monk
+MAX Lv : 5
 Series : ^777777Supportive^000000
 Explanation : ^777777Conjures the soul of the most powerful Monk and provides its power to your companion
 When character uses The Way of the Dragon through combo skill,
@@ -3346,6 +4016,7 @@ SP will be regenerate on Critic Explosion Status.^000000
 #
 SL_STAR#
 Soul of Star Gladiator
+MAX Lv : 5
 Series : ^777777Supportive^000000
 Explanation : ^777777Conjures the soul of the most powerful Star Gladiator
 and provides its power to your companion
@@ -3358,6 +4029,7 @@ The character will be able to use the Fusion of Sun,  Moon and Star.^000000
 #
 SL_SAGE#
 Soul of Sage
+MAX Lv : 5
 Series : ^777777Supportive^000000
 Explanation : ^777777Conjures the soul of the most powerful Sage and provides its power to your companion
 Able to use elment bolt of highest level when character uses Auto Spell.^000000
@@ -3369,6 +4041,7 @@ Able to use elment bolt of highest level when character uses Auto Spell.^000000
 #
 SL_CRUSADER#
 Soul of Crusader
+MAX Lv : 5
 Series : ^777777Supportive^000000
 Explanation : ^777777Conjures the soul of the most powerful Crusader and provides its power to your companion
 Damage become 2 times stronger, delay time will reduce by half^000000
@@ -3380,6 +4053,7 @@ Damage become 2 times stronger, delay time will reduce by half^000000
 #
 SL_SUPERNOVICE#
 Soul of Super Novice
+^777777Skill Requirements : Taekwon Master Spirit 1^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Conjures the soul of the most powerful Super Novice and provides its power to your companion
 When the character reaches level 90 and above,  he can equip headgear of all positions..
@@ -3394,6 +4068,8 @@ Sword,  Dagger,  Axe,  Mace and Staff.^000000
 #
 SL_KNIGHT#
 Soul of Knight
+MAX Lv : 5
+^777777Skill Requirements : Crusader Spirit 1^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Conjures the soul of the most powerful Knight and provides its power to your companion
 When the skill level of Two Hand Quicken reaches level 10,  character will be able to use Sword Quicken.^000000
@@ -3406,9 +4082,14 @@ When the skill level of Two Hand Quicken reaches level 10,  character will be ab
 SL_WIZARD#
 Soul of Wizard
 Series : ^777777Supportive^000000
-Explanation : ^777777Conjures the soul of the most powerful Wizard and provides its power to your companion
-Uses magic without consuming any magic gemstone.
-When holding a Fragment Of Crystal during the Soul Status, it will evaporate the reflected magic from Kaite to the player by consuming a piece of Crystal Pieces. ^000000
+Description: ^777777Summon
+the spirit of history's most
+powerful Wizard and endow
+its abilities upon the Wizard targeted by this skill. For the
+skill's duration, the targeted Wizard can use certain skills
+without consuming Gemstones.While having the wizard's soul, when using magic without consuming a gem stone the skill consuming SP and the casting time increases by 50% .
+^FFFFFF_^000000
+SP Consumption & Duration by Level
 [Lv 1] ^777777SP Consumption: 460,  Duration: 150seconds^000000
 [Lv 2] ^777777SP Consumption: 360,  Duration: 200seconds^000000
 [Lv 3] ^777777SP Consumption: 260,  Duration: 250seconds^000000
@@ -3430,11 +4111,14 @@ Power of Holy Light increases by 500%^000000
 #
 SL_BARDDANCER#
 Soul of Bard and Dancer
+MAX Lv : 5
 Series : ^777777Supportive^000000
-Explanation : ^777777Conjures the soul of the most powerful Bard and Dancer and provides its power to your companion
-Character will be affected by the performance skills too.
-Movement speed will increases during the performance  Whistle and Humming,  Assassin Cross of Sunset and Forget Me Not,  
-A Poem of Bragi and Fortune's Kiss,  The Apple of Idun and At Your Service can be linked.^000000
+Description: ^777777Summon
+the spirit of history's most artistic performer and endow its abilities upon the Bard or Dancer^FFFFFF ^777777targeted by this skill.
+For the skill's duration, Bards and^FFFFFF ^777777Dancers have increased Movement Speed, receive the same effect as Party Members
+when performing Play or Dance skills,^FFFFFF ^777777and are able to combo skills with Perfect Tablature, Focus^FFFFFF ^777777Ballet, Impressive Riff,
+Slow Grace, Magic Strings,Lady Luck, Song of Lutie and Gypsy's Kiss. The skill which is linked with Bard and Dancer's Soul's consumed amount increases by 50%.
+^FFFFFF_^000000SP Consumption & Duration by Level
 [Lv 1] ^777777SP Consumption: 460,  Duration: 150seconds^000000
 [Lv 2] ^777777SP Consumption: 360,  Duration: 200seconds^000000
 [Lv 3] ^777777SP Consumption: 260,  Duration: 250seconds^000000
@@ -3443,11 +4127,20 @@ A Poem of Bragi and Fortune's Kiss,  The Apple of Idun and At Your Service can b
 #
 SL_ROGUE#
 Soul of Rogue
+MAX Lv : 5
+^777777Skill Requirements : Assassin Spirit 1^000000
 Series : ^777777Supportive^000000
-Explanation : ^777777Conjures the soul of most powerful Rogue and provides its power to your companion
-Activation rate of Double Attack increases by 100%
-Status when casting can't be cancel, recovery effect will increases when using potion, When character uses Chase Walk, 
-the duration of STR increment will be longer and movement speed will increases. ^000000
+Description: ^777777Summon the
+spirit of history's sneakiest Rogue^FFFFFF ^777777and endow its abilities
+upon the Rogue targeted by
+this skill, enhancing Stealth status's^FFFFFF ^777777Movement Speed
+and STR increase. For this
+skill's duration, this Rogue
+will be unaffected by dispell skills^FFFFFF ^777777and will receive more
+HP from potions created by a Top Ten Ranking Alchemist.
+^FFFFFF_^000000
+SP Consumption
+& Duration by Level
 [Lv 1] ^777777SP Consumption: 460,  Duration: 150seconds^000000
 [Lv 2] ^777777SP Consumption: 360,  Duration: 200seconds^000000
 [Lv 3] ^777777SP Consumption: 260,  Duration: 250seconds^000000
@@ -3456,11 +4149,16 @@ the duration of STR increment will be longer and movement speed will increases. 
 #
 SL_ASSASIN#
 Soul of Assassin
+MAX Lv : 5
 Series : ^777777Supportive^000000
-Explanation : ^777777Conjures the soul of most powerful Assassin.
-and provides its power to your companion
-Attack of Sonic Blow increases by 100%. Delay time is reduced.
-Sonic Blow damage increase by 25% during War of Emperium, the delay time will not be shorten.^000000
+Description: ^777777Summon the spirit of history's most
+mysterious Assassin and endow its abilities upon
+a targeted Assassin. For the skill's duration,
+Sonic Blow will have a 100% increase in damage
+and reduced cast delay.
+When an assasin who got a soul from a soul linker uses
+Sonic Blow, SP consumption increases by 100%.
+SP Consumption & Duration by Level
 [Lv 1] ^777777SP Consumption: 460,  Duration: 150seconds^000000
 [Lv 2] ^777777SP Consumption: 360,  Duration: 200seconds^000000
 [Lv 3] ^777777SP Consumption: 260,  Duration: 250seconds^000000
@@ -3469,6 +4167,8 @@ Sonic Blow damage increase by 25% during War of Emperium, the delay time will no
 #
 SL_BLACKSMITH#
 Soul of Blacksmith
+MAX Lv : 5
+^777777Skill Requirements : Alchemist Spirit 1^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Conjures the soul of the most powerful Blacksmith.
 and provides its power to your companion
@@ -3485,12 +4185,15 @@ and Assassin Cross of Sunset ^000000
 #
 BS_ADRENALINE2#
 Adrenaline All
+^777777Skill Requirements : Adrenaline Rush 5, Spirit State^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Gain Adrenaline Rush effect regardless of weapon type.
 Duration: 150 seconds,  SP Consumption: 64^000000
 #
 SL_HUNTER#
 Soul of Hunter
+MAX Lv : 5
+^777777Skill Requirements : Bard and Dancer Spirit 1^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Conjures the soul of the most powerful Hunter
 and provides its power to your companion
@@ -3503,6 +4206,8 @@ Gain effect of Beast Bane which increases according to the value of STR^000000
 #
 SL_SOULLINKER#
 Soul of Soullinker
+MAX Lv : 5
+^777777Skill Requirements : Taekwon Master Spirit 1^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777Conjures the soul of the most powerful Soullinker
 and provides its power to your companion
@@ -3515,6 +4220,8 @@ and provides its power to your companion
 #
 SL_KAIZEL#
 kaizel
+MAX Lv : 7
+^777777Skill Requirements : Priest Spirit 1^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777'Ka'Series Magic that can only be used on the Soullinker class
 When the casting time is not effected by DEX, it will immediately resurrect after dead, and will be in Kyrie Eleipson status for 2 sec.
@@ -3529,6 +4236,8 @@ Duration of spell is 30 minutes and the effect wears off once the character is r
 #
 SL_KAAHI#
 Kaahi
+MAX Lv : 7
+^777777Skill Requirements : Priest Spirit 1, Monk Spirit 1, Crusader Spirit 1^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777'Ka'Series Magic that can only be used on the Soullinker class
 When the character is attacked (except skill attack) during the spell's active duration,  SP is consumed to recover HP.
@@ -3538,6 +4247,8 @@ HP Recovery rate per healing: 200 ~ 1400^000000
 #
 SL_KAUPE#
 Kaupe
+MAX Lv : 3
+^777777Skill Requirements : Assassin Spirit 1, Rogue Spirit 1^000000
 Series : ^777777Supportive^000000
 Explanation : ^777777'Ka'Series Magic that can only be used on the Soullinker class
 Dodge the phsycal attack at certain rate.
@@ -3548,12 +4259,19 @@ Duration is 10 minutes and effect of spell wears off once the character dodge 1 
 #
 SL_KAITE#
 Kaite
+^777777Skill Requirements : Wizard Spirit 1, Sage Spirit 1^000000
 Series : ^777777Supportive^000000
-Explanation : ^777777'Ka'Series Magic that can only be used on the Soullinker class
-Reflect most magic attack and healing skill to the caster.
-When character's Healing skill is reflected,  he will not be healed.
-Will not reflect the magic that cast by High LV monster or Boss monster,  
-but will reflect to all character's magic regardless of receiving party's BLV and will not overlap with the skill Assumption ^000000
+Description: ^777777Reflect most magic spells back at
+the original caster. Reflected Healing spells
+will not heal the original caster. The magic
+spells of high level monsters cannot be
+reflected, although this skill has a 100%
+chance of reflecting spells from other players
+regardless of level. It doesn't overlap with 
+Assumptio and in this state all physical damges are 
+added by 400%. The kaite skill of a Soul Linker, the magical 
+reflection rate becomes 50%, and cannot reflect the 
+ground-target magic. Also gets 400% of all physical damages.^000000
 [Lv 1] ^777777Cast time:6seconds,  No. of Reflect: 1time,  Duration: 1minute^000000
 [Lv 2] ^777777Cast time:5.5seconds,  No. of Reflect: 1times,  Duration: 2minutes^000000
 [Lv 3] ^777777Cast time:5seconds,  No. of Reflect: 1times,  Duration: 3minutes^000000
@@ -3564,6 +4282,8 @@ but will reflect to all character's magic regardless of receiving party's BLV an
 #
 SL_KAINA#
 Kaina
+MAX Lv : 7
+^777777Skill Requirements : Happy Break 1^000000
 Series : ^777777Passive^000000
 Explanation : ^777777Power of Happy Break and MSP increases. 
 The Skill of Kaina will reduces 3% of SP consumption of Estin, Estern, Esma when character reached BLV 70, 
@@ -3578,6 +4298,8 @@ The Skill of Kaina will reduces 3% of SP consumption of Estin, Estern, Esma when
 #
 SL_STIN#
 Estin
+MAX Lv : 7
+^777777Skill Requirements : Wizard Spirit 1^000000
 Series : ^777777Magic Attack^000000
 Explanation : ^777777Uses 'Es'Series Magic on the monsters.
 Damages small monsters and knock it back for 2 cells.
@@ -3594,6 +4316,8 @@ When you use Estin,  you require 3 seconds of casting just like the casting of E
 #
 SL_STUN#
 Estun
+MAX Lv : 7
+^777777Skill Requirements : Wizard Spirit 1^000000
 Series : ^777777Magic Attack^000000
 Explanation : ^777777Uses 'Es'Series Magic on the monsters.
 Deals damage to medium monster and stun it for 2 seconds.
@@ -3610,6 +4334,8 @@ When you use Estin,  you require 3 seconds of casting just like the casting of E
 #
 SL_SMA#
 Esma
+MAX Lv : 10
+^777777Skill Requirements : Estin 7, Estun 7^000000
 Series : ^777777Magic Attack^000000
 Explanation : ^777777Uses 'Es'Series Magic on the monsters.
 Skill of Seven Wind that possesses elemental effect.
@@ -3629,6 +4355,8 @@ LV is player's character LV,^000000
 #
 SL_SWOO#
 Eswoo
+MAX Lv : 7
+^777777Skill Requirements : Priest Spirit 1^000000
 Series : ^777777Status Magic^000000
 Explanation : ^777777Uses 'Es'Series Magic on the monsters.
 Shrinks the size of the monsters and lowers its movement speed within the active duration.
@@ -3644,6 +4372,8 @@ When using Eswoo to monsters which in Eswoo status, the Eswoo status of that par
 #
 SL_SKE#
 Eske
+MAX Lv : 3
+^777777Skill Requirements : Knight Spirit 1^000000
 Series : ^777777Status Magic^000000
 Explanation : ^777777Uses 'Es'Series Magic on the monsters.
 Increase the attack of monster by 400% and decrease the defense by 50%
@@ -3654,6 +4384,8 @@ Become status that allow to cast Esma in 3 min times.^000000
 #
 SL_SKA#
 Eska
+MAX Lv : 3
+^777777Skill Requirements : Monk Spirit 1^000000
 Series : ^777777Status Magic^000000
 Explanation : ^777777Uses magic of 'Es' Series on monster,
 and turn the monster into the status of Physical Immune^000000
@@ -3663,6 +4395,8 @@ and turn the monster into the status of Physical Immune^000000
 #
 SL_HIGH#
 1st level professions' soul
+MAX Lv : 5
+^777777Skill Requirements : Super Novice Spirit 5^000000
 Series : ^777777Supportive^000000
 Explanation: ^777777Summon a soul of first class profession,  and obtain the ability of the first class profession.
 The status will increase according to the level of the character and the maximum status is 50.^000000
@@ -3674,6 +4408,8 @@ The status will increase according to the level of the character and the maximum
 #
 KN_ONEHAND#
 Sword Quicken
+One Hand Quicken
+^777777Skill Requirements : Two Hand Quicken 10, Spirit State^000000
 Series : ^777777Supportive^000000
 Explanation: ^777777Increases the attack speed when character uses one hand sword.
 ASPD will increases in a certain period of time when using One-Hand Sword,  
@@ -3683,6 +4419,7 @@ there will be effect if drink another^000000
 #
 HT_POWER#
 Beast Strafing
+^777777Skill Requirements : Double Strafe 10, Spirit State^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Explanation : ^777777 Attack with Double strafing when the target is Brute class monster.
@@ -3690,6 +4427,7 @@ Damage dealt is based on STR value.^000000
 #
 HLIF_HEAL#
 Touch of Heal
+MAX Lv : 5
 Explanation : ^777777 Recovers player HP.
 Skill is similar to the Healing skill of Acolyte.
 Consumes 1 Red slim potion Recovers HP of the targeted player. Recovery rate depends on the LV and INT of caster.^000000
@@ -3701,6 +4439,7 @@ Consumes 1 Red slim potion Recovers HP of the targeted player. Recovery rate dep
 #
 HLIF_AVOID#
 Emergency Avoid
+MAX Lv : 5
 Explanation : ^777777 Increases the movement speed of Homunculus and player to avoid attack^000000
  [Lv 1] ^777777Speed increment: 10%,  Duration: 40 seconds^000000
  [Lv 2] ^777777Speed increment: 20%,  Duration: 35 seconds^000000
@@ -3710,6 +4449,7 @@ Explanation : ^777777 Increases the movement speed of Homunculus and player to a
 #
 HLIF_BRAIN#
 Brain Surgery
+MAX Lv : 5
 Series : ^777777Passive^000000
 Explanation : ^777777Performs surgery to increase MSP and SP recovery rate of Homunculus.
 Increases the Touch of Heal recovery rate too.^000000
@@ -3731,6 +4471,7 @@ The condition will only be active for at most 5 minutes Value of HP/SP will beco
 #
 HAMI_CASTLE#
 Castling
+MAX Lv : 5
 Explanation: ^777777Exchanges the position of player and the homunculus.
 The monster that attacks player will attack the homunculus.^000000
  [Lv 1] ^777777Success rate : 20%^000000
@@ -3741,6 +4482,7 @@ The monster that attacks player will attack the homunculus.^000000
 #
 HAMI_DEFENCE#
 Deffence
+MAX Lv : 5
 Explanation : ^777777Increases the defense of player and homunculus temporarily^000000
  [Lv 1] ^777777DEF Increment : 2,  Duration : 40 seconds^000000
  [Lv 2] ^777777DEF Increment : 4,  Duration : 35 seconds^000000
@@ -3750,6 +4492,7 @@ Explanation : ^777777Increases the defense of player and homunculus temporarily^
 #
 HAMI_SKIN#
 Adamantium Skin
+MAX Lv : 5
 Series : ^777777Passive^000000
 Explanation : ^777777Increases the Def of homunculus permanently.
 Increases MHP and HP Recovery rate.^000000
@@ -3761,6 +4504,7 @@ Increases MHP and HP Recovery rate.^000000
 #
 HAMI_BLOODLUST#
 Blood Lust
+MAX Lv : 3
 Explanation : ^777777Increases the attack of homunculus to 1.5x normal attack,  for 5 minutes.
 There is a certain rate where 20% of the damage dealt towards the enemy 
 will be used to recover the homunculus' HP.^000000
@@ -3770,6 +4514,7 @@ will be used to recover the homunculus' HP.^000000
 #
 HFLI_MOON#
 Moonlight
+MAX Lv : 5
 Explanation : ^777777Deals continuous tail attacks  to a nearby target^000000
  [Lv 1] ^777777No. of attacks: 1,  Damage increment rate: 220%^000000
  [Lv 2] ^777777No. of attacks: 2,  Damage increment rate: 330%^000000
@@ -3779,6 +4524,7 @@ Explanation : ^777777Deals continuous tail attacks  to a nearby target^000000
 #
 HFLI_FLEET#
 Fleet Move
+MAX Lv : 5
 Explanation : ^777777Increases the attack and attack speed of Homunculus Lif temporarily.^000000
  [Lv 1] ^777777Attack Speed Increment:3,  Attack Increment rate: 110%,  Duration: 60 seconds,  Delay: 60 seconds^000000
  [Lv 2] ^777777Attack Speed Increment: 6,  Attack Increment rate: 115%,  Duration: 55 seconds,  Delay: 70 seconds^000000
@@ -3788,6 +4534,7 @@ Explanation : ^777777Increases the attack and attack speed of Homunculus Lif tem
 #
 HFLI_SPEED#
 Overed Speed
+MAX Lv : 5
 Explanation : ^777777Increases the dodge rate of the Homunculus temporarily^000000
  [Lv 1] ^777777Dodge Rate Increment: 20,  Duration: 60 seconds,  Cast Delay: 60 seconds^000000
  [Lv 2] ^777777Dodge Rate Increment: 30,  Duration: 55 seconds,  Cast Delay: 70 seconds^000000
@@ -3797,6 +4544,7 @@ Explanation : ^777777Increases the dodge rate of the Homunculus temporarily^0000
 #
 HFLI_SBR44#
 S.B.R.44
+MAX Lv : 3
 Explanation : ^777777Sacrifices the bond between master and homunculus to deals greater damage on the enemies^000000
  [Lv 1] ^777777Bond x 100%^000000
  [Lv 2] ^777777Bond x 150%^000000
@@ -3805,6 +4553,7 @@ Explanation : ^777777Sacrifices the bond between master and homunculus to deals 
 #
 HVAN_CAPRICE#
 Caprice
+MAX Lv : 5
 Explanation : ^777777Randomly activate elemental bolts. The activated elemental bolts cannot be predicted.
 Level of elemental bolt used is affected by the skill level of Caprice^000000
  [Lv 1] ^777777Activates level 1 elemental bolt attack^000000
@@ -3815,6 +4564,7 @@ Level of elemental bolt used is affected by the skill level of Caprice^000000
 #
 HVAN_CHAOTIC#
 Chaotic Venediction
+MAX Lv : 5
 Explanation : ^777777Enemy,  Homunculus,  Master,  Chooses 1 from 3 targets mentioned above to use Healing skill at a certain rate.^000000
  [Lv 1] ^777777Uses Healing Lv : 1,  Enemy : 50%,  Homunculus : 20%,  Master : 30%^000000
  [Lv 2] ^777777Uses Healing Lv : 1~2,  Enemy : 40%,  Homunculus : 50%,  Master : 10%^000000
@@ -3824,6 +4574,7 @@ Explanation : ^777777Enemy,  Homunculus,  Master,  Chooses 1 from 3 targets ment
 #
 HVAN_INSTRUCT#
 Change Instruction
+MAX Lv : 5
 Series : ^777777Passive^000000
 Explanation : ^777777Increases the INT and STR value of the homunculus^000000
  [Lv 1] ^777777INT Increment : 1,  STR Increment : 1^000000
@@ -3834,6 +4585,7 @@ Explanation : ^777777Increases the INT and STR value of the homunculus^000000
 #
 HVAN_EXPLOSION#
 Bio Explosion
+MAX Lv : 3
 Explanation : ^777777Deals damage to target in 9x9 cells radius around the homunculus through self explosion of homunculus.
 The damage dealt pierces all defense and the amount of damage is based on the MHP of the homunculus. 
 When this skill is used,  the degree of bond with the homunculus becomes 1^000000
@@ -3843,6 +4595,7 @@ When this skill is used,  the degree of bond with the homunculus becomes 1^00000
 #
 KN_CHARGEATK#
 Charge Attack(Charge Attack)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Content : ^777777Charge up to an enemy enemy at range in a split second and attack
@@ -3850,17 +4603,20 @@ The further the distance away from the enemy, the stronger attack power, but the
 #
 CR_SHRINK#
 Shrink(Shrink)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Supportive^000000
 Content : ^777777When using auto-guard skill, enemy will be pushed back 2 cells from you for 5 minutes, effect will be cancelled if Shrink skill is used again when it is still active
 When Auto-Guard skill is 5% for one level and every skill level is raised every 5% to 10 level, there is a 50% chance to make enemy move back^000000
 #
 AS_SONICACCEL#
 Sonic Acceleration(Sonic Acceleration)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^000099Passive^000000
 Content : ^777777Increase accuracy of Sonic Blow by 50%, and increase its attack power by 10% ^000000
 #
 AS_VENOMKNIFE#
 Venom Knife(Venom Knife)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Content : ^777777Can only be used when equipped with 'Venom Knife'.
@@ -3868,13 +4624,21 @@ When using this skill, 1 'Venom Knife' will be used up to attack an enemy at ran
 #
 RG_CLOSECONFINE#
 Close Confine(Close Confine)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
-Content : ^777777Grab targeted single enemy for 15 seconds so that he cannot move, the grabber will also not be able to move.
-You will get FLEE+10 bonus when you grab someone. If either one person should die or teleport away, the skill effect will be removed immediately^000000
+Description: ^777777Immobilize an enemy for 10 secs
+at the cost of also freezing the movements of
+the caster. The caster's Dodge Rate is increased
+by 10 during this skill's duration. This skill
+is canceled automatically if caster uses a Wing of Fly,
+a Wing of Butterfly, a teleport, or the distance
+between two grows apart, or in the hiding mode.
+teleported.^000000
 #
 WZ_SIGHTBLASTER#
 Sight Blaster(Sight Blaster)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Yourself^000000
 Content : ^777777A fire glow will surround the caster protecting him for 2 minutes.
@@ -3883,6 +4647,7 @@ This skill cannot be used during War of Emperium.^000000
 #
 SA_CREATECON#
 Create Converter(Create Converter)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Supportive^000000
 Content : ^777777Create a 'Converter' item based on either Fire, Earth, Wind or Water element.
 Fire-Elemental Converter: 3 Scorpion's Tail + 1 Scroll
@@ -3892,30 +4657,35 @@ Water-Elemental Converter: 3 Snail's Shell + 1 Scroll^000000
 #
 SA_ELEMENTWATER#
 Water-Elemental Change(Elemental Change Water)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Content : ^777777Change target monster's elemental property to Water type^000000
 #
 SA_ELEMENTGROUND#
 Earth-Elemental Change(Elemental Change Ground)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Content : ^777777Change target monster's elemental property to Earth type^000000
 #
 SA_ELEMENTFIRE#
 Fire-Elemental Change(Elemental Change Fire)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Content : ^777777Change target monster's elemental property to Fire type^000000
 #
 SA_ELEMENTWIND#
 Wind-Elemental Change(Elemental Change Wind)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Content : ^777777Change target monster's elemental property to Wind type^000000
 #
 HT_PHANTASMIC#
 Phantasmic Arrow(Phantasmic Arrow)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Content : ^777777This skill allows you to launch arrows of illusion when you do not have arrows equipped
@@ -3923,12 +4693,14 @@ Has 150% of attack power, when hits enemy pushes them back by 3 cells^000000
 #
 BA_PANGVOICE#
 Pang Voice(Pang Voice)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Content : ^777777Screams at single target, causes Confuse, not effective against Boss Series : monsters ^000000
 #
 DC_WINKCHARM#
 Wink of Charm(Wink of Charm)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Supportive^000000
 Target : ^777777Enemy^000000
 Content : ^777777Charm single target with a wink, targeted monster will not attack for 10 seconds
@@ -3937,18 +4709,22 @@ Only works on Demi-humans, Angels, and Demon-Series : monsters, does not work on
 #
 BS_UNFAIRLYTRICK#
 Unfair Trick(Unfairly Trick)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^000099Passive^000000
 Content : ^777777Reduces the Zeny consumed by Mammonite by 10%^000000
 #
 BS_GREED#
 Greed(Greed)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Supportive^000000
 Target : ^777777Surrounding 2 Cells^000000
-Content : ^777777When this skill used, all items within 2 cells of player will go straight into his inventory
-Cannot be used in Town Mode, Guild War Mode or PvP Mode^000000
+Description: ^777777Automatically pick up every item
+within 2 cells of the caster. This skill cannot
+be used within towns.^000000
 #
 PR_REDEMPTIO#
 Redemptio(Redemptio)
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Supportive^000000
 Target : ^777777All Party Members^000000
 Content : ^777777Sacrifice yourself to revive all dead party members inside play screen, revived players gets 50% of their HP
@@ -3957,12 +4733,14 @@ Will not be activated if used when EXP is below 1%^000000
 #
 MO_KITRANSLATION#
 Ki Translation
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Supportive^000000
 Target : ^777777One Party Member^000000
 Content : ^777777Gives own spirit ball to party member. One spirit ball will be transferred whenever this skill is activated.^000000
 #
 MO_BALKYOUNG#
 Ki Explosion
+^777777Skill Requirements : Finish Quest^000000
 Series : ^777777Attack^000000
 Target : ^777777Enemy^000000
 Content : ^777777Attack enemy with energy focused in the palm and blast away nearby enemies.
@@ -3972,6 +4750,7 @@ The targeted enemy receives 300% damage, nearby monsters will be pushed away by 
 //----------------  10.4 update skilldesctable ----------------
 NJ_TOBIDOUGU#
 Tobidougu
+MAX Lv : 10
 Series : ^777777Passive^000000
 Explanation : ^777777Increase damage caused by Ninja's Shuriken class attack^000000
 [Level 1] : ^777777Attack +3^000000
@@ -3987,6 +4766,8 @@ Explanation : ^777777Increase damage caused by Ninja's Shuriken class attack^000
 #
 NJ_SYURIKEN#
 Syuriken Throw
+MAX Lv : 10
+^777777Skill Requirements : Dagger Throwing Practice 1^000000
 Series : ^777777Attack^000000
 Explanation : ^777777This skill can only be used when a shuriken is equipped
 Launch shuriken attacks on enemy. Basic attack range is 9 cells^000000
@@ -4003,15 +4784,20 @@ Launch shuriken attacks on enemy. Basic attack range is 9 cells^000000
 #
 NJ_KUNAI#
 Kunai Throw
+MAX Lv : 10
+^777777Skill Requirements : Dagger Throwing Practice 5^000000
 Series : ^777777Attack^000000
 Explanation : ^777777This skill can only be used when a Kunai is equipped.
 Deals 3 times of attack after the Kunai is thrown. Effect varies according to type of Kunai used^000000
 #
 NJ_HUUMA#
 Huuma Throw
+MAX Lv : 5
+^777777Skill Requirements : Dagger Throwing Practice 5, Throw Kunai 5^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Throw a large Humma to deals damage to target and enemies around the target. Number of attacks will increase according to type of skill used.
 Damage done will be distributed among the enemies which receive the damage^000000
+It's not canceled even when attacked while casting.^000000
 [Level 1] : ^777777Attack 300%^000000
 [Level 2] : ^777777Attack 450%^000000
 [Level 3] : ^777777Attack 600%^000000
@@ -4020,6 +4806,8 @@ Damage done will be distributed among the enemies which receive the damage^00000
 #
 NJ_ZENYNAGE#
 Zenynage
+MAX Lv : 10
+^777777Skill Requirements : Dagger Throwing Practice 10, Throw Huuma Shuriken 5^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Throw money at target to deal damage that pierce the defense of target
 However, the damage dealt will be reduced when this skill is used against Boss class monsters and in PvP mode. There is a 5 seconds delay after the skill is cast^000000
@@ -4036,9 +4824,15 @@ However, the damage dealt will be reduced when this skill is used against Boss c
 #
 NJ_TATAMIGAESHI#
 Tatamigaeshi
+MAX Lv : 5
 Series : ^777777Attack^000000
-Explanation : ^777777Flips the tatami around caster and use it to attack the enemies. Enemies will be knock back for 3 cells. 
-The cells where the tatami is flipped will ignore the effect of range attack for 3 seconds. There is a 3 seconds delay after the skill is cast^000000
+Description: ^777777Flip tatami to cause the 4*4 area
+around the caster to ignore long range physical
+damage for 3 seconds. Each cast is followed by
+a 3 second cast delay, and has the chance to
+damage and push enemies 5 cells backward if
+they are within the skill's attack range.^000000
+Attack Range & Damage by Skill Level
 [Level 1] : ^777777Attack Range 1 cell, Attack 110%^000000
 [Level 2] : ^777777Attack Range 2 cells, Attack 120%^000000
 [Level 3] : ^777777Attack Range 2 cells, Attack 130%^000000
@@ -4047,6 +4841,8 @@ The cells where the tatami is flipped will ignore the effect of range attack for
 #
 NJ_SHADOWJUMP#
 Shandow Jump
+MAX Lv : 5
+^777777Skill Requirements : Flip Tatami 1^000000
 Series : ^777777Support^000000
 Explanation : ^777777Move to destination under 'Hiding' mode. Character can move to the destination as long as the destination is available for attack^000000
 [Level 1] : ^777777Movement Distance 5 cells^000000
@@ -4057,6 +4853,8 @@ Explanation : ^777777Move to destination under 'Hiding' mode. Character can move
 #
 NJ_KASUMIKIRI#
 Kasumikiri
+MAX Lv : 10
+^777777Skill Requirements : Shadow Leap 1^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Change to 'Hiding' mode when attacking enemy^000000
 [Level 1] : ^777777Attack 110%^000000
@@ -4072,6 +4870,8 @@ Explanation : ^777777Change to 'Hiding' mode when attacking enemy^000000
 #
 NJ_KIRIKAGE#
 Kirikage
+MAX Lv : 5
+^777777Skill Requirements : Haze Slasher 5^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Attack target during 'Hiding' mode. Range of attack is similar to Shadow Jump skill
 'Hiding' will be automatically deactivated when character attacks^000000
@@ -4083,6 +4883,8 @@ Explanation : ^777777Attack target during 'Hiding' mode. Range of attack is simi
 #
 NJ_UTSUSEMI#
 Utsusemi
+MAX Lv : 5
+^777777Skill Requirements : Shadow Leap 5^000000
 Series : ^777777Support^000000
 Explanation : ^777777Enter 'Utsusemi' state when this skill is activated. During this state, character will automatically dodge attack and move backwards for 7 cells when being attacked.
 After receiving certain amount of attacks, the state of 'Utsusemi' will be deactivated^000000
@@ -4094,6 +4896,8 @@ After receiving certain amount of attacks, the state of 'Utsusemi' will be deact
 #
 NJ_BUNSINJYUTSU#
 Bunsinjyutsu
+MAX Lv : 10
+^777777Skill Requirements : Shadow Slash 3, Ninja Aura 1, Cicada Skid Shed 4^000000
 Series : ^777777Support^000000
 Explanation : ^777777Create a replica of ownself. Character will auto dodge certain amount of attacks;
 Defend against melee and range physical attack. Cannot defend against magic attack.
@@ -4111,6 +4915,7 @@ This skill can only be used when 'Nen' is active. Consume on Shadow Orb^000000
 #
 NJ_NINPOU#
 Ninpou
+MAX Lv : 10
 Series : ^777777Passive^000000
 Explanation : ^777777Increases SP recovery rate through Ninjitsu. SP recovery rate increases as MAXSP increases.^000000
 [Level 1] : ^777777SP +3 every 10 seconds^000000
@@ -4126,11 +4931,15 @@ Explanation : ^777777Increases SP recovery rate through Ninjitsu. SP recovery ra
 #
 NJ_KOUENKA#
 Koienka
+MAX Lv : 10
+^777777Skill Requirements : Ninja Mastery 1^000000
 Series : ^777777Attack^bb0000(Fire)^000000
 Explanation : ^777777Fires flora that looks like fireworks to deal fire elemental attack on targets. Damage dealt will differ according to level of skill. Every attack will deal 90% damage of MATK value.^000000
 #
 NJ_KAENSIN#
 Kaensin
+MAX Lv : 10
+^777777Skill Requirements : Flaming Petals 5^000000
 Series : ^777777Attack^bb0000(Fire)^000000
 Explanation : ^777777Trigger a fire storm in 5*5 cells around character to deal continuous attacks on enemy within the area of effect.
 Skill lasts for 20 seconds and vanishes after performing the maximum number of hits. Consumes Flame Stone x1^000000
@@ -4147,6 +4956,8 @@ Skill lasts for 20 seconds and vanishes after performing the maximum number of h
 #
 NJ_BAKUENRYU#
 Bakuenryu
+MAX Lv : 5
+^777777Skill Requirements : Ninja Mastery 10, Blaze Shield 7^000000
 Series : ^777777Attack^bb0000(Fire)^000000
 Explanation : ^777777Summons a fire dragon that emerges from the ground to deal 3 times damage on enemies within the 5*5 cells area of effect. Consumes Flame Stone x1^000000
 [Level 1] : ^777777MATK +300%^000000
@@ -4157,12 +4968,16 @@ Explanation : ^777777Summons a fire dragon that emerges from the ground to deal 
 #
 NJ_HYOUSENSOU#
 Hyousensou
+MAX Lv : 10
+^777777Skill Requirements : Ninja Mastery 1^000000
 Series : ^777777Attack^0000bb(Ice)^000000
 Explanation : ^777777Forms an ice lance on the ground to launch attacks on enemy. The number of attacks increases as the skill level increases. 
 Level 1 skill launches 3 attacks and level 10 skill will deal 12 attacks. Every attacks deal 70% of MATK damage^000000
 #
 NJ_SUITON#
 Suiton
+MAX Lv : 10
+^777777Skill Requirements : Freezing Spear 5^000000
 Series : ^777777Support^0000bb(Ice)^000000
 Explanation : ^777777Form a water puddle on the ground to reduce the movement speed of enemies in the area of effect by half. AGI of target will be reduced too.
 Player can use Water Ball and Aqua Benedicto skill in the this skill area of effect. Ice Lance will deals addition damage in the area of effect too. 
@@ -4181,6 +4996,8 @@ The AGI and movement speed of the caster and other ninjas in the skill's area of
 #
 NJ_HYOUSYOURAKU#
 Hyousyouraku
+MAX Lv : 5
+^777777Skill Requirements : Ninja Mastery 10, Watery Evasion 7^000000
 Series : ^777777Attack^0000bb(Ice)^000000
 Explanation : ^777777Summon large ice blocks from sky to attack enemies in the area of 7*7cells
 Consumes Ice Stone x1^000000
@@ -4192,6 +5009,8 @@ Consumes Ice Stone x1^000000
 #
 NJ_HUUJIN#
 Huujin
+MAX Lv : 10
+^777777Skill Requirements : Ninja Mastery 1^000000
 Series : ^777777Attack^bbbb00(Wind)^000000
 Explanation : ^777777Summons wind blade to deals wind elemental damage^000000
 [Level 1] : ^7777771hit^000000
@@ -4207,8 +5026,13 @@ Explanation : ^777777Summons wind blade to deals wind elemental damage^000000
 #
 NJ_RAIGEKISAI#
 Raigekisai
+MAX Lv : 5
+^777777Skill Requirements : Wind Blade^000000
 Series : ^777777Attack^bbbb00(Wind)^000000
-Explanation : ^777777Call lightning to deals damage to enemies around caster. Consumes Wind Stone x1^000000
+Description: ^777777Summon lightning bolts to the appointed
+area to damage enemies within the skill's
+range. Each cast consumes 1 Wind Stone.^000000
+Damage & Range by Skill Level
 [Level 1] : ^777777MATK +200%, Area of Effect 5*5cells^000000
 [Level 2] : ^777777MATK +240%, Area of Effect 5*5cells^000000
 [Level 3] : ^777777MATK +280%, Area of Effect 7*7cells^000000
@@ -4217,6 +5041,8 @@ Explanation : ^777777Call lightning to deals damage to enemies around caster. Co
 #
 NJ_KAMAITACHI#
 Kamaitachi 
+MAX Lv : 5
+^777777Skill Requirements : Ninja Mastery 10, Lightning Jolt 5^000000
 Series : ^777777Attack^bbbb00(Wind)^000000
 Explanation : ^777777Summons wind blade to destroy all enemies between the caster and target.
 Consumes Wind Stone x1^000000
@@ -4228,10 +5054,16 @@ Consumes Wind Stone x1^000000
 #
 NJ_NEN#
 Nen
+MAX Lv : 5
+^777777Skill Requirements : Ninja Mastery 5^000000
 Series : ^777777Support^bb00bb(Psychic energy)^000000
-Explanation : ^777777Body of caster turns red after gathering Nen energy. During Nen state, INT and STR will increase.
-Character muse be in Nen state if character wishes to use Bunsinjyutsu skill and Issen skill. It will be deactivated 
-when character uses Bunsinjyutsu skill and Issen skill^000000
+Description: ^777777Focus spritual energy to enter
+Ninja Aura status, which endows the caster with
+INT and STR bonuses. Ninja Aura status enables
+the use of the Mirror Image and Killing Strike
+skills, although using those skills will cancel
+Ninja Aura.^000000
+STR, INT Bonuses & Duration by Skill Level
 [Level 1] : ^777777STR, INT +1, Duration 30seconds^000000
 [Level 2] : ^777777STR, INT +2, Duration 45seconds^000000
 [Level 3] : ^777777STR, INT +3, Duration 60seconds^000000
@@ -4240,28 +5072,41 @@ when character uses Bunsinjyutsu skill and Issen skill^000000
 #
 NJ_ISSEN#
 Issen
+MAX Lv : 10
+^777777Skill Requirements : Dagger Throwing Practice 7, Shadow Slash 5, Ninja Aura 1^000000
 Series : ^777777Attack^000000
-Explanation : ^777777Consume own HP to deal critical damage. The damage done is relative to the amount of HP. Caster's HP will become 1 after using this skill^000000
+Description: ^777777Sacrifice the caster's remaining HP
+to inflict devastating damage to the targeted
+enemy. The amount of remaining HP affects the
+damage inflicted, and each cast of this skill
+will always reduce the caster's HP to 1.^000000
 #
 GS_GLITTERING#
 Filp the Coin
+MAX Lv : 5
 Series : ^777777Support^000000
 Explanation : ^777777If you get 'Head' after flipping the coin, you will obtain a golden coin. Else, you will lose one.
 You can obtain at most 10 coins. The success rate increases as your skill level gets higher. Using this skill consumes 1 gold coin^000000
 #
 GS_FLING#
 Fling
+MAX lv 1
+^777777Skill Requirements : Coin Flip 1^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Launches coin attack and lower the defense of enemy. Using this skill can consumes at most 5 coins. 
 More defense is reduced when more coins are used.^000000
 #
 GS_TRIPLEACTION#
 Triple Action
+MAX Lv : 1
+^777777Skill Requirements : Chain Action 10, Coin Flip 1^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Consumes 1 coins to deal 3 continuous attacks^000000
 #
 GS_BULLSEYE#
 Bull's Eye
+MAX Lv : 1
+^777777Skill Requirements : Tracking 10, Coin Flip 5^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Deals critical damage on 1 enemy of demi human or brute class. Consumes 1 coin and deals 500% of damage. 
 There is 0.1% rate of inflicting instant death status
@@ -4269,35 +5114,46 @@ This skill will not inflict instant death status on Boss class monsters^000000
 #
 GS_MADNESSCANCEL#
 Madness Canceler
+MAX Lv : 1
+^777777Skill Requirements : Gatling Fever 10, Coin Flip 4^000000
 Series : ^777777Support^000000
 Explanation : ^777777When character consumes 4 coins to activate a skill, ATK +100, Aspd +20%. However, character will be immobilized for 15 seconds. 
 This skill cannot be used together with Adjustment.^000000
 #
 GS_ADJUSTMENT#
 Adjustment
+MAX Lv : 1
+^777777Skill Requirements : Disarm 5, Coin Flip 4^000000
 Series : ^777777Support^000000
 Explanation : ^777777When character consumes 2 coins to activate a skill, character will gain the effect of Hit -30, Dodge +30 for 30 seconds. 
 Damage received from range physical attack will be reduced for 20% too. This skill cannot be used together with Madness Canceler.^000000
 #
 GS_INCREASING#
 Increasing Accuracy
+MAX Lv : 1
+^777777Skill Requirements : Snake Eye 10, Coin Flip 2^000000
 Series : ^777777Support^000000
 Explanation : ^777777Consumes 4 coins and gain the effect of Hit +20, DEX +4, AGI +4 for 1 minute.^000000
 #
 GS_MAGICALBULLET#
 Magicial Bullet
+MAX Lv : 1
+^777777Skill Requirements : Coin Flip 1^000000
 Series : ^777777Support^000000
 Explanation : ^777777Consumes 1 coin to fire a magic bullet that will not consumes any ammunition. 
 Magic bullet deals mind element attack where the damage is calculated according to the value of ATK and MATK.^000000
 #
 GS_CRACKER#
 Cracker
+MAX Lv : 1
+^777777Skill Requirements : Coin Flip 1^000000
 Series : ^777777Support^000000
 Explanation : ^777777Fires gunshots that frighten and stun the enemies. Consumes 1 coin. 
 The stun success rate is higher when the distant between target and caster is closer.^000000
 #
 GS_SINGLEACTION#
 Single Action
+MAX Lv : 10
 Series : ^777777Passive^000000
 Explanation : ^777777A basic skill that increases the accuracy and attack speed when character equips weapon of rifle class. 
 The hit rate and attack speed increases when the skill level increases.^000000
@@ -4314,6 +5170,7 @@ The hit rate and attack speed increases when the skill level increases.^000000
 #
 GS_SNAKEEYE#
 Snake Eye
+MAX Lv : 10
 Series : ^777777Passive^000000
 Explanation : ^777777Increases the attack range and hit rate of rifle class weapon^000000
 [Level 1] : ^777777Hit Rate +1, attack range +1^000000
@@ -4329,11 +5186,15 @@ Explanation : ^777777Increases the attack range and hit rate of rifle class weap
 #
 GS_CHAINACTION#
 Chain Action
+MAX Lv : 10
+^777777Skill Requirements : Single Action 5^000000
 Series : ^777777Passive^000000
 Explanation : ^777777There is certain rate to fire 2 bullets in an attack. The rate of firing two bullets increases as the skill level increases.^000000
 #
 GS_TRACKING#
 Tracking
+MAX Lv : 10
+^777777Skill Requirements : Single Action 5^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Aims at the enemy carefully to deal extreme damage. Cast time and damage dealt increase as the skill level increases.
 This skill can only be used when character equips a rifle or pistol^000000
@@ -4350,6 +5211,8 @@ This skill can only be used when character equips a rifle or pistol^000000
 #
 GS_DISARM#
 Disarm
+MAX Lv : 5
+^777777Skill Requirements : Tracking 7^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Aims at target's hand from the distant of 7 cells and hit its weapon away.
 When this skill is used against monsters, there is a ATK-25% effect. The success rate of disarm increases as the skill level increases.
@@ -4358,17 +5221,24 @@ This skill has no effect against boss class monster.^000000
 #
 GS_PIERCINGSHOT#
 Piercing Shot
-Series : ^777777Attack^000000
-Explanation : ^777777Fires a bullet that pierces enemy's defense. There is certain rate for the victim of this skill to suffer wounded status.
-This skill can only be used when character equips pistol or rifle^000000
-[Level 1] : ^777777Attack 120%, Wounded rate 3%^000000
-[Level 2] : ^777777Attack 140%, Wounded Rate 6%^000000
-[Level 3] : ^777777Attack 160%, Wounded Rate 9%^000000
-[Level 4] : ^777777Attack 180%, Wounded Rate 12%^000000
-[Level 5] : ^777777Attack 200%, Wounded Rate 15%^000000
+MAX Lv : 5
+^777777Skill Requirements : Tracking 5^000000
+Skill Form:^777777Offensive^000000
+Description: ^777777Inflict Defense piercing damage
+that has the chance of causing the Bleeding
+effect on its target. Requires a Pistol or
+Rifle Class Weapon.When using rifle class Attack Power increases.^000000
+Damage, Bleeding Chance by Level
+[Lv 1]: ^777777120%(180%) Atk, 3%^000000
+[Lv 2]: ^777777140%(210%) Atk, 6%^000000
+[Lv 3]: ^777777160%(240%) Atk, 9%^000000
+[Lv 4]: ^777777180%(270%) Atk, 12%^000000
+[Lv 5]: ^777777200%(300%) Atk, 15%^000000
 #
 GS_RAPIDSHOWER#
 Rapid Shower
+MAX Lv : 10
+^777777Skill Requirements :  Chain Action^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Launches 5 continuous attack on single enemy. This skill can only be used when character equips pistol class weapon.
 5 ammunition will be consumed when character uses this skill^000000
@@ -4385,6 +5255,8 @@ Explanation : ^777777Launches 5 continuous attack on single enemy. This skill ca
 #
 GS_DESPERADO#
 Desperado
+MAX Lv : 10
+^777777Skill Requirements : Trigger Happy Shot 5^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Launches random attacks on enemies within 7 cells around caster. Launches at most 10 attacks on enemies within the area of effect.
 This skill can only be used when character equips a pistol class weapon. Using this skill consumes 10 ammunition.^000000
@@ -4401,23 +5273,27 @@ This skill can only be used when character equips a pistol class weapon. Using t
 #
 GS_GATLINGFEVER#
 Gatling Fever
+MAX Lv : 10
+^777777Skill Requirements : Trigger Happy Shot 7, Desperado 5^000000
 Series : ^777777Support^000000
 Explanation : ^777777Increases attack speed and damage but reduces dodge rate and movement speed during active duration. 
 If character activate the skill again during active duration, the effect of this skill will be cancelled. 
 This skill can only be used when character equips a Galting Gun.^000000
-[Level 1] : ^777777Damage +30, Attack Speed +2%, Dodge rate -5%, Duration 30seconds^000000
-[Level 2] : ^777777Damage +40, Attack Speed +4%, Dodge rate -10%, Duration 45seconds^000000
-[Level 3] : ^777777Damage +50, Attack Speed +6%, Dodge rate -15%, Duration 60seconds^000000
-[Level 4] : ^777777Damage +60, Attack Speed +8%, Dodge rate -20%, Duration 75seconds^000000
-[Level 5] : ^777777Damage +70, Attack Speed +10%, Dodge rate -25%, Duration 90seconds^000000
-[Level 6] : ^777777Damage +80, Attack Speed +12%, Dodge rate -30%, Duration 105seconds^000000
-[Level 7] : ^777777Damage +90, Attack Speed +14%, Dodge rate -35%, Duration 120seconds^000000
-[Level 8] : ^777777Damage +100, Attack Speed +16%, Dodge rate -40%, Duration 135seconds^000000
-[Level 9] : ^777777Damage +110, Attack Speed +18%, Dodge rate -45%, Duration 150seconds^000000
-[Level 10] : ^777777Damage +120, Attack Speed +20%, Dodge rate -50%, Duration 165seconds^000000
+[Level 1] : ^777777Damage +30, Attack Speed +1%, Flee -5, Duration 30sec.^000000
+[Level 2] : ^777777Damage +40, Attack Speed +2%, Flee -10, Duration 45sec.^000000
+[Level 3] : ^777777Damage +50, Attack Speed +3%, Flee -15, Duration 60sec.^000000
+[Level 4] : ^777777Damage +60, Attack Speed +4%, Flee -20, Duration 75sec.^000000
+[Level 5] : ^777777Damage +70, Attack Speed +5%, Flee -25, Duration 90sec.^000000
+[Level 6] : ^777777Damage +80, Attack Speed +6%, Flee -30, Duration 105sec.^000000
+[Level 7] : ^777777Damage +90, Attack Speed +7%, Flee -35, Duration 120sec.^000000
+[Level 8] : ^777777Damage +100, Attack Speed +8%, Flee -40, Duration 135sec.^000000
+[Level 9] : ^777777Damage +110, Attack Speed +9%, Flee -45, Duration 150sec.^000000
+[Level 10] : ^777777Damage +120, Attack Speed +10%, Flee -50, Duration 165sec.^000000
 #
 GS_DUST#
 Dust
+MAX Lv : 10
+^777777Skill Requirements : Single Action 5^000000
 Series : ^777777Attack^000000
 Explanation : ^777777Fires scatter bullet to attack nearby enemies and deals critical damage. Target hit by this skill will be knockback for 5 cells.
 Can only be used when character equips Shotgun ^000000
@@ -4434,6 +5310,8 @@ Can only be used when character equips Shotgun ^000000
 #
 GS_FULLBUSTER#
 Full Buster
+MAX Lv : 10
+^777777Skill Requirements : Crowd Control Shot 3^00000
 Series : ^777777Attack^000000
 Explanation : ^777777Fires all ammunition in one attack to deal heavy damage. However, caster will suffer darkness status after using the skill.
 Can only be used when character equips Shotgun. Activating this skill consumes 10 ammunitions.^000000
@@ -4450,39 +5328,41 @@ Can only be used when character equips Shotgun. Activating this skill consumes 1
 #
 GS_SPREADATTACK#
 Spread Attack
+MAX Lv : 10
+^777777Skill Requirements : Full Blast 5^000000
 Series : ^777777Attack^000000
-Explanation : ^777777Uses shot gun to expand the attack range of the bullet. This skill can only be used when character equips a shotgun.
-Using this skill consumes 5 ammunition^000000
-[Level 1] : ^777777Attack 100%, range 3*3cells^000000
-[Level 2] : ^777777Attack 120%, range 3*3cells^000000
-[Level 3] : ^777777Attack 140%, range 3*3cells^000000
-[Level 4] : ^777777Attack 160%, range 5*5cells^000000
-[Level 5] : ^777777Attack 180%, range 5*5cells^000000
-[Level 6] : ^777777Attack 200%, range 5*5cells^000000
-[Level 7] : ^777777Attack 220%, range 7*7cells^000000
-[Level 8] : ^777777Attack 240%, range 7*7cells^000000
-[Level 9] : ^777777Attack 260%, range 7*7cells^000000
-[Level 10] : ^777777Attack 280%, range 9*9cells^000000
+Decription : ^777777 Consumes 5 bullets to spread damage over a large area. Requires a Shotgun or a Grenade Launcher.^000000
+[Level 1] : ^777777Attack Power 220%, Range 3*3 cells^000000
+[Level 2] : ^777777Attack Power 240%, Range 3*3 cells^000000
+[Level 3] : ^777777Attack Power 260%, Range 3*3 cells^000000
+[Level 4] : ^777777Attack Power 280%, Range 5*5 cells^000000
+[Level 5] : ^777777Attack Power 300%, Range 5*5 cells^000000
+[Level 6] : ^777777Attack Power 320%, Range 5*5 cells^000000
+[Level 7] : ^777777Attack Power 340%, Range 7*7 cells^000000
+[Level 8] : ^777777Attack Power 360%, Range 7*7 cells^000000
+[Level 9] : ^777777Attack Power 380%, Range 7*7 cells^000000
+[Level 10] : ^777777Attack Power 400%, Range 9*9 cells^000000
 #
 GS_GROUNDDRIFT#
 Ground Drift
-Series : ^777777Attack^000000
-Explanation : ^777777Uses grenade launcher to bury a grenade in the ground. Grenade will explode to deal damage on enemies who approach it. 
-Effect of explosion varies according to the type of grenade used.
-This skill can only be used when character equips a grenade launcher^000000
-[Level 1] : ^777777Damage +50, Duration 3seconds^000000
-[Level 2] : ^777777Damage +100, Duration 6seconds^000000
-[Level 3] : ^777777Damage +150, Duration 9seconds^000000
-[Level 4] : ^777777Damage +200, Duration 12seconds^000000
-[Level 5] : ^777777Damage +250, Duration 15seconds^000000
-[Level 6] : ^777777Damage +300, Duration 18seconds^000000
-[Level 7] : ^777777Damage +350, Duration 21seconds^000000
-[Level 8] : ^777777Damage +400, Duration 24seconds^000000
-[Level 9] : ^777777Damage +450, Duration 27seconds^000000
-[Level 10] : ^777777Damage +500, Duration 30seconds^000000
+MAX Lv : 10
+^777777Skill Requirements : Full Blast 5, Spread Shot 7^000000
+Skill Form:^777777Offensive^000000
+Description : ^777777 Plant Bullet Spheres into the ground that will explode upon enemy approach. The explosion's effect varies according to the type of bullet planted. Requires a Grenade Launcher.^000000
+[Level 1] : ^777777Damage 220%, Duration 3sec.^000000
+[Level 2] : ^777777Damage 240%, Duration 6sec.^000000
+[Level 3] : ^777777Damage 260%, Duration 9sec.^000000
+[Level 4] : ^777777Damage 280%, Duration 12sec.^000000
+[Level 5] : ^777777Damage 300%, Duration 15sec.^000000
+[Level 6] : ^777777Damage 320%, Duration 18sec.^000000
+[Level 7] : ^777777Damage 340%, Duration 21sec.^000000
+[Level 8] : ^777777Damage 360%, Duration 24sec.^000000
+[Level 9] : ^777777Damage 380%, Duration 27sec.^000000
+[Level 10] : ^777777Damage 400%, Duration 30sec.^000000
 #
 ALL_INCCARRY#
 Enlarge Weight Limit R
+MAX Lv : 10
 Skill Form : ^000099Passive^000000
 Contents : ^777777Improve Maximum Weight Limit.^000000
 [Level 1] : ^777777Enlarge Weight +200^000000
@@ -4950,20 +5830,3 @@ ALL_PARTYFLEE#
 A warm flower wind, blow softly here!!
 Detail : ^777777Flower^000000
 #
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
