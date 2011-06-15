@@ -69,7 +69,7 @@ sub new {
 	$self->{packet_list} = {
 		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		'006A' => ['login_error', 'C Z20', [qw(type unknown)]],
-		'006B' => ['received_characters', 'v a*', [qw(len charInfo)]], # struct varies a lot, this one is from XKore 2
+		'006B' => ['received_characters', 'v C3 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # struct varies a lot, this one is from XKore 2
 		'006C' => ['login_error_game_login_server'],
 		# OLD '006D' => ['character_creation_successful', 'a4 x4 V x62 Z24 C7', [qw(ID zeny name str agi vit int dex luk slot)]],
 		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v2', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag)]],
