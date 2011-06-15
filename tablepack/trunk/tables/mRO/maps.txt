@@ -1,3 +1,32 @@
+//poring war
+poring_w01.rsw#Poring War-Waiting Room#
+poring_w02.rsw#Poring War#
+//renewal
+dicastes01.rsw#El Dicastes, the Capital of Sapha#
+dicastes02.rsw#Brumbeld Jorhi Forest#
+dic_in01.rsw#Inside of Dicastes#
+dic_fild01.rsw#Kamidal in the Skirts of Mountain#
+dic_fild02.rsw#Kamidal in the Skirts of Mountain#
+dic_dun01.rsw#Kamidal Tunnel#
+dic_dun02.rsw#Skarava Hall#
+job3_gen01.rsw#Generic Lab#
+s_atelier.rsw#Shadow Workshop#
+moc_para01.rsw#Inside of Paradise Group Building in Morocc#
+job3_arch01.rsw#Waiting room for Arch Bishop Job Change#
+job3_arch02.rsw#Odin Temple#
+job3_arch03.rsw#Waiting room for Arch Bishop Job Change#
+job3_guil01.rsw#Secret Tavern#
+job3_guil02.rsw#Inside of Old Warehouse#
+job3_guil03.rsw#An isolated mansion#
+job3_rang01.rsw#Waiting room for Ranger Job Change#
+job3_rang02.rsw#Test room for Ranger Job Change#
+job3_rune01.rsw#Inside of Rune knight Templar#
+job3_rune02.rsw#Test room for Rune Knight Job Change#
+job3_rune03.rsw#Test room for Rune Knight Job Change#
+job3_war01.rsw#Test room for Warlock Job Change#
+job3_war02.rsw#Test room for Warlock Job Change#
+jupe_core2.rsw#The centre of Juperos#
+
 //2009.04.08 bossnia event
 bossnia_01.rsw#bossnia#
 bossnia_02.rsw#bossnia#
@@ -631,7 +660,8 @@ pvp_y_5-5.rsw#PvP : Room Morroc#
 pvp_y_6-5.rsw#PvP : Room Morroc#
 pvp_y_7-5.rsw#PvP : Room Morroc#
 pvp_y_8-5.rsw#PvP : Room Morroc#
-pvp_2vs2.rsw#PvP : Event Colosseum#veins.rsw#Veins, the Canyon Village#
+pvp_2vs2.rsw#PvP : Event Colosseum#
+veins.rsw#Veins, the Canyon Village#
 ve_in.rsw#Inside Veins#
 ve_in02.rsw#Inside Veins#
 ve_fild01.rsw#Veins Field#
@@ -669,22 +699,10 @@ schg_cas04.rsw#Nidhoggur Guild#
 schg_cas05.rsw#Nidhoggur Guild#
 sch_gld.rsw#Nidhoggur#
 //11.3
-bossnia_01.rsw#Bossnia#
-bossnia_02.rsw#Bossnia#
-bossnia_03.rsw#Bossnia#
-bossnia_04.rsw#Bossnia#
-itemmall.rsw#Item Mall#
-poring_w01.rsw#Poring War - Waiting Room#
-poring_w02.rsw#Poring War#
-nameless_i.rsw#Unnamed Islet#
-nameless_n.rsw#Unnamed Islet#
-nameless_in.rsw#Inside Unnamed Islet#
-abbey01.rsw#Monastery#
-abbey02.rsw#Monastery#
-abbey03.rsw#Monastery#
-que_temsky.rsw#Pope's Office - The Garden of Heaven#
-z_agit.rsw#Z Gang's Hideout#
 
-//--- 2010 ³ëµ¿Àý
-evt_mobroom.rsw#Monster's Cave#
-
+brasilis.rsw#Brasilis#
+bra_in01.rsw#Inside Brasilis#
+bra_fild01.rsw#Brasilis Field#
+bra_dun01.rsw#Cave behind Waterfall#
+bra_dun02.rsw#Cave behind Waterfall#
+evt_hello.rsw#Halloween Field#
