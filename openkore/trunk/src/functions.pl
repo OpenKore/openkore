@@ -1003,35 +1003,9 @@ sub parseOutgoingClientMessage {
 		Network::Receive->decrypt(\$msg, $msg);
 	}
 	my $switch = Network::MessageTokenizer::getMessageID($msg);
-	if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch) ||
-		$config{'debugPacket_include_dumpMethod'} && existsInList($config{'debugPacket_include'}, $switch))
-	{
-		my $label = $packetDescriptions{Send}{$switch} ?
-			" - $packetDescriptions{Send}{$switch}" : '';
-		
-		if ($config{'debugPacket_ro_sent'} == 1) {
-			debug sprintf("Sent by RO client packet: %-4s    [%2d bytes]  %s\n", $switch, length($msg), $label), "parseMsg", 0;
-		} elsif ($config{'debugPacket_ro_sent'} == 2) {
-			visualDump($sendMsg, "<< Received packet (RO): $switch  $label");
-		}
-		if ($config{'debugPacket_include_dumpMethod'} == 1) {
-			debug "Packet: $switch$label\n", "parseMsg", 0;
-		} elsif ($config{'debugPacket_include_dumpMethod'} == 2) {
-			visualDump($sendMsg, $switch . $label);
-		} elsif ($config{'debugPacket_include_dumpMethod'} == 3) {
-			dumpData($msg,1);
-		} elsif ($config{'debugPacket_include_dumpMethod'} == 4) {
-			open DUMP, ">> DUMP_lines.txt";
-			print DUMP sprintf(unpack('H*', $msg) . "\n");
-			close DUMP;
-		} elsif ($config{'debugPacket_include_dumpMethod'} == 5) {
-			open DUMP, ">> DUMP_HEAD.txt";
-			print DUMP sprintf(substr(unpack('H*', $msg),2,2) . substr(unpack('H*', $msg),0,2) . " " . length($msg) . " send " . $label . " \n");
-			close DUMP;
-		}
-	}
+	
+	parseMessage_pre('ro_sent', $switch, $msg, $sendMsg);
 
-	Plugins::callHook('RO_sendMsg_pre', {switch => $switch, msg => $msg, realMsg => \$sendMsg});
 	my $serverType = $masterServer->{serverType};
 
 	# If the player tries to manually do something in the RO client, disable AI for a small period
@@ -1300,35 +1274,7 @@ sub parseIncomingMessage {
 	}
 
 	$lastswitch = $switch;
-	if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch) ||
-		$config{'debugPacket_include_dumpMethod'} && existsInList($config{'debugPacket_include'}, $switch))
-	{
-		my $label = $packetDescriptions{Recv}{$switch} ?
-			"[$packetDescriptions{Recv}{$switch}]" : '';
-
-		if ($config{'debugPacket_received'} == 1) {
-			debug sprintf("Received packet: %-4s    [%2d bytes]  %s\n", $switch, length($msg), $label), "parseMsg", 0;
-		} elsif ($config{'debugPacket_received'} == 2) {
-			visualDump($recvmsg, "<< Received packet (server): $switch  $label");
-		}
-		if ($config{'debugPacket_include_dumpMethod'} == 1) {
-			debug "Packet: $switch$label\n", "parseMsg", 0;
-		} elsif ($config{'debugPacket_include_dumpMethod'} == 2) {
-			visualDump($msg, "$switch$label");
-		} elsif ($config{'debugPacket_include_dumpMethod'} == 3) {
-			dumpData($msg,1);
-		} elsif ($config{'debugPacket_include_dumpMethod'} == 4) {
-			open DUMP, ">> DUMP_lines.txt";
-			print DUMP sprintf(unpack('H*', $msg) . "\n");
-			close DUMP;
-		} elsif ($config{'debugPacket_include_dumpMethod'} == 5) {
-			open DUMP, ">> DUMP_HEAD.txt";
-			print DUMP sprintf(substr(unpack('H*', $msg),2,2) . substr(unpack('H*', $msg),0,2) . " " . length($msg) . " recv " . $label . " \n");
-			close DUMP;
-		}
-	}
-
-	Plugins::callHook('parseMsg/pre', {switch => $switch, msg => $msg, msg_size => length($msg)});
+	parseMessage_pre('received', $switch, $msg, $recvmsg);
 
 	if (!$packetParser->willMangle($switch)) {
 		# If we're running in X-Kore mode, pass the message back to the RO client.
@@ -1364,6 +1310,42 @@ sub parseIncomingMessage {
 			}
 		}
 	}
+}
+
+sub parseMessage_pre {
+	my ($mode, $switch, $msg, $realMsg) = @_;
+	my ($title, $config_suffix, $desc_key, $dumpMethod5_word, $hook) = @{{
+		'received' => ['<< Received packet:', 'received', 'Recv', 'recv', 'parseMsg/pre'],
+		'ro_sent' => ['<< Sent by RO client:', 'ro_sent', 'Send', 'send', 'RO_sendMsg_pre'],
+	}->{$mode}};
+	
+	if ($config{'debugPacket_'.$config_suffix} && !existsInList($config{'debugPacket_exclude'}, $switch) ||
+		$config{'debugPacket_include_dumpMethod'} && existsInList($config{'debugPacket_include'}, $switch))
+	{
+		my $label = $packetDescriptions{$desc_key}{$switch} ?
+			" - $packetDescriptions{$desc_key}{$switch}" : '';
+
+		if ($config{'debugPacket_'.$config_suffix} == 1) {
+			debug sprintf("%-24s %-4s%s [%2d bytes]%s\n", $title, $switch, $label, length($msg)), 'parseMsg', 0;
+		} elsif ($config{'debugPacket_'.$config_suffix} == 2) {
+			visualDump($realMsg, sprintf('%-24s %-4s%s', $title, $switch, $label));
+		}
+		if ($config{debugPacket_include_dumpMethod} == 1) {
+			debug sprintf("%-24s %-4s%s\n", $title, $switch, $label), "parseMsg", 0;
+		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
+			visualDump($realMsg, sprintf('%-24s %-4s%s', $title, $switch, $label));
+		} elsif ($config{debugPacket_include_dumpMethod} == 3) {
+			dumpData($msg, 1);
+		} elsif ($config{debugPacket_include_dumpMethod} == 4) {
+			open my $dump, '>>', 'DUMP_lines.txt';
+			print $dump unpack('H*', $msg) . "\n";
+		} elsif ($config{debugPacket_include_dumpMethod} == 5) {
+			open my $dump, '>>', 'DUMP_HEAD.txt';
+			print $dump sprintf("%-4s %2d %s%s\n", substr(unpack('H*', $msg), 2, 2) . substr(unpack('H*', $msg), 0, 2), length($msg), $dumpMethod5_word, $label);
+		}
+	}
+
+	Plugins::callHook($hook, {switch => $switch, msg => $msg, msg_size => length($msg), realMsg => \$realMsg});
 }
 
 return 1;
