@@ -146,6 +146,9 @@ sub reconstruct {
 	my $packet = $self->{packet_list}{$switch};
 	my ($name, $packString, $varNames) = @{$packet};
 
+	if (my $custom_reconstruct = $self->can('reconstruct_'.$name)) {
+		$self->$custom_reconstruct($args);
+	}
 	my @vars = ();
 	for my $varName (@{$varNames}) {
 		push(@vars, $args->{$varName});
@@ -204,6 +207,9 @@ sub parse {
 	);
 	if ($handler->[1]) {
 		@args{@{$handler->[2]}} = unpack("x2 $handler->[1]", $msg);
+	}
+	if (my $custom_parse = $self->can('parse_'.$handler->[0])) {
+		$self->$custom_parse(\%args);
 	}
 
 	my $callback = $self->can($handler->[0]);

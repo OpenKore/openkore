@@ -28,6 +28,7 @@ use Translation qw(T TF);
 use I18N qw(stringToBytes);
 use Utils;
 use Utils::Exceptions;
+use Utils::Rijndael;
 
 # to test zealotus bug
 #use Data::Dumper;
@@ -35,7 +36,24 @@ use Utils::Exceptions;
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0064' => ['master_login', 'V a24 a24 C', [qw(version username password master_version)]],
+		'0134' => ['buy_bulk_vender', 'v a4 a*', [qw(len venderID itemInfo)]],
+		'02B0' => ['master_login', 'V a24 a24 C H32 H26 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
+		'0801' => ['buy_bulk_vender', 'v a4 a4 a*', [qw(len venderID venderCID itemInfo)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	# # it would automatically use the first available if not set
+	# my %handlers = qw(
+	# 	master_login 0064
+	# 	buy_bulk_vender 0134
+	# );
+	# $self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 sub version {
@@ -132,34 +150,26 @@ sub sendBuyBulk {
 	$self->sendToServer($msg);
 }
 
-=pod
-sub sendBuyVender {
-	my ($self, $venderID, $ID, $amount) = @_;
-	my $msg = pack("C*", 0x34, 0x01, 0x0C, 0x00) . $venderID . pack("v*", $amount, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Vender Buy: ".getHex($ID)."\n", "sendPacket";
-}
-=cut
-# 0x0134,-1,purchasereq,2:4:8
-sub sendBuyBulkVender {
-	my ($self, $venderID, $r_array) = @_;
-	my $msg = pack('v2 a4', 0x0134, 8+4*@{$r_array}, $venderID);
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemIndex});
-		debug "Sent bulk buy vender: $r_array->[$i]{itemIndex} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
-	}
-	$self->sendToServer($msg);
+sub parse_buy_bulk_vender {
+	my ($self, $args) = @_;
+	@{$args->{items}} = map {{ amount => unpack('v', $_), itemIndex => unpack('x2 v', $_) }} unpack '(a4)*', $args->{itemInfo};
 }
 
-# 0x0801,-1,purchasereq,2:4:8:12
-sub sendBuyBulkVender2 {
+sub reconstruct_buy_bulk_vender {
+	my ($self, $args) = @_;
+	# ITEM index. There were any other indexes expected to be in item buying packet?
+	$args->{itemInfo} = pack '(a4)*', map { pack 'v2', @{$_}{qw(amount itemIndex)} } @{$args->{items}};
+}
+
+sub sendBuyBulkVender {
 	my ($self, $venderID, $r_array, $venderCID) = @_;
-	my $msg = pack('v2 a4 a4', 0x0801, 12+4*@{$r_array}, $venderID, $venderCID); # TODO: is it the vender's charID?
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemIndex});
-		debug "Sent bulk buy vender: $r_array->[$i]{itemIndex} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
-	}
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({
+		switch => 'buy_bulk_vender',
+		venderID => $venderID,
+		venderCID => $venderCID,
+		items => $r_array,
+	}));
+	debug "Sent bulk buy vender: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$r_array)."\n", "sendPacket";
 }
 
 sub sendCardMerge {
@@ -833,6 +843,34 @@ sub sendMasterCodeRequest {
 	$self->sendToServer($msg);
 }
 
+sub parse_master_login {
+	my ($self, $args) = @_;
+	
+	if (exists $args->{password_rijndael}) {
+		my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
+		my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
+		my $in = pack('a24', $args->{password_rijndael});
+		my $rijndael = Utils::Rijndael->new;
+		$rijndael->MakeKey($key, $chain, 24, 24);
+		$args->{password} = unpack("Z24", $rijndael->Decrypt($in, undef, 24, 0));
+	}
+}
+
+sub reconstruct_master_login {
+	my ($self, $args) = @_;
+	
+	exists $args->{ip} or $args->{ip} = '3139322e3136382e322e3400685f4c40'; # gibberish
+	exists $args->{mac} or $args->{mac} = '31313131313131313131313100'; # gibberish
+	exists $args->{isGravityID} or $args->{isGravityID} = 0;
+	
+	my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
+	my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
+	my $in = pack('a24', $args->{password});
+	my $rijndael = Utils::Rijndael->new;
+	$rijndael->MakeKey($key, $chain, 24, 24);
+	$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 24, 0);
+}
+
 sub sendMasterLogin {
 	my ($self, $username, $password, $master_version, $version) = @_;
 	my $msg;
@@ -861,10 +899,22 @@ sub sendMasterLogin {
 			pack("C*", $master_version);
 
 	} else {
-		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version) .
-			pack("a24", $username) .
-			pack("a24", $password) .
-			pack("C*", $master_version);
+		if ($masterServer->{masterLogin_packet} eq '') {
+			$self->sendClientMD5Hash() unless $masterServer->{clientHash} eq ''; # this is a hack, just for testing purposes, it should be moved to the login algo later on
+			
+			$msg = $self->reconstruct({
+				switch => 'master_login',
+				version => $version,
+				master_version => $master_version,
+				username => $username,
+				password => $password,
+			});
+		} else {
+			$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version) .
+				pack("a24", $username) .
+				pack("a24", $password) .
+				pack("C*", $master_version);
+		}
 	}
 	$self->sendToServer($msg);
 }
@@ -897,22 +947,6 @@ sub sendMasterSecureLogin {
 		$msg = pack("C*", 0xFA, 0x01) . pack("V1", $version) . pack("a24", $username) .
 					 $md5->digest . pack("C*", $master_version). pack("C1", $account);
 	}
-	$self->sendToServer($msg);
-}
-
-sub sendMasterHANLogin {
-	my ($self, $username, $password, $master_version, $version) = @_;
-	$self->sendClientMD5Hash() if ($masterServer->{clientHash} != ''); 						# this is a hack, just for testing purposes, it should be moved to the login algo later on
-	my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
-	my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
-	my $in = pack('a24', $password);
-	my $rijndael = Utils::Rijndael->new();
-	$rijndael->MakeKey($key, $chain, 24, 24);
-	$password = $rijndael->Encrypt($in, undef, 24, 0);
-	my $ip = "3139322e3136382e322e3400685f4c40";		# gibberish, ofcourse ;-)
-	my $mac = "31313131313131313131313100";				# gibberish
-	my $isGravityID = 0;
-	my $msg = pack('v V a24 a24 C H32 H26 C', 0x02B0, $self->version, $username, $password, $master_version, $ip, $mac, $isGravityID);
 	$self->sendToServer($msg);
 }
 
