@@ -203,10 +203,7 @@ sub parse {
 		KEYS => $handler->[2],
 	);
 	if ($handler->[1]) {
-		my @unpacked_data = unpack("x2 $handler->[1]", $msg);
-		foreach my $key (@{$handler->[2]}) {
-			$args{$key} = shift @unpacked_data;
-		}
+		@args{@{$handler->[2]}} = unpack("x2 $handler->[1]", $msg);
 	}
 
 	my $callback = $self->can($handler->[0]);
