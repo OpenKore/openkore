@@ -24,10 +24,9 @@
 package Network::Send;
 
 use strict;
+use base qw(Network::PacketParser);
 use encoding 'utf8';
 use Carp::Assert;
-
-use Exception::Class ('Network::Send::ServerTypeNotSupported', 'Network::Send::CreationException');
 
 use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2);
 use I18N qw(stringToBytes);
@@ -74,58 +73,11 @@ sub import {
 	Network::Send::Compatibility->export_to_level(1, undef, @EXPORT_OK);
 }
 
-# Not not call this method directly, use create() instead.
-sub new {
-	my ($class) = @_;
-	return bless {}, $class;
-}
+### CATEGORY: Class methods
 
 ##
-# int $NetworkSend->{serverType}
+# void Network::Send::encrypt(r_msg, themsg)
 #
-# The server type for this message sender object, as passed to the
-# create() method.
-
-##
-# Network::Send->create(net, int serverType)
-# net: An object compatible with the '@MODULE(Network)' class.
-# serverType: A server type.
-#
-# Create a new message sender object for the specified server type.
-#
-# Throws Network::Send::ServerTypeNotSupported if the specified server type
-# is not supported.
-# Throws Network::Send::CreationException if the server type is supported, but the
-# message sender object cannot be created.
-sub create {
-	my (undef, $net, $serverType) = @_;
-
-	my ($mode, $type, $param) = Settings::parseServerType ($serverType);
-	my $class = "Network::Send::$type" . ($param ? "::$param" : ""); #param like Thor in bRO_Thor
-	
-	debug "[ST send] $class ". " (mode: " . ($mode ? "new" : "old") .")\n";
-
-	eval("use $class;");
-	if ($@ =~ /Can\'t locate/) {
-		Network::Send::ServerTypeNotSupported->throw(error => "Server type '$type' not supported.");
-	} elsif ($@) {
-		die $@;
-	}
-
-	my $instance = $class->new();
-
-	if (!$instance) {
-		Network::Send::CreationException->throw(
-			error => "Cannot create message sender object for server type '$type'.");
-	}
-
-	$instance->{net} = $net;
-	$instance->{serverType} = $type;
-	Modules::register($class);
-
-	return $instance;
-}
-
 # This is an old method used back in the iRO beta 2 days when iRO had encrypted packets.
 # At the moment (December 20 2006) there are no servers that still use encrypted packets.
 sub encrypt {
@@ -209,6 +161,10 @@ sub encrypt {
 	$$r_msg = $newmsg;
 }
 
+### CATEGORY: Methods
+
+##
+# void $messageSender->encryptMessageID(r_message)
 sub encryptMessageID {
 	use bytes;
 	my ($self, $r_message) = @_;
@@ -232,6 +188,10 @@ sub encryptMessageID {
 	}
 }
 
+##
+# void $messageSender->injectMessage(String message)
+#
+# Send text message to the connected client's party chat.
 sub injectMessage {
 	my ($self, $message) = @_;
 	my $name = stringToBytes("|");
@@ -246,6 +206,10 @@ sub injectMessage {
 	$self->{net}->clientSend($msg);
 }
 
+##
+# void $messageSender->injectAdminMessage(String message)
+#
+# Send text message to the connected client's system chat.
 sub injectAdminMessage {
 	my ($self, $message) = @_;
 	$message = stringToBytes($message);
@@ -257,6 +221,10 @@ sub injectAdminMessage {
 	$self->{net}->clientSend($message);
 }
 
+##
+# void $messageSender->sendToServer(Bytes msg)
+#
+# Send a raw data to the server.
 sub sendToServer {
 	my ($self, $msg) = @_;
 	my $net = $self->{net};
@@ -295,6 +263,11 @@ sub sendToServer {
 	}
 }
 
+##
+# void $messageSender->sendRaw(String raw)
+# raw: space-delimited list of hex byte values
+#
+# Send a raw data to the server.
 sub sendRaw {
 	my ($self, $raw) = @_;
 	my $msg;
