@@ -347,7 +347,7 @@ sub checkServer {
 			$self->{nextPort} = $master->{port};
 			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
 			eval {
-				$packetParser = Network::Receive->create($config{serverType});
+				$packetParser = Network::Receive->create($self, $config{serverType});
 				$messageSender = Network::Send->create($self, $config{serverType});
 			};
 			if (my $e = caught('Exception::Class::Base')) {

@@ -321,8 +321,8 @@ sub checkConnection {
 		$incomingMessages->clear();
 
 		eval {
-			$packetParser = Network::Receive->create($config{serverType});
 			my $wrapper = ($self->{wrapper}) ? $self->{wrapper} : $self;
+			$packetParser = Network::Receive->create($wrapper, $config{serverType});
 			$messageSender = Network::Send->create($wrapper, $config{serverType});
 		};
 		if ($@) {

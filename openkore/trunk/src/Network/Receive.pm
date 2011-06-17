@@ -20,11 +20,10 @@
 package Network::Receive;
 
 use strict;
+use base qw(Network::PacketParser);
 use encoding 'utf8';
 use Carp::Assert;
 use Scalar::Util;
-
-use Exception::Class ('Network::Receive::InvalidServerType', 'Network::Receive::CreationError');
 
 use Globals;
 #use Settings;
@@ -41,271 +40,8 @@ use Utils::Crypton;
 use Translation;
 
 ######################################
-### Public methods
+### CATEGORY: Class methods
 ######################################
-
-# Do not call this directly. Use create() instead.
-sub new {
-	my ($class) = @_;
-	my $self;
-
-	# If you are wondering about those funny strings like 'x2 v1' read http://perldoc.perl.org/functions/pack.html
-	# and http://perldoc.perl.org/perlpacktut.html
-
-	# Defines a list of Packet Handlers and decoding information
-	# 'packetSwitch' => ['handler function','unpack string',[qw(argument names)]]
-
-	$self->{packet_list} = {};
-
-	return bless $self, $class;
-}
-
-##
-# Network::Receive->create(String serverType)
-#
-# Create a new server message parsing object for the specified server type.
-#
-# Throws Network::Receive::InvalidServerType if the specified server type does
-# not exist.
-# Throws Network::Receive::CreationError if some other error occured.
-sub create {
-	my ($self, $serverType) = @_;
-	
-	my ($mode, $type, $param) = Settings::parseServerType ($serverType);
-	my $class = "Network::Receive::$type" . ($param ? "::$param" : ""); #param like Thor in bRO_Thor
-	
-	debug "[ST recv] $class ". " (mode: " . ($mode ? "new" : "old") .")\n";
-
-	undef $@;
-	eval("use $class;");
-	if ($@ =~ /^Can't locate /s) {
-		Network::Receive::InvalidServerType->throw(
-			TF("Cannot load server message parser for server type '%s'.", $type)
-		);
-	} elsif ($@) {
-		Network::Receive::CreationError->throw(
-			TF("An error occured while loading the server message parser for server type '%s':\n%s",
-				$type, $@)
-		);
-	}
-	
-	my $self = $class->new;
-	
-	if ($Settings::sys{devel_networkReceiveHooks}) {
-		# hook all handlers from Network::Receive::* for compatibility
-		# (if/when all handlers will be moved out of Network, this could be removed)
-		
-		# TODO: some way of handling only packets that are not handled by any plugins?
-		my @handlers = grep { $self->can ($_) } keys %{{map { $_->[0] => 1 } values %{$self->{packet_list}}}};
-		
-		if (@handlers) {
-			debug TF("Adding hooks for packet handlers in %s: %s\n", $class, join ', ', @handlers), 'network_compatibility';
-			
-			Scalar::Util::weaken (my $weakSelf = $self);
-			
-			my $handler = sub {
-				my (undef, $args, $callback) = @_;
-				
-				$weakSelf->$callback ($args);
-				$args->{return} = 1;
-			};
-			
-			$self->{recvpacketHandleHooks} = Plugins::addHooks (map { ["packet_handle/$_", $handler, $_] } @handlers);
-		}
-	}
-	
-	return $self;
-}
-
-sub DESTROY {
-	my ($self) = @_;
-	
-	if ($Settings::sys{devel_networkReceiveHooks} && $self->{recvpacketHandleHooks}) {
-		debug T("Removing hooks for packet handlers in Network::Receive\n"), 'network_compatibility';
-		
-		Plugins::delHooks ($self->{recvpacketHandleHooks});
-	}
-}
-
-# $packetParser->reconstruct($args)
-#
-# Reconstructs a raw packet from $args using $self->{packet_list}.
-sub reconstruct {
-	my ($self, $args) = @_;
-
-	my $switch = $args->{switch};
-	unless ($switch =~ /^[0-9A-F]{4}$/) {
-		# lookup by handler name
-		unless (exists $self->{packet_lut}{$switch}) {
-			# alternative (if any) isn't set yet, pick the first available
-			for (keys %{$self->{packet_list}}) {
-				if ($self->{packet_list}{$_}[0] eq $switch) {
-					$self->{packet_lut}{$switch} = $_;
-					last;
-				}
-			}
-			unless (exists $self->{packet_lut}{$switch}) {
-				die "Can't construct unknown packet $switch";
-			}
-		}
-		
-		$switch = $self->{packet_lut}{$switch};
-	}
-
-	my $packet = $self->{packet_list}{$switch};
-	my ($name, $packString, $varNames) = @{$packet};
-
-	my @vars = ();
-	for my $varName (@{$varNames}) {
-		push(@vars, $args->{$varName});
-	}
-	my $packet = pack("H2 H2 $packString", substr($switch, 2, 2), substr($switch, 0, 2), @vars);
-	
-	if (exists $rpackets{$switch}) {
-		if ($rpackets{$switch} > 0) {
-			# fixed length packet, pad/truncate to the correct length
-			$packet = pack('a'.$rpackets{$switch}, $packet);
-		} else {
-			# variable length packet, store its length in the packet
-			substr($packet, 2, 2) = pack('v', length $packet);
-		}
-	}
-	
-	return $packet;
-}
-
-sub parse {
-	my ($self, $msg) = @_;
-
-	$bytesReceived += length($msg);
-	my $switch = Network::MessageTokenizer::getMessageID($msg);
-	my $handler = $self->{packet_list}{$switch};
-
-	unless ($handler) {
-		warning "Packet Parser: Unknown switch: $switch\n";
-		return undef;
-	}
-
-	# set this alternative (if any) as the one in use with that server
-	# TODO: permanent storage (with saving)?
-	$self->{packet_lut}{$handler->[0]} = $switch;
-
-	debug "Received packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
-
-	# RAW_MSG is the entire message, including packet switch
-	my %args = (
-		switch => $switch,
-		RAW_MSG => $msg,
-		RAW_MSG_SIZE => length($msg),
-		KEYS => $handler->[2],
-	);
-	if ($handler->[1]) {
-		my @unpacked_data = unpack("x2 $handler->[1]", $msg);
-		foreach my $key (@{$handler->[2]}) {
-			$args{$key} = shift @unpacked_data;
-		}
-	}
-
-	if ($Settings::sys{devel_networkReceiveHooks}) {
-		Plugins::callHook("packet_pre/$handler->[0]", \%args);
-		Misc::checkValidity("Packet: " . $handler->[0] . " (pre)");
-		unless ($args{return}) {
-			if (Plugins::hasHook("packet_handle/$handler->[0]", \%args)) {
-				Plugins::callHook("packet_handle/$handler->[0]", \%args);
-				Misc::checkValidity("Packet: " . $handler->[0]);
-			} else {
-				warning "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n";
-				debug ("Unpacked: " . join(', ', @{\%args}{@{$handler->[2]}}) . "\n"), "packetParser", 2 if $handler->[2];
-			}
-		}
-	} else {
-		my $callback = $self->can($handler->[0]);
-		if ($callback) {
-			Plugins::callHook("packet_pre/$handler->[0]", \%args);
-			Misc::checkValidity("Packet: " . $handler->[0] . " (pre)");
-			$self->$callback(\%args);
-			Misc::checkValidity("Packet: " . $handler->[0]);
-		} else {
-			warning "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n";
-			debug ("Unpacked: " . join(', ', @{\%args}{@{$handler->[2]}}) . "\n"), "packetParser", 2 if $handler->[2];
-		}
-	}
-
-	Plugins::callHook("packet/$handler->[0]", \%args);
-	return \%args;
-}
-
-##
-# boolean $packetParser->willMangle(Bytes messageID)
-# messageID: a message ID, such as "008A".
-#
-# Check whether the message with the specified message ID will be mangled.
-# If the bot is running in X-Kore mode, then messages that will be mangled will not
-# be sent to the RO client.
-#
-# By default, a message will never be mangled. Plugins can register mangling procedures
-# though. This is done by using the following hooks:
-# `l
-# - "Network::Receive/willMangle" - This hook has arguments 'messageID' (Bytes) and 'name' (String).
-#          'name' is a human-readable description of the message, and may be undef. Plugins
-#          should set the 'return' argument to 1 if they want willMangle() to return 1.
-# - "Network::Receive/mangle" - This hook has arguments 'messageArgs' and 'messageName' (the latter may be undef).
-# `l`
-# The following example demonstrates how this is done:
-# <pre class="example">
-# Plugins::addHook("Network::Receive/willMangle", \&willMangle);
-# Plugins::addHook("Network::Receive/mangle", \&mangle);
-#
-# sub willMangle {
-#     my (undef, $args) = @_;
-#     if ($args->{messageID} eq '008A') {
-#         $args->{willMangle} = 1;
-#     }
-# }
-#
-# sub mangle {
-#     my (undef, $args) = @_;
-#     my $message_args = $args->{messageArgs};
-#     if ($message_args->{switch} eq '008A') {
-#         ...Modify $message_args as necessary....
-#     }
-# }
-# </pre>
-sub willMangle {
-	if (Plugins::hasHook("Network::Receive/willMangle")) {
-		my ($self, $messageID) = @_;
-		my $packet = $self->{packet_list}{$messageID};
-		my $name;
-		$name = $packet->[0] if ($packet);
-
-		my %args = (
-			messageID => $messageID,
-			name => $name
-		);
-		Plugins::callHook("Network::Receive/willMangle", \%args);
-		return $args{return};
-	} else {
-		return undef;
-	}
-}
-
-# boolean $packetParser->mangle(Array* args)
-#
-# Calls the appropriate plugin function to mangle the packet, which
-# destructively modifies $args.
-# Returns false if the packet should be suppressed.
-sub mangle {
-	my ($self, $args) = @_;
-
-	my %hook_args = (messageArgs => $args);
-	my $entry = $self->{packet_list}{$args->{switch}};
-	if ($entry) {
-		$hook_args{messageName} = $entry->[0];
-	}
-
-	Plugins::callHook("Network::Receive/mangle", \%hook_args);
-	return $hook_args{return};
-}
 
 ##
 # Network::Receive->decrypt(r_msg, themsg)
@@ -401,9 +137,15 @@ sub decrypt {
 
 
 #######################################
-###### Private methods
+### CATEGORY: Private class methods
 #######################################
 
+##
+# int Network::Receive::queryLoginPinCode([String message])
+# Returns: login PIN code, or undef if cancelled
+# Ensures: length(result) in 4..8
+#
+# Request login PIN code from user.
 sub queryLoginPinCode {
 	my $message = $_[0] || T("You've never set a login PIN code before.\nPlease enter a new login PIN code:");
 	do {
@@ -423,6 +165,11 @@ sub queryLoginPinCode {
 	} while (1);
 }
 
+##
+# boolean Network::Receive->queryAndSaveLoginPinCode([String message])
+# Returns: true on success
+#
+# Request login PIN code from user and save it in config.
 sub queryAndSaveLoginPinCode {
 	my ($self, $message) = @_;
 	my $pin = queryLoginPinCode($message);

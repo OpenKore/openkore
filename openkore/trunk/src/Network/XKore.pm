@@ -58,7 +58,7 @@ sub new {
 	$self->{clientPackets} = "";
 
 	$masterServer = $masterServers{$config{master}};
-	$packetParser = Network::Receive->create($masterServer->{serverType});
+	$packetParser = Network::Receive->create($self, $masterServer->{serverType});
 	$messageSender = Network::Send->create($self, $masterServer->{serverType});
 	
 	Plugins::addHook("Network::Receive/willMangle", \&willMangle);

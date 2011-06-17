@@ -1,4 +1,5 @@
 DirectConnection.pm
+PacketParser.pm
 Receive.pm
 Send.pm
 PaddedPackets.pm
