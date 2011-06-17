@@ -134,12 +134,13 @@ sub reconstruct {
 					last;
 				}
 			}
-			unless (exists $self->{packet_lut}{$switch}) {
-				die "Can't construct unknown packet $switch";
-			}
 		}
 		
-		$switch = $self->{packet_lut}{$switch};
+		$switch = $self->{packet_lut}{$switch} || $switch;
+	}
+
+	unless (exists $self->{packet_list}{$switch}) {
+		die "Can't reconstruct unknown packet: $switch";
 	}
 
 	my $packet = $self->{packet_list}{$switch};
