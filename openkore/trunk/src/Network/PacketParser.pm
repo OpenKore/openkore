@@ -128,7 +128,7 @@ sub reconstruct {
 		# lookup by handler name
 		unless (exists $self->{packet_lut}{$switch}) {
 			# alternative (if any) isn't set yet, pick the first available
-			for (keys %{$self->{packet_list}}) {
+			for (sort {$a cmp $b} keys %{$self->{packet_list}}) {
 				if ($self->{packet_list}{$_}[0] eq $switch) {
 					$self->{packet_lut}{$switch} = $_;
 					last;
