@@ -158,10 +158,7 @@ sub reconstruct {
 	if (exists $rpackets{$switch}) {
 		if ($rpackets{$switch} > 0) {
 			# fixed length packet, pad/truncate to the correct length
-			# TODO: preprocess %rpackets so it doesn't contain garbage like whitespace
-			my $length = $rpackets{$switch};
-			$length =~ s/\s//g;
-			$packet = pack('a'.$length, $packet);
+			$packet = pack('a'.(0+$rpackets{$switch}), $packet);
 		} else {
 			# variable length packet, store its length in the packet
 			substr($packet, 2, 2) = pack('v', length $packet);
