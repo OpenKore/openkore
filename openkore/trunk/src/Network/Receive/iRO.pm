@@ -38,6 +38,7 @@ sub new {
 	return $self;
 }
 
-*quest_update_mission_hunt = *quest_update_mission_hunt_v2;
+*parse_quest_update_mission_hunt = *Network::Receive::ServerType0::parse_quest_update_mission_hunt_v2;
+*reconstruct_quest_update_mission_hunt = *Network::Receive::ServerType0::reconstruct_quest_update_mission_hunt_v2;
 
 1;

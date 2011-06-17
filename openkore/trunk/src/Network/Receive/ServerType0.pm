@@ -415,7 +415,7 @@ sub new {
 		'02B2' => ['quest_all_mission', 'v V', [qw(len amount)]],				# var len
 		'02B3' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]],
 		'02B4' => ['quest_delete', 'V', [qw(questID)]],
-		'02B5' => ['quest_update_mission_hunt', 'v2', [qw(len amount)]],		# var len
+		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],		# var len
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]],
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]],
 		'02B9' => ['hotkeys'],
@@ -7832,27 +7832,36 @@ sub quest_delete {
 	delete $questList->{$questID};
 }
 
-# 02B5
-# note: this packet updates the objectives counters
-sub quest_update_mission_hunt {
+sub parse_quest_update_mission_hunt {
 	my ($self, $args) = @_;
-	for (my $i = 0; $i < $args->{amount}; $i++) {
-		my ($questID, $mobID, $count) = unpack('V2 v', substr($args->{RAW_MSG}, 6+$i*10, 10));
-		my $mission = \%{$questList->{$questID}->{missions}->{$mobID}};
-		$mission->{count} = $count;
-		$mission->{mobID} = $mobID;
-		debug sprintf ("questID (%d) - mob(%s) count(%d) \n", $questID, monsterName($mobID), $count), "info";
-	}
+	@{$args->{mobs}} = map {
+		my %result; @result{qw(questID mobID count)} = unpack 'V2 v', $_; \%result
+	} unpack '(a10)*', $args->{mobInfo};
+}
+
+sub reconstruct_quest_update_mission_hunt {
+	my ($self, $args) = @_;
+	$args->{mobInfo} = pack '(a10)*', map { pack 'V2 v', @{$_}{qw(questID mobID count)} } @{$args->{mobs}};
+}
+
+sub parse_quest_update_mission_hunt_v2 {
+	my ($self, $args) = @_;
+	@{$args->{mobs}} = map {
+		my %result; @result{qw(questID mobID goal count)} = unpack 'V2 v2', $_; \%result
+	} unpack '(a12)*', $args->{mobInfo};
+}
+
+sub reconstruct_quest_update_mission_hunt_v2 {
+	my ($self, $args) = @_;
+	$args->{mobInfo} = pack '(a12)*', map { pack 'V2 v2', @{$_}{qw(questID mobID goal count)} } @{$args->{mobs}};
 }
 
 # 02B5
 # note: this packet updates the objectives counters
-sub quest_update_mission_hunt_v2 {
+sub quest_update_mission_hunt {
 	my ($self, $args) = @_;
-	for (my $i = 0; $i < $args->{amount}; $i++) {
-		my ($questID, $mobID, $goal, $count) = unpack('V2 v2', substr($args->{RAW_MSG}, 6+$i*12, 12));
-		@{$questList->{$questID}{missions}{$mobID}}{qw(mobID goal count)} = ($mobID, $goal, $count);
-		debug sprintf("questID (%d) - mob(%s) count(%d/%d)\n", $questID, monsterName($mobID), $count, $goal), "info";
+	for my $mob (@{$args->{mobs}}) {
+		@{$questList->{$mob->{questID}}{missions}{$mob->{mobID}}}{@$_} = @{$mob}{@$_} for [qw(mobID goal count)];
 	}
 }
 
