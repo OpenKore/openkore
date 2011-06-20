@@ -2330,8 +2330,10 @@ sub processAutoSkillUse {
 sub processPartySkillUse {
 	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))){
 		my %party_skill;
+		PARTYSKILL:
 		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
 			next if (!$config{"partySkill_$i"});
+			next unless checkSelfCondition("partySkill_$i");
 			$party_skill{skillObject} = Skill->new(auto => $config{"partySkill_$i"});
 			$party_skill{owner} = $party_skill{skillObject}->getOwner;
 			
@@ -2375,7 +2377,6 @@ sub processPartySkillUse {
 						or $char->{mercenary} && $player->{ID} eq $char->{mercenary}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@mercenary')
 					)
 					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
-					&& checkSelfCondition("partySkill_$i")
 				){
 					$party_skill{ID} = $party_skill{skillObject}->getHandle;
 					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"} || $char->getSkillLevel($party_skill{skillObject});
@@ -2393,11 +2394,10 @@ sub processPartySkillUse {
 					# $ai_v{"partySkill_${i}_target_time"}{$targetID}
 					# when the skill is actually cast
 					$targetTimeout{$ID}{$party_skill{ID}} = $i;
-					last;
+					last PARTYSKILL;
 				}
 
 			}
-			last if (defined $party_skill{targetID});
 		}
 
 		if ($config{useSelf_skill_smartHeal} && $party_skill{ID} eq "AL_HEAL" && !$config{$party_skill{prefix}."_noSmartHeal"}) {
