@@ -3,7 +3,7 @@ package Interface::Wx::StatView::Exp;
 use strict;
 use base 'Interface::Wx::StatView';
 
-use Globals qw/$char $conState $startTime_EXP $startingzeny $totalBaseExp $totalJobExp $bytesSent $bytesReceived/;
+use Globals qw/$char $conState $packetParser $startTime_EXP $startingzeny $totalBaseExp $totalJobExp $bytesSent/;
 use Translation qw/T TF/;
 use Utils qw/formatNumber timeConvert timeOut/;
 
@@ -86,7 +86,7 @@ sub update {
 		$self->set ('zeny', formatNumber ($value = $char->{zeny} - $startingzeny));
 		$self->set ('zenyPerHour', formatNumber (int $value / $bottingHours));
 		$self->set ('bytesSent', formatNumber ($bytesSent));
-		$self->set ('bytesReceived', formatNumber ($bytesReceived));
+		$self->set ('bytesReceived', $packetParser && formatNumber($packetParser->{bytesProcessed}));
 	}
 	
 	$self->GetSizer->Layout;

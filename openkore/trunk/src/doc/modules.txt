@@ -21,6 +21,7 @@ Task::Timeout
 Task::Wait
 TaskManager
 Modules
+Network::ClientReceive
 Network::DirectConnection
 Network::PacketParser
 Network::Receive

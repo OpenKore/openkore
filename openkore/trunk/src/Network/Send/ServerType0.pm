@@ -25,7 +25,7 @@ use Plugins;
 use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync);
 use Log qw(debug);
 use Translation qw(T TF);
-use I18N qw(stringToBytes);
+use I18N qw(bytesToString stringToBytes);
 use Utils;
 use Utils::Exceptions;
 use Utils::Rijndael;
@@ -39,16 +39,45 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0064' => ['master_login', 'V a24 a24 C', [qw(version username password master_version)]],
-		'0134' => ['buy_bulk_vender', 'v a4 a*', [qw(len venderID itemInfo)]],
-		'02B0' => ['master_login', 'V a24 a24 C H32 H26 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
-		'0801' => ['buy_bulk_vender', 'v a4 a4 a*', [qw(len venderID venderCID itemInfo)]],
+		'0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
+		'0065' => ['game_login', 'a4 a4 a4 v C', [qw(accountID sessionID sessionID2 userLevel accountSex)]],
+		'0066' => ['char_login', 'C', [qw(slot)]],
+		'0067' => ['char_create'], # TODO
+		'0068' => ['char_delete'], # TODO
+		'0072' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'007D' => ['map_loaded'], # len 2
+		'007E' => ['sync'], # TODO
+		'0089' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
+		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
+		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
+		'009F' => ['item_take', 'a4', [qw(ID)]],
+		'00B2' => ['restart', 'C', [qw(type)]],
+		'00F3' => ['map_login', '', [qw()]],
+		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
+		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
+		'0149' => ['alignment', 'a4 C v', [qw(targetID type point)]],
+		'014D' => ['guild_check'], # len 2
+		'014F' => ['guild_info_request', 'V', [qw(type)]],
+		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
+		'0187' => ['ban_check', 'a4', [qw(accountID)]],
+		'018A' => ['quit_request', 'v', [qw(type)]],
+		'01B2' => ['shop_open'], # TODO
+		'012E' => ['shop_close'], # len 2
+		'0204' => ['client_hash'], # TODO
+		'021D' => ['less_effect'], # TODO
+		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
+		'02B0' => ['master_login', 'V Z24 Z24 C H32 H26 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
+		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	# # it would automatically use the first available if not set
 	# my %handlers = qw(
 	# 	master_login 0064
+	# 	game_login 0065
+	# 	map_login 0072
 	# 	buy_bulk_vender 0134
 	# );
 	# $self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -74,8 +103,11 @@ sub sendAddStatusPoint {
 
 sub sendAlignment {
 	my ($self, $ID, $alignment) = @_;
-	my $msg = pack("C*", 0x49, 0x01) . $ID . pack("C*", $alignment);
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({
+		switch => 'alignment',
+		targetID => $ID,
+		type => $alignment,
+	}));
 	debug "Sent Alignment: ".getHex($ID).", $alignment\n", "sendPacket", 2;
 }
 
@@ -101,8 +133,7 @@ sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 		return;
 	}
 
-	my $msg = pack('v a4 C', 0x0089, $monID, $flag);
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({switch => 'actor_action', targetID => $monID, type => $flag}));
 	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
 }
 
@@ -126,8 +157,10 @@ sub sendAutoSpell {
 
 sub sendBanCheck {
 	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0x87, 0x01) . $ID;
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({
+		switch => 'ban_check',
+		accountID => $ID,
+	}));
 	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
 }
 
@@ -223,23 +256,22 @@ sub sendCharDelete {
 
 sub sendCharLogin {
 	my ($self, $char) = @_;
-	my $msg = pack("C*", 0x66,0) . pack("C*",$char);
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({switch => 'char_login', slot => $char}));
+}
+
+sub parse_public_chat {
+	my ($self, $args) = @_;
+	$self->parseChat($args);
+}
+
+sub reconstruct_public_chat {
+	my ($self, $args) = @_;
+	$self->reconstructChat($args);
 }
 
 sub sendChat {
 	my ($self, $message) = @_;
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-
-	my ($data, $charName); # Type: Bytes
-	$message = stringToBytes($message); # Type: Bytes
-	$charName = stringToBytes($char->{name});
-
-	$data = pack("C*", 0x8C, 0x00) .
-		pack("v*", length($charName) + length($message) + 8) .
-		$charName . " : " . $message . chr(0);
-		
-	$self->sendToServer($data);
+	$self->sendToServer($self->reconstruct({switch => 'public_chat', message => $message}));
 }
 
 sub sendChatRoomBestow {
@@ -313,8 +345,7 @@ sub sendChatRoomLeave {
 
 sub sendCloseShop {
 	my $self = shift;
-	my $msg = pack("C*", 0x2E, 0x01);
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({switch => 'shop_close'}));
 	debug "Shop Closed\n", "sendPacket", 2;
 }
 
@@ -467,14 +498,21 @@ sub sendProduceMix {
 	debug "Sent Forge, Produce Item: $ID\n" , 2;
 }
 
+sub reconstruct_game_login {
+	my ($self, $args) = @_;
+	$args->{userLevel} = 0 unless exists $args->{userLevel};
+	($args->{iAccountSID}) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/ unless exists $args->{iAccountSID};
+}
+
 sub sendGameLogin {
 	my ($self, $accountID, $sessionID, $sessionID2, $sex) = @_;
-	my $msg = pack("v1", hex($masterServer->{gameLogin_packet}) || 0x65) . $accountID . $sessionID . $sessionID2 . pack("C*", 0, 0, $sex);
-	if (hex($masterServer->{gameLogin_packet}) == 0x0273 || hex($masterServer->{gameLogin_packet}) == 0x0275) {
-		my ($serv) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/;
-		$msg .= pack("x16 C1 x3", $serv);
-	}
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({
+		switch => 'game_login',
+		accountID => $accountID,
+		sessionID => $sessionID,
+		sessionID2 => $sessionID2,
+		accountSex => $sex,
+	}));
 	debug "Sent sendGameLogin\n", "sendPacket", 2;
 }
 
@@ -536,18 +574,19 @@ sub sendGuildBreak {
 	debug "Sent Guild Break: $guildName\n", "sendPacket", 2;
 }
 
+sub parse_guild_chat {
+	my ($self, $args) = @_;
+	$self->parseChat($args);
+}
+
+sub reconstruct_guild_chat {
+	my ($self, $args) = @_;
+	$self->reconstructChat($args);
+}
+
 sub sendGuildChat {
 	my ($self, $message) = @_;
-
-	my ($charName);
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-	$message = stringToBytes($message);
-	$charName = stringToBytes($char->{name});
-
-	my $data = pack("C*",0x7E, 0x01) .
-		pack("v*", length($charName) + length($message) + 8) .
-		$charName . " : " . $message . chr(0);
-	$self->sendToServer($data);
+	$self->sendToServer($self->reconstruct({switch => 'guild_chat', message => $message}));
 }
 
 sub sendGuildCreate {
@@ -560,8 +599,7 @@ sub sendGuildCreate {
 
 sub sendGuildMasterMemberCheck {
 	my ($self, $ID) = @_;
-	my $msg = pack("v", 0x014D);
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({switch => 'guild_check'}));
 	debug "Sent Guild Master/Member Check.\n", "sendPacket";
 }
 
@@ -654,8 +692,10 @@ sub sendGuildPositionInfo {
 
 sub sendGuildRequestInfo {
 	my ($self, $page) = @_; # page 0-4
-	my $msg = pack("C*", 0x4f, 0x01).pack("V1", $page);
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_info_request',
+		type => $page,
+	}));
 	debug "Sent Guild Request Page : ".$page."\n", "sendPacket";
 }
 
@@ -765,9 +805,7 @@ sub sendItemUse {
 
 sub sendLook {
 	my ($self, $body, $head) = @_;
-	my $msg;
-	$msg = pack("C*", 0x9B, 0x00, $head, 0x00, $body);
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({switch => 'actor_look_at', body => $body, head => $head}));
 	debug "Sent look: $body $head\n", "sendPacket", 2;
 	$char->{look}{head} = $head;
 	$char->{look}{body} = $body;
@@ -775,11 +813,9 @@ sub sendLook {
 
 sub sendMapLoaded {
 	my $self = shift;
-	my $msg;
 	$syncSync = pack("V", getTickCount());
-	$msg = pack("C*", 0x7D,0x00);
 	debug "Sending Map Loaded\n", "sendPacket";
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({switch => 'map_loaded'}));
 	Plugins::callHook('packet/sendMapLoaded');
 }
 
@@ -789,13 +825,14 @@ sub sendMapLogin {
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
 	
 	if ($self->{serverType} == 0 || $self->{serverType} == 21 || $self->{serverType} == 22) {
-		# Server Type 21 is tRO (2008-09-16Ragexe12_Th), 22 is idRO
-		$msg = pack("C*", 0x72,0) .
-			$accountID .
-			$charID .
-			$sessionID .
-			pack("V1", getTickCount()) .
-			pack("C*",$sex);
+		$msg = $self->reconstruct({
+			switch => 'map_login',
+			accountID => $accountID,
+			charID => $charID,
+			sessionID => $sessionID,
+			tick => getTickCount,
+			sex => $sex,
+		});
 
 	} else { #oRO and pRO
 		my $key;
@@ -859,9 +896,9 @@ sub parse_master_login {
 sub reconstruct_master_login {
 	my ($self, $args) = @_;
 	
-	exists $args->{ip} or $args->{ip} = '3139322e3136382e322e3400685f4c40'; # gibberish
-	exists $args->{mac} or $args->{mac} = '31313131313131313131313100'; # gibberish
-	exists $args->{isGravityID} or $args->{isGravityID} = 0;
+	$args->{ip} = '3139322e3136382e322e3400685f4c40' unless exists $args->{ip}; # gibberish
+	$args->{mac} = '31313131313131313131313100' unless exists $args->{mac}; # gibberish
+	$args->{isGravityID} = 0 unless exists $args->{isGravityID};
 	
 	my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
 	my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
@@ -982,18 +1019,20 @@ sub sendOpenShop {
 	$self->sendToServer($msg);
 }
 
+sub parse_party_chat {
+	my ($self, $args) = @_;
+	$self->parseChat($args);
+}
+
+sub reconstruct_party_chat {
+	my ($self, $args) = @_;
+	$self->reconstructChat($args);
+}
+
 sub sendPartyChat {
 	my $self = shift;
 	my $message = shift;
-
-	my $charName;
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-	$message = stringToBytes($message);
-	$charName = stringToBytes($char->{name});
-
-	my $msg = pack("C*",0x08, 0x01) . pack("v*", length($charName) + length($message) + 8) .
-		$charName . " : " . $message . chr(0);
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({switch => 'party_chat', message => $message}));
 }
 
 sub sendPartyJoin {
@@ -1144,22 +1183,32 @@ sub sendPreLoginCode {
 	debug "Sent pre-login packet $type\n", "sendPacket", 2;
 }
 
+sub parse_private_message {
+	my ($self, $args) = @_;
+	$args->{privMsg} = bytesToString($args->{privMsg});
+	stripLanguageCode(\$args->{privMsg});
+	$args->{privMsgUser} = bytesToString($args->{privMsgUser});
+}
+
+sub reconstruct_private_message {
+	my ($self, $args) = @_;
+	$args->{privMsg} = '|00' . $args->{privMsg} if $config{chatLangCode} && $config{chatLangCode} ne 'none';
+	$args->{privMsg} = stringToBytes($args->{privMsg});
+	$args->{privMsgUser} = stringToBytes($args->{privMsgUser});
+}
+
 sub sendPrivateMsg {
 	my ($self, $user, $message) = @_;
-
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-	$message = stringToBytes($message);
-	$user = stringToBytes($user);
-
-	my $msg = pack("C*", 0x96, 0x00) . pack("v*", length($message) + 29) . $user .
-		chr(0) x (24 - length($user)) . $message . chr(0);
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({
+		switch => 'private_message',
+		privMsg => $message,
+		privMsgUser => $user,
+	}));
 }
 
 sub sendQuit {
 	my $self = shift;
-	my $msg = pack("C*", 0x8A, 0x01, 0x00, 0x00);
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({switch => 'quit_request', type => 0}));
 	debug "Sent Quit\n", "sendPacket", 2;
 }
 
@@ -1220,7 +1269,7 @@ sub sendQuitToCharSelect {
 # type: 0=respawn ; 1=return to char select
 sub sendRestart {
 	my ($self, $type) = @_;
-	$self->sendToServer(pack('v C', 0x00B2, $type));
+	$self->sendToServer($self->reconstruct({switch => 'restart', type => $type}));
 	debug "Sent Restart: " . ($type ? 'Quit To Char Selection' : 'Respawn') . "\n", "sendPacket", 2;
 }
 
@@ -1425,9 +1474,7 @@ sub sendSync {
 
 sub sendTake {
 	my ($self, $itemID) = @_;
-	my $msg;
-	$msg = pack("C*", 0x9F, 0x00) . $itemID;
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({switch => 'item_take', ID => $itemID}));
 	debug "Sent take\n", "sendPacket", 2;
 }
 

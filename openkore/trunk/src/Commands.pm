@@ -1410,9 +1410,9 @@ sub cmdDebug {
 		configModify("debug", 2);
 
 	} elsif ($arg1 eq "info") {
-		my $connected = "server=".($net->serverAlive ? "yes" : "no").
+		my $connected = $net && "server=".($net->serverAlive ? "yes" : "no").
 			",client=".($net->clientAlive ? "yes" : "no");
-		my $time = sprintf("%.2f", time - $lastPacketTime);
+		my $time = $packetParser && sprintf("%.2f", time - $packetParser->{lastPacketTime});
 		my $ai_timeout = sprintf("%.2f", time - $timeout{'ai'}{'time'});
 		my $ai_time = sprintf("%.4f", time - $ai_v{'AI_last_finished'});
 
@@ -1424,7 +1424,7 @@ sub cmdDebug {
 			"\$timeout{ai}: %.2f secs ago  (value should be >%s)\n" .
 			"Last AI() call: %.2f secs ago\n" .
 			"-------------------------------------------\n",
-		$conState, $connected, $AI, $AI_forcedOff, @ai_seq, $time, $ai_timeout, 
+		$conState, $connected, $AI, $AI_forcedOff, "@ai_seq", $time, $ai_timeout, 
 		$timeout{'ai'}{'timeout'}, $ai_time), "list";
 	}
 }
@@ -1601,7 +1601,7 @@ sub cmdExp {
 		$totalelasped = 0;
 		undef %itemChange;
 		$bytesSent = 0;
-		$bytesReceived = 0;
+		$packetParser->{bytesProcessed} = 0 if $packetParser;
 		message T("Exp counter reset.\n"), "success";
 		return;
 	}
@@ -1649,7 +1649,7 @@ sub cmdExp {
 			timeConvert($w_sec), formatNumber($totalBaseExp), $percentB, formatNumber($totalJobExp), $percentJ,
 			formatNumber($bExpPerHour), $percentBhr, formatNumber($jExpPerHour), $percentJhr,
 			formatNumber($zenyMade), formatNumber($zenyPerHour), timeConvert($EstB_sec), timeConvert($EstJ_sec), 
-			$char->{'deathCount'}, formatNumber($bytesSent), formatNumber($bytesReceived)), "info";
+			$char->{'deathCount'}, formatNumber($bytesSent), $packetParser && formatNumber($packetParser->{bytesProcessed})), "info";
 			
 		if ($arg1 eq "") {
 			message("---------------------------------\n", "list");
