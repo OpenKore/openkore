@@ -43,6 +43,25 @@ use Translation;
 ### CATEGORY: Class methods
 ######################################
 
+# Just a wrapper for SUPER::parse.
+sub parse {
+	my $self = shift;
+	my $args = $self->SUPER::parse(@_);
+	
+	if ($args && $config{debugPacket_received} == 3 &&
+			existsInList($config{'debugPacket_include'}, $args->{switch})) {
+		my $packet = $self->{packet_list}{$args->{switch}};
+		my ($name, $packString, $varNames) = @{$packet};
+		
+		my @vars = ();
+		for my $varName (@{$varNames}) {
+			message "$varName = $args->{$varName}\n";
+		}
+	}
+	
+	return $args;
+}
+
 ##
 # Network::Receive->decrypt(r_msg, themsg)
 # r_msg: a reference to a scalar.

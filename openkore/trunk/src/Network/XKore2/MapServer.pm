@@ -20,7 +20,7 @@ use Globals qw(
 	$portalsList $npcsList $monstersList $playersList $petsList
 	@friendsID %friends %pet @partyUsersID %spells
 	@chatRoomsID %chatRooms @venderListsID %venderLists $hotkeyList
-	$packetParser %config
+	%config
 );
 use Base::Ragnarok::MapServer;
 use base qw(Base::Ragnarok::MapServer);
@@ -56,10 +56,10 @@ sub getCharInfo {
 	}
 }
 
-sub handleMapLoaded {
+sub map_loaded {
 	# The RO client has finished loading the map.
 	# Send character information to the RO client.
-	my ($self, $client) = @_;
+	my ($self, $args, $client) = @_;
 	no encoding 'utf8';
 	use bytes;
 
@@ -239,7 +239,7 @@ sub handleMapLoaded {
 		shiftPack(\$coords, $portal->{pos}{x}, 10);
 		shiftPack(\$coords, $portal->{pos}{y}, 10);
 		shiftPack(\$coords, 0, 4);
-		$output .= $packetParser->reconstruct({
+		$output .= $self->{recvPacketParser}->reconstruct({
 			switch => '0078',
 			coords => $coords,
 			map { $_ => $portal->{$_} } qw(ID type)
@@ -254,7 +254,7 @@ sub handleMapLoaded {
 		shiftPack(\$coords, $npc->{pos}{x}, 10);
 		shiftPack(\$coords, $npc->{pos}{y}, 10);
 		shiftPack(\$coords, $npc->{look}{body}, 4);
-		$output .= $packetParser->reconstruct({
+		$output .= $self->{recvPacketParser}->reconstruct({
 			switch => '0078',
 			coords => $coords,
 			map { $_ => $npc->{$_} } qw(ID opt1 opt2 option type)
@@ -269,7 +269,7 @@ sub handleMapLoaded {
 		shiftPack(\$coords, $monster->{pos_to}{x}, 10);
 		shiftPack(\$coords, $monster->{pos_to}{y}, 10);
 		shiftPack(\$coords, $monster->{look}{body}, 4);
-		$output .= $packetParser->reconstruct({
+		$output .= $self->{recvPacketParser}->reconstruct({
 			switch => '0078',
 			walk_speed => $monster->{walk_speed} * 1000,
 			coords => $coords,
@@ -285,7 +285,7 @@ sub handleMapLoaded {
 		shiftPack(\$coords, $pet->{pos_to}{x}, 10);
 		shiftPack(\$coords, $pet->{pos_to}{y}, 10);
 		shiftPack(\$coords, $pet->{look}{body}, 4);
-		$output .= $packetParser->reconstruct({
+		$output .= $self->{recvPacketParser}->reconstruct({
 			switch => '0078',
 			walk_speed => $pet->{walk_speed} * 1000,
 			coords => $coords,
@@ -420,75 +420,51 @@ sub handleMapLoaded {
    $client->send($output);
 	
 	if ($config{verbose} && !$config{XKore_silent}) {
-		$client->send($packetParser->reconstruct({switch => '009A', message => $Settings::welcomeText}));
+		$client->send($self->{recvPacketParser}->reconstruct({
+			switch => 'system_chat',
+			message => $Settings::welcomeText,
+		}));
 	}
+	
+	$args->{mangle} = 2;
 }
 
-sub process_007D {
-	my ($self, $client) = @_;
-	handleMapLoaded($self, $client);
-}
-
-sub process_01C0 {
-	my ($self, $client) = @_;
-	handleMapLoaded($self, $client);
-}
-
-sub process_00B2 {
-	my ($self, $client) = @_;
+sub restart {
+	my ($self, $args, $client) = @_;
 	# If they want to character select/respawn, kick them to the login screen
 	# immediately (GM kick)
 	$client->send(pack('C3', 0x81, 0, 15));
+	
+	$args->{mangle} = 2;
 }
 
-sub process_018A {
-	my ($self, $client) = @_;
+sub quit_request {
+	my ($self, $args, $client) = @_;
 	# Client wants to quit
 	$client->send(pack('C*', 0x8B, 0x01, 0, 0));
+	
+	$args->{mangle} = 2;
 }
 
-sub handleSync {
-	my ($self, $client, $message) = @_;
-	my $ID = Network::MessageTokenizer::getMessageID($message);
-	my $serverType = $self->getServerType();
-	if (
-		($ID eq "007E" && (
-			$serverType == 0 ||
-			$serverType == 1 ||
-			$serverType == 2 ||
-			$serverType == 6 ||
-			$serverType == 21)
-		)
-		|| ($ID eq "0089" && (
-			$serverType == 3 ||
-			$serverType == 5 ||
-			$serverType == 8)
-		)
-		|| ($ID eq "0116" &&
-			$serverType == 4 )
-		|| ($ID eq "00A7" &&
-			$serverType == 18)
-	) {
-		# Surpress client sync message.
-	} else {
-		&unhandledMessage;
-	}
+sub sync {
+	my ($self, $args, $client) = @_;
+	$args->{mangle} = 2;
 }
-
-sub process_007E { &handleSync; }
-sub process_0089 { &handleSync; }
-sub process_0116 { &handleSync; }
-sub process_00A7 { &handleSync }
 
 # Not sure what these are, but don't let it get to the RO server.
-sub process_021D {}
-sub process_014D {}
-sub process_014F {}
-sub process_0181 {}
+sub less_effect {
+	my ($self, $args, $client) = @_;
+	$args->{mangle} = 2;
+}
 
-sub unhandledMessage {
-	my ($self, $client, $message) = @_;
-	$client->{outbox}->add($message);
+sub guild_check {
+	my ($self, $args, $client) = @_;
+	$args->{mangle} = 2;
+}
+
+sub guild_info_request {
+	my ($self, $args, $client) = @_;
+	$args->{mangle} = 2;
 }
 
 1;

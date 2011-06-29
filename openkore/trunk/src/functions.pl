@@ -23,6 +23,7 @@ use Log qw(message warning error debug);
 use Interface;
 use Network::Receive;
 use Network::Send ();
+use Network::ClientReceive;
 use Network::PaddedPackets;
 use Network::MessageTokenizer;
 use Commands;
@@ -306,6 +307,8 @@ sub initNetworking {
 	our $XKore_dontRedirect = 0;
 	my $XKore_version = $config{XKore};
 	eval {
+		$clientPacketHandler = Network::ClientReceive->new;
+		
 		if ($XKore_version eq "1") {
 			# Inject DLL to running Ragnarok process
 			require Network::XKore;
@@ -694,26 +697,10 @@ sub mainLoop_initialized {
 	if (defined($data) && length($data) > 0) {
 		Benchmark::begin("parseMsg") if DEBUG;
 
-		my $type;
 		$incomingMessages->add($data);
-		while ($data = $incomingMessages->readNext(\$type)) {
-			if ($type == Network::MessageTokenizer::KNOWN_MESSAGE) {
-				parseIncomingMessage($data);
-			} else {
-				if ($type == Network::MessageTokenizer::UNKNOWN_MESSAGE) {
-					# Unknown message - ignore it
-					my $messageID = Network::MessageTokenizer::getMessageID($data);
-					if (!existsInList($config{debugPacket_exclude}, $messageID)) {
-						warning TF("Packet Tokenizer: Unknown switch: %s\n", $messageID), "connection";
-						visualDump($data, "<< Received unknown packet") if ($config{debugPacket_unparsed});
-					}
-				} elsif ($config{debugPacket_received}) {
-					debug "Received account ID\n", "parseMsg", 0 ;
-				}
-				# Pass it along to the client, whatever it is
-				$net->clientSend($data);
-			}
-		}
+		$net->clientSend($_) for $packetParser->process(
+			$incomingMessages, $packetParser
+		);
 		$net->clientFlush() if (UNIVERSAL::isa($net, 'Network::XKoreProxy'));
 		Benchmark::end("parseMsg") if DEBUG;
 	}
@@ -723,9 +710,9 @@ sub mainLoop_initialized {
 	if (defined($data) && length($data) > 0) {
 		my $type;
 		$outgoingClientMessages->add($data);
-		while ($data = $outgoingClientMessages->readNext(\$type)) {
-			parseOutgoingClientMessage($data);
-		}
+		$net->serverSend($_) for $messageSender->process(
+			$outgoingClientMessages, $clientPacketHandler
+		);
 	}
 
 	# GameGuard support
@@ -984,368 +971,6 @@ sub parseInput {
 		}
 	}
 	$XKore_dontRedirect = 0;
-}
-
-
-#######################################
-#######################################
-# Parse RO Client Send Message
-#######################################
-#######################################
-
-sub parseOutgoingClientMessage {
-	use bytes;
-	no encoding 'utf8';
-	my ($msg) = @_;
-
-	my $sendMsg = $msg;
-	if (length($msg) >= 4 && $net->getState() >= 4 && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
-		Network::Receive->decrypt(\$msg, $msg);
-	}
-	my $switch = Network::MessageTokenizer::getMessageID($msg);
-	
-	parseMessage_pre('ro_sent', $switch, $msg, $sendMsg);
-
-	my $serverType = $masterServer->{serverType};
-
-	# If the player tries to manually do something in the RO client, disable AI for a small period
-	# of time using ai_clientSuspend().
-
-# sendSync
-	if ($masterServer->{syncID} && $switch eq sprintf('%04X', hex($masterServer->{syncID}))) {
-		#syncSync support for XKore 1 mode
-		$syncSync = substr($msg, $masterServer->{syncTickOffset}, 4);
-
-# sendGameLogin
-	} elsif ($switch eq "0065") {
-		# Login to character server
-		$incomingMessages->nextMessageMightBeAccountID();
-
-# sendCharLogin
-	} elsif ($switch eq "0066") {
-		# Login character selected
-		configModify("char", unpack("C*",substr($msg, 2, 1)));
-
-# sendMapLogin
-	} elsif (
-		($switch eq "0072" && ($serverType == 0 || $serverType == 21 || $serverType == 22)) ||
-		($switch eq "00F3" && $serverType == 18)
-	) {
-		# Map login
-		$incomingMessages->nextMessageMightBeAccountID();
-		if ($serverType == 0 && $config{sex} ne "") {
-			$sendMsg = substr($sendMsg, 0, 18) . pack("C",$config{'sex'});
-		}
-
-# sendSync
-	} elsif ($switch eq "00A7") {
-		if($masterServer && $masterServer->{paddedPackets}) {
-			$syncSync = substr($msg, 8, 4);
-		}
-
-# sendSync
-	} elsif ($switch eq "007E") {
-		if ($masterServer && $masterServer->{paddedPackets}) {
-			$syncSync = substr($msg, 4, 4);
-		}
-
-# sendMapLoaded
-	} elsif ($switch eq "007D") {
-		# Map loaded
-		$packetParser->changeToInGameState();
-		AI::clear("clientSuspend");
-		$timeout{ai}{time} = time;
-		if ($firstLoginMap) {
-			undef $sentWelcomeMessage;
-			undef $firstLoginMap;
-		}
-		$timeout{'welcomeText'}{'time'} = time;
-		$ai_v{portalTrace_mapChanged} = time;
-		# syncSync support for XKore 1 mode
-		if($masterServer->{serverType} == 11) {
-			$syncSync = substr($msg, 8, 4);
-		} else {
-			# formula: MapLoaded_len + Sync_len - 4 - Sync_packet_last_junk
-			$syncSync = substr($msg, $masterServer->{mapLoadedTickOffset}, 4);
-		}
-		message T("Map loaded\n"), "connection";
-		
-		Plugins::callHook('map_loaded');
-
-# sendMove
-	} elsif ($switch eq "0085") {
-		#if ($masterServer->{serverType} == 0 || $masterServer->{serverType} == 1 || $masterServer->{serverType} == 2) {
-		#	#Move
-		#	AI::clear("clientSuspend");
-		#	makeCoordsDir(\%coords, substr($msg, 2, 3));
-		#	ai_clientSuspend($switch, (distance($char->{'pos'}, \%coords) * $char->{walk_speed}) + 4);
-		#}
-
-# sendAction
-	} elsif ($switch eq "0089") {
-		if ($masterServer->{serverType} == 0) {
-			# Attack
-			if (!$config{'tankMode'} && !AI::inQueue("attack")) {
-				AI::clear("clientSuspend");
-				ai_clientSuspend($switch, 2, unpack("C*",substr($msg,6,1)), substr($msg,2,4));
-			} else {
-				undef $sendMsg;
-			}
-		}
-
-# sendChat
-	} elsif (($switch eq "008C" && ($masterServer->{serverType} == 0 || $masterServer->{serverType} == 1 || $masterServer->{serverType} == 2 || $masterServer->{serverType} == 6 || $masterServer->{serverType} == 7 || $masterServer->{serverType} == 10 || $masterServer->{serverType} == 11 || $masterServer->{serverType} == 21 || $masterServer->{serverType} == 22)) ||
-		($switch eq "00F3" && ($masterServer->{serverType} == 3 || $masterServer->{serverType} == 5 || $masterServer->{serverType} == 8 || $masterServer->{serverType} == 9 || $masterServer->{serverType} == 15)) ||
-		($switch eq "009F" && $masterServer->{serverType} == 4) ||
-		($switch eq "007E" && $masterServer->{serverType} == 12) ||
-		($switch eq "0190" && ($masterServer->{serverType} == 13 || $masterServer->{serverType} == 18)) ||
-		($switch eq "0085" && $masterServer->{serverType} == 14) ||	# Public chat
-
-# sendPartyChat
-		$switch eq "0108" ||	# Party chat
-
-# sendGuildChat
-		$switch eq "017E") {	# Guild chat
-
-		my $length = unpack("v",substr($msg,2,2));
-		my $message = substr($msg, 4, $length - 4);
-		my ($chat) = $message =~ /^[\s\S]*? : ([\s\S]*)\000?/;
-		$chat =~ s/^\s*//;
-
-		stripLanguageCode(\$chat);
-
-		my $prefix = quotemeta $config{'commandPrefix'};
-		if ($chat =~ /^$prefix/) {
-			$chat =~ s/^$prefix//;
-			$chat =~ s/^\s*//;
-			$chat =~ s/\s*$//;
-			$chat =~ s/\000*$//;
-			parseInput($chat, 1);
-			undef $sendMsg;
-		}
-
-# sendPrivateMsg
-	} elsif ($switch eq "0096") {
-		# Private message
-		my $length = unpack("v",substr($msg,2,2));
-		my ($user) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
-		my $chat = substr($msg, 28, $length - 29);
-		$chat =~ s/^\s*//;
-
-		# Ensures: $user and $chat are String
-		$user = I18N::bytesToString($user);
-		$chat = I18N::bytesToString($chat);
-		stripLanguageCode(\$chat);
-
-		my $prefix = quotemeta $config{commandPrefix};
-		if ($chat =~ /^$prefix/) {
-			$chat =~ s/^$prefix//;
-			$chat =~ s/^\s*//;
-			$chat =~ s/\s*$//;
-			parseInput($chat, 1);
-			undef $sendMsg;
-		} else {
-			undef %lastpm;
-			$lastpm{msg} = $chat;
-			$lastpm{user} = $user;
-			push @lastpm, {%lastpm};
-		}
-
-# sendLook
-	} elsif (($switch eq "009B" && $masterServer->{serverType} == 0) ||
-		($switch eq "009B" && $masterServer->{serverType} == 1) ||
-		($switch eq "009B" && $masterServer->{serverType} == 2) ||
-		($switch eq "0085" && $masterServer->{serverType} == 3) ||
-		($switch eq "00F3" && $masterServer->{serverType} == 4) ||
-		($switch eq "0085" && $masterServer->{serverType} == 5) ||
-		#($switch eq "009B" && $masterServer->{serverType} == 6) || serverType 6 uses what?
-		($switch eq "009B" && $masterServer->{serverType} == 7) ||
-		($switch eq "0072" && $masterServer->{serverType} == 13)) { # rRO
-		# Look
-		
-		if ($char) {
-			if ($masterServer->{serverType} == 0) {
-				$char->{look}{head} = unpack("C", substr($msg, 2, 1));
-				$char->{look}{body} = unpack("C", substr($msg, 4, 1));
-			} elsif ($masterServer->{serverType} == 1 ||
-				$masterServer->{serverType} == 2 ||
-				$masterServer->{serverType} == 4 ||
-				$masterServer->{serverType} == 7) {
-				$char->{look}{head} = unpack("C", substr($msg, 6, 1));
-				$char->{look}{body} = unpack("C", substr($msg, 14, 1));
-			} elsif ($masterServer->{serverType} == 3) {
-				$char->{look}{head} = unpack("C", substr($msg, 12, 1));
-				$char->{look}{body} = unpack("C", substr($msg, 22, 1));
-			} elsif ($masterServer->{serverType} == 5) {
-				$char->{look}{head} = unpack("C", substr($msg, 8, 1));
-				$char->{look}{body} = unpack("C", substr($msg, 16, 1));
-			} elsif ($masterServer->{serverType} == 13) { # rRO
-				$char->{look}{head} = unpack("C", substr($msg, 2, 1));
-				$char->{look}{body} = unpack("C", substr($msg, 4, 1));
-			}
-		}
-
-# sendTake
-	} elsif ($switch eq "009F") {
-		if ($masterServer->{serverType} == 0) {
-			# Take
-			AI::clear("clientSuspend");
-			ai_clientSuspend($switch, 2, substr($msg,2,4));
-		}
-
-# sendRestart
-	} elsif ($switch eq "00B2") {
-		# Trying to exit (respawn)
-		AI::clear("clientSuspend");
-		ai_clientSuspend($switch, 10);
-
-# sendQuit
-	} elsif ($switch eq "018A") {
-		# Trying to exit
-		AI::clear("clientSuspend");
-		ai_clientSuspend($switch, 10);
-
-# sendAlignment (makes no sense since this is a GM sent packet?)
-	} elsif ($switch eq "0149") {
-		# Chat/skill mute
-		undef $sendMsg;
-
-# sendOpenShop
-	} elsif ($switch eq "01B2") {
-		# client started a shop manually
-		$shopstarted = 1;
-
-# sendCloseShop
-	} elsif ($switch eq "012E") {
-		# client stopped shop manually
-		$shopstarted = 0;
-	}
-
-	if ($sendMsg ne "") {
-		$messageSender->encryptMessageID(\$sendMsg);
-		$net->serverSend($sendMsg);
-	}
-
-	# This should be changed to packets that haven't been parsed yet, in a similar manner
-	# as parseMsg
-	return "";
-}
-
-
-#######################################
-#######################################
-#Parse Message
-#######################################
-#######################################
-
-
-##
-# void parseIncomingMessage(Bytes msg)
-# msg: The data to parse, as received from the socket.
-#
-# Parse network data sent by the RO server.
-sub parseIncomingMessage {
-	my ($msg) = @_;
-	my $recvmsg = $msg;
-
-	# Determine packet switch
-	my $switch = Network::MessageTokenizer::getMessageID($msg);
-	if (length($msg) >= 4 && substr($msg, 0, 4) ne $accountID && $net->getState() >= Network::CONNECTED_TO_CHAR_SERVER
-	 && $lastswitch ne $switch && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
-		# The decrypt below casued annoying unparsed errors (at least in serverType  2)
-		if ($masterServer->{serverType} != 2) {
-			Network::Receive->decrypt(\$msg, $msg);
-			$switch = Network::MessageTokenizer::getMessageID($msg);
-		}
-	}
-
-	# The user is running in X-Kore mode and wants to switch character or gameGuard type 2 after 0259 tag 02.
-	# We're now expecting an accountID, unless the server has replicated packet 0259 (server-side bug).
-	if ($net->getState() == 2.5 && (!$config{gameGuard} || ($switch ne '0259' && $config{gameGuard} eq "2"))) {
-		if (length($msg) >= 4) {
-			$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
-			$accountID = substr($msg, 0, 4);
-			debug "Selecting character, new accountID: ".unpack("V", $accountID)."\n", "connection";
-			$net->clientSend($accountID);
-			return substr($msg, 4);
-		} else {
-			return $msg;
-		}
-	}
-
-	$lastswitch = $switch;
-	parseMessage_pre('received', $switch, $msg, $recvmsg);
-
-	if (!$packetParser->willMangle($switch)) {
-		# If we're running in X-Kore mode, pass the message back to the RO client.
-		$net->clientSend($msg);
-	}
-
-	$lastPacketTime = time;
-	if ($packetParser &&
-		(my $args = $packetParser->parse($msg))) {
-		# Use the new object-oriented packet parser
-		if ($config{debugPacket_received} == 3 &&
-		    existsInList($config{'debugPacket_include'}, $switch)) {
-			my $switch = $args->{switch};
-			my $packet = $packetParser->{packet_list}{$switch};
-			my ($name, $packString, $varNames) = @{$packet};
-
-			my @vars = ();
-			for my $varName (@{$varNames}) {
-				message "$varName = $args->{$varName}\n";
-			}
-		}
-
-		if ($packetParser->willMangle($switch)) {
-			my $ret = $packetParser->mangle($args);
-			if (!$ret) {
-				# Packet was not mangled
-				$net->clientSend($args->{RAW_MSG});
-			} elsif ($ret == 1) {
-				# Packet was mangled
-				$net->clientSend($packetParser->reconstruct($args));
-			} else {
-				# Packet was suppressed
-			}
-		}
-	}
-}
-
-sub parseMessage_pre {
-	my ($mode, $switch, $msg, $realMsg) = @_;
-	my ($title, $config_suffix, $desc_key, $dumpMethod5_word, $hook) = @{{
-		'received' => ['<< Received packet:', 'received', 'Recv', 'recv', 'parseMsg/pre'],
-		'ro_sent' => ['<< Sent by RO client:', 'ro_sent', 'Send', 'send', 'RO_sendMsg_pre'],
-	}->{$mode}};
-	
-	if ($config{'debugPacket_'.$config_suffix} && !existsInList($config{'debugPacket_exclude'}, $switch) ||
-		$config{'debugPacket_include_dumpMethod'} && existsInList($config{'debugPacket_include'}, $switch))
-	{
-		my $label = $packetDescriptions{$desc_key}{$switch} ?
-			" - $packetDescriptions{$desc_key}{$switch}" : '';
-
-		if ($config{'debugPacket_'.$config_suffix} == 1) {
-			debug sprintf("%-24s %-4s%s [%2d bytes]%s\n", $title, $switch, $label, length($msg)), 'parseMsg', 0;
-		} elsif ($config{'debugPacket_'.$config_suffix} == 2) {
-			visualDump($realMsg, sprintf('%-24s %-4s%s', $title, $switch, $label));
-		}
-		if ($config{debugPacket_include_dumpMethod} == 1) {
-			debug sprintf("%-24s %-4s%s\n", $title, $switch, $label), "parseMsg", 0;
-		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
-			visualDump($realMsg, sprintf('%-24s %-4s%s', $title, $switch, $label));
-		} elsif ($config{debugPacket_include_dumpMethod} == 3) {
-			dumpData($msg, 1);
-		} elsif ($config{debugPacket_include_dumpMethod} == 4) {
-			open my $dump, '>>', 'DUMP_lines.txt';
-			print $dump unpack('H*', $msg) . "\n";
-		} elsif ($config{debugPacket_include_dumpMethod} == 5) {
-			open my $dump, '>>', 'DUMP_HEAD.txt';
-			print $dump sprintf("%-4s %2d %s%s\n", substr(unpack('H*', $msg), 2, 2) . substr(unpack('H*', $msg), 0, 2), length($msg), $dumpMethod5_word, $label);
-		}
-	}
-
-	Plugins::callHook($hook, {switch => $switch, msg => $msg, msg_size => length($msg), realMsg => \$realMsg});
 }
 
 return 1;

@@ -8,7 +8,7 @@ use Modules 'register';
 use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
 use Misc;
-use Globals qw(%config $packetParser);
+use Globals qw(%config);
 
 use constant SESSION_TIMEOUT => 120;
 use constant DUMMY_CHARACTER => {
@@ -69,14 +69,19 @@ sub charBlockSize {
 	return $_[0]->{charBlockSize};
 }
 
-sub process_0065 {
+sub game_login {
 	# Character server login.
-	my ($self, $client, $message) = @_;
-	my ($accountID, $sessionID, $sessionID2, $gender) = unpack('x2 a4 V V x2 C', $message);
-	my $session = $self->{sessionStore}->get($sessionID);
+	my ($self, $args, $client) = @_;
+	# maybe sessionstore should store sessionID as bytes?
+	my $session = $self->{sessionStore}->get(unpack('V', $args->{sessionID}));
 
-	if (!$session || $session->{accountID} ne $accountID || $session->{sessionID} != $sessionID
-	  || $session->{sex} != $gender || $session->{state} ne 'About to select character') {
+	unless (
+		$session && $session->{accountID} eq $args->{accountID}
+		# maybe sessionstore should store sessionID as bytes?
+		&& pack('V', $session->{sessionID}) eq $args->{sessionID}
+		&& $session->{sex} == $args->{accountSex}
+		&& $session->{state} eq 'About to select character'
+	) {
 		$client->close();
 
 	} else {
@@ -91,7 +96,7 @@ sub process_0065 {
 			next if (!$char);
 
 			$output .= pack(
-				$packetParser->received_characters_unpackString,
+				$self->{recvPacketParser}->received_characters_unpackString,
 				$char->{charID},	# character ID
 				$char->{exp},		# base experience
 				$char->{zeny},		# zeny
@@ -143,11 +148,11 @@ sub process_0065 {
 		$self->{sessionStore}->mark($session);
 		$client->{session} = $session;
 		$session->{time} = time;
-		$client->send($accountID);
+		$client->send($args->{accountID});
 		if ($config{XKore_altCharServer} == 1){
 			$client->send(pack('C2 v', 0x72, 0x00, length($output) + 4) . $output);
 		}else{
-			$client->send($packetParser->reconstruct({
+			$client->send($self->{recvPacketParser}->reconstruct({
 				switch => 'received_characters',
 				charInfo => $output,
 				
@@ -163,19 +168,18 @@ sub process_0065 {
 
 }
 
-sub process_0066 {
+sub char_login {
 	# Select character.
-	my ($self, $client, $message) = @_;
+	my ($self, $args, $client) = @_;
 	my $session = $client->{session};
 	if ($session) {
 		$self->{sessionStore}->mark($session);
-		my ($charIndex) = unpack('x2 C', $message);
 		my @characters = $self->getCharacters();
-		if (!$characters[$charIndex]) {
+		if (!$characters[$args->{slot}]) {
 			# Invalid character selected.
 			$client->send(pack('C*', 0x6C, 0x00, 0));
 		} else {
-			my $char = $characters[$charIndex];
+			my $char = $characters[$args->{slot}];
 			my $charInfo = $self->{mapServer}->getCharInfo($session);
 			if (!$charInfo) {
 				# We can't get the character information for some reason.
@@ -186,7 +190,7 @@ sub process_0066 {
 				
 				$session->{charID} = $char->{charID};
 				$session->{state} = 'About to load map';
-				$client->send($packetParser->reconstruct({
+				$client->send($self->{recvPacketParser}->reconstruct({
 					switch => 'received_character_ID_and_Map',
 					charID => $char->{charID},
 					mapName => $charInfo->{map},
@@ -199,27 +203,27 @@ sub process_0066 {
 	$client->close();
 }
 
-sub process_0187 {
+sub ban_check {
 	# Ban check.
 	# Doing nothing seems to work.
 }
 
-sub process_0067 {
+sub char_create {
 	# Character creation.
-	my ($self, $client) = @_;
+	my ($self, $args, $client) = @_;
 	# Deny it.
 	$client->send(pack('C*', 0x6E, 0x00, 2));
 }
 
-sub process_0067 {
+sub char_delete {
 	# Character deletion.
-	my ($self, $client) = @_;
+	my ($self, $args, $client) = @_;
 	# Deny it.
 	$client->send(pack('C*', 0x70, 0x00, 1));
 }
 
 sub unhandledMessage {
-	my ($self, $client) = @_;
+	my ($self, $args, $client) = @_;
 	$client->close();
 }
 

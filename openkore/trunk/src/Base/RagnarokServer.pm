@@ -17,6 +17,8 @@ sub new {
 	my $self = $class->SUPER::new($port, $host);
 	$self->{serverType} = $serverType;
 	$self->{rpackets} = $rpackets;
+	$self->{recvPacketParser} = Network::Receive->create(undef, $serverType);
+	$self->{sendPacketParser} = Network::Send->create(undef, $serverType);
 	return $self;
 }
 
@@ -50,20 +52,10 @@ sub onClientNew {
 sub onClientData {
 	my ($self, $client, $data) = @_;
 	$client->{tokenizer}->add($data);
-	my $type;
-	while (my $message = $client->{tokenizer}->readNext(\$type)) {
-		if ($type == Network::MessageTokenizer::KNOWN_MESSAGE) {
-			my $ID = Network::MessageTokenizer::getMessageID($message);
-			my $handler = $self->can('process_' . (($ID eq $masterServer->{masterLogin_packet}) ? '0064' : $ID)); # temporary fix for servers that changed the masterLogin_packet switch
-			if ($handler) {
-				$handler->($self, $client, $message);
-			} else {
-				$self->unhandledMessage($client, $message);
-			}
-		} else {
-			$client->close();
-		}
-	}
+	
+	$client->{outbox} && $client->{outbox}->add($_) for $self->{sendPacketParser}->process(
+		$client->{tokenizer}, $self, $client
+	);
 }
 
 sub displayMessage {
@@ -73,6 +65,11 @@ sub displayMessage {
 }
 
 sub unhandledMessage {
+}
+
+sub unknownMessage {
+	my ($self, $args, $client) = @_;
+	$client->close;
 }
 
 1;

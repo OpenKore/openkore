@@ -23,11 +23,13 @@ use strict;
 use encoding 'utf8';
 use Carp::Assert;
 use Scalar::Util;
+use Time::HiRes qw(time);
 
 use Globals;
 #use Settings;
 use Log qw(message warning error debug);
 #use FileParsers;
+use I18N qw(bytesToString stringToBytes);
 use Interface;
 use Network;
 use Network::MessageTokenizer;
@@ -69,6 +71,7 @@ sub new {
 
 	$self->{packet_list} = {};
 	$self->{packet_lut} = {};
+	$self->{bytesProcessed} = 0;
 
 	return bless $self, $class;
 }
@@ -181,9 +184,8 @@ sub reconstruct {
 # - KEYS: list of argument names from {packet_list}
 # `l`
 sub parse {
-	my ($self, $msg) = @_;
+	my ($self, $msg, $handleContainer, @handleArguments) = @_;
 
-	$bytesReceived += length($msg);
 	my $switch = Network::MessageTokenizer::getMessageID($msg);
 	my $handler = $self->{packet_list}{$switch};
 
@@ -192,9 +194,7 @@ sub parse {
 		return undef;
 	}
 
-	# set this alternative (if any) as the one in use with that server
-	# TODO: permanent storage (with saving)?
-	$self->{packet_lut}{$handler->[0]} = $switch;
+	# $handler->[0] may be (re)binded to $switch here for current serverType
 
 	debug "Received packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
 
@@ -212,21 +212,21 @@ sub parse {
 		$self->$custom_parse(\%args);
 	}
 
-	my $callback = $self->can($handler->[0]);
+	my $callback = $handleContainer->can($handler->[0]);
 	if ($callback) {
 		# Hook names can be made more uniform,
 		# but the ones for Receive must be kept for compatibility anyway.
+		# TODO: restrict to $Globals::packetParser and $Globals::messageSender?
 		if ($self->{hook_prefix} eq 'Network::Receive') {
 			Plugins::callHook("packet_pre/$handler->[0]", \%args);
 		} else {
 			Plugins::callHook("$self->{hook_prefix}/packet_pre/$handler->[0]", \%args);
 		}
 		Misc::checkValidity("Packet: " . $handler->[0] . " (pre)");
-		$self->$callback(\%args);
+		$handleContainer->$callback(\%args, @handleArguments);
 		Misc::checkValidity("Packet: " . $handler->[0]);
 	} else {
-		warning "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n";
-		debug ("Unpacked: " . join(', ', @{\%args}{@{$handler->[2]}}) . "\n"), "packetParser", 2 if $handler->[2];
+		$handleContainer->unhandledMessage(\%args, @handleArguments);
 	}
 
 	if ($self->{hook_prefix} eq 'Network::Receive') {
@@ -235,6 +235,13 @@ sub parse {
 		Plugins::callHook("$self->{hook_prefix}/packet/$handler->[0]", \%args);
 	}
 	return \%args;
+}
+
+sub unhandledMessage {
+	my ($self, $args) = @_;
+	
+	warning "Packet Parser: Unhandled Packet: $args->{switch} Handler: $self->{packet_list}{$args->{switch}}[0]\n";
+	debug ("Unpacked: " . join(', ', @{$args}{@{$args->{KEYS}}}) . "\n"), "packetParser", 2 if $args->{KEYS};
 }
 
 ##
@@ -308,6 +315,143 @@ sub mangle {
 
 	Plugins::callHook("$self->{hook_prefix}/mangle", \%hook_args);
 	return $hook_args{return};
+}
+
+sub process {
+	my ($self, $tokenizer, $handleContainer, @handleArguments) = @_;
+	
+	my @result;
+	my $type;
+	while (my $message = $tokenizer->readNext(\$type)) {
+		$handleContainer->{bytesProcessed} += length($message);
+		$handleContainer->{lastPacketTime} = time;
+		
+		my $args;
+		
+		if ($type == Network::MessageTokenizer::KNOWN_MESSAGE) {
+			my $switch = Network::MessageTokenizer::getMessageID($message);
+			
+			# FIXME?
+			$self->parse_pre($handleContainer->{hook_prefix}, $switch, $message);
+			
+			my $willMangle = $handleContainer->can('willMangle') && $handleContainer->willMangle($switch);
+			
+			if ($args = $self->parse($message, $handleContainer, @handleArguments)) {
+				$args->{mangle} ||= $willMangle && $handleContainer->mangle($args);
+			} else {
+				$args = {
+					switch => $switch,
+					RAW_MSG => $message,
+					(mangle => 2) x!! $willMangle,
+				};
+			}
+			
+		} elsif ($type == Network::MessageTokenizer::ACCOUNT_ID) {
+			$args = {
+				RAW_MSG => $message
+			};
+			
+		} elsif ($type == Network::MessageTokenizer::UNKNOWN_MESSAGE) {
+			$args = {
+				switch => Network::MessageTokenizer::getMessageID($message),
+				RAW_MSG => $message,
+				# RAW_MSG_SIZE => length($message),
+			};
+			$handleContainer->unknownMessage($args, @handleArguments);
+			
+		} else {
+			die "Packet Tokenizer: Unknown type: $type";
+		}
+		
+		unless ($args->{mangle}) {
+			# Packet was not mangled
+			push @result, $args->{RAW_MSG};
+			#$result .= $args->{RAW_MSG};
+		} elsif ($args->{mangle} == 1) {
+			# Packet was mangled
+			push @result, $self->reconstruct($args);
+			#$result .= $self->reconstruct($args);
+		} else {
+			# Packet was suppressed
+		}
+	}
+	
+	# If we're running in X-Kore mode, pass messages back to the RO client.
+	
+	# It seems like messages can't be just concatenated safely
+	# (without "use bytes" pragma or messing with unicode stuff)
+	# http://perldoc.perl.org/perlunicode.html#The-%22Unicode-Bug%22
+	return @result;
+}
+
+sub parse_pre {
+	my ($self, $mode, $switch, $msg) = @_;
+	my $values = {
+		'Network::Receive' => ['<< Received packet:', 'received', 'Recv', 'recv', 'parseMsg/pre'],
+		'Network::ClientReceive' => ['<< Sent by RO client:', 'ro_sent', 'Send', 'send', 'RO_sendMsg_pre'],
+	}->{$mode} or return;
+	my ($title, $config_suffix, $desc_key, $dumpMethod5_word, $hook) = @$values;
+	
+	if ($config{'debugPacket_'.$config_suffix} && !existsInList($config{'debugPacket_exclude'}, $switch) ||
+		$config{'debugPacket_include_dumpMethod'} && existsInList($config{'debugPacket_include'}, $switch))
+	{
+		my $label = $packetDescriptions{$desc_key}{$switch} ?
+			" - $packetDescriptions{$desc_key}{$switch}" : '';
+		
+		if ($config{'debugPacket_'.$config_suffix} == 1) {
+			debug sprintf("%-24s %-4s%s [%2d bytes]%s\n", $title, $switch, $label, length($msg)), 'parseMsg', 0;
+		} elsif ($config{'debugPacket_'.$config_suffix} == 2) {
+			visualDump($msg, sprintf('%-24s %-4s%s', $title, $switch, $label));
+		}
+		if ($config{debugPacket_include_dumpMethod} == 1) {
+			debug sprintf("%-24s %-4s%s\n", $title, $switch, $label), "parseMsg", 0;
+		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
+			visualDump($msg, sprintf('%-24s %-4s%s', $title, $switch, $label));
+		} elsif ($config{debugPacket_include_dumpMethod} == 3) {
+			dumpData($msg, 1);
+		} elsif ($config{debugPacket_include_dumpMethod} == 4) {
+			open my $dump, '>>', 'DUMP_lines.txt';
+			print $dump unpack('H*', $msg) . "\n";
+		} elsif ($config{debugPacket_include_dumpMethod} == 5) {
+			open my $dump, '>>', 'DUMP_HEAD.txt';
+			print $dump sprintf("%-4s %2d %s%s\n", substr(unpack('H*', $msg), 2, 2) . substr(unpack('H*', $msg), 0, 2), length($msg), $dumpMethod5_word, $label);
+		}
+	}
+	
+	Plugins::callHook($hook, {switch => $switch, msg => $msg, msg_size => length($msg), realMsg => \$msg});
+}
+
+sub unknownMessage {
+	my ($self, $args) = @_;
+	
+	# Unknown message - ignore it
+	unless (existsInList($config{debugPacket_exclude}, $args->{switch})) {
+		warning TF("Packet Tokenizer: Unknown switch: %s\n", $args->{switch}), 'connection';
+		visualDump($args->{RAW_MSG}, "<< Received unknown packet") if $config{debugPacket_unparsed};
+	}
+	
+	# Pass it along to the client, whatever it is
+}
+
+# Utility methods used by both Receive and Send
+
+sub parseChat {
+	my ($self, $args) = @_;
+	$args->{message} = bytesToString($args->{message});
+	if ($args->{message} =~ /^(.*?)\s{1,2}:\s{1,2}(.*)$/) {
+		$args->{name} = $1;
+		$args->{message} = $2;
+		stripLanguageCode(\$args->{message});
+	}
+	if (exists $args->{ID}) {
+		$args->{actor} = Actor::get($args->{ID});
+	}
+}
+
+sub reconstructChat {
+	my ($self, $args) = @_;
+	$args->{message} = '|00' . $args->{message} if $config{chatLangCode} && $config{chatLangCode} ne 'none';
+	$args->{message} = stringToBytes($char->{name}) . ' : ' . stringToBytes($args->{message});
 }
 
 1;

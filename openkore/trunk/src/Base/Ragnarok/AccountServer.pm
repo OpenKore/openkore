@@ -9,7 +9,6 @@ use Exception::Class qw(
 	Base::Ragnarok::AccountServer::AccountBanned
 );
 
-use Globals qw($packetParser);
 use Modules 'register';
 use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
@@ -61,26 +60,15 @@ sub login {
 	die "This is an abstract method and has not been implemented.";
 }
 
-sub process_0064 {
-	my ($self, $client, $message) = @_;
-	my ($switch, $version, $username, $password, $master_version) = unpack("v V Z24 Z24 C1", $message);
-
-	if ($switch == 0x02B0) {
-		# TODO: merge back with sendMasterHANLogin
-		my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
-		my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
-		my $in = pack('a24', $password);
-		my $rijndael = Utils::Rijndael->new();
-		$rijndael->MakeKey($key, $chain, 24, 24);
-		$password = unpack("Z24", $rijndael->Decrypt($in, undef, 24, 0));
-	}
+sub master_login {
+	my ($self, $args, $client) = @_;
 
 	my $sessionID = $self->{sessionStore}->generateSessionID();
 	my %session = (
 		sessionID => $sessionID,
 		sessionID2 => $sessionID
 	);
-	my $result = $self->login(\%session, $username, $password);
+	my $result = $self->login(\%session, @{$args}{qw(username password)});
 	if ($result == LOGIN_SUCCESS) {
 		my $output = '';
 		$self->{sessionStore}->add(\%session);
@@ -100,8 +88,9 @@ sub process_0064 {
 			);
 		}
 		
-		$client->send($packetParser->reconstruct({
+		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'account_server_info',
+			# maybe sessionstore should store sessionID as bytes?
 			sessionID => pack('V', $session{sessionID}),
 			accountID => $session{accountID},
 			sessionID2 => pack('V', $session{sessionID2}),
@@ -111,19 +100,19 @@ sub process_0064 {
 		$client->close();
 
 	} elsif ($result == ACCOUNT_NOT_FOUND) {
-		$client->send($packetParser->reconstruct({
+		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'login_error',
 			type => Network::Receive::ServerType0::REFUSE_INVALID_ID,
 		}));
 		$client->close();
 	} elsif ($result == PASSWORD_INCORRECT) {
-		$client->send($packetParser->reconstruct({
+		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'login_error',
 			type => Network::Receive::ServerType0::REFUSE_INVALID_PASSWD,
 		}));
 		$client->close();
 	} elsif ($result == ACCOUNT_BANNED) {
-		$client->send($packetParser->reconstruct({
+		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'login_error',
 			type => Network::Receive::ServerType0::REFUSE_NOT_CONFIRMED,
 		}));
@@ -133,11 +122,10 @@ sub process_0064 {
 	}
 }
 
-# sendClientMD5Hash
-sub process_0204 {}
+sub client_hash {}
 
 sub unhandledMessage {
-	my ($self, $client) = @_;
+	my ($self, $args, $client) = @_;
 	$client->close();
 }
 

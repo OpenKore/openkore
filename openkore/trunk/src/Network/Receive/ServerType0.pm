@@ -109,7 +109,7 @@ sub new {
 		'0097' => ['private_message', 'v Z24 Z*', [qw(len privMsgUser privMsg)]],
 		'0098' => ['private_message_sent', 'C', [qw(type)]],
 		'009A' => ['system_chat', 'v a*', [qw(len message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
-		'009C' => ['actor_look_at', 'a4 C x C', [qw(ID head body)]],
+		'009C' => ['actor_look_at', 'a4 v C', [qw(ID head body)]],
 		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]],
 		'009E' => ['item_appeared', 'a4 v C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]],
 		'00A0' => ['inventory_item_added', 'v3 C3 a8 v C2', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
@@ -3176,6 +3176,7 @@ sub gameguard_grant {
 		message T("Server granted login request to account server\n"), "poseidon";
 	} else {
 		message T("Server granted login request to char/map server\n"), "poseidon";
+		# FIXME
 		change_to_constate25 if ($config{'gameGuard'} eq "2");
 	}
 	$net->setState(1.3) if ($net->getState() == 1.2);
