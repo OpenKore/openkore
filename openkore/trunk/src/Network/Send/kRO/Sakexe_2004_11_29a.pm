@@ -33,7 +33,19 @@ sub version {
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0085' => ['public_chat', 'x2 Z*', [qw(message)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	my %handlers = qw(
+		public_chat 0085
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	$self;
 }
 
 # 0x072,22,useskilltoid,8:12:18
@@ -64,20 +76,6 @@ sub sendSkillUseLoc {
 
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-# 0x085,-1,globalmessage,2:4
-sub sendChat {
-	my ($self, $message) = @_;
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-
-	my ($data, $charName); # Type: Bytes
-	$message = stringToBytes($message); # Type: Bytes
-	$charName = stringToBytes($char->{name});
-
-	$data = pack('v2 Z*', 0x0085, length($charName) + length($message) + 8, $charName . " : " . $message);
-
-	$self->sendToServer($data);
 }
 
 # 0x089,7,ticksend,3

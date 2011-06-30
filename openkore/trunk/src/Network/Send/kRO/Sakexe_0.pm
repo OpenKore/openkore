@@ -34,7 +34,17 @@ sub version {
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
+		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
+		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
+		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	$self;
 }
 
 # 0x0064,55
@@ -184,17 +194,19 @@ sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 # 0x008b,2
 
 # 0x008c,-1,globalmessage,2:4
+sub parse_public_chat {
+	my ($self, $args) = @_;
+	$self->parseChat($args);
+}
+
+sub reconstruct_public_chat {
+	my ($self, $args) = @_;
+	$self->reconstructChat($args);
+}
+
 sub sendChat {
 	my ($self, $message) = @_;
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-
-	my ($data, $charName); # Type: Bytes
-	$message = stringToBytes($message); # Type: Bytes
-	$charName = stringToBytes($char->{name}); # Type: Bytes
-
-	$data = pack('v2 Z*', 0x008C, length($charName) + length($message) + 8, $charName . " : " . $message);
-
-	$self->sendToServer($data);
+	$self->sendToServer($self->reconstruct({switch => 'public_chat', message => $message}));
 }
 
 # 0x008d,-1
@@ -224,16 +236,27 @@ sub sendGetPlayerInfo {
 # 0x0095,30
 
 # 0x0096,-1,wis,2:4:28
+sub parse_private_message {
+	my ($self, $args) = @_;
+	$args->{privMsg} = bytesToString($args->{privMsg});
+	stripLanguageCode(\$args->{privMsg});
+	$args->{privMsgUser} = bytesToString($args->{privMsgUser});
+}
+
+sub reconstruct_private_message {
+	my ($self, $args) = @_;
+	$args->{privMsg} = '|00' . $args->{privMsg} if $config{chatLangCode} && $config{chatLangCode} ne 'none';
+	$args->{privMsg} = stringToBytes($args->{privMsg});
+	$args->{privMsgUser} = stringToBytes($args->{privMsgUser});
+}
+
 sub sendPrivateMsg {
 	my ($self, $user, $message) = @_;
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-
-	$message = stringToBytes($message); # Type: Bytes
-	$user = stringToBytes($user); # Type: Bytes
-
-	my $data = pack('v2 Z24 Z*', 0x0096, length($message) + 29, $user, $message);
-
-	$self->sendToServer($data);
+	$self->sendToServer($self->reconstruct({
+		switch => 'private_message',
+		privMsg => $message,
+		privMsgUser => $user,
+	}));
 }
 
 # 0x0097,-1
@@ -695,16 +718,19 @@ sub sendPartyKick {
 # 0x0107,10
 
 # 0x0108,-1,partymessage,2:4
+sub parse_party_chat {
+	my ($self, $args) = @_;
+	$self->parseChat($args);
+}
+
+sub reconstruct_party_chat {
+	my ($self, $args) = @_;
+	$self->reconstructChat($args);
+}
+
 sub sendPartyChat {
 	my ($self, $message) = @_;
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-
-	my ($data, $charName); # Type: Bytes
-	$message = stringToBytes($message); # Type: Bytes
-	$charName = stringToBytes($char->{name}); # Type: Bytes
-
-	$data = pack('v2 Z*',0x0108, length($charName) + length($message) + 8, $charName . " : " . $message);
-	$self->sendToServer($data);
+	$self->sendToServer($self->reconstruct({switch => 'party_chat', message => $message}));
 }
 
 # 0x0109,-1
@@ -1178,16 +1204,19 @@ sub sendCardMerge {
 # 0x017d,7
 
 # 0x017e,-1,guildmessage,2:4
+sub parse_guild_chat {
+	my ($self, $args) = @_;
+	$self->parseChat($args);
+}
+
+sub reconstruct_guild_chat {
+	my ($self, $args) = @_;
+	$self->reconstructChat($args);
+}
+
 sub sendGuildChat {
 	my ($self, $message) = @_;
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-
-	my ($data, $charName); # Type: Bytes
-	$message = stringToBytes($message); # Type: Bytes
-	$charName = stringToBytes($char->{name}); # Type: Bytes
-
-	$data = pack('v2 Z*',0x017E, length($charName) + length($message) + 8, $charName . " : " . $message);
-	$self->sendToServer($data);
+	$self->sendToServer($self->reconstruct({switch => 'guild_chat', message => $message}));
 }
 
 # 0x017f,-1
