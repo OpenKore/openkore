@@ -15,6 +15,7 @@ package Network::Receive::ServerType0;
 use strict;
 use Network::Receive ();
 use base qw(Network::Receive);
+use Socket qw(inet_aton inet_ntoa);
 use Time::HiRes qw(time usleep);
 
 use AI;
@@ -59,7 +60,7 @@ use Utils::Assert;
 use Utils::Exceptions;
 use Utils::Crypton;
 use Translation;
-use I18N qw(bytesToString);
+use I18N qw(bytesToString stringToBytes);
 # from old receive.pm
 
 sub new {
@@ -996,10 +997,36 @@ sub account_payment_info {
 	message  T("-------------------------------------------------------\n"), "info";
 }
 
+sub parse_account_server_info {
+	my ($self, $args) = @_;
+	
+	@{$args->{servers}} = map {
+		my %server;
+		@server{qw(ip port name users display)} = unpack 'a4 v Z20 v2 x2', $_;
+		if ($masterServer && $masterServer->{private}) {
+			$server{ip} = $masterServer->{ip};
+		} else {
+			$server{ip} = inet_ntoa($server{ip});
+		}
+		$server{name} = bytesToString($server{name});
+		\%server
+	} unpack '(a32)*', $args->{serverInfo};
+}
+
+sub reconstruct_account_server_info {
+	my ($self, $args) = @_;
+	
+	$args->{serverInfo} = pack '(a32)*', map { pack(
+		'a4 v Z20 v2 x2',
+		inet_aton($_->{ip}),
+		$_->{port},
+		stringToBytes($_->{name}),
+		@{$_}{qw(users display)},
+	) } @{$args->{servers}};
+}
+
 sub account_server_info {
 	my ($self, $args) = @_;
-	my $msg = $args->{serverInfo};
-	my $msg_size = length($msg);
 
 	$net->setState(2);
 
@@ -1024,16 +1051,7 @@ sub account_server_info {
 		[unpack("V1",$accountID), getHex($accountID), $sex_lut{$accountSex}, unpack("V1",$sessionID), getHex($sessionID),
 		unpack("V1",$sessionID2), getHex($sessionID2)]), 'connection';
 
-	my $num = 0;
-	undef @servers;
-	for (my $i = 0; $i < $msg_size; $i+=32) {
-		$servers[$num]{ip} = makeIP(substr($msg, $i, 4));
-		$servers[$num]{ip} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
-		$servers[$num]{port} = unpack("v1", substr($msg, $i+4, 2));
-		($servers[$num]{name}) = bytesToString(unpack("Z*", substr($msg, $i + 6, 20)));
-		$servers[$num]{users} = unpack("V",substr($msg, $i + 26, 4));
-		$num++;
-	}
+	@servers = @{$args->{servers}};
 
 	message T("--------- Servers ----------\n" .
 			"#   Name                  Users  IP              Port\n"), 'connection';

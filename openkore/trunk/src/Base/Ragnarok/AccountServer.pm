@@ -12,7 +12,6 @@ use Exception::Class qw(
 use Modules 'register';
 use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
-use Socket qw(inet_aton);
 use Utils::Exceptions;
 use Network::Receive::ServerType0; # constants only
 
@@ -70,22 +69,22 @@ sub master_login {
 	);
 	my $result = $self->login(\%session, @{$args}{qw(username password)});
 	if ($result == LOGIN_SUCCESS) {
-		my $output = '';
 		$self->{sessionStore}->add(\%session);
 		$session{state} = 'About to select character';
 
 		# Show list of character servers.
+		my @servers;
 		foreach my $charServer (@{$self->{charServers}}) {
-			my $host = inet_aton($charServer->getHost());
-			$host = inet_aton($client->{BSC_sock}->sockhost) if $host eq "\000\000\000\000";
+			my $ip = $charServer->getHost;
+			$ip = $client->{BSC_sock}->sockhost if $ip =~ /^0\./;
 
-			$output .= pack('a4 v Z20 v C1 x3',
-				$host,				# host
-				$charServer->getPort(),		# port
-				$charServer->getName(),		# character server name
-				$charServer->getPlayersCount(),	# number of players
-				5				# display (5 = "don't show number of players)
-			);
+			push @servers, {
+				ip => $ip,
+				port => $charServer->getPort,
+				name => $charServer->getName,
+				users => $charServer->getPlayersCount,
+				display => 5, # don't show number of players
+			};
 		}
 		
 		$client->send($self->{recvPacketParser}->reconstruct({
@@ -95,7 +94,7 @@ sub master_login {
 			accountID => $session{accountID},
 			sessionID2 => pack('V', $session{sessionID2}),
 			accountSex => $session{sex},
-			serverInfo => $output,
+			servers => \@servers,
 		}));
 		$client->close();
 
