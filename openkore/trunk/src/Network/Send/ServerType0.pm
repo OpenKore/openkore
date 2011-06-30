@@ -67,7 +67,7 @@ sub new {
 		'0204' => ['client_hash'], # TODO
 		'021D' => ['less_effect'], # TODO
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
-		'02B0' => ['master_login', 'V Z24 Z24 C H32 H26 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
+		'02B0' => ['master_login', 'V Z24 a24 C H32 H26 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
 	);
