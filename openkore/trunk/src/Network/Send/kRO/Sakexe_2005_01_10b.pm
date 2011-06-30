@@ -33,7 +33,19 @@ sub version {
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'00F3' => ['public_chat', 'x2 Z*', [qw(message)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	my %handlers = qw(
+		public_chat 00F3
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	$self;
 }
 
 # 0x0072,26,useskilltoid,8:16:22
@@ -134,20 +146,6 @@ sub sendMove {
 	my $msg = pack('v x8 a3', 0x00A7, getCoordString($x = int $x, $y = int $y, 1));
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
-
-# 0x00f3,-1,globalmessage,2:4
-sub sendChat {
-	my ($self, $message) = @_;
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-
-	my ($data, $charName); # Type: Bytes
-	$message = stringToBytes($message); # Type: Bytes
-	$charName = stringToBytes($char->{name});
-
-	$data = pack('v2 Z*', 0x00F3, length($charName) + length($message) + 8, $charName . " : " . $message);
-
-	$self->sendToServer($data);
 }
 
 # 0x00f5,9,takeitem,5
