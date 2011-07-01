@@ -83,7 +83,7 @@ sub nextMessageMightBeAccountID {
 #
 # Extract the message ID (also known as the "packet switch") from the given message.
 sub getMessageID {
-	return uc(unpack("H2", substr($_[0], 1, 1))) . uc(unpack("H2", substr($_[0], 0, 1)));
+	uc join '', unpack '@1H2 @0H2', $_[0]
 }
 
 ##
@@ -155,8 +155,7 @@ sub readNext {
 		if (length($$buffer) >= 4) {
 			$size = unpack("v", substr($$buffer, 2, 2));
 			if (length($$buffer) >= $size) {
-				$result = substr($$buffer, 0, $size);
-				substr($$buffer, 0, $size, '');
+				$result = substr($$buffer, 0, $size, '');
 				$$type = KNOWN_MESSAGE;
 			}
 		}
