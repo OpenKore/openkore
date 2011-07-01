@@ -152,11 +152,7 @@ sub reconstruct {
 	if (my $custom_reconstruct = $self->can('reconstruct_'.$name)) {
 		$self->$custom_reconstruct($args);
 	}
-	my @vars = ();
-	for my $varName (@{$varNames}) {
-		push(@vars, $args->{$varName});
-	}
-	my $packet = pack("H2 H2 $packString", substr($switch, 2, 2), substr($switch, 0, 2), @vars);
+	my $packet = pack("v $packString", hex $switch, $packString && @{$args}{@$varNames});
 	
 	if (exists $rpackets{$switch}) {
 		if ($rpackets{$switch} > 0) {
