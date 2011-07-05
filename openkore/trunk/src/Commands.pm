@@ -245,7 +245,6 @@ sub initCompletions {
 # Commands::run("s");
 sub run {
 	my $input = shift;
-	my $handler;
 	initHandlers() if (!%handlers);
 
 	# Resolve command aliases
@@ -259,6 +258,7 @@ sub run {
 	# Loop through all of the commands...
 	foreach my $command (@commands) {
 		my ($switch, $args) = split(/ +/, $command, 2);
+		my $handler;
 		$handler = $customCommands{$switch}{callback} if ($customCommands{$switch});
 		$handler = $handlers{$switch} if (!$handler && $handlers{$switch});
 
@@ -284,8 +284,6 @@ sub run {
 			Plugins::callHook("Commands::run/pre", \%params);
 			$handler->($switch, $args);
 			Plugins::callHook("Commands::run/post", \%params);
-			# undef the handler here, this is needed to make sure the other commands in the chain (if any) are run properly.
-			undef $handler;
 
 		} else {
 			my %params = ( switch => $switch, input => $command );
