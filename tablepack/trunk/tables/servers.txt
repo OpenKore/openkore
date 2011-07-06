@@ -401,7 +401,6 @@ serverType tRO
 secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
-gameLogin_packet 0x275
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
@@ -416,7 +415,6 @@ serverType tRO
 secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
-gameLogin_packet 0x275
 pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
@@ -432,7 +430,6 @@ serverType tRO
 secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
-gameLogin_packet 0x275
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
