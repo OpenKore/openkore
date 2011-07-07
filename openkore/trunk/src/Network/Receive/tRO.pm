@@ -31,11 +31,6 @@ sub new {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
 
-	my %handlers = qw(
-		game_login 0275
-	);
-	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
 	return $self;
 }
 
