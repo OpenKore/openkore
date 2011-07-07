@@ -515,10 +515,10 @@ addTableFolders pserver/RMS;eA;translated/kRO_english;kRO
 ip kronos.sca-gaming.net
 port 6900
 private 1
-master_version 14
+master_version 20
 version 23
-serverType kRO_RagexeRE_2010_11_16a
+serverType kRO_RagexeRE_2010_07_14a
 serverEncoding Western
-charBlockSize 132
+charBlockSize 112
 chatLangCode 1
-addTableFolders pserver/KoreRO;eA;kRO/RagexeRE_2010_11_16a;translated/kRO_english;kRO
+addTableFolders pserver/KoreRO;eA;kRO/RagexeRE_2010_07_14a;translated/kRO_english;kRO
