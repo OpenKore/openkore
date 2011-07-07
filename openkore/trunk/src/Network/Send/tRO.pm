@@ -22,8 +22,14 @@ use I18N qw(stringToBytes);
 use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
-   my ($class) = @_;
-   return $class->SUPER::new(@_);
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	my %handlers = qw(
+		game_login 0275
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 sub sendMove {

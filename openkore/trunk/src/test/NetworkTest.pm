@@ -82,6 +82,13 @@ sub start {
 					my $instance = eval { $module->create(undef, $serverType) };
 					ok($instance, "create $module") or skip 'failed', 1;
 					
+					for (keys %{$instance->{packet_lut}}) {
+						subtest sprintf('$_{packet_list}{$_{packet_lut}{%s}}', $_) => sub { SKIP: {
+							ok(my $handler = $instance->{packet_list}{$instance->{packet_lut}{$_}}, 'exists') or skip 'failed', 1;
+							is($_, $handler->[0], 'matches');
+						}}
+					}
+					
 					# do not test unsupported STs further
 					next if $serverType =~ /^[1-9]/;
 					
@@ -89,12 +96,12 @@ sub start {
 					next if $serverType =~ /^kRO/;
 					
 					for my $expected (@{$tests{$module}}) {
-						subtest "$expected->{switch}" => sub { SKIP: {
+						subtest "reconstruct and parse $expected->{switch}" => sub { SKIP: {
 							my ($reconstruct_callback, $parse_callback);
 							
-							subtest 'check for reconstruct and parse callbacks' => sub {
-								ok($reconstruct_callback = $instance->can("reconstruct_$expected->{switch}"));
-								ok($parse_callback = $instance->can("parse_$expected->{switch}"));
+							subtest 'callbacks exist' => sub {
+								ok($reconstruct_callback = $instance->can("reconstruct_$expected->{switch}"), 'reconstruct');
+								ok($parse_callback = $instance->can("parse_$expected->{switch}"), 'parse');
 							} or skip 'failed', 1;
 							
 							my $got = Storable::dclone($expected);
@@ -104,7 +111,7 @@ sub start {
 							# there may be additional keys after reconstruct_callback
 							$got = reduce_struct($got, $expected);
 							
-							is_deeply($got, $expected, 'reconstruct and parse test data');
+							is_deeply($got, $expected, 'test data');
 						}}
 					}
 				}
