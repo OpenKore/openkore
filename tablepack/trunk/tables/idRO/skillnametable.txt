@@ -1183,3 +1183,9 @@ SO_DIAMONDDUST#Diamond_Dust#
 SO_WARMER#Warmer#
 SO_VARETYR_SPEAR#Varetyr_Spear#
 SO_ARRULLO#Arrullo#
+
+SO_EL_CONTROL#Control_Spirit#
+SO_SUMMON_AGNI#Call_Agni#
+SO_SUMMON_AQUA#Call_Aqua#
+SO_SUMMON_VENTUS#Call_Ventus#
+SO_SUMMON_TERA#Call_Tera#

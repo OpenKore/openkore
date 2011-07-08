@@ -428,7 +428,7 @@ pvp_y_6-5.rsw#PvP : Ruangan Morroc#
 pvp_y_7-5.rsw#PvP : Ruangan Morroc#
 pvp_y_8-5.rsw#PvP : Ruangan Morroc#
 pvp_2vs2.rsw#PvP : Colosseum#
-//------¿ò¹ß¶ó °ü·Ã Ãß°¡------------------
+//------움발라 관련 추가------------------
 um_dun01.rsw#Toko Tukang Kayu di Dalam Hutan#
 um_dun02.rsw#Jalan Menuju ke Dunia Lain#
 um_in.rsw#Dalam Umbala#
@@ -437,7 +437,7 @@ um_fild02.rsw#Hutan Humga#
 um_fild03.rsw#Rawa-rawa Karara#
 um_fild04.rsw#Hutan Humga#
 umbala.rsw#Umbala, Desa Suku Wootan#
-//--------------´ÏÇÃÇìÀÓ-----------
+//--------------니플헤임-----------
 nif_in.rsw#Dalam Niflheim#
 yggdrasil01.rsw#?Pulau Herbet Camlet (Batang Pohon Yggdrasil)#
 nif_fild02.rsw#Kubah Setan#
@@ -495,7 +495,7 @@ lhz_dun01.rsw#Laboratorium Somatology #
 lhz_dun02.rsw#Laboratorium Somatology#
 lhz_dun03.rsw#Laboratorium Somatology#
 lhz_fild01.rsw#Field Lighthalzen#
-yuno_pre.rsw#Gedung Pemerintahab Schwaltzvalt#
+yuno_pre.rsw#Gedung Pemerintahan Schwaltzvalt#
 y_airport.rsw#Juno Airport#
 lhz_fild03.rsw#Lighthalzen Field#
 lhz_fild02.rsw#Lighthalzen Field (Grim Ripper's Valley)#
@@ -752,3 +752,53 @@ spl_in02.rsw#Splandid#
 2010rwc_06.rsw#Arena 6#
 2010rwc_07.rsw#Arena 7#
 2010rwc_08.rsw#Arena 8#
+
+//renewal
+dicastes01.rsw#El Dicastes, Ibukota Sapha#
+dicastes02.rsw#Hutan Brumbeld Jorhi#
+dic_in01.rsw#Dalam Dicastes#
+dic_fild01.rsw#Kaki Guning Kamidal#
+dic_fild02.rsw#Kaki Guning Kamidal#
+dic_dun01.rsw#Lorong Kamidal#
+dic_dun02.rsw#Aula Skarava#
+job3_gen01.rsw#Laboratorium Generik#
+s_atelier.rsw#Bengkel Bayangan#
+moc_para01.rsw#Dalam Bangunan Grup Paradise di Morroc#
+job3_arch01.rsw#Ruang Tunggu Pelatihan Archbishop#
+job3_arch02.rsw#Kuil Odin#
+job3_arch03.rsw#Ruang Tunggu Pelatihan Archbishop#
+job3_guil01.rsw#Bar Rahasia#
+job3_guil02.rsw#Dalam Gudang Tua#
+job3_guil03.rsw#Sebuah Rumah Terpencil#
+job3_rang01.rsw#Ruang Tunggu Pelatihan Ranger#
+job3_rang02.rsw#Ruang Tes Pelatihan Ranger#
+job3_rune01.rsw#Dalam Rune Knight Templar#
+job3_rune02.rsw#Ruang Tes Pelatihan Rune Knight#
+job3_rune03.rsw#Ruang Tes Pelatihan Rune Knight#
+job3_war01.rsw#Ruang Tes Pelatihan Warlock#
+job3_war02.rsw#Ruang Tes Pelatihan Warlock#
+jupe_core2.rsw#Pusat Juperos#
+
+//Dewata
+dewata.rsw#Pulau Dewata#
+dew_in01.rsw#Dalam Desa Suku Jati#
+dew_fild01.rsw#Dewata Field, Desa Suku Jati#
+dew_dun01.rsw#Gunung Krakatau#
+dew_dun02.rsw#Goa Istana#
+
+//Brasilis
+brasilis.rsw#Kota Brasilis#
+bra_in01.rsw#Dalam Brasilis#
+bra_fild01.rsw#Hutan Brasilis#
+bra_dun01.rsw#Taman Brasilis#
+bra_dun02.rsw#Taman Brasilis#
+
+
+//Manual Update
+
+nameless_i.rsw#Nameless Island Daylight#
+nameless_n.rsw#Nameless Island Night#
+nameless_in.rsw#Dalam Nameless Island#
+abbey01.rsw#Abbey Dungeon#
+abbey02.rsw#Abbey Dungeon#
+abbey03.rsw#Abbey Dungeon#

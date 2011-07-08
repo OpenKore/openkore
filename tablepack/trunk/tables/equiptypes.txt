@@ -13,3 +13,4 @@
 256 Helmet
 512 Eye Mask
 513 Mid-Lower Mask
+768 Up-Mid Helmet
