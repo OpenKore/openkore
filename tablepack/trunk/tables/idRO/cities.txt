@@ -1,0 +1,125 @@
+airplane.rsw#Airship#
+airplane_01.rsw#Airship#
+airport.rsw#Airport#
+alb_ship.rsw#Kapal Alberta#
+alb2trea.rsw# Pulau Alberta#
+alberta.rsw#Alberta#
+alberta_in.rsw#Dalam Alberta#
+alde_alche.rsw#Perkumpulan Alchemist#
+aldeba_in.rsw##Dalam Al De Baran#
+aldebaran.rsw# Al De Baran#
+ama_in02.rsw#Dalam TenguGak#
+ama_in01.rsw#Dalam Amatsu#
+amatsu.rsw#Amatsu, Pulau Tengu#
+arena_room.rsw#Ruang Tunggu#
+auction_01.rsw#Rumah Lelang #
+auction_02.rsw#Rumah Lealng #
+ayo_in02.rsw#Dalam Ayotaya #
+ayo_in01.rsw#Dalam Ayotaya #
+ayothaya.rsw#Ayotaya #
+bat_room.rsw#Ruang Tunggu BOE#
+bra_in01.rsw#Dalam Brasilis#
+cmd_in02.rsw#Dalam Comodo#
+cmd_in01.rsw#Dalam Comodo#
+comodo.rsw#Comodo#
+dew_in01.rsw#Dalam Desa Suku Jati#
+dic_in01.rsw#Dalam Dicastes#
+ein_in01.rsw#Dalam Einbroch#
+einbroch.rsw#Einbroch#
+gef_tower.rsw#Menara Geffen#
+geffen.rsw#Geffen#
+geffen_in.rsw#Dalam Geffen#
+gon_in.rsw#Dalam Gonryun#
+gonryun.rsw#Gonryun, Tempat para Dewa#
+hu_in01.rsw#Dalam Hugel#
+hugel.rsw#Hugel, Kota taman Odin #
+in_orcs01.rsw#Desa Orc#
+#itemmall.rsw#
+izlu2dun.rsw#Pulau Byalan#
+izlude.rsw#Kota Izlude#
+izlude_in.rsw#Dalam Izlude#
+jawaii.rsw#Jawaii, Pulau Bulan Madu#
+jawaii_in.rsw##Di dalam Jawaii#
+job3_guil01.rsw##Bar Rahasia#
+job3_guil02.rsw#Dalam Gudang Tua#
+kh_mansion.rsw#Kiel Hyre's Mansion #
+kh_rossi.rsw#The Rosimier's Mansion #
+kh_school.rsw#Akademi Kiel Hyre #
+kh_vila.rsw#Kiel Hyre's Cottage #
+lhz_airport.rsw#Landasan udara Lighthalzen#
+lhz_cube.rsw#Cube Room#
+lhz_in01.rsw#Rekenber Headquarters#
+lhz_in02.rsw#Dalam Lighthalzen#
+lhz_in03.rsw#Dalam Lighthalzen#
+lhz_que01.rsw##Dalam Lighthalzen#
+lighthalzen.rsw#Lighthalzen, Kota kemakmuran#
+lou_in02.rsw#Di dalam Kastil Naga#
+lou_in01.rsw#Di dalam Kastil Naga#
+louyang.rsw#Kastil Naga#
+#mal_in01.rsw#
+#mal_in02.rsw#
+man_in01.rsw#Manuk#
+mid_campin.rsw#Kemah Ekspedisi#
+moc_castle.rsw#Kastil Morroc#
+moc_para01.rsw#Dalam Bangunan Grup Paradise di Morroc#
+moc_ruins.rsw#Reruntuhan Morroc#
+monk_in.rsw#Dalam St.Abbey#
+morocc.rsw#Kota Morroc#
+morocc_in.rsw#Dalam Morroc#
+moscovia.rsw#Moscovia#
+mosk_in.rsw#Dalam Moscovia#
+nameless_in.rsw#Dalam Nameless Island#
+nif_in.rsw#Dalam Niflheim#
+pay_arche.rsw#Desa Archer#
+#payo1.rsw#
+payon.rsw#Kota Payon#
+payon_in01.rsw#Dalam Payon#
+payon_in02.rsw#Dalam Payon#
+payon_in03.rsw#Dalam Payon#
+prontera.rsw#Prontera#
+prt_are_in.rsw#Ruang Tunggu#
+prt_are01.rsw#ARENA#
+prt_arena01.rsw#ARENA#
+prt_castle.rsw#Kastil Prontera#
+prt_church.rsw#Gereja#
+prt_in.rsw#Dalam Prontera#
+#que_ba.rsw#
+que_bingo.rsw#Bingo Game Room #
+que_dan02.rsw#Rumah Tua di Yuno#
+que_god01.rsw#Quest Map #
+que_god02.rsw#Quest Map #
+que_house_s.rsw#
+que_job01.rsw#Private Pub #
+que_ng.rsw#
+que_rachel.rsw#Inside Temple#
+que_sign01.rsw#
+que_thor.rsw#Thor Volcano Dungeon#
+ra_in01.rsw#Dalam Rachel#
+ra_temin.rsw#Dalam Kuil#
+rachel.rsw#Rachel, Ibukota Negeri Arunafeltz#
+s_atelier.rsw#Bengkel Bayangan#
+sec_in01.rsw#Ruangan dalam Valhalla#
+sec_in02.rsw#Ruangan dalam Valhalla#
+sec_pri.rsw#Ruangan meditasi (Penjara Valhalla)#
+spl_in01.rsw#Pos Komando di Splandid#
+spl_in02.rsw#Splandid#
+sword_1-1.rsw#Ruang Tes Swordman#
+sword_2-1.rsw#Ruang Tes Swordman#
+sword_3-1.rsw#Ruang Tes Swordman#
+thana_step.rsw#Thanatos Tower - Upper Level #
+um_in.rsw#Dalam Umbala#
+umbala.rsw#Umbala, Desa Suku Wootan#
+veins.rsw#Veins, Kota Thor#
+ve_in.rsw#Dalam Veins#
+ve_in02.rsw#Inside Veins#
+xmas.rsw#Lutie,Desa Salju#
+xmas_in.rsw#Dalam Lutie#
+#xmas_x.rsw#
+y_airport.rsw#Juno Airport#
+yuno.rsw#Juno, Ibukota Schwaltsvalt#
+yuno_in03.rsw#Dalam Juno#
+yuno_in02.rsw#Dalam Kastil Sage#
+yuno_in01.rsw#Dalam Juno#
+yuno_in05.rsw#Ruangan pusat jantung Ymir#
+yuno_in04.rsw#Dalam Juno#
+yuno_pre.rsw#Gedung Pemerintahan Schwaltzvalt#
