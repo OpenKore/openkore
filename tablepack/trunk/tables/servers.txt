@@ -405,6 +405,8 @@ patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
 addTableFolders tRO
+charBlockSize 112
+gameguard 1
 
 [Thailand - tRO Free life server (Alice(new), Poring)]
 ip 122.155.11.242
@@ -420,6 +422,8 @@ patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
 addTableFolders tRO
+charBlockSize 112
+gameguard 1
 
 [Thailand - tRO Free life server (Yoyo, Picky)]
 ip 122.155.11.241
@@ -434,6 +438,8 @@ patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
 addTableFolders tRO
+charBlockSize 112
+gameguard 1
 
 ## http://www.rovietnam.com.vn/
 [Vietnam - vRO: SD]
