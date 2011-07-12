@@ -36,12 +36,22 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0085' => ['actor_action', 'x7 a4 x9 C', [qw(targetID type)]],
 		'009F' => ['public_chat', 'x2 Z*', [qw(message)]],
+		'00F3' => ['actor_look_at', 'x2 C x4 C', [qw(head body)]],
+		'00F5' => ['map_login', 'x5 a4 x4 a4 x6 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0113' => ['item_take', 'x5 a4', [qw(ID)]],
+		'0116' => ['sync'], # TODO
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
+		map_login 00F5
+		sync 0116
+		actor_action 0085
 		public_chat 009F
+		actor_look_at 00F3
+		item_take 0113
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
@@ -65,24 +75,6 @@ sub sendStorageAdd {
 }
 
 # 0x0085,23,actionrequest,9:22
-sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
-	my ($self, $monID, $flag) = @_;
-
-	my %args;
-	$args{monID} = $monID;
-	$args{flag} = $flag;
-	# eventually we'll trow this hooking out so...
-	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
-	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	my $msg = pack('v x7 a4 x9 C', 0x0085, $monID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
-}
 
 # 0x0089,9,walktoxy,6
 sub sendMove {
@@ -135,22 +127,8 @@ sub sendSkillUseLoc {
 }
 
 # 0x00f3,10,changedir,4:9
-sub sendLook {
-	my ($self, $body, $head) = @_;
-	my $msg = pack('v x2 C x4 C', 0x00F3, $head, $body);
-	$self->sendToServer($msg);
-	debug "Sent look: $body $head\n", "sendPacket", 2;
-	$char->{look}{head} = $head;
-	$char->{look}{body} = $body;
-}
 
 # 0x00f5,34,wanttoconnection,7:15:25:29:33
-sub sendMapLogin {
-	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
-	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	my $msg = pack('v x5 a4 x4 a4 x6 a4 V C', 0x00F5, $accountID, $charID, $sessionID, getTickCount(), $sex);
-	$self->sendToServer($msg);
-}
 
 # 0x00f7,2,closekafra,0
 sub sendStorageClose {
@@ -159,12 +137,6 @@ sub sendStorageClose {
 }
 
 # 0x0113,11,takeitem,7
-sub sendTake {
-	my ($self, $itemID) = @_;
-	my $msg = pack('v x5 a4', 0x0113, $itemID);
-	$self->sendToServer($msg);
-	debug "Sent take\n", "sendPacket", 2;
-}
 
 # 0x0116,11,ticksend,7
 sub sendSync {

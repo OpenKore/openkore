@@ -15,7 +15,6 @@ package Network::Receive::ServerType0;
 use strict;
 use Network::Receive ();
 use base qw(Network::Receive);
-use Socket qw(inet_aton inet_ntoa);
 use Time::HiRes qw(time usleep);
 
 use AI;
@@ -68,7 +67,7 @@ sub new {
 	my $self = $class->SUPER::new();
 
 	$self->{packet_list} = {
-		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		'0069' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'006A' => ['login_error', 'C Z20', [qw(type unknown)]],
 		'006B' => ['received_characters', 'v C3 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # struct varies a lot, this one is from XKore 2
 		'006C' => ['login_error_game_login_server'],
@@ -995,99 +994,6 @@ sub account_payment_info {
 	message TF("Pay per day  : %s day(s) %s hour(s) and %s minute(s)\n", $D_d, $D_h, $D_m), "info";
 	message TF("Pay per hour : %s day(s) %s hour(s) and %s minute(s)\n", $H_d, $H_h, $H_m), "info";
 	message  T("-------------------------------------------------------\n"), "info";
-}
-
-sub parse_account_server_info {
-	my ($self, $args) = @_;
-	
-	@{$args->{servers}} = map {
-		my %server;
-		@server{qw(ip port name users display)} = unpack 'a4 v Z20 v2 x2', $_;
-		if ($masterServer && $masterServer->{private}) {
-			$server{ip} = $masterServer->{ip};
-		} else {
-			$server{ip} = inet_ntoa($server{ip});
-		}
-		$server{name} = bytesToString($server{name});
-		\%server
-	} unpack '(a32)*', $args->{serverInfo};
-}
-
-sub reconstruct_account_server_info {
-	my ($self, $args) = @_;
-	
-	$args->{serverInfo} = pack '(a32)*', map { pack(
-		'a4 v Z20 v2 x2',
-		inet_aton($_->{ip}),
-		$_->{port},
-		stringToBytes($_->{name}),
-		@{$_}{qw(users display)},
-	) } @{$args->{servers}};
-}
-
-sub account_server_info {
-	my ($self, $args) = @_;
-
-	$net->setState(2);
-
-	undef $conState_tries;
-	$sessionID = $args->{sessionID};
-	$accountID = $args->{accountID};
-	$sessionID2 = $args->{sessionID2};
-	# Account sex should only be 0 (female) or 1 (male)
-	# inRO gives female as 2 but expects 0 back
-	# do modulus of 2 here to fix?
-	# FIXME: we should check exactly what operation the client does to the number given
-	$accountSex = $args->{accountSex} % 2;
-	$accountSex2 = ($config{'sex'} ne "") ? $config{'sex'} : $accountSex;
-
-	message swrite(
-		T("-----------Account Info------------\n" .
-		"Account ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
-		"Sex:        \@<<<<<<<<<<<<<<<<<<<<<\n" .
-		"Session ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
-		"            \@<<<<<<<<< \@<<<<<<<<<<\n" .
-		"-----------------------------------"),
-		[unpack("V1",$accountID), getHex($accountID), $sex_lut{$accountSex}, unpack("V1",$sessionID), getHex($sessionID),
-		unpack("V1",$sessionID2), getHex($sessionID2)]), 'connection';
-
-	@servers = @{$args->{servers}};
-
-	message T("--------- Servers ----------\n" .
-			"#   Name                  Users  IP              Port\n"), 'connection';
-	for (my $num = 0; $num < @servers; $num++) {
-		message(swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
-			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}]
-		), 'connection');
-	}
-	message("-------------------------------\n", 'connection');
-
-	if ($net->version != 1) {
-		message T("Closing connection to Account Server\n"), 'connection';
-		$net->serverDisconnect();
-		if (!$masterServer->{charServer_ip} && $config{server} eq "") {
-			my @serverList;
-			foreach my $server (@servers) {
-				push @serverList, $server->{name};
-			}
-			my $ret = $interface->showMenu(
-					T("Please select your login server."),
-					\@serverList,
-					title => T("Select Login Server"));
-			if ($ret == -1) {
-				quit();
-			} else {
-				main::configModify('server', $ret, 1);
-			}
-
-		} elsif ($masterServer->{charServer_ip}) {
-			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';
-
-		} else {
-			message TF("Server %s selected\n",$config{server}), 'connection';
-		}
-	}
 }
 
 sub actor_action {

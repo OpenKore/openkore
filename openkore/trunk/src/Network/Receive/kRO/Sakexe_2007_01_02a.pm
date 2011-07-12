@@ -77,6 +77,11 @@ sub new {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
 
+	my %handlers = qw(
+		account_id 0283
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
 	return $self;
 }
 

@@ -24,11 +24,13 @@ use base qw(Network::PacketParser);
 use encoding 'utf8';
 use Carp::Assert;
 use Scalar::Util;
+use Socket qw(inet_aton inet_ntoa);
 
 use Globals;
 #use Settings;
 use Log qw(message warning error debug);
 #use FileParsers;
+use I18N qw(bytesToString stringToBytes);
 use Interface;
 use Network;
 use Network::MessageTokenizer;
@@ -197,6 +199,111 @@ sub queryAndSaveLoginPinCode {
 		return 1;
 	} else {
 		return 0;
+	}
+}
+
+# parse/reconstruct callbacks and packet handlers
+
+sub parse_account_server_info {
+	my ($self, $args) = @_;
+	
+	unless ($args->{lastLoginIP} eq "\0"x4) {
+		$args->{lastLoginIP} = inet_ntoa($args->{lastLoginIP});
+	} else {
+		delete $args->{lastLoginIP};
+	}
+	
+	@{$args->{servers}} = map {
+		my %server;
+		@server{qw(ip port name users display)} = unpack 'a4 v Z20 v2 x2', $_;
+		if ($masterServer && $masterServer->{private}) {
+			$server{ip} = $masterServer->{ip};
+		} else {
+			$server{ip} = inet_ntoa($server{ip});
+		}
+		$server{name} = bytesToString($server{name});
+		\%server
+	} unpack '(a32)*', $args->{serverInfo};
+}
+
+sub reconstruct_account_server_info {
+	my ($self, $args) = @_;
+	
+	$args->{lastLoginIP} = inet_aton($args->{lastLoginIP});
+	
+	$args->{serverInfo} = pack '(a32)*', map { pack(
+		'a4 v Z20 v2 x2',
+		inet_aton($_->{ip}),
+		$_->{port},
+		stringToBytes($_->{name}),
+		@{$_}{qw(users display)},
+	) } @{$args->{servers}};
+}
+
+sub account_server_info {
+	my ($self, $args) = @_;
+
+	$net->setState(2);
+	undef $conState_tries;
+	$sessionID = $args->{sessionID};
+	$accountID = $args->{accountID};
+	$sessionID2 = $args->{sessionID2};
+	# Account sex should only be 0 (female) or 1 (male)
+	# inRO gives female as 2 but expects 0 back
+	# do modulus of 2 here to fix?
+	# FIXME: we should check exactly what operation the client does to the number given
+	$accountSex = $args->{accountSex} % 2;
+	$accountSex2 = ($config{'sex'} ne "") ? $config{'sex'} : $accountSex;
+
+	# any servers with lastLoginIP lastLoginTime?
+	# message TF("Last login: %s from %s\n", @{$args}{qw(lastLoginTime lastLoginIP)}) if ...;
+
+	message swrite(
+		T("-----------Account Info------------\n" .
+		"Account ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
+		"Sex:        \@<<<<<<<<<<<<<<<<<<<<<\n" .
+		"Session ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
+		"            \@<<<<<<<<< \@<<<<<<<<<<\n" .
+		"-----------------------------------"),
+		[unpack('V',$accountID), getHex($accountID), $sex_lut{$accountSex}, unpack('V',$sessionID), getHex($sessionID),
+		unpack('V',$sessionID2), getHex($sessionID2)]), 'connection';
+
+	@servers = @{$args->{servers}};
+
+	message T("--------- Servers ----------\n" .
+			"#   Name                  Users  IP              Port\n"), 'connection';
+	for (my $num = 0; $num < @servers; $num++) {
+		message(swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
+			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}]
+		), 'connection');
+	}
+	message("-------------------------------\n", 'connection');
+
+	if ($net->version != 1) {
+		message T("Closing connection to Account Server\n"), 'connection';
+		$net->serverDisconnect();
+		if (!$masterServer->{charServer_ip} && $config{server} eq "") {
+			my @serverList;
+			foreach my $server (@servers) {
+				push @serverList, $server->{name};
+			}
+			my $ret = $interface->showMenu(
+					T("Please select your login server."),
+					\@serverList,
+					title => T("Select Login Server"));
+			if ($ret == -1) {
+				quit();
+			} else {
+				main::configModify('server', $ret, 1);
+			}
+
+		} elsif ($masterServer->{charServer_ip}) {
+			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';
+
+		} else {
+			message TF("Server %s selected\n",$config{server}), 'connection';
+		}
 	}
 }
 
