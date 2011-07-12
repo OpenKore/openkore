@@ -32,7 +32,18 @@ sub version {
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0085' => ['actor_action', 'x2 a4 x6 C', [qw(targetID type)]],
+		'00F3' => ['actor_look_at', 'x4 C x9 C', [qw(head body)]],
+		'00F5' => ['map_login', 'x4 a4 x5 a4 x a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0113' => ['item_take', 'x4 a4', [qw(ID)]],
+		'0116' => ['sync'], # TODO
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	$self;
 }
 
 # 0x0072,13,useitem,5:9
@@ -52,24 +63,6 @@ sub sendStorageAdd {
 }
 
 # 0x0085,15,actionrequest,4:14
-sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
-	my ($self, $monID, $flag) = @_;
-
-	my %args;
-	$args{monID} = $monID;
-	$args{flag} = $flag;
-	# eventually we'll trow this hooking out so...
-	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
-	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	my $msg = pack('v x2 a4 x6 C', 0x0085, $monID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
-}
 
 # 0x008c,108,useskilltoposinfo,6:9:23:26:28
 sub sendSkillUseLocInfo {
@@ -114,30 +107,10 @@ sub sendSkillUseLoc {
 }
 
 # 0x00f3,15,changedir,6:14
-sub sendLook {
-	my ($self, $body, $head) = @_;
-	my $msg = pack('v x4 C x9 C', 0x00F3, $head, $body);
-	$self->sendToServer($msg);
-	debug "Sent look: $body $head\n", "sendPacket", 2;
-	$char->{look}{head} = $head;
-	$char->{look}{body} = $body;
-}
 
 # 0x00f5,29,wanttoconnection,5:14:20:24:28
-sub sendMapLogin {
-	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
-	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	my $msg = pack('v x4 a4 x5 a4 x a4 V C', 0x00F5, $accountID, $charID, $sessionID, getTickCount(), $sex);
-	$self->sendToServer($msg);
-}
 
 # 0x0113,9,takeitem,5
-sub sendTake {
-	my ($self, $itemID) = @_;
-	my $msg = pack('v x4 a4', 0x0113, $itemID);
-	$self->sendToServer($msg);
-	debug "Sent take\n", "sendPacket", 2;
-}
 
 # 0x0116,9,ticksend,5
 sub sendSync {

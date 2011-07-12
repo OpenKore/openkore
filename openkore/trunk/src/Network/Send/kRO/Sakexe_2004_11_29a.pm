@@ -37,11 +37,19 @@ sub new {
 	
 	my %packets = (
 		'0085' => ['public_chat', 'x2 Z*', [qw(message)]],
+		'0089' => ['sync'], # TODO
+		'009F' => ['actor_action', 'x4 a4 x7 C', [qw(targetID type)]],
+		'00A2' => ['item_take', 'x a4', [qw(ID)]],
+		'00F3' => ['actor_look_at', 'x C x3 C', [qw(head body)]],
+		'00F5' => ['map_login', 'x a4 x3 a4 x6 a4 V C', [qw(accountID charID sessionID tick sex)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
+		sync 0089
+		actor_action 009F
 		public_chat 0085
+		item_take 00A2
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
@@ -113,32 +121,8 @@ sub sendStorageClose {
 }
 
 # 0x09f,18,actionrequest,6:17
-sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
-	my ($self, $monID, $flag) = @_;
-
-	my %args;
-	$args{monID} = $monID;
-	$args{flag} = $flag;
-	# eventually we'll trow this hooking out so...
-	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
-	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	my $msg = pack('v x4 a4 x7 C', 0x009F, $monID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
-}
 
 # 0x0a2,7,takeitem,3
-sub sendTake {
-	my ($self, $itemID) = @_;
-	my $msg = pack('v x a4', 0x00A2, $itemID);
-	$self->sendToServer($msg);
-	debug "Sent take\n", "sendPacket", 2;
-}
 
 # 0x0a7,7,walktoxy,4
 sub sendMove {
@@ -149,22 +133,8 @@ sub sendMove {
 }
 
 # 0x0f3,8,changedir,3:7
-sub sendLook {
-	my ($self, $body, $head) = @_;
-	my $msg = pack('v x C x3 C', 0x00F3, $head, $body);
-	$self->sendToServer($msg);
-	debug "Sent look: $body $head\n", "sendPacket", 2;
-	$char->{look}{head} = $head;
-	$char->{look}{body} = $body;
-}
 
 # 0x0f5,29,wanttoconnection,3:10:20:24:28
-sub sendMapLogin {
-	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
-	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	my $msg = pack('v x a4 x3 a4 x6 a4 V C', 0x00F5, $accountID, $charID, $sessionID, getTickCount(), $sex);
-	$self->sendToServer($msg);
-}
 
 # 0x0f7,14,solvecharname,10
 sub sendGetCharacterName {

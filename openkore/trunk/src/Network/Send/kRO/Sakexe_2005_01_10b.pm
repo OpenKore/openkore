@@ -36,12 +36,21 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0085' => ['actor_look_at', 'x10 C x9 C', [qw(head body)]],
+		'0089' => ['sync'], # TODO
+		'009B' => ['map_login', 'x a4 x5 a4 x7 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'00F3' => ['public_chat', 'x2 Z*', [qw(message)]],
+		'00F5' => ['item_take', 'x7 a4', [qw(ID)]],
+		'0190' => ['actor_action', 'x7 a4 x6 C', [qw(targetID type)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
+		map_login 009B
+		actor_action 0190
 		public_chat 00F3
+		actor_look_at 0085
+		item_take 00F5
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
@@ -79,14 +88,6 @@ sub sendSkillUseLocInfo {
 }
 
 # 0x0085,23,changedir,12:22
-sub sendLook {
-	my ($self, $body, $head) = @_;
-	my $msg = pack('v x10 C x9 C', 0x0085, $head, $body);
-	$self->sendToServer($msg);
-	debug "Sent look: $body $head\n", "sendPacket", 2;
-	$char->{look}{head} = $head;
-	$char->{look}{body} = $body;
-}
 
 # 0x0089,9,ticksend,5
 sub sendSync {
@@ -117,12 +118,6 @@ sub sendStorageAdd {
 }
 
 # 0x009b,32,wanttoconnection,3:12:23:27:31
-sub sendMapLogin {
-	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
-	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	my $msg = pack('v x a4 x5 a4 x7 a4 V C', 0x009B, $accountID, $charID, $sessionID, getTickCount(), $sex);
-	$self->sendToServer($msg);
-}
 
 # 0x009f,17,useitem,5:13
 sub sendItemUse {
@@ -149,12 +144,6 @@ sub sendMove {
 }
 
 # 0x00f5,9,takeitem,5
-sub sendTake {
-	my ($self, $itemID) = @_;
-	my $msg = pack('v x7 a4', 0x00F5, $itemID);
-	$self->sendToServer($msg);
-	debug "Sent take\n", "sendPacket", 2;
-}
 
 # 0x00f7,21,movefromkafra,11:17
 sub sendStorageGet {
@@ -181,24 +170,6 @@ sub sendDrop {
 }
 
 # 0x0190,20,actionrequest,9:19
-sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
-	my ($self, $monID, $flag) = @_;
-
-	my %args;
-	$args{monID} = $monID;
-	$args{flag} = $flag;
-	# eventually we'll trow this hooking out so...
-	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
-	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	my $msg = pack('v x7 a4 x6 C', 0x0190, $monID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
-}
 
 # 0x0193,2,closekafra,0
 sub sendStorageClose {

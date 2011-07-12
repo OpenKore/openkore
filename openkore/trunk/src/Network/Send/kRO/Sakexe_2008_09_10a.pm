@@ -30,36 +30,26 @@ sub version {
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	my %handlers = qw(
+		map_login 0436
+		actor_action 0437
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	$self;
 }
 
 # 0x0436,19,wanttoconnection,2:6:10:14:18
-sub sendMapLogin {
-	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
-	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	my $msg = pack('v a4 a4 a4 V C', 0x0436, $accountID, $charID, $sessionID, getTickCount(), $sex);
-	$self->sendToServer($msg);
-}
 
 #0x0437,7,actionrequest,2:6
-sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
-	my ($self, $monID, $flag) = @_;
-
-	my %args;
-	$args{monID} = $monID;
-	$args{flag} = $flag;
-	# eventually we'll trow this hooking out so...
-	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
-	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	my $msg = pack('v a4 C', 0x0437, $monID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
-}
 
 # 0x0438,10,useskilltoid,2:4:6
 sub sendSkillUse {

@@ -29,18 +29,17 @@ sub version {
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0072' => ['map_login', 'x3 a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	$self;
 }
 
 # 0x0072,22,wanttoconnection,5:9:13:17:21
-sub sendMapLogin {
-	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
-	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-
-	my $msg = pack('v x3 a4 a4 a4 V C', 0x0072, $accountID, $charID, $sessionID, getTickCount(), $sex);
-
-	$self->sendToServer($msg);
-}
 
 # 0x0085,8,walktoxy,5
 sub sendMove {

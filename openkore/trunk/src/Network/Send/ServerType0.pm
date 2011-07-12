@@ -24,6 +24,7 @@ use base qw(Network::Send);
 use Plugins;
 use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync);
 use Log qw(debug);
+use Misc qw(stripLanguageCode);
 use Translation qw(T TF);
 use I18N qw(bytesToString stringToBytes);
 use Utils;
@@ -119,23 +120,6 @@ sub sendArrowCraft {
 }
 
 # 0x0089,7,actionrequest,2:6
-sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
-	my ($self, $monID, $flag) = @_;
-
-	my %args;
-	$args{monID} = $monID;
-	$args{flag} = $flag;
-	# eventually we'll trow this hooking out so...
-	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
-	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	$self->sendToServer($self->reconstruct({switch => 'actor_action', targetID => $monID, type => $flag}));
-	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
-}
 
 sub sendAttackStop {
 	my $self = shift;
@@ -254,26 +238,6 @@ sub sendCharDelete {
 	$self->sendToServer($msg);
 }
 
-sub sendCharLogin {
-	my ($self, $char) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'char_login', slot => $char}));
-}
-
-sub parse_public_chat {
-	my ($self, $args) = @_;
-	$self->parseChat($args);
-}
-
-sub reconstruct_public_chat {
-	my ($self, $args) = @_;
-	$self->reconstructChat($args);
-}
-
-sub sendChat {
-	my ($self, $message) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'public_chat', message => $message}));
-}
-
 sub sendChatRoomBestow {
 	my ($self, $name) = @_;
 
@@ -341,12 +305,6 @@ sub sendChatRoomLeave {
 	my $msg = pack("C*", 0xE3, 0x00);
 	$self->sendToServer($msg);
 	debug "Sent Leave Chat Room\n", "sendPacket", 2;
-}
-
-sub sendCloseShop {
-	my $self = shift;
-	$self->sendToServer($self->reconstruct({switch => 'shop_close'}));
-	debug "Shop Closed\n", "sendPacket", 2;
 }
 
 # 0x022d,5,hommenu,4
@@ -498,24 +456,6 @@ sub sendProduceMix {
 	debug "Sent Forge, Produce Item: $ID\n" , 2;
 }
 
-sub reconstruct_game_login {
-	my ($self, $args) = @_;
-	$args->{userLevel} = 0 unless exists $args->{userLevel};
-	($args->{iAccountSID}) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/ unless exists $args->{iAccountSID};
-}
-
-sub sendGameLogin {
-	my ($self, $accountID, $sessionID, $sessionID2, $sex) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'game_login',
-		accountID => $accountID,
-		sessionID => $sessionID,
-		sessionID2 => $sessionID2,
-		accountSex => $sex,
-	}));
-	debug "Sent sendGameLogin\n", "sendPacket", 2;
-}
-
 sub sendGetCharacterName {
 	my ($self, $ID) = @_;
 	my $msg = pack("C*", 0x93, 0x01) . $ID;
@@ -574,33 +514,12 @@ sub sendGuildBreak {
 	debug "Sent Guild Break: $guildName\n", "sendPacket", 2;
 }
 
-sub parse_guild_chat {
-	my ($self, $args) = @_;
-	$self->parseChat($args);
-}
-
-sub reconstruct_guild_chat {
-	my ($self, $args) = @_;
-	$self->reconstructChat($args);
-}
-
-sub sendGuildChat {
-	my ($self, $message) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'guild_chat', message => $message}));
-}
-
 sub sendGuildCreate {
 	my ($self, $name) = @_;
 	# By Default, the second param is our CharID. which indicate the Guild Master Char ID
 	my $msg = pack('v a4 a24', 0x0165, $charID, stringToBytes($name));
 	$self->sendToServer($msg);
 	debug "Sent Guild Create: $name\n", "sendPacket", 2;
-}
-
-sub sendGuildMasterMemberCheck {
-	my ($self, $ID) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'guild_check'}));
-	debug "Sent Guild Master/Member Check.\n", "sendPacket";
 }
 
 sub sendGuildJoin {
@@ -688,15 +607,6 @@ sub sendGuildPositionInfo {
 		debug "Sent GuildPositionInfo: $r_array->[$i]{index}, $r_array->[$i]{permissions}, $r_array->[$i]{index}, $r_array->[$i]{tax}, ".stringToBytes($r_array->[$i]{title})."\n", "d_sendPacket", 2;
 	}
 	$self->sendToServer($msg);
-}
-
-sub sendGuildRequestInfo {
-	my ($self, $page) = @_; # page 0-4
-	$self->sendToServer($self->reconstruct({
-		switch => 'guild_info_request',
-		type => $page,
-	}));
-	debug "Sent Guild Request Page : ".$page."\n", "sendPacket";
 }
 
 sub sendGuildRequestEmblem {
@@ -803,54 +713,6 @@ sub sendItemUse {
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
-sub sendLook {
-	my ($self, $body, $head) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'actor_look_at', body => $body, head => $head}));
-	debug "Sent look: $body $head\n", "sendPacket", 2;
-	$char->{look}{head} = $head;
-	$char->{look}{body} = $body;
-}
-
-sub sendMapLoaded {
-	my $self = shift;
-	$syncSync = pack("V", getTickCount());
-	debug "Sending Map Loaded\n", "sendPacket";
-	$self->sendToServer($self->reconstruct({switch => 'map_loaded'}));
-	Plugins::callHook('packet/sendMapLoaded');
-}
-
-sub sendMapLogin {
-	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
-	my $msg;
-	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	
-	if ($self->{serverType} == 0 || $self->{serverType} == 21 || $self->{serverType} == 22) {
-		$msg = $self->reconstruct({
-			switch => 'map_login',
-			accountID => $accountID,
-			charID => $charID,
-			sessionID => $sessionID,
-			tick => getTickCount,
-			sex => $sex,
-		});
-
-	} else { #oRO and pRO
-		my $key;
-
-		$key = pack("C*", 0xFA, 0x12, 0, 0x50, 0x83);
-		$msg = pack("C*", 0x72, 0, 0, 0, 0) .
-			$accountID .
-			$key .
-			$charID .
-			pack("C*", 0xFF, 0xFF) .
-			$sessionID .
-			pack("V", getTickCount()) .
-			pack("C", $sex);
-	}
-
-	$self->sendToServer($msg);
-}
-
 sub sendMasterCodeRequest {
 	my $self = shift;
 	my $type = shift;
@@ -877,82 +739,6 @@ sub sendMasterCodeRequest {
 		}
 	}
 	$msg .= pack("C*", 0xDB, 0x01);
-	$self->sendToServer($msg);
-}
-
-sub parse_master_login {
-	my ($self, $args) = @_;
-	
-	if (exists $args->{password_rijndael}) {
-		my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
-		my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
-		my $in = pack('a24', $args->{password_rijndael});
-		my $rijndael = Utils::Rijndael->new;
-		$rijndael->MakeKey($key, $chain, 24, 24);
-		$args->{password} = unpack("Z24", $rijndael->Decrypt($in, undef, 24, 0));
-	}
-}
-
-sub reconstruct_master_login {
-	my ($self, $args) = @_;
-	
-	$args->{ip} = '3139322e3136382e322e3400685f4c40' unless exists $args->{ip}; # gibberish
-	$args->{mac} = '31313131313131313131313100' unless exists $args->{mac}; # gibberish
-	$args->{isGravityID} = 0 unless exists $args->{isGravityID};
-	
-	my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
-	my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
-	my $in = pack('a24', $args->{password});
-	my $rijndael = Utils::Rijndael->new;
-	$rijndael->MakeKey($key, $chain, 24, 24);
-	$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 24, 0);
-}
-
-sub sendMasterLogin {
-	my ($self, $username, $password, $master_version, $version) = @_;
-	my $msg;
-
-	if ($self->{serverType} == 4) {
-		# This is used on the RuRO private server.
-		# A lot of packets are different so I gave up,
-		# but I'll keep this code around in case anyone ever needs it.
-
-		# I'm not sure if serverType 4 actually needs this whacko login
-
-		$username = substr($username, 0, 23) if (length($username) > 23);
-		$password = substr($password, 0, 23) if (length($password) > 23);
-
-		my $tmp = pack("C*", 0x0D, 0xF0, 0xAD, 0xBA) x 6;
-		substr($tmp, 0, length($username) + 1, $username . chr(0));
-		$username = $tmp;
-
-		$tmp = (pack("C*", 0x0D, 0xF0, 0xAD, 0xBA) x 3) .
-			pack("C*", 0x00, 0xD0, 0xC2, 0xCF, 0xA2, 0xF9, 0xCA, 0xDF, 0x0E, 0xA6, 0xF1, 0x41);
-		substr($tmp, 0, length($password) + 1, $password . chr(0));
-		$password = $tmp;
-
-		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version) .
-			$username . $password .
-			pack("C*", $master_version);
-
-	} else {
-		if ($masterServer->{masterLogin_packet} eq '') {
-			$self->sendClientMD5Hash() unless $masterServer->{clientHash} eq ''; # this is a hack, just for testing purposes, it should be moved to the login algo later on
-			
-			$msg = $self->reconstruct({
-				switch => 'master_login',
-				version => $version,
-				master_version => $master_version,
-				username => $username,
-				password => $password,
-			});
-		} else {
-			$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version) .
-				pack("a24", $username) .
-				pack("a24", $password) .
-				pack("C*", $master_version);
-		}
-	}
 	$self->sendToServer($msg);
 }
 
@@ -1017,22 +803,6 @@ sub sendOpenShop {
 	}
 
 	$self->sendToServer($msg);
-}
-
-sub parse_party_chat {
-	my ($self, $args) = @_;
-	$self->parseChat($args);
-}
-
-sub reconstruct_party_chat {
-	my ($self, $args) = @_;
-	$self->reconstructChat($args);
-}
-
-sub sendPartyChat {
-	my $self = shift;
-	my $message = shift;
-	$self->sendToServer($self->reconstruct({switch => 'party_chat', message => $message}));
 }
 
 sub sendPartyJoin {
@@ -1183,35 +953,6 @@ sub sendPreLoginCode {
 	debug "Sent pre-login packet $type\n", "sendPacket", 2;
 }
 
-sub parse_private_message {
-	my ($self, $args) = @_;
-	$args->{privMsg} = bytesToString($args->{privMsg});
-	stripLanguageCode(\$args->{privMsg});
-	$args->{privMsgUser} = bytesToString($args->{privMsgUser});
-}
-
-sub reconstruct_private_message {
-	my ($self, $args) = @_;
-	$args->{privMsg} = '|00' . $args->{privMsg} if $config{chatLangCode} && $config{chatLangCode} ne 'none';
-	$args->{privMsg} = stringToBytes($args->{privMsg});
-	$args->{privMsgUser} = stringToBytes($args->{privMsgUser});
-}
-
-sub sendPrivateMsg {
-	my ($self, $user, $message) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'private_message',
-		privMsg => $message,
-		privMsgUser => $user,
-	}));
-}
-
-sub sendQuit {
-	my $self = shift;
-	$self->sendToServer($self->reconstruct({switch => 'quit_request', type => 0}));
-	debug "Sent Quit\n", "sendPacket", 2;
-}
-
 sub sendRaw {
 	my $self = shift;
 	my $raw = shift;
@@ -1253,24 +994,6 @@ sub sendRepairItem {
 	my $msg = pack("C2 v2 V2 C1", 0xFD, 0x01, $args->{index}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
 	$self->sendToServer($msg);
 	debug ("Sent repair item: ".$args->{index}."\n", "sendPacket", 2);
-}
-
-# for old plugin compatibility, use sendRestart instead!
-sub sendRespawn {
-	sendRestart(0);
-}
-
-# for old plugin compatibility, use sendRestart instead!
-sub sendQuitToCharSelect {
-	sendRestart(1);
-}
-
-# 0x00b2,3,restart,2
-# type: 0=respawn ; 1=return to char select
-sub sendRestart {
-	my ($self, $type) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'restart', type => $type}));
-	debug "Sent Restart: " . ($type ? 'Quit To Char Selection' : 'Respawn') . "\n", "sendPacket", 2;
 }
 
 sub sendSell {
@@ -1470,12 +1193,6 @@ sub sendSync {
 
 	$self->sendToServer($msg);
 	debug "Sent Sync\n", "sendPacket", 2;
-}
-
-sub sendTake {
-	my ($self, $itemID) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'item_take', ID => $itemID}));
-	debug "Sent take\n", "sendPacket", 2;
 }
 
 sub sendTalk {
@@ -1839,10 +1556,5 @@ sub sendProgress {
 }
 
 # 0x0204,18
-sub sendClientMD5Hash {
-	my ($self) = @_;
-	my $msg = pack('v H32', 0x0204, $masterServer->{clientHash}); # ex 82d12c914f5ad48fd96fcf7ef4cc492d (kRO sakray != kRO main)
-	$self->sendToServer($msg);
-}
 
 1;

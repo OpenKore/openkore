@@ -85,7 +85,7 @@ sub new {
 	my %packets = (
 		'0069' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], # -1
 		'006A' => ['login_error', 'C Z20', [qw(type block_date)]], # 23
-		'006B' => ['received_characters'], # -1
+		'006B' => ['received_characters', 'v C3 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # struct varies a lot, this one is from XKore 2
 		'006C' => ['connection_refused', 'C', [qw(error)]], # 3
 		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot)]], # packet(108) = switch(2) + charblock(106)
 		'006E' => ['character_creation_failed', 'C' ,[qw(type)]], # 3
@@ -618,84 +618,6 @@ sub account_payment_info {
 	message TF("Pay per day  : %s day(s) %s hour(s) and %s minute(s)\n", $D_d, $D_h, $D_m), "info";
 	message TF("Pay per hour : %s day(s) %s hour(s) and %s minute(s)\n", $H_d, $H_h, $H_m), "info";
 	message  T("-------------------------------------------------------\n"), "info";
-}
-
-# TODO: test optimized unpacking
-sub account_server_info {
-	my ($self, $args) = @_;
-
-	$net->setState(2);
-	undef $conState_tries;
-	$sessionID = $args->{sessionID};
-	$accountID = $args->{accountID};
-	$sessionID2 = $args->{sessionID2};
-	# Account sex should only be 0 (female) or 1 (male)
-	# inRO gives female as 2 but expects 0 back
-	# do modulus of 2 here to fix?
-	# FIXME: we should check exactly what operation the client does to the number given
-	$accountSex = $args->{accountSex} % 2;
-	$accountSex2 = ($config{'sex'} ne "") ? $config{'sex'} : $accountSex;
-
-	message swrite(
-		T("-----------Account Info------------\n" .
-		"Account ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
-		"Sex:        \@<<<<<<<<<<<<<<<<<<<<<\n" .
-		"Session ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
-		"            \@<<<<<<<<< \@<<<<<<<<<<\n" .
-		"-----------------------------------"),
-		[unpack('V',$accountID), getHex($accountID), $sex_lut{$accountSex}, unpack('V',$sessionID), getHex($sessionID),
-		unpack('V',$sessionID2), getHex($sessionID2)]), 'connection';
-
-	my $num = 0;
-	undef @servers;
-	for (my $i = 0; $i < length($args->{serverInfo}); $i+=32) {
-		($servers[$num]{ip},
-		$servers[$num]{port},
-		$servers[$num]{name},
-		$servers[$num]{users},
-		$servers[$num]{state},
-		$servers[$num]{property}) = unpack('a4 v Z20 v3', substr($args->{serverInfo}, $i, 32));
-		
-		$servers[$num]{ip} = ($masterServer && $masterServer->{private}) ? $masterServer->{ip} : makeIP($servers[$num]{ip});
-		$servers[$num]{name} = bytesToString($servers[$num]{name});
-		$num++;
-	}
-
-	message T("--------- Servers ----------\n" .
-			"#   Name                  Users  IP              Port\n"), 'connection';
-	for (my $num = 0; $num < @servers; $num++) {
-		message(swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
-			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}]
-		), 'connection');
-	}
-	message("-------------------------------\n", 'connection');
-
-	if ($net->version != 1) {
-		message T("Closing connection to Account Server\n"), 'connection';
-		$net->serverDisconnect();
-		if (!$masterServer->{charServer_ip} && $config{server} eq "") {
-			my @serverList;
-			foreach my $server (@servers) {
-				push @serverList, $server->{name};
-			}
-			my $ret = $interface->showMenu(
-					T("Please select your login server."),
-					\@serverList,
-					title => T("Select Login Server"));
-			if ($ret == -1) {
-				quit();
-			} else {
-				main::configModify('server', $ret, 1);
-			}
-
-		} elsif ($masterServer->{charServer_ip}) {
-			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';
-
-		} else {
-			message TF("Server %s selected\n",$config{server}), 'connection';
-		}
-	}
 }
 
 # type=01 pick up item
@@ -6626,6 +6548,12 @@ sub switch_character {
 	# User is switching characters in X-Kore
 	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
 	$net->serverDisconnect();
+}
+
+sub reconstruct_system_chat {
+	my ($self, $args) = @_;
+	
+	$args->{domain} = 'ssss' unless exists $args->{domain};
 }
 
 # TODO: known prefixes (chat domains): micc | ssss | blue | tool

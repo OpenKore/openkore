@@ -22,7 +22,14 @@ use base qw(Network::Send::kRO::Sakexe_2004_11_09a);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'021D' => ['less_effect'], # TODO
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	$self;
 }
 
 =pod

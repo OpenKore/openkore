@@ -7,12 +7,30 @@ use Globals qw($char $masterServer);
 use Log qw(debug);
 use Utils qw(getTickCount getHex getCoordString);
 
-# 0x0436,19,wanttoconnection,2:6:10:14:18
-sub sendMasterLogin {
-	my ($self) = @_;
-	local $masterServer->{masterLogin_packet} = '0436';
-	$self->SUPER::sendMasterLogin(@_);
+sub new {
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0360' => ['sync'], # TODO
+		'0361' => ['actor_look_at', 'C2', [qw(head body)]],
+		'0362' => ['item_take', 'a4', [qw(ID)]],
+		'0436' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	my %handlers = qw(
+		master_login 0436
+		sync 0360
+		actor_look_at 0361
+		item_take 0362
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	$self;
 }
+
+# 0x0436,19,wanttoconnection,2:6:10:14:18
 
 # 0x035f,5,walktoxy,2
 sub sendMove {
@@ -32,20 +50,8 @@ sub sendSync {
 }
 
 # 0x0361,5,changedir,2:4
-sub sendLook {
-	my ($self, $body, $head) = @_;
-	$self->sendToServer(pack('v C2', 0x0361, $head, $body));
-	debug "Sent look: $body $head\n", "sendPacket", 2;
-	$char->{look}{head} = $head;
-	$char->{look}{body} = $body;
-}
 
 # 0x0362,6,takeitem,2
-sub sendTake {
-	my ($self, $itemID) = @_;
-	$self->sendToServer(pack('v a4', 0x0362, $itemID));
-	debug "Sent take\n", "sendPacket", 2;
-}
 
 # 0x0363,6,dropitem,2:4
 sub sendDrop {

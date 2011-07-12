@@ -32,18 +32,19 @@ sub version {
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0072' => ['map_login', 'x10 a4 x6 a4 x4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'009B' => ['actor_look_at', 'x3 C x6 C', [qw(head body)]],
+		'009F' => ['item_take', 'x4 a4', [qw(ID)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	$self;
 }
 
 # 0x0072,39,wanttoconnection,12:22:30:34:38
-sub sendMapLogin {
-	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
-	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-
-	my $msg = pack('v x10 a4 x6 a4 x4 a4 V C', 0x0072, $accountID, $charID, $sessionID, getTickCount(), $sex);
-
-	$self->sendToServer($msg);
-}
 
 # 0x0085,9,walktoxy,6
 sub sendMove {
@@ -54,22 +55,8 @@ sub sendMove {
 }
 
 # 0x009b,13,changedir,5:12
-sub sendLook {
-	my ($self, $body, $head) = @_;
-	my $msg = pack('v x3 C x6 C', 0x009B, $head, $body);
-	$self->sendToServer($msg);
-	debug "Sent look: $body $head\n", "sendPacket", 2;
-	$char->{look}{head} = $head;
-	$char->{look}{body} = $body;
-}
 
 # 0x009f,10,takeitem,6
-sub sendTake {
-	my ($self, $itemID) = @_;
-	my $msg = pack('v x4 a4', 0x009F, $itemID);
-	$self->sendToServer($msg);
-	debug "Sent take\n", "sendPacket", 2;
-}
 
 # 0x00a7,17,useitem,6:13
 sub sendItemUse {

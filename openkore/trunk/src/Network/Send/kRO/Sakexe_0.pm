@@ -37,10 +37,30 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
+		'0065' => ['game_login', 'a4 a4 a4 v C', [qw(accountID sessionID sessionID2 userLevel accountSex)]],
+		'0066' => ['char_login', 'C', [qw(slot)]],
+		'0067' => ['char_create'], # TODO
+		'0068' => ['char_delete'], # TODO
+		'0072' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'007D' => ['map_loaded'], # len 2
+		'007E' => ['sync'], # TODO
+		'0089' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
+		'009B' => ['actor_look_at', 'C2', [qw(head body)]],
+		'009F' => ['item_take', 'a4', [qw(ID)]],
+		'00B2' => ['restart', 'C', [qw(type)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
+		'0149' => ['alignment'], # TODO
+		'014D' => ['guild_check'], # len 2
+		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
+		'0187' => ['ban_check'], # TODO
+		'018A' => ['quit_request', 'v', [qw(type)]],
+		'01B2' => ['shop_open'], # TODO
+		'012E' => ['shop_close'], # len 2
+		'0204' => ['client_hash'], # TODO
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -50,33 +70,11 @@ sub new {
 # 0x0064,55
 # NOTE: we support private servers that alter the packetswitch with: $masterServer->{masterLogin_packet}
 # NOTE: we support private server that alter the version number by passing on $version
-sub sendMasterLogin {
-	my ($self, $username, $password, $master_version, $version) = @_;
-	my $msg = pack('v V a24 a24 C', hex($masterServer->{masterLogin_packet}) || 0x0064, $version || version(), $username, $password, $master_version);
-	$self->sendToServer($msg);
-	debug "Sent sendMasterLogin\n", "sendPacket", 2;
-}
 
 # 0x0065,17
 # TODO: move 0273 and 0275 to appropriate Sakexe version
-sub sendGameLogin {
-	my ($self, $accountID, $sessionID, $sessionID2, $sex) = @_;
-	my $msg = pack("v a4 a4 a4 x2 C", hex($masterServer->{gameLogin_packet}) || 0x0065, $accountID, $sessionID, $sessionID2, $sex);
-	if (hex($masterServer->{gameLogin_packet}) == 0x0273 || hex($masterServer->{gameLogin_packet}) == 0x0275) {
-		my ($serv) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/;
-		$msg .= pack("x16 C x3", $serv);
-	}
-	$self->sendToServer($msg);
-	debug "Sent sendGameLogin\n", "sendPacket", 2;
-}
 
 # 0x0066,6
-sub sendCharLogin {
-	my ($self, $char) = @_;
-	my $msg = pack('v C', 0x0066, $char);
-	$self->sendToServer($msg);
-	debug "Sent sendCharLogin\n", "sendPacket", 2;
-}
 
 # 0x0067,37
 sub sendCharCreate {
@@ -107,13 +105,6 @@ sub sendCharDelete {
 # 0x0071,28
 
 # 0x0072,19,wanttoconnection,2:6:10:14:18
-sub sendMapLogin {
-	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
-	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	my $msg = pack('v a4 a4 a4 V C', 0x0072, $accountID, $charID, $sessionID, getTickCount(), $sex);
-	$self->sendToServer($msg);
-	debug "Sent sendMapLogin\n", "sendPacket", 2;
-}
 
 # 0x0073,11
 # 0x0074,3
@@ -127,11 +118,6 @@ sub sendMapLogin {
 # 0x007c,41
 
 # 0x007d,2,loadendack,0
-sub sendMapLoaded {
-	$_[0]->sendToServer(pack('v', 0x007D));
-	debug "Sending Map Loaded\n", "sendPacket";
-	Plugins::callHook('packet/sendMapLoaded');
-}
 
 # 0x007e,6,ticksend,2
 sub sendSync {
@@ -171,43 +157,11 @@ sub sendMove {
 # 0x0088,10
 
 # 0x0089,7,actionrequest,2:6
-sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
-	my ($self, $monID, $flag) = @_;
-
-	my %args;
-	$args{monID} = $monID;
-	$args{flag} = $flag;
-	# eventually we'll trow this hooking out so...
-	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
-	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	my $msg = pack('v a4 C', 0x0089, $monID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
-}
 
 # 0x008a,29
 # 0x008b,2
 
 # 0x008c,-1,globalmessage,2:4
-sub parse_public_chat {
-	my ($self, $args) = @_;
-	$self->parseChat($args);
-}
-
-sub reconstruct_public_chat {
-	my ($self, $args) = @_;
-	$self->reconstructChat($args);
-}
-
-sub sendChat {
-	my ($self, $message) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'public_chat', message => $message}));
-}
 
 # 0x008d,-1
 # 0x008e,-1
@@ -236,28 +190,6 @@ sub sendGetPlayerInfo {
 # 0x0095,30
 
 # 0x0096,-1,wis,2:4:28
-sub parse_private_message {
-	my ($self, $args) = @_;
-	$args->{privMsg} = bytesToString($args->{privMsg});
-	stripLanguageCode(\$args->{privMsg});
-	$args->{privMsgUser} = bytesToString($args->{privMsgUser});
-}
-
-sub reconstruct_private_message {
-	my ($self, $args) = @_;
-	$args->{privMsg} = '|00' . $args->{privMsg} if $config{chatLangCode} && $config{chatLangCode} ne 'none';
-	$args->{privMsg} = stringToBytes($args->{privMsg});
-	$args->{privMsgUser} = stringToBytes($args->{privMsgUser});
-}
-
-sub sendPrivateMsg {
-	my ($self, $user, $message) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'private_message',
-		privMsg => $message,
-		privMsgUser => $user,
-	}));
-}
 
 # 0x0097,-1
 # 0x0098,3
@@ -274,26 +206,12 @@ sub sendGMMessage {
 # 0x009a,-1
 
 # 0x009b,5,changedir,2:4
-sub sendLook {
-	my ($self, $body, $head) = @_;
-	my $msg = pack('v C2', 0x009B, $head, $body);
-	$self->sendToServer($msg);
-	debug "Sent look: $body $head\n", "sendPacket", 2;
-	$char->{look}{head} = $head;
-	$char->{look}{body} = $body;
-}
 
 # 0x009c,9
 # 0x009d,17
 # 0x009e,17
 
 # 0x009f,6,takeitem,2
-sub sendTake {
-	my ($self, $itemID) = @_;
-	my $msg = pack('v a4', 0x009F, $itemID);
-	$self->sendToServer($msg);
-	debug "Sent take\n", "sendPacket", 2;
-}
 
 # 0x00a0,23
 # 0x00a1,6
@@ -349,11 +267,6 @@ sub sendUnequip {
 
 # 0x00b2,3,restart,2
 # type: 0=respawn ; 1=return to char select
-sub sendRestart {
-	my ($self, $type) = @_;
-	$self->sendToServer(pack('v C', 0x00B2, $type));
-	debug "Sent Restart: " . ($type ? 'Quit To Char Selection' : 'Respawn') . "\n", "sendPacket", 2;
-}
 
 # 0x00b3,3
 # 0x00b4,-1
@@ -718,20 +631,6 @@ sub sendPartyKick {
 # 0x0107,10
 
 # 0x0108,-1,partymessage,2:4
-sub parse_party_chat {
-	my ($self, $args) = @_;
-	$self->parseChat($args);
-}
-
-sub reconstruct_party_chat {
-	my ($self, $args) = @_;
-	$self->reconstructChat($args);
-}
-
-sub sendPartyChat {
-	my ($self, $message) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'party_chat', message => $message}));
-}
 
 # 0x0109,-1
 # 0x010a,4
@@ -860,10 +759,6 @@ sub sendCompanionRelease {
 # 0x012d,4
 
 # 0x012e,2,closevending,0
-sub sendCloseShop {
-	$_[0]->sendToServer(pack('v', 0x012E));
-	debug "Shop Closed\n", "sendPacket", 2;
-}
 
 # 0x012f,-1
 # TODO
@@ -974,20 +869,10 @@ sub sendAlignment {
 # 0x014c,-1
 
 # 0x014d,2,guildcheckmaster,0
-sub sendGuildMasterMemberCheck {
-	$_[0]->sendToServer(pack('v', 0x014D));
-	debug "Sent Guild Master/Member Check.\n", "sendPacket";
-}
 
 # 0x014e,6
 
 # 0x014f,6,guildrequestinfo,2
-sub sendGuildRequestInfo {
-	my ($self, $page) = @_; # page 0-4
-	my $msg = pack('v V', 0x014f, $page);
-	$self->sendToServer($msg);
-	debug "Sent Guild Request Page : ".$page."\n", "sendPacket";
-}
 
 # 0x0150,110
 
@@ -1204,20 +1089,6 @@ sub sendCardMerge {
 # 0x017d,7
 
 # 0x017e,-1,guildmessage,2:4
-sub parse_guild_chat {
-	my ($self, $args) = @_;
-	$self->parseChat($args);
-}
-
-sub reconstruct_guild_chat {
-	my ($self, $args) = @_;
-	$self->reconstructChat($args);
-}
-
-sub sendGuildChat {
-	my ($self, $message) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'guild_chat', message => $message}));
-}
 
 # 0x017f,-1
 
@@ -1238,10 +1109,6 @@ sub sendGuildChat {
 # 0x0189,4
 
 # 0x018a,4,quitgame,0
-sub sendQuit {
-	$_[0]->sendToServer(pack('v x2', 0x018A));
-	debug "Sent Quit\n", "sendPacket", 2;
-}
 
 # 0x018b,4
 # 0x018c,29
@@ -1627,7 +1494,6 @@ sub sendFriendRemove {
 }
 
 # 0x0204,18
-*sendClientMD5Hash = *Network::Send::ServerType0::sendClientMD5Hash;
 
 # 0x0205,26
 # 0x0206,11
