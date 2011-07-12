@@ -44,7 +44,7 @@ sub DESTROY {
 sub onInfo {
 	my ($self) = @_;
 	
-	if ($cart{exists} or $char && $char->{statuses} && scalar grep /^Level \d Cart$/, keys %{$char->{statuses}}) {
+	if ($char->cartActive) {
 		$self->setStat ('count', $cart{items}, $cart{items_max});
 		$self->setStat ('weight', $cart{weight}, $cart{weight_max});
 	} else {
