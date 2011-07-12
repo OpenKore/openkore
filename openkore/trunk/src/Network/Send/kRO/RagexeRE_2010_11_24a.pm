@@ -7,6 +7,8 @@ use Globals qw($char $masterServer);
 use Log qw(debug);
 use Utils qw(getTickCount getHex getCoordString);
 
+sub version { 26 }
+
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
@@ -15,12 +17,12 @@ sub new {
 		'0360' => ['sync'], # TODO
 		'0361' => ['actor_look_at', 'C2', [qw(head body)]],
 		'0362' => ['item_take', 'a4', [qw(ID)]],
-		'0436' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
+		'0436' => ['map_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
-		master_login 0436
+		map_login 0436
 		sync 0360
 		actor_look_at 0361
 		item_take 0362
