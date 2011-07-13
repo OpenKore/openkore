@@ -441,39 +441,20 @@ addTableFolders tRO
 charBlockSize 112
 gameguard 1
 
-## http://www.rovietnam.com.vn/
-[Vietnam - vRO: SD]
-ip 222.255.122.36
+## http://ro.tahadi.com/
+[aRO - Middle East]
+ip 83.138.187.152
 port 6900
-master_version 26
+master_version 35
 version 1
-serverType 12
+serverType aRO
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Western
-paddedPackets 1
-paddedPackets_attackID 0x0190
-paddedPackets_skillUseID 0x0085
-addTableFolders Old
-
-## http://www.rovietnam.com.vn/
-[Vietnam - vRO: Thu Thach]
-ip 222.255.122.20
-port 6900
-master_version 32
-version 1
-serverType 13
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverEncoding Western
-paddedPackets 1
-paddedPackets_attackID 0x0193
-paddedPackets_skillUseID 0x0089
-addTableFolders Old
+gameGuard 1
+addTableFolders aRO;Old
 
 ####################
 # Private RO Servers
