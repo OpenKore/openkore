@@ -64,6 +64,7 @@ sub start {
 		20
 		21
 		22
+		aRO
 		bRO
 		bRO_Thor
 		fRO
