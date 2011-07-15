@@ -36,12 +36,16 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'007E' => undef,
 		'0085' => ['actor_action', 'x7 a4 x9 C', [qw(targetID type)]],
+		'0094' => undef,
 		'009F' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'00F3' => ['actor_look_at', 'x2 C x4 C', [qw(head body)]],
 		'00F5' => ['map_login', 'x5 a4 x4 a4 x6 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'00F7' => undef,
 		'0113' => ['item_take', 'x5 a4', [qw(ID)]],
 		'0116' => ['sync'], # TODO
+		'0193' => undef,
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	

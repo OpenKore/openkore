@@ -14,6 +14,9 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0085' => undef,
+		'0089' => undef,
+		'00F5' => undef,
 		'0360' => ['sync'], # TODO
 		'0361' => ['actor_look_at', 'C2', [qw(head body)]],
 		'0362' => ['item_take', 'a4', [qw(ID)]],
@@ -22,7 +25,6 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
-		map_login 0436
 		sync 0360
 		actor_look_at 0361
 		item_take 0362
