@@ -39,6 +39,8 @@ sub new {
 		'0085' => ['actor_look_at', 'x10 C x9 C', [qw(head body)]],
 		'0089' => ['sync'], # TODO
 		'009B' => ['map_login', 'x a4 x5 a4 x7 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'009F' => undef,
+		'00A2' => undef,
 		'00F3' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'00F5' => ['item_take', 'x7 a4', [qw(ID)]],
 		'0190' => ['actor_action', 'x7 a4 x6 C', [qw(targetID type)]],

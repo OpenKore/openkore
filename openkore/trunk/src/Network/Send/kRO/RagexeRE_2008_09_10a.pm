@@ -32,6 +32,8 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'009B' => undef,
+		'0190' => undef,
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
 	);

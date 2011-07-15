@@ -36,8 +36,12 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0072' => undef,
 		'007E' => ['map_login', 'x10 a4 x2 a4 x2 a4 x2 V C', [qw(accountID charID sessionID tick sex)]],
+		'0089' => undef,
+		'008C' => undef,
 		'0094' => ['item_take', 'x4 a4', [qw(ID)]],
+		'009B' => undef,
 		'009F' => ['actor_look_at', 'x3 C x6 C', [qw(head body)]],
 		'00F3' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'00F7' => ['sync'], # TODO
@@ -45,6 +49,8 @@ sub new {
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
+	# since there is only one available switch alternative per kRO ST,
+	# this setup for $self->{packet_lut} is not really required
 	my %handlers = qw(
 		map_login 007E
 		sync 00F7

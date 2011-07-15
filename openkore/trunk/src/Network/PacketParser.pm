@@ -132,7 +132,7 @@ sub reconstruct {
 		unless (exists $self->{packet_lut}{$switch}) {
 			# alternative (if any) isn't set yet, pick the first available
 			for (sort {$a cmp $b} keys %{$self->{packet_list}}) {
-				if ($self->{packet_list}{$_}[0] eq $switch) {
+				if ($self->{packet_list}{$_} && $self->{packet_list}{$_}[0] eq $switch) {
 					$self->{packet_lut}{$switch} = $_;
 					last;
 				}
@@ -142,7 +142,7 @@ sub reconstruct {
 		$switch = $self->{packet_lut}{$switch} || $switch;
 	}
 
-	unless (exists $self->{packet_list}{$switch}) {
+	unless ($self->{packet_list}{$switch}) {
 		die "Can't reconstruct unknown packet: $switch";
 	}
 

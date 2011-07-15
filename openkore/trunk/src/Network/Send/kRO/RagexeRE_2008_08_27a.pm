@@ -40,6 +40,8 @@ sub new {
 		'009B' => ['map_login', 'x5 a4 x4 a4 x6 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'00F5' => ['item_take', 'x5 a4', [qw(ID)]],
 		'0190' => ['actor_action', 'x7 a4 x9 C', [qw(targetID type)]],
+		'0436' => undef,
+		'0437' => undef,
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
