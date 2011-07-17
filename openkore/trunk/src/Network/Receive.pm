@@ -207,7 +207,7 @@ sub queryAndSaveLoginPinCode {
 sub parse_account_server_info {
 	my ($self, $args) = @_;
 	
-	unless ($args->{lastLoginIP} eq "\0"x4) {
+	if (length $args->{lastLoginIP} == 4 && $args->{lastLoginIP} ne "\0"x4) {
 		$args->{lastLoginIP} = inet_ntoa($args->{lastLoginIP});
 	} else {
 		delete $args->{lastLoginIP};
