@@ -33,6 +33,7 @@ use I18N qw(stringToBytes);
 use Utils qw(existsInList getHex getTickCount);
 use Misc;
 use Log qw(debug);
+use I18N qw(bytesToString stringToBytes);
 
 sub import {
 	# This code is for backward compatibility reasons, so that you can still
