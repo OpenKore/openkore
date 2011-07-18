@@ -29,11 +29,10 @@ use encoding 'utf8';
 use Carp::Assert;
 
 use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync);
-use I18N qw(stringToBytes);
+use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount);
 use Misc;
 use Log qw(debug);
-use I18N qw(bytesToString stringToBytes);
 
 sub import {
 	# This code is for backward compatibility reasons, so that you can still
@@ -461,7 +460,7 @@ sub sendChat {
 sub parse_private_message {
 	my ($self, $args) = @_;
 	$args->{privMsg} = bytesToString($args->{privMsg});
-	stripLanguageCode(\$args->{privMsg});
+	Misc::stripLanguageCode(\$args->{privMsg});
 	$args->{privMsgUser} = bytesToString($args->{privMsgUser});
 }
 
