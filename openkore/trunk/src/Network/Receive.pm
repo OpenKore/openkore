@@ -202,7 +202,34 @@ sub queryAndSaveLoginPinCode {
 	}
 }
 
-# parse/reconstruct callbacks and packet handlers
+### Packet inner struct handlers
+
+# The block size in the received_characters packet varies from server to server.
+# This method may be overrided in other ServerType handlers to return
+# the correct block size.
+sub received_characters_blockSize {
+	if ($masterServer && $masterServer->{charBlockSize}) {
+		return $masterServer->{charBlockSize};
+	} else {
+		return 106;
+	}
+}
+
+# The length must exactly match charBlockSize, as it's used to construct packets.
+sub received_characters_unpackString {
+	for ($masterServer && $masterServer->{charBlockSize}) {
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4 x4' if $_ == 136;
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4' if $_ == 132;
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16' if $_ == 128;
+		return 'a4 V9 v V2 v14 Z24 C6 v2 x4' if $_ == 116; # TODO: (missing 2 last bytes)
+		return 'a4 V9 v V2 v14 Z24 C6 v2' if $_ == 112;
+		return 'a4 V9 v17 Z24 C6 v2' if $_ == 108;
+		return 'a4 V9 v17 Z24 C6 v' if $_ == 106 || !$_;
+		die "Unknown charBlockSize: $_";
+	}
+}
+
+### Parse/reconstruct callbacks and packet handlers
 
 sub parse_account_server_info {
 	my ($self, $args) = @_;

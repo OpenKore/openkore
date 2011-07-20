@@ -842,37 +842,6 @@ use constant {
 #### Packet inner struct handlers ####
 ######################################
 
-# The block size in the received_characters packet varies from server to server.
-# This method may be overrided in other ServerType handlers to return
-# the correct block size.
-sub received_characters_blockSize {
-	if ($masterServer && $masterServer->{charBlockSize}) {
-		return $masterServer->{charBlockSize};
-	} else {
-		return 106;
-	}
-}
-
-sub received_characters_unpackString {
-	# the length must exactly match charBlockSize, as it's used to construct packets
-	
-	if ($masterServer && $masterServer->{charBlockSize} == 136) {
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4 x4'; # 136
-	} elsif ($masterServer && $masterServer->{charBlockSize} == 132) {
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4'; # 132
-	} elsif ($masterServer && $masterServer->{charBlockSize} == 128) {
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16'; # 128
-	} elsif ($masterServer && $masterServer->{charBlockSize} == 116) {
-		return 'a4 V9 v V2 v14 Z24 C6 v2 x4'; # 116 TODO: (missing 2 last bytes)
-	} elsif ($masterServer && $masterServer->{charBlockSize} == 112) {
-		return 'a4 V9 v V2 v14 Z24 C6 v2'; # 112
-	} elsif ($masterServer && $masterServer->{charBlockSize} == 108) {
-		return 'a4 V9 v17 Z24 C6 v2'; # 108
-	} else {
-		return 'a4 V9 v17 Z24 C6 v'; # 106
-	}
-}
-
 # Override this function if you need to.
 sub items_nonstackable {
 	my ($self, $args) = @_;
@@ -5095,7 +5064,7 @@ sub received_characters {
 	my $blockSize = $self->received_characters_blockSize();
 	for (my $i = $args->{RAW_MSG_SIZE} % $blockSize; $i < $args->{RAW_MSG_SIZE}; $i += $blockSize) {
 		#exp display bugfix - chobit andy 20030129
-        my $unpack_string = received_characters_unpackString();
+		my $unpack_string = $self->received_characters_unpackString;
 		my ($cID,$exp,$zeny,$jobExp,$jobLevel, $opt1, $opt2, $option, $stance, $manner, $statpt,
 			$hp,$maxHp,$sp,$maxSp, $walkspeed, $jobId,$hairstyle, $weapon, $level, $skillpt,$headLow, $shield,$headTop,$headMid,$hairColor,
 			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename) =
