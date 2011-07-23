@@ -22,10 +22,10 @@ sub new {
 		unless ($object->{identified}) {
 			$canActivate = T('Identify') if defined (my $identifyIndex = binFind(\@identifyID, $object->{invIndex}));
 			$subActivate = sub { Commands::run("identify $identifyIndex") };
-		} elsif ($self->isUsable ($object)) {
+		} elsif ($object->usable) {
 			$canActivate = T('Use 1 on Self');
 			$subActivate = sub { $object->use };
-		} elsif ($self->isEquip ($object)) {
+		} elsif ($object->equippable) {
 			unless ($object->{equipped}) {
 				$canActivate = T('Equip') if $object->{identified};
 				$subActivate = sub { $object->equip };
@@ -36,7 +36,7 @@ sub new {
 				$canStorage = 0;
 				$canDrop = 0;
 			}
-		} elsif ($self->isCard ($object)) {
+		} elsif ($object->mergeable) {
 			$canActivate = T('Request Merge List');
 			$subActivate = sub { Commands::run("card use $object->{invIndex}") };
 		}
@@ -64,8 +64,8 @@ sub new {
 		push @{$self->{head}}, {title => T('Drop 1'), command => "drop $invIndex 1"} if $canDrop;
 		
 	} else { # multiple items selected
-		if (List::MoreUtils::all { $self->isEquip($_) } @$objects) {
-			if (my @items = grep { $self->isEquip($_) && !$_->{equipped} } @$objects) {
+		if (List::MoreUtils::all { $_->equippable } @$objects) {
+			if (my @items = grep { $_->equippable && !$_->{equipped} } @$objects) {
 				push @{$self->{head}}, {
 					title => TF('Equip %s', $self->listTitle(@items)),
 					callback => sub { $_->equip for @items },

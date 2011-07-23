@@ -765,7 +765,7 @@ sub cmdCard {
 		my $msg;
 		$msg .= T("-----------Card List-----------\n");
 		foreach my $item (@{$char->inventory->getItems()}) {
-			if ($item->{type} == 6) {
+			if ($item->mergeable) {
 				$msg .= "$item->{invIndex} $item->{name} x $item->{amount}\n";
 			}
 		}
@@ -2776,18 +2776,9 @@ sub cmdInventory {
 		my ($i, $display, $index, $sell);
 
 		foreach my $item (@{$char->inventory->getItems()}) {
-			# TODO: move item type detection to Actor::Item?
-			if (($item->{type} == 3 ||
-			     $item->{type} == 6 ||
-			     $item->{type} == 10 ||
-			     $item->{type} == 16 ||
-				 $item->{type} == 17 ||
-			     $item->{type} == 19) && !$item->{equipped}) {
-				push @non_useable, $item->{invIndex};
-			} elsif ($item->{type} <= 2 ||
-					 $item->{type} == 18) {
+			if ($item->usable) {
 				push @useable, $item->{invIndex};
-			} else {
+			} elsif ($item->equippable) {
 				my %eqp;
 				$eqp{index} = $item->{index};
 				$eqp{binID} = $item->{invIndex};
@@ -2802,6 +2793,8 @@ sub cmdInventory {
 				} else {
 					push @uequipment, \%eqp;
 				}
+			} else {
+				push @non_useable, $item->{invIndex};
 			}
 		}
 
@@ -4271,22 +4264,17 @@ sub cmdStorage_list {
 	for (my $i = 0; $i < @storageID; $i++) {
 		next if ($storageID[$i] eq "");
 		my $item = $storage{$storageID[$i]};
-		if ($item->{type} == 3 ||
-		    $item->{type} == 6 ||
-		    $item->{type} == 10 ||
-		    $item->{type} == 16 ||
-	        $item->{type} == 17 ||
-			$item->{type} == 19) {
-			push @non_useable, $item;
-		} elsif ($item->{type} <= 2) {
+		if ($item->usable) {
 			push @useable, $item;
-		} else {
+		} elsif ($item->equippable) {
 			my %eqp;
 			$eqp{binID} = $i;
 			$eqp{name} = $item->{name};
 			$eqp{type} = $itemTypes_lut{$item->{type}};
 			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
 			push @equipment, \%eqp;
+		} else {
+			push @non_useable, $item;
 		}
 	}
 	
@@ -4780,7 +4768,8 @@ sub cmdUseItemOnMonster {
 	} elsif (!$char->inventory->get($arg1)) {
 		error TF("Error in function 'im' (Use Item on Monster)\n" .
 			"Inventory Item %s does not exist.\n", $arg1);
-	} elsif ($char->inventory->get($arg1)->{type} > 2) {
+	} elsif (!$char->inventory->get($arg1)->usable) {
+		# TODO: $item->use already checks whether item is usable
 		error TF("Error in function 'im' (Use Item on Monster)\n" .
 			"Inventory Item %s is not of type Usable.\n", $arg1);
 	} elsif ($monstersID[$arg2] eq "") {
@@ -4805,7 +4794,7 @@ sub cmdUseItemOnPlayer {
 	} elsif (!$char->inventory->get($arg1)) {
 		error TF("Error in function 'ip' (Use Item on Player)\n" .
 			"Inventory Item %s does not exist.\n", $arg1);
-	} elsif ($char->inventory->get($arg1)->{type} > 2) {
+	} elsif (!$char->inventory->get($arg1)->usable) {
 		error TF("Error in function 'ip' (Use Item on Player)\n" .
 			"Inventory Item %s is not of type Usable.\n", $arg1);
 	} elsif ($playersID[$arg2] eq "") {
@@ -4833,7 +4822,7 @@ sub cmdUseItemOnSelf {
 			"Inventory Item %s does not exist.\n", $args);
 		return;
 	}
-	if ($item->{type} > 2 && $item->{type} != 18) {
+	if (!$item->usable) {
 		error TF("Error in function 'is' (Use Item on Yourself)\n" .
 			"Inventory Item %s is not of type Usable.\n", $item);
 		return;
