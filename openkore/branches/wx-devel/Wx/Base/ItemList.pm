@@ -10,8 +10,6 @@ use Misc qw/items_control pickupitems/;
 use Translation qw/T TF/;
 use Utils qw/formatNumber/;
 
-use Interface::Wx::Utils qw(isUsable isEquip isCard);
-
 sub new {
 	my ($class, $parent, $id) = (shift, shift, shift);
 	
@@ -64,9 +62,9 @@ sub setItem {
 			$item->{price} ? formatNumber($item->{price}) : '',
 		], (
 			!$item->{identified} ? $self->{color}{notIdent}
-			: isUsable($item) ? $self->{color}{usable}
-			: isEquip($item) ? $self->{color}{equip}
-			: isCard($item) ? $self->{color}{card}
+			: $item->usable ? $self->{color}{usable}
+			: $item->equippable ? $self->{color}{equip}
+			: $item->mergeable ? $self->{color}{card}
 			: $self->{color}{other}
 		));
 	} else {

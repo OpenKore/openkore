@@ -9,7 +9,6 @@ use Globals qw/$char %config %itemsDesc_lut %shop %arrowcraft_items %items_contr
 use Misc qw/items_control pickupitems/;
 use Translation qw/T TF/;
 use Utils qw/formatNumber/;
-use Interface::Wx::Utils qw(isUsable isEquip isCard);
 
 sub new {
 	my ($class, $parent, $objects) = @_;
@@ -27,7 +26,7 @@ sub new {
 		push @tail, {};
 		
 		# TODO: more grained item type check for each option
-		if (isEquip($object)) {
+		if ($object->equippable) {
 			my @submenu;
 			for (
 				['autoSwitch_default_rightHand', T('Default for Right Hand')],

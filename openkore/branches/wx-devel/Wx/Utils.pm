@@ -21,18 +21,12 @@ use Translation qw(T TF);
 our @EXPORT = qw(
 	loadDialog loadPNG setupDialog dataFile
 	startMainLoop stopMainLoop
-	isUsable isEquip isCard
 );
 our %files;
 our @searchPath;
 our $pngAdded;
 
 Wx::InitAllImageHandlers;
-
-# TODO: move item type detection to Actor::Item?
-sub isUsable { $_[-1]{type} <= 2 }
-sub isEquip { (0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1) [$_[-1]{type}] }
-sub isCard { $_[-1]{type} == 6 }
 
 # Wx MainLoop
 

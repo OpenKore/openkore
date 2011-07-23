@@ -345,6 +345,26 @@ sub nameString {
 }
 
 ##
+# boolean $ActorItem->usable()
+#
+# Returns true if item can be used.
+
+##
+# boolean $ActorItem->equippable()
+#
+# Returns true if item can be equipped.
+
+##
+# boolean $ActorItem->mergeable()
+#
+# Returns true if item can be merged into another item.
+
+#           type: 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19
+sub usable     { (1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0)[$_[0]{type}] }
+sub equippable { (0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1)[$_[0]{type}] }
+sub mergeable  { (0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)[$_[0]{type}] }
+
+##
 # $ActorItem->equippedInSlot(slot)
 # slot: slot to check
 # Returns: wheter item is equipped in $slot
@@ -352,10 +372,6 @@ sub equippedInSlot {
 	my ($self, $slot) = @_;
 	return ($self->{equipped} & $equipSlot_rlut{$slot});
 }
-
-#sub equippable {
-#	my $self = shift;
-#}
 
 ##
 # void $ActorItem->equip()
@@ -388,7 +404,9 @@ sub unequip {
 sub use {
 	my $self = shift;
 	my $target = shift;
-	return 0 unless $self->{type} <= 2 || $self->{type} == 18;
+	# TODO: use Actor as an argument
+	return 0 unless $self->usable;
+	# FIXME: "==" is wrong choice there. Why not just sendItemUse(..., $target || $accountID)
 	if (!$target || $target == $accountID) {
 		$messageSender->sendItemUse($self->{index}, $accountID);
 	}
