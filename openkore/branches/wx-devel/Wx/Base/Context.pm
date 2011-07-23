@@ -4,7 +4,9 @@ use strict;
 use Wx ':everything';
 use Wx::Event ':everything';
 
+use Globals qw($char);
 use Misc qw(launchURL);
+use Translation qw(T TF);
 
 sub new {
 	my $self = bless {}, shift;
@@ -56,6 +58,16 @@ sub popup {
 	my ($self) = @_;
 	
 	$self->{parent}->PopupMenu($self->menu, wxDefaultPosition);
+}
+
+sub useSkillMenu {
+	my ($self, $filter, $item) = @_;
+	
+	map {{ title => TF("%s [%d]", $_->getName, $_->getLevel), $item->($_) }}
+	sort { $a->getName cmp $b->getName }
+	grep { $filter->($_) }
+	map { Skill->new(handle => $_, level => $char->{skills}{$_}{lv}) }
+	keys %{$char->{skills}}
 }
 
 1;
