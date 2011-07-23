@@ -9,8 +9,6 @@ use Globals qw($char %config %overallAuth @partyUsersID %sex_lut $pvp %currentDe
 use Translation qw(T TF);
 use Utils qw(binFind);
 
-use Interface::Wx::Utils;
-
 sub new {
 	my ($class, $parent, $objects) = @_;
 	
@@ -64,7 +62,7 @@ sub new {
 		}
 		
 		push @{$self->{head}}, {
-			title => T('Use Skill'), menu => [skillListMenuList(
+			title => T('Use Skill'), menu => [$self->useSkillMenu(
 				sub { $_[0]->getLevel && {
 					Skill::TARGET_LOCATION => 1,
 					Skill::TARGET_ACTORS => 1,

@@ -14,7 +14,7 @@ use Wx::Event ':everything';
 use Scalar::Util;
 use List::Util;
 
-use Globals qw($char %config $quit $interface);
+use Globals qw(%config $quit $interface);
 use Log qw(debug);
 use Translation qw(T TF);
 
@@ -22,7 +22,6 @@ our @EXPORT = qw(
 	loadDialog loadPNG setupDialog dataFile
 	startMainLoop stopMainLoop
 	isUsable isEquip isCard
-	skillListMenuList
 );
 our %files;
 our @searchPath;
@@ -34,19 +33,6 @@ Wx::InitAllImageHandlers;
 sub isUsable { $_[-1]{type} <= 2 }
 sub isEquip { (0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1) [$_[-1]{type}] }
 sub isCard { $_[-1]{type} == 6 }
-
-# Not related to Wx
-
-sub skillListMenuList {
-	my ($filter, $item) = @_;
-	
-	map {{ title => TF("%s [%d]", $_->getName, $_->getLevel), $item->($_) }}
-	sort { $a->getName cmp $b->getName }
-	grep { $filter->($_) }
-	map { new Skill(handle => $_, level => $char->{skills}{$_}{lv}) }
-	keys %{$char->{skills}}
-}
-
 
 # Wx MainLoop
 
