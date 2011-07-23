@@ -92,10 +92,6 @@ sub _removeCallbacks {
 	delete $self->{ids}
 }
 
-sub isUsable { $_[-1]{type} <= 2 }
-sub isEquip { (0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1) [$_[-1]{type}] }
-sub isCard { $_[-1]{type} == 6 }
-
 sub getSelection { map { $char->inventory->get ($_) } @{$_[0]{selection}} }
 
 sub onInventoryListRemove { $_[0]->setItem ($_[2][1]) }
@@ -145,9 +141,9 @@ sub _onRightClick {
 		my ($item) = @selection;
 		
 		my ($canActivate, $canDrop) = (undef, 1);
-		if ($self->isUsable ($item)) {
+		if ($item->usable) {
 			$canActivate = T('Use 1 on self');
-		} elsif ($self->isEquip ($item)) {
+		} elsif ($item->equippable) {
 			unless ($item->{equipped}) {
 				$canActivate = T('Equip') if $item->{identified};
 			} else {
@@ -156,7 +152,7 @@ sub _onRightClick {
 				$canStorage = 0;
 				$canDrop = 0;
 			}
-		} elsif ($self->isCard ($item)) {
+		} elsif ($item->mergeable) {
 			$canActivate = T('Start card merging');
 		}
 		
@@ -178,15 +174,15 @@ sub _onActivate {
 	
 	return unless 1 == (my ($item) = $self->getSelection);
 	
-	if ($self->isUsable ($item)) {
+	if ($item->usable) {
 		$item->use;
-	} elsif ($self->isEquip ($item)) {
+	} elsif ($item->equippable) {
 		unless ($item->{equipped}) {
 			$item->equip;
 		} else {
 			$item->unequip;
 		}
-	} elsif ($self->isCard ($item)) {
+	} elsif ($item->mergeable) {
 		Commands::run ('card use ' . $item->{invIndex});
 	}
 }
