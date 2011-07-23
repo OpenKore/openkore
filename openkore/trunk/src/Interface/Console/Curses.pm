@@ -592,11 +592,11 @@ sub updateObjects {
 				$lineStyle = 'normal' unless $objects->{$id}{sp};
 				$lineStyle = 'blue' unless $objects->{$id}{lv} || $objects->{$id}{up};
 			} elsif ($_ eq 'inventory') {
-				if ($objects->{$id}{type} <= 2) {
+				if ($objects->{$id}->usable) {
 					$lineStyle = 'green';
 				} elsif ($objects->{$id}{equipped}) {
 					$lineStyle = 'cyan';
-				} elsif ($objects->{$id}{type} !~ /^3|6|10|16|17$/) {
+				} elsif ($objects->{$id}->equippable) {
 					$lineStyle = 'blue';
 				}
 			}
