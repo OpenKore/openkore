@@ -2035,7 +2035,8 @@ sub cart_items_nonstackable {
 
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 
-		$local_item = $cart{inventory}[$item->{index}] = {};
+		# TODO: different classes for inventory/cart/storage items
+		$local_item = $cart{inventory}[$item->{index}] = Actor::Item->new;
 		foreach (@{$unpack->{keys}}) {
 			$local_item->{$_} = $item->{$_};
 		}
@@ -2065,7 +2066,7 @@ sub cart_items_stackable {
 
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 
-		$local_item = $cart{inventory}[$item->{index}] ||= {};
+		$local_item = $cart{inventory}[$item->{index}] ||= Actor::Item->new;
 		if ($local_item->{amount}) {
 			$local_item->{amount} += $item->{amount};
 		} else {
@@ -2086,7 +2087,7 @@ sub cart_items_stackable {
 sub cart_item_added {
 	my ($self, $args) = @_;
 
-	my $item = $cart{inventory}[$args->{index}] ||= {};
+	my $item = $cart{inventory}[$args->{index}] ||= Actor::Item->new;
 	if ($item->{amount}) {
 		$item->{amount} += $args->{amount};
 	} else {
@@ -2785,6 +2786,7 @@ sub errors {
 	} elsif ($args->{type} == 3) {
 		error T("Error: Out of sync with server\n"), "connection";
 	} elsif ($args->{type} == 4) {
+		# fRO: "Your account is not validated, please click on the validation link in your registration mail."
 		error T("Error: Server is jammed due to over-population.\n"), "connection";
 	} elsif ($args->{type} == 5) {
 		error T("Error: You are underaged and cannot join this server.\n"), "connection";
@@ -6357,7 +6359,7 @@ sub storage_item_added {
 	my $index = $args->{index};
 	my $amount = $args->{amount};
 
-	my $item = $storage{$index} ||= {};
+	my $item = $storage{$index} ||= Actor::Item->new;
 	if ($item->{amount}) {
 		$item->{amount} += $amount;
 	} else {
@@ -6409,7 +6411,7 @@ sub storage_items_nonstackable {
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 
 		binAdd(\@storageID, $item->{index});
-		$local_item = $storage{$item->{index}} = {};
+		$local_item = $storage{$item->{index}} = Actor::Item->new;
 
 		foreach (@{$unpack->{keys}}) {
 			$local_item->{$_} = $item->{$_};
@@ -6440,7 +6442,7 @@ sub storage_items_stackable {
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 
 		binAdd(\@storageID, $item->{index});
-		$local_item = $storage{$item->{index}} = {};
+		$local_item = $storage{$item->{index}} = Actor::Item->new;
 
 		foreach (@{$unpack->{keys}}) {
 			$local_item->{$_} = $item->{$_};
