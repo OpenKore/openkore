@@ -1722,7 +1722,7 @@ sub cart_items_nonstackable {
 
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 
-		$local_item = $cart{inventory}[$item->{index}] = {};
+		$local_item = $cart{inventory}[$item->{index}] = Actor::Item->new;
 		foreach (@{$unpack->{keys}}) {
 			$local_item->{$_} = $item->{$_};
 		}
@@ -1764,7 +1764,7 @@ sub cart_items_nonstackable {
 sub cart_item_added {
 	my ($self, $args) = @_;
 
-	my $item = $cart{inventory}[$args->{index}] ||= {};
+	my $item = $cart{inventory}[$args->{index}] ||= Actor::Item->new;
 	if ($item->{amount}) {
 		$item->{amount} += $args->{amount};
 	} else {
@@ -1828,7 +1828,7 @@ sub cart_items_stackable {
 
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 		
-		$local_item = $cart{inventory}[$item->{index}] ||= {};
+		$local_item = $cart{inventory}[$item->{index}] ||= Actor::Item->new;
 		if ($local_item->{amount}) {
 			$local_item->{amount} += $item->{amount};
 		} else {
@@ -6145,7 +6145,7 @@ sub storage_item_added {
 	my $index = $args->{index};
 	my $amount = $args->{amount};
 
-	my $item = $storage{$index} ||= {};
+	my $item = $storage{$index} ||= Actor::Item->new;
 	if ($item->{amount}) {
 		$item->{amount} += $amount;
 	} else {
@@ -6200,7 +6200,7 @@ sub storage_items_nonstackable {
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 
 		binAdd(\@storageID, $item->{index});
-		$local_item = $storage{$item->{index}} = {};
+		$local_item = $storage{$item->{index}} = Actor::Item->new;
 		
 		foreach (@{$unpack->{keys}}) {
 			$local_item->{$_} = $item->{$_};
@@ -6258,7 +6258,7 @@ sub storage_items_stackable {
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 
 		binAdd(\@storageID, $item->{index});
-		$local_item = $storage{$item->{index}} = {};
+		$local_item = $storage{$item->{index}} = Actor::Item->new;
 		
 		foreach (@{$unpack->{keys}}) {
 			$local_item->{$_} = $item->{$_};
