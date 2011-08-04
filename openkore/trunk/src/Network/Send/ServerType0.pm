@@ -66,6 +66,7 @@ sub new {
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'0204' => ['client_hash'], # TODO
+		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 		'021D' => ['less_effect'], # TODO
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C H32 H26 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
@@ -420,12 +421,6 @@ sub sendEquip {
 
 # 0x0208,11,friendslistreply,2:6:10
 # Reject:0/Accept:1
-sub sendFriendListReply {
-	my ($self, $accountID, $charID, $flag) = @_;
-	my $msg = pack('v a4 a4 a3', 0x0208, $accountID, $charID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Reject friend request\n", "sendPacket";
-}
 
 sub sendFriendRequest {
 	my ($self, $name) = @_;

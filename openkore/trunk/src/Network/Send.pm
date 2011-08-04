@@ -574,4 +574,15 @@ sub sendClientMD5Hash {
 	$self->sendToServer($msg);
 }
 
+sub sendFriendListReply {
+	my ($self, $accountID, $charID, $flag) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'friend_response',
+		friendAccountID => $accountID,
+		friendCharID => $charID,
+		type => $flag,
+	}));
+	debug "Sent Reject friend request\n", "sendPacket";
+}
+
 1;
