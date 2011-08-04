@@ -33,6 +33,7 @@ sub new {
 	
 	my %packets = (
 		'0072' => ['map_login', 'x3 a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -90,12 +91,6 @@ sub sendSkillUseLocInfo {
 }
 
 # 0x0208,14,friendslistreply,2:6:10
-sub sendFriendListReply { # 1 accept, 0 deny
-	my ($self, $accountID, $charID, $flag) = @_;
-	my $msg = pack('v a4 a4 V', 0x0208, $accountID, $charID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Reject friend request\n", "sendPacket";
-}
 
 =pod
 //2004-07-05aSakexe

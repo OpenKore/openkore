@@ -61,6 +61,7 @@ sub new {
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'0204' => ['client_hash'], # TODO
+		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -1501,12 +1502,6 @@ sub sendFriendRemove {
 
 # 0x0208,11,friendslistreply,2:6:10
 # sendFriendReject:0/sendFriendAccept:1
-sub sendFriendListReply {
-	my ($self, $accountID, $charID, $flag) = @_;
-	my $msg = pack('v a4 a4 C', 0x0208, $accountID, $charID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Reject friend request\n", "sendPacket";
-}
 
 1;
 

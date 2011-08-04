@@ -330,7 +330,7 @@ sub new {
 		'0205' => ['divorced', 'Z24', [qw(name)]], # clif_divorced
 		'0206' => ['friend_logon', 'a4 a4 C', [qw(friendAccountID friendCharID isNotOnline)]],
 		'0207' => ['friend_request', 'a4 a4 Z24', [qw(accountID charID name)]],
-		'0209' => ['friend_response', 'C Z24', [qw(type name)]],
+		'0209' => ['friend_response', 'v a4 a4 Z24', [qw(type accountID charID name)]],
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]],
 		'020E' => ['taekwon_packets', 'Z24 a4 C2', [qw(name ID value flag)]],
 		'020F' => ['pvp_point', 'V2', [qw(AID GID)]], #TODO: PACKET_CZ_REQ_PVPPOINT
@@ -2908,7 +2908,7 @@ sub friend_response {
 		$friends{$ID}{charID} = substr($args->{RAW_MSG}, 8, 4);
 		$friends{$ID}{name} = $name;
 		$friends{$ID}{online} = 1;
-		message TF("%s is now your friend\n", $incomingFriend{'name'});
+		message TF("%s is now your friend\n", $name);
 	}
 }
 
