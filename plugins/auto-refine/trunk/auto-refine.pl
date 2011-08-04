@@ -104,7 +104,7 @@ sub route {
 	my $map = shift;
 	my $x = shift;
 	my $y = shift;
-	my $routeTask = Task::MapRoute->new(map => $map, x => $x, y => $y, distFromGoal => 10, notifyUponArrival => 1);
+	my $routeTask = Task::MapRoute->new(actor => $char, map => $map, x => $x, y => $y, distFromGoal => 10, notifyUponArrival => 1);
 	$taskManager->add($routeTask);
 	$routeCallback = $taskManager->onTaskFinished->add(undef,\&toggleRefine);
 }
