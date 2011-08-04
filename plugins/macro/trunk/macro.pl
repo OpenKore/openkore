@@ -261,6 +261,8 @@ sub commandHandler {
 			if ($params[$idx] eq '-orphan') {$orphan = $params[++$idx]}
 			if ($params[$idx] eq '--') {splice @params, 0, ++$idx; $cparms = 1; last}
 		}
+		
+		delete $varStack{$_} for grep /^\.param\d+$/, keys %varStack;
 		if ($cparms) {foreach my $p (1..@params) {$varStack{".param".$p} = $params[$p-1]}}
 		$queue = new Macro::Script($arg, $repeat);
 		if (!defined $queue) {error "macro $arg not found or error in queue\n"}
