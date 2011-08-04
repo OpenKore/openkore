@@ -186,7 +186,8 @@ sub next {
 			$self->{time} = $tmptime{time};
 			if ($self->{subcall}->finished) {
 				if ($self->{subcall}->{repeat} == 0) {$self->{finished} = 1}
-				undef $self->{subcall};	$self->{line}++
+				undef $self->{subcall};
+				# $self->{line}++
 			}
 			return $command
 		}
@@ -213,6 +214,8 @@ sub next {
 			return ""
 		}
 	}
+	
+	# TODO: separate line advancing and timeout setting
 	
 	my $errtpl = "error in ".$self->{line};
 	##########################################
@@ -457,6 +460,7 @@ sub next {
 		unless (defined $self->{subcall}) {$self->{error} = "$errtpl: failed to call script"}
 		else {
 			$self->{subcall}->regSubmacro;
+			$self->{line}++; # point to the next line to be executed in the caller
 			$self->{timeout} = $self->{macro_delay}
 		}
 	##########################################
