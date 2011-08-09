@@ -138,7 +138,7 @@ sub match {
 		return $text eq $1
 	}
 
-	if ($kw =~ /^\/(.*?)\/(\w?)/) {
+	if ($kw =~ /^\/(.*?)\/(\w?)$/) {
 		if ($text =~ /$1/ || ($2 eq 'i' && $text =~ /$1/i)) {
 			if (!defined $cmpr) {
 				no strict;
