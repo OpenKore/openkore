@@ -6,6 +6,12 @@ sub setVar { $Macro::Data::varStack{$_[0]} = $_[1] }
 sub getVar { $Macro::Data::varStack{$_[0]} }
 
 sub start {
+	subtest 'console' => sub {
+		ok(Macro::Automacro::checkConsole('/a\/b/', [undef, undef, undef, undef, 'a/b']), 'slash in regexp');
+		
+		done_testing
+	};
+	
 	subtest "location" => sub {
 		for (
 			[
