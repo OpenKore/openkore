@@ -35,6 +35,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0089' => ['character_move', 'x1 a3', [qw(coords)]],
 		'00F3' => ['actor_look_at', 'x3 C x6 C', [qw(head body)]],
 		'00F5' => ['map_login', 'x10 a4 x2 a4 x2 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0113' => ['item_take', 'x4 a4', [qw(ID)]],
@@ -62,12 +63,6 @@ sub sendStorageAdd {
 }
 
 # 0x0089,6,walktoxy,3
-sub sendMove {
-	my ($self, $x, $y) = @_;
-	my $msg = pack('v x2 a3', 0x0089, getCoordString($x = int $x, $y = int $y, 1));
-	$self->sendToServer($msg);
-	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
 
 # 0x008c,103,useskilltoposinfo,2:6:17:21:23
 sub sendSkillUseLocInfo {

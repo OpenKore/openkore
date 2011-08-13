@@ -45,6 +45,7 @@ sub new {
 		'0072' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'007D' => ['map_loaded'], # len 2
 		'007E' => ['sync'], # TODO
+		'0085' => ['character_move', 'a3', [qw(coords)]],
 		'0089' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
@@ -146,10 +147,19 @@ sub sendQuitRequest {
 # 0x0084,2
 
 # 0x0085,5,walktoxy,2
+sub parse_character_move {
+	my ($self, $args) = @_;
+	makeCoordsDir($args, $args->{coords});
+}
+
+sub reconstruct_character_move {
+	my ($self, $args) = @_;
+	$args->{coords} = getCoordString(@{$args}{qw(x y)}, 1);
+}
+
 sub sendMove {
 	my ($self, $x, $y) = @_;
-	my $msg = pack('v a3', 0x0085, getCoordString($x = int $x, $y = int $y, 1));
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({switch => 'character_move', x => $x, y => $y}));
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 

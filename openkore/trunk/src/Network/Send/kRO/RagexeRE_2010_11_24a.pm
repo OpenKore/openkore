@@ -16,16 +16,19 @@ sub new {
 	my %packets = (
 		'0085' => undef,
 		'0089' => undef,
+		'00A7' => undef,
 		'00F5' => undef,
+		'035F' => ['character_move', 'a3', [qw(coords)]],
 		'0360' => ['sync'], # TODO
 		'0361' => ['actor_look_at', 'C2', [qw(head body)]],
 		'0362' => ['item_take', 'a4', [qw(ID)]],
-		'0436' => ['map_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
+		# 0436 unchanged
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
 		sync 0360
+		character_move 035F
 		actor_look_at 0361
 		item_take 0362
 	);
@@ -37,11 +40,6 @@ sub new {
 # 0x0436,19,wanttoconnection,2:6:10:14:18
 
 # 0x035f,5,walktoxy,2
-sub sendMove {
-	my ($self, $x, $y) = @_;
-	$self->sendToServer(pack('v a3', 0x035F, getCoordString($x = int $x, $y = int $y, 1)));
-	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
 
 # 0x0360,6,ticksend,2
 sub sendSync {

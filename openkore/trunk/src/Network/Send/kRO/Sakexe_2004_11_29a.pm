@@ -40,6 +40,7 @@ sub new {
 		'0089' => ['sync'], # TODO
 		'009F' => ['actor_action', 'x4 a4 x7 C', [qw(targetID type)]],
 		'00A2' => ['item_take', 'x a4', [qw(ID)]],
+		'00A7' => ['character_move', 'x2 a3', [qw(coords)]],
 		'00F3' => ['actor_look_at', 'x C x3 C', [qw(head body)]],
 		'00F5' => ['map_login', 'x a4 x3 a4 x6 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0113' => undef,
@@ -49,6 +50,7 @@ sub new {
 	
 	my %handlers = qw(
 		sync 0089
+		character_move 00A7
 		actor_action 009F
 		public_chat 0085
 		item_take 00A2
@@ -127,12 +129,6 @@ sub sendStorageClose {
 # 0x0a2,7,takeitem,3
 
 # 0x0a7,7,walktoxy,4
-sub sendMove {
-	my ($self, $x, $y) = @_;
-	my $msg = pack('v x2 a3', 0x00A7, getCoordString($x = int $x, $y = int $y, 1));
-	$self->sendToServer($msg);
-	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
 
 # 0x0f3,8,changedir,3:7
 
