@@ -35,9 +35,9 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0085' => ['actor_look_at', 'x6 C x9 C', [qw(head body)]],
+		'0085' => ['actor_look_at', 'x6 v x6 C', [qw(head body)]],
 		'0089' => ['sync'], # TODO
-		'009B' => ['map_login', 'x7 a4 x4 a4 x4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'009B' => ['map_login', 'x7 a4 x2 a4 x4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'00A7' => ['character_move', 'x6 a3', [qw(coords)]],
 		'00F5' => ['item_take', 'x7 a4', [qw(ID)]],
 		'0190' => ['actor_action', 'x9 a4 x8 C', [qw(targetID type)]],

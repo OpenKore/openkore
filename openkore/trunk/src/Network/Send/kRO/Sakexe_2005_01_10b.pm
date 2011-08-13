@@ -43,7 +43,7 @@ sub new {
 		'00A2' => undef,
 		'00A7' => ['character_move', 'x8 a3', [qw(coords)]],
 		'00F3' => ['public_chat', 'x2 Z*', [qw(message)]],
-		'00F5' => ['item_take', 'x7 a4', [qw(ID)]],
+		'00F5' => ['item_take', 'x3 a4', [qw(ID)]],
 		'0190' => ['actor_action', 'x7 a4 x6 C', [qw(targetID type)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;

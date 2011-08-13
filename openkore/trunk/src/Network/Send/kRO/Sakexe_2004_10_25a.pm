@@ -36,9 +36,9 @@ sub new {
 	
 	my %packets = (
 		'0085' => ['actor_action', 'x2 a4 x6 C', [qw(targetID type)]],
-		'00F3' => ['actor_look_at', 'x4 C x9 C', [qw(head body)]],
+		'00F3' => ['actor_look_at', 'x4 v x6 C', [qw(head body)]],
 		'00F5' => ['map_login', 'x4 a4 x5 a4 x a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0113' => ['item_take', 'x4 a4', [qw(ID)]],
+		'0113' => ['item_take', 'x3 a4', [qw(ID)]],
 		'0116' => ['sync'], # TODO
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;

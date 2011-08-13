@@ -37,7 +37,7 @@ sub new {
 	
 	my %packets = (
 		'0072' => undef,
-		'007E' => ['map_login', 'x10 a4 x2 a4 x2 a4 x2 V C', [qw(accountID charID sessionID tick sex)]],
+		'007E' => ['map_login', 'x10 a4 x2 a4 x2 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0085' => undef,
 		'0089' => undef,
 		'008C' => undef,
