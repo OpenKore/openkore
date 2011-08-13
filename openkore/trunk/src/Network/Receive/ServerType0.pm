@@ -236,7 +236,7 @@ sub new {
 		'016D' => ['guild_member_online_status', 'a4 a4 V', [qw(ID charID online)]],
 		'016F' => ['guild_notice'],
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID guildName)]],
-		'0173' => ['guild_alliance', 'V', [qw(flag)]],
+		'0173' => ['guild_alliance', 'C', [qw(flag)]],
 		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(unknown ID mode sameID exp position_name)]],
 		'0177' => ['identify_list'],
 		'0179' => ['identify', 'v C', [qw(index flag)]],

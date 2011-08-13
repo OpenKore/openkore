@@ -20,7 +20,7 @@ sub new {
 		'00F5' => undef,
 		'035F' => ['character_move', 'a3', [qw(coords)]],
 		'0360' => ['sync'], # TODO
-		'0361' => ['actor_look_at', 'C2', [qw(head body)]],
+		'0361' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0362' => ['item_take', 'a4', [qw(ID)]],
 		# 0436 unchanged
 	);

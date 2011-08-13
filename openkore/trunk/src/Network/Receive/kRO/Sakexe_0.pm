@@ -346,7 +346,7 @@ sub new {
 		# 0x0170 is sent packet
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID guildName)]], # 30
 		# 0x0172 is sent packet
-		'0173' => ['guild_alliance', 'V', [qw(flag)]], # 3
+		'0173' => ['guild_alliance', 'C', [qw(flag)]], # 3
 		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(len ID mode sameID exp position_name)]], # -1 # FIXME: this is a var len message!!!
 		# 0x0175 is sent packet
 		'0176' => ['guild_member_info', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub		
