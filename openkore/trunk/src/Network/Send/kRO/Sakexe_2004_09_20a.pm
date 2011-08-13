@@ -36,6 +36,7 @@ sub new {
 	
 	my %packets = (
 		'0085' => ['actor_action', 'x a4 x C', [qw(targetID type)]],
+		'0089' => ['character_move', 'x9 a3', [qw(coords)]],
 		'00F3' => ['actor_look_at', 'x6 C x8 C', [qw(head body)]],
 		'00F5' => ['map_login', 'x8 a4 x3 a4 x2 x V C', [qw(accountID charID sessionID tick sex)]],
 		'0113' => ['item_take', 'x8 a4', [qw(ID)]],
@@ -65,12 +66,6 @@ sub sendStorageAdd {
 # 0x0085,9,actionrequest,3:8
 
 # 0x0089,14,walktoxy,11
-sub sendMove {
-	my ($self, $x, $y) = @_;
-	my $msg = pack('v x9 a3', 0x0089, getCoordString($x = int $x, $y = int $y, 1));
-	$self->sendToServer($msg);
-	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
 
 # 0x008c,109,useskilltoposinfo,16:20:23:27:29
 sub sendSkillUseLocInfo {

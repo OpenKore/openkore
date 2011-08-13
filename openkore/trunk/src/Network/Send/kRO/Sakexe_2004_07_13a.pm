@@ -36,6 +36,7 @@ sub new {
 	
 	my %packets = (
 		'0072' => ['map_login', 'x10 a4 x6 a4 x4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0085' => ['character_move', 'x4 a3', [qw(coords)]],
 		'009B' => ['actor_look_at', 'x3 C x6 C', [qw(head body)]],
 		'009F' => ['item_take', 'x4 a4', [qw(ID)]],
 	);
@@ -47,12 +48,6 @@ sub new {
 # 0x0072,39,wanttoconnection,12:22:30:34:38
 
 # 0x0085,9,walktoxy,6
-sub sendMove {
-	my ($self, $x, $y) = @_;
-	my $msg = pack('v x4 a3', 0x0085, getCoordString(int $x, int $y));
-	$self->sendToServer($msg);
-	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
 
 # 0x009b,13,changedir,5:12
 

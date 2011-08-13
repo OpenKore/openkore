@@ -37,6 +37,7 @@ sub new {
 	my %packets = (
 		'007E' => ['map_login', 'x7 a4 x8 a4 x3 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0094' => ['item_take', 'x7 a4', [qw(ID)]],
+		'009B' => ['character_move', 'x10 a3', [qw(coords)]],
 		'009F' => ['actor_look_at', 'x5 C x3 C', [qw(head body)]],
 		'00F7' => ['sync'], # TODO
 		'0193' => ['actor_action', 'x5 a4 x6 C', [qw(targetID type)]],
@@ -92,12 +93,6 @@ sub sendSkillUseLoc {
 # 0x0094,13,takeitem,9
 
 # 0x009b,15,walktoxy,12
-sub sendMove {
-	my ($self, $x, $y) = @_;
-	my $msg = pack('v x10 a3', 0x009B, getCoordString($x = int $x, $y = int $y, 1));
-	$self->sendToServer($msg);
-	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
 
 # 0x009f,12,changedir,7:11
 

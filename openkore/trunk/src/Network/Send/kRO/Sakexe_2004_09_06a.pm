@@ -38,6 +38,8 @@ sub new {
 	my %packets = (
 		'007E' => undef,
 		'0085' => ['actor_action', 'x7 a4 x9 C', [qw(targetID type)]],
+		'0089' => ['character_move', 'x4 a3', [qw(coords)]],
+		'009B' => undef,
 		'0094' => undef,
 		'009F' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'00F3' => ['actor_look_at', 'x2 C x4 C', [qw(head body)]],
@@ -52,6 +54,7 @@ sub new {
 	my %handlers = qw(
 		map_login 00F5
 		sync 0116
+		character_move 0089
 		actor_action 0085
 		public_chat 009F
 		actor_look_at 00F3
@@ -81,12 +84,6 @@ sub sendStorageAdd {
 # 0x0085,23,actionrequest,9:22
 
 # 0x0089,9,walktoxy,6
-sub sendMove {
-	my ($self, $x, $y) = @_;
-	my $msg = pack('v x4 a3', 0x0089, getCoordString($x = int $x, $y = int $y, 1));
-	$self->sendToServer($msg);
-	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
 
 # 0x008c,105,useskilltoposinfo,10:14:18:23:25
 sub sendSkillUseLocInfo {

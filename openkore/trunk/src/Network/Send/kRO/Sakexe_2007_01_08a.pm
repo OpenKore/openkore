@@ -39,6 +39,7 @@ sub new {
 		'0085' => ['actor_look_at', 'x8 C x2 C', [qw(head body)]],
 		'0089' => ['sync'], # TODO
 		'009B' => ['map_login', 'x5 a4 x10 a4 x a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'00A7' => ['character_move', 'x3 a3', [qw(coords)]],
 		'00F5' => ['item_take', 'x5 a4', [qw(ID)]],
 		'0190' => ['actor_action', 'x2 a4 x C', [qw(targetID type)]],
 	);
@@ -126,12 +127,6 @@ sub sendGetCharacterName {
 }
 
 # 0x00a7,8,walktoxy,5
-sub sendMove {
-	my ($self, $x, $y) = @_;
-	my $msg = pack('v x3 a3', 0x00A7, getCoordString($x = int $x, $y = int $y, 1));
-	$self->sendToServer($msg);
-	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
 
 # 0x00f5,11,takeitem,7
 
