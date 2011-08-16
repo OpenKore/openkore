@@ -52,10 +52,25 @@ proc set_packet_len
 	mov edx, dword [ebp+0Ch] ; edx -> PacketLen
 	mov eax, ecx
 	mov ecx, dword [ebp+08h] ; ecx -> PacketInnerLen
-	mov dword [eax], ecx
-	mov dword [eax+04h], edx
+	mov dword [eax], ecx ; offset+00h -> PacketInnerLen
+	mov dword [eax+04h], edx ; offset+04h -> PacketLen
 	pop ebp
 	retn 8
+endp
+
+; Prepares params for print_packet4 and print_packet5
+proc set_packet_len2
+	push ebp
+	mov ebp, esp
+	mov edx, dword [ebp+0Ch] ; edx -> PacketLen
+	mov eax, ecx
+	mov ecx, dword [ebp+08h] ; ecx -> PacketInnerLen
+	mov [eax], ecx ; offset+00h -> PacketInnerLen
+	mov ecx, dword [ebp+10h] ; ecx -> Unknown ??? O_o
+	mov dword [eax+04h], edx ; offset+04h -> PacketLen
+	mov dword [eax+08h], ecx ; offset+08h ->  Unknown ??? O_o
+	pop ebp
+	retn 0Ch
 endp
 
 ; Print out packet (type 1)
@@ -63,12 +78,14 @@ proc print_packet1
 	push ebp
 	mov ebp, esp
 	mov eax, ecx
+	push eax
 	mov ecx, dword [ebp+08h]
 	mov eax, dword [ecx] ; eax -> Packet_ID
 	mov ecx, dword [ebp+0Ch]
 	mov edx, dword [ecx] ; edx -> PacketLen
 	mov ecx, dword [ecx+04h] ; ecx -> PacketInnerLen
 	ccall [printf], str2, eax, edx, ecx
+	pop eax
 	pop ebp
 	retn 8
 endp
@@ -98,6 +115,67 @@ proc print_packet3
 	ccall [printf], str2, eax, edx, ecx
 	pop ebp
 	ret
+endp
+
+; Print out packet (type 4)
+proc print_packet4
+	push ebp
+	mov ebp, esp
+	mov ecx, dword [ebp+08h]
+	mov eax, dword [ecx] ; eax -> Packet_ID
+	mov ecx, dword [ebp+0Ch]
+	mov edx, dword [ecx] ; edx -> PacketLen
+	mov ebx, dword [ecx+04h] ; ebx -> PacketInnerLen
+	mov ecx, dword [ecx+08h] ; ecx ->  Unknown ??? O_o
+	ccall [printf], str3, eax, edx, ebx, ecx
+	pop ebp
+	ret
+endp
+
+; Print out packet (type 5)
+proc print_packet5
+	push ebp
+	mov ebp, esp
+	mov ecx, dword [ebp+0Ch]
+	mov eax, dword [ecx] ; eax -> Packet_ID
+	mov ecx, dword [ebp+10h]
+	mov edx, dword [ecx] ; edx -> PacketLen
+	mov ebx, dword [ecx+04h] ; ebx -> PacketInnerLen
+	mov ecx, dword [ecx+08h] ; ecx ->  Unknown ??? O_o
+	ccall [printf], str3, eax, edx, ebx, ecx
+	pop ebp
+	ret
+endp
+
+
+; Print out packet (type 6)
+proc print_packet6
+	push ebp
+	mov ebp, esp
+	mov ecx, dword [ebp+0Ch]
+	mov eax, dword [ecx] ; eax -> Packet_ID
+	mov edx, dword [ecx+04h] ; edx -> PacketLen
+	mov ebx, dword [ecx+08h] ; ebx -> PacketInnerLen
+	mov ecx, dword [ecx+0Ch] ; ecx -> Unknown ??? O_o
+	ccall [printf], str3, eax, edx, ebx, ecx
+	pop ebp
+	ret
+endp
+
+; Print out packet (type 7)
+proc print_packet7
+	push ebp
+	mov ebp, esp
+	mov eax, ecx
+	push eax
+	mov eax, dword [ebp+08h] ; eax -> Packet_ID
+	mov ecx, dword [ebp+0Ch] ; ecx -> PacketLen
+	mov edx, dword [ebp+10h] ; edx -> PacketInnerLen
+	mov ebx, dword [ebp+14h] ; ebx ->  Unknown ??? O_o
+	ccall [printf], str3, eax, ecx, edx, ebx
+	pop eax
+	pop ebp
+	retn 8
 endp
 
 ; Dummy Function to replace old std::map calls
@@ -136,14 +214,20 @@ section '.data' data readable writeable
 ; Just to keep functions on their places (No to loose them).
 dd __alloca_probe
 dd set_packet_len
+dd set_packet_len2
 dd print_packet1
 dd print_packet2
 dd print_packet3
+dd print_packet4
+dd print_packet5
+dd print_packet6
+dd print_packet7
 dd dummy
 
 str0	db '# Packet Extractor by kLabMouse',0Ah,0
 str1	db '# Extracted from ', 0FFh dup(70h),0 ; Replace the 0x70... sequence with original source name
 str2	db 0Ah,'%0.4X %d %d',0
+str3	db 0Ah,'%0.4X %d %d %d',0
 hello_msg db 'Hello, world!',0
 
 ;====================================
