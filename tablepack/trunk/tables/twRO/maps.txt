@@ -790,3 +790,17 @@ bra_dun01.rsw#瀑布內的洞窟#
 bra_dun02.rsw#瀑布內的洞窟#
 //-----------------2010.05_Laborers'sDayEvent
 evt_mobroom.rsw#怪物洞穴#
+//-------------Dewata
+dewata.rsw#德瓦他#
+dew_in01.rsw#賈提族村裡#
+dew_fild01.rsw#德瓦他原野_賈提族部落#
+dew_dun01.rsw#喀拉喀托火山島#
+dew_dun02.rsw#伊斯坦納洞穴#
+//-------------malangdo
+malangdo.rsw#綿綿島#
+mal_in01.rsw#綿綿島內部#
+mal_in02.rsw#船內部#
+mal_dun01.rsw#星光珊瑚地帶#
+1@cash.rsw#章魚洞穴#
+1@pump.rsw#排水溝#
+2@pump.rsw#排水溝#
