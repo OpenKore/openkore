@@ -184,7 +184,10 @@ sub iterate {
 	
 			# attempt to find homunculus on it's last known coordinates
 			} elsif ($AI == AI::AUTO && !$slave->{lostRoute}) {
-				if ($config{teleportAuto_lostHomunculus}) {
+				if ($config{homunculus_StandByAuto}) {
+					message TF("Stand By Homun\n", $slave), 'teleport';
+					$slave->sendStandBy;
+				} elsif ($config{teleportAuto_lostHomunculus}) {
 					message TF("Teleporting to get %s back\n", $slave), 'teleport';
 					useTeleport(1);
 				} else {
@@ -421,7 +424,8 @@ sub processAttack {
 				debug "Slave attackSkillSlot on $target->{name} ($target->{binID}): ".$skill->getName()." (lvl $lvl)\n", "monsterSkill";
 				my $skillTarget = $config{"${prefix}_isSelfSkill"} ? $slave : $target;
 				AI::ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $skillTarget, $prefix);
-				$ai_v{$prefix . "_time"}{$ID} = time;
+				$ai_v{$prefix . "_time"} = time;
+				$ai_v{$prefix . "_target_time"}{$ID} = time;
 				last;
 			}
 		}
