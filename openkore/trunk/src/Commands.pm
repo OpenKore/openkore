@@ -3860,10 +3860,13 @@ sub cmdSell {
 		}
 
 	} elsif ($args[0] eq "done") {
-		$messageSender->sendSellBulk(\@sellList);
-		message TF("Sold %s items.\n", @sellList.""), "success";
-		@sellList = ();
-
+		if (@sellList == 0) {
+			message T("Your sell list is empty.\n"), "info";
+		} else {
+			$messageSender->sendSellBulk(\@sellList);
+			message TF("Sold %s items.\n", @sellList.""), "success";
+			@sellList = ();
+		}
 	} elsif ($args[0] eq "cancel") {
 		@sellList = ();
 		message T("Sell list has been cleared.\n"), "info";
