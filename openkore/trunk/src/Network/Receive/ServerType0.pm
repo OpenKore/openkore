@@ -72,7 +72,7 @@ sub new {
 		'006B' => ['received_characters', 'v C3 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # struct varies a lot, this one is from XKore 2
 		'006C' => ['login_error_game_login_server'],
 		# OLD '006D' => ['character_creation_successful', 'a4 x4 V x62 Z24 C7', [qw(ID zeny name str agi vit int dex luk slot)]],
-		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v2', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag)]],
+		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v2', [qw(charID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag)]],
 		'006E' => ['character_creation_failed', 'C' ,[qw(type)]],
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
@@ -2218,17 +2218,22 @@ sub character_creation_failed {
 
 sub character_creation_successful {
 	my ($self, $args) = @_;
-
 	my $char = new Actor::You;
 	foreach (@{$self->{packet_list}{$args->{switch}}->[2]}) {
 		$char->{$_} = $args->{$_} if (exists $args->{$_});
 	}
 	$char->{name} = bytesToString($args->{name});
 	$char->{jobID} = 0;
+	$char->{headgear}{low} = 0;
+	$char->{headgear}{top} = 0;
+	$char->{headgear}{mid} = 0;
+	$char->{nameID} = unpack("V", $accountID); 
 	#$char->{lv} = 1;
 	#$char->{lv_job} = 1;
 	$char->{sex} = $accountSex2;
 	$chars[$char->{slot}] = $char;
+
+
 
 	$net->setState(3);
 	message TF("Character %s (%d) created.\n", $char->{name}, $char->{slot}), "info";
@@ -8066,11 +8071,14 @@ sub skill_post_delaylist {
 
 sub msg_string {
 	my ($self, $args) = @_;
+	message TF("index: %s para1: %s\n", $args->{index}, $args->{para1}), "info";
 	#		'07E2' => ['msg_string', 'v V', [qw(index para1)]], #TODO PACKET_ZC_MSG_VALUE        **msgtable
 }
 
 sub skill_msg {
 	my ($self, $args) = @_;
+	message TF("id: %s msgid: %s\n", $args->{id}, $args->{msgid}), "info";
+	
 	#	'07E6' => ['skill_msg', 'v V', [qw(id msgid)]], #TODO: PACKET_ZC_MSG_SKILL     **msgtable
 }
 
