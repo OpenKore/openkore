@@ -7076,19 +7076,33 @@ sub mail_new {
 	message TF("New mail from sender: %s titled: %s.\n", bytesToString($args->{sender}), bytesToString($args->{title})), "info";
 }
 
-# TODO
 sub mail_setattachment {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
+		if (defined $AI::temp::mailAttachAmount) {
+			undef $AI::temp::mailAttachAmount;
+		}
 		message TF("Failed to attach %s.\n", ($args->{index}) ? T("item: ").$char->inventory->getByServerIndex($args->{index}) : T("zeny")), "info";
 	} else {
-		# TODO: remove attached item/zeny from inventory here
-		# * amount isn't in this packet?
-		# * more than you have (item/zeny) can be "attached" without any error
-		# * after canceling mail writing, server WILL add attached items back, but not for zeny
-
-		# TODO: tweak this message?
-		message TF("Succeeded to attach %s.\n", ($args->{index}) ? T("item: ").$char->inventory->getByServerIndex($args->{index}) : T("zeny")), "info";
+		if (($args->{index})) {
+			message TF("Succeeded to attach %s.\n", T("item: ").$char->inventory->getByServerIndex($args->{index})), "info";
+			if (defined $AI::temp::mailAttachAmount) {
+				my $item = $char->inventory->getByServerIndex($args->{index});
+				if ($item) {
+					my $change = min($item->{amount},$AI::temp::mailAttachAmount);
+					inventoryItemRemoved($item->{invIndex}, $change);
+					Plugins::callHook('packet_item_removed', {index => $item->{invIndex}});
+				}
+				undef $AI::temp::mailAttachAmount;
+			}
+		} else {
+			message TF("Succeeded to attach %s.\n", T("zeny")), "info";
+			if (defined $AI::temp::mailAttachAmount) {
+				my $change = min($char->{zeny},$AI::temp::mailAttachAmount);
+				$char->{zeny} = $char->{zeny} - $change;
+				message TF("You lost %s zeny.\n", formatNumber($change));
+			}
+		}
 	}
 }
 

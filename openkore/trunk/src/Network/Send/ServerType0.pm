@@ -1367,6 +1367,14 @@ sub sendMailSetAttach {
 	my $amount = $_[1];
 	my $index = (defined $_[2]) ? $_[2] : 0;	# 0 for zeny
 	my $msg = pack("v2 V", 0x0247, $index, $amount);
+
+	#We must do it or we will lost attachment what was not send.
+	if ($index) {
+		$self->sendMailOperateWindow(1);
+	} else {
+		$self->sendMailOperateWindow(2);
+	}	
+	$AI::temp::mailAttachAmount = $amount;
 	$self->sendToServer($msg);
 	debug "Sent mail set attachment.\n", "sendPacket", 2;
 }
