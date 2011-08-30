@@ -55,4 +55,11 @@ sub sendHomunculusMove {
 	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
 }
 
+sub sendCharDelete {
+	my ($self, $charID, $email) = @_;
+	my $msg = pack("C*", 0xFB, 0x01) .
+			$charID . pack("a50", stringToBytes($email));
+	$self->sendToServer($msg);
+}
+
 1;
