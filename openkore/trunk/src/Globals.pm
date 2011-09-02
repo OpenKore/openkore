@@ -295,6 +295,7 @@ our %jobs_lut = (
 	4110 => 'Baby Guard',		# mounted
 	4111 => 'Baby Ranger',		# mounted
 	4112 => 'Baby Mechanic',	# mounted
+	4190 => 'High Super Novice',
 
 	# Homunculus
 	6001 => 'Lif',
