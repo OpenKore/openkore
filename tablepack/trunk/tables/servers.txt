@@ -335,7 +335,7 @@ recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
-[Taiwan - twRO: Free (Moonlight, Picky, Baphomet, Poring Goblin)]
+[Taiwan - twRO: Free (Moonlight, Picky, Baphomet, Poring, Goblin)]
 ip 220.130.113.221
 port 6900
 master_version 5
