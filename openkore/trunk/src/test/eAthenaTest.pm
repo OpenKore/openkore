@@ -101,7 +101,15 @@ sub start {
 									
 									or skip 'structure needed only for non-empty packets', 1;
 									
-									skip 'no structure to compare to', 1 unless @{$packet_db{$ST}{packets}{$switch}{pos}};
+									unless (@{$packet_db{$ST}{packets}{$switch}{pos}}) {
+										if ($their_info->{len} > 0) {
+											is(length(pack $our_info->[1]) + 2, $their_info->{len}, 'total length (fixed-length packet)');
+										} else {
+											like($our_info->[1], qr/^(?:x2|v).*\*$/, 'variable-length last field (variable-length packet)');
+										}
+										
+										skip 'no structure to compare to', 1;
+									}
 									
 									SKIP: {
 										for ($our_info->[1]) {
