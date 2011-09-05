@@ -39,6 +39,7 @@ sub new {
 		'0085' => ['character_move', 'x4 a3', [qw(coords)]],
 		'009B' => ['actor_look_at', 'x3 C x6 C', [qw(head body)]],
 		'009F' => ['item_take', 'x4 a4', [qw(ID)]],
+		'0116' => ['skill_use_location', 'x5 v2 x4 v2', [qw(lv skillID x y)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -81,14 +82,6 @@ sub sendSkillUse {
 }
 
 # 0x0116,19,useskilltopos,7:9:15:17
-sub sendSkillUseLoc {
-	my ($self, $ID, $lv, $x, $y) = @_;
-
-	my $msg = pack('v x5 v2 x4 v2', 0x0116, $lv, $ID, $x, $y);
-
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
 
 # 0x0190,99,useskilltoposinfo,7:9:15:17:19
 sub sendSkillUseLocInfo {

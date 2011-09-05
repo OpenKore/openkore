@@ -37,10 +37,15 @@ sub new {
 	
 	my %packets = (
 		'0085' => ['actor_look_at', 'x4 C x3 C', [qw(head body)]],
-		'0089' => ['sync'], # TODO
+		'0089' => ['sync', 'x V', [qw(time)]],
+		'008C' => ['actor_info_request', 'x5 a4', [qw(ID)]],
+		'0094' => ['storage_item_add', 'x10 v x3 V', [qw(index amount)]],
 		'009B' => ['map_login', 'x a4 x6 a4 x5 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'00A7' => ['character_move', 'x10 a3', [qw(coords)]],
 		'00F5' => ['item_take', 'x a4', [qw(ID)]],
+		'00F7' => ['storage_item_remove', 'x3 v x2 V', [qw(index amount)]],
+		'0113' => ['skill_use_location', 'x7 v x4 v x6 v x3 v', [qw(lv skillID x y)]],
+		'0116' => ['item_drop', 'x4 v x2 v', [qw(index amount)]],
 		'0190' => ['actor_action', 'x3 a4 x11 C', [qw(targetID type)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -81,32 +86,10 @@ sub sendSkillUseLocInfo {
 # 0x0085,11,changedir,6:10
 
 # 0x0089,7,ticksend,3
-sub sendSync {
-	my ($self, $initialSync) = @_;
-	my $msg;
-	# XKore mode 1 lets the client take care of syncing.
-	return if ($self->{net}->version == 1);
-
-	$msg = pack('v x V', 0x0089, getTickCount());
-	$self->sendToServer($msg);
-	debug "Sent Sync\n", "sendPacket", 2;
-}
 
 # 0x008c,11,getcharnamerequest,7
-sub sendGetPlayerInfo {
-	my ($self, $ID) = @_;
-	my $msg = pack('v x5 a4', 0x008C, $ID);
-	$self->sendToServer($msg);
-	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
-}
 
 # 0x0094,21,movetokafra,12:17
-sub sendStorageAdd {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v x10 v x3 V', 0x0094, $index, $amount);
-	$self->sendToServer($msg);
-	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
-}
 
 # 0x009b,31,wanttoconnection,3:13:22:26:30
 
@@ -131,28 +114,10 @@ sub sendGetCharacterName {
 # 0x00f5,7,takeitem,3
 
 # 0x00f7,13,movefromkafra,5:9
-sub sendStorageGet {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v x3 v x2 V', 0x00F7, $index, $amount);
-	$self->sendToServer($msg);
-	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
-}
 
 # 0x0113,30,useskilltopos,9:15:23:28
-sub sendSkillUseLoc {
-	my ($self, $ID, $lv, $x, $y) = @_;
-	my $msg = pack('v x7 v x4 v x6 v x3 v', 0x0113, $lv, $ID, $x, $y);
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
 
 # 0x0116,12,dropitem,6:10
-sub sendDrop {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v x4 v x2 v', 0x0113, $index, $amount);
-	$self->sendToServer($msg);
-	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
-}
 
 # 0x0190,21,actionrequest,5:20
 

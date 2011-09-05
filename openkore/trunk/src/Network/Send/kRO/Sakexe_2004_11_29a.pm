@@ -36,15 +36,20 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'007E' => ['skill_use_location', 'x2 v x3 v x11 v x4 v', [qw(lv skillID x y)]],
 		'0085' => ['public_chat', 'x2 Z*', [qw(message)]],
-		'0089' => ['sync'], # TODO
+		'0089' => ['sync', 'x V', [qw(time)]],
+		'008C' => ['actor_info_request', 'x7 a4', [qw(ID)]],
+		'0094' => ['storage_item_add', 'x2 v x4 V', [qw(index amount)]],
+		'009B' => undef,
 		'009F' => ['actor_action', 'x4 a4 x7 C', [qw(targetID type)]],
 		'00A2' => ['item_take', 'x a4', [qw(ID)]],
 		'00A7' => ['character_move', 'x2 a3', [qw(coords)]],
 		'00F3' => ['actor_look_at', 'x C x3 C', [qw(head body)]],
 		'00F5' => ['map_login', 'x a4 x3 a4 x6 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0113' => undef,
-		'0116' => undef,
+		'0116' => ['item_drop', 'x2 v x4 v', [qw(index amount)]],
+		'0193' => ['storage_item_remove', 'x2 v x11 V', [qw(index amount)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -53,7 +58,11 @@ sub new {
 		character_move 00A7
 		actor_action 009F
 		public_chat 0085
+		actor_info_request 008C
 		item_take 00A2
+		item_drop 0116
+		storage_item_add 0094
+		skill_use_location 007E
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
@@ -81,42 +90,12 @@ sub sendSkillUse {
 }
 
 # 0x07e,30,useskilltopos,4:9:22:28
-sub sendSkillUseLoc {
-	my ($self, $ID, $lv, $x, $y) = @_;
-
-	my $msg = pack('v x2 v x3 v x11 v x4 v', 0x007E, $lv, $ID, $x, $y);
-
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
 
 # 0x089,7,ticksend,3
-sub sendSync {
-	my ($self, $initialSync) = @_;
-	my $msg;
-	# XKore mode 1 lets the client take care of syncing.
-	return if ($self->{net}->version == 1);
-
-	$msg = pack('v x V', 0x0089, getTickCount());
-	$self->sendToServer($msg);
-	debug "Sent Sync\n", "sendPacket", 2;
-}
 
 # 0x08c,13,getcharnamerequest,9
-sub sendGetPlayerInfo {
-	my ($self, $ID) = @_;
-	my $msg = pack('v x7 a4', 0x008C, $ID);
-	$self->sendToServer($msg);
-	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
-}
 
 # 0x094,14,movetokafra,4:10
-sub sendStorageAdd {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v x2 v x4 V', 0x0094, $index, $amount);
-	$self->sendToServer($msg);
-	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
-}
 
 # 0x09b,2,closekafra,0
 sub sendStorageClose {
@@ -153,12 +132,6 @@ sub sendSkillUseLocInfo {
 }
 
 # 0x116,12,dropitem,4:10
-sub sendDrop {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v x2 v x4 v', 0x0116, $index, $amount);
-	$self->sendToServer($msg);
-	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
-}
 
 # 0x190,15,useitem,3:11
 sub sendItemUse {
@@ -169,12 +142,6 @@ sub sendItemUse {
 }
 
 # 0x193,21,movefromkafra,4:17
-sub sendStorageGet {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v x2 v x11 V', 0x0193, $index, $amount);
-	$self->sendToServer($msg);
-	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
-}
 
 # 0x222,6,weaponrefine,2
 sub sendWeaponRefine {
