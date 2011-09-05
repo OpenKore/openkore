@@ -424,6 +424,20 @@ sub sendMapLoaded {
 	Plugins::callHook('packet/sendMapLoaded');
 }
 
+sub reconstruct_sync {
+	my ($self, $args) = @_;
+	$args->{time} = getTickCount;
+}
+
+sub sendSync {
+	my ($self, $initialSync) = @_;
+	# XKore mode 1 lets the client take care of syncing.
+	return if ($self->{net}->version == 1);
+
+	$self->sendToServer($self->reconstruct({switch => 'sync'}));
+	debug "Sent Sync\n", "sendPacket", 2;
+}
+
 sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 	my ($self, $monID, $flag) = @_;
 
@@ -455,6 +469,12 @@ sub reconstruct_public_chat {
 sub sendChat {
 	my ($self, $message) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'public_chat', message => $message}));
+}
+
+sub sendGetPlayerInfo {
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'actor_info_request', ID => $ID}));
+	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub parse_private_message {
@@ -493,6 +513,12 @@ sub sendTake {
 	debug "Sent take\n", "sendPacket", 2;
 }
 
+sub sendDrop {
+	my ($self, $index, $amount) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'item_drop', index => $index, amount => $amount}));
+	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
+}
+
 # for old plugin compatibility, use sendRestart instead!
 sub sendRespawn {
 	sendRestart(0);
@@ -511,6 +537,18 @@ sub sendRestart {
 	debug "Sent Restart: " . ($type ? 'Quit To Char Selection' : 'Respawn') . "\n", "sendPacket", 2;
 }
 
+sub sendStorageAdd {
+	my ($self, $index, $amount) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'storage_item_add', index => $index, amount => $amount}));
+	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
+}
+
+sub sendStorageGet {
+	my ($self, $index, $amount) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'storage_item_remove', index => $index, amount => $amount}));
+	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
+}
+
 sub parse_party_chat {
 	my ($self, $args) = @_;
 	$self->parseChat($args);
@@ -524,6 +562,34 @@ sub reconstruct_party_chat {
 sub sendPartyChat {
 	my ($self, $message) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'party_chat', message => $message}));
+}
+
+sub parse_buy_bulk_vender {
+	my ($self, $args) = @_;
+	@{$args->{items}} = map {{ amount => unpack('v', $_), itemIndex => unpack('x2 v', $_) }} unpack '(a4)*', $args->{itemInfo};
+}
+
+sub reconstruct_buy_bulk_vender {
+	my ($self, $args) = @_;
+	# ITEM index. There were any other indexes expected to be in item buying packet?
+	$args->{itemInfo} = pack '(a4)*', map { pack 'v2', @{$_}{qw(amount itemIndex)} } @{$args->{items}};
+}
+
+sub sendBuyBulkVender {
+	my ($self, $venderID, $r_array, $venderCID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'buy_bulk_vender',
+		venderID => $venderID,
+		venderCID => $venderCID,
+		items => $r_array,
+	}));
+	debug "Sent bulk buy vender: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$r_array)."\n", "sendPacket";
+}
+
+sub sendSkillUseLoc {
+	my ($self, $ID, $lv, $x, $y) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'skill_use_location', lv => $lv, skillID => $ID, x => $x, y => $y}));
+	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
 sub sendGuildMasterMemberCheck {

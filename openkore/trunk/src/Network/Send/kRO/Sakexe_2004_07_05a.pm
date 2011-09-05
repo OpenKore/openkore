@@ -34,6 +34,7 @@ sub new {
 	my %packets = (
 		'0072' => ['map_login', 'x3 a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0085' => ['character_move', 'x3 a3', [qw(coords)]],
+		'0116' => ['skill_use_location', 'x2 v x3 v3', [qw(lv skillID x y)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -66,14 +67,6 @@ sub sendSkillUse {
 }
 
 # 0x0116,15,useskilltopos,4:9:11:13
-sub sendSkillUseLoc {
-	my ($self, $ID, $lv, $x, $y) = @_;
-
-	my $msg = pack('v x2 v x3 v3', 0x0116, $lv, $ID, $x, $y);
-
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
 
 # 0x0190,95,useskilltoposinfo,4:9:11:13:15
 sub sendSkillUseLocInfo {

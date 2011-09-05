@@ -23,7 +23,7 @@ use Network::Send::ServerType0;
 
 use Log qw(message warning error debug);
 use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
+use Utils qw(getTickCount getHex getCoordString makeCoordsDir);
 
 # TODO: maybe we should try to not use globals in here at all but instead pass them on?
 use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
@@ -44,15 +44,21 @@ sub new {
 		'0068' => ['char_delete'], # TODO
 		'0072' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'007D' => ['map_loaded'], # len 2
-		'007E' => ['sync'], # TODO
+		'007E' => ['sync', 'V', [qw(time)]],
 		'0085' => ['character_move', 'a3', [qw(coords)]],
 		'0089' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
+		'0094' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
 		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'009F' => ['item_take', 'a4', [qw(ID)]],
+		'00A2' => ['item_drop', 'v2', [qw(index amount)]],
 		'00B2' => ['restart', 'C', [qw(type)]],
+		'00F3' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
+		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0149' => ['alignment'], # TODO
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
@@ -122,15 +128,6 @@ sub sendCharDelete {
 # 0x007d,2,loadendack,0
 
 # 0x007e,6,ticksend,2
-sub sendSync {
-	my ($self, $initialSync) = @_;
-	# XKore mode 1 lets the client take care of syncing.
-	return if ($self->{net}->version == 1);
-
-	my $msg = pack('v V', 0x007E, getTickCount());
-	$self->sendToServer($msg);
-	debug "Sent Sync\n", "sendPacket", 2;
-}
 
 # 0x007f,6
 # 0x0080,7
@@ -191,12 +188,6 @@ sub sendTalk {
 # 0x0093,2
 
 # 0x0094,6,getcharnamerequest,2
-sub sendGetPlayerInfo {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4', 0x0094, $ID);
-	$self->sendToServer($msg);
-	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
-}
 
 # 0x0095,30
 
@@ -228,12 +219,6 @@ sub sendGMMessage {
 # 0x00a1,6
 
 # 0x00a2,6,dropitem,2:4
-sub sendDrop {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v3', 0x00A2, $index, $amount);
-	$self->sendToServer($msg);
-	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
-}
 
 # 0x00a3,-1
 # 0x00a4,-1
@@ -554,22 +539,10 @@ sub sendDealTrade {
 # 0x00f2,6
 
 # 0x00f3,8,movetokafra,2:4
-sub sendStorageAdd {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v2 V', 0x00F3, $index, $amount);
-	$self->sendToServer($msg);
-	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
-}
 
 # 0x00f4,21
 
 # 0x00f5,8,movefromkafra,2:4
-sub sendStorageGet {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v2 V', 0x00F5, $index, $amount);
-	$self->sendToServer($msg);
-	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
-}
 
 # 0x00f6,8
 
@@ -684,12 +657,6 @@ sub sendSkillUse {
 # 0x0115,35
 
 # 0x0116,10,useskilltopos,2:4:6:8
-sub sendSkillUseLoc {
-	my ($self, $ID, $lv, $x, $y) = @_;
-	my $msg = pack('v5', 0x0116, $lv, $ID, $x, $y);
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
 
 # 0x0117,18
 
@@ -786,26 +753,7 @@ sub sendEnteringVender {
 # 0x0132,6
 # 0x0133,-1
 
-=pod
-# TODO: this is a dynamic len packet, we could buy more types of items at once!!!
-sub sendBuyVender {
-	my ($self, $venderID, $ID, $amount) = @_;
-	my $len = 12;
-	my $msg = pack('v2 a4 v2', 0x0134, $len, $venderID, $amount, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Vender Buy: ".getHex($ID)."\n", "sendPacket";
-}
-=cut
 # 0x0134,-1,purchasereq,2:4:8
-sub sendBuyBulkVender {
-	my ($self, $venderID, $r_array) = @_;
-	my $msg = pack('v2 a4', 0x0134, 8+4*@{$r_array}, $venderID);
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemIndex});
-		debug "Sent bulk buy vender: $r_array->[$i]{itemIndex} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
-	}
-	$self->sendToServer($msg);
-}
 
 # 0x0135,7
 # 0x0136,-1

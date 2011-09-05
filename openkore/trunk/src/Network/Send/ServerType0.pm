@@ -47,15 +47,20 @@ sub new {
 		'0068' => ['char_delete'], # TODO
 		'0072' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'007D' => ['map_loaded'], # len 2
-		'007E' => ['sync'], # TODO
+		'007E' => ['sync', 'V', [qw(time)]],
 		'0089' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
+		'0094' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
 		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'009F' => ['item_take', 'a4', [qw(ID)]],
+		'00A2' => ['item_drop', 'v2', [qw(index amount)]],
 		'00B2' => ['restart', 'C', [qw(type)]],
-		'00F3' => ['map_login', '', [qw()]],
+		#'00F3' => ['map_login', '', [qw()]],
+		'00F3' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
+		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0149' => ['alignment', 'a4 C v', [qw(targetID type point)]],
 		'014D' => ['guild_check'], # len 2
@@ -166,28 +171,6 @@ sub sendBuyBulk {
 		debug "Sent bulk buy: $r_array->[$i]{itemID} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
 	}
 	$self->sendToServer($msg);
-}
-
-sub parse_buy_bulk_vender {
-	my ($self, $args) = @_;
-	@{$args->{items}} = map {{ amount => unpack('v', $_), itemIndex => unpack('x2 v', $_) }} unpack '(a4)*', $args->{itemInfo};
-}
-
-sub reconstruct_buy_bulk_vender {
-	my ($self, $args) = @_;
-	# ITEM index. There were any other indexes expected to be in item buying packet?
-	$args->{itemInfo} = pack '(a4)*', map { pack 'v2', @{$_}{qw(amount itemIndex)} } @{$args->{items}};
-}
-
-sub sendBuyBulkVender {
-	my ($self, $venderID, $r_array, $venderCID) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'buy_bulk_vender',
-		venderID => $venderID,
-		venderCID => $venderCID,
-		items => $r_array,
-	}));
-	debug "Sent bulk buy vender: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$r_array)."\n", "sendPacket";
 }
 
 sub sendCardMerge {
@@ -388,16 +371,6 @@ sub sendDealTrade {
 	debug "Sent Deal Trade\n", "sendPacket", 2;
 }
 
-sub sendDrop {
-	my ($self, $index, $amount) = @_;
-	my $msg;
-
-	$msg = pack("C*", 0xA2, 0x00) . pack("v*", $index, $amount);
-
-	$self->sendToServer($msg);
-	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
-}
-
 sub sendEmotion {
 	my ($self, $ID) = @_;
 	my $msg = pack("C*", 0xBF, 0x00).pack("C1",$ID);
@@ -456,14 +429,6 @@ sub sendGetCharacterName {
 	my $msg = pack("C*", 0x93, 0x01) . $ID;
 	$self->sendToServer($msg);
 	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
-}
-
-sub sendGetPlayerInfo {
-	my ($self, $ID) = @_;
-	my $msg;
-	$msg = pack("C*", 0x94, 0x00) . $ID;
-	$self->sendToServer($msg);
-	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendNPCBuySellList { # type:0 get store list, type:1 get sell list
@@ -1024,26 +989,6 @@ sub sendSkillUse {
 	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
 
-sub sendSkillUseLoc {
-	my ($self, $ID, $lv, $x, $y) = @_;
-	my $msg;
-
-	$msg = pack("C*", 0x16, 0x01).pack("v*",$lv,$ID,$x,$y);
-	
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendStorageAdd {
-	my ($self, $index, $amount) = @_;
-	my $msg;
-
-	$msg = pack("C*", 0xF3, 0x00) . pack("v*", $index) . pack("V*", $amount);
-
-	$self->sendToServer($msg);
-	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
-}
-
 sub sendStorageAddFromCart {
 	my $self = shift;
 	my $index = shift;
@@ -1069,16 +1014,6 @@ sub sendStorageClose {
 
 	$self->sendToServer($msg);
 	debug "Sent Storage Done\n", "sendPacket", 2;
-}
-
-sub sendStorageGet {
-	my ($self, $index, $amount) = @_;
-	my $msg;
-
-	$msg = pack("C*", 0xF5, 0x00) . pack("v*", $index) . pack("V*", $amount);
-	
-	$self->sendToServer($msg);
-	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
 
 sub sendStorageGetToCart {
@@ -1175,19 +1110,6 @@ sub sendSuperNoviceExplosion {
 	my $msg = pack("C*", 0xED, 0x01);
 	$_[0]->sendToServer($msg);
 	debug "Sent Super Novice Explosion\n", "sendPacket", 2;
-}
-
-sub sendSync {
-	my ($self, $initialSync) = @_;
-	my $msg;
-	# XKore mode 1 lets the client take care of syncing.
-	return if ($self->{net}->version == 1);
-	
-	$syncSync = pack("V", getTickCount());
-	$msg = pack("C*", 0x7E, 0x00) . $syncSync;
-
-	$self->sendToServer($msg);
-	debug "Sent Sync\n", "sendPacket", 2;
 }
 
 sub sendTalk {

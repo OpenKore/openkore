@@ -23,20 +23,24 @@ use Log qw(debug);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0134' => undef,
+		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	my %handlers = qw(
+		buy_bulk_vender 0801
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	$self;
 }
 
 # TODO: exact location packet?
 # 0x0801,-1,purchasereq,2:4:8:12
-sub sendBuyBulkVender {
-	my ($self, $venderID, $r_array, $venderCID) = @_;
-	my $msg = pack('v2 a4 a4', 0x0801, 12+4*@{$r_array}, $venderID, $venderCID); # TODO: is it the vender's charID?
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemIndex});
-		debug "Sent bulk buy vender: $r_array->[$i]{itemIndex} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
-	}
-	$self->sendToServer($msg);
-}
 
 =pod
 0008

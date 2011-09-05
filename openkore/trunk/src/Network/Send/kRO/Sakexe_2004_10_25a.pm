@@ -35,11 +35,16 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'007E' => ['storage_item_add', 'x4 v x V', [qw(index amount)]],
 		'0085' => ['actor_action', 'x2 a4 x6 C', [qw(targetID type)]],
+		'0094' => ['item_drop', 'x4 v x2 v', [qw(index amount)]],
+		'009B' => ['actor_info_request', 'x4 a4', [qw(ID)]],
+		'00A7' => ['skill_use_location', 'x4 v x v x12 v x v', [qw(lv skillID x y)]],
 		'00F3' => ['actor_look_at', 'x4 v x6 C', [qw(head body)]],
-		'00F5' => ['map_login', 'x4 a4 x5 a4 x a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'00F5' => ['map_login', 'x3 a4 x5 a4 x2 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0113' => ['item_take', 'x3 a4', [qw(ID)]],
-		'0116' => ['sync'], # TODO
+		'0116' => ['sync', 'x3 V', [qw(time)]],
+		'0193' => ['storage_item_remove', 'x10 v x4 V', [qw(index amount)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -55,12 +60,6 @@ sub sendItemUse {
 }
 
 # 0x007e,13,movetokafra,6:9
-sub sendStorageAdd {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v x4 v x V', 0x007E, $index, $amount);
-	$self->sendToServer($msg);
-	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
-}
 
 # 0x0085,15,actionrequest,4:14
 
@@ -75,20 +74,8 @@ sub sendSkillUseLocInfo {
 }
 
 # 0x0094,12,dropitem,6:10
-sub sendDrop {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v x4 v x7 v', 0x0094, $index, $amount);
-	$self->sendToServer($msg);
-	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
-}
 
 # 0x009b,10,getcharnamerequest,6
-sub sendGetPlayerInfo {
-	my ($self, $ID) = @_;
-	my $msg = pack('v x4 a4', 0x008c, $ID);
-	$self->sendToServer($msg);
-	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
-}
 
 # 0x00a2,16,solvecharname,12
 sub sendGetCharacterName {
@@ -99,12 +86,6 @@ sub sendGetCharacterName {
 }
 
 # 0x00a7,28,useskilltopos,6:9:23:26
-sub sendSkillUseLoc {
-	my ($self, $ID, $lv, $x, $y) = @_;
-	my $msg = pack('v x4 v x v x12 v x v', 0x00A7, $lv, $ID, $x, $y);
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
 
 # 0x00f3,15,changedir,6:14
 
@@ -113,16 +94,6 @@ sub sendSkillUseLoc {
 # 0x0113,9,takeitem,5
 
 # 0x0116,9,ticksend,5
-sub sendSync {
-	my ($self, $initialSync) = @_;
-	my $msg;
-	# XKore mode 1 lets the client take care of syncing.
-	return if ($self->{net}->version == 1);
-
-	$msg = pack('v x4 V', 0x0116, getTickCount());
-	$self->sendToServer($msg);
-	debug "Sent Sync\n", "sendPacket", 2;
-}
 
 # 0x0190,26,useskilltoid,4:10:22
 sub sendSkillUse {
@@ -145,12 +116,6 @@ sub sendSkillUse {
 }
 
 # 0x0193,22,movefromkafra,12:18
-sub sendStorageGet {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v x10 v x4 V', 0x0193, $index, $amount);
-	$self->sendToServer($msg);
-	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
-}
 
 =pod
 //2004-10-25aSakexe
