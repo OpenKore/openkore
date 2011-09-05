@@ -1,6 +1,5 @@
 #!/usr/bin/env perl
 use strict;
-no strict 'refs';
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/..";
@@ -16,6 +15,7 @@ my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest Rijnd
 	FileParsersTest
 	NetworkTest
 	FieldTest
+	eAthenaTest
 );
 if ($^O eq 'MSWin32') {
 	push @tests, qw(HttpReaderTest);
@@ -32,6 +32,5 @@ foreach my $module (@tests) {
 		print STDERR "Cannot load unit test $module:\n$@\n";
 		exit 1;
 	}
-	my $start = "${module}::start";
-	$start->();
+	$module->start;
 }
