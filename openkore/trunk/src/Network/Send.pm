@@ -520,14 +520,10 @@ sub sendDrop {
 }
 
 # for old plugin compatibility, use sendRestart instead!
-sub sendRespawn {
-	sendRestart(0);
-}
+sub sendRespawn { $_[0]->sendRestart(0) }
 
 # for old plugin compatibility, use sendRestart instead!
-sub sendQuitToCharSelect {
-	sendRestart(1);
-}
+sub sendQuitToCharSelect { $_[0]->sendRestart(1) }
 
 # 0x00b2,3,restart,2
 # type: 0=respawn ; 1=return to char select
