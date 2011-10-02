@@ -9,8 +9,9 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#  $Revision: 6687 $
+#  $Revision: 7841 $
 #  $Id: kRO.pm 6687 2009-04-19 19:04:25Z technologyguild $
+#  Edit by ya4epT SVN7841 2011-10-03 00:20
 ########################################################################
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
@@ -25,6 +26,8 @@ use I18N qw(stringToBytes);
 
 # TODO: maybe we should try to not use globals in here at all but instead pass them on?
 use Globals qw(%config);
+use Misc qw(stripLanguageCode chatLog);
+use I18N qw(bytesToString);
 
 sub new {
 	my ($class) = @_;
@@ -53,7 +56,7 @@ sub new {
 		# 0x02bc,6
 		# 0x02bf,10
 		# 0x02c0,2
-		# 0x02c1,-1
+		'02C1' => ['main_chat', 'v a8 a*', [qw(len unknown message)]], # -1
 		# 0x02c2,-1
 
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]], # 30
@@ -91,6 +94,13 @@ sub new {
 	}
 
 	return $self;
+}
+sub main_chat {
+	my ($self, $args) = @_;
+	my $message = bytesToString($args->{message});
+	stripLanguageCode(\$message);
+	chatLog("M", "$message\n") if ($config{logSystemChat});
+	message "$message\n", "schat";
 }
 
 =pod
