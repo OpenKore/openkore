@@ -497,12 +497,12 @@ sub new {
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade card1 card2 card3 card4)]], # 0x080F,20 # TODO: test & use type
 		'0810' => ['open_buying_store', 'c', [qw(amount)]], #TODO: PACKET_ZC_OPEN_BUYING_STORE
 		'0812' => ['open_buying_store_fail', 'v', [qw(result)]], #TODO: PACKET_ZC_FAILED_OPEN_BUYING_STORE_TO_BUYER     **msgtable
-		'0814' => ['buying_store_appear', 'V Z*', [qw(id name)]], #TODO: PACKET_ZC_BUYING_STORE_ENTRY
-		'081C' => ['buying_store_item_delete', 'v2 V', [qw(index amount zeny)]],
-		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
+#		'0814' => ['buying_store_appear', 'V Z*', [qw(id name)]], #TODO: PACKET_ZC_BUYING_STORE_ENTRY
 		'0814' => ['buyer_found', 'a4 A80', [qw(ID title)]],
 		'0816' => ['buyer_lost', 'V', [qw(ID)]], #TODO: PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY
 		'0818' => ['buyer_items', 'v a4 a4', [qw(len venderID venderCID)]],
+		'081C' => ['buying_store_item_delete', 'v2 V', [qw(index amount zeny)]],
+		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
 		'082D' => ['received_characters', 'v C x2 C2 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]],
 		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
 		'084B' => ['item_appeared', 'a4 v2 C v2', [qw(ID nameID amount identified x y)]], # 19 TODO   provided by try71023
