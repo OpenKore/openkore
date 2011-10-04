@@ -35,14 +35,8 @@ sub write_player {
 	my (undef, $args) = @_;
 	my $targetId = $args->{player}{nameID};
 	my $targetName = $args->{player}{name};
-	my $aYou = Actor::get($accountID);
 	my $selfName = $char->name();
-	my $file = '$Settings::logs_folder/players_$selfName.txt';
-
-	my ($uId, $name);
-	my $exist=0;
-	my $line;
-
+	my $file = "$Settings::logs_folder/players_$selfName.txt";
 	message "Player Exists: $targetName ($targetId)\n";
 
 	open FILE, ">>:utf8", $file;
