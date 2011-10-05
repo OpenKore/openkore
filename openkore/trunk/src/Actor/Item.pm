@@ -406,13 +406,7 @@ sub use {
 	my $target = shift;
 	# TODO: use Actor as an argument
 	return 0 unless $self->usable;
-	# FIXME: "==" is wrong choice there. Why not just sendItemUse(..., $target || $accountID)
-	if (!$target || $target == $accountID) {
-		$messageSender->sendItemUse($self->{index}, $accountID);
-	}
-	else {
-		$messageSender->sendItemUse($self->{index}, $target);
-	}
+	$messageSender->sendItemUse($self->{index}, !$target?$accountID:$target);
 	return 1;
 }
 
