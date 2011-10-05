@@ -287,7 +287,7 @@ sub new {
 		'01C5' => ['cart_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'v2 a4 v C', [qw(index itemID ID remaining success)]],
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]],
-		'01CD' => ['sage_autospell', 'a*', [qw(skills_list)]],
+		'01CD' => ['sage_autospell', 'x2 a*', [qw(autospell_list)]],
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]],
 		'01D0' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'01D1' => ['blade_stop', 'a4 a4 V', [qw(sourceID targetID active)]],
@@ -460,7 +460,7 @@ sub new {
 		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]],
 		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]],
 		'0441' => ['skill_delete', 'v', [qw(ID)]], #TODO: PACKET_ZC_SKILLINFO_DELETE
-		'0442' => ['sage_autospell', 'v V a*', [qw(len why skills_list)]],
+		'0442' => ['sage_autospell', 'x2 V a*', [qw(why autoshadowspell_list)]],
 		'0444' => ['cash_item_list', 'v V3 c v', [qw(len cash_point price discount_price type item_id)]], #TODO: PACKET_ZC_SIMPLE_CASH_POINT_ITEMLIST
 		'0446' => ['actor_quest_effect', 'a4 v4', [qw(ID x y effect type)]],
 
@@ -5243,27 +5243,6 @@ sub resurrection {
 			$player->{deltaHp} = 0;
 		}
 		message TF("%s has been resurrected\n", getActorName($targetID)), "info";
-	}
-}
-
-# Sage's Hindsight, Shadow Chaser's Auto Shadow Spell
-sub sage_autospell {
-	my ($self, $args) = @_;
-
-	my @skills = unpack 'v*', $args->{skills_list};
-	debug "Available skills: @skills\n", 'skill';
-
-	if ($config{autoSpell}) {
-		my $skill = new Skill(auto => $config{autoSpell});
-		if ($config{autoSpell_force} || List::Util::first { $_ == $skill->getIDN } @skills) {
-			if (defined $args->{why}) {
-				$messageSender->sendSkillSelect($skill->getIDN, $args->{why});
-			} else {
-				$messageSender->sendAutoSpell($skill->getIDN);
-			}
-		} else {
-			warning "Configured autoSpell is not available.\n", 'skill';
-		}
 	}
 }
 

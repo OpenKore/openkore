@@ -26,7 +26,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'0442' => ['skills_list_autoshadowspell', 'v V a*', [qw(len amount skillIDs)]], # -1 # TODO: use
+		'0442' => [sage_autospell => 'x2 V a*', [qw(why autoshadowspell_list)]], # -1
 		# 0x0443 is sent packet # TODO: add
 	);
 	
@@ -35,15 +35,6 @@ sub new {
 	}
 
 	return $self;
-}
-
-sub skills_list_autoshadowspell {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-	for (my $i = 0; $i < $args->{count}; $i++) {
-		my ($skillID) = unpack('v', substr($args->{skillIDs}, $i*2, 2));
-		debug "$skillID\n";
-	}
 }
 
 =pod

@@ -436,7 +436,7 @@ sub new {
 		# // 0x01ca,0
 		# 0x01cb is sent packet
 		'01CC' => ['monster_talk', 'a4 C3', [qw(ID stateID skillID arg)]], # 9
-		'01CD' => ['sage_autospell'], # 30
+		'01CD' => ['sage_autospell', 'a*', [qw(autospell_list)]], # 30
 		# 0x01ce is sent packet
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]], # 28
 		'01D0' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]], # 8
@@ -5141,14 +5141,6 @@ sub resurrection {
 			$player->{deltaHp} = 0;
 		}
 		message TF("%s has been resurrected\n", getActorName($targetID)), "info";
-	}
-}
-
-sub sage_autospell {
-	# Sage Autospell - list of spells availible sent from server
-	if ($config{autoSpell}) {
-		my $skill = new Skill(auto => $config{autoSpell});
-		$messageSender->sendAutoSpell($skill->getIDN());
 	}
 }
 
