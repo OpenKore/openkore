@@ -24,7 +24,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x043f,25
+		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]], # 25
 		# 0x0444,-1
 		# 0x0445 is sent packet
 	);
