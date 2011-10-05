@@ -46,8 +46,7 @@ sub cast {
                         ($item->{'amount'} > 0) &&
                         (main::checkSelfCondition($prefix.$i))) 
                 {
-						#Remove the comment bellow if you play on eathena server
-						#Commands::run('arrowcraft use');
+						Commands::run('arrowcraft use') if ($masterServer->{private});
                         sendArrowCraft($messageSender,$item->{'nameID'});
                         message ("You use Arrow Craft on item: " . $item->{'name'} . "\n", "selfSkill");
                         $delay{'time'} = time;
