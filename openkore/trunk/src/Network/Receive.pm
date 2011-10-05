@@ -334,4 +334,57 @@ sub account_server_info {
 	}
 }
 
+sub parse_sage_autospell {
+	my ($self, $args) = @_;
+	
+	$args->{skills} = [map { Skill->new(idn => $_) } sort { $a<=>$b } grep {$_}
+		exists $args->{autoshadowspell_list}
+		? (unpack 'v*', $args->{autoshadowspell_list})
+		: (unpack 'V*', $args->{autospell_list})
+	];
+}
+
+sub reconstruct_sage_autospell {
+	my ($self, $args) = @_;
+	
+	my @skillIDs = map { $_->getIDN } $args->{skills};
+	$args->{autoshadowspell_list} = pack 'v*', @skillIDs;
+	$args->{autospell_list} = pack 'V*', @skillIDs;
+}
+
+##
+# sage_autospell({arrayref skills, int why})
+# skills: list of Skill objects
+# why: unknown
+#
+# Skill list for Sage's Hindsight and Shadow Chaser's Auto Shadow Spell
+sub sage_autospell {
+	my ($self, $args) = @_;
+	
+	return unless $self->changeToInGameState;
+	
+	my $msg = center(' ' . T('Auto Spell') . ' ', 40, '-') . "\n"
+	. T("   # Skill\n")
+	. (join '', map { swrite '@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', [$_->getIDN, $_] } @{$args->{skills}})
+	. ('-'x40) . "\n";
+	
+	message $msg, 'list';
+	
+	if ($config{autoSpell}) {
+		my $skill = new Skill(auto => $config{autoSpell});
+		if ($config{autoSpell_force} || List::Util::first { $_->getIDN == $skill->getIDN } @{$args->{skills}}) {
+			if (defined $args->{why}) {
+				$messageSender->sendSkillSelect($skill->getIDN, $args->{why});
+			} else {
+				$messageSender->sendAutoSpell($skill->getIDN);
+			}
+		} else {
+			error TF("Configured autoSpell (%s) is not available.\n", $skill);
+			message T("Configure autoSpell_force to use it anyway.\n"), 'hint';
+		}
+	} else {
+		message T("Configure autoSpell to automatically select skill for Auto Spell.\n"), 'hint';
+	}
+}
+
 1;
