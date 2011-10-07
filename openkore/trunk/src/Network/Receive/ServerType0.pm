@@ -7981,7 +7981,8 @@ sub open_buying_store {
 }
 sub actor_quest_effect {
 	my ($self, $args) = @_;
-	debug("npc: %d (%d, %d) effect: %d (type: %d)\n",$args->{ID}, $args->{x}, $args->{y},, $args->{effect}, $args->{type});
+	my $actor = Actor::get($args->{ID});
+	debug TF("npc: %s (%d, %d) effect: %d (type: %d)\n", $actor, $args->{x}, $args->{y}, $args->{effect}, $args->{type});
 }
 
 sub define_check {
