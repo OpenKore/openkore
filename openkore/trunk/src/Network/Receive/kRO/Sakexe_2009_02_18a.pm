@@ -19,12 +19,14 @@ package Network::Receive::kRO::Sakexe_2009_02_18a;
 
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2009_01_14a);
+use Log qw(debug);
+use Translation qw(TF);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'0446' => ['quest_npc_effect', 'a4 v4', [qw(npcID xPos yPos effect type)]], # 14
+		'0446' => ['actor_quest_effect', 'a4 v4', [qw(ID x y effect type)]], # 14
 	);
 	
 	foreach my $switch (keys %packets) {
@@ -33,7 +35,11 @@ sub new {
 
 	return $self;
 }
-
+sub actor_quest_effect {
+	my ($self, $args) = @_;
+	my $actor = Actor::get($args->{ID});
+	debug TF("npc: %s (%d, %d) effect: %d (type: %d)\n", $actor, $args->{x}, $args->{y}, $args->{effect}, $args->{type});
+}
 =pod
 //2009-02-18aSakexe
 0x0446,14
