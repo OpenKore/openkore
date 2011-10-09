@@ -462,7 +462,7 @@ sub new {
 		'0441' => ['skill_delete', 'v', [qw(ID)]], #TODO: PACKET_ZC_SKILLINFO_DELETE
 		'0442' => ['sage_autospell', 'x2 V a*', [qw(why autoshadowspell_list)]],
 		'0444' => ['cash_item_list', 'v V3 c v', [qw(len cash_point price discount_price type item_id)]], #TODO: PACKET_ZC_SIMPLE_CASH_POINT_ITEMLIST
-		'0446' => ['actor_quest_effect', 'a4 v4', [qw(ID x y effect type)]],
+		'0446' => ['minimap_indicator', 'a4 v4', [qw(npcID x y effect qtype)]],
 
 		'0449' => ['hack_shield_alarm'],
 		'07D8' => ['party_setting', 'V C2', [qw(exp itempick itemdiv)]],
@@ -4238,20 +4238,6 @@ sub message_string {
 	}
 }
 
-sub minimap_indicator {
-	my ($self, $args) = @_;
-
-	if ($args->{type} == 2) {
-		message TF("Minimap indicator at location %d, %d " .
-		"with the color %s cleared\n", $args->{x}, $args->{y}, "[R:$args->{red}, G:$args->{green}, B:$args->{blue}, A:$args->{alpha}]"),
-		"info";
-	} else {
-		message TF("Minimap indicator at location %d, %d " .
-		"with the color %s shown\n", $args->{x}, $args->{y}, "[R:$args->{red}, G:$args->{green}, B:$args->{blue}, A:$args->{alpha}]"),
-		"info";
-	}
-}
-
 sub monster_typechange {
 	my ($self, $args) = @_;
 
@@ -7978,11 +7964,6 @@ sub open_buying_store {
 	my($self, $args) = @_;
 	my $number = $args->{number};
 	message TF("You can gather %d items.\n", $number);
-}
-sub actor_quest_effect {
-	my ($self, $args) = @_;
-	my $actor = Actor::get($args->{ID});
-	debug TF("npc: %s (%d, %d) effect: %d (type: %d)\n", $actor, $args->{x}, $args->{y}, $args->{effect}, $args->{type});
 }
 
 sub define_check {

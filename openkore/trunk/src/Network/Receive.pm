@@ -334,6 +334,68 @@ sub account_server_info {
 	}
 }
 
+use constant QTYPE => (
+	0x0 => [0xff, 0xff, 0, 0],
+	0x1 => [0xff, 0x80, 0, 0],
+	0x2 => [0, 0xff, 0, 0],
+	0x3 => [0x80, 0, 0x80, 0],
+);
+
+sub parse_minimap_indicator {
+	my ($self, $args) = @_;
+	
+	$args->{actor} = Actor::get($args->{npcID});
+	$args->{show} = $args->{type} != 2;
+	
+	unless (defined $args->{red}) {
+		@{$args}{qw(red green blue alpha)} = @{{QTYPE}->{$args->{qtype}} || [0xff, 0xff, 0xff, 0]};
+	}
+	
+	# FIXME: packet 0144: coordinates are missing now when clearing indicators; ID is used
+	# Wx depends on coordinates there
+}
+
+# TODO
+sub reconstruct_minimap_indicator {
+}
+
+##
+# minimap_indicator({bool show, Actor actor, int x, int y, int red, int green, int blue, int alpha [, int effect]})
+# show: whether indicator is shown or cleared
+# actor: @MODULE(Actor) who issued the indicator; or which Actor it's binded to
+# x, y: indicator coordinates
+# red, green, blue, alpha: indicator color
+# effect: unknown, may be missing
+#
+# Minimap indicator.
+sub minimap_indicator {
+	my ($self, $args) = @_;
+	
+	my $color_str = "[R:$args->{red}, G:$args->{green}, B:$args->{blue}, A:$args->{alpha}]";
+	my $indicator = T("minimap indicator");
+	if (defined $args->{type}) {
+		unless ($args->{type} == 1 || $args->{type} == 2) {
+			$indicator .= " (unknown type $args->{type})";
+		}
+	} elsif (defined $args->{effect}) {
+		if ($args->{effect} == 1) {
+			$indicator = T("*Quest!*");
+		} elsif ($args->{effect}) { # 0 is no effect
+			$indicator = "unknown effect $args->{effect}";
+		}
+	}
+	
+	if ($args->{show}) {
+		message TF("%s shown %s at location %d, %d " .
+		"with the color %s\n", $args->{actor}, $indicator, @{$args}{qw(x y)}, $color_str),
+		"info";
+	} else {
+		message TF("%s cleared %s at location %d, %d " .
+		"with the color %s\n", $args->{actor}, $indicator, @{$args}{qw(x y)}, $color_str),
+		"info";
+	}
+}
+
 sub parse_sage_autospell {
 	my ($self, $args) = @_;
 	
@@ -354,10 +416,10 @@ sub reconstruct_sage_autospell {
 
 ##
 # sage_autospell({arrayref skills, int why})
-# skills: list of Skill objects
+# skills: list of @MODULE(Skill) instances
 # why: unknown
 #
-# Skill list for Sage's Hindsight and Shadow Chaser's Auto Shadow Spell
+# Skill list for Sage's Hindsight and Shadow Chaser's Auto Shadow Spell.
 sub sage_autospell {
 	my ($self, $args) = @_;
 	
