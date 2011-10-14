@@ -137,18 +137,28 @@ sub new {
 
 	my @holder = ($self);
 	Scalar::Util::weaken($holder[0]);
+	
+	my $workaround_skill_use = sub {
+		my ($handle) = @_;
+		sub {
+			onSkillUse(undef, {
+				sourceID => $char->{ID},
+				skillID => Skill->new(handle => $handle)->getIDN,
+			}, \@holder)
+		}
+	};
+	
 	$self->{hooks} = Plugins::addHooks(
 		['is_casting',       \&onSkillCast, \@holder],
 		['packet_skilluse',  \&onSkillUse,  \@holder],
 		
 		# server doesn't confirm skill use for MC_IDENTIFY
 		# FIXME: server doesn't send anything if there're no items to identify
-		['packet/identify_list' => sub {
-			onSkillUse(undef, {
-				sourceID => $char->{ID},
-				skillID => Skill->new(qw(handle MC_IDENTIFY))->getIDN,
-			}, \@holder)
-		}],
+		['packet/identify_list' => $workaround_skill_use->('MC_IDENTIFY')],
+		
+		# server doesn't confirm skill use for MC_VENDING
+		# official servers send lone skill_cast packet
+		['packet/shop_skill' => $workaround_skill_use->('MC_VENDING')],
 		
 		['packet_skillfail', \&onSkillFail, \@holder],
 		['packet_castCancelled', \&onSkillCancelled, \@holder],
