@@ -140,6 +140,16 @@ sub new {
 	$self->{hooks} = Plugins::addHooks(
 		['is_casting',       \&onSkillCast, \@holder],
 		['packet_skilluse',  \&onSkillUse,  \@holder],
+		
+		# server doesn't confirm skill use for MC_IDENTIFY
+		# FIXME: server doesn't send anything if there're no items to identify
+		['packet/identify_list' => sub {
+			onSkillUse(undef, {
+				sourceID => $char->{ID},
+				skillID => Skill->new(qw(handle MC_IDENTIFY))->getIDN,
+			}, \@holder)
+		}],
+		
 		['packet_skillfail', \&onSkillFail, \@holder],
 		['packet_castCancelled', \&onSkillCancelled, \@holder],
 		['Network::Receive::map_changed', \&onMapChanged, \@holder],
