@@ -13,11 +13,13 @@
 package profiles;
 
 use strict;
+use File::Spec;
 use Plugins;
 use Globals qw($interface);
 
 my $profile_folder = "profiles";
 
+return unless
 Plugins::register('profiles', 'Profiles Selector', \&on_unload);
 
 my $hooks = Plugins::addHooks(
@@ -30,17 +32,19 @@ sub on_unload {
 }
 
 sub onStart {
-   opendir D, $profile_folder;
-   my @conlist = readdir(D);
-   closedir D;
+   opendir my $d, $profile_folder;
+   my @conlist = readdir($d);
+   closedir $d;
 
    my @profiles;
 
    foreach (@conlist) {
-      next if (!-d "$profile_folder\\$_");
+      next unless -d File::Spec->catdir($profile_folder, $_);
       next if ($_ =~ /^\./);
       push @profiles, $_;
    }
+
+   @profiles = sort { $a cmp $b } @profiles;
 
    my $choice = $interface->showMenu(
          "Please choose a Profiles folder.",
@@ -53,21 +57,7 @@ sub onStart {
 
    } else {
 
-      if (-e "$profile_folder\\" . @profiles[$choice] . "\\config.txt") {
-         $Settings::config_file = "$profile_folder\\" . @profiles[$choice] . "\\config.txt";
-      }
-
-      if (-e "$profile_folder\\" . @profiles[$choice] . "\\mon_control.txt") {
-         $Settings::mon_control_file = "$profile_folder\\" . @profiles[$choice] . "\\mon_control.txt";
-      }
-
-      if (-e "$profile_folder\\" . @profiles[$choice] . "\\items_control.txt") {
-         $Settings::items_control_file = "$profile_folder\\" . @profiles[$choice] . "\\items_control.txt";
-      }
-
-      if (-e "$profile_folder\\" . @profiles[$choice] . "\\shop.txt") {
-         $Settings::shop_file = "$profile_folder\\" . @profiles[$choice] . "\\shop.txt";
-      }
+      unshift @Settings::controlFolders, File::Spec->catdir($profile_folder, $profiles[$choice]);
    }
 }
 
