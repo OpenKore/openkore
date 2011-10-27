@@ -308,9 +308,10 @@ sub setTablesFolders {
 	@tablesFolders = @_;
 }
 
+# FIXME: should be f(Array<String> folders), not f(String folders)?
 sub addTablesFolders {
 	if (defined(my $root = getTablepackFolder())) {
-		unshift @tablesFolders, grep -d, map { File::Spec->catfile($root, $_) } split ';', shift
+		unshift @tablesFolders, grep -d, map { File::Spec->catdir($root, $_) } split ';', shift
 	}
 }
 
