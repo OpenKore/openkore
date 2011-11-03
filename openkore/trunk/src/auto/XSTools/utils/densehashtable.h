@@ -99,6 +99,7 @@
 #include "sparseconfig.h"
 #include <assert.h>
 #include <stdlib.h>             // for abort()
+#include <stddef.h>		// for ptrdiff_t
 #include <algorithm>            // For swap(), eg
 #include <iostream>             // For cerr
 #include <memory>               // For uninitialized_fill, uninitialized_copy
