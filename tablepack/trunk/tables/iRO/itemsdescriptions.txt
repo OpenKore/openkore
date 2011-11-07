@@ -40736,3 +40736,5014 @@ Gf Recruiter Hat
 AFK Hat
 Weight : ^7777771^000000
 #
+16186#
+A box containing 1 Baby Dragon Hat.
+This can be purchased Playspan store at ^0000FFstore.playspan.com^000000
+^FF0000Can be traded and stored.^000000
+^FF0000Once opened, the hat can only be placed in storage.^000000
+Description:
+A baby dragon who has been trained to help its master.
+^FF0000From May 6 to June 3^000000
+^0000FFIt has the ability to grant its wearer 20% more Base experience for each dragon type monster killed.^000000
+^0000FFIncreases damage and resistance to Dragon type monsters by 10%.^000000
+^FF0000This item is account bound.^000000
+Slot : ^7777771^000000
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Location : ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level  : ^7777771^000000
+Jobs : ^777777All^000000
+^FFFFFF_^000000
+Weight : ^7777771^000000
+#
+16192#
+A Box that contains 1 Coati Hat
+^ffffff_^000000
+Description:
+A Coati-shaped Hat with a cute thick tail. This hat comes with a fresh forest scent.
+Agi +3, Can't be refined.
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Location : ^777777Upper ^000000
+Weight : ^77777770^000000
+Required Level : ^77777745^000000
+Jobs : ^777777Every Classes^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+16193#
+A Box that contains 1 Tucan Hat
+^ffffff_^000000
+Description:
+A bird from the Tucan family with a fabulous yellow colored beak. It has been seen eating sweet loop flavored cereal.
+Dex +3. Can't be refined.
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Position : ^777777Upper-Mid ^000000
+Weight : ^77777760^000000
+Required Level : ^77777745^000000
+Job : ^777777Every Classes^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+16194#
+A Box that contains 1 Jaguar Hat
+^ffffff_^000000
+Description:
+A mask of the king of the Amazon the Jaguar. According to rumor, those who wear this get blessings from nature.
+Mdef +2.
+Enables the use of Crazy Uproar skill.
+Class : ^777777Headgear^000000
+Defense : ^7777774^000000
+Location : ^777777Upper, Middle, Low^000000
+Weight : ^77777740^000000
+Required Level : ^77777725^000000
+Jobs : ^777777All Jobs^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+18507#
+A fashion accessory
+that gives ears that
+vaunted, elvish look.
+For some, it is an
+incredible turn-on.
+^CC0000This item is Account Bound^000000
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Middle^000000
+Weight : ^77777710^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All^000000
+#
+12409#
+Ignorance is delicious
+^ffffff_^000000
+Weight :: ^7777770^000000
+#
+12410#
+Strengthens relationships with distant friends and family.
+Weight : ^7777770^000000
+#
+6219#
+A mark that certifies a member of the Eden Group. It's made to be very portable.
+Weight : ^7777770^000000
+#
+6223#
+One of the hardest metals on the Rune Midgard continent. It has a extraordinary degree of strength but it's too solid to be easily refined. 
+Weight : ^77777715^000000
+#
+6224#
+One of the hardest metals found in the Ash Vacuum.
+It was difficult to refine because of it's high density, but recent experiments have made it possible to use it in weapon strengthening.
+Weight : ^77777715^000000
+#
+6225#
+A high density Carnium used in upgrading armor. Take this to Basta in Payon next to the Kafra Shop Ladies to help you upgrade armor at +10 and higher.
+This Carnium's density guarantees that your armor will NOT break when attempting to upgrade and if the upgrade attempt fails, it will only downgrade 1 level instead of 3 like a normal Carnium.
+Weight : ^7777770^000000
+#
+6226#
+A high density Bradium used in upgrading weapons. Take this to Basta in Payon next to the Kafra Shop Ladies to help you upgrade weapons at +10 and higher.
+This Bradium's density guarantees that your weapon will NOT break when attempting to upgrade and if the upgrade attempt fails, it will only downgrade 1 level instead of 3 like a normal Bradium.
+Weight : ^7777770^000000
+#
+16258#
+A box which contains 5 high density bradiums.
+The density and solidity has been heightened by repeated experiments from Rune Midgard's scholars. It seems that it becomes more difficult for weapon upgrade.
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed. (When the upgrade fails, upgrade level gets -1)
+Weight : ^7777771^000000
+^ff0000This item is excluded from subscription withdrawal or refund.^000000
+Weight : ^7777771^000000
+#
+16259#
+A box which contains 5 high density carniums.
+It has been compressed for such a long time that the density and solidity is heightened. It seems that it becomes more difficult for Defense Weapon Upgrade.
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed. (When the upgrade fails, upgrade level gets -1)
+Weight : ^7777771^000000
+^ff0000This item is excluded from subscription withdrawal or refund.^000000
+Weight : ^7777771^000000
+#
+16260#
+A box which contains 10 high density bradiums.
+The density and solidity has been heightened by repeated experiments from Rune Midgard's scholars. It seems that it becomes more difficult for weapon upgrade.
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed. (When the upgrade fails, upgrade level gets -1)
+Weight : ^7777771^000000
+^ff0000This item is excluded from subscription withdrawal or refund.^000000
+Weight : ^7777771^000000
+#
+16261#
+A box which contains 10 high density carniums.
+It has been compressed for such a long time that the density and solidity is heightened. It seems that it becomes more difficult for Defense Weapon Upgrade.
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed. (When the upgrade fails, upgrade level gets -1)
+Weight : ^7777771^000000
+^ff0000This item is excluded from subscription withdrawal or refund.^000000
+Weight : ^7777771^000000
+#
+16262#
+A box which contains 5 high density bradiums.
+The density and solidity has been heightened by repeated experiments from Rune Midgard's scholars. It seems that it becomes more difficult for weapon upgrade.
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed. (When the upgrade fails, upgrade level gets -1)
+Weight : ^7777771^000000
+^ff0000This item is excluded from subscription withdrawal or refund.^000000
+Weight : ^7777771^000000
+#
+16263#
+A box which contains 5 high density carniums.
+It has been compressed for such a long time that the density and solidity is heightened. It seems that it becomes more difficult for Defense Weapon Upgrade.
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed. (When the upgrade fails, upgrade level gets -1)
+Weight : ^7777771^000000
+^ff0000This item is excluded from subscription withdrawal or refund.^000000
+Weight : ^7777771^000000
+#
+16264#
+A box which contains 10 high density bradiums.
+The density and solidity has been heightened by repeated experiments from Rune Midgard's scholars. It seems that it becomes more difficult for weapon upgrade.
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed. (When the upgrade fails, upgrade level gets -1)
+Weight : ^7777771^000000
+^ff0000This item is excluded from subscription withdrawal or refund.^000000
+Weight : ^7777771^000000
+#
+16265#
+A box which contains 10 high density carniums.
+It has been compressed for such a long time that the density and solidity is heightened. It seems that it becomes more difficult for Defense Weapon Upgrade.
+When you fail while upgrading defense weapon whose upgrade level is over +10, it won't be destroyed. (When the upgrade fails, upgrade level gets -1)
+Weight : ^7777771^000000
+^ff0000This item is excluded from subscription withdrawal or refund.^000000
+Weight : ^7777771^000000
+#
+1191#
+A reddish wide two-handed sword.
+Attack Speed increases by 1 for every 2 upgrade levels.
+Class : ^777777Two-handed Sword^000000
+Attack : ^777777280^000000
+Weight : ^777777340^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Rune Knight^000000
+#
+1287#
+A katar that is specially designed for high-speed attack.
+Class : ^777777Katar ^000000
+Attack : ^777777190^000000
+Weight : ^777777120^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Guillotine Cross^000000
+#
+1649#
+A staff which is crafted by a stone that is often used when Laphines put magic power into it. 
+Fixed Casting decreases by 1% for every upgrade level. (This effect does not stack with card's or other parts' decreasing effect.)
+Matk +180.
+Class : ^777777Staff^000000
+Attack Strength : ^77777730^000000
+Weight : ^77777750^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Third Mage/Acolyte Class^000000
+#
+1746#
+It's made after a bow of ancient forest watching tribe. 
+Dex +2.
+Class : ^777777Bow^000000
+Attack : ^777777160^000000
+Weight : ^777777150^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Ranger, Minstrel, and Wanderer^000000
+#
+16003#
+A heavy mace with a blade meaning 'Big Ring' in the Sapha's language.
+Class : ^777777Mace^000000
+Attack : ^777777175^000000
+Weight : ^777777150^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Mechanic, Genetic, and Acolyte Class^000000
+#
+1192#
+A two-handed sword that is made by the Eden Group for a beginner Swordman.
+Cannot be upgraded.
+Class : ^777777Two-handed Sword^000000
+Attack : ^777777162^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777726^000000
+Jobs : ^777777Swordman Class^000000
+#
+1193#
+A two-handed sword that is made by the Eden Group. It is suitable for intermediates who have more experience handling two-handed swords.
+Cannot be upgraded.
+Class : ^777777Two-handed Sword^000000
+Attack : ^777777185^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777740^000000
+Jobs : ^777777Swordman Class^000000
+#
+1650#
+A staff that is made by the Eden Group. A basic item for a beginning Mage.
+Int +2 , Matk +125
+Cannot be upgraded.
+Class : ^777777Staff^000000
+Attack : ^77777760^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777726^000000
+Jobs : ^777777Mage and Acolyte Class^000000
+#
+1651#
+A staff that is made by the Eden Group. A basic item for a beginning Mage.
+Int +3 , Matk +150
+Cannot be upgraded.
+Class : ^777777Staff^000000
+Attack : ^77777760^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777726^000000
+Jobs : ^777777Magician Class/Acolyte Class^000000
+#
+1747#
+A bow that is made by the Eden Group. It's been remodeled for beginning Archers.
+Cannot be upgraded.
+Class : ^777777Bow^000000
+Attack : ^77777782^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777726^000000
+Jobs : ^777777Archer Class/Thief/Rogue^000000
+#
+1748#
+A rich bow that is made by the Eden Group. It is suitable for intermediates who have handled a bow before.
+Cannot be upgraded.
+Class : ^777777Bow^000000
+Attack : ^777777120^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777740^000000
+Jobs : ^777777Archer Class/Thief/Rogue^000000
+#
+2456#
+Boots that are provided only for members of the Eden Group.
+These are designed to fit comfortably throughout long-walks.
+HP recovery +10%.
+SP recovery +2%.
+Cannot be upgraded.
+Class : ^777777Footwear^000000
+Defense : ^77777714^000000
+Weight : ^7777770^000000
+Required Level : ^77777712^000000
+Jobs : ^777777All Jobs^000000
+#
+2457#
+Boots that are provided only for members of the Eden Group.
+These are designed to fit comfortably throughout long-walks.
+HP recovery +12%
+SP recovery +4%
+Cannot be upgraded.
+Class : ^777777Footwear^000000
+Defense : ^77777716^000000
+Weight : ^7777770^000000
+Required Level : ^77777726^000000
+Jobs : ^777777All Jobs^000000
+#
+2458#
+Boots that are provided only for members of the Eden Group.
+These are designed to fit comfortably throughout long-walks.
+HP recovery   +14%
+SP recovery +6%
+Cannot be upgraded.
+Class : ^777777Footwear^000000
+Defense : ^77777718^000000
+Weight : ^7777770^000000
+Required Level : ^77777740^000000
+Jobs : ^777777All Jobs^000000
+#
+2560#
+A manteau which is only for Eden Group members.
+It is designed to flatter anyone's backside.
+Increases tolerance to neutral property by 10%.
+Cannot be upgraded.
+Class : ^777777Garment^000000
+Defense : ^77777714^000000
+Weight : ^7777770^000000
+Required Level : ^77777712^000000
+Jobs : ^777777All Jobs^000000
+#
+5583#
+A hat that is provided only for members of the Eden Group.
+It's designed to go well with a suit.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location : ^777777Upper ^000000
+Weight : ^7777770^000000
+Required Level : ^77777712^000000
+Jobs : ^777777All Jobs^000000
+#
+13050#
+A practical dagger that is made by the Eden Group.
+This dagger is very useful for beginning adventurers.
+Matk +60
+Cannot be upgraded.
+Class : ^777777Dagger^000000
+Attack : ^777777124^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777726^000000
+Jobs : ^777777Novice/Swordman Class/Magician Class/Archer Class/Merchant  Class/Thief Class/Soul Linker/Ninja^000000
+#
+13051#
+A practical dagger that is made by the Eden Group.
+It's suitable for an intermediate who has handled a dagger before. 
+Matk +70
+Cannot be upgraded.
+Class : ^777777Dagger^000000
+Attack : ^777777158^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777740^000000
+Jobs : ^777777Novice/SwordmanClass/Magician Class/Archer Class/Merchant Class/Thief Class^000000
+#
+13112#
+A revolver that is made by the Eden Group. This is easy for beginning Gunslingers to weild.
+Hit -5.
+Cannot be upgraded.
+Class : ^777777Pistol^000000
+Attack : ^77777744^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777726^000000
+Jobs : ^777777Gunslinger^000000
+#
+13113#
+A revolver that is made by the Eden Group. It's suitable for an intermediate gun handler.
+Hit -5.
+Cannot be upgraded.
+Class : ^777777Pistol^000000
+Attack : ^77777760^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777740^000000
+Jobs : ^777777Gunslinger^000000
+#
+13423#
+A one-handed sword that is made by the Eden Group. A weapon that can be used by anyone easily.
+Cannot be upgraded.
+Class : ^777777Sword^000000
+Attack Strength : ^777777147^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777726^000000
+Jobs : ^777777SwordmanClass/Merchant Class/Thief Class^000000
+#
+13424#
+A one-handed sword that is made by the Eden Group. It's suitable for an intermediate sword handler.
+Cannot be upgraded.
+Class : ^777777Sword^000000
+Attack : ^777777170^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777740^000000
+Jobs : ^777777SwordmanClass/Merchant Class/Thief Class^000000
+#
+15009#
+A suit that is only provided for members of the Eden Group.
+There are various sizes so tall people don't have to worry about it. 
+MaxHP +100, MaxSP  +10.
+Cannot be upgraded.
+Class : ^777777Armor^000000
+Defense : ^77777735^000000
+Weight : ^7777770^000000
+Required Level : ^77777712^000000
+Jobs : ^777777All Jobs^000000
+#
+15010#
+A suit that is only provided for members of the Eden Group.
+There are various sizes so tall people don't have to worry about it. 
+MaxHP +200, MaxSP  +20.
+Cannot be upgraded.
+Class : ^777777Armor^000000
+Defense : ^77777746^000000
+Weight : ^7777770^000000
+Required Level : ^77777726^000000
+Jobs : ^777777All Jobs^000000
+#
+15011#
+A suit that is only provided for members of the Eden Group.
+There are various sizes so tall people don't have to worry about it. 
+MaxHP +300, MaxSP  +30,
+Mdef +5.
+Cannot be upgraded.
+Class : ^777777Armor^000000
+Defense : ^77777758^000000
+Weight : ^7777770^000000
+Required Level : ^77777740^000000
+Jobs : ^777777All Jobs^000000
+#
+16004#
+A beginner's mace that is made exclusively by the Eden Group.
+Cannot be upgraded.
+Class : ^777777Mace^000000
+Attack : ^777777142^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777726^000000
+Jobs : ^777777Swordman Class/Acolyte Class/Merchant Class^000000
+#
+16005#
+A mace that is made by the Eden Group.
+Cannot be upgraded.
+Class : ^777777Mace^000000
+Attack : ^777777163^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777772^000000
+Required Level : ^77777740^000000
+Jobs : ^777777Swordman Class/Acolyte Class/Merchant Class^000000
+#
+11514#
+It has the same effect with a white slim potion. [Not to be sold.]
+^ffffff_^000000
+Weight :: ^7777775^000000
+#
+2146#
+A shield which is a guard covered with thin layer of mixed silver and steel. It looks good when it reflects light.
+Class : ^777777Shield^000000
+Defense : ^77777760^000000
+Weight : ^77777730^000000
+Required Level : ^77777722^000000
+Jobs : ^777777All Jobs^000000
+#
+2147#
+A round-shape shield that is used generally. It has heightened a defense power by adding ernium thick at the round part. 
+Class : ^777777Shield^000000
+Defense : ^77777790^000000
+Weight : ^77777760^000000
+Required Level : ^77777722^000000
+Jobs : ^777777All Transcendent Jobs except Novice^000000
+#
+2148#
+A shield made by crafting the metal from the Ash Vacuum.
+It looks like a bloomed flower due to the metal pieces rounded on it.
+Class : ^777777Shield^000000
+Defense : ^777777130^000000
+Weight : ^777777130^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Rune Knight and Royal Guard^000000
+#
+15012#
+A snow-white robe on which spells are embroidered.
+Reduces Casting Time by 3%.
+(Only the biggest effect of the fix casting is implemented.)
+Increase the effect of the Heal that its wearer casts by 5%.
+Class : ^777777Armor^000000
+Defense : ^77777742^000000
+Weight :: ^77777740^000000
+Required Level : ^77777722^000000
+Jobs : ^777777All jobs^000000
+#
+15013#
+A suit for adventurers that maximizes defense while still fitting comfortably.
+Class : ^777777Armor^000000
+Defense : ^77777758^000000
+Weight :: ^777777280^000000
+Required Level : ^77777722^000000
+Jobs : ^777777All jobs except novice^000000
+#
+15014#
+A armor made of a metal called Opcidium.
+The decoration of a black crystal looks profound.
+Class : ^777777Armor^000000
+Defense : ^77777793^000000
+Weight :: ^777777450^000000
+Required Level : ^777777100^000000
+Jobs : ^777777All third class jobs^000000
+#
+12717#
+A poison that paralyzes senses.
+It continues for 300 seconds and decreases Attack speed(After attack delay increases for 10%), - 10% Dodge, movement speed cuts in half. 
+^ffffff_^000000
+Weight : ^7777772^000000
+#
+12718#
+A poison which has the same properties of a leech.
+It consumes some HP for 300 seconds.
+^ffffff_^000000
+Weight : ^7777772^000000
+#
+12719#
+An ash powder that causes the Oblivion state.
+Oblivion lasts for 300 seconds. If under Oblivion state, SP doesn't recover naturally and cannot be canceled by Lex Divine or Green Potion.
+You cannot use skills while caught by Oblivion ashes. 
+^ffffff_^000000
+Weight : ^7777772^000000
+#
+12720#
+A poison that pollutes a wound. 
+When a target is caught by this poison for 300 seconds, recovery skills decrease in effect by 20%.
+The poison is extra potent if also inflicted by fatal wound.
+^ffffff_^000000
+Weight : ^7777772^000000
+#
+12721#
+A poison that numbs nerves.
+It continues for 300 seconds, and generates damage every 3 seconds. This ignores the weapons or card options which don't disconnect spell. 
+^ffffff_^000000
+Weight : ^7777772^000000
+#
+12722#
+A poison that causes a feverish state.
+For 300 seconds, it spells darkness that can't be removed and causes hallucination. Gets 100 damages for one second, and while getting damages if casting was ongoing, the casting also can be cancelled. 
+^ffffff_^000000
+Weight : ^7777772^000000
+#
+12723#
+A poison that has the effect of a laughing mushroom.
+For 300 seconds, one loses 3% of HP for every 4 seconds and casts random skills.
+^ffffff_^000000
+Weight : ^7777772^000000
+#
+12724#
+A poison that reduces physical strength. 
+MaxHP decreases by 15% for 15 seconds.
+^ffffff_^000000
+Weight : ^7777772^000000
+#
+12725#
+Casts 'Refresh' removing all abnormal states and debuffs and prevents any abnormal state or debuff effects for 30 seconds.
+Recover 25% HP and can be used while stunned, frozen or deep sleep.
+Must wait 5 minutes to reuse. 
+Maximum carrying amount :10
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12726#
+Casts 'Crushing Strike' destroying your all equipped weapons while drawing out all of their power to strike a strong blow to your target. 
+Must wait  1 minute to reuse.
+Maximum carrying amount :10
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12727#
+Casts 'Millennium Shield' randomly summoning 2~4 magic shields. 
+This shield has the same Def and Mdef as the person casting and has 1000 HP. 
+Must wait 1 minute and 30 seconds before reusing.
+Maximum carrying amount :10
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12728#
+Cast 'Vitality Activation' maximizing your health for one minute. HP recovery potion effect increases one and half times.
+But, it generates instability of mind so SP does not naturally recover while active and the effect of SP recovery potion decreases to half.
+Waiting time for reuse: None.
+Maximum carrying amount :2.
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12729#
+Cast 'Fighting Spirit' increasing Atk of the user and members of a party that the user belongs to.
+The caster gets 7 times increase of Atk as much as the number of the party, and the members of the party get a 25% increase of Atk the caster received.
+Also, the player gets a little increased Attack Strength effect. This effect is better when Rune Mastery level is higher. 
+Waiting time for reuse: None.
+Maximum carrying amount: 20.
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12730#
+Cast 'Abundance' recovering 60 SP for every 10 seconds for 3 minutes.
+Waiting time for reuse: None.
+Maximum carrying amount :5
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12731#
+Cast 'Giant Cross' heightening your power and attack strength tremendously.
+Str increases by 30 for 4 minutes. Has a chance to hit an enemy for 3 times the damage while melee attacking and has a chance of destroying the target's weapon.
+Waiting time for reuse: None.
+Maximum carrying amount: 10
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12732#
+Cast 'Storm Blast' momentarily discharging a destructible power from the Rune Stone.
+Generates a 7 x 7 shockwave around yourself and damages all targets and causes knockback effect.
+Waiting time for reuse: None.
+Maximum carrying amount: 10
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12733#
+Cast 'Stonehard Skin' changing your skin into a solid shell for 3 minutes. Has a chance of destroying weapons of attacking enemies.
+Consumes 25% of your HP and this skin possesses the same amount of HP consumed.
+It disappears when all the HP is consumed.
+For monsters, it decreases 25% of Atk for 10 seconds at a fixed rate.
+This skill cannot be used for a boss monster.
+No waiting time for reuse.
+Maximum carrying amount: 10
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12734#
+A rough Rune Stone with a luxurious color that gives a better chance of successfully creating refined Rune Stones.
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12735#
+An old rough Rune Stone that gives a higher chance of successfully creating refined  Rune Stones.
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12736#
+A mysteriously colored rough Rune Stone that significantly increases the success rate of creating refined Rune Stones. 
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12737#
+An ordinary rough Rune Stone used to create refined Rune Stones..
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12738#
+A rare rough Rune Stone that gives a high chance of successfully creating refined Rune Stones.
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+12333#
+A crystal that is shining with mysterious color. When used, you recover 15% of MaxSP.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7931#
+Basic tools for poison making are all stocked. It's a gift set for those who dream of making poison.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7932#
+Fragile. You'll get into trouble when attracted by a red beautiful flower and fragrance.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7933#
+Fragile. The red berry ripened but the fragrance seems like it's of a domestic animal.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7934#
+Fragile. It's not green tea even if it uses the very end of a young leaf. 
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7935#
+Fragile. It does not have any scent unlike a beautiful figure.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7936#
+Fragile. The purplish, small, and cute flower seems charming but when you touch, it's very itchy. 
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7937#
+Fragile. It seems like a weed that grows anywhere but it looks dangerous. 
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7938#
+A golden crystal. It seems very warm as if sunshine has been put into it.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7939#
+A little branch that is extracted from an old tree that grows in a sacred place.
+Rune Knights use these to make Rune stones.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+6120#
+A paint that is safe for skin. It's used for body painting. 
+^ffffff_^000000
+Weight : ^7777772^000000
+#
+6121#
+A brush that can draw little and delicate pictures. Exclusively for body painting.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+6122#
+A brush which is wide and has a long hand grip. Exclusively for ground graffiti.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+6123#
+A paint with a vivid and intense color. Exclusively for ground graffiti.
+^ffffff_^000000
+Weight : ^7777773^000000
+#
+6124#
+A very tiny flute. It sounds like a wolf tamed by a ranger. 
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+7940#
+A trap that is reformed for hunters whose weights were a burden.
+^ffffff_^000000
+Weight : ^7777770.2^000000
+#
+12341#
+A box that is filled with one hundred reformed traps. 
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+6128#
+An antidote for Guillotine Cross only.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+6144#
+A heartbreaking tear for others. Sometimes a miracle happens by this tear. 
+^ffffff_^000000
+Weight : ^7777770.2^000000
+#
+12384#
+Strong magic energy is whirling about in a rainbow color sealed with a Warlock's Frost Misty magic. 
+Weight : ^7777775^000000
+#
+12385#
+Strong magic energy is whirling about in a rainbow color sealed with a Warlock's Crimson Lock magic. 
+Weight : ^7777775^000000
+#
+12386#
+Strong magic energy is whirling about in a rainbow color sealed with a Warlock's Chain Lightning magic.
+Weight : ^7777775^000000
+#
+12387#
+Strong magic energy is whirling about in a rainbow color sealed with a Warlock's Earth Strain magic.
+Weight : ^7777775^000000
+#
+12388#
+A rune stone for probationary Rune Knights.
+Weight : ^7777771^000000
+#
+12389#
+A rune stone for probationary Rune Knights.
+Weight : ^7777771^000000
+#
+12390#
+A rune stone for probationary Rune Knights.
+Weight : ^7777771^000000
+#
+15002#
+An armor with solid plate material adorned with gorgeous runes and jewels. It's actually very light and solid and it feels as if magic is winding around your whole body.
+Class : ^777777Armor^000000
+Defense : ^77777795^000000
+Weight : ^7777770^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Swordman Class^000000
+#
+2798#
+A necklace with holy but rough energy.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Priest/Monk^000000
+#
+6156#
+A report from staff Rust requested for an approval to be given to Test Supervisor Caution.
+Weight : ^7777771^000000
+#
+1549#
+A huge iron skewer pops up and stabs out and retracts after attacking with this weapon.
+Class : ^777777Mace^000000
+Attack Strength : ^777777450^000000
+Weight : ^777777300^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+2139#
+It sends out a hot flames that it burns enemies out in a short time. 
+Class : ^777777Shield^000000
+Defense : ^77777760^000000
+Weight : ^777777200^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+2800#
+A part used for the Mechanic Magic Gear skill, Acceleration.
+Agi +2.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+2801#
+A component to use the Mechanic Magic Gear Skill, Hovering. 
+Agi +1.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^777777200^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+2802#
+A component to use the Mechanic Magic Gear Skill, Self Destruction.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^777777100^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+2803#
+An accessory item to use the Mechanic Magic Gear Skill, Shape Shift. 
+Int +3.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777750^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+2804#
+A component to use the Mechanic Magic Gear Skill, Emergency Cool.
+Dex +1.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^777777250^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+2805#
+A component to use the Mechanic Magic Gear Skill, Magnetic Field. 
+Dex +1.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^777777600^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+2806#
+A component to use the Mechanic Magic Gear Skill, Neutral Barrier.
+Dex +1.
+Class : ^777777Accessory^000000
+Defense : ^7777773^000000
+Weight : ^777777800^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+2807#
+A component to use the Mechanic Magic Gear Skill, Repair.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777740^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+2808#
+An armor to use the Mechanic Magic Gear Skill, Stealth Field. 
+Agi +3.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^777777100^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+2809#
+A component to use Mechanic Magic Gear Skill, Emergency Cool.
+Dex +1.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^777777250^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+2810#
+A component to use the Mechanic Magic Gear Skill, Emergency Cool.
+Dex +1.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^777777250^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mechanic only^000000
+#
+6145#
+A bullet which is used for skills.
+^ffffff_^000000
+Weight : ^7777770.2^000000
+#
+6146#
+A fuel that is used for a large number of Magic Gear skills. Strong skills consumes more fuel.
+^ffffff_^000000
+Weight : ^7777773^000000
+#
+6147#
+A bullet which effuses cold air.
+^ffffff_^000000
+Weight : ^7777770.3^000000
+#
+6186#
+A consumable item used for destroying a fixed installed fort. 
+Weight : ^7777771^000000
+#
+12383#
+A magazine with a thousand Vulcan Bullets. It's portable. 
+^ffffff_^000000
+Weight : ^77777750^000000
+#
+12392#
+Restores a certain amount of HP to Magic Gear.
+Weight :: ^77777710^000000
+#
+12393#
+Restores a proper amount of HP to Magic Gear.
+Weight :: ^77777714^000000
+#
+12394#
+Restores HP to Magic Gear.
+Weight :: ^77777718^000000
+#
+18000#
+A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon. 
+Class : ^777777Cannonball^000000
+Attack Strength : ^777777100^000000
+Weight : ^7777771^000000
+Property : ^777777None^000000
+#
+18001#
+A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
+Class : ^777777Cannonball^000000
+Attack Strength : ^777777120^000000
+Weight : ^7777771^000000
+Property : ^777777Holy^000000
+#
+18002#
+A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
+Class : ^777777Cannonball^000000
+Attack Strength : ^777777120^000000
+Weight : ^7777771^000000
+Property  : ^777777shadow^000000
+#
+18003#
+A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
+Class : ^777777Cannonball^000000
+Attack Strength : ^777777120^000000
+Weight : ^7777771^000000
+Property  : ^777777Ghost^000000
+#
+18004#
+A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
+Class : ^777777Cannonball^000000
+Attack Strength : ^777777250^000000
+Weight : ^7777771^000000
+Property : ^777777Neutral^000000
+#
+6189#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Fire Property magic, Fire Bolt.
+Weight : ^7777770^000000
+#
+6190#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Water Property magic, Cold Bolt.
+Weight : ^7777770^000000
+#
+6191#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Wind Property magic, Lightning Bolt.
+Weight : ^7777770^000000
+#
+6192#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Water Property magic, Storm Gust.
+Weight : ^7777770^000000
+#
+6193#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Wind property magic, Lord of Vermillion.
+Weight : ^7777770^000000
+#
+6194#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Fire property magic, Meteor Storm.
+Weight : ^7777770^000000
+#
+6195#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Fire property magic, Comet.
+Weight : ^7777770^000000
+#
+6196#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Four property magic, Tetra Vortex.
+Weight : ^7777770^000000
+#
+6197#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Wind Property magic, Thunder Storm.
+Weight : ^7777770^000000
+#
+6198#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Wind Property magic, Jupitel Thunder.
+Weight : ^7777770^000000
+#
+6199#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Water Property magic, Water Ball.
+Weight : ^7777770^000000
+#
+6200#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Earth Property magic, Heaven's Drive.
+Weight : ^7777770^000000
+#
+6201#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Earth Property magic, Earth Spike.
+Weight : ^7777770^000000
+#
+6202#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Earth Property magic, Earth Strain.
+Weight : ^7777770^000000
+#
+6203#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Wind Property magic, Chain Lightening.
+Weight : ^7777770^000000
+#
+6204#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Fire Property magic, Crimson Rock.
+Weight : ^7777770^000000
+#
+6205#
+An essential magic book for the Warlock Skill [Reading Spell Book]
+Magic Power can be drawn out by reading the words written in this book. 
+It's written about the Neutral Property magic, Drain Life.
+Weight : ^7777770^000000
+#
+6210#
+Be careful of the sharp thorns that surround this.
+It is used for Geneticist Skill, 'Thorn Trap', 'Thorn Wall' and 'Crazy weed'.
+Weight : ^7777770.1^000000
+#
+6211#
+An unpleasant seed that is used for reddish fruits, it looks as if blood is inside of it.
+It's used for Geneticist Skill, 'Blood  Sucker'.
+Weight : ^7777770.1^000000
+#
+6212#
+A purplish spore. When it's touched a purple dust curls up that you need to be careful of.
+It's consumed for Geneticist Skill, 'Spore Explosion'.
+Weight : ^7777770.1^000000
+#
+6213#
+A black powder that explodes when heated. It's more explosive than gunpowder.
+Weight : ^7777770.1^000000
+#
+6214#
+A snow-white powder. It's so light that it  stays in the air for a long time. Do not breathe it in or it can be fatal.
+Weight : ^7777770.1^000000
+#
+6215#
+Gas that stimulates the eyes and nose. When exposed to this gas, do not rub your eyes. Cleanse with clear water immediately if you that happens.
+Weight : ^7777770.1^000000
+#
+6216#
+A bottle filled with inedible oil.
+Weight : ^7777770.1^000000
+#
+6217#
+A Mandragora flowerpot used for an experiment. Fragile. Never pull out recklessly.
+Weight : ^7777770.1^000000
+#
+11513#
+A fresh candy for sore throats.
+A very small amount of HP recovery. 
+Weight : ^7777770.1^000000
+#
+5683#
+An imitation of the famous Magestic Goat. Though, it seems like it doesn't have any magical effects.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location: ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5684#
+A carefully imitated Jewel Crown replica that looks quite good.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location: ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5685#
+An well-made replica which can't be distinguished if one doesn't look at it carefully.
+Class : ^777777Headgear^000000
+Defense : ^7777778^000000
+Location : ^777777Upper^000000
+Weight : ^77777740^000000
+Jobs : ^777777Swordman Class/Merchant Class/Thief^000000
+#
+5686#
+An S-grade replica which is copied in detail down to the wrinkles.
+It even feels like the real thing.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location: ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Leve : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5687#
+A helm of an Orc that copies it's primitive feelings.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location: ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+6266#
+A Key which is nicknamed 'Deception'. You're not sure what this key is for.
+Weight : ^7777770^000000
+#
+6267#
+A Key which nicknamed 'Illusion'. You're not sure what this key is for.
+Weight : ^7777770^000000
+#
+6268#
+A Key which nicknamed 'Pleasure'. You're not sure what this key is for.
+Weight : ^7777770^000000
+#
+6269#
+A legendary brush which is used by a Master of dark arts. People says it's made of the best ivory and hair of a god.
+Weight : ^7777770^000000
+#
+6270#
+A picture of Maestro Song that was taken in front of Thanatos tower. Written on the back is 'I want to have a Teddy Bear. I need 33?'.
+Weight : ^7777770^000000
+#
+6271#
+A receipt from a shop in Juno. There's a signature which looks like it was signed by 'Maestro Song'.
+Weight : ^7777770^000000
+#
+6272#
+A seed of a plant which is widely used for experiments that grows fast and is easy to modify.
+Weight : ^7777770^000000
+#
+6273#
+An altered seed which is influenced by external factors. Nobody knows what kind of plant will bloom from it.
+Weight : ^7777770^000000
+#
+6274#
+Traces of a cloth which has been worn by a Saint.
+Weight : ^7777770^000000
+#
+6275#
+A Cross shield which is said to have been used by King Schmitz. It's so old and shabby that it seems impossible to use.
+Weight : ^7777770^000000
+#
+6276#
+A transparent reagent without any impurities.
+Weight : ^7777770^000000
+#
+6277#
+A red colored reagent.
+Weight : ^7777770^000000
+#
+6278#
+A black colored reagent.
+Weight : ^7777770^000000
+#
+6244#
+Dangerous powder which has a dark color that is used to make a bomb. Have to handle with care!
+Weight : ^7777770.1^000000
+#
+6245#
+Matt black colored very fine powder. Be careful with it or it will blow up.
+Weight : ^7777770.1^000000
+#
+6246#
+Yellow powder with no smell nor taste. Burns with blue sparks when heated.
+Weight : ^7777770.1^000000
+#
+6247#
+A salty White powder with no smell.
+Weight : ^7777770.1^000000
+#
+6248#
+A pot which can be used as a shaker.
+Weight : ^7777771^000000
+#
+6249#
+The most delicious part of a Savage.
+Weight : ^7777771^000000
+#
+6250#
+Long iron skewer for barbecue dishes.
+Weight : ^7777771^000000
+#
+6251#
+A kind of fuel which is made of wood. It adds great taste to food.
+Weight : ^7777771^000000
+#
+6252#
+Blood of a Desert Wolf which is used for medications.
+Weight : ^7777771^000000
+#
+6253#
+A lump of very very cold ice.
+Weight : ^7777771^000000
+#
+6254#
+Well roasted pressed meat.
+Weight : ^7777771^000000
+#
+6255#
+A large cooking pot which can cook a large amount of food.
+Weight : ^7777771^000000
+#
+6256#
+A fragment of ice that is made when it's crushed.
+Weight : ^7777771^000000
+#
+6257#
+A transparent crystal of ice.
+Weight : ^7777771^000000
+#
+6258#
+The most common fruit on Comodo island. It has a sour and sweet flavor unlike it's shape.
+Weight : ^7777771^000000
+#
+6259#
+A sticky Drocera tentacle which is widely grown in Arunafeltz. It's hard to collect because of it's stickyness.
+Weight : ^7777771^000000
+#
+6260#
+Tail of Petit. It'll grow again when it's cut.
+Weight : ^7777771^000000
+#
+6261#
+White and thin noodle. It's a summer delicacy.
+Weight : ^7777771^000000
+#
+6262#
+A basic ingredient of cooking. It requires hours of boiling to make it. It's essential especially for noodles.
+Weight : ^7777771^000000
+#
+6263#
+Fruit of coconut tree. It contains fruit juice within.
+Weight : ^7777771^000000
+#
+6264#
+Round and green net patterned fruit. It has a sweet smell.
+Weight : ^7777771^000000
+#
+6265#
+A fruit with a sour and sweet flavor. The peel of the fruit is tough but the fruit inside is delicious.
+Weight : ^7777771^000000
+#
+6279#
+Ingredients to make an Apple bomb.
+Material : ^000088Apple + Cell + Gun Powder + Detonator^000000
+Weight : ^7777771^000000
+#
+6280#
+Ingredients to make a Pineapple bomb.
+Material : ^000088Pineapple + Cactus Needle + 3 Gun Powder + Detonator^000000
+Weight : ^7777771^000000
+#
+6281#
+Ingredients to make a Coconut bomb.
+Material : ^000088Coconut + 2 Gun Powder + Detonator^000000
+Weight : ^7777771^000000
+#
+6282#
+Ingredients to make a Melon bomb.
+Material : ^000088Melon + Sticky Mucus + 2 Gun Powder + Detonator^000000
+Weight : ^7777771^000000
+#
+6283#
+Ingredients to make a Banana bomb.
+Material : ^000088Banana + Mould Powder + 4 Gun Powder  + Detonator^000000
+Weight : ^7777771^000000
+#
+6284#
+Thorn seed, vampire seed, bomb shaped mushroom plant cultivation.
+Thorn Seed : ^000088Thorn fruit 10^000000
+vampire seed : ^000088MenEater_Plant root 10^000000
+Bomb mushroom spore : ^000088mushroom spore 10, Poison mushroom spore 5, Gun Powder^000000
+Weight :: ^7777771^000000
+#
+6285#
+This is the manual book for producing Enriched White PotionZ, vitata500, Enriched cell juice.
+Enriched White PotionZ : ^000088Empty Test Tube 10  + white potion 20  + white herb 10  + Alcohol 1 ^000000
+vitata 500 : ^000088Empty Test Tube 10  + grape 10 + honey 10 + Blue Herb 10^000000
+Concentrated Juice : ^000088Empty Test Tube 10 + Awakening Potion 5 + Intensive Potion 5 + Hot Sauce 5^000000
+Cure Landscape : ^000088Empty Test Tube 10 + elixir 5 + Green Herbs 20 + Mastela Fruit 1 + Yggdrasil Leaf 1^000000
+Weight : ^7777771^000000
+#
+11022#
+The latest book of Alchemist Monthly! It contains recipes of 'Mix cooking' trends and other useful information.
+Weight : ^7777775^000000
+#
+11023#
+Alchemist Monthly 'Best of' series. [HP of you & me Vol.12]
+Alchemist Darcia's endless study of improvement in strength has finally been accomplished!
+Weight : ^7777775^000000
+#
+11024#
+Alchemist Monthly 'Best of' series. [SP of Dream Vol.10]
+This book contains Alchemist Vain and Vajin's study of increasing SP, and recipes for making reagent.
+Weight : ^7777775^000000
+#
+12418#
+A potion that increases Atk a little. Duration : 500 sec.
+Weight : ^7777775^000000
+#
+12419#
+A potion that increases Matk a little. Duration : 500 sec.
+Weight : ^7777775^000000
+#
+12422#
+A small potion that increases MaxHP.
+MaxHP slightly increased for 500 sec, HP recovery +1%.
+Weight : ^7777772^000000
+#
+12423#
+A potion that increases MaxHP.
+MaxHP moderately increased for 500 sec, HP recovery +2%.
+Weight : ^7777774^000000
+#
+12424#
+A big potion that increases MaxHP.
+MaxHP increased by a large amount for 500 sec, HP recovery +5%.
+Weight : ^7777778^000000
+#
+12425#
+A small potion that increases MaxSP.
+MaxSP slightly increased for 500 sec, SP recovery +2%.
+Weight : ^7777772^000000
+#
+12426#
+A potion that increases MaxSP.
+MaxSP moderately increased for 500 sec, SP recovery +4%.
+Weight : ^7777774^000000
+#
+12427#
+A big potion that increases MaxSP.
+MaxSP increased by a large amount for 500 sec, SP recovery +8%.
+Weight : ^7777778^000000
+#
+12428#
+Recovers a large amount of HP, increases natural HP recovery speed by 20%. Duration : 500 sec.
+Weight : ^7777777^000000
+#
+12429#
+A very wild dish, whole Savage barbecue!
+Str +20.
+Duration : 5 min.
+Weight : ^7777775^000000
+#
+12430#
+Deep red colored cocktail. It could contain blood of a wolf.
+Int +20.
+Duration : 5 min.
+Weight : ^7777775^000000
+#
+12431#
+Meat of a Minor's head. Famous for it's soft and good taste.
+Vit +20.
+Duration : 5 min.
+Weight : ^7777775^000000
+#
+12432#
+Fantastic combination of transparent ice and tea.
+Dex +20.
+Duration : 5 min.
+Weight : ^7777775^000000
+#
+12433#
+One of a best delicacies in Arunafeltz with a chewy texture.
+Agi +20.
+Duration : 5 min.
+Weight : ^7777775^000000
+#
+12434#
+Noodle which is decorated with the best part of Petti. Delicacy of Geffen.
+Luk +20.
+Duration : 5 min.
+Weight : ^7777775^000000
+#
+12435#
+A black scary thing that smells burnt. It looks like a failure of something, so it couldn't preserve it's original shape.
+Decrease All Status 5 to 10.
+Duration : 5 min.
+Weight : ^7777775^000000
+#
+12436#
+Recovers SP, natural SP natural speed increased by 20% and MaxSP increased by 5%. Duration : 500 sec.
+Weight : ^7777775^000000
+#
+12437#
+Increase attack speed a little. Duration : 500 sec.
+Weight : ^7777775^000000
+#
+12475#
+Recovers several kinds of abnormal statuses. Recovers small amount of HP.
+(Silence, Bleeding, Poison, Curse, Reverse Orcish, Change Undead)
+Weight : ^7777775^000000
+#
+13260#
+A small apple shaped bomb. Though it has weak attack power, it has long range.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777770.1^000000
+Property : ^777777Neutral^000000
+#
+13261#
+A bomb which is made of the hard part of a coconut.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777770.1^000000
+Property : ^777777Neutral^000000
+#
+13262#
+A bomb which uses sweet and sticky juice of a melon.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777770.1^000000
+Property : ^777777Neutral^000000
+#
+13263#
+Hard peel of pineapple that attacks wide range.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777770.1^000000
+Property : ^777777Neutral^000000
+#
+13264#
+Use this banana peel bomb to make your enemies fall.
+Class : ^777777Shuriken^000000
+Attack : ^7777770^000000
+Weight : ^7777770.1^000000
+Property : ^777777Neutral^000000
+#
+13265#
+A black lump that can used as a projctile.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13266#
+A slightly larger black lump that can used as a projectile.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13267#
+A hardened black lump that can kill when thrown at someone.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13268#
+Mysterious unknown powder. You don't know what harm it will cause if thrown at someone.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777771^000000
+Property : ^777777Neutral^000000
+#
+13270#
+Slightly remodeled Full SwingK enabled for throwing. Increases Atk.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13271#
+Slightly remodeled Mana Plus enabled for throwing. Increases Matk.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13272#
+Slightly remodeled Cure Free enabled for throwing. Recovers several kinds of abnormal statuses. Recovers a small amount of HP.
+(Silence, Bleeding, Poison, Curse, Reverse Orcish, Change Undead)
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight :: ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13275#
+Slightly remodeled HP increase potion(S) enabled for throwing. MaxHP slightly increased for 500 sec, HP recovery +1%.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777772^000000
+Property : ^777777Neutral^000000
+#
+13276#
+Slightly remodeled HP increase potion(M) enabled for throwing. MaxHP moderately increased for 500 sec, HP recovery +2%.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777774^000000
+Property : ^777777Neutral^000000
+#
+13277#
+Slightly remodeled HP increase potion(L) enabled for throwing. MaxHP greatly increased for 500 sec, HP recovery +5%.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777778^000000
+Property : ^777777Neutral^000000
+#
+13278#
+Slightly remodeled SP Increase Potion(S) enabled for throwing. MaxSP slightly increased for 500 sec, SP recovery +2%.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777772^000000
+Property : ^777777Neutral^000000
+#
+13279#
+Slightly remodeled SP Increase Potion(M) enabled for throwing. MaxSP increased for 500 sec, SP recovery +4%.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777774^000000
+Property : ^777777Neutral^000000
+#
+13280#
+Slightly remodeled SP increase potion(L) enabled for throwing. MaxSP greatly increased for 500 sec, SP recovery +8%.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777778^000000
+Property : ^777777Neutral^000000
+#
+13281#
+Slightly remodeled Enriched White Potion enabled for throwing.
+Recovers a large amount of HP, increases natural HP recovery speed by 20%. Duration : 500 sec.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777777^000000
+Property : ^777777Neutral^000000
+#
+13282#
+Slightly remodeled Vitata 500 enabled for throwing.
+Recovers SP, and increase SP recovery speed by 20%, increase MaxSP by 5%. Duration : 500 sec.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13283#
+Slightly remodeled Enriched Cell Juice enabled for throwing.
+Increases attack speed. Duration : 500 sec.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13284#
+Slightly remodeled Savage BBQ enabled for throwing.
+Increases Str.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13285#
+Slightly remodeled Cocktail Warg blood enabled for throwing.
+Increases Int.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13286#
+Slightly remodeled Minor Brisket enabled for throwing that increases Vit.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13287#
+Slightly remodeled Siroma Ice Tea enabled for throwing that increases Dex.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13288#
+Slightly remodeled Drocera Stew enabled for throwing that increases Agi.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13289#
+Slightly remodeled Petti Noodle enabled for throwing that increases Luk.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+13290#
+Slightly remodeled Black lump enabled for throwing that decreases all Statuses.
+Class : ^777777Projectile^000000
+Attack : ^7777770^000000
+Weight : ^7777775^000000
+Property : ^777777Neutral^000000
+#
+6297#
+A special bottle which is designed for throwing. Caution! It's fragile.
+Weight : ^7777771^000000
+#
+5746#
+A circlet designed for a Rune Knight. It has Rune magical power in it.
+Str +1, Int +1, Mdef +5.
+When pure Str is 120, Atk +10, Matk +5.
+Class : ^777777Headgear^000000
+Defense : ^77777712^000000
+Location: ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Rune Knight^000000
+#
+5747#
+A hat which is used for ceremonies by bishops.
+Int +1, Vit +1, Mdef +5.
+Increase 5% of self-using heal effect.
+When pure Int is 120, Matk +10.
+Class : ^777777Headgear^000000
+Defense : ^77777712^000000
+Location: ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Arch Bishop^000000
+#
+5748#
+A specially designed goggle for snipers.
+Dex +1, Agi +1, Mdef +5.
+When pure Agi is 120, long range physical attack +4%, Aspd +1.
+Class : ^777777Headgear^000000
+Defense : ^77777712^000000
+Location: ^777777Upper & Middle^000000
+Weight : ^77777710^0000
+Required Level : ^777777100^000000
+Jobs : ^777777Ranger^000000
+#
+5749#
+A special hairband which is designed to use the most frequently used tools. 
+Str +1, Dex +1, Mdef +5.
+When pure Str is 120, Atk +10, Cri +3.
+Class : ^777777Headgear^000000
+Defense : ^77777712^000000
+Location: ^777777Upper ^000000
+Weight :: ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Mechanic^000000
+#
+5750#
+A mini crown which is made at Shadow Artworks. Masterpiece of the designer Doomk.
+Int +1, Agi +1, Mdef +1.
+When pure Agi is 120, Atk +10, Flee +3.
+Class : ^777777Headgear^000000
+Defense : ^77777712^000000
+Location: ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Shadow Chaser^000000
+#
+5751#
+A hat of a famous minstrel. Fancy and plentiful black feathers adorn this hat.
+Int +1, Luk +1, Mdef +5.
+Increases long range physical attack power by 5%
+rushed toward windmill, decrease sp by 10.
+Class : ^777777Headgear^000000
+Defense : ^77777712^000000
+Location : ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Minstrel^000000
+#
+5752#
+Free gift of a famous Geneticist Bob Rose's book. Midas mark looks cute.
+Str +1, Dex +1, Mdef +5.
+When pure Str is 120, Atk +5, Aspd +1.
+Class : ^777777Headgear^000000
+Defense : ^77777712^000000
+Location: ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Geneticist^000000
+#
+5753#
+A hat which is decorated with minerals from an unknown world that has magical power in it.
+Int +1, Dex +1, Mdef +5.
+When pure Dex is 120, Matk +10, reduces Variable Casting Time 2%.
+Class : ^777777Headgear^000000
+Defense : ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Warlock^000000
+#
+5754#
+A hat made for those who decide to become a Sura. It expresses a burning spirit.
+Str +1, Vit +1, Mdef +5.
+When pure Str is 120, Atk +10, Hit +3.
+Class : ^777777Headgear^000000
+Defense : ^77777712^000000
+Location: ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Sura^000000
+#
+5755#
+A mask which is designed for Guillotine Cross' costume.
+Agi +1, Mdef +5.
+When pure Agi is 120, Atk +10, Dodge +5.
+Class : ^777777Headgear^000000
+Defense : ^7777776^000000
+Location: ^777777Middle & Lower^000000
+Weight : ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Guillotine Cross^000000
+#
+5756#
+Tremendous strength of spirit is harnessed in this hat adorned with feathers.
+Int +1, Dex +1, Mdef +5.
+If pure Int 120 or greater,
+Matk +10, Flee + 3.
+Class : ^777777Headgear^000000
+Defense : ^77777712^000000
+Location : ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Sorcerer^000000
+#
+5756#
+A hat for a ritual ceremony which is made from a spiritual feather.
+Int +1, Dex +1, Mdef +5.
+When pure Int is 120, Matk +10, Flee +3.
+Class : ^777777Headgear^000000
+Defense : ^77777712^000000
+Location: ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Royal Guard^000000
+#
+5757#
+A headgear which is focused on defense. It covers almost all of the face.
+Int +1, Vit +2, Mdef +5.
+When pure Int is 120, Matk +10, Def +5.
+Class : ^777777Headgear^000000
+Defense : ^77777717^000000
+Location: ^777777Upper-Mid^000000
+#
+5758#
+A beautiful head ornament of a ballerina.
+Int +1, Luk +1, Mdef +5.
+Increases long range physical attack power by 5%.
+Swing dance, for the consumed SP for the symphony decreased by 10.
+Class : ^777777Headgear^000000
+Defense : ^77777712^000000
+Location: ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Wanderer^000000
+#
+5760#
+A special hairband which is designed to use the most frequently used tools. 
+Str +1, Dex +1, Mdef +5.
+When pure Str is 120, Atk +10, Cri +3.
+Class : ^777777Headgear^000000
+Defense : ^77777712^000000
+Location: ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Mechanic^000000
+#
+12380#
+A flute that emits high frequency sounds only to a wolf. A disposable.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12381#
+A scroll written with an unknown language.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12382#
+A scroll written with an unknown language.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+2140#
+A wing-shaped guard nailed with a luxurious bluish energy rune. A clear energy comes out that stimulates spirit.
+MaxSP +2
+Class : ^777777Shield^000000
+Defense : ^77777770^000000
+Weight : ^7777770^000000
+Required Level : ^7777770^000000
+Jobs : ^777777Swordman Class^000000
+#
+2794#
+A bluish ring engraved with a mysterious rune. You can feel a mysterious energy from the sparkling rune. 
+Str +2.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^7777770^000000
+Required Level : ^7777770^000000
+Jobs : ^777777Swordman Class^000000
+#
+2795#
+A Green Apple ring for those who have ascended to their third job. Once you are accustomed to your specific job skills it's effects begin to wear off. 
+All Stats +6 at job level 1.
+Stat bonus decreases by 1 for every 5 job levels attained.
+At job level 30 stat bonus is cancelled.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^7777770^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Every Third Job Except Novice^000000
+#
+2796#
+A stone with enormous latent magic power.
+Increases Magic attack against Naga monsters by 10%.
+Wearing this will give you a chance of receiving a Glittering Crystal while hunting Naga monsters.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mage Class^000000
+#
+2797#
+A stone with enormous latent magic power.
+Increases Magic attack against Bradium Golems by 10%.
+Wearing this will give you a chance of receiving a Giant Bradium Fragment while hunting Bradium Golems.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Level : ^77777799^000000
+Jobs : ^777777Mage Class^000000
+#
+5516#
+An artificial eyeball which glitters sharply.
+Dex +1,  Adds 3% to Long Distance Atk
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Weight : ^777777100^000000
+Required Level : ^7777770^000000
+Jobs : ^777777Sniper Only^000000
+#
+5517#
+An artificial eyeball which glitters sharply.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Weight : ^777777100^000000
+Required Level : ^7777770^000000
+Jobs : ^777777ArcherClass^000000
+#
+6150#
+A key with a magnificent pattern. The pattern which symbolizes Arunafeltz and Goddess Freya is distinctive.
+Weight : ^7777770^000000
+#
+6151#
+A huge piece of Bradium. You can feel the mysterious power. 
+Weight : ^7777770^000000
+#
+6152#
+A crystal that emits a mysterious light. It's peculiar that it is transparent but doesn't reflect the opposite side.
+Weight : ^7777770^000000
+#
+6153#
+A very special exchange ticket. You can exchange it with something good. 
+Weight : ^7777770^000000
+#
+6154#
+A golden shining piece. It might have once been a piece of a beautiful horn pipe.
+Weight : ^7777771^000000
+#
+2819#
+A guidebook that enables one to experience basic Swordman skills.
+SP + 100.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777Novice Class^000000
+#
+2820#
+A guidebook that enables one to experience basic Thief skills.
+SP + 100.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777Novice Class^000000
+#
+2821#
+A guidebook that enables one to experience basic Acolyte skills.
+SP + 100.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777Novice Class^000000
+#
+2822#
+A guidebook that enables one to experience basic Archer skills.
+SP + 100.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777Novice Class^000000
+#
+2823#
+A guidebook that enables one to experience basic Merchant skills.
+SP + 100.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777Novice Class^000000
+#
+2824#
+A guidebook that enables to experience basic Mage skills.
+SP + 100.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777Novice Class^000000
+#
+6377#
+^FF0000This Item item has been disabled. The buying shop is disabled until further notice.^000000
+An official license from the Merchant Guild that allows you to open a Bulk Buyer Vending Shop.
+You must have at least 1 of the items in your inventory that you wish to Buy in Bulk from others.
+Consumed when using the 
+Weight : ^7777771^000000
+#
+12548#
+^FF0000This Item item has been disabled. The buying shop is disabled until further notice.^000000
+A questionable license that allows you to open a Bulk Buyer Vending Shop. The Merchant Guild's stamp looks like it has been hand drawn.
+You must have at least 1 of the items in your inventory that you wish to Buy in Bulk from others.
+(One time use)
+Weight : ^7777771^000000
+#
+12379#
+[Not for Sale] It's been made as a special production in Sessrumnir temple. It has been modeled after current pope.
+There's an issue with this as a blasphemy and likely been prohibited but, it's still popular within close associates.
+There's a rumor that the fan club of the girl pope made this. The taste is not bad. "Eat before an expiration date."
+For 20 minutes ATK, MATK + 3%, All property resistance 3%.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+6360#
+Gemstone with fire property, a small piece split from Red Blood.
+Weight : ^7777770.5^000000
+#
+6361#
+Gemstone with water property, a small piece split from Crystal Blue.
+Weight : ^7777770.5^000000
+#
+6362#
+Gemstone with wind property, a small piece split from Wind of Verdure.
+Weight : ^7777770.5^000000
+#
+6363#
+Gemstone with earth property, a small piece split from Green Live.
+Weight : ^7777770.5^000000
+#
+11056#
+A singlepath of the study of spirits! 'Earthde Lagon' unravels the mystery of spirit magic.
+Only Lagon tells you the points of the Spirit Magic! Only the key points are in it!'
+'At the moment you open this book you are the upper 1% among the spiritists!!'
+Weight : ^7777771^000000
+#
+12258#
+A box with a bomb capsule. When you use a bomb poring is summoned. Flammable!.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+6218#
+A delivery box from Dieshin Man in Morroc Ruins.
+Weight : ^7777770^000000
+#
+12263#
+A manual that explains the most efficient way to battle. It is a very detailed and well composed manual.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+16615#
+A box that contains 1 Charming Ribbon
+Description:
+A pretty red ribbon
+decorated with a pink
+heart in the middle.
+Reduce damage from
+Undead and Demon
+monsters by 5%.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location: ^777777Upper^000000
+Weight : ^77777740^000000
+Level Requirement: ^77777710^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16616#
+A box that contains 1 Charming Ribbon
+Description:
+A pretty red ribbon
+decorated with a pink
+heart in the middle.
+Reduce damage from
+Undead and Demon
+monsters by 5%.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location: ^777777Upper^000000
+Weight : ^77777740^000000
+Level Requirement: ^77777710^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+13993#
+A box containing 1 Alice Hat
+Description:
+A hat adorned with an
+Alice doll. When worn,
+it seems like Alice is
+cheering you on from
+the top of your head.
+''Be strong, master!''
++10% damage against
+Demihuman monsters,
+and has low chance of
+casting Sleep on
+its wearer.
+Str +1.
+Cannot be upgraded.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Location: ^777777Upper^000000    Weight : ^77777750^000000
+Level Requirement: ^77777730^000000
+Jobs: ^777777Every
+Job except Novice^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16692#
+A box that contains 1 Alice Doll
+Description:
+A hat adorned with an
+Alice doll. When worn,
+it seems like Alice is
+cheering you on from
+the top of your head.
+''Be strong, master!''
++10% damage against
+Demihuman monsters,
+and has low chance of
+casting Sleep on
+its wearer.
+Str +1.
+Cannot be upgraded.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Location: ^777777Upper^000000
+Weight : ^77777750^000000
+Level Requirement: ^77777730^000000
+Jobs: ^777777Every
+Job except Novice^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16693#
+A box that contains 1 Crescent Helm
+Description:
+A sturdy, decorative
+hat worn by military
+generals in a far
+east country. Vit +1.
+Reduce Demihuman
+monster damage by 5%.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000    Defense :^7777778^000000
+Location: ^777777Upper, Mid^000000    Weight : ^777777300^000000
+Level Requirement: ^77777750^000000
+Jobs: ^777777Swordman and
+Merchant Classes^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16694#
+A box that contains 1 Crescent Helm
+Description:
+A sturdy, decorative
+hat worn by military
+generals in a far
+east country. Vit +1.
+Reduce Demihuman
+monster damage by 5%.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000    Defense :^7777778^000000
+Location: ^777777Upper, Mid^000000    Weight : ^777777300^000000
+Level Requirement: ^77777750^000000
+Jobs: ^777777Swordman and
+Merchant Classes^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16695#
+A box that contains 1 Dragon Skull
+Description:
+A helmet made from
+a dragon's skull that
+provides protection
+against dragons.
+Decreases damage
+from Dragon Class
+monsters by 5%.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^77777710^000000
+Location : ^777777Upper^000000
+Weight : ^77777780^000000
+Required Level: ^77777750^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16696#
+A box that contains 1 Dragon Skull
+Description:
+A helmet made from
+a dragon's skull that
+provides protection
+against dragons.
+Decreases damage
+from Dragon Class
+monsters by 5%.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^77777710^000000
+Location : ^777777Upper^000000
+Weight : ^77777780^000000
+Required Level: ^77777750^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16697#
+A box that contains 1 Drooping Bunny
+Description:
+A cute rabbit doll that^FFFFFF   ^000000 can be worn on the head.
+Dex +1, Flee +2.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16698#
+A box that contains 1 Drooping Bunny
+Description:
+A cute rabbit doll that^FFFFFF   ^000000 can be worn on the head.
+Dex +1, Flee +2.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16699#
+A box that contains 1 Evolved Blue Fish
+description:
+A headgear that looks
+just like a scrumptious^FFFFFF   ^000000 fish. It even has the
+same smell! Agi +1,
+Dex +1. Cannot be
+dropped or traded,
+but can be placed
+in Kafra Storage.
+Class : ^777777Headgear^000000
+Defense: ^7777774^000000
+Location : ^777777Upper^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16700#
+A box that contains 1 Evolved Blue Fish
+description:
+A headgear that looks
+just like a scrumptious^FFFFFF   ^000000 fish. It even has the
+same smell! Agi +1,
+Dex +1. Cannot be
+dropped or traded,
+but can be placed
+in Kafra Storage.
+Class : ^777777Headgear^000000
+Defense: ^7777774^000000
+Location : ^777777Upper^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16701#
+A box that contains 1 Evolved Pair of Red Ribbon
+Description:
+A pair of small
+red hairbands that
+makes girls look
+really cute when they
+wear them. Flee +5.
+Cannot be traded or
+dropped, but can be
+placed in Kafra Storage.
+Impossible to Upgrade
+Class : ^777777Headgear^000000
+Defense: ^7777772^000000
+Location : ^777777Middle^000000
+Weight : ^77777710^000000
+Required Level : ^77777745^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16702#
+A box that contains 1 Evolved Pair of Red Ribbon
+Description:
+A pair of small
+red hairbands that
+makes girls look
+really cute when they
+wear them. Flee +5.
+Cannot be traded or
+dropped, but can be
+placed in Kafra Storage.
+Impossible to Upgrade
+Class : ^777777Headgear^000000
+Defense: ^7777772^000000
+Location : ^777777Middle^000000
+Weight : ^77777710^000000
+Required Level : ^77777745^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16703#
+A box that contains 1 Evolved Pipe
+Description:
+Just say no.
+Especially if
+you're underage.
+Vit +1. Reduce
+damage from Brute
+class monsters by 5%.
+Cannot be traded or
+dropped, but can be
+placed in Kafra Storage.
+Impossible to Upgrade
+Class : ^777777Headgear^000000
+Defense: ^7777770^000000
+Location : ^777777Lower^000000
+Weight : ^77777710^000000
+Jobs: ^777777Novices
+can't smoke, but as
+for everyone else...^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16704#
+A box that contains 1 Evolved Pipe
+Description:
+Just say no.
+Especially if
+you're underage.
+Vit +1. Reduce
+damage from Brute
+class monsters by 5%.
+Cannot be traded or
+dropped, but can be
+placed in Kafra Storage.
+Impossible to Upgrade
+Class : ^777777Headgear^000000
+Defense: ^7777770^000000
+Location : ^777777Lower^000000
+Weight : ^77777710^000000
+Jobs: ^777777Novices
+can't smoke, but as
+for everyone else...^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16705#
+A box that contains 1 Hibiscus
+Description:
+A flower said to
+be as beautiful as
+a fairy in a far east
+country, and usually
+used as a medicinal
+herb. Dex +1, Int +1
+MDEF +5.
+Cannot be upgraded.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location: ^777777Upper^000000    Weight : ^77777720^000000
+Level Requirement: ^77777710^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16706#
+A box that contains 1 Hibiscus
+Description:
+A flower said to
+be as beautiful as
+a fairy in a far east
+country, and usually
+used as a medicinal
+herb. Dex +1, Int +1
+MDEF +5.
+Cannot be upgraded.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location: ^777777Upper^000000    Weight : ^77777720^000000
+Level Requirement: ^77777710^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16707#
+A box that contains 1 Jumping Poring
+Description:
+A Poring hat that feels like hopping on top of your head. It brings fortune to the wearer.
+Luk + 1
+Cannot be upgraded and destroyed.
+Class : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16708#
+A box that contains 1 Jumping Poring
+Description:
+A Poring hat that feels like hopping on top of your head. It brings fortune to the wearer.
+Luk + 1
+Cannot be upgraded and destroyed.
+Class : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16709#
+A box that contains 1 Kettle Hat
+Description:
+A sturdy pot worn on
+the head that overflows^FFFFFF   ^000000 with water if shaken.
+Has a chance of auto-
+casting Lv.2 Deluge
+or Lv.3 Waterball
+with each attack.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777778^000000
+Location : ^777777Upper^000000
+Weight : ^77777760^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16710#
+A box that contains 1 Kettle Hat
+Description:
+A sturdy pot worn on
+the head that overflows^FFFFFF   ^000000 with water if shaken.
+Has a chance of auto-
+casting Lv.2 Deluge
+or Lv.3 Waterball
+with each attack.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777778^000000
+Location : ^777777Upper^000000
+Weight : ^77777760^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16711#
+A box that contains 1 Magic Eyes
+Descripiton:
+A hat that looks like the eyes of a dark mage, which are rumored to blink sometimes.
+Reduce Variable Casting Time by 10% and increase SP Consumption by 20%.
+MDEF + 5.
+Class : ^777777Headgear^000000    
+Defense : ^7777773^000000
+Location : ^777777Upper^000000    
+^ffffff_^000000
+Weight : ^7777773^000000
+Required Level : ^77777730^000000
+Jobs : ^777777Magician Class/Soul Linker^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16712#
+A box that contains 1 Magic Eyes
+Descripiton:
+A hat that looks like the eyes of a dark mage, which are rumored to blink sometimes.
+Reduce Variable Casting Time by 10% and increase SP Consumption by 20%.
+MDEF + 5.
+Class : ^777777Headgear^000000    
+Defense : ^7777773^000000
+Location : ^777777Upper^000000    
+^ffffff_^000000
+Weight : ^7777773^000000
+Required Level : ^77777730^000000
+Jobs : ^777777Magician Class/Soul Linker^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16713#
+A box that contains 1 Mini Propeller
+Description:
+This hat makes the
+wearer feel as if he
+is floating on air.
+Agi +2, Dex +1,
+Dodge +10. This
+headgear's
+upgrade level affects
+the percentage of
+Cast Time reduction.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777774^000000
+Position: ^777777Upper^000000
+Weight : ^77777720^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16714#
+A box that contains 1 Mini Propeller
+Description:
+This hat makes the
+wearer feel as if he
+is floating on air.
+Agi +2, Dex +1,
+Dodge +10. This
+headgear's
+upgrade level affects
+the percentage of
+Cast Time reduction.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777774^000000
+Position: ^777777Upper^000000
+Weight : ^77777720^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16715#
+A box that contains 1 Puppy Hat
+Description:
+A small brown-colored dog that sits atop your head. It's so cute you'd be barking mad to remove it.
+Agi + 1.
+Auto casts Gloria Lv1 with low percent chance; if AGI is over 77, the cast increases to Lv3.
+Cannot be upgraded.
+Class : ^777777Headgear^000000
+Defense : ^7777774^000000
+Location : ^777777Upper^000000
+^ffffff_^000000
+Weight : ^77777750^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16716#
+A box that contains 1 Puppy Hat
+Description:
+A small brown-colored dog that sits atop your head. It's so cute you'd be barking mad to remove it.
+Agi + 1.
+Auto casts Gloria Lv1 with low percent chance; if AGI is over 77, the cast increases to Lv3.
+Cannot be upgraded.
+Class : ^777777Headgear^000000
+Defense : ^7777774^000000
+Location : ^777777Upper^000000
+^ffffff_^000000
+Weight : ^77777750^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16717#
+A box that contains 1 Sheep Hat
+Description:
+A hat that looks like
+a sheep's head that is
+so adorable, an enemy
+might change his mind
+about attacking. Reflects 5% physical damage.
+Impossible to Upgrade
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Location: ^777777Upper^000000
+Weight : ^77777715^000000
+Required Level : ^77777750^000000
+Jobs: ^777777Acolyte Class^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16718#
+A box that contains 1 Sheep Hat
+Description:
+A hat that looks like
+a sheep's head that is
+so adorable, an enemy
+might change his mind
+about attacking. Reflects 5% physical damage.
+Impossible to Upgrade
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Location: ^777777Upper^000000
+Weight : ^77777715^000000
+Required Level : ^77777750^000000
+Jobs: ^777777Acolyte Class^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+13991#
+A box containing 1 Tiger Mask
+Description:
+A mask rumored to make its wearer ferociously aggressive.
+Str +3
+HP +100
+Indestructible
+Impossible to Upgrade
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000    Defense: ^7777772^000000
+Location: ^777777Upper, Mid^000000    Weight : ^77777740^000000
+Required Level : ^77777750^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16719#
+A box that contains 1 Tiger Mask
+Description:
+A mask rumored to make its wearer ferociously aggressive.
+Str +3
+HP +100
+Indestructible
+Impossible to Upgrade
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000    Defense: ^7777772^000000
+Location: ^777777Upper, Mid^000000    Weight : ^77777740^000000
+Required Level : ^77777750^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16720#
+A box that contains 1 Vacation Hat
+Description:
+A hat that's perfect
+for vacationing, and
+shields the wearer's
+face from UV rays.
+VIT  +1. Cannot
+be upgraded.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777772^000000
+Location : ^777777Upper^000000
+Weight : ^77777720^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16721#
+A box that contains 1 Vacation Hat
+Description:
+A hat that's perfect
+for vacationing, and
+shields the wearer's
+face from UV rays.
+VIT  +1. Cannot
+be upgraded.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777772^000000
+Location : ^777777Upper^000000
+Weight : ^77777720^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16722#
+A box that contains 1 Vane Hairpin
+Description:
+A hairpin that looks
+like a spinning windmill,^FFFFFF ^000000 but it doesn't generate
+any power, though. Agi +2. Cannot be upgraded.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777774^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16723#
+A box that contains 1 Vane Hairpin
+Description:
+A hairpin that looks
+like a spinning windmill,^FFFFFF ^000000 but it doesn't generate
+any power, though. Agi +2. Cannot be upgraded.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777774^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16724#
+A box that contains 1 Vanilmirth Hat
+Description:
+A cold, soft hat that is^FFFFFF  ^000000 shaped like a Vanilmirth.
+Has a certain chance
+of auto-casting a Lv.1
+Bolt skill with each
+melee attack. Magic
+Defense +5. Cannot be^FFFFFF     ^000000 upgraded. Indestructible.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^777777100^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16725#
+A box that contains 1 Vanilmirth Hat
+Description:
+A cold, soft hat that is^FFFFFF  ^000000 shaped like a Vanilmirth.
+Has a certain chance
+of auto-casting a Lv.1
+Bolt skill with each
+melee attack. Magic
+Defense +5. Cannot be^FFFFFF     ^000000 upgraded. Indestructible.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^777777100^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16726#
+A box that contains 1 Water Lily Crown
+Description:
+A training cap that
+lends a sense of
+quiet and stability
+to the wearer.
+DEX  +1, Agi +1,
+Magic Defense +3.
+Increases HP Recovery
+by 5% and SP Recovery by^FFFFFF  ^000000 3%. Cannot be upgraded.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^77777720^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16727#
+A box that contains 1 Water Lily Crown
+Description:
+A training cap that
+lends a sense of
+quiet and stability
+to the wearer.
+DEX  +1, Agi +1,
+Magic Defense +3.
+Increases HP Recovery
+by 5% and SP Recovery by^FFFFFF  ^000000 3%. Cannot be upgraded.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^77777720^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16728#
+A box that contains 1 Pink Beanie
+Description:
+A hat woven out of
+yarn that keeps the
+head warm, but is
+mostly worn because
+of its fashionable
+look. Luk +1. 
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Position: ^777777Upper^000000
+Weight : ^77777735^000000
+Level Requirement: ^777777None^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16729#
+A box that contains 1 Pink Beanie
+Description:
+A hat woven out of
+yarn that keeps the
+head warm, but is
+mostly worn because
+of its fashionable
+look. Luk +1. 
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Position: ^777777Upper^000000
+Weight : ^77777735^000000
+Level Requirement: ^777777None^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16730#
+A box that contains 1 Green Ribbon
+Description:
+A long piece of green satin tied together into a neat little ribbon that wards off harmful magic.
+Mdef +3
+^FFFFFF_^000000
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Head Position : ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level : ^777777None^000000
+Jobs : ^777777Every job^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16731#
+A box that contains 1 Green Ribbon
+Description:
+A long piece of green satin tied together into a neat little ribbon that wards off harmful magic.
+Mdef +3
+^FFFFFF_^000000
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Head Position : ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level : ^777777None^000000
+Jobs : ^777777Every job^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16732#
+A box that contains 1 Gray Deviruchi Hat
+Description:
+A cute hat shaped
+like a Deviruchi that
+brings happiness
+to its wearer and 
+onlookers. Str +1,
+Int +1. 
+Class : ^777777Headgear^000000
+Defense: ^7777774^000000
+Position: ^777777Upper^000000
+Weight : ^77777780^000000
+Level Requirement: ^77777764^000000
+Jobs: ^777777All except Novice^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16733#
+A box that contains 1 Gray Deviruchi Hat
+Description:
+A cute hat shaped
+like a Deviruchi that
+brings happiness
+to its wearer and 
+onlookers. Str +1,
+Int +1. 
+Class : ^777777Headgear^000000
+Defense: ^7777774^000000
+Position: ^777777Upper^000000
+Weight : ^77777780^000000
+Level Requirement: ^77777764^000000
+Jobs: ^777777All except Novice^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16734#
+A box that contains 1 Blue Drooping Cat
+Description:
+A cat doll that you
+can carry on your
+head. If you think
+you hear it meow
+or feel it move, it's
+just an illusion.
+MDEF +15. +30% defense
+against Curse status.
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Position: ^777777Upper^000000
+Weight : ^77777750^000000
+Level Requirement: ^777777None^000000
+Jobs: ^777777All except Novice   ^000000 ^FFFFFF_^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16735#
+A box that contains 1 Blue Drooping Cat
+Description:
+A cat doll that you
+can carry on your
+head. If you think
+you hear it meow
+or feel it move, it's
+just an illusion.
+MDEF +15. +30% defense
+against Curse status.
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Position: ^777777Upper^000000
+Weight : ^77777750^000000
+Level Requirement: ^777777None^000000
+Jobs: ^777777All except Novice   ^000000 ^FFFFFF_^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16736#
+A box that contains 1 Fantastic Wig
+Description:
+Wig with red, white and black colors.
+When equipped, increases movement speed.
+DEF+4
+Enables the use of the skill 'Hiding' Lv1.
+Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Upper-Mid^000000    Weight : ^77777710^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16737#
+A box that contains 1 Fantastic Wig
+Description:
+Wig with red, white and black colors.
+When equipped, increases movement speed.
+DEF+4
+Enables the use of the skill 'Hiding' Lv1.
+Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Upper-Mid^000000    Weight : ^77777710^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16738#
+A box that contains 1 Yellow Mage Hat
+Description:
+A crude looking
+hat that lends a
+look of cheerfulness
+and agility, and is
+coveted by most
+skilled magic users.
+Int +2, SP +150. 
+Class : ^777777Headgear^000000
+Defense: ^7777772^000000
+Position: ^777777Upper^000000
+Weight : ^77777730^000000
+Jobs: ^777777Mage Classes,
+and Soul Linker Job^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+16739#
+A box that contains 1 Yellow Mage Hat
+Description:
+A crude looking
+hat that lends a
+look of cheerfulness
+and agility, and is
+coveted by most
+skilled magic users.
+Int +2, SP +150. 
+Class : ^777777Headgear^000000
+Defense: ^7777772^000000
+Position: ^777777Upper^000000
+Weight : ^77777730^000000
+Jobs: ^777777Mage Classes,
+and Soul Linker Job^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+13869#
+A box that contains 1 Chick Hat
+Description:
+A hat adorned with a
+cute chick that brings
+feelings of joy to those^FFFFFF  ^000000 that see it hopping.
+Adds 3% resistance to
+Demihuman and Animal
+Class monsters. Cannot
+be upgraded. Enables
+Lv. 2 Double Attack.
+Max HP and SP +50
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000    Defense: ^7777772^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level: ^77777710^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+14097#
+A box that contains 1 Chick Hat
+Description:
+A hat adorned with a
+cute chick that brings
+feelings of joy to those^FFFFFF  ^000000 that see it hopping.
+Adds 3% resistance to
+Demihuman and Animal
+Class monsters. Cannot
+be upgraded. Enables
+Lv. 2 Double Attack.
+Max HP and SP +50
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000    Defense: ^7777772^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level: ^77777710^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+13866#
+A box that contains 1 Flapping Angel Wing
+Description:
+A headgear that looks
+like flapping angel
+wings. It makes you
+feel might lighter
+when you wear it,
+though it also makes
+you feel pretty dizzy.
++3% Attack Speed and Variable Casting Speed
+Int + 1, Agi + 1
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Required Level : ^77777710^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+14094#
+A box that contains 1 Flapping Angel Wing
+Description:
+A headgear that looks
+like flapping angel
+wings. It makes you
+feel might lighter
+when you wear it,
+though it also makes
+you feel pretty dizzy.
++3% Attack Speed and Variable Casting Speed
+Int + 1, Agi + 1
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Required Level : ^77777710^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+13992#
+A box containing 1 Neko Mimi
+Description:
+A cute cat-looking hat which enhances its wearer's look.
+Has a cat tail which emphasises the appearance.
+Luk +2, MDEF +10
+Reduce 5% of damage taken from Brute monsters.
+Class : ^777777Headgear^000000    Defense: ^7777772^000000
+Location: ^777777Upper^000000    Weight : ^77777730^000000
+Requirement: ^777777None^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+14095#
+A box containing 1 Neko Mimi
+Description:
+A cute cat-looking hat which enhances its wearer's look.
+Has a cat tail which emphasises the appearance.
+Luk +2, MDEF +10
+Reduce 5% of damage taken from Brute monsters.
+Class : ^777777Headgear^000000    Defense: ^7777772^000000
+Location: ^777777Upper^000000    Weight : ^77777730^000000
+Requirement: ^777777None^000000
+Jobs: ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+13722#
+A box containing 1 Pecopeco Hairband
+Description:
+A hairband with
+PecoPeco wings that
+lends you a PecoPeco's
+speed. Increases
+Movement Speed,
+Decreases ASPD by 10%,
+(After attack delay decreases by 5%)
+and increases
+Variable Cast Time by 25%.
+Cannot be Dropped, 
+or Traded,
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777776^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level: ^77777770^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+14098#
+A box containing 1 Pecopeco Hairband
+Description:
+A hairband with
+PecoPeco wings that
+lends you a PecoPeco's
+speed. Increases
+Movement Speed,
+Decreases ASPD by 10%,
+(After attack delay decreases by 5%)
+and increases
+Variable Cast Time by 25%.
+Cannot be Dropped, 
+or Traded,
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777776^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level: ^77777770^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+13725#
+A box containing 1 Ramen Hat
+Description:
+Delicious noodles
+worn on the head that
+can be eaten when food
+is especially scarce.
+There's nothing like
+a good bowl of ramen.
+Nothing. Dex +4.
+Cannot be upgraded.
+Has a chance to
+auto-cast Lv.1 Dex-
+Decrease each
+time the wearer 
+is attacked.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777750^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+14101#
+A box containing 1 Ramen Hat
+Description:
+Delicious noodles
+worn on the head that
+can be eaten when food
+is especially scarce.
+There's nothing like
+a good bowl of ramen.
+Nothing. Dex +4.
+Cannot be upgraded.
+Has a chance to
+auto-cast Lv.1 Dex-
+Decrease each
+time the wearer 
+is attacked.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777750^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+13723#
+A box containing 1 Red Glasses
+Description:
+A must-have item for
+those that care about
+appearances: it can
+increase your beauty
+threefold. Magic
+Defense +5.
+Impossible to Upgrade
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777771^000000
+Location : ^777777Middle^000000
+Weight : ^77777710^000000
+Required Level: ^77777710^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+14099#
+A box containing 1 Red Glasses
+Description:
+A must-have item for
+those that care about
+appearances: it can
+increase your beauty
+threefold. Magic
+Defense +5.
+Impossible to Upgrade
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777771^000000
+Location : ^777777Middle^000000
+Weight : ^77777710^000000
+Required Level: ^77777710^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+13937#
+A box containing 1 Robo Eye
+^ff0000This box and it's contents are account bound^000000
+Description:
+A weird item that spreads a strange-shaped beam around the eyes. It seems to have been made in outer space.
+ATK, MATK + 2%, Dex + 1
+Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Middle^000000
+Weight : ^77777720^000000
+Required Level : ^77777710^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+14024#
+A box containing 1 Robo Eye
+^ff0000This box and it's contents account bound^000000
+Description:
+A weird item that spreads a strange-shaped beam around the eyes. It seems to have been made in outer space.
+ATK, MATK + 2%, Dex + 1
+Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Middle^000000
+Weight : ^77777720^000000
+Required Level : ^77777710^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+13724#
+A box containing 1 Whisper Mask
+Description:
+A mask shaped like
+a Whisper that feels like^FFFFFF ^000000 its always massaging
+your face so it ^333333might^000000 be^FFFFFF  ^000000 good for your skin.
+Agi +3. Increase
+Ghost damage by 10%.
+Cannot be upgraded.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777770^000000
+Location :
+^777777Upper, Mid, Lower^000000
+Weight : ^77777710^000000
+Required Level: ^77777710^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+14100#
+A box containing 1 Whisper Mask
+Description:
+A mask shaped like
+a Whisper that feels like^FFFFFF ^000000 its always massaging
+your face so it ^333333might^000000 be^FFFFFF  ^000000 good for your skin.
+Agi +3. Increase
+Ghost damage by 10%.
+Cannot be upgraded.
+Cannot be Dropped, 
+or Tradable
+Can be placed in Kafra Storage
+Class : ^777777Headgear^000000
+Defense: ^7777770^000000
+Location :
+^777777Upper, Mid, Lower^000000
+Weight : ^77777710^000000
+Required Level: ^77777710^000000
+Jobs : ^777777All^000000
+^777777_^000000
+Weight : ^7777771^000000
+#
+6424#
+A piece of a soul's spirit that refuses to rest in peace.
+Weight : ^7777770^000000
+#
+6425#
+A certificate that says that you have helped liberate a soul from being damned in the afterlife.
+Weight : ^7777770^000000
+#
+6454#
+One of Santa's Gift Bags that he uses when he delivers gifts to the children of the world.
+Weight : ^7777771^000000
+#
+18553#
+A 'fashionable' Christmas Tree hat designed by Louise Carol.
+Increases resistance to Blind, Stun, Curse and Chaos by 20%.
+Has a 1% chance of dropping Cookie Bags with each monster killed.
+If refined to +7, Cookie Bag drop rate increases by 2%.
+If refined to +9, Cookie Bag drop rate increases by 4%.
+^ff0000This item can be traded, stored, and put into a cart^000000
+Class : ^777777Headgear^000000
+Defense: ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777750^000000
+Required Level: ^77777730^000000
+Jobs : ^777777All^000000
+#
+5596#
+A Four-leafed clover that brings it's wearer luck.
+Luk+3, Mdef +2
+Can be placed in Kafra Storage, cart and traded.
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location : ^777777Lower^000000
+Weight : ^7777775^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+17030#
+A box containing 1 St Patrick's Hat.
+^0000ffThis hat can also be obtained once per character by participating in the St. Patrick's Day event by speaking to the Mysterious Man in Payon^000000.
+^ff0000This item is not available for refund or cancellation of purchase once opened.^000000
+^ff0000This item can only be traded or stored. Once opened, the item inside is account bound.^000000
+Description:
+This is an exact replica of the hat worn by O'Riley the Leprechaun.
+Str +1, Int +1, Mdef +4.
+If refined to +7 or higher, adds a chance of dropping Green Ales with every monster killed.
+^ff0000This item can only be put in storage^000000
+Class : ^777777Headgear^000000
+Defense : ^7777778^000000
+Location : ^777777Upper ^000000
+Weight : ^77777730^000000
+Required Level : ^77777740^000000
+Job : ^777777All^000000
+Box Weight : ^77777710^000000
+#
+18565#
+This is an exact replica of the hat worn by O'Riley the Leprechaun.
+Str +1, Int +1, Mdef +4.
+If refined to +7 or higher, adds a chance of dropping Green Ales with every monster killed.
+^ff0000Can be traded, stored, and vended^000000
+Class : ^777777Headgear^000000
+Defense : ^7777778^000000
+Location : ^777777Upper ^000000
+Weight : ^77777730^000000
+Required Level : ^77777740^000000
+Job : ^777777All^000000
+#
+16372#
+A box containing 1 Four Leaf Clover
+^ff0000This item is not available for refund or cancellation of purchase once opened.^000000
+^ff0000This item can only be stored. Once opened, the item inside is account bound.^000000
+Description:
+A Four-leafed clover that brings it's wearer luck.
+Luk+3, Mdef +2
+^ff0000This item can only be put in storage^000000
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location : ^777777Lower^000000
+Weight : ^7777775^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+Box Weight : ^7777771^000000
+#
+18508#
+A hat which is very unique and rare, made from the feathers of a legendary bird Garuda.
+Reduces damage from all elements by 5%.
+Luk +5, Hit +10, Reduces casting delay by 5%.
+If refined to +7 or higher, has a chance of getting Mastela Fruit when attacking monsters. Chance to drop increases by 1% for each refine level over 7.
+^ff0000Can be traded, stored, and vended^000000
+Class : ^777777Headgear^000000
+Defense : ^7777774^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All except Novices^000000
+#
+5585#
+A hairband embroidered with Runes and golden thread.
+Increases resistance to Neutral Property attacks by 3%.
+Add a low chance of recovering HP/SP when the user receives Physical Melee Damage.
+Hit +5.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location: ^777777Upper & Middle ^000000
+Weight : ^77777740^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+18505#
+An accessory which is traditionally used in piercings by the Umbala tribespeople.
+MaxHP +1%.
+Increases the recovery rate of 'Meat' by 25%.
+Has a chance of dropping 'Meat' when defeating monsters.
+^ff0000Can be traded, stored, and vended^000000
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Location : ^777777Lower ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000 
+Jobs : ^777777All Jobs^000000
+#
+16689#
+Garuda Hat Box
+#
+16325#
+Rune Hairband Box
+#
+16758#
+Umbala Spirit Box
+#
+16385#
+O'Riley's Green Box which can be opened to receive 1 random item.
+^ff0000This box can be traded, stored, and vended. The items inside are account bound.^000000
+contains the following items:
+^ffffff_^000000
+^0000ffGaruda Hat^000000
+A hat which is very unique and rare, made from the feathers of a legendary bird Garuda.
+Reduces damage from all type of monster by 5%.
+Luk +5, Hit +10, Reduces casting delay by 5%.
+If refined to +7 or higher, has a chance of getting Mastela Fruit when attacking monsters. Chance to drop increases by 1% for each refine level over 7.
+^ff0000This item is account bound but may become tradeable in the future.^000000
+Class : ^777777Headgear^000000
+Defense : ^7777774^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All except Novices^000000
+^ffffff_^000000
+^0000ffUmbala Spirit^000000
+An accessory which is traditionally used in piercings by the Umbala tribespeople.
+MaxHP +1%.
+Increases the recovery rate of 'Meat' by 25%.
+Has a chance of dropping 'Meat' when defeating monsters.
+^ff0000This item is account bound but may become tradeable in the future.^000000
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Location : ^777777Lower ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000 
+Jobs : ^777777All Jobs^000000
+^ffffff_^000000
+^0000ffGrand Peco Headdress^000000
+An elaborate multi-colored headdress made from the feathers of a Grand Peco.
+Increases attack against Demihuman and Brute type monsters 7%
+Has a low chance of adding the curse status to your target while physically melee attacking.
+^ff0000This item is account bound but may become tradeable in the future.^000000
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location : ^777777Upper & Middle^000000
+Weight : ^77777780^000000
+Required Level : ^7777771^000000 
+Jobs : ^777777All Jobs^000000
+^ffffff_^000000
+^0000ffBeer Hat^000000
+A mug of beer sits precariously on your head. Drinking severely impairs your ability to steer mounts or operate machinery.
+If refined to 7 or higher, adds 100% resistance to Confusion status.
+^ff0000This item is account bound but may become tradeable in the future.^000000
+Class : ^777777Headgear^000000
+Defense : ^7777774^000000
+Location : ^777777Upper^000000
+Weight : ^77777760^000000
+Required Level : ^77777718^000000 
+Jobs : ^777777All Jobs^000000
+^ffffff_^000000
+^0000ff2 Battle Manual X3^000000
+This well written, detailed manual explains Extremely Efficient battle methods.
+^000088EXP rate increases to 300% for 30 minutes.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+14545#
+This well written, detailed manual explains Extremely Efficient battle methods.
+^000088EXP rate increases to 300% for 30 minutes.^000000
+^ff0000Can be traded, stored, and vended^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+6237#
+The most famous fruit from Brasilis. This fruit has natural properties that boost concentration and speed.
+Weight : ^7777770^000000
+#
+11515#
+A tropical fruit with a hard shell. Drinking the juice of this fruit quenches thirst.
+Recover HP 300.
+Weight : ^77777712^000000
+#
+11516#
+A famous berry used in Brasilis deserts. It is made into ice-cream or juice during the hot summer months.
+Recover small amount HP.
+Weight : ^7777772^000000
+#
+11517#
+A potion that has a special effect. 
+^000088HP Recovery +400^000000 
+Weight : ^77777710^000000
+#
+12414#
+A candy made of guarana berries. Don't eat too much at once beacuse it increases concentration.
+Slightly increases attack speed.
+Weight : ^7777771^000000
+#
+12414#
+A candy made of guarana berries. Don't eat too much at once beacuse it increases concentration.
+Slightly increases agility.
+Weight : ^7777771^000000
+#
+6221#
+A ball with mysterious power.
+Weight : ^7777770^000000
+#
+6222#
+Small purity beads.
+Weight : ^7777770^000000
+#
+12408#
+A strange ball that can capture Strange Hydra.
+Weight : ^7777770^000000
+#
+5302#
+A hat made from a Brasilis Water Lily flower.
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All^000000
+#
+7553#
+A delicate flower found in the depths of Brasilis.
+Weight : ^7777770^000000
+#
+17053#
+A box that contains 10 of each colored Butterfly Wings and 10 Dungeon Teleport Scrolls.
+^ffff00Yellow Butterfly Wing^000000:
+An enchanted butterfly's wing that instantly sends its user to the towns of the Rune Midgarts Kingdom.
+Locations: "Prontera", "Geffen", "Payon", "Morroc", "Al De Baran" or "Alberta" when waved in the air.
+Warning: If no town is selected, the item will disappear.
+Weight : ^7777771^000000
+^00ff00Green Butterfly Wing^000000:
+An enchanted butterfly's wing that instantly sends its user to the towns of the Schwaltzwalt Republic.
+Locations: "Juno", "Lighthalzen", Einbroch" or "Hugel" when waved in the air.
+Warning: If no town is selected, the item will disappear.
+Weight : ^7777771^000000
+^ff0000Red Butterfly Wing^000000:
+An enchanted butterfly's wing that instantly sends its user to the towns of Arunafeltz.
+Locations: "Veins" or "Rachel"
+Warning: If no town is selected, the item will disappear.
+Weight : ^7777771^000000
+^0000ffBlue Butterfly Wing^000000:
+An enchanted butterfly's wing that instantly sends its user to the island towns of Rune Midgard.
+Locations: "Ayothaya", "Amatsu", "Luoyang", "Kunlun"
+Warning: If no town is selected, the item will disappear.
+Weight : ^7777771^000000
+^ffffff_^000000
+Box Weight : ^7777771^000000
+#
+13908#
+Opening this Album will yield a card from any of the Class Card sets!
+Weight : ^7777771^000000
+#
+13702#
+A box that contains 10 Gym Passes
+Description:
+A Gym Pass that can be
+given to a special
+NPC to learn a skill
+that will increase your^FFFFFF   ^000000 Maximum Weight
+Capacity by 200 for
+each skill level.
+This special skill
+can only be learned
+up to Level 10.
+^ffffff_^000000
+Weight : ^7777771^000000
+Box Weight : ^7777771^000000
+#
+13701#
+A box that contains 10 HD Oridecons
+Description:
+High Density Oridecon
+that has been buried
+deep underground. 
+Used as a material to
+strengthen weapons currently from refine levels 7 through 9.
+This item's density ensures that refine attempts will not break the weapon and if the attempt fails it will only downgrade by 1.
+Only a Blacksmith named Mighty Hammer in Payon can use this ore to refine.
+^ffffff_^000000
+Weight : ^7777770^000000
+Box Weight : ^7777771^000000
+#
+5661#
+A mark of a good pirate can be gauged by the quality of their bandanas.
+Str +1, Dex +1
+Class : ^777777Headgear^000000
+Defense : ^7777776^000000
+Location : ^777777Upper^000000
+Weight : ^7777770^000000
+Required Level : ^77777710^000000
+Job : ^777777All^000000
+#
+4991#
+Adventurers can feel carefree exploring dangerous lands knowing that Kafra gal Blossom is supporting them back in town. 
+10% Resistance to fire/wind/water/earth/holy/shadow elements 
+2% chance to increase resistance to fire/wind/water/earth/holy/shadow elements by 10% for 10 seconds when receiving magic damage
+Class : ^777777Card^000000
+Compound on: ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+4998#
+GM_Aegis_Card
+#
+4999#
+GM_Valor_Card
+#
+25005#99_Battle_Manual#
+25006#99_Battle_Manual_Box#
+25007#Beast_Powder#
+25008#Beast_Powder_Box#
+17105#
+A box that contains 50 HD Elunium
+Description:
+High Density Elunium
+that has been buried
+deep underground. 
+Used as a material
+to strengthen armor currently from refine levels 7 through 9.
+This item's density ensures that refine attempts will not break the armor and if the attempt fails it will only downgrade by 1.
+Only a Blacksmith named Mighty Hammer in Payon can use this ore to refine.
+Box Weight : ^7777771^000000
+#
+25006#99_Battle_Manual_Box#
+25007#Beast_Powder#
+25008#Beast_Powder_Box#
+17105#
+A box that contains 50 HD Elunium
+Description:
+High Density Elunium
+that has been buried
+deep underground. 
+Used as a material
+to strengthen armor currently from refine levels 7 through 9.
+This item's density ensures that refine attempts will not break the armor and if the attempt fails it will only downgrade by 1.
+Only a Blacksmith named Mighty Hammer in Payon can use this ore to refine.
+Box Weight : ^7777771^000000
+#
+25007#Beast_Powder#
+25008#Beast_Powder_Box#
+17105#
+A box that contains 50 HD Elunium
+Description:
+High Density Elunium
+that has been buried
+deep underground. 
+Used as a material
+to strengthen armor currently from refine levels 7 through 9.
+This item's density ensures that refine attempts will not break the armor and if the attempt fails it will only downgrade by 1.
+Only a Blacksmith named Mighty Hammer in Payon can use this ore to refine.
+Box Weight : ^7777771^000000
+#
+25008#Beast_Powder_Box#
+17105#
+A box that contains 50 HD Elunium
+Description:
+High Density Elunium
+that has been buried
+deep underground. 
+Used as a material
+to strengthen armor currently from refine levels 7 through 9.
+This item's density ensures that refine attempts will not break the armor and if the attempt fails it will only downgrade by 1.
+Only a Blacksmith named Mighty Hammer in Payon can use this ore to refine.
+Box Weight : ^7777771^000000
+#
+17105#
+A box that contains 50 HD Elunium
+Description:
+High Density Elunium
+that has been buried
+deep underground. 
+Used as a material
+to strengthen armor currently from refine levels 7 through 9.
+This item's density ensures that refine attempts will not break the armor and if the attempt fails it will only downgrade by 1.
+Only a Blacksmith named Mighty Hammer in Payon can use this ore to refine.
+Box Weight : ^7777771^000000
+#
+17104#
+A box that contains 50 HD Oridecon
+Description:
+High Density Oridecon
+that has been buried
+deep underground. 
+Used as a material to
+strengthen weapons currently from refine levels 7 through 9.
+This item's density ensures that refine attempts will not break the weapon and if the attempt fails it will only downgrade by 1.
+Only a Blacksmith named Mighty Hammer in Payon can use this ore to refine.
+Box Weight : ^7777771^000000
+#
+13862#
+A welcoming Package for new visitors to Rune Midgard.
+Contains 2 Battle Manuals to speed up your leveling.
+15 Bless and Agi Scrolls to make you move faster and increase your power!
+Also a few Yellow Butterfly wings to allow you to teleport to the important towns on the Midgard Continent to get your job change easily!
+^ffffff_^000000
+The items may be put in Kafra storage.
+Weight: ^7777771^000000
+#
+12507#
+An enchanted butterfly's wing that instantly sends its user to the towns of the Rune Midgarts Kingdom.
+Locations: "Prontera", "Geffen", "Payon", "Morroc", "Al De Baran" or "Alberta" when waved in the air.
+Warning: If no town is selected, the item will disappear.
+^FF0000This item is character bound^000000
+Weight: ^7777771^000000
+#
+5737#
+The friendly Potted Muka likes to encourage you by aggravating your opponents!
+Enables the use of ^00ff00Level 3 Provoke^000000
+Fully Tradable, cannot be upgraded.
+Class : ^777777Headgear^000000
+Defense : ^77777710^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs: ^777777All^000000
+#
+5526#
+The beautiful Lady Tanee Doll will keep you company on your adventures.
+Agi +2, Flee +3
+Increased damage to Wind Monsters by 5%
+Small chance of Dropping a Banana when a monster is Killed.
+^CC0000Not Upgradable.^000000
+Location: Top Headgear
+Def: 4
+Level Required: 60
+Classes: All
+#
+6481#
+^ff0000Not available for trade.^000000
+A shard of a Holy Rock, recreating the entire Holy rock will help unlock the past.
+Weight : ^7777770^000000
+#
+6482#
+^ff0000Not available for trade.^000000
+A key with a secret power that allows access into the Old city of Payon.
+Bring this item to the Old Timer in the Eden Group Bar and he can show you the pathway.
+Weight : ^7777770^000000
+#
+6483#
+^ff0000Not available for trade.^000000
+A scroll with secret power. This allows access into the memory of Morroc.
+Bring this item to the Old Timer in the Eden Group Bar and he can show you the pathway.
+Weight : ^7777770^000000
+#
+17081#
+^ff0000Not available for trade.^000000
+A Box containing 1 Crown of Yggdrasil
+^ff0000This item is not available for refund or cancel of purchase.^000000
+Item Description:
+A Crown woven from Yggdrasil's Branches which represents new life after a sacrifice.
+Vit +2, Int +2.
++1% Heal to yourself and others.
+For each refine level up to +6, this percentage increases by 1.
+If refine level is at +7 or higher, this percentage increases by 2.
+^FF0000Concept created by Channa^000000
+Class : ^777777Headgear^000000
+Defense : ^7777776^000000
+Location : ^777777Upper ^000000
+Weight : ^77777720^000000
+Required Level : ^77777770^000000
+Job : ^777777All^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+18580#
+^ff0000Not available for trade.^000000
+A Crown woven from Yggdrasil's Branches which represents new life after a sacrifice.
+Vit +2, Int +2.
+Increases the effectiveness of received healing and your own healing by 1%.
+For each refine level up to +6, this percentage increases by 1.
+If refine level is +7 or higher, this percentage increases by 2.
+^FF0000Concept created by Channa^000000
+Class : ^777777Headgear^000000
+Defense : ^7777776^000000
+Location : ^777777Upper ^000000
+Weight : ^77777720^000000
+Required Level : ^77777770^000000
+Job : ^777777All^000000
+#
+17106#
+A box that contains 10 Gym Passes
+Description:
+A Gym Pass that can be
+given to a special
+NPC to learn a skill
+that will increase your^FFFFFF   ^000000 Maximum Weight
+Capacity by 200 for
+each skill level.
+This special skill
+can only be learned
+up to Level 10.
+^ffffff_^000000
+Weight : ^7777771^000000
+Box Weight : ^7777771^000000
+#
+18591#
+Glasses worn by
+true sophisticates.
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location : ^777777Middle^000000
+Weight : ^77777710^000000
+Jobs: ^777777Every Job
+except Novice^000000
+#
+6242#
+A coin given in exchange for old RWC Groove Packs. Bring this to the RWC Groove Recycler on the second floor of Eden Group to redeem for special items.
+^0000ffThese must be redeemed by October 4, 2011 on which date they will be deleted.^000000
+^ff0000This item is account bound.^000000
+Weight : ^7777770^000000
+#
+18538#
+A spirit literally whispering sweet nothings into your ear and out the other.
+Unable to refine.
+Mdef +3
+Increases resistance to attacks from Demon and Angel monsters by 1%
+When killing a Demon monster, there's a chance of obtaining 'Holy Water'.
+When killing an Angel type emonster, there's a chance of obtaining 'Cursed Water'.
+Special Effect:
+If equipped in combination with the Heart Hairpin[0], adds an additional 9% resistance to attacks from Angel monsters.
+If equipped in combination with the Crescent Hairpin[0], adds an additional 9% resistance to attacks from Demon monsters.
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Location : ^777777Middle^000000
+Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18539#
+A driver's cap with a menacing skull on the band.
+Matk +2%
+If refined to +5 or higher, adds an additional Matk +3%.
+If refined to +7 or higher, adds an additional Matk +3%.
+Special Effect:
+If equipped in combination with Elven Ears[0], decreases the SP cost of skills by 3%.
+If equipped in combination with Evil Bone Wand[0], each refine on the weapon adds Matk +10. If the Bone Wand[0] is refined to +10, reduces cast time of skill by 10%.
+If equipped in combination with Thorn Staff of Darkness[0], each refine on the weapon adds Matk +10. If the Thorn Staff of Darkness[0] is refined to +10, reduces cast time of skills by 10%.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location : ^777777Upper^000000
+Weight : ^77777740^000000
+Required Level : ^77777710^000000
+Job : ^777777All^000000
+#
+18540#
+A mask worn by an ancient Rune Midgardian race that worshipped demons.
+Attack Speed +1%.
+Drains 1 SP every 2 seconds.
+Unable to refine.
+Special Effect:
+If equipped with Succubus Horn[0] or Incubus Horn[0], Aspd +1, Attack Speed +9%, drains an additional 3 SP every 2 seconds.
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Location : ^777777Middle and Lower^000000
+Weight : ^777777100^000000
+Required Level : ^77777710^000000
+Job : ^777777All^000000
+#
+18541#
+A soft feathered archer's cap that gives you that dash of Errol Flynn flair.
+Dex +2.
+Critical Damage +10%.
+Special Effect:
+If equipped with 'Sharp Arrow's, adds an additional Critical Damage +5%. If equipped with a +7 Little Feather Hat[1] or higher, adds an additional Critical Damage +5% with 'Sharp Arrow's.
+When equipped with the bow +10 Falken Blitz[2], the cast time of [Focus Arrow Strike] is reduced by 50%.
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Location : ^777777Upper^000000
+Weight : ^77777750^000000
+Required Level : ^77777730^000000
+Job : ^777777All^000000
+#
+18542#
+A headdress worn by high level members of warrior clergy members.
+Increases the effect of received healing by 5%.
+Increases the effectiveness of your own healing skills by 2%.
+If refined to +7 or higher, increases the effectiveness of your healing skills by an additional 3%.
+Special Effect:
+If equipped in combination with a Healing Staff[0], the effectiveness of your healing skills is increased by 1% per refine level of the staff.
+If equipped in combination with a Holy Stick[1], the effectiveness of your healing skills is increased by 3% per refine level of the staff.
+Class : ^777777Headgear^000000
+Defense : ^77777710^000000
+Location : ^777777Upper & Middle^000000
+Weight : ^77777750^000000
+Required Level : ^77777730^000000
+Job : ^777777All^000000
+#
+6321#
+A sturdy helm with hooked horns. Can be sold to Item Collectors.
+Weight : ^7777771^000000
+#
+6322#
+A slim helm with stag horns. Can be sold to Item Collectors.
+Weight : ^7777771^000000
+#
+6323#
+A helm with small horns on both sides. Can be sold to Item Collectors.
+Weight : ^7777771^000000
+#
+6324#
+A helm decorated with a single horn. Can be sold to Item Collectors.
+Weight : ^7777771^000000
+#
+6325#
+White leg of a Manuk region spider. Can be sold to Item Collectors.
+Weight : ^7777771^000000
+#
+6326#
+A beautiful wing fragment of a large insect. Gorgeous colors are displayed between the torn hide.
+Weight : ^7777771^000000
+#
+1196#
+A cold etched sword made with refined Bradium, a mineral from the Other World.
+Cannot be destroyed.
+AGI + 3, MHP - 10%.
+Class : ^777777Two-Handed Sword^000000
+Attack : ^777777280^000000
+Weight : ^77777740^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777110^000000
+Jobs : ^777777Swordman Class Type^000000
+#
+1433#
+A beautiful spear engraved with patterns of the Rune-Midgarts Kingdom.
+20% ATK increase of Cannon Spear and Banishing Point. Additional 3% ATK increase with every +2 upgrades.
+When used together with Imperial Guard, ATK of Grand Cross and Genesis Ray increases by 10%.
+MATK + 40
+Class : ^777777One-Handed Spear^000000
+Attack : ^777777180^000000
+Weight : ^777777180^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777102^000000
+Jobs : ^777777Royal Guard Only^000000
+#
+1654#
+A staff which converts elemental power into psychic energy.
+Fluctuate casting time of Psychic Wave decreased by 3 secs. Increases SP of Psychic Wave by 60.
+ATK increased by 2% and MHP decreased by 2% for every upgrade above level 6.
+Loses SP 100 upon disrobement.
+MATK + 170
+Class : ^777777One-Hand Staff^000000
+Attack : ^77777740^000000
+Weight : ^77777750^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777102^000000
+Jobs : ^777777Sorcerer Only^000000
+#
+1830#
+A knuckle engraved with splendid patterns of a bronze dragon.
+20% ATK increase of Earth Shaker and Sky Blow. 5% SP increase in every skill use.
+1% SP decrease with every upgrade above level 6.
+Class : ^777777Knuckle^000000
+Attack : ^777777142^000000
+Weight : ^77777750^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777102^000000
+Jobs : ^777777Sura Only^000000
+#
+1930#
+A flute made of sturdy plant stem.
+Fluctuate casting time of Lullaby and Rush to Windmill decreased by 2 secs. SP of each skill decreased by 4 with every upgrade above level 6.
+MATK + 50
+Class : ^777777Instrument^000000
+Attack : ^777777170^000000
+Weight : ^77777780^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777102^000000
+Jobs : ^777777Minstrel Only^000000
+#
+1984#
+A flexible whip made of renovated plant stem.
+Fluctuate casting time of Lullaby and Swing Dance decreased by 2 secs. SP of each skill decreased by 4 with every upgrade above level 6.
+MATK + 50
+Class : ^777777Whip^000000 
+Attack : ^777777170^000000
+Weight : ^77777780^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777102^000000
+Jobs : ^777777Wanderer Only^000000
+#
+1985#
+A whip of alluring fragrance made of a magical rose stem.
+Low chance of triggering Lv1 Siren's Voice with every physical attack.
+INT + 2, AGI -2, MATK + 130.
+Class : ^777777Whip^000000
+Attack : ^777777100^000000
+Weight : ^777777100^000000
+Weapon Level : ^7777774^000000
+Required Level : ^777777110^000000
+Jobs : ^777777Wanderer Only^000000
+#
+2153#
+A beautiful shield engraved with the patterns of the Rune Kingdom.
+MDEF + 5.
+20% ATK increase of Shield Press. ATK increased by 2% with every upgrade above level 6.
+Class : ^777777Shield^000000
+Defense : ^777777120^000000
+Weight : ^777777250^000000
+Required Level : ^777777102^000000
+Jobs : ^777777Royal Guard Only^000000
+#
+2465#
+Shoes fit for dancing.
+AGI + 1, Aspd increase. (2% decrease of delay after ATK).
+32 SP decrease of Swing Dance.
+Class : ^777777Shoes^000000
+Defense : ^77777715^000000
+Weight : ^77777730^000000
+Required Level : ^777777105^000000
+Jobs : ^777777Wanderer Only^000000
+#
+2853#
+An orb filled with liquid of unknown powers.
+INT + 3, MDEF + 1, MSP + 30.
+10% ATK increase of Soul Expansion and Psychic Wave, SP of each skill increased by 50.
+Class : ^777777Accessory^000000
+Defense : ^7777772^000000
+Weight : ^77777720^000000
+Required Level : ^777777110^000000
+Jobs : ^7777773rd Job Classes Only^000000
+#
+2854#
+A white glove made especially for fire magic. Gives off a faint burnt smell.
+INT + 1, MDEF + 2.
+10% increase of all Fire ATK.
+Low chance to trigger Lv 5 Auto-spell Fire Ball with every physical or magic ATK.
+20% decrease of tolerance to all Water magic.
+30% decrease of tolerance to all water ATK.
+Class : ^777777Accessory^000000
+Defense : ^7777771^000000
+Weight : ^77777710^000000
+Required Level : ^777777125^000000
+Jobs : ^7777773rd Job Classes Only^000000
+#
+13061#
+A sawtooth dagger crafted by the Rogue Guild.
+30% ATK increase of Fatal Menace. 2% ATK and +3 MATK increase with every upgrade above level 6.
+HIT +5, MATK +5 when used with Black Cat. Masquerade: Enervation and Groomy SP decreased by 20.
+Class : ^777777Dagger^000000
+Attack : ^777777142^000000
+Weight : ^77777760^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777102^000000
+Jobs : ^777777Shadow Chaser Only^000000
+#
+13062#
+An ancient ritual dagger with unknown powers.
+MATK + 120, MSP + 100, SP Recovery increased by 5%.
+Low chance of cursing self with every physical or magic ATK.
+Class : ^777777Dagger^000000
+Attack : ^777777107^000000
+Weight : ^77777760^000000
+Weapon Level : ^7777774^000000
+Required Level : ^777777120^000000
+Jobs : ^777777Swordman/Merchant/Thief/Archer/Mage Class Types Type^000000
+#
+13431#
+A cold etched sword made with refined Bradium, a mineral from the Other World.
+Cannot be destroyed.
+AGI + 1, MHP - 5%.
+Class : ^777777Sword^000000
+Attack : ^777777180^000000
+Weight : ^777777220^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777110^000000
+Jobs : ^777777Swordman/Merchant Class Types^000000
+#
+16010#
+A new bag from the Alchemist Society: 'A weapon favorable for women!' 
+20% ATK increase of Crazy Weed and Demonic Fire. 2% ATK increase of each skill for every upgrade above level 6.
+MATK + 100
+Class : ^777777Club^000000
+Attack : ^77777715^000000
+Weight : ^777777100^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777102^000000
+Jobs : ^777777Generic Only^000000
+#
+18103#
+A small bow with magical powers.
+SP decreased by 10 for Severe Rainstorm.
+INT + 4, MATK + 100.
+Class : ^777777Bow^000000
+Attack : ^77777775^000000
+Weight : ^777777170^000000
+Weapon Level : ^7777773^000000
+Required Level : ^777777105^000000
+Jobs : ^7777773rd Class Archer Type^000000
+#
+2463#
+^ff0000This item cannot be traded with others.^000000
+It has a message inscribed - Feline boots of a forgotten era, with both an unpolished and polished beauty.
+Unable to Refine or Destroy.
+Class : ^777777Shoes^000000
+Defense : ^77777712^000000
+Weight : ^7777770^000000
+Required Level : ^77777775^000000
+Job : ^777777All^000000
+#
+2564#
+^ff0000This item cannot be traded with others.^000000
+It has a message inscribed - A symbol of valor made with the tail of a savage beast.
+Unable to Refine or Destroy.
+Class : ^777777Robe^000000
+Defense : ^77777716^000000
+Weight : ^7777770^000000
+Required Level : ^77777775^000000
+Class : ^777777All^000000
+#
+2843#
+^ff0000This item cannot be traded with others.^000000
+It has a message inscribed - An accessory hung over a beast's neck to show dignity.
+SP + 50.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^7777770^000000
+Required Level : ^77777775^000000
+Class : ^777777All^000000
+#
+2844#
+^ff0000This item cannot be traded with others.^000000
+A brooch made to resemble the El Dicastes Diel.
+Allows teleportation to the Sapha Capital El Discastes at all times with the skill [To El Dicastes].
+^00ff00Open your skill window and use the [To El Dicastes] skill to activate^000000.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^77777780^000000
+Class : ^777777All^000000
+#
+4760#
+MATK + 1%,
+Fixed casting time reduced by 1%.
+#
+4761#
+MATK + 2%,
+Fixed casting time reduced by 1%.
+#
+4762#
+FLEE + 6.
+#
+4763#
+FLEE + 12.
+#
+4764#
+CRI + 5.
+#
+4765#
+CRI + 7.
+#
+4766#
+ATK + 2%.
+#
+4767#
+ATK + 3%.
+#
+6304#
+^ff0000This item cannot be traded with others.^000000
+A certificate given by Sapha leaders for meritorious deeds.
+Weight : ^7777770^000000
+#
+6305#
+^ff0000This item cannot be traded with others.^000000
+A piece of skin that is frozen solid. Something is very strange about it...
+Weight : ^7777770^000000
+#
+6306#
+^ff0000This item cannot be traded with others.^000000
+A mass made of somebody or something's blood. It is not similar to any human or creature's blood that you've ever seen before.
+Weight : ^7777770^000000
+#
+6307#
+^ff0000This item cannot be traded with others.^000000
+Mineral with an odd pulse similar to the dimensional crack. You sense a magic that is not of this world from it.
+Weight : ^7777770^000000
+#
+6308#
+^ff0000This item cannot be traded with others.^000000
+An unappraised ancient item. It's true nature is unknown.
+Weight : ^7777770^000000
+#
+6319#
+A shard from a broken piece of Bradium.
+Weight : ^7777771^000000
+#
+6340#
+An old piece of sheet music filled with notes inscribed in green ink.
+Weight : ^7777771^000000
+#
+6341#
+An old piece of sheet music filled with notes inscribed in red ink.
+Weight : ^7777771^000000
+#
+6342#
+An old piece of sheet music filled with notes inscribed in purple ink.
+Weight : ^7777771^000000
+#
+6343#
+An old piece of sheet music filled with notes inscribed in blue ink.
+Weight : ^7777771^000000
+#
+6437#
+A perfume made to make one smell like a Scaraba. Spraying this will help you avoid Scarabas from mobbing you.
+Weight : ^7777770^000000
+#
+12296#
+^0000CCSuper Summer Hat Pack^000000, opening this up and get your prize!  This item cannot be traded, but can be saved and opened at your leisure!
+^ff0000This box is account bound, the items inside can be traded, stored and vended.
+This item will be sold until August 2, 2011.^000000
+If you do not like what you get, visit the second floor of the Eden Group and speak to the Summer Hat Pack exchanger.
+^FFFFFF ^000000
+Description:
+Contains one of the following headgears:
+^0000FFSpirit Whispers^000000
+^0000FFSkull Cap^000000
+^0000FFDemon Mask^000000
+^0000FFLittle Feather Hat^000000
+^0000FFBenevolent Guardian^000000
+^FFFFFF ^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+13990#
+A box that contains
+10 Job Battle Manuals.
+^FF0000This box can only be traded and stored. The items inside are account bound.^000000
+^ffffff_^000000
+This well written,
+detailed manual
+explains effective
+battle methods.
+^ff0000This item is account bound^000000
+^000088Job EXP rate increases to
+150% for 30 minutes.
+This bonus stacks with VIP and Battle Manuals to give an additional job bonus.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+Box Weight : ^7777771^000000
+#
+14592#
+This well written,
+detailed manual
+explains effective
+battle methods.
+^ff0000This item is account bound^000000
+^000088Job EXP rate increases to
+150% for 30 minutes.
+This bonus stacks with VIP and Battle Manuals to give an additional job bonus.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+17114#
+Horn_Of_Ancient_Box
+#
+17115#
+Sprout_Hat_Box
+#
+17116#
+Mercury_Helm_Box
+#
+18595#
+If refined to +7 or higher, has a 1% chance of activating +100 attack for 10 seconds.
+^FF0000Concept created during the 2011 Create a headgear Contest.
+Created by Creciableu^000000
+Class : ^777777Headgear^000000
+Defense : ^7777778^000000
+Location : ^777777Upper^000000
+Weight : ^77777740^000000
+Required Level : ^77777750^000000
+Job : ^777777All^000000
+#
+18596#
+Enables the use of Level 3 Heaven's Drive.
+^FF0000Concept created during the 2011 Create a headgear Contest.
+Created by Miii^000000
+Class : ^777777Headgear^000000
+Defense : ^7777774^000000
+Location : ^777777Upper^000000
+Weight : ^77777720^000000
+Required Level : ^77777770^000000
+Job : ^777777All^000000
+#
+18597#
+Aspd +3%, Critical +3
+If refined to +7 or +8, adds an additional Aspd +2% and Critical +2.
+If refined to +9 or higher, adds an additional Aspd +2% and Critical +2.
+^FF0000Concept created during the 2011 Create a headgear Contest.
+Created by areitus^000000
+Class : ^777777Headgear^000000
+Defense : ^77777710^000000
+Location : ^777777Upper^000000
+Weight : ^77777740^000000
+Required Level : ^77777770^000000
+Job : ^777777All^000000
+#
+17119#
+Inside are some old favorites as well as some fresh outta the factory items like Headgears created by our very own Adventurers.
+^0000FFS Class: 1 Black Frame Glasses [1]^000000
+^00FF00A Class: 2000 Prize Medal^000000
+^00FF00A Class: 1 Super Summer Hat Pack^000000
+^00FF00A Class: 5 Battle Manual X3^000000
+^00FF00B Class: 1 Mercury Riser^000000
+^0000CCB Class: 1 Ancient Horn^000000
+^0000CCB Class: 1 Sprout Hat^000000
+^CC0000C Class: Virgo Crown^000000
+^CC0000C Class: Virgo Diadem^000000
+^CC0000C Class: 250 Valor Badges^000000
+^00CC00D Class: 1 Slotting Advertisement^000000
+^00CC00D Class: 2 Bloody Branch^000000
+^00CC00D Class: 1 Party Buff Scroll Pack^000000
+^00CC00D Class: 10 Spearman Scroll 10^000000
+^00CC00D Class: 5 Girl's Naivety^000000
+#
+12295#
+^FF0000Available Through August 9th^000000
+A fun pack that offers a little bit of Joy to adventurers that open it!  Inside you will always get:
+1x Battle Manual X3
+And also get one of the below prizes too!
+
+1x Battle Manual X3
+3x Kuloren  *Shinobi Taming item
+2x Job Manual
+50x Bravery Badges *Go to the Battle Grounds *Untradable
+1x Abyssmal Knight Helm [1]
+Wearable by all, but lvl 70 required, no special attributes other than high Defense at this time.
+
+Groove Pack is NOT tradable.
+Weight :^7777771^000000
+#
+6494#
+A sparkling coin minted in the Kafra Headquarters in Aldebaran. These can be exchanged for various goods and services.
+Weight : ^7777770^000000
+#
+6495#
+The Eden group recognizes the bearer of this badge as one who has done great deeds. These can be exchanged for various goods and services.
+Weight : ^7777770^000000
+#
+3737#
+These points can be exchanged for various goods and services with ^ff0000Grandma Boxter^000000 at the second floor of the Eden Group Headquarters
+Weight : ^7777770^000000
+#
+12622#
+An animal halter lead that summons a creature to ride on.
+Mount creatures increase movement speed by 25%.
+Cannot attack while on a mount.
+^ff0000When this item expires, so does the mount.
+This item is account bound.^000000
+Weight : ^7777770^000000
+#
+16682#
+A box that contains 1 Halter Lead. Once opened, the item inside expires after 1 week.
+^ff0000This item is not refundable and can be traded and stored.^000000
+An animal halter lead that summons a creature to ride on.
+Mount creatures increase movement speed by 25%.
+Cannot attack while on a mount.
+^ff0000When this item expires, so does the mount.^000000
+Weight : ^7777771^000000
+#
+16683#
+A box that contains 1 Halter Lead. Once opened, the item inside expires after 30 days.
+^ff0000This item is not refundable and can be traded and stored.^000000
+An animal halter lead that summons a creature to ride on.
+Mount creatures increase movement speed by 25%.
+Cannot attack while on a mount.
+^ff0000When this item expires, so does the mount.^000000
+Weight : ^7777771^000000
+#
+18621#
+A gift given to you by Agent York which he retrieved from thugs in Geffen that used this mask to disguise themselves while committing crimes and extorting citizens.
+^ff0000From August 16-September 13 special effect: 15% chance to resist Silence, 1% chance to reflect targeted magic, and 15% bonus to EXP from monsters.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Required Level : ^77777770^000000
+Job : ^777777All^000000
+#
+18611#
+Dark-colored plastic framed glasses, great for looking retro and intelligent! Int +1, Mdef +2.
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location : ^777777Middle^000000
+Weight : ^77777720^000000
+Required Level : ^77777770^000000
+Job : ^777777All^000000
+#
+12391#
+The RWC Groove Pack contains many items of pure win.  It is advised to use with caution.
+RWC Groove pack is not meant to be consumed internally.
+^FFFFFF_^000000
+Using RWC Groove Pack will certainly give you:
+- 1x Bloody Dead Branch
+^FFFFFF_^000000
+And randomly give you one of the following item sets.
+- 1x Old Card Album
+- 1x Abyss Helm
+- 1x Ifrit Mask
+- 1x Bloody Dead Branch
+- 1x Spirit Auger
+- 4x Old Coffin
+- 1x Battle Manual X3
+- 1x Safe to 7 Headgear Certificate
+- 1x Safe to 7 Body Armor Certificate
+- 1x Safe to 7 Weapon Certificate
+^FFFFFF_^000000
+^FF0000RWC Groove pack cannot be traded, but may be stored.^000000
+^FFFFFF_^000000
+Weight : ^7777771^000000
+#
+12403#
+The RWC Groove Pack 2 contains many items of pure win.  It is advised to use with caution.
+RWC Groove pack is not meant to be consumed internally.
+^FFFFFF_^000000
+Using RWC Groove Pack will certainly give you:
+- 1x Safe to 7 Chance Box
+^FFFFFF_^000000
+And randomly give you one of the following item sets.
+- 1x Drooping Alicel Doll
+- 50x Valor Badge (Battelgrounds)
+- 4x Delicious Shaved Ice (Marionette Tame)
+- 1x Battle Manual X3
+- 1x Safe to 7 Chance Box (1 of 3, Safe to 7 Headgear, Body Armor or Weapon Certificate)
+^FFFFFF_^000000
+^FF0000RWC Groove pack cannot be traded, but may be stored.^000000
+^FFFFFF_^000000
+Weight : ^7777771^000000
+#
+12416#
+A very cute egg scroll. It feels so fancy that makes you expect something from it.
+Weight : ^7777771^000000
+#
+12493#
+A very cute egg scroll. It feels so fancy that makes you expect something from it.
+Weight : ^7777771^000000
+#
+12545#
+A very cute egg scroll. It feels so fancy that makes you expect something from it.
+Weight : ^7777771^000000
+#
+12577#
+A very cute, football looking scroll. Limited Edition! It feels so fancy that makes you expect something from it.
+Weight : ^7777771^000000
+#
+12595#
+A very cute, flame looking scroll. Limited Edition! It feels so fancy that makes you expect something from it.
+Weight : ^7777771^000000
+#
+12641#
+A very cute, devil looking scroll. Limited Edition! It feels so fancy that makes you expect something from it.
+Weight : ^7777771^000000
+#
+12654#
+A very cute, angel looking scroll. Limited Edition! It feels so fancy that makes you expect something from it.
+Weight : ^7777771^000000
+#
+12673#
+This box contains one of the 3 Safe to 7 Upgrade Certificates; either Gear, Weapon or Headgear.  Take the certificate and the appropriate piece of equipment to Mighty Hammer to do a safe attempt at upgrading!  Even if the upgrade attempt fails the equipment is safe and unchanged.
+^ffffff_^000000
+Weight: ^7777771^000000
+^ff0000May be stored only.^000000
+#
+12696#
+A firecracker to celebrate the 2011 RWC!
++3 to all stats for 10 minutes when used.
+Weight : ^7777772^000000
+#
+12696#
+Special Firecracker to celebrate 2011 RWC. You will have 10 seconds fun!
+Weight : ^7777772^000000
+#
+12697#
+A firecracker to celebrate the 2011 RWC!
++3 to all stats for 10 minutes when used.
+Weight : ^7777772^000000
+#
+12697#
+Special Firecracker to celebrate 2011 RWC. You will have 10 seconds fun!
+Weight : ^7777772^000000
+#
+2168#
+Very unique, square formed shield with a special jewel on it which protects from physical power.
+If upgraded to +5 or higher, increases 1% of tolerance against Neutral attack. (The tolerance increase is limited to refine level 12) per refine level.
+Class : ^777777Shield^000000
+Defense : ^77777755^000000
+Weight : ^77777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+12690#
+This album seems to contain the cards for headgears. It is pretty shabby which shows an old, unknown power.
+Weight : ^7777775^000000
+#
+12691#
+This album seems to contain the cards for armors. It is pretty shabby which shows an old, unknown power.
+Weight : ^7777775^000000
+#
+12692#
+This album seems to contain the cards for shields. It is pretty shabby which shows an old, unknown power.
+Weight : ^7777775^000000
+#
+12693#
+This album seems to contain the cards for garments. It is pretty shabby which shows an old, unknown power.
+Weight : ^7777775^000000
+#
+12694#
+This album seems to contain the cards for shoes. It is pretty shabby which shows an old, unknown power.
+Weight : ^7777775^000000
+#
+12695#
+This album seems to contain the cards for accessories. It is pretty shabby which shows an old, unknown power.
+Weight : ^7777775^000000
+#
+12696#
+A firecracker to celebrate the 2011 RWC!
++3 to all stats for 10 minutes when used.
+Weight : ^7777772^000000
+#
+12696#
+Special Firecracker to celebrate 2011 RWC. You will have 10 seconds fun!
+Weight : ^7777772^000000
+#
+12697#
+A firecracker to celebrate the 2011 RWC!
++3 to all stats for 10 minutes when used.
+Weight : ^7777772^000000
+#
+12697#
+Special Firecracker to celebrate 2011 RWC. You will have 10 seconds fun!
+Weight : ^7777772^000000
+#
+12698#
+This album seems to contain the cards for weapons. It is pretty shabby which shows an old, unknown power.
+Weight : ^7777775^000000
+#
+17122#
+^ff0000This box cannot be traded with others.^000000
+A box containing 1 Immune Shield
+
+Very unique, square formed shield with a special jewel on it which protects from physical power.
+If upgraded to +5 or higher, increases 1% of tolerance against Neutral attack. (The tolerance increase is limited to refine level 12) per refine level.
+Class : ^777777Shield^000000
+Defense : ^77777755^000000
+Weight : ^77777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+
+^ff0000Once you open the box, it cannot be refunded.^000000
+Weight : ^7777771^000000
+#
+17123#
+^ff0000This box cannot be traded with others.^000000
+A box containing one Black Devil's Mask
+
+A grotesque headgear which covers a half of a person's face. But don't you worry. The part of eyes are open so you can see well.
+All Stats + 2.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Medium ^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+
+^ff0000Once you open the box, it cannot be refunded.^000000
+Weight : ^7777771^000000
+#
+17124#
+^ff0000This box cannot be traded with others.^000000
+A box containing one Cat Ear Beret
+
+A cute beret with cat ears! Cats don't normally wear hats but if they did they would wear this one.
+If upgraded to +5 or higher, increases 2% of Physical damage on Demi-human monsters and reduces 2% of physical damage from Demi-human monsters per refine level over 4 and caps at level 12.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location : ^777777Upper ^000000
+Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+
+^ff0000Once you open the box, it cannot be refunded.^000000
+Weight : ^7777771^000000
+#
+17125#
+^ff0000This box cannot be traded with others.^000000
+A box containing one Red Pom Band
+
+A lovely red hat with a white pom pom.
+MDEF + 5.
+If upgraded to +5 or higher, increases 2% of Magical damage on Demi-human monsters, and reduces 2% of magical damage from Demi-human monsters per refine level over 4 and caps at level 12.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Upper ^000000
+Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+
+^ff0000Once you open the box, it cannot be refunded.^000000
+Weight : ^7777771^000000
+#
+18599#
+A grotesque headgear which covers a half of a person's face. But don't you worry. The part of eyes are open so you can see well.
+All Stats + 2.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Medium ^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18600#
+A cute beret with cat ears! Cats don't normally wear hats but if they did they would wear this one.
+If upgraded to +5 or higher, increases 2% of Physical damage on Demi-human monsters and reduces 2% of physical damage from Demi-human monsters per refine level over 4 and caps at level 12.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location : ^777777Upper ^000000
+Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18601#
+A lovely red hat with a white pom pom.
+MDEF + 5.
+If upgraded to +5 or higher, increases 2% of Magical damage on Demi-human monsters, and reduces 2% of magical damage from Demi-human monsters per refine level over 4 and caps at level 12.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Upper ^000000
+Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18603#
+A grotesque headgear which covers a half of a person's face. But don't you worry. The part of eyes are open so you can see well.
+All Stats +1.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Medium ^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+15032#
+An armor made with animal leather used by the Jaty tribe during battle.
+Mdef +10.
+Decreases 5% of attack damage from all monsters.
+15% of additional tolerance to stun and freezing.
+Class : ^777777Armor^000000
+Defense : ^7777772^000000
+Weight : ^77777750^000000
+Required Level : ^7777771^000000
+Job : ^777777All except Novice^000000
+#
+18520#
+A crown that only the person who receives the tribal honor of the Jaty Tribe can wear.
+Decrease 5% of damage from animal and plant type monsters. Increases 5% of damage to animal and plant type monsters.
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Location: ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+13067#
+A long time ago, the manufacturing process for the holy sword of the Jaty tribe in Dewata island disappeared, but it has been reproduced by Mastersmith Gatti again.
+Matk +70.
+Enable a 2% chance of gaining 10% of the damage inflicted on an enemy as HP with each attack.
+An additional enchant option is available from Gatti for this weapon.
+Class : ^777777Dagger^000000
+Attack : ^777777107^000000
+Weight : ^77777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777730^000000
+Job : ^777777Swordman, Mage, Archer, Merchant, and Thief Classes; Soul Linker and Ninja^000000
+#
+6401#
+Vegetable oil from oil palm fruit. It's very heavy!!
+Weight : ^77777750^000000
+#
+6402#
+An oil palm fruit. It is used when vegetable oil is made.
+Weight : ^7777775^000000
+#
+6403#
+A leather of comodo. It is used when weapon or shield is made.
+Weight : ^7777771^000000
+#
+6404#
+It's a handle of weapon.
+Weight : ^77777710^000000
+#
+6405#
+It's a feather of bird called Cendrawasih. It's splendid and has a strong green color.
+Weight : ^7777771^000000
+#
+6406#
+It's a feather used when the 1st Jaty Crown was made. Shows beautiful light.
+Weight : ^77777710^000000
+#
+11532#
+It's the seasoned fried rice mixed with seafoods, meat, and vegitables.
+Recovers small amount of HP.
+Weight : ^7777772^000000
+#
+11533#
+Skewered chopped meat with a special barbeque sauce on it.
+Recovers small amount of HP.
+Weight : ^7777772^000000
+#
+11534#
+It's a Coconut Juice. Recovers small amount of HP and SP.
+Weight : ^7777775^000000
+#
+4760#
+MATK + 1%,
+Fixed casting time reduced by 1%.
+#
+4761#
+MATK + 2%,
+Fixed casting time reduced by 1%.
+#
+4762#
+FLEE + 6.
+#
+4763#
+FLEE + 12.
+#
+4764#
+CRI + 5.
+#
+4765#
+CRI + 7.
+#
+4766#
+ATK + 2%.
+#
+4767#
+ATK + 3%.
+#
+4786#
+MDef +2
+^ffffff_^000000
+#
+4787#
+MDef +4
+^ffffff_^000000
+#
+4788#
+MDef +6
+^ffffff_^000000
+#
+4789#
+MDef +8
+^ffffff_^000000
+#
+4790#
+MDef +10
+^ffffff_^000000
+#
+4791#
+Def +3
+^ffffff_^000000
+#
+4792#
+Def +6
+^ffffff_^000000
+#
+4793#
+Def +9
+^ffffff_^000000
+#
+4794#
+Def +12
+^ffffff_^000000
+#
+4795#
+HP +100
+^ffffff_^000000
+#
+4796#
+HP +200
+^ffffff_^000000
+#
+4797#
+HP +300
+^ffffff_^000000
+#
+4798#
+HP +400
+^ffffff_^000000
+#
+4799#
+HP +500
+^ffffff_^000000
+#
+4800#
+SP +50
+^ffffff_^000000
+#
+4801#
+SP +100
+^ffffff_^000000
+#
+4802#
+SP +150
+^ffffff_^000000
+#
+4806#
+Matk +3%
+#
+6235#
+Take this certificate, 1 Elunium and an upgradable Headgear to Mighty Hammer in the Eden Group.  If he fails on the upgrade when the item is +4, +5, or +6 the item will not break and it will stay at its current upgrade level.
+This item is Tradable, and Storagable only.
+Weight: ^7777771^000000
+#
+6234#
+Take this certificate, 1 Elunium and an upgradable Shield, Shoes, Clothing, or Armor to Mighty Hammer in the Eden Group.  If he fails on the upgrade when the item is +4, +5, or +6 the item will not break and it will stay at its current upgrade level.
+This item is Tradable, and Storagable only.
+Weight: ^7777771^000000
+#
+6230#
+Take this certificate, 1 Oridecon and an upgradable Weapon to Mighty Hammer in the Eden Group.  If he fails on the upgrade when the item is +4, +5, or +6 the item will not break and it will stay at its current upgrade level.
+This item is Tradable, and Storagable only.
+Weight: ^7777771^000000
+#
+7602#
+A card marked with the
+letter ''^000088R^000000'' which is used for special events.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+6012#
+A card marked with the
+letter ''^000088C^000000'' which is used for special events.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+6485#
+A card marked with the
+number ''^0000882^000000'' which is used for special events.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+6486#
+A card marked with the
+number ''^0000880^000000'' which is used for special events.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+6487#
+A card marked with the
+number ''^0000881^000000'' which is used for special events.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+5774#
+Aaarrrgghhhh, this hat be made out of bona fide unidentified dead animal leather. With time, aging and weathering, most of the hat formed into it's current shape and dyed a bright red.
+
+Class : ^777777Headgear^000000
+Location: ^777777Upper^000000
+Defense: ^7777771^000000
+Weight : ^77777750^000000
+Required Level : ^77777720^000000
+Jobs: ^777777All^000000
+#
+18630#
+A cute doll of a drooping Alicel from the Robot Factory.
+Increases damage to Demihuman and Demon monsters by 10%.
+If refined to +7 or higher, has a low chance of adding 100% Aspd for 7 seconds.
+Class : ^777777Headgear^000000
+Location: ^777777Upper^000000
+Defense: ^7777776^000000
+Weight : ^77777750^000000
+Required Level : ^77777770^000000
+Jobs: ^777777All except novice^000000
+#
