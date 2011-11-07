@@ -8,10 +8,10 @@
 # to change anything, edit SConstruct (or SConscript in the subfolders).
 #
 # If you experience any build problems, read this web page:
-# http://www.openkore.com/compilation.php
+# http://www.openkore.com/index.php/How_to_run_OpenKore
 
 all:
-	@python src/scons-local-2.0.1/scons.py || echo -e "\e[1;31mCompilation failed. Please read http://www.openkore.com/compilation.php for help.\e[0m"
+	@python src/scons-local-2.0.1/scons.py || echo -e "\e[1;31mCompilation failed. Please read http://www.openkore.com/index.php/How_to_run_OpenKore for help.\e[0m"
 
 clean:
 	python src/scons-local-2.0.1/scons.py -c
