@@ -588,7 +588,7 @@
 1255#Jamadhar#
 1256#Katar_of_Frozen_Icicle#
 1257#Katar_of_Quaking#
-1258#Katar_of_ Raging_Blaze#
+1258#Katar_of_Raging_Blaze#
 1259#Katar_of_Piercing_Wind#
 1260#Sharpened_Legbone_of_Ghoul#
 1261#Infiltrator#
@@ -604,7 +604,7 @@
 1271#Blood_Tears#
 1275#Katar_of_Frozen_Icicle#
 1276#Katar_of_Quaking#
-1277#Katar_of_ Raging_Blaze#
+1277#Katar_of_Raging_Blaze#
 1278#Katar_of_Piercing_Wind#
 1279#Brave_Carnage_Katar#
 1280#Valorous_Carnage_Katar#
@@ -2616,7 +2616,14 @@
 6126#Summer_Happy_Box#
 6187#Blank_Card#
 6188#Slotting_Advertisement#
+6216#Oil_Bottle#
+6219#Eden_Group_Mark#
 6243#WPS_Point_Token#
+6252#Blood_of_Wolf#
+6260#Petti's Tail#
+6263#Coconut Fruit#
+6264#Melon#
+6265#Pineapple#
 6286#Gym_Pass#
 6287#New_Clothing_Dye_Coupon#
 6288#Summer_Happy_Box#
@@ -2629,6 +2636,8 @@
 6295#Original_Clothing_Dye_Coupon#
 6298#Crushed_Pumpkin#
 6299#Worn_Fabric#
+6453#Undelivered_Gifts#
+6454#Santa_Bag#
 
 7001#Mould_Powder#
 7002#Ogre_Tooth#
@@ -3277,6 +3286,14 @@
 7916#Silver_Coin#		
 7919#Festival_Ticket#
 7923#Krathong#
+7932#Poison_Herb_Nerium#
+7933#Posion_Herb_Rantana#
+7934#Poison_Herb_Makulata#
+7935#Poison_Herb_Seratum#
+7936#Poison_Herb_Scopolia#
+7937#Poison_Herb_Amoena#
+7938#Light_Granule#
+7939#Elder_Branch#
 7941#Halloween_Ticket#
 7946#Gold_Ring_Of_Valentine#
 7947#Silver_Ring_Of_Valentine#
@@ -4163,6 +4180,7 @@
 14596#Pierre's_Treasurebox#
 
 15000#Bone_Plate#
+15012#Puente Robe#
 
 16000#Erde#
 16001#Red_Square_Bag#
@@ -4226,6 +4244,4 @@
 16590#Thoughtful_Hat_Box#
 
 18101#Bow_Of_Rudra#
-
-6453#Undelivered_Gifts#
-6454#Santa_Bag#
+18527#Gloomy_Pumpkin_Hat#
