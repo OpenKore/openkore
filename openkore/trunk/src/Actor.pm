@@ -95,7 +95,11 @@ sub new {
 	my %self = (
 		actorType => $actorType,
 		onNameChange => new CallbackList('onNameChange'),
-		onUpdate => new CallbackList('onUpdate')
+		onUpdate => new CallbackList('onUpdate'),
+		
+		# define it so deltaHp check may work immediately
+		# TODO: set it only for actors with actual hp (players, monsters)?
+		deltaHp => 0,
 	);
 	return bless \%self, $class;
 }
