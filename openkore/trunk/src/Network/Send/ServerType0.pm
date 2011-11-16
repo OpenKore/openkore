@@ -77,6 +77,7 @@ sub new {
 		'02B0' => ['master_login', 'V Z24 a24 C H32 H26 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
+		'0819' => ['buy_bulk_buyer', 'x2 x2 a4 a*', [qw(buyerID buyingStoreID zeny itemInfo)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	

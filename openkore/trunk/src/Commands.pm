@@ -69,6 +69,7 @@ sub initHandlers {
 	bg                 => \&cmdChat,
 	bl				   => \&cmdBuyerList,
 	buy                => \&cmdBuy,
+	buyer			   => \&cmdBuyer,
 	c                  => \&cmdChat,
 	card               => \&cmdCard,
 	cart               => \&cmdCart,
@@ -5013,6 +5014,40 @@ sub cmdBuyerList {
 	}
 	message("----------------------------------\n", "list");
 }
+
+
+sub cmdBuyer {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^([\d\w]+)/;
+	my ($arg2) = $args =~ /^[\d\w]+ (\d+)/;
+	my ($arg3) = $args =~ /^[\d\w]+ \d+ (\d+)/;
+	if ($arg1 eq "") {
+		error T("Syntax error in function 'buyer' (Buyer Shop)\n" .
+			"Usage: buyer <buyer # | end> [<item #> <amount>]\n");
+	} elsif ($arg1 eq "end") {
+		undef @venderItemList;
+		undef $venderID;
+		undef $venderCID;
+	} elsif ($venderListsID[$arg1] eq "") {
+		error TF("Error in function 'buyer' (Buyer Shop)\n" .
+			"buyer %s does not exist.\n", $arg1);
+	} elsif ($arg2 eq "") {
+		$messageSender->sendEnteringbuyer($buyerListsID[$arg1]);
+	} elsif ($buyerListsID[$arg1] ne $buyerID) {
+		error T("Error in function 'buyer' (Buyer Shop)\n" .
+			"Buyer ID is wrong.\n");
+	} else {
+		if ($arg3 <= 0) {
+			$arg3 = 1;
+		}
+		$messageSender->sendBuyBulkbuyer($buyerID, [{itemIndex  => $arg2, amount => $arg3}], $buyingStoreID);
+	}
+}
+
 
 sub cmdVerbose {
 	if ($config{'verbose'}) {

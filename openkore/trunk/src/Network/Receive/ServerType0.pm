@@ -219,6 +219,7 @@ sub new {
 		'014B' => ['GM_silence', 'C Z24', [qw(type name)]],
 		'014C' => ['guild_allies_enemy_list'],
 		'014E' => ['guild_master_member', 'V', [qw(type)]],
+		'0151' => ['guild_emblem_img', 'a4', [qw(GuildID)]],
 		'0152' => ['guild_emblem', 'v a4 a4 Z*', [qw(len guildID emblemID emblem)]],
 		'0154' => ['guild_members_list'],
 		'0156' => ['guild_member_position_changed', 'v V3', [qw(unknown accountID charID positionID)]],
@@ -495,12 +496,11 @@ sub new {
 		'080B' => ['booking_delete', 'V', [qw(index)]],
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade card1 card2 card3 card4)]], # 0x080F,20 # TODO: test & use type
-		'0810' => ['open_buying_store', 'c', [qw(amount)]], #TODO: PACKET_ZC_OPEN_BUYING_STORE
-		'0812' => ['open_buying_store_fail', 'v', [qw(result)]], #TODO: PACKET_ZC_FAILED_OPEN_BUYING_STORE_TO_BUYER     **msgtable
-#		'0814' => ['buying_store_appear', 'V Z*', [qw(id name)]], #TODO: PACKET_ZC_BUYING_STORE_ENTRY
-		'0814' => ['buyer_found', 'a4 A80', [qw(ID title)]],
-		'0816' => ['buyer_lost', 'V', [qw(ID)]], #TODO: PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY
-		'0818' => ['buyer_items', 'v a4 a4', [qw(len venderID venderCID)]],
+		'0810' => ['open_buying_store', 'c', [qw(amount)]],
+		'0812' => ['open_buying_store_fail', 'v', [qw(result)]],
+		'0814' => ['buying_store_found', 'V Z*', [qw(ID title)]],
+		'0816' => ['buying_store_lost', 'V', [qw(ID)]],
+		'0818' => ['buying_store_items_list', 'v a4 a4', [qw(len buyerID buyingStoreID zeny)]],
 		'081C' => ['buying_store_item_delete', 'v2 V', [qw(index amount zeny)]],
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
 		'082D' => ['received_characters', 'v C x2 C2 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]],
@@ -7337,6 +7337,13 @@ sub guild_master_member {
 	message T("You are a guildmaster.\n"), "info";
 }
 
+# 0151
+# TODO
+sub guild_emblem_img {
+	my ($self, $args) = @_;
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+}
+
 # 0152
 # TODO
 sub guild_emblem {
@@ -7951,6 +7958,99 @@ sub progress_bar_stop {
 	message TF("Progress bar finished.\n", 'info');
 }
 
+sub open_buying_store { #0x810
+	my($self, $args) = @_;
+	my $amount = $args->{amount};
+	message TF("Your buying store can buy %d items \n", $amount);
+}
+
+sub open_buying_store_fail { #0x812
+	my ($self, $args) = @_;
+	my $result = $args->{result};
+	if($result == 1){
+		message TF("Failed to open Purchasing Store.\n"),"info";
+	}else if($result == 2){
+		message TF("The total weight of the item exceeds your weight limit. Please reconfigure.\n"), "info";
+	}else if($result == 8){
+		message TF("Shop information is incorrect and cannot be opened.\n"), "info";
+	}else{
+		message TF("Failed opening your buying store.\n");
+	}
+}
+
+sub buying_store_found {
+	my ($self, $args) = @_;
+	my $ID = $args->{ID};
+	
+	if (!$buyerLists{$ID} || !%{$buyerLists{$ID}}) {
+		binAdd(\@buyerListsID, $ID);
+		Plugins::callHook('packet_buying', {ID => $ID});
+	}
+	$buyerLists{$ID}{title} = bytesToString($args->{title});
+	$buyerLists{$ID}{id} = $ID;
+}
+
+sub buying_store_lost {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	binRemove(\@buyerListsID, $ID);
+	delete $buyerLists{$ID};
+}
+
+sub buying_store_items_list {
+	my($self, $args) = @_;
+	
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $headerlen = 16;
+	undef @buyerItemList;
+	undef $buyerID;
+	undef $buyingStoreID;
+	$buyerID = $args->{buyerID};
+	$buyingStoreID = $args->{buyingStoreID};
+	my $player = Actor::get($buyerID);
+	
+	message TF("%s\n" .	
+	"#   Name                                      Type           Amount       Price\n",
+		center(' Buyer: ' . $player->nameIdx . ' ', 79, '-')), "list";
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=9) {
+		my $item = {};
+		my $index = 0;
+
+		($item->{price},
+		$item->{amount},
+		$item->{type},
+		$item->{nameID})	= unpack('V v C v', substr($args->{RAW_MSG}, $i, 9));
+
+		$item->{name} = itemName($item);
+		$buyerItemList[$index] = $item;
+		$index++;
+
+		debug("Item added to Buying Store: $item->{name} - $item->{price} z\n", "buying_store", 2);
+
+		Plugins::callHook('packet_buying_store', {
+			buyerID => $buyerID,
+			number => $index,
+			name => $item->{name},
+			amount => $item->{amount},
+			price => $item->{price},
+			type => $item->{type}
+		});
+
+		message(swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
+			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
+			"list");
+	}
+	message("-------------------------------------------------------------------------------\n", "list");
+
+	Plugins::callHook('packet_buying_store2', {
+		venderID => $buyerID,
+		itemList => \@buyerItemList
+	});
+}
+
 sub buying_store_item_delete {
 	my($self, $args) = @_;
 	return unless changeToInGameState();
@@ -7959,11 +8059,6 @@ sub buying_store_item_delete {
 		buyingstoreitemdelete($item->{invIndex}, $args->{amount});
 		Plugins::callHook('buying_store_item_delete', {index => $item->{invIndex}});
 	}
-}
-sub open_buying_store {
-	my($self, $args) = @_;
-	my $number = $args->{number};
-	message TF("You can gather %d items.\n", $number);
 }
 
 sub define_check {
