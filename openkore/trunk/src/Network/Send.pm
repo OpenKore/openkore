@@ -560,17 +560,7 @@ sub sendPartyChat {
 	$self->sendToServer($self->reconstruct({switch => 'party_chat', message => $message}));
 }
 
-		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
-		struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC2 {
-  /* this+0x0 */ short PacketType
-  /* this+0x2 */ short PacketLength
-  /* this+0x4 */ unsigned long AID
-  /* this+0x8 */ unsigned long UniqueID
-  /* this+0xc */ struct CZ_PURCHASE_ITEM_FROMMC itemList[...] {
-    /* this+0x0 */ short count
-    /* this+0x2 */ short index
-  }
-}
+
 sub parse_buy_bulk_vender {
 	my ($self, $args) = @_;
 	@{$args->{items}} = map {{ amount => unpack('v', $_), itemIndex => unpack('x2 v', $_) }} unpack '(a4)*', $args->{itemInfo};
