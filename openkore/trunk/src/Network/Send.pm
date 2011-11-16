@@ -560,6 +560,17 @@ sub sendPartyChat {
 	$self->sendToServer($self->reconstruct({switch => 'party_chat', message => $message}));
 }
 
+		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
+		struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC2 {
+  /* this+0x0 */ short PacketType
+  /* this+0x2 */ short PacketLength
+  /* this+0x4 */ unsigned long AID
+  /* this+0x8 */ unsigned long UniqueID
+  /* this+0xc */ struct CZ_PURCHASE_ITEM_FROMMC itemList[...] {
+    /* this+0x0 */ short count
+    /* this+0x2 */ short index
+  }
+}
 sub parse_buy_bulk_vender {
 	my ($self, $args) = @_;
 	@{$args->{items}} = map {{ amount => unpack('v', $_), itemIndex => unpack('x2 v', $_) }} unpack '(a4)*', $args->{itemInfo};
@@ -580,6 +591,39 @@ sub sendBuyBulkVender {
 		items => $r_array,
 	}));
 	debug "Sent bulk buy vender: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$r_array)."\n", "sendPacket";
+}
+		'0819' => ['buy_bulk_buyer', 'x2 x2 a4 a*', [qw(buyerID buyingStoreID zeny itemInfo)]],
+		struct PACKET_CZ_REQ_TRADE_BUYING_STORE {
+  /* this+0x0 */ short PacketType
+  /* this+0x2 */ short PacketLength
+  /* this+0x4 */ unsigned long makerAID x2
+  /* this+0x8 */ unsigned long StoreID x2
+  /* this+0xc */ struct struct TRADE_ITEM_BUYING_STORE ItemList[...] {
+    /* this+0x0 */ unsigned short index
+    /* this+0x2 */ unsigned short ITID
+    /* this+0x4 */ short count
+  }
+}
+sub parse_buy_bulk_buyer {
+	my ($self, $args) = @_;
+	@{$args->{items}} = map {{ amount => unpack('v', $_), itemIndex => unpack('x2 v', $_) }} unpack '(a4)*', $args->{itemInfo};
+}
+
+sub reconstruct_buy_bulk_buyer {
+	my ($self, $args) = @_;
+	# ITEM index. There were any other indexes expected to be in item buying packet?
+	$args->{itemInfo} = pack '(a4)*', map { pack 'v2', @{$_}{qw(amount itemIndex)} } @{$args->{items}};
+}
+
+sub sendBuyBulkbuyer {
+	my ($self, $buyerID, $r_array, $buyingStoreID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'buy_bulk_buyer',
+		buyerID => $buyerID,
+		buyingStoreID => $buyingStoreID,
+		items => $r_array,
+	}));
+	debug "Sent bulk buy buyer: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$r_array)."\n", "sendPacket";
 }
 
 sub sendSkillUseLoc {
