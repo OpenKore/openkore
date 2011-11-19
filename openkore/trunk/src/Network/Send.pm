@@ -572,6 +572,7 @@ sub reconstruct_buy_bulk_vender {
 	$args->{itemInfo} = pack '(a4)*', map { pack 'v2', @{$_}{qw(amount itemIndex)} } @{$args->{items}};
 }
 
+# not "buy", it sells items!
 sub sendBuyBulkVender {
 	my ($self, $venderID, $r_array, $venderCID) = @_;
 	$self->sendToServer($self->reconstruct({
@@ -582,18 +583,7 @@ sub sendBuyBulkVender {
 	}));
 	debug "Sent bulk buy vender: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$r_array)."\n", "sendPacket";
 }
-		'0819' => ['buy_bulk_buyer', 'x2 x2 a4 a*', [qw(buyerID buyingStoreID zeny itemInfo)]],
-		struct PACKET_CZ_REQ_TRADE_BUYING_STORE {
-  /* this+0x0 */ short PacketType
-  /* this+0x2 */ short PacketLength
-  /* this+0x4 */ unsigned long makerAID x2
-  /* this+0x8 */ unsigned long StoreID x2
-  /* this+0xc */ struct struct TRADE_ITEM_BUYING_STORE ItemList[...] {
-    /* this+0x0 */ unsigned short index
-    /* this+0x2 */ unsigned short ITID
-    /* this+0x4 */ short count
-  }
-}
+
 sub parse_buy_bulk_buyer {
 	my ($self, $args) = @_;
 	@{$args->{items}} = map {{ amount => unpack('v', $_), itemIndex => unpack('x2 v', $_) }} unpack '(a4)*', $args->{itemInfo};

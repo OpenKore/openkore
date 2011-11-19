@@ -498,8 +498,8 @@ sub new {
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade card1 card2 card3 card4)]], # 0x080F,20 # TODO: test & use type
 		'0810' => ['open_buying_store', 'c', [qw(amount)]],
 		'0812' => ['open_buying_store_fail', 'v', [qw(result)]],
-		'0814' => ['buying_store_found', 'V Z*', [qw(ID title)]],
-		'0816' => ['buying_store_lost', 'V', [qw(ID)]],
+		'0814' => ['buying_store_found', 'a4 Z*', [qw(ID title)]],
+		'0816' => ['buying_store_lost', 'a4', [qw(ID)]],
 		'0818' => ['buying_store_items_list', 'v a4 a4', [qw(len buyerID buyingStoreID zeny)]],
 		'081C' => ['buying_store_item_delete', 'v2 V', [qw(index amount zeny)]],
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
@@ -2772,6 +2772,7 @@ sub errors {
 		$net->serverDisconnect();
 	}
 	if ($args->{type} == 0) {
+		# FIXME BAN_SERVER_SHUTDOWN is 0x1, 0x0 is BAN_UNFAIR
 		error T("Server shutting down\n"), "connection";
 	} elsif ($args->{type} == 1) {
 		error T("Error: Server is closed\n"), "connection";
@@ -7969,11 +7970,11 @@ sub open_buying_store_fail { #0x812
 	my $result = $args->{result};
 	if($result == 1){
 		message TF("Failed to open Purchasing Store.\n"),"info";
-	}else if($result == 2){
+	} elsif ($result == 2){
 		message TF("The total weight of the item exceeds your weight limit. Please reconfigure.\n"), "info";
-	}else if($result == 8){
+	} elsif ($result == 8){
 		message TF("Shop information is incorrect and cannot be opened.\n"), "info";
-	}else{
+	} else {
 		message TF("Failed opening your buying store.\n");
 	}
 }
@@ -7984,7 +7985,7 @@ sub buying_store_found {
 	
 	if (!$buyerLists{$ID} || !%{$buyerLists{$ID}}) {
 		binAdd(\@buyerListsID, $ID);
-		Plugins::callHook('packet_buying', {ID => $ID});
+		Plugins::callHook('packet_buying', {ID => unpack 'V', $ID});
 	}
 	$buyerLists{$ID}{title} = bytesToString($args->{title});
 	$buyerLists{$ID}{id} = $ID;
