@@ -128,6 +128,7 @@ sub binRemove {
 	my $i;
 	for ($i = 0; $i < @{$r_array};$i++) {
 		if ($$r_array[$i] eq $ID) {
+			# "WARNING: Calling delete on array values is deprecated and likely to be removed in a future version of Perl."
 			delete $$r_array[$i];
 			last;
 		}
