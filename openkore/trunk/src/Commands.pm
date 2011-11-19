@@ -5029,13 +5029,15 @@ sub cmdBuyer {
 		error T("Syntax error in function 'buyer' (Buyer Shop)\n" .
 			"Usage: buyer <buyer # | end> [<item #> <amount>]\n");
 	} elsif ($arg1 eq "end") {
+		# FIXME vender?
 		undef @venderItemList;
 		undef $venderID;
 		undef $venderCID;
-	} elsif ($venderListsID[$arg1] eq "") {
+	} elsif ($buyerListsID[$arg1] eq "") {
 		error TF("Error in function 'buyer' (Buyer Shop)\n" .
 			"buyer %s does not exist.\n", $arg1);
 	} elsif ($arg2 eq "") {
+		# FIXME not implemented
 		$messageSender->sendEnteringbuyer($buyerListsID[$arg1]);
 	} elsif ($buyerListsID[$arg1] ne $buyerID) {
 		error T("Error in function 'buyer' (Buyer Shop)\n" .
