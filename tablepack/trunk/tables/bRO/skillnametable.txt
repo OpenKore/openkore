@@ -1,546 +1,421 @@
-// Novice Skills \\
-NV_BASIC#Basic_Skill#
-NV_FIRSTAID#First_Aid#
-NV_TRICKDEAD#Trick_Dead#
-
-// Acolyte Skills \\
-AL_ANGELUS#Angelus#
-AL_BLESSING#Blessing#
-AL_CURE#Cure#
-AL_CRUCIS#Signum_Crucis#
-AL_DECAGI#Decrease_Agility#
-AL_DEMONBANE#Demon_Bane#
-AL_DP#Divine_Protection#
-AL_INCAGI#Increase_Agility#
-AL_HEAL#Heal#
+﻿NV_BASIC#Habilidades_Básicas#
+SM_SWORD#Perícia_com_Espada#
+SM_TWOHAND#Perícia_com_Espada_de_Duas_Mãos#
+SM_RECOVERY#Aumentar_Recuperação_de_HP#
+SM_BASH#Golpe_Fulminante#
+SM_PROVOKE#Provocar#
+SM_MAGNUM#Impacto_Explosivo#
+SM_ENDURE#Vigor#
+MG_SRECOVERY#Aumentar_Recuperação_de_SP#
+MG_SIGHT#Chama_Reveladora#
+MG_NAPALMBEAT#Ataque_Espiritual#
+MG_SAFETYWALL#Escudo_Mágico#
+MG_SOULSTRIKE#Espíritos_Anciões#
+MG_COLDBOLT#Lanças_de_Gelo#
+MG_FROSTDIVER#Rajada_Congelante#
+MG_STONECURSE#Petrificar#
+MG_FIREBOLT#Lanças_de_Fogo#
+MG_FIREBALL#Bolas_de_Fogo#
+MG_FIREWALL#Barreira_de_Fogo#
+MG_LIGHTNINGBOLT#Relâmpago#
+MG_THUNDERSTORM#Tempestade_de_Raios#
+AL_DP#Proteção_Divina#
+AL_DEMONBANE#Flagelo_do_Mal#
+AL_RUWACH#Revelação#
+AL_PNEUMA#Escudo_Sagrado#
+AL_TELEPORT#Teleporte#
+AL_WARP#Portal#
+AL_HEAL#Curar#
+AL_INCAGI#Aumentar_Agilidade#
+AL_DECAGI#Diminuir_Agilidade#
 AL_HOLYWATER#Aqua_Benedicta#
-AL_PNEUMA#Pneuma#
-AL_RUWACH#Ruwach#
-AL_TELEPORT#Teleportation#
-AL_WARP#Warp_Portal#
-AL_HOLYLIGHT#Holy_Light#
-
-// Swordman Skills \\
-SM_SWORD#Sword_Mastery#
-SM_TWOHAND#Two-Handed_Sword_Mastery#
-SM_RECOVERY#Increase_Recuperative_Power#
-SM_BASH#Bash#
-SM_PROVOKE#Provoke#
-SM_MAGNUM#Magnum_Break#
-SM_ENDURE#Endure#
-SM_AUTOBERSERK#Auto_Berserk#
-SM_MOVINGRECOVERY#Moving_HP_Recovery#
-SM_FATALBLOW#Fatal_Blow#
-
-// Mage Skills \\
-MG_SRECOVERY#Increase_Spiritual_Power#
-MG_SIGHT#Sight#
-MG_NAPALMBEAT#Napalm_Beat#
-MG_SAFETYWALL#Safety_Wall#
-MG_SOULSTRIKE#Soul_Strike#
-MG_COLDBOLT#Cold_Bolt#
-MG_FROSTDIVER#Frost_Diver#
-MG_STONECURSE#Stone_Curse#
-MG_FIREBOLT#Fire_Bolt#
-MG_FIREBALL#Fire_Ball#
-MG_FIREWALL#Fire_Wall#
-MG_LIGHTNINGBOLT#Lightning_Bolt#
-MG_THUNDERSTORM#Thunder_Storm#
-MG_ENERGYCOAT#Energy_Coat#
-
-// Merchant Skills \\
-MC_INCCARRY#Enlarge_Weight_Limit#
-MC_DISCOUNT#Discount#
-MC_OVERCHARGE#Overcharge#
-MC_PUSHCART#Pushcart#
-MC_IDENTIFY#Identify#
-MC_VENDING#Vending#
-MC_MAMMONITE#Mammonite#
-MC_CARTREVOLUTION#Cart_Revolution#
-MC_CHANGECART#Change_Cart#
-MC_LOUD#Loud_Exclamation#
-
-// Archer Skills \\
-AC_OWL#Owl's_Eye#
-AC_VULTURE#Vulture's_Eye#
-AC_CONCENTRATION#Attention_Concentrate#
-AC_DOUBLE#Double_Strafing#
-AC_SHOWER#Arrow_Shower#
-AC_MAKINGARROW#Making_Arrow#
-AC_CHARGEARROW#Charge_Arrow#
-
-// Thief Skills \\
-TF_DOUBLE#Double_Attack#
-TF_MISS#Increase_Dodge#
-TF_STEAL#Steal#
-TF_HIDING#Hiding#
-TF_POISON#Envenom#
-TF_DETOXIFY#Detoxify#
-TF_SPRINKLESAND#Sprinkle_Sand#
-TF_BACKSLIDING#Back_Sliding#
-TF_PICKSTONE#Pick_Stone#
-TF_THROWSTONE#Throw_Stone#
-
-// Knight Skills \\
-KN_AUTOCOUNTER#Auto_Counter#
-KN_BOWLINGBASH#Bowling_Bash#
-KN_BRANDISHSPEAR#Brandish_Spear#
-KN_CAVALIERMASTERY#Cavalry_Mastery#
-KN_PIERCE#Pierce#
-KN_SPEARBOOMERANG#Spear_Boomerang#
-KN_SPEARMASTERY#Spear_Mastery#
-KN_SPEARSTAB#Spear_Stab#
-KN_TWOHANDQUICKEN#Two-Hand_Quicken#
-KN_RIDING#Riding#
-KN_CHARGEATK#Charge_Attack#
-KN_ONEHAND#One-Hand_Quicken#
-
-// Priest Skills \\
-PR_MACEMASTERY#Mace_Mastery#
+AL_CRUCIS#Signum_Crusis#
+AL_ANGELUS#Angelus#
+AL_BLESSING#Bênção#
+AL_CURE#Medicar#
+MC_INCCARRY#Aumentar_Capacidade_de_Carga#
+MC_DISCOUNT#Desconto#
+MC_OVERCHARGE#Superfaturar#
+MC_PUSHCART#Usar_Carrinho#
+MC_IDENTIFY#Identificar_Item#
+MC_VENDING#Comércio#
+MC_MAMMONITE#Mammonita#
+AC_OWL#Precisão#
+AC_VULTURE#Olhos_de_Águia#
+AC_CONCENTRATION#Concentração#
+AC_DOUBLE#Rajada_de_Flechas#
+AC_SHOWER#Chuva_de_Flechas#
+TF_DOUBLE#Ataque_Duplo#
+TF_MISS#Perícia_em_Esquiva#
+TF_STEAL#Furto#
+TF_HIDING#Esconderijo#
+TF_POISON#Envenenar#
+TF_DETOXIFY#Desintoxicar#
+KN_SPEARMASTERY#Perícia_com_Lança#
+KN_PIERCE#Perfurar#
+KN_BRANDISHSPEAR#Brandir_Lança#
+KN_SPEARSTAB#Estocada#
+KN_SPEARBOOMERANG#Lança_Bumerangue#
+KN_TWOHANDQUICKEN#Rapidez_com_Duas_Mãos#
+KN_AUTOCOUNTER#Contra-Ataque#
+KN_BOWLINGBASH#Impacto_de_Tyr#
+KN_RIDING#Montaria#
+KN_CAVALIERMASTERY#Perícia_em_Montaria#
+PR_MACEMASTERY#Perícia_com_Maça#
 PR_IMPOSITIO#Impositio_Manus#
 PR_SUFFRAGIUM#Suffragium#
 PR_ASPERSIO#Aspersio#
-PR_BENEDICTIO#B.S_Sacramenti#
-PR_SANCTUARY#Sanctuary#
-PR_STRECOVERY#Recovery#
-PR_SLOWPOISON#Slow_Poison#
+PR_BENEDICTIO#B.S._Sacramenti#
+PR_SANCTUARY#Santuário#
+PR_STRECOVERY#Graça_Divina#
+PR_SLOWPOISON#Retardar_Veneno#
+ALL_RESURRECTION#Ressuscitar#
 PR_KYRIE#Kyrie_Eleison#
 PR_MAGNIFICAT#Magnificat#
 PR_GLORIA#Gloria#
 PR_LEXDIVINA#Lex_Divina#
-PR_TURNUNDEAD#Turn_Undead#
+PR_TURNUNDEAD#Esconjurar#
 PR_LEXAETERNA#Lex_Aeterna#
 PR_MAGNUS#Magnus_Exorcismus#
-PR_REDEMPTIO#Redemptio#
-
-// Hunter Skills \\
-HT_ANKLESNARE#Ankle_Snare#
-HT_BEASTBANE#Beast_Bane#
-HT_BLASTMINE#Blast_Mine#
-HT_BLITZBEAT#Blitz_Beat#
-HT_CLAYMORETRAP#Claymore_Trap#
-HT_DETECTING#Detecting#
-HT_FALCON#Falconry_Mastery#
-HT_FLASHER#Flasher#
-HT_FREEZINGTRAP#Freezing_Trap#
-HT_LANDMINE#Land_Mine#
-HT_REMOVETRAP#Remove_Trap#
-HT_TALKIEBOX#Talkie_Box#
-HT_SANDMAN#Sandman#
-HT_SHOCKWAVE#Shockwave_Trap#
-HT_SKIDTRAP#Skid_Trap#
-HT_SPRINGTRAP#Spring_Trap#
-HT_STEELCROW#Steel_Crow#
-HT_PHANTASMIC#Phantasmic_Arrow#
-HT_POWER#Beast_Strafing#
-
-// Wizard Skills \\
-WZ_FIREPILLAR#Fire_Pillar#
-WZ_SIGHTRASHER#Sightrasher#
-WZ_METEOR#Meteor_Storm#
-WZ_JUPITEL#Jupitel_Thunder#
-WZ_VERMILION#Lord_of_Vermilion#
-WZ_WATERBALL#Water_Ball#
-WZ_ICEWALL#Ice_Wall#
-WZ_FROSTNOVA#Frost_Nova#
-WZ_STORMGUST#Storm_Gust#
-WZ_EARTHSPIKE#Earth_Spike#
-WZ_HEAVENDRIVE#Heaven's_Drive#
-WZ_QUAGMIRE#Quagmire#
-WZ_ESTIMATION#Monster_Property#
-WZ_SIGHTBLASTER#Sight_Blaster#
-
-// Assassin Skills \\
-AS_RIGHT#Right-Hand_Mastery#
-AS_LEFT#Left-Hand_Mastery#
-AS_KATAR#Katar_Mastery#
-AS_CLOAKING#Cloaking#
-AS_SONICBLOW#Sonic_Blow#
-AS_GRIMTOOTH#Grimtooth#
-AS_ENCHANTPOISON#Enchant_Poison#
-AS_POISONREACT#Poison_React#
-AS_VENOMDUST#Venom_Dust#
-AS_SPLASHER#Venom_Splasher#
-AS_SONICACCEL#Sonic_Acceleration#
-AS_VENOMKNIFE#Throw_Venom_Knife#
-
-// Blacksmith Skills \\
-BS_IRON#Iron_Tempering#
-BS_STEEL#Steel_Tempering#
-BS_ENCHANTEDSTONE#Enchanted_Stone_Craft#
-BS_ORIDEOCON#Research_Oridecon#
-BS_DAGGER#Smith_Dagger#
-BS_SWORD#Smith_Sword#
-BS_TWOHANDSWORD#Smith_Two-Handed_Sword#
-BS_AXE#Smith_Axe#
-BS_MACE#Smith_Mace#
-BS_KNUCKLE#Smith_Brass_Knuckle#
-BS_SPEAR#Smith_Spear#
-BS_HILTBINDING#Hilt_Binding#
-BS_FINDINGORE#Finding_Ore#
-BS_WEAPONRESEARCH#Weaponry_Research#
-BS_REPAIRWEAPON#Repair_Weapon#
-BS_SKINTEMPER#Skin_Tempering#
-BS_HAMMERFALL#Hammer_Fall#
-BS_ADRENALINE#Adrenaline_Rush#
-BS_WEAPONPERFECT#Weapon_Perfection#
-BS_OVERTHRUST#Over_Thrust#
-BS_MAXIMIZE#Maximize_Power#
-BS_UNFAIRLYTRICK#Unfair_Trick#
-BS_GREED#Greed#
-BS_ADRENALINE2#Full_Adrenaline_Rush#
-
-// Rogue Skills \\
-RG_SNATCHER#Snatcher#
-RG_STEALCOIN#Steal_Coin#
-RG_BACKSTAP#Back_Stab#
-RG_TUNNELDRIVE#Tunnel_Drive#
-RG_RAID#Raid#
-RG_STRIPWEAPON#Strip_Weapon#
-RG_STRIPSHIELD#Strip_Shield#
-RG_STRIPARMOR#Strip_Armor#
-RG_STRIPHELM#Strip_Helm#
-RG_INTIMIDATE#Intimidate#
-RG_GRAFFITI#Graffiti#
-RG_FLAGGRAFFITI#Flag_Graffiti#
-RG_CLEANER#Cleaner#
-RG_GANGSTER#Gangster's_Paradise#
-RG_COMPULSION#Compulsion_Discount#
-RG_PLAGIARISM#Plagiarism#
-RG_CLOSECONFINE#Close_Confine#
-
-// Alchemist Skills \\
-AM_AXEMASTERY#Axe_Mastery#
-AM_LEARNINGPOTION#Learning_Potion#
-AM_PHARMACY#Pharmacy#
-AM_DEMONSTRATION#Demonstration#
-AM_ACIDTERROR#Acid_Terror#
-AM_POTIONPITCHER#Potion_Pitcher#
-AM_CANNIBALIZE#Bio_Cannibalize#
-AM_SPHEREMINE#Sphere_Mine#
-AM_CP_WEAPON#Chemical_Protection_Weapon#
-AM_CP_SHIELD#Chemical_Protection_Shield#
-AM_CP_ARMOR#Chemical_Protection_Armor#
-AM_CP_HELM#Chemical_Protection_Helm#
-AM_BERSERKPITCHER#Berserk_Pitcher#
-AM_TWILIGHT1#Twilight_Alchemy#
-AM_TWILIGHT2#Twilight_Alchemy#
-AM_TWILIGHT3#Twilight_Alchemy#
-
-// Crusader Skills \\
-CR_TRUST#Faith#
-CR_AUTOGUARD#Auto_Guard#
-CR_SHIELDCHARGE#Shield_Charge#
-CR_SHIELDBOOMERANG#Shield_Boomerang#
-CR_REFLECTSHIELD#Reflect_Shield#
-CR_HOLYCROSS#Holy_Cross#
-CR_GRANDCROSS#Grand_Cross#
-CR_DEVOTION#Devotion#
-CR_PROVIDENCE#Providence#
-CR_DEFENDER#Defender#
-CR_SPEARQUICKEN#Spear_Quicken#
-CR_SHRINK#Shrink#
-
-// Monk Skills \\
-MO_IRONHAND#Iron_Hand#
-MO_SPIRITSRECOVERY#Spirits_Recovery#
-MO_CALLSPIRITS#Call_Spirits#
-MO_ABSORBSPIRITS#Absorb_Spirits#
-MO_TRIPLEATTACK#Triple_Attack#
-MO_BODYRELOCATION#Body_Relocation#
-MO_DODGE#Dodge#
-MO_INVESTIGATE#Investigate#
-MO_FINGEROFFENSIVE#Finger_Offensive#
-MO_STEELBODY#Steel_Body#
-MO_BLADESTOP#Blade_Stop#
-MO_EXPLOSIONSPIRITS#Critical_Explosion#
-MO_EXTREMITYFIST#Asura_Strike#
-MO_CHAINCOMBO#Chain_Combo#
-MO_COMBOFINISH#Combo_Finish#
-MO_KITRANSLATION#Ki_Translation#
-MO_BALKYOUNG#Ki_Explosion#
-
-// Sage Skills \\
-SA_ADVANCEDBOOK#Advanced_Book#
-SA_CASTCANCEL#Cast_Cancel#
-SA_FREECAST#Free_Cast#
-SA_SPELLBREAKER#Spell_Breaker#
-SA_AUTOSPELL#Auto_Spell#
-SA_MAGICROD#Magic_Rod#
-SA_VOLCANO#Volcano#
-SA_DELUGE#Deluge#
-SA_VIOLENTGALE#Violent_Gale#
-SA_LANDPROTECTOR#Land_Protector#
-SA_FLAMELAUNCHER#Flame_Launcher#
-SA_FROSTWEAPON#Frost_Weapon#
-SA_LIGHTNINGLOADER#Lightning_Loader#
-SA_SEISMICWEAPON#Seismic_Weapon#
-SA_DRAGONOLOGY#Dragonology#
-SA_DISPELL#Dispell#
+HT_ANKLESNARE#Instalar_Armadilha#
+HT_BEASTBANE#Flagelo_das_Feras#
+HT_BLASTMINE#Instalar_Mina#
+HT_BLITZBEAT#Ataque_Aéreo#
+HT_CLAYMORETRAP#Armadilha_Explosiva#
+HT_DETECTING#Alerta#
+HT_FALCON#Adestrar_Falcão#
+HT_FLASHER#Armadilha_Luminosa#
+HT_FREEZINGTRAP#Armadilha_Congelante#
+HT_LANDMINE#Armadilha_Atordoante#
+HT_REMOVETRAP#Remover_Armadilha#
+HT_TALKIEBOX#Mensagem_Secreta#
+HT_SANDMAN#Armadilha_Sonífera#
+HT_SHOCKWAVE#Armadilha_Extenuante#
+HT_SKIDTRAP#Armadilha_Escorregadia#
+HT_SPRINGTRAP#Desativar_Armadilha#
+HT_STEELCROW#Garras_de_Aço#
+WZ_FIREPILLAR#Coluna_de_Fogo#
+WZ_SIGHTRASHER#Supernova#
+WZ_FIREIVY#Hera_de_Fogo#
+WZ_METEOR#Chuva_de_Meteoros#
+WZ_JUPITEL#Trovão_de_Júpiter#
+WZ_VERMILION#Ira_de_Thor#
+WZ_WATERBALL#Esfera_d'Água#
+WZ_ICEWALL#Barreira_de_Gelo#
+WZ_FROSTNOVA#Congelar#
+WZ_STORMGUST#Nevasca#
+WZ_EARTHSPIKE#Coluna_de_Pedra#
+WZ_HEAVENDRIVE#Fúria_da_Terra#
+WZ_QUAGMIRE#Pântano_dos_Mortos#
+WZ_ESTIMATION#Sentido_Sobrenatural#
+AS_RIGHT#Perícia_com_Mão_Direita#
+AS_LEFT#Perícia_com_Mão_Esquerda#
+AS_KATAR#Perícia_com_Katar#
+AS_CLOAKING#Furtividade#
+AS_SONICBLOW#Lâminas_Destruidoras#
+AS_GRIMTOOTH#Tocaia#
+AS_ENCHANTPOISON#Envenenar_Arma#
+AS_POISONREACT#Refletir_Veneno#
+AS_VENOMDUST#Névoa_Tóxica#
+AS_SPLASHER#Explosão_Tóxica#
+BS_IRON#Trabalhar_Ferro#
+BS_STEEL#Trabalhar_Aço#
+BS_ENCHANTEDSTONE#Produzir_Pedra_Fundamental#
+BS_ORIDEOCON#Perícia_com_Oridecon#
+BS_DAGGER#Forjar_Adaga#
+BS_SWORD#Forjar_Espada#
+BS_TWOHANDSWORD#Forjar_Espada_de_Duas_Mãos#
+BS_AXE#Forjar_Machado#
+BS_MACE#Forjar_Maça#
+BS_KNUCKLE#Forjar_Soqueira#
+BS_SPEAR#Forjar_Lança#
+BS_HILTBINDING#Punho_Firme#
+BS_FINDINGORE#Encontrar_Minério#
+BS_WEAPONRESEARCH#Perícia_em_Armamento#
+BS_REPAIRWEAPON#Consertar_Armas#
+BS_SKINTEMPER#Resistência_ao_Fogo#
+BS_HAMMERFALL#Martelo_de_Thor#
+BS_ADRENALINE#Adrenalina_Pura#
+BS_WEAPONPERFECT#Manejo_Perfeito#
+BS_OVERTHRUST#Força_Violenta#
+BS_MAXIMIZE#Amplificar_Poder#
+NV_FIRSTAID#Primeiros_Socorros#
+SM_MOVINGRECOVERY#Recuperar_HP_em_Movimento#
+AC_MAKINGARROW#Fabricar_Flechas#
+TF_SPRINKLESAND#Chutar_Areia#
+MC_CARTREVOLUTION#Cavalo-de-Pau#
+AL_HOLYLIGHT#Luz_Divina#
+MG_ENERGYCOAT#Proteção_Arcana#
+NV_TRICKDEAD#Fingir_de_Morto#
+SM_FATALBLOW#Ataque_Fatal#
+AC_CHARGEARROW#Disparo_Violento#
+TF_BACKSLIDING#Recuar#
+MC_CHANGECART#Personalizar_Carrinho#
+SM_AUTOBERSERK#Instinto_de_Sobrevivência#
+TF_PICKSTONE#Procurar_Pedras#
+TF_THROWSTONE#Arremessar_Pedra#
+MC_LOUD#Grito_de_Guerra#
+GD_APPROVAL#Autorização_Oficial#
+GD_KAFRACONTRACT#Contrato_com_Kafra#
+GD_GUARDRESEARCH#Comandar_Guardiões#
+GD_CHARISMA#Carisma#
+GD_EXTENSION#Expandir_Clã#
+RG_SNATCHER#Mãos_Leves#
+RG_STEALCOIN#Afanar#
+RG_BACKSTAP#Apunhalar#
+RG_TUNNELDRIVE#Túnel_de_Fuga#
+RG_RAID#Ataque_Surpresa#
+RG_STRIPWEAPON#Remover_Arma#
+RG_STRIPSHIELD#Remover_Escudo#
+RG_STRIPARMOR#Remover_Armadura#
+RG_STRIPHELM#Remover_Capacete#
+RG_INTIMIDATE#Rapto#
+RG_GRAFFITI#Grafitti#
+RG_FLAGGRAFFITI#Pichar#
+RG_CLEANER#Faxina#
+RG_GANGSTER#Malandragem#
+RG_COMPULSION#Extorquir#
+RG_PLAGIARISM#Plágio#
+AM_AXEMASTERY#Perícia_com_Machado#
+AM_LEARNINGPOTION#Pesquisa_de_Poções#
+AM_PHARMACY#Preparar_Poção#
+AM_DEMONSTRATION#Fogo_Grego#
+AM_ACIDTERROR#Terror_Ácido#
+AM_POTIONPITCHER#Arremessar_Poção#
+AM_CANNIBALIZE#Criar_Monstro_Planta#
+AM_SPHEREMINE#Criar_Esfera_Marinha#
+AM_CP_WEAPON#Revestir_Arma#
+AM_CP_SHIELD#Revestir_Escudo#
+AM_CP_ARMOR#Revestir_Armadura#
+AM_CP_HELM#Revestir_Capacete#
+AM_BIOETHICS#Bioética#
+AM_BIOTECHNOLOGY#Biotecnologia#
+AM_CREATECREATURE#Criar_Criatura#
+AM_CULTIVATION#Cultivo#
+AM_FLAMECONTROL#Controle_das_Chamas#
+AM_CALLHOMUN#Criar_Homunculus#
+AM_REST#Vaporizar#
+AM_DRILLMASTER#Semeadeira#
+AM_HEALHOMUN#Curar_Homunculus#
+AM_RESURRECTHOMUN#Ressuscitar_Homunculus#
+CR_TRUST#Fé#
+CR_AUTOGUARD#Bloqueio#
+CR_SHIELDCHARGE#Punição_Divina#
+CR_SHIELDBOOMERANG#Escudo_Bumerangue#
+CR_REFLECTSHIELD#Escudo_Refletor#
+CR_HOLYCROSS#Crux_Divinum#
+CR_GRANDCROSS#Crux_Magnun#
+CR_DEVOTION#Redenção#
+CR_PROVIDENCE#Divina_Providência#
+CR_DEFENDER#Aura_Sagrada#
+CR_SPEARQUICKEN#Rapidez_com_Lança#
+MO_IRONHAND#Punhos_de_Ferro#
+MO_SPIRITSRECOVERY#Meditação#
+MO_CALLSPIRITS#Invocar_Esfera_Espiritual#
+MO_ABSORBSPIRITS#Absorver_Esferas_Espirituais#
+MO_TRIPLEATTACK#Combo_Triplo#
+MO_BODYRELOCATION#Passo_Etéreo#
+MO_DODGE#Cair_das_Pétalas#
+MO_INVESTIGATE#Impacto_Psíquico#
+MO_FINGEROFFENSIVE#Disparo_de_Esferas_Espirituais#
+MO_STEELBODY#Corpo_Fechado#
+MO_BLADESTOP#Dilema#
+MO_EXPLOSIONSPIRITS#Fúria_Interior#
+MO_EXTREMITYFIST#Punho_Supremo_de_Asura#
+MO_CHAINCOMBO#Combo_Quádruplo#
+MO_COMBOFINISH#O_Último_Dragão#
+SA_ADVANCEDBOOK#Estudo_de_Livros#
+SA_CASTCANCEL#Cancelar_magia#
+SA_FREECAST#Conjuração_Livre#
+SA_SPELLBREAKER#Desconcentrar#
+SA_AUTOSPELL#Desejo_Arcano#
+SA_MAGICROD#Espelho_Mágico#
+SA_VOLCANO#Vulcão#
+SA_DELUGE#Dilúvio#
+SA_VIOLENTGALE#Furacão#
+SA_BARRENZONE#Terra_Estéril#
+SA_LANDPROTECTOR#Proteger_Terreno#
+SA_FLAMELAUNCHER#Encantar_com_Chama#
+SA_FROSTWEAPON#Encantar_com_Geada#
+SA_LIGHTNINGLOADER#Encantar_com_Ventania#
+SA_SEISMICWEAPON#Encantar_com_Terremoto#
+SA_DRAGONOLOGY#Dragonologia#
+SA_DISPELL#Desencantar#
 SA_ABRACADABRA#Abracadabra#
-SA_CREATECON#Create_Elemental_Converter#
-SA_ELEMENTWATER#Elemental_Change_(Water)#
-SA_ELEMENTGROUND#Elemental_Change_(Earth)#
-SA_ELEMENTFIRE#Elemental_Change_(Fire)#
-SA_ELEMENTWIND#Elemental_Change_(Wind)#
-
-// Abracadabra Skills \\
-SA_BARRENZONE#Barren_Zone#
-SA_CLASSCHANGE#Class_Change#
-SA_DEATH#Death#
-SA_MONOCELL#Monocell#
-SA_SUMMONMONSTER#Summon_Monster#
-SA_REVERSEORCISH#Reverse_Orcish#
-SA_FORTUNE#Fortune#
-SA_TAMINGMONSTER#Taming_Monster#
-SA_QUESTION#?#
+SA_MONOCELL#Mono_Cell#
+SA_CLASSCHANGE#Transformação#
+SA_SUMMONMONSTER#Invocar_Monstro#
+SA_REVERSEORCISH#Transformação_Orc#
+SA_DEATH#Extermínio#
+SA_FORTUNE#Toque_de_Midas#
+SA_TAMINGMONSTER#Hipnose#
+SA_QUESTION#Interrogatório#
 SA_GRAVITY#Gravity#
-SA_LEVELUP#Level_Up#
-SA_INSTANTDEATH#Instant_Death#
-SA_FULLRECOVERY#Full_Recovery#
+SA_LEVELUP#Level_Up!#
+SA_INSTANTDEATH#Suicídio#
+SA_FULLRECOVERY#Recuperação#
 SA_COMA#Coma#
-
-// Bard & Dance Skills \\
-BD_ADAPTATION#Adaptation_to_Circumstances#
-BD_DRUMBATTLEFIELD#A_Drum_on_the_Battlefield#
-BD_ENCORE#Encore#
-BD_ETERNALCHAOS#Eternal_Chaos#
-BD_INTOABYSS#Into_the_Abyss#
-BD_LULLABY#Lullaby#
-BD_RICHMANKIM#Mr._Kim_A_Rich_Man#
-BD_RINGNIBELUNGEN#The_Ring_of_Nibelungen#
-BD_ROKISWEIL#Loki's_Veil#
-BD_SIEGFRIED#Invulnerable_Siegfried#
-
-// Bard Skills \\
-BA_APPLEIDUN#The_Apple_of_Idun#
-BA_ASSASSINCROSS#Assassin_Cross_of_Sunset#
-BA_DISSONANCE#Dissonance#
-BA_FROSTJOKE#Frost_Joker#
-BA_MUSICALLESSON#Musical_Lesson#
-BA_MUSICALSTRIKE#Musical_Strike#
-BA_POEMBRAGI#A_Poem_of_Bragi#
-BA_WHISTLE#A_Whistle#
-BA_PANGVOICE#Pang_Voice#
-
-// Dancer Skills \\
-DC_DANCINGLESSON#Dancing_Lesson#
-DC_DONTFORGETME#Please_Don't_Forget_Me#
-DC_FORTUNEKISS#Fortune's_Kiss#
-DC_HUMMING#Humming#
-DC_SCREAM#Scream#
-DC_SERVICEFORYOU#Service_for_You#
-DC_THROWARROW#Throw_Arrow#
-DC_UGLYDANCE#Ugly_Dance#
-DC_WINKCHARM#Wink_of_Charm#
-
-// Wedding Skills \\
-WE_CALLPARTNER#I_miss_you#
-WE_FEMALE#I'll_sacrifice_myself_for_you#
-WE_MALE#I'll_save_you#
-WE_BABY#Mom,_Dad,_I_love_you!#
-WE_CALLBABY#Come_to_me,_honey~#
-WE_CALLPARENT#Mom,_Dad,_I_miss_you!#
-
-// Lord_Knight Skills \\
-LK_AURABLADE#Aura_Blade#
-LK_BERSERK#Berserk#
-LK_CONCENTRATION#Concentration#
-LK_HEADCRUSH#Head_Crush#
-LK_JOINTBEAT#Joint_Beat#
-LK_PARRYING#Parrying#
-LK_SPIRALPIERCE#Spiral_Pierce#
-LK_TENSIONRELAX#Tension_Relax#
-
-// Paladin Skills \\
-PA_GOSPEL#Gospel#
-PA_PRESSURE#Pressure#
-PA_SACRIFICE#Sacrifice#
-PA_SHIELDCHAIN#Shield_Chain#
-
-// High Priest Skills \\
+BD_ADAPTATION#Encerramento#
+BD_ENCORE#Bis#
+BD_LULLABY#Cantiga_de_Ninar#
+BD_RICHMANKIM#Banquete_de_Njord#
+BD_ETERNALCHAOS#Ritmo_Caótico#
+BD_DRUMBATTLEFIELD#Rufar_dos_Tambores#
+BD_RINGNIBELUNGEN#Anel_dos_Nibelungos#
+BD_ROKISWEIL#Lamento_de_Loki#
+BD_INTOABYSS#Canção_Preciosa#
+BD_SIEGFRIED#Ode_a_Siegfried#
+BD_RAGNAROK#Ragnarök#
+BA_MUSICALLESSON#Lições_de_Música#
+BA_MUSICALSTRIKE#Flecha_Melódica#
+BA_DISSONANCE#Dissonância#
+BA_FROSTJOKE#Piada_Infame#
+BA_WHISTLE#Assovio#
+BA_ASSASSINCROSS#Crepúsculo_Sangrento#
+BA_POEMBRAGI#Poema_de_Bragi#
+BA_APPLEIDUN#Maçãs_de_Idun#
+DC_DANCINGLESSON#Lições_de_Dança#
+DC_THROWARROW#Estilingue#
+DC_UGLYDANCE#Dança_do_Ventre#
+DC_SCREAM#Escândalo#
+DC_HUMMING#Sibilo#
+DC_DONTFORGETME#Não_Me_Abandones#
+DC_FORTUNEKISS#Beijo_da_Sorte#
+DC_SERVICEFORYOU#Dança_Cigana#
+WE_MALE#Amor_Verdadeiro#
+WE_FEMALE#Amor_Eterno#
+WE_CALLPARTNER#Saudades_de_Você#
+LK_AURABLADE#Lâmina de Aura#
+LK_PARRYING#Aparar Golpe#
+LK_CONCENTRATION#Dedicação#
+LK_TENSIONRELAX#Relaxar#
+LK_BERSERK#Frenesi#
+PA_PRESSURE#Gloria Domini#
+PA_SACRIFICE#Sacrifício do Mártir#
+PA_GOSPEL#Canto de Batalha#
 HP_ASSUMPTIO#Assumptio#
-HP_BASILICA#Basilica#
-HP_MEDITATIO#Meditatio#
-HP_MANARECHARGE#Mana_Recharge#
+HP_BASILICA#Basílica#
+HP_MEDITATIO#Meditação#
+HW_SOULDRAIN#Dreno de Alma#
+HW_MAGICCRASHER#Esmagamento Mágico#
+HW_MAGICPOWER#Amplificação Mística#
+CH_PALMSTRIKE#Golpe da Palma em Fúria#
+CH_TIGERFIST#Punho do Tigre#
+CH_CHAINCRUSH#Combo Esmagador#
+PF_HPCONVERSION#Indulgir#
+PF_SOULCHANGE#Exalar Alma#
+PF_SOULBURN#Sifão de Alma#
+ASC_KATAR#Perícia com Katar Avançada#
+ASC_BREAKER#Destruidor de Almas#
+SN_SIGHT#Visão Real#
+SN_FALCONASSAULT#Assalto do Falcão#
+SN_SHARPSHOOTING#Tiro Preciso#
+SN_WINDWALK#Caminho do Vento#
+WS_MELTDOWN#Golpe Estilhaçante#
+WS_CREATECOIN#Criar Moeda#
+WS_CREATENUGGET#Criar Pepita#
+WS_CARTBOOST#Impulso no Carrinho#
+WS_SYSTEMCREATE#Criar Máquina Automática de Ataque#
+ST_CHASEWALK#Espreitar#
+ST_REJECTSWORD#Instinto de Defesa#
+ST_STEALBACKPACK#Roubar Bolso#
+CR_ALCHEMY#Alquimia#
+CR_SYNTHESISPOTION#Síntese de Poção#
+CG_ARROWVULCAN#Vulcão de Flechas#
+CG_MOONLIT#Bênção Protetora#
+CG_MARIONETTE#Controle de Marionete#
+LK_SPIRALPIERCE#Perfurar em Espiral#
+LK_HEADCRUSH#Golpe Traumático#
+LK_JOINTBEAT#Ataque Vital#
+HW_NAPALMVULCAN#Vulcão Napalm#
+CH_SOULCOLLECT#Zen#
+PF_MINDBREAKER#Enlouquecedor#
+PF_MEMORIZE#Presciência#
+PF_FOGWALL#Bruma Ofuscante#
+PF_SPIDERWEB#Prisão da Teia#
+ASC_METEORASSAULT#Impacto Meteoro#
+ASC_CDP#Criar Veneno Mortal#
+ASC_EDP#Encantar com Veneno Mortal#
+WE_BABY#Mãe, Pai, amo vocês!#
+WE_CALLPARENT#Mãe, Pai, cadê vocês?#
+WE_CALLBABY#Vem cá, filhote!#
+GD_GLORYGUILD#Glória da Guilda#
+GD_LEADERSHIP#Grande Liderança#
+GD_GLORYWOUNDS#Ferimentos de Glória#
+GD_SOULCOLD#Coração de Frio#
+GD_HAWKEYES#Olhar Apurado#
+GD_BATTLEORDER#Comando de Batalha#
+GD_REGENERATION#Regeneração#
+GD_RESTORE#Restauração#
+GD_EMERGENCYCALL#Chamado Urgente#
+GD_GUARDUP#Fortalecer Guardiões#
+GD_DEVELOPMENT#Desenvolvimento Permanente#
+ST_PRESERVE#Preservar#
+ST_FULLSTRIP#Remoção Total#
+WS_WEAPONREFINE#Atualizar Arma#
+CR_SLIMPITCHER#Arremessar Poção Compacta#
+CR_FULLPROTECTION#Proteção Química Total#
+ITM_TOMAHAWK#Arremessar Tomahawk...#
 
-// High Wizard Skills \\
-HW_MAGICCRASHER#Magic_Crasher#
-HW_MAGICPOWER#Amplify_Magic_Power#
-HW_NAPALMVULCAN#Napalm_Vulcan#
-HW_SOULDRAIN#Soul_Drain#
-HW_GANBANTEIN#Ganbantein#
-HW_GRAVITATION#Gravitation_Field#
+// -- 10.2 + 10.3 ????
 
-// Champion Skills \\
-CH_CHAINCRUSH#Chain_Crush_Combo#
-CH_PALMSTRIKE#Palm_Push_Strike#
-CH_SOULCOLLECT#Dangerous_Soul_Collect#
-CH_TIGERFIST#Tiger_Knuckle_Fist#
-
-// Professor Skills \\
-PF_HPCONVERSION#Health_Conversion#
-PF_SOULCHANGE#Soul_Change#
-PF_SOULBURN#Soul_Burn#
-PF_MEMORIZE#Memorize#
-PF_FOGWALL#Wall_of_Fog#
-PF_MINDBREAKER#Mind_Breaker#
-PF_SPIDERWEB#Spider_Web#
-PF_DOUBLECASTING#Double_Casting#
-
-// Assassin Cross Skills \\
-ASC_BREAKER#Soul_Breaker#
-ASC_EDP#Enchant_Deadly_Poison#
-ASC_CDP#Create_Deadly_Poison#
-ASC_KATAR#Advanced_Katar_Research#
-ASC_METEORASSAULT#Meteor_Assault#
-
-// Sniper Skills \\
-SN_FALCONASSAULT#Falcon_Assault#
-SN_SIGHT#True_Sight#
-SN_SHARPSHOOTING#Sharp_Shooting#
-SN_WINDWALK#Wind_Walk#
-
-// Whitesmith Skills \\
-WS_CARTBOOST#Cart_Boost#
-WS_MELTDOWN#Melt_Down#
-WS_WEAPONREFINE#Weapon_Refine#
-WS_CARTTERMINATION#Cart_Termination#
-WS_OVERTHRUSTMAX#Maximum_Over_Thrust#
-
-// Stalker Skills \\
-ST_CHASEWALK#Chase_Walk#
-ST_REJECTSWORD#Reject_Sword#
-ST_PRESERVE#Preserve#
-ST_FULLSTRIP#Full_Strip#
-
-// Clown & Gypsy Skills \\
-CG_ARROWVULCAN#Arrow_Vulcan#
-CG_MARIONETTE#Marionette_Control#
-CG_MOONLIT#Moonlit_Water_Mill#
-CG_LONGINGFREEDOM#Longing_for_Freedom#
-CG_HERMODE#Wand_of_Hermode#
-CG_TAROTCARD#Tarot_Card_of_Fate#
-
-// Creator Skills \\
-CR_ACIDDEMONSTRATION#Acid_Demonstration#
-CR_SLIMPITCHER#Slim_Potion_Pitcher#
-CR_FULLPROTECTION#Full_Chemical_Protection#
-CR_CULTIVATION#Plant_Cultivation#
-
-// Homunculus Skills \\
-AM_BIOETHICS#Bioethics#
-AM_BIOTECHNOLOGY#Biotechnology#
-AM_CREATECREATURE#Create_Creature#
-AM_CULTIVATION#Cultivation#
-AM_FLAMECONTROL#Flame_Control#
-AM_CALLHOMUN#Call_Homunculus#
-AM_REST#Rest#
-AM_DRILLMASTER#Drillmaster#
-AM_HEALHOMUN#Heal_Homunculus#
-AM_RESURRECTHOMUN#Resurrect_Homunculus#
-
-// LIF Skills \\
-HLIF_HEAL#Touch_of_Heal#
-HLIF_AVOID#Emergency_Avoid#
-HLIF_BRAIN#Brain_Surgery#
-HLIF_CHANGE#Mental_Change#
-
-// AMISTR Skills \\
-HAMI_CASTLE#Castling#
-HAMI_DEFENCE#Defense#
-HAMI_SKIN#Adamantium_Skin#
-HAMI_BLOODLUST#Blood_Lust#
-
-// FILIR Skills \\
-HFLI_MOON#Moonlight#
-HFLI_FLEET#Fleet_Move#
-HFLI_SPEED#Over_Speed#
-HFLI_SBR44#S.B.R.44#
-
-// VANILMIRTH Skills \\
-HVAN_CAPRICE#Caprice#
-HVAN_CHAOTIC#Chaotic_Benediction#
-HVAN_INSTRUCT#Change_Instruction#
-HVAN_EXPLOSION#Bio_Explosion#
-
-// Guild Skills \\
-GD_APPROVAL#Approval#
-GD_KAFRACONTRACT#Kafra_Contract#
-GD_GUARDRESEARCH#Guardian_Research#
-GD_EXTENSION#Guild_Extension#
-GD_GLORYGUILD#Guild's_Glory#
-GD_LEADERSHIP#Great_Leadership#
-GD_GLORYWOUNDS#Wounds_of_Glory#
-GD_SOULCOLD#Soul_of_Cold#
-GD_HAWKEYES#Sharp_Hawk_Eyes#
-GD_BATTLEORDER#Battle_Orders#
-GD_REGENERATION#Regeneration#
-GD_RESTORE#Restore#
-GD_EMERGENCYCALL#Emergency_Call#
-GD_GUARDUP#Build_up_the_Guardian#
-GD_DEVELOPMENT#Emsolute_Develop#
-GD_ITEMEMERGENCYCALL#Item_Emergency_Call#
-
-// Item Skills \\
-ITM_TOMAHAWK#Throw_Tomahawk#
-
-// TaeKwon Girl/Boy Skills \\
-TK_RUN#Running#
-TK_READYSTORM#Prepare_Whirlwind_Kick#
-TK_STORMKICK#Whirlwind_Kick#
-TK_READYDOWN#Prepare_Axe_Kick#
-TK_DOWNKICK#Axe_Kick#
-TK_READYTURN#Prepare_Round_Kick#
-TK_TURNKICK#Round_Kick#
-TK_READYCOUNTER#Prepare_Counter_Kick#
-TK_COUNTER#Counter_Kick#
-TK_DODGE#Break_Fall#
-TK_JUMPKICK#Flying_Side_Kick#
-TK_HPTIME#Peaceful_Rest#
-TK_SPTIME#Enjoyable_Rest#
-TK_POWER#Fighting_Chant#
-TK_SEVENWIND#Warm_Wind#
-TK_MISSION#TaeKwon_Mission#
-TK_HIGHJUMP#High_Jump#
-
-// Star Gladiator Skills \\
-SG_FEEL#Feeling#
-SG_SUN_WARM#Warmth_of_the_Sun#
-SG_MOON_WARM#Warmth_of_the_Moon#
-SG_STAR_WARM#Warmth_of_the_Stars#
-SG_SUN_COMFORT#Comfort_of_the_Sun#
-SG_MOON_COMFORT#Comfort_of_the_Moon#
-SG_STAR_COMFORT#Comfort_of_the_Stars#
-SG_HATE#Hatred#
-SG_SUN_ANGER#Anger_of_the_Sun#
-SG_MOON_ANGER#Anger_of_the_Moon#
-SG_STAR_ANGER#Anger_of_the_Stars#
-SG_SUN_BLESS#Blessing_of_the_Sun#
-SG_MOON_BLESS#Blessing_of_the_Moon#
-SG_STAR_BLESS#Blessing_of_the_Stars#
-SG_DEVIL#Demon#
-SG_FRIEND#Friend#
-SG_KNOWLEDGE#Knowledge#
-SG_FUSION#Union#
-
-// Soul Linker Skills \\
-SL_ALCHEMIST#Alchemist_Spirit#
-SL_MONK#Monk_Spirit#
-SL_STAR#Star_Gladiator_Spirit#
-SL_SAGE#Sage_Spirit#
-SL_CRUSADER#Crusader_Spirit#
-SL_SUPERNOVICE#Super_Novice_Spirit#
-SL_KNIGHT#Knight_Spirit#
-SL_WIZARD#Wizard_Spirit#
-SL_PRIEST#Priest_Spirit#
-SL_BARDDANCER#Bard_and_Dancer_Spirits#
-SL_ROGUE#Rogue_Spirit#
-SL_ASSASIN#Assassin_Spirit#
-SL_BLACKSMITH#Blacksmith_Spirit#
-SL_HUNTER#Hunter_Spirit#
-SL_SOULLINKER#Soul_Linker_Spirit#
-SL_HIGH#Rebirth_Spirit#
+TK_RUN#Corrida#
+TK_READYSTORM#Postura do Tornado#
+TK_STORMKICK#Chute do Tornado#
+TK_READYDOWN#Postura da Patada Voadora#
+TK_DOWNKICK#Patada Voadora#
+TK_READYTURN#Postura da Rasteira#
+TK_TURNKICK#Rasteira#
+TK_READYCOUNTER#Postura do Contrachute#
+TK_COUNTER#Contrachute#
+TK_DODGE#Cambalhota#
+TK_JUMPKICK#Chute Aéreo#
+TK_HPTIME#Trégua Rápida#
+TK_SPTIME#Retiro Rápido#
+TK_POWER#Kihop#
+TK_SEVENWIND#Brisa Leve#
+TK_HIGHJUMP#Salto#
+TK_MISSION#Missão Tae Kwon Dô#	
+SG_FEEL#Percepção Solar, Lunar e Estelar#
+SG_SUN_WARM#Calor Solar#
+SG_MOON_WARM#Calor Lunar#
+SG_STAR_WARM#Calor Estelar#
+SG_SUN_COMFORT#Proteção Solar#
+SG_MOON_COMFORT#Proteção Lunar#
+SG_STAR_COMFORT#Proteção Estelar#
+SG_HATE#Oposição Solar, Lunar e Estelar#
+SG_SUN_ANGER#Fúria Solar#
+SG_MOON_ANGER#Fúria Lunar#
+SG_STAR_ANGER#Fúria Estelar#
+SG_SUN_BLESS#Bênção Solar#
+SG_MOON_BLESS#Bênção Lunar#
+SG_STAR_BLESS#Bênção Estelar#
+SG_DEVIL#Sombra Solar, Lunar e Estelar#
+SG_FRIEND#Auxílio Solar, Lunar e Estelar#
+SG_KNOWLEDGE#Transmissão Solar, Lunar e Estelar#
+SG_FUSION#União Solar, Lunar e Estelar#
+SL_ALCHEMIST#Espírito do Alquimista#
+AM_BERSERKPITCHER#Arremessar Poção da Fúria Selvagem#
+AM_TWILIGHT1#Criação Espiritual de Poções#
+AM_TWILIGHT2#Criação Espiritual de Poções#
+AM_TWILIGHT3#Criação Espiritual de Poções#
+SL_MONK#Espírito do Monge#
+SL_STAR#Espírito do Mestre Taekwon#
+SL_SAGE#Espírito do Sábio#
+SL_CRUSADER#Espírito do Templário#
+SL_SUPERNOVICE#Espírito do Superaprendiz#
+SL_KNIGHT#Espírito do Cavaleiro#
+SL_WIZARD#Espírito do Bruxo#
+SL_PRIEST#Espírito do Sacerdote#
+SL_BARDDANCER#Espírito do Artista#
+SL_ROGUE#Espírito do Arruaceiro#
+SL_ASSASIN#Espírito do Mercenário#
+SL_BLACKSMITH#Espírito do Ferreiro#
+BS_ADRENALINE2#Adrenalina Concentrada#
+SL_HUNTER#Espírito do Caçador#
+SL_SOULLINKER#Espírito do Espiritualista#
+SL_HIGH#Espírito dos Transcendentais#
+BS_ADRENALINE2#Adrenalina Concentrada#
 SL_KAIZEL#Kaizel#
 SL_KAAHI#Kaahi#
 SL_KAUPE#Kaupe#
@@ -552,634 +427,153 @@ SL_SMA#Esma#
 SL_SWOO#Eswoo#
 SL_SKE#Eske#
 SL_SKA#Eska#
-
-// Ninja Skills \\
-NJ_TOBIDOUGU#Throwing_Mastery#
-NJ_SYURIKEN#Throw_Shuriken#
-NJ_KUNAI#Throw_Kunai#
-NJ_HUUMA#Throw_Fuuma_Shuriken#
-NJ_ZENYNAGE#Throw_Zeny#
-NJ_TATAMIGAESHI#Reverse_Tatami#
-NJ_KASUMIKIRI#Mist_Slash#
-NJ_SHADOWJUMP#Shadow_Jump#
-NJ_KIRIKAGE#Shadow_Slash#
-NJ_UTSUSEMI#Cast-off_Ciceda_Shell#
-NJ_BUNSINJYUTSU#Illusionary_Shadow#
-NJ_NINPOU#Ninpou_Training#
-NJ_KOUENKA#Crimson_Fire_Blossom#
-NJ_KAENSIN#Crimson_Fire_Formation#
-NJ_BAKUENRYU#Dragon_Fire_Formation#
-NJ_HYOUSENSOU#Lightning_Spear_of_Ice#
-NJ_SUITON#Water_Escape_Technique#
-NJ_HYOUSYOURAKU#Falling_Ice_Pillar#
-NJ_HUUJIN#Wind_Blade#
-NJ_RAIGEKISAI#Lightning_Crash#
-NJ_KAMAITACHI#North_Wind#
-NJ_NEN#Soul#
-NJ_ISSEN#Final_Strike#
-
-// Gunslinger Skills \\
-GS_GLITTERING#Flip_the_Coin#
-GS_FLING#Fling#
-GS_TRIPLEACTION#Triple_Action#
-GS_BULLSEYE#Bull's_Eye#
-GS_MADNESSCANCEL#Madness_Canceller#
-GS_ADJUSTMENT#Adjustment#
-GS_INCREASING#Increasing_Accuracy#
-GS_MAGICALBULLET#Magical_Bullet#
-GS_CRACKER#Cracker#
-GS_SINGLEACTION#Single_Action#
-GS_SNAKEEYE#Snake's_Eye#
-GS_CHAINACTION#Chain_Action#
-GS_TRACKING#Tracking#
-GS_DISARM#Disarm#
-GS_PIERCINGSHOT#Piercing_Shot#
-GS_RAPIDSHOWER#Rapid_Shower#
+ST_PRESERVE#Preservar#
+WS_WEAPONREFINE#Aprimorar Armamento#
+CR_FULLPROTECTION#Proteção Química Total#
+ITM_TOMAHAWK#Arremessar Tomahawk#
+PA_SHIELDCHAIN#Choque Rápido#
+HP_MANARECHARGE#Riqueza Espírito#
+PF_DOUBLECASTING#Lanças Duplas#
+HW_GANBANTEIN#Ganbantein#
+HW_GRAVITATION#Campo Gravitacional#
+WS_CARTTERMINATION#Choque de Carrinho#
+WS_OVERTHRUSTMAX#Força Violentíssima#
+CG_LONGINGFREEDOM#Grito de Liberdade#
+CG_HERMODE#Bastão de Hermod#
+CG_TAROTCARD#Destino nas Cartas#
+CR_ACIDDEMONSTRATION#Bomba Ácida#
+CR_CULTIVATION#Cultivar Planta#
+KN_ONEHAND#Rapidez com Uma Mão#
+HT_POWER#Ataque da Fera#
+HLIF_HEAL#Cura pelas Mãos#
+HLIF_AVOID#Bater em Retirada#
+HLIF_BRAIN#Cirurgia Cerebral#
+HLIF_CHANGE#Esforço Mental#
+HAMI_CASTLE#Troca de Lugar#
+HAMI_DEFENCE#Fortaleza#
+HAMI_SKIN#Pele de Adamantium#
+HAMI_BLOODLUST#Sede de Sangue#
+HFLI_MOON#Pica-Pau#
+HFLI_FLEET#Vôo Frenético#
+HFLI_SPEED#Vôo Acelerado#
+HFLI_SBR44#S.B.R.44#
+HVAN_CAPRICE#Capricho#
+HVAN_CHAOTIC#Bênção Caótica#
+HVAN_INSTRUCT#Mudança de Planos#
+HVAN_EXPLOSION#Autodestruição#
+KN_CHARGEATK#Avanço Ofensivo#
+CR_SHRINK#Submissão#
+AS_SONICACCEL#Lâminas Aceleradas#
+AS_VENOMKNIFE#Faca Envenenada#
+RG_CLOSECONFINE#Confinamento#
+WZ_SIGHTBLASTER#Explosão Protetora#
+SA_CREATECON#Criar Conversor Elemental#
+SA_ELEMENTWATER#Mudança Elemental - Água#
+SA_ELEMENTGROUND#Mudança Elemental - Terra#
+SA_ELEMENTFIRE#Mudança Elemental - Fogo#
+SA_ELEMENTWIND#Mudança Elemental - Vento#
+HT_PHANTASMIC#Flecha Fantasma#
+BA_PANGVOICE#Voz Dolorosa#
+DC_WINKCHARM#Piscadela#
+BS_UNFAIRLYTRICK#Venda Duvidosa#
+BS_GREED#Ganância#
+PR_REDEMPTIO#Martírio#
+MO_KITRANSLATION#Concessão Espiritual#
+MO_BALKYOUNG#Punhos Intensos#
+NJ_TOBIDOUGU#Prática de Arremesso de Shuriken#
+NJ_SYURIKEN#Arremessar Shuriken#
+NJ_KUNAI#Arremessar Kunai#
+NJ_HUUMA#Arremessar Shuriken Huuma#
+NJ_ZENYNAGE#Chuva de Moedas#
+NJ_TATAMIGAESHI#Virar Tatami#
+NJ_KASUMIKIRI#Corte da Névoa#
+NJ_SHADOWJUMP#Salto das Sombras#
+NJ_KIRIKAGE#Corte das Sombras#
+NJ_UTSUSEMI#Troca de Pele#
+NJ_BUNSINJYUTSU#Imagem Falsa#
+NJ_NINPOU#Perícia Ninja#
+NJ_KOUENKA#Pétalas Flamejantes#
+NJ_KAENSIN#Escudo de Chamas#
+NJ_BAKUENRYU#Dragão Explosivo#
+NJ_HYOUSENSOU#Lança Congelante#
+NJ_SUITON#Evasão Aquática#
+NJ_HYOUSYOURAKU#Grande Floco de Neve#
+NJ_HUUJIN#Lâmina de Vento#
+NJ_RAIGEKISAI#Descarga Elétrica#
+NJ_KAMAITACHI#Brisa Cortante#
+NJ_NEN#Aura Ninja#
+NJ_ISSEN#Ataque Mortal#
+GS_GLITTERING#Cara ou Coroa#
+GS_FLING#Atirar Moedas#
+GS_TRIPLEACTION#Ataque Triplo#
+GS_BULLSEYE#Ataque Certeiro#
+GS_MADNESSCANCEL#Resistência Final#
+GS_ADJUSTMENT#Pânico do Justiceiro#
+GS_INCREASING#Aumentar Precisão#
+GS_MAGICALBULLET#Bala Mágica#
+GS_CRACKER#Tiro Bombinha#
+GS_SINGLEACTION#Ataque Concentrado#
+GS_SNAKEEYE#Olhos de Serpente#
+GS_CHAINACTION#Reação em Cadeia#
+GS_TRACKING#Rastrear o Alvo#
+GS_DISARM#Desarmar#
+GS_PIERCINGSHOT#Ferir Alvo#
+GS_RAPIDSHOWER#Rajada Certeira#
 GS_DESPERADO#Desperado#
-GS_GATLINGFEVER#Gatling_Fever#
-GS_DUST#Dust#
-GS_FULLBUSTER#Full_Buster#
-GS_SPREADATTACK#Spread_Attack#
-GS_GROUNDDRIFT#Ground_Drift#
-
-// Dark Collector Skills \\
-MB_FIGHTING#Munak_Fighting#
-MB_NEUTRAL#Bongun_Neutral#
-MB_TAIMING_PUTI#Pet_Friend#
-MB_WHITEPOTION#Ordering_White_Potion#
-MB_MENTAL#Ordering_Mental#
-MB_CARDPITCHER#Card_Pitcher#
-MB_PETPITCHER#Pet_Pitcher#
-MB_BODYSTUDY#Body_Studying#
-MB_BODYALTER#Body_Altering#
-MB_PETMEMORY#Pet_Memory#
-MB_M_TELEPORT#Munak_Teleport#
-MB_B_GAIN#Bongun_Gain#
-MB_M_GAIN#Munak_Gain#
-MB_MISSION#Taming_Mission#
-MB_MUNAKKNOWLEDGE#Taming_Master#
-MB_MUNAKBALL#Munak_Ball#
-MB_SCROLL#Bongun_Scroll#
-MB_B_GATHERING#Bongun_Gathering#
-MB_M_GATHERING#Munak_Gathering#
-MB_B_EXCLUDE#Bongun_Exclude#
-MB_B_DRIFT#Bongun_Drift#
-MB_B_WALLRUSH#Bongun_Wall_Rush#
-MB_M_WALLRUSH#Munak_Wall_Rush#
-MB_B_WALLSHIFT#Bongun_Wall_Shift#
-MB_M_WALLCRASH#Munak_Wall_Crash#
-MB_M_REINCARNATION#Munak_Reincarnation#
-MB_B_EQUIP#Bongun_Almighty#
-
-// Extra Soul Linker Skills \\
-SL_DEATHKNIGHT#Death_Knight_Spirit#
-SL_COLLECTOR#Dark_Collector_Spirit#
-SL_NINJA#Ninja_Spirit#
-SL_GUNNER#Gunslinger_Spirit#
-AM_TWILIGHT4#Twilight_Alchemy#
-
-// Mercenary Swordman Skills \\
-MS_BASH#Bash#
-MS_MAGNUM#Magnum_Break#
-MS_BOWLINGBASH#Bowling_Bash#
-MS_PARRYING#Parrying#
-MS_REFLECTSHIELD#Reflect_Shield#
-MS_BERSERK#Berserk#
-
-// Mercenary Archer Skills \\
-MA_DOUBLE#Double_Strafing#
-MA_SHOWER#Arrow_Shower#
-MA_SKIDTRAP#Skid_Trap#
-MA_LANDMINE#Land_Mine#
-MA_SANDMAN#Sandman#
-MA_FREEZINGTRAP#Freezing_Trap#
-MA_REMOVETRAP#Remove_Trap#
-MA_CHARGEARROW#Charge_Arrow#
-MA_SHARPSHOOTING#Sharp_Shooting#
-
-// Mercenary Spearman Skills \\
-ML_PIERCE#Pierce#
-ML_BRANDISH#Brandish_Spear#
-ML_SPIRALPIERCE#Spiral_Pierce#
-ML_DEFENDER#Defender#
-ML_AUTOGUARD#Auto_Guard#
-ML_DEVOTION#Devotion#
-
-// Mercenary Additional Skills \\
+GS_GATLINGFEVER#Ataque Gatling#
+GS_DUST#Controle de Multidão#
+GS_FULLBUSTER#Ataque Total#
+GS_SPREADATTACK#Disparo Espalhado#
+GS_GROUNDDRIFT#Mina do Justiceiro#
+//?????
+ALL_INCCARRY#Aumentar Capacidade de Carga Especial#
+MS_BASH#Golpe_Fulminante#
+MS_MAGNUM#Impacto_Explosivo#
+MS_BOWLINGBASH#Impacto_de_Tyr#
+MS_PARRYING#Aparar_Golpe#
+MS_REFLECTSHIELD#Escudo_Refletor#
+MS_BERSERK#Fúria_Insana#
+MA_DOUBLE#Rajada_de_Flechas#
+MA_SHOWER#Chuva_de_Flechas#
+MA_SKIDTRAP#Armadilha_Escorregadia#
+MA_LANDMINE#Armadilha_Atordoante#
+MA_SANDMAN#Armadilha_Sonífera#
+MA_FREEZINGTRAP#Armadilha_Congelante#
+MA_REMOVETRAP#Remover_Armadilha#
+MA_CHARGEARROW#Carregar_Flechas#
+MA_SHARPSHOOTING#Tiro_Preciso#
+ML_PIERCE#Perfurar#
+ML_BRANDISH#Brandir_Lança#
+ML_SPIRALPIERCE#Perfurar_em_Espiral#
+ML_DEFENDER#Aura_Sagrada#
+ML_AUTOGUARD#Bloqueio#
+ML_DEVOTION#Redenção#
 MER_MAGNIFICAT#Magnificat#
-MER_QUICKEN#Two-Hand_Quicken#
-MER_SIGHT#Sight#
-MER_CRASH#Crash#
-MER_REGAIN#Regain#
-MER_TENDER#Tender#
-MER_BENEDICTION#Benediction#
-MER_RECUPERATE#Recuperate#
-MER_MENTALCURE#Mental_Cure#
-MER_COMPRESS#Compress#
-MER_PROVOKE#Provoke#
-MER_AUTOBERSERK#Auto_Berserk#
-MER_DECAGI#Decrease_Agility#
-MER_SCAPEGOAT#Scapegoat#
+MER_QUICKEN#Rapidez_com_Arma#
+MER_SIGHT#Chama_Reveladora#
+MER_CRASH#Impacto#
+MER_REGAIN#Recompor#
+MER_TENDER#Amolecer#
+MER_BENEDICTION#Bendição#
+MER_RECUPERATE#Restabelecer#
+MER_MENTALCURE#Cura_Mental#
+MER_COMPRESS#Compressa#
+MER_PROVOKE#Provocar#
+MER_AUTOBERSERK#Instinto_de_Sobrevivência_Automático#
+MER_DECAGI#Diminuir_Agilidade#
+MER_SCAPEGOAT#Bode_Expiatório#
 MER_LEXDIVINA#Lex_Divina#
-MER_ESTIMATION#Monster_Property#
-MER_KYRIE#Kyrie_Eleison#
-MER_INCAGI#Increase_Agility#
-MER_BLESSING#Blessing#
-
-// Death Knight Skills \\
-DE_BERSERKAIZER#Berserk_Kaizer#
-DE_PASSIVE#Death_Passive#
-DE_PATTACK#Death_Passive_Attack#
-DE_PSPEED#Death_Passive_Speed#
-DE_PDEFENSE#Death_Passive_Defense#
-DE_PCRITICAL#Death_Passive_Critical#
-DE_PHP#Death_Passive_HP#
-DE_PSP#Death_Passive_SP#
-DE_RESET#Death_Optimize#
-DE_RANKING#Death_Passive_Ranking#
-DE_PTRIPLE#Death_Passive_Triple#
-DE_ENERGY#Death_Energy#
-DE_NIGHTMARE#Death_Nightmare#
-DE_SLASH#Death_Slash#
-DE_COIL#Death_Coil#
-DE_WAVE#Death_Wave#
-DE_REBIRTH#Death_Reverse_Energy#
-DE_AURA#Death_Aura#
-DE_FREEZER#Death_Freezer#
-DE_CHANGEATTACK#Death_Change_Attack#
-DE_PUNISH#Death_Punish#
-DE_POISON#Death_Poison_Slash#
-DE_INSTANT#Death_Instant_Barrier#
-DE_WARNING#Death_Warning#
-DE_RANKEDKNIFE#Death_Knife#
-DE_RANKEDGRADIUS#Death_Gradius#
-DE_GAUGE#Mighty_Gauge#
-DE_GTIME#Mighty_Time_Charge#
-DE_GPAIN#Mighty_Pain_Charge#
-DE_GSKILL#Mighty_Skill_Charge#
-DE_GKILL#Mighty_Kill_Charge#
-DE_ACCEL#Dead_Acceleration#
-DE_BLOCKDOUBLE#Dead_Double_Blocking#
-DE_BLOCKMELEE#Dead_Near(Melee)_Blocking#
-DE_BLOCKFAR#Dead_Distance(Range)_Blocking#
-DE_FRONTATTACK#Dead_Rush_Attack#
-DE_DANGERATTACK#Dead_Dangerous_Attack#
-DE_TWINATTACK#Dead_Twin_Attack#
-DE_WINDATTACK#Dead_Storm_Attack#
-DE_WATERATTACK#Dead_Water_Attack#
-
-// Dark Collector Skills \\
-DA_ENERGY#Dark_Energy#
-DA_CLOUD#Dark_Cloud#
-DA_FIRSTSLOT#Dark_First_Fantasy#
-DA_HEADDEF#Dark_Head_Defense#
-DA_SPACE#Dark_Twilight#
-DA_TRANSFORM#Dark_Transform#
-DA_EXPLOSION#Dark_Explosion#
-DA_REWARD#Dark_Reward#
-DA_CRUSH#Dark_Crush#
-DA_ITEMREBUILD#Dark_Item_Re_-_Build#
-DA_ILLUSION#Dark_Illusion#
-DA_NUETRALIZE#Dark_Nuetralize#
-DA_RUNNER#Dark_Runner#
-DA_TRANSFER#Dark_Transfer#
-DA_WALL#Dark_Wall#
-DA_REVENGE#Dark_Revenge#
-DA_EARPLUG#Dark_Ear_Plug#
-DA_CONTRACT#Black_Gemstone_Contract#
-DA_BLACK#Black_Gemstone_Magic#
-DA_DREAM#Black_Dream_Of_Gemstone#
-DA_MAGICCART#Collector_Magic_Cart#
-DA_COPY#Collector_Copy#
-DA_CRYSTAL#Collector_Crystal#
-DA_EXP#Collector_Experience#
-DA_CARTSWING#Collector_Magical_Cart_Swing#
-DA_REBUILD#Collector_Human_Re_-_Build#
-DA_JOBCHANGE#Collector_Novice_Job_Change#
-DA_EDARKNESS#Collector_Emperium_Darkness#
-DA_EGUARDIAN#Collector_Emperium_Guardian#
-DA_TIMEOUT#Collector_Time_Out#
-DA_ZENYRANK#Collector_Ranking#
-DA_ACCESSORYMIX#Collector__Mix#
-DA_DARKPOWER#Dark_Soul_Power#
-
-// Multiple Class Skils \\
-ALL_TIMEIN#Time_In#
-ALL_RESURRECTION#Resurrection#
-ALL_INCCARRY#Enlarge_Weight_Limit_R#
-ALL_CATCRY#Crying_Monster#
-ALL_PARTYFLEE#Blow!Flower_Wind#
-ALL_ANGEL_PROTECT#Thank_You#
-ALL_DREAM_SUMMERNIGHT#A_Dream_Of_Summer_Night#
-ALL_REVERSEORCISH#Reverse_Orcish#
-ALL_WEWISH#We_Wish#
-
-// Unused Skills \\
-WZ_FIREIVY#Fire_Ivy#
-BD_RAGNAROK#Ragnarok#
-LK_FURY#Fury#
-ASC_HALLUCINATION#Hallucination_Walk#
-WS_CREATECOIN#Create_Coin#
-WS_CREATENUGGET#Create_Nugget#
-WS_SYSTEMCREATE#Auto_Attack_System#
-CR_ALCHEMY#Alchemy#
-CR_SYNTHESISPOTION#Synthesis_Potion#
-ST_STEALBACKPACK#Steal_Backpack#
-GD_CHARISMA#Charisma#
-BG_SKILL_1#Bride_Groom_Skill_1#
-BG_SKILL_2#Bride_Groom_Skill_2#
-BG_SKILL_3#Bride_Groom_Skill_3#
-
-// Monster Skills \\
-NPC_PIERCINGATT#Thrusting_Attack#
-NPC_MENTALBREAKER#Spirit_Destruction#
-NPC_RANGEATTACK#Stand_Off_Attack#
-NPC_ATTRICHANGE#Run_Attribute_Change#
-NPC_CHANGEWATER#Water_Attribute_Change#
-NPC_CHANGEGROUND#Earth_Attribute_Change#
-NPC_CHANGEFIRE#Fire_Attribute_Change#
-NPC_CHANGEWIND#Wind_Attribute_Change#
-NPC_CHANGEPOISON#Poison_Attribute_Change#
-NPC_CHANGEHOLY#Holy_Attribute_Change#
-NPC_CHANGEDARKNESS#Shadow_Attribute_Change#
-NPC_CHANGETELEKINESIS#Sense_Attribute_Change#
-NPC_CRITICALSLASH#Defense_Disregard_Attack#
-NPC_COMBOATTACK#Multi-Stage_Attack#
-NPC_GUIDEDATTACK#On-Target_Impact_Attack#
-NPC_SELFDESTRUCTION#Suicide_Bombing#
-NPC_SPLASHATTACK#Splash_Attack#
-NPC_SUICIDE#Suicide#
-NPC_POISON#Poison_Attack#
-NPC_BLINDATTACK#Darkness_Attack#
-NPC_SILENCEATTACK#Silence_Attack#
-NPC_STUNATTACK#Stun_Attack#
-NPC_PETRIFYATTACK#Petrify_Attack#
-NPC_CURSEATTACK#Cursing_Attack#
-NPC_SLEEPATTACK#Sleep_Attack#
-NPC_RANDOMATTACK#Random_Attack#
-NPC_WATERATTACK#Water_Attribute_Attack#
-NPC_GROUNDATTACK#Earth_Attribute_Attack#
-NPC_FIREATTACK#Fire_Attribute_Attack#
-NPC_WINDATTACK#Wind_Attribute_Attack#
-NPC_POISONATTACK#Poison_Attribute_Attack#
-NPC_HOLYATTACK#Holy_Attribute_Attack#
-NPC_DARKNESSATTACK#Shadow_Attribute_Attack#
-NPC_TELEKINESISATTACK#Sense_Attribute_Attack#
-NPC_MAGICALATTACK#Demon_Shock_Attack#
-NPC_METAMORPHOSIS#Metamorphosis#
-NPC_PROVOCATION#Provocation#
-NPC_SMOKING#Smoking#
-NPC_SUMMONSLAVE#Follower_Summons#
-NPC_EMOTION#Emotion#
-NPC_TRANSFORMATION#Transformation#
-NPC_BLOODDRAIN#Sucking_Blood#
-NPC_ENERGYDRAIN#Energy_Drain#
-NPC_KEEPING#Keeping#
-NPC_DARKBREATH#Dark_Breath#
-NPC_DARKBLESSING#Dark_Blessing#
-NPC_BARRIER#Barrier#
-NPC_DEFENDER#Defender#
-NPC_LICK#Lick#
-NPC_HALLUCINATION#Hallucination#
-NPC_REBIRTH#Rebirth#
-NPC_SUMMONMONSTER#Monster_Summons#
-NPC_RANDOMMOVE#Random_Move#
-NPC_SPEEDUP#Speed_Up#
-NPC_REVENGE#Revenge#
-NPC_DARKCROSS#Cross_of_Darkness#
-NPC_GRANDDARKNESS#Grand_Cross_of_Darkness#
-NPC_DARKSTRIKE#Soul_Strike_of_Darkness#
-NPC_DARKTHUNDER#Darkness_Jupitel#
-NPC_STOP#Stop#
-NPC_WEAPONBRAKER#Break_Weapon#
-NPC_ARMORBRAKE#Break_Armor#
-NPC_HELMBRAKE#Break_Helm#
-NPC_SHIELDBRAKE#Break_Shield#
-NPC_UNDEADATTACK#Undead_Attack#
-NPC_CHANGEUNDEAD#Change_Undead#
-NPC_POWERUP#Power_Up#
-NPC_AGIUP#Agi_Up#
-NPC_SIEGEMODE#Siege_Mode#
-NPC_CALLSLAVE#Call_Slave#
-NPC_INVISIBLE#Invisible#
-NPC_RUN#Run#
-NPC_EMOTION_ON#Emotion_On#
-NPC_EARTHQUAKE#Earth_Quake#
-NPC_FIREBREATH#Fire_Breath#
-NPC_ICEBREATH#Ice_Breath#
-NPC_THUNDERBREATH#Thunder_Breath#
-NPC_ACIDBREATH#Acid_Breath#
-NPC_DARKNESSBREATH#Darkness_Breath#
-NPC_DRAGONFEAR#Dragon_Fear#
-NPC_BLEEDING#Bleeding#
-NPC_PULSESTRIKE#Pulse_Strike#
-NPC_HELLJUDGEMENT#Hell_Judgement#
-NPC_WIDESILENCE#Wide_Silence#
-NPC_WIDEFREEZE#Wide_Freeze#
-NPC_WIDEBLEEDING#Wide_Bleeding#
-NPC_WIDESTONE#Wide_Stone#
-NPC_WIDECONFUSE#Wide_Confuse#
-NPC_WIDESLEEP#Wide_Sleep#
-NPC_WIDESIGHT#Wide_Sight#
-NPC_EVILLAND#Evil_Land#
-NPC_MAGICMIRROR#Magic_Mirror#
-NPC_SLOWCAST#Slow_Cast#
-NPC_CRITICALWOUND#Critical_Wound#
-NPC_EXPULSION#Expulsion#
-NPC_STONESKIN#Stone_Skin#
-NPC_ANTIMAGIC#Anti_Magic#
-NPC_WIDECURSE#Wide_Curse#
-NPC_WIDESTUN#Wide_Stun#
-NPC_VAMPIRE_GIFT#Vampire_Gift#
-NPC_WIDESOULDRAIN#Wide_Soul_Drain#
-NPC_ALLHEAL#All_Heal#
-NPC_HELLPOWER#Hell_Power#
-
-// Rune Knight Skills \\
-RK_ENCHANTBLADE#Enchant_Blade#
-RK_SONICWAVE#Sonic_Wave#
-RK_DEATHBOUND#Death_Bound#
-RK_HUNDREDSPEAR#Hundred_Spear#
-RK_WINDCUTTER#Wind_Cutter#
-RK_IGNITIONBREAK#Ignition_Break#
-RK_DRAGONTRAINING#Dragon_Training#
-RK_DRAGONBREATH#Dragon_Breath#
-RK_DRAGONHOWLING#Dragon_Howling#
-RK_RUNEMASTERY#Rune_Mastery#
-RK_MILLENNIUMSHIELD#Millennium_Shield_-_Berkana_Rune#
-RK_CRUSHSTRIKE#Crush_Strike_-_Raido_Rune#
-RK_REFRESH#Refresh_-_Nauthiz_Rune#
-RK_GIANTGROWTH#Giant_Growth_-_Thurisaz_Rune#
-RK_STONEHARDSKIN#Stonehard_Skin_-_Hagalaz_Rune#
-RK_VITALITYACTIVATION#Vitality_Activation_-_Isa_Rune#
-RK_STORMBLAST#Storm_Blast_Wyrd_Rune#
-RK_FIGHTINGSPIRIT#Fightning_Spirit_-_Othila_Rune#
-RK_ABUNDANCE#Abundance_-_Uruz_Rune#
-RK_PHANTOMTHRUST#Phantom_Thrust#
-
-// Arch Bishop Skills \\
-AB_JUDEX#Judex#
-AB_ANCILLA#Ancilla#
-AB_ADORAMUS#Adoramus#
-AB_CLEMENTIA#Clementia#
-AB_CANTO#Canto_Candidus#
-AB_CHEAL#Coluceo_Heal#
-AB_EPICLESIS#Epiclesis#
-AB_PRAEFATIO#Praefatio#
-AB_ORATIO#Oratio#
-AB_LAUDAAGNUS#Lauda_Agnus#
-AB_LAUDARAMUS#Lauda_Ramus#
-AB_EUCHARISTICA#Eucharistica#
-AB_RENOVATIO#Renovatio#
-AB_HIGHNESSHEAL#Highness_Heal#
-AB_CLEARANCE#Clearance#
-AB_EXPIATIO#Expiatio#
-AB_DUPLELIGHT#Duple_Light#
-AB_DUPLELIGHT_MELEE#Duple_Light_-_Melee#
-AB_DUPLELIGHT_MAGIC#Duple_Light_-_Magic#
-AB_SILENTIUM#Silentium#
-AB_SECRAMENT#Sacrament#
-
-// Guillotine Cross Skills \\
-GC_VENOMIMPRESS#Venom_Impress#
-GC_CROSSIMPACT#Cross_Impact#
-GC_DARKILLUSION#Dark_Illusion#
-GC_RESEARCHNEWPOISON#Research_New_Poison#
-GC_CREATENEWPOISON#Create_New_Poison#
-GC_ANTIDOTE#Antidote#
-GC_POISONINGWEAPON#Poisoning_Weapon#
-GC_WEAPONBLOCKING#Weapon_Blocking#
-GC_COUNTERSLASH#Counter_Slash#
-GC_WEAPONCRUSH#Weapon_Crush#
-GC_VENOMPRESSURE#Venom_Pressure#
-GC_POISONSMOKE#Poison_Smoke#
-GC_CLOAKINGEXCEED#Cloaking_Exceed#
-GC_PHANTOMMENACE#Phantom_Menace#
-GC_HALLUCINATIONWALK#Hallucination_Walk#
-GC_ROLLINGCUTTER#Rolling_Cutter#
-GC_CROSSRIPPERSLASHER#Cross_Ripper_Slasher#
-
-// Ranger Skills \\
-RA_AIMEDBOLT#Aimed_Bolt#
-RA_RESEARCHTRAP#Research_Trap#
-RA_RANGERMAIN#Ranger_Main#
-RA_ELECTRICSHOCKER#Electric_Shocker#
-RA_WUGMASTERY#Warg_Mastery#
-RA_ARROWSTORM#Arrow_Storm#
-RA_CLUSTERBOMB#Cluster_Bomb#
-RA_DETONATOR#Detonator#
-RA_CAMOUFLAGE#Camouflage#
-RA_TOOTHOFWUG#Tooth_of_Warg#
-RA_WUGRIDER#Warg_Rider#
-RA_FEARBREEZE#Fear_Breeze#
-RA_MAGENTATRAP#Magenta_Trap#
-RA_FIRINGTRAP#Firing_Trap#
-RA_ICEBOUNDTRAP#Ice_Bound_Trap#
-RA_SENSITIVEKEEN#Sensitive_Keen#
-RA_WUGSTRIKE#Warg_Strike#
-RA_WUGDASH#Warg_Dash#
-RA_COBALTTRAP#Cobalt_Trap#
-RA_WUGBITE#Warg_Bite#
-RA_MAIZETRAP#Maize_Trap#
-RA_VERDURETRAP#Verdure_Trap#
-
-// Warlock Skills \\
-WL_WHITEIMPRISON#White_Imprison#
-WL_SOULEXPANSION#Soul_Expansion#
-WL_FROSTMISTY#Frost_Misty#
-WL_JACKFROST#Jack_Frost#
-WL_MARSHOFABYSS#Marsh_of_Abyss#
-WL_RECOGNIZEDSPELL#Recognized_Spell#
-WL_SIENNAEXECRATE#Sienna_Execrate#
-WL_RADIUS#Radius#
-WL_STASIS#Stasis#
-WL_DRAINLIFE#Drain_Life#
-WL_CRIMSONROCK#Crimson_Rock#
-WL_HELLINFERNO#Hell_Inferno#
-WL_COMET#Comet#
-WL_CHAINLIGHTNING#Chain_Lightning#
-WL_CHAINLIGHTNING_ATK#Chain_Lightning#
-WL_EARTHSTRAIN#Earth_Strain#
-WL_TETRAVORTEX#Tetra_Vortex#
-WL_TETRAVORTEX_FIRE#Tetra_Vortex#
-WL_TETRAVORTEX_WATER#Tetra_Vortex#
-WL_TETRAVORTEX_WIND#Tetra_Vortex#
-WL_TETRAVORTEX_GROUND#Tetra_Vortex#
-WL_SUMMONFB#Summon_Fire_Ball#
-WL_SUMMONBL#Summon_Ball_Lightning#
-WL_SUMMONWB#Summon_Water_Ball#
-WL_SUMMON_ATK_FIRE#Summon_Attack#
-WL_SUMMON_ATK_WIND#Summon_Attack#
-WL_SUMMON_ATK_WATER#Summon_Attack#
-WL_SUMMON_ATK_GROUND#Summon_Attack#
-WL_SUMMONSTONE#Summon_Stone#
-WL_RELEASE#Release#
-WL_READING_SB#Reading Spellbook#
-WL_FREEZE_SP#Freeze Spell#
-
-// Shadow Chaser Skills \\
-SC_FATALMENACE#Fatal_Menace#
-SC_REPRODUCE#Reproduce#
-SC_AUTOSHADOWSPELL#Auto_Shadow_Spell#
-SC_SHADOWFORM#Shadow_Form#
-SC_TRIANGLESHOT#Triangle_Shot#
-SC_STRIPACCESSARY#Strip_Accessory#
-SC_BODYPAINT#Body_Painting#
-SC_INVISIBILITY#Invisibility#
-SC_DEADLYINFECT#Deadly_Infect#
-SC_ENERVATION#Masquerade_-_Enervation#
-SC_GROOMY#Masquerade_-_Groomy#
-SC_IGNORANCE#Masquerade_-_Ignorance#
-SC_LAZINESS#Masquerade_-_Lazieness#
-SC_UNLUCKY#Masquerade_-_Unlucky#
-SC_WEAKNESS#Masquerade_-_Weakness#
-SC_MANHOLE#Manhole#
-SC_DIMENSIONDOOR#Dimension_Door#
-SC_CHAOSPANIC#Chaos_Panic#
-SC_MAELSTROM#Maelstrom#
-SC_BLOODYLUST#Bloody_Lust#
-SC_FEINTBOMB#Feint_Bomb#
-
-// Mechanic Skills \\
-NC_MADOLICENCE#Magic_Gear_License#
-NC_BOOSTKNUCKLE#Boost_Knuckle#
-NC_PILEBUNKER#Pile_Bunker#
-NC_VULCANARM#Vulcan_Arm#
-NC_FLAMELAUNCHER#Flame_Launcher#
-NC_COLDSLOWER#Cold_Slower#
-NC_ARMSCANNON#Arms_Cannon#
-NC_ACCELERATION#Acceleration#
-NC_HOVERING#Hovering#
-NC_F_SIDESLIDE#Front_Side_Slide#
-NC_B_SIDESLIDE#Back_Side_Slide#
-NC_MAINFRAME#Mainframe_Restructure#
-NC_SELFDESTRUCTION#Self_Destruction#
-NC_SHAPESHIFT#Shape_Shift#
-NC_EMERGENCYCOOL#Emergency_Cool#
-NC_INFRAREDSCAN#Infrared_Scan#
-NC_ANALYZE#Analyze#
-NC_MAGNETICFIELD#Magnetic_Field#
-NC_NEUTRALBARRIER#Neutral_Barrier#
-NC_STEALTHFIELD#Stealth_Field#
-NC_REPAIR#Repair#
-NC_TRAININGAXE#Axe_Training#
-NC_RESEARCHFE#Research_Fire_/_Earth#
-NC_AXEBOOMERANG#Axe_Boomerang#
-NC_POWERSWING#Power_Swing#
-NC_AXETORNADO#Axe_Tornado#
-NC_SILVERSNIPER#FAW_-_Silver_Sniper#
-NC_MAGICDECOY#FAW_-_Magic_Decoy#
-NC_DISJOINT#FAW_-_Removal#
-
-// Wanderer & Minstrel Skills \\
-WA_SWING_DANCE#Swing_Dance#
-WA_SYMPHONY_OF_LOVER#Symphony_of_Lovers#
-WA_MOONLIT_SERENADE#Moonlit_Serenade#
-MI_RUSH_WINDMILL#Windmill_Swing_Attack#
-MI_ECHOSONG#Echo_Song#
-MI_HARMONIZE#Harmonize#
-WM_LESSON#Lesson#
-WM_METALICSOUND#Metalic_Sound#
-WM_REVERBERATION#Reverberation#
-WM_DOMINION_IMPULSE#Dominion_Impulse#
-WM_SEVERE_RAINSTORM#Severe_Rainstorm#
-WM_POEMOFNETHERWORLD#Poem_of_the_Netherworld#
-WM_VOICEOFSIREN#Siren's_Voice#
-WM_DEADHILLHERE#Valley_of_Death#
-WM_LULLABY_DEEPSLEEP#Deep_Sleep_Lullaby#
-WM_SIRCLEOFNATURE#Circle_of_Life's_Melody#
-WM_RANDOMIZESPELL#Randomize_Spell#
-WM_GLOOMYDAY#Gloomy_Day#
-WM_GREAT_ECHO#Great_Echo#
-WM_SONG_OF_MANA#Song_of_Mana#
-WM_DANCE_WITH_WUG#Dance_with_a_Warg#
-WM_SOUND_OF_DESTRUCTION#Sound_of_Destruction#
-WM_SATURDAY_NIGHT_FEVER#Saturday_Night_Fever#
-WM_LERADS_DEW#Lerad's_Dew#
-WM_MELODYOFSINK#Melody_of_Sink#
-WM_BEYOND_OF_WARCRY#Warcry_of_Beyond#
-WM_UNLIMITED_HUMMING_VOICE#Unlimited_Humming_Voice#
-
-// Sura Skills \\
-SR_DRAGONCOMBO#Dragon_Combo#
-SR_SKYNETBLOW#Skynet_Blow#
-SR_EARTHSHAKER#Earth_Shaker#
-SR_FALLENEMPIRE#Fallen_Empire#
-SR_TIGERCANNON#Tiger_Cannon#
-SR_HELLGATE#Hell_Gate#
-SR_RAMPAGEBLASTER#Rampage_Blaster#
-SR_CRESCENTELBOW#Crescent_Elbow#
-SR_CURSEDCIRCLE#Cursed_Circle#
-SR_LIGHTNINGWALK#Lightning_Walk#
-SR_KNUCKLEARROW#Knuckle_Arrow#
-SR_WINDMILL#Windmill#
-SR_RAISINGDRAGON#Raising_Dragon#
-SR_GENTLETOUCH#Gentle_Touch#
-SR_ASSIMILATEPOWER#Assimilate_Power#
-SR_POWERVELOCITY#Power_Velocity#
-SR_CRESCENTELBOW_AUTOSPELL#Crescent_Elbow_Autospell#
-SR_GATEOFHELL#Gate_of_Hell#
-SR_GENTLETOUCH_QUIET#Gentle_Touch_-_Quiet#
-SR_GENTLETOUCH_CURE#Gentle_Touch_-_Cure#
-SR_GENTLETOUCH_ENERGYGAIN#Gentle_Touch_-_Energy_Gain#
-SR_GENTLETOUCH_CHANGE#Gentle_Touch_-_Change#
-SR_GENTLETOUCH_REVITALIZE#Gentle_Touch_-_Revitalize#
-SR_HOWLINGOFLION#Howling_of_Lion#
-SR_RIDEINLIGHTNING#Ride_in_Lightning#
-
-// Royal Guard Skills \\
-LG_CANNONSPEAR#Cannon_Spear#
-LG_BANISHINGPOINT#Banishing_Point#
-LG_TRAMPLE#Trample#
-LG_SHIELDPRESS#Shield_Press#
-LG_REFLECTDAMAGE#Reflect_Damage#
-LG_PINPOINTATTACK#Pinpoint_Attack#
-LG_FORCEOFVANGUARD#Force_of_Vanguard#
-LG_RAGEBURST#Rage_Burst#
-LG_SHIELDSPELL#Shield_Spell#
-LG_EXEEDBREAK#Exceed_Break#
-LG_OVERBRAND#Overbrand#
-LG_PRESTIGE#Prestige#
-LG_BANDING#Banding#
-LG_MOONSLASHER#Moon_Slasher#
-LG_RAYOFGENESIS#Ray_of_Genesis#
-LG_PIETY#Piety#
-LG_EARTHDRIVE#Earth_Drive#
-LG_HESPERUSLIT#Hesperuslit#
-LG_INSPIRATION#Inspiration#
-
-// Genetic Skills \\
-GN_TRAINING_SWORD#Sword_Training#
-GN_REMODELING_CART#Cart_Remodeling#
-GN_CART_TORNADO#Cart_Tornado#
-GN_CARTCANNON#Cart_Cannon#
-GN_CARTBOOST#Cart_Boost#
-GN_THORNS_TRAP#Thorn_Trap#
-GN_BLOOD_SUCKER#Blood_Sucker#
-GN_SPORE_EXPLOSION#Spore_Explosion#
-GN_WALLOFTHORN#Wall_of_Thorns#
-GN_CRAZYWEED#Crazy_Weed#
-GN_DEMONIC_FIRE#Demonic_Fire#
-GN_FIRE_EXPANSION#Fire_Expansion#
-GN_HELLS_PLANT#Hell's_Plant#
-GN_MANDRAGORA#Howling_of_Mandragora#
-GN_SLINGITEM#Sling_Item#
-GN_CHANGEMATERIAL#Change_Material#
-GN_MIX_COOKING#Mix_Cooking#
-GN_MAKEBOMB#Create_Bomb#
-GN_S_PHARMACY#Special_Pharmacy#
-
-// Sorcerer Skills \\
-SO_FIREWALK#Fire_Walk#
-SO_ELECTRICWALK#Electric_Walk#
-SO_SPELLFIST#Spell_Fist#
-SO_VACUUM_EXTREME#Vacuum_Extreme#
-SO_PSYCHIC_WAVE#Psychic_Wave#
-SO_CLOUD_KILL#Cloud_Kill#
-SO_POISON_BUSTER#Poison_Buster#
-SO_STRIKING#Striking#
-SO_EARTHGRAVE#Earth_Grave#
-SO_DIAMONDDUST#Diamond_Dust#
-SO_WARMER#Warmer#
-SO_VARETYR_SPEAR#Varetyr_Spear#
-SO_ARRULLO#Arrullo#
+MER_ESTIMATION#Propriedades_do_Monstro#
+ALL_WEWISH#Noite Feliz!#
+GM_SANDMAN#Durma bem, minha criança#
+ALL_CATCRY#Rugido da Fera#
+ALL_REVERSEORCISH#Transformação Orc#
+GD_ITEMEMERGENCYCALL#Chamado Urgente#
+NPC_HELLPOWER#Poder Infernal#
+NPC_VAMPIRE_GIFT#Beijo do Vampiro#
+CASH_BLESSING#Bênção em Grupo#
+CASH_INCAGI#Aumentar Agilidade em Grupo#
+CASH_ASSUMPTIO#Assumptio em Grupo#
+NPC_STONESKIN#Pele de Pedra#
+NPC_ANTIMAGIC#Anti-Magia#
+NPC_DRAGONFEAR#Fúria do Dragão#
