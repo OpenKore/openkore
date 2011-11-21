@@ -14,6 +14,7 @@
 # anonymous person - beta-testing
 # kaliwanagan - original author
 # illusionist - bRO support
+# Fr3DBr - bRO Update (El Dicastes++)
 ###########################################################
 
 package Poseidon;
