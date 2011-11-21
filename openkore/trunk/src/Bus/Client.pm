@@ -72,7 +72,10 @@ sub new {
 	$self->{port} = $args{port};
 	$self->{userAgent}   = $args{userAgent} || "OpenKore";
 	$self->{privateOnly} = defined($args{privateOnly}) ? $args{privateOnly} : 0;
-
+	
+	# Control Timeout for Waiting Reply from Poseidon (GG/HS Query)
+	$self->{gstimeout} = 0;
+	
 	# A queue containing messages to be sent next time we're
 	# connected to the bus.
 	$self->{sendQueue} = [];

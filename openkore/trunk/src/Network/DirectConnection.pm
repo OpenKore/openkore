@@ -345,6 +345,10 @@ sub checkConnection {
 			$net->serverSend($msg);
 			message T("Requesting permission to logon on account server...\n");
 			$conState = 1.2;
+			
+			# Saving Last Request Time (Logon) (GG/HS Query)
+			$self->{gstimeout} = time;			
+			
 			return;
 		}
 
@@ -373,7 +377,15 @@ sub checkConnection {
 		}
 
 		$timeout{'master'}{'time'} = time;
-
+	} elsif ($self->getState() == 1.2) {
+	# Checking if we succesful received the Game Guard Confirmation (Should Happen Sooner)
+		if ( time - $self->{gstimeout} > 10 )
+		{
+			message T("The Game Guard Authorization Request\n");
+			message T("has timed out, please check your poseidon server !!\n");
+			$self->serverDisconnect;
+			$self->setState(Network::NOT_CONNECTED);			
+		}
 	# we skipped some required connection operations while waiting for the server to allow as to login,
 	# after we have successfully sent in the reply to the game guard challenge (using the poseidon server)
 	# this conState will allow us to continue from where we left off.
