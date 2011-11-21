@@ -1,24 +1,4 @@
-﻿//-------------Ep 13.2----------
-1@nyd.rsw#Ninho de Nidhogg#
-2@nyd.rsw#Ninho de Nidhogg#
-nyd_dun01.rsw#A Grande Ferida#
-nyd_dun02.rsw#A Grande Ferida#
-manuk.rsw#Vila Mineradora Manuka#
-man_fild02.rsw#Montanhas dos Manuk#
-man_in01.rsw#Dentro da Vila Mineradora#
-splendide.rsw#Base dos Esplêndidos, Esplendor#
-spl_fild01.rsw#Campos dos Esplendores#
-spl_in01.rsw#Dentro de Esplendor#
-spl_in02.rsw#Dentro de Esplendor#
-
-// --- brazil localizing 
-brasilis.rsw#Cidade de Brasilis#
-bra_in01.rsw#Interior de Brasilis#
-bra_fild01.rsw#Floresta de Brasilis#
-bra_dun01.rsw#Caverna das Cataratas#
-bra_dun02.rsw#Profundezas das Cataratas#
-
-gld_dun04.rsw#Calabouço do Feudo de Britoniah#
+﻿gld_dun04.rsw#Calabouço do Feudo de Britoniah#
 gld_dun03.rsw#Calabouço do Feudo das Valquírias#
 gld_dun02.rsw#Calabouço do Feudo de Luina#
 gld_dun01.rsw#Calabouço do Feudo do Bosque Celestial#
@@ -772,3 +752,31 @@ arug_que01.rsw#Pradaria de Morestone#
 arug_dun01.rsw#Calabouço Subterrâneo de Castelo#
 1@orcs.rsw#Caverna Subterrânea de Orcs#
 2@orcs.rsw#Caverna Subterrânea de Orcs#
+evt_hello.rsw#Undead camp#
+
+//-------------Ep 13.2----------
+1@nyd.rsw#Ninho de Nidhogg#
+2@nyd.rsw#Ninho de Nidhogg#
+nyd_dun01.rsw#A Grande Ferida#
+nyd_dun02.rsw#A Grande Ferida#
+manuk.rsw#Vila Mineradora Manuka#
+man_fild02.rsw#Montanhas dos Manuk#
+man_in01.rsw#Dentro da Vila Mineradora#
+splendide.rsw#Base dos Esplêndidos, Esplendor#
+spl_fild01.rsw#Campos dos Esplendores#
+spl_in01.rsw#Dentro de Esplendor#
+spl_in02.rsw#Dentro de Esplendor#
+
+// --- brazil localizing 
+brasilis.rsw#Cidade de Brasilis#
+bra_in01.rsw#Interior de Brasilis#
+bra_fild01.rsw#Floresta de Brasilis#
+bra_dun01.rsw#Caverna das Cataratas#
+bra_dun02.rsw#Profundezas das Cataratas#
+
+// --- Dewata localizing
+dewata.rsw#Dewata#
+dew_in01.rsw#Inside of Jaty Tribe Village#
+dew_fild01.rsw#Dewata Field_Jaty Tribe Village#
+dew_dun01.rsw#Krakatau Volcano Island#
+dew_dun02.rsw#Istana Cave#

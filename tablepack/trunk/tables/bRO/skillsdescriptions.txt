@@ -1,4 +1,4 @@
-NV_BASIC#
+﻿NV_BASIC#
 Habilidades Básicas
 Nível máximo : 9 
 ^777777Libera uso de Hablidades Básicas de Interface.^000000
@@ -3577,7 +3577,7 @@ Só pode ser usado em áreas de PvP e Guerra do Emperium.^000000
 [Nível 2]: ^77777750% de Chance de Sucesso^000000
 [Nível 3]: ^77777760% de Chance de Sucesso^000000
 [Nível 4]: ^77777770% de Chance de Sucesso^000000
-[Nível 5]: ^77777770% de Chance de Sucesso^000000
+[Nível 5]: ^77777770% de Chance de Sucesso, Dano = 2 x SP^000000
 #
 ASC_KATAR#
 Perícia com Katar Avançada

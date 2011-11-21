@@ -982,3 +982,21 @@ bossnia_04.gat#gef_dun03.gat#
 bossnia_04.rsw#gef_dun03.rsw#
 À¯ÀúÀÎÅÍÆäÀÌ½º\map\bossnia_04.bmp#À¯ÀúÀÎÅÍÆäÀÌ½º\map\gef_dun03.bmp#
 
+
+//-----renewal
+jupe_core2.gnd#jupe_core.gnd#
+jupe_core2.gat#jupe_core.gat#
+jupe_core2.rsw#jupe_core.rsw#
+À¯ÀúÀÎÅÍÆäÀÌ½º\map\jupe_core2.bmp#À¯ÀúÀÎÅÍÆäÀÌ½º\map\jupe_core.bmp#
+job3_arch03.gnd#job3_arch01.gnd#
+job3_arch03.gat#job3_arch01.gat#
+job3_arch03.rsw#job3_arch01.rsw#
+À¯ÀúÀÎÅÍÆäÀÌ½º\map\job3_arch03.bmp#À¯ÀúÀÎÅÍÆäÀÌ½º\map\job3_arch01.bmp#
+job3_rune03.gnd#job3_rune02.gnd#
+job3_rune03.gat#job3_rune02.gat#
+job3_rune03.rsw#job3_rune02.rsw#
+À¯ÀúÀÎÅÍÆäÀÌ½º\map\job3_rune03.bmp#À¯ÀúÀÎÅÍÆäÀÌ½º\map\job3_rune02.bmp#
+job3_war02.gnd#job3_war01.gnd#
+job3_war02.gat#job3_war01.gat#
+job3_war02.rsw#job3_war01.rsw#
+À¯ÀúÀÎÅÍÆäÀÌ½º\map\job3_war02.bmp#À¯ÀúÀÎÅÍÆäÀÌ½º\map\job3_war01.bmp#
