@@ -16,39 +16,37 @@
 # illusionist - bRO support
 ###########################################################
 
+package Poseidon;
+
 use strict;
 use FindBin qw($RealBin);
 use lib "$RealBin/..";
 use lib "$RealBin/../deps";
 use Time::HiRes qw(time sleep);
+use Poseidon::Config;
 use Poseidon::RagnarokServer;
 use Poseidon::QueryServer;
 
-
 use constant POSEIDON_SUPPORT_URL => 'http://wiki.openkore.com/index.php?title=Poseidon';
-
-use constant RAGNAROK_SERVER_HOST => '127.0.0.1';
-use constant RAGNAROK_SERVER_PORT => 6900;
-
-use constant QUERY_SERVER_HOST => '127.0.0.1';
-use constant QUERY_SERVER_PORT => 24390;
-
 use constant SLEEP_TIME => 0.01;
 
 our ($roServer, $queryServer);
 
+sub initialize 
+{
+	# Loading Configuration
+	Poseidon::Config::parse_config_file ("../../control/poseidon.txt", \%config);
 
-sub initialize {
-	print "Starting Poseidon...\n";
-	$roServer = new Poseidon::RagnarokServer(RAGNAROK_SERVER_PORT,
-		RAGNAROK_SERVER_HOST);
-	$queryServer = new Poseidon::QueryServer(QUERY_SERVER_PORT,
-		QUERY_SERVER_HOST, $roServer);
-	print ">>> Poseidon initialized <<<\n\n";
+	# Starting Poseidon
+	print "Starting Poseidon 2.1...\n";
+	$roServer = new Poseidon::RagnarokServer($config{ragnarokserver_port}, $config{ragnarokserver_ip});
+	print "Ragnarok Online Server Ready At : " . $config{ragnarokserver_ip} . ":" . $config{ragnarokserver_port} . "\n";
+	$queryServer = new Poseidon::QueryServer($config{queryserver_port}, $config{queryserver_ip}, $roServer);
+	print "Query Server Ready At : " . $config{queryserver_ip} . ":" . $config{queryserver_port} . "\n";
+	print ">>> Poseidon 2.1 initialized <<<\n\n";
 	print "Please read " . POSEIDON_SUPPORT_URL . "\n";
 	print "for further instructions.\n";
 }
-
 
 sub __start {
 	initialize();
