@@ -2360,6 +2360,14 @@ sub chat_info {
 	$chat->{limit} = $args->{limit};
 	$chat->{public} = $args->{public};
 	$chat->{num_users} = $args->{num_users};
+	
+	Plugins::callHook('packet_chatinfo', {
+	  title => $title,
+	  ownerID => $args->{ownerID},
+	  limit => $args->{limit},
+	  public => $args->{public},
+	  num_users => $args->{num_users}
+	});	
 }
 
 sub chat_join_result {
@@ -6845,7 +6853,8 @@ sub vender_items_list {
 			price => $item->{price},
 			upgrade => $item->{upgrade},
 			cards => $item->{cards},
-			type => $item->{type}
+			type => $item->{type},
+			id => $item->{nameID}
 		});
 
 		message(swrite(
