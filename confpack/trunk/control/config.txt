@@ -10,6 +10,11 @@ password
 loginPinCode
 char
 
+# Poseidon Settings
+# They must be the same as Query Server config in Poseidon.txt
+poseidonServer 127.0.0.1
+poseidonPort 24390
+
 bindIp
 # For an overview of all servertypes please go to the following URL:
 # http://wiki.openkore.com/index.php?title=ServerType
