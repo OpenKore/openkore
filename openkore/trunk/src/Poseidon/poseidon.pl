@@ -36,7 +36,7 @@ our ($roServer, $queryServer);
 sub initialize 
 {
 	# Loading Configuration
-	Poseidon::Config::parse_config_file ("../../control/poseidon.txt", \%config);
+	Poseidon::Config::parse_config_file ("poseidon.txt", \%config);
 
 	# Starting Poseidon
 	print "Starting Poseidon 2.1...\n";

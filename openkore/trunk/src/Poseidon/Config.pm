@@ -30,7 +30,7 @@ sub parse_config_file
 {
     my ($config_line, $Name, $Value, $Config);
     my ($File, $Config) = @_;
-    open (CONFIG, "$File") or die "ERROR: Config file not found : $File";
+    open (CONFIG, "../../control/$File") or open (CONFIG, "./control/$File") or die "ERROR: Config file not found : $File\n";
     while (<CONFIG>) {
         $config_line=$_;
         chop ($config_line);											# Remove trailling \n
