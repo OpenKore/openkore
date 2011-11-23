@@ -864,7 +864,7 @@ sub items_nonstackable {
 		 $args->{switch} eq '02D1' || # storage
 		 $args->{switch} eq '02D2'    # cart
 	) {
-		return $items->{type3};
+		return $items->{$rpackets{'00AA'} == 7 ? 'type3' : 'type4'};
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
