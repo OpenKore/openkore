@@ -89,7 +89,7 @@ serverEncoding Western
 patchserver ropatch1.gravityus.com
 patchpath /patch02
 addTableFolders iRO
-charBlockSize 112
+charBlockSize 116
 
 [International - iRO: Sakray]
 ip 128.241.92.162
@@ -114,7 +114,7 @@ serverEncoding Western
 patchserver ropatch1.gravityus.com
 patchpath /patch02
 addTableFolders iRO
-charBlockSize 112
+charBlockSize 116
 
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
