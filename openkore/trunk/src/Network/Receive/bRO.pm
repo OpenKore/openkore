@@ -18,6 +18,7 @@ sub new {
 	return $self;
 }
 
+# FIXME merge with ServerType0's sub, is bRO really so different?
 sub items_nonstackable {
 	my ($self, $args) = @_;
 
