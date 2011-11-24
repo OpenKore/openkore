@@ -1327,42 +1327,55 @@ sub actor_display {
 		$actor->{nameID} = $nameID;
 
 	} elsif ($args->{type} >= 1000) { # FIXME: in rare cases RO uses a monster sprite for NPC's (JT_ZHERLTHSH = 0x4b0 = 1200) ==> use object_type ?
-		# Actor might be a monster
-		if ($args->{hair_style} == 0x64) {
-			# Actor is a pet
-			$actor = $petsList->getByID($args->{ID});
+		my $obj_type = (defined $args->{object_type}) ? $args->{object_type} : -1;
+		# Actor might be a monster NPC
+		if ($obj_type == 6) {
+			$actor = $npcsList->getByID($args->{ID});
 			if (!defined $actor) {
-				$actor = new Actor::Pet();
+				$actor = new Actor::NPC();
 				$actor->{appear_time} = time;
-				if ($monsters_lut{$args->{type}}) {
-					$actor->setName($monsters_lut{$args->{type}});
-				}
-				$actor->{name_given} = "Unknown";
 				$mustAdd = 1;
-
-				# Previously identified monsters could suddenly be identified as pets.
-				if ($monstersList->getByID($args->{ID})) {
-					$monstersList->removeByID($args->{ID});
-				}
 			}
+			$actor->{nameID} = $nameID;
 
 		} else {
-			# Actor really is a monster
-			$actor = $monstersList->getByID($args->{ID});
-			if (!defined $actor) {
-				$actor = new Actor::Monster();
-				$actor->{appear_time} = time;
-				if ($monsters_lut{$args->{type}}) {
-					$actor->setName($monsters_lut{$args->{type}});
+			# Actor might be a monster
+			if ($args->{hair_style} == 0x64) {
+				# Actor is a pet
+				$actor = $petsList->getByID($args->{ID});
+				if (!defined $actor) {
+					$actor = new Actor::Pet();
+					$actor->{appear_time} = time;
+					if ($monsters_lut{$args->{type}}) {
+						$actor->setName($monsters_lut{$args->{type}});
+					}
+					$actor->{name_given} = "Unknown";
+					$mustAdd = 1;
+	
+					# Previously identified monsters could suddenly be identified as pets.
+					if ($monstersList->getByID($args->{ID})) {
+						$monstersList->removeByID($args->{ID});
+					}
 				}
-				$actor->{name_given} = "Unknown";
-				$actor->{binType} = $args->{type};
-				$mustAdd = 1;
+	
+			} else {
+				# Actor really is a monster
+				$actor = $monstersList->getByID($args->{ID});
+				if (!defined $actor) {
+					$actor = new Actor::Monster();
+					$actor->{appear_time} = time;
+					if ($monsters_lut{$args->{type}}) {
+						$actor->setName($monsters_lut{$args->{type}});
+					}
+					$actor->{name_given} = "Unknown";
+					$actor->{binType} = $args->{type};
+					$mustAdd = 1;
+				}
 			}
+	
+			# Why do monsters and pets use nameID as type?
+			$actor->{nameID} = $args->{type};
 		}
-
-		# Why do monsters and pets use nameID as type?
-		$actor->{nameID} = $args->{type};
 
 	} else {	# ($args->{type} < 1000 && $args->{type} != 45 && !$jobs_lut{$args->{type}})
 		# Actor is an NPC
