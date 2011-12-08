@@ -428,7 +428,7 @@ pvp_y_6-5.rsw#PvP : Ruangan Morroc#
 pvp_y_7-5.rsw#PvP : Ruangan Morroc#
 pvp_y_8-5.rsw#PvP : Ruangan Morroc#
 pvp_2vs2.rsw#PvP : Colosseum#
-//------ÏõÄÎ∞úÎùº Í¥ÄÎ†® Ï∂îÍ∞Ä------------------
+//------øÚπﬂ∂Û ∞¸∑√ √ﬂ∞°------------------
 um_dun01.rsw#Toko Tukang Kayu di Dalam Hutan#
 um_dun02.rsw#Jalan Menuju ke Dunia Lain#
 um_in.rsw#Dalam Umbala#
@@ -437,7 +437,7 @@ um_fild02.rsw#Hutan Humga#
 um_fild03.rsw#Rawa-rawa Karara#
 um_fild04.rsw#Hutan Humga#
 umbala.rsw#Umbala, Desa Suku Wootan#
-//--------------ÎãàÌîåÌó§ÏûÑ-----------
+//--------------¥œ«√«Ï¿”-----------
 nif_in.rsw#Dalam Niflheim#
 yggdrasil01.rsw#?Pulau Herbet Camlet (Batang Pohon Yggdrasil)#
 nif_fild02.rsw#Kubah Setan#
@@ -495,7 +495,7 @@ lhz_dun01.rsw#Laboratorium Somatology #
 lhz_dun02.rsw#Laboratorium Somatology#
 lhz_dun03.rsw#Laboratorium Somatology#
 lhz_fild01.rsw#Field Lighthalzen#
-yuno_pre.rsw#Gedung Pemerintahan Schwaltzvalt#
+yuno_pre.rsw#Gedung Pemerintahab Schwaltzvalt#
 y_airport.rsw#Juno Airport#
 lhz_fild03.rsw#Lighthalzen Field#
 lhz_fild02.rsw#Lighthalzen Field (Grim Ripper's Valley)#
@@ -757,11 +757,12 @@ spl_in02.rsw#Splandid#
 dicastes01.rsw#El Dicastes, Ibukota Sapha#
 dicastes02.rsw#Hutan Brumbeld Jorhi#
 dic_in01.rsw#Dalam Dicastes#
-dic_fild01.rsw#Kaki Guning Kamidal#
-dic_fild02.rsw#Kaki Guning Kamidal#
-dic_dun01.rsw#Lorong Kamidal#
-dic_dun02.rsw#Aula Skarava#
-job3_gen01.rsw#Laboratorium Generik#
+dic_fild01.rsw#Kaki Gunung Kamidal#
+dic_fild02.rsw#Kaki Gunung Kamidal#
+dic_dun01.rsw#Lorong Pertambangan Dicastes#
+dic_dun02.rsw#Dungeon Scraba#
+dic_dun03.rsw#Dungeon Scraba#
+job3_gen01.rsw#Laboratorium Genetik#
 s_atelier.rsw#Bengkel Bayangan#
 moc_para01.rsw#Dalam Bangunan Grup Paradise di Morroc#
 job3_arch01.rsw#Ruang Tunggu Pelatihan Archbishop#
@@ -778,27 +779,29 @@ job3_rune03.rsw#Ruang Tes Pelatihan Rune Knight#
 job3_war01.rsw#Ruang Tes Pelatihan Warlock#
 job3_war02.rsw#Ruang Tes Pelatihan Warlock#
 jupe_core2.rsw#Pusat Juperos#
-
-//Dewata
-dewata.rsw#Pulau Dewata#
-dew_in01.rsw#Dalam Desa Suku Jati#
-dew_fild01.rsw#Dewata Field, Desa Suku Jati#
-dew_dun01.rsw#Gunung Krakatau#
-dew_dun02.rsw#Goa Istana#
+gld2_ald.rsw#Corridor of the abyss : Tear of the Hero#
+gld2_gef.rsw#Corridor of the abyss : Dead men's hill#
+gld2_pay.rsw#Corridor of the abyss : The ancient wind#
+gld2_prt.rsw#Corridor of the abyss : Warrior's way#
+lhz_dun04.rsw#Laboratorium Somatology B4F#
+que_lhz.rsw#Laboratorium Somatology B4F#
+1@lhz.rsw#Worsev's Laboratory#
+malangdo.rsw#Malangdo#
+mal_in01.rsw#Dalam Malangdo#
+mal_in02.rsw#Dalam Malangdo Kapal#
+mal_dun01.rsw#Starry Coral Area#
+1@cash.rsw#Octopus Cave#
+1@pump.rsw#Culvert#
+2@pump.rsw#Culvert#
+que_house_s.rsw#Strange House#
+bif_fild01.rsw#Bifrost South#
+bif_fild02.rsw#Bifrost North#
+1@mist.rsw#Labyrinth in the mistwood#
+mora.rsw#Rafle Village, Mora#
 
 //Brasilis
 brasilis.rsw#Kota Brasilis#
 bra_in01.rsw#Dalam Brasilis#
-bra_fild01.rsw#Hutan Brasilis#
-bra_dun01.rsw#Taman Brasilis#
-bra_dun02.rsw#Taman Brasilis#
-
-
-//Manual Update
-
-nameless_i.rsw#Nameless Island Daylight#
-nameless_n.rsw#Nameless Island Night#
-nameless_in.rsw#Dalam Nameless Island#
-abbey01.rsw#Abbey Dungeon#
-abbey02.rsw#Abbey Dungeon#
-abbey03.rsw#Abbey Dungeon#
+bra_fild01.rsw#Kota Brasilis#
+bra_dun01.rsw#Pintu masuk Gua Air terjun#
+bra_dun02.rsw#Di dalam Gua Air terjun#
