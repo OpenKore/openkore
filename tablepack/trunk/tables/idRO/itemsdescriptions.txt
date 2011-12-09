@@ -1,4 +1,4 @@
-501#
+﻿501#
 Potion yang memberikan ^000088sejumlah HP^000000,terbuat dari Red herb.							
 ^ffffff_^000000							
 Berat : ^7777777^000000							
