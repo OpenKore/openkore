@@ -776,7 +776,7 @@ sub getCoordString {
 	my $coords = "";
 
 	shiftPack(\$coords, 0x44, 8)
-		unless (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5) || $nopadding);
+		unless (($config{serverType} == 0) || $nopadding);
 	shiftPack(\$coords, $x, 10);
 	shiftPack(\$coords, $y, 10);
 	shiftPack(\$coords, 0, 4);
