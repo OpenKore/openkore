@@ -182,7 +182,7 @@ sub sendMove {
 	
 	$msg = pack("C*", 0xA7, 0x00, 0x60, 0x00, 0x00, 0x00) .
 		pack("C*", 0xC7, 0x00, 0x00, 0x00) .
-		getCoordString($x, $y);
+		getCoordString($x, $y, 1);
 	
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
