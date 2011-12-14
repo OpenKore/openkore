@@ -59,6 +59,7 @@ sub new {
 		#'00F3' => ['map_login', '', [qw()]],
 		'00F3' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0102' => ['party_setting', 'V', [qw(exp)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
@@ -75,7 +76,17 @@ sub new {
 		'021D' => ['less_effect'], # TODO
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C H32 H26 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
+		#'035F' => ['character_move'], # TODO
+		'0360' => ['sync', 'V', [qw(time)]],
+		'0361' => ['actor_look_at', 'v C', [qw(head body)]],
+		'0362' => ['item_take', 'a4', [qw(ID)]],
+		'0363' => ['item_drop', 'v2', [qw(index amount)]],
+		'0364' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'0365' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0368' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
 		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
 		# not "buy", it sells items!
 		'0819' => ['buy_bulk_buyer', 'x2 x2 a4 a*', [qw(buyerID buyingStoreID zeny itemInfo)]],
@@ -860,10 +871,15 @@ sub sendPartyShareEXP {
 # 0x0102,6,partychangeoption,2:4
 # note: item share changing seems disabled in newest clients
 sub sendPartyOption {
-	my ($self, $exp, $item) = @_;
-	my $msg = pack('v3', 0x0102, $exp, $item);
-	$self->sendToServer($msg);
-	debug "Sent Party 0ption\n", "sendPacket", 2;
+	my ($self, $exp, $itemPickup, $itemDivision) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_setting',
+		exp => $exp,
+		itemPickup => $itemPickup,
+		itemDivision => $itemDivision,
+	}));
+	debug "Sent Party Option\n", "sendPacket", 2;
 }
 
 sub sendPetCapture {

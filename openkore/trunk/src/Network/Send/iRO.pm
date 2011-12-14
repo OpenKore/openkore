@@ -26,6 +26,15 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %handlers = qw(
+		sync 0360
+		actor_info_request 0368
+		actor_look_at 0361
+		item_take 0362
+		item_drop 0363
+		storage_item_add 0364
+		storage_item_remove 0365
+		skill_use_location 0366
+		party_setting 07D7
 		buy_bulk_vender 0801
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -39,7 +48,7 @@ sub sendMove {
    my $y = int scalar shift;
    my $msg;
 
-   $msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y, 1);
+   $msg = pack("C*", 0x5F, 0x03) . getCoordString($x, $y, 1);
 
    $self->sendToServer($msg);
    debug "Sent move to: $x, $y\n", "sendPacket", 2;
