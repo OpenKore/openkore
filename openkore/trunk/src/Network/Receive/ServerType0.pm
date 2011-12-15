@@ -5257,6 +5257,7 @@ sub resurrection {
 sub secure_login_key {
 	my ($self, $args) = @_;
 	$secureLoginKey = $args->{secure_key};
+	debug sprintf("Secure login key: %s\n", getHex($args->{secure_key})), 'connection';
 }
 
 sub self_chat {

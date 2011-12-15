@@ -12,6 +12,9 @@ use Exception::Class qw(
 use Modules 'register';
 use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
+use Globals qw($masterServer);
+use Log qw(debug);
+use Utils qw(getHex);
 use Utils::Exceptions;
 use Network::Receive::ServerType0; # constants only
 
@@ -59,6 +62,13 @@ sub login {
 	die "This is an abstract method and has not been implemented.";
 }
 
+sub secureKey {
+	my ($self, $client) = @_;
+	
+	# FIXME: randomize for every client? Mimic the original server?
+	'key'
+}
+
 sub master_login {
 	my ($self, $args, $client) = @_;
 
@@ -67,7 +77,12 @@ sub master_login {
 		sessionID => $sessionID,
 		sessionID2 => $sessionID
 	);
-	my $result = $self->login(\%session, @{$args}{qw(username password)});
+	my $result = $self->login(
+		\%session, $args->{username},
+		exists $args->{password_md5}
+			? sub { $args->{password_md5} eq $self->{sendPacketParser}->secureLoginHash($_[0], $self->secureKey($client), $masterServer->{secureLogin}) }
+			: sub { $args->{password} eq $_[0] }
+	);
 	if ($result == LOGIN_SUCCESS) {
 		$self->{sessionStore}->add(\%session);
 		$session{state} = 'About to select character';
@@ -121,7 +136,24 @@ sub master_login {
 	}
 }
 
-sub client_hash {}
+sub client_hash {
+	my ($self, $args, $client) = @_;
+	
+	debug sprintf("Client hash: %s\n", getHex($args->{hash})), 'connection';
+}
+
+sub secure_login_key_request {
+	my ($self, $args, $client) = @_;
+	
+	my $key = $self->secureKey($client);
+	
+	$client->send($self->{recvPacketParser}->reconstruct({
+		switch => 'secure_login_key',
+		secure_key => $key,
+	}));
+	
+	debug sprintf("Client requests secure login. Secure login key: %s\n", getHex($key)), 'connection';
+}
 
 sub unhandledMessage {
 	my ($self, $args, $client) = @_;
