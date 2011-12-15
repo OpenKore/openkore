@@ -67,6 +67,7 @@ sub new {
 		'018A' => ['quit_request', 'v', [qw(type)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
+		'01DB' => ['secure_login_key_request'], # len 2
 		'0204' => ['client_hash'], # TODO
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
 	);

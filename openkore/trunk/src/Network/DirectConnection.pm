@@ -364,11 +364,14 @@ sub checkConnection {
 				$code = $config{secureLogin_requestCode};
 			}
 
-			if ($code ne '') {
-				$messageSender->sendMasterCodeRequest('code', $code);
-			} else {
-				$messageSender->sendMasterCodeRequest('type', $master->{secureLogin_type});
-			}
+			$messageSender->sendToServer($messageSender->reconstruct({
+				switch => 'client_hash',
+				$code ne '' ? (code => $code) : (type => $master->{secureLogin_type}),
+			}));
+			
+			$messageSender->sendToServer($messageSender->reconstruct({
+				switch => 'secure_login_key_request',
+			}));
 
 		} elsif ($self->serverAlive) {
 			$messageSender->sendPreLoginCode($master->{preLoginCode}) if ($master->{preLoginCode});
@@ -404,11 +407,14 @@ sub checkConnection {
  				$code = $config{secureLogin_requestCode};
 			}
 
-			if ($code ne '') {
-				$messageSender->sendMasterCodeRequest('code', $code);
-			} else {
-				$messageSender->sendMasterCodeRequest('type', $master->{secureLogin_type});
-			}
+			$messageSender->sendToServer($messageSender->reconstruct({
+				switch => 'client_hash',
+				$code ne '' ? (code => $code) : (type => $master->{secureLogin_type}),
+			}));
+			
+			$messageSender->sendToServer($messageSender->reconstruct({
+				switch => 'secure_login_key_request',
+			}));
 
 		} else {
 			$messageSender->sendPreLoginCode($master->{preLoginCode}) if ($master->{preLoginCode});

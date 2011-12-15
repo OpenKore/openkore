@@ -27,6 +27,7 @@ use strict;
 use base qw(Network::PacketParser);
 use encoding 'utf8';
 use Carp::Assert;
+use Digest::MD5;
 
 use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync);
 use I18N qw(bytesToString stringToBytes);
@@ -301,12 +302,14 @@ sub reconstruct_master_login {
 	$args->{mac} = '31313131313131313131313100' unless exists $args->{mac}; # gibberish
 	$args->{isGravityID} = 0 unless exists $args->{isGravityID};
 	
-	my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
-	my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
-	my $in = pack('a24', $args->{password});
-	my $rijndael = Utils::Rijndael->new;
-	$rijndael->MakeKey($key, $chain, 24, 24);
-	$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 24, 0);
+	if (exists $args->{password}) {
+		my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
+		my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
+		my $in = pack('a24', $args->{password});
+		my $rijndael = Utils::Rijndael->new;
+		$rijndael->MakeKey($key, $chain, 24, 24);
+		$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 24, 0);
+	}
 }
 
 sub sendMasterLogin {
@@ -356,6 +359,36 @@ sub sendMasterLogin {
 	}
 	$self->sendToServer($msg);
 	debug "Sent sendMasterLogin\n", "sendPacket", 2;
+}
+
+sub secureLoginHash {
+	my ($self, $password, $salt, $type) = @_;
+	my $md5 = Digest::MD5->new;
+	
+	$password = stringToBytes($password);
+	if ($type % 2) {
+		$salt = $salt . $password;
+	} else {
+		$salt = $password . $salt;
+	}
+	$md5->add($salt);
+	
+	$md5->digest
+}
+
+sub sendMasterSecureLogin {
+	my ($self, $username, $password, $salt, $version, $master_version, $type, $account) = @_;
+
+	$self->{packet_lut}{master_login} ||= $type < 3 ? '01DD' : '01FA';
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'master_login',
+		version => $version || $self->version,
+		master_version => $master_version,
+		username => $username,
+		password_md5 => $self->secureLoginHash($password, $salt, $type),
+		clientInfo => $account > 0 ? $account - 1 : 0,
+	}));
 }
 
 sub reconstruct_game_login {
@@ -654,10 +687,38 @@ sub sendCloseShop {
 	debug "Shop Closed\n", "sendPacket", 2;
 }
 
+sub reconstruct_client_hash {
+	my ($self, $args) = @_;
+	
+	if (defined $args->{code}) {
+		# FIXME there's packet switch in that code. How to handle it correctly?
+		my $code = $args->{code};
+		$code =~ s/^02 04 //;
+		
+		$args->{hash} = pack 'C*', map hex, split / /, $code;
+		
+	} elsif ($args->{type}) {
+		if ($args->{type} == 1) {
+			$args->{hash} = pack('C*', 0x7B, 0x8A, 0xA8, 0x90, 0x2F, 0xD8, 0xE8, 0x30, 0xF8, 0xA5, 0x25, 0x7A, 0x0D, 0x3B, 0xCE, 0x52);
+		} elsif ($args->{type} == 2) {
+			$args->{hash} = pack('C*', 0x27, 0x6A, 0x2C, 0xCE, 0xAF, 0x88, 0x01, 0x87, 0xCB, 0xB1, 0xFC, 0xD5, 0x90, 0xC4, 0xED, 0xD2);
+		} elsif ($args->{type} == 3) {
+			$args->{hash} = pack('C*', 0x42, 0x00, 0xB0, 0xCA, 0x10, 0x49, 0x3D, 0x89, 0x49, 0x42, 0x82, 0x57, 0xB1, 0x68, 0x5B, 0x85);
+		} elsif ($args->{type} == 4) {
+			$args->{hash} = pack('C*', 0x22, 0x37, 0xD7, 0xFC, 0x8E, 0x9B, 0x05, 0x79, 0x60, 0xAE, 0x02, 0x33, 0x6D, 0x0D, 0x82, 0xC6);
+		} elsif ($args->{type} == 5) {
+			$args->{hash} = pack('C*', 0xc7, 0x0A, 0x94, 0xC2, 0x7A, 0xCC, 0x38, 0x9A, 0x47, 0xF5, 0x54, 0x39, 0x7C, 0xA4, 0xD0, 0x39);
+		}
+	}
+}
+
+# TODO: clientHash and secureLogin_requestCode is almost the same, merge
 sub sendClientMD5Hash {
 	my ($self) = @_;
-	my $msg = pack('v H32', 0x0204, $masterServer->{clientHash}); # ex 82d12c914f5ad48fd96fcf7ef4cc492d (kRO sakray != kRO main)
-	$self->sendToServer($msg);
+	$self->sendToServer($self->reconstruct({
+		switch => 'client_hash',
+		hash => pack('H32', $masterServer->{clientHash}), # ex 82d12c914f5ad48fd96fcf7ef4cc492d (kRO sakray != kRO main)
+	}));
 }
 
 sub sendFriendListReply {

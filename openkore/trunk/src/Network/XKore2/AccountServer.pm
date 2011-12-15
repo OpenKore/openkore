@@ -21,7 +21,7 @@ use base qw(Base::Ragnarok::AccountServer);
 
 # Overrided method.
 sub login {
-	my ($self, $session, $username, $password) = @_;
+	my ($self, $session, $username, $password_check_callback) = @_;
 	if ($char) {
 		$session->{accountID} = $char->{ID};
 		$session->{sex} = $char->{sex};
@@ -32,7 +32,7 @@ sub login {
 	}
 
 	return Base::Ragnarok::AccountServer::ACCOUNT_NOT_FOUND unless $config{username} eq $username;
-	return Base::Ragnarok::AccountServer::PASSWORD_INCORRECT unless $config{adminPassword} eq $password;
+	return Base::Ragnarok::AccountServer::PASSWORD_INCORRECT unless $password_check_callback->($config{adminPassword});
 
 	return Base::Ragnarok::AccountServer::LOGIN_SUCCESS;
 }

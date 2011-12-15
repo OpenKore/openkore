@@ -17,7 +17,6 @@ package Network::Send::ServerType0;
 
 use strict;
 use Time::HiRes qw(time);
-use Digest::MD5;
 
 use Network::Send ();
 use base qw(Network::Send);
@@ -71,7 +70,10 @@ sub new {
 		'018A' => ['quit_request', 'v', [qw(type)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
-		'0204' => ['client_hash'], # TODO
+		'01DB' => ['secure_login_key_request'], # len 2
+		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_md5 master_version)]],
+		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_md5 master_version clientInfo)]],
+		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 		'021D' => ['less_effect'], # TODO
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
@@ -684,66 +686,6 @@ sub sendItemUse {
 
 	$self->sendToServer($msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
-}
-
-sub sendMasterCodeRequest {
-	my $self = shift;
-	my $type = shift;
-	my $code = shift;
-	my $msg;
-
-	if ($type eq 'code') {
-		$msg = '';
-		foreach (split(/ /, $code)) {
-			$msg .= pack("C1",hex($_));
-		}
-
-	} else { # type eq 'type'
-		if ($code == 1) {
-			$msg = pack("C*", 0x04, 0x02, 0x7B, 0x8A, 0xA8, 0x90, 0x2F, 0xD8, 0xE8, 0x30, 0xF8, 0xA5, 0x25, 0x7A, 0x0D, 0x3B, 0xCE, 0x52);
-		} elsif ($code == 2) {
-			$msg = pack("C*", 0x04, 0x02, 0x27, 0x6A, 0x2C, 0xCE, 0xAF, 0x88, 0x01, 0x87, 0xCB, 0xB1, 0xFC, 0xD5, 0x90, 0xC4, 0xED, 0xD2);
-		} elsif ($code == 3) {
-			$msg = pack("C*", 0x04, 0x02, 0x42, 0x00, 0xB0, 0xCA, 0x10, 0x49, 0x3D, 0x89, 0x49, 0x42, 0x82, 0x57, 0xB1, 0x68, 0x5B, 0x85);
-		} elsif ($code == 4) {
-			$msg = pack("C*", 0x04, 0x02, 0x22, 0x37, 0xD7, 0xFC, 0x8E, 0x9B, 0x05, 0x79, 0x60, 0xAE, 0x02, 0x33, 0x6D, 0x0D, 0x82, 0xC6);
-		} elsif ($code == 5) {
-			$msg = pack("C*", 0x04, 0x02, 0xc7, 0x0A, 0x94, 0xC2, 0x7A, 0xCC, 0x38, 0x9A, 0x47, 0xF5, 0x54, 0x39, 0x7C, 0xA4, 0xD0, 0x39);
-		}
-	}
-	$msg .= pack("C*", 0xDB, 0x01);
-	$self->sendToServer($msg);
-}
-
-sub sendMasterSecureLogin {
-	my $self = shift;
-	my $username = shift;
-	my $password = shift;
-	my $salt = shift;
-	my $version = shift;
-	my $master_version = shift;
-	my $type =  shift;
-	my $account = shift;
-	my $md5 = Digest::MD5->new;
-	my ($msg);
-
-	$username = stringToBytes($username);
-	$password = stringToBytes($password);
-	if ($type % 2 == 1) {
-		$salt = $salt . $password;
-	} else {
-		$salt = $password . $salt;
-	}
-	$md5->add($salt);
-	if ($type < 3 ) {
-		$msg = pack("C*", 0xDD, 0x01) . pack("V1", $version) . pack("a24", $username) .
-					 $md5->digest . pack("C*", $master_version);
-	}else{
-		$account = ($account>0) ? $account -1 : 0;
-		$msg = pack("C*", 0xFA, 0x01) . pack("V1", $version) . pack("a24", $username) .
-					 $md5->digest . pack("C*", $master_version). pack("C1", $account);
-	}
-	$self->sendToServer($msg);
 }
 
 sub sendMemo {
