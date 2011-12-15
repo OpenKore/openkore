@@ -466,7 +466,7 @@ sub new {
 		'0446' => ['minimap_indicator', 'a4 v4', [qw(npcID x y effect qtype)]],
 
 		'0449' => ['hack_shield_alarm'],
-		'07D8' => ['party_setting', 'V C2', [qw(exp itempick itemdiv)]],
+		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
 		'07D9' => ['hotkeys'], # 268 # hotkeys:38
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]],
@@ -4604,7 +4604,7 @@ sub party_chat {
 	});
 }
 
-# TODO: test if this packet also gives us the item share options
+# TODO: itemPickup itemDivision
 sub party_exp {
 	my ($self, $args) = @_;
 	$char->{party}{share} = $args->{type};
