@@ -388,11 +388,11 @@ sub minimap_indicator {
 	if ($args->{show}) {
 		message TF("%s shown %s at location %d, %d " .
 		"with the color %s\n", $args->{actor}, $indicator, @{$args}{qw(x y)}, $color_str),
-		"info";
+		'effect';
 	} else {
 		message TF("%s cleared %s at location %d, %d " .
 		"with the color %s\n", $args->{actor}, $indicator, @{$args}{qw(x y)}, $color_str),
-		"info";
+		'effect';
 	}
 }
 
