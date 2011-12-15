@@ -5166,7 +5166,7 @@ sub received_character_ID_and_Map {
 		$args->{mapName}, $map_ip, $map_port), "connection";
 	checkAllowedMap($map_noinstance);
 	message(T("Closing connection to Character Server\n"), "connection") unless ($net->version == 1);
-	$net->serverDisconnect();
+	$net->serverDisconnect(1);
 	main::initStatVars();
 }
 
