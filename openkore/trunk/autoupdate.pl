@@ -34,34 +34,24 @@ sub check_svn_util {
 
 sub upgrade {
 	my ($path, $repos_name) = @_;
-	
-	return unless -d "$path/.svn" && !-l $path;
-	
-	print "Checking " . $repos_name . " for updates...";
+	print "Chenking " . $repos_name . " for updates...\n";
 	my $sa = SVN::Updater->load({ path => $path });
 
-	my (undef, $old_version) = $sa->info;
-	$sa->update("--force", "--accept", "theirs-conflict");
-	my (undef, $new_version) = $sa->info;
-	
-	if ($old_version == $new_version) {
-		print " no updates available\n";
-	} else {
-		print " updated to r$new_version\n";
-	}
+	print "  Fetching updates...\n";
+	$sa->update("--force", "--accept theirs-conflict");
+	print " Done updating " . $repos_name . "\n";
 };
 
 print "-===================== OpenKore Auto Update tool =====================-\n";
 if (check_svn_util() == 1) {
-	upgrade("$RealBin", "OpenKore core files");
-	upgrade("$RealBin/tables", "OpenKore table data files");
-	upgrade("$RealBin/fields", "OpenKore map data files");
-	upgrade($_, $_) while <$RealBin/plugins/*>;
+	upgrade(".", "OpenKore core files") if (-d "src/.svn");
+	upgrade("./tables", "OpenKore table data files") if (-d "tables/.svn");
+	upgrade("./fields", "OpenKore map data files") if (-d "fields/.svn");
 };
 print "-=========================== Done Updating ===========================-\n\n\n";
 
 # Run main App
-my $file = "$RealBin/openkore.pl";
+my $file = "openkore.pl";
 $0 = $file;
 FindBin::again();
 {
