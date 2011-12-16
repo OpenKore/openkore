@@ -16,16 +16,12 @@ EXTRA_LIBRARY_DIRECTORIES = []
 
 # Extra arguments to be passed to the compiler during the compilation
 # stage (not during the linking stage).
-# EXTRA_COMPILER_FLAGS = ['-Wall', '-g', '-O2', '-pipe']
-
-# Optimized Flags. Use only on Release.
-EXTRA_COMPILER_FLAGS = ['-Wall', '-O3', '-pipe']
+EXTRA_COMPILER_FLAGS = ['-Wall', '-g', '-O2', '-pipe']
 
 ####################
 
 import os
 import sys
-import subprocess
 
 ### Platform configuration ###
 
@@ -38,8 +34,6 @@ READLINE_LIB = 'readline'
 
 perlconfig = {}
 env = Environment()
-if win32:
-	env = Environment(tools = ['mingw', 'gcc', 'cc', 'g++', 'c++'])
 
 def CheckPerl(context):
 	global cygwin
@@ -84,9 +78,9 @@ def CheckPerl(context):
 			# in PATH yet. So add the default Perl installation folder
 			# to PATH.
 			os.environ['PATH'] += os.path.pathsep + "/cygdrive/c/Perl/bin"
-		ret = subprocess.call(["wperl", ".perltest.pl"])
+		ret = os.spawnlp(os.P_WAIT, "wperl", "wperl", ".perltest.pl")
 	else:
-		ret = subprocess.call(["perl", ".perltest.pl"])
+		ret = os.spawnlp(os.P_WAIT, "perl", "perl", ".perltest.pl")
 	context.Result(ret == 0)
 
 	os.unlink(".perltest.pl")
@@ -135,8 +129,7 @@ def CheckReadline(context, conf):
 
 def CheckLibCurl(context):
 	context.Message('Checking for libcurl...')
-	p = subprocess.Popen('curl-config --version', shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True, universal_newlines=True)
-	(input, output, error) = (p.stdin, p.stdout, p.stderr)
+	(input, output, error) = os.popen3('curl-config --version', 'r')
 	if input != None:
 		input.close()
 	if error != None:
@@ -227,7 +220,7 @@ if cygwin:
 			'--export-all-symbols',
 			'--add-stdcall-alias'] + sources
 		print ' '.join(command)
-		ret = subprocess.call(command)
+		ret = os.spawnvp(os.P_WAIT, command[0], command)
 		if ret != 0:
 			return 0
 
@@ -243,7 +236,7 @@ if cygwin:
 		command += ['-lstdc++']
 
 		print ' '.join(command)
-		return subprocess.call(command)
+		return os.spawnvp(os.P_WAIT, command[0], command)
 
 	NativeDLLBuilder = Builder(action = linkDLLAction,
 		emitter = '$LIBEMITTER',
@@ -267,7 +260,7 @@ elif darwin:
 				command += ['-l' + flag]
 
 		print ' '.join(command)
-		return subprocess.call(command)
+		return os.spawnvp(os.P_WAIT, command[0], command)
 
 	NativeDLLBuilder = Builder(action = linkBundleAction,
 				   emitter = '$LIBEMITTER',
@@ -287,9 +280,7 @@ if win32:
 	perlenv['CCFLAGS'] += Split('-Wno-comments -include stdint.h')
 	perlenv['CPPDEFINES'] += Split('__MINGW32__ WIN32IO_IS_STDIO ' +
 		'_UINTPTR_T_DEFINED CHECK_FORMAT')
-	#perlenv['LIBS'] += ['perl58']
-	#perlenv['LIBS'] += ['perl510']
-	perlenv['LIBS'] += ['perl512']
+	perlenv['LIBS'] += ['perl58']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 elif not darwin:
 	# Unix (except MacOS X)
@@ -338,7 +329,7 @@ def buildXS(target, source, env):
 		'-typemap',
 		perlconfig['typemap'],
 		str(source[0])]
-	return subprocess.call(command)
+	return os.spawnvp(os.P_WAIT, perlconfig['perl'], command)
 
 perlenv.Append(BUILDERS = { 'XS' : Builder(action = buildXS) })
 
