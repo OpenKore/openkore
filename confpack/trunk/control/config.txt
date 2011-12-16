@@ -33,7 +33,7 @@ XKore_publicIp 127.0.0.1
 
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
-adminPassword mojefrac
+adminPassword troswiek
 callSign
 commandPrefix ;
 
