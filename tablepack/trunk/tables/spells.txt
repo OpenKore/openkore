@@ -2,16 +2,16 @@
 127 Fire Wall
 128 Warp Portal Opening
 129 Warp Portal
-130 Holy Communion?
+130 B.S Sacramenti
 131 Sanctuary
 132 Magnus Exorcismus
 133 Pneuma
 134 Big Magic
 135 Fire Pillar (standby)
 136 Fire Pillar (detonating)
-137 Hidden Trap
-138 Trap
-139 Hidden Warp NPC
+#137 JT_HIDDEN_TRAP
+#138 JT_TRAP
+#139 JT_HIDDEN_WARP_NPC
 140 Talkie Box (hatsudou-chuu)
 141 Ice Wall
 142 Quagmire
@@ -20,61 +20,51 @@
 145 Ankle Snare
 146 Venom Dust
 147 Land Mine
-148 Shockwave
+148 Shockwave Trap
 149 Sandman
 150 Flasher
 151 Freezing Trap
-152 Claymore
+152 Claymore Trap
 153 Talkie Box
 154 Volcano
 155 Deluge
-156 Violent Gale
-157 Land Protector
+156 Whirlwind
+157 Magnetic Earth
 158 Lullaby
-159 Rich Man Mr.Kim
-160 Eternal Chaos
-161 Drum Sound on Battlefield
-162 Ring of Nibelungen
-163 Roki's Weil
-164 Into the Abyss
-165 Invulnerable Siegfried
-166 Dissonance
-167 Whistle
-168 Assassin Cross
-169 Poem of Bragi
-170 Apple of Idun
-171 Ugly Dance
-172 Humming
-173 Don't Forget Me
-174 Fortune's Kiss
-175 At Your Service
-176 Graffiti
-177 Demonstration
+159 Mental Sensing
+160 Down Tempo
+161 Battle Theme
+162 Harmonic Lick
+163 Classical Pluck
+164 Power Cord
+165 Acoustic Rhythm
+166 Unchained Serenade
+167 Perfect Tabulature
+168 Impressive Riff
+169 Magic Strings
+170 Song of Lutie
+171 Hip Shaker
+172 Focus Ballet
+173 Slow Grace
+174 Lady Luck
+175 Gypsy's Kiss
+176 Scribble
+177 Bomb
 # Wedding skills
 178 Pink Warp Portal Wind
-179 Gospel
+179 Battle Chant
 180 Basilica
-181 Moonlit Water Mill
-182 Wall of Fog
-183 Spider Web
-184 Gravitation Field
-185 Wand of Hermode
-186 JT_KAENSIN
-187 Suiton
-188 Reverse Tatami
-189 Kaensin
-190 Ground Drift
-191 JT_BLIND_S
-192 Death Poison Slash
-193 Death Freezer
-194 JT_FLARE_S
-195 Death Wave
-196 Dead Water Attack
-197 Dead Storm Attack
-198 Earth Quake
+181 Sheltering Bliss
+182 Blinding Mist
+183 Fiber Lock
+184 Gravitational Field
+185 Hermode's Rod
+186 Blaze Shield
+187 Watery Evasion
+188 Flip Tatami
+189 Blaze Shield
+190 Gunslinger Mine
 199 Evil Land
-200 Dark Runner
-201 Dark Transfer
 202 Epiclesis
 203 Earth Strain
 204 Man Hole
@@ -82,7 +72,6 @@
 206 Chaos Panic
 207 Maelstrom
 208 Blood Lust
-209 Feint Bomb
 210 Magenta Trap
 211 Cobalt Trap
 212 Maize Trap
@@ -95,17 +84,12 @@
 219 Severe Rainstorm
 220 Fire Walk
 221 Electric Walk
-222 Poem of the Netherworld
-223 Psychic Wave
 224 Cloud Kill
-225 Poison Smoke
-226 Neutral Barrier
-227 Stealth Field
 228 Warmer
 229 Thorn Trap
 230 Wall of Thorns
 231 Demonic Fire
-232 Fire Expansion Smoke Powder
-233 Fire Expansion Tear Gas
+#232 ???
+#233 ???
 234 Hell's Plant  
 235 Vacuum Extreme
