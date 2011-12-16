@@ -1,0 +1,5 @@
+1 Poisoned
+2 Cursed
+4 Silenced
+16 Blinded
+34 Chaos
