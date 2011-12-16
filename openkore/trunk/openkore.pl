@@ -23,7 +23,6 @@ use Carp::Assert;
 sub __start {
 	use ErrorHandler;
 	use XSTools;
-	use Utils::Rijndael;
 	srand();
 
 
@@ -42,8 +41,8 @@ sub __start {
 	use Globals;
 	use Interface;
 	$interface = Interface->loadInterface($Settings::interface);
-	$interface->title($Settings::NAME);
 	selfCheck();
+
 
 	##### LOAD OPENKORE MODULES #####
 
@@ -85,7 +84,7 @@ sub __start {
 	use Poseidon::Client;
 	Modules::register(qw/Utils FileParsers
 		Network::Receive Network::Send Misc AI AI::CoreLogic
-		AI::Attack AI::Slave AI::Slave::Homunculus AI::Slave::Mercenary
+		AI::Attack AI::Homunculus
 		ChatQueue Actor Actor::Player Actor::Monster Actor::You
 		Actor::Party Actor::Unknown Actor::Item Match Utils::Benchmark/);
 
@@ -129,7 +128,7 @@ sub selfCheck {
 			"Your Windows TCP/IP stack is broken. Please read\n" .
 			"  %s\n" .
 			"to learn how to solve this.",
-			"http://wiki.openkore.com/index.php?title=Frequently_Asked_Questions#How_to_fix_broken_TCP.2FIP_stack"));
+			"http://www.visualkore-bot.com/faq.php#tcp"));
 		exit 1;
 	}
 
@@ -144,16 +143,16 @@ sub selfCheck {
 
 	if (!defined &XSTools::majorVersion) {
 		$interface->errorDialog(TF("Your version of the XSTools library is too old.\n" .
-			"Please upgrade it from %s", "http://misc.openkore.com"));
+			"Please read %s", "http://www.openkore.com/aliases/xstools.php"));
 		exit 1;
-	} elsif (XSTools::majorVersion() != 5) {
+	} elsif (XSTools::majorVersion() != 4) {
 		my $error;
 		if (defined $ENV{INTERPRETER}) {
 			$error = TF("Your version of (wx)start.exe is incompatible.\n" .
-				"Please upgrade it from %s", "http://misc.openkore.com");
+				"Please upgrade it by reading %s", "http://www.openkore.com/aliases/xstools.php");
 		} else {
 			$error = TF("Your version of XSTools library is incompatible.\n" .
-				"Please upgrade it from %s", "http://misc.openkore.com");
+				"Please upgrade it by reading %s", "http://www.openkore.com/aliases/xstools.php");
 		}
 		$interface->errorDialog($error);
 		exit 1;
@@ -161,10 +160,10 @@ sub selfCheck {
 		my $error;
 		if (defined $ENV{INTERPRETER}) {
 			$error = TF("Your version of (wx)start.exe is too old.\n" .
-				"Please upgrade it from %s", "http://misc.openkore.com")
+				"Please upgrade it by reading %s", "http://www.openkore.com/aliases/xstools.php")
 		} else {
 			$error = TF("Your version of the XSTools library is too old.\n" .
-				"Please upgrade it from %s", "http://misc.openkore.com")
+				"Please upgrade it by reading %s", "http://www.openkore.com/aliases/xstools.php")
 		}
 		$interface->errorDialog($error);
 		exit 1;
