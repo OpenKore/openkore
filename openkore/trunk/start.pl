@@ -78,25 +78,14 @@ if (0) {
 	require Win32::Process;
 	require XSTools;
 	require Encode;
-	require Encode::KR;
-	require Encode::TW;
-	require Encode::JP;
-	require Encode::CN;
 	require encoding;
 	require Storable;
 	require Compress::Zlib;
-	# new Perl 5.12 and more
-	require "unicore/lib/Perl/SpacePer.pl";
-	require "unicore/lib/Perl/Word.pl";
-	require "unicore/lib/Nt/De.pl";
-	require "unicore/lib/Gc/Cc.pl";
-	require "unicore/lib/Blk/ASCII.pl";
-	# Old Perl 5.10 and less
-	# require "unicore/lib/gc_sc/SpacePer.pl";
-	# require "unicore/lib/gc_sc/Word.pl";
-	# require "unicore/lib/gc_sc/Digit.pl";
-	# require "unicore/lib/gc_sc/Cntrl.pl";
-	# require "unicore/lib/gc_sc/ASCII.pl";
+	require "unicore/lib/gc_sc/SpacePer.pl";
+	require "unicore/lib/gc_sc/Word.pl";
+	require "unicore/lib/gc_sc/Digit.pl";
+	require "unicore/lib/gc_sc/Cntrl.pl";
+	require "unicore/lib/gc_sc/ASCII.pl";
 	require HTML::Entities;
 }
 
