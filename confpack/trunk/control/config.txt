@@ -3,12 +3,12 @@
 
 ######## Login options and server-specific options ########
 
-master
-server
-username
-password
+master International - iRO: Valkyrie
+server 2
+username marryanna
+password 01281965815227madnoh
 loginPinCode
-char
+char 0
 
 # Poseidon Settings
 # They must be the same as Query Server config in Poseidon.txt
@@ -18,7 +18,7 @@ poseidonPort 24390
 bindIp
 # For an overview of all servertypes please go to the following URL:
 # http://wiki.openkore.com/index.php?title=ServerType
-serverType 0
+serverType iRO
 
 # 1 = hook into RO client, 2 = Act as stand-alone proxy, proxy = act as true proxy
 XKore 0
@@ -33,7 +33,7 @@ XKore_publicIp 127.0.0.1
 
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
-adminPassword
+adminPassword mojefrac
 callSign
 commandPrefix ;
 
@@ -652,3 +652,5 @@ debugPacket_exclude
 debugPacket_include
 debugPacket_include_dumpMethod
 debugDomains
+charBlockSize 116
+serverEncoding Western
