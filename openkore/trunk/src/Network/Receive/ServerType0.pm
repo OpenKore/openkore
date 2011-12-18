@@ -258,7 +258,7 @@ sub new {
 		'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # talkie box message
 		'0192' => ['map_change_cell', 'v3 Z16', [qw(x y type map_name)]], # ex. due to ice wall
 		'0194' => ['character_name', 'a4 Z24', [qw(ID name)]],
-		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
+		'0195' => ['actor_info', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]],
 		'0199' => ['map_property', 'v', [qw(type)]],
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]],
@@ -1655,8 +1655,17 @@ sub actor_info {
 
 	my $player = $playersList->getByID($args->{ID});
 	if ($player) {
-		# This packet tells us the names of players who aren't in a guild, as opposed to 0195.
+		# 0095: This packet tells us the names of players who aren't in a guild.
+		# 0195: Receive names of players who are in a guild.
+		# FIXME: There is more to this packet than just party name and guild name.
+		# This packet is received when you leave a guild
+		# (with cryptic party and guild name fields, at least for now)
 		$player->setName(bytesToString($args->{name}));
+		
+		$player->{party}{name} = bytesToString($args->{partyName}) if defined $args->{partyName};
+		$player->{guild}{name} = bytesToString($args->{guildName}) if defined $args->{guildName};
+		$player->{guild}{title} = bytesToString($args->{guildTitle}) if defined $args->{guildTitle};
+		
 		message "Player Info: " . $player->nameIdx . "\n", "parseMsg_presence", 2;
 		updatePlayerNameCache($player);
 		Plugins::callHook('charNameUpdate', {player => $player});
@@ -1743,42 +1752,6 @@ sub actor_movement_interrupted {
 	if ($char->{homunculus} && $char->{homunculus}{ID} eq $actor->{ID}) {
 		AI::clear("move");
 	}
-}
-
-sub actor_name_received {
-	my ($self, $args) = @_;
-
-	# FIXME: There is more to this packet than just party name and guild name.
-	# This packet is received when you leave a guild
-	# (with cryptic party and guild name fields, at least for now)
-	my $player = $playersList->getByID($args->{ID});
-	if (defined $player) {
-		# Receive names of players who are in a guild.
-		$player->setName(bytesToString($args->{name}));
-		$player->{party}{name} = bytesToString($args->{partyName});
-		$player->{guild}{name} = bytesToString($args->{guildName});
-		$player->{guild}{title} = bytesToString($args->{guildTitle});
-		updatePlayerNameCache($player);
-		debug "Player Info: $player->{name} ($player->{binID})\n", "parseMsg_presence", 2;
-		Plugins::callHook('charNameUpdate', {player => $player});
-	} else {
-		debug "Player Info for " . unpack("V", $args->{ID}) .
-			" (not on screen): " . bytesToString($args->{name}) . "\n",
-			"parseMsg_presence/remote", 2;
-	}
-
-	my $monster = $monstersList->getByID($args->{ID});
-	if ($monster) {
-		my $name = bytesToString($args->{name});
-		debug "Monster Info 2: $name ($monster->{binID})\n", "parseMsg", 2;
-		$monster->{name_given} = $name;
-		if ($monsters_lut{$monster->{nameID}} eq "") {
-			$monster->setName($name);
-			$monsters_lut{$monster->{nameID}} = $name;
-			updateMonsterLUT(Settings::getTableFilename("monsters.txt"), $monster->{nameID}, $name);
-		}
-	}
-
 }
 
 # TODO: translation-friendly messages
