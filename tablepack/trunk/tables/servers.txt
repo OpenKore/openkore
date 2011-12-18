@@ -53,7 +53,7 @@ addTableFolders euRO
 
 ## http://www.ragnarokonline.fr
 [France - fRO]
-ip 84.14.101.102
+ip 62.23.1.52
 port 6900
 master_version 31
 version 1
