@@ -10,6 +10,7 @@ use Interface::Wx::Base::SparseArrayListCtrl;
 use Interface::Wx::Context::Item;
 
 use Globals qw($char);
+use Misc qw(itemName);
 use Utils qw(formatNumber);
 use Translation qw(T TF);
 
@@ -48,7 +49,16 @@ sub new {
 			&{$updateTotal};
 		},
 		context => sub {
-			if (my (@sel) = $weak->{list}->getSelection) { Interface::Wx::Context::Item->new($weak, \@sel)->popup }
+			if (my (@sel) = $weak->{list}->getSelection) {
+				Interface::Wx::Context::Item->new($weak, [map {
+					# TODO: Actor::Item really needs to be fully initializable via ->new
+					my $item = Actor::Item->new;
+					my $args = $_;
+					$item->{$_} = $args->{$_} for qw(index nameID amount identified broken upgrade cards type);
+					$item->{name} = itemName($item);
+					$item
+				} @sel])->popup
+			}
 		},
 		%$args,
 	}), 1, wxEXPAND);
