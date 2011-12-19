@@ -613,6 +613,7 @@ sub initMapChangeVars {
 	$ai_v{inventory_time} = time + 60;
 	$ai_v{temp} = {};
 	$cart{inventory} = [];
+	delete $storage{opened};
 	undef @venderItemList;
 	undef $venderID;
 	undef $venderCID;
