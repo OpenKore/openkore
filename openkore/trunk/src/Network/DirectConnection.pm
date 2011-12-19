@@ -364,10 +364,17 @@ sub checkConnection {
 				$code = $config{secureLogin_requestCode};
 			}
 
-			$messageSender->sendToServer($messageSender->reconstruct({
-				switch => 'client_hash',
-				$code ne '' ? (code => $code) : (type => $master->{secureLogin_type}),
-			}));
+			if ($code ne '') {
+				$messageSender->sendToServer($messageSender->reconstruct({
+					switch => 'client_hash',
+					code => $code,
+				}));
+			} elsif ($master->{secureLogin_type}) {
+				$messageSender->sendToServer($messageSender->reconstruct({
+					switch => 'client_hash',
+					type => $master->{secureLogin_type},
+				}));
+			}
 			
 			$messageSender->sendToServer($messageSender->reconstruct({
 				switch => 'secure_login_key_request',
@@ -407,10 +414,17 @@ sub checkConnection {
  				$code = $config{secureLogin_requestCode};
 			}
 
-			$messageSender->sendToServer($messageSender->reconstruct({
-				switch => 'client_hash',
-				$code ne '' ? (code => $code) : (type => $master->{secureLogin_type}),
-			}));
+			if ($code ne '') {
+				$messageSender->sendToServer($messageSender->reconstruct({
+					switch => 'client_hash',
+					code => $code,
+				}));
+			} elsif ($master->{secureLogin_type}) {
+				$messageSender->sendToServer($messageSender->reconstruct({
+					switch => 'client_hash',
+					type => $master->{secureLogin_type},
+				}));
+			}
 			
 			$messageSender->sendToServer($messageSender->reconstruct({
 				switch => 'secure_login_key_request',
