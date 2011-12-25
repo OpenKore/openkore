@@ -137,7 +137,7 @@ sub add {
 		# Convert to UTF-8 so we don't segfault.
 		# Conversion to ISO-8859-1 will always succeed
 		foreach my $encoding ("EUC-KR", "EUCKR", "ISO-2022-KR", "ISO8859-1") {
-			$utf8 = Encode::encode($encoding, $text);
+			$utf8 = eval { Encode::encode($encoding, $text) };
 			last if $utf8;
 		}
 		$text = Encode::encode_utf8($utf8);
