@@ -23,6 +23,9 @@ sub new {
 		['packet/map_loaded', sub {
 			$weak->clear
 		}],
+		['packet_pre/skills_list', sub {
+			$weak->clear if $_[1]{switch} eq '010F'
+		}],
 		['packet_charSkills', sub {
 			$weak->onSkillChange($_[1])
 		}],
