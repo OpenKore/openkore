@@ -219,7 +219,6 @@ sub new {
 		'014B' => ['GM_silence', 'C Z24', [qw(type name)]],
 		'014C' => ['guild_allies_enemy_list'],
 		'014E' => ['guild_master_member', 'V', [qw(type)]],
-		'0151' => ['guild_emblem_img', 'a4', [qw(GuildID)]],
 		'0152' => ['guild_emblem', 'v a4 a4 Z*', [qw(len guildID emblemID emblem)]],
 		'0154' => ['guild_members_list'],
 		'0156' => ['guild_member_position_changed', 'v V3', [qw(unknown accountID charID positionID)]],
