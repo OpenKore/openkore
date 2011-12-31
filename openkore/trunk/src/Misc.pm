@@ -2020,6 +2020,7 @@ sub objectRemoved {
 	my ($type, $ID, $obj) = @_;
 
 	if ($type eq 'monster') {
+		# FIXME: what if mon_control was changed since the counter was increased?
 		if (mon_control($obj->{name},$obj->{nameID})->{teleport_search}) {
 			$ai_v{temp}{searchMonsters}--;
 		}
@@ -3108,12 +3109,12 @@ sub getBestTarget {
 		##if ($nonLOSNotAllowed && ($config{'attackMaxDistance'} < $dist)) {
 		##	next;
 		##}
-		if (!defined($highestPri) || ($priority{$name} > $highestPri)) {
+		if (!defined($bestTarget) || ($priority{$name} > $highestPri)) {
 			$highestPri = $priority{$name};
 			$smallestDist = $dist;
 			$bestTarget = $_;
 		}
-		if ((!defined($highestPri) || $priority{$name} == $highestPri)
+		if ((!defined($bestTarget) || $priority{$name} == $highestPri)
 		  && (!defined($smallestDist) || $dist < $smallestDist)) {
 			$highestPri = $priority{$name};
 			$smallestDist = $dist;
@@ -3129,12 +3130,12 @@ sub getBestTarget {
 			my $pos = calcPosition($monster);
 			my $name = lc $monster->{name};
 			my $dist = round(distance($myPos, $pos));
-			if (!defined($highestPri) || ($priority{$name} > $highestPri)) {
+			if (!defined($bestTarget) || ($priority{$name} > $highestPri)) {
 				$highestPri = $priority{$name};
 				$smallestDist = $dist;
 				$bestTarget = $_;
 			}
-			if ((!defined($highestPri) || $priority{$name} == $highestPri)
+			if ((!defined($bestTarget) || $priority{$name} == $highestPri)
 			  && (!defined($smallestDist) || $dist < $smallestDist)) {
 				$highestPri = $priority{$name};
 				$smallestDist = $dist;
