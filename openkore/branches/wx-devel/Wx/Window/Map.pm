@@ -107,7 +107,7 @@ sub new {
 	
 	$self->parsePortals(Settings::getTableFilename("portals.txt"));
 	if ($field && $char) {
-		$self->set($field->name(), $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
+		$self->set($field->baseName, $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
 	}
 	
 	$self->{npcs} = [];
@@ -129,7 +129,7 @@ sub updateGlue {
 
 	my $myPos = calcPosition($char);
 
-	$self->set($field->name(), $myPos->{x}, $myPos->{y}, $field, $char->{look});
+	$self->set($field->baseName, @{$myPos}{qw(x y)}, $field, $char->{look});
 	
 	my ($i, $args, $routeTask, $route);
 	$self->setRoute(
@@ -160,7 +160,7 @@ sub onMapClick {
 	for (
 		(map {[$_, $_->{pos}, $config{wx_map_npcSticking} || 1, "talk $_->{binID}"]} @{$self->{npcs}}),
 		(map {[$_, $_->{pos}, $config{wx_map_monsterSticking} || 1, "a $_->{binID}"]} @{$self->{monsters}}),
-		($self->{portals}{$field->name} ? map {[$_, {x=>$_->{x}, y=>$_->{y}}, $config{wx_map_portalSticking} || 5]} @{$self->{portals}{$field->name}} : ()),
+		($self->{portals}{$field->baseName} ? map {[$_, {x=>$_->{x}, y=>$_->{y}}, $config{wx_map_portalSticking} || 5]} @{$self->{portals}{$field->baseName}} : ()),
 	) {
 		my ($actor, $pos, $distance, $command) = @$_;
 		
@@ -207,8 +207,8 @@ sub onMapChange {
 sub set {
 	my ($self, $map, $x, $y, $field, $look) = @_;
 
-	$self->{field}{width} = $field->width() if ($field && $field->width());
-	$self->{field}{height} = $field->height() if ($field && $field->height());
+	$self->{field}{width} = $field->width if $field && $field->width;
+	$self->{field}{height} = $field->height if $field && $field->height;
 
 	if ($map && $map ne $self->{field}{name}) {
 		# Map changed
@@ -230,6 +230,12 @@ sub set {
 		$self->{field}{look} = $look;
 		$self->{needUpdate} = 1;
 	}
+}
+
+# DEPRECATED
+sub setDest {
+	my ($self, $x, $y) = @_;
+	$self->setRoute(defined $x ? [x => $x, y => $y] : undef);
 }
 
 sub setRoute {
@@ -561,7 +567,7 @@ sub _loadMapImage {
 		my $file = _f(File::Spec->tmpdir(), "map.xpm");
 		return unless (open(F, ">", $file));
 		binmode F;
-		print F Utils::xpmmake($field->width(), $field->height(), $field->{rawMap});
+		print F Utils::xpmmake($field->width, $field->height, $field->{rawMap});
 		close F;
 		my $bitmap = _loadImage($file, $self->{zoom});
 		unlink $file;
