@@ -22,7 +22,14 @@ use base qw(Network::Send::kRO::RagexeRE_2010_04_20a);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0825' => ['master_login', 'x2 V C Z24 x27 Z17 Z15 a32', [qw(version master_version username ip mac_hyphen_separated password)]], # not used by default
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	$self;
 }
 =pod
 //2010-06-01aRagexeRE
