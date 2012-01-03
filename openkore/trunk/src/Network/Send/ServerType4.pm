@@ -163,6 +163,36 @@ sub sendMapLogin {
 	$self->sendToServer($msg);
 }
 
+sub sendMasterLogin {
+	my ($self, $username, $password, $master_version, $version) = @_;
+	my $msg;
+
+	# This is used on the RuRO private server.
+	# A lot of packets are different so I gave up,
+	# but I'll keep this code around in case anyone ever needs it.
+
+	# I'm not sure if serverType 4 actually needs this whacko login
+
+	$username = substr($username, 0, 23) if (length($username) > 23);
+	$password = substr($password, 0, 23) if (length($password) > 23);
+
+	my $tmp = pack("C*", 0x0D, 0xF0, 0xAD, 0xBA) x 6;
+	substr($tmp, 0, length($username) + 1, $username . chr(0));
+	$username = $tmp;
+
+	$tmp = (pack("C*", 0x0D, 0xF0, 0xAD, 0xBA) x 3) .
+		pack("C*", 0x00, 0xD0, 0xC2, 0xCF, 0xA2, 0xF9, 0xCA, 0xDF, 0x0E, 0xA6, 0xF1, 0x41);
+	substr($tmp, 0, length($password) + 1, $password . chr(0));
+	$password = $tmp;
+
+	$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version) .
+		$username . $password .
+		pack("C*", $master_version);
+
+	$self->sendToServer($msg);
+	debug "Sent sendMasterLogin\n", "sendPacket", 2;
+}
+
 sub sendMove {
 	my $self = shift;
 	my $x = int scalar shift;

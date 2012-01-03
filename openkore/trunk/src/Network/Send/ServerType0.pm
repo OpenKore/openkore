@@ -78,7 +78,7 @@ sub new {
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 		'021D' => ['less_effect'], # TODO
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
-		'02B0' => ['master_login', 'V Z24 a24 C H32 H26 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
+		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
 		#'035F' => ['character_move'], # TODO
 		'0360' => ['sync', 'V', [qw(time)]],
 		'0361' => ['actor_look_at', 'v C', [qw(head body)]],

@@ -68,7 +68,7 @@ sub new {
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'01DB' => ['secure_login_key_request'], # len 2
-		'0204' => ['client_hash'], # TODO
+		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
