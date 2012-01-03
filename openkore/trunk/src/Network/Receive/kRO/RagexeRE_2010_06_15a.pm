@@ -22,7 +22,15 @@ use base qw(Network::Receive::kRO::RagexeRE_2010_06_08a);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'006A' => undef,
+		'083E' => ['login_error', 'V Z20', [qw(type unknown)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	$self;
 }
 =pod
 //2010-06-15aRagexeRE
