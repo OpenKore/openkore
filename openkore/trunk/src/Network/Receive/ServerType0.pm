@@ -505,6 +505,7 @@ sub new {
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
 		'082D' => ['received_characters', 'v C x2 C2 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]],
 		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
+		'083E' => ['login_error', 'V Z20', [qw(type unknown)]],
 		'084B' => ['item_appeared', 'a4 v2 C v2', [qw(ID nameID amount identified x y)]], # 19 TODO   provided by try71023
 		'0856' => ['actor_display', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
 		'0857' => ['actor_display', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
@@ -1242,13 +1243,7 @@ sub actor_display {
 	}
 
 	my (%coordsFrom, %coordsTo);
-	if ($args->{switch} eq "007B" ||
-		$args->{switch} eq "0086" ||
-		$args->{switch} eq "01DA" ||
-		$args->{switch} eq "022C" ||
-		$args->{switch} eq "02EC" ||
-		$args->{switch} eq "07F7" ||
-		$args->{switch} eq "0856") {
+	if (length $args->{coords} == 6) {
 		# Actor Moved
 		makeCoordsFromTo(\%coordsFrom, \%coordsTo, $args->{coords}); # body dir will be calculated using the vector
 	} else {

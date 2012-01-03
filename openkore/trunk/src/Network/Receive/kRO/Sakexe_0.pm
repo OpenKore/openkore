@@ -901,12 +901,7 @@ sub actor_display {
 	}
 
 	my (%coordsFrom, %coordsTo);
-	if ($args->{switch} eq "007B" ||
-		$args->{switch} eq "0086" ||
-		$args->{switch} eq "01DA" ||
-		$args->{switch} eq "022C" ||
-		$args->{switch} eq "02EC" ||
-		$args->{switch} eq "07F7") {
+	if (length $args->{coords} == 6) {
 		# Actor Moved
 		makeCoordsFromTo(\%coordsFrom, \%coordsTo, $args->{coords}); # body dir will be calculated using the vector
 	} else {
