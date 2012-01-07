@@ -2723,3 +2723,6 @@ lhz_in02 265 14 lhz_in02 269 82
 lhz_in02 282 79 lighthalzen 194 48
 
 xmas 139 307 evt_xmas 129 129 0 c r1
+
+prontera 272 108 s_atelier 13 119
+s_atelier 10 119 prontera 268 109
