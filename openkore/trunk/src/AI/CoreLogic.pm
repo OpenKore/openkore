@@ -1911,6 +1911,11 @@ sub processFollow {
 	# var/flag about follow should be moved to %ai_v
 
 	return if (!$config{follow});
+	# stop follow when talking with NPC
+	if (AI::action eq 'route' && defined(AI::args(0)->getSubtask())) {
+		my $rrr = AI::args(0)->getSubtask();
+		return if ($rrr->getName() eq 'TalkNPC');
+	}
 	if($config{'sitAuto_follow'} && (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'}) && $field->isCity) {
 	my $action = AI::action;
 		if($action eq "sitting" && !$char->{sitting} && $char->{skills}{NV_BASIC}{lv} >= 3){
