@@ -47,6 +47,7 @@ sub new {
 		'0072' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'007D' => ['map_loaded'], # len 2
 		'007E' => ['sync', 'V', [qw(time)]],
+		'0085' => ['move','a4', [qw(coordString)]],
 		'0089' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'0094' => ['actor_info_request', 'a4', [qw(ID)]],
@@ -79,7 +80,6 @@ sub new {
 		'021D' => ['less_effect'], # TODO
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
-		#'035F' => ['character_move'], # TODO
 		'0360' => ['sync', 'V', [qw(time)]],
 		'0361' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0362' => ['item_take', 'a4', [qw(ID)]],
@@ -89,6 +89,7 @@ sub new {
 		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0368' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0437' => ['move','a4', [qw(coordString)]],			
 		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
 		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
 		# not "buy", it sells items!
@@ -698,8 +699,12 @@ sub sendMemo {
 
 sub sendMove {
 	my ($self, $x, $y) = @_;
-	my $msg = pack("C*", 0x85, 0x00) . getCoordString(int $x, int $y);
-	$self->sendToServer($msg);
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'move',
+		coordString => getCoordString(int $x, int $y),
+	}));
+
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
