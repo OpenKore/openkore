@@ -63,7 +63,8 @@ sub process {
 		$client->close();
 		return;
 	}
-	print "Received query from client " . $client->getIndex() . "\n";
+	
+	print "[PoseidonServer]-> Received query from bot client " . $client->getIndex() . "\n";
 
 	my %request = (
 		packet => $args->{packet},
@@ -89,17 +90,27 @@ sub process {
 
 
 sub onClientNew {
-	my ($self, $client) = @_;
+	my ($self, $client, $index) = @_;
 	$client->{"$CLASS parser"} = new Bus::MessageParser();
+	print "[PoseidonServer]-> New Bot Client Connected : " . $client->getIndex() . "\n";
 }
 
-sub onClientData {
+sub onClientExit {
+	my ($self, $client, $index) = @_;
+	print "[PoseidonServer]-> Bot Client Disconnected : " . $client->getIndex() . "\n";
+}
+
+sub onClientData
+{
 	my ($self, $client, $msg) = @_;
 	my ($ID, $args);
 
 	my $parser = $client->{"$CLASS parser"};
+	
 	$parser->add($msg);
-	while ($args = $parser->readNext(\$ID)) {
+	
+	while ($args = $parser->readNext(\$ID))
+	{
 		$self->process($client, $ID, $args);
 	}
 }
@@ -112,7 +123,8 @@ sub iterate {
 	$server = $self->{"$CLASS server"};
 	$queue = $self->{"$CLASS queue"};
 
-	if ($server->getState() eq 'requested') {
+	if ($server->getState() eq 'requested') 
+	{
 		# Send the response to the client.
 		if (@{$queue} > 0 && $queue->[0]{client}) {
 			my ($data, %args);
@@ -121,12 +133,12 @@ sub iterate {
 			$data = serialize("Poseidon Reply", \%args);
 			$queue->[0]{client}->send($data);
 			$queue->[0]{client}->close();
-			print "Sent result to client " . $queue->[0]{client}->getIndex() . "\n";
+			print "[PoseidonServer]-> Sent result to client : " . $queue->[0]{client}->getIndex() . "\n";
 		}
 		shift @{$queue};
 
 	} elsif (@{$queue} > 0 && $server->getState() eq 'ready') {
-		print "Querying Ragnarok Online client.\n";
+		print "[PoseidonServer]-> Querying Ragnarok Online client [" . time . "]...\n";
 		$server->query($queue->[0]{packet});
 	}
 }

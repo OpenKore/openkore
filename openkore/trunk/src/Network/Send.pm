@@ -29,7 +29,7 @@ use encoding 'utf8';
 use Carp::Assert;
 use Digest::MD5;
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync);
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync @lastpm %lastpm @privMsgUsers);
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount);
 use Misc;
@@ -248,7 +248,7 @@ sub sendToServer {
 	# encrypt(\$msg, $msg);
 
 	# Packet Prefix Encryption Support
-	$self->encryptMessageID(\$msg);
+	$self->encryptMessageID(\$msg, unpack("v", $msg));
 
 	$net->serverSend($msg);
 	$bytesSent += length($msg);
@@ -432,6 +432,10 @@ sub sendMapLogin {
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
 
+# Small Necessary Control
+my $cl_players = {};
+my $cl_timer = 0;
+
 sub sendMapLoaded {
 	my $self = shift;
 	$syncSync = pack("V", getTickCount());
@@ -507,13 +511,24 @@ sub reconstruct_private_message {
 	$args->{privMsgUser} = stringToBytes($args->{privMsgUser});
 }
 
-sub sendPrivateMsg {
+sub sendPrivateMsg
+{
 	my ($self, $user, $message) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'private_message',
-		privMsg => $message,
-		privMsgUser => $user,
-	}));
+
+	if ( !$cl_players->{$user} ) { $cl_players->{$user} = 0; }
+	my $size =  keys(%$cl_players);
+	if ( $size > (3+3) && $cl_timer == 0 ) { $cl_timer = time; }
+	if ( $cl_timer != 0 && (time - $cl_timer) > (30+30) ) { $cl_timer = 0; $cl_players = {}; }
+
+	if ( $cl_timer == 0 ) 
+	{
+		$self->sendToServer($self->reconstruct({
+			switch => 'private_message',
+			privMsg => $message,
+			privMsgUser => $user,
+		}));	
+	}
+	else { shift @lastpm; }
 }
 
 sub sendLook {
@@ -713,6 +728,18 @@ sub sendFriendListReply {
 		type => $flag,
 	}));
 	debug "Sent Reject friend request\n", "sendPacket";
+}
+
+sub sendReplySyncRequestEx 
+{
+	my ($self, $SyncID) = @_;
+	# Packing New Message and Dispatching
+	my $pid = sprintf("%04X", $SyncID);
+	$self->sendToServer(pack("C C", hex(substr($pid, 2, 2)), hex(substr($pid, 0, 2))));
+	# Debug Log
+	# print "Dispatching Sync Ex Reply : 0x" . $pid . "\n";		
+	# Debug Log
+	debug "Sent Reply Sync Request Ex\n", "sendPacket", 2;
 }
 
 1;

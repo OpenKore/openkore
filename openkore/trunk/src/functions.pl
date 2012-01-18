@@ -721,7 +721,7 @@ sub mainLoop_initialized {
 		my $result = Poseidon::Client::getInstance()->getResult();
 		if (defined($result)) {
 			debug "Received Poseidon result.\n", "poseidon";
-			$messageSender->encryptMessageID(\$result);
+			$messageSender->encryptMessageID(\$result, unpack("v", $result));
 			$net->serverSend($result);
 		}
 	}

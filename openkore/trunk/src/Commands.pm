@@ -3745,18 +3745,18 @@ sub cmdPrivateMessage {
 			error T("Error in function 'pm' (Private Message)\n" .
 				"You have not pm-ed anyone before\n");
 		} else {
-			sendMessage($messageSender, "pm", $msg, $privMsgUsers[$user - 1]);
 			$lastpm{msg} = $msg;
 			$lastpm{user} = $privMsgUsers[$user - 1];
+			sendMessage($messageSender, "pm", $msg, $privMsgUsers[$user - 1]);
 		}
 
 	} else {
 		if (!defined binFind(\@privMsgUsers, $user)) {
 			push @privMsgUsers, $user;
 		}
-		sendMessage($messageSender, "pm", $msg, $user);
 		$lastpm{msg} = $msg;
 		$lastpm{user} = $user;
+		sendMessage($messageSender, "pm", $msg, $user);
 	}
 }
 

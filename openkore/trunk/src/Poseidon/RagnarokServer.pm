@@ -26,8 +26,15 @@ use base qw(Base::Server);
 use Misc;
 use Utils qw(binSize getCoordString timeOut getHex getTickCount);
 use Poseidon::Config;
+use Math::BigInt;
 
 my %clientdata;
+
+# Decryption Keys
+my $enc_val1 = 0;
+my $enc_val2 = 0;
+my $enc_val3 = 0;
+my $state    = 0;
 
 sub new {
 	my ($class, @args) = @_;
@@ -59,7 +66,8 @@ sub new {
 # Ensure: $self->getState() eq 'requesting'
 #
 # Send a GameGuard query to the RO client.
-sub query {
+sub query 
+{
 	my ($self, $packet) = @_;
 	my $clients = $self->clients();
 
@@ -72,7 +80,8 @@ sub query {
 			}
 		}
 	}
-	print "Error: no Ragnarok Online client connected.\n";
+	
+	print "[RagnarokServer]-> Error: no Ragnarok Online client connected.\n";
 }
 
 ##
@@ -113,18 +122,30 @@ sub readResponse {
 
 #####################################################
 
-
-sub onClientNew {
+sub onClientNew 
+{
 	my ($self, $client, $index) = @_;
-	print "Ragnarok Online client ($index) connected.\n";
+
+	if ( $state == 0 )
+	{
+		# Initialize Decryption
+		$enc_val1 = 0;
+		$enc_val2 = 0;
+		$enc_val3 = 0;
+	} else { $state = 0; }
+	
 	$self->{challengeNum} = 0;
-	$self->{state} = 'ready';
+	
+	print "[RagnarokServer]-> Ragnarok Online client ($index) connected.\n";	
 }
 
-sub onClientExit {
+sub onClientExit 
+{
 	my ($self, $client, $index) = @_;
+	
 	$self->{challengeNum} = 0;
-	print "Ragnarok Online client ($index) disconnected.\n";
+	
+	print "[RagnarokServer]-> Ragnarok Online client ($index) disconnected.\n";
 }
 
 ## constants
@@ -140,20 +161,54 @@ my $npcID1 = pack("a4", "npc1");
 my $npcID0 = pack("a4", "npc2");
 my $monsterID = pack("a4", "mon1");
 my $itemID = pack("a4", "itm1");
+
+sub DecryptMessageID 
+{
+	my ($MID) = @_;
 	
+	# Checking if Decryption is Activated
+	if ($enc_val1 != 0 && $enc_val2 != 0 && $enc_val3 != 0) 
+	{
+		# Saving Last Informations for Debug Log
+		my $oldMID = $MID;
+		my $oldKey = ($enc_val1 >> 16) & 0x7FFF;
+		
+		# Calculating the Next Decryption Key
+		$enc_val1 = $enc_val1->bmul($enc_val3)->badd($enc_val2) & 0xFFFFFFFF;
+	
+		# Xoring the Message ID [657BE2h] [0x6E0A]
+		$MID = ($MID ^ (($enc_val1 >> 16) & 0x7FFF)) & 0xFFFF;
+
+		# Debug Log
+		# print sprintf("Decrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $MID, $oldKey, ($enc_val1 >> 16) & 0x7FFF);
+	}
+	
+	return $MID;
+}
+
 sub onClientData {
 	my ($self, $client, $msg, $index) = @_;
 
+	my $packet_id = DecryptMessageID(unpack("v",$msg));
+	my $switch = sprintf("%04X", $packet_id);
+	
+	# Parsing Packet
+	ParsePacket($self, $client, $msg, $index, $packet_id, $switch);
+}
+
+sub ParsePacket
+{
+	my ($self, $client, $msg, $index, $packet_id, $switch) = @_;
+
+	#my $packed_switch = quotemeta substr($msg, 0, 2);
+	my $packed_switch = $packet_id;
+	
 	### These variables control the account information ###
 	my $host = $self->getHost();
 	my $port = pack("v", $self->getPort());
 	$host = '127.0.0.1' if ($host eq 'localhost');
-	my @ipElements = split /\./, $host;
-	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	my $packed_switch = quotemeta substr($msg, 0, 2);
+	my @ipElements = split /\./, $host;	
 	
-	# print $switch . "\n";
-
 	# Note:
 	# The switch packets are pRO specific and assumes the use of secureLogin 1. It may or may not work with other
 	# countries' clients (except probably oRO). The best way to support other clients would be: use a barebones
@@ -251,13 +306,36 @@ sub onClientData {
 
 	} elsif ($switch eq '0066') { # client sends character choice packet
 
+		# If Using Packet Encrypted Client
+		if ( $config{PacketIDEncryption} )
+		{
+			# Enable Decryption
+			$enc_val1 = Math::BigInt->new('0x6FEE49EE');
+			$enc_val2 = Math::BigInt->new('0x9EE09EE');
+			$enc_val3 = Math::BigInt->new('0x9EE09EE');
+		}
+		
+		# State
+		$state = 1;
+
 		$clientdata{$index}{mode} = unpack('C1', substr($msg, 2, 1));
 
 		# '0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
 		my $mapName = pack("a16", "new_1-1.gat");
 		my $data = pack("C*", 0x71, 0x00) . $charID . $mapName . 
 			pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) . $port;
+		
 		$client->send($data);
+	} elsif ($switch eq '022D' &&
+		(length($msg) == 19) &&
+		(substr($msg, 2, 4) eq $accountID) &&
+		(substr($msg, 6, 4) eq $charID) &&
+		(substr($msg, 10, 4) eq $sessionID)
+		) { # client sends the maplogin packet
+
+		SendMapLogin($self, $client, $msg, $index);
+		# save servers.txt info
+		$clientdata{$index}{serverType} = 0;
 
 	} elsif ($switch eq '0072' &&
 		(length($msg) == 19) &&
@@ -419,9 +497,21 @@ sub onClientData {
 	} elsif ($switch eq '007D') { # client sends the map loaded packet
 		my $data;
 
+		# Temporary Hack to Initialized Crypted Client
+		if ( $config{PacketIDEncryption} )
+		{
+			for ( my $i = 0 ; $i < 64 ; $i++ ) 
+			{
+				$client->send(pack("C C", 0x70, 0x08));
+				
+				# Forcedly Calculating the Next Decryption Key
+				$enc_val1 = $enc_val1->bmul($enc_val3)->badd($enc_val2) & 0xFFFFFFFF;	
+			}
+		}		
+		
 		PerformMapLoadedTasks($self, $client, $msg, $index);
 	} elsif (
-		(($switch eq '007E') && (($clientdata{$index}{serverType} == 0) || ($clientdata{$index}{serverType} == 1) || ($clientdata{$index}{serverType} == 2) || ($clientdata{$index}{serverType} == 6) || ($clientdata{$index}{serverType} == 7) || ($clientdata{$index}{serverType} == 10) || ($clientdata{$index}{serverType} == 11))) ||
+		( ( ($switch eq '007E') || ($switch eq '035F') ) && (($clientdata{$index}{serverType} == 0) || ($clientdata{$index}{serverType} == 1) || ($clientdata{$index}{serverType} == 2) || ($clientdata{$index}{serverType} == 6) || ($clientdata{$index}{serverType} == 7) || ($clientdata{$index}{serverType} == 10) || ($clientdata{$index}{serverType} == 11))) ||
 		(($switch eq '0089') && (($clientdata{$index}{serverType} == 3) || ($clientdata{$index}{serverType} == 5) || ($clientdata{$index}{serverType} == 8) || ($clientdata{$index}{serverType} == 9))) ||
 		(($switch eq '0116') && ($clientdata{$index}{serverType} == 4)) ||
 		(($switch eq '00A7') && ($clientdata{$index}{serverType} == 12))
@@ -432,13 +522,18 @@ sub onClientData {
 		### Check if packet 0228 got tangled up with the sync packet
 		if (uc(unpack("H2", substr($msg, 7, 1))) . uc(unpack("H2", substr($msg, 6, 1))) eq '0228') {
 			# queue the response (thanks abt123)
-			$self->{response} = substr($msg, 6, length($msg));
+			$self->{response} = pack("v", $packet_id) . substr($msg, 8, length($msg)-2);
 			$self->{state} = 'requested';
 		}
 
 	} elsif ($switch eq '00B2') { # quit to character select screen
 			
-			SendGoToCharSelection($self, $client, $msg, $index);
+		SendGoToCharSelection($self, $client, $msg, $index);
+			
+		# Disable Decryption
+		$enc_val1 = 0;
+		$enc_val2 = 0;
+		$enc_val3 = 0;			
 			
 	} elsif ($switch eq '0187') { # accountid sync (what does this do anyway?)
 		$client->send($msg);
@@ -452,9 +547,9 @@ sub onClientData {
 		# Don't allow other packet's (like Sync) to get to RO server.
 		my $length = unpack("v",substr($msg,2,2));
 		if ($length > 0) {
-			$self->{response} = substr($msg,0,$length+2);
+			$self->{response} = pack("v", $packet_id) . substr($msg,2,$length);
 		} else {
-			$self->{response} = $msg;
+			$self->{response} = pack("v", $packet_id);
 		};
 		$self->{state} = 'requested';
 	
@@ -780,8 +875,10 @@ sub SendMapLogin {
 			pack("v2 x2 v3 a24 C1", 27, 2, 4, 26, 9, "AL_WARP", 0) . # location skill test
 			pack("v2 x2 v3 a24 C1", 28, 16, 10, 40, 9, "AL_HEAL", 0); # target skill test
 	}
+	
 	$client->send($data);
-	$client->{connectedToMap} = 1;
+	
+	$client->{connectedToMap} = 1;	
 }
 
 sub SendGoToCharSelection

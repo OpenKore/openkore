@@ -2230,12 +2230,12 @@ sub sendMessage_send {
 	} elsif ($type eq "bg") {
 		$sender->sendBattlegroundChat($msg);
 	} elsif ($type eq "pm") {
-		$sender->sendPrivateMsg($user, $msg);
 		%lastpm = (
 			msg => $msg,
 			user => $user
 		);
 		push @lastpm, {%lastpm};
+		$sender->sendPrivateMsg($user, $msg);
 	} elsif ($type eq "k") {
 		$sender->injectMessage($msg);
 	}

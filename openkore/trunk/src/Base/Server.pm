@@ -97,7 +97,7 @@ sub new {
 	my %self;
 
 	$self{BS_server} = IO::Socket::INET->new(
-		Listen		=> 5,
+		Listen		=> 250,
 		LocalAddr	=> $bind,
 		LocalPort	=> $port,
 		Proto		=> 'tcp',
@@ -267,7 +267,10 @@ sub _newClient {
 	my $fd = fileno($sock);
 	my $host = $sock->peerhost if ($sock->can('peerhost'));
 	my $client = new Base::Server::Client($sock, $host, $fd);
-	my $index = $self->{BS_clients}->add($client);
+	# The result of Add Function always Gives 0 Index ? So using $FD as Index for Now...
+	$self->{BS_clients}->add($client);
+	my $index = $fd;
+	#print(sprintf("New Index : %d\n",$index));
 	$client->setIndex($index);
 	$self->onClientNew($client, $index);
 }
