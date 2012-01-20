@@ -12,34 +12,34 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0281' => ['actor_look_at', 'v C', [qw(head body)]],		
+		'0202' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],		
+		'023B' => ['move','a4', [qw(coordString)]],		
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
-		'035F' => ['sync', 'V', [qw(time)]],
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],		
-		'0437' => ['move','a4', [qw(coordString)]],
-		'07E4' => ['item_take', 'a4', [qw(ID)]],
-		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],		
 		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
-		'0817' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],		
-		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],		
+		'0811' => ['actor_action', 'a4 C', [qw(targetID type)]],		
+		'088D' => ['item_take', 'a4', [qw(ID)]],		
+		'089E' => ['actor_look_at', 'v C', [qw(head body)]],				
+		'08A2' => ['item_drop', 'v2', [qw(index amount)]],		
+		'08A5' => ['actor_info_request', 'a4', [qw(ID)]],		
+		'08A6' => ['storage_item_add', 'v V', [qw(index amount)]],				
+		'08AB' => ['sync', 'V', [qw(time)]],		
+		'08AD' => ['storage_item_remove', 'v V', [qw(index amount)]],		
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
 	
 	my %handlers = qw(
-		actor_look_at 0281		
+		map_login 0202
+		move 023B		
 		master_login 02B0		
-		sync 035F
-		item_drop 0362
-		storage_item_remove 0364
-		actor_action 0369
-		move 0437
-		item_take 07E4		
-		storage_item_add 07EC
 		buy_bulk_vender 0801
-		map_login 0817		
-		actor_info_request 08AD
+		actor_action 0811		
+		item_take 088D		
+		actor_look_at 089E		
+		item_drop 08A2		
+		actor_info_request 08A5
+		storage_item_add 08A6		
+		sync 08AB		
+		storage_item_remove 08AD		
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
@@ -88,9 +88,9 @@ sub sendMapLogin
 	# Initializing the Encryption Keys
 	if ( $map_login == 0 )
 	{
-		$enc_val1 = Math::BigInt->new('0x4C20526F');
-		$enc_val2 = Math::BigInt->new('0x5ECB2473');
-		$enc_val3 = Math::BigInt->new('0x22B41D5');
+		$enc_val1 = Math::BigInt->new('0xD816E03');
+		$enc_val2 = Math::BigInt->new('0x0A154007');
+		$enc_val3 = Math::BigInt->new('0x6E044F42');
 		$map_login = 1;
 	}
 
@@ -117,9 +117,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("C C v", 0x85, 0x08, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("C C v", 0x8E, 0x08, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("C C v", 0x85, 0x08, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("C C v", 0x8E, 0x08, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
