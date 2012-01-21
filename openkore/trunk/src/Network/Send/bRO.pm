@@ -149,4 +149,11 @@ sub sendHomunculusMove
 	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
 }
 
+sub sendHomunculusCommand {
+	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0:get stats, 1:feed or 2:fire
+	my $msg = pack ('v2 C', 0x08A4, $type, $command);
+	$self->sendToServer($msg);
+	debug "Sent Homunculus Command $command", "sendPacket", 2;
+}
+
 1;
