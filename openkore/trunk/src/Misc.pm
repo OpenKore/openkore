@@ -1176,6 +1176,11 @@ sub charSelectScreen {
 		push @choices, T('Delete a character');
 	} else {
 		message T("There are no characters on this account.\n"), "connection";
+      if ($config{char} ne "switch" && defined($char)) {
+         message T("Please use the : \"conf char switch\" command, if you are switching your account.\n"), "connection";
+         relog(10);
+         return 0;
+      }		
 	}
 	
 	my $choice = $interface->showMenu(

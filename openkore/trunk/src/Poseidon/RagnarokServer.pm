@@ -151,7 +151,7 @@ sub onClientExit
 ## constants
 my $accountID = pack("a4", "acct");
 my $posX = 53;
-my $posY = 111;
+my $posY = 113;
 
 ## Globals
 my $charID = pack("a4", "char");
@@ -321,7 +321,7 @@ sub ParsePacket
 		$clientdata{$index}{mode} = unpack('C1', substr($msg, 2, 1));
 
 		# '0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
-		my $mapName = pack("a16", "new_1-1.gat");
+		my $mapName = pack("a16", "moc_prydb1.gat");
 		my $data = pack("C*", 0x71, 0x00) . $charID . $mapName . 
 			pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) . $port;
 		
