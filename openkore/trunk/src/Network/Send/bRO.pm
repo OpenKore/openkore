@@ -12,34 +12,42 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0202' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],		
-		'023B' => ['move','a4', [qw(coordString)]],		
-		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
-		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
-		'0811' => ['actor_action', 'a4 C', [qw(targetID type)]],		
-		'088D' => ['item_take', 'a4', [qw(ID)]],		
-		'089E' => ['actor_look_at', 'v C', [qw(head body)]],				
-		'08A2' => ['item_drop', 'v2', [qw(index amount)]],		
-		'08A5' => ['actor_info_request', 'a4', [qw(ID)]],		
-		'08A6' => ['storage_item_add', 'v V', [qw(index amount)]],				
-		'08AB' => ['sync', 'V', [qw(time)]],		
-		'08AD' => ['storage_item_remove', 'v V', [qw(index amount)]],		
+		'0232' => ['homunculus_move','a4 a4', [qw(homumID coordString)]],	
+		'023B' => ['item_drop', 'v2', [qw(index amount)]],				
+		'0281' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
+		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],		
+		'02C4' => ['storage_item_add', 'v V', [qw(index amount)]],		
+		'0368' => ['actor_look_at', 'v C', [qw(head body)]],					
+		'0811' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],		
+		'0835' => ['actor_info_request', 'a4', [qw(ID)]],		
+		'0885' => ['move','a4', [qw(coordString)]],		
+		'0886' => ['item_take', 'a4', [qw(ID)]],				
+		'0889' => ['storage_item_remove', 'v V', [qw(index amount)]],	
+		'0890' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0898' => ['party_join_request_by_name', 'a24', [qw(partyName)]],
+		'089A' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],	
+		'08A0' => ['actor_action', 'a4 C', [qw(targetID type)]],				
+		'08AD' => ['sync', 'V', [qw(time)]],		
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
 	
 	my %handlers = qw(
-		map_login 0202
-		move 023B		
-		master_login 02B0		
-		buy_bulk_vender 0801
-		actor_action 0811		
-		item_take 088D		
-		actor_look_at 089E		
-		item_drop 08A2		
-		actor_info_request 08A5
-		storage_item_add 08A6		
-		sync 08AB		
-		storage_item_remove 08AD		
+		homunculus_move 0232
+		item_drop 023B
+		buy_bulk_vender 0281
+		master_login 02B0	
+		storage_item_add 02C4		
+		actor_look_at 0368				
+		map_login 0811
+		actor_info_request 0835		
+		move 0885		
+		item_take 0886
+		storage_item_remove 0889
+		homunculus_command 0890
+		party_join_request_by_name 0898
+		skill_use_location 089A
+		actor_action 08A0				
+		sync 08AD
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
@@ -88,9 +96,9 @@ sub sendMapLogin
 	# Initializing the Encryption Keys
 	if ( $map_login == 0 )
 	{
-		$enc_val1 = Math::BigInt->new('0xD816E03');
-		$enc_val2 = Math::BigInt->new('0x0A154007');
-		$enc_val3 = Math::BigInt->new('0x6E044F42');
+		$enc_val1 = Math::BigInt->new('0x6F16311C');
+		$enc_val2 = Math::BigInt->new('0x131956BA');
+		$enc_val3 = Math::BigInt->new('0x696C2227');
 		$map_login = 1;
 	}
 
@@ -117,9 +125,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("C C v", 0x8E, 0x08, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x802, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("C C v", 0x8E, 0x08, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x802, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
@@ -140,20 +148,40 @@ sub sendMove
 
 sub sendHomunculusMove 
 {
-	my $self = shift;
-	my $homunID = shift;
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-	my $msg = pack("C*", 0x32, 0x02) . $homunID . getCoordString($x, $y, 1);
-	$self->sendToServer($msg);
-	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
+	my ($self, $homunID, $x, $y) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'homunculus_move',
+		homumID => $homunID,
+		coordString => getCoordString(int $x, int $y, 1),
+	}));
+
+	debug "Sent Homunculus Move to: $x, $y\n", "sendPacket", 2;
 }
 
-sub sendHomunculusCommand {
+sub sendHomunculusCommand 
+{
 	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0:get stats, 1:feed or 2:fire
-	my $msg = pack ('v2 C', 0x08A4, $type, $command);
-	$self->sendToServer($msg);
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'homunculus_command',
+		commandType => $type,
+		commandID => $command,
+	}));	
+	
 	debug "Sent Homunculus Command $command", "sendPacket", 2;
+}
+
+sub sendPartyJoinRequestByName 
+{
+	my ($self, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_join_request_by_name',
+		partyName => _binName($name),
+	}));	
+	
+	debug "Sent Request Join Party (by name): $name\n", "sendPacket", 2;
 }
 
 1;
