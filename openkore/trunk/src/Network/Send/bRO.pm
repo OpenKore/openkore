@@ -12,42 +12,42 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0232' => ['homunculus_move','a4 a4', [qw(homumID coordString)]],	
+		'0202' => ['actor_look_at', 'v C', [qw(head body)]],							
+		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],		
+		'0232' => ['homunculus_move','a4 a4', [qw(homumID coordString)]],			
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],		
-		'02C4' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0365' => ['actor_info_request', 'a4', [qw(ID)]],				
-		'0367' => ['move','a4', [qw(coordString)]],	
-		'0438' => ['sync', 'V', [qw(time)]],		
-		'07E4' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],			
-		'0802' => ['storage_item_add', 'v V', [qw(index amount)]],				
-		'0817' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],		
-		'0894' => ['item_drop', 'v2', [qw(index amount)]],						
-		'088A' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'088D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],		
-		'088E' => ['item_take', 'a4', [qw(ID)]],						
-		'0889' => ['actor_look_at', 'v C', [qw(head body)]],							
-		'0891' => ['storage_item_remove', 'v V', [qw(index amount)]],					
-		'08A6' => ['party_join_request_by_name', 'a24', [qw(partyName)]],		
+		'035F' => ['sync', 'V', [qw(time)]],		
+		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],				
+		'0362' => ['item_drop', 'v2', [qw(index amount)]],								
+		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],							
+		'0368' => ['actor_action', 'a4 C', [qw(targetID type)]],		
+		'0437' => ['move','a4', [qw(coordString)]],			
+		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],					
+		'07E4' => ['item_take', 'a4', [qw(ID)]],
+		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],				
+		'0802' => ['party_join_request_by_name', 'a24', [qw(partyName)]],				
+		'0811' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],				
+		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],						
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
 	
 	my %handlers = qw(
-		homunculus_move 0232
-		master_login 02B0	
-		map_login 02C4
-		actor_info_request 0365		
-		move 0367
-		sync 0438
-		skill_use_location 07E4		
-		storage_item_add 0802		
-		buy_bulk_vender 0817
-		actor_look_at 0889						
-		actor_action 088A
-		homunculus_command 088D
-		item_take 088E		
-		storage_item_remove 0891		
-		item_drop 0894				
-		party_join_request_by_name 08A6		
+		actor_look_at 0202	
+		map_login 022D
+		homunculus_move 0232		
+		master_login 02B0		
+		sync 035F		
+		homunculus_command 0361		
+		item_drop 0362
+		storage_item_remove 0364
+		actor_action 0368
+		move 0437		
+		skill_use_location 0438		
+		item_take 07E4
+		storage_item_add 07EC
+		party_join_request_by_name 0802			
+		buy_bulk_vender 0811		
+		actor_info_request 08AD		
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
@@ -96,9 +96,9 @@ sub sendMapLogin
 	# Initializing the Encryption Keys
 	if ( $map_login == 0 )
 	{
-		$enc_val1 = Math::BigInt->new('0x7B12307F');
-		$enc_val2 = Math::BigInt->new('0x24995ABB');
-		$enc_val3 = Math::BigInt->new('0x722175D5');
+		$enc_val1 = Math::BigInt->new('0x6FEE49EE');
+		$enc_val2 = Math::BigInt->new('0x9EE09EE');
+		$enc_val3 = Math::BigInt->new('0x9EE09EE');
 		$map_login = 1;
 	}
 
@@ -125,9 +125,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x23B, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x369, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x23B, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x369, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
