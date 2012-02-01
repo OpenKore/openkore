@@ -29,6 +29,7 @@ our %amSingle = (
 	'notMonster' => 1,   # check: disallow monsters other than ~
 	'pm' => 1,           # check: private message
 	'pubm' => 1,         # check: public chat
+	'system' => 1,       # check: system chat
 	'guild' => 1,        # check: guild chat
 	'party' => 1,        # check: party chat
 	'console' => 1,      # check: console message

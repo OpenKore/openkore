@@ -2945,9 +2945,11 @@ sub useTeleport {
 	if ($use_lvl == 1) {
 		#$item = $char->inventory->getByName("Fly Wing");
 		$item = $char->inventory->getByNameID(601);
+		unless ($item) { $item = $char->inventory->getByNameID(12323); } # only if we don't have any fly wing
 	} elsif ($use_lvl == 2) {
 		#$item = $char->inventory->getByName("Butterfly Wing");
 		$item = $char->inventory->getByNameID(602);
+		unless ($item) { $item = $char->inventory->getByNameID(12324); } # only if we don't have any butterfly wing
 	}
 
 	if ($item) {

@@ -3955,7 +3955,12 @@ sub hp_sp_changed {
 sub local_broadcast {
 	my ($self, $args) = @_;
 	my $message = bytesToString($args->{message});
+	stripLanguageCode(\$message);
+	chatLog("lb", "$message\n");# if ($config{logLocalBroadcast});
 	message "$message\n", "schat";
+	Plugins::callHook('packet_localBroadcast', {
+		Msg => $message
+	});
 }
 
 sub login_error {
@@ -6658,6 +6663,9 @@ sub system_chat {
 		$message = bytesToString(substr($args->{message},34));
 	}
 	$message =~ s/\000//g; # remove null charachters
+	$message =~ s/^(tool[0-9a-fA-F]{6})//g; # remove those annoying toolDDDDDD from bRO (and maybe some other server?)
+	$message =~ s/^ssss//g; # remove those annoying ssss from bRO (and maybe some other server?)
+	$message =~ s/^ +//g; $message =~ s/ +$//g; # remove whitespace in the beginning and the end of $message
 	stripLanguageCode(\$message);
 	chatLog("s", "$message\n") if ($config{logSystemChat});
 	# Translation Comment: System/GM chat

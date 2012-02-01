@@ -20,13 +20,13 @@ sub new {
 		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],				
 		'0362' => ['item_drop', 'v2', [qw(index amount)]],								
 		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],							
-		'0368' => ['actor_action', 'a4 C', [qw(targetID type)]],		
+		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],		
 		'0437' => ['move','a4', [qw(coordString)]],			
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],					
 		'07E4' => ['item_take', 'a4', [qw(ID)]],
 		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],				
+		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
 		'0802' => ['party_join_request_by_name', 'a24', [qw(partyName)]],				
-		'0811' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],				
 		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],						
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
@@ -40,13 +40,13 @@ sub new {
 		homunculus_command 0361		
 		item_drop 0362
 		storage_item_remove 0364
-		actor_action 0368
+		actor_action 0369
 		move 0437		
 		skill_use_location 0438		
 		item_take 07E4
 		storage_item_add 07EC
+		buy_bulk_vender 0801		
 		party_join_request_by_name 0802			
-		buy_bulk_vender 0811		
 		actor_info_request 08AD		
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -96,9 +96,9 @@ sub sendMapLogin
 	# Initializing the Encryption Keys
 	if ( $map_login == 0 )
 	{
-		$enc_val1 = Math::BigInt->new('0x6FEE49EE');
-		$enc_val2 = Math::BigInt->new('0x9EE09EE');
-		$enc_val3 = Math::BigInt->new('0x9EE09EE');
+		$enc_val1 = Math::BigInt->new('0x64E81B58');
+		$enc_val2 = Math::BigInt->new('0x20582058');
+		$enc_val3 = Math::BigInt->new('0x30582058');
 		$map_login = 1;
 	}
 
@@ -125,9 +125,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x369, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x8A2, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x369, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x8A2, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}

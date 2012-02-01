@@ -457,10 +457,10 @@ sub checkMsg {
 			}
 		}
 		return 0 unless $auth
-	} else {
-		$msg = $tmp
+	} elsif ($var eq '.lastsys') {
+		($msg) = $tmp =~ /^([\/"].*?[\/"]\w*)\s*,?\s*(.*)/;
+		chomp($msg);
 	}
-
 	$arg->{Msg} =~ s/[\r\n]*$//g;
 	if (match($arg->{Msg},$msg)){
 		$varStack{$var} = $arg->{MsgUser};
@@ -741,6 +741,10 @@ sub automacroCheck {
 		} elsif (defined $automacro{$am}->{pubm}) {
 			if ($trigger eq 'packet_pubMsg') {
 			next CHKAM unless checkMsg(".lastpub", $automacro{$am}->{pubm}, $args)
+			} else {next CHKAM}
+		} elsif (defined $automacro{$am}->{system}) {
+			if ($trigger eq 'packet_sysMsg') {
+			next CHKAM unless checkMsg(".lastsys", $automacro{$am}->{system}, $args)
 			} else {next CHKAM}
 		} elsif (defined $automacro{$am}->{party}) {
 			if ($trigger eq 'packet_partyMsg') {
