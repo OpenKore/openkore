@@ -1450,7 +1450,7 @@ sub cmdDrop {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^([\d,-]+)/;
 	my ($arg2) = $args =~ /^[\d,-]+ (\d+)$/;
-	if ($arg1 eq "") {
+	if (($arg1 eq "") or ($arg1 < 0)) {
 		error T("Syntax Error in function 'drop' (Drop Inventory Item)\n" .	
 			"Usage: drop <item #> [<amount>]\n");
 	} else {
