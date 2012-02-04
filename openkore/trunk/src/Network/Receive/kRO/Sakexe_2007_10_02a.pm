@@ -11,7 +11,6 @@
 #
 #  $Revision: 7841 $
 #  $Id: kRO.pm 6687 2009-04-19 19:04:25Z technologyguild $
-#  Edit by ya4epT SVN7841 2011-10-03 00:20
 ########################################################################
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
@@ -21,13 +20,13 @@ package Network::Receive::kRO::Sakexe_2007_10_02a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2007_05_07a);
 
+use Globals qw(%config);
+use I18N qw(bytesToString);
 use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
+use Misc qw(stripLanguageCode chatLog);
+
 
 # TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw(%config);
-use Misc qw(stripLanguageCode chatLog);
-use I18N qw(bytesToString);
 
 sub new {
 	my ($class) = @_;
@@ -56,7 +55,7 @@ sub new {
 		# 0x02bc,6
 		# 0x02bf,10
 		# 0x02c0,2
-		'02C1' => ['main_chat', 'v a8 a*', [qw(len unknown message)]], # -1
+		'02C1' => ['main_chat', 'v a4 a4 a*', [qw(len accountID color message)]], # -1
 		# 0x02c2,-1
 
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]], # 30
