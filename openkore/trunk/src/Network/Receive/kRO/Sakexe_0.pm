@@ -598,7 +598,8 @@ sub account_id {
 	my ($self, $args) = @_;
 	# the account ID is already unpacked into PLAIN TEXT when it gets to this function...
 	# So lets not fuckup the $accountID since we need that later... someone will prolly have to fix this later on
-	#$accountID = $args->{accountID};
+	my $accountID = $args->{accountID};
+	debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
 }
 
 sub account_payment_info {
