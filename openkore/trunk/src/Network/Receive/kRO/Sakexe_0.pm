@@ -2977,7 +2977,7 @@ sub guild_chat {
 	return unless changeToInGameState();
 
 	$chat = bytesToString($args->{message});
-	if (($chatMsgUser, $chatMsg) = $chat =~ /(.*?) : (.*)/) {
+	if (($chatMsgUser, $chatMsg) = $chat =~ /(.*?)\s?: (.*)/) {
 		$chatMsgUser =~ s/ $//;
 		stripLanguageCode(\$chatMsg);
 		$chat = "$chatMsgUser : $chatMsg";

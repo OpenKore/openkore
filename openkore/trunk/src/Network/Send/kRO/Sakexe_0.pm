@@ -48,12 +48,14 @@ sub new {
 		'0085' => ['character_move', 'a3', [qw(coords)]],
 		'0089' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
+		'0090' => ['sendTalk'], # TODO
 		'0094' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
 		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'009F' => ['item_take', 'a4', [qw(ID)]],
 		'00A2' => ['item_drop', 'v2', [qw(index amount)]],
 		'00B2' => ['restart', 'C', [qw(type)]],
+		'00B6' => ['sendTalkResponse'], # TODO
 		'00F3' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
@@ -62,6 +64,7 @@ sub new {
 		'0149' => ['alignment'], # TODO
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
+		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check'], # TODO
 		'018A' => ['quit_request', 'v', [qw(type)]],
