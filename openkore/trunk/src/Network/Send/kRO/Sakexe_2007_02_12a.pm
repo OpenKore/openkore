@@ -36,6 +36,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0072' => ['sendSkillUse'], # TODO
 		'0085' => ['actor_look_at', 'x5 C x2 C', [qw(head body)]],
 		'0089' => ['sync', 'x2 V', [qw(time)]], # TODO
 		'0094' => ['storage_item_add', 'x5 v x V', [qw(index amount)]],
