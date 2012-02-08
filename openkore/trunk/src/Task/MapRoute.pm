@@ -161,8 +161,8 @@ sub iterate {
 		# If current solution has conversation steps specified
 		if ( $self->{substage} eq 'Waiting for Warp' ) {
 			$self->{timeout} = time unless $self->{timeout};
-			if (timeOut($self->{timeout}, $timeout{ai_route_npcTalk}{timeout} || 10)
-			 || $ai_v{npc_talk}{talk} eq 'close') {
+			if (timeOut($self->{timeout}, $timeout{ai_route_npcTalk}{timeout} || 10))
+			 #|| $ai_v{npc_talk}{talk} eq 'close') {
 				# We waited for 10 seconds and got nothing
 				delete $self->{substage};
 				delete $self->{timeout};
