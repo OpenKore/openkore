@@ -460,7 +460,9 @@ sub checkMsg {
 	} elsif ($var eq '.lastsys') {
 		($msg) = $tmp =~ /^([\/"].*?[\/"]\w*)\s*,?\s*(.*)/;
 		chomp($msg);
-	}
+	} else {
+		$msg = $tmp
+	}	
 	$arg->{Msg} =~ s/[\r\n]*$//g;
 	if (match($arg->{Msg},$msg)){
 		$varStack{$var} = $arg->{MsgUser};

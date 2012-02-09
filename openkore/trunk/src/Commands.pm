@@ -3641,7 +3641,15 @@ sub cmdPlugin {
 		} elsif ($args[1] eq 'all') {
 			Plugins::loadAll();
 		} else {
-			Plugins::load($args[1]);
+			if (-e $args[1]) {
+			# then search inside plugins folder !
+				Plugins::load($args[1]);
+			} elsif (-e $Plugins::current_plugin_folder."\\".$args[1]) {
+				Plugins::load($Plugins::current_plugin_folder."\\".$args[1]);
+			} elsif (-e $Plugins::current_plugin_folder."\\".$args[1].".pl") {
+				# we'll try to add .pl ....
+				Plugins::load($Plugins::current_plugin_folder."\\".$args[1].".pl");
+			}
 		}
 
 	} elsif ($args[0] eq 'unload') {
