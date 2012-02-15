@@ -1,3 +1,4 @@
+# bRO (Brazil): Odin
 package Network::Send::bRO;
 use strict;
 use Globals;
@@ -11,44 +12,47 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0202' => ['storage_item_add', 'v V', [qw(index amount)]],				
+
 		'0232' => ['homunculus_move','a4 a4', [qw(homumID coordString)]],					
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],				
-		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],		
-		'0869' => ['item_take', 'a4', [qw(ID)]],		
-		'088C' => ['actor_action', 'a4 C', [qw(targetID type)]],		
-		'085E' => ['actor_info_request', 'a4', [qw(ID)]],								
-		'089A' => ['move','a4', [qw(coordString)]],					
-		'091A' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],							
-		'0923' => ['sync', 'V', [qw(time)]],				
-		'0930' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],				
-		'093D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],						
-		'094B' => ['actor_look_at', 'v C', [qw(head body)]],									
-		'0952' => ['item_drop', 'v2', [qw(index amount)]],										
-		'095F' => ['party_join_request_by_name', 'a24', [qw(partyName)]],								
-		'0961' => ['storage_item_remove', 'v V', [qw(index amount)]],									
+		'035F' => ['sync', 'V', [qw(time)]],						
+		'0368' => ['actor_action', 'a4 C', [qw(targetID type)]],				
+		'0437' => ['move','a4', [qw(coordString)]],							
+		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],									
+		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],				
+		'0802' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],						
+		'0887' => ['storage_item_remove', 'v V', [qw(index amount)]],			
+		'0888' => ['item_drop', 'v2', [qw(index amount)]],												
+		'0899' => ['actor_look_at', 'v C', [qw(head body)]],											
+		'08A5' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],								
+		'08AB' => ['storage_item_add', 'v V', [qw(index amount)]],						
+		'0957' => ['party_join_request_by_name', 'a24', [qw(partyName)]],										
+		'0960' => ['item_take', 'a4', [qw(ID)]],
+		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
 	
 	my %handlers = qw(
 
-		storage_item_add 0202
 		homunculus_move 0232
 		master_login 02B0
+		sync 035F		
+		actor_action 0368
+		move 0437
+		skill_use_location 0438
 		buy_bulk_vender 0801
-		item_take 0869
-		actor_action 088C
-		actor_info_request 085E
-		move 089A
-		skill_use_location 091A
-		sync 0923
-		map_login 0930
-		homunculus_command 093D
-		actor_look_at 094B
-		item_drop 0952
-		party_join_request_by_name 095F
-		storage_item_remove 0961
+		map_login 0802
+		storage_item_remove 0887
+		item_drop 0888
+		actor_look_at 0899
+		homunculus_command 08A5
+		storage_item_add 08AB
+		party_join_request_by_name 0957
+		item_take 0960
+		actor_info_request 096A
 	);
+	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
@@ -96,9 +100,9 @@ sub sendMapLogin
 	# Initializing the Encryption Keys
 	if ( $map_login == 0 )
 	{
-		$enc_val1 = Math::BigInt->new('0x7D57677F');
-		$enc_val2 = Math::BigInt->new('0x247149DF');
-		$enc_val3 = Math::BigInt->new('0x31A05411');
+		$enc_val1 = Math::BigInt->new('0x3DC81D3F');
+		$enc_val2 = Math::BigInt->new('0x52610BA4');
+		$enc_val3 = Math::BigInt->new('0x31401E7C');
 		$map_login = 1;
 	}
 
@@ -125,9 +129,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x87F, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x364, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x87F, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x364, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
