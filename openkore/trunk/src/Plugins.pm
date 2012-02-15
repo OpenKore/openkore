@@ -159,6 +159,8 @@ sub load {
 				Plugin::LoadException->throw("$!");
 			}
 		}
+		undef $current_plugin;
+		undef $current_plugin_folder;		
 	}
 }
 
