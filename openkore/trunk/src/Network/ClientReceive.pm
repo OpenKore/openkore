@@ -203,7 +203,7 @@ sub unknownMessage {
 	
 	# Unknown message - ignore it
 	unless (existsInList($config{debugPacket_exclude}, $args->{switch})) {
-		warning TF("Packet Tokenizer: Unknown outgoing switch: %s\n", $args->{switch}), 'connection';
+		debug TF("Packet Tokenizer: Unknown outgoing switch: %s\n", $args->{switch}), 'outgoing';
 		visualDump($args->{RAW_MSG}, "<< Outgoing unknown packet") if $config{debugPacket_unparsed};
 	}
 	
