@@ -13,7 +13,7 @@ use Time::HiRes qw(time);
 
 use Globals qw($packetParser $incomingMessages %config $char %ai_v %timeout $shopstarted $firstLoginMap $sentWelcomeMessage @lastpm %lastpm);
 use Misc qw(configModify visualDump);
-use Log qw(message warning);
+use Log qw(message debug warning);
 use Translation;
 use Utils qw(existsInList);
 
