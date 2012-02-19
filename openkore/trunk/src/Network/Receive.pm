@@ -434,7 +434,7 @@ sub sage_autospell {
 	
 	if ($config{autoSpell}) {
 		my $skill = new Skill(auto => $config{autoSpell});
-		if ($config{autoSpell_force} || List::Util::first { $_->getIDN == $skill->getIDN } @{$args->{skills}}) {
+		if (!$config{autoSpell_safe} || List::Util::first { $_->getIDN == $skill->getIDN } @{$args->{skills}}) {
 			if (defined $args->{why}) {
 				$messageSender->sendSkillSelect($skill->getIDN, $args->{why});
 			} else {
@@ -442,7 +442,7 @@ sub sage_autospell {
 			}
 		} else {
 			error TF("Configured autoSpell (%s) is not available.\n", $skill);
-			message T("Configure autoSpell_force to use it anyway.\n"), 'hint';
+			message T("Disable autoSpell_safe to use it anyway.\n"), 'hint';
 		}
 	} else {
 		message T("Configure autoSpell to automatically select skill for Auto Spell.\n"), 'hint';
