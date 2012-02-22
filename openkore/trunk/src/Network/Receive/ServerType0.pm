@@ -1106,7 +1106,7 @@ sub actor_died_or_disappeared {
 			debug "Monster Died: " . $monster->name . " ($monster->{binID})\n", "parseMsg_damage";
 			$monster->{dead} = 1;
 
-			if ((AI::action ne "attack" || AI::args(0)->{ID} ne $ID) &&
+			if ((AI::action ne "attack" || AI::args(0)->{ID} eq $ID) &&
 			    ($config{itemsTakeAuto_party} &&
 			    ($monster->{dmgFromParty} > 0 ||
 			     $monster->{dmgFromYou} > 0))) {
