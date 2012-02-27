@@ -68,7 +68,7 @@ sub new {
 
 	$self->{packet_list} = {
 		'0069' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
-		'006A' => ['login_error', 'C Z20', [qw(type unknown)]],
+		'006A' => ['login_error', 'C Z20', [qw(type date)]],
 		'006B' => ['received_characters', 'v C3 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # struct varies a lot, this one is from XKore 2
 		'006C' => ['login_error_game_login_server'],
 		# OLD '006D' => ['character_creation_successful', 'a4 x4 V x62 Z24 C7', [qw(ID zeny name str agi vit int dex luk slot)]],
@@ -4012,7 +4012,7 @@ sub login_error {
 			"serverType: %s\n", $master->{version}, $master->{master_version}, $config{serverType}), "connection";
 		relog(30);
 	} elsif ($args->{type} == REFUSE_BLOCK_TEMPORARY) {
-		error T("The server is temporarily blocking your connection\n"), "connection";
+		error TF("The server is temporarily blocking your connection until %s\n", $args->{date}), "connection";
 	} elsif ($args->{type} == REFUSE_USER_PHONE_BLOCK) { #Phone lock
 		error T("Please dial to activate the login procedure.\n"), "connection";
 		relog(10);
@@ -6764,6 +6764,10 @@ sub unit_levelup {
 		message TF("%s failed to refine a weapon!\n", $name), "refine";
 	} elsif ($type == REFINING_SUCCESS_EFFECT) {
 		message TF("%s successfully refined a weapon!\n", $name), "refine";
+	} elsif ($type == MAKEITEM_AM_SUCCESS_EFFECT) {
+		message TF("%s successfully creation a potions!\n", $name), "refine";
+	} elsif ($type == MAKEITEM_AM_FAIL_EFFECT) {
+		message TF("%s failed to creation a potions!\n", $name), "refine";	
 	} else {
 		message TF("%s unknown unit_levelup effect (%d)\n", $name, $type);
 	}
