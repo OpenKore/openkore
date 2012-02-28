@@ -12,7 +12,7 @@
 # pRO Valkyrie as of October 17 2007
 # paddedPackets_attackID 0x0190
 # paddedPackets_skillUseID 0x00A7
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Send::ServerType19;
 
 use strict;

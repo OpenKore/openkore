@@ -24,7 +24,7 @@
 # The submodule @MODULE(Network::Send) contains functions for sending all
 # kinds of messages to the RO server.
 #
-# Please also read <a href="http://www.openkore.com/wiki/index.php/Network_subsystem">the
+# Please also read <a href="http://wiki.openkore.com/index.php/Network_subsystem">the
 # network subsystem overview.</a>
 #
 # This implementation establishes a direct connection to the RO server.

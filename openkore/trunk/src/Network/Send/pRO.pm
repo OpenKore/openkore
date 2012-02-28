@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # pRO (Philippines)
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Send::pRO;
 
 use strict;

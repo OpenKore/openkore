@@ -13,7 +13,7 @@
 # $Id: ServerType8.pm 5761 2007-06-26 12:25:48Z bibian $
 ########################################################################
 #  kRO Client 2009-02-25b (eA packet version 23)
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Send::ServerType8_5;
 
 use strict;

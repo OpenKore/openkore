@@ -14,7 +14,7 @@
 ########################################################################
 # Korea (kRO), before February 2007
 # The majority of private servers on Dec 2007; packet_ver 22 of eAthena
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Send::ServerType8;
 
 use strict;

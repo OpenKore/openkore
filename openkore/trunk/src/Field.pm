@@ -20,7 +20,7 @@
 # 'cliff', etc.
 #
 # This class is closely related to the .fld file, as used by OpenKore.
-# See http://www.openkore.com/wiki/index.php/Field_file_format#The_FLD_file_format
+# See http://wiki.openkore.com/index.php/Field_file_format
 # for more information.
 #
 # This class is a hash and has the following hash items:

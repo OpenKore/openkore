@@ -1,5 +1,5 @@
 # LegacyRO after February 2008
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Receive::ServerType8_3;
 
 use strict;

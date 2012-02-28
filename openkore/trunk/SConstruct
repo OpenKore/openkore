@@ -160,13 +160,13 @@ conf = Configure(env, custom_tests = {
 })
 if not conf.CheckPerl():
 	print "You do not have Perl installed! Read:"
-	print "http://www.openkore.com/wiki/index.php/How_to_run_OpenKore_on_Linux/Unix#Perl.27s_Time::HiRes_module"
+	print "http://wiki.openkore.com/index.php/How_to_run_OpenKore#Perl_module:_Time::HiRes"
 	Exit(1)
 if not win32:
 	have_ncurses = conf.CheckLib('ncurses')
 	if not conf.CheckReadline(conf):
 		print "You don't have GNU readline installed, or your version of GNU readline is not recent enough! Read:"
-		print "http://www.openkore.com/wiki/index.php/How_to_run_OpenKore_on_Linux/Unix#GNU_readline"
+		print "http://wiki.openkore.com/index.php/How_to_run_OpenKore#GNU_readline"
 		Exit(1)
 
 	if darwin:

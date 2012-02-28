@@ -15,7 +15,7 @@
 # syncID 0x0190
 # syncTickOffset 5
 # mapLoadedTickOffset 7
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Send::ServerType14;
 
 use strict;

@@ -84,7 +84,7 @@ sub new {
 
 	my %packets = (
 		'0069' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], # -1
-		'006A' => ['login_error', 'C Z20', [qw(type block_date)]], # 23
+		'006A' => ['login_error', 'C Z20', [qw(type date)]], # 23
 		'006B' => ['received_characters', 'v C3 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # struct varies a lot, this one is from XKore 2
 		'006C' => ['connection_refused', 'C', [qw(error)]], # 3
 		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot)]], # packet(108) = switch(2) + charblock(106)
@@ -3847,7 +3847,7 @@ sub login_error {
 			"serverType: %s\n", $master->{version}, $master->{master_version}, $config{serverType}), "connection";
 		relog(30);
 	} elsif ($args->{type} == 6) {
-		error T("The server is temporarily blocking your connection\n"), "connection";
+		error TF("The server is temporarily blocking your connection until %s\n", $args->{date}), "connection";
 	}
 	if ($args->{type} != 5 && $versionSearch) {
 		$versionSearch = 0;

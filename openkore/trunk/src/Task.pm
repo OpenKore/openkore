@@ -13,7 +13,7 @@
 # MODULE DESCRIPTION: Abstract task base class.
 #
 # This is the abstract base class for all tasks. Please read
-# <a href="http://www.openkore.com/wiki/index.php/AI_subsystem_and_task_framework_overview">
+# <a href="http://wiki.openkore.com/index.php/AI_subsystem_and_task_framework_overview">
 # the AI subsystem and task framework overview
 # </a>
 # for an overview.

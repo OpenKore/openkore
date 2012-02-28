@@ -14,7 +14,7 @@
 # Modified by skseo, Jan-24-2007, Fixed bugs.
 ########################################################################
 # legacyRO, after February 2008
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Send::ServerType8_3;
 
 use strict;

@@ -15,7 +15,7 @@
 # server to Kore. Information in the messages are stored in global variables
 # (in the module Globals).
 #
-# Please also read <a href="http://www.openkore.com/wiki/index.php/Network_subsystem">the
+# Please also read <a href="http://wiki.openkore.com/index.php/Network_subsystem">the
 # network subsystem overview.</a>
 package Network::Receive;
 
