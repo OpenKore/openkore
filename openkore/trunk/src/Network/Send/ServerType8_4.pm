@@ -14,7 +14,7 @@
 # Modified by skseo, Jan-24-2007, Fixed bugs.
 ########################################################################
 # kRO 2008-3-26 (eA packet version 9)
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Send::ServerType8_4;
 
 use strict;

@@ -14,7 +14,7 @@
 #  Modified by skseo, Jan-24-2007, Fixed bugs.
 ########################################################################
 # Some eAthena servers after Feb 26th 2008
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Send::ServerType8_2;
 
 use strict;

@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Receive::ServerType0;
 
 use strict;
@@ -18,12 +18,7 @@ use base qw(Network::Receive);
 use Time::HiRes qw(time usleep);
 
 use AI;
-use Globals qw($char %timeout $net %config @chars $conState $conState_tries $messageSender $field);
 use Log qw(message warning error debug);
-use Translation;
-use Network;
-use Utils qw(makeCoordsDir makeCoordsXY makeCoordsFromTo);
-
 
 # from old receive.pm
 use Task::Wait;
@@ -44,7 +39,6 @@ use Actor::Item;
 use Actor::Unknown;
 use Field;
 use Settings;
-use Log qw(message warning error debug);
 use FileParsers;
 use Interface;
 use Network;
@@ -54,7 +48,6 @@ use Misc;
 use Plugins;
 use Utils;
 use Skill;
-use AI;
 use Utils::Assert;
 use Utils::Exceptions;
 use Utils::Crypton;

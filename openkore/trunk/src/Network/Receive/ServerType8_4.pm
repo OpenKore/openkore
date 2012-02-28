@@ -1,5 +1,5 @@
 #  kRO Client 2008-3-26 (eA packet version 9)
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Receive::ServerType8_4;
 
 use strict;

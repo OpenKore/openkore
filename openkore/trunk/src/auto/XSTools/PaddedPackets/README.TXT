@@ -27,7 +27,7 @@ As you know, each packet in the RO protocol is at least 2 bytes. The first
 two bytes are referred to as "packet switch" (although I prefer to call them
 "message" and "message ID", respectively). More information about the RO
 protocol's general format can be found here:
-http://www.openkore.com/wiki/index.php/Network_subsystem#Appendix_A:_introduction_to_the_Ragnarok_Online_protocol
+http://wiki.openkore.com/index.php/Network_subsystem
 
 A padded packet contains a hash of of its packet switch. There are 16
 different hashing algorithms that can be used. Which hashing algorithm is

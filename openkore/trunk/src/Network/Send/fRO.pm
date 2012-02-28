@@ -11,7 +11,7 @@
 #########################################################################
 # fRO (France)
 # 2010-06-17aRagexe
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Send::fRO;
 use strict;
 

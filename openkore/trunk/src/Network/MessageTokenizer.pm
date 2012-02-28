@@ -12,7 +12,7 @@
 ##
 # MODULE DESCRIPTION: Conversion of byte stream to descrete messages.
 #
-# As explained by the <a href="http://www.openkore.com/wiki/index.php/Network_subsystem">
+# As explained by the <a href="http://wiki.openkore.com/index.php/Network_subsystem">
 # network subsystem overview</a>, the Ragnarok Online protocol uses TCP, which means
 # that all server messages are received as a byte stream.
 # This class is specialized in extracting discrete RO server or client messages from a byte

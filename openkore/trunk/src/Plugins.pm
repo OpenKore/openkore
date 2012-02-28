@@ -16,7 +16,7 @@
 # MODULE DESCRIPTION: Plugin system
 #
 # This module provides an interface for handling plugins.
-# See the <a href="http://www.openkore.com/wiki/index.php/How_to_write_plugins_for_OpenKore">Plugin
+# See the <a href="http://wiki.openkore.com/index.php/How_to_write_plugins_for_OpenKore">Plugin
 # Writing Tutorial</a> for more information about plugins.
 #
 # NOTE: Do not confuse plugins with modules! See Modules.pm for more information.

@@ -19,7 +19,7 @@
 # This class contains convenience methods for sending messages to the RO
 # server.
 #
-# Please also read <a href="http://www.openkore.com/wiki/index.php/Network_subsystem">the
+# Please also read <a href="http://wiki.openkore.com/index.php/Network_subsystem">the
 # network subsystem overview.</a>
 package Network::Send;
 
