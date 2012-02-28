@@ -6765,9 +6765,9 @@ sub unit_levelup {
 	} elsif ($type == REFINING_SUCCESS_EFFECT) {
 		message TF("%s successfully refined a weapon!\n", $name), "refine";
 	} elsif ($type == MAKEITEM_AM_SUCCESS_EFFECT) {
-		message TF("%s successfully creation a potions!\n", $name), "refine";
+		message TF("%s successfully created a potion!\n", $name), "refine";
 	} elsif ($type == MAKEITEM_AM_FAIL_EFFECT) {
-		message TF("%s failed to creation a potions!\n", $name), "refine";	
+		message TF("%s failed to create a potion!\n", $name), "refine";	
 	} else {
 		message TF("%s unknown unit_levelup effect (%d)\n", $name, $type);
 	}
