@@ -99,7 +99,7 @@ sub new {
 		'0091' => ['map_change', 'Z16 v2', [qw(map x y)]],
 		'0092' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # 28
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
-		'0097' => ['private_message', 'v Z24 Z*', [qw(len privMsgUser privMsg)]],
+		'0097' => ['private_message', 'v Z28 Z*', [qw(len privMsgUser privMsg)]],
 		'0098' => ['private_message_sent', 'C', [qw(type)]],
 		'009A' => ['system_chat', 'v a*', [qw(len message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
 		'009C' => ['actor_look_at', 'a4 v C', [qw(ID head body)]],
