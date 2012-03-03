@@ -1281,12 +1281,8 @@ sub actor_display {
 			if (!defined $actor) {
 				$actor = new Actor::Player();
 				$actor->{appear_time} = time;
-
-                                # New actor_display packets include the player's name
-                                if($args->{name}) {
-                                        $actor->{name} = $args->{name};
-                                }
-
+				# New actor_display packets include the player's name
+				$actor->{name} = bytesToString($args->{name}) if($args->{name});
 				$mustAdd = 1;
 			}
 			$actor->{nameID} = $nameID;
