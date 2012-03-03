@@ -15,20 +15,20 @@ sub new {
 
 		'0232' => ['homunculus_move','a4 a4', [qw(homumID coordString)]],					
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],				
-		'02C4' => ['sync', 'V', [qw(time)]],								
-		'0438' => ['actor_info_request', 'a4', [qw(ID)]],		
 		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],						
-		'0860' => ['storage_item_remove', 'v V', [qw(index amount)]],					
-		'086B' => ['actor_look_at', 'v C', [qw(head body)]],													
-		'0870' => ['move','a4', [qw(coordString)]],							
-		'087B' => ['item_take', 'a4', [qw(ID)]],		
-		'0880' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],											
-		'0882' => ['actor_action', 'a4 C', [qw(targetID type)]],						
-		'088F' => ['item_drop', 'v2', [qw(index amount)]],														
-		'08A3' => ['party_join_request_by_name', 'a24', [qw(partyName)]],												
-		'093A' => ['storage_item_add', 'v V', [qw(index amount)]],								
-		'094A' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],								
-		'095E' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],										
+		'0802' => ['actor_look_at', 'v C', [qw(head body)]],													
+		'0838' => ['storage_item_add', 'v V', [qw(index amount)]],								
+		'0862' => ['move','a4', [qw(coordString)]],							
+		'086D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],								
+		'089A' => ['actor_info_request', 'a4', [qw(ID)]],		
+		'0919' => ['sync', 'V', [qw(time)]],										
+		'091F' => ['actor_action', 'a4 C', [qw(targetID type)]],										
+		'0923' => ['item_drop', 'v2', [qw(index amount)]],														
+		'092D' => ['storage_item_remove', 'v V', [qw(index amount)]],					
+		'0932' => ['party_join_request_by_name', 'a24', [qw(partyName)]],														
+		'0946' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],										
+		'094E' => ['item_take', 'a4', [qw(ID)]],		
+		'0953' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],											
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
@@ -37,20 +37,20 @@ sub new {
 
 		homunculus_move 0232
 		master_login 02B0
-		sync 02C4
-		actor_info_request 0438
 		buy_bulk_vender 0801
-		storage_item_remove 0860
-		actor_look_at 086B
-		move 0870
-		item_take 087B
-		skill_use_location 0880
-		actor_action 0882		
-		item_drop 088F
-		party_join_request_by_name 08A3
-		storage_item_add 093A		
-		map_login 094A
-		homunculus_command 095E
+		actor_look_at 0802
+		storage_item_add 0838				
+		move 0862		
+		map_login 086D		
+		actor_info_request 089A		
+		sync 0919		
+		actor_action 091F				
+		item_drop 0923		
+		storage_item_remove 092D
+		party_join_request_by_name 0932		
+		homunculus_command 0946		
+		item_take 094E		
+		skill_use_location 0953
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -91,20 +91,32 @@ sub encryptMessageID
 	}
 }
 
+sub sendStoragePassword {
+	my $self = shift;
+	# 16 byte packed hex data
+	my $pass = shift;
+	# 2 = set password ?
+	# 3 = give password ?
+	my $type = shift;
+	my $msg;
+	if ($type == 3) {
+		$msg = pack("v v", 0x23B, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+	} elsif ($type == 2) {
+		$msg = pack("v v", 0x23B, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+	} else {
+		ArgumentException->throw("The 'type' argument has invalid value ($type).");
+	}
+	$self->sendToServer($msg);
+}
+
 sub sendMapLogin 
 {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	my $msg;
+
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
 	
-	# Initializing the Encryption Keys
-	if ( $map_login == 0 )
-	{
-		$enc_val1 = Math::BigInt->new('0x737D211C');
-		$enc_val2 = Math::BigInt->new('0x38424E43');
-		$enc_val3 = Math::BigInt->new('0x456F57EF');
-		$map_login = 1;
-	}
+	if ( $map_login == 0 ) { CalculateHash(); $map_login = 1; }
 
 	# Reconstructing Packet 
 	$msg = $self->reconstruct({
@@ -118,24 +130,6 @@ sub sendMapLogin
 
 	$self->sendToServer($msg);
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
-}
-
-sub sendStoragePassword {
-	my $self = shift;
-	# 16 byte packed hex data
-	my $pass = shift;
-	# 2 = set password ?
-	# 3 = give password ?
-	my $type = shift;
-	my $msg;
-	if ($type == 3) {
-		$msg = pack("v v", 0x93E, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
-	} elsif ($type == 2) {
-		$msg = pack("v v", 0x93E, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
-	} else {
-		ArgumentException->throw("The 'type' argument has invalid value ($type).");
-	}
-	$self->sendToServer($msg);
 }
 
 sub sendMove 
@@ -186,6 +180,16 @@ sub sendPartyJoinRequestByName
 	}));	
 	
 	debug "Sent Request Join Party (by name): $name\n", "sendPacket", 2;
+}
+
+sub CalculateHash()
+{
+	# K
+	$enc_val1 = Math::BigInt->new('0x00000000BF63E862')->bxor(0xFFFFFFFF);
+	# M
+	$enc_val3 = Math::BigInt->new('0x00000000807EC6ED')->bxor(0xFFFFFFFF);
+	# A
+	$enc_val2 = Math::BigInt->new('0x00000000ABE5F430')->bxor(0xFFFFFFFF);
 }
 
 1;
