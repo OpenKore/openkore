@@ -4,7 +4,7 @@ use Log qw(message warning error debug);
 use base 'Network::Receive::ServerType0';
 use Globals qw($messageSender);
 
-/* Sync_Ex algorithm developed by Fr3DBr */
+# Sync_Ex algorithm developed by Fr3DBr
 
 sub new {
 	my ($class) = @_;
