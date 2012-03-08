@@ -2166,7 +2166,7 @@ sub processSitAutoIdle {
 			$timeout{ai_sit_idle}{time} = time;
 		}
 
-		if ( !$char->{sitting} && timeOut($timeout{ai_sit_idle})
+		if ($char->{skills}{NV_BASIC}{lv} >= 3 && !$char->{sitting} && timeOut($timeout{ai_sit_idle})
 		 && (!$config{shopAuto_open} || timeOut($timeout{ai_shop})) ) {
 			sit();
 		}
