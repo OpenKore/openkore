@@ -2122,7 +2122,7 @@ sub processNameRequestQueue {
 
 		# Some private servers ban you if you request info for an object with
 		# GM Perfect Hide status
-		if (!$actor || defined($actor->{name}) || $actor->statusActive('EFFECTSTATE_SPECIALHIDING')) {
+		if (!$actor || defined($actor->{info}) || $actor->statusActive('EFFECTSTATE_SPECIALHIDING')) {
 			shift @{$queue};
 			next;
 		}
