@@ -1000,13 +1000,24 @@ sub processAutoMakeArrow {
 	if ((AI::isIdle || AI::is(qw/route move autoBuy storageAuto follow sitAuto items_take items_gather/))
 	 && timeOut($AI::Timeouts::autoArrow, 0.2) && $config{autoMakeArrows} && defined binFind(\@skillsID, 'AC_MAKINGARROW') ) {
 		my $max = @arrowCraftID;
+		my $nMake = 0;
 		for (my $i = 0; $i < $max; $i++) {
 			my $item = $char->inventory->get($arrowCraftID[$i]);
 			next if (!$item);
 			if ($arrowcraft_items{lc($item->{name})}) {
 				$messageSender->sendArrowCraft($item->{nameID});
 				debug "Making item\n", "ai_makeItem";
+				$nMake++;
 				last;
+			}
+		}
+		$messageSender->sendArrowCraft(-1) if ($nMake == 0 && $max > 0);
+		if ($nMake == 0 && !$useArrowCraft){
+			foreach my $item (@{$char->inventory->getItems()}) {
+				if ($arrowcraft_items{lc($item->{name})}) {
+					$useArrowCraft = 1;
+					last;
+				}
 			}
 		}
 		$AI::Timeouts::autoArrow = time;
