@@ -6726,6 +6726,7 @@ sub unequip_item {
 
 	if ($args->{type} == 10 || $args->{type} == 32768) {
 		delete $char->{equipment}{arrow};
+		delete $char->{arrow};
 	} else {
 		foreach (%equipSlot_rlut){
 			if ($_ & $args->{type}){
