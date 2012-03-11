@@ -17,6 +17,7 @@ aldebaran 223 222 xmas_fild01 78 68 0 c r1 c c n
 moc_fild12 35 303 cmd_fild08 331 319 0 c r0 n
 ayothaya 152 68 alberta 247 42 0 c r0 n
 ama_in02 115 177 ama_dun01 229 10 0 c r1 c r0 n
+ama_dun01 229 7 ama_in02 119 181 0 c r0 n
 
 # Uncomment these fields if you wish to use Kapra warps
 #yuno 142 183 prontera 116 72 1800 c c c c c r0
@@ -1822,7 +1823,7 @@ umbala 106 285 um_dun01 42 27
 umbala 107 130 um_in 99 63
 umbala 138 129 um_in 99 111
 umbala 125 157 um_in 155 111
-# bunjy jump
+# bungee jump
 #umbala 140 197 nif_in 68 14
 um_dun01 42 27 umbala 106 285
 um_dun01 149 198 um_dun02 52 22
@@ -1868,6 +1869,8 @@ yuno_fild01 70 377 yuno_fild09 70 21
 yuno_fild01 287 367 yuno_fild09 280 32
 yuno_fild02 19 340 yuno_fild03 382 331
 yuno_fild02 117 375 hu_fild04 122 35
+yuno_fild02 69 23 yuno_fild08 75 375
+yuno_fild02 287 16 yuno_fild08 285 385
 yuno_fild03 20 79 yuno_fild04 374 82
 yuno_fild03 20 162 yuno_fild04 374 149
 yuno_fild03 33 140 mag_dun01 125 67
@@ -2722,7 +2725,16 @@ lighthalzen 197 36 lhz_in02 284 30
 lhz_in02 265 14 lhz_in02 269 82
 lhz_in02 282 79 lighthalzen 194 48
 
+# Eden HQ
+moc_para01 47 161 moc_para01 48 16
+moc_para01 48 16 moc_para01 48 164
+moc_para01 158 26 moc_para01 57 27
+moc_para01 57 27 moc_para01 162 26
+moc_para01 179 90 moc_para01 41 187
+moc_para01 41 187 moc_para01 179 93
+
 xmas 139 307 evt_xmas 129 129 0 c r1
 
 prontera 272 108 s_atelier 13 119
 s_atelier 10 119 prontera 268 109
+
