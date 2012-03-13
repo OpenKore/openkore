@@ -219,7 +219,12 @@ sub parse {
 			Plugins::callHook("$self->{hook_prefix}/packet_pre/$handler->[0]", \%args);
 		}
 		Misc::checkValidity("Packet: " . $handler->[0] . " (pre)");
-		$handleContainer->$callback(\%args, @handleArguments);
+
+                # If return is set in a packet_pre handler, the packet will be ignored.
+                unless($args{return}) {
+                        $handleContainer->$callback(\%args, @handleArguments);
+                }
+
 		Misc::checkValidity("Packet: " . $handler->[0]);
 	} else {
 		$handleContainer->unhandledMessage(\%args, @handleArguments);
@@ -276,6 +281,24 @@ sub unhandledMessage {
 #     }
 # }
 # </pre>
+#
+# You can also mangle packets by defining $args->{mangle} in other plugin hooks. The options avalable are:
+# `l
+# - 0 = no mangle
+# - 1 = mangle (change packet and reconstruct)
+# - 2 = drop
+# `l`
+# The following example will drop all public chat messages:
+# <pre class="example">
+# Plugins::addHook("packet_pre/public_chat", \&mangleChat);
+#
+# sub mangleChat
+# {
+#	my(undef, $args) = @_;
+#	$args->{mangle} = 2;
+# }
+# </pre>
+
 sub willMangle {
 	my ($self, $messageID) = @_;
 	if (Plugins::hasHook("$self->{hook_prefix}/willMangle")) {
