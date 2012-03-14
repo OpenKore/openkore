@@ -15,20 +15,20 @@ sub new {
 
 		'0232' => ['homunculus_move','a4 a4', [qw(homumID coordString)]],					
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],				
-		'02C4' => ['sync', 'V', [qw(time)]],								
-		'0438' => ['actor_info_request', 'a4', [qw(ID)]],		
-		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],						
-		'0860' => ['storage_item_remove', 'v V', [qw(index amount)]],					
-		'086B' => ['actor_look_at', 'v C', [qw(head body)]],													
-		'0870' => ['move','a4', [qw(coordString)]],							
-		'087B' => ['item_take', 'a4', [qw(ID)]],		
-		'0880' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],											
-		'0882' => ['actor_action', 'a4 C', [qw(targetID type)]],						
-		'088F' => ['item_drop', 'v2', [qw(index amount)]],														
-		'08A3' => ['party_join_request_by_name', 'a24', [qw(partyName)]],												
-		'093A' => ['storage_item_add', 'v V', [qw(index amount)]],								
-		'094A' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],								
-		'095E' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],													
+		'0361' => ['actor_action', 'a4 C', [qw(targetID type)]],								
+		'0437' => ['sync', 'V', [qw(time)]],								
+		'0438' => ['party_join_request_by_name', 'a24', [qw(partyName)]],														
+		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],								
+		'085B' => ['item_take', 'a4', [qw(ID)]],				
+		'0862' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],													
+		'086E' => ['move','a4', [qw(coordString)]],	
+		'0879' => ['storage_item_remove', 'v V', [qw(index amount)]],							
+		'087F' => ['item_drop', 'v2', [qw(index amount)]],																
+		'0881' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],										
+		'0890' => ['actor_look_at', 'v C', [qw(head body)]],															
+		'0895' => ['actor_info_request', 'a4', [qw(ID)]],				
+		'0923' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],													
+		'093B' => ['storage_item_add', 'v V', [qw(index amount)]],										
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
@@ -36,21 +36,21 @@ sub new {
 	my %handlers = qw(
 
 		homunculus_move 0232
-		master_login 02B0
-		sync 02C4
-		actor_info_request 0438
-		buy_bulk_vender 0801
-		storage_item_remove 0860
-		actor_look_at 086B
-		move 0870
-		item_take 087B
-		skill_use_location 0880
-		actor_action 0882		
-		item_drop 088F
-		party_join_request_by_name 08A3
-		storage_item_add 093A		
-		map_login 094A
-		homunculus_command 095E
+		master_login 02B0		
+		actor_action 0361
+		sync 0437		
+		party_join_request_by_name 0438
+		buy_bulk_vender 0801		
+		item_take 085B		
+		homunculus_command 0862
+		move 086E		
+		storage_item_remove 0879		
+		item_drop 087F		
+		map_login 0881		
+		actor_look_at 0890		
+		actor_info_request 0895		
+		skill_use_location 0923		
+		storage_item_add 093B		
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -103,9 +103,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x93E, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x95B, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x93E, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x95B, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
@@ -188,11 +188,11 @@ sub sendPartyJoinRequestByName
 sub PrepareKeys()
 {
 	# K
-	$enc_val1 = Math::BigInt->new('0x737DDEB6BC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
+	$enc_val1 = Math::BigInt->new('0x73BDB99EBC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
 	# M
-	$enc_val3 = Math::BigInt->new('0x456FA845BC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
+	$enc_val3 = Math::BigInt->new('0x2778DB7EBC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
 	# A
-	$enc_val2 = Math::BigInt->new('0x3842B1E9BC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
+	$enc_val2 = Math::BigInt->new('0x60BE8733BC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
 }
 
 1;
