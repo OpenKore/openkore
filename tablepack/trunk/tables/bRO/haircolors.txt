@@ -1,9 +1,9 @@
 ﻿0 Castanho Escuro
-1 Brown/Blond
-2 Purple
-3 Light Brown
-4 Green
-5 Blue
-6 White
-7 Dark Brown
-8 Red
+1 Castanho/Loiro
+2 Roxo
+3 Castanho Claro
+4 Verde
+5 Azul
+6 Branco
+7 Castanho Escuro
+8 Vermelho

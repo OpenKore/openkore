@@ -780,3 +780,450 @@ dew_in01.rsw#Inside of Jaty Tribe Village#
 dew_fild01.rsw#Dewata Field_Jaty Tribe Village#
 dew_dun01.rsw#Krakatau Volcano Island#
 dew_dun02.rsw#Istana Cave#
+
+moc_para01.rsw#Garden of Eden#
+
+//----------- iRO Maps ------------
+
+2007rwc_01.rsw#2007 Ragnarok World Championship Arena 1#
+2007rwc_02.rsw#2007 Ragnarok World Championship Arena 2#
+2007rwc_03.rsw#2007 Ragnarok World Championship Arena 3#
+2007rwc_04.rsw#2007 Ragnarok World Championship Arena 4#
+2007rwc_05.rsw#2007 Ragnarok World Championship Arena 5#
+2007rwc_06.rsw#2007 Ragnarok World Championship Arena 6#
+2007rwc_07.rsw#2007 Ragnarok World Championship Arena 7#
+2007rwc_08.rsw#2007 Ragnarok World Championship Arena 8#
+2007rwc_09.rsw#2007 Ragnarok World Championship Arena 9#
+2007rwc_10.rsw#2007 Ragnarok World Championship Arena 10#
+2007rwc_r.rsw#2007 Ragnarok World Championship Arena Waiting Room#
+afay_vilg00.rsw#Payon Village#
+afay_vilg01.rsw#Payon Village#
+agef_vilg00.rsw#Geffen Village#
+agef_vilg01.rsw#Geffen Village#
+alberta_d.gat#Alberta#
+alberta_x.rsw#Alberta#
+amoc_dugn01.rsw#Morocc Dungeon#
+amoc_dugn02.rsw#Morocc Dungeon#
+amoc_fild01.rsw#Morocc Field#
+amoc_fild02.rsw#Morocc Field#
+amoc_fild03.rsw#Morocc Field#
+amoc_fild04.rsw#Morocc Field#
+amoc_intr00.rsw#Inside Morocc#
+amoc_intr01.rsw#Inside Morocc#
+amoc_intr02.rsw#Inside Morocc#
+amoc_intr04.rsw#Inside Morocc#
+amoc_vilg00.rsw#Morocc Village#
+amoc_vilg01.rsw#Morocc Village#
+amoc_vilg02.rsw#Morocc Village#
+anothership.rsw#Another Ship#
+aprobemap.rsw#Probe Map 1#
+aprobemap02.rsw#Probe Map 2#
+aprt_cstl01.rsw#Prontera Castle#
+aprt_dugn00.rsw#Prontera Dungeon#
+aprt_dugn01.rsw#Prontera Dungeon#
+aprt_fild00.rsw#Prontera Field#
+aprt_fild01.rsw#Prontera Field#
+aprt_fild03.rsw#Prontera Field#
+aprt_fild04.rsw#Prontera Field#
+aprt_fild05.rsw#Prontera Field#
+aprt_intr01_a.rsw#Inside Prontera#
+aprt_intr01.rsw#Inside Prontera#
+aprt_intr02.rsw#Inside Prontera#
+aprt_vilg00.rsw#Prontera Village#
+aprt_vilg01.rsw#Prontera Village#
+aprt_vilg02.rsw#Prontera Village#
+atank_test.rsw#Tank Test 1#
+atank_test2.rsw#Tank Test 2#
+atest.rsw#Test Map#
+baby_para.rsw#Playground#
+darkness_z.rsw#Darkness Island#
+dragon_nes2.rsw#Evil Dragon Nest#
+dragon_nest.rsw#Evil Dragon Nest#
+ein_polu.rsw#Indoor#
+force_map1.rsw#Time Limit Fight#
+force_map2.rsw#Time Limit Fight#
+force_map3.rsw#Time Limit Fight#
+g_room1-1.rsw#Quiz Revolution#
+g_room1-2.rsw#Quiz Revolution#
+g_room1-3.rsw#Quiz Revolution#
+g_room2.rsw#Quiz Revolution#
+geffen_x.rsw#Geffen#
+gld_dun04.rsw#Britoniah Guild Dungeon#
+guild_rwc1.rsw#Training Room#
+guild_rwc2.rsw#Training Room#
+guild_rwc3.rsw#Training Room#
+guild_rwc4.rsw#Training Room#
+guild_rwc5.rsw#Training Room#
+guild_vs1-1.rsw#Guild Arena#
+guild_vs1-2.rsw#Guild Arena#
+guild_vs1-3.rsw#Guild Arena#
+guild_vs1-4.rsw#Guild Arena#
+guild_vs2-1.rsw#Guild Arena#
+guild_vs2-2.rsw#Guild Arena#
+guild_vs2ga.rsw#Geffen Room A#
+guild_vs2gb.rsw#Geffen Room B#
+guild_vs2gc.rsw#Geffen Room C#
+guild_vs2ia.rsw#Izlude Room A#
+guild_vs2ib.rsw#Izlude Room B#
+guild_vs2ic.rsw#Izlude Room C#
+guild_vs2ma.rsw#Morocc Room A#
+guild_vs2mb.rsw#Morocc Room B#
+guild_vs2mc.rsw#Morocc Room C#
+guild_vs2pa.rsw#Prontera Room A#
+guild_vs2pb.rsw#Prontera Room B#
+guild_vs2pc.rsw#Prontera Room C#
+guild_vs5.rsw#Guild Arena#
+holy_gold.rsw#Gold Sanctuary#
+holy_silver.rsw#Silver Sanctuary#
+izlude_x.rsw#Izlude Town#
+izlude07.rsw#Izlude Town#
+job_hunter.rsw#Hunter Guild#
+job_knight.rsw#The Chivalry#
+job_priest.rsw#The Sanctum#
+job_sword1.rsw#Swordman Test Hall#
+job_wizard.rsw#Wizard Academy#
+jp_castle.rsw#Halloween Castle#
+jp_dress_a.rsw#Back Stage A#
+jp_dress_b.rsw#Back Stage B#
+jp_event02.rsw#Japanese Event 2#
+jp_event03.rsw#Japanese Event 3#
+jp_event04.rsw#Japanese Event 4#
+jp_event05.rsw#Japanese Event 5#
+jp_event06.rsw#Japanese Event 6#
+jp_magic.rsw#House of Magical#
+jp_ruins.rsw#Sandy Beach of Ruins#
+jp_stage_a.rsw#Stage A#
+jp_stage_b.rsw#Stage B#
+moonlight_a.rsw#Moonlight A#
+mosk_que.rsw#Moscovia Quest#
+new_zone01.rsw#Training Ground#
+new_zone02.rsw#Training Ground#
+new_zone03.rsw#Training Ground#
+new_zone04.rsw#Training Ground#
+oldpay_in01.rsw#Inside Old Payon#
+oldpay_in02.rsw#Inside Old Payon#
+oldpayon.rsw#Old Payon#
+ordeal_a00.rsw#Battle Ordeal Mode#
+ordeal_a02.rsw#Battle Ordeal Mode#
+pay_arche_s.rsw#Archer Village#
+poring_c01.rsw#Poring Waiting Room#
+poring_c02.rsw#Poring Market#
+prontera_s.rsw#Prontera City, Capital of Rune Midgard#
+prontera_x.rsw#Prontera City, Capital of Rune Midgard#
+prt_church_x.rsw#The Sanctuary#
+pvp_2vs2b.rsw#PvP : Event Coliseum#
+pvp_2vs2c.rsw#PvP : Event Coliseum#
+pvp_room.rsw#PvP : Waiting Room#
+que_ba.rsw#...#
+que_job02.rsw#Job Quest 2#
+que_job03.rsw#Job Quest 3#
+que_moc_16.rsw#Moon Palace, Mob Area#
+que_moon.rsw#Moon Palace#
+que_new01.rsw#New Year Day Place#
+que_new02.rsw#New Year Day Place#
+que_ng.rsw#Ninja - Gunslinger map#
+que_san04.rsw#Inside Freya's Temple#
+que_sign02.rsw#Valley of Gyoll#
+room_00.rsw#Room 0#
+room_01.rsw#Room 1#
+room_02.rsw#Room 2#
+rwc02.rsw#Ragnarok World Championship Arena 2#
+tha_scene01.rsw#Thanatos Tower Entrance#
+tower_a0.rsw#Tower A0#
+tower_a1.rsw#Tower A1#
+tower_a10.rsw#Tower A10#
+tower_a11.rsw#Tower A11#
+tower_a12.rsw#Tower A12#
+tower_a2.rsw#Tower A2#
+tower_a3.rsw#Tower A3#
+tower_a4.rsw#Tower A4#
+tower_a5.rsw#Tower A5#
+tower_a6.rsw#Tower A6#
+tower_a7.rsw#Tower A7#
+tower_a8.rsw#Tower A8#
+tower_a9.rsw#Tower A9#
+tower_b0.rsw#Tower B0#
+tower_b1.rsw#Tower B1#
+tower_b10.rsw#Tower B10#
+tower_b11.rsw#Tower B11#
+tower_b12.rsw#Tower B12#
+tower_b2.rsw#Tower B2#
+tower_b3.rsw#Tower B3#
+tower_b4.rsw#Tower B4#
+tower_b5.rsw#Tower B5#
+tower_b6.rsw#Tower B6#
+tower_b7.rsw#Tower B7#
+tower_b8.rsw#Tower B8#
+tower_b9.rsw#Tower B9#
+tower_c0.rsw#Tower C0#
+tower_c1.rsw#Tower C1#
+tower_c10.rsw#Tower C10#
+tower_c11.rsw#Tower C11#
+tower_c12.rsw#Tower C12#
+tower_c2.rsw#Tower C2#
+tower_c3.rsw#Tower C3#
+tower_c4.rsw#Tower C4#
+tower_c5.rsw#Tower C5#
+tower_c6.rsw#Tower C6#
+tower_c7.rsw#Tower C7#
+tower_c8.rsw#Tower C8#
+tower_c9.rsw#Tower C9#
+tower_d0.rsw#Tower D0#
+tower_d1.rsw#Tower D1#
+tower_d10.rsw#Tower D10#
+tower_d11.rsw#Tower D11#
+tower_d12.rsw#Tower D12#
+tower_d2.rsw#Tower D2#
+tower_d3.rsw#Tower D3#
+tower_d4.rsw#Tower D4#
+tower_d5.rsw#Tower D5#
+tower_d6.rsw#Tower D6#
+tower_d7.rsw#Tower D7#
+tower_d8.rsw#Tower D8#
+tower_d9.rsw#Tower D9#
+xmas_x.rsw#Lutie, the Snow Village#
+g_room1-1.rsw#Quiz Revolution#
+g_room1-2.rsw#Quiz Revolution#
+g_room1-3.rsw#Quiz Revolution#
+
+//----------- kRO Maps ------------
+
+dicastes01.rsw#Capital City Of The Sapha#
+dicastes02.rsw#Plumbeld Yorhi Forest#
+dic_in01.rsw#Inside El Descates#
+dic_fild01.rsw#El Descates Field Foot Of The Kamidal Mountain#
+dic_fild02.rsw#El Descates Field Foot Of The Kamidal Mountain#
+dic_dun01.rsw#Underground Passage Kamidal Tunnel#
+dic_dun02.rsw#Underground Nest Scaraba Hole#
+job3_gen01.rsw#Genetic Job Change Waiting Room#
+s_atelier.rsw#...#
+job3_arch01.rsw#Arch Bishop Job Change Waiting Room#
+job3_arch02.rsw#Odin Shrine#
+job3_arch03.rsw#Arch Bishop Job Change Waiting Room#
+job3_guil01.rsw#Secret Pub#
+job3_guil02.rsw#Inside Rundown Warehouse#
+job3_guil03.rsw#Remote Mansion#
+job3_rang01.rsw#Ranger Job Change Waiting Room#
+job3_rang02.rsw#Ranger Job Change Test#
+job3_rune01.rsw#Inside Rune Knight Corps Building#
+job3_rune02.rsw#Rune Knight Job Change Test#
+job3_rune03.rsw#Rune Knight Job Change Test#
+job3_war01.rsw#Warlock Job Change Test#
+job3_war02.rsw#Warlock Job Change Test#
+jupe_core2.rsw#Center of Juperos#
+mosk_que.rsw#Moscovia Quest#
+tha_scene01.rsw#Thanatos Tower Entrance#
+gld_dun04.rsw#Britoniah Guild Dungeon#
+guild_vs5.rsw#Guild Arena#
+que_job02.rsw#Job Quest 2#
+que_job03.rsw#Job Quest 3#
+ordeal_a00.rsw#Battle Ordeal Mode#
+ordeal_a02.rsw#Battle Ordeal Mode#
+force_map1.rsw#Time Limit Fight#
+force_map2.rsw#Time Limit Fight#
+force_map3.rsw#Time Limit Fight#
+job_hunter.rsw#Hunter Guild#
+job_knight.rsw#The Chivalry#
+job_priest.rsw#The Sanctum#
+job_sword1.rsw#Swordman Test Hall#
+job_wizard.rsw#Wizard Academy#
+pvp_room.rsw#PvP : Waiting Room#
+que_sign02.rsw#Valley of Gyoll#
+g_room1-1.rsw#Quiz Revolution#
+g_room1-2.rsw#Quiz Revolution#
+g_room1-3.rsw#Quiz Revolution#
+g_room2.rsw#Quiz Revolution#
+guild_vs1-1.rsw#Guild Arena#
+guild_vs1-2.rsw#Guild Arena#
+guild_vs1-3.rsw#Guild Arena#
+guild_vs1-4.rsw#Guild Arena#
+guild_vs2-1.rsw#Guild Arena#
+guild_vs2-2.rsw#Guild Arena#
+new_zone01.rsw#Training Ground#
+new_zone02.rsw#Training Ground#
+new_zone03.rsw#Training Ground#
+new_zone04.rsw#Training Ground#
+que_ng.rsw#Ninja - Gunslinger map#
+que_san04.rsw#Inside Freya's Temple#
+que_ba.rsw#...#
+prontera_x.rsw#Prontera City, Capital of Rune Midgard#
+alberta_x.rsw#Alberta#
+aldebaran_x.rsw#Aldebaran#
+geffen_x.rsw#Geffen#
+izlude_x.rsw#Izlude Town#
+prt_church_x.rsw#The Sanctuary#
+prontera_s.rsw#Prontera City, Capital of Rune Midgard#
+pay_arche_s.rsw#Archer Village#
+rwc02.rsw#Ragnarok World Championship Arena 2#
+2007rwc_r.rsw#2007 Ragnarok World Championship Arena Waiting Room#
+2007rwc_01.rsw#2007 Ragnarok World Championship Arena 1#
+2007rwc_02.rsw#2007 Ragnarok World Championship Arena 2#
+2007rwc_03.rsw#2007 Ragnarok World Championship Arena 3#
+2007rwc_04.rsw#2007 Ragnarok World Championship Arena 4#
+2007rwc_05.rsw#2007 Ragnarok World Championship Arena 5#
+2007rwc_06.rsw#2007 Ragnarok World Championship Arena 6#
+2007rwc_07.rsw#2007 Ragnarok World Championship Arena 7#
+2007rwc_08.rsw#2007 Ragnarok World Championship Arena 8#
+2007rwc_09.rsw#2007 Ragnarok World Championship Arena 9#
+2007rwc_10.rsw#2007 Ragnarok World Championship Arena 10#
+izlude07.rsw#Izlude Town#
+guild_rwc1.rsw#Training Room#
+guild_rwc2.rsw#Training Room#
+guild_rwc3.rsw#Training Room#
+guild_rwc4.rsw#Training Room#
+guild_rwc5.rsw#Training Room#
+fay_vilg00.rsw#Payon Village#
+fay_vilg01.rsw#Payon Village#
+gef_vilg00.rsw#Geffen Village#
+gef_vilg01.rsw#Geffen Village#
+moc_dugn01.rsw#Morocc Dungeon#
+moc_dugn02.rsw#Morocc Dungeon#
+moc_intr00.rsw#Inside Morocc#
+moc_intr01.rsw#Inside Morocc#
+moc_intr02.rsw#Inside Morocc#
+moc_intr04.rsw#Inside Morocc#
+moc_vilg00.rsw#Morocc Village#
+moc_vilg01.rsw#Morocc Village#
+moc_vilg02.rsw#Morocc Village#
+probemap.rsw#Probe Map 1#
+probemap02.rsw#Probe Map 2#
+prt_cstl01.rsw#Prontera Castle#
+prt_dugn00.rsw#Prontera Dungeon#
+prt_dugn01.rsw#Prontera Dungeon#
+prt_intr01.rsw#Inside Prontera#
+prt_intr01_a.rsw#Inside Prontera#
+prt_intr02.rsw#Inside Prontera#
+prt_vilg00.rsw#Prontera Village#
+prt_vilg01.rsw#Prontera Village#
+prt_vilg02.rsw#Prontera Village#
+tank_test.rsw#Tank Test 1#
+tank_test2.rsw#Tank Test 2#
+test.rsw#Test Map#
+oldpayon.rsw#Old Payon#
+oldpay_in01.rsw#Inside Old Payon#
+oldpay_in02.rsw#Inside Old Payon#
+xmas_x.rsw#Lutie, the Snow Village#
+alberta_d.gat#Alberta#
+holy_gold.rsw#Gold Sanctuary#
+holy_silver.rsw#Silver Sanctuary#
+darkness_z.rsw#Darkness Island#
+baby_para.rsw#Playground#
+dragon_nest.rsw#Evil Dragon Nest#
+dragon_nes2.rsw#Evil Dragon Nest#
+que_new01.rsw#New Year Day Place#
+que_new02.rsw#New Year Day Place#
+jp_stage_a.rsw#Stage A#
+jp_castle.rsw#Halloween Castle#
+jp_ruins.rsw#Sandy Beach of Ruins#
+jp_magic.rsw#House of Magical#
+jp_stage_b.rsw#Stage B#
+jp_dress_a.rsw#Back Stage A#
+jp_dress_b.rsw#Back Stage B#
+anothership.rsw#Another Ship#
+jp_event02.rsw#Japanese Event 2#
+jp_event03.rsw#Japanese Event 3#
+jp_event04.rsw#Japanese Event 4#
+jp_event05.rsw#Japanese Event 5#
+jp_event06.rsw#Japanese Event 6#
+pvp_2vs2b.rsw#PvP : Event Coliseum#
+pvp_2vs2c.rsw#PvP : Event Coliseum#
+room_00.rsw#Room 0#
+room_01.rsw#Room 1#
+room_02.rsw#Room 2#
+moonlight_a.rsw#Moonlight A#
+guild_vs2pa.rsw#Prontera Room A#
+guild_vs2pb.rsw#Prontera Room B#
+guild_vs2pc.rsw#Prontera Room C#
+guild_vs2ia.rsw#Izlude Room A#
+guild_vs2ib.rsw#Izlude Room B#
+guild_vs2ic.rsw#Izlude Room C#
+guild_vs2ga.rsw#Geffen Room A#
+guild_vs2gb.rsw#Geffen Room B#
+guild_vs2gc.rsw#Geffen Room C#
+guild_vs2ma.rsw#Morocc Room A#
+guild_vs2mb.rsw#Morocc Room B#
+guild_vs2mc.rsw#Morocc Room C#
+tower_a0.rsw#Tower A0#
+tower_a1.rsw#Tower A1#
+tower_a2.rsw#Tower A2#
+tower_a3.rsw#Tower A3#
+tower_a4.rsw#Tower A4#
+tower_a5.rsw#Tower A5#
+tower_a6.rsw#Tower A6#
+tower_a7.rsw#Tower A7#
+tower_a8.rsw#Tower A8#
+tower_a9.rsw#Tower A9#
+tower_a10.rsw#Tower A10#
+tower_a11.rsw#Tower A11#
+tower_a12.rsw#Tower A12#
+tower_b0.rsw#Tower B0#
+tower_b1.rsw#Tower B1#
+tower_b2.rsw#Tower B2#
+tower_b3.rsw#Tower B3#
+tower_b4.rsw#Tower B4#
+tower_b5.rsw#Tower B5#
+tower_b6.rsw#Tower B6#
+tower_b7.rsw#Tower B7#
+tower_b8.rsw#Tower B8#
+tower_b9.rsw#Tower B9#
+tower_b10.rsw#Tower B10#
+tower_b11.rsw#Tower B11#
+tower_b12.rsw#Tower B12#
+tower_c0.rsw#Tower C0#
+tower_c1.rsw#Tower C1#
+tower_c2.rsw#Tower C2#
+tower_c3.rsw#Tower C3#
+tower_c4.rsw#Tower C4#
+tower_c5.rsw#Tower C5#
+tower_c6.rsw#Tower C6#
+tower_c7.rsw#Tower C7#
+tower_c8.rsw#Tower C8#
+tower_c9.rsw#Tower C9#
+tower_c10.rsw#Tower C10#
+tower_c11.rsw#Tower C11#
+tower_c12.rsw#Tower C12#
+tower_d0.rsw#Tower D0#
+tower_d1.rsw#Tower D1#
+tower_d2.rsw#Tower D2#
+tower_d3.rsw#Tower D3#
+tower_d4.rsw#Tower D4#
+tower_d5.rsw#Tower D5#
+tower_d6.rsw#Tower D6#
+tower_d7.rsw#Tower D7#
+tower_d8.rsw#Tower D8#
+tower_d9.rsw#Tower D9#
+tower_d10.rsw#Tower D10#
+tower_d11.rsw#Tower D11#
+tower_d12.rsw#Tower D12#
+que_moon.rsw#Moon Palace#
+que_moc_16.rsw#Moon Palace, Mob Area#
+ein_polu.rsw#Indoor#
+poring_c01.rsw#Poring Waiting Room#
+poring_c02.rsw#Poring Market#
+gl_in01_ev.rsw#Event Crazy Drops#
+evt_zombie.rsw#Run From Zombies#
+dicastes01.rsw#사파 수도 엘 디카스테스#
+dicastes02.rsw#브룸벨드 요르히 숲#
+dic_in01.rsw#디카스테스 내부#
+dic_fild01.rsw#카미달 산기슭#
+dic_fild02.rsw#카미달 산기슭#
+dic_dun01.rsw#카미달 터널#
+dic_dun02.rsw#스카라바 홀#
+job3_gen01.rsw#제네릭 연구소#
+s_atelier.rsw#그림자 공방#
+job3_arch01.rsw#아크비숍 전직 대기실#
+job3_arch02.rsw#휘겔 오딘 신전#
+job3_arch03.rsw#아크비숍 전직 대기실#
+job3_guil01.rsw#비밀 주점#
+job3_guil02.rsw#허름한 창고 내부#
+job3_guil03.rsw#외딴 저택#
+job3_rang01.rsw#레인저 전직 대기실#
+job3_rang02.rsw#레인저 전직 시험장#
+job3_rune01.rsw#룬나이트 기사단 내부#
+job3_rune02.rsw#룬나이트 전직 시험장#
+job3_rune03.rsw#룬나이트 전직 시험장#
+job3_war01.rsw#워록 전직 시험장#
+job3_war02.rsw#워록 전직 시험장#
+jupe_core2.rsw#유페로스 중심부#
+gld_dun04.rsw#길드 지하 던전#
+guild_vs5.rsw#길드 대항 경기장#
