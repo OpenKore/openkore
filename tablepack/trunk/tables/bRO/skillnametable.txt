@@ -1,27 +1,27 @@
-ÔªøNV_BASIC#Habilidades_B√°sicas#
-SM_SWORD#Per√≠cia_com_Espada#
-SM_TWOHAND#Per√≠cia_com_Espada_de_Duas_M√£os#
-SM_RECOVERY#Aumentar_Recupera√ß√£o_de_HP#
+NV_BASIC#Habilidades_B·sicas#
+SM_SWORD#PerÌcia_com_Espada#
+SM_TWOHAND#PerÌcia_com_Espada_de_Duas_M„os#
+SM_RECOVERY#Aumentar_RecuperaÁ„o_de_HP#
 SM_BASH#Golpe_Fulminante#
 SM_PROVOKE#Provocar#
 SM_MAGNUM#Impacto_Explosivo#
 SM_ENDURE#Vigor#
-MG_SRECOVERY#Aumentar_Recupera√ß√£o_de_SP#
+MG_SRECOVERY#Aumentar_RecuperaÁ„o_de_SP#
 MG_SIGHT#Chama_Reveladora#
 MG_NAPALMBEAT#Ataque_Espiritual#
-MG_SAFETYWALL#Escudo_M√°gico#
-MG_SOULSTRIKE#Esp√≠ritos_Anci√µes#
-MG_COLDBOLT#Lan√ßas_de_Gelo#
+MG_SAFETYWALL#Escudo_M·gico#
+MG_SOULSTRIKE#EspÌritos_Anciıes#
+MG_COLDBOLT#LanÁas_de_Gelo#
 MG_FROSTDIVER#Rajada_Congelante#
 MG_STONECURSE#Petrificar#
-MG_FIREBOLT#Lan√ßas_de_Fogo#
+MG_FIREBOLT#LanÁas_de_Fogo#
 MG_FIREBALL#Bolas_de_Fogo#
 MG_FIREWALL#Barreira_de_Fogo#
-MG_LIGHTNINGBOLT#Rel√¢mpago#
+MG_LIGHTNINGBOLT#Rel‚mpago#
 MG_THUNDERSTORM#Tempestade_de_Raios#
-AL_DP#Prote√ß√£o_Divina#
+AL_DP#ProteÁ„o_Divina#
 AL_DEMONBANE#Flagelo_do_Mal#
-AL_RUWACH#Revela√ß√£o#
+AL_RUWACH#RevelaÁ„o#
 AL_PNEUMA#Escudo_Sagrado#
 AL_TELEPORT#Teleporte#
 AL_WARP#Portal#
@@ -31,43 +31,43 @@ AL_DECAGI#Diminuir_Agilidade#
 AL_HOLYWATER#Aqua_Benedicta#
 AL_CRUCIS#Signum_Crusis#
 AL_ANGELUS#Angelus#
-AL_BLESSING#B√™n√ß√£o#
+AL_BLESSING#BÍnÁ„o#
 AL_CURE#Medicar#
 MC_INCCARRY#Aumentar_Capacidade_de_Carga#
 MC_DISCOUNT#Desconto#
 MC_OVERCHARGE#Superfaturar#
 MC_PUSHCART#Usar_Carrinho#
 MC_IDENTIFY#Identificar_Item#
-MC_VENDING#Com√©rcio#
+MC_VENDING#ComÈrcio#
 MC_MAMMONITE#Mammonita#
-AC_OWL#Precis√£o#
-AC_VULTURE#Olhos_de_√Åguia#
-AC_CONCENTRATION#Concentra√ß√£o#
+AC_OWL#Precis„o#
+AC_VULTURE#Olhos_de_¡guia#
+AC_CONCENTRATION#ConcentraÁ„o#
 AC_DOUBLE#Rajada_de_Flechas#
 AC_SHOWER#Chuva_de_Flechas#
 TF_DOUBLE#Ataque_Duplo#
-TF_MISS#Per√≠cia_em_Esquiva#
+TF_MISS#PerÌcia_em_Esquiva#
 TF_STEAL#Furto#
 TF_HIDING#Esconderijo#
 TF_POISON#Envenenar#
 TF_DETOXIFY#Desintoxicar#
-KN_SPEARMASTERY#Per√≠cia_com_Lan√ßa#
+KN_SPEARMASTERY#PerÌcia_com_LanÁa#
 KN_PIERCE#Perfurar#
-KN_BRANDISHSPEAR#Brandir_Lan√ßa#
+KN_BRANDISHSPEAR#Brandir_LanÁa#
 KN_SPEARSTAB#Estocada#
-KN_SPEARBOOMERANG#Lan√ßa_Bumerangue#
-KN_TWOHANDQUICKEN#Rapidez_com_Duas_M√£os#
+KN_SPEARBOOMERANG#LanÁa_Bumerangue#
+KN_TWOHANDQUICKEN#Rapidez_com_Duas_M„os#
 KN_AUTOCOUNTER#Contra-Ataque#
 KN_BOWLINGBASH#Impacto_de_Tyr#
 KN_RIDING#Montaria#
-KN_CAVALIERMASTERY#Per√≠cia_em_Montaria#
-PR_MACEMASTERY#Per√≠cia_com_Ma√ßa#
+KN_CAVALIERMASTERY#PerÌcia_em_Montaria#
+PR_MACEMASTERY#PerÌcia_com_MaÁa#
 PR_IMPOSITIO#Impositio_Manus#
 PR_SUFFRAGIUM#Suffragium#
 PR_ASPERSIO#Aspersio#
 PR_BENEDICTIO#B.S._Sacramenti#
-PR_SANCTUARY#Santu√°rio#
-PR_STRECOVERY#Gra√ßa_Divina#
+PR_SANCTUARY#Santu·rio#
+PR_STRECOVERY#GraÁa_Divina#
 PR_SLOWPOISON#Retardar_Veneno#
 ALL_RESURRECTION#Ressuscitar#
 PR_KYRIE#Kyrie_Eleison#
@@ -80,64 +80,64 @@ PR_MAGNUS#Magnus_Exorcismus#
 HT_ANKLESNARE#Instalar_Armadilha#
 HT_BEASTBANE#Flagelo_das_Feras#
 HT_BLASTMINE#Instalar_Mina#
-HT_BLITZBEAT#Ataque_A√©reo#
+HT_BLITZBEAT#Ataque_AÈreo#
 HT_CLAYMORETRAP#Armadilha_Explosiva#
 HT_DETECTING#Alerta#
-HT_FALCON#Adestrar_Falc√£o#
+HT_FALCON#Adestrar_Falc„o#
 HT_FLASHER#Armadilha_Luminosa#
 HT_FREEZINGTRAP#Armadilha_Congelante#
 HT_LANDMINE#Armadilha_Atordoante#
 HT_REMOVETRAP#Remover_Armadilha#
 HT_TALKIEBOX#Mensagem_Secreta#
-HT_SANDMAN#Armadilha_Son√≠fera#
+HT_SANDMAN#Armadilha_SonÌfera#
 HT_SHOCKWAVE#Armadilha_Extenuante#
 HT_SKIDTRAP#Armadilha_Escorregadia#
 HT_SPRINGTRAP#Desativar_Armadilha#
-HT_STEELCROW#Garras_de_A√ßo#
+HT_STEELCROW#Garras_de_AÁo#
 WZ_FIREPILLAR#Coluna_de_Fogo#
 WZ_SIGHTRASHER#Supernova#
 WZ_FIREIVY#Hera_de_Fogo#
 WZ_METEOR#Chuva_de_Meteoros#
-WZ_JUPITEL#Trov√£o_de_J√∫piter#
+WZ_JUPITEL#Trov„o_de_J˙piter#
 WZ_VERMILION#Ira_de_Thor#
-WZ_WATERBALL#Esfera_d'√Ågua#
+WZ_WATERBALL#Esfera_d'¡gua#
 WZ_ICEWALL#Barreira_de_Gelo#
 WZ_FROSTNOVA#Congelar#
 WZ_STORMGUST#Nevasca#
 WZ_EARTHSPIKE#Coluna_de_Pedra#
-WZ_HEAVENDRIVE#F√∫ria_da_Terra#
-WZ_QUAGMIRE#P√¢ntano_dos_Mortos#
+WZ_HEAVENDRIVE#F˙ria_da_Terra#
+WZ_QUAGMIRE#P‚ntano_dos_Mortos#
 WZ_ESTIMATION#Sentido_Sobrenatural#
-AS_RIGHT#Per√≠cia_com_M√£o_Direita#
-AS_LEFT#Per√≠cia_com_M√£o_Esquerda#
-AS_KATAR#Per√≠cia_com_Katar#
+AS_RIGHT#PerÌcia_com_M„o_Direita#
+AS_LEFT#PerÌcia_com_M„o_Esquerda#
+AS_KATAR#PerÌcia_com_Katar#
 AS_CLOAKING#Furtividade#
-AS_SONICBLOW#L√¢minas_Destruidoras#
+AS_SONICBLOW#L‚minas_Destruidoras#
 AS_GRIMTOOTH#Tocaia#
 AS_ENCHANTPOISON#Envenenar_Arma#
 AS_POISONREACT#Refletir_Veneno#
-AS_VENOMDUST#N√©voa_T√≥xica#
-AS_SPLASHER#Explos√£o_T√≥xica#
+AS_VENOMDUST#NÈvoa_TÛxica#
+AS_SPLASHER#Explos„o_TÛxica#
 BS_IRON#Trabalhar_Ferro#
-BS_STEEL#Trabalhar_A√ßo#
+BS_STEEL#Trabalhar_AÁo#
 BS_ENCHANTEDSTONE#Produzir_Pedra_Fundamental#
-BS_ORIDEOCON#Per√≠cia_com_Oridecon#
+BS_ORIDEOCON#PerÌcia_com_Oridecon#
 BS_DAGGER#Forjar_Adaga#
 BS_SWORD#Forjar_Espada#
-BS_TWOHANDSWORD#Forjar_Espada_de_Duas_M√£os#
+BS_TWOHANDSWORD#Forjar_Espada_de_Duas_M„os#
 BS_AXE#Forjar_Machado#
-BS_MACE#Forjar_Ma√ßa#
+BS_MACE#Forjar_MaÁa#
 BS_KNUCKLE#Forjar_Soqueira#
-BS_SPEAR#Forjar_Lan√ßa#
+BS_SPEAR#Forjar_LanÁa#
 BS_HILTBINDING#Punho_Firme#
-BS_FINDINGORE#Encontrar_Min√©rio#
-BS_WEAPONRESEARCH#Per√≠cia_em_Armamento#
+BS_FINDINGORE#Encontrar_MinÈrio#
+BS_WEAPONRESEARCH#PerÌcia_em_Armamento#
 BS_REPAIRWEAPON#Consertar_Armas#
-BS_SKINTEMPER#Resist√™ncia_ao_Fogo#
+BS_SKINTEMPER#ResistÍncia_ao_Fogo#
 BS_HAMMERFALL#Martelo_de_Thor#
 BS_ADRENALINE#Adrenalina_Pura#
 BS_WEAPONPERFECT#Manejo_Perfeito#
-BS_OVERTHRUST#For√ßa_Violenta#
+BS_OVERTHRUST#ForÁa_Violenta#
 BS_MAXIMIZE#Amplificar_Poder#
 NV_FIRSTAID#Primeiros_Socorros#
 SM_MOVINGRECOVERY#Recuperar_HP_em_Movimento#
@@ -145,25 +145,25 @@ AC_MAKINGARROW#Fabricar_Flechas#
 TF_SPRINKLESAND#Chutar_Areia#
 MC_CARTREVOLUTION#Cavalo-de-Pau#
 AL_HOLYLIGHT#Luz_Divina#
-MG_ENERGYCOAT#Prote√ß√£o_Arcana#
+MG_ENERGYCOAT#ProteÁ„o_Arcana#
 NV_TRICKDEAD#Fingir_de_Morto#
 SM_FATALBLOW#Ataque_Fatal#
 AC_CHARGEARROW#Disparo_Violento#
 TF_BACKSLIDING#Recuar#
 MC_CHANGECART#Personalizar_Carrinho#
-SM_AUTOBERSERK#Instinto_de_Sobreviv√™ncia#
+SM_AUTOBERSERK#Instinto_de_SobrevivÍncia#
 TF_PICKSTONE#Procurar_Pedras#
 TF_THROWSTONE#Arremessar_Pedra#
 MC_LOUD#Grito_de_Guerra#
-GD_APPROVAL#Autoriza√ß√£o_Oficial#
+GD_APPROVAL#AutorizaÁ„o_Oficial#
 GD_KAFRACONTRACT#Contrato_com_Kafra#
-GD_GUARDRESEARCH#Comandar_Guardi√µes#
+GD_GUARDRESEARCH#Comandar_Guardiıes#
 GD_CHARISMA#Carisma#
-GD_EXTENSION#Expandir_Cl√£#
-RG_SNATCHER#M√£os_Leves#
+GD_EXTENSION#Expandir_Cl„#
+RG_SNATCHER#M„os_Leves#
 RG_STEALCOIN#Afanar#
 RG_BACKSTAP#Apunhalar#
-RG_TUNNELDRIVE#T√∫nel_de_Fuga#
+RG_TUNNELDRIVE#T˙nel_de_Fuga#
 RG_RAID#Ataque_Surpresa#
 RG_STRIPWEAPON#Remover_Arma#
 RG_STRIPSHIELD#Remover_Escudo#
@@ -175,20 +175,20 @@ RG_FLAGGRAFFITI#Pichar#
 RG_CLEANER#Faxina#
 RG_GANGSTER#Malandragem#
 RG_COMPULSION#Extorquir#
-RG_PLAGIARISM#Pl√°gio#
-AM_AXEMASTERY#Per√≠cia_com_Machado#
-AM_LEARNINGPOTION#Pesquisa_de_Po√ß√µes#
-AM_PHARMACY#Preparar_Po√ß√£o#
+RG_PLAGIARISM#Pl·gio#
+AM_AXEMASTERY#PerÌcia_com_Machado#
+AM_LEARNINGPOTION#Pesquisa_de_PoÁıes#
+AM_PHARMACY#Preparar_PoÁ„o#
 AM_DEMONSTRATION#Fogo_Grego#
-AM_ACIDTERROR#Terror_√Åcido#
-AM_POTIONPITCHER#Arremessar_Po√ß√£o#
+AM_ACIDTERROR#Terror_¡cido#
+AM_POTIONPITCHER#Arremessar_PoÁ„o#
 AM_CANNIBALIZE#Criar_Monstro_Planta#
 AM_SPHEREMINE#Criar_Esfera_Marinha#
 AM_CP_WEAPON#Revestir_Arma#
 AM_CP_SHIELD#Revestir_Escudo#
 AM_CP_ARMOR#Revestir_Armadura#
 AM_CP_HELM#Revestir_Capacete#
-AM_BIOETHICS#Bio√©tica#
+AM_BIOETHICS#BioÈtica#
 AM_BIOTECHNOLOGY#Biotecnologia#
 AM_CREATECREATURE#Criar_Criatura#
 AM_CULTIVATION#Cultivo#
@@ -198,42 +198,42 @@ AM_REST#Vaporizar#
 AM_DRILLMASTER#Semeadeira#
 AM_HEALHOMUN#Curar_Homunculus#
 AM_RESURRECTHOMUN#Ressuscitar_Homunculus#
-CR_TRUST#F√©#
+CR_TRUST#FÈ#
 CR_AUTOGUARD#Bloqueio#
-CR_SHIELDCHARGE#Puni√ß√£o_Divina#
+CR_SHIELDCHARGE#PuniÁ„o_Divina#
 CR_SHIELDBOOMERANG#Escudo_Bumerangue#
 CR_REFLECTSHIELD#Escudo_Refletor#
 CR_HOLYCROSS#Crux_Divinum#
 CR_GRANDCROSS#Crux_Magnun#
-CR_DEVOTION#Reden√ß√£o#
-CR_PROVIDENCE#Divina_Provid√™ncia#
+CR_DEVOTION#RedenÁ„o#
+CR_PROVIDENCE#Divina_ProvidÍncia#
 CR_DEFENDER#Aura_Sagrada#
-CR_SPEARQUICKEN#Rapidez_com_Lan√ßa#
+CR_SPEARQUICKEN#Rapidez_com_LanÁa#
 MO_IRONHAND#Punhos_de_Ferro#
-MO_SPIRITSRECOVERY#Medita√ß√£o#
+MO_SPIRITSRECOVERY#MeditaÁ„o#
 MO_CALLSPIRITS#Invocar_Esfera_Espiritual#
 MO_ABSORBSPIRITS#Absorver_Esferas_Espirituais#
 MO_TRIPLEATTACK#Combo_Triplo#
-MO_BODYRELOCATION#Passo_Et√©reo#
-MO_DODGE#Cair_das_P√©talas#
-MO_INVESTIGATE#Impacto_Ps√≠quico#
+MO_BODYRELOCATION#Passo_EtÈreo#
+MO_DODGE#Cair_das_PÈtalas#
+MO_INVESTIGATE#Impacto_PsÌquico#
 MO_FINGEROFFENSIVE#Disparo_de_Esferas_Espirituais#
 MO_STEELBODY#Corpo_Fechado#
 MO_BLADESTOP#Dilema#
-MO_EXPLOSIONSPIRITS#F√∫ria_Interior#
+MO_EXPLOSIONSPIRITS#F˙ria_Interior#
 MO_EXTREMITYFIST#Punho_Supremo_de_Asura#
-MO_CHAINCOMBO#Combo_Qu√°druplo#
-MO_COMBOFINISH#O_√öltimo_Drag√£o#
+MO_CHAINCOMBO#Combo_Qu·druplo#
+MO_COMBOFINISH#O_⁄ltimo_Drag„o#
 SA_ADVANCEDBOOK#Estudo_de_Livros#
 SA_CASTCANCEL#Cancelar_magia#
-SA_FREECAST#Conjura√ß√£o_Livre#
+SA_FREECAST#ConjuraÁ„o_Livre#
 SA_SPELLBREAKER#Desconcentrar#
 SA_AUTOSPELL#Desejo_Arcano#
-SA_MAGICROD#Espelho_M√°gico#
-SA_VOLCANO#Vulc√£o#
-SA_DELUGE#Dil√∫vio#
-SA_VIOLENTGALE#Furac√£o#
-SA_BARRENZONE#Terra_Est√©ril#
+SA_MAGICROD#Espelho_M·gico#
+SA_VOLCANO#Vulc„o#
+SA_DELUGE#Dil˙vio#
+SA_VIOLENTGALE#Furac„o#
+SA_BARRENZONE#Terra_EstÈril#
 SA_LANDPROTECTOR#Proteger_Terreno#
 SA_FLAMELAUNCHER#Encantar_com_Chama#
 SA_FROSTWEAPON#Encantar_com_Geada#
@@ -243,118 +243,118 @@ SA_DRAGONOLOGY#Dragonologia#
 SA_DISPELL#Desencantar#
 SA_ABRACADABRA#Abracadabra#
 SA_MONOCELL#Mono_Cell#
-SA_CLASSCHANGE#Transforma√ß√£o#
+SA_CLASSCHANGE#TransformaÁ„o#
 SA_SUMMONMONSTER#Invocar_Monstro#
-SA_REVERSEORCISH#Transforma√ß√£o_Orc#
-SA_DEATH#Exterm√≠nio#
+SA_REVERSEORCISH#TransformaÁ„o_Orc#
+SA_DEATH#ExtermÌnio#
 SA_FORTUNE#Toque_de_Midas#
 SA_TAMINGMONSTER#Hipnose#
-SA_QUESTION#Interrogat√≥rio#
+SA_QUESTION#InterrogatÛrio#
 SA_GRAVITY#Gravity#
 SA_LEVELUP#Level_Up!#
-SA_INSTANTDEATH#Suic√≠dio#
-SA_FULLRECOVERY#Recupera√ß√£o#
+SA_INSTANTDEATH#SuicÌdio#
+SA_FULLRECOVERY#RecuperaÁ„o#
 SA_COMA#Coma#
 BD_ADAPTATION#Encerramento#
 BD_ENCORE#Bis#
 BD_LULLABY#Cantiga_de_Ninar#
 BD_RICHMANKIM#Banquete_de_Njord#
-BD_ETERNALCHAOS#Ritmo_Ca√≥tico#
+BD_ETERNALCHAOS#Ritmo_CaÛtico#
 BD_DRUMBATTLEFIELD#Rufar_dos_Tambores#
 BD_RINGNIBELUNGEN#Anel_dos_Nibelungos#
 BD_ROKISWEIL#Lamento_de_Loki#
-BD_INTOABYSS#Can√ß√£o_Preciosa#
+BD_INTOABYSS#CanÁ„o_Preciosa#
 BD_SIEGFRIED#Ode_a_Siegfried#
-BD_RAGNAROK#Ragnar√∂k#
-BA_MUSICALLESSON#Li√ß√µes_de_M√∫sica#
-BA_MUSICALSTRIKE#Flecha_Mel√≥dica#
-BA_DISSONANCE#Disson√¢ncia#
+BD_RAGNAROK#Ragnarˆk#
+BA_MUSICALLESSON#LiÁıes_de_M˙sica#
+BA_MUSICALSTRIKE#Flecha_MelÛdica#
+BA_DISSONANCE#Disson‚ncia#
 BA_FROSTJOKE#Piada_Infame#
 BA_WHISTLE#Assovio#
-BA_ASSASSINCROSS#Crep√∫sculo_Sangrento#
+BA_ASSASSINCROSS#Crep˙sculo_Sangrento#
 BA_POEMBRAGI#Poema_de_Bragi#
-BA_APPLEIDUN#Ma√ß√£s_de_Idun#
-DC_DANCINGLESSON#Li√ß√µes_de_Dan√ßa#
+BA_APPLEIDUN#MaÁ„s_de_Idun#
+DC_DANCINGLESSON#LiÁıes_de_DanÁa#
 DC_THROWARROW#Estilingue#
-DC_UGLYDANCE#Dan√ßa_do_Ventre#
-DC_SCREAM#Esc√¢ndalo#
+DC_UGLYDANCE#DanÁa_do_Ventre#
+DC_SCREAM#Esc‚ndalo#
 DC_HUMMING#Sibilo#
-DC_DONTFORGETME#N√£o_Me_Abandones#
+DC_DONTFORGETME#N„o_Me_Abandones#
 DC_FORTUNEKISS#Beijo_da_Sorte#
-DC_SERVICEFORYOU#Dan√ßa_Cigana#
+DC_SERVICEFORYOU#DanÁa_Cigana#
 WE_MALE#Amor_Verdadeiro#
 WE_FEMALE#Amor_Eterno#
-WE_CALLPARTNER#Saudades_de_Voc√™#
-LK_AURABLADE#L√¢mina de Aura#
+WE_CALLPARTNER#Saudades_de_VocÍ#
+LK_AURABLADE#L‚mina de Aura#
 LK_PARRYING#Aparar Golpe#
-LK_CONCENTRATION#Dedica√ß√£o#
+LK_CONCENTRATION#DedicaÁ„o#
 LK_TENSIONRELAX#Relaxar#
 LK_BERSERK#Frenesi#
 PA_PRESSURE#Gloria Domini#
-PA_SACRIFICE#Sacrif√≠cio do M√°rtir#
+PA_SACRIFICE#SacrifÌcio do M·rtir#
 PA_GOSPEL#Canto de Batalha#
 HP_ASSUMPTIO#Assumptio#
-HP_BASILICA#Bas√≠lica#
-HP_MEDITATIO#Medita√ß√£o#
+HP_BASILICA#BasÌlica#
+HP_MEDITATIO#MeditaÁ„o#
 HW_SOULDRAIN#Dreno de Alma#
-HW_MAGICCRASHER#Esmagamento M√°gico#
-HW_MAGICPOWER#Amplifica√ß√£o M√≠stica#
-CH_PALMSTRIKE#Golpe da Palma em F√∫ria#
+HW_MAGICCRASHER#Esmagamento M·gico#
+HW_MAGICPOWER#AmplificaÁ„o MÌstica#
+CH_PALMSTRIKE#Golpe da Palma em F˙ria#
 CH_TIGERFIST#Punho do Tigre#
 CH_CHAINCRUSH#Combo Esmagador#
 PF_HPCONVERSION#Indulgir#
 PF_SOULCHANGE#Exalar Alma#
-PF_SOULBURN#Sif√£o de Alma#
-ASC_KATAR#Per√≠cia com Katar Avan√ßada#
+PF_SOULBURN#Sif„o de Alma#
+ASC_KATAR#PerÌcia com Katar AvanÁada#
 ASC_BREAKER#Destruidor de Almas#
-SN_SIGHT#Vis√£o Real#
-SN_FALCONASSAULT#Assalto do Falc√£o#
+SN_SIGHT#Vis„o Real#
+SN_FALCONASSAULT#Assalto do Falc„o#
 SN_SHARPSHOOTING#Tiro Preciso#
 SN_WINDWALK#Caminho do Vento#
-WS_MELTDOWN#Golpe Estilha√ßante#
+WS_MELTDOWN#Golpe EstilhaÁante#
 WS_CREATECOIN#Criar Moeda#
 WS_CREATENUGGET#Criar Pepita#
 WS_CARTBOOST#Impulso no Carrinho#
-WS_SYSTEMCREATE#Criar M√°quina Autom√°tica de Ataque#
+WS_SYSTEMCREATE#Criar M·quina Autom·tica de Ataque#
 ST_CHASEWALK#Espreitar#
 ST_REJECTSWORD#Instinto de Defesa#
 ST_STEALBACKPACK#Roubar Bolso#
 CR_ALCHEMY#Alquimia#
-CR_SYNTHESISPOTION#S√≠ntese de Po√ß√£o#
-CG_ARROWVULCAN#Vulc√£o de Flechas#
-CG_MOONLIT#B√™n√ß√£o Protetora#
+CR_SYNTHESISPOTION#SÌntese de PoÁ„o#
+CG_ARROWVULCAN#Vulc„o de Flechas#
+CG_MOONLIT#BÍnÁ„o Protetora#
 CG_MARIONETTE#Controle de Marionete#
 LK_SPIRALPIERCE#Perfurar em Espiral#
-LK_HEADCRUSH#Golpe Traum√°tico#
+LK_HEADCRUSH#Golpe Traum·tico#
 LK_JOINTBEAT#Ataque Vital#
-HW_NAPALMVULCAN#Vulc√£o Napalm#
+HW_NAPALMVULCAN#Vulc„o Napalm#
 CH_SOULCOLLECT#Zen#
 PF_MINDBREAKER#Enlouquecedor#
-PF_MEMORIZE#Presci√™ncia#
+PF_MEMORIZE#PresciÍncia#
 PF_FOGWALL#Bruma Ofuscante#
-PF_SPIDERWEB#Pris√£o da Teia#
+PF_SPIDERWEB#Pris„o da Teia#
 ASC_METEORASSAULT#Impacto Meteoro#
 ASC_CDP#Criar Veneno Mortal#
 ASC_EDP#Encantar com Veneno Mortal#
-WE_BABY#M√£e, Pai, amo voc√™s!#
-WE_CALLPARENT#M√£e, Pai, cad√™ voc√™s?#
-WE_CALLBABY#Vem c√°, filhote!#
-GD_GLORYGUILD#Gl√≥ria da Guilda#
-GD_LEADERSHIP#Grande Lideran√ßa#
-GD_GLORYWOUNDS#Ferimentos de Gl√≥ria#
-GD_SOULCOLD#Cora√ß√£o de Frio#
+WE_BABY#M„e, Pai, amo vocÍs!#
+WE_CALLPARENT#M„e, Pai, cadÍ vocÍs?#
+WE_CALLBABY#Vem c·, filhote!#
+GD_GLORYGUILD#GlÛria da Guilda#
+GD_LEADERSHIP#Grande LideranÁa#
+GD_GLORYWOUNDS#Ferimentos de GlÛria#
+GD_SOULCOLD#CoraÁ„o de Frio#
 GD_HAWKEYES#Olhar Apurado#
 GD_BATTLEORDER#Comando de Batalha#
-GD_REGENERATION#Regenera√ß√£o#
-GD_RESTORE#Restaura√ß√£o#
+GD_REGENERATION#RegeneraÁ„o#
+GD_RESTORE#RestauraÁ„o#
 GD_EMERGENCYCALL#Chamado Urgente#
-GD_GUARDUP#Fortalecer Guardi√µes#
+GD_GUARDUP#Fortalecer Guardiıes#
 GD_DEVELOPMENT#Desenvolvimento Permanente#
 ST_PRESERVE#Preservar#
-ST_FULLSTRIP#Remo√ß√£o Total#
+ST_FULLSTRIP#RemoÁ„o Total#
 WS_WEAPONREFINE#Atualizar Arma#
-CR_SLIMPITCHER#Arremessar Po√ß√£o Compacta#
-CR_FULLPROTECTION#Prote√ß√£o Qu√≠mica Total#
+CR_SLIMPITCHER#Arremessar PoÁ„o Compacta#
+CR_FULLPROTECTION#ProteÁ„o QuÌmica Total#
 ITM_TOMAHAWK#Arremessar Tomahawk...#
 
 // -- 10.2 + 10.3 ????
@@ -369,52 +369,52 @@ TK_TURNKICK#Rasteira#
 TK_READYCOUNTER#Postura do Contrachute#
 TK_COUNTER#Contrachute#
 TK_DODGE#Cambalhota#
-TK_JUMPKICK#Chute A√©reo#
-TK_HPTIME#Tr√©gua R√°pida#
-TK_SPTIME#Retiro R√°pido#
+TK_JUMPKICK#Chute AÈreo#
+TK_HPTIME#TrÈgua R·pida#
+TK_SPTIME#Retiro R·pido#
 TK_POWER#Kihop#
 TK_SEVENWIND#Brisa Leve#
 TK_HIGHJUMP#Salto#
-TK_MISSION#Miss√£o Tae Kwon D√¥#	
-SG_FEEL#Percep√ß√£o Solar, Lunar e Estelar#
+TK_MISSION#Miss„o Tae Kwon DÙ#	
+SG_FEEL#PercepÁ„o Solar, Lunar e Estelar#
 SG_SUN_WARM#Calor Solar#
 SG_MOON_WARM#Calor Lunar#
 SG_STAR_WARM#Calor Estelar#
-SG_SUN_COMFORT#Prote√ß√£o Solar#
-SG_MOON_COMFORT#Prote√ß√£o Lunar#
-SG_STAR_COMFORT#Prote√ß√£o Estelar#
-SG_HATE#Oposi√ß√£o Solar, Lunar e Estelar#
-SG_SUN_ANGER#F√∫ria Solar#
-SG_MOON_ANGER#F√∫ria Lunar#
-SG_STAR_ANGER#F√∫ria Estelar#
-SG_SUN_BLESS#B√™n√ß√£o Solar#
-SG_MOON_BLESS#B√™n√ß√£o Lunar#
-SG_STAR_BLESS#B√™n√ß√£o Estelar#
+SG_SUN_COMFORT#ProteÁ„o Solar#
+SG_MOON_COMFORT#ProteÁ„o Lunar#
+SG_STAR_COMFORT#ProteÁ„o Estelar#
+SG_HATE#OposiÁ„o Solar, Lunar e Estelar#
+SG_SUN_ANGER#F˙ria Solar#
+SG_MOON_ANGER#F˙ria Lunar#
+SG_STAR_ANGER#F˙ria Estelar#
+SG_SUN_BLESS#BÍnÁ„o Solar#
+SG_MOON_BLESS#BÍnÁ„o Lunar#
+SG_STAR_BLESS#BÍnÁ„o Estelar#
 SG_DEVIL#Sombra Solar, Lunar e Estelar#
-SG_FRIEND#Aux√≠lio Solar, Lunar e Estelar#
-SG_KNOWLEDGE#Transmiss√£o Solar, Lunar e Estelar#
-SG_FUSION#Uni√£o Solar, Lunar e Estelar#
-SL_ALCHEMIST#Esp√≠rito do Alquimista#
-AM_BERSERKPITCHER#Arremessar Po√ß√£o da F√∫ria Selvagem#
-AM_TWILIGHT1#Cria√ß√£o Espiritual de Po√ß√µes#
-AM_TWILIGHT2#Cria√ß√£o Espiritual de Po√ß√µes#
-AM_TWILIGHT3#Cria√ß√£o Espiritual de Po√ß√µes#
-SL_MONK#Esp√≠rito do Monge#
-SL_STAR#Esp√≠rito do Mestre Taekwon#
-SL_SAGE#Esp√≠rito do S√°bio#
-SL_CRUSADER#Esp√≠rito do Templ√°rio#
-SL_SUPERNOVICE#Esp√≠rito do Superaprendiz#
-SL_KNIGHT#Esp√≠rito do Cavaleiro#
-SL_WIZARD#Esp√≠rito do Bruxo#
-SL_PRIEST#Esp√≠rito do Sacerdote#
-SL_BARDDANCER#Esp√≠rito do Artista#
-SL_ROGUE#Esp√≠rito do Arruaceiro#
-SL_ASSASIN#Esp√≠rito do Mercen√°rio#
-SL_BLACKSMITH#Esp√≠rito do Ferreiro#
+SG_FRIEND#AuxÌlio Solar, Lunar e Estelar#
+SG_KNOWLEDGE#Transmiss„o Solar, Lunar e Estelar#
+SG_FUSION#Uni„o Solar, Lunar e Estelar#
+SL_ALCHEMIST#EspÌrito do Alquimista#
+AM_BERSERKPITCHER#Arremessar PoÁ„o da F˙ria Selvagem#
+AM_TWILIGHT1#CriaÁ„o Espiritual de PoÁıes#
+AM_TWILIGHT2#CriaÁ„o Espiritual de PoÁıes#
+AM_TWILIGHT3#CriaÁ„o Espiritual de PoÁıes#
+SL_MONK#EspÌrito do Monge#
+SL_STAR#EspÌrito do Mestre Taekwon#
+SL_SAGE#EspÌrito do S·bio#
+SL_CRUSADER#EspÌrito do Templ·rio#
+SL_SUPERNOVICE#EspÌrito do Superaprendiz#
+SL_KNIGHT#EspÌrito do Cavaleiro#
+SL_WIZARD#EspÌrito do Bruxo#
+SL_PRIEST#EspÌrito do Sacerdote#
+SL_BARDDANCER#EspÌrito do Artista#
+SL_ROGUE#EspÌrito do Arruaceiro#
+SL_ASSASIN#EspÌrito do Mercen·rio#
+SL_BLACKSMITH#EspÌrito do Ferreiro#
 BS_ADRENALINE2#Adrenalina Concentrada#
-SL_HUNTER#Esp√≠rito do Ca√ßador#
-SL_SOULLINKER#Esp√≠rito do Espiritualista#
-SL_HIGH#Esp√≠rito dos Transcendentais#
+SL_HUNTER#EspÌrito do CaÁador#
+SL_SOULLINKER#EspÌrito do Espiritualista#
+SL_HIGH#EspÌrito dos Transcendentais#
 BS_ADRENALINE2#Adrenalina Concentrada#
 SL_KAIZEL#Kaizel#
 SL_KAAHI#Kaahi#
@@ -429,77 +429,77 @@ SL_SKE#Eske#
 SL_SKA#Eska#
 ST_PRESERVE#Preservar#
 WS_WEAPONREFINE#Aprimorar Armamento#
-CR_FULLPROTECTION#Prote√ß√£o Qu√≠mica Total#
+CR_FULLPROTECTION#ProteÁ„o QuÌmica Total#
 ITM_TOMAHAWK#Arremessar Tomahawk#
-PA_SHIELDCHAIN#Choque R√°pido#
-HP_MANARECHARGE#Riqueza Esp√≠rito#
-PF_DOUBLECASTING#Lan√ßas Duplas#
+PA_SHIELDCHAIN#Choque R·pido#
+HP_MANARECHARGE#Riqueza EspÌrito#
+PF_DOUBLECASTING#LanÁas Duplas#
 HW_GANBANTEIN#Ganbantein#
 HW_GRAVITATION#Campo Gravitacional#
 WS_CARTTERMINATION#Choque de Carrinho#
-WS_OVERTHRUSTMAX#For√ßa Violent√≠ssima#
+WS_OVERTHRUSTMAX#ForÁa ViolentÌssima#
 CG_LONGINGFREEDOM#Grito de Liberdade#
-CG_HERMODE#Bast√£o de Hermod#
+CG_HERMODE#Bast„o de Hermod#
 CG_TAROTCARD#Destino nas Cartas#
-CR_ACIDDEMONSTRATION#Bomba √Åcida#
+CR_ACIDDEMONSTRATION#Bomba ¡cida#
 CR_CULTIVATION#Cultivar Planta#
-KN_ONEHAND#Rapidez com Uma M√£o#
+KN_ONEHAND#Rapidez com Uma M„o#
 HT_POWER#Ataque da Fera#
-HLIF_HEAL#Cura pelas M√£os#
+HLIF_HEAL#Cura pelas M„os#
 HLIF_AVOID#Bater em Retirada#
 HLIF_BRAIN#Cirurgia Cerebral#
-HLIF_CHANGE#Esfor√ßo Mental#
+HLIF_CHANGE#EsforÁo Mental#
 HAMI_CASTLE#Troca de Lugar#
 HAMI_DEFENCE#Fortaleza#
 HAMI_SKIN#Pele de Adamantium#
 HAMI_BLOODLUST#Sede de Sangue#
 HFLI_MOON#Pica-Pau#
-HFLI_FLEET#V√¥o Fren√©tico#
-HFLI_SPEED#V√¥o Acelerado#
+HFLI_FLEET#VÙo FrenÈtico#
+HFLI_SPEED#VÙo Acelerado#
 HFLI_SBR44#S.B.R.44#
 HVAN_CAPRICE#Capricho#
-HVAN_CHAOTIC#B√™n√ß√£o Ca√≥tica#
-HVAN_INSTRUCT#Mudan√ßa de Planos#
-HVAN_EXPLOSION#Autodestrui√ß√£o#
-KN_CHARGEATK#Avan√ßo Ofensivo#
-CR_SHRINK#Submiss√£o#
-AS_SONICACCEL#L√¢minas Aceleradas#
+HVAN_CHAOTIC#BÍnÁ„o CaÛtica#
+HVAN_INSTRUCT#MudanÁa de Planos#
+HVAN_EXPLOSION#AutodestruiÁ„o#
+KN_CHARGEATK#AvanÁo Ofensivo#
+CR_SHRINK#Submiss„o#
+AS_SONICACCEL#L‚minas Aceleradas#
 AS_VENOMKNIFE#Faca Envenenada#
 RG_CLOSECONFINE#Confinamento#
-WZ_SIGHTBLASTER#Explos√£o Protetora#
+WZ_SIGHTBLASTER#Explos„o Protetora#
 SA_CREATECON#Criar Conversor Elemental#
-SA_ELEMENTWATER#Mudan√ßa Elemental - √Ågua#
-SA_ELEMENTGROUND#Mudan√ßa Elemental - Terra#
-SA_ELEMENTFIRE#Mudan√ßa Elemental - Fogo#
-SA_ELEMENTWIND#Mudan√ßa Elemental - Vento#
+SA_ELEMENTWATER#MudanÁa Elemental - ¡gua#
+SA_ELEMENTGROUND#MudanÁa Elemental - Terra#
+SA_ELEMENTFIRE#MudanÁa Elemental - Fogo#
+SA_ELEMENTWIND#MudanÁa Elemental - Vento#
 HT_PHANTASMIC#Flecha Fantasma#
 BA_PANGVOICE#Voz Dolorosa#
 DC_WINKCHARM#Piscadela#
 BS_UNFAIRLYTRICK#Venda Duvidosa#
-BS_GREED#Gan√¢ncia#
-PR_REDEMPTIO#Mart√≠rio#
-MO_KITRANSLATION#Concess√£o Espiritual#
+BS_GREED#Gan‚ncia#
+PR_REDEMPTIO#MartÌrio#
+MO_KITRANSLATION#Concess„o Espiritual#
 MO_BALKYOUNG#Punhos Intensos#
-NJ_TOBIDOUGU#Pr√°tica de Arremesso de Shuriken#
+NJ_TOBIDOUGU#Pr·tica de Arremesso de Shuriken#
 NJ_SYURIKEN#Arremessar Shuriken#
 NJ_KUNAI#Arremessar Kunai#
 NJ_HUUMA#Arremessar Shuriken Huuma#
 NJ_ZENYNAGE#Chuva de Moedas#
 NJ_TATAMIGAESHI#Virar Tatami#
-NJ_KASUMIKIRI#Corte da N√©voa#
+NJ_KASUMIKIRI#Corte da NÈvoa#
 NJ_SHADOWJUMP#Salto das Sombras#
 NJ_KIRIKAGE#Corte das Sombras#
 NJ_UTSUSEMI#Troca de Pele#
 NJ_BUNSINJYUTSU#Imagem Falsa#
-NJ_NINPOU#Per√≠cia Ninja#
-NJ_KOUENKA#P√©talas Flamejantes#
+NJ_NINPOU#PerÌcia Ninja#
+NJ_KOUENKA#PÈtalas Flamejantes#
 NJ_KAENSIN#Escudo de Chamas#
-NJ_BAKUENRYU#Drag√£o Explosivo#
-NJ_HYOUSENSOU#Lan√ßa Congelante#
-NJ_SUITON#Evas√£o Aqu√°tica#
+NJ_BAKUENRYU#Drag„o Explosivo#
+NJ_HYOUSENSOU#LanÁa Congelante#
+NJ_SUITON#Evas„o Aqu·tica#
 NJ_HYOUSYOURAKU#Grande Floco de Neve#
-NJ_HUUJIN#L√¢mina de Vento#
-NJ_RAIGEKISAI#Descarga El√©trica#
+NJ_HUUJIN#L‚mina de Vento#
+NJ_RAIGEKISAI#Descarga ElÈtrica#
 NJ_KAMAITACHI#Brisa Cortante#
 NJ_NEN#Aura Ninja#
 NJ_ISSEN#Ataque Mortal#
@@ -507,21 +507,21 @@ GS_GLITTERING#Cara ou Coroa#
 GS_FLING#Atirar Moedas#
 GS_TRIPLEACTION#Ataque Triplo#
 GS_BULLSEYE#Ataque Certeiro#
-GS_MADNESSCANCEL#Resist√™ncia Final#
-GS_ADJUSTMENT#P√¢nico do Justiceiro#
-GS_INCREASING#Aumentar Precis√£o#
-GS_MAGICALBULLET#Bala M√°gica#
+GS_MADNESSCANCEL#ResistÍncia Final#
+GS_ADJUSTMENT#P‚nico do Justiceiro#
+GS_INCREASING#Aumentar Precis„o#
+GS_MAGICALBULLET#Bala M·gica#
 GS_CRACKER#Tiro Bombinha#
 GS_SINGLEACTION#Ataque Concentrado#
 GS_SNAKEEYE#Olhos de Serpente#
-GS_CHAINACTION#Rea√ß√£o em Cadeia#
+GS_CHAINACTION#ReaÁ„o em Cadeia#
 GS_TRACKING#Rastrear o Alvo#
 GS_DISARM#Desarmar#
 GS_PIERCINGSHOT#Ferir Alvo#
 GS_RAPIDSHOWER#Rajada Certeira#
 GS_DESPERADO#Desperado#
 GS_GATLINGFEVER#Ataque Gatling#
-GS_DUST#Controle de Multid√£o#
+GS_DUST#Controle de Multid„o#
 GS_FULLBUSTER#Ataque Total#
 GS_SPREADATTACK#Disparo Espalhado#
 GS_GROUNDDRIFT#Mina do Justiceiro#
@@ -532,48 +532,379 @@ MS_MAGNUM#Impacto_Explosivo#
 MS_BOWLINGBASH#Impacto_de_Tyr#
 MS_PARRYING#Aparar_Golpe#
 MS_REFLECTSHIELD#Escudo_Refletor#
-MS_BERSERK#F√∫ria_Insana#
+MS_BERSERK#F˙ria_Insana#
 MA_DOUBLE#Rajada_de_Flechas#
 MA_SHOWER#Chuva_de_Flechas#
 MA_SKIDTRAP#Armadilha_Escorregadia#
 MA_LANDMINE#Armadilha_Atordoante#
-MA_SANDMAN#Armadilha_Son√≠fera#
+MA_SANDMAN#Armadilha_SonÌfera#
 MA_FREEZINGTRAP#Armadilha_Congelante#
 MA_REMOVETRAP#Remover_Armadilha#
 MA_CHARGEARROW#Carregar_Flechas#
 MA_SHARPSHOOTING#Tiro_Preciso#
 ML_PIERCE#Perfurar#
-ML_BRANDISH#Brandir_Lan√ßa#
+ML_BRANDISH#Brandir_LanÁa#
 ML_SPIRALPIERCE#Perfurar_em_Espiral#
 ML_DEFENDER#Aura_Sagrada#
 ML_AUTOGUARD#Bloqueio#
-ML_DEVOTION#Reden√ß√£o#
+ML_DEVOTION#RedenÁ„o#
 MER_MAGNIFICAT#Magnificat#
 MER_QUICKEN#Rapidez_com_Arma#
 MER_SIGHT#Chama_Reveladora#
 MER_CRASH#Impacto#
 MER_REGAIN#Recompor#
 MER_TENDER#Amolecer#
-MER_BENEDICTION#Bendi√ß√£o#
+MER_BENEDICTION#BendiÁ„o#
 MER_RECUPERATE#Restabelecer#
 MER_MENTALCURE#Cura_Mental#
 MER_COMPRESS#Compressa#
 MER_PROVOKE#Provocar#
-MER_AUTOBERSERK#Instinto_de_Sobreviv√™ncia_Autom√°tico#
+MER_AUTOBERSERK#Instinto_de_SobrevivÍncia_Autom·tico#
 MER_DECAGI#Diminuir_Agilidade#
-MER_SCAPEGOAT#Bode_Expiat√≥rio#
+MER_SCAPEGOAT#Bode_ExpiatÛrio#
 MER_LEXDIVINA#Lex_Divina#
 MER_ESTIMATION#Propriedades_do_Monstro#
 ALL_WEWISH#Noite Feliz!#
-GM_SANDMAN#Durma bem, minha crian√ßa#
+GM_SANDMAN#Durma bem, minha crianÁa#
 ALL_CATCRY#Rugido da Fera#
-ALL_REVERSEORCISH#Transforma√ß√£o Orc#
+ALL_REVERSEORCISH#TransformaÁ„o Orc#
 GD_ITEMEMERGENCYCALL#Chamado Urgente#
 NPC_HELLPOWER#Poder Infernal#
 NPC_VAMPIRE_GIFT#Beijo do Vampiro#
-CASH_BLESSING#B√™n√ß√£o em Grupo#
+CASH_BLESSING#BÍnÁ„o em Grupo#
 CASH_INCAGI#Aumentar Agilidade em Grupo#
 CASH_ASSUMPTIO#Assumptio em Grupo#
 NPC_STONESKIN#Pele de Pedra#
 NPC_ANTIMAGIC#Anti-Magia#
-NPC_DRAGONFEAR#F√∫ria do Drag√£o#
+NPC_DRAGONFEAR#F˙ria do Drag„o#
+
+// Rune Knight
+RK_ENCHANTBLADE#Encantar L‚mina#
+RK_SONICWAVE#Onda de Choque#
+RK_DEATHBOUND#Revidar Dano#
+RK_HUNDREDSPEAR#LanÁa das Mil Pontas#
+RK_WINDCUTTER#Vento Cortante#
+RK_IGNITIONBREAK#Impacto Flamejante#
+RK_DRAGONTRAINING#Adestrar Drag„o#
+RK_DRAGONBREATH#Sopro do Drag„o#
+RK_DRAGONHOWLING#Rugido do Drag„o#
+RK_RUNEMASTERY#PerÌcia em Runas#
+RK_MILLENNIUMSHIELD#Escudos Milenares#
+RK_CRUSHSTRIKE#Golpe Tit‚nico#
+RK_REFRESH#PurificaÁ„o#
+RK_GIANTGROWTH#ForÁa Tit‚nica#
+RK_STONEHARDSKIN#Escamas Rochosas#
+RK_VITALITYACTIVATION#Vitalidade R˙nica#
+RK_STORMBLAST#Explos„o R˙nica#
+RK_FIGHTINGSPIRIT#Aura de Combate#
+RK_ABUNDANCE#RegeneraÁ„o Espiritual#
+RK_PHANTOMTHRUST#Arp„o#
+
+// Guillotine Cross
+GC_VENOMIMPRESS#Potencializar Veneno#
+GC_CROSSIMPACT#L‚minas Retalhadoras#
+GC_DARKILLUSION#Ilus„o Sombria#
+GC_RESEARCHNEWPOISON#Pesquisa de Toxinas#
+GC_CREATENEWPOISON#Cria Toxina#
+GC_ANTIDOTE#Aplicar AntÌdoto#
+GC_POISONINGWEAPON#Aplicar Toxina#
+GC_WEAPONBLOCKING#Reflexo de Combate#
+GC_COUNTERSLASH#RetaliaÁ„o#
+GC_WEAPONCRUSH#EstilhaÁar Arma#
+GC_VENOMPRESSURE#Intoxicar#
+GC_POISONSMOKE#NÈvoa TÛxica#
+GC_CLOAKINGEXCEED#OcultaÁ„o#
+GC_PHANTOMMENACE#AmeaÁa Fantasma#
+GC_HALLUCINATIONWALK#Passos da Ilus„o#
+GC_ROLLINGCUTTER#L‚minas de Loki#
+GC_CROSSRIPPERSLASHER#Castigo de Loki#
+
+// Arch Bishop
+AB_JUDEX#Judex#
+AB_ANCILLA#Ancilla#
+AB_ADORAMUS#Adoramus#
+AB_CLEMENTIA#Crementia#
+AB_CANTO#Canto Candidus#
+AB_CHEAL#Coluceo Heal#
+AB_EPICLESIS#Epiclesis#
+AB_PRAEFATIO#Praefatio#
+AB_ORATIO#Oratio#
+AB_LAUDAAGNUS#Lauda Agnus#
+AB_LAUDARAMUS#Lauda Ramus#
+AB_EUCHARISTICA#Eucharistica#
+AB_RENOVATIO#Renovatio#
+AB_HIGHNESSHEAL#Highness Heal#
+AB_CLEARANCE#Clearance#
+AB_EXPIATIO#Expiatio#
+AB_DUPLELIGHT#Duple Light#
+AB_DUPLELIGHT_MELEE#Duple Light Melee#
+AB_DUPLELIGHT_MAGIC#Duple Light Magic#
+AB_SILENTIUM#Silentium#
+AB_SECRAMENT#Secrament#
+
+// Warlock
+WL_WHITEIMPRISON#ExÌlio#
+WL_SOULEXPANSION#Impacto Espiritual#
+WL_FROSTMISTY#Zero Absoluto#
+WL_JACKFROST#Esquife de Gelo#
+WL_MARSHOFABYSS#P‚ntano de Nifflheim#
+WL_RECOGNIZEDSPELL#Maestria Arcana#
+WL_SIENNAEXECRATE#F˙ria da Medusa#
+WL_RADIUS#Expans„o Arcana#
+WL_STASIS#DistorÁ„o Arcana#
+WL_DRAINLIFE#Drenar Vida#
+WL_CRIMSONROCK#Meteoro Escarlate#
+WL_HELLINFERNO#Chamas de Hela#
+WL_COMET#Cometa#
+WL_CHAINLIGHTNING#Corrente ElÈtrica#
+WL_CHAINLIGHTNING_ATK#Corrente ElÈtrica#
+WL_EARTHSTRAIN#Abalo SÌsmico#
+WL_TETRAVORTEX#Tetra Vortex#
+WL_TETRAVORTEX_FIRE#Tetra Vortex Fire#
+WL_TETRAVORTEX_WATER#Tetra Vortex Water#
+WL_TETRAVORTEX_WIND#Tetra Vortex Wind#
+WL_TETRAVORTEX_GROUND#Tetra Vortex Earth#
+WL_SUMMONFB#Invocar Esfera de Fogo#
+WL_SUMMONBL#Invocar Esfera de Vento#
+WL_SUMMONWB#Invocar Esfera de ¡gua#
+WL_SUMMON_ATK_FIRE#Invocar Esfera de Fogo#
+WL_SUMMON_ATK_WIND#Invocar Esfera de Vento#
+WL_SUMMON_ATK_WATER#Invocar Esfera de ¡gua#
+WL_SUMMON_ATK_GROUND#Invocar Esfera da Terra#
+WL_SUMMONSTONE#Invocar Esfera de Terra#
+WL_RELEASE#Disparo Arcano#
+WL_READING_SB#Estudo Arcano#
+WL_FREEZE_SP#Estudo Arcano AvanÁado#
+
+// Ranger
+RA_ARROWSTORM#Tempestade de Flechas#
+RA_FEARBREEZE#Disparo Selvagem#
+RA_RANGERMAIN#T·ticas de SobrevivÍncia#
+RA_AIMEDBOLT#Disparo Certeiro#
+RA_DETONATOR#Detonador#
+RA_ELECTRICSHOCKER#Armadilha Energizada#
+RA_CLUSTERBOMB#Bomba RelÛgio#
+RA_WUGMASTERY#Adestrar Lobo#
+RA_WUGRIDER#Montaria em Lobo#
+RA_WUGDASH#Corrida em Lobo#
+RA_WUGSTRIKE#Investida de Lobo#
+RA_WUGBITE#Mordida Feroz#
+RA_TOOTHOFWUG#Presas Afiadas#
+RA_SENSITIVEKEEN#Faro AguÁado#
+RA_CAMOUFLAGE#Camuflagme#
+RA_RESEARCHTRAP#PerÌcia com Armadilha#
+RA_MAGENTATRAP#Armadilha Escarlate#
+RA_COBALTTRAP#Armadilha Cobalto#
+RA_MAIZETRAP#Armadilha Ocre#
+RA_VERDURETRAP#Armadilha Esmeralda#
+RA_FIRINGTRAP#Armadilha Incendi·ria#
+RA_ICEBOUNDTRAP#Armadilha Glacial#
+
+// Mechanic
+NC_MADOLICENCE#LicenÁa de Pilotagem#
+NC_BOOSTKNUCKLE#Punho Foguete#
+NC_PILEBUNKER#Bate Estaca#
+NC_VULCANARM#Metralhadora#
+NC_FLAMELAUNCHER#LanÁa Chamas#
+NC_COLDSLOWER#G·s CriogÍnico#
+NC_ARMSCANNON#Canh„o#
+NC_ACCELERATION#AceleraÁ„o#
+NC_HOVERING#Planar#
+NC_F_SIDESLIDE#Propuls„o Dianteira#
+NC_B_SIDESLIDE#Propuls„o Traseira#
+NC_MAINFRAME#ReforÁar Estrutura#
+NC_SELFDESTRUCTION#Autodestruic„o#
+NC_SHAPESHIFT#Reconfigurar Elemento#
+NC_EMERGENCYCOOL#Resfriamento#
+NC_INFRAREDSCAN#Sensor Infravermelho#
+NC_ANALYZE#Analisar#
+NC_MAGNETICFIELD#Campo MagnÈtico#
+NC_NEUTRALBARRIER#Campo Protetor#
+NC_STEALTHFIELD#Campo de Invisibilidade#
+NC_REPAIR#Reparar#
+NC_TRAININGAXE#Maestria com Machados#
+NC_RESEARCHFE#Sabedoria de Hefesto#
+NC_AXEBOOMERANG#Arremesso de Machado#
+NC_POWERSWING#Brandir Machado#
+NC_AXETORNADO#F˙ria do Machado#
+NC_SILVERSNIPER#Artilharia CaÁadora#
+NC_MAGICDECOY#Artilharia Arcana#
+NC_DISJOINT#Remover Artilharia#
+
+// Shadow Chaser
+SC_FATALMENACE#Acerto de Contas#
+SC_REPRODUCE#Mimetismo#
+SC_AUTOSHADOWSPELL#Desejo das Sombras#
+SC_SHADOWFORM#VÌnculo Sombrio#
+SC_TRIANGLESHOT#Disparo Triplo#
+SC_BODYPAINT#Borrifar Tinta#
+SC_INVISIBILITY#Forma EtÈrea#
+SC_DEADLYINFECT#PestilÍncia#
+SC_ENERVATION#M·scara da Fraqueza#
+SC_GROOMY#M·scara da Melancolia#
+SC_IGNORANCE#M·scara da Tolice#
+SC_LAZINESS#M·scara da Ociosidade#
+SC_UNLUCKY#M·scara do Infort˙nio#
+SC_WEAKNESS#M·scara da Vulnerabilidade#
+SC_STRIPACCESSARY#Remover AcessÛrio#
+SC_MANHOLE#Pintar Armadilha#
+SC_DIMENSIONDOOR#Portal Dimensional#
+SC_CHAOSPANIC#SÌmbolo do Caos#
+SC_MAELSTROM#Redemoinho de AbsorÁ„o#
+SC_BLOODYLUST#Sede de Sangue#
+SC_FEINTBOMB#CÛpia Explosiva#
+
+// Royal Guard
+LG_CANNONSPEAR#Disparo Perfurante#
+LG_BANISHINGPOINT#Toque do OblÌvio#
+LG_TRAMPLE#Pisotear Armadilha#
+LG_SHIELDPRESS#Escudo Compressor#
+LG_REFLECTDAMAGE#Reflex„o Amplificada#
+LG_PINPOINTATTACK#Estocada Precisa#
+LG_FORCEOFVANGUARD#ProteÁ„o da Vanguarda#
+LG_RAGEBURST#RetribuiÁ„o da Vanguarda#
+LG_SHIELDSPELL#Aegis Domini#
+LG_EXEEDBREAK#Exceder Limite#
+LG_OVERBRAND#LanÁa do Destino#
+LG_PRESTIGE#PrestÌgio Divino#
+LG_BANDING#FormaÁ„o Real#
+LG_MOONSLASHER#Espiral Lunar#
+LG_RAYOFGENESIS#Raio da CriaÁ„o#
+LG_PIETY#DevoÁ„o#
+LG_EARTHDRIVE#Aegis Inferi#
+LG_HESPERUSLIT#Trindade#
+LG_INSPIRATION#ConsagraÁ„o#
+
+// Sura
+SR_DRAGONCOMBO#Punho do Drag„o#
+SR_SKYNETBLOW#Soco Furac„o#
+SR_EARTHSHAKER#Impacto SÌsmico#
+SR_FALLENEMPIRE#RuÌna#
+SR_TIGERCANNON#Garra de Tigre#
+SR_HELLGATE#Hell Gate#
+SR_RAMPAGEBLASTER#Explos„o Espiritual#
+SR_CRESCENTELBOW#Cotovelada Ascendente#
+SR_CURSEDCIRCLE#Campo AmaldiÁoado#
+SR_LIGHTNINGWALK#Salto Rel‚mpago#
+SR_KNUCKLEARROW#Investida de Shura#
+SR_WINDMILL#Rasteira#
+SR_RAISINGDRAGON#Drag„o Ascendente#
+SR_GENTLETOUCH#Chakra#
+SR_ASSIMILATEPOWER#AbsorÁ„o Espiritual#
+SR_POWERVELOCITY#Ren˙ncia Espiritual#
+SR_CRESCENTELBOW_AUTOSPELL#Cotovelada Ascendente#
+SR_GATEOFHELL#Portıes do Inferno#
+SR_GENTLETOUCH_QUIET#Chakra do SilÍncio#
+SR_GENTLETOUCH_CURE#Chakra da Cura#
+SR_GENTLETOUCH_ENERGYGAIN#Chakra da Energia#
+SR_GENTLETOUCH_CHANGE#Chakra da F˙ria#
+SR_GENTLETOUCH_REVITALIZE#Chakra do Vigor#
+
+// Wanderer
+WA_SWING_DANCE#Ritmo Contagiante#
+WA_SYMPHONY_OF_LOVER#Balada SinfÙnica#
+WA_MOONLIT_SERENADE#Serenata ao Luar#
+
+// Minstrel
+MI_RUSH_WINDMILL#Sinfonia dos Ventos#
+MI_ECHOSONG#CanÁ„o de Balder#
+MI_HARMONIZE#Harmonizar#
+
+// Minstrel/Wanderer#
+WM_LESSON#DomÌnio Musical#
+WM_METALICSOUND#RuÌdo Estridente#
+
+WM_REVERBERATION#Resson‚ncia#
+WM_REVERBERATION_MELEE#Reverberation Melee#
+WM_REVERBERATION_MAGIC#Reverberation Magic#
+WM_DOMINION_IMPULSE#Ativar Resson‚ncia#
+WM_SEVERE_RAINSTORM#Temporal de Mil Flechas#
+WM_POEMOFNETHERWORLD#Poema de Nifflheim#
+WM_VOICEOFSIREN#Canto da Sereia#
+WM_DEADHILLHERE#RÈquiem de Orfeu#
+WM_LULLABY_DEEPSLEEP#Melodia de Morfeu#
+WM_SIRCLEOFNATURE#Sibilo de Eir#
+WM_RANDOMIZESPELL#Improviso#
+WM_GLOOMYDAY#Ode a Hela#
+WM_GREAT_ECHO#Brado de Odin#
+WM_SONG_OF_MANA#CanÁ„o de Aflheim#
+WM_DANCE_WITH_WUG#DanÁa com Lobos#
+WM_SOUND_OF_DESTRUCTION#Prel˙dio do Ragnarok#
+WM_SATURDAY_NIGHT_FEVER#Embalos de S·bado a Noite#
+
+WM_LERADS_DEW#Orvalho de Idun#
+WM_MELODYOFSINK#C‚ntico da IluminaÁ„o#
+WM_BEYOND_OF_WARCRY#Clamor de Batalha#
+WM_UNLIMITED_HUMMING_VOICE#Murm˙rio Perene#
+
+// Sorcerer
+SO_FIREWALK#Passos da Salamandra#
+SO_ELECTRICWALK#Passos da SÌlfide#
+SO_SPELLFIST#Punho Arcano#
+SO_EARTHGRAVE#Castigo de Nerthus#
+SO_DIAMONDDUST#PÛ de Diamante#
+SO_POISON_BUSTER#Implos„o TÛxica#
+SO_PSYCHIC_WAVE#Onda PsiquÌca#
+SO_CLOUD_KILL#MaldiÁ„o de Jormungand#
+SO_STRIKING#Encanto de ”rion#
+SO_WARMER#Aquecer Terreno#
+SO_VACUUM_EXTREME#Tornado#
+
+SO_VARETYR_SPEAR#LanÁas de Aesir#
+SO_ARRULLO#Onda HipnÛtica#
+SO_EL_CONTROL#DomÌnio Elemental#
+SO_SUMMON_AGNI#Invocar Agni#
+SO_SUMMON_AQUA#Invocar Varuna#
+SO_SUMMON_VENTUS#Invocar Vayu#
+SO_SUMMON_TERA#Invocar Chandra#
+SO_EL_ACTION#Incitar Elemental#
+SO_EL_ANALYSIS#An·lise Elemental#
+SO_EL_SYMPATHY#Empatia Elemental#
+SO_EL_CURE#Troca Espiritual#
+SO_FIRE_INSIGNIA#InsÌgnia do Fogo#
+SO_WATER_INSIGNIA#InsÌgnia da ¡gua#
+SO_WIND_INSIGNIA#InsÌgnia do Vento#
+SO_EARTH_INSIGNIA#InsÌgnia da Terra#
+
+// Genetic
+
+GN_TRAINING_SWORD#PerÌcia em Esgrima#
+GN_REMODELING_CART#Aprimorar Carrinho#
+GN_CART_TORNADO#Tornado de Carrinho#
+GN_CARTCANNON#Canh„o de PrÛtons#
+GN_CARTBOOST#Propuls„o do Carrinho#
+GN_THORNS_TRAP#Armadilha de Espinhos#
+GN_BLOOD_SUCKER#Planta Sanguessuga#
+GN_SPORE_EXPLOSION#Esporo Explosivo#
+GN_WALLOFTHORN#Muralha de Espinhos#
+yesweaponGN_CRAZYWEED#Erva Daninha#
+GN_CRAZYWEED_ATK#Erva Daninha#
+GN_DEMONIC_FIRE#Bomba Napalm#
+GN_FIRE_EXPANSION#Catalisador AlquÌmico#
+GN_FIRE_EXPANSION_SMOKE_POWDER#Fire Expansion Smoke Powder#
+GN_FIRE_EXPANSION_TEAR_GAS#Fire Expansion Tear Gas#
+GN_FIRE_EXPANSION_ACID#Fire Expansion Acid#
+GN_HELLS_PLANT#Planta Infernal#
+GN_HELLS_PLANT_ATK#Planta Infernal#
+GN_MANDRAGORA#Grito da Mandr·gora#
+GN_SLINGITEM#Arremessar Item#
+GN_CHANGEMATERIAL#ReaÁ„o AlquÌmica#
+GN_MIX_COOKING#Culin·ria AvanÁada#
+GN_MAKEBOMB#Criar Bomba Org‚nica#
+GN_S_PHARMACY#Farmacologia AvanÁada#
+GN_SLINGITEM_RANGEMELEEATK#Arremessar Item#
+
+// More rd Job Skills
+AB_SECRAMENT#Sacramentum#
+WM_SEVERE_RAINSTORM_MELEE#Temporal de Mil Flechas#
+SR_HOWLINGOFLION#Rugido do Le„o#
+SR_RIDEINLIGHTNING#Tempestade Espiritual#
+LG_OVERBRAND_BRANDISH#LanÁa do Destino#
+LG_OVERBRAND_PLUSATK#LanÁa do Destino#
+// Extra Skills
+ALL_ODINS_RECALL#Odin's Recall#
+RETURN_TO_ELDICASTES#Return To Eldicastes#
+ALL_BUYING_STORE#Open Buying Store#
+ALL_GUARDIAN_RECALL#Guardian's Recall#
+ALL_ODINS_POWER#Odin's Power#
+ALL_RIDING#Call Mount#
