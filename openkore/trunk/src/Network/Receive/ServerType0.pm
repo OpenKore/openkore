@@ -943,25 +943,6 @@ sub account_id {
 	#$accountID = $args->{accountID};
 }
 
-sub account_payment_info {
-	my ($self, $args) = @_;
-	my $D_minute = $args->{D_minute};
-	my $H_minute = $args->{H_minute};
-
-	my $D_d = int($D_minute / 1440);
-	my $D_h = int(($D_minute % 1440) / 60);
-	my $D_m = int(($D_minute % 1440) % 60);
-
-	my $H_d = int($H_minute / 1440);
-	my $H_h = int(($H_minute % 1440) / 60);
-	my $H_m = int(($H_minute % 1440) % 60);
-
-	message  T("============= Account payment information =============\n"), "info";
-	message TF("Pay per day  : %s day(s) %s hour(s) and %s minute(s)\n", $D_d, $D_h, $D_m), "info";
-	message TF("Pay per hour : %s day(s) %s hour(s) and %s minute(s)\n", $H_d, $H_h, $H_m), "info";
-	message  T("-------------------------------------------------------\n"), "info";
-}
-
 sub actor_action {
 	my ($self,$args) = @_;
 	return unless changeToInGameState();
