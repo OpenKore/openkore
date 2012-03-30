@@ -2747,12 +2747,12 @@ sub errors {
 	if ($args->{type} == 0) {
 		# FIXME BAN_SERVER_SHUTDOWN is 0x1, 0x0 is BAN_UNFAIR
 		error T("Server shutting down\n"), "connection";
-		if(%config{'dcOnServerShutDown'} == 1) {
+		if($config{'dcOnServerShutDown'} == 1) {
 			$quit = 1;
 		}
 	} elsif ($args->{type} == 1) {
 		error T("Error: Server is closed\n"), "connection";
-		if(%config{'dcOnServerClose'} == 1) {
+		if($config{'dcOnServerClose'} == 1) {
 			$quit = 1;
 		}
 	} elsif ($args->{type} == 2) {
