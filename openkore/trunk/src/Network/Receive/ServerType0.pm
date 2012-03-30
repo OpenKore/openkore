@@ -3990,6 +3990,7 @@ sub login_error {
 		error TF("The server is temporarily blocking your connection until %s\n", $args->{date}), "connection";
 	} elsif ($args->{type} == REFUSE_USER_PHONE_BLOCK) { #Phone lock
 		error T("Please dial to activate the login procedure.\n"), "connection";
+		Plugins::callHook('dial');
 		relog(10);
 	}
 	if ($args->{type} != REFUSE_INVALID_VERSION && $versionSearch) {
@@ -4428,8 +4429,6 @@ sub npc_talk_close {
 	$ai_v{npc_talk}{talk} = 'close';
 	$ai_v{npc_talk}{time} = time;
 	undef %talk;
-
-	Plugins::callHook('npc_talk_done', {ID => $ID});
 }
 
 sub npc_talk_continue {
