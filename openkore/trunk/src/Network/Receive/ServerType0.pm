@@ -4429,6 +4429,8 @@ sub npc_talk_close {
 	$ai_v{npc_talk}{talk} = 'close';
 	$ai_v{npc_talk}{time} = time;
 	undef %talk;
+	
+	Plugins::callHook('npc_talk_done', {ID => $ID});
 }
 
 sub npc_talk_continue {
