@@ -23,11 +23,11 @@ my $chooks = Commands::register(
 sub Unload {
 	Plugins::delHook($hooks);
 	$socket->close();
-	print "Chatroom Password Cracker has been unloaded.\n";
+	print "RO Dialer has been unloaded.\n";
 }
 
 sub Reload {
-	print "Chatroom Password Cracker has been reloaded\n";
+	print "RO Dialer has been reloaded\n";
 }
 
 sub onstart {
