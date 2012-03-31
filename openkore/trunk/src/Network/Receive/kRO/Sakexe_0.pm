@@ -602,122 +602,6 @@ sub account_id {
 	debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
 }
 
-# type=01 pick up item
-# type=02 sit down
-# type=03 stand up
-# type=04 reflected/absorbed damage?
-# type=08 double attack
-# type=09 don't display flinch animation (endure)
-# type=0a critical hit
-# type=0b lucky dodge
-sub actor_action {
-	my ($self,$args) = @_;
-	return unless changeToInGameState();
-
-	$args->{damage} = intToSignedShort($args->{damage});
-	if ($args->{type} == 1) {
-		# Take item
-		my $source = Actor::get($args->{sourceID});
-		my $verb = $source->verb('pick up', 'picks up');
-		my $target = getActorName($args->{targetID});
-		debug "$source $verb $target\n", 'parseMsg_presence';
-
-		my $item = $itemsList->getByID($args->{targetID});
-		$item->{takenBy} = $args->{sourceID} if ($item);
-
-	} elsif ($args->{type} == 2) {
-		# Sit
-		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
-		if ($args->{sourceID} eq $accountID) {
-			message T("You are sitting.\n") if (!$char->{sitting});
-			$char->{sitting} = 1;
-			AI::queue("sitAuto") unless (AI::inQueue("sitAuto")) || $ai_v{sitAuto_forcedBySitCommand};
-		} else {
-			message TF("%s is sitting.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
-			my $player = $playersList->getByID($args->{sourceID});
-			$player->{sitting} = 1 if ($player);
-		}
-		Misc::checkValidity("actor_action (take item)");
-
-	} elsif ($args->{type} == 3) {
-		# Stand
-		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
-		if ($args->{sourceID} eq $accountID) {
-			message T("You are standing.\n") if ($char->{sitting});
-			if ($config{sitAuto_idle}) {
-				$timeout{ai_sit_idle}{time} = time;
-			}
-			$char->{sitting} = 0;
-		} else {
-			message TF("%s is standing.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
-			my $player = $playersList->getByID($args->{sourceID});
-			$player->{sitting} = 0 if ($player);
-		}
-		Misc::checkValidity("actor_action (stand)");
-
-	} else {
-		# Attack
-		my $dmgdisplay;
-		my $totalDamage = $args->{damage} + $args->{dual_wield_damage};
-		if ($totalDamage == 0) {
-			$dmgdisplay = T("Miss!");
-			$dmgdisplay .= "!" if ($args->{type} == 11); # lucky dodge
-		} else {
-			$dmgdisplay = $args->{damage};
-			$dmgdisplay .= "!" if ($args->{type} == 10); # critical hit
-			$dmgdisplay .= " + $args->{dual_wield_damage}" if $args->{dual_wield_damage};
-		}
-
-		Misc::checkValidity("actor_action (attack 1)");
-
-		updateDamageTables($args->{sourceID}, $args->{targetID}, $totalDamage);
-
-		Misc::checkValidity("actor_action (attack 2)");
-
-		my $source = Actor::get($args->{sourceID});
-		my $target = Actor::get($args->{targetID});
-		my $verb = $source->verb('attack', 'attacks');
-
-		$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $totalDamage == 0;
-
-		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}));
-		Plugins::callHook('packet_attack', {sourceID => $args->{sourceID}, targetID => $args->{targetID}, msg => \$msg, dmg => $totalDamage, type => $args->{type}});
-
-		my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
-
-		Misc::checkValidity("actor_action (attack 3)");
-
-		if ($args->{sourceID} eq $accountID) {
-			message("$status $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
-			if ($startedattack) {
-				$monstarttime = time();
-				$monkilltime = time();
-				$startedattack = 0;
-			}
-			Misc::checkValidity("actor_action (attack 4)");
-			calcStat($args->{damage});
-			Misc::checkValidity("actor_action (attack 5)");
-
-		} elsif ($args->{targetID} eq $accountID) {
-			message("$status $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
-			if ($args->{damage} > 0) {
-				$damageTaken{$source->{name}}{attack} += $args->{damage};
-			}
-
-		} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}}) {
-			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent}) . " $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
-
-		} elsif ($char->{slaves} && $char->{slaves}{$args->{targetID}}) {
-			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent}) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
-
-		} else {
-			debug("$msg", 'parseMsg_damage');
-		}
-
-		Misc::checkValidity("actor_action (attack 6)");
-	}
-}
-
 sub actor_died_or_disappeared {
 	my ($self,$args) = @_;
 	return unless changeToInGameState();
@@ -1894,25 +1778,7 @@ sub change_to_constate25 {
 }
 
 sub changeToInGameState {
-	if ($net->version() == 1) {
-		if ($accountID && UNIVERSAL::isa($char, 'Actor::You')) {
-			if ($net->getState() != Network::IN_GAME) {
-				$net->setState(Network::IN_GAME);
-			}
-			return 1;
-		} else {
-			if ($net->getState() != Network::IN_GAME_BUT_UNINITIALIZED) {
-				$net->setState(Network::IN_GAME_BUT_UNINITIALIZED);
-				if ($config{verbose} && $messageSender && !$sentWelcomeMessage) {
-					$messageSender->injectAdminMessage("Please relogin to enable X-${Settings::NAME}.");
-					$sentWelcomeMessage = 1;
-				}
-			}
-			return 0;
-		}
-	} else {
-		return 1;
-	}
+	Network::Receive::changeToInGameState;
 }
 
 sub character_creation_failed {

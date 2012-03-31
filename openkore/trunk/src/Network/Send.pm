@@ -24,6 +24,7 @@
 package Network::Send;
 
 use strict;
+use Network::PacketParser; # import
 use base qw(Network::PacketParser);
 use encoding 'utf8';
 use Carp::Assert;
@@ -465,8 +466,8 @@ sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 	$args{monID} = $monID;
 	$args{flag} = $flag;
 	# eventually we'll trow this hooking out so...
-	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
-	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
+	Plugins::callHook('packet_pre/sendAttack', \%args) if $flag == ACTION_ATTACK || $flag == ACTION_ATTACK_REPEAT;
+	Plugins::callHook('packet_pre/sendSit', \%args) if $flag == ACTION_SIT || $flag == ACTION_STAND;
 	if ($args{return}) {
 		$self->sendToServer($args{msg});
 		return;
