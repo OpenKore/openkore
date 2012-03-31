@@ -357,6 +357,446 @@ sub account_server_info {
 	}
 }
 
+# This function is a merge of actor_exists, actor_connected, actor_moved, etc...
+sub actor_display {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+	my ($actor, $mustAdd);
+
+
+	#### Initialize ####
+
+	my $nameID = unpack("V", $args->{ID});
+
+	if ($args->{switch} eq "0086") {
+		# Message 0086 contains less information about the actor than other similar
+		# messages. So we use the existing actor information.
+		my $coordsArg = $args->{coords};
+		my $tickArg = $args->{tick};
+		$args = Actor::get($args->{ID})->deepCopy();
+		# Here we overwrite the $args data with the 0086 packet data.
+		$args->{switch} = "0086";
+		$args->{coords} = $coordsArg;
+		$args->{tick} = $tickArg; # lol tickcount what do we do with that? debug "tick: " . $tickArg/1000/3600/24 . "\n";
+	}
+
+	my (%coordsFrom, %coordsTo);
+	if (length $args->{coords} == 6) {
+		# Actor Moved
+		makeCoordsFromTo(\%coordsFrom, \%coordsTo, $args->{coords}); # body dir will be calculated using the vector
+	} else {
+		# Actor Spawned/Exists
+		makeCoordsDir(\%coordsTo, $args->{coords}, \$args->{body_dir});
+		%coordsFrom = %coordsTo;
+	}
+
+	# Remove actors that are located outside the map
+	# This may be caused by:
+	#  - server sending us false actors
+	#  - actor packets not being parsed correctly
+	if (defined $field && ($field->isOffMap($coordsFrom{x}, $coordsFrom{y}) || $field->isOffMap($coordsTo{x}, $coordsTo{y}))) {
+		warning TF("Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
+		return;
+	}
+
+	# Remove actors with a distance greater than removeActorWithDistance. Useful for vending (so you don't spam
+	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
+	# beyond removeActorWithDistance.
+	if ($config{removeActorWithDistance}) {
+		if ((my $block_dist = blockDistance($char->{pos_to}, \%coordsTo)) > ($config{removeActorWithDistance})) {
+			my $nameIdTmp = unpack("V", $args->{ID});
+			debug "Removed out of sight actor $nameIdTmp at ($coordsTo{x}, $coordsTo{y}) (distance: $block_dist)\n";
+			return;
+		}
+	}
+=pod
+	# Zealotus bug
+	if ($args->{type} == 1200) {
+		open DUMP, ">> test_Zealotus.txt";
+		print DUMP "Zealotus: " . $nameID . "\n";
+		print DUMP Dumper($args);
+		close DUMP;
+	}
+=cut
+	# TODO: use object_type? this this the table?
+	# i figure, if the players homunculus/mercenary can differentiate between npc/monster, so can kore
+	# and i think this might have something to do with it
+=pod
+  PC_TYPE =  0x0,
+  NPC_TYPE =  0x1,
+  ITEM_TYPE =  0x2,
+  SKILL_TYPE =  0x3,
+  UNKNOWN_TYPE =  0x4,
+  NPC_MOB_TYPE =  0x5,
+  NPC_EVT_TYPE =  0x6,
+  NPC_PET_TYPE =  0x7,
+  NPC_HO_TYPE =  0x8,
+  NPC_MERSOL_TYPE =  0x9,
+  NPC_ELEMENTAL_TYPE =  0xa,
+=cut
+	#### Step 1: create/get the correct actor object ####
+	if ($jobs_lut{$args->{type}}) {
+		unless ($args->{type} > 6000) {
+			# Actor is a player
+			$actor = $playersList->getByID($args->{ID});
+			if (!defined $actor) {
+				$actor = new Actor::Player();
+				$actor->{appear_time} = time;
+				# New actor_display packets include the player's name
+				$actor->{name} = bytesToString($args->{name}) if($args->{name});
+				$mustAdd = 1;
+			}
+			$actor->{nameID} = $nameID;
+		} else {
+			# Actor is a homunculus or a mercenary
+			$actor = $slavesList->getByID($args->{ID});
+			if (!defined $actor) {
+				$actor = ($char->{slaves} && $char->{slaves}{$args->{ID}})
+				? $char->{slaves}{$args->{ID}} : new Actor::Slave ($args->{type});
+
+				$actor->{appear_time} = time;
+				$mustAdd = 1;
+			}
+			$actor->{nameID} = $nameID;
+		}
+
+	} elsif ($args->{type} == 45) {
+		# Actor is a portal
+		$actor = $portalsList->getByID($args->{ID});
+		if (!defined $actor) {
+			$actor = new Actor::Portal();
+			$actor->{appear_time} = time;
+			my $exists = portalExists($field->baseName, \%coordsTo);
+			$actor->{source}{map} = $field->baseName;
+			if ($exists ne "") {
+				$actor->setName("$portals_lut{$exists}{source}{map} -> " . getPortalDestName($exists));
+			}
+			$mustAdd = 1;
+
+			# Strangely enough, portals (like all other actors) have names, too.
+			# We _could_ send a "actor_info_request" packet to find the names of each portal,
+			# however I see no gain from this. (And it might even provide another way of private
+			# servers to auto-ban bots.)
+		}
+		$actor->{nameID} = $nameID;
+
+	} elsif ($args->{type} >= 1000) { # FIXME: in rare cases RO uses a monster sprite for NPC's (JT_ZHERLTHSH = 0x4b0 = 1200) ==> use object_type ?
+		my $obj_type = (defined $args->{object_type}) ? $args->{object_type} : -1;
+		# Actor might be a monster NPC
+		if ($obj_type == 6) {
+			$actor = $npcsList->getByID($args->{ID});
+			if (!defined $actor) {
+				$actor = new Actor::NPC();
+				$actor->{appear_time} = time;
+				$mustAdd = 1;
+			}
+			$actor->{nameID} = $nameID;
+
+		} else {
+			# Actor might be a monster
+			if ($args->{hair_style} == 0x64) {
+				# Actor is a pet
+				$actor = $petsList->getByID($args->{ID});
+				if (!defined $actor) {
+					$actor = new Actor::Pet();
+					$actor->{appear_time} = time;
+					if ($monsters_lut{$args->{type}}) {
+						$actor->setName($monsters_lut{$args->{type}});
+					}
+					$actor->{name_given} = "Unknown";
+					$mustAdd = 1;
+
+					# Previously identified monsters could suddenly be identified as pets.
+					if ($monstersList->getByID($args->{ID})) {
+						$monstersList->removeByID($args->{ID});
+					}
+				}
+
+			} else {
+				# Actor really is a monster
+				$actor = $monstersList->getByID($args->{ID});
+				if (!defined $actor) {
+					$actor = new Actor::Monster();
+					$actor->{appear_time} = time;
+					if ($monsters_lut{$args->{type}}) {
+						$actor->setName($monsters_lut{$args->{type}});
+					}
+					$actor->{name_given} = "Unknown";
+					$actor->{binType} = $args->{type};
+					$mustAdd = 1;
+				}
+			}
+
+			# Why do monsters and pets use nameID as type?
+			$actor->{nameID} = $args->{type};
+		}
+
+	} else {	# ($args->{type} < 1000 && $args->{type} != 45 && !$jobs_lut{$args->{type}})
+		# Actor is an NPC
+		$actor = $npcsList->getByID($args->{ID});
+		if (!defined $actor) {
+			$actor = new Actor::NPC();
+			$actor->{appear_time} = time;
+			$mustAdd = 1;
+		}
+		$actor->{nameID} = $nameID;
+	}
+
+
+	#### Step 2: update actor information ####
+	$actor->{ID} = $args->{ID};
+	$actor->{jobID} = $args->{type};
+	$actor->{type} = $args->{type};
+	$actor->{lv} = $args->{lv};
+	$actor->{pos} = {%coordsFrom};
+	$actor->{pos_to} = {%coordsTo};
+	$actor->{walk_speed} = $args->{walk_speed} / 1000 if (exists $args->{walk_speed} && $args->{switch} ne "0086");
+	$actor->{time_move} = time;
+	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
+
+	if (UNIVERSAL::isa($actor, "Actor::Player")) {
+		# None of this stuff should matter if the actor isn't a player... => does matter for a guildflag npc!
+
+		# Interesting note about emblemID. If it is 0 (or none), the Ragnarok
+		# client will display "Send (Player) a guild invitation" (assuming one has
+		# invitation priveledges), regardless of whether or not guildID is set.
+		# I bet that this is yet another brilliant "feature" by GRAVITY's good programmers.
+		$actor->{emblemID} = $args->{emblemID} if (exists $args->{emblemID});
+		$actor->{guildID} = $args->{guildID} if (exists $args->{guildID});
+
+		if (exists $args->{lowhead}) {
+			$actor->{headgear}{low} = $args->{lowhead};
+			$actor->{headgear}{mid} = $args->{midhead};
+			$actor->{headgear}{top} = $args->{tophead};
+			$actor->{weapon} = $args->{weapon};
+			$actor->{shield} = $args->{shield};
+		}
+
+		$actor->{sex} = $args->{sex};
+
+		if ($args->{act} == 1) {
+			$actor->{dead} = 1;
+		} elsif ($args->{act} == 2) {
+			$actor->{sitting} = 1;
+		}
+
+		# Monsters don't have hair colors or heads to look around...
+		$actor->{hair_color} = $args->{hair_color} if (exists $args->{hair_color});
+
+	} elsif (UNIVERSAL::isa($actor, "Actor::NPC") && $args->{type} == 722) { # guild flag has emblem
+		# odd fact: "this data can also be found in a strange place:
+		# (shield OR lowhead) + midhead = emblemID		(either shield or lowhead depending on the packet)
+		# tophead = guildID
+		$actor->{emblemID} = $args->{emblemID};
+		$actor->{guildID} = $args->{guildID};
+	}
+
+	# But hair_style is used for pets, and their bodies can look different ways...
+	$actor->{hair_style} = $args->{hair_style} if (exists $args->{hair_style});
+	$actor->{look}{body} = $args->{body_dir} if (exists $args->{body_dir});
+	$actor->{look}{head} = $args->{head_dir} if (exists $args->{head_dir});
+
+	# When stance is non-zero, character is bobbing as if they had just got hit,
+	# but the cursor also turns to a sword when they are mouse-overed.
+	#$actor->{stance} = $args->{stance} if (exists $args->{stance});
+
+	# Visual effects are a set of flags (some of the packets don't have this argument)
+	$actor->{opt3} = $args->{opt3} if (exists $args->{opt3}); # stackable
+
+	# Known visual effects:
+	# 0x0001 = Yellow tint (eg, a quicken skill)
+	# 0x0002 = Red tint (eg, power-thrust)
+	# 0x0004 = Gray tint (eg, energy coat)
+	# 0x0008 = Slow lightning (eg, mental strength)
+	# 0x0010 = Fast lightning (eg, MVP fury)
+	# 0x0020 = Black non-moving statue (eg, stone curse)
+	# 0x0040 = Translucent weapon
+	# 0x0080 = Translucent red sprite (eg, marionette control?)
+	# 0x0100 = Spaztastic weapon image (eg, mystical amplification)
+	# 0x0200 = Gigantic glowy sphere-thing
+	# 0x0400 = Translucent pink sprite (eg, marionette control?)
+	# 0x0800 = Glowy sprite outline (eg, assumptio)
+	# 0x1000 = Bright red sprite, slowly moving red lightning (eg, MVP fury?)
+	# 0x2000 = Vortex-type effect
+
+	# Note that these are flags, and you can mix and match them
+	# Example: 0x000C (0x0008 & 0x0004) = gray tint with slow lightning
+
+=pod
+typedef enum <unnamed-tag> {
+  SHOW_EFST_NORMAL =  0x0,
+  SHOW_EFST_QUICKEN =  0x1,
+  SHOW_EFST_OVERTHRUST =  0x2,
+  SHOW_EFST_ENERGYCOAT =  0x4,
+  SHOW_EFST_EXPLOSIONSPIRITS =  0x8,
+  SHOW_EFST_STEELBODY =  0x10,
+  SHOW_EFST_BLADESTOP =  0x20,
+  SHOW_EFST_AURABLADE =  0x40,
+  SHOW_EFST_REDBODY =  0x80,
+  SHOW_EFST_LIGHTBLADE =  0x100,
+  SHOW_EFST_MOON =  0x200,
+  SHOW_EFST_PINKBODY =  0x400,
+  SHOW_EFST_ASSUMPTIO =  0x800,
+  SHOW_EFST_SUN_WARM =  0x1000,
+  SHOW_EFST_REFLECT =  0x2000,
+  SHOW_EFST_BUNSIN =  0x4000,
+  SHOW_EFST_SOULLINK =  0x8000,
+  SHOW_EFST_UNDEAD =  0x10000,
+  SHOW_EFST_CONTRACT =  0x20000,
+} <unnamed-tag>;
+=cut
+
+	# Save these parameters ...
+	$actor->{opt1} = $args->{opt1}; # nonstackable
+	$actor->{opt2} = $args->{opt2}; # stackable
+	$actor->{option} = $args->{option}; # stackable
+
+	# And use them to set status flags.
+	if (setStatus($actor, $args->{opt1}, $args->{opt2}, $args->{option})) {
+		$mustAdd = 0;
+	}
+
+
+	#### Step 3: Add actor to actor list ####
+	if ($mustAdd) {
+		if (UNIVERSAL::isa($actor, "Actor::Player")) {
+			$playersList->add($actor);
+
+		} elsif (UNIVERSAL::isa($actor, "Actor::Monster")) {
+			$monstersList->add($actor);
+
+		} elsif (UNIVERSAL::isa($actor, "Actor::Pet")) {
+			$petsList->add($actor);
+
+		} elsif (UNIVERSAL::isa($actor, "Actor::Portal")) {
+			$portalsList->add($actor);
+
+		} elsif (UNIVERSAL::isa($actor, "Actor::NPC")) {
+			my $ID = $args->{ID};
+			my $location = $field->baseName . " $actor->{pos}{x} $actor->{pos}{y}";
+			if ($npcs_lut{$location}) {
+				$actor->setName($npcs_lut{$location});
+			}
+			$npcsList->add($actor);
+
+		} elsif (UNIVERSAL::isa($actor, "Actor::Slave")) {
+			$slavesList->add($actor);
+		}
+	}
+
+
+	#### Packet specific ####
+	if ($args->{switch} eq "0078" ||
+		$args->{switch} eq "01D8" ||
+		$args->{switch} eq "022A" ||
+		$args->{switch} eq "02EE" ||
+		$args->{switch} eq "07F9" ||
+		$args->{switch} eq "0857") {
+		# Actor Exists (standing)
+
+		if ($actor->isa('Actor::Player')) {
+			my $domain = existsInList($config{friendlyAID}, unpack("V", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+			debug "Player Exists: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsFrom{x}, $coordsFrom{y})\n", $domain;
+
+			Plugins::callHook('player', {player => $actor});  #backwards compatibility
+
+			Plugins::callHook('player_exist', {player => $actor});
+
+		} elsif ($actor->isa('Actor::NPC')) {
+			message TF("NPC Exists: %s (%d, %d) (ID %d) - (%d)\n", $actor->name, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
+
+		} elsif ($actor->isa('Actor::Portal')) {
+			message TF("Portal Exists: %s (%s, %s) - (%s)\n", $actor->name, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $actor->{binID}), "portals", 1;
+
+		} elsif ($actor->isa('Actor::Monster')) {
+			debug sprintf("Monster Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+
+		} elsif ($actor->isa('Actor::Pet')) {
+			debug sprintf("Pet Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+
+		} elsif ($actor->isa('Actor::Slave')) {
+			debug sprintf("Slave Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+
+		} else {
+			debug sprintf("Unknown Actor Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+		}
+
+	} elsif ($args->{switch} eq "0079" ||
+		$args->{switch} eq "01DB" ||
+		$args->{switch} eq "022B" ||
+		$args->{switch} eq "02ED" ||
+		$args->{switch} eq "01D9" ||
+		$args->{switch} eq "07F8" ||
+		$args->{switch} eq "0858") {
+		# Actor Connected (new)
+
+		if ($actor->isa('Actor::Player')) {
+			my $domain = existsInList($config{friendlyAID}, unpack("V", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+			debug "Player Connected: ".$actor->name." ($actor->{binID}) Level $args->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsTo{x}, $coordsTo{y})\n", $domain;
+
+			Plugins::callHook('player', {player => $actor});  #backwards compatibailty
+
+			Plugins::callHook('player_connected', {player => $actor});
+		} else {
+			debug "Unknown Connected: $args->{type} - ", "parseMsg";
+		}
+
+	} elsif ($args->{switch} eq "007B" ||
+		$args->{switch} eq "0086" ||
+		$args->{switch} eq "01DA" ||
+		$args->{switch} eq "022C" ||
+		$args->{switch} eq "02EC" ||
+		$args->{switch} eq "07F7" ||
+		$args->{switch} eq "0856") {
+		# Actor Moved
+
+		# Correct the direction in which they're looking
+		my %vec;
+		getVector(\%vec, \%coordsTo, \%coordsFrom);
+		my $direction = int sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45);
+
+		$actor->{look}{body} = $direction;
+		$actor->{look}{head} = 0;
+
+		if ($actor->isa('Actor::Player')) {
+			debug "Player Moved: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Monster')) {
+			debug "Monster Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Pet')) {
+			debug "Pet Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Slave')) {
+			debug "Slave Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Portal')) {
+			# This can never happen of course.
+			debug "Portal Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+		} elsif ($actor->isa('Actor::NPC')) {
+			# Neither can this.
+			debug "NPC Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+		} else {
+			debug "Unknown Actor Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+		}
+
+	} elsif ($args->{switch} eq "007C") {
+		# Actor Spawned
+		if ($actor->isa('Actor::Player')) {
+			debug "Player Spawned: " . $actor->nameIdx . " $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}}\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Monster')) {
+			debug "Monster Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Pet')) {
+			debug "Pet Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Slave')) {
+			debug "Slave Spawned: " . $actor->nameIdx . " $jobs_lut{$actor->{jobID}}\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Portal')) {
+			# Can this happen?
+			debug "Portal Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+		} elsif ($actor->isa('NPC')) {
+			debug "NPC Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+		} else {
+			debug "Unknown Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+		}
+	}
+}
+
 sub actor_died_or_disappeared {
 	my ($self,$args) = @_;
 	return unless changeToInGameState();
