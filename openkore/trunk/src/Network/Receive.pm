@@ -357,6 +357,146 @@ sub account_server_info {
 	}
 }
 
+sub actor_died_or_disappeared {
+	my ($self,$args) = @_;
+	return unless changeToInGameState();
+	my $ID = $args->{ID};
+	avoidList_ID($ID);
+
+	if ($ID eq $accountID) {
+		message T("You have died\n") if (!$char->{dead});
+		Plugins::callHook('self_died');
+		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || $AI == AI::OFF;
+		$char->{deathCount}++;
+		$char->{dead} = 1;
+		$char->{dead_time} = time;
+		if($char->{equipment}{arrow}{type}==19){
+			delete $char->{equipment}{arrow};
+		}
+
+	} elsif (defined $monstersList->getByID($ID)) {
+		my $monster = $monstersList->getByID($ID);
+		if ($args->{type} == 0) {
+			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
+			$monster->{disappeared} = 1;
+
+		} elsif ($args->{type} == 1) {
+			debug "Monster Died: " . $monster->name . " ($monster->{binID})\n", "parseMsg_damage";
+			$monster->{dead} = 1;
+
+			if ((AI::action ne "attack" || AI::args(0)->{ID} eq $ID) &&
+			    ($config{itemsTakeAuto_party} &&
+			    ($monster->{dmgFromParty} > 0 ||
+			     $monster->{dmgFromYou} > 0))) {
+				AI::clear("items_take");
+				ai_items_take($monster->{pos}{x}, $monster->{pos}{y},
+					$monster->{pos_to}{x}, $monster->{pos_to}{y});
+			}
+
+		} elsif ($args->{type} == 2) { # What's this?
+			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
+			$monster->{disappeared} = 1;
+
+		} elsif ($args->{type} == 3) {
+			debug "Monster Teleported: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
+			$monster->{teleported} = 1;
+		}
+
+		$monster->{gone_time} = time;
+		$monsters_old{$ID} = $monster->deepCopy();
+		Plugins::callHook('monster_disappeared', {monster => $monster});
+		$monstersList->remove($monster);
+
+	} elsif (defined $playersList->getByID($ID)) {
+		my $player = $playersList->getByID($ID);
+		if ($args->{type} == 1) {
+			message TF("Player Died: %s (%d) %s %s\n", $player->name, $player->{binID}, $sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}});
+			$player->{dead} = 1;
+			$player->{dead_time} = time;
+		} else {
+			if ($args->{type} == 0) {
+				debug "Player Disappeared: " . $player->name . " ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
+				$player->{disappeared} = 1;
+			} elsif ($args->{type} == 2) {
+				debug "Player Disconnected: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
+				$player->{disconnected} = 1;
+			} elsif ($args->{type} == 3) {
+				debug "Player Teleported: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
+				$player->{teleported} = 1;
+			} else {
+				debug "Player Disappeared in an unknown way: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg_presence";
+				$player->{disappeared} = 1;
+			}
+
+			$player->{gone_time} = time;
+			$players_old{$ID} = $player->deepCopy();
+			Plugins::callHook('player_disappeared', {player => $player});
+
+			$playersList->remove($player);
+		}
+
+	} elsif ($players_old{$ID}) {
+		if ($args->{type} == 2) {
+			debug "Player Disconnected: " . $players_old{$ID}->name . "\n", "parseMsg_presence";
+			$players_old{$ID}{disconnected} = 1;
+		} elsif ($args->{type} == 3) {
+			debug "Player Teleported: " . $players_old{$ID}->name . "\n", "parseMsg_presence";
+			$players_old{$ID}{teleported} = 1;
+		}
+
+	} elsif (defined $portalsList->getByID($ID)) {
+		my $portal = $portalsList->getByID($ID);
+		debug "Portal Disappeared: " . $portal->name . " ($portal->{binID})\n", "parseMsg";
+		$portal->{disappeared} = 1;
+		$portal->{gone_time} = time;
+		$portals_old{$ID} = $portal->deepCopy();
+		$portalsList->remove($portal);
+
+	} elsif (defined $npcsList->getByID($ID)) {
+		my $npc = $npcsList->getByID($ID);
+		debug "NPC Disappeared: " . $npc->name . " ($npc->{nameID})\n", "parseMsg";
+		$npc->{disappeared} = 1;
+		$npc->{gone_time} = time;
+		$npcs_old{$ID} = $npc->deepCopy();
+		$npcsList->remove($npc);
+
+	} elsif (defined $petsList->getByID($ID)) {
+		my $pet = $petsList->getByID($ID);
+		debug "Pet Disappeared: " . $pet->name . " ($pet->{binID})\n", "parseMsg";
+		$pet->{disappeared} = 1;
+		$pet->{gone_time} = time;
+		$petsList->remove($pet);
+
+	} elsif (defined $slavesList->getByID($ID)) {
+		my $slave = $slavesList->getByID($ID);
+		if ($args->{type} == 1) {
+			message TF("Slave Died: %s (%d) %s\n", $slave->name, $slave->{binID}, $slave->{actorType});
+		} else {
+			if ($args->{type} == 0) {
+				debug "Slave Disappeared: " . $slave->name . " ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
+				$slave->{disappeared} = 1;
+			} elsif ($args->{type} == 2) {
+				debug "Slave Disconnected: ".$slave->name." ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
+				$slave->{disconnected} = 1;
+			} elsif ($args->{type} == 3) {
+				debug "Slave Teleported: ".$slave->name." ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
+				$slave->{teleported} = 1;
+			} else {
+				debug "Slave Disappeared in an unknown way: ".$slave->name." ($slave->{binID}) $slave->{actorType}\n", "parseMsg_presence";
+				$slave->{disappeared} = 1;
+			}
+
+			$slave->{gone_time} = time;
+			Plugins::callHook('slave_disappeared', {slave => $slave});
+		}
+
+		$slavesList->remove($slave);
+
+	} else {
+		debug "Unknown Disappeared: ".getHex($ID)."\n", "parseMsg";
+	}
+}
+
 sub actor_action {
 	my ($self,$args) = @_;
 	return unless changeToInGameState();
