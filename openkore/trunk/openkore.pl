@@ -56,10 +56,10 @@ sub __start {
 	use Utils;
 	use Plugins;
 	use FileParsers;
+	use Misc;
 	use Network::Receive;
 	use Network::Send ();
 	use Commands;
-	use Misc;
 	use AI;
 	use AI::CoreLogic;
 	use AI::Attack;

@@ -26,6 +26,7 @@ use Globals;
 use Log qw(message);
 use base qw(Actor);
 use InventoryList;
+use Network::PacketParser;
 use Translation;
 use Utils;
 
@@ -350,8 +351,8 @@ sub attack {
 	} #END OF BLOCK AUTOEQUIP
 }
 
-sub sendSit { $messageSender->sendAction(undef, 2) }
-sub sendStand { $messageSender->sendAction(undef, 3) }
+sub sendSit { $messageSender->sendAction(undef, ACTION_SIT) }
+sub sendStand { $messageSender->sendAction(undef, ACTION_STAND) }
 sub sendMove { $messageSender->sendMove(@_[1, 2]) }
 
 1;
