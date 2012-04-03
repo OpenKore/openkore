@@ -64,6 +64,7 @@ namespace Dialer {
         private static void timeTrigger(object sender, ElapsedEventArgs e) {
             dialFlag = true;
             Console.WriteLine("DialFlag: true");
+            usb.Write("ATH\r");
             timer.Stop();
         }
 
