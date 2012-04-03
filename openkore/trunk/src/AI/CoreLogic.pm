@@ -1989,6 +1989,19 @@ sub processFollow {
 						getVector(\%vec, $player->{pos_to}, $char->{pos_to});
 						moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - $config{followDistanceMin});
 						$timeout{ai_sit_idle}{time} = time;
+						
+						if($config{followRandom}) {
+							if(int(rand(2))) {
+								$pos{x} += int(rand($config{followRandomDistance})); }
+							else {
+								$pos{x} -= int(rand($config{followRandomDistance})); }
+
+							if(int(rand(2))) {
+								$pos{y} += int(rand($config{followRandomDistance})); }
+							else {
+								$pos{y} -= int(rand($config{followRandomDistance})); }
+						}
+						
 						$char->sendMove(@pos{qw(x y)});
 					}
 				}

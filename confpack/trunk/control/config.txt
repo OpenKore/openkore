@@ -155,6 +155,8 @@ followDistanceMin 3
 followLostStep 12
 followSitAuto 0
 followBot 0
+followRandom 0
+followRandomDistance 4
 
 itemsTakeAuto 2
 itemsTakeAuto_party 0
