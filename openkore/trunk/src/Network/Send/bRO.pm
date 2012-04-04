@@ -13,12 +13,10 @@ sub new {
 	
 	my %packets = (
 
-		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],				
 		'035F' => ['sync', 'V', [qw(time)]],												
 		'0368' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],											
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],														
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],				
-		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],														
 		'0860' => ['item_drop', 'v2', [qw(index amount)]],																		
 		'086F' => ['item_take', 'a4', [qw(ID)]],										
 		'0897' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],																
