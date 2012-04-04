@@ -26,25 +26,4 @@ sub new {
    return $class->SUPER::new(@_);
 }
 
-sub sendMove {
-   my $self = shift;
-   my $x = int scalar shift;
-   my $y = int scalar shift;
-   my $msg;
-
-   $msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y, 1);
-
-   $self->sendToServer($msg);
-   debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
-
-sub sendHomunculusMove {
-	my $self = shift;
-	my $homunID = shift;
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-	my $msg = pack("C*", 0x32, 0x02) . $homunID . getCoordString($x, $y, 1);
-	$self->sendToServer($msg);
-	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
-}
 1;

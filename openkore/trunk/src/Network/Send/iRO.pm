@@ -27,6 +27,7 @@ sub new {
 	
 	my %handlers = qw(
 		sync 0360
+		character_move 035F
 		actor_info_request 0368
 		actor_look_at 0361
 		item_take 0362
@@ -40,28 +41,6 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
-}
-
-sub sendMove {
-   my $self = shift;
-   my $x = int scalar shift;
-   my $y = int scalar shift;
-   my $msg;
-
-   $msg = pack("C*", 0x5F, 0x03) . getCoordString($x, $y, 1);
-
-   $self->sendToServer($msg);
-   debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
-
-sub sendHomunculusMove {
-	my $self = shift;
-	my $homunID = shift;
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-	my $msg = pack("C*", 0x32, 0x02) . $homunID . getCoordString($x, $y, 1);
-	$self->sendToServer($msg);
-	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
 }
 
 sub sendCharDelete {
