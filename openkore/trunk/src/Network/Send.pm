@@ -32,7 +32,7 @@ use Digest::MD5;
 
 use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync @lastpm %lastpm @privMsgUsers);
 use I18N qw(bytesToString stringToBytes);
-use Utils qw(existsInList getHex getTickCount);
+use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
 use Log qw(debug);
 
@@ -459,6 +459,22 @@ sub sendSync {
 	debug "Sent Sync\n", "sendPacket", 2;
 }
 
+sub parse_character_move {
+	my ($self, $args) = @_;
+	makeCoordsDir($args, $args->{coords});
+}
+
+sub reconstruct_character_move {
+	my ($self, $args) = @_;
+	$args->{coords} = getCoordString(@{$args}{qw(x y)}, $config{serverType} == 0);
+}
+
+sub sendMove {
+	my ($self, $x, $y) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'character_move', x => $x, y => $y}));
+	debug "Sent move to: $x, $y\n", "sendPacket", 2;
+}
+
 sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 	my ($self, $monID, $flag) = @_;
 
@@ -718,6 +734,22 @@ sub sendClientMD5Hash {
 		switch => 'client_hash',
 		hash => pack('H32', $masterServer->{clientHash}), # ex 82d12c914f5ad48fd96fcf7ef4cc492d (kRO sakray != kRO main)
 	}));
+}
+
+sub parse_actor_move {
+	my ($self, $args) = @_;
+	makeCoordsDir($args, $args->{coords});
+}
+
+sub reconstruct_actor_move {
+	my ($self, $args) = @_;
+	$args->{coords} = getCoordString(@{$args}{qw(x y)}, !($config{serverType} > 0));
+}
+
+sub sendHomunculusMove {
+	my ($self, $ID, $x, $y) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'actor_move', ID => $ID, x => $x, y => $y}));
+	debug sprintf("Sent %s move to: %d, %d\n", Actor::get($ID), $x, $y), "sendPacket", 2;
 }
 
 sub sendFriendListReply {

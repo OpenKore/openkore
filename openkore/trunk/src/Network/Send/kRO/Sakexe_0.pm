@@ -148,21 +148,6 @@ sub sendQuitRequest {
 # 0x0084,2
 
 # 0x0085,5,walktoxy,2
-sub parse_character_move {
-	my ($self, $args) = @_;
-	makeCoordsDir($args, $args->{coords});
-}
-
-sub reconstruct_character_move {
-	my ($self, $args) = @_;
-	$args->{coords} = getCoordString(@{$args}{qw(x y)}, 1);
-}
-
-sub sendMove {
-	my ($self, $x, $y) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'character_move', x => $x, y => $y}));
-	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
 
 # 0x0086,16
 # 0x0087,12

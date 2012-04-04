@@ -25,7 +25,14 @@ use Utils qw(getHex getCoordString);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	$self;
 }
 
 # 0x022d,5,hommenu,4
@@ -37,12 +44,6 @@ sub sendHomunculusCommand {
 }
 
 # 0x0232,9,hommoveto,6
-sub sendHomunculusMove {
-	my ($self, $homunID, $x, $y) = @_;
-	my $msg = pack('v a4 a3', 0x0232, $homunID, getCoordString($x = int $x, $y = int $y, 1));
-	$self->sendToServer($msg);
-	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
-}
 
 # 0x0233,11,homattack,0
 sub sendHomunculusAttack {
