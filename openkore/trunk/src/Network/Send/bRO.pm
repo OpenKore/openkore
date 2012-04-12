@@ -21,10 +21,11 @@ sub new {
 		'0923' => ['item_drop', 'v2', [qw(index amount)]],																				
 		'0924' => ['actor_action', 'a4 C', [qw(targetID type)]],																
 		'0925' => ['actor_look_at', 'v C', [qw(head body)]],					
+		'092B' => ['character_move', 'a3', [qw(coords)]],				
 		'0930' => ['storage_item_remove', 'v V', [qw(index amount)]],													
 		'0934' => ['actor_info_request', 'a4', [qw(ID)]],												
 		'094C' => ['sync', 'V', [qw(time)]],									
-		'094D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],													
+		'094D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],	
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
