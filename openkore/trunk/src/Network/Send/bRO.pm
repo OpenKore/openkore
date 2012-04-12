@@ -32,6 +32,7 @@ sub new {
 	my %handlers = qw(
 
 		item_take 023B
+		master_login 02B0		
 		storage_item_add 02C4
 		party_join_request_by_name 085F
 		skill_use_location 088A
