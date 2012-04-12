@@ -13,18 +13,14 @@ sub new {
 	
 	my %packets = (
 
-		'0232' => ['homunculus_move','a4 a4', [qw(homumID coordString)]],					
 		'023B' => ['item_take', 'a4', [qw(ID)]],											
-		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],				
 		'02C4' => ['storage_item_add', 'v V', [qw(index amount)]],				
-		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],																
 		'085F' => ['party_join_request_by_name', 'a24', [qw(partyName)]],																						
 		'088A' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],						
 		'08A1' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],																		
 		'0923' => ['item_drop', 'v2', [qw(index amount)]],																				
 		'0924' => ['actor_action', 'a4 C', [qw(targetID type)]],																
 		'0925' => ['actor_look_at', 'v C', [qw(head body)]],					
-		'092B' => ['move','a4', [qw(coordString)]],							
 		'0930' => ['storage_item_remove', 'v V', [qw(index amount)]],													
 		'0934' => ['actor_info_request', 'a4', [qw(ID)]],												
 		'094C' => ['sync', 'V', [qw(time)]],									
@@ -35,18 +31,15 @@ sub new {
 	
 	my %handlers = qw(
 
-		homunculus_move 0232
 		item_take 023B
-		master_login 02B0
 		storage_item_add 02C4
-		buy_bulk_vender 0801
 		party_join_request_by_name 085F
 		skill_use_location 088A
 		map_login 08A1
 		item_drop 0923
 		actor_action 0924
 		actor_look_at 0925
-		move 092B
+		character_move 092B
 		storage_item_remove 0930		
 		actor_info_request 0934		
 		sync 094C
@@ -133,31 +126,6 @@ sub sendMapLogin
 
 	$self->sendToServer($msg);
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
-}
-
-sub sendMove 
-{
-	my ($self, $x, $y) = @_;
-	
-	$self->sendToServer($self->reconstruct({
-		switch => 'move',
-		coordString => getCoordString(int $x, int $y, 1),
-	}));
-
-	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
-
-sub sendHomunculusMove 
-{
-	my ($self, $homunID, $x, $y) = @_;
-	
-	$self->sendToServer($self->reconstruct({
-		switch => 'homunculus_move',
-		homumID => $homunID,
-		coordString => getCoordString(int $x, int $y, 1),
-	}));
-
-	debug "Sent Homunculus Move to: $x, $y\n", "sendPacket", 2;
 }
 
 sub sendHomunculusCommand 
