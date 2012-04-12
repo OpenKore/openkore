@@ -13,39 +13,44 @@ sub new {
 	
 	my %packets = (
 
-		'035F' => ['sync', 'V', [qw(time)]],												
-		'0368' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],											
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],														
-		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],				
-		'0860' => ['item_drop', 'v2', [qw(index amount)]],																		
-		'086F' => ['item_take', 'a4', [qw(ID)]],										
-		'0897' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],																
-		'089A' => ['actor_look_at', 'v C', [qw(head body)]],			
-		'08AA' => ['storage_item_add', 'v V', [qw(index amount)]],																
-		'08A7' => ['party_join_request_by_name', 'a24', [qw(partyName)]],																				
-		'092E' => ['storage_item_remove', 'v V', [qw(index amount)]],											
-		'096A' => ['actor_info_request', 'a4', [qw(ID)]],										
+		'0232' => ['homunculus_move','a4 a4', [qw(homumID coordString)]],					
+		'023B' => ['item_take', 'a4', [qw(ID)]],											
+		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],				
+		'02C4' => ['storage_item_add', 'v V', [qw(index amount)]],				
+		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],																
+		'085F' => ['party_join_request_by_name', 'a24', [qw(partyName)]],																						
+		'088A' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],						
+		'08A1' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],																		
+		'0923' => ['item_drop', 'v2', [qw(index amount)]],																				
+		'0924' => ['actor_action', 'a4 C', [qw(targetID type)]],																
+		'0925' => ['actor_look_at', 'v C', [qw(head body)]],					
+		'092B' => ['move','a4', [qw(coordString)]],							
+		'0930' => ['storage_item_remove', 'v V', [qw(index amount)]],													
+		'0934' => ['actor_info_request', 'a4', [qw(ID)]],												
+		'094C' => ['sync', 'V', [qw(time)]],									
+		'094D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],													
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
 	
 	my %handlers = qw(
 
+		homunculus_move 0232
+		item_take 023B
 		master_login 02B0
-		sync 035F
-		homunculus_command 0368
-		actor_action 0369
-		character_move 0437
-		skill_use_location 0438
+		storage_item_add 02C4
 		buy_bulk_vender 0801
-		item_drop 0860
-		item_take 086F
-		map_login 0897
-		actor_look_at 089A
-		storage_item_add 08AA
-		party_join_request_by_name 08A7
-		storage_item_remove 092E
-		actor_info_request 096A	
+		party_join_request_by_name 085F
+		skill_use_location 088A
+		map_login 08A1
+		item_drop 0923
+		actor_action 0924
+		actor_look_at 0925
+		move 092B
+		storage_item_remove 0930		
+		actor_info_request 0934		
+		sync 094C
+		homunculus_command 094D
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -98,9 +103,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x367, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x366, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x367, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x366, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
@@ -128,6 +133,31 @@ sub sendMapLogin
 
 	$self->sendToServer($msg);
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
+}
+
+sub sendMove 
+{
+	my ($self, $x, $y) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'move',
+		coordString => getCoordString(int $x, int $y, 1),
+	}));
+
+	debug "Sent move to: $x, $y\n", "sendPacket", 2;
+}
+
+sub sendHomunculusMove 
+{
+	my ($self, $homunID, $x, $y) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'homunculus_move',
+		homumID => $homunID,
+		coordString => getCoordString(int $x, int $y, 1),
+	}));
+
+	debug "Sent Homunculus Move to: $x, $y\n", "sendPacket", 2;
 }
 
 sub sendHomunculusCommand 
@@ -158,11 +188,11 @@ sub sendPartyJoinRequestByName
 sub PrepareKeys()
 {
 	# K
-	$enc_val1 = Math::BigInt->new('0x50A7C75BBC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
+	$enc_val1 = Math::BigInt->new('0x1464FD2FBC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
 	# M
-	$enc_val3 = Math::BigInt->new('0x6FD9A79ABC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
+	$enc_val3 = Math::BigInt->new('0x699A8DC5BC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
 	# A
-	$enc_val2 = Math::BigInt->new('0xC34EA66BC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
+	$enc_val2 = Math::BigInt->new('0x418EF8DFBC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
 }
 
 1;
