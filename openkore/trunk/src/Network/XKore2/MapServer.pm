@@ -240,7 +240,7 @@ sub map_loaded {
 		shiftPack(\$coords, $portal->{pos}{y}, 10);
 		shiftPack(\$coords, 0, 4);
 		$output .= $self->{recvPacketParser}->reconstruct({
-			switch => '0078',
+			switch => 'actor_exists',
 			coords => $coords,
 			map { $_ => $portal->{$_} } qw(ID type)
 		});
@@ -255,7 +255,7 @@ sub map_loaded {
 		shiftPack(\$coords, $npc->{pos}{y}, 10);
 		shiftPack(\$coords, $npc->{look}{body}, 4);
 		$output .= $self->{recvPacketParser}->reconstruct({
-			switch => '0078',
+			switch => 'actor_exists',
 			coords => $coords,
 			map { $_ => $npc->{$_} } qw(ID opt1 opt2 option type)
 		});
@@ -270,7 +270,7 @@ sub map_loaded {
 		shiftPack(\$coords, $monster->{pos_to}{y}, 10);
 		shiftPack(\$coords, $monster->{look}{body}, 4);
 		$output .= $self->{recvPacketParser}->reconstruct({
-			switch => '0078',
+			switch => 'actor_exists',
 			walk_speed => $monster->{walk_speed} * 1000,
 			coords => $coords,
 			map { $_ => $monster->{$_} } qw(ID opt1 opt2 option type lv)
@@ -286,7 +286,7 @@ sub map_loaded {
 		shiftPack(\$coords, $pet->{pos_to}{y}, 10);
 		shiftPack(\$coords, $pet->{look}{body}, 4);
 		$output .= $self->{recvPacketParser}->reconstruct({
-			switch => '0078',
+			switch => 'actor_exists',
 			walk_speed => $pet->{walk_speed} * 1000,
 			coords => $coords,
 			map { $_ => $pet->{$_} } qw(ID type hair_style lv)
