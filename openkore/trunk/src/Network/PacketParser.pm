@@ -256,10 +256,10 @@ sub parse {
 		}
 		Misc::checkValidity("Packet: " . $handler->[0] . " (pre)");
 
-                # If return is set in a packet_pre handler, the packet will be ignored.
-                unless($args{return}) {
-                        $handleContainer->$callback(\%args, @handleArguments);
-                }
+		# If return is set in a packet_pre handler, the packet will be ignored.
+		unless($args{return}) {
+			$handleContainer->$callback(\%args, @handleArguments);
+		}
 
 		Misc::checkValidity("Packet: " . $handler->[0]);
 	} else {
