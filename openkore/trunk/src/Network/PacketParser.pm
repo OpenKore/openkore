@@ -217,6 +217,16 @@ sub parse {
 	}
 
 	# $handler->[0] may be (re)binded to $switch here for current serverType
+	# but all the distinct packets need a distinct names for that, even if they share the handler
+	# like actor_display = actor_exists + actor_connected + actor_moved
+	# if (DEBUG) {
+	# 	unless ($self->{packet_lut}{$handler->[0]} eq $switch) {
+	# 		$self->{packet_lut}{$handler->[0]} = $switch;
+	# 		if ((grep { $_ && $_->[0] eq $handler->[0] } values %{$self->{packet_list}}) > 1) {
+	# 			warning sprintf "Using %s to provide %s\n", $switch, $handler->[0];
+	# 		}
+	# 	}
+	# }
 
 	debug "Received packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
 

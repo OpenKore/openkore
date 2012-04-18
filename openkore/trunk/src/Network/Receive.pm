@@ -358,6 +358,18 @@ sub account_server_info {
 	}
 }
 
+*actor_exists = *actor_display_compatibility;
+*actor_connected = *actor_display_compatibility;
+*actor_moved = *actor_display_compatibility;
+*actor_spawned = *actor_display_compatibility;
+sub actor_display_compatibility {
+	my ($self, $args) = @_;
+	# compatibility; TODO do it in PacketParser->parse?
+	Plugins::callHook('packet_pre/actor_display', $args);
+	&actor_display unless $args->{return};
+	Plugins::callHook('packet/actor_display', $args);
+}
+
 # This function is a merge of actor_exists, actor_connected, actor_moved, etc...
 sub actor_display {
 	my ($self, $args) = @_;
