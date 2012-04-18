@@ -56,13 +56,12 @@ sub map_login {
 		$self->{sessionStore}->remove($session);
 		$client->{session} = $session;
 
-		# # TODO: use result from the server?
-		# if (exists $self->{recvPacketParser}{packet_lut}{define_check}) {
-		# 	$client->send($self->{recvPacketParser}->reconstruct({
-		# 		switch => 'define_check',
-		# 		result => Network::Receive::ServerType0::DEFINE__BROADCASTING_SPECIAL_ITEM_OBTAIN | Network::Receive::ServerType0::DEFINE__RENEWAL_ADD_2,
-		# 	}));
-		# }
+		if (exists $self->{recvPacketParser}{packet_lut}{define_check}) {
+			$client->send($self->{recvPacketParser}->reconstruct({
+				switch => 'define_check',
+				result => Network::Receive::ServerType0::DEFINE__BROADCASTING_SPECIAL_ITEM_OBTAIN | Network::Receive::ServerType0::DEFINE__RENEWAL_ADD_2,
+			}));
+		}
 
 		if (exists $self->{recvPacketParser}{packet_lut}{account_id}) {
 			$client->send($self->{recvPacketParser}->reconstruct({

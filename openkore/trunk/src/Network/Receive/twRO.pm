@@ -34,6 +34,7 @@ sub new {
 		actor_exists 0856
 		actor_connected 0857
 		actor_moved 0858
+		define_check 07FF
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
