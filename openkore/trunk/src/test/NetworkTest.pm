@@ -3,6 +3,7 @@ package NetworkTest;
 
 use strict;
 use Test::More;
+use Misc;
 use Network::Receive;
 use Network::Send;
 
