@@ -496,7 +496,7 @@ sub parseChat {
 	if ($args->{message} =~ /^(.*?)\s{1,2}:\s{1,2}(.*)$/) {
 		$args->{name} = $1;
 		$args->{message} = $2;
-		stripLanguageCode(\$args->{message});
+		Misc::stripLanguageCode(\$args->{message});
 	}
 	if (exists $args->{ID}) {
 		$args->{actor} = Actor::get($args->{ID});
