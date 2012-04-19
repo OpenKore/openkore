@@ -60,7 +60,7 @@ sub start {
 		sessionStore => $sessionStore
 	);
 	$hooks = Plugins::addHooks(
-		['Network::setState', \&stateChanged],
+		['Network::stateChanged', \&stateChanged],
 		['Network::clientAlive', \&clientAlive],
 		['Network::clientSend', \&clientSend],
 		['Network::clientRecv', \&clientRecv],
