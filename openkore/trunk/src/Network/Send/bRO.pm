@@ -30,11 +30,7 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
 	
 	my %handlers = qw(
-
-		# Never Changes
 		master_login 02B0
-
-		# Modified Packet IDs
 		actor_look_at 0202
 		map_login 022D
 		sync 035F
@@ -164,7 +160,7 @@ sub PrepareKeys()
 	# M
 	$enc_val3 = Math::BigInt->new('0x1A7395D9BC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
 	# A
-	$enc_val2 = Math::BigInt->new('0x67A3B0D9BC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
+	$enc_val2 = Math::BigInt->new('0x6A7395D9BC00')->bdec()->bxor(0xFFAABBFF)->brsft(16);
 }
 
 1;
