@@ -60,6 +60,9 @@ sub start {
 		sessionStore => $sessionStore
 	);
 	$hooks = Plugins::addHooks(
+		['packet_pre/map_loaded', \&map_loaded],
+		['packet_pre/map_changed', \&map_changed],
+		['packet_pre/initialize_message_id_encryption', \&initialize_message_id_encryption],
 		['Network::stateChanged', \&stateChanged],
 		['Network::clientAlive', \&clientAlive],
 		['Network::clientSend', \&clientSend],
@@ -76,10 +79,39 @@ sub stop {
 	Plugins::delHooks($hooks);
 }
 
+sub map_loaded {
+	my (undef, $args) = @_;
+	
+	$args->{mangle} = 2;
+}
+
+sub map_changed {
+	my (undef, $args) = @_;
+	
+	$mapServerChange = Storable::dclone($args);
+	
+	$args->{mangle} = 2;
+}
+
+sub initialize_message_id_encryption {
+	my (undef, $args) = @_;
+	
+	$args->{mangle} = 2;
+}
+
 sub stateChanged {
 	$accountServer->setServerType($masterServer->{serverType});
 	$charServer->setServerType($masterServer->{serverType});
 	$mapServer->setServerType($masterServer->{serverType});
+	
+	if ($Globals::net->getState() == Network::IN_GAME && $mapServerChange ne '') {
+		$Globals::net->clientSend($mapServer->{recvPacketParser}->reconstruct({
+			%$mapServerChange,
+			switch => 'map_change',
+		}));
+		
+		$mapServerChange = undef;
+	}
 }
 
 sub clientAlive {
@@ -91,7 +123,7 @@ sub clientSend {
 	my (undef, $args) = @_;
 	if ($args->{net}->getState() == Network::IN_GAME) {
 		foreach my $client (@{$mapServer->clients}) {
-			my $sendData = filterPacket($args->{data});
+			my $sendData = $args->{data};
 			$client->send($sendData) if (length($sendData) > 0);
 		}
 	}
@@ -117,23 +149,6 @@ sub clientRecv {
 		}
 		$args->{return} = $result if (length($result) > 0);
 	}
-}
-
-sub filterPacket {
-	my ($msg) = shift;
-	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	if ($switch eq "0092"){
-	    $mapServerChange = unpack('x2 Z16 x*', $msg);
-		$mapServerChange =~ /([\s\S]*)\./;
-		return "";
-	} elsif ($switch eq "00B0" && $mapServerChange ne '') {
-		my $pos = calcPosition($char);
-		$msg = pack("C*",0x91,0). pack("a16", $mapServerChange) . pack("v1 v1", $pos->{x}, $pos->{y}).$msg;
-		$mapServerChange = '';
-	} elsif ($switch eq "02AE") {
-		$msg = "";
-	}
-	return $msg;
 }
 
 sub mainLoop {
