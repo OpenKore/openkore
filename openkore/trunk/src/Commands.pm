@@ -2784,6 +2784,7 @@ sub cmdInventory {
 				$eqp{index} = $item->{index};
 				$eqp{binID} = $item->{invIndex};
 				$eqp{name} = $item->{name};
+				$eqp{amount} = $item->{amount};
 				$eqp{equipped} = ($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
 				$eqp{type} = $itemTypes_lut{$item->{type}};
 				$eqp{equipped} .= " ($item->{equipped})";
@@ -2814,7 +2815,9 @@ sub cmdInventory {
 			$msg .= T("-- Equipment (Not Equipped) --\n");
 			foreach my $item (@uequipment) {
 				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? T("Will be sold") : "";
-				$display = sprintf("%-3d  %s (%s) %s", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
+				$display = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
+				$display .= " x $item->{amount}" if $item->{amount} > 1;
+				$display .= $item->{identified};
 				$msg .= sprintf("%-57s %s\n", $display, $sell);
 			}
 		}
