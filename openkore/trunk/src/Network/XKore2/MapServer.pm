@@ -20,7 +20,7 @@ use Globals qw(
 	$portalsList $npcsList $monstersList $playersList $petsList
 	@friendsID %friends %pet @partyUsersID %spells
 	@chatRoomsID %chatRooms @venderListsID %venderLists $hotkeyList
-	%config
+	%config $questList
 );
 use Base::Ragnarok::MapServer;
 use base qw(Base::Ragnarok::MapServer);
@@ -403,6 +403,19 @@ sub map_loaded {
 		$output = pack('C2 V3 x5 Z24', 0x6C, 0x01,
 			$char->{guildID}, $char->{guild}{emblem}, $char->{guild}{mode},
 			stringToBytes($char->{guild}{name}));
+		$client->send($output);
+	}
+
+	# Send quest info
+	$output = '';
+	my $k = 0;
+	foreach my $questID (keys %{$questList}) {
+		my $quest = $questList->{$questID};
+		$output .= pack('V C', $questID, $quest->{active});
+		$k++;
+	}
+	if ($k > 0 && length($output) > 0) {
+		$output = pack('C2 v V', 0xB1, 0x02, length($output) + 8, $k) . $output;
 		$client->send($output);
 	}
 
