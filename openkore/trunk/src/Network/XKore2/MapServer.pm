@@ -406,22 +406,31 @@ sub map_loaded {
 		$client->send($output);
 	}
 
-	# Send quest info
-	$output = '';
+	# Send quest/mission info
+	my $q_output = '';
+	my $m_output = '';
+	my $tmp = '';
 	my $k = 0;
+	my $mi = 0;
 	foreach my $questID (keys %{$questList}) {
 		my $quest = $questList->{$questID};
-		$output .= pack('V C', $questID, $quest->{active});
+		$q_output .= pack('V C', $questID, $quest->{active});
+
+		# misson info
+		$tmp = '';
+		$mi = 0;
+		foreach my $mobID (keys %{$quest->{missions}}) {
+			my $mission = $quest->{missions}->{$mobID};
+			$tmp = pack('V v Z24', $mission->{mobID}, $mission->{count}, $mission->{mobName_org});
+			$mi++;
+		}
+		$m_output .= pack('V3 v a90', $questID, $quest->{time_start}, $quest->{time}, $mi, $tmp);
 		$k++;
 	}
-	if ($k > 0 && length($output) > 0) {
-		$output = pack('C2 v V', 0xB1, 0x02, length($output) + 8, $k) . $output;
+	if ($k > 0 && length($q_output) > 0) {
+		$output = pack('C2 v V', 0xB1, 0x02, length($q_output) + 8, $k) . $q_output;
+		$output .= pack('C2 v V', 0xB2, 0x02, length($m_output) + 8, $k) . $m_output;
 		$client->send($output);
-	}
-
-	# Send "sitting" if the char is sitting
-	if ($char->{sitting}) {
-		$client->send(pack('C2 a4 x20 C1 x2', 0x8A, 0x00, $char->{ID}, 2));
 	}
 	
 	#Hack to Avoid Sprite Error Crash if you are level 99
