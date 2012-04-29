@@ -32,7 +32,7 @@ use Wx::RichText;
 use base qw(Wx::RichTextCtrl);
 use encoding 'utf8';
 
-use Globals qw(%consoleColors);
+use Globals qw(%consoleColors $interface);
 use Utils::StringScanner;
 
 use constant STYLE_SLOT => 4;
@@ -269,6 +269,8 @@ sub add {
 
 	$self->_CaretRestore(); # Restore Caret and Selection position
 	$self->finalizePrinting($atBottom);
+
+	$interface->Yield();
 }
 
 sub addColoredText {
