@@ -45,6 +45,7 @@ use File::Spec;
 
 use Globals;
 use Log qw(message error);
+use Misc qw(chatLog);
 use Network;
 use Network::Send ();
 use Plugins;
@@ -52,7 +53,6 @@ use Settings;
 use Interface;
 use Utils qw(dataWaiting timeOut);
 use Utils::Exceptions;
-use Misc qw(chatLog);
 use Translation;
 
 ##

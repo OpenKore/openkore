@@ -18,12 +18,12 @@ package Network::Send::ServerType0;
 use strict;
 use Time::HiRes qw(time);
 
+use Misc qw(stripLanguageCode);
 use Network::Send ();
 use base qw(Network::Send);
 use Plugins;
 use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync);
 use Log qw(debug);
-use Misc qw(stripLanguageCode);
 use Translation qw(T TF);
 use I18N qw(bytesToString stringToBytes);
 use Utils;

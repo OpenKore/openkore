@@ -26,13 +26,13 @@ use encoding 'utf8';
 
 use Globals;
 use Log qw(message warning error debug);
+use Misc;
 use Network::Send ();
 use Settings;
 use AI;
 use AI::SlaveManager;
 use ChatQueue;
 use Utils;
-use Misc;
 use Commands;
 use Network;
 use FileParsers;
