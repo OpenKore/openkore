@@ -197,7 +197,7 @@ sub onSkillCast {
 	 && $self->{skill}->getIDN() == $args->{skillID}) {
 		$self->{castingStarted} = 1;
 		$self->{castFinishTimer}{time} = time;
-		$self->{castFinishTimer}{timeout} = $args->{castTime} + DEFAULT_CAST_TIMEOUT;
+		$self->{castFinishTimer}{timeout} = $args->{castTime} / 1000 + DEFAULT_CAST_TIMEOUT;
 	}
 }
 
