@@ -3731,7 +3731,7 @@ sub checkSelfCondition {
 	}
 
 	# check skill use SP if this is a 'use skill' condition
-	if ($prefix =~ /skill/i) {
+	if ($prefix =~ /skill|attackComboSlot/i) {
 		my $skill = Skill->new(auto => $config{$prefix});
 		return 0 unless ($char->getSkillLevel($skill)
 						|| $config{$prefix."_equip_leftAccessory"}
