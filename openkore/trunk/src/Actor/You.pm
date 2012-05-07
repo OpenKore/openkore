@@ -68,6 +68,22 @@ use Utils;
 #
 # A unique character ID for this character (not the same as the account ID, or $char->{ID}).
 
+use constant {
+	ACTION_ATTACK => 0x0,
+	ACTION_ITEMPICKUP => 0x1, # pick up item
+	ACTION_SIT => 0x2, # sit down
+	ACTION_STAND => 0x3, # stand up
+	ACTION_ATTACK_NOMOTION => 0x4, # reflected/absorbed damage?
+	ACTION_SPLASH => 0x5,
+	ACTION_SKILL => 0x6,
+	ACTION_ATTACK_REPEAT => 0x7,
+	ACTION_ATTACK_MULTIPLE => 0x8, # double attack
+	ACTION_ATTACK_MULTIPLE_NOMOTION => 0x9, # don't display flinch animation (endure)
+	ACTION_ATTACK_CRITICAL => 0xa, # critical hit
+	ACTION_ATTACK_LUCKY => 0xb, # lucky dodge
+	ACTION_TOUCHSKILL => 0xc,
+};
+
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new('You');
