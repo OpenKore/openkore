@@ -316,7 +316,7 @@ sub map_loaded {
 	$output = '';
 	foreach my $ID (@venderListsID) {
 		next if !defined($ID) || !$venderLists{$ID};
-		$output .= pack('C2 a4 a30 x50', 0x31, 0x01, $ID, $venderLists{$ID}{title});
+		$output .= pack('C2 a4 a30 x50', 0x31, 0x01, $ID, stringToBytes($venderLists{$ID}{title}));
 	}
 	$client->send($output) if (length($output) > 0);
 
@@ -328,7 +328,7 @@ sub map_loaded {
 		my $chatMsg = pack('a4 a4 v2 C1 a* x1',
 			$chatRooms{$ID}{ownerID}, $ID, $chatRooms{$ID}{limit},
 			$chatRooms{$ID}{num_users}, $chatRooms{$ID}{public},
-			$chatRooms{$ID}{title});
+			stringToBytes($chatRooms{$ID}{title}));
 		$output .= pack('C2 v', 0xD7, 0x00, length($chatMsg) + 4) . $chatMsg;
 	}
 	$client->send($output) if (length($output) > 0);

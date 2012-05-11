@@ -8,6 +8,7 @@ use Modules 'register';
 use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
 use Misc;
+use I18N qw(stringToBytes);
 use Globals qw(%config);
 
 use constant SESSION_TIMEOUT => 120;
@@ -124,7 +125,7 @@ sub game_login {
 				$char->{headgear}{mid},
 				$char->{hair_color},
 				$char->{clothes_color},
-				$char->{name},
+				stringToBytes($char->{name}),
 				$char->{str},
 				$char->{agi},
 				$char->{vit},
