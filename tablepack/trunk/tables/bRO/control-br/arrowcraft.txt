@@ -1,0 +1,21 @@
+#############################################################################################
+# A Codificação do texto está correta?
+# Codificação:  ANSI -> UTF8 Without boom
+# Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
+# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+#############################################################################################
+# Arqueiros têm a habilidade especial Fabricar Flechas, que permite a você criar
+# flechas usando certos itens.
+# Se você quer que o Kore automaticamente crie flechas com o Fabricar Flechas, então
+# poderá fazer isso editando este arquivo.
+#
+# Dentro do arquivo, especifique os ingredientes que você precisará para criar flechas.
+# O formato é o seguinte:
+# (Nome do item) (Quantidade)
+#
+# Por exemplo:
+# Sangue Escarlate 1
+# Garleta
+#
+# Isso irá permitir ao Kore criar Flechas de Fogo e Flechas de Ferro, usando
+# os itens acima.

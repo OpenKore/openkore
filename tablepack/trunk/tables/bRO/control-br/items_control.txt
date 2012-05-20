@@ -1,0 +1,317 @@
+#############################################################################################
+# A Codificação do texto está correta?
+# Codificação:  ANSI -> UTF8 Without boom
+# Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
+# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+#############################################################################################
+# Nesse arquivo você pode configurar quais itens serão adicionados no armazém,
+# quais serão vendidos em NPC, ou deixados no inventário.
+#
+# Sintaxe:
+# (nome do item) (minimo) (auto-armazém) (auto-venda) [por no carrinho] [pegar do carrinho]
+# nome do item          : Nome do item (Digite i no console do openkore para saber o nome correto.)
+# minimo                        : Quantidade minima desse item que deseja manter no inventário.
+# auto-armazém         : Coloque 1 para voltar ao NPC da Kafra e adicionar esse item ao armazém.
+# auto-venda            : Coloque 1 para vender esse item em NPC.
+# por no carrinho       : Coloque 1 para adicionar esse item automaticamente no carrinho.
+# pegar do carrinho     : Coloque 1 para retirar esse item automaticamente do carrinho.
+#
+# No exemplo abaixo, vai ser vendido todos os jellopys, armazenar todas as facas e colocar
+# todas as flores no carrinho:
+#       Jellopy 0 0 1
+#       Faca 0 1 0
+#       Flor 0 0 0 1
+#
+# Neste exemplo, será coletado Poções Vermelhas do carrinho se você tiver menos que 25
+# deste item em seu inventário:
+#       Poção Vermelha 25 0 0 0 1
+#
+# O nome do item não é diferenciado por letras maiúsculas ou minúsculas. Apenas os itens encontrados
+# neste arquivo serão armazenados ou vendidos.
+#
+# Se o auto-armazém e auto-venda estiverem como 1, o Kore irá armazenar primeiro (exceto se
+# o armazém estiver lotado), e somente depois irá vender os itens.
+#
+# O Kore jamais irá vender ou armazenar itens equipados. Por exemplo, se voce estiver usando
+# uma faca e na lista ter uma linha de auto-venda de todas as facas, o Kore irá vender somente
+# as que estiverem no inventário, jamais a faca que estiver usando.
+#
+# Não esqueça de definir storageAuto, sellAuto e demais configurações relacionadas
+# no config.txt, ou então este arquivo não terá efeito algum.
+#
+# As listas de auto-venda e auto-armazém são padronizadas. Modifique-as
+# como achar melhor.
+ 
+ 
+# Todos os itens não mencionados nesse arquivo serão automaticamente adicionados no armazém.
+all 0 1 0
+ 
+ 
+##### ITENS DE SUPORTE E CURA #####
+# Configure-os conforme sua necessidade.
+ 
+Asas de Borboleta 10 1 0
+Asas de Mosca 100 1 0
+ 
+Poção Azul 0 1 0
+Poção Vermelha Compacta 50 1 0
+Poção Branca Compacta 50 1 0
+Poção Amarela Compacta 50 1 0
+Poção Verde 0 1 0
+Poção Vermelha 25 1 0
+Poção Laranja 25 1 0
+Poção Branca 25 1 0
+Poção Amarela 25 1 0
+ 
+##### FLECHAS #####
+# Você pode precisar modificar esta linha se você é um arqueiro/caçador.
+ 
+Flecha 3000 1 0
+ 
+ 
+ 
+#########################
+##### ITENS À VENDA #####
+#########################
+ 
+ 
+##### EQUIPAMENTOS INÚTEIS #####
+# Equipamentos inúteis que serão vendidos por padrão.
+ 
+Anel de Caveira 0 0 1
+Anel de Diamante 0 0 1
+Anel de Flor 0 0 1
+Anel de Ouro 0 0 1
+Anel de Prata 0 0 1
+Armadura Acolchoada 0 0 1
+Armadura de Madeira [1] 0 0 1
+Armadura de Madeira 0 0 1
+Armadura Metálica 0 0 1
+Bandana 0 0 1
+Barrete 0 0 1
+Botas 0 0 1
+Broquel 0 0 1
+Camisa de Algodão [1] 0 0 1
+Camisa de Algodão 0 0 1
+Capacete de Schallern 0 0 1
+Capote [1] 0 0 1
+Capote 0 0 1
+Capuz [1] 0 0 1
+Capuz 0 0 1
+Casaco [1] 0 0 1
+Casaco 0 0 1
+Chapéu 0 0 1
+Cota de Malha 0 0 1
+Elmo 0 0 1
+Escapulário 0 0 1
+Escudo 0 0 1
+Escudo Espelhado 0 0 1
+Faixa de Cabelo 0 0 1
+Gibão [1] 0 0 1
+Gibão 0 0 1
+Grilhões 0 0 1
+Laço [1] 0 0 1
+Laço 0 0 1
+Malha 0 0 1
+Manteau 0 0 1
+Manto de Seda 0 0 1
+Manto Prateado [1] 0 0 1
+Manto Prateado 0 0 1
+Manto Sagrado 0 0 1
+Máscara Cirúrgica 0 0 1
+Máscara Feliz 0 0 1
+Máscara X 0 0 1
+Óculos de Mergulho 0 0 1
+Óculos Escuros 0 0 1
+Rosário 0 0 1
+Rouba de Baixo 0 0 1
+Salto Alto 0 0 1
+Sandálias [1] 0 0 1
+Sandálias 0 0 1
+#Sapatilha de Cristal 0 0 1
+Sapatos 0 0 1
+Sobrepeliz 0 0 1
+Solidéu 0 0 1
+Tapa-Olho 0 0 1
+Tiara 0 0 1
+Traje de Gatuno 0 0 1
+Túnica 0 0 1
+Turbante 0 0 1
+Vembrassa 0 0 1
+ 
+ 
+##### ARMAS INÚTEIS #####
+# Armas inúteis que serão vendidas por padrão.
+ 
+Açoite [2] 0 0 1
+Açoite [3] 0 0 1
+Adaga [2] 0 0 1
+Adaga [3] 0 0 1
+Adaga 0 0 1
+Alabarda [1] 0 0 1
+Alabarda [2] 0 0 1
+Alaúde [2] 0 0 1
+Alaúde [3] 0 0 1
+Alfanje [3] 0 0 1
+Alfanje 0 0 1
+Arbaleste [1] 0 0 1
+Arco [3] 0 0 1
+Arco [4] 0 0 1
+Arco 0 0 1
+Arco Composto [3] 0 0 1
+Arco Composto 0 0 1
+Arco Grande [2] 0 0 1
+Arco Grande [3] 0 0 1
+Arco Grande 0 0 1
+Armadura de Aprendiz [1] 0 0 1
+Azagaia [3] 0 0 1
+Azagaia [4] 0 0 1
+Azagaia 0 0 1
+Azorrague [1] 0 0 1
+Azorrague 0 0 1
+Bandolin [2] 0 0 1
+Bandolin [3] 0 0 1
+Bastão [3] 0 0 1
+#Bastão [4] 0 0 1
+Bastão 0 0 1
+Besta [2] 0 0 1
+Besta 0 0 1
+Besta de Rebetição [1] 0 0 1
+#Bíblia [2] 0 0 1
+Bracelete de Aprendiz [1] 0 0 1
+Cajado [2] 0 0 1
+Cajado 0 0 1
+Cetro [1] 0 0 1
+Cetro 0 0 1
+#Chemeti 0 0 1
+Chibata [1] 0 0 1
+Chibata [2] 0 0 1
+Cimitarra [2] 0 0 1
+Cimitarra [3] 0 0 1
+Cinto [1] 0 0 1
+Clava [3] 0 0 1
+Clava [4] 0 0 1
+Clava 0 0 1
+Claymore 0 0 1
+Cordame [1] 0 0 1
+Cordame [2] 0 0 1
+Cordame [3] 0 0 1
+Cordel [3] 0 0 1
+#Cordel [4] 0 0 1
+Damascus [1] 0 0 1
+Dedos Afiados [1] 0 0 1
+Dedos Afiados [2] 0 0 1
+Demolidor [1] 0 0 1
+Demolidor 0 0 1
+#Diário de Menina [1] 0 0 1
+Dilaceradora [3] 0 0 1
+Dilaceradora [4] 0 0 1
+Dilaceradora 0 0 1
+Esmagador [2] 0 0 1
+Esmagador [3] 0 0 1
+Espada [3] 0 0 1
+Espada [4] 0 0 1
+Espada 0 0 1
+Espada Bastarda [2] 0 0 1
+Espada Bastarda 0 0 1
+Espada de Duas Mãos [1] 0 0 1
+Espada de Duas Mãos 0 0 1
+Espada Larga [1] 0 0 1
+Espada Matadora [2] 0 0 1
+Espada Matadora [3] 0 0 1
+Espada Matadora 0 0 1
+Espada Orc 0 0 1
+Faca [3] 0 0 1
+Faca [4] 0 0 1
+Faca 0 0 1
+Faca Escoscesa [2] 0 0 1
+Faca Escoscesa [3] 0 0 1
+Faca Escoscesa 0 0 1
+Flamberge 0 0 1
+Florete [2] 0 0 1
+Florete [3] 0 0 1
+Florete 0 0 1
+Gakkung [1] 0 0 1
+Garra [1] 0 0 1
+Garra [2] 0 0 1
+Gladius [2] 0 0 1
+Gladius 0 0 1
+Glaive [2] 0 0 1
+Glaive [3] 0 0 1
+Glaive 0 0 1
+Guerrilheira [1] 0 0 1
+Guerrilheira [2] 0 0 1
+Guerrilheira 0 0 1
+Guisarme [2] 0 0 1
+Guisarme 0 0 1
+Guisarme-Bico 0 0 1
+Gumoongoh [1] 0 0 1
+Gumoongoh [2] 0 0 1
+Haedonggum [1] 0 0 1
+Harpa [1] 0 0 1
+Harpa [2] 0 0 1
+Jamadhar 0 0 1
+Jur [2] 0 0 1
+Kataná [3] 0 0 1
+Kataná [4] 0 0 1
+Kataná 0 0 1
+Katar [1] 0 0 1
+Lâmina [3] 0 0 1
+Lâmina [4] 0 0 1
+Lâmina 0 0 1
+Lança 0 0 1
+Maça [3] 0 0 1
+#Maça [4] 0 0 1
+Maça 0 0 1
+Maça de Guerra [1] 0 0 1
+Maça de Guerra [2] 0 0 1
+Maça Espada 0 0 1
+Machado [3] 0 0 1
+Machado [4] 0 0 1
+Machado 0 0 1
+Machado de Batalha [3] 0 0 1
+Machado de Batalha [4] 0 0 1
+Machado de Batalha 0 0 1
+#Machado de Combate [1] 0 0 1
+Machado de Duas Mãos [1] 0 0 1
+Machado de Duas Mãos 0 0 1
+Machado dos Orcs 0 0 1
+Main Gauche [3] 0 0 1
+Main Gauche 0 0 1
+Mangual [2] 0 0 1
+Mangual [3] 0 0 1
+Mangual Pesado [2] 0 0 1
+Marreta [2] 0 0 1
+Marreta [3] 0 0 1
+Marreta 0 0 1
+Pique [3] 0 0 1
+Pique 0 0 1
+Punho [1] 0 0 1
+Punho 0 0 1
+Ranseur [3] 0 0 1
+Ranseur [4] 0 0 1
+Ranseur 0 0 1
+Sabre [2] 0 0 1
+Sabre de Impacto [2] 0 0 1
+#Serpente 0 0 1
+Soco Inglês [2] 0 0 1
+Soco Inglês [3] 0 0 1
+Soqueira [2] 0 0 1
+Soqueira [3] 0 0 1
+Stiletto [2] 0 0 1
+Stiletto [3] 0 0 1
+Stiletto 0 0 1
+Tridente [2] 0 0 1
+Tridente 0 0 1
+Tsurugi [1] 0 0 1
+Tsurugi [2] 0 0 1
+Tsurugi 0 0 1
+Vareta [2] 0 0 1
+Vareta [3] 0 0 1
+Vareta 0 0 1
+Violão [1] 0 0 1
+Violão 0 0 1
+Violino [3] 0 0 1
+#Violino [4] 0 0 1
+Waghnak [3] 0 0 1
+Waghnak [4] 0 0 1
