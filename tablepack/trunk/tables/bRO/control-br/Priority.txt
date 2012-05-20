@@ -1,0 +1,18 @@
+#############################################################################################
+# A Codificação do texto está correta?
+# Codificação:  ANSI -> UTF8 Without boom
+# Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
+# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+#############################################################################################
+# Coloque os nomes dos monstros que tem alta prioridade neste arquivo.
+# (A diferença entre maiúsculas e minúsculas deve ser levada em consideração)
+# Monstros com o nome mais acima na lista têm maiores prioridade que os abaixo.
+#
+# O Seguinte exemplo dá a Hidra a maior prioridade. Se você é atacado
+# por ambos, Obeaune e Hidras, atacará Hidras primeiro. Obeaunes terão
+# maior prioridade  que todos os monstros não listados neste arquivo, então você
+# atacará Obeaunes antes se for atacado por Obeaunes e qualquer outro
+# monstro que não seja Hidra
+# Exemplo (Remova o # a frente dos nomes caso queira ativa-los)
+#Hidra
+#Obeaune

@@ -1,0 +1,25 @@
+#############################################################################################
+# A Codificação do texto está correta?
+# Codificação:  ANSI -> UTF8 Without boom
+# Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
+# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+#############################################################################################
+# O Kore pode responder com uma mensagem quando alguém fala com você. Neste arquivo,
+# você pode configurar o que o Kore deve dizer quando alguém diz alguma coisa.
+#
+# Cada linha tem o seguinte formato:
+# (palavras) TAB (respostas)
+#
+# (palavras) usa-se uma vírgula para separar. Quando aparece a mensagem (Alguém está conversando com você)
+# que contém a palavra que está nesta lista, o Kore irá
+# escolher uma resposta aleatória (respostas), que é uma lista separada por vírgulas e
+# Nº de respostas possíveis.
+#
+#
+# Exemplo:
+# bot,botter    não, Eu não sou bot, hein?
+#
+# Quando alguém diz algo que contenha a palavra "bot" ou "botter",
+# O Kore irá responder com "não", "Eu não sou um bot" ou "hein?".
+ 
+bot,botter      não,eu não sou bot,hein?
