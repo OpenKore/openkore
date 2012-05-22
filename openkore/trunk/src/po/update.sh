@@ -17,10 +17,8 @@ xgettext --from-code=utf-8 -L Perl --force-po -o openkore.pot --keyword=T --keyw
 	../Interface/Wx/StatView/*.pm \
 	../Interface/Wx/*.pm \
 	../Interface/*.pm \
-	../Network/Receive/bRO/*.pm \
 	../Network/Receive/kRO/*.pm \
 	../Network/Receive/*.pm \
-	../Network/Send/bRO/*.pm \
 	../Network/Send/kRO/*.pm \
 	../Network/Send/*.pm \
 	../Network/*.pm \
