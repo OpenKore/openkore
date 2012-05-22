@@ -2436,9 +2436,8 @@ msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3158
 #: ../Network/Receive/ServerType0.pm:3288
-#, fuzzy, perl-format
 msgid "The server is temporarily blocking your connection until %s\n"
-msgstr "Севрер временно блокирует ваши подключения.\n"
+msgstr "Сервер временно блокирует ваши подключения до %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3167
 #: ../Network/Receive/ServerType0.pm:3301
@@ -4141,9 +4140,8 @@ msgid "You need to be at least base level 10 to send private messages.\n"
 msgstr "Невозможно отправлять личные сообщения до 10 уровня\n"
 
 #: ../Network/Receive/ServerType0.pm:3538
-#, fuzzy, perl-format
 msgid "Monster %s (%d) changed to %s\n"
-msgstr "%s сменил профессию на: %s.\n"
+msgstr "Монстр %s (%d) изменился в %s.\n"
 
 #: ../Network/Receive/ServerType0.pm:3566
 #: ../Network/Receive/ServerType0.pm:3567
@@ -4171,18 +4169,16 @@ msgid "Ready to start selling items\n"
 msgstr ""
 
 #: ../Network/Receive/ServerType0.pm:3621
-#, fuzzy, perl-format
 msgid "%s: Type 'store' to start buying, or type 'sell' to start selling\n"
-msgstr "Введите 'deal' чтобы начать сделку, или 'deal no' чтобы отвергнуть.\n"
+msgstr "%s: Введите 'store' чтобы купить, или 'sell' чтобы продать\n"
 
 #: ../Network/Receive/ServerType0.pm:3658
-#, fuzzy, perl-format
 msgid ""
 "----------%s's Store List-----------\n"
 "#  Name                    Type               Price\n"
 msgstr ""
-"-- Список товаров в магазине --\n"
-"#  Наименование            Тип            Цена\n"
+"--- Список товаров в магазине %s ---\n"
+"#  Наименование            Тип                Цена\n"
 
 #: ../Network/Receive/ServerType0.pm:3881
 #, perl-format
@@ -4289,14 +4285,12 @@ msgid "Disconnecting on job level %d!\n"
 msgstr "Отключение из-за получения %d проф-уровня!\n"
 
 #: ../Network/Receive/ServerType0.pm:6043
-#, fuzzy, perl-format
 msgid "%s successfully created a potion!\n"
-msgstr "%s - удачное улучшение оружия!\n"
+msgstr "%s успешно изготовил зелье!\n"
 
 #: ../Network/Receive/ServerType0.pm:6045
-#, fuzzy, perl-format
 msgid "%s failed to create a potion!\n"
-msgstr "%s - неудачное улучшение оружия!\n"
+msgstr "%s не смог изготовить зелье!\n"
 
 #: ../Network/Receive/ServerType0.pm:6047
 #, perl-format
@@ -4305,7 +4299,6 @@ msgstr "%s вызвал непонятный (тип=%d) спец. эффект\
 
 #: ../Network/Receive/ServerType0.pm:6104
 #: ../Network/Receive/ServerType0.pm:7302
-#, fuzzy, perl-format
 msgid ""
 "%s\n"
 "#   Name                                      Type           Amount       "
@@ -4404,9 +4397,8 @@ msgid "Failed opening your buying store.\n"
 msgstr ""
 
 #: ../Network/Receive/ServerType0.pm:7401
-#, fuzzy, perl-format
 msgid "Guild member added: %s\n"
-msgstr "Член гильдии %s вошел в игру.\n"
+msgstr "Новый член гильдии: %s\n"
 
 #: ../Network/Receive/ServerType0.pm:7432
 #, perl-format
@@ -4414,9 +4406,8 @@ msgid "index: %s para1: %s\n"
 msgstr ""
 
 #: ../Network/Receive/ServerType0.pm:7438
-#, fuzzy, perl-format
 msgid "id: %s msgid: %s\n"
-msgstr "продано: %s шт. - %s, получено %s зени.\n"
+msgstr ""
 
 #: ../Network/Receive/ServerType17.pm:46 ../Network/Receive.pm:313
 msgid ""
@@ -4472,9 +4463,8 @@ msgid "Map loaded\n"
 msgstr "Локация загружена\n"
 
 #: ../Network/ClientReceive.pm:206
-#, fuzzy, perl-format
 msgid "Packet Tokenizer: Unknown outgoing switch: %s\n"
-msgstr "Packet Tokenizer: Unknown switch: %s\n"
+msgstr "Packet Tokenizer: Unknown outgoing switch: %s\n"
 
 #: ../Network/DirectConnection.pm:148
 #, perl-format
@@ -4709,35 +4699,32 @@ msgid "*Quest!*"
 msgstr ""
 
 #: ../Network/Receive.pm:1135
-#, fuzzy, perl-format
 msgid "%s shown %s at location %d, %d with the color %s\n"
-msgstr "Индикатор на миникарте локации %d, %d %s цветом очищен.\n"
+msgstr "Показан индикатор на миникарте локации %d, %d %s цветом.\n"
 
 #: ../Network/Receive.pm:1139
-#, fuzzy, perl-format
 msgid "%s cleared %s at location %d, %d with the color %s\n"
-msgstr "Индикатор на миникарте локации %d, %d %s цветом очищен.\n"
+msgstr "Скрыт индикатор на миникарте локации %d, %d %s цветом.\n"
 
 #: ../Network/Receive.pm:1174
 msgid "Auto Spell"
-msgstr ""
+msgstr "Автозаклинание"
 
 #: ../Network/Receive.pm:1175
 msgid "   # Skill\n"
 msgstr ""
 
 #: ../Network/Receive.pm:1190
-#, fuzzy, perl-format
 msgid "Configured autoSpell (%s) is not available.\n"
-msgstr "Инвентарь телеги недоступен.\n"
+msgstr "Выбранный навык (%s) недоступен для Автозаклинания.\n"
 
 #: ../Network/Receive.pm:1191
 msgid "Disable autoSpell_safe to use it anyway.\n"
-msgstr ""
+msgstr "Выключите autoSpell_safe чтобы всё равно его использовать.\n"
 
 #: ../Network/Receive.pm:1194
 msgid "Configure autoSpell to automatically select skill for Auto Spell.\n"
-msgstr ""
+msgstr "Настройте autoSpell чтобы автоматически выбирать навык для Автозаклинания.\n"
 
 #: ../Network/XKore.pm:51
 #, perl-format
