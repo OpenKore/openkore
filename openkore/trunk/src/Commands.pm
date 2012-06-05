@@ -77,7 +77,8 @@ sub initHandlers {
 	chat               => \&cmdChatRoom,
 	chist              => \&cmdChist,
 	cil                => \&cmdItemLogClear,
-	cl                 => \&cmdChatLogClear,
+	cl                 => \&cmdChatRoom,
+	clearlog           => \&cmdChatLogClear,
 	closeshop          => \&cmdCloseShop,
 	conf               => \&cmdConf,
 	connect            => \&cmdConnect,
@@ -967,8 +968,12 @@ sub cmdChatRoom {
 		return;
 	}
 
-	my (undef, $args) = @_;
+	my ($command, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
+
+	if($command eq 'cl') {
+		$arg1 = 'list';
+	}
 
 	if ($arg1 eq "bestow") {
 		my ($arg2) = $args =~ /^\w+ (\d+)/;
