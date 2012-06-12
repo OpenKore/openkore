@@ -1,0 +1,556 @@
+gonryun 152 117 Mailbox
+gonryun 159 122 Kafra Employee
+gonryun 162 122 Eden Teleport Officer#2
+gonryun 149 189 Yotang#Flower_Of_Fairy
+gonryun 166 196 Soldier
+gon_dun01 163 53 trace1-3
+gon_dun01 133 183 trace1-4
+gon_dun01 134 183 #getitem1-4
+gon_dun01 190 160 trace1-2
+gon_dun01 190 159 #getitem1-2
+gon_dun01 164 53 #getitem1-3
+gonryun 153 64 Kunlun Envoy#3
+gonryun 163 60 Kunlun Guide
+gonryun 169 71 Guide
+gonryun 147 84 Tool Dealer
+gonryun 173 84 Armor Dealer
+gonryun 147 101 Chef Assistant
+gonryun 180 118 Iron Man
+gon_dun01 139 257 trace1-5
+gon_dun01 140 257 #getitem1-5
+pay_fild08 218 283 Mysterious Man#magum
+pay_fild08 218 283 Mysterious Man#magum
+gonryun 139 142 Girl#1
+payon 147 63 Olivia Van de'Bar#pa082
+payon 163 64 Guide#01payon
+payon 179 66 Dashia#09tuto_rhea07
+payon 173 82 Young Man
+payon 159 96 Tool Dealer
+payon 181 104 Kafra Employee
+payon 221 85 Guide#03payon
+payon 186 104 Smile Assistance
+payon 178 108 Bulletin Board#pay
+payon 214 79 Talpiz#BLS
+payon 177 111 Eden Teleport Officer#1
+payon 189 105 Maroll Battle Recruiter
+payon 215 102 Moohyun#job_star
+payon 180 115 Sam Status#payon
+payon 210 110 Drunkard
+payon 191 104 Mailbox
+payon 189 105 Maroll Battle Recruiter
+payon 191 104 Mailbox
+payon 186 104 Smile Assistance
+payon 181 104 Kafra Employee
+payon 200 113 Continental Messenger#p
+payon 210 110 Drunkard
+payon 178 108 Bulletin Board#pay
+payon 215 102 Moohyun#job_star
+payon 221 85 Guide#03payon
+payon 214 79 Talpiz#BLS
+payon 200 113 Continental Messenger#p
+prontera 124 76 Eden Teleport Officer#1
+prontera 123 83 Maroll Battle Recruiter
+prontera 148 49 Bulletin Board#pron
+prontera 155 49 Karian#cmd9
+prontera 155 42 #prtjm1
+prontera 155 44 #prtjm2
+prontera 155 46 #prtjm3
+prontera 155 40 #jmprt1
+prt_fild08 159 371 Poring War Recruiter#wo
+prt_fild08 175 374 Bard#brising
+pay_gld 153 166 Scarlet Palace
+pay_gld 271 163 Sacred Palace
+pay_gld 303 185 Pet Breeder#payg
+pay_gld 305 185 Kafra Employee#c
+payon 191 66 Wise Bull Horn
+payon 65 119 Broom Grandma#07russia_
+payon 82 109 Pile of Stone#paypuzz2
+payon 91 77 Bag Seller
+payon 103 63 Jason
+payon 147 63 Olivia Van de'Bar#pa082
+payon 163 64 Guide#01payon
+payon 179 66 Dashia#09tuto_rhea07
+payon 191 66 Wise Bull Horn
+pay_gld 143 160 Scarlet Palace
+pay_fild08 188 153 Mushroom Spores?#33
+gon_dun01 148 156 start01
+pay_fild08 188 153 Mushroom Spores?#33
+payon 177 111 Eden Teleport Officer#1
+payon 180 115 Sam Status#payon
+payon 173 82 Young Man
+payon 159 96 Tool Dealer
+gonryun 174 101 Weapon Dealer
+gonryun 181 161 Jing Wen Zhen
+gon_dun02 23 105 trace2-5
+gon_dun02 23 105 trace2-5
+gon_dun02 23 106 #getitem2-5
+izlude 150 143 Kylick
+izlude 164 138 Pet Groomer
+izlude 171 185 Honeymoon Helper#Izlude
+izlude 182 186 Edgar
+izlude 201 181 Sailor
+izlu2dun 106 58 Kafra Employee
+izlu2dun 104 91 Bulletin Board#izlude
+izlu2dun 110 87 Soldier#Resurrection01
+iz_dun00 163 167 Sargeant#Resurrection03
+iz_dun00 173 167 Private#Resurrection04
+izlude 94 98 Fruit Gardener
+izlude 105 99 Butcher
+izlude 105 92 Vendor from Milk Ranch
+izlude 119 121 Cuskoal
+izlude 129 118 Smile Assistance
+izlude 131 116 Bulletin Board#izlude
+izlude 135 121 Point Seller#Sorcerer7
+izlude 150 118 Dega
+izlude 132 136 Fish Tails?#33
+izlude 171 133 Bullet Dealer Tony#airp
+izlu2dun 105 87 Soldier#Resurrection02
+iz_dun02 27 359 Runtank#Resurrection06
+iz_dun02 27 361 Gahoman#Resurrection05
+iz_dun02 112 96 Immortal Hearts?#33
+gon_dun01 201 25 trace1-1
+gon_dun01 202 25 #getitem1-1
+morocc 156 97 Kafra Employee
+morocc 165 82 Morroc Villager#07russi
+morocc 156 70 Girl#sc00
+morocc 154 38 Guide#02morocc
+moc_fild12 160 372 majabara
+moc_fild12 160 365 Ashe#3
+moc_fild12 166 369 Trace of Battle#1
+moc_fild12 173 215 Trace of Battle#2
+moc_fild12 276 165 Trace of Battle#3
+moc_fild11 39 163 Trace of Battle#4
+moc_fild11 205 52 Trace of Battle#5
+moc_fild17 213 358 Trace of Battle#8
+moc_fild17 228 274 Trace of Battle#9
+moc_fild17 209 235 Suspicious Skeleton Sta
+moc_fild17 273 133 Tomb
+moc_fild17 235 232 Tomb
+moc_fild17 34 292 Trace of Battle#10
+moc_fild17 137 252 Tomb
+moc_fild17 180 269 Tomb
+moc_fild17 287 267 Tomb
+moc_fild17 316 326 Tomb
+moc_fild17 211 287 Tomb
+moc_fild17 224 338 Tomb
+moc_fild17 328 235 Tomb
+moc_fild17 108 200 Tomb
+moc_fild17 105 262 Tomb
+moc_fild17 194 251 Tomb
+moc_fild17 72 310 Tomb
+morocc 161 97 Eden Teleport Officer#2
+moc_fild17 87 292 Tomb
+moc_fild17 99 271 Tomb
+moc_fild17 149 223 Tomb
+moc_fild17 231 302 Tomb
+moc_fild17 143 329 Tomb
+moc_fild17 261 155 Tomb
+moc_fild17 218 349 Tomb
+moc_fild17 230 221 Tomb
+moc_fild17 270 177 Tomb
+moc_fild17 105 252 Tomb
+moc_fild17 98 291 Tomb
+moc_fild17 134 199 Tomb
+moc_fild17 252 223 Tomb
+moc_fild17 194 330 Tomb
+moc_fild17 268 194 Tomb
+gonryun 200 82 Jian Chung Xun
+moc_fild17 76 232 Tomb
+moc_fild17 131 228 Tomb
+moc_fild17 256 199 Tomb
+moc_fild17 205 273 Tomb
+moc_fild17 154 161 Tomb
+moc_fild17 84 313 Tomb
+moc_fild17 260 302 Tomb
+moc_fild17 159 276 Tomb
+moc_fild17 134 234 Tomb
+moc_fild17 103 323 Tomb
+moc_para01 16 22 Old Adventurer#eden
+moc_para01 26 15 Primo d'Buffer
+moc_para01 13 22 Merry Badger#xch
+moc_fild17 77 263 Tomb
+moc_fild17 256 172 Tomb
+moc_para01 44 19 Cat Hand Agent#gekk
+moc_para01 47 39 #warp_2_pass
+moc_para01 53 34 VIP Services#eden
+moc_para01 40 38 41-55 Mission Board
+moc_para01 42 38 56-70 Mission Board
+moc_para01 44 22 Sparkle#Tuto
+moc_para01 44 38 71-85 Mission Board
+moc_para01 41 23 Gramps#huntquests
+moc_para01 49 39 Eat Gear#eden
+moc_para01 50 39 Eve Natalia
+moc_para01 41 40 Current Events Board
+moc_fild17 105 306 Tomb
+prontera 29 200 Guide#03prontera
+prontera 29 207 Kafra Employee
+moc_fild17 108 275 Tomb
+prontera 34 212 Mailbox
+prontera 38 212 Eden Teleport Officer#3
+yuno 146 168 Karian#cmd2
+yuno 153 113 Bulletin Board#juno
+yuno 165 111 Juno Sage
+yuno 157 87 A Citizen of Juno
+yuno 153 47 Juno Guide
+yuno 143 170 Mr. Click#job_min
+yuno 142 183 Isalei#Prtclear
+yuno 148 187 Mailbox
+yuno 152 187 Kafra Employee
+yuno 163 187 Magical Item Seller
+yuno 144 189 Eden Teleport Officer#1
+yuno 153 191 Cool Event Voting Staff
+yuno 162 191 Kafra Voting Staff#yuno
+yuno 131 116 Information Post#yuno
+yuno_fild02 75 218 Door#kh2
+yuno_fild02 109 218 Door#kh1
+yuno_fild02 93 210 Cottage Keeper#kh
+izlude 136 94 Mailbox
+izlude 121 87 Guide#01izlude
+izlude 134 88 Kafra Employee
+izlude 134 97 Eden Teleport Officer#3
+moc_paraup 26 185 Suhnmi#eden
+moc_paraup 10 185 Kafra Employee
+moc_paraup 14 185 Normalson#ed
+moc_paraup 24 175 Siege Master#moc_para01
+moc_paraup 21 172 Party Recruiting Expert
+moc_paraup 12 179 Battleground Master#moc
+moc_paraup 28 167 Memorial Dungeon Expert
+moc_paraup 14 168 Map Expert#moc_para01
+moc_paraup 11 168 Happy Troy#pslot
+moc_paraup 26 174 Grandma Boxter#boxx
+moc_paraup 30 169 Special Event Sales#3
+moc_paraup 30 180 Enriched Hammer#ed
+moc_paraup 32 171 Kafra Headgears#eden1
+moc_paraup 32 174 Kafra Rental Items#eden
+moc_paraup 32 179 Tutorial Goal#moc_para0
+moc_paraup 33 185 Dinorah Lacostt#ed
+moc_paraup 34 178 Tutorial Instructor#moc
+moc_paraup 35 168 Kafra Utility Shop#eden
+moc_paraup 35 174 Kafra Dye Shop#dyes2
+moc_paraup 37 170 Kafra Consumables#eden3
+moc_paraup 37 172 Kafra Costume#eden5
+moc_paraup 38 185 Mighty Hammer#ed
+moc_paraup 41 169 Kafra Stacker#eden
+moc_paraup 48 175 86-90 Mission Board
+moc_paraup 48 177 91-99 Mission Board
+moc_paraup 48 184 Gum & Manual Exchanger#
+moc_paraup 33 162 Ripped Callus#ed
+moc_paraup 38 162 Code the Redeemer#Give1
+prontera 146 86 Mailbox
+prontera 146 89 Kafra Employee
+yuno_fild03 37 143 Bulletin Board#noggroad
+iz_dun01 210 77 Tentacles?#33
+iz_dun01 191 92 Shells?#33
+iz_dun03 155 165 Gills#33
+gonryun 156 118 Victoria Quest#spotligh
+gonryun 158 118 Rock Banagain#spotlight
+moc_para01 172 28 Eden Group Intern#eden
+moc_para01 169 35 Old Timer#2011anni
+moc_para01 169 22 Dally Quen
+izlude 171 127 Magazine Dealer Kenny#a
+izlude 135 78 Charfri
+prt_in 61 141 Inn Employee
+prt_in 56 140 PVPNarrator
+prontera 197 188 Veeyop
+prontera 165 194 Gondul
+prontera 163 178 Magic Gear Master
+prontera 157 187 Smile Assistance
+prontera 160 133 YuPi
+prontera 147 125 Cool Event Voting Staff
+prontera 164 125 Kafra Voting Staff#pron
+prontera 165 60 Apprentice Craftsman
+prontera 163 53 Promotional Staff
+prontera 155 48 #prtjm4
+prt_fild08 347 216 Guard#song
+prt_fild08 347 209 Guard#song
+izlude 55 74 Bonne
+moc_para01 38 38 26-40 Mission Board#09t
+moc_para01 36 38 11-25 Mission Board#Tut
+moc_para01 32 30 Spikle#Tuto
+moc_fild17 238 327 Tomb
+moc_fild17 101 308 Tomb
+monk_in 99 58 Sensei Moohae
+prt_monk 230 106 Asthe#tu
+prt_monk 217 123 #tu_monk
+prt_monk 223 123 Eavesdrop#tu
+prt_monk 219 164 Gloria#tu
+prt_monk 243 238 #boy_voi
+prt_monk 251 255 Touha
+prt_monk 153 210 Cleope Verce
+prt_monk 57 179 Boohae
+prt_monk 225 180 Hyunmoo
+prt_monk 199 169 Door Keeper#mk
+monk_test 329 61 Bashu
+monk_test 386 388 Apprentice Monk
+prontera 275 213 Mailbox
+prontera 271 213 Eden Teleport Officer#3
+prontera 282 208 Guide#02prontera
+prontera 282 200 Kafra Employee
+monk_test 83 384 Trap#t_monk1_2
+monk_test 83 385 Trap#t_monk1_4
+monk_test 82 384 Trap#t_monk1_1
+monk_test 39 388 Trap#t_monk2_2
+monk_test 39 386 Trap#t_monk2_4
+monk_test 82 385 Trap#t_monk1_3
+monk_test 38 388 Trap#t_monk2_1
+monk_test 38 386 Trap#t_monk2_3
+job_monk 225 180 Hyunmoo
+prt_monk 136 261 Weapon Merchant#tu
+prt_monk 59 247 Guarding Monk
+prt_monk 28 260 Hedrick
+prt_fild03 365 255 Ascetic
+moc_fild17 161 337 Tomb
+yuno 164 200 Noyee#G
+yuno_fild04 165 245 Dismal Guy#lt
+jupe_cave 147 52 jupe_entrance#2
+yuno_fild07 208 175 jupe_entrance
+moc_para01 21 30 Sprakki#eden
+moc_para01 27 30 Rakkis#eden4155
+moc_para01 27 35 Secretary Lime Evenor#e
+moc_para01 20 35 Office Assistant Neede#
+moc_para01 25 35 Instructor Boya#para01
+moc_para01 23 35 Instructor Ur#2nd01
+moc_para01 17 35 Mesmerist#renew
+moc_para01 34 38 1-11 Mission Board#Tuto
+moc_para01 14 32 Aperture#acolytewarp
+moc_para01 1 10 eatgear admin#ed
+prontera 105 87 Gift Merchant
+bat_room 148 150 Teleporter#Battlefield
+bat_room 148 147 Kafra Staff
+bat_room 151 144 KVM Logistic Officer#kv
+bat_room 160 141 Prince Croix
+bat_room 161 140 Prince Croix's Aide#01
+bat_room 161 142 Prince Croix's Aide#02
+bat_room 160 159 General Guillaume
+bat_room 161 158 General Guillaume's Aid
+bat_room 160 150 Erundek
+bat_room 161 160 General Guillaume's Aid
+bat_room 151 121 Croix Knight
+bat_room 164 121 KVM Mercenary Officer#C
+bat_room 167 121 Croix Knight#kvm
+bat_room 169 205 KVM Waiting Room#b
+bat_room 169 207 #80codeCroix
+prontera 123 102 Merchant#pron
+prontera 106 116 Merideth
+prontera 98 120 Keiki#acolytewarp
+prontera 73 134 Vendor from Milk Ranch
+prontera 78 150 Dairenne
+prontera 58 182 Flower Girl
+prt_fild05 278 220 Bulletin Board#sewer
+prt_fild05 303 169 Worm Peelings?#33
+mjolnir_09 306 36 #mj09_find_4
+mjolnir_09 99 100 Bee Stings?#33
+mjolnir_09 106 36 #mj09_find_3
+mjolnir_09 38 243 #mj09_find_2
+mjolnir_09 209 341 Dwarf Blacksmith#south
+mjolnir_09 229 214 #mj09_01
+mjolnir_09 85 129  #3
+mjolnir_09 87 129 Berling#1
+mjolnir_09 369 279 #mj09_find_5
+mjolnir_10 75 22 #mj10_find_4
+mjolnir_10 201 355 #mj10_find_1
+mjolnir_05 82 171 #mj05_find_1
+mjolnir_05 219 375 #mj05_find_2
+mjolnir_12 220 37 #mj12_find_3
+mjolnir_12 199 370 #mj12_find_1
+aldebaran 139 63 Guide Soldier#01aldebar
+aldebaran 152 63 Merchant#alde
+aldebaran 152 97 Neuschwanstein
+aldebaran 149 97 Hohenschwangau
+aldebaran 134 97 Nuernberg
+aldebaran 131 97 Wuerzburg
+aldebaran 128 97 Rothenburg
+aldebaran 133 108 Soldier
+aldebaran 105 116 Lizingshetter
+aldebaran 117 181 Phracon Guy
+aldebaran 132 184 Girl#prince
+aldebaran 121 231 Alchemy Guy
+aldebaran 144 230 Jeanbai
+aldebaran 135 243 Guide Soldier#03aldebar
+yuno_fild07 254 176 Buddy#job_shu
+mjolnir_06 275 50 #mj06_find_2
+mjolnir_06 28 332 #mj06_find_1
+geffen 196 111 Chef Assistant
+geffen 203 116 Guide#01geffen
+geffen 199 125 Mailbox
+geffen 203 123 Kafra Employee
+mjolnir_06 371 78 #mj06_find_3
+mjolnir_06 371 78 #mj06_find_3
+mjolnir_07 26 78 #mj07_find_5
+mjolnir_07 26 78 #mj07_find_5
+mjolnir_07 157 25 #mj07_find_6
+mjolnir_07 157 25 #mj07_find_6
+prt_fild05 290 224 Kafra Employee
+prt_fild05 290 221 Tool Dealer
+prt_fild05 290 224 Kafra Employee
+prt_fild05 290 221 Tool Dealer
+prontera 141 97 Warmhearted Woman#job_m
+izlu2dun 108 27 Sailor
+morocc 143 63 Ragged Man#nd
+moc_fild17 187 285 Tomb
+moc_fild17 288 293 Tomb
+moc_fild12 116 122 Talons#33
+moc_fild18 177 333 Trace of Battle#13
+moc_fild18 346 296 Trace of Battle#11
+moc_fild17 86 318 Tomb
+moc_fild17 79 207 Tomb
+alberta 214 77 Captain Janssen
+alberta 237 71 Optamara Crew#alberta
+alberta 245 69 Kunlun Envoy#0
+alberta 245 66 Moscovia P.R. Officer#0
+gon_fild01 255 79 Kunlun Envoy#1
+gon_fild01 187 239 Kunlun Envoy#1
+moc_fild20 38 174 Continental Guard#21_ed
+moc_fild20 38 183 Continental Guard#22_ed
+morocc 116 39 Rogue Guild Agent#nd4
+morocc 60 42 Young Man#moc
+morocc 53 87 Prison Ward#sch
+morocc 37 287 Volunteer-Morroc#07rhea
+moc_ruins 143 43 Assassin Boy#07rhea_25
+moc_ruins 156 52 Mailbox
+moc_ruins 159 53 Guide#01ruins
+moc_ruins 137 70 Book-Touching Man#garas
+moc_ruins 154 86 Leablem
+moc_ruins 137 89 Time-Space Gap Guard
+moc_ruins 155 107 Ant Man#07rhea_24
+moc_ruins 141 125 Mr. Irrelevant
+moc_ruins 121 116 Picky Lady#07rhea_23
+moc_ruins 115 123 Chef Assistant
+moc_ruins 113 126 Trader
+moc_ruins 104 133 Kafra Voting Staff#moro
+moc_ruins 106 133 #ForeignMerchant3
+moc_ruins 125 135 Trader
+moc_ruins 110 105 Jeweler
+morocc 152 110 Bulletin Board#morroc
+ra_fild01 245 325 Suspicious Man#ra_in01
+ice_dun01 157 15 #Minsicecave1
+ice_dun01 157 23 #Minsicecave2
+ice_dun01 154 13 Dispatched Instructor#2
+ice_dun01 274 274 Spirit Detecting Staff#
+ice_dun02 120 105 Man Stuck in Ice#cave
+ice_dun02 206 223 Red Flame#sc_f02
+ice_dun01 141 41 #Minsicecave3
+ice_dun01 120 35 #Minsicecave4
+aldebaran 143 136 Bell Keeper#A
+aldebaran 136 135 Smile Assistance
+aldebaran 127 138 Promotional Staff
+yuno_fild08 196 196 Hanie#kh1
+yuno_fild08 158 194 Security Guard#kh1
+yuno_fild08 158 185 Security Guard#kh2
+yuno_fild08 71 170 Grave#kh
+yuno_fild08 69 185 Window#kh
+aldebaran 135 128 Continental Messenger#a
+aldebaran 135 122 Mailbox
+aldebaran 136 133 Bulletin Board#clocktow
+aldebaran 140 130 #jm¾Ëµ¥½Ã°è¾Õ
+aldebaran 142 128 Karian#cmd8
+aldebaran 146 124 Town Girl
+aldebaran 143 119 Kafra Employee
+aldebaran 133 119 Eden Teleport Officer#5
+aldebaran 133 114 Point Seller#Sorcerer4
+aldebaran 146 109 Maroll Battle Recruiter
+yuno_fild12 232 222 Old Fisherman#kh
+aldebaran 146 106 Bulletin Board#alde
+aldebaran 165 107 Chef Assistant
+aldebaran 145 102 Kafra Voting Staff#alde
+aldebaran 138 102 Cool Event Voting Staff
+umbala 92 159 Bertan
+umbala 104 155 Mailbox
+umbala 102 154 Chef Assistant
+umbala 137 94 Bulletin Board#umbala
+umbala 128 94 Umbala Guide#01umbala
+prontera 154 187 Guide#01prontera
+prontera 155 190 Kriemhild
+prontera 146 194 Swanhild
+prontera 149 202 YuNa
+prontera 143 203 Fadhgridh
+prontera 130 213 Riding Creature Master
+prontera 125 208 PecoPeco Remover
+aldebaran 90 170 Slot Guy
+pay_fild07 83 89 Zoologist#09tuto_rhea04
+pay_fild07 126 49 Insect Feelers?#33
+pay_fild07 269 164 Bear's Footskin?#33
+yuno 157 205 Juno Artisan
+yuno 150 228 Juno Soldier
+yuno 130 173 Chef Assistant
+veins 161 63 Old Man
+veins 148 41 Towner
+veins 162 34 Towner
+ve_fild07 235 42 Silk Sand Camel
+veins 189 101 Veins Guide#veins02
+veins 227 127 Ivory
+veins 221 120 Young Town Native
+veins 218 123 Mailbox
+veins 208 128 Cool Event Corp. Staff
+veins 202 128 Point Seller#Sorcerer11
+veins 214 122 Eden Teleport Officer#1
+ve_fild07 125 128 Boat#Aru
+izlude 123 113 [West]USRC Entrance#201
+izlude 124 106 Team 1 line up
+izlude 125 106 Team 2 line up
+izlude 126 106 Team 3 line up
+izlude 127 106 Team 4 line up
+izlude 128 106 Team 5 line up
+izlude 129 106 Team 6 line up
+izlude 130 106 Team 7 line up
+izlude 131 106 Team 8 line up
+izlude 132 113 [East]USRC Entrance#201
+xmas_fild01 205 69 Tomb
+xmas_fild01 92 57 Biologist#09tuto_rhea06
+xmas_fild01 75 80 Bulletin Board#lutie
+iz_dun04 43 46 Eden Group Member#para0
+aldebaran 159 242 Insect Guy
+aldebaran 178 239 Bill Thayer
+aldebaran 223 222 Mr. Claus
+iz_dun04 130 234 Gatekeeper#iz_dun1
+xmas_fild01 155 88 Tomb
+xmas_fild01 158 65 Tomb
+comodo 197 149 Comodo Guide#03comodo
+comodo 195 150 Kafra Employee
+comodo 200 150 Mailbox
+comodo 210 148 Bulletin Board#comodo
+comodo 210 154 Suspicious Guy
+comodo 219 158 Kachua
+comodo 228 159 Hair Ornament Girl
+comodo 236 164 Hat Girl#Hair_Brush
+comodo 322 178 Comodo Guide
+comodo 170 137 La Ed
+comodo 193 159 Point Seller#Sorcerer5
+comodo 187 153 Hullaris
+comodo 193 151 Bor Robin#1
+comodo 191 153 Eden Teleport Officer#2
+amatsu 126 145 Innkeeper#2011autumn
+amatsu 112 164 Gate Soldier#1
+amatsu 119 164 Gate Soldier#2
+amatsu 164 174 Gate Soldier#5
+amatsu 171 174 Gate Soldier#6
+amatsu 189 166 Kouji
+amatsu 205 163 Mimi
+amatsu 214 225 Lord of Palace#2011autu
+amatsu 216 230 Yubei Jagyu#2011autumn
+amatsu 215 234 Bishop Ochanomizu#2011a
+amatsu 218 231 Fujiko Jagyu#2011autumn
+amatsu 223 236 Publisher
+amatsu 228 249 Dance Instructor#2011au
+amatsu 233 234 Staff member#07russia_4
+amatsu 251 283 Guide Man
+amatsu 102 146 Mailbox
+amatsu 102 149 Kafra Employee
+amatsu 102 152 Eden Teleport Officer#4
+ve_fild03 152 134 #ve_01
+ve_fild03 256 228 #ve_02
+ve_fild03 282 268 #ve_04
+veins 235 126 Old man#3rdgc07
+veins 253 133 Kid
+veins 263 153 Towner
+veins 270 164 Old Man
+veins 274 188 Ledrion#veins
+veins 291 205 Kid
+veins 291 215 Vigilante#3rdgc06
+veins 248 301 Kid
+veins 218 323 Towner
+veins 210 345 Veins Guide#veins01
+ve_fild03 351 219 #ve_find_1
+ve_fild03 223 51 #ve_find_2
+anthell02 49 173 Tomb
+anthell01 29 264 Eden Group Member#para0
