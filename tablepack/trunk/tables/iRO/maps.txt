@@ -776,7 +776,7 @@ bif_fild02.rsw#Bifrost Bridge#
 moc_paraup.rsw#Inside of Paradise Group Building in Morroc 2nd floor#
 
 
-// ---------- Port Malaya ½Å±Ô ¸Ê ------------
+// ---------- Port Malaya ËÄ¹Ä…Ã” Â¸Ä˜ ------------
 malaya.rsw#Port Malaya#
 ma_fild01.rsw#Baryo Mahiwaga#
 ma_fild02.rsw#Forest#
