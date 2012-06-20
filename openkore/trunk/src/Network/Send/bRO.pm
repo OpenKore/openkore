@@ -13,40 +13,40 @@ sub new {
 	
 	my %packets = (
 
-		'092F' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
-		'0946' => ['party_join_request_by_name', 'a24', [qw(partyName)]],
-		'0874' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0870' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'085E' => ['character_move','a3', [qw(coords)]],
-		'086E' => ['sync', 'V', [qw(time)]],
-		'08A8' => ['actor_look_at', 'v C', [qw(head body)]],
-		'0868' => ['item_take', 'a4', [qw(ID)]],
-		'08A4' => ['item_drop', 'v2', [qw(index amount)]],
-		'0878' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'091B' => ['storage_item_remove', 'v V', [qw(index amount)]],
-		'092A' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'091F' => ['actor_info_request', 'a4', [qw(ID)]],	
+		'0880' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0897' => ['party_join_request_by_name', 'a24', [qw(partyName)]],
+		'0886' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0368' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0968' => ['character_move','a3', [qw(coords)]],
+		'0363' => ['sync', 'V', [qw(time)]],
+		'086C' => ['actor_look_at', 'v C', [qw(head body)]],
+		'0867' => ['item_take', 'a4', [qw(ID)]],
+		'08AA' => ['item_drop', 'v2', [qw(index amount)]],
+		'0819' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'0969' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0924' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0937' => ['actor_info_request', 'a4', [qw(ID)]],	
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
 	
 	my %handlers = qw(
 
-		homunculus_command 092F
+		homunculus_command 0880
 		master_login 02B0
-		party_join_request_by_name 0946
-		map_login 0874
-		actor_action 0870
+		party_join_request_by_name 0897
+		map_login 0886
+		actor_action 0368
 		buy_bulk_vender 0801
-		character_move 085E
-		sync 086E
-		actor_look_at 08A8
-		item_take 0868
-		item_drop 08A4
-		storage_item_add 0878
-		storage_item_remove 091B
-		skill_use_location 092A
-		actor_info_request 091F
+		character_move 0968
+		sync 0363
+		actor_look_at 086C
+		item_take 0867
+		item_drop 08AA
+		storage_item_add 0819
+		storage_item_remove 0969
+		skill_use_location 0924
+		actor_info_request 0937
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -99,9 +99,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x08A5, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x0941, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x08A5, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x0941, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
@@ -159,11 +159,11 @@ sub sendPartyJoinRequestByName
 sub PrepareKeys()
 {
 	# K
-	$enc_val1 = Math::BigInt->new('0x64597152');
+	$enc_val1 = Math::BigInt->new('0x7ECD6D07');
 	# M
-	$enc_val3 = Math::BigInt->new('0x61001AB9');
+	$enc_val3 = Math::BigInt->new('0x1D0B3956');
 	# A
-	$enc_val2 = Math::BigInt->new('0x795A4195');
+	$enc_val2 = Math::BigInt->new('0x584E7391');
 }
 
 1;
