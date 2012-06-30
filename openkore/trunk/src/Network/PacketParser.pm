@@ -456,12 +456,12 @@ sub parse_pre {
 		if ($config{'debugPacket_'.$config_suffix} == 1) {
 			debug sprintf("%-24s %-4s%s [%2d bytes]%s\n", $title, $switch, $label, length($msg)), 'parseMsg', 0;
 		} elsif ($config{'debugPacket_'.$config_suffix} == 2) {
-			visualDump($msg, sprintf('%-24s %-4s%s', $title, $switch, $label));
+			Misc::visualDump($msg, sprintf('%-24s %-4s%s', $title, $switch, $label));
 		}
 		if ($config{debugPacket_include_dumpMethod} == 1) {
 			debug sprintf("%-24s %-4s%s\n", $title, $switch, $label), "parseMsg", 0;
 		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
-			visualDump($msg, sprintf('%-24s %-4s%s', $title, $switch, $label));
+			Misc::visualDump($msg, sprintf('%-24s %-4s%s', $title, $switch, $label));
 		} elsif ($config{debugPacket_include_dumpMethod} == 3) {
 			dumpData($msg, 1);
 		} elsif ($config{debugPacket_include_dumpMethod} == 4) {
@@ -482,7 +482,7 @@ sub unknownMessage {
 	# Unknown message - ignore it
 	unless (existsInList($config{debugPacket_exclude}, $args->{switch})) {
 		warning TF("Packet Tokenizer: Unknown switch: %s\n", $args->{switch}), 'connection';
-		visualDump($args->{RAW_MSG}, "<< Received unknown packet") if $config{debugPacket_unparsed};
+		Misc::visualDump($args->{RAW_MSG}, "<< Received unknown packet") if $config{debugPacket_unparsed};
 	}
 	
 	# Pass it along to the client, whatever it is
