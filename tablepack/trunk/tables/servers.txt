@@ -60,6 +60,7 @@ version 1
 serverType fRO
 serverEncoding Western
 addTableFolders fRO
+charBlockSize 116
 
 [Indonesia - idRO: Thor - Legend - Fnc - Heroes]
 ip 202.43.167.67

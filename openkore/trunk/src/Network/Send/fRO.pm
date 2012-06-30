@@ -23,6 +23,16 @@ sub new {
 	
 	my %handlers = qw(
 		master_login 02B0
+		sync 0360
+		character_move 035F
+		actor_info_request 0368
+		actor_look_at 0361
+		item_take 0362
+		item_drop 0363
+		storage_item_add 0364
+		storage_item_remove 0365
+		skill_use_location 0366
+		party_setting 07D7
 		buy_bulk_vender 0801
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
