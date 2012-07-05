@@ -117,6 +117,16 @@ patchpath /patch02
 addTableFolders iRO
 charBlockSize 116
 
+[International - iRO: Classic]
+ip 128.241.92.162
+port 6900
+master_version 1
+version 18
+serverType iRO_Classic
+serverEncoding Western
+addTableFolders iRO/Classic;iRO
+charBlockSize 108
+
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
 ip 61.215.212.13
