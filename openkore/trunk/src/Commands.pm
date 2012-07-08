@@ -4016,6 +4016,9 @@ sub cmdSkills {
 		} elsif ($char->{points_skill} < 1) {
 			error TF("Error in function 'skills add' (Add Skill Point)\n" .
 				"Not enough skill points to increase %s\n", $skill->getName());
+		} elsif ($char->{skills}{$skill->getHandle()}{up} == 0) {
+			error TF("Error in function 'skills add' (Add Skill Point)\n" .
+				"Skill %s reached its maximum level or prerequisite not reached\n", $skill->getName());
 		} else {
 			$messageSender->sendAddSkillPoint($skill->getIDN());
 		}
