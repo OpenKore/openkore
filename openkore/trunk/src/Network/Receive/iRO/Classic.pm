@@ -29,6 +29,11 @@ sub new {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
 
+	my %handlers = qw(
+		received_characters 082D
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
 	return $self;
 }
 
