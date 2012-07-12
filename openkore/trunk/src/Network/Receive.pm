@@ -242,7 +242,13 @@ sub received_characters_blockSize {
 # The length must exactly match charBlockSize, as it's used to construct packets.
 sub received_characters_unpackString {
 	for ($masterServer && $masterServer->{charBlockSize}) {
+		# unknown purpose (0 = disabled, otherwise displays "Add-Ons" sidebar) (from rA)
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4 x4 x4 x4' if $_ == 144;
+		# change slot feature
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4 x4 x4' if $_ == 140;
+		# robe
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4 x4' if $_ == 136;
+		# delete date
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4' if $_ == 132;
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16' if $_ == 128;
 		return 'a4 V9 v V2 v14 Z24 C6 v2 x4' if $_ == 116; # TODO: (missing 2 last bytes)
