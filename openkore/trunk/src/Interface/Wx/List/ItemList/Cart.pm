@@ -38,7 +38,7 @@ sub unload {
 sub onInfo {
 	my ($self) = @_;
 	
-	if ($char->cartActive) {
+	if ($cart{exists} || $char->cartActive) {
 		$self->setStat ('count', $cart{items}, $cart{items_max});
 		$self->setStat ('weight', $cart{weight}, $cart{weight_max});
 	} else {
