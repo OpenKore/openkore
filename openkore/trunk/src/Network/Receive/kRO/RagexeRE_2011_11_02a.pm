@@ -8,7 +8,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'08B9' => ['account_id', 'a4 a6', [qw(unknown accountID)]], # 12
+		'08B9' => ['account_id', 'x4 a4 x2', [qw(accountID)]], # 12
 	);
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
