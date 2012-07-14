@@ -593,15 +593,6 @@ sub map_loaded {
 	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
 }
 
-# This is for what eA calls PacketVersion 9, they send the AID in a 'proper' packet
-sub account_id {
-	my ($self, $args) = @_;
-	# the account ID is already unpacked into PLAIN TEXT when it gets to this function...
-	# So lets not fuckup the $accountID since we need that later... someone will prolly have to fix this later on
-	my $accountID = $args->{accountID};
-	debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
-}
-
 sub actor_info {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
