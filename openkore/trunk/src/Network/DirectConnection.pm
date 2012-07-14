@@ -44,7 +44,7 @@ use Scalar::Util;
 use File::Spec;
 
 use Globals;
-use Log qw(message error);
+use Log qw(message warning error);
 use Misc qw(chatLog);
 use Network;
 use Network::Send ();
@@ -222,6 +222,18 @@ sub serverDisconnect {
 	my $self = shift;
 	
 	if ($self->serverAlive) {
+		if ($incomingMessages && length(my $incoming = $incomingMessages->getBuffer)) {
+				warning TF("Incoming data left in the buffer:\n");
+				Misc::visualDump($incoming);
+				
+				if (defined(my $rplen = $incomingMessages->{rpackets}{my $switch = Network::MessageTokenizer::getMessageID($incoming)})) {
+					my $inlen = do { no encoding 'utf8'; use bytes; length $incoming };
+					if ($rplen > $inlen) {
+						warning TF("Only %d bytes in the buffer, when %s's packet length is supposed to be %d (wrong recvpackets?)\n", $inlen, $switch, $rplen);
+					}
+				}
+		}
+
 		$messageSender->sendQuit() if ($self->getState() == Network::IN_GAME);
 
 		message TF("Disconnecting (%s:%s)...", $self->{remote_socket}->peerhost(), 
