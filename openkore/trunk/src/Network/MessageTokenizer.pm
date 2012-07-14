@@ -130,8 +130,8 @@ sub readNext {
 				substr($$buffer, 0, 4, '');
 				$$type = ACCOUNT_ID;
 			} else {
-				$$type = KNOWN_MESSAGE; # Account ID is "hidden" in a packet (0283 is one of them)
-				return;
+				# Account ID is "hidden" in a packet (0283 is one of them)
+				return $self->readNext($type);
 			}
 		
 		} else {
