@@ -1,0 +1,31 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+my %packets;
+my $packet_ver;
+
+sub dump_packets {
+	return unless $packet_ver;
+	
+	open my $o, '>', "recvpackets-v$packet_ver.txt";
+	print $o "$_ $packets{$_}\n" for sort { hex $a <=> hex $b } keys %packets;
+}
+
+# missing in packet_db in eAthena/rAthena
+$packets{'08B9'} = 12;
+
+open my $f, 'packet_db.txt';
+while (<$f>) {
+	if (/^packet_ver:\s*(\d++)/) {
+		dump_packets;
+		$packet_ver = $1;
+	}
+	
+	next if m{^//};
+	
+	if (/^0x([[:xdigit:]]{4}),(-?\d++)/) {
+		$packets{uc $1} = $2;
+	}
+}
+dump_packets;
