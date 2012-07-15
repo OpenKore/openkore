@@ -170,16 +170,18 @@ sub map_loaded {
 	$client->send($output);
 	
 	# Send Hotkeys
-	$output = '';
-	if(@{$hotkeyList} <= 28) { # todo: there is also 07D9,254
-		$output .=  pack('v', 0x02B9); # old interface (28 hotkeys)
-	} else {
-		$output .=  pack('v', 0x07D9); # renewal interface as of: RagexeRE_2009_06_10a (38 hotkeys)
+	if ($hotkeyList) {
+		$output = '';
+		if(@{$hotkeyList} <= 28) { # todo: there is also 07D9,254
+			$output .=  pack('v', 0x02B9); # old interface (28 hotkeys)
+		} else {
+			$output .=  pack('v', 0x07D9); # renewal interface as of: RagexeRE_2009_06_10a (38 hotkeys)
+		}
+		for (my $i = 0; $i < @{$hotkeyList}; $i++) {
+			$output .= pack('C V v', $hotkeyList->[$i]->{type}, $hotkeyList->[$i]->{ID}, $hotkeyList->[$i]->{lv});
+		}
+		$client->send($output) if (@{$hotkeyList});
 	}
-	for (my $i = 0; $i < @{$hotkeyList}; $i++) {
-		$output .= pack('C V v', $hotkeyList->[$i]->{type}, $hotkeyList->[$i]->{ID}, $hotkeyList->[$i]->{lv});
-	}
-	$client->send($output) if (@{$hotkeyList});
 
 	# Sort items into stackable and non-stackable
 	if (UNIVERSAL::isa($char, 'Actor::You')) {
