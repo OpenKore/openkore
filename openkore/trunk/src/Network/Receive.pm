@@ -364,6 +364,12 @@ sub account_server_info {
 	}
 }
 
+sub connection_refused {
+	my ($self, $args) = @_;
+
+	error TF("The server has denied your connection (%d).\n", $args->{error}), 'connection';
+}
+
 *actor_exists = *actor_display_compatibility;
 *actor_connected = *actor_display_compatibility;
 *actor_moved = *actor_display_compatibility;
