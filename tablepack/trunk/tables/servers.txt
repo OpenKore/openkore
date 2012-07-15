@@ -466,6 +466,7 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 1
 addTableFolders aRO;Old
+charBlockSize 112
 
 ####################
 # Private RO Servers
