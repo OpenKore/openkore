@@ -6,6 +6,7 @@ use strict;
 use Test::More;
 BEGIN { *eq_or_diff = \&is_deeply unless eval q(use Test::Differences; 1) }
 
+use Misc;
 use Network::Receive::kRO::RagexeRE_0;
 use Network::Send;
 
@@ -32,7 +33,7 @@ sub start {
 				}
 			} else {
 				s|//.*$||;
-				if (/^(.*?): (.*)$/) {
+				if (/^(.*?):\s*(.*)$/) {
 					if ($1 eq 'packet_ver') {
 						$packet_db{$theirServerTypes[-1]}{version} = $2;
 					}
