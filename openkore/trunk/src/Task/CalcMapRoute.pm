@@ -72,7 +72,8 @@ sub new {
 		ArgumentException->throw(error => "Invalid arguments.");
 	}
 
-	$self->{source}{map} = defined($args{sourceMap}) ? $args{sourceMap} : $field->baseName;
+	$self->{source}{field} = defined($args{sourceMap}) ? Field->new(name => $args{sourceMap}) : $field;
+	$self->{source}{map} = $self->{source}{field}->baseName;
 	$self->{source}{x} = defined($args{sourceX}) ? $args{sourceX} : $char->{pos_to}{x};
 	$self->{source}{y} = defined($args{sourceY}) ? $args{sourceY} : $char->{pos_to}{y};
 	($self->{dest}{map}, undef) = Field::nameToBaseName(undef, $args{map}); # Hack to clean up InstanceID
@@ -120,7 +121,7 @@ sub iterate {
 
 		# Check whether destination is walkable from the starting point.
 		if ($self->{source}{map} eq $self->{dest}{map}
-		 && Task::Route->getRoute(undef, $field, $self->{source}, $self->{dest}{pos}, 0)) {
+		 && Task::Route->getRoute(undef, $self->{source}{field}, $self->{source}, $self->{dest}{pos}, 0)) {
 			$self->{mapSolution} = [];
 			$self->setDone();
 			return;
@@ -129,8 +130,8 @@ sub iterate {
 		# Initializes the openlist with portals walkable from the starting point.
 		foreach my $portal (keys %portals_lut) {
 			my $entry = $portals_lut{$portal};
-			next if ($entry->{source}{map} ne $field->baseName);
-			my $ret = Task::Route->getRoute($self->{solution}, $field, $self->{source}, $entry->{source});
+			next if ($entry->{source}{map} ne $self->{source}{field}->baseName);
+			my $ret = Task::Route->getRoute($self->{solution}, $self->{source}{field}, $self->{source}, $entry->{source});
 			if ($ret) {
 				for my $dest (grep { $entry->{dest}{$_}{enabled} } keys %{$entry->{dest}}) {
 					my $penalty = int(($entry->{dest}{$dest}{steps} ne '') ? $routeWeights{NPC} : $routeWeights{PORTAL});
@@ -159,7 +160,7 @@ sub iterate {
 			my $destpos = "$self->{dest}{pos}{x},$self->{dest}{pos}{y}";
 			$destpos = "($destpos)" if ($destpos ne "");
 			$self->setError(CANNOT_CALCULATE_ROUTE, TF("Cannot calculate a route from %s (%d,%d) to %s %s",
-				$field->baseName, $self->{source}{x}, $self->{source}{y},
+				$self->{source}{field}->baseName, $self->{source}{x}, $self->{source}{y},
 				$self->{dest}{map}, $destpos));
 			debug "CalcMapRoute failed.\n", "route";
 		}
