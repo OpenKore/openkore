@@ -1,0 +1,4 @@
+prontera 150 150 aretnorp 150 150
+aretnorp 150 160 prontera 150 160
+prontera 150 170 alberta 150 170
+alberta 150 180 prontera 150 180

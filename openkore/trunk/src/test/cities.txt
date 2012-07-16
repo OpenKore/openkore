@@ -1,1 +1,2 @@
 prontera.rsw#Prontera City#
+alberta.rsw#Alberta City#
