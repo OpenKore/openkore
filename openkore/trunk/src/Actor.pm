@@ -560,7 +560,9 @@ sub setStatus {
 	if ($flag) {
 		# Skill activated
 		$again = $self->{statuses}{$handle} ? 'again' : 'now';
-		$self->{statuses}{$handle} = {};
+		# All these hacks are for task to get lost when re-gaining a status,
+		# so it won't expire from an old task
+		$self->{statuses}{$handle} = bless {}, 'OpenkoreFixup::EmptyObject';
 		
 		if ($tick) {
 			Scalar::Util::weaken($self->{statuses}{$handle}{_actor} = $self);
@@ -568,8 +570,11 @@ sub setStatus {
 			$taskManager->add(Task::Timeout->new(
 				object => $self->{statuses}{$handle},
 				weak => 1,
-				function => sub { $_[0]->{_actor}->setStatus($handle, 0) },#now
-				seconds => $tick / 1000,
+				function => sub {
+					$_[0]->{_actor}->setStatus($handle, 0);
+					error "BUG: setStatus($handle, 0) failed?\n" if defined $_[0];
+				},#now
+				seconds => $tick / 1000 - 1,
 			));
 		}
 		
