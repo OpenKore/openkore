@@ -1,2 +1,4 @@
 prontera.rsw#Prontera City#
-prt_copy.rsw#Copy of Prontera#
+unreachable.rsw#Unreachable Location#
+aretnorp.rsw#Aretnorp Dungeon#
+alberta.rsw#Alberta City#
