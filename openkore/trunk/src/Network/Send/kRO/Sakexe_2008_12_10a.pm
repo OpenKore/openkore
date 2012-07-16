@@ -21,8 +21,14 @@ use strict;
 use base qw(Network::Send::kRO::Sakexe_2008_11_26a);
 
 sub new {
-	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $_[0]->SUPER::new(@_);
+
+	my %packets = (
+		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
+	$self
 }
 
 =pod

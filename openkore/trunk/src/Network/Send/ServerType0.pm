@@ -92,6 +92,7 @@ sub new {
 		'0368' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0437' => ['character_move','a3', [qw(coords)]],
+		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
 		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
 		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
 		# not "buy", it sells items!
@@ -1042,12 +1043,6 @@ sub sendLoginPinCode {
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
-}
-
-sub sendSkillSelect {
-	my ($self, $skillID, $why) = @_;
-	$_[0]->sendToServer(pack 'C2 V v', 0x43, 0x04, $why, $skillID);
-	debug sprintf("Sent Skill Select (skillID: %d, why: %d)", $skillID, $why), 'sendPacket', 2;
 }
 
 sub sendSuperNoviceDoriDori {

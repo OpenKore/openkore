@@ -763,6 +763,16 @@ sub sendFriendListReply {
 	debug "Sent Reject friend request\n", "sendPacket";
 }
 
+sub sendSkillSelect {
+	my ($self, $skillID, $why) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'skill_select',
+		skillID => $skillID,
+		why => $why,
+	}));
+	debug sprintf("Sent Skill Select (skillID: %d, why: %d)", $skillID, $why), 'sendPacket', 2;
+}
+
 sub sendReplySyncRequestEx 
 {
 	my ($self, $SyncID) = @_;
