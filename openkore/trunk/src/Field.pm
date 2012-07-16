@@ -27,9 +27,9 @@
 # `l
 # - <tt>name</tt> - The name of the field, like 'prontera' and '0021@cata'. This is not always the same as baseName.
 #                   You should not access this item directly; use the $Field->name() method instead.
-# - <tt>baseName</tt> - The name of the field, which is the base name of the file without the extension.
+# - <tt>baseName</tt> - The name of the field, which is the base name of the field without the extension.
 #             This is not always the same as name: for example,
-#             descName: Training Ground, name: 'new_1-2', field file: 'new_zone01.fld', baseName: 'new_zone01'
+#             descName: Training Ground, name: 'new_1-2', field file: 'new_zone01.fld', baseName: 'new_1-2'
 #             descName: Catacombs, name: '0021@cata', field file: '1@cata.fld', baseName: '1@cata'
 # - <tt>width</tt> - The field's width. You should not access this item directly; use $Field->width() instead.
 # - <tt>height</tt> - The field's height. You should not access this item directly; use $Field->width() instead.
@@ -124,7 +124,7 @@ sub name {
 # String $Field->baseName()
 #
 # Returns the field's base name.
-#     ex. prontera, new_zone01 (aliased), 1@cata (instanced)
+#     ex. prontera, new_1-2 (alias), 1@cata (instanced)
 sub baseName {
 	return $_[0]->{baseName};
 }
@@ -380,8 +380,10 @@ sub loadDistanceMap {
 # and/or the distance map file.
 sub loadByName {
 	my ($self, $name, $loadDistanceMap) = @_;
-	($self->{baseName}, $self->{instanceID}) = $self->nameToBaseName($name);
-	my $file = $self->{baseName} . ".fld";
+	my $baseName;
+	($baseName, $self->{instanceID}) = $self->nameToBaseName($name);
+	$self->{baseName} = $baseName;
+	my $file = $self->sourceName . ".fld";
 
 	if ($Settings::fields_folder) {
 		$file = File::Spec->catfile($Settings::fields_folder, $file);
@@ -392,6 +394,7 @@ sub loadByName {
 
 	if (-f $file) {
 		$self->loadFile($file, $loadDistanceMap);
+		$self->{baseName} = $baseName;
 		$self->{name} = $name;
 	} else {
 		FileNotFoundException->throw("No corresponding field file found for field '$name'.");
@@ -402,12 +405,20 @@ sub loadByName {
 sub nameToBaseName {
 	my ($self, $name) = @_;
 	
-	my ($baseName, $instanceID);
+	my ($instanceID);
 
 	if ($name =~ /^(\d{3})(\d@.*)/) { # instanced maps, ex: 0021@cata
 		$instanceID = $1;
 		$name = $2;
 	}
+
+	return ($name, $instanceID);
+}
+
+sub sourceName {
+	my ($self) = @_;
+	my $name = $self->baseName;
+	my $baseName;
 
 	if ($baseName = $masterServer->{"field_$name"}) {
 		# Handle server-specific versions of the field from servers.txt
@@ -421,9 +432,7 @@ sub nameToBaseName {
 		$baseName = $name;
 	}
 
-	return ($baseName, $instanceID);
-
-	# tl;dr $name =~ s/^\d{3}(?=\d@)//; return $masterServer->{"field_$name"} || $mapAlias_lut{$name} || $name;
+	return $baseName;
 }
 
 1;
