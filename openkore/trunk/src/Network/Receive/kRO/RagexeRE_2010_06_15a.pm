@@ -25,7 +25,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'006A' => undef,
+		#'006A' => undef, # Athena still sends it
 		'083E' => ['login_error', 'V Z20', [qw(type unknown)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
