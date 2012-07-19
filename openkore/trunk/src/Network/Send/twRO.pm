@@ -24,9 +24,25 @@ use Utils qw(getTickCount getHex getCoordString);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+	my %packets = (
+		'0819' => ['buy_bulk_buyer', 'x2 a4 a4 v a*', [qw(buyerID buyingStoreID zeny itemInfo)]],
+		);
 	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
 	my %handlers = qw(
+		character_move 035F
+		sync 0360
+		actor_look_at 0361
+		item_take 0362
+		item_drop 0363
+		storage_item_add 0364
+		storage_item_remove 0365
+		skill_use_location 0366
+		actor_info_request 0368
 		buy_bulk_vender 0801
+		party_setting 07D7
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
