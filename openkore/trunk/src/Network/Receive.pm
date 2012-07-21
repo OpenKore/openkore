@@ -31,7 +31,7 @@ use AI qw(ai_items_take);
 use Globals;
 #use Settings;
 use Log qw(message warning error debug);
-#use FileParsers;
+use FileParsers qw(updateMonsterLUT updateNPCLUT);
 use I18N qw(bytesToString stringToBytes);
 use Interface;
 use Network;
@@ -1073,6 +1073,86 @@ sub actor_action {
 
 		Misc::checkValidity("actor_action (attack 6)");
 	}
+}
+
+sub actor_info {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+	debug "Received object info: $args->{name}\n", "parseMsg_presence/name", 2;
+
+	my $player = $playersList->getByID($args->{ID});
+	if ($player) {
+		# 0095: This packet tells us the names of players who aren't in a guild.
+		# 0195: Receive names of players who are in a guild.
+		# FIXME: There is more to this packet than just party name and guild name.
+		# This packet is received when you leave a guild
+		# (with cryptic party and guild name fields, at least for now)
+		$player->setName(bytesToString($args->{name}));
+		$player->{info} = 1;
+		
+		$player->{party}{name} = bytesToString($args->{partyName}) if defined $args->{partyName};
+		$player->{guild}{name} = bytesToString($args->{guildName}) if defined $args->{guildName};
+		$player->{guild}{title} = bytesToString($args->{guildTitle}) if defined $args->{guildTitle};
+		
+		message "Player Info: " . $player->nameIdx . "\n", "parseMsg_presence", 2;
+		updatePlayerNameCache($player);
+		Plugins::callHook('charNameUpdate', {player => $player});
+	}
+
+	my $monster = $monstersList->getByID($args->{ID});
+	if ($monster) {
+		my $name = bytesToString($args->{name});
+		debug "Monster Info: $name ($monster->{binID})\n", "parseMsg", 2;
+		$monster->{name_given} = $name;
+		$monster->{info} = 1;
+		if ($monsters_lut{$monster->{nameID}} eq "") {
+			$monster->setName($name);
+			$monsters_lut{$monster->{nameID}} = $name;
+			updateMonsterLUT(Settings::getTableFilename("monsters.txt"), $monster->{nameID}, $name);
+		}
+	}
+
+	my $npc = $npcs{$args->{ID}};
+	if ($npc) {
+		$npc->setName(bytesToString($args->{name}));
+		$npc->{info} = 1;
+		if ($config{debug} >= 2) {
+			my $binID = binFind(\@npcsID, $args->{ID});
+			debug "NPC Info: $npc->{name} ($binID)\n", "parseMsg", 2;
+		}
+
+		my $location = $field->baseName . " $npc->{pos}{x} $npc->{pos}{y}";
+		if (!$npcs_lut{$location}) {
+			$npcs_lut{$location} = $npc->{name};
+			updateNPCLUT(Settings::getTableFilename("npcs.txt"), $location, $npc->{name});
+		}
+	}
+
+	my $pet = $pets{$args->{ID}};
+	if ($pet) {
+		my $name = bytesToString($args->{name});
+		$pet->{name_given} = $name;
+		$pet->setName($name);
+		$pet->{info} = 1;
+		if ($config{debug} >= 2) {
+			my $binID = binFind(\@petsID, $args->{ID});
+			debug "Pet Info: $pet->{name_given} ($binID)\n", "parseMsg", 2;
+		}
+	}
+
+	my $slave = $slavesList->getByID($args->{ID});
+	if ($slave) {
+		my $name = bytesToString($args->{name});
+		$slave->{name_given} = $name;
+		$slave->setName($name);
+		$slave->{info} = 1;
+		my $binID = binFind(\@slavesID, $args->{ID});
+		debug "Slave Info: $name ($binID)\n", "parseMsg_presence", 2;
+		updatePlayerNameCache($slave);
+	}
+
+	# TODO: $args->{ID} eq $accountID
 }
 
 use constant QTYPE => (
