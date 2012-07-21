@@ -607,6 +607,7 @@ sub actor_info {
 		# This packet is received when you leave a guild
 		# (with cryptic party and guild name fields, at least for now)
 		$player->setName(bytesToString($args->{name}));
+		$player->{info} = 1;
 		
 		$player->{party}{name} = bytesToString($args->{partyName}) if defined $args->{partyName};
 		$player->{guild}{name} = bytesToString($args->{guildName}) if defined $args->{guildName};
@@ -622,6 +623,7 @@ sub actor_info {
 		my $name = bytesToString($args->{name});
 		debug "Monster Info: $name ($monster->{binID})\n", "parseMsg", 2;
 		$monster->{name_given} = $name;
+		$monster->{info} = 1;
 		if ($monsters_lut{$monster->{nameID}} eq "") {
 			$monster->setName($name);
 			$monsters_lut{$monster->{nameID}} = $name;
@@ -632,6 +634,7 @@ sub actor_info {
 	my $npc = $npcs{$args->{ID}};
 	if ($npc) {
 		$npc->setName(bytesToString($args->{name}));
+		$npc->{info} = 1;
 		if ($config{debug} >= 2) {
 			my $binID = binFind(\@npcsID, $args->{ID});
 			debug "NPC Info: $npc->{name} ($binID)\n", "parseMsg", 2;
@@ -649,6 +652,7 @@ sub actor_info {
 		my $name = bytesToString($args->{name});
 		$pet->{name_given} = $name;
 		$pet->setName($name);
+		$pet->{info} = 1;
 		if ($config{debug} >= 2) {
 			my $binID = binFind(\@petsID, $args->{ID});
 			debug "Pet Info: $pet->{name_given} ($binID)\n", "parseMsg", 2;
@@ -660,6 +664,7 @@ sub actor_info {
 		my $name = bytesToString($args->{name});
 		$slave->{name_given} = $name;
 		$slave->setName($name);
+		$slave->{info} = 1;
 		my $binID = binFind(\@slavesID, $args->{ID});
 		debug "Slave Info: $name ($binID)\n", "parseMsg_presence", 2;
 		updatePlayerNameCache($slave);
