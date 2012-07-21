@@ -302,7 +302,7 @@ sub new {
 		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
 		##
-		'01E6' => ['couple_name', 'c24', [qw(name)]],
+		'01E6' => ['marriage_partner_name', 'Z24', [qw(name)]],
 		'01E9' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]],
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]],
@@ -7430,12 +7430,6 @@ sub skill_msg {
 	message TF("id: %s msgid: %s\n", $args->{id}, $args->{msgid}), "info";
 	
 	#	'07E6' => ['skill_msg', 'v V', [qw(id msgid)]], #TODO: PACKET_ZC_MSG_SKILL     **msgtable
-}
-
-sub couple_name {
-	my ($self, $args) = @_;
-	debug ("01E6 couple_name: %s\n", $args->{name}), 2;
-	#'01E6' => ['couple_name', 'c24', [qw(name)]], #TODO: PACKET_ZC_COUPLENAME
 }
 
 1;

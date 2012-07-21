@@ -1221,4 +1221,14 @@ sub account_id {
 	debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
 }
 
+##
+# marriage_partner_name({String name})
+#
+# Name of the partner character, sent to everyone around right before casting "I miss you".
+sub marriage_partner_name {
+	#my ($self, $args) = @_;
+	# TODO save and display with the next skill use message?
+	#... = $args->{name};
+}
+
 1;
