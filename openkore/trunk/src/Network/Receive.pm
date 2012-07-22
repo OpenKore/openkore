@@ -468,7 +468,7 @@ sub actor_display {
 				$actor = new Actor::Player();
 				$actor->{appear_time} = time;
 				# New actor_display packets include the player's name
-				$actor->{name} = bytesToString($args->{name}) if($args->{name});
+				$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
 				$mustAdd = 1;
 			}
 			$actor->{nameID} = $nameID;
@@ -480,6 +480,7 @@ sub actor_display {
 				? $char->{slaves}{$args->{ID}} : new Actor::Slave ($args->{type});
 
 				$actor->{appear_time} = time;
+				$actor->{name_given} = bytesToString($args->{name}) if exists $args->{name};
 				$mustAdd = 1;
 			}
 			$actor->{nameID} = $nameID;
@@ -513,6 +514,7 @@ sub actor_display {
 			if (!defined $actor) {
 				$actor = new Actor::NPC();
 				$actor->{appear_time} = time;
+				$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
 				$mustAdd = 1;
 			}
 			$actor->{nameID} = $nameID;
@@ -528,7 +530,7 @@ sub actor_display {
 					if ($monsters_lut{$args->{type}}) {
 						$actor->setName($monsters_lut{$args->{type}});
 					}
-					$actor->{name_given} = "Unknown";
+					$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : "Unknown";
 					$mustAdd = 1;
 
 					# Previously identified monsters could suddenly be identified as pets.
@@ -546,7 +548,7 @@ sub actor_display {
 					if ($monsters_lut{$args->{type}}) {
 						$actor->setName($monsters_lut{$args->{type}});
 					}
-					$actor->{name_given} = "Unknown";
+					$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : "Unknown";
 					$actor->{binType} = $args->{type};
 					$mustAdd = 1;
 				}
@@ -562,6 +564,7 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::NPC();
 			$actor->{appear_time} = time;
+			$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
 			$mustAdd = 1;
 		}
 		$actor->{nameID} = $nameID;
