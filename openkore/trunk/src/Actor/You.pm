@@ -73,6 +73,7 @@ sub new {
 	my $self = $class->SUPER::new('You');
 	$self->{__inventory} = new InventoryList();
 	$self->{configPrefix} = '';
+	$self->{dcOnEmptyItems} = '';
 
 	return $self;
 }
