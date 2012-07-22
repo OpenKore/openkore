@@ -1083,11 +1083,14 @@ sub processAutoStorage {
 			    )
 			) {
 				if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
+=pod
+					#This works only for last getAuto item
 					if ($config{"getAuto_${i}_dcOnEmpty"}) {
  						message TF("Disconnecting on empty %s!\n", $config{"getAuto_$i"});
 						chatLog("k", TF("Disconnecting on empty %s!\n", $config{"getAuto_$i"}));
 						quit();
 					}
+=cut
 				} else {
 					if ($storage{openedThisSession} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
 					} else {
@@ -1322,6 +1325,7 @@ sub processAutoStorage {
 					$item{storage}{amount} = ($item{storage}{index} ne "")? $storage{$item{storage}{index}}{amount} : 0;
 					$item{max_amount} = $config{"getAuto_$args->{index}"."_maxAmount"};
 					$item{amount_needed} = $item{max_amount} - $item{inventory}{amount};
+					$item{dcOnEmpty} = $config{"getAuto_$args->{index}"."_dcOnEmpty"};
 
 					# Calculate the amount to get
 					if ($item{amount_needed} > 0) {
@@ -1342,6 +1346,11 @@ sub processAutoStorage {
 
 					if ($item{storage}{amount} < $item{amount_needed}) {
 						warning TF("storage: %s out of stock\n", $item{name});
+						if ($item{dcOnEmpty}) {
+							debug TF("Disconnecting on empty %s!\n", $item{name});
+							$char->{dcOnEmptyItems} .= "," if ($char->{dcOnEmptyItems} ne "");
+							$char->{dcOnEmptyItems} .= $item{name};
+						}
 					}
 
 					if (!$config{relogAfterStorage} && $args->{retry} >= 3 && !$args->{warned}) {
