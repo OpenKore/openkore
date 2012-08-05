@@ -16,6 +16,7 @@ package webMonitorServer;
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#############################################
 
 use strict;
 use Base::WebServer;
@@ -26,7 +27,14 @@ use Utils;
 use Log;
 use Commands;
 use template;
+use Skill;
+use Network;
+use Network::Send ();
 
+#[PT-BR]
+# Keywords são campos específicos no modelo que irá, eventualmente,
+# ser substituído por conteúdo dinâmico
+#[EN] 
 # Keywords are specific fields in the template that will eventually get
 # replaced by dynamic content.
 my %keywords;
@@ -39,6 +47,8 @@ my %keywords;
 # most of the code was derived from.
 my @messages;
 my $cHook = Log::addHook(\&cHook, "Console Log");
+my $hookShopList = Plugins::addHook('packet_vender_store', \&hookShopList);
+
 sub cHook {
 	my $type = shift;
 	my $domain = shift;
@@ -74,6 +84,27 @@ sub cHook {
 	}
 }
 
+# [PT-BR] "hookShopList" é usada na aba "Shop".
+# [EN] "hookShopList" is used on tab "Shop".
+my ($shopNumber, @price, @number, @listName, @listAmount, @upgrade, @cards, @type, @id, @shopJS);
+sub hookShopList {
+	my ($packet, $args) = @_;
+	push (@price, formatNumber($args->{price}));
+	push (@listName, $args->{name});
+	push (@number, $args->{number});
+	push (@listAmount, $args->{amount});
+	push (@upgrade, $args->{upgrade});
+	push (@cards, $args->{cards});
+	push (@type, $args->{type});
+	push (@id, $args->{nameID});
+	
+	if ($args->{price} < $char->{'zeny'}){
+		push (@shopJS, '<a href="javascript:buy(' . $shopNumber . ' , ' . $args->{number} . ')">Buy</a>');
+	} else {
+		push (@shopJS, '');
+	}
+}
+
 ###
 # $webMonitorServer->request
 #
@@ -82,7 +113,7 @@ sub cHook {
 sub request {
 	my ($self, $process) = @_;
 	my $content = '';
-
+	
 	# We then inspect the headers the client sent us to see if there are any
 	# resources that was sent
 	my %resources = %{$process->{GET}};
@@ -95,8 +126,12 @@ sub request {
 	# alias the newbie maps to new_zone01
 	$filename =~ s/new_.../new_zone01/;
 
+# [PT-BR] Listar o inventário
+# [EN] Show inventory
 	my (@unusable, @usable, @equipment, @uequipment);
 	my (@unusableAmount, @usableAmount);
+	my (@unusableJS, @usableJS, @equipmentJS, @uequipmentJS);
+	my $Item_IDN;
 	for (my $i; $i < @{$char->inventory->getItems()}; $i++) {
 		my $item = $char->inventory->getItems()->[$i];
 		next unless $item && %{$item};
@@ -105,37 +140,186 @@ sub request {
 		{
 			push @unusable, $item->{name};
 			push @unusableAmount, $item->{amount};
+			push @unusableJS, '<a href="javascript:drop(' . $item->{invIndex} . ')">Drop</a>';
 		} elsif ($item->{type} <= 2) {
 			push @usable, $item->{name};
 			push @usableAmount, $item->{amount};
+			push @usableJS, '<a href="javascript:self(' . $item->{invIndex} . ')">Use</a> <a href="javascript:drop(' . $item->{invIndex} . ')">Drop</a>';
 		} else {
 			if ($item->{equipped}) {
 				push @equipment, $item->{name};
+				push @equipmentJS, '<a href="javascript:eq(' . $item->{invIndex} . ')">Unequip</a> <a href="javascript:drop(' . $item->{invIndex} . ')">Drop</a>';
 			} else {
 				push @uequipment, $item->{name};
+				push @uequipmentJS, '<a href="javascript:eq(' . $item->{invIndex} . ')">Equip</a> <a href="javascript:drop(' . $item->{invIndex} . ')">Drop</a>';
 			}
 		}
 	}
 	my @statuses = (keys %{$char->{statuses}});
-	my (@npcName, @npcLocX, @npcLocY);
-	foreach my $npcsID (@npcsID) {
-		push @npcName, $npcs{$npcsID}{name};
-		push @npcLocX, $npcs{$npcsID}{pos}{x};
-		push @npcLocY, $npcs{$npcsID}{pos}{y};
-	}	
+
+# [PT-BR] Listar os membros do clã
+# [EN] Show members of the clan
+	my ($i, $name, $class, $lvl, $title, $online, $ID, $charID);
+	my (@listMemberIndex, @listMemberName, @listMemberClass, @listMemberLvl, @listMemberTitle, @listMemberOnline, @listMemberID, @listMemberCharID);
+	
+	if (defined @{$guild{member}}) {
+		my $count = @{$guild{member}};
+			for ($i = 0; $i < $count; $i++) {
+				$name  = $guild{member}[$i]{name};
+				next if (!defined $name);
+
+				$class   = $jobs_lut{$guild{member}[$i]{jobID}};
+				$lvl   = $guild{member}[$i]{lv};
+				$title = $guild{member}[$i]{title};
+				# Translation Comment: Guild member online
+				$online = $guild{member}[$i]{online} ? "Yes" : "No";
+				$ID = unpack("V",$guild{member}[$i]{ID});
+				$charID = unpack("V",$guild{member}[$i]{charID});
+
+				push @listMemberIndex, $i;
+				push @listMemberName, $name;
+				push @listMemberClass, $class;
+				push @listMemberLvl, $lvl;
+				push @listMemberTitle, $title;
+				push @listMemberOnline, $online;
+				push @listMemberID, $charID;
+		}
+	}
+	
+# [PT-BR] Listar as lojas dos jogadores (NÃO serão listadas as dos NPC's!!)
+# [EN] List player stores (NPC's shops won't be listed!!)
+	my (@listComboBox);
+
+	for (my $i = 0; $i < @venderListsID; $i++) {
+		next if ($venderListsID[$i] eq "");
+		my $player = Actor::get($venderListsID[$i]);
+		# autovivifies $obj->{pos_to} but it doesnt matter
+		push (@listComboBox, '<option value="' . $i . '">' . $venderLists{$venderListsID[$i]}{'title'} . '</option>');
+		#push @shopList, $i . ' ' . $venderLists{$venderListsID[$i]}{'title'} . ' ' . $player->{pos_to}{x} || '?' . ' ' . $player->{pos_to}{y} || '?' . ' ' . $player->name . '<br>'
+	}
+
+# [PT-BR] Listar os NPC's
+# [EN] Show NPC's
+	my (@npcBinID, @npcName, @npcLocX, @npcLocY, @npcNameID, @npcTalk);
+	my $npcs = $npcsList->getItems();
+		foreach my $npc (@{$npcs}) {
+			push @npcNameID, $npc->{binID};
+			push @npcLocX, $npc->{pos}{x};
+			push @npcLocY, $npc->{pos}{y};
+			push @npcName, $npc->name;
+			push @npcBinID, $npc->{nameID};
+			push @npcTalk, '<a href="javascript:talk(' . $npc->{binID} . ')">Talk</a>';
+		}
+
+# [PT-BR] Listar habilidades
+# [EN] Show skills
+	my (@skillsIDN, @skillsName, @skillsLevel, @skillsJS, @skillsIcoUp);	
+	my $act;
+	for my $handle (@skillsID) {
+		my $skill = new Skill(handle => $handle);
+		my $sp = $char->{skills}{$handle}{sp} || 'Skill Pasive';
+		my $IDN = $skill->getIDN();
+
+		#  [EN] $skill->getTargetType() can result in 0, 1, 2 and 4
+		# 0 -> Passive Skill (Therefore $act have nothing, because it's not consumes SP and can't be used)
+		# 1 -> It's used on enemy
+		# 2 -> It's used in a place
+		# 4 -> It's used in yourself. Can involve party too (E.G: Glory Skill)
+		# 16 -> It's used in other players.
+		# See more in src\Actor.pm		
+		#  [PT-BR] $skill->getTargetType() pode resultar em 0, 1, 2 e 4
+		# 0 -> Skill passiva (por isso $act terá nada, pois não consome 0 e não pode ser usada)
+		# 1 -> Usa-se no inimigo
+		# 2 -> Usa-se em um lugar
+		# 4 -> Usa-se em você. Pode envolver o grupo também (ex: habilidade glória)
+		# 16 -> Usa-se em outros jogadores
+		# Veja mais no src\Actor.pm
+		my $type = $skill->getTargetType();
+		if ($char->getSkillLevel($skill) > 0){
+			if ($type == 0){
+				$act = ''; #Skill passive
+			} elsif ($type == 1){
+				$act = ' - <b>SP:</b> ' . $sp . '   <a href="javascript:enemy(' . $IDN . ')">Attack</a>';
+			} elsif ($type == 2){
+				$act = ' - <b>SP:</b> ' . $sp . '   <a href="javascript:locat(' . $IDN . ')">choose location</a>';
+			} elsif ($type == 4){
+				$act = ' - <b>SP:</b> ' . $sp . '   <a href="javascript:self(' . $IDN . ')">Use</a>';
+			} elsif ($type == 16){
+				$act = ' - <b>SP:</b> ' . $sp . '   <a href="javascript:actor(' . $IDN . ')">Choose actor</a>';
+			} 
+		}
+		
+		# [PT-BR] Saber se o personagem tem ou não pontos de habilidades disponíveis e se a habilidade é melhorável
+		#  (ainda não chegou ao nível máximo e atingiu seus pré-requisitos), para saber se deve mostrar a imagem de aumentar nível e sua função.
+		my $ico_up;
+		if ($char->{points_skill} > 0 && $char->{skills}{$handle}{up} == 1){
+		$ico_up = '<a href="javascript:skill_up(' . $IDN .')"><img src="skills/skill_up.gif"></a> ';}
+		
+		# [PT-BR] Para finalizar, adicionar dados para as array's
+		# [EN] To finalize, add the elements into the array's
+		push @skillsIDN, $IDN;
+		push @skillsIcoUp, $ico_up;
+		push @skillsName, $skill->getName();
+		push @skillsLevel, $char->getSkillLevel($skill);
+		push @skillsJS, $act;
+	}
 
 	%keywords =	(
+	# NPC
+		'npcBinID' => \@npcBinID,
 		'npcName' => \@npcName,
 		'npcLocationX' => \@npcLocX,
 		'npcLocationY' => \@npcLocY,
+		'npcNameID' => \@npcNameID,
+		'npcTalkJS' => \@npcTalk,
+	# Inventory
 		'inventoryEquipped' => \@equipment,
+		'inventoryEquippedJS' => \@equipmentJS,
 		'inventoryUnequipped' => \@uequipment,
+		'inventoryUnequippedJS' => \@uequipmentJS,
 		'inventoryUsable' => \@usable,
 		'inventoryUsableAmount' => \@usableAmount,
+		'inventoryUsableJS' => \@usableJS,
 		'inventoryUnusableAmount' => \@unusableAmount,
 		'inventoryUnusable' => \@unusable,
+		'inventoryUnusableJS' => \@unusableJS,
 		'consoleMessages' => \@messages,
 		'characterStatuses' => \@statuses,
+	# Guild
+		'guildLv' => $guild{lv},
+		'guildExp' => $guild{exp},
+		'guildExpNext' => $guild{exp_next},
+		'guildMaster' => $guild{master},
+		'guildConnect' => $guild{conMember},
+		'guildMember' => $guild{maxMember},
+		'guildListMemberIndex' => \@listMemberIndex,
+		'guildListMemberName' => \@listMemberName,
+		'guildListMemberClass' => \@listMemberClass,
+		'guildListMemberLvl' => \@listMemberLvl,
+		'guildListMemberTitle' => \@listMemberTitle,
+		'guildListMemberOnline' => \@listMemberOnline,
+		'guildListMemberID' => \@listMemberID,
+		'guildListMemberCharID' => \@listMemberCharID,
+	# Shop
+		'shopListComboBox' => \@listComboBox,
+		'shopName' => \@listName,
+		'shopAmount' => \@listAmount,
+		'shopPrice' => \@price,
+		'shopNumber' => \@number,
+		'shopUpgrade' => \@upgrade,
+		'shopCards' => \@cards,
+		'shopType' => \@type,
+		'shopID' => \@id,
+		'shopJS' => \@shopJS,
+	# Skills
+		'skillsIDN' => \@skillsIDN,
+		'skillsIcoUp' => \@skillsIcoUp,
+		'skillsName' => \@skillsName,
+		'skillsLevel' => \@skillsLevel,
+		'skillsJS' => \@skillsJS,
+	# Other's
+		'characterSkillPoints' => $char->{points_skill},
+		'characterStatusesSring' => $char->statusesString(),
 		'characterName' => $char->name(),
 		'characterJob' => $jobs_lut{$char->{jobID}},
 		'characterSex' => $sex_lut{$char->{sex}},
@@ -155,7 +339,7 @@ sub request {
 		'characterLeftAccessory' => $char->{equipment}{leftAccessory}{name} || 'none',
 		'characterRightAccessory' => $char->{equipment}{rightAccessory}{name} || 'none',
 		'characterArrow' => $char->{equipment}{arrow}{name} || 'none',
-		'characterZeny' => $char->{zenny},
+		'characterZeny' => formatNumber($char->{'zeny'}),
 		'characterStr' => $char->{str},
 		'characterStrBonus' => $char->{str_bonus},
 		'characterStrPoints' => $char->{points_str},
@@ -214,7 +398,12 @@ sub request {
 		'characterLocationX' => $char->position()->{x},
 		'characterLocationY' => $char->position()->{y},
 		'characterLocationMap' => $field->name,
+		'characterGetRouteX' => $char->{pos_to}->{x},
+		'characterGetRouteY' => $char->{pos_to}->{y},
+		'characterGetTimeRoute' => $char->{time_move_calc},
 		'lastConsoleMessage' => $messages[-1],
+		'lastConsoleMessage2' => $messages[-2],
+		'lastConsoleMessage3' => $messages[-3],
 		'skin' => 'default', # TODO: replace with config.txt entry for the skin
 		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
 	);
@@ -225,7 +414,7 @@ sub request {
 	}
 	# TODO: will be removed later
 	if ($filename eq '/variables') {
-		# Reload the page every 5 seconds
+		# [PT-BR] Recarregar a página a cada 5 segundos | [EN] Reload the page every 5 seconds
 		$content .= '<head><meta http-equiv="refresh" content="5"></head>';
 		
 		# Display internal variables in alphabetical order (useful for debugging)
@@ -244,7 +433,7 @@ sub request {
 
 	# TODO: will be removed later
 	} elsif ($filename eq '/console') {
-		# Reload the page every 5 seconds
+		# [PT-BR] Recarregar a página a cada 5 segundos | [EN] Reload the page every 5 seconds
 		$content .= '<head><meta http-equiv="refresh" content="5"></head>' . "\n";
 		$content .= '<pre>' . "\n";
 
@@ -293,9 +482,43 @@ sub handle {
 	my $process = shift;
 	my $retval;
 
+    #[EN]
+	# Reading commands sent via web
+	# Example to send your bot say "Brazil" :
+	# http://localhost:1025/handler?command=c+Brazil&page=default/status.html
+	
+	#[PT-BR]
+	# Leitura dos comandos enviados via web.
+	# Exemplo para mandar o bot dizer "Brasil":
+	# http://localhost:1025/handler?command=c+Brasil&page=default/status.html
 	if ($resources->{command}) {
+		message "New command received via web: $resources->{command}\n";
 		Commands::run($resources->{command});
 	}
+
+	# [PT-BR] Usado na aba Shop.
+	# [EN] Used Shop tab
+	if ($resources->{shop}) {
+	# [PT-BR] Apagar dandos antigos da array (Não mostrar os itens das lojas clicadas anteriomente) 
+	# [EN] Erase old data from array (Won't show itens from stores previously opened) 
+		@price = ();
+		@number = ();
+		@listName = ();
+		@listAmount = ();
+		@upgrade = ();
+		@cards = ();
+		@type = ();
+		@id = ();
+		@shopJS = ();
+	# [PT-BR] Mandar o send\ServerType0.pm enviar pacotes para o Ragnarok, afim de listar os itens da loja
+	# [EN] Tell send\ServerType0.pm to send packets to Ragnarok, in order to list the itens from the shop
+		$shopNumber = $resources->{shop};
+		$messageSender->sendEnteringVender($venderListsID[$shopNumber]);
+	# [PT-BR] Veja na "sub hookShopList" como foi feita a leitura dos dados
+	# [EN] Look "sub hookShopList" to learn how the data reading was made
+	}
+	
+	###
 	
 	if ($resources->{requestVar}) {
 		$process->print($keywords{$resources->{requestVar}});

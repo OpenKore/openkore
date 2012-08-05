@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<LINK href="styles/iframe.css" type=text/css rel=stylesheet>
+</HEAD>
+<BODY>
+<!-- [PT-BR] Esse formulário mostra os itens do inventário, quantidade e permite usá-los.
+	 [EN] This form displays your items from inventory, your amount and allows to use him. -->
+
+<script type="text/javascript" defer="defer">
+		<!-- [PT-BR] Esta function tem com função enviar o comando ao OpenKore
+		<!--  A leitura é feito no arquivo "webMonitorServer.pm", na sub "handle"
+		<!-- [EN] This function has function with send the command to the OpenKore
+		<!--  The reading is done in the "webMonitorServer.pm", in sub "handle"
+		
+			function send_command() {
+				var tc = document.getElementById("text_command");
+				var combo = document.getElementById("sel");
+				window.location.href = '../handler?command=' + combo.options[combo.selectedIndex].value + tc.value + '&page={skin}/inventory.html';
+			}
+
+		<!-- [PT-BR] Esta function serve para apenas reconhecer a tecla "enter" para enviar
+		<!--  o comando
+		<!-- [EN] This function only serves to recognize the "enter" key to send
+		<!--  the command		
+			function submitenter(e) {
+				var keycode;
+				if (window.event) keycode = window.event.keyCode;
+
+				if (keycode == 13) {
+					send_command();
+				}
+			}
+			
+		<!-- [PT-BR] Exibir a lista de itens de acordo com a opção selecionada no ComboBox de id "tipo"
+		<!-- [EN] Show the list of items according to the option selected in the ComboBox of id "tipo" 
+			function exibir(escolha) {
+				var escolhido = escolha.options[escolha.selectedIndex].value;
+				var tabela_lista = document.getElementById("lista_itens");	
+				
+				if (escolhido == 'none'){
+				tabela_lista.innerHTML = '';
+				}
+				
+				if (escolhido == 'usable'){
+				tabela_lista.innerHTML = '{startLoop}{inventoryUsableAmount} x {inventoryUsable}  {inventoryUsableJS}<br>{endLoop}';
+				}
+				
+				if (escolhido == 'equipped'){
+				tabela_lista.innerHTML = '{startLoop}{inventoryEquipped}  {inventoryEquippedJS}<br>{endLoop}';
+				}
+				
+				if (escolhido == 'unequipped'){
+				tabela_lista.innerHTML = '{startLoop}{inventoryUnequipped}  {inventoryUnequippedJS}<br>{endLoop}';
+				}
+				
+				if (escolhido == 'unusable'){
+				tabela_lista.innerHTML = '{startLoop}{inventoryUnusableAmount} x {inventoryUnusable}  {inventoryUnusableJS}<br>{endLoop}';
+				}
+			}
+			
+		<!-- [PT-BR] Interagir com o item de acordo com o ID dele
+		<!-- [EN] Interacting with the item according with your ID
+		
+		<!-- Drop
+			function drop(drop_i){
+				text_command.value = 'drop ' + drop_i;
+				document.getElementById('tip').innerHTML= "Usage <b>drop</b>: drop (&ltinventory # item list>) [&ltamount>]";
+			}
+
+		<!-- Use
+			function self(drop_s){
+				text_command.value = 'is ' + drop_s;
+				document.getElementById('tip').innerHTML= "Usage <b>i</b>tem on <b>s</b>elf: is (&ltinventory # item list>)";
+			}
+
+		<!-- Equip/Unequip
+			function eq(drop_e){
+				text_command.value = 'eq ' + drop_e;
+				document.getElementById('tip').innerHTML= "Usage <b>eq</b>uip/un<b>eq</b>uip: eq (&ltinventory # equip list>)";
+			}
+</script>	 
+
+<div id ="nov" style = "position:absolute; left:5px; top:5px; width:760px; height:200px; z-index:2"> 
+	<IFRAME name="nov" src="log.html" frameborder=0 scrolling=auto width=760 height=200px></IFRAME>	
+	<select size="1" id="sel">
+		<option selected value="">Console</option>
+		<option value="c ">Chat</option>
+		<option value="p ">Grupo</option>
+		<option value="g ">Guild</option>
+	</select>
+	<input type="text" size="105" id="text_command" onKeyPress="submitenter(this.event)"/><br>
+	<input type="button" value="Send command" onClick="send_command()"><br>
+
+	<div id="tip">Tip</div>	
+	<select size="1" id="tipo" onChange="exibir(this)">
+		<option selected value="none">Choose an option below</option>
+		<option value="usable">Usable</option>
+		<option value="equipped">Equipped</option>
+		<option value="unequipped">Unequipped</option>
+		<option value="unusable">Unusable</option>
+	</select>
+	
+	<table class="inventory" width="750">
+	<CAPTION>Inventory</CAPTION>
+	<tr>
+		<td class="list" id="lista_itens"></td>
+	</tr>
+	</table>	
+</div>
+	
+</BODY>
+</HTML>
