@@ -16,6 +16,12 @@ caption {
  color: #cecece;
 }
 
+mcaption {
+ font-size: 10pt;
+ font-weight: bold;
+ color: #cecece;
+}
+
 th.status {
  text-align: left;
  width: auto;

@@ -1,10 +1,105 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
-<meta http-equiv="refresh" content="10">
+<meta http-equiv="refresh" content="3">
 <LINK href="styles/iframe.css" type=text/css rel=stylesheet>
 </HEAD>
 <BODY>
+
+		<style>
+		.ponto {  background-color: #0000FF; position: absolute; overflow: hidden;}
+		</style>
+		
+		<script type="text/javascript" defer="defer">
+			function geraPonto(x, y, nome, elempai) {
+				//Agradecimentos a Micox por ajudar a fazer essa função
+				var pixel = document.createElement('div');
+				pixel.id = nome;
+				pixel.className = 'ponto';
+				pixel.style.width = pixel.style.height = 8 + 'px'
+				pixel.style.left = x + 'px';
+				pixel.style.top = y + 'px';
+				pixel.style.opacity = 0.6;
+				return elempai.appendChild(pixel);
+			}
+			
+			window.onload = function atualizar(){
+			<!-- [PT-BR] Imagem do mapa:
+			<!-- [PT-BR] Map image:
+				var im = document.getElementById("iMap");
+				im.src = 'map/{characterLocationMap}.bmp';
+				
+			<!-- [EN]
+			<!-- WARNING : This is only an example, because it's still not working.
+			<!-- Player Position :			
+			<!-- Officially, in game, 1xy (Coordinates) is equal to 1,32 pixels
+			<!--   var Xconv = {characterLocationX} * 1.32;
+			<!--   var Yconv = {characterLocationY} * 1,32
+			<!--   generatesPoint(3 - 4 + Xconv,((-22 - 4 + Yconv) - 499) * -1,'pplayer',idmap;
+			<!-- Explaining the calculations :
+			<!-- 22 = To disregard the title of DIV
+			<!-- 3= To disregard the marge of DIV
+			<!-- -4 = To disregard the size of square which indicates the player position						
+
+			<!-- [PT-BR]
+			<!-- AVISO: Isso serve apenas como exemplo, pois ainda não esta funcionando perfeitamente!
+			<!--  Posição do jogador:			
+			<!--  Oficialmente, 1xy coordenada no Ragnarok equivalem a 1,32 pixels
+			<!--	var Xconv = {characterLocationX} * 1.32;
+			<!--	var Yconv = {characterLocationY} * 1.32;
+			<!--	geraPonto(3 - 4 + Xconv,((-22 - 4 + Yconv) - 499) * -1,'pplayer',idmap);
+			<!-- Explicando os calculos no geraPonto:
+			<!-- 22 = Para desconsiderar o título da DIV
+			<!-- 3  = Para desconsiderar a borda da DIV
+			<!-- -4 = Para desconsiderar o tamanho do quadrado da qual aponta a posisão do jogador
+			
+			<!-- [PT-BR] Função de mudar a imagem de aumentar atributos, caso tenha ponto suficiente
+			<!-- [EN] Changes the function of increase attributes, if you have enough points
+				var MSTR = document.getElementById("SSTR");	
+					if ({characterStrPoints} > {characterFreePoints}){
+					MSTR.src = 'images/sempontos.png';
+					} else {
+					MSTR.src = 'images/arrow.png';
+					}
+				
+				var MAGI = document.getElementById("SAGI");	
+					if ({characterAgiPoints} > {characterFreePoints}){
+					MAGI.src = 'images/sempontos.png';
+					} else {
+					MAGI.src = 'images/arrow.png';
+					}
+			
+				var MVIT = document.getElementById("SVIT");	
+					if ({characterVitPoints} > {characterFreePoints}){
+					MVIT.src = 'images/sempontos.png';
+					} else {
+					MVIT.src = 'images/arrow.png';
+					}
+				
+				var MINT = document.getElementById("SINT");	
+					if ({characterIntPoints} > {characterFreePoints}){
+					MINT.src = 'images/sempontos.png';
+					} else {
+					MINT.src = 'images/arrow.png';
+					}
+
+				var MDEX = document.getElementById("SDEX");	
+					if ({characterDexPoints} > {characterFreePoints}){
+					MDEX.src = 'images/sempontos.png';
+					} else {
+					MDEX.src = 'images/arrow.png';
+					}
+
+				var MLUK = document.getElementById("SLUK");	
+					if ({characterLukPoints} > {characterFreePoints}){
+					MLUK.src = 'images/sempontos.png';
+					} else {
+					MLUK.src = 'images/arrow.png';
+					}	
+			}
+		</script>
+
+		
 <div id ="status_table" style = "position:absolute; left:5px; top:5px;"> 
 	<table class="status">
 		<CAPTION>Character Status</CAPTION>
@@ -53,14 +148,6 @@
 			<th class="status">Spirits:</th>
 			<td class="status">{characterSpirits}</td>
 		</tr>
-		<tr>
-			<td class="status">&nbsp;</td>
-			<th class="status">Location:</th>
-			<td class="status">{characterLocationMap}</td>
-			<td class="status">&nbsp;</td>
-			<th class="status">Coords:</th>
-			<td class="status">{characterLocationX},{characterLocationY}</td>
-		</tr>
 	</table>
 </div>
 
@@ -71,7 +158,7 @@
 			<th class="status">STR:</th>
 			<td class="status">{characterStr}</td>
 			<td class="status">+{characterStrBonus}</td>
-			<td class="status"><a href="/handler?command=stat_add+str&page={skin}/status.html"><img src="images/arrow.png"></a></td>
+			<td class="status" ><a href="/handler?command=stat_add+str&page={skin}/status.html"><img id="SSTR"></a></td>
 			<th class="status">&nbsp;</th>
 			<th class="status">#{characterStrPoints}</th>
 			<th class="status">&nbsp;</th>
@@ -85,7 +172,7 @@
 			<th class="status">AGI:</th>
 			<td class="status">{characterAgi}</td>
 			<td class="status">+{characterAgiBonus}</td>
-			<td class="status"><a href="/handler?command=stat_add+agi&page={skin}/status.html"><img src="images/arrow.png"></a></td>
+			<td class="status"><a href="/handler?command=stat_add+agi&page={skin}/status.html"><img id="SAGI"></a></td>
 			<th class="status">&nbsp;</th>
 			<th class="status">#{characterAgiPoints}</th>
 			<th class="status">&nbsp;</th>
@@ -99,7 +186,7 @@
 			<th class="status">VIT:</th>
 			<td class="status">{characterVit}</td>
 			<td class="status">+{characterVitBonus}</td>
-			<td class="status"><a href="/handler?command=stat_add+vit&page={skin}/status.html"><img src="images/arrow.png"></a></td>
+			<td class="status"><a href="/handler?command=stat_add+vit&page={skin}/status.html"><img id="SVIT"></a></td>
 			<th class="status">&nbsp;</th>
 			<th class="status">#{characterVitPoints}</th>
 			<th class="status">&nbsp;</th>
@@ -113,7 +200,7 @@
 			<th class="status">INT:</th>
 			<td class="status">{characterInt}</td>
 			<td class="status">+{characterIntBonus}</td>
-			<td class="status"><a href="/handler?command=stat_add+int&page={skin}/status.html"><img src="images/arrow.png"></a></td>
+			<td class="status"><a href="/handler?command=stat_add+int&page={skin}/status.html"><img id="SINT"></a></td>
 			<th class="status">&nbsp;</th>
 			<th class="status">#{characterIntPoints}</th>
 			<th class="status">&nbsp;</th>
@@ -127,7 +214,7 @@
 			<th class="status">DEX:</th>
 			<td class="status">{characterDex}</td>
 			<td class="status">+{characterDexBonus}</td>
-			<td class="status"><a href="/handler?command=stat_add+dex&page={skin}/status.html"><img src="images/arrow.png"></a></td>
+			<td class="status"><a href="/handler?command=stat_add+dex&page={skin}/status.html"><img id="SDEX"></a></td>
 			<th class="status">&nbsp;</th>
 			<th class="status">#{characterDexPoints}</th>
 			<th class="status">&nbsp;</th>
@@ -138,7 +225,7 @@
 			<th class="status">LUK:</th>
 			<td class="status">{characterLuk}</td>
 			<td class="status">+{characterLukBonus}</td>
-			<td class="status"><a href="/handler?command=stat_add+luk&page={skin}/status.html"><img src="images/arrow.png"></a></td>
+			<td class="status"><a href="/handler?command=stat_add+luk&page={skin}/status.html"><img id="SLUK"></a></td>
 			<th class="status">&nbsp;</th>
 			<th class="status">#{characterLukPoints}</th>
 			<th class="status">&nbsp;</th>
@@ -150,7 +237,37 @@
 	</table>
 </div>
 
-<div id ="status_points_table" style = "position:absolute; left:5px; top:190px;">
+<div id ="mapa" style = "position:absolute; left:5px; top:190px;">
+	<table class="map">
+		<CAPTION>Mapa</CAPTION>
+		<tr>
+			<td class="map" id="clmapa"><img id="iMap"></td>
+			<td class="map">&nbsp;</td>
+		</tr>
+	</table>
+</div>
+
+<div id ="mapa_infos" style = "position:absolute; left:305px; top:210px;">
+	<table class="map_i">
+		<tr>
+			<td class="map_i">&nbsp;</td>
+			<th class="map_i">Location:</th>
+			<td class="map_i">{characterLocationMap}</td>
+		</tr>
+		<tr>
+			<td class="map_i">&nbsp;</td>
+			<th class="map_i">Coords:</th>
+			<td class="map_i">{characterLocationX},{characterLocationY}</td>
+		</tr>
+		<tr>
+			<td class="map_i">&nbsp;</td>
+			<th class="map_i">Going to:</th>
+			<td class="map_i">{characterGetRouteX},{characterGetRouteY} (faltam {characterGetTimeRoute}s)</td>	
+		</tr>
+	</table>
+</div>
+
+<div id ="status_points_table" style = "position:absolute; left:5px; top:750px;">
 	<table class="status">
 		<CAPTION>Looks/Equipment</CAPTION>
 		<tr>
@@ -202,15 +319,11 @@
 	</table>
 </div>
 
-<div id ="status_points_table" style = "position:absolute; left:5px; top:375px;">
-	<table class="status" width="50%">
-	<CAPTION>Arrays</CAPTION>
+<div id ="status_points_table" style = "position:absolute; left:5px; top:935px;">
+	<table class="status" width="500">
+	<CAPTION>Statuses</CAPTION>
 	<tr>
-		<td class="status">characterStatuses:<br>{startLoop}{characterStatuses}<br>{endLoop}</td>
-		<td class="status">inventoryEquipped:<br>{startLoop}{inventoryEquipped}<br>{endLoop}</td>
-		<td class="status">inventoryUnequipped:<br>{startLoop}{inventoryUnequipped}<br>{endLoop}</td>
-		<td class="status">inventoryUnusable:<br>{startLoop}{inventoryUnusable}<br>{endLoop}</td>
-		<td class="status">inventoryUsable:<br>{startLoop}{inventoryUsable}<br>{endLoop}</td>
+		<td class="status">{characterStatusesSring}</td>
 	</tr>
 	</table>
 </div>
