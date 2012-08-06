@@ -392,7 +392,7 @@ sub main {
 	} elsif (
 		$config{attackCheckLOS} && $args->{attackMethod}{distance} > 2
 		&& (($config{attackCanSnipe} && !checkLineSnipable($realMyPos, $realMonsterPos))
-		|| (!$config{attackCanSnipe} && $realMonsterDist < $args->{attackMethod}{maxDistance} && !checkLineWalkable($realMyPos, $realMonsterPos)))
+		|| (!$config{attackCanSnipe} && $realMonsterDist < $args->{attackMethod}{maxDistance} && !checkLineWalkable($realMyPos, $realMonsterPos, 1)))
 	) {
 		# We are a ranged attacker without LOS
 		# Calculate squares around monster within shooting range, but not
@@ -422,7 +422,7 @@ sub main {
 			#    $masterPos, if we have a master.
 			if (
 			    (($config{attackCanSnipe} && checkLineSnipable($spot, $realMonsterPos))
-				&& checkLineWalkable($spot, $realMonsterPos))
+				|| checkLineWalkable($spot, $realMonsterPos))
 				&& $field->isWalkable($spot->{x}, $spot->{y})
 				&& ($realMyPos->{x} != $spot->{x} && $realMyPos->{y} != $spot->{y})
 				&& (!$master || round(distance($spot, $masterPos)) <= $config{followDistanceMax})
