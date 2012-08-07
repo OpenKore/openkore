@@ -4518,6 +4518,7 @@ sub cmdTalk {
 		error TF("Error in function 'talk' (Talk to NPC)\n" .
 			"NPC %s does not exist\n", $arg1);
 	} elsif ($arg1 =~ /^\d+$/) {
+		AI::clear("route");
 		$messageSender->sendTalk($npcsID[$arg1]);
 
 	} elsif (($arg1 eq "resp" || $arg1 eq "num" || $arg1 eq "text") && !%talk) {
@@ -4593,7 +4594,7 @@ sub cmdTalk {
 
 	} else {
 		error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
-			"Usage: talk <NPC # | cont | resp | num> [<response #>|<number #>]\n");
+			"Usage: talk <NPC # | cont | resp | num | text | no> [<response #>|<number #>]\n");
 	}
 }
 
