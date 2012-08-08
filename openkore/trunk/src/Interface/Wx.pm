@@ -1309,44 +1309,51 @@ sub onMapClick {
 	my ($self, $x, $y) = @_;
 	my $checkPortal = 0;
 	my $noMove = 0;
-	delete $self->{mouseMapText};
-	if ($self->{mapViewer} && $self->{mapViewer}->{portals}
-		&& $self->{mapViewer}->{portals}->{$field->baseName}
-		&& @{$self->{mapViewer}->{portals}->{$field->baseName}}){
-
-		foreach my $portal (@{$self->{mapViewer}->{portals}->{$field->baseName}}){
-			if (distance($portal,{x=>$x,y=>$y}) <= ($config{wx_map_portalSticking} || 5)) {
-				$x = $portal->{x};
-				$y = $portal->{y};#{O}_{O}#
-				$self->writeOutput("message", TF("Moving to Portal %s, %s\n", $x, $y), "info");
-				$checkPortal = 1;
-				last;
-			}
-		}
-		
-		foreach my $monster (@{$self->{mapViewer}->{monsters}}){
-			if (distance($monster->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_monsterSticking} || 1)) {
-				main::attack($monster->{ID});
-				$noMove = 1;
-				last;
-			}
-		}
-		
-		foreach my $npc (@{$self->{mapViewer}->{npcs}}){
-			if (distance($npc->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_npcSticking} || 1)) {
-				Commands::run("talk " . $npc->{binID});
-				$noMove = 1;
-				last;
-			}
-		}
-	}
 	
-	unless ($noMove) {
-		$self->writeOutput("message", TF("Moving to %s, %s\n", $x, $y), "info") unless $checkPortal;
-		AI::clear("mapRoute", "route", "move");
-		main::ai_route($field->baseName, $x, $y, attackOnRoute => 1);
+	if ($currentChatRoom ne "") {			
+		$self->writeOutput("error", TF("Error in function 'move' (Move Player)\n" .
+										"Unable to walk while inside a chat room!\n" .
+										"Use the command: chat leave\n"));
+	} else {
+		delete $self->{mouseMapText};
+		if ($self->{mapViewer} && $self->{mapViewer}->{portals}
+			&& $self->{mapViewer}->{portals}->{$field->baseName}
+			&& @{$self->{mapViewer}->{portals}->{$field->baseName}}){
+
+			foreach my $portal (@{$self->{mapViewer}->{portals}->{$field->baseName}}){
+				if (distance($portal,{x=>$x,y=>$y}) <= ($config{wx_map_portalSticking} || 5)) {
+					$x = $portal->{x};
+					$y = $portal->{y};#{O}_{O}#
+					$self->writeOutput("message", TF("Moving to Portal %s, %s\n", $x, $y), "info");
+					$checkPortal = 1;
+					last;
+				}
+			}
+			
+			foreach my $monster (@{$self->{mapViewer}->{monsters}}){
+				if (distance($monster->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_monsterSticking} || 1)) {
+					main::attack($monster->{ID});
+					$noMove = 1;
+					last;
+				}
+			}
+			
+			foreach my $npc (@{$self->{mapViewer}->{npcs}}){
+				if (distance($npc->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_npcSticking} || 1)) {
+					Commands::run("talk " . $npc->{binID});
+					$noMove = 1;
+					last;
+				}
+			}
+		}
+		
+		unless ($noMove) {
+			$self->writeOutput("message", TF("Moving to %s, %s\n", $x, $y), "info") unless $checkPortal;
+			AI::clear("mapRoute", "route", "move");
+			main::ai_route($field->baseName, $x, $y, attackOnRoute => 1);
+		}
+		$self->{inputBox}->SetFocus;
 	}
-	$self->{inputBox}->SetFocus;
 }
 
 sub onMap_MapChange {

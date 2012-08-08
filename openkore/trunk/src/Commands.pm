@@ -3079,6 +3079,11 @@ sub cmdMove {
 		message T("Stopped all movement\n"), "success";
 	} else {
 		AI::clear(qw/move route mapRoute/);
+		if ($currentChatRoom ne "") {
+			error TF("Error in function 'move' (Move Player)\n" .
+				"Unable to walk while inside a chat room!\n" .
+				"Use the command: chat leave\n");
+		} else {
 		if ($maps_lut{"${map}.rsw"}) {
 			if ($x ne "") {
 				message TF("Calculating route to: %s(%s): %s, %s\n", 
@@ -3101,6 +3106,7 @@ sub cmdMove {
 			}
 		} else {
 			error TF("Map %s does not exist\n", $map);
+		}
 		}
 	}
 }
