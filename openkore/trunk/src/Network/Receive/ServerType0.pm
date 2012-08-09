@@ -506,7 +506,7 @@ sub new {
 		'0858' => ['actor_moved', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # standing provided by try71023
 		# '0859' => ['show_eq'],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
-		'08C8' => ['actor_action', 'a4 a4 a4 V3 v C2 V', [qw(sourceID targetID tick src_speed dst_speed damage div unknown type dual_wield_damage)]],
+		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 	};
 
 	# Item RECORD Struct's
@@ -3160,7 +3160,7 @@ sub login_error {
 
 	$net->serverDisconnect();
 	if ($args->{type} == REFUSE_INVALID_ID) {
-		error T("Account name doesn't exist\n"), "connection";
+		error TF("Account name [%s] doesn't exist\n", $config{'username'}), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
 			my $username = $interface->query(T("Enter your Ragnarok Online username again."));
 			if (defined($username)) {
@@ -3866,6 +3866,7 @@ sub party_join {
 		if ($ID eq $accountID) {
 			message TF("You joined party '%s'\n", $name), undef, 1;
 			$char->{party} = {};
+			Plugins::callHook('packet_partyJoin', { partyName => $name });
 		} else {
 			message TF("%s joined your party '%s'\n", $user, $name), undef, 1;
 		}
