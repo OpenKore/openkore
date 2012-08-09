@@ -739,7 +739,7 @@ sub processTake {
 		AI::dequeue;
 
 	} elsif (AI::action eq "take") {
-		my $myPos = $char->{pos_to};
+		my $myPos = $char->{pos};
 		my $dist = round(distance($item->{pos}, $myPos));
 		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
 
