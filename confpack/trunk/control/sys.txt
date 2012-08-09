@@ -56,4 +56,4 @@ loadPlugins_list macro
 skipPlugins_list
 
 ###### Miscellaneous ######
-sendAnonymousStatisticReport 1
+sendAnonymousStatisticReport 0
