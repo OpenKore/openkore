@@ -435,7 +435,8 @@ sub new {
 		'02E0' => ['battleground_hp', 'a4 Z24 v2', [qw(ID name hp max_hp)]],
 		# 02E1 packet unsure of dual_wield_damage needs more testing
 		# a4 a4 a4 V3 v C V ?
-		'02E1' => ['actor_action', 'a4 a4 a4 V2 v x2 v x2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
+		#'02E1' => ['actor_action', 'a4 a4 a4 V2 v x2 v x2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
+		'02E1' => ['actor_action', 'a4 a4 a4 V3 v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'02E7' => ['map_property', 'v2 a*', [qw(len type info_table)]],
 		'02E8' => ['inventory_items_stackable'],
 		'02E9' => ['cart_items_stackable'],
@@ -505,7 +506,7 @@ sub new {
 		'0858' => ['actor_moved', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # standing provided by try71023
 		# '0859' => ['show_eq'],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
-		# '08C8' => ['actor_action'],
+		'08C8' => ['actor_action', 'a4 a4 a4 V3 v C2 V', [qw(sourceID targetID tick src_speed dst_speed damage div unknown type dual_wield_damage)]],
 	};
 
 	# Item RECORD Struct's
