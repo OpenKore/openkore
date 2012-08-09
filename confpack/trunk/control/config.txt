@@ -405,6 +405,7 @@ attackSkillSlot {
 	disabled 0
 	monsters
 	notMonsters
+	monstersCount
 	maxAttempts 0
 	maxUses 0
 	target_whenStatusActive
@@ -432,6 +433,9 @@ attackComboSlot {
 	dist 1.5
 	isSelfSkill 1
 	target_deltaHp
+	monsters
+	notMonsters
+	monstersCount
 }
 
 doCommand {
@@ -448,6 +452,7 @@ doCommand {
 	aggressives
 	monsters
 	notMonsters
+	monstersCount
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -478,6 +483,7 @@ useSelf_skill {
 	aggressives
 	monsters
 	notMonsters
+	monstersCount
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -509,6 +515,7 @@ partySkill {
 	aggressives
 	monsters
 	notMonsters
+	monstersCount
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -561,6 +568,8 @@ equipAuto {
 	shoes
 	arrow
 	monsters
+	notMonsters
+	monstersCount
 	weight 0
 	whileSitting 0
 	hp
@@ -598,6 +607,7 @@ useSelf_item {
 	aggressives
 	monsters
 	notMonsters
+	monstersCount
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
