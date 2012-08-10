@@ -1,4 +1,4 @@
-# Pasta control traduzida de acordo com a revision 8099, do windhamwong
+﻿# Pasta control traduzida de acordo com a revision 8105, do farrainbow
 #############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
