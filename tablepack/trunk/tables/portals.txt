@@ -1,7 +1,7 @@
 #format: <source coordinate><destination coordinate>[zenny cost][conversation sequence]
 alberta 195 151 alb2trea 62 69 0 c c r0
 alb2trea 39 50 alberta 192 169 0 r0
-alberta 247 122 tur_dun01 157 39 10000 c r1 c r0 c c c 
+alberta 247 122 tur_dun01 157 39 10000 c r1 c r0 c c c
 alberta 245 45 lou_fild01 190 101 10000 c r1 c c r0
 alberta 247 42 ayothaya 149 71 10000 c r1 c c r0 n
 lou_fild01 190 100 alberta 235 45 0 c r0
@@ -19,7 +19,7 @@ ayothaya 152 68 alberta 247 42 0 c r0 n
 ama_in02 115 177 ama_dun01 229 10 0 c r1 c r0 n
 ama_dun01 229 7 ama_in02 119 181 0 c r0 n
 
-# Uncomment these fields if you wish to use Kafra warps
+# VIP Warps
 #yuno 142 183 prontera 116 72 1800 c c c c c r0
 #yuno 142 183 izlude 94 103 1800 c c c c c r1
 #yuno 142 183 geffen 120 39 1800 c c c c c r2
@@ -88,6 +88,62 @@ ama_dun01 229 7 ama_in02 119 181 0 c r0 n
 #izlude 134 88 payon 161 58 1200 c r2 c r1
 #izlude 134 88 morocc 156 47 1200 c r2 c r2
 #izlude 134 88 aldebaran 168 112 1800 c r2 c r3
+# to add: Eden warper, Prontera warper
+
+# Non-VIP Warps
+prontera 146 89 izlude 94 103 2000 c r2 c r0
+prontera 146 89 geffen 120 39 2000 c r2 c r1
+prontera 146 89 payon 161 58 2000 c r2 c r2
+prontera 146 89 morocc 156 47 2000 c r2 c r3
+prontera 146 89 alberta 117 56 2000 c r2 c r4
+prontera 146 89 aldebaran 168 112 2000 c r2 c r5
+prontera 146 89 comodo 209 143 3000 c r2 c r6
+prontera 146 89 umbala 100 154 3000 c r2 c r7
+prontera 151 29 izlude 94 103 2000 c r2 c r0
+prontera 151 29 geffen 120 39 2000 c r2 c r1
+prontera 151 29 payon 161 58 2000 c r2 c r2
+prontera 151 29 morocc 156 47 2000 c r2 c r3
+prontera 151 29 alberta 117 56 2000 c r2 c r4
+prontera 151 29 aldebaran 168 112 2000 c r2 c r5
+prontera 151 29 comodo 209 143 3000 c r2 c r6
+prontera 151 29 umbala 100 154 3000 c r2 c r7
+prontera 282 200 izlude 94 103 2000 c r2 c r0
+prontera 282 200 geffen 120 39 2000 c r2 c r1
+prontera 282 200 payon 161 58 2000 c r2 c r2
+prontera 282 200 morocc 156 47 2000 c r2 c r3
+prontera 282 200 alberta 117 56 2000 c r2 c r4
+prontera 282 200 aldebaran 168 112 2000 c r2 c r5
+prontera 282 200 comodo 209 143 3000 c r2 c r6
+prontera 282 200 umbala 100 154 3000 c r2 c r7
+prontera 29 207 izlude 94 103 2000 c r2 c r0
+prontera 29 207 geffen 120 39 2000 c r2 c r1
+prontera 29 207 payon 161 58 2000 c r2 c r2
+prontera 29 207 morocc 156 47 2000 c r2 c r3
+prontera 29 207 alberta 117 56 2000 c r2 c r4
+prontera 29 207 aldebaran 168 112 2000 c r2 c r5
+prontera 29 207 comodo 209 143 3000 c r2 c r6
+prontera 29 207 umbala 100 154 3000 c r2 c r7
+prontera 98 120 yuno 157 167 1800 c c r0 c
+geffen 120 62 prontera 116 72 2000 c r2 c r0
+geffen 203 123 prontera 116 72 2000 c r2 c r0
+aldebaran 143 119 geffen 120 39 2000 c r2 c r0
+izlude 134 88 prontera 116 72 2000 c r2 c r0
+yuno 152 187 einbroch 67 195 2000 c r2 c r0
+yuno 152 187 lighthalzen 159 90 2000 c r2 c r1
+yuno 152 187 hugel 98 150 2000 c r2 c r2
+yuno 152 187 rachel 119 135 2000 c r2 c r3
+yuno 327 108 aldebaran 168 112 2000 c r2 c r0
+yuno 142 183 prontera 116 72 1800 c c r0 c n
+morocc 156 97 prontera 116 72 2000 c r2 c r0
+comodo 195 150 morocc 156 47 2000 c c r2 c r0
+payon 181 104 prontera 116 72 2000 c r2 c r0
+payon 175 226 prontera 116 72 1200 c r2 c r0
+alberta 113 60 payon 161 58 2000 c r2 c r0
+rachel 109 138 veins 205 101 2200 c r2 c r0
+rachel 109 138 yuno 158 125 3000 c r2 c r1
+veins 208 128 rachel 115 125 2200 c r2 c r0
+veins 208 128 yuno 158 125 3000 c r2 c r1
+moc_para01 14 32 prontera 116 72 1800 c c r0 c n
 
 # Training Grounds
 new_1-1 148 112 new_1-2 100 9
@@ -233,7 +289,7 @@ rachel 149 138 bat_room 154 150 0 c c r0 c
 #bat_room 148 150 lighthalzen 159 93 0 c r0 c
 #bat_room 148 150 moc_ruins 152 48 0 c r0 c
 #bat_room 148 150 payon 161 58 0 c r0 c
-#bat_room 148 150 prontera 116 72 0 c r0 c
+bat_room 148 150 prontera 116 72 0 c r0 c
 #bat_room 148 150 rachel 115 124 0 c r0 c
 # following bat_room npcs are only available with base lvl 80
 # Tierra 1 Blue
@@ -259,7 +315,7 @@ bat_room 148 178 bat_room 141 224 0 c r0 c
 bat_room 141 220 bat_room 154 150
 bat_b02 10 293 bat_room 154 150 0 c
 # Flavius 2 Red
-bat_room 148 121 bat_room 
+bat_room 148 121 bat_room
 bat_room  bat_room 154 150
 bat_b02 189 14 bat_room 154 150 0 c
 
@@ -356,7 +412,7 @@ aldebaran 72 197 aldeba_in 27 34
 aldebaran 89 234 aldeba_in 245 237
 aldebaran 118 63 aldeba_in 208 117
 aldebaran 138 34 mjolnir_12 199 378
-aldebaran 139 135 c_tower1 200 157
+aldebaran 140 135 c_tower1 199 159
 aldebaran 140 243 yuno_fild01 208 18
 aldebaran 197 70 aldeba_in 94 38
 aldebaran 225 54 aldeba_in 149 123
@@ -583,6 +639,8 @@ comodo 271 271 cmd_in01 109 125
 comodo 333 175 beach_dun3 17 265
 einbroch 150 25 ein_fild08 164 377
 einbroch 157 331 ein_fild04 184 31
+einbroch 232 272 einbech 43 215 200 c c r0 n
+einbech 39 215 einbroch 226 276 200 c r0 n
 einbech 145 112 ein_in01 268 104
 einbech 177 136 ein_in01 190 35
 einbech 138 252 ein_dun01 22 14
@@ -847,6 +905,7 @@ gl_cas01 371 301 gl_prison 11 70
 gl_cas01 215 236 gl_cas01 135 40
 gl_cas02 104 15 gl_cas01 200 165
 gl_cas02 104 193 glast_01 199 322
+gl_cas02 104 193 glast_01 199 325
 gl_church 16 299 gl_chyard 147 287
 gl_church 156 4 glast_01 200 137
 gl_church 301 46 gl_chyard 147 12
@@ -861,8 +920,8 @@ gl_in01 83 174 glast_01 179 360
 gl_in01 106 125 glast_01 220 360
 gl_in01 118 59 glast_01 237 330
 gl_knt01 12 148 gl_knt02 10 138
-gl_knt01 104 204 gl_knt01 128 292
-gl_knt01 128 292 gl_knt01 104 204
+gl_knt01 104 204 gl_knt01 123 292
+gl_knt01 128 292 gl_knt01 104 199
 gl_knt01 150 6 glast_01 77 193
 gl_knt01 150 291 gl_knt02 157 292
 gl_knt01 231 197 gl_sew02 296 18
@@ -893,6 +952,7 @@ glast_01 162 330 gl_in01 81 68
 glast_01 179 360 gl_in01 83 174
 glast_01 200 137 gl_church 156 4
 glast_01 200 297 gl_cas01 200 18
+glast_01 199 322 gl_cas02 104 189
 glast_01 220 360 gl_in01 106 125
 glast_01 237 330 gl_in01 118 59
 glast_01 380 304 gef_fild06 18 304
@@ -1445,6 +1505,8 @@ prontera 204 192 prt_in 68 130
 prontera 208 154 prt_in 172 33
 prontera 237 317 prt_church 100 56
 prontera 289 203 prt_fild06 23 193
+prontera 272 108 s_atelier 13 119
+s_atelier 10 119 prontera 268 109
 prt_castle 28 121 prt_castle 40 138
 prt_castle 31 113 prt_castle 54 113
 prt_castle 40 138 prt_castle 28 121
@@ -1823,12 +1885,14 @@ tur_dun02 167 19 tur_dun03 132 193
 tur_dun03 217 71 tur_dun04 100 196
 tur_dun04 100 196 tur_dun03 217 71
 umbala 130 79 um_fild04 215 339
-umbala 138 129 um_in 99 110
 umbala 129 78 um_fild04 215 340
 umbala 106 285 um_dun01 42 27
 umbala 107 130 um_in 99 63
-umbala 138 129 um_in 99 111
+umbala 138 129 um_in 99 114
 umbala 125 157 um_in 155 111
+umbala 94 186 um_in 141 39
+umbala 100 203 um_in 163 69
+umbala 107 118 um_in 15 20
 # bungee jump
 #umbala 140 197 nif_in 68 14
 um_dun01 42 27 umbala 106 285
@@ -1836,7 +1900,6 @@ um_dun01 149 198 um_dun02 52 22
 um_dun02 52 22 um_dun01 149 198
 um_dun02 126 162 yggdrasil01 38 63
 um_fild01 31 374 beach_dun2 258 244
-um_fild01 366 277 um_fild02 22 272
 um_fild01 369 277 um_fild02 22 272
 um_fild01 31 274 beach_dun2 258 244
 um_fild02 188 374 um_fild04 182 13
@@ -1851,10 +1914,13 @@ um_fild03 243 26 cmd_fild01 178 370
 um_fild04 182 13 um_fild02 188 374
 um_fild04 215 339 umbala 130 79
 um_fild04 215 340 umbala 129 78
-um_in 99 110 umbala 138 129
 um_in 155 111 umbala 125 157
-um_in 99 111 umbala 138 129
+um_in 99 111 umbala 136 127
 um_in 99 63 umbala 107 130
+um_in 141 39 umbala 94 183
+um_in 11 18 umbala 107 118
+um_in 166 69 umbala 100 203
+yggdrasil01 27 195 yggdrasil01 270 52
 yggdrasil01 270 52 yggdrasil01 27 195
 yggdrasil01 248 259 nif_fild01 316 67
 yuno 48 105 yuno_in01 40 176
@@ -2415,6 +2481,8 @@ que_bingo 39 34 que_bingo 34 109
 que_bingo 34 105 que_bingo 38 28
 que_bingo 53 34 que_bingo 49 71
 que_bingo 48 66 que_bingo 53 29
+hugel 209 109 odin_tem01 100 146 800 c r1 n
+odin_temp01 93 146 hugel 206 109 c r1 n
 ein_fild04 343 293 ein_fild05 80 294
 ein_fild05 76 294 ein_fild04 336 292
 ein_fild05 376 183 ein_fild06 47 166
@@ -2608,7 +2676,7 @@ que_ng 172 42 que_ng 160 139
 y_airport 143 43 y_airport 148 51 1200 c r0 c r0
 y_airport 143 49 y_airport 142 40 0 c r0 c r0
 y_airport 140 63 yuno 47 244 0 c r0
-y_airport 145 63 yuno 59 244 0 c r0 
+y_airport 145 63 yuno 59 244 0 c r0
 
 # Lighthalzen airport
 lhz_airport 143 43 lhz_airport 148 51 1200 c r0 c r0
@@ -2733,15 +2801,60 @@ lighthalzen 197 36 lhz_in02 284 30
 lhz_in02 265 14 lhz_in02 269 82
 lhz_in02 282 79 lighthalzen 194 48
 
+# Eden HQ Entrace
+prontera 124 76 moc_para01 31 14 c c r0
+prontera 38 212 moc_para01 31 14 c c r0
+prontera 162 326 moc_para01 31 14 c c r0
+prontera 271 213 moc_para01 31 14 c c r0
+morocc 161 97 moc_para01 31 14 c c r0
+moc_ruins 68 164 moc_para01 31 14 c c r0
+moc_prydb1 53 126 moc_para01 31 14 c c r0
+amatsu 102 152 moc_para01 31 14 c c r0
+brasilis 194 221 moc_para01 31 14 c c r0
+geffen 132 66 moc_para01 31 14 c c r0
+geffen 196 147 moc_para01 31 14 c c r0
+payon 177 111 moc_para01 31 14 c c r0
+aldebaran 133 119 moc_para01 31 14 c c r0
+einbroch 244 200 moc_para01 31 14 c c r0
+moscovia 220 192 moc_para01 31 14 c c r0
+einbroch 55 202 moc_para01 31 14 c c r0
+yuno 144 189 moc_para01 31 14 c c r0
+lighthalzen 167 102 moc_para01 31 14 c c r0
+alberta 124 67 moc_para01 31 14 c c r0
+dewata 194 168 moc_para01 31 14 c c r0
+comodo 191 153 moc_para01 31 14 c c r0
+cmd_fild07 139 134 moc_para01 31 14 c c r0
+gonryun 162 122 moc_para01 31 14 c c r0
+umbala 96 160 moc_para01 31 14 c c r0
+ayothaya 209 169 moc_para01 31 14 c c r0
+hugel 99 167 moc_para01 31 14 c c r0
+rachel 125 144 moc_para01 31 14 c c r0
+veins 214 122 moc_para01 31 14 c c r0
+alberta_in 75 39 moc_para01 31 14 c c r0
+alberta 27 238 moc_para01 31 14 c c r0
+geffen_in 160 104 moc_para01 31 14 c c r0
+payon_in02 58 58 moc_para01 31 14 c c r0
+izlude 134 97 moc_para01 31 14 c c r0
+izlude_in 68 162 moc_para01 31 14 c c r0
+
 # Eden HQ
-moc_para01 47 161 moc_para01 48 16
-moc_para01 48 16 moc_para01 48 164
-moc_para01 158 26 moc_para01 57 27
+moc_para01 47 39 moc_para01 106 14 c r0
+moc_para01 107 12 moc_para01 47 37
+moc_para01 100 27 moc_para01 47 85
+moc_para01 49 86 moc_para01 103 27
+moc_para01 113 32 moc_para01 105 92
+moc_para01 102 92 moc_para01 111 33
 moc_para01 57 27 moc_para01 162 26
-moc_para01 179 90 moc_para01 41 187
-moc_para01 41 187 moc_para01 179 93
+moc_para01 158 26 moc_para01 55 27
+#moc_para01 48 16 moc_para01 48 164
+moc_para01 48 16 moc_paraup 48 164
+#moc_para01 47 161 moc_para01 47 18
+moc_paraup 47 161 moc_para01 47 18
+#moc_para01 41 187 moc_para01 179 93
+moc_paraup 41 187 moc_paraup 179 93
+#moc_para01 179 90 moc_para01 41 185
+moc_paraup 179 90 moc_paraup 41 185
+moc_para01 30 10 prontera 116 72
 
+#------------------------------
 xmas 139 307 evt_xmas 129 129 0 c r1
-
-prontera 272 108 s_atelier 13 119
-s_atelier 10 119 prontera 268 109
