@@ -662,6 +662,7 @@ debugPacket_unparsed 0
 debugPacket_received 0
 debugPacket_ro_sent 0
 debugPacket_sent 0
+debugPacket_alwaysDisplay 0
 debugPacket_exclude
 debugPacket_include
 debugPacket_include_dumpMethod
