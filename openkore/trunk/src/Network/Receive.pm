@@ -51,18 +51,18 @@ use Translation;
 sub parse {
 	my $self = shift;
 	my $args = $self->SUPER::parse(@_);
-	
+
 	if ($args && $config{debugPacket_received} == 3 &&
 			existsInList($config{'debugPacket_include'}, $args->{switch})) {
 		my $packet = $self->{packet_list}{$args->{switch}};
 		my ($name, $packString, $varNames) = @{$packet};
-		
+
 		my @vars = ();
 		for my $varName (@{$varNames}) {
 			message "$varName = $args->{$varName}\n";
 		}
 	}
-	
+
 	return $args;
 }
 
@@ -263,13 +263,13 @@ sub received_characters_unpackString {
 
 sub parse_account_server_info {
 	my ($self, $args) = @_;
-	
+
 	if (length $args->{lastLoginIP} == 4 && $args->{lastLoginIP} ne "\0"x4) {
 		$args->{lastLoginIP} = inet_ntoa($args->{lastLoginIP});
 	} else {
 		delete $args->{lastLoginIP};
 	}
-	
+
 	@{$args->{servers}} = map {
 		my %server;
 		@server{qw(ip port name users display)} = unpack 'a4 v Z20 v2 x2', $_;
@@ -285,9 +285,9 @@ sub parse_account_server_info {
 
 sub reconstruct_account_server_info {
 	my ($self, $args) = @_;
-	
+
 	$args->{lastLoginIP} = inet_aton($args->{lastLoginIP});
-	
+
 	$args->{serverInfo} = pack '(a32)*', map { pack(
 		'a4 v Z20 v2 x2',
 		inet_aton($_->{ip}),
@@ -548,7 +548,8 @@ sub actor_display {
 					if ($monsters_lut{$args->{type}}) {
 						$actor->setName($monsters_lut{$args->{type}});
 					}
-					$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : "Unknown";
+					#$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : "Unknown";
+					$actor->{name_given} = "Unknown";
 					$actor->{binType} = $args->{type};
 					$mustAdd = 1;
 				}
@@ -1093,11 +1094,11 @@ sub actor_info {
 		# (with cryptic party and guild name fields, at least for now)
 		$player->setName(bytesToString($args->{name}));
 		$player->{info} = 1;
-		
+
 		$player->{party}{name} = bytesToString($args->{partyName}) if defined $args->{partyName};
 		$player->{guild}{name} = bytesToString($args->{guildName}) if defined $args->{guildName};
 		$player->{guild}{title} = bytesToString($args->{guildTitle}) if defined $args->{guildTitle};
-		
+
 		message "Player Info: " . $player->nameIdx . "\n", "parseMsg_presence", 2;
 		updatePlayerNameCache($player);
 		Plugins::callHook('charNameUpdate', {player => $player});
@@ -1167,14 +1168,14 @@ use constant QTYPE => (
 
 sub parse_minimap_indicator {
 	my ($self, $args) = @_;
-	
+
 	$args->{actor} = Actor::get($args->{npcID});
 	$args->{show} = $args->{type} != 2;
-	
+
 	unless (defined $args->{red}) {
 		@{$args}{qw(red green blue alpha)} = @{{QTYPE}->{$args->{qtype}} || [0xff, 0xff, 0xff, 0]};
 	}
-	
+
 	# FIXME: packet 0144: coordinates are missing now when clearing indicators; ID is used
 	# Wx depends on coordinates there
 }
@@ -1213,7 +1214,7 @@ sub reconstruct_minimap_indicator {
 # Minimap indicator.
 sub minimap_indicator {
 	my ($self, $args) = @_;
-	
+
 	my $color_str = "[R:$args->{red}, G:$args->{green}, B:$args->{blue}, A:$args->{alpha}]";
 	my $indicator = T("minimap indicator");
 	if (defined $args->{type}) {
@@ -1227,7 +1228,7 @@ sub minimap_indicator {
 			$indicator = "unknown effect $args->{effect}";
 		}
 	}
-	
+
 	if ($args->{show}) {
 		message TF("%s shown %s at location %d, %d " .
 		"with the color %s\n", $args->{actor}, $indicator, @{$args}{qw(x y)}, $color_str),
@@ -1241,7 +1242,7 @@ sub minimap_indicator {
 
 sub parse_sage_autospell {
 	my ($self, $args) = @_;
-	
+
 	$args->{skills} = [map { Skill->new(idn => $_) } sort { $a<=>$b } grep {$_}
 		exists $args->{autoshadowspell_list}
 		? (unpack 'v*', $args->{autoshadowspell_list})
@@ -1251,7 +1252,7 @@ sub parse_sage_autospell {
 
 sub reconstruct_sage_autospell {
 	my ($self, $args) = @_;
-	
+
 	my @skillIDs = map { $_->getIDN } $args->{skills};
 	$args->{autoshadowspell_list} = pack 'v*', @skillIDs;
 	$args->{autospell_list} = pack 'V*', @skillIDs;
@@ -1265,16 +1266,16 @@ sub reconstruct_sage_autospell {
 # Skill list for Sage's Hindsight and Shadow Chaser's Auto Shadow Spell.
 sub sage_autospell {
 	my ($self, $args) = @_;
-	
+
 	return unless $self->changeToInGameState;
-	
+
 	my $msg = center(' ' . T('Auto Spell') . ' ', 40, '-') . "\n"
 	. T("   # Skill\n")
 	. (join '', map { swrite '@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', [$_->getIDN, $_] } @{$args->{skills}})
 	. ('-'x40) . "\n";
-	
+
 	message $msg, 'list';
-	
+
 	if ($config{autoSpell}) {
 		my $skill = new Skill(auto => $config{autoSpell});
 		if (!$config{autoSpell_safe} || List::Util::first { $_->getIDN == $skill->getIDN } @{$args->{skills}}) {
