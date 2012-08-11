@@ -213,10 +213,6 @@ sub parse {
 
 	unless ($handler) {
 		warning "Packet Parser: Unknown switch: $switch\n";
-		if (debugPacket_include_dumpMethod != 0 && $config{'debugPacket_alwaysDisplay'}) {
-			Misc::dumpData($msg, 1);
-			Misc::visualDump($msg);
-		}
 		return undef;
 	}
 
