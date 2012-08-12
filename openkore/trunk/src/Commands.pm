@@ -1606,9 +1606,6 @@ sub cmdExp {
 		undef %itemChange;
 		$bytesSent = 0;
 		$packetParser->{bytesProcessed} = 0 if $packetParser;
-		$char->{baseUpCount} = 0;
-		$char->{jobUpCount} = 0;
-		$char->{deathCount} = 0;
 		message T("Exp counter reset.\n"), "success";
 		return;
 	}
@@ -1639,13 +1636,9 @@ sub cmdExp {
 				$EstJ_sec = int(($char->{'exp_job_max'} - $char->{exp_job})/($jExpPerHour/3600));
 			}
 		}
-		$char->{jobUpCount} = 0 if (!defined $char->{jobUpCount});
-		$char->{baseUpCount} = 0 if (!defined $char->{baseUpCount});
 		$char->{deathCount} = 0 if (!defined $char->{deathCount});
 		message TF( "------------Exp Report------------\n" .
 					"Botting time : %s\n" .
-					"BaseUp       : %s\n" .
-					"JobUp        : %s\n" .
 					"BaseExp      : %s %s\n" .
 					"JobExp       : %s %s\n" .
 					"BaseExp/Hour : %s %s\n" .
@@ -1657,7 +1650,7 @@ sub cmdExp {
 					"Died : %s\n" .
 					"Bytes Sent   : %s\n" .
 					"Bytes Rcvd   : %s\n",
-			timeConvert($w_sec), $char->{'baseUpCount'}, $char->{'jobUpCount'}, formatNumber($totalBaseExp), $percentB, formatNumber($totalJobExp), $percentJ,
+			timeConvert($w_sec), formatNumber($totalBaseExp), $percentB, formatNumber($totalJobExp), $percentJ,
 			formatNumber($bExpPerHour), $percentBhr, formatNumber($jExpPerHour), $percentJhr,
 			formatNumber($zenyMade), formatNumber($zenyPerHour), timeConvert($EstB_sec), timeConvert($EstJ_sec), 
 			$char->{'deathCount'}, formatNumber($bytesSent), $packetParser && formatNumber($packetParser->{bytesProcessed})), "info";
@@ -1665,46 +1658,6 @@ sub cmdExp {
 		if ($arg1 eq "") {
 			message("---------------------------------\n", "list");
 		}
-	}
-	
-	if (($arg1 eq "refine") || ($arg1 eq "report")) {
-		$knownArg = 1;
-		
-		my ($refineSucessPerCentage, $refineFailPerCentage, $refineTotal);
-		$char->{refineSuccessCount} = 0 if (!defined $char->{refineSuccessCount});
-		$char->{refineFailCount} = 0 if (!defined $char->{refineFailCount});
-		
-		$refineTotal = $char->{'refineSuccessCount'} + $char->{'refineFailCount'};
-			if ($refineTotal > 0) {
-				$refineSucessPerCentage = "(".sprintf("%.2f",$char->{'refineSuccessCount'} * 100 / $refineTotal)."%)";
-				$refineFailPerCentage = "(".sprintf("%.2f",$char->{'refineFailCount'} * 100 / $refineTotal)."%)";
-				}
-		
-			message TF( "------------Refine Report------------\n" .
-				"Success   : %s %s\n" .
-				"Fail      : %s %s\n" .
-				"Total     : %s\n",
-			$char->{'refineSuccessCount'}, $refineSucessPerCentage, $char->{'refineFailCount'}, $refineFailPerCentage, $refineTotal), "info";
-	}
-
-	if (($arg1 eq "create") || ($arg1 eq "report")) {
-		$knownArg = 1;
-		
-		my ($createSucessPerCentage, $createFailPerCentage, $createTotal);
-		$char->{createSuccessCount} = 2 if (!defined $char->{createSuccessCount});
-		$char->{createFailCount} = 1 if (!defined $char->{createFailCount});
-		
-		$createTotal = $char->{'createSuccessCount'} + $char->{'createFailCount'};
-			if ($createTotal > 0) {
-				$createSucessPerCentage = "(".sprintf("%.2f",$char->{'createSuccessCount'} * 100 / $createTotal)."%)";
-				$createFailPerCentage = "(".sprintf("%.2f",$char->{'createFailCount'} * 100 / $createTotal)."%)";
-				}
-		
-			message TF( "------------Create Report------------\n" .
-				"Success   : %s %s\n" .
-				"Fail      : %s %s\n" .
-				"Total     : %s\n",
-			$char->{'createSuccessCount'}, $createSucessPerCentage, $char->{'createFailCount'}, $createFailPerCentage, $createTotal), "info";
 	}
 	
 	if (($arg1 eq "monster") || ($arg1 eq "report")) {
@@ -1743,7 +1696,7 @@ sub cmdExp {
 	
 	if (!$knownArg) {
 		error T("Syntax error in function 'exp' (Exp Report)\n" .
-			"Usage: exp [<report | refine | create | monster | item | reset>]\n");
+			"Usage: exp [<report | monster | item | reset>]\n");
 	}
 }
 
