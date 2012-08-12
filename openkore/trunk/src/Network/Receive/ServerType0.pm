@@ -5951,18 +5951,24 @@ sub unit_levelup {
 	my $name = getActorName($ID);
 	if ($type == LEVELUP_EFFECT) {
 		message TF("%s gained a level!\n", $name);
+		$char->{'baseUpCount'}++;
 		Plugins::callHook('base_level', {name => $name});
 	} elsif ($type == JOBLEVELUP_EFFECT) {
 		message TF("%s gained a job level!\n", $name);
+		$char->{'jobUpCount'}++;
 		Plugins::callHook('job_level', {name => $name});
 	} elsif ($type == REFINING_FAIL_EFFECT) {
 		message TF("%s failed to refine a weapon!\n", $name), "refine";
+		$char->{'refineFailCount'}++;
 	} elsif ($type == REFINING_SUCCESS_EFFECT) {
 		message TF("%s successfully refined a weapon!\n", $name), "refine";
+		$char->{'refineSuccessCount'}++;
 	} elsif ($type == MAKEITEM_AM_SUCCESS_EFFECT) {
 		message TF("%s successfully created a potion!\n", $name), "refine";
+		$char->{'createSuccessCount'}++;
 	} elsif ($type == MAKEITEM_AM_FAIL_EFFECT) {
 		message TF("%s failed to create a potion!\n", $name), "refine";	
+		$char->{'createFailCount'}++;
 	} else {
 		message TF("%s unknown unit_levelup effect (%d)\n", $name, $type);
 	}
