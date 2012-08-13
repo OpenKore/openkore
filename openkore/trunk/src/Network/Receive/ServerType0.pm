@@ -4673,7 +4673,7 @@ sub show_eq {
 
 sub show_eq_msg_other {
 	my ($self, $args) = @_;
-	if ($args->{type}) {
+	if ($args->{flag}) {
 		message T("Allowed to view the other player's Equipment.\n");
 	} else {
 		message T("Not allowed to view the other player's Equipment.\n");
@@ -5948,7 +5948,7 @@ sub unit_levelup {
 
 	my $ID = $args->{ID};
 	my $type = $args->{type};
-	my $name = getActorName($ID);
+	my $name = Actor::get($ID);
 	if ($type == LEVELUP_EFFECT) {
 		message TF("%s gained a level!\n", $name);
 		Plugins::callHook('base_level', {name => $name});
