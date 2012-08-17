@@ -1,4 +1,4 @@
-1101#Sword#
+﻿1101#Sword#
 1102#Sword#
 1103#Sword#
 1104#Falchion#
@@ -916,7 +916,7 @@
 5018#Feather Bonnet#
 5019#Corsair#
 
-// ---- EP 1.5 糤??-----------
+// ---- EP 1.5 ??ずか?-----------
 
 1753#Steel Arrow#
 1754#Crystal Arrow#
@@ -964,13 +964,13 @@
 1556#Book of Gust of Wind#
 1557#Book of the Apocalypse#
 1558#Girl's Diary#
-//---- RO PVP 膙м初 糤??------
+//---- RO PVP ?㎌놓 ??ずか?------
 
 7028#Invite for Duel#
 7029#Admission for Duel#
 
 
-// ---- EP 2.0и狟ね┣ 糤??-----------
+// ---- EP 2.0㏀ず?ㅝ㈖か ??ずか?-----------
 
 2621#Ring#
 2622#Earring#
@@ -1070,7 +1070,7 @@
 538#Well baked Cookie#
 539#Piece of Cake#
 
-// ---- Ep 3.0 ?畄 ----------------
+// ---- Ep 3.0 ??q ----------------
 
 7038#Yarn#
 7039#Novice Nametag#
@@ -1109,7 +1109,7 @@
 645#Center Potion#
 656#Awakening Potion#
 657#Berserk Potion#
-// ---陛侥捞亥飘
+// ---금식이벤트
 552#Ketupat#
 
 
@@ -1210,16 +1210,16 @@
 5051#Bell of Cat#
 5052#Blue hair band#
 5053#Sphinx Helm#
-// ---汲朝捞亥飘
+// ---설날이벤트
 668#Ang Pow#
-// ---惯坊鸥牢捞亥飘
+// ---발렌타인이벤트
 7182#Cacao#
 558#Chocolate#
 559#HandMade Chocolate#
 
-// ----  泅犁 5044#厩付狼 朝俺#客 5051#绊剧捞 规匡#篮 荤侩 救窃-------
+// ----  현재 5044#악마의 날개#와 5051#고양이 방울#은 사용 안함-------
 
-// ---- EP 5.0 Juno  框а框玻 -----------
+// ---- EP 5.0 Juno ? 움㎽ず??움깼 -----------
 
 2110#Holy Guard#
 2111#Herald of GOD#
@@ -1313,12 +1313,12 @@
 2510#Novice Gloomy Hood#
 2352#Novice Ninja Rag#
 
-// ---- Ro Μ禣1㏄??├? ----------------
+// ---- Ro ━?1???㈏か? ----------------
 
 7146#Vancance Ticket#
 7147#Jasmin#
 7148#Mother Letter#
-// ----窜坷例捞亥飘
+// ----단오절이벤트
 7272#Dumpling doll#
 564#Rice Ball#
 682#Realgar Wine#
@@ -1327,7 +1327,7 @@
 2639#Purification Sachet#
 
 
-// ---- 酒付玛 包访 眠啊 酒捞袍 - 01 ----------------
+// ---- 아마쯔 관련 추가 아이템 - 01 ----------------
 
 663#Korean Rice Cake#
 7149#Yellow Plate#
@@ -1343,7 +1343,7 @@
 7159#Tengu's Nose#
 7160#Lord's Pass Ticket#
 551#Sushi#
-// ---- 娘烽 包访 眠啊 酒捞袍 - 01 -----------
+// ---- 쿤룬 관련 추가 아이템 - 01 -----------
 
 553#Bun#
 7161#Black Bear's Skin#
@@ -1367,11 +1367,11 @@
 7174#Packing Ribbon#
 7175#Packing Paper#
 
-//------惫版例 捞亥飘
+//------국경절 이벤트
 684#Durian#
 
 
-// ----捞亥飘侩-----------
+// ----이벤트용-----------
 
 7174#Packing Ribbon#
 7175#Packing Paper#
@@ -1386,7 +1386,7 @@
 7183#Sister Letter#
 7184#Piano Keyboard#
 
-// -----框惯扼酒捞袍-----------
+// -----움발라아이템-----------
 7185#Quiz Ticket#
 7186#Thin Stem#
 7187#Festival Mask#
@@ -1408,7 +1408,7 @@
 7203#Solid Twig#
 7204#Gunpowder#
 
-// -----聪敲庆烙-----------
+// -----니플헤임-----------
 
 7205#Piece of Black Cloth#
 7206#Black Kitty Doll#
@@ -1433,7 +1433,7 @@
 7225#Pumpkin Bucket#
 7226#Pill#
 
-// ----- 陛加拳企 ------
+// ----- 금속화폐 ------
 7228#Gold Bullion#
 7229#Silver Bullion#
 7230#White Gold Bullion#
@@ -1450,7 +1450,7 @@
 677#Platinum Coin#
 678#Deadly Poison Bottle#
 
-// ----- 副饭捞涅胶飘 -----
+// ----- 릴레이퀘스트 -----
 7234#Soul of Guild#
 7235#Soul of Courage#
 7236#Soul of Guard#
@@ -1477,7 +1477,7 @@
 562#Double-Crust Swiss Fondue#
 563#Double-Crust Swiss Fondue#
 
-// ----- 赣府酒捞袍-----
+// ----- 머리아이템-----
 
 5057#Ear Of Black Cat#
 5058#Drooping Kitty#
@@ -1519,7 +1519,7 @@
 5094#Orc Hero Helm#
 680#Magical Carnation#
 
-// ----侩瘤己----------
+// ----용지성----------
 
 7262#Fan#
 7263#Cat Eyed Stone#
@@ -1531,11 +1531,11 @@
 7269#Bib#
 7270#Milk Bottle#
 
-// ----磊客捞-----------
+// ----자와이-----------
 
 681#Memory of wedding#
 
-// ----茄惫捞亥飘包访 酒捞袍-----------
+// ----한국이벤트관련 아이템-----------
 
 7273#RWC Golden Necklace#
 7274#Ancient Translator#
@@ -1558,7 +1558,7 @@
 5098#Tiger Mask#
 
 
-// ----4 Level Weapon 包访 捞亥飘-----------
+// ----4 Level Weapon 관련 이벤트-----------
 
 7289#Olivine#
 7290#Phlogopite#
@@ -1579,11 +1579,11 @@
 12018#Fire Cracker#
 573#Chocolate Drink#
 
-//----措父 何劝例 捞亥飘 酒捞袍-----------
+//----대만 부활절 이벤트 아이템-----------
 574#Egg#
 12019#Holy Egg#
 
-// -------怕惫 酒夸鸥具 酒捞袍 ( 髁闲 ??髁? 讵)-----
+// -------태국 아요타야 아이템 ( 泰國 ??泰? 物品)-----
 7285#Thread Skein#
 7286#Chill#
 566#Tomyumkung#
@@ -1597,13 +1597,13 @@
 7301#Sword Accessory#
 7302#Kratong#
 
-// ------- japan mobile event item(祉茆猗薛匝槟 讵)-----
+// ------- japan mobile event item(日本手機活動用 物品)-----
 5099#Cat Hat#
 
-// -------牢聪 扼付窜 (煸淫 RAMADAN)  -----
+// -------인니 라마단 (印尼 RAMADAN)  -----
 685#RAMADAN#
 
-// ------- 舅单官鄂 磐焊飘发 焊惑酒捞袍-----
+// ------- 알데바란 터보트랙 보상아이템-----
 9026#Zherlthsh Egg#
 9027#Alice Egg#
 686#Earth Spike Level3#
@@ -1642,7 +1642,7 @@
 12017#Slow Down Potion#
 7303#Bag of Rice#
 
-// ------- 脚痹 墨靛 180咯辆
+// ------- 신규 카드 180여종
 4149#Gargoyle Card#
 4150#Goat Card#
 4151#Gajomart Card#
@@ -1828,18 +1828,18 @@
 4331#Heater Card#
 
 
-// ------葛官老 酒捞袍-------
+// ------모바일 아이템-------
 2511#Skeleton's Cape#
 2641#Fashionable Sack#
 5100#Sales Signboard#
 
-// ------- japan mobile event item(祉茆猗薛匝槟 讵) -----
+// ------- japan mobile event item(日本手機活動用 物品) -----
 5101#Takius Blindfold#
 
-// ------- 2005 RBO 传悼磊 酒捞袍 -----
+// ------- 2005 RBO 눈동자 아이템 -----
 5102#Round Eyes#
 
-// ------- 歹 荤牢 3何 涅胶飘 酒捞袍 -----
+// ------- 더 사인 3부 퀘스트 아이템 -----
 2642#Serin's Gold Ring#
 2643#Serin's Gold Ring#
 7304#Witch's Spell Book#
@@ -1853,7 +1853,7 @@
 7311#Free Flying Ship Ticket#
 7312#Jubilee#
 
-//---歹 荤牢 3何 涅胶飘 酒捞袍
+//---더 사인 3부 퀘스트 아이템
 7313#Seal Of Witch#
 7314#The Sign#
 2644#The Sign#
@@ -1870,19 +1870,19 @@
 7326#Fluorescent Liquid#
 7327#Headlamp#
 
-// ------- 葛官老 捞亥飘 -----
+// ------- 모바일 이벤트 -----
 2645#Moonlight Ring#
 5103#Sunflower Hairpin#
 1244#Holy Dagger#
 
-// ------- 怕惫 价掺鄂 捞亥飘(汲朝) --------
+// ------- 태국 송끄란 이벤트(설날) --------
 7328#Legendary Scroll#
 7329#Old Copper Key#
 
 // ------- 2005 Mother Event --------
 2646#Carnation Bouquet#
 
-// ------- 2005 葛官老 捞亥飘 -------
+// ------- 2005 모바일 이벤트 -------
 5104#Dark Blindfold#
 
 // ------- 1st Job Quest item -------
@@ -1923,8 +1923,8 @@
 //---------------------2005  deepavali   event-------------------------------
 2666#Lamp of Hope#
 
-// -------- 10.2 府洒鸥福哩 ---------------
-// -------- (诟闲RO 2裎掖押曳 匝)--------
+// -------- 10.2 리히타르젠 ---------------
+// -------- (美國RO 2週年紀念 活動)--------
 2647#Nile Rose#
 7332#Slate#
 7333#Piece Of Slate#
@@ -1933,7 +1933,7 @@
 7336#Piece Of Slate#
 7337#Eye Of Hellion#
 
-// --------(沔钴匐酗Patch) ----------
+// --------(新的武器Patch) ----------
 1262#Nail Of Loki#
 1263#Unholy Touch#
 1474#Gae Bolg#
@@ -1974,7 +1974,7 @@
 1969#Bladed Whip#
 1970#Queen's Whip#
 
-// ---------- (耱圣钴匐酗哿锡) ----------
+// ---------- (增加的武器和防具) ----------
 2113#Novice Shield#
 2114#Stone Buckler#
 2115#Valkyrja's Shield#
@@ -2012,7 +2012,7 @@
 1621#Hypnotist's Staff#
 1622#Hypnotist's Staff#
 
-// ---------(沔耱圣钴蚤锡)-----------
+// ---------(新增加的頭具)-----------
 5107#Well Baked Toast#
 5108#Detective Hat#
 5109#Red Bonnet#
@@ -2029,7 +2029,7 @@
 5118#Ear Of Puppy#
 5121#Zherlthsh Mask#
 
-// ------- (鸠3蟓 沔钴匐酗哿锡) --------
+// ------- (第3次 新的武器和防具) --------
 5122#Magni Cap#
 5123#Ulle Cap#
 5124#Fricca Circlet#
@@ -2042,7 +2042,7 @@
 1308#Golden Axe#
 1971#Electric Wire#
 
-// -------- (嘘弼源慵 嘴鞑渑?)----------
+// -------- (企業都市 里希塔樂?)----------
 576#Prickly Fruit#
 7340#Will Of Darkness#
 7341#Worn Out Pendant#
@@ -2059,7 +2059,7 @@
 7351#Friend's Diary#
 2658#Nile Rose#
 
-// -------- (童盂钴攵讵 樾?拶 )---------- 
+// -------- (古代的遺物 優沛?斯 )---------- 
 7352#Green Transparent Board#
 7353#Red Transparent Board#
 7354#Yellow Transparent Board#
@@ -2069,7 +2069,7 @@
 7358#Piece Of Crest#
 7359#Piece Of Crest#
 
-// ---  (镒 哒憝)---
+// ---  (表情 箱子)---
 12027#Giggling Box#
 12028#Box Of Thunder#
 12029#Gloomy Box#
@@ -2079,16 +2079,16 @@
 12033#Box Of Sunlight#
 12034#Painting Box#
 
-// ---------- (喙萄匝) ----------
+// ---------- (仙境活動) ----------
 7360#RO Festival Ticket#
 
-// ---------- (樾?拶) ----------
+// ---------- (優沛?斯) ----------
 2659#Vesper Core01#
 2660#Vesper Core02#
 2661#Vesper Core03#
 2662#Vesper Core04#
 
-// ---------- (煸淫约亍匝) ---------
+// ---------- (印尼獨立活動) ---------
 
 7399#selamat#
 7400#hari#
@@ -2097,7 +2097,7 @@
 7403#Republic of Indonesia#
 7404#ke-60#
 
-// ----------(猗薛 它尥  铤恸) ----------
+// ----------(手機 劍士篇  戰術) ----------
 
 5129#Bird Nest#
 5130#Lion Mask#
@@ -2106,11 +2106,11 @@
 2663#Gauntlet Of Accuracy#
 2664#Scarf Belt#
 
-// ------------  (鸠3贴 讵)-----------
+// ------------  (第3季 物品)-----------
 12040#Stone Of Intelligence#
 5132#Angeling Hat#
 
-// ----------- (30瘊柱租) ------------
+// ----------- (30種料理) ------------
 12041#Fried Rocker#
 12042#Flipper Salad#
 12043#Explosion Steak#
@@ -2172,13 +2172,13 @@
 12099#Bloody Soda#
 12100#Nine Tail Meal#
 
-// ---------- PPL赋沛(亍运) ----------
+// ---------- PPL립톤(立頓) ----------
 7405#Crushed Can#
 
-// ------------ 2005(煸淫讵) ---------------
+// ------------ 2005(印尼物品) ---------------
 7415#Stone Of Summons#
 
-// ----------- (呗讵) ---------------
+// ----------- (商品物品) ---------------
 12103#Blood Twig#
 12104#Random Arrow Container#
 12105#Taming Gift Box#
@@ -2194,7 +2194,7 @@
 //-----------2005 christmas event---------------------------------------------
 12132#Santa's Bag#
 
-// --------- 肺肚捞亥飘 2006 ----------
+// --------- 로또이벤트 2006 ----------
 7361#Lotto Ball01#
 7362#Lotto Ball02#
 7363#Lotto Ball03#
@@ -2255,7 +2255,7 @@
 12112#Tropical Sograt#
 12113#Vermilion The Beach#
 
-//-------------------耱圣钴悬姻槟讵
+//-------------------增加的技能用物品
 1771#Venom Knife#
 7419#Embryo HandBook#
 12114#Elemental Fire#
@@ -2267,10 +2267,10 @@
 12120#Resist Earth#
 12121#Resist Wind#
 
-//-------------------PVP讵
+//-------------------PVP物品
 7420#Skull#
 
-//-------------------鸠卟贴祢兮讵
+//-------------------第三季任務物品
 7421#Red Key#
 7422#Yellow Key#
 7423#Blue Key#
@@ -2286,7 +2286,7 @@
 7433#Scroll#
 7434#Elemental Potion Book#
 
-//-------------------鸠卟贴讵
+//-------------------第三季物品
 7435#Golden Bracelet#
 7436#Piece Of Memory Green#
 7437#Piece Of Memory Purple#
@@ -2322,12 +2322,12 @@
 12128#Imperial Cooking Kits#
 12129#Fantastic Cooking Kits#
 
-//-------------------猗薛匝(茏蘩) 
+//-------------------手機活動(服事篇) 
 2356#Vestment Of Grace#
 2665#Ring Of Exorcism#
 5133#Sheep Hat#
 
-//-------------------柱租鸩砺
+//-------------------料理製作
 7472#Cookbook01#
 7473#Cookbook02#
 7474#Cookbook03#
@@ -2339,17 +2339,17 @@
 7480#Cookbook09#
 7481#Cookbook10#
 7482#Pot#
-//-------------------桠匝钴讵
+//-------------------海外活動的物品
 7483#Key Of Seal#
 
-//-------------------猗薛匝(厢铹猗)
+//-------------------手機活動(弓箭手篇)
 5135#Cyclops Visor#
 
-//-------------------耱圣钴蚺弼县
+//-------------------增加的職業群
 2667#Glove Of Archer#
 1725#Bow Of Minstrel#
 
-//-------------------闲证团钴匝
+//-------------------韓國聯考的活動
 12131#Lucky Potion#
 
 // ---------- ???????? ---------
@@ -2394,7 +2394,7 @@
 5202#Fantastic Pumpkin Head#
 
 //-----------------  10.4 updata new item  -----------------
-// --------------- ? 欹咋 委钚 祢兮 ----------------	
+// --------------- ? 海伊洛 官邸 任務 ----------------	
 7487#Tavern Wine#
 7488#Delivery Box#
 7489#Villa Spare Key#
@@ -2420,7 +2420,7 @@
 7509#Fancy Key Card#
 7516#Green Key Card#
 
-// ------------- 鸠4贴 讵 --------------	
+// ------------- 第4季 物品 --------------	
 2357#Valkyrie Armor#
 2421#Valkyrie Shoes#
 2524#Valkyrie Manteau#
@@ -2429,18 +2429,18 @@
 7512#Burnt Parts#
 7513#Pocket Watch#
 
-// -------------- 桠匝讵 -------------	
+// -------------- 海外活動物品 -------------	
 584#Fish Ball Soup#
 12133#Ice Cream#
 
-// -------------- 鬲讵哌? -----------------	
+// -------------- 魔物賽? -----------------	
 7514#Monster Ticket#
 7515#Marvelous Medal#
 
-// --------------- 诟闲岫?鼾钴匝---------------------	
+// --------------- 美國所?辦的活動---------------------	
 12134#Red Envelope#
 	
-// --------------- ?讵 ----------------	
+// --------------- ?品包物品 ----------------	
 5137#Alice Doll#
 5138#Magic Eyes#
 5139#Hibiscus#
@@ -2449,39 +2449,39 @@
 5142#Crescent Helm#
 5143#Kabuki Mask#
 
-// --------------- 蓿兹薰 -------------------	
+// --------------- 菲律賓 -------------------	
 5144#Gambler Hat#
 
-// --------------- 诟闲 ---------------------	
+// --------------- 美國 ---------------------	
 12135#Green Ale#
 7517#Gold Coin#
 	
-// ---------------- 鏖啶 ----------------	
+// ---------------- 巴西 ----------------	
 7525#Summer Feast Ticket#
 	
-// --------------- 鸠4贴匝 ---------------	
+// --------------- 第4季活動 ---------------	
 7526#Manuscript Paper#
 	
-// --------------- 媳窠岫?鼾钴匝 --------------	
+// --------------- 歐洲所?辦的活動 --------------	
 585#Wurst#
 	
-// ---------------- 鏖啶 ----------------	
+// ---------------- 巴西 ----------------	
 5145#Carnival Joker Jester#
 	
-// ------------------ 煸峪 --------------------	
+// ------------------ 印度 --------------------	
 586#Mother's Cake#
 	
-// ------------------ 祉茆岫?鼾钴匝 ---------------------	
+// ------------------ 日本所?辦的活動 ---------------------	
 2669#Golden Necklace#
 	
-// ------------------ 铜荧讵 ---------------------	
+// ------------------ 階段物品 ---------------------	
 12137#1st Stage Prize#
 12138#2nd Stage Prize#
 12139#3rd Stage Prize#
 12140#4th Stage Prize#
 12141#5th Stage Prize#
 	
-// ---------- 耱圣钴蚺弼县 - 汴箧猗 -----------	
+// ---------- 增加的職業群 - 神槍手 -----------	
 13100#Six Shooter#
 13101#Six Shooter#
 13102#Crimson Bolt#
@@ -2511,7 +2511,7 @@
 13206#Blind Sphere#
 13207#Freezing Sphere#
 
-// ------------------ 耱圣 燠砗 ------------------------	
+// ------------------ 增加 忍者 ------------------------	
 13250#Shuriken#
 13251#Nimbus Shuriken#
 13252#Flash Shuriken#
@@ -2545,11 +2545,11 @@
 2119#Improved Arm Guard#
 2120#Improved Arm Guard#
 
-// ---------------煸淫-----------------	
+// ---------------印尼-----------------	
 7527#Life Book#
 12142#Magic Book#
 	
-// ---------------- 髁闲 诟闲 蓿兹薰岫?鼾钴匝 ----------------	
+// ---------------- 泰國 美國 菲律賓所?辦的活動 ----------------	
 5146#Elephant Hat#
 5147#Baseball Cap#
 7528#Id Lottery Ticket#
@@ -2563,7 +2563,7 @@
 7536#Photo Album 03#
 7537#Photo Album 04#
 	
-// ---------------- 黝鬃蜒 -----------------	
+// ---------------- 波利金幣 -----------------	
 12143#Red Can#
 7538#Sifted Sand#
 7539#Poring Coin#
@@ -2576,10 +2576,10 @@
 12150#Bullet Case Blood#
 12151#Bullet Case Silver#
 
-// -----------------媳窠岫?鼾钴匝-------------------
+// -----------------歐洲所?辦的活動-------------------
 5148#Phrygian Cap#
 
-// -----------------鏖啶岫?鼾钴匝-------------------
+// -----------------巴西所?辦的活動-------------------
 5150#Joker Jester#
 7547#Soccer Ball#
 7548#Soccer Shoes#
@@ -2588,13 +2588,13 @@
 7551#Ticket02#
 7552#Ticket03#
 
-// ------------------媳窠皤涔彰 岫?鼾钴匝--------------------
+// ------------------歐洲提阿拉 所?辦的活動--------------------
 5149#Silver Tiara#
 
-// ------------------RO OST 鼽劂押曳 讵-------------------
+// ------------------RO OST 販賣紀念 物品-------------------
 5151#Headset OST#
 
-// ---------------------- 煸峪莴鲅锝匝 -----------------------
+// ---------------------- 印度父親節活動 -----------------------
 5154#Sunglasses#
 5155#Granpa Beard#
 5156#Flu Mask#
@@ -2771,11 +2771,11 @@
 12981#Teleport Scroll5#
 12982#Teleport Scroll6#
 
-// ------------- 富饭捞矫酒 PVP 捞悼胶农费 ------------
+// ------------- 말레이시아 PVP 이동스크롤 ------------
 13569#PVP Teleport Scroll Box#
 14528#PVP Teleport Scroll#
 
-// -----------------Ep11.1--------- 家南牢忙飘 脚痹公扁眠啊 ----------------------------
+// -----------------Ep11.1--------- 소켓인챈트 신규무기추가 ----------------------------
 
 1816#Berserk#
 1532#Stunner#
@@ -2811,7 +2811,7 @@
 5168#Bongun Hat#
 
 
-// ------------------- 2006 惑馆扁 脚痹墨靛 眠啊.11.2 备泅---------------------
+// ------------------- 2006 상반기 신규카드 추가.11.2 구현---------------------
 
 4332#Waste Stove Card#
 4333#Venomous Card#
@@ -2890,7 +2890,7 @@
 4406#Skeggiold Card#
 4407#Randgris Card#
 
-// ------------- 酒风唱 惑馆扁 -----------
+// ------------- 아루나 상반기 -----------
 
 7561#Glacial Heart#
 7562#Ice Scale#
@@ -2909,7 +2909,7 @@
 587#Red Prickly Fruit#
 2422#High Fashion Sandals#
 
-// -----------------------2006 惑馆扁 捧备酒捞袍--------------------------
+// -----------------------2006 상반기 투구아이템--------------------------
 
 5169#Bride Mask#
 5170#Feather Beret#
@@ -2921,7 +2921,7 @@
 5176#Hahoe Mask#
 5177#Mythical Lion Mask#
 
-// -------------- 2006 眠啊酒捞袍 -------------
+// -------------- 2006 추가아이템 -------------
 
 5184#Captain Hat#
 12183#Holy Arrow Quiver#
@@ -3003,7 +3003,7 @@
 13707#Super Pet Egg 8#
 
 //--------7~9 event ---------------------------------------------------
-// -------------- 富饭捞矫酒/教啊弃 捞亥飘 酒捞袍 ---------------
+// -------------- 말레이시아/싱가폴 이벤트 아이템 ---------------
 7884#Jade Plate#
 7885#Sacred Arrow#
 5805#Victorious Coronet#
@@ -3085,7 +3085,7 @@
 5213#Sheila Hairnet#
 5214#Moonowl Cap#
 
-// --------------闲闲耶togetherwithRO匝 讵---------------
+// --------------韓國國內togetherwithRO活動 物品---------------
 7886#Bean Paste#
 7887#Dried Fruit Box#
 7888#Bag of Nuts#
@@ -3101,13 +3101,13 @@
 5354#SONGKOK#
 5355#SELENDANG#
 11704#KETUPAT#
-// ----- 农府胶付胶 捞亥飘 魂鸥 荐堪 --------
+// ----- 크리스마스 이벤트 산타 수염 --------
 5811#Santa_Beard#
 7908#Louise's_Beauty_Coupon#
 7909#Stolen_Cookie#
 7910#Stolen_Candy#
 7911#Yulia's_Hat#
-// ------------------- 2006 惑馆扁 脚痹墨靛 眠啊.-----------------------
+// ------------------- 2006 상반기 신규카드 추가.-----------------------
 
 4332#Waste_Stove_Card#
 4333#Venomous_Card#
@@ -3186,7 +3186,7 @@
 4406#Skeggiold_Card#
 4407#Randgris_Card#
 
-// ---------------- 氓佬扁 --------------------
+// ---------------- 책읽기 --------------------
 11000#History_book_of_Prontera#
 11001#Adventure_Story_Vol.1#
 11002#Chef_King_Orleans_Vol.1#
@@ -3198,11 +3198,11 @@
 11008#Biographical_Dictionary_Copy_Edition#
 11009#Adventure_Story_Vol.2#
 
-// ------------------- 配福拳魂 涅胶飘 酒捞袍 ---------------------
+// ------------------- 토르화산 퀘스트 아이템 ---------------------
 7704#Broken_Thermometer#
 7705#Note_of_Geologist#
 
-// ------------------- 配福拳魂 脚痹 厘厚 酒捞袍 ---------------------
+// ------------------- 토르화산 신규 장비 아이템 ---------------------
 1370#Doom_Slayer#
 1371#Doom_Slayer#
 13163#Long_Barrel#
@@ -3217,7 +3217,7 @@
 2679#Ring_Of_Resonance#
 2680#Lesser_Elemental_Ring#
 
-// -------- 2007 老夯 楷富 某浆酒捞袍 ----------
+// -------- 2007 일본 연말 캐쉬아이템 ----------
 5380#Fish_Head_Hat#
 5381#Santa_Poring_Hat#
 5382#Bell_Ribbon#
@@ -3245,7 +3245,7 @@
 14539#Shadow_Armor_Scroll#
 
 
-// ---------------- 某浆袍 菩虐瘤 眠啊 -----------------
+// ---------------- 캐쉬템 패키지 추가 -----------------
 13634#1 Hour_Package_Vol_1#
 13635#1 Hour_Package_Vol_2#
 13636#1 Hour_Package_Vol_3#
@@ -3262,11 +3262,11 @@
 13553#Dungeon_Teleport_Scroll_5_Box#
 14527#Dungeon_Teleport_Scroll#
 
-// ---------------- 秋胶厘 雀盔鼻 -----------------
+// ---------------- 헬스장 회원권 -----------------
 13710#Gym_Membership_Card_Box#
 7776#Gym_Membership_Card#
 
-// ---------------- 某浆酒捞袍 20070702 -----------------
+// ---------------- 캐쉬아이템 20070702 -----------------
 13711#Small_Life_Potion_10_Box#
 13712#Small_Life_Potion_30_Box#
 13713#Small_Life_Potion_50_Box#
@@ -3293,7 +3293,7 @@
 
 
 
-// ---------------- 某浆酒捞袍 20070801 -----------------
+// ---------------- 캐쉬아이템 20070801 -----------------
 13738#Glass_of_Illusion_5_Box#
 13739#Glass_of_Illusion_10_Box#
 13740#Shadow_Armor_Scroll_5_Box#
@@ -3328,7 +3328,7 @@
 595#Mushroom_Pancake#
 
 
-// ---------------------- 侩捍家券辑 -------------------------------
+// ---------------------- 용병소환서 -------------------------------
 
 
 12153#Bowman_Scroll_1#
@@ -3368,7 +3368,7 @@
 12242#Mercenary_Awakening_Potion#
 12243#Mercenary_Berserk_Potion#
 
-// ---------------- 副饭捞 涅胶飘 酒捞袍 ------------------
+// ---------------- 릴레이 퀘스트 아이템 ------------------
 7730#Mission_Ticket_1#
 7731#Mission_Ticket_2#
 7732#Mission_Ticket_3#
@@ -3382,17 +3382,17 @@
 7740#Mission_Ticket_11#
 7741#Mission_Ticket_12#
 
-// -------------- 11.3 棱袍 -------------------
+// -------------- 11.3 잡템 -------------------
 7751#Old_White_Cloth#
 7752#Clattering_Skull#
 7753#Broken_Farming_Utensil#
 7754#Broken_Crown#
 
-// ------------ 涅胶飘 酒捞袍 -----------------
+// ------------ 퀘스트 아이템 -----------------
 7755#Research_Note#
 7756#Sealed_Book#
 
-// ------------------- 11.3 脚痹 厘厚 酒捞袍 --------------------------
+// ------------------- 11.3 신규 장비 아이템 --------------------------
 2122#Platinum_Shield#
 2123#Orleans's_Server#
 2124#Thorny_Buckler#
@@ -3459,14 +3459,14 @@
 1974#Carrot_Whip#
 13107#Wasteland's_Outlaw#
 13170#Lever_Action_Rifle#
-// ------------ 11.3 涅胶飘 酒捞袍 --------------
+// ------------ 11.3 퀘스트 아이템 --------------
 7722#Debt_Note#
 7723#Diamond_of_Ruin#
 7724#Forbidden_Secret_Art#
 7725#Unlucky_Emerald#
 7726#Token_of_King#
 
-// ----------------- 20070808 脚痹_Card 34辆 -----------------
+// ----------------- 20070808 신규_Card 34종 -----------------
 4408#Gloom_Under_Night_Card#
 4409#Agav_Card#
 4410#Echio_Card#
@@ -3501,16 +3501,15 @@
 4439#Flame_Skull_Card#
 4440#Necromancer_Card#
 4441#Fallen_Bishop_Card#
-// ------------- 2008 措父 窜坷例 ---------------
+// ------------- 2008 대만 단오절 ---------------
 11505#Iris#
-5411#White_Snake_Hat#
 
-//--------------2008 富教 惫版老--------------
+//--------------2008 말싱 국경일--------------
 12709#Guyak Candy#
 12710#Guyak Pudding#
 7922#NationalDay_Prize_Ticket#
 
-//--------------2008 且肺扩 捞亥飘-----------
+//--------------2008 할로윈 이벤트-----------
 5292#Dragon_Skull#
 5294#Whisper_Mask#
 5181#Helm_of_Darkness#
@@ -3518,7 +3517,7 @@
 5460#Evolved_Dragon_Skull#
 5461#Evolved_Whisper_Mask#
 
-// 2008,11,26 某浆酒捞袍 诀单捞飘
+// 2008,11,26 캐쉬아이템 업데이트
 13804#Fire_Cracker_Love_Box#
 13807#Fire_Cracker_Bday_Box#
 14546#Fire_Cracker_Love#
@@ -3537,7 +3536,7 @@
 13821#Green_Apple_Box#
 5286#Pecopeco_Hairband#
 
-// 菩虐瘤俊 器窃等 酒捞袍 眠啊
+// 패키지에 포함된 아이템 추가
 2684#Ring_Of_Wind#
 2685#Ring_Of_Earth#
 5179#Gold_Tiara#
@@ -3562,7 +3561,7 @@
 14569#Knife_Goblin_Ring#
 7821#Green_Apple#
 
-// 2008.12.03 某浆 酒捞袍 诀单捞飘
+// 2008.12.03 캐쉬 아이템 업데이트
 5291#Kettle_Hat#
 5284#Water_Lily_Crown#
 5324#Little_Angel_Doll#
@@ -3606,7 +3605,7 @@
 14391#Spiritual_Ring_Box#
 14392#Variant_Shoes_Box#
 
-//2008 农府胶付胶 捞亥飘
+//2008 크리스마스 이벤트
 2784#O_Holy_Night#
 12354#Buche_De_Noel#
 12355#Xmas_Gift#
@@ -3614,7 +3613,7 @@
 6092#Piece_Of_Singing_Crystal#
 12260#Cool_Summer_Outfit#
 
-//2008.12.17 某浆 酒捞袍 诀单捞飘
+//2008.12.17 캐쉬 아이템 업데이트
 5191#Ribbon_Black#
 5290#Drooping_Bunny#
 5341#Claris_Doll_Hat#
@@ -3622,12 +3621,12 @@
 13911#Christmas_Scroll#
 12244#Old_Gift_Box#
 
-// 2008.12.31 某浆 酒捞袍
+// 2008.12.31 캐쉬 아이템
 5287#Vacation_Hat#
 13847#Mysterious_Travel_Sack3#
 
 // ------------- Ep. 12 ---------------
-// ------------- 傈厘 焊惑 酒捞袍 ---------------
+// ------------- 전장 보상 아이템 ---------------
 13036#Assassin_Damascus#
 13037#Assassin_Damascus#
 13410#Gladiator_Blade#
@@ -3687,17 +3686,17 @@
 13859#Directive_Envelope_A#
 13860#Directive_Envelope_B#
 
-// ------------ 皋葛府倔 带傈 焊惑袍 ----------------
+// ------------ 메모리얼 던전 보상템 ----------------
 13412#Twin_Edge_of_Naght_Sieger#
 13413#Twin_Edge_of_Naght_Sieger#
 1636#Thorn_Staff_of_Darkness#
 1185#Violet_Fear#
 2542#Flame_Manteau_of_Naght_Sieger#
 
-//葛肺农 牧萍迟呕 啊靛 牢刘辑
+//모로크 컨티넨탈 가드 인증서
 7826#Continental_Guard_Paper#
 
-// ------------ 付空 葛肺农 ----------------
+// ------------ 마왕 모로크 ----------------
 2536#Skin_of_Ventus#
 2537#Diabolus_Manteau#
 2728#Cursed_Hand#
@@ -3710,7 +3709,7 @@
 2375#Diabolus_Armor#
 2433#Diabolus_Boots#
 
-// ---------- 且娄 抛胶飘 -----------
+// ---------- 할짝 테스트 -----------
 2129#Exorcism_Bible#
 2130#Cross_Shield#
 2131#Magic_Bible_Vol1#
@@ -3739,26 +3738,26 @@
 1572#Principles_of_Magic#
 1573#Ancient_Magic#
 
-// ------------- 傈厘 戎厘 ---------------
+// ------------- 전장 휘장 ---------------
 7828#Bravery_Badge#
 7829#Valor_Badge#
 
-// -------- 豪牢狼 脚傈 酒捞袍 ------------
+// -------- 봉인의 신전 아이템 ------------
 6001#Essence_of_Fire#
 6002#Token_of_Apostle#
 6003#Pendant_of_Spirit#
 
-// ----------------- 付仿捞 标电 官器皋飘 牢屈 -----------------
+// ----------------- 마력이 깃든 바포메트 인형 -----------------
 6004#Cursed_Baphomet_Doll#
 
-// ------------------- 12.1 涅胶飘 酒捞袍 ----------------------
+// ------------------- 12.1 퀘스트 아이템 ----------------------
 7798#Fragment_of_Darkness#
 7799#Crystal_of_Darkness#
 
-// --------------- 鞘府巧 磊眉力累 捧备 7辆 ----
+// --------------- 필리핀 자체제작 투구 7종 ----
 5374#Gigantic_Magestic_Goat#
 
-// ------------------- 捞亥飘 酒捞袍 ------------------
+// ------------------- 이벤트 아이템 ------------------
 6000#Ashes_of_Darkness#
 //-- Ep12 Add-------------------------------------------
 7820#Piece_of_Morocc_Skin#
@@ -3766,7 +3765,7 @@
 7795#Mami's_Photo_Album#
 7796#Author's_Autograph#
 7797#Author's_Memo#
-// ------------------ 窍厩 抛胶飘 (家南)----------------
+// ------------------ 하악 테스트 (소켓)----------------
 1568#Book_of_Billows#
 1569#Book_of_Mother_Earth#
 1570#Book_of_Blazing_Sun#
@@ -3806,7 +3805,7 @@
 2128#Herald_of_GOD#
 2523#Undershirt#
 5353#Hat_of_the_Sun_God#
-// ----------------- 葛胶内厚酒(矾矫酒 肺拿扼捞隆)------------------
+// ----------------- 모스코비아(러시아 로컬라이징)------------------
 7760#Yaga's_Magic_Book#
 7761#Magic_Gourd_Bottle#
 7762#Yaga's_Pestle#
@@ -3815,7 +3814,7 @@
 7765#Babayaga's_Secret_Medicine#
 2707#GUSLI#
 
-//----葛胶内厚酒 2瞒---------- 矾矫酒 阂荤脚 内溅捞 酒捞袍 ---------------
+//----모스코비아 2차---------- 러시아 불사신 코쉐이 아이템 ---------------
 7876#Golden_Key#
 7877#Red_Ring#
 7878#Lusalka's_Hair#
@@ -3827,7 +3826,7 @@
 2429#Iron_Boots#
 2430#Iron_Boots#
 
-//2009.01.21 某浆酒捞袍
+//2009.01.21 캐쉬아이템
 13822#Whole_Barbecue_Box#
 7822#Whole_Barbecue#
 13824#Spirit_Liquor_Box#
@@ -3837,20 +3836,20 @@
 13818#Red_Deleter_Box#
 14572#Holy_Marble#
 
-//2009.01.21 备沥捞亥飘
+//2009.01.21 구정이벤트
 11708#Fore_Flank_Sirloin#
 14607#Luxurious Western Food#
 14608#Manchu-Han Imperial Feast#
 14609#Spoiled_Cuisine#
 
-//2009.02.05 某浆酒捞袍
+//2009.02.05 캐쉬아이템
 13924#L_Orc_Hero_Helm_Box#
 5375#L_Orc_Hero_Helm#
 13920#Satanic_Chain_P_Box#
 5376#Satanic_Chain_P#
 5342#Sorin_Doll_Hat#
 
-//2009.02.11 惯坊鸥牢
+//2009.02.11 발렌타인
 12742#Valentine_Gift_Box#
 12743#Valentine_Gift_Box#
 12744#Chocolate_Box#
@@ -3860,39 +3859,39 @@
 7947#Silver_Ring_Of_Valentine#
 5817#Valentine's_Emblem#
 
-//付力胶平绊快飘2
+//마제스틱고우트2
 5518#Large_Baphomet_Horns#
 
-//2009.02.25 某浆酒捞袍 诀单捞飘
+//2009.02.25 캐쉬아이템 업데이트
 13961#Mojji Box#
 5105#Hat Of Cake#
 13820#Wanderer Box#
 14574#Skull Of Vagabond#
 
-//2009.04.01 父快例捞亥飘
+//2009.04.01 만우절이벤트
 12396#Gift_Box?#
 12397#Gift_Box?#
 
-//2009.04.08 焊胶聪酒捞亥飘
+//2009.04.08 보스니아이벤트
 7227#Bossnia Entrance Ticket#
 
-//2009.04.22 某浆酒捞袍
+//2009.04.22 캐쉬아이템
 14600#Mental_Potion#
 14601#Blessing_Of_Tyr#
 
-//2009.05.06 某浆酒捞袍
+//2009.05.06 캐쉬아이템
 5371#Judge's_Hat#
 13906#Kitty_Set_Box#
 13907#Softcore_Set_Box#
 
-//2009.05.20 某浆 酒捞袍
-// ------------ 2008 措父 9岿 胶农费 -----------
+//2009.05.20 캐쉬 아이템
+// ------------ 2008 대만 9월 스크롤 -----------
 14317#White_Lady_Scroll#
-// -------- 怕惫 肺捞农扼烹 抄檬赣府鹅 ---------
+// -------- 태국 로이크라통 난초머리띠 ---------
 5370#Orchid_Hairband#
 13910#Brewing_Set_Box#
 
-//胶农费郴 酒捞袍
+//스크롤내 아이템
 12190#Moon_Cake#
 12191#Special_Moon_Cake#
 5343#Telling_Doll_Hat#
@@ -3908,7 +3907,7 @@
 11505#Iris#
 5411#White_Snake_Hat#
 
-//2009.06.03 某浆酒捞袍
+//2009.06.03 캐쉬아이템
 13905#Hardcore_Set_Box#
 13897#Disguise_Summon_Box5#
 12277#Disguise_Summon_Book#
@@ -3919,7 +3918,7 @@
 6047#Original_Clothing_Dye_Coupon#
 14290#Original_Clothing_Dye_Coupon_Box#
 
-//2009.06.17 某浆酒捞袍
+//2009.06.17 캐쉬아이템
 5367#Hyegun's_Hat#
 13908#Deviruchi_Set_Box#
 14244#Clamorous_Ring_Box#
@@ -3928,7 +3927,7 @@
 5229#Gray_Deviruchi_Cap#
 2755#Clamorous_Ring#
 
-//2009.07.01 某浆酒捞袍
+//2009.07.01 캐쉬아이템
 5431#Chicken_Hat#
 14296#Angel_Scroll#
 13898#Alice_Summon_Box5#
@@ -3936,19 +3935,19 @@
 5207#Angel's_Blessing#
 12278#Alice_Summon_Book#
 
-//2009.07.01 RWC 焊惑酒捞袍
+//2009.07.01 RWC 보상아이템
 5451#RMC Dragon Helm Gold #
 5452#RMC Dragon Helm Silver #
 5453#RMC Dragon Helm Copper #
 
-//2009.07.08 某浆酒捞袍
+//2009.07.08 캐쉬아이템
 5385#Yoyo_Hat#
 14297#Devil_Scroll#
 13896#Mimic_Summon_Box5#
 12276#Mimic_Summon_Book#
 13819#Diabolic_Taming_Box#
 
-//2009.07.29 某浆酒捞袍
+//2009.07.29 캐쉬아이템
 13849#Yellow_Butterfly_Wing_Box5#
 13857#Sparkling_Candy_Box5#
 13909#Mvphunt_Set_Box#
@@ -3956,18 +3955,18 @@
 14586#Sparkling_Candy#
 
 
-//2009.08.12 某浆酒捞袍
+//2009.08.12 캐쉬아이템
 5429#Hobgoblin's_Hat#
 13855#Blue_Butterfly_Wing_Box5#
 14246#Insecticide_Ring_Box#
 14585#Blue_Butterfly_Wing#
 2757#Insecticide_Ring#
 
-//2009.08.25 kRO 咯抚捞亥飘
+//2009.08.25 kRO 여름이벤트
 5586#Mosquito_Coil#
 5587#Mosquito_Coil__For_1_Use#
 
-// 2009-01-08 措父 蜡历傍葛 酒捞袍
+// 2009-01-08 대만 유저공모 아이템
 5496#Dice_Hat#
 5497#King_Tiger_Doll_Hat#
 14440#Dice_Hat_Box#
@@ -3977,29 +3976,29 @@
 13870#New_Style_Coupon_Box#
 7622#New_Style_Coupon#
 
-// ------------ 2008 措父 11岿 胶农费 -----------
+// ------------ 2008 대만 11월 스크롤 -----------
 14363#Warm_Heart_Scroll#
 
-//-----------------老夯_3岿葛官老----------------
+//-----------------일본_3월모바일----------------
 5508#Shark_Hat#
 14490#Shark_Hat_Box#
 
-// -------------- 2008 老夯 捧备酒捞袍 叼磊牢 牧抛胶飘 -----------------
+// -------------- 2008 일본 투구아이템 디자인 컨테스트 -----------------
 5470#Darkness_Eyes#
 
-// ------------ 2009/9/30 富饭捞矫酒 某浆酒捞袍 -----------
+// ------------ 2009/9/30 말레이시아 캐쉬아이템 -----------
 5467#Dragoon_Helm#
 5498#Wondering_King_Wolf_Helm#
 14345#Animal_Scroll#
 
-// ----------------2009/9/29 富饭捞矫酒 眠籍捞亥飘 眠啊酒捞袍----------
+// ----------------2009/9/29 말레이시아 추석이벤트 추가아이템----------
 5457#Spring_Rabbit_Hat#
 12340#Mysterious_Rice_Powder#
 
-// -------------------------- 涅胶飘合 酒捞袍 ------------------------------
+// -------------------------- 퀘스트북 아이템 ------------------------------
 5259#Elephant_Hat#
 
-// -----------------2009/10/14 且肺盔 捞亥飘-----------------------
+// -----------------2009/10/14 할로원 이벤트-----------------------
 
 // ------------ 2009.Oct. Malaysia cashitem -----------
 5471#Hairband_Of_Reginleif#
@@ -4025,7 +4024,7 @@
 14592#Job_Manual#
 13607#Bubble_Gum_Box5#
 
-//------------- 2009/11岿  某浆酒捞袍------------
+//------------- 2009/11월  캐쉬아이템------------
 5539#Jaguar_Hat#
 14245#Chemical_Ring_Box#
 16235#Octopus_Hat_Box#
@@ -4042,7 +4041,7 @@
 5568#Rabbit_Bonnet#
 13973#Poison_Bottle_30_Box#
 
-//----------------12.2 力访捞亥飘-----------
+//----------------12.2 제련이벤트-----------
 5690#Red_Wing_Hat#
 16461#Red_Wing_Hat_Box#
 
@@ -4091,22 +4090,22 @@
 5555#Leafcat_Hat#
 5557#Wild_Rose_Hat#
 2759#Decussate_Ring#
-//---------------------农府胶付胶12.15
+//---------------------크리스마스12.15
 7974#A_Piece_Of_Illusion#
 12746#Curious_Snowball#
 12317#Powder Snow#
-//-----------------某浆酒捞袍------12.15----
+//-----------------캐쉬아이템------12.15----
 5556#Fur_Seal_Hat#
 16237#Fur_Seal_Hat_Box#
 5558#Saci_Hat#
 16239#Saci_Hat_Box#
 12246#Magic_Card_Album#
 5584#Majestic_Evil_Horn#
-// ---胶湃府悸-------12.18
+// ---스탯리셋-------12.18
 6320#Premium_Reset_Stone#
 16555#Premium_Reset_Stone_Box#
 
-//-------胶农费-------12.18
+//-------스크롤-------12.18
 16562#Majestic_Devil_Scroll#
 
 //--------------2010.1.6------------
@@ -4123,7 +4122,7 @@
 6220#Mysterious_Dyestuff#
 5468#Parade_Cap#
 
-//-----------备沥捞亥飘----------------
+//-----------구정이벤트----------------
 5841#Norn's_Winged_Hat#
 7624#Spring_Stanza_23#
 7978#Spring_Stanza_1#
@@ -4155,11 +4154,11 @@
 12328#Charm_Of_Happiness#
 12247#Halohalo#
 
-//-------------惯坊鸥牢 1.29-----------
+//-------------발렌타인 1.29-----------
 11502#Light_Blue_Potion#
 7975#Cupid_Chocolate#
 
-//------------------某浆酒捞袍 2.18--------
+//------------------캐쉬아이템 2.18--------
 14439#Power_Of_Thor_Box#
 16414#Turtle_Hat_Box#
 16543#Snowman_Hat_Box#
@@ -4173,18 +4172,18 @@
 5611#Turtle_Hat#
 5299#Ati_Atihan_Hat#
 12261#Secret_Medicine#
-//------------------某浆酒捞袍 3.3--------
+//------------------캐쉬아이템 3.3--------
 5332#Loki_Mask#
 5465#Sky_Hat#
 
-//----------------2010. 3.31.父快例-----------
+//----------------2010. 3.31.만우절-----------
 5848#Robin_Eyepatch#
 5849#Doctor_Hairband#
 
-//-------------2010.3.31 何劝例-------------
+//-------------2010.3.31 부활절-------------
 5852#Easter_Egg_Shell#
 
-//------------2010.4岿盒 某浆酒捞袍---------
+//------------2010.4월분 캐쉬아이템---------
 5609#Chung_Hairband#
 5610#Ice_Wing_Ear#
 16410#Chung_Hairband_Box#
@@ -4202,7 +4201,7 @@
 13420#Honglyun's_Sword#
 
 
-//------------2010.5岿盒 某浆酒捞袍---------
+//------------2010.5월분 캐쉬아이템---------
 16133#Sunshine_Staff_Box#
 14461#Asara_Fairy_Hat_Box#
 16132#Lunatic_Hat_Box#
@@ -4220,23 +4219,23 @@
 5469#Noble_Hat#
 5595#Eye_Of_Yuno#
 
-//------- 5岿 某浆 穿遏 酒捞袍 眠啊 -----
+//------- 5월 캐쉬 누락 아이템 추가 -----
 5056#Fruit_of_Love#
 5188#Minstrel's_Hat#
 5528#Frog_King_Hat#
 5387#Neko_Mimi_Kafra#
 16134#King_Frog_Hat_Box#
 
-//--------- 2010. 05. 12 畴悼例 捞亥飘 -------------
+//--------- 2010. 05. 12 노동절 이벤트 -------------
 2237#Beard#
 12766#JOB_Manual#
 
 
-//----------2010.05.31 窜坷例 捞亥飘 霖厚---------
+//----------2010.05.31 단오절 이벤트 준비---------
 7635#Scent_Bag#
 
 
-//---------- 2010. 06. 09 面傈某浆 捞亥飘 棺 6岿 脚痹某浆 -----------
+//---------- 2010. 06. 09 충전캐쉬 이벤트 및 6월 신규캐쉬 -----------
 16409#Chrysanthemum_Scroll#
 16446#Pegasus_Scroll#
 13871#Magician_Card_Box#
@@ -4265,7 +4264,7 @@
 5531#Baby_Dragon_Hat#
 
 
-//---------------2010.06.23 岿靛呐-------------------
+//---------------2010.06.23 월드컵-------------------
 
 5856#Worldcup_Hat_of_Passion#
 5857#Worldcup_Hat_of_Fight#
@@ -4283,7 +4282,7 @@
 
 
 //Ep13-------------------------------------------------------------------------------------------6.28------------------
-// ---------- 俊乔家靛 13 涅胶飘 酒捞袍 ------------
+// ---------- 에피소드 13 퀘스트 아이템 ------------
 6027#Crystal_Of_Feardoom#
 6028#Sealed_Scroll#
 6029#Morocc_Tracing_Log#
@@ -4297,7 +4296,7 @@
 6035#Decaying_Stem#
 14596#Pierre's_Treasurebox#
 
-// ----------- 20080521 俊乔家靛 13 涅胶飘 酒捞袍 -----------
+// ----------- 20080521 에피소드 13 퀘스트 아이템 -----------
 6036#Meeting_Invitation#
 6037#Messy_File#
 6038#Neat_Report#
@@ -4318,10 +4317,10 @@
 12321#Arunafeltz_Desert_Sandwich#
 12322#Chocolate_Pie#
 
-// ----------- 俊乔家靛 13 ppl 酒捞袍 -----------
+// ----------- 에피소드 13 ppl 아이템 -----------
 6051#Gray_Hollow#
 
-// ---------- 农府芭 焊惑 酒捞袍 ----------
+// ---------- 크리거 보상 아이템 ----------
 13416#Glorious_Flamberge#
 13417#Glorious_Rapier#
 13418#Glorious_Holy_Avenger#
@@ -4355,7 +4354,7 @@
 2549#Glorious_Muffler#
 2772#Glorious_Ring#
 
-// ---------- 农府芭 焊惑 酒捞袍 眠啊 规绢备 ----------
+// ---------- 크리거 보상 아이템 추가 방어구 ----------
 2445#Glorious_Public_Shoes#
 2446#Glorious_Supplied_Shoes#
 2395#Glorious_Public_Suit#
@@ -4363,17 +4362,17 @@
 2773#Glorious_Public_Ring#
 2774#Glorious_Supplied_Ring#
 
-// ----------- 俊乔家靛 13 超矫 ------------
+// ----------- 에피소드 13 낚시 ------------
 2775#Lure#
 2550#Fisher's_Muffler#
 
-// ----------- 俊乔家靛 13 棱袍 ------------
+// ----------- 에피소드 13 잡템 ------------
 6020#Fur#
 6021#Peaked_Hat#
 6022#Hard_Skin#
 6023#Mystic_Horn#
 
-// --------- EP13 脚痹 厘厚 酒捞袍 ---------------
+// --------- EP13 신규 장비 아이템 ---------------
 5398#Bone_Head#
 5399#Mandragora_Cap#
 2386#Chameleon_Armor#
@@ -4412,7 +4411,7 @@
 1925#Cello#
 1926#Harp_of_Nepenthes#
 
-// ----------- 捞亥飘 酒捞袍 ------------
+// ----------- 이벤트 아이템 ------------
 2443#Fisher's_Boots#
 2764#Small_Fishing_Rod#
 6048#Unidentifeid_Mineral#
@@ -4421,7 +4420,7 @@
 6010#Hoe#
 
 
-//-------------------------------------------2010.7岿 某浆酒捞袍-------------------
+//-------------------------------------------2010.7월 캐쉬아이템-------------------
 16457#November_Scroll#
 13538#Meteorstorm_Scroll_Box#
 13539#Stormgust_Scroll_Box#
@@ -4437,7 +4436,7 @@
 16228#RJC_Katusa_Box#
 
 
-//--------------13.1穿遏 酒捞袍 眠啊-----------2010.07.07
+//--------------13.1누락 아이템 추가-----------2010.07.07
 7835#Dusk_Glow#
 7836#Dawn_Essence#
 7837#Cold_Moonlight#
@@ -4447,17 +4446,17 @@
 7833#Hero_Remains#
 7834#Andvari's_Ring#
 
-// ------------- 且肺扩 绵力葛磊 ---------------
+// ------------- 할로윈 축제모자 ---------------
 5356#Festival_Pumpkin_Hat#
 
-//------------------- 2010.8 某浆酒捞袍
+//------------------- 2010.8 캐쉬아이템
 
 5364#Dark_Snake_Lord_Hat#
 5656#Scooter_Helmet#
 5548#Scarlet_Rose#
 16229#Scarlet_Rose_Box#
 
-//------------------- 2010.8 眠啊
+//------------------- 2010.8 추가
 5493#Wool_Cap#
 
 //------------------- 2010.08.18
@@ -4472,7 +4471,7 @@
 5597#Bubble_Gum_In_Mouth#
 16374#Bubble_Gum_In_Mouth_Box#
 
-//------------------- 2010.09 脚痹
+//------------------- 2010.09 신규
 
 5654#Holy_Marching_Hat#
 13764#Novice_Battle_Manual_Box#
@@ -4486,7 +4485,7 @@
 5337#Party_Recruiter_Hat#
 5339#Friend_Recruiter_Hat#
 
-//------------------- 2010.09 眠籍捞亥飘 酒捞袍
+//------------------- 2010.09 추석이벤트 아이템
 6099#Grilled_Rice_Cake#
 
 // ----------- Ep 13.2 Reward Items ------------
@@ -4652,7 +4651,7 @@
 16000#Erde#
 16001#Red_Square_Bag#
 
-//-----2010 RWC 扁充 眠啊 某浆 酒捞袍-----
+//-----2010 RWC 기념 추가 캐쉬 아이템-----
 18508#Garuda_Hat#
 18509#RWC_2010_Indonesia#
 
@@ -4663,7 +4662,7 @@
 5313#Diadem#
 14408#Solar_Scroll#
 
-//Renewal 眠啊酒捞袍
+//Renewal 추가아이템
 6051#Gray Hollow#
 12323#Novice Fly Wing#
 12324#Novice Butterfly Wing#
@@ -4684,7 +4683,7 @@
 5136#Antonio's Santa Hat#
 
 
-// --------- 茄惫 6岿 坷滚力访 ---------
+// --------- 한국 6월 오버제련 ---------
 6223#Carnium#
 6224#Bradium#
 6225#HD Carnium#
@@ -4698,7 +4697,7 @@
 16264#HD Bradium 10 Box#
 16265#HD Carnium 10 Box#
 
-// -------------- 3瞒 烽唱捞飘, 酒农厚俭 -----------------
+// -------------- 3차 룬나이트, 아크비숍 -----------------
 12717#Paralysis#
 12718#Leech End#
 12719#Oblivion Curse#
@@ -4733,7 +4732,7 @@
 7938#Light Granule#
 7939#Elder Branch#
 
-// 3瞒流诀焙 酒捞袍-货档快眉捞辑, 饭牢历
+// 3차직업군 아이템-새도우체이서, 레인저
 6120#Face Paint#
 6121#Makeover Brush#
 6122#Paint Brush#
@@ -4773,7 +4772,7 @@
 2810#Special Cooler#
 6186#Monkey Wrench#
 
-// ---------3瞒 傈流涅胶飘---------
+// ---------3차 전직퀘스트---------
 12380#Job Change Flute#
 12381#Ancient Language Scroll#
 12382#Ancient Language Scroll#
@@ -4801,7 +4800,7 @@
 2798#Will Of Exhausted Worrior#
 6156#A Report To Be Approved#
 
-// -------- 况废 眠啊胶懦 酒捞袍 --------
+// -------- 워록 추가스킬 아이템 --------
 6189#Spell Book(Fire Bolt)#
 6190#Spell Book(Cold Bolt)#
 6191#Spell Book(Lightning Bolt)#
@@ -4820,7 +4819,7 @@
 6204#Spell Book(Crimson Rock)#
 6205#Spell Book(Drain Life)#
 
-// ------- 3瞒 力匙腐 酒捞袍 -------
+// ------- 3차 제네릭 아이템 -------
 6210#Seed Of Horny Plant#
 6211#Bloodsuck Plant Seed#
 6212#Bomb Mushroom Spore#
@@ -4830,10 +4829,10 @@
 6216#Oil Bottle#
 6217#Mandragora Flowerpot#
 
-// ------ 3瞒 盔歹矾刮胶飘芳 酒捞袍 ------
+// ------ 3차 원더러민스트렐 아이템 ------
 11513#Neck Protection Candy#
 
-// --------- 9岿 3-2瞒 傈流侩 酒捞袍 ---------
+// --------- 9월 3-2차 전직용 아이템 ---------
 6266#Key Of Deception#
 6267#Key Of Illusion#
 6268#Key Of Gaiety#
@@ -4848,7 +4847,7 @@
 6277#Red Reagent#
 6278#Black Reagent#
 
-// --------- 3-2瞒 力匙腐眠啊酒捞袍 ----------
+// --------- 3-2차 제네릭추가아이템 ----------
 6244#Gun Powder#
 6245#Black Powder#
 6246#Yellow Powder#
@@ -4935,7 +4934,7 @@
 13290#Black Thing To Throw#
 6297#Bottle Throw#
 
-// ---------- 茄惫 2010斥 1岿 3瞒 傈侩 捧备 ----------
+// ---------- 한국 2010년 1월 3차 전용 투구 ----------
 5746#Rune Circlet#
 5747#Mitra#
 5748#Sniper Goggle#
@@ -4951,17 +4950,17 @@
 5758#Dying Swan#
 5760#Driver Band#
 
-// ------------ 2010斥 2岿 加己籍眠啊 ------------
+// ------------ 2010년 2월 속성석추가 ------------
 6360#Scarlet Point#
 6361#Indigo Point#
 6362#Yellow Wish Point#
 6363#Lime Green Point#
 
-// ---------- 2010斥 4岿 家辑矾 眠啊 ---------
+// ---------- 2010년 4월 소서러 추가 ---------
 11056#Spiritualism Guide#
 
 
-// ---------- 茄惫 檬焊磊荐访厘 -----------
+// ---------- 한국 초보자수련장 -----------
 2819#Swordman Manual#
 2820#Thief Manual#
 2821#Acolyte Manual#
@@ -4969,7 +4968,7 @@
 2823#Merchant Manual#
 2824#Mage Manual#
 
-// ------- 茄惫 5岿 涅胶飘酒捞袍 ------
+// ------- 한국 5월 퀘스트아이템 ------
 6218#Disin Delivery Box#
 
 6377#Street Stall License#
@@ -4977,7 +4976,7 @@
 
 12258#Bombring Capsule#
 
-// -------- 茄惫6岿 倡盔窜 ----------
+// -------- 한국6월 낙원단 ----------
 1192#P.Slayer1#
 1193#P.Slayer2#
 1650#P.Staff1#
@@ -5001,7 +5000,7 @@
 16004#P.Mace1#
 16005#P.Mace2#
 
-// -------- 茄惫 6岿 眠啊规绢备 ---------
+// -------- 한국 6월 추가방어구 ---------
 2146#Siver Guard#
 2147#Round Buckler#
 2148#Rosa Shield#
@@ -5009,14 +5008,14 @@
 15013#Claire Suits#
 15014#Ebone Armor#
 
-// --------- 7岿 宏扼龙 肺拿扼捞隆 ------
+// --------- 7월 브라질 로컬라이징 ------
 6237#Guarana Fruit#
 11515#coconut#
 11516#Asai Fruit#
 11517#Puri Potion#
 12414#Guarana Candy#
 
-// -------- 茄惫6岿 3瞒 公扁眠啊 --------
+// -------- 한국6월 3차 무기추가 --------
 1191#Alca Bringer#
 1287#Durga#
 1649#Rafini Staff#
@@ -5024,8 +5023,8 @@
 16003#Carga Mace#
 
 
-//------ 府春倔 祈笼 ----------
-// -------- 扼弊 DS 酒捞袍 ---------
+//------ 리뉴얼 편집 ----------
+// -------- 라그 DS 아이템 ---------
 2777#Shaman Ring#
 2778#Shaman Earrings#
 2779#Dark Knight Belt#
@@ -5059,9 +5058,9 @@
 7957#Lost Card3#
 7958#Lost Card4#
 16266#Red Beret Box#
-12413#PC Cafe Coupon Boxケ#
+12413#PC Cafe Coupon BoxⅡ#
 
-// ------- 茄惫 7岿 脚痹墨靛 -------
+// ------- 한국 7월 신규카드 -------
 4442#Tatacho Card#
 4443#Aqua Elemental Card#
 4444#Draco Card#
@@ -5070,7 +5069,7 @@
 4448#Cornus Card#
 4449#Dark Shadow Card#
 4450#Banshee Master Card#
-4451#Ant Buyanne Card#
+4451#Entweihen Crothen Card#
 4452#Centipede Larva Card#
 4453#Hilsrion Card#
 
@@ -5083,11 +5082,11 @@
 
 14233#Dead Tree Branch Box10#
 
-//-------- 2010.10.20 夸沥狼蓖 家南 捞亥飘
+//-------- 2010.10.20 요정의귀 소켓 이벤트
 6396#Auger Of Spirit#
 18507#Elven Ear#
 
-//-------- 2010.10.27 傍烹 且肺扩捞亥飘
+//-------- 2010.10.27 공통 할로윈이벤트
 6424#Halloween Spiritpiece#
 6425#Halloween Certificate#
 18527#Gloomy Pumpkin Hat#
@@ -5109,7 +5108,7 @@
 5358#Pecopeco Wing Ears#
 5416#Beer Hat#
 5307#Carmen Miranda's Hat#
-5737#Red Beret#
+5737#Cactus Hat#
 
 14001#Recruit Siege Supply Box#
 14002#Veteran Siege Supply Box#
@@ -5171,7 +5170,7 @@
 5359#Ship Captain Hat#
 16666#Magic Candy 10Box#
 
-//-----------1-6滚弊 荐沥
+//-----------1-6버그 수정
 13611#Enriched Oridecon 5 Box#
 12596#Magic Candy#
 13937#Robo Eye Box#
@@ -5267,7 +5266,7 @@
 6111#Mystic Stone#
 6095#Flavored Alcohol#
 
-//---------2010.09.27 啪铰袍---------
+//---------2010.09.27 탑승템---------
 12622#Boarding Halter#
 16682#Boarding Halter Box#
 
@@ -5316,7 +5315,7 @@
 6472#HolyMom_Blaze#
 17052#HolyMom_Blaze_Box#
 
-//--------------- 畴悼例 05.25---------------
+//--------------- 노동절 05.25---------------
 556#Rice_Cake_Stick#
 557#Neatly_Sliced_Rice_Cake#
 
@@ -5330,7 +5329,7 @@
 7555#Green_Incense#
 
 
-//--------------------5. 25 街磊泵焊包胶农费, 芥赣胶农费---------
+//--------------------5. 25 쌍자궁보관스크롤, 썸머스크롤---------
 17082#Gemini_Diadem_Scroll#
 17083#Gemini Diadem Scroll Box#
 5569#Gemini_Diadem#
@@ -5345,7 +5344,7 @@
 13408#Refined Fire Brand#
 13773#Refined Fire Brand box#
 
-//-------------------------6岿 1老 刀赋扁充胶农费 -----
+//-------------------------6월 1일 독립기념스크롤 -----
 2871#Brazilian_Embrem#
 16681#Samba Scroll#
 5600#Samba Twin Ribbon#
@@ -5358,7 +5357,7 @@
 2741#All_In_One_Ring#
 12375#Akaraje#
 
-//-----------------0615 某浆+侩捍
+//-----------------0615 캐쉬+용병
 5674#Pig Money Box#
 17000#WanderM. Summon 5 Box#
 17001#WanderM. Summon 10 Box#
@@ -5370,11 +5369,6 @@
 17007#Salamander Summon 10 Box#
 17008#Teddy Bear Summon 5 Box#
 17009#Teddy Bear Summon 10 Box#
-
-
-
-
-
 
 12626#Wanderman Scroll#
 12627#Wicked Nymph Scroll#
@@ -5444,3 +5438,585 @@
 19514#Charlie Beard#
 19515#Yellow Hat#
 19516#Singing Bird#
+
+
+
+
+
+
+
+
+
+
+
+
+// --------------- 2011-08-03 ----------------
+5396#Jasper_Crest#
+5573#Dokkaebi_Horn#
+
+
+
+
+
+
+
+
+
+
+
+// ---------------- 2011-08-10 카드 교환 시스템 --------------------
+6379#Card Coin#	
+5152#Chinese_Crown#
+5180#Holiday_Hat#
+
+
+
+
+
+
+
+
+
+
+// ---------------------- 2011-8-17 --------------------------
+12263#Field_Manual#
+12264#Chewy_Bubble_Gum#
+12265#Life_Insurance#
+2383#Brynhild#
+2541#Asprika#
+
+// ---------------------- 2011-8-29 --------------------------
+5304#Bongun_Hat#
+5585#Rune_Hairband#
+5413#Popcorn_Hat#
+5778#Blue_Arara_Hat#
+5473#Forceps_Hairpin#
+5671#Drooping_Morocc_Minion#
+5586#Mosquito_Coil#
+5779#Drooping_Boto#
+17138#Cancer_Scroll#
+5581#Cancer_Diadem#
+5582#Cancer_Crown#
+13609#Megaphone_5_Box#
+
+
+
+
+
+
+
+
+
+
+
+
+// --------------------- 2011. 09. 06 --------------------------
+5472#Red_White_Hat#
+17139#RWC_Super_Scroll#
+
+
+// ---------------------- 2011. 09. 20 --------------------------
+17140#Leo Scroll#
+
+5588#Leo Crown #
+5589#Leo Diadem#
+5334#Angeling_Wanna_Fly#
+13600#Siegfried_Box5#
+1578#Book_of_Prayer#
+14322#Book_of_Prayer_Box#
+
+
+
+
+
+
+
+
+
+
+
+
+// ---------------- 2011. 09. 28 RWC2011 황금포링 이벤트 -----------------
+6012#Blue_C_Card#
+6485#Blue_2_Card#
+6486#Blue_0_Card#
+6487#Blue_1_Card#
+7470#Blue_W_Card#
+7602#Blue_R_Card#
+
+
+
+// ------------ 2011. 10. 05 ----------------
+12696#RWC_Celebration_Firecracker#
+12697#RWC_Celebration_Firecracker_Ⅱ#
+17141#Virgo_Scroll#
+5598#Virgo_Crown#
+5599#Virgo_Diadem#
+6024#Shining Diamond#
+
+
+
+
+2168#Immuned_Shield#
+12690#Headgear_Card_Album#
+12691#Armor_Card_Album#
+12692#Shield_Card_Album#
+12693#Garment_Card_Album#
+12694#Shoes_Card_Album#
+12695#Accessory_Card_Album#
+
+12698#Weapon_Card_Album#
+17122#Immuned_Shield_Box#
+17123#Black_Devil's_Mask_Box#
+17124#Cat_Ears_Beret_Box#
+17125#Red_Bread_Hat_Box#
+18599#Black_Devil's_Mask#
+18600#Cat_Ears_Beret#
+18601#Red_Bread_Hat#
+18603#Black_Devil's_Mask#
+
+// ------------ 2011. 10. 12 ----------------
+19517#Chicken Comb#
+19518#Rainbow#
+19519#Lightning Cloud#
+19520#Rain Cloud#
+19521#Charlie Hat#
+19522#Red Mini Crown#
+16972#Weather Report Box#
+16973#Yellow Hat Box#
+16974#Actor Set Box#
+16975#Singing Bird Box#
+16976#Chicken Set Box#
+16977#Red Mini Crown Box#
+17014#Butterfly Wing Ear Box#
+17015#Nut On Head Box#
+
+// ------------ 2011. 10. 12 Lucky Egg ----------------
+12928#Holy Aspersio Scroll#
+12406#Mind Armor Scroll#
+12549#Light White Pot 100 Box#
+12533#Blue Herb 100 Box#
+12550#Poison Bottle 30 Box#
+6230#Weapon Refine Lv7 Scroll#
+6234#Armor Refine Lv7 Scroll#
+12577#Lucky Scroll 6#
+6228#Weapon Refine Lv9 Scroll#
+6229#Weapon Refine Lv8 Scroll#
+6232#Armor Refine Lv9 Scroll#
+6233#Armor Refine Lv8 Scroll#
+6456#Weapon Refine Lv5 Scroll#
+6457#Armor Refine Lv5 Scroll#
+
+// ------- 2011. 10. 19 Cashitem ----------------
+5663#Libra Diadem#
+5662#Libra Crown#
+16436#Libra Crown Box#
+16438#Libra Diadem Box#
+16673#Libra Scroll#
+2576#Bravery Bag#
+16999#Bravery Bag Box#
+14362#Orc Load Scroll Box#
+14605#Orc Load Scroll#
+
+// ------- 2011. 10. 24 Holloween ----------------
+5475#Cube_Mask#
+18656#Witch's_Pumpkin_Hat#
+18612#White Musang Hat#
+18613#Black Musang Hat#
+18614#Grim Reaper Hat#
+18615#Injured Eyepatch#
+18616#Long Tongue#
+18617#Onigiri In Mouth#
+18618#Airplane Hat#
+18619#Thief Bandana#
+18620#Heart Eyepatch#
+18626#Gelato Hat#
+6130#Ticket Loli Ruri#
+1383#Holy Celestial Axe#
+14375#Holy Celestial Axe Box#
+16757#halloween Scroll#
+18543#Witchs Hat#
+6299#Worn Cloth Piece#
+12490#Vivid Notation#
+9042#Loli Ruri Egg#
+6097#Sweet Pumpkin Pie#
+
+
+// ------- 2011. 11. 2  ----------------
+17143#Scorpio Scroll#
+5676#Scorpio Crown#
+5677#Scorpio Diadem#
+5789#Thanatos Mal Mask#
+2855#Whike Black Tail#
+
+// ------- 2011. 11. 4 ----------------
+16675#Splash Scroll#
+5770#Splash Hat#
+17156#Bossnia Ticket Scroll#
+
+
+
+15041#Boitata_Armor#
+17026#Boitata_Scroll#
+18561#Black Feather Beret#
+14523#Pill#
+
+// ------- 2011. 11. 30 ----------------
+18638#Citron Hat#
+18639#Navy Officer Hat#
+18640#Starfish Headband#
+18641#Ribbon Magic Hat#
+18645#Sailor Hat#
+18646#Cow Hat#
+18647#Star Eyepatch#
+18648#Tongue Charm#
+12778#Mini Baphomet Scroll#
+12779#Galapago Scroll#
+6551#Black Devil Auger#
+
+// ------- 2011. 12. 7 ----------------
+17093#Uprage Two-handed Sword Box#
+21000#Uprage Two-handed Sword#
+17092#Upgrade Bow Box#
+18112#Upgrade Bow#
+17091#Upgrade Mace Box#
+16019#Upgrade Mace#
+17090#Upgrage Revolver Box#
+13115#Upgrade Revolver#
+17089#Upgrade Dagger Box#
+13071#Upgrade Dagger#
+17088#Upgrade Staff Box#
+2015#Upgrade Staff#
+17087#Upgrade Book Box#
+1585#Upgrade Book#
+17086#Upgrade Lance Box#
+1491#Upgrade Lance#
+17085#Upgrade Two-handed Axe Box#
+1394#Upgrade Two-handed Axe#
+17084#Upgrade Katar Box#
+1292#Upgrade Katar#
+
+// ------- 2011. 12. 14 ----------------
+4483#Sealed Dracula Card#
+15008#Flame Sprits Armor#
+12403#RWC2011 Lucky Scroll#
+
+// ------- 2011. 12. 21 Xmas ----------------
+6535#Piece Of Red Fabric#
+6536#Star Shape Decoration#
+18671#Rudolf Hairband#
+7629#Pink Gift Box#
+12739#Snow Flower#
+
+// ------- 2011. 12. 21 ----------------
+5384#Twin Pompom Hat#
+5742#Rudolf Santa Hat#
+18661#Trident_Helmet#
+18662#Antler Fedora#
+18664#Blind Glasses#
+18666#CD In Mouth#
+18667#Cat Lace Hairband#
+18668#Droopy Turtle Hat#
+4485#Sealed Gloom Card#
+
+// ------- 2011. 12. 28 ----------------
+12654#Lucky Scroll 9#
+
+// ------- 2012. 1. 4 ----------------
+18522#Evil Marcher Hat#
+12507#Yellow Butterfly Wing#
+12508#Green Butterfly Wing#
+12509#Red Butterfly Wing#
+12510#Blue Butterfly Wing#
+19511#Blue Heart Eye Patch#
+19512#Pink Heart Eye Patch#
+12373#Boy's Naivety#
+12374#Flaming Ice#
+12395#Tantan Noodle#
+6484#Enchant Book#
+12673#Lucky Scroll 10#
+9055#Succubus Egg#
+9056#Imp Egg#
+12642#Fruit Of Mastela 100 Box#
+12595#Lucky Scroll 7#
+12641#Lucky Scroll 8#
+
+// ------- 2012. 1. 11 ----------------
+9030#Chung E Egg#
+4812#Spell4Lv#
+4813#Spell3Lv#
+4814#Spell2Lv#
+4815#Spell1Lv#
+4816#Sharp3Lv#
+4817#Sharp2Lv#
+4818#Sharp1Lv#
+4826#Spell5Lv#
+4827#Spell6Lv#
+4828#Spell7Lv#
+4829#Spell8Lv#
+4830#Spell9Lv#
+4831#Spell10Lv#
+4832#Expert_Archer1Lv#
+4833#Expert_Archer2Lv#
+4834#Expert_Archer3Lv#
+4835#Expert_Archer4Lv#
+4836#Expert_Archer5Lv#
+4837#Expert_Archer6Lv#
+4838#Expert_Archer7Lv#
+4839#Expert_Archer8Lv#
+4840#Expert_Archer9Lv#
+4841#Expert_Archer10Lv#
+4843#Sharp4Lv#
+4844#Sharp5Lv#
+4807#ASPD+1#
+4808#Fighting_Spirit4Lv#
+4809#Fighting_Spirit3Lv#
+4810#Fighting_Spirit2Lv#
+4811#Fighting_Spirit1Lv#
+4820#Fighting_Spirit5Lv#
+4821#Fighting_Spirit6Lv#
+4822#Fighting_Spirit7Lv#
+4823#Fighting_Spirit8Lv#
+4824#Fighting_Spirit9Lv#
+4825#Fighting_Spirit10Lv#
+4842#ASPD+2#
+4760#MATK+1%#
+4761#MATK+2%#
+4806#MATK+3%#
+4480#Sealed Kiel Card#
+4482#Sealed Boss Ygnizem Card#
+
+// ------- 2012. 1. 18 ----------------
+12787# Diabolic Scroll#
+5768#Sakura Coronet#
+18521#Lucky Clover#
+4484# Sealed Mistress Card #
+18538#Devil's Whisper#
+
+// ------- 2012. 2. 1 ----------------
+18529#Drooping Wild Rose#
+18530#Tha Despero Mask#
+18533#Honeybee Hat#
+18549#Butterfly Hairpin#
+18532#Heart Ribbon Band#
+18542#Love Guard#
+18555#General Helmet#
+18565#Leprechaun Hat#
+12416#Lucky Scroll 3#
+18665#Orange In Mouth#
+12826#Wind Type Scroll#
+18663#Sunglasses Baseball Hat#
+18670#Hankie In Mouth#
+
+// ------- EP13.3 ----------------
+6321#Rake Horn Helm#
+6322#Antler Helm#
+6323#Twin Horn Helm#
+6324#Single Horn Helm#
+6325#White Spider Limb#
+6326#Piece of Queen's Wing#
+1196#Two-Handed Chrome Metal Sword#
+1433#Imperial Spear#
+1654#Mental Stick#
+1830#Sura's Rampage#
+1930#Green Whistle#
+1984#Stem Whip#
+1985#Rosebine#
+2153#Imperial Guard#
+2465#Dance Shoes#
+2853#Telekinetic Orb#
+2854#Alchemy Glove#
+13061#Black Wing#
+13062#Ancient Dagger#
+13431#Chrome Metal Sword#
+16010#Red Ether Bag#
+18103#Mystic Bow#
+2463#Feral Boots#
+2564#Feral Tail#
+2843#Golden Bell#
+2844#Light of El Dicastes#
+4762#FLEE+6#
+4763#FLEE+12#
+4764#CRI+5#
+4765#CRI+7#
+4766#ATK+2%#
+4767#ATK+3%#
+6304#Exploit Certification of Sapha#
+6305#Piece of Frozen Skin#
+6306#Cotted Bloodstain#
+6307#Strange Magic Stone#
+6308#Unknown Relic#
+6319#Small Bradium#
+6340#Faded Music(Green)#
+6341#Faded Music(Red)#
+6342#Faded Music(Purple)#
+6343#Faded Music(Blue)#
+6437#Scaraba Perfume#
+16683#Boarding Halter Box#
+12580#Universal Catalog Silver#
+12581#Universal Catalog Gold#
+12591#Universal Catalog Bronze#
+
+// ------- 2012. 2. 9 ----------------
+5572#Savage Babe Hat#
+5593#Magical Rabbit Bonnet#
+6116#Succubus Pet Ticket#
+6117#Imp Pet Ticket#
+6118#Chung E Pet Ticket#
+12493#Lucky Scroll 4#
+6231#Weapon Refine Lv6 Scroll#
+6235#Armor Refine Lv6 Scroll#
+
+// ------- 2012. 2. 16 ----------------
+2589#Fallen Angel Wing#
+12361#Delicious Shaved Ice#
+12363#Ghost Coffin#
+12370#Girl's Naivety#
+4481#Sealed Ktullanux Card#
+12545#Lucky Scroll 5#
+9043#Marionette Egg#
+9045#Whisper Egg#
+9052#Incubus Egg#
+6566#Fierce_Cacao_99_Recipe#
+6567#Chocolate_Drink_Recipe#
+11057#February_Sweets#
+
+// ------- 2012. 2. 23 ----------------
+18515#RMSC 2011 Champion Helm#
+18516#RMSC 2011 1st Runner Helm#
+18517#RMSC 2011 2nd Runner Helm#
+6110#Yellow Vital Flower#
+
+// ------- 2012. 2. 29 ----------------
+12391#Lucky Scroll 1#
+10025#Star Hairband#
+10027#Spirit Chain#
+10034#Ball Mask#
+
+// ------- 2012. 3. 8 ----------------
+12827#Water Type Scroll#
+12828#Fire Type Scroll#
+12829#Earth Type Scroll#
+5379#Balloon Hat#
+2914#Wizard Left Eye#
+4494#Sealed Turtle General Card#
+4495#Sealed Amon Ra Card#
+4497#Sealed Knight of Windstorm Card#
+4498#Sealed Lady Tanee Car#
+4493#Sealed Tao Gunka Card#
+18660#Indi Feather Band#
+18676#Hexagon Spectacles#
+18679#Abacus In Mouth#
+18682#Teardrop#
+12822#Korea Rice Cake 50 Box#
+16770#Silvervine Fruit 10 Box#
+10024#Fashionable Glasses#
+10037#Black Butterfly Mask#
+10038#Horn Protector#
+
+// ------- 2012. 3. 15 ----------------
+5822#Love Chick Hat#
+
+// ------- 2012. 4. 19 ----------------
+4486#Sealed Berzebub Card#
+4491#Sealed Sniper Card#
+4500#Sealed Orc Load Card#
+4501#Sealed High Priest Card#
+4502#Sealed MasterSmith Card#
+4503#Sealed Vesper Card#
+4504#Sealed Eddga Card#
+18675#Green Apple Hat#
+18680#Frog Hat#
+18681#Puppy Ears Hat#
+18683#Carrot In Mouth#
+12850#Heaven Scroll#
+12851#Vocation Scroll#
+12852#Wisdom Scroll#
+12853#Patron Scroll#
+16993#Butterfly Wing 50 Box#
+6423#Anger Seagod#
+14372#Powder Snow Box#
+
+// ------- 2012. 5. 31 ----------------
+12860#Mommy Day Cake#
+18739#Carnation Hairband#
+
+// ------- 2012. 5. 17 ----------------
+18697#Syringe In Mouth#
+18708#Candy Hat#
+18709#Black Knitted Hat#
+4488#Sealed Dark Lord Card#
+4539#Sealed Fallen Bishop Card#
+
+// ------- 2012. 5. 23 ----------------
+16576#Illusion Nothing#
+
+// ------- 2012. 6. 7 ----------------
+5591#Desert Prince Scarf#
+4490#Sealed Moonlight Flower Card#
+4492#Sealed Orc Hero Card#
+
+// ------- 2012. 6. 14 ----------------
+14376#Angeling Potion Box#
+18693#Sleeping Kitty Cat#
+18694#Red Hood#
+12350#Angeling Potion#
+
+// ------- 2012. 6. 21 ----------------
+18753#Rice Dumpling Hat#
+16652#Flame Light#
+18692#Mike Hat#
+18702#Shaving Cream#
+4543#Sealed Garm Card#
+18729#MVP Basketball Hat#
+
+// ------- 2012. 6. 28 ----------------
+17209#Rainbow Scroll#
+17210#Charming Red Scroll#
+17211#Sweet Orange Scroll#
+17212#Colourful Yellow Scroll#
+4487#Sealed Ifrit Card#
+4540#Sealed Lord Of The Death Card#
+4541#Sealed High Wizard Card#
+12927#Aspersio 5 Scroll Box#
+18669#Cowhide Hat#
+18678#Leek In Mouth#
+18684#Showy High Cap#
+18711#Electric Sunglass#
+18714#Hippo Hat#
+18716#Strawberry In Mouth#
+18718#Rose Hairband#
+
+
+// ------- 2012. 7. 19 ----------------
+17233#Death Scroll#
+17234#Life Scroll#
+17235#Magic Scroll#
+17236#Power Scroll#
+17237#Darkness Scroll#
+17238#Holy Scroll#
+17239#Horn Scroll#
+17240#Mercury Scroll#
+4499#Sealed Incantation Samurai Card#
+4536#Sealed Atroce Card#
+4544#Sealed Dark Snake Lord Card#
+18554#King Prawn Hat#
+2881#Orleans Necklace#
+5777#Remover Hat#
+15040#Prison Uniform#
+18534#Fancy Phantom Mask#
+18540#Devil Mask#
+18573#White Feather#
+18595#Ancient Horns#
+18597#Mercury Riser#
+17071#Superb Fish 50 Box#
+18574#Lord of Death Helm#
+18591#Mini Glasses#
+2874#Buffalo Horn#
+5764#Lovely Rabbit Hood#
+18576#Yin Yang Earrings#
+18611#Black Frame Glasses#
+2481#Rune_Boots#
+18713#Monkey Fur Hat#
+18563#Heart Wing Hairband#
+5450#Sun Cap#
