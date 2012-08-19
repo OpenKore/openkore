@@ -1310,10 +1310,14 @@ sub onMapClick {
 	my $checkPortal = 0;
 	my $noMove = 0;
 	
-	if ($currentChatRoom ne "") {			
-		$self->writeOutput("error", TF("Error in function 'move' (Move Player)\n" .
+	if ($currentChatRoom ne "") {
+		$self->writeOutput("error", T("Error in function 'move' (Move Player)\n" .
 										"Unable to walk while inside a chat room!\n" .
 										"Use the command: chat leave\n"));
+	} elsif ($shopstarted) {
+		$self->writeOutput("error", T("Error in function 'move' (Move Player)\n" .
+										"Unable to walk while the shop is open!\n" .
+										"Use the command: closeshop\n"));
 	} else {
 		delete $self->{mouseMapText};
 		if ($self->{mapViewer} && $self->{mapViewer}->{portals}

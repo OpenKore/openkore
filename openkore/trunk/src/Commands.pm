@@ -3080,9 +3080,13 @@ sub cmdMove {
 	} else {
 		AI::clear(qw/move route mapRoute/);
 		if ($currentChatRoom ne "") {
-			error TF("Error in function 'move' (Move Player)\n" .
+			error T("Error in function 'move' (Move Player)\n" .
 				"Unable to walk while inside a chat room!\n" .
 				"Use the command: chat leave\n");
+		} elsif ($shopstarted) {
+			error T("Error in function 'move' (Move Player)\n" .
+				"Unable to walk while the shop is open!\n" .
+				"Use the command: closeshop\n");
 		} else {
 		if ($maps_lut{"${map}.rsw"}) {
 			if ($x ne "") {
