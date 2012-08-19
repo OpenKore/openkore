@@ -4161,6 +4161,11 @@ sub makeShop {
 		return;
 	}
 
+	if (!$cart{exists} && !$char->cartActive) {
+		error T("You need this with a cart in order to create a shop!\n");
+		return;
+	}
+
 	if (!$shop{title_line}) {
 		error T("Your shop does not have a title.\n");
 		return;

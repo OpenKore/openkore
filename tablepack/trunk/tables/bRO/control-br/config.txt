@@ -1,20 +1,20 @@
-﻿# Pasta control traduzida de acordo com a revision 8105, do farrainbow
+﻿# Pasta control traduzida de acordo com a revision 8118, do keplerbr
 #############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
 # Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
-# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e KeplerBR  ---          www.openkore.com.br
 #############################################################################################
 # * Wiki do OpenKore brasileira oficial:
-#    http://openkore.com.br/
+#     http://openkore.com.br/
 # * Wiki do OpenKore internacional:
-#    http://openkore.com
+#     http://openkore.com
 ###############################################################################
 ###############################################################################
 # * Fórum do OpenKore brasileiro oficial:
-#    http://openkore.com.br/index.php
+#     http://openkore.com.br/index.php
 # * Fórum do OpenKore internacional:
-#    http://forums.openkore.com
+#     http://forums.openkore.com
 ###############################################################################
 # Manual na wiki brasileira: http://openkore.com.br/wiki/index.php?title=Manual
 # Manual na wiki internacional: http://wiki.openkore.com/index.php?title=Manual
@@ -217,6 +217,7 @@ saveMap_warpChatCommand
  
 shopAuto_open 0
 shop_random 0
+shop_LockOnly 0
  
 sitAuto_hp_lower 40
 sitAuto_hp_upper 100

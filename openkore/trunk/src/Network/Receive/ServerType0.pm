@@ -5948,23 +5948,23 @@ sub unit_levelup {
 
 	my $ID = $args->{ID};
 	my $type = $args->{type};
-	my $name = Actor::get($ID);
+	my $actor = Actor::get($ID);
 	if ($type == LEVELUP_EFFECT) {
-		message TF("%s gained a level!\n", $name);
-		Plugins::callHook('base_level', {name => $name});
+		message TF("%s gained a level!\n", $actor);
+		Plugins::callHook('base_level', {name => $actor});
 	} elsif ($type == JOBLEVELUP_EFFECT) {
-		message TF("%s gained a job level!\n", $name);
-		Plugins::callHook('job_level', {name => $name});
+		message TF("%s gained a job level!\n", $actor);
+		Plugins::callHook('job_level', {name => $actor});
 	} elsif ($type == REFINING_FAIL_EFFECT) {
-		message TF("%s failed to refine a weapon!\n", $name), "refine";
+		message TF("%s failed to refine a weapon!\n", $actor), "refine";
 	} elsif ($type == REFINING_SUCCESS_EFFECT) {
-		message TF("%s successfully refined a weapon!\n", $name), "refine";
+		message TF("%s successfully refined a weapon!\n", $actor), "refine";
 	} elsif ($type == MAKEITEM_AM_SUCCESS_EFFECT) {
-		message TF("%s successfully created a potion!\n", $name), "refine";
+		message TF("%s successfully created a potion!\n", $actor), "refine";
 	} elsif ($type == MAKEITEM_AM_FAIL_EFFECT) {
-		message TF("%s failed to create a potion!\n", $name), "refine";	
+		message TF("%s failed to create a potion!\n", $actor), "refine";	
 	} else {
-		message TF("%s unknown unit_levelup effect (%d)\n", $name, $type);
+		message TF("%s unknown unit_levelup effect (%d)\n", $actor, $type);
 	}
 }
 
