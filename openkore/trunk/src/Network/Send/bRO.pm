@@ -6,6 +6,7 @@ use Log qw(message warning error debug);
 use Utils qw(existsInList getHex getTickCount getCoordString);
 use Math::BigInt;
 use base 'Network::Send::ServerType0';
+use I18N qw(stringToBytes);
 
 sub new {
 	my ($class) = @_;
@@ -148,9 +149,13 @@ sub sendPartyJoinRequestByName
 {
 	my ($self, $name) = @_;
 	
+	$name = stringToBytes ($name);
+	$name = substr ($name, 0, 24) if 24 < length $name;
+	$name .= "\x00" x (24 - length $name);
+	
 	$self->sendToServer($self->reconstruct({
 		switch => 'party_join_request_by_name',
-		partyName => _binName($name),
+		partyName => $name,
 	}));	
 	
 	debug "Sent Request Join Party (by name): $name\n", "sendPacket", 2;
