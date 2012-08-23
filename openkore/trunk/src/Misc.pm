@@ -1679,7 +1679,10 @@ sub inventoryItemRemoved {
 		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;
-	$char->inventory->remove($item) if ($item->{amount} <= 0);
+	if ($item->{amount} <= 0) {
+		delete $char->{equipment}{arrow} if $char->{arrow} && $char->{arrow} == $item->{index};
+		$char->inventory->remove($item);
+	}
 	$itemChange{$item->{name}} -= $amount;
 }
 
@@ -3671,6 +3674,14 @@ sub checkSelfCondition {
 			return 0 if (!inRange($char->sp_percent, $1));
 		} else {
 			return 0 if (!inRange($char->{sp}, $config{$prefix."_sp"}));
+		}
+	}
+
+	if ($config{$prefix."_weight"}) {
+		if ($config{$prefix."_weight"} =~ /^(.*)\%$/) {
+			return 0 if $char->{weight_max} && !inRange($char->weight_percent, $1);
+		} else {
+			return 0 if !inRange($char->{weight}, $config{$prefix."_weight"});
 		}
 	}
 
