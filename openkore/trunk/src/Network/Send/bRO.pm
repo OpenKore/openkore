@@ -15,7 +15,7 @@ sub new {
 	my %packets = (
 
 		'08AD' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
-		'035F' => ['party_join_request_by_name', 'a24', [qw(partyName)]],
+		'035F' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'088E' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'094A' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'085C' => ['character_move','a3', [qw(coords)]],
@@ -149,13 +149,9 @@ sub sendPartyJoinRequestByName
 {
 	my ($self, $name) = @_;
 	
-	$name = stringToBytes ($name);
-	$name = substr ($name, 0, 24) if 24 < length $name;
-	$name .= "\x00" x (24 - length $name);
-	
 	$self->sendToServer($self->reconstruct({
 		switch => 'party_join_request_by_name',
-		partyName => $name,
+		partyName => stringToBytes ($name),
 	}));	
 	
 	debug "Sent Request Join Party (by name): $name\n", "sendPacket", 2;
