@@ -1155,75 +1155,75 @@ Penetração#
 
 
 //--------------------±¹¿Õ¼±Ãâ--------------------------------
-4015#Tornando-se um Avaliador#SG_FEEL#
+4015#Tornando-se um Avaliador#SG_FEEL#QUE_NOIMAGE#
 Encontre-se com o inspetor do reino e torne-se um avaliador.#
 #
 
-4016#Prova de Qualificação#SG_FEEL#
+4016#Prova de Qualificação#SG_FEEL#QUE_NOIMAGE#
 Prove sua força, trazendo 2 Rédeas.#
 #
 
-4017#Teste de Qualificação#SG_FEEL#
+4017#Teste de Qualificação#SG_FEEL#QUE_NOIMAGE#
 Passe no teste de aptidão para se qualificar.#
 #
 
-4018#Encontro dos Príncipes#SG_FEEL#
+4018#Encontro dos Príncipes#SG_FEEL#QUE_NOIMAGE#
 Fale com o inspetor de novo e prepare-se para encontrar os príncipes.#
 #
 
-4020#Entrevista com o Príncipe#SG_FEEL#
+4020#Entrevista com o Príncipe#SG_FEEL#QUE_NOIMAGE#
 Fale com o príncipe da família Gaebolg.#
 #
 
-4021#Entrevista com o Príncipe#SG_FEEL#
+4021#Entrevista com o Príncipe#SG_FEEL#QUE_NOIMAGE#
 Fale com o príncipe da família Walter.#
 #
 
-4022#Entrevista com o Príncipe#SG_FEEL#
+4022#Entrevista com o Príncipe#SG_FEEL#QUE_NOIMAGE#
 Fale com o príncipe da família Richard.#
 #
 
-4023#Entrevista com o Príncipe#SG_FEEL#
+4023#Entrevista com o Príncipe#SG_FEEL#QUE_NOIMAGE#
 Fale com o príncipe da família Heine.#
 #
 
-4024#Entrevista com o Príncipe#SG_FEEL#
+4024#Entrevista com o Príncipe#SG_FEEL#QUE_NOIMAGE#
 Fale com o príncipe da família Wigner.#
 #
 
-4025#Entrevista com o Príncipe#SG_FEEL#
+4025#Entrevista com o Príncipe#SG_FEEL#QUE_NOIMAGE#
 Fale com o príncipe da família Roewenburg.#
 #
 
-4026#Entrevista com o Príncipe#SG_FEEL#
+4026#Entrevista com o Príncipe#SG_FEEL#QUE_NOIMAGE#
 Fale com o príncipe da família Nerius.#
 #
 
-4027#Entrevista com o Príncipe#SG_FEEL#
+4027#Entrevista com o Príncipe#SG_FEEL#QUE_NOIMAGE#
 Escute a história um pouco mais.#
 #
 
-4028#O Favor de Peter#SG_FEEL#
+4028#O Favor de Peter#SG_FEEL#QUE_NOIMAGE#
 Encontre a garota que escreveu a carta ao príncipe Peter, e entregue as flores por ele.#
 #
 
-4029#O Favor da Garota#SG_FEEL#
+4029#O Favor da Garota#SG_FEEL#QUE_NOIMAGE#
 Entregue a flor da garota a Peter.#
 #
 
-4030#A História de Ahrum e Ernst#SG_FEEL#
+4030#A História de Ahrum e Ernst#SG_FEEL#QUE_NOIMAGE#
 Ouça a história de Ahrum e Ernst.#
 #
 
-4031#A História de Ahrum e Ernst#SG_FEEL#
+4031#A História de Ahrum e Ernst#SG_FEEL#QUE_NOIMAGE#
 Você soube que uma pessoa da família Walter está aqui. Mas como?#
 #
 
-4032#Conspiração das duas famílias#SG_FEEL#
+4032#Conspiração das duas famílias#SG_FEEL#QUE_NOIMAGE#
 Há uma conspiração entre as famílias Walter e Richard. Você precisa contar isso a alguém.#
 #
 
-4033#Morte de Ahrum#SG_FEEL#
+4033#Morte de Ahrum#SG_FEEL#QUE_NOIMAGE#
 O príncipe Ahrum foi morto por Ernst. Você precisa relatar isso o mais rápido possível.#
 #
 
@@ -7012,6 +7012,17 @@ Fale com a Pequena Noel na casa do Papai Noel em Luthie.#
 Parece que os guaxinins estão satisfeitos com o tanto de batatas doces que receberam como presente. Passe a mensagem para Quercus.#
 Fale com 'Quercus', membro do Time dos Guaxinins Felizes em Prontera.#
 
+//----------2012 Valkiwi Event#2-------
+12275#Estranho retrato falado#SG_FEEL#QUE_NOIMAGE#
+Encontre este retrato e entregue ao Guardião. ^990099Porings e Poporings^000000 possivelmente devem ter#
+#
 
+12276#Nossa louca maquininha#SG_FEEL#QUE_NOIMAGE#
+Um braço de nossa máquina superaqueceu. Você não pode receber seu prêmio nessas condições ^990099até que ela esteja consertada.^000000#
+#
+
+12277#Cartas, é o que você precisa!#SG_FEEL#QUE_NOIMAGE#
+Encontre este retrato e entregue a Falquíria. ^990099Porings e Poporings^000000 possivelmente devem ter#
+#
 //file end
 

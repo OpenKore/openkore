@@ -248,7 +248,7 @@
 12429#Churrasco de Selvagem#
 12430#Coquetel Uivante#
 12431#Carne ao Vinho#
-12432#Chá Gelado de Sinoma#
+12432#Chá Gelado de Siroma#
 12433#Cozido de Drosera#
 12434#Macarrão com Petite#
 12435#Gororoba Preta#
@@ -297,7 +297,6 @@
 5757#Ordem do Protetor#
 5758#Súplica do Cisne#
 5760#Talento do Piloto#
-5783#Orelhas de Coelho Amarelas#
 16578#Ovo Cibernético#
 5768#Coroa de Cerejeira#
 13937#Caixa de Olhos Biônicos#
@@ -1995,7 +1994,7 @@
 7547#Bola_de_Futebol#
 7548#Chuteiras#
 7549#Bandeira_Nacional#
-7550#Pacote do Torin#
+7550#Pacote_de_Jokenpô#
 7551#Ticket de Segunda Profissão#
 7552#Nota_com_Horários_dos_Jogos#
 //event - Roberto Magnus Quiz Show 
@@ -2365,7 +2364,7 @@
 2652#Broche Amaldiçoado da Deusa da Fortuna#
 2653#Anel do Sacrifício#
 2654#Cinto Shinobi#
-2655#Bola de Ferro Ensangüentada#
+2655#Bola de Ferro Ensanguentada#
 2656#Talismã da Armadura#
 1264#Jur Especial#
 1265#Rugido Sangrento#
@@ -2663,8 +2662,8 @@
 12212#Asa de Mosca Gigante#
 12213#Neuralizador#
 12214#Espelho Convexo#
-12215#Bênção#
-12216#Aumentar Agilidade#
+12215#Pergaminho_da_Bênção#
+12216#Pergaminho_para_Aumentar_Agilidade#
 12217#Aspersio#
 12218#Pergaminho de Assumptio#
 12219#Pergaminho do Vento#
@@ -3190,7 +3189,7 @@
 // ---------------- Halloween 2007 -----------------
 5356#Chapéu_de_Abóbora_do_Festival#
 
-// --------------- Draconic Society --------------------	
+// --------------- Draconic Society --------------------
 7558#Ticket de Promoção#
 
 // ------------------ New Headgears --------------------
@@ -3507,14 +3506,14 @@
 7840#Presente_da_Valquíria#
 
 // ---------- New Hats ----------
-	
+
 5322#Lencinho#
-5352#Chapéu_de_Poporing#			
-5100#Placa_de_Promoção#			
-5103#Presilha de Girassol#			
-5189#Espírito de Outono#			
-5200#Boina_Rosa#					
-5209#Boné Amarelo de Beisebol#	
+5352#Chapéu_de_Poporing#
+5100#Placa_de_Promoção#
+5103#Presilha de Girassol#
+5189#Espírito de Outono#
+5200#Boina_Rosa#
+5209#Boné Amarelo de Beisebol#
 5270#Folhas_de_Outono#
 
 // -------------- 2007? 9? ?? ??? ?? 13? -----------------
@@ -3727,19 +3726,19 @@
 
 // ----------- ?? ? ?? ------------------
 9032#Ovo_de_Goblin_(Adaga)#
-9033#Ovo_de_Goblin_(Maça)#
+9033#Ovo_de_Goblin_(Mangual)#
 9034#Ovo_de_Goblin_(Martelo)#
 9035#Ovo_de_Deletério#
 9036#Ovo_de_Diabolik#
 9037#Ovo_de_Andarilho#
 13815#Caixa_para_Goblin_(Adaga)#
-13816#Caixa_para_Goblin_(Maça)#
+13816#Caixa_para_Goblin_(Mangual)#
 13817#Caixa_para_Goblin_(Martelo)#
 13818#Kit_de_domesticar_Deletério#
 13819#Caixa_para_Diabolik#
 13820#Caixa_para_Andarilho#
 14569#Anel_de_Goblin_(Adaga)#
-14570#Anel_de_Goblin_(Maça)#
+14570#Anel_de_Goblin_(Mangual)#
 14571#Anel_de_Goblin_(Martelo)#
 14572#Cristal_de_Âmbar#
 14573#Pedra_Incandescente#
@@ -5240,7 +5239,7 @@
 //-----------RWC2011 new items.
 
 2168#Escudo_Celestial#
-12690#Álbum_Equipamento_para_Cabeça#
+12690#Álbum_para_Equipamento_para_Cabeça#
 12691#Álbum_para_Vestimentas#
 12692#Álbum_para_Escudo#
 12693#Álbum_para_Capas#
@@ -5291,7 +5290,7 @@
 18603#Máscara_Esquisita#
 18530#Máscara_do_Despero_de_Thanatos#
 18538#Sussurro_da_Maldade#
-18540#Máscara_Amaldiçoada#
+18540#Máscara_do_Evangelho#
 15040#Uniforme_de_Presidiário#
 
 //---------2011 halloween event
@@ -5346,10 +5345,10 @@
 2564#Cauda_Feral#
 2843#Colar_com_Sino_Dourado#
 2844#Luz_de_El_Dicastes#
-4760#Conjuração1#
-4761#Conjuração2#
-4762#Esquiva+6#
-4763#Esquiva+12#
+4760#Pedra da Conjuração 1#
+4761#Pedra da Conjuração 2#
+4762#Pedra de Esquiva +6#
+4763#Pedra de Esquiva +12#
 4764#CRI+5#
 4765#CRI+7#
 4766#ATQ+2%#
@@ -5443,8 +5442,8 @@
 18596#Chapéu_de_Broto#
 1291#Katar_do_Sicário#
 18580#Coroa_de_Yggdrasil#
-18577#Bolt_24#
-18595#Chifre do Patriarca#
+18577#Parafusos de Ragenstein#
+18595#Chifre_do_Patriarca#
 
 //------------2012 March Items------------
 
@@ -5466,27 +5465,156 @@
 17091#Caixa com Maça Aprimorada#
 17092#Caixa com Arco Aprimorado#
 17093#Caixa com Espada Aprimorada de Duas Mãos#
+17094#Caixa da Katar Aprimorada#
+17095#Caixa do Machado Aprimorado de Duas Mãos#
+17096#Caixa da Lança Aprimorada de Duas Mãos#
+17097#Caixa do Livro Aprimorado#
+17098#Caixa do Cajado Aprimorado#
+17099#Caixa da Adaga Aprimorada#
+17100#Caixa da Pistola Aprimorada#
+17101#Caixa da Maça Aprimorada#
+17102#Caixa do Arco Aprimorado#
+17103#Caixa da Espada Aprimorada de Duas Mãos#
+12673#Ovo da Páscoa#
 18112#Arco Aprimorado#
 21000#Espada Aprimorada de Duas Mãos#
-6484#Livro de Encantamento#
+6484#Livro de Encantamentos#
 17033#Pacote de Revestimento#
 17064#Ovo das Estrelas#
 5782#Elmo Espartano#
 15049#Armadura da Fé de Odin#
 2589#Asas de Arcano Caído#
 5664#Asas de Filir#
-13070#Unha Escarlate#
+13070#Garra Escarlate#
 18597#Elmo do Mercúrio#
 18573#Pena Branca#
-4808#Espírito do Lutador4#
-4820#Espírito do Lutador5#
-4835#Mira Apurada4#
-4836#Mira Apurada5#
-4843#Crítico4#
-4844#Crítico5#
-4812#Encantamento4#
-4826#Encantamento5#
-4806#Conjuração3#
+4808#Espírito do Lutador 4#
+4820#Espírito do Lutador 5#
+4835#Pedra da Mira Apurada 4#
+4836#Pedra da Mira Apurada 5#
+4843#Pedra de Crítico 4#
+4844#Pedra de Crítico 5#
+4812#Pedra de Encantamento 4#
+4826#Pedra de Encantamento 5#
+4806#Pedra da Conjuração 3#
+9051#Ovo_do_Atirador_de_Pedras#
+10033#Peruca_do_Atirador#
+12369#Óleo_de_Coco#
+6109#Adubo_Delicioso#
+6137#Ticket_do_Atirador_de_Pedras#
+
+//---------------2012 April items----------
+
+18619#Disfarce do Arruaceiro#
+18611#Óculos Escuros Especiais#
+18591#Óculos do Inspetor#
+5764#Gorro de Coelho#
+17106#Passe_Antigravitacional[10]#
+12391#Ovo_da_Fauna#
+12778#Assistente_Bafomé_Jr#
+12779#Assistente_Galápago#
+6116#Cupom_de_Succubus#
+6117#Cupom_de_Imp#
+6118#Cupom_de_Donzela_Verde#
+5520#Protetor_de_Orelhas_de_Coelho#
+
+//------------------April Fool Event 2012-----------
+
+18567#Nariz_de_Madeira#
+4478#Carta_da_Falquíria#
+4479#Carta_da_Falquíria#
+6465#Medalha_do_Guardião#
+
+//------------------2012 May items---------------
+
+19574#Elmo_Sombrio_de_Cristal#
+19573#Tiara_do_Amor#
+18630#Boneca_de_Alicel#
+12663#Pergaminho_do_Poring#
+18581#Máscara_de_Tigre_Vermelha#
+18684#Chapéu_de_Dewata#
+18620#Tapa-Olho_Amoroso#
+18593#Coroa_do_Poder#
+18575#Disfarce_de_Solid_Sorrateiro#
+18612#Chapéu_Branco_de_Borobudur#
+18613#Chapéu_Negro_de_Borobudur#
+12791#Pílula_de_Combate#
+12793#Pílula_de_Combate[10]#
+12801#Pergaminho_do_Eddga#
+18663#Boné_com_Óculos#
+12835#Coração_Jovial#
+18563#Tiara_dos_Corações-Alados#
+12680#Poção_Azul_de_Guerra[10]#
+
+//----------------------2012 June Items -----------------------------
+
+17208#Caixa_do_Pergaminho_do_Eddga#
+4491#Carta_Selada_da_Atiradora_de_Elite_Cecil#
+2579#Estola_Mágica#
+18661#Elmo_do_Daimiô#
+2913#Algemas_de_Presidiário#
+18576#Presilhas_de_Yin_Yang#
+18676#Digimóculos#
+18555#Elmo_do_General#
+18571#Chapéu_das_Flores_Encantadas#
+12792#Grande_Pílula_de_Combate#
+12794#Grande_Pílula_de_Combate[10]#
+15058#Jaqueta_de_Motociclista#
+12834#Ovo_dos_Mortos-Vivos#
+6238#Pergaminho de Arma +11#
+6239#Pergaminho de Armadura +11#
+12664#Pergaminho_do_Golem#
+18668#Boneco_da_Lentidão#
+2906#Manopla_do_Mineiro_Sortudo#
+17165#Kit_de_Sobrevivência#
+18673#Coroa_de_Arunafeltz#
+18670#Lenço_da_Compaixão#
+4499#Carta_Selada_do_Samurai_Encarnado#
+4500#Carta_Selada_do_Senhor_dos_Orcs#
+4848#Redução_Neutra1#
+4849#Redução_Humanóide1#
+4852#Fator_de_Cura5#
+4853#Super_Força#
+4854#Super_Agilidade#
+4855#Super_Vitalidade#
+4856#Super_Inteligência#
+4857#Super_Destreza#
+4858#Super_Sorte#
+4851#Fator_de_Cura4#
+4850#Fator_de_Cura3#
+4817#Pedra_de_Crítico_2#
+4816#Pedra_de_Crítico_3#
+4814#Pedra_de_Encantamento 2#
+4813#Pedra_de_Encantamento_3#
+4833#Pedra_da_Mira_Apurada_2#
+4834#Pedra_da_Mira_Apurada_3#
+4810#Espírito_do_Lutador_2#
+4809#Espírito_do_Lutador_3#
+
+//---------------------------2012 July Items---------------------------
+
+12787#Pergaminho_do_Diabolik#
+18638#Capacete_de_Limão#
+2576#Mochila_da_Aventura#
+12800#Pergaminho_do_Ktullanux#
+18657#Asas_de_Pégaso#
+12828#Ovo_de_Fogo#
+12822#Ovos_de_Chocolate_Branco[30]#
+
+//---------------------2012 August Items--------------------
+
+2176#Livro_Obscuro#
+18639#Quepe_da_Marinha#
+18590#Tiara_das_Cinco_Almas#
+18642#Máscara_de_Tesoura#
+18643#Máscara_de_Pedra#
+18644#Máscara_de_Papel#
+17181#Caixa_de_Madeira_Entalhada#
+14545#Super_Manual_de_Batalha#
+2164#Escudo_Brilhante#
+18631#Lacinho_da_Cozinheira#
+18645#Quepe_do_Marinheiro#
+18646#Gorro_da_Vaquinha#
 
 
 
