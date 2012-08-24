@@ -1680,7 +1680,11 @@ sub inventoryItemRemoved {
 	}
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
-		delete $char->{equipment}{arrow} if $char->{arrow} && $char->{arrow} == $item->{index};
+		if ($char->{arrow} && $char->{arrow} == $item->{index}) {
+			message TF("Run out of Arrow/Bullet: %s (%d)\n", $item->{name}, $invIndex), "inventory";
+			delete $char->{equipment}{arrow};
+			delete $char->{arrow};
+		}
 		$char->inventory->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
