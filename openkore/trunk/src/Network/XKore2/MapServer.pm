@@ -145,7 +145,13 @@ sub map_loaded {
 	foreach my $ID (keys %{$char->{statuses}}) {
 		while (my ($statusID, $statusName) = each %statusHandle) {
 			if ($ID eq $statusName) {
-				$output .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $char->{ID}, 1);
+#				$output .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $char->{ID}, 1);
+				if ($statusID == 673) {
+					# for Cart active
+					$output .= pack('C2 v a4 C V4', 0x3F, 0x04, $statusID, $char->{ID}, 1, 9999, 4, 0, 0);
+				} else {
+					$output .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $char->{ID}, 1);
+				}
 			}
 		}
 	}
@@ -181,6 +187,66 @@ sub map_loaded {
 			$output .= pack('C V v', $hotkeyList->[$i]->{type}, $hotkeyList->[$i]->{ID}, $hotkeyList->[$i]->{lv});
 		}
 		$client->send($output) if (@{$hotkeyList});
+	}
+
+	# Send cart information includeing the items
+	if ($cart{exists} || $char->cartActive) {
+		$output = pack('C2 v2 V2', 0x21, 0x01, $cart{items}, $cart{items_max}, ($cart{weight} * 10), ($cart{weight_max} * 10));
+		$client->send($output);
+		
+		my @stackable;
+		my @nonstackable;
+		for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
+			next if (!$cart{'inventory'}[$i] || !%{$cart{'inventory'}[$i]});
+			my $item = $cart{'inventory'}[$i];
+			$item->{index} = $i;
+			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10 || $item->{type} == 16) {
+				push @stackable, $item;
+			} else {
+				push @nonstackable, $item;
+			}
+		}
+		
+		# Send stackable item information
+		$output = '';
+		foreach my $item (@stackable) {
+			$output .= pack('v2 C2 v2',
+				$item->{index},
+				$item->{nameID},
+				$item->{type},
+				$item->{identified},  # identified
+				$item->{amount},
+				$item->{type_equip},
+			);
+		}
+		$output = $self->{recvPacketParser}->reconstruct({
+			switch => 'cart_items_stackable',
+			len => length($output) + 4,
+			data => $output
+		});
+		$client->send($output);
+		
+		# Send non-stackable item information
+		$output = '';
+		foreach my $item (@nonstackable) {
+			$output .= pack('v2 C2 v2 C2 a8',
+				$item->{index},
+				$item->{nameID},
+				$item->{type},
+				$item->{identified},  # identified
+				$item->{type_equip},
+				$item->{equipped},
+				$item->{broken},
+				$item->{upgrade},
+				$item->{cards},
+			);
+		}
+		$output = $self->{recvPacketParser}->reconstruct({
+			switch => 'cart_items_nonstackable',
+			len => length($output) + 4,
+			data => $output
+		});
+		$client->send($output);
 	}
 
 	# Sort items into stackable and non-stackable

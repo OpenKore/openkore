@@ -38,6 +38,8 @@ sub new {
 		actor_connected 0857
 		actor_moved 0858
 		account_id 0283
+		cart_items_nonstackable 0122
+		cart_items_stackable 0123
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
