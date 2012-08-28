@@ -960,7 +960,7 @@ sub actor_status_active {
 #	my ($type, $ID, $flag, $tick) = @{$args}{qw(type ID flag tick)};
 	my ($type, $ID, $flag, $tick, $unknown1, $unknown2, $unknown3) = @{$args}{qw(type ID flag tick unknown1 unknown2 unknown3)};
 	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
-	$cart{type} = $unknown1 if ($type == 673 && defined $unknown1); # for Cart active
+	$cart{type} = $unknown1 if ($type == 673 && defined $unknown1 && ($ID eq $accountID)); # for Cart active
 	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
 	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick == 9999 ? undef : $tick);
 }
