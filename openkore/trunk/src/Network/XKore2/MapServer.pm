@@ -20,7 +20,7 @@ use Globals qw(
 	$portalsList $npcsList $monstersList $playersList $petsList
 	@friendsID %friends %pet @partyUsersID %spells
 	@chatRoomsID %chatRooms @venderListsID %venderLists $hotkeyList
-	%config $questList
+	%config $questList %cart
 );
 use Base::Ragnarok::MapServer;
 use base qw(Base::Ragnarok::MapServer);
@@ -30,6 +30,7 @@ use Utils qw(shiftPack);
 
 use Log qw(debug);
 
+my $RunOnce = 1;
 
 # Overrided method.
 sub onClientNew {
@@ -148,7 +149,7 @@ sub map_loaded {
 #				$output .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $char->{ID}, 1);
 				if ($statusID == 673) {
 					# for Cart active
-					$output .= pack('C2 v a4 C V4', 0x3F, 0x04, $statusID, $char->{ID}, 1, 9999, 4, 0, 0);
+					$output .= pack('C2 v a4 C V4', 0x3F, 0x04, $statusID, $char->{ID}, 1, 9999, $cart{type}, 0, 0);
 				} else {
 					$output .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $char->{ID}, 1);
 				}
@@ -190,14 +191,15 @@ sub map_loaded {
 	}
 
 	# Send cart information includeing the items
-	if ( ($cart{exists} || $char->cartActive) &&
-	  (exists $self->{recvPacketParser}{packet_lut}{cart_items_stackable}) &&
-	  (exists $self->{recvPacketParser}{packet_lut}{cart_items_nonstackable}) ) {
+	if (($cart{exists} || $char->cartActive) && $RunOnce) {
+		$RunOnce = 0;
+
 		$output = pack('C2 v2 V2', 0x21, 0x01, $cart{items}, $cart{items_max}, ($cart{weight} * 10), ($cart{weight_max} * 10));
 		$client->send($output);
 		
 		my @stackable;
 		my @nonstackable;
+		my $n = 0;
 		for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
 			next if (!$cart{'inventory'}[$i] || !%{$cart{'inventory'}[$i]});
 			my $item = $cart{'inventory'}[$i];
@@ -211,27 +213,28 @@ sub map_loaded {
 		
 		# Send stackable item information
 		$output = '';
+		$n = 0;
 		foreach my $item (@stackable) {
-			$output .= pack('v2 C2 v2',
+			$output .= pack('v2 C2 v2 a8 l',
 				$item->{index},
 				$item->{nameID},
 				$item->{type},
 				$item->{identified},  # identified
 				$item->{amount},
 				$item->{type_equip},
+				$item->{cards},
+				$item->{expire},
 			);
+			$n++;
 		}
-		$output = $self->{recvPacketParser}->reconstruct({
-			switch => 'cart_items_stackable',
-			len => length($output) + 4,
-			data => $output
-		});
-		$client->send($output);
+		$output = pack('C2 v', 0xE9, 0x02, length($output) + 4) . $output;
+		$client->send($output) if ($n > 0);
 		
 		# Send non-stackable item information
 		$output = '';
+		$n = 0;
 		foreach my $item (@nonstackable) {
-			$output .= pack('v2 C2 v2 C2 a8',
+			$output .= pack('v2 C2 v2 C2 a8 l v2',
 				$item->{index},
 				$item->{nameID},
 				$item->{type},
@@ -241,14 +244,14 @@ sub map_loaded {
 				$item->{broken},
 				$item->{upgrade},
 				$item->{cards},
+				$item->{expire},
+				$item->{bindOnEquipType},
+				$item->{sprite_id},
 			);
+			$n++;
 		}
-		$output = $self->{recvPacketParser}->reconstruct({
-			switch => 'cart_items_nonstackable',
-			len => length($output) + 4,
-			data => $output
-		});
-		$client->send($output);
+		$output = pack('C2 v', 0xD2, 0x02, length($output) + 4) . $output;
+		$client->send($output) if ($n > 0);
 	}
 
 	# Sort items into stackable and non-stackable
