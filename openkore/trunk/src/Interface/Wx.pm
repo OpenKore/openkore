@@ -1296,6 +1296,27 @@ sub onMapMouseMove {
 	$walkable = $field->isWalkable($x, $y);
 	if ($x >= 0 && $y >= 0 && $walkable) {
 		$self->{mouseMapText} = TF("Mouse over: %s, %s", $x, $y);
+
+		foreach my $portal (@{$self->{mapViewer}->{portals}->{$field->baseName}}) {
+			if (distance($portal,{x=>$x,y=>$y}) <= ($config{wx_map_portalSticking} || 5)) {
+					$self->{mouseMapText} = TF("Portal at %s %s  -  Destination: %s, at %s %s", $x, $y, $portal->{destination}{field}, $portal->{destination}{x}, $portal->{destination}{y});
+				}
+			}
+		foreach my $monster (@{$self->{mapViewer}->{monsters}}) {
+			if (distance($monster->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_monsterSticking} || 1)) {
+				$self->{mouseMapText} = TF("%s at %s, %s", Actor::get($monster->{ID}), $x, $y);
+			}
+		}
+		foreach my $players (@{$self->{mapViewer}->{players}}) {
+			if (distance($players->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_playersSticking} || 1)) {
+				$self->{mouseMapText} = TF("%s at %s, %s  -  Class: %s", Actor::get($players->{ID}), $x, $y, $jobs_lut{$players->{jobID}});
+			}
+		}
+		foreach my $npc (@{$self->{mapViewer}->{npcs}}){
+			if (distance($npc->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_npcSticking} || 1)) {
+				$self->{mouseMapText} = TF("%s at %s, %s", Actor::get($npc->{ID}), $x, $y);
+			}
+		}
 	} else {
 		delete $self->{mouseMapText};
 	}
