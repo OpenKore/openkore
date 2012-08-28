@@ -507,6 +507,7 @@ sub new {
 		# '0859' => ['show_eq'],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
+		'08CB' => ['rates_info', 's4 a*', [qw(len exp death drop detail)]],
 	};
 
 	# Item RECORD Struct's
@@ -6306,6 +6307,34 @@ sub mail_return {
 	($args->{fail}) ?
 		error TF("The mail with ID: %s does not exist.\n", $args->{mailID}), "info" :
 		message TF("The mail with ID: %s is returned to the sender.\n", $args->{mailID}), "info";
+}
+
+# 08CB
+sub rates_info {
+	my ($self, $args) = @_;
+	my %rates = (
+		exp => { total => $args->{exp} },
+		death => { total => $args->{death} },
+		drop => { total => $args->{drop} },
+	);
+	
+	# get details
+	for (my $offset = 0; $offset < length($args->{detail}); $offset += 7) {
+		my ($type, $exp, $death, $drop) = unpack("C s3", substr($args->{detail}, $offset, 7));
+		$rates{exp}{$type} = $exp; $rates{death}{$type} = $death; $rates{drop}{$type} = $drop;
+	}
+	 
+	# we have 4 kinds of detail:
+	# $rates{exp or drop or death}{DETAIL_KIND}
+	# 0 = base server exp (?)
+	# 1 = premium acc additional exp
+	# 2 = server additional exp
+	# 3 = not sure, maybe it's for "extra exp" events? never seen this using the official client (bRO)
+	message T("=========================== Server Infos ===========================\n"), "info";
+	message TF("EXP Rates: %s\% (Base %s\% + Premium %s\% + Server %s\% + Plus %s\%) \n", $rates{exp}{total}, $rates{exp}{0}, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3}), "info";
+	message TF("Drop Rates: %s\% (Base %s\% + Premium %s\% + Server %s\% + Plus %s\%) \n", $rates{drop}{total}, $rates{drop}{0}, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3}), "info";
+	message TF("Death Penalty: %s\% (Base %s\% + Premium %s\% + Server %s\% + Plus %s\%) \n", $rates{death}{total}, $rates{death}{0}, $rates{death}{1}, $rates{death}{2}, $rates{death}{3}), "info";
+	message T("=====================================================================\n"), "info";
 }
 
 sub premium_rates_info {
