@@ -37776,3 +37776,104 @@ Location : ^777777Upper^000000    Weight : ^777777100^000000
 Level Requirement : ^77777720^000000 
 Job : ^777777All Job except Novice^000000
 #
+
+// ------- 2012. 8. 29 ----------------
+18571#
+The white cap is decorated with the white flowers, rumors said it will bring the luck to you.
+Cannot refine.
+EXP from defeated monster +3%.
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000 Weight : ^777777100^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+12791#
+The pill can increase the attack power temporary, but it will cause the side effect to body and concentration 
+Within 10 minutes, ATK & MATK+5%, MHP & MSP -3%.
+Weight : ^77777715^000000
+#
+17165#
+The toolkit filled with useful item for traveler. It contains 20 Blessing 10 Scroll and 20 Increase Agility 10 Scroll.
+^ff0000The scrolls are unable to trade after opened from toolkit^000000
+Weight : ^7777771^000000
+#
+5788#
+Magic attack to Neutral Type Monster +4%, Damage from Neutral Type Monster -5%.
+Series : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Middle ^000000Weight : ^77777720^000000
+Level Requirement : ^77777710^000000
+Job : ^777777All^000000
+#
+2579#
+The embroidered shawl can enhance the concentration of magic.
+MDEF +3.
+The SP consumption for all skill -5%, MaxSP +3%.
+If refined to +6 and above, MaxSP +3% in addition.
+Series : ^777777Garment^000000 Defense : ^7777778^000000
+Weight : ^77777770^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18673#
+The hat made according to the pope.
+MDEF +1, SP Recovery +2%.
+If equipped with Blush, SP Recovery +3% in addition.
+Cannot refine.
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Location: ^777777Upper ^000000 Weight : ^77777730^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+2176#
+The horrible curse book will be scared to death.
+MDEF +5.
+When receive physical attack, have chance to cause certain abnormal status to the enemies surrounding in 5*5 cells.
+If refined to +7 and above, have higher chance to cause abnormal status.
+If refined to +9 and above, the chance to cause abnormal status is increased additionally.
+Series : ^777777Shield^000000 Defense : ^77777780^000000
+Weight : ^77777750^000000
+Level Requirement : ^77777765^000000
+Job : ^777777All^000000
+#
+4537#
+HIT+50
+If compounded equipment is refined to +15 and above, HIT+75.
+Series : ^777777Card^000000
+Compound : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+18593#
+The small and beautiful red crown.
+MATK +3%, Variable Casting Time -3%, SP Consumption -3% when using skill.
+The recovery for healing skill +3%,
+INT +1, MDEF +5.
+If refined to +5 and above, MATK +1%.
+If refined to +7 and above, MATK +2%.
+Series : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Headgear ^000000Weight : ^77777710^000000
+Level Requirement : ^77777730^000000
+Job : ^777777All^000000
+#
+18657#
+The decoction is made with wing of Pegasus. It will enhance the speed according to wearer's ability.
+ASPD + 1%.
+Base Lv 100~149, ASPD + 2%.
+When Base Lv is 150 and above, ASPD +3%.
+Series : ^777777Headgear^000000 Defense : ^7777771^000000
+Location: ^777777Middle ^000000 Weight : ^77777750^000000
+Level Requirement : ^77777780^000000
+Job : ^777777All^000000
+#
+17071#
+^ff0000 unable to trade with other account.^000000
+A box has Superb Fish Slice 50. must careful on dealing with.
+^ff0000once opens, cannot refund .^000000
+weight : ^7777771^000000
+#
+14524#
+A slice of a very rare fish that can barely be caught once a year. It has the scent of blue sea.
+It recovers your SP and HP.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+

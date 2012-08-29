@@ -6020,3 +6020,18 @@
 18713#Monkey Fur Hat#
 18563#Heart Wing Hairband#
 5450#Sun Cap#
+
+// ------- 2012. 8. 29 ----------------
+18571#Lucky Hat#
+12791#Combat Pill#
+17165#Challenge Kit#
+5788#3D Glasses#
+2579#Magic Stole#
+18673#Tare Pope#
+2176#Dark Book#
+4537#Sealed Phreeoni Card#
+18593#Fancy Mini Crown#
+18657#Pegasus Wing Ears#
+17071#Superb Fish Box50#
+14524#Superb Fish Slice#
+
