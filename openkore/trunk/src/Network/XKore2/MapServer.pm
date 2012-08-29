@@ -143,15 +143,17 @@ sub map_loaded {
 	# Send more status information
 	# TODO: Find a faster/better way of doing this? This seems cumbersome.
 	$output = '';
-	foreach my $ID (keys %{$char->{statuses}}) {
-		while (my ($statusID, $statusName) = each %statusHandle) {
-			if ($ID eq $statusName) {
-#				$output .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $char->{ID}, 1);
-				if ($statusID == 673) {
-					# for Cart active
-					$output .= pack('C2 v a4 C V4', 0x3F, 0x04, $statusID, $char->{ID}, 1, 9999, $cart{type}, 0, 0);
-				} else {
-					$output .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $char->{ID}, 1);
+	if ($RunOnce) {
+		foreach my $ID (keys %{$char->{statuses}}) {
+			while (my ($statusID, $statusName) = each %statusHandle) {
+				if ($ID eq $statusName) {
+#					$output .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $char->{ID}, 1);
+					if ($statusID == 673) {
+						# for Cart active
+						$output .= pack('C2 v a4 C V4', 0x3F, 0x04, $statusID, $char->{ID}, 1, 9999, $cart{type}, 0, 0);
+					} else {
+						$output .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $char->{ID}, 1);
+					}
 				}
 			}
 		}
@@ -192,8 +194,6 @@ sub map_loaded {
 
 	# Send cart information includeing the items
 	if (($cart{exists} || $char->cartActive) && $RunOnce) {
-		$RunOnce = 0;
-
 		$output = pack('C2 v2 V2', 0x21, 0x01, $cart{items}, $cart{items_max}, ($cart{weight} * 10), ($cart{weight_max} * 10));
 		$client->send($output);
 		
@@ -530,6 +530,7 @@ sub map_loaded {
 	}
 	
 	$args->{mangle} = 2;
+	$RunOnce = 0;
 }
 
 sub restart {
