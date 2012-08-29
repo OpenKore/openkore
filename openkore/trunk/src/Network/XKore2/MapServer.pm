@@ -540,6 +540,7 @@ sub restart {
 	$client->send(pack('C3', 0x81, 0, 15));
 	
 	$args->{mangle} = 2;
+	$RunOnce = 1;
 }
 
 sub quit_request {
@@ -548,6 +549,7 @@ sub quit_request {
 	$client->send(pack('C*', 0x8B, 0x01, 0, 0));
 	
 	$args->{mangle} = 2;
+	$RunOnce = 1;
 }
 
 sub sync {
