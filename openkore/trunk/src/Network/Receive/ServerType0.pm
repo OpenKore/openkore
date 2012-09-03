@@ -6111,6 +6111,7 @@ sub vending_start {
 	my $msg_size = unpack("v1",substr($msg, 2, 2));
 
 	#started a shop.
+	message TF("Shop '%s' opened!\n", $shop{title}), "success";
 	@articles = ();
 	# FIXME: why do we need a seperate variable to track how many items are left in the store?
 	$articles = 0;
@@ -6142,6 +6143,7 @@ sub vending_start {
 			"list");
 	}
 	message(('-'x79)."\n", "list");
+	$shopstarted = 1;
 	$shopEarned ||= 0;
 }
 
