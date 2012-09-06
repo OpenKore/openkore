@@ -339,7 +339,7 @@ ASC_EDP#Enchant_Deadly_Poison#
 WE_BABY#Mom,_Dad,_I_love_you!#
 WE_CALLPARENT#Mom,_Dad,_I_miss_you!#
 WE_CALLBABY#Come_to_me,_honey~#
-TK_RUN#Sprint#				
+TK_RUN#Sprint#
 TK_READYSTORM#Tornado_Stance#
 TK_STORMKICK#Tornado_Kick#
 TK_READYDOWN#Heel_Drop_Stance#
@@ -355,7 +355,7 @@ TK_SPTIME#Happy_Break#
 TK_POWER#Kihop#
 TK_SEVENWIND#Mild_Wind#
 TK_HIGHJUMP#Leap#
-TK_MISSION#Taekwon_Mission#		
+TK_MISSION#Taekwon_Mission#
 SG_FEEL#Solar,_Lunar_and_Stellar_Perception#
 SG_SUN_WARM#Solar_Heat#
 SG_MOON_WARM#Lunar_Heat#
@@ -518,7 +518,7 @@ GS_DUST#Crowd_Control_Shot#
 GS_FULLBUSTER#Full_Blast#
 GS_SPREADATTACK#Spread_Shot#
 GS_GROUNDDRIFT#Gunslinger_Mine#
-ALL_INCCARRY#Enlarge_Weight_Limit#			
+ALL_INCCARRY#Enlarge_Weight_Limit#
 MS_BASH#Bash#
 MS_MAGNUM#Magnum_Break#
 MS_BOWLINGBASH#Bowling_Bash#
@@ -734,7 +734,7 @@ GC_CREATENEWPOISON#ew_Poison_Creation#
 GC_ANTIDOTE#Anti_Dote#
 GC_POISONINGWEAPON#Poisonous_Weapon#
 GC_WEAPONBLOCKING#Weapon_Blocking#
-GC_COUNTERSLASH#朝Counter_Slash#
+GC_COUNTERSLASH#īCounter_Slash#
 GC_WEAPONCRUSH#Weapon_Crush#
 GC_VENOMPRESSURE#Venom_Pressure#
 GC_POISONSMOKE#Poisonous_Smoke#
