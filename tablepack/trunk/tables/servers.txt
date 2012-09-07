@@ -465,7 +465,7 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
-serverEncoding Western
+serverEncoding Arabic
 gameGuard 1
 addTableFolders aRO;Old
 charBlockSize 112
