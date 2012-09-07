@@ -38,6 +38,7 @@ define_alias("Russian"				=> "cp1251");
 define_alias("Cyrillic"				=> "cp1251");
 define_alias("Japanese"				=> "Shift_JIS");
 define_alias("Thai"					=> "cp874");
+define_alias("Arabic"				=> "cp1256");
 
 ##
 # String I18N::bytesToString(Bytes data)
