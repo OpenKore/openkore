@@ -6035,3 +6035,10 @@
 17071#Superb Fish Box50#
 14524#Superb Fish Slice#
 
+// ------- 2012. 9. 5 ----------------
+13582#Convex Mirror Box5#
+12798#Zealotus Scroll#
+12792#Advance Combat Pill#
+18536#Foxtail#
+18747#Eyes Of Ifrit #
+18580#Yggdrasil Crown#
