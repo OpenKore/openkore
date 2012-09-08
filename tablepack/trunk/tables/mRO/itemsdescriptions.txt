@@ -37877,3 +37877,61 @@ It recovers your SP and HP.
 Weight : ^7777771^000000
 #
 
+// ------- 2012. 9. 5 ----------------
+13582#
+A box that contains 5 Convex Mirror.
+^ffffff_^000000
+Convex Mirror - When you use it, you will know the time a Boss Monster exists in the map. 
+If the Boss Monster exists, its location will be indicated on the mini map during the active duration of this item. Lasts for 10 minutes. 
+The effect will disappear when you leave the map or log out from the game.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+18534#
+a colorful mask that hide owner's identification, 
+there's a rumor that it make feel exciting when wears.
+STR + 1, ATK + 5%, Delay decrease 1% , refined will be MAXHP + 100 per 1
+Skill 'Mamer Night', 'Throwing money' will increase Damage 20%.
+Series : ^777777Headgear^000000 Defense : ^7777775^000000
+Location: ^777777Upper mid ^000000 Weight : ^777777100^000000
+Level Requirement : ^77777720^000000
+Jobs : ^777777All^000000
+#
+12798#
+The scroll can summon Zealotus
+The mercenary will disappear when the character is unable to fight.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12792#
+The pill can increase the attack power temporary, but it will cause the side effect to body and concentration 
+Within 10 minutes, ATK & MATK+10%, MHP & MSP -5%.
+Weight : ^77777715^000000
+#
+18536#
+The item in the mouth of wanderman when he lying.
+MATK +10, All stats casting -0.1 second.
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18747#
+The blinking eyes, looked palpitate dread.
+DEX + 1.
+Resistance to Curse +25%.
+Series : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Middle ^000000Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18580#
+The Crown woven from Yggdrasil's Branches represent that even after sacrifice, new life and ways open up.  
+VIT +2, INT +2.
+Chance to cast Blessing, Increase AGI or Heal when hit by monster
+If refined to +7 or higher, the chance goes up.
+Class : ^777777HeadGear^000000 Def : ^7777776^000000
+Position : ^777777Upper ^000000 Weight : ^77777720^000000
+Required LV : ^77777770^000000
+Job : ^777777All^000000
+#
