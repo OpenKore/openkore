@@ -3237,7 +3237,20 @@ sub cmdParty {
 			$messageSender->sendPartyJoin($incomingParty{ID}, $arg2);
 		}
 		undef %incomingParty;
-
+	} elsif ($arg1 eq "request" || $arg1 eq "share" || $arg1 eq "kick" || $arg1 eq "leader") {
+		my $party_admin;
+		# check if we are the party leader before using leader specific commands.
+		for (my $i = 0; $i < @partyUsersID; $i++) {
+			if (($char->{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) && ($char->{'party'}{'users'}{$partyUsersID[$i]}{'name'} eq $char->name)){
+				message T("You are a party leader.\n"), "info";
+				$party_admin = 1;
+			}
+		}
+		if (!$party_admin) {
+			error TF("Error in function 'party %s'\n" .
+			"You must be the party leader in order to use this !\n", $arg1);
+			return;
+		}
 	} elsif ($arg1 eq "request" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
 		error T("Error in function 'party request' (Request to Join Party)\n" .
 			"Can't request a join - you're not in a party.\n");
