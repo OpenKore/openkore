@@ -775,11 +775,12 @@ sub getCoordString {
 	my $nopadding = shift;
 	my $coords = "";
 
-	shiftPack(\$coords, 0x44, 8)
-		unless (($config{serverType} == 0) || $nopadding);
+	shiftPack(\$coords, 0x44, 8);
 	shiftPack(\$coords, $x, 10);
 	shiftPack(\$coords, $y, 10);
 	shiftPack(\$coords, 0, 4);
+	$coords = substr($coords, 1)
+		if (($config{serverType} == 0) || $nopadding);
 	
 	return $coords;
 }
@@ -790,11 +791,12 @@ sub getCoordString2 {
 	my $nopadding = shift;
 	my $coords = "";
 
-	shiftPack(\$coords, 0x44, 8)
-		unless (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5) || $nopadding);
+	shiftPack(\$coords, 0x44, 8);
 	shiftPack(\$coords, $x, 10);
 	shiftPack(\$coords, $y, 10);
 	shiftPack(\$coords, 0, 28);
+	$coords = substr($coords, 1)
+		if (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5) || $nopadding);
 	
 	return $coords;
 }
