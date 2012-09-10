@@ -3237,63 +3237,76 @@ sub cmdParty {
 			$messageSender->sendPartyJoin($incomingParty{ID}, $arg2);
 		}
 		undef %incomingParty;
-
-	} elsif ($arg1 eq "request" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-		error T("Error in function 'party request' (Request to Join Party)\n" .
-			"Can't request a join - you're not in a party.\n");
-	} elsif ($arg1 eq "request") {
-		unless ($arg2 =~ /\D/) {
-			if ($playersID[$arg2] eq "") {
-				error TF("Error in function 'party request' (Request to Join Party)\n" .
-					"Can't request to join party - player %s does not exist.\n", $arg2);
-			} else {
-				$messageSender->sendPartyJoinRequest($playersID[$arg2]);
-			}
-		} else {
-			$messageSender->sendPartyJoinRequestByName ($arg2);
-		}
-
 	} elsif ($arg1 eq "leave" && (!$char->{'party'} || !%{$char->{'party'}} ) ) {
 		error T("Error in function 'party leave' (Leave Party)\n" .
 			"Can't leave party - you're not in a party.\n");
 	} elsif ($arg1 eq "leave") {
 		$messageSender->sendPartyLeave();
+	# party leader specific commands
+	} elsif ($arg1 eq "request" || $arg1 eq "share" || $arg1 eq "kick" || $arg1 eq "leader") {
+		my $party_admin;
+		# check if we are the party leader before using leader specific commands.
+		for (my $i = 0; $i < @partyUsersID; $i++) {
+			if (($char->{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) && ($char->{'party'}{'users'}{$partyUsersID[$i]}{'name'} eq $char->name)){
+				message T("You are the party leader.\n"), "info";
+				$party_admin = 1;
+			}
+		}
+		if (!$party_admin) {
+			error TF("Error in function 'party %s'\n" .
+			"You must be the party leader in order to use this !\n", $arg1);
+			return;
+		} elsif ($arg1 eq "request" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
+			error T("Error in function 'party request' (Request to Join Party)\n" .
+				"Can't request a join - you're not in a party.\n");
+		} elsif ($arg1 eq "request") {
+			unless ($arg2 =~ /\D/) {
+				if ($playersID[$arg2] eq "") {
+					error TF("Error in function 'party request' (Request to Join Party)\n" .
+						"Can't request to join party - player %s does not exist.\n", $arg2);
+				} else {
+					$messageSender->sendPartyJoinRequest($playersID[$arg2]);
+				}
+			} else {
+				message TF("Requesting player %s to join your party.\n", $arg2);
+				$messageSender->sendPartyJoinRequestByName ($arg2);
+			}
+
+		} elsif ($arg1 eq "share" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
+			error T("Error in function 'party share' (Set Party Share EXP)\n" .
+				"Can't set share - you're not in a party.\n");
+		} elsif ($arg1 eq "share" && $arg2 ne "1" && $arg2 ne "0") {
+			error T("Syntax Error in function 'party share' (Set Party Share EXP)\n" .
+				"Usage: party share <flag>\n");
+		} elsif ($arg1 eq "share") {
+			$messageSender->sendPartyOption($arg2, 0);
 
 
-	} elsif ($arg1 eq "share" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-		error T("Error in function 'party share' (Set Party Share EXP)\n" .
-			"Can't set share - you're not in a party.\n");
-	} elsif ($arg1 eq "share" && $arg2 ne "1" && $arg2 ne "0") {
-		error T("Syntax Error in function 'party share' (Set Party Share EXP)\n" .
-			"Usage: party share <flag>\n");
-	} elsif ($arg1 eq "share") {
-		$messageSender->sendPartyOption($arg2, 0);
-
-
-	} elsif ($arg1 eq "kick" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-		error T("Error in function 'party kick' (Kick Party Member)\n" .
-			"Can't kick member - you're not in a party.\n");
-	} elsif ($arg1 eq "kick" && $arg2 eq "") {
-		error T("Syntax Error in function 'party kick' (Kick Party Member)\n" . 
-			"Usage: party kick <party member #>\n");
-	} elsif ($arg1 eq "kick" && $partyUsersID[$arg2] eq "") {
-		error TF("Error in function 'party kick' (Kick Party Member)\n" .
-			"Can't kick member - member %s doesn't exist.\n", $arg2);
-	} elsif ($arg1 eq "kick") {
-		$messageSender->sendPartyKick($partyUsersID[$arg2]
-				,$char->{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
-				
-	} elsif ($arg1 eq "leader" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-		error T("Error in function 'party leader' (Change Party Leader)\n" .
-			"Can't change party leader - you're not in a party.\n");	
-	} elsif ($arg1 eq "leader" && ($arg2 eq "" || $arg2 !~ /\d/)) {
-		error T("Syntax Error in function 'party leader' (Change Party Leader)\n" . 
-			"Usage: party leader <party member #>\n");			
-		} elsif ($arg1 eq "leader" && $partyUsersID[$arg2] eq "") {
-		error TF("Error in function 'party leader' (Change Party Leader)\n" .
-			"Can't change party leader - member %s doesn't exist.\n", $arg2);
-	} elsif ($arg1 eq "leader") {
-		$messageSender->sendPartyLeader($partyUsersID[$arg2]);
+		} elsif ($arg1 eq "kick" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
+			error T("Error in function 'party kick' (Kick Party Member)\n" .
+				"Can't kick member - you're not in a party.\n");
+		} elsif ($arg1 eq "kick" && $arg2 eq "") {
+			error T("Syntax Error in function 'party kick' (Kick Party Member)\n" . 
+				"Usage: party kick <party member #>\n");
+		} elsif ($arg1 eq "kick" && $partyUsersID[$arg2] eq "") {
+			error TF("Error in function 'party kick' (Kick Party Member)\n" .
+				"Can't kick member - member %s doesn't exist.\n", $arg2);
+		} elsif ($arg1 eq "kick") {
+			$messageSender->sendPartyKick($partyUsersID[$arg2]
+					,$char->{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
+					
+		} elsif ($arg1 eq "leader" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
+			error T("Error in function 'party leader' (Change Party Leader)\n" .
+				"Can't change party leader - you're not in a party.\n");	
+		} elsif ($arg1 eq "leader" && ($arg2 eq "" || $arg2 !~ /\d/)) {
+			error T("Syntax Error in function 'party leader' (Change Party Leader)\n" . 
+				"Usage: party leader <party member #>\n");			
+			} elsif ($arg1 eq "leader" && $partyUsersID[$arg2] eq "") {
+			error TF("Error in function 'party leader' (Change Party Leader)\n" .
+				"Can't change party leader - member %s doesn't exist.\n", $arg2);
+		} elsif ($arg1 eq "leader") {
+			$messageSender->sendPartyLeader($partyUsersID[$arg2]);
+		}
 	} else {
 		error T("Syntax Error in function 'party' (Party Management)\n" .
 			"Usage: party [<create|join|request|leave|share|kick|leader>]\n");
