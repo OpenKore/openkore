@@ -83,6 +83,7 @@ sub parseArrayFile {
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
 		$line =~ s/[\r\n\x{FEFF}]//g;
+		$line =~ s/\#$//g; # support msgstringtable.txt
 		push @lines, $line;
 	}
 	@{$r_array} = scalar(@lines) + 1;

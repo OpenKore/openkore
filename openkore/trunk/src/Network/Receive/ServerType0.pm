@@ -3420,7 +3420,10 @@ sub message_string {
 	} elsif ($args->{msg_id} == 0x04F5) {
 		message T("Your mercenary soldier has ran away.\n"), "info";
 		$self->mercenary_off ();
-
+		
+	} elsif (@msgTable[$args->{msg_id}++]) { # show message from msgstringtable
+		warning T(@msgTable[$args->{msg_id}++]."\n");
+		
 	} elsif ($args->{msg_id} ==	0x054D) {
 		message T("View player equip request denied.\n"), "info";
 
