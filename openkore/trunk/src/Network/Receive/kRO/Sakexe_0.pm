@@ -3367,9 +3367,16 @@ sub message_string {
 	} elsif ($args->{msg_id} == 0x04F5) {
 		message T("Your mercenary soldier has ran away.\n"), "info";
 		$self->mercenary_off ();
-								
+		
+	} elsif (@msgTable[$args->{msg_id}++]) { # show message from msgstringtable
+		warning T(@msgTable[$args->{msg_id}++]."\n");
+		
 	} elsif ($args->{msg_id} ==	0x054D) {
 		message T("View player equip request denied.\n"), "info";
+
+	} elsif ($args->{msg_id} == 0x06AF) {
+		message T("You need to be at least base level 10 to send private messages.\n"), "info";
+
 	} else {
 		warning TF("msg_id: %s gave unknown results in: %s\n", $args->{msg_id}, $self->{packet_list}{$args->{switch}}->[0]);
 	}
@@ -4842,14 +4849,25 @@ sub skill_use_failed {
 		6 => T('Wrong Weapon Type'),
 		7 => T('Red Gem Needed'),
 		8 => T('Blue Gem Needed'),
-		9 => '90% Overweight',
-		10 => T('Requirement')
+		9 => T('90% Overweight'),
+		10 => T('Requirement'),
+		13 => T('Need this within the water'),
+		29 => T('Must have at least 1% of base XP'),
+		83 => T('Location not allowed to create chatroom/market')
 		);
-	warning TF("Skill %s failed (%s)\n", Skill->new(idn => $skillID)->getName(), $failtype{$type}), "skill";
+	
+	my $errorMessage;
+	if (exists $failtype{$type}) {
+		$errorMessage = $failtype{$type};
+	} else {
+		$errorMessage = 'Unknown error';
+	}
+	
+	warning TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill";
 	Plugins::callHook('packet_skillfail', {
 		skillID     => $skillID,
 		failType    => $type,
-		failMessage => $failtype{$type}
+		failMessage => $errorMessage
 	});
 }
 
@@ -5995,6 +6013,7 @@ sub vending_start {
 			"list");
 	}
 	message(('-'x79)."\n", "list");
+	$shopstarted = 1;
 	$shopEarned ||= 0;
 }
 
