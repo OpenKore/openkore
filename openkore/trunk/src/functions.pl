@@ -261,7 +261,7 @@ sub loadDataFiles {
 	Settings::addTableFile('skillsencore.txt', loader => [\&parseList, \%skillsEncore]);
 	Settings::addTableFile('quests.txt', loader => [\&parseROQuestsLUT, \%quests_lut], mustExist => 0);
 	Settings::addTableFile('effects.txt', loader => [\&parseDataFile2, \%effectName], mustExist => 0);
-	Settings::addTableFile('msgstringtable.txt', loader => [\&parseArrayFile, \@msgTable]);
+	Settings::addTableFile('msgstringtable.txt', loader => [\&parseArrayFile, \@msgTable], mustExist => 0);
 
 	use encoding 'utf8';
 
