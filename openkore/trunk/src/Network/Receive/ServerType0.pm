@@ -4264,6 +4264,11 @@ sub received_characters {
 			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename) =
 			unpack($unpack_string, substr($args->{RAW_MSG}, $i));
 		$chars[$slot] = new Actor::You;
+
+		# Re-use existing $char object instead of re-creating it.
+		# Required because existing AI sequences (eg, route) keep a reference to $char.
+		$chars[$slot] = $char if $char && $char->{ID} == $accountID && $char->{charID} == $cID;
+
 		$chars[$slot]{ID} = $accountID;
 		$chars[$slot]{charID} = $cID;
 		$chars[$slot]{exp} = $exp;
