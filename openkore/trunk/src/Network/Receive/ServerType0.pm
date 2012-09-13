@@ -3405,33 +3405,36 @@ sub mercenary_off {
 sub message_string {
 	my ($self, $args) = @_;
 
-	if ($args->{msg_id} == 0x04F2) {
-		message T("Mercenary soldier's duty hour is over.\n"), "info";
-		$self->mercenary_off ();
-
-	} elsif ($args->{msg_id} == 0x04F3) {
-		message T("Your mercenary soldier has been killed.\n"), "info";
-		$self->mercenary_off ();
-
-	} elsif ($args->{msg_id} == 0x04F4) {
-		message T("Your mercenary soldier has been fired.\n"), "info";
-		$self->mercenary_off ();
-
-	} elsif ($args->{msg_id} == 0x04F5) {
-		message T("Your mercenary soldier has ran away.\n"), "info";
-		$self->mercenary_off ();
-		
-	} elsif (@msgTable[$args->{msg_id}++]) { # show message from msgstringtable
+	if (@msgTable[$args->{msg_id}++]) { # show message from msgstringtable
 		warning T(@msgTable[$args->{msg_id}++]."\n");
+		$self->mercenary_off() if ($args->{msg_id} >= 0x04F2 && $args->{msg_id} <= 0x04F5);
 		
-	} elsif ($args->{msg_id} ==	0x054D) {
-		message T("View player equip request denied.\n"), "info";
-
-	} elsif ($args->{msg_id} == 0x06AF) {
-		message T("You need to be at least base level 10 to send private messages.\n"), "info";
-
 	} else {
-		warning TF("msg_id: %s gave unknown results in: %s\n", $args->{msg_id}, $self->{packet_list}{$args->{switch}}->[0]);
+		if ($args->{msg_id} == 0x04F2) {
+			message T("Mercenary soldier's duty hour is over.\n"), "info";
+			$self->mercenary_off ();
+	
+		} elsif ($args->{msg_id} == 0x04F3) {
+			message T("Your mercenary soldier has been killed.\n"), "info";
+			$self->mercenary_off ();
+	
+		} elsif ($args->{msg_id} == 0x04F4) {
+			message T("Your mercenary soldier has been fired.\n"), "info";
+			$self->mercenary_off ();
+	
+		} elsif ($args->{msg_id} == 0x04F5) {
+			message T("Your mercenary soldier has ran away.\n"), "info";
+			$self->mercenary_off ();
+			
+		} elsif ($args->{msg_id} ==	0x054D) {
+			message T("View player equip request denied.\n"), "info";
+	
+		} elsif ($args->{msg_id} == 0x06AF) {
+			message T("You need to be at least base level 10 to send private messages.\n"), "info";
+	
+		} else {
+			warning TF("msg_id: %s gave unknown results in: %s\n", $args->{msg_id}, $self->{packet_list}{$args->{switch}}->[0]);
+		}
 	}
 }
 
