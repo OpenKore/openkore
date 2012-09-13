@@ -4267,7 +4267,7 @@ sub received_characters {
 
 		# Re-use existing $char object instead of re-creating it.
 		# Required because existing AI sequences (eg, route) keep a reference to $char.
-		$chars[$slot] = $char if $char && $char->{ID} == $accountID && $char->{charID} == $cID;
+		$chars[$slot] = $char if $char && $char->{ID} eq $accountID && $char->{charID} eq $cID;
 
 		$chars[$slot]{ID} = $accountID;
 		$chars[$slot]{charID} = $cID;
