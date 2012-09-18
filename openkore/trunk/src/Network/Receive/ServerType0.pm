@@ -134,7 +134,7 @@ sub new {
 		'00C3' => ['job_equipment_hair_change', 'a4 C2', [qw(ID part number)]],
 		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]],
 		'00C6' => ['npc_store_info'],
-		'00C7' => ['npc_sell_list'],
+		'00C7' => ['npc_sell_list', 'v a*', [qw(len itemsdata)]],
 		'00D1' => ['ignore_player_result', 'C2', [qw(type error)]],
 		'00D2' => ['ignore_all_result', 'C2', [qw(type error)]],
 		'00D4' => ['whisper_list'],
@@ -3525,6 +3525,13 @@ sub npc_sell_list {
 	}
 	undef $talk{buyOrSell};
 	message T("Ready to start selling items\n");
+	
+	debug "You can sell:\n", "info";
+	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
+		my ($index, $price, $price_overcharge) = unpack("v L L", substr($args->{itemsdata},$i,($i + 10)));
+		my $item = $char->inventory->getByServerIndex($index);
+		debug "[$item->{amount} x $item->{name}] for $price_overcharge z each. \n", "info";
+	}
 
 	# continue talk sequence now
 	$ai_v{npc_talk}{time} = time;

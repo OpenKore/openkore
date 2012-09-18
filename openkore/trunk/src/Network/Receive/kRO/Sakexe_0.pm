@@ -175,7 +175,7 @@ sub new {
 		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]], # 6
 		# 0x00c5 is sent packet
 		'00C6' => ['npc_store_info'], # -1
-		'00C7' => ['npc_sell_list'], # -1
+		'00C7' => ['npc_sell_list', 'v a*', [qw(len itemsdata)]], # -1
 		# 0x00c8 is sent packet
 		# 0x00c9 is sent packet
 		'00CA' => ['buy_result', 'C', [qw(fail)]], # 3
@@ -3483,6 +3483,13 @@ sub npc_sell_list {
 	}
 	undef $talk{buyOrSell};
 	message T("Ready to start selling items\n");
+	
+	debug "You can sell:\n", "info";
+	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
+		my ($index, $price, $price_overcharge) = unpack("v L L", substr($args->{itemsdata},$i,($i + 10)));
+		my $item = $char->inventory->getByServerIndex($index);
+		debug "[$item->{amount} x $item->{name}] for $price_overcharge z each. \n", "info";
+	}
 
 	# continue talk sequence now
 	$ai_v{npc_talk}{time} = time;
