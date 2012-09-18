@@ -3530,6 +3530,7 @@ sub npc_sell_list {
 	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
 		my ($index, $price, $price_overcharge) = unpack("v L L", substr($args->{itemsdata},$i,($i + 10)));
 		my $item = $char->inventory->getByServerIndex($index);
+		$item->{sellable} = 1; # flag this item as sellable
 		debug "[$item->{amount} x $item->{name}] for $price_overcharge z each. \n", "info";
 	}
 
