@@ -2484,10 +2484,10 @@
 // -------------- Additional Skill Item --------------
 1771#Faca Envenenada#
 7419#Guia de Criação de Embriões#
-12114#Conversor Elemental#
-12115#Conversor Elemental#
-12116#Conversor Elemental#
-12117#Conversor Elemental#
+12114#Conversor Elemental de Fogo#
+12115#Conversor Elemental de Água#
+12116#Conversor Elemental de Terra#
+12117#Conversor Elemental de Vento#
 12118#Poção Anti-Fogo#
 12119#Poção Anti-Água#
 12120#Poção Anti-Terra#
