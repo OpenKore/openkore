@@ -4299,14 +4299,28 @@ sub cmdStorage {
 	}
 }
 
+
+## cmdStorage_list
+##
+## Displays the contents of storage, or a subset indicated by switches.
+##
+## Called by: cmdStorage (not called directly)
+##  
+## Usage:
+##  cmdStorage_list(<list_type>)
+##
+##    Only uses the first parameter of the scalar passed.
+##    <list_type> ::= ''|eq|nu|u
+##
+##
 sub cmdStorage_list {
 	my $type = shift;
 	message "$type\n";
-	
+
 	my @useable;
 	my @equipment;
 	my @non_useable;
-	
+
 	for (my $i = 0; $i < @storageID; $i++) {
 		next if ($storageID[$i] eq "");
 		my $item = $storage{$storageID[$i]};
@@ -4317,22 +4331,31 @@ sub cmdStorage_list {
 			$eqp{binID} = $i;
 			$eqp{name} = $item->{name};
 			$eqp{type} = $itemTypes_lut{$item->{type}};
+			## Add amt so we can give quantities for ammo.
+			$eqp{amount} = $item->{amount};
 			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
 			push @equipment, \%eqp;
 		} else {
 			push @non_useable, $item;
 		}
 	}
-	
+
 	my $msg = T("-----------Storage-------------\n");
-	
+
 	if (!$type || $type eq 'eq') {
 		$msg .= T("-- Equipment --\n");
 		foreach my $item (@equipment) {
-			$msg .= sprintf("%-3d  %s (%s) %s\n", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
+			## altered to allow for Arrows/Ammo which will are stackable equip.
+			my $line = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
+			if ($item->{amount} > 1) {
+				$line .= " x $item->{amount}";
+			} else {
+				$line .= $item->{identified};
+			}
+			$msg .= $line . "\n";
 		}
 	}
-	
+
 	if (!$type || $type eq 'nu') {
 		$msg .= T("-- Non-Usable --\n");
 		for (my $i = 0; $i < @non_useable; $i++) {
@@ -4345,7 +4368,7 @@ sub cmdStorage_list {
 				[$binID, $display]);
 		}
 	}
-	
+
 	if (!$type || $type eq 'u') {
 		$msg .= T("-- Usable --\n");
 		for (my $i = 0; $i < @useable; $i++) {
@@ -4358,7 +4381,7 @@ sub cmdStorage_list {
 				[$binID, $display]);
 		}
 	}
-	
+
 	$msg .= "-------------------------------\n";
 	$msg .= TF("Capacity: %d/%d\n", $storage{items}, $storage{items_max});
 	$msg .= "-------------------------------\n";
