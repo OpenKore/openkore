@@ -94,8 +94,11 @@ sub new {
 		'0437' => ['character_move','a3', [qw(coords)]],
 		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
 		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
-		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]],
-		# not "buy", it sells items!
+		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]], # not "buy", it sells items!
+		'0802' => ['party_booking_req_register', 's8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
+		'0804' => ['party_booking_req_search', 's3 L s', [qw(level MapID job LastIndex ResultCount)]],
+		'0806' => ['party_booking_delete'],
+		'0808' => ['party_booking_req_update', 's6', [qw(job0 job1 job2 job3 job4 job5)]],
 		'0819' => ['buy_bulk_buyer', 'x2 x2 a4 a*', [qw(buyerID buyingStoreID zeny itemInfo)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;

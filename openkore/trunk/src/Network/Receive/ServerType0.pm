@@ -480,14 +480,13 @@ sub new {
 		'07FD' => ['special_item_obtain', 'v C v c/Z a*', [qw(len type nameID holder etc)]],
 		'07FE' => ['sound_effect', 'Z24', [qw(name)]],
 		'07FF' => ['define_check', 'v V', [qw(len result)]], #TODO: PACKET_ZC_DEFINE_CHECK
-
 		'0800' => ['vender_items_list', 'v a4 a4', [qw(len venderID venderCID)]], # -1
 		'0803' => ['booking_register', 'v', [qw(result)]],
-		'0805' => ['booking_search', 'v c V c24 V v3', [qw(len info index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
-		'0807' => ['booking_unregister', 'v', [qw(result)]],
-		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
-		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
-		'080B' => ['booking_delete', 'V', [qw(index)]],
+		'0805' => ['booking_ack_search', 's a a*', [qw(len IsExistMoreResult innerData)]],
+		'0807' => ['booking_ack_delete', 'v', [qw(result)]],
+		'0809' => ['booking_insert', 'L Z24 L v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
+		'080A' => ['booking_update', 'L v6', [qw(index job1 job2 job3 job4 job5 job6)]],
+		'080B' => ['booking_delete', 'L', [qw(index)]],
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade card1 card2 card3 card4)]], # 0x080F,20 # TODO: test & use type
 		'0810' => ['open_buying_store', 'c', [qw(amount)]],
@@ -3814,6 +3813,75 @@ sub party_leader {
 			$char->{party}{users}{$partyUsersID[$i]}{admin} = '';
 		}
 	}
+}
+
+# 0x803
+sub booking_register {
+	my ($self, $args) = @_;
+	my $result = $args->{result};
+
+	if ($result == 0) {
+	message T("Booking successfully created!\n"), "booking";
+	} elsif ($result == 2) {
+	error T("You already got a reservation group active!\n"), "booking";
+	} else {
+	error TF("Unknown error in creating the group booking (Error %s)\n", $result), "booking";
+	}
+}
+
+# 0x805
+sub booking_ack_search {
+	my ($self, $args) = @_;
+
+	if (length($args->{innerData}) == 0) {
+		error T("Without results!"), "booking";
+	}
+
+	message "-------------- Booking Search ---------------\n";
+	for (my $offset = 0; $offset < length($args->{innerData}); $offset += 48) {
+		my ($index, $charName, $expireTime, $level, $mapID, @job) = unpack("L Z24 L s8", substr($args->{innerData}, $offset, 48));
+		message swrite(T("Name: @<<<<<<<<<<<<<<<<<<<<<<<<	Index: @>>>>\n" .
+						 "Created: @<<<<<<<<<<<<<<<<<<<<<	Level: @>>>\n" .
+						 "MapID: @<<<<<\n".
+						 "Job: @<<<< @<<<< @<<<< @<<<< @<<<<\n" .
+						 "---------------------------------------------"),
+					   [$charName, $index, getFormattedDate($expireTime), $level, $mapID, @job]), "booking";
+	}
+}
+
+# 0x807
+sub booking_ack_delete {
+	my ($self, $args) = @_;
+	my $result = $args->{result};
+
+	if ($result == 0) {
+	message T("Reserve deleted successfully!\n"), "booking";
+	} elsif ($result == 3) {
+	error T("You're not with a group booking active!\n"), "booking";
+	} else {
+	error TF("Unknown error in deletion of group booking (Error %s)\n", $result), "booking";
+	}
+}
+
+# 0x809
+sub booking_insert {
+	my ($self, $args) = @_;
+
+	message TF("%s has created a new group booking (index: %s)\n", $args->{name}, $args->{index});
+}
+
+# 0x80A
+sub booking_update {
+	my ($self, $args) = @_;
+
+	message TF("Reserve index of %s has changed its settings\n", $args->{index});
+}
+
+# 0x80B
+sub booking_delete {
+	my ($self, $args) = @_;
+	
+	message TF("Deleted reserve group index %s\n", $args->{index});
 }
 
 sub party_hp_info {
