@@ -6,35 +6,35 @@
 1026 Munak
 1029 Isis
 1031 Poporing
-1035 Mosca Caçadora
+1035 Mosca CaÃ§adora
 1040 Golem
-1042 ChonChon de Aço
+1042 ChonChon de AÃ§o
 1049 Picky
 1052 Rocker
 1056 Fumacento
 1057 Yoyo
-1063 Lunático
+1063 LunÃ¡tico
 1077 Esporo Venenoso
-1101 Bafomé Jr
+1101 BafomÃ© Jr
 1107 Filhote de Lobo do Deserto
 1109 Deviruchi
 1110 Dokebi
 1113 Drops
 1122 Goblin (Adaga)
 1155 Petite Terrestre
-1167 Bebê Selvagem
+1167 BebÃª Selvagem
 1170 Sohee
 1179 Sussurro
 1188 Bongun
 1208 Andarilho
 1245 Goblin Natalino
 1275 Alice
-1299 Líder Goblin
+1299 LÃ­der Goblin
 1370 Succubus
 1374 Incubus 
 1379 Pesadelo Sombrio
 1382 Diabolik
-1385 Deletério
+1385 DeletÃ©rio
 1401 Shinobi
 1404 Boneco de Miyabi
 1416 Ninfa Perversa
@@ -46,7 +46,7 @@
 1513 Mao Guai
 1519 Chung E
 1536 Goblin (Machado)
-1538 Goblin (Maça)
+1538 Goblin (MaÃ§a)
 1586 Gato de Folha
 1630 Lady Branca
 1749 Medusa

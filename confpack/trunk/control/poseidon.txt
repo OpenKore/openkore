@@ -13,9 +13,9 @@ queryserver_port=24390
 # Server Type
 # Here you have to specify your current server type in order
 # to the poseidon operate properly !
-# The available server types for now are : BRO
-# Be aware that this setting is case sensitive !
-server_type=BRO
+# The available server types for now are : bRO
+# You should modify this if you're having problems with char list.
+server_type=bRO
 
 # Char Block Size
 # Here you can specify the desired CharBlockSize your client requires
@@ -25,4 +25,4 @@ CharBlockSize=116
 # Enable Packet ID Encryption
 # Here you can choose wether your client supports or not packet encryption
 # this is mostly used in bRO
-PacketIDEncryption=0
+PacketIDEncryption=1
