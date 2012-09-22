@@ -68,6 +68,7 @@ sub initHandlers {
 	bingbing           => \&cmdBingBing,
 	bg                 => \&cmdChat,
 	bl				   => \&cmdBuyerList,
+	booking			   => \&cmdBooking,
 	buy                => \&cmdBuy,
 	buyer			   => \&cmdBuyer,
 	c                  => \&cmdChat,
@@ -5081,6 +5082,66 @@ sub cmdBuyerList {
 	message("----------------------------------\n", "list");
 }
 
+sub cmdBooking {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	
+	if ($arg1 eq "search") {
+		$args =~ /^\w+\s([0-9]+)\s?([0-9]+)?\s?([0-9]+)?\s?([0-9]+)?\s?([0-9]+)?/;
+		# $1 -> level
+		# $2 -> MapID
+		# $3 -> job
+		# $4 -> ResultCount
+		# $5 -> LastIndex
+
+		$messageSender->sendPartyBookingReqSearch($1, $2, $3, $4, $5);
+	} elsif ($arg1 eq "recruit") {
+		$args =~ /^\w+\s([0-9]+)\s?([0-9]+)?\s?([0-9]+)?\s?([0-9]+)?\s?([0-9]+)?\s?([0-9]+)?\s?([0-9]+)?\s?([0-9]+)?/;
+		# $1      -> level
+		# $2      -> MapID
+		# $3 ~ $8 -> jobs
+
+		if (!$3) {
+			error T("Syntax Error in function 'recruit' (Booking recruit)\n" .
+				"Usage: booking recruit \"<level>\" \"<MapID>\" \"<job 1 ~ 6x>\"\n");
+			return;
+		}
+
+		# job null = 65535
+		my @jobList = (65535) x 6;
+		$jobList[0] = $3;
+		$jobList[1] = $4 if ($4);
+		$jobList[2] = $5 if ($5);
+		$jobList[3] = $6 if ($6);
+		$jobList[4] = $7 if ($7);
+		$jobList[5] = $8 if ($8);
+
+		$messageSender->sendPartyBookingRegister($1, $2, @jobList);
+	} elsif ($arg1 eq "update") {
+		$args =~ /^\w+\s([0-9]+)\s?([0-9]+)?\s?([0-9]+)?\s?([0-9]+)?\s?([0-9]+)?\s?([0-9]+)?/;
+
+		# job null = 65535
+		my @jobList = (65535) x 6;
+		$jobList[0] = $1;
+		$jobList[1] = $2 if ($2);
+		$jobList[2] = $3 if ($3);
+		$jobList[3] = $4 if ($4);
+		$jobList[4] = $5 if ($5);
+		$jobList[5] = $6 if ($6);
+
+		$messageSender->sendPartyBookingUpdate(@jobList);		
+	} elsif ($arg1 eq "delete") {
+		$messageSender->sendPartyBookingDelete();
+	} else {
+		error T("Syntax error in function 'booking'\n" .
+			"Usage: booking [<search | recruit | update | delete>]\n");
+	}
+}
 
 sub cmdBuyer {
 	if (!$net || $net->getState() != Network::IN_GAME) {

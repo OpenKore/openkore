@@ -95,6 +95,9 @@ Send a message in the battlegrounds chat.
 [bingbing]
 Does a bingbing body turn.
 
+[booking]
+Interact with a group booking
+
 [buy]
 Buy an item from the current NPC shop
 <store item #> [<amount>]	buy <amount> items from the 'store' list

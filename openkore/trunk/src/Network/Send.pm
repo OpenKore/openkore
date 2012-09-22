@@ -702,6 +702,46 @@ sub sendCloseShop {
 	debug "Shop Closed\n", "sendPacket", 2;
 }
 
+# 0x802
+sub sendPartyBookingRegister {
+	my ($self, $level, $MapID, @jobList) = @_;
+
+	$self->sendToServer($self->reconstruct({switch => 'party_booking_req_register', level => $level, MapID => $MapID,
+						job0 => @jobList[0], job1 => @jobList[1], job2 => @jobList[2],
+						job3 => @jobList[3], job4 => @jobList[4], job5 => @jobList[5]}));
+
+	debug "Sent Booking Register\n", "sendPacket", 2;
+}
+
+# 0x804
+sub sendPartyBookingReqSearch {
+	my ($self, $level, $MapID, $job, $LastIndex, $ResultCount) = @_;
+
+	$job = "65535" if ($job == 0); # job null = 65535
+	$ResultCount = "10" if ($ResultCount == 0); # ResultCount defaut = 10
+
+	$self->sendToServer($self->reconstruct({switch => 'party_booking_req_search', level => $level, MapID => $MapID, job => $job, LastIndex => $LastIndex, ResultCount => $ResultCount}));
+	debug "Sent Booking Search\n", "sendPacket", 2;
+}
+
+# 0x806
+sub sendPartyBookingDelete {
+	my $self = shift;
+	$self->sendToServer($self->reconstruct({switch => 'party_booking_delete'}));
+	debug "Booking Deleted\n", "sendPacket", 2;
+}
+
+# 0x808
+sub sendPartyBookingUpdate {
+	my ($self, @jobList) = @_;
+
+	$self->sendToServer($self->reconstruct({switch => 'party_booking_req_update', job0 => @jobList[0],
+						job1 => @jobList[1], job2 => @jobList[2], job3 => @jobList[3],
+						job4 => @jobList[4], job5 => @jobList[5]}));
+
+	debug "Sent Booking Update\n", "sendPacket", 2;
+}
+
 sub reconstruct_client_hash {
 	my ($self, $args) = @_;
 	
