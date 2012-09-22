@@ -16,7 +16,7 @@
 1063 Lunático
 1077 Esporo Venenoso
 1101 Bafomé Jr
-1107 Filhote de Lobo do Deserto
+1107 Filhote de Lobo
 1109 Deviruchi
 1110 Dokebi
 1113 Drops
