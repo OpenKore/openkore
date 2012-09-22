@@ -12,6 +12,10 @@ play 40
 # When disconnected, wait x seconds before reconnecting again
 reconnect 30
 
+# Wait x seconds for a poseidon reply before disconnecting
+# Ignore this if you don't use Poseidon Server
+poseidon_wait_reply 15
+
 # Activate AI after x seconds after the map's loaded
 ai 2
 

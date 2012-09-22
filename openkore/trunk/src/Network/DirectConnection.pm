@@ -359,7 +359,7 @@ sub checkConnection {
 			$conState = 1.2;
 			
 			# Saving Last Request Time (Logon) (GG/HS Query)
-			$self->{gstimeout} = time;			
+			$timeout{poseidon_wait_reply}{time} = time;			
 			
 			return;
 		}
@@ -401,7 +401,7 @@ sub checkConnection {
 		$timeout{'master'}{'time'} = time;
 	} elsif ($self->getState() == 1.2) {
 	# Checking if we succesful received the Game Guard Confirmation (Should Happen Sooner)
-		if ( time - $self->{gstimeout} > 10 )
+		if ( time - $timeout{poseidon_wait_reply}{time} > ($timeout{poseidon_wait_reply}{timeout} || 15) )
 		{
 			message T("The Game Guard Authorization Request\n");
 			message T("has timed out, please check your poseidon server !!\n");
