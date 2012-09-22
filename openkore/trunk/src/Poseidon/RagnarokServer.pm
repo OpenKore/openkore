@@ -310,9 +310,7 @@ sub ParsePacket
 		if ( $config{PacketIDEncryption} )
 		{
 			# Enable Decryption
-			$enc_val1 = Math::BigInt->new('0x6FEE49EE');
-			$enc_val2 = Math::BigInt->new('0x9EE09EE');
-			$enc_val3 = Math::BigInt->new('0x9EE09EE');
+			$enc_val1 = Math::BigInt->new('0x26977a6f');$enc_val3 = Math::BigInt->new('0x4dba6c1e');$enc_val2 = Math::BigInt->new('0x374e3b8e');
 		}
 		
 		# State
@@ -804,7 +802,7 @@ sub SendCharacterList
 	# Packet Len, Total Characters and Total Slots
 	my $totalchars = 2;
 	my $totalslots = 12;
-	my $len = ($blocksize * $totalchars) + 7; # 7 Is the Header Size (V V C3)		
+	my $len = ($blocksize * $totalchars) + (lc($config{server_type}) eq 'bro'?29:7); # v2 C5 a20 size for bRO
 	
 	# Character Block Pack String
 	my $packstring = '';
@@ -824,7 +822,12 @@ sub SendCharacterList
 	my($cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename) = 0;
 
 	# Preparing Begin of Character List Packet
-	my $data = $accountID . pack("v v C3", 0x6b, $len, $totalslots, -1, -1);		
+	my $data;
+	if (lc($config{server_type}) eq 'bro') {
+		$data = $accountID . pack("v2 C5 a20", 0x82d, $len,$totalchars,0,0,0,$totalchars,-0);
+	} else {
+		$data = $accountID . pack("v v C3", 0x6b, $len, $totalslots, -1, -1);
+	}
 	
 	# Character Block
 	my $block;
@@ -862,7 +865,7 @@ sub SendMapLogin {
 	# '0073' => ['map_loaded','x4 a3',[qw(coords)]]
 	my $data;
 	
-	if ( $config{server_type} ne "BRO" ) { $data .= $accountID; } #<- This is Server Type Based !!
+	if ( lc($config{server_type}) ne "bro" ) { $data .= $accountID; } #<- This is Server Type Based !!
 	$data .= pack("C*", 0x73, 0x00) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05);
 
 	if ($clientdata{$index}{mode}) {
