@@ -73,6 +73,10 @@ sub new {
 		'01DB' => ['secure_login_key_request'], # len 2
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
+		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
+		'0804' => ['booking_search', 'v3 L s', [qw(level MapID job LastIndex ResultCount)]],
+		'0806' => ['booking_delete'],
+		'0808' => ['booking_update', 'v6', [qw(job0 job1 job2 job3 job4 job5)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	

@@ -481,12 +481,12 @@ sub new {
 		'07FE' => ['sound_effect', 'Z24', [qw(name)]],
 		'07FF' => ['define_check', 'v V', [qw(len result)]], #TODO: PACKET_ZC_DEFINE_CHECK
 		'0800' => ['vender_items_list', 'v a4 a4', [qw(len venderID venderCID)]], # -1
-		'0803' => ['booking_register', 'v', [qw(result)]],
-		'0805' => ['booking_ack_search', 's a a*', [qw(len IsExistMoreResult innerData)]],
-		'0807' => ['booking_ack_delete', 'v', [qw(result)]],
-		'0809' => ['booking_insert', 'L Z24 L v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
-		'080A' => ['booking_update', 'L v6', [qw(index job1 job2 job3 job4 job5 job6)]],
-		'080B' => ['booking_delete', 'L', [qw(index)]],
+		'0803' => ['booking_register_request', 'v', [qw(result)]],
+		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
+		'0807' => ['booking_delete_request', 'v', [qw(result)]],
+		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
+		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
+		'080B' => ['booking_delete', 'V', [qw(index)]],
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade card1 card2 card3 card4)]], # 0x080F,20 # TODO: test & use type
 		'0810' => ['open_buying_store', 'c', [qw(amount)]],
@@ -3816,7 +3816,7 @@ sub party_leader {
 }
 
 # 0x803
-sub booking_register {
+sub booking_register_request {
 	my ($self, $args) = @_;
 	my $result = $args->{result};
 
@@ -3830,16 +3830,17 @@ sub booking_register {
 }
 
 # 0x805
-sub booking_ack_search {
+sub booking_search_request {
 	my ($self, $args) = @_;
 
 	if (length($args->{innerData}) == 0) {
 		error T("Without results!"), "booking";
+		return;
 	}
 
 	message "-------------- Booking Search ---------------\n";
 	for (my $offset = 0; $offset < length($args->{innerData}); $offset += 48) {
-		my ($index, $charName, $expireTime, $level, $mapID, @job) = unpack("L Z24 L s8", substr($args->{innerData}, $offset, 48));
+		my ($index, $charName, $expireTime, $level, $mapID, @job) = unpack("V Z24 V s8", substr($args->{innerData}, $offset, 48));
 		message swrite(T("Name: @<<<<<<<<<<<<<<<<<<<<<<<<	Index: @>>>>\n" .
 						 "Created: @<<<<<<<<<<<<<<<<<<<<<	Level: @>>>\n" .
 						 "MapID: @<<<<<\n".
@@ -3850,7 +3851,7 @@ sub booking_ack_search {
 }
 
 # 0x807
-sub booking_ack_delete {
+sub booking_delete_request {
 	my ($self, $args) = @_;
 	my $result = $args->{result};
 

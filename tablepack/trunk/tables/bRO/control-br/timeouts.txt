@@ -18,6 +18,10 @@ play 40
 # Quando desconectado, esperar x segundos antes de reconectar novamente
 reconnect 30
  
+# Espera x segundos por uma resposta do poseidon antes de desconectar-se
+# Ignore esta linha se você não usa Poseidon Server
+poseidon_wait_reply 15
+
 # Ativar AI antes de x segundos antes do mapa carregado
 ai 2
  
