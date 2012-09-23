@@ -706,7 +706,7 @@ sub sendCloseShop {
 sub sendPartyBookingRegister {
 	my ($self, $level, $MapID, @jobList) = @_;
 
-	$self->sendToServer($self->reconstruct({switch => 'party_booking_req_register', level => $level, MapID => $MapID,
+	$self->sendToServer($self->reconstruct({switch => 'booking_register', level => $level, MapID => $MapID,
 						job0 => @jobList[0], job1 => @jobList[1], job2 => @jobList[2],
 						job3 => @jobList[3], job4 => @jobList[4], job5 => @jobList[5]}));
 
@@ -720,14 +720,14 @@ sub sendPartyBookingReqSearch {
 	$job = "65535" if ($job == 0); # job null = 65535
 	$ResultCount = "10" if ($ResultCount == 0); # ResultCount defaut = 10
 
-	$self->sendToServer($self->reconstruct({switch => 'party_booking_req_search', level => $level, MapID => $MapID, job => $job, LastIndex => $LastIndex, ResultCount => $ResultCount}));
+	$self->sendToServer($self->reconstruct({switch => 'booking_search', level => $level, MapID => $MapID, job => $job, LastIndex => $LastIndex, ResultCount => $ResultCount}));
 	debug "Sent Booking Search\n", "sendPacket", 2;
 }
 
 # 0x806
 sub sendPartyBookingDelete {
 	my $self = shift;
-	$self->sendToServer($self->reconstruct({switch => 'party_booking_delete'}));
+	$self->sendToServer($self->reconstruct({switch => 'booking_delete'}));
 	debug "Booking Deleted\n", "sendPacket", 2;
 }
 
@@ -735,7 +735,7 @@ sub sendPartyBookingDelete {
 sub sendPartyBookingUpdate {
 	my ($self, @jobList) = @_;
 
-	$self->sendToServer($self->reconstruct({switch => 'party_booking_req_update', job0 => @jobList[0],
+	$self->sendToServer($self->reconstruct({switch => 'booking_update', job0 => @jobList[0],
 						job1 => @jobList[1], job2 => @jobList[2], job3 => @jobList[3],
 						job4 => @jobList[4], job5 => @jobList[5]}));
 

@@ -19,9 +19,9 @@ queryserver_port=24390
 # Tipo de Servidor
 # Aqui você tem que especificar o tipo de servidor atual,
 # para o poseidon funcionar correctamente!
-# O tipo de servidor disponível agora é apenas o BRO.
-# Esteja ciente de que esta definição é sensível a letras maiúsculas!
-server_type=BRO
+# O tipo de servidor disponível agora é apenas o bRO.
+# Você deve modificar esta linha se estiver tendo problema com a lista de personagens
+server_type=bRO
  
 # Tamanho de Bloco Char
 # Aqui você pode especificar o CharBlockSize desejado no seu cliente.
@@ -31,4 +31,4 @@ CharBlockSize=116
 # Ative o Packet ID Encryption alterando-o de 0 para 1.
 # Aqui você pode escolher a criptografia de tempo de pacotes que seu cliente suporta ou não.
 # Isto é usado principalmente no servidor bRO
-PacketIDEncryption=0
+PacketIDEncryption=1

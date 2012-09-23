@@ -501,6 +501,12 @@ sub new {
 		# // 0x020b,0
 		# // 0x020c,0
 		# 0x020d,-1 # TODO
+		'0803' => ['booking_register_request', 'v', [qw(result)]],
+		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
+		'0807' => ['booking_delete_request', 'v', [qw(result)]],
+		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
+		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
+		'080B' => ['booking_delete', 'V', [qw(index)]],
 	);
 
 	foreach my $switch (keys %packets) {
@@ -6838,6 +6844,76 @@ sub switch_character {
 	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
 	$net->serverDisconnect();
 	debug "result: $args->{result}\n";
+}
+
+# 0x803
+sub booking_register_request {
+	my ($self, $args) = @_;
+	my $result = $args->{result};
+
+	if ($result == 0) {
+	message T("Booking successfully created!\n"), "booking";
+	} elsif ($result == 2) {
+	error T("You already got a reservation group active!\n"), "booking";
+	} else {
+	error TF("Unknown error in creating the group booking (Error %s)\n", $result), "booking";
+	}
+}
+
+# 0x805
+sub booking_search_request {
+	my ($self, $args) = @_;
+
+	if (length($args->{innerData}) == 0) {
+		error T("Without results!"), "booking";
+		return;
+	}
+
+	message "-------------- Booking Search ---------------\n";
+	for (my $offset = 0; $offset < length($args->{innerData}); $offset += 48) {
+		my ($index, $charName, $expireTime, $level, $mapID, @job) = unpack("V Z24 V s8", substr($args->{innerData}, $offset, 48));
+		message swrite(T("Name: @<<<<<<<<<<<<<<<<<<<<<<<<	Index: @>>>>\n" .
+						 "Created: @<<<<<<<<<<<<<<<<<<<<<	Level: @>>>\n" .
+						 "MapID: @<<<<<\n".
+						 "Job: @<<<< @<<<< @<<<< @<<<< @<<<<\n" .
+						 "---------------------------------------------"),
+					   [$charName, $index, getFormattedDate($expireTime), $level, $mapID, @job]), "booking";
+	}
+}
+
+# 0x807
+sub booking_delete_request {
+	my ($self, $args) = @_;
+	my $result = $args->{result};
+
+	if ($result == 0) {
+	message T("Reserve deleted successfully!\n"), "booking";
+	} elsif ($result == 3) {
+	error T("You're not with a group booking active!\n"), "booking";
+	} else {
+	error TF("Unknown error in deletion of group booking (Error %s)\n", $result), "booking";
+	}
+}
+
+# 0x809
+sub booking_insert {
+	my ($self, $args) = @_;
+
+	message TF("%s has created a new group booking (index: %s)\n", $args->{name}, $args->{index});
+}
+
+# 0x80A
+sub booking_update {
+	my ($self, $args) = @_;
+
+	message TF("Reserve index of %s has changed its settings\n", $args->{index});
+}
+
+# 0x80B
+sub booking_delete {
+	my ($self, $args) = @_;
+	
+	message TF("Deleted reserve group index %s\n", $args->{index});
 }
 
 1;
