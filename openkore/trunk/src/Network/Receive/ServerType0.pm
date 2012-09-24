@@ -3205,7 +3205,10 @@ sub login_error {
 		error T("Please dial to activate the login procedure.\n"), "connection";
 		Plugins::callHook('dial');
 		relog(10);
+	} elsif ($args->{type} == ACCEPT_LOGIN_USER_PHONE_BLOCK) {
+		error T("Mobile Authentication: Max number of simultaneous IP addresses reached.\n"), "connection";
 	}
+
 	if ($args->{type} != REFUSE_INVALID_VERSION && $versionSearch) {
 		$versionSearch = 0;
 		writeSectionedFileIntact(Settings::getTableFilename("servers.txt"), \%masterServers);
