@@ -4230,6 +4230,7 @@ sub openShop {
 	$shop{title} = ($config{shopTitleOversize}) ? $shop{title} : substr($shop{title},0,36);
 	$messageSender->sendOpenShop($shop{title}, \@items);
 	message T("Trying to set up shop...\n"), "vending";
+	$shopstarted = 1;
 }
 
 sub closeShop {

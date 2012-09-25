@@ -6234,7 +6234,6 @@ sub vending_start {
 			"list");
 	}
 	message(('-'x79)."\n", "list");
-	$shopstarted = 1;
 	$shopEarned ||= 0;
 }
 
