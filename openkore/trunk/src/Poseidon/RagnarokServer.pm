@@ -310,7 +310,7 @@ sub ParsePacket
 		if ( $config{PacketIDEncryption} )
 		{
 			# Enable Decryption
-			$enc_val1 = Math::BigInt->new('0x146f5964');$enc_val3 = Math::BigInt->new('0x1fa30c53');$enc_val2 = Math::BigInt->new('0x76792070');
+			$enc_val1 = Math::BigInt->new('0x26977a6f');$enc_val3 = Math::BigInt->new('0x4dba6c1e');$enc_val2 = Math::BigInt->new('0x374e3b8e');
 		}
 		
 		# State
@@ -324,7 +324,7 @@ sub ParsePacket
 			pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) . $port;
 		
 		$client->send($data);
-	} elsif ($switch eq '088E' &&
+	} elsif ($switch eq '022D' &&
 		(length($msg) == 19) &&
 		(substr($msg, 2, 4) eq $accountID) &&
 		(substr($msg, 6, 4) eq $charID) &&
