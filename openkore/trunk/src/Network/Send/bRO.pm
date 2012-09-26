@@ -9,7 +9,7 @@
 #  also distribute the source code.											#
 #  See http://www.gnu.org/licenses/gpl.html for the full license.			#
 #############################################################################
-# bRO (Brasil)
+# bRO (Brazil)
 package Network::Send::bRO;
 use strict;
 use Globals;
@@ -25,19 +25,19 @@ sub new {
 	
 	my %packets = (
 
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0802' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0437' => ['character_move','a3', [qw(coords)]],		
 		'035F' => ['sync', 'V', [qw(time)]],
-		'0965' => ['actor_look_at', 'v C', [qw(head body)]],				
-		'07E4' => ['item_take', 'a4', [qw(ID)]],
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],		
-		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0898' => ['actor_look_at', 'v C', [qw(head body)]],				
+		'0369' => ['item_take', 'a4', [qw(ID)]],
+		'086C' => ['item_drop', 'v2', [qw(index amount)]],		
+		'091B' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'0941' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],	
-		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],	
-		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
-		'0944' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'088E' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],	
+		'0950' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'087A' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
@@ -47,19 +47,19 @@ sub new {
 		master_login 02B0
 		buy_bulk_vender 0801
 		party_setting 07D7
-		actor_action 0369
+		actor_action 0802
 		character_move 0437
 		sync 035F
-		actor_look_at 0965		
-		item_take 07E4
-		item_drop 0362
-		storage_item_add 07EC
-		storage_item_remove 0364
+		actor_look_at 0898		
+		item_take 0369
+		item_drop 086C
+		storage_item_add 091B
+		storage_item_remove 0941
 		skill_use_location 0438
 		actor_info_request 096A		
-		map_login 022D
-		party_join_request_by_name 0802
-		homunculus_command 0944	
+		map_login 088E
+		party_join_request_by_name 0950
+		homunculus_command 087A	
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -112,9 +112,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x0946, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x0931, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x0946, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x0931, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
@@ -172,11 +172,11 @@ sub sendPartyJoinRequestByName
 sub PrepareKeys()
 {
 	# K
-	$enc_val1 = Math::BigInt->new('0x26977a6f');
+	$enc_val1 = Math::BigInt->new('0x146f5964');
 	# M
-	$enc_val3 = Math::BigInt->new('0x4dba6c1e');
+	$enc_val3 = Math::BigInt->new('0x1fa30c53');
 	# A
-	$enc_val2 = Math::BigInt->new('0x374e3b8e');
+	$enc_val2 = Math::BigInt->new('0x76792070');
 }
 
 1;
