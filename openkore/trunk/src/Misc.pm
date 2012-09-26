@@ -2403,6 +2403,7 @@ sub setStatus {
 			message TF("Found perfectly hidden %s\n", $actor->nameString());
 			# message TF("Remove perfectly hidden %s\n", $actor->nameString());
 			# $npcsList->remove($actor);
+			Plugins::callHook('perfect_hidden_npc',{actor => $actor, changed => $changed});
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::Pet")) {
 			message TF("Found perfectly hidden %s\n", $actor->nameString());

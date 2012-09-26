@@ -62,7 +62,7 @@ sub __start {
 	}
 
 	if (!$options{quiet}) {
-		printf "Bus server started at port %d\n", $server->getPort();
+		printf "Bus server started at %s : %d\n", $server->getHost(), $server->getPort();
 	}
 	while (1) {
 		$server->iterate(-1);
