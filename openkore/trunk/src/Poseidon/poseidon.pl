@@ -42,6 +42,7 @@ sub initialize
 	print "Starting Poseidon 2.1 (26 Sep 2012)...\n";
 	$roServer = new Poseidon::RagnarokServer($config{ragnarokserver_port}, $config{ragnarokserver_ip});
 	print "Ragnarok Online Server Ready At : " . $config{ragnarokserver_ip} . ":" . $config{ragnarokserver_port} . "\n";
+	print "PacketIDEncryption ".($config{PacketIDEncryption}?"enabled":"disabled")." !\n"; 
 	$queryServer = new Poseidon::QueryServer($config{queryserver_port}, $config{queryserver_ip}, $roServer);
 	print "Query Server Ready At : " . $config{queryserver_ip} . ":" . $config{queryserver_port} . "\n";
 	print ">>> Poseidon 2.1 initialized <<<\n\n";
