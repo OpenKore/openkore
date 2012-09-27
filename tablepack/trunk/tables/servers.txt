@@ -313,7 +313,14 @@ recvpackets recvpackets-sakray.txt
 addTableFolders pRO
 
 ## http://www.raggame.ru/
-[Russia - rRO]
+[Russia - rRO-Renewal]
+serverType rRO-renewal
+serverEncoding Russian
+charBlockSize 132
+recvpackets recvpackets-renewal.txt
+addTableFolders rRO
+
+[Russia - rRO-old]
 ip 109.105.144.66
 port 6900
 master_version 25
