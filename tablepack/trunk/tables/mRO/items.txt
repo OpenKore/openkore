@@ -2394,7 +2394,7 @@
 5202#Fantastic Pumpkin Head#
 
 //-----------------  10.4 updata new item  -----------------
-// --------------- ? 海伊洛 官邸 任務 ----------------	
+// --------------- ? 海伊洛 官邸 任務 ----------------
 7487#Tavern Wine#
 7488#Delivery Box#
 7489#Villa Spare Key#
@@ -2420,7 +2420,7 @@
 7509#Fancy Key Card#
 7516#Green Key Card#
 
-// ------------- 第4季 物品 --------------	
+// ------------- 第4季 物品 --------------
 2357#Valkyrie Armor#
 2421#Valkyrie Shoes#
 2524#Valkyrie Manteau#
@@ -2429,18 +2429,18 @@
 7512#Burnt Parts#
 7513#Pocket Watch#
 
-// -------------- 海外活動物品 -------------	
+// -------------- 海外活動物品 -------------
 584#Fish Ball Soup#
 12133#Ice Cream#
 
-// -------------- 魔物賽? -----------------	
+// -------------- 魔物賽? -----------------
 7514#Monster Ticket#
 7515#Marvelous Medal#
 
-// --------------- 美國所?辦的活動---------------------	
+// --------------- 美國所?辦的活動---------------------
 12134#Red Envelope#
-	
-// --------------- ?品包物品 ----------------	
+
+// --------------- ?品包物品 ----------------
 5137#Alice Doll#
 5138#Magic Eyes#
 5139#Hibiscus#
@@ -2449,39 +2449,39 @@
 5142#Crescent Helm#
 5143#Kabuki Mask#
 
-// --------------- 菲律賓 -------------------	
+// --------------- 菲律賓 -------------------
 5144#Gambler Hat#
 
-// --------------- 美國 ---------------------	
+// --------------- 美國 ---------------------
 12135#Green Ale#
 7517#Gold Coin#
-	
-// ---------------- 巴西 ----------------	
+
+// ---------------- 巴西 ----------------
 7525#Summer Feast Ticket#
-	
-// --------------- 第4季活動 ---------------	
+
+// --------------- 第4季活動 ---------------
 7526#Manuscript Paper#
-	
-// --------------- 歐洲所?辦的活動 --------------	
+
+// --------------- 歐洲所?辦的活動 --------------
 585#Wurst#
-	
-// ---------------- 巴西 ----------------	
+
+// ---------------- 巴西 ----------------
 5145#Carnival Joker Jester#
-	
-// ------------------ 印度 --------------------	
+
+// ------------------ 印度 --------------------
 586#Mother's Cake#
-	
-// ------------------ 日本所?辦的活動 ---------------------	
+
+// ------------------ 日本所?辦的活動 ---------------------
 2669#Golden Necklace#
-	
-// ------------------ 階段物品 ---------------------	
+
+// ------------------ 階段物品 ---------------------
 12137#1st Stage Prize#
 12138#2nd Stage Prize#
 12139#3rd Stage Prize#
 12140#4th Stage Prize#
 12141#5th Stage Prize#
-	
-// ---------- 增加的職業群 - 神槍手 -----------	
+
+// ---------- 增加的職業群 - 神槍手 -----------
 13100#Six Shooter#
 13101#Six Shooter#
 13102#Crimson Bolt#
@@ -2511,7 +2511,7 @@
 13206#Blind Sphere#
 13207#Freezing Sphere#
 
-// ------------------ 增加 忍者 ------------------------	
+// ------------------ 增加 忍者 ------------------------
 13250#Shuriken#
 13251#Nimbus Shuriken#
 13252#Flash Shuriken#
@@ -2545,11 +2545,11 @@
 2119#Improved Arm Guard#
 2120#Improved Arm Guard#
 
-// ---------------印尼-----------------	
+// ---------------印尼-----------------
 7527#Life Book#
 12142#Magic Book#
-	
-// ---------------- 泰國 美國 菲律賓所?辦的活動 ----------------	
+
+// ---------------- 泰國 美國 菲律賓所?辦的活動 ----------------
 5146#Elephant Hat#
 5147#Baseball Cap#
 7528#Id Lottery Ticket#
@@ -2562,8 +2562,8 @@
 7535#Photo Album 02#
 7536#Photo Album 03#
 7537#Photo Album 04#
-	
-// ---------------- 波利金幣 -----------------	
+
+// ---------------- 波利金幣 -----------------
 12143#Red Can#
 7538#Sifted Sand#
 7539#Poring Coin#
@@ -3319,12 +3319,12 @@
 14542#Big_Defence_Potion#
 14543#Small_Magic_Defence_Potion#
 14544#Big_Magic_Defence_Potion#
-//----Russian Items------------			
+//----Russian Items------------
 5243#Chullos#
-591#Caviar_Pancake#		
-592#Jam_Pancake#		
-593#Honey_Pancake#		
-594#Sour-Cream_Pancake#		
+591#Caviar_Pancake#
+592#Jam_Pancake#
+593#Honey_Pancake#
+594#Sour-Cream_Pancake#
 595#Mushroom_Pancake#
 
 
@@ -3513,7 +3513,7 @@
 5292#Dragon_Skull#
 5294#Whisper_Mask#
 5181#Helm_of_Darkness#
-5138#Magic_Eyes#  
+5138#Magic_Eyes#
 5460#Evolved_Dragon_Skull#
 5461#Evolved_Whisper_Mask#
 
@@ -4013,12 +4013,12 @@
 14251#Dragoon_Ring_Box#
 2754#Hallow_Ring#
 2762#Dragoon_Ring#
-2753#Beholder_Ring#	
+2753#Beholder_Ring#
 2761#Satanic_Ring#
 14583#Green_Butterfly_Wing#
 14584#Red_Butterfly_Wing#
 14443#Pizza_Hat_Box#
-16193#Tuca_Hat_Box#	
+16193#Tuca_Hat_Box#
 16456#Ribbon of Bride Scroll#
 5567#Bright_Fury#
 14592#Job_Manual#
@@ -4031,10 +4031,10 @@
 5464#Zaha_Doll_Hat#
 14247#Fisher_Ring_Box#
 16194#Jaguar_Hat_Box#
-2756#Chemical_Ring# 
+2756#Chemical_Ring#
 5554#Octopus_Hat#
 2758#Fisher_Ring#
-5563#Dolor_Hat# 
+5563#Dolor_Hat#
 16244#Dolor_Hat_Box#
 
 16466#Egg Of Light Scroll#
@@ -5465,7 +5465,7 @@
 
 
 // ---------------- 2011-08-10 카드 교환 시스템 --------------------
-6379#Card Coin#	
+6379#Card Coin#
 5152#Chinese_Crown#
 5180#Holiday_Hat#
 
@@ -6042,3 +6042,38 @@
 18536#Foxtail#
 18747#Eyes Of Ifrit #
 18580#Yggdrasil Crown#
+
+// ------- 2012. 9. 19 ----------------
+16245#Full Moon Scroll#
+
+// ------- 2012. 9. 26 ----------------
+18707#Maneater Flower Hat#
+12801#Eddga Scroll#
+5319#Archangeling Hat#
+4538#Sealed White Lady Card#
+18701#Ancient Civil Man Hat#
+6635#Blacksmith Blessing#
+18740#RMSC2012 Special Costume#
+18745#Choco Stick In Mouth#
+18746#Chilly Breath#
+18748#Gold Ingot Poring Hat#
+18749#Majoruros Horn#
+18750#Poker Card In Mouth#
+4549#Upgrade Maya Puple Card#
+
+// ------- zhongqiujie ----------------
+6065#[Happy] Word Mooncake#
+6066#[Joyful] Word Mooncake#
+6067#[Celebrate] Word Mooncake#
+6068#Rabbit Skin#
+7411#Word Mooncake#
+12335#Yummy Skewered Dish#
+12336#Baked Mushroom#
+12337#Grilled Sausage#
+12338#Grilled Corn#
+5378#Rabbit Ear Hat#
+18805#Eclipse Hat#
+18806#Black Rabbit Hat#
+18807#White Citron Hat#
+18808#Wing Style Spectacle#
+4489#Sealed Pharaoh Card #
