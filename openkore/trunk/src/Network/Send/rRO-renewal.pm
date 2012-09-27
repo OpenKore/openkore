@@ -11,7 +11,7 @@
 #########################################################################
 # tRO (Thai) for 2008-09-16Ragexe12_Th
 # Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
-package Network::Send::rROphoenix;
+package Network::Send::rRO-renewal;
 
 use strict;
 use base 'Network::Send::ServerType0';
@@ -34,7 +34,6 @@ sub new {
 		'0113' => ['sendSkillUse'],
 		'0130' => ['sendEnteringVender'],
 		'0146' => ['sendTalkCancel'],
-#		'035F' => ['move','a4', [qw(coordString)]],
 		'0364' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'0365' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'08B8' => ['security_code'],#10
