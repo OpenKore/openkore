@@ -30,7 +30,7 @@ CREATE TABLE `shopcont` (
   `map` varchar(254) NOT NULL default '',
   `server` varchar(40) NOT NULL default 'Chaos',
   UNIQUE KEY `id` (`id`)
-) TYPE=MyISAM COMMENT='RO Shop Database';
+) ENGINE=MyISAM COMMENT='RO Shop Database';
     
 
 # --------------------------------------------------------
@@ -43,4 +43,4 @@ CREATE TABLE `shopvisit` (
   `server` varchar(40) NOT NULL default 'Chaos',
   UNIQUE KEY `id` (`id`),
   KEY `shopOwnerID` (`shopOwnerID`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
