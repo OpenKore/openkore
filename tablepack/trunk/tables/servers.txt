@@ -314,7 +314,7 @@ addTableFolders pRO
 
 ## http://www.raggame.ru/
 [Russia - rRO-Renewal]
-serverType rRO-renewal
+serverType rROrenewal
 serverEncoding Russian
 charBlockSize 132
 recvpackets recvpackets-renewal.txt

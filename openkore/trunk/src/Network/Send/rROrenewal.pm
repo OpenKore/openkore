@@ -11,7 +11,7 @@
 #########################################################################
 # tRO (Thai) for 2008-09-16Ragexe12_Th
 # Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
-package Network::Send::rRO-renewal;
+package Network::Send::rROrenewal;
 
 use strict;
 use base 'Network::Send::ServerType0';
