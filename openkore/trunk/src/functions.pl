@@ -275,9 +275,7 @@ sub loadDataFiles {
 	};
 	if (my $e = caught('UTF8MalformedException')) {
 		$interface->errorDialog(TF(
-			"The file %s must be valid UTF-8 encoded, which it is \n" .
-			"currently not. To solve this prolem, please use Notepad\n" .
-			"to save that file as valid UTF-8.",
+			"The file %s must be in UTF-8 encoding.",
 			$e->textfile));
 		exit 1;
 	} elsif (my $e = caught('FileNotFoundException')) {
