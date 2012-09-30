@@ -3,4 +3,5 @@ block.h
 engine.cpp
 engine.h
 PaddedPackets.xs
+README.TXT
 typedefs.h

@@ -1,9 +1,10 @@
+ClientReceive.pm
 DirectConnection.pm
+MessageTokenizer.pm
 PacketParser.pm
+PaddedPackets.pm
 Receive.pm
 Send.pm
-PaddedPackets.pm
-MessageTokenizer.pm
 XKore.pm
 XKore2.pm
 XKoreProxy.pm

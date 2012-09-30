@@ -2,6 +2,7 @@ functions.pl
 Actor.pm
 ActorList.pm
 AI.pm
+Branches.txt
 ChatQueue.pm
 Commands.pm
 Deal.pm
