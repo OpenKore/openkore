@@ -498,7 +498,7 @@ sub new {
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
 		'082D' => ['received_characters', 'v C x2 C2 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]],
 		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
-		'083E' => ['login_error', 'V Z20', [qw(type unknown)]],
+		'083E' => ['login_error', 'V Z20', [qw(type date)]],
 		'084B' => ['item_appeared', 'a4 v2 C v4', [qw(ID nameID unknown1 identified x y unknown2 amount)]], # 19 TODO   provided by try71023, modified sofax222
 		'0856' => ['actor_exists', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
 		'0857' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
