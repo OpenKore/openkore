@@ -2456,6 +2456,9 @@ sub stripLanguageCode {
 		if ($$r_msg =~ /^\|..(.*)/) {
 			$$r_msg = $1;
 			return 1;
+		} elsif ($$r_msg =~ /^(#main : \[.*\] )\|..(.*)/) {
+			$$r_msg = $1.$2;
+			return 1;
 		}
 		return 0;
 	} else {
