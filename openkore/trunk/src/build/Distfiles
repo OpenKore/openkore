@@ -1,8 +1,7 @@
-Do_Not_Compile_OpenKore.txt
-openkore.ico
+autoload.pl
 compile.bat
 compile-wx.bat
-autoload.pl
+Do_Not_Compile_OpenKore.txt
 dos2unix.pl
+openkore.ico
 unix2dos.pl
-compile-wx-readme.txt
