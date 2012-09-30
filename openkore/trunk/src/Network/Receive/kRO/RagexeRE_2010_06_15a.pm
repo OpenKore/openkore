@@ -26,7 +26,7 @@ sub new {
 	
 	my %packets = (
 		#'006A' => undef, # Athena still sends it
-		'083E' => ['login_error', 'V Z20', [qw(type unknown)]],
+		'083E' => ['login_error', 'V Z20', [qw(type date)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
