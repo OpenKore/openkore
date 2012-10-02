@@ -1,0 +1,1201 @@
+﻿// Novice Skills \\
+NV_BASIC#المهارات الأساسية#
+NV_FIRSTAID#االإسعاف#
+NV_TRICKDEAD#التظاهر بالموت#
+
+// Acolyte Skills \\
+AL_DP#الثوب السلبي#
+AL_DEMONBANE#وشاح العفريت#
+AL_RUWACH#رواك#
+AL_PNEUMA#نوما#
+AL_TELEPORT#التحرك الذاتي#
+AL_WARP#فتح بوابة#
+AL_HEAL#شفاء#
+AL_INCAGI#زيادة الخفة#
+AL_DECAGI#تخفيض الخفة#
+AL_HOLYWATER#أكوا بينيديكتا#
+AL_CRUCIS#سيجنوم كروشيس#
+AL_ANGELUS#الدرع المحصن#
+AL_BLESSING#تشجيع#
+AL_CURE#علاج#
+AL_HOLYLIGHT#ضوء التطهير#
+
+// Swordman Skills \\
+SM_SWORD#تعلم السيف#
+SM_TWOHAND#تعلم السيف ذو القبضتين#
+SM_RECOVERY#زيادة استرجاع نقاط الصحة#
+SM_BASH#الضربة العنيفة#
+SM_PROVOKE#استفزاز#
+SM_MAGNUM#ماجنوم بريك#
+SM_ENDURE#التحمل#
+SM_MOVINGRECOVERY#الشفاء أثناء الحركة#
+SM_FATALBLOW#الضربة الساحقة#
+SM_AUTOBERSERK#الهائج#
+
+// Mage Skills \\
+MG_SRECOVERY#زيادة استرجاع نقاط المهارة#
+MG_SIGHT#الرؤية#
+MG_NAPALMBEAT#ضربة نابالم#
+MG_SAFETYWALL#حائط الأمان#
+MG_SOULSTRIKE#ضربة الروح#
+MG_COLDBOLT#الصاعق البارد#
+MG_FROSTDIVER#غاطس التجمد#
+MG_STONECURSE#لعنة الحجر#
+MG_FIREBOLT#الصاعق الناري#
+MG_FIREBALL#كرة النار#
+MG_FIREWALL#الحائط الناري#
+MG_LIGHTNINGBOLT#صاعق البرق#
+MG_THUNDERSTORM#عاصفة الرعد#
+MG_ENERGYCOAT#غطاء الطاقة#
+
+// Merchant Skills \\
+MC_INCCARRY#زيادة مستوى الوزن#
+MC_DISCOUNT#التخفيض#
+MC_OVERCHARGE#زيادة السعر#
+MC_PUSHCART#عربة الدفع#
+MC_IDENTIFY#كشف الأداة#
+MC_VENDING#البيع#
+MC_MAMMONITE#مامونيتي#
+MC_CARTREVOLUTION#ثورة العربة#
+MC_CHANGECART#إستبدال العربة#
+MC_LOUD#الصراخ الجنوني#
+
+// Archer Skills \\
+AC_OWL#عين البوم#
+AC_VULTURE#عين النسر#
+AC_CONCENTRATION#تحسين التركيز#
+AC_DOUBLE#الضربة المزدوجة#
+AC_SHOWER#مطر السهام#
+AC_MAKINGARROW#صنع السهام#
+AC_CHARGEARROW#صد السهام#
+
+// Thief Skills \\
+TF_DOUBLE#الهجوم المزدوج#
+TF_MISS#تحسين المناورة#
+TF_STEAL#السرقة#
+TF_HIDING#الاختباء#
+TF_POISON#تسميم#
+TF_DETOXIFY#إزالة السم#
+TF_SPRINKLESAND#رش الرمال#
+TF_BACKSLIDING#الانزلاق إلى الوراء#
+TF_PICKSTONE#التقاط الحجر#
+TF_THROWSTONE#رمي الحجر#
+
+// Knight Skills \\
+KN_SPEARMASTERY#تعلم الرمح#
+KN_PIERCE#اختراق#
+KN_BRANDISHSPEAR#حمل الرمح#
+KN_SPEARSTAB#طعنة الرمح#
+KN_SPEARBOOMERANG#رمي الرمح#
+KN_TWOHANDQUICKEN#تسريع اليدين#
+KN_AUTOCOUNTER#صد الهجوم#
+KN_BOWLINGBASH#ضربة الدوران#
+KN_RIDING#ركوب البيكو بيكو#
+KN_CAVALIERMASTERY#تعلم الفروسية#
+KN_CHARGEATK#الهجوم الاندفاعي#
+KN_ONEHAND#تسريع اليد الواحدة#
+
+// Priest Skills \\
+PR_MACEMASTERY#فن المنجل#
+PR_IMPOSITIO#إيمبوسيتو مانوس#
+PR_SUFFRAGIUM#سفراجيوم#
+PR_ASPERSIO#أسبيرسيو#
+PR_BENEDICTIO#ب.س ساكرامينتي#
+PR_SANCTUARY#مأوى#
+PR_SLOWPOISON#السم البطيء#
+PR_STRECOVERY#تحسيين الحالة#
+PR_KYRIE#كايري إيليزن#
+PR_MAGNIFICAT#تكبير#
+PR_GLORIA#جلوريا#
+PR_LEXDIVINA#لكس ديفينا#
+PR_TURNUNDEAD#تغير الخلود#
+PR_LEXAETERNA#لعنة#
+PR_MAGNUS#ماقنوس إكزورسيموس#
+PR_REDEMPTIO#فداء#
+
+// Hunter Skills \\
+HT_SKIDTRAP#فخ الانزلاق#
+HT_LANDMINE#لغم أرضي#
+HT_ANKLESNARE#إمساك الكاحل#
+HT_SHOCKWAVE#فخ الصدمة#
+HT_SANDMAN#الرجل الترابي#
+HT_FLASHER#الومّاض#
+HT_FREEZINGTRAP#فخ التجميد#
+HT_BLASTMINE#لغم متفجر#
+HT_CLAYMORETRAP#فخ كلايمور#
+HT_REMOVETRAP#إزالة الفخ#
+HT_TALKIEBOX#الصندوق المتكلم#
+HT_BEASTBANE#هلاك الوحوش#
+HT_FALCON#فن الصقر#
+HT_STEELCROW#العتلة الفولاذية#
+HT_BLITZBEAT#الضربة الخاطفة#
+HT_DETECTING#اكتشاف#
+HT_SPRINGTRAP#فخ الزنبرك#
+HT_PHANTASMIC#سهام فانتاسميك#
+HT_POWER#اندفاع الوحش#
+
+// Wizard Skills \\
+WZ_FIREPILLAR#عمود النار#
+WZ_SIGHTRASHER#تدمير الرؤية#
+WZ_FIREIVY#لبلاب النار#
+WZ_METEOR#عاصفة النيازك#
+WZ_JUPITEL#رعد جوبيتل#
+WZ_VERMILION#لورد فيرميليون#
+WZ_WATERBALL#كرة الماء#
+WZ_ICEWALL#حائط الثلج#
+WZ_FROSTNOVA#صقيع نوفا#
+WZ_STORMGUST#هجوم العاصفة#
+WZ_EARTHSPIKE#وتد الأرض#
+WZ_HEAVENDRIVE#ضربة السماء#
+WZ_QUAGMIRE#كواجماير#
+WZ_ESTIMATION#الإحساس#
+WZ_SIGHTBLASTER#الرؤيه#
+
+// Assassin Skills \\
+AS_RIGHT#فن اليد اليمنى#
+AS_LEFT#فن اليد اليسرى#
+AS_KATAR#فن الكاتار#
+AS_CLOAKING#التخفّي#
+AS_SONICBLOW#ضربة سونيك#
+AS_GRIMTOOTH#السن الشرس#
+AS_ENCHANTPOISON#سحر السم#
+AS_POISONREACT#تفاعل السم#
+AS_VENOMDUST#غبار السم#
+AS_SPLASHER#نشر السم#
+AS_SONICACCEL#تسارع السونيك#
+AS_VENOMKNIFE#سم السكين#
+
+// Blacksmith Skills \\
+BS_IRON#صهر الحديد#
+BS_STEEL#صهر الفولاذ#
+BS_ENCHANTEDSTONE#الحجر المسحور#
+BS_ORIDEOCON#أبحاث الأوريديكون#
+BS_DAGGER#صنع الخنجر#
+BS_SWORD#صنع السيف#
+BS_TWOHANDSWORD#صنع سيف ذو قبضتين#
+BS_AXE#صنع الفأس#
+BS_MACE#صنع صولجان#
+BS_KNUCKLE#صنع سلاح المفاصل#
+BS_SPEAR#صنع الرمح#
+BS_HILTBINDING#جمع المقابض#
+BS_FINDINGORE#اكتشاف الخام#
+BS_WEAPONRESEARCH#أبحاث السلاح#
+BS_REPAIRWEAPON#تصليح السلاح#
+BS_SKINTEMPER#دباغة الجلود#
+BS_HAMMERFALL#سقوط المطرقة#
+BS_ADRENALINE#هجوم الأدرينالين#
+BS_WEAPONPERFECT#تحسين السلاح#
+BS_OVERTHRUST#إندفاع القوة#
+BS_MAXIMIZE#القوة القصوى#
+BS_UNFAIRLYTRICK#فن البيع المشبوه#
+BS_GREED#جشع#
+BS_ADRENALINE2 #هجوم الأدرينالين المتقدم#
+
+// Rogue Skills \\
+RG_SNATCHER#المحاصرة#
+RG_STEALCOIN#سرقة#
+RG_BACKSTAP#طعنة الظهر#
+RG_TUNNELDRIVE#تتبع#
+RG_RAID#الغارة#
+RG_STRIPWEAPON#خلع السلاح#
+RG_STRIPSHIELD#نزع الترس#
+RG_STRIPARMOR#خلع الدرع#
+RG_STRIPHELM#خلع الخوذة#
+RG_INTIMIDATE#الإختلاس#
+RG_GRAFFITI#شخبطة#
+RG_FLAGGRAFFITI#قطعة فنية#
+RG_CLEANER#تنظيف الشخبطة#
+RG_GANGSTER#عصابة#
+RG_COMPULSION#ازعاج#
+RG_PLAGIARISM#سرقة أدبية#
+RG_CLOSECONFINE#الاحتجاز القريب#
+
+// Alchemist Skills \\
+AM_AXEMASTERY#فن الفأس#
+AM_LEARNINGPOTION#أبحاث الجرع#
+AM_PHARMACY#الصيدلة#
+AM_DEMONSTRATION#قنبلة#
+AM_ACIDTERROR#أحماض الرعب#
+AM_POTIONPITCHER#جرعة المساعدة#
+AM_CANNIBALIZE#استدعاء فلورا#
+AM_SPHEREMINE#استدعاء كرة الأعماق#
+AM_CP_WEAPON#سلاح كيماوي#
+AM_CP_SHIELD#الترس المولّف#
+AM_CP_ARMOR#الدرع المولّف#
+AM_CP_HELM#خوذة كيماوية#
+AM_BERSERKPITCHER#جرعة الهائج المعاونة#
+AM_TWILIGHT1 #إنشاء الجرعة الروحية1#
+AM_TWILIGHT2 #إنشاء الجرعة الروحية2#
+AM_TWILIGHT3 #إنشاء الجرعة الروحية3#
+
+// Crusader Skills \\
+CR_TRUST#الثقة#
+CR_AUTOGUARD#الدفاع#
+CR_SHIELDCHARGE#هجوم الدرع#
+CR_SHIELDBOOMERANG#الدرع المرتد#
+CR_REFLECTSHIELD#درع العكس#
+CR_HOLYCROSS#الضوء المتقاطع#
+CR_GRANDCROSS#ضوء الهيبة#
+CR_DEVOTION#التضحية#
+CR_PROVIDENCE#روح المقاومة#
+CR_DEFENDER#هالة الدفاع#
+CR_SPEARQUICKEN#تسريع الرمح#
+CR_SHRINK#التقليص#
+
+// Monk Skills \\
+MO_IRONHAND#القبضات الحديدية#
+MO_SPIRITSRECOVERY#الإيقاع الروحي#
+MO_CALLSPIRITS#إستدعاء كرة روحية#
+MO_ABSORBSPIRITS#امتصاص الكرات الروحية#
+MO_TRIPLEATTACK#ضربة ترايفكتا المحتدمة#
+MO_BODYRELOCATION#تحرك مفاجيء#
+MO_DODGE#المناورة#
+MO_INVESTIGATE#المقتل الخفي#
+MO_FINGEROFFENSIVE#رمي الكرة الروحية#
+MO_STEELBODY#القوة الذهنية#
+MO_BLADESTOP#الإستئصال#
+MO_EXPLOSIONSPIRITS#الغضب#
+MO_EXTREMITYFIST#ضربة المقصلة#
+MO_CHAINCOMBO#ضربة الإحتدام الرباعية#
+MO_COMBOFINISH#ضربة الإحتدام القاضية#
+MO_KITRANSLATION#المنح الروحية#
+MO_BALKYOUNG#الكف المؤلمة#
+
+// Sage Skills \\
+SA_ADVANCEDBOOK#الدراسة#
+SA_CASTCANCEL#إلغاء الإلقاء#
+SA_MAGICROD#العصا السحرية#
+SA_SPELLBREAKER#كاسر السحر#
+SA_FREECAST#الإلقاء السهل#
+SA_AUTOSPELL#الإدراك#
+SA_FLAMELAUNCHER#منح اللهيب#
+SA_FROSTWEAPON#منح التسونامي#
+SA_LIGHTNINGLOADER#منح الإعصار#
+SA_SEISMICWEAPON#منح الزلزال#
+SA_DRAGONOLOGY#علم التنين#
+SA_VOLCANO#البركان#
+SA_DELUGE#الطوفان#
+SA_VIOLENTGALE#الزوبعة#
+SA_LANDPROTECTOR#الأرض المغناطيسية#
+SA_DISPELL#إزالة السحر#
+SA_CREATECON#انشاء محول العناصر#
+SA_ELEMENTWATER#تغيير عنصري الماء#
+SA_ELEMENTGROUND#تغيير عنصري الارض#
+SA_ELEMENTFIRE#تغيير عنصري النار#
+SA_ELEMENTWIND#تغيير عنصري الرياح#
+
+// Abracadabra Skills \\
+SA_ABRACADABRA#هوكس بوكس#
+SA_MONOCELL#الخلية المصغرة#
+SA_CLASSCHANGE#تغيير النوع#
+SA_SUMMONMONSTER#إستدعاء الوحوش#
+SA_REVERSEORCISH#مسخ#
+SA_DEATH#الموت#
+SA_FORTUNE#تحويل الذهب#
+SA_TAMINGMONSTER#تهجين الوحوش#
+SA_QUESTION#تساؤل#
+SA_GRAVITY#الجاذبية#
+SA_LEVELUP#زيادة التعلم#
+SA_INSTANTDEATH#الإنتحار#
+SA_FULLRECOVERY#إستعادة الشباب#
+SA_COMA#الغيبوبة#
+
+// Bard & Dance Skills \\
+BD_ADAPTATION#أمبير#
+BD_ENCORE#إعادة#
+BD_LULLABY#تهويدة#
+BD_RICHMANKIM#الإحساس الذهني#
+BD_ETERNALCHAOS#السلّم السفلي#
+BD_DRUMBATTLEFIELD#إيقاع المعركة#
+BD_RINGNIBELUNGEN#الإنطلاق المتناسق#
+BD_ROKISWEIL#الوتر الكلاسيكي#
+BD_INTOABYSS#وتر القوة#
+BD_SIEGFRIED#الإيقاع الصوتي#
+
+// Bard Skills \\
+BA_MUSICALLESSON#دروس الموسيقى#
+BA_MUSICALSTRIKE#هجوم الألحان#
+BA_DISSONANCE#لحن الغرام#
+BA_FROSTJOKE#الموسيقى المتحررة#
+BA_WHISTLE#التابلاتور المثالية#
+BA_ASSASSINCROSS#الريف العجيب#
+BA_POEMBRAGI#الوتر السحري#
+BA_APPLEIDUN#اغنية لوتي#
+BA_PANGVOICE#صوت الآلم#
+
+// Dancer Skills \\
+DC_DANCINGLESSON#دروس الرقص#
+DC_THROWARROW#السهم المتأرجح#
+DC_UGLYDANCE#هز#
+DC_SCREAM#الإبهار#
+DC_HUMMING#رقصة الباليه المركزة#
+DC_DONTFORGETME#مشية الجمال#
+DC_FORTUNEKISS#سيدة الحظ#
+DC_SERVICEFORYOU#قبلة الغجرية#
+DC_WINKCHARM#الغمزة الساحرة#
+
+// Wedding Skills \\
+WE_MALE#لمسة الحب#
+WE_FEMALE#الحب الأبدي#
+WE_CALLPARTNER#اللقاء الرومنسي#
+WE_BABY#أمي, أبي, أحبكما!#
+WE_CALLPARENT#أمي, أبي, أفتقدكما!#
+WE_CALLBABY#تعال إلي يا صغيري!#
+
+// Lord_Knight Skills \\
+LK_AURABLADE#هالة النصل#
+LK_PARRYING#صد#
+LK_CONCENTRATION#مولّد الرمح#
+LK_TENSIONRELAX#ارتخاء#
+LK_BERSERK#جنون#
+LK_SPIRALPIERCE#اللولب المتصادم#
+LK_HEADCRUSH#ضربة التعقيد النفسي#
+LK_JOINTBEAT#الضربة الحيوية#
+
+// Paladin Skills \\
+PA_GOSPEL#أنشودة الحرب#
+PA_PRESSURE#جلوريا دوميني#
+PA_SACRIFICE#حساب النضال#
+PA_SHIELDCHAIN#الضربه السريعة#
+
+// High Priest Skills \\
+HP_ASSUMPTIO#الإفتراض#
+HP_BASILICA#كاتدرائية#
+HP_MEDITATIO#التدبر#
+HP_MANARECHARGE#تدبير الروح#
+
+// High Wizard Skills \\
+HW_MAGICCRASHER#هراوة التحطيم#
+HW_MAGICPOWER#التضخيم الروحي#
+HW_NAPALMVULCAN#نابالم فولكان#
+HW_SOULDRAIN#امتصاص الروح#
+HW_GANBANTEIN#إلغاء مهارات الارض#
+HW_GRAVITATION#جاذبية الارض#
+
+// Champion Skills \\
+CH_CHAINCRUSH#ضربات السحق المتتالية#
+CH_PALMSTRIKE#ضربة المعصم القاضية#
+CH_SOULCOLLECT#زن#
+CH_TIGERFIST#الضربة الجليدية#
+
+// Professor Skills \\
+PF_HPCONVERSION#الإنغماس#
+PF_SOULCHANGE#زفرة الروح#
+PF_SOULBURN#إمتصاص الروح#
+PF_MEMORIZE#البصيرة#
+PF_FOGWALL#الضباب المعمي#
+PF_MINDBREAKER#مدمر العقول#
+PF_SPIDERWEB#حاجز الألياف#
+PF_DOUBLECASTING#ضربه مزدوجه#
+
+// Assassin Cross Skills \\
+ASC_BREAKER#مدمر الروح#
+ASC_EDP#تسميم بالسم المميت#
+ASC_CDP#تكوين السم المميت#
+ASC_KATAR#فن الكاتار المطور#
+ASC_METEORASSAULT#بطش النيازك#
+
+// Sniper Skills \\
+SN_SIGHT#عين الصقر#
+SN_FALCONASSAULT#بطش الصقر#
+SN_SHARPSHOOTING#هجوم السهام المركز#
+SN_WINDWALK#ماشي الرياح#
+
+// Whitesmith Skills \\
+WS_MELTDOWN#هجوم التكسير#
+WS_CREATECOIN#صناعة النقود#
+WS_CREATENUGGET#صناعة كتلة#
+WS_CARTBOOST#تدعيم العربه#
+WS_SYSTEMCREATE#صناعة آلة الهجوم الأوتوماتيكي#
+WS_WEAPONREFINE#تحديث السلاح#
+WS_CARTTERMINATION#اصطدام عالي السرعة العربة#
+WS_OVERTHRUSTMAX#إندفاع القوة الكبير#
+
+// Stalker Skills \\
+ST_CHASEWALK#الشبح#
+ST_REJECTSWORD#مضاد الغرائز#
+ST_PRESERVE#الحفظ#
+ST_FULLSTRIP#التعرية الكاملة#
+
+// Clown & Gypsy Skills \\
+CG_ARROWVULCAN#فولكان الأسهم#
+CG_MOONLIT#الحماية الناعمة#
+CG_MARIONETTE#التحكم بالدمى#
+CG_LONGINGFREEDOM#الشوق للحرية#
+CG_HERMODE#عصا هرمود#
+CG_TAROTCARD#بطاقة تاروت المصيرية#
+
+// Creator Skills \\
+CR_ACIDDEMONSTRATION#قنبلة الحمض#
+CR_SLIMPITCHER#جرعة الدعم المركزة#
+CR_FULLPROTECTION#حماية كيماوية كاملة#
+CR_CULTIVATION#زراعة النباتات#
+
+// Homunculus Skills \\
+AM_BIOETHICS#أخلاقيات علوم الاحياء#
+AM_BIOTECHNOLOGY#التكنولوجيا الحيوية#
+AM_CREATECREATURE#الإنشاء الحيوي#
+AM_CULTIVATION#الزراعة#
+AM_FLAMECONTROL#التحكم في اللهب#
+AM_CALLHOMUN#إستدعاء الهومونكولس#
+AM_REST#تبخير#
+AM_DRILLMASTER#سيد الحفر#
+AM_HEALHOMUN#علاج الهومونكولس#
+AM_RESURRECTHOMUN#إنعاش الهومونكولس#
+
+// LIF Skills \\
+HLIF_HEAL#Touch_of_Heal#
+HLIF_AVOID#Emergency_Avoid#
+HLIF_BRAIN#Brain_Surgery#
+HLIF_CHANGE#Mental_Change#
+
+// AMISTR Skills \\
+HAMI_CASTLE#Castling#
+HAMI_DEFENCE#Defense#
+HAMI_SKIN#Adamantium_Skin#
+HAMI_BLOODLUST#Blood_Lust#
+
+// FILIR Skills \\
+HFLI_MOON#Moonlight#
+HFLI_FLEET#Fleet_Move#
+HFLI_SPEED#Over_Speed#
+HFLI_SBR44#S.B.R.44#
+
+// VANILMIRTH Skills \\
+HVAN_CAPRICE#Caprice#
+HVAN_CHAOTIC#Chaotic_Benediction#
+HVAN_INSTRUCT#Change_Instruction#
+HVAN_EXPLOSION#Bio_Explosion#
+
+// Guild Skills \\
+GD_APPROVAL#إعتماد النقابة الرسمي#
+GD_KAFRACONTRACT#عقد تجاري مع كابرا#
+GD_GUARDRESEARCH#أبحاث الحماة#
+GD_GUARDUP#تقوية الحماة#
+GD_EXTENSION#تكبير النقابة#
+GD_GLORYGUILD#مجد النقابة#
+GD_LEADERSHIP#القيادة العظيمة#
+GD_GLORYWOUNDS#جراح المجد#
+GD_SOULCOLD#القلب البارد#
+GD_HAWKEYES#النظرة الصارمة#
+GD_BATTLEORDER#أوامر المعركة#
+GD_REGENERATION#تجديد الجسد و الذهن#
+GD_RESTORE#ترميم الجراح#
+GD_EMERGENCYCALL#الإستدعاء العاجل#
+GD_DEVELOPMENT#التطوير المستمر#
+GD_ITEMEMERGENCYCALL#إستدعاء الادوات الاسطورية#
+
+// Item Skills \\
+ITM_TOMAHAWK#رمي التوماهوك#
+
+// TaeKwon Girl/Boy Skills \\
+TK_RUN#الركض#
+TK_READYSTORM#وضع الاعصار#
+TK_STORMKICK#ضربة الاعصار#
+TK_READYDOWN#وضع سقوط الكعب#
+TK_DOWNKICK#سقوط الكعب#
+TK_READYTURN#وضع المنزل المستدير#
+TK_TURNKICK#المنزل المستدير#
+TK_READYCOUNTER#وضع الضربة المضادة#
+TK_COUNTER#الضربة المضادة#
+TK_DODGE#الاسقاط#
+TK_JUMPKICK#الضربة الطائرة#
+TK_HPTIME#الضربة السلمية#
+TK_SPTIME#الضربة السعيدة#
+TK_POWER#كيهوب#
+TK_SEVENWIND#الرياح اللطيفة#
+TK_MISSION#مهمة التايكوندو#
+TK_HIGHJUMP#القفز#
+
+// Star Gladiator Skills \\
+SG_FEEL#الادراك الشمسي و القمري و النجمي#
+SG_SUN_WARM#الحرارة الشمسية#
+SG_MOON_WARM#الحرارة القمرية#
+SG_STAR_WARM#الحرارة النجمية#
+SG_SUN_COMFORT#الحماية الشمسية#
+SG_MOON_COMFORT#الحماية القمرية#
+SG_STAR_COMFORT#الحماية النجمية#
+SG_HATE#التعارض الشمسي و القمري و النجمي#
+SG_SUN_ANGER#الغضب الشمسي#
+SG_MOON_ANGER#الغضب القمري#
+SG_STAR_ANGER#الغضب النجمي#
+SG_SUN_BLESS#البركات الشمسية#
+SG_MOON_BLESS#البركاتة القمرية#
+SG_STAR_BLESS#البركاتة النجمية#
+SG_DEVIL#الظلال الشمسية و القمرية و النجمية#
+SG_FRIEND#الفريق الشمسي و القمري و النجمي#
+SG_KNOWLEDGE#المبعوث الشمسي و القمري و النجمي#
+SG_FUSION#الاتحاد الشمسي و القمري و النجمي#
+
+// Soul Linker Skills \\
+SL_ALCHEMIST#روح الكيميائي#
+SL_MONK#روح الناسك#
+SL_STAR#روح المعلم الاول#
+SL_SAGE#روح الحكيم#
+SL_CRUSADER#روح المناضل#
+SL_SUPERNOVICE#روح المبتدئ الخارق#
+SL_KNIGHT#روح الفارس#
+SL_WIZARD#روح الساحر#
+SL_PRIEST#روح الطبيب#
+SL_BARDDANCER#روح المغني و الراقصة#
+SL_ROGUE#روح المحتال#
+SL_ASSASIN#روح القاتل الاجير#
+SL_BLACKSMITH#روح الحداد#
+SL_HUNTER#روح الصياد#
+SL_SOULLINKER#روح رابط الارواح#
+SL_HIGH#الروح العالية الاولى#
+SL_KAIZEL#كايزل#
+SL_KAAHI#كاهي#
+SL_KAUPE#كوبي#
+SL_KAITE#كايت#
+SL_KAINA#كيانا#
+SL_STIN#إيستن#
+SL_STUN#إيستون#
+SL_SMA#إيسما#
+SL_SWOO#إيسوو#
+SL_SKE#إيسكس#
+SL_SKA#إيسكا#
+
+// Ninja Skills \\
+NJ_TOBIDOUGU#تمرين رمي الخنجر#
+NJ_SYURIKEN#رمي الخنجر#
+NJ_KUNAI#رمي الكوناي#
+NJ_HUUMA#رمي الخنجر البشري#
+NJ_ZENYNAGE#رمي العملات#
+NJ_TATAMIGAESHI#قلب تاتامي#
+NJ_KASUMIKIRI#قاصم الضباب#
+NJ_SHADOWJUMP#قفزة الظل#
+NJ_KIRIKAGE#ظلال المشرط#
+NJ_UTSUSEMI#تناثر جلد السيكادا#
+NJ_BUNSINJYUTSU#صورة المرآه#
+NJ_NINPOU#فن النينجا#
+NJ_KOUENKA#اشعال البتليات#
+NJ_KAENSIN#درع اللهب#
+NJ_BAKUENRYU#تفجير التنين#
+NJ_HYOUSENSOU#تجميد الرمح#
+NJ_SUITON#هروب الماء#
+NJ_HYOUSYOURAKU#سحب قشور الثلج#
+NJ_HUUJIN#نصل الرياح#
+NJ_RAIGEKISAI#هزة البرق#
+NJ_KAMAITACHI#الرياح الاولى#
+NJ_NEN#هالة النينجا#
+NJ_ISSEN#الهجوم القاتل#
+
+// Gunslinger Skills \\
+GS_GLITTERING#قلب العملة#
+GS_FLING#إلقاء العملة#
+GS_TRIPLEACTION#الفعل الثلاثي#
+GS_BULLSEYE#عين الثور#
+GS_MADNESSCANCEL#الوقفة الاخيرة#
+GS_ADJUSTMENT#رعب رامي البندقية#
+GS_INCREASING#زيادة الدقة#
+GS_MAGICALBULLET#الرصاصة السحرية#
+GS_CRACKER#الكذاب#
+GS_SINGLEACTION#الفعل الفردي#
+GS_SNAKEEYE#عيون الثعبان#
+GS_CHAINACTION#الفعل المتسلسل#
+GS_TRACKING#التتبع#
+GS_DISARM#نزع السلاح#
+GS_PIERCINGSHOT#الضربة الجارحة#
+GS_RAPIDSHOWER#إطلاق الضربة السعيدة#
+GS_DESPERADO#المجرم اليائس#
+GS_GATLINGFEVER#الحمى النيرانية#
+GS_DUST#الضربة الحاكمة للزحام#
+GS_FULLBUSTER#الانفجار الكامل#
+GS_SPREADATTACK#الضربة المنتشرة#
+GS_GROUNDDRIFT#منجم رامي البندقية#
+
+// Dark Collector Skills \\
+MB_FIGHTING#Munak_Fighting#
+MB_NEUTRAL#Bongun_Neutral#
+MB_TAIMING_PUTI#Pet_Friend#
+MB_WHITEPOTION#Ordering_White_Potion#
+MB_MENTAL#Ordering_Mental#
+MB_CARDPITCHER#Card_Pitcher#
+MB_PETPITCHER#Pet_Pitcher#
+MB_BODYSTUDY#Body_Studying#
+MB_BODYALTER#Body_Altering#
+MB_PETMEMORY#Pet_Memory#
+MB_M_TELEPORT#Munak_Teleport#
+MB_B_GAIN#Bongun_Gain#
+MB_M_GAIN#Munak_Gain#
+MB_MISSION#Taming_Mission#
+MB_MUNAKKNOWLEDGE#Taming_Master#
+MB_MUNAKBALL#Munak_Ball#
+MB_SCROLL#Bongun_Scroll#
+MB_B_GATHERING#Bongun_Gathering#
+MB_M_GATHERING#Munak_Gathering#
+MB_B_EXCLUDE#Bongun_Exclude#
+MB_B_DRIFT#Bongun_Drift#
+MB_B_WALLRUSH#Bongun_Wall_Rush#
+MB_M_WALLRUSH#Munak_Wall_Rush#
+MB_B_WALLSHIFT#Bongun_Wall_Shift#
+MB_M_WALLCRASH#Munak_Wall_Crash#
+MB_M_REINCARNATION#Munak_Reincarnation#
+MB_B_EQUIP#Bongun_Almighty#
+
+// Extra Soul Linker Skills \\
+SL_DEATHKNIGHT#Death_Knight_Spirit#
+SL_COLLECTOR#Dark_Collector_Spirit#
+SL_NINJA#Ninja_Spirit#
+SL_GUNNER#Gunslinger_Spirit#
+AM_TWILIGHT4#Twilight_Alchemy#
+
+// Mercenary Swordman Skills \\
+MS_BASH#Bash#
+MS_MAGNUM#Magnum_Break#
+MS_BOWLINGBASH#Bowling_Bash#
+MS_PARRYING#Parrying#
+MS_REFLECTSHIELD#Reflect_Shield#
+MS_BERSERK#Berserk#
+
+// Mercenary Archer Skills \\
+MA_DOUBLE#Double_Strafing#
+MA_SHOWER#Arrow_Shower#
+MA_SKIDTRAP#Skid_Trap#
+MA_LANDMINE#Land_Mine#
+MA_SANDMAN#Sandman#
+MA_FREEZINGTRAP#Freezing_Trap#
+MA_REMOVETRAP#Remove_Trap#
+MA_CHARGEARROW#Charge_Arrow#
+MA_SHARPSHOOTING#Sharp_Shooting#
+
+// Mercenary Spearman Skills \\
+ML_PIERCE#Pierce#
+ML_BRANDISH#Brandish_Spear#
+ML_SPIRALPIERCE#Spiral_Pierce#
+ML_DEFENDER#Defender#
+ML_AUTOGUARD#Auto_Guard#
+ML_DEVOTION#Devotion#
+
+// Mercenary Additional Skills \\
+MER_MAGNIFICAT#Magnificat#
+MER_QUICKEN#Two-Hand_Quicken#
+MER_SIGHT#Sight#
+MER_CRASH#Crash#
+MER_REGAIN#Regain#
+MER_TENDER#Tender#
+MER_BENEDICTION#Benediction#
+MER_RECUPERATE#Recuperate#
+MER_MENTALCURE#Mental_Cure#
+MER_COMPRESS#Compress#
+MER_PROVOKE#Provoke#
+MER_AUTOBERSERK#Auto_Berserk#
+MER_DECAGI#Decrease_Agility#
+MER_SCAPEGOAT#Scapegoat#
+MER_LEXDIVINA#Lex_Divina#
+MER_ESTIMATION#Monster_Property#
+MER_KYRIE#Kyrie_Eleison#
+MER_INCAGI#Increase_Agility#
+MER_BLESSING#Blessing#
+
+// Death Knight Skills \\
+DE_BERSERKAIZER#Berserk_Kaizer#
+DE_PASSIVE#Death_Passive#
+DE_PATTACK#Death_Passive_Attack#
+DE_PSPEED#Death_Passive_Speed#
+DE_PDEFENSE#Death_Passive_Defense#
+DE_PCRITICAL#Death_Passive_Critical#
+DE_PHP#Death_Passive_HP#
+DE_PSP#Death_Passive_SP#
+DE_RESET#Death_Optimize#
+DE_RANKING#Death_Passive_Ranking#
+DE_PTRIPLE#Death_Passive_Triple#
+DE_ENERGY#Death_Energy#
+DE_NIGHTMARE#Death_Nightmare#
+DE_SLASH#Death_Slash#
+DE_COIL#Death_Coil#
+DE_WAVE#Death_Wave#
+DE_REBIRTH#Death_Reverse_Energy#
+DE_AURA#Death_Aura#
+DE_FREEZER#Death_Freezer#
+DE_CHANGEATTACK#Death_Change_Attack#
+DE_PUNISH#Death_Punish#
+DE_POISON#Death_Poison_Slash#
+DE_INSTANT#Death_Instant_Barrier#
+DE_WARNING#Death_Warning#
+DE_RANKEDKNIFE#Death_Knife#
+DE_RANKEDGRADIUS#Death_Gradius#
+DE_GAUGE#Mighty_Gauge#
+DE_GTIME#Mighty_Time_Charge#
+DE_GPAIN#Mighty_Pain_Charge#
+DE_GSKILL#Mighty_Skill_Charge#
+DE_GKILL#Mighty_Kill_Charge#
+DE_ACCEL#Dead_Acceleration#
+DE_BLOCKDOUBLE#Dead_Double_Blocking#
+DE_BLOCKMELEE#Dead_Near(Melee)_Blocking#
+DE_BLOCKFAR#Dead_Distance(Range)_Blocking#
+DE_FRONTATTACK#Dead_Rush_Attack#
+DE_DANGERATTACK#Dead_Dangerous_Attack#
+DE_TWINATTACK#Dead_Twin_Attack#
+DE_WINDATTACK#Dead_Storm_Attack#
+DE_WATERATTACK#Dead_Water_Attack#
+
+// Dark Collector Skills \\
+DA_ENERGY#Dark_Energy#
+DA_CLOUD#Dark_Cloud#
+DA_FIRSTSLOT#Dark_First_Fantasy#
+DA_HEADDEF#Dark_Head_Defense#
+DA_SPACE#Dark_Twilight#
+DA_TRANSFORM#Dark_Transform#
+DA_EXPLOSION#Dark_Explosion#
+DA_REWARD#Dark_Reward#
+DA_CRUSH#Dark_Crush#
+DA_ITEMREBUILD#Dark_Item_Re_-_Build#
+DA_ILLUSION#Dark_Illusion#
+DA_NUETRALIZE#Dark_Nuetralize#
+DA_RUNNER#Dark_Runner#
+DA_TRANSFER#Dark_Transfer#
+DA_WALL#Dark_Wall#
+DA_REVENGE#Dark_Revenge#
+DA_EARPLUG#Dark_Ear_Plug#
+DA_CONTRACT#Black_Gemstone_Contract#
+DA_BLACK#Black_Gemstone_Magic#
+DA_DREAM#Black_Dream_Of_Gemstone#
+DA_MAGICCART#Collector_Magic_Cart#
+DA_COPY#Collector_Copy#
+DA_CRYSTAL#Collector_Crystal#
+DA_EXP#Collector_Experience#
+DA_CARTSWING#Collector_Magical_Cart_Swing#
+DA_REBUILD#Collector_Human_Re_-_Build#
+DA_JOBCHANGE#Collector_Novice_Job_Change#
+DA_EDARKNESS#Collector_Emperium_Darkness#
+DA_EGUARDIAN#Collector_Emperium_Guardian#
+DA_TIMEOUT#Collector_Time_Out#
+DA_ZENYRANK#Collector_Ranking#
+DA_ACCESSORYMIX#Collector__Mix#
+DA_DARKPOWER#Dark_Soul_Power#
+
+// Multiple Class Skils \\
+ALL_TIMEIN#Time_In#
+ALL_RESURRECTION#إنعاش#
+ALL_INCCARRY#زيادة وزن#
+ALL_CATCRY#Crying_Monster#
+ALL_PARTYFLEE#Blow!Flower_Wind#
+ALL_ANGEL_PROTECT#Thank_You#
+ALL_DREAM_SUMMERNIGHT#A_Dream_Of_Summer_Night#
+ALL_REVERSEORCISH#Reverse_Orcish#
+ALL_WEWISH#We_Wish#
+
+// Unused Skills \\
+WZ_FIREIVY#لبلاب النار#
+BD_RAGNAROK#راجناروك#
+LK_FURY#غضب#
+ASC_HALLUCINATION#مشية الهلوسه#
+WS_CREATECOIN#صناعة النقود#
+WS_CREATENUGGET#صناعة كتلة#
+WS_SYSTEMCREATE#صناعة آلة الهجوم الأوتوماتيكي#
+CR_ALCHEMY#الكيمياء#
+CR_SYNTHESISPOTION#تركيب الجرع#
+ST_STEALBACKPACK#نشل الجيب#
+GD_CHARISMA#Charisma#
+BG_SKILL_1#Bride_Groom_Skill_1#
+BG_SKILL_2#Bride_Groom_Skill_2#
+BG_SKILL_3#Bride_Groom_Skill_3#
+
+// Monster Skills \\
+NPC_PIERCINGATT#Thrusting_Attack#
+NPC_MENTALBREAKER#Spirit_Destruction#
+NPC_RANGEATTACK#Stand_Off_Attack#
+NPC_ATTRICHANGE#Run_Attribute_Change#
+NPC_CHANGEWATER#Water_Attribute_Change#
+NPC_CHANGEGROUND#Earth_Attribute_Change#
+NPC_CHANGEFIRE#Fire_Attribute_Change#
+NPC_CHANGEWIND#Wind_Attribute_Change#
+NPC_CHANGEPOISON#Poison_Attribute_Change#
+NPC_CHANGEHOLY#Holy_Attribute_Change#
+NPC_CHANGEDARKNESS#Shadow_Attribute_Change#
+NPC_CHANGETELEKINESIS#Sense_Attribute_Change#
+NPC_CRITICALSLASH#Defense_Disregard_Attack#
+NPC_COMBOATTACK#Multi-Stage_Attack#
+NPC_GUIDEDATTACK#On-Target_Impact_Attack#
+NPC_SELFDESTRUCTION#Suicide_Bombing#
+NPC_SPLASHATTACK#Splash_Attack#
+NPC_SUICIDE#Suicide#
+NPC_POISON#Poison_Attack#
+NPC_BLINDATTACK#Darkness_Attack#
+NPC_SILENCEATTACK#Silence_Attack#
+NPC_STUNATTACK#Stun_Attack#
+NPC_PETRIFYATTACK#Petrify_Attack#
+NPC_CURSEATTACK#Cursing_Attack#
+NPC_SLEEPATTACK#Sleep_Attack#
+NPC_RANDOMATTACK#Random_Attack#
+NPC_WATERATTACK#Water_Attribute_Attack#
+NPC_GROUNDATTACK#Earth_Attribute_Attack#
+NPC_FIREATTACK#Fire_Attribute_Attack#
+NPC_WINDATTACK#Wind_Attribute_Attack#
+NPC_POISONATTACK#Poison_Attribute_Attack#
+NPC_HOLYATTACK#Holy_Attribute_Attack#
+NPC_DARKNESSATTACK#Shadow_Attribute_Attack#
+NPC_TELEKINESISATTACK#Sense_Attribute_Attack#
+NPC_MAGICALATTACK#Demon_Shock_Attack#
+NPC_METAMORPHOSIS#Metamorphosis#
+NPC_PROVOCATION#Provocation#
+NPC_SMOKING#Smoking#
+NPC_SUMMONSLAVE#Follower_Summons#
+NPC_EMOTION#Emotion#
+NPC_TRANSFORMATION#Transformation#
+NPC_BLOODDRAIN#Sucking_Blood#
+NPC_ENERGYDRAIN#Energy_Drain#
+NPC_KEEPING#Keeping#
+NPC_DARKBREATH#Dark_Breath#
+NPC_DARKBLESSING#Dark_Blessing#
+NPC_BARRIER#Barrier#
+NPC_DEFENDER#Defender#
+NPC_LICK#Lick#
+NPC_HALLUCINATION#Hallucination#
+NPC_REBIRTH#Rebirth#
+NPC_SUMMONMONSTER#Monster_Summons#
+NPC_RANDOMMOVE#Random_Move#
+NPC_SPEEDUP#Speed_Up#
+NPC_REVENGE#Revenge#
+NPC_DARKCROSS#Cross_of_Darkness#
+NPC_GRANDDARKNESS#Grand_Cross_of_Darkness#
+NPC_DARKSTRIKE#Soul_Strike_of_Darkness#
+NPC_DARKTHUNDER#Darkness_Jupitel#
+NPC_STOP#Stop#
+NPC_WEAPONBRAKER#Break_Weapon#
+NPC_ARMORBRAKE#Break_Armor#
+NPC_HELMBRAKE#Break_Helm#
+NPC_SHIELDBRAKE#Break_Shield#
+NPC_UNDEADATTACK#Undead_Attack#
+NPC_CHANGEUNDEAD#Change_Undead#
+NPC_POWERUP#Power_Up#
+NPC_AGIUP#Agi_Up#
+NPC_SIEGEMODE#Siege_Mode#
+NPC_CALLSLAVE#Call_Slave#
+NPC_INVISIBLE#Invisible#
+NPC_RUN#Run#
+NPC_EMOTION_ON#Emotion_On#
+NPC_EARTHQUAKE#Earth_Quake#
+NPC_FIREBREATH#Fire_Breath#
+NPC_ICEBREATH#Ice_Breath#
+NPC_THUNDERBREATH#Thunder_Breath#
+NPC_ACIDBREATH#Acid_Breath#
+NPC_DARKNESSBREATH#Darkness_Breath#
+NPC_DRAGONFEAR#Dragon_Fear#
+NPC_BLEEDING#Bleeding#
+NPC_PULSESTRIKE#Pulse_Strike#
+NPC_HELLJUDGEMENT#Hell_Judgement#
+NPC_WIDESILENCE#Wide_Silence#
+NPC_WIDEFREEZE#Wide_Freeze#
+NPC_WIDEBLEEDING#Wide_Bleeding#
+NPC_WIDESTONE#Wide_Stone#
+NPC_WIDECONFUSE#Wide_Confuse#
+NPC_WIDESLEEP#Wide_Sleep#
+NPC_WIDESIGHT#Wide_Sight#
+NPC_EVILLAND#Evil_Land#
+NPC_MAGICMIRROR#Magic_Mirror#
+NPC_SLOWCAST#Slow_Cast#
+NPC_CRITICALWOUND#Critical_Wound#
+NPC_EXPULSION#Expulsion#
+NPC_STONESKIN#Stone_Skin#
+NPC_ANTIMAGIC#Anti_Magic#
+NPC_WIDECURSE#Wide_Curse#
+NPC_WIDESTUN#Wide_Stun#
+NPC_VAMPIRE_GIFT#Vampire_Gift#
+NPC_WIDESOULDRAIN#Wide_Soul_Drain#
+NPC_ALLHEAL#All_Heal#
+NPC_HELLPOWER#Hell_Power#
+
+// Rune Knight Skills \\
+RK_ENCHANTBLADE#سحر النصل#
+RK_SONICWAVE#الموجة الصوتية#
+RK_DEATHBOUND#ضربة الموت#
+RK_HUNDREDSPEAR#مائة رمح#
+RK_WINDCUTTER#قاطع الرياح#
+RK_IGNITIONBREAK#قاطع الاشتعال#
+RK_DRAGONTRAINING#تدريب التنين#
+RK_DRAGONBREATH#نفخة التنين#
+RK_DRAGONHOWLING#عواء التنين#
+RK_RUNEMASTERY#تعلم الرون#
+RK_MILLENNIUMSHIELD#حجر فيركانا الرون#
+RK_CRUSHSTRIKE#حجر رايدو الرون#
+RK_REFRESH#حجر نوسيج الرون#
+RK_GIANTGROWTH#حجر توريساس الرون#
+RK_STONEHARDSKIN#حجر هاجالاس الرون#
+RK_VITALITYACTIVATION#حجر إيسيا الرون#
+RK_STORMBLAST#حجر بيرتز الرون#
+RK_FIGHTINGSPIRIT#حجر أزير الرون#
+RK_ABUNDANCE#حجر أورج الرون#
+RK_PHANTOMTHRUST#إندفاع الشبح#
+
+// Arch Bishop Skills \\
+AB_JUDEX#جوديكس#
+AB_ANCILLA#أنسيلا#
+AB_ADORAMUS#أدوراموس#
+AB_CLEMENTIA#كليمنشا#
+AB_CANTO#كانتو كانديدوس#
+AB_CHEAL#علاج كولوسيو#
+AB_EPICLESIS#الاستدعاء#
+AB_PRAEFATIO#بريفاتيو#
+AB_ORATIO#أوراتيو#
+AB_LAUDAAGNUS#لوداجنوس#
+AB_LAUDARAMUS#لوداراموس#
+AB_EUCHARISTICA#إيوتشاريستيكا#
+AB_RENOVATIO#رينوفاتيو#
+AB_HIGHNESSHEAL#العلاج السامي#
+AB_CLEARANCE#الاطلاق#
+AB_EXPIATIO#إكزبيتو#
+AB_DUPLELIGHT#الضوء المزدوج#
+AB_DUPLELIGHT_MELEE#Duple_Light_-_Melee#
+AB_DUPLELIGHT_MAGIC#Duple_Light_-_Magic#
+AB_SILENTIUM#سيلينيوم#
+AB_SECRAMENT#المباركة#
+
+// Guillotine Cross Skills \\
+GC_VENOMIMPRESS#انطباع السم#
+GC_CROSSIMPACT#الصدمة المتقاطعة#
+GC_DARKILLUSION#الوهم المظلم#
+GC_RESEARCHNEWPOISON#أبحاث السم الجديد#
+GC_CREATENEWPOISON#صناعة السم الجديد#
+GC_ANTIDOTE#الترياق#
+GC_POISONINGWEAPON#السلاح السام#
+GC_WEAPONBLOCKING#منع السلاح#
+GC_COUNTERSLASH#المشرط المضاد#
+GC_WEAPONCRUSH#سحق السلاح#
+GC_VENOMPRESSURE#ضغط السم#
+GC_POISONSMOKE#الدخان السام#
+GC_CLOAKINGEXCEED#زيادة التخفي#
+GC_PHANTOMMENACE#تهديد الشبح#
+GC_HALLUCINATIONWALK#مشية الهلوسة#
+GC_ROLLINGCUTTER#القاطع الدوار#
+GC_CROSSRIPPERSLASHER#طاعن التقاطع الخارق#
+
+// Ranger Skills \\
+RA_AIMEDBOLT#الضربة الموجهة#
+RA_RESEARCHTRAP#بحث الشراك#
+RA_RANGERMAIN#حارس الأحراش الأساسي#
+RA_ELECTRICSHOCKER#الصادم الكهرابائي#
+RA_WUGMASTERY#إتقان الذئب#
+RA_ARROWSTORM#عاصفة السهام#
+RA_CLUSTERBOMB#القنبلة العنقودية#
+RA_DETONATOR#المفجر#
+RA_CAMOUFLAGE#التمويه#
+RA_TOOTHOFWUG#أسنان الذئب#
+RA_WUGRIDER#ركوب الذئب#
+RA_FEARBREEZE#نسيم الخوف#
+RA_MAGENTATRAP#الشراك الأرجواني#
+RA_FIRINGTRAP#الشراك الناري#
+RA_ICEBOUNDTRAP#شراك الحصار الجليدي#
+RA_SENSITIVEKEEN#القاطع الحساس#
+RA_WUGSTRIKE#هجمة الذئب#
+RA_WUGDASH#اندفاع الذئب#
+RA_COBALTTRAP#شراك كوبالت#
+RA_WUGBITE#عضة الذئب#
+RA_MAIZETRAP#شرك الذرة#
+RA_VERDURETRAP#الشراك المضئ#
+
+// Warlock Skills \\
+WL_WHITEIMPRISON#السجن الابيض#
+WL_SOULEXPANSION#توسيع الروح#
+WL_FROSTMISTY#الضباب المتجمد#
+WL_JACKFROST#جاك فروست#
+WL_MARSHOFABYSS#مستنقع الهاوية#
+WL_RECOGNIZEDSPELL#التعويذة المعروفة#
+WL_SIENNAEXECRATE#لعنة سينا#
+WL_RADIUS#المجال#
+WL_STASIS#الجمود#
+WL_DRAINLIFE#استنزاف الحياة#
+WL_CRIMSONROCK#الصخرة القرمزية#
+WL_HELLINFERNO#الجحيم المستعر#
+WL_COMET#المذنب#
+WL_CHAINLIGHTNING#البرق المتسلسل#
+WL_CHAINLIGHTNING_ATK#البرق المتسلسل#
+WL_EARTHSTRAIN#إجهاد الارض#
+WL_TETRAVORTEX#دوامة تيترا#
+WL_TETRAVORTEX_FIRE#Tetra_Vortex#
+WL_TETRAVORTEX_WATER#Tetra_Vortex#
+WL_TETRAVORTEX_WIND#Tetra_Vortex#
+WL_TETRAVORTEX_GROUND#Tetra_Vortex#
+WL_SUMMONFB#استدعاء الكرة النارية#
+WL_SUMMONBL#استدعاء الكرة البرقية#
+WL_SUMMONWB#استدعاء الكرة المائية#
+WL_SUMMON_ATK_FIRE#Summon_Attack#
+WL_SUMMON_ATK_WIND#Summon_Attack#
+WL_SUMMON_ATK_WATER#Summon_Attack#
+WL_SUMMON_ATK_GROUND#Summon_Attack#
+WL_SUMMONSTONE#استدعاء الحجر#
+WL_RELEASE#الإطلاق#
+WL_READING_SB#قراء كتاب التعاويذ#
+WL_FREEZE_SP#تعويذة التجميد#
+
+// Shadow Chaser Skills \\
+SC_FATALMENACE#التهديد المميت#
+SC_REPRODUCE#التزايد#
+SC_AUTOSHADOWSPELL#تعويذة الظلال#
+SC_SHADOWFORM#تشكل الظلال#
+SC_TRIANGLESHOT#ضربة المثلث#
+SC_STRIPACCESSARY#نزع الإكسسوارات#
+SC_BODYPAINT#طلاء الجسد#
+SC_INVISIBILITY#الحجب#
+SC_DEADLYINFECT#العدوى المميتة#
+SC_ENERVATION#التنكر-الضعف#
+SC_GROOMY#التنكر-التعيس#
+SC_IGNORANCE#التنكر-التجاهل#
+SC_LAZINESS#التنكر-الكسل#
+SC_UNLUCKY#التنكر-سئ الحظ#
+SC_WEAKNESS#التنكر-الوهن#
+SC_MANHOLE#الفتحة#
+SC_DIMENSIONDOOR#باب البعد#
+SC_CHAOSPANIC#الذعر الفوضوي#
+SC_MAELSTROM#الغضب العارم#
+SC_BLOODYLUST#التعطش للدماء#
+SC_FEINTBOMB#القنبلة الماكرة#
+
+// Mechanic Skills \\
+NC_MADOLICENCE#رخصة المادوجير#
+NC_BOOSTKNUCKLE#تدعيم الواقي#
+NC_PILEBUNKER#كومة التدعيم#
+NC_VULCANARM#ذراع فولكان#
+NC_FLAMELAUNCHER#قاذف اللهب#
+NC_COLDSLOWER#مؤخر الصقيع#
+NC_ARMSCANNON#مدفع الذراع#
+NC_ACCELERATION#التسريع#
+NC_HOVERING#الحوامة#
+NC_F_SIDESLIDE#الإنزلاق إلى الأمام#
+NC_B_SIDESLIDE#الإنزلاق إلى الوراء#
+NC_MAINFRAME#إعادة تصميم الهيكل#
+NC_SELFDESTRUCTION#الدمار الانتحاري#
+NC_SHAPESHIFT#تحويل الشكل#
+NC_EMERGENCYCOOL#طوارئ التبريد#
+NC_INFRAREDSCAN#مسح بالأشعة تحت الحمراء#
+NC_ANALYZE#التحليل#
+NC_MAGNETICFIELD#المجال المغناطيسي#
+NC_NEUTRALBARRIER#الحاجز المحايد#
+NC_STEALTHFIELD#الميدان الخفي#
+NC_REPAIR#الاصلاح#
+NC_TRAININGAXE#تعلم الفأس#
+NC_RESEARCHFE#أبحاث الارض و النار#
+NC_AXEBOOMERANG#رمي الفأس#
+NC_POWERSWING#تأرجح القوة#
+NC_AXETORNADO#إعصار الفأس#
+NC_SILVERSNIPER#القناص الفضي للاسلحة الذاتية الثابتة#
+NC_MAGICDECOY#الشرك السحري للاسلحة الذاتية الثابتة#
+NC_DISJOINT#نزع الاسلحة الذاتية الثابتة#
+
+// Wanderer & Minstrel Skills \\
+WA_SWING_DANCE#رقصة الارجوحة#
+WA_SYMPHONY_OF_LOVER#سيفونية الحبيب#
+WA_MOONLIT_SERENADE#لحن ضوء القمر#
+MI_RUSH_WINDMILL#الاندفاع الى طاحونة الرياح#
+MI_ECHOSONG#أغنية الصدى#
+MI_HARMONIZE#التناغم#
+WM_LESSON#الدرس#
+WM_METALICSOUND#الصوت المعدني#
+WM_REVERBERATION#الصدى#
+WM_DOMINION_IMPULSE#نبض السيادة#
+WM_SEVERE_RAINSTORM#عاصفة مطيرة قوية#
+WM_POEMOFNETHERWORLD#الأغنية اليائسة#
+WM_VOICEOFSIREN#صوت الحورية#
+WM_DEADHILLHERE#التل الميت#
+WM_LULLABY_DEEPSLEEP#التهويدة#
+WM_SIRCLEOFNATURE#الطبيعة الدوارة#
+WM_RANDOMIZESPELL#التعويذة العشوائية#
+WM_GLOOMYDAY#الخجل الكئيب#
+WM_GREAT_ECHO#الصدى العظيم#
+WM_SONG_OF_MANA#أغنية مانا#
+WM_DANCE_WITH_WUG#الرقص مع واج#
+WM_SOUND_OF_DESTRUCTION#أغنية الدمار#
+WM_SATURDAY_NIGHT_FEVER#حمى السبت#
+WM_LERADS_DEW#ندى ليراد#
+WM_MELODYOFSINK#اللحن الغارق#
+WM_BEYOND_OF_WARCRY#الصرخة البعيدة#
+WM_UNLIMITED_HUMMING_VOICE#الهمهمة المطلقة#
+
+// Sura Skills \\
+SR_DRAGONCOMBO#ضربات التنين المتتالية#
+SR_SKYNETBLOW#ضربة السماء#
+SR_EARTHSHAKER#مزلزل الارض#
+SR_FALLENEMPIRE#الامبراطورية المنهارة#
+SR_TIGERCANNON#مدفع النمر#
+SR_HELLGATE#بوابة الجحيم#
+SR_RAMPAGEBLASTER#انفجار الثورة#
+SR_CRESCENTELBOW#مرفق هلالي#
+SR_CURSEDCIRCLE#الدائرة الملعونة#
+SR_LIGHTNINGWALK#خطوة البرق#
+SR_KNUCKLEARROW#سهم المخلب#
+SR_WINDMILL#طاحونة الرياح#
+SR_RAISINGDRAGON#التنين الصاعد#
+SR_GENTLETOUCH#اللمسة الحانية#
+SR_ASSIMILATEPOWER#امتصاص القوة#
+SR_POWERVELOCITY#زرع القوة#
+SR_CRESCENTELBOW_AUTOSPELL#Crescent_Elbow_Autospell#
+SR_GATEOFHELL#بوابة الجحيم#
+SR_GENTLETOUCH_QUIET#صمت اللمسة الحانية#
+SR_GENTLETOUCH_CURE#سرعة اللمسة الحانية#
+SR_GENTLETOUCH_ENERGYGAIN#حفظ اللمسة الحانية#
+SR_GENTLETOUCH_CHANGE#تعارض اللمسة الحانية#
+SR_GENTLETOUCH_REVITALIZE#اللمسة الحانية الحية#
+SR_HOWLINGOFLION#زئير الاسد#
+SR_RIDEINLIGHTNING#ركوب البرق#
+
+// Royal Guard Skills \\
+LG_CANNONSPEAR#مدفع الرماح#
+LG_BANISHINGPOINT#النقطة الطاردة#
+LG_TRAMPLE#السحق#
+LG_SHIELDPRESS#ضغط الدرع#
+LG_REFLECTDAMAGE#الضرر المنعكس#
+LG_PINPOINTATTACK#الهجوم المحدد#
+LG_FORCEOFVANGUARD#قوة الطليعة#
+LG_RAGEBURST#الهجوم المضاد#
+LG_SHIELDSPELL#تعويذة الدرع#
+LG_EXEEDBREAK#الضربة الفائقة#
+LG_OVERBRAND#الطعنة المزدوجة#
+LG_PRESTIGE#الاحترام#
+LG_BANDING#التجمع#
+LG_MOONSLASHER#قاطع القمر#
+LG_RAYOFGENESIS#شعاع التكوين#
+LG_PIETY#الصلاح#
+LG_EARTHDRIVE#ضربة الارض#
+LG_HESPERUSLIT#ضوء الزهرة#
+LG_INSPIRATION#الإلهام#
+
+// Genetic Skills \\
+GN_TRAINING_SWORD#فن السيف#
+GN_REMODELING_CART#إعادة بناء العربة#
+GN_CART_TORNADO#إعصار العربة#
+GN_CARTCANNON#مدفع العربة#
+GN_CARTBOOST#تدعيم العربة#
+GN_THORNS_TRAP#فخ الأشواك#
+GN_BLOOD_SUCKER#مصاص الدماء#
+GN_SPORE_EXPLOSION#انفجار الأبواغ#
+GN_WALLOFTHORN#حائط الشوك#
+GN_CRAZYWEED#العشب المجنون#
+GN_DEMONIC_FIRE#نار العفاريت#
+GN_FIRE_EXPANSION#تمديد النار#
+GN_HELLS_PLANT#نبات الجحيم#
+GN_MANDRAGORA#عواء نبتة ماندراجورا#
+GN_SLINGITEM#الأداة المتأرجحة#
+GN_CHANGEMATERIAL#تغيير المواد#
+GN_MIX_COOKING#الطهي المخلوط#
+GN_MAKEBOMB#صناعة القنبلة#
+GN_S_PHARMACY#الصيدلة الخاصة#
+
+// Sorcerer Skills \\
+SO_FIREWALK#الخطوة النارية#
+SO_ELECTRICWALK#الخطوة الكهربية#
+SO_SPELLFIST#تعويذة القبضة#
+SO_VACUUM_EXTREME#المكنسة الرهيبة#
+SO_PSYCHIC_WAVE#الموجة النفسية#
+SO_CLOUD_KILL#السحابة القاتلة#
+SO_POISON_BUSTER#انفجار السم#
+SO_STRIKING#الضاربة#
+SO_EARTHGRAVE#رمس الارض#
+SO_DIAMONDDUST#غبار الماس#
+SO_WARMER#الدفيئة#
+SO_VARETYR_SPEAR#رمح فيرتير#
+SO_ARRULLO#أروللو#
+SO_EL_CONTROL#التحكم بالروح#
+SO_SUMMON_AGNI#استدعاء أجني#
+SO_SUMMON_AQUA#استدعاء أكوا#
+SO_SUMMON_VENTUS#استدعاء فينتوس#
+SO_SUMMON_TERA#استدعاء تيرا#
+SO_El_Action#الفعل العنصري#
+SO_El_Analysis#تحليل العنصر#
+SO_El_Sympathy#التعاطف الروحي#
+SO_El_Cure#علاج الروح#
+SO_Fire_Insignia#شارة النار#
+SO_Water_Insignia#شارة الماء#
+SO_Wind_Insignia#شارة الرياح#
+SO_Earth_Insignia#شارة الارض#
