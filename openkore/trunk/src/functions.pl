@@ -658,6 +658,8 @@ sub initMapChangeVars {
 	Plugins::callHook('packet_mapChange');
 
 	$logAppend = ($config{logAppendUsername}) ? "_$config{username}_$config{char}" : '';
+	$logAppend = ($config{logAppendServer}) ? "_$servers[$config{'server'}]{'name'}".$logAppend : $logAppend;
+	
 	if ($config{logAppendUsername} && index($Settings::storage_log_file, $logAppend) == -1) {
 		$Settings::chat_log_file     = substr($Settings::chat_log_file,    0, length($Settings::chat_log_file)    - 4) . "$logAppend.txt";
 		$Settings::storage_log_file  = substr($Settings::storage_log_file, 0, length($Settings::storage_log_file) - 4) . "$logAppend.txt";
