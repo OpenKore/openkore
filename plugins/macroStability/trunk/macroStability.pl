@@ -1,5 +1,6 @@
 #############################################################################
-# macroStability revised 03 plugin by imikelance										
+# macroStability plugin by imikelance/Revok
+# r4
 #																			
 # Openkore: http://openkore.com/											
 # Openkore Brazil: http://openkore.com.br/	
@@ -12,30 +13,16 @@
 # 1				: Plugin disabled											
 #																			
 # macroStability_disableChecks <boolean flag>								
-# 0 or unset	: Checks for macro plugin and macro file on startup			
+# 0 or unset	: Checks for macro plugin on startup			
 # 1				: Disables startup checks
 #
 # Quick note: if you have a macro or automacro that needs to be triggered while not ingame
 # you can add _ignoreState to it's name and this plugin won't pause it.
 # Also, you can use "set ignoreState 1" inside your automacro's conditions or declare
 # $ignoreState = 1 inside your macro and it should have the same effect.	
-#
-# 22:37 quarta-feira, 15 de fevereiro de 2012 - revised 03
-#	- working with Openkore r7946		
-#
-# 19:37 domingo, 29 de janeiro de 2012 - revised 02
-#	- added ignoreState variable support
-#   - added SILENT constant. Set it to 1 to hide macroStability common warnings
-#	- fixed a small bug where Openkore would crash if "reload macros" is used while macros are paused.
-#
-# 19:53 quinta-feira, 26 de janeiro de 2012 - revised 01
-# 	- now you can use _ignoreState to avoid pausing any macro
-#
-# 09:15 domingo, 1 de janeiro de 2012 (Happy new year!)
-# 	- released !			
-#
+#	
 # TODO: (if possible) Write a function to go back one step in macros and give users an option to turn this on/off
-# TODO: allow users to rename macro.pl without modifying code
+# DONE: allow users to rename macro.pl without modifying code
 #																			
 # This source code is licensed under the									
 # GNU General Public License, Version 3.									
@@ -81,28 +68,17 @@ use constant {
 # Subs
 
 # handles macro plugin availability
-# TODO: we should check if macro plugin is loaded, not if macro.pl exists.
+# DONE: we should check if macro plugin is loaded, not if macro.pl exists.
 sub onKStart {
 	unless ($::config{macroStability_disableChecks} == 1) {
-		unless (-e $workingFolder."/macro.pl") {
-			error("[macroStability] ERROR: macro plugin is not installed or it was renamed from macro.pl.\n");
-			error("If you renamed macro.pl, please set \"macroStability_disableChecks\" to 1 in ".Settings::getControlFilename("config.txt").".\n");
-			error("macroStability will now unload.\n");
-			unload;
-			die "macro plugin is not installed or it was renamed from macro.pl.";
+		my $loaded;
+		for (my $i = 0; $i < @Plugins::plugins; $i++) {
+			$loaded = 1 if ($Plugins::plugins[$i]->{name} eq "macro");
 		}
-		if (defined $::config{macro_file}) {
-			if (!defined Settings::getControlFilename($::config{macro_file})) {
-				error("[macroStability] ".$::config{macro_file}." is not found.\n");
-				error("macroStability will now unload.\n");
-				unload;
-			}
-		} else {
-			if (!defined Settings::getControlFilename("macros.txt")) {
-				error("[macroStability] macros.txt is not found.\n");
-				error("macroStability will now unload.\n");
-				unload;
-			}
+		unless ($loaded) {
+			unload;
+			die ("[macroStability] ERROR: macro plugin is not installed.\n".
+			"If you know what you're doing, you can disable this warning by setting \"macroStability_disableChecks\" to 1 in ".Settings::getControlFilename("config.txt").".\n");
 		}
 	}
 }
