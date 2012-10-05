@@ -1,0 +1,23 @@
+[Default]
+decrypt_mid 0
+charBlockSize 116
+charListPacket 0x6b
+maploginPacket 0000
+[bRO_2012-09-19a]
+decrypt_mid 1
+decrypt_mid_keys 0x26977a6f 0x374e3b8e 0x4dba6c1e # K M A
+charBlockSize 116
+charListPacket 0x82d
+maploginPacket 022D
+[bRO_2012-09-26a]
+decrypt_mid 1
+decrypt_mid_keys 0x146f5964 0x76792070 0x1fa30c53 # K M A
+charBlockSize 116
+charListPacket 0x82d
+maploginPacket 088E
+[bRO_2012-10-03a]
+decrypt_mid 1
+decrypt_mid_keys 0x5c18014b 0x503e1282 0x6e6b29c1 # K M A
+charBlockSize 116
+charListPacket 0x82d
+maploginPacket 0366
