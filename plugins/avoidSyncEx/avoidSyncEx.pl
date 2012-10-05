@@ -112,8 +112,8 @@ sub start {
 	# nosave parser
 	# brAthena\npc\mapflag\nosave.txt
 	# thx insidemybrain !
-	open MAPDBH, "<:utf8", $workingFolder."/eathena/nosave.txt"
-		or die "cannot open ".$workingFolder."/eathena/nosave.txt: $!";
+	open MAPDBH, "<:utf8", $workingFolder."/nosave.txt"
+		or die "cannot open ".$workingFolder."/nosave.txt: $!";
 		while (<MAPDBH>) {
 			chomp;
 			my $currline = $_;
