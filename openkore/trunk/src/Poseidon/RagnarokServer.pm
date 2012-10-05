@@ -26,6 +26,7 @@ use base qw(Base::Server);
 use Misc;
 use Utils qw(binSize getCoordString timeOut getHex getTickCount);
 use Poseidon::Config;
+use FileParsers;
 use Math::BigInt;
 
 my %clientdata;
@@ -55,6 +56,15 @@ sub new {
 
 	# Invariant: state ne ''
 	$self->{state} = 'ready';
+	
+	# added servertypes support
+	parseSectionedFile('servertypes.txt', \%{$self->{type}});
+	
+	if (!$self->{type}->{$config{server_type}}) {
+		die "Invalid serverType specified. Please check your poseidon config file.\n";
+	} else {
+		print "Building RagnarokServer with serverType $config{server_type}...\n";
+	}
 
 	return $self;
 }
@@ -307,10 +317,11 @@ sub ParsePacket
 	} elsif ($switch eq '0066') { # client sends character choice packet
 
 		# If Using Packet Encrypted Client
-		if ( $config{PacketIDEncryption} )
+		if ( $self->{type}->{$config{server_type}}->{decrypt_mid_keys} )
 		{
 			# Enable Decryption
-			$enc_val1 = Math::BigInt->new('0x26977a6f');$enc_val3 = Math::BigInt->new('0x4dba6c1e');$enc_val2 = Math::BigInt->new('0x374e3b8e');
+			my @enc_values = split(/\s+/, $self->{type}->{$config{server_type}}->{decrypt_mid_keys});
+			($enc_val1, $enc_val2, $enc_val3) = (Math::BigInt->new(@enc_values[0]), Math::BigInt->new(@enc_values[1]), Math::BigInt->new(@enc_values[2]));
 		}
 		
 		# State
@@ -324,7 +335,8 @@ sub ParsePacket
 			pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) . $port;
 		
 		$client->send($data);
-	} elsif ($switch eq '022D' &&
+		
+	} elsif ($switch eq  $self->{type}->{$config{server_type}}->{maploginPacket} &&
 		(length($msg) == 19) &&
 		(substr($msg, 2, 4) eq $accountID) &&
 		(substr($msg, 6, 4) eq $charID) &&
@@ -496,7 +508,7 @@ sub ParsePacket
 		my $data;
 
 		# Temporary Hack to Initialized Crypted Client
-		if ( $config{PacketIDEncryption} )
+		if ( $self->{type}->{$config{server_type}}->{decrypt_mid_keys} )
 		{
 			for ( my $i = 0 ; $i < 64 ; $i++ ) 
 			{
@@ -797,12 +809,12 @@ sub SendCharacterList
 	print "Requested Char List (Standard)\n";
 	
 	# Wanted Block Size
-	my $blocksize = $config{CharBlockSize};
+	my $blocksize = $self->{type}->{$config{server_type}}->{charBlockSize} || 116; #defaults to 116
 
 	# Packet Len, Total Characters and Total Slots
 	my $totalchars = 2;
 	my $totalslots = 12;
-	my $len = ($blocksize * $totalchars) + (lc($config{server_type}) eq 'bro'?29:7); # v2 C5 a20 size for bRO
+	my $len = $blocksize * $totalchars;
 	
 	# Character Block Pack String
 	my $packstring = '';
@@ -823,10 +835,10 @@ sub SendCharacterList
 
 	# Preparing Begin of Character List Packet
 	my $data;
-	if (lc($config{server_type}) eq 'bro') {
-		$data = $accountID . pack("v2 C5 a20", 0x82d, $len,$totalchars,0,0,0,$totalchars,-0);
+	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x82d') {
+		$data = $accountID . pack("v2 C5 a20", 0x82d, $len + 29,$totalchars,0,0,0,$totalchars,-0); # 29 = v2 C5 a20 size for bRO
 	} else {
-		$data = $accountID . pack("v v C3", 0x6b, $len, $totalslots, -1, -1);
+		$data = $accountID . pack("v v C3", 0x6b, $len + 7, $totalslots, -1, -1);
 	}
 	
 	# Character Block
@@ -865,7 +877,7 @@ sub SendMapLogin {
 	# '0073' => ['map_loaded','x4 a3',[qw(coords)]]
 	my $data;
 	
-	if ( lc($config{server_type}) ne "bro" ) { $data .= $accountID; } #<- This is Server Type Based !!
+	if ( $config{server_type} !~ /^bRO/ ) { $data .= $accountID; } #<- This is Server Type Based !!
 	$data .= pack("C*", 0x73, 0x00) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05);
 
 	if ($clientdata{$index}{mode}) {
@@ -946,13 +958,13 @@ sub SendShowNPC
 	
 	# '0856' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # spawning provided by try71023
 	my $dbuf;
-	if ( $config{server_type} eq "BRO" ) { $dbuf .= pack("C", $object_type); } #<- This is Server Type Based !!
+	if ( $config{server_type} !~ /^bRO/ ) { $dbuf .= pack("C", $object_type); } #<- This is Server Type Based !!
 	$dbuf .= pack("a4 v3 V v11 a4 a2 v V C2",$NPCID,$walk_speed,$opt1,$opt2,$option,$type,$hair_style,$weapon,$lowhead,$shield,$tophead,$midhead,$hair_color,$clothes_color,$head_dir,$guildID,$emblemID,$manner,$opt3,$stance,$sex);
 	$dbuf .= getCoordString($X, $Y, 1);
 	$dbuf .= pack("C2 v2",$xSize,$ySize,$lv,$font);
 	$dbuf .= pack("Z" . length($name),$name);
 	my $opcode;
-	if ( $config{server_type} eq "BRO" ) { $opcode = 0x858; } #<- This is Server Type Based !!
+	if ( $config{server_type} !~ /^bRO/ ) { $opcode = 0x858; } #<- This is Server Type Based !!
 	$client->send(pack("v v",$opcode,length($dbuf) + 4) . $dbuf);
 }
 
