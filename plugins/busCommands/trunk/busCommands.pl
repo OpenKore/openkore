@@ -1,20 +1,9 @@
 #############################################################################
-# busCommands revision 02 plugin by imikelance/marcelofoxes									
+# busCommands plugin by imikelance/Revok
+# r3
 #																			
 # Openkore: http://openkore.com/											
-# Openkore Brazil: http://openkore.com.br/		
-#
-# 17:03 segunda-feira, 20 de fevereiro de 2012 (rev 02)
-#	- now you can use "bus <map name> <command>" to command your bots inside that map
-#
-# 01:01 domingo, 12 de fevereiro de 2012 (rev 01)
-#	- fixed "bus command", where only commands without arguments (like sit, stand, st) would work									
-#	- fixed self name checking													
-#	- added	hook to allow usage with macros												
-#	- added MESSENGER_MODE to allow this plugin to act as a messenger (receive/send messages only)												
-#												
-# 05:52 quarta-feira, 8 de fevereiro de 2012
-# 	- released !
+# Openkore Brazil: http://openkore.com.br/
 #
 #	my special thanks goes to openkore team for developing BUS System !
 #																			
@@ -32,8 +21,10 @@ use Globals;
 use constant {
 	PLUGINNAME				=>	"busCommands",
 	BUS_MESSAGE_ID 			=> 	"busComm",
+	BUS_MESSAGE_ID_MESS		=> 	"busCM",
 	# you can change some of this plugin settings below !
 	BUS_COMMAND 			=> 	"bus",
+	BUS_COMMAND_MESS 			=> 	"busmsg",
 	DEBUG					=>	0,		# set to 1 to show debug messages
 	SILENT					=>	0,		# disable almost every message. error messages will still be shown
 	MESSENGER_MODE			=>	0,		# use this to receive/send messages and not commands.
@@ -41,7 +32,8 @@ use constant {
 
 # Plugin
 Plugins::register(PLUGINNAME, "receive and send commands (and messages too) via BUS system", \&unload);	
-	my $myCmds = Commands::register([BUS_COMMAND, 		"use ".BUS_COMMAND." <all|player name> <command>.",\&comm_Send]);
+	my $myCmds = Commands::register([BUS_COMMAND, 		"use ".BUS_COMMAND." <all|player name> <command>.",\&comm_Send],
+									[BUS_COMMAND_MESS,	"sends a message via BUS",\&msg_Send]);
 	
 	my $networkHook = Plugins::addHook('Network::stateChanged',\&init);
 	
@@ -63,19 +55,37 @@ sub comm_Send {
 	}
 	
 	if ($1 eq $char->name || $1 eq "all") {
-		Plugins::callHook('bus_received', {message => $2});
 		return if (MESSENGER_MODE || $config{'busCommands_messengerMode'});
 		msg("Running command \"$2\"");
 		Commands::run($2);
 	} elsif ($field) {
 		if ($1 eq $field->name) {
-			Plugins::callHook('bus_received', {message => $2});
 			return if (MESSENGER_MODE || $config{'busCommands_messengerMode'});
 			
 			msg("Running command $2 received via BUS");
 			Commands::run($2);
 		}
 	}
+}
+
+sub msg_Send {
+	my (undef, $cmm) = @_;
+	$cmm =~ m/^"(.*)" (.*)$/;
+	$cmm =~ m/^(\w+) (.*)$/ unless ($1);
+	
+	my $from = "anon";
+	if ($char) {
+		$from = $char->name;
+	}
+	
+	my %args;
+	$args{player} = $1;
+	$args{comm} = $2;
+	$args{sender} = $from;
+	$bus->send(BUS_MESSAGE_ID_MESS, \%args);
+	
+	Plugins::callHook('bus_received', {message => $args{comm}, sender => $args{sender}}) if (($char && $1 eq $char->name) || $1 eq "all");
+
 }
 			
 # handle plugin loaded manually
@@ -101,21 +111,23 @@ sub init {
 sub bus_message_received {
 	my (undef, undef, $msg) = @_;
 	return if (!$char);
-	return unless ($msg->{messageID} eq BUS_MESSAGE_ID);
-	if ($msg->{args}{player} eq $char->name || $msg->{args}{player} eq "all") {
-			Plugins::callHook('bus_received', {message => $msg->{args}{comm},});
-			return if (MESSENGER_MODE || $config{'busCommands_messengerMode'});
-			
-			msg("Running command $msg->{args}{comm} received via BUS");
-			Commands::run($msg->{args}{comm});
-	} elsif ($field) {
-		if ($msg->{args}{player} eq $field->name) {
-			Plugins::callHook('bus_received', {message => $msg->{args}{comm},});
-			return if (MESSENGER_MODE || $config{'busCommands_messengerMode'});
-			
-			msg("Running command $msg->{args}{comm} received via BUS");
-			Commands::run($msg->{args}{comm});
+	if ($msg->{messageID} eq BUS_MESSAGE_ID) {
+		if ($msg->{args}{player} eq $char->name || $msg->{args}{player} eq "all") {
+				Plugins::callHook('bus_received', {message => $msg->{args}{comm},});				
+				msg("Running command $msg->{args}{comm} received via BUS");
+				Commands::run($msg->{args}{comm});
+		} elsif ($field) {
+			if ($msg->{args}{player} eq $field->name) {
+				Plugins::callHook('bus_received', {message => $msg->{args}{comm},});				
+				msg("Running command $msg->{args}{comm} received via BUS");
+				Commands::run($msg->{args}{comm});
+			}
 		}
+	} elsif ($msg->{messageID} eq BUS_MESSAGE_ID_MESS) {
+	
+		Plugins::callHook('bus_received', {message => $msg->{args}{comm}, sender => $msg->{args}{sender}}) 
+												if ($msg->{args}{player} eq $char->name || $msg->{args}{player} eq "all");
+		
 	}
 }
 
