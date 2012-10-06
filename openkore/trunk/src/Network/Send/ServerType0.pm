@@ -96,7 +96,7 @@ sub new {
 		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
 		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]], # not "buy", it sells items!
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
-		'0804' => ['booking_search', 'v3 L s', [qw(level MapID job LastIndex ResultCount)]],
+		'0804' => ['booking_search', 'v3 V s', [qw(level MapID job LastIndex ResultCount)]],
 		'0806' => ['booking_delete'],
 		'0808' => ['booking_update', 'v6', [qw(job0 job1 job2 job3 job4 job5)]],
 		'0819' => ['buy_bulk_buyer', 'x2 x2 a4 a*', [qw(buyerID buyingStoreID zeny itemInfo)]],
