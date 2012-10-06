@@ -405,6 +405,8 @@ sub checkConnection {
 		{
 			message T("The Game Guard Authorization Request\n");
 			message T("has timed out, please check your poseidon server !!\n");
+			message TF("Address poseidon server: %s\n", $config{'poseidonServer'});
+			message TF("Port poseidon: %s\n", $config{'poseidonPort'});
 			$self->serverDisconnect;
 			$self->setState(Network::NOT_CONNECTED);			
 		}

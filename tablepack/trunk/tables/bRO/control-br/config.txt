@@ -1,19 +1,17 @@
-# Pasta control traduzida de acordo com a revision 8165, do marcelofoxes
+# Pasta control traduzida de acordo com a revision 8201, do marcelofoxes
 #############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
 # Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
 # Créditos tradução: Duds, Draigonz, Sayd, Temaki' e KeplerBR  ---          www.openkore.com.br
 #############################################################################################
-# * Wiki do OpenKore brasileira oficial:
-#     http://openkore.com.br/
 # * Wiki do OpenKore internacional:
 #     http://openkore.com
 ###############################################################################
 ###############################################################################
-# * Fórum do OpenKore brasileiro oficial:
+# * Fórum brasileiro do OpenKore:
 #     http://openkore.com.br/index.php
-# * Fórum do OpenKore internacional:
+# * Fórum internacional do OpenKore:
 #     http://forums.openkore.com
 ###############################################################################
 # Manual na wiki brasileira: http://openkore.com.br/wiki/index.php?title=Manual
