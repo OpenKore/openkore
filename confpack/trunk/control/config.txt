@@ -10,7 +10,7 @@ password
 loginPinCode
 char
 
-# Poseidon Settings
+# Poseidon Settings (http://wiki.openkore.com/index.php/PoseidonServer)
 # They must be the same as Query Server config in Poseidon.txt
 poseidonServer 127.0.0.1
 poseidonPort 24390
@@ -21,6 +21,7 @@ bindIp
 serverType 0
 
 # 1 = hook into RO client, 2 = Act as stand-alone proxy, proxy = act as true proxy
+# http://wiki.openkore.com/index.php/XKore
 XKore 0
 XKore_silent 1
 XKore_bypassBotDetection 0
@@ -166,7 +167,6 @@ itemsMaxWeight_sellOrStore 48
 itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
 itemsTakeAuto_new 0
-    
 
 lockMap
 lockMap_x
@@ -209,7 +209,6 @@ sitAuto_over_50 0
 sitAuto_idle 1
 sitAuto_look
 sitAuto_look_from_wall
-
 
 statsAddAuto 0
 statsAddAuto_list
@@ -274,6 +273,7 @@ logSystemChat 1
 logEmoticons
 logConsole 0
 logAppendUsername 1
+logAppendServer
 
 chatTitleOversize 0
 shopTitleOversize 0
@@ -468,7 +468,6 @@ doCommand {
 	manualAI 0
 }
 
-
 useSelf_skill {
 	lvl 10
 	maxCastTime 0
@@ -498,7 +497,6 @@ useSelf_skill {
 }
 
 useSelf_skill_smartHeal 1
-
 
 partySkill {
 	lvl 10
@@ -540,7 +538,6 @@ partySkill {
 	inInventory
 	isSelfSkill 0
 }
-
 
 autoSwitch_default_rightHand
 autoSwitch_default_leftHand
