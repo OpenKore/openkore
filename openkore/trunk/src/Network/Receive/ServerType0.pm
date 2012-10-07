@@ -3803,6 +3803,20 @@ sub party_exp {
 	} else {
 		error T("Error setting party option\n");
 	}
+	if ($args->{itemPickup} == 0) {
+		message T("Party item set to Individual Take\n"), "party", 1;
+	} elsif ($args->{itemPickup} == 1) {
+		message T("Party item set to Even Share\n"), "party", 1;
+	} else {
+		error T("Error setting party option\n");
+	}
+	if ($args->{itemDivision} == 0) {
+		message T("Party item division set to Individual Take\n"), "party", 1;
+	} elsif ($args->{itemDivision} == 1) {
+		message T("Party item division set to Even Share\n"), "party", 1;
+	} else {
+		error T("Error setting party option\n");
+	}
 }
 
 sub party_leader {
@@ -3991,8 +4005,8 @@ sub party_join {
 	$char->{party}{users}{$ID}->{ID} = $ID;
 =cut
 
-	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption(1, 0);
+	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
+		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareDiv});
 	}
 }
 
@@ -4075,8 +4089,8 @@ sub party_users_info {
 		$char->{party}{users}{$ID}->{ID} = $ID;
 	}
 
-	if ($config{partyAutoShare} && $char->{party} && %{$char->{party}}) {
-		$messageSender->sendPartyOption(1, 0);
+	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
+		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareDiv});
 	}
 
 }
