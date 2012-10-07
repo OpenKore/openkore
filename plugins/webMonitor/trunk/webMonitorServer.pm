@@ -99,7 +99,7 @@ sub hookShopList {
 	push (@id, $args->{nameID});
 	
 	if ($args->{price} < $char->{'zeny'}){
-		push (@shopJS, '<a href="javascript:buy(' . $shopNumber . ' , ' . $args->{number} . ')">Buy</a>');
+		push (@shopJS, '<a class="btn btn-mini btn-success"  href="/handler?command=buy+' . $shopNumber . ' , ' . $args->{number} . ')">Buy</a>');
 	} else {
 		push (@shopJS, '');
 	}
@@ -140,18 +140,18 @@ sub request {
 		{
 			push @unusable, $item->{name};
 			push @unusableAmount, $item->{amount};
-			push @unusableJS, '<a href="javascript:drop(' . $item->{invIndex} . ')">Drop</a>';
+			push @unusableJS, '<td><a class="btn btn-mini btn-danger" href="/handler?command=drop+' . $item->{invIndex} . '">Drop</a></td>';
 		} elsif ($item->{type} <= 2) {
 			push @usable, $item->{name};
 			push @usableAmount, $item->{amount};
-			push @usableJS, '<a href="javascript:self(' . $item->{invIndex} . ')">Use</a> <a href="javascript:drop(' . $item->{invIndex} . ')">Drop</a>';
+			push @usableJS, '<td><a class="btn btn-mini btn-success" href="/handler?command=is+' . $item->{invIndex} . '">Use</a></td><td><a class="btn btn-mini btn-danger" href="/handler?command=drop+' . $item->{invIndex} . '">Drop</a></td>';
 		} else {
 			if ($item->{equipped}) {
 				push @equipment, $item->{name};
-				push @equipmentJS, '<a href="javascript:eq(' . $item->{invIndex} . ')">Unequip</a> <a href="javascript:drop(' . $item->{invIndex} . ')">Drop</a>';
+				push @equipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?command=eq+' . $item->{invIndex} . '">Unequip</a></td><td><a class="btn btn-mini btn-danger" href="/handler?command=drop+' . $item->{invIndex} . '">Drop</a></td>';
 			} else {
 				push @uequipment, $item->{name};
-				push @uequipmentJS, '<a href="javascript:eq(' . $item->{invIndex} . ')">Equip</a> <a href="javascript:drop(' . $item->{invIndex} . ')">Drop</a>';
+				push @uequipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?command=eq+' . $item->{invIndex} . '">Equip</a></td><td><a class="btn btn-mini btn-danger" href="/handler?command=drop+' . $item->{invIndex} . '">Drop</a></td>';
 			}
 		}
 	}
@@ -172,7 +172,7 @@ sub request {
 				$lvl   = $guild{member}[$i]{lv};
 				$title = $guild{member}[$i]{title};
 				# Translation Comment: Guild member online
-				$online = $guild{member}[$i]{online} ? "Yes" : "No";
+				$online = $guild{member}[$i]{online} ? "<span class='label label-success'>Online</span>" : "<span class='label label-important'>Offline</span>";
 				$ID = unpack("V",$guild{member}[$i]{ID});
 				$charID = unpack("V",$guild{member}[$i]{charID});
 
@@ -208,7 +208,7 @@ sub request {
 			push @npcLocY, $npc->{pos}{y};
 			push @npcName, $npc->name;
 			push @npcBinID, $npc->{nameID};
-			push @npcTalk, '<a href="javascript:talk(' . $npc->{binID} . ')">Talk</a>';
+			push @npcTalk, '<a class="btn btn-mini" href="javascript:talk(' . $npc->{binID} . ')">Talk</a>';
 		}
 
 # [PT-BR] Listar habilidades
@@ -237,15 +237,15 @@ sub request {
 		my $type = $skill->getTargetType();
 		if ($char->getSkillLevel($skill) > 0){
 			if ($type == 0){
-				$act = ''; #Skill passive
+				$act = '<td></td><td><div align="center"><a class="btn btn-mini disabled">Passive</a></div></td>'; #Skill passive
 			} elsif ($type == 1){
-				$act = ' - <b>SP:</b> ' . $sp . '   <a href="javascript:enemy(' . $IDN . ')">Attack</a>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sm+' . $IDN . '+0">Attack</a></div>';
 			} elsif ($type == 2){
-				$act = ' - <b>SP:</b> ' . $sp . '   <a href="javascript:locat(' . $IDN . ')">choose location</a>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=is+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
 			} elsif ($type == 4){
-				$act = ' - <b>SP:</b> ' . $sp . '   <a href="javascript:self(' . $IDN . ')">Use</a>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=is+' . $IDN . '">Use</a></div>';
 			} elsif ($type == 16){
-				$act = ' - <b>SP:</b> ' . $sp . '   <a href="javascript:actor(' . $IDN . ')">Choose actor</a>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sp+' . $IDN . '+0">Choose actor</a></div>';
 			} 
 		}
 		
@@ -253,7 +253,7 @@ sub request {
 		#  (ainda não chegou ao nível máximo e atingiu seus pré-requisitos), para saber se deve mostrar a imagem de aumentar nível e sua função.
 		my $ico_up;
 		if ($char->{points_skill} > 0 && $char->{skills}{$handle}{up} == 1){
-		$ico_up = '<a href="javascript:skill_up(' . $IDN .')"><img src="skills/skill_up.gif"></a> ';}
+		$ico_up = '<a href="/handler?command=skills+add+' . $IDN .'"><i class="icon-plus-sign"></i></a> ';}
 		
 		# [PT-BR] Para finalizar, adicionar dados para as array's
 		# [EN] To finalize, add the elements into the array's
@@ -322,7 +322,9 @@ sub request {
 		'characterStatusesSring' => $char->statusesString(),
 		'characterName' => $char->name(),
 		'characterJob' => $jobs_lut{$char->{jobID}},
+		'characterJobID' => $char->{jobID},
 		'characterSex' => $sex_lut{$char->{sex}},
+		'characterSexID' => $char->{sex},
 		'characterLevel' => $char->{lv},
 		'characterJobLevel' => $char->{lv_job},
 		'characterID' => unpack("V", $char->{ID}),
@@ -373,7 +375,7 @@ sub request {
 		'characterDefMagicBonus' => $char->{def_magic_bonus},
 		'characterFlee' => $char->{flee},
 		'characterFleeBonus' => $char->{flee_bonus},
-		'characterSpirits' => $char->{spirits} || 'none',
+		'characterSpirits' => $char->{spirits} || '-',
 	
 		'characterBaseExp' => $char->{exp},
 		'characterBaseMax' => $char->{exp_max},
@@ -404,6 +406,13 @@ sub request {
 		'lastConsoleMessage' => $messages[-1],
 		'lastConsoleMessage2' => $messages[-2],
 		'lastConsoleMessage3' => $messages[-3],
+		'lastConsoleMessage3' => $messages[-4],
+		'lastConsoleMessage3' => $messages[-5],
+		'lastConsoleMessage3' => $messages[-6],
+		'lastConsoleMessage3' => $messages[-8],
+		'lastConsoleMessage3' => $messages[-9],
+		'lastConsoleMessage3' => $messages[-10],
+		'lastConsoleMessage3' => $messages[-11],
 		'skin' => 'default', # TODO: replace with config.txt entry for the skin
 		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
 	);
@@ -434,7 +443,7 @@ sub request {
 	# TODO: will be removed later
 	} elsif ($filename eq '/console') {
 		# [PT-BR] Recarregar a página a cada 5 segundos | [EN] Reload the page every 5 seconds
-		$content .= '<head><meta http-equiv="refresh" content="5"></head>' . "\n";
+		$content .= '<head><meta http-equiv="refresh" content="1"></head>' . "\n";
 		$content .= '<pre>' . "\n";
 
 		# Concatenate the message buffer
