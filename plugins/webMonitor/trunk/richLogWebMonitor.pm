@@ -48,7 +48,7 @@ sub unload {
 #------------------
 # [PT-BR] Iniciando
 #------------------
-my $caminho = 'plugins/webMonitor/WWW/default/log.html.template';
+my $caminho = 'plugins/webMonitor/WWW/log.html.template';
 
 # [PT-BR] Caso o arquivo já exista, será deletado
 if (-e $caminho){
@@ -143,19 +143,53 @@ body {
  </style>
  <meta http-equiv="refresh" content="2">
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <SCRIPT language=JavaScript1.2> 
+//change 1 to another integer to alter the scroll speed. Greater is faster
+var speed=50
+var currentpos=0,alt=1,curpos1=0,curpos2=-1
+function initialize(){
+startit()
+}
+function scrollwindow(){
+if (document.all &&
+!document.getElementById)
+temp=document.body.scrollTop
+else
+temp=window.pageYOffset
+if (alt==0)
+alt=2
+else
+alt=1
+if (alt==0)
+curpos1=temp
+else
+curpos2=temp
+if (curpos1!=curpos2){
+if (document.all)
+currentpos=document.body.scrollTop+speed
+else
+currentpos=window.pageYOffset+speed
+window.scroll(0,currentpos)
+}
+else{
+currentpos=0
+window.scroll(0,currentpos)
+}
+}
+function startit(){
+setInterval("scrollwindow()",1)
+}
+window.onload=initialize
+</SCRIPT>
  </head>
- 
-<script type="text/javascript">
-	function descer() {
-		window.scrollTo(0,99999);
-	}
-</script>
 
-<input type="button" onclick="descer()" value="Jump down" /><br>
+
  );
         }
-        print F $message2."\n";
+        
+		print F $message2."\n";
         close(F);
+		
     }
     
 }

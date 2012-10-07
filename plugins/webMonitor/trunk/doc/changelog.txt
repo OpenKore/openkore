@@ -1,0 +1,15 @@
+06/10/2012
+- international release - BonScott
+
+05/10/2012
+- fix layouts bugs - BonScott
+- add 2 new vars (sexID e jobID)
+- removed intro page
+
+04/10/2012
+- polished layout
+- added tooltips to bars (hp,sp,base,job,weight)
+
+01/10/2012
+- adjusts in core plugin
+- re-design by BonScott
