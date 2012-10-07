@@ -10,8 +10,8 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # tRO (Thai) for 2008-09-16Ragexe12_Th
-# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
-package Network::Send::rROrenewal;
+# Servertype overview: http://openkore.com/index.php/ServerType
+package Network::Send::rRO;
 
 use strict;
 use base 'Network::Send::ServerType0';
