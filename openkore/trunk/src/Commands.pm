@@ -3244,7 +3244,7 @@ sub cmdParty {
 	} elsif ($arg1 eq "leave") {
 		$messageSender->sendPartyLeave();
 	# party leader specific commands
-	} elsif ($arg1 eq "request" || $arg1 eq "share" || $arg1 eq "kick" || $arg1 eq "leader") {
+	} elsif ($arg1 eq "request" || $arg1 eq "share" || $arg1 eq "shareitem" || $arg1 eq "sharediv" || $arg1 eq "kick" || $arg1 eq "leader") {
 		my $party_admin;
 		# check if we are the party leader before using leader specific commands.
 		for (my $i = 0; $i < @partyUsersID; $i++) {
@@ -3280,7 +3280,25 @@ sub cmdParty {
 			error T("Syntax Error in function 'party share' (Set Party Share EXP)\n" .
 				"Usage: party share <flag>\n");
 		} elsif ($arg1 eq "share") {
-			$messageSender->sendPartyOption($arg2, 0);
+			$messageSender->sendPartyOption($arg2, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
+
+		} elsif ($arg1 eq "shareitem" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
+			error T("Error in function 'party shareitem' (Set Party Share Item)\n" .
+				"Can't set share - you're not in a party.\n");
+		} elsif ($arg1 eq "shareitem" && $arg2 ne "1" && $arg2 ne "0") {
+			error T("Syntax Error in function 'party shareitem' (Set Party Share Item)\n" .
+				"Usage: party shareitem <flag>\n");
+		} elsif ($arg1 eq "shareitem") {
+			$messageSender->sendPartyOption($config{partyAutoShare}, $arg2, $config{partyAutoShareItemDiv});
+
+		} elsif ($arg1 eq "sharediv" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
+			error T("Error in function 'party share' (Set Party Share EXP)\n" .
+				"Can't set share - you're not in a party.\n");
+		} elsif ($arg1 eq "sharediv" && $arg2 ne "1" && $arg2 ne "0") {
+			error T("Syntax Error in function 'party share' (Set Party Share EXP)\n" .
+				"Usage: party share <flag>\n");
+		} elsif ($arg1 eq "sharediv") {
+			$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $arg2);
 
 
 		} elsif ($arg1 eq "kick" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
@@ -3310,7 +3328,7 @@ sub cmdParty {
 		}
 	} else {
 		error T("Syntax Error in function 'party' (Party Management)\n" .
-			"Usage: party [<create|join|request|leave|share|kick|leader>]\n");
+			"Usage: party [<create|join|request|leave|share|shareitem|sharediv|kick|leader>]\n");
 	}
 }
 
