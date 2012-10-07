@@ -11,7 +11,7 @@
 #########################################################################
 # rRO-Phoenix (Russia)
 # Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
-package Network::Receive::rROrenewal;
+package Network::Receive::rRO;
 
 use strict;
 use base 'Network::Receive::ServerType0';

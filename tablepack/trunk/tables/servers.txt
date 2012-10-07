@@ -317,10 +317,9 @@ addTableFolders pRO
 ip 109.105.144.106
 port 6900
 version 112112
-serverType rROrenewal
+serverType rRO
 serverEncoding Russian
 charBlockSize 132
-recvpackets recvpackets-renewal.txt
 addTableFolders rRO
 
 ## http://ro.gameflier.com/
