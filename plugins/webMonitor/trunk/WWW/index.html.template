@@ -131,7 +131,7 @@
 				ctx.fillStyle="#FF0000";
 				ctx.fillRect(150,150,5,3);
 				</script>
-				<p><div class="center">{characterLocationX},{characterLocationY}</p></div>
+				<p><div class="center" id="coord">{characterLocationX},{characterLocationY}</p></div>
 			</div><!--/span-->
 			
           </div><!--/row-->

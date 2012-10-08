@@ -1,0 +1,317 @@
+/*!
+ * Bootstrap v2.1.1
+ *
+ * Modificações custom.
+ */
+ .console {
+	border: 1px;
+	border-style: solid;
+	border-color: #eeeeee;
+	-webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+	height: 250px;
+}
+canvas{
+	height: 200px;
+	width: 200px;
+}
+.sidebar-nav { 
+padding: 9px 0; 
+}
+.iframe {
+display:block;
+width:100%!important; 
+height:350px!important;
+}
+.job {
+	height: 120px;
+	width: 120px;
+}
+.iconSkill{
+	height: 24px;
+	width: 24px;
+}
+#job00 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/b6/Female_Novice_%28Ragnarok_Online%29.png");}
+#job10 {background-image:url("http://cdn.wikimg.net/strategywiki/images/8/8f/Male_Novice_%28Ragnarok_Online%29.png");}
+#job01 {background-image:url("http://cdn.wikimg.net/strategywiki/images/c/c5/Female_Swordsman_%28Ragnarok_Online%29.png");}
+#job11 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/15/Male_Swordsman_%28Ragnarok_Online%29.png");}
+#job02 {background-image:url("http://cdn.wikimg.net/strategywiki/images/0/00/Female_Magician_%28Ragnarok_Online%29.png");}
+#job12 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/f2/Male_Magician_%28Ragnarok_Online%29.png");}
+#job03 {background-image:url("http://cdn.wikimg.net/strategywiki/images/3/32/Female_Archer_%28Ragnarok_Online%29.png");}
+#job13 {background-image:url("http://cdn.wikimg.net/strategywiki/images/7/73/Male_Archer_%28Ragnarok_Online%29.png");}
+#job04 {background-image:url("http://cdn.wikimg.net/strategywiki/images/d/de/Female_Acolyte_%28Ragnarok_Online%29.png");}
+#job14 {background-image:url("http://cdn.wikimg.net/strategywiki/images/6/63/Male_Acolyte_%28Ragnarok_Online%29.png");}
+#job05 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/b7/Female_Merchant_%28Ragnarok_Online%29.png");}
+#job15 {background-image:url("http://cdn.wikimg.net/strategywiki/images/4/40/Male_Merchant_%28Ragnarok_Online%29.png");}
+#job06 {background-image:url("http://cdn.wikimg.net/strategywiki/images/5/5e/Female_Thief_%28Ragnarok_Online%29.png");}
+#job16 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/17/Male_Thief_%28Ragnarok_Online%29.png");}
+#job07 {background-image:url("http://cdn.wikimg.net/strategywiki/images/2/27/Female_Knight_%28Ragnarok_Online%29.png");}
+#job17 {background-image:url("http://cdn.wikimg.net/strategywiki/images/9/9e/Male_Knight_%28Ragnarok_Online%29.png");}
+#job08 {background-image:url("http://cdn.wikimg.net/strategywiki/images/0/0f/Female_Priest_%28Ragnarok_Online%29.png");}
+#job18 {background-image:url("http://cdn.wikimg.net/strategywiki/images/7/77/Male_Priest_%28Ragnarok_Online%29.png");}
+#job09 {background-image:url("http://cdn.wikimg.net/strategywiki/images/7/70/Female_Wizard_%28Ragnarok_Online%29.png");}
+#job19 {background-image:url("http://cdn.wikimg.net/strategywiki/images/0/0c/Male_Wizard_%28Ragnarok_Online%29.png");}
+#job010 {background-image:url("http://cdn.wikimg.net/strategywiki/images/2/22/Female_Blacksmith_%28Ragnarok_Online%29.png");}
+#job110 {background-image:url("http://cdn.wikimg.net/strategywiki/images/6/61/Male_Blacksmith_%28Ragnarok_Online%29.png");}
+#job011 {background-image:url("http://cdn.wikimg.net/strategywiki/images/c/c3/Female_Hunter_%28Ragnarok_Online%29.png");}
+#job111 {background-image:url("http://cdn.wikimg.net/strategywiki/images/d/de/Male_Hunter_%28Ragnarok_Online%29.png");}
+#job012 {background-image:url("http://cdn.wikimg.net/strategywiki/images/2/20/Female_Assassin_%28Ragnarok_Online%29.png");}
+#job112 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/f7/Male_Assassin_%28Ragnarok_Online%29.png");}
+#job014 {background-image:url("http://cdn.wikimg.net/strategywiki/images/a/ae/Female_Crusader_%28Ragnarok_Online%29.png");}
+#job114 {background-image:url("http://cdn.wikimg.net/strategywiki/images/a/a3/Male_Crusader_%28Ragnarok_Online%29.png");}
+#job015 {background-image:url("http://cdn.wikimg.net/strategywiki/images/3/32/Female_Monk_%28Ragnarok_Online%29.png");}
+#job115 {background-image:url("http://cdn.wikimg.net/strategywiki/images/4/43/Male_Monk_%28Ragnarok_Online%29.png");}
+#job016 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/b7/Female_Sage_%28Ragnarok_Online%29.png");}
+#job116 {background-image:url("http://cdn.wikimg.net/strategywiki/images/6/6f/Male_Sage_%28Ragnarok_Online%29.png");}
+#job017 {background-image:url("http://cdn.wikimg.net/strategywiki/images/d/d4/Female_Rogue_%28Ragnarok_Online%29.png");}
+#job117 {background-image:url("http://cdn.wikimg.net/strategywiki/images/6/63/Male_Rogue_%28Ragnarok_Online%29.png");}
+#job018 {background-image:url("http://cdn.wikimg.net/strategywiki/images/8/81/Female_Alchemist_%28Ragnarok_Online%29.png");}
+#job118 {background-image:url("http://cdn.wikimg.net/strategywiki/images/6/67/Male_Alchemist_%28Ragnarok_Online%29.png");}
+#job119 {background-image:url("http://cdn.wikimg.net/strategywiki/images/d/d5/Bard_%28Ragnarok_Online%29.png");}
+#job020 {background-image:url("http://cdn.wikimg.net/strategywiki/images/8/8b/Dancer_%28Ragnarok_Online%29.png");}
+#job023 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/f9/Female_Supernovice_%28Ragnarok_Online%29.png");}
+#job123 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/1d/Male_Supernovice_%28Ragnarok_Online%29.png");}
+#job024 {background-image:url("http://cdn.wikimg.net/strategywiki/images/0/04/Female_Gunslinger_%28Ragnarok_Online%29.png");}
+#job124 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/1e/Male_Gunslinger_%28Ragnarok_Online%29.png");}
+#job025 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/b1/Female_Ninja_%28Ragnarok_Online%29.png");}
+#job125 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/1a/Male_Ninja_%28Ragnarok_Online%29.png");}
+#job04001 {background-image:url("Novice High");}
+#job04001 {background-image:url("Novice High");}
+#job04002 {background-image:url("Swordman High");}
+#job04002 {background-image:url("Swordman High");}
+#job04003 {background-image:url("Magician High");}
+#job04003 {background-image:url("Magician High");}
+#job04004 {background-image:url("Archer High");}
+#job04004 {background-image:url("Archer High");}
+#job04005 {background-image:url("Acolyte High");}
+#job04005 {background-image:url("Acolyte High");}
+#job04006 {background-image:url("Merchant High");}
+#job04006 {background-image:url("Merchant High");}
+#job04007 {background-image:url("Thief High");}
+#job04007 {background-image:url("Thief High");}
+#job04008 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/b3/Female_Lord_Knight_%28Ragnarok_Online%29.png");}
+#job14008 {background-image:url("http://cdn.wikimg.net/strategywiki/images/8/8d/Male_Lord_Knight_%28Ragnarok_Online%29.png");}
+#job04009 {background-image:url("http://cdn.wikimg.net/strategywiki/images/6/63/Female_High_Priest_%28Ragnarok_Online%29.png");}
+#job14009 {background-image:url("http://cdn.wikimg.net/strategywiki/images/9/96/Male_High_Priest_%28Ragnarok_Online%29.png");}
+#job04010 {background-image:url("http://cdn.wikimg.net/strategywiki/images/8/88/Female_High_Wizard_%28Ragnarok_Online%29.png");}
+#job14010 {background-image:url("http://cdn.wikimg.net/strategywiki/images/2/2b/Male_High_Wizard_%28Ragnarok_Online%29.png");}
+#job04011 {background-image:url("http://cdn.wikimg.net/strategywiki/images/8/8d/Female_Mastersmith_%28Ragnarok_Online%29.png");}
+#job14011 {background-image:url("http://cdn.wikimg.net/strategywiki/images/4/45/Male_Mastersmith_%28Ragnarok_Online%29.png");}
+#job04012 {background-image:url("http://cdn.wikimg.net/strategywiki/images/e/ee/Female_Sniper_%28Ragnarok_Online%29.png");}
+#job14012 {background-image:url("http://cdn.wikimg.net/strategywiki/images/2/2b/Male_Sniper_%28Ragnarok_Online%29.png");}
+#job04013 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/fc/Female_Assassin_Cross_%28Ragnarok_Online%29.png");}
+#job14013 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/b4/Male_Assassin_Cross_%28Ragnarok_Online%29.png");}
+#job04015 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/f6/Male_Paladin_%28Ragnarok_Online%29.png");}
+#job14015 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/f5/Female_Paladin_%28Ragnarok_Online%29.png");}
+#job04016 {background-image:url("http://cdn.wikimg.net/strategywiki/images/3/32/Female_Champion_%28Ragnarok_Online%29.png");}
+#job14016 {background-image:url("http://cdn.wikimg.net/strategywiki/images/a/a8/Male_Champion_%28Ragnarok_Online%29.png");}
+#job04017 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/14/Female_Scholar_%28Ragnarok_Online%29.png");}
+#job14017 {background-image:url("http://cdn.wikimg.net/strategywiki/images/d/d2/Male_Scholar_%28Ragnarok_Online%29.png");}
+#job04018 {background-image:url("http://cdn.wikimg.net/strategywiki/images/c/c8/Female_Stalker_%28Ragnarok_Online%29.png");}
+#job14018 {background-image:url("http://cdn.wikimg.net/strategywiki/images/2/2d/Male_Stalker_%28Ragnarok_Online%29.png");}
+#job04019 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/bd/Female_Biochemist_%28Ragnarok_Online%29.png");}
+#job14019 {background-image:url("http://cdn.wikimg.net/strategywiki/images/5/57/Male_Biochemist_%28Ragnarok_Online%29.png");}
+#job04021 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/f4/Gypsy_%28Ragnarok_Online%29.png");}
+#job14020 {background-image:url("http://cdn.wikimg.net/strategywiki/images/e/ee/Minstrel_%28Ragnarok_Online%29.png");}
+#job04045 {background-image:url("Super Baby");}
+#job14045 {background-image:url("Super Baby");}
+#job04046 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/bd/Taekwon_Girl_%28Ragnarok_Online%29.png");}
+#job14046 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/14/Taekwon_Boy_%28Ragnarok_Online%29.png");}
+#job04047 {background-image:url("Star Gladiator");}
+#job14047 {background-image:url("Star Gladiator");}
+#job04049 {background-image:url("Soul Linker");}
+#job14049 {background-image:url("Soul Linker");}
+#job04050 {background-image:url("Gangsi");}
+#job14050 {background-image:url("Gangsi");}
+#job04051 {background-image:url("Death Knight");}
+#job14051 {background-image:url("Death Knight");}
+#job04052 {background-image:url("Dark Collector");}
+#job14052 {background-image:url("Dark Collector");}
+#job04190 {background-image:url("Ex. Super Novice");}
+#job14190 {background-image:url("Ex. Super Novice");}
+#job04191 {background-image:url("Ex. Super Baby");}
+#job14191 {background-image:url("Ex. Super Baby");}
+#job04211 {background-image:url("Kagerou");}
+#job14211 {background-image:url("Kagerou");}
+#job04212 {background-image:url("Oboro");}
+#job14212 {background-image:url("Oboro");}
+#job022{background-image:url("Wedding");}
+#job122 {background-image:url("Wedding");}
+#job {background-image:url("");}
+/*! Skills */
+#skill1 {background-image:url("http://www.ragdata.com/images/skills/nv_basic.gif");}
+#skill2 {background-image:url("http://www.ragdata.com/images/skills/sm_sword.gif");}
+#skill3 {background-image:url("http://www.ragdata.com/images/skills/sm_twohand.gif");}
+#skill4 {background-image:url("http://www.ragdata.com/images/skills/sm_recovery.gif");}
+#skill5 {background-image:url("http://www.ragdata.com/images/skills/sm_bash.gif");}
+#skill6 {background-image:url("http://www.ragdata.com/images/skills/sm_provoke.gif");}
+#skill7 {background-image:url("http://www.ragdata.com/images/skills/sm_magnum.gif");}
+#skill8 {background-image:url("http://www.ragdata.com/images/skills/sm_endure.gif");}
+#skill9 {background-image:url("http://www.ragdata.com/images/skills/mg_srecovery.gif");}
+#skill10 {background-image:url("http://www.ragdata.com/images/skills/mg_sight.gif");}
+#skill11 {background-image:url("http://www.ragdata.com/images/skills/mg_napalmbeat.gif");}
+#skill12 {background-image:url("http://www.ragdata.com/images/skills/mg_safetywall.gif");}
+#skill13 {background-image:url("http://www.ragdata.com/images/skills/mg_soulstrike.gif");}
+#skill14 {background-image:url("http://www.ragdata.com/images/skills/mg_coldbolt.gif");}
+#skill15 {background-image:url("http://www.ragdata.com/images/skills/mg_frostdiver.gif");}
+#skill16 {background-image:url("http://www.ragdata.com/images/skills/mg_stonecurse.gif");}
+#skill17 {background-image:url("http://www.ragdata.com/images/skills/mg_fireball.gif");}
+#skill18 {background-image:url("http://www.ragdata.com/images/skills/mg_firewall.gif");}
+#skill19 {background-image:url("http://www.ragdata.com/images/skills/mg_firebolt.gif");}
+#skill20 {background-image:url("http://www.ragdata.com/images/skills/mg_lightningbolt.gif");}
+#skill21 {background-image:url("http://www.ragdata.com/images/skills/mg_thunderstorm.gif");}
+#skill22 {background-image:url("http://www.ragdata.com/images/skills/al_dp.gif");}
+#skill23 {background-image:url("http://www.ragdata.com/images/skills/al_demonbane.gif");}
+#skill24 {background-image:url("http://www.ragdata.com/images/skills/al_ruwach.gif");}
+#skill25 {background-image:url("http://www.ragdata.com/images/skills/al_pneuma.gif");}
+#skill26 {background-image:url("http://www.ragdata.com/images/skills/al_teleport.gif");}
+#skill27 {background-image:url("http://www.ragdata.com/images/skills/al_warp.gif");}
+#skill28 {background-image:url("http://www.ragdata.com/images/skills/al_heal.gif");}
+#skill29 {background-image:url("http://www.ragdata.com/images/skills/al_incagi.gif");}
+#skill30 {background-image:url("http://www.ragdata.com/images/skills/al_decagi.gif");}
+#skill31 {background-image:url("http://www.ragdata.com/images/skills/al_holywater.gif");}
+#skill32 {background-image:url("http://www.ragdata.com/images/skills/al_crucis.gif");}
+#skill33 {background-image:url("http://www.ragdata.com/images/skills/al_angelus.gif");}
+#skill34 {background-image:url("http://www.ragdata.com/images/skills/al_blessing.gif");}
+#skill35 {background-image:url("http://www.ragdata.com/images/skills/al_cure.gif");}
+#skill36 {background-image:url("http://www.ragdata.com/images/skills/mc_inccarry.gif");}
+#skill37 {background-image:url("http://www.ragdata.com/images/skills/mc_discount.gif");}
+#skill38 {background-image:url("http://www.ragdata.com/images/skills/mc_overcharge.gif");}
+#skill39 {background-image:url("http://www.ragdata.com/images/skills/mc_pushcart.gif");}
+#skill40 {background-image:url("http://www.ragdata.com/images/skills/mc_identify.gif");}
+#skill41 {background-image:url("http://www.ragdata.com/images/skills/mc_vending.gif");}
+#skill42 {background-image:url("http://www.ragdata.com/images/skills/mc_mammonite.gif");}
+#skill43 {background-image:url("http://www.ragdata.com/images/skills/ac_owl.gif");}
+#skill44 {background-image:url("http://www.ragdata.com/images/skills/ac_vulture.gif");}
+#skill45 {background-image:url("http://www.ragdata.com/images/skills/ac_concentration.gif");}
+#skill46 {background-image:url("http://www.ragdata.com/images/skills/ac_double.gif");}
+#skill47 {background-image:url("http://www.ragdata.com/images/skills/ac_shower.gif");}
+#skill48 {background-image:url("http://www.ragdata.com/images/skills/tf_double.gif");}
+#skill49 {background-image:url("http://www.ragdata.com/images/skills/tf_miss.gif");}
+#skill50 {background-image:url("http://www.ragdata.com/images/skills/tf_steal.gif");}
+#skill51 {background-image:url("http://www.ragdata.com/images/skills/tf_hiding.gif");}
+#skill52 {background-image:url("http://www.ragdata.com/images/skills/tf_poison.gif");}
+#skill53 {background-image:url("http://www.ragdata.com/images/skills/tf_detoxify.gif");}
+#skill54 {background-image:url("http://www.ragdata.com/images/skills/all_resurrection.gif");}
+#skill55 {background-image:url("http://www.ragdata.com/images/skills/kn_spearmastery.gif");}
+#skill56 {background-image:url("http://www.ragdata.com/images/skills/kn_pierce.gif");}
+#skill57 {background-image:url("http://www.ragdata.com/images/skills/kn_brandishspear.gif");}
+#skill58 {background-image:url("http://www.ragdata.com/images/skills/kn_spearstab.gif");}
+#skill59 {background-image:url("http://www.ragdata.com/images/skills/kn_spearboomerang.gif");}
+#skill60 {background-image:url("http://www.ragdata.com/images/skills/kn_twohandquicken.gif");}
+#skill61 {background-image:url("http://www.ragdata.com/images/skills/kn_autocounter.gif");}
+#skill62 {background-image:url("http://www.ragdata.com/images/skills/kn_bowlingbash.gif");}
+#skill63 {background-image:url("http://www.ragdata.com/images/skills/kn_riding.gif");}
+#skill64 {background-image:url("http://www.ragdata.com/images/skills/kn_cavaliermastery.gif");}
+#skill65 {background-image:url("http://www.ragdata.com/images/skills/pr_macemastery.gif");}
+#skill66 {background-image:url("http://www.ragdata.com/images/skills/pr_impositio.gif");}
+#skill67 {background-image:url("http://www.ragdata.com/images/skills/pr_suffragium.gif");}
+#skill68 {background-image:url("http://www.ragdata.com/images/skills/pr_aspersio.gif");}
+#skill69 {background-image:url("http://www.ragdata.com/images/skills/pr_benedictio.gif");}
+#skill70 {background-image:url("http://www.ragdata.com/images/skills/pr_sanctuary.gif");}
+#skill71 {background-image:url("http://www.ragdata.com/images/skills/pr_slowpoison.gif");}
+#skill72 {background-image:url("http://www.ragdata.com/images/skills/pr_strecovery.gif");}
+#skill73 {background-image:url("http://www.ragdata.com/images/skills/pr_kyrie.gif");}
+#skill74 {background-image:url("http://www.ragdata.com/images/skills/pr_magnificat.gif");}
+#skill75 {background-image:url("http://www.ragdata.com/images/skills/pr_gloria.gif");}
+#skill76 {background-image:url("http://www.ragdata.com/images/skills/pr_lexdivina.gif");}
+#skill77 {background-image:url("http://www.ragdata.com/images/skills/pr_turnundead.gif");}
+#skill78 {background-image:url("http://www.ragdata.com/images/skills/pr_lexaeterna.gif");}
+#skill79 {background-image:url("http://www.ragdata.com/images/skills/pr_magnus.gif");}
+#skill80 {background-image:url("http://www.ragdata.com/images/skills/wz_firepillar.gif");}
+#skill81 {background-image:url("http://www.ragdata.com/images/skills/wz_sightrasher.gif");}
+#skill82 {background-image:url("");}
+#skill83 {background-image:url("http://www.ragdata.com/images/skills/wz_meteor.gif");}
+#skill84 {background-image:url("http://www.ragdata.com/images/skills/wz_jupitel.gif");}
+#skill85 {background-image:url("http://www.ragdata.com/images/skills/wz_vermilion.gif");}
+#skill86 {background-image:url("http://www.ragdata.com/images/skills/wz_waterball.gif");}
+#skill87 {background-image:url("http://www.ragdata.com/images/skills/wz_icewall.gif");}
+#skill88 {background-image:url("http://www.ragdata.com/images/skills/wz_frostnova.gif");}
+#skill89 {background-image:url("http://www.ragdata.com/images/skills/wz_stormgust.gif");}
+#skill90 {background-image:url("http://www.ragdata.com/images/skills/wz_earthspike.gif");}
+#skill91 {background-image:url("http://www.ragdata.com/images/skills/wz_heavendrive.gif");}
+#skill92 {background-image:url("http://www.ragdata.com/images/skills/wz_quagmire.gif");}
+#skill93 {background-image:url("http://www.ragdata.com/images/skills/wz_estimation.gif");}
+#skill94 {background-image:url("http://www.ragdata.com/images/skills/bs_iron.gif");}
+#skill95 {background-image:url("http://www.ragdata.com/images/skills/bs_steel.gif");}
+#skill96 {background-image:url("http://www.ragdata.com/images/skills/bs_enchantedstone.gif");}
+#skill97 {background-image:url("");}
+#skill98 {background-image:url("http://www.ragdata.com/images/skills/bs_dagger.gif");}
+#skill99 {background-image:url("http://www.ragdata.com/images/skills/bs_sword.gif");}
+#skill100 {background-image:url("http://www.ragdata.com/images/skills/bs_twohandsword.gif");}
+#skill101 {background-image:url("http://www.ragdata.com/images/skills/bs_axe.gif");}
+#skill102 {background-image:url("http://www.ragdata.com/images/skills/bs_mace.gif");}
+#skill103 {background-image:url("http://www.ragdata.com/images/skills/bs_knuckle.gif");}
+#skill104 {background-image:url("http://www.ragdata.com/images/skills/bs_spear.gif");}
+#skill105 {background-image:url("http://www.ragdata.com/images/skills/bs_hiltbinding.gif");}
+#skill106 {background-image:url("http://www.ragdata.com/images/skills/bs_findingore.gif");}
+#skill107 {background-image:url("http://www.ragdata.com/images/skills/bs_weaponresearch.gif");}
+#skill108 {background-image:url("http://www.ragdata.com/images/skills/bs_repairweapon.gif");}
+#skill109 {background-image:url("http://www.ragdata.com/images/skills/bs_skintemper.gif");}
+#skill110 {background-image:url("http://www.ragdata.com/images/skills/bs_hammerfall.gif");}
+#skill111 {background-image:url("http://www.ragdata.com/images/skills/bs_adrenaline.gif");}
+#skill112 {background-image:url("http://www.ragdata.com/images/skills/bs_weaponperfect.gif");}
+#skill113 {background-image:url("http://www.ragdata.com/images/skills/bs_overthrust.gif");}
+#skill114 {background-image:url("http://www.ragdata.com/images/skills/bs_maximize.gif");}
+#skill115 {background-image:url("http://www.ragdata.com/images/skills/ht_skidtrap.gif");}
+#skill116 {background-image:url("http://www.ragdata.com/images/skills/ht_landmine.gif");}
+#skill117 {background-image:url("http://www.ragdata.com/images/skills/ht_anklesnare.gif");}
+#skill118 {background-image:url("http://www.ragdata.com/images/skills/ht_shockwave.gif");}
+#skill119 {background-image:url("http://www.ragdata.com/images/skills/ht_sandman.gif");}
+#skill120 {background-image:url("http://www.ragdata.com/images/skills/ht_flasher.gif");}
+#skill121 {background-image:url("");}
+#skill122 {background-image:url("");}
+#skill123 {background-image:url("");}
+#skill124 {background-image:url("");}
+#skill125 {background-image:url("");}
+#skill126 {background-image:url("");}
+#skill127 {background-image:url("");}
+#skill128 {background-image:url("");}
+#skill129 {background-image:url("");}
+#skill130 {background-image:url("");}
+#skill131 {background-image:url("");}
+#skill132 {background-image:url("");}
+#skill133 {background-image:url("");}
+#skill134 {background-image:url("");}
+#skill135 {background-image:url("");}
+#skill136 {background-image:url("");}
+#skill137 {background-image:url("");}
+#skill138 {background-image:url("");}
+#skill139 {background-image:url("");}
+#skill140 {background-image:url("");}
+#skill141 {background-image:url("");}
+#skill142 {background-image:url("http://www.ragdata.com/images/skills/nv_firstaid.gif");}
+#skill143 {background-image:url("");}
+#skill144 {background-image:url("");}
+#skill145 {background-image:url("");}
+#skill146 {background-image:url("");}
+#skill147 {background-image:url("");}
+#skill148 {background-image:url("");}
+#skill149 {background-image:url("");}
+#skill151 {background-image:url("");}
+#skill152 {background-image:url("");}
+#skill153 {background-image:url("");}
+#skill154 {background-image:url("");}
+#skill155 {background-image:url("");}
+#skill156 {background-image:url("");}
+#skill157 {background-image:url("");}
+#skill158 {background-image:url("");}
+#skill159 {background-image:url("");}
+#skill160 {background-image:url("");}
+#skill210 {background-image:url("http://www.ragdata.com/images/skills/rg_snatcher.gif");}
+#skill211 {background-image:url("http://www.ragdata.com/images/skills/rg_stealcoin.gif");}
+#skill212 {background-image:url("http://www.ragdata.com/images/skills/rg_backstap.gif");}
+#skill213 {background-image:url("http://www.ragdata.com/images/skills/rg_tunneldrive.gif");}
+#skill214 {background-image:url("http://www.ragdata.com/images/skills/rg_raid.gif");}
+#skill215 {background-image:url("http://www.ragdata.com/images/skills/rg_stripweapon.gif");}
+#skill216 {background-image:url("http://www.ragdata.com/images/skills/rg_stripshield.gif");}
+#skill217 {background-image:url("http://www.ragdata.com/images/skills/rg_striparmor.gif");}
+#skill218 {background-image:url("http://www.ragdata.com/images/skills/rg_striphelm.gif");}
+#skill219 {background-image:url("http://www.ragdata.com/images/skills/rg_intimidate.gif");}
+#skill220 {background-image:url("http://www.ragdata.com/images/skills/rg_graffiti.gif");}
+#skill221 {background-image:url("");}
+#skill222 {background-image:url("");}
+#skill223 {background-image:url("http://www.ragdata.com/images/skills/rg_gangster.gif");}
+#skill224 {background-image:url("http://www.ragdata.com/images/skills/rg_compulsion.gif");}
+#skill225 {background-image:url("http://www.ragdata.com/images/skills/rg_plagiarism.gif");}

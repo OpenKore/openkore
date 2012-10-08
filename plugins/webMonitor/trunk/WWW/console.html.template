@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{characterName} - {characterLevel}/{characterJobLevel} - OpenKore</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<script type='text/javascript' src='js/jquery.min.js'></script>
+	<script type="text/javascript" src="js/bootstrap-2.0.2.js"></script>
+	<link href="css/custom.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	<script type='text/javascript'>
+		<!-- tooltip para icones -->
+		!function( $ ){
+		$(function () {	
+		$('[rel=tooltip]').tooltip();
+		});
+		}( window.jQuery )
+	</script>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand">OpenKore</a>
+    <ul class="nav">
+      <li class="active"><a>{characterName}</a></li>
+      <li><a>Base Level: {characterLevel}</a></li>
+      <li><a>Job Level: {characterJobLevel}</a></li>
+    </ul>
+  </div>
+</div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Menu</li>
+              <li><a href="index.html"><i class="icon-user"></i> Status</a></li>
+              <li><a href="inventory.html"><i class="icon-chevron-right"></i> Invent&aacute;rio</a></li>
+              <li class="active"><a href="console.html"><i class="icon-map-marker"></i> Console</a></li>
+              <li><a href="chatlog.html"><i class="icon-comment"></i> ChatLog</a></li>
+              <li><a href="guild.html"><i class="icon-chevron-right"></i> Guild</a></li>
+              <li><a href="shop.html"><i class="icon-shopping-cart"></i> Shop</a></li>
+              <li><a href="npcs.html"><i class="icon-chevron-right"></i> NPC&#39;s</a></li>
+              <li><a href="skills.html"><i class="icon-chevron-right"></i> Skills</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+          <div class="row-fluid">
+            <div class="span9">
+              <h3>Console</h3>
+			  <div contenteditable class="console">
+				<p class="muted">{lastConsoleMessage}</p>
+				<p class="muted">{lastConsoleMessage2}</p>
+				<p class="muted">{lastConsoleMessage3}</p>
+			  </div>
+			  <br/>
+              <p><a class="btn" href="index.html">Detalhar... &raquo;</a></p>
+            </div><!--/span-->
+             <div class="span3">
+              <h3>{characterName}</h3>
+				<p>Base Level
+				<div class="progress"><div class="bar" style="width: {characterBasePercent}%;"></div></div></p>
+				<p>Job Level
+				<div class="progress"><div class="bar" style="width: {characterJobPercent}%;"></div></div></p>
+              <p><a class="btn" href="index.html">Detalhar... &raquo;</a></p>
+				
+			  </div><!--/span-->
+          </div><!--/row-->
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p align="center">BonScott &copy; webMonitor 2012</p>
+      </footer>
+
+    </div>
+  </body>
+</html>
