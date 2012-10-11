@@ -67,7 +67,7 @@
 					<tr>
 						<td><div align="center"><div id="skill{skillsIDN}" class="iconSkill"> {skillsIcoUp}</div></div></td>
 						<td><div align="center">{skillsLevel}</div></td>
-						<td>{skillsName}</td>
+						<td class="left">{skillsName}</td>
 						{skillsJS}
 					</tr><!-- {endLoop} -->
 					<tr></tr>

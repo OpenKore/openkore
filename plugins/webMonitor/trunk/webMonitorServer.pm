@@ -28,12 +28,13 @@ use Log;
 use Commands;
 use template;
 use Skill;
+use Settings;
 use Network;
 use Network::Send ();
 
 #[PT-BR]
-# Keywords s„o campos especÌficos no modelo que ir·, eventualmente,
-# ser substituÌdo por conte˙do din‚mico
+# Keywords s√£o campos espec√≠ficos no modelo que ir√°, eventualmente,
+# ser substitu√≠do por conte√∫do din√¢mico
 #[EN] 
 # Keywords are specific fields in the template that will eventually get
 # replaced by dynamic content.
@@ -84,7 +85,7 @@ sub cHook {
 	}
 }
 
-# [PT-BR] "hookShopList" È usada na aba "Shop".
+# [PT-BR] "hookShopList" √© usada na aba "Shop".
 # [EN] "hookShopList" is used on tab "Shop".
 my ($shopNumber, @price, @number, @listName, @listAmount, @upgrade, @cards, @type, @id, @shopJS);
 sub hookShopList {
@@ -126,11 +127,12 @@ sub request {
 	# alias the newbie maps to new_zone01
 	$filename =~ s/new_.../new_zone01/;
 
-# [PT-BR] Listar o invent·rio
+# [PT-BR] Listar o invent√°rio
 # [EN] Show inventory
 	my (@unusable, @usable, @equipment, @uequipment);
 	my (@unusableAmount, @usableAmount);
 	my (@unusableJS, @usableJS, @equipmentJS, @uequipmentJS);
+	my (@unusableID, @usableID, @equipmentID, @uequipmentID);
 	my $Item_IDN;
 	for (my $i; $i < @{$char->inventory->getItems()}; $i++) {
 		my $item = $char->inventory->getItems()->[$i];
@@ -138,18 +140,22 @@ sub request {
 		if (($item->{type} == 3 || $item->{type} == 6 ||
 			$item->{type} == 10) && !$item->{equipped})
 		{
+			push @unusableID, $item->{nameID};
 			push @unusable, $item->{name};
 			push @unusableAmount, $item->{amount};
 			push @unusableJS, '<td><a class="btn btn-mini btn-danger" href="/handler?command=drop+' . $item->{invIndex} . '">Drop</a></td>';
 		} elsif ($item->{type} <= 2) {
+			push @usableID, $item->{nameID};
 			push @usable, $item->{name};
 			push @usableAmount, $item->{amount};
 			push @usableJS, '<td><a class="btn btn-mini btn-success" href="/handler?command=is+' . $item->{invIndex} . '">Use</a></td><td><a class="btn btn-mini btn-danger" href="/handler?command=drop+' . $item->{invIndex} . '">Drop</a></td>';
 		} else {
 			if ($item->{equipped}) {
+				push @equipmentID, $item->{nameID};
 				push @equipment, $item->{name};
 				push @equipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?command=eq+' . $item->{invIndex} . '">Unequip</a></td><td><a class="btn btn-mini btn-danger" href="/handler?command=drop+' . $item->{invIndex} . '">Drop</a></td>';
 			} else {
+				push @uequipmentID, $item->{nameID};
 				push @uequipment, $item->{name};
 				push @uequipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?command=eq+' . $item->{invIndex} . '">Equip</a></td><td><a class="btn btn-mini btn-danger" href="/handler?command=drop+' . $item->{invIndex} . '">Drop</a></td>';
 			}
@@ -157,7 +163,7 @@ sub request {
 	}
 	my @statuses = (keys %{$char->{statuses}});
 
-# [PT-BR] Listar os membros do cl„
+# [PT-BR] Listar os membros do cl√£
 # [EN] Show members of the clan
 	my ($i, $name, $class, $lvl, $title, $online, $ID, $charID);
 	my (@listMemberIndex, @listMemberName, @listMemberClass, @listMemberLvl, @listMemberTitle, @listMemberOnline, @listMemberID, @listMemberCharID);
@@ -186,7 +192,7 @@ sub request {
 		}
 	}
 	
-# [PT-BR] Listar as lojas dos jogadores (N√O ser„o listadas as dos NPC's!!)
+# [PT-BR] Listar as lojas dos jogadores (N√ÉO ser√£o listadas as dos NPC's!!)
 # [EN] List player stores (NPC's shops won't be listed!!)
 	my (@listComboBox);
 
@@ -228,10 +234,10 @@ sub request {
 		# 16 -> It's used in other players.
 		# See more in src\Actor.pm		
 		#  [PT-BR] $skill->getTargetType() pode resultar em 0, 1, 2 e 4
-		# 0 -> Skill passiva (por isso $act ter· nada, pois n„o consome 0 e n„o pode ser usada)
+		# 0 -> Skill passiva (por isso $act ter√° nada, pois n√£o consome 0 e n√£o pode ser usada)
 		# 1 -> Usa-se no inimigo
 		# 2 -> Usa-se em um lugar
-		# 4 -> Usa-se em vocÍ. Pode envolver o grupo tambÈm (ex: habilidade glÛria)
+		# 4 -> Usa-se em voc√™. Pode envolver o grupo tamb√©m (ex: habilidade gl√≥ria)
 		# 16 -> Usa-se em outros jogadores
 		# Veja mais no src\Actor.pm
 		my $type = $skill->getTargetType();
@@ -249,8 +255,8 @@ sub request {
 			} 
 		}
 		
-		# [PT-BR] Saber se o personagem tem ou n„o pontos de habilidades disponÌveis e se a habilidade È melhor·vel
-		#  (ainda n„o chegou ao nÌvel m·ximo e atingiu seus prÈ-requisitos), para saber se deve mostrar a imagem de aumentar nÌvel e sua funÁ„o.
+		# [PT-BR] Saber se o personagem tem ou n√£o pontos de habilidades dispon√≠veis e se a habilidade √© melhor√°vel
+		#  (ainda n√£o chegou ao n√≠vel m√°ximo e atingiu seus pr√©-requisitos), para saber se deve mostrar a imagem de aumentar n√≠vel e sua fun√ß√£o.
 		my $ico_up;
 		if ($char->{points_skill} > 0 && $char->{skills}{$handle}{up} == 1){
 		$ico_up = '<a href="/handler?command=skills+add+' . $IDN .'"><i class="icon-plus-sign"></i></a> ';}
@@ -263,7 +269,7 @@ sub request {
 		push @skillsLevel, $char->getSkillLevel($skill);
 		push @skillsJS, $act;
 	}
-
+	
 	%keywords =	(
 	# NPC
 		'npcBinID' => \@npcBinID,
@@ -285,6 +291,10 @@ sub request {
 		'inventoryUnusableJS' => \@unusableJS,
 		'consoleMessages' => \@messages,
 		'characterStatuses' => \@statuses,
+		'unusableID' => \@unusableID,
+		'usableID' => \@usableID,
+		'equipmentID' => \@equipmentID,
+		'uequipmentID' => \@uequipmentID,
 	# Guild
 		'guildLv' => $guild{lv},
 		'guildExp' => $guild{exp},
@@ -317,7 +327,26 @@ sub request {
 		'skillsName' => \@skillsName,
 		'skillsLevel' => \@skillsLevel,
 		'skillsJS' => \@skillsJS,
+	# Report
+		#my $datadir = $Settings::logs_folder;
+		#'logDir' = $datadir; ### tentei copiar o mesmo principio das outras variaveis
+		'reconnectCount' => $reconnectCount, #relogs
+		'elasped' => $elasped,
+		'totalElasped' => $totalelasped,
+		'dmgPSec' => $dmgpsec,
+		'totalDamage' => $totaldmg, #dmg total feito
+		'startTimeEXP' => $startTime_EXP,
+		'startingZeny' => $startingzeny, 
+		'bExpSwitch' => $bExpSwitch,
+		'jExpSwitch' => $jExpSwitch,
+		'totalBaseExp' => $totalBaseExp, #exp ganha
+		'totalJobExp' => $totalJobExp, #exp ganha
+		'monsterBaseExp' => $monsterBaseExp,
+		'monsterJobExp' => $monsterJobExp,
+		'taskManager' => $taskManager,	
 	# Other's
+		'userAccount' => $config{username},
+		'userChar' => $config{char},
 		'characterSkillPoints' => $char->{points_skill},
 		'characterStatusesSring' => $char->statusesString(),
 		'characterName' => $char->name(),
@@ -406,13 +435,6 @@ sub request {
 		'lastConsoleMessage' => $messages[-1],
 		'lastConsoleMessage2' => $messages[-2],
 		'lastConsoleMessage3' => $messages[-3],
-		'lastConsoleMessage3' => $messages[-4],
-		'lastConsoleMessage3' => $messages[-5],
-		'lastConsoleMessage3' => $messages[-6],
-		'lastConsoleMessage3' => $messages[-8],
-		'lastConsoleMessage3' => $messages[-9],
-		'lastConsoleMessage3' => $messages[-10],
-		'lastConsoleMessage3' => $messages[-11],
 		'skin' => 'default', # TODO: replace with config.txt entry for the skin
 		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
 	);
@@ -423,7 +445,7 @@ sub request {
 	}
 	# TODO: will be removed later
 	if ($filename eq '/variables') {
-		# [PT-BR] Recarregar a p·gina a cada 5 segundos | [EN] Reload the page every 5 seconds
+		# [PT-BR] Recarregar a p√°gina a cada 5 segundos | [EN] Reload the page every 5 seconds
 		$content .= '<head><meta http-equiv="refresh" content="5"></head>';
 		
 		# Display internal variables in alphabetical order (useful for debugging)
@@ -442,7 +464,7 @@ sub request {
 
 	# TODO: will be removed later
 	} elsif ($filename eq '/console') {
-		# [PT-BR] Recarregar a p·gina a cada 5 segundos | [EN] Reload the page every 5 seconds
+		# [PT-BR] Recarregar a p√°gina a cada 5 segundos | [EN] Reload the page every 5 seconds
 		$content .= '<head><meta http-equiv="refresh" content="1"></head>' . "\n";
 		$content .= '<pre>' . "\n";
 
@@ -508,7 +530,7 @@ sub handle {
 	# [PT-BR] Usado na aba Shop.
 	# [EN] Used Shop tab
 	if ($resources->{shop}) {
-	# [PT-BR] Apagar dandos antigos da array (N„o mostrar os itens das lojas clicadas anteriomente) 
+	# [PT-BR] Apagar dandos antigos da array (N√£o mostrar os itens das lojas clicadas anteriomente) 
 	# [EN] Erase old data from array (Won't show itens from stores previously opened) 
 		@price = ();
 		@number = ();
