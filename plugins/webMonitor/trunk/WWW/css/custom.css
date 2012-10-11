@@ -1,8 +1,4 @@
-/*!
- * Bootstrap v2.1.1
- *
- * Modificações custom.
- */
+/*! Modificações custom */
  .console {
 	border: 1px;
 	border-style: solid;
@@ -120,6 +116,8 @@ height:350px!important;
 #job14046 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/14/Taekwon_Boy_%28Ragnarok_Online%29.png");}
 #job04047 {background-image:url("Star Gladiator");}
 #job14047 {background-image:url("Star Gladiator");}
+#job04048 {background-image:url("Star Gladiator (Union)");}
+#job14048 {background-image:url("Star Gladiator (Union)");}
 #job04049 {background-image:url("Soul Linker");}
 #job14049 {background-image:url("Soul Linker");}
 #job04050 {background-image:url("Gangsi");}
@@ -138,7 +136,10 @@ height:350px!important;
 #job14212 {background-image:url("Oboro");}
 #job022{background-image:url("Wedding");}
 #job122 {background-image:url("Wedding");}
-#job {background-image:url("");}
+#job026 {background-image:url("Christmas");}
+#job126 {background-image:url("Christmas");}
+#job027 {background-image:url("Summer");}
+#job127 {background-image:url("Summer");}
 /*! Skills */
 #skill1 {background-image:url("http://www.ragdata.com/images/skills/nv_basic.gif");}
 #skill2 {background-image:url("http://www.ragdata.com/images/skills/sm_sword.gif");}
@@ -260,42 +261,43 @@ height:350px!important;
 #skill118 {background-image:url("http://www.ragdata.com/images/skills/ht_shockwave.gif");}
 #skill119 {background-image:url("http://www.ragdata.com/images/skills/ht_sandman.gif");}
 #skill120 {background-image:url("http://www.ragdata.com/images/skills/ht_flasher.gif");}
-#skill121 {background-image:url("");}
-#skill122 {background-image:url("");}
-#skill123 {background-image:url("");}
-#skill124 {background-image:url("");}
-#skill125 {background-image:url("");}
-#skill126 {background-image:url("");}
-#skill127 {background-image:url("");}
-#skill128 {background-image:url("");}
-#skill129 {background-image:url("");}
-#skill130 {background-image:url("");}
-#skill131 {background-image:url("");}
-#skill132 {background-image:url("");}
-#skill133 {background-image:url("");}
-#skill134 {background-image:url("");}
-#skill135 {background-image:url("");}
-#skill136 {background-image:url("");}
-#skill137 {background-image:url("");}
-#skill138 {background-image:url("");}
-#skill139 {background-image:url("");}
-#skill140 {background-image:url("");}
-#skill141 {background-image:url("");}
+#skill121 {background-image:url("http://www.ragdata.com/images/skills/ht_freezingtrap.gif");}
+#skill122 {background-image:url("http://www.ragdata.com/images/skills/ht_blastmine.gif");}
+#skill123 {background-image:url("http://www.ragdata.com/images/skills/ht_claymoretrap.gif");}
+#skill124 {background-image:url("http://www.ragdata.com/images/skills/ht_removetrap.gif");}
+#skill125 {background-image:url("http://www.ragdata.com/images/skills/ht_talkiebox.gif");}
+#skill126 {background-image:url("http://www.ragdata.com/images/skills/ht_beastbane.gif");}
+#skill127 {background-image:url("http://www.ragdata.com/images/skills/ht_falcon.gif");}
+#skill128 {background-image:url("http://www.ragdata.com/images/skills/ht_steelcrow.gif");}
+#skill129 {background-image:url("http://www.ragdata.com/images/skills/ht_blitzbeat.gif");}
+#skill130 {background-image:url("http://www.ragdata.com/images/skills/ht_detecting.gif");}
+#skill131 {background-image:url("http://www.ragdata.com/images/skills/ht_springtrap.gif");}
+#skill132 {background-image:url("http://www.ragdata.com/images/skills/as_right.gif");}
+#skill133 {background-image:url("http://www.ragdata.com/images/skills/as_left.gif");}
+#skill134 {background-image:url("http://www.ragdata.com/images/skills/as_katar.gif");}
+#skill135 {background-image:url("http://www.ragdata.com/images/skills/as_cloaking.gif");}
+#skill136 {background-image:url("http://www.ragdata.com/images/skills/as_sonicblow.gif");}
+#skill137 {background-image:url("http://www.ragdata.com/images/skills/as_grimtooth.gif");}
+#skill138 {background-image:url("http://www.ragdata.com/images/skills/as_enchantpoison.gif");}
+#skill139 {background-image:url("http://www.ragdata.com/images/skills/as_poisonreact.gif");}
+#skill140 {background-image:url("http://www.ragdata.com/images/skills/as_venomdust.gif");}
+#skill141 {background-image:url("http://www.ragdata.com/images/skills/as_splasher.gif");}
 #skill142 {background-image:url("http://www.ragdata.com/images/skills/nv_firstaid.gif");}
-#skill143 {background-image:url("");}
-#skill144 {background-image:url("");}
-#skill145 {background-image:url("");}
-#skill146 {background-image:url("");}
-#skill147 {background-image:url("");}
-#skill148 {background-image:url("");}
-#skill149 {background-image:url("");}
-#skill151 {background-image:url("");}
-#skill152 {background-image:url("");}
-#skill153 {background-image:url("");}
-#skill154 {background-image:url("");}
-#skill155 {background-image:url("");}
-#skill156 {background-image:url("");}
-#skill157 {background-image:url("");}
+#skill143 {background-image:url("http://www.ragdata.com/images/skills/nv_trickdead.gif");}
+#skill144 {background-image:url("http://www.ragdata.com/images/skills/sm_movingrecovery.gif");}
+#skill145 {background-image:url("http://www.ragdata.com/images/skills/sm_fatalblow.gif");}
+#skill146 {background-image:url("http://www.ragdata.com/images/skills/sm_autoberserk.gif");}
+#skill147 {background-image:url("http://www.ragdata.com/images/skills/ac_makingarrow.gif");}
+#skill148 {background-image:url("http://www.ragdata.com/images/skills/ac_chargearrow.gif");}
+#skill149 {background-image:url("http://www.ragdata.com/images/skills/tf_sprinklesand.gif");}
+#skill150 {background-image:url("http://www.ragdata.com/images/skills/tf_backsliding.gif");}
+#skill151 {background-image:url("http://www.ragdata.com/images/skills/tf_pickstone.gif");}
+#skill152 {background-image:url("http://www.ragdata.com/images/skills/tf_throwstone.gif");}
+#skill153 {background-image:url("http://www.ragdata.com/images/skills/mc_cartrevolution.gif");}
+#skill154 {background-image:url("http://www.ragdata.com/images/skills/mc_changecart.gif");}
+#skill155 {background-image:url("http://www.ragdata.com/images/skills/mc_loud.gif");}
+#skill156 {background-image:url("http://www.ragdata.com/images/skills/al_holylight.gif");}
+#skill157 {background-image:url("http://www.ragdata.com/images/skills/mg_energycoat.gif");}
 #skill158 {background-image:url("");}
 #skill159 {background-image:url("");}
 #skill160 {background-image:url("");}
@@ -315,3 +317,9 @@ height:350px!important;
 #skill223 {background-image:url("http://www.ragdata.com/images/skills/rg_gangster.gif");}
 #skill224 {background-image:url("http://www.ragdata.com/images/skills/rg_compulsion.gif");}
 #skill225 {background-image:url("http://www.ragdata.com/images/skills/rg_plagiarism.gif");}
+#skill226 {background-image:url("http://www.ragdata.com/images/skills/am_axemastery.gif");}
+#skill227 {background-image:url("http://www.ragdata.com/images/skills/am_learningpotion.gif");}
+#skill228 {background-image:url("http://www.ragdata.com/images/skills/am_pharmacy.gif");}
+#skill229 {background-image:url("http://www.ragdata.com/images/skills/am_demonstration.gif");}
+#skill230 {background-image:url("http://www.ragdata.com/images/skills/am_acidterror.gif");}
+#skill231 {background-image:url("http://www.ragdata.com/images/skills/am_potionpitcher.gif");}

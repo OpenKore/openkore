@@ -1,15 +1,21 @@
-06/10/2012
-- international release - BonScott
+11/10/2012 - BonScott
+- add all item icons
+- add new variables
+- fix align of skill names
+- add more skills icons
 
-05/10/2012
-- fix layouts bugs - BonScott
+06/10/2012 - BonScott
+- international release
+
+05/10/2012 - BonScott
+- fix layouts bugs
 - add 2 new vars (sexID e jobID)
 - removed intro page
 
-04/10/2012
+04/10/2012 - BonScott
 - polished layout
 - added tooltips to bars (hp,sp,base,job,weight)
 
-01/10/2012
+01/10/2012 - BonScott
 - adjusts in core plugin
 - re-design by BonScott

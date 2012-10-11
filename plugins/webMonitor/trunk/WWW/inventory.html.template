@@ -12,7 +12,6 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 	<script type='text/javascript'>
-		<!-- tooltip para icones -->
 		!function( $ ){
 		$(function () {	
 		$('[rel=tooltip]').tooltip();
@@ -31,19 +30,19 @@
 				}
 				
 				if (escolhido == 'usable'){
-				tabela_lista.innerHTML = '{startLoop}<tr><td>{inventoryUsableAmount}</td><td class="left">{inventoryUsable}</td>{inventoryUsableJS}</tr>{endLoop}';
+				tabela_lista.innerHTML = '{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{usableID}.gif"/></td><td>{inventoryUsableAmount}</td><td class="left">{inventoryUsable}</td>{inventoryUsableJS}</tr>{endLoop}';
 				}
 				
 				if (escolhido == 'equipped'){
-				tabela_lista.innerHTML = '{startLoop}<tr><td>1</td><td class="left">{inventoryEquipped}</td>{inventoryEquippedJS}</tr>{endLoop}';
+				tabela_lista.innerHTML = '{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{equipmentID}.gif"/></td><td>1</td><td class="left">{inventoryEquipped}</td><td></td>{inventoryEquippedJS}</tr>{endLoop}';
 				}
 				
 				if (escolhido == 'unequipped'){
-				tabela_lista.innerHTML = '{startLoop}<tr><td>1</td><td class="left">{inventoryUnequipped}</td>{inventoryUnequippedJS}</tr>{endLoop}';
+				tabela_lista.innerHTML = '{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{uequipmentID}.gif"/></td><td>1</td><td class="left">{inventoryUnequipped}</td>{inventoryUnequippedJS}</tr>{endLoop}';
 				}
 				
 				if (escolhido == 'unusable'){
-				tabela_lista.innerHTML = '{startLoop}<tr><td>{inventoryUnusableAmount}</td><td class="left">{inventoryUnusable}</td><td></td>{inventoryUnusableJS}</tr>{endLoop}';
+				tabela_lista.innerHTML = '{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{unusableID}.gif"/></td><td>{inventoryUnusableAmount}</td><td class="left">{inventoryUnusable}</td><td></td>{inventoryUnusableJS}</tr>{endLoop}';
 				}
 			}
 </script>
@@ -73,26 +72,27 @@
               <li><a href="npcs.html"><i class="icon-chevron-right"></i> NPC&#39;s</a></li>
               <li><a href="skills.html"><i class="icon-chevron-right"></i> Skills</a></li>
             </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
+          </div>
+        </div>
         <div class="span9">
           <div class="row-fluid">
             <div class="span9">
 			
 			<select class="span9" id="tipo" onChange="exibir(this)">
-				<option selected value="none">Escolha uma opção</option>
-				<option value="usable">Usaveis</option>
-				<option value="equipped">Equipado</option>
-				<option value="unequipped">Desequipado</option>
-				<option value="unusable">Inusaveis</option>
+				<option selected value="none">Choose Option</option>
+				<option value="usable">Usable</option>
+				<option value="equipped">Equipped</option>
+				<option value="unequipped">Unequipped</option>
+				<option value="unusable">Unusable</option>
 			</select>			
 			
 			<table class="table table-hover">
 				<thead>
 					<tr>
+						<th></th>
 						<th>Qnt.</th>
 						<th>Item</th>
-						<th>Usar</th>
+						<th>A&ccedil;&atilde;o</th>
 						<th>Dropar</th>
 					</tr>
 				</thead>
@@ -100,12 +100,12 @@
 				</tbody>
 			</table>
 
-            </div><!--/span-->
+            </div>
 
-          </div><!--/row-->
+          </div>
 		  
-        </div><!--/span-->
-      </div><!--/row-->
+        </div>
+      </div>
 
       <hr>
 
