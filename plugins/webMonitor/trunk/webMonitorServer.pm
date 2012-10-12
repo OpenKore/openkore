@@ -32,6 +32,8 @@ use Settings;
 use Network;
 use Network::Send ();
 
+my $varteste=$Settings::storage_log_file;
+
 #[PT-BR]
 # Keywords são campos específicos no modelo que irá, eventualmente,
 # ser substituído por conteúdo dinâmico
@@ -247,9 +249,9 @@ sub request {
 			} elsif ($type == 1){
 				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sm+' . $IDN . '+0">Attack</a></div>';
 			} elsif ($type == 2){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sl+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=is+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
 			} elsif ($type == 4){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=ss+' . $IDN . '">Use</a></div>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=is+' . $IDN . '">Use</a></div>';
 			} elsif ($type == 16){
 				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sp+' . $IDN . '+0">Choose actor</a></div>';
 			} 
@@ -329,8 +331,6 @@ sub request {
 		'skillsLevel' => \@skillsLevel,
 		'skillsJS' => \@skillsJS,
 	# Report
-		#my $datadir = $Settings::logs_folder;
-		#'logDir' = $datadir; ### tentei copiar o mesmo principio das outras variaveis
 		'reconnectCount' => $reconnectCount, #relogs
 		'elasped' => $elasped,
 		'totalElasped' => $totalelasped,
@@ -344,7 +344,6 @@ sub request {
 		'totalJobExp' => $totalJobExp, #exp ganha
 		'monsterBaseExp' => $monsterBaseExp,
 		'monsterJobExp' => $monsterJobExp,
-		'taskManager' => $taskManager,	
 	# Other's
 		'userAccount' => $config{username},
 		'userChar' => $config{char},
@@ -438,6 +437,7 @@ sub request {
 		'lastConsoleMessage3' => $messages[-3],
 		'skin' => 'default', # TODO: replace with config.txt entry for the skin
 		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
+		'logDir' => $varteste,
 	);
 	
 	if ($filename eq '/handler') {

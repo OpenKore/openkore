@@ -35,7 +35,7 @@ use FindBin qw($RealBin);
 use lib "$RealBin/plugins/webMonitor";
 use webMonitorServer;
 use chatLogWebMonitor;
-use richLogWebMonitor;
+use logConsole;
 
 ###
 # Initialize some variables as well as plugin hooks
