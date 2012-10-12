@@ -67,7 +67,7 @@
         <div class="span9">
           <div class="row-fluid">
             <div class="span9">
-			<iframe class="iframe" name="nov" src="log.html" frameborder="0" scrolling="auto"></iframe>	
+			<object height="350" width="100%" type="text/html" data="logConsole.html" ></object>	
 			
 			<select class="span4" id="sel" onChange="talk_commands(this)">
 				<option selected value="">Console</option>
