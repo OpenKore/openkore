@@ -1,3 +1,8 @@
+12/10/2012 - BonScott
+- reworked consoleLog, remove richLogWebMonitor
+- show console without iframes
+- auto-scroll work on console (first-time is manual)
+
 12/10/2012 - KeplerBR
 - simple bugix in the Show skills
 

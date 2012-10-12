@@ -1,4 +1,23 @@
 /*! Modificações custom */
+.bodyConsole {
+	background-color: #101010;
+	font-family: "Lucida Console";
+	font-weight: bold;
+	font-size: 12px;
+}
+.grey {color: #c0c0c0;}
+.yellow {color: #ffff00;}
+.darkgreen {color: #008000;}
+.green {color: #00FF00;}
+.white {color: #FFFFFF;}
+.red {color: #FF0000;}
+.cyan {color: #00FFFF;}
+.darkmagenta {color: #800080;}
+.magenta {color: #ff00ff;}
+.blue {color: #0000ff;}
+.darkcyan {color: #008080;}
+.brown {color: #808000;}
+
  .console {
 	border: 1px;
 	border-style: solid;
@@ -9,8 +28,8 @@
 	height: 250px;
 }
 canvas{
-	height: 200px;
-	width: 200px;
+	height: 250px;
+	width: 250px;
 }
 .sidebar-nav { 
 padding: 9px 0; 

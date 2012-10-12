@@ -11,14 +11,6 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-	<script type='text/javascript'>
-		<!-- tooltip para icones -->
-		!function( $ ){
-		$(function () {	
-		$('[rel=tooltip]').tooltip();
-		});
-		}( window.jQuery )
-	</script>
 </head>
 <body>
 
@@ -54,14 +46,10 @@
           <div class="row-fluid">
             <div class="span9">
               <h3>Console</h3>
-			  <div contenteditable class="console">
-				<p class="muted">{lastConsoleMessage}</p>
-				<p class="muted">{lastConsoleMessage2}</p>
-				<p class="muted">{lastConsoleMessage3}</p>
-			  </div>
+			  <object height="350" width="100%" type="text/html" data="logConsole.html" ></object>
+
 			  <br/>
-              <p><a class="btn" href="index.html">Detalhar... &raquo;</a></p>
-            </div><!--/span-->
+            </div>
              <div class="span3">
               <h3>{characterName}</h3>
 				<p>Base Level
@@ -70,10 +58,10 @@
 				<div class="progress"><div class="bar" style="width: {characterJobPercent}%;"></div></div></p>
               <p><a class="btn" href="index.html">Detalhar... &raquo;</a></p>
 				
-			  </div><!--/span-->
-          </div><!--/row-->
-        </div><!--/span-->
-      </div><!--/row-->
+			  </div>
+          </div>
+        </div>
+      </div>
 
       <hr>
 
