@@ -220,11 +220,11 @@ sub request {
 # [PT-BR] Listar habilidades
 # [EN] Show skills
 	my (@skillsIDN, @skillsName, @skillsLevel, @skillsJS, @skillsIcoUp);	
-	my $act;
 	for my $handle (@skillsID) {
 		my $skill = new Skill(handle => $handle);
 		my $sp = $char->{skills}{$handle}{sp} || 'Skill Pasive';
 		my $IDN = $skill->getIDN();
+		my $act = '';
 
 		#  [EN] $skill->getTargetType() can result in 0, 1, 2 and 4
 		# 0 -> Passive Skill (Therefore $act have nothing, because it's not consumes SP and can't be used)
@@ -247,9 +247,9 @@ sub request {
 			} elsif ($type == 1){
 				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sm+' . $IDN . '+0">Attack</a></div>';
 			} elsif ($type == 2){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=is+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sl+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
 			} elsif ($type == 4){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=is+' . $IDN . '">Use</a></div>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=ss+' . $IDN . '">Use</a></div>';
 			} elsif ($type == 16){
 				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sp+' . $IDN . '+0">Choose actor</a></div>';
 			} 
@@ -259,7 +259,8 @@ sub request {
 		#  (ainda não chegou ao nível máximo e atingiu seus pré-requisitos), para saber se deve mostrar a imagem de aumentar nível e sua função.
 		my $ico_up;
 		if ($char->{points_skill} > 0 && $char->{skills}{$handle}{up} == 1){
-		$ico_up = '<a href="/handler?command=skills+add+' . $IDN .'"><i class="icon-plus-sign"></i></a> ';}
+			$ico_up = '<a href="/handler?command=skills+add+' . $IDN .'"><i class="icon-plus-sign"></i></a> ';
+		}
 		
 		# [PT-BR] Para finalizar, adicionar dados para as array's
 		# [EN] To finalize, add the elements into the array's

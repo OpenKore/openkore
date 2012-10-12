@@ -1,4 +1,4 @@
-# Pasta control traduzida de acordo com a revision 8201, do marcelofoxes
+# Pasta control traduzida de acordo com a revision 8205, do windhamwong
 #############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
@@ -27,7 +27,7 @@ password
 loginPinCode
 char
  
-# Opções do Poseidon
+# Opções do Poseidon (http://wiki.openkore.com/index.php/PoseidonServer)
 # Essas configurações devem ser as mesmas do Poseidon.txt
 poseidonServer 127.0.0.1
 poseidonPort 24390
@@ -38,6 +38,7 @@ bindIp
 serverType 0
  
 # 1 = rodar dentro do cliente do RO, 2 = usar proxy autônomo, proxy = atua como proxy verdadeiro
+# http://wiki.openkore.com/index.php/XKore
 XKore 0
 XKore_silent 1
 XKore_bypassBotDetection 0
@@ -183,8 +184,8 @@ itemsMaxWeight_sellOrStore 48
 itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
 itemsTakeAuto_new 0
-   
- 
+
+
 lockMap
 lockMap_x
 lockMap_y
@@ -226,8 +227,8 @@ sitAuto_over_50 0
 sitAuto_idle 1
 sitAuto_look
 sitAuto_look_from_wall
- 
- 
+
+
 statsAddAuto 0
 statsAddAuto_list
 statsAddAuto_dontUseBonus 0
@@ -272,6 +273,8 @@ dealAuto 1
 dealAuto_names
 partyAuto 1
 partyAutoShare 0
+partyAutoShareItem 0
+partyAutoShareItemDiv 0
 guildAutoDeny 1
  
 verbose 1
@@ -289,6 +292,7 @@ logSystemChat 1
 logEmoticons
 logConsole 0
 logAppendUsername 1
+logAppendServer
  
 chatTitleOversize 0
 shopTitleOversize 0
@@ -555,7 +559,7 @@ partySkill {
 	inInventory
 	isSelfSkill 0
 }
- 
+
 
 autoSwitch_default_rightHand
 autoSwitch_default_leftHand
