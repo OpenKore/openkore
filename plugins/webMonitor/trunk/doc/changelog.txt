@@ -1,3 +1,6 @@
+12/10/2012 - KeplerBR
+- simple bugix in the Show skills
+
 11/10/2012 - BonScott
 - add all item icons
 - add new variables
