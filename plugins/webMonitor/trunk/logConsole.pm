@@ -6,8 +6,6 @@ package logConsoleWebMonitor;
 
 use strict;
 use Plugins;
-use Commands;
-use Log qw( warning message error );
 use Settings;
 use Globals;
 use Misc;
@@ -45,9 +43,11 @@ sub on_Log {
 	if (defined $consoleColors{$type}{$domain}) {
 			$msgColor = $consoleColors{$type}{$domain};
 		} elsif ($type eq "warning") {
-			$msgColor = 'yellow';
+			$msgColor = $consoleColors{warning}{default};
 		} elsif ($type eq "error") {
-			$msgColor = 'red';
+			$msgColor = $consoleColors{error}{default};
+        } elsif ($type eq "debug") {
+            $msgColor = $consoleColors{debug}{default};
 		} else {
 			$msgColor = 'grey';
 	}

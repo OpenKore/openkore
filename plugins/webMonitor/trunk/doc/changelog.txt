@@ -1,10 +1,13 @@
+13/10/2012 - KeplerBR
+- Bugfix in "consoleLog" and "Show skills"
+
 12/10/2012 - BonScott
 - reworked consoleLog, remove richLogWebMonitor
 - show console without iframes
 - auto-scroll work on console (first-time is manual)
 
 12/10/2012 - KeplerBR
-- simple bugix in the Show skills
+- simple bugfix in the Show skills
 
 11/10/2012 - BonScott
 - add all item icons

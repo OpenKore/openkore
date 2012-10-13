@@ -249,9 +249,9 @@ sub request {
 			} elsif ($type == 1){
 				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sm+' . $IDN . '+0">Attack</a></div>';
 			} elsif ($type == 2){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=is+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sl+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
 			} elsif ($type == 4){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=is+' . $IDN . '">Use</a></div>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=ss+' . $IDN . '">Use</a></div>';
 			} elsif ($type == 16){
 				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sp+' . $IDN . '+0">Choose actor</a></div>';
 			} 
