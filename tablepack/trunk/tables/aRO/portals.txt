@@ -2037,6 +2037,7 @@ ra_in01 241 299 ra_in01 193 312
 ra_in01 185 303 ra_in01 194 249
 ra_in01 357 61 ra_in01 310 62
 ra_in01 297 59 ra_in01 339 116
+ra_temple 119 180 ra_temin 169 23
 ra_temin 130 93 ra_temin 239 258
 ra_temin 206 93 ra_temin 312 258
 ra_temin 275 332 ra_temin 27 305
