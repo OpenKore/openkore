@@ -1,7 +1,8 @@
 To do:
 - complete classes images (custom.css)
-- compelte skill icons (custom.css)
+- complete skill icons (custom.css)
 - fix point on map
 - better handler of logs
-- report page (like 'exp' command)
+- report page (like 'exp' command) (layout finished - BonScott)
 - chatLog without blank lines in txt
+- fix position of "add skill point" button
