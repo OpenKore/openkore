@@ -178,7 +178,7 @@ sub iterate {
 
 		} elsif ( $step =~ /^t=(.*)/i ) {
 			# Send NPC talk text.
-			$messageSender->sendTalkText($self->{ID}, $1);
+			$messageSender->sendTalkText($talk{ID}, $1);
 
 		} elsif ( $step =~ /^a=(.*)/i ) {
 			# Run a command.
@@ -189,7 +189,7 @@ sub iterate {
 
 		} elsif ( $step =~ /d(\d+)/i ) {
 			# Send NPC talk number.
-			$messageSender->sendTalkNumber($self->{ID}, $1);
+			$messageSender->sendTalkNumber($talk{ID}, $1);
 
 		} elsif ( $step =~ /x/i ) {
 			# Initiate NPC conversation.
@@ -202,7 +202,7 @@ sub iterate {
 		} elsif ( $step =~ /c/i ) {
 			# Click Next.
 			if ($npcTalkType eq 'next') {
-				$messageSender->sendTalkContinue($self->{ID});
+				$messageSender->sendTalkContinue($talk{ID});
 			} else {
 				$self->setError(WRONG_NPC_INSTRUCTIONS,
 					T("According to the given NPC instructions, the Next button " .
@@ -251,11 +251,11 @@ sub iterate {
 
 		} elsif ( $step =~ /b/i ) {
 			# Get the shop's item list.
-			$messageSender->sendNPCBuySellList($self->{ID}, 0);
+			$messageSender->sendNPCBuySellList($talk{ID}, 0);
 
 		} elsif ( $step =~ /s/i ) {
 			# Get the sell list in a shop.
-			$messageSender->sendNPCBuySellList($self->{ID}, 1);
+			$messageSender->sendNPCBuySellList($talk{ID}, 1);
 
 		} elsif ( $step =~ /e/i ) {
 			# ? Pretend like the conversation was stopped by the NPC?
