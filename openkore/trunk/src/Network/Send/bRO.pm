@@ -13,41 +13,56 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
-		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
+		'088A' => ['item_take', 'a4', [qw(ID)]],
+		'0838' => ['actor_look_at', 'v C', [qw(head body)]],
+		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
+		'012E' => ['shop_close'],
+		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
+		'0802' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0881' => ['item_drop', 'v2', [qw(index amount)]],
 		'035F' => ['sync', 'V', [qw(time)]],
-		'0437' => ['character_move','a3', [qw(coords)]],
-		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0202' => ['actor_look_at', 'v C', [qw(head body)]],
-		'07E4' => ['item_take', 'a4', [qw(ID)]],
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],
-		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
-		'023B' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'01B2' => ['shop_open'],
+		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
+		'0887' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0437' => ['character_move','a3', [qw(coords)]],
+		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0943' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'086E' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
+		'001F' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
+		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
-
-		master_login 02B0
+		skill_select 0443
+		actor_info_request 096A
+		shop_close 012E
+		guild_chat 017E
+		storage_item_add 0943
+		party_join_request_by_name 086E
 		buy_bulk_vender 0801
-		party_setting 07D7
 		map_login 022D
+		master_login 02B0
+		party_setting 07D7
+		item_take 088A
+		skill_use_location 0438
+		party_setting 07D7
+		private_message 001F
+		public_chat 008C
+		actor_action 0369
+		homunculus_command 0887
 		sync 035F
 		character_move 0437
-		actor_info_request 096A
-		actor_action 0369
-		actor_look_at 0202
-		item_take 07E4
-		item_drop 0362
-		storage_item_add 07EC
-		storage_item_remove 0364
-		skill_use_location 0438
-		homunculus_command 0361
-		party_join_request_by_name 023B
+		party_chat 0108
+		shop_open 01B2
+		actor_look_at 0838
+		storage_item_remove 0802
+		item_drop 0881
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -100,9 +115,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x0942, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x0957, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x0942, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x0957, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
@@ -160,11 +175,11 @@ sub sendPartyJoinRequestByName
 sub PrepareKeys()
 {
 	# K
-	$enc_val1 = Math::BigInt->new('0x52FE4ADA');
+	$enc_val1 = Math::BigInt->new('0x');
 	# M
-	$enc_val3 = Math::BigInt->new('0x747A537A');
+	$enc_val3 = Math::BigInt->new('0x');
 	# A
-	$enc_val2 = Math::BigInt->new('0x7B7A3B7A');
+	$enc_val2 = Math::BigInt->new('0x');
 }
 
 1;
