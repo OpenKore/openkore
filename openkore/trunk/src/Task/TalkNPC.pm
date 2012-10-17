@@ -22,7 +22,7 @@ use Modules 'register';
 use Task;
 use base qw(Task);
 use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config @storeList $net %talk);
-use Log qw(message debug);
+use Log qw(message debug error);
 use Utils;
 use Commands;
 use Network;
@@ -166,7 +166,8 @@ sub iterate {
 				shift @{$self->{steps}};
 			}
 		}
-
+		
+		my @bulkitemlist;
 		my $step = $self->{steps}[0];
 		my $npcTalkType = $ai_v{npc_talk}{talk};
 
@@ -236,22 +237,35 @@ sub iterate {
 			$ai_v{npc_talk}{time} = time;
 			$self->{time} = time;
 
-		} elsif ( $step =~ /^b(\d+),(\d+)/i ) {
-			# Buy an shop item.
-			my $index = $1;
-			my $amount = $2;
-			if ($storeList[$index]) {
-				my $itemID = $storeList[$index]{nameID};
-				$ai_v{npc_talk}{itemID} = $itemID;
-				#$messageSender->sendBuy($itemID, $amount);
-				$messageSender->sendBuyBulk([{itemID  => $itemID, amount => $amount}]); # TODO: we could buy more types of items at once
-			} else {
-				$self->setError(NO_SHOP_ITEM, TF("Shop item %d not found.", $index));
-			}
-
-		} elsif ( $step =~ /b/i ) {
+		} elsif ( $step =~ /b.*/i ) {
 			# Get the shop's item list.
-			$messageSender->sendNPCBuySellList($talk{ID}, 0);
+			if ($step =~ /^b$/i) {
+				$messageSender->sendNPCBuySellList($talk{ID}, 0);
+			# Bulk buy solution.
+			} else {
+				while ($self->{steps}[0] =~ /^b(\d+),(\d+)/i){
+					my $index = $1;
+					my $amount = $2;
+					if ($storeList[$index]) {
+						my $itemID = $storeList[$index]{nameID};
+						push (@{$ai_v{npc_talk}{itemsIDlist}},$itemID);
+						push (@bulkitemlist,{itemID  => $itemID, amount => $amount});
+					} else {
+						# ? Maybe better to use something else, but not error?
+						error TF("Shop item %s not found.\n", $index);
+					}
+					shift @{$self->{steps}};
+				}
+				if (grep(defined, @bulkitemlist)) {
+					$messageSender->sendBuyBulk(\@bulkitemlist);
+					$ai_v{npc_talk}{talk} = 'close' if !$self->{steps}[0];
+				}
+				# We give some time to get inventory_item_added packet from server.
+				# And skip this itteration.
+				$ai_v{npc_talk}{time} = time + 0.2;
+				$self->{time} = time + 0.2;
+				next;
+			}
 
 		} elsif ( $step =~ /s/i ) {
 			# Get the sell list in a shop.

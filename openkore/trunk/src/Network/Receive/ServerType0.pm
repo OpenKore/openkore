@@ -2721,7 +2721,7 @@ sub inventory_item_added {
 		$args->{item} = $item;
 
 		# TODO: move this stuff to AI()
-		if ($ai_v{npc_talk}{itemID} eq $item->{nameID}) {
+		if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}, $ai_v{npc_talk}{itemID}) {
 			$ai_v{'npc_talk'}{'talk'} = 'buy';
 			$ai_v{'npc_talk'}{'time'} = time;
 		}
