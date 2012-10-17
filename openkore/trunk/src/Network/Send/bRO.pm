@@ -175,11 +175,11 @@ sub sendPartyJoinRequestByName
 sub PrepareKeys()
 {
 	# K
-	$enc_val1 = Math::BigInt->new('0x');
+	$enc_val1 = Math::BigInt->new('0x3FE709BA');
 	# M
-	$enc_val3 = Math::BigInt->new('0x');
+	$enc_val3 = Math::BigInt->new('0x0778601F');
 	# A
-	$enc_val2 = Math::BigInt->new('0x');
+	$enc_val2 = Math::BigInt->new('0x5DC515C1');
 }
 
 1;
