@@ -5,4 +5,3 @@ To do:
 - better handler of logs
 - report page (like 'exp' command) (layout finished - BonScott)
 - chatLog without blank lines in txt
-- fix position of "add skill point" button
