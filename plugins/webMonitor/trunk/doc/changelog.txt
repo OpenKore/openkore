@@ -1,5 +1,7 @@
 16/10/2012 - BonScott
 - button for add atributes and mini-help balloon
+- fix position of "add skill point" button
+- fix map size
 
 13/10/2012 - KeplerBR
 - Bugfix in "consoleLog" and "Show skills"

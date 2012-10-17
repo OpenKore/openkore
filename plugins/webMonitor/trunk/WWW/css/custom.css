@@ -5,6 +5,7 @@
 	font-weight: bold;
 	font-size: 12px;
 }
+.iconup {margin-left:30px;margin-top:5px;}
 .grey {color: #c0c0c0;}
 .yellow {color: #ffff00;}
 .darkgreen {color: #008000;}
@@ -30,6 +31,9 @@
 canvas{
 	height: 250px;
 	width: 250px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position:center; 
 }
 .sidebar-nav { 
 padding: 9px 0; 
