@@ -208,7 +208,7 @@ sub iterate {
 				x => $self->{mapSolution}[0]{pos}{x},
 				y => $self->{mapSolution}[0]{pos}{y},
 				maxTime => $self->{maxTime},
-				distFromGoal => 10,
+				distFromGoal => 10 - distance($self->{mapSolution}[0]{pos}, $solution[-1]),
 				avoidWalls => $self->{avoidWalls},
 				solution => \@solution
 			);
