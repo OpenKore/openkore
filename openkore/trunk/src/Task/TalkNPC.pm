@@ -216,7 +216,7 @@ sub iterate {
 			my $choice = $1;
 			if ($npcTalkType eq 'select') {
 				if ($choice < @{$talk{responses}} - 1) {
-					$messageSender->sendTalkResponse($self->{ID}, $choice + 1);
+					$messageSender->sendTalkResponse($talk{ID}, $choice + 1);
 				} else {
 					$self->setError(WRONG_NPC_INSTRUCTIONS,
 						TF("According to the given NPC instructions, menu item %d must " .
