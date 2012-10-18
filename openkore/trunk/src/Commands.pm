@@ -672,20 +672,33 @@ sub cmdBuy {
 		error TF("You must be logged in the game to use this command (%s)\n", shift);
 		return;
 	}
+	
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\d+)/;
-	my ($arg2) = $args =~ /^\d+ (\d+)$/;
-	if ($arg1 eq "") {
-		error T("Syntax Error in function 'buy' (Buy Store Item)\n" . 
-			"Usage: buy <item #> [<amount>]\n");
-	} elsif ($storeList[$arg1] eq "") {
-		error TF("Error in function 'buy' (Buy Store Item)\n" . 
-			"Store Item %s does not exist.\n", $arg1);
-	} else {
-		if ($arg2 <= 0) {
-			$arg2 = 1;
+	my @bulkitemlist;
+	
+	foreach (split /\,/, $args) {
+		my($index,$amount) = $_ =~ /^\s*(\d+)\s*(\d*)\s*$/;
+		
+		if ($index eq "") {
+			error T("Syntax Error in function 'buy' (Buy Store Item)\n" . 
+				"Usage: buy <item #> [<amount>][, <item #> [<amount>]]...\n");
+			return;
+			
+		} elsif ($storeList[$index] eq "") {
+			error TF("Error in function 'buy' (Buy Store Item)\n" . 
+				"Store Item %s does not exist.\n", $index);
+			return;
+			
+		} elsif ($amount eq "" || $amount <= 0) {
+			$amount = 1;
 		}
-		$messageSender->sendBuyBulk([{itemID  => $storeList[$arg1]{'nameID'}, amount => $arg2}]); # TODO: we could buy more types of items at once
+		
+		my $itemID = $storeList[$index]{nameID};
+		push (@bulkitemlist,{itemID  => $itemID, amount => $amount});
+	}
+	
+	if (grep(defined, @bulkitemlist)) {
+		$messageSender->sendBuyBulk(\@bulkitemlist);
 	}
 }
 
