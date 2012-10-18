@@ -184,6 +184,20 @@ our %jobs_lut = (
 	180 => 'Clown',
 	181 => 'Gypsy',
 
+	# Elementals
+	2114 => 'Agni',
+	2115 => 'Agni',
+	2116 => 'Agni',
+	2117 => 'Aqua',
+	2118 => 'Aqua',
+	2119 => 'Aqua',
+	2120 => 'Ventus',
+	2121 => 'Ventus',
+	2122 => 'Ventus',
+	2123 => 'Tera',
+	2124 => 'Tera',
+	2125 => 'Tera',
+
 	4001 => 'High Novice',
 	4002 => 'High Swordsman',
 	4003 => 'High Magician',
