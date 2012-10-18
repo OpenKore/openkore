@@ -2191,6 +2191,8 @@ sub processFollow {
 	if (!exists $args->{following} && !exists $args->{ai_follow_lost}) {
 		ai_partyfollow();
 	}
+	
+	Plugins::callHook("ai_follow", $args);
 }
 
 ##### SITAUTO-IDLE #####
