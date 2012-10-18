@@ -298,6 +298,8 @@ our %jobs_lut = (
 	4112 => 'Baby Mechanic',	# mounted
 	4190 => 'Super Novice',         # expanded
 	4191 => 'Super Baby',           # expanded
+	4211 => 'Kagerou',
+	4212 => 'Oboro',
 
 	# Homunculus
 	6001 => 'Lif',
