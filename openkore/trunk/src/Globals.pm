@@ -365,13 +365,14 @@ our %jobs_lut = (
 	6045 => 'Mercenary Swordman 9',
 	6046 => 'Mercenary Swordman 10',
 
-	# Sorcerer slaves (names may be incorrect)
 	6047 => 'Mercenary Monster', # don't know about this one
-	6048 => 'Mercenary Eira',
-	6049 => 'Mercenary Bayeri',
-	6050 => 'Mercenary Sera',
-	6051 => 'Mercenary Dieter',
-	6052 => 'Mercenary Eleanor',
+
+	# Homunculus S
+	6048 => 'Eira',
+	6049 => 'Bayeri',
+	6050 => 'Sera',
+	6051 => 'Dieter',
+	6052 => 'Eleanor',
 
 );
 
