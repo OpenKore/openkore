@@ -21,6 +21,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		'08B9' => ['account_id', 'x4 a4 x2', [qw(accountID)]], # 12 
+		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
 	);
 
 	foreach my $switch (keys %packets) {
@@ -28,6 +29,7 @@ sub new {
 	}
 	my %handlers = qw(
 		account_id 08B9
+		show_eq 0859
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
