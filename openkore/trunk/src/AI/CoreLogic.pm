@@ -1903,18 +1903,26 @@ sub processAutoSkillsRaise {
 sub processRandomWalk {
 	if (AI::isIdle && (AI::SlaveManager::isIdle()) && $config{route_randomWalk} && !$ai_v{sitAuto_forcedBySitCommand}
 		&& (!$field->isCity || $config{route_randomWalk_inTown})
-		&& length($field->{rawMap}) ) {
+		&& length($field->{rawMap}) 
+		){
+		if($char->{pos}{x} == $config{'lockMap_x'} && !($config{'lockMap_randX'} > 0) && ($char->{pos}{y} == $config{'lockMap_y'} && !($config{'lockMap_randY'} >0))) {
+			error T("Coordinate lockmap is used; randomWalk disabled\n");
+			$config{'route_randomWalk'} = 0;
+			return;
+		}
 		my ($randX, $randY);
 		my $i = 500;
 		do {
-			$randX = int(rand($field->width)) + 1;
-			$randX = int($config{'lockMap_x'} - $config{'lockMap_randX'} + rand(2*$config{'lockMap_randX'}))+1 if ($config{'lockMap_x'} ne '' && $config{'lockMap_randX'} ne '');
-			$randY = int(rand($field->height)) + 1;
-			$randY = int($config{'lockMap_y'} - $config{'lockMap_randY'} + rand(2*$config{'lockMap_randY'}))+1 if ($config{'lockMap_y'} ne '' && $config{'lockMap_randY'} ne '');
+			$randX = int(rand($field->width));
+			$randX = $config{'lockMap_x'} if ($char->{pos}{x} == $config{'lockMap_x'} && !($config{'lockMap_randX'} > 0));
+			$randX = $config{'lockMap_x'} - $config{'lockMap_randX'} + int(rand(2*$config{'lockMap_randX'}+1)) if ($config{'lockMap_x'} ne '' && $config{'lockMap_randX'} >= 0);
+			$randY = int(rand($field->height));
+			$randY = $config{'lockMap_y'} if ($char->{pos}{y} == $config{'lockMap_y'} && !($config{'lockMap_randY'} > 0));
+			$randY = $config{'lockMap_y'} - $config{'lockMap_randY'} + int(rand(2*$config{'lockMap_randY'}+1)) if ($config{'lockMap_y'} ne '' && $config{'lockMap_randY'} >= 0);
 		} while (--$i && !$field->isWalkable($randX, $randY));
 		if (!$i) {
 			error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
-			$config{route_randomWalk} = 0;
+			$config{'route_randomWalk'} = 0;
 		} else {
 			message TF("Calculating random route to: %s: %s, %s\n", $field->descString(), $randX, $randY), "route";
 			ai_route($field->baseName, $randX, $randY,
