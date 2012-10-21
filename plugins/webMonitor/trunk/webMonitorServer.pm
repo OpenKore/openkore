@@ -1,21 +1,22 @@
 package webMonitorServer;
 
-# webMonitor - an HTTP interface to monitor bots
-# Copyright (C) 2006 kaliwanagan
+# webMonitorV2 - Web interface to monitor yor bots
+# Copyright (C) 2012 BonScott
+# thanks to iMikeLance
 #
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
+# How use:
+# Add in your config.txt
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# webPort XXXX
+# 
+# Where XXXX is a number of your choice. Ex:
+# webPort 1020
+# 
+# Set only one port for each bot. For more details, visit:
+# [OpenKoreBR]
 #
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+# [OpenKore International]
+#
 #############################################
 
 use strict;
@@ -31,8 +32,7 @@ use Skill;
 use Settings;
 use Network;
 use Network::Send ();
-
-my $varteste=$Settings::storage_log_file;
+use POSIX qw/strftime/;
 
 #[PT-BR]
 # Keywords são campos específicos no modelo que irá, eventualmente,
@@ -42,6 +42,9 @@ my $varteste=$Settings::storage_log_file;
 # replaced by dynamic content.
 my %keywords;
 
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+$mon++; $year += 1900; 
+my $time = strftime('%H:%M:%S', localtime);
 ###
 # cHook
 #
@@ -331,19 +334,14 @@ sub request {
 		'skillsLevel' => \@skillsLevel,
 		'skillsJS' => \@skillsJS,
 	# Report
+		'time' => $time,
 		'reconnectCount' => $reconnectCount, #relogs
-		'elasped' => $elasped,
-		'totalElasped' => $totalelasped,
-		'dmgPSec' => $dmgpsec,
+		'deathCount' => $char->{deathCount}, #died times
+		'totalElasped' => timeConvert($totalelasped), #tempo de bot
 		'totalDamage' => $totaldmg, #dmg total feito
-		'startTimeEXP' => $startTime_EXP,
-		'startingZeny' => $startingzeny, 
-		'bExpSwitch' => $bExpSwitch,
-		'jExpSwitch' => $jExpSwitch,
+		'startTimeEXP' => timeConvert($startTime_EXP),
 		'totalBaseExp' => $totalBaseExp, #exp ganha
 		'totalJobExp' => $totalJobExp, #exp ganha
-		'monsterBaseExp' => $monsterBaseExp,
-		'monsterJobExp' => $monsterJobExp,
 	# Other's
 		'userAccount' => $config{username},
 		'userChar' => $config{char},
@@ -437,7 +435,6 @@ sub request {
 		'lastConsoleMessage3' => $messages[-3],
 		'skin' => 'default', # TODO: replace with config.txt entry for the skin
 		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
-		'logDir' => $varteste,
 	);
 	
 	if ($filename eq '/handler') {

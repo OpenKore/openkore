@@ -31,9 +31,7 @@
 canvas{
 	height: 250px;
 	width: 250px;
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position:center; 
+
 }
 .sidebar-nav { 
 padding: 9px 0; 
