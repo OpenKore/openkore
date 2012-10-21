@@ -29,7 +29,10 @@
       <li class="active"><a>{characterName}</a></li>
       <li><a>Base Level: {characterLevel}</a></li>
       <li><a>Job Level: {characterJobLevel}</a></li>
+	  <li><a>userAccount: {userAccount}</a></li>
+	  <li><a>Hora: {time}</a></li>
     </ul>
+	<a href="/handler?command=quit" class="btn btn-danger btn-mini pull-right"><i class="icon-off icon-white"></i> OFF</a>
   </div>
 </div>
 
@@ -41,6 +44,7 @@
               <li class="nav-header">Menu</li>
               <li><a href="index.html"><i class="icon-user"></i> Status</a></li>
               <li><a href="inventory.html"><i class="icon-chevron-right"></i> Invent&aacute;rio</a></li>
+			  <li><a href="config.html"><i class="icon-cog"></i> Config</a></li>
               <li><a href="console.html"><i class="icon-chevron-right"></i> Console</a></li>
               <li><a href="chatlog.html"><i class="icon-comment"></i> ChatLog</a></li>
               <li><a href="guild.html"><i class="icon-chevron-right"></i> Guild</a></li>

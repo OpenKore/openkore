@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>{characterName} - {characterLevel}/{characterJobLevel} - OpenKore</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="img/favicon.png" />
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<script type='text/javascript' src='js/jquery.min.js'></script>
 	<script type="text/javascript" src="js/bootstrap-2.0.2.js"></script>
@@ -37,6 +38,8 @@
       <li class="active"><a>{characterName}</a></li>
       <li><a>Base Level: {characterLevel}</a></li>
       <li><a>Job Level: {characterJobLevel}</a></li>
+	  <li><a>userAccount: {userAccount}</a></li>
+	  <li><a>Hora: {time}</a></li>
     </ul>
 	<a href="/handler?command=quit" class="btn btn-danger btn-mini pull-right"><i class="icon-off icon-white"></i> OFF</a>
   </div>
@@ -50,6 +53,8 @@
               <li class="nav-header">Menu</li>
               <li class="active"><a href="index.html"><i class="icon-user"></i> Status</a></li>
               <li><a href="inventory.html"><i class="icon-chevron-right"></i> Invent&aacute;rio</a></li>
+			  <!-- <li><a href="report.html"><i class="icon-tasks"></i> Relat&oacute;rio</a></li> -->
+			  <li><a href="config.html"><i class="icon-cog"></i> Config</a></li>
               <li><a href="console.html"><i class="icon-chevron-right"></i> Console</a></li>
               <li><a href="chatlog.html"><i class="icon-comment"></i> ChatLog</a></li>
               <li><a href="guild.html"><i class="icon-chevron-right"></i> Guild</a></li>
@@ -71,9 +76,9 @@
 				<h6 align="right">{characterSP}/{characterSPMax}</h6>
 				<div class="progress" rel="tooltip" title="{characterSPPercent}%"><div class="bar" style="width: {characterSPPercent}%;"></div></div>
 				</div>
-				<div class="span2">
+				<div class="span3">
 					<table class="table-condensed">
-							<tbody>
+						<tbody>
 							<tr><td class="left">Str</td><td class="pull-right">{characterStr}+{characterStrBonus}  <a href="/handler?command=stat_add+str&page=index.html" rel="tooltip" title="You need <b>{characterStrPoints}</b> points for add 1 STR point!"><i class="icon-plus-sign"></i></a></td></tr>
 							<tr><td class="left">Agi</td><td class="pull-right">{characterAgi}+{characterAgiBonus}  <a href="/handler?command=stat_add+agi&page=index.html" rel="tooltip" title="You need <b>{characterAgiPoints}</b> points for add 1 AGI point!"><i class="icon-plus-sign"></i></a></td></tr>
 							<tr><td class="left">Vit</td><td class="pull-right">{characterVit}+{characterVitBonus}  <a href="/handler?command=stat_add+vit&page=index.html" rel="tooltip" title="You need <b>{characterVitPoints}</b> points for add 1 VIT point!"><i class="icon-plus-sign"></i></a></td></tr>
@@ -89,14 +94,14 @@
 				<div class="span3">
 					<table class="table-condensed">
 						<tbody>
-							<tr><td>Atk</td><td class="pull-right">{characterAttack}+{characterAttackBonus}</td></tr>
-							<tr><td>AtkM</td><td class="pull-right">{characterAttackMagicMax}~{characterAttackMagicMin}</td></tr>
-							<tr><td>Hit</td><td class="pull-right">{characterHit}</td></tr>
-							<tr><td>Critical</td><td class="pull-right">{characterCritical}</td></tr>
-							<tr><td>Def</td><td class="pull-right">{characterDef}+{characterDefBonus}</td></tr>
-							<tr><td>DefM</td><td class="pull-right">{characterDefMagic}+{characterDefMagicBonus}</td></tr>
-							<tr><td>Flee</td><td class="pull-right">{characterFlee}+{characterFleeBonus}</td></tr>
-							<tr><td>ASPD</td><td class="pull-right">{characterAttackSpeed}</td></tr>
+							<tr><td class="left">Atk</td><td class="pull-right">{characterAttack}+{characterAttackBonus}</td></tr>
+							<tr><td class="left">AtkM</td><td class="pull-right">{characterAttackMagicMax}~{characterAttackMagicMin}</td></tr>
+							<tr><td class="left">Hit</td><td class="pull-right">{characterHit}</td></tr>
+							<tr><td class="left">Critical</td><td class="pull-right">{characterCritical}</td></tr>
+							<tr><td class="left">Def</td><td class="pull-right">{characterDef}+{characterDefBonus}</td></tr>
+							<tr><td class="left">DefM</td><td class="pull-right">{characterDefMagic}+{characterDefMagicBonus}</td></tr>
+							<tr><td class="left">Flee</td><td class="pull-right">{characterFlee}+{characterFleeBonus}</td></tr>
+							<tr><td class="left">ASPD</td><td class="pull-right">{characterAttackSpeed}</td></tr>
 							<br/>
 						</tbody>
 					</table>

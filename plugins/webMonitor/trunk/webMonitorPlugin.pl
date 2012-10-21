@@ -1,32 +1,23 @@
 package webMonitorPlugin;
 
-# webMonitor - an HTTP interface to monitor bots
-# Copyright (C) 2006 kaliwanagan
+# webMonitorV2 - Web interface to monitor yor bots
+# Copyright (C) 2012 BonScott
+# thanks to iMikeLance
 #
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
+# How use:
+# Add in your config.txt
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# webPort XXXX
+# 
+# Where XXXX is a number of your choice. Ex:
+# webPort 1020
+# 
+# Set only one port for each bot. For more details, visit:
+# [OpenKoreBR]
 #
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+# [OpenKore International]
+#
 #############################################
-# [PT-BR] Projeto recontinuado em 2012 por KeplerBR
-#  Agradecimentos ao llbranco, ao iMike e ao Swapmwalker
-# Tradução de PT-BR para EN por Swapmwalker
-# [ENG] Project continued on 2012 by KeplerBR
-#  Thanks to llbranco, iMike and Swapmwalker
-# PT-BR to EN translation by Swapmwalker
-#
-# [PT-BR] Tópico no fórum brasileiro: http://openkore.com.br/index.php?/topic/2749-plugin-webmonitor/
-# [EN] Topic in the international forum: http://forums.openkore.com/viewtopic.php?f=36&t=17768&p=63194
-
 
 use strict;
 use Plugins;
@@ -36,25 +27,31 @@ use lib "$RealBin/plugins/webMonitor";
 use webMonitorServer;
 use chatLogWebMonitor;
 use logConsole;
+use Globals;
+use Log qw(warning message error);
 
-###
 # Initialize some variables as well as plugin hooks
-#
-my $port = 1025;
-my $bind = "localhost";
-my $webserver = new webMonitorServer($port, $bind);
 
-Plugins::register('webMonitor', 'an HTTP interface to monitor bots', \&Unload);
-my $hook = Plugins::addHook('AI_post', \&mainLoop);
+my $port;
+my $bind;
+my $webserver;
 
-sub Unload {
-	Plugins::delHook('AI_post', $hook);
+Plugins::register('webMonitor', 'Web interface to monitor yor bots', \&Unload);
+my $hook = Plugins::addHooks(['AI_post', \&mainLoop], ['start3', \&post_loading]);
+
+##### Seting webServer after of plugins loads
+sub post_loading {
+	$port = $config{webPort};
+	$bind = "localhost";
+    warning "webPort: ".$config{webPort}."\n";
+	print "$config{webPort}\n";
+	$webserver = new webMonitorServer($port, $bind);
 }
-
-###
-# Main loop
-#
+sub Unload {
+	Plugins::delHooks($hook);
+}
 sub mainLoop {
+	return if !$webserver;
 	$webserver->iterate;
 }
 

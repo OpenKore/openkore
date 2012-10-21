@@ -1,7 +1,18 @@
+19/10/2012 - BonScott
+- added icon to favorite easy
+- added username in top bar
+- added time to top bar
+- ADDED PORT CONFIG !!! [webPort in config.txt]
+- changed icons font to iRO database
+- added change lockMap via web
+- tons of rapid actions buttons (reload files, route, autobuy, macros, etc...)
+
 16/10/2012 - BonScott
+- added "free points"
 - button for add atributes and mini-help balloon
 - fix position of "add skill point" button
 - fix map size
+- change layout of inventary to tabbed vision (better and fast)
 
 13/10/2012 - KeplerBR
 - Bugfix in "consoleLog" and "Show skills"
