@@ -283,14 +283,17 @@ moc_ruins 75 162 bat_room 154 150 0 c c r0 c
 payon 189 105 bat_room 154 150 0 c c r0 c
 prontera 123 83 bat_room 154 150 0 c c r0 c
 rachel 149 138 bat_room 154 150 0 c c r0 c
-# following is a single warp, depends of battleground entrance npc used
+
+# following is a single warp, depends of entrance npc used
+# currently unsupported, do not enable that
 #bat_room 148 150 aldebaran 168 112 0 c r0 c
 #bat_room 148 150 geffen 120 39 0 c r0 c
 #bat_room 148 150 lighthalzen 159 93 0 c r0 c
 #bat_room 148 150 moc_ruins 152 48 0 c r0 c
 #bat_room 148 150 payon 161 58 0 c r0 c
-bat_room 148 150 prontera 116 72 0 c r0 c
+#bat_room 148 150 prontera 116 72 0 c r0 c
 #bat_room 148 150 rachel 115 124 0 c r0 c
+
 # following bat_room npcs are only available with base lvl 80
 # Tierra 1 Blue
 bat_room 124 178 bat_room 57 223 0 c r0 c
@@ -2854,7 +2857,10 @@ moc_paraup 47 161 moc_para01 47 18
 moc_paraup 41 187 moc_paraup 179 93
 #moc_para01 179 90 moc_para01 41 185
 moc_paraup 179 90 moc_paraup 41 185
-moc_para01 30 10 prontera 116 72
+
+# following is a single warp, depends of entrance npc used
+# currently unsupported, do not enable that
+#moc_para01 30 10 prontera 116 72
 
 #------------------------------
 xmas 139 307 evt_xmas 129 129 0 c r1
