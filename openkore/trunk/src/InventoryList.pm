@@ -216,6 +216,10 @@ sub getByNameList {
 		if ($indexSlot) {
 			return $self->get($indexSlot->[0]);
 		}
+		$indexSlot = $self->getByNameID($name);
+		if ($indexSlot) {
+			return $indexSlot;
+		}
 	}
 	return undef;
 }

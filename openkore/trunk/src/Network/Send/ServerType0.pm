@@ -70,6 +70,7 @@ sub new {
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
+		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'01DB' => ['secure_login_key_request'], # len 2

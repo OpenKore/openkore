@@ -1053,7 +1053,7 @@ sub avoidGM_talk {
 	# in order to prevent false matches
 	return 0 if (existsInList($config{avoidGM_ignoreList}, $user));
 
-	if ($user =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i || $user =~ /$config{avoidGM_namePattern}/) {
+	if ($user =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i || ($config{avoidGM_namePattern} && ($user =~ /$config{avoidGM_namePattern}/))) {
 		my %args = (
 			name => $user,
 		);

@@ -68,6 +68,7 @@ sub new {
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check'], # TODO
 		'018A' => ['quit_request', 'v', [qw(type)]],
+		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'01DB' => ['secure_login_key_request'], # len 2
@@ -1093,12 +1094,12 @@ sub sendSkillUseLocInfo {
 # 0x0192,24
 
 # 0x0193,6,solvecharname,2
-sub sendGetCharacterName {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4', 0x0193, $ID);
-	$self->sendToServer($msg);
-	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
-}
+# sub sendGetCharacterName {
+	# my ($self, $ID) = @_;
+	# my $msg = pack('v a4', 0x0193, $ID);
+	# $self->sendToServer($msg);
+	# debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
+# }
 
 # 0x0194,30
 # 0x0195,102
