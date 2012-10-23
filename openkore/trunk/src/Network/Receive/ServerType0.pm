@@ -425,7 +425,7 @@ sub new {
 		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len data)]],
 		'02D4' => ['inventory_item_added', 'v3 C3 a8 v C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
 		'02D5' => ['ISVR_DISCONNECT'], #TODO: PACKET_ZC_ISVR_DISCONNECT
-		'02D7' => ['show_eq', 'v Z24 v7 C', [qw(len name jobID hair_style tophead midhead lowhead hair_color clothes_color sex)]],
+		'02D7' => ['show_eq', 'v Z24 v7 C a*', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex equips_info)]], #type is job
 		'02D9' => ['show_eq_msg_other', 'V2', [qw(unknown flag)]],
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]],
 		'02DC' => ['battleground_message', 'v a4 Z24 Z*', [qw(len ID name message)]],
@@ -2721,7 +2721,8 @@ sub inventory_item_added {
 		$args->{item} = $item;
 
 		# TODO: move this stuff to AI()
-		if ($ai_v{npc_talk}{itemID} eq $item->{nameID}) {
+		if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}, $ai_v{npc_talk}{itemID}) {
+
 			$ai_v{'npc_talk'}{'talk'} = 'buy';
 			$ai_v{'npc_talk'}{'time'} = time;
 		}
@@ -3803,6 +3804,20 @@ sub party_exp {
 	} else {
 		error T("Error setting party option\n");
 	}
+	if ($args->{itemPickup} == 0) {
+		message T("Party item set to Individual Take\n"), "party", 1;
+	} elsif ($args->{itemPickup} == 1) {
+		message T("Party item set to Even Share\n"), "party", 1;
+	} else {
+		error T("Error setting party option\n");
+	}
+	if ($args->{itemDivision} == 0) {
+		message T("Party item division set to Individual Take\n"), "party", 1;
+	} elsif ($args->{itemDivision} == 1) {
+		message T("Party item division set to Even Share\n"), "party", 1;
+	} else {
+		error T("Error setting party option\n");
+	}
 }
 
 sub party_leader {
@@ -3991,8 +4006,9 @@ sub party_join {
 	$char->{party}{users}{$ID}->{ID} = $ID;
 =cut
 
-	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption(1, 0);
+	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
+		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareDiv});
+
 	}
 }
 
@@ -4075,8 +4091,10 @@ sub party_users_info {
 		$char->{party}{users}{$ID}->{ID} = $ID;
 	}
 
-	if ($config{partyAutoShare} && $char->{party} && %{$char->{party}}) {
-		$messageSender->sendPartyOption(1, 0);
+	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
+		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareDiv});
+
+
 	}
 
 }

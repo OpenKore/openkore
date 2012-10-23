@@ -14,3 +14,7 @@
 512 Eye Mask
 513 Mid-Lower Mask
 768 Up-Mid Helmet
+769 Up-Mid-Lower Helmet
+1024 Visual Helmet
+2048 Visual Eye Mask
+4096 Visual Lower Mask
