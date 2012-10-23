@@ -425,7 +425,7 @@ sub new {
 		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len data)]],
 		'02D4' => ['inventory_item_added', 'v3 C3 a8 v C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
 		'02D5' => ['ISVR_DISCONNECT'], #TODO: PACKET_ZC_ISVR_DISCONNECT
-		'02D7' => ['show_eq', 'v Z24 v7 C', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex)]], #type is job
+		'02D7' => ['show_eq', 'v Z24 v7 C', [qw(len name jobID hair_style tophead midhead lowhead hair_color clothes_color sex)]],
 		'02D9' => ['show_eq_msg_other', 'V2', [qw(unknown flag)]],
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]],
 		'02DC' => ['battleground_message', 'v a4 Z24 Z*', [qw(len ID name message)]],
@@ -503,7 +503,7 @@ sub new {
 		'0856' => ['actor_exists', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
 		'0857' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
 		'0858' => ['actor_moved', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # standing provided by try71023
-		'0859' => ['show_eq', 'v Z24 v7 C', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex)]], # need test
+		'0859' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'08CB' => ['rates_info', 's4 a*', [qw(len exp death drop detail)]],
@@ -2721,7 +2721,7 @@ sub inventory_item_added {
 		$args->{item} = $item;
 
 		# TODO: move this stuff to AI()
-		if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}, $ai_v{npc_talk}{itemID}) {
+		if ($ai_v{npc_talk}{itemID} eq $item->{nameID}) {
 			$ai_v{'npc_talk'}{'talk'} = 'buy';
 			$ai_v{'npc_talk'}{'time'} = time;
 		}
@@ -3803,20 +3803,6 @@ sub party_exp {
 	} else {
 		error T("Error setting party option\n");
 	}
-	if ($args->{itemPickup} == 0) {
-		message T("Party item set to Individual Take\n"), "party", 1;
-	} elsif ($args->{itemPickup} == 1) {
-		message T("Party item set to Even Share\n"), "party", 1;
-	} else {
-		error T("Error setting party option\n");
-	}
-	if ($args->{itemDivision} == 0) {
-		message T("Party item division set to Individual Take\n"), "party", 1;
-	} elsif ($args->{itemDivision} == 1) {
-		message T("Party item division set to Even Share\n"), "party", 1;
-	} else {
-		error T("Error setting party option\n");
-	}
 }
 
 sub party_leader {
@@ -4005,8 +3991,8 @@ sub party_join {
 	$char->{party}{users}{$ID}->{ID} = $ID;
 =cut
 
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareDiv});
+	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
+		$messageSender->sendPartyOption(1, 0);
 	}
 }
 
@@ -4089,8 +4075,8 @@ sub party_users_info {
 		$char->{party}{users}{$ID}->{ID} = $ID;
 	}
 
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareDiv});
+	if ($config{partyAutoShare} && $char->{party} && %{$char->{party}}) {
+		$messageSender->sendPartyOption(1, 0);
 	}
 
 }
@@ -4742,61 +4728,6 @@ sub shop_skill {
 
 	# TODO: mark that skill cast has been successful
 }
-
-sub show_eq {
-	my ($self, $args) = @_;
-
-	#len type hair_style tophead midhead lowhead hair_color clothes_color sex
-
-	my $unpack_string  = "v ";
-	   $unpack_string .= "v C2 v2 C2 ";
-	   $unpack_string .= "a8 ";
-	   $unpack_string .= "a6"; #unimplemented in eA atm
-	for (my $i = 43; $i < $args->{RAW_MSG_SIZE}; $i += 26) {
-		my ($index,
-			$ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, # typical for nonstackables
-			$cards,
-			$expire) = unpack($unpack_string, substr($args->{RAW_MSG}, $i));
-
-		my $item = {};
-		$item->{index} = $index;
-
-		$item->{nameID} = $ID;
-		$item->{type} = $type;
-
-		$item->{identified} = $identified;
-		$item->{type_equip} = $type_equip;
-		$item->{equipped} = $equipped;
-		$item->{broken} = $broken;
-		$item->{upgrade} = $upgrade;
-
-		$item->{cards} = $cards;
-
-		$item->{expire} = $expire;
-
-		message sprintf("%-15s: %s\n", $equipSlot_lut{$item->{equipped}}, itemName($item)), "list";
-		debug "$index, $ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, $cards, $expire\n";
-	}
-}
-
-sub show_eq_msg_other {
-	my ($self, $args) = @_;
-	if ($args->{flag}) {
-		message T("Allowed to view the other player's Equipment.\n");
-	} else {
-		message T("Not allowed to view the other player's Equipment.\n");
-	}
-}
-
-sub show_eq_msg_self {
-	my ($self, $args) = @_;
-	if ($args->{type}) {
-		message T("Other players are allowed to view your Equipment.\n");
-	} else {
-		message T("Other players are not allowed to view your Equipment.\n");
-	}
-}
-
 
 # TODO:
 # Add 'dispose' support
