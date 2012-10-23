@@ -177,7 +177,7 @@ sub iterate {
 
 		} elsif (distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) <= 10) {
 			my ($from,$to) = split /=/, $self->{mapSolution}[0]{portal};
-			if ($self->{actor}{zeny} >= $portals_lut{$from}{dest}{$to}{cost}) {
+			if (($self->{actor}{zeny} >= $portals_lut{$from}{dest}{$to}{cost}) || ($char->inventory->getByNameID(7060) && $portals_lut{$from}{dest}{$to}{allow_ticket})) {
 				# We have enough money for this service.
 				$self->{substage} = 'Waiting for Warp';
 				@{$self}{qw(old_x old_y)} = @{$self->{actor}{pos_to}}{qw(x y)};

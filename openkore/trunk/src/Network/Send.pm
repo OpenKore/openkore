@@ -514,6 +514,12 @@ sub sendGetPlayerInfo {
 	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
+sub sendGetCharacterName {
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'actor_name_request', ID => $ID}));
+	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
+}
+
 sub parse_private_message {
 	my ($self, $args) = @_;
 	$args->{privMsg} = bytesToString($args->{privMsg});

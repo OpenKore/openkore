@@ -102,6 +102,7 @@ sub initHandlers {
 	merc               => \&cmdSlave,
 	g                  => \&cmdChat,
 	getplayerinfo      => \&cmdGetPlayerInfo,
+	getcharname		   => \&cmdGetCharacterName,
 	# GM Commands - Start
 	gmb                => \&cmdGmb,
 	gmbb               => \&cmdGmbb,
@@ -2118,6 +2119,15 @@ sub cmdGetPlayerInfo {
 	my (undef, $args) = @_;
 	return 0 if (isSafeActorQuery(pack("V", $args)) != 1); # Do not Query GM's
 	$messageSender->sendGetPlayerInfo(pack("V", $args));
+}
+
+sub cmdGetCharacterName {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+	my (undef, $args) = @_;
+	$messageSender->sendGetCharacterName(pack("V", $args));
 }
 
 sub cmdGmb {

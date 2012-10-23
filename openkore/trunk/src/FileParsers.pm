@@ -567,21 +567,32 @@ sub parsePortals {
 		$line =~ s/\cM|\cJ//g;
 		$line =~ s/\s+/ /g;
 		$line =~ s/^\s+|\s+$//g;
-		my @args = split /\s/, $line, 8;
-		if (@args > 5) {
-			my $portal = "$args[0] $args[1] $args[2]";
-			my $dest = "$args[3] $args[4] $args[5]";
-			$$r_hash{$portal}{'source'}{'map'} = $args[0];
-			$$r_hash{$portal}{'source'}{'x'} = $args[1];
-			$$r_hash{$portal}{'source'}{'y'} = $args[2];
-			$$r_hash{$portal}{'dest'}{$dest}{'map'} = $args[3];
-			$$r_hash{$portal}{'dest'}{$dest}{'x'} = $args[4];
-			$$r_hash{$portal}{'dest'}{$dest}{'y'} = $args[5];
-			$$r_hash{$portal}{'dest'}{$dest}{'cost'} = $args[6];
-			$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $args[7];
+		$line =~ s/(.*)[\s\t]+#.*$/$1/;
+		
+		if ($line =~ /^(\w+)\s(\d{1,3})\s(\d{1,3})\s(\w+)\s(\d{1,3})\s(\d{1,3})\s?(.*)/) {
+		my ($source_map, $source_x, $source_y, $dest_map, $dest_x, $dest_y, $misc) = ($1, $2, $3, $4, $5, $6, $7);
+			my $portal = "$source_map $source_x $source_y";
+			my $dest = "$dest_map $dest_x $dest_y";
+			$$r_hash{$portal}{'source'}{'map'} = $source_map;
+			$$r_hash{$portal}{'source'}{'x'} = $source_x;
+			$$r_hash{$portal}{'source'}{'y'} = $source_y;
+			$$r_hash{$portal}{'dest'}{$dest}{'map'} = $dest_map;
+			$$r_hash{$portal}{'dest'}{$dest}{'x'} = $dest_x;
+			$$r_hash{$portal}{'dest'}{$dest}{'y'} = $dest_y;
 			$$r_hash{$portal}{dest}{$dest}{enabled} = 1; # is available permanently (can be used when calculating a route)
 			#$$r_hash{$portal}{dest}{$dest}{active} = 1; # TODO: is available right now (otherwise, wait until it becomes available)
+			if ($misc =~ /^(\d+)\s(\d)\s(.*)$/) { # [cost] [allow_ticket] [talk sequence]
+				$$r_hash{$portal}{'dest'}{$dest}{'cost'} = $1;
+				$$r_hash{$portal}{'dest'}{$dest}{'allow_ticket'} = $2;
+				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $3;
+			} elsif ($misc =~ /^(\d+)\s(.*)$/) { # [cost] [talk sequence]
+				$$r_hash{$portal}{'dest'}{$dest}{'cost'} = $1;
+				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $2;
+			} else { # [talk sequence]
+				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $misc;
+			}
 		}
+		
 	}
 	close FILE;
 	return 1;
