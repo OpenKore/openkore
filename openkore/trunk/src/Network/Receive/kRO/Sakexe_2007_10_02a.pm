@@ -77,7 +77,7 @@ sub new {
 		'02D4' => ['inventory_item_added', 'v3 C3 a8 v C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]], # 29
 		'02D5' => ['isvr_disconnect'], # 2
 
-		'02D7' => ['show_eq', 'v Z24 v7 C', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex)]], # -1 #type is job
+		'02D7' => ['show_eq', 'v Z24 v7 C a*', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex equips_info)]], # -1 #type is job
 
 		'02D9' => ['show_eq_msg_other', 'V2', [qw(unknown flag)]], # 10
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]], # 3
