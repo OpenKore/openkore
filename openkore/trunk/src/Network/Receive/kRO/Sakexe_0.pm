@@ -4563,60 +4563,6 @@ sub shop_skill {
 	message TF("You can sell %s items!\n", $number);
 }
 
-sub show_eq {
-	my ($self, $args) = @_;
-
-	#len type hair_style tophead midhead lowhead hair_color clothes_color sex
-
-	my $unpack_string  = "v ";
-	   $unpack_string .= "v C2 v2 C2 ";
-	   $unpack_string .= "a8 ";
-	   $unpack_string .= "a6"; #unimplemented in eA atm
-	for (my $i = 43; $i < $args->{RAW_MSG_SIZE}; $i += 26) {
-		my ($index,
-			$ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, # typical for nonstackables
-			$cards,
-			$expire) = unpack($unpack_string, substr($args->{RAW_MSG}, $i));
-
-		my $item = {};
-		$item->{index} = $index;
-
-		$item->{nameID} = $ID;
-		$item->{type} = $type;
-
-		$item->{identified} = $identified;
-		$item->{type_equip} = $type_equip;
-		$item->{equipped} = $equipped;
-		$item->{broken} = $broken;
-		$item->{upgrade} = $upgrade;
-
-		$item->{cards} = $cards;
-
-		$item->{expire} = $expire;
-
-		message sprintf("%-15s: %s\n", $equipSlot_lut{$item->{equipped}}, itemName($item)), "list";
-		debug "$index, $ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, $cards, $expire\n"; 
-	}
-}
-
-sub show_eq_msg_other {
-	my ($self, $args) = @_;
-	if ($args->{type}) {
-		message T("Allowed to view the other player's Equipment.\n");
-	} else {
-		message T("Not allowed to view the other player's Equipment.\n");
-	}
-}
-
-sub show_eq_msg_self {
-	my ($self, $args) = @_;
-	if ($args->{type}) {
-		message T("Other players are allowed to view your Equipment.\n");
-	} else {
-		message T("Other players are not allowed to view your Equipment.\n");
-	}
-}
-
 sub skill_cast {
 	my ($self, $args) = @_;
 
