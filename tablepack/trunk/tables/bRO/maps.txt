@@ -1,4 +1,4 @@
-gld_dun04.rsw#Calabouço do Feudo de Britoniah#
+﻿gld_dun04.rsw#Calabouço do Feudo de Britoniah#
 gld_dun03.rsw#Calabouço do Feudo das Valquírias#
 gld_dun02.rsw#Calabouço do Feudo de Luina#
 gld_dun01.rsw#Calabouço do Feudo do Bosque Celestial#
@@ -781,4 +781,4 @@ dew_fild01.rsw#Dewata Field_Jaty Tribe Village#
 dew_dun01.rsw#Krakatau Volcano Island#
 dew_dun02.rsw#Istana Cave#
 
-
+moc_para01.rsw#Garden of Eden#
