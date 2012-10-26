@@ -2911,3 +2911,10 @@ new_3-2 100 6 new_3-1 148 112
 new_3-1 148 112 new_3-2 100 9
 new_2-2 100 6 new_2-1 148 112
 new_2-1 148 112 new_2-2 100 9
+yuno_fild12 23 226 yuno_fild11 364 218
+yuno_fild11 364 218 yuno_fild12 26 230
+prt_fild09 383 251 moc_fild01 25 242
+dew_fild01 375 212 dewata 44 252
+dewata 44 252 dew_fild01 373 212
+dew_dun02 305 30 dew_fild01 48 65
+dew_fild01 48 65 dew_dun02 302 30
