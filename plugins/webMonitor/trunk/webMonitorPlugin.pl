@@ -47,15 +47,9 @@ my $hook = Plugins::addHooks(
 
 ##### Seting webServer after of plugins loads
 sub post_loading {
-	$port = $config{webPort};
-	
-	if (!$port) {
-		warning "'webPort' not defined in config.txt! Using the default port!\n";
-		$port = 1025;
-	}
+	$port = $config{webPort} || 1025;
 	
 	$bind = "localhost";
-    warning "webPort: $port\n";
 	$webserver = new webMonitorServer($port, $bind);
 }
 sub Unload {
