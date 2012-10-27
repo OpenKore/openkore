@@ -40,7 +40,10 @@ my $bind;
 my $webserver;
 
 Plugins::register('webMonitor', 'Web interface to monitor yor bots', \&Unload);
-my $hook = Plugins::addHooks(['AI_post', \&mainLoop], ['start3', \&post_loading]);
+my $hook = Plugins::addHooks(
+	['mainLoop_post', \&mainLoop],
+	['start3', \&post_loading],
+);
 
 ##### Seting webServer after of plugins loads
 sub post_loading {
