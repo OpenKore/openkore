@@ -22,6 +22,7 @@ package webMonitorServer;
 use strict;
 use Base::WebServer;
 use base qw(Base::WebServer);
+use Translation qw(T TF);
 use Globals;
 use Log qw(message debug);
 use Utils;
@@ -54,6 +55,14 @@ my $time = strftime('%H:%M:%S', localtime);
 my @messages;
 my $cHook = Log::addHook(\&cHook, "Console Log");
 my $hookShopList = Plugins::addHook('packet_vender_store', \&hookShopList);
+
+sub new {
+	my $class = shift;
+
+	my $self = $class->SUPER::new(@_);
+	message TF("webMonitor started at http://%s:%s/\n", $self->getHost, $self->getPort), 'connection';
+	$self
+}
 
 sub cHook {
 	my $type = shift;
