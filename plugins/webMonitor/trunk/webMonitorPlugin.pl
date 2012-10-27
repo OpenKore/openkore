@@ -26,7 +26,7 @@ use strict;
 use Plugins;
 use Settings;
 use FindBin qw($RealBin);
-use lib "$RealBin/plugins/webMonitor";
+use lib $Plugins::current_plugin_folder;
 use webMonitorServer;
 use chatLogWebMonitor;
 use logConsole;
