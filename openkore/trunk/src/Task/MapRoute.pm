@@ -188,9 +188,10 @@ sub iterate {
 					sequence => $self->{mapSolution}[0]{steps});
 				$self->setSubtask($task);
 			} else {
-				error TF("Insufficient zeny to pay for service at %s (%s,%s).\n",
-					$field->baseName, $self->{mapSolution}[0]{pos}{x},
-					$self->{mapSolution}[0]{pos}{y}), "route";
+				error TF("You need %sz to pay for warp service at %s (%s,%s), you have %sz.\n",
+					$portals_lut{$from}{dest}{$to}{cost},
+					$field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y},
+					$self->{actor}{zeny}), "route";
 				$self->initMapCalculator(); # Redo MAP router
 			}
 
