@@ -9,7 +9,7 @@ sub new {
 	my ($class, $type) = @_;
 	
 	my $actorType =
-		($type >= 6001 && $type <= 6016) ? 'Homunculus' :
+		(($type >= 6001 && $type <= 6016) || ($type >= 6048 && $type <= 6052)) ? 'Homunculus' :
 		($type >= 6017 && $type <= 6046) ? 'Mercenary' :
 	'Unknown';
 	
