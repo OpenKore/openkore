@@ -22,6 +22,7 @@ package webMonitorServer;
 # Copyright (C) 2012 BonScott
 # thanks to iMikeLance
 #
+# ------------------------------
 # How use:
 # Add in your config.txt
 #
@@ -29,12 +30,14 @@ package webMonitorServer;
 # 
 # Where XXXX is a number of your choice. Ex:
 # webPort 1020
-# 
+#
+# If webPort not defined in config, the default port is 1025
+# ------------------------------
 # Set only one port for each bot. For more details, visit:
 # [OpenKoreBR]
-#
+#	http://openkore.com.br/index.php?/topic/3189-webmonitor-v2-by-bonscott/
 # [OpenKore International]
-#
+#	http://forums.openkore.com/viewtopic.php?f=34&t=18264
 #############################################
 
 use strict;
