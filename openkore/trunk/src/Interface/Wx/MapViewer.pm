@@ -40,7 +40,6 @@ our %addedHandlers;
 sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new(@_);
-	$self->{mapDir} = 'map';
 	$self->{points} = [];
 	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
 	
@@ -302,9 +301,10 @@ sub mapSize {
 	}
 }
 
+# DEPRECATED
 sub setMapDir {
 	my $self = shift;
-	$self->{mapDir} = shift;
+	$Settings::maps_folder = shift;
 }
 
 sub parsePortals {
@@ -451,37 +451,10 @@ sub _loadImage {
 	return ($bitmap && $bitmap->Ok()) ? $bitmap : undef;
 }
 
-sub _map {
-	my $self = shift;
-	return File::Spec->catfile($self->{mapDir}, @_);
-}
-
-sub _f {
-	return File::Spec->catfile(@_);
-}
-
 sub _loadMapImage {
 	my $self = shift;
 	my $field = shift;
-	my $name = $field->sourceName;
-
-	if (-f $self->_map("$name.jpg")) {
-		return _loadImage($self->_map("$name.jpg"), $self->{zoom});
-	} elsif (-f $self->_map("$name.png")) {
-		return _loadImage($self->_map("$name.png"), $self->{zoom});
-	} elsif (-f $self->_map("$name.bmp")) {
-		return _loadImage($self->_map("$name.bmp"), $self->{zoom});
-
-	} else {
-		my $file = _f(File::Spec->tmpdir(), "map.xpm");
-		return unless (open(F, ">", $file));
-		binmode F;
-		print F Utils::xpmmake($field->width, $field->height, $field->{rawMap});
-		close F;
-		my $bitmap = _loadImage($file, $self->{zoom});
-		unlink $file;
-		return $bitmap;
-	}
+	return _loadImage($field->image, $self->{zoom});
 }
 
 sub _drawArrow {
@@ -759,7 +732,7 @@ sub _onPaint {
 	}
 	
 	if (!$self->{selfDot}) {
-		my $file = $self->_map("kore.png");
+		my $file = File::Spec->catfile($Settings::maps_folder, "kore.png");
 		$self->{selfDot} = _loadImage($file) if (-f $file);
 	}
 	

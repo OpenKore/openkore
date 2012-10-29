@@ -11,7 +11,7 @@
 	<link href="css/custom.css" rel="stylesheet">
     <style type="text/css">
 		canvas { 
-		background:url(http://www.ragdata.com/images/maps/{characterLocationMap}.jpg);
+		background:url(/map/{characterLocationMap});
 		background-size: contain;
 		background-repeat: no-repeat;
 		background-position:center; 
