@@ -1,7 +1,20 @@
+29/10/2012 - BonScott
+- add a lot of skills icons
+- crieated "report" page in beta
+- reload page before "item action" in inventory
+- added "reload config" button
+- added "reload timeouts" button
+
+29/10/2012 - EternalHarvest
+- added Map image API
+
+29/10/2012 - EternalHarvest
+- Use URL which can be opened from terminal etc, instead of warnings about undefined and default options
+
 21/10/2012 - KeplerBR
-- If the WebPort has not been set, uses default port (1025)
-- Simple bugfiz menu of the inventory
-- "Config.html" sent (credits: BonScott)
+- if the WebPort has not been set, uses default port (1025)
+- simple bugfix menu of the inventory
+- "config.html" sent (credits: BonScott)
 
 19/10/2012 - BonScott
 - added icon to favorite easy
