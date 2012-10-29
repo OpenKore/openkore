@@ -21,6 +21,10 @@ EXTRA_LIBRARY_DIRECTORIES = []
 # Optimized Flags. Use only on Release.
 EXTRA_COMPILER_FLAGS = ['-Wall', '-O3', '-pipe']
 
+# Brew's readline
+DARWIN_INCLUDE_DIRECTORIES = ['/usr/local/opt/readline/include']
+DARWIN_LIBRARY_DIRECTORIES = ['/usr/local/opt/readline/lib']
+
 ####################
 
 import os
@@ -40,6 +44,10 @@ perlconfig = {}
 env = Environment()
 if win32:
 	env = Environment(tools = ['mingw', 'gcc', 'cc', 'g++', 'c++'])
+
+if darwin:
+	env['LIBPATH'] = DARWIN_LIBRARY_DIRECTORIES
+	env['CPPPATH'] = DARWIN_INCLUDE_DIRECTORIES
 
 def CheckPerl(context):
 	global cygwin
@@ -64,7 +72,7 @@ def CheckPerl(context):
 		return;
 	}
 
-	my $coredir = File::Spec->catfile($Config{installarchlib}, "CORE");
+	my $coredir = File::Spec->catfile($Config{archlibexp}, "CORE");
 
 	open(F, ">", ".perlconfig.txt");
 	print F "perl=$Config{perlpath}\\n";
@@ -210,6 +218,9 @@ if win32:
 elif not darwin:
 	libenv['CCFLAGS'] += ['-fPIC']
 	libenv['LINKFLAGS'] += ['-fPIC']
+else:
+	env['LIBPATH'] += DARWIN_LIBRARY_DIRECTORIES
+	env['CPPPATH'] += DARWIN_INCLUDE_DIRECTORIES
 libenv.Replace(CXXFLAGS = libenv['CCFLAGS'])
 
 if cygwin:
@@ -304,6 +315,8 @@ else:
 	# Add default Fink header directory to header search path.
 	# But give system's default include paths higher priority.
 	perlenv['CPPPATH'] += ['/usr/include', '/usr/local/include', '/sw/include']
+	perlenv['LIBPATH'] += DARWIN_LIBRARY_DIRECTORIES
+	perlenv['CPPPATH'] += DARWIN_INCLUDE_DIRECTORIES
 
 perlenv['CPPPATH'] += [perlconfig['coredir']]
 perlenv['CCFLAGS'] += ['-DVERSION=\\"1.0\\"', '-DXS_VERSION=\\"1.0\\"']
