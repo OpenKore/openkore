@@ -501,6 +501,11 @@ sub request {
 		$content .= '</pre>';
 		$process->shortResponse($content);
 
+	} elsif ($filename =~ m{^/map/(\w+)$}) {
+		my $image = Field->new(name => $1)->image('png, jpg');
+		$process->header('Content-Type' => contentType($image));
+		sendFile($process, $image);
+
 	} else {
 		# Figure out the content-type of the file and send a header to the
 		# client containing that information. Well-behaved clients should
@@ -516,13 +521,8 @@ sub request {
 
 		# See if the file being requested exists in the file system. This is
 		# useful for static stuff like style sheets and graphics.
-		} elsif (open (FILE, "<" . "plugins/webMonitor/WWW/" . $filename)) {
-			binmode FILE;
-			while (read FILE, my $buffer, 1024) {
-				$process->print($buffer);
-			}
-			close FILE;
-			
+		} elsif (sendFile($process, 'plugins/webMonitor/WWW/' . $filename)) {
+
 		} else {
 			# our custom 404 message
 			$process->header("Content-Type", 'text/html');
@@ -530,6 +530,19 @@ sub request {
 			$content .= "<h1>File " . $filename . " not found.</h1>";
 			$process->shortResponse($content);
 		}
+	}
+}
+
+sub sendFile {
+	my ($process, $filename) = @_;
+
+	if (open my $f, '<', $filename) {
+		binmode $f;
+		while (read $f, my $buffer, 1024) {
+			$process->print($buffer);
+		}
+		close $f;
+		return 1;
 	}
 }
 

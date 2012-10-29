@@ -96,6 +96,7 @@ our %options;
 
 our $fields_folder;
 our $logs_folder;
+our $maps_folder;
 
 our $config_file;
 our $mon_control_file;
@@ -145,6 +146,7 @@ sub parseArguments {
 
 	undef $fields_folder;
 	undef $logs_folder;
+	undef $maps_folder;
 	undef $config_file;
 	undef $mon_control_file;
 	undef $items_control_file;
@@ -164,6 +166,7 @@ sub parseArguments {
 		'plugins=s',          \$options{plugins},
 		'fields=s',           \$fields_folder,
 		'logs=s',             \$logs_folder,
+		'maps=s',             \$maps_folder,
 
 		'config=s',           \$config_file,
 		'mon_control=s',      \$mon_control_file,
@@ -198,6 +201,7 @@ sub parseArguments {
 
 	$fields_folder = "fields" if (!defined $fields_folder);
 	$logs_folder = "logs" if (!defined $logs_folder);
+	$maps_folder = "map" unless defined $maps_folder;
 	$chat_log_file = File::Spec->catfile($logs_folder, "chat.txt");
 	$storage_log_file = File::Spec->catfile($logs_folder, "storage.txt");
 	$shop_log_file = File::Spec->catfile($logs_folder, "shop_log.txt");
