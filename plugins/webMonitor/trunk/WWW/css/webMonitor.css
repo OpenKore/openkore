@@ -19,19 +19,22 @@
 .darkcyan {color: #008080;}
 .brown {color: #808000;}
 
- .console {
+.console {
 	border: 1px;
 	border-style: solid;
 	border-color: #eeeeee;
 	-webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
 	height: 250px;
 }
 canvas{
 	height: 250px;
 	width: 250px;
 
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center; 
 }
 .sidebar-nav { 
 padding: 9px 0; 

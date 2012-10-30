@@ -1,49 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>{characterName} - {characterLevel}/{characterJobLevel} - OpenKore</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" type="image/png" href="img/favicon.png" />
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<script type='application/javascript' src='js/jquery.min.js'></script>
-	<script type="application/javascript" src="js/bootstrap-2.0.2.js"></script>
-	<link href="css/custom.css" rel="stylesheet">
-    <style type="text/css">
-		canvas { 
-		background:url(/map/{characterLocationMap});
-		background-size: contain;
-		background-repeat: no-repeat;
-		background-position:center; 
-		}
-    </style>
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-	<script type='application/javascript'>
-		<!-- tooltip para icones -->
-		!function( $ ){
-		$(function () {	
-		$('[rel=tooltip]').tooltip();
-		});
-		}( window.jQuery )
-	</script>
-</head>
-<body>
-
-<div class="navbar">
-  <div class="navbar-inner">
-    <a class="brand">OpenKore</a>
-    <ul class="nav">
-      <li class="active"><a>{characterName}</a></li>
-      <li><a>Base Level: {characterLevel}</a></li>
-      <li><a>Job Level: {characterJobLevel}</a></li>
-	  <li><a>userAccount: {userAccount}</a></li>
-	  <li><a>Hora: {time}</a></li>
-    </ul>
-	<a href="/handler?command=quit" class="btn btn-danger btn-mini pull-right"><i class="icon-off icon-white"></i> OFF</a>
-  </div>
-</div>
+{{_header.html}}
 
     <div class="container-fluid">
       <div class="row-fluid">
@@ -132,7 +87,7 @@
 			
             <div class="span3">
               <br/><h5 class="center"><i class="icon-map-marker"></i> {characterLocationMap}</h5>
-				<div class="center"><canvas id="mapa"></canvas><br/></div>
+				<div class="center"><canvas id="mapa" style="background-image: url('/map/{characterLocationMap}')"></canvas><br/></div>
 				<script>
 				var c=document.getElementById("mapa");
 				var ctx=c.getContext("2d");
