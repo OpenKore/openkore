@@ -66,16 +66,24 @@ my $hook = Plugins::addHooks(
 	['start3', \&post_loading],
 );
 
+sub Unload {
+	Plugins::delHooks($hook);
+}
+
 ##### Seting webServer after of plugins loads
 sub post_loading {
 	$port = $config{webPort} || 1025;
 	
 	$bind = "localhost";
-	$webserver = new webMonitorServer($port, $bind);
+	eval {
+		$webserver = new webMonitorServer($port, $bind);
+	};
+	unless ($webserver) {
+		error "webMonitor failed to start\n";
+		Unload;
+	}
 }
-sub Unload {
-	Plugins::delHooks($hook);
-}
+
 sub mainLoop {
 	return if !$webserver;
 	$webserver->iterate;
