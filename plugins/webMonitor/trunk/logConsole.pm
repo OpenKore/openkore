@@ -61,7 +61,7 @@ sub on_Log {
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="refresh" content="1">
 <link href="css/custom.css" rel="stylesheet">
-<script type='text/javascript' src='js/custom.js'></script>
+<script type='application/javascript' src='js/custom.js'></script>
 </head><body class="bodyConsole">
  );
 		}

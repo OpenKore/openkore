@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/png" href="img/favicon.png" />
 	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<script type='text/javascript' src='js/jquery.min.js'></script>
-	<script type="text/javascript" src="js/bootstrap-2.0.2.js"></script>
+	<script type='application/javascript' src='js/jquery.min.js'></script>
+	<script type="application/javascript" src="js/bootstrap-2.0.2.js"></script>
 	<link href="css/custom.css" rel="stylesheet">
     <style type="text/css">
 		canvas { 
@@ -20,7 +20,7 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-	<script type='text/javascript'>
+	<script type='application/javascript'>
 		<!-- tooltip para icones -->
 		!function( $ ){
 		$(function () {	
