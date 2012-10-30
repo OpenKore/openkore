@@ -56,6 +56,9 @@ use Network;
 use Network::Send ();
 use POSIX qw/strftime/;
 
+# TODO use real templating system?
+my %templates;
+
 #[PT-BR]
 # Keywords são campos específicos no modelo que irá, eventualmente,
 # ser substituído por conteúdo dinâmico
@@ -467,6 +470,10 @@ sub request {
 		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
 	);
 	
+	# FIXME
+	%templates = map { $_ => template->new($webMonitorPlugin::path . '/WWW/' . $_ . '.template')->{template} } qw(
+	);
+	
 	if ($filename eq '/handler') {
 		handle(\%resources, $process);
 		return;
@@ -518,6 +525,8 @@ sub request {
 
 		# The file requested has an associated template. Do a replacement.
 		if ($file->{template}) {
+			# FIXME
+			$file->{template} = $file->replace(\%templates, qw({{ }}));
 			$content = $file->replace(\%keywords, '{', '}');
 			$process->print($content);
 
