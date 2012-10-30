@@ -467,6 +467,7 @@ sub request {
 		'lastConsoleMessage2' => $messages[-2],
 		'lastConsoleMessage3' => $messages[-3],
 		'skin' => 'default', # TODO: replace with config.txt entry for the skin
+		'brand' => $Settings::NAME,
 		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
 	);
 	
