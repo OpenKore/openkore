@@ -49,7 +49,7 @@ sub unload {
 #------------------
 # [PT-BR] Iniciando
 #------------------
-my $caminho = 'plugins/webMonitor/WWW/chatlog.html.template';
+my $caminho = $webMonitorPlugin::path . '/WWW/chatlog.html.template';
 
 
 # [PT-BR] Caso o arquivo já exista, será deletado

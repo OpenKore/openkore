@@ -514,7 +514,7 @@ sub request {
 		# respect this header.
 		$process->header("Content-Type", contentType($filename));
 
-		my $file = new template("plugins/webMonitor/WWW/" . $filename . '.template');
+		my $file = new template($webMonitorPlugin::path . '/WWW/' . $filename . '.template');
 
 		# The file requested has an associated template. Do a replacement.
 		if ($file->{template}) {
@@ -523,7 +523,7 @@ sub request {
 
 		# See if the file being requested exists in the file system. This is
 		# useful for static stuff like style sheets and graphics.
-		} elsif (sendFile($process, 'plugins/webMonitor/WWW/' . $filename)) {
+		} elsif (sendFile($process, $webMonitorPlugin::path . '/WWW/' . $filename)) {
 
 		} else {
 			# our custom 404 message
