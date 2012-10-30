@@ -3,7 +3,7 @@
 <script type="application/javascript" defer="defer">
 			function send_command() {
 				var lockMap = document.getElementById("lockMap");
-				window.location.href = '../handler?command='conf + lockMap + lockMap.value + '&page=config.html';
+				window.location.href = '../handler?command=conf lockMap ' + lockMap.value + '&page=config.html';
 			}	
 			function submitenter(e) {
 				var keycode;
