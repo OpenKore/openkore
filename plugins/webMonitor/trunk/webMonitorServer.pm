@@ -472,6 +472,7 @@ sub request {
 	
 	# FIXME
 	%templates = map { $_ => template->new($webMonitorPlugin::path . '/WWW/' . $_ . '.template')->{template} } qw(
+		_header.html
 	);
 	
 	if ($filename eq '/handler') {
