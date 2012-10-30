@@ -191,7 +191,17 @@ sub _processRequest {
 
 	my $process = new Base::WebServer::Process($client->getSocket(),
 						   $file, \%headers);
-	$self->request($process);
+
+	undef $@;
+	eval {
+		$self->request($process);
+	};
+	if ($@) {
+		Log::warning("$@\n");
+		$process->header('Content-Type' => 'text/html');
+		$process->status(500 => 'Internal Server Error');
+		$process->shortResponse("<h1>Internal Server Error</h1>\n<p>$@</p>");
+	}
 }
 
 # Reject a client by sending it a HTTP error message, then closing the connection.
