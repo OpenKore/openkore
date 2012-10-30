@@ -40,7 +40,7 @@
 					<li class="active"><a href="#exp" data-toggle="tab" rel="tooltip" title="Geral Overview">Experience</a></li>
 					<li><a href="#" data-toggle="tab" rel="tooltip" title="Monster Killed Until Now">Monsters</a></li>
 					<li><a href="#" data-toggle="tab" rel="tooltip" title="Items Dropped Until Now">Itens</a></li>
-					<li class="pull-right"><a href="#" rel="tooltip" title="Reset statistics of openKore!"><i class="icon-repeat"></i><i> Reset</a></i></li>
+					<li class="pull-right"><a href="#" rel="tooltip" title="Reset statistics!"><i class="icon-repeat"></i><i> Reset</a></i></li>
 				</ul>
 				
 				<div class="tab-content">

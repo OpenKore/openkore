@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>{characterName} - {characterLevel}/{characterJobLevel} - OpenKore</title>
+	<title>{characterName} - {characterLevel}/{characterJobLevel} - {brand}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="icon" type="image/png" href="img/favicon.png" />
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
@@ -21,7 +21,7 @@
 
 <div class="navbar">
 	<div class="navbar-inner">
-		<a class="brand">OpenKore</a>
+		<a class="brand">{brand}</a>
 
 		<ul class="nav">
 			<li class="active"><a>{characterName}</a></li>
