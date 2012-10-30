@@ -128,7 +128,7 @@ body {
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  </head>
  
-<script type="text/javascript">
+<script type="application/javascript">
 	function descer() {
 		window.scrollTo(0,99999);
 	}

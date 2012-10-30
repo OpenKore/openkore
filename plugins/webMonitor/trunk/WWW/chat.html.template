@@ -9,7 +9,7 @@
 	 Os logs do chat gerados são chamados de "chatlog.html" e feitos por "webMonitor\chatLogWebMonitor.pm"
 	[EN] -->
 
-		<script type="text/javascript" defer="defer">
+		<script type="application/javascript" defer="defer">
 		<!-- [PT-BR] Esta function tem com função enviar o comando ao OpenKore
 		<!--  A leitura é feito no arquivo "webMonitorServer.pm", na sub "handle"
 		<!-- [EN] This function has function with send the command to the OpenKore
