@@ -445,13 +445,17 @@ sub sourceName {
 sub image {
 	my ($self, $format) = @_;
 	my $name = $self->sourceName;
-	$format ||= 'jpg, png, bmp, xpm';
-
-	for (map { File::Spec->catfile($Settings::maps_folder, "$name.$_") } split /\s*,\s*/, $format) {
-		return $_ if -f;
+	my $search = $format;
+	if ($search) {
+		($format) = split /\s*,\s*/, $search;
+	} else {
+		$search = 'jpg, png, bmp, xpm';
+		$format = 'xpm';
 	}
 
-	($format) = split /\s*,\s*/, $format;
+	for (map { File::Spec->catfile($Settings::maps_folder, "$name.$_") } split /\s*,\s*/, $search) {
+		return $_ if -f;
+	}
 
 	if (!-d $Settings::maps_folder) {
 		if (!File::Path::make_path($Settings::maps_folder)) {
@@ -467,8 +471,10 @@ sub image {
 
 	return $xpmFile if $format eq 'xpm';
 
-	require Wx;
-	Wx->import(':everything');
+	undef $@;
+	eval q(use Wx ':everything');
+	return if $@;
+
 	my %wxImageType = (
 		jpg => eval 'wxBITMAP_TYPE_JPEG()',
 		png => eval 'wxBITMAP_TYPE_PNG()',
