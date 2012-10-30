@@ -43,8 +43,11 @@ package webMonitorPlugin;
 use strict;
 use Plugins;
 use Settings;
-use FindBin qw($RealBin);
-use lib $Plugins::current_plugin_folder;
+our $path;
+BEGIN {
+	$path = $Plugins::current_plugin_folder;
+}
+use lib $path;
 use webMonitorServer;
 use chatLogWebMonitor;
 use logConsole;

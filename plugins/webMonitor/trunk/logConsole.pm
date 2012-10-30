@@ -21,7 +21,7 @@ Plugins::register(PLUGINNAME, "webMonitor logConsole", \&unload);
 
 # Log hook
 my $logHook = Log::addHook(\&on_Log, PLUGINNAME);
-my $caminho = 'plugins/webMonitor/WWW/logConsole.html';
+my $caminho = $webMonitorPlugin::path . '/WWW/logConsole.html';
 if (-e $caminho){
 unlink($caminho);
 }
