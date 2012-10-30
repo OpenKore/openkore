@@ -197,10 +197,10 @@ sub _processRequest {
 		$self->request($process);
 	};
 	if ($@) {
-		Log::warning("$@\n");
+		print "$@\n";
 		$process->header('Content-Type' => 'text/html');
 		$process->status(500 => 'Internal Server Error');
-		$process->shortResponse("<h1>Internal Server Error</h1>\n<p>$@</p>");
+		$process->shortResponse('<h1>Internal Server Error</h1>');
 	}
 }
 
