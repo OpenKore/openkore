@@ -504,8 +504,7 @@ sub request {
 		$content .= '</pre>';
 		$process->shortResponse($content);
 
-	} elsif ($filename =~ m{^/map/(\w+)$}) {
-		my $image = Field->new(name => $1)->image('png, jpg');
+	} elsif ($filename =~ m{^/map/(\w+)$} and my $image = Field->new(name => $1)->image('png, jpg')) {
 		$process->header('Content-Type' => contentType($image));
 		sendFile($process, $image);
 
@@ -528,9 +527,9 @@ sub request {
 
 		} else {
 			# our custom 404 message
-			$process->header("Content-Type", 'text/html');
-			$process->status(404, "File Not Found");
-			$content .= "<h1>File " . $filename . " not found.</h1>";
+			$process->header('Content-Type' => 'text/html');
+			$process->status(404 => 'Not Found');
+			$content .= "<h1>Not Found</h1>";
 			$process->shortResponse($content);
 		}
 	}
