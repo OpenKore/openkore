@@ -550,27 +550,9 @@ sub request {
 		handle(\%resources, $process);
 		return;
 	}
-	# TODO: will be removed later
-	if ($filename eq '/variables') {
-		# [PT-BR] Recarregar a página a cada 5 segundos | [EN] Reload the page every 5 seconds
-		$content .= '<head><meta http-equiv="refresh" content="5"></head>';
-		
-		# Display internal variables in alphabetical order (useful for debugging)
-		$content .= '<hr><h1>%keywords</h1><hr>';
-		foreach my $key (sort keys %keywords) {
-			$content .= "$key => " . $keywords{$key} . '<br>';
-		}
-		$content .= '<hr>';
-
-		$content .= '<hr><h1>$char</h1><hr>';
-		foreach my $key (sort keys %{$char}) {
-			$content .= "$key => " . $char->{$key} . '<br>';
-		}
-		$content .= '<hr>';
-		$process->shortResponse($content);
 
 	# TODO: will be removed later
-	} elsif ($filename eq '/console') {
+	if ($filename eq '/console') {
 		# [PT-BR] Recarregar a página a cada 5 segundos | [EN] Reload the page every 5 seconds
 		$content .= '<head><meta http-equiv="refresh" content="1"></head>' . "\n";
 		$content .= '<pre>' . "\n";
