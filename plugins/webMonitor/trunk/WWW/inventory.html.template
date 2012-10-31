@@ -1,32 +1,5 @@
 {{_header.html}}
 
-<script type="application/javascript" defer="defer">
-			function exibir(escolha) {
-				var escolhido = escolha.options[escolha.selectedIndex].value;
-				var tabela_lista = document.getElementById("listarItens");	
-				
-				if (escolhido == 'none'){
-				tabela_lista.innerHTML = '';
-				}
-				
-				if (escolhido == 'usable'){
-				tabela_lista.innerHTML = '{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{usableID}.gif"/></td><td>{inventoryUsableAmount}</td><td class="left">{inventoryUsable}</td>{inventoryUsableJS}</tr>{endLoop}';
-				}
-				
-				if (escolhido == 'equipped'){
-				tabela_lista.innerHTML = '{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{equipmentID}.gif"/></td><td>1</td><td class="left">{inventoryEquipped}</td><td></td>{inventoryEquippedJS}</tr>{endLoop}';
-				}
-				
-				if (escolhido == 'unequipped'){
-				tabela_lista.innerHTML = '{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{uequipmentID}.gif"/></td><td>1</td><td class="left">{inventoryUnequipped}</td>{inventoryUnequippedJS}</tr>{endLoop}';
-				}
-				
-				if (escolhido == 'unusable'){
-				tabela_lista.innerHTML = '{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{unusableID}.gif"/></td><td>{inventoryUnusableAmount}</td><td class="left">{inventoryUnusable}</td><td></td>{inventoryUnusableJS}</tr>{endLoop}';
-				}
-			}
-</script>
-
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span2">
@@ -34,10 +7,9 @@
             <ul class="nav nav-list">
               <li class="nav-header">Menu</li>
               <li><a href="index.html"><i class="icon-user"></i> Status</a></li>
-              <li class="active"><a href="inventory.html"><i class="icon-chevron-right"></i> Invent&aacute;rio</a></li>
+              <li class="active"><a href="inventory.html"><i class="icon-chevron-right"></i> Inventory</a></li>
 			  <li><a href="report.html"><i class="icon-tasks"></i> Report</a></li>
-			  <li><a href="config.html"><i class="icon-cog"></i> Config</a></li>
-              <li><a href="console.html"><i class="icon-map-marker"></i> Console</a></li>
+              <li><a href="console.html"><i class="icon-chevron-right"></i> Console</a></li>
               <li><a href="chatlog.html"><i class="icon-comment"></i> ChatLog</a></li>
               <li><a href="guild.html"><i class="icon-chevron-right"></i> Guild</a></li>
               <li><a href="shop.html"><i class="icon-shopping-cart"></i> Shop</a></li>
@@ -49,31 +21,81 @@
         <div class="span9">
           <div class="row-fluid">
             <div class="span9">
-			
-			<select class="span9" id="tipo" onChange="exibir(this)">
-				<option selected value="none">Choose Option</option>
-				<option value="usable">Usable</option>
-				<option value="equipped">Equipped</option>
-				<option value="unequipped">Unequipped</option>
-				<option value="unusable">Unusable</option>
-			</select>			
-			
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th></th>
-						<th>Qnt.</th>
-						<th>Item</th>
-						<th>A&ccedil;&atilde;o</th>
-						<th>Dropar</th>
-					</tr>
-				</thead>
-				<tbody id="listarItens">
-				</tbody>
-			</table>
-
+			<div class="tabbable">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#usable" data-toggle="tab">Usable</a></li>
+					<li><a href="#unusable" data-toggle="tab">Unusable</a></li>
+					<li><a href="#equipped" data-toggle="tab">Equipped</a></li>
+					<li><a href="#unequipped" data-toggle="tab">Unequipped</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="usable">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Qnt.</th>
+								<th>Item</th>
+								<th>A&ccedil;&atilde;o</th>
+								<th>Dropar</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://db.irowiki.org/image/item/{usableID}.png"/></td><td>{inventoryUsableAmount}</td><td class="left">{inventoryUsable}</td>{inventoryUsableJS}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>
+					<div class="tab-pane" id="unusable">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Qnt.</th>
+								<th>Item</th>
+								<th>A&ccedil;&atilde;o</th>
+								<th>Dropar</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{unusableID}.gif"/></td><td>{inventoryUnusableAmount}</td><td class="left">{inventoryUnusable}</td><td></td>{inventoryUnusableJS}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>
+					<div class="tab-pane" id="equipped">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Qnt.</th>
+								<th>Item</th>
+								<th>A&ccedil;&atilde;o</th>
+								<th>Dropar</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{equipmentID}.gif"/></td><td>1</td><td class="left">{inventoryEquipped}</td><td></td>{inventoryEquippedJS}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>
+					<div class="tab-pane" id="unequipped">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Qnt.</th>
+								<th>Item</th>
+								<th>A&ccedil;&atilde;o</th>
+								<th>Dropar</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{uequipmentID}.gif"/></td><td>1</td><td class="left">{inventoryUnequipped}</td>{inventoryUnequippedJS}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>		
+				</div>
+			</div>			
             </div>
-
           </div>
 		  
         </div>
