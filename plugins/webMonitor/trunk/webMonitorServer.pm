@@ -192,6 +192,8 @@ sub request {
 # [PT-BR] Recolher os dados para a aba Report
 	# Experience
 	my ($endTime_EXP, $w_sec, $bExpPerHour, $jExpPerHour, $EstB_sec, $zenyMade, $zenyPerHour, $EstJ_sec);
+	my (@reportMonsterID, @reportMonsterName, @reportMonsterCount);
+	my (@reportItemID, @reportItemName, @reportItemCount);
 	$endTime_EXP = time;
 	$w_sec = int($endTime_EXP - $startTime_EXP);
 	
@@ -212,20 +214,16 @@ sub request {
 	# Monster
 	for (my $i = 0; $i < @monsters_Killed; $i++) {
 		next if ($monsters_Killed[$i] eq "");
-
-		# VARIÁVEIS QUE VOCÊ PODE USAR:
-		#	$monsters_Killed[$i]{nameID}	#ID
-		#	$monsters_Killed[$i]{name}		#Nome
-		#	$monsters_Killed[$i]{count}		#Contagem
-
+		push (@reportMonsterID, $monsters_Killed[$i]{nameID});
+		push (@reportMonsterName, $monsters_Killed[$i]{name});
+		push (@reportMonsterCount, $monsters_Killed[$i]{count});
 	}
 	# Itens
 	for my $item (sort keys %itemChange) {
 		next unless $itemChange{$item};
-		
-		# VARIÁVEIS QUE VOCÊ PODE USAR:
-		#	$item # Acredito que seja o nome do item
-		#	$itemChange{$item}	# Acredito que seja o delta do item (variação, quantos sairam e quantos chegaram)
+		push (@reportItemID, $item); #Bug fix: Is there something equivalent to a items_rlut?
+		push (@reportItemName, $item);
+		push (@reportItemCount, $itemChange{$item});
 	}
 
 # [PT-BR] Listar o inventário
@@ -444,18 +442,23 @@ sub request {
 		'skillsJS' => \@skillsJS,
 	# Report
 		'time' => $time,
-		'deathCount' => (exists $char->{deathCount} ? $char->{deathCount} : 0), #died times
-		'totalElasped' => timeConvert($totalelasped), #tempo de bot
-		'startTimeEXP' => timeConvert($w_sec),
-		'totalBaseExp' => $totalBaseExp, #exp base ganha
-		'perHourBaseExp' => $bExpPerHour, #exp base ganha por hora
-		'levelupBaseEstimation' => timeConvert($EstB_sec), #estimativa para upar base
-		'totalJobExp' => $totalJobExp, #exp job ganha
-		'perHourJobExp' => $jExpPerHour, #exp job base ganha por hora
-		'levelupJobEstimation' => timeConvert($EstJ_sec), #estimativa para upar base
-		'zenyMade' => formatNumber($zenyMade), #quantidade de zeny ganho
-		'perHourZeny' => $zenyPerHour, #nezy ganho por hora
-		'deltaHp' => $char->{deltaHp}, #variação do HP
+		'deathCount' => (exists $char->{deathCount} ? $char->{deathCount} : 0),
+		'bottingTime' => timeConvert($w_sec),
+		'totalBaseExp' => $totalBaseExp,
+		'perHourBaseExp' => $bExpPerHour,
+		'levelupBaseEstimation' => timeConvert($EstB_sec),
+		'totalJobExp' => $totalJobExp,
+		'perHourJobExp' => $jExpPerHour,
+		'levelupJobEstimation' => timeConvert($EstJ_sec),
+		'zenyMade' => formatNumber($zenyMade),
+		'perHourZeny' => $zenyPerHour,
+		'deltaHp' => $char->{deltaHp},
+		'reportMonsterID' => \@reportMonsterID,
+		'reportMonsterName' => \@reportMonsterName,
+		'reportMonsterCount' => \@reportMonsterCount,
+		'reportItemID' => \@reportItemID,
+		'reportItemName' => \@reportItemName,
+		'reportItemCount' => \@reportItemCount,
 	# Other's
 		'userAccount' => $config{username},
 		'userChar' => $config{char},

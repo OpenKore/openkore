@@ -1,5 +1,11 @@
 {{_header.html}}
 
+<script type="application/javascript" defer="defer">
+			function send_command_reset() {
+				window.location.href = '../handler?csrf={csrf}&command=exp reset&page=report.html';
+			}
+</script>
+
         <div class="span10">
           <div class="row-fluid">
             <div class="span10">
@@ -19,18 +25,18 @@
 				
 				<ul class="nav nav-tabs">
 					<li class="active"><a href="#exp" data-toggle="tab" rel="tooltip" title="Geral Overview">Experience</a></li>
-					<li><a href="#" data-toggle="tab" rel="tooltip" title="Monster Killed Until Now">Monsters</a></li>
-					<li><a href="#" data-toggle="tab" rel="tooltip" title="Items Dropped Until Now">Itens</a></li>
-					<li class="pull-right"><a href="#" rel="tooltip" title="Reset statistics!"><i class="icon-repeat"></i><i> Reset</a></i></li>
+					<li><a href="#monsters" data-toggle="tab" rel="tooltip" title="Monster Killed Until Now">Monsters</a></li>
+					<li><a href="#itens" data-toggle="tab" rel="tooltip" title="Report items of earned and spent">Itens</a></li>
+					<li class="pull-right"><a onClick="send_command_reset()" rel="tooltip" title="Reset statistics!"><i class="icon-repeat"></i><i> Reset</a></i></li>
 				</ul>
 				
 				<div class="tab-content">
 					<div class="tab-pane active" id="exp">
-					<i class="icon-time"></i>  Bot Time: {totalElasped}<br/> <!-- startTimeEXP: -->
+					<i class="icon-time"></i>  Bot Time: {bottingTime}<br/>
 					<i class="icon-exclamation-sign"></i>  Died: {deathCount}<br/>
 					<br/>
-					<i class="icon-ok-circle"></i>  Base Exp Gained: {totalBaseExp}<br/>
-					<i class="icon-ok-circle"></i>  Job Exp Gained: {totalJobExp}<br/>
+					<i class="icon-ok-circle"></i>  Base Exp Gained: {totalBaseExp} ({perHourBaseExp} per hour)<br/>
+					<i class="icon-ok-circle"></i>  Job Exp Gained: {totalJobExp} ({perHourJobExp} per hour)<br/>
 					<br/>
 					<i class="icon-circle-arrow-up"></i>  Time for Base UP: {levelupBaseEstimation}<br/>
 					<i class="icon-circle-arrow-up"></i>  Time for Job UP: {levelupJobEstimation}<br/>
@@ -40,50 +46,28 @@
 					<div class="tab-pane" id="monsters">
 					<table class="table table-hover">
 						<tbody>
-						<tr>
-						  <td><img src="http://db.irowiki.org/image/monster/1033.png"></td>
-						  <td>999</td>
-						  <td>Elder Willow</td>
-						</tr>
-						<tr>
-						  <td><img src="http://db.irowiki.org/image/monster/1317.png"></td>
-						  <td>111</td>
-						  <td>Seal</td>
-						</tr>
-						<tr>
-						  <td><img src="http://db.irowiki.org/image/monster/1169.png"></td>
-						  <td>777</td>
-						  <td>Skel Worker</td>
-						</tr>
+						<tr><!-- {startLoop} -->
+						  <td><img src="http://db.irowiki.org/image/monster/{reportMonsterID}.png"></td>
+						  <td>{reportMonsterCount}</td>
+						  <td>{reportMonsterName}</td>
+						</tr><!-- {endLoop} -->
 						</tbody>
 					</table>
 					</div>
 					<div class="tab-pane" id="itens">
 						<table class="table table-hover">
 						<tbody>
-						<tr>
-						  <td><img src="http://db.irowiki.org/image/item/604.png"></td>
-						  <td>999</td>
-						  <td>Dead Branch</td>
-						</tr>
-						<tr>
-						  <td><img src="http://db.irowiki.org/image/item/746.png"></td>
-						  <td>2151</td>
-						  <td>Glass Bead</td>
-						</tr>
-						<tr>
-						  <td><img src="http://db.irowiki.org/image/item/4312.png"></td>
-						  <td>1</td>
-						  <td>Skel Worker Card</td>
-						</tr>
+						<tr><!-- {startLoop} -->
+						  <td><img src="http://db.irowiki.org/image/item/{reportItemID}.png"></td>
+						  <td>{reportItemCount}</td>
+						  <td>{reportItemName}</td>
+						</tr><!-- {endLoop} -->
 						</tbody>
 					</table>
 					</div>
 				</div>
 				</div>
-				
 
-				
 				</div>
             </div><!--/span-->
 			
