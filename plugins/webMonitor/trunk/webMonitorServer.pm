@@ -323,37 +323,47 @@ sub request {
 	my (@skillsIDN, @skillsName, @skillsLevel, @skillsJS, @skillsIcoUp);	
 	for my $handle (@skillsID) {
 		my $skill = new Skill(handle => $handle);
-		my $sp = $char->{skills}{$handle}{sp} || 'Skill Pasive';
+		my $sp = $char->{skills}{$handle}{sp};
 		my $IDN = $skill->getIDN();
 		my $act = '';
 
 		my $type = $skill->getTargetType();
 		if ($char->getSkillLevel($skill) > 0){
+			$act = '<td>' . $sp . '</td><td><div align="center">';
 			if ($type == Skill::TARGET_PASSIVE){
-				$act = '<td></td><td><div align="center"><a class="btn btn-mini disabled">Passive</a></div></td>'; #Skill passive
-			} elsif ($type == Skill::TARGET_ENEMY){
-				$act = '<td>' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sm+' . $IDN . '+0">Attack</a></div>';
-			} elsif ($type == Skill::TARGET_LOCATION){
-				$act = '<td>' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sl+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
-			} elsif ($type == Skill::TARGET_SELF){
-				$act = '<td>' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=ss+' . $IDN . '">Use</a></div>';
-			} elsif ($type == Skill::TARGET_ACTORS){
-				$act = '<td>' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sp+' . $IDN . '+0">Choose actor</a></div>';
+				$act .= '<a class="btn btn-mini disabled">Passive</a></div></td>'; #Skill passive
+			}
+			if ($type == Skill::TARGET_SELF || $type == Skill::TARGET_ACTORS || $type == Skill::TARGET_LOCATION){
+				$act .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=ss+' . $IDN . '">' . T('Use on self') . '</a> ';
+			}
+			if ($type == Skill::TARGET_ENEMY){
+				$act .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sm+' . $IDN . '+0">' . T('Use on enemy') . '</a> ';
+			}
+			if ($type == Skill::TARGET_ACTORS){
+				$act .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sp+' . $IDN . '+0">' . T('Use on actor') . '</a> ';
 			} 
+			if ($type == Skill::TARGET_LOCATION){
+				$act .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sl+' . $IDN . '+{characterLocationX}+{characterLocationY}">' . T('Use on location') . '</a> ';
+			}
+			$act .= '</div></td>';
+		} else {
+			$act = '<td></td><td></td>';
 		}
 		
 		# [PT-BR] Saber se o personagem tem ou não pontos de habilidades disponíveis e se a habilidade é melhorável
 		#  (ainda não chegou ao nível máximo e atingiu seus pré-requisitos), para saber se deve mostrar a imagem de aumentar nível e sua função.
 		my $ico_up;
 		if ($char->{points_skill} > 0 && $char->{skills}{$handle}{up} == 1){
-			$ico_up = '<a href="/handler?csrf=' . $csrf . '&command=skills+add+' . $IDN .'"><i class="icon-plus-sign"></i></a> ';
+			$ico_up = '<a href="/handler?csrf=' . $csrf . '&command=skills+add+' . $IDN .'" title="' . T('Level up') . '" rel="tooltip"><i class="icon-plus-sign"></i></a> ';
 		}
 		
+		my $title = $skill->getHandle;
+
 		# [PT-BR] Para finalizar, adicionar dados para as array's
 		# [EN] To finalize, add the elements into the array's
 		push @skillsIDN, $IDN;
 		push @skillsIcoUp, $ico_up;
-		push @skillsName, $skill->getName();
+		push @skillsName, '<abbr title="' . $title . '">' . $skill->getName() . '</abbr>';
 		push @skillsLevel, $char->getSkillLevel($skill);
 		push @skillsJS, $act;
 	}
