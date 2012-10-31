@@ -1675,13 +1675,12 @@
 7172#Garras_de_Leopardo#
 
 // Wedding
-
 7170#Smoking#
 2634#Anel_do_Noivo#
 2635#Anel_da_Noiva#
 
 // Halloween
-
+6658#Moeda do Dia das Bruxas
 5134#Cabeça de Abóbora#
 7460#Ticket para Nifelheim#
 7461#Carta com a letra A#
@@ -1695,10 +1694,13 @@
 7469#Carta com a letra U#
 7470#Carta com a letra W#
 7471#Carta com a letra Y#
+
 //-----Miliandro EVENT------------
 7483#Chave do Lacre#
+
 //----2005 New Year-----
 12018#Fogo_de_Artifício#
+
 //----2005 XMAS ------
 //5136#Gorro_Mágico_de_Papai_Noel#
 12132#Bolsa do Papai Noel#
@@ -1716,11 +1718,9 @@
 12124#Bolo Arco-Íris#
 
 // ---- ????? ?? ??? ?? Christmas -----------
-
 7176#Certificado_Real#
 
 // ----- ????? kRO-----
-
 554#Mochi#
 
 
@@ -1737,11 +1737,9 @@
 
 //7180#Carta_de_Recomendação_de_Hahn#
 7180#Ticket_de_Evento#
-
 556#Bolinho_de_Arroz_no_Palito#
 557#Fatia_de_Bolo_de_Arroz#
 669#Sopa_de_Arroz#
-
 7181#Nota_Fiscal#
 
 // ----- ???? ??? Valentine's Day -----
@@ -2597,7 +2595,7 @@
 7457#Óleo de Cozinha#
 577#Sacola de Grãos#
 578#Morango#
-579#Peixe Fresco#
+579#Peixe Fresco Comestível#
 580#Pão#
 581#Cogumelo Comestível#
 582#Laranja#
