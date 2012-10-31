@@ -1,24 +1,5 @@
 {{_header.html}}
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span2">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Menu</li>
-              <li class="active"><a href="index.html"><i class="icon-user"></i> Status</a></li>
-              <li><a href="inventory.html"><i class="icon-chevron-right"></i> Invent&aacute;rio</a></li>
-			  <li><a href="report.html"><i class="icon-tasks"></i> Report</a></li>
-			  <li><a href="config.html"><i class="icon-cog"></i> Config</a></li>
-              <li><a href="console.html"><i class="icon-chevron-right"></i> Console</a></li>
-              <li><a href="chatlog.html"><i class="icon-comment"></i> ChatLog</a></li>
-              <li><a href="guild.html"><i class="icon-chevron-right"></i> Guild</a></li>
-              <li><a href="shop.html"><i class="icon-shopping-cart"></i> Shop</a></li>
-              <li><a href="npcs.html"><i class="icon-chevron-right"></i> NPC&#39;s</a></li>
-              <li><a href="skills.html"><i class="icon-chevron-right"></i> Skills</a></li>
-            </ul>
-          </div>
-        </div>
         <div class="span9">
           <div class="row-fluid">
             <div class="span9">
@@ -100,15 +81,5 @@
           </div><!--/row-->
 		  
         </div><!--/span-->
-      </div><!--/row-->
 
-      <hr>
-
-      <footer>
-        <p align="center">BonScott &copy; webMonitor 2012</p>
-      </footer>
-
-    </div>
-
-  </body>
-</html>
+{{_footer.html}}

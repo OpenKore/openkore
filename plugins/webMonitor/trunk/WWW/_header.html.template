@@ -34,3 +34,13 @@
 		<a href="/handler?csrf={csrf}&command=quit" class="btn btn-danger btn-mini pull-right"><i class="icon-off icon-white"></i> OFF</a>
 	</div>
 </div>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span2">
+			<div class="well sidebar-nav">
+				<ul class="nav nav-list">
+					{menu}
+				</ul>
+			</div>
+		</div>
