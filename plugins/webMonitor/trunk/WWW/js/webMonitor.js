@@ -1,5 +1,5 @@
 (function($) {
 	$(function() {
-		$('[rel=tooltip]').tooltip()
+		$('abbr, [rel=tooltip]').tooltip()
 	});
 })(jQuery);
