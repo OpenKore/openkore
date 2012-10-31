@@ -368,8 +368,24 @@ sub request {
 		push @skillsJS, $act;
 	}
 	
+	my @menu = (
+		{ url => '/', title => T('Status'), image => 'icon-user' },
+		{ url => '/inventory.html', title => T('Inventory') },
+		{ url => '/report.html', title => T('Exp Report'), image => 'icon-tasks' },
+		{ url => '/config.html', title => T('Config'), image => 'icon-cog' },
+		{ url => '/console.html', title => T('Console Log') },
+		{ url => '/chatlog.html', title => T('Chat History'), image => 'icon-comment' },
+		{ url => '/guild.html', title => T('Guild') },
+		{ url => '/shop.html', title => T('Vender List'), image => 'icon-shopping-cart' },
+		{ url => '/npcs.html', title => T('NPC List') },
+		{ url => '/skills.html', title => T('Skill List') },
+	);
+
 	%keywords =	(
 		csrf => $csrf,
+		menu =>
+			'<li class="nav-header">' . T('Menu') . '</li>'
+			. (join "\n", map { '<li class="' . ($_->{url} eq $process->file && 'active') . '"><a href="' . $_->{url} . '"><i class="' . ($_->{image} || 'icon-chevron-right') . '"></i> ' . $_->{title} . '</a></li>' } @menu),
 	# NPC
 		'npcBinID' => \@npcBinID,
 		'npcName' => \@npcName,
@@ -539,6 +555,7 @@ sub request {
 	# FIXME
 	%templates = map { $_ => template->new($webMonitorPlugin::path . '/WWW/' . $_ . '.template')->{template} } qw(
 		_header.html
+		_footer.html
 	);
 	
 	if ($filename eq '/handler') {
