@@ -164,6 +164,45 @@ sub request {
 	$filename .= 'index.html' if ($filename =~ /\/$/);
 	# alias the newbie maps to new_zone01
 	$filename =~ s/new_.../new_zone01/;
+	
+# [PT-BR] Recolher os dados para a aba Report
+	# Experience
+	my ($endTime_EXP, $w_sec, $bExpPerHour, $jExpPerHour, $EstB_sec, $zenyMade, $zenyPerHour, $EstJ_sec);
+	$endTime_EXP = time;
+	$w_sec = int($endTime_EXP - $startTime_EXP);
+	
+	if ($w_sec > 0) {
+		$zenyMade = $char->{zeny} - $startingzeny;
+		$bExpPerHour = int($totalBaseExp / $w_sec * 3600);
+		$jExpPerHour = int($totalJobExp / $w_sec * 3600);
+		$zenyPerHour = int($zenyMade / $w_sec * 3600);
+		
+		if ($char->{exp_max} && $bExpPerHour) {
+		$EstB_sec = int(($char->{exp_max} - $char->{exp})/($bExpPerHour/3600));
+		}
+	
+		if ($char->{exp_job_max} && $jExpPerHour) {
+		$EstJ_sec = int(($char->{'exp_job_max'} - $char->{exp_job})/($jExpPerHour/3600));
+		}
+	}
+	# Monster
+	for (my $i = 0; $i < @monsters_Killed; $i++) {
+		next if ($monsters_Killed[$i] eq "");
+
+		# VARIÁVEIS QUE VOCÊ PODE USAR:
+		#	$monsters_Killed[$i]{nameID}	#ID
+		#	$monsters_Killed[$i]{name}		#Nome
+		#	$monsters_Killed[$i]{count}		#Contagem
+
+	}
+	# Itens
+	for my $item (sort keys %itemChange) {
+		next unless $itemChange{$item};
+		
+		# VARIÁVEIS QUE VOCÊ PODE USAR:
+		#	$item # Acredito que seja o nome do item
+		#	$itemChange{$item}	# Acredito que seja o delta do item (variação, quantos sairam e quantos chegaram)
+	}
 
 # [PT-BR] Listar o inventário
 # [EN] Show inventory
@@ -368,13 +407,18 @@ sub request {
 		'skillsJS' => \@skillsJS,
 	# Report
 		'time' => $time,
-		'reconnectCount' => $reconnectCount, #relogs
-		'deathCount' => $char->{deathCount}, #died times
+		'deathCount' => (exists $char->{deathCount} ? $char->{deathCount} : 0), #died times
 		'totalElasped' => timeConvert($totalelasped), #tempo de bot
-		'totalDamage' => $totaldmg, #dmg total feito
-		'startTimeEXP' => timeConvert($startTime_EXP),
-		'totalBaseExp' => $totalBaseExp, #exp ganha
-		'totalJobExp' => $totalJobExp, #exp ganha
+		'startTimeEXP' => timeConvert($w_sec),
+		'totalBaseExp' => $totalBaseExp, #exp base ganha
+		'perHourBaseExp' => $bExpPerHour, #exp base ganha por hora
+		'levelupBaseEstimation' => timeConvert($EstB_sec), #estimativa para upar base
+		'totalJobExp' => $totalJobExp, #exp job ganha
+		'perHourJobExp' => $jExpPerHour, #exp job base ganha por hora
+		'levelupJobEstimation' => timeConvert($EstJ_sec), #estimativa para upar base
+		'zenyMade' => formatNumber($zenyMade), #quantidade de zeny ganho
+		'perHourZeny' => $zenyPerHour, #nezy ganho por hora
+		'deltaHp' => $char->{deltaHp}, #variação do HP
 	# Other's
 		'userAccount' => $config{username},
 		'userChar' => $config{char},
