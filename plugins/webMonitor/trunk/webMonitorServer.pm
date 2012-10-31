@@ -332,13 +332,13 @@ sub request {
 			if ($type == Skill::TARGET_PASSIVE){
 				$act = '<td></td><td><div align="center"><a class="btn btn-mini disabled">Passive</a></div></td>'; #Skill passive
 			} elsif ($type == Skill::TARGET_ENEMY){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sm+' . $IDN . '+0">Attack</a></div>';
+				$act = '<td>' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sm+' . $IDN . '+0">Attack</a></div>';
 			} elsif ($type == Skill::TARGET_LOCATION){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sl+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
+				$act = '<td>' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sl+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
 			} elsif ($type == Skill::TARGET_SELF){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=ss+' . $IDN . '">Use</a></div>';
+				$act = '<td>' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=ss+' . $IDN . '">Use</a></div>';
 			} elsif ($type == Skill::TARGET_ACTORS){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sp+' . $IDN . '+0">Choose actor</a></div>';
+				$act = '<td>' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sp+' . $IDN . '+0">Choose actor</a></div>';
 			} 
 		}
 		
