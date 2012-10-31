@@ -18,7 +18,7 @@
 			function send_command() {
 				var tc = document.getElementById("text_command");
 				var combo = document.getElementById("sel");
-				window.location.href = '../handler?command=' + combo.options[combo.selectedIndex].value + tc.value + '&page={skin}/chat.html';
+				window.location.href = '../handler?csrf={csrf}&command=' + combo.options[combo.selectedIndex].value + tc.value + '&page={skin}/chat.html';
 			}
 
 		<!-- [PT-BR] Esta function serve para apenas reconhecer a tecla "enter" para enviar

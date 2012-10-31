@@ -4,7 +4,7 @@
 			function send_command() {
 				var tc = document.getElementById("text_command");
 				var combo = document.getElementById("sel");
-				window.location.href = '../handler?command=' + combo.options[combo.selectedIndex].value + tc.value + '';
+				window.location.href = '../handler?csrf={csrf}&command=' + combo.options[combo.selectedIndex].value + tc.value + '';
 			}	
 			function submitenter(e) {
 				var keycode;
@@ -17,7 +17,7 @@
 			function exibir() {
 				var escolhido = lista_loja.options[lista_loja.selectedIndex].value;			
 
-				window.location.href = '../handler?shop=' + escolhido + '';
+				window.location.href = '../handler?csrf={csrf}&shop=' + escolhido + '';
 			}		
 </script>	 
 

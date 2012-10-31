@@ -56,6 +56,13 @@ use Network;
 use Network::Send ();
 use POSIX qw/strftime/;
 
+BEGIN {
+	eval {
+		require Math::Random::Secure;
+		Math::Random::Secure->import('rand');
+	}
+}
+
 # TODO use real templating system?
 my %templates;
 
@@ -80,12 +87,27 @@ my @messages;
 my $cHook = Log::addHook(\&cHook, "Console Log");
 my $hookShopList = Plugins::addHook('packet_vender_store', \&hookShopList);
 
+# CSRF prevention token
+my $csrf = int rand 2**32;
+
 sub new {
 	my $class = shift;
 
 	my $self = $class->SUPER::new(@_);
 	message TF("webMonitor started at http://%s:%s/\n", $self->getHost, $self->getPort), 'connection';
 	$self
+}
+
+sub checkCSRF {
+	my ($self, $process) = @_;
+
+	my $ret = $process->{GET}{csrf} eq $csrf;
+	unless ($ret) {
+		$process->status(403 => 'Forbidden');
+		$process->header('Content-Type' => 'text/html');
+		$process->shortResponse('<h1>Forbidden</h1>');
+	}
+	$ret
 }
 
 sub cHook {
@@ -138,7 +160,7 @@ sub hookShopList {
 	push (@id, $args->{nameID});
 	
 	if ($args->{price} < $char->{'zeny'}){
-		push (@shopJS, '<a class="btn btn-mini btn-success"  href="/handler?command=buy+' . $shopNumber . ' , ' . $args->{number} . ')">Buy</a>');
+		push (@shopJS, '<a class="btn btn-mini btn-success"  href="/handler?csrf=' . $csrf . '&command=buy+' . $shopNumber . ' , ' . $args->{number} . ')">Buy</a>');
 	} else {
 		push (@shopJS, '');
 	}
@@ -164,7 +186,9 @@ sub request {
 	$filename .= 'index.html' if ($filename =~ /\/$/);
 	# alias the newbie maps to new_zone01
 	$filename =~ s/new_.../new_zone01/;
-	
+
+	my $csrf_pass = $resources{csrf} eq $csrf;
+
 # [PT-BR] Recolher os dados para a aba Report
 	# Experience
 	my ($endTime_EXP, $w_sec, $bExpPerHour, $jExpPerHour, $EstB_sec, $zenyMade, $zenyPerHour, $EstJ_sec);
@@ -220,21 +244,21 @@ sub request {
 			push @unusableID, $item->{nameID};
 			push @unusable, $item->{name};
 			push @unusableAmount, $item->{amount};
-			push @unusableJS, '<td><a class="btn btn-mini btn-danger" href="/handler?command=drop+' . $item->{invIndex} . '">Drop</a></td>';
+			push @unusableJS, '<td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">Drop</a></td>';
 		} elsif ($item->{type} <= 2) {
 			push @usableID, $item->{nameID};
 			push @usable, $item->{name};
 			push @usableAmount, $item->{amount};
-			push @usableJS, '<td><a class="btn btn-mini btn-success" href="/handler?command=is+' . $item->{invIndex} . '">Use</a></td><td><a class="btn btn-mini btn-danger" href="/handler?command=drop+' . $item->{invIndex} . '">Drop</a></td>';
+			push @usableJS, '<td><a class="btn btn-mini btn-success" href="/handler?csrf=' . $csrf . '&command=is+' . $item->{invIndex} . '">Use</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">Drop</a></td>';
 		} else {
 			if ($item->{equipped}) {
 				push @equipmentID, $item->{nameID};
 				push @equipment, $item->{name};
-				push @equipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?command=eq+' . $item->{invIndex} . '">Unequip</a></td><td><a class="btn btn-mini btn-danger" href="/handler?command=drop+' . $item->{invIndex} . '">Drop</a></td>';
+				push @equipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=eq+' . $item->{invIndex} . '">Unequip</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">Drop</a></td>';
 			} else {
 				push @uequipmentID, $item->{nameID};
 				push @uequipment, $item->{name};
-				push @uequipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?command=eq+' . $item->{invIndex} . '">Equip</a></td><td><a class="btn btn-mini btn-danger" href="/handler?command=drop+' . $item->{invIndex} . '">Drop</a></td>';
+				push @uequipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=eq+' . $item->{invIndex} . '">Equip</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">Drop</a></td>';
 			}
 		}
 	}
@@ -322,13 +346,13 @@ sub request {
 			if ($type == 0){
 				$act = '<td></td><td><div align="center"><a class="btn btn-mini disabled">Passive</a></div></td>'; #Skill passive
 			} elsif ($type == 1){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sm+' . $IDN . '+0">Attack</a></div>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sm+' . $IDN . '+0">Attack</a></div>';
 			} elsif ($type == 2){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sl+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sl+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
 			} elsif ($type == 4){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=ss+' . $IDN . '">Use</a></div>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=ss+' . $IDN . '">Use</a></div>';
 			} elsif ($type == 16){
-				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?command=sp+' . $IDN . '+0">Choose actor</a></div>';
+				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sp+' . $IDN . '+0">Choose actor</a></div>';
 			} 
 		}
 		
@@ -336,7 +360,7 @@ sub request {
 		#  (ainda não chegou ao nível máximo e atingiu seus pré-requisitos), para saber se deve mostrar a imagem de aumentar nível e sua função.
 		my $ico_up;
 		if ($char->{points_skill} > 0 && $char->{skills}{$handle}{up} == 1){
-			$ico_up = '<a href="/handler?command=skills+add+' . $IDN .'"><i class="icon-plus-sign"></i></a> ';
+			$ico_up = '<a href="/handler?csrf=' . $csrf . '&command=skills+add+' . $IDN .'"><i class="icon-plus-sign"></i></a> ';
 		}
 		
 		# [PT-BR] Para finalizar, adicionar dados para as array's
@@ -349,6 +373,7 @@ sub request {
 	}
 	
 	%keywords =	(
+		csrf => $csrf,
 	# NPC
 		'npcBinID' => \@npcBinID,
 		'npcName' => \@npcName,
@@ -521,6 +546,7 @@ sub request {
 	);
 	
 	if ($filename eq '/handler') {
+		$self->checkCSRF($process) or return;
 		handle(\%resources, $process);
 		return;
 	}
