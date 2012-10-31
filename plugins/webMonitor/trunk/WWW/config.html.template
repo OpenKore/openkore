@@ -75,7 +75,7 @@
 					
 					
 					<div class="tab-pane" id="timeouts">
-					<a class="btn btn-small btn-warning" href="/handler?csrf={csrf}&command=reload+timeouts&page=config.html">reload macros.txt</a>
+					<a class="btn btn-small btn-warning" href="/handler?csrf={csrf}&command=reload+timeouts&page=config.html">reload timeouts.txt</a>
 					</div>
 					
 	
