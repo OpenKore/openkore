@@ -327,31 +327,17 @@ sub request {
 		my $IDN = $skill->getIDN();
 		my $act = '';
 
-		#  [EN] $skill->getTargetType() can result in 0, 1, 2 and 4
-		# 0 -> Passive Skill (Therefore $act have nothing, because it's not consumes SP and can't be used)
-		# 1 -> It's used on enemy
-		# 2 -> It's used in a place
-		# 4 -> It's used in yourself. Can involve party too (E.G: Glory Skill)
-		# 16 -> It's used in other players.
-		# See more in src\Actor.pm		
-		#  [PT-BR] $skill->getTargetType() pode resultar em 0, 1, 2 e 4
-		# 0 -> Skill passiva (por isso $act terá nada, pois não consome 0 e não pode ser usada)
-		# 1 -> Usa-se no inimigo
-		# 2 -> Usa-se em um lugar
-		# 4 -> Usa-se em você. Pode envolver o grupo também (ex: habilidade glória)
-		# 16 -> Usa-se em outros jogadores
-		# Veja mais no src\Actor.pm
 		my $type = $skill->getTargetType();
 		if ($char->getSkillLevel($skill) > 0){
-			if ($type == 0){
+			if ($type == Skill::TARGET_PASSIVE){
 				$act = '<td></td><td><div align="center"><a class="btn btn-mini disabled">Passive</a></div></td>'; #Skill passive
-			} elsif ($type == 1){
+			} elsif ($type == Skill::TARGET_ENEMY){
 				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sm+' . $IDN . '+0">Attack</a></div>';
-			} elsif ($type == 2){
+			} elsif ($type == Skill::TARGET_LOCATION){
 				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sl+' . $IDN . '+{characterLocationX}+{characterLocationY}">choose location</a></div>';
-			} elsif ($type == 4){
+			} elsif ($type == Skill::TARGET_SELF){
 				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=ss+' . $IDN . '">Use</a></div>';
-			} elsif ($type == 16){
+			} elsif ($type == Skill::TARGET_ACTORS){
 				$act = '<td>SP: ' . $sp . '<td>   <div align="center"><a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sp+' . $IDN . '+0">Choose actor</a></div>';
 			} 
 		}
