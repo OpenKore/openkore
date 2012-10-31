@@ -58,7 +58,11 @@ sub new {
 	$self->{state} = 'ready';
 	
 	# added servertypes support
-	parseSectionedFile('servertypes.txt', \%{$self->{type}});
+	if (-e 'servertypes.txt') {
+		parseSectionedFile('servertypes.txt', \%{$self->{type}});
+	} else {
+		parseSectionedFile('src/Poseidon/servertypes.txt', \%{$self->{type}});
+	}
 	
 	if (!$self->{type}->{$config{server_type}}) {
 		die "Invalid serverType specified. Please check your poseidon config file.\n";
