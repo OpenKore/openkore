@@ -59,6 +59,7 @@ use Log qw(warning message error);
 my $port;
 my $bind;
 my $webserver;
+our $socketServer;
 
 Plugins::register('webMonitor', 'Web interface to monitor yor bots', \&Unload);
 my $hook = Plugins::addHooks(
@@ -82,11 +83,20 @@ sub post_loading {
 		error "webMonitor failed to start\n";
 		Unload;
 	}
+
+	eval {
+		require WebMonitor::WebSocketServer;
+		$socketServer = new WebMonitor::WebSocketServer(undef, $bind);
+	};
+	unless ($socketServer) {
+		error "WebSocket server failed to start\n"
+	}
 }
 
 sub mainLoop {
 	return if !$webserver;
 	$webserver->iterate;
+	$socketServer->iterate if $socketServer;
 }
 
 1;

@@ -380,6 +380,7 @@ sub request {
 	);
 
 	%keywords =	(
+		socketPort => int($webMonitorPlugin::socketServer && $webMonitorPlugin::socketServer->getPort),
 		csrf => $csrf,
 		menu =>
 			'<li class="nav-header">' . T('Menu') . '</li>'

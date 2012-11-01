@@ -6,23 +6,23 @@
 				<div class="span3">
 				<div align="center"><div class="thumbnail job" id="job{characterSexID}{characterJobID}"></div></div>
 				<strong>{T HP}</strong>
-				<h6 align="right">{characterHP}/{characterHPMax}</h6>
-				<div class="progress" rel="tooltip" title="{characterHPPercent}%"><div class="bar bar-success" style="width: {characterHPPercent}%;"></div></div>
+				<h6 align="right"><span class="value_char_hp">{characterHP}</span>/<span class="value_char_hp_max">{characterHPMax}</span></h6>
+				<div class="progress progress_char_hp" rel="tooltip" title="{characterHPPercent}%"><div class="bar bar-success" style="width: {characterHPPercent}%;"></div></div>
 				<strong>{T SP}</strong>
-				<h6 align="right">{characterSP}/{characterSPMax}</h6>
-				<div class="progress" rel="tooltip" title="{characterSPPercent}%"><div class="bar" style="width: {characterSPPercent}%;"></div></div>
+				<h6 align="right"><span class="value_char_sp">{characterSP}</span>/<span class="value_char_sp_max">{characterSPMax}</span></h6>
+				<div class="progress progress_char_sp" rel="tooltip" title="{characterSPPercent}%"><div class="bar" style="width: {characterSPPercent}%;"></div></div>
 				</div>
 				<div class="span3">
 					<table class="table-condensed">
 						<tbody>
-							<tr><td class="left">{T Str}</td><td class="pull-right">{characterStr}+{characterStrBonus}  <a href="/handler?csrf={csrf}&command=stat_add+str&page=index.html" rel="tooltip" title="You need <b>{characterStrPoints}</b> points for add 1 STR point!"><i class="icon-plus-sign"></i></a></td></tr>
-							<tr><td class="left">{T Agi}</td><td class="pull-right">{characterAgi}+{characterAgiBonus}  <a href="/handler?csrf={csrf}&command=stat_add+agi&page=index.html" rel="tooltip" title="You need <b>{characterAgiPoints}</b> points for add 1 AGI point!"><i class="icon-plus-sign"></i></a></td></tr>
-							<tr><td class="left">{T Vit}</td><td class="pull-right">{characterVit}+{characterVitBonus}  <a href="/handler?csrf={csrf}&command=stat_add+vit&page=index.html" rel="tooltip" title="You need <b>{characterVitPoints}</b> points for add 1 VIT point!"><i class="icon-plus-sign"></i></a></td></tr>
-							<tr><td class="left">{T Int}</td><td class="pull-right">{characterInt}+{characterIntBonus}  <a href="/handler?csrf={csrf}&command=stat_add+int&page=index.html" rel="tooltip" title="You need <b>{characterIntPoints}</b> points for add 1 INT point!"><i class="icon-plus-sign"></i></a></td></tr>
-							<tr><td class="left">{T Dex}</td><td class="pull-right">{characterDex}+{characterDexBonus}  <a href="/handler?csrf={csrf}&command=stat_add+dex&page=index.html" rel="tooltip" title="You need <b>{characterDexPoints}</b> points for add 1 DEX point!"><i class="icon-plus-sign"></i></a></td></tr>
-							<tr><td class="left">{T Luk}</td><td class="pull-right">{characterLuk}+{characterLukBonus}  <a href="/handler?csrf={csrf}&command=stat_add+luk&page=index.html" rel="tooltip" title="You need <b>{characterLukPoints}</b> points for add 1 LUK point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Str}</td><td class="pull-right"><span class="value_char_str">{characterStr}</span>+<span class="value_char_str_bonus">{characterStrBonus}</span>  <a href="/handler?csrf={csrf}&command=stat_add+str&page=index.html" rel="tooltip" title="You need <b>{characterStrPoints}</b> points for add 1 STR point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Agi}</td><td class="pull-right"><span class="value_char_agi">{characterAgi}</span>+<span class="value_char_agi_bonus">{characterAgiBonus}</span>  <a href="/handler?csrf={csrf}&command=stat_add+agi&page=index.html" rel="tooltip" title="You need <b>{characterAgiPoints}</b> points for add 1 AGI point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Vit}</td><td class="pull-right"><span class="value_char_vit">{characterVit}</span>+<span class="value_char_vit_bonus">{characterVitBonus}</span>  <a href="/handler?csrf={csrf}&command=stat_add+vit&page=index.html" rel="tooltip" title="You need <b>{characterVitPoints}</b> points for add 1 VIT point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Int}</td><td class="pull-right"><span class="value_char_int">{characterInt}</span>+<span class="value_char_int_bonus">{characterIntBonus}</span>  <a href="/handler?csrf={csrf}&command=stat_add+int&page=index.html" rel="tooltip" title="You need <b>{characterIntPoints}</b> points for add 1 INT point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Dex}</td><td class="pull-right"><span class="value_char_dex">{characterDex}</span>+<span class="value_char_dex_bonus">{characterDexBonus}</span>  <a href="/handler?csrf={csrf}&command=stat_add+dex&page=index.html" rel="tooltip" title="You need <b>{characterDexPoints}</b> points for add 1 DEX point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Luk}</td><td class="pull-right"><span class="value_char_luk">{characterLuk}</span>+<span class="value_char_luk_bonus">{characterLukBonus}</span>  <a href="/handler?csrf={csrf}&command=stat_add+luk&page=index.html" rel="tooltip" title="You need <b>{characterLukPoints}</b> points for add 1 LUK point!"><i class="icon-plus-sign"></i></a></td></tr>
 							<tr><td></td></tr>
-							<tr><td class="left">{T Status point}</td><td class="pull-right">{characterFreePoints}</td></tr>
+							<tr><td class="left">{T Status point}</td><td class="pull-right"><span class="value_char_points_free">{characterFreePoints}</span></td></tr>
 							<br/>
 						</tbody>
 					</table>
@@ -30,14 +30,14 @@
 				<div class="span3">
 					<table class="table-condensed">
 						<tbody>
-							<tr><td class="left">{T Atk}</td><td class="pull-right">{characterAttack}+{characterAttackBonus}</td></tr>
-							<tr><td class="left">{T Matk}</td><td class="pull-right">{characterAttackMagicMax}~{characterAttackMagicMin}</td></tr>
-							<tr><td class="left">{T Hit}</td><td class="pull-right">{characterHit}</td></tr>
-							<tr><td class="left">{T Critical}</td><td class="pull-right">{characterCritical}</td></tr>
-							<tr><td class="left">{T Def}</td><td class="pull-right">{characterDef}+{characterDefBonus}</td></tr>
-							<tr><td class="left">{T Mdef}</td><td class="pull-right">{characterDefMagic}+{characterDefMagicBonus}</td></tr>
-							<tr><td class="left">{T Flee}</td><td class="pull-right">{characterFlee}+{characterFleeBonus}</td></tr>
-							<tr><td class="left">{T Aspd}</td><td class="pull-right">{characterAttackSpeed}</td></tr>
+							<tr><td class="left">{T Atk}</td><td class="pull-right"><span class="value_char_attack">{characterAttack}</span>+<span class="value_char_attack_bonus">{characterAttackBonus}</span></td></tr>
+							<tr><td class="left">{T Matk}</td><td class="pull-right"><span class="value_char_attack_magic_min">{characterAttackMagicMax}</span>~<span class="value_char_attack_magic_max">{characterAttackMagicMin}</span></td></tr>
+							<tr><td class="left">{T Hit}</td><td class="pull-right"><span class="value_char_hit">{characterHit}</span></td></tr>
+							<tr><td class="left">{T Critical}</td><td class="pull-right"><span class="value_char_critical">{characterCritical}</span></td></tr>
+							<tr><td class="left">{T Def}</td><td class="pull-right"><span class="value_char_def">{characterDef}</span>+<span class="value_char_def_bonus">{characterDefBonus}</span></td></tr>
+							<tr><td class="left">{T Mdef}</td><td class="pull-right"><span class="value_char_def_magic">{characterDefMagic}</span>+<span class="value_char_def_magic_bonus">{characterDefMagicBonus}</span></td></tr>
+							<tr><td class="left">{T Flee}</td><td class="pull-right"><span class="value_char_flee">{characterFlee}</span>+<span class="value_char_flee_bonus">{characterFleeBonus}</span></td></tr>
+							<tr><td class="left">{T Aspd}</td><td class="pull-right"><span class="value_char_attack_speed">{characterAttackSpeed}</span></td></tr>
 							<br/>
 						</tbody>
 					</table>
@@ -47,19 +47,19 @@
 						<tbody>
 							<br/>
 							<tr>Base Level<br/>
-							<h6 align="right">{characterBaseExp}/{characterBaseMax}</h6>
-							<div class="progress" rel="tooltip" title="{characterBasePercent}%"><div class="bar" style="width: {characterBasePercent}%;"></div></div>
+							<h6 align="right"><span class="value_char_exp">{characterBaseExp}</span>/<span class="value_char_exp_max">{characterBaseMax}</span></h6>
+							<div class="progress progress_char_exp" rel="tooltip" title="{characterBasePercent}%"><div class="bar" style="width: {characterBasePercent}%;"></div></div>
 							</tr>
 							<tr>Job Level<br/>
-							<h6 align="right">{characterJobExp}/{characterJobMax}</h6>
-							<div class="progress" rel="tooltip" title="{characterJobPercent}%"><div class="bar" style="width: {characterJobPercent}%;"></div></div>
+							<h6 align="right"><span class="value_char_exp_job">{characterJobExp}</span>/<span class="value_char_exp_job_max">{characterJobMax}</span></h6>
+							<div class="progress progress_char_exp_job" rel="tooltip" title="{characterJobPercent}%"><div class="bar" style="width: {characterJobPercent}%;"></div></div>
 							</tr>
 							<tr>Weight<br/>
-							<h6 align="right">{characterWeight}/{characterWeightMax}</h6>
-							<div class="progress" rel="tooltip" title="{characterWeightPercent}%"><div class="bar bar-danger" style="width: {characterWeightPercent}%;"></div></div>
+							<h6 align="right"><span class="value_char_weight">{characterWeight}</span>/<span class="value_char_weight_max">{characterWeightMax}</span></h6>
+							<div class="progress progress_char_weight" rel="tooltip" title="{characterWeightPercent}%"><div class="bar bar-danger" style="width: {characterWeightPercent}%;"></div></div>
 							</tr>
 							<tr>Zeny<br/>
-							<div class="pull-right"><span class="label label-success">{characterZeny}</span></div>
+							<div class="pull-right"><span class="label label-success"><span class="value_char_zeny">{characterZeny}</span></span></div>
 							</tr>
 						</tbody>
 					</table>
@@ -67,7 +67,7 @@
             </div><!--/span-->
 			
             <div class="span3">
-              <br/><h5 class="center"><i class="icon-map-marker"></i> {characterLocationDescription}</h5>
+              <br/><h5 class="center"><i class="icon-map-marker"></i> <span class="value_field_description">{characterLocationDescription}</span></h5>
 				<div class="center"><canvas id="mapa" style="background-image: url('/map/{characterLocationMap}')"></canvas><br/></div>
 				<script>
 				var c=document.getElementById("mapa");
@@ -75,7 +75,7 @@
 				ctx.fillStyle="#FF0000";
 				ctx.fillRect(150,150,5,3);
 				</script>
-				<p><div class="center" id="coord">{characterLocationX},{characterLocationY}</p></div>
+				<p><div class="center" id="coord"><span class="value_char_pos_x">{characterLocationX}</span>, <span class="value_char_pos_y">{characterLocationY}</span></p></div>
 			</div><!--/span-->
 			
           </div><!--/row-->
