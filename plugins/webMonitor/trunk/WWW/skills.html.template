@@ -21,7 +21,7 @@
 						{skillsJS}
 					</tr><!-- {endLoop} -->
 					<tr></tr>
-					<tr>Skills Points: <span class="badge badge-success">{characterSkillPoints}</span></tr>
+					<tr>{T Skill point}: <span class="badge badge-success">{characterSkillPoints}</span></tr>
 				</tbody>
 			</table>
 

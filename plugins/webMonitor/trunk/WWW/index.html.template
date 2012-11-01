@@ -5,24 +5,24 @@
             <div class="span9">
 				<div class="span3">
 				<div align="center"><div class="thumbnail job" id="job{characterSexID}{characterJobID}"></div></div>
-				<strong>HP</strong>
+				<strong>{T HP}</strong>
 				<h6 align="right">{characterHP}/{characterHPMax}</h6>
 				<div class="progress" rel="tooltip" title="{characterHPPercent}%"><div class="bar bar-success" style="width: {characterHPPercent}%;"></div></div>
-				<strong>SP</strong>
+				<strong>{T SP}</strong>
 				<h6 align="right">{characterSP}/{characterSPMax}</h6>
 				<div class="progress" rel="tooltip" title="{characterSPPercent}%"><div class="bar" style="width: {characterSPPercent}%;"></div></div>
 				</div>
 				<div class="span3">
 					<table class="table-condensed">
 						<tbody>
-							<tr><td class="left">Str</td><td class="pull-right">{characterStr}+{characterStrBonus}  <a href="/handler?csrf={csrf}&command=stat_add+str&page=index.html" rel="tooltip" title="You need <b>{characterStrPoints}</b> points for add 1 STR point!"><i class="icon-plus-sign"></i></a></td></tr>
-							<tr><td class="left">Agi</td><td class="pull-right">{characterAgi}+{characterAgiBonus}  <a href="/handler?csrf={csrf}&command=stat_add+agi&page=index.html" rel="tooltip" title="You need <b>{characterAgiPoints}</b> points for add 1 AGI point!"><i class="icon-plus-sign"></i></a></td></tr>
-							<tr><td class="left">Vit</td><td class="pull-right">{characterVit}+{characterVitBonus}  <a href="/handler?csrf={csrf}&command=stat_add+vit&page=index.html" rel="tooltip" title="You need <b>{characterVitPoints}</b> points for add 1 VIT point!"><i class="icon-plus-sign"></i></a></td></tr>
-							<tr><td class="left">Int</td><td class="pull-right">{characterInt}+{characterIntBonus}  <a href="/handler?csrf={csrf}&command=stat_add+int&page=index.html" rel="tooltip" title="You need <b>{characterIntPoints}</b> points for add 1 INT point!"><i class="icon-plus-sign"></i></a></td></tr>
-							<tr><td class="left">Dex</td><td class="pull-right">{characterDex}+{characterDexBonus}  <a href="/handler?csrf={csrf}&command=stat_add+dex&page=index.html" rel="tooltip" title="You need <b>{characterDexPoints}</b> points for add 1 DEX point!"><i class="icon-plus-sign"></i></a></td></tr>
-							<tr><td class="left">Luk</td><td class="pull-right">{characterLuk}+{characterLukBonus}  <a href="/handler?csrf={csrf}&command=stat_add+luk&page=index.html" rel="tooltip" title="You need <b>{characterLukPoints}</b> points for add 1 LUK point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Str}</td><td class="pull-right">{characterStr}+{characterStrBonus}  <a href="/handler?csrf={csrf}&command=stat_add+str&page=index.html" rel="tooltip" title="You need <b>{characterStrPoints}</b> points for add 1 STR point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Agi}</td><td class="pull-right">{characterAgi}+{characterAgiBonus}  <a href="/handler?csrf={csrf}&command=stat_add+agi&page=index.html" rel="tooltip" title="You need <b>{characterAgiPoints}</b> points for add 1 AGI point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Vit}</td><td class="pull-right">{characterVit}+{characterVitBonus}  <a href="/handler?csrf={csrf}&command=stat_add+vit&page=index.html" rel="tooltip" title="You need <b>{characterVitPoints}</b> points for add 1 VIT point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Int}</td><td class="pull-right">{characterInt}+{characterIntBonus}  <a href="/handler?csrf={csrf}&command=stat_add+int&page=index.html" rel="tooltip" title="You need <b>{characterIntPoints}</b> points for add 1 INT point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Dex}</td><td class="pull-right">{characterDex}+{characterDexBonus}  <a href="/handler?csrf={csrf}&command=stat_add+dex&page=index.html" rel="tooltip" title="You need <b>{characterDexPoints}</b> points for add 1 DEX point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Luk}</td><td class="pull-right">{characterLuk}+{characterLukBonus}  <a href="/handler?csrf={csrf}&command=stat_add+luk&page=index.html" rel="tooltip" title="You need <b>{characterLukPoints}</b> points for add 1 LUK point!"><i class="icon-plus-sign"></i></a></td></tr>
 							<tr><td></td></tr>
-							<tr><td class="left">Points</td><td class="pull-right">{characterFreePoints}</td></tr>
+							<tr><td class="left">{T Status point}</td><td class="pull-right">{characterFreePoints}</td></tr>
 							<br/>
 						</tbody>
 					</table>
@@ -30,14 +30,14 @@
 				<div class="span3">
 					<table class="table-condensed">
 						<tbody>
-							<tr><td class="left">Atk</td><td class="pull-right">{characterAttack}+{characterAttackBonus}</td></tr>
-							<tr><td class="left">AtkM</td><td class="pull-right">{characterAttackMagicMax}~{characterAttackMagicMin}</td></tr>
-							<tr><td class="left">Hit</td><td class="pull-right">{characterHit}</td></tr>
-							<tr><td class="left">Critical</td><td class="pull-right">{characterCritical}</td></tr>
-							<tr><td class="left">Def</td><td class="pull-right">{characterDef}+{characterDefBonus}</td></tr>
-							<tr><td class="left">DefM</td><td class="pull-right">{characterDefMagic}+{characterDefMagicBonus}</td></tr>
-							<tr><td class="left">Flee</td><td class="pull-right">{characterFlee}+{characterFleeBonus}</td></tr>
-							<tr><td class="left">ASPD</td><td class="pull-right">{characterAttackSpeed}</td></tr>
+							<tr><td class="left">{T Atk}</td><td class="pull-right">{characterAttack}+{characterAttackBonus}</td></tr>
+							<tr><td class="left">{T Matk}</td><td class="pull-right">{characterAttackMagicMax}~{characterAttackMagicMin}</td></tr>
+							<tr><td class="left">{T Hit}</td><td class="pull-right">{characterHit}</td></tr>
+							<tr><td class="left">{T Critical}</td><td class="pull-right">{characterCritical}</td></tr>
+							<tr><td class="left">{T Def}</td><td class="pull-right">{characterDef}+{characterDefBonus}</td></tr>
+							<tr><td class="left">{T Mdef}</td><td class="pull-right">{characterDefMagic}+{characterDefMagicBonus}</td></tr>
+							<tr><td class="left">{T Flee}</td><td class="pull-right">{characterFlee}+{characterFleeBonus}</td></tr>
+							<tr><td class="left">{T Aspd}</td><td class="pull-right">{characterAttackSpeed}</td></tr>
 							<br/>
 						</tbody>
 					</table>
