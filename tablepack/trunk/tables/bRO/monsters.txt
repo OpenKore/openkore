@@ -544,4 +544,6 @@
 1704 Odium de Thanatos
 1639 Kathryne Keyron
 1619 Porcellio
-2936 Halloween ghostring
+2936 Halloween ghosting
+1323 Lontra
+1391 Pingu
