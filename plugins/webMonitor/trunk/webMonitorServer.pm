@@ -242,21 +242,21 @@ sub request {
 			push @unusableID, $item->{nameID};
 			push @unusable, $item->{name};
 			push @unusableAmount, $item->{amount};
-			push @unusableJS, '<td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">Drop</a></td>';
+			push @unusableJS, '<td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">' . T('Drop 1') . '</a></td>';
 		} elsif ($item->{type} <= 2) {
 			push @usableID, $item->{nameID};
 			push @usable, $item->{name};
 			push @usableAmount, $item->{amount};
-			push @usableJS, '<td><a class="btn btn-mini btn-success" href="/handler?csrf=' . $csrf . '&command=is+' . $item->{invIndex} . '">Use</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">Drop</a></td>';
+			push @usableJS, '<td><a class="btn btn-mini btn-success" href="/handler?csrf=' . $csrf . '&command=is+' . $item->{invIndex} . '">' . T('Use 1 on self') . '</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">' . T('Drop 1') . '</a></td>';
 		} else {
 			if ($item->{equipped}) {
 				push @equipmentID, $item->{nameID};
 				push @equipment, $item->{name};
-				push @equipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=uneq+' . $item->{invIndex} . '">Unequip</a></td><td></td>';
+				push @equipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=uneq+' . $item->{invIndex} . '">' . T('Unequip') . '</a></td><td></td>';
 			} else {
 				push @uequipmentID, $item->{nameID};
 				push @uequipment, $item->{name};
-				push @uequipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=eq+' . $item->{invIndex} . '">Equip</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">Drop</a></td>';
+				push @uequipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=eq+' . $item->{invIndex} . '">' . T('Equip') . '</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">' . T('Drop 1') . '</a></td>';
 			}
 		}
 	}
@@ -369,10 +369,10 @@ sub request {
 	my @menu = (
 		{ url => '/', title => T('Status'), image => 'icon-user' },
 		{ url => '/inventory.html', title => T('Inventory') },
-		{ url => '/report.html', title => T('Exp Report'), image => 'icon-tasks' },
+		{ url => '/report.html', title => T('Report'), image => 'icon-tasks' },
 		{ url => '/config.html', title => T('Config'), image => 'icon-cog' },
-		{ url => '/console.html', title => T('Console Log') },
-		{ url => '/chatlog.html', title => T('Chat History'), image => 'icon-comment' },
+		{ url => '/console.html', title => T('Console') },
+		{ url => '/chatlog.html', title => T('Chat Log'), image => 'icon-comment' },
 		{ url => '/guild.html', title => T('Guild') },
 		{ url => '/shop.html', title => T('Vender List'), image => 'icon-shopping-cart' },
 		{ url => '/npcs.html', title => T('NPC List') },
@@ -597,6 +597,10 @@ sub request {
 		if ($file->{template}) {
 			# FIXME
 			$file->{template} = $file->replace(\%templates, qw({{ }}));
+
+			# FIXME: gettext in templates
+			$keywords{"T $_"} = T($_) for $file->{template} =~ /\{T ([^}]+)\}/g;
+
 			$content = $file->replace(\%keywords, '{', '}');
 			$process->print($content);
 
