@@ -252,7 +252,7 @@ sub request {
 			if ($item->{equipped}) {
 				push @equipmentID, $item->{nameID};
 				push @equipment, $item->{name};
-				push @equipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=eq+' . $item->{invIndex} . '">Unequip</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">Drop</a></td>';
+				push @equipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=eq+' . $item->{invIndex} . '">Unequip</a></td><td></td>';
 			} else {
 				push @uequipmentID, $item->{nameID};
 				push @uequipment, $item->{name};
