@@ -1,549 +1,244 @@
+1001 Escorpião
 1002 Poring
+1004 Zangão
+1005 Familiar
+1007 Fabre
+1008 Pupa
+1009 Condor
+1010 Salgueiro
 1011 ChonChon
+1012 Sapo de Rodda
+1013 Lobo
 1014 Esporo
+1016 Esqueleto Arqueiro
+1018 Creamy
 1019 Peco-Peco
 1023 Guerreiro Orc
+1024 Rabo de Verme
+1025 Jibóia
 1026 Munak
+1028 Esqueleto Soldado
 1029 Isis
 1031 Poporing
+1032 Verit
+1033 Salgueiro Ancião
+1034 Sapo de Thara
 1035 Mosca Caçadora
+1037 Sorrateiro
 1040 Golem
+1041 Múmia
 1042 ChonChon de Aço
+1044 Obeaune
+1045 Cavalo-Marinho
+1047 Ovo de PecoPeco
+1048 Ovo de Besouro-Ladrão
 1049 Picky
+1050 Picky
+1051 Besouro-Ladrão
 1052 Rocker
+1055 Muka
 1056 Fumacento
 1057 Yoyo
+1058 Metaller
+1060 Pé Grande
+1062 Poring Noel
 1063 Lunático
+1064 Megalodon
+1066 Vadon
+1067 Cornutus
+1068 Hidra
+1069 Peixe-Espada
+1070 Kukre
+1073 Caranguejo
+1074 Molusco
 1077 Esporo Venenoso
+1079 Planta Azul
+1080 Planta Verde
+1084 Cogumelo Negro
+1085 Cogumelo Vermelho
+1093 Eclipse
+1094 Ambernite
+1095 Andre
+1096 Angeling
+1097 Ovo de Andre
+1099 Argiope
+1100 Argos
 1101 Bafomé Jr
+1102 Bathory
+1103 Caramelo
+1105 Deniro
+1106 Lobo do Deserto
 1107 Filhote de Lobo
 1109 Deviruchi
 1110 Dokebi
+1111 Drainliar
 1113 Drops
+1114 Poeira
+1117 Druida Maligno
+1118 Flora
+1119 Frilldora
+1120 Ghostring
 1122 Goblin (Adaga)
+1127 Hode
+1128 Besouro-Chifre
+1131 Coringa
+1132 Khalitzburg
+1138 Magnólia
+1139 Louva-a-Deus
+1141 Marina
+1142 Esfera Marinha
+1144 Marte
+1146 Matyr
+1154 Pasana
 1155 Petite Terrestre
+1156 Petite Voador
+1158 Fen
+1159 Freeoni
+1160 Piere
+1161 Plâncton
+1163 Raydric
+1164 Réquiem
+1165 Arenoso
+1166 Selvagem
 1167 Bebê Selvagem
 1170 Sohee
-1179 Sussurro
-1188 Bongun
-1208 Andarilho
-1245 Goblin Natalino
-1275 Alice
-1299 Líder Goblin
-1370 Succubus
-1374 Incubus 
-1379 Pesadelo Sombrio
-1382 Diabolik
-1385 Deletério
-1401 Shinobi
-1404 Boneco de Miyabi
-1416 Ninfa Perversa
-1459 Marionete
-1482 Jirtas
-1495 Atirador de Pedras
-1504 Dullahan
-1505 Loli Ruri
-1513 Mao Guai
-1519 Chung E
-1536 Goblin (Machado)
-1538 Goblin (Maça)
-1586 Gato de Folha
-1630 Lady Branca
-1749 Medusa
-1815 Bolinho de Arroz 
-1837 Imp
-1209 Cãibra
-1253 Gárgula
-1396 8 Anos bRO
-1395 8 Anos bRO
-1163 Raydric
-1084 Cogumelo Negro
-1132 Khalitzburg
-1219 Cavaleiro do Abismo
-1261 Rosa Selvagem
-1276 Raydric Arqueiro
-1195 Rideword
-1186 Cochicho
-2115 Agni
-2116 Agni
-2346 Ktullanux
-2326 Galapago
-2325 Bafomé Jr
-2121 Vayu
-1156 Petite Voador
-1037 Sorrateiro
-1139 Louva-a-Deus
-1080 Planta Verde
-1079 Planta Azul
-1008 Pupa
-1018 Creamy
-2347 Eddga
-2120 Vayu
-2060 Alice
-2120 Vayu
-2081 Anêmona
-1368 Planta Carnívora
-1114 Poeira
-1369 Grand Peco
-1372 Bode
-1386 Rochoso
-1376 Harpia
-1009 Condor
-1050 Picky
-1047 Ovo de PecoPeco
-1007 Fabre
-1678 Venatu
-1679 Venatu
-1676 Venatu
-1595 Marin
-1582 Deviling
-1433 Deviruchi
-2058 Mimic
-1677 Venatu
-1118 Flora
-2122 Vayu
-1055 Muka
-1670 Dimik
-1201 Rybio
-2342 Diabolik
-2342 Diabolik
-1010 Salgueiro
-1004 Zangão
-1184 Fabre
-1034 Sapo de Thara
-1068 Hidra
-1064 Megalodon
-1673 Dimik
-1001 Escorpião
-1255 Nereida
-1051 Besouro-Ladrão
-1128 Besouro-Chifre
-1033 Salgueiro Ancião
-1085 Cogumelo Vermelho
-1005 Familiar
-1016 Esqueleto Arqueiro
-1041 Múmia
-1111 Drainliar
-1032 Verit
-1146 Matyr
-1191 Mímico
-1028 Esqueleto Soldado
-1094 Ambernite
-1012 Sapo de Rodda
-1671 Dimik
-1048 Ovo de Besouro-Ladrão
-2034 Desert Wolf Baby 
-1714 Ferus
-1164 Réquiem
+1174 Percevejo
+1175 Tarou
+1177 Zenorc
 1178 Zerom
-1100 Argos
-1494 Encouraçado
-1493 Dríade
-1499 Guerreiro Wootan
-1497 Golem de Madeira
-1498 Artilheiro Wootan
-1587 Kraben
-1584 Tamruan
-1691 Kraben
-1688 Lady Tanee
-1192 Alma Penada
-1117 Druida Maligno
-1166 Selvagem
-1291 Aparição
-1198 Sacerdote Maldito
-1605 Ilusão das Trevas
-1302 Ilusão das Trevas
-1199 Punk
-1269 Relógio
-1377 Ancião
-1270 Gerente
-1216 Penomena
-1102 Bathory
-1131 Coringa
-1213 Grand Orc
-1211 Escaravelho
-1193 Alarme
-1272 Senhor das Trevas
-1194 Arclouse
-1024 Rabo de Verme
-1025 Jibóia
-1242 Marin
-1096 Angeling
-1062 Poring Noel
-1120 Ghostring
-1613 Metaling
-1273 Senhora Orc
-1686 Filhote de Orc
+1179 Sussurro
+1184 Fabre
+1186 Cochicho
+1188 Bongun
 1189 Orc Arqueiro
 1190 Senhor dos Orcs
-1127 Hode
-1165 Arenoso
-1119 Frilldora
-1558 Arenoso
-1159 Freeoni
-1743 Myst Case
-1628 Holden
-2117 Varuna
-1836 Magmaring
-1836 Magmaring
-1784 Stapo
-1784 Stapo
-1784 Stapo
-1780 Muscipular
-1780 Muscipular
-1780 Muscipular
-1781 Drosera
-1106 Lobo do Deserto
-1782 Roween
-1627 Anopheles
-1099 Argiope
-1099 Argiope
-1380 Furador
-1794 Roween
-1177 Zenorc
-1177 Zenorc
-1045 Cavalo-Marinho
-1069 Peixe-Espada
-1158 Fen
-1142 Esfera Marinha
-1264 Tritão
-1161 Plâncton
-1141 Marina
-1070 Kukre
-1066 Vadon
-1067 Cornutus
-1144 Marte
-1044 Obeaune
-1638 Cecil Damon
-1699 Mímico Antigo
-1058 Metaller
-1058 Metaller
-1829 Espadachim Guardião
-1154 Pasana
-1154 Pasana
-1175 Tarou
-1175 Tarou
-1175 Tarou
-1254 Raggler
-1073 Caranguejo
-1254 Raggler
-1073 Caranguejo
-1254 Raggler
-1073 Caranguejo
-1266 Estrela do Mar
-1074 Molusco
-1160 Piere
-1095 Andre
-1105 Deniro
-1095 Andre
-1105 Deniro
-1097 Ovo de Andre
-1160 Piere
-2012 Zumbi
-1097 Ovo de Andre
-1074 Molusco
-1013 Lobo
-1013 Lobo
-1013 Lobo
-1616 Minérios
-1616 Minérios
-1138 Magnólia
-1138 Magnólia
-1138 Magnólia
-2151 Rafflesia Alnoldi
-2153 Cendrawasih
-1301 Am Mut
-1753 Frus
-1509 Lude
-1508 Quve
-1681 Gemini-S58
-2038 Valkyrie
-1174 Percevejo
-1174 Percevejo
-1093 Eclipse
-1918 Sombra da Inveja
-1918 Sombra da Inveja
-1918 Sombra da Inveja
-1060 Pé Grande
-1060 Pé Grande
-1103 Caramelo
-1103 Caramelo
-1704 Odium de Thanatos
-1639 Kathryne Keyron
-1619 Porcellio
-2936 Halloween ghostring1002 Poring
-1011 ChonChon
-1014 Esporo
-1019 Peco-Peco
-1023 Guerreiro Orc
-1026 Munak
-1029 Isis
-1031 Poporing
-1035 Mosca Caçadora
-1040 Golem
-1042 ChonChon de Aço
-1049 Picky
-1052 Rocker
-1056 Fumacento
-1057 Yoyo
-1063 Lunático
-1077 Esporo Venenoso
-1101 Bafomé Jr
-1107 Filhote de Lobo
-1109 Deviruchi
-1110 Dokebi
-1113 Drops
-1122 Goblin (Adaga)
-1155 Petite Terrestre
-1167 Bebê Selvagem
-1170 Sohee
-1179 Sussurro
-1188 Bongun
-1208 Andarilho
-1245 Goblin Natalino
-1275 Alice
-1299 Líder Goblin
-1370 Succubus
-1374 Incubus 
-1379 Pesadelo Sombrio
-1382 Diabolik
-1385 Deletério
-1401 Shinobi
-1404 Boneco de Miyabi
-1416 Ninfa Perversa
-1459 Marionete
-1482 Jirtas
-1495 Atirador de Pedras
-1504 Dullahan
-1505 Loli Ruri
-1513 Mao Guai
-1519 Chung E
-1536 Goblin (Machado)
-1538 Goblin (Maça)
-1586 Gato de Folha
-1630 Lady Branca
-1749 Medusa
-1815 Bolinho de Arroz 
-1837 Imp
-1209 Cãibra
-1253 Gárgula
-1396 8 Anos bRO
-1395 8 Anos bRO
-1163 Raydric
-1084 Cogumelo Negro
-1132 Khalitzburg
-1219 Cavaleiro do Abismo
-1261 Rosa Selvagem
-1276 Raydric Arqueiro
-1195 Rideword
-1186 Cochicho
-2115 Agni
-2116 Agni
-2346 Ktullanux
-2326 Galapago
-2325 Bafomé Jr
-2121 Vayu
-1156 Petite Voador
-1037 Sorrateiro
-1139 Louva-a-Deus
-1080 Planta Verde
-1079 Planta Azul
-1008 Pupa
-1018 Creamy
-2347 Eddga
-2120 Vayu
-2060 Alice
-2120 Vayu
-2081 Anêmona
-1368 Planta Carnívora
-1114 Poeira
-1369 Grand Peco
-1372 Bode
-1386 Rochoso
-1376 Harpia
-1009 Condor
-1050 Picky
-1047 Ovo de PecoPeco
-1007 Fabre
-1678 Venatu
-1679 Venatu
-1676 Venatu
-1595 Marin
-1582 Deviling
-1433 Deviruchi
-2058 Mimic
-1677 Venatu
-1118 Flora
-2122 Vayu
-1055 Muka
-1670 Dimik
-1201 Rybio
-2342 Diabolik
-2342 Diabolik
-1010 Salgueiro
-1004 Zangão
-1184 Fabre
-1034 Sapo de Thara
-1068 Hidra
-1064 Megalodon
-1673 Dimik
-1001 Escorpião
-1255 Nereida
-1051 Besouro-Ladrão
-1128 Besouro-Chifre
-1033 Salgueiro Ancião
-1085 Cogumelo Vermelho
-1005 Familiar
-1016 Esqueleto Arqueiro
-1041 Múmia
-1111 Drainliar
-1032 Verit
-1146 Matyr
 1191 Mímico
-1028 Esqueleto Soldado
-1094 Ambernite
-1012 Sapo de Rodda
-1671 Dimik
-1048 Ovo de Besouro-Ladrão
-2034 Desert Wolf Baby 
-1714 Ferus
-1164 Réquiem
-1178 Zerom
-1100 Argos
-1494 Encouraçado
-1493 Dríade
-1499 Guerreiro Wootan
-1497 Golem de Madeira
-1498 Artilheiro Wootan
-1587 Kraben
-1584 Tamruan
-1691 Kraben
-1688 Lady Tanee
 1192 Alma Penada
-1117 Druida Maligno
-1166 Selvagem
-1291 Aparição
-1198 Sacerdote Maldito
-1605 Ilusão das Trevas
-1302 Ilusão das Trevas
-1199 Punk
-1269 Relógio
-1377 Ancião
-1270 Gerente
-1216 Penomena
-1102 Bathory
-1131 Coringa
-1213 Grand Orc
-1211 Escaravelho
 1193 Alarme
-1272 Senhor das Trevas
 1194 Arclouse
-1024 Rabo de Verme
-1025 Jibóia
+1195 Rideword
+1198 Sacerdote Maldito
+1199 Punk
+1201 Rybio
+1208 Andarilho
+1209 Cãibra
+1211 Escaravelho
+1213 Grand Orc
+1216 Penomena
+1219 Cavaleiro do Abismo
 1242 Marin
-1096 Angeling
-1062 Poring Noel
-1120 Ghostring
-1613 Metaling
-1273 Senhora Orc
-1686 Filhote de Orc
-1189 Orc Arqueiro
-1190 Senhor dos Orcs
-1127 Hode
-1165 Arenoso
-1119 Frilldora
-1558 Arenoso
-1159 Freeoni
-1743 Myst Case
-1628 Holden
-2117 Varuna
-1836 Magmaring
-1836 Magmaring
-1784 Stapo
-1784 Stapo
-1784 Stapo
-1780 Muscipular
-1780 Muscipular
-1780 Muscipular
-1781 Drosera
-1106 Lobo do Deserto
-1782 Roween
-1627 Anopheles
-1099 Argiope
-1099 Argiope
-1380 Furador
-1794 Roween
-1177 Zenorc
-1177 Zenorc
-1045 Cavalo-Marinho
-1069 Peixe-Espada
-1158 Fen
-1142 Esfera Marinha
+1245 Goblin Natalino
+1253 Gárgula
+1254 Raggler
+1255 Nereida
+1261 Rosa Selvagem
 1264 Tritão
-1161 Plâncton
-1141 Marina
-1070 Kukre
-1066 Vadon
-1067 Cornutus
-1144 Marte
-1044 Obeaune
-1638 Cecil Damon
-1699 Mímico Antigo
-1058 Metaller
-1058 Metaller
-1829 Espadachim Guardião
-1154 Pasana
-1154 Pasana
-1175 Tarou
-1175 Tarou
-1175 Tarou
-1254 Raggler
-1073 Caranguejo
-1254 Raggler
-1073 Caranguejo
-1254 Raggler
-1073 Caranguejo
 1266 Estrela do Mar
-1074 Molusco
-1160 Piere
-1095 Andre
-1105 Deniro
-1095 Andre
-1105 Deniro
-1097 Ovo de Andre
-1160 Piere
-2012 Zumbi
-1097 Ovo de Andre
-1074 Molusco
-1013 Lobo
-1013 Lobo
-1013 Lobo
-1616 Minérios
-1616 Minérios
-1138 Magnólia
-1138 Magnólia
-1138 Magnólia
-2151 Rafflesia Alnoldi
-2153 Cendrawasih
+1269 Relógio
+1270 Gerente
+1272 Senhor das Trevas
+1273 Senhora Orc
+1275 Alice
+1276 Raydric Arqueiro
+1291 Aparição
+1299 Líder Goblin
 1301 Am Mut
-1753 Frus
-1509 Lude
-1508 Quve
-1681 Gemini-S58
-2038 Valkyrie
-1174 Percevejo
-1174 Percevejo
-1093 Eclipse
-1918 Sombra da Inveja
-1918 Sombra da Inveja
-1918 Sombra da Inveja
-1060 Pé Grande
-1060 Pé Grande
-1103 Caramelo
-1103 Caramelo
-1704 Odium de Thanatos
-1639 Kathryne Keyron
-1619 Porcellio
-2936 Halloween ghosting
+1302 Ilusão das Trevas
 1323 Lontra
+1368 Planta Carnívora
+1369 Grand Peco
+1370 Succubus
+1372 Bode
+1374 Incubus 
+1376 Harpia
+1377 Ancião
+1379 Pesadelo Sombrio
+1380 Furador
+1382 Diabolik
+1385 Deletério
+1386 Rochoso
 1391 Pingu
+1395 8 Anos bRO
+1396 8 Anos bRO
+1401 Shinobi
+1404 Boneco de Miyabi
+1416 Ninfa Perversa
+1433 Deviruchi
+1459 Marionete
+1482 Jirtas
+1493 Dríade
+1494 Encouraçado
+1495 Atirador de Pedras
+1497 Golem de Madeira
+1498 Artilheiro Wootan
+1499 Guerreiro Wootan
+1504 Dullahan
+1505 Loli Ruri
+1508 Quve
+1509 Lude
+1513 Mao Guai
+1519 Chung E
+1536 Goblin (Machado)
+1538 Goblin (Maça)
+1558 Arenoso
+1582 Deviling
+1584 Tamruan
+1586 Gato de Folha
+1587 Kraben
+1595 Marin
+1605 Ilusão das Trevas
+1613 Metaling
+1616 Minérios
+1619 Porcellio
+1627 Anopheles
+1628 Holden
+1630 Lady Branca
+1638 Cecil Damon
+1639 Kathryne Keyron
+1670 Dimik
+1671 Dimik
+1673 Dimik
+1676 Venatu
+1677 Venatu
+1678 Venatu
+1679 Venatu
+1681 Gemini-S58
+1686 Filhote de Orc
+1688 Lady Tanee
+1691 Kraben
+1699 Mímico Antigo
+1704 Odium de Thanatos
+1714 Ferus
+1743 Myst Case
+1749 Medusa
+1753 Frus
+1780 Muscipular
+1781 Drosera
+1782 Roween
+1784 Stapo
+1794 Roween
+1815 Bolinho de Arroz 
+1829 Espadachim Guardião
+1836 Magmaring
+1837 Imp
+1918 Sombra da Inveja
+2012 Zumbi
+2034 Desert Wolf Baby 
+2038 Valkyrie
+2058 Mimic
+2060 Alice
+2081 Anêmona
+2115 Agni
+2116 Agni
+2117 Varuna
+2120 Vayu
+2121 Vayu
+2122 Vayu
+2151 Rafflesia Alnoldi
+2153 Cendrawasih
+2325 Bafomé Jr
+2326 Galapago
+2342 Diabolik
+2346 Ktullanux
+2347 Eddga
+2936 Halloween ghosting
