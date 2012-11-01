@@ -67,7 +67,7 @@
             </div><!--/span-->
 			
             <div class="span3">
-              <br/><h5 class="center"><i class="icon-map-marker"></i> {characterLocationMap}</h5>
+              <br/><h5 class="center"><i class="icon-map-marker"></i> {characterLocationDescription}</h5>
 				<div class="center"><canvas id="mapa" style="background-image: url('/map/{characterLocationMap}')"></canvas><br/></div>
 				<script>
 				var c=document.getElementById("mapa");

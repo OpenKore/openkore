@@ -544,6 +544,7 @@ sub request {
 		'characterLocationX' => $char->position()->{x},
 		'characterLocationY' => $char->position()->{y},
 		'characterLocationMap' => $field->name,
+		characterLocationDescription => $field->descString,
 		'characterGetRouteX' => $char->{pos_to}->{x},
 		'characterGetRouteY' => $char->{pos_to}->{y},
 		'characterGetTimeRoute' => $char->{time_move_calc},
