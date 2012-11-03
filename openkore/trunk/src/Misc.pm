@@ -3009,7 +3009,7 @@ sub top10Listing {
 		$points[$i] = unpack("V1", substr($msg, 242 + ($i*4), 4));
 	}	
 	for ($i = 0; $i < 10; $i++) {
-		$textList .= swrite("[@<] @<<<<<<<<<<<<<<<<<<<<<<<<        @>>>>>>",
+		$textList .= swrite("[@<] @<<<<<<<<<<<<<<<<<<<<<<<<    @>>>>>>>>>>",
 			[$i+1, $list[$i], $points[$i]]);
 	}
 	
