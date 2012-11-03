@@ -21,18 +21,23 @@
 #
 # Usando um peso de 10000 o kore evitar completamente um mapa.
 #
- 
+
 # Portal peso.
 #Isso pode ser usado para fazer Kore evitar / preferir percorrer.
- 
+
 #Mapa portais.
 #. Apenas mude isso, se você sabe exatamente o que você está fazendo!
 PORTAL 20
- 
+
 # Peso NPC.
 # Isto pode ser usado para evitar / preferir ir para o destino
 # Usando um NPC. Apenas mude isso, se você sabe exatamente o que você está fazendo!
 NPC 200
- 
+
+# Mapas onde você pode sair para o mesmo lugar que você veio,
+# que confundem a rota se forem adicionados ao portal(.txt) de qualquer forma.
+bat_room 10000
+moc_para01 10000
+
 # Adicione seus pesos e mapas aqui.
 # Formato: <map name> <weight>
