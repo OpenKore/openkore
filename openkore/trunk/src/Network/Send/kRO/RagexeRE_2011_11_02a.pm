@@ -15,7 +15,6 @@ use strict;
 use base qw(Network::Send::kRO::RagexeRE_2011_10_05a);
 
 use Log qw(debug);
-use Utils qw(getHex);
 
 sub version { 28 }
 
@@ -24,22 +23,22 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'022D' => undef,
 		# TODO 0x0281,36,storagepassword,0
-		'0436' => undef, # TODO 0x0436,26,friendslistadd,2
-		'0437' => undef,
+		'0369' => undef,
 		# TODO 0x0811,-1,itemlistwindowselected,2:4:8
 		# TODO 0x0835,-1,reqopenbuyingstore,2:4:8:9:89
 		'083C' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		# 0x890,8 ?
-		'08AA' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		# TODO 0x088b,2,searchstoreinfonextpage,0
 		# TODO 0x088d,26,partyinvite2,2
+		# 0x890,8 ?
 		# TODO 0x0898,5,hommenu,4
 		# TODO 0x089b,2,reqclosebuyingstore,0
 		# TODO 0x089e,-1,reqtradebuyingstore,2:4:8:12
 		# TODO 0x08a1,6,reqclickbuyingstore,2
 		# TODO 0x08a2,12,searchstoreinfolistitemclick,2:6:10
 		# TODO 0x08a5,18,bookingregreq,2:4:6
+		'08AA' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		# TODO 0x08ab,-1,searchstoreinfo,2:4:5:9:13:14:15
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;

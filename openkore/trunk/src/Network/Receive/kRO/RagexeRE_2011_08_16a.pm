@@ -21,13 +21,17 @@ use base qw(Network::Receive::kRO::RagexeRE_2010_11_24a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
 	my %packets = (
 		'08B9' => ['account_id', 'x4 a4 x2', [qw(accountID)]], # 12
 	);
+
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
+	my %handlers = qw(
+		account_id 08B9
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
 }
