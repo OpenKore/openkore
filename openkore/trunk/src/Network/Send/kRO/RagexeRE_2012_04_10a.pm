@@ -25,20 +25,15 @@ sub new {
 	
 	my %packets = (
 		'02C4' => undef,
-		'0368' => undef,
+		# TODO 0x0360,6,reqclickbuyingstore,2
+		# TODO 0x0366,90,useskilltoposinfo,2:4:6:8:10
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0804' => undef,
-		'0806' => undef,
-		'0808' => undef,
 		# TODO 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
-		'0861' => undef,
-		'0863' => undef,
 		'0865' => undef,
 		'086A' => undef,
 		'086C' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0870' => undef,
 		'0871' => ['actor_look_at', 'v C', [qw(head body)]],
-		'0884' => undef,
+		# TODO 0x0884,6,solvecharname,2
 		'0885' => undef, # TODO 0x0885,5,hommenu,2:4
 		'0886' => ['sync', 'V', [qw(time)]],
 		'0887' => undef,
@@ -58,15 +53,13 @@ sub new {
 		# TODO 0x08FB,6,bookingcanceljoinparty,2
 		# TODO 0x0907,5,moveitem,2:4
 		# TODO 0x091C,26,partyinvite2,2
-		'0926' => undef,
-		'0929' => undef,
 		'0938' => ['item_take', 'a4', [qw(ID)]],
 		'093B' => undef,
 		# TODO 0x0945,-1,itemlistwindowselected,2:4:8
 		'094B' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		# TODO 0x0961,36,storagepassword,0
-		'096A' => undef,
 		'0963' => undef,
+		'096A' => undef,
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -114,3 +107,17 @@ sub sendGetCharacterName {
 }
 
 1;
+
+=cut
+what is?
+		'0368' => undef,
+		'0804' => undef,
+		'0806' => undef,
+		'0808' => undef,
+		'0861' => undef,
+		'0863' => undef,
+		'0870' => undef,
+		'0884' => undef,
+		'0926' => undef,
+		'0929' => undef,
+=pod
