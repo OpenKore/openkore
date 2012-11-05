@@ -3070,35 +3070,45 @@ sub cmdMove {
 		return;
 	}
 	my (undef, $args) = @_;
-	my ($arg1, $arg2, $arg3) = $args =~ /^(.+?) (.+?)(?: (.*))?$/;
-
-	my ($map, $x, $y);
-	if ($arg1 eq "") {
-		# map name or portal number
-		$map = $args;
-	} elsif ($arg3 eq "") {
-		# coordinates
-		$x = $arg1;
-		$y = $arg2;
-		$map = $field->baseName;
-	} elsif ($arg1 =~ /^\d+$/) {
+	my @args_split = split(/\s+/, $args);
+	
+	my ($map_or_portal, $x, $y, $dist);	
+	if (($args_split[0] =~ /^\d+$/) && ($args_split[1] =~ /^\d+$/) && ($args_split[2] =~ /^\w+$/)) {
 		# coordinates and map
-		$x = $arg1;
-		$y = $arg2;
-		$map = $arg3;
-	} else {
+		$map_or_portal = $args_split[2];
+		$x = $args_split[0];
+		$y = $args_split[1];
+	} elsif (($args_split[0] =~ /^\w+$/) && ($args_split[1] =~ /^\d+$/) && ($args_split[2] =~ /^\d+$/)) {
 		# map and coordinates
-		$x = $arg2;
-		$y = $arg3;
-		$map = $arg1;
+		$map_or_portal = $args_split[0];
+		$x = $args_split[1];
+		$y = $args_split[2];
+	} elsif (($args_split[0] =~ /^\w+$/) && !$args_split[1]) {
+		# map only
+		$map_or_portal = $args_split[0];
+	} elsif (($args_split[0] =~ /^\d+$/) && ($args_split[1] =~ /^\d+$/) && !$args_split[2]) {
+		# coordinates only
+		$map_or_portal = $field->baseName;
+		$x = $args_split[0];
+		$y = $args_split[1];
+	} else {
+		error T("Syntax Error in function 'move' (Move Player)\n" .
+			"Usage: move <x> <y> [<map> [<distance from coordinates>]]\n" .
+			"       move <map> [<x> <y> [<distance from coordinates>]]\n" .
+			"       move <portal#>\n");
 	}
 	
-	if ((($x !~ /^\d+$/ || $y !~ /^\d+$/) && $arg1 ne "") || ($args eq "")) {
-		error T("Syntax Error in function 'move' (Move Player)\n" .
-			"Usage: move <x> <y> [<map>]\n" .
-			"       move <map> [<x> <y>]\n" .
-			"       move <portal#>\n");
-	} elsif ($map eq "stop") {
+	# if (($args_split[0] =~ /^\d+$/) && ($args_split[1] =~ /^\d+$/) && ($args_split[2] =~ /^\d+$/)) {
+		# # distance from x, y
+		# $dist = $args_split[2];
+	# } elsif {
+	if ($args_split[3] =~ /^\d+$/) {
+		# distance from map x, y
+		$dist = $args_split[3];
+	}
+	
+		
+	if ($map_or_portal eq "stop") {
 		AI::clear(qw/move route mapRoute/);
 		message T("Stopped all movement\n"), "success";
 	} else {
@@ -3112,28 +3122,32 @@ sub cmdMove {
 				"Unable to walk while the shop is open!\n" .
 				"Use the command: closeshop\n");
 		} else {
-		if ($maps_lut{"${map}.rsw"}) {
-			if ($x ne "") {
+		if ($maps_lut{"${map_or_portal}.rsw"}) {
+			if ($dist) {
+				message TF("Calculating route to: %s(%s): %s, %s (Distance: %s)\n", 
+					$maps_lut{$map_or_portal.'.rsw'}, $map_or_portal, $x, $y, $dist), "route";
+			} elsif ($x ne "") {
 				message TF("Calculating route to: %s(%s): %s, %s\n", 
-					$maps_lut{$map.'.rsw'}, $map, $x, $y), "route";
+					$maps_lut{$map_or_portal.'.rsw'}, $map_or_portal, $x, $y), "route";
 			} else {
 				message TF("Calculating route to: %s(%s)\n", 
-					$maps_lut{$map.'.rsw'}, $map), "route";
+					$maps_lut{$map_or_portal.'.rsw'}, $map_or_portal), "route";
 			}
-			main::ai_route($map, $x, $y,
+			main::ai_route($map_or_portal, $x, $y,
 				attackOnRoute => 1,
 				noSitAuto => 1,
-				notifyUponArrival => 1);
-		} elsif ($map =~ /^\d+$/) {
-			if ($portalsID[$map]) {
+				notifyUponArrival => 1,
+				distFromGoal => $dist);
+		} elsif ($map_or_portal =~ /^\d+$/) {
+			if ($portalsID[$map_or_portal]) {
 				message TF("Move into portal number %s (%s,%s)\n", 
-					$map, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'});
-				main::ai_route($field->baseName, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
+					$map_or_portal, $portals{$portalsID[$map_or_portal]}{'pos'}{'x'}, $portals{$portalsID[$map_or_portal]}{'pos'}{'y'});
+				main::ai_route($field->baseName, $portals{$portalsID[$map_or_portal]}{'pos'}{'x'}, $portals{$portalsID[$map_or_portal]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
 			} else {
 				error T("No portals exist.\n");
 			}
 		} else {
-			error TF("Map %s does not exist\n", $map);
+			error TF("Map %s does not exist\n", $map_or_portal);
 		}
 		}
 	}
