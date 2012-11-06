@@ -1680,7 +1680,8 @@
 2635#Anel_da_Noiva#
 
 // Halloween
-6658#Moeda do Dia das Bruxas
+6658#Moeda do Dia das Bruxas#
+18810#Chapéu de Abóbora Infernal#
 5134#Cabeça de Abóbora#
 7460#Ticket para Nifelheim#
 7461#Carta com a letra A#
