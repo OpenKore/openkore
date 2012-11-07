@@ -1,0 +1,53 @@
+Scroll
+Makes the chat scroll in either direction. Speed and amount of characters to move can be adjusted with scspeed, scchars. The title can be set with sctitle. You can add titles with sctitle and clear them with sctitlesclear.
+
+Swap
+When in swap the chat will swap between different topics, a little less bot like if you set it to a high interval. However might not be very usefull. Adjust the swap speed with scspeed. 
+
+IMPORTANT!
+You must no longer create the chat yourself however you must leave it after you are done. Type 'chat leave' in console.
+
+Chat Commands
+type 'schelp' in console to get a list of chat commands
+
+Config.txt
+It is now possible to make your own configs so you can quick load any chat you want.
+Code:
+scrollingChat Buy Forge Stuff {
+	title_1 "Iron Ore (150z), Coal (1k), Steel (3k), Ori (10k), "
+	title_2 "Star Crumb (2k), Star Dust (200z), Elements (10k), "
+	mode 0 #Mode 0 = scroll
+	speed 1
+	prefix "B> "
+	direction left
+	chars 2
+}
+
+scrollingChat Sell Weapons {
+	title_1 "S> +8 Fire Swordmace"
+	title_2 "S> +5 Wind Claymore"
+	title_3 "S> +5 Earth Claymore"
+	mode 1 #Mode 1 = Swap
+	speed 10
+}
+
+scrollingChat Smile! {
+	title_1 "Smiiiile ! ~~~~ "
+}
+
+
+Note.
+If you use mode 0 (scroll) the strings you enter will be put together. so if you have 'title_1' , 'title_2' the chat title will be 'title_1 + title_2'.
+
+sc: Enables / Disables this plugin
+sc [Config Num]: Enable the plugin and loads the specified config. Use 'scconflist' to get number.
+scconflist: Will list all the configs that have been loaded
+schelp: Displays this help message
+sctitle <text>: Set the title of the chat (sctitle "привет ")
+sctitlesclear: Can be used to clear all titles when in swap mode
+scshowtitle: Will show the current title(s)
+scprefix <text>: Sets a prefix that is used for scroll mode (not swap)
+scmode: Will swap between chat modes (Scroll/swap)
+scspeed <number>: Set the scroll speed in seconds
+scchars <number>: Set the amount of characters to move each tick
+scdirection <direction>: Set the scroll direction for the text
