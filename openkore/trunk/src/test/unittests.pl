@@ -10,6 +10,7 @@ use List::MoreUtils;
 use Test::More qw(no_plan);
 my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest RijndaelTest
 	SetTest SkillTest InventoryListTest
+	ItemsTest
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
 	PluginsHookTest
 	FileParsersTest
