@@ -60,7 +60,19 @@ BEGIN {
 	eval {
 		require Math::Random::Secure;
 		Math::Random::Secure->import('rand');
+	};
+
+	eval {
+		require HTML::Entities;
+		HTML::Entities->import('encode_entities');
+	};
+	if ($@) {
+		*encode_entities = sub { '' };
 	}
+
+	eval {
+		require File::ReadBackwards;
+	};
 }
 
 # TODO use real templating system?
@@ -111,38 +123,88 @@ sub checkCSRF {
 }
 
 sub cHook {
-	my $type = shift;
-	my $domain = shift;
-	my $level = shift;
-	my $currentVerbosity = shift;
-	my $messages = shift;
-	my $user_data = shift;
-	my $logfile = shift;
-	my $deathmsg = shift;
+	my ($type, $domain, $level, $currentVerbosity, $message, $data) = @_;
 
 	if ($level <= $currentVerbosity) {
-		# Prepend the time to the message
-		my (undef, $microseconds) = Time::HiRes::gettimeofday;
-		$microseconds = substr($microseconds, 0, 2);
-		my $message = "[".getFormattedDate(int(time)).".$microseconds] ".$messages;	
-	
-		# TODO: make this configurable (doesn't prepend the time for now)
-		my @lines = split "\n", $messages;
-		if (@lines > 1) {
-			foreach my $line (@lines) {
-				$line .= "\n";
-				push @messages, $line;
-			}
-		} else {
-			push(@messages, $messages);
-		}
+		push @messages, {type => $type, domain => $domain, level => $level, message => $message};
 
 		# Make sure we don't let @messages grow too large
 		# TODO: make the message size configurable
-		while (@messages > 20) {
-			shift(@messages);
+		while (@messages > 40) {
+			splice @messages, 0, -20
 		}
 	}
+}
+
+sub messageClass {
+	my ($type, $domain) = @_;
+	return unless $type =~ /^\w+$/ && $domain =~ /^\w+$/;
+	$domain = 'default' unless $consoleColors{$type}{$domain};
+	'msg_' . $type . '_' . $domain
+}
+
+sub consoleColorsCSS {
+	my $css;
+
+	for my $type (keys %consoleColors) {
+		for my $domain (keys %{$consoleColors{$type}}) {
+			next unless $type =~ /^\w+$/ && $domain =~ /^\w+$/;
+			my $color = $consoleColors{$type}{$domain};
+			$css .= ".msg_${type}_${domain} { color: ${consoleColors{$type}{$domain}}; }\n"
+		}
+	}
+
+	$css
+}
+
+sub consoleLogHTML {
+	my @parts;
+
+	defined &HTML::Entities::encode
+	or return '<span class="msg_web"><a href="http://search.cpan.org/perldoc?HTML::Entities">HTML::Entities</a> is required to display console log.' . "\n" . '</span>';
+
+	for (@messages) {
+		my $domain = $consoleColors{$_->{type}}{$_->{domain}} ? $_->{domain} : 'default';
+		my $class = messageClass($_->{type}, $_->{domain});
+		$class = ' class="' . $class . '"' if $class;
+
+		push @parts, '<span' . $class . '>' . encode_entities($_->{message}) . '</span>';
+	}
+
+	push @parts, '<noscript><span class="msg_web">Reload to get new messages.</span></noscript>';
+
+	local $";
+	"@parts"
+}
+
+# TODO merge with chist command somehow, new API?
+# TODO chat_log_file's contents are formatted and look different
+sub chatLogHTML {
+	my @parts;
+
+	my $bw = eval { File::ReadBackwards->new($Settings::chat_log_file) }
+	or return do {
+		if ($@ =~ 'perhaps you forgot to load "File::ReadBackwards"') {
+			'<span class="msg_web"><a href="http://search.cpan.org/perldoc?File::ReadBackwards">File::ReadBackwards</a> is required to retrieve chat log.' . "\n" . '</span>'
+		} else {
+			'<span class="msg_error_default">Error while retrieving chat log:' . "\n" . encode_entities($@) . '</span>'
+		}
+	};
+
+	defined &HTML::Entities::encode
+	or return '<span class="msg_web"><a href="http://search.cpan.org/perldoc?HTML::Entities">HTML::Entities</a> is required to display chat log.' . "\n" . '</span>';
+
+	while (defined(my $line = $bw->readline)) {
+		push @parts, encode_entities($line);
+		# TODO: make the message size configurable
+		last if @parts > 20;
+	}
+	@parts = reverse @parts;
+
+	push @parts, '<noscript><span class="msg_web">Reload to get new messages.</span></noscript>';
+
+	local $";
+	"@parts"
 }
 
 # [PT-BR] "hookShopList" é usada na aba "Shop".
@@ -372,7 +434,7 @@ sub request {
 		{ url => '/report.html', title => T('Report'), image => 'icon-tasks' },
 		{ url => '/config.html', title => T('Config'), image => 'icon-cog' },
 		{ url => '/console.html', title => T('Console') },
-		{ url => '/chatlog.html', title => T('Chat Log'), image => 'icon-comment' },
+		{ url => '/chat.html', title => T('Chat Log'), image => 'icon-comment' },
 		{ url => '/guild.html', title => T('Guild') },
 		{ url => '/shop.html', title => T('Vender List'), image => 'icon-shopping-cart' },
 		{ url => '/npcs.html', title => T('NPC List') },
@@ -385,6 +447,10 @@ sub request {
 		menu =>
 			'<li class="nav-header">' . T('Menu') . '</li>'
 			. (join "\n", map { '<li class="' . ($_->{url} eq $process->file && 'active') . '"><a href="' . $_->{url} . '"><i class="' . ($_->{image} || 'icon-chevron-right') . '"></i> ' . $_->{title} . '</a></li>' } @menu),
+	# Logs
+		consoleColors => consoleColorsCSS,
+		consoleLog => consoleLogHTML,
+		chatLog => chatLogHTML,
 	# NPC
 		'npcBinID' => \@npcBinID,
 		'npcName' => \@npcName,
@@ -403,7 +469,6 @@ sub request {
 		'inventoryUnusableAmount' => \@unusableAmount,
 		'inventoryUnusable' => \@unusable,
 		'inventoryUnusableJS' => \@unusableJS,
-		'consoleMessages' => \@messages,
 		'characterStatuses' => \@statuses,
 		'unusableID' => \@unusableID,
 		'usableID' => \@usableID,
@@ -549,9 +614,6 @@ sub request {
 		'characterGetRouteX' => $char->{pos_to}->{x},
 		'characterGetRouteY' => $char->{pos_to}->{y},
 		'characterGetTimeRoute' => $char->{time_move_calc},
-		'lastConsoleMessage' => $messages[-1],
-		'lastConsoleMessage2' => $messages[-2],
-		'lastConsoleMessage3' => $messages[-3],
 		'skin' => 'default', # TODO: replace with config.txt entry for the skin
 		'brand' => $Settings::NAME,
 		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
@@ -561,6 +623,7 @@ sub request {
 	%templates = map { $_ => template->new($webMonitorPlugin::path . '/WWW/' . $_ . '.template')->{template} } qw(
 		_header.html
 		_footer.html
+		_sidebar.html
 	);
 	
 	if ($filename eq '/handler') {
@@ -569,21 +632,7 @@ sub request {
 		return;
 	}
 
-	# TODO: will be removed later
-	if ($filename eq '/console') {
-		# [PT-BR] Recarregar a página a cada 5 segundos | [EN] Reload the page every 5 seconds
-		$content .= '<head><meta http-equiv="refresh" content="1"></head>' . "\n";
-		$content .= '<pre>' . "\n";
-
-		# Concatenate the message buffer
-		foreach my $message (@messages) {
-			$content .= $message;
-		}
-		
-		$content .= '</pre>';
-		$process->shortResponse($content);
-
-	} elsif ($filename =~ m{^/map/(\w+)$} and my $image = Field->new(name => $1)->image('png, jpg')) {
+	if ($filename =~ m{^/map/(\w+)$} and my $image = Field->new(name => $1)->image('png, jpg')) {
 		$process->header('Content-Type' => contentType($image));
 		sendFile($process, $image);
 

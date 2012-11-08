@@ -27,6 +27,9 @@ sub new {
 
 	Scalar::Util::weaken(my $weak = $self);
 
+	my $data = [$weak];
+	$self->{logHook} = Log::addHook(\&console, $data);
+
 	$self->{hooks} = Plugins::addHooks(
 		['packet/hp_sp_changed' => sub { $weak->values(qw(char_hp char_sp)) } ],
 		['packet/stat_info' => sub { $weak->values } ],
@@ -40,6 +43,19 @@ sub new {
 	);
 
 	$self
+}
+
+sub console {
+	my ($type, $domain, $level, $currentVerbosity, $message, $data) = @_;
+	my $self = $data->[0] or return;
+
+	if ($level <= $currentVerbosity) {
+		$self->broadcast(encode_json({type => 'console', data => {
+			message => $message,
+			domain => $domain,
+			class => webMonitorServer::messageClass($type, $domain),
+		}}));
+	}
 }
 
 my %valueSources = (

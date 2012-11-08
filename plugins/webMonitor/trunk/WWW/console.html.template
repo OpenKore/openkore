@@ -1,23 +1,17 @@
 {{_header.html}}
 
-        <div class="span9">
-          <div class="row-fluid">
-            <div class="span9">
-              <h3>{T Console}</h3>
-			  <object height="350" width="100%" type="text/html" data="logConsole.html" ></object>
+<div class="span9">
+	<div class="row-fluid">
+		<div class="span9">
+			<h3>{T Console}</h3>
 
-			  <br/>
-            </div>
-             <div class="span3">
-              <h3>{characterName}</h3>
-				<p>Base Level
-				<div class="progress"><div class="bar" style="width: {characterBasePercent}%;"></div></div></p>
-				<p>Job Level
-				<div class="progress"><div class="bar" style="width: {characterJobPercent}%;"></div></div></p>
-              <p><a class="btn" href="index.html">Detalhar... &raquo;</a></p>
-				
-			  </div>
-          </div>
-        </div>
+			<pre class="log console">{consoleLog}</pre>
+
+			</br>
+		</div>
+
+		{{_sidebar.html}}
+	</div>
+</div>
 
 {{_footer.html}}

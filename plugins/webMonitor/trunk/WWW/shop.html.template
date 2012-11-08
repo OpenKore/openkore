@@ -24,7 +24,7 @@
         <div class="span9">
           <div class="row-fluid">
             <div class="span9">
-			<object height="350" width="100%" type="text/html" data="logConsole.html" ></object>
+			<pre class="log console">{consoleLog}</pre>
 			
 			<select class="span4" id="lista_loja" onChange="exibir()">
 				<option selected value="">Choose a shop to view</option>

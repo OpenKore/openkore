@@ -66,17 +66,7 @@
 				</div>
             </div><!--/span-->
 			
-            <div class="span3">
-              <br/><h5 class="center"><i class="icon-map-marker"></i> <span class="value_field_description">{characterLocationDescription}</span></h5>
-				<div class="center"><canvas id="mapa" style="background-image: url('/map/{characterLocationMap}')"></canvas><br/></div>
-				<script>
-				var c=document.getElementById("mapa");
-				var ctx=c.getContext("2d");
-				ctx.fillStyle="#FF0000";
-				ctx.fillRect(150,150,5,3);
-				</script>
-				<p><div class="center" id="coord"><span class="value_char_pos_x">{characterLocationX}</span>, <span class="value_char_pos_y">{characterLocationY}</span></p></div>
-			</div><!--/span-->
+			{{_sidebar.html}}
 			
           </div><!--/row-->
 		  
