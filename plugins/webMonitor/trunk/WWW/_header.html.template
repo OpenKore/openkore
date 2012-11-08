@@ -8,6 +8,11 @@
 	<link rel="icon" type="image/png" href="img/favicon.png" />
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/webMonitor.css">
+	<style type="text/css">
+		/*<![CDATA[*/
+			{consoleColors}
+		/*]]>*/
+	</style>
 	<script type="application/javascript" src="js/jquery.min.js"></script>
 	<script type="application/javascript" src="js/bootstrap-2.0.2.js"></script>
 	<script type="application/javascript" src="js/webMonitor.js"></script>

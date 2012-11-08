@@ -49,8 +49,6 @@ BEGIN {
 }
 use lib $path;
 use webMonitorServer;
-use chatLogWebMonitor;
-use logConsole;
 use Globals;
 use Log qw(warning message error);
 
