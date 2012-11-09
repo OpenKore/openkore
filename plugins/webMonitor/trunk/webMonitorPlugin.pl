@@ -78,7 +78,7 @@ sub post_loading {
 		$webserver = new webMonitorServer($port, $bind);
 	};
 	unless ($webserver) {
-		error "webMonitor failed to start\n";
+		error "webMonitor failed to start: $@\n";
 		Unload;
 	}
 
@@ -87,7 +87,7 @@ sub post_loading {
 		$socketServer = new WebMonitor::WebSocketServer(undef, $bind);
 	};
 	unless ($socketServer) {
-		error "WebSocket server failed to start\n"
+		error "WebSocket server failed to start: $@\n"
 	}
 }
 
