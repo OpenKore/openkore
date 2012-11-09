@@ -1,1102 +1,1129 @@
-# Extracted from DOS Extractor V5.2 (by ROX_Leopardo) at 26/10/2012
-0942 2 2 0
-08AC 2 2 0
-02E4 6 6 0
-0863 2 2 0
-01F9 6 6 0
-01FB 56 56 0
-00CB 3 3 1
-07D7 8 8 0
-0283 6 6 1
-0855 6 6 0
-0939 2 2 0
-0206 11 11 1
-0091 22 22 1
-0846 4 4 0
-00C2 6 6 1
-0102 6 6 0
-0882 2 2 0
-07E9 5 5 0
-088E 2 2 0
-092B 2 2 0
-02A6 -1 10 0
-0814 86 86 1
-08D3 10 10 0
-07DB 8 8 1
-0967 2 2 0
-08E3 118 118 0
-094A 2 2 0
-096E -1 4 1
-07EB -1 8 1
-086E 2 2 0
-095F 2 2 0
-08D0 9 9 1
-0264 20 20 0
-0156 -1 4 1
-0145 19 19 1
-0837 3 3 0
-0972 -1 9 1
-013C 4 4 1
-01A8 4 4 0
-0879 2 2 0
-02D7 -1 43 1
-007C 44 44 1
-00C1 2 2 0
-0961 2 2 0
-0065 17 17 0
-01DB 2 2 0
-02CA 3 3 0
-0183 10 10 0
-098B 2 2 0
-01B2 -1 85 0
-0845 6 6 0
-085E 2 2 0
-0885 2 2 0
-008A 29 29 1
-0968 2 2 0
-080F 20 20 1
-0229 15 15 1
-07D9 268 268 1
-012C 3 3 1
-08F9 6 6 1
-00B8 7 7 0
-0240 -1 8 1
-026C 4 4 0
-0184 10 10 1
-0360 6 6 0
-011E 3 3 1
-0926 2 2 0
-021B 10 10 1
-081B 10 10 1
-0223 8 8 1
-0979 50 50 0
-0246 4 4 0
-07FC 10 10 1
-0101 6 6 1
-02D6 6 6 0
-0215 6 6 1
-020D -1 4 0
-0877 2 2 0
-0945 2 2 0
-07E4 6 6 0
-01A3 5 5 1
-010C 6 6 1
-08F5 -1 4 1
-016B 10 10 0
-0964 2 2 0
-0172 10 10 0
-0178 4 4 0
-01C3 -1 16 1
-01C0 2 2 0
-08D6 6 6 0
-014A 6 6 1
-00C7 -1 4 1
-08B3 -1 8 0
-00C4 6 6 1
-01F0 -1 4 1
-0808 14 14 0
-0082 2 2 0
-00D3 2 2 0
-0069 -1 47 0
-01A4 11 11 1
-092F 2 2 0
-0143 10 10 0
-0973 7 7 1
-025E 4 4 0
-0903 -1 4 1
-01F1 -1 4 0
-0105 31 31 1
-0133 -1 8 1
-0141 14 14 1
-00A2 6 6 0
-021A 282 282 1
-085F 2 2 0
-08BC 10 10 0
-00DC 28 28 1
-01B3 67 67 1
-008B 23 23 1
-0192 24 24 1
-0243 6 6 0
-0363 8 8 0
-08E7 10 10 0
-02E5 5 5 0
-019B 10 10 1
-00D9 14 14 0
-0850 7 7 0
-02DF 36 36 1
-028C 46 46 0
-09CB -1 28 0
-02AA 4 4 0
-009C 9 9 1
-0861 2 2 0
-08B0 17 17 0
-088D 2 2 0
-07EC 8 8 0
-00AC 7 7 1
-017F -1 4 1
-013A 4 4 1
-0090 7 7 0
-0134 -1 8 0
-0270 2 2 0
-02DB -1 4 0
-0971 6 6 1
-01CD 30 30 1
-00FD 27 27 1
-02CB 65 65 1
-0818 -1 16 1
-0189 4 4 1
-0981 -1 12 0
-00C8 -1 4 0
-010B 6 6 1
-02C5 30 30 1
-019C -1 4 0
-08B6 3 3 0
-0887 2 2 0
-08FC 30 30 0
-093C 2 2 0
-08DF 50 50 1
-011B 20 20 0
-01F5 9 9 1
-017E -1 4 0
-0988 6 6 0
-098D -1 4 0
-0170 14 14 0
-0098 3 3 1
-01B7 6 6 0
-0221 -1 4 1
-01FF 10 10 1
-0148 8 8 1
-097B -1 16 0
-0825 -1 65 0
-0976 -1 28 1
-01D1 14 14 1
-02E7 -1 6 1
-08C2 2 2 0
-0163 -1 4 1
-0260 6 6 1
-081E 8 8 1
-00CF 27 27 0
-08DA 26 26 1
-08B9 12 12 0
-0122 -1 4 1
-007B 60 60 1
-013E 24 24 1
-0149 9 9 0
-02D4 29 29 1
-08CA -1 8 0
-01C7 2 2 1
-08E9 2 2 0
-01B1 7 7 1
-0868 2 2 0
-0369 7 7 0
-0853 -1 4 0
-01D8 54 54 1
-0962 2 2 0
-0124 21 21 1
-01E6 26 26 1
-00EA 5 5 1
-0252 -1 12 1
-028A 18 18 1
-01AA 10 10 1
-0439 8 8 0
-0196 9 9 1
-00FE 30 30 1
-0923 2 2 0
-088C 2 2 0
-02DE 6 6 1
-091A 2 2 0
-01D2 10 10 1
-01E5 6 6 0
-0977 14 14 1
-0112 4 4 0
-08C5 6 6 0
-0248 -1 68 0
-096D -1 4 1
-0931 2 2 0
-0275 37 37 0
-0087 12 12 1
-082D -1 29 0
-006C 3 3 0
-07EF 8 8 1
-0955 2 2 0
-00E4 6 6 0
-096C 6 6 1
-019F 6 6 0
-0157 6 6 0
-018E 10 10 0
-07EA 2 2 0
-00F5 8 8 0
-0854 -1 4 0
-08C3 10 10 0
-00C6 -1 4 1
-02B0 85 85 0
-07F9 -1 63 1
-0235 -1 4 1
-0292 2 2 0
-0938 2 2 0
-0965 2 2 0
-027A -1 4 1
-08AB 2 2 0
-028D 34 34 0
-00FF 10 10 0
-098F -1 8 0
-019D 6 6 0
-01C4 22 22 1
-07DF 54 54 0
-0888 2 2 0
-016A 30 30 1
-01AD -1 4 1
-01ED 2 2 0
-0130 6 6 0
-08C6 4 4 0
-01CC 9 9 1
-0928 2 2 0
-08E5 41 41 0
-096A 6 6 0
-02D8 10 10 0
-02BA 11 11 0
-0097 -1 32 1
-0836 -1 7 0
-0104 79 79 1
-00A6 -1 4 1
-093B 2 2 0
-0910 10 10 1
-08BB 8 8 0
-01D7 11 11 1
-0828 14 14 0
-02F0 10 10 1
-01C8 13 13 1
-024F 10 10 0
-0171 30 30 1
-0135 7 7 1
-0160 -1 4 1
-08B2 -1 6 0
-08C8 34 34 1
-016E 186 186 0
-025A -1 4 1
-0287 -1 8 1
-090F -1 73 1
-0937 2 2 0
-0256 5 5 1
-0921 2 2 0
-026A 4 4 0
-00C5 7 7 0
-0986 10 10 0
-0255 5 5 1
-0237 2 2 0
-089E 2 2 0
-0956 2 2 0
-08F8 7 7 1
-01E8 28 28 0
-026B 4 4 0
-007E 6 6 0
-01B9 6 6 1
-080B 6 6 1
-0198 8 8 0
-0142 6 6 1
-006D 118 118 0
-01A9 6 6 0
-07DC 6 6 0
-0121 14 14 1
-0813 -1 12 1
-02D9 10 10 1
-0983 29 29 1
-0953 2 2 0
-090C 30 30 0
-0081 3 3 0
-01CA 3 3 0
-087B 2 2 0
-01F4 32 32 1
-00A3 -1 4 1
-0908 5 5 1
-0940 2 2 0
-0119 13 13 1
-0273 30 30 0
-012E 2 2 0
-0860 2 2 0
-0073 11 11 1
-02B8 22 22 1
-08E2 27 27 0
-0114 31 31 1
-01AF 4 4 0
-0875 2 2 0
-02B1 -1 8 1
-0864 2 2 0
-027E -1 6 0
-0277 84 84 0
-08EA 4 4 0
-043F 25 25 1
-08A7 36 36 0
-02EE 60 60 1
-0975 -1 28 1
-08EE 6 6 0
-0949 2 2 0
-00A1 6 6 1
-02ED 59 59 1
-0984 28 28 1
-0902 -1 4 1
-0974 2 2 1
-0957 2 2 0
-0151 6 6 0
-08EC 73 73 0
-0827 6 6 0
-01C6 4 4 0
-08F1 6 6 0
-00BA 2 2 0
-0161 -1 4 0
-0989 2 2 0
-0294 10 10 1
-08FD 6 6 0
-0199 4 4 1
-01A1 3 3 0
-0954 2 2 0
-018C 29 29 1
-01BA 26 26 0
-08BF 8 8 0
-0893 2 2 0
-029C 66 66 0
-018B 4 4 0
-088A 2 2 0
-0279 2 2 0
-02AD 8 8 0
-0068 46 46 0
-0800 -1 12 1
-01BE 2 2 0
-015C 90 90 1
-0438 10 10 0
-00DF -1 17 1
-022A 58 58 1
-0085 5 5 0
-01F2 20 20 1
-0829 12 12 0
-0167 3 3 1
-08CD 10 10 1
-0218 2 2 0
-08D8 27 27 1
-007F 6 6 1
-08FF 24 24 1
-00F8 2 2 1
-01D9 53 53 1
-00F6 8 8 1
-0144 23 23 1
-0254 3 3 0
-07F0 6 6 0
-023E 8 8 0
-0936 2 2 0
-02DD 32 32 1
-007D 2 2 0
-00E2 26 26 0
-00F1 2 2 1
-0187 6 6 0
-0856 -1 71 1
-00DE -1 15 0
-0212 26 26 0
-08E6 4 4 0
-02E3 10 10 0
-0083 2 2 1
-02F3 -1 68 0
-082C 10 10 0
-02EC 67 67 1
-0946 2 2 0
-0116 10 10 0
-00A0 23 23 1
-08C0 -1 10 0
-01D0 8 8 1
-02CC 4 4 1
-08CF 10 10 0
-00EF 2 2 0
-0266 30 30 0
-094B 2 2 0
-027B 14 14 0
-01D5 -1 8 0
-08DD 27 27 1
-01B8 3 3 1
-08B5 6 6 0
-0076 9 9 1
-01BB 26 26 0
-024B 4 4 0
-07F6 14 14 1
-0878 2 2 0
-01F8 2 2 1
-025C 4 4 0
-02C6 30 30 1
-080A 18 18 1
-0918 2 2 0
-01F3 10 10 1
-0064 55 55 0
-0823 -1 6 0
-07ED 10 10 1
-02A7 -1 10 0
-0805 -1 5 1
-0094 6 6 0
-0137 6 6 1
-0896 2 2 0
-0166 -1 4 1
-0447 2 2 0
-0924 2 2 0
-0231 26 26 0
-08FB 6 6 1
-0093 2 2 1
-0228 18 18 0
-010F -1 4 1
-093D 2 2 0
-0109 -1 8 1
-08BD 8 8 0
-0826 4 4 0
-00EC 3 3 1
-02D0 -1 4 1
-0366 90 90 0
-015A 66 66 1
-089F 2 2 0
-0164 -1 4 1
-029E 11 11 1
-0930 2 2 0
-0966 2 2 0
-010E 11 11 1
-00DD 29 29 1
-086F 2 2 0
-0916 26 26 1
-016D 14 14 1
-089A 2 2 0
-01DA 60 60 1
-0803 4 4 1
-00FC 6 6 0
-08A3 2 2 0
-00C3 8 8 1
-08F7 3 3 1
-02F2 2 2 1
-043E -1 4 1
-094E 2 2 0
-015F 42 42 1
-0886 2 2 0
-08CE 2 2 0
-0914 -1 80 1
-021E 6 6 0
-015E 6 6 1
-017A 4 4 0
-07F4 3 3 0
-098A -1 74 0
-013D 6 6 1
-093E 2 2 0
-02D2 -1 4 1
-00DA 3 3 1
-01C5 22 22 1
-01CE 6 6 0
-0088 10 10 1
-02E2 8 8 0
-02BB 8 8 1
-035F 6 6 0
-08E4 6 6 0
-012F -1 84 0
-0449 4 4 0
-0195 102 102 1
-006E 3 3 0
-01A5 26 26 0
-093F 2 2 0
-0258 2 2 0
-0804 14 14 0
-083A 5 5 0
-07E1 15 15 1
-01B0 11 11 1
-0874 2 2 0
-0443 8 8 0
-084A 2 2 0
-08F4 6 6 0
-0912 10 10 1
-087E 2 2 0
-0245 3 3 1
-0115 35 35 1
-023B 26 26 0
-0214 42 42 1
-0922 2 2 0
-07F8 -1 62 1
-084D 10 10 0
-083C 10 10 0
-091D 2 2 0
-08CB -1 10 0
-00BB 5 5 0
-0819 -1 15 0
-00E9 19 19 1
-07E8 -1 4 0
-0201 -1 4 1
-0437 5 5 0
-010D 2 2 1
-02B2 -1 8 1
-0282 284 284 1
-0232 9 9 0
-08CC 109 109 0
-0165 30 30 0
-01CB 9 9 0
-092A 2 2 0
-02AB 36 36 0
-0899 2 2 0
-0958 2 2 0
-01AE 4 4 0
-024D 12 12 0
-0188 8 8 1
-0262 11 11 0
-0952 2 2 0
-02CD 71 71 1
-07F2 8 8 1
-027C 60 60 0
-011D 2 2 0
-08D1 7 7 1
-0444 -1 8 1
-07F7 -1 69 1
-08A5 2 2 0
-090B 30 30 0
-095E 2 2 0
-092C 2 2 0
-0136 -1 8 1
-02C9 3 3 1
-010A 4 4 1
-025F 6 6 1
-0155 -1 4 0
-00B9 6 6 0
-095B 2 2 0
-0816 6 6 1
-0960 2 2 0
-0066 3 3 0
-00F3 8 8 0
-012D 4 4 1
-092D 2 2 0
-0822 9 9 0
-0075 -1 11 1
-08D9 30 30 1
-0202 5 5 0
-01D4 6 6 1
-02DA 3 3 1
-02E0 34 34 1
-018A 4 4 0
-07E5 4 4 0
-00E5 26 26 1
-0978 6 6 0
-01E0 30 30 1
-00B2 3 3 0
-00BF 3 3 0
-0862 2 2 0
-0806 2 2 0
-022B 57 57 1
-0296 -1 4 1
-08BE 14 14 0
-0217 2 2 0
-016F 182 182 1
-08F0 6 6 0
-022E 71 71 1
-081A 4 4 1
-08BA 10 10 0
-02F6 7 7 0
-08E0 51 51 1
-00B1 8 8 1
-0944 2 2 0
-0291 4 4 1
-016C 43 43 1
-00DB -1 8 1
-0947 2 2 0
-00F0 3 3 1
-081D 22 22 1
-0807 4 4 1
-014D 2 2 0
-0817 2 2 0
-017C 6 6 0
-0074 3 3 0
-0948 2 2 0
-035D -1 16 0
-0204 18 18 0
-0241 6 6 0
-01DD 47 47 0
-0220 10 10 1
-0871 2 2 0
-01D3 35 35 1
-0934 2 2 0
-0120 6 6 1
-0070 3 3 0
-02C8 3 3 0
-0884 2 2 0
-0103 30 30 0
-00CE 2 2 0
-0445 6 6 0
-0925 2 2 0
-02B7 7 7 1
-02A5 8 8 0
-0801 -1 12 0
-00D7 -1 17 1
-0177 -1 4 1
-08AD 2 2 0
-02D1 -1 4 1
-0293 70 70 1
-07E0 58 58 0
-08F3 -1 8 0
-008C -1 4 0
-012A 2 2 0
-07E3 6 6 1
-02E6 6 6 0
-07EE 6 6 0
-0913 30 30 1
-01A7 4 4 0
-02C4 2 2 0
-0226 282 282 1
-00F9 26 26 0
-027F 8 8 0
-0842 6 6 0
-01E7 2 2 0
-08A2 2 2 0
-0441 4 4 1
-0364 8 8 0
-0267 4 4 0
-0154 -1 4 1
-0812 8 8 1
-07D8 8 8 1
-0367 2 2 0
-02D5 2 2 1
-01A2 37 37 1
-097E 12 12 1
-0365 18 18 0
-0959 2 2 0
-0080 7 7 1
-0289 8 8 1
-07E7 32 32 0
-014F 6 6 0
-014E 6 6 1
-08AF 10 10 0
-091B 2 2 0
-0933 2 2 0
-085D 2 2 0
-083B 2 2 0
-0927 2 2 0
-006A 23 23 0
-00FB -1 28 1
-0205 26 26 1
-084C 10 10 0
-0865 2 2 0
-097C 4 4 0
-00F7 2 2 0
-00B3 3 3 0
-00A8 7 7 1
-0162 -1 6 1
-0146 6 6 0
-0905 -1 4 1
-02E1 33 33 1
-028B -1 4 0
-011A 15 15 1
-01E2 34 34 1
-01BD 26 26 0
-029D -1 4 1
-01A0 3 3 1
-0100 2 2 0
-0077 5 5 1
-0078 55 55 1
-00E1 30 30 1
-07DE 30 30 0
-0847 -1 6 0
-08A1 2 2 0
-006B -1 4 0
-0261 11 11 0
-0193 6 6 0
-0244 6 6 0
-0950 2 2 0
-00BE 5 5 1
-0159 54 54 0
-044A 6 6 0
-01DC -1 4 0
-0892 2 2 0
-0951 2 2 0
-0859 -1 45 1
-0809 50 50 1
-0071 28 28 0
-082A 10 10 0
-02B6 7 7 0
-080D 3 3 1
-0917 2 2 0
-0127 8 8 0
-0824 6 6 1
-0906 -1 45 1
-02EB 13 13 1
-094F 2 2 0
-0194 30 30 1
-0881 2 2 0
-00E7 3 3 1
-083D 6 6 0
-011F 16 16 1
-01EF -1 4 1
-0985 -1 4 1
-043D 8 8 1
-0140 22 22 0
-0147 39 39 1
-07F3 6 6 1
-02A2 8 8 1
-0209 36 36 1
-0139 16 16 1
-03DD 18 18 0
-01FC -1 4 1
-0869 2 2 0
-084F 6 6 0
-0274 8 8 1
-08A4 2 2 0
-0182 106 106 1
-0900 -1 4 1
-00A4 -1 4 1
-08B8 10 10 0
-01FE 5 5 1
-022F 5 5 1
-009D 17 17 1
-086A 2 2 0
-02CE 10 10 1
-08C7 -1 19 1
-0288 6 6 0
-0190 90 90 0
-0180 6 6 0
-0970 31 31 0
-00A5 -1 4 1
-0269 4 4 0
-0891 2 2 0
-0866 2 2 0
-0867 2 2 0
-0286 4 4 0
-00AA 9 9 1
-0179 5 5 1
-0802 26 26 0
-0915 -1 74 1
-029B 80 80 1
-028E 4 4 0
-0181 3 3 1
-02CF 6 6 0
-013F 26 26 0
-0295 -1 4 1
-007A 58 58 1
-07F5 6 6 0
-0200 26 26 0
-0238 282 282 1
-08E8 -1 5 1
-0107 10 10 1
-0963 2 2 0
-0095 30 30 1
-0253 3 3 1
-00C0 7 7 1
-02C2 -1 6 1
-00B6 6 6 1
-00E8 8 8 0
-093A 2 2 0
-0230 12 12 1
-02F4 3 3 0
-086B 2 2 0
-02EA -1 4 1
-091E 2 2 0
-0224 10 10 1
-08D5 -1 8 0
-0138 3 3 0
-01FD 15 15 0
-00D2 4 4 1
-086C 2 2 0
-015D 42 42 0
-0297 -1 4 1
-0207 34 34 1
-0436 4 4 0
-0227 18 18 0
-0236 10 10 1
-01B4 12 12 1
-08C4 8 8 0
-01AC 6 6 1
-00ED 2 2 0
-08D2 10 10 1
-014B 27 27 1
-02B4 6 6 1
-080C 2 2 0
-0894 2 2 0
-018F 6 6 1
-0084 2 2 1
-014C -1 4 1
-00A7 8 8 0
-094C 2 2 0
-0106 10 10 1
-020E 32 32 1
-01BF 3 3 0
-035E 2 2 0
-0169 3 3 1
-0067 37 37 0
-095A 2 2 0
-0895 2 2 0
-01EE -1 4 1
-087A 2 2 0
-08A8 2 2 0
-0203 10 10 0
-087D 2 2 0
-08D4 8 8 0
-085B 2 2 0
-083E 26 26 0
-085C 2 2 0
-02E8 -1 4 1
-0920 2 2 0
-02F1 2 2 0
-0843 6 6 0
-0815 -1 89 0
-024A 70 70 1
-0191 86 86 1
-01E1 8 8 1
-0835 2 2 0
-02B5 -1 6 1
-0821 2 2 0
-019A 14 14 1
-0079 53 53 1
-023C 6 6 0
-0901 -1 4 1
-0222 6 6 0
-0935 2 2 0
-0446 14 14 1
-07FD -1 7 1
-0219 282 282 1
-084E 5 5 0
-0889 2 2 0
-01DF 6 6 0
-0117 18 18 1
-097D 288 288 1
-08FA 6 6 1
-02DC -1 32 1
-01E3 14 14 0
-0361 5 5 0
-01E9 81 81 1
-026D 4 4 0
-0858 -1 64 1
-0092 28 28 1
-07FE 26 26 1
-0883 2 2 0
-00EE 2 2 1
-01CF 28 28 1
-0131 86 86 1
-091F 2 2 0
-0969 2 2 0
-0168 14 14 0
-00D8 6 6 1
-0150 110 110 1
-07E6 8 8 1
-009A -1 4 1
-035C 2 2 0
-029A 27 27 1
-019E 2 2 1
-0278 2 2 0
-0810 3 3 1
-028F 6 6 0
-01B6 114 114 1
-0898 2 2 0
-081C 10 10 1
-01C9 97 97 1
-0173 3 3 1
-081F -1 9 1
-006F 2 2 0
-01C2 10 10 1
-0128 8 8 0
-00D4 -1 4 1
-026F 2 2 0
-0870 2 2 0
-0233 11 11 0
-0820 11 11 0
-0132 6 6 1
-00D1 4 4 1
-08AA 2 2 0
-090A 26 26 1
-0851 -1 4 0
-00AF 6 6 1
-08EF 6 6 0
-00FA 3 3 1
-0897 2 2 0
-0113 10 10 0
-0904 -1 4 1
-0873 2 2 0
-01F6 34 34 1
-024C 8 8 0
-015B 54 54 0
-00BC 6 6 1
-0099 -1 4 0
-094D 2 2 0
-0849 12 12 0
-08FE -1 4 1
-0185 34 34 1
-0175 6 6 0
-07FB 25 25 1
-0110 10 10 1
-0152 -1 12 1
-00CA 3 3 1
-0980 7 7 1
-013B 4 4 1
-0448 -1 4 0
-08DE 27 27 1
-0251 34 34 0
-025D 6 6 1
-0259 3 3 0
-0362 6 6 0
-0271 40 40 0
-08DC 26 26 1
-082B 6 6 0
-0880 2 2 0
-022D 19 19 0
-0263 11 11 0
-0125 8 8 1
-08B1 -1 4 0
-00C9 -1 4 0
-0876 2 2 0
-0281 -1 12 0
-01D6 4 4 1
-08D7 28 28 1
-025B 6 6 0
-096B 4 4 1
-0841 4 4 0
-090D -1 10 1
-0268 4 4 0
-0280 12 12 1
-088B 2 2 0
-0298 8 8 1
-0213 26 26 0
-084B 19 19 1
-087F 2 2 0
-08EB 39 39 0
-020A 10 10 1
-0929 2 2 0
-08A0 2 2 0
-0153 -1 4 0
-087C 2 2 0
-0982 7 7 0
-01FA 48 48 0
-02C1 -1 12 1
-089D 2 2 0
-00AB 4 4 0
-0086 16 16 1
-08E1 51 51 1
-023D 6 6 0
-095C 2 2 0
-021C 10 10 1
-0941 2 2 0
-097A -1 8 1
-01BC 26 26 0
-01F7 14 14 0
-0839 66 66 1
-0257 8 8 1
-0111 39 39 1
-08A6 2 2 0
-08F6 22 22 1
-00E6 3 3 0
-0838 12 12 0
-00B0 8 8 1
-0234 6 6 0
-0911 30 30 1
-0247 8 8 0
-00AE -1 4 1
-0272 44 44 0
-0909 6 6 1
-024E 6 6 0
-02AC 6 6 0
-02EF 8 8 1
-00CC 6 6 0
-0242 -1 99 1
-017B -1 4 1
-0250 3 3 1
-0890 2 2 0
-01A6 -1 4 1
-012B 2 2 1
-08F2 36 36 0
-01EB 10 10 1
-00F4 21 21 1
-0197 4 4 0
-0852 2 2 0
-098E -1 28 0
-0290 4 4 0
-0811 -1 12 0
-018D -1 4 1
-0108 -1 4 0
-008D -1 8 1
-08C1 2 2 0
-021D 6 6 0
-0872 2 2 0
-07DA 6 6 0
-00D5 -1 15 0
-02F5 7 7 0
-0176 106 106 0
-08DB 27 27 1
-0089 7 7 0
-00E3 2 2 0
-022C 65 65 1
-017D 7 7 1
-0126 8 8 0
-009F 6 6 0
-0943 2 2 0
-089C 2 2 0
-027D 62 62 0
-00E0 30 30 0
-092E 2 2 0
-080E 14 14 1
-0442 -1 8 1
-008E -1 4 1
-0208 14 14 0
-0129 8 8 0
-089B 2 2 0
-096F 7 7 1
-0368 6 6 0
-01E4 2 2 1
-009B 5 5 0
-011C 68 68 1
-0844 2 2 0
-0216 6 6 1
-0848 -1 6 0
-088F 2 2 0
-00CD 3 3 1
-029F 3 3 0
-01C1 14 14 1
-0919 2 2 0
-021F 66 66 1
-03DE 18 18 0
-0987 63 63 0
-0907 5 5 0
-00D6 3 3 1
-02BC 6 6 0
-00A9 6 6 0
-023F 2 2 0
-07FA 8 8 1
-07F1 18 18 1
-08ED 43 43 0
-01EA 6 6 1
-0225 2 2 0
-08B4 2 2 0
-086D 2 2 0
-02D3 4 4 1
-01DE 33 33 1
-095D 2 2 0
-0072 19 19 0
-00F2 6 6 1
-0285 6 6 1
-0249 3 3 1
-00B7 -1 8 1
-0123 -1 4 1
-02C7 7 7 0
-0299 6 6 1
-0239 11 11 1
-085A 2 2 0
-0265 20 20 0
-07DD 54 54 1
-0840 -1 4 0
-00BD 44 44 1
-00B5 6 6 1
-091C 2 2 0
-098C 4 4 0
-00B4 -1 8 1
-01AB 12 12 1
-009E 17 17 1
-01B5 18 18 0
-0857 -1 65 1
-01EC 26 26 1
-08A9 2 2 0
-0932 2 2 0
-00EB 2 2 0
-0284 14 14 1
-090E 2 2 0
-07E2 8 8 1
-02B3 107 107 1
-097F -1 8 1
-00D0 3 3 0
-044B 2 2 0
-0276 -1 51 0
-02E9 -1 4 1
-0440 10 10 1
-023A 4 4 0
-08C9 2 2 0
-0118 2 2 0
-0174 -1 4 1
-02B9 191 191 1
+# RO packet extractor by iMikeLance/Revok [14:13 (UTC -03:00) 08-11-2012] 
+# Target: D:\marcelofoxes\Documents\Dropbox\Ragnarok Online\_2012-11-08aRagexe.exe 
+# MD5: B7E8323AA7932237E98604B6966865A0  CRC32: 2345EDF7 
+# MID Encryption keys are K: 0x350F3DF0 M: 0x46237A85 A: 0x443C7060
+# Storage Encryption keys are K: 050B6F79, 0202C179, 0E20120, 04FA43E3, 0179B6C8, 05973DF2, 07D8D6B, 08CB9ED9
+0955 2 2 0		# [sync_ex_question_reply]
+0878 2 2 0		# [sync_request_ex]
+01AF 4 4 0		# [unknown]
+08DF 50 50 1	# [unknown]
+07F6 14 14 1	# [unknown]
+009A -1 4 1		# [unknown]
+07EC 8 8 0		# [storage_item_add]
+01BA 26 26 0	# [unknown]
+0251 34 34 0	# [unknown]
+0900 -1 4 1		# [unknown]
+016C 43 43 1	# [unknown]
+0881 2 2 0		# [sync_request_ex]
+08A0 2 2 0		# [sync_ex_question_reply]
+0877 2 2 0		# [sync_request_ex]
+08AD 2 2 0		# [sync_ex_question_reply]
+026B 4 4 0		# [unknown]
+01A1 3 3 0		# [unknown]
+08C3 10 10 0	# [unknown]
+007F 6 6 1		# [unknown]
+0951 2 2 0		# [sync_ex_question_reply]
+081E 8 8 1		# [unknown]
+00B3 3 3 0		# [unknown]
+0989 2 2 0		# [unknown]
+07FD -1 7 1		# [unknown]
+0281 -1 12 0	# [unknown]
+011E 3 3 1		# [unknown]
+08AC 2 2 0		# [sync_ex_question_reply]
+08B2 -1 6 0		# [unknown]
+016A 30 30 1	# [unknown]
+0091 22 22 1	# [unknown]
+02CA 3 3 0		# [unknown]
+0364 8 8 0		# [storage_item_remove]
+012A 2 2 0		# [unknown]
+02E3 10 10 0	# [unknown]
+01F3 10 10 1	# [unknown]
+0071 28 28 0	# [unknown]
+0271 40 40 0	# [unknown]
+0201 -1 4 1		# [unknown]
+0257 8 8 1		# [unknown]
+093C 2 2 0		# [sync_request_ex]
+0824 6 6 1		# [unknown]
+08ED 43 43 0	# [unknown]
+006D 118 118 0	# [unknown]
+006A 23 23 0	# [unknown]
+028A 18 18 1	# [unknown]
+019A 14 14 1	# [unknown]
+088E 2 2 0		# [sync_ex_question_reply]
+00BE 5 5 1		# [unknown]
+0811 -1 12 0	# [unknown]
+00FE 30 30 1	# [unknown]
+0216 6 6 1		# [unknown]
+0980 7 7 1		# [unknown]
+027F 8 8 0		# [unknown]
+01F8 2 2 1		# [unknown]
+0279 2 2 0		# [unknown]
+0893 2 2 0		# [sync_ex_question_reply]
+00F3 8 8 0		# [unknown]
+027E -1 6 0		# [unknown]
+02C4 2 2 0		# [sync_ex_question_reply]
+0907 5 5 0		# [unknown]
+0891 2 2 0		# [sync_ex_question_reply]
+02B9 191 191 1	# [unknown]
+021D 6 6 0		# [unknown]
+0924 2 2 0		# [sync_request_ex]
+0923 2 2 0		# [sync_request_ex]
+08EE 6 6 0		# [unknown]
+0086 16 16 1	# [unknown]
+094F 2 2 0		# [sync_ex_question_reply]
+0436 2 2 0		# [sync_ex_question_reply]
+0252 -1 12 1	# [unknown]
+0127 8 8 0		# [unknown]
+090D -1 10 1	# [unknown]
+0934 2 2 0		# [sync_request_ex]
+01E8 28 28 0	# [unknown]
+035F 6 6 0		# [sync]
+07EE 6 6 0		# [unknown]
+019F 6 6 0		# [unknown]
+02E8 -1 4 1		# [unknown]
+0954 2 2 0		# [sync_ex_question_reply]
+02F5 7 7 0		# [unknown]
+0859 -1 45 1	# [unknown]
+07DD 54 54 1	# [unknown]
+0284 14 14 1	# [unknown]
+08CC 109 109 0	# [unknown]
+02C5 30 30 1	# [unknown]
+01E3 14 14 0	# [unknown]
+0262 11 11 0	# [unknown]
+03DD 18 18 0	# [unknown]
+0882 2 2 0		# [sync_request_ex]
+01FF 10 10 1	# [unknown]
+02DF 36 36 1	# [unknown]
+0226 282 282 1	# [unknown]
+00B1 8 8 1		# [unknown]
+0915 -1 74 1	# [unknown]
+01F9 6 6 0		# [unknown]
+0074 3 3 0		# [unknown]
+01B9 6 6 1		# [unknown]
+01F6 34 34 1	# [unknown]
+01CB 9 9 0		# [unknown]
+01BE 2 2 0		# [unknown]
+028B -1 4 0		# [unknown]
+0443 8 8 0		# [unknown]
+0446 14 14 1	# [unknown]
+00BB 5 5 0		# [unknown]
+044A 6 6 0		# [unknown]
+080F 20 20 1	# [unknown]
+01C8 13 13 1	# [unknown]
+0188 8 8 1		# [unknown]
+086B 2 2 0		# [sync_request_ex]
+024F 10 10 0	# [unknown]
+0843 6 6 0		# [unknown]
+00FD 27 27 1	# [unknown]
+0182 106 106 1	# [unknown]
+0223 8 8 1		# [unknown]
+08CA -1 8 0		# [unknown]
+0277 84 84 0	# [unknown]
+0874 2 2 0		# [sync_request_ex]
+0365 18 18 0	# [unknown]
+025E 4 4 0		# [unknown]
+01B4 12 12 1	# [unknown]
+07E5 4 4 0		# [unknown]
+01CD 30 30 1	# [unknown]
+02BC 6 6 0		# [unknown]
+0965 2 2 0		# [sync_ex_question_reply]
+07F3 6 6 1		# [unknown]
+099D -1 4 1		# [unknown]
+0861 2 2 0		# [sync_request_ex]
+0846 4 4 0		# [unknown]
+02C1 -1 12 1	# [unknown]
+00EB 2 2 0		# [unknown]
+022C 65 65 1	# [unknown]
+0363 8 8 0		# [unknown]
+00CA 3 3 1		# [unknown]
+081F -1 9 1		# [unknown]
+090A 26 26 1	# [unknown]
+012D 4 4 1		# [unknown]
+01AC 6 6 1		# [unknown]
+0908 5 5 1		# [unknown]
+0918 2 2 0		# [sync_request_ex]
+029C 66 66 0	# [unknown]
+02E4 6 6 0		# [unknown]
+01DA 60 60 1	# [unknown]
+0088 10 10 1	# [unknown]
+00A0 23 23 1	# [unknown]
+08C0 -1 10 0	# [unknown]
+0260 6 6 1		# [unknown]
+0212 26 26 0	# [unknown]
+08B9 12 12 0	# [unknown]
+0883 2 2 0		# [sync_request_ex]
+0207 34 34 1	# [unknown]
+08D2 10 10 1	# [unknown]
+091C 2 2 0		# [sync_request_ex]
+0840 -1 4 0		# [unknown]
+00FA 3 3 1		# [unknown]
+020D -1 4 0		# [unknown]
+0080 7 7 1		# [unknown]
+0173 3 3 1		# [unknown]
+0942 2 2 0		# [sync_ex_question_reply]
+00D7 -1 17 1	# [unknown]
+0118 2 2 0		# [unknown]
+0982 7 7 0		# [unknown]
+00B4 -1 8 1		# [unknown]
+08A4 2 2 0		# [sync_ex_question_reply]
+0927 2 2 0		# [sync_request_ex]
+01A9 6 6 0		# [unknown]
+0298 8 8 1		# [unknown]
+0142 6 6 1		# [unknown]
+0991 -1 4 1		# [unknown]
+00FC 6 6 0		# [unknown]
+0361 2 2 0		# [sync_ex_question_reply]
+02CC 4 4 1		# [unknown]
+00EF 2 2 0		# [unknown]
+0992 -1 4 1		# [unknown]
+03DE 18 18 0	# [unknown]
+0236 10 10 1	# [unknown]
+096C 6 6 1		# [unknown]
+0191 86 86 1	# [unknown]
+08E9 2 2 0		# [unknown]
+0104 79 79 1	# [unknown]
+0083 2 2 1		# [unknown]
+08D1 7 7 1		# [unknown]
+0110 10 10 1	# [unknown]
+08B6 3 3 0		# [unknown]
+094D 2 2 0		# [sync_ex_question_reply]
+0876 2 2 0		# [sync_request_ex]
+08B3 -1 8 0		# [unknown]
+00D5 -1 15 0	# [unknown]
+007B 60 60 1	# [unknown]
+08B1 -1 4 0		# [unknown]
+0864 2 2 0		# [sync_request_ex]
+00C1 2 2 0		# [unknown]
+0152 -1 12 1	# [unknown]
+021E 6 6 0		# [unknown]
+025F 6 6 1		# [unknown]
+00A5 -1 4 1		# [unknown]
+0447 2 2 0		# [unknown]
+018B 4 4 0		# [unknown]
+081C 10 10 1	# [unknown]
+0267 4 4 0		# [unknown]
+0844 2 2 0		# [unknown]
+009D 17 17 1	# [unknown]
+0165 30 30 0	# [unknown]
+0856 -1 71 1	# [unknown]
+0151 6 6 0		# [unknown]
+0803 4 4 1		# [unknown]
+0829 12 12 0	# [unknown]
+01EF -1 4 1		# [unknown]
+01D6 4 4 1		# [unknown]
+029B 80 80 1	# [unknown]
+0835 2 2 0		# [unknown]
+01BC 26 26 0	# [unknown]
+092B 2 2 0		# [sync_request_ex]
+0072 19 19 0	# [unknown]
+00A2 6 6 0		# [unknown]
+026D 4 4 0		# [unknown]
+02D3 4 4 1		# [unknown]
+025A -1 4 1		# [unknown]
+0894 2 2 0		# [sync_ex_question_reply]
+0439 8 8 0		# [unknown]
+00C9 -1 4 0		# [unknown]
+01C2 10 10 1	# [unknown]
+01FD 15 15 0	# [unknown]
+029A 27 27 1	# [unknown]
+019E 2 2 1		# [unknown]
+083B 2 2 0		# [unknown]
+08D8 27 27 1	# [unknown]
+01C1 14 14 1	# [unknown]
+0240 -1 8 1		# [unknown]
+086C 2 2 0		# [sync_request_ex]
+098A -1 74 0	# [unknown]
+0963 2 2 0		# [sync_ex_question_reply]
+07F1 18 18 1	# [unknown]
+0087 12 12 1	# [unknown]
+080D 3 3 1		# [unknown]
+010E 11 11 1	# [unknown]
+084C 10 10 0	# [unknown]
+0175 6 6 0		# [unknown]
+08AB 2 2 0		# [sync_ex_question_reply]
+0100 2 2 0		# [unknown]
+02C8 3 3 0		# [unknown]
+0218 2 2 0		# [unknown]
+00D9 14 14 0	# [unknown]
+020E 32 32 1	# [unknown]
+0164 -1 4 1		# [unknown]
+0135 7 7 1		# [unknown]
+099A 9 9 1		# [unknown]
+0445 6 6 0		# [unknown]
+01A7 4 4 0		# [unknown]
+08E1 51 51 1	# [unknown]
+00EE 2 2 1		# [unknown]
+0912 10 10 1	# [unknown]
+014C -1 4 1		# [unknown]
+0166 -1 4 1		# [unknown]
+0170 14 14 0	# [unknown]
+0987 63 63 0	# [unknown]
+0269 4 4 0		# [unknown]
+01E9 81 81 1	# [unknown]
+08DD 27 27 1	# [unknown]
+0093 2 2 1		# [unknown]
+08D6 6 6 0		# [unknown]
+012B 2 2 1		# [unknown]
+090C 30 30 0	# [unknown]
+0967 2 2 0		# [sync_ex_question_reply]
+01FB 56 56 0	# [unknown]
+0263 11 11 0	# [unknown]
+00B9 6 6 0		# [unknown]
+01EC 26 26 1	# [unknown]
+025B 6 6 0		# [unknown]
+0176 106 106 0	# [unknown]
+021F 66 66 1	# [unknown]
+0879 2 2 0		# [sync_request_ex]
+07E6 8 8 1		# [unknown]
+0972 -1 9 1		# [unknown]
+0971 6 6 1		# [unknown]
+00EA 5 5 1		# [unknown]
+0993 -1 4 1		# [unknown]
+02BA 11 11 0	# [unknown]
+0916 26 26 1	# [unknown]
+08E5 41 41 0	# [unknown]
+0868 2 2 0		# [sync_request_ex]
+0816 6 6 1		# [unknown]
+00E2 26 26 0	# [unknown]
+0866 2 2 0		# [sync_request_ex]
+01B8 3 3 1		# [unknown]
+01E5 6 6 0		# [unknown]
+00C3 8 8 1		# [unknown]
+026A 4 4 0		# [unknown]
+00DB -1 8 1		# [unknown]
+086F 2 2 0		# [sync_request_ex]
+024A 70 70 1	# [unknown]
+0130 6 6 0		# [unknown]
+0073 11 11 1	# [unknown]
+0180 6 6 0		# [unknown]
+01E6 26 26 1	# [unknown]
+00F1 2 2 1		# [unknown]
+01C7 2 2 1		# [unknown]
+0204 18 18 0	# [unknown]
+012F -1 84 0	# [unknown]
+07D7 8 8 0		# [unknown]
+0268 4 4 0		# [unknown]
+0264 20 20 0	# [unknown]
+08EA 4 4 0		# [unknown]
+08C6 4 4 0		# [unknown]
+024B 4 4 0		# [unknown]
+090F -1 73 1	# [unknown]
+086E 2 2 0		# [sync_request_ex]
+02A6 -1 10 0	# [unknown]
+01DC -1 4 0		# [unknown]
+08F1 6 6 0		# [unknown]
+00BF 3 3 0		# [unknown]
+01C6 4 4 0		# [unknown]
+0259 3 3 0		# [unknown]
+00DA 3 3 1		# [unknown]
+02EC 67 67 1	# [unknown]
+00F9 26 26 0	# [unknown]
+098B 2 2 0		# [unknown]
+0187 6 6 0		# [unknown]
+0858 -1 64 1	# [unknown]
+02F6 7 7 0		# [unknown]
+0286 4 4 0		# [unknown]
+0969 2 2 0		# [sync_ex_question_reply]
+0913 30 30 1	# [unknown]
+0273 30 30 0	# [unknown]
+0140 22 22 0	# [unknown]
+0885 2 2 0		# [sync_ex_question_reply]
+013E 24 24 1	# [unknown]
+02B5 -1 6 1		# [unknown]
+0109 -1 8 1		# [unknown]
+02A5 8 8 0		# [unknown]
+02E2 8 8 0		# [unknown]
+01CC 9 9 1		# [unknown]
+0285 6 6 1		# [unknown]
+08E4 6 6 0		# [unknown]
+0947 2 2 0		# [sync_ex_question_reply]
+08BF 8 8 0		# [unknown]
+0857 -1 65 1	# [unknown]
+0865 2 2 0		# [sync_request_ex]
+02DB -1 4 0		# [unknown]
+08C1 2 2 0		# [unknown]
+02C9 3 3 1		# [unknown]
+094E 2 2 0		# [sync_ex_question_reply]
+00F5 8 8 0		# [unknown]
+0082 2 2 0		# [unknown]
+0362 6 6 0		# [item_drop]
+08EB 39 39 0	# [unknown]
+0851 -1 4 0		# [unknown]
+02E6 6 6 0		# [unknown]
+0810 3 3 1		# [unknown]
+01D5 -1 8 0		# [unknown]
+08A2 2 2 0		# [sync_ex_question_reply]
+0848 -1 6 0		# [unknown]
+08BD 8 8 0		# [unknown]
+08E8 -1 5 1		# [unknown]
+0922 2 2 0		# [sync_request_ex]
+0906 -1 45 1	# [unknown]
+022A 58 58 1	# [unknown]
+00D4 -1 4 1		# [unknown]
+08A8 2 2 0		# [sync_ex_question_reply]
+089D 2 2 0		# [sync_ex_question_reply]
+02F4 3 3 0		# [unknown]
+099B 8 8 1		# [unknown]
+087E 2 2 0		# [sync_request_ex]
+0880 2 2 0		# [sync_request_ex]
+0822 9 9 0		# [unknown]
+007C 44 44 1	# [unknown]
+0291 4 4 1		# [unknown]
+08BB 8 8 0		# [unknown]
+08A5 2 2 0		# [sync_ex_question_reply]
+035D -1 16 0	# [unknown]
+0997 -1 45 1	# [unknown]
+02EB 13 13 1	# [unknown]
+018A 4 4 0		# [unknown]
+020A 10 10 1	# [unknown]
+0270 2 2 0		# [unknown]
+0092 28 28 1	# [unknown]
+07DE 30 30 0	# [unknown]
+011F 16 16 1	# [unknown]
+0174 -1 4 1		# [unknown]
+00F8 2 2 1		# [unknown]
+0860 2 2 0		# [sync_request_ex]
+0293 70 70 1	# [unknown]
+0849 12 12 0	# [unknown]
+0827 6 6 0		# [unknown]
+014E 6 6 1		# [unknown]
+01BF 3 3 0		# [unknown]
+00E4 6 6 0		# [unknown]
+085D 2 2 0		# [sync_request_ex]
+0928 2 2 0		# [sync_request_ex]
+08EC 73 73 0	# [unknown]
+0146 6 6 0		# [unknown]
+095E 2 2 0		# [sync_ex_question_reply]
+082B 6 6 0		# [unknown]
+088A 2 2 0		# [sync_ex_question_reply]
+014F 6 6 0		# [unknown]
+0988 6 6 0		# [unknown]
+01E2 34 34 1	# [unknown]
+087B 2 2 0		# [sync_request_ex]
+0120 6 6 1		# [unknown]
+0838 12 12 0	# [unknown]
+08BC 10 10 0	# [unknown]
+0440 10 10 1	# [unknown]
+00E0 30 30 0	# [unknown]
+02AA 4 4 0		# [unknown]
+08F3 -1 8 0		# [unknown]
+0163 -1 4 1		# [unknown]
+024E 6 6 0		# [unknown]
+083C 10 10 0	# [unknown]
+011B 20 20 0	# [unknown]
+07E3 6 6 1		# [unknown]
+0299 6 6 1		# [unknown]
+017E -1 4 0		# [unknown]
+01E4 2 2 1		# [unknown]
+08E2 27 27 0	# [unknown]
+0189 4 4 1		# [unknown]
+0169 3 3 1		# [unknown]
+00A9 6 6 0		# [unknown]
+0887 2 2 0		# [sync_ex_question_reply]
+00AA 9 9 1		# [unknown]
+01AA 10 10 1	# [unknown]
+0986 10 10 0	# [unknown]
+0808 14 14 0	# [unknown]
+00C8 -1 4 0		# [unknown]
+0250 3 3 1		# [unknown]
+01D2 10 10 1	# [unknown]
+08E0 51 51 1	# [unknown]
+087F 2 2 0		# [sync_request_ex]
+006E 3 3 0		# [unknown]
+035E 2 2 0		# [unknown]
+0123 -1 4 1		# [unknown]
+093A 4 4 0		# [unknown]
+0862 2 2 0		# [sync_request_ex]
+0958 2 2 0		# [sync_ex_question_reply]
+0283 6 6 1		# [unknown]
+01E0 30 30 1	# [unknown]
+07E1 15 15 1	# [unknown]
+0195 102 102 1	# [unknown]
+08F5 -1 4 1		# [unknown]
+00E5 26 26 1	# [unknown]
+085F 2 2 0		# [sync_request_ex]
+00CE 2 2 0		# [unknown]
+018E 10 10 0	# [unknown]
+00E9 19 19 1	# [unknown]
+01DD 47 47 0	# [unknown]
+01C0 2 2 0		# [unknown]
+0360 6 6 0		# [unknown]
+0443 8 8 0		# [unknown]
+013F 26 26 0	# [unknown]
+0979 50 50 0	# [unknown]
+01C5 22 22 1	# [unknown]
+043F 25 25 1	# [unknown]
+00A6 -1 4 1		# [unknown]
+0138 3 3 0		# [unknown]
+092F 2 2 0		# [sync_request_ex]
+02B7 7 7 1		# [unknown]
+0162 -1 6 1		# [unknown]
+07F5 6 6 0		# [unknown]
+0069 -1 47 0	# [unknown]
+01CE 6 6 0		# [unknown]
+0944 2 2 0		# [sync_ex_question_reply]
+0190 90 90 0	# [unknown]
+0136 -1 8 1		# [unknown]
+019B 10 10 1	# [unknown]
+012C 3 3 1		# [unknown]
+01C4 22 22 1	# [unknown]
+0150 110 110 1	# [unknown]
+0105 31 31 1	# [unknown]
+01B2 -1 85 0	# [unknown]
+01F2 20 20 1	# [unknown]
+0925 2 2 0		# [sync_request_ex]
+0996 -1 28 1	# [unknown]
+0079 53 53 1	# [unknown]
+0926 2 2 0		# [sync_request_ex]
+087C 2 2 0		# [sync_request_ex]
+0974 2 2 1		# [unknown]
+01AB 12 12 1	# [unknown]
+01A8 4 4 0		# [unknown]
+085B 2 2 0		# [sync_request_ex]
+08F0 6 6 0		# [unknown]
+08E7 10 10 0	# [unknown]
+0090 7 7 0		# [unknown]
+097D 288 288 1	# [unknown]
+09CB -1 28 0	# [unknown]
+044B 2 2 0		# [unknown]
+08EF 6 6 0		# [unknown]
+0184 10 10 1	# [unknown]
+08C9 2 2 0		# [unknown]
+0167 3 3 1		# [unknown]
+01EA 6 6 1		# [unknown]
+0863 2 2 0		# [sync_request_ex]
+0131 86 86 1	# [unknown]
+07EB -1 8 1		# [unknown]
+0976 -1 28 1	# [unknown]
+08CF 10 10 0	# [unknown]
+023B 6 6 0		# [unknown]
+0237 2 2 0		# [unknown]
+00B5 6 6 1		# [unknown]
+01EE -1 4 1		# [unknown]
+096B 4 4 1		# [unknown]
+0133 -1 8 1		# [unknown]
+02B2 -1 8 1		# [unknown]
+01A2 37 37 1	# [unknown]
+02CB 65 65 1	# [unknown]
+0444 -1 8 1		# [unknown]
+0933 2 2 0		# [sync_request_ex]
+07F4 3 3 0		# [unknown]
+0288 6 6 0		# [unknown]
+0850 7 7 0		# [unknown]
+01FC -1 4 1		# [unknown]
+0842 6 6 0		# [unknown]
+0117 18 18 1	# [unknown]
+01B0 11 11 1	# [unknown]
+092D 2 2 0		# [sync_request_ex]
+01FA 48 48 0	# [unknown]
+02CF 6 6 0		# [unknown]
+0200 26 26 0	# [unknown]
+0113 10 10 0	# [unknown]
+0910 10 10 1	# [unknown]
+080E 14 14 1	# [unknown]
+010D 2 2 1		# [unknown]
+085E 2 2 0		# [sync_request_ex]
+02B3 107 107 1	# [unknown]
+02DC -1 32 1	# [unknown]
+0169 3 3 1		# [unknown]
+0141 14 14 1	# [unknown]
+02D1 -1 4 1		# [unknown]
+0242 -1 99 1	# [unknown]
+00B0 8 8 1		# [unknown]
+02F1 2 2 0		# [unknown]
+00DD 29 29 1	# [unknown]
+00F4 21 21 1	# [unknown]
+097B -1 16 0	# [unknown]
+0287 -1 8 1		# [unknown]
+07DA 6 6 0		# [unknown]
+07E4 6 6 0		# [item_take]
+07DB 8 8 1		# [unknown]
+01B3 67 67 1	# [unknown]
+0903 -1 4 1		# [unknown]
+088C 2 2 0		# [sync_ex_question_reply]
+0449 4 4 0		# [unknown]
+08E6 4 4 0		# [unknown]
+089A 2 2 0		# [sync_ex_question_reply]
+0144 23 23 1	# [unknown]
+0999 11 11 1	# [unknown]
+0964 2 2 0		# [sync_ex_question_reply]
+02C7 7 7 0		# [unknown]
+01FE 5 5 1		# [unknown]
+08C8 34 34 1	# [unknown]
+0897 2 2 0		# [sync_ex_question_reply]
+095F 2 2 0		# [sync_ex_question_reply]
+0905 -1 4 1		# [unknown]
+0819 -1 15 0	# [unknown]
+0256 5 5 1		# [unknown]
+02EA -1 4 1		# [unknown]
+0167 3 3 1		# [unknown]
+0099 -1 4 0		# [unknown]
+016B 10 10 0	# [unknown]
+081A 4 4 1		# [unknown]
+089F 2 2 0		# [sync_ex_question_reply]
+08FC 30 30 0	# [unknown]
+082A 10 10 0	# [unknown]
+0836 -1 7 0		# [unknown]
+022D 2 2 0		# [sync_request_ex]
+0225 2 2 0		# [unknown]
+01F0 -1 4 1		# [unknown]
+0873 2 2 0		# [sync_request_ex]
+089B 2 2 0		# [sync_ex_question_reply]
+0066 3 3 0		# [unknown]
+0197 4 4 0		# [unknown]
+07EA 2 2 0		# [unknown]
+0448 -1 4 0		# [unknown]
+0869 2 2 0		# [sync_request_ex]
+0804 14 14 0	# [unknown]
+0219 282 282 1	# [unknown]
+015B 54 54 0	# [unknown]
+08D3 10 10 0	# [unknown]
+024C 8 8 0		# [unknown]
+0124 21 21 1	# [unknown]
+084D 10 10 0	# [unknown]
+07DF 54 54 0	# [unknown]
+01BB 26 26 0	# [unknown]
+01DB 2 2 0		# [unknown]
+0282 284 284 1	# [unknown]
+0815 -1 89 0	# [unknown]
+0294 10 10 1	# [unknown]
+0233 11 11 0	# [unknown]
+07F7 -1 69 1	# [unknown]
+015F 42 42 1	# [unknown]
+0248 -1 68 0	# [unknown]
+0898 2 2 0		# [sync_ex_question_reply]
+0129 8 8 0		# [unknown]
+0884 2 2 0		# [sync_ex_question_reply]
+00B6 6 6 1		# [unknown]
+01A3 5 5 1		# [unknown]
+0220 10 10 1	# [unknown]
+08A6 2 2 0		# [sync_ex_question_reply]
+02E5 5 5 0		# [unknown]
+0442 -1 8 1		# [unknown]
+00EC 3 3 1		# [unknown]
+0239 11 11 1	# [unknown]
+010F -1 4 1		# [unknown]
+0297 -1 4 1		# [unknown]
+02D9 10 10 1	# [unknown]
+08A7 2 2 0		# [sync_ex_question_reply]
+0183 10 10 0	# [unknown]
+01E7 2 2 0		# [unknown]
+0441 4 4 1		# [unknown]
+02B6 7 7 0		# [unknown]
+0977 14 14 1	# [unknown]
+010C 6 6 1		# [unknown]
+0119 13 13 1	# [unknown]
+0871 2 2 0		# [sync_request_ex]
+017C 6 6 0		# [unknown]
+07F0 6 6 0		# [unknown]
+02E7 -1 6 1		# [unknown]
+0143 10 10 0	# [unknown]
+02A2 8 8 1		# [unknown]
+0902 -1 4 1		# [unknown]
+086A 2 2 0		# [sync_request_ex]
+0215 6 6 1		# [unknown]
+092A 2 2 0		# [sync_request_ex]
+0367 2 2 0		# [sync_request_ex]
+0245 3 3 1		# [unknown]
+094C 2 2 0		# [sync_ex_question_reply]
+07FE 26 26 1	# [unknown]
+089C 2 2 0		# [sync_ex_question_reply]
+081B 10 10 1	# [unknown]
+027B 14 14 0	# [unknown]
+0198 8 8 0		# [unknown]
+08C7 -1 19 1	# [unknown]
+00AC 7 7 1		# [unknown]
+07E9 5 5 0		# [unknown]
+00C2 6 6 1		# [unknown]
+0067 37 37 0	# [unknown]
+01B5 18 18 0	# [unknown]
+0802 26 26 0	# [party_join_request_by_name]
+017A 4 4 0		# [unknown]
+0278 2 2 0		# [unknown]
+0232 9 9 0		# [unknown]
+084A 2 2 0		# [unknown]
+01B7 6 6 0		# [unknown]
+008A 29 29 1	# [unknown]
+07DC 6 6 0		# [unknown]
+01D1 14 14 1	# [unknown]
+012E 2 2 0		# [unknown]
+0107 10 10 1	# [unknown]
+0853 -1 4 0		# [unknown]
+00AB 4 4 0		# [unknown]
+0975 -1 28 1	# [unknown]
+016D 14 14 1	# [unknown]
+009B 5 5 0		# [unknown]
+0102 6 6 0		# [unknown]
+0998 8 8 1		# [unknown]
+00D3 2 2 0		# [unknown]
+02D0 -1 4 1		# [unknown]
+0978 6 6 0		# [unknown]
+01C9 97 97 1	# [unknown]
+02AC 6 6 0		# [unknown]
+0234 6 6 0		# [unknown]
+01EB 10 10 1	# [unknown]
+00E8 8 8 0		# [unknown]
+0192 24 24 1	# [unknown]
+00A4 -1 4 1		# [unknown]
+08CE 2 2 0		# [unknown]
+096F 7 7 1		# [unknown]
+006B -1 4 0		# [unknown]
+015C 90 90 1	# [unknown]
+0230 12 12 1	# [unknown]
+080A 18 18 1	# [unknown]
+0103 30 30 0	# [unknown]
+016B 10 10 0	# [unknown]
+0984 28 28 1	# [unknown]
+01B1 7 7 1		# [unknown]
+0973 7 7 1		# [unknown]
+00D8 6 6 1		# [unknown]
+085A 2 2 0		# [sync_request_ex]
+0077 5 5 1		# [unknown]
+013B 4 4 1		# [unknown]
+0244 6 6 0		# [unknown]
+0070 3 3 0		# [unknown]
+07ED 10 10 1	# [unknown]
+0801 -1 12 0	# [unknown]
+083A 5 5 0		# [unknown]
+0165 30 30 0	# [unknown]
+02DA 3 3 1		# [unknown]
+0826 4 4 0		# [unknown]
+0111 39 39 1	# [unknown]
+0221 -1 4 1		# [unknown]
+089E 2 2 0		# [sync_ex_question_reply]
+0438 10 10 0	# [skill_use_location]
+027D 62 62 0	# [unknown]
+0870 2 2 0		# [sync_request_ex]
+028D 34 34 0	# [unknown]
+0122 -1 4 1		# [unknown]
+0292 2 2 0		# [unknown]
+0930 2 2 0		# [sync_request_ex]
+0812 8 8 1		# [unknown]
+091A 2 2 0		# [sync_request_ex]
+00AF 6 6 1		# [unknown]
+01A5 26 26 0	# [unknown]
+014B 27 27 1	# [unknown]
+08F6 22 22 1	# [unknown]
+0995 -1 28 1	# [unknown]
+0966 2 2 0		# [sync_ex_question_reply]
+018D -1 4 1		# [unknown]
+02BB 8 8 1		# [unknown]
+018F 6 6 1		# [unknown]
+0266 30 30 0	# [unknown]
+0206 11 11 1	# [unknown]
+07D9 268 268 1	# [unknown]
+02AB 36 36 0	# [unknown]
+0224 10 10 1	# [unknown]
+00CB 3 3 1		# [unknown]
+0227 18 18 0	# [unknown]
+084F 6 6 0		# [unknown]
+0890 19 19 0	# [map_login]
+08FF 24 24 1	# [unknown]
+0177 -1 4 1		# [unknown]
+00DC 28 28 1	# [unknown]
+02F0 10 10 1	# [unknown]
+01F7 14 14 0	# [unknown]
+08A3 2 2 0		# [sync_ex_question_reply]
+027C 60 60 0	# [unknown]
+0837 3 3 0		# [unknown]
+0255 5 5 1		# [unknown]
+00F2 6 6 1		# [unknown]
+007D 2 2 0		# [unknown]
+0886 2 2 0		# [sync_ex_question_reply]
+087A 2 2 0		# [sync_request_ex]
+0275 37 37 0	# [unknown]
+08AA 2 2 0		# [sync_ex_question_reply]
+095D 2 2 0		# [sync_ex_question_reply]
+0231 26 26 0	# [unknown]
+01F4 32 32 1	# [unknown]
+0243 6 6 0		# [unknown]
+0179 5 5 1		# [unknown]
+01ED 2 2 0		# [unknown]
+0937 2 2 0		# [sync_request_ex]
+0116 10 10 0	# [unknown]
+01D9 53 53 1	# [unknown]
+0253 3 3 1		# [unknown]
+096A 6 6 0		# [actor_info_request]
+0901 -1 4 1		# [unknown]
+0960 2 2 0		# [sync_ex_question_reply]
+007A 58 58 1	# [unknown]
+0825 -1 65 0	# [unknown]
+0932 5 5 0		# [homunculus_command]
+02F3 -1 68 0	# [unknown]
+0145 19 19 1	# [unknown]
+08CB -1 10 0	# [unknown]
+021A 282 282 1	# [unknown]
+022B 57 57 1	# [unknown]
+043E -1 4 1		# [unknown]
+01D4 6 6 1		# [unknown]
+00E6 3 3 0		# [unknown]
+00CC 6 6 0		# [unknown]
+028F 6 6 0		# [unknown]
+009C 9 9 1		# [unknown]
+080B 6 6 1		# [unknown]
+0208 14 14 0	# [unknown]
+01A6 -1 4 1		# [unknown]
+0981 -1 12 0	# [unknown]
+092E 2 2 0		# [sync_request_ex]
+01CF 28 28 1	# [unknown]
+084B 19 19 1	# [unknown]
+00B7 -1 8 1		# [unknown]
+0155 -1 4 0		# [unknown]
+0064 55 55 0	# [unknown]
+0076 9 9 1		# [unknown]
+01D7 11 11 1	# [unknown]
+017F -1 4 1		# [unknown]
+010B 6 6 1		# [unknown]
+0172 10 10 0	# [unknown]
+087D 2 2 0		# [sync_request_ex]
+0068 46 46 0	# [unknown]
+0990 31 31 1	# [unknown]
+0280 12 12 1	# [unknown]
+023A 4 4 0		# [unknown]
+08FB 6 6 1		# [unknown]
+013D 6 6 1		# [unknown]
+099C 6 6 1		# [unknown]
+027A -1 4 1		# [unknown]
+02D7 -1 43 1	# [unknown]
+02D2 -1 4 1		# [unknown]
+00AE -1 4 1		# [unknown]
+0217 2 2 0		# [unknown]
+00E7 3 3 1		# [unknown]
+0945 2 2 0		# [sync_ex_question_reply]
+0209 36 36 1	# [unknown]
+0193 6 6 0		# [unknown]
+0249 3 3 1		# [unknown]
+00C5 7 7 0		# [unknown]
+02DD 32 32 1	# [unknown]
+0806 2 2 0		# [unknown]
+088B 2 2 0		# [sync_ex_question_reply]
+0156 -1 4 1		# [unknown]
+0875 2 2 0		# [sync_request_ex]
+093F 2 2 0		# [sync_request_ex]
+006C 3 3 0		# [unknown]
+019C -1 4 0		# [unknown]
+08BA 10 10 0	# [unknown]
+0168 14 14 0	# [unknown]
+0238 282 282 1	# [unknown]
+0241 6 6 0		# [unknown]
+08F4 6 6 0		# [unknown]
+00A7 8 8 0		# [unknown]
+008B 23 23 1	# [unknown]
+016A 30 30 1	# [unknown]
+07E2 8 8 1		# [unknown]
+0132 6 6 1		# [unknown]
+016F 182 182 1	# [unknown]
+0139 16 16 1	# [unknown]
+0196 9 9 1		# [unknown]
+0065 17 17 0	# [unknown]
+016C 43 43 1	# [unknown]
+07E7 32 32 0	# [unknown]
+00DF -1 17 1	# [unknown]
+0983 29 29 1	# [unknown]
+094B 2 2 0		# [sync_ex_question_reply]
+010A 4 4 1		# [unknown]
+086D 26 26 0	# [unknown]
+023F 2 2 0		# [unknown]
+0114 31 31 1	# [unknown]
+02D4 29 29 1	# [unknown]
+028E 4 4 0		# [unknown]
+0085 5 5 0		# [unknown]
+01BD 26 26 0	# [unknown]
+0228 18 18 0	# [unknown]
+08D0 9 9 1		# [unknown]
+097C 4 4 0		# [unknown]
+0368 36 36 0	# [storage_packet]
+00D0 3 3 0		# [unknown]
+0899 2 2 0		# [sync_ex_question_reply]
+091E 2 2 0		# [sync_request_ex]
+0125 8 8 1		# [unknown]
+0149 9 9 0		# [unknown]
+02A7 -1 10 0	# [unknown]
+0166 -1 4 1		# [unknown]
+02E1 33 33 1	# [unknown]
+0914 -1 80 1	# [unknown]
+015E 6 6 1		# [unknown]
+093E 2 2 0		# [sync_request_ex]
+08AF 10 10 0	# [unknown]
+07FB 25 25 1	# [unknown]
+016E 186 186 0	# [unknown]
+08D5 -1 8 0		# [unknown]
+0148 8 8 1		# [unknown]
+095C 2 2 0		# [sync_ex_question_reply]
+08FA 6 6 1		# [unknown]
+0222 6 6 0		# [unknown]
+019D 6 6 0		# [unknown]
+0205 26 26 1	# [unknown]
+08D7 28 28 1	# [unknown]
+00C0 7 7 1		# [unknown]
+0956 2 2 0		# [sync_ex_question_reply]
+023E 8 8 0		# [unknown]
+096E -1 4 1		# [unknown]
+011C 68 68 1	# [unknown]
+02B0 85 85 0	# [unknown]
+095B 2 2 0		# [sync_ex_question_reply]
+01AD -1 4 1		# [unknown]
+00FB -1 28 1	# [unknown]
+0095 30 30 1	# [unknown]
+0126 8 8 0		# [unknown]
+07F9 -1 63 1	# [unknown]
+0089 7 7 0		# [unknown]
+023D 6 6 0		# [unknown]
+0247 8 8 0		# [unknown]
+08F2 36 36 0	# [unknown]
+0202 2 2 0		# [sync_request_ex]
+0185 34 34 1	# [unknown]
+00F6 8 8 1		# [unknown]
+0101 6 6 1		# [unknown]
+00F7 2 2 0		# [unknown]
+08DA 26 26 1	# [unknown]
+083D 6 6 0		# [unknown]
+025D 6 6 1		# [unknown]
+0888 2 2 0		# [sync_ex_question_reply]
+098D -1 4 0		# [unknown]
+0938 2 2 0		# [sync_request_ex]
+02C6 30 30 1	# [unknown]
+021C 10 10 1	# [unknown]
+008C -1 4 0		# [unknown]
+00D2 4 4 1		# [unknown]
+013C 4 4 1		# [unknown]
+0128 8 8 0		# [unknown]
+08BE 14 14 0	# [unknown]
+0147 39 39 1	# [unknown]
+093B 2 2 0		# [sync_request_ex]
+0094 6 6 0		# [unknown]
+096D -1 4 1		# [unknown]
+0909 6 6 1		# [unknown]
+08F8 7 7 1		# [unknown]
+08A9 2 2 0		# [sync_ex_question_reply]
+07F8 -1 62 1	# [unknown]
+08DE 27 27 1	# [unknown]
+0112 4 4 0		# [unknown]
+02B4 6 6 1		# [unknown]
+08F7 3 3 1		# [unknown]
+01A0 3 3 1		# [unknown]
+0081 3 3 0		# [unknown]
+0261 11 11 0	# [unknown]
+098F -1 8 0		# [unknown]
+0821 2 2 0		# [unknown]
+0820 11 11 0	# [unknown]
+02E9 -1 4 1		# [unknown]
+0970 31 31 0	# [unknown]
+097A -1 8 1		# [unknown]
+0943 2 2 0		# [sync_ex_question_reply]
+090B 30 30 0	# [unknown]
+0855 6 6 0		# [unknown]
+00BC 6 6 1		# [unknown]
+084E 5 5 0		# [unknown]
+08A1 2 2 0		# [sync_ex_question_reply]
+08D4 8 8 0		# [unknown]
+0366 90 90 0	# [unknown]
+0817 2 2 0		# [unknown]
+0075 -1 11 1	# [unknown]
+00C4 6 6 1		# [unknown]
+094A 2 2 0		# [sync_ex_question_reply]
+0258 2 2 0		# [unknown]
+01D8 54 54 1	# [unknown]
+0098 3 3 1		# [unknown]
+00CD 3 3 1		# [unknown]
+02F2 2 2 1		# [unknown]
+014A 6 6 1		# [unknown]
+00F0 3 3 1		# [unknown]
+029E 11 11 1	# [unknown]
+08C4 8 8 0		# [unknown]
+006F 2 2 0		# [unknown]
+0178 4 4 0		# [unknown]
+0839 66 66 1	# [unknown]
+01F5 9 9 1		# [unknown]
+0920 2 2 0		# [sync_request_ex]
+081D 22 22 1	# [unknown]
+0845 6 6 0		# [unknown]
+02E0 34 34 1	# [unknown]
+0814 86 86 1	# [unknown]
+00D1 4 4 1		# [unknown]
+02CE 10 10 1	# [unknown]
+091D 2 2 0		# [sync_request_ex]
+00A3 -1 4 1		# [unknown]
+02B8 22 22 1	# [unknown]
+023C 6 6 0		# [unknown]
+00BD 44 44 1	# [unknown]
+083E 26 26 0	# [unknown]
+0274 8 8 1		# [unknown]
+0823 -1 6 0		# [unknown]
+0137 6 6 1		# [unknown]
+00E1 30 30 1	# [unknown]
+011A 15 15 1	# [unknown]
+08CD 10 10 1	# [unknown]
+02ED 59 59 1	# [unknown]
+0181 3 3 1		# [unknown]
+043D 8 8 1		# [unknown]
+018C 29 29 1	# [unknown]
+0946 2 2 0		# [sync_ex_question_reply]
+08B8 10 10 0	# [unknown]
+07E8 -1 4 0		# [unknown]
+0199 4 4 1		# [unknown]
+0157 6 6 0		# [unknown]
+08B4 2 2 0		# [unknown]
+0800 -1 12 1	# [unknown]
+00ED 2 2 0		# [unknown]
+0961 2 2 0		# [sync_ex_question_reply]
+0985 -1 4 1		# [unknown]
+00CF 27 27 0	# [unknown]
+015A 66 66 1	# [unknown]
+07FC 10 10 1	# [unknown]
+0813 -1 12 1	# [unknown]
+082C 10 10 0	# [unknown]
+02EF 8 8 1		# [unknown]
+0168 14 14 0	# [unknown]
+0904 -1 4 1		# [unknown]
+08F9 6 6 1		# [unknown]
+01D3 35 35 1	# [unknown]
+098C 4 4 0		# [unknown]
+0818 -1 16 1	# [unknown]
+0931 2 2 0		# [sync_request_ex]
+07D8 8 8 1		# [unknown]
+0108 -1 4 0		# [unknown]
+02CD 71 71 1	# [unknown]
+0265 20 20 0	# [unknown]
+00C7 -1 4 1		# [unknown]
+025C 4 4 0		# [unknown]
+01DE 33 33 1	# [unknown]
+02B1 -1 8 1		# [unknown]
+08B5 6 6 0		# [unknown]
+0936 2 2 0		# [sync_request_ex]
+0805 -1 5 1		# [unknown]
+026C 4 4 0		# [unknown]
+0950 2 2 0		# [sync_ex_question_reply]
+01CA 3 3 0		# [unknown]
+00D6 3 3 1		# [unknown]
+0919 2 2 0		# [sync_request_ex]
+009F 6 6 0		# [unknown]
+017B -1 4 1		# [unknown]
+024D 12 12 0	# [unknown]
+092C 2 2 0		# [sync_request_ex]
+007E 6 6 0		# [unknown]
+080C 2 2 0		# [unknown]
+022E 71 71 1	# [unknown]
+0935 2 2 0		# [sync_request_ex]
+082D -1 29 0	# [unknown]
+01F1 -1 4 0		# [unknown]
+0115 35 35 1	# [unknown]
+0289 8 8 1		# [unknown]
+08FE -1 4 1		# [unknown]
+00B2 3 3 0		# [unknown]
+014D 2 2 0		# [unknown]
+0994 -1 4 1		# [unknown]
+00B8 7 7 0		# [unknown]
+091B 2 2 0		# [sync_request_ex]
+0097 -1 32 1	# [unknown]
+088D 2 2 0		# [sync_ex_question_reply]
+02C2 -1 6 1		# [unknown]
+01A4 11 11 1	# [unknown]
+0369 7 7 0		# [actor_action]
+08DC 26 26 1	# [unknown]
+0872 2 2 0		# [sync_request_ex]
+008E -1 4 1		# [unknown]
+0854 -1 4 0		# [unknown]
+07FA 8 8 1		# [unknown]
+0272 44 44 0	# [unknown]
+0921 2 2 0		# [sync_request_ex]
+088F 2 2 0		# [sync_ex_question_reply]
+0952 2 2 0		# [sync_ex_question_reply]
+0437 5 5 0		# [character_move]
+0953 2 2 0		# [sync_ex_question_reply]
+009E 17 17 1	# [unknown]
+022F 5 5 1		# [unknown]
+0084 2 2 1		# [unknown]
+02DE 6 6 1		# [unknown]
+0214 42 42 1	# [unknown]
+0889 2 2 0		# [sync_ex_question_reply]
+026F 2 2 0		# [unknown]
+08C5 6 6 0		# [unknown]
+07E0 58 58 0	# [unknown]
+0896 2 2 0		# [sync_ex_question_reply]
+0917 2 2 0		# [sync_request_ex]
+0809 50 50 1	# [unknown]
+0847 -1 6 0		# [unknown]
+017D 7 7 1		# [unknown]
+02D6 6 6 0		# [unknown]
+0161 -1 4 0		# [unknown]
+0276 -1 51 0	# [unknown]
+08E3 118 118 0	# [unknown]
+021B 10 10 1	# [unknown]
+02AD 8 8 0		# [unknown]
+01DF 6 6 0		# [unknown]
+0929 2 2 0		# [sync_request_ex]
+0078 55 55 1	# [unknown]
+015D 42 42 0	# [unknown]
+095A 2 2 0		# [sync_ex_question_reply]
+0948 2 2 0		# [sync_ex_question_reply]
+00DE -1 15 0	# [unknown]
+01AE 4 4 0		# [unknown]
+035C 2 2 0		# [unknown]
+0941 2 2 0		# [sync_ex_question_reply]
+07EF 8 8 1		# [unknown]
+0171 30 30 1	# [unknown]
+0296 -1 4 1		# [unknown]
+0962 2 2 0		# [sync_ex_question_reply]
+013A 4 4 1		# [unknown]
+0159 54 54 0	# [unknown]
+0841 4 4 0		# [unknown]
+028C 46 46 0	# [unknown]
+02D8 10 10 0	# [unknown]
+01B6 114 114 1	# [unknown]
+0828 14 14 0	# [unknown]
+01C3 -1 16 1	# [unknown]
+08DB 27 27 1	# [unknown]
+0957 2 2 0		# [sync_ex_question_reply]
+07F2 8 8 1		# [unknown]
+0254 3 3 0		# [unknown]
+0153 -1 4 0		# [unknown]
+029F 3 3 0		# [unknown]
+0106 10 10 1	# [unknown]
+0121 14 14 1	# [unknown]
+0160 -1 4 1		# [unknown]
+097E 12 12 1	# [unknown]
+00BA 2 2 0		# [unknown]
+01E1 8 8 1		# [unknown]
+08D9 30 30 1	# [unknown]
+0892 5 5 0		# [actor_look_at]
+02D5 2 2 1		# [unknown]
+00A1 6 6 1		# [unknown]
+0203 10 10 0	# [unknown]
+02EE 60 60 1	# [unknown]
+098E -1 28 0	# [unknown]
+00C6 -1 4 1		# [unknown]
+0949 2 2 0		# [sync_ex_question_reply]
+08FD 6 6 0		# [unknown]
+0213 26 26 0	# [unknown]
+08C2 2 2 0		# [unknown]
+0290 4 4 0		# [unknown]
+0867 2 2 0		# [sync_request_ex]
+0940 2 2 0		# [sync_request_ex]
+0939 2 2 0		# [sync_request_ex]
+0911 30 30 1	# [unknown]
+011D 2 2 0		# [unknown]
+01D0 8 8 1		# [unknown]
+0229 15 15 1	# [unknown]
+00FF 10 10 0	# [unknown]
+00E3 2 2 0		# [unknown]
+0235 -1 4 1		# [unknown]
+0154 -1 4 1		# [unknown]
+08B0 17 17 0	# [unknown]
+0895 2 2 0		# [sync_ex_question_reply]
+0852 2 2 0		# [unknown]
+091F 2 2 0		# [sync_request_ex]
+090E 2 2 0		# [unknown]
+0807 4 4 1		# [unknown]
+0134 -1 8 0		# [unknown]
+0246 4 4 0		# [unknown]
+008D -1 8 1		# [unknown]
+093D 2 2 0		# [sync_request_ex]
+029D -1 4 1		# [unknown]
+0295 -1 4 1		# [unknown]
+00A8 7 7 1		# [unknown]
+097F -1 8 1		# [unknown]
+0968 2 2 0		# [sync_ex_question_reply]
+0959 2 2 0		# [sync_ex_question_reply]
+0194 30 30 1	# [unknown]
+085C 2 2 0		# [sync_request_ex]
