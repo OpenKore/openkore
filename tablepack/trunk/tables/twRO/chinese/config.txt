@@ -1,8 +1,11 @@
+
+
 # Config.txt 中文化版
 # 中文化由DrKN漢化及提供
 # 23/01/2011
 # 請參閱使用者手冊
 # 該手冊位於 http://openkore.sourceforge.net/manual/
+
 
 
 ######## 登入及伺服器相關設定 ########
@@ -17,12 +20,22 @@ password
 loginPinCode
 # 登錄密碼
 char
+
+
+
+
+
 # 角色編號
 
 bindIp
+
+
+
 # 綁定IP [ 一般為空白 ] [ 空白=自動判斷 ]
 serverType twRO
 # 伺服器類型 [ 台灣仙境傳說為 twRO ]
+
+
 
 pauseCharServer 0
 # 連接角色伺服器前等候時間 [ 秒 ]
@@ -44,16 +57,18 @@ XKore_silent 1
 # XKore訊息隱藏於RO對話欄 [ 0: 不會顯示在對話欄  1: 會顯示在對話欄 ]
 XKore_bypassBotDetection 0
 # 檢測主程式是否需要加上補丁 [ 0: 不會做主程式檢測  1: 會做主程式檢測 ]
-XKore_exeName Ragxe.exe
+XKore_exeName ragexe.exe
 # RO主程式執行檔名字 [ 免費伺服器為 RagFree.exe ]
 
+
 # XKore 2 模式伺服器端設定
-XKore_listenIp 127.0.0.1 
+XKore_listenIp 127.0.0.1
 # XKore 2 模式綁定IP [ 本機IP ]
 XKore_listenPort 6901
 # XKore 2 模式綁定連接埠
 XKore_publicIp 127.0.0.1
 # XKore 2 模式綁定對外IP [ 外來連接IP ]
+
 
 
 ######## 遠端控制相關設定 ########
@@ -64,14 +79,23 @@ adminPassword
 callSign
 # 指令辨認字眼
 commandPrefix ;
+
+
+
+
+
+
+
 # XKore 模式時使用，所有對話以此開始會當作為指令執行
+
 
 alias_heal healme
 # 自訂快速指令 [ heal 為 指令，healme 為 觸發字眼 舉例：在公頻喊healme，此bot會自動執行指令：heal ]
 
 
+
 ######## 主設定 ########
-allowedMaps 
+allowedMaps
 # 限制bot只能在某地圖活動
 allowedMaps_reaction 1
 # 如果不在allowedMaps，則會執行之動作 [ 0: 重生/使用技能回家  1: 關閉Kore ]
@@ -81,6 +105,7 @@ allowedMaps_reaction 1
 attackAuto 2
 # 自動攻擊模式 [ 0: 不會被動/主動攻擊  1: 只會被動攻擊  2: 會被動/主動攻擊 ]
 attackAuto_party 1
+
 # 是否自動攻擊隊友的目標 [ 0: 不會攻擊  1: 會攻擊 ]
 attackAuto_followTarget 1
 # 是否自動攻擊跟隨目標的目標 [ 0: 不會攻擊  1: 會攻擊 ]
@@ -93,7 +118,7 @@ attackDistanceAuto 0
 attackMaxDistance 2.5
 # 攻擊最大距離
 attackMaxRouteDistance 100
-# 攻擊前移動最大距離
+# 攻擊前移動最大距離 [ 格數 ]
 attackMaxRouteTime 4
 # 攻擊前移動最大時間值 [ 秒 ]
 attackMinPlayerDistance 2
@@ -113,6 +138,11 @@ attackLooters 0
 attackChangeTarget 1
 # 會否攻擊已改變攻擊目標的魔物 [ 0: 不會  1: 會 ]
 aggressiveAntiKS 0
+
+
+
+
+
 # 會否開啟防止搶怪模式 [ 0: 不會  1: 會 ]
 attackAuto_onlyWhenSafe 0
 # 是否會在其他玩家視線內攻擊 [ 0: 會在其他玩家視線內攻擊  1: 不會在奇他玩家視線內攻擊 ]
@@ -139,6 +169,7 @@ attackEquip_shoes
 # 攻擊時自動佩帶裝備 [ 鞋子 ]
 attackEquip_arrow
 # 攻擊時自動佩帶裝備 [ 箭矢 ]
+
 
 
 ######## 雜項設定 ########
@@ -182,10 +213,12 @@ autoMakeArrows 0
 # 是否啟動自動製作箭矢 [ 0: 不會  1: 會 ] [ 需配搭arrowcraft.txt ]
 
 autoRestart 0
+
 # 是否啟動自動重登功能 [ 0: 不會  1: 會 ]
 autoRestartMin 10800
 # 最小達到此秒數才會重登
 autoRestartSeed 3600
+
 # 時間隨機數 達到autoRestartMin後在autoRestartSeed所設定之數字之內隨機一個數字 [ autoRestartMin+隨機(autoRetartSeed) ]
 autoRestartSleep 1
 # 在自動重啟功能中登出後會否待機 [ 0: 不會  1: 會 ]
@@ -204,41 +237,72 @@ autoSpell
 avoidGM_near 0
 # 是否啟動防GM功能 [ 0: 不會  1: 會 ]
 avoidGM_near_inTown 0
+# 是否在城鎮內使用防GM功能 [ 0: 不會  1: 會 ]
 avoidGM_talk 0
+# 是否啟動防GM對話功能 [ 0: 不會  1: 會 ]
 avoidGM_reconnect 1800
+# 防GM功能觸發後重新連接時間 [ 秒 ]
 avoidGM_ignoreList
+# 防GM功能角色無視 [ 角色名稱 使用 , 分隔 ]
 
 avoidList 1
+# 是否啟動防玩家功能 [ 0: 不會  1: 會 ]
 avoidList_inLockOnly 0
+# 是否只在鎖定地圖使用防玩家功能 [ 0: 不會  1: 會 ]
 avoidList_reconnect 1800
+# 防玩家功能觸發後重新連接時間 [ 秒 ]
 
 cachePlayerNames 1
+# 暫存玩家名稱 [ 0: 不會  1: 會 ]
 cachePlayerNames_duration 900
+# 暫存玩家名稱儲存時間 [ 秒 ]
 cachePlayerNames_maxSize 100
+# 暫存玩家名稱容量 [ byte ]
 
 clientSight 20
+# 角色視野距離
 
 dcOnDeath 0
+# 死亡後觸發 [ -1: 不會復活回城或關閉  0/(空白): (ai_dead_respawn)秒後復活  1: 關閉 ]
 dcOnDualLogin 0
+# 遇到重覆登錄後關閉 [ 0: 不會  1: 會  >=2: n秒數後重連 ]
 dcOnDisconnect 0
+# 斷線後關閉 [ 0: 不會  1: 會 ]
 dcOnEmptyArrow 0
+# 箭矢用光後關閉 [ 0: 不會  1: 會 ]
 dcOnMaxReconnections 0
+# 嘗試重新連線達到時關閉 [ 次數 ]
 dcOnMute 0
+# 被禁言後關閉 [ 0: 不會  1: 會 ]
 dcOnPM 0
+# 被密頻後關閉 [ 0: 不會  1: 會 ]
 dcOnZeny 0
+# 金錢小過或等於後觸發
 dcOnStorageFull 1
+# 倉庫滿了後關閉 [ 0: 不會  1: 會 ]
 dcOnPlayer 0
+# 視野內發現玩家後關閉 [ 0: 不會  1: 會 ]
+dcOnServerShutDown 0
+# 伺服器關機時關閉 [ 0: 不會  1: 會 ]
+dcOnServerClose 0
+# 伺服器顯示已關機時關閉 [ 0: 不會  1: 會 ]
 
 follow 0
+# 是否啟動跟隨模式 [ 0: 不會  1: 會 ]
 followTarget
+# 跟隨模式主人名稱
 followEmotion 1
+# 是否跟隨主人使用表情 [ 0: 不會  1: 會 ]
 followEmotion_distance 4
+
 followFaceDirection 0
 followDistanceMax 6
 followDistanceMin 3
 followLostStep 12
 followSitAuto 0
 followBot 0
+followRandom 0
+followRandomDistance 4
 
 itemsTakeAuto 2
 itemsTakeAuto_party 0
@@ -280,11 +344,13 @@ saveMap_warpChatCommand
 
 shopAuto_open 0
 shop_random 0
+shop_LockOnly 0
 
 sitAuto_hp_lower 40
 sitAuto_hp_upper 100
 sitAuto_sp_lower 0
 sitAuto_sp_upper 0
+sitAuto_follow 0
 sitAuto_over_50 0
 sitAuto_idle 1
 sitAuto_look
@@ -335,6 +401,8 @@ dealAuto 1
 dealAuto_names
 partyAuto 1
 partyAutoShare 0
+partyAutoShareItem 0
+partyAutoShareItemDiv 0
 guildAutoDeny 1
 
 verbose 1
@@ -352,6 +420,7 @@ logSystemChat 1
 logEmoticons
 logConsole 0
 logAppendUsername 1
+logAppendServer
 
 chatTitleOversize 0
 shopTitleOversize 0
@@ -370,6 +439,9 @@ tankersList
 
 repairAuto 0
 repairAuto_list
+
+status_mapProperty 0
+status_mapType 0
 
 removeActorWithDistance
 
@@ -483,6 +555,7 @@ attackSkillSlot {
 	disabled 0
 	monsters
 	notMonsters
+	monstersCount
 	maxAttempts 0
 	maxUses 0
 	target_whenStatusActive
@@ -510,6 +583,9 @@ attackComboSlot {
 	dist 1.5
 	isSelfSkill 1
 	target_deltaHp
+	monsters
+	notMonsters
+	monstersCount
 }
 
 doCommand {
@@ -526,6 +602,7 @@ doCommand {
 	aggressives
 	monsters
 	notMonsters
+	monstersCount
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -556,6 +633,7 @@ useSelf_skill {
 	aggressives
 	monsters
 	notMonsters
+	monstersCount
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -571,6 +649,7 @@ useSelf_skill_smartHeal 1
 
 partySkill {
 	lvl 10
+	dist 3
 	maxCastTime 0
 	minCastTime 0
 	hp
@@ -586,6 +665,7 @@ partySkill {
 	aggressives
 	monsters
 	notMonsters
+	monstersCount
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -638,6 +718,8 @@ equipAuto {
 	shoes
 	arrow
 	monsters
+	notMonsters
+	monstersCount
 	weight 0
 	whileSitting 0
 	hp
@@ -675,6 +757,7 @@ useSelf_item {
 	aggressives
 	monsters
 	notMonsters
+	monstersCount
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
