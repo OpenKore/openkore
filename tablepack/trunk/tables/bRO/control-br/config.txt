@@ -1,4 +1,4 @@
-# Pasta control traduzida de acordo com a revision 8224, do iMike
+# Pasta control traduzida de acordo com a revision 8304, do keplerbr
 #############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
@@ -216,7 +216,6 @@ saveMap_warpChatCommand
  
 shopAuto_open 0
 shop_random 0
-shop_LockOnly 0
  
 sitAuto_hp_lower 40
 sitAuto_hp_upper 100
