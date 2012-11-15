@@ -3052,7 +3052,7 @@ sub processAutoShopOpen {
 	}
 
 	if ($config{'shopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && !$shopstarted
-		&& ($config{'shop_LockOnly'} && inLockMap() || !$config{'shop_LockOnly'})) {
+		&& $field->baseName eq $config{'lockMap'}) {
 		
 		openShop();
 	}
