@@ -38,7 +38,7 @@
 		})
 
 		var socketAddr, socket;
-		if (WebSocket && CONFIG.socketPort) {
+		if (typeof WebSocket !== 'undefined' && CONFIG.socketPort) {
 			socketAddr = CONFIG.socketHost + ':' + CONFIG.socketPort
 			message("Connecting (" + socketAddr + ")... ", 'web', 'msg_web')
 
