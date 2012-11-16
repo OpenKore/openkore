@@ -237,6 +237,8 @@ sub initCompletions {
 	%completions = ();
 }
 
+### CATEGORY: Functions
+
 ##
 # Commands::run(input)
 # input: a command.
@@ -441,6 +443,7 @@ sub defaultCompletor {
 
 
 ##################################
+### CATEGORY: Commands
 
 
 sub cmdAI {
@@ -4355,89 +4358,6 @@ sub cmdStorage {
 	}
 }
 
-
-##
-# void cmdStorage_list(String list_type)
-# list_type: ''|eq|nu|u
-#
-# Displays the contents of storage, or a subset indicated by switches.
-#
-# Called by: cmdStorage (not called directly).
-sub cmdStorage_list {
-	my $type = shift;
-	message "$type\n";
-
-	my @useable;
-	my @equipment;
-	my @non_useable;
-
-	for (my $i = 0; $i < @storageID; $i++) {
-		next if ($storageID[$i] eq "");
-		my $item = $storage{$storageID[$i]};
-		if ($item->usable) {
-			push @useable, $item;
-		} elsif ($item->equippable) {
-			my %eqp;
-			$eqp{binID} = $i;
-			$eqp{name} = $item->{name};
-			$eqp{type} = $itemTypes_lut{$item->{type}};
-			## Add amt so we can give quantities for ammo.
-			$eqp{amount} = $item->{amount};
-			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
-			push @equipment, \%eqp;
-		} else {
-			push @non_useable, $item;
-		}
-	}
-
-	my $msg = T("-----------Storage-------------\n");
-
-	if (!$type || $type eq 'eq') {
-		$msg .= T("-- Equipment --\n");
-		foreach my $item (@equipment) {
-			## altered to allow for Arrows/Ammo which will are stackable equip.
-			my $line = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
-			if ($item->{amount} > 1) {
-				$line .= " x $item->{amount}";
-			} else {
-				$line .= $item->{identified};
-			}
-			$msg .= $line . "\n";
-		}
-	}
-
-	if (!$type || $type eq 'nu') {
-		$msg .= T("-- Non-Usable --\n");
-		for (my $i = 0; $i < @non_useable; $i++) {
-			my $item = $non_useable[$i];
-			my $binID = $item->{binID};
-			my $display = $item->{name};
-			$display .= " x $item->{amount}";
-			$msg .= swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$binID, $display]);
-		}
-	}
-
-	if (!$type || $type eq 'u') {
-		$msg .= T("-- Usable --\n");
-		for (my $i = 0; $i < @useable; $i++) {
-			my $item = $useable[$i];
-			my $binID = $item->{binID};
-			my $display = $item->{name};
-			$display .= " x $item->{amount}";
-			$msg .= swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$binID, $display]);
-		}
-	}
-
-	$msg .= "-------------------------------\n";
-	$msg .= TF("Capacity: %d/%d\n", $storage{items}, $storage{items_max});
-	$msg .= "-------------------------------\n";
-	message($msg, "list");
-}
-
 sub cmdStorage_add {
 	my $items = shift;
 
@@ -5694,6 +5614,90 @@ sub cmdWeaponRefine {
 
 sub cmdAnswerCaptcha {
 	$messageSender->sendCaptchaAnswer($_[1]);
+}
+
+### CATEGORY: Private functions
+
+##
+# void cmdStorage_list(String list_type)
+# list_type: ''|eq|nu|u
+#
+# Displays the contents of storage, or a subset indicated by switches.
+#
+# Called by: cmdStorage (not called directly).
+sub cmdStorage_list {
+	my $type = shift;
+	message "$type\n";
+
+	my @useable;
+	my @equipment;
+	my @non_useable;
+
+	for (my $i = 0; $i < @storageID; $i++) {
+		next if ($storageID[$i] eq "");
+		my $item = $storage{$storageID[$i]};
+		if ($item->usable) {
+			push @useable, $item;
+		} elsif ($item->equippable) {
+			my %eqp;
+			$eqp{binID} = $i;
+			$eqp{name} = $item->{name};
+			$eqp{type} = $itemTypes_lut{$item->{type}};
+			## Add amt so we can give quantities for ammo.
+			$eqp{amount} = $item->{amount};
+			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
+			push @equipment, \%eqp;
+		} else {
+			push @non_useable, $item;
+		}
+	}
+
+	my $msg = T("-----------Storage-------------\n");
+
+	if (!$type || $type eq 'eq') {
+		$msg .= T("-- Equipment --\n");
+		foreach my $item (@equipment) {
+			## altered to allow for Arrows/Ammo which will are stackable equip.
+			my $line = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
+			if ($item->{amount} > 1) {
+				$line .= " x $item->{amount}";
+			} else {
+				$line .= $item->{identified};
+			}
+			$msg .= $line . "\n";
+		}
+	}
+
+	if (!$type || $type eq 'nu') {
+		$msg .= T("-- Non-Usable --\n");
+		for (my $i = 0; $i < @non_useable; $i++) {
+			my $item = $non_useable[$i];
+			my $binID = $item->{binID};
+			my $display = $item->{name};
+			$display .= " x $item->{amount}";
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$binID, $display]);
+		}
+	}
+
+	if (!$type || $type eq 'u') {
+		$msg .= T("-- Usable --\n");
+		for (my $i = 0; $i < @useable; $i++) {
+			my $item = $useable[$i];
+			my $binID = $item->{binID};
+			my $display = $item->{name};
+			$display .= " x $item->{amount}";
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$binID, $display]);
+		}
+	}
+
+	$msg .= "-------------------------------\n";
+	$msg .= TF("Capacity: %d/%d\n", $storage{items}, $storage{items_max});
+	$msg .= "-------------------------------\n";
+	message($msg, "list");
 }
 
 1;
