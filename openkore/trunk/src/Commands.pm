@@ -4356,19 +4356,13 @@ sub cmdStorage {
 }
 
 
-## cmdStorage_list
 ##
-## Displays the contents of storage, or a subset indicated by switches.
-##
-## Called by: cmdStorage (not called directly)
-##  
-## Usage:
-##  cmdStorage_list(<list_type>)
-##
-##    Only uses the first parameter of the scalar passed.
-##    <list_type> ::= ''|eq|nu|u
-##
-##
+# void cmdStorage_list(String list_type)
+# list_type: ''|eq|nu|u
+#
+# Displays the contents of storage, or a subset indicated by switches.
+#
+# Called by: cmdStorage (not called directly).
 sub cmdStorage_list {
 	my $type = shift;
 	message "$type\n";
