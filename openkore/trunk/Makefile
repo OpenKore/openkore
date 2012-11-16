@@ -24,3 +24,6 @@ bindist:
 
 test:
 	perl openkore.pl --control=../control --tables=../tables --fields=../fields $$ARGS
+
+doc:
+	cd src/doc && ./createdoc.pl
