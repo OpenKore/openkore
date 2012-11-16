@@ -916,7 +916,9 @@ sub judgeSkillArea {
 
 ##
 # makeCoordsDir(r_hash, rawCoords, bodyDir)
+#
 # Read makeCoords()
+#
 # Another 0.5 bytes or 4 bits are reserved for body direction.
 #
 # ex. stand/spawn packet (4 + 10 + 10 = 24 bits = 3 bytes = a3)
@@ -928,7 +930,9 @@ sub makeCoordsDir {
 
 ##
 # makeCoordsFromTo(r_hashFrom, r_hashTo, rawCoords)
+#
 # Read makeCoords()
+#
 # Coordinates for From & To packed together require 5 bytes.
 #
 # Another 1 byte or 2*4 bits are reserved for a clientside feature:
@@ -946,6 +950,7 @@ sub makeCoordsFromTo {
 
 ##
 # makeCoordsXY(r_hashFrom, r_hashRawCoords)
+#
 # Read makeCoords()
 #
 # Note: this function is used as a help function for: makeCoordsDir, makeCoordsFromTo
@@ -1056,6 +1061,7 @@ sub unShiftPack {
 #
 # Create a distance map from raw field data. This distance map data is used by pathfinding
 # for wall avoidance support.
+
 # sub old_makeDistMap {
 # 	# makeDistMap() is now written in C++ (src/auto/XSTools/misc/fastutils.xs)
 # 	# The old Perl function is still here in case anyone wants to read it

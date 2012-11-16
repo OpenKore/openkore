@@ -3164,6 +3164,8 @@ sub getBestTarget {
 }
 
 ##
+# boolean isSafe()
+#
 # Returns 1 if there is a player nearby (except party and homunculus) or 0 if not
 sub isSafe {
 	foreach (@playersID) {
@@ -3175,6 +3177,8 @@ sub isSafe {
 }
 
 ##
+# boolean isSafeActorQuery(ID)
+#
 # Returns 1 if we are safe to query actor name by given actor ID.
 sub isSafeActorQuery {
 	my ($ID) = @_;
