@@ -723,12 +723,6 @@ sub handle {
 	# [PT-BR] Veja na "sub hookShopList" como foi feita a leitura dos dados
 	# [EN] Look "sub hookShopList" to learn how the data reading was made
 	}
-	
-	###
-	
-	if ($resources->{requestVar}) {
-		$process->print($keywords{$resources->{requestVar}});
-	}
 
 	# make sure this is the last resource to be checked
 	if ($resources->{page}) {
