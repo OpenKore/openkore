@@ -733,7 +733,10 @@ sub handle {
  		$process->header('Location', $filename);
 		$process->status(303, "See Other");
 		$process->print("\n");
+		return
 	}
+
+	$process->status(204 => 'No Content');
 }
 
 sub contentType {
