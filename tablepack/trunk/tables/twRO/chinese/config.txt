@@ -1,12 +1,8 @@
-
-
 # Config.txt 中文化版
 # 中文化由DrKN漢化及提供
 # 23/01/2011
 # 請參閱使用者手冊
 # 該手冊位於 http://openkore.sourceforge.net/manual/
-
-
 
 ######## 登入及伺服器相關設定 ########
 master
@@ -21,21 +17,40 @@ loginPinCode
 # 登錄密碼
 char
 
-
-
-
-
 # 角色編號
 
 bindIp
-
-
 
 # 綁定IP [ 一般為空白 ] [ 空白=自動判斷 ]
 serverType twRO
 # 伺服器類型 [ 台灣仙境傳說為 twRO ]
 
+######## XKore 相關設定 ########
+XKore 0
+# XKore 模式 [ 0: 停用此功能 1: (XKore)->(RO主程式)->(遊戲伺服器)  2: (RO主程式)->(XKore)->(遊戲伺服器) ]
+XKore_silent 1
+# XKore訊息隱藏於RO對話欄 [ 0: 不會顯示在對話欄  1: 會顯示在對話欄 ]
+XKore_bypassBotDetection 0
+# 檢測主程式是否需要加上補丁 [ 0: 不會做主程式檢測  1: 會做主程式檢測 ]
+XKore_exeName ragexe.exe
+# RO主程式執行檔名字 [ 免費伺服器為 RagFree.exe ]
 
+# XKore 2 模式伺服器端設定
+XKore_listenIp 127.0.0.1
+# XKore 2 模式綁定IP [ 本機IP ]
+XKore_listenPort 6901
+# XKore 2 模式綁定連接埠
+XKore_publicIp 127.0.0.1
+# XKore 2 模式綁定對外IP [ 外來連接IP ]
+
+######## 遠端控制相關設定 ########
+secureAdminPassword 1
+# 遠端控制開關 [ 1: 開 2: 關 ] [ XKore 模式時不建議打開 ]
+adminPassword
+# 遠端控制密碼
+callSign
+# 指令辨認字眼
+commandPrefix ;
 
 pauseCharServer 0
 # 連接角色伺服器前等候時間 [ 秒 ]
@@ -49,57 +64,16 @@ secureLogin_requestCode
 message_length_max 80
 # 對話最長長度 [ 不應修改 ]
 
-
-######## XKore 相關設定 ########
-XKore 0
-# XKore 模式 [ 0: 停用此功能 1: (XKore)->(RO主程式)->(遊戲伺服器)  2: (RO主程式)->(XKore)->(遊戲伺服器) ]
-XKore_silent 1
-# XKore訊息隱藏於RO對話欄 [ 0: 不會顯示在對話欄  1: 會顯示在對話欄 ]
-XKore_bypassBotDetection 0
-# 檢測主程式是否需要加上補丁 [ 0: 不會做主程式檢測  1: 會做主程式檢測 ]
-XKore_exeName ragexe.exe
-# RO主程式執行檔名字 [ 免費伺服器為 RagFree.exe ]
-
-
-# XKore 2 模式伺服器端設定
-XKore_listenIp 127.0.0.1
-# XKore 2 模式綁定IP [ 本機IP ]
-XKore_listenPort 6901
-# XKore 2 模式綁定連接埠
-XKore_publicIp 127.0.0.1
-# XKore 2 模式綁定對外IP [ 外來連接IP ]
-
-
-
-######## 遠端控制相關設定 ########
-secureAdminPassword 1
-# 遠端控制開關 [ 1: 開 2: 關 ] [ XKore 模式時不建議打開 ]
-adminPassword
-# 遠端控制密碼
-callSign
-# 指令辨認字眼
-commandPrefix ;
-
-
-
-
-
-
-
 # XKore 模式時使用，所有對話以此開始會當作為指令執行
-
 
 alias_heal healme
 # 自訂快速指令 [ heal 為 指令，healme 為 觸發字眼 舉例：在公頻喊healme，此bot會自動執行指令：heal ]
-
-
 
 ######## 主設定 ########
 allowedMaps
 # 限制bot只能在某地圖活動
 allowedMaps_reaction 1
 # 如果不在allowedMaps，則會執行之動作 [ 0: 重生/使用技能回家  1: 關閉Kore ]
-
 
 ######## 攻擊相關設定 ########
 attackAuto 2
@@ -139,10 +113,6 @@ attackChangeTarget 1
 # 會否攻擊已改變攻擊目標的魔物 [ 0: 不會  1: 會 ]
 aggressiveAntiKS 0
 
-
-
-
-
 # 會否開啟防止搶怪模式 [ 0: 不會  1: 會 ]
 attackAuto_onlyWhenSafe 0
 # 是否會在其他玩家視線內攻擊 [ 0: 會在其他玩家視線內攻擊  1: 不會在奇他玩家視線內攻擊 ]
@@ -169,8 +139,6 @@ attackEquip_shoes
 # 攻擊時自動佩帶裝備 [ 鞋子 ]
 attackEquip_arrow
 # 攻擊時自動佩帶裝備 [ 箭矢 ]
-
-
 
 ######## 雜項設定 ########
 autoMoveOnDeath 0
@@ -294,52 +262,92 @@ followTarget
 followEmotion 1
 # 是否跟隨主人使用表情 [ 0: 不會  1: 會 ]
 followEmotion_distance 4
-
+# 是否跟隨主人的方向 [ 0: 不會  1: 會 ]
 followFaceDirection 0
-followDistanceMax 6
-followDistanceMin 3
-followLostStep 12
+# 使否跟隨主人坐下 [ 0: 停用  1: 啟動 ]
 followSitAuto 0
+# 距離主人的最大距離 [ 格數 ]
+followDistanceMax 6
+# 距離主人的最小距離 [ 格數 ]
+followDistanceMin 3
+# 主人離開視點後向上一次看到主人的方向行走多少步 [ 格數 ]
+followLostStep 12
+# 主人時否同樣是機械人 [ 0: 是  1: 否 ]
 followBot 0
+# 是否站在主人附近隨機的坐標上 [ 0: 停用  1: 啟動 ]
 followRandom 0
+# 距離主人的隨機格數 [ 格數(例: followRandom 3 是隨機站在主人的3x3範圍內) ]
 followRandomDistance 4
 
+######## 撿物設定 ########
+# 自動撿物設定 [ 0: 不撿取 1: 殺死所有怪後撿取  >=2: 優先撿取 ]
 itemsTakeAuto 2
+# 自動幫助隊友撿物設定 [ 0: 停用  1: 啟動 ]
 itemsTakeAuto_party 0
+# 自動收集物品設定 [ 0: 不收集 1: 殺死所有怪後收集  >=2: 優先收集 ]
 itemsGatherAuto 2
+# 設定自動撿物最大負重量 [ 負重量百份比 ]
 itemsMaxWeight 89
+# 設定自動賣物負重量觸發點 [ 負重量百份比 ]
 itemsMaxWeight_sellOrStore 48
+# 設定自動賣物物品量觸發點 [ 物品數量 ]
 itemsMaxNum_sellOrStore 99
+# 設定自動放置到手推車最大負重量 [ 負重量 ]
 cartMaxWeight 7900
+# 設定使用自動撿物新算法 [ 0: 停用  1: 啟動 ]
 itemsTakeAuto_new 0
     
-
+######## 地圖設定 ########
+# 鎖定地圖名稱 [ 地圖檔名稱 ]
 lockMap
+# 鎖定地圖X坐標
 lockMap_x
+# 鎖定地圖Y坐標
 lockMap_y
+# 鎖定地圖隨機X坐標 [ 設定後將隨機移動到 {lockMap_x +/- 隨機(lockMap_randX)} 坐標
 lockMap_randX
+# 鎖定地圖隨機Y坐標 [ 設定後將隨機移動到 {lockMap_y +/- 隨機(lockMap_randY)} 坐標
 lockMap_randY
 
+# 設定嘗試脫離沒傳陣之地圖 [ 0: 停用  1: 啟動 ]
 route_escape_reachedNoPortal 1
+# 設定嘗試隨機移動沒傳陣之地圖以尋找傳陣 [ 0: 停用  1: 啟動 ]
 route_escape_randomWalk 1
+# 當在沒傳陣之地圖時執行對話指令 [ 對話指令 ]
 route_escape_shout
+# 設定迴避牆璧 [ 0: 停用  1: 啟動 ]
 route_avoidWalls 1
+# 設定隨機移動 [ 0: 停用  1: 在當前地圖隨機移動  2: 在當前地圖隨機移動並迴避所有傳陣 ]
 route_randomWalk 1
+# 設定會否在城市內隨機移動 [ 0: 不會  1: 會 ]
 route_randomWalk_inTown 0
+# 設定隨機移動最大秒數 [ 秒數 ]
 route_randomWalk_maxRouteTime 75
+# 設定傳送到目標地圖之最大使用ZENY [ ZENY ]
 route_maxWarpFee
+# 設定與同一NPC對話之次數以到達目標地圖 [ 次數 ]
 route_maxNpcTries 5
+# 設定會否使用技能[瞬間移動]以達到目標地圖 [ 0: 停用  1: 啟動 ]
 route_teleport 0
+# 設定要瞬移到距離需到達的傳送陣多少格數才停止 [ 格數 ]
 route_teleport_minDistance 150
+# 設定瞬移最大次數 [ 次數 ]
 route_teleport_maxTries 8
+# 設定在某地圖將不使用瞬移以作代步 [ 地圖名稱 以 , 分隔 ]
 route_teleport_notInMaps
+# 設定每次移動時的移動格數 [ 格數 ]
 route_step 15
 
+# 設定是否與目標保持距離 [ 0: 停用  1: 啟動 ]
 runFromTarget 0
+# 設定與目標之距離 [ 格數 ]
 runFromTarget_dist 6
 
+# 設定角色儲存的地圖 [ 地圖名 ]
 saveMap
+# 設定會否使用道具或技能回城買/賣物 [ 0: 停用  1: 啟動 ]
 saveMap_warpToBuyOrSell 1
+# 設定回城指令 [ 對話指令 ]
 saveMap_warpChatCommand
 
 shopAuto_open 0
@@ -355,7 +363,6 @@ sitAuto_over_50 0
 sitAuto_idle 1
 sitAuto_look
 sitAuto_look_from_wall
-
 
 statsAddAuto 0
 statsAddAuto_list
@@ -615,7 +622,6 @@ doCommand {
 	manualAI 0
 }
 
-
 useSelf_skill {
 	lvl 10
 	maxCastTime 0
@@ -645,7 +651,6 @@ useSelf_skill {
 }
 
 useSelf_skill_smartHeal 1
-
 
 partySkill {
 	lvl 10
@@ -687,7 +692,6 @@ partySkill {
 	inInventory
 	isSelfSkill 0
 }
-
 
 autoSwitch_default_rightHand
 autoSwitch_default_leftHand
