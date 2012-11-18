@@ -702,6 +702,12 @@ sub handle {
 		Commands::run($resources->{command});
 	}
 
+	if ($resources->{x} && $resources->{y}) {
+		my ($x, $y) = map int, @{$resources}{qw(x y)};
+		$y = $field->{height} - $y;
+		Commands::run("move $x $y");
+	}
+
 	# [PT-BR] Usado na aba Shop.
 	# [EN] Used Shop tab
 	if ($resources->{shop}) {
