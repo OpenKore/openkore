@@ -4,8 +4,8 @@
 	</h5>
 	<div class="center">
 		<!-- why canvas? -->
-		<canvas id="map" style="background-image: url('/map/{characterLocationMap}')">
-			<img src="/map/{characterLocationMap}" alt="{characterLocationMap}"/>
+		<canvas id="map" style="background-image: url('{characterLocationMapURL}')">
+			<img src="{characterLocationMapURL}" alt="{characterLocationMap}"/>
 		</canvas>
 	</div>
 	<p>
