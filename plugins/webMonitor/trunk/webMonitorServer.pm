@@ -610,6 +610,7 @@ sub request {
 		'characterLocationX' => $char->position()->{x},
 		'characterLocationY' => $char->position()->{y},
 		'characterLocationMap' => $field->name,
+		'characterLocationMapURL' => sprintf($config{webMapURL} || '/map/%s', $field->name),
 		characterLocationDescription => $field->descString,
 		'characterGetRouteX' => $char->{pos_to}->{x},
 		'characterGetRouteY' => $char->{pos_to}->{y},
