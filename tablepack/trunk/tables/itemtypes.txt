@@ -2,12 +2,12 @@
 1 Usable Status
 2 Usable Special
 3 Event
-4 Weapon
-5 Armor
+4 Armor
+5 Weapon
 6 Card
 7 Quest
 8 Pet Armor
-9 Weapon
+9 2-Hand Weapon
 10 Arrow
 11 Helmet
 12 Unknown_Type_12

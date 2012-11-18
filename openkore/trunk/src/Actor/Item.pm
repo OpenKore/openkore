@@ -68,6 +68,7 @@ our @slots = qw(
 	robe armor shoes
 	leftAccessory rightAccessory
 	arrow
+	costumeTopHead costumeMidHead costumeLowHead
 );
 
 
@@ -359,10 +360,10 @@ sub nameString {
 #
 # Returns true if item can be merged into another item.
 
-#           type: 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19
-sub usable     { (1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0)[$_[0]{type}] }
-sub equippable { (0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1)[$_[0]{type}] }
-sub mergeable  { (0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)[$_[0]{type}] }
+#            type: 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+sub usable     	{ (1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0)[$_[0]{type}] }
+sub equippable	{ (0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1)[$_[0]{type}] }
+sub mergeable 	{ (0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)[$_[0]{type}] }
 
 ##
 # $ActorItem->equippedInSlot(slot)

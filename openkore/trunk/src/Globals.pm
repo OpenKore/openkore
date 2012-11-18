@@ -69,10 +69,9 @@ our %equipSlot_lut = (
 	'128'  => 'leftAccessory',
 	'256'  => 'topHead',
 	'512'  => 'midHead',
-	'1024' => 'carry', #used in messyKore don't know if it actually exists
-	# 0x400 => LOCATION_COSTUME_HEAD1,
-	# 0x800 => LOCATION_COSTUME_HEAD2,
-	# 0x1000 => LOCATION_COSTUME_HEAD3,
+	'1024' => 'costumeTopHead',
+	'2048' => 'costumeMidHead',
+	'4096' => 'costumeLowHead',
 	# 0x2000 => LOCATION_COSTUME_FLOOR,
 	'32768'   => 'arrow' #just use an made up ID since arrow doesn't have any
 	# 0xffff8000 => LOCATION_ARROW,
@@ -89,7 +88,9 @@ our %equipSlot_rlut = (
 	'leftAccessory'  => 128,
 	'topHead'        => 256,
 	'midHead'        => 512,
-	'carry'			 => 1024,
+	'costumeTopHead' => 1024,
+	'costumeMidHead' => 2048,
+	'costumeLowHead' => 4096,
 	'arrow'          => '' #arrow seems not to have any ID
 );
 our %elements_lut;
