@@ -2322,12 +2322,20 @@ sub guild_ally_request {
 
 sub guild_broken {
 	my ($self, $args) = @_;
-	# FIXME: determine the real significance of flag
 	my $flag = $args->{flag};
-	message T("Guild broken.\n");
-	undef %{$char->{guild}};
-	undef $char->{guildID};
-	undef %guild;
+
+	if ($flag == 2) {
+		error T("Guild can not be undone: there are still members in the guild\n");		
+	} elsif ($flag == 1) {
+		error T("Guild can not be undone: invalid key\n");
+	} elsif ($flag == 0) {
+		message T("Guild broken.\n");
+		undef %{$char->{guild}};
+		undef $char->{guildID};
+		undef %guild;
+	} else {
+		error TF("Guild can not be undone: unknown reason (flag: %s)\n", $flag);		
+	}
 }
 
 sub guild_member_setting_list {
