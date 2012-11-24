@@ -313,7 +313,7 @@ sub new {
 		# 0x014f is sent packet
 		'0150' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string)]], # 110
 		# 0x0151 is sent packet
-		'0152' => ['guild_emblem', 'v a4 a4 Z*', [qw(len guildID emblemID emblem)]], # -1
+		'0152' => ['guild_emblem', 'v a4 a4 a*', [qw(len guildID emblemID emblem)]], # -1
 		# 0x0153 is sent packet
 		'0154' => ['guild_members_list'], # -1
 		# 0x0155 is sent packet
