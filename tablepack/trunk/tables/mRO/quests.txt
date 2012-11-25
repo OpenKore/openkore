@@ -6937,3 +6937,192 @@ Jinha gave you some ingredients. Let's deliver them to Serious Lee at Kiel Hyre 
 7469#Jinha's part time business#SG_FEEL#QUE_NOIMAGE#
 It seems ingredients are delivered daily. You might get some part time work this time tomorrow...#
 #
+
+//------ Dewata
+5035#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+Memo in Dewata island is in trouble now. Let's go and find out what's happening in Jaty tribe as a favor of Memo.#
+^0000FFJaty Tribe^000000 is located at ^FF000010 o'clock^000000 direction of Dewata Island.#
+
+5036#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+In order to make Palm Oils, huge Oil Palm Fruit is required. Poby who left to pick up those fruits has not been returned yet. Please go to the palm forest and look for Poby.#
+You can find Poby at the ^0000FFeast side of palm forest^000000.#
+
+5037#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+Poby who climbed up the tree without any safety devices fell from the tree and hurt his back so he cannot move at all.#
+Please tell Poby's situation to ^0000FFLero^000000 in Jaty tribe.#
+
+5038#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+You've decided to help Lero instead of injured Poby.#
+Ask Poby how to pick up fruits from the palm trees.#
+
+5039#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+For novice to pick up oil palm fruit from the tree, he/she must shake or kick the tree. For your own safety, please you must wear a Safety Helmet.#
+Please take ^0000FF60 Oil Palm Fruit^000000 to Lero.#
+
+5040#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+Lero wants you to tell up to dated situation to Memo while he presses oil from oil palm fruits.#
+Tell Lero's message to Memo in Dewata island.#
+
+5041#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+Memo says palm oils should be ready by now.#
+Let's go to get oils from Lero in Jaty tribe.#
+
+5042#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+Take 30 fresh oils to Memo.#
+^FF0000Lero says be careful because oils are very heavy.^000000#
+
+5043#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+With oils you've brought, Memo will take care of urgent issues first.#
+Please wait Memo for 5 minutes while he's taking care of urgent issues.#
+
+5044#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+Memo, an old man in Dewata island, really thanks to you. Memo hopes you can help him tomorrow as well.#
+Let's visit Memo tomorrow again.(24 hours later).#
+
+5045#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+An old man, Memo, really thanks you for coming to help. He asks you to help Lero in Jaty tribe and take oils.#
+^0000FFJaty Tribe^000000 is located at ^FF000010 o'clock^000000 direction of Dewata Island.#
+
+5046#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+Lero asks you to pick up 20 Oil Palm Fruit.#
+Palm forest is located at ^FF00005 o'clock^000000 direction of Jaty tribe.#
+
+5047#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+Take 10 fresh oils to Memo.#
+Lero says be careful because oils are very heavy.#
+
+5048#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+Lero asks you to pick up 30 Oil Palm Fruit.#
+Palm forest is located at ^FF00005 o'clock^000000 direction of Jaty tribe.#
+
+5049#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+Take 15 fresh oils to Memo.#
+Lero says be careful because oils are very heavy.#
+
+5050#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+Lero asks you to pick up 40 Oil Palm Fruit.#
+Palm forest is located at ^FF00005 o'clock^000000 direction of Jaty tribe.#
+
+5051#Help out the old man!!#SG_FEEL#QUE_NOIMAGE#
+Take 20 fresh oils to Memo.#
+Lero says be careful because oils are very heavy.#
+
+5052#Traditional Weapon#SG_FEEL#QUE_NOIMAGE#
+Please don't forget to visit me after you obtain the approval of Jaty tribe.#
+Visit the whitesmith, Gatti, after obtaining approval of Jaty tribe.#
+
+5053#Traditional Weapon#SG_FEEL#QUE_NOIMAGE#
+Obtaining the approval from Jaty tribe was my long-cherished desire... Anyway...you've obtained the approval from Jaty tribe, please bring 100 Leather of Comodo instead of me.#
+Bring 100 Leather of Comodo to Whitesmith, Gatti.#
+
+5054#Traditional Weapon#SG_FEEL#QUE_NOIMAGE#
+If you bring the Caress Hilt I made, 100 Leather of Comodo, 20 Steel, and 10 Oridecon, I will make the weapon written in the weapon manufacture manual.#
+Whitesmith, Gatti will make the weapon if you bring 100 Leather of Comodo, 20 Steel, and 10 Oridecon to him.#
+
+// Indonesia Localising : "Legend"
+
+9155#Get materials for Jaty Crown#SG_FEEL#QUE_NOIMAGE#
+Message from ^0000FFFaiko, the tribal chief^000000: "^404040Get 15 Feather of Cendrawasih^000000"#
+Go back to ^0000FFFaiko, the tribal chief^000000 after finding ^FF0000Jaty Crown^000000#
+
+9156#Make Jaty Crown#SG_FEEL#QUE_NOIMAGE#
+Message from ^0000FFFaiko, the tribal chief^000000: "^404040It seems that making the Jaty Crown is going well.^000000"#
+Talk to ^0000FFFaiko, the tribal chief^000000#
+
+9157#Reward from Sage, Kasyapa#SG_FEEL#QUE_NOIMAGE#
+Message from ^0000FFFaiko, the tribal chief^000000: "^404040Sage, Kasyapa is looking for you.^000000"#
+Let's get reward from ^0000FFSage, Kasyapa^000000#
+
+9158#Delivery of Good News(1)#SG_FEEL#QUE_NOIMAGE#
+Message from ^0000FFFaiko, the tribal chief^000000: "^404040Deliver the Satay to our tribal worrior.^000000"#
+Let's deliver the ^FF0000Satay^000000 to ^0000FFJaty tribal worrior.^000000#
+
+9159#Back to Faiko#SG_FEEL#QUE_NOIMAGE#
+Message from ^0000FFJaty Tribal Worrior^000000: "^404040Don't forget about the pride of tribe and the courage.^000000"#
+Let's get back to the ^0000FFFailko, Tribal Chief^000000#
+
+9160#Delivery of Good News(2)#SG_FEEL#QUE_NOIMAGE#
+Message from ^0000FFFailko, Tribal Chief^000000: "^404040Deliver the Satay to the Tribe Manager located outside of village.^000000"#
+Let's deliver the ^FF0000Satay^000000 to the ^0000FFTribe Manager^000000#
+
+9161#Back to Faiko#SG_FEEL#QUE_NOIMAGE#
+Message from ^0000FFTribe Manager^000000: "^404040Don't forget about the value of tradition.^000000"#
+Let's get back to the ^0000FFFailko, Tribal Chief^000000#
+
+9162#Delivery of Good News(3)#SG_FEEL#QUE_NOIMAGE#
+Message from ^0000FFFailko, Tribal Chief^000000: "^404040Deliver the Satay to the Gatekeeper of Krakatau Volcano.^000000"#
+Let's deliver the ^FF0000Satay^000000 to the ^0000FFGatekeeper of Krakatau Volcano.^000000#
+
+9163#Back to Faiko#SG_FEEL#QUE_NOIMAGE#
+Message from ^0000FFGatekeeper of Krakatau Volcano^000000: "^404040Test your courage by climing up to the Krakatau Volcano.^000000"#
+Let's get back to the ^0000FFFailko, Tribal Chief^000000#
+
+9164#Delivery of Good News(4)#SG_FEEL#QUE_NOIMAGE#
+Message from ^0000FFFailko, Tribal Chief^000000: "^404040Deliver the Satay to the Borobudur Temple Manager.^000000"#
+Let's deliver the ^FF0000Satay^000000 to the ^0000FFBorobudur Temple Manager^000000#
+
+9165#Reward from Faiko for success of Jaty Crown#SG_FEEL#QUE_NOIMAGE#
+Message from ^0000FFBorobudur Temple Manager^000000: "^404040Dewata Island and Jaty Tribe is full of mystery.^000000"#
+Let's get back to the ^0000FFFailko, Tribal Chief^000000 and receive the reward.#
+
+//=== 할로윈 데이===
+//------------------ The Merchant of Hell
+14166#Apple!!#SG_FEEL#QUE_NOIMAGE#
+Gave a fresh apple from the world of the living, to the Merchant of Hell. He says that he'd like to help you, so listen to him.#
+To The Merchant of Hell#
+
+14167#Hat???#SG_FEEL#QUE_NOIMAGE#
+The Merchant of Hell said that he would make Hell Pumpkin Hat if you brings all the material. Go back to him after getting those material. Needle and Thread, Firm Pumpkin, Goast Free Charm, Memory of Jack are needed.#
+find the materials for the Hat#
+
+14168#Quiz Show!#SG_FEEL#QUE_NOIMAGE#
+You were correct in the Quiz Show so you are given Firm Pumpkin!#
+Passed the Quiz!#
+
+14169#After having Snack Time#SG_FEEL#QUE_NOIMAGE#
+Those kids had the snack with passion! They didn't even talk while having the snack. You should talk to them to be careful.#
+A word for the children#
+
+14170#Another Trial!#SG_FEEL#QUE_NOIMAGE#
+You got wrong answers. Try again!!#
+Try again the Quiz#
+
+14171#Request of Mr.Ham#SG_FEEL#QUE_NOIMAGE#
+Mr.Ham asked you the material for making Cursed Doll. 3 Black Hair, 3 Daenggie, 10 Tree Of  Universe, 10 Tree Of Wisdom are needed.#
+Request of Mr.Ham#
+
+14172#Request of Mr.Han#SG_FEEL#QUE_NOIMAGE#
+Mr.Han asked you to get his request instead of Mr.Ham's. 3 Skirt of Virgin, 5 Short Daenggie, 15 Tree of Nature, 1 Wooden Block are needed.#
+Request of Mr.Han#
+
+14173#Material for Goast Free Charm#SG_FEEL#QUE_NOIMAGE#
+Toto, who is scared of Goasts, asked for materials to make Goast Free Charm. 1 Red Gemstone, 30 Bill Of Birds, 30 Talon, 50 Feather of Birds.#
+Find materials for Goast Free Charm#
+
+14174#Word of Curse#SG_FEEL#QUE_NOIMAGE#
+You rejected to do a favour to Toto. Then she told you cursed words saying that you will be not fine. Will it be a right decision to ignore this poor little girl??#
+Request of Toto#
+
+14175#Let's leave to Hugel#SG_FEEL#QUE_NOIMAGE#
+Jack, who cannot remember anything asked you to investigate his past in Hugel. Go to Hugel to find traces.#
+To Hugel!!#
+
+14176#Rejection#SG_FEEL#QUE_NOIMAGE#
+You rejected the request of Jack. But you cannot forget his disappointed eyes.#
+Request of Jack#
+
+14177#To Centrea's House#SG_FEEL#QUE_NOIMAGE#
+If you go to Centrea's House, you would find out something about Jack and her. Go to her house.#
+To Centrea's House#
+
+14178#Looking for Jack's Soul#SG_FEEL#QUE_NOIMAGE#
+Centrea said that she had hidden Jack's Soul in Doll Vending Machine. She also said that she set a password but forgot that. You will have to find the password and find Jack's Soul.#
+Find Jack's Soul#
+
+14179#To Prontera#SG_FEEL#QUE_NOIMAGE#
+There were some sad story between Jack and Centrea. Go back to Jack and tell him the story.#
+To Jack#
+
+14180#Lost Bead#SG_FEEL#QUE_NOIMAGE#
+At the moment that you were going to put the password in the machine, the bead got disappeared. Go back to Centrea to ask her what happened.#
+To Centrea#

@@ -6077,3 +6077,146 @@
 18807#White Citron Hat#
 18808#Wing Style Spectacle#
 4489#Sealed Pharaoh Card #
+
+// ------- 2012. 10. 17 ----------------
+18677# Cherry Twig In Mouth #
+
+// ------- Dewata ----------------
+15032#Tidung#
+18520#Jaty_Crown#
+13067#Caress#
+6401#Palm_Oils#
+6402#Oil_Palm_Fruit#
+6403#Leather_of_Comodo#
+6404#Caress_Hilt #
+6405#Feather_of_Cendrawasih#
+6406#Shining_Feather_of_Cendrawasih#
+11532#Nasi_Goreng#
+11533#Satay#
+11534#Coconut_Juice#
+
+// ------- RWC2012 Cash Item ----------------
+1670#RWC Memory Staff#
+2966#RWC 2012 ring#
+2967#RWC 2012 ring#
+2968#RWC 2012 pendant#
+2969#RWC 2012 pendant#
+12887#C Wing Of Fly#
+13092#RWC Memory Knife#
+16026#RWC Memory Mace#
+17251#C Wing Of Fly 3Day Box#
+17252#RWC 2012 Set Box#
+17253#RWC 2012 ring Box#
+17254#RWC 2012 pendant Box#
+18821#Rainbow Feather Deco#
+19650#Rainbow Feather Deco#
+6665#RWC Initializer#
+14611#M Physical defense potion#
+14612#M Magical defense potion#
+14613#2012 RWC Scroll#
+17262#Special_Potion_Box#
+14614#Special_Potion#
+
+// ------- RMSC2012  ----------------
+18828#RMSC2012 Champion Headgear#
+18829#RMSC2012 1st Runner Headgear#
+18830#RMSC2012 2nd Runner Headgear#
+18831#RMSC2012 Special Headgear#
+
+// ------- 2012. 10. 24 ----------------
+18710#Sugared Fruit Stick#
+5335#Jumping Poring#
+
+// ------- Holloween ----------------
+6654#Needle_And_Thread#
+6655#Firm_Pumpkin#
+6656#Goast_Free_Charm#
+6657#Memory_Of_Jack#
+6658#Halloween_Coin#
+18810#Hell_Pumpkin_Hat#
+22514#Candy_Holder#
+
+// ------- Malangdo  ----------------
+1198#Hairtail#
+1489#Spearfish#
+2872#G Honor Certificate#
+2873#Cat Hand Glove#
+13208#GongBug#
+16740#Ptotection Seagod Box#
+16741#Hairtail Box1#
+16742#Hairtail Box2#
+16743#Spearfish Box1#
+16744#Spearfish Box2#
+16745#Saurel Box1#
+16746#Saurel Box2#
+16747#Tuna Box1#
+16748#Tuna Box2#
+16749#Malang Crab Box1#
+16750#Malang Crab Box2#
+18107#Malang Snow Crab#
+18108#Brindle Eel#
+18537#Malangdo_Hat#
+6417#Silvervine_Fruit#
+6418#Aclass_Coin#
+6419#Bclass_Coin#
+6420#Cclass_Coin#
+6421#Dclass_Coin#
+6422#Dclass_Coin#
+6426#Poor_Can#
+6427#Poor_Can_Sack#
+16751#Spotty_Eel_Box1#
+16752#Spotty_Eel_Box2#
+16763#Seagod's_Protection_Box2#
+16764#Seagod's_Protection_Box3#
+16765#Octopus_Hstick_Box#
+16766#Octopus_Hstick_Box2#
+16767#Octopus_Hstick_Box3#
+16771#Silvervine_Box40#
+16979#Silvervine_Box4#
+17013#Malang_Woe_Encard_Box#
+6428#Adventure_Card_A#
+6429#Adventure_Card_B#
+6430#Fragment_of_Picture#
+6431#Bucket#
+6432#All_Filled_Bucket#
+6433#Cleaning_Brush#
+6434#Fixing_Kit#
+6435#Fresh_Fruit#
+6436#Seagod's_Protection#
+6440#Ordinary_Lubricant#
+6441#Premium_Lubricant#
+6442#Octopus_Hunting_Stick#
+6443#Sillit_Pong#
+11536#Cat's_Ship_Biscuit#
+11537#Weevil_Bug_Worm#
+12612#Shabby_Coin_Bag#
+12613#Premium_Coin_Bag#
+12614#Normal_Coin_Bag#
+12615#Poor_Coin_Bag#
+12616#S_Grade_Coin_Bag#
+12617#Agrade_Pocket#
+12618#Bgrade_Pocket#
+12619#Cgrade_Pocket#
+12620#Dgrade_Pocket#
+12621#Egrade_Pocket#
+12623#High_Weapon_Box#
+12624#Delicious_Jelly#
+12633#Malang_Cat_Can#
+12636#Malang_Sp_Can#
+12637#Gong_Bug_Pocket#
+12638#Dried_Squid_Box#
+12639#Flying_Fish_Box#
+12640#Starfish_Box#
+12643#E_Coin_Pack50#
+13068#Saurel#
+13291#Starfish#
+13292#Dried_Squid#
+13293#Flying_Fish#
+16015#Cat_Club#
+16016#Tuna#
+
+// ------- 2012. 11. 7 ----------------
+18700#Rabbit Ribbon Hat#
+18625#Rocket Helm#
+19573#C Heart Wing Hairband#
+18706#Can Hat#
