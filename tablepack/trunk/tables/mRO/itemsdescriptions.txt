@@ -18688,7 +18688,7 @@ Weight: ^7777771^000000
 4376#
 Increases Max SP
 by 40%, but reduces
-Max HP by 40%.
+Max HP by 50%.
 Adds a low chance of
 dropping Bananas when
 defeating monsters.
@@ -38156,4 +38156,970 @@ Reduce 15% of normal SP amount required to perform the skill.
 Series : ^777777Card ^000000
 Device : ^777777Helmet^000000
 Weight : ^7777771^000000
+#
+
+// ------- 2012. 10. 17 ----------------
+18677#
+A pretty cherry twig, everyone wanna to have it.
+Damage to plant type monster +2%.
+Cannot refine.
+Series : ^777777Headgear^000000    Defense : ^7777770^000000
+Location :  ^777777Lower^000000    Weight : ^77777720^000000
+Level Requirement :  ^77777720^000000
+Job : ^777777All Job Except Novice^000000
+#
+
+15032#
+An armor made with animal leather. Jaty tribe uses it during the battle.
+Decrease 5%of attack damage from all monsters. MDEF + 10.
+15% of additional tolerance to stun and freezing.
+Class : ^777777Armor^000000 Defense : ^7777772^000000
+Weight : ^77777750^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All except Novice^000000
+#
+18520#
+The crown only the person who receives tribal honor can wear.
+Decrease 5% of damage from animal and plant types of monsters. Increase 5% of  damage to animal and plant types of monsters.
+Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location: ^777777Upper ^000000 Weight : ^77777710^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All^000000
+#
+13067#
+A long time ago, manufacture process for the holy sword of Jaty tribe in Dewata island was disappeared but it reproduced by Whitesmith Gatti again.
+Absorb 10% of the damage which effected to the monster when physical attacks into own HP.
+MATK + 70.
+Class : ^777777Dagger^000000 Attack : ^777777107^000000
+Weight : ^77777770^000000
+Weapon Lv. : ^7777773^000000
+Required Lv. : ^77777730^000000
+Job : ^777777Swordman, Mage, Archer, Merchant, and Thief Classes; Soul Linker and Ninja^000000
+#
+6401#
+Vegetable oil from oil palm fruit. It's very heavy!!
+Weight : ^77777750^000000
+#
+6402#
+An oil palm fruit. It is used when vegetable oil is made.
+Weight : ^7777775^000000
+#
+6403#
+A leather of comodo. It is used when weapon or shield is made.
+Weight : ^7777771^000000
+#
+6404#
+It's a handle of weapon.
+Weight : ^77777710^000000
+#
+6405#
+It's a feather of bird called Cendrawasih. It's splendid and has a strong green color.
+Weight : ^7777771^000000
+#
+6406#
+It's a feather used when the 1st Jaty Crown was made. Shows beautiful light.
+Weight : ^77777710^000000
+#
+11532#
+It's the seasoned fried rice mixed with seafoods, meat, and vegitables.
+Recovers small amount of HP.
+Weight : ^7777772^000000
+#
+11533#
+It's a food you skewer the chopped meat with source on and barbecue it.
+Recovers small amount of HP.
+Weight : ^7777772^000000
+#
+11534#
+It's a Coconut Juice. Recovers small amount of HP and SP.
+Weight : ^7777775^000000
+#
+
+// ------- RWC2012 Cash Item ----------------
+1670#
+Memory Staff that have amazing magic spell for celebrating 2012 RWC. . When equiped with RWC pendant, hidden Magic spell would be come out.
+MATK + 30, When refine level is above 3, gives MATK + 30.
+When refine level is above 6, damage to all monsters would be increased by 5%.
+When refine level is above 9, damage to all monsters would be increased by 5%. When Magical attacking, 1Lv of [Magic Amplification] would be cast in low chance.
+When equipping with RWC 2012 pendant, MATK +5 would be increased for every weapon refine 1. 
+Class : ^777777One Handed Staff^000000 Attack : ^77777725^000000
+Weight : ^77777750^000000
+Weapon Level : ^7777773^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777MagicianClass/AcolyteClass/Soul Linker^000000
+#
+2966#
+Gold ring that have amazing power for celebrating '2012 RWC'.
+ATK + 1%.
+When equipping with RWC 2012 pendant, ATK + 4%, MATK + 4%.
+Class : ^777777Accessory^000000 Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2967#
+Gold ring that have amazing power for celebrating '2012 RWC'.
+ATK + 1%.
+When equipping with RWC 2012 pendant, ATK + 4%, MATK + 4%.
+Class : ^777777Accessory^000000 Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2968#
+Gold pendant that have amazing power for celebrating '2012 RWC'.
+MATK + 1%.
+When equipping with RWC 2012 ring, ATK + 4%, MATK + 4%.
+Class : ^777777Accessory^000000 Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2969#
+Gold pendant that have amazing power for celebrating '2012 RWC'.
+MATK + 1%.
+When equipping with RWC 2012 ring, ATK + 4%, MATK + 4%.
+Class : ^777777Accessory^000000 Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+#
+12887#
+^000088Rental Item^000000
+^ff0000This Item cannot be traded with other accounts.^000000
+Cast spell on the wings of fly. ^000088Enable to Warp to the Random Spot in the map..^000000
+Weight : ^7777770^000000
+#
+13092#
+Gold knife for celebrating 2012 RWC. The logo of RWC is carved.
+ATK, MATK + 20 increased on every 3 refinement.
+When refine level is above 6, damage would be increased 5 % for all monsters.
+9When refine level is above 9, damage would be increased 5% for all monsters. 1Lv of [Weapon Perfection] would be cast in low chance when Physical attacking.
+When equipping with RWC 2012 ring, ATK + 10 for every a weapon refinement.
+When equipping with RWC 2012 pendant, MATK + 10 for every a weapon refinement.
+Class : ^777777Knife^000000 Attack : ^77777750^000000
+Weight : ^77777765^000000
+Weapon Level : ^7777773^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777Novice/SwordmanClass/MagicianClass/ArcherClass/MerchantClass/ThiefClass/Soul Linker/Ninja^000000
+#
+16026#
+Gold Mace for celebrating 2012 RWC. When equiped with RWC ring, hidden power would be come out.
+ATK + 30 increase for every 3 refine. 
+When refine level is above 6, damage 5% would be increased for all monsters.
+When refine level is above 9, damage 5% would be increased for all monsters. 1Lv of [Weapon Perfection] would be cast in low chance when Physical attacking.
+When equipping with RWC 2012 ring, ATK + 5 for every a weapon refinement.
+Class : ^777777Mace^000000 Attack : ^777777100^000000
+Weight : ^77777780^000000
+Weapon Level : ^7777773^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777SwordmanClass/AcolyteClass/MerchantClass^000000
+#
+17251#
+^ff0000This Item cannot be traded with other accounts.^000000
+A box containing 1 unlimited wing of fly that can use for 3 days.
+^ffffff_^000000
+^000088Rental Item^000000
+^ff0000This Item cannot be traded with other accounts.^000000
+Cast spell on the wings of fly. ^000088Enable to Warp to the Random Spot in the map..^000000
+Weight : ^7777770^000000
+^ffffff_^000000
+^ff0000Once this box is open, it won't be refunded.^000000
+Weight : ^7777771^000000
+#
+17252#
+^ff0000This Item cannot be traded with other accounts.^000000
+A box containing 1 RWC 2012 ring and 1 RWC 2012 pendant.
+1 unlimited wing of fly for 3 days is added.
+^ff0000Once this box is open, it won't be refunded.^000000
+Weight : ^7777771^000000
+#
+17253#
+^ff0000This Item cannot be traded with other accounts.^000000
+A box containing 1 RWC 2012 ring.
+^ffffff_^000000
+that have amazing power for celebrating '2012 RWC'. gold ring.
+ATK + 1%.
+When equipping with RWC 2012 pendant, ATK + 4%, MATK + 4%.
+Class : ^777777Accessory^000000 Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+^ffffff_^000000
+^ff0000Once this box is open, it won't be refunded.^000000
+Weight : ^7777771^000000
+#
+17254#
+^ff0000This Item cannot be traded with other accounts.^000000
+A box containing 1 RWC 2012 pendant.
+^ffffff_^000000
+that have amazing power for celebrating '2012 RWC'. gold의 pendant.
+MATK + 1%.
+When equipping with RWC 2012 ring, ATK + 4%, MATK + 4%.
+Class : ^777777Accessory^000000 Defense : ^7777770^000000
+Weight : ^77777720^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+^ffffff_^000000
+^ff0000Once this box is open, it won't be refunded.^000000
+Weight : ^7777771^000000
+#
+18821#
+Rainbow Feather deco for celebrating '2012 RWC'.
+ATK + 1%, MATK + 1%.
+ATK, MATK 1% would be increased for every 3 refinement.
+When equipping with RWC 2012 ring, ATK + 1% would be increased for every 2 refinement.
+When equipping with RWC 2012 pendant, MATK + 1% would be increased for every 2 refinement.
+Class : ^777777Helmet^000000 Defense : ^7777775^000000
+Location : ^777777Upper ^000000Weight : ^77777730^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19650#
+Rainbow Feather deco for celebrating '2012 RWC'.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+#
+6665#
+The person who this Initializer will have a chance to initialize the enchant of RWC accessory.
+Weight : ^7777771^000000
+#
+14611#
+^ff0000This Item cannot be traded with other accounts.^000000
+Potion that made from dragon's strong skin and special medicine
+Increase 3% tolerance to physical attack for 3 min.
+Effect goes away when player goes down or Dispell the item effect.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+14612#
+^ff0000This Item cannot be traded with other accounts.^000000
+Potion that made from elf's mustache and special medicine.
+Increase 3% tolerance to magical attack for 2 min.
+Effect goes away when player goes down or Dispell the item effect.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+14613#
+^ff0000This Item cannot be traded with other accounts.^000000
+RWC 2012 scroll
+You can get the rare item among the Rainbow Feather Deco, RWC Weapon, Armor/Wapon Refine Lv9 Scroll, RWC Initializer, Old Card Album and so on.
+Weight : ^7777771^000000
+#
+17262#
+^ff0000This Item cannot be traded with other accounts.^000000
+A box containing 5 Special defense potions. You can get RWC 2012 scroll for celebrating RWC. 
+^ffffff_^000000
+^ff0000This Item cannot be traded with other accounts.^000000
+Potion that made from dragon's strong skin, elf's mustache and special medicine
+Increase 3% tolerance to physical and magical attack for 30 min.
+^000088Effect goes away when player goes down or Dispell the item effect.^000000
+^ffffff_^000000
+^ff0000Once this box is open, it won't be refunded.^000000^ff0000
+Weight : ^7777771^000000
+#
+14614#
+Potion that made from dragon's strong skin, elf's mustache and special medicine
+Increase 3% tolerance to physical and magical attack for 30 min.
+^000088Effect goes away when player goes down or Dispell the item effect.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+// ------- RMSC2012  ----------------
+18828#
+The special headgear made for RMSC2012 Champion
+All State +5, MDEF +5.
+Increase moving speed.
+Can use Lv1 [Teleportation] skill.
+Unable destroy.
+Class : ^777777HeadGear^000000 Defense : ^77777720^000000
+Position : ^777777Upper ^000000    Weight : ^777777100^000000
+Required LV : ^77777795^000000
+Job : ^777777All^000000
+#
+18829#
+The special headgear made for RMSC2012 1st Runner Up.
+All State +4, MDEF +5.
+Increase moving speed.
+Can use Lv1 [Teleportation] skill.
+Unable destroy.
+Class : ^777777HeadGear^000000 Defense : ^77777720^000000
+Position : ^777777Upper ^000000Weight : ^777777100^000000
+Required LV : ^77777795^000000
+Job : ^777777All^000000
+#
+18830#
+The special headgear made for RMSC2012 2nd Runner Up.
+All State +3, MDEF +5.
+Increase moving speed.
+Can use Lv1 [Teleportation] skill.
+Unable destroy.
+Class : ^777777HeadGear^000000 Defense : ^77777720^000000
+Position : ^777777Upper ^000000Weight : ^777777100^000000
+Required LV : ^77777795^000000
+Job : ^777777All^000000
+#
+18831#
+The special headgear made for RMSC2012 finalist.
+All State + 2, MDEF + 5.
+Increase moving speed.
+Unable destroy.
+Class : ^777777HeadGear^000000 Defense : ^77777720^000000
+Position : ^777777Upper ^000000Weight : ^777777100^000000
+Required LV : ^77777795^000000
+Job : ^777777All^000000
+#
+
+// ------- 2012. 10. 24 ----------------
+18710#
+The desert made with a variety of fruits topped with maltose.
+Cannot refine.
+Series : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Lower^000000    Weight : ^77777720^000000
+Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+5335#
+You will feel the poring is jumping on your hat. Rumors says it will bring the fortune to you.
+LUK +1.
+Cannot refine and destroy.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Job : ^777777All^000000
+#
+
+// ------- Holloween ----------------
+6654#
+^ff0000You can not trade this item with other account.^000000
+Needle and Thread go along with each other always.You can find this only on halloween season.
+Weight : ^7777770^000000
+#
+6655#
+^ff0000You can not trade this item with other account.^000000
+A pumkin, hard as much as wood. You can make Jack O lantern with it. This is usuful only on halloween season.
+Weight : ^7777770^000000
+#
+6656#
+^ff0000You can not trade this item with other account.^000000
+A charm that can expel all kind of ghost in the world. You can find this only on halloween season.
+Weight : ^7777770^000000
+#
+6657#
+^ff0000You can not trade this item with other account.^000000
+A grass ball which contains Jack's memory. It will be disappreared after halloween season.
+Weight : ^7777770^000000
+#
+6658#
+A coin from underground. Can't be used on Earth. It will be disappreared after halloween season.
+Weight : ^7777770^000000
+#
+18810#
+A pumkin hat made with old belongings of the dead. When you attack wearing this hat, those dead sould will come back to you. After halloween season, those ghost will go back to underground.
+MDEF + 12.
+minus 5% of damage from Demon, Undead type monsters
+ATK, MATK +10%.
+Class : ^777777Headgear^000000 Def : ^77777712^000000
+Location : ^777777Upper ^000000Weight : ^77777750^000000
+Required Lv : ^7777771^000000
+Jobs : ^777777All^000000
+#
+22514#
+A candy holder which is commonly used on halloween season. There are some old goods and sweets in it.
+Weight : ^7777771^000000
+#
+
+// ------- Malangdo  ----------------
+1198#
+^000088rental item^000000
+cutlassfish  and oceanic fish. Called as Do Er from logn knife shape. It is freezed so cold.
+CRI + 20, Critical Damage 50% increase.
+when Attack, it delivers freeze at regular rate.
+if base lv is over 100, ATK + 50 
+Class : ^777777Both Hands Sword^000000 Attack : ^777777220^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777SwordmanClass^000000
+#
+1489#
+^000088rental item^000000
+a spearfish and oceanic fish. It is well known for delicious fish It is pretty freezed
+when using pierce, spiral pierce, it gives critical damage at high rate. And also make freeze itself by low rate.
+Spiral Pierce Attack increase 100% , Inspiration  Attack 50% . ( Effect of Inspiration will disappear once unequipped)
+if base level is over 100 , add ATK + 30 .
+Class : ^777777Both Hands Spear^000000 Attack : ^777777220^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777SwordmanClass^000000
+#
+2872#
+a certificate  that it gurantee cat gamer members. It has ability to record the match .
+Class : ^777777accessory ^000000 defence : ^7777770^000000
+Weight : ^7777770^000000
+Required Lv : ^7777770^000000
+Jobs : ^777777All Jobs^000000
+#
+2873#
+a souvenir for Malang do, it makes you happy when equipped
+VIT + 1, AGI + 1, DEX + 1, LUK + 1.
+Class : ^777777accessory ^000000 defence : ^7777775^000000
+Weight : ^77777710^000000
+Required Lv : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+13208#
+crustacean and an arthropod type. It is so hard
+when attack , it give stun at regular rate
+Class : ^777777bullet^000000 attack : ^77777750^000000
+Weight : ^7777770.5^000000 properties : ^777777none^000000
+#
+16740#
+a box that has a Ptotection Seagod. (23hours available)
+
+^000088rental item^000000
+a certificate of Ptotection Seagod
+Weight : ^7777771^000000
+
+^ff0000For this item, the cancellation of purchase of refund is not allowed^000000
+Weight : ^7777771^000000
+#
+16741#
+a box that has cutlassfish ( one hour available)
+^000088rental item^000000
+this is pretty freezed
+CRI + 20, critical damage  50% increase
+when Attack, it give freeze at regular rate to enemy.
+when Base  LV over 100 , ATK + 50 .
+Class : ^777777Both HandsSword^000000 Attack : ^777777220^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777SwordmanClass^000000
+^ff0000For this item, the cancellation of purchase of refund is not allowed^000000
+Weight : ^7777771^000000
+#
+16742#
+a box that has cutlassfish ( 7days available)
+^000088rental item^000000
+this is pretty freezed
+CRI + 20, critical damage  50% increase
+when Attack, it give freeze at regular rate to enemy.
+when Base  LV over 100 , ATK + 50 .
+Class : ^777777Both HandsSword^000000 Attack : ^777777220^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777SwordmanClass^000000
+^ff0000For this item, the cancellation of purchase of refund is not allowed^000000
+Weight : ^7777771^000000
+#
+16743#
+a box that has a spearfish. (1hour available)
+^000088rental item^000000
+a spearfish and oceanic fish. It is well known for delicious fish It is pretty freezed
+when using pierce, spiral pierce, it gives critical damage at high rate. And also make freeze itself by low rate.
+Spiral Pierce Attack increase 100% , Inspiration  Attack 50% . ( Effect of Inspiration will disappear once unequipped)
+if base level is over 100 , add ATK + 30 .
+Class : ^777777Both HandsSpear^000000 Attack : ^777777220^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777SwordmanClass^000000
+^ff0000For this item, the cancellation of purchase of refund is not allowed^000000
+Weight : ^7777771^000000
+#
+16744#
+a box that has a spearfish. (7days available)
+^000088rental item^000000
+a spearfish and oceanic fish. It is well known for delicious fish It is pretty freezed
+when using pierce, spiral pierce, it gives critical damage at high rate. And also make freeze itself by low rate.
+Spiral Pierce Attack increase 100% , Inspiration  Attack 50% . ( Effect of Inspiration will disappear once unequipped)
+if base level is over 100 , add ATK + 30 .
+Class : ^777777Both HandsSpear^000000 Attack : ^777777220^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777SwordmanClass^000000
+^ff0000For this item, the cancellation of purchase of refund is not allowed.^000000
+Weight : ^7777771^000000
+#
+16745#
+a box that has  a horse mackerel (1 hour available)
+^000088rental item^000000
+it is amazingly freezed
+MATK + 100.
+when closer physical Attack,  ATK + 30 for 7 sec
+when magical  Attack,  MATK + 20 for 7 sec
+if base level is over 100 이, ATK + 10, MATK + 10 
+Class : ^777777Sword^000000 Attack : ^777777160^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777SwordmanClass/magicianClass/archerClass/merchantClass/ThiefClass/soul linker/ninja^000000
+^ff0000For this item, the cancellation of purchase of refund is not allowed.^000000
+Weight : ^7777771^000000
+#
+16746#
+a box that has  a horse mackerel (7 days available)
+^000088rental item^000000
+it is amazingly freezed
+MATK + 100.
+when closer physical Attack,  ATK + 30 for 7 sec
+when magical  Attack,  MATK + 20 for 7 sec
+if base level is over 100 이, ATK + 10, MATK + 10 
+Class : ^777777Sword^000000 Attack : ^777777160^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777SwordmanClass/magicianClass/archerClass/merchantClass/ThiefClass/soul linker/ninja^000000
+^ff0000For this item, the cancellation of purchase of refund is not allowed.^000000
+Weight : ^7777771^000000
+#
+16747#
+a box that has  butter fish (1 hour available)
+^000088rental item^000000
+it is amazingly freezed
+when closer physical Attack, it cats stun or auto spell bash 5 Lv.(if over 5Lv, will cast as leared LV)
+make freeze itself at low rate
+if Base LV over 100 , ATK + 20.
+Class : ^777777blunt^000000 Attack : ^777777180^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777SwordmanClass/acolyteClass/merchantClass^000000
+^ff0000For this item, the cancellation of purchase of refund is not allowed.^000000
+Weight : ^7777771^000000
+#
+16748#
+a box that has  butter fish (7 days available)
+^000088rental item^000000
+it is amazingly freezed
+when closer physical Attack, it cats stun or auto spell bash 5 Lv.(if over 5Lv, will cast as leared LV)
+make freeze itself at low rate
+if Base LV over 100 , ATK + 20.
+Class : ^777777둔기^000000 Attack : ^777777180^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777SwordmanClass/acolyteClass/merchantClass^000000
+^ff0000For this item, the cancellation of purchase of refund is not allowed.^000000
+Weight : ^7777771^000000
+#
+16749#
+a box that has snow crab from malang area (1 hour available)
+^000088rental item^000000
+usually, lives in sand or mud
+LUK + 3, critical damage increase 50%.
+if base LV over100, distance  physical Attack 20% add
+Class : ^777777bow^000000 Attack : ^777777120^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777archerClass/Thief/RogueClass^000000
+^ff0000For this item, the cancellation of purchase of refund is not allowed.^000000
+Weight : ^7777771^000000
+#
+16750#
+a box that has snow crab from malang area (7 days available)
+^000088rental item^000000
+usually, lives in sand or mud
+LUK + 3, critical damage increase 50%.
+if base LV over100, distance  physical Attack 20% add
+Class : ^777777bow^000000 Attack : ^777777120^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777archerClass/Thief/RogueClass^000000
+^ff0000For this item, the cancellation of purchase of refund is not allowed.^000000
+Weight : ^7777771^000000
+#
+18107#
+^000088rental item^000000
+ a kind of crab living in sand or mud.
+LUK + 3, critical damage 50%.
+if base lv over 100 , distance physical Attack 20%
+Class : ^777777bow^000000 Attack : ^777777120^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777archerClass/Thief/RogueClass^000000
+#
+18108#
+^000088rental item^000000
+an eel from malando beach
+AGI + 3, if distant physical Attack, ASPD + 2 for 5 sec
+if base lv over 100 , distance physical Attack 20%
+Class : ^777777bow^000000 Attack : ^777777180^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Jobs : ^777777Hunter Class/Bard Class/Dancer Class^000000
+#
+18537#
+a souvenir hat from Malang do
+FLEE + 6
+Class : ^777777Headgear^000000 defence : ^7777775^000000
+location: ^777777Upper ^000000 Weight : ^77777710^000000
+Required Lv : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+6417#
+Sunkissed Silvervine Fruit. Human think that is normal and tastes bad but it is valuable in Malangdo.
+Weight : ^7777770^000000
+#
+6418#
+Glittering high class coin. There is possibility of luxury weapon enchant.
+Weight : ^7777770^000000
+#
+6419#
+Glittering high class coin. There is possibility of luxury weapon enchant.
+Weight : ^7777770^000000
+#
+6420#
+General normal coin.There is possibility of mid class weapon enchant.
+Weight : ^7777770^000000
+#
+6421#
+General normal coin.There is possibility of mid class weapon enchant.
+Weight : ^7777770^000000
+#
+6422#
+Poor low class coin. If collect various this, that could be used weapon refinement.
+Weight : ^7777770^000000
+#
+6426#
+It looks like a normal caned food but, the surface is rusted here and there. It grosses me out
+Weight : ^7777771^000000
+#
+6427#
+Sack containing full of poor caned food. Purpose is suspiciously
+Weight : ^7777770^000000
+#
+16751#
+Box containing 1 spotty eel. (Available 1 hour)
+^000088Rental item^000000
+Spotty eel that appeared on Malangdo beach. It is always elastic and trying to make body 1 line. That is why we can use it to arrow.
+AGI + 3, ASPD is added +2 for 5 seconds with consistent probability. when doing long distance physical Attack.
+Add long distance physical attack 20% when the base level is over 100.
+Class : ^777777Arrow^000000 Attack : ^777777180^000000
+Weight : ^7777770^000000
+Weapon lvl : ^7777771^000000
+Required lvl : ^77777750^000000
+Jobs : ^777777Hunter/Bard/Dancer^000000
+^ff0000Opend item is not refundable^000000
+Weight : ^7777771^000000
+#
+16752#
+Box containing 1 spotty eel. (Available 7 days)
+^000088Rental item^000000
+Spotty eel that appeared on Malangdo beach. It is always elastic and trying to make body 1 line. That is why we can use it to arrow.
+AGI + 3, ASPD is added +2 for 5 seconds with consistent probability. when doing long distance physical Attack.
+Add long distance physical attack 20% when the base level is over 100.
+Class : ^777777Arrow^000000 Attack : ^777777180^000000
+Weight : ^7777770^000000
+Weapon lvl : ^7777771^000000
+Required lvl : ^77777750^000000
+Jobs : ^777777Hunter/Bard/Dancer^000000
+^ff0000Opend item is not refundable^000000
+Weight : ^7777771^000000
+#
+16763#
+Box containing 1 Seagod's protection. (Available 7 days)
+^000088Rental item^000000
+Token of Seagod's protection. Giving strong ability to survice from violent wave in the deep sea.
+Weight : ^7777771^000000
+^ff0000Opend item is not refundable^000000
+Weight : ^7777771^000000
+#
+16764#
+Box containing 1 Seagod's protection. (Available 15 days)
+^000088Rental item^000000
+Token of Seagod's protection. Giving strong ability to survice from violent wave in the deep sea.
+Weight : ^7777771^000000
+^ff0000Opend item is not refundable^000000
+Weight : ^7777771^000000
+#
+16765#
+Box containing 1 Octopus Hunting stick. (Available 23 hours)
+Specifically created to hunt king octopus.
+Weight : ^7777770^000000
+^ff0000Opend item is not refundable^000000
+Weight : ^7777771^000000
+#
+16766#
+Box containing 1 Octopus Hunting stick. (Available 3 days)
+Specifically created to hunt king octopus.
+Weight : ^7777770^000000
+^ff0000Opend item is not refundable^000000
+Weight : ^7777771^000000
+#
+16767#
+Box containing 1 Octopus Hunting stick. (Available 7 days)
+Specifically created to hunt king octopus.
+Weight : ^7777770^000000
+^ff0000Opend item is not refundable^000000
+Weight : ^7777771^000000
+#
+16771#
+Box containing 40 Silvervine Fruits. A small amount of canned food is included as a bonus.
+Sunkissed Silvervine Fruit. Human think that is normal and tastes bad but it is valuable in Malangdo.
+Weight : ^7777770^000000
+^ff0000Opend item is not refundable^000000
+Weight : ^7777771^000000
+#
+16979#
+Box containing 4 Silvervine Fruits. A small amount of canned food is included as a bonus.
+Sunkissed Silvervine Fruit. Human think that is normal and tastes bad but it is valuable in Malangdo.
+Weight : ^7777770^000000
+^ff0000Opend item is not refundable^000000
+Weight : ^7777771^000000
+#
+17013#
+Box containing 1 Octopus Hunting stick and seagod's protection (Available 23 hours)
+^ff0000Opend item is not refundable^000000
+Weight : ^7777771^000000
+#
+6428#
+Adventure Card from Meow Adventure Club. This card is necessary for experiencing the adventure of the Meow Adventure Club.
+Weight : ^7777770^000000
+#
+6429#
+Adventure Card from Meow Adventure Club. This card is necessary for experiencing the adventure of the Meow Adventure Club.
+Weight : ^7777770^000000
+#
+6430#
+A fragment of picture which was found in the treasure seeking. When all the fragments are gathered, it will become a complete picture.
+Weight : ^7777770^000000
+#
+6431#
+A normal, ordinary bucket. Seems like anything can be carried with it.
+Weight : ^77777710^000000
+#
+6432#
+A bucket with water filled to the top. It is pretty heavy, so be careful not to spill water.
+Weight : ^777777300^000000
+#
+6433#
+A brush which is proper for cleaning. The bristles are abrasive enough so they will let a fine, well cleaning.
+Weight : ^77777730^000000
+#
+6434#
+A Fixing Kit box for crack in the ground. There is everything for fixing like shovel, saw, adhesives, stapler, sea cucumber and sea squirt.
+Weight : ^777777100^000000
+#
+6435#
+A freshly picked fruit of Yggdrasil. Smells fresh too!
+Weight : ^77777710^000000
+#
+6436#
+^000088Rental Item^000000
+A token in which Protection of Seagod was indwelled. It allows you to have a special ability to survive deep under the sea.
+Weight : ^7777770^000000
+#
+6440#
+A lubricant which helps removing the card which is already stuck in a slot of an equipment. However, this will only help the card removal. The equipment and its refine level may have a problem after trying.
+Weight : ^7777770^000000
+#
+6441#
+A lubricant which helps removing the card which is already stuck in a slot of an equipment. This one is pretty good so it might protect the equipment and its refine level while removing the card, unlike the ordinary one.
+Weight : ^7777770^000000
+#
+6442#
+^000088Rental Item^000000
+A special hunting stick to hunt Giant Octopus.
+Weight : ^7777770^000000
+#
+6443#
+[^ff0000Fragile^000000]
+The legendary agent which is said to melt the surface of an object so anything can be separated. It will be perfect for taking off MVP cards.
+Weight : ^7777770^000000
+#
+11536#
+Food that the fleet of Cat Paw Merchant Association had in the voyage. It is a hardtack which facilitated its storage.
+Those Cat sailors call it the Teeth Grinder or Worm Castle. Some HP can be recovered when it is eaten.
+Weight : ^7777771^000000
+#
+11537#
+A chubby worm which was caught when the biscuit was almost eaten.
+It can be an important energy fountain in a survival situation, but...
+Weight : ^7777771^000000
+#
+12612#
+A small, worn out bag which makes a tiny sound. Cling! No one has any idea what's in it.
+Weight : ^7777771^000000
+#
+12613#
+A small bag which makes a tiny sound. Cling! It is said that sometimes a pretty good Coin was discovered in it.
+Weight : ^7777771^000000
+#
+12614#
+A small bag which makes a tiny sound. Cling! It is said that sometimes a fairly fine Coin was discovered in it.
+Weight : ^7777771^000000
+#
+12615#
+A small bag which makes a tiny sound. Cling!
+It is said that you should not be expecting something good.
+Weight : ^7777771^000000
+#
+12616#
+A bag containing coin A, coin B and some other stuff too. If you are lucky, you can even get Anger of Seagod.
+Weight : ^7777771^000000
+#
+12617#
+This is a bag with A coin, B coin and C coin, If you are lucky, you will get more cans or coins.
+Weight : ^7777771^000000
+#
+12618#
+This is a bag with B coin, C coin and D coin, If you are lucky, you will get more cans or coins.
+Weight : ^7777771^000000
+#
+12619#
+This is a bag with C coin, D coin and E coin, If you are lucky, you will get more cans or coins.
+Weight : ^7777771^000000
+#
+12620#
+This is a bag with D coin and E coin, If you are lucky, you will get more cans or coins.
+Weight : ^7777771^000000
+#
+12621#
+This is a bag with E coin, If you are lucky, you will get extra cans or coins.
+Weight : ^7777771^000000
+#
+12623#
+A hard box with beautiful details. there are many high-end equipments.
+Weight : ^7777771^000000
+#
+12624#
+Yummy brown jelly. you will be happy when you eat. It might melt, so please not to keep in warm place.
+Recover 3% of HP and SP.
+Weight : ^7777775^000000
+#
+12633#
+Special produce from Malangdo, made as a can so you can save easily. Strangely It was known to give power to people.
+Increase exp and job exp by 10% for 20mins. (can overlap with other exp item and only apply for monster hunting.)
+Increase 20% of item drop rate for 20mins
+Weight : ^7777775^000000
+#
+12636#
+Delicious can food from Malangdo.
+You will think about sea and Malangdo see sights in  your mind when you eat.... once you look around, you will notice you are in Malangdo.
+Weight : ^7777770^000000
+#
+12637#
+A bag with 200 Gong Bugs.
+Can feel something not good movement inside of the bag.
+Weight : ^77777750^000000
+#
+12638#
+A bag with 200 Dried Squids.
+Watch out when you unpack, it is compressed in a small bag.
+Weight : ^777777200^000000
+#
+12639#
+A bag with 200 Flying fishes
+Quite surprised that how many there are in this small bag..
+Weight : ^777777200^000000
+#
+12640#
+A Bag with 200 Star fishes
+Packed neatedly
+Weight : ^77777750^000000
+#
+12643#
+An old and thin coin bag. . 50 E coins are in the bag.
+Weight : ^7777771^000000
+#
+13068#
+^000088Rental item^000000
+Sea fish. Can be cooked in different food. Frozen really hard.
+MATK + 100.
+When attacking in short distance, gives ATK +30 for 7 sec with certain rate.
+When magical attacking, MATK +20 for 7 sec with certain rate.
+When base Lv is over Lv 100, add ATK + 10, MATK + 10.
+Class : ^777777Dagger^000000 Attack : ^777777160^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required Lv : ^77777750^000000
+Job : ^777777Sword Man Class/Magician Class/Archer Class/Merchant Class/Thief Class/Soul Linker/Ninja^000000
+#
+13291#
+Echinodermata , Start fish. it looks like a star. It is stiff, so it might can used as a Shuriken.
+GIves Stun effect with certain rate when attacking
+Class : ^777777Throwing weapon^000000
+Attack : ^777777110^000000
+Required Lv : ^77777750^000000
+Weight : ^7777770.5^000000      Type : ^777777Nothing^000000
+#
+13292#
+A squid which dried for so long. Even possible to use for Kunai.
+GIves Blind with certain rate
+Class : ^777777Throwing weapon^000000 Attack : ^77777750^000000
+Weight : ^7777772^000000 Type : ^777777NothingType^000000
+#
+13293#
+A flying fish. A rumor that it flies with big fin. it is frozen, so even possible to use for Kunai.
+Gives scar with certain rate.
+Class : ^777777Throwing weapon^000000 Attack : ^77777750^000000
+Weight : ^7777772^000000 Type : ^777777NothingType^000000
+#
+16015#
+A cat hand shaped club which doesn't seem hurt.
+Increase 15% damages for Animal enemies.
+When P.Attacking, gives "seduce" status to enemies with low chance.
+Class : ^777777Club^000000 Attack : ^77777788^000000
+Weight : ^77777770^000000
+Weapon Lv : ^7777771^000000
+Required LV : ^7777771^000000
+Job : ^777777Novice/Sword Man Class/Acolyte Class/Merchant Class^000000
+#
+16016#
+^000088Rantal item^000000
+A big sea fish. The high qualitry fish that use for everywhere. Frozen really hard.
+When attacking in short distanence, gives stun or auto spell Bash 5Lv with high chance.(if over 5Lv, it runs as you learned)
+and gives freezing status with low chance to yourself.
+if base Lv is over Lv 100, add ATK + 20.
+Class : ^777777club^000000 Attack : ^777777180^000000
+Weight : ^7777770^000000
+Weapon Lv : ^7777771^000000
+Required LV : ^77777750^000000
+Job : ^777777Sword Man Class/AcolyteClass/Merchant Class^000000
+#
+
+// ------- 2012. 11. 7 ----------------
+18625#
+The special rocket helm.
+All State + 2, MDEF + 5.
+Increase moving speed,
+Indestructible.
+Series : ^777777Headgear^000000 Defense : ^77777720^000000
+Location : ^777777Upper ^000000Weight : ^777777100^000000
+Level Requirement : ^77777795^000000
+Job : ^777777All Job^000000
+#
+18700#
+Who has equipped the ear of rabbit on the hat!
+INT + 1.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Job : ^777777All^000000
+#
+19573#
+The hairband of girls that decorated with love feather and lace.
+Series : ^777777Costume^000000
+Location : ^777777Upper ^000000 Weight : ^7777770^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All Job^000000
+#
+18706#
+What has hidden inside the can?
+LUK +3.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777740^000000
+Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000
 #
