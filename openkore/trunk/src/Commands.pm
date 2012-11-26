@@ -460,7 +460,9 @@ sub cmdAI {
 		AI::clear;
 		$taskManager->stopAll() if defined $taskManager;
 		delete $ai_v{temp};
-		undef $char->{dead};
+		if ($char) {
+			undef $char->{dead};
+		}
 		message T("AI sequences cleared\n"), "success";
 
 	} elsif ($args eq 'print') {
