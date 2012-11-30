@@ -7430,15 +7430,6 @@ sub millenium_shield {
 	my ($self, $args) = @_;
 }
 
-sub skill_post_delay {
-	my ($self, $args) = @_;
-	
-	my $skillName = (new Skill(idn => $args->{ID}))->getName;
-	my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : ' Delay';
-	
-	$char->setStatus($skillName.$status, 1, $args->{time});
-}
-
 sub skill_post_delaylist {
 	my ($self, $args) = @_;
 	
