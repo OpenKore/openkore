@@ -1355,7 +1355,6 @@ sub show_eq_msg_self {
 
 # 043D
 sub skill_post_delay {
-	message "skill_post_delay\n";
 	my ($self, $args) = @_;
 	
 	my $skillName = (new Skill(idn => $args->{ID}))->getName;
