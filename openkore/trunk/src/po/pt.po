@@ -2951,7 +2951,7 @@ msgstr "Sua arma ficará abençoada com Poder Divino até o próximo minuto.\n"
 #: ../Network/Receive/kRO/Sakexe_0.pm:4492
 #: ../Network/Receive/ServerType0.pm:4584
 msgid "Your armor will remain blessed with Holy power for the next minute.\n"
-msgstr "Sua armadura ficará abençoada com Pode Divido até o próximo minuto.\n"
+msgstr "Sua armadura ficará abençoada com Poder Divino até o próximo minuto.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4494
 #: ../Network/Receive/ServerType0.pm:4586
