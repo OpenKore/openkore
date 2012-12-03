@@ -1416,11 +1416,11 @@ sub sendCaptchaAnswer {
 	$self->sendToServer($msg);
 }
 
-sub sendEnteringBuyVender {
+sub sendEnteringBuyer {
 	my ($self, $ID) = @_;
 	my $msg = pack("C*", 0x17, 0x08) . $ID;
 	$self->sendToServer($msg);
-	debug "Sent Entering Buy Vender: ".getHex($ID)."\n", "sendPacket", 2;
+	debug "Sent Entering Buyer: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendProgress {

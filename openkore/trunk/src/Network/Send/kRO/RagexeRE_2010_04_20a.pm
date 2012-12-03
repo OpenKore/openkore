@@ -19,10 +19,18 @@ package Network::Send::kRO::RagexeRE_2010_04_20a;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2010_04_14d);
+use Log qw(debug);
+use Utils qw(getHex);
 
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
+}
+sub sendEnteringBuyer {
+	my ($self, $ID) = @_;
+	my $msg = pack("C*", 0x17, 0x08) . $ID;
+	$self->sendToServer($msg);
+	debug "Sent Entering Buyer: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 =pod

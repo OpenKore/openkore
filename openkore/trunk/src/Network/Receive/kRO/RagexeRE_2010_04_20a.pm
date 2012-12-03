@@ -19,12 +19,34 @@ package Network::Receive::kRO::RagexeRE_2010_04_20a;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2010_04_14d);
+use Globals qw(%buyerLists @buyerListsID);
+use I18N qw(bytesToString);
+use Utils::DataStructures qw(binAdd);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
-}
+	my $self = $class->SUPER::new(@_);
+		my %packets = (
+		'0814' => ['buying_store_found', 'a4 Z*', [qw(ID title)]], #86
+	);
 
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
+	return $self; 
+}
+sub buying_store_found {
+	my ($self, $args) = @_;
+	my $ID = $args->{ID};
+	
+	if (!$buyerLists{$ID} || !%{$buyerLists{$ID}}) {
+		binAdd(\@buyerListsID, $ID);
+		Plugins::callHook('packet_buying', {ID => unpack 'V', $ID});
+	}
+	$buyerLists{$ID}{title} = bytesToString($args->{title});
+	$buyerLists{$ID}{id} = $ID;
+}
 =pod
 //2010-04-20aRagexeRE
 //0x0812,8

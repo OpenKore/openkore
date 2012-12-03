@@ -5142,7 +5142,7 @@ sub cmdBuyer {
 			"buyer %s does not exist.\n", $arg1);
 	} elsif ($arg2 eq "") {
 		# FIXME not implemented
-		$messageSender->sendEnteringbuyer($buyerListsID[$arg1]);
+		$messageSender->sendEnteringBuyer($buyerListsID[$arg1]);
 	} elsif ($buyerListsID[$arg1] ne $buyerID) {
 		error T("Error in function 'buyer' (Buyer Shop)\n" .
 			"Buyer ID is wrong.\n");
