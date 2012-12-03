@@ -19,12 +19,29 @@ package Network::Receive::kRO::RagexeRE_2010_03_09a;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2010_03_03a);
+use Globals qw(%buyerLists @buyerListsID);
+use Utils::DataStructures qw(binRemove);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
-}
+	my $self = $class->SUPER::new(@_);
+		my %packets = (
+		'0816' => ['buying_store_lost', 'a4', [qw(ID)]], #6
+	);
 
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
+	return $self; 
+}
+sub buying_store_lost {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	binRemove(\@buyerListsID, $ID);
+	delete $buyerLists{$ID};
+}
 =pod
 //2010-03-09aRagexeRE
 //0x0813,-1
