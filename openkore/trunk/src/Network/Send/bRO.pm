@@ -24,56 +24,56 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'035F' => ['sync', 'V', [qw(time)]],
-		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
-		'0890' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0932' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
-		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'012E' => ['shop_close'],
-		'0892' => ['actor_look_at', 'v C', [qw(head body)]],
-		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
-		'07E4' => ['item_take', 'a4', [qw(ID)]],
-		'09CB' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
-		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
-		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],
-		'0437' => ['character_move','a3', [qw(coords)]],
+		'0893' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],
-		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
-		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
+		'0866' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'01B2' => ['shop_open'],
+		'0202' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
+		'0944' => ['actor_look_at', 'v C', [qw(head body)]],
+		'086D' => ['sync', 'V', [qw(time)]],
+		'089D' => ['item_take', 'a4', [qw(ID)]],
+		'087A' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
+		'02C4' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
+		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
+		'085B' => ['actor_info_request', 'a4', [qw(ID)]],
+		'012E' => ['shop_close'],
+		'0888' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
+		'087D' => ['item_drop', 'v2', [qw(index amount)]],
+		'094E' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
+		'0946' => ['character_move','a3', [qw(coords)]],
+		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
 
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
 	
 	my %handlers = qw(
-		skill_use_location 0438
-		public_chat 008C
 		guild_chat 017E
-		private_message 09CB
-		storage_item_add 07EC
-		actor_look_at 0892
-		homunculus_command 0932
+		map_login 02C4
+		item_take 089D
+		storage_item_remove 0888
 		party_setting 07D7
-		buy_bulk_vender 0801
-		actor_action 0369
-		sync 035F
-		actor_info_request 096A
+		actor_action 0866
+		sync 086D
+		item_drop 087D
+		private_message 0096
+		public_chat 008C
 		shop_open 01B2
-		item_take 07E4
-		item_drop 0362
-		shop_close 012E
+		party_join_request_by_name 087A
+		buy_bulk_vender 0801
 		skill_select 0443
-		party_join_request_by_name 0802
+		homunculus_command 094E
 		party_chat 0108
-		character_move 0437
+		actor_look_at 0944
+		actor_info_request 085B
+		character_move 0946
+		shop_close 012E
+		storage_item_add 0893
+		skill_use_location 0202
 		master_login 02B0
-		storage_item_remove 0364
-		map_login 0890
 
 	);
 	
@@ -109,9 +109,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x368, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x956, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x368, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x956, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
@@ -169,11 +169,11 @@ sub sendPartyJoinRequestByName
 sub PrepareKeys()
 {
 	# K
-	$enc_val1 = Math::BigInt->new('0x350F3DF0');
+	$enc_val1 = Math::BigInt->new('0x1DE40099');
 	# M
-	$enc_val3 = Math::BigInt->new('0x46237A85');
+	$enc_val3 = Math::BigInt->new('0x5E6878E9');
 	# A
-	$enc_val2 = Math::BigInt->new('0x443C7060');
+	$enc_val2 = Math::BigInt->new('0x779357C0');
 }
 
 1;
