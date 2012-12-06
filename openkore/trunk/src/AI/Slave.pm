@@ -1,6 +1,7 @@
 package AI::Slave;
 
 use strict;
+use Time::HiRes qw(time);
 use base qw/Actor::Slave/;
 use Globals;
 use Log qw/message warning error debug/;
