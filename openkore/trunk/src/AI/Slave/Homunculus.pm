@@ -1,6 +1,7 @@
 package AI::Slave::Homunculus;
 
 use strict;
+use Time::HiRes qw(time);
 use base qw/AI::Slave/;
 use Globals;
 use Log qw/message warning error debug/;
