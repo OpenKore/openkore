@@ -44,8 +44,10 @@ sub new {
 	my %handlers = qw(
 		actor_info_request 0368
 		actor_look_at 0361
-		item_take 0362
 		character_move 035F
+		item_drop 0363
+		item_take 0362
+		party_setting 07D7
 		storage_item_add 0364
 		storage_item_remove 0365
 	);
