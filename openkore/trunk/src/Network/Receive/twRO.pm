@@ -34,9 +34,9 @@ sub new {
 	}
 
 	my %handlers = qw(
-		actor_exists 0856
-		actor_connected 0857
-		actor_moved 0858
+		actor_moved 0856
+		actor_exists 0857
+		actor_connected 0858
 		account_id 0283
 		received_characters 082D
 	);
