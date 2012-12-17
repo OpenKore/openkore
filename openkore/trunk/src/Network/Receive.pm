@@ -251,6 +251,8 @@ sub received_characters_unpackString {
 		# delete date
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4' if $_ == 132;
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16' if $_ == 128;
+		# bro (bitfrost update)
+		return 'a4 V9 v V2 v14 Z24 C8 v Z12' if $_ == 124;
 		return 'a4 V9 v V2 v14 Z24 C6 v2 x4' if $_ == 116; # TODO: (missing 2 last bytes)
 		return 'a4 V9 v V2 v14 Z24 C6 v2' if $_ == 112;
 		return 'a4 V9 v17 Z24 C6 v2' if $_ == 108;
