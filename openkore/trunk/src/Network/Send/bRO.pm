@@ -1,14 +1,14 @@
-#################################################################################################
-#  OpenKore - Network subsystem									#
-#  This module contains functions for sending messages to the server.				#
-#												#
-#  This software is open source, licensed under the GNU General Public				#
-#  License, version 2.										#
-#  Basically, this means that you're allowed to modify and distribute				#
-#  this software. However, if you distribute modified versions, you MUST			#
-#  also distribute the source code.								#
-#  See http://www.gnu.org/licenses/gpl.html for the full license.				#
-#################################################################################################
+#############################################################################
+#  OpenKore - Network subsystem												#
+#  This module contains functions for sending messages to the server.		#
+#																			#
+#  This software is open source, licensed under the GNU General Public		#
+#  License, version 2.														#
+#  Basically, this means that you're allowed to modify and distribute		#
+#  this software. However, if you distribute modified versions, you MUST	#
+#  also distribute the source code.											#
+#  See http://www.gnu.org/licenses/gpl.html for the full license.			#
+#############################################################################
 # bRO (Brazil)
 package Network::Send::bRO;
 use strict;
@@ -18,105 +18,92 @@ use Utils qw(existsInList getHex getTickCount getCoordString);
 use Math::BigInt;
 use base 'Network::Send::ServerType0';
 use I18N qw(stringToBytes);
-use Switch;
+use Utils;
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-
+	
 	my %packets = (
-		'012E' => ['shop_close'],
-		'0870' => ['actor_info_request', 'a4', [qw(ID)]],
-		'085F' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
-		'0969' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
-		'0802' => ['storage_item_remove', 'v V', [qw(index amount)]],
-		'01B2' => ['shop_open'],
-		'0949' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
+		'0366' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0887' => ['character_move','a3', [qw(coords)]],
 		'0884' => ['sync', 'V', [qw(time)]],
-		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
-		'091E' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
-		'0883' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
 		'0202' => ['actor_look_at', 'v C', [qw(head body)]],
 		'08AD' => ['item_take', 'a4', [qw(ID)]],
-		'0887' => ['character_move','a3', [qw(coords)]],
 		'0939' => ['item_drop', 'v2', [qw(index amount)]],
-		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
-		'0366' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'09CB' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
-		'08B8' => ['pin_password_reply','a4 Z*', [qw(accountID pinReply)]],
+		'0883' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'0802' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0949' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0870' => ['actor_info_request', 'a4', [qw(ID)]],
+		'091E' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'085F' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
+		'0969' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
+		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
+		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
+		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
+
 	);
-
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-
+	
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
+	
 	my %handlers = qw(
-		skill_use_location 0949
-		sync 0884
-		private_message 09CB
-		party_join_request_by_name 085F
-		item_take 08AD
-		public_chat 008C
-		map_login 091E
-		storage_item_remove 0802
-		guild_chat 017E
-		party_setting 07D7
 		actor_action 0366
-		homunculus_command 0969
-		actor_info_request 0870
-		skill_select 0443
-		shop_close 012E
-		storage_item_add 0883
-		party_setting 07D7
-		shop_open 01B2
-		buy_bulk_vender 0801
-		party_chat 0108
 		character_move 0887
-		master_login 02B0
+		sync 0884
 		actor_look_at 0202
+		item_take 08AD
 		item_drop 0939
-	);
+		storage_item_add 0883
+		storage_item_remove 0802
+		skill_use_location 0949
+		actor_info_request 0870
+		map_login 091E
+		party_join_request_by_name 085F
+		homunculus_command 0969
+		master_login 02B0
+		buy_bulk_vender 0801
+		party_setting 07D7
+		send_pin_password 08B8
+		new_pin_password 08BA
 
+	);
+	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
-	# Enabling Bro Pin System (by Fr3DBr)
-	$config{broPin} = 1;	
-
 	return $self;
 }
 
 # Local Servertype Globals
 my $map_login = 0;
 my $enc_val3 = 0;
-
+		
 sub encryptMessageID 
 {
 	my ($self, $r_message, $MID) = @_;
-
+	
 	# Checking In-Game State
 	if ($self->{net}->getState() != Network::IN_GAME && !$map_login) { $enc_val1 = 0; $enc_val2 = 0; return; }
-
+	
 	# Turn Off Map Login Flag
 	if ($map_login)	{ $map_login = 0; }
-
+		
 	# Checking if Encryption is Activated
 	if ($enc_val1 != 0 && $enc_val2 != 0) 
 	{
 		# Saving Last Informations for Debug Log
 		my $oldMID = $MID;
 		my $oldKey = ($enc_val1 >> 8 >> 8) & 0x7FFF;
-
+		
 		# Calculating the Encryption Key
 		$enc_val1 = $enc_val1->bmul($enc_val3)->badd($enc_val2) & 0xFFFFFFFF;
-
+	
 		# Xoring the Message ID
 		$MID = ($MID ^ (($enc_val1 >> 8 >> 8) & 0x7FFF)) & 0xFFFF;
 		$$r_message = pack("v", $MID) . substr($$r_message, 2);
 
 		# Debug Log
 		if ($config{debugPacket_sent} == 1) 
-		{
+		{		
 			debug(sprintf("Encrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $MID, $oldKey, ($enc_val1 >> 8 >> 8) & 0x7FFF), "sendPacket", 0);
 		}
 	}
@@ -131,9 +118,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x0968, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x968, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x0968, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x968, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
@@ -146,7 +133,7 @@ sub sendMapLogin
 	my $msg;
 
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-
+	
 	if ( $map_login == 0 ) { PrepareKeys(); $map_login = 1; }
 
 	# Reconstructing Packet 
@@ -166,72 +153,91 @@ sub sendMapLogin
 sub sendHomunculusCommand 
 {
 	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0:get stats, 1:feed or 2:fire
-
+	
 	$self->sendToServer($self->reconstruct({
 		switch => 'homunculus_command',
 		commandType => $type,
 		commandID => $command,
-	}));
-
+	}));	
+	
 	debug "Sent Homunculus Command $command", "sendPacket", 2;
 }
 
 sub sendPartyJoinRequestByName 
 {
 	my ($self, $name) = @_;
-
+	
 	$self->sendToServer($self->reconstruct({
 		switch => 'party_join_request_by_name',
 		partyName => stringToBytes ($name),
-	}));
-
+	}));	
+	
 	debug "Sent Request Join Party (by name): $name\n", "sendPacket", 2;
 }
 
 sub PrepareKeys()
 {
 	# K
-	$enc_val1 = Math::BigInt->new('0x45375c8e');
+	$enc_val1 = Math::BigInt->new('0x45375C8E');
 	# M
-	$enc_val3 = Math::BigInt->new('0x66042e4a');
+	$enc_val3 = Math::BigInt->new('0x66042E4A');
 	# A
-	$enc_val2 = Math::BigInt->new('0x076c687b');
+	$enc_val2 = Math::BigInt->new('0x76C687B');
 }
 
-sub sendBroPin {
-	my ($self) = @_;
-	my $i = 0;
-	my $c = 0;
-	my $pin = "";
+sub sendLoginPinCode {
+	my ($self, $seed, $type) = @_;
 	
-	# bRO Pin Password Implementation by Fr3DBr	
-	
-	# Convert String to PIN
-	for ($i = 0; $i < 4; $i++)
-	{
-		# Grabbing Digit
-		$c = substr($config{loginPinCode}, $i, 1);
-		
-		# Converting Digit
-		switch ($c)
-		{
-			case "0" { $pin .= '8'; } case "1" { $pin .= '2'; }	case "2" { $pin .= '7'; }
-			case "3" { $pin .= '5'; } case "4" { $pin .= '3'; }	case "5" { $pin .= '0'; }
-			case "6" { $pin .= '1'; } case "7" { $pin .= '4'; }	case "8" { $pin .= '9'; } case "9" { $pin .= '6'; }
+	my $pin = randomizePinCode($seed, $config{loginPinCode});
+	my $msg;
+	if ($type == 0) {
+		$msg = $self->reconstruct({
+			switch => 'send_pin_password',
+			accountID => $accountID,
+			pin => $pin,
+		});
+	} elsif ($type == 1) {
+		$msg = $self->reconstruct({
+			switch => 'new_pin_password',
+			accountID => $accountID,
+			pin => $pin,
+		});
+	}
+	$self->sendToServer($msg);
+	$timeout{charlogin}{time} = time;
+	debug "Sent loginPinCode\n", "sendPacket", 2;	
+}
+
+# randomizePin function/algorithm by Kurama, ever_boy_, kLabMouse and Iniro. cleanups by Revok
+sub randomizePinCode {
+	my ($seed, $pin) = @_;
+	$seed =  Math::BigInt->new($seed);
+	my $mulfactor = 0x3498;
+	my $addfactor = 0x881234;
+	my @keypad_keys_order = ('0'..'9');
+	# calculate keys order (they are randomized based on seed value)
+	if (@keypad_keys_order >= 1) {
+		my $k = 2;
+		for (my $pos = 1; $pos < @keypad_keys_order; $pos++) {
+			$seed = $addfactor + $seed * $mulfactor & 0xFFFFFFFF; # calculate next seed value
+			my $replace_pos = $seed % $k;
+			if ($pos != $replace_pos) {
+				my $old_value = $keypad_keys_order[$pos];
+				$keypad_keys_order[$pos] = $keypad_keys_order[$replace_pos];
+				$keypad_keys_order[$replace_pos] = $old_value;
+			}
+			$k++;
 		}
 	}
-	
-	# Reconstructing Packet
-
-	my $msg = $self->reconstruct({
-		switch => 'pin_password_reply',
-		accountID => $accountID,
-		pinReply => $pin,
-	});
-	
-	$self->sendToServer($msg);
-	
-	debug "Sent sendBroPin\n", "sendPacket", 2;	
+	# associate keys values with their position using a hash
+	my %keypad;
+	for (my $pos = 0; $pos < @keypad_keys_order; $pos++) { $keypad{@keypad_keys_order[$pos]} = $pos; }
+	my $pin_reply = '';
+	my @pin_numbers = split('',$pin);
+	foreach (@pin_numbers) {
+		$pin_reply .= $keypad{$_};
+	}
+	return int $pin_reply;
 }
 
 1;
