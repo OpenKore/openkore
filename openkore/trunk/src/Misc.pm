@@ -1165,7 +1165,10 @@ sub charSelectScreen {
 	return $plugin_args{return} if ($plugin_args{return});
 
 	if ($plugin_args{autoLogin} && @chars && $config{char} ne "" && $chars[$config{char}]) {
-		$messageSender->sendCharLogin($config{char});
+		if ( $config{loginPinCode} eq "" && $config{broPin} eq "" )
+		{
+			$messageSender->sendCharLogin($config{char});
+		}
 		$timeout{charlogin}{time} = time;
 		return 1;
 	}
@@ -1194,7 +1197,10 @@ sub charSelectScreen {
 	} elsif ($choice < @charNames) {
 		# Character chosen
 		configModify('char', $charNameIndices[$choice], 1);
-		$messageSender->sendCharLogin($config{char});
+		if ( $config{loginPinCode} eq "" && $config{broPin} eq "" )
+		{
+			$messageSender->sendCharLogin($config{char});
+		}
 		$timeout{charlogin}{time} = time;
 		return 1;
 
