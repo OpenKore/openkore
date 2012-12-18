@@ -1143,13 +1143,21 @@ sub processAutoStorage {
 				$args->{done} = 1;
 				return;
 			}
-
+			if (!AI::args->{distance}) {
+				# Calculate variable or fixed (old) distance
+				if ($config{'storageAuto_minDistance'} && $config{'storageAuto_maxDistance'}) {
+					AI::args->{distance} = $config{'storageAuto_minDistance'} + round(rand($config{'storageAuto_maxDistance'} - $config{'storageAuto_minDistance'}));
+				} else {
+					AI::args->{distance} = $config{'storageAuto_distance'};
+				}
+			}
+			
 			# Determine whether we have to move to the NPC
 			if ($field->baseName ne $args->{npc}{map}) {
 				$do_route = 1;
 			} else {
-				my $distance = distance($args->{npc}{pos}, $char->{pos_to});
-				if ($distance > $config{'storageAuto_distance'}) {
+				my $distance_from_char = distance($args->{npc}{pos}, $char->{pos_to});
+				if (($distance_from_char > AI::args->{distance}) && !defined($args->{sentStore}) && !defined($ai_v{temp}{storage_opened})) {
 					$do_route = 1;
 				}
 			}
@@ -1173,7 +1181,7 @@ sub processAutoStorage {
 					message TF("Calculating auto-storage route to: %s(%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
 					ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
 						 attackOnRoute => 1,
-						 distFromGoal => $config{'storageAuto_distance'});
+						 distFromGoal => AI::args->{distance});
 				}
 			}
 		}
@@ -1431,14 +1439,23 @@ sub processAutoSell {
 			$args->{'done'} = 1;
 			return;
 		}
-
+		
+		if (!AI::args->{distance}) {
+			if ($config{'sellAuto_standpoint'}) {
+				AI::args->{distance} = 1;
+			} elsif ($config{'sellAuto_minDistance'} && $config{'sellAuto_maxDistance'}) {
+				AI::args->{distance} = $config{'sellAuto_minDistance'} + round(rand($config{'sellAuto_maxDistance'} - $config{'sellAuto_minDistance'}));
+			} else {
+				AI::args->{distance} = $config{'sellAuto_distance'};
+			}
+		}
+		
 		undef $ai_v{'temp'}{'do_route'};
 		if ($field->baseName ne $args->{'npc'}{'map'}) {
 			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
 			$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
-			$config{'sellAuto_distance'} = 1 if ($config{sellAuto_standpoint});
-			if ($ai_v{'temp'}{'distance'} > $config{'sellAuto_distance'}) {
+			if (($ai_v{'temp'}{'distance'} > AI::args->{distance}) && !defined($args->{sentSell})) { #  && !defined($ai_v{temp}{storage_opened})
 				$ai_v{'temp'}{'do_route'} = 1;
 			}
 		}
@@ -1459,7 +1476,7 @@ sub processAutoSell {
 	 			message TF("Calculating auto-sell route to: %s(%s): %s, %s\n", $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}, $ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}), "route";
 				ai_route($args->{'npc'}{'map'}, $args->{'npc'}{'pos'}{'x'}, $args->{'npc'}{'pos'}{'y'},
 					attackOnRoute => 1,
-					distFromGoal => $config{'sellAuto_distance'},
+					distFromGoal => AI::args->{distance},
 					noSitAuto => 1);
 			}
 		} else {
@@ -1598,12 +1615,22 @@ sub processAutoBuy {
 		}
 
 		undef $ai_v{'temp'}{'do_route'};
+		if (!AI::args->{distance}) {
+			# Calculate variable or fixed (old) distance
+			if ($config{"buyAuto_$args->{index}"."_standpoint"}) {
+				AI::args->{distance} = 1;
+			} elsif ($config{"buyAuto_".$args->{index}."_minDistance"} && $config{"buyAuto_".$args->{index}."_maxDistance"}) {
+				AI::args->{distance} = $config{"buyAuto_$args->{index}"."_minDistance"} + round(rand($config{"buyAuto_$args->{index}"."_maxDistance"} - $config{"buyAuto_$args->{index}"."_minDistance"}));
+			} else {
+				AI::args->{distance} = $config{"buyAuto_$args->{index}"."_distance"};
+			}
+		}
+		
 		if ($field->baseName ne $args->{'npc'}{'map'}) {
 			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
 			$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
-			$config{"buyAuto_$args->{index}"."_distance"} = 1 if ($config{"buyAuto_$args->{index}"."_standpoint"});
-			if ($ai_v{'temp'}{'distance'} > $config{"buyAuto_$args->{index}"."_distance"}) {
+			if (($ai_v{'temp'}{'distance'} > AI::args->{distance}) && !defined($args->{sentBuy})) {
 				$ai_v{'temp'}{'do_route'} = 1;
 			}
 		}
@@ -1632,7 +1659,7 @@ sub processAutoBuy {
  				message TF($msgneeditem."Calculating auto-buy route to: %s (%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
 				ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
 					attackOnRoute => 1,
-					distFromGoal => $config{"buyAuto_$args->{index}"."_distance"});
+					distFromGoal => AI::args->{distance});
 			}
 		} else {
 			if ($args->{lastIndex} eq "" || $args->{lastIndex} != $args->{index}) {
