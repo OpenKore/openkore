@@ -22,7 +22,7 @@ use base qw(Network::Receive::kRO::Sakexe_2007_05_07a);
 
 use Globals qw(%config);
 use I18N qw(bytesToString);
-use Log qw(message warning error debug);
+use Log qw(message);
 use Misc qw(stripLanguageCode chatLog);
 
 
@@ -97,7 +97,12 @@ sub new {
 sub main_chat {
 	my ($self, $args) = @_;
 	my $message = bytesToString($args->{message});
-	stripLanguageCode(\$message);
+	my ($domain, $chatMsgUser, $chatMsg);
+	if (($domain, $chatMsgUser, $chatMsg) = $message =~ /\[(.*)\] (.*?): (.*)/) {
+		$chatMsgUser =~ s/ $//;
+		stripLanguageCode(\$chatMsg);
+		$message = "[$domain] $chatMsgUser: $chatMsg";
+	} 
 	chatLog("M", "$message\n") if ($config{logSystemChat});
 	message "$message\n", "schat";
 }
