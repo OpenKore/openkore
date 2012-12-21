@@ -1,0 +1,180 @@
+# This file contains information about master servers.
+
+#####################
+# Official RO Servers
+
+## http://ro.gameflier.com/
+[台灣 - 月費伺服器 (查爾斯、愛麗絲)]
+ip 220.130.113.209
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Traditional Chinese
+charBlockSize 116
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets_paid.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 老朋友伺服器 (免費查爾斯、免費愛麗絲)]
+ip 220.130.113.235
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Traditional Chinese
+charBlockSize 116
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets_free.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 免費伺服器 (魔王波利、黃金波利)]
+ip 220.130.113.238
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Traditional Chinese
+charBlockSize 116
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets_free.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 免費伺服器 (波利、巴風特、小雞、哥布靈、月夜貓)]
+ip 220.130.113.221
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Traditional Chinese
+charBlockSize 116
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets_free.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 免費伺服器 (惡魔波利、天使波利、波利之王)]
+ip 220.130.113.222
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Traditional Chinese
+charBlockSize 116
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets_free.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 免費伺服器 (彩虹橋)]
+ip 220.130.113.234
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Traditional Chinese
+charBlockSize 116
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets_free.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 全區伺服器 (普隆德拉)]
+ip 220.130.113.208
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Traditional Chinese
+charBlockSize 116
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets_free.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 測試伺服器: Sakray]
+ip 61.220.62.26
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Traditional Chinese
+charBlockSize 116
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets_sakray.txt
+addTableFolders twRO
+captcha 0
+
+
+[Malaysia - mRO: Poring King]
+ip 202.71.105.25
+port 6900
+master_version 16
+version 211
+serverType mRO
+charBlockSize 116
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+addTableFolders mRO
+
+[Malaysia - mRO: freyia - carnival]
+ip 220.130.114.212
+port 6900
+master_version 17
+version 211
+serverType mRO
+charBlockSize 116
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+addTableFolders mRO
+
+[Malaysia - mRO: Prontera Free Server]
+ip 202.71.105.29
+port 6900
+master_version 17
+version 211
+serverType iRO
+charBlockSize 116
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+addTableFolders mRO
+
+
+
+
+####################
+# Private RO Servers
+
+[Localhost]
+ip localhost
+port 6900
+private 1
+master_version 1
+version 20
+serverType kRO_RagexeRE_2009_11_04a
+serverEncoding Western
+addTableFolders translated/kRO_english;kRO
+
+
+# this is for XKore 2 client only, it won't affect XKore 2 server
+# configure serverType, serverEncoding, charBlockSize according to your server
+[XKore 2]
+ip localhost
+port 6901
+serverType
+serverEncoding Western
+addTableFolders translated/kRO_english;kRO
+charBlockSize
+clientHash 0123456789abcdef0123456789abcdef
