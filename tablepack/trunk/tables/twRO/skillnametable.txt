@@ -404,8 +404,8 @@ SG_KNOWLEDGE#太陽和月亮和星星的知識#
 SG_FUSION#太陽和月亮和星星的融合#
 SL_ALCHEMIST#鍊金術師的靈魂#
 AM_BERSERKPITCHER#菠色克投擲#
-AM_TWILIGHT1#寬廣配藥#
-AM_TWILIGHT2#寬廣配藥#
+AM_TWILIGHT1#寬廣配藥(白水)#
+AM_TWILIGHT2#寬廣配藥(纖白)#
 AM_TWILIGHT3#寬廣配藥#
 SL_MONK#武道家的靈魂#
 SL_STAR#拳聖的靈魂#
@@ -518,47 +518,46 @@ GS_SPREADATTACK#火力全開#
 GS_GROUNDDRIFT#四面埋伏#
 GD_ITEMEMERGENCYCALL#緊急呼叫#
 ALL_INCCARRY#負重量上升R#
-
 //----------------------------2008.04.21. ep.11.3 jh---------------------------------------------------
-MS_BASH#狂擊#
-MS_MAGNUM#怒爆#
-MS_BOWLINGBASH#怪物互擊#
-MS_PARRYING#雙劍挌擋#
-MS_BERSERK#狂怒之槍#
-MS_REFLECTSHIELD#反射盾#
-MA_SHOWER#箭雨 #
-MA_SKIDTRAP#滑動陷阱#
-MA_LANDMINE#地雷陷阱#
-MA_SANDMAN#睡魔陷阱#
-MA_FREEZINGTRAP#霜凍陷阱#
-MA_REMOVETRAP#陷阱移除#
-MA_CHARGEARROW#衝鋒箭#
-MA_SHARPSHOOTING#銳利射擊#
-MA_DOUBLE#二連矢#
-ML_PIERCE#連刺攻擊#
-ML_BRANDISHSPEAR#騎乘攻擊#
-ML_AUTOGUARD#自動防禦#
-ML_DEVOTION#犧牲#
-ML_DEFENDER#光之盾#
-ML_SPIRALPIERCE#螺旋擊刺#
-ML_BRANDISH#騎乘攻擊#
-MER_PROVOKE#挑釁#
-MER_SIGHT#火狩#
-MER_DECAGI#緩速術#
-MER_QUICKEN#加速武器#
-MER_REGAIN#恢復#
-MER_TENDER#補給#
-MER_BENEDICTION#祝福#
-MER_RECUPERATE#復原#
-MER_MENTALCURE#精神治癒#
-MER_COMPRESS#壓制#
-MER_MAGNIFICAT#莫納的祝福#
-MER_LEXDIVINA#沉默之術#
-MER_ESTIMATION#怪物情報#
-MER_CRASH#撞擊#
-MER_AUTOBERSERK#狂暴狀態#
-MER_SCAPEGOAT#替罪羔羊#
-
+MS_BASH#傭兵_狂擊#
+MS_MAGNUM#傭兵_怒爆#
+MS_BOWLINGBASH#傭兵_怪物互擊#
+MS_PARRYING#傭兵_雙劍挌擋#
+MS_REFLECTSHIELD#傭兵_反射盾#
+MS_BERSERK#傭兵_狂怒之槍#
+MS_REFLECTSHIELD#傭兵_反射盾#
+MA_SHOWER#傭兵_箭雨#
+MA_SKIDTRAP#傭兵_滑動陷阱#
+MA_LANDMINE#傭兵_地雷陷阱#
+MA_SANDMAN#傭兵_睡魔陷阱#
+MA_FREEZINGTRAP#傭兵_霜凍陷阱#
+MA_REMOVETRAP#傭兵_陷阱移除#
+MA_CHARGEARROW#傭兵_衝鋒箭#
+MA_SHARPSHOOTING#傭兵_銳利射擊#
+MA_DOUBLE#傭兵_二連矢#
+ML_PIERCE#傭兵_連刺攻擊#
+ML_BRANDISHSPEAR#傭兵_騎乘攻擊#
+ML_AUTOGUARD#傭兵_自動防禦#
+ML_DEVOTION#傭兵_犧牲#
+ML_DEFENDER#傭兵_光之盾#
+ML_SPIRALPIERCE#傭兵_螺旋擊刺#
+ML_BRANDISH#傭兵_騎乘攻擊#
+MER_PROVOKE#傭兵_挑釁#
+MER_SIGHT#傭兵_火狩#
+MER_DECAGI#傭兵_緩速術#
+MER_QUICKEN#傭兵_加速武器#
+MER_REGAIN#傭兵_恢復#
+MER_TENDER#傭兵_補給#
+MER_BENEDICTION#傭兵_祝福#
+MER_RECUPERATE#傭兵_復原#
+MER_MENTALCURE#傭兵_精神治癒#
+MER_COMPRESS#傭兵_壓制#
+MER_MAGNIFICAT#傭兵_莫納的祝福#
+MER_LEXDIVINA#傭兵_沉默之術#
+MER_ESTIMATION#傭兵_怪物情報#
+MER_CRASH#傭兵_撞擊#
+MER_AUTOBERSERK#傭兵_狂暴狀態#
+MER_SCAPEGOAT#傭兵_替罪羔羊#
 //-----15.Apr.2009 event of spring----
 ALL_PARTYFLEE#吹吧! 花風!!#
 //--------2009. 06.02 EP13.1 -------------
@@ -591,7 +590,6 @@ NPC_VAMPIRE_GIFT#吸血鬼接觸#
 NPC_WIDESOULDRAIN#法力燃燒#
 NPC_ALLHEAL#生命之流#
 NPC_HELLPOWER#地獄之權能#
-
 //----- 盧恩騎士 Rune Knight --------------
 RK_ENCHANTBLADE#魔力劍#
 RK_SONICWAVE#音速衝擊波#
@@ -631,10 +629,10 @@ AB_HIGHNESSHEAL#高階治癒術#
 AB_CLEARANCE#解除#
 AB_EXPIATIO#贖罪#
 AB_DUPLELIGHT#二道聖光#
-AB_DUPLELIGHT_MELEE#二道聖光#
-AB_DUPLELIGHT_MAGIC#二道聖光#
+AB_DUPLELIGHT_MELEE#二道聖光 (物理)#
+AB_DUPLELIGHT_MAGIC#二道聖光 (魔法)#
 AB_SILENTIUM#靜寂#
-AB_SECRAMENT#靜寂#
+AB_SECRAMENT#聖典#
 //----------十字斬首者 Guillotine Cross ---------
 GC_VENOMIMPRESS#毒耐性弱化#
 GC_CROSSIMPACT#十字斬#
@@ -749,9 +747,9 @@ NC_RESEARCHFE#火焰與大地的研究#
 NC_AXEBOOMERANG#迴旋斧#
 NC_POWERSWING#揮斧重擊#
 NC_AXETORNADO#戰斧颶風#
-NC_SILVERSNIPER#FAW銀光狙擊手#
-NC_MAGICDECOY#FAW_魔法傀儡#
-NC_DISJOINT#FAW_解體#
+NC_SILVERSNIPER#銀光狙擊手#
+NC_MAGICDECOY#魔法傀儡#
+NC_DISJOINT#解體#
 //-----------宮廷樂師 Minstrel --------
 WA_SWING_DANCE#搖擺舞#
 WA_SYMPHONY_OF_LOVER#戀人交響樂#
@@ -911,7 +909,6 @@ SL_GUNNER#神槍手之魂#
 AM_TWILIGHT4#暮光藥劑學#
 DE_BERSERKAIZER#狂暴化#
 DA_DARKPOWER#黑暗_靈魂之力#
-
 DE_PASSIVE#Death_被動#
 DE_PATTACK#Death_襲擊_被動#
 DE_PSPEED#Death_加速_被動#
@@ -951,7 +948,6 @@ DE_DANGERATTACK#死亡騎士_威脅_攻擊#
 DE_TWINATTACK#死亡騎士危險_攻擊#
 DE_WINDATTACK#死亡騎士_暴風_攻擊#
 DE_WATERATTACK#死亡騎士_水_攻擊#
-
 DA_ENERGY#黑暗搜集者_能量#
 DA_CLOUD#黑暗搜集者_暗雲#
 DA_FIRSTSLOT#黑暗搜集者_最初幻想#
@@ -985,3 +981,47 @@ DA_TIMEOUT#黑暗搜集者_超時#
 ALL_TIMEIN#準時#
 DA_ZENYRANK#黑暗搜集者_排列#
 DA_ACCESSORYMIX#黑暗搜集者_組裝# 
+DA_ZENYRANK#黑暗搜集者 排列#
+ALL_BUYING_STORE#開設購買商店#
+EL_AQUAPLAY#冰封領域#
+EL_BLAST#風暴衝擊#
+EL_CHILLY_AIR#絕對零度#
+EL_CIRCLE_OF_FIRE#烈焰之環#
+EL_COOLER#急速降溫#
+EL_CURSED_SOIL#詛咒之地#
+EL_FIRE_ARROW#火箭#
+EL_FIRE_BOMB#火爆#
+EL_FIRE_BOMB_ATK#火焰炸彈#
+EL_FIRE_CLOAK#火焰斗篷#
+EL_FIRE_MANTLE#火焰披風#
+EL_FIRE_WAVE#火焰衝擊波#
+EL_FIRE_WAVE_ATK#火焰衝擊波~#
+EL_GUST#雷電強化#
+EL_HEATER#急速升溫#
+EL_HURRICANE#颶風肆虐#
+EL_HURRICANE_ATK#颶風肆虐~#
+EL_ICE_NEEDLE#冰針#
+EL_PETROLOGY#岩石領域#
+EL_POWER_OF_GAIA#天神下凡#
+EL_PYROTECHNIC#烈焰強化#
+EL_ROCK_CRUSHER#碎石#
+EL_ROCK_CRUSHER_ATK#碎石~#
+EL_SOLID_SKIN#皮膚固化#
+EL_STONE_HAMMER#石錘#
+EL_STONE_RAIN#岩石風暴#
+EL_STONE_SHIELD#岩石盾#
+EL_TIDAL_WEAPON#海嘯武器#
+EL_TROPIC#灼熱地帶#
+EL_TYPOON_MIS#颱風飛彈#
+EL_TYPOON_MIS_ATK#颱風飛彈~#
+EL_UPHEAVAL#天崩地裂#
+EL_WATER_BARRIER#水之屏障#
+EL_WATER_DROP#大豪雨#
+EL_WATER_SCREEN#水之守護#
+EL_WATER_SCREW#螺旋水波#
+EL_WATER_SCREW_ATK#螺旋水波~#
+EL_WILD_STORM#荒野風暴#
+EL_WIND_CURTAIN#風之魂#
+EL_WIND_SLASH#風之刃#
+EL_WIND_STEP#風之閃現#
+EL_ZEPHYR#風之結界#
