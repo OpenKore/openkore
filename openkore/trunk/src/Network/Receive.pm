@@ -364,6 +364,9 @@ sub account_server_info {
 			message TF("Server %s selected\n",$config{server}), 'connection';
 		}
 	}
+
+	# FIXME better support for multiple received_characters packets
+	undef @chars;
 }
 
 sub connection_refused {
