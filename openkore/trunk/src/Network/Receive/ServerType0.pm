@@ -4348,10 +4348,8 @@ sub private_message_sent {
 sub received_characters {
 	return if ($net->getState() == Network::IN_GAME);
 	my ($self, $args) = @_;
-	message T("Received characters from Character Server\n"), "connection";
 	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER);
 	undef $conState_tries;
-	undef @chars;
 
 	Plugins::callHook('parseMsg/recvChars', $args->{options});
 	if ($args->{options} && exists $args->{options}{charServer}) {
@@ -4360,6 +4358,8 @@ sub received_characters {
 		$charServer = $net->serverPeerHost . ":" . $net->serverPeerPort;
 	}
 
+	# PACKET_HC_ACCEPT_ENTER2 contains no character info
+	return unless exists $args->{charInfo};
 
 	my $blockSize = $self->received_characters_blockSize();
 	for (my $i = $args->{RAW_MSG_SIZE} % $blockSize; $i < $args->{RAW_MSG_SIZE}; $i += $blockSize) {
@@ -4405,6 +4405,14 @@ sub received_characters {
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 	}
+
+	# FIXME better support for multiple received_characters packets
+	if ($args->{switch} eq '099D' && $args->{RAW_MSG_SIZE} != 4) {
+		$net->setState(1.5);
+		return
+	}
+
+	message T("Received characters from Character Server\n"), "connection";
 
 	# gradeA says it's supposed to send this packet here, but
 	# it doesn't work...
@@ -7121,6 +7129,10 @@ sub switch_character {
 	# User is switching characters in X-Kore
 	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
 	$net->serverDisconnect();
+
+	# FIXME better support for multiple received_characters packets
+	undef @chars;
+
 	debug "result: $args->{result}\n";
 }
 

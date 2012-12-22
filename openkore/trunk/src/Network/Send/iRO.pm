@@ -25,6 +25,11 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	
+	my %packets = (
+		'09A1' => ['unknown_09A1'],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
 	my %handlers = qw(
 		sync 0360
 		character_move 035F
