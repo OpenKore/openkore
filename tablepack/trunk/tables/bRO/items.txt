@@ -3227,6 +3227,9 @@
 7909#Biscoito_Roubado#
 7910#Doce_Roubado#
 7911#Chapéu_de_Yulia#
+6681#Biscoitos de Natal#
+6682#Sacola de Itens Negociáveis#
+
 
 // ----------------- cRO Hats ------------------
 
