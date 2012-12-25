@@ -3086,23 +3086,19 @@ sub cmdMove {
 		$map_or_portal = $args_split[2];
 		$x = $args_split[0];
 		$y = $args_split[1];
-		warning("coordinates and map \n");
 	} elsif (($args_split[0] =~ /^\S+$/) && ($args_split[1] =~ /^\d+$/) && ($args_split[2] =~ /^\d+$/)) {
 		# map and coordinates
 		$map_or_portal = $args_split[0];
 		$x = $args_split[1];
 		$y = $args_split[2];
-		warning("map and coordinates \n");
 	} elsif (($args_split[0] =~ /^\S+$/) && !$args_split[1]) {
 		# map only
 		$map_or_portal = $args_split[0];
-		warning("map only \n");
 	} elsif (($args_split[0] =~ /^\d+$/) && ($args_split[1] =~ /^\d+$/) && !$args_split[2]) {
 		# coordinates only
 		$map_or_portal = $field->baseName;
 		$x = $args_split[0];
 		$y = $args_split[1];
-		warning("coordinates only \n");
 	} else {
 		error T("Syntax Error in function 'move' (Move Player)\n" .
 			"Usage: move <x> <y> [<map> [<distance from coordinates>]]\n" .
