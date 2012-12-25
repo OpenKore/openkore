@@ -5657,7 +5657,7 @@ sub cmdStorage_list {
 		}
 	}
 
-	my $msg = T("-----------Storage-------------\n");
+	my $msg = center(defined $storageTitle ? $storageTitle : T('Storage'), 78, '-') . "\n";
 
 	if (!$type || $type eq 'eq') {
 		$msg .= T("-- Equipment --\n");
