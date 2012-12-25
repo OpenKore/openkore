@@ -507,6 +507,12 @@ sub new {
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'08CB' => ['rates_info', 's4 a*', [qw(len exp death drop detail)]],
+		'0900' => ['inventory_items_stackable', 'x2 a*', [qw(itemInfo)]],
+		'0901' => ['inventory_items_nonstackable', 'x2 a*', [qw(itemInfo)]],
+		'0902' => ['cart_items_stackable', 'x2 a*', [qw(itemInfo)]],
+		'0903' => ['cart_items_nonstackable', 'x2 a*', [qw(itemInfo)]],
+		'0975' => ['storage_items_stackable', 'x2 Z24 a*', [qw(title itemInfo)]],
+		'0976' => ['storage_items_nonstackable', 'x2 Z24 a*', [qw(title itemInfo)]],
 	};
 
 	# Item RECORD Struct's
@@ -532,6 +538,11 @@ sub new {
 				types => 'v2 C2 v2 C2 a8 l v2',
 				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType sprite_id)],
 			},
+			type5 => {
+				len => 27,
+				types => 'v2 C v2 C a8 l v2 C',
+				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+			},
 		},
 		items_stackable => {
 			type1 => {
@@ -548,6 +559,11 @@ sub new {
 				len => 22,
 				types => 'v2 C2 v2 a8 l',
 				keys => [qw(index nameID type identified amount type_equip cards expire)],
+			},
+			type5 => {
+				len => 22,
+				types => 'v2 C v2 a8 l C',
+				keys => [qw(index nameID type amount type_equip cards expire identified)],
 			},
 		},
 	};
@@ -847,6 +863,11 @@ sub items_nonstackable {
 		 $args->{switch} eq '02D2'    # cart
 	) {
 		return $items->{$rpackets{'00AA'} == 7 ? 'type3' : 'type4'};
+	} elsif ($args->{switch} eq '0901' # inventory
+		|| $args->{switch} eq '0976' # storage
+		|| $args->{switch} eq '0903' # cart
+	) {
+		return $items->{type5};
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -875,9 +896,56 @@ sub items_stackable {
 		 $args->{switch} eq '02E9'    # cart
 	) {
 		return $items->{type3};
+
+	} elsif ($args->{switch} eq '0900' # inventory
+		|| $args->{switch} eq '0975' # storage
+		|| $args->{switch} eq '0902' # cart
+	) {
+		return $items->{type5};
+
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}
+}
+
+sub parse_items {
+	my ($self, $args, $unpack, $process) = @_;
+	my @itemInfo;
+
+	my $length = length $args->{itemInfo};
+	for (my $i = 0; $i < $length; $i += $unpack->{len}) {
+		my $item;
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{itemInfo}, $i, $unpack->{len}));
+
+		$process->($item);
+
+		push @itemInfo, $item;
+	}
+
+	@itemInfo
+}
+
+sub parse_items_nonstackable {
+	my ($self, $args) = @_;
+
+	$self->parse_items($args, $self->items_nonstackable($args), sub {
+		my ($item) = @_;
+
+		#$item->{placeEtcTab} = $item->{identified} & (1 << 2);
+		$item->{broken} = $item->{identified} & (1 << 1) unless exists $item->{broken};
+		$item->{idenfitied} = $item->{identified} & (1 << 0);
+	})
+}
+
+sub parse_items_stackable {
+	my ($self, $args) = @_;
+
+	$self->parse_items($args, $self->items_stackable($args), sub {
+		my ($item) = @_;
+
+		#$item->{placeEtcTab} = $item->{identified} & (1 << 1);
+		$item->{idenfitied} = $item->{identified} & (1 << 0);
+	})
 }
 
 #######################################
@@ -1213,21 +1281,12 @@ sub cart_add_failed {
 sub cart_items_nonstackable {
 	my ($self, $args) = @_;
 
-	my $newmsg;
-	my $msg = $args->{RAW_MSG};
-	$self->decrypt(\$newmsg, substr($msg, 4));
-	$msg = substr($msg, 0, 4).$newmsg;
-
-	my $unpack = $self->items_nonstackable($args);
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+	for my $item ($self->parse_items_nonstackable($args)) {
+		my ($local_item);
 
 		# TODO: different classes for inventory/cart/storage items
 		$local_item = $cart{inventory}[$item->{index}] = Actor::Item->new;
-		foreach (@{$unpack->{keys}}) {
+		for (keys %$item) {
 			$local_item->{$_} = $item->{$_};
 		}
 		$local_item->{name} = itemName($local_item);
@@ -1244,23 +1303,14 @@ sub cart_items_nonstackable {
 sub cart_items_stackable {
 	my ($self, $args) = @_;
 
-	my $newmsg;
-	my $msg = $args->{RAW_MSG};
-	$self->decrypt(\$newmsg, substr($msg, 4));
-	$msg = substr($msg, 0, 4).$newmsg;
-
-	my $unpack = $self->items_stackable($args);
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+	for my $item ($self->parse_items_stackable($args)) {
+		my ($local_item);
 
 		$local_item = $cart{inventory}[$item->{index}] ||= Actor::Item->new;
 		if ($local_item->{amount}) {
 			$local_item->{amount} += $item->{amount};
 		} else {
-			foreach (@{$unpack->{keys}}) {
+			for (keys %$item) {
 				$local_item->{$_} = $item->{$_};
 			}
 		}
@@ -2842,23 +2892,16 @@ sub revolving_entity {
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my ($newmsg, $psize);
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
 
-	my $unpack = $self->items_nonstackable($args);
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item, $add);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+	for my $item ($self->parse_items_nonstackable($args)) {
+		my ($local_item, $add);
 
 		unless($local_item = $char->inventory->getByServerIndex($item->{index})) {
 			$local_item = new Actor::Item();
 			$add = 1;
 		}
 
-		foreach (@{$unpack->{keys}}) {
+		for (keys %$item) {
 			$local_item->{$_} = $item->{$_};
 		}
 		$local_item->{name} = itemName($local_item);
@@ -2887,23 +2930,15 @@ sub inventory_items_stackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
-
-	my $unpack = $self->items_stackable($args);
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item, $add);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+	for my $item ($self->parse_items_stackable($args)) {
+		my ($local_item, $add);
 
 		unless($local_item = $char->inventory->getByServerIndex($item->{index})) {
 			$local_item = new Actor::Item();
 			$add = 1;
 		}
 
-		foreach (@{$unpack->{keys}}) {
+		for (keys %$item) {
 			$local_item->{$_} = $item->{$_};
 		}
 
@@ -5652,21 +5687,13 @@ sub storage_item_removed {
 sub storage_items_nonstackable {
 	my ($self, $args) = @_;
 
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
-
-	my $unpack = $self->items_nonstackable($args);
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+	for my $item ($self->parse_items_nonstackable($args)) {
+		my ($local_item);
 
 		binAdd(\@storageID, $item->{index});
 		$local_item = $storage{$item->{index}} = Actor::Item->new;
 
-		foreach (@{$unpack->{keys}}) {
+		for (keys %$item) {
 			$local_item->{$_} = $item->{$_};
 		}
 		$local_item->{name} = itemName($local_item);
@@ -5675,29 +5702,23 @@ sub storage_items_nonstackable {
 
 		debug "Storage: $local_item->{name} ($local_item->{binID})\n", "parseMsg";
 	}
+
+	$storageTitle = exists $args->{title} ? $args->{title} : undef;
 }
 
 sub storage_items_stackable {
 	my ($self, $args) = @_;
 
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
-
 	undef %storage;
 	undef @storageID;
 
-	my $unpack = $self->items_stackable($args);
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+	for my $item ($self->parse_items_stackable($args)) {
+		my ($local_item);
 
 		binAdd(\@storageID, $item->{index});
 		$local_item = $storage{$item->{index}} = Actor::Item->new;
 
-		foreach (@{$unpack->{keys}}) {
+		for (keys %$item) {
 			$local_item->{$_} = $item->{$_};
 		}
 		$local_item->{amount} = $local_item->{amount} & ~0x80000000;
@@ -5706,6 +5727,8 @@ sub storage_items_stackable {
 		$local_item->{identified} = 1;
 		debug "Storage: $local_item->{name} ($local_item->{binID}) x $local_item->{amount}\n", "parseMsg";
 	}
+
+	$storageTitle = exists $args->{title} ? $args->{title} : undef;
 }
 
 sub storage_opened {
@@ -5717,7 +5740,7 @@ sub storage_opened {
 	if (!$storage{opened}) {
 		$storage{opened} = 1;
 		$storage{openedThisSession} = 1;
-		message T("Storage opened.\n"), "storage";
+		message defined $storageTitle ? TF("Storage '%s' opened.\n", $storageTitle) : T("Storage opened.\n"), "storage";
 		Plugins::callHook('packet_storage_open');
 	}
 }
