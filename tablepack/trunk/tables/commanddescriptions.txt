@@ -13,9 +13,10 @@ Attack a monster.
 
 [ai]
 Enable/disable AI.
-				toggles AI on/off
+				toggles AI on/manual/off
 on				enables AI
 off				disables AI
+manual			makes AI manual
 ai_v			displays the contents of the %ai_v hash, for debugging purposes
 clear			clears AI sequences
 print			displays detailed info about current AI sequence
@@ -105,6 +106,9 @@ Buy an item from the current NPC shop
 [c]
 Chat in the public chat.
 <message>			send <message> to public chat
+
+[captcha]
+Answer captcha
 
 [card]
 Card compounding.
@@ -207,21 +211,24 @@ Equip an item.
 slots				lists slot names
 
 [eval]
-Evaluate a Perl expression (developers only).
+Evaluate a Perl expression.
 <expression>			evaluate a Perl expression
 
 [exp]
 Experience report.
 				displays the experience report
 reset				resets the experience report
+
 [falcon]
 Falcon status.
 				displays falcon status
 release 		releases your falcon
+
 [follow]
 Follow another player.
 <player name|player #>		follow the specified player
 stop				stop following
+
 [friend]
 Friend management.
 				lists friends
@@ -230,24 +237,28 @@ accept				accepts a friend request
 reject				rejects a friend request
 pm <friend #>			pm a friend
 remove <friend #>		remove a friend from friends list
+
 [g]
 Chat in the guild chat.
 <message>			send <message> to guild chat
+
 [getplayerinfo]
-Get the name of the object with specified ID
+Get the name of the player with specified ID
 <player ID>			show the name of the specified ID (needs debug 2)
+
 [guild]
 Guild management.
-				request guild info
+					request guild info
 info				displays guild info
 members				displays guild member info
 request <player name|player #>	request player to join your guild
 join <flag>			accepts a guild join request if <flag> is 1, deny if 0
 leave				leave the guild
+
 [help]
 Help displays commands
-				lists available commands
-<command>*			displays detailed information about a command
+					lists available commands
+<command>			displays detailed information about a command
 
 [homun]
 Interact with homunculus.
@@ -277,50 +288,65 @@ neq				lists unequipped items
 nu				lists non-usable items
 u				lists usable items
 desc <inventory item #>		displays inventory item description
+
 [identify]
 Identify an unindentified item.
 				lists items to be identified
 <identify #>			identify an item
+
 [ignore]
 Ignore a user (block his messages).
 <flag> <player name>		ignores a player if <flag> is 1, unignore if 0
 <flag> all			ignores all players if <flag> is 1, unignore if 0
+
 [il]
 Display items on the ground.
+
 [ihist]
 Displays last few entries of the item log.
 				display last 5 entries
 <number>			display last <number> entries
+
 [im]
 Use item on monster.
 <inventory item #> <monster #>	use item on monster
+
 [ip]
 Use item on player.
 <inventory item #> <player #>	use item on player
+
 [is]
 Use item on yourself.
 <inventory item #>		use item on yourself
+
 [kill]
 Attack another player (PVP/GVG only).
 <player #>			attack the specified player
+
 [look]
 Look in a certain direction.
 <body dir> [<head dir>]		look at <body dir> (0-7) with head at <head dir> (0-2)
+
 [lookp]
 Look at a certain player.
 <player #>			look at player
+
 [m]
 Displays Mail commands.
+
 [ma]
 Mail & Attachment.
 get <mail #>		takes items attached from mail
 add zeny <amount> 	attaches zenys in the mail
 add item <amount> <inventory item>		attaches items in the mail
+
 [md]
 Deletes a Mail.
 <mail #>		delete a mail with a corresponding number from the mail list when you open your mailbox
+
 [memo]
 Save current position for warp portal.
+
 [merc]
 Interact with Mercenary.
 s				display mercenary status
@@ -339,64 +365,91 @@ print			prints mercenary AI
 skills			displays mercenary skills
 skills add <skill #>	add a skill point to the current mercenary skill
 desc <skill #>	display a description of the specified mercenary skill
+
 [mi]
 Opens Mailbox.
+
 [ml]
 List monsters that are on screen.
+
 [mo]
 Open a mail.
-<mail #>	open the mail whit a corresponding number from the mail list when you open your mailbox
+<mail #>	open the mail with a corresponding number from the mail list when you open your mailbox
+
 [move]
 Move your character.
 <x> <y> [<map name>]		move to the coordinates on a map
 <map name> 			move to map
 <portal #>			move to nearby portal
 stop				stop all movement
+
 [mr]
 Returns the mail to the sender.
 <mail #>	a corresponding number from the mail list when you open your mailbox
+
 [ms]
 Sends Mail.
 <receiver> <tittle>	<message>	sends mail to <receiver>
+
 [mw]
 Interacts with mail box window.
 0	write mail
 1	take attached items back
 2	inputs zenys
+
 [nl]
 List NPCs that are on screen.
+
 [openshop]
 Open your vending shop.
+
 [p]
 Chat in the party chat.
 <message>			send <message> to party chat
+
 [party]
 Party management.
 				displays party member info
-create \"<party name>\"		organize a party
+create \"<party name>"\		organize a party
 share <flag>			sets party exp sharing to even if flag is 1, individual take if 0
 request <player #>		request player to join your party
 join <flag>			accept a party join request if <flag> is 1, deny if 0
 kick <party member #>		kick party member from party
 leave				leave the party
+
 [pause]
 Delay the next console commands.
 <seconds>		delay the next console commands by a specified number of seconds (default: 1 sec.)
+
 [pecopeco]
 Pecopeco status.
 				display pecopeco status
 release			release your pecopeco
-#[pet]
-#Pet management.
-#s				displays pet status
+
+[pet]
+Pet management.
+s				displays pet status
+status			displays pet status
+c <monster #>	captures a monster
+capture <monster #>		captures a monster
+hatch <egg #> 	hatches a pet egg, but first you should use the item Pet Incubator
+info			sends pet menu
+feed			feeds your pet
+performance		plays with your pet
+return			sends your pet back to the egg
+unequip			unequips your pet
+name <name>		changes the name of the pet
+
 [petl]
 List pets that are on screen.
+
 [pl]
 List players that are on screen.
 				lists players on screen
 <player #>		displays detailed info about a player
 p				lists party players on screen
 g				lists guild players on screen
+
 [plugin]
 Control plugins.
 				lists loaded plugins
@@ -404,37 +457,47 @@ load <filename>			loads a plugin file
 reload <plugin name|plugin #>	reloads a loaded plugin
 unload <plugin name|plugin #>	unloads a loaded plugin
 help				displays plugin help
+
 [pm]
 Send a private message.
 <player name|PM list #> <message>	send <message> to player through PM
+
 [pml]
 Quick PM list.
+
 [portals]
 List portals that are on screen.
+
 [quest]
 Quest management.
 						displays possible commands for quest
 set <questID> on		enable quest
 set <questID> off		disable quest
 list					displays a list of your quests
+
 [quit]
 Exit this program.
+
 [rc]
 Reload source code files.
 				reload functions.pl
 <module names>			reload module files in the space-separated <module names>
+
 [refine]
 Refine an item (using the whitesmith skill)
 refine (<item name> | <item index>) 
+
 [reload]
 Reload configuration files.
-all				reload all config and table files
-<names>				reload config files in the list of <names>
+all				reload all control and table files
+<names>				reload control files in the list of <names>
 all except <names>		reload all files except those in the list of <names>
+
 [relog]
 Log out then log in again.
 				logout and login after 5 seconds
 <seconds>			logout and login after <seconds>
+
 [respawn]
 Respawn back to the save point.
 
@@ -462,8 +525,8 @@ me off		disables equipment showing
 Sit down.
 
 [skills]
-Show skills or add skill point.
-				Lists available skills.
+Skills management.
+						Lists available skills.
 add <skill #>			add a skill point
 desc <skill #>			displays skill description
 
@@ -519,10 +582,11 @@ get <storage item #> [<amount>]	gets item from storage to inventory
 gettocart <storage item #> [<amount>]	gets item from storage to cart
 close				close storage
 log				logs storage items to logs\storage.txt
+
 [store]
 Display shop items from NPC.
-				lists available shop items from NPC
-desc <store item #>		displays store item description
+					lists available shop items from NPC
+desc <store item #>	displays store item description
 
 [switchconf]
 Switch configuration file.
@@ -542,68 +606,92 @@ resp <response #>	select a response to NPC
 num <number>		send a number to NPC
 text <string>		send text to NPC
 no					ends/cancels conversation with NPC
+
 [talknpc]
 Send a sequence of responses to an NPC.
 <x> <y> <NPC talk codes>	talk to the NPC standing at <x> <y> and use <NPC talk codes>
+
 [tank]
 Tank for a player.
 <player name|player #>		starts tank mode with player as tankModeTarget
 stop				stops tank mode
+
 [tele]
 Teleport to a random location.
+
 [testshop]
 Show what your vending shop would sell.
+
 [timeout]
 Set a timeout.
 <type>				displays value of <type>
 <type> <second>		sets value of <type> to <seconds>
+
 [top10]
 Displays top10 ranking.
 top10 (a | alche | alchemist)		displays Alchemist's top10 ranking
 top10 (b | black | blacksmith)		displays Blackmith's top10 ranking
 top10 (p | pk | pvp)				displays PVP top10 ranking
 top10 (t | tk | taekwon)			displays Taekwon's top10 ranking
+
 [uneq]
 Unequp an item.
 <inventory item #>		unequips the specified item
+
 [vender]
 Buy items from vending shops.
 <vender #>			enter vender shop
 <vender #> <vender item #> [<amount>]	buy items from vender shop
 end				leave current vender shop
+
 [verbose]
 Toggle verbose on/off.
+
 [version]
 Display the version of openkore.
+
 [vl]
 List nearby vending shops.
+
 [warp]
 Open warp portal.
 list				lists available warp portals to open
 <warp portal #|map name>	opens a warp portal to a map
+
 [weight]
 Gives a report about your inventory weight.
 				displays info about current weight
 <item weight>			calculates how much more items of specified weight can be carried
+
 [where]
 Shows your current location.
+
 [who]
 Display the number of people on the current server.
+
 [whoami]
 Display your character and account ID.
+
 [north]
 Move 5 steps north.
+
 [south]
 Move 5 steps south.
+
 [east]
 Move 5 steps east.
+
 [west]
 Move 5 steps west.
+
 [northeast]
 Move 5 steps northeast.
+
 [northwest]
 Move 5 steps northwest.
+
 [southeast]
 Move 5 steps southeast.
+
 [southwest]
 Move 5 steps southwest.
