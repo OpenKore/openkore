@@ -1,0 +1,697 @@
+#Aqui as descrições dos comandos são armazenadas
+#
+#[comando] -é o nome do comando
+#A primeira linha é uma descrição rápida
+#<key>			descrição
+#
+#opção			descrição, essas opções são divididas por tabs
+#Você pode usar quantos tabs quizer.
+#
+[a]
+Ataca um monstro.
+<monster #>		Ataca o monstro especificado
+
+[ai]
+Ativa/desativa a Inteligência Artificial (IA)
+				Alterna a IA entre on/manual/off
+on				Ativa a IA
+off				Desativa a IA
+manual			Torna a IA manual
+ai_v			Exibe o conteúdo do hash ai_v%, para fins de depuração
+clear			Limpa as sequências da Inteligência Artificial
+print			Mostra informações detalhadas sobre as atuais sequências da Inteligência Artificial
+
+[aiv]
+Mostra as atuais sequências da Inteligência Artificial.
+
+[al]
+Mostra o status atual da sua loja.
+
+[arrowcraft]
+Cria flechas.
+				Lista os itens disponíveis para a criação de flechas
+use				Usa a habilidade dos arqueiros Fabricar Flechas
+<arrowcraft #>		Cria flechas usando um item da lista do 'arrowcraft'
+forceuse <inventory item #>		Criar flechas imediatamente de um item, sem usar a habilidade
+
+[as]
+Para de atacar um monstro.
+
+[au]
+Mostra os possíveis comandos para um leilão.
+
+[aua]
+Adiciona um item ao leilão.
+<item do inventório> <quantitade>	Adiciona o item, na quantidade especificada, ao leilão
+
+[aub]
+Faz uma oferta num leilão.
+<id> <preço>	Faz uma oferta num leilão
+
+[auc]
+Cria um leilão.
+<preço atual> <preço de compra instantânea> <horas>	Cria um leilão
+
+[aud]
+Deleta um leilão.
+<index>			Deleta um leilão
+
+[aue]
+Termina um leilão.
+<index>			Termina um leilão
+
+[aui]
+Mostra as informações do seu leilão.
+selling			Mostra as informações de venda
+buying			Mostra as informações de compra
+
+[aur]
+Remove item do leilão.
+
+[aus]
+Procura por um leilão de acordo com o critério.
+<tipo> <preço> <texto>	Critério de pesquisa de itens. Tipo: 1-Armadura; 2-Arma; 3-Carta; 4-Miscelância; 5-Por texto; 6-Por preço; 7-Venda; 8-Compra
+
+[auth]
+Autoriza/desautoriza um usuário para usar os comandos de chat do openkore.
+<nome do player> 0		Desautoriza <nome do player>
+<nome do player> 1		Autoriza <nome do player>
+
+[autobuy]
+Inicia a sequência de compra automática.
+
+[autosell]
+Inicia a sequência de venda automática.
+
+[autostorage]
+Inicia a sequência de armazenagem automática.
+
+[bangbang]
+Faz um giro de corpo "bangbang".
+
+[bg]
+Manda uma mensagem no chat de battleground.
+<mensagem>		Manda uma <mensagem> no chat de battleground
+
+[bingbing]
+Faz um giro de corpo "bingbing".
+
+[booking]
+Interaja com uma reserva de grupo.
+
+[buy]
+Compra um item do NPC lojista atual.
+<Número do item da loja> [<quantidade>]		Compra a <quantidade> de itens da lista da loja.
+
+[c]
+Usa o chat público.
+<mensagem>		Manda uma <mensagem> no chat público
+
+[captcha]
+Responde o captcha
+
+[card]
+Composição de cartas.
+list			Lista as cartas no inventório
+use <card #>	Inicia a composição da carta usando a carta especificada
+mergelist		Lista os itens para fundir com a carta
+mergecancel		Cancela a solicitação da junção da carta
+merge <card merge #>	Funde a carta com o item e finaliza a composição.
+forceuse <card #> <inventory item #>	Funde a carta com o item instantâneamente
+
+[cart]
+Administração do carrinho.
+				Lista os itens no carrinho
+add <inventory item #> [<quantidade>]	Adiciona uma <quantidade> de um item do inventório ao carrinho.
+get <cart item #> [<quantidade>]		Obtém uma <quantidade> de um item do carrinho.
+desc <cart item#> [<quantidade>]		Mostra uma descrição de um item do carrinho.
+
+[charselect]
+Pede ao servidor para sair para a tela de seleção de personagens.
+
+[chat]
+Gerenciamento da sala de chat.
+list				Mostra as salas de chat na tela
+join <chat room #>	Entra numa sala de chat
+info				Mostra informações sobre a sala de chat atual
+leave				Sai da sala de chat atual
+create \"<título>"\ [<limite> <public flag> <senha>]	Cria uma sala de chat
+modify \"<título>"\ [<limite> <public flag> <senha>]	Modifica a sala de chat atual
+bestow <user #>		Dá as funções de adiministrador para um usuário do chat
+kick <user #>		Explusa um jogador da sala de chat
+
+[chist]
+Mostra últimas entradas do chat log.
+					Mostra as últimas 5 entradas do log
+<number>			Mostra as últimas <número> entradas do log
+
+[cil]
+Limpa o item log.
+
+[cl]
+Limpa o chat log.
+
+[closeshop]
+Fecha a sua loja.
+
+[conf]
+Muda uma chave de configuração.
+<key>						Mostra o valor da <key>
+<key> <valor>				Configura o valor da <key> para o <valor>
+<key> none					Torna a <key> indefinida
+<label.attribute> <valor>	Define um novo valor para uma chave de configuração especificada através de um label
+<label.attribute> none		Torna indefinida a chave de configuração especificada através de um label
+
+[cook]
+Tenta criar um item alimentício.
+<cook list #>		Tenta criar um item alimentício
+
+[damage]
+Reporta o dano levado.
+					Mostra o relatório de danos tomados
+reset				Reseta o relatório de danos tomados
+
+[deal]
+Negocia itens com outro player.
+					Aceita um pedido de negociação/finaliza a atual troca/negociação
+<player #>			Solicita uma negociação com um player
+add <inventory item #> [<quantidade>]	Adiciona itens à negociação atual
+add z [<quantidade>]	Adiciona uma quantidade de zenys à negociação atual
+no					Nega um pedido de negociação/cancela a negociação atual
+
+[debug]
+Alterna a depuração entre on/off.
+<nível>				Configura o debug para o <nível>
+info				Mostra as informações de depuração
+
+[dl]
+Lista os itens da negociação atual.
+
+[doridori]
+Faz um giro de cabeça "doridori".
+
+[drop]
+Derruba um item do inventário.
+<inventory item #> [<quantidade>]	Derruba um item do inventário
+
+[dump]
+"Dump" o pacote atual recebido e saia.
+
+[dumpnow]
+"Dump" o pacote atual recebido sem sair.
+
+[e]
+Mostra um emotion.
+<emotion>			Mostra o emotion especificado (tables\emotions.txt)
+
+[eq]
+Equipa um item.
+<inventory item #>	Equipa o item especificado
+<slotname> <inventory item #> Equipa o item especificado no slot especificado
+slots				Lista os nomes dos slots
+
+[eval]
+Avalia uma expressão em Perl.
+<expressão>			Avalia uma expressão em Perl.
+
+[exp]
+Mostra um relatório de experiência.
+					Mostra um relatório de experiência.
+reset				Reseta o relatório de experiência.
+
+[falcon]
+Status do falcão.
+					Mostra o status do falcão
+release				Dispensa o falcão
+
+[follow]
+Segue outro player.
+<nome do player|player #>	Seque o player especificado
+stop				Para de seguir.
+
+[friend]
+Administração de amizades.
+					Lista os amigos
+request <nome do player|player #>	Envia um pedido de amizade para ser seu amigo.
+accept				Aceita uma solicitação de amizade
+reject				Rejeita uma solicitação de amizade
+pm <amigo #>		Envia uma mensagem particular para um amigo
+remove <amigo #>	Remove um amigo da lista de amigos
+
+[g]
+Usa o chat da guilda.
+<mensagem>			Manda uma <mensagem> pelo chat da guilda
+
+[getplayerinfo]
+Obtém o nome do player pelo ID especificado.
+<player ID>			Mostra o nome do ID especificado (necessita da opção 'debug 2' ativada)
+
+[guild]
+Administração da guilda.
+					Solicitação de informações da guilda
+info				Mostra informação da guilda
+members				Mostra informação de membros da guilda
+request <nome do playe|player #>	Solicita a um player para entrar na guilda
+join <flag>			Aceita um solicitação para entrar em uma guilda, se <flag> for 1, se <flag> for 0 negará
+leave				Sai da guilda
+
+[help]
+Exibe os comandos
+					Lista os comandos disponíveis
+<comando>			Mostra informação detalhada sobre o comando especificado
+
+[homun]
+Interaja com o homunculus.
+s				Mostra os status do homunculus.
+status			Mostra os status do homunculus.
+feed			Alimenta seu homunculus (Necessário ter comida para o homunculus)
+fire			Deleta seu homunculus
+move <x> <y>	Move seu homunculus
+standby 		Deixa seu homunculus no modo standby
+aiv 			Mostra a IA atual do homunculus
+ai				Torna a IA ligada/desligada/manual
+on 				Torna a IA do homunculus ativada
+auto			Torna a IA do homunculus ativada
+manual			Torna a IA do homunculus manual
+off				Torna a IA do homunculus desativada
+clear			Limpa a IA do homunculus
+print			Mostra a IA do homunculus
+skills			Mostra as skills do homunculus
+skills add <skill #>	Adiciona um ponto de skill para as skills do homunculus.
+desc <skill #>	Mostra uma descrição da uma habilidade específica
+
+[i]
+Mostra os itens do inventório
+				Mostra os itens do inventório
+eq				Mostra os itens equipados
+neq				Mostra os itens não equipados
+nu				Mostra os itens não utilizáveis
+u				Mostra os itens utilizáveis
+desc <inventory item #>	Mostra a descrição do item do inventório especificado 
+
+[identify]
+Identifica um item não identificado.
+				Mostra os items que podem ser identificados
+<identify #>	Identifica um item
+
+[ignore]
+Ignora um player.
+<flag> <nome do player>		Ignora o player se o <flag> for 1, não ignora se o <flag> for 0
+<flag> all					Ignora todos os players se <flag> for 1, não ignora todos os players se o <flag> for 0
+
+[il]
+Mostra os itens no chão.
+
+[ihist]
+Mostra as últimas entradas do item log.
+				Mostra as últimas 5 entradas
+<número>		Mostra as últimas <número> entradas
+
+[im]
+Usa um item em um monstro.
+<inventory item #> <monster #>	Usar item em monstro
+
+[ip]
+Usa um item em um player.
+<inventory item #> <player #>	Usar item em player
+
+[is]
+Usa um item em você mesmo.
+<inventory item #>				Usar item em si
+
+[kill]
+Ataca outro player [PVP/GVG/WOE apenas].
+<player #> 		Ataca o player especificado
+
+[look]
+Olha para uma localização específica.
+<dir corpo> [<dir cabeça>]		Olha para <dir corpo> (0-7) com a cabeça no <dir cabeça> (0-2)
+
+[lookp]
+Olha para um determinado player.
+<player #>		Olha para o player
+
+[m]
+Mostra os comandos de correiro.
+
+[ma]
+Correspondêcia & anexos.
+get <carta #>	Pega os itens anexados na correspondêcia
+add zeny <quantidade>	Anexa zeny na carta
+add item <quantidade> <inventory item>	Anexa item na carta
+
+[md]
+Deleta uma carta.
+<carta #>		Excluir uma carta com um número correspondente da lista de de correio quando você abre sua caixa de correio
+
+[memo]
+Salva a posição atual para um portal.
+
+[merc]
+Interaja com o mercenário.
+s				Mostra o status do mercenário
+status			Mostra o status do mercenário
+fire			Deleta o mercenário
+move <x> <y>	Move o mercenário
+standby			Deixa seu mercenário no modo standby
+aiv				Mostra a IA atual do mercenário
+ai				Alterna a IA do mercenário entre ligada/desligada/manual
+on				Liga a IA do mercenário
+auto			Liga a IA do mercenário
+manual			Torna a IA do mercenário manual
+off				Desliga a IA do mercenário
+clean			Limpa a IA do mercenário
+print			Mostra a IA do mercenário
+skills			Mostra as habilidades do mercenário
+skills add <skill #>	Adicina um ponto para a skill do mercenário especificada
+desc <skill #>	Mostra a descrição da habilidade do mercenário especificada
+
+[mi]
+Abre a caixa de correiro.
+
+[ml]
+Lista os monstros que estão na tela.
+
+[mo]
+Abre uma carta.
+<carta #>		Abre a carta com o número correspondente à lista de cartas de quando você abre sua caixa de correiro
+
+[move]
+Move seu presonagem.
+<x> <y>	[<nome do mapa>] Move para as coordenadas especificadas em um mapa
+<nome do mapa>	Se move para o mapa especificado
+<portal #>		Se move para um portal próximo
+stop 			Para todo movimento
+
+[mr]
+Retorna a carta para sua origem.
+<mail #>		Retorna a carta com o número correspondente à lista de cartas quando você abre sua caixa de correiro
+
+[ms]
+Envia uma carta.
+<destino> <título> <mensagem>	Envia uma carta para o <destino>
+
+[mw]
+Interaja com a janela da caixa de correiro.
+0 				Escreve uma carta
+1				Pega os itens anexados de volta
+2				Adiciona zeny
+
+[nl]
+Lista os NPCs que estão na tela.
+
+[openshop]
+Abre sua loja.
+
+[p]
+Usa o chat da party.
+<mensagem>		Envia <mensagem> por chat da party
+
+[party]
+Administração da party.
+				Exibe informações dos membros da party
+create \"<nome da party>"\	Cria uma party
+share <flag>	Define o compartilhamento de exp da party como igual se a flag é 1, individual se for 0
+request <player #>			Convida um player para entrar na party
+join <flag>		Aceita o convite de party se a <flag> for 1, nega se for 0
+kick <party member #>		Expulsa um membro da party
+leave			Sai da party
+
+[pause]
+Atrasa o próximo comando do console.
+<segundos>		Atrasa o próximo comando do console por um determinado número de segundos (padrão: 1 seg.)
+
+[pecopeco]
+Status do Peco Peco.
+				Mostra o status do Peco Peco
+release			Dispensa o Peco Peco
+
+[pet]
+Administração do pet.
+s				Mostra o status do pet
+status			Mostra o status do pet
+c <monster #>	Captura um monstro
+capture <monster #>		Captura um monstro
+hatch <egg #>	Choca um ovo de pet, mas antes você deve utilizar o item Incubadora
+info			Envia o menu de pet
+feed			Alimenta seu pet
+performance		Brinca com seu pet
+return			Manda o pet de volta para o ovo
+unequip			Desequipa seu pet
+name <name>		Muda o nome do pet
+
+[petl]
+Lista os pets na tela.
+
+[pl]
+Lista os players na tela.
+				Lista os players na tela
+<player #>		Mostra informação detalhada sobre o player especificado
+p				Lista os membros da party na tela
+g				Lista os membros da guilda na tela
+
+[plugin]
+Controla os plugins.
+				Lista os plugins carregados
+load <nome do plugin>				Carrega um plugin
+reload <nome do plugin|plugin #>	Recarrega um plugin
+unload <nome do plugin|plugin #>	Descarrega um plugin
+help			Mostra a ajuda de plugin
+
+[pm]
+Envia uma mensagem privativa.
+<nome do player|Lista de PM #> <mensagem>	Envia <mensagem> para o player especificado através de PM
+
+[pml]
+Lista de players para PM.
+
+[portals]
+Lista os portais na tela.
+
+[quest]
+Administração de quests.
+					Mostra os possíveis comandos para quest
+set <quest ID> on	Ativa a quest
+set <quest ID> on	Desativa a quest
+list				Mostra uma lista das quests
+
+[quit]
+Sai do openkore.
+
+[rc]
+Recarrega arquivos da source.
+					Recarrega functions.pl
+<nome dos módulos>	Recarregar arquivos de módulo no <nomes do modulos> separada por espaço
+
+[refine]
+Refina um item (utilizando a habilidade de Mestre Ferreiro).
+refine (<nome do item>|<index do item>)		Refina um item
+
+[reload]
+Recarrega arquivos de configuração.
+all 				Recarrega todos os arquivos da pasta control e tables
+<nomes>				Recarrega arquivos da pasta control numa lista de <nomes>
+all except <nomes>	Recarrega todos os arquivos exceto os aqueles numa lista de <nomes>
+
+[relog]
+Desloga e loga novamente.
+					Desloga e loga novamente após 5 segundos
+<segundos>			Desloga e loga novamente após <segundos>
+
+[respawn]
+Volta para o ponto de retorno.
+
+[s]
+Mostra o status do personagem.
+
+[sell]
+Vende itens para um NPC.
+<inventory item #> [<quantidade>]	Coloca itens do inventório na lista de venda
+list				Mostra os itens na lista de venda
+done				Vende tudo na lista de vendas
+cancel				Limpa a lista de vendas
+
+[send]
+Envia um pacote bruto para o servidor.
+<hex string>		Envia um pacote bruto para o servidor conectado
+
+[showeq]
+Ver equipamentos.
+<player>			Solicitar informações de equipamentos para um player
+me on				Habilita mostrar equipamentos
+me off				Desabilita mostrar equipamentos
+
+[sit]
+Senta.
+
+[skills]
+Administração de habilidades.
+					Lista as habilidades disponíveis
+add <skill #>		Adiciona um ponto em uma habilidade
+desc <skill #>		Mostra a descrição de uma habilidade
+
+[sl]
+Usa uma habilidade em uma localização.
+<skill #> <x> <y> [<level>]		Usa uma habilidade em uma localização
+
+[sll]
+Exibe uma lista de slaves em sua área atual.
+
+[sm]
+Usa uma habilidade em um monstro.
+<skill #> <monster #> [<level>]		Usa uma habilidade em um monstro
+
+[sp]
+Usa uma habilidade em um player.
+<skill #> <monster #> [<level>]		Usa uma habilidade em um player
+
+[spells]
+Lista feitiços de área na tela.
+
+[ss]
+Usa uma habilidade em si mesmo.
+<skill #> [<level>]		Usa uma habilidade em si mesmo
+
+[ssl]
+Usa uma habilidade no slave.
+<skill #> <alvo #> <skill level>	Usa uma habilidade no slave
+
+[ssp]
+Usa uma habilidade em uma área.
+<skill #> <alvo #> [<skill level>]	Usa uma habilidade em uma área
+
+[st]
+Mostra o status.
+
+[stand]
+Levanta.
+
+[stat_add]
+Adiciona pontos de status.
+str|agi|int|vit|dex|luk		Adiciona pontos ao status especificado
+
+[storage]
+Manipula itens no armazém.
+					Lista os itens no armazém
+eq					Lista os equipamentos no armazém
+nu					Lista os itens não-utilizáveis no armazém
+u					Lista os itens utilizáveis no armazém
+add <inventory item #> [<quantidade>]	Adiciona item do inventório ao armazém
+addfromcart <cart item #> [<quantidade>]	Adiciona item do carrinho ao armazém
+get	<storage item #> [<quantidade>]		Adiciona item do armazém ao inventário
+gettocart	<storage item #> [<quantidade>]		Adiciona item do armazém ao carrinho
+close				Fecha o armazém
+log					Registra os itens do armazém para logs\storage.txt
+
+[store]
+Mostra itens da loja do NPC.
+					Lista da loja itens disponíveis de NPC
+desc <store item #>	Mostra a descrição do item da loja de NPC
+
+[swithconf]
+Troca o arquivo de configuração.
+<nome do arquivo>	Troca o arquivo de configuração para <nome do arquivo>
+
+[take]
+Pega um item do chão.
+<item #>			Pega o item do chão
+first				Pega o primeiro item do chão
+
+[talk]
+Fala manualmente com um NPC.
+<NPC #>				Fala com um NPC
+cont				Continua falando com o NPC
+resp				Mostra uma lista de respostas para o NPC
+resp <número da resposta>	Seleciona uma resposta para o NPC
+num <número>		Envia um número para um NPC
+text <string>		Envia um texto para um NPC
+no					Cancela a conversa com o NPC
+
+[talknpc]
+Envia uma sequência de respostas para um NPC.
+<x> <y> <códigos de conversa>	Falar com o NPC em pé <x> <y> e usar <códigos conversa NPC>
+
+[tank]
+Tanka para um player.
+<nome do player|player #>	Inicia o modo tankar com o jogador como o tankModeTarget
+stop						Para de tankar
+
+[tele]
+Teleporta para uma localização randômica.
+
+[testshop]
+Mostra o que sua loja venderia.
+
+[timeout]
+Defina um tempo limite.
+<tipo>			Mostra o valor de <tipo>
+<tipo> <segundos>	Define o valor de <tipo> para <segundos>
+
+[top10]
+Mostra o rank do top10.
+top10 (a | alche | alchemist)		Mostra o rank de alquimistas
+top10 (b | black | blacksmith)		Mostra o rank de Ferreiros
+top10 (p | pk | pvp)				Mostra o rank do PVP
+top10 (t | tk | taekwon)			Mostra o rank de Taekwon
+
+[uneq]
+Desequipa um item.
+<inventory item #>			Desequipa o item especificado
+
+[vender]
+Compra itens das lojas de players.
+<vender #>					Entra na loja
+<vender #> <vender item #> [<quantidade>]	Compra itens da loja
+end							Sai da loja atual
+
+[verbose]
+Desliga/liga o verbose.
+
+[version]
+Mostra a versão do openkore.
+
+[vl]
+Lista as lojas próximas.
+
+[warp]
+Abre um portal.
+list			Lista os portais disponíveis
+<warp portal #|nome do mapa>	Abre um portal para o local especificado
+
+[weight]
+Mostra um relatório sobre o peso dos itens no inventório.
+				Mostra informações sobre o peso atual
+<peso do item>	Calcula quanto mais do item pode ser carregado
+
+[where]
+Mostra sua localização atual.
+
+[who]
+Mostra número de pessoas online.
+
+[whoami]
+Mostra o ID do seu personagem e da conta.
+
+[north]
+Move 5 passos para o norte.
+
+[south]
+Move 5 passos para o sul.
+
+[east]
+Move 5 passos para o leste.
+
+[west]
+Move 5 passos para o oeste.
+
+[northeast]
+Move 5 passos para o nordeste.
+
+[northwest]
+Move 5 passos para o noroeste.
+
+[southeast]
+Move 5 passos para o sudeste.
+
+[southwest]
+Move 5 passos para o sudoeste.
