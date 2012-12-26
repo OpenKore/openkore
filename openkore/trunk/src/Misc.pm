@@ -4280,6 +4280,7 @@ sub parseReload {
 			Settings::loadByRegexp(qr/$args/, $progressHandler);
 		}
 		Log::initLogFiles();
+		message T("All files were loaded\n"), "reload";
 	};
 	if (my $e = caught('UTF8MalformedException')) {
 		error TF(

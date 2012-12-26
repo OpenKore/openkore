@@ -5277,8 +5277,8 @@ sub cmdWhoAmI {
 		error T("Character information not yet available.\n");
 		return;
 	}
-	my $GID = unpack("L1", $charID);
-	my $AID = unpack("L1", $accountID);
+	my $GID = unpack("V1", $charID);
+	my $AID = unpack("V1", $accountID);
 	message TF("Name:    %s (Level %s %s %s)\n" .
 		"Char ID: %s\n" .
 		"Acct ID: %s\n", 
