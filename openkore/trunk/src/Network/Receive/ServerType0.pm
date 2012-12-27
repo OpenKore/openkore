@@ -948,6 +948,33 @@ sub parse_items_stackable {
 	})
 }
 
+sub _items_list {
+	my ($self, $args) = @_;
+
+	for my $item (@{$args->{items}}) {
+		my ($local_item, $add);
+
+		unless ($local_item = $args->{getter} && $args->{getter}($item)) {
+			$local_item = $args->{class}->new;
+			$add = 1;
+		}
+
+		for ([keys %$item]) {
+			@{$local_item}{@$_} = @{$item}{@$_};
+		}
+		$local_item->{name} = itemName($local_item);
+		$local_item->{amount} = 1 unless exists $local_item->{amount}; # there's no amount for non-stackable items
+
+		$args->{callback}($local_item) if $args->{callback};
+
+		$args->{adder}($local_item) if $add;
+
+		my $index = exists $local_item->{invIndex} ? $local_item->{invIndex} : $local_item->{index};
+		debug "$args->{debug_str}: $local_item->{name} ($index) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}}\n", 'parseMsg';
+		Plugins::callHook($args->{hook}, {index => $index, item => $local_item});
+	}
+}
+
 #######################################
 ###### Packet handling callbacks ######
 #######################################
@@ -1281,20 +1308,15 @@ sub cart_add_failed {
 sub cart_items_nonstackable {
 	my ($self, $args) = @_;
 
-	for my $item ($self->parse_items_nonstackable($args)) {
-		my ($local_item);
-
+	$self->_items_list({
 		# TODO: different classes for inventory/cart/storage items
-		$local_item = $cart{inventory}[$item->{index}] = Actor::Item->new;
-		for (keys %$item) {
-			$local_item->{$_} = $item->{$_};
-		}
-		$local_item->{name} = itemName($local_item);
-		$local_item->{amount} = 1;
-
-		debug "Non-Stackable Cart Item: $local_item->{name} ($local_item->{index}) x 1\n", "parseMsg";
-		Plugins::callHook('packet_cart', {index => $local_item->{index}});
-	}
+		class => 'Actor::Item',
+		hook => 'packet_cart',
+		debug_str => 'Non-Stackable Cart Item',
+		items => [$self->parse_items_nonstackable($args)],
+		getter => sub { $cart{inventory}[$_[0]{index}] },
+		adder => sub { $cart{inventory}[$_[0]{index}] = $_[0] },
+	});
 
 	$ai_v{'inventory_time'} = time + 1;
 	$ai_v{'cart_time'} = time + 1;
@@ -1303,22 +1325,14 @@ sub cart_items_nonstackable {
 sub cart_items_stackable {
 	my ($self, $args) = @_;
 
-	for my $item ($self->parse_items_stackable($args)) {
-		my ($local_item);
-
-		$local_item = $cart{inventory}[$item->{index}] ||= Actor::Item->new;
-		if ($local_item->{amount}) {
-			$local_item->{amount} += $item->{amount};
-		} else {
-			for (keys %$item) {
-				$local_item->{$_} = $item->{$_};
-			}
-		}
-		$local_item->{name} = itemName($local_item);
-
-		debug "Stackable Cart Item: $local_item->{name} ($local_item->{index}) x $local_item->{amount}\n", "parseMsg";
-		Plugins::callHook('packet_cart', {index => $local_item->{index}});
-	}
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_cart',
+		debug_str => 'Stackable Cart Item',
+		items => [$self->parse_items_stackable($args)],
+		getter => sub { $cart{inventory}[$_[0]{index}] },
+		adder => sub { $cart{inventory}[$_[0]{index}] = $_[0] },
+	});
 
 	$ai_v{'inventory_time'} = time + 1;
 	$ai_v{'cart_time'} = time + 1;
@@ -2893,35 +2907,28 @@ sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 
-	for my $item ($self->parse_items_nonstackable($args)) {
-		my ($local_item, $add);
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_inventory',
+		debug_str => 'Non-Stackable Inventory Item',
+		items => [$self->parse_items_nonstackable($args)],
+		getter => sub { $char->inventory->getByServerIndex($_[0]{index}) },
+		adder => sub { $char->inventory->add($_[0]) },
+		callback => sub {
+			my ($local_item) = @_;
 
-		unless($local_item = $char->inventory->getByServerIndex($item->{index})) {
-			$local_item = new Actor::Item();
-			$add = 1;
-		}
-
-		for (keys %$item) {
-			$local_item->{$_} = $item->{$_};
-		}
-		$local_item->{name} = itemName($local_item);
-		$local_item->{amount} = 1;
-
-		if ($local_item->{equipped}) {
-			foreach (%equipSlot_rlut){
-				if ($_ & $local_item->{equipped}){
-					next if $_ == 10; #work around Arrow bug
-					next if $_ == 32768;
-					$char->{equipment}{$equipSlot_lut{$_}} = $local_item;
+			if ($local_item->{equipped}) {
+				foreach (%equipSlot_rlut){
+					if ($_ & $local_item->{equipped}){
+						next if $_ == 10; #work around Arrow bug
+						next if $_ == 32768;
+						$char->{equipment}{$equipSlot_lut{$_}} = $local_item;
+					}
 				}
 			}
 		}
+	});
 
-		$char->inventory->add($local_item) if ($add);
-
-		debug "Inventory: $local_item->{name} ($local_item->{invIndex}) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}} - $equipTypes_lut{$local_item->{type_equip}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $local_item->{invIndex}});
-	}
 	$ai_v{'inventory_time'} = time + 1;
 	$ai_v{'cart_time'} = time + 1;
 }
@@ -2930,30 +2937,23 @@ sub inventory_items_stackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 
-	for my $item ($self->parse_items_stackable($args)) {
-		my ($local_item, $add);
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_inventory',
+		debug_str => 'Stackable Inventory Item',
+		items => [$self->parse_items_stackable($args)],
+		getter => sub { $char->inventory->getByServerIndex($_[0]{index}) },
+		adder => sub { $char->inventory->add($_[0]) },
+		callback => sub {
+			my ($local_item) = @_;
 
-		unless($local_item = $char->inventory->getByServerIndex($item->{index})) {
-			$local_item = new Actor::Item();
-			$add = 1;
+			if (defined $char->{arrow} && $local_item->{index} == $char->{arrow}) {
+				$local_item->{equipped} = 32768;
+				$char->{equipment}{arrow} = $local_item;
+			}
 		}
+	});
 
-		for (keys %$item) {
-			$local_item->{$_} = $item->{$_};
-		}
-
-		if (defined $char->{arrow} && $local_item->{index} == $char->{arrow}) {
-			$local_item->{equipped} = 32768;
-			$char->{equipment}{arrow} = $local_item;
-		}
-		$local_item->{name} = itemName($local_item);
-
-		$char->inventory->add($local_item) if ($add);
-
-		debug "Inventory: $local_item->{name} ($local_item->{invIndex}) x $local_item->{amount} - " .
-			"$itemTypes_lut{$local_item->{type}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $local_item->{invIndex}, item => $local_item});
-	}
 	$ai_v{'inventory_time'} = time + 1;
 	$ai_v{'cart_time'} = time + 1;
 }
@@ -5687,21 +5687,13 @@ sub storage_item_removed {
 sub storage_items_nonstackable {
 	my ($self, $args) = @_;
 
-	for my $item ($self->parse_items_nonstackable($args)) {
-		my ($local_item);
-
-		binAdd(\@storageID, $item->{index});
-		$local_item = $storage{$item->{index}} = Actor::Item->new;
-
-		for (keys %$item) {
-			$local_item->{$_} = $item->{$_};
-		}
-		$local_item->{name} = itemName($local_item);
-		$local_item->{amount} = 1;
-		$local_item->{binID} = binFind(\@storageID, $item->{index});
-
-		debug "Storage: $local_item->{name} ($local_item->{binID})\n", "parseMsg";
-	}
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_storage',
+		debug_str => 'Non-Stackable Storage Item',
+		items => [$self->parse_items_nonstackable($args)],
+		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
+	});
 
 	$storageTitle = exists $args->{title} ? $args->{title} : undef;
 }
@@ -5712,21 +5704,18 @@ sub storage_items_stackable {
 	undef %storage;
 	undef @storageID;
 
-	for my $item ($self->parse_items_stackable($args)) {
-		my ($local_item);
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_storage',
+		debug_str => 'Stackable Storage Item',
+		items => [$self->parse_items_stackable($args)],
+		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
+		callback => sub {
+			my ($local_item) = @_;
 
-		binAdd(\@storageID, $item->{index});
-		$local_item = $storage{$item->{index}} = Actor::Item->new;
-
-		for (keys %$item) {
-			$local_item->{$_} = $item->{$_};
-		}
-		$local_item->{amount} = $local_item->{amount} & ~0x80000000;
-		$local_item->{name} = itemName($local_item);
-		$local_item->{binID} = binFind(\@storageID, $local_item->{index});
-		$local_item->{identified} = 1;
-		debug "Storage: $local_item->{name} ($local_item->{binID}) x $local_item->{amount}\n", "parseMsg";
-	}
+			$local_item->{amount} = $local_item->{amount} & ~0x80000000;
+		},
+	});
 
 	$storageTitle = exists $args->{title} ? $args->{title} : undef;
 }
