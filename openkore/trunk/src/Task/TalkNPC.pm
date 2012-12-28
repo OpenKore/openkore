@@ -242,7 +242,7 @@ sub iterate {
 			if ($step =~ /^b$/i) {
 				$messageSender->sendNPCBuySellList($talk{ID}, 0);
 			# Bulk buy solution.
-			} else {
+			} elsif ($step =~ /^b(\d+),(\d+)/i) {
 				while ($self->{steps}[0] =~ /^b(\d+),(\d+)/i){
 					my $index = $1;
 					my $amount = $2;
@@ -264,7 +264,7 @@ sub iterate {
 				# And skip this itteration.
 				$ai_v{npc_talk}{time} = time + 0.2;
 				$self->{time} = time + 0.2;
-				next;
+				return;
 			}
 
 		} elsif ( $step =~ /s/i ) {
