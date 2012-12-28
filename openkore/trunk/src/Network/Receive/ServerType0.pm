@@ -3251,6 +3251,8 @@ sub login_error {
 		relog(10);
 	} elsif ($args->{type} == ACCEPT_LOGIN_USER_PHONE_BLOCK) {
 		error T("Mobile Authentication: Max number of simultaneous IP addresses reached.\n"), "connection";
+	} else {
+		error TF("The server has denied your connection for unknown reason (%d).\n", $args->{type}), 'connection';
 	}
 
 	if ($args->{type} != REFUSE_INVALID_VERSION && $versionSearch) {
