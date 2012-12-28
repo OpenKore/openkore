@@ -305,6 +305,12 @@ sub reconstruct_master_login {
 	$args->{isGravityID} = 0 unless exists $args->{isGravityID};
 	
 	if (exists $args->{password}) {
+		for (Digest::MD5->new) {
+			$_->add($args->{password});
+			$args->{password_md5} = $_->clone->digest;
+			$args->{password_md5_hex} = $_->hexdigest;
+		}
+
 		my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
 		my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
 		my $in = pack('a24', $args->{password});

@@ -501,6 +501,18 @@ gameGuard 1
 addTableFolders aRO;Old
 charBlockSize 112
 
+## http://ro.kunlun.com/
+[cRO - China]
+ip 118.186.39.226
+port 6900
+master_version 4
+version 4
+serverType cRO
+serverEncoding Simplified Chinese
+# FIXME
+charBlockSize
+addTableFolders cRO
+
 ####################
 # Private RO Servers
 
