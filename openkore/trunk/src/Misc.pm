@@ -416,8 +416,10 @@ sub visualDump {
 	my ($msg, $label) = @_;
 	my $dump;
 	my $puncations = quotemeta '~!@#$%^&*()_-+=|\"\'';
-	no encoding 'utf8';
-	use bytes;
+
+	# doesn't work right with debugPacket_sent
+	#no encoding 'utf8';
+	#use bytes;
 
 	$dump = "================================================\n";
 	if (defined $label) {
