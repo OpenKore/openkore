@@ -509,8 +509,7 @@ master_version 4
 version 4
 serverType cRO
 serverEncoding Simplified Chinese
-# FIXME
-charBlockSize
+charBlockSize 144
 addTableFolders cRO
 
 ####################
