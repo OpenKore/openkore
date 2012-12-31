@@ -375,7 +375,7 @@ sub request {
 			push @npcLocY, $npc->{pos}{y};
 			push @npcName, $npc->name;
 			push @npcBinID, $npc->{nameID};
-			push @npcTalk, '<a class="btn btn-mini" href="javascript:talk(' . $npc->{binID} . ')">Talk</a>';
+			push @npcTalk, '<a class="btn btn-mini" href="javascript:write_input(\'talk ' . $npc->{binID} . '\')">Talk</a>';
 		}
 
 # [PT-BR] Listar habilidades
