@@ -3,8 +3,8 @@
 <script type="application/javascript" defer="defer">
 			function send_command() {
 				var lockMap = document.getElementById("lockMap");
-				window.location.href = '../handler?csrf={csrf}&command=conf lockMap ' + lockMap.value + '&page=config.html';
-			}	
+				window.location.href = '../handler?csrf={csrf}&command=conf lockMap ' + lockMap.value;
+			}
 			function submitenter(e) {
 				var keycode;
 				if (window.event) keycode = window.event.keyCode;
@@ -80,7 +80,7 @@
 					
 	
 				</div>
-			</div>			
+			</div>
             </div>
           </div>
 		  

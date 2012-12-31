@@ -4,8 +4,10 @@
 			function send_command() {
 				var tc = document.getElementById("text_command");
 				var combo = document.getElementById("sel");
-				window.location.href = '../handler?csrf={csrf}&command=' + combo.options[combo.selectedIndex].value + tc.value + '&page={skin}/npcs.html';
-			}	
+				window.location.href = '../handler?csrf={csrf}&command=' + combo.options[combo.selectedIndex].value + tc.value;
+				tc.value = '';
+			}
+
 			function submitenter(e) {
 				var keycode;
 				if (window.event) keycode = window.event.keyCode;
@@ -14,7 +16,7 @@
 					send_command();
 				}
 			}
-</script>	 
+</script>
 
         <div class="span9">
           <div class="row-fluid">
