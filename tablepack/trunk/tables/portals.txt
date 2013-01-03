@@ -2858,6 +2858,32 @@ moc_paraup 41 187 moc_paraup 179 93
 #moc_para01 179 90 moc_para01 41 185
 moc_paraup 179 90 moc_paraup 41 185
 
+#Port Malaya
+alberta 237 71 malaya 271 55 10000 c r1 n
+ma_fild01 37 272 malaya 370 277
+ma_in01 105 92 malaya 309 70
+ma_in01 126 17 malaya 261 240
+ma_in01 24 77 malaya 178 211
+ma_in01 33 152 malaya 300 211
+ma_in01 86 16 malaya 112 212
+ma_in01 9 24 malaya 299 167
+malaya 112 212 ma_in01 83 16
+malaya 178 211 ma_in01 24 80
+malaya 238 206 moc_para01 31 14 0 c r0
+malaya 261 240 ma_in01 126 20
+malaya 276 55 alberta 239 68 0 c r0 n
+malaya 299 167 ma_in01 12 24
+malaya 300 211 ma_in01 36 152
+malaya 309 70 ma_in01 108 92
+malaya 370 277 ma_fild01 40 272
+ma_fild02 248 33 ma_fild01 266 359
+ma_fild01 266 359 ma_fild02 248 36
+ma_scene01 140 80 ma_fild01 288 52
+ma_fild01 288 52 ma_scene01 142 78
+#Need to finish nurse quest to get access to the hospital
+malaya 48 76 ma_dun01 33 110 0 r0 n
+ma_dun01 35 108 malaya 58 76 0 c r0 n
+
 # following is a single warp, depends of entrance npc used
 # currently unsupported, do not enable that
 #moc_para01 30 10 prontera 116 72
