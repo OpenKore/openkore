@@ -75,4 +75,4 @@ xmas.rsw#Lutie, Snow Village#
 xmas_x.rsw#Lutie, the Snow Village#
 moc_para01.rsw#Eden land#
 malaya.rsw#Port Malaya#
-ma_in01.rsw#Inside of Malaya# 
+ma_in01.rsw#Inside of Malaya#
