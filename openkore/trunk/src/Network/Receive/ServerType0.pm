@@ -957,6 +957,13 @@ sub parse_items {
 	@itemInfo
 }
 
+=pod
+parse_items_nonstackable
+
+Change in packet behavior: the amount is not specified, but this is a
+non-stackable item (equipment), so the amount is obviously "1".
+
+=cut
 sub parse_items_nonstackable {
 	my ($self, $args) = @_;
 
@@ -964,6 +971,11 @@ sub parse_items_nonstackable {
 		my ($item) = @_;
 
 		#$item->{placeEtcTab} = $item->{identified} & (1 << 2);
+
+		# Non stackable items now have no amount normally given in the
+		# packet, so we must assume one.  We'll even play it safe, and
+		# not change the amount if it's already a non-zero value.
+		$item->{amount} = 1 unless ($item->{amount});
 		$item->{broken} = $item->{identified} & (1 << 1) unless exists $item->{broken};
 		$item->{idenfitied} = $item->{identified} & (1 << 0);
 	})
@@ -995,7 +1007,6 @@ sub _items_list {
 			@{$local_item}{@$_} = @{$item}{@$_};
 		}
 		$local_item->{name} = itemName($local_item);
-		$local_item->{amount} = 1 unless exists $local_item->{amount}; # there's no amount for non-stackable items
 
 		$args->{callback}($local_item) if $args->{callback};
 
