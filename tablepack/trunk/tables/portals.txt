@@ -1508,8 +1508,6 @@ prontera 204 192 prt_in 68 130
 prontera 208 154 prt_in 172 33
 prontera 237 317 prt_church 100 56
 prontera 289 203 prt_fild06 23 193
-prontera 272 108 s_atelier 13 119
-s_atelier 10 119 prontera 268 109
 prt_castle 28 121 prt_castle 40 138
 prt_castle 31 113 prt_castle 54 113
 prt_castle 40 138 prt_castle 28 121
@@ -2660,6 +2658,24 @@ mosk_in 99 126 mosk_in 21 116
 moscovia 256 138 mosk_in 96 61
 moscovia 256 179 mosk_in 211 114
 mosk_in 89 180 moscovia 204 169
+
+# Atelier
+prontera 272 108 s_atelier 13 119
+s_atelier 10 119 prontera 268 109
+s_atelier 76 128 s_atelier 31 128
+s_atelier 31 128 s_atelier 76 125
+s_atelier 166 72 s_atelier 117 71
+s_atelier 117 71 s_atelier 171 72
+rachel 180 115 s_atelier 130 70
+s_atelier 131 75 rachel 180 118
+s_atelier 159 130 s_atelier 108 129
+s_atelier 108 129 s_atelier 159 125
+yuno 278 67 s_atelier 109 123
+s_atelier 105 123 yuno 275 67
+s_atelier 80 66 s_atelier 32 64
+s_atelier 32 64 s_atelier 80 63
+lighthalzen 41 52 s_atelier 18 75
+s_atelier 18 79 lighthalzen 41 56
 
 # Einbroch tower
 einbroch 218 198 einbroch 181 196 10 c c c c r0
