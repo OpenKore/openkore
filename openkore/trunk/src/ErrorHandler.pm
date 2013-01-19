@@ -22,26 +22,13 @@ package ErrorHandler;
 use strict;
 use Carp;
 use Scalar::Util;
+use Globals;
 use encoding 'utf8';
-
-sub T {
-	if (defined &Translation::T && defined &Translation::_translate) {
-		return &Translation::T;
-	} else {
-		return $_[0];
-	}
-}
-
-sub TF {
-	if (defined &Translation::TF && defined &Translation::T && defined &Translation::_translate) {
-		return &Translation::TF;
-	} else {
-		my $format = shift;
-		return sprintf($format, @_);
-	}
-}
+use Translation;
 
 sub showError {
+	$net->serverDisconnect() if ($net);
+
 	if (!$Globals::interface || UNIVERSAL::isa($Globals::interface, "Interface::Startup") || UNIVERSAL::isa($Globals::interface, "Interface::Socket")) {
 		print TF("%s\nPress ENTER to exit this program.\n", $_[0]);
 		<STDIN>;
@@ -77,7 +64,7 @@ sub errorHandler {
 	                 "version, search the forums first to see if your problem had already been solved,\n" . 
 	                 "or has already been reported. If you truly believe you have encountered a bug in\n" .
 	                 "the program, please include the contents of the errors.txt in your bug report,\n" .
-			 "or we may not be able to help you!\n\n" .
+	                 "or we may not be able to help you!\n\n" .
 	                 "The error message is:\n" .
 	                 "%s",
 	                 $errorMessage);
@@ -98,7 +85,7 @@ sub errorHandler {
 		$log .= "Loaded plugins:\n";
 		foreach my $plugin (@Plugins::plugins) {
 			next if (!defined $plugin);
-			$log .= "  $plugin->{filename} ($plugin->{name})\n";
+			$log .= "  $plugin->{filename} ($plugin->{name}; description: $plugin->{description})\n";
 		}
 	} else {
 		$log .= "No loaded plugins.\n";
@@ -122,7 +109,7 @@ sub errorHandler {
 		close F;
 
 		my $msg;
-		$msg .=  "  $lines[$line-2]" if ($line - 2 >= 0);
+		$msg .= "  $lines[$line-2]" if ($line - 2 >= 0);
 		$msg .= "* $lines[$line-1]";
 		$msg .= "  $lines[$line]" if (@lines > $line);
 		$msg .= "\n" unless $msg =~ /\n$/s;
@@ -134,7 +121,6 @@ sub errorHandler {
 		close F;
 	}
 	showError($display);
-	exit 9;
 }
 
 $SIG{__DIE__} = \&errorHandler;
