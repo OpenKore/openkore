@@ -107,10 +107,10 @@ sub new {
 		'009E' => ['item_appeared', 'a4 v C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]],
 		'00A0' => ['inventory_item_added', 'v3 C3 a8 v C2', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00A1' => ['item_disappeared', 'a4', [qw(ID)]],
-		'00A3' => ['inventory_items_stackable'],
-		'00A4' => ['inventory_items_nonstackable'],
-		'00A5' => ['storage_items_stackable'],
-		'00A6' => ['storage_items_nonstackable'],
+		'00A3' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'00A4' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'00A5' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'00A6' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'00A8' => ['use_item', 'v x2 C', [qw(index amount)]],
 		'00AA' => ($rpackets{'00AA'} == 7) # or 9
 			? ['equip_item', 'v2 C', [qw(index type success)]]
@@ -185,8 +185,8 @@ sub new {
 		'011F' => ['area_spell', 'a4 a4 v2 C2', [qw(ID sourceID x y type fail)]],
 		'0120' => ['area_spell_disappears', 'a4', [qw(ID)]],
 		'0121' => ['cart_info', 'v2 V2', [qw(items items_max weight weight_max)]],
-		'0122' => ['cart_items_nonstackable', 'v a*', [qw(len data)]],
-		'0123' => ['cart_items_stackable', 'v a*', [qw(len data)]],
+		'0122' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0123' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0124' => ['cart_item_added', 'v V v C3 a8', [qw(index amount nameID identified broken upgrade cards)]],
 		'0125' => ['cart_item_removed', 'v V', [qw(index amount)]],
 		'012C' => ['cart_add_failed', 'C', [qw(fail)]],
@@ -307,9 +307,9 @@ sub new {
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]],
 		'01EC' => ['guild_member_map_change', 'a4 a4 Z16', [qw(GDID AID mapName)]], # 26 # TODO: change vars, add sub
-		'01EE' => ['inventory_items_stackable'],
-		'01EF' => ['cart_items_stackable', 'v a*', [qw(len data)]],
-		'01F0' => ['storage_items_stackable'],
+		'01EE' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'01EF' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'01F0' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'01F2' => ['guild_member_online_status', 'a4 a4 V v3', [qw(ID charID online sex hair_style hair_color)]],
 		'01F3' => ['misc_effect', 'a4 V', [qw(ID effect)]], # weather/misceffect2 packet
 		'01F4' => ['deal_request', 'Z24 a4 v', [qw(user ID level)]],
@@ -382,9 +382,9 @@ sub new {
 		'0291' => ['message_string', 'v', [qw(msg_id)]],
 		'0293' => ['boss_map_info', 'C V2 v2 x4 Z24', [qw(flag x y hours minutes name)]],
 		'0294' => ['book_read', 'a4 a4', [qw(bookID page)]],
-		'0295' => ['inventory_items_nonstackable'],
-		'0296' => ['storage_items_nonstackable'],
-		'0297' => ['cart_items_nonstackable', 'v a*', [qw(len data)]],
+		'0295' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0296' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0297' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]],
 		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]],
 		'029A' => ['inventory_item_added', 'v3 C3 a8 v C2 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
@@ -420,9 +420,9 @@ sub new {
 		'02CC' => ['instance_window_queue', 'C', [qw(flag)]],
 		'02CD' => ['instance_window_join', 'Z61 V2', [qw(name time_remaining time_close)]],
 		'02CE' => ['instance_window_leave', 'C', [qw(flag)]],
-		'02D0' => ['inventory_items_nonstackable'],
-		'02D1' => ['storage_items_nonstackable'],
-		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len data)]],
+		'02D0' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'02D1' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'02D4' => ['inventory_item_added', 'v3 C3 a8 v C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
 		'02D5' => ['ISVR_DISCONNECT'], #TODO: PACKET_ZC_ISVR_DISCONNECT
 		'02D7' => ['show_eq', 'v Z24 v7 C a*', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex equips_info)]], #type is job
@@ -438,9 +438,9 @@ sub new {
 		#'02E1' => ['actor_action', 'a4 a4 a4 V2 v x2 v x2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'02E1' => ['actor_action', 'a4 a4 a4 V3 v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'02E7' => ['map_property', 'v2 a*', [qw(len type info_table)]],
-		'02E8' => ['inventory_items_stackable'],
-		'02E9' => ['cart_items_stackable', 'v a*', [qw(len data)]],
-		'02EA' => ['storage_items_stackable'],
+		'02E8' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'02E9' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'02EA' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'02EB' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
 		'02EC' => ['actor_exists', 'x a4 v3 V v5 V v5 a4 a4 V C2 a6 x2 v2',[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords lv unknown)]], # Moving
 		'02ED' => ['actor_connected', 'a4 v3 V v10 a4 a4 V C2 a3 v3',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords act lv unknown)]], # Spawning
@@ -507,12 +507,12 @@ sub new {
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'08CB' => ['rates_info', 's4 a*', [qw(len exp death drop detail)]],
-		'0900' => ['inventory_items_stackable', 'x2 a*', [qw(itemInfo)]],
-		'0901' => ['inventory_items_nonstackable', 'x2 a*', [qw(itemInfo)]],
-		'0902' => ['cart_items_stackable', 'x2 a*', [qw(itemInfo)]],
-		'0903' => ['cart_items_nonstackable', 'x2 a*', [qw(itemInfo)]],
-		'0975' => ['storage_items_stackable', 'x2 Z24 a*', [qw(title itemInfo)]],
-		'0976' => ['storage_items_nonstackable', 'x2 Z24 a*', [qw(title itemInfo)]],
+		'0900' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'0901' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0902' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'0903' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0975' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0976' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 	};
 
 	# Item RECORD Struct's
