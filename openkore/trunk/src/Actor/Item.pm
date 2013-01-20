@@ -90,7 +90,7 @@ sub new {
 	$self->{equipped} = 0;
 	$self->{identified} = 0;
 	$self->{nameID} = 0;
-	$self->{invIndex} = 0;
+	$self->{invIndex} = -1;
 	return $self;
 }
 

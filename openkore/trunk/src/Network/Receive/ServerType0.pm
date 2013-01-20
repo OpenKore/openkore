@@ -1012,7 +1012,7 @@ sub _items_list {
 
 		$args->{adder}($local_item) if $add;
 
-		my $index = exists $local_item->{invIndex} ? $local_item->{invIndex} : $local_item->{index};
+		my $index = ($local_item->{invIndex} >= 0) ? $local_item->{invIndex} : $local_item->{index};
 		debug "$args->{debug_str}: $local_item->{name} ($index) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}}\n", 'parseMsg';
 		Plugins::callHook($args->{hook}, {index => $index, item => $local_item});
 	}
