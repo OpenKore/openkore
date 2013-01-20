@@ -109,8 +109,8 @@ sub new {
 		'00A1' => ['item_disappeared', 'a4', [qw(ID)]],
 		'00A3' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'00A4' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
-		'00A5' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
-		'00A6' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'00A5' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'00A6' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'00A8' => ['use_item', 'v x2 C', [qw(index amount)]],
 		'00AA' => ($rpackets{'00AA'} == 7) # or 9
 			? ['equip_item', 'v2 C', [qw(index type success)]]
@@ -309,7 +309,7 @@ sub new {
 		'01EC' => ['guild_member_map_change', 'a4 a4 Z16', [qw(GDID AID mapName)]], # 26 # TODO: change vars, add sub
 		'01EE' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'01EF' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
-		'01F0' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'01F0' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'01F2' => ['guild_member_online_status', 'a4 a4 V v3', [qw(ID charID online sex hair_style hair_color)]],
 		'01F3' => ['misc_effect', 'a4 V', [qw(ID effect)]], # weather/misceffect2 packet
 		'01F4' => ['deal_request', 'Z24 a4 v', [qw(user ID level)]],
@@ -383,7 +383,7 @@ sub new {
 		'0293' => ['boss_map_info', 'C V2 v2 x4 Z24', [qw(flag x y hours minutes name)]],
 		'0294' => ['book_read', 'a4 a4', [qw(bookID page)]],
 		'0295' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
-		'0296' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0296' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0297' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]],
 		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]],
@@ -421,7 +421,7 @@ sub new {
 		'02CD' => ['instance_window_join', 'Z61 V2', [qw(name time_remaining time_close)]],
 		'02CE' => ['instance_window_leave', 'C', [qw(flag)]],
 		'02D0' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
-		'02D1' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'02D1' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'02D4' => ['inventory_item_added', 'v3 C3 a8 v C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
 		'02D5' => ['ISVR_DISCONNECT'], #TODO: PACKET_ZC_ISVR_DISCONNECT
@@ -440,7 +440,7 @@ sub new {
 		'02E7' => ['map_property', 'v2 a*', [qw(len type info_table)]],
 		'02E8' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'02E9' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
-		'02EA' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'02EA' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'02EB' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
 		'02EC' => ['actor_exists', 'x a4 v3 V v5 V v5 a4 a4 V C2 a6 x2 v2',[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords lv unknown)]], # Moving
 		'02ED' => ['actor_connected', 'a4 v3 V v10 a4 a4 V C2 a3 v3',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords act lv unknown)]], # Spawning
