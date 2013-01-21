@@ -2676,7 +2676,6 @@ sub guild_name {
 	$char->{guildID} = $guildID;
 	$char->{guild}{emblem} = $emblemID;
 
-	$messageSender->sendGuildMasterMemberCheck();	# Is this necessary?? (requests for guild info packet 014E)
 	$messageSender->sendGuildRequestInfo(0);	#requests for guild info packet 01B6 and 014C
 	$messageSender->sendGuildRequestInfo(1);	#requests for guild member packet 0166 and 0154
 	debug "guild name: $guildName\n";
@@ -3940,7 +3939,7 @@ sub booking_search_request {
 	my ($self, $args) = @_;
 
 	if (length($args->{innerData}) == 0) {
-		error T("Without results!"), "booking";
+		error T("Without results!\n"), "booking";
 		return;
 	}
 
@@ -3952,7 +3951,7 @@ sub booking_search_request {
 						 "MapID: @<<<<<\n".
 						 "Job: @<<<< @<<<< @<<<< @<<<< @<<<<\n" .
 						 "---------------------------------------------"),
-					   [$charName, $index, getFormattedDate($expireTime), $level, $mapID, @job]), "booking";
+					   [bytesToString($charName), $index, getFormattedDate($expireTime), $level, $mapID, @job]), "booking";
 	}
 }
 
@@ -3974,7 +3973,7 @@ sub booking_delete_request {
 sub booking_insert {
 	my ($self, $args) = @_;
 
-	message TF("%s has created a new group booking (index: %s)\n", $args->{name}, $args->{index});
+	message TF("%s has created a new group booking (index: %s)\n", bytesToString($args->{name}), $args->{index});
 }
 
 # 0x80A
