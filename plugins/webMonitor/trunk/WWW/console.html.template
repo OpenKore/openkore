@@ -22,16 +22,21 @@
 		<div class="span9">
 			<h3>{T Console}</h3>
 
-			<pre class="log console">{consoleLog}</pre>
+			<div>
+				<pre class="log console">{consoleLog}</pre>
+			</div>
 
-			<select class="span4" id="selection_command">
-				<option selected value="">Console</option>
-				<option value="c ">Chat</option>
-				<option value="p ">Party</option>
-				<option value="g ">Guild</option>
-			</select>
+			<div class="input-append" rel="tooltip">
+				<select class="span2" id="selection_command">
+					<option selected value="">Console</option>
+					<option value="c ">Chat</option>
+					<option value="p ">Party</option>
+					<option value="g ">Guild</option>
+				</select>
 
-			<input class="span7" id="input_command" size="46" type="text" onKeyPress="submitenter(this.event)">&nbsp;<button class="btn btn-small" type="button" value="Send command" onClick="send_command()">Send</button><br>
+				<input class="span7" id="input_command" type="text" onKeyPress="submitenter(this.event)">
+				<input type="button" class="btn span2" id="button_send" value="Send" disabled onClick="send_command()"/>
+			</div>
 
 			</br>
 		</div>

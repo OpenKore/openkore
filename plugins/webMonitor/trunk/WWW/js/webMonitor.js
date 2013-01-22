@@ -47,12 +47,16 @@
 			socket.onopen = function() {
 				console.log('Socket opened.');
 				message("connected\n", 'web', 'msg_web')
+				
+				$("#button_send").removeAttr("disabled");
 			}
 
 			socket.onclose = function() {
 				console.log('Socket closed.');
 				message("Disconnecting (" + socketAddr + ")... disconnected\n", 'web', 'msg_web')
 				message("Reload to get new messages.\n", 'web', 'msg_web')
+				
+				$("#button_send").attr("disabled", "disabled");
 			}
 
 			socket.onerror = function(e) {
