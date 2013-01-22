@@ -184,10 +184,10 @@ sub chatLogHTML {
 
 	my $bw = eval { File::ReadBackwards->new($Settings::chat_log_file) }
 	or return do {
-		if ($@ =~ 'perhaps you forgot to load "File::ReadBackwards"') {
+		if ($@ =~ 'perhaps you forgot to load "File::ReadBackwards"' || $@ =~ 'Can\'t locate object method "new" via package "File::ReadBackwards"') {
 			'<span class="msg_web"><a href="http://search.cpan.org/perldoc?File::ReadBackwards">File::ReadBackwards</a> is required to retrieve chat log.' . "\n" . '</span>'
 		} else {
-			'<span class="msg_error_default">Error while retrieving chat log:' . "\n" . encode_entities($@) . '</span>'
+			'<span class="msg_error_default">Error while retrieving file \'' . $Settings::chat_log_file . '\' chat log:' . "\n" . encode_entities($@) . '</span>'
 		}
 	};
 
