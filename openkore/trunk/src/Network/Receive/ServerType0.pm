@@ -488,7 +488,7 @@ sub new {
 		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
 		'080B' => ['booking_delete', 'V', [qw(index)]],
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
-		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade card1 card2 card3 card4)]], # 0x080F,20 # TODO: test & use type
+		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20
 		'0810' => ['open_buying_store', 'c', [qw(amount)]],
 		'0812' => ['open_buying_store_fail', 'v', [qw(result)]],
 		'0814' => ['buying_store_found', 'a4 Z*', [qw(ID title)]],
