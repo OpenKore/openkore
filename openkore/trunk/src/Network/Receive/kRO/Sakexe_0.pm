@@ -6811,7 +6811,7 @@ sub booking_search_request {
 	my ($self, $args) = @_;
 
 	if (length($args->{innerData}) == 0) {
-		error T("Without results!"), "booking";
+		error T("Without results!\n"), "booking";
 		return;
 	}
 
@@ -6823,7 +6823,7 @@ sub booking_search_request {
 						 "MapID: @<<<<<\n".
 						 "Job: @<<<< @<<<< @<<<< @<<<< @<<<<\n" .
 						 "---------------------------------------------"),
-					   [$charName, $index, getFormattedDate($expireTime), $level, $mapID, @job]), "booking";
+					   [bytesToString($charName), $index, getFormattedDate($expireTime), $level, $mapID, @job]), "booking";
 	}
 }
 
@@ -6845,7 +6845,7 @@ sub booking_delete_request {
 sub booking_insert {
 	my ($self, $args) = @_;
 
-	message TF("%s has created a new group booking (index: %s)\n", $args->{name}, $args->{index});
+	message TF("%s has created a new group booking (index: %s)\n", bytesToString($args->{name}), $args->{index});
 }
 
 # 0x80A
