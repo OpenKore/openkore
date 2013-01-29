@@ -6,15 +6,15 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Guild: {characterGuildName}</th><th>L&iacute;der: {guildMaster}</th>
-						<th>Level: {guildLv}</th><th>Conectados: <span class="badge badge-success">{guildConnect}</span>/<span class="badge badge-inverse">{guildMember}</span></th>
+						<th>Guild: {characterGuildName}</th><th>Master: {guildMaster}</th>
+						<th>Level: {guildLv}</th><th>Connect: <span class="badge badge-success">{guildConnect}</span>/<span class="badge badge-inverse">{guildMember}</span></th>
 						<th>Exp: {guildExp}/{guildExpNext}</th>
 					</tr>
 					<tr>
-						<th><div align="center">Nome</div></th>
-						<th><div align="center">Classe</div></th>
+						<th><div align="center">Name</div></th>
+						<th><div align="center">Class</div></th>
 						<th><div align="center">Level</div></th>
-						<th><div align="center">T&iacute;tulo</div></th>
+						<th><div align="center">Title</div></th>
 						<th><div align="center">Online</div></th>
 					</tr>
 				</thead>

@@ -72,8 +72,8 @@ sub Unload {
 ##### Seting webServer after of plugins loads
 sub post_loading {
 	$port = $config{webPort} || 1025;
-	
-	$bind = "localhost";
+	$bind = $config{webBind} || "localhost";
+
 	eval {
 		$webserver = new webMonitorServer($port, $bind);
 	};
