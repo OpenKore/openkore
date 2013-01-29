@@ -38,9 +38,9 @@
 					<tr>
 						<th>ID</th>
 						<th>Item</th>
-						<th>Preço</th>
-						<th>Qnt.</th>
-						<th>Comprar</th>
+						<th>Price</th>
+						<th>Amount</th>
+						<th>Buy</th>
 					</tr>
 				</thead>
 				<tbody id="listarItens"><!-- {startLoop} -->

@@ -34,7 +34,7 @@
 					<option value="g ">Guild</option>
 				</select>
 
-				<input class="span7" id="input_command" type="text" onKeyPress="submitenter(this.event)">
+				<input class="span9" id="input_command" type="text" onKeyPress="submitenter(this.event)">
 				<input type="button" class="btn span2" id="button_send" value="Send" disabled onClick="send_command()"/>
 			</div>
 

@@ -78,10 +78,6 @@ BEGIN {
 # TODO use real templating system?
 my %templates;
 
-#[PT-BR]
-# Keywords são campos específicos no modelo que irá, eventualmente,
-# ser substituído por conteúdo dinâmico
-#[EN] 
 # Keywords are specific fields in the template that will eventually get
 # replaced by dynamic content.
 my %keywords;
@@ -207,8 +203,7 @@ sub chatLogHTML {
 	"@parts"
 }
 
-# [PT-BR] "hookShopList" é usada na aba "Shop".
-# [EN] "hookShopList" is used on tab "Shop".
+# "hookShopList" is used on tab "Shop".
 my ($shopNumber, @price, @number, @listName, @listAmount, @upgrade, @cards, @type, @id, @shopJS);
 sub hookShopList {
 	my ($packet, $args) = @_;
@@ -251,7 +246,7 @@ sub request {
 
 	my $csrf_pass = $resources{csrf} eq $csrf;
 
-# [PT-BR] Recolher os dados para a aba Report
+# Collect data for the tab Report
 	# Experience
 	my ($endTime_EXP, $w_sec, $bExpPerHour, $jExpPerHour, $EstB_sec, $zenyMade, $zenyPerHour, $EstJ_sec);
 	my (@reportMonsterID, @reportMonsterName, @reportMonsterCount);
@@ -283,13 +278,12 @@ sub request {
 	# Itens
 	for my $item (sort keys %itemChange) {
 		next unless $itemChange{$item};
-		push (@reportItemID, $item); #Bug fix: Is there something equivalent to a items_rlut?
+		push (@reportItemID, $item); #Bugfix: Is there something equivalent to a items_rlut?
 		push (@reportItemName, $item);
 		push (@reportItemCount, $itemChange{$item});
 	}
 
-# [PT-BR] Listar o inventário
-# [EN] Show inventory
+# Show inventory
 	my (@unusable, @usable, @equipment, @uequipment);
 	my (@unusableAmount, @usableAmount);
 	my (@unusableJS, @usableJS, @equipmentJS, @uequipmentJS);
@@ -324,8 +318,7 @@ sub request {
 	}
 	my @statuses = (keys %{$char->{statuses}});
 
-# [PT-BR] Listar os membros do clã
-# [EN] Show members of the clan
+# Show members of the clan
 	my ($i, $name, $class, $lvl, $title, $online, $ID, $charID);
 	my (@listMemberIndex, @listMemberName, @listMemberClass, @listMemberLvl, @listMemberTitle, @listMemberOnline, @listMemberID, @listMemberCharID);
 	
@@ -353,8 +346,7 @@ sub request {
 		}
 	}
 	
-# [PT-BR] Listar as lojas dos jogadores (NÃO serão listadas as dos NPC's!!)
-# [EN] List player stores (NPC's shops won't be listed!!)
+# List player stores (NPC's shops won't be listed!!)
 	my (@listComboBox);
 
 	for (my $i = 0; $i < @venderListsID; $i++) {
@@ -365,8 +357,7 @@ sub request {
 		#push @shopList, $i . ' ' . $venderLists{$venderListsID[$i]}{'title'} . ' ' . $player->{pos_to}{x} || '?' . ' ' . $player->{pos_to}{y} || '?' . ' ' . $player->name . '<br>'
 	}
 
-# [PT-BR] Listar os NPC's
-# [EN] Show NPC's
+# Show NPC's
 	my (@npcBinID, @npcName, @npcLocX, @npcLocY, @npcNameID, @npcTalk);
 	my $npcs = $npcsList->getItems();
 		foreach my $npc (@{$npcs}) {
@@ -378,8 +369,7 @@ sub request {
 			push @npcTalk, '<a class="btn btn-mini" href="javascript:write_input(\'talk ' . $npc->{binID} . '\')">Talk</a>';
 		}
 
-# [PT-BR] Listar habilidades
-# [EN] Show skills
+# Show skills
 	my (@skillsIDN, @skillsName, @skillsLevel, @skillsJS, @skillsIcoUp);	
 	for my $handle (@skillsID) {
 		my $skill = new Skill(handle => $handle);
@@ -410,8 +400,6 @@ sub request {
 			$act = '<td></td><td></td>';
 		}
 		
-		# [PT-BR] Saber se o personagem tem ou não pontos de habilidades disponíveis e se a habilidade é melhorável
-		#  (ainda não chegou ao nível máximo e atingiu seus pré-requisitos), para saber se deve mostrar a imagem de aumentar nível e sua função.
 		my $ico_up;
 		if ($char->{points_skill} > 0 && $char->{skills}{$handle}{up} == 1){
 			$ico_up = '<a href="/handler?csrf=' . $csrf . '&command=skills+add+' . $IDN .'" title="' . T('Level up') . '" rel="tooltip"><i class="icon-plus-sign"></i></a> ';
@@ -419,8 +407,7 @@ sub request {
 		
 		my $title = $skill->getHandle;
 
-		# [PT-BR] Para finalizar, adicionar dados para as array's
-		# [EN] To finalize, add the elements into the array's
+		# To finalize, add the elements into the array's
 		push @skillsIDN, $IDN;
 		push @skillsIcoUp, $ico_up;
 		push @skillsName, '<abbr title="' . $title . '">' . $skill->getName() . '</abbr>';
@@ -448,11 +435,11 @@ sub request {
 			'<li class="nav-header">' . T('Menu') . '</li>'
 			. (join "\n", map { '<li class="' . ($_->{url} eq $process->file && 'active') . '"><a href="' . $_->{url} . '"><i class="' . ($_->{image} || 'icon-chevron-right') . '"></i> ' . $_->{title} . '</a></li>' } @menu),
 	# Logs
-		consoleColors => consoleColorsCSS,
-		consoleLog => consoleLogHTML,
-		chatLog => chatLogHTML,
+		'consoleColors' => consoleColorsCSS,
+		'consoleLog' => consoleLogHTML,
+		'chatLog' => chatLogHTML,
 	# NPC
-		'npcBinID' => \@npcBinID,
+		'npcBinID' => \@npcBinID, # Never used
 		'npcName' => \@npcName,
 		'npcLocationX' => \@npcLocX,
 		'npcLocationY' => \@npcLocY,
@@ -469,7 +456,6 @@ sub request {
 		'inventoryUnusableAmount' => \@unusableAmount,
 		'inventoryUnusable' => \@unusable,
 		'inventoryUnusableJS' => \@unusableJS,
-		'characterStatuses' => \@statuses,
 		'unusableID' => \@unusableID,
 		'usableID' => \@usableID,
 		'equipmentID' => \@equipmentID,
@@ -481,24 +467,24 @@ sub request {
 		'guildMaster' => $guild{master},
 		'guildConnect' => $guild{conMember},
 		'guildMember' => $guild{maxMember},
-		'guildListMemberIndex' => \@listMemberIndex,
+		'guildListMemberIndex' => \@listMemberIndex, # Never used
 		'guildListMemberName' => \@listMemberName,
 		'guildListMemberClass' => \@listMemberClass,
 		'guildListMemberLvl' => \@listMemberLvl,
 		'guildListMemberTitle' => \@listMemberTitle,
 		'guildListMemberOnline' => \@listMemberOnline,
-		'guildListMemberID' => \@listMemberID,
-		'guildListMemberCharID' => \@listMemberCharID,
+		'guildListMemberID' => \@listMemberID, # Never used
+		'guildListMemberCharID' => \@listMemberCharID, # Never used
 	# Shop
 		'shopListComboBox' => \@listComboBox,
 		'shopName' => \@listName,
 		'shopAmount' => \@listAmount,
 		'shopPrice' => \@price,
 		'shopNumber' => \@number,
-		'shopUpgrade' => \@upgrade,
-		'shopCards' => \@cards,
-		'shopType' => \@type,
-		'shopID' => \@id,
+		'shopUpgrade' => \@upgrade, # Never used
+		'shopCards' => \@cards, # Never used
+		'shopType' => \@type, # Never used
+		'shopID' => \@id, # Never used
 		'shopJS' => \@shopJS,
 	# Skills
 		'skillsIDN' => \@skillsIDN,
@@ -517,19 +503,18 @@ sub request {
 		'perHourJobExp' => $jExpPerHour,
 		'levelupJobEstimation' => timeConvert($EstJ_sec),
 		'zenyMade' => formatNumber($zenyMade),
-		'perHourZeny' => $zenyPerHour,
-		'deltaHp' => $char->{deltaHp},
+		'perHourZeny' => $zenyPerHour, # Never used
+		'deltaHp' => $char->{deltaHp}, # Never used
 		'reportMonsterID' => \@reportMonsterID,
 		'reportMonsterName' => \@reportMonsterName,
 		'reportMonsterCount' => \@reportMonsterCount,
 		'reportItemID' => \@reportItemID,
 		'reportItemName' => \@reportItemName,
 		'reportItemCount' => \@reportItemCount,
-	# Other's
-		'userAccount' => $config{username},
-		'userChar' => $config{char},
+	# Character infos general
+		'characterStatuses' => \@statuses, # Never used
 		'characterSkillPoints' => $char->{points_skill},
-		'characterStatusesSring' => $char->statusesString(),
+		'characterStatusesSring' => $char->statusesString(), # Never used
 		'characterName' => $char->name(),
 		'characterJob' => $jobs_lut{$char->{jobID}},
 		'characterJobID' => $char->{jobID},
@@ -537,20 +522,20 @@ sub request {
 		'characterSexID' => $char->{sex},
 		'characterLevel' => $char->{lv},
 		'characterJobLevel' => $char->{lv_job},
-		'characterID' => unpack("V", $char->{ID}),
-		'characterHairColor'=> $haircolors{$char->{hair_color}},
+		'characterID' => unpack("V", $char->{ID}), # Never used
+		'characterHairColor'=> $haircolors{$char->{hair_color}}, # Never used
 		'characterGuildName' => $char->{guild}{name},
-		'characterLeftHand' => $char->{equipment}{leftHand}{name} || 'none',
-		'characterRightHand' => $char->{equipment}{rightHand}{name} || 'none',
-		'characterTopHead' => $char->{equipment}{topHead}{name} || 'none',
-		'characterMidHead' => $char->{equipment}{midHead}{name} || 'none',
-		'characterLowHead' => $char->{equipment}{lowHead}{name} || 'none',
-		'characterRobe' => $char->{equipment}{robe}{name} || 'none',
-		'characterArmor' => $char->{equipment}{armor}{name} || 'none',
-		'characterShoes' => $char->{equipment}{shoes}{name} || 'none',
-		'characterLeftAccessory' => $char->{equipment}{leftAccessory}{name} || 'none',
-		'characterRightAccessory' => $char->{equipment}{rightAccessory}{name} || 'none',
-		'characterArrow' => $char->{equipment}{arrow}{name} || 'none',
+		'characterLeftHand' => $char->{equipment}{leftHand}{name} || 'none', # Never used
+		'characterRightHand' => $char->{equipment}{rightHand}{name} || 'none', # Never used
+		'characterTopHead' => $char->{equipment}{topHead}{name} || 'none', # Never used
+		'characterMidHead' => $char->{equipment}{midHead}{name} || 'none', # Never used
+		'characterLowHead' => $char->{equipment}{lowHead}{name} || 'none', # Never used
+		'characterRobe' => $char->{equipment}{robe}{name} || 'none', # Never used
+		'characterArmor' => $char->{equipment}{armor}{name} || 'none', # Never used
+		'characterShoes' => $char->{equipment}{shoes}{name} || 'none', # Never used
+		'characterLeftAccessory' => $char->{equipment}{leftAccessory}{name} || 'none', # Never used
+		'characterRightAccessory' => $char->{equipment}{rightAccessory}{name} || 'none', # Never used
+		'characterArrow' => $char->{equipment}{arrow}{name} || 'none', # Never used
 		'characterZeny' => formatNumber($char->{'zeny'}),
 		'characterStr' => $char->{str},
 		'characterStrBonus' => $char->{str_bonus},
@@ -575,7 +560,7 @@ sub request {
 		'characterAttackBonus' => $char->{attack_bonus},
 		'characterAttackMagicMax' => $char->{attack_magic_max},
 		'characterAttackMagicMin' => $char->{attack_magic_min},
-		'characterAttackRange' => $char->{attack_range},
+		'characterAttackRange' => $char->{attack_range}, # Never used
 		'characterAttackSpeed' => $char->{attack_speed},
 		'characterHit' => $char->{hit},
 		'characterCritical' => $char->{critical},
@@ -585,7 +570,7 @@ sub request {
 		'characterDefMagicBonus' => $char->{def_magic_bonus},
 		'characterFlee' => $char->{flee},
 		'characterFleeBonus' => $char->{flee_bonus},
-		'characterSpirits' => $char->{spirits} || '-',
+		'characterSpirits' => $char->{spirits} || '-', # Never used
 	
 		'characterBaseExp' => $char->{exp},
 		'characterBaseMax' => $char->{exp_max},
@@ -606,18 +591,20 @@ sub request {
 		'characterWeight' => $char->{weight},
 		'characterWeightMax' => $char->{weight_max},
 		'characterWeightPercent' => sprintf("%.0f", $char->weight_percent()),
-		'characterWalkSpeed' => $char->{walk_speed},
+		'characterWalkSpeed' => $char->{walk_speed}, # Never used
 		'characterLocationX' => $char->position()->{x},
 		'characterLocationY' => $char->position()->{y},
 		'characterLocationMap' => $field->name,
 		'characterLocationMapURL' => sprintf($config{webMapURL} || '/map/%s', $field->name),
-		characterLocationDescription => $field->descString,
-		'characterGetRouteX' => $char->{pos_to}->{x},
-		'characterGetRouteY' => $char->{pos_to}->{y},
-		'characterGetTimeRoute' => $char->{time_move_calc},
-		'skin' => 'default', # TODO: replace with config.txt entry for the skin
+		'characterLocationDescription' => $field->descString,
+		'characterGetRouteX' => $char->{pos_to}->{x}, # Never used
+		'characterGetRouteY' => $char->{pos_to}->{y}, # Never used
+		'characterGetTimeRoute' => $char->{time_move_calc}, # Never used
+	# Other's
+		'userAccount' => $config{username},
+		'userChar' => $config{char}, # Never used
 		'brand' => $Settings::NAME,
-		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
+		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS, # Never used
 	);
 	
 	# FIXME
@@ -688,15 +675,6 @@ sub handle {
 	my $process = shift;
 	my $retval;
 
-    #[EN]
-	# Reading commands sent via web
-	# Example to send your bot say "Brazil" :
-	# http://localhost:1025/handler?command=c+Brazil&page=default/status.html
-	
-	#[PT-BR]
-	# Leitura dos comandos enviados via web.
-	# Exemplo para mandar o bot dizer "Brasil":
-	# http://localhost:1025/handler?command=c+Brasil&page=default/status.html
 	if ($resources->{command}) {
 		message "New command received via web: $resources->{command}\n";
 		Commands::run($resources->{command});
@@ -708,11 +686,9 @@ sub handle {
 		Commands::run("move $x $y");
 	}
 
-	# [PT-BR] Usado na aba Shop.
-	# [EN] Used Shop tab
+	# Used Shop tab
 	if ($resources->{shop}) {
-	# [PT-BR] Apagar dandos antigos da array (Não mostrar os itens das lojas clicadas anteriomente) 
-	# [EN] Erase old data from array (Won't show itens from stores previously opened) 
+	# Erase old data from array (Won't show itens from stores previously opened) 
 		@price = ();
 		@number = ();
 		@listName = ();
@@ -722,12 +698,10 @@ sub handle {
 		@type = ();
 		@id = ();
 		@shopJS = ();
-	# [PT-BR] Mandar o send\ServerType0.pm enviar pacotes para o Ragnarok, afim de listar os itens da loja
-	# [EN] Tell send\ServerType0.pm to send packets to Ragnarok, in order to list the itens from the shop
+	# Tell send\ServerType0.pm to send packets to Ragnarok, in order to list the itens from the shop
 		$shopNumber = $resources->{shop};
 		$messageSender->sendEnteringVender($venderListsID[$shopNumber]);
-	# [PT-BR] Veja na "sub hookShopList" como foi feita a leitura dos dados
-	# [EN] Look "sub hookShopList" to learn how the data reading was made
+	# Look "sub hookShopList" to learn how the data reading was made
 	}
 
 	# make sure this is the last resource to be checked

@@ -16,10 +16,10 @@
 						<thead>
 							<tr>
 								<th></th>
-								<th>Qnt.</th>
+								<th>Amount</th>
 								<th>Item</th>
-								<th>A&ccedil;&atilde;o</th>
-								<th>Dropar</th>
+								<th>Action</th>
+								<th>Drop</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -32,10 +32,10 @@
 						<thead>
 							<tr>
 								<th></th>
-								<th>Qnt.</th>
+								<th>Amount</th>
 								<th>Item</th>
-								<th>A&ccedil;&atilde;o</th>
-								<th>Dropar</th>
+								<th>Action</th>
+								<th>Drop</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -48,10 +48,10 @@
 						<thead>
 							<tr>
 								<th></th>
-								<th>Qnt.</th>
+								<th>Amount</th>
 								<th>Item</th>
-								<th>A&ccedil;&atilde;o</th>
-								<th>Dropar</th>
+								<th>Action</th>
+								<th>Drop</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -64,10 +64,10 @@
 						<thead>
 							<tr>
 								<th></th>
-								<th>Qnt.</th>
+								<th>Amount</th>
 								<th>Item</th>
-								<th>A&ccedil;&atilde;o</th>
-								<th>Dropar</th>
+								<th>Action</th>
+								<th>Drop</th>
 							</tr>
 						</thead>
 						<tbody>
