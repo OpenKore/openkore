@@ -1,13 +1,14 @@
-#  OpenKore - Network subsystem	#
-#  This module contains functions for sending messages to the server.				#
-#												#
-#  This software is open source, licensed under the GNU General Public				#
-#  License, version 2.										#
-#  Basically, this means that you're allowed to modify and distribute				#
-#  this software. However, if you distribute modified versions, you MUST			#
-#  also distribute the source code.								#
-#  See http://www.gnu.org/licenses/gpl.html for the full license.				#
-#################################################################################################
+#########################################################################
+#  OpenKore - Network subsystem
+#  Copyright (c) 2006 OpenKore Team
+#
+#  This software is open source, licensed under the GNU General Public
+#  License, version 2.
+#  Basically, this means that you're allowed to modify and distribute
+#  this software. However, if you distribute modified versions, you MUST
+#  also distribute the source code.
+#  See http://www.gnu.org/licenses/gplhtml for the full license.
+#########################################################################
 # bRO (Brazil)
 
 package Network::Receive::bRO;
@@ -17,7 +18,6 @@ use base 'Network::Receive::ServerType0';
 use Globals;
 use Translation;
 use Misc;
-
 # Sync_Ex algorithm developed by Fr3DBr
 
 sub new {
@@ -61,7 +61,7 @@ sub new {
 		'093F' => ['sync_request_ex'],  
 		'093C' => ['sync_request_ex'],  
 		'093E' => ['sync_request_ex'],  
-		'0931' => ['sync_request_ex'],  
+		'023B' => ['sync_request_ex'],  
 		'0926' => ['sync_request_ex'],  
 		'092E' => ['sync_request_ex'],  
 		'0921' => ['sync_request_ex'],  
@@ -97,7 +97,7 @@ sub new {
 		'0869' => ['sync_request_ex'],  
 		'086E' => ['sync_request_ex'],  
 		'0874' => ['sync_request_ex'],  
-		'0860' => ['sync_request_ex'],  
+		'0361' => ['sync_request_ex'],  
 		'0870' => ['sync_request_ex'],  
 		'087D' => ['sync_request_ex'],  
 		'0880' => ['sync_request_ex'],  
@@ -107,7 +107,7 @@ sub new {
 		'0872' => ['sync_request_ex'],  
 		'091A' => ['sync_request_ex'],  
 		'085C' => ['sync_request_ex'],  
-		'0939' => ['sync_request_ex'],  
+		'0202' => ['sync_request_ex'],  
 		'0862' => ['sync_request_ex'],  
 		'0877' => ['sync_request_ex'],  
 		'0879' => ['sync_request_ex'],  
@@ -176,12 +176,12 @@ sub sync_request_ex {
 		'0919' => '0943',  
 		'0865' => '088F',  
 		'0866' => '0890',  
-		'0933' => '095D',  
+		'0933' => '022D',  
 		'0867' => '0891',  
 		'0936' => '0960',  
 		'087C' => '08A6',  
 		'093A' => '0964',  
-		'0876' => '08A0',  
+		'0876' => '0940',  
 		'0367' => '02C4',  
 		'0922' => '094C',  
 		'0868' => '0892',  
@@ -196,12 +196,12 @@ sub sync_request_ex {
 		'091C' => '0946',  
 		'087B' => '08A5',  
 		'092A' => '0954',  
-		'0875' => '089E',  
+		'0875' => '089F',  
 		'0938' => '0962',  
 		'093F' => '0969',  
 		'093C' => '0966',  
 		'093E' => '0968',  
-		'0931' => '095B',  
+		'023B' => '095B',  
 		'0926' => '0950',  
 		'092E' => '0958',  
 		'0921' => '094B',  
@@ -236,8 +236,8 @@ sub sync_request_ex {
 		'0873' => '089D',  
 		'0869' => '0893',  
 		'086E' => '0898',  
-		'0874' => '0940',  
-		'0860' => '088A',  
+		'0874' => '089E',  
+		'0361' => '088A',  
 		'0870' => '089A',  
 		'087D' => '08A7',  
 		'0880' => '08AA',  
@@ -247,9 +247,9 @@ sub sync_request_ex {
 		'0872' => '089C',  
 		'091A' => '0944',  
 		'085C' => '0886',  
-		'0939' => '0963', 
+		'0202' => '0963', 
 		'0862' => '088C',  
-		'0877' => '08A1', 
+		'0877' => '08A0', 
 		'0879' => '08A3',  
 		
 	);
@@ -329,15 +329,13 @@ sub login_pin_code_request {
 		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is invalid. Please re-enter your login PIN code."))));
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
 	} elsif ($args->{flag} == 8) {
-		# TODO: This part needs to be improved!
 		# PIN code incorrect.
 		error T("PIN code is incorrect.\n");
-		Commands::run("relog");
-		#configModify('loginPinCode', '', 1);
-		#return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code."))));
-		#$messageSender->sendLoginPinCode($args->{seed}, 0);
+		configModify('loginPinCode', '', 1);
+		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code."))));
+		$messageSender->sendLoginPinCode($args->{seed}, 0);
 	} else {
-		debug("login_pin_code_request: unknown flag $args->{flag}");
+		debug("login_pin_code_request: unknown flag $args->{flag}\n");
 	}
 	$timeout{master}{time} = time;
 }
@@ -345,5 +343,232 @@ sub login_pin_code_request {
 *parse_quest_update_mission_hunt = *Network::Receive::ServerType0::parse_quest_update_mission_hunt_v2;
 *reconstruct_quest_update_mission_hunt = *Network::Receive::ServerType0::reconstruct_quest_update_mission_hunt_v2;
 
-1;	
+# temporary patch in order to fix inventory 20121226
+use Utils;
 
+sub cart_items_nonstackable {
+	my ($self, $args) = @_;
+
+	my $newmsg;
+	my $msg = $args->{RAW_MSG};
+	$self->decrypt(\$newmsg, substr($msg, 4));
+	$msg = substr($msg, 0, 4).$newmsg;
+
+	my $unpack = $self->items_nonstackable($args);
+
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
+		my ($item, $local_item);
+
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+
+		# TODO: different classes for inventory/cart/storage items
+		$local_item = $cart{inventory}[$item->{index}] = Actor::Item->new;
+
+		foreach (@{$unpack->{keys}}) {
+			$local_item->{$_} = $item->{$_};
+		}
+		$local_item->{name} = itemName($local_item);
+		$local_item->{amount} = 1;
+
+		debug "Non-Stackable Cart Item: $local_item->{name} ($local_item->{index}) x 1\n", "parseMsg";
+		Plugins::callHook('packet_cart', {index => $local_item->{index}});
+	}
+
+	$ai_v{'inventory_time'} = time + 1;
+	$ai_v{'cart_time'} = time + 1;
+}
+
+sub cart_items_stackable {
+	my ($self, $args) = @_;
+
+	my $newmsg;
+	my $msg = $args->{RAW_MSG};
+	$self->decrypt(\$newmsg, substr($msg, 4));
+	$msg = substr($msg, 0, 4).$newmsg;
+
+	my $unpack = $self->items_stackable($args);
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
+		my ($item, $local_item);
+
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+
+		$local_item = $cart{inventory}[$item->{index}] ||= Actor::Item->new;
+		if ($local_item->{amount}) {
+			$local_item->{amount} += $item->{amount};
+		} else {
+
+			foreach (@{$unpack->{keys}}) {
+				$local_item->{$_} = $item->{$_};
+			}
+		}
+		$local_item->{name} = itemName($local_item);
+
+		debug "Stackable Cart Item: $local_item->{name} ($local_item->{index}) x $local_item->{amount}\n", "parseMsg";
+		Plugins::callHook('packet_cart', {index => $local_item->{index}});
+	}
+
+	$ai_v{'inventory_time'} = time + 1;
+	$ai_v{'cart_time'} = time + 1;
+}
+
+sub inventory_items_nonstackable {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+	my ($newmsg, $psize);
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
+	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
+
+	my $unpack = $self->items_nonstackable($args);
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
+		my ($item, $local_item, $add);
+
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+
+		unless($local_item = $char->inventory->getByServerIndex($item->{index})) {
+			$local_item = new Actor::Item();
+			$add = 1;
+		}
+
+
+		foreach (@{$unpack->{keys}}) {
+			$local_item->{$_} = $item->{$_};
+		}
+		$local_item->{name} = itemName($local_item);
+		$local_item->{amount} = 1;
+
+		if ($local_item->{equipped}) {
+			foreach (%equipSlot_rlut){
+				if ($_ & $local_item->{equipped}){
+					next if $_ == 10; #work around Arrow bug
+					next if $_ == 32768;
+					$char->{equipment}{$equipSlot_lut{$_}} = $local_item;
+				}
+			}
+		}
+
+		$char->inventory->add($local_item) if ($add);
+
+		debug "Inventory: $local_item->{name} ($local_item->{invIndex}) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}} - $equipTypes_lut{$local_item->{type_equip}}\n", "parseMsg";
+		Plugins::callHook('packet_inventory', {index => $local_item->{invIndex}});
+	}
+	$ai_v{'inventory_time'} = time + 1;
+	$ai_v{'cart_time'} = time + 1;
+}
+
+sub inventory_items_stackable {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+
+
+	my $newmsg;
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
+	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
+
+	my $unpack = $self->items_stackable($args);
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
+		my ($item, $local_item, $add);
+
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+
+		unless($local_item = $char->inventory->getByServerIndex($item->{index})) {
+			$local_item = new Actor::Item();
+			$add = 1;
+		}
+
+
+		foreach (@{$unpack->{keys}}) {
+			$local_item->{$_} = $item->{$_};
+		}
+
+		if (defined $char->{arrow} && $local_item->{index} == $char->{arrow}) {
+			$local_item->{equipped} = 32768;
+			$char->{equipment}{arrow} = $local_item;
+		}
+		$local_item->{name} = itemName($local_item);
+
+		$char->inventory->add($local_item) if ($add);
+
+		debug "Inventory: $local_item->{name} ($local_item->{invIndex}) x $local_item->{amount} - " .
+			"$itemTypes_lut{$local_item->{type}}\n", "parseMsg";
+		Plugins::callHook('packet_inventory', {index => $local_item->{invIndex}, item => $local_item});
+	}
+	$ai_v{'inventory_time'} = time + 1;
+	$ai_v{'cart_time'} = time + 1;
+}
+
+
+
+sub storage_items_nonstackable {
+	my ($self, $args) = @_;
+
+	my $newmsg;
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
+	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
+
+	my $unpack = $self->items_nonstackable($args);
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
+		my ($item, $local_item);
+
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+
+		binAdd(\@storageID, $item->{index});
+		$local_item = $storage{$item->{index}} = Actor::Item->new;
+
+
+		foreach (@{$unpack->{keys}}) {
+			$local_item->{$_} = $item->{$_};
+		}
+		$local_item->{name} = itemName($local_item);
+		$local_item->{amount} = 1;
+		$local_item->{binID} = binFind(\@storageID, $item->{index});
+
+		debug "Storage: $local_item->{name} ($local_item->{binID})\n", "parseMsg";
+	}
+
+
+}
+
+sub storage_items_stackable {
+	my ($self, $args) = @_;
+
+	my $newmsg;
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
+	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
+
+	undef %storage;
+	undef @storageID;
+
+	my $unpack = $self->items_stackable($args);
+
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
+		my ($item, $local_item);
+
+		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
+
+		binAdd(\@storageID, $item->{index});
+		$local_item = $storage{$item->{index}} = Actor::Item->new;
+
+
+		foreach (@{$unpack->{keys}}) {
+			$local_item->{$_} = $item->{$_};
+		}
+		$local_item->{amount} = $local_item->{amount} & ~0x80000000;
+		$local_item->{name} = itemName($local_item);
+		$local_item->{binID} = binFind(\@storageID, $local_item->{index});
+		$local_item->{identified} = 1;
+		debug "Storage: $local_item->{name} ($local_item->{binID}) x $local_item->{amount}\n", "parseMsg";
+	}
+}
+
+sub changeToInGameState {
+	Network::Receive::changeToInGameState;
+}
+
+1;
