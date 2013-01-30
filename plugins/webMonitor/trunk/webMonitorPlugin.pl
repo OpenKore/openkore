@@ -24,10 +24,21 @@ package webMonitorPlugin;
 #
 # ------------------------------
 # How use:
+#
+# Install the following packages:
+#
+#      Protocol::WebSocket
+#      JSON::Any
+#      JSON::PP
+#      Wx
+#      File::ReadBackwards
+#
 # Add in your config.txt
 #
+# webBind localhost
 # webPort XXXX
-# 
+# webMapURL http://www.ragdata.com/images/maps/%s.jpg
+#
 # Where XXXX is a number of your choice. Ex:
 # webPort 1020
 #
