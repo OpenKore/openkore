@@ -7,15 +7,15 @@
 				<thead>
 					<tr>
 						<th></th>
-						<th><div align="center">Level</div></th>
-						<th><div align="center">Name</div></th>
-						<th><div align="center">SP</div></th>
-						<th><div align="center">Use</div></th>
+						<th><div>Level</div></th>
+						<th><div>Name</div></th>
+						<th><div>SP</div></th>
+						<th><div>Use</div></th>
 					</tr>
 				</thead>
 				<tbody id="listarItens"><!-- {startLoop} -->
 					<tr>
-						<td><div id="skill{skillsIDN}" class="iconSkill center"><div class="iconup right">{skillsIcoUp}</div></div></td>
+						<td><div id="skill{skillsIDN}" class="iconSkill left"><div class="iconUp right">{skillsIcoUp}</div></div></td>
 						<td><div align="center">{skillsLevel}</div></td>
 						<td class="left">{skillsName}</td>
 						{skillsJS}
