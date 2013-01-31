@@ -272,7 +272,7 @@ sub request {
 	for (my $i = 0; $i < @monsters_Killed; $i++) {
 		next if ($monsters_Killed[$i] eq "");
 		push (@reportMonsterID, $monsters_Killed[$i]{nameID});
-		push (@reportMonsterName, $monsters_Killed[$i]{name});
+		push (@reportMonsterName, '<a href="' . sprintf($config{webDBLink_monster} || 'http://ratemyserver.net/index.php?page=mob_db&mob_id=%s', $monsters_Killed[$i]{nameID}) . "\">$monsters_Killed[$i]{name}</a>");
 		push (@reportMonsterCount, $monsters_Killed[$i]{count});
 	}
 	# Itens
@@ -296,22 +296,22 @@ sub request {
 			$item->{type} == 10) && !$item->{equipped})
 		{
 			push @unusableID, $item->{nameID};
-			push @unusable, $item->{name};
+			push @unusable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @unusableAmount, $item->{amount};
 			push @unusableJS, '<td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">' . T('Drop 1') . '</a></td>';
 		} elsif ($item->{type} <= 2) {
 			push @usableID, $item->{nameID};
-			push @usable, $item->{name};
+			push @usable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @usableAmount, $item->{amount};
 			push @usableJS, '<td><a class="btn btn-mini btn-success" href="/handler?csrf=' . $csrf . '&command=is+' . $item->{invIndex} . '">' . T('Use 1 on self') . '</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">' . T('Drop 1') . '</a></td>';
 		} else {
 			if ($item->{equipped}) {
 				push @equipmentID, $item->{nameID};
-				push @equipment, $item->{name};
+				push @equipment, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 				push @equipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=uneq+' . $item->{invIndex} . '">' . T('Unequip') . '</a></td><td></td>';
 			} else {
 				push @uequipmentID, $item->{nameID};
-				push @uequipment, $item->{name};
+				push @uequipment, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 				push @uequipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=eq+' . $item->{invIndex} . '">' . T('Equip') . '</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{invIndex} . '">' . T('Drop 1') . '</a></td>';
 			}
 		}
