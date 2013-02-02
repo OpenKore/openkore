@@ -143,6 +143,7 @@ our @EXPORT = (
 	printItemDesc
 	processNameRequestQueue
 	quit
+	offlineMode
 	relog
 	sendMessage
 	setSkillUseTimer
@@ -2154,6 +2155,14 @@ sub processNameRequestQueue {
 sub quit {
 	$quit = 1;
 	message T("Exiting...\n"), "system";
+}
+
+sub offlineMode {
+	$net->setState(Network::NOT_CONNECTED) if ($net);
+	undef $conState_tries;
+	$net->serverDisconnect() if ($net);
+	$Settings::no_connect = 1;
+	message TF("Openkore will stay disconnected. Type \"connect\" in order to connect again.\n"), "connection";
 }
 
 sub relog {
