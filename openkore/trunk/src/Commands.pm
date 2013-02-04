@@ -3431,12 +3431,16 @@ sub cmdPet {
 				"Egg: %s could not be found.\n", $args[1]);
 		}
 
-	} elsif (!%pet && defined $args[0]) {
+	} elsif ((!%pet||!$pet{hungry}) && defined $args[0]) {
 		error T("Error in function 'pet' (Pet Management)\n" .
 			"You don't have a pet.\n");
 
 	} elsif ($args[0] eq "s" || $args[0] eq "status") {
-		message TF("-----------Pet Status-----------\nName: %-23s Accessory: %s\n", $pet{name}, itemNameSimple($pet{accessory})), "list";
+		message TF("----------------Pet Status----------------\nName: %-23s Accessory: %s\n", $pet{name}, itemNameSimple($pet{accessory})), "list";
+		message TF("Hungry: %-21s Level: %s\n", $pet{hungry}, $pet{level}), "list";
+		message TF("Friendly: %-19s Renameable: %s\n", $pet{friendly}, ($pet{renameable}?"YES":"NO")), "list";
+		message TF("------------------------------------------\n", "list");
+		
 
 	} elsif ($args[0] eq "i" || $args[0] eq "info") {
 		$messageSender->sendPetMenu(0);
