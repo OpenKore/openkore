@@ -177,6 +177,7 @@ sub iterate {
 	processSendEmotion();
 	processAutoShopOpen();
 	processRepairAuto();
+	processFeed();
 	Benchmark::end("AI (part 4)") if DEBUG;
 
 
@@ -3108,6 +3109,20 @@ sub processRepairAuto {
 				return;
 			}
 		}
+	}
+}
+
+sub processFeed {
+	if ($config{pet_autoFeed} && timeOut($timeout{ai_petFeed}) && ($pet{hungry} <= $config{pet_hunger} || $pet{hungry} <= $config{pet_return})) {
+		if ($pet{hungry} <= $config{pet_return}) {
+			message TF("Pet hunger reaches the return value.\n");
+			$messageSender->sendPetMenu(3);
+			undef %pet; # todo: instead undef %pet when the actor (our pet) dissapears, this is safer (xkore)
+			return;
+		}
+		message TF("Pet hunger reaches the feed value.\n");
+		$messageSender->sendPetMenu(1);
+		$timeout{ai_petFeed}{time} = time;
 	}
 }
 

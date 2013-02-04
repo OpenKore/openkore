@@ -379,6 +379,13 @@ homunculus_autoFeedAllowedMaps
 homunculus_hungerMin 11
 homunculus_hungerMax 24
 
+# Turn on/off pet autofeeding
+pet_autoFeed 1
+# Feed pet when meet the hunger value
+pet_hunger 25
+# Return pet when meet the hunger value
+pet_return 20
+
 ######## Block options ########
 # You can copy & paste any block multiple times. So if you want to
 # configure two attack skills, just duplicate the attackSkillSlot block.

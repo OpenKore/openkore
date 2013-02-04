@@ -75,6 +75,9 @@ ai_dead_respawn 4
 ai_wipe_old 200
 ai_wipe_check 30
 
+# Every x seconds, check pet hungry for feeding
+ai_petFeed 60
+
 # Send the sit/stand packet at most every x second
 ai_sit 1
 # Sit after having idled for x seconds
