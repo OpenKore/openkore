@@ -80,7 +80,10 @@ ai_guildAutoDeny 3
 ai_dead_respawn 4
 ai_wipe_old 200
 ai_wipe_check 30
- 
+
+# A cada x segundos, checar a fome do pet afim de alimentá-lo
+ai_petFeed 60
+
 # Enviar o pacote "sentar/levantar" (sit/stand) sempre a cada x segundos
 ai_sit 1
 # Sentar depois de ficar ocioso por x segundos
