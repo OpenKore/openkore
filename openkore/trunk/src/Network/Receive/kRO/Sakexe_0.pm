@@ -3053,7 +3053,7 @@ sub login_error {
 			}
 		}
 	} elsif ($args->{type} == 1) {
-		error T("Password Error\n"), "connection";
+		error TF("Password Error for account [%s]\n", $config{'username'}), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
 			my $password = $interface->query(T("Enter your Ragnarok Online password again."), isPassword => 1);
 			if (defined($password)) {
