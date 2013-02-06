@@ -1,16 +1,15 @@
-#########################################################################
-#  OpenKore - Network subsystem
-#  This module contains functions for sending messages to the server.
-#
-#  This software is open source, licensed under the GNU General Public
-#  License, version 2.
-#  Basically, this means that you're allowed to modify and distribute
-#  this software. However, if you distribute modified versions, you MUST
-#  also distribute the source code.
-#  See http://www.gnu.org/licenses/gpl.html for the full license.
-#########################################################################
+#############################################################################
+#  OpenKore - Network subsystem												#
+#  This module contains functions for sending messages to the server.		#
+#																			#
+#  This software is open source, licensed under the GNU General Public		#
+#  License, version 2.														#
+#  Basically, this means that you're allowed to modify and distribute		#
+#  this software. However, if you distribute modified versions, you MUST	#
+#  also distribute the source code.											#
+#  See http://www.gnu.org/licenses/gpl.html for the full license.			#
+#############################################################################
 # bRO (Brazil)
-
 package Network::Send::bRO;
 use strict;
 use Globals;
@@ -19,50 +18,47 @@ use Utils qw(existsInList getHex getTickCount getCoordString);
 use Math::BigInt;
 use base 'Network::Send::ServerType0';
 use I18N qw(stringToBytes);
-use Utils;
 
 sub new {
-   my ($class) = @_;
-   my $self = $class->SUPER::new(@_);
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0361' => ['character_move','a3', [qw(coords)]],
+		'035F' => ['sync', 'V', [qw(time)]],
+		'0437' => ['actor_look_at', 'v C', [qw(head body)]],
+		'0867' => ['item_take', 'a4', [qw(ID)]],
+		'0879' => ['item_drop', 'v2', [qw(index amount)]],
+		'0364' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'0962' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
+		'08A9' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0947' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
+		'0940' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
+		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
+		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
+		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
 
-   my %packets = (
-      '0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-	  '0437' => ['character_move','a3', [qw(coords)]],
-	  '035F' => ['sync', 'V', [qw(time)]],
-	  '0860' => ['actor_look_at', 'v C', [qw(head body)]],
-	  '07E4' => ['item_take', 'a4', [qw(ID)]],
-	  '0362' => ['item_drop', 'v2', [qw(index amount)]],
-	  '07EC' => ['storage_item_add', 'v V', [qw(index amount)]],
-	  '0436' => ['storage_item_remove', 'v V', [qw(index amount)]],
-	  '0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-	  '096A' => ['actor_info_request', 'a4', [qw(ID)]],
-	  '0364' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-	  '0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
-	  '095D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
-	  '0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
-	  '08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
-	  '08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
-	  #'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
-		
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
 	
 	my %handlers = qw(
 		actor_action 0369
-		character_move 0437
+		character_move 0361
 		sync 035F
-		actor_look_at 0860
-		item_take 07E4
-		item_drop 0362
-		private_message 0096
-		storage_item_add 07EC
-		storage_item_remove 0436
+		actor_look_at 0437
+		item_take 0867
+		item_drop 0879
+		storage_item_add 0364
+		storage_item_remove 0962
 		skill_use_location 0438
 		actor_info_request 096A
-		map_login 0364
-		party_join_request_by_name 0802
-		homunculus_command 095D
+		map_login 08A9
+		party_join_request_by_name 0947
+		homunculus_command 0940
 		master_login 02B0
 		buy_bulk_vender 0801
 		party_setting 07D7
@@ -112,8 +108,7 @@ sub encryptMessageID
 	}
 }
 
-sub sendStoragePassword 
-{
+sub sendStoragePassword {
 	my $self = shift;
 	# 16 byte packed hex data
 	my $pass = shift;
@@ -122,24 +117,24 @@ sub sendStoragePassword
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x0931, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x95A, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x0931, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x95A, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
 	$self->sendToServer($msg);
-}		
+}
 
 sub sendMapLogin 
 {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	my $msg;
-	
+
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
 	
 	if ( $map_login == 0 ) { PrepareKeys(); $map_login = 1; }
-	
+
 	# Reconstructing Packet 
 	$msg = $self->reconstruct({
 		switch => 'map_login',
@@ -149,7 +144,7 @@ sub sendMapLogin
 		tick => getTickCount,
 		sex => $sex,
 	});
-	
+
 	$self->sendToServer($msg);
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
@@ -171,15 +166,10 @@ sub sendPartyJoinRequestByName
 {
 	my ($self, $name) = @_;
 	
-	$name = stringToBytes ($name);
-	$name = substr ($name, 0, 24) if 24 < length $name;
-	$name .= "\x00" x (24 - length $name);
-
 	$self->sendToServer($self->reconstruct({
-	switch => 'party_join_request_by_name',
-	partyName => $name,
-	}));
-
+		switch => 'party_join_request_by_name',
+		partyName => stringToBytes ($name),
+	}));	
 	
 	debug "Sent Request Join Party (by name): $name\n", "sendPacket", 2;
 }
@@ -187,15 +177,14 @@ sub sendPartyJoinRequestByName
 sub PrepareKeys()
 {
 	# K
-	$enc_val1 = Math::BigInt->new('0x2A11218A');
+	$enc_val1 = Math::BigInt->new('0x70E3751B');
 	# M
-	$enc_val3 = Math::BigInt->new('0x5ED639EF');
+	$enc_val3 = Math::BigInt->new('0x2A4B26D1');
 	# A
-	$enc_val2 = Math::BigInt->new('0x593C3710');
+	$enc_val2 = Math::BigInt->new('0x1147081E');
 }
 
-sub sendLoginPinCode 
-{
+sub sendLoginPinCode {
 	my ($self, $seed, $type) = @_;
 	
 	my $pin = randomizePinCode($seed, $config{loginPinCode});
@@ -219,8 +208,7 @@ sub sendLoginPinCode
 }
 
 # randomizePin function/algorithm by Kurama, ever_boy_, kLabMouse and Iniro. cleanups by Revok
-sub randomizePinCode 
-{
+sub randomizePinCode {
 	my ($seed, $pin) = @_;
 	$seed =  Math::BigInt->new($seed);
 	my $mulfactor = 0x3498;
