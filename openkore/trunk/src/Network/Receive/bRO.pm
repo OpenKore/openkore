@@ -1,16 +1,15 @@
-#########################################################################
-#  OpenKore - Network subsystem
-#  Copyright (c) 2006 OpenKore Team
-#
-#  This software is open source, licensed under the GNU General Public
-#  License, version 2.
-#  Basically, this means that you're allowed to modify and distribute
-#  this software. However, if you distribute modified versions, you MUST
-#  also distribute the source code.
-#  See http://www.gnu.org/licenses/gplhtml for the full license.
-#########################################################################
+#############################################################################
+#  OpenKore - Network subsystem												#
+#  This module contains functions for sending messages to the server.		#
+#																			#
+#  This software is open source, licensed under the GNU General Public		#
+#  License, version 2.														#
+#  Basically, this means that you're allowed to modify and distribute		#
+#  this software. However, if you distribute modified versions, you MUST	#
+#  also distribute the source code.											#
+#  See http://www.gnu.org/licenses/gpl.html for the full license.			#
+#############################################################################
 # bRO (Brazil)
-
 package Network::Receive::bRO;
 use strict;
 use Log qw(message warning error debug);
@@ -18,6 +17,7 @@ use base 'Network::Receive::ServerType0';
 use Globals;
 use Translation;
 use Misc;
+
 # Sync_Ex algorithm developed by Fr3DBr
 
 sub new {
@@ -25,102 +25,102 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-	
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
-		'085E' => ['sync_request_ex'],  
-		'091D' => ['sync_request_ex'],  
-		'092C' => ['sync_request_ex'],  
-		'0932' => ['sync_request_ex'],  
-		'092D' => ['sync_request_ex'],  
-		'085D' => ['sync_request_ex'],  
-		'0919' => ['sync_request_ex'],  
-		'0865' => ['sync_request_ex'],  
-		'0866' => ['sync_request_ex'],  
-		'0933' => ['sync_request_ex'],  
-		'0867' => ['sync_request_ex'],  
-		'0936' => ['sync_request_ex'],  
-		'087C' => ['sync_request_ex'],  
-		'093A' => ['sync_request_ex'],  
-		'0876' => ['sync_request_ex'],  
-		'0367' => ['sync_request_ex'],  
-		'0922' => ['sync_request_ex'],  
-		'0868' => ['sync_request_ex'],  
-		'0882' => ['sync_request_ex'],  
-		'091E' => ['sync_request_ex'],  
-		'0861' => ['sync_request_ex'],  
-		'091B' => ['sync_request_ex'],  
-		'0863' => ['sync_request_ex'],  
-		'0923' => ['sync_request_ex'],  
-		'0920' => ['sync_request_ex'],  
-		'0918' => ['sync_request_ex'],  
-		'091C' => ['sync_request_ex'],  
-		'087B' => ['sync_request_ex'],  
-		'092A' => ['sync_request_ex'],  
-		'0875' => ['sync_request_ex'],  
-		'0938' => ['sync_request_ex'],  
-		'093F' => ['sync_request_ex'],  
-		'093C' => ['sync_request_ex'],  
-		'093E' => ['sync_request_ex'],  
-		'023B' => ['sync_request_ex'],  
-		'0926' => ['sync_request_ex'],  
-		'092E' => ['sync_request_ex'],  
-		'0921' => ['sync_request_ex'],  
-		'0864' => ['sync_request_ex'],  
-		'0935' => ['sync_request_ex'],  
-		'085F' => ['sync_request_ex'],  
-		'0930' => ['sync_request_ex'],  
-		'091F' => ['sync_request_ex'],  
-		'086D' => ['sync_request_ex'],  
-		'085B' => ['sync_request_ex'],  
-		'0927' => ['sync_request_ex'],  
-		'0934' => ['sync_request_ex'],  
-		'0917' => ['sync_request_ex'],  
-		'093D' => ['sync_request_ex'],  
-		'087F' => ['sync_request_ex'],  
-		'0937' => ['sync_request_ex'],  
-		'087E' => ['sync_request_ex'],  
-		'0925' => ['sync_request_ex'],  
-		'0924' => ['sync_request_ex'],  
-		'0881' => ['sync_request_ex'],  
-		'092F' => ['sync_request_ex'],  
-		'0878' => ['sync_request_ex'],  
-		'086A' => ['sync_request_ex'],  
+		'0281' => ['sync_request_ex'],  
 		'085A' => ['sync_request_ex'],  
-		'0871' => ['sync_request_ex'],  
-		'086F' => ['sync_request_ex'],  
-		'086C' => ['sync_request_ex'],  
-		'0929' => ['sync_request_ex'],  
-		'092B' => ['sync_request_ex'],  
-		'0883' => ['sync_request_ex'],  
-		'086B' => ['sync_request_ex'],  
-		'0873' => ['sync_request_ex'],  
-		'0869' => ['sync_request_ex'],  
-		'086E' => ['sync_request_ex'],  
-		'0874' => ['sync_request_ex'],  
-		'0361' => ['sync_request_ex'],  
-		'0870' => ['sync_request_ex'],  
-		'087D' => ['sync_request_ex'],  
-		'0880' => ['sync_request_ex'],  
-		'093B' => ['sync_request_ex'],  
-		'0928' => ['sync_request_ex'],  
-		'087A' => ['sync_request_ex'],  
-		'0872' => ['sync_request_ex'],  
-		'091A' => ['sync_request_ex'],  
+		'085B' => ['sync_request_ex'],  
 		'085C' => ['sync_request_ex'],  
-		'0202' => ['sync_request_ex'],  
+		'0887' => ['sync_request_ex'],  
+		'085E' => ['sync_request_ex'],  
+		'085F' => ['sync_request_ex'],  
+		'0884' => ['sync_request_ex'],  
+		'0861' => ['sync_request_ex'],  
 		'0862' => ['sync_request_ex'],  
+		'0885' => ['sync_request_ex'],  
+		'022D' => ['sync_request_ex'],  
+		'0864' => ['sync_request_ex'],  
+		'0802' => ['sync_request_ex'],  
+		'0362' => ['sync_request_ex'],  
+		'0868' => ['sync_request_ex'],  
+		'0869' => ['sync_request_ex'],  
+		'086A' => ['sync_request_ex'],  
+		'086B' => ['sync_request_ex'],  
+		'086C' => ['sync_request_ex'],  
+		'086D' => ['sync_request_ex'],  
+		'07EC' => ['sync_request_ex'],  
+		'086F' => ['sync_request_ex'],  
+		'0870' => ['sync_request_ex'],  
+		'0871' => ['sync_request_ex'],  
+		'0872' => ['sync_request_ex'],  
+		'0873' => ['sync_request_ex'],  
+		'0874' => ['sync_request_ex'],  
+		'0875' => ['sync_request_ex'],  
+		'0876' => ['sync_request_ex'],  
 		'0877' => ['sync_request_ex'],  
-		'0879' => ['sync_request_ex'],  
+		'0878' => ['sync_request_ex'],  
+		'0363' => ['sync_request_ex'],  
+		'087A' => ['sync_request_ex'],  
+		'087B' => ['sync_request_ex'],  
+		'087C' => ['sync_request_ex'],  
+		'087D' => ['sync_request_ex'],  
+		'087E' => ['sync_request_ex'],  
+		'087F' => ['sync_request_ex'],  
+		'0880' => ['sync_request_ex'],  
+		'0881' => ['sync_request_ex'],  
+		'0882' => ['sync_request_ex'],  
+		'0883' => ['sync_request_ex'],  
+		'0917' => ['sync_request_ex'],  
+		'0918' => ['sync_request_ex'],  
+		'0889' => ['sync_request_ex'],  
+		'091A' => ['sync_request_ex'],  
+		'091B' => ['sync_request_ex'],  
+		'091C' => ['sync_request_ex'],  
+		'091D' => ['sync_request_ex'],  
+		'091E' => ['sync_request_ex'],  
+		'091F' => ['sync_request_ex'],  
+		'0920' => ['sync_request_ex'],  
+		'0921' => ['sync_request_ex'],  
+		'0922' => ['sync_request_ex'],  
+		'0923' => ['sync_request_ex'],  
+		'0924' => ['sync_request_ex'],  
+		'0925' => ['sync_request_ex'],  
+		'0926' => ['sync_request_ex'],  
+		'0927' => ['sync_request_ex'],  
+		'0928' => ['sync_request_ex'],  
+		'0929' => ['sync_request_ex'],  
+		'092A' => ['sync_request_ex'],  
+		'092B' => ['sync_request_ex'],  
+		'092C' => ['sync_request_ex'],  
+		'092D' => ['sync_request_ex'],  
+		'092E' => ['sync_request_ex'],  
+		'092F' => ['sync_request_ex'],  
+		'0930' => ['sync_request_ex'],  
+		'0931' => ['sync_request_ex'],  
+		'0932' => ['sync_request_ex'],  
+		'0933' => ['sync_request_ex'],  
+		'0934' => ['sync_request_ex'],  
+		'0935' => ['sync_request_ex'],  
+		'0936' => ['sync_request_ex'],  
+		'07E4' => ['sync_request_ex'],  
+		'0938' => ['sync_request_ex'],  
+		'0939' => ['sync_request_ex'],  
+		'093A' => ['sync_request_ex'],  
+		'093B' => ['sync_request_ex'],  
+		'093C' => ['sync_request_ex'],  
+		'093D' => ['sync_request_ex'],  
+		'093E' => ['sync_request_ex'],  
+		'093F' => ['sync_request_ex'],  
 		'08B9' => ['login_pin_code_request', 'V V v', [qw(seed accountID flag)]],
 		'08BB' => ['login_pin_new_code_result', 'v V', [qw(flag seed)]],
 	);
-	
+
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
 	
 	Plugins::addHook('packet_pre/received_characters' => sub {
 		$self->{lockCharScreen} = 2;
+		$timeout{charlogin}{time} = time;
 	});
 	
 	Plugins::addHook(charSelectScreen => sub {
@@ -156,6 +156,7 @@ sub items_nonstackable {
 		warning("items_nonstackable: unsupported packet ($args->{switch})!\n");
 	}
 }
+
 sub sync_request_ex {
 	my ($self, $args) = @_;
 	
@@ -166,93 +167,23 @@ sub sync_request_ex {
 	my $PacketID = $args->{switch};
 	
 	# Sync Ex Reply Array
-	my %sync_ex_question_reply = (	
-		'085E' => '0888',  
-		'091D' => '0947',  
-		'092C' => '0956',  
-		'0932' => '095C',  
-		'092D' => '0957',  
-		'085D' => '0887',  
-		'0919' => '0943',  
-		'0865' => '088F',  
-		'0866' => '0890',  
-		'0933' => '022D',  
-		'0867' => '0891',  
-		'0936' => '0960',  
-		'087C' => '08A6',  
-		'093A' => '0964',  
-		'0876' => '0940',  
-		'0367' => '02C4',  
-		'0922' => '094C',  
-		'0868' => '0892',  
-		'0882' => '08AC',  
-		'091E' => '0948',  
-		'0861' => '088B',  
-		'091B' => '0945',  
-		'0863' => '088D',  
-		'0923' => '094D',  
-		'0920' => '094A',  
-		'0918' => '0942',  
-		'091C' => '0946',  
-		'087B' => '08A5',  
-		'092A' => '0954',  
-		'0875' => '089F',  
-		'0938' => '0962',  
-		'093F' => '0969',  
-		'093C' => '0966',  
-		'093E' => '0968',  
-		'023B' => '095B',  
-		'0926' => '0950',  
-		'092E' => '0958',  
-		'0921' => '094B',  
-		'0864' => '088E',  
-		'0935' => '095F',  
-		'085F' => '0889',  
-		'0930' => '095A',  
-		'091F' => '0949',  
-		'086D' => '0897',  
-		'085B' => '0885',  
-		'0927' => '0951',  
-		'0934' => '095E',  
-		'0917' => '0941',  
-		'093D' => '0967',  
-		'087F' => '08A9',  
-		'0937' => '0961',  
-		'087E' => '08A8',  
-		'0925' => '094F',  
-		'0924' => '094E',  
-		'0881' => '08AB',  
-		'092F' => '0959',  
-		'0878' => '08A2',  
-		'086A' => '0894',  
-		'085A' => '0884',  
-		'0871' => '089B',  
-		'086F' => '0899',  
-		'086C' => '0896',  
-		'0929' => '0953',  
-		'092B' => '0955',  
-		'0883' => '08AD',  
-		'086B' => '0895',  
-		'0873' => '089D',  
-		'0869' => '0893',  
-		'086E' => '0898',  
-		'0874' => '089E',  
-		'0361' => '088A',  
-		'0870' => '089A',  
-		'087D' => '08A7',  
-		'0880' => '08AA',  
-		'093B' => '0965',  
-		'0928' => '0952',  
-		'087A' => '08A4',  
-		'0872' => '089C',  
-		'091A' => '0944',  
-		'085C' => '0886',  
-		'0202' => '0963', 
-		'0862' => '088C',  
-		'0877' => '08A0', 
-		'0879' => '08A3',  
-		
-	);
+	my %sync_ex_question_reply = ('0281', '0860', '085A', '0863', '085B', '0367', '085C', '085D', '0887', '08A0', '085E', '0919', 
+		'085F', '0865', '0884', '088A', '0861', '088B', '0862', '088C', '0885', '088D', 
+		'022D', '088E', '0864', '088F', '0802', '0890', '0362', '0891', '0868', '0892', 
+		'0869', '0893', '086A', '0894', '086B', '0895', '086C', '0896', '086D', '0897', 
+		'07EC', '0898', '086F', '0899', '0870', '089A', '0871', '089B', '0872', '089C', 
+		'0873', '089D', '0874', '089E', '0875', '089F', '0876', '0888', '0877', '08A1', 
+		'0878', '08A2', '0363', '08A3', '087A', '08A4', '087B', '0202', '087C', '08A6', 
+		'087D', '08A7', '087E', '08A8', '087F', '0436', '0880', '08AA', '0881', '08AB', 
+		'0882', '08AC', '0883', '08AD', '0917', '0941', '0918', '0942', '0889', '0943', 
+		'091A', '0944', '091B', '0945', '091C', '0946', '091D', '02C4', '091E', '0948', 
+		'091F', '0949', '0920', '094A', '0921', '094B', '0922', '094C', '0923', '094D', 
+		'0924', '094E', '0925', '094F', '0926', '0950', '0927', '0951', '0928', '0952', 
+		'0929', '0953', '092A', '0954', '092B', '0955', '092C', '0956', '092D', '0957', 
+		'092E', '0958', '092F', '0959', '0930', '023B', '0931', '095B', '0932', '095C', 
+		'0933', '095D', '0934', '095E', '0935', '095F', '0936', '0960', '07E4', '0961', 
+		'0938', '0365', '0939', '0963', '093A', '0964', '093B', '0965', '093C', '0966', 
+		'093D', '0967', '093E', '0968', '093F', '0969');
 	
 	# Getting Sync Ex Reply ID from Table
 	my $SyncID = $sync_ex_question_reply{$PacketID};
@@ -271,7 +202,8 @@ sub sync_request_ex {
 
 	# Dispatching Sync Ex Reply
 	$messageSender->sendReplySyncRequestEx($SyncID);
-}	
+}
+
 sub login_pin_new_code_result {
 	my ($self, $args) = @_;
 	
@@ -294,6 +226,7 @@ sub login_pin_new_code_result {
 	}
 
 }
+
 sub login_pin_code_request {
 	my ($self, $args) = @_;
 	
@@ -342,233 +275,5 @@ sub login_pin_code_request {
 
 *parse_quest_update_mission_hunt = *Network::Receive::ServerType0::parse_quest_update_mission_hunt_v2;
 *reconstruct_quest_update_mission_hunt = *Network::Receive::ServerType0::reconstruct_quest_update_mission_hunt_v2;
-
-# temporary patch in order to fix inventory 20121226
-use Utils;
-
-sub cart_items_nonstackable {
-	my ($self, $args) = @_;
-
-	my $newmsg;
-	my $msg = $args->{RAW_MSG};
-	$self->decrypt(\$newmsg, substr($msg, 4));
-	$msg = substr($msg, 0, 4).$newmsg;
-
-	my $unpack = $self->items_nonstackable($args);
-
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
-
-		# TODO: different classes for inventory/cart/storage items
-		$local_item = $cart{inventory}[$item->{index}] = Actor::Item->new;
-
-		foreach (@{$unpack->{keys}}) {
-			$local_item->{$_} = $item->{$_};
-		}
-		$local_item->{name} = itemName($local_item);
-		$local_item->{amount} = 1;
-
-		debug "Non-Stackable Cart Item: $local_item->{name} ($local_item->{index}) x 1\n", "parseMsg";
-		Plugins::callHook('packet_cart', {index => $local_item->{index}});
-	}
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
-sub cart_items_stackable {
-	my ($self, $args) = @_;
-
-	my $newmsg;
-	my $msg = $args->{RAW_MSG};
-	$self->decrypt(\$newmsg, substr($msg, 4));
-	$msg = substr($msg, 0, 4).$newmsg;
-
-	my $unpack = $self->items_stackable($args);
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
-
-		$local_item = $cart{inventory}[$item->{index}] ||= Actor::Item->new;
-		if ($local_item->{amount}) {
-			$local_item->{amount} += $item->{amount};
-		} else {
-
-			foreach (@{$unpack->{keys}}) {
-				$local_item->{$_} = $item->{$_};
-			}
-		}
-		$local_item->{name} = itemName($local_item);
-
-		debug "Stackable Cart Item: $local_item->{name} ($local_item->{index}) x $local_item->{amount}\n", "parseMsg";
-		Plugins::callHook('packet_cart', {index => $local_item->{index}});
-	}
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
-sub inventory_items_nonstackable {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-	my ($newmsg, $psize);
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
-
-	my $unpack = $self->items_nonstackable($args);
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item, $add);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
-
-		unless($local_item = $char->inventory->getByServerIndex($item->{index})) {
-			$local_item = new Actor::Item();
-			$add = 1;
-		}
-
-
-		foreach (@{$unpack->{keys}}) {
-			$local_item->{$_} = $item->{$_};
-		}
-		$local_item->{name} = itemName($local_item);
-		$local_item->{amount} = 1;
-
-		if ($local_item->{equipped}) {
-			foreach (%equipSlot_rlut){
-				if ($_ & $local_item->{equipped}){
-					next if $_ == 10; #work around Arrow bug
-					next if $_ == 32768;
-					$char->{equipment}{$equipSlot_lut{$_}} = $local_item;
-				}
-			}
-		}
-
-		$char->inventory->add($local_item) if ($add);
-
-		debug "Inventory: $local_item->{name} ($local_item->{invIndex}) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}} - $equipTypes_lut{$local_item->{type_equip}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $local_item->{invIndex}});
-	}
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
-sub inventory_items_stackable {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-
-
-
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
-
-	my $unpack = $self->items_stackable($args);
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item, $add);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
-
-		unless($local_item = $char->inventory->getByServerIndex($item->{index})) {
-			$local_item = new Actor::Item();
-			$add = 1;
-		}
-
-
-		foreach (@{$unpack->{keys}}) {
-			$local_item->{$_} = $item->{$_};
-		}
-
-		if (defined $char->{arrow} && $local_item->{index} == $char->{arrow}) {
-			$local_item->{equipped} = 32768;
-			$char->{equipment}{arrow} = $local_item;
-		}
-		$local_item->{name} = itemName($local_item);
-
-		$char->inventory->add($local_item) if ($add);
-
-		debug "Inventory: $local_item->{name} ($local_item->{invIndex}) x $local_item->{amount} - " .
-			"$itemTypes_lut{$local_item->{type}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $local_item->{invIndex}, item => $local_item});
-	}
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
-
-
-sub storage_items_nonstackable {
-	my ($self, $args) = @_;
-
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
-
-	my $unpack = $self->items_nonstackable($args);
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
-
-		binAdd(\@storageID, $item->{index});
-		$local_item = $storage{$item->{index}} = Actor::Item->new;
-
-
-		foreach (@{$unpack->{keys}}) {
-			$local_item->{$_} = $item->{$_};
-		}
-		$local_item->{name} = itemName($local_item);
-		$local_item->{amount} = 1;
-		$local_item->{binID} = binFind(\@storageID, $item->{index});
-
-		debug "Storage: $local_item->{name} ($local_item->{binID})\n", "parseMsg";
-	}
-
-
-}
-
-sub storage_items_stackable {
-	my ($self, $args) = @_;
-
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
-
-	undef %storage;
-	undef @storageID;
-
-	my $unpack = $self->items_stackable($args);
-
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
-
-		binAdd(\@storageID, $item->{index});
-		$local_item = $storage{$item->{index}} = Actor::Item->new;
-
-
-		foreach (@{$unpack->{keys}}) {
-			$local_item->{$_} = $item->{$_};
-		}
-		$local_item->{amount} = $local_item->{amount} & ~0x80000000;
-		$local_item->{name} = itemName($local_item);
-		$local_item->{binID} = binFind(\@storageID, $local_item->{index});
-		$local_item->{identified} = 1;
-		debug "Storage: $local_item->{name} ($local_item->{binID}) x $local_item->{amount}\n", "parseMsg";
-	}
-}
-
-sub changeToInGameState {
-	Network::Receive::changeToInGameState;
-}
 
 1;
