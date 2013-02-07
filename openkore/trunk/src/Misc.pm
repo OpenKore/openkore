@@ -1212,8 +1212,15 @@ sub charSelectScreen {
 	
 	if ($mode eq "create") {
 		while (1) {
-			my $message = T("Please enter the desired properties for your characters, in this form:\n" .
-				"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]");
+			my $message;
+			if ($messageSender->{char_create_version}) {
+				$message = T("Please enter the desired properties for your characters, in this form:\n" .
+					"(slot) \"(name)\" [ (hairstyle) [(haircolor)] ]");
+			} else {
+				$message = T("Please enter the desired properties for your characters, in this form:\n" .
+					"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]");
+			}
+
 			my $input = $interface->query($message);
 			unless ($input =~ /\S/) {
 				goto TOP;
@@ -1410,14 +1417,12 @@ sub checkMonsterCleanness {
 #          will be sent to the server if all parameters are correct.
 #
 # Create a new character. You must be currently connected to the character login server.
+#
+# Observation: From the RagexeRE_2012_03_07f, are no longer the chosen artributos when
+#              selecting the character!
 sub createCharacter {
 	my $slot = shift;
 	my $name = shift;
-	my ($str,$agi,$vit,$int,$dex,$luk, $hair_style, $hair_color) = @_;
-
-	if (!@_) {
-		($str,$agi,$vit,$int,$dex,$luk) = (5,5,5,5,5,5);
-	}
 
 	if ($net->getState() != 3) {
 		$interface->errorDialog(T("We're not currently connected to the character login server."), 0);
@@ -1434,26 +1439,40 @@ sub createCharacter {
 	} elsif (length($name) > 23) {
 		$interface->errorDialog(T("Name must not be longer than 23 characters."), 0);
 		return 0;
+	}
 
+	if ($messageSender->{char_create_version}) {
+		my ($hair_style, $hair_color) = @_;
+
+		$messageSender->sendCharCreate($slot, $name,
+			$hair_style, $hair_color);
 	} else {
-		for ($str,$agi,$vit,$int,$dex,$luk) {
+		my ($str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
+
+		if (!@_) {
+			($str, $agi, $vit, $int, $dex, $luk) = (5, 5, 5, 5, 5, 5);
+		}
+
+		for ($str, $agi, $vit, $int, $dex, $luk) {
 			if ($_ > 9 || $_ < 1) {
 				$interface->errorDialog(T("Stats must be comprised between 1 and 9."), 0);
-				return;
+				return 0;
 			}
 		}
+		
 		for ($str+$int, $agi+$luk, $vit+$dex) {
 			if ($_ != 10) {
 				$interface->errorDialog(T("The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10."), 0);
-				return;
+				return 0;
 			}
 		}
 
 		$messageSender->sendCharCreate($slot, $name,
 			$str, $agi, $vit, $int, $dex, $luk,
 			$hair_style, $hair_color);
-		return 1;
 	}
+
+	return 1;
 }
 
 ##

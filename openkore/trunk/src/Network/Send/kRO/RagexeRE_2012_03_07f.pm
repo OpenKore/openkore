@@ -16,13 +16,15 @@ use base qw(Network::Send::kRO::RagexeRE_2011_11_02a);
 
 use Log qw(debug);
 use Utils qw(getHex);
+use I18N qw(stringToBytes);
 
 sub version { 29 }
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+	$self->{char_create_version} = 1;
+
 	my %packets = (
 		'02C4' => ['item_drop', 'v2', [qw(index amount)]],
 		# TODO 0x0360,6,reqclickbuyingstore,2
@@ -51,6 +53,7 @@ sub new {
 		'093B' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'0963' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
+		'0970' => ['char_create'],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -70,6 +73,15 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	$self;
+}
+
+# 0x0970,31
+sub sendCharCreate {
+	my ($self, $slot, $name, $hair_style, $hair_color) = @_;
+
+	my $msg = pack('v a24 C v2', 0x0970, stringToBytes($name), $slot, $hair_color, $hair_style);
+	$self->sendToServer($msg);
+	debug "Sent sendCharCreate\n", "sendPacket", 2;
 }
 
 # 0x0366,90,useskilltoposinfo,2:4:6:8:10
