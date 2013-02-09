@@ -507,6 +507,7 @@ sub new {
 		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
 		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
 		'080B' => ['booking_delete', 'V', [qw(index)]],
+		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 	);
 
 	foreach my $switch (keys %packets) {
@@ -2987,8 +2988,8 @@ sub job_equipment_hair_change {
 
 }
 
-# 01FF
-# TODO: test
+# 01FF and 08D2
+# Leap, Snap, Back Slide... Various knockback
 sub high_jump {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -2999,19 +3000,17 @@ sub high_jump {
 		$actor->{appear_time} = time;
 		$actor->{nameID} = unpack ('V', $args->{ID});
 	} elsif ($actor->{pos_to}{x} == $args->{x} && $actor->{pos_to}{y} == $args->{y}) {
-		message TF("%s failed to Jump\n", $actor->nameString), 'skill';
+		message TF("%s failed to instantly move\n", $actor->nameString), 'skill';
 		return;
 	}
 	
 	$actor->{pos} = {x => $args->{x}, y => $args->{y}};
 	$actor->{pos_to} = {x => $args->{x}, y => $args->{y}};
 	
-	message TF("%s Jumped: %d, %d\n", $actor->nameString, $actor->{pos_to}{x}, $actor->{pos_to}{y}), 'skill';
+	message TF("%s instantly moved to %d, %d\n", $actor->nameString, $actor->{pos_to}{x}, $actor->{pos_to}{y}), 'skill', 2;
 	
-	if ($args->{ID} eq $accountID) {
-		$char->{time_move} = time;
-		$char->{time_move_calc} = 0;
-	}
+	$actor->{time_move} = time;
+	$actor->{time_move_calc} = 0;
 }
 
 sub hp_sp_changed {

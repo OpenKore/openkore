@@ -507,6 +507,7 @@ sub new {
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'08CB' => ['rates_info', 's4 a*', [qw(len exp death drop detail)]],
+		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]],
 		'0900' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0901' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0902' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
@@ -3192,7 +3193,7 @@ sub job_equipment_hair_change {
 
 }
 
-# Leap, Back Slide, various knockback
+# Leap, Snap, Back Slide... Various knockback
 sub high_jump {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -3203,8 +3204,7 @@ sub high_jump {
 		$actor->{appear_time} = time;
 		$actor->{nameID} = unpack ('V', $args->{ID});
 	} elsif ($actor->{pos_to}{x} == $args->{x} && $actor->{pos_to}{y} == $args->{y}) {
-		# TODO detect when Leap/etc fails?
-		message TF("%s failed to instantly move\n", $actor->nameString), 'skill', 2;
+		message TF("%s failed to instantly move\n", $actor->nameString), 'skill';
 		return;
 	}
 
