@@ -24,7 +24,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# //0x07e1,15
+		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]], # 0x07e1,15
 	);
 
 	foreach my $switch (keys %packets) {
