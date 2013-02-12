@@ -714,6 +714,15 @@ sub sendCloseShop {
 	debug "Shop Closed\n", "sendPacket", 2;
 }
 
+# 0x7DA
+sub sendPartyLeader {
+	my $self = shift;
+	my $ID = shift;
+	my $msg = pack("C*", 0xDA, 0x07).$ID;
+	$self->sendToServer($msg);
+	debug "Sent Change Party Leader ".getHex($ID)."\n", "sendPacket", 2;
+}
+
 # 0x802
 sub sendPartyBookingRegister {
 	my ($self, $level, $MapID, @jobList) = @_;

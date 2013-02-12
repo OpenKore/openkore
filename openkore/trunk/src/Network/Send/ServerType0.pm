@@ -734,14 +734,6 @@ sub sendPartyJoinRequest {
 	debug "Sent Request Join Party: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
-sub sendPartyLeader {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack("C*", 0xDA, 0x07).$ID;
-	$self->sendToServer($msg);
-	debug "Sent Change Party Leader ".getHex($ID)."\n", "sendPacket", 2;
-}
-
 sub _binName {
 	my $name = shift;
 	
