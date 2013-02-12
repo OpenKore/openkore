@@ -92,13 +92,6 @@ ama_dun01 229 7 ama_in02 119 181 0 c r0 n
 
 # Non-VIP Warps
 #prontera 146 89 aldebaran 168 112 2000 1 c r2 c r5
-yuno 142 183 prontera 116 72 1800 1 c c c c c r0
-yuno 142 183 izlude 94 103 1800 1 c c c c c r1
-yuno 142 183 geffen 120 39 1800 1 c c c c c r2
-yuno 142 183 morocc 156 47 1800 1 c c c c c r3
-yuno 142 183 payon 161 58 1800 1 c c c c c r4
-yuno 142 183 alberta 117 56 1800 1 c c c c c r5
-yuno 142 183 comodo 209 143 1800 1 c c c c c r6
 yuno 152 187 aldebaran 168 112 1200 1 c r2 c r0
 aldebaran 143 119 geffen 120 39 2300 1 c r2 c r0
 aldebaran 143 119 yuno 158 125 1200 1 c r2 c r1
@@ -2067,6 +2060,7 @@ yuno_in05 181 116 yuno_in05 177 9
 yuno_in05 196 103 yuno_in05 153 142
 yuno_in05 196 194 yuno_in02 82 14
 yuno_in05 125 83 yuno_in05 192 103
+yuno_fild09 234 133 que_dan02 13 10
 que_dan02 13 6 yuno_fild09 234 129
 xmas 104 289 xmas_in 30 161
 xmas 119 162 xmas_in 38 89
@@ -2853,10 +2847,10 @@ yuno 144 189 moc_para01 31 14 c c r0
 lighthalzen 167 102 moc_para01 31 14 c c r0
 alberta 124 67 moc_para01 31 14 c c r0
 dewata 194 168 moc_para01 31 14 c c r0
-comodo 191 153 moc_para01 31 14 c c r0
+# comodo 191 153 moc_para01 31 14 c c r0
 # cmd_fild07 139 134 moc_para01 31 14 c c r0
 gonryun 162 122 moc_para01 31 14 c c r0
-umbala 96 160 moc_para01 31 14 c c r0
+#umbala 96 160 moc_para01 31 14 c c r0
 ayothaya 209 169 moc_para01 31 14 c c r0
 hugel 99 167 moc_para01 31 14 c c r0
 rachel 125 144 moc_para01 31 14 c c r0
@@ -2870,21 +2864,27 @@ izlude_in 68 162 moc_para01 31 14 c c r0
 
 # Eden HQ
 moc_para01 47 39 moc_para01 106 14 c r0
-moc_para01 107 12 moc_para01 47 37
-moc_para01 100 27 moc_para01 47 85
-moc_para01 49 86 moc_para01 103 27
+moc_para01 102 92 moc_para01 111 33
 moc_para01 113 32 moc_para01 105 92
-moc_para01 102 92 moc_para01 113 32
-moc_para01 57 27 moc_para01 107 12
-moc_para01 158 26 moc_para01 57 27
-#moc_para01 48 16 moc_para01 48 164
-moc_para01 48 16 moc_paraup 48 164
-#moc_para01 47 161 moc_para01 47 18
-moc_paraup 47 161 moc_para01 47 18
-#moc_para01 41 187 moc_para01 179 93
-moc_paraup 41 187 moc_paraup 179 93
-#moc_para01 179 90 moc_para01 41 185
-moc_paraup 179 90 moc_paraup 41 185
+moc_para01 107 12 moc_para01 47 37
+moc_para01 47 161 moc_para01 47 18
+moc_para01 57 27 moc_para01 162 26
+moc_para01 158 26 moc_para01 55 27
+#moc_para01 57 27 moc_para01 107 12
+# moc_para01 100 27 moc_para01 47 85
+# moc_para01 49 86 moc_para01 103 27
+# moc_para01 113 32 moc_para01 105 92
+# moc_para01 102 92 moc_para01 113 32
+# moc_para01 57 27 moc_para01 107 12
+# moc_para01 158 26 moc_para01 57 27
+# #moc_para01 48 16 moc_para01 48 164
+# moc_para01 48 16 moc_paraup 48 164
+# #moc_para01 47 161 moc_para01 47 18
+# moc_paraup 47 161 moc_para01 47 18
+# #moc_para01 41 187 moc_para01 179 93
+# moc_paraup 41 187 moc_paraup 179 93
+# #moc_para01 179 90 moc_para01 41 185
+# moc_paraup 179 90 moc_paraup 41 185
 moc_para01 30 10 prontera 116 72
 
 #------------------------------
@@ -2918,3 +2918,26 @@ dew_fild01 375 212 dewata 44 252
 dewata 44 252 dew_fild01 373 212
 dew_dun02 305 30 dew_fild01 48 65
 dew_fild01 48 65 dew_dun02 302 30
+
+new_1-2 100 6 new_1-1 148 112
+new_1-1 148 112 new_1-2 100 9
+new_2-2 100 6 new_2-1 148 112
+new_2-1 148 112 new_2-2 100 9
+new_4-2 100 6 new_4-1 148 112
+new_4-1 148 112 new_4-2 100 9
+new_1-2 100 6 new_1-1 148 112
+new_1-1 148 112 new_1-2 100 9
+new_1-2 100 6 new_1-1 148 112
+new_1-1 148 112 new_1-2 100 9
+new_2-2 100 6 new_2-1 148 112
+new_2-1 148 112 new_2-2 100 9
+new_2-2 100 6 new_2-1 148 112
+new_2-1 148 112 new_2-2 100 9
+new_3-2 100 6 new_3-1 148 112
+new_3-1 148 112 new_3-2 100 9
+new_3-2 100 6 new_3-1 148 112
+new_3-1 148 112 new_3-2 100 9
+new_2-2 100 6 new_2-1 148 112
+new_2-1 148 112 new_2-2 100 9
+new_3-2 100 6 new_3-1 148 112
+new_3-1 148 112 new_3-2 100 9
