@@ -2937,7 +2937,7 @@ sub revolving_entity {
 	# Monk Spirits or Gunslingers' coins or senior ninja
 	my $sourceID = $args->{sourceID};
 	my $entityNum = $args->{entity};
-	my $entityElement $args->{type}if $args->{type};
+	my $entityElement = $args->{type} if $args->{type};
 	my $entityType;
 	
 	my $jobID = Actor::get($sourceID)->{jobID};
