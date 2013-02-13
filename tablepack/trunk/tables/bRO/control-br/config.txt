@@ -1,4 +1,4 @@
-# Pasta control traduzida de acordo com a r8386
+# Pasta control traduzida de acordo com a r8399
 #############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
@@ -423,6 +423,7 @@ attackSkillSlot {
 	whenStatusInactive
 	whenFollowing
 	spirit
+	amuletType
 	aggressives
 	previousDamage
 	stopWhenHit 0
@@ -476,6 +477,7 @@ doCommand {
 	whenStatusInactive
 	whenFollowing
 	spirit
+	amuletType
 	aggressives
 	monsters
 	notMonsters
@@ -507,6 +509,7 @@ useSelf_skill {
 	whenStatusInactive
 	whenFollowing
 	spirit
+	amuletType
 	aggressives
 	monsters
 	notMonsters
@@ -539,6 +542,7 @@ partySkill {
 	whenStatusInactive
 	whenFollowing
 	spirit
+	amuletType
 	aggressives
 	monsters
 	notMonsters
@@ -609,6 +613,7 @@ equipAuto {
 	whenStatusInactive
 	whenFollowing
 	spirit
+	amuletType
 	aggressives
 	stopWhenHit 0
 	inLockOnly 0
@@ -631,6 +636,7 @@ useSelf_item {
 	whenStatusInactive
 	whenFollowing
 	spirit
+	amuletType
 	aggressives
 	monsters
 	notMonsters

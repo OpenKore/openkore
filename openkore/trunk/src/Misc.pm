@@ -1118,7 +1118,7 @@ sub charSelectScreen {
 
 	# Check system version to delete a character
 	my $charDeleteVersion;
-	$charDeleteVersion = 1 if ($masterServer->{charBlockSize} => 132);
+	$charDeleteVersion = 1 if ($masterServer->{charBlockSize} >= 132);
 
 	# the client also does this
 	$questList = {};
