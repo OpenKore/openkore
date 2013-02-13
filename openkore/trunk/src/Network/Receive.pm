@@ -243,13 +243,13 @@ sub received_characters_blockSize {
 sub received_characters_unpackString {
 	for ($masterServer && $masterServer->{charBlockSize}) {
 		# unknown purpose (0 = disabled, otherwise displays "Add-Ons" sidebar) (from rA)
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4 x4 x4 x4' if $_ == 144;
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4' if $_ == 144;
 		# change slot feature
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4 x4 x4' if $_ == 140;
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4' if $_ == 140;
 		# robe
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4 x4' if $_ == 136;
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4' if $_ == 136;
 		# delete date
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 x4' if $_ == 132;
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V' if $_ == 132;
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16' if $_ == 128;
 		# bro (bitfrost update)
 		return 'a4 V9 v V2 v14 Z24 C8 v Z12' if $_ == 124;
@@ -1366,6 +1366,48 @@ sub skill_post_delay {
 	my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : ' Delay';
 	
 	$char->setStatus($skillName.$status, 1, $args->{time});
+}
+
+# 0828,14
+sub char_delete2_result {
+	my ($self, $args) = @_;
+	my $result = $args->{result};
+
+	if ($result) {
+		my $deleteDate = getFormattedDate($args->{deleteDate});
+
+		message TF("Your character will be delete, left %s\n", $deleteDate), "connection";
+		$chars[$messageSender->{char_delete_slot}]{deleteDate} = $deleteDate;
+	} elsif ($result == 0) {
+		error T("That character already planned to be erased!\n");
+	} elsif ($result == 3) {
+		error T("Error in database of the server!\n");
+	} elsif ($result == 4) {
+		error T("To delete a character you must withdraw from the guild!\n");
+	} elsif ($result == 5) {
+		error T("To delete a character you must withdraw from the party!\n");
+	} else {
+		error TF("Unknown error when trying to delete the character! (Error number: %s)\n", $result);
+	}
+
+	charSelectScreen;
+}
+
+# 082C,14
+sub char_delete2_cancel_result {
+	my ($self, $args) = @_;
+	my $result = $args->{result};
+
+	if ($result) {
+		message T("Character is no longer scheduled to be deleted\n"), "connection";
+		$chars[$messageSender->{char_delete_slot}]{deleteDate} = '';
+	} elsif ($result == 2) {
+		error T("Error in database of the server!\n");
+	} else {
+		error TF("Unknown error when trying to cancel the deletion of the character! (Error number: %s)\n", $result);
+	}
+	
+	charSelectScreen;
 }
 
 ##

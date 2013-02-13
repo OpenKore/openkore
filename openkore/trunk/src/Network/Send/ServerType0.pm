@@ -101,6 +101,8 @@ sub new {
 		'0806' => ['booking_delete'],
 		'0808' => ['booking_update', 'v6', [qw(job0 job1 job2 job3 job4 job5)]],
 		'0819' => ['buy_bulk_buyer', 'x2 x2 a4 a*', [qw(buyerID buyingStoreID zeny itemInfo)]],
+		'0827' => ['char_delete2', 'a4', [qw(charID)]], # 6
+		'082B' => ['char_delete2_cancel', 'a4', [qw(charID)]], # 6
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;

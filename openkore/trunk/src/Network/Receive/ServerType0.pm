@@ -496,6 +496,8 @@ sub new {
 		'0818' => ['buying_store_items_list', 'v a4 a4', [qw(len buyerID buyingStoreID zeny)]],
 		'081C' => ['buying_store_item_delete', 'v2 V', [qw(index amount zeny)]],
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
+		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
+		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'082D' => ['received_characters', 'v C x2 C2 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]],
 		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
 		'083E' => ['login_error', 'V Z20', [qw(type date)]],
@@ -4444,9 +4446,10 @@ sub received_characters {
 	for (my $i = $args->{RAW_MSG_SIZE} % $blockSize; $i < $args->{RAW_MSG_SIZE}; $i += $blockSize) {
 		#exp display bugfix - chobit andy 20030129
 		my $unpack_string = $self->received_characters_unpackString;
+		# TODO: What would be the $unknown ?
 		my ($cID,$exp,$zeny,$jobExp,$jobLevel, $opt1, $opt2, $option, $stance, $manner, $statpt,
 			$hp,$maxHp,$sp,$maxSp, $walkspeed, $jobId,$hairstyle, $weapon, $level, $skillpt,$headLow, $shield,$headTop,$headMid,$hairColor,
-			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename) =
+			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename, $unknown, $mapname, $deleteDate) =
 			unpack($unpack_string, substr($args->{RAW_MSG}, $i));
 		$chars[$slot] = new Actor::You;
 
@@ -4481,6 +4484,7 @@ sub received_characters {
 		$chars[$slot]{luk} = $luk;
 		$chars[$slot]{sex} = $accountSex2;
 
+		$chars[$slot]{deleteDate} = getFormattedDate($deleteDate) if ($deleteDate);
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 	}

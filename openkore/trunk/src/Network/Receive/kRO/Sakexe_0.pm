@@ -507,6 +507,8 @@ sub new {
 		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
 		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
 		'080B' => ['booking_delete', 'V', [qw(index)]],
+		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
+		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 	);
 
@@ -4177,9 +4179,10 @@ sub received_characters {
 	for (my $i = $args->{RAW_MSG_SIZE} % $blockSize; $i < $args->{RAW_MSG_SIZE}; $i += $blockSize) {
 		#exp display bugfix - chobit andy 20030129
 		my $unpack_string = $self->received_characters_unpackString;
+		# TODO: What would be the $unknown ?
 		my ($cID,$exp,$zeny,$jobExp,$jobLevel, $opt1, $opt2, $option, $stance, $manner, $statpt,
 			$hp,$maxHp,$sp,$maxSp, $walkspeed, $jobId,$hairstyle, $weapon, $level, $skillpt,$headLow, $shield,$headTop,$headMid,$hairColor,
-			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename, $mapname) =
+			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename, $unknown, $mapname, $deleteDate) =
 			unpack($unpack_string, substr($args->{RAW_MSG}, $i));
 
 		$chars[$slot] = new Actor::You;
@@ -4213,6 +4216,7 @@ sub received_characters {
 		$chars[$slot]{luk} = $luk;
 		$chars[$slot]{sex} = $accountSex2;
 
+		$chars[$slot]{deleteDate} = getFormattedDate($deleteDate) if ($deleteDate);
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 	}
