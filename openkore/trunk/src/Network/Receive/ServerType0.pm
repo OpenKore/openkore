@@ -2950,13 +2950,13 @@ sub revolving_entity {
 	}
 
 	if ($sourceID eq $accountID) {
-		message TF("You have %s %s(s) now\n", $entityNum,$entityType), "parseMsg_statuslook", 1;
+		message TF("You have %s %s(s) now\n", $entityNum,$entityType), "parseMsg_statuslook", 1 if $entities != $actor->{spirits};
 		$char->{spirits} = $entityNum;
 		$entityNum == 0 ? $char->{amuletType} = '' : $char->{amuletType} = $entityElement;
 	} elsif (my $actor = Actor::get($sourceID)) {
 		message TF("%s has %s %s(s) now\n", $actor, $entityNum,$entityType), "parseMsg_statuslook", 2;
 		$actor->{spirits} = $entityNum;
-		$entityNum == 0 ? $actor->{amuletType} = '' : $actor->{amuletType} = $entityElement;
+		$entityNum == 0 ? $actor->{amuletType} = '' : $actor->{amuletType} = $entityElement if $entities != $actor->{spirits};
 	}
 
 }
