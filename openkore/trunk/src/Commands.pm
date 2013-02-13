@@ -4307,7 +4307,7 @@ sub cmdStatus {
 	my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
 	my $totalelasped_string = sprintf("%.2f", $totalelasped);
 	my $elasped_string = sprintf("%.2f", $elasped);
-
+	
 	$msg = swrite(
 		TF("----------------------- Status -------------------------\n" .
 		"\@<<<<<<<<<<<<<<<<<<<<<<<         HP: \@>>>>>>>>>>>>>>>>>>\n" .
@@ -4316,13 +4316,13 @@ sub cmdStatus {
 		"Job : \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
 		"Zeny: \@<<<<<<<<<<<<<<<<<     Weight: \@>>>>>>>>>>>>>>>>>>\n" .
 		"Statuses: %s\n" .
-		"Spirits/Coins: %s\n" .
+		"Spirits/Coins/Amulets: %s\n" .
 		"--------------------------------------------------------\n" .
 		"Total Damage: \@>>>>>>>>>>>>> Dmg/sec: \@<<<<<<<<<<<<<<\n" .
 		"Total Time spent (sec): \@>>>>>>>>\n" .
 		"Last Monster took (sec): \@>>>>>>>\n" .
 		"--------------------------------------------------------",
-		$char->statusesString, (exists $char->{spirits} ? $char->{spirits} : 0)),
+		$char->statusesString, (exists $char->{spirits} && $char->{spirits} != 0 ? ($char->{amuletType} ? $char->{spirits}."\tType: ".$char->{amuletType} : $char->{spirits}) : 0)),
 		[$char->{'name'}, $hp_string, $job_name_string, $sp_string,
 		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
 		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]);

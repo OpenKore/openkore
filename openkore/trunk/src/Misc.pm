@@ -3840,10 +3840,12 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_whenStatusInactive"}) {
 		return 0 if $char->statusActive($config{$prefix . "_whenStatusInactive"});
 	}
+	
 
 	if ($config{$prefix . "_onAction"}) { return 0 unless (existsInList($config{$prefix . "_onAction"}, AI::action())); }
 	if ($config{$prefix . "_notOnAction"}) { return 0 if (existsInList($config{$prefix . "_notOnAction"}, AI::action())); }
 	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange(defined $char->{spirits} ? $char->{spirits} : 0, $config{$prefix . "_spirit"})); }
+	if ($config{$prefix . "_amuletType"}) {return 0 unless $config{$prefix . "_amuletType"} == $char->{amuletType}; }
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
 	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field->baseName eq $config{lockMap}); }
