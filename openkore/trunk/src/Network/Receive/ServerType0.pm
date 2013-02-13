@@ -509,6 +509,7 @@ sub new {
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'08CB' => ['rates_info', 's4 a*', [qw(len exp death drop detail)]],
+		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]],
 		'0900' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0901' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
@@ -2933,17 +2934,34 @@ sub married {
 sub revolving_entity {
 	my ($self, $args) = @_;
 
-	# Monk Spirits or Gunslingers' coins
+	# Monk Spirits or Gunslingers' coins or senior ninja
 	my $sourceID = $args->{sourceID};
-	my $entities = $args->{entity};
-	my $entityType = (Actor::get($sourceID)->{jobID} == 24) ? T("coin") : T("spirit");
+	my $entityNum = $args->{entity};
+	my $entityType;
+	my $entityElement;
+	if ($args->{type}) {
+		$entityElement = T('fire') if $args->{type} == 3;
+		$entityElement = T('water') if $args->{type} == 1;
+		$entityElement = T('wind') if $args->{type} == 4;
+		$entityElement = T('earth') if $args->{type} == 2;
+	}
+	my $jobID = Actor::get($sourceID)->{jobID};
+	if($jobID == 24) {
+		$entityType = T('coin');
+	}elsif($jobID == 4211 || $jobID == 4212) {
+			$entityType = T('amulet');
+	}else{
+		$entityType = T('spirit');
+	}
 
 	if ($sourceID eq $accountID) {
-		message TF("You have %s %s(s) now\n", $entities,$entityType), "parseMsg_statuslook", 1 if $entities != $char->{spirits};
-		$char->{spirits} = $entities;
+		message TF("You have %s %s(s) now\n", $entityNum,$entityType), "parseMsg_statuslook", 1;
+		$char->{spirits} = $entityNum;
+		$entityNum == 0 ? $char->{amuletType} = '' : $char->{amuletType} = $entityElement;
 	} elsif (my $actor = Actor::get($sourceID)) {
-		$actor->{spirits} = $entities;
-		message TF("%s has %s %s(s) now\n", $actor, $entities,$entityType), "parseMsg_statuslook", 2 if $entities != $actor->{spirits};
+		message TF("%s has %s %s(s) now\n", $actor, $entityNum,$entityType), "parseMsg_statuslook", 2;
+		$actor->{spirits} = $entityNum;
+		$entityNum == 0 ? $actor->{amuletType} = '' : $actor->{amuletType} = $entityElement;
 	}
 
 }
@@ -5098,6 +5116,7 @@ sub skill_use_failed {
 		9 => T('90% Overweight'),
 		10 => T('Requirement'),
 		13 => T('Need this within the water'),
+		19 => T('Full Amulet'),
 		29 => T('Must have at least 1% of base XP'),
 		83 => T('Location not allowed to create chatroom/market')
 		);
