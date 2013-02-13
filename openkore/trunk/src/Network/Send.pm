@@ -763,6 +763,22 @@ sub sendPartyBookingUpdate {
 	debug "Sent Booking Update\n", "sendPacket", 2;
 }
 
+# 0x0827,6
+sub sendCharDelete2 {
+	my ($self, $charID) = @_;
+
+	$self->sendToServer($self->reconstruct({switch => 'char_delete2', charID => $charID}));
+	debug "Sent sendCharDelete2\n", "sendPacket", 2;
+}
+
+# 0x082B,6
+sub sendCharDelete2Cancel {
+	my ($self, $charID) = @_;
+
+	$self->sendToServer($self->reconstruct({switch => 'char_delete2_cancel', charID => $charID}));
+	debug "Sent sendCharDelete2Cancel\n", "sendPacket", 2;
+}
+
 sub reconstruct_client_hash {
 	my ($self, $args) = @_;
 	

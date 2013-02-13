@@ -1115,7 +1115,11 @@ sub charSelectScreen {
 	# An array which maps an index in @charNames to an index in @chars
 	my @charNameIndices;
 	my $mode;
-	
+
+	# Check system version to delete a character
+	my $charDeleteVersion;
+	$charDeleteVersion = 1 if ($masterServer->{charBlockSize} => 132);
+
 	# the client also does this
 	$questList = {};
 
@@ -1146,12 +1150,19 @@ sub charSelectScreen {
 				$chars[$num]{'int'}, $chars[$num]{'sp'}, $chars[$num]{'sp_max'}, $chars[$num]{'dex'},
 				$chars[$num]{'zeny'}, $chars[$num]{'luk'});
 		}
-		push @charNames, TF("Slot %d: %s (%s, level %d/%d)",
+
+		my $messageDeleteDate;
+		if ($chars[$num]{deleteDate}) {
+			$messageDeleteDate = TF("\n     -> It will be deleted lefting %s!", $chars[$num]{deleteDate});
+		}
+		
+		push @charNames, TF("Slot %d: %s (%s, level %d/%d)%s",
 			$num,
 			$chars[$num]{name},
 			$jobs_lut{$chars[$num]{'jobID'}},
 			$chars[$num]{lv},
-			$chars[$num]{lv_job});
+			$chars[$num]{lv_job},
+			$messageDeleteDate);
 		push @charNameIndices, $num;
 	}
 
@@ -1176,7 +1187,11 @@ sub charSelectScreen {
 	my @choices = @charNames;
 	push @choices, T('Create a new character');
 	if (@chars) {
-		push @choices, T('Delete a character');
+		if ($charDeleteVersion) {
+			push @choices, T('Delete or cancel the deletion a character');
+		} else {
+			push @choices, T('Delete a character');
+		}
 	} else {
 		message T("There are no characters on this account.\n"), "connection";
       if ($config{char} ne "switch" && defined($char)) {
@@ -1247,23 +1262,33 @@ sub charSelectScreen {
 		}
 		my $charIndex = @charNameIndices[$choice];
 
-		my $email = $interface->query("Enter your email address.");
-		if (!defined($email)) {
-			goto TOP;
-		}
+		if ($charDeleteVersion) {
+		$messageSender->{char_delete_slot} = $charIndex;
 
-		my $confirmation = $interface->showMenu(
-			TF("Are you ABSOLUTELY SURE you want to delete:\n%s", $charNames[$choice]),
-			[T("No, don't delete"), T("Yes, delete")],
-			title => T("Confirm delete"));
-		if ($confirmation != 1) {
-			goto TOP;
-		}
+			if ($chars[$charIndex]{deleteDate}) {
+				$messageSender->sendCharDelete2Cancel($chars[$charIndex]{charID});
+			} else {
+				$messageSender->sendCharDelete2($chars[$charIndex]{charID});
+			}
+		} else {
+			my $email = $interface->query("Enter your email address.");
+			if (!defined($email)) {
+				goto TOP;
+			}
 
-		$messageSender->sendCharDelete($chars[$charIndex]{charID}, $email);
-		message TF("Deleting character %s...\n", $chars[$charIndex]{name}), "connection";
-		$AI::temp::delIndex = $charIndex;
-		$timeout{charlogin}{time} = time;
+			my $confirmation = $interface->showMenu(
+				TF("Are you ABSOLUTELY SURE you want to delete:\n%s", $charNames[$choice]),
+				[T("No, don't delete"), T("Yes, delete")],
+				title => T("Confirm delete"));
+			if ($confirmation != 1) {
+				goto TOP;
+			}
+
+			$messageSender->sendCharDelete($chars[$charIndex]{charID}, $email);
+			message TF("Deleting character %s...\n", $chars[$charIndex]{name}), "connection";
+			$AI::temp::delIndex = $charIndex;
+			$timeout{charlogin}{time} = time;
+		}
 	}
 	return 2;
 }
