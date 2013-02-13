@@ -2937,14 +2937,9 @@ sub revolving_entity {
 	# Monk Spirits or Gunslingers' coins or senior ninja
 	my $sourceID = $args->{sourceID};
 	my $entityNum = $args->{entity};
+	my $entityElement $args->{type}if $args->{type};
 	my $entityType;
-	my $entityElement;
-	if ($args->{type}) {
-		$entityElement = T('fire') if $args->{type} == 3;
-		$entityElement = T('water') if $args->{type} == 1;
-		$entityElement = T('wind') if $args->{type} == 4;
-		$entityElement = T('earth') if $args->{type} == 2;
-	}
+	
 	my $jobID = Actor::get($sourceID)->{jobID};
 	if($jobID == 24) {
 		$entityType = T('coin');
