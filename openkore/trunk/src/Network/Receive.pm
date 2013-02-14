@@ -1372,9 +1372,10 @@ sub skill_post_delay {
 sub char_delete2_result {
 	my ($self, $args) = @_;
 	my $result = $args->{result};
+	my $deleteDate = $args->{deleteDate};
 
-	if ($result) {
-		my $deleteDate = getFormattedDate($args->{deleteDate});
+	if ($result && $deleteDate) {
+		$deleteDate = getFormattedDate($deleteDate);
 
 		message TF("Your character will be delete, left %s\n", $deleteDate), "connection";
 		$chars[$messageSender->{char_delete_slot}]{deleteDate} = $deleteDate;
