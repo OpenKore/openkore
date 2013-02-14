@@ -509,6 +509,7 @@ sub new {
 		'080B' => ['booking_delete', 'V', [qw(index)]],
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
+		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 	);
 
@@ -2616,24 +2617,6 @@ sub married {
 
 	my $actor = Actor::get($args->{ID});
 	message TF("%s got married!\n", $actor);
-}
-
-sub revolving_entity {
-	my ($self, $args) = @_;
-
-	# Monk Spirits or Gunslingers' coins
-	my $sourceID = $args->{sourceID};
-	my $entities = $args->{entity};
-	my $entityType = (Actor::get($sourceID)->{jobID} == 24) ? T("coin") : T("spirit");
-
-	if ($sourceID eq $accountID) {
-		message TF("You have %s %s(s) now\n", $entities,$entityType), "parseMsg_statuslook", 1 if $entities != $char->{spirits};
-		$char->{spirits} = $entities;
-	} elsif (my $actor = Actor::get($sourceID)) {
-		$actor->{spirits} = $entities;
-		message TF("%s has %s %s(s) now\n", $actor, $entities,$entityType), "parseMsg_statuslook", 2 if $entities != $actor->{spirits};
-	}
-
 }
 
 # TODO: test extracted unpack string
@@ -4815,6 +4798,7 @@ sub skill_use_failed {
 		9 => T('90% Overweight'),
 		10 => T('Requirement'),
 		13 => T('Need this within the water'),
+		19 => T('Full Amulet'),
 		29 => T('Must have at least 1% of base XP'),
 		83 => T('Location not allowed to create chatroom/market')
 		);

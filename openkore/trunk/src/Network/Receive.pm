@@ -1411,6 +1411,36 @@ sub char_delete2_cancel_result {
 	charSelectScreen;
 }
 
+# 01D0 (spirits), 01E1 (coins), 08CF (amulets)
+sub revolving_entity {
+	my ($self, $args) = @_;
+
+	# Monk Spirits or Gunslingers' coins or senior ninja
+	my $sourceID = $args->{sourceID};
+	my $entityNum = $args->{entity};
+	my $entityElement = $elements_lut{$args->{type}} if ($args->{type} && $entityNum);
+	my $entityType;
+
+	my $actor = Actor::get($sourceID);
+	if ($lastSwitch eq '01D0') {
+		$entityType = T('spirit');
+	} elsif ($lastSwitch eq '01E1') {
+		$entityType = T('coin');
+	} else {
+		$entityType = T('amulet');
+	}
+
+	if ($sourceID eq $accountID && $entityNum != $char->{spirits}) {
+		$char->{spirits} = $entityNum;
+		$char->{amuletType} = $entityElement;
+		$entityElement ? message TF("You have %s %s(s) of %s now\n", $entityNum, $entityType, $entityElement), "parseMsg_statuslook", 1 : message TF("You have %s %s(s) now\n", $entityNum, $entityType), "parseMsg_statuslook", 1;
+	} elsif ($entityNum != $actor->{spirits}) {
+		$actor->{spirits} = $entityNum;
+		$actor->{amuletType} = $entityElement;
+		$entityElement ? message TF("%s has %s %s(s) of %s now\n", $actor, $entityNum, $entityType, $entityElement), "parseMsg_statuslook", 1 : message TF("%s has %s %s(s) now\n", $actor, $entityNum, $entityType), "parseMsg_statuslook", 1;
+	}
+}
+
 ##
 # account_id({accountID})
 #

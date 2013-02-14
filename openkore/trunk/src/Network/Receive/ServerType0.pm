@@ -2931,36 +2931,6 @@ sub married {
 	message TF("%s got married!\n", $actor);
 }
 
-sub revolving_entity {
-	my ($self, $args) = @_;
-
-	# Monk Spirits or Gunslingers' coins or senior ninja
-	my $sourceID = $args->{sourceID};
-	my $entityNum = $args->{entity};
-	my $entityElement = $elements_lut{$args->{type}} if ($args->{entity} && $entityNum);
-	my $entityType;
-
-	my $actor = Actor::get($sourceID);
-	my $jobID = $actor->{jobID};
-	if ($jobID == 24) {
-		$entityType = T('coin');
-	} elsif ($jobID == 4211 || $jobID == 4212) {
-		$entityType = T('amulet');
-	} else {
-		$entityType = T('spirit');
-	}
-
-	if ($sourceID eq $accountID && $entityNum != $char->{spirits}) {
-		$char->{spirits} = $entityNum;
-		$char->{amuletType} = $entityElement;
-		message TF("You have %s %s(s) now\n", $entityNum, $entityType), "parseMsg_statuslook", 1 ;
-	} elsif ($entityNum != $actor->{spirits}) {
-		$actor->{spirits} = $entityNum;
-		$actor->{amuletType} = $entityElement ;
-		message TF("%s has %s %s(s) now\n", $actor, $entityNum, $entityType), "parseMsg_statuslook", 2;
-	}
-}
-
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
