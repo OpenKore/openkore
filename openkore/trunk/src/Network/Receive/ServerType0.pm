@@ -2939,26 +2939,26 @@ sub revolving_entity {
 	my $entityNum = $args->{entity};
 	my $entityElement = $args->{type} if $args->{type};
 	my $entityType;
-	
+
+	my $actor = Actor::get($sourceID);
 	my $jobID = Actor::get($sourceID)->{jobID};
-	if($jobID == 24) {
+	if ($jobID == 24) {
 		$entityType = T('coin');
-	}elsif($jobID == 4211 || $jobID == 4212) {
-			$entityType = T('amulet');
-	}else{
+	} elsif ($jobID == 4211 || $jobID == 4212) {
+		$entityType = T('amulet');
+	} else {
 		$entityType = T('spirit');
 	}
 
 	if ($sourceID eq $accountID) {
-		message TF("You have %s %s(s) now\n", $entityNum,$entityType), "parseMsg_statuslook", 1 if $entities != $actor->{spirits};
+		message TF("You have %s %s(s) now\n", $entityNum, $entityType), "parseMsg_statuslook", 1 if ($entityNum != $actor->{spirits});
 		$char->{spirits} = $entityNum;
 		$entityNum == 0 ? $char->{amuletType} = '' : $char->{amuletType} = $entityElement;
-	} elsif (my $actor = Actor::get($sourceID)) {
-		message TF("%s has %s %s(s) now\n", $actor, $entityNum,$entityType), "parseMsg_statuslook", 2;
+	} elsif ($actor == Actor::get($sourceID)) {
+		message TF("%s has %s %s(s) now\n", $actor, $entityNum, $entityType), "parseMsg_statuslook", 2;
 		$actor->{spirits} = $entityNum;
-		$entityNum == 0 ? $actor->{amuletType} = '' : $actor->{amuletType} = $entityElement if $entities != $actor->{spirits};
+		$entityNum == 0 ? $actor->{amuletType} = '' : $actor->{amuletType} = $entityElement if ($entityNum != $actor->{spirits});
 	}
-
 }
 
 sub inventory_items_nonstackable {
