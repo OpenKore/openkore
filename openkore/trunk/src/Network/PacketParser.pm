@@ -208,11 +208,11 @@ sub reconstruct {
 sub parse {
 	my ($self, $msg, $handleContainer, @handleArguments) = @_;
 
-	my $switch = Network::MessageTokenizer::getMessageID($msg);
-	my $handler = $self->{packet_list}{$switch};
+	$lastSwitch = Network::MessageTokenizer::getMessageID($msg);
+	my $handler = $self->{packet_list}{$lastSwitch};
 
 	unless ($handler) {
-		warning "Packet Parser: Unknown switch: $switch\n";
+		warning "Packet Parser: Unknown switch: $lastSwitch\n";
 		return undef;
 	}
 
@@ -228,11 +228,11 @@ sub parse {
 	# 	}
 	# }
 
-	debug "Received packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
+	debug "Received packet: $lastSwitch Handler: $handler->[0]\n", "packetParser", 2;
 
 	# RAW_MSG is the entire message, including packet switch
 	my %args = (
-		switch => $switch,
+		switch => $lastSwitch,
 		RAW_MSG => $msg,
 		RAW_MSG_SIZE => length($msg),
 		KEYS => $handler->[2],

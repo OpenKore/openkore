@@ -4322,7 +4322,7 @@ sub cmdStatus {
 		"Total Time spent (sec): \@>>>>>>>>\n" .
 		"Last Monster took (sec): \@>>>>>>>\n" .
 		"--------------------------------------------------------",
-		$char->statusesString, (exists $char->{spirits} && $char->{spirits} != 0 ? ($char->{amuletType} ? $char->{spirits}."\tType: ".$elements_lut{$char->{amuletType}} : $char->{spirits}) : 0)),
+		$char->statusesString, (exists $char->{spirits} && $char->{spirits} != 0 ? ($char->{amuletType} ? $char->{spirits} . "\tType: " . $char->{amuletType} : $char->{spirits}) : 0)),
 		[$char->{'name'}, $hp_string, $job_name_string, $sp_string,
 		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
 		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]);
