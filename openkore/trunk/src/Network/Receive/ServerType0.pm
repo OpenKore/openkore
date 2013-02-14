@@ -2937,11 +2937,11 @@ sub revolving_entity {
 	# Monk Spirits or Gunslingers' coins or senior ninja
 	my $sourceID = $args->{sourceID};
 	my $entityNum = $args->{entity};
-	my $entityElement = $args->{type} if $args->{type};
+	my $entityElement = $elements_lut{$args->{type}} if ($args->{entity} && $entityNum);
 	my $entityType;
 
 	my $actor = Actor::get($sourceID);
-	my $jobID = Actor::get($sourceID)->{jobID};
+	my $jobID = $actor->{jobID};
 	if ($jobID == 24) {
 		$entityType = T('coin');
 	} elsif ($jobID == 4211 || $jobID == 4212) {
@@ -2950,14 +2950,14 @@ sub revolving_entity {
 		$entityType = T('spirit');
 	}
 
-	if ($sourceID eq $accountID) {
-		message TF("You have %s %s(s) now\n", $entityNum, $entityType), "parseMsg_statuslook", 1 if ($entityNum != $actor->{spirits});
+	if ($sourceID eq $accountID && $entityNum != $char->{spirits}) {
 		$char->{spirits} = $entityNum;
-		$entityNum == 0 ? $char->{amuletType} = '' : $char->{amuletType} = $entityElement;
-	} elsif ($actor == Actor::get($sourceID)) {
-		message TF("%s has %s %s(s) now\n", $actor, $entityNum, $entityType), "parseMsg_statuslook", 2;
+		$char->{amuletType} = $entityElement;
+		message TF("You have %s %s(s) now\n", $entityNum, $entityType), "parseMsg_statuslook", 1 ;
+	} elsif ($entityNum != $actor->{spirits}) {
 		$actor->{spirits} = $entityNum;
-		$entityNum == 0 ? $actor->{amuletType} = '' : $actor->{amuletType} = $entityElement if ($entityNum != $actor->{spirits});
+		$actor->{amuletType} = $entityElement ;
+		message TF("%s has %s %s(s) now\n", $actor, $entityNum, $entityType), "parseMsg_statuslook", 2;
 	}
 }
 
