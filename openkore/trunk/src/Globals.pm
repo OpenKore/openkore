@@ -72,6 +72,8 @@ our %equipSlot_lut = (
 	'1024' => 'costumeTopHead',
 	'2048' => 'costumeMidHead',
 	'4096' => 'costumeLowHead',
+	'8192' => 'costumeRobe',
+	'16384' => 'costumeFloor',
 	# 0x2000 => LOCATION_COSTUME_FLOOR,
 	'32768'   => 'arrow' #just use an made up ID since arrow doesn't have any
 	# 0xffff8000 => LOCATION_ARROW,
@@ -91,6 +93,8 @@ our %equipSlot_rlut = (
 	'costumeTopHead' => 1024,
 	'costumeMidHead' => 2048,
 	'costumeLowHead' => 4096,
+	'costumeRobe' => 8192,
+	'costumeFloor' => 16384,
 	'arrow'          => '' #arrow seems not to have any ID
 );
 our %elements_lut;

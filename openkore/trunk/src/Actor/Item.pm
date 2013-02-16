@@ -69,6 +69,7 @@ our @slots = qw(
 	leftAccessory rightAccessory
 	arrow
 	costumeTopHead costumeMidHead costumeLowHead
+	costumeRobe costumeFloor
 );
 
 
