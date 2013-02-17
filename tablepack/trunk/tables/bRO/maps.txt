@@ -1,4 +1,4 @@
-﻿gld_dun04.rsw#Calabouço do Feudo de Britoniah#
+gld_dun04.rsw#Calabouço do Feudo de Britoniah#
 gld_dun03.rsw#Calabouço do Feudo das Valquírias#
 gld_dun02.rsw#Calabouço do Feudo de Luina#
 gld_dun01.rsw#Calabouço do Feudo do Bosque Celestial#
@@ -780,5 +780,20 @@ dew_in01.rsw#Inside of Jaty Tribe Village#
 dew_fild01.rsw#Dewata Field_Jaty Tribe Village#
 dew_dun01.rsw#Krakatau Volcano Island#
 dew_dun02.rsw#Istana Cave#
+
+// ---- Ep 14.1 -------------
+bif_fild01.rsw#Floresta da Neblina - Sul de Bifröst#
+bif_fild02.rsw#Floresta da Neblina - Norte de Bifröst#
+mora.rsw#Mora - A Vila dos Rafflen#
+dic_in01.rsw#Casa em Dicastes#
+1@mist.rsw#Labirinto da Neblina#
+dicastes01.rsw#El Dicastes, Cidade Capital dos Manuks#
+dicastes02.rsw#Floresta Brumbeld Jorhi#
+dic_fild01.rsw#Campos de El Dicastes 01#
+dic_fild02.rsw#Campos de El Dicastes 02#
+dic_dun01.rsw#Túnel Kamidal 01#
+dic_dun02.rsw#Túnel Kamidal 02#
+dic_dun03.rsw#Túnel Kamidal - Pesadelo#
+
 
 moc_para01.rsw#Garden of Eden#

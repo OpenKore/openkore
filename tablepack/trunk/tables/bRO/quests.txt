@@ -5052,8 +5052,8 @@ Complete o desafio. Derrote 10 Tarous#
 Derrote 10 Tarous#
 
 7136#Grupo Valhalla#SG_FEEL#QUE_NOIMAGE#
-Complete o desafio. Derrote 10 Familiares#
-Derrote 10 Familiares#
+Complete o desafio. Derrote 5 Familiares#
+Derrote 5 Familiares#
 
 7137#Grupo Valhalla#SG_FEEL#QUE_NOIMAGE#
 Você completou todas as tarefas do gato falante. Fale com o membro do Grupo Valhalla.#
@@ -5777,8 +5777,8 @@ Complete o desafio caçando 15 Filhotes de Orc#
 Cace 15 Filhotes de Orc#
 
 12076#Caçada de Monstros#SG_FEEL#QUE_NOIMAGE#
-Complete o desafio caçando 15 Guerreiros Orc#
-Cace 15 Guerreiros Orc#
+Complete o desafio caçando 20 Guerreiros Orc#
+Cace 20 Guerreiros Orc#
 
 12077#Caçada de Monstros#SG_FEEL#QUE_NOIMAGE#
 Complete o desafio caçando 15 Vadons#
@@ -7059,5 +7059,802 @@ Trabalhe com ^005DFFViorel^000000#
 Você pode usar o serviço de reset de atributos se possuir uma Pedra das Valquírias. .#
 Volte daqui a ^FF000020 horas^000000.#
 
-//file end
+//=== ÇÒ·ÎÀ© µ¥ÀÌ===
+//------------------ O Mercador do Inferno
+14166#Maçã!!! #SG_FEEL#QUE_NOIMAGE#
+Pegue uma maçã fresca do mundo dos vivos e entregue-a ao Mercador do Inferno. Ele diz que gostaria de ajudar você, então escute-o.#
+Ao Mercador do Inferno#
 
+14167#Chapéu???#SG_FEEL#QUE_NOIMAGE#
+O Mercador do Inferno disse que fará um Chapéu de Abóbora Infernal para você, se lhe trouxer os materiais. Volte a falar com ele depois de consegui-los. Você vai precisar de Agulha e Linha, Abóbora Firme, Amuleto do Fantasma Livre e Memória de Jack.#
+Encontre os materiais do Chapéu#
+
+14168#Perguntas e Respostas!#SG_FEEL#QUE_NOIMAGE#
+Você acertou Perguntas e Respostas, então receberá a Abóbora Resistente!#
+Passou no teste!#
+
+14169#Depois de comer um lanchinho#SG_FEEL#QUE_NOIMAGE#
+As crianças comeram o lanche com paixão! Eles nem mesmo falaram enquanto comiam. Você deve lhes dizer para tomar cuidado.#
+Uma palavra para as crianças.#
+
+14170#Outra prova!#SG_FEEL#QUE_NOIMAGE#
+Você errou as respostas. Tente novamente!!!#
+Tentar Novamente#
+
+14171#Pedido do Sr. Han#SG_FEEL#QUE_NOIMAGE#
+O Sr. Han lhe pediu o material para criar a Boneca Amaldiçoada. 3 Cabelos Pretos, 3 Tranças, 10 Troncos Estéreis, 10 Troncos Sólidos.#
+Pedido do Sr. Han#
+
+14172#Pedido do Sr. Han#SG_FEEL#QUE_NOIMAGE#
+O Sr. Han pediu que você atendesse ao pedido dele e não do Sr. Han. 3 Saias Virginais, 5 Tranças Curtas, 15 Troncos de Alta Qualidade, 1 Tronco.#
+Pedido do Sr. Han#
+
+14173#Material do Amuleto do Fantasma Livre#SG_FEEL#QUE_NOIMAGE#
+Toto, que tem medo de fantasmas, pediu materiais para criar o Amuleto do Fantasma Livre. 1 Gema Vermelha, 30 Bicos de Ave, 30 Caudas de Ave e 50 Plumas de Ave.#
+Encontre os materiais do Amuleto do Fantasma Livre#
+
+14174#Palavra Maldita#SG_FEEL#QUE_NOIMAGE#
+Você se recusou a prestar um favor a Toto. Então, ela lhe amaldiçoou com palavras. Seria mesmo uma sábia decisão ignorar essa pobre garotinha!?#
+Pedido de Toto#
+
+14175#Vamos para Hugel#SG_FEEL#QUE_NOIMAGE#
+Jack, que não consegue se lembrar de nada, lhe pediu para investigar o passado dele em Hugel. Volte a Hugel para encontrar pistas.#
+Para Hugel!!!#
+
+14176#Rejeição#SG_FEEL#QUE_NOIMAGE#
+Você rejeitou o pedido de Jack. Mas não pode esquecer seus olhos desapontados.#
+Pedido de Jack#
+
+14177#Para a Casa de Centrea#SG_FEEL#QUE_NOIMAGE#
+Se você for à Casa de Centrea, descobrirá algo sobre Jack e ela. Vá até a casa dela.#
+Para a Casa de Centrea#
+
+14178#Procurando a alma de Jack.#SG_FEEL#QUE_NOIMAGE#
+Centrea disse que escondeu a Alma de Jack na Máquina de Vendas de Bonecas. Ela também disse que colocou uma senha, mas a esqueceu. Você terá que encontrar a senha e a alma de Jack.#
+Encontre a Alma de Jack.#
+
+14179#Para Prontera#SG_FEEL#QUE_NOIMAGE#
+Aconteceu algo triste entre Jack e Centrea. Fale com Jack e conte a ele a história toda.#
+Falar com Jack#
+
+14180#Conta Perdida#SG_FEEL#QUE_NOIMAGE#
+No momento em que você estava colocando a senha na máquina, a conta começou a desaparecer. Fale com Centrea e pergunte o que aconteceu.#
+Falar com Centrea#
+
+//////////////////////////////EP 14.1
+//--- Warlock Extrem Magical Book Quest --- ?? ??? ??? ???
+12218#Como criar o elixir de lava#SG_FEEL#QUE_NOIMAGE#
+Refine 40 corações incandescentes com a ajuda de um grande poder no lugar mais quente do 2º andar do Calabouço do Vulcão de Thor. Este elixir é para aqueles que se dedicam à magia. #
+Próximo a thor_v02 163 104#
+
+12219#Como criar o elixir das chamas#SG_FEEL#QUE_NOIMAGE#
+O elixir das chamas pode ser refinado em um terreno estável do Calabouço do Vulcão de Thor. Preciso de 10 lenhas em brasa. Para criar a magia perfeita, os outros três elixires devem existir ao mesmo tempo.#
+Perto de thor_v01 185 91#
+
+12220#Como criar o elixir gelado#SG_FEEL#QUE_NOIMAGE#
+Eu consegui refinar o elixir gelado nas profundezas do Calabouço de Gelo. Portanto, escrevo: "São necessários 10 corações de gelo. Para criar a magia perfeita, os outros três elixires devem existir ao mesmo tempo". #
+Perto de ice_dun03 137 148#
+
+12221#Como criar o elixir de fósseis#SG_FEEL#QUE_NOIMAGE#
+Foi possível refinar o elixir de fósseis entre as rochas antigas no 2º andar do Calabouço da Mina. Precisei usar 10 Jubileus. Para criar a magia perfeita, os outros três elixires devem existir ao mesmo tempo.#
+Perto de ein_dun02 181 124#
+
+12222#Como criar o elixir da tempestade#SG_FEEL#QUE_NOIMAGE#
+Eu visitei o Tabuleiro de Xadrez dos ermitões para refinar o elixir da tempestade. Consigo sentir facilmente a energia dos ventos, então a tarefa foi fácil. Foram usadas 10 presas de dragão. Para criar a magia perfeita, os outros três elixires devem existir ao mesmo tempo.#
+Perto de gon_dun02 252 198#
+
+//-- 2010 ???? 14.1 ep14_1_rofe.sc
+1109#Lope e Euridi — Sobreviventes da névoa da floresta.#SG_FEEL#QUE_NOIMAGE#
+Encontre a Estalagem da Vila de Mora e pergunte sobre o paradeiro de Lope.#
+#
+
+1110#Lope e Euridi — Vítimas da névoa.#SG_FEEL#QUE_NOIMAGE#
+Você encontra alguém chamado Pitt. Ele diz que Lope deve estar vivo, mas não sabe onde ele está.#
+Volte a falar com Euridi e conte para ela o que você descobriu.#
+
+1111#Lope e Euridi — A névoa da floresta.#SG_FEEL#QUE_NOIMAGE#
+Procure as ^0000FFPistas sobre Lope^000000 na floresta e leve-as para Pitt. Trinta devem ser suficientes.#
+#
+
+1112#Lope e Euridi — Labirinto.#SG_FEEL#QUE_NOIMAGE#
+Pitt não está ajudando muito. É melhor você levar as pistas sobre Lope para Euridi. Talvez sejam úteis para ela.#
+#
+
+1113#Lope e Euridi — Promessa quebrada.#SG_FEEL#QUE_NOIMAGE#
+Quando se juntam as pistas, percebe-se que Pitt deve ter tido algo a ver com o que aconteceu com Lope...#
+#
+
+1114#Lope e Euridi — O custo do sacrifício.#SG_FEEL#QUE_NOIMAGE#
+Pitt lhe entrega o Anel de Lope e confessa o que fez. Você precisa contar a Euridi o que aconteceu.#
+#
+
+1115#Lope e Euridi — Canção do Abismo.#SG_FEEL#QUE_NOIMAGE#
+Enquanto Euridi canta para Lope, a amiga dela diz que ouviu falar de um homem suspeito perto da entrada da floresta.#
+#
+
+1116#Lope e Euridi — Canção dos Mortos.#SG_FEEL#QUE_NOIMAGE#
+Você encontra Lope, mas ele lhe pede para dizer a Euridi que se transformou em pó. Ele não pode mais estar com ela da maneira como desejavam.#
+#
+
+1117#Lope e Euridi — Promessa eterna.#SG_FEEL#QUE_NOIMAGE#
+Naturalmente, quando você entrega o Anel de Lope para Euridi, ela não aceita bem a notícia...#
+Fale com a Amiga de Euridi.#
+
+1118#Cavaleiros Vizinhos.#SG_FEEL#QUE_NOIMAGE#
+Recolha 30 Pistas sobre Lope e volte a falar com o Mestre da Ordem dos Cavaleiros.#
+#
+
+1119#Cavaleiros Vizinhos#SG_FEEL#QUE_NOIMAGE#
+Você concluiu uma tarefa para o Comandante dos Cavaleiros Vizinhos. Aguarde o cronômetro terminar antes de tentar ajudá-lo de novo.#
+#
+
+// ???? 14.1
+// ???? ??? ?? ???
+5016#Traga-me as Ferramentas de Pesquisa#SG_FEEL#QUE_NOIMAGE#
+Os Pesquisadores Refugos estão dizendo que foram atacados por uma criatura não identificada e que a pesquisa deles foi roubada.#
+Pegue a pesquisa da criatura não identificada e devolva-a aos pesquisadores.#
+
+5017#Vingança do Pesquisador#SG_FEEL#QUE_NOIMAGE#
+Os assistentes estão dizendo que você precisa ajudá-los a relaxar, pois só assim conseguem fazer suas pesquisas.  Vamos perturbar a criatura não identificada 3 vezes.#
+Perturbe 3 vezes a criatura não identificada na Banheira.#
+
+5018#Vingança do Pesquisador#SG_FEEL#QUE_NOIMAGE#
+Você terminou de perturbar a criatura não identificada na Banheira.#
+Volte a falar com os pesquisadores Refugos.#
+
+5019#Pesquisa das Amostras do Banho#SG_FEEL#QUE_NOIMAGE#
+Uma pesquisa está prestes a começar. Antes disso, eles precisam dos materiais para os testes!  Vamos até a Banheira para obter 10 desses materiais!#
+Você pode pegar os materiais para os testes diretamente da Banheira.#
+
+5020#Analisando as Amostras#SG_FEEL#QUE_NOIMAGE#
+Agora, os pesquisadores estão fazendo os testes básicos. Disseram que isso vai levar cerca de 24 horas. Já que não há nada para ser feito no momento, que tal descansar um pouco?#
+Depois de 24 horas, nós voltaremos a falar com os pesquisadores.#
+
+5021#Amostras Coletadas#SG_FEEL#QUE_NOIMAGE#
+O resultado da pesquisa mostrou que a criatura não identificada possui um DNA interessante. Para compará-lo a outros tipos de DNA, vá até a Banheira para coletar alguns dentes.#
+Os dentes podem ser obtidos diretamente da Banheira.#
+
+5022#Amostras Coletadas#SG_FEEL#QUE_NOIMAGE#
+O resultado da pesquisa mostrou que a criatura não identificada possui um DNA interessante. Para compará-lo a outros tipos de DNA, vá até a Banheira para coletar algumas escamas.#
+As escamas podem ser obtidas diretamente da Banheira.#
+
+5023#Espécime do teste#SG_FEEL#QUE_NOIMAGE#
+No momento, os pesquisadores estão analisando as amostras que você trouxe para descobrir mais informações sobre o DNA interessante.#
+Volte a falar com eles daqui a 6 horas.#
+
+5024#Pesquisa da bacia leste#SG_FEEL#QUE_NOIMAGE#
+Os pesquisadores disseram que ficaram ainda mais curiosos após encontrar o DNA interessante.  Para satisfazer essa curiosidade, eles querem que você vá até a Poça Leste e obtenha mais amostras.#
+Vá até a Poça Leste, colete as amostras e leve-as para os pesquisadores.#
+
+5025#Pesquisa da bacia oeste#SG_FEEL#QUE_NOIMAGE#
+Os pesquisadores disseram que ficaram ainda mais curiosos após encontrar o DNA interessante.  Para satisfazer essa curiosidade, eles querem que você vá até a Poça Oeste e obtenha mais amostras.#
+Vá até a Poça Oeste, colete as amostras e leve-as para os pesquisadores.#
+
+5026#Pesquisa da bacia sul#SG_FEEL#QUE_NOIMAGE#
+Os pesquisadores disseram que ficaram ainda mais curiosos após encontrar o DNA interessante.  Para satisfazer essa curiosidade, eles querem que você vá até a Poça Sul e obtenha mais amostras.#
+Vá até a Poça Sul, colete as amostras e leve-as para os pesquisadores.#
+
+5027#Pesquisa da bacia norte#SG_FEEL#QUE_NOIMAGE#
+Os pesquisadores disseram que ficaram ainda mais curiosos após encontrar o DNA interessante.  Para satisfazer essa curiosidade, eles querem que você vá até a Poça Norte e obtenha mais amostras.#
+Vá até a Poça Norte, colete as amostras e leve-as para os pesquisadores.#
+
+5028#Espécime do teste#SG_FEEL#QUE_NOIMAGE#
+A pesquisa está na etapa final. Os pesquisadores estão analisando as amostras das 4 poças.#
+Volte a falar com eles daqui a 12 horas.#
+
+5029#Criatura não identificada#SG_FEEL#QUE_NOIMAGE#
+Você travou uma batalha com a criatura não identificada. Agora, precisa curar sua mente e seu corpo.#
+Descanse por 1 hora.#
+
+5030#A família da criatura#SG_FEEL#QUE_NOIMAGE#
+Faz tempo que Peixinho não vê a família dele e gostaria de saber como estão. Vá até a poça nos arredores da vila e encontre a família de Peixinho.#
+Encontre a família de Peixinho.#
+
+5031#A família da criatura#SG_FEEL#QUE_NOIMAGE#
+Faz tempo que Peixinho não vê a família dele e gostaria de saber como estão. Vá até a poça nos arredores da vila e encontre a família de Peixinho.#
+Encontre a família de Peixinho.#
+
+5032#A família da criatura#SG_FEEL#QUE_NOIMAGE#
+Faz tempo que Peixinho não vê a família dele e gostaria de saber como estão. Vá até a poça nos arredores da vila e encontre a família de Peixinho.#
+Encontre a família de Peixinho.#
+
+5033#A família da criatura#SG_FEEL#QUE_NOIMAGE#
+Faz tempo que Peixinho não vê a família dele e gostaria de saber como estão. Vá até a poça nos arredores da vila e encontre a família de Peixinho.#
+Encontre a família de Peixinho.#
+
+5034#Notícias da família#SG_FEEL#QUE_NOIMAGE#
+Você encontra a família de Peixinho. Vamos contar para ele.#
+Vá até a Banheira e conte a notícia para Peixinho.#
+
+//-- 2010 ???? 14.1
+//---- Cheshire? ??? ?
+7206#Os novos dias de Cheshire#SG_FEEL#QUE_NOIMAGE#
+Você encontrará um integrante da Cat Comercial no centro do ^4d4dffTúnel Kamidal^000000. ^4d4dff No lado oeste da entrada do Salão Skaraba há uma caixa de itens marcada.^000000. Transporte-a para outro lugar. O destino estará indicado nela.#
+#
+
+7207#Caixa de Cheshire#SG_FEEL#QUE_NOIMAGE#
+Você encontrou a caixa mencionada por Cheshire no Túnel Kamidal. Na parte inferior, está escrito o seguinte em letras pequenas: ^4d4dff Em frente à Fenda de Bifrost^000000. Informe isso a Cheshire. Ele pode estar em qualquer lugar de Bifrost.#
+#
+
+7208#E amanhã também, por favor.#SG_FEEL#QUE_NOIMAGE#
+Você concordou em ajudar Cheshire, no Túnel Kamidal, a transportar a caixa uma vez por dia. Quando chegar a hora, vá buscá-la.#
+#
+
+7209#Esqueça a caixa.#SG_FEEL#QUE_NOIMAGE#
+A caixa está perdida. No lugar dela, Cheshire quer que você obtenha 20 unidades de Bradium Refinado.#
+Bradium Refinado: 20 unidades.#
+
+7210#Entrega diária#SG_FEEL#QUE_NOIMAGE#
+Cheshire está esperando a caixa de Bradium. Você deve levar os itens de hoje para ele, em Bifrost.#
+#
+
+//------???? ???
+7211#Explore a Floresta Nebulosa#SG_FEEL#QUE_NOIMAGE#
+Explore a Floresta Nebulosa. Ela se lembrará de você e o rejeitará se tentar entrar de novo.#
+#
+
+7212#O encontro com Loki#SG_FEEL#QUE_NOIMAGE#
+Por acaso, você conhece alguém chamado Loki na floresta. Ele está procurando uma pessoa. Jarani (um nome?), com cabelo roxo. O que isso quer dizer? Se você encontrá-la, deve informar a Loki?#
+#
+
+7213#Protetor Errante#SG_FEEL#QUE_NOIMAGE#
+Loki estava procurando o Guardião Niddhog que estava andando sem rumo por entre a névoa.  Você concordou em se encontrar com ele na Vila de Mora assim que sair da floresta.#
+#
+
+//-- ???? 14.1
+//Bifrost ep14_1_bs.sc
+11182#O relatório de Theore#SG_FEEL#QUE_NOIMAGE#
+Theore parece estar enlouquecido. Espere ele se acalmar e repita o que tem a dizer.#
+#
+
+11183#O favor de Theore#SG_FEEL#QUE_NOIMAGE#
+Theore pediu para você encontrar os Laphines que estão vindo para os Campos de Splendide.#
+Vasculhe a área sudoeste do Campo de Splendide 2.#
+
+11184#Laphine em fuga#SG_FEEL#QUE_NOIMAGE#
+Você encontrou um Laphine desarmado nos arbustos, mas ele fugiu.#
+Continue vasculhando o Campo de Splendide 2.#
+
+11185#Uma bolsa pequena#SG_FEEL#QUE_NOIMAGE#
+Você encontrou uma bolsa pequena nos arbustos. É melhor levar de volta para Theore.#
+#
+
+11186#Uma bolsa pequena#SG_FEEL#QUE_NOIMAGE#
+Leve a bolsa de volta para Splendide e tente encontrar o dono.#
+#
+
+11187#Devolvendo a bolsa das fadas#SG_FEEL#QUE_NOIMAGE#
+Você encontra uma Fada Cansada, mas a bolsa não pertence a ela. Junte as pistas para tentar encontrar o dono e informe suas descobertas para a Fada Cansada.#
+#
+
+11188#O dono da bolsa das fadas#SG_FEEL#QUE_NOIMAGE#
+Se prometer não contar para ninguém, você pode falar com Kusmi novamente.#
+Fale com Kusmi novamente.#
+
+11189#Rota de suprimentos de Bifrost#SG_FEEL#QUE_NOIMAGE#
+Kusmi ainda precisa de ajuda porque a rota por onde vêm os suprimentos do continente foi obstruída.#
+Converse com Kusmi novamente.#
+
+11190#Rota de suprimentos de Bifrost#SG_FEEL#QUE_NOIMAGE#
+Encontre um Soldado Laphine, em Splendide, para informá-lo sobre a rota de suprimentos.#
+#
+
+11191#Fendas em Bifrost#SG_FEEL#QUE_NOIMAGE#
+Você pode chegar a Alfheim atravessando o Labirinto da Floresta Nebulosa. No entanto, ninguém jamais voltou de lá.#
+Volte a falar com Kusmi.#
+
+11192#Vila de Mora...#SG_FEEL#QUE_NOIMAGE#
+Se você for até o armazém na Vila de Mora, o gerente falará mais sobre o assunto. No caminho de volta, você pode conferir se meu amigo Rondo está na vila?#
+Encontre Rondo, o amigo de Kusmi, na Vila de Mora.#
+
+11193#O amigo de Kusmi#SG_FEEL#QUE_NOIMAGE#
+Diga a Kusmi que podemos nos encontrar quando ela quiser. Ela não precisa se preocupar.#
+Volte a falar com Kusmi.#
+
+11194#Bolsa pequena#SG_FEEL#QUE_NOIMAGE#
+Se quiser mesmo ouvir a resposta, fale comigo. Preciso de tempo para pensar.#
+Fale com Theodore novamente.#
+
+11195#Bifrost#SG_FEEL#QUE_NOIMAGE#
+E, como falei antes, o que lhe contei é um segredo e você não deve revelá-lo a ninguém. Precisamos de ajuda, mas não queremos que os outros saibam.#
+Fale com Theodore novamente.#
+
+11196#Bifrost#SG_FEEL#QUE_NOIMAGE#
+A rota de suprimentos passa por Bifrost, e você pode chegar até ela por trás da Base de Splendide. Se for se aventurar nesse local, pergunte a um guarda como são as coisas por lá.#
+Encontre um Soldado Laphine, em Splendide, para informá-lo sobre a rota de suprimentos.#
+
+11197#Fendas em Bifrost#SG_FEEL#QUE_NOIMAGE#
+Você pode chegar a Alfheim atravessando o Labirinto da Floresta Nebulosa. No entanto, ninguém jamais voltou de lá.#
+Volte a falar com Theodore.#
+
+11198#Vila de Mora...#SG_FEEL#QUE_NOIMAGE#
+Se falar com o Gerente do Armazém da Vila de Mora, você vai conseguir mais informações. E, se não for pedir demais, pode procurar minha amiga, Lilitia, também...?#
+Encontre Lilitia, a amiga de Theodore, na Vila de Mora.#
+
+11199#A amiga de Theodore#SG_FEEL#QUE_NOIMAGE#
+O quê? Foi Theodore quem mandou você? Diga a ele que estou muito brava!!#
+Volte a falar com Theodore.#
+
+11200#Bolsa pequena#SG_FEEL#QUE_NOIMAGE#
+Não é fácil responder isso... Mas agradeço por você ter encontrado minha bolsa... Humm... Por favor, me dê um tempo para pensar.#
+Fale com Pauchon novamente.#
+
+11201#Bifrost#SG_FEEL#QUE_NOIMAGE#
+Eu comeria a casca daquela árvore se pudesse. Se ao menos alguém nos ajudasse... *choradeira*#
+Fale com Pauchon novamente.#
+
+11202#Bifrost#SG_FEEL#QUE_NOIMAGE#
+Uma grande estrada se estende da parte de trás de Splendide. Oh! O guarda de lá deve saber alguma coisa. Se estiver indo para lá, descubra o que está acontecendo.#
+Encontre um Soldado Laphine, em Splendide, para informá-lo sobre a rota de suprimentos.#
+
+11203#Fendas em Bifrost#SG_FEEL#QUE_NOIMAGE#
+Você pode chegar a Alfheim atravessando o Labirinto da Floresta Nebulosa. No entanto, ninguém jamais voltou de lá.#
+Volte a falar com Pauchon.#
+
+11204#Vila de Mora...#SG_FEEL#QUE_NOIMAGE#
+Deveríamos ter nos encontrado na Vila de Mora, mas ele é tão distraído que já deve ter partido.#
+Encontre Humming, o amigo de Pauchon, na Vila de Mora.#
+
+11205#O amigo de Pauchon#SG_FEEL#QUE_NOIMAGE#
+Se chegar a Splendide antes de mim, diga a Pauchon que vou atravessar o Labirinto da Floresta Nebulosa.#
+Volte a falar com Pauchon.#
+
+11206#Entrega rápida#SG_FEEL#QUE_NOIMAGE#
+Se pretende voltar a Splendide, faça uma visita a Jones, na Estalagem. Ele tem algo que precisa ser entregue imediatamente para o exército de Splendide.#
+Encontre Jones na Vila de Mora.#
+
+11207#Um fardo muito pesado#SG_FEEL#QUE_NOIMAGE#
+Você está carregando peso demais. Por favor, alivie a sua carga e volte aqui.#
+Alivie o peso do seu inventário e volte a falar com Jones.#
+
+11208#Daphrer#SG_FEEL#QUE_NOIMAGE#
+Por favor, tome cuidado com isso. É para Daphrer, em Splendide.#
+Leve o Kit de Suprimentos para Daphrer.#
+
+//---- 2010 ???? 14.1 ep14_1_dealer.sc
+12225#Insetos Carregadores de Frutas#SG_FEEL#QUE_NOIMAGE#
+Quero que você os elimine antes que tentem vender alguma coisa para os aventureiros perdidos na floresta.#
+Cace 3 Aranhas Poms.# 
+
+12226#Caçadores Floridos#SG_FEEL#QUE_NOIMAGE#
+Nenhuma fatalidade foi informada ainda, mas é melhor tomarmos precauções. Por favor, lide com isso da maneira adequada.#
+Cace 4 Louva-a-deus Mantis#
+
+12227#Pequenos e Ferozes#SG_FEEL#QUE_NOIMAGE#
+Eles não pareciam tão ferozes, mas o aventureiro me pediu para dar um jeito neles, então vou ter que fazer isso.#
+Cace 5 Chapins.#
+
+12228#Um Rancor Desconhecido#SG_FEEL#QUE_NOIMAGE#
+Não sei qual é o problema dele com as fadas, mas um pedido é um pedido.#
+Cace 6 Pequenos Fatuns.#
+
+12229#Bola de Pelo#SG_FEEL#QUE_NOIMAGE#
+Elas não parecem perigosas, mas dizem que roubam livros e doces dos aventureiros. Por favor, lide com isso da maneira adequada.#
+Cace 7 Mímicos.#
+
+12230#Cronômetro de solicitações#SG_FEEL#QUE_NOIMAGE#
+Elephantine não tem mais tarefas disponíveis hoje.#
+Aguarde o cronômetro terminar.#
+
+12231#Material para Conservantes#SG_FEEL#QUE_NOIMAGE#
+*sorriso* Nada mais, nada menos que... Antenas de Inseto! O Vendedor de Mercadorias Diversas me pediu para obter quatro delas. Eu, pessoalmente, nunca me alimentaria de uma coisa dessas...#
+Consiga 4 Antenas de Insetos.#
+
+12232#Um Símbolo de Resistência#SG_FEEL#QUE_NOIMAGE#
+Os Corações Imortais parecem ser bem populares ultimamente. O Vendedor de Mercadorias Diversas me pediu para obter cinco deles.#
+Consiga 5 Corações Imortais.#
+
+12233#Material para Kits de Primeiros Socorros#SG_FEEL#QUE_NOIMAGE#
+Eles precisam de toneladas de Bandagens Estragadas para fazer bandagens de primeiros socorros. Acho que estão sem materiais novos. O cliente é o Vendedor de Mercadorias Diversas que está ali. Três punhados serão suficientes.#
+Consiga 1 Bandagem Estragada.#
+
+12234#Símbolos da Coragem#SG_FEEL#QUE_NOIMAGE#
+O Vendedor de Mercadorias Diversas me pediu para obter três Insígnias Orcs que serão usadas para fazer símbolos da coragem.#
+Consiga 3 Insígnias Orcs.#
+
+12235#Bom para o Vigor#SG_FEEL#QUE_NOIMAGE#
+O Vendedor de Mercadorias Diversas me pediu para obter três Ossos que serão usados para fazer o tônico.#
+Consiga 3 Ossos.#
+
+12236#A Última Moda em Talismãs#SG_FEEL#QUE_NOIMAGE#
+Os Espólios servem como inspiração para os criadores desses estojos. A Vendedora de Artigos Úteis, que está à minha frente, me pediu para obter dois deles.#
+Consiga 2 Espólios.#
+
+12237#Proteja Seus Itens Valiosos#SG_FEEL#QUE_NOIMAGE#
+Parece que a Vendedora de Artigos Úteis, que está à minha frente, faz estojos protetores com Cascas. Me pediram para obter três delas.#
+Consiga 3 Cascas.#
+
+12238#Material para Protetores de Canela#SG_FEEL#QUE_NOIMAGE#
+A Vendedora de Artigos Úteis, que está à minha frente, me pediu para obter três Cascas Escamadas, que serão usadas para fazer protetores de canela.#
+Consiga 3 Cascas Escamadas.#
+
+12239#Veneno por Veneno#SG_FEEL#QUE_NOIMAGE#
+A Vendedora de Artigos Úteis, que está à minha frente, me pediu para obter dois Caninos Venenosos, que serão usados na pesquisa da substância.#
+Consiga 2 Caninos Venenosos.#
+
+12240#Não Escorregue#SG_FEEL#QUE_NOIMAGE#
+A Vendedora de Artigos Úteis, que está à minha frente, me encarregou de obter cinco gotas de Muco Pegajoso.#
+Consiga 5 Mucos Pegajosos.#
+
+12241#Cronômetro de solicitações#SG_FEEL#QUE_NOIMAGE#
+Bow-wow não tem mais tarefas hoje.#
+Aguarde o cronômetro terminar.#
+
+12242#Cronômetro de solicitações#SG_FEEL#QUE_NOIMAGE#
+Woof-grrr não tem mais tarefas hoje.#
+Aguarde o cronômetro terminar.#
+
+12243#Informações sobre Tazar, uma pessoa desaparecida#SG_FEEL#QUE_NOIMAGE#
+32 anos de idade. Veio de Midgard. Entrou no Labirinto da Floresta Nebulosa para colher plantas nativas. Desaparecido há 3 meses.  Sobrevivência improvável.#
+Vasculhe o Labirinto da Floresta Nebulosa nos arredores de 13, 10.#
+
+12244#Informações sobre Niger, uma pessoa desaparecida#SG_FEEL#QUE_NOIMAGE#
+19 anos de idade. Aventureiro que veio de um lugar distante e desconhecido por navio. Decidiu explorar o Labirinto vestindo meias finas, ignorando os avisos dos habitantes de Mora. Desaparecido há 2 meses.#
+Vasculhe o Labirinto da Floresta Nebulosa nos arredores de 10, 24.#
+
+12245#Informações sobre Messil, uma pessoa desaparecida#SG_FEEL#QUE_NOIMAGE#
+Idade desconhecida. Sofre de uma doença mental não muito intensa.  Entrou sozinho no Labirinto da Floresta Nebulosa com a intenção de purificá-lo.#
+Vasculhe o Labirinto da Floresta Nebulosa nos arredores de 14, 24.#
+
+12246#Informações sobre Noirit, uma pessoa desaparecida#SG_FEEL#QUE_NOIMAGE#
+51 anos de idade. Costumava ser um ladrão que roubava espadas famosas de todas as partes do mundo. Desapareceu no Labirinto após ser perseguido por gerenciar um cassino ilegal que causou muitas fatalidades. #
+Vasculhe o Labirinto da Floresta Nebulosa nos arredores de 19, 27.#
+
+12247#Informações sobre Pajama Sin, uma pessoa desaparecida#SG_FEEL#QUE_NOIMAGE#
+22 anos de idade. Piloto cadete de um aeroplano. Sumiu enquanto estava de licença na cidade de Mora. Há rumores de que fugiu após se alistar ao exército. Desapareceu há 4 meses. Chance mínima de sobrevivência.#
+Vasculhe o Labirinto da Floresta Nebulosa nos arredores de 30, 32.#
+
+12248#Informações sobre Mendel, uma pessoa desaparecida#SG_FEEL#QUE_NOIMAGE#
+Idade desconhecida. Uma mulher de cabelos longos vestida de preto. Estava participando de uma expedição à floresta do Labirinto em busca de vida eterna. Desapareceu há 3 meses. Chance mínima de sobrevivência.#
+Vasculhe o Labirinto da Floresta Nebulosa nos arredores de 33, 28.#
+
+12249#Informações sobre Milebit, uma pessoa desaparecida#SG_FEEL#QUE_NOIMAGE#
+50 anos de idade, aproximadamente. Atual prefeito da Vila de Mora. Fugiu para a floresta do Labirinto após ser pego desviando o dinheiro das obras de moradia.  Sobrevivência incerta.#
+Vasculhe o Labirinto da Floresta Nebulosa nos arredores de 33, 17.#
+
+12250#Informações sobre Kunmoon, uma pessoa desaparecida#SG_FEEL#QUE_NOIMAGE#
+29 anos de idade. Um jovem com um passado desconhecido. Fugiu para a floresta do Labirinto após abrir vários tipos de comércio e roubar 1.200 moedas dos residentes de Mora. Sobrevivência incerta.#
+Vasculhe o Labirinto da Floresta Nebulosa nos arredores de 28, 8.#
+
+12251#Informações sobre Chaihokin, uma pessoa desaparecida#SG_FEEL#QUE_NOIMAGE#
+34 anos de idade. Flertou com várias mulheres em Mora. Enquanto fugia dos habitantes de Mora, entrou na floresta do Labirinto. Sobrevivência incerta.#
+Vasculhe o Labirinto da Floresta Nebulosa nos arredores de 17, 5.#
+
+12252#Informações sobre Tual, uma pessoa desaparecida#SG_FEEL#QUE_NOIMAGE#
+Idade desconhecida. Desapareceu com moedas que eram controladas em conjunto pelos habitantes. Chance mínima de sobrevivência.#
+Vasculhe o Labirinto da Floresta Nebulosa nos arredores de 11, 4.#
+
+12253#Cronômetro de solicitações#SG_FEEL#QUE_NOIMAGE#
+O Guia Espiritual não tem mais tarefas hoje.#
+Aguarde o cronômetro terminar.#
+
+// =========== Eden Group / Paradise Team Quest 86 ~ 90 =============== 
+4167#Caça às Caudas de Dragão#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Caudas de Dragão, na Ilha das Tartarugas, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4168#Caça aos Coelhos#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Coelhos, na Ilha das Tartarugas, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4169#Caça às Pestes#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Pestes, na Ilha das Tartarugas, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4170#Caça aos Bathorys#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Bathorys, na Torre do Relógio, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4171#Caça aos Alarmes#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Alarmes, na Torre do Relógio, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4172#Caça às Baba Yagas#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Baba Yagas, em Moscovia, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4173#Caça aos Yao Juns#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Yao Juns, em Louyang, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4174#Caça aos Soldados Atiradores#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Soldados Atiradores, em Amatsu, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4175#Caça aos Zippers#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Zippers, em Kunlun, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4176#Caça aos Petites Subterrâneos#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Petites Subterrâneos, nos arredores de Geffen, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4177#Caça às Rafflesias#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Rafflesias, nos arredores de Lighthalzen, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4178#Caça aos Venomous#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Venomous, nos arredores de Einbroch, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4179#Caça aos Mineiros#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Mineiros, nos arredores de Einbroch, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4180#Caça aos Novus Amarelos#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Novus Amarelos, nos arredores de Einbroch, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+// Eden Group / Paradise Team Quest 91 ~ 99
+4181#Caça aos Soldados#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Soldados, na Ilha das Tartarugas, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4182#Caça aos Congeladores#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Congeladores, na Ilha das Tartarugas, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4183#Caça aos Aquecedores#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Aquecedores, na Ilha das Tartarugas, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4184#Caça aos Injustiçados#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Injustiçados, em Glast Heim, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4185#Caça aos Rybios#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Rybios, em Glast Heim, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4186#Caça aos Sacerdotes Malditos#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Sacerdotes Malditos, em Glast Heim, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4187#Caça aos Stapos#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Stapos, em Veins, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4188#Caça aos Roweens#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Roweens, em Rachel, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4189#Caça aos Siromas#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Siromas, no Calabouço de Gelo, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4190#Caça aos Shinobis#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Shinobis, em Amatsu, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4191#Caça às Ninfas Perversas#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Ninfas Perversas, em Kunlun, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4192#Caça aos Deviruchis#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Deviruchis, no Calabouço de Geffen, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4193#Caça aos Minerais#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Minerais, no Calabouço de Geffen, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4194#Caça aos Kahos#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Kahos, no Vulcão de Thor, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4195#Caça às Nereidas#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Nereidas, no Calabouço de Comodo, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+4196#Caça aos Mascarados#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Mascarados, em Nifflheim, e retorne ao segundo andar da Matriz do Grupo Éden.#
+#
+
+// Eden Group / Paradise Team Quest 86 ~ 90 Time Limit Notification 
+4198#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça às Caudas de Dragão.#
+#
+
+4199#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Coelhos.#
+#
+
+4200#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça às Pestes.#
+#
+
+4201#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Bathorys.#
+#
+
+4202#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Alarmes.#
+#
+
+4203#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça às Baba Yagas.#
+#
+
+4204#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Yao Juns.#
+#
+
+4205#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Soldados Atiradores.#
+#
+
+4206#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Zippers.#
+#
+
+4207#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Petites Subterrâneos.#
+#
+
+4208#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça às Rafflesias.#
+#
+
+4209#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Venomous.#
+#
+
+4210#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Mineiros.#
+#
+
+4211#86-90 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Novus Amarelos.#
+#
+
+
+// Eden Group / Paradise Team Quest 91 ~ 99 Time Limit Notification
+4212#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Soldados.#
+#
+
+4213#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Congeladores.#
+#
+
+4214#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Aquecedores.#
+#
+
+4215#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Injustiçados.#
+#
+
+4216#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Rybios.#
+#
+
+4217#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Sacerdotes Malditos.#
+#
+
+4218#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Stapos.#
+#
+
+4219#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Roweens.#
+#
+
+4220#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Siromas.#
+#
+
+4221#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Shinobis.#
+#
+
+4222#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça às Ninfas Perversas.#
+#
+
+4223#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Deviruchis.#
+#
+
+4224#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Minerais.#
+#
+
+4225#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Kahos.#
+#
+
+4226#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça às Nereidas.#
+#
+
+4227#91-99 Cronômetro do Quadro de Missões#SG_FEEL#QUE_NOIMAGE#
+Você deve esperar 3 horas antes de refazer a missão Caça aos Mascarados.#
+#
+
+//----------2012Å©¸®½º¸¶½º_Feliz Natal, Equipe Fumacentos em Ação!
+
+1276#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Colete 10 Doces Roubados, 10 Biscoitos Roubados e 10 Mochila de Itens Roubados se derrotar Fumacentos em Meias e Fumacentos Natalinos.#
+Fale com Lutir, o dono da loja#
+
+1277#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#3
+O balconista da Fumacentos em Ação parece estar encrencado, você deveria visitá-lo para saber mais.#
+Fale com o balconista da Fumacentos em Ação#
+
+1278#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Você decidiu ajudar nas atividades especiais de natal da Equipe Fumacentos em Ação, em vez do balconista. Você deve visitar Prontera para conhecer o capitão da equipe Fumacentos em Ação.#
+Fale com o capitão da Fumacentos em Ação#
+
+1279#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Você deve coletar materiais para a casa dos biscoitos para que a equipe Fumacentos em Ação tenha um natal gostoso!#
+Fale com o capitão da Fumacentos em Ação#
+
+1280#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+O capitão da equipe Fumacentos em Ação está meio deprimido pelo fracasso da casa de biscoitos. Você deve falar com ele novamente.#
+Fale com o capitão da Fumacentos em Ação#
+
+1281#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 2 integrantes da Fumacentos em Ação. Convide 5 integrantes da Fumacentos em Ação e fale depois com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1282#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 5 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1283#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 12 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1284#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 20 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1285#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 25 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1286#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 1 integrante da Fumacentos em Ação. Convide 5 integrantes da Fumacentos em Ação e fale depois com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1287#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 15 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1288#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 7 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1289#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 17 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1290#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 24 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1291#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 3 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1292#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 10 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1293#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 11 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1294#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 19 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1295#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Encontrando a Família Equipe Fumacentos em Ação! Você convidou 23 integrantes da Fumacentos em Ação. Fale com o capitão da equipe #
+Encontre a família Fumacentos em Ação.#
+
+1296#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
+Convide 5 integrantes da equipe Fumacentos em Ação para o dia de natal. Você pode encontrá-los nas cidades e campos.#
+Encontre a família Fumacentos em Ação.#
