@@ -776,7 +776,7 @@ bif_fild02.rsw#Bifrost Bridge#
 moc_paraup.rsw#Inside of Paradise Group Building in Morroc 2nd floor#
 
 
-// ---------- Port Malaya 脚痹 甘 ------------
+// ---------- Port Malaya ½Å±Ô ¸Ê ------------
 malaya.rsw#Port Malaya#
 ma_fild01.rsw#Baryo Mahiwaga#
 ma_fild02.rsw#Forest#
@@ -796,3 +796,13 @@ ma_zif07.rsw#Inside of Jeepney#
 ma_zif08.rsw#Inside of Jeepney#
 ma_zif09.rsw#Inside of Jeepney#
 job_ko.rsw#Hidden Place#
+
+malangdo.rsw#Malangdo#
+mal_in01.rsw#Malangdo Inside#
+mal_in02.rsw#Inside the Ship#
+// º°ºû»êÈ£Áö´ë ¹ø¿ªÇÊ¿ä
+mal_dun01.rsw#Starry Coral Area#
+1@cash.rsw#Octopus Cave#
+1@pump.rsw#Culvert#
+2@pump.rsw#Culvert#
+eque_qsch01.rsw#Okolnir#

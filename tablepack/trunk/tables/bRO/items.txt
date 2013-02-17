@@ -5647,4 +5647,298 @@
 
 18809#Bandana de 8º aniversário#
 
+//---------------------2012 October Items--------------------
+
+18694#Chapeuzinho Vermelho#
+18701#Chapéu da Sabedoria Antiga#
+2936#Anel Revigorante#
+2495#Botas de Aegir#
+15061#Armadura de Aegir#
+12852#Ovo do Patrono#
+13990#Caixa de Manual de Combate de Classe#
+4486#Carta Belzebu Selada#
+4504#Carta Eddga Selada#
+14132#Caixa do Anel Crítico Aprimorado#
+2835#Anel Crítico Aprimorado#
+14408#Ovo do Sol Nascente#
+2165#Escudo Solar#
+20701#Manteau Solar#
+4502#Carta Mestre-ferreiro Howard Selada#
+4501#Carta Sumo-Sacerdotisa Margareta Selada#
+
+//---------------------2012 RWC Items--------------------
+
+1670#Cajado Memorável do RWC 2012#
+6665#Cupom de Aprimoramento do RWC 2012#
+13092#Adaga Memorável do RWC 2012#
+14611#Poção Média de Defesa Física RWC#
+14612#Poção Média de Defesa Mágica RWC#
+14613#Ovo do RWC 2012#
+14614#Poção Especial de Defesa do RWC#
+16026#Maça Memorável do RWC 2012#
+17262#Caixa de Poções de Defesa do RWC#
+18821#Chapéu de Penas Arco-íris#
+19650#Adorno Arco-íris#
+2966#Anel Memorável RWC 2012#
+2967#Anel Memorável RWC 2012#
+2968#Colar Memorável RWC 2012#
+2969#Colar Memorável RWC 2012#
+12887#Asa de Mosca Ilimitada#
+17251#Cx. Asa de Mosca Ilimitada (3 dias)#
+17252#Caixa Memorável do RWC#
+17253#Caixa Memorável do Anel RWC#
+17254#Caixa Memorável do Colar RWC#
+
+//-------RWC2012 enchant event material-------------
+4797#HP+300#
+4796#HP+200#
+4795#HP+100#
+4800#SP +50#
+4801#SP +100#
+4802#SP +150#
+4807#Vel. Ataque +1#
+4811#Espírito_do_Lutador_1#
+4815#Pedra_de_Encantamento_1#
+4818#Pedra_de_Crítico_1#
+4819#ATQ +1%#
+4821#Espírito_do_Lutador_6#
+4822#Espírito_do_Lutador_7#
+4823#Espírito_do_Lutador_8#
+4824#Espírito_do_Lutador_9#
+4825#Espírito_do_Lutador_10#
+4827#Pedra_de_Encantamento_6#
+4828#Pedra_de_Encantamento_7#
+4829#Pedra_de_Encantamento_8#
+4830#Pedra_de_Encantamento_9#
+4831#Pedra_de_Encantamento_10#
+4832#Pedra_da_Mira_Apurada_1#
+4837#Pedra_da_Mira_Apurada_6#
+4838#Pedra_da_Mira_Apurada_7#
+4839#Pedra_da_Mira_Apurada_8#
+4840#Pedra_da_Mira_Apurada_9#
+4841#Pedra_da_Mira_Apurada_10#
+4842#Vel. Ataque +2#
+4859#Esquiva +1#
+4860#Esquiva +3#
+4861#HP Máx. +1%#
+4862#HP Máx. +2%#
+4867#HP Máx. +3%#
+4868#HP Máx. +4%#
+4870#SP +25#
+4871#SP +75#
+
+//----------2012 halloween---------------
+6654#Agulha e Linha#
+6655#Abóbora Firme#
+6656#Amuleto do Fantasma Livre#
+6657#Memória de Jack#
+6658#Moeda do Dia das Bruxas#
+18810#Chapéu de Abóbora Infernal#
+22514#Porta-doces#
+
+//---------------------2012 November Items--------------------
+
+18693#Gatinho Adormecido#
+18698#Salgadinho de Queijo#
+18665#Laranja Fresca#
+18702#Creme de Barbear#
+18678#Alho Poró#
+18703#Broto de Yggdrasil#
+12829#Ovo da Cordilheira#
+18682#Lágrimas de Cristal#
+18679#Ábaco#
+4497#Carta Cavaleiro da Tempestade Selada#
+4498#Carta Lady Tanee Selada#
+
+//---------------------2012 December Items--------------------
+
+13080#Maré Cortante#
+13084#Lâmina da Erosão#
+1494#Lança das Ondas#
+18117#Arco Real#
+1318#Tentáculo Afiado#
+18695#Coroa do Renascido#
+2177#Escudo do Abismo#
+18729#Bola Rebourne#
+18696#Capacete de Laranja#
+18728#Elmo de Aegir#
+20700#Manteau de Aegir#
+17037#Cx Perg. Transform.: Deviruchi#
+12658#Perg. Transformação: Deviruchi#
+17042#Cx Perg. Transformação: Poring#
+12663#Perg. Transformação: Poring#
+17040#Cx Perg. Transform.: Marduk#
+12661#Perg. Transformação: Marduk#
+17041#Cx Perg. Transform.: Banshee#
+12662#Perg. Transformação: Banshee#
+17038#Cx Perg. Transform.: RaydricA.#
+12659#Perg. Transformação: RaydricA.#
+17039#Cx Perg. Transformação: Mavka#
+12660#Perg. Transformação: Mavka#
+17043#Cx Perg. Transformação: Golem#
+12664#Perg. Transformação: Golem#
+2561#Capuz Evoluído#
+
+//---------------------2012 Bifröst Items--------------------
+
+2156#Bíblia_da_Promessa (Volume_1)#
+2467#Sapatos_do_Açoite_de_Ouro#
+2468#Sapatos_Aquáticos#
+2469#Sapatos_Vermelhos#
+2470#Sapatos_Florestais#
+2568#Sobrepeliz Sombrio do Sicário#
+2858#Pingente_do_Guarda#
+2859#Orbe_do_Açoite_de_Ouro#
+2860#Orbe_Aquática#
+2861#Orbe_Vermelha#
+2862#Orbe_Florestal#
+2864#Luz_da_Cura#
+2865#Selo_da_Catedral#
+2866#Anel_do_Arcebispo#
+5792#Alfinete de Peixe#
+15024#Acolchoamento_Militar#
+15025#Manto_do_Açoite_de_Ouro#
+15026#Manto_Aquático#
+15027#Manto_Vermelho#
+15028#Manto_Florestal#
+2007#Cajado_do_Açoite_de_Ouro#
+2008#Cajado_Aquático#
+2009#Cajado_Vermelho#
+2010#Cajado_Florestal#
+12561#Semente_Misteriosa#
+12573#Cesta_de_Frutas#
+12574#Fruto_de_Mora#
+12575#Aljava_de_Flechas_Élficas#
+12576#Aljava_de_Flechas_de_Caça#
+6380#Moeda_de_Mora#
+6381#Pá_de_Campo#
+6382#Urna#
+6383#Pista_sobre_Lope#
+6384#Anel_de_Lope#
+6385#Bolsa_de_Ferramentas_de_Pesquisa#
+6386#Amostra_da_Água_do_Banho#
+6387#Dente_Quebrado#
+6388#Escama#
+6389#Amostra_da_Poça_para_Pesquisa#
+6390#Saco_Pequeno#
+6391#Kit_de_Suprimentos_Esplêndido#
+6392#Caixa_de_Bradium#
+6393#Pluma_Arredondada#
+6394#Pluma_Dourada#
+6395#Poder_Mágico_Angelical#
+4786#DEFM +2#
+4787#DEFM +4#
+4788#DEFM +6#
+4789#DEFM +8#
+4790#DEFM + 10#
+4791#DEF +3#
+4792#DEF +6#
+4793#DEF +9#
+4794#DEF + 12#
+4795#HP + 100#
+4796#HP + 200#
+4797#HP + 300#
+4798#HP + 400#
+4799#HP + 500#
+4800#SP + 50#
+4801#SP + 100#
+4802#SP + 150#
+4803#Cura Nv. 1#
+4804#Catolicismo Nv. 1#
+4805#Arcebispo Nv. 1#
+11519#Torrada_de_Carne#
+11520#Manga_de_Mora#
+11521#Suco_da_Fruta_da_Pinguicula#
+11522#Fluido_Vermelho_de_Refugo#
+11523#Fluido_Amarelo_de_Refugo#
+11524#Fluido_Branco_de_Refugo#
+11525#Chá_Exótico_de_Mora#
+11526#Esplenccino#
+1773#Flecha_Élfica#
+1774#Flecha_de_Caça#
+12608#Caixa Atrativa#
+12539#Caixa Convidativa#
+
+//Eden Group Items
+1197#Espada_Matadora_III_do_Éden#
+1289#Katar_I_do_Grupo_Éden#
+1391#Machado_de_2_Mãos_I_do_Éden#
+1434#Lança_I_do_Grupo_Éden#
+1583#Dicionário_I_do_Grupo_Éden#
+1658#Cajado_III_do_Grupo_Éden#
+1831#Garra_I_do_Grupo_Éden#
+1931#Guitarra_I_do_Grupo_Éden#
+1986#Chicote_I_do_Grupo_Éden#
+2473#Botas_IV_do_Grupo_Éden#
+2571#Capa_II_do_Grupo_Éden#
+13066#Adaga_III_do_Grupo_Éden#
+13310#Shuriken_Huuma_I_do_Éden#
+13114#Revólver_III_do_Grupo_Éden#
+13434#Sabre_III_do_Grupo_Éden#
+15031#Armadura_do_Grupo_Éden#
+15033#Capote_do_Tutorial#
+15034#Capote_do_Tutorial#
+16014#Maça_III_do_Grupo_Éden#
+18106#Arco_III_do_Grupo_Éden#
+18514#Chapéu_II_do_Grupo_Éden#
+
+//------------------Ep.14.1 Cards---------------------------------
+4456#Carta Sombra do Guardião#
+4457#Carta Naght Sieger#
+4458#Carta Duneyrr#
+4459#Carta Rata#
+4460#Carta Rhyncho#
+4461#Carta Phylla#
+4462#Carta Mamute Rochoso#
+4463#Carta Leão de Vinhas#
+4464#Carta Aunoe#
+4465#Carta Fanat#
+4466#Carta Mestre Beholder#
+4467#Carta Heavy Metaling#
+4468#Carta Pinguicula Sombria#
+4469#Carta Naga#
+4470#Carta Nepenthes#
+4471#Carta Ovo de Draco#
+4472#Carta Golem de Bradium#
+4473#Carta Árvore Anciã#
+4474#Carta Zakudam#
+4475#Carta Cobalto#
+4476#Carta Pinguicula#
+4477#Carta Apocalipse Infernal#
+
+
+//------------------Natal 2012 Items---------------------------------
+
+6681#Biscoitos de Natal#
+6682#Sacola de Itens Negociáveis#
+18850#Chapéu de Urso Natalino#
+19707#Urso Polar#
+
+
+//------------------January 2013 Items---------------------------------
+
+18662#Cartola do Xóper#
+18680#Chapéu de Perereca#
+12826#Ovo do Tornado#
+18641#Cartola de Amatsu#
+18681#Orelhas de Cachorro#
+
+12530#Caixa_de_Mastelas[200]#
+
+//------------------February 2013 Items---------------------------------
+
+12798#Assistente Jirtas#
+12797#Assistente Dama dos Desejos#
+18674#Chapéu do Piloto#
+18667#Lacinhos com Gatos#
+18636#Laço Nupcial#
+12851#Ovo Vocacional#
+18664#Blind_Glasses #
+18855#Chapéu de Dantos Sumont#
+18697#Green_Apple_Hat #
+18857#Chapéu de Curupira#
+18697#Syringe_In_Mouth#
+13438#Magical_Blade#
+
+
 //file end
