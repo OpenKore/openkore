@@ -1,14 +1,14 @@
-#############################################################################
-#  OpenKore - Network subsystem												#
-#  This module contains functions for sending messages to the server.		#
-#																			#
-#  This software is open source, licensed under the GNU General Public		#
-#  License, version 2.														#
-#  Basically, this means that you're allowed to modify and distribute		#
-#  this software. However, if you distribute modified versions, you MUST	#
-#  also distribute the source code.											#
-#  See http://www.gnu.org/licenses/gpl.html for the full license.			#
-#############################################################################
+#################################################################################################
+#  OpenKore - Network subsystem									#
+#  This module contains functions for sending messages to the server.				#
+#												#
+#  This software is open source, licensed under the GNU General Public				#
+#  License, version 2.										#
+#  Basically, this means that you're allowed to modify and distribute				#
+#  this software. However, if you distribute modified versions, you MUST			#
+#  also distribute the source code.								#
+#  See http://www.gnu.org/licenses/gpl.html for the full license.				#
+#################################################################################################
 # bRO (Brazil)
 package Network::Send::bRO;
 use strict;
@@ -24,47 +24,47 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
-		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
-		'0880' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],
-		'093C' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'035F' => ['sync', 'V', [qw(time)]],
-		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],
-		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
-		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'093A' => ['actor_look_at', 'v C', [qw(head body)]],
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
-		'07E4' => ['item_take', 'a4', [qw(ID)]],
-		'0437' => ['character_move','a3', [qw(coords)]],
-		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
 
+		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0437' => ['character_move','a3', [qw(coords)]],		
+		'035F' => ['sync', 'V', [qw(time)]],
+		'087F' => ['actor_look_at', 'v C', [qw(head body)]],				
+		'0875' => ['item_take', 'a4', [qw(ID)]],
+		'0949' => ['item_drop', 'v2', [qw(index amount)]],		
+		'089C' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'0869' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'096A' => ['actor_info_request', 'a4', [qw(ID)]],	
+		'0872' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],	
+		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'0966' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
+		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
+		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
 	
 	my %handlers = qw(
-		character_move 0437
-		homunculus_command 0880
-		party_setting 07D7
-		actor_info_request 096A
-		map_login 093C
+
 		actor_action 0369
-		party_join_request_by_name 0802
-		actor_look_at 093A
-		storage_item_add 07EC
+		character_move 0437
+		sync 035F
+		actor_look_at 087F		
+		item_take 0875
+		item_drop 0949
+		storage_item_add 089C
+		storage_item_remove 0869
+		skill_use_location 0438
+		actor_info_request 096A		
+		map_login 0872
+		party_join_request_by_name 02C4
+		homunculus_command 0966
 		master_login 02B0
+		party_setting 07D7
+		buy_bulk_vender 0801
 		send_pin_password 08B8
 		new_pin_password 08BA
-		buy_bulk_vender 0801
-		item_drop 0362
-		storage_item_remove 0364
-		item_take 07E4
-		sync 035F
-		skill_use_location 0438
-
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -117,9 +117,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x958, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x08AB, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x958, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x08AB, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
@@ -177,11 +177,11 @@ sub sendPartyJoinRequestByName
 sub PrepareKeys()
 {
 	# K
-	$enc_val1 = Math::BigInt->new('0x3FF07B60');
+	$enc_val1 = Math::BigInt->new('0x09ba7198');
 	# M
-	$enc_val3 = Math::BigInt->new('0x4B04728');
+	$enc_val3 = Math::BigInt->new('0x18f7412d');
 	# A
-	$enc_val2 = Math::BigInt->new('0x1E72063');
+	$enc_val2 = Math::BigInt->new('0x15ba7198');
 }
 
 sub sendLoginPinCode {
