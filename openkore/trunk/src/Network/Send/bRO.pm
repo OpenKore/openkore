@@ -24,22 +24,22 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
-		'0872' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0817' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
-		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
-		'0437' => ['character_move','a3', [qw(coords)]],
-		'0966' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
-		'0869' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'091E' => ['actor_info_request', 'a4', [qw(ID)]],
+		'0953' => ['character_move','a3', [qw(coords)]],
+		'085C' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
+		'0281' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
 		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
-		'0949' => ['item_drop', 'v2', [qw(index amount)]],
-		'0875' => ['item_take', 'a4', [qw(ID)]],
-		'089C' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'087F' => ['actor_look_at', 'v C', [qw(head body)]],
-		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'035F' => ['sync', 'V', [qw(time)]],
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
+		'0952' => ['item_drop', 'v2', [qw(index amount)]],
+		'086C' => ['item_take', 'a4', [qw(ID)]],
+		'0949' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'0867' => ['actor_look_at', 'v C', [qw(head body)]],
+		'087C' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0917' => ['sync', 'V', [qw(time)]],
+		'0892' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0880' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
 
 	);
 	
@@ -47,23 +47,23 @@ sub new {
 	
 	my %handlers = qw(
 		send_pin_password 08B8
-		skill_use_location 0438
-		actor_action 0369
-		storage_item_add 089C
+		skill_use_location 087C
+		actor_action 0892
+		storage_item_add 0949
 		new_pin_password 08BA
-		party_join_request_by_name 02C4
-		sync 035F
-		actor_info_request 096A
-		character_move 0437
-		homunculus_command 0966
+		party_join_request_by_name 0880
+		sync 0917
+		actor_info_request 091E
+		character_move 0953
+		homunculus_command 085C
 		master_login 02B0
-		item_drop 0949
-		actor_look_at 087F
-		map_login 0872
+		item_drop 0952
+		actor_look_at 0867
+		map_login 0817
 		party_setting 07D7
-		storage_item_remove 0869
+		storage_item_remove 0281
 		buy_bulk_vender 0801
-		item_take 0875
+		item_take 086C
 
 	);
 	
@@ -177,11 +177,11 @@ sub sendPartyJoinRequestByName
 sub PrepareKeys()
 {
 	# K
-	$enc_val1 = Math::BigInt->new('0x9510F3C');
+	$enc_val1 = Math::BigInt->new('0x55216796');
 	# M
-	$enc_val3 = Math::BigInt->new('0x18F7412D');
+	$enc_val3 = Math::BigInt->new('0x761A79AC');
 	# A
-	$enc_val2 = Math::BigInt->new('0x15BA7198');
+	$enc_val2 = Math::BigInt->new('0x24393CF6');
 }
 
 sub sendLoginPinCode {
