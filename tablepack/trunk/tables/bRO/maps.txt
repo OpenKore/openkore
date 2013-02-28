@@ -752,7 +752,7 @@ arug_que01.rsw#Pradaria de Morestone#
 arug_dun01.rsw#Calabouço Subterrâneo de Castelo#
 1@orcs.rsw#Caverna Subterrânea de Orcs#
 2@orcs.rsw#Caverna Subterrânea de Orcs#
-evt_hello.rsw#Undead camp#
+evt_hello.rsw#Campo Morto#
 
 //-------------Ep 13.2----------
 1@nyd.rsw#Ninho de Nidhogg#
@@ -776,10 +776,10 @@ bra_dun02.rsw#Profundezas das Cataratas#
 
 // --- Dewata localizing
 dewata.rsw#Dewata#
-dew_in01.rsw#Inside of Jaty Tribe Village#
-dew_fild01.rsw#Dewata Field_Jaty Tribe Village#
-dew_dun01.rsw#Krakatau Volcano Island#
-dew_dun02.rsw#Istana Cave#
+dew_in01.rsw#Dentro da Vila da Tribo Jaty#
+dew_fild01.rsw#Campos de Dewata - Vila da tribo Jaty#
+dew_dun01.rsw#Vulcão Krakatau Volcano#
+dew_dun02.rsw#Caverna Istana#
 
 // ---- Ep 14.1 -------------
 bif_fild01.rsw#Floresta da Neblina - Sul de Bifröst#
@@ -795,5 +795,14 @@ dic_dun01.rsw#Túnel Kamidal 01#
 dic_dun02.rsw#Túnel Kamidal 02#
 dic_dun03.rsw#Túnel Kamidal - Pesadelo#
 
+//------------------2013 ep14.1 malangdo---------------------------
+malangdo.rsw#Malangdo - A Ilha da Pata de Gato#
+mal_in01.rsw#Interior de Malangdo#
+mal_in02.rsw#Interior do navio#
+// ?????? ????
+mal_dun01.rsw#Área de Coral Estrelado#
+1@cash.rsw#Caverna do Polvo#
+1@pump.rsw#Esgotos de malangdo#
+2@pump.rsw#Esgotos de malangdo#
 
 moc_para01.rsw#Garden of Eden#

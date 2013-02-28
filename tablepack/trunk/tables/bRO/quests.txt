@@ -5052,8 +5052,8 @@ Complete o desafio. Derrote 10 Tarous#
 Derrote 10 Tarous#
 
 7136#Grupo Valhalla#SG_FEEL#QUE_NOIMAGE#
-Complete o desafio. Derrote 5 Familiares#
-Derrote 5 Familiares#
+Complete o desafio. Derrote 10 Familiares#
+Derrote 10 Familiares#
 
 7137#Grupo Valhalla#SG_FEEL#QUE_NOIMAGE#
 Você completou todas as tarefas do gato falante. Fale com o membro do Grupo Valhalla.#
@@ -7858,3 +7858,839 @@ Encontre a família Fumacentos em Ação.#
 1296#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
 Convide 5 integrantes da equipe Fumacentos em Ação para o dia de natal. Você pode encontrá-los nas cidades e campos.#
 Encontre a família Fumacentos em Ação.#
+
+//------ 2011.05 malangdo
+//---------?Malangdo Daily Quest - Help the Bad Cats --------------------------------
+
+1145#Ajude os gatos maus em perigo!#SG_FEEL#QUE_NOIMAGE#
+Faça um favor a Gobong, que está com dor de barriga. Vá para o porto e tente ouvir a conversa suspeita.#
+Perto do Gato Tolo.#
+
+1146#Ajude os gatos maus em perigo!#SG_FEEL#QUE_NOIMAGE#
+Dos vendedores suspeitos, você ouviu uma conversa sobre o objeto escondido. Verifique a área perto da sacola do balão que está a norte do navio Navi.#
+#
+
+1147#Ajude os gatos maus em perigo!#SG_FEEL#QUE_NOIMAGE#
+A única coisa que você achou foi um memorando inútil. Vá escutar os negociantes um pouco mais.#
+Perto do Gato Tolo.#
+
+1148#Ajude os gatos maus em perigo!#SG_FEEL#QUE_NOIMAGE#
+Através da conversa dos negociantes suspeitos ,você percebeu que o local escondido é o próprio navio Navi. Encontre outro gato suspeito no convés do navio Navi.#
+Convés do navio Navi.#
+
+1149#Ajude os gatos maus em perigo!#SG_FEEL#QUE_NOIMAGE#
+De acordo com o Vendedor Muito Suspeito, você decidiu dar uma olhada por Gozangee.#
+Lounge do navio Navi.#
+
+1150#Ajude os gatos maus em perigo!#SG_FEEL#QUE_NOIMAGE#
+Você encontrou um saco de latas vencidas no convés do navio Navi. Você precisa ver Vendedor Muito Suspeito de novo.#
+Convés do navio Navi.#
+
+1151#Ajude os gatos maus em perigo!#SG_FEEL#QUE_NOIMAGE#
+Junte 30 latas vencidas na Área do Coral Estrelado e volte para Gobonge.#
+#
+
+1152#Ajude os gatos maus em perigo!#SG_FEEL#QUE_NOIMAGE#
+Missão de ajudar os gatos maus cumprida.# 
+Depois de 1 dia, você pode ajudá-los de novo.#
+
+1153#Ajude os gatos maus em perigo!#SG_FEEL#QUE_NOIMAGE#
+Vá ver o Líder da Patrulha e diga olá para Gobonge.#
+Líder da Patrulha.#
+
+1154#Ajude os gatos maus em perigo!#SG_FEEL#QUE_NOIMAGE#
+Depois de limpar 20 Red Erumas, na Área do Coral Estralado, informe isso ao Líder da Patrulha.#
+Líder da Patrulha.#
+
+1155#Ajude os gatos maus em perigo!#SG_FEEL#QUE_NOIMAGE#
+Informe a má ação a Gobonge.#
+Gobonge#
+
+//- ????
+4197#Polvo#SG_FEEL#QUE_NOIMAGE#
+O Polvo aparece a cada 3 horas.#
+Próxima hora de sua aparição: 3 horas.#
+
+// 2010 ??? - ?? ????
+5058#O humor dos jogadores-(1)#SG_FEEL#QUE_NOIMAGE#
+O Diretor dos Cat Gamers está preocupado depois de uma sequência de 10 derrotas!!!#
+Pergunte ao Diretor dos Cat Gamers sobre o humor atual dos jogadores Nyang.#
+
+5059#O humor dos jogadores-(2)#SG_FEEL#QUE_NOIMAGE#
+Ouvi do diretor sobre o humor dos jogadores.#
+Vamos enviar para o Diretor dos Cat Gamers.#
+
+5060#Choque de gato#SG_FEEL#QUE_NOIMAGE#
+O Diretor dos Cat Gamers ficou muito chocado.#
+O Diretor dos Cat Gamers pode precisar de um tempo para pensar.#
+
+5061#Estou assustado?#SG_FEEL#QUE_NOIMAGE#
+O Diretor dos Cat Gamers se pergunta se os gatos que deixaram a equipe estão com medo dele ou não... Vamos encontrar os gatos que a abandonaram, Eryu, Stew, Ketchup e Eff.#
+Por favor, o Diretor dos Cat Gamers te pediu isso.#
+
+5062#Encontrei Eryu.#SG_FEEL#QUE_NOIMAGE#
+Encontrei Eryu.#
+Encontrei Eryu.#
+
+5063#Encontrei Stew.#SG_FEEL#QUE_NOIMAGE#
+Encontrei Stew.#
+Encontrei Stew.#
+
+5064#Encontrei Ketchup.#SG_FEEL#QUE_NOIMAGE#
+Encontrei Ketchup.#
+Encontrei Ketchup.#
+
+5065#Encontrei Eff.#SG_FEEL#QUE_NOIMAGE#
+Encontrei Eff.#
+Encontrei Eff.#
+
+5066#Imagem assustadora-(1)#SG_FEEL#QUE_NOIMAGE#
+O Diretor dos Cat Gamers quer mudar sua imagem assustadora.#
+Deixe-me perguntar ao Gerente Cat quem é aprovado pelo Diretor dos Cat Gamers.#
+
+5067#Imagem assustadora-(2)#SG_FEEL#QUE_NOIMAGE#
+O Gerente Cat disse "Imagem assustadora... isso é mesmo difícil... Por que não desistir... Isso seria mais fácil.... recolher reclamações... !! Eu ouvi que, às vezes, o exército faz isso...”#
+Diga ao Diretor dos Cat Gamers para trazer uma caixa para recolher reclamações.#
+
+5068#Recolher reclamações#SG_FEEL#QUE_NOIMAGE#
+Estamos recolhendo reclamações dos 'Jogadores Nyang'.#
+O tempo de coleta é apenas de 20 horas.#
+
+5069#Sinal de honra#SG_FEEL#QUE_NOIMAGE#
+Agora, estamos produzindo um sinal de honra que é resultado do esforço e sofrimento da equipe técnica Nyang.#
+Por favor, volte em 1 hora e pegue o sinal de honra do Diretor dos Cat Gamers.#
+
+5070#Partida de treino de pedra-papel-tesoura#SG_FEEL#QUE_NOIMAGE#
+Eu tenho uma partida de treino de pedra-papel-tesoura com um 'jogador Nyang'.#
+O próximo treino será após 24 horas.#
+
+5071#Prática de treino de Chamchamcham#SG_FEEL#QUE_NOIMAGE#
+Eu tenho uma partida de treino de Chamchamcham com um 'jogador Nyang'.#
+O próximo treino será após 24 horas.#
+
+5072#Partida de treino de KongNyangKong#SG_FEEL#QUE_NOIMAGE#
+Eu tenho uma partida de treino de KongNyangKong com um 'jogador Nyang'.#
+O próximo treino será após 24 horas.#
+
+5073#Desafiando no jogo da bandeira#SG_FEEL#QUE_NOIMAGE#
+'Eu desafiei a equipe do jogo da bandeira dos 'jogadores Nyang'.#
+O próximo desafio será após 24 horas.#
+
+5074#Refeição de gato#SG_FEEL#QUE_NOIMAGE#
+Eu recebi este papel porque perdi a partida de treino. '^0000FF30 Phens Deliciosos, 10 Caudas de Peixe Especiais^000000' está escrito aqui.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5075#Comida saudável#SG_FEEL#QUE_NOIMAGE#
+Eu recebi este papel porque perdi uma partida de treino... '^0000FF50 Martes, 30 garrafas de Leite^000000'está escrito aqui.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5076#Inimigos#SG_FEEL#QUE_NOIMAGE#
+Eu recebi este papel porque perdi uma partida de treino... '^0000FFPerturbe 30 Kobolds Arqueiros^000000'está escrito aqui.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5077#Treinando reação#SG_FEEL#QUE_NOIMAGE#
+Eu recebi este papel porque perdi uma partida de treino... '^0000FFCapture 10 Cramps^000000'está escrito aqui.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5078#Comida de ave leve#SG_FEEL#QUE_NOIMAGE#
+Eu recebi este papel porque perdi uma partida de treino... '^0000FF50 Pecopecos^000000'está escrito aqui.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5079#Como estabilizar a mente#SG_FEEL#QUE_NOIMAGE#
+Eu recebi este papel porque perdi uma partida de treino... '^0000FF20 Novelos para o Diretor dos Cat Gamers^000000'está escrito aqui.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5080#Falta de lanche#SG_FEEL#QUE_NOIMAGE#
+Eu recebi este papel porque perdi uma partida de treino... '^0000FF30 Caudas de Rato^000000'está escrito aqui.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5081#Comida banida#SG_FEEL#QUE_NOIMAGE#
+Eu recebi este papel porque perdi uma partida de treino... '^0000FF5 Limões^000000'está escrito aqui.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5082#Comida fria#SG_FEEL#QUE_NOIMAGE#
+Eu recebi este papel porque perdi uma partida de treino... '^0000FF10 Cubos de Gelo ou Sorvete^000000'está escrito aqui.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5083#Por favor, volte, Eryu-(1)#SG_FEEL#QUE_NOIMAGE#
+Trabalho que recebi porque perdi uma partida de treino. Encontre Eryu e diga'^0000FFVolte^000000'.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5084#Por favor, volte, Eryu-(2)#SG_FEEL#QUE_NOIMAGE#
+Encontre Eryu e diga 'Volte'.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5085#Por favor, volte, Stew-(1)#SG_FEEL#QUE_NOIMAGE#
+Favor que recebi porque perdi uma partida de treino. Encontre Stew e diga'^0000FFVolte^000000'.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5086#Por favor, volte, Stew-(2)#SG_FEEL#QUE_NOIMAGE#
+Encontre Stew e diga 'Volte'.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5087#Por favor, volte, Ketchup-(1)#SG_FEEL#QUE_NOIMAGE#
+Favor que recebi porque perdi uma partida de treino. Encontre Ketchup e diga'^0000FFVolte^000000'.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5088#Por favor, volte, Ketchup-(2)#SG_FEEL#QUE_NOIMAGE#
+Encontre Ketchup e diga 'Volte'.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5089#Por favor, volte, Eff-(1)#SG_FEEL#QUE_NOIMAGE#
+Favor que recebi porque perdi uma partida de treino. Encontre Eff e diga'^0000FFVolte^000000'.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5090#Por favor, volte, Eff-(2)#SG_FEEL#QUE_NOIMAGE#
+Encontre Eff e diga 'Volte'.#
+Depois que terminar o trabalho, por favor, informe ao Diretor dos Cat Gamers.#
+
+5091#Vá para Malangdo#SG_FEEL#QUE_NOIMAGE#
+Vá para Malangdo...#
+Malangdo#
+
+//-- ??? ?? ???
+7242#Brincar com o gatinho#SG_FEEL#QUE_NOIMAGE#
+A solicitação de Rato, um marinheiro gato especialista, em Malangdo. Ele se preocupa com os gatinhos, então, te pediu para encontrá-los e brincar com eles. Vá encontrar os gatinhos. Eles são Rosy, a branca, Roku, o preto e Charo, o dourado.#
+#
+
+7243#Nyadventure-Bússola Duruduru#SG_FEEL#QUE_NOIMAGE#
+Você recebeu uma carta de bravura A dos gatinhos que chamam a si mesmos de 'Equipe de Bravura Meow'. A carta parece ser necessária para operar alguns dispositivos feitos por eles. Se colocar a carta na Bússola do Começo, o jogo começará.#
+#
+
+7244#Nyadventure-Corrida Duruduru#SG_FEEL#QUE_NOIMAGE#
+A corrida da Bússola Duruduru começou. Você tem que terminar a corrida na ordem correta dentro do tempo limite. A ordem das bússolas é [Chama Vermelha] -> [Chama Azul] -> [Chama Dourada] -> [Floresta] -> [Nuvem].#
+#
+
+7245#Nyadventure-Corrida Duruduru#SG_FEEL#QUE_NOIMAGE#
+A corrida da Bússola Duruduru começou. Você tem que terminar a corrida na ordem correta dentro do tempo limite. A ordem das bússolas é [Chama Dourada] -> [Chama Azul] -> [Nuvem] -> [Floresta] -> [Chama Vermelha].#
+#
+
+7246#Nyadventure-Estou indo agora.#SG_FEEL#QUE_NOIMAGE#
+Charo diz que um detetive gato está perto do navio Navi que está no centro de Malangdo. Vá encontrar o detetive e seu amigo.#
+#
+
+7247#Nyadventure-Pare o Bang!#SG_FEEL#QUE_NOIMAGE#
+Homnya, um gato questionável que chama a si mesmo de 'detetive de verdade' e seu amigo, Nyangson, dizem que se a máquina em frente explodir, toda Malangdo será destruída. Então, eles pediram para você parar a máquina.#
+#
+
+7248##SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+7249#Nyadventure-Bang! Vejo você da próxima vez#SG_FEEL#QUE_NOIMAGE#
+De acordo com Homnya e Nyangson, esta máquina chamada Bang causa um problema por minuto. Você nunca sabe quando terá problemas. Verifique a máquina de novo amanhã.#
+#
+
+7250#Nyadventure-Tesouro escondido?#SG_FEEL#QUE_NOIMAGE#
+Quando Bang para, Homnya e Nyangson te dão uma informação útil. Eles falam sobre um tesouro. Homnya diz que o tesouro está dentro do navio Navi. Pode ser só uma piada, mas vale a pena tentar.#
+#
+
+7251#Nyadventure-A primeira parte da pintura#SG_FEEL#QUE_NOIMAGE#
+A parte da pintura que você achou na caixa no navio Navi#
+#
+
+7252#Nyadventure-A segunda parte da pintura#SG_FEEL#QUE_NOIMAGE#
+A parte da pintura que você achou no livro na sala de reuniões do navio Navi#
+#
+
+7253#Nyadventure-A terceira parte da pintura#SG_FEEL#QUE_NOIMAGE#
+A parte da pintura que você achou debaixo da cama antiga na cabine da tripulação.#
+#
+
+7254#Nyadventure-A quarta parte da pintura#SG_FEEL#QUE_NOIMAGE#
+A parte da pintura que você achou na concha decorativa no quarto do capitão.#
+#
+
+7255#Nyadventure-A quinta parte da pintura#SG_FEEL#QUE_NOIMAGE#
+A parte da pintura que você achou na rachadura do pilar de madeira.#
+#
+
+7256#Nyadventure-A sexta parte da pintura#SG_FEEL#QUE_NOIMAGE#
+A parte da pintura que você achou na janela de ventilação no chão da cabine.#
+#
+
+7257#Nyadventure-Corrida, volte amanhã!#SG_FEEL#QUE_NOIMAGE#
+A Corrida Duruduru é boa, se você competir uma vez por dia. Se quiser, volte mais tarde.#
+#
+
+7258#Nyadventure-Pintura concluída#SG_FEEL#QUE_NOIMAGE#
+As partes que você encontrou no navio são 6, no total. Parece uma pintura completa. Vá até Charo, Rosy e Roku e diga isso a eles.#
+#
+
+7259#Presente da Equipe de Bravura Meow#SG_FEEL#QUE_NOIMAGE#
+Charo, Rosy e Roku dizem que querem dar as partes da pintura que você encontrou para Rato. Leve a pintura para Rato para entregar o amor dos gatinhos (mesmo que a pintura não esteja inteira).#
+#
+
+//---- Chefe de Malangdo
+7260#A origem dos insetos#SG_FEEL#QUE_NOIMAGE#
+Cleanyang está chorando muito dizendo que os insetos aparecem seguidamente, mesmo ele tendo limpado todo o navio. Ajude-o. Inspecione o navio Navi meticulosamente.#
+#
+
+7261#Recolha os biscoitos de gato do navio-Quarto do Capitão#SG_FEEL#QUE_NOIMAGE#
+No canto do quarto do capitão, você encontrou biscoito de gato duro escondido. O biscoito estava coberto de insetos. Os insetos devem estar lá pelo biscoito...#
+#
+
+7262#Recolha os biscoitos de gato do navio-Cabine da Tripulação#SG_FEEL#QUE_NOIMAGE#
+No quarto dos marinheiros, você encontrou biscoito de gato duro escondido. O biscoito estava coberto de insetos. Os insetos devem estar lá pelo biscoito...#
+#
+
+7263#Recolha os biscoitos de gato do navio-Sala de Reuniões#SG_FEEL#QUE_NOIMAGE#
+Em algum lugar na sala de reuniões, você encontrou biscoito de gato duro escondido. O biscoito estava coberto de insetos. Os insetos devem estar lá pelo biscoito...#
+#
+
+7264#Para o Chefe Nyas#SG_FEEL#QUE_NOIMAGE#
+Cleanyang limpou todo o navio, mas o problema são os biscoitos de gato duros que estavam além do seu alcance. Você deve contar a verdade a Nyas e limpar Cleanyang da acusação falsa.#
+Falando com Nyas#
+
+7265#Fúria do Chefe Nyas#SG_FEEL#QUE_NOIMAGE#
+Quando você contou a história dos biscoitos e insetos, o chefe ficou com muita raiva. É melhor falar com ele mais tarde.#
+Falando com Nyas#
+
+7266#Declaração do Chefe Nyas#SG_FEEL#QUE_NOIMAGE#
+Nyas decidiu e declarou que, de agora em diante, pelo menos uma refeição do dia será biscoitos de gato duros. Ele pediu para você trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso para fazer os biscoitos.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, entregue a mensagem a Cleanyang.#
+
+7267#Hora marcada com Cleanyang#SG_FEEL#QUE_NOIMAGE#
+Para resolver o incidente dos biscoitos de gato duros, você vai trabalhar com Cleanyang. Volte até Cleanyang na hora marcada.#
+#
+
+7268#Encontrar os biscoitos de gato duros!#SG_FEEL#QUE_NOIMAGE#
+Você vai pegar os biscoitos que os gatos começaram a esconder no navio. Se tirar os biscoitos, os insetos vão desaparecer. Concentre-se nos 9 locais onde os biscoitos são vistos frequentemente.#
+#
+
+7269#Recolha os biscoitos de gato do navio-Área de Lazer#SG_FEEL#QUE_NOIMAGE#
+Nas ervas daninhas na área de lazer externa, você encontrou biscoito de gato duro escondido. O biscoito estava coberto de insetos. Os insetos devem estar lá pelo biscoito...#
+#
+
+7270#Recolha os biscoitos de gato do navio-Caixa de Areia#SG_FEEL#QUE_NOIMAGE#
+Na estranha pilha de areia, você encontrou biscoito de gato duro escondido. O biscoito estava coberto de insetos. Os insetos devem estar lá pelo biscoito...#
+#
+
+7271#Recolha os biscoitos de gato do navio-Embaixo das Escadas#SG_FEEL#QUE_NOIMAGE#
+No canto embaixo da escada, você encontrou biscoito de gato duro escondido. O biscoito estava coberto de insetos. Os insetos devem estar lá pelo biscoito...#
+#
+
+7272#Recolha os biscoitos de gato do navio-Canto da Torre dos Gatos#SG_FEEL#QUE_NOIMAGE#
+No canto da torre dos gatos, você encontrou biscoito de gato duro escondido. O biscoito estava coberto de insetos. Os insetos devem estar lá pelo biscoito...#
+#
+
+7273#Recolha os biscoitos de gato do navio-Canto da Cabine#SG_FEEL#QUE_NOIMAGE#
+No vão entre a cabine e a parede, você encontrou biscoito de gato duro escondido. O biscoito estava coberto de insetos. Os insetos devem estar lá pelo biscoito...#
+#
+
+7274#Recolha os biscoitos de gato do navio-Base da Torre dos Gatos#SG_FEEL#QUE_NOIMAGE#
+No vão entre a base e o chão, você encontrou biscoito de gato duro escondido. O biscoito estava coberto de insetos. Os insetos devem estar lá pelo biscoito...#
+#
+
+7275#Recolha os biscoitos de gato do navio-Catacumba de Areia#SG_FEEL#QUE_NOIMAGE#
+Em uma catacumba de areia, você encontrou biscoito de gato duro escondido. O biscoito estava coberto de insetos. Os insetos devem estar lá pelo biscoito...#
+#
+
+7276#Prometa entregar mais comida#SG_FEEL#QUE_NOIMAGE#
+Chefe Nyas quer que você entregue os ingredientes para o biscoito e para novas comidas todo dia. De qualquer forma, volte até ele sempre que puder.#
+#
+
+//-?
+7281#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Suco de Uva e Mel.#
+
+7282#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Bolo-Mousse de Chocolate.#
+
+7283#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Salada de Frutas.#
+
+7284#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Sanduíche Cremoso.#
+
+7285#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Salada Verde.#
+
+7286#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Bolo de Pêssego.#
+
+7287#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Pão Doce Assombroso.#
+
+7288#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Torrada Especial.#
+
+7289#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Suco de Frutas Divino.#
+
+7290#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Tônico de Hwergelmir.#
+
+//-?
+7291#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Perna de Gafanhoto Frita.#
+
+7292#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Palmípede Temperado.#
+
+7293#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Bife Bombástico.#
+
+7294#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Bife Marinado com Ervas.#
+
+7295#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Panqueca de Lutie.#
+
+7296#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Bife Marinado Brilhante.#
+
+7297#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Assado Inteiro.#
+
+7298#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Pé de Urso Especial.#
+
+7299#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Sauté de Tendões.#
+
+7300#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Língua no Vapor.#
+
+//-??
+7301#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Sopa de Tinta de Lula e Ovas de Sapo.#
+
+7302#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Macarrão Liso.#
+
+7303#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Queijo Gratinado com Tentáculos.#
+
+7304#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Macarrão Frio de Lutie.#
+
+7305#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Asa de Morcego com Abóbora no Vapor.#
+
+7306#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Gratinado de Chilli e Camarão.#
+
+7307#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Crocodilo no Vapor com Vegetais.#
+
+7308#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Curry Incrivelmente Picante.#
+
+7309#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Cozido de Carne Especial.#
+
+7310#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Escorpião no Vapor.#
+
+//-??
+7311#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Garra de Caranguejo no Vapor.#
+
+7312#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Fruto do Mar Sortido.#
+
+7313#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Sopa de Ostra.#
+
+7314#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Água-Viva Temperada.#
+
+7315#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Bolinho Apimentado Frito.#
+
+7316#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Bebida Amargosa.#
+
+7317#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Banquete Suntuoso.#
+
+7318#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Burrito Gigante.#
+
+7319#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Sopa de Dragão Ascendente.#
+
+7320#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Cozido de Imortalidade.#
+
+//-??
+7321#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Chá de Ervas com Uva.#
+
+7322#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Chá Vermelho de Outono.#
+
+7323#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Chá de Ervas e Mel.#
+
+7324#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Vinho de Frutas de Morroc.#
+
+7325#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Vinho de Mastela.#
+
+7326#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Vinho de Cogumelo Vermelho.#
+
+7327#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Chá de Ervas e Geleia Real Especial.#
+
+7328#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Chá de Família Real.#
+
+7329#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Tristram. 12#
+
+7330#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Coquetel Sopro do Dragão.#
+
+//-?
+7331#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Cauda de Macaco Frita.#
+
+7332#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Suco Misto.#
+
+7333#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Batata-Doce Frita.#
+
+7334#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Lábio Fossilizado no Vapor.#
+
+7335#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Cauda de Escorpião Frita.#
+
+7336#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Sopa da Sorte.#
+
+7337#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Espetinho Sortido.#
+
+7338#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Bolinho de Arroz com Morango.#
+
+7339#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Refrigerante Sangrento.#
+
+7340#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Nove-Caudas Cozido.#
+
+//-20??
+7341#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Churrasco Selvagem.#
+
+7342#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Coquetel com Sangue de Wug.#
+
+7343#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Carne ao Vinho.#
+
+7344#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Chá Gelado de Siroma.#
+
+7345#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Cozido de Erva Drocera.#
+
+7346#Lista de Tarefas de Nyas#SG FEEL#QUE NOIMAGE#
+Chefe Nyas te pediu para trazer 10 bolsas de Grãos e 1 garrafa de Molho Saboroso. E ele também quer que você consiga os alimentos abaixo porque está curioso sobre as comidas humanas.#
+10 bolsas de Grãos, 1 garrafa de Molho Saboroso, 1 Macarrão com Rabo de Petti.#
+
+//--????? ??(??14.1???_?????)
+11209#A aflição de Sr. Tomas#SG_FEEL#QUE_NOIMAGE#
+Todos os humanos que visitam Malangdo estão vindo a mim é por isso que eu tenho tanto trabalho. Há uma ^0000FFreunião regular em Malangdo^000000, logo ali. O local fica do ^0000FFoutro lado, no fim do corredor^000000.#
+Participe na reunião.#
+
+11210#Reunião regular de Malangdo#SG_FEEL#QUE_NOIMAGE#
+A agenda de hoje é ^ff99ccStar Candy^000000. Se alguém tiver opinião sobre o próximo tópico, por favor, fale.#
+Vamos ouvir a opinião de Scottfold.#
+
+11211#Reunião regular de Malangdo#SG_FEEL#QUE_NOIMAGE#
+O ^0000FFintérprete Biscuit^000000 está ao lado dela, mas é muito difícil ter uma conversa detalhada.#
+Vamos ouvir a opinião de Koon.#
+
+11212#Reunião regular de Malangdo#SG_FEEL#QUE_NOIMAGE#
+Deixe-me falar sobre o resultado do estudo.#
+Vamos ouvir o resultado do estudo do linguista Devore.#
+
+11213#Reunião regular de Malangdo#SG_FEEL#QUE_NOIMAGE#
+^0000FFO estudo da língua Starfish^000000 começou quando nos fixamos em Malangdo, mas não atingiu o que eu esperava. É possível ter uma conversa simples, mas o desempenho não é bom.#
+Vamos ouvir o resultado do estudo do geólogo Mali.#
+
+11214#Reunião regular de Malangdo#SG_FEEL#QUE_NOIMAGE#
+Há muitas rachaduras no chão. Ninguém sabe quando Star Candy se moverá, então, temos que consertá-las rapidamente.#
+Vamos ouvir a opinião de Brie.#
+
+11215#Reunião regular de Malangdo#SG_FEEL#QUE_NOIMAGE#
+Entendemos muito bem que o ferimento de Rican pode afetar o comércio de Frutos de Yggdrasil, então, não se preocupem com isso.#
+Vamos ouvir a história de Brie.#
+
+11216#Fruto de Yggdrasil#SG_FEEL#QUE_NOIMAGE#
+De qualquer forma, não conheço exatamente os Frutos de Yggdrasil. Se tem uma pergunta, vá para minha casa no ^6666ccoeste de Malangdo^000000. Meu pai estará superentediado lá...#
+Vamos encontrar o pai de Brie, Sr. Rican.#
+
+11217#Fruto de Yggdrasil#SG_FEEL#QUE_NOIMAGE#
+^6666ccOs Frutos de Yggdrasil estão em todos os lugares!^000000 Você pode conseguir facilmente na ilha de Malangdo, então, por favor, traga mais ou menos 30 deles.#
+Vamos trazer 30 Frutos de Yggdrasil frescos.#
+
+11218#Fruto de Yggdrasil#SG_FEEL#QUE_NOIMAGE#
+Por que não coloca alguns Frutos de Yggdrasill na máquina?#
+Vamos colocar Frutos de Yggdrasil na máquina.#
+
+11219#Fruto de Yggdrasil#SG_FEEL#QUE_NOIMAGE#
+Ao apertar o botão, a máquina funciona.#
+Vamos falar com Rican.#
+
+11220#Fruto de Yggdrasil#SG_FEEL#QUE_NOIMAGE#
+Depois que machuquei meu joelho, ele deve ir para o Sr. Mali todo dia. Se você vir meu filho, apenas diga para ele voltar para mim...#
+Vamos encontrar Brie.#
+
+11221#A gelatina mais macia do mundo.#SG_FEEL#QUE_NOIMAGE#
+Se você precisar de mais detalhes, por favor, peça ao meu ^6666ccassistente Bob^000000. Ele pode estar na ^6666ccpróxima sala^000000.#
+Vamos encontrar o assistente Bob.#
+
+11222#A gelatina mais macia do mundo.#SG_FEEL#QUE_NOIMAGE#
+Preencha a rachadura com o barro cinza e branco. Prenda o vão com o grampeador.#
+Vamos consertar as rachaduras com o kit de conserto, quando todos disserem OK...#
+
+11223#A gelatina mais macia do mundo.#SG_FEEL#QUE_NOIMAGE#
+A rachadura está bem preenchida. Vamos relatar isso a Bob.#
+Vamos voltar para Bob.#
+
+11224#A gelatina mais macia do mundo.#SG_FEEL#QUE_NOIMAGE#
+Impressionante! Mágico! Chocante! Muito bem!!! Contarei para o Dr. Mali!#
+Vamos ver o Dr. Mali.#
+
+11225#Não interferir nos esforços da estrada.#SG_FEEL#QUE_NOIMAGE#
+Todo mundo sabe como o Dr. Devore se concentra no estudo da língua Starfish!!! Por favor, tenha confiança! Você está indo bem!#
+O linguista Devore pode estar em crise. Vamos falar com ele.#
+
+11226#Não interferir nos esforços da estrada.#SG_FEEL#QUE_NOIMAGE#
+A língua Starfish é tão misteriosa. Eu não sei nada. Não tenho certeza se é mesmo uma 'língua' ou não. Eu realmente quero saber o que eles querem aqui!#
+Vamos pesquisar a língua Starfish.#
+
+11227#Não interferir nos esforços da estrada.#SG_FEEL#QUE_NOIMAGE#
+Biscuit pode ter habilidades linguísticas muito fluentes, diferente do que o Dr. Devore diz. Vou contar o fato para o Dr. Devore.#
+Vamos ao Dr. Devore.#
+
+11228#Não interferir nos esforços da estrada.#SG_FEEL#QUE_NOIMAGE#
+Isso é incrível. Bem, ele só não falou na minha frente. Vamos ouvir!!!#
+Vamos voltar para Biscuit.#
+
+11229#Por Star Candy.#SG_FEEL#QUE_NOIMAGE#
+Você é capaz de falar com Biscuit como espécie igual. Qualquer conversa vai ajudar no meu estudo.#
+Vamos falar com Biscuit.#
+
+11230#Por Star Candy.#SG_FEEL#QUE_NOIMAGE#
+Eu ouvi diversas coisas sobre Star Candy, Biscuit e Malangdo.#
+Continue a conversa.#
+
+11231#Por Star Candy.#SG_FEEL#QUE_NOIMAGE#
+Você pode capturar a gelatina por aqui. 30 gelatinas deliciosas são suficientes para uma refeição.#
+Vamos voltar com 30 gelatinas deliciosas.#
+
+11232#Por Star Candy.#SG_FEEL#QUE_NOIMAGE#
+Ei, Star Candy! Você não está comendo bem. Você não tem apetite?#
+Vamos descobrir o que está acontecendo.#
+
+11233#Por Star Candy.#SG_FEEL#QUE_NOIMAGE#
+Temos que carregar água, então, por favor, traga balde e escova para limpar Star Candy. Essas coisas devem estar no armazém.#
+Vamos encontrar o balde e a escova de limpeza.#
+
+11234#Por Star Candy.#SG_FEEL#QUE_NOIMAGE#
+Você trouxe as coisas também. Você pode esfregar sua pele em sentido anti-horário!#
+Limpe pele seca -> pele espinhosa -> pele rachada -> pele dura.#
+
+11235#Por Star Candy.#SG_FEEL#QUE_NOIMAGE#
+A pele seca, pele espinhosa, pele rachada e pele dura mudaram para pele macia como seda.#
+Vamos voltar para Biscuit.#
+
+11236#Interseção#SG_FEEL#QUE_NOIMAGE#
+Você não precisa esperar que o estudo esteja concluído. Apenas conte a Devore. Eu quero falar sobre a situação atual com ele.#
+Vamos enviar para o Dr. Devore.#
+
+11237#A aflição de Sr. Tomas#SG_FEEL#QUE_NOIMAGE#
+Por favor, dê as boas notícias ao Chefe Tomas.#
+Vamos ver o Chefe Tomas.#
+
+11238#Fruto de Yggdrasil#SG_FEEL#QUE_NOIMAGE#
+O desconto é como antes. 30 Frutos de Yggdrasil frescos que são achados facilmente na ilha Malangdo!!!#
+Vamos voltar para Rican com 30 Frutos de Yggdrasil frescos.#
+
+11239#Fruto de Yggdrasil#SG_FEEL#QUE_NOIMAGE#
+Você não pode receber nenhuma solicitação de Rican durante um dia.#
+#
+
+11240#A gelatina mais macia do mundo.#SG_FEEL#QUE_NOIMAGE#
+Se você precisar de mais detalhes, por favor, peça ao meu ^6666ccassistente Bob^000000. Ele pode estar na ^6666ccpróxima sala^000000.#
+Vamos ver o assistente Bob.#
+
+11241#A gelatina mais macia do mundo.#SG_FEEL#QUE_NOIMAGE#
+Preencha a rachadura com o barro cinza e branco. Prenda o vão com o grampeador.#
+Vamos consertar as rachaduras com o kit de conserto, quando todos disserem OK...#
+
+11242#A gelatina mais macia do mundo.#SG_FEEL#QUE_NOIMAGE#
+A rachadura está bem preenchida. Vamos relatar ao Dr. Mali.#
+Vamos voltar para o Dr. Mali.#
+
+11243#A gelatina mais macia do mundo.#SG_FEEL#QUE_NOIMAGE#
+Você não pode receber nenhuma solicitação de Dr. Mali durante um dia.#
+#
+
+11244#Gelatina Macia#SG_FEEL#QUE_NOIMAGE#
+Capture alguma gelatina por aqui. Acho que 30 gelatinas deliciosas são suficientes para uma refeição.#
+Vamos voltar com 30 gelatinas deliciosas.#
+
+11245#Gelatina Macia#SG_FEEL#QUE_NOIMAGE#
+Você não pode receber nenhuma solicitação de Biscuit durante um dia.#
+#
+
+//--????? ?? ???(??14.1???_?????)
+12254#Agora é limpeza#SG_FEEL#QUE_NOIMAGE#
+Agora é hora de limpar Por favor, concentre-se em um ponto até que termine.#
+Limpando os esgotos por 1 hora.#
+
+12255#Cace caranguejo das Profundezas.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffcaranguejo de alto-mar ^000000e levantar nossas vozes! Vamos lá, heróis! Não tenham medo deles, apenas venham aqui! É só um dia!#
+Cace 20 caranguejo das Profundezas - Apareça no Calabouço dos Esgotos no modo normal.#
+
+12256#Cace Marte das Profundezas.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000fflula de alto-mar ^000000e levantar nossas vozes! Vamos lá, heróis! Não tenham medo deles, apenas venham aqui! É só um dia!#
+Cace 20 Marte das Profundezas - Apareça no Calabouço dos Esgotos no modo normal.#
+
+12257#Cace Vadon Ancestral.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffcrustáceo antigo ^000000e levantar nossas vozes! Vamos lá, heróis! Não tenham medo deles, apenas venham aqui! É só um dia!#
+Cace 20 Vadon Ancestral- Apareça no Calabouço dos Esgotos no modo normal.#
+
+12258#Cace Ostra das Profundezas.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffconcha de alto-mar ^000000e levantar nossas vozes! Vamos lá, heróis! Não tenham medo deles, apenas venham aqui! É só um dia!#
+Cace 20 Ostra das Profundezas - Apareça no Calabouço dos Esgotos no modo normal.#
+
+12259#Cace kukres ancestrais.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffkukre antigo ^000000e levantar nossas vozes! Vamos lá, heróis! Não tenham medo deles, apenas venham aqui! É só um dia!#
+Cace 20 kukres ancestrais - Apareça no Calabouço dos Esgotos no modo normal.#
+
+12260#Cace ornutus das Profundezas.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffbúzio de alto-mar ^000000e levantar nossas vozes! Vamos lá, heróis! Não tenham medo deles, apenas venham aqui! É só um dia!#
+Cace 20 Cornutus das Profundezas - Apareça no Calabouço dos Esgotos no modo normal.#
+
+12261#Cace cavalos marinhos das profundezas.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffcavalo marinho de alto-mar ^000000e levantar nossas vozes! Vamos lá, heróis! Não tenham medo deles, apenas venham aqui! É só um dia!#
+Cace 30 cavalos marinhos das profundezas - Apareça no Calabouço dos Esgotos no modo difícil.#
+
+12262#Cace peixe espada ancestral.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffpeixe espada antigo ^000000e levantar nossas vozes! Vamos lá, heróis! Não tenham medo deles, apenas venham aqui! É só um dia!#
+Cace 30 peixes espada ancestral - Apareça no Calabouço dos Esgotos no modo difícil.#
+
+12263#Cace Strouf Ancestral.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffdeus do mar antigo ^000000e levantar nossas vozes! Vamos lá, heróis! Não tenham medo deles, apenas venham aqui! É só um dia!#
+Cace 30 Strouf Ancestral - Apareça no Calabouço dos Esgotos no modo difícil.#
+
+12264#Cace anolian mutante.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffanolian mutante ^000000e levantar nossas vozes! Vamos lá, heróis! Não tenham medo deles, apenas venham aqui! É só um dia!#
+Cace 30 anolians mutantes - Apareça no Calabouço dos Esgotos no modo difícil.#
+
+12265#Cace Obeaune das Profundezas.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffsereia de alto-mar ^000000e levantar nossas vozes! Vamos lá, heróis! Não tenham medo deles, apenas venham aqui! É só um dia!#
+Cace 30 Obeaune das Profundezas - Apareça no Calabouço dos Esgotos no modo difícil.#
+
+12266#Cace kapha mutante.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffkapha mutante ^000000e levantar nossas vozes! Vamos lá, heróis! Não tenham medo deles, apenas venham aqui! É só um dia!#
+Cace 30 kaphas mutantes - Apareça no Calabouço dos Esgotos no modo difícil.#
+
+12267#Cace celacanto estranho.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffcelacanto estranho ^000000e levantar nossa voz! Vou te dar só uma semana para terminar este trabalho! Extermine todos eles no modo normal no Calabouço dos Esgotos!#
+Cace 1 celacanto estranho - Apareça no Calabouço dos Esgotos no modo normal.#
+
+12268#Cace celacanto das trevas.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffcelacanto das trevas ^000000e levantar nossa voz! Vou te dar só uma semana para terminar este trabalho! Extermine todos eles no modo normal no Calabouço dos Esgotos!#
+Cace 1 celacanto sombrio - Apareça no Calabouço dos Esgotos no modo normal.#
+
+12269#Cace celacanto cruel.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffcelacanto cruel ^000000e levantar nossa voz! Vou te dar só uma semana para terminar este trabalho! Extermine todos eles no modo difícil no Calabouço dos Esgotos!#
+Cace 1 celacanto cruel - Apareça no Calabouço dos Esgotos no modo difícil.#
+
+12270#Cace celacanto mutante.#SG_FEEL#QUE_NOIMAGE#
+Hoje, herói dos esgotos, definimos a data para o extermínio do^0000ffcelacanto mutante ^000000e levantar nossa voz! Vou te dar só uma semana para terminar este trabalho! Extermine todos eles no modo difícil no Calabouço dos Esgotos!#
+Cace 1 celacanto mutante - Apareça no Calabouço dos Esgotos no modo difícil.#
+
+12271#Serviço diário único normal nos esgotos em progresso.#SG_FEEL#QUE_NOIMAGE#
+Você já tem 1 solicitação de serviço. Já que você já o fez, não pode receber nova solicitação por um dia.#
+Você está encarregado dos esgotos, normal por 1 dia.#
+
+12272#Serviço diário único difícil nos esgotos em progresso.#SG_FEEL#QUE_NOIMAGE#
+Você já tem 1 solicitação de serviço. Já que você já o fez, não pode receber nova solicitação por um dia.#
+Você está encarregado dos esgotos, difícil por 1 dia.#
+
+12273#Serviço semanal normal nos esgotos em progresso.#SG_FEEL#QUE_NOIMAGE#
+Você já tem 1 solicitação de serviço. Já que você já o fez, não pode receber nova solicitação por 7 dias.#
+Você está encarregado dos esgotos, normal por 7 dias.#
+
+12274#Serviço semanal difícil nos esgotos em progresso.#SG_FEEL#QUE_NOIMAGE#
+Você já tem 1 solicitação de serviço. Já que você já o fez, não pode receber nova solicitação por 7 dias.#
+Você está encarregado dos esgotos, difícil por 7 dias.#
