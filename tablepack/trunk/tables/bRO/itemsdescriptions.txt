@@ -10820,10 +10820,7 @@ Bandeira Nacional utilizada pela torcida durante a Copa do Mundo.
 Peso: ^7777771^000000
 #
 7550#
-Troque-o pelos seguintes itens: 
-Em Odin e Thor: 01 Broquel Evoluído[1], 01 Casaco Evoluído[1], 01 Sapatos Aprimorados[1] e 03 Pergaminhos 
-de Armadura +7  na Kafra de Promoções em Prontera (144, 229).
-Em Asgard: 01 Broquel Evoluído[1], 01 Casaco Evoluído[1] e 01 Sapatos Aprimorados[1] na Kafra de Promoções em Prontera (144, 229).
+Troque-o pelos seguintes itens: Elmo de Aegir[1], Manteau de Aegir[1], Armadura de Aegir[1] e Botas de Aegir[1].
 Esta promoção está disponível apenas até a manutenção do dia 06/02/2013.
 ^ff0000Este ticket pode ser negociado, colocado no carrinho, pode ser transferido para o armazém, mas não pode ser derrubado no chão.^000000
 ^ff0000Após o término do evento, os tickets serão removidos das contas de jogo.^000000
@@ -18434,8 +18431,8 @@ INT+1 e DEFM + 5
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
 Equipa em: ^777777Centro^000000
-Peso: ^77777710^000000
-Nível necessário: ^77777710^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
 #
 5289#
@@ -20548,6 +20545,7 @@ Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777774^000000
 Equipa em: ^777777Topo^000000
 Peso: ^77777720^000000
+Nível Necessário: ^77777710^000000
 Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
 #
 // ----------------- Haircuts-------------------
@@ -20844,9 +20842,8 @@ Classes que utilizam: ^777777Todas, exceto Aprendiz.^000000
 // -------------- 2007? 9? ?? ??? Helm 13? -----------------
 5333#
 Ideal para quem adora ficar antenado nas últimas notícias de Rune-Midgard. Também ajuda a captar as baladas dos bardos mesmo à longa distância. Além de prático, suas ondas de rádio também produzem eletricidade estática que pode ser usada tanto para o ataque quanto para sua proteção.
-DEFM +5, Crítico +5, Esquiva +5.
+DEFM +2
 Permite o uso da habilidade Relâmpago em nível 1.
-Adiciona uma pequena chance de conjurar a habilidade Tempestade de Raios Nv. 5 quando receber ataques físicos.
 Defesa: ^7777772^000000
 Equipa em: ^777777Topo^000000
 Peso: ^777777150^000000
@@ -23134,7 +23131,7 @@ Chance de conjurar automaticamente a magia "Lanças de Fogo" Nv. 3 sempre que o 
 Não é possível aprimorar esse item.
 Defesa: ^7777778^000000
 Equipa em: ^777777Topo, Centro e Baixo^000000
-Peso: ^77777710^000000
+Peso: ^7777770^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
 #
@@ -25859,7 +25856,7 @@ Classes que utilizam:  ^777777Transcendentais de Espadachim / Mercador / Gatuno 
 1979#
 Chicote forte e flexível, feito com um tentáculo de Nepenthes. 
 INT + 2
-Ao usar ^00FF00'Estilingue'^000000, há chance de Congelar o inimigo.
+Ao usar Rajada de Flechas, há chance de Congelar o inimigo.
 Se o refinamento estiver acima de 9, a chance de Congelar aumenta.
 Tipo: ^777777Chicote^000000
 Ataque: ^777777120^000000
@@ -28000,7 +27997,7 @@ Peso: ^77777750^000000
 #
 12259#
 Um tônico encantado com a essência de uma raríssima flor.
-Ao ser usado, concede 3.000.000 de EXP de base e 1.500.000 de EXP de classe.
+Ao ser usado, concede uma quantidade de EXP de base e de classe.
 ^ff0000Atenção! Este item não pode ser negociado, derrubado no chão, colocado no carrinho mas pode ser colocado no armazém.^000000
 ^ffffff_^000000
 Peso: ^7777770^000000
@@ -29743,7 +29740,6 @@ A forma desta maça é inspirada na cobra, simbolizando a fonte de conhecimento.
 O poder de ataque de 'Terror Ácido' e 'Fogo Grego' aumenta em 20%. O poder de recuperação das habilidades do usuário aumenta em 10%.^000000
 Tipo: ^777777Maça^000000
 Ataque: ^777777130^000000
-Nível da arma: ^7777774^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam:  ^777777Transcendentais de Espadachim/Mercador/Noviço^000000
@@ -30197,7 +30193,7 @@ Um grande capuz negro decorado com uma engraçada caveira com uma cicatriz num d
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
 Equipa em: ^777777Topo e centro^000000
-Peso: ^77777770^000000
+Peso: ^7777770^000000
 Nível necessário: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -34541,6 +34537,7 @@ Classes que utilizam:  ^777777Todas^000000
 
 5654#
 Utilizado pela Banda Marcial Gleeter, da Universidade de Juno, esse chapéu logo se tornou o terror de todos os valentões que praticam o “bullying”. Isso porque a banda conseguiu realizar uma apresentação tão magnífica que impressionou até o próprio Bragi, e este, em recompensa abençoou seus uniformes com poderes sagrados.
+FOR +2
 Ao realizar ataques físico, há uma chance de encantar sua arma com a propriedade sagrado por 90 segundos.  
 Tipo : ^777777Equipamento para cabeça^000000
 Defesa : ^7777772^000000
@@ -37214,7 +37211,7 @@ Defesa : ^7777773^000000
 Equipa em : ^777777Topo^000000
 Peso : ^77777720^000000
 Nível Necessário : ^777777Nenhum^000000
-Classes : ^777777Todas as Classes^000000
+Classes : ^777777Todas exceto Aprendizes^000000
 #
 
 18620#
@@ -37352,7 +37349,7 @@ Peso: ^7777771^000000
 #
 
 4491#
-Carta Atiradora de Elite Cecil Selada
+Carta Selada da Atiradora de Elite Cecil
 Chance de 5% de absorver 10% do dano físico causado ao inimigo pelo usuário como HP, mas também reduz a recuperação de HP em 100%.
 Caso arma equipada possua o refinamento acima de +14, o ganho de HP será aumentado mais 5% por dano causado.
 Tipo de Item: ^777777Carta^000000
@@ -39031,7 +39028,7 @@ Classe: ^777777Arcebispo^000000
 ^ff0000Este item não pode ser trocado entre contas.^000000
 Um anel espesso com uma pedra roxa dado a um sacerdote treinador.
 INT + 2. Aumenta em 2% a eficiência das habilidades de cura.
-Permite que o usuário encante itens com efeitos relacionados à Sopro Divino.
+Permite que o usuário encante itens com efeitos relacionados à Cura da Arena.
 Tipo: ^777777Acessório^000000 
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
@@ -39862,6 +39859,100 @@ Utilização: ^777777Arma^000000
 Peso : ^7777771^000000
 #
 
+//------------------Ep.14.1 AB Items---------------------------------
+
+2471#
+Aumenta a tolerância contra Humanoides em 10%
+Diminui a tolerância contra todas as outras raças em 10%
+HP Máximo +500
+Tipo : ^777777Sapato^000000
+Defesa : ^77777712^000000
+Peso : ^77777730^000000
+Nível Necessário : ^777777100^000000
+Classe: ^777777Arcebispo^000000
+#
+
+2472#
+Aumenta a tolerância contra Demônio em 10%
+Diminui a tolerância contra todas as outras raças em 10%
+SP Máximo +150
+Tipo : ^777777Sapato^000000
+Defesa : ^77777712^000000
+Peso : ^77777730^000000
+Nível Necessário : ^777777100^000000
+Classe: ^777777Arcebispo^000000
+#
+
+2569#
+Esquiva Perfeita +5
+Tem a chance de conjurar Renovatio nv. 1 enquanto ataca fisica ou magicamente.
+Tipo : ^777777Armadura^000000
+Defesa : ^77777712^000000
+Peso : ^77777730^000000
+Nível Necessário : ^777777100^000000
+Classe: ^777777Arcebispo^000000
+#
+
+2570#
+Esquiva +5
+Tem a chance de conjurar Oratio nv. 2 enquanto ataca fisica ou magicamente.
+Se o usuário souber um nível maior da habilidade, o nível aprendido será ativado.
+Tipo : ^777777Armadura^000000
+Defesa : ^77777712^000000
+Peso : ^77777730^000000
+Nível Necessário : ^777777100^000000
+Classe: ^777777Arcebispo^000000
+#
+
+15029#
+Abençoa o usuário com a propriedade Sagrada.
+Diminui o consumo de SP de Clementia para 50
+INT +1, DEFM +10
+Tipo : ^777777Manto^000000
+Defesa : ^77777722^000000
+Peso : ^77777730^000000
+Nível Necessário : ^777777100^000000
+Classe: ^777777Arcebispo^000000
+#
+
+15030#
+Abençoa o usuário com a propriedade sombria.
+Aumenta o dano de Judex em 30%. Aumenta o consumo de SP de Judex para 40.
+FOR +1, INT +1, DEFM+10
+Tipo : ^777777Manto^000000
+Defesa : ^77777722^000000
+Peso : ^77777730^000000
+Nível Necessário : ^777777100^000000
+Classe: ^777777Arcebispo^000000
+#
+
+1657#
+Um cajado que irradia a preocupação com o Bem-estar alheio.
+Adiciona 10% de bônus na Cura.
+ATQM + 160, INT + 2.
+Se usado em conjunto com a Túnica, Sapatos e Xale da Afeição aumenta o bônus de Cura em 25% e o consumo de SP de Cura em 20.
+Diminui em 2 segundos o tempo de conjuração de Sacramento, Lauda Agnus e Lauda Ramus
+Tipo : ^777777Cajado^000000
+Ataque : ^77777730^000000
+Peso : ^77777750^000000
+Arma Nível : ^7777774^000000
+Nível Necessário : ^777777100^000000
+Classe: ^777777Arcebispo^000000
+#
+
+16013#
+Uma maça que acerta como julgamento para expulsar o mal.
+Ataques físicos ou mágicos tem chance de aumentar o dano em monstros do tipo Dêmonio em 20% por 7 segundos.
+ATQM + 140, FOR + 1, INT + 1.
+Se usado em conjunto com Túnica, Sapatos e Xale do Julgamento, aumenta dano contra Mortos-vivos em 15%
+Aumenta o dano de Adoramus em 200% e aumenta o custo de SP de Adoramus em 30.
+Tipo: ^777777Maça^000000
+Ataque : ^777777170^000000
+Peso : ^777777120^000000
+Arma Nível : ^7777773^000000
+Nível Necessário : ^777777100^000000
+Classe: ^777777Arcebispo^000000
+#
 
 
 //------------------Xmas 2012 Items---------------------------------
@@ -39978,6 +40069,7 @@ Uma caixa contendo 200 Mastelas. Uma fruta roxa, muito bela.
 Peso : ^77777710^000000 
 #
 
+
 //------------------February 2013 Items---------------------------------
 
 12798#
@@ -40033,81 +40125,73 @@ Peso : ^7777771^000000
 #
 
 18664#
-Fashion item with strong identity. Be a fashionista and do not mind what others say.
-Class : ^777777Helm^000000    
-DEF : ^7777773^000000
-Location : ^777777Mid^000000    
-Weight : ^77777740^000000
-Required Level : ^77777720^000000
-Jobs : ^777777All class except novice^000000
+Em Lightzhalzen, um dos acadêmicos que trabalhou no projeto do Laboratório de Somatologia acabou se aposentando e abrindo o “Instituto Chico para Jovens Superdotados”. Seu sonho era treinar jovens que haviam nascido com alguma anomalia mágica para que usassem seus poderes especiais para o bem. Escotti Verões foi seu primeiro aluno, fadado a sempre ter que usar esses óculos de quartzo rubi para evitar soltar Bolas de Fogo pelos olhos.
+Tipo : ^777777Equipamento para Cabeça^000000 
+Defesa : ^7777773^000000
+Equipa em : ^777777Meio^000000    
+Peso : ^77777740^000000
+Nível Necessário : ^77777720^000000
+Classes : ^777777Todas exceto Aprendiz^000000
 #
 
 18855#
-A hat worn by Santos Dumont, the Father of Aviation, throughout his life.
+Pouca gente em Rune-Midgard sabe, mas foi um nativo da ilha-nação de Brasilis quem inventou os balões dirigíveis! Conhecido como Dantos Sumont, este intrépido inventor sempre podia ser visto com este chapéu na cabeça enquanto realizava suas proezas aéreas. Existe uma certa polêmica se Dantos realmente foi o “pai da aviação”, mas ninguém nega que ele foi a primeira pessoa a contornar a Torre de Geffen a bordo de um dirigível, apesar de seu voo em outra máquina voadora, batizada como Ave de Rapina, ter chamado mais atenção.
 ^0000FFAGI + 3, INT + 3.
-on physical attack, have a chance to enchant [wind]property ontheir weapon for 3 min.^000000
-Class : ^777777Headgear^000000 
-Def : ^77777710^000000
-Location : ^777777upper ^000000
-Weight : ^77777710^000000
-Required Lv  : ^7777771^000000
-Jobs : ^777777All^000000
+Pequena chance de Encantar a arma com propriedade 'Vento' por três minutos ao realizar ataques físicos de curta distância.^000000
+Tipo : ^777777Equipamento para Cabeça^000000 
+Defesa : ^77777710^000000
+Equipa em : ^777777Topo^000000
+Peso : ^77777710^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
 
 #
 
-18697#
-a unique fresh of apple. Sustain ambient odor
-^0000FFDEX + 2, HIT + 5.^000000
-Class : ^777777Headgear^000000    
-Defense : ^7777773^000000
-Location : ^777777Upper^000000    
-Weight : ^77777720^000000
-Req Level : ^77777720^000000
-Jobs : ^777777All except Novice^000000
+18675#
+Esse chapéu em formato de maçã verde emite um aroma doce e agradável. Criado pelo visionário Steve Trampos, o chapéu logo passou a ser chamado pelos fashionistas de Rune-Midgard de “ai-Hat” depois de um incidente no qual um Peco Peco mordeu um pedaço de uma destas maçãs.
+^0000FFDES + 2, Precisão+ 5.^000000
+Tipo : ^777777Equipamento para Cabeça^000000    
+Defesa : ^7777773^000000
+Equipa em : ^777777Topo^000000  
+Peso : ^77777720^000000
+Nível Necessário : ^77777720^000000
+Classes : ^777777Todas exceto Aprendiz^000000
 #
 
 18857#
-Guardian of the forests and animals Curupira scares the hunters who do not respect the forest. With their sharp whistles it confuses them causing them to lose control of their movements and get lost in the woods.
-^0000FFDEX + 3.
-Add a chance of auto casting 'Confusion' on an enemy when the user receives Physical Damage.^000000
-Class : ^777777Headgear^000000 
-Def : ^77777720^000000
-Location : ^777777upper ^000000
-Weight : ^77777710^000000
-Required Lv  : ^7777771^000000
-Jobs : ^777777All^000000
+De acordo com os nativos de Brasilis, o Curupira é um guardião da floresta e dos animais locais, que afugenta os caçadores que não respeitam a natureza. Deixando pegadas invertidas com seus pés virados para trás, pregando peças e imitando animais, o Curupira os deixa confusos até se perderem na floresta. Agora você pode andar com o boneco deste defensor da natureza de cabelos de fogo na cabeça, mostrando seu amor por Brasilis!
+^0000FFDES + 3.
+Chance de causar ‘Confusão’ no inimigo enquanto receber dano de ataques físicos.^000000
+Tipo : ^777777Equipamento para Cabeça^000000  
+Defesa : ^77777720^000000
+Equipa em : ^777777Topo^000000
+Peso : ^77777710^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
 #
 
 18697#
-Accessory that refer to the syringe. When have this in the mouth, It is threatening.
+Esta seringa parece guardar um terrível segredo! Seria uma amostra de sangue da última vítima do Sicário Serial, Texder Gorman? Estaria infectada com um novo vírus da Corporação Sombrinha? Será que carrega nela o soro do Rúlqui Vermelho? Todos olham para você com medo e desconfiança, enquanto você anda com essa seringa na boca. Ninguém imagina que ela tem apenas catchup para você colocar no seu sanduíche.
 
-^00FF00Refine unavailable.^000000
-
-Class : ^777777Headgear^000000    
-Defense : ^7777770^000000
-
-Location : ^777777Lower^000000    
-Weight : ^77777720^000000
-
-Required Level : ^77777720^000000
-
-Job : ^777777All Jobs except Novice^000000
+^00FF00Impossível Refinar.^000000
+Tipo : ^777777Equipamento para Cabeça^000000   
+Defesa : ^7777770^000000
+Equipa em : ^777777Baixo^000000     
+Peso : ^77777720^000000
+Nível Necessário : ^77777720^000000
+Classes : ^777777Todas exceto Aprendiz^000000
 #
 
 13438#
-The Wizard created this sword with all his magic power. But he could not use it.
-^00FF00When using short physical attack, it gives Magic attack with certain rate. Increase skills frequency per 2 upgrades.
-MATK + 110.^000000
-Class : ^777777Sword^000000 
-Attack : ^777777165^000000
-
-Weight : ^777777200^000000
-
-Weapon Lv : ^7777774^000000
-
-Required Lv. : ^777777105^000000
-
-Jobs : ^777777Novice/Swordman class/Merchant class/Thief class^000000
+Esta espada magicamente encantada, cobiçada pela famosa bruxa-guerreira Lila Contrária. Com o poder da luz lunar, ela poderia muito bem ser empunhada pela Sailor Musa.
+^00FF00Chance de conjurar um ataque mágico aleatório enquanto ataca fisicamente. Aumenta as chances a cada 2 refinamentos.
+ATQM + 110.^000000
+Tipo : ^777777Espada de uma mão^000000 
+Ataque : ^777777165^000000
+Peso : ^777777200^000000
+Nível da Arma : ^7777774^000000
+Nível Requerido : ^777777105^000000
+Classes : ^777777Aprendiz, Espadachim, Mercadores, Gatunos e suas respectivas evoluções.^000000
 #
 
 4503#
@@ -40118,4 +40202,655 @@ Tipo de Item :  ^777777Carta^000000
 Equipado em :  ^777777Equipamento para Cabeça^000000
 Peso : ^7777771^000000
 #
+
+//------------------2013 ep14.1 malangdo---------------------------
+1198#
+^000088Item de Aluguel^000000
+O arenque é um  peixe oceânico. É muito conhecido e usado na culinária há milênios. Está ultracongelado.
+Crítico + 20, dano crítico com 50% de aumento.
+Durante o ataque, ele dá uma carga de congelamento de fluxo normal.
+Se o nível de base for mais de 100, + 50 de ATQ. 
+Tipo: ^777777Espada de Duas Mãos^000000: ^777777220^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Espadachim e evoluções^000000
+#
+1489#
+^000088Item de Aluguel^000000
+O agulhão é um peixe oceânico. É bem conhecido pelo seu aroma delicioso. Ele está bem congelado.
+Quando usar o perfurar ou perfurar em espiral, ele dá um dano crítico com uma taxa alta. E também se congela em uma taxa baixa.
+O ataque com perfurar em espiral aumenta 100% , o ataque com inspiração 50% . (o efeito da inspiração desaparecerá quando for desequipado)
+Se o nível de base for mais de 100, adicione + 30 de ATQ.
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque : ^777777220^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Espadachim e evoluções^000000
+#
+2872#
+Um certificado garantido aos gatos jogadores. Ele tem a habilidade de gravar a disputa.
+Tipo: ^777777Acessório^000000
+defesa : ^7777770^000000
+Peso: ^7777770^000000
+Nv. Necessário: ^7777771^000000
+Classe: ^777777Todas as Classes^000000
+#
+2873#
+Uma lembrancinha de Malangdo, ela faz com que você fique feliz quando equipado.
+ + 1 de VIT, + 1 de AGI , + 1 de DEX , + 1 de SOR.
+Tipo: ^777777Acessório^000000
+Defesa : ^7777775^000000
+Peso: ^77777710^000000
+Nv. Necessário: ^7777771^000000
+Classe: ^777777Todas as Classes^000000
+#
+13208#
+Um tipo de artrópode. Quando se enrola, fica muito duro.
+Durante o ataque, ele atordoa com um fluxo normal.
+Tipo: ^777777Ataque com munição^000000: ^77777750^000000
+Peso: ^7777770.5^000000 propriedades: ^777777nenhuma^000000
+#
+16740#
+Uma caixa que tem uma Proteção do Deus do Mar. (Disponível por 23 horas)
+
+^000088Item de Aluguel^000000
+Um certificado de Proteção do Deus do Mar.
+Peso: ^7777771^000000
+
+^ff0000Após aberta a caixa, o item não poderá ser restituído^000000.
+Peso: ^7777771^000000
+#
+
+16741#
+Uma caixa contendo um Arenque (disponível por uma hora).
+
+^000088Item de Aluguel^000000
+O arenque é um  peixe oceânico. É muito conhecido e usado na culinária há milênios. Está ultracongelado.
+Crítico + 20, dano crítico com 50% de aumento.
+Durante o ataque, ele dá uma carga de congelamento de fluxo normal.
+Se o nível de base for mais de 100, + 50 de ATQ. 
+Tipo: ^777777Espada de Duas Mãos^000000: ^777777220^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Espadachim e evoluções^000000
+
+^ff0000Após aberta a caixa, o item não poderá ser restituído^000000.
+Peso: ^7777771^000000
+#
+16742#
+Uma caixa contendo um Arenque  (disponível por 7 dias).
+
+^000088Item de Aluguel^000000
+O arenque é um  peixe oceânico. É muito conhecido e usado na culinária há milênios. Está ultracongelado.
+Crítico + 20, dano crítico com 50% de aumento.
+Durante o ataque, ele dá uma carga de congelamento de fluxo normal.
+Se o nível de base for mais de 100, + 50 de ATQ. 
+Tipo: ^777777Espada de Duas Mãos^000000: ^777777220^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Espadachim e evoluções^000000
+
+^ff0000Após aberta a caixa, o item não poderá ser restituído^000000.
+Peso: ^7777771^000000
+#
+16743#
+Uma caixa contendo um Agulhão. (Disponível por 1 hora)
+
+^000088Item de Aluguel^000000
+O agulhão é um peixe oceânico. É bem conhecido pelo seu aroma delicioso. Ele está bem congelado.
+Quando usar o perfurar ou perfurar em espiral, ele dá um dano crítico com uma taxa alta. E também se congela em uma taxa baixa.
+O ataque com perfurar em espiral aumenta 100% , o ataque com inspiração 50% . (o efeito da inspiração desaparecerá quando for desequipado)
+Se o nível de base for mais de 100, adicione + 30 de ATQ.
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque : ^777777220^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Espadachim e evoluções^000000
+
+^ff0000Após aberta a caixa, o item não poderá ser restituído^000000.
+Peso: ^7777771^000000
+#
+16744#
+Uma caixa contendo um Agulhão. (Disponível por 7 dias)
+
+^000088Item de Aluguel^000000
+O agulhão é um peixe oceânico. É bem conhecido pelo seu aroma delicioso. Ele está bem congelado.
+Quando usar o perfurar ou perfurar em espiral, ele dá um dano crítico com uma taxa alta. E também se congela em uma taxa baixa.
+O ataque com perfurar em espiral aumenta 100% , o ataque com inspiração 50% . (o efeito da inspiração desaparecerá quando for desequipado)
+Se o nível de base for mais de 100, adicione + 30 de ATQ.
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque : ^777777220^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Espadachim e evoluções^000000
+
+^ff0000Após aberta a caixa, o item não poderá ser restituído^000000.
+Peso: ^7777771^000000
+#
+16745#
+Uma caixa contendo uma Manjuba (disponível por 1 hora).
+
+^000088Item de Aluguel^000000
+Peixe do mar. Pode ser cozido em comidas diferentes. Realmente, muito congelado.
++ 100 de ATQM.
+Quando estiver atacando em uma curta distância, dá +30 de ATQ por 7 s com certa taxa.
+Quando houver um ataque mágico, + 20 de ATQM por 7 s com certa taxa.
+Quando o nível de base for mais de 100, adicione + 10 de ATQ, + 10 de ATQM.
+Tipo: ^777777Adaga^000000
+Ataque : ^777777160^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Espadachim, Mago, Arqueiro, Mercador, Gatuno e respectivas evoluções, Espiritualista, Ninja^000000
+
+^ff0000Após aberta a caixa, o item não poderá ser restituído^000000.
+Peso: ^7777771^000000
+#
+16746#
+Uma caixa que tem um bonito (disponível por 7 dias).
+
+^000088Item de Aluguel^000000
+Peixe do mar. Pode ser cozido em comidas diferentes. Realmente, muito congelado.
++ 100 de ATQM.
+Quando estiver atacando em uma curta distância, dá +30 de ATQ por 7 s com certa taxa.
+Quando houver um ataque mágico, + 20 de ATQM por 7 s com certa taxa.
+Quando o nível de base for mais de 100, adicione + 10 de ATQ, + 10 de ATQM.
+Tipo: ^777777Adaga^000000
+Ataque : ^777777160^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Espadachim, Mago, Arqueiro, Mercador, Gatuno e respectivas evoluções, Espiritualista, Ninja^000000
+
+^ff0000Após aberta a caixa, o item não poderá ser restituído^000000.
+Peso: ^7777771^000000
+#
+16747#
+Uma caixa que tem um Atum (disponível por 1 hora).
+
+^000088Item de Aluguel^000000
+Um grande peixe do mar. Muito popular, pode ser usado em diversas receitas. Está muito congelado.
+Chance de causar o status 'Atordoamento' no adversário ou conjurar automaticamente 'Golpe Fulminante nv. 5' ao atacar fisicamente. Se o personagem tiver 'Golpe Fulminante' maior que o nv. 5, ele usará o nível aprendido.
+Chance de causar o status 'Congelamento' no usuário ao atacar fisicamente.
+Se o nível de base for mais de 100, adicione + 20 de ATQ.
+Tipo: ^777777Maça^000000
+Ataque : ^777777180^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. necessário: ^77777750^000000
+Classe: ^777777 Espadachins, Noviços, Mercadores  e evoluções^000000
+
+
+^ff0000Após aberta a caixa, o item não poderá ser restituído^000000.
+Peso: ^7777771^000000
+#
+16748#
+Uma caixa que tem um Atum (disponível por 7 dias).
+
+^000088Item de Aluguel^000000
+Um grande peixe do mar. Muito popular, pode ser usado em diversas receitas. Está muito congelado.
+Chance de causar o status 'Atordoamento' no adversário ou conjurar automaticamente 'Golpe Fulminante nv. 5' ao atacar fisicamente. Se o personagem tiver 'Golpe Fulminante' maior que o nv. 5, ele usará o nível aprendido.
+Chance de causar o status 'Congelamento' no usuário ao atacar fisicamente.
+Se o nível de base for mais de 100, adicione + 20 de ATQ.
+Tipo: ^777777Maça^000000
+Ataque : ^777777180^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. necessário: ^77777750^000000
+Classe: ^777777 Espadachins, Noviços, Mercadores  e evoluções^000000
+
+
+^ff0000Após aberta a caixa, o item não poderá ser restituído^000000.
+Peso: ^7777771^000000
+#
+
+16749#
+Um caixa que tem um Caranguejo de Malangdo (disponível por 1 hora).
+
+Um tipo de caranguejo que vive na areia ou na lama.
++ 3 de SOR, dano crítico 50% .
+Se o nível de base for mais de 100, 20% de distância do ataque físico.
+Tipo: ^777777Arco^000000
+Ataque : ^777777120^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Arqueiro e evoluções/Gatuno e evoluções de Arruaceiro ^000000
+
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+
+16750#
+Um caixa que tem um Caranguejo de Malangdo (disponível por 7 dias).
+
+^000088Item de Aluguel^000000
+Geralmente, vive na areia ou na lama.
++ 3 de SOR, dano crítico com 50% de aumento.
+Se o nível de base for mais de 100, adicione 20% de distância do ataque físico.
+Tipo: ^777777Arco^000000
+Ataque : ^777777120^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Classe Arqueiro/Gatuno/Classe Arruaceiro^000000
+
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+18107#
+^000088Item de Aluguel^000000
+Um tipo de caranguejo que vive na areia ou na lama.
++ 3 de SOR, dano crítico 50% .
+Se o nível de base for mais de 100, 20% de distância do ataque físico.
+Tipo: ^777777Arco^000000
+Ataque : ^777777120^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Arqueiro e evoluções/Gatuno e evoluções de Arruaceiro ^000000
+#
+18108#
+^000088Item de Aluguel^000000
+Uma enguia da praia de Malangdo. Ela tenta ficar esticada. Por isso, podemos usá-la como arco.
++ 3 de AGI, chance de  VelATQ + 2 por 5 s quando atacar à distância
+Se o nível de base for mais de 100, 20% de distância do ataque físico.
+Tipo: ^777777Arco^000000
+Ataque : ^777777180^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Caçador, Bardo/Odalisca e evoluções^000000
+#
+18536#
+Um item com o estilo errante.
++ 10 de ATQM, todas as conjurações fixas reduzem 0,1 s.
+Tipo: ^777777Equipamento para Cabeça^000000
+Defesa : ^7777770^000000
+Lugar: ^777777Peso wqa	 ^000000: ^77777710^000000
+Nv. Necessário: ^7777771^000000
+Classe: ^777777Todas as Classes^000000
+#
+18537#
+Um chapéu de lembrança de Malangdo.
++ 6 de Esquiva.
+Tipo: ^777777Equipamento para Cabeça^000000
+Defesa: ^7777775^000000
+Equipa em: ^777777Topo^000000
+Peso  : ^77777710^000000
+Nv. Necessário: ^7777771^000000
+Classe: ^777777Todas as Classes^000000
+#
+6417#
+Fruta dos gatos madura. Os humanos acham que é normal e tem um gosto ruim, mas é bem valorizada em Malangdo.
+Peso: ^7777770^000000
+#
+6418#
+Moeda brilhante de alto nível. Há a possibilidade de encantar uma arma de luxo.
+Peso: ^7777770^000000
+#
+6419#
+Moeda brilhante de alto nível. Há a possibilidade de encantar uma arma de luxo.
+Peso: ^7777770^000000
+#
+6420#
+Moeda geral normal. Há a possibilidade de encantar uma arma de nível médio.
+Peso: ^7777770^000000
+#
+6421#
+Moeda geral normal. Há a possibilidade de encantar uma arma de nível médio.
+Peso: ^7777770^000000
+#
+6422#
+Moeda de baixíssimo nível. Se você recolher várias delas, elas poderão ser usadas como refinamento de armas.
+Peso: ^7777770^000000
+#
+6423#
+Relíquia da Ira do Deus do Mar. Ninguém sabe a utilidade deste item.
+Peso: ^7777770^000000
+#
+6426#
+Parece uma comida enlatada normal vencida, mas a superfície está enferrujada aqui e ali. Isso me enoja.
+Peso: ^7777771^000000
+#
+6427#
+Saco cheio de comida enlatada vencida e de má qualidade . O propósito é suspeito.
+Peso: ^7777770^000000
+#
+16751#
+Uma caixa com 1 enguia pintada. (Disponível por 1 hora)
+
+^000088Item de Aluguel^000000
+Uma enguia da praia de Malangdo. Ela tenta ficar esticada. Por isso, podemos usá-la como arco.
++ 3 de AGI, chance de  VelATQ + 2 por 5 s quando atacar à distância.
+Se o nível de base for mais de 100, 20% de distância do ataque físico.
+Tipo: ^777777Arco^000000
+Ataque : ^777777180^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Caçador, Bardo/Odalisca e evoluções^000000
+
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+16752#
+Uma caixa com 1 enguia malhada. (Disponível por 7 dias)
+
+^000088Item de Aluguel^000000
+Uma enguia da praia de Malangdo. Ela tenta ficar esticada. Por isso, podemos usá-la como arco.
++ 3 de AGI, chance de  VelATQ + 2 por 5 s quando atacar à distância.
+Se o nível de base for mais de 100, 20% de distância do ataque físico.
+Tipo: ^777777Arco^000000
+Ataque : ^777777180^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Caçador, Bardo/Odalisca e evoluções^000000
+
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+16763#
+Caixa com 1 Proteção do Deus do Mar. (Disponível por 7 dias)
+^000088Item de Aluguel^000000
+Emblema da Proteção do Deus do Mar. Dá a forte habilidade de sobreviver às ondas violentas de alto mar.
+Peso: ^7777771^000000
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+16764#
+Caixa com 1 Proteção do Deus do Mar. (Disponível por 15 dias)
+^000088Item de Aluguel^000000
+Emblema da Proteção do Deus do Mar. Dá a forte habilidade de sobreviver às ondas violentas de alto mar.
+Peso: ^7777771^000000
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+16765#
+Caixa com 1 arpão para caçar polvo. (Disponível por 23 horas)
+Especificamente criado para caçar o polvo-rei.
+Peso: ^7777770^000000
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+16766#
+Caixa com 1 arpão para caçar polvo. (Disponível por 3 dias)
+Especificamente criado para caçar o polvo-rei.
+Peso: ^7777770^000000
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+16767#
+Caixa com 1 arpão para caçar polvo. (Disponível por 7 dias)
+Especificamente criado para caçar o polvo-rei.
+Peso: ^7777770^000000
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+16770#
+Caixa com 10 frutas dos gatos. Uma pequena quantidade de comida enlatada está incluída como bônus.
+Fruta dos gatos madura. Os humanos acham que é normal e tem um gosto ruim, mas é bem valorizada em Malangdo.
+Peso: ^7777770^000000
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+16771#
+Caixa com 40 frutas dos gatos. Uma pequena quantidade de comida enlatada está incluída como bônus.
+Fruta dos gatos madura. Os humanos acham que é normal e tem um gosto ruim, mas é bem valorizada em Malangdo.
+Peso: ^7777770^000000
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+16979#
+Caixa com 4 frutas dos gatos. Uma pequena quantidade de comida enlatada está incluída como bônus.
+
+Fruta dos gatos madura. Os humanos acham que é normal e tem um gosto ruim, mas é bem valorizada em Malangdo.
+Peso: ^7777770^000000
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+17013#
+Caixa com 1 arpão de caçar polvo e Proteção do Deus do Mar (disponível por 23 horas).
+^ff0000Após aberto, o item não será restituído.^000000.
+Peso: ^7777771^000000
+#
+6428#
+Carta de aventura da Equipe de Aventureiros Meow. A carta é necessária para experimentar a aventura da Equipe de Aventureiros Meow.
+Peso: ^7777770^000000
+#
+6429#
+Carta de aventura da Equipe de Aventureiros Meow. A carta é necessária para experimentar a aventura da Equipe de Aventureiros Meow.
+Peso: ^7777770^000000
+#
+6430#
+Um fragmento do quadro que foi encontrado durante a caça ao tesouro. Quando todos os fragmentos forem recolhidos, ele se tornará um quadro completo.
+Peso: ^7777770^000000
+#
+6431#
+Um balde normal, comum. Parece que qualquer coisa pode ser carregada nele.
+Peso: ^77777710^000000
+#
+6432#
+Um balde com água até a borda. É bem pesado, então, tome cuidado para não derramá-la.
+Peso: ^777777300^000000
+#
+6433#
+Uma escova apropriada para a limpeza. A cerdas são abrasivas o suficiente para proporcionar uma boa faxina.
+Peso: ^77777730^000000
+#
+6434#
+Um kit de conserto de rachaduras no chão. Há tudo para o conserto como pá, serra, adesivos, grampeador, pepino-do-mar e ascídia.
+Peso: ^777777100^000000
+#
+6435#
+Fruta fresca de Yggdrasil. Também tem um cheiro fresco!
+Peso: ^77777710^000000
+#
+6436#
+^000088Item de Aluguel^000000
+Um emblema no qual a Proteção do Deus do Mar foi inserido. Permite que você tenha uma habilidade especial de sobreviver no fundo do mar.
+Peso: ^7777770^000000
+#
+6440#
+Um lubrificante que ajuda a remover a carta que já está presa em um slot de um equipamento. 
+No entanto, isso só ajudará na remoção da carta. O equipamento e seu nível de refinamento podem ter um problema depois da tentativa de refinamento.
+Peso: ^7777770^000000
+#
+6441#
+Um lubrificante que ajuda a remover a carta que já está presa em um slot de um equipamento. 
+Ele pode proteger o equipamento e seu nível de refinamento enquanto você remove a carta, ao contrário da normal.
+Peso: ^7777770^000000
+#
+6442#
+^000088Item de Aluguel^000000
+Um arpão de caça especial para caçar polvos gigantes.
+Peso: ^7777770^000000
+#
+6443#
+[^ff0000Frágil^000000]
+Um lubrificante de alta corrosão. Lendário por derreter a superfície de um objeto para que qualquer coisa possa ser separada. 
+É perfeito para retirar cartas MVP de alguns equipamentos, inclusive de Elmos contendo uma carta Abelha-Rainha.
+Peso: ^7777770^000000
+#
+11536#
+Comida que a frota da Corporação Pata de Gato comia em suas viagens. É uma bolacha dura e fácil de armazenar.
+Esses gatos marinheiros chamam isso de amolador de dentes ou castelo de vermes. Algum HP pode ser recuperado, se você os comer.
+Peso: ^7777771^000000
+#
+11537#
+Um verme gordo foi descoberto quando o biscoito estava quase sendo comido.
+Pode ser uma fonte de energia importante em uma situação de sobrevivência, mas...
+Peso: ^7777771^000000
+#
+12612#
+Uma sacola pequena e gasta que faz um barulhinho. Cling! Ninguém tem a menor ideia do que está nela.
+Peso: ^7777771^000000
+#
+12613#
+Uma sacola pequena que faz um barulhinho. Cling! Dizem que, às vezes, tem uma moeda muito boa nela.
+Peso: ^7777771^000000
+#
+12614#
+Uma sacola pequena que faz um barulhinho. Cling! Dizem que, às vezes, tem uma moeda bastante boa nela.
+Peso: ^7777771^000000
+#
+12615#
+Uma sacola pequena que faz um barulhinho. Cling!
+Dizem que você não pode esperar alguma coisa boa nela.
+Peso: ^7777771^000000
+#
+12616#
+Uma sacola com moedas A e B e algumas outras coisas também. Se tiver sorte, você pode até conseguir uma Ira do Deus do Mar.
+Peso: ^7777771^000000
+#
+12617#
+Essa é uma bolsa com moedas A, B e C, se você tiver sorte conseguirá mais latas ou moedas.
+Peso: ^7777771^000000
+#
+12618#
+Essa é uma bolsa com moedas B, C e D, se você tiver sorte conseguirá mais latas ou moedas.
+Peso: ^7777771^000000
+#
+12619#
+Essa é uma bolsa com moedas C, D e E, se você tiver sorte conseguirá mais latas ou moedas.
+Peso: ^7777771^000000
+#
+12620#
+Essa é uma bolsa com moedas D e E, se você tiver sorte conseguirá mais latas ou moedas.
+Peso: ^7777771^000000
+#
+12621#
+Essa é uma bolsa com moeda E, se você tiver sorte conseguirá mais latas ou moedas.
+Peso: ^7777771^000000
+#
+12623#
+Uma caixa rígida com lindos detalhes. Há muitos equipamentos de ponta.
+Recebe uma arma aleatoriamente.
+Peso: ^7777771^000000
+#
+12624#
+Uma geléia deliciosa que, quando comer, você vai ficar feliz. Pode derreter, então, por favor, não deixe em local quente.
+Recupera 3% de HP e SP.
+Peso: ^7777775^000000
+#
+12633#
+Produção especial de Malangdo, enlatado para que você possa guardar com facilidade. É conhecida estranhamente por dar poderes às pessoas.
+Aumenta a experiência base e experiência de classe em 10% por 20 min. (pode sobrepor outros itens de experiência e são válidos apenas para a caça de monstros)
+Aumenta em 20% a taxa de itens derrubados por monstros por 20 min.
+Peso: ^7777775^000000
+#
+12636#
+Comida enlatada deliciosa de Malangdo.
+Você lembrará o mar de Malangdo, e verá imagens na sua cabeça quando comer... Quando olhar ao redor, perceberá que está em Malangdo.
+Peso: ^7777770^000000
+#
+12637#
+Uma sacola com 200 Tatu Bola. 
+Posso sentir alguma coisa se movimentando dentro da sacola, isso não é bom.
+Peso: ^77777750^000000
+#
+12638#
+Uma sacola com 200 lulas secas. 
+Cuidado quando for tirar a embalagem, está compactada em uma sacola pequena.
+Peso: ^777777200^000000
+#
+12639#
+Uma sacola com 200 peixes voadores. 
+Você ficará surpreso com a quantidade deles em uma sacola pequena...
+Peso: ^777777200^000000
+#
+12640#
+Uma sacola com 200 estrelas-do-mar bem empacotadas.
+Peso: ^77777750^000000
+#
+12643#
+Uma saco velho e fino para carregar moedas. 
+Há 50 Moedas Classe E na bolsa.
+Peso: ^7777771^000000
+#
+13068#
+^000088Item de Aluguel^000000
+Peixe do mar. Pode ser cozido em comidas diferentes. Realmente, muito congelado.
++ 100 de ATQM.
+Quando estiver atacando em uma curta distância, dá +30 de ATQ por 7 s com certa taxa.
+Quando houver um ataque mágico, + 20 de ATQM por 7 s com certa taxa.
+Quando o nível de base for mais de 100, adicione + 10 de ATQ, + 10 de ATQM.
+Tipo: ^777777Adaga^000000
+Ataque : ^777777160^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. Necessário: ^77777750^000000
+Classe: ^777777Espadachim, Mago, Arqueiro, Mercador, Gatuno e respectivas evoluções, Espiritualista, Ninja^000000
+#
+13291#
+Equinoderme , estrela-do-mar. Parece uma estrela. É duro, então, pode ser usado como um shuriken.
+Chance de causar o status 'Atordoamento'.
+Tipo: ^777777Shuriken^000000
+Ataque: ^777777110^000000
+Nv. Necessário: ^77777750^000000
+Peso: ^7777770.5^000000      
+Tipo: ^777777Neutro^000000
+#
+13292#
+Uma lula que está seca há muito tempo. 
+Pode ser usada como uma kunai.
+Chance de causar o status 'Cegueira'.
+Tipo: ^777777Kunai^000000
+Ataque : ^77777750^000000
+Peso: ^7777772^000000 
+Tipo: ^777777Neutro^000000
+#
+13293#
+Um peixe voador. Há um rumor de que ele voa com uma grande nadadeira. 
+Ele está congelado, então, é possível usá-lo como um kunai.
+Chance de causar o status 'Sangramento'.
+Tipo: ^777777Kunai^000000
+Ataque : ^77777750^000000
+Peso: ^7777772^000000 
+Tipo: ^777777Neutro^000000
+#
+16015#
+Um taco no formato de uma pata de gato. Apesar de fofinho e parecer delicado, causa grande dano.
+Aumenta em 15% o dano a inimigos Brutos.
+Chance de causar o status 'Sedução' no adversário ao atacar fisicamente.
+Tipo: ^777777Maça^000000
+Ataque: ^77777788^000000
+Peso: ^77777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. necessário: ^7777771^000000
+Classe: ^777777 Espadachins, Noviços, Mercadores  e evoluções^000000
+#
+16016#
+^000088Item de Aluguel^000000
+Um grande peixe do mar. Muito popular, pode ser usado em diversas receitas. Está muito congelado.
+Chance de causar o status 'Atordoamento' no adversário ou conjurar automaticamente 'Golpe Fulminante nv. 5' ao atacar fisicamente. Se o personagem tiver 'Golpe Fulminante' maior que o nv. 5, ele usará o nível aprendido.
+Chance de causar o status 'Congelamento' no usuário ao atacar fisicamente.
+Se o nível de base for mais de 100, adicione + 20 de ATQ.
+Tipo: ^777777Maça^000000
+Ataque : ^777777180^000000
+Peso: ^7777770^000000
+Nv. da Arma: ^7777771^000000
+Nv. necessário: ^77777750^000000
+Classe: ^777777 Espadachins, Noviços, Mercadores  e evoluções^000000
+
+#
+12531#
+Uma caixa contendo 100 Poções Brancas
+Peso : ^7777770^000000
+^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000
+#
+6451#
+^ff0000Este item não pode ser negociado^000000
+Um peixe que vive próximo a Malangdo, ainda não identificado.
+Há um gato pegando este peixe!
+Peso : ^7777770^000000
+#
+
 //file end

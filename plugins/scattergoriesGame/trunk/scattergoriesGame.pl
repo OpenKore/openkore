@@ -111,9 +111,9 @@ my (%scoreboard, %listItens, %recentAnswers);
 		my $initialLetter = substr($chatMessage, 0, 1);
 
 		my $currentAnalysis = $currentLetter;
-		$currentAnalysis = "s/ã|á|à|â|a|/i" if ($currentLetter eq 'a');	$currentAnalysis = "s/é|è|ê|e|/i" if ($currentLetter eq 'e');
-		$currentAnalysis = "s/í|ì|î|i|/i" if ($currentLetter eq 'i');	$currentAnalysis = "s/õ|ó|ò|ô|o|/i" if ($currentLetter eq 'o');
-		$currentAnalysis = "s/ú|ù|ô|u|/i" if ($currentLetter eq 'u');
+		$currentAnalysis = "/ã|á|à|â|a|/i" if ($currentLetter eq 'a');	$currentAnalysis = "/é|è|ê|e|/i" if ($currentLetter eq 'e');
+		$currentAnalysis = "/í|ì|î|i|/i" if ($currentLetter eq 'i');	$currentAnalysis = "/õ|ó|ò|ô|o|/i" if ($currentLetter eq 'o');
+		$currentAnalysis = "/ú|ù|ô|u|/i" if ($currentLetter eq 'u');
 		if ($initialLetter =~ $currentAnalysis) {
 			if (exists $listItens{$chatMessage} || exists $Skill::StaticInfo::names{$chatMessage}) {
 				if ($recentAnswers{$currentLetter} ne $chatMessage) {
@@ -188,13 +188,11 @@ my (%scoreboard, %listItens, %recentAnswers);
 		Commands::run("pm $nick -------------------");
 		Commands::run("pm $nick Ranking:");
 		if ($message =~ s/full scoreboard/i/) {
-			my $playersCount = 0;
 			for (keys %scoreboard) {
 				Commands::run("pm $nick * $_ - $scoreboard{$_} point(s)");
-				$playersCount++;
 			}
 			Commands::run("pm $nick -------------------");
-			Commands::run("pm $nick Total: $playersCount players");
+			Commands::run("pm $nick Total: " . scalar (keys %scoreboard) . "  players");
 		} else {
 			for (keys %scoreboard) {
 				Commands::run("pm $nick * $_ - $scoreboard{$_} point(s)") if ($scoreboard{$_} > 30);
@@ -214,6 +212,7 @@ my (%scoreboard, %listItens, %recentAnswers);
 		for (keys %scoreboard) {
 			$message .= "* $_ - $scoreboard{$_}\n";
 		}
+		$message .= "Total: " . scalar (keys %scoreboard) . "  players\n";
 
 		$message .= center('Recently given answers', 50, '-') . "\n";
 		for (keys %recentAnswers) {
