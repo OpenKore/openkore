@@ -1411,6 +1411,22 @@ sub char_delete2_cancel_result {
 	charSelectScreen;
 }
 
+# 013C
+sub arrow_equipped {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+	return unless $args->{index};
+	$char->{arrow} = $args->{index};
+
+	my $item = $char->inventory->getByServerIndex($args->{index});
+	if ($item && $char->{equipment}{arrow} != $item) {
+		$char->{equipment}{arrow} = $item;
+		$item->{equipped} = 32768;
+		$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
+		message TF("Arrow/Bullet equipped: %s (%d) x %s\n", $item->{name}, $item->{invIndex}, $item->{amount});
+	}
+}
+
 # 01D0 (spirits), 01E1 (coins), 08CF (amulets)
 sub revolving_entity {
 	my ($self, $args) = @_;
