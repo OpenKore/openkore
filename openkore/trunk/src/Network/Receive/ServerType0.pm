@@ -1163,21 +1163,6 @@ sub area_spell_disappears {
 	binRemove(\@spellsID, $ID);
 }
 
-sub arrow_equipped {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-	return unless $args->{index};
-	$char->{arrow} = $args->{index};
-
-	my $item = $char->inventory->getByServerIndex($args->{index});
-	if ($item && $char->{equipment}{arrow} != $item) {
-		$char->{equipment}{arrow} = $item;
-		$item->{equipped} = 32768;
-		$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
-		message TF("Arrow/Bullet equipped: %s (%d)\n", $item->{name}, $item->{invIndex});
-	}
-}
-
 sub arrow_none {
 	my ($self, $args) = @_;
 

@@ -1587,7 +1587,9 @@ sub cmdEquip_list {
 	for my $slot (@Actor::Item::slots) {
 		my $item = $char->{equipment}{$slot};
 		my $name = $item ? $item->{name} : '-';
-		($item->{type} == 19)?message sprintf("%-15s: %s x %s\n", $slot, $name, $item->{amount}), "list":message sprintf("%-15s: %s\n", $slot, $name), "list";
+		($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) ?
+			message sprintf("%-15s: %s x %s\n", $slot, $name, $item->{amount}), "list" :
+			message sprintf("%-15s: %s\n", $slot, $name), "list";
 	}
 }
 
