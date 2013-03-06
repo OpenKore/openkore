@@ -1961,7 +1961,7 @@ sub cmdSlave {
 			message T("Feeding your homunculus.\n"), "homunculus";
 		}
 
-	} elsif ($subcmd eq "fire") {
+	} elsif ($subcmd eq "delete") {
 		if (!$net || $net->getState() != Network::IN_GAME) {
 			error TF("You must be logged in the game to use this command (%s)\n", $cmd . ' ' . $subcmd);
 			return;	
@@ -2116,8 +2116,24 @@ sub cmdSlave {
 				"Usage: %s skills [(<add | desc>) [<skill #>]]\n", $string);
 		}
 
+	} elsif ($args[0] eq "rename") {
+		if ($char->{homunculus}{renameflag}) {
+			if ($args[1] ne '') {
+				if (length($args[1]) < 25) {
+					$messageSender->sendHomunculusName($args[1]);
+				} else {
+					error T("The name can not exceed 24 characters\n");
+				}
+			} else {
+				error TF("Syntax Error in function 'slave rename' (Slave Rename)\n" .
+					"Usage: %s rename <new name>\n", $string);
+			}
+		} else {
+			error T("His homunculus has been named or not under conditions to be renamed!\n");
+		}
+
  	} else {
-		error TF("Usage: %s <feed | s | status | move | standby | ai | aiv | skills | fire>\n", $string);
+		error TF("Usage: %s <feed | s | status | move | standby | ai | aiv | skills | delete | rename>\n", $string);
 	}
 }
 

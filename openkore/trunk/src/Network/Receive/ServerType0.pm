@@ -2303,11 +2303,17 @@ sub homunculus_property {
 sub homunculus_state_handler {
 	my ($slave, $args) = @_;
 	# Homunculus states:
-	# 0 - alive
+	# 0 - alive and unnamed
 	# 2 - rest
 	# 4 - dead
 
 	return unless $char->{homunculus};
+
+	if ($args->{state} == 0) {
+		$char->{homunculus}{renameflag} = 1;
+	} else {
+		$char->{homunculus}{renameflag} = 0;
+	}
 
 	if (($args->{state} & ~8) > 1) {
 		foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
