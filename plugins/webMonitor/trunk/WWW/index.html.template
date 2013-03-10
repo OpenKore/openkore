@@ -64,6 +64,15 @@
 						</tbody>
 					</table>
 				</div>
+				<div class="span4">
+					<table class="table-condensed">
+						<tbody>
+							<br/>
+							<b>Status:</b> {characterStatusesSring}
+							</tr>
+						</tbody>
+					</table>
+				</div>
             </div><!--/span-->
 			
 			{{_sidebar.html}}

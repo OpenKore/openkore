@@ -15,7 +15,7 @@
 				</thead>
 				<tbody id="listarItens"><!-- {startLoop} -->
 					<tr>
-						<td><div id="skill{skillsIDN}" class="iconSkill left"><div class="iconUp right">{skillsIcoUp}</div></div></td>
+						<td>{skillsIco}<div class="iconSkill left"><div class="iconUp right">{skillsIcoUp}</div></div></td>
 						<td><div align="center">{skillsLevel}</div></td>
 						<td class="left">{skillsName}</td>
 						{skillsJS}

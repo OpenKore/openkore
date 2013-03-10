@@ -276,9 +276,10 @@ sub request {
 		push (@reportMonsterCount, $monsters_Killed[$i]{count});
 	}
 	# Itens
+	my %reverseItems_lut = reverse %items_lut;
 	for my $item (sort keys %itemChange) {
 		next unless $itemChange{$item};
-		push (@reportItemID, $item); #Bugfix: Is there something equivalent to a items_rlut?
+		push (@reportItemID, $reverseItems_lut{$item});
 		push (@reportItemName, $item);
 		push (@reportItemCount, $itemChange{$item});
 	}
@@ -370,7 +371,7 @@ sub request {
 		}
 
 # Show skills
-	my (@skillsIDN, @skillsName, @skillsLevel, @skillsJS, @skillsIcoUp);	
+	my (@skillsIco, @skillsName, @skillsLevel, @skillsJS, @skillsIcoUp);	
 	for my $handle (@skillsID) {
 		my $skill = new Skill(handle => $handle);
 		my $sp = $char->{skills}{$handle}{sp};
@@ -378,12 +379,12 @@ sub request {
 		my $act = '';
 
 		my $type = $skill->getTargetType();
-		if ($char->getSkillLevel($skill) > 0){
+		if ($char->getSkillLevel($skill)){
 			$act = '<td>' . $sp . '</td><td><div align="center">';
 			if ($type == Skill::TARGET_PASSIVE){
 				$act .= '<a class="btn btn-mini disabled">Passive</a></div></td>'; #Skill passive
 			}
-			if ($type == Skill::TARGET_SELF || $type == Skill::TARGET_ACTORS || $type == Skill::TARGET_LOCATION){
+			if ($type == Skill::TARGET_SELF){
 				$act .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=ss+' . $IDN . '">' . T('Use on self') . '</a> ';
 			}
 			if ($type == Skill::TARGET_ENEMY){
@@ -401,31 +402,81 @@ sub request {
 		}
 		
 		my $ico_up;
-		if ($char->{points_skill} > 0 && $char->{skills}{$handle}{up} == 1){
+		if ($char->{points_skill} && $char->{skills}{$handle}{up}) {
 			$ico_up = '<a href="/handler?csrf=' . $csrf . '&command=skills+add+' . $IDN .'" title="' . T('Level up') . '" rel="tooltip"><i class="icon-plus-sign"></i></a> ';
 		}
 		
 		my $title = $skill->getHandle;
 
 		# To finalize, add the elements into the array's
-		push @skillsIDN, $IDN;
+		push @skillsIco, "<img src=\"http://www.ragdata.com/images/skills/" . lc($title) . ".gif\"></img>";
 		push @skillsIcoUp, $ico_up;
 		push @skillsName, '<abbr title="' . $title . '">' . $skill->getName() . '</abbr>';
 		push @skillsLevel, $char->getSkillLevel($skill);
 		push @skillsJS, $act;
 	}
-	
+
+# Show skills homunculo
+	my (@homunculoSkillsIco, @homunculoSkillsName, @homunculoSkillsLevel, @homunculoSkillsJS, @homunculoSkillsIcoUp);
+	if ($char->{homunculus}) {
+		for my $homunculoHandle (@{$char->{homunculus}{slave_skillsID}}) {
+			my $homunculoSkill = new Skill(handle => $homunculoHandle);
+			my $homunculoSp = $char->{skills}{$homunculoHandle}{sp};
+			my $homunculoIDN = $homunculoSkill->getIDN();
+			my $homunculoAct = '';
+
+			my $type = $homunculoSkill->getTargetType();
+			if ($char->getSkillLevel($homunculoSkill)){
+				$homunculoAct = '<td>' . $homunculoSp . '</td><td><div align="center">';
+				if ($type == Skill::TARGET_PASSIVE){
+					$homunculoAct .= '<a class="btn btn-mini disabled">Passive</a></div></td>'; #Skill passive
+				}
+				if ($type == Skill::TARGET_SELF){
+					$homunculoAct .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=ss+' . $homunculoIDN . '">' . T('Use on self') . '</a> ';
+				}
+				if ($type == Skill::TARGET_ENEMY){
+					$homunculoAct .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sm+' . $homunculoIDN . '+0">' . T('Use on enemy') . '</a> ';
+				}
+				if ($type == Skill::TARGET_ACTORS){
+					$homunculoAct .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sp+' . $homunculoIDN . '+0">' . T('Use on actor') . '</a> ';
+				} 
+				if ($type == Skill::TARGET_LOCATION){
+					$homunculoAct .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sl+' . $homunculoIDN . '+{characterLocationX}+{characterLocationY}">' . T('Use on location') . '</a> ';
+				}
+				$homunculoAct .= '</div></td>';
+			} else {
+				$homunculoAct = '<td></td><td></td>';
+			}
+			
+			my $homunculoIcoUp;
+			if ($char->{homunculus}{points_skill} && $char->{homunculus}{skills}{$homunculoHandle}{up}){
+				$homunculoIcoUp = '<a href="/handler?csrf=' . $csrf . '&command=homun+skills+add+' . $homunculoIDN .'" title="' . T('Level up') . '" rel="tooltip"><i class="icon-plus-sign"></i></a> ';
+			}
+			
+			my $title = $homunculoSkill->getHandle;
+
+			# To finalize, add the elements into the array's
+			push @homunculoSkillsIco, "<img src=\"http://www.ragdata.com/images/skills/" . lc($title) . ".gif\"></img>";
+			push @homunculoSkillsIcoUp, $homunculoIcoUp;
+			push @homunculoSkillsName, '<abbr title="' . $title . '">' . $homunculoSkill->getName() . '</abbr>';
+			push @homunculoSkillsLevel, ($char->getSkillLevel($homunculoSkill)) ? $char->getSkillLevel($homunculoSkill) : 0;
+			push @homunculoSkillsJS, $homunculoAct;
+		}
+	}
+
+# Menu list
 	my @menu = (
 		{ url => '/', title => T('Status'), image => 'icon-user' },
-		{ url => '/inventory.html', title => T('Inventory') },
+		{ url => '/inventory.html', title => T('Inventory'), image => 'icon-briefcase' },
 		{ url => '/report.html', title => T('Report'), image => 'icon-tasks' },
 		{ url => '/config.html', title => T('Config'), image => 'icon-cog' },
 		{ url => '/console.html', title => T('Console') },
 		{ url => '/chat.html', title => T('Chat Log'), image => 'icon-comment' },
 		{ url => '/guild.html', title => T('Guild') },
 		{ url => '/shop.html', title => T('Vender List'), image => 'icon-shopping-cart' },
-		{ url => '/npcs.html', title => T('NPC List') },
-		{ url => '/skills.html', title => T('Skill List') },
+		{ url => '/npcs.html', title => T('NPC List'), image => 'icon-th-list' },
+		{ url => '/skills.html', title => T('Skill List'), image => 'icon-th-list' },
+		{ url => '/homunculos.html', title => T('Homunculos') },
 	);
 
 	%keywords =	(
@@ -487,7 +538,7 @@ sub request {
 		'shopID' => \@id, # Never used
 		'shopJS' => \@shopJS,
 	# Skills
-		'skillsIDN' => \@skillsIDN,
+		'skillsIco' => \@skillsIco,
 		'skillsIcoUp' => \@skillsIcoUp,
 		'skillsName' => \@skillsName,
 		'skillsLevel' => \@skillsLevel,
@@ -511,10 +562,48 @@ sub request {
 		'reportItemID' => \@reportItemID,
 		'reportItemName' => \@reportItemName,
 		'reportItemCount' => \@reportItemCount,
+	# Pet
+		'petName' => $pet{name}, # Never used
+		'petAccessory' => defined $pet{accessory} ? itemNameSimple($pet{accessory}) : 'N/A', # Never used
+		'petHungry' => $pet{hungry}, # Never used
+		'petLevel' => $pet{level}, # Never used
+		'petFriendly' => $pet{friendly}, # Never used
+	# Homunculo
+		'homunculusName' => $char->{homunculus}{'name'},
+		'homunculusJobId' => $char->{homunculus}{'jobId'},
+		'homunculusID' => $char->{homunculus},
+		'homunculusHP' => $char->{homunculus}{'hp'},
+		'homunculusHPMax' => $char->{homunculus}{'hp_max'},
+		'homunculusHPPercent' => sprintf("%.2f", $char->{homunculus}{hpPercent}),
+		'homunculusSP' => $char->{homunculus}{'sp'},
+		'homunculusSPMax' => $char->{homunculus}{'sp_max'},
+		'homunculusSPPercent' => sprintf("%.2f", $char->{homunculus}{spPercent}),
+		'homunculusEXP' => $char->{homunculus}{'exp'},
+		'homunculusEXPMax' => $char->{homunculus}{'exp_max'},
+		'homunculusEXPPercent' => sprintf("%.2f", $char->{homunculus}{expPercent}),
+		'homunculusHunger' => $char->{homunculus}{'hunger'},
+		'homunculusAccessory' => $char->{homunculus}{'accessory'},
+		'homunculusIntimacy' => $char->{homunculus}{'intimacy'},
+		'homunculusFaith' => $char->{homunculus}{'faith'},
+		'homunculusLevel' => $char->{homunculus}{'level'},
+		'homunculusAtk' => $char->{homunculus}{'atk'},
+		'homunculusAtkMagic' => $char->{homunculus}{'attack_magic_max'},
+		'homunculusAtkSpeed' => $char->{homunculus}{'attack_speed'},
+		'homunculusHit' => $char->{homunculus}{'hit'},
+		'homunculusCritical' => $char->{homunculus}{'critical'},
+		'homunculusDef' => $char->{homunculus}{'def'},
+		'homunculusMDef' => $char->{homunculus}{'mdef'},
+		'homunculusFlee' => $char->{homunculus}{'flee'},
+		'homunculusSkillsIco' => \@homunculoSkillsIco,
+		'homunculusSkillsIcoUp' => \@homunculoSkillsIcoUp,
+		'homunculusSkillsName' => \@homunculoSkillsName,
+		'homunculusSkillsLevel' => \@homunculoSkillsLevel,
+		'homunculusSkillsJS' => \@homunculoSkillsJS,
+		'homunculusSkillsPoints' => defined $char->{homunculus}{points_skill} ? $char->{homunculus}{points_skill} : 'N/A',
 	# Character infos general
 		'characterStatuses' => \@statuses, # Never used
 		'characterSkillPoints' => $char->{points_skill},
-		'characterStatusesSring' => $char->statusesString(), # Never used
+		'characterStatusesSring' => $char->statusesString(),
 		'characterName' => $char->name(),
 		'characterJob' => $jobs_lut{$char->{jobID}},
 		'characterJobID' => $char->{jobID},
@@ -595,7 +684,7 @@ sub request {
 		'characterLocationX' => $char->position()->{x},
 		'characterLocationY' => $char->position()->{y},
 		'characterLocationMap' => $field->name,
-		'characterLocationMapURL' => sprintf($config{webMapURL} || '/map/%s', $field->name),
+		'characterLocationMapURL' => sprintf($config{webMapURL} || (-e '/map/%s', $field->name) ? '/map/%s' : undef),
 		'characterLocationDescription' => $field->descString,
 		'characterGetRouteX' => $char->{pos_to}->{x}, # Never used
 		'characterGetRouteY' => $char->{pos_to}->{y}, # Never used
