@@ -6008,6 +6008,7 @@ Weight : ^7777771^000000
 4128#
 Immune to all magic spells. (including healing)
 Spends 100% of MSP when uses skills.
+^ff0000[Effect not available currently]^000000
 Series : ^777777Card^000000
 Device : ^777777Guard^000000
 Weight : ^7777771^000000
@@ -16909,37 +16910,37 @@ Weight : ^7777770.2^000000      Property: ^777777Holy^000000
 12965#
 Box that contains Level 1 Emergency Call Scroll
 Able to summon 7 online Guild Member. Only applicable for Guild Leader.
-^ffffff_^000000
+^ff0000Attention: This item cannot use in quest map and memorial instant dungeon!^000000
 Weight: ^7777771^000000
 #
 12966#
 Box that contains Level 2 Emergency Call Scroll
 Able to summon 12 online Guild Member. Only applicable for Guild Leader.
-^ffffff_^000000
+^ff0000Attention: This item cannot use in quest map and memorial instant dungeon!^000000
 Weight: ^7777771^000000
 #
 12967#
 Box that contains Level 3 Emergency Call Scroll
 Able to summon 20 online Guild Member. Only applicable for Guild Leader.
-^ffffff_^000000
+^ff0000Attention: This item cannot use in quest map and memorial instant dungeon!^000000
 Weight: ^7777771^000000
 #
 12968#
 Box that contains Level 1 Emergency Call Scroll
 Able to summon 7 online Guild Member. Only applicable for Guild Leader.
-^ffffff_^000000
+^ff0000Attention: This item cannot use in quest map and memorial instant dungeon!^000000
 Weight: ^7777771^000000
 #
 12969#
 Box that contains Level 2 Emergency Call Scroll
 Able to summon 12 online Guild Member. Only applicable for Guild Leader.
-^ffffff_^000000
+^ff0000Attention: This item cannot use in quest map and memorial instant dungeon!^000000
 Weight: ^7777771^000000
 #
 12970#
 Box that contains Level 3 Emergency Call Scroll
 Able to summon 20 online Guild Member. Only applicable for Guild Leader.
-^ffffff_^000000
+^ff0000Attention: This item cannot use in quest map and memorial instant dungeon!^000000
 Weight: ^7777771^000000
 #
 12971#
@@ -39013,7 +39014,7 @@ Weight : ^7777770^000000
 12637#
 A bag with 200 Gong Bugs.
 Can feel something not good movement inside of the bag.
-Weight : ^77777750^000000
+Weight : ^7777771^000000
 #
 12638#
 A bag with 200 Dried Squids.
@@ -39121,5 +39122,560 @@ LUK +3.
 Series : ^777777Headgear^000000    Defense : ^7777773^000000
 Location : ^777777Upper^000000    Weight : ^77777740^000000
 Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+
+// ------- 2012. 11. 14 ----------------
+4819#
+ATK + 1%.
+#
+4848#
+Increases tolerance to Neutral property attacks by 5%.
+#
+4849#
+Reduces damage from Demi-human property by 5%.
+#
+4850#
+Increases Heal Amount by 6%. Increases SP consumption by 5%.
+#
+4851#
+Increases Heal Amount by 12%. Increases SP consumption by 10%.
+#
+4852#
+Increases Heal Amount by 20%. Increases SP consumption by 15%.
+#
+4853#
+STR + 1.
+If the item's refine level is 8, STR + 3 additionally.
+If the item's refine level is 9, ATK + 1% additionally.
+If the item's refine level is 12 ASPD + 1, Decreases casting time by 7%.
+#
+4854#
+AGI + 1.
+If the item's refine level is 8, AGI + 3 additionally.
+If the item's refine level is 9, ATK + 1% additionally.
+If the item's refine level is 12 ASPD + 1, Decreases casting time by 7%.
+#
+4855#
+VIT + 1.
+If the item's refine level is 8, VIT + 3 additionally.
+If the item's refine level is 9, SP + 1% additionally.
+If the item's refine level is 12 ASPD + 1, Decreases casting time by 7%.
+#
+4856#
+INT + 1.
+If the item's refine level is 8, INT + 3 additionally.
+If the item's refine level is 9, MATK + 1% additionally.
+If the item's refine level is 12 ASPD + 1, Decreases casting time by 7%.
+#
+4857#
+DEX + 1.
+If the item's refine level is 8, DEX + 3 additionally.
+If the item's refine level is 9, MATK + 1% additionally.
+If the item's refine level is 12 ASPD + 1, Decreases casting time by 7%.
+#
+4858#
+LUK + 1.
+If the item's refine level is 8, LUK + 3 additionally.
+If the item's refine level is 9, MHP + 1% additionally.
+If the item's refine level is 12 ASPD + 1, Decreases casting time by 7%.
+#
+4859#
+FLEE + 1.
+#
+4860#
+FLEE + 3.
+#
+4870#
+SP + 25
+#
+4871#
+SP + 75
+#
+4861#
+MHP + 1%.
+#
+4862#
+MHP + 2%.
+#
+4867#
+MHP + 3%.
+#
+4868#
+MHP + 4%.
+#
+4787#
+MDEF + 4
+#
+4792#
+DEF + 6
+#
+4801#
+SP + 100
+#
+4795#
+HP + 100
+#
+4796#
+HP + 200
+#
+4786#
+MDEF + 2
+#
+4788#
+MDEF + 6
+#
+4789#
+MDEF + 8
+#
+4790#
+MDEF + 10
+#
+4791#
+DEF + 3
+#
+4793#
+DEF + 9
+#
+4794#
+DEF + 12
+#
+4797#
+HP + 300
+#
+4798#
+HP + 400
+#
+4799#
+HP + 500
+#
+4800#
+SP + 50
+#
+4802#
+SP + 150
+#
+4803#
+Decreases cooldown time for Highness Heal by 3 seconds.
+#
+4804#
+Decreases SP cost of Coluseo Heal by 30.
+#
+4805#
+Increases the effectiveness of healing skills by 3%.
+#
+6380#
+^ff0000This item cannot be traded between accounts.^000000
+A small coin with a polished surface. It is used for many purposes in the Village of Mora.
+Weight : ^7777770^000000
+#
+
+// ------- 2012. 12. 5 ----------------
+5458#
+The hairband with windmills.
+HP & SP +5%
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777720^000000
+Job : ^777777All^000000
+#
+18631#
+Sensual Chef hat made in cute concept art. Goes well with casual outfit.
+DEX+3, LUK+1.
+Drops Outdoor/Home/Professional/Royal/Fantastic Cooking Kit by random percentage when refined to +7 and above.
+Class : ^777777Headgear^000000    Defense : ^7777775^000000
+Location : ^777777Upper^000000    Weight : ^77777730^000000
+Required Lv : ^77777770^000000
+Job : ^777777All^000000
+#
+5795#
+A red dress hat.
+It goes well with fancy dresses.
+MDEF +7
+MDEF +1 per 2 refine Lv.
+Series : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location : ^777777Upper^000000
+Weight : ^77777720^000000
+Required Lv : ^77777720^000000
+Job : ^777777All^000000
+#
+17072#
+^ff0000 Unable to trade with other account.^000000
+A box has 100 Superb Fish Slice . Must careful on dealing with.
+^ff0000Once opens, cannot refund .^000000
+weight : ^7777771^000000
+#
+5357#
+This hair accessory is made of Valkyrie's jewel and feathers.
+MDEF +10
+Cannot be destroyed.
+Series : ^777777Headgear^000000    
+Location : ^777777Upper & Middle^000000
+Defense : ^77777710^000000
+Weight : ^77777720^000000
+Job : ^777777All^000000
+#
+5506#
+A lovely nightcap. It is cute and you will feels sleepy when your wear it.
+ATK, MATK +5%.
+Series : ^777777Headgear^000000        Defense : ^7777772^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Job : ^777777All^000000
+#
+5507#
+A lovely nightcap. It is cute and you will feels sleepy when your wear it.
+ATK, MATK +5%.
+Series : ^777777Headgear^000000        Defense : ^7777774^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Job : ^777777All^000000
+#
+5277#
+The yellow bandana stained with a little blood. Wear it to join the parade.
+LUK+2, VIT+2
+Resistance to long range attack +10%.
+Series : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000    Weight : ^777777100^000000
+Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+
+// ------- 2012. 12. 21 Christmas ----------------
+6681#
+^ff0000This Item cannot be traded with other accounts.^000000
+The ingredient of cookie house for Raccoon Hooray team for this Christmas..
+Weight : ^7777771^000000
+#
+6682#
+^ff0000This Item cannot be traded with other accounts.^000000
+The bag has a lot of goods that Raccoon Hooray team borrowed without permission. You would better giving back to owners.
+Weight : ^7777771^000000
+#
+18850#
+Christmas hat that Raccoon Hooray team borrowed from Satan without permission.
+It is very helpful for Raccoon Hooray team to sleep in the open. Because it is very warm.
+MDEF +3.
+AGI +1, DEX +1.
+HP recovery speed 5% will be increased during the event period.
+SP recovery speed 3% increase.
+Monsters drop Buche_De_Noel by the certain rate.
+Class : ^777777Helmet^000000 Defense : ^7777777^000000
+Location : ^777777Upper ^000000Weight : ^77777730^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19707#
+Christmas hat that Raccoon Hooray team borrowed from Satan without permission.
+It is very helpful for Raccoon Hooray team to sleep in the open. Because it is very warm.
+Class : ^777777Clothes^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+16542#
+The special scroll to celebrate the Christmas Festival. Wish everyone Merry Christmas.
+Weight : ^7777771^000000
+#
+
+// ------- 2013. 1. 23  ----------------
+18659#
+A Hat created with power of mythical creature, Boitata.
+on physical attack, user will have a chance to cast SONIC_BLOW, Lv 5. and enchant fire property on weapon for 3 min.
+If user put this on with Boitata_Armor, user will give 10% more damage to Earth property monsters and enchant fire property on his armor. INT+3, STR + 3, MDEF + 10
+Class : ^777777Headgear^000000    Defense : ^7777775^000000
+Location : ^777777Upper-mid^000000
+Weight : ^7777770^000000
+Required Lv : ^7777770^000000
+Jobs : ^777777All^000000
+#
+18696#
+Top of head orange that makes smooth and glossy hair.
+Can use Lv2 'Mammonite' skill.
+Class : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777740^000000
+Required Level : ^77777720^000000
+Job : ^777777All Jobs except Novice^000000
+#
+2888#
+This is normal school bag that is designed to put books easily.
+Attack speed increased (Reduce delay 3%, after attack), decrease Casting 3%.
+If below level 79, HP+200, SP+100.
+If equipped with Academy Badge, increase attack speed(Reduce delay 3%, after attack), decrease Casting 3%.
+Class : ^777777Accessory^000000 Defense : ^7777770^000000
+Weight : ^777777100^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2751#
+If finish probationary wizard school very well, receive this badge.
+Perhaps, it has symbolic meaning to probationary wizards.
+INT+2, MATK+3%, MHP+100.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^77777710^000000
+Jobs : ^777777All^000000
+#
+18630#
+A cute doll of a drooping Alice from the Robot Factory.
+Increases damage to Demihuman monsters by 10%.
+If refined to +7 or higher, has a low chance of adding 100% Aspd for 7 seconds.
+Class : ^777777Headgear^000000    Defense : ^7777776^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All Jobs except Novice^000000
+#
+
+// ------- 2013. 1. 30  ----------------
+14625#
+The scroll with mystery power. 
+Weight : ^7777771^000000 
+#
+18743#
+The soul of the Chung E, it is scary and horrible.
+Series : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000 
+#
+20707#
+The legendary ancient beast in China.
+ALL Status + 1.
+Resistance to Demi-Human type monster +5%.
+Series : ^777777Garment^000000 Defense : ^77777718^000000
+Weight : ^7777770^000000 
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000 
+#
+6606#
+^ff0000Only available for merchant class character.^000000
+The special coupon that can remodel your pushcart to new design cute cart!
+There are 3 new designs are available!
+Weight : ^7777771^000000
+#
+
+// ------- 2013. 2. 6  ----------------
+14624#
+The scroll in blue colour.
+Have chance to obtain Sealed Incantation Samurai Card, Sealed Phreeoni Card, Maneater Flower Hat, Black Devil Mask, RWC Memory Knife and etc randomly.
+Weight : ^7777771^000000
+#
+14643#
+The scroll in violet colour.
+Have chance to obtain RSX 0806 Card, Sealed Garm Card, Maya Puple Card, RWC Memory Mace, Helm Of Thoth, Cherry Twig In Mouth and etc randomly.
+Weight : ^7777771^000000
+#
+18715#
+The helm worn by the priest of Thoth.
+INT+2, MDEF+5, MaxSP+100.
+Cannot refine.
+Series : ^777777Headgear^000000  Defense : ^7777772^000000
+Location : ^777777Upper^000000    Weight : ^777777250^000000
+Level Requirement : ^77777780^000000
+Job : ^777777All Job except Novice^000000
+#
+2986#
+The ring is designed according to the snake.
+DEX+3, MDEF+2.
+Series : ^777777Accessory^000000 Defense : ^7777772^000000
+Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+2987#
+The charm is designed according to the snake.
+AGI+3, LUK+2, MDEF  3.
+Series : ^777777Accessory^000000 Defense : ^7777773^000000
+Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+7646#
+The bookmark that is written with the blessing content and decorated by lucky clover.
+Weight : ^7777771^000000
+#
+7647#
+The coin is made to pray for the luck.
+^ff0000This item cannot with other account.^000000
+Weight : ^7777770^000000
+#
+7648#
+The bookmark that is written with the blessing content and decorated by lucky clover.
+Weight : ^7777771^000000
+#
+7649#
+The bookmark that is written with the blessing content and decorated by lucky clover.
+Weight : ^7777771^000000
+#
+18872#
+The headgear is designed according to the curled of snake.
+STR+3, INT+3, MDEF+5.
+If equipped with Snake Ring, ATK+1 for every Base Lv increased. (Maximum level 160).
+If equipped with Snake Charm, MATK+1 for every Base Lv increased. (Maximum level 160).
+If equipped with Snake Ring and Snake Charm, have chance to drop Snake Wild Beery after defeated monsters.
+Series : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+19730#
+The headgear is designed according to the curled of snake.
+Series : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777771^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+22558#
+The item that contain various celebration item for festival.
+Weight : ^7777771^000000
+#
+22559#
+The common wild berry in the field.
+After used, recover HP & SP by 50%, enable [Endure] Lv3.
+Weight : ^77777710^000000
+#
+
+// ------- 2013. 2. 20  ----------------
+15088#
+The cloth worn by student for school.
+AGI+2, LUK+1.
+MHP increase according to Base Lv x3 
+MSP increase according to Base Lv x1/2
+Series : ^777777Armor^000000 Defense : ^77777725^000000
+Weight : ^77777750^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+17256#
+^ff0000Certain item in the box cannot trade with other account.^000000
+A gift box for good student.
+Contains Evoked Angel School Cap, Red Pencil In Mouth, School Uniform, Korean Rice Cake Box and Insurance x5 (cannot be traded).
+Weight : ^7777771^000000
+#
+17257#
+^ff0000Certain item in the box cannot trade with other account.^000000
+A gift box for naughty student.
+Contains Evoked Devil School Cap, Blue Pencil In Mouth, School Uniform,  Korean Rice Cake Box and Insurance x5 (cannot be traded).
+Weight : ^7777771^000000
+#
+18814#
+^ff0000This item cannot be traded with other account.^000000f
+The symbol of good student, it represents the enthusiastic in helping.
+VIT+1, INT+2.
+Series : ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All Job except Novice^000000
+#
+18815#
+^ff0000This item cannot be traded with other account.^000000f
+The symbol of naughty student, it represents the devil and troublesome.
+VIT+1, STR+2.
+Series : ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All Job except Novice^000000
+#
+18816#
+The symbol of good student, it represents the enthusiastic in helping.
+VIT+2, INT+2, LUK+1.
+If equipped with Red Pencil In Mouth and School Uniform, MATK increase according to Base Lv, (BaseLv 1/3, Maxmimum Lv150), EXP from monster +5%.
+Series : ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All Job except Novice^000000
+#
+18817#
+The symbol of naughty student, it represents the devil and troublesome.
+VIT+2, STR+2, LUK+1.
+If equipped with Blue Pencil In Mouth and School Uniform, ATK increase according Base Lv (BaseLv 1/3, maximum Lv150), EXP from monster +5%.
+Series : ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All Job except Novice^000000
+#
+18818#
+The red pencil in the mouth.
+HIT+3.
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18819#
+The blue pencil in the mouth.
+HIT+3.
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+14626#
+The scroll in indigo colour.
+Have chance to obtain Pharaoh Card, Sealed Dark Snake Lord Card, Deviling Card, RWC Memory Staff, Monkey On Fur Hat, and etc randomly.
+Weight : ^7777771^000000
+#
+18712#
+The useful tools for refreshing in the summer.
+Cannot refine.
+Series : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Lower^000000    Weight : ^77777720^000000
+Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000"
+#
+18841#
+The kawaii mini poring.
+For every 3 refine level, attack speed +2% (reduce delay after attack);
+EXP +3% after defeated monster.
+If refined to +10, ASPD + 1.
+Series : ^777777Headgear^000000 Defense : ^7777778^000000
+Location : ^777777Upper ^000000 Weight : ^77777735^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18843#
+The big and small deviling are in party now.
+Reduce 5% damage from Demi-Human (player);
+If refined to +8 and above, MaxHP+1% for every refine level increased.
+Series : ^777777Headgear^000000 Defense : ^7777777^000000
+Location : ^777777Upper ^000000Weight : ^77777735^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18845#
+The kiss from Banshee Master, it bring the power to the owner.
+When receive physical damage, have chance to activate [Resistance to Demi-Human (player) +100% for 3 seconds], MaxSP + 3%.
+Series : ^777777Headgear ^000000 Defense : ^7777775^000000
+Location : ^777777Lower ^000000 Weight : ^77777720^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+
+// ------- 2013. 2. 27  ----------------
+18842#
+The large hat can help the ladies to cover from the sunshine.
+INT+2 for every 3 refine level increased.
+Reduce 7% damage from Demi-Human.
+MaxHP -3%.
+Series : ^777777Headgear^000000  Defense : ^7777778^000000
+Location : ^777777Upper ^000000  Weight : ^77777735^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18844#
+The flying balloon on top of your head.
+All state +2, Total Dodge +2.
+Series : ^777777Headgear^000000  Defense : ^7777775^000000
+Location : ^777777Lower ^000000  Weight : ^7777775^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18715#
+The headgear worn by priest of Thoth during ceremony.
+INT+2, MDEF+5, MaxSP+100.
+Cannot refine.
+Series : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000    Weight : ^777777250^000000
+Level Requirement : ^77777780^000000
 Job : ^777777All Job except Novice^000000
 #
