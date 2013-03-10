@@ -1924,6 +1924,7 @@ sub cmdSlave {
 		center(T(" Slave Status "), 78, '-') . "\n" .
 		T("Name: \@<<<<<<<<<<<<<<<<<<<<<<<<< HP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"Type: \@<<<<<<<<<<<<<<<<<<<<<<<<< SP: \@>>>>>>>>>>>>>>>>>>\n" .
+		"Job: \@<<<<<<<<<<<<<<<\n" .
 		"Level: \@<<   \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n") .
 		('-'x78) . "\n" .
 		T("Atk: \@>>>    Matk:     \@>>>    Hunger:      \@>>>\n" .
@@ -1932,8 +1933,9 @@ sub cmdSlave {
 		"Flee:\@>>>    Aspd:     \@>>>    Summons:     \@>>>\n" .
 		"Range: \@<<   Skill pt: \@>>>    Contract End: \@>>>>>>>>>>\n"),
 		[$slave->{'name'}, $hp_string,
-		$slave->{actorType}, $sp_string,
-		$slave->{'level'}, $exp_string, 
+		$slave->{'actorType'}, $sp_string,
+		$jobs_lut{$slave->{'jobId'}},
+		$slave->{'level'}, $exp_string,
 		$slave->{'atk'}, $slave->{'attack_magic_max'}, $hunger_string,
 		$slave->{'hit'}, $slave->{'critical'}, $intimacy_label, $intimacy_string,
 		$slave->{'def'}, $slave->{'mdef'}, $accessory_string,
@@ -1961,7 +1963,7 @@ sub cmdSlave {
 			message T("Feeding your homunculus.\n"), "homunculus";
 		}
 
-	} elsif ($subcmd eq "delete") {
+	} elsif ($subcmd eq "delete" || $subcmd eq "fire") {
 		if (!$net || $net->getState() != Network::IN_GAME) {
 			error TF("You must be logged in the game to use this command (%s)\n", $cmd . ' ' . $subcmd);
 			return;	

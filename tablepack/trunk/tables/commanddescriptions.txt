@@ -265,7 +265,9 @@ Interact with homunculus.
 s				display homunculus status
 status			display homunculus status
 feed			feed your homunculus. (Food needed)
-fire			deletes your homunculus
+rename			rename your homunculus
+fire			delete your homunculus
+delete			delete your homunculus
 move <x> <y>	moves your homunculus
 standby 		makes your homunculus standby
 aiv 			display current homunculus AI 

@@ -486,6 +486,7 @@ sub actor_display {
 
 				$actor->{appear_time} = time;
 				$actor->{name_given} = bytesToString($args->{name}) if exists $args->{name};
+				$actor->{jobId} = $args->{type} if exists $args->{type};
 				$mustAdd = 1;
 			}
 			$actor->{nameID} = $nameID;
