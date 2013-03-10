@@ -265,7 +265,9 @@ Interaja com o homunculus.
 s				Mostra os status do homunculus.
 status			Mostra os status do homunculus.
 feed			Alimenta seu homunculus (Necessário ter comida para o homunculus)
+rename			Renomeia seu homunculus
 fire			Deleta seu homunculus
+delete			Deleta seu homunculus
 move <x> <y>	Move seu homunculus
 standby 		Deixa seu homunculus no modo standby
 aiv 			Mostra a IA atual do homunculus
