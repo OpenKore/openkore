@@ -6161,7 +6161,7 @@
 6419#Bclass_Coin#
 6420#Cclass_Coin#
 6421#Dclass_Coin#
-6422#Dclass_Coin#
+6422#Eclass_Coin#
 6426#Poor_Can#
 6427#Poor_Can_Sack#
 16751#Spotty_Eel_Box1#
@@ -6220,3 +6220,112 @@
 18625#Rocket Helm#
 19573#C Heart Wing Hairband#
 18706#Can Hat#
+
+// ------- 2012. 11. 14 ----------------
+4819#ATK+1%#
+4848#Immuned_1Lv#
+4849#Cranial_1Lv#
+4850#Archbishop2Lv#
+4851#Archbishop3Lv#
+4852#Archbishop4Lv#
+4853#Special_STR#
+4854#Special_AGI#
+4855#Special_VIT#
+4856#Special_INT#
+4857#Special_DEX#
+4858#Special_LUK#
+4859#FLEE+1#
+4860#FLEE+3#
+4870#SP+25#
+4871#SP+75#
+4861#MHP+1%#
+4862#MHP+2%#
+4867#MHP+3%#
+4868#MHP+4%#
+4787#MDEF+4#
+4792#DEF+6#
+4801#SP+100#
+4795#HP+100#
+4796#HP+200#
+4786#MDEF+2#
+4788#MDEF+6#
+4789#MDEF+8#
+4790#MDEF+10#
+4791#DEF+3#
+4793#DEF+9#
+4794#DEF+12#
+4797#HP+300#
+4798#HP+400#
+4799#HP+500#
+4800#SP+50#
+4802#SP+150#
+4803#Cure1Lv.#
+4804#Catholic1Lv.#
+4805#Archbishop1Lv.#
+6380#Mora_Coin#
+
+// ------- 2012. 12. 5 ----------------
+5458#Pinwheel Cap#
+18631#Ribbon Chief Hat#
+5795#Red Dress Hat#
+5357#Wings Of Victory#
+17072#Superb Fish 100 Box#
+5506#Blue Pajamas Hat#
+5507#Pink Pajamas Hat#
+5277#Yellow Bandana#
+
+// ------- 2012. 12. 21 Christmas ----------------
+6681#XMAS_Cookie#
+6682#Bag_Of_Selling_Goods#
+18850#Polar_Bear_Cap#
+19707#C_Polar_Bear_Cap#
+16542#Xmas Bless#
+
+// ------- 2013. 1. 23  ----------------
+18659#Boitata_Hat#
+18696#Orange Hat#
+2888#School_Bag#
+2751#Academy_Badge#
+18630#Depress Alice Hat#
+
+// ------- 2013. 1. 30  ----------------
+14625#Buddha_Scroll#
+18743#Spirit Of Chung E# 
+20707#Kirin Wing#
+6606#Cute Cart Remodel Coupon#
+
+// ------- 2013. 2. 6  ----------------
+14624#Blue Scroll#
+14643#Violet Scroll#
+18715#Helm Of Thoth#
+2986#Snake Ring#
+2987#Snake Charm#
+7646#RO Lucky Bookmark#
+7647#Lucky Coin#
+7648#Snake Lucky Bookmark#
+7649#Prosperous Lucky Bookmark#
+18872#Curled Snake Hat#
+19730#C Curled Snake Hat#
+22558#Red Gift Bag#
+22559#Wild Snake Berry#
+
+// ------- 2013. 2. 20  ----------------
+15088#School Uniform#
+17256#Angel School Gift Box#
+17257#Devil School Gift Box#
+18814#Angel School Cap#
+18815#Devil School Cap#
+18816#Evoked Angel School Cap#
+18817#Evoked Devil School Cap#
+18818#Red Pencil In Mouth#
+18819#Blue Pencil In Mouth#
+14626#Indigo Scroll#
+18712#Fan In Mouth#
+18841#Small Poring Band#
+18843#Small Deviling Hat#
+18845#Banshee MasterKiss#
+
+// ------- 2013. 2. 27  ----------------
+18842#Hat Of Girl#
+18844#Blue Poring Balloon#
+18715#Helm Of Thoth#

@@ -7126,3 +7126,909 @@ To Jack#
 14180#Lost Bead#SG_FEEL#QUE_NOIMAGE#
 At the moment that you were going to put the password in the machine, the bead got disappeared. Go back to Centrea to ask her what happened.#
 To Centrea#
+
+
+//------ 2011.05 malangdo
+//---------ㅡMalangdo Daily Quest - Help the Bad Cats --------------------------------
+
+1145#Help the Bad Cats in Danger!#SG_FEEL#QUE_NOIMAGE#
+Do a favour to Gobong who's stomach is upset. Go to the port and try to listen to the suspious conversation.#
+Near the Foolish Cat.#
+
+1146#Help the Bad Cats in Danger!#SG_FEEL#QUE_NOIMAGE#
+From the suspious dealers, you listened on the conversation about the hidden object. Check the area around the balloon bag which is in the north of ship Navi.#
+#
+
+1147#Help the Bad Cats in Danger!#SG_FEEL#QUE_NOIMAGE#
+The only thing you found is a useless memo. Go to listen to the dealers a bit more.#
+Near the Foolish Cat.#
+
+1148#Help the Bad Cats in Danger!#SG_FEEL#QUE_NOIMAGE#
+Through the conversation of the suspious dealers, you realised that the hidden place is ship Navi itself. Find another suspicious cat on the deck of ship Navi.#
+Deck of ship Navi.#
+
+1149#Help the Bad Cats in Danger!#SG_FEEL#QUE_NOIMAGE#
+According to the Awfully suspious dealer, you decided to look around Gozangee.#
+ship Navi lounge.#
+
+1150#Help the Bad Cats in Danger!#SG_FEEL#QUE_NOIMAGE#
+You found a sack of bad cans on the deck of ship Navi. You need to see the Awfully Suspious Dealer again.#
+Deck of ship Navi.#
+
+1151#Help the Bad Cats in Danger!#SG_FEEL#QUE_NOIMAGE#
+Gather 30 Bad cans in Starry Coral Area and go back to Gobonge.#
+#
+
+1152#Help the Bad Cats in Danger!#SG_FEEL#QUE_NOIMAGE#
+Helping bad cats mission completed.# 
+After 1 day, you can help them again.#
+
+1153#Help the Bad Cats in Danger!#SG_FEEL#QUE_NOIMAGE#
+Go to see Patrol leader and say hello for Gobonge.#
+Patrol leader.#
+
+1154#Help the Bad Cats in Danger!#SG_FEEL#QUE_NOIMAGE#
+After cleaning up 20 Red Eruma in Starry Coral Area, report that to Patrol Leader.#
+Patrol leader.#
+
+1155#Help the Bad Cats in Danger!#SG_FEEL#QUE_NOIMAGE#
+Report Bad action to Gobonge.#
+Gobonge#
+
+//- 문어동굴
+4197#Pervert Octopus#SG_FEEL#QUE_NOIMAGE#
+The Pervert Octopus appears every 3 hours.#
+The next time of its appearance : in 3 hours#
+
+// 2010 말랑도 - 냥이 게이머즈
+5058#The mood of the players-(1)#SG_FEEL#QUE_NOIMAGE#
+Cat gamers Director's worry for esacaping from a 10-game losing streak!!#
+Ask director of cat about current the mood of Nyang gamers players.#
+
+5059#The mood of the players-(2)#SG_FEEL#QUE_NOIMAGE#
+Heard about the mood of the players from the director.#
+Let's send to Cat gamers Director.#
+
+5060#Cat Shock#SG_FEEL#QUE_NOIMAGE#
+Cat gamers Director was big shocked.#
+Cat gamers Director might need a time to think.#
+
+5061#Am I scared?#SG_FEEL#QUE_NOIMAGE#
+Cat gamers Director wonders leaving cats are scared me or not.. Let's find leaving cat Eryu, Stew, Ketchup, Eff.#
+Please, Cat gamers Director ask about it.#
+
+5062#I met Eryu.#SG_FEEL#QUE_NOIMAGE#
+I met Eryu.#
+I met Eryu.#
+
+5063#I met Stew.#SG_FEEL#QUE_NOIMAGE#
+I met Stew.#
+I met Stew.#
+
+5064#I met Ketchup.#SG_FEEL#QUE_NOIMAGE#
+I met Ketchup.#
+I met Ketchup.#
+
+5065#I met Eff.#SG_FEEL#QUE_NOIMAGE#
+I met Eff.#
+I met Eff.#
+
+5066#Scary image-(1)#SG_FEEL#QUE_NOIMAGE#
+Cat gamers Director wants to change his Scary image.#
+Let me ask director cat who is accredited by Cat gamers Director.#
+
+5067#Scary image-(2)#SG_FEEL#QUE_NOIMAGE#
+Director cat said "Scary image.. that is really hard.. Why does not giving up.. Tthat will be easy…collecting complaint... !! I heard that sometimes army do that~#
+Tell Cat gamers Director, bring a box for collecting complaint.#
+
+5068#Collecting complaint#SG_FEEL#QUE_NOIMAGE#
+We are collecting complaint from 'Nyang Gamers' players.#
+Collecting time is only for 20 hours.#
+
+5069#Token of honor#SG_FEEL#QUE_NOIMAGE#
+Now, we are producing a token of honor that is the efforts and suffering of the Nyang's technical team .#
+Please, come back 1 hour later and get the token of honor from Cat gamers Director.#
+
+5070#Practice matach of Rock-paper-scissors#SG_FEEL#QUE_NOIMAGE#
+I have a rock-paper-scissors practice match with player of 'Nyang gamers'.#
+The next practice will be after 24 hours.#
+
+5071#Practice matach of Charmcharmcharm#SG_FEEL#QUE_NOIMAGE#
+I have a Charmcharmcharm practice match with player of 'Nyang gamers'.#
+The next practice will be after 24 hours.#
+
+5072#Kong nyang kong Practice matach#SG_FEEL#QUE_NOIMAGE#
+I have a practice match with Kong nyang kong in 'Nyang gamers'.#
+The next practice will be after 24 hours.#
+
+5073#Challenging of flag wave#SG_FEEL#QUE_NOIMAGE#
+'I challenged team of flag wave in 'Nyang gamers'.#
+The next challenge will be after 24 hours.#
+
+5074#Cat's Meal#SG_FEEL#QUE_NOIMAGE#
+I received this paper because I lost the practice match. '^0000FFDelicious Phen 30, Special fish tail 10^000000' is written here.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5075#Health food#SG_FEEL#QUE_NOIMAGE#
+I received this paper because I lost the practice match.. '^0000FFMarse 50, Milk 30^000000'is written here.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5076#enemies#SG_FEEL#QUE_NOIMAGE#
+I received this paper because I lost the practice match.. '^0000FFAnnoy 30 Kobold Archer^000000'is written here.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5077#Reaction Training#SG_FEEL#QUE_NOIMAGE#
+I received this paper because I lost the practice match.. '^0000FFCatch 10 Cramp^000000'is written here.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5078#Light bird food#SG_FEEL#QUE_NOIMAGE#
+I received this paper because I lost the practice match.. '^0000FFPecopeco bird meat 50^000000'is written here.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5079#How to stabilize the mind#SG_FEEL#QUE_NOIMAGE#
+I received this paper because I lost the practice match.. '^0000FFTo Cat gamers Director Yarn 20^000000'is written here.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5080#Lack of Snack#SG_FEEL#QUE_NOIMAGE#
+I received this paper because I lost the practice match.. '^0000FFRat Tail 30^000000'is written here.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5081#Banned foods#SG_FEEL#QUE_NOIMAGE#
+I received this paper because I lost the practice match.. '^0000FFLemon 5^000000'is written here.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5082#Cool food#SG_FEEL#QUE_NOIMAGE#
+I received this paper because I lost the practice match.. '^0000FFIce cube or ice cream 10^000000'is written here.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5083#Please come back Eryu-(1)#SG_FEEL#QUE_NOIMAGE#
+Work that I got because I lost the practice match. Meet Eryu and said '^0000FFCome back^000000'.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5084#Please come back Eryu-(2)#SG_FEEL#QUE_NOIMAGE#
+I met Eryu and said 'come back'.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5085#Please come back Stew-(1)#SG_FEEL#QUE_NOIMAGE#
+Favor that I reveiced because I lost the practice match. Meet Stew and said '^0000FFCome back^000000'.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5086#Please come back Stew-(2)#SG_FEEL#QUE_NOIMAGE#
+I met Stew and said 'come back'.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5087#Please come back Ketchup-(1)#SG_FEEL#QUE_NOIMAGE#
+Favor that I reveiced because I lost the practice match. Meet Ketchup and said '^0000FFCome back^000000'.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5088#Please come back Ketchup-(2)#SG_FEEL#QUE_NOIMAGE#
+I met Ketchup and said 'come back'.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5089#Please come back Eff-(1)#SG_FEEL#QUE_NOIMAGE#
+Favor that I reveiced because I lost the practice match. Meet Eff and said '^0000FFCome back^000000'.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5090#Please come back Eff-(2)#SG_FEEL#QUE_NOIMAGE#
+I met Eff and said 'Come back'.#
+When you finish your job, Please report to Cat gamers Director.#
+
+5091#Go Malangdo#SG_FEEL#QUE_NOIMAGE#
+Go Malangdo..#
+Malangdo#
+
+//-- 말랑도 야옹 모험단
+7242#Play with the baby cat#SG_FEEL#QUE_NOIMAGE#
+The request from Rato, an expert cat sailor in Malangdo. He worries about the baby cats so asked you find them and play with them. Go to find those baby cats. They are Rosy the white one, Roku the black one, and gold one Charo.#
+#
+
+7243#Nyadventure-Duruduru Compass#SG_FEEL#QUE_NOIMAGE#
+You received Adventure card A from the baby cats who called themselved 'Mew Bravery Team'. The card seems necessary for operating some devices made by the Mew Bravery Team. If you insert the card into the Compass of Beginning, the game starts.#
+#
+
+7244#Nyadventure-Duruduru Race#SG_FEEL#QUE_NOIMAGE#
+Duruduru Compass Race got started. You have to turn around all the area in order within a limited time. The order of the compass is [Red Flame] -> [Blue Flame] -> [Gold Flame] -> [Forest] -> [Cloud].#
+#
+
+7245#Nyadventure-Duruduru Race#SG_FEEL#QUE_NOIMAGE#
+Duruduru Compass Race got started. You have to turn around all the area in order within a limited time. The order of the compass is [Gold Flame] -> [Blue Flame] -> [Cloud] -> [Forest] -> [Red Flame].#
+#
+
+7246#Nyadventure-I'm coming now.#SG_FEEL#QUE_NOIMAGE#
+Charo says that a detective cat is near ship Navi which is in the centre of Malangdo. Go to meet the detective and the friend.#
+#
+
+7247#Nyadventure-Stop the Bang!#SG_FEEL#QUE_NOIMAGE#
+Homnya, a doubtful cat who called himself a 'real detective' and his friend Nyangson say that if the machine in front explodes, the whole Malangdo will be gone. So they ask you to stop the machine.#
+#
+
+7248##SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+7249#Nyadventure-Bang! See you next time#SG_FEEL#QUE_NOIMAGE#
+According to Homnya and Nyangson, this machine named Bang makes problem every minute. You never know when you will be in trouble. You will go to see the Bang tomorrow.#
+#
+
+7250#Nyadventure-Hidden Treasure?#SG_FEEL#QUE_NOIMAGE#
+When the Bang stopped, Homnya and Nyangson gives you a useful information. They talk about treasure something. Homnya says the treasure is inside of ship Navi. It might be a kidding but worth to try. Let's go.#
+#
+
+7251#Nyadventure-The First piece of Painting#SG_FEEL#QUE_NOIMAGE#
+The piece of Painting which you found in the box in ship Navi#
+#
+
+7252#Nyadventure-The Second piece of Painting#SG_FEEL#QUE_NOIMAGE#
+The piece of Painting which was put in the book in ship Navi's meeting room#
+#
+
+7253#Nyadventure-The Third piece of Painting#SG_FEEL#QUE_NOIMAGE#
+The piece of Painting which you found under the old bed in the crew's cabin#
+#
+
+7254#Nyadventure-The Fourth piece of Painting#SG_FEEL#QUE_NOIMAGE#
+The piece of Painting which you found in the decoration seashell of the captain's room#
+#
+
+7255#Nyadventure-The Fifth piece of Painting#SG_FEEL#QUE_NOIMAGE#
+The piece of Painting which you found in the crack of wooden pillar#
+#
+
+7256#Nyadventure-The Sixth piece of Painting#SG_FEEL#QUE_NOIMAGE#
+The piece of Painting which you found in the Ventilation window on the cabin floor#
+#
+
+7257#Nyadventure-Race, Come back tomorrow!#SG_FEEL#QUE_NOIMAGE#
+Duruduru Race is good if you only run once a day. If you want it, come back later.#
+#
+
+7258#Nyadventure-Painting completed#SG_FEEL#QUE_NOIMAGE#
+Pieces you found in the ship are over all 6. It seems a complete painting. Go to Charo, Rosy Roku and let them know this.#
+#
+
+7259#Gift from the Mew Bravery Team#SG_FEEL#QUE_NOIMAGE#
+Charo, Rosy and Roku say that they want to give Rato the painting pieces found. Bring the painting to Rato in order to deliver the love of baby cats (even though the painting is torn apart).#
+#
+
+//---- Malangdo Chef
+7260#The origin of Bugs#SG_FEEL#QUE_NOIMAGE#
+Cleanyang's crying out loud saying that bugs appear over and over again although he cleans up the ship completely. Help him. Inspect ship Navi meticulously.#
+#
+
+7261#Pick up Cat's Ship Biscuit-Captain's Room#SG_FEEL#QUE_NOIMAGE#
+In the corner of the captain's room, you found out cat's hard biscuit which was hidden. The biscuit was all covered with the bugs. Those bugs must be there for the biscuit..#
+#
+
+7262#Pick up Cat's Ship Biscuit-Crew's Cabin#SG_FEEL#QUE_NOIMAGE#
+In the sailor's room, you found out cat's hard biscuit which was hidden. The biscuit was all covered with the bugs. Those bugs must be there for the biscuit..#
+#
+
+7263#Pick up Cat's Ship Biscuit-Meeting Room#SG_FEEL#QUE_NOIMAGE#
+In somewhere in the meeting room, you found out cat's hard biscuit which was hidden. The biscuit was all covered with the bugs. Those bugs must be there for the biscuit..#
+#
+
+7264#To Chef Nyas#SG_FEEL#QUE_NOIMAGE#
+Cleanyang did clean up all the ship, but the problem was those cat's hard biscuit which were kept beyond his reach. You should tell Nyas the truth and clear Cleanyang of the false charge.#
+Talking with Nyas#
+
+7265#Rage of Chef Nyas#SG_FEEL#QUE_NOIMAGE#
+When you told the story about the biscuit and the bugs, the chef got so angry. You'd better talk to him a little later.#
+Talking with Nyas#
+
+7266#Declaration of Chef Nyas#SG_FEEL#QUE_NOIMAGE#
+Nyas decided himself and declared that at least one meal a day will be cat's hard biscuit from now. He asked you to bring 10 bags of Grain and 1 bottle of Plain Sauce for making the biscuits.#
+10 bags of Grain, 1 bottle of Plain Sauce, Deliver the message to Cleanyang.#
+
+7267#Appointed time with Cleanyang#SG_FEEL#QUE_NOIMAGE#
+In order to solve the Cat's hard biscuit incident, you are going to work with Cleanyang. Go back to Cleanyang at the appointed time.#
+#
+
+7268#Find the Cat's hard biscuits!#SG_FEEL#QUE_NOIMAGE#
+You are gonna pick up the biscuits which cats on the ship started to hide. If the biscuits are taken, the bugs also will be gone. Focus on the 9 spots where the biscuits are frequently seen.#
+#
+
+7269#Pick up Cat's Ship Biscuit-Rest Area#SG_FEEL#QUE_NOIMAGE#
+In the weed of outdoor rest area, you found out cat's hard biscuit which was hidden. The biscuit was all covered with the bugs. Those bugs must be there for the biscuit..#
+#
+
+7270#Pick up Cat's Ship Biscuit-Sand area#SG_FEEL#QUE_NOIMAGE#
+In a strange pile of sand, you found out cat's hard biscuit which was hidden. The biscuit was all covered with the bugs. Those bugs must be there for the biscuit..#
+#
+
+7271#Pick up Cat's Ship Biscuit-Under the stairs#SG_FEEL#QUE_NOIMAGE#
+In the corner underneath stairs, you found out cat's hard biscuit which was hidden. The biscuit was all covered with the bugs. Those bugs must be there for the biscuit..#
+#
+
+7272#Pick up Cat's Ship Biscuit-Corner of Cat tower#SG_FEEL#QUE_NOIMAGE#
+In the corner of cat tower, you found out cat's hard biscuit which was hidden. The biscuit was all covered with the bugs. Those bugs must be there for the biscuit..#
+#
+
+7273#Pick up Cat's Ship Biscuit-Corner of Locker#SG_FEEL#QUE_NOIMAGE#
+In the gap between the locker and the wall, you found out cat's hard biscuit which was hidden. The biscuit was all covered with the bugs. Those bugs must be there for the biscuit..#
+#
+
+7274#Pick up Cat's Ship Biscuit-Foothold of Cat tower#SG_FEEL#QUE_NOIMAGE#
+In the gap between the foothold and the floor, you found out cat's hard biscuit which was hidden. The biscuit was all covered with the bugs. Those bugs must be there for the biscuit..#
+#
+
+7275#Pick up Cat's Ship Biscuit-Sand Grave#SG_FEEL#QUE_NOIMAGE#
+In a sand grave, you found out cat's hard biscuit which was hidden. The biscuit was all covered with the bugs. Those bugs must be there for the biscuit..#
+#
+
+7276#Promise to deliver more food#SG_FEEL#QUE_NOIMAGE#
+Chef Nyas wants you to deliver the ingredient for the biscuit every day, and for some new food. Anyway go back to him whenever you can.#
+#
+
+//-덱
+7281#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Honey Grape Juice#
+
+7282#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Chocolate Mousse Cake#
+
+7283#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Fruit Mix#
+
+7284#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Cream Sandwich#
+
+7285#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Green Salad#
+
+7286#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Peach Cake#
+
+7287#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Soul Haunted Bread#
+
+7288#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Special Toast#
+
+7289#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Heavenly Fruit Juice#
+
+7290#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Hwergelmir's Tonic#
+
+//-힘
+7291#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Fried Grasshopper Legs#
+
+7292#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Seasoned Sticky Webfoot#
+
+7293#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Bomber Steak#
+
+7294#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Herb Marinade Beef#
+
+7295#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Lutie Lady's Pancake#
+
+7296#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Shiny Marinade Beef#
+
+7297#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Whole Roast#
+
+7298#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Bearfoot Special#
+
+7299#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Tendon Satay#
+
+7300#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Steamed Tongue#
+
+//-어질
+7301#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Frog Egg Squid Ink Soup#
+
+7302#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Smooth Noodle#
+
+7303#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Tentacle Cheese Gratin#
+
+7304#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Lutie Cold Noodle#
+
+7305#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Steamed Bat Wing in Pumpkin#
+
+7306#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Chile Shrimp Gratin#
+
+7307#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Steamed Alligator with Vegetable#
+
+7308#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Incredibly Spicy Curry#
+
+7309#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Special Meat Stew#
+
+7310#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Steamed Scorpion#
+
+//-바탈
+7311#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Steamed Crab Nippers#
+
+7312#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Assorted Seafood#
+
+7313#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Clam Soup#
+
+7314#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Seasoned Jellyfish#
+
+7315#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Spicy Fried Bao#
+
+7316#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Awfully Bitter Bracer#
+
+7317#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Sumptuous Feast#
+
+7318#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Giant Burito#
+
+7319#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Ascending Dragon Soup#
+
+7320#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Stew Of Immortality#
+
+//-인트
+7321#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Grape Juice Herbal Tea#
+
+7322#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Autumn Red Tea#
+
+7323#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Honey Herbal Tea#
+
+7324#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Morroc Fruit Wine#
+
+7325#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Mastela Fruit Wine#
+
+7326#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Red Mushroom Wine#
+
+7327#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Special Royal Jelly Herbal Tea#
+
+7328#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Royal Family Tea#
+
+7329#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Tristram 12#
+
+7330#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Dragon Breath Cocktail#
+
+//-럭
+7331#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Fried Monkey Tails#
+
+7332#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Mixed Juice#
+
+7333#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Fried Sweet Potato#
+
+7334#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Steamed Ancient Lips#
+
+7335#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Fried Scorpion Tails#
+
+7336#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Lucky Soup#
+
+7337#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Assorted Shish Kebob#
+
+7338#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Strawberry Flavored Rice Ball#
+
+7339#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Blood Flavored Soda#
+
+7340#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Cooked Nine Tail's Tails#
+
+//-20요리
+7341#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Savage BBQ#
+
+7342#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Wug Blood Cocktail#
+
+7343#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Minor Brisket#
+
+7344#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Siroma Icetea#
+
+7345#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Drocera Herb Stew#
+
+7346#Errands List of Nyas#SG FEEL#QUE NOIMAGE#
+Chef Nyas ordered you to bring 10 Bags of Grain and 1 bottle of Savory Sauce. And he also wants you to get the food below for his curiosity of Human Food.#
+10 Bags of Grain, 1 Bottle of Savory Sauce, 1 Petti Tail Noodle#
+
+//--토마스씨의 고충(국내14.1에추가_말랑도포함)
+11209#Mr. Tomas' distress#SG_FEEL#QUE_NOIMAGE#
+All human who visit Malangdo are coming to me that is why I have too much work. There is ^0000FFMalangdo regular meeting^000000, just go over there. The place is located on ^0000FFThe other side of corridor end^000000.#
+Participate meeting.#
+
+11210#Malangdo regular meeting#SG_FEEL#QUE_NOIMAGE#
+Today agenda is ^ff99ccStar Candy^000000. If anyone has opinion about next topic, please speak up.#
+Let's hear Scottfold's opinion.#
+
+11211#Malangdo regular meeting#SG_FEEL#QUE_NOIMAGE#
+There is ^0000FFinterpreter Biscuit^000000 next him but it is really hard to have detailed conversation.#
+Let's hear Koon's opinion.#
+
+11212#Malangdo regular meeting#SG_FEEL#QUE_NOIMAGE#
+Let me tell you about the production of study.#
+Let's hear Llinguist  Devore's production of study.#
+
+11213#Malangdo regular meeting#SG_FEEL#QUE_NOIMAGE#
+^0000FFStudy of language of Starfish^000000 is started when we are settled in Malando but it does not achieve what I expected. A simple conversation is available but that is lack of performance.#
+Let's hear Geologist Mali's production of study.#
+
+11214#Malangdo regular meeting#SG_FEEL#QUE_NOIMAGE#
+There are several ground crack. Nobody knows when the Star Candy will move so, we have to repair them quickly.#
+Let's hear Brie's opinion.#
+
+11215#Malangdo regular meeting#SG_FEEL#QUE_NOIMAGE#
+We pretty understand that Mr. Rican's injury could affect trading of Yggdrasilberry so, don't worry about that.#
+Let's hear Brie's Story.#
+
+11216#Yggdrasilberry#SG_FEEL#QUE_NOIMAGE#
+Anyway, I don't know exactly about Yggdrasilberry. If you have question, just go my home in ^6666ccWestern Malando^000000. My father will be bored out of his skull there...#
+Let's meet Brie's father Mr. Rican.#
+
+11217#Yggdrasilberry#SG_FEEL#QUE_NOIMAGE#
+^6666ccThe Yggdrasilberry is everywhere.^000000 You can get easily on island Malangdo so, please bring about 30 of them.#
+Let's bring 30 fresh Yggdrasilberry.#
+
+11218#Yggdrasilberry#SG_FEEL#QUE_NOIMAGE#
+Why don't you put Yggdrasilberry in the machine.?#
+Let's put Yggdrasilberry in that machine.#
+
+11219#Yggdrasilberry#SG_FEEL#QUE_NOIMAGE#
+When press the button, the machine is started.#
+Let's talk with Rican.#
+
+11220#Yggdrasilberry#SG_FEEL#QUE_NOIMAGE#
+After I had knee injury, he might go to Dr. Mali everyday. If you see my son, just tell him come back to me~#
+Let's find Brie.#
+
+11221#The most soft jelly in the world#SG_FEEL#QUE_NOIMAGE#
+If you need more detail, please ask my  ^6666ccassistant Bob^000000. He might be at ^6666ccright next room^000000.#
+Let's meet the assistant Bob.#
+
+11222#The most soft jelly in the world#SG_FEEL#QUE_NOIMAGE#
+Fill mixed gray and white clay up into the crack. Attach the gap with stapler.#
+Let's repair crack by repairing kit. when everyone says OK....#
+
+11223#The most soft jelly in the world#SG_FEEL#QUE_NOIMAGE#
+The crack is filled up as well. Let's report to Bob.#
+let's get back to Bob.#
+
+11224#The most soft jelly in the world#SG_FEEL#QUE_NOIMAGE#
+Empress! magical! shocking! well done!!! I'll tell Dr. Mali!#
+Let's see Dr. Mali.#
+
+11225#Not intersecting effort of the road#SG_FEEL#QUE_NOIMAGE#
+Everyone knows how Dr. Devore concentrates his study of starfish language!!! Please be confidence! you are doing good!#
+Llinguist Devore might be fell into slump. Let's talk with him.#
+
+11226#Not intersecting effort of the road#SG_FEEL#QUE_NOIMAGE#
+The starfish language is so mysterious. I don't know at all. I'm not sure that is really 'language' or not. I really want to know what they want over there!#
+Let's research about the Starfish.#
+
+11227#Not intersecting effort of the road#SG_FEEL#QUE_NOIMAGE#
+Biscuit might have a very fluent language skills, unlike Dr. Devore's saying. I 'll tell this fact to Dr. Devore.#
+Let's go to Dr. Devore.#
+
+11228#Not intersecting effort of the road#SG_FEEL#QUE_NOIMAGE#
+That is incredible. Well, Didn't it only speak in front of me. Let's go to hear!!#
+Let's get back to Biscuit.#
+
+11229#For the Star Candy#SG_FEEL#QUE_NOIMAGE#
+You are able to speak with Biscuit as same species. Any conversation will help my study.#
+Let's talk with Biscuit.#
+
+11230#For the Star Candy#SG_FEEL#QUE_NOIMAGE#
+I heard several things about Star candy, Biscuit and Malangdo.#
+Continue the conversation.#
+
+11231#For the Star Candy#SG_FEEL#QUE_NOIMAGE#
+You just catch the jelly around here. Delicious 30 jelly will be enough for one meal.#
+Let's get back with 30 delicious Jelly.#
+
+11232#For the Star Candy#SG_FEEL#QUE_NOIMAGE#
+Hey Star Candy! you don't eat as well. You don't have no appetite?#
+Let's find out what is going on.#
+
+11233#For the Star Candy#SG_FEEL#QUE_NOIMAGE#
+We have to carry water so, please bring bucket and brush to clean Star Candy. Those might be in storage#
+Let's find cleaning bucket and brush.#
+
+11234#For the Star Candy#SG_FEEL#QUE_NOIMAGE#
+You brought stuff as well. Now you can scrub your skin in counterclock wise!#
+Clean up friable skin-> haggard skin-> cracked skin-> hard skin.#
+
+11235#For the Star Candy#SG_FEEL#QUE_NOIMAGE#
+Friable skin, haggard skin, cracked skin and hard skin are changed smooth skin as soft as silk.#
+Let's get back to Biscuit.#
+
+11236#Intersection#SG_FEEL#QUE_NOIMAGE#
+You don't have to wait until the study is completed. Just tell Devore. I want to talk about the current situation with him.#
+Let's send to Dr. Devore.#
+
+11237#Mr. Tomas' distress#SG_FEEL#QUE_NOIMAGE#
+Please send this good news to chief Tomas.#
+Let's see the chief Tomas.#
+
+11238#Yggdrasilberry#SG_FEEL#QUE_NOIMAGE#
+The discount is just like before. 30 fresh Yggdrasilberry that easily found in island Malangdo!!#
+Let's get back to Rican with 30 fresh Yggdrasilberry.#
+
+11239#Yggdrasilberry#SG_FEEL#QUE_NOIMAGE#
+You can't receive any request from Rican during one day.#
+#
+
+11240#The most soft jelly in the world#SG_FEEL#QUE_NOIMAGE#
+If you need more detail, please ask my ^6666ccassistant Bob^000000. He might be at ^6666ccright next room^000000.#
+Let's see assistant Bob.#
+
+11241#The most soft jelly in the world#SG_FEEL#QUE_NOIMAGE#
+Fill mixed gray and white clay up into the crack. Attach the gap with stapler.#
+Let's repair crack by repairing kit. when everyone says OK....#
+
+11242#The most soft jelly in the world#SG_FEEL#QUE_NOIMAGE#
+The crack is filled up as well. Let's report to Dr. Mali.#
+Let's get back to Dr. Mali.#
+
+11243#The most soft jelly in the world#SG_FEEL#QUE_NOIMAGE#
+You can't receive any request from Dr. Mali during one day.#
+#
+
+11244#Soft Jelly#SG_FEEL#QUE_NOIMAGE#
+Just catch some jelly around here. I think that delicious 30 jelly are enough for one meal.#
+Let's get back with 30 delicious jelly.#
+
+11245#Soft Jelly#SG_FEEL#QUE_NOIMAGE#
+You can't receive any request from Biscuit during one day.#
+#
+
+//--지하배수로 던전 퀘스트(국내14.1에추가_말랑도포함)
+12254#Now it's cleaning#SG_FEEL#QUE_NOIMAGE#
+Now it's cleaning time. Please concentrate one spot until that finish#
+Cleaning the culvert during 1 hour#
+
+12255#Hunt deep sea crab#SG_FEEL#QUE_NOIMAGE#
+Today, the hero of Culvert, we set a date of extermination of^0000ffdeep sea crab ^000000and raise our. Common heros! Don't be afraid of them just come over here! It is just oneday!#
+Hunt 20 deep sea crabs - Appear in Culvert Dungeon Normal mode#
+
+12256#Hunt deep sea squid#SG_FEEL#QUE_NOIMAGE#
+Today, the hero of Culvert, we set a date of extermination of^0000ffdeep sea squid ^000000and raise our. Common heros! Don't be afraid of them just come over here! It is just oneday!#
+Hunt 20 deep sea squids - Appear in Culvert Dungeon Normal mode#
+
+12257#Hunt Ancient crustacean#SG_FEEL#QUE_NOIMAGE#
+Today, the hero of Culvert, we set a date of extermination of^0000ffancient crustacean ^000000and raise our. Common heros! Don't be afraid of them just come over here! It is just oneday!#
+Hunt 20 ancient crustaceans - Appear in Culvert Dungeon Normal mode#
+
+12258#Hunt deep sea shell#SG_FEEL#QUE_NOIMAGE#
+Today, the hero of Culvert, we set a date of extermination of^0000ffdeep sea shell ^000000and raise our. Common heros! Don't be afraid of them just come over here! It is just oneday!#
+Hunt 20 deep sea shells - Appear in Culvert Dungeon Normal mode#
+
+12259#Hunt ancient kukre#SG_FEEL#QUE_NOIMAGE#
+Today, the hero of Culvert, we set a date of extermination of^0000ffancient kukre ^000000and raise our. Common heros! Don't be afraid of them just come over here! It is just oneday!#
+Hunt 20 ancient kukres - Appear in Culvert Dungeon Normal mode#
+
+12260#Hunt deep sea conch#SG_FEEL#QUE_NOIMAGE#
+Today, the hero of Culvert, we set a date of extermination of^0000ffdeep sea conch ^000000and raise our. Common heros! Don't be afraid of them just come over here! It is just oneday!#
+Hunt 20 deep sea conches - Appear in Culvert Dungeon Normal mode#
+
+12261#Hunt deep sea horse#SG_FEEL#QUE_NOIMAGE#
+Today, the hero of Culvert, we set a date of extermination of^0000ffdeep sea horse ^000000and raise our. Common heros! Don't be afraid of them just come over here! It is just oneday!#
+Hunt 30 deep sea horses - Appear in Culvert Dungeon Hard mode#
+
+12262#Hunt ancient sword fish#SG_FEEL#QUE_NOIMAGE#
+Today, the hero of Culvert, we set a date of extermination of^0000ffancient sword fish ^000000and raise our. Common heros! Don't be afraid of them just come over here! It is just oneday!#
+Hunt 30 ancient sword fishes - Appear in Culvert Dungeon Hard mode#
+
+12263#Hunt ancient sea god#SG_FEEL#QUE_NOIMAGE#
+Today, the hero of Culvert, we set a date of extermination of^0000ffancient sea god ^000000and raise our. Common heros! Don't be afraid of them just come over here! It is just oneday!#
+Hunt 30 ancient sea gods - Appear in Culvert Dungeon Hard mode#
+
+12264#Hunt mutation anolian#SG_FEEL#QUE_NOIMAGE#
+Today, the hero of Culvert, we set a date of extermination of^0000ffmutation anolian ^000000and raise our. Common heros! Don't be afraid of them just come over here! It is just oneday!#
+Hunt 30 mutation anolians - Appear in Culvert Dungeon Hard mode#
+
+12265#Hunt deep sea mermaid#SG_FEEL#QUE_NOIMAGE#
+Today, the hero of Culvert, we set a date of extermination of^0000ffdeep sea mermaid ^000000and raise our. Common heros! Don't be afraid of them just come over here! It is just oneday!#
+Hunt 30 deep sea mermaids - Appear in Culvert Dungeon Hard mode#
+
+12266#Hunt transformable kapha#SG_FEEL#QUE_NOIMAGE#
+Today, the hero of Culvert, we set a date of extermination of^0000fftransformable kapha ^000000and raise our. Common heros! Don't be afraid of them just come over here! It is just oneday!#
+Hunt 30 transformable kaphas - Appear in Culvert Dungeon Hard mode#
+
+12267#Hunt weird coelacanth#SG_FEEL#QUE_NOIMAGE#
+The hero of Culvert, we set a week of Hunt ^0000ffweird coelacanth ^000000 and raise our voice! I'll give you just one week to finish this job! Termiante all of them normal mode in culvert dungeon!#
+Hunt 1 weird coelacanth - Appear in Culvert Dungeon Normal mode#
+
+12268#Hunt dark coelacanth#SG_FEEL#QUE_NOIMAGE#
+The hero of Culvert, we set a week of Hunt ^0000ffdark coelacanth ^000000 and raise our voice! I'll give you just one week to finish this job! Termiante all of them normal mode in culvert dungeon!#
+Hunt 1 dark coelacanth - Appear in Culvert Dungeon Normal mode#
+
+12269#Hunt Cruel coelacanth#SG_FEEL#QUE_NOIMAGE#
+The hero of Culvert, we set a week of Hunt ^0000ffCruel coelacanth ^000000 and raise our voice! I'll give you just one week to finish this job! Termiante all of them hard mode in culvert dungeon!#
+Hunt 1 Cruel coelacanth - Appear in Culvert Dungeon Hard mode#
+
+12270#Hunt mutation coelacanth#SG_FEEL#QUE_NOIMAGE#
+The hero of Culvert, we set a week of Hunt ^0000ffmutation coelacanth ^000000 and raise our voice! I'll give you just one week to finish this job! Termiante all of them hard mode in culvert dungeon!#
+Hunt 1 mutation coelacanth - Appear in Culvert Dungeon Hard mode#
+
+12271#In progress general culvert single day service#SG_FEEL#QUE_NOIMAGE#
+You already have got 1 requested service. Since you already have done it, you cannot get a new request for one day.#
+You are in charge of Culvert, normal for 1 day#
+
+12272#In progress hard culvert single day service#SG_FEEL#QUE_NOIMAGE#
+You already have got 1 requested service. Since you already have done it, you cannot get a new request for one day.#
+You are in charge of Culvert, hard for 1 day#
+
+12273#In progress general culvert weekly service#SG_FEEL#QUE_NOIMAGE#
+You already have got 1 requested service. Since you already have done it, you cannot get a new request for 7 days.#
+You are in charge of Culvert, normal for 7 days#
+
+12274#In progress hard culvert weekly service#SG_FEEL#QUE_NOIMAGE#
+You already have got 1 requested service. Since you already have done it, you cannot get a new request for 7 days.#
+You are in charge of Culvert, hard for 7 days#
+
+//----대만 2013 구정 이벤트
+15009#Prosperous Commission 1#SG_FEEL#QUE_NOIMAGE#
+Collect 20 Armlet Of Obedience from the Verit at Morroc Pyramid 4F#
+Collect 20 Armlet Of Obedience#
+
+15010#Prosperous Commission 2#SG_FEEL#QUE_NOIMAGE#
+Collect 100 Shining Scales from the Isis at Morroc Pyramid 4F#
+Collect 100 Shining Scales#
+
+15011#Prosperous Commission 3#SG_FEEL#QUE_NOIMAGE#
+Collect 200 Slender Snake from Medusa at West Cave of Comodo dungeon.#
+Collect 200 Slender Snake#
+
+15012#Prosperous Commission 4#SG_FEEL#QUE_NOIMAGE#
+Defeat 100 Snake Beast appeared in the field nearby the cities.#
+Defeat 100 Snake Beast#
+
+15013#Prosperous Commission#SG_FEEL#QUE_NOIMAGE#
+The Prosperous Commission can only be accept after passed the indicated time below.#
+Only can accept Prosperous Commission after 20 hours#
+
+5239#Good Student Qualification#SG_FEEL#QUE_NOIMAGE#
+Good Student Qualification#
+Good Student Qualification#
+
+5240#Transformation Skill of Magic School#SG_FEEL#QUE_NOIMAGE#
+Help new student to collect [50 Raccoon Leaf] to learn transformation skill.#
+Raccoon Leaf 50#
+
+5241#Medicine Ingredient#SG_FEEL#QUE_NOIMAGE#
+Help to collect the [50 Heart Of Mermaid] to make the medicine.#
+Heart Of Mermaid 50#
+
+5242#Restaurant Crisis#SG_FEEL#QUE_NOIMAGE#
+Help the restaurant to collect [30 Ice Piece] to make ice tea.#
+Ice Piece 30#
+
+5243#Tailor Request#SG_FEEL#QUE_NOIMAGE#
+Help to collect [40 Soft Silky Cloth] for tailor to make clothes for poor student.#
+Soft Silky Cloth 40#
+
+5244#Light of Reading#SG_FEEL#QUE_NOIMAGE#
+Help to poor student to collect [40 Pumpkin Bucket] for reading.#
+Pumpkin Bucket 40#
+
+5245#Naughty Student Qualification#SG_FEEL#QUE_NOIMAGE#
+Naughty Student Qualification#
+Naughty Student Qualification#
+
+5246#Bully Orc Baby#SG_FEEL#QUE_NOIMAGE#
+Snatch [50 Milk Bottle] to show your determination.#
+Milk Bottle 50#
+
+5247#Pinwheel of Rice Cake Boy#SG_FEEL#QUE_NOIMAGE#
+Snatch [50 Blade Of Pinwheel] from the children.#
+Blade Of Pinwheel 50#
+
+5248#Stole the cloth from Miyabi#SG_FEEL#QUE_NOIMAGE#
+Steal the [40 Old Japaness Clothes] from Miyabi in Amatsu.#
+Old Japaness Clothes 40#
+
+5249#Break the Tengu#SG_FEEL#QUE_NOIMAGE#
+Break the Tengu and bring back [30 Tengu's Nose]!#
+Tengu's Nose 30#
+
+5250#Steal the Black Kitty Doll#SG_FEEL#QUE_NOIMAGE#
+Challenge the evil - Loli Ruri and bring back [40 Black Kitty Doll].#
+Black Kitty Doll 40#
