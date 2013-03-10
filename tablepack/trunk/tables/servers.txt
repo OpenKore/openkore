@@ -173,7 +173,7 @@ ip 202.71.105.25
 port 6900
 master_version 16
 version 211
-serverType mRO
+serverType bRO
 charBlockSize 116
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -191,11 +191,12 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 addTableFolders mRO
 
 [Malaysia - mRO: Prontera Free Server]
-ip 202.71.105.29
+# Prontera / Sara Free
+ip 202.71.105.101
 port 6900
 master_version 17
 version 211
-serverType iRO
+serverType twRO
 charBlockSize 116
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
