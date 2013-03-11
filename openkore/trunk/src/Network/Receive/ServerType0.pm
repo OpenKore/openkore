@@ -474,7 +474,7 @@ sub new {
 		'07F7' => ['actor_exists', 'v C a4 v3 V v5 a4 v5 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking
 		'07F8' => ['actor_connected', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # spawning
 		'07F9' => ['actor_moved', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # standing
-		'07FA' => ['inventory_item_removed', 'v3', [qw(unknown index amount)]], #//0x07fa,8
+		'07FA' => ['inventory_item_removed', 'V v2', [qw(reason index amount)]], #//0x07fa,8
 		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait dispose)]],
 		'07FC' => ['party_leader', 'V2', [qw(old new)]],
 		'07FD' => ['special_item_obtain', 'v C v c/Z a*', [qw(len type nameID holder etc)]],
@@ -2852,16 +2852,6 @@ sub inventory_item_added {
 		message T("Cannot pickup item (you're Frozen?)\n"), "drop";
 	} else {
 		message TF("Cannot pickup item (failure code %d)\n", $fail), "drop";
-	}
-}
-
-sub inventory_item_removed {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{index});
-	if ($item) {
-		inventoryItemRemoved($item->{invIndex}, $args->{amount});
-		Plugins::callHook('packet_item_removed', {index => $item->{invIndex}});
 	}
 }
 

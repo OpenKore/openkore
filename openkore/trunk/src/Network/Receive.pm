@@ -1428,6 +1428,39 @@ sub arrow_equipped {
 	}
 }
 
+# 00AF, 07FA
+sub inventory_item_removed {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $reason = $args->{reason};
+
+	if ($reason) {
+		if ($reason == 1) {
+			message TF("%s was used to cast the skill\n", $item->{name}), "inventory";
+		} elsif ($reason == 2) {
+			message TF("%s broke due to the refinement failed\n", $item->{name}), "inventory";
+		} elsif ($reason == 3) {
+			message TF("%s used in a chemical reaction\n", $item->{name}), "inventory";
+		} elsif ($reason == 4) {
+			message TF("%s was moved to the storage\n", $item->{name}), "inventory";
+		} elsif ($reason == 5) {
+			message TF("%s was moved to the cart\n", $item->{name}), "inventory";
+		} elsif ($reason == 6) {
+			message TF("%s was sold\n", $item->{name}), "inventory";
+		} elsif ($reason == 7) {
+			message TF("%s was consumed by Four Spirit Analysis skill\n", $item->{name}), "inventory";
+		} else {
+			message TF("%s was consumed by an unknown reason (reason number %s)\n", $item->{name}, $reason), "inventory";
+		}
+	}
+
+	if ($item) {
+		inventoryItemRemoved($item->{invIndex}, $args->{amount});
+		Plugins::callHook('packet_item_removed', {index => $item->{invIndex}});
+	}
+}
+
 # 01D0 (spirits), 01E1 (coins), 08CF (amulets)
 sub revolving_entity {
 	my ($self, $args) = @_;
@@ -1443,8 +1476,10 @@ sub revolving_entity {
 		$entityType = T('spirit');
 	} elsif ($lastSwitch eq '01E1') {
 		$entityType = T('coin');
-	} else {
+	} elsif ($lastSwitch eq '08CF') {
 		$entityType = T('amulet');
+	} else {
+		$entityType = T('entity unknown');
 	}
 
 	if ($sourceID eq $accountID && $entityNum != $char->{spirits}) {
