@@ -501,6 +501,7 @@ sub new {
 		# // 0x020b,0
 		# // 0x020c,0
 		# 0x020d,-1 # TODO
+		'07FA' => ['inventory_item_removed', 'v3', [qw(reason index amount)]], #//0x07fa,8
 		'0803' => ['booking_register_request', 'v', [qw(result)]],
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
@@ -2540,16 +2541,6 @@ sub inventory_item_added {
 		message T("Cannot pickup item (you're Frozen?)\n"), "drop";
 	} else {
 		message TF("Cannot pickup item (failure code %d)\n", $fail), "drop";
-	}
-}
-
-sub inventory_item_removed {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{index});
-	if ($item) {
-		inventoryItemRemoved($item->{invIndex}, $args->{amount});
-		Plugins::callHook('packet_item_removed', {index => $item->{invIndex}});
 	}
 }
 
