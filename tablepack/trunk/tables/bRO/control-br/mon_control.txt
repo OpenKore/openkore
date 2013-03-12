@@ -22,8 +22,9 @@
 # < 0 (-1, -2, etc.) para definir a distância crítica exata para esse monstro. Teletransporta se o monstro atingir.
 # 1 para teletransportar caso o monstro apareça em seu campo de visão.
 # 2 para teletransportar caso o monstro atacar.
-# 3 para desconectar caso o monstro apareça em seu campo de visão.
-# Isso só é usado em modo auto-ataque.
+#  -> Isso só é ativado em modo de auto-ataque.
+# 3 para desconectar por 30 segundos caso o monstro apareça em seu campo de visão.
+# > 4 (4, 5, etc.) para definir o tempo que ficará desconectado (em segundos) caso o monstro apareça em seu campo de visão.
 #
 # <search>: Configure para 1 para teleportar em busca do monstro.
 # Auto-ataque precisa estar habilitado.

@@ -3049,8 +3049,8 @@ sub processAutoResponse {
 	}
 }
 
+##### AVOID GM, PLAYERS OR MONSTERS #####
 sub processAvoid {
-	##### AVOID GM OR PLAYERS #####
 	if (timeOut($timeout{ai_avoidcheck})) {
 		avoidGM_near() if ($config{avoidGM_near} >= 1 && (!$field->isCity || $config{avoidGM_near_inTown}));
 		avoidList_near() if $config{avoidList} >= 1;
@@ -3058,9 +3058,14 @@ sub processAvoid {
 	}
 	foreach (@monstersID) {
 		next unless $_;
-		if (mon_control($monsters{$_}{name},$monsters{$_}{nameID})->{teleport_auto} == 3) {
+		my $action = mon_control($monsters{$_}{name},$monsters{$_}{nameID})->{teleport_auto};
+
+		if ($action == 3) {
 		   warning TF("Disconnecting for 30 secs to avoid %s\n", $monsters{$_}{name});
 		   relog(30);
+		} elsif ($action > 3) {
+		   warning TF("Disconnecting for %s secs to avoid %s\n", $action, $monsters{$_}{name});
+		   relog($action);
 		}
 	}
 }
