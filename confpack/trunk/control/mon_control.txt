@@ -18,7 +18,7 @@
 # 2 to teleport if the monster attacks you.
 #  -> This is only used in auto-attack mode!
 # 3 to disconnect for 30 seconds if the monster is on your screen.
-# > 4 (4, 5, etc.) to set the time that will be disconnected (in seconds) if the monster is on your screen.
+# >= 4 (4, 5, etc.) to set the time that will be disconnected (in seconds) if the monster is on your screen.
 #
 # <search>: Put a 1 to only attack the monster in the search mode.
 # This is only used in auto-attack mode.
