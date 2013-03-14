@@ -19,7 +19,7 @@ Poção feita de ervas azuis. Recupera ^000088cerca de 60 SP^000000, dependendo 
 Peso: ^77777715^000000
 #
 506#
-Poção que medica contra ^000088Veneno^000000, ^000088Silêncio^000000, ^000088Cegueira^000000 e ^000088Confusão^000000.
+Poção que medica contra ^000088Veneno^000000, ^000088Silêncio^000000 e ^000088Cegueira^000000.
 Peso: ^7777777^000000
 #
 507#
@@ -5364,6 +5364,7 @@ Classes que utilizam: ^777777Todas^000000
 #
 2614#
 Esse tesouro único pode Neutralizar todos os tipos de veneno do mundo.
+^FF0000Torna o personagem imune ao elemento Veneno.^000000
 Classe: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
@@ -10820,8 +10821,8 @@ Bandeira Nacional utilizada pela torcida durante a Copa do Mundo.
 Peso: ^7777771^000000
 #
 7550#
-Troque-o pelos seguintes itens: Elmo de Aegir[1], Manteau de Aegir[1], Armadura de Aegir[1] e Botas de Aegir[1].
-Esta promoção está disponível apenas até a manutenção do dia 06/02/2013.
+Troque-o pelos seguintes itens: Chapéu de Caça [1], Máscara de Tigre, Chapéu de Arara Azul [1] e Chapéu de Engenheiro [1].
+Esta promoção está disponível apenas até a manutenção do dia 20/03/2013.
 ^ff0000Este ticket pode ser negociado, colocado no carrinho, pode ser transferido para o armazém, mas não pode ser derrubado no chão.^000000
 ^ff0000Após o término do evento, os tickets serão removidos das contas de jogo.^000000
 Atenção! Certifique-se de que seu personagem possui espaço e peso disponíveis para receber todos os itens.
@@ -11381,7 +11382,7 @@ Carta Maya Macho.
 Combine com um item para utilizar sua propriedade. 
 Não pode ser removida depois de combinada.
 Classe: ^777777Carta^000000
-Utilização: ^777777Equipamento para a cabeça^000000
+Combina com: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4199#
@@ -12750,6 +12751,13 @@ Um comprovante que permite a entrada em Valhala.
 ^ffffff_^000000
 Peso: ^7777770^000000
 #
+
+7274#
+Pode-se ler em suas páginas:
+"A principal porta para o grande poder pode ser encontrada embaixo do por do sol no céu na torre que toca as nuvens.
+A chave da porta estará na grama que vive ao sol."
+Peso: ^7777771^000000#
+
 2644#
 Um comprovante que permite a entrada em Valhala. Ele também identifica o seu portador como o guerreiro escolhido e testado pelos Deuses. Ele tem uma lente azul translúcida no centro, que é cercada por letras antigas entalhadas em prata, e parece ser muito poderoso e misterioso para ser considerado apenas um simples comprovante. Sua beleza extasia as pessoas assim que elas o vêem.
 Classe: ^777777Acessório^000000
@@ -15208,8 +15216,7 @@ Peso: ^7777771^000000
 5132#
 Um gorro cor-de-rosa muito bonitinho, criado à imagem da Angeling, a mãe de todos os Porings.
 Se você usá-lo por muito tempo, sentirá vontade de sair saltitando pra lá e pra cá.
-^FF0000Reduz em 10% o dano recebido de monstros da raça Humanóide.
-AVISO: Este item não pode ser trocado ou jogado ao chão.^000000
+^FF0000Reduz em 10% o dano recebido de monstros da raça Humanóide.^000000
 Defesa: ^7777775^000000	
 Equipa em: ^777777Topo^000000
 Peso: ^77777770^000000	
@@ -18483,7 +18490,7 @@ Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777773^000000
 Equipa em: ^777777Topo^000000
 Peso: ^77777750^000000
-Nível necessário: ^77777730^000000
+Nível necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
 #
 
@@ -19572,7 +19579,7 @@ Peso: ^7777771^000000
 Carta Algoz Eremes.
 Permite o uso de Furtividade nv. 3.
 Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Capa^000000
+Combina com: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4360#
@@ -29740,6 +29747,7 @@ A forma desta maça é inspirada na cobra, simbolizando a fonte de conhecimento.
 O poder de ataque de 'Terror Ácido' e 'Fogo Grego' aumenta em 20%. O poder de recuperação das habilidades do usuário aumenta em 10%.^000000
 Tipo: ^777777Maça^000000
 Ataque: ^777777130^000000
+Nível da Arma: ^7777773^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam:  ^777777Transcendentais de Espadachim/Mercador/Noviço^000000
@@ -34700,7 +34708,7 @@ Peso: ^7777771^000000
 18534#
 Uma máscara típica dos bailes de Carnaval da alta sociedade de Brasilis. Ela é cheio de ornamentos refinados que transmitem claramente a mensagem “não sou apenas rico o bastante para ter uma máscara chique de carnaval, como também sou rico o bastante para não levá-la à sério”.
 ^0000ffAdiciona +1 de Força.^000000
-^0000ff+5 de Ataque físico.^000000
+^0000ff+5% de Ataque físico.^000000
 ^0000ff- 1% no tempo entre habilidades .^000000
 ^0000ffHP máximo +100 a cada nível de refinamento do item .^000000
 ^0000ff20% à mais no dano causado pela habilidade Mamonita .^000000
@@ -37616,11 +37624,11 @@ Aumento da efetividade de Cura em 6%. Custo de SP aumentado em 5%
 #
 
 4817#
-Crítco +9, Acerto +3
+Crítico +9, Precisão +3
 #
 
 4816#
-Crítco +12, Acerto +4
+Crítico +12, Precisão +4
 #
 
 4814#
@@ -38219,8 +38227,8 @@ Peso : ^7777771^000000
 Um chapéu com penas coloridas, feito em ouro e jóias raras. Criado para comemorar o RWC 2012.
 ATQ + 1%, ATQM + 1%.
 ATQ e ATQM aumentado em 1% a cada 3 refinamentos.
-Quando equipado em conjunto com o Anel Memorável RWC 2012, ATQ +1% para cada refinamento do chapéu.
-Quando equipado em conjunto com o Colar Memorável RWC 2012, será aumentado ATQM +1% a cada refinamento do chapéu.
+Quando equipado em conjunto com o Anel Memorável RWC 2012, ATQ +1% para cada 2 refinamentos do chapéu.
+Quando equipado em conjunto com o Colar Memorável RWC 2012, será aumentado ATQM +1% a cada 2 refinamentos do chapéu.
 Tipo : ^777777Equipamento para a Cabeça^000000 
 Defesa : ^7777775^000000
 Equipa em : ^777777Topo^000000
@@ -39365,7 +39373,7 @@ Reduz em 3 segundos o tempo de 'recarga' de Curatio.
 #
 
 4804#
-Reduz em 30 pontos o custo de SP de Cura da Arena.
+Reduz em 30 pontos o custo de SP de 'Sopro Divino'.
 #
 
 4805#
@@ -40183,7 +40191,7 @@ Classes : ^777777Todas exceto Aprendiz^000000
 #
 
 13438#
-Esta espada magicamente encantada, cobiçada pela famosa bruxa-guerreira Lila Contrária. Com o poder da luz lunar, ela poderia muito bem ser empunhada pela Sailor Musa.
+Uma espada magicamente encantada, cobiçada pela famosa bruxa-guerreira Lila Contrária. Com o poder da luz lunar, ela poderia muito bem ser empunhada pela Sailor Musa.
 ^00FF00Chance de conjurar um ataque mágico aleatório enquanto ataca fisicamente. Aumenta as chances a cada 2 refinamentos.
 ATQM + 110.^000000
 Tipo : ^777777Espada de uma mão^000000 
@@ -40517,10 +40525,12 @@ Peso: ^7777770^000000
 #
 6426#
 Parece uma comida enlatada normal vencida, mas a superfície está enferrujada aqui e ali. Isso me enoja.
+^FF0000Não pode ser trocada ou colocada no armazém^000000
 Peso: ^7777771^000000
 #
 6427#
 Saco cheio de comida enlatada vencida e de má qualidade . O propósito é suspeito.
+^FF0000Não pode ser trocada ou colocada no armazém^000000
 Peso: ^7777770^000000
 #
 16751#
@@ -40852,5 +40862,83 @@ Um peixe que vive próximo a Malangdo, ainda não identificado.
 Há um gato pegando este peixe!
 Peso : ^7777770^000000
 #
+
+//------------------March2013 Items---------------------------------
+
+5788#
+Óculos misteriosos, inventado pelo Feiticeiro James Camarão, para que as pessoas, ao ler seu livro, “Ah, vá! Tá...”, acreditassem que as imagens dele estavam saltando para fora das páginas. Quando você o coloca, além de um estranho desejo de comer pipoca, você tem a incrível sensação de que as coisas ao seu redor estão mais reais do que eram antes. Parece até que este golpe vindo em sua direção pode lhe atingir... Opa! E não é que pode mesmo? Se abaixe aí!
+^0000FFAumenta o Dano Mágico em 4% em monstros da raça Amorfo. Diminui em 5% o dano recebido da propriedade Neutra.^000000 
+Tipo : ^777777Equipamento para Cabeça^000000 
+Defesa : ^7777771^000000
+Equipa em : ^777777Meio^000000 
+Peso : ^77777710^000000
+Nível Necessário : ^77777710^000000
+Classe: ^777777Todas^000000
+#
+
+18699#
+Para as outras pessoas deve ser engraçado olhar para você e ter a impressão que tem um peixe na sua cabeça tentando te engolir. Para sua sorte, ele nunca fará isso... Ao menos enquanto você continuar o alimentando com outros peixes frescos! Dizem que um Felino da Corporação Pata de Gato chamado Feliz foi quem pescou esse peixe encantado e já ia transformá-lo em jantar quando seu melhor amigo, um mestre chamado Nátiçu, teve a brilhante ideia de transformá-lo em chapéu. Nem pense em criticar! Afinal, quem anda por aí com ele na cabeça é você!
+^0000FFDiminui em 10% o dano recebido por monstros de propriedade Água. Pequena chance de derrubar o consumível 'Peixe Fresco' ao derrotar monstros do tipo Peixe.^000000 
+
+Impossível Refinar^000000
+
+Tipo : ^777777Equipamento para Cabeça^000000    
+Defesa : ^7777773^000000
+
+Equipa em : ^777777Topo^000000    
+Peso : ^777777120^000000
+
+Classe: ^777777Todas^000000
+#
+
+18727#
+Criado pela famosa estilista marinha, Leira, este chapéu é uma cópia exata do simpático capuz usado pela fada aquática, Sedora. Para sua sorte, diferente dos tentáculos da Sedora, que queimam como os de água-viva, os do seu chapéu são feitos de pano, e ainda carregam encantamentos que o protegerão contra seres aquáticos.
+
+^0000FFDiminui em 5% o dano recebido por monstros do tipo Peixe.
+Recuperação usando os itens Sushi e Peixe Cru +50%
+Se refinado acima do +7, recuperação usando o item Peixe Cru +100%. ^000000 
+
+Tipo : ^777777Equipamento para Cabeça^000000 
+Defesa : ^77777713^000000
+
+
+Equipa em : ^777777Topo^000000  
+Peso : ^77777730^000000
+
+Nível Necessário : ^77777710^000000
+
+Classe: ^777777Todas^000000
+#
+
+18692#
+When attend open audition for singers, let this hat wear.
+Yourself and mic in a body may appeal to judge.
+
+^0000FFDES + 2, SOR + 1.^000000 
+
+Tipo : ^777777Equipamento para Cabeça^000000    
+Defesa : ^7777773^000000
+
+Equipa em : ^777777Topo^000000    
+Peso : ^77777720^000000
+
+Classe: ^777777Todas exceto Aprendiz^000000
+#
+
+12850#
+You can get one of precious items from Sealed Vesper Card, Sealed Sniper Card, Premium Reset_Stone_Box, Puppy-Eared Hat, Enriched Elunium Box and so on.
+Peso : ^7777771^000000
+#
+
+18700#
+Gothic rabbit ribbon hat that is arrogant  and cute.
+^0000FFINT + 1.^000000 
+Tipo : ^777777Equipamento para Cabeça^000000    
+Defesa : ^7777773^000000
+Equipa em : ^777777Topo^000000    
+Peso : ^77777750^000000
+Classe: ^777777Todas^000000
+#
+
 
 //file end
