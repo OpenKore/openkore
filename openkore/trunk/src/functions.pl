@@ -138,6 +138,8 @@ sub loadDataFiles {
 		loader => [\&parseConfigFile, \%config],
 		internalName => 'config.txt',
 		autoSearch => 0);
+	Settings::addControlFile('consolecolors.txt',
+		loader => [\&parseSectionedFile, \%consoleColors]);
 	Settings::addControlFile(Settings::getMonControlFilename(),
 		loader => [\&parseMonControl, \%mon_control],
 		internalName => 'mon_control.txt',
@@ -164,8 +166,6 @@ sub loadDataFiles {
 		loader => [\&parseAvoidControl, \%avoid]);
 	Settings::addControlFile('priority.txt',
 		loader => [\&parsePriority, \%priority]);
-	Settings::addControlFile('consolecolors.txt',
-		loader => [\&parseSectionedFile, \%consoleColors]);
 	Settings::addControlFile('routeweights.txt',
 		loader => [\&parseDataFile, \%routeWeights]);
 	Settings::addControlFile('arrowcraft.txt',

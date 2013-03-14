@@ -4268,7 +4268,11 @@ sub makeShop {
 		my %item;
 		$item{name} = $cart_item->{name};
 		$item{index} = $index;
-		$item{price} = $sale->{price};
+			if ($sale->{priceMax}) {
+				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
+			} else {
+				$item{price} = $sale->{price};
+			}
 		$item{amount} =
 			$sale->{amount} && $sale->{amount} < $amount ?
 			$sale->{amount} : $amount;

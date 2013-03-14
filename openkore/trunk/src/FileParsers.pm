@@ -450,27 +450,34 @@ sub parseShopControl {
 		my $real_price = $price;
 		$real_price =~ s/,//g;
 
+		my ($priceMax, $priceCommas, $priceMaxCommas);
+		if ($real_price =~ /../) {
+			($real_price, $priceMax) = split(/\../, $real_price);
+			($priceCommas, $priceMaxCommas) = split(/\../, $price);
+		}
+
 		my $loc = Translation::TF("Line %s: Item '%s'", $linenum, $name);
 		if ($real_price !~ /^\d+$/) {
 			push(@errors, Translation::TF("%s has non-integer price: %s", $loc, $price));
-		} elsif ($price ne $real_price && formatNumber($real_price) ne $price) {
+		} elsif (!$priceMax && ($price ne $real_price && formatNumber($real_price) ne $price) ||
+				 $priceMax  && ($priceCommas ne $real_price && formatNumber($real_price) ne $priceCommas ||
+							   $priceMaxCommas ne $priceMax && formatNumber($priceMax) ne $priceMaxCommas))
+		{
 			push(@errors, Translation::TF("%s has incorrect comma placement in price: %s", $loc, $price));
 		} elsif ($real_price < 0) {
 			push(@errors, Translation::TF("%s has non-positive price: %s", $loc, $price));
 		} elsif ($real_price > 1000000000) {
 			push(@errors, Translation::TF("%s has price over 1,000,000,000: %s", $loc, $price));
-		}
-
-		if ($amount > 30000) {
+		} elsif ($amount > 30000) {
 			push(@errors, Translation::TF("%s has amount over 30,000: %s", $loc, $amount));
 		}
 
-		push(@{$shop->{items}}, {name => $name, price => $real_price, amount => $amount});
+		push(@{$shop->{items}}, {name => $name, price => $real_price, priceMax => $priceMax, amount => $amount});
 	}
 
 	if (@errors) {
 		error Translation::TF("Errors were found in %s:\n", $file);
-		foreach (@errors) { error("$line\n"); }
+		foreach (@errors) { error("$_\n"); }
 		error Translation::TF("Please correct the above errors and type 'reload %s'.\n", $file);
 		return 0;
 	}
