@@ -1,4 +1,3 @@
-# Pasta control traduzida de acordo com a r8399
 #############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
