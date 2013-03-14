@@ -315,7 +315,7 @@ sub map_loaded {
 		$output .= $self->{recvPacketParser}->reconstruct({
 			switch => 'actor_exists',
 			coords => $coords,
-			map { $_ => $portal->{$_} } qw(ID type)
+			map { $_ => $portal->{$_} } qw(object_type ID type)
 		});
 	}
 	$client->send($output) if (length($output) > 0);
@@ -330,7 +330,7 @@ sub map_loaded {
 		$output .= $self->{recvPacketParser}->reconstruct({
 			switch => 'actor_exists',
 			coords => $coords,
-			map { $_ => $npc->{$_} } qw(ID opt1 opt2 option type)
+			map { $_ => $npc->{$_} } qw(object_type ID opt1 opt2 option type)
 		});
 	}
 	$client->send($output) if (length($output) > 0);
@@ -346,7 +346,7 @@ sub map_loaded {
 			switch => 'actor_exists',
 			walk_speed => $monster->{walk_speed} * 1000,
 			coords => $coords,
-			map { $_ => $monster->{$_} } qw(ID opt1 opt2 option type lv)
+			map { $_ => $monster->{$_} } qw(object_type ID opt1 opt2 option type lv)
 		});
 	}
 	$client->send($output) if (length($output) > 0);
@@ -362,7 +362,7 @@ sub map_loaded {
 			switch => 'actor_exists',
 			walk_speed => $pet->{walk_speed} * 1000,
 			coords => $coords,
-			map { $_ => $pet->{$_} } qw(ID type hair_style lv)
+			map { $_ => $pet->{$_} } qw(object_type ID type hair_style lv)
 		});
 	}
 	$client->send($output) if (length($output) > 0);
