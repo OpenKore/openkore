@@ -16,10 +16,10 @@ Coco		1,000..2,000	2
 #
 # A primeira linha deste ficheiro é onde está o nome da loja. (Poderá ser editado)
 # Para separar o nome do preço e da quantidade utilize a tecla TAB para dar um espaço entre eles.
-# <nome>	<preço>[..<preço máximo>]	[<preço máximo>]	[<quantidade>]
+# <nome>	<preço>[..<preço máximo>]	[<quantidade>]
 #
 # Importante: Informar o preço máximo é opcional. Caso não seja informado, o item sempre será vendido
-# pelo mesmo preço fonecido no campo "preço". Caso seja informado o preço máximo, será vendido no intervalo
+# pelo mesmo preço fornecido no campo "preço". Caso seja informado o preço máximo, será vendido no intervalo
 # entre "preço" e "preço máximo"
 # Importante: Equipamentos (armas, armaduras...) é necessário uma linha para cada item, não é possível #adicionar vários equipamentos na mesma linha.
 #
