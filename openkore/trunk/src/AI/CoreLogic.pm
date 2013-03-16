@@ -39,6 +39,8 @@ use FileParsers;
 use Translation;
 use Field;
 use Task::TalkNPC;
+use Task::UseSkill;
+use Task::ErrorReport;
 use Utils::Exceptions;
 
 # This is the main function from which the rest of the AI
@@ -3086,10 +3088,19 @@ sub processAutoShopOpen {
 
 	if ($config{'shopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && !$shopstarted
 		&& $field->baseName eq $config{'lockMap'}) {
-		if ($config{'shopAuto_open'} == 1) {
-			openShop();
-		} elsif ($config{'shopAuto_open'} == 2) {
-			Commands::run("openshopsafe");
+		if ($config{'shop_useSkill'}) {
+			my $skill = new Skill(auto => "MC_VENDING");
+
+			require Task::UseSkill;
+			my $skillTask = new Task::UseSkill(
+				actor => $skill->getOwner,
+				skill => $skill,
+				priority => Task::USER_PRIORITY
+			);
+			my $task = new Task::ErrorReport(task => $skillTask);
+			$taskManager->add($task);
+		} else {
+			main::openShop();
 		}
 	}
 }
