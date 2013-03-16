@@ -142,7 +142,6 @@ sub initHandlers {
 	move               => \&cmdMove,
 	nl                 => \&cmdNPCList,
 	openshop           => \&cmdOpenShop,
-	openshopsafe       => \&cmdOpenShopSafe,
 	p                  => \&cmdChat,
 	party              => \&cmdParty,
 	pecopeco           => \&cmdPecopeco,  
@@ -3218,35 +3217,30 @@ sub cmdNPCList {
 }
 
 sub cmdOpenShop {
-	# This method is responsible to uses a bug in which openkore opens the shop
-	# without using a vending skill
-
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command (%s)\n", shift);
 		return;
 	}
-	main::openShop();
-}
+	
+	if ($config{'shop_useSkill'}) {
+		# This method is responsible to NOT uses a bug in which openkore opens the shop,
+		# using a vending skill and awaiting the response of the package and then open the shop
+		my $skill = new Skill(auto => "MC_VENDING");
 
-sub cmdOpenShopSafe {
-	# This method is responsible to NOT uses a bug in which openkore opens the shop,
-	# using a vending skill and awaiting the response of the package and then open the shop
+		require Task::UseSkill;
+		my $skillTask = new Task::UseSkill(
+			actor => $skill->getOwner,
+			skill => $skill,
+			priority => Task::USER_PRIORITY
+		);
+		my $task = new Task::ErrorReport(task => $skillTask);
+		$taskManager->add($task);
+	} else {
+		# This method is responsible to uses a bug in which openkore opens the shop
+		# without using a vending skill
 
-	if (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command (%s)\n", shift);
-		return;
-		}
-
-	my $skill = new Skill(auto => "MC_VENDING");
-
-	require Task::UseSkill;
-	my $skillTask = new Task::UseSkill(
-		actor => $skill->getOwner,
-		skill => $skill,
-		priority => Task::USER_PRIORITY
-	);
-	my $task = new Task::ErrorReport(task => $skillTask);
-	$taskManager->add($task);
+		main::openShop();
+	}
 }
 
 sub cmdParty {
