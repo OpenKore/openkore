@@ -4800,16 +4800,6 @@ sub shop_sold {
 	}
 }
 
-sub shop_skill {
-	my ($self, $args) = @_;
-
-	# Used the shop skill.
-	my $number = $args->{number};
-	message TF("You can sell %s items!\n", $number);
-
-	# TODO: mark that skill cast has been successful
-}
-
 # TODO:
 # Add 'dispose' support
 sub skill_cast {

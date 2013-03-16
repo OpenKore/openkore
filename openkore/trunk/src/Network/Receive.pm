@@ -1461,6 +1461,17 @@ sub inventory_item_removed {
 	}
 }
 
+# 01D2
+sub shop_skill {
+	my ($self, $args) = @_;
+
+	# Used the shop skill.
+	my $number = $args->{number};
+	message TF("You can sell %s items!\n", $number);
+	
+	main::openShop();
+}
+
 # 01D0 (spirits), 01E1 (coins), 08CF (amulets)
 sub revolving_entity {
 	my ($self, $args) = @_;

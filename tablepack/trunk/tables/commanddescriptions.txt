@@ -405,6 +405,9 @@ List NPCs that are on screen.
 [openshop]
 Open your vending shop.
 
+[openshopsafe]
+Open your vending shop to safely.
+
 [p]
 Chat in the party chat.
 <message>			send <message> to party chat

@@ -3086,8 +3086,11 @@ sub processAutoShopOpen {
 
 	if ($config{'shopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && !$shopstarted
 		&& $field->baseName eq $config{'lockMap'}) {
-		
-		openShop();
+		if ($config{'shopAuto_open'} == 1) {
+			openShop();
+		} elsif ($config{'shopAuto_open'} == 2) {
+			Commands::run("openshopsafe");
+		}
 	}
 }
 

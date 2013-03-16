@@ -4523,14 +4523,6 @@ sub shop_sold {
 	}
 }
 
-sub shop_skill {
-	my ($self, $args) = @_;
-
-	# Used the shop skill.
-	my $number = $args->{number};
-	message TF("You can sell %s items!\n", $number);
-}
-
 sub skill_cast {
 	my ($self, $args) = @_;
 
