@@ -91,6 +91,7 @@ sub new {
 		'0365' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0368' => ['actor_info_request', 'a4', [qw(ID)]],
+		'0369' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0437' => ['character_move','a3', [qw(coords)]],
 		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
@@ -452,12 +453,14 @@ sub sendProduceMix {
 	debug "Sent Forge, Produce Item: $ID\n" , 2;
 }
 
+=pod
 sub sendGetCharacterName {
 	my ($self, $ID) = @_;
 	my $msg = pack("C*", 0x93, 0x01) . $ID;
 	$self->sendToServer($msg);
 	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
+=cut
 
 sub sendNPCBuySellList { # type:0 get store list, type:1 get sell list
 	my ($self, $ID, $type) = @_;
