@@ -4059,8 +4059,8 @@ sub party_join {
 	$char->{party}{users}{$ID}->{ID} = $ID;
 =cut
 
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareDiv});
+	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
+		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
 
 	}
 }
@@ -4144,8 +4144,8 @@ sub party_users_info {
 		$char->{party}{users}{$ID}->{ID} = $ID;
 	}
 
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareDiv});
+	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
+		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
 
 
 	}
