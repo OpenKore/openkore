@@ -41,7 +41,7 @@ sub new {
 		storage_item_remove 0365
 		skill_use_location 0366
 		actor_info_request 0368
-		buy_bulk_vender 0801
+		actor_name_request 0369
 		party_setting 07D7
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
