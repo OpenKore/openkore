@@ -1437,21 +1437,21 @@ sub inventory_item_removed {
 
 	if ($reason) {
 		if ($reason == 1) {
-			message TF("%s was used to cast the skill\n", $item->{name}), "inventory";
+			debug TF("%s was used to cast the skill\n", $item->{name}), "inventory", 1;
 		} elsif ($reason == 2) {
-			message TF("%s broke due to the refinement failed\n", $item->{name}), "inventory";
+			debug TF("%s broke due to the refinement failed\n", $item->{name}), "inventory", 1;
 		} elsif ($reason == 3) {
-			message TF("%s used in a chemical reaction\n", $item->{name}), "inventory";
+			debug TF("%s used in a chemical reaction\n", $item->{name}), "inventory", 1;
 		} elsif ($reason == 4) {
-			message TF("%s was moved to the storage\n", $item->{name}), "inventory";
+			debug TF("%s was moved to the storage\n", $item->{name}), "inventory", 1;
 		} elsif ($reason == 5) {
-			message TF("%s was moved to the cart\n", $item->{name}), "inventory";
+			debug TF("%s was moved to the cart\n", $item->{name}), "inventory", 1;
 		} elsif ($reason == 6) {
-			message TF("%s was sold\n", $item->{name}), "inventory";
+			debug TF("%s was sold\n", $item->{name}), "inventory", 1;
 		} elsif ($reason == 7) {
-			message TF("%s was consumed by Four Spirit Analysis skill\n", $item->{name}), "inventory";
+			debug TF("%s was consumed by Four Spirit Analysis skill\n", $item->{name}), "inventory", 1;
 		} else {
-			message TF("%s was consumed by an unknown reason (reason number %s)\n", $item->{name}, $reason), "inventory";
+			debug TF("%s was consumed by an unknown reason (reason number %s)\n", $item->{name}, $reason), "inventory", 1;
 		}
 	}
 

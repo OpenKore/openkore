@@ -405,9 +405,6 @@ Lista os NPCs que estão na tela.
 [openshop]
 Abre sua loja.
 
-[openshopsafe]
-Abre sua loja com segurança.
-
 [p]
 Usa o chat da party.
 <mensagem>		Envia <mensagem> por chat da party
