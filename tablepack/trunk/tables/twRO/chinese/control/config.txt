@@ -28,6 +28,9 @@ serverType twRO
 ######## XKore 相關設定 ########
 XKore 0
 # XKore 模式 [ 0: 停用此功能 1: (XKore)->(RO主程式)->(遊戲伺服器)  2: (RO主程式)->(XKore)->(遊戲伺服器) ]
+XKore_port 2350
+XKore_dll NetRedirect.dll
+XKore_autoAttachIfOneExe 1
 XKore_silent 1
 # XKore訊息隱藏於RO對話欄 [ 0: 不會顯示在對話欄  1: 會顯示在對話欄 ]
 XKore_bypassBotDetection 0
