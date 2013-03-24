@@ -38,6 +38,9 @@ serverType 0
 # 1 = rodar dentro do cliente do RO, 2 = usar proxy autônomo, proxy = atua como proxy verdadeiro
 # http://wiki.openkore.com/index.php/XKore
 XKore 0
+XKore_port 2350
+XKore_dll NetRedirect.dll
+XKore_autoAttachIfOneExe 1
 XKore_silent 1
 XKore_bypassBotDetection 0
 XKore_exeName ragexe.exe

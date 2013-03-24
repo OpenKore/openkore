@@ -38,7 +38,7 @@ use Translation;
 # Initialize X-Kore mode. Throws Network::XKore::CannotStart on error.
 sub new {
 	my $class = shift;
-	my $port = 2350;
+	my $port = $config{XKore_port} || 2350;
 	my $self = bless {}, $class;
 
 	undef $@;
@@ -238,29 +238,71 @@ sub checkConnection {
 	
 	# (Re-)initialize X-Kore if necessary
 	$self->setState(Network::NOT_CONNECTED);
-	my $printed;
 	my $pid;
 	# Wait until the RO client has started
-	while (!($pid = Utils::Win32::GetProcByName($config{XKore_exeName}))) {
-		message TF("Please start the Ragnarok Online client (%s)\n", $config{XKore_exeName}), "startup" unless $printed;
-		$printed = 1;
-		$interface->iterate;
-		if (defined(my $input = $interface->getInput(0))) {
-			if ($input eq "quit") {
-				$quit = 1;
-				last;
-			} else {
-				message T("Error: You cannot type anything except 'quit' right now.\n");
+
+	my $loop = 1;
+	my @list;
+
+	message TF("Please start the Ragnarok Online client (%s)\n", $config{XKore_exeName}), "startup";
+	Plugins::callHook('XKore_start');
+	while ($loop) {
+		undef @list;
+		my @z = Utils::Win32::listProcesses();
+
+		foreach (@z) {
+			if (lc($_->{'exe'}) eq lc($config{XKore_exeName})) {
+				push @list, {exe => $_->{'exe'}, pid => $_->{'pid'}};
 			}
 		}
-		usleep 20000;
-		last if $quit;
+
+		if (@list == 0) {
+			# no process, wait for start
+			usleep 20000;
+			next;
+		}
+
+		# automatically attach if one process found and config allows it
+		if (@list == 1 && $config{XKore_autoAttachIfOneExe}) {
+			$pid = $list[0]->{'pid'};
+			message TF("Ragnarok Online client found, pid = %i\n", $pid), "startup";
+
+			$loop = 0;
+			last;
+		}
+
+		# several exes, make choice
+		message T("Found Ragnarok Online client(s), select one: (enter to rescan, quit to quit)\n"), "startup";
+		my $qr;
+		my $i = 0;
+		foreach (@list) {
+			$qr = $qr . TF("[%i] pid = %i (%s)\n", $i, $_->{'pid'}, $_->{'exe'});
+			$i++;
+		}
+		my $input = $interface->query($qr, title => "Select Ragnarok Online client");
+		if ($input eq "quit") {
+			$quit = 1;
+			$loop = 0;
+			last;
+		} elsif ($input eq "r" || !defined($input) || $input eq '' || $input !~ /^\d+$/) {
+			next;
+		} else {
+			if ($input < 0 || $input >= @list) {
+				error TF("Please enter a number between 0 and %i\n", @list - 1);
+					next;
+			}
+			$pid = $list[$input]->{'pid'};
+			message TF("Selected pid = %i\n", $pid), "startup";
+			$loop = 0;
+			last;
+		}
 	}
+
 	return if $quit;
 
+	sleep 1;
+
 	# Inject DLL
-	message T("Ragnarok Online client found\n"), "startup";
-	sleep 1 if $printed;
 	if (!$self->inject($pid)) {
 		# Failed to inject
 		$interface->errorDialog($@);
@@ -287,26 +329,23 @@ sub checkConnection {
 sub inject {
 	my ($self, $pid) = @_;
 	my $cwd = Win32::GetCwd();
+	my $dllName = $config{XKore_dll} || 'NetRedirect.dll';
 	my $dll;
-
 	undef $@;
-	foreach my $file ("$cwd\\src\\auto\\XSTools\\NetRedirect.dll", "$cwd\\src\\auto\\XSTools\\win32\\NetRedirect.dll",
-			"$cwd\\NetRedirect.dll", "$cwd\\Inject.dll") {
+	foreach my $file ("$cwd\\src\\auto\\XSTools\\$dllName", "$cwd\\src\\auto\\XSTools\\win32\\$dllName", "$cwd\\$dllName") {
 		if (-f $file) {
 			$dll = $file;
 			last;
 		}
 	}
-
 	if (!$dll) {
-		$@ = T("Cannot find NetRedirect.dll. Please check your installation.");
+		$@ = T("Cannot find $dllName. Please check your installation.");
 		return 0;
 	}
-
 	if (Utils::Win32::InjectDLL($pid, $dll)) {
 		return 1;
 	} else {
-		$@ = T("Unable to inject NetRedirect.dll");
+		$@ = T("Unable to inject $dll");
 		return undef;
 	}
 }
