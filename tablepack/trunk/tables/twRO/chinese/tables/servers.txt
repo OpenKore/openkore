@@ -152,29 +152,16 @@ PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x0597
 addTableFolders mRO
 
 
-
-
-####################
-# Private RO Servers
-
-[Localhost]
-ip localhost
-port 6900
-private 1
-master_version 1
-version 20
-serverType kRO_RagexeRE_2009_11_04a
-serverEncoding Western
-addTableFolders translated/kRO_english;kRO
-
-
 # this is for XKore 2 client only, it won't affect XKore 2 server
 # configure serverType, serverEncoding, charBlockSize according to your server
 [XKore 2]
 ip localhost
 port 6901
-serverType
-serverEncoding Western
-addTableFolders translated/kRO_english;kRO
-charBlockSize
+serverType twRO
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets_free.txt
+addTableFolders twRO
+charBlockSize 116
 clientHash 0123456789abcdef0123456789abcdef
