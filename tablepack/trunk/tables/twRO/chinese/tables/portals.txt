@@ -1,0 +1,3370 @@
+﻿#######################################################
+# 新增完成日期為 2010/12/2 ,最後修改日期為 2011/2/23  #
+# 新增海洞6                                           #
+# Try71023僅發表於月光論壇                            #
+#                                                     #
+# 最後修改日期為 2012/3/1                             #
+# 新增綿綿島路徑.飛空艇路徑                           #
+#######################################################
+
+#飛空艇(國內線)
+airplane 208 53 airplane 245 160
+airplane 245 160 airplane 208 53
+airplane 254 54 airplane 87 67
+airplane 87 67 airplane 254 54
+airplane 243 73 yuno 96 261
+airplane 243 73 lighthalzen 302 75
+airplane 243 29 einbroch 92 278
+airplane 243 29 hugel 181 146
+#飛空艇(國際線)
+airplane_01 208 53 airplane_01 245 160
+airplane_01 245 160 airplane_01 208 53
+airplane_01 254 54 airplane_01 87 67
+airplane_01 87 67 airplane_01 254 54
+airplane_01 243 73 ra_fild12 292 204
+airplane_01 243 73 izlude 200 56
+airplane_01 243 73 yuno 6 261
+airplane_01 243 29 ra_fild12 292 204
+airplane_01 243 29 izlude 200 56
+airplane_01 243 29 yuno 6 261
+#朱諾 機場
+yuno 53 214 y_airport 143 16
+y_airport 143 16 yuno 53 214
+yuno 96 261 airplane 243 29
+yuno 6 261 airplane_01 244 58
+y_airport 143 43 y_airport 148 51 0 c r0 c r0
+y_airport 143 49 y_airport 142 40 0 c r0 c r0
+y_airport 140 63 yuno 47 244 0 c r0
+yuno 47 240 y_airport 143 54
+y_airport 145 63 yuno 59 244 0 c r0
+yuno 59 240 y_airport 143 54
+#毀葛
+hugel 178 142 airplane 243 73
+#拉赫
+ra_fild12 295 208 airplane_01 245 60
+#艾音布羅克 機場
+einbroch 64 207 airport 143 14
+airport 143 14 einbroch 64 207
+airport 143 43 airport 148 51 0 c r0 c r0
+airport 143 49 airport 142 40 0 c r0 c r0
+airport 142 61 einbroch 64 234
+einbroch 64 234 airport 142 61
+einbroch 92 281 airplane 224 64
+airport 124 13 airport 19 18
+airport 19 18 airport 124 13
+airport 47 18 airport 161 13
+airport 161 13 airport 47 18
+#里希塔樂鎮 機場
+lighthalzen 267 75 lhz_airport 142 13
+lhz_airport 142 13 lighthalzen 267 75
+lhz_airport 143 43 lhz_airport 148 51 0 c r0 c r0
+lhz_airport 143 49 lhz_airport 142 40 0 c r0 c r0
+lighthalzen 294 76 lhz_airport 142 60
+lhz_airport 142 60 lighthalzen 294 76
+lhz_airport 125 13 lhz_airport 19 18
+lhz_airport 19 18 lhz_airport 125 13
+lhz_airport 47 18 lhz_airport 160 13
+lhz_airport 160 13 lhz_airport 47 18
+lighthalzen 308 76 airplane 244 58
+#伊斯
+izlude 202 75 airplane_01 244 58 1200 c r0 c r0
+########################################
+#[各地船夫 傳送服務]
+#依斯魯得島
+izlude 197 205 izlu2dun 107 50 150 c r0 n
+izlude 197 205 alberta 188 169 500 c r1 n
+izlude 180 224 jawaii 239 112 0 c r1 n
+izlude 182 218 malangdo 217 85 1000 c r1 c c r0 c
+izlude 198 213 cmd_fild07 92 129 2800 c r0 c
+#崑崙原野
+gon_fild01 255 79 alberta 243 67 0 c r0 n
+#島柏伊亞嵐島
+izlu2dun 108 27 izlude 176 182 0 c r0 n
+#毀葛
+hugel 209 109 odin_tem01 100 146 0 c r1 n
+#奧丁神殿
+odin_tem01 93 146 hugel 206 109 0 c r1 n
+#天津
+amatsu 194 79 alberta 243 91 0 c r0 n
+#莫斯科比亞
+moscovia 166 53 alberta 243 67 0 c r0 n
+#龍之城 原野
+lou_fild01 190 100 alberta 235 45 0 c r0 n
+#哎喲泰雅
+ayothaya 152 68 alberta 235 45 0 c r0 n
+#巴西
+brasilis 316 57 alberta 244 115 0 c r0 n
+#沉船附近的島嶼
+alb2trea 39 50 alberta 192 169 0 r0 n
+#蜜月島 爪哇咿
+jawaii 239 112 izlude 171 185 0 c c r0 n
+jawaii 122 263 alberta 192 157 0 c c r0 n
+#烏龜島
+tur_dun01 165 29 alberta 241 115 0 c r0 c c n
+#艾爾貝塔
+alberta 195 151 alb2trea 62 69 0 c c r0 n
+alberta 189 151 alb2trea 43 53 0 c r0 n
+alberta 189 151 izlude 176 182 500 c r1 n
+alberta 247 122 tur_dun01 157 39 0 c r1 c r0 c c c n
+alberta 245 45 lou_fild01 190 101 0 c r1 c c r0 n
+alberta 247 42 ayothaya 149 71 0 c r1 c c r0 n
+alberta 247 115 brasilis 314 60 0 c c r0 n
+alberta 245 69 gon_fild01 258 82 0 c r1 c c r0 n
+alberta 245 93 amatsu 194 83 0 c r1 c c c r0 n
+alberta 245 66 moscovia 163 55 0 c r1 c c r0 n
+#發樂斯 燈塔島
+#cmd_fild07 299 83 alberta 192 169 600 c r0 n
+#cmd_fild07 299 83 izlude 176 182 800 c r1 n
+cmd_fild07 94 134 alberta 192 169 600 c r0 n
+cmd_fild07 94 134 izlude 176 182 800 c r1 n
+##############################################################
+#[各地卡普拉,准它,宣傳人員 傳送服務]
+#普隆德拉
+prontera 146 89 izlude 94 103 600 c r2 c r0 n
+prontera 146 89 geffen 120 39 1200 c r2 c r1 n
+prontera 146 89 payon 161 58 1200 c r2 c r2 n
+prontera 146 89 morocc 156 46 1200 c r2 c r3 n
+prontera 146 89 gef_fild10 52 326 1700 c r2 c r4 n
+prontera 146 89 alberta 117 56 1800 c r2 c r5 n
+prontera 151 29 izlude 94 103 600 c r2 c r0 n
+prontera 151 29 geffen 120 39 1200 c r2 c r1 n
+prontera 151 29 payon 161 58 1200 c r2 c r2 n
+prontera 151 29 morocc 156 46 1200 c r2 c r3 n
+prontera 151 29 gef_fild10 52 326 1700 c r2 c r4 n
+prontera 151 29 alberta 117 56 1800 c r2 c r5 n
+prontera 29 207 izlude 94 103 600 c r2 c r0 n
+prontera 29 207 geffen 120 39 1200 c r2 c r1 n
+prontera 29 207 payon 161 58 1200 c r2 c r2 n
+prontera 29 207 morocc 156 46 1200 c r2 c r3 n
+prontera 29 207 gef_fild10 52 326 1700 c r2 c r4 n
+prontera 29 207 alberta 117 56 1800 c r2 c r5 n
+prontera 282 200 izlude 94 103 600 c r2 c r0 n
+prontera 282 200 geffen 120 39 1200 c r2 c r1 n
+prontera 282 200 payon 161 58 1200 c r2 c r2 n
+prontera 282 200 morocc 156 46 1200 c r2 c r3 n
+prontera 282 200 gef_fild10 52 326 1700 c r2 c r4 n
+prontera 282 200 alberta 117 56 1800 c r2 c r5 n
+prontera 248 42 izlude 94 103 600 c r0 n
+#克魔島
+comodo 195 150 morocc 156 46 1800 c c r2 c r0 n
+comodo 195 150 cmd_fild07 127 134 1200 c c r2 c r1 n
+comodo 195 150 umbala 100 154 1800 c c r2 c r2 n
+#燈塔島
+cmd_fild07 136 134 morocc 156 46 1200 c c r2 c r0 n
+cmd_fild07 136 134 comodo 209 143 1200 c c r2 c r1 n
+#汶巴拉
+umbala 87 160 comodo 209 143 1800 c r2 c r0 n
+#艾爾帕蘭
+aldebaran 143 119 geffen 120 39 1200 c r2 c r0 n
+aldebaran 143 119 yuno 158 125 1200 c r2 c r1 n
+aldebaran 143 119 izlude 94 103 1800 c r2 c r2 n
+aldebaran 143 119 mjolnir_02 99 351 1700 c r2 c r3 n
+#吉芬
+geffen 120 62 prontera 116 72 1200 c r2 c r0 n
+geffen 120 62 aldebaran 168 112 1200 c r2 c r1 n
+geffen 120 62 gef_fild10 52 326 1700 c r2 c r2 n
+geffen 120 62 mjolnir_02 99 351 1700 c r2 c r3 n
+geffen 203 123 prontera 116 72 1200 c r2 c r0 n
+geffen 203 123 aldebaran 168 112 1200 c r2 c r1 n
+geffen 203 123 gef_fild10 52 326 1700 c r2 c r2 n
+geffen 203 123 mjolnir_02 99 351 1700 c r2 c r3 n
+#斐揚
+payon 181 104 prontera 116 72 1200 c r2 c r0 n
+payon 181 104 alberta 117 56 1200 c r2 c r1 n
+payon 181 104 morocc 156 46 1200 c r2 c r2 n
+payon 175 226 prontera 116 72 1200 c r2 c r0 n
+payon 175 226 alberta 117 56 1200 c r2 c r1 n
+payon 175 226 morocc 156 46 1200 c r2 c r2 n
+#艾爾貝塔
+alberta 113 60 payon 161 58 1200 c r2 c r0 n
+alberta 113 60 morocc 156 46 1800 c r2 c r1 n
+alberta 113 60 prontera 116 72 1800 c r2 c r2 n
+alberta 28 229 payon 161 58 1200 c r2 c r0 n
+alberta 28 229 morocc 156 46 1800 c r2 c r1 n
+alberta 28 229 prontera 116 72 1800 c r2 c r2 n
+#夢羅克
+morocc 156 97 prontera 116 72 1200 c r2 c r0 n
+morocc 156 97 payon 161 58 1200 c r2 c r1 n
+morocc 156 97 alberta 117 56 1800 c r2 c r2 n
+morocc 156 97 comodo 209 143 1800 c r2 c r3 n
+morocc 156 97 cmd_fild07 127 134 1200 c r2 c r4 n
+morocc 160 258 prontera 116 72 1200 c r2 c r0 n
+morocc 160 258 payon 161 58 1200 c r2 c r1 n
+morocc 160 258 alberta 117 56 1800 c r2 c r2 n
+morocc 160 258 comodo 209 143 1800 c r2 c r3 n
+morocc 160 258 cmd_fild07 127 134 1200 c r2 c r4 n
+#朱諾
+yuno 152 187 aldebaran 168 112 1200 c r2 c r0 n
+yuno 327 108 aldebaran 168 112 1200 c r2 c r0 n
+yuno 277 221 aldebaran 168 112 1200 c r2 c r0 n
+#朱諾飛空挺宣傳人員傳送
+yuno 142 183 prontera 116 72 1800 c c c c c r0 n
+yuno 142 183 izlude 94 103 1800 c c c c c r1 n
+yuno 142 183 geffen 120 39 1800 c c c c c r2 n
+yuno 142 183 morocc 156 47 1800 c c c c c r3 n
+yuno 142 183 payon 161 58 1800 c c c c c r4 n
+yuno 142 183 alberta 117 56 1800 c c c c c r5 n
+yuno 142 183 comodo 209 143 1800 c c c c c r6 n
+yuno 277 221 aldebaran 168 112 1200 c r2 c r0 n
+#拉赫
+rachel 109 138 veins 208 128 2200 c r2 c r0 n
+#菲音斯
+veins 208 128 rachel 109 138 2200 c r2 c r0 n
+##############################################################
+#盧恩米德加茲王國首都-普隆德拉
+prontera 161 192 mid_camp 210 291 0 c c r0 n
+prontera 45 346 prt_in 80 113
+prontera 156 360 prt_castle 102 16
+prontera 22 203 prt_fild05 373 205
+prontera 156 22 prt_fild08 170 378
+prontera 42 67 prt_in 47 29
+prontera 289 203 prt_fild06 23 193
+prontera 84 89 prt_in 282 179
+prontera 74 90 prt_in 248 173
+prontera 73 100 prt_in 208 179
+prontera 120 267 prt_in 183 97
+prontera 107 215 prt_in 240 141
+prontera 132 222 prt_in 131 71
+prontera 133 183 prt_in 53 105
+prontera 192 267 prt_in 181 55
+prontera 177 221 prt_in 168 124
+prontera 204 192 prt_in 68 130
+prontera 179 184 prt_in 60 77
+prontera 208 154 prt_in 172 33
+prontera 237 317 prt_church 100 56
+prontera 263 279 prt_in 227 15
+prontera 272 108 s_atelier 10 119
+s_atelier 10 119 prontera 272 108
+s_atelier 31 128 s_atelier 76 128
+s_atelier 76 128 s_atelier 31 128
+prt_in 227 15 prontera 263 279
+prt_in 172 33 prontera 208 154
+prt_in 60 77 prontera 179 184
+prt_in 69 65 prt_in 82 65
+prt_in 82 65 prt_in 69 65
+prt_in 48 65 prt_in 37 65
+prt_in 37 65 prt_in 48 65
+prt_in 70 143 prt_in 70 162
+prt_in 70 162 prt_in 70 143
+prt_in 68 130 prontera 204 192
+prt_in 168 124 prontera 177 221
+prt_in 181 55 prontera 192 267
+prt_in 53 105 prontera 133 183
+prt_in 135 71 prontera 136 219
+prt_in 240 141 prontera 107 215
+prt_in 256 131 prt_in 254 113
+prt_in 254 113 prt_in 256 131
+prt_in 183 97 prontera 120 267
+prt_in 234 163 prt_in 217 163
+prt_in 217 163 prt_in 234 163
+prt_in 263 163 prt_in 274 163
+prt_in 274 163 prt_in 263 163
+prt_in 282 179 prontera 84 89
+prt_in 248 173 prontera 74 90
+prt_in 208 179 prontera 73 100
+prt_in 47 29 prontera 42 67
+prt_in 80 113 prontera 45 346
+prt_church 100 56 prontera 237 317
+prt_church 90 81 prt_church 31 19
+prt_church 31 19 prt_church 90 81
+prt_church 109 81 prt_church 168 19
+prt_church 168 19 prt_church 109 81
+prt_church 115 122 prt_church 166 106
+prt_church 166 106 prt_church 115 122
+prt_church 177 113 prt_church 21 91 0 n
+prt_church 23 89 prt_church 178 111 0 c r0 c n
+prt_castle 102 16 prontera 156 360
+prt_castle 82 29 prt_castle 59 29
+prt_castle 59 29 prt_castle 82 29
+prt_castle 121 29 prt_castle 144 29
+prt_castle 144 29 prt_castle 121 29
+prt_castle 102 73 prt_castle 102 88
+prt_castle 102 88 prt_castle 102 73
+prt_castle 92 107 prt_castle 75 107
+prt_castle 75 107 prt_castle 92 107
+prt_castle 54 113 prt_castle 31 113
+prt_castle 31 113 prt_castle 54 113
+prt_castle 28 121 prt_castle 40 138
+prt_castle 40 138 prt_castle 28 121
+prt_castle 45 145 prt_castle 68 153
+prt_castle 68 153 prt_castle 45 145
+prt_castle 102 140 prt_castle 102 129
+prt_castle 102 129 prt_castle 102 140
+prt_castle 113 107 prt_castle 130 107
+prt_castle 130 107 prt_castle 113 107
+prt_castle 149 113 prt_castle 172 113
+prt_castle 172 113 prt_castle 149 113
+prt_castle 176 121 prt_castle 170 138
+prt_castle 170 138 prt_castle 176 121
+prt_castle 164 145 prt_castle 135 153
+prt_castle 135 153 prt_castle 164 145
+prt_castle 102 181 prt_gld 159 29
+#普隆德拉 區域
+prt_fild00 383 249 mjolnir_09 30 249
+prt_fild00 317 18 prt_fild04 323 387
+prt_fild00 159 383 mjolnir_07 156 16
+prt_fild00 18 129 gef_fild00 381 137
+prt_fild00 165 18 prt_fild04 160 387
+prt_fild01 136 373 prt_maze01 99 31
+prt_fild01 380 243 prt_fild02 17 242
+prt_fild01 382 304 prt_fild02 17 305
+prt_fild01 199 24 prt_gld 159 298
+prt_fild01 20 292 mjolnir_09 373 288
+prt_fild01 66 373 mjolnir_10 66 15
+prt_fild01 261 373 mjolnir_10 265 13
+prt_fild01 382 351 prt_fild02 17 350
+prt_fild02 305 17 prt_fild06 277 320
+prt_fild02 380 347 prt_fild03 16 249
+prt_fild02 173 382 mjolnir_11 174 20
+prt_fild02 17 242 prt_fild01 380 243
+prt_fild02 17 305 prt_fild01 382 304
+prt_fild02 17 350 prt_fild01 382 351
+prt_fild03 16 249 prt_fild02 380 347
+prt_fild03 371 256 prt_monk 22 248
+prt_fild04 323 387 prt_fild00 317 18
+prt_fild04 17 114 gef_fild01 382 111
+prt_fild04 378 72 prt_fild05 13 63
+prt_fild04 384 155 prt_fild05 14 141
+prt_fild04 160 387 prt_fild00 165 18
+prt_fild04 384 334 prt_fild05 15 333
+prt_fild05 292 385 mjolnir_09 300 28
+prt_fild05 373 205 prontera 22 203
+prt_fild05 15 333 prt_fild04 384 334
+prt_fild05 105 381 mjolnir_09 106 28
+prt_fild05 255 14 prt_fild07 248 376
+prt_fild05 134 14 prt_fild07 132 381
+prt_fild05 13 63 prt_fild04 378 72
+prt_fild05 14 141 prt_fild04 384 155
+prt_fild06 277 320 prt_fild02 305 17
+prt_fild06 23 193 prontera 289 203
+prt_fild07 84 13 prt_fild09 87 380
+prt_fild07 206 12 prt_fild09 224 380
+prt_fild07 13 64 gef_fild02 380 68
+prt_fild07 14 289 gef_fild02 380 289
+prt_fild07 132 381 prt_fild05 134 14
+prt_fild07 17 145 gef_fild02 380 156
+prt_fild07 385 186 prt_fild08 16 187
+prt_fild07 383 239 prt_fild08 16 239
+prt_fild07 248 376 prt_fild05 255 14
+prt_fild08 371 212 izlude 30 78
+prt_fild08 55 21 moc_fild01 56 384
+prt_fild08 233 16 moc_fild01 239 382
+prt_fild08 16 239 prt_fild07 383 239
+prt_fild08 16 187 prt_fild07 385 186
+prt_fild08 170 378 prontera 156 22
+prt_fild09 14 124 prt_fild10 339 126
+prt_fild09 14 139 prt_fild10 339 126
+prt_fild09 383 251 moc_fild01 22 242
+prt_fild09 383 223 moc_fild01 22 242
+prt_fild09 224 380 prt_fild07 206 12
+prt_fild09 87 380 prt_fild07 84 13
+prt_fild10 227 299 gef_fild02 266 18
+prt_fild10 339 126 prt_fild09 14 139
+prt_fild10 339 126 prt_fild09 14 124
+prt_fild10 20 122 prt_fild11 362 111
+prt_fild10 20 196 prt_fild11 361 184
+prt_fild11 361 184 prt_fild10 20 196
+prt_fild11 302 301 gef_fild03 312 16
+prt_fild11 17 281 gef_fild11 377 293
+prt_fild11 362 111 prt_fild10 20 122
+#普隆德拉 地下水道
+prt_in 88 105 prt_fild05 274 208 0 c r0 n
+prt_fild05 270 212 prt_sewb1 131 247 0 c r0 n
+prt_sewb1 135 248 prt_fild05 270 212
+prt_sewb1 188 247 prt_sewb2 19 12
+prt_sewb2 19 12 prt_sewb1 188 247
+prt_sewb2 19 175 prt_sewb2 60 24
+prt_sewb2 60 24 prt_sewb2 19 175
+prt_sewb2 100 176 prt_sewb2 140 24
+prt_sewb2 140 24 prt_sewb2 100 176
+prt_sewb2 180 24 prt_sewb3 180 173
+prt_sewb3 180 173 prt_sewb2 180 24
+prt_sewb3 20 185 prt_sewb4 100 96
+prt_sewb4 100 96 prt_sewb3 20 185
+#聖卡畢利那 修道院
+prt_monk 22 248 prt_fild03 371 256
+prt_monk 192 172 monk_test 329 47
+prt_monk 245 137 monk_in 98 186
+prt_monk 245 106 monk_in 98 27
+monk_in 98 186 prt_monk 245 137
+monk_in 99 141 monk_in 99 102
+monk_in 99 102 monk_in 99 141
+monk_in 98 27 prt_monk 245 106
+monk_in 69 46 monk_in 40 38
+monk_in 40 38 monk_in 69 46
+monk_in 128 46 monk_in 159 38
+monk_in 159 38 monk_in 128 46
+monk_in 128 84 monk_in 159 90
+monk_in 159 90 monk_in 128 84
+monk_in 69 84 monk_in 40 92
+monk_in 40 92 monk_in 69 84
+monk_test 329 47 prt_monk 192 172
+monk_test 329 76 monk_test 259 115
+monk_test 259 115 monk_test 329 76
+monk_test 272 125 monk_test 298 127
+monk_test 298 127 monk_test 272 125
+##############################################################
+#依斯魯得島
+izlude 128 148 geffen 120 39 1200 c r2 c r0 n
+izlude 128 148 payon 161 58 1200 c r2 c r1 n
+izlude 128 148 morocc 156 46 1200 c r2 c r2 n
+izlude 128 148 aldebaran 168 112 1800 c r2 c r3 n
+izlude 110 182 izlude_in 65 87
+izlude 52 172 izlude_in 74 161
+izlude_in 65 84 izlude 112 179
+izlude_in 74 158 izlude 52 168
+izlude 20 98 prt_fild08 367 212
+#學院
+izlude 125 257 iz_ac01 99 29
+izlude 135 257 iz_ac01 99 29
+iz_ac01 100 24 izlude 127 253
+#依斯魯得-島柏伊亞嵐島
+izlu2dun 108 83 iz_dun00 168 173
+#海底 洞窟
+iz_dun00 168 173 izlu2dun 108 83
+iz_dun00 39 41 iz_dun01 41 32
+iz_dun00 352 342 iz_dun01 253 258
+iz_dun01 41 32 iz_dun00 39 41
+iz_dun01 253 258 iz_dun00 352 342
+iz_dun01 118 170 iz_dun02 236 198
+iz_dun02 236 198 iz_dun01 118 170
+iz_dun02 339 331 iz_dun03 29 63
+iz_dun03 29 63 iz_dun02 339 331
+iz_dun03 264 245 iz_dun04 26 24
+iz_dun04 26 24 iz_dun03 264 245
+iz_dun04 130 234 iz_dun05 141 187 100000 c c c c r1
+iz_dun05 142 190 iz_dun04 130 234 0 c r1 c r1
+##############################################################
+#沙漠之都-夢羅克
+morocc 160 17 moc_fild12 159 381
+morocc 45 110 que_job01 6 94
+morocc 98 68 morocc_in 44 178
+morocc 85 55 morocc_in 44 146
+morocc 24 164 moc_fild19 169 107
+morocc 253 56 morocc_in 134 77
+morocc 46 46 morocc_in 68 75
+morocc 274 269 morocc_in 136 136
+morocc 197 66 morocc_in 83 90
+morocc 284 170 morocc_in 108 179
+morocc 52 259 morocc_in 183 65
+morocc 25 294 moc_ruins 159 37
+morocc 160 297 moc_fild07 198 21
+morocc_in 171 50 morocc_in 171 37
+morocc_in 171 37 morocc_in 171 50
+morocc_in 183 65 morocc 52 259
+morocc_in 174 151 morocc_in 174 166
+morocc_in 174 166 morocc_in 174 151
+morocc_in 174 122 morocc_in 174 109
+morocc_in 174 109 morocc_in 174 122
+morocc_in 166 130 morocc_in 149 129
+morocc_in 149 129 morocc_in 166 130
+morocc_in 144 122 morocc_in 144 109
+morocc_in 144 109 morocc_in 144 122
+morocc_in 136 136 morocc 274 269
+morocc_in 108 179 morocc 284 170
+morocc_in 68 123 morocc_in 55 123
+morocc_in 55 123 morocc_in 68 123
+morocc_in 93 123 morocc_in 106 123
+morocc_in 106 123 morocc_in 93 123
+morocc_in 83 90 morocc 197 66
+morocc_in 83 90 morocc 197 66
+morocc_in 105 95 morocc_in 93 95
+morocc_in 93 95 morocc_in 105 95
+morocc_in 86 101 morocc_in 86 117
+morocc_in 86 117 morocc_in 86 101
+morocc_in 68 95 morocc_in 55 95
+morocc_in 55 95 morocc_in 68 95
+morocc_in 44 178 morocc 98 68
+morocc_in 34 161 morocc_in 23 161
+morocc_in 23 161 morocc_in 34 161
+morocc_in 57 161 morocc_in 70 161
+morocc_in 70 161 morocc_in 57 161
+morocc_in 134 77 morocc 253 56
+morocc_in 44 146 morocc 85 55
+morocc_in 68 75 morocc 46 46
+morocc_in 68 62 morocc_in 68 42
+morocc_in 68 42 morocc_in 68 62
+morocc_in 144 151 morocc_in 144 169
+morocc_in 144 166 morocc_in 144 148
+moc_ruins 71 16 moc_fild19 71 170
+moc_ruins 159 37 morocc 25 294
+#秘密酒店
+que_job01 6 94 morocc 45 110
+que_job01 17 48 que_job01 68 96
+que_job01 68 96 que_job01 17 48
+que_job01 80 77 que_job01 61 50
+que_job01 65 50 que_job01 84 77
+que_job01 51 55 que_job01 11 7
+que_job01 11 4 que_job01 52 50
+que_job01 51 44 que_job01 80 21
+que_job01 80 27 que_job01 52 50
+#蘇克拉特 沙漠
+moc_fild01 239 382 prt_fild08 233 16
+moc_fild01 56 384 prt_fild08 55 21
+moc_fild01 22 242 prt_fild09 383 223
+moc_fild01 22 242 prt_fild09 383 251
+moc_fild01 341 16 moc_fild02 67 342
+moc_fild01 379 162 pay_fild04 17 165
+moc_fild01 321 16 moc_fild02 67 342
+moc_fild01 301 16 moc_fild02 67 342
+moc_fild02 332 19 moc_fild03 70 341
+moc_fild02 228 29 moc_fild13 298 370
+moc_fild02 67 342 moc_fild01 341 16
+moc_fild02 378 272 pay_gld 16 276
+moc_fild02 350 339 pay_fild04 194 17
+moc_fild02 67 342 moc_fild01 321 16
+moc_fild02 67 342 moc_fild01 301 16
+moc_fild02 71 18 moc_fild13 146 368
+moc_fild03 303 170 pay_fild01 13 152
+moc_fild03 17 37 moc_fild13 308 49
+moc_fild03 70 341 moc_fild02 332 19
+moc_fild07 198 21 morocc 160 297
+moc_fild11 26 161 moc_fild12 289 168
+moc_fild11 212 29 moc_fild17 218 369
+moc_fild12 118 30 moc_fild18 158 382
+moc_fild12 289 168 moc_fild11 26 161
+moc_fild12 159 381 morocc 160 17
+moc_fild12 35 303 cmd_fild08 331 319 0 c r0 n
+moc_fild13 308 49 moc_fild03 17 37
+moc_fild13 298 370 moc_fild02 228 29
+moc_fild13 146 368 moc_fild02 71 18
+moc_fild16 16 179 moc_fild17 369 272
+moc_fild17 218 369 moc_fild11 212 29
+moc_fild17 369 272 moc_fild16 16 179
+moc_fild17 30 300 moc_fild18 382 305
+moc_fild18 158 382 moc_fild12 118 30
+moc_fild18 51 170 cmd_fild09 369 164
+moc_fild18 382 305 moc_fild17 30 300
+moc_fild19 169 107 morocc 24 164
+moc_fild19 71 170 moc_ruins 71 16
+#金字塔迷宮
+moc_ruins 54 161 moc_pryd01 195 9
+moc_pryd01 10 195 moc_pryd02 10 195
+moc_pryd01 195 9 moc_ruins 54 161
+moc_pryd01 90 109 moc_prydb1 100 191
+moc_prydb1 100 191 moc_pryd01 90 109
+moc_prydb1 87 115 moc_prydb1 59 115
+moc_prydb1 59 115 moc_prydb1 87 115
+moc_prydb1 111 115 moc_prydb1 142 115
+moc_prydb1 142 115 moc_prydb1 111 115
+moc_prydb1 100 104 moc_prydb1 100 77
+moc_prydb1 100 77 moc_prydb1 100 104
+moc_prydb1 100 55 moc_pryd05 94 98
+moc_pryd02 10 195 moc_pryd01 10 195
+moc_pryd02 100 99 moc_pryd03 100 97
+moc_pryd03 100 97 moc_pryd02 100 99
+moc_pryd03 15 187 moc_pryd04 15 187
+moc_pryd03 12 15 moc_pryd04 12 15
+moc_pryd03 184 11 moc_pryd04 184 11
+moc_pryd03 188 184 moc_pryd04 188 184
+moc_pryd04 15 187 moc_pryd03 15 187
+moc_pryd04 12 15 moc_pryd03 12 15
+moc_pryd04 188 184 moc_pryd03 188 184
+moc_pryd04 184 11 moc_pryd03 184 11
+moc_pryd05 94 98 moc_prydb1 100 55
+moc_pryd05 223 9 moc_pryd06 195 8
+moc_pryd06 195 8 moc_pryd05 223 9
+#史芬克斯密穴
+moc_fild19 98 99 in_sphinx1 288 6
+in_sphinx1 288 6 moc_fild19 98 99
+in_sphinx1 80 191 in_sphinx2 149 77
+in_sphinx2 149 77 in_sphinx1 80 191
+in_sphinx2 276 272 in_sphinx3 210 57
+in_sphinx3 210 57 in_sphinx2 276 272
+in_sphinx3 70 83 in_sphinx3 70 111
+in_sphinx3 70 111 in_sphinx3 70 83
+in_sphinx3 60 227 in_sphinx3 35 227
+in_sphinx3 35 227 in_sphinx3 60 227
+in_sphinx3 12 69 in_sphinx4 10 224
+in_sphinx4 10 224 in_sphinx3 12 69
+in_sphinx4 120 113 in_sphinx5 100 96
+in_sphinx5 100 96 in_sphinx4 120 113
+in_sphinx5 16 10 in_sphinx5 183 10
+in_sphinx5 183 10 in_sphinx5 16 188
+in_sphinx5 16 188 in_sphinx5 183 188
+in_sphinx5 183 188 in_sphinx5 16 10
+in_sphinx5 189 16 in_sphinx5 11 183
+in_sphinx5 11 183 in_sphinx5 11 16
+in_sphinx5 11 16 in_sphinx5 189 183
+in_sphinx5 189 183 in_sphinx5 189 16
+#刺客工會
+moc_fild16 205 296 in_moc_16 18 8
+in_moc_16 18 8 moc_fild16 205 296
+##############################################################
+#山岳之都 裴揚
+payon 228 329 pay_arche 81 17
+payon 122 27 pay_fild01 333 361
+payon 16 143 pay_gld 374 149
+payon 267 89 pay_fild08 17 75
+payon 223 117 payon_in01 172 11
+payon 130 169 payon_in01 13 139
+payon 141 85 payon_in01 14 51
+payon 136 158 payon_in01 23 129
+payon 151 127 payon_in01 56 50
+payon 269 152 payon_in01 86 9
+payon 256 285 payon_in01 42 11
+payon 156 247 payon_in03 98 114
+payon 127 204 payon_in03 85 19
+payon 189 233 payon_in03 146 39
+payon 107 326 payon_in03 20 60
+payon 155 328 payon_in03 165 140
+payon_in01 13 139 payon 130 169
+payon_in01 17 51 payon 147 85
+payon_in01 10 38 payon_in01 10 17
+payon_in01 10 17 payon_in01 10 38
+payon_in01 10 59 payon_in01 10 80
+payon_in01 10 80 payon_in01 10 59
+payon_in01 23 129 payon 136 158
+payon_in01 172 11 payon 223 117
+payon_in01 181 43 payon_in01 181 70
+payon_in01 181 70 payon_in01 181 43
+payon_in01 193 92 payon_in01 146 61
+payon_in01 146 61 payon_in01 193 92
+payon_in01 133 42 payon_in01 133 21
+payon_in01 133 21 payon_in01 133 42
+payon_in01 56 50 payon 151 127
+payon_in01 86 9 payon 269 152
+payon_in01 92 37 payon_in01 107 71
+payon_in01 107 71 payon_in01 92 37
+payon_in01 42 11 payon 256 285
+payon_in03 98 114 payon 156 247
+payon_in03 90 124 payon_in03 83 124
+payon_in03 83 124 payon_in03 90 124
+payon_in03 99 133 payon_in03 99 148
+payon_in03 99 148 payon_in03 99 133
+payon_in03 107 124 payon_in03 114 124
+payon_in03 114 124 payon_in03 107 124
+payon_in03 85 19 payon 127 204
+payon_in03 74 19 payon_in03 67 19
+payon_in03 67 19 payon_in03 74 19
+payon_in03 46 19 payon_in03 39 19
+payon_in03 39 19 payon_in03 46 19
+payon_in03 28 19 payon_in03 21 19
+payon_in03 21 19 payon_in03 28 19
+payon_in03 146 39 payon 189 233
+payon_in03 158 32 payon_in03 130 17
+payon_in03 130 17 payon_in03 158 32
+payon_in03 172 32 payon_in03 160 17
+payon_in03 160 17 payon_in03 172 32
+payon_in03 186 32 payon_in03 190 17
+payon_in03 190 17 payon_in03 186 32
+payon_in03 20 60 payon 107 326
+payon_in03 20 73 payon_in03 20 86
+payon_in03 20 86 payon_in03 20 73
+payon_in03 20 103 payon_in03 20 118
+payon_in03 20 118 payon_in03 20 103
+payon_in03 12 131 payon_in03 12 142
+payon_in03 12 142 payon_in03 12 131
+payon_in03 28 131 payon_in03 28 142
+payon_in03 28 142 payon_in03 28 131
+payon_in03 28 161 payon_in03 28 172
+payon_in03 28 172 payon_in03 28 161
+payon_in03 12 161 payon_in03 12 172
+payon_in03 12 172 payon_in03 12 161
+payon_in03 165 140 payon 155 328
+payon_in03 186 153 payon_in03 186 178
+payon_in03 186 178 payon_in03 186 153
+#裴揚 弓箭手村落
+pay_arche 81 17 payon 228 329
+pay_arche 145 165 payon_in02 64 56
+pay_arche 92 170 payon_in02 50 4
+pay_arche 71 156 payon_in02 82 41
+payon_in02 64 56 pay_arche 145 165
+payon_in02 52 67 payon_in02 35 67
+payon_in02 35 67 payon_in02 52 67
+payon_in02 75 67 payon_in02 10 25
+payon_in02 10 25 payon_in02 75 67
+payon_in02 50 4 pay_arche 92 170
+payon_in02 82 45 pay_arche 74 153
+payon_in02 70 33 payon_in02 61 33
+payon_in02 61 33 payon_in02 70 33
+#斐揚 樹林
+pay_fild01 13 152 moc_fild03 303 170
+pay_fild01 333 361 payon 122 27
+pay_fild01 379 201 pay_fild07 16 200
+pay_fild01 278 14 pay_fild02 83 386
+pay_fild01 353 14 pay_fild02 167 390
+pay_fild02 167 390 pay_fild01 353 14
+pay_fild02 83 386 pay_fild01 278 14
+pay_fild02 284 108 pay_fild03 15 110
+pay_fild03 15 110 pay_fild02 284 108
+pay_fild03 172 281 pay_fild07 163 17
+pay_fild03 392 63 alberta 15 234
+pay_fild03 313 16 pay_fild06 305 375
+pay_fild04 194 17 moc_fild02 350 339
+pay_fild04 17 165 moc_fild01 379 162
+pay_fild06 305 375 pay_fild03 313 16
+pay_fild07 382 290 pay_fild10 16 290
+pay_fild07 280 382 pay_fild08 160 16
+pay_fild07 163 17 pay_fild03 172 281
+pay_fild07 16 200 pay_fild01 379 201
+pay_fild08 262 91 pay_fild09 16 91
+pay_fild08 160 16 pay_fild07 280 382
+pay_fild08 17 75 payon 267 89
+pay_fild09 112 16 pay_fild10 112 382
+pay_fild09 16 91 pay_fild08 262 91
+pay_fild10 16 290 pay_fild07 382 290
+pay_fild10 112 382 pay_fild09 112 16
+#斐揚地下
+pay_arche 36 131 pay_dun00 21 186
+pay_dun00 21 186 pay_arche 36 131
+pay_dun00 184 33 pay_dun01 15 33
+pay_dun01 15 33 pay_dun00 184 33
+pay_dun01 286 25 pay_dun02 16 63
+pay_dun02 16 63 pay_dun01 286 25
+pay_dun02 137 128 pay_dun03 155 161
+pay_dun03 155 161 pay_dun02 137 128
+pay_dun03 127 62 pay_dun04 202 206
+pay_dun03 127 62 pay_dun04 32 204
+pay_dun03 127 62 pay_dun04 191 41
+pay_dun03 127 62 pay_dun04 40 37
+pay_dun04 202 206 pay_dun03 127 62
+pay_dun04 32 204 pay_dun03 127 62
+pay_dun04 191 41 pay_dun03 127 62
+pay_dun04 40 37 pay_dun03 127 62
+##############################################################
+#魔法之都 吉芬
+geffen 26 119 gef_fild07 339 187
+geffen 43 85 geffen_in 70 138
+geffen 182 59 geffen_in 106 181
+geffen 217 119 gef_fild00 40 199
+geffen 172 174 geffen_in 70 52
+geffen 119 213 gef_fild04 187 39
+geffen 61 180 geffen_in 163 94
+geffen 140 99 geffen_in 166 54
+geffen 138 138 geffen_in 28 106
+geffen 98 141 geffen_in 28 160
+geffen 120 114 gef_tower 52 177
+geffen 119 55 gefenia03 130 206
+geffen_in 28 156 geffen 101 138
+geffen_in 28 106 geffen 138 138
+geffen_in 166 54 geffen 140 99
+geffen_in 163 94 geffen 61 180
+geffen_in 114 60 geffen_in 114 37
+geffen_in 114 37 geffen_in 114 60
+geffen_in 87 65 geffen_in 100 67
+geffen_in 100 67 geffen_in 87 65
+geffen_in 52 65 geffen_in 41 67
+geffen_in 41 67 geffen_in 52 65
+geffen_in 52 65 geffen_in 26 37
+geffen_in 26 37 geffen_in 52 65
+geffen_in 72 98 geffen_in 70 83
+geffen_in 70 83 geffen_in 72 98
+geffen_in 79 107 geffen_in 104 109
+geffen_in 104 109 geffen_in 79 107
+geffen_in 70 48 geffen 168 170
+geffen_in 138 162 geffen_in 138 149
+geffen_in 138 149 geffen_in 138 162
+geffen_in 138 162 geffen_in 138 149
+geffen_in 113 163 geffen_in 136 169
+geffen_in 136 169 geffen_in 113 163
+geffen_in 106 181 geffen 182 59
+geffen_in 70 149 geffen_in 70 161
+geffen_in 70 158 geffen_in 70 146
+geffen_in 70 132 geffen 46 88
+geffen_in 26 60 geffen_in 26 34
+#吉芬 中央塔
+gef_tower 52 181 geffen 120 110
+gef_tower 153 28 gef_dun00 104 99
+gef_tower 156 93 gef_tower 158 107
+gef_tower 158 104 gef_tower 156 90
+gef_tower 158 128 gef_tower 158 153
+gef_tower 158 150 gef_tower 158 124
+gef_tower 158 174 gef_tower 52 140
+gef_tower 52 135 gef_tower 158 169
+gef_tower 38 160 gef_tower 42 90
+gef_tower 42 86 gef_tower 38 157
+gef_tower 62 87 gef_tower 60 30
+gef_tower 60 34 gef_tower 60 90
+gef_tower 44 36 gef_tower 106 162
+gef_tower 106 158 gef_tower 44 33
+gef_tower 120 158 gef_tower 118 111
+gef_tower 118 114 gef_tower 120 161
+gef_tower 106 115 gef_tower 106 72
+gef_tower 106 69 gef_tower 106 112
+gef_tower 118 68 gef_tower 116 28
+gef_tower 116 31 gef_tower 118 71
+gef_tower 66 156 gef_tower 42 90
+#吉芬 區域
+gef_fild00 381 137 prt_fild00 18 129
+gef_fild00 267 382 mjolnir_06 265 29
+gef_fild00 40 199 geffen 217 119
+gef_fild01 382 111 prt_fild04 17 114
+gef_fild01 69 17 gef_fild03 66 382
+gef_fild01 16 102 gef_fild09 368 95
+gef_fild02 266 18 prt_fild10 227 299
+gef_fild02 380 68 prt_fild07 13 64
+gef_fild02 380 289 prt_fild07 14 289
+gef_fild02 380 156 prt_fild07 17 145
+gef_fild02 16 275 gef_fild03 379 277
+gef_fild02 14 78 gef_fild03 382 77
+gef_fild03 312 16 prt_fild11 302 301
+gef_fild03 379 277 gef_fild02 16 275
+gef_fild03 382 77 gef_fild02 14 78
+gef_fild03 66 382 gef_fild01 69 17
+gef_fild03 18 52 gef_fild10 370 56
+gef_fild04 187 39 geffen 119 213
+gef_fild04 261 362 mjolnir_01 284 18
+gef_fild04 362 322 mjolnir_06 18 331
+gef_fild04 16 309 gef_fild05 364 309
+gef_fild05 364 309 gef_fild04 16 309
+gef_fild05 64 15 gef_fild07 64 363
+gef_fild05 15 201 gef_fild06 382 211
+gef_fild06 382 211 gef_fild05 15 201
+gef_fild06 218 17 gef_fild08 200 355
+gef_fild07 339 187 geffen 26 119
+gef_fild07 18 191 gef_fild08 360 187
+gef_fild07 64 363 gef_fild05 64 15
+gef_fild08 360 187 gef_fild07 18 191
+gef_fild08 200 355 gef_fild06 218 17
+gef_fild09 368 95 gef_fild01 16 102
+gef_fild09 23 56 gef_fild13 380 56
+gef_fild09 225 25 gef_fild10 251 371
+gef_fild10 251 371 gef_fild09 225 25
+gef_fild10 370 56 gef_fild03 18 52
+gef_fild10 215 51 in_orcs01 162 55
+gef_fild10 136 331 in_orcs01 124 171
+gef_fild10 138 284 in_orcs01 29 116
+gef_fild10 104 21 gef_fild11 111 364
+gef_fild11 111 364 gef_fild10 104 21
+gef_fild11 377 293 prt_fild11 17 281
+in_orcs01 29 116 gef_fild10 138 284
+in_orcs01 162 55 gef_fild10 215 51
+in_orcs01 124 171 gef_fild10 136 331
+#吉芬中央塔 地下密穴
+gef_dun00 104 103 gef_tower 153 31
+gef_dun00 107 169 gef_dun01 115 240
+gef_dun01 115 240 gef_dun00 107 169
+gef_dun01 197 38 gef_dun02 106 134
+gef_dun02 106 134 gef_dun01 197 38
+#獸人地下洞窟
+gef_fild10 223 205 in_orcs01 108 86
+gef_fild10 63 337 in_orcs01 30 154
+orcsdun01 183 8 orcsdun02 21 188
+orcsdun01 32 172 in_orcs01 30 182
+orcsdun02 180 15 in_orcs01 108 114
+orcsdun02 21 188 orcsdun01 183 8
+in_orcs01 30 182 orcsdun01 32 172
+in_orcs01 108 114 orcsdun02 180 15
+in_orcs01 30 154 gef_fild10 63 337
+in_orcs01 108 86 gef_fild10 223 205
+########################################
+#港口之都 艾爾貝塔
+alberta 117 38 alberta_in 180 34
+alberta_in 180 34 alberta 117 38
+alberta 33 42 alberta_in 78 44
+alberta_in 78 44 alberta 33 42
+alberta_in 64 57 alberta_in 24 54
+alberta_in 24 54 alberta_in 64 57
+alberta_in 64 31 alberta_in 24 33
+alberta_in 24 33 alberta_in 64 31
+alberta 45 145 alberta_in 73 141
+alberta_in 73 141 alberta 45 145
+alberta_in 66 153 alberta_in 66 170
+alberta_in 66 170 alberta_in 66 153
+alberta_in 66 130 alberta_in 66 113
+alberta_in 66 113 alberta_in 66 130
+alberta 65 233 alberta_in 14 141
+alberta_in 14 141 alberta 65 233
+alberta_in 22 153 alberta_in 22 170
+alberta_in 22 170 alberta_in 22 153
+alberta_in 22 130 alberta_in 22 113
+alberta_in 22 113 alberta_in 22 130
+alberta 98 153 alberta_in 189 89
+alberta_in 189 89 alberta 98 153
+alberta_in 125 160 alberta 99 221
+alberta 99 221 alberta_in 125 160
+alberta 93 205 alberta_in 114 130
+alberta_in 114 130 alberta 93 205
+alberta_in 114 183 alberta_in 152 186
+alberta_in 152 186 alberta_in 114 183
+alberta_in 159 175 alberta_in 114 97
+alberta_in 114 97 alberta_in 159 175
+alberta_in 159 153 alberta_in 114 49
+alberta_in 114 49 alberta_in 159 153
+alberta 209 173 alb_ship 160 171
+alberta 15 234 pay_fild03 392 63
+alberta 178 165 alb_ship 41 163
+alberta 170 170 alb_ship 26 166
+alb_ship 160 171 alberta 209 173
+alb_ship 41 163 alberta 178 165
+alb_ship 37 174 alb_ship 68 99
+alb_ship 68 99 alb_ship 37 174
+alb_ship 26 166 alberta 170 170
+########################################
+#運河之都 艾爾帕蘭
+aldebaran 168 168 xmas_fild01 84 48 0 c r1 c c n
+aldebaran 139 135 c_tower1 200 157
+aldebaran 197 70 aldeba_in 94 41
+aldebaran 225 54 aldeba_in 149 123
+aldebaran 233 105 aldeba_in 157 193
+aldebaran 140 243 yuno_fild01 208 18
+aldebaran 89 234 aldeba_in 245 237
+aldebaran 61 229 aldeba_in 148 224
+aldebaran 51 218 aldeba_in 24 224
+aldebaran 72 197 aldeba_in 27 34
+aldebaran 35 140 alde_gld 284 160
+aldebaran 53 65 alde_alche 42 171
+aldebaran 65 53 alde_alche 19 171
+aldebaran 118 63 aldeba_in 208 117
+aldebaran 138 34 mjolnir_12 199 378
+aldeba_in 218 104 aldeba_in 217 71
+aldeba_in 217 71 aldeba_in 218 104
+aldeba_in 217 131 aldeba_in 217 160
+aldeba_in 217 160 aldeba_in 217 131
+aldeba_in 208 117 aldebaran 118 63
+aldeba_in 27 71 aldeba_in 27 102
+aldeba_in 27 102 aldeba_in 27 71
+aldeba_in 27 34 aldebaran 72 197
+aldeba_in 24 224 aldebaran 51 218
+aldeba_in 134 237 aldeba_in 103 157
+aldeba_in 103 157 aldeba_in 134 237
+aldeba_in 83 191 aldeba_in 83 224
+aldeba_in 83 224 aldeba_in 83 191
+aldeba_in 64 157 aldeba_in 37 238
+aldeba_in 37 238 aldeba_in 64 157
+aldeba_in 148 224 aldebaran 61 229
+aldeba_in 245 237 aldebaran 89 234
+aldeba_in 157 193 aldebaran 233 105
+aldeba_in 149 123 aldebaran 225 54
+aldeba_in 94 38 aldebaran 197 68
+aldeba_in 103 61 aldeba_in 97 102
+aldeba_in 97 102 aldeba_in 103 61
+aldeba_in 144 92 aldeba_in 149 55
+aldeba_in 149 55 aldeba_in 144 92
+#鍊金術師 轉職所
+alde_alche 13 184 alde_alche 88 117
+alde_alche 88 117 alde_alche 13 184
+alde_alche 41 186 alde_alche 114 183
+alde_alche 114 183 alde_alche 41 186
+alde_alche 133 103 alde_alche 158 163
+alde_alche 158 163 alde_alche 133 103
+alde_alche 133 77 alde_alche 158 107
+alde_alche 158 107 alde_alche 133 77
+alde_alche 89 62 alde_alche 17 29
+alde_alche 17 29 alde_alche 89 62
+alde_alche 46 77 alde_alche 93 17
+alde_alche 93 17 alde_alche 46 77
+alde_alche 46 104 alde_alche 160 17
+alde_alche 160 17 alde_alche 46 104
+alde_alche 42 171 aldebaran 53 65
+alde_alche 19 171 aldebaran 65 53
+#艾爾帕蘭 鐘塔
+c_tower1 200 157 aldebaran 139 135
+c_tower1 235 226 c_tower2 268 26
+c_tower1 123 22 alde_dun01 302 25
+c_tower2 273 26 c_tower1 235 223
+c_tower2 142 283 c_tower3 60 147
+c_tower2 13 288 c_tower3 235 7
+c_tower2 24 24 alde_dun03 277 183
+c_tower3 60 147 c_tower2 142 283
+c_tower3 240 7 c_tower2 13 282
+c_tower3 240 7 c_tower3 235 7
+c_tower3 7 39 alde_dun01 171 158
+c_tower3 42 41 alde_dun02 122 169
+c_tower3 163 252 alde_dun02 262 41
+c_tower3 212 159 alde_dun03 276 53
+c_tower3 146 8 c_tower1 235 223
+c_tower3 10 249 c_tower4 185 44 0 c r2 n
+c_tower4 204 57 c_tower4 65 77
+c_tower4 198 59 c_tower4 152 98
+c_tower4 133 202 c_tower4 140 149
+c_tower4 79 49 c_tower4 204 60
+c_tower4 68 46 c_tower4 73 154
+c_tower4 51 156 alde_dun01 171 158
+alde_dun01 302 25 c_tower1 123 22
+alde_dun01 167 158 c_tower2 142 283
+alde_dun01 292 306 alde_dun02 43 20
+alde_dun02 43 20 alde_dun01 292 306
+alde_dun02 267 41 alde_dun02 262 41
+alde_dun02 279 250 alde_dun03 12 267
+alde_dun02 122 169 c_tower3 42 41
+alde_dun02 267 41 c_tower3 168 252
+alde_dun03 276 48 c_tower1 235 226
+alde_dun03 277 183 c_tower2 24 24
+alde_dun03 191 31 c_tower3 212 159
+alde_dun03 12 267 alde_dun02 279 250
+alde_dun03 130 125 alde_dun03 171 127
+alde_dun03 171 127 alde_dun03 130 125
+alde_dun03 264 16 alde_dun04 79 267 0 c r2 n
+alde_dun04 272 74 alde_dun04 204 62
+alde_dun04 208 58 alde_dun04 268 74
+alde_dun04 207 225 c_tower3 7 34
+c_tower2 223 267 c_tower3 252 29
+c_tower3 252 24 alde_dun03 130 130
+alde_dun04 80 273 alde_dun03 263 26
+alde_dun04 215 192 c_tower2 148 283
+alde_dun04 32 74 alde_dun02 187 239
+#下方5個傳點預設不開啟(避免掛地上3樓要回城跑到4樓)
+#c_tower4 189 40 alde_dun03 130 130
+#c_tower4 171 179 alde_dun03 276 53
+#c_tower4 37 70 alde_dun03 277 54
+#c_tower4 153 107 c_tower2 228 267
+#c_tower4 70 19 c_tower3 151 8
+##############################################################
+#白雪村落 薑餅城
+xmas 149 41 xmas_fild01 90 252
+xmas 119 162 xmas_in 38 89
+xmas 120 131 xmas_in 43 33
+xmas 173 160 xmas_in 163 93
+xmas 181 169 xmas_in 179 109
+xmas 174 131 xmas_in 153 32
+xmas 142 239 xmas_in 94 83
+xmas 149 239 xmas_in 104 83
+xmas 149 258 xmas_in 104 117
+xmas 142 258 xmas_in 94 117
+xmas 189 278 xmas_in 168 160
+xmas 104 289 xmas_in 30 161
+xmas 143 314 xmas_dun01 205 13
+xmas_in 30 161 xmas 104 289
+xmas_in 168 160 xmas 189 278
+xmas_in 104 117 xmas 149 258
+xmas_in 94 117 xmas 142 258
+xmas_in 94 83 xmas 142 239
+xmas_in 104 83 xmas 149 239
+xmas_in 153 32 xmas 174 131
+xmas_in 163 93 xmas 173 160
+xmas_in 179 109 xmas 181 169
+xmas_in 46 33 xmas 123 131
+xmas_in 38 89 xmas 119 162
+#薑餅城原野
+xmas_fild01 84 48 aldebaran 168 168
+xmas_fild01 90 252 xmas 149 41
+xmas_fild01 69 252 xmas 149 41
+#玩具工廠倉庫
+xmas_dun01 205 13 xmas 143 314
+xmas_dun01 129 130 xmas_dun02 131 130
+#玩具分類場
+xmas_dun02 129 130 xmas_dun01 132 130
+##############################################################
+#海邊之都 克魔島
+comodo 115 291 cmd_in02 67 132
+comodo 92 128 cmd_in01 90 174
+comodo 130 195 cmd_in02 139 169
+comodo 140 111 cmd_in02 178 136
+comodo 126 98 cmd_in02 139 97
+comodo 140 90 cmd_in02 74 21
+comodo 153 97 cmd_in02 216 97
+comodo 265 74 cmd_in01 123 186
+comodo 271 271 cmd_in01 109 125
+comodo 236 298 cmd_in01 183 81
+comodo 192 294 cmd_in01 183 123
+comodo 145 328 cmd_in01 120 67
+comodo 176 358 beach_dun2 154 13
+comodo 333 175 beach_dun3 17 265
+comodo 24 214 beach_dun 276 67
+cmd_in01 90 174 comodo 92 128
+cmd_in01 123 186 comodo 265 74
+cmd_in01 109 125 comodo 271 271
+cmd_in01 183 81 comodo 236 298
+cmd_in01 120 67 comodo 145 328
+cmd_in01 183 123 comodo 192 294
+cmd_in02 208 206 cmd_in02 98 216
+cmd_in02 98 216 cmd_in02 208 206
+cmd_in02 69 129 comodo 115 288
+cmd_in02 139 169 comodo 130 195
+cmd_in02 178 136 comodo 140 111
+cmd_in02 139 97 comodo 126 98
+cmd_in02 74 21 comodo 140 90
+cmd_in02 90 37 cmd_in02 187 78
+cmd_in02 187 78 cmd_in02 90 37
+cmd_in02 168 113 cmd_in02 58 74
+cmd_in02 58 74 cmd_in02 168 113
+cmd_in02 216 97 comodo 153 97
+#巴不其卡 森林
+cmd_fild01 77 366 um_fild03 114 50
+cmd_fild01 222 24 cmd_fild02 222 376
+cmd_fild01 178 370 um_fild03 243 26
+cmd_fild01 362 263 cmd_fild03 23 269
+cmd_fild01 362 73 cmd_fild03 23 68
+cmd_fild01 26 318 beach_dun3 286 57
+#克克魔 海邊
+cmd_fild02 382 269 cmd_fild04 21 275
+cmd_fild02 358 95 cmd_fild04 31 92
+cmd_fild02 222 376 cmd_fild01 222 24
+#基乃依 沼澤地
+cmd_fild03 181 17 cmd_fild04 180 372
+cmd_fild03 23 68 cmd_fild01 362 73
+cmd_fild03 23 269 cmd_fild01 362 263
+#克克魔 海邊
+cmd_fild04 180 372 cmd_fild03 181 17
+cmd_fild04 21 275 cmd_fild02 382 269
+cmd_fild04 31 92 cmd_fild02 358 95
+cmd_fild04 376 287 cmd_fild06 21 285
+cmd_fild04 304 180 in_rogue 161 103
+in_rogue 161 103 cmd_fild04 304 180
+#要塞都市 山特樂曼(西邊)
+cmd_fild06 379 174 cmd_fild08 25 170
+cmd_fild06 368 96 cmd_fild08 15 102
+cmd_fild06 372 359 cmd_fild08 25 355
+cmd_fild06 21 285 cmd_fild04 376 287
+cmd_fild06 151 27 cmd_fild07 149 379
+#發樂斯 燈塔島
+cmd_fild07 149 379 cmd_fild06 151 27
+cmd_fild07 389 186 cmd_fild09 12 170
+cmd_fild07 193 117 in_rogue 375 46
+cmd_fild07 355 286 in_rogue 247 126
+#要塞都市 山特樂曼(東邊)
+cmd_fild08 25 355 cmd_fild06 372 359
+cmd_fild08 25 170 cmd_fild06 379 174
+cmd_fild08 15 102 cmd_fild06 368 96
+cmd_fild08 76 31 cmd_fild09 75 382
+cmd_fild08 309 48 cmd_fild09 309 381
+cmd_fild08 354 324 moc_fild12 35 303
+cmd_fild08 335 355 anthell01 35 267
+cmd_fild08 348 82 anthell02 171 170
+#要塞都市 山特樂曼(南邊)
+cmd_fild09 369 164 moc_fild18 51 170
+cmd_fild09 309 381 cmd_fild08 309 48
+cmd_fild09 75 382 cmd_fild08 76 31
+cmd_fild09 12 170 cmd_fild07 389 186
+#克魔島 西邊洞穴 加露
+beach_dun 276 67 comodo 24 214
+#克魔島 東邊洞穴 馬吾
+beach_dun3 286 57 cmd_fild01 26 318
+beach_dun3 17 265 comodo 333 175
+#克魔島 北邊洞穴 盧安達
+beach_dun2 154 13 comodo 176 358
+beach_dun2 258 244 um_fild01 31 274
+#螞蟻地獄
+anthell01 253 32 anthell02 32 267
+anthell01 35 267 cmd_fild08 335 355
+anthell02 171 170 cmd_fild08 348 82
+anthell02 32 267 anthell01 253 32
+#流氓工會
+in_rogue 247 122 cmd_fild07 349 285
+in_rogue 375 46 cmd_fild07 193 117
+in_rogue 375 33 in_rogue 375 125
+in_rogue 375 125 in_rogue 375 33
+########################################
+#雨檀族村落-汶巴拉
+um_in 29 71 umbala 217 186
+um_in 99 111 umbala 136 127
+um_in 99 63 umbala 107 130
+um_in 38 110 umbala 68 253
+um_in 141 39 umbala 94 186
+um_in 166 69 umbala 100 203
+um_in 155 111 umbala 125 157
+umbala 138 129 um_in 99 114
+umbala 220 189 um_in 32 71
+umbala 107 130 um_in 99 63
+umbala 94 186 um_in 141 39
+umbala 100 203 um_in 166 69
+umbala 68 253 um_in 38 110
+umbala 125 157 um_in 155 111
+umbala 130 79 um_fild04 215 339
+umbala 106 285 yggdrasil01 39 63
+#嚕嚕卡森林
+um_fild01 369 277 um_fild02 22 272
+um_fild01 31 274 beach_dun2 258 244
+#滬家森林
+um_fild02 373 148 um_fild03 32 145
+um_fild02 373 329 um_fild03 19 334
+um_fild02 188 374 um_fild04 182 13
+um_fild02 22 272 um_fild01 369 277
+#卡拉拉森林
+um_fild03 243 26 cmd_fild01 178 370
+um_fild03 114 50 cmd_fild01 77 366
+um_fild03 32 145 um_fild02 373 148
+um_fild03 19 334 um_fild02 373 329
+#滬家叢林
+um_fild04 182 13 um_fild02 188 374
+um_fild04 215 339 umbala 130 79
+########################################
+#禾貝勒開米勒之島 (天地樹葉樹幹)
+yggdrasil01 270 52 yggdrasil01 27 195
+yggdrasil01 27 195 yggdrasil01 270 52
+yggdrasil01 248 259 nif_fild01 315 67
+########################################
+#死者國家-尼芙菲姆
+nif_in 65 174 nif_in 140 171
+nif_in 140 171 nif_in 65 174
+nif_in 169 82 nif_in 186 106
+nif_in 186 106 nif_in 169 82
+nif_in 34 34 nif_in 88 29
+nif_in 88 29 nif_in 34 34
+nif_in 18 154 niflheim 255 194
+nif_in 11 88 niflheim 219 169
+nif_in 154 78 niflheim 166 162
+nif_in 135 13 niflheim 219 198
+nif_in 23 11 niflheim 189 210
+nif_in 95 106 niflheim 202 248
+nif_in 78 74 niflheim 186 241
+niflheim 219 198 nif_in 135 15
+niflheim 189 210 nif_in 23 11
+niflheim 255 194 nif_in 18 154
+niflheim 219 169 nif_in 11 88
+niflheim 166 162 nif_in 154 78
+niflheim 189 241 nif_in 81 77
+niflheim 202 248 nif_in 95 106
+niflheim 19 154 nif_fild02 378 235
+#斯凱領頓 (尼芙菲姆 偏遠村落)
+nif_fild01 344 322 nif_fild02 26 311
+#鬼的峽谷
+nif_fild02 22 311 nif_fild01 340 322
+nif_fild02 378 235 niflheim 19 154
+########################################
+#修發茲共和國首都-朱諾
+yuno 158 13 yuno_fild04 231 288
+yuno 117 135 yuno_in01 116 37
+yuno 196 138 yuno_in01 32 33
+yuno 195 87 yuno_in04 192 28
+yuno 264 87 yuno_in01 168 104
+yuno 278 67 s_atelier 105 123
+yuno 342 203 yuno_in04 29 58
+yuno 273 141 kh_rossi 15 92
+yuno 323 284 yuno_in03 167 19
+yuno 278 293  yuno_in03 25 11
+yuno 284 366 yuno_in03 224 19
+yuno 157 322 yuno_pre 69 10
+yuno 87 321 yuno_in02 172 61
+yuno 218 180 que_god01 99 81
+yuno 245 147 yuno_in01 101 85
+yuno 48 105 yuno_in01 40 176
+yuno 13 126 sch_gld 354 89
+yuno 48 151 yuno_in01 34 100
+yuno 93 180 yuno_in04 33 130
+yuno_in01 34 100 yuno 48 151
+yuno_in01 32 182 yuno_in01 82 164
+yuno_in01 82 164 yuno_in01 32 182
+yuno_in01 40 176 yuno 48 105
+yuno_in01 101 85 yuno 245 147
+yuno_in01 168 104 yuno 264 87
+yuno_in01 32 36 yuno 193 142
+yuno_in01 88 36 yuno_in01 176 34
+yuno_in01 176 34 yuno_in01 88 36
+yuno_in01 116 40 yuno 120 138
+yuno_in02 172 61 yuno 87 321
+yuno_in02 93 207 valkyrie 48 8 0 c c r1 n
+yuno_in02 82 14 yuno_in05 196 194
+yuno_in03 223 167 yuno_in03 96 62
+yuno_in03 96 62 yuno_in03 223 167
+yuno_in03 219 50 yuno_in03 104 115
+yuno_in03 104 115 yuno_in03 219 50
+yuno_in03 244 52 yuno_in03 235 91
+yuno_in03 235 91 yuno_in03 244 52
+yuno_in03 231 62 yuno_in03 239 141
+yuno_in03 239 141 yuno_in03 231 62
+yuno_in03 224 19 yuno 284 366
+yuno_in03 25 11 yuno 278 293
+yuno_in03 25 56 yuno_in03 32 89
+yuno_in03 32 89 yuno_in03 25 56
+yuno_in03 167 19 yuno 323 284
+yuno_in03 167 72 yuno_in03 179 109
+yuno_in03 179 109 yuno_in03 167 72
+yuno_in03 111 192 yuno_in03 162 129
+yuno_in03 153 134 yuno_in03 66 186
+yuno_in03 66 186 yuno_in03 153 134
+yuno_in03 186 131 yuno_in03 161 187
+yuno_in03 161 187 yuno_in03 186 131
+yuno_in03 162 129 yuno_in03 111 192
+yuno_in03 173 118 yuno_in03 124 178
+yuno_in03 124 178 yuno_in03 173 118
+yuno_in03 186 119 yuno_in03 161 174
+yuno_in03 161 174 yuno_in03 186 119
+yuno_in04 192 28 yuno 195 87
+yuno_in04 29 58 yuno 342 203
+yuno_in04 52 58 yuno_in04 95 58
+yuno_in04 95 58 yuno_in04 52 58
+yuno_in04 33 130 yuno 93 180
+yuno_in04 103 64 yuno_in04 103 93
+yuno_in04 103 93 yuno_in04 103 64
+yuno_in04 103 51 yuno_in04 103 22
+yuno_in04 103 22 yuno_in04 103 51
+yuno_in04 115 51 yuno_in04 115 22
+yuno_in04 115 64 yuno_in04 115 93
+yuno_in04 115 22 yuno_in04 115 51
+yuno_in04 115 93 yuno_in04 115 64
+yuno_in04 122 57 yuno_in04 161 110
+yuno_in04 161 110 yuno_in04 122 57
+yuno_in05 148 83 yuno_in05 128 83
+yuno_in05 125 83 yuno_in05 145 83
+yuno_in05 125 83 yuno_in05 192 103
+yuno_in05 196 103 yuno_in05 128 83
+yuno_in05 148 83 yuno_in05 168 103
+yuno_in05 165 103 yuno_in05 145 83
+yuno_in05 137 71 yuno_in05 15 185
+yuno_in05 16 188 yuno_in05 181 94
+yuno_in05 181 91 yuno_in05 181 113
+yuno_in05 181 116 yuno_in05 177 12
+yuno_in05 177 9 yuno_in05 177 49
+yuno_in05 177 52 yuno_in05 177 12
+yuno_in05 177 52 yuno_in05 181 94
+yuno_in05 181 91 yuno_in05 177 49
+yuno_in05 177 9 yuno_in05 181 113
+yuno_in05 47 185 yuno_in05 181 94
+yuno_in05 47 185 yuno_in05 177 12
+yuno_in05 40 178 yuno_in05 177 9
+yuno_in05 31 167 yuno_in05 50 88
+yuno_in05 50 88 yuno_in02 85 14
+yuno_in05 196 194 yuno_in02 85 14
+yuno_in05 153 142 yuno_in05 145 83
+s_atelier 108 129 s_atelier 159 130
+s_atelier 159 130 s_atelier 108 129
+s_atelier 105 123 yuno 278 67
+que_god01 99 81 yuno 218 180
+yuno_pre 69 10 yuno 157 322
+#羅希米愛樂家 官邸
+kh_rossi 15 92 yuno 273 141
+kh_rossi 35 98 kh_rossi 27 143
+kh_rossi 27 143 kh_rossi 35 98
+kh_rossi 35 87 kh_rossi 27 42
+kh_rossi 27 42 kh_rossi 35 87
+kh_rossi 42 26 kh_rossi 87 25
+kh_rossi 87 25 kh_rossi 42 26
+kh_rossi 99 42 kh_rossi 63 87
+kh_rossi 63 87 kh_rossi 99 42
+kh_rossi 90 87 kh_rossi 168 34
+kh_rossi 168 34 kh_rossi 90 87
+kh_rossi 90 101 kh_rossi 282 60
+kh_rossi 282 60 kh_rossi 90 101
+kh_rossi 248 68 kh_rossi 88 273
+kh_rossi 88 273 kh_rossi 248 68
+kh_rossi 222 68 kh_rossi 22 273
+kh_rossi 22 273 kh_rossi 222 68
+kh_rossi 259 46 kh_rossi 228 234
+kh_rossi 228 234 kh_rossi 259 46
+kh_rossi 248 25 kh_rossi 88 222
+kh_rossi 88 222 kh_rossi 248 25
+kh_rossi 222 25 kh_rossi 22 222
+kh_rossi 22 222 kh_rossi 222 25
+kh_rossi 220 238 kh_rossi 260 279
+kh_rossi 260 279 kh_rossi 220 238
+kh_rossi 220 231 kh_rossi 260 190
+kh_rossi 260 190 kh_rossi 220 231
+kh_rossi 204 238 kh_rossi 204 279
+kh_rossi 204 279 kh_rossi 204 238
+kh_rossi 204 231 kh_rossi 204 190
+kh_rossi 204 190 kh_rossi 204 231
+kh_rossi 188 238 kh_rossi 148 279
+kh_rossi 148 279 kh_rossi 188 238
+kh_rossi 188 231 kh_rossi 148 190
+kh_rossi 148 190 kh_rossi 188 231
+#巴奇利神殿 (偉大戰士們的殿堂)
+valkyrie 49 67 valkyrie 49 72
+valkyrie 49 72 valkyrie 49 67
+#巴奇利神殿各地傳送
+#valkyrie 44 33 prontera 116 72 0 c r0 n
+#valkyrie 44 33 morocc 156 46 0 c r1 n
+#valkyrie 44 33 payon 161 58 0 c r2 n
+#valkyrie 44 33 geffen 120 39 0 c r3 n
+#valkyrie 44 33 alberta 117 56 0 c r4 n
+#valkyrie 44 33 izlude 94 103 0 c r5 n
+#valkyrie 44 33 aldebaran 91 105 0 c r6 n
+#valkyrie 44 33 comodo 209 143 0 c r7 n
+#valkyrie 44 33 yuno 328 101 0 c r8 n
+#國界 檢查站
+yuno_fild01 208 18 aldebaran 140 243
+yuno_fild01 27 247 yuno_fild12 369 244
+yuno_fild01 70 377 yuno_fild09 70 18
+yuno_fild01 287 367 yuno_fild09 280 29
+#吉 海伊洛 別墅
+yuno_fild02 287 16 yuno_fild08 285 385
+yuno_fild02 69 23 yuno_fild08 75 375
+yuno_fild02 19 340 yuno_fild03 382 331
+yuno_fild02 117 375 hu_fild04 122 27
+yuno_fild02 75 218 kh_vila 188 18 0 c r0 n
+kh_vila 191 18 yuno_fild02 74 215
+kh_vila 22 167 kh_vila 32 128
+kh_vila 32 128 kh_vila 22 167
+kh_vila 44 103 kh_vila 84 66
+kh_vila 84 66 kh_vila 44 103
+kh_vila 20 103 kh_vila 34 66
+kh_vila 34 66 kh_vila 20 103
+kh_vila 46 54 kh_vila 71 54
+kh_vila 71 54 kh_vila 46 54
+kh_vila 90 47 kh_vila 115 47
+kh_vila 115 47 kh_vila 90 47
+kh_vila 71 38 kh_vila 46 38
+kh_vila 46 38 kh_vila 71 38
+kh_vila 126 75 kh_vila 180 171
+kh_vila 180 171 kh_vila 126 75
+kh_vila 175 71 kh_vila 136 64
+kh_vila 79 11 yuno_fild02 92 208
+#爾邁斯 瀑雷德
+yuno_fild03 382 331 yuno_fild02 19 340
+yuno_fild03 21 162 yuno_fild04 374 149
+yuno_fild03 20 79 yuno_fild04 374 82
+yuno_fild03 215 382 yuno_fild06 214 27
+yuno_fild03 178 15 yuno_fild07 179 354
+yuno_fild03 33 140 mag_dun01 125 67
+yuno_fild04 231 288 yuno 158 13
+yuno_fild04 374 149 yuno_fild03 21 162
+yuno_fild04 374 82 yuno_fild03 20 79
+yuno_fild04 249 22 ein_fild06 251 365
+yuno_fild06 214 27 yuno_fild03 215 382
+yuno_fild06 369 132 hu_fild04 27 126
+yuno_fild06 151 370 hu_fild01 141 36
+#爾邁斯 峽谷(深淵的峽谷)
+yuno_fild07 352 292 yuno_fild08 24 275
+yuno_fild07 360 72 yuno_fild08 31 58
+yuno_fild07 92 28 yuno_fild11 91 372
+yuno_fild07 73 220 ein_fild06 335 176
+yuno_fild07 179 354 yuno_fild03 178 15
+#啟 海伊洛 學院
+yuno_fild08 134 29 yuno_fild12 193 372
+yuno_fild08 75 375 yuno_fild02 69 23
+yuno_fild08 24 275 yuno_fild07 352 292
+yuno_fild08 285 385 yuno_fild02 287 16
+yuno_fild08 375 194 yuno_fild09 20 193
+yuno_fild08 31 58 yuno_fild07 360 72
+yuno_fild08 158 194 kh_school 71 155 0 n
+yuno_fild08 158 185 kh_school 71 155 0 n
+kh_school 35 176 kh_school 153 56
+kh_school 153 56 kh_school 35 176
+kh_school 153 16 kh_school 35 133
+kh_school 35 133 kh_school 153 16
+kh_school 30 125 kh_school 71 14
+kh_school 71 14 kh_school 30 125
+kh_school 30 155 kh_school 186 117
+kh_school 186 117 kh_school 30 155
+kh_school 71 74 kh_school 30 185
+kh_school 30 185 kh_school 71 74
+kh_school 76 156 yuno_fild08 155 189
+#機械人型工廠
+yuno_fild08 71 170 kh_dun01 3 230 0 c r0 c r0 n
+kh_dun01 3 234 yuno_fild08 71 170
+kh_dun01 4 235 yuno_fild08 71 170
+kh_dun01 232 176 kh_dun01 63 7
+kh_dun01 63 7 kh_dun01 232 176
+kh_dun02 43 195 kh_dun01 32 199
+kh_dun01 42 204 kh_dun02 41 198
+kh_dun01 35 197 kh_dun02 41 198
+#秀發茲發德 警備隊 露營地
+yuno_fild09 20 193 yuno_fild08 375 194
+yuno_fild09 280 29 yuno_fild01 287 367
+yuno_fild09 70 18 yuno_fild01 70 377
+yuno_fild09 234 133 que_dan02 13 10
+que_dan02 13 6 yuno_fild09 234 129
+#朱諾 原野
+yuno_fild11 91 372 yuno_fild07 92 28
+yuno_fild11 28 266 ein_fild07 381 264
+yuno_fild11 368 361 yuno_fild12 23 339
+yuno_fild11 364 218 yuno_fild12 23 226
+#國界 檢查站
+yuno_fild12 369 244 yuno_fild01 27 247
+yuno_fild12 193 372 yuno_fild08 134 29
+yuno_fild12 23 339 yuno_fild11 368 361
+yuno_fild12 23 226 yuno_fild11 364 218
+#諾可羅德
+mag_dun01 125 67 yuno_fild03 33 140
+mag_dun01 243 240 mag_dun02 48 33
+mag_dun02 48 33 mag_dun01 243 240
+#優配擂斯
+yuno_fild07 208 175 jupe_cave 147 52
+jupe_cave 147 52 yuno_fild07 208 175
+jupe_cave 29 52 juperos_01 51 249
+juperos_01 51 249 jupe_cave 29 52
+jupe_gate 28 145 jupe_gate 49 167
+jupe_gate 49 167 jupe_gate 71 144
+jupe_gate 49 167 jupe_gate 28 145
+jupe_gate 71 144 jupe_gate 49 167
+jupe_gate 28 14 jupe_area1 103 222
+jupe_gate 71 144 jupe_area2 60 222
+jupe_area1 103 222 jupe_gate 28 14
+jupe_area2 60 222 jupe_gate 71 144
+jupe_gate 50 171 juperos_02 130 149 0 c r0 c n
+juperos_01 100 91 juperos_02 128 277 0 c r0 c n
+juperos_02 33 59 juperos_01 120 72
+########################################
+#天水之國-天津町
+amatsu 94 117 ama_in01 33 24
+amatsu 132 117 ama_in01 86 23
+amatsu 52 148 ama_in01 88 94
+amatsu 148 140 que_ng 20 138
+amatsu 168 182 ama_in01 34 96
+amatsu 248 160 ama_in01 76 178
+amatsu 217 116 ama_in01 157 25
+amatsu 248 292 ama_fild01 75 30
+amatsu 85 235 ama_in02 226 45
+amatsu 177 138 ama_in01 31 176
+que_ng 20 138 amatsu 148 140
+que_ng 10 183 que_ng 37 64
+que_ng 37 64 que_ng 10 183
+que_ng 30 37 que_ng 63 30
+que_ng 63 30 que_ng 30 37
+ama_in01 31 176 amatsu 177 138
+ama_in01 33 24 amatsu 94 117
+ama_in01 86 23 amatsu 132 117
+ama_in01 88 94 amatsu 52 148
+ama_in01 34 96 amatsu 168 182
+ama_in01 76 178 amatsu 248 160
+ama_in01 157 25 amatsu 217 116
+ama_in01 162 34 ama_in01 166 73
+ama_in01 166 73 ama_in01 162 34
+ama_in01 175 171 ama_fild01 174 331
+ama_in01 174 121 ama_fild01 330 141
+ama_in02 226 45 amatsu 88 235
+ama_in02 195 44 ama_in02 65 40
+ama_in02 56 44 ama_in02 59 144
+ama_in02 59 141 ama_in02 56 41
+ama_in02 65 37 ama_in02 195 41
+ama_in02 59 160 ama_in02 215 152
+ama_in02 215 149 ama_in02 59 156
+ama_in02 222 161 ama_in02 129 164
+ama_in02 126 164 ama_in02 219 161
+ama_in02 115 177 ama_dun01 229 10 0 c r1 c r0 n
+#天津町原野
+ama_fild01 75 30 amatsu 248 292
+ama_fild01 174 331 ama_in01 175 171
+ama_fild01 330 141 ama_in01 174 121
+#榻榻米 迷宮
+ama_dun01 229 7 ama_in02 119 181 0 c r0 n
+ama_dun01 235 144 ama_dun02 30 40
+#地下森 戰場
+ama_dun02 30 40 ama_dun01 235 144
+ama_dun02 196 123 ama_dun03 120 9
+#天津町 地下神舍
+ama_dun03 120 9 ama_dun02 196 123
+########################################
+#神仙之島-崑崙
+gonryun 161 8 gon_fild01 192 265
+gonryun 195 93 gon_in 95 26
+gonryun 215 114 gon_in 149 24
+gonryun 109 131 gon_in 47 24
+gonryun 107 184 gon_in 72 67
+gonryun 221 162 gon_in 109 98
+gonryun 159 201 gon_dun01 153 45
+gon_in 109 98 gonryun 221 162
+gon_in 184 11 gon_in 189 85
+gon_in 72 67 gonryun 107 184
+gon_in 42 35 gon_in 31 97
+gon_in 31 97 gon_in 42 35
+gon_in 47 24 gonryun 109 131
+gon_in 149 24 gon_in 186 85
+gon_in 186 85 gon_in 149 24
+gon_in 184 36 gon_in 186 107
+gon_in 186 107 gon_in 184 36
+gon_in 149 24 gonryun 215 114
+gon_in 95 26 gonryun 195 93
+#崑崙原野
+gon_fild01 192 265 gonryun 161 8
+#西王母神殿
+gon_dun01 153 45 gonryun 159 201
+gon_dun01 162 273 gon_dun02 14 113
+#神仙的圍棋臺
+gon_dun02 14 113 gon_dun01 162 273
+gon_dun02 56 119 gon_dun02 44 213
+gon_dun02 44 213 gon_dun02 56 119
+gon_dun02 171 258 gon_dun02 76 96
+gon_dun02 76 100 gon_dun02 145 62
+gon_dun02 145 66 gon_dun02 199 20
+gon_dun02 92 190 gon_dun02 196 20
+gon_dun02 196 20 gon_dun02 92 190
+gon_dun02 44 166 gon_dun02 97 121
+gon_dun02 94 118 gon_dun02 177 189
+gon_dun02 180 189 gon_dun02 170 164
+gon_dun02 165 189 gon_dun02 235 138
+gon_dun02 235 138 gon_dun02 165 189
+gon_dun02 170 161 gon_dun02 86 44
+gon_dun02 199 94 gon_dun02 63 66
+gon_dun02 63 66 gon_dun02 199 94
+gon_dun02 276 76 gon_dun02 168 92
+gon_dun02 168 92 gon_dun02 276 76
+gon_dun02 86 44 gon_dun02 145 233
+gon_dun02 148 236 gon_dun02 234 191
+gon_dun02 234 191 gon_dun02 148 236
+gon_dun02 251 268 gon_dun03 68 9
+#武陵道院
+gon_dun03 68 6 gon_dun02 251 268
+########################################
+#古都-龍之城(洛陽)
+louyang 84 254 louyang 133 245 0 c r0 n
+louyang 218 19 lou_fild01 233 356
+louyang 130 63 lou_in02 72 28
+louyang 309 80 lou_in02 189 74
+louyang 263 93 lou_in02 242 59
+louyang 317 176 lou_in02 121 28
+louyang 280 167 lou_in02 58 170
+louyang 136 97 lou_in02 249 173
+louyang 129 121 lou_in02 203 159
+louyang 125 121 lou_in02 198 159
+louyang 145 174 lou_in02 126 165
+louyang 218 255 lou_in01 101 119
+louyang 133 245 lou_in01 28 19
+louyang 37 271 lou_dun01 221 195
+lou_in01 101 119 louyang 218 255
+lou_in01 79 141 lou_in01 50 141
+lou_in01 50 141 lou_in01 79 141
+lou_in01 125 141 lou_in01 153 141
+lou_in01 153 141 lou_in01 125 141
+lou_in01 28 19 louyang 133 245
+lou_in01 25 23 lou_in01 17 19 0 c r1 c n
+lou_in01 14 18 louyang 90 254
+lou_in02 72 28 louyang 130 63
+lou_in02 189 74 louyang 309 80
+lou_in02 201 94 lou_in02 176 46
+lou_in02 176 46 lou_in02 201 94
+lou_in02 242 59 louyang 263 93
+lou_in02 121 28 louyang 317 176
+lou_in02 58 170 louyang 280 167
+lou_in02 35 190 lou_in02 44 138
+lou_in02 44 138 lou_in02 35 190
+lou_in02 80 190 lou_in02 71 140
+lou_in02 71 140 lou_in02 80 190
+lou_in02 249 173 louyang 136 97
+lou_in02 203 159 louyang 129 121
+lou_in02 198 159 louyang 125 121
+lou_in02 126 165 louyang 145 174
+#龍之城 原野
+lou_fild01 233 356 louyang 218 19
+#lou_fild01 195 177 lou_fild01 180 170 0 c r0 n
+lou_fild01 175 173 lou_fild01 200 174 0 c r1 n
+#王陵
+lou_dun01 221 195 louyang 37 271
+lou_dun01 40 201 lou_dun02 288 18
+lou_dun02 288 18 lou_dun01 40 201
+lou_dun02 165 269 lou_dun03 165 35
+lou_dun03 165 35 lou_dun02 165 269
+########################################
+#蜜月島-爪哇咿
+jawaii 141 200 jawaii_in 113 61 1000 c c c r0 n
+jawaii 108 199 jawaii_in 132 107 1000 c c c r0 n
+jawaii 107 189 jawaii_in 89 117 1000 c c r0 n
+jawaii 112 173 jawaii_in 90 78 1000 c c c r0 n
+jawaii 192 215 jawaii_in 27 91
+jawaii_in 27 91 jawaii 192 215
+jawaii_in 113 61 jawaii 141 200
+jawaii_in 132 107 jawaii 108 199
+jawaii_in 89 117 jawaii 107 189
+jawaii_in 90 78 jawaii 112 173
+########################################
+#哎喲泰雅
+ayothaya 208 283 ayo_in02 100 148
+ayothaya 62 104 ayo_in01 194 183
+ayothaya 111 109 ayo_in01 177 129
+ayothaya 130 97 ayo_in01 46 183
+ayothaya 130 75 ayo_in01 17 153
+ayothaya 129 86 ayo_in01 23 176
+ayothaya 276 176 ayo_fild01 32 240
+ayothaya 165 90 ayo_in01 73 174
+ayothaya 177 90 ayo_in01 98 175
+ayothaya 173 77 ayo_in01 85 149
+ayothaya 229 69 ayo_in01 137 195
+ayothaya 202 140 ayo_in01 31 78
+ayothaya 211 150 ayo_in01 50 94
+ayothaya 202 161 ayo_in01 31 111
+ayothaya 192 150 ayo_in01 10 94
+ayo_in01 194 183 ayothaya 62 104
+ayo_in01 177 129 ayothaya 111 109
+ayo_in01 46 183 ayothaya 130 97
+ayo_in01 73 174 ayothaya 165 90
+ayo_in01 98 175 ayothaya 177 90
+ayo_in01 85 149 ayothaya 173 77
+ayo_in01 137 195 ayothaya 229 69
+ayo_in01 31 78 ayothaya 202 140
+ayo_in01 13 82 ayo_in01 21 14
+ayo_in01 21 14 ayo_in01 13 82
+ayo_in01 48 82 ayo_in01 60 14
+ayo_in01 60 14 ayo_in01 48 82
+ayo_in01 50 94 ayothaya 211 150
+ayo_in01 48 107 ayo_in01 176 27
+ayo_in01 176 27 ayo_in01 48 107
+ayo_in01 31 111 ayothaya 202 161
+ayo_in01 13 107 ayo_in01 135 27
+ayo_in01 135 27 ayo_in01 13 107
+ayo_in01 10 94 ayothaya 192 150
+ayo_in01 17 153 ayothaya 130 75
+ayo_in01 23 176 ayothaya 129 86
+ayo_in02 100 148 ayothaya 208 283
+#哎喲泰雅 原野
+ayo_fild01 32 240 ayothaya 276 176
+ayo_fild01 129 197 ayo_fild02 25 154 0 c c c c c r0 c c c n
+ayo_fild02 25 154 ayo_fild01 129 197 0 c r0 c n
+ayo_fild02 285 149 ayo_dun01 274 14
+#古代神殿 迷宮
+ayo_dun01 274 14 ayo_fild02 285 149
+ayo_dun01 24 283 ayo_dun02 276 22 0 n
+ayo_dun02 276 22 ayo_dun01 24 283
+ayo_dun02 24 22 ayo_dun01 24 283
+########################################
+#鋼鐵之都-艾音布羅克
+#einbroch 232 272 einbech 43 215 200 c r0 n
+#einbroch 252 301 einbech 43 215 200 c r0 n
+einbroch 157 331 ein_fild04 184 26
+einbroch 129 229 ein_in01 11 147
+einbroch 214 263 einbroch 233 312
+einbroch 233 312 einbroch 214 263
+einbroch 269 312 einbroch 250 263
+einbroch 250 263 einbroch 269 312
+einbroch 216 214 ein_in01 108 13
+einbroch 257 199 ein_in01 195 224
+einbroch 278 233 ein_in01 103 95
+einbroch 290 222 ein_in01 121 77
+einbroch 255 107 ein_in01 14 14
+einbroch 179 73 ein_in01 81 198
+einbroch 132 79 ein_in01 13 213
+einbroch 150 25 ein_fild08 164 380
+einbroch 137 199 que_ng 130 166
+einbroch 173 229 einbroch 181 196 10 c c c c r0 n
+einbroch 173 229 einbroch 181 196 20 c c c c r1 n
+einbroch 176 172 einbroch 181 196 10 c c c c r0 n
+einbroch 176 172 einbroch 181 196 20 c c c c r1 n
+einbroch 175 196 einbroch 216 188 0 c c r0 n
+que_ng 130 166 einbroch 137 199
+que_ng 178 162 que_ng 170 85
+que_ng 170 85 que_ng 178 162
+que_ng 165 137 que_ng 172 42
+que_ng 172 42 que_ng 165 137
+ein_in01 13 213 einbroch 132 79
+ein_in01 81 198 einbroch 179 73
+ein_in01 39 36 ein_in01 39 85
+ein_in01 39 85 ein_in01 39 36
+ein_in01 14 14 einbroch 255 107
+ein_in01 121 77 einbroch 290 222
+ein_in01 126 88 ein_in01 100 142
+ein_in01 100 142 ein_in01 126 88
+ein_in01 103 95 einbroch 278 233
+ein_in01 231 273 ein_in01 264 246
+ein_in01 264 246 ein_in01 231 273
+ein_in01 274 246 ein_in01 273 273
+ein_in01 273 273 ein_in01 274 246
+ein_in01 284 224 ein_in01 180 277
+ein_in01 180 277 ein_in01 284 224
+ein_in01 264 203 ein_in01 232 176
+ein_in01 232 176 ein_in01 264 203
+ein_in01 274 176 ein_in01 274 203
+ein_in01 274 203 ein_in01 274 176
+ein_in01 211 232 ein_in01 271 232
+ein_in01 271 232 ein_in01 211 232
+ein_in01 211 216 ein_in01 271 218
+ein_in01 271 218 ein_in01 211 216
+ein_in01 195 224 einbroch 257 199
+ein_in01 108 13 einbroch 216 214
+ein_in01 11 147 einbroch 129 229
+#採礦村落 艾音貝赫
+#einbech 39 215 einbroch 226 276 200 c r0 n
+einbech 138 252 ein_dun01 22 11
+einbech 62 29 ein_fild09 71 352
+einbech 177 136 ein_in01 190 35
+einbech 207 135 ein_in01 187 99
+einbech 214 121 ein_in01 205 83
+einbech 256 109 ein_in01 145 153
+einbech 154 106 ein_in01 288 89
+einbech 145 112 ein_in01 265 104
+ein_in01 265 104 einbech 145 112
+ein_in01 288 89 einbech 154 106
+ein_in01 145 153 einbech 256 109
+ein_in01 205 83 einbech 214 121
+ein_in01 187 99 einbech 207 135
+ein_in01 190 38 einbech 177 133
+#礦山洞穴
+ein_dun01 22 11 einbech 138 252
+ein_dun01 261 255 ein_dun02 286 292
+ein_dun02 286 292 ein_dun01 261 255
+#艾音布羅克 原野
+ein_fild01 27 261 cave 98 22
+ein_fild01 106 34 ein_fild05 172 371
+ein_fild03 361 204 ein_fild04 14 205
+ein_fild03 361 219 ein_fild04 14 215
+ein_fild03 363 257 ein_fild04 20 250
+ein_fild03 142 31 lhz_fild02 166 366
+ein_fild04 14 205 ein_fild03 361 204
+ein_fild04 14 215 ein_fild03 361 219
+ein_fild04 20 250 ein_fild03 363 257
+ein_fild04 184 26 einbroch 157 331
+ein_fild04 343 293 ein_fild05 76 294
+ein_fild05 76 294 ein_fild04 343 293
+ein_fild05 172 371 ein_fild01 106 34
+ein_fild05 376 183 ein_fild06 42 171
+ein_fild06 335 176 yuno_fild07 73 220
+ein_fild06 251 365 yuno_fild04 249 22
+ein_fild06 42 171 ein_fild05 376 183
+ein_fild06 135 36 ein_fild07 144 362
+ein_fild07 144 362 ein_fild06 135 36
+ein_fild07 381 264 yuno_fild11 28 266
+ein_fild08 164 380 einbroch 150 25
+ein_fild08 361 129 ein_fild09 34 135
+ein_fild08 23 275 lhz_fild03 364 282
+ein_fild09 71 352 einbech 62 29
+ein_fild09 34 135 ein_fild08 361 129
+#洞穴村落
+cave 98 22 ein_fild01 27 261
+########################################
+#企業之都-里希塔樂鎮
+lighthalzen 214 329 lhz_fild01 210 18
+lighthalzen 236 276 lhz_in02 129 199
+lighthalzen 251 299 lhz_in03 93 21
+lighthalzen 198 257 lhz_in02 44 28
+lighthalzen 188 204 kh_mansion 88 50
+lighthalzen 238 220 lhz_in02 27 265
+lighthalzen 198 163 lhz_in02 21 191
+lighthalzen 196 46 lhz_in02 282 79
+lighthalzen 197 36 lhz_in02 288 30
+lighthalzen 159 133 lhz_in02 232 261
+lighthalzen 101 248 lhz_in01 111 121
+lighthalzen 106 248 lhz_in01 116 121
+lighthalzen 93 110 lhz_in02 108 26
+lighthalzen 52 132 job3_gen01 49 49
+lighthalzen 50 86 lhz_in03 50 31
+lighthalzen 41 52 s_atelier 18 79
+lighthalzen 267 200 lighthalzen 303 229 0 n
+lighthalzen 294 223 lighthalzen 206 199 0 n
+lighthalzen 345 231 lhz_in03 188 11
+lighthalzen 340 240 lhz_in03 180 90
+lighthalzen 347 261 lhz_in03 10 216
+lighthalzen 324 301 lhz_in03 237 100
+lighthalzen 324 322 lhz_in03 12 162
+lighthalzen 313 301 lhz_cube 231 12 0 c c r0 n
+s_atelier 18 79 lighthalzen 41 52
+s_atelier 32 64 s_atelier 80 66
+s_atelier 80 66 s_atelier 32 64
+job3_gen01 7 59 job3_gen01 71 56
+job3_gen01 71 56 job3_gen01 7 59
+job3_gen01 49 49 lighthalzen 52 132
+lhz_in01 43 144 lhz_in01 278 157
+lhz_in01 278 157 lhz_in01 43 144
+lhz_in01 35 226 lhz_in01 37 225 0 n
+lhz_in01 40 224 lhz_in01 15 129
+lhz_in01 43 114 lhz_in01 278 132
+lhz_in01 278 132 lhz_in01 43 114
+lhz_in01 58 129 lhz_in01 191 127
+lhz_in01 191 127 lhz_in01 58 129
+lhz_in01 15 129 lhz_in01 35 226 
+lhz_in01 106 15 lhz_in01 88 215
+lhz_in01 88 215 lhz_in01 106 15
+lhz_in01 149 179 lhz_in01 11 24
+lhz_in01 11 24 lhz_in01 149 179
+lhz_in01 140 215 lhz_in01 158 15
+lhz_in01 158 15 lhz_in01 140 215
+lhz_in01 194 55 lhz_in01 188 254
+lhz_in01 188 254 lhz_in01 194 55
+lhz_in01 231 226 lhz_in01 251 226
+lhz_in01 251 226 lhz_in01 231 226
+lhz_in01 76 254 lhz_in01 98 55
+lhz_in01 98 55 lhz_in01 76 254
+lhz_in01 111 121 lighthalzen 101 248
+lhz_in01 116 121 lighthalzen 106 248
+lhz_in02 108 26 lighthalzen 93 110
+lhz_in02 250 278 lhz_in02 261 278
+lhz_in02 261 278 lhz_in02 250 278
+lhz_in02 210 284 lhz_in02 236 219
+lhz_in02 236 219 lhz_in02 210 284
+lhz_in02 254 212 lhz_in02 269 212
+lhz_in02 269 212 lhz_in02 254 212
+lhz_in02 231 200 lhz_in02 216 200
+lhz_in02 216 200 lhz_in02 231 200
+lhz_in02 231 182 lhz_in02 216 182
+lhz_in02 216 182 lhz_in02 231 182
+lhz_in02 238 169 lhz_in02 238 154
+lhz_in02 238 154 lhz_in02 238 169
+lhz_in02 232 261 lighthalzen 159 133
+lhz_in02 288 30 lighthalzen 197 36
+lhz_in02 274 82 lhz_in02 265 14
+lhz_in02 265 14 lhz_in02 274 82
+lhz_in02 282 79 lighthalzen 196 46
+lhz_in02 39 204 lhz_in02 36 136
+lhz_in02 36 136 lhz_in02 39 204
+lhz_in02 49 154 lhz_in02 103 155
+lhz_in02 103 155 lhz_in02 49 154
+lhz_in02 89 144 lhz_in02 94 212
+lhz_in02 94 212 lhz_in02 89 144
+lhz_in02 79 223 lhz_in02 31 145
+lhz_in02 31 145 lhz_in02 79 223
+lhz_in02 21 191 lighthalzen 198 163
+lhz_in02 13 284 lhz_in02 95 285
+lhz_in02 95 285 lhz_in02 13 284
+lhz_in02 114 272 lhz_in02 149 282
+lhz_in02 149 282 lhz_in02 114 272
+lhz_in02 27 265 lighthalzen 238 220
+kh_mansion 88 50 lighthalzen 188 204
+kh_mansion 21 11 kh_mansion 72 49
+kh_mansion 27 27 kh_kiehl01 10 31
+lhz_in02 44 28 lighthalzen 198 257
+lhz_in02 129 199 lighthalzen 236 276
+lhz_in03 93 21 lighthalzen 251 299
+lhz_in03 134 14 lhz_in03 120 90
+lhz_in03 120 90 lhz_in03 134 14
+lhz_in03 50 31 lighthalzen 50 86
+lhz_in03 13 31 lhz_in03 20 99
+lhz_in03 20 99 lhz_in03 13 31
+lhz_in03 188 11 lighthalzen 345 231
+lhz_in03 191 35 lhz_in03 190 100
+lhz_in03 190 100 lhz_in03 191 35
+lhz_in03 180 90 lighthalzen 340 240
+lhz_in03 10 216 lighthalzen 347 261
+lhz_in03 237 100 lighthalzen 324 301
+lhz_in03 257 83 lhz_in03 250 14
+lhz_in03 250 14 lhz_in03 257 83
+lhz_in03 12 162 lighthalzen 324 322
+#正立方體 房間
+lhz_cube 75 193 lhz_cube 10 136
+lhz_cube 66 184 lhz_cube 66 74
+lhz_cube 58 193 lhz_cube 66 74
+lhz_cube 66 201 lhz_cube 10 136
+lhz_cube 19 136 lhz_cube 10 74
+lhz_cube 10 144 lhz_cube 66 136
+lhz_cube 2 136 lhz_cube 67 193
+lhz_cube 10 128 lhz_cube 66 74
+lhz_cube 66 66 lhz_cube 10 18
+lhz_cube 75 75 lhz_cube 66 136
+lhz_cube 59 75 lhz_cube 67 193
+lhz_cube 66 82 lhz_cube 66 136
+lhz_cube 75 136 lhz_cube 10 193
+lhz_cube 66 144 lhz_cube 66 136
+lhz_cube 59 136 lhz_cube 66 74
+lhz_cube 66 128 lhz_cube 67 193
+lhz_cube 18 18 lhz_cube 10 193
+lhz_cube 10 26 lhz_cube 66 136
+lhz_cube 2 18 lhz_cube 66 74
+lhz_cube 10 10 lhz_cube 123 18
+lhz_cube 114 18 lhz_cube 248 184
+lhz_cube 130 18 lhz_cube 66 74
+lhz_cube 123 26 lhz_cube 67 193
+lhz_cube 123 10 lhz_cube 67 193
+lhz_cube 19 192 lhz_cube 66 74
+lhz_cube 2 192 lhz_cube 10 74
+lhz_cube 10 185 lhz_cube 66 74
+lhz_cube 10 201 lhz_cube 66 18
+lhz_cube 19 74 lhz_cube 67 193
+lhz_cube 2 74 lhz_cube 66 18
+lhz_cube 10 66 lhz_cube 123 18
+lhz_cube 10 82 lhz_cube 67 193
+lhz_cube 75 18 lhz_cube 66 74
+lhz_cube 66 26 lhz_cube 123 18
+lhz_cube 58 18 lhz_cube 66 136
+lhz_cube 66 10 lhz_cube 10 18
+lhz_cube 177 96 lighthalzen 310 302
+lhz_cube 231 12 lighthalzen 313 301
+lhz_cube 231 96 lhz_dun02 224 6
+#生體試驗 研究所
+lhz_in01 24 140 lhz_dun01 149 285 0 c r0 n
+lhz_dun01 149 9 lhz_dun02 146 19
+lhz_dun01 18 145 lhz_dun02 17 156
+lhz_dun01 281 150 lhz_dun02 282 161
+lhz_dun01 149 291 lhz_in01 19 129
+lhz_dun02 282 161 lhz_dun01 281 150
+lhz_dun02 146 19 lhz_dun01 149 9
+lhz_dun02 17 156 lhz_dun01 18 145
+lhz_dun02 149 149 lhz_dun03 139 137
+lhz_dun02 224 6 lhz_cube 231 96
+lhz_dun03 139 137 lhz_dun02 149 149
+#里希塔樂鎮 原野
+lhz_fild01 210 18 lighthalzen 214 329
+lhz_fild01 367 222 lhz_fild02 29 219
+lhz_fild01 296 382 ra_fild06 294 21
+lhz_fild02 164 37 lhz_fild03 158 350
+lhz_fild03 364 282 ein_fild08 23 275
+lhz_fild03 158 350 lhz_fild02 164 37
+#里希塔樂鎮 原野(死神的峽谷)
+lhz_fild02 166 366 ein_fild03 142 31
+lhz_fild02 29 219 lhz_fild01 367 222
+########################################
+#田園都市-毀葛
+hugel 95 33 hu_fild06 200 372
+hugel 104 79 hu_in01 231 107
+hugel 52 90 hu_in01 37 90
+hugel 91 104 hu_in01 30 299
+hugel 129 66 hu_in01 345 107
+hugel 155 114 hu_in01 211 173
+hugel 153 153 hu_in01 287 227
+hugel 153 216 hu_in01 301 379
+hugel 92 167 hu_in01 246 359
+hugel 70 157 hu_in01 110 369
+hugel 55 208 que_bingo 49 7
+hugel 80 230 hu_in01 24 362
+hugel 206 228 hu_in01 381 363
+hu_in01 30 299 hugel 91 104
+hu_in01 388 388 hu_in01 380 319
+hu_in01 380 319 hu_in01 388 388
+hu_in01 381 363 hugel 206 228
+hu_in01 24 362 hugel 80 230
+hu_in01 108 390 hu_in01 114 322
+hu_in01 114 322 hu_in01 108 390
+hu_in01 110 369 hugel 70 157
+hu_in01 168 307 hu_in01 168 379
+hu_in01 168 379 hu_in01 168 307
+hu_in01 229 313 hu_in01 168 315
+hu_in01 168 315 hu_in01 229 313
+hu_in01 248 388 hu_in01 244 315
+hu_in01 244 315 hu_in01 248 388
+hu_in01 246 359 hugel 92 167
+hu_in01 314 386 hu_in01 307 322
+hu_in01 307 322 hu_in01 314 386
+hu_in01 287 227 hugel 153 153
+hu_in01 263 252 hu_in01 365 253
+hu_in01 365 253 hu_in01 263 252
+hu_in01 301 379 hugel 153 216
+hu_in01 195 192 hu_in01 162 168
+hu_in01 162 168 hu_in01 195 192
+hu_in01 195 219 hu_in01 162 228
+hu_in01 162 228 hu_in01 195 219
+hu_in01 211 173 hugel 155 114
+hu_in01 381 118 hu_in01 379 178
+hu_in01 379 178 hu_in01 381 118
+hu_in01 345 107 hugel 129 66
+hu_in01 34 318 hu_in01 34 246
+hu_in01 34 246 hu_in01 34 318
+hu_in01 15 108 hu_in01 15 151
+hu_in01 15 151 hu_in01 15 108
+hu_in01 15 70 hu_in01 15 29
+hu_in01 15 29 hu_in01 15 70
+hu_in01 37 90 hugel 52 90
+hu_in01 231 107 hugel 104 79
+hu_in01 268 123 hu_in01 265 42
+hu_in01 265 42 hu_in01 268 123
+#魔物賽跑 競賽場
+#單人
+p_track01 76 36 hugel 63 73 0 c c r0 n
+#hugel 58 72 p_track01 75 41 0 c r1 c c r0 n
+#hugel 58 72 p_track01 75 41 0 c r1 c c r0 c r0 n
+#雙人
+p_track02 76 36 hugel 63 73 0 c c r0 n
+#hugel 62 69 p_track02 75 41 0 c r1 c c r0 n
+#hugel 62 69 p_track02 75 41 0 c r1 c c r0 c r0 n
+#賓果遊戲 競賽場
+que_bingo 53 34 que_bingo 48 66
+que_bingo 48 66 que_bingo 53 34
+que_bingo 39 34 que_bingo 34 105
+que_bingo 34 105 que_bingo 39 34
+que_bingo 49 7 hugel 55 208
+#奧丁神殿
+odin_tem01 377 182 odin_tem02 21 180
+odin_tem01 383 334 odin_tem02 21 334
+odin_tem02 21 334 odin_tem01 383 334
+odin_tem02 21 180 odin_tem01 377 182
+odin_tem02 153 349 odin_tem03 121 49
+odin_tem02 261 377 odin_tem03 247 34
+odin_tem03 121 49 odin_tem02 153 349
+odin_tem03 247 34 odin_tem02 261 377
+#達納托斯 塔台
+hu_fild01 141 36 yuno_fild06 151 370
+hu_fild01 366 185 hu_fild02 17 168
+hu_fild01 140 163 tha_scene01 131 220 0 c r2 c r0 c r0 n
+tha_scene01 144 198 tha_t01 149 33
+#達納托斯 塔台 下層部
+tha_t01 149 33 hu_fild01 140 158
+tha_t01 150 150 tha_t02 149 125
+tha_t02 149 125 tha_t01 150 150
+tha_t02 231 161 tha_t02 227 163 c r0 c c n
+tha_t02 227 163 tha_t03 217 165
+tha_t03 217 165 tha_t02 227 163
+tha_t03 59 140 tha_t04 60 137
+tha_t04 60 137 tha_t03 59 140
+tha_t04 81 36 tha_t05 62 8
+#毀葛 原野
+hu_fild02 17 168 hu_fild01 366 185
+hu_fild02 40 22 hu_fild04 47 372
+hu_fild02 283 28 hu_fild04 294 379
+hu_fild04 47 372 hu_fild02 40 22
+hu_fild04 294 379 hu_fild02 283 28
+hu_fild04 380 183 hu_fild05 33 198
+hu_fild04 122 27 yuno_fild02 117 375
+hu_fild04 27 126 yuno_fild06 369 132
+hu_fild05 33 198 hu_fild04 380 183
+hu_fild05 353 126 hu_fild06 28 119
+hu_fild06 28 119 hu_fild05 353 126
+hu_fild06 200 372 hugel 95 33
+# 毀葛-深淵湖水 地下洞穴 1F~3F
+# 每次進入消耗 龍牙x 1 龍鱗x 1 龍尾x 1 
+hu_fild05 168 304 abyss_01 275 280 0 c r0 c c c n
+#跟石頭對話去湖中央
+hu_fild05 171 211 hu_fild05 169 305 0 c r0 c c c c n
+#離開湖中央
+hu_fild05 184 204 hu_fild05 196 210
+hu_fild05 196 210 abyss_01 265 274
+abyss_01 265 274 hu_fild05 196 210
+abyss_01 25 24 abyss_02 277 270
+abyss_02 277 270 abyss_01 25 24
+abyss_02 145 280 abyss_03 115 25
+abyss_03 115 25 abyss_02 145 280
+########################################
+#阿盧納貝茲教國首都-拉赫
+rachel 275 125 ra_fild12 40 226
+rachel 217 55 ra_in01 250 38
+rachel 180 115 s_atelier 131 75
+rachel 179 220 ra_in01 295 348
+rachel 216 160 ra_in01 135 286
+rachel 103 240 ra_in01 339 193
+rachel 90 189 ra_in01 192 152
+rachel 108 200 ra_in01 213 79
+rachel 105 171 ra_in01 309 70
+rachel 115 149 ra_in01 386 39
+rachel 116 158 ra_in01 375 109
+rachel 42 87 ra_in01 171 355
+rachel 42 109 ra_in01 172 392
+rachel 130 21 ve_fild02 195 382
+rachel 81 33 ra_in01 237 202
+rachel 61 33 ra_in01 181 202
+rachel 83 78 ra_in01 249 266
+rachel 150 249 ra_temple 120 22
+ra_in01 249 262 rachel 83 73
+ra_in01 241 299 ra_in01 197 312
+ra_in01 197 312 ra_in01 241 299
+ra_in01 185 303 ra_in01 194 245
+ra_in01 194 245 ra_in01 185 303
+ra_in01 181 202 rachel 61 33
+ra_in01 259 144 ra_in01 188 189
+ra_in01 188 189 ra_in01 259 144
+ra_in01 175 189 ra_in01 136 189
+ra_in01 136 189 ra_in01 175 189
+ra_in01 244 189 ra_in01 287 189
+ra_in01 287 189 ra_in01 244 189
+ra_in01 231 189 ra_in01 296 144
+ra_in01 296 144 ra_in01 231 189
+ra_in01 237 202 rachel 81 33
+ra_in01 172 392 rachel 42 109
+ra_in01 178 370 ra_in01 109 385
+ra_in01 109 385 ra_in01 178 370
+ra_in01 165 369 ra_in01 126 334
+ra_in01 126 334 ra_in01 165 369
+ra_in01 171 355 rachel 42 87
+ra_in01 375 109 rachel 116 158
+ra_in01 314 62 ra_in01 357 61
+ra_in01 357 61 ra_in01 314 62
+ra_in01 386 39 rachel 115 149
+ra_in01 297 59 ra_in01 339 120
+ra_in01 339 120 ra_in01 297 59
+ra_in01 309 70 rachel 105 171
+ra_in01 213 79 rachel 108 200
+ra_in01 192 152 rachel 90 189
+ra_in01 381 200 ra_in01 381 268
+ra_in01 381 268 ra_in01 381 200
+ra_in01 367 255 ra_in01 330 296
+ra_in01 330 296 ra_in01 367 255
+ra_in01 319 303 ra_in01 381 324
+ra_in01 381 324 ra_in01 319 303
+ra_in01 339 193 rachel 103 240
+ra_in01 135 286 rachel 216 160
+ra_in01 312 374 ra_in01 355 374
+ra_in01 355 374 ra_in01 312 374
+ra_in01 291 371 ra_in01 221 380
+ra_in01 221 380 ra_in01 291 371
+ra_in01 295 348 rachel 179 220
+ra_in01 235 21 ra_in01 183 31
+ra_in01 183 31 ra_in01 235 21
+ra_in01 250 38 rachel 217 55
+s_atelier 131 75 rachel 180 115
+s_atelier 117 71 s_atelier 166 72
+s_atelier 166 72 s_atelier 117 71
+#菲依雅 大神殿(瑟斯隆尼勒)
+ra_temple 120 22 rachel 150 249
+ra_temple 119 180 ra_temin 169 18
+ra_temin 169 18 ra_temple 119 180
+ra_temin 130 93 ra_temin 239 253
+ra_temin 239 253 ra_temin 130 93
+ra_temin 275 332 ra_temin 27 299
+ra_temin 27 299 ra_temin 275 332
+ra_temin 312 253 ra_temin 206 93
+ra_temin 206 93 ra_temin 312 253
+ra_temin 134 131 ra_temin 275 243
+ra_temin 275 243 ra_temin 134 131
+ra_temin 275 226 ra_temsky 99 8
+ra_temin 73 126 ra_temin 74 136 0 c r0 n
+ra_temsky 99 8 ra_temin 275 226
+ra_temin 28 319 ra_san01 139 139
+#任務 菲依雅 大神殿
+que_rachel 27 299 que_rachel 275 332
+que_rachel 275 332 que_rachel 27 299
+que_rachel 239 253 que_rachel 130 93
+que_rachel 130 93 que_rachel 239 253
+que_rachel 206 93 que_rachel 312 253
+que_rachel 312 253 que_rachel 206 93
+que_rachel 169 18 ra_temple 119 175
+#神殿聖域
+ra_san01 139 139 ra_temin 28 319
+ra_san01 139 13 ra_san04 119 104
+ra_san01 139 13 ra_san03 123 283
+ra_san02 289 149 ra_san03 5 149
+ra_san02 213 280 ra_san01 140 19
+ra_san02 213 4 ra_san04 35 221
+ra_san02 30 21 ra_san05 14 149
+ra_san03 123 283 ra_san01 139 13
+ra_san03 5 149 ra_san02 289 149
+ra_san03 279 21 ra_san05 282 149
+ra_san03 85 15 ra_san04 203 221
+ra_san04 119 104 ra_san01 139 13
+ra_san04 120 48 ra_san05 150 282
+ra_san04 203 221 ra_san03 85 15
+ra_san04 35 221 ra_san02 213 4
+ra_san05 150 7 ra_temple 119 153
+#阿巫敦拉 草原
+ra_fild01 233 333 ice_dun01 157 10
+ra_fild01 306 38 ra_fild04 322 378
+ra_fild03 374 168 ra_fild04 23 176
+ra_fild04 263 54 ra_fild08 287 370
+ra_fild04 322 378 ra_fild01 306 38
+ra_fild04 362 351 ra_fild05 33 353
+ra_fild04 23 176 ra_fild03 374 168
+ra_fild05 33 353 ra_fild04 362 351
+ra_fild05 348 274 ra_fild06 19 277
+ra_fild06 19 277 ra_fild05 348 274
+ra_fild06 294 21 lhz_fild01 296 382
+ra_fild08 287 370 ra_fild04 263 54
+ra_fild08 165 29 ra_fild12 149 374
+ra_fild12 149 374 ra_fild08 165 29
+ra_fild12 36 225 rachel 275 125
+#冰洞穴
+ice_dun01 146 161 ice_dun02 151 145
+ice_dun01 157 10 ra_fild01 233 333
+ice_dun02 151 145 ice_dun01 146 161
+ice_dun02 150 285 ice_dun03 149 19
+ice_dun03 149 19 ice_dun02 150 285
+########################################
+#峽谷村落-菲音斯
+veins 218 361 ve_fild06 153 220
+veins 197 260 ve_in 351 317
+veins 88 173 ve_in 77 291
+veins 114 278 ve_in 183 203
+veins 128 270 ve_in 206 211
+veins 130 238 ve_in 99 215
+veins 148 220 ve_in 256 127
+veins 230 166 ve_in 251 287
+veins 143 25 ve_fild07 147 371
+veins 150 179 ve_in 349 219
+veins 337 231 ve_in 194 369
+veins 257 256 job3_guil01 6 93
+veins 267 230 ve_in02 13 19
+ve_in 98 299 ve_in 128 372
+ve_in 194 369 ve_in 337 231
+ve_in 347 250 ve_in 286 223
+ve_in 286 223 ve_in 347 250
+ve_in 349 219 veins 150 179
+ve_in 128 372 ve_in 98 299
+ve_in 77 291 veins 88 173
+ve_in 261 315 ve_in 177 293
+ve_in 177 293 ve_in 261 315
+ve_in 251 283 veins 230 161
+ve_in 224 115 ve_in 318 121
+ve_in 318 121 ve_in 224 115
+ve_in 256 127 veins 148 220
+ve_in 76 229 ve_in 71 160
+ve_in 71 160 ve_in 76 229
+ve_in 99 215 veins 130 238
+ve_in 206 211 veins 128 270
+ve_in 351 317 veins 197 260
+ve_in 183 203 veins 114 278
+ve_in 309 114 ve_in 220 115
+ve_in02 13 19 veins 267 230
+job3_guil01 6 93 veins 257 256
+job3_guil01 18 48 job3_guil01 67 95
+job3_guil01 67 95 job3_guil01 18 48
+#菲音斯 原野
+ve_fild01 350 92 ve_fild02 73 133
+ve_fild01 366 267 ve_fild02 31 263
+ve_fild01 184 20 ve_fild04 174 339
+ve_fild02 195 382 rachel 130 21
+ve_fild02 31 263 ve_fild01 366 267
+ve_fild02 73 133 ve_fild01 350 92
+ve_fild02 191 21 aru_gld 195 363
+ve_fild03 355 223 ve_fild04 44 249
+ve_fild03 168 240 thor_v01 21 224
+ve_fild03 222 43 ve_fild05 200 330
+ve_fild04 174 339 ve_fild01 184 20
+ve_fild04 44 249 ve_fild03 355 223
+ve_fild04 115 50 ve_fild06 81 177
+ve_fild05 200 330 ve_fild03 222 43
+ve_fild05 359 192 ve_fild06 81 177
+ve_fild06 81 177 ve_fild04 115 50
+ve_fild06 153 220 veins 218 361
+ve_fild06 81 177 ve_fild05 359 192
+ve_fild07 147 371 veins 143 25
+#托爾火山 洞穴
+thor_v01 21 224 ve_fild03 168 240
+thor_v01 201 37 thor_v02 73 203
+thor_v02 73 203 thor_v01 201 37
+thor_v02 192 60 thor_v03 30 262
+thor_v02 143 78 que_thor 65 55
+que_thor 69 56 thor_v02 146 84
+thor_v03 30 262 thor_v02 192 60
+########################################
+#莫斯科比亞
+moscovia 136 46 mosk_fild01 95 93 0 c c r0 c c c c
+moscovia 256 179 mosk_in 211 111
+moscovia 223 174 mosk_in 11 246
+moscovia 203 171 mosk_in 89 180
+moscovia 185 188 mosk_in 12 179
+moscovia 229 208 mosk_in 142 175
+moscovia 256 138 mosk_in 93 61
+moscovia 205 98 mosk_in 214 252
+mosk_in 152 272 mosk_in 220 273
+mosk_in 220 273 mosk_in 152 272
+mosk_in 214 252 moscovia 205 98
+mosk_in 21 113 mosk_in 99 126
+mosk_in 99 126 mosk_in 21 113
+mosk_in 93 61 moscovia 256 138
+mosk_in 150 192 mosk_in 202 188
+mosk_in 202 188 mosk_in 150 192
+mosk_in 142 175 moscovia 229 208
+mosk_in 12 179 moscovia 185 188
+mosk_in 89 180 moscovia 203 171
+mosk_in 11 246 moscovia 223 174
+mosk_in 211 111 moscovia 256 179
+mosk_in 222 128 mosk_in 288 116
+mosk_in 288 116 mosk_in 222 128
+#莫斯科比亞 原野
+mosk_fild01 86 104 mosk_fild02 204 54 0 c c r2 c c c r1 c n
+mosk_fild02 198 53 moscovia 140 54 0 c r0 n
+mosk_fild02 190 257 mosk_dun01 189 42
+#森林洞穴
+mosk_dun01 189 42 mosk_fild02 190 254
+mosk_dun01 207 276 mosk_dun02 165 30 0 c c r0 n
+mosk_dun01 264 191 mosk_dun03 117 36 0 c c r0 n
+mosk_dun02 168 28 mosk_dun01 201 269 0 c c r0 n
+mosk_dun02 268 117 mosk_dun03 32 135 0 c c r0 n
+mosk_dun03 27 131 mosk_dun02 262 118 0 c c r0 n
+mosk_dun03 119 46 mosk_dun01 257 190 0 c c r0 n
+########################################
+#米德加爾特聯合營地
+mid_camp 213 286 moc_fild20 342 179 0 c c r0 n
+mid_camp 9 215 spl_fild02 380 217 0 c r0 n
+mid_camp 13 143 spl_fild02 379 143 0 c r0 n
+mid_camp 336 171 man_fild01 36 235 0 c r0 n
+mid_camp 163 231 mid_campin 376 136
+mid_camp 196 204 mid_campin 223 109
+mid_camp 205 211 mid_campin 232 123
+mid_camp 214 249 mid_campin 89 99
+mid_camp 266 260 mid_campin 283 124
+mid_campin 283 124 mid_camp 266 260
+mid_campin 89 99 mid_camp 214 249
+mid_campin 232 123 mid_camp 205 211
+mid_campin 223 109 mid_camp 196 204
+mid_campin 376 136 mid_camp 163 231
+mid_campin 111 128 mid_campin 165 170
+mid_campin 162 170 mid_campin 108 128
+mid_campin 113 120 mid_campin 165 126
+mid_campin 162 126 mid_campin 110 120
+mid_campin 113 114 mid_campin 165 82
+mid_campin 162 82 mid_campin 110 114
+mid_campin 94 141 mid_campin 117 181
+mid_campin 117 178 mid_campin 94 138
+mid_campin 86 141 mid_campin 66 181
+mid_campin 65 178 mid_campin 86 138
+mid_campin 68 128 mid_campin 22 168
+mid_campin 25 168 mid_campin 71 128
+mid_campin 66 120 mid_campin 22 124
+mid_campin 25 124 mid_campin 70 120
+mid_campin 66 114 mid_campin 22 80
+mid_campin 25 80 mid_campin 70 114
+########################################
+#礦村魔怒克
+manuk 114 357 man_fild02 139 41
+manuk 235 124 man_in01 70 169
+manuk 255 110 man_in01 5 61
+manuk 279 115 man_in01 123 226
+manuk 311 142 man_in01 275 41
+manuk 253 195 man_in01 26 284
+manuk 257 228 man_in01 130 265
+manuk 265 237 man_in01 180 265
+manuk 276 247 man_in01 230 265
+manuk 288 249 man_in01 280 265
+manuk 302 243 man_in01 330 265
+manuk 311 234 man_in01 380 265
+manuk 310 201 man_in01 358 119
+man_in01 324 222 man_in01 328 141
+man_in01 328 141 man_in01 324 222
+man_in01 358 119 manuk 310 201
+man_in01 380 265 manuk 311 234
+man_in01 330 265 manuk 302 243
+man_in01 280 265 manuk 288 249
+man_in01 230 265 manuk 276 247
+man_in01 180 265 manuk 265 237
+man_in01 130 265 manuk 257 228
+man_in01 5 275 man_in01 7 219
+man_in01 7 219 man_in01 5 275
+man_in01 22 275 man_in01 74 279
+man_in01 74 279 man_in01 22 275
+man_in01 26 284 manuk 253 195
+man_in01 390 16 man_in01 318 17
+man_in01 318 17 man_in01 390 16
+man_in01 275 41 manuk 311 142
+man_in01 5 61 manuk 255 110
+man_in01 70 169 manuk 235 124
+man_in01 61 173 man_in01 20 175
+man_in01 20 175 man_in01 61 173
+man_in01 61 190 man_in01 61 238
+man_in01 61 238 man_in01 61 190
+man_in01 11 19 man_in01 182 34
+man_in01 182 34 man_in01 11 19
+man_in01 123 226 manuk 279 115
+man_in01 183 58 man_in01 13 125
+man_in01 10 125 man_in01 179 58
+man_in01 65 125 man_in01 179 58
+#魔怒克原野
+man_fild01 103 55 man_fild03 84 369
+man_fild01 35 232 mid_camp 336 171
+man_fild01 372 230 man_fild02 32 261
+man_fild02 32 261 man_fild01 372 230
+man_fild02 139 41 manuk 114 357
+man_fild03 84 369 man_fild01 103 55
+########################################
+#守護精靈前線陣地史波浪壯麗
+splendide 388 252 spl_fild02 8 241
+splendide 228 164 spl_in01 30 301
+splendide 198 240 spl_in01 110 301
+splendide 238 212 spl_in01 30 215
+splendide 156 210 spl_in01 171 189
+splendide 170 168 spl_in01 190 301
+splendide 197 193 spl_in01 110 19
+splendide 299 251 spl_in02 140 93
+splendide 240 317 spl_in02 224 232
+splendide 230 299 spl_in02 207 195
+splendide 214 310 spl_in02 180 223
+splendide 286 229 spl_in02 137 66
+splendide 286 128 spl_in02 236 63
+splendide 259 112 spl_in02 189 41
+splendide 157 316 spl_in02 108 213
+splendide 119 324 spl_in02 61 229
+splendide 132 68 spl_in02 45 52
+splendide 287 140 spl_in02 237 89
+spl_in01 95 38 spl_in01 199 36
+spl_in01 197 36 spl_in01 93 38
+spl_in01 238 36 spl_in01 126 38
+spl_in01 124 38 spl_in01 236 36
+spl_in01 218 22 spl_in01 310 19
+spl_in01 310 17 spl_in01 218 20
+spl_in01 110 17 splendide 197 191
+spl_in01 30 213 splendide 237 210
+spl_in01 191 320 spl_in01 276 334
+spl_in01 276 336 spl_in01 190 322
+spl_in01 190 299 splendide 170 166
+spl_in01 171 187 splendide 156 208
+spl_in01 110 299 splendide 198 238
+spl_in01 30 299 splendide 228 162
+spl_in02 139 91 splendide 297 250
+spl_in02 222 232 splendide 238 317
+spl_in02 207 193 splendide 228 299
+spl_in02 180 221 splendide 214 308
+spl_in02 135 66 splendide 284 228
+spl_in02 234 64 splendide 284 129
+spl_in02 187 42 splendide 259 114
+spl_in02 108 211 splendide 157 314
+spl_in02 62 227 splendide 119 322
+spl_in02 44 54 splendide 133 70
+spl_in02 236 86 splendide 285 139
+#史波浪壯麗原野
+spl_fild01 289 28 spl_fild02 293 379
+spl_fild02 6 241 splendide 388 252
+spl_fild02 103 30 spl_fild03 99 373
+spl_fild02 382 143 mid_camp 13 143
+spl_fild02 383 216 mid_camp 9 215
+spl_fild02 310 10 spl_fild03 306 379
+spl_fild02 293 379 spl_fild01 289 28
+spl_fild03 306 379 spl_fild02 310 10
+spl_fild03 99 373 spl_fild02 103 30
+#粗暴者的傷口
+spl_fild01 375 109 nyd_dun01 72 125 0 c r0 n
+nyd_dun01 62 233 spl_fild01 376 65 0 c r0 n
+nyd_dun01 255 142 nyd_dun02 61 265
+nyd_dun02 56 264 nyd_dun01 249 143
+########################################
+#巴西
+brasilis 308 336 bra_fild01 72 34
+brasilis 146 162 bra_in01 17 134
+brasilis 274 153 bra_in01 39 7
+bra_in01 17 134 brasilis 146 162
+bra_in01 50 171 bra_in01 79 169
+bra_in01 79 169 bra_in01 50 171
+bra_in01 79 142 bra_in01 50 145
+bra_in01 50 145 bra_in01 79 142
+bra_in01 39 7 brasilis 274 153
+bra_in01 31 29 bra_in01 25 70
+bra_in01 25 70 bra_in01 31 29
+bra_in01 31 74 bra_in01 148 57
+bra_in01 148 57 bra_in01 31 74
+bra_in01 52 67 bra_in01 85 67
+bra_in01 85 67 bra_in01 52 67
+bra_in01 52 27 bra_in01 83 27
+bra_in01 83 27 bra_in01 52 27
+bra_in01 9 67 bra_in01 156 23
+bra_in01 156 23 bra_in01 9 67
+#巴西原野
+bra_fild01 72 34 brasilis 308 336
+#瀑布內的洞窟
+bra_in01 12 185 bra_in01 138 176
+bra_in01 138 174 bra_in01 12 183
+bra_in01 144 187 bra_in01 206 98 0 c r0 n
+bra_in01 206 98 bra_in01 138 176
+bra_in01 206 188 bra_dun01 87 47 0 n
+bra_dun01 87 43 bra_in01 206 188 0 n
+bra_dun01 199 35 bra_dun02 261 265
+bra_dun02 261 265 bra_dun01 199 35
+########################################
+#克雷斯特漢姆古城
+gef_fild06 18 304 glast_01 380 304
+glast_01 380 304 gef_fild06 18 304
+glast_01 200 137 gl_church 156 4
+glast_01 51 108 gl_step 8 7
+glast_01 77 193 gl_knt01 150 6
+#古城 修道院
+gl_church 156 4 glast_01 200 137
+gl_church 301 46 gl_chyard 147 12
+gl_church 16 299 gl_chyard 147 287
+gl_chyard 147 12 gl_church 301 46
+gl_chyard 12 149 gl_sew02 30 273
+gl_chyard 147 287 gl_church 16 299
+#古城 地下水道
+gl_sew01 258 258 gl_prison1 61 183
+gl_sew01 19 21 gl_sew02 108 291
+gl_sew02 16 26 gl_prison1 62 187
+gl_sew02 30 273 gl_chyard 12 149
+gl_sew02 109 294 gl_sew01 19 21
+gl_sew02 296 18 gl_knt01 231 197
+gl_sew02 290 156 gl_step 120 124
+gl_sew02 299 294 gl_sew03 171 286
+gl_sew03 171 286 gl_sew02 299 294
+gl_sew03 64 10 gl_sew04 68 280
+gl_sew04 68 280 gl_sew03 64 10
+gl_sew04 104 78 gl_dun01 133 277
+#古城 最下層 地下洞窟
+gl_dun01 133 277 gl_sew04 104 78
+gl_dun01 225 18 gl_dun02 224 277
+gl_dun02 224 277 gl_dun01 225 18
+#古城 樓梯密穴
+gl_step 120 124 gl_sew02 290 156
+gl_step 8 7 glast_01 51 108
+#古城 騎士團
+gl_knt01 128 292 gl_knt01 104 204
+gl_knt01 104 204 gl_knt01 128 292
+gl_knt01 231 197 gl_sew02 296 18
+gl_knt01 150 6 glast_01 77 193
+gl_knt01 12 148 gl_knt02 10 138
+gl_knt01 287 144 gl_knt02 289 138
+gl_knt01 150 291 gl_knt02 157 292
+gl_knt02 157 292 gl_knt01 150 291
+gl_knt02 10 138 gl_knt01 12 148
+gl_knt02 289 138 gl_knt01 287 144
+#古城 地上樓層
+gl_cas01 234 192 gl_prison 11 70
+gl_cas01 200 165 gl_cas02 104 15
+gl_cas01 135 40 gl_cas01 144 314
+gl_cas01 149 314 gl_prison 14 70
+gl_cas01 167 191 gl_prison 14 70
+gl_cas01 185 236 gl_cas01 163 191
+gl_cas01 371 301 gl_prison 14 70
+gl_cas01 372 39 gl_cas01 367 301
+gl_cas01 215 236 gl_cas01 238 192
+glast_01 200 297 gl_cas01 200 18
+glast_01 237 330 gl_in01 118 59
+glast_01 220 360 gl_in01 106 125
+glast_01 179 360 gl_in01 83 174
+glast_01 162 330 gl_in01 81 68
+gl_cas01 200 18 glast_01 200 294
+gl_cas02 104 15 gl_cas01 200 165
+gl_cas02 104 193 glast_01 199 325
+#古城 地下監獄
+gl_prison 149 183 gl_prison1 150 10
+gl_prison 11 70 gl_cas01 234 192
+gl_prison1 62 187 gl_sew02 16 26
+gl_prison1 150 10 gl_prison 149 183
+#古城 室內
+gl_in01 118 59 glast_01 237 330
+gl_in01 106 125 glast_01 220 360
+gl_in01 83 174 glast_01 179 360
+gl_in01 81 68 glast_01 162 330
+#########################################
+T#r#y#7#1#0#2#3#僅#發#表#於#月#光#論#壇 
+#妙勒尼山脈
+mjolnir_01 284 18 gef_fild04 261 362
+mjolnir_01 381 256 mjolnir_02 28 258
+mjolnir_02 361 18 mjolnir_06 366 383
+mjolnir_02 326 289 mjolnir_03 21 258
+mjolnir_02 28 258 mjolnir_01 381 256
+mjolnir_02 79 365 mjo_dun01 52 14
+mjolnir_03 242 204 mjolnir_04 122 208
+mjolnir_03 212 17 mjolnir_07 214 383
+mjolnir_03 21 258 mjolnir_02 326 289
+mjolnir_04 122 208 mjolnir_03 242 204
+mjolnir_04 160 46 mjolnir_08 159 373
+mjolnir_04 387 174 mjolnir_05 16 171
+mjolnir_05 220 382 mjolnir_12 220 26
+mjolnir_05 16 171 mjolnir_04 387 174
+mjolnir_05 235 16 mjolnir_10 235 381
+mjolnir_06 18 331 gef_fild04 362 322
+mjolnir_06 366 383 mjolnir_02 361 18
+mjolnir_06 382 377 mjolnir_07 16 377
+mjolnir_06 383 74 mjolnir_07 17 77
+mjolnir_06 265 29 gef_fild00 267 382
+mjolnir_07 383 362 mjolnir_08 29 346
+mjolnir_07 156 16 prt_fild00 159 383
+mjolnir_07 17 77 mjolnir_06 383 74
+mjolnir_07 16 377 mjolnir_06 382 377
+mjolnir_07 383 233 mjolnir_08 30 234
+mjolnir_07 214 383 mjolnir_03 212 17
+mjolnir_08 159 373 mjolnir_04 160 46
+mjolnir_08 369 257 mjolnir_10 15 258
+mjolnir_08 29 346 mjolnir_07 383 362
+mjolnir_08 185 28 mjolnir_09 194 367
+mjolnir_08 30 234 mjolnir_07 383 233
+mjolnir_09 194 367 mjolnir_08 185 28
+mjolnir_09 30 249 prt_fild00 383 249
+mjolnir_09 373 288 prt_fild01 20 292
+mjolnir_09 106 28 prt_fild05 105 381
+mjolnir_09 300 28 prt_fild05 292 385
+mjolnir_10 66 15 prt_fild01 66 373
+mjolnir_10 265 13 prt_fild01 261 373
+mjolnir_10 15 258 mjolnir_08 369 257
+mjolnir_10 235 381 mjolnir_05 235 16
+mjolnir_10 384 220 mjolnir_11 20 220
+mjolnir_11 20 220 mjolnir_10 384 220
+mjolnir_11 174 20 prt_fild02 173 382
+mjolnir_12 220 26 mjolnir_05 220 382
+mjolnir_12 199 378 aldebaran 138 34
+mjolnir_12 44 17 prt_maze01 17 111
+#妙勒尼 廢棄礦場
+mjo_dun01 52 14 mjolnir_02 79 365
+mjo_dun01 14 283 mjo_dun02 384 343
+mjo_dun02 384 343 mjo_dun01 14 283
+mjo_dun02 31 21 mjo_dun03 302 264
+mjo_dun02 39 21 mjo_dun03 308 264
+mjo_dun03 302 264 mjo_dun02 31 21
+mjo_dun03 308 264 mjo_dun02 39 21
+#迷藏森林
+prt_maze01 22 85 prt_maze01 137 128
+prt_maze01 137 125 prt_maze01 191 139
+prt_maze01 194 139 prt_maze01 22 88
+prt_maze01 17 114 prt_maze01 8 186
+prt_maze01 5 186 prt_maze01 182 88
+prt_maze01 182 85 prt_maze01 58 48
+prt_maze01 52 45 prt_maze01 139 48
+prt_maze01 139 45 prt_maze01 71 11
+prt_maze01 74 12 prt_maze01 58 48
+prt_maze01 74 74 prt_maze01 58 191
+prt_maze01 58 194 prt_maze01 23 128
+prt_maze01 23 125 prt_maze01 151 22
+prt_maze01 154 22 prt_maze01 139 48
+prt_maze01 137 74 prt_maze01 182 88
+prt_maze01 168 94 prt_maze01 191 139
+prt_maze01 166 139 prt_maze01 128 173
+prt_maze01 125 171 prt_maze01 8 186
+prt_maze01 22 194 prt_maze01 16 31
+prt_maze01 16 34 prt_maze01 128 173
+prt_maze01 154 181 prt_maze01 191 175
+prt_maze01 194 175 prt_maze01 23 128
+prt_maze01 5 140 prt_maze01 58 48
+prt_maze01 18 154 prt_maze01 177 71
+prt_maze01 177 74 prt_fild01 136 368
+prt_maze01 99 34 prt_maze01 137 128
+prt_maze01 154 134 prt_maze01 58 191
+prt_maze01 175 45 prt_maze01 58 48
+prt_maze01 194 94 prt_maze01 58 191
+prt_maze01 114 22 prt_maze01 177 71
+prt_maze01 85 13 prt_maze01 22 88
+prt_maze01 175 165 prt_maze01 48 104
+prt_maze01 45 104 prt_maze01 63 128
+prt_maze01 54 154 prt_maze01 191 175
+prt_maze01 63 114 prt_maze01 111 56
+prt_maze01 114 56 prt_maze01 176 8
+prt_maze01 176 5 prt_maze01 137 128
+prt_maze01 194 54 prt_maze01 99 31
+prt_maze01 85 56 prt_maze01 105 111
+prt_maze01 105 114 prt_maze01 111 145
+prt_maze01 98 154 prt_maze01 102 168
+prt_maze01 85 174 prt_maze02 93 20
+prt_maze01 102 165 prt_maze01 99 31
+prt_maze01 45 21 prt_maze01 142 111
+prt_maze01 125 105 prt_maze01 14 48
+prt_maze01 14 74 prt_maze01 151 22
+prt_maze01 63 85 prt_maze01 151 22
+prt_maze01 74 97 prt_maze01 71 11
+prt_maze01 63 125 prt_maze01 182 88
+prt_maze01 23 5 prt_maze01 176 8
+prt_maze01 194 15 prt_maze01 52 48
+prt_maze01 176 34 prt_maze01 8 186
+prt_maze01 96 45 prt_maze01 63 128
+prt_maze01 104 74 prt_maze01 14 48
+prt_maze01 14 45 mjolnir_12 44 20
+prt_maze01 5 58 prt_maze01 48 104
+prt_maze01 114 95 prt_maze01 14 48
+prt_maze01 85 97 prt_maze01 63 128
+prt_maze01 165 22 prt_maze01 63 128
+prt_maze01 142 114 prt_maze01 23 128
+prt_maze01 114 145 prt_maze01 23 128
+prt_maze01 85 146 prt_maze01 142 111
+prt_maze02 18 126 prt_maze02 90 170
+prt_maze02 100 182 prt_maze03 182 85
+prt_maze02 93 16 prt_maze01 102 168
+prt_maze03 182 85 prt_maze02 100 182
+prt_maze03 85 146 prt_maze03 22 88
+prt_maze03 22 85 prt_maze03 88 146
+prt_maze03 98 154 prt_maze03 99 31
+prt_maze03 14 74 prt_maze03 63 111
+prt_maze03 63 114 prt_maze03 14 74
+prt_maze03 14 45 prt_maze03 88 174
+prt_maze03 85 174 prt_maze03 14 48
+prt_maze03 5 58 prt_maze03 191 15
+prt_maze03 194 15 prt_maze03 8 58
+prt_maze03 176 5 prt_maze03 111 95
+prt_maze03 114 95 prt_maze03 176 8
+prt_maze03 165 22 prt_maze03 111 146
+prt_maze03 114 145 prt_maze03 168 22
+prt_maze03 176 34 prt_maze03 88 56
+prt_maze03 137 74 prt_maze03 102 168
+prt_maze03 102 165 prt_maze03 137 74
+prt_maze03 139 45 prt_maze03 88 146
+prt_maze03 194 94 prt_maze03 151 22
+prt_maze03 154 22 prt_maze03 48 21
+prt_maze03 45 21 prt_maze03 18 151
+prt_maze03 18 154 prt_maze03 48 21
+prt_maze03 54 5 prt_maze03 71 97
+prt_maze03 74 97 prt_maze03 56 8
+prt_maze03 74 12 prt_maze03 175 168
+prt_maze03 175 165 prt_maze03 71 12
+prt_maze03 194 175 prt_maze03 191 139
+prt_maze03 194 139 prt_maze03 191 175
+prt_maze03 166 139 prt_maze03 63 88
+prt_maze03 45 104 prt_maze03 96 48
+prt_maze03 96 45 prt_maze03 48 104
+prt_maze03 63 85 prt_maze03 169 139
+prt_maze03 5 140 prt_maze03 111 56
+prt_maze03 114 56 prt_maze03 8 140
+prt_maze03 23 125 prt_maze03 177 71
+prt_maze03 177 74 prt_maze03 23 128
+prt_maze03 194 54 prt_maze03 171 94
+prt_maze03 168 94 prt_maze03 191 54
+prt_maze03 175 45 prt_maze03 22 191
+prt_maze03 22 194 prt_maze03 175 48
+prt_maze03 5 186 prt_maze03 151 134
+prt_maze03 154 134 prt_maze03 8 186
+prt_maze03 137 125 prt_maze03 71 71
+prt_maze03 74 74 prt_maze03 48 21
+prt_maze03 17 114 prt_maze03 129 102
+prt_maze03 125 105 prt_maze03 58 191
+prt_maze03 58 194 prt_maze03 8 58
+prt_maze03 52 45 prt_maze03 16 31
+prt_maze03 16 34 prt_maze03 52 48
+prt_maze03 23 5 prt_maze03 88 13
+prt_maze03 85 13 prt_maze03 23 8
+prt_maze03 99 34 prt_maze03 98 151
+prt_maze03 114 22 prt_maze03 104 71
+prt_maze03 104 74 prt_maze03 111 22
+prt_maze03 142 114 prt_maze03 54 151
+prt_maze03 54 154 prt_maze03 142 111
+prt_maze03 63 125 prt_maze03 88 97
+prt_maze03 85 97 prt_maze03 63 128
+prt_maze03 85 56 prt_maze03 176 31
+prt_maze03 105 114 prt_maze03 128 174
+prt_maze03 125 171 prt_maze03 105 111
+prt_maze03 154 181 prt_maze03 139 48
+########################################
+#烏龜島
+tur_dun01 154 241 tur_dun02 148 264
+tur_dun02 167 19 tur_dun03 132 189
+tur_dun02 148 268 tur_dun01 154 237
+tur_dun03 217 71 tur_dun04 100 192
+tur_dun03 132 193 tur_dun02 167 23
+tur_dun04 100 196 tur_dun03 215 75
+########################################
+#沉船附近的島嶼
+alb2trea 88 111 treasure01 69 24
+#沉沒之船
+treasure01 69 22 alb2trea 85 107
+treasure01 58 37 treasure01 39 37
+treasure01 41 37 treasure01 61 37
+treasure01 79 37 treasure01 98 37
+treasure01 96 37 treasure01 77 37
+treasure01 69 75 treasure01 69 106
+treasure01 69 102 treasure01 69 77
+treasure01 61 111 treasure01 39 111
+treasure01 41 111 treasure01 63 111
+treasure01 76 111 treasure01 100 111
+treasure01 98 111 treasure01 74 111
+treasure01 69 125 treasure01 69 142
+treasure01 69 140 treasure01 69 123
+treasure01 38 164 treasure01 25 164
+treasure01 27 164 treasure01 40 164
+treasure01 99 164 treasure01 114 164
+treasure01 112 164 treasure01 97 164
+treasure01 125 161 treasure01 144 161
+treasure01 142 161 treasure01 123 161
+treasure01 164 114 treasure01 164 88
+treasure01 164 91 treasure01 164 116
+treasure01 69 177 treasure02 102 27
+treasure02 102 24 treasure01 69 179
+treasure02 80 72 treasure02 63 72
+treasure02 65 72 treasure02 82 72
+treasure02 49 99 treasure02 49 130
+treasure02 49 128 treasure02 49 97
+treasure02 123 72 treasure02 140 72
+treasure02 138 72 treasure02 121 72
+treasure02 155 99 treasure02 155 130
+treasure02 155 128 treasure02 155 97
+treasure02 102 103 treasure02 102 120
+treasure02 102 118 treasure02 102 101
+########################################
+#神秘島
+e_tower 81 105 alberta 223 36 0 c r2 n
+alberta 214 77 e_tower 70 114 10000 c r1 n
+########################################
+#尼它堆(朱諾)
+sch_gld 354 89 yuno 13 126
+sch_gld 137 98 schg_cas01 119 8
+sch_gld 293 90 schg_cas01 119 8
+sch_gld 65 315 schg_cas01 119 8
+schg_cas01 119 4 sch_gld 293 100
+sch_gld 288 258 schg_cas02 339 78
+schg_cas02 339 73 sch_gld 288 252
+sch_gld 97 183 schg_cas03 337 330
+schg_cas03 337 336 sch_gld 97 196
+########################################
+#發菲依雅(拉赫)
+aru_gld 195 363 ve_fild02 191 21
+aru_gld 289 347 arug_cas03 141 45
+aru_gld 155 274 arug_cas01 275 93
+aru_gld 68 150 arug_cas03 141 45
+aru_gld 78 47 arug_cas02 139 31
+aru_gld 287 107 arug_cas03 141 45
+arug_cas03 141 40 aru_gld 299 345
+########################################
+#巴基力雷恩(普隆德拉)
+prt_gld 159 298 prt_fild01 199 24
+prt_gld 159 25 prt_castle 102 181
+prt_gld 129 65 prtg_cas01 103 32
+#克林希特
+prtg_cas01 103 32 prt_gld 134 65
+prtg_cas01 51 70 prtg_cas01 202 92
+prtg_cas01 196 119 prtg_cas01 40 54
+prtg_cas01 37 47 prtg_cas01 45 34
+prtg_cas01 41 34 prtg_cas01 40 47
+prtg_cas01 37 54 prtg_cas01 187 118
+prtg_cas01 196 65 prtg_cas01 75 54
+prtg_cas01 57 19 prtg_cas01 80 49
+prtg_cas01 71 54 prtg_cas01 192 65
+prtg_cas01 84 49 prtg_cas01 61 19
+prtg_cas01 147 120 prtg_cas01 75 187
+prtg_cas01 75 183 prtg_cas01 147 116
+prtg_cas01 206 183 prtg_cas01 113 163
+prtg_cas01 109 163 prtg_cas01 202 183
+prtg_cas01 206 92 prtg_cas01 55 70
+prtg_cas01 84 19 prtg_cas01 192 65
+prtg_cas01 62 34 prtg_cas01 192 119
+#斯般希特
+prt_gld 240 124 prtg_cas02 43 229
+prtg_cas02 43 233 prt_gld 240 128
+prtg_cas02 35 183 prtg_cas02 75 86
+prtg_cas02 71 86 prtg_cas02 35 187
+prtg_cas02 45 21 prtg_cas02 203 25
+prtg_cas02 184 44 prtg_cas02 157 140
+prtg_cas02 157 135 prtg_cas02 184 40
+prtg_cas02 161 41 prtg_cas02 57 202
+prtg_cas02 53 202 prtg_cas02 165 41
+prtg_cas02 210 41 prtg_cas02 84 215
+prtg_cas02 88 215 prtg_cas02 206 41
+prtg_cas02 203 21 prtg_cas02 45 25
+prtg_cas02 98 21 prtg_cas02 64 168
+prtg_cas02 64 164 prtg_cas02 98 25
+#拉茲立克斯
+prt_gld 153 141 prtg_cas03 168 12
+prtg_cas03 168 8 prt_gld 153 137
+prtg_cas03 165 59 prtg_cas03 45 47
+prtg_cas03 45 43 prtg_cas03 165 54
+prtg_cas03 86 73 prtg_cas03 178 81
+prtg_cas03 178 85 prtg_cas03 82 73
+prtg_cas03 164 173 prtg_cas03 45 117
+prtg_cas03 6 78 prtg_cas03 176 44
+prtg_cas03 172 44 prtg_cas03 10 78
+prtg_cas03 45 120 prtg_cas03 164 177
+prtg_cas03 194 233 prtg_cas03 191 59
+prtg_cas03 191 55 prtg_cas03 190 233
+prtg_cas03 169 235 prtg_cas03 11 200
+prtg_cas03 7 200 prtg_cas03 169 231
+#司葵古
+prtg_cas04 86 9 prt_gld 111 240
+prt_gld 107 240 prtg_cas04 86 13
+prtg_cas04 63 30 prtg_cas04 34 229
+prtg_cas04 34 225 prtg_cas04 63 26
+prtg_cas04 10 229 prtg_cas04 48 44
+prtg_cas04 48 48 prtg_cas04 10 233
+prtg_cas04 56 229 prtg_cas04 54 29
+prtg_cas04 54 25 prtg_cas04 56 233
+prtg_cas04 60 254 prtg_cas04 42 17
+prtg_cas04 42 13 prtg_cas04 56 254
+prtg_cas04 7 254 prtg_cas04 32 32
+prtg_cas04 32 28 prtg_cas04 11 254
+prtg_cas04 34 290 prtg_cas04 238 261
+prtg_cas04 238 257 prtg_cas04 34 286
+prtg_cas04 247 258 prtg_cas04 255 14
+prtg_cas04 251 14 prtg_cas04 247 254
+#關德
+prtg_cas05 17 231 prt_gld 208 240
+prt_gld 212 240 prtg_cas05 17 235
+prtg_cas05 38 250 prtg_cas05 244 7
+prtg_cas05 244 3 prtg_cas05 35 247
+prtg_cas05 292 13 prtg_cas05 76 246
+prtg_cas05 76 242 prtg_cas05 288 13
+prtg_cas05 53 246 prtg_cas05 199 13
+prtg_cas05 195 13 prtg_cas05 55 248
+prtg_cas05 228 96 prtg_cas05 26 7
+prtg_cas05 26 3 prtg_cas05 228 92
+prtg_cas05 260 96 prtg_cas05 66 229
+prtg_cas05 66 225 prtg_cas05 260 92
+prtg_cas05 58 7 prtg_cas05 253 290
+prtg_cas05 253 294 prtg_cas05 58 11
+########################################
+#怖立特離亞 (吉芬)
+gef_fild13 380 56 gef_fild09 23 56
+gef_fild13 41 373 gef_fild07 40 23
+gef_fild07 40 19 gef_fild13 41 369
+#吉芬公會左下角X2入口
+gefg_cas05 99 204 gef_fild13 305 87
+gef_fild13 305 83 gefg_cas05 99 200
+gefg_cas05 83 152 gefg_cas05 66 72
+gefg_cas05 66 76 gefg_cas05 80 155
+gefg_cas05 43 62 gefg_cas05 78 138
+gefg_cas05 74 138 gefg_cas05 47 62
+gefg_cas05 88 62 gefg_cas05 83 165
+gefg_cas05 87 165 gefg_cas05 84 62
+gefg_cas05 68 150 gefg_cas05 44 147
+gefg_cas05 44 143 gefg_cas05 70 155
+gefg_cas05 37 16 gefg_cas05 158 42
+gefg_cas05 149 44 gefg_cas05 37 20
+gefg_cas05 178 72 gefg_cas05 46 165
+gefg_cas05 50 165 gefg_cas05 178 68
+gefg_cas05 206 44 gefg_cas05 93 20
+gefg_cas05 93 16 gefg_cas05 202 44
+gefg_cas05 190 20 gefg_cas05 194 151
+gefg_cas05 194 147 gefg_cas05 190 16
+gefg_cas05 7 134 gef_fild13 252 57
+gef_fild13 256 57 gefg_cas05 11 134
+#吉芬公會中下X2入口
+gef_fild13 210 75 gefg_cas01 95 178
+gefg_cas01 99 178 gef_fild13 214 75
+gefg_cas01 34 136 gef_fild13 150 50
+gef_fild13 150 54 gefg_cas01 34 140
+gefg_cas01 39 196 gefg_cas01 62 13
+gefg_cas01 62 9 gefg_cas01 39 192
+gefg_cas01 90 51 gefg_cas01 54 185
+gefg_cas01 58 185 gefg_cas01 90 47
+gefg_cas01 33 51 gefg_cas01 35 185
+gefg_cas01 31 185 gefg_cas01 33 47
+gefg_cas01 54 84 gefg_cas01 174 14
+gefg_cas01 170 14 gefg_cas01 50 84
+gefg_cas01 170 34 gefg_cas01 30 167
+gefg_cas01 34 167 gefg_cas01 174 34
+gefg_cas01 209 34 gefg_cas01 56 170
+gefg_cas01 59 170 gefg_cas01 205 34
+gefg_cas01 181 52 gefg_cas01 198 160
+gefg_cas01 202 160 gefg_cas01 185 52
+#吉芬公會右上
+gef_fild13 308 244 gefg_cas02 70 143
+gefg_cas02 70 147 gef_fild13 308 240
+gefg_cas02 35 173 gefg_cas02 76 42
+gefg_cas02 80 42 gefg_cas02 39 173
+gefg_cas02 34 68 gefg_cas02 50 175
+gefg_cas02 46 175 gefg_cas02 34 64
+gefg_cas02 34 13 gefg_cas02 22 156
+gefg_cas02 22 160 gefg_cas02 34 17
+gefg_cas02 25 13 gefg_cas02 170 11
+gefg_cas02 174 11 gefg_cas02 21 13
+gefg_cas02 148 18 gefg_cas02 35 150
+gefg_cas02 34 152 gefg_cas02 153 18
+gefg_cas02 185 18 gefg_cas02 53 136
+gefg_cas02 57 136 gefg_cas02 180 18
+gefg_cas02 184 36 gefg_cas02 48 155
+gefg_cas02 48 159 gefg_cas02 184 41
+gefg_cas02 150 36 gefg_cas02 152 186
+gefg_cas02 152 190 gefg_cas02 150 41
+#吉芬公會中上
+gef_fild13 196 281 gefg_cas04 24 149
+gefg_cas04 24 145 gef_fild13 193 278
+gefg_cas04 34 211 gefg_cas04 18 78
+gefg_cas04 18 82 gefg_cas04 34 215
+gefg_cas04 18 9 gefg_cas04 57 220
+gefg_cas04 57 224 gefg_cas04 18 13
+gefg_cas04 42 81 gefg_cas04 42 13
+gefg_cas04 42 9 gefg_cas04 42 77
+gefg_cas04 52 25 gefg_cas04 142 37
+gefg_cas04 142 33 gefg_cas04 52 21
+gefg_cas04 142 55 gefg_cas04 32 180
+gefg_cas04 27 180 gefg_cas04 142 59
+gefg_cas04 174 36 gefg_cas04 53 192
+gefg_cas04 53 196 gefg_cas04 170 36
+gefg_cas04 178 57 gefg_cas04 143 166
+gefg_cas04 140 168 gefg_cas04 178 61
+#吉芬公會最左上X4入口
+gef_fild13 77 284 gefg_cas03 60 286
+gefg_cas03 68 290 gef_fild13 74 287
+gefg_cas03 103 283 gef_fild13 117 273
+gef_fild13 112 269 gefg_cas03 100 280
+gefg_cas03 66 223 gefg_cas03 96 53
+gefg_cas03 92 53 gefg_cas03 62 223
+gefg_cas03 135 92 gefg_cas03 34 282
+gefg_cas03 34 286 gefg_cas03 131 92
+gefg_cas03 47 271 gefg_cas03 38 255
+gefg_cas03 38 259 gefg_cas03 43 271
+gefg_cas03 38 243 gefg_cas03 29 219
+gefg_cas03 27 215 gefg_cas03 17 202
+gefg_cas03 17 206 gefg_cas03 32 222
+gefg_cas03 58 232 gefg_cas03 62 213
+gefg_cas03 65 215 gefg_cas03 233 74
+gefg_cas03 237 74 gefg_cas03 62 213
+gefg_cas03 212 46 gefg_cas03 225 158
+gefg_cas03 225 154 gefg_cas03 212 42
+gefg_cas03 266 47 gefg_cas03 45 175
+gefg_cas03 42 175 gefg_cas03 266 43
+gefg_cas03 256 11 gefg_cas03 159 16
+gefg_cas03 154 16 gefg_cas03 252 11
+gefg_cas03 152 92 gefg_cas03 59 255
+gefg_cas03 63 255 gefg_cas03 156 92
+gefg_cas03 50 248 gefg_cas03 54 229
+gefg_cas03 135 15 gefg_cas03 110 217
+gefg_cas03 106 217 gefg_cas03 131 15
+gefg_cas03 115 210 gefg_cas03 92 215
+gefg_cas03 90 218 gefg_cas03 111 210
+gefg_cas03 93 209 gefg_cas03 92 250
+gefg_cas03 95 251 gefg_cas03 91 209
+gefg_cas03 88 248 gefg_cas03 76 242
+gefg_cas03 79 244 gefg_cas03 91 250
+gefg_cas03 43 191 gefg_cas03 70 185
+gefg_cas03 70 182 gefg_cas03 39 191
+gefg_cas03 93 159 gef_fild13 83 181
+gef_fild13 83 185 gefg_cas03 89 159
+gef_fild13 139 240 gefg_cas03 125 250
+gefg_cas03 130 250 gef_fild13 143 240
+########################################
+#露依納 (艾爾帕蘭)
+alde_gld 284 160 aldebaran 35 140
+#艾爾帕蘭公會右上
+alde_gld 243 242 aldeg_cas04 149 17
+aldeg_cas04 196 86 aldeg_cas04 49 57
+aldeg_cas04 49 53 aldeg_cas04 196 82
+aldeg_cas04 22 88 aldeg_cas04 192 41
+aldeg_cas04 197 40 aldeg_cas04 26 88
+aldeg_cas04 78 88 aldeg_cas04 174 58
+aldeg_cas04 175 54 aldeg_cas04 74 88
+aldeg_cas04 145 17 alde_gld 239 242
+aldeg_cas04 21 123 aldeg_cas04 125 168
+aldeg_cas04 121 168 aldeg_cas04 25 123
+aldeg_cas04 50 132 aldeg_cas04 74 88
+aldeg_cas04 108 210 aldeg_cas04 186 92
+aldeg_cas04 185 87 aldeg_cas04 111 210
+aldeg_cas04 132 231 aldeg_cas04 129 212
+aldeg_cas04 132 209 aldeg_cas04 14 196
+aldeg_cas04 17 196 aldeg_cas04 132 228
+aldeg_cas04 156 210 aldeg_cas04 169 97
+aldeg_cas04 171 100 aldeg_cas04 152 210
+#艾爾帕蘭公會右下
+alde_gld 259 90 aldeg_cas05 216 103
+aldeg_cas05 216 107 alde_gld 264 90
+aldeg_cas05 195 42 aldeg_cas05 19 227
+aldeg_cas05 15 227 aldeg_cas05 195 46
+aldeg_cas05 70 189 aldeg_cas05 166 81
+aldeg_cas05 164 86 aldeg_cas05 66 189
+aldeg_cas05 13 175 aldeg_cas05 162 194
+aldeg_cas05 166 194 aldeg_cas05 13 179
+aldeg_cas05 5 187 aldeg_cas05 151 62
+aldeg_cas05 150 67 aldeg_cas05 9 187
+aldeg_cas05 125 194 aldeg_cas05 199 70
+aldeg_cas05 194 71 aldeg_cas05 129 194
+aldeg_cas05 165 232 aldeg_cas05 193 49
+aldeg_cas05 188 49 aldeg_cas05 165 228
+aldeg_cas05 156 231 aldeg_cas05 18 88
+aldeg_cas05 14 88 aldeg_cas05 156 227
+#艾爾帕蘭公會左中下
+alde_gld 142 81 aldeg_cas03 114 286
+aldeg_cas03 114 290 alde_gld 142 85
+aldeg_cas03 60 241 aldeg_cas03 91 61
+aldeg_cas03 91 57 aldeg_cas03 60 236
+aldeg_cas03 93 124 aldeg_cas03 87 251
+aldeg_cas03 87 247 aldeg_cas03 54 90
+aldeg_cas03 51 90 aldeg_cas03 87 251
+aldeg_cas03 79 130 aldeg_cas03 201 149
+aldeg_cas03 201 145 aldeg_cas03 79 126
+aldeg_cas03 214 186 aldeg_cas03 49 222
+aldeg_cas03 44 222 aldeg_cas03 213 182
+aldeg_cas03 199 190 aldeg_cas03 195 51
+aldeg_cas03 195 54 aldeg_cas03 199 186
+aldeg_cas03 130 90 aldeg_cas03 96 215
+aldeg_cas03 92 217 aldeg_cas03 127 90
+#艾爾帕蘭公會左上
+alde_gld 95 253 aldeg_cas02 88 163
+aldeg_cas02 88 159 alde_gld 95 249
+aldeg_cas02 22 194 aldeg_cas02 88 13
+aldeg_cas02 88 9 aldeg_cas02 22 190
+aldeg_cas02 45 39 aldeg_cas02 79 208
+aldeg_cas02 84 208 aldeg_cas02 105 84
+aldeg_cas02 105 88 aldeg_cas02 79 208
+aldeg_cas02 121 88 aldeg_cas02 177 135
+aldeg_cas02 177 131 aldeg_cas02 121 84
+aldeg_cas02 206 196 aldeg_cas02 197 13
+aldeg_cas02 197 9 aldeg_cas02 206 192
+aldeg_cas02 192 196 aldeg_cas02 50 180
+aldeg_cas02 50 185 aldeg_cas02 192 192
+aldeg_cas02 130 61 aldeg_cas02 33 179
+aldeg_cas02 33 174 aldeg_cas02 123 63
+#艾爾帕蘭公會左下
+alde_gld 48 79 aldeg_cas01 34 248
+aldeg_cas01 34 252 alde_gld 48 83
+aldeg_cas01 26 188 aldeg_cas01 50 70
+aldeg_cas01 46 70 aldeg_cas01 24 188
+aldeg_cas01 70 112 aldeg_cas01 42 225
+aldeg_cas01 39 222 aldeg_cas01 70 108
+aldeg_cas01 50 222 aldeg_cas01 104 108
+aldeg_cas01 104 112 aldeg_cas01 45 224
+aldeg_cas01 126 61 aldeg_cas01 62 191
+aldeg_cas01 66 191 aldeg_cas01 122 61
+aldeg_cas01 89 23 aldeg_cas01 207 132
+aldeg_cas01 207 128 aldeg_cas01 89 27
+aldeg_cas01 232 186 aldeg_cas01 42 197
+aldeg_cas01 46 197 aldeg_cas01 232 182
+aldeg_cas01 31 197 aldeg_cas01 175 175
+aldeg_cas01 171 175 aldeg_cas01 35 197
+aldeg_cas01 206 188 aldeg_cas01 216 50
+aldeg_cas01 216 54 aldeg_cas01 206 184
+########################################
+#青林湖泊(斐揚)
+pay_gld 16 276 moc_fild02 378 272
+pay_gld 374 149 payon 16 143
+pay_gld 121 238 payg_cas01 214 44
+pay_gld 291 116 payg_cas02 276 61
+pay_gld 323 293 payg_cas03 226 22
+pay_gld 140 156 payg_cas04 252 275
+pay_gld 204 270 payg_cas05 62 223
+#明亭
+payg_cas01 84 15 payg_cas01 11 115
+payg_cas01 11 115 payg_cas01 84 15
+payg_cas01 53 111 payg_cas01 115 151
+payg_cas01 115 151 payg_cas01 53 111
+payg_cas01 214 44 pay_gld 121 238
+payg_cas01 102 17 payg_cas01 201 126
+payg_cas01 134 43 payg_cas01 222 130
+payg_cas01 222 130 payg_cas01 134 43
+payg_cas01 201 114 payg_cas01 213 76
+payg_cas01 201 126 payg_cas01 102 17
+payg_cas01 218 112 payg_cas01 230 98
+payg_cas01 230 98 payg_cas01 218 112
+payg_cas01 213 76 payg_cas01 201 114
+#天壇
+payg_cas02 276 61 pay_gld 291 116
+payg_cas02 215 31 payg_cas02 65 292
+payg_cas02 65 292 payg_cas02 215 31
+payg_cas02 47 223 payg_cas02 280 291
+payg_cas02 280 291 payg_cas02 47 223
+payg_cas02 254 241 payg_cas02 13 42
+payg_cas02 13 42 payg_cas02 254 241
+payg_cas02 84 240 payg_cas02 222 26
+payg_cas02 222 26 payg_cas02 84 240
+payg_cas02 236 59 payg_cas02 232 72
+payg_cas02 232 72 payg_cas02 28 293
+payg_cas02 28 293 payg_cas02 232 72
+#佛影
+payg_cas03 226 22 pay_gld 323 293
+payg_cas03 20 19 payg_cas03 255 76
+payg_cas03 269 79 payg_cas03 57 19
+payg_cas03 272 68 payg_cas03 261 34
+payg_cas03 262 71 payg_cas03 39 5
+payg_cas03 39 5 payg_cas03 262 71
+payg_cas03 261 34 payg_cas03 272 68
+payg_cas03 255 76 payg_cas03 20 19
+payg_cas03 255 64 payg_cas03 245 41
+payg_cas03 245 41 payg_cas03 255 64
+payg_cas03 57 19 payg_cas03 269 79
+payg_cas03 39 84 payg_cas03 29 245
+payg_cas03 29 245 payg_cas03 39 84
+payg_cas03 29 269 payg_cas03 269 290
+payg_cas03 269 290 payg_cas03 29 269
+#紅樓
+payg_cas04 252 275 pay_gld 140 156
+payg_cas04 232 189 payg_cas04 78 261
+payg_cas04 78 261 payg_cas04 232 189
+payg_cas04 74 282 payg_cas04 229 208
+payg_cas04 229 208 payg_cas04 74 282
+payg_cas04 74 240 payg_cas04 260 212
+payg_cas04 260 212 payg_cas04 74 240
+payg_cas04 7 261 payg_cas04 59 30
+payg_cas04 59 30 payg_cas04 7 261
+payg_cas04 28 31 payg_cas04 254 45
+payg_cas04 254 45 payg_cas04 28 31
+#竹林峴
+payg_cas05 62 223 pay_gld 204 270
+payg_cas05 283 256 payg_cas05 290 43
+payg_cas05 290 43 payg_cas05 283 256
+payg_cas05 242 41 payg_cas05 14 14
+payg_cas05 14 14 payg_cas05 242 41
+payg_cas05 237 286 payg_cas05 23 283
+payg_cas05 219 256 payg_cas05 56 255
+payg_cas05 23 283 payg_cas05 237 286
+payg_cas05 56 255 payg_cas05 219 256
+payg_cas05 39 264 payg_cas05 237 227
+payg_cas05 237 227 payg_cas05 39 264
+#########################################
+
+#新手訓練場
+prt_fild08 148 112 new_zone02 100 9
+new_zone02 126 106 new_zone02 160 171
+new_zone02 156 171 new_zone02 123 106
+new_zone01 148 112 new_zone02 100 6
+new_zone02 100 6 new_zone01 148 112
+new_zone02 73 106 new_zone02 46 172
+new_zone02 46 172 new_zone02 73 106
+new_zone03 103 50 new_zone03 96 21 0 c c c r0 n
+new_zone03 103 50 new_zone03 96 21 0 c c c r1 n
+new_zone03 prontera 150 50 0 c c r1 c r0 n
+new_zone03 morocc 155 110 0 c c r1 c r0 n
+new_zone03 payon 166 67 0 c c r1 c r0 n
+new_zone03 alberta 114 58 0 c c r1 c r0 n
+new_zone03 geffen 122 65 0 c c r1 c r0 n
+#########################################
+#無名島(白天)
+nameless_i 228 232 nameless_in 12 172
+nameless_in 12 169 nameless_i 230 229
+nameless_i 252 130 nameless_in 26 128
+nameless_in 12 112 nameless_i 254 121
+nameless_i 253 116 nameless_in 12 109
+nameless_in 23 128 nameless_i 249 127
+nameless_i 100 259 nameless_in 97 180
+nameless_in 86 159 nameless_i 78 246
+nameless_i 75 251 nameless_in 82 159
+nameless_in 96 177 nameless_i 99 255
+#無名島(晚上)
+ve_fild07 125 128 nameless_n 259 218 0 c r0 n
+nameless_n 259 218 ve_fild07 130 130 0 c r0 n
+nameless_n 157 184 abbey01 51 10
+#修道院
+abbey01 51 10 nameless_n 157 184
+abbey01 12 205 abbey01 87 122
+abbey01 87 122 abbey01 12 205
+abbey01 322 101 abbey02 149 7
+abbey02 149 7 abbey01 322 96
+abbey02 149 290 abbey03 119 6
+abbey03 119 6 abbey02 149 290
+########################################
+#伊甸園NPC
+#中央
+prontera 124 76 moc_para01 30 10 0 c c r0 n
+#moc_para01 30 10 prontera 116 72
+#吉芬
+geffen 132 66 moc_para01 30 10 0 c c r0 n
+#moc_para01 30 10 geffen 120 39
+#艾爾帕蘭
+aldebaran 133 119 moc_para01 30 10 0 c c r0 n
+#moc_para01 30 10 aldebaran 168 112
+伊斯魯劍士村 劍士轉職所
+izlude_in 68 162 moc_para01 30 10 0 c c r0 n
+#moc_para01 30 10 izlude_in 68 162
+#艾爾貝塔
+alberta 124 67 moc_para01 30 10 0 c c r0 n
+#moc_para01 30 10 alberta 117 56
+#斐楊
+payon 177 111 moc_para01 30 10 0 c c r0 n
+#moc_para01 30 10 payon 161 58 
+#夢-金字塔外
+moc_ruins 68 164 moc_para01 30 10 0 c c r0 n
+#moc_para01 30 10 moc_ruins 64 161
+#朱諾
+yuno 144 189 moc_para01 30 10 0 c c r0 n
+#moc_para01 30 10 yuno 158 125
+#天津忍者轉職所
+que_ng 33 73 moc_para01 30 10 0 c c r0 n
+#moc_para01 30 10 que_ng 33 63
+#拉赫
+rachel 125 144 moc_para01 30 10 0 c c r0 n
+#moc_para01 30 10 rachel 115 125
+#伊甸園地圖
+moc_para01 47 39 moc_para01 107 12 0 c r0 n
+moc_para01 48 16 moc_para01 48 164
+moc_para01 47 161 moc_para01 47 18
+moc_para01 57 27 moc_para01 162 26
+moc_para01 158 26 moc_para01 55 27
+moc_para01 41 187 moc_para01 179 93
+moc_para01 179 90 moc_para01 41 185
+moc_para01 107 12 moc_para01 47 37
+moc_para01 100 27 moc_para01 47 85
+moc_para01 49 86 moc_para01 103 27
+moc_para01 113 32 moc_para01 105 92
+moc_para01 102 92 moc_para01 111 33
+##############################################################
+#時空裂縫(建議低等級或掛周邊地圖時打上#關掉傳點)
+morocc 299 207 moc_fild20 36 177
+moc_fild11 377 197 moc_fild20 36 177
+moc_ruins 137 89 moc_fild22b 49 195 0 c c c c c c c r0 n
+#prt_fild09 246 17 moc_fild20 208 207 0 c c r1 c n
+#prt_fild09 95 19 moc_fild20 208 207 0 c c r1 c n
+#prt_fild10 263 23 moc_fild20 208 207 0 c c r1 c n
+#moc_fild01 84 19 moc_fild20 208 207 0 c c r1 c n
+moc_fild07 380 202 moc_fild20 208 207 0 c c r1 c n
+#moc_fild11 189 360 moc_fild20 208 207 0 c c r1 c n
+#moc_fild13 32 171 moc_fild20 208 207 0 c c r1 c n
+#moc_fild16 333 380 moc_fild20 208 207 0 c c r1 c n
+#moc_fild16 124 381 moc_fild20 208 207 0 c c r1 c n
+moc_fild20 349 179 moc_fild22b 37 196 0 c c c r0 n
+moc_fild20 354 183 morocc 160 61 0 c r1 c c c c c r1 c c r1 n
+moc_fild20 354 174 morocc 160 61 0 c r1 c c c c c r1 c c r1 n
+moc_fild20 38 174 morocc 160 61 0 c r1 c c c c c r1 c c r1 n
+moc_fild20 38 183 morocc 160 61 0 c r1 c c c c c r1 c c r1 n
+moc_fild20 203 336 morocc 160 61 0 c r1 c c c c c r1 c c r1 n
+moc_fild20 215 336 morocc 160 61 0 c r1 c c c c c r1 c c r1 n
+moc_fild22b 37 196 moc_fild20 349 179 0 c c c r0 n
+moc_fild22b 230 197 mid_camp 210 291 0 c r0 c c n
+##############################################################
+#自動新增未分類列表
+
+mal_in01 38 217 malangdo 119 137
+malangdo 119 137 mal_in01 36 216
+mal_in01 75 222 mal_in01 11 218
+mal_in01 11 218 mal_in01 76 220
+mal_in01 140 213 mal_in01 79 219
+mal_in01 79 219 mal_in01 140 216
+mal_in01 30 119 malangdo 113 151
+malangdo 113 151 mal_in01 28 118
+mal_in01 67 118 mal_in01 20 119
+mal_in01 20 119 mal_in01 65 117
+mal_in01 18 161 malangdo 112 167
+malangdo 112 167 mal_in01 17 163
+mal_in01 75 174 mal_in01 18 173
+mal_in01 18 173 mal_in01 72 173
+mal_in01 124 175 mal_in01 73 170
+mal_in01 73 170 mal_in01 124 172
+mal_in01 9 16 malangdo 240 150
+malangdo 240 150 mal_in01 11 17
+mal_in01 67 12 mal_in01 20 15
+mal_in01 20 15 mal_in01 65 11
+mal_in02 60 61 malangdo 162 163
+malangdo 162 163 mal_in02 58 61
+mal_in02 34 60 mal_in02 51 60
+mal_in02 51 60 mal_in02 31 60
+mal_in02 63 35 mal_in02 63 53
+mal_in02 63 53 mal_in02 63 33
+mal_in02 63 66 mal_in02 63 35
+mal_in02 64 87 mal_in02 63 66
+mal_in02 101 35 mal_in02 101 53
+mal_in02 101 53 mal_in02 101 33
+mal_in02 101 66 mal_in02 101 35
+mal_in02 102 87 mal_in02 101 66
+mal_in02 139 35 mal_in02 137 53
+mal_in02 137 53 mal_in02 139 33
+mal_in02 137 66 mal_in02 139 35
+mal_in02 140 87 mal_in02 137 66
+mal_in02 142 60 mal_in02 140 87
+mal_in02 159 61 mal_in02 142 60
+mal_in01 18 78 malangdo 135 109
+malangdo 135 109 mal_in01 19 76
+mal_in01 67 66 mal_in01 18 67
+mal_in01 18 67 mal_in01 65 65
+mal_dun01 30 230 malangdo 73 239
+malangdo 73 239 mal_dun01 33 230
+mal_in01 163 13 malangdo 135 276
+malangdo 135 276 mal_in01 164 15
+dew_fild01 375 212 dewata 44 252
+dewata 44 252 dew_fild01 373 212
+dew_dun02 305 30 dew_fild01 48 65
+dew_fild01 48 65 dew_dun02 302 30
+dew_in01 16 31 dew_fild01 57 273
+dew_fild01 57 273 dew_in01 15 33
+alberta 240 47 dewata 232 53 0 c r0 n
+dewata 229 49 alberta 235 45 0 c r0 n
+#甲蟲隧道
+dic_fild01 24 79 dic_dun01 366 45
+dic_dun01 30 216 manuk 326 180 0 c r0 n
+manuk 321 182 dic_dun01 33 212 0 c r0 n
+dic_dun01 87 212 dic_dun01 169 227
+dic_dun01 371 228 dic_dun01 32 156
+dic_dun01 371 172 dic_dun01 32 100
+dic_dun01 371 100 dic_dun01 33 43
+dic_dun01 371 44 dic_fild01 28 79
+dic_dun01 29 43 dic_dun01 367 100
+dic_dun01 28 100 dic_dun01 367 172
+dic_dun01 28 156 dic_dun01 367 228
+dic_dun01 165 227 dic_dun01 83 212
+dic_fild01 153 281 dicastes01 199 41 0 c r0 n
+dicastes01 136 103 dic_in01 26 98
+dic_in01 44 116 dic_in01 260 115 0 r3
+dic_in01 261 115 dic_in01 42 115 0 r0
+dic_in01 26 96 dicastes01 137 106
+dicastes01 199 34 dic_fild01 149 279
+dic_dun01 294 106 dic_dun02 101 142 0 c r0 n
+dic_dun02 102 148 dic_dun01 290 99
+#綿綿島
+malangdo 219 86 izlude 194 180 0 c c r0
+malangdo 219 86 alberta 192 150 0 c c r1
+alberta 200 151 malangdo 217 85 0 c r1 c c r0
