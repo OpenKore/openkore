@@ -12,6 +12,10 @@ play 40
 # When disconnected, wait x seconds before reconnecting again
 reconnect 30
 
+# Wait x seconds for a poseidon reply before disconnecting
+# Ignore this if you don't use Poseidon Server
+poseidon_wait_reply 15
+
 # Activate AI after x seconds after the map's loaded
 ai 2
 
@@ -71,6 +75,9 @@ ai_dead_respawn 4
 ai_wipe_old 200
 ai_wipe_check 30
 
+# Every x seconds, check pet hungry for feeding
+ai_petFeed 60
+
 # Send the sit/stand packet at most every x second
 ai_sit 1
 # Sit after having idled for x seconds
@@ -117,7 +124,7 @@ ai_storageAuto_giveup 15
 ai_cartAuto 0.15
 
 # delay between checking if we need to do any cartAuto functions
-ai_cartAutoCheck 2
+ai_cartAutoCheck 3
 ai_avoidcheck 0.5
 ai_shop 4
 

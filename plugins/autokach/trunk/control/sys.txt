@@ -1,6 +1,9 @@
 ###### Localization settings ######
 locale
 
+###### Localization compatibility ######
+# Enable to make Kore compatible with old 2.0 configs.
+locale_compat 0
 
 ###### Wx interface settings ######
 wxHideConsole 1
@@ -53,4 +56,4 @@ loadPlugins_list macro
 skipPlugins_list
 
 ###### Miscellaneous ######
-sendAnonymousStatisticReport 1
+sendAnonymousStatisticReport 0

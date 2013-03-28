@@ -1,73 +1,68 @@
 #manticora@rofan, 14.04.2009
 #plugin autokach
-#Цель: 	Написать макрос для авт. смены локаций кача (lockMap) 
-#		и настройки на эти самые локи (mon_control.txt, items_control.txt)
-#Процесс:
-#	1. Создание в Microsoft Excel или OpenOffice Calc специального вида таблицы (kach.xls или kach.ods),
-#	со следующими столбцами:
-#		1.	[Номер по порядку] - просто порядковый номер
-		# 2.	[Мин левел] - минимальный лвл, начиная с которого можно качаться на данной локации
-		# 3.	[Макс левел] - максимальный лвл, на котором еще есть смысл тут качаться
-		# 4.	[Город] - город, в котором сохранен персонаж (saveMap)
-		# 5.	[Локация] - локация, на которой будет качаться персонаж с "Мин левел" по "Макс левел" включительно (lockMap)
-		# 6.	[Бить мобов] - список мобов через запятую ",", которых надо бить (mconf Mob 2 0 0)
-		# 7.	[Не бить мобов] - список мобов через запятую ",", которых не надо бить (mconf Mob 0 0 0)
-		# 8.	[Лут на склад] - список лута через запятую ",", который надо относить Кафре на склад (iconf Loot 0 1 0)
-		# 9.	[Лут на продажу] - список лута через запятую ",", который надо продавать неписям (iconf Loot 0 0 1)
-	# Обязательно нужно выполнять следующие требования:
-		# 1. Названия мобов, локаций, лута должно соответствовать внутрикоровскому стандарту.
-		# 2. [Мин левел] <= [Макс левел].
-		# 3. Таблица должна быть без шапки-заголовка, только данные.
-		# 4. Строки в таблице должны быть упорядочены по столбцу [Мин левел].
-		# 5. Может быть несколько (последовательных) строк с одинаковыми полями [Мин левел], [Макс левел], [Город].
-		# Это дает возможность выбирать на одном и том же левеле выбирать случайную локу для кача.
-		# 6. Может быть несколько последовательных строк с одинаковыми полями [Город]. Это дает возможность 
-		# при достижении достижении следующего левеле менять локу, но не переходить в другой город.
-		# 7. Нельзя допускать путанницы, когда в строках [Мин левел] и [Макс левел] совпадают или пересекаются,
-		# но [Город]а при этом - разные.
-	# 2. Сохраняем таблицу в формат *.csv (kach.csv). Столбцы разделяюся точкой с зяпятой ";". 
-	# Вот пример такой таблицы:
-	# 1;0;11;izlude;moc_fild01;all, Drops, Picky, Poring, Ant's Egg, PecoPeco's Egg;Andre, Deniro, Piere, Baby Desert Wolf, Yellow Plant;all;Jellopy
-	# 2;0;11;izlude;prt_fild10;all, Savage Babe, Shining Plant, Thief Bug;Poporing, Red Mushroom, Savage;all;Jellopy
-	# 3;12;13;izlude;moc_fild02;all, Ant's Egg, Drops, PecoPeco's Egg, Picky;Green Plant, Peco Peco, Yellow Plant;all;Jellopy
-	# 4;12;13;izlude;prt_fild09;all, Condor, PecoPeco's Egg, Picky, Savage Babe;Baby Desert Wolf, Yellow Plant;all;Jellopy
-	# 5;14;15;morocc;moc_fild07;all, Drops, PecoPeco's Egg, Picky, Super Picky;Yellow Plant;all;Jellopy
-	# 6;14;15;morocc;moc_fild10;all, Ant's Egg, Drops, PecoPeco's Egg, Picky, Super Picky;Yellow Plant, Green Plant, Magnolia;all;Jellopy
-	# 7;14;15;morocc;moc_fild12;all, Drops, PecoPeco's Egg, Picky, Super Picky;Yellow Plant;all;Jellopy
-	# 8;16;17;morocc;moc_fild11;all, Muka, Shining Plant;Piere, Andre, Deniro, Golem, Hode, Magnolia;all;Jellopy
-	# 9;16;17;morocc;moc_fild06;all, Ant's Egg, Condor, Muka;Peco Peco, Yellow Plant, Magnolia;all;Jellopy
-	# 10;18;19;izlude;moc_fild04;all, Ant's Egg, Desert Wolf, Metaller, Scorpion;Yellow Plant, Piere, Magnolia, Andre;all;Jellopy
-	# 11;18;19;izlude;moc_fild13;all, Anacodaq, Desert Wolf, Drops, Poporing, Sidewinder, Snake;Red Mushroom, Yellow Plant;all;Jellopy
-	# 3. Таблицу kach.csv копируем в openkore\control.
-	# 4. Плагин autokach.pl копируем в openkore\plugins.
-	# 5. Создаем пустой файл kach.mcs в openkore\control.
-	# 5. Копируем файл с макросами (macro savetown, macro conftown) настройки на города vedro.txt в openkore\control.
-	# 6. В openkore\control\macros.txt подключаем kach.mcs: "!include kach.mcs".
-	# 7. В openkore\control\macros.txt подключаем vedro.txt: "!include vedro.txt".
-	# 8. В openkore\control\config.txt создаем параметр QuestPart (Передаем привет Святому Инквизитору).
-	# 9. Запускаем OpenKore.
-	# 10. Вводим команду ka4 или kach.
-	# 11. Перечитываем файл с макросами: "reload macro".
-	# 12. Запускаем сгенерированный макрос: "macro autokach".
-	# 13. Наслаждаемся самостоятельным ботом
+#Р¦РµР»СЊ: 	РќР°РїРёСЃР°С‚СЊ РјР°РєСЂРѕСЃ РґР»СЏ Р°РІС‚. СЃРјРµРЅС‹ Р»РѕРєР°С†РёР№ РєР°С‡Р° (lockMap) 
+#		Рё РЅР°СЃС‚СЂРѕР№РєРё РЅР° СЌС‚Рё СЃР°РјС‹Рµ Р»РѕРєРё (mon_control.txt, items_control.txt)
+# РџСЂРѕС†РµСЃСЃ:
+# 1. РЎРѕР·РґР°РЅРёРµ РІ Microsoft Excel РёР»Рё OpenOffice Calc СЃРїРµС†РёР°Р»СЊРЅРѕРіРѕ РІРёРґР° С‚Р°Р±Р»РёС†С‹ (autokach.xls РёР»Рё autokach.ods),
+#   СЃРѕ СЃР»РµРґСѓСЋС‰РёРјРё СЃС‚РѕР»Р±С†Р°РјРё:
+#	1.	[РќРѕРјРµСЂ РїРѕ РїРѕСЂСЏРґРєСѓ] - РїСЂРѕСЃС‚Рѕ РїРѕСЂСЏРґРєРѕРІС‹Р№ РЅРѕРјРµСЂ
+#	2.	[РњРµС‚РєР°] - РјРµС‚РєР°, РѕР±СЉРµРґРёРЅСЏСЋС‰Р°СЏ РіСЂСѓРїРїСѓ СЃС‚СЂРѕРє. РњРµС‚РєР° РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РїСЂРё РіРµРЅРµСЂР°С†РёРё РјР°РєСЂРѕСЃР° Р°РІС‚РѕРєР°С‡Р°. РњРµС‚РєР° РїРѕР·РІРѕР»СЏРµС‚ С…СЂР°РЅРёС‚СЊ РІ РѕРґРЅРѕРј С„Р°Р№Р»Рµ РЅРµСЃРєРѕР»СЊРєРѕ СЂР°Р·Р»РёС‡РЅС‹С… РІР°СЂРёР°РЅС‚РѕРІ РЅР°СЃС‚СЂРѕР№РєРё
+#	3.	[РњРёРЅ Р»РµРІРµР»] - РјРёРЅРёРјР°Р»СЊРЅС‹Р№ Р»РІР», РЅР°С‡РёРЅР°СЏ СЃ РєРѕС‚РѕСЂРѕРіРѕ РјРѕР¶РЅРѕ РєР°С‡Р°С‚СЊСЃСЏ РЅР° РґР°РЅРЅРѕР№ Р»РѕРєР°С†РёРё
+#	4.	[РњР°РєСЃ Р»РµРІРµР»] - РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ Р»РІР», РЅР° РєРѕС‚РѕСЂРѕРј РµС‰Рµ РµСЃС‚СЊ СЃРјС‹СЃР» С‚СѓС‚ РєР°С‡Р°С‚СЊСЃСЏ
+#	4.	[Р“РѕСЂРѕРґ] - РіРѕСЂРѕРґ, РІ РєРѕС‚РѕСЂРѕРј СЃРѕС…СЂР°РЅРµРЅ РїРµСЂСЃРѕРЅР°Р¶ (saveMap)
+#	6.	[Р›РѕРєР°С†РёСЏ] - Р»РѕРєР°С†РёСЏ, РЅР° РєРѕС‚РѕСЂРѕР№ Р±СѓРґРµС‚ РєР°С‡Р°С‚СЊСЃСЏ РїРµСЂСЃРѕРЅР°Р¶ СЃ "РњРёРЅ Р»РµРІРµР»" РїРѕ "РњР°РєСЃ Р»РµРІРµР»" РІРєР»СЋС‡РёС‚РµР»СЊРЅРѕ (lockMap)
+#	7.	[Р‘РёС‚СЊ РјРѕР±РѕРІ] - СЃРїРёСЃРѕРє РјРѕР±РѕРІ С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ ",", РєРѕС‚РѕСЂС‹С… РЅР°РґРѕ Р±РёС‚СЊ (mconf Mob 2 0 0)
+#	8.	[РќРµ Р±РёС‚СЊ РјРѕР±РѕРІ] - СЃРїРёСЃРѕРє РјРѕР±РѕРІ С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ ",", РєРѕС‚РѕСЂС‹С… РЅРµ РЅР°РґРѕ Р±РёС‚СЊ (mconf Mob 0 0 0)
+#	9.	[Р›СѓС‚ РЅР° СЃРєР»Р°Рґ] - СЃРїРёСЃРѕРє Р»СѓС‚Р° С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ ",", РєРѕС‚РѕСЂС‹Р№ РЅР°РґРѕ РѕС‚РЅРѕСЃРёС‚СЊ РљР°С„СЂРµ РЅР° СЃРєР»Р°Рґ (iconf Loot 0 1 0)
+#	10.	[Р›СѓС‚ РЅР° РїСЂРѕРґР°Р¶Сѓ] - СЃРїРёСЃРѕРє Р»СѓС‚Р° С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ ",", РєРѕС‚РѕСЂС‹Р№ РЅР°РґРѕ РїСЂРѕРґР°РІР°С‚СЊ РЅРµРїРёСЃСЏРј (iconf Loot 0 0 1)
+# РћР±СЏР·Р°С‚РµР»СЊРЅРѕ РЅСѓР¶РЅРѕ РІС‹РїРѕР»РЅСЏС‚СЊ СЃР»РµРґСѓСЋС‰РёРµ С‚СЂРµР±РѕРІР°РЅРёСЏ:
+#	1. РќР°Р·РІР°РЅРёСЏ РјРѕР±РѕРІ, Р»РѕРєР°С†РёР№, Р»СѓС‚Р° РґРѕР»Р¶РЅРѕ СЃРѕРѕС‚РІРµС‚СЃС‚РІРѕРІР°С‚СЊ РІРЅСѓС‚СЂРёРєРѕСЂРѕРІСЃРєРѕРјСѓ СЃС‚Р°РЅРґР°СЂС‚Сѓ.
+#	2. [РњРёРЅ Р»РµРІРµР»] <= [РњР°РєСЃ Р»РµРІРµР»].
+#	3. РЎС‚СЂРѕРєРё РІ С‚Р°Р±Р»РёС†Рµ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ СѓРїРѕСЂСЏРґРѕС‡РµРЅС‹ РїРѕ СЃС‚РѕР»Р±С†Сѓ [РњРёРЅ Р»РµРІРµР»].
+#	4. РњРѕР¶РµС‚ Р±С‹С‚СЊ РЅРµСЃРєРѕР»СЊРєРѕ (РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅС‹С…) СЃС‚СЂРѕРє СЃ РѕРґРёРЅР°РєРѕРІС‹РјРё РїРѕР»СЏРјРё [РњРёРЅ Р»РµРІРµР»], [РњР°РєСЃ Р»РµРІРµР»], [Р“РѕСЂРѕРґ].
+#	   Р­С‚Рѕ РґР°РµС‚ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РІС‹Р±РёСЂР°С‚СЊ РЅР° РѕРґРЅРѕРј Рё С‚РѕРј Р¶Рµ Р»РµРІРµР»Рµ РІС‹Р±РёСЂР°С‚СЊ СЃР»СѓС‡Р°Р№РЅСѓСЋ Р»РѕРєСѓ РґР»СЏ РєР°С‡Р°.
+#	5. РњРѕР¶РµС‚ Р±С‹С‚СЊ РЅРµСЃРєРѕР»СЊРєРѕ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅС‹С… СЃС‚СЂРѕРє СЃ РѕРґРёРЅР°РєРѕРІС‹РјРё РїРѕР»СЏРјРё [Р“РѕСЂРѕРґ]. Р­С‚Рѕ РґР°РµС‚ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ 
+#	   РїСЂРё РґРѕСЃС‚РёР¶РµРЅРёРё РґРѕСЃС‚РёР¶РµРЅРёРё СЃР»РµРґСѓСЋС‰РµРіРѕ Р»РµРІРµР»Рµ РјРµРЅСЏС‚СЊ Р»РѕРєСѓ, РЅРѕ РЅРµ РїРµСЂРµС…РѕРґРёС‚СЊ РІ РґСЂСѓРіРѕР№ РіРѕСЂРѕРґ.
+#	6. РќРµР»СЊР·СЏ РґРѕРїСѓСЃРєР°С‚СЊ РїСѓС‚Р°РЅРЅРёС†С‹, РєРѕРіРґР° РІ СЃС‚СЂРѕРєР°С… [РњРёРЅ Р»РµРІРµР»] Рё [РњР°РєСЃ Р»РµРІРµР»] СЃРѕРІРїР°РґР°СЋС‚ РёР»Рё РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ,
+#	   РЅРѕ [Р“РѕСЂРѕРґР°] РїСЂРё СЌС‚РѕРј - СЂР°Р·РЅС‹Рµ.
+#
+# 2. РЎРѕС…СЂР°РЅСЏРµРј С‚Р°Р±Р»РёС†Сѓ РІ С„РѕСЂРјР°С‚ *.csv (autokach.csv). РЎС‚РѕР»Р±С†С‹ СЂР°Р·РґРµР»СЏСЋСЃСЏ С‚РѕС‡РєРѕР№ СЃ Р·СЏРїСЏС‚РѕР№ ";". 
+#   Р’РѕС‚ РїСЂРёРјРµСЂ С‚Р°РєРѕР№ С‚Р°Р±Р»РёС†С‹:
+#	1;aco;0;13;prontera;moc_fild01;Drops, Picky, Poring, Ant's Egg, PecoPeco's Egg;all, Andre, Deniro, Piere, Baby Desert Wolf, Yellow Plant;all;Jellopy, Clover, Red Herb, Carrot, Apple, Sticky Mucus, Shell, Iron Ore, Phracon, Chrysalis
+#	2;aco;0;13;prontera;moc_fild02;Ant's Egg, Drops, PecoPeco's Egg, Picky;all, Green Plant, Peco Peco, Yellow Plant;all;Jellopy, Clover, Red Herb, Carrot, Apple, Sticky Mucus, Shell, Iron Ore, Phracon, Chrysalis
+#	3;aco;0;13;prontera;prt_fild06;Lunatic, Poring, Pupa, Thief Bug Egg;all, Thief Bug, Green Plant;all, Feather, Rainbow Carrot, Empty Bottle, Unripe Apple, Red Gemstone;Jellopy, Clover, Red Herb, Carrot, Apple, Sticky Mucus, Shell, Iron Ore, Phracon, Chrysalis
+#	4;aco;0;13;prontera;prt_fild01;Blue Plant, Fabre, Lunatic, Poring, Pupa;all, Green Plant, Thief Bug;all, Feather, Rainbow Carrot, Empty Bottle, Unripe Apple;Jellopy, Clover, Red Herb, Carrot, Apple, Sticky Mucus, Shell, Iron Ore, Phracon, Chrysalis
+#	5;demo;0;11;izlude;moc_fild01;Drops, Picky, Poring, Ant's Egg, PecoPeco's Egg;all, Andre, Deniro, Piere, Baby Desert Wolf, Yellow Plant;all;Jellopy, Clover, Red Herb, Carrot, Apple, Sticky Mucus, Shell, Iron Ore, Phracon, Chrysalis
+#	6;demo;0;11;izlude;prt_fild10;Savage Babe, Shining Plant, Thief Bug;all, Poporing, Red Mushroom, Savage;all;Jellopy, Clover, Red Herb, Carrot, Apple, Sticky Mucus, Shell, Iron Ore, Phracon, Chrysalis
+#	7;demo;12;13;izlude;moc_fild02;Ant's Egg, Drops, PecoPeco's Egg, Picky;all, Green Plant, Peco Peco, Yellow Plant;all;Jellopy, Clover, Red Herb, Carrot, Apple, Sticky Mucus, Shell, Iron Ore, Phracon, Chrysalis
+# 3. РўР°Р±Р»РёС†Сѓ autokach.csv РєРѕРїРёСЂСѓРµРј РІ openkore\plugins.
+# 4. РџР»Р°РіРёРЅ autokach.pl РєРѕРїРёСЂСѓРµРј РІ openkore\plugins.
+# 5. РљРѕРїРёСЂСѓРµРј С„Р°Р№Р» СЃ РјР°РєСЂРѕСЃР°РјРё (macro savetown, macro conftown) РЅР°СЃС‚СЂРѕР№РєРё РЅР° РіРѕСЂРѕРґР° vedro.txt РІ openkore\control.
+# 6. Р’ openkore\control\macros.txt РїРѕРґРєР»СЋС‡Р°РµРј autokach.mcs: "!include autokach.mcs".
+# 7. Р’ openkore\control\macros.txt РїРѕРґРєР»СЋС‡Р°РµРј vedro.txt: "!include vedro.txt".
+# 8. Р’ openkore\control\config.txt СЃРѕР·РґР°РµРј РїР°СЂР°РјРµС‚СЂ QuestPart (РџРµСЂРµРґР°РµРј РїСЂРёРІРµС‚ РЎРІСЏС‚РѕРјСѓ РРЅРєРІРёР·РёС‚РѕСЂСѓ).
+# 9. Р—Р°РїСѓСЃРєР°РµРј OpenKore.
+# 10. Р’РІРѕРґРёРј РєРѕРјР°РЅРґСѓ kach [РњРµС‚РєР°].
+# 11. РџРµСЂРµС‡РёС‚С‹РІР°РµРј С„Р°Р№Р» СЃ РјР°РєСЂРѕСЃР°РјРё: "reload macro".
+# 12. Р—Р°РїСѓСЃРєР°РµРј СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ РјР°РєСЂРѕСЃ: "macro autokach".
+# 13. РќР°СЃР»Р°Р¶РґР°РµРјСЃСЏ СЃР°РјРѕСЃС‚РѕСЏС‚РµР»СЊРЅС‹Рј Р±РѕС‚РѕРј
+#
+# VERSION 3
+
 package autokach;
+
+use strict;
 use Plugins;
-use Globals;
-use Log qw(message);
+use Log qw(message error);
 
 Plugins::register('autokach','AutoKach Plugin. f(lvl)=location. manticora', \&Unload, \&Unload);
 
-my $chooks = Commands::register(['kach', 'make autokach.csv => autokach.mcs', \&mainKach], 
-				['ka4',  'make autokach.csv => autokach.mcs', \&mainKach]);
+my $chooks = Commands::register(['kach',  'make autokach.csv => autokach.mcs', \&mainKach]);
 my $datadir = $Plugins::current_plugin_folder;
 my @folders = Settings::getControlFolders();
 my $filename = "$datadir\\autokach.csv";
 my $output = "$folders[0]\\autokach.mcs";
 my $kach = "Kach";
-my $setname = "";
-my $am = "";
-my @q = ();
-my $n = 0;
 
 sub Unload {
 	Commands::unregister($chooks);
@@ -76,24 +71,24 @@ sub Unload {
 	undef $filename;
 	undef $output;
 	undef $kach;
-	undef $setname;
-	undef $am;
-	undef @q;
-	undef $n;
 	message "autokach plugin unloading or reloading\n", 'success';
 }
 
 sub mainKach {
 	my ($cmd, $args) = @_;
+	my ($setname, $am, @q, $n);
+
 	if (($args eq '') or ($args eq 'help')) {
-		message "Usage:\nka4 help - this help\nka4 clear - clear file $output\n","list";
-		message "ka4 <set_name> - generate file $output whith records <set_name>\n","list";
+		message "Usage:\n".
+			"  kach help - this help\n".
+			"  kach clear - clear file $output\n".
+			"  kach <label> - generate file $output for records <label>\n","list";
 		return 1;
 	}
 	
 	if ($args eq 'clear') {	
-		open(O,">$folders[0]\\$output");
-		print O "#\n#\n#";
+		open(O,">$output")  or die "No file $output";;
+		print O "#\n";
 		close(O);
 		message "File $output was cleared\n","list";
 		return 1;
@@ -101,14 +96,13 @@ sub mainKach {
 	
 	if ($args ne '') {
 		$setname = $args;	
-		message "$setname","list";
+		message "Generate macros for label \"$setname\"\n","list";
 	}
 
-	$n = 0;
 	open(F,"$filename") or die "No file $filename";
-	while ($line = <F>) {
+	while (my $line = <F>) {
 		chomp($line);
-		($num, $set ,$lvl1, $lvl2, $saveMap, $lockMap, $kill, $notkill, $kafra, $sell) = split(";", $line);
+		my ($num, $set ,$lvl1, $lvl2, $saveMap, $lockMap, $kill, $notkill, $kafra, $sell) = split(";", $line);
 		if ($setname eq $set) {
 			$n++;	
 			$q[$n]{lvl1} = $lvl1;
@@ -122,45 +116,39 @@ sub mainKach {
 		}
 	}
 	if ($n == 0) {
-		message "HeTy Huqpura\nBad SetName: $setname\n","list";
+		error "Error: Label \"$setname\" not found\n";
 		return 1;
 	}
 	
-	#Поясниловка про макрос и действия в городе
-	#Начало файла kach.mcs. Следующий макрос запускает всю цепочку...
+# РџРѕСЏСЃРЅРёР»РѕРІРєР° РїСЂРѕ РјР°РєСЂРѕСЃ Рё РґРµР№СЃС‚РІРёСЏ РІ РіРѕСЂРѕРґРµ
+# РќР°С‡Р°Р»Рѕ С„Р°Р№Р»Р° autokach.mcs. РЎР»РµРґСѓСЋС‰РёР№ РјР°РєСЂРѕСЃ Р·Р°РїСѓСЃРєР°РµС‚ РІСЃСЋ С†РµРїРѕС‡РєСѓ...
 	open(O,">$output");
 	print O "#UTF-8\n";
 	print O "macro autokach \{\n";
 	print O "[\n";
-	print O "	log ===================================\n";
-	print O "	log ==== Begin AUTOKACH: $kach ====\n";
-	print O "	log ===================================\n";
-	message "===================================\n","list";
-	message "==== Name of AUTOKACH: $kach ====\n","list";
-	message "==== .CSV: $filename ====\n","list";
-	message "==== File: $output ====\n","list";
-	message "==== Begin: \"macro autokach\" ====\n","list";
-	message "===================================\n","list";
-	for ($i=1;$i<$n;$i++) {
-		$s = "= $q[$i]{lvl1}..$q[$i]{lvl2} lvl -> $q[$i]{saveMap}, $q[$i]{lockMap} =\n";
+	print O "	log = Begin AUTOKACH: $kach\n";
+	message "= Name of AUTOKACH: $kach\n","list";
+	message "= .CSV: $filename\n","list";
+	message "= File: $output\n","list";
+	message "= Begin: \"macro autokach\"\n","list";
+	for (my $i = 1; $i <= $n; $i++) {
+		my $s = "= $q[$i]{lvl1}..$q[$i]{lvl2} lvl -> $q[$i]{saveMap}, $q[$i]{lockMap}\n";
 		print O "	log $s";
 		message "$s","list";
 	}
-	print O "	log ===================================\n";
-	message "===================================\n","list";
 	print O "	do conf saveMap none\n";
 	print O "	do conf QuestPart $kach"."2\n";
 	print O	"]\n\}\n\n";
 
 
-	#Макрос - поведение в городе. Сохраниться, прописать настройки: склад, купить, продать..
-	#Настройки выполняют внешние по отношению к автокачу макросы
-	#их имена macro savetown и macro conftown
+# РњР°РєСЂРѕСЃ - РїРѕРІРµРґРµРЅРёРµ РІ РіРѕСЂРѕРґРµ. РЎРѕС…СЂР°РЅРёС‚СЊСЃСЏ, РїСЂРѕРїРёСЃР°С‚СЊ РЅР°СЃС‚СЂРѕР№РєРё: СЃРєР»Р°Рґ, РєСѓРїРёС‚СЊ, РїСЂРѕРґР°С‚СЊ..
+# РќР°СЃС‚СЂРѕР№РєРё РІС‹РїРѕР»РЅСЏСЋС‚ РІРЅРµС€РЅРёРµ РїРѕ РѕС‚РЅРѕС€РµРЅРёСЋ Рє Р°РІС‚РѕРєР°С‡Сѓ РјР°РєСЂРѕСЃС‹
+# РёС… РёРјРµРЅР° macro savetown Рё macro conftown
 	print O "automacro $kach"."Town \{\n";
-	%towns = ();
-	for ($i=1;$i<$n;$i++) {	$towns{$q[$i]{saveMap}} = $q[$i]{saveMap};	}
-	#Получаем список всех городов, которые упомянуты в исходной табличке
-	$loc = "";	foreach $town (sort values %towns) {	$loc .= $town." ";	} chop($loc);	$loc =~ s/ /, /g;
+	my %towns;
+	for (my $i = 1; $i <= $n; $i++) {	$towns{$q[$i]{saveMap}} = $q[$i]{saveMap};	}
+# РџРѕР»СѓС‡Р°РµРј СЃРїРёСЃРѕРє РІСЃРµС… РіРѕСЂРѕРґРѕРІ, РєРѕС‚РѕСЂС‹Рµ СѓРїРѕРјСЏРЅСѓС‚С‹ РІ РёСЃС…РѕРґРЅРѕР№ С‚Р°Р±Р»РёС‡РєРµ
+	my $loc;	foreach my $town (sort values %towns) {	$loc .= $town." ";	} chop($loc);	$loc =~ s/ /, /g;
 	print O "	location $loc\n";
 	print O "	run-once 1\n";
 	print O "	eval \$::config\{QuestPart\} eq \"$kach"."0\"\n";
@@ -179,9 +167,9 @@ sub mainKach {
 	print O	"\}\n";
 
 	
-	$i=1;
+	my $i = 1;
 	do {
-		$automacro = $kach."_".$q[$i]{saveMap}."_".$q[$i]{lvl1}."_".$q[$i]{lvl2};
+		my $automacro = $kach."_".$q[$i]{saveMap}."_".$q[$i]{lvl1}."_".$q[$i]{lvl2};
 		$am .= " ".$automacro;
 		print O "automacro $automacro \{\n";
 		if ($q[$i]{lvl1} eq $q[$i]{lvl2}) { print O "	base = $q[$i]{lvl1}\n"; }
@@ -195,22 +183,27 @@ sub mainKach {
 		print O "	do conf route_randomWalk 1\n";
 
 
-		$j=$i; $lockMaps = "";
+		my $j = $i; my $lockMaps;
 		while ( ($j <= $n) and ($q[$i]{lvl1} eq $q[$j]{lvl1}) and
 				($q[$i]{lvl2} eq $q[$j]{lvl2}) and ($q[$i]{saveMap} eq $q[$j]{saveMap}) ) {
 			$lockMaps .= $q[$j]{lockMap}." ";
 			$j++;
 		}
-		#Удаляем лишний пробел в хвосте, который мы сами же и приклеивали
+# РЈРґР°Р»СЏРµРј Р»РёС€РЅРёР№ РїСЂРѕР±РµР» РІ С…РІРѕСЃС‚Рµ, РєРѕС‚РѕСЂС‹Р№ РјС‹ СЃР°РјРё Р¶Рµ Рё РїСЂРёРєР»РµРёРІР°Р»Рё
 		chop($lockMaps);	$lockMaps =~ s/ /","/g;
 		print O "	do conf lockMap \@random(\"$lockMaps\")\n";
 
 		
 		$j=$i;
 		while ( ($q[$i]{lvl1} eq $q[$j]{lvl1}) and ($j <= $n) and
-				($q[$i]{lvl2} eq $q[$j]{lvl2}) and ($q[$i]{saveMap} eq $q[$j]{saveMap}) ) {
-			$metka = $q[$j]{lockMap};	$metka =~ s/_//g;
+			($q[$i]{lvl2} eq $q[$j]{lvl2}) and ($q[$i]{saveMap} eq $q[$j]{saveMap}) ) {
+			my $metka = $q[$j]{lockMap};	$metka =~ s/_//g;
 			print O "	if (\@config(lockMap) != $q[$j]{lockMap}) goto not$metka\n";
+			my $kill = $q[$j]{kill};
+			my $notkill = $q[$j]{notkill};
+			my $kafra = $q[$j]{kafra};
+			my $sell = $q[$j]{sell};
+			my ($mob, $item, @mobs, @items);	
 			@mobs = split(",",$kill);	foreach $mob (@mobs) {		print O "\t\tdo mconf $mob 2 0 0\n";	}
 			@mobs = split(",",$notkill);foreach $mob (@mobs) {		print O "\t\tdo mconf $mob 0 0 0\n";	}
 			@items = split(",",$kafra);	foreach $item (@items) {	print O "\t\tdo iconf $item 0 1 0\n";	}
@@ -224,14 +217,15 @@ sub mainKach {
 	} until $i > $n;
 	
 
-	#Мы пишем переходы между городами.
+# РњС‹ РїРёС€РµРј РїРµСЂРµС…РѕРґС‹ РјРµР¶РґСѓ РіРѕСЂРѕРґР°РјРё.
 	$i=1;
 	do {
-		$j=$i;
+		my $j = $i;
 		while ( ($j <= $n) and ($q[$i]{saveMap} eq $q[$j]{saveMap}) ) {
-			$lockMaps .= $q[$j]{lockMap}." ";
+			my $lockMaps .= $q[$j]{lockMap}." ";
 			$j++;
 		}
+		my ($automacro, $kach_moveto_);
 		$automacro = "$kach_moveto_$q[$i]{saveMap}_$q[$i]{lvl1}_$q[$j-1]{lvl2}";
 		print O "#### $q[$i]{lvl1}..$q[$j-1]{lvl2} #### $q[$i]{saveMap}\n";
 		print O "automacro $automacro \{\n";
@@ -257,8 +251,7 @@ sub mainKach {
 		$i = $j;
 	} until $i > $n;
 
-	
-	#Пишем пару служебных макросов, чтобы разблочить и заблочить все автомакросы, если нам надо.
+# РџРёС€РµРј РїР°СЂСѓ СЃР»СѓР¶РµР±РЅС‹С… РјР°РєСЂРѕСЃРѕРІ, С‡С‚РѕР±С‹ СЂР°Р·Р±Р»РѕС‡РёС‚СЊ Рё Р·Р°Р±Р»РѕС‡РёС‚СЊ РІСЃРµ Р°РІС‚РѕРјР°РєСЂРѕСЃС‹, РµСЃР»Рё РЅР°Рј РЅР°РґРѕ.
 	print O "\nmacro autokachLock {\n";
 	foreach (split(" ",$am)) {	print O "	lock $_\n";	}
 	print O "}\n\n";
@@ -267,14 +260,16 @@ sub mainKach {
 	foreach (split(" ",$am)) {	print O "	release $_\n"; }
 	print O "}\n\n";
 
-	#Расписываем исходную табличку .csv, по которой написаны автомакросы.
+# Р Р°СЃРїРёСЃС‹РІР°РµРј РёСЃС…РѕРґРЅСѓСЋ С‚Р°Р±Р»РёС‡РєСѓ .csv, РїРѕ РєРѕС‚РѕСЂРѕР№ РЅР°РїРёСЃР°РЅС‹ Р°РІС‚РѕРјР°РєСЂРѕСЃС‹.
 	open(F,"$filename") or die "No file $filename";
 	print O "# source file: $filename. SetName: $setname\n#\n";
 	while (<F>) {
-		($num, $set ,$lvl1, $lvl2, $saveMap, $lockMap, $kill, $notkill, $kafra, $sell) = split(";", $_);
+		my ($num, $set ,$lvl1, $lvl2, $saveMap, $lockMap, $kill, $notkill, $kafra, $sell) = split(";", $_);
 		if ($setname eq $set) {	print O "# $_";	}
 	}
 	close(F);
 	close(O);
-	return 1;
+	undef $am;
 }
+
+1;

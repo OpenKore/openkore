@@ -1,5 +1,5 @@
 AUTHOR: manticora
-Version 2
+Version 3
 
 What is the Vedro-like macros?
 1. topic at rofan.ru: http://www.rofan.ru/viewtopic.php?f=32&t=7370
