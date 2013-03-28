@@ -8,7 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(releaseAM lockAM automacroCheck consoleCheckWrapper);
 our @EXPORT = qw(checkLocalTime checkVar checkVarVar checkLoc checkPersonGuild checkLevel checkLevel checkClass
 	checkPercent checkStatus checkItem checkPerson checkCond checkCast checkGround checkSpellsID
-	checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange checkNotMonster);
+	checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange);
 	
 use Misc qw(whenGroundStatus getSpellName getActorName);
 use Utils;
@@ -507,7 +507,8 @@ sub checkSpellsID {
 # checks for monster ...
 sub checkMonster {
 	my $line = $_[0];
-	my ($not, $mercenary, $use, $monsterList, $cond);
+	my $not = $_[1];
+	my ($mercenary, $use, $monsterList, $cond);
 	my $mondist = $config{clientSight} || 20;
 
 	if ($line =~ /^\s*(.*),?\s+([<>=!~]+)\s+(\d+|\d+\s*.{2}\s*\d+)\s*$/) {
@@ -517,7 +518,7 @@ sub checkMonster {
 		$cond = "<="
 	}
 
-	if ($monsterList =~ /^(not|mercenary)\s+(.*)\s*$/) {
+	if (!$not && $monsterList =~ /^(not|mercenary)\s+(.*)\s*$/) {
 		if ($1 eq "not") {$not = 1; $monsterList = $2}
 		else {$mercenary = 1; $use = 1; $monsterList = $2}
 	}
@@ -575,29 +576,6 @@ sub checkMonster {
 		}
 	}
 	return 1 if ($use);
-	return 0
-}
-
-# checks for forbidden monster
-# quick hack, maybe combine it with checkMonster later
-sub checkNotMonster {
-	my $line = $_[0];
-	my $mondist = $config{clientSight};
-	my ($monsterList, $cond);
-	if ($line =~ /^\s*(.*),?\s+([<>=!~]+)\s+(\d+|\d+\s*.{2}\s*\d+)\s*$/) {
-		($monsterList, $cond, $mondist) = ($1, $2, $3)
-	} else {
-		$monsterList = $line;
-		$cond = "<="
-	}
-	foreach (@monstersID) {
-		next unless defined $_;
-		next if existsInList($monsterList, $monsters{$_}->{name});
-		my $mypos = calcPosition($char);
-		my $pos = calcPosition($monsters{$_});
-		my $dist = sprintf("%.1f",distance($pos, $mypos));
-		return cmpr($dist, $cond, $mondist)
-	}
 	return 0
 }
 
@@ -772,10 +750,10 @@ sub automacroCheck {
 
 		next CHKAM if (defined $automacro{$am}->{map}    && $automacro{$am}->{map} ne $field->baseName);
 		next CHKAM if (defined $automacro{$am}->{class}  && !checkClass($automacro{$am}->{class}));
-		next CHKAM if (defined $automacro{$am}->{notMonster} && !checkNotMonster($automacro{$am}->{notMonster}));
 		next CHKAM if (defined $automacro{$am}->{eval} && !checkEval($automacro{$am}->{eval}));
 		next CHKAM if (defined $automacro{$am}->{whenGround} && !checkGround($automacro{$am}->{whenGround}));
-		
+		next CHKAM if (defined $automacro{$am}->{notMonster} && !checkMonster($automacro{$am}->{notMonster}, 1));
+
 		foreach my $i (@{$automacro{$am}->{monster}})    {next CHKAM unless checkMonster($i)}
 		foreach my $i (@{$automacro{$am}->{aggressives}}){next CHKAM unless checkAggressives($i)}
 		foreach my $i (@{$automacro{$am}->{location}})   {next CHKAM unless checkLoc($i)}
