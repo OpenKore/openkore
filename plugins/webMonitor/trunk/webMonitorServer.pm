@@ -587,7 +587,7 @@ sub request {
 		'homunculusFaith' => $char->{homunculus}{'faith'},
 		'homunculusLevel' => $char->{homunculus}{'level'},
 		'homunculusAtk' => $char->{homunculus}{'atk'},
-		'homunculusAtkMagic' => $char->{homunculus}{'attack_magic_max'},
+		'homunculusAtkMagic' => $char->{homunculus}{'matk'},
 		'homunculusAtkSpeed' => $char->{homunculus}{'attack_speed'},
 		'homunculusHit' => $char->{homunculus}{'hit'},
 		'homunculusCritical' => $char->{homunculus}{'critical'},
