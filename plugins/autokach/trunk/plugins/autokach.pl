@@ -53,12 +53,12 @@
 package autokach;
 use Plugins;
 use Globals;
-use Log qw(message error debug);
+use Log qw(message);
 
-Plugins::register('autokach','AutoKach Plugin. f(lvl)=location. manticora', \&Unload); 
+Plugins::register('autokach','AutoKach Plugin. f(lvl)=location. manticora', \&Unload, \&Unload);
 
 my $chooks = Commands::register(['kach', 'make autokach.csv => autokach.mcs', \&mainKach], 
-								['ka4',  'make autokach.csv => autokach.mcs', \&mainKach]);
+				['ka4',  'make autokach.csv => autokach.mcs', \&mainKach]);
 my $datadir = $Plugins::current_plugin_folder;
 my @folders = Settings::getControlFolders();
 my $filename = "$datadir\\autokach.csv";
@@ -70,8 +70,17 @@ my @q = ();
 my $n = 0;
 
 sub Unload {
-   Commands::unregister($chooks);
-   message "autokach plugin unloading\n", 'success'
+	Commands::unregister($chooks);
+	undef $datadir;
+	my @folders = Settings::getControlFolders();
+	undef $filename;
+	undef $output;
+	undef $kach;
+	undef $setname;
+	undef $am;
+	undef @q;
+	undef $n;
+	message "autokach plugin unloading or reloading\n", 'success';
 }
 
 sub mainKach {
