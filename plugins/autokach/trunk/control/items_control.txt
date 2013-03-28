@@ -400,7 +400,7 @@ Fluff 0 0 1
 Fragment 0 0 1
 Frill 0 0 1
 Frozen Rose 0 0 1
-Garlet 0 0 1
+#Garlet 0 0 1
 Gill 0 0 1
 Glass Bead 0 0 1
 Glitter Shell 0 0 1
@@ -494,7 +494,7 @@ Rouge 0 0 1
 Round Shell 0 0 1
 Sand Clump 0 0 1
 Scale Shell 0 0 1
-Scell 0 0 1
+#Scell 0 0 1
 Scorpion Claw 0 0 1
 Scorpion Nipper 0 0 1
 Scorpion Tail 0 0 1
@@ -560,5 +560,38 @@ Yellow Plate 0 0 1
 Young Twig 0 0 1
 Yoyo Doll 0 0 1
 Yoyo Tail 0 0 1
-Zargon 0 0 1
+#Zargon 0 0 1
 Zenorc's Fang 0 0 1
+
+##### UNSTORAGEABLE ITEMS #####
+
+"Bowman Scroll 1" 0 0 0
+"Bowman Scroll 2" 0 0 0
+"Bowman Scroll 3" 0 0 0
+"Bowman Scroll 4" 0 0 0
+"Bowman Scroll 5" 0 0 0
+"Bowman Scroll 6" 0 0 0
+"Bowman Scroll 7" 0 0 0
+"Bowman Scroll 8" 0 0 0
+"Bowman Scroll 9" 0 0 0
+"Bowman Scroll 10" 0 0 0
+"Fencer Scroll 1" 0 0 0
+"Fencer Scroll 2" 0 0 0
+"Fencer Scroll 3" 0 0 0
+"Fencer Scroll 4" 0 0 0
+"Fencer Scroll 5" 0 0 0
+"Fencer Scroll 6" 0 0 0
+"Fencer Scroll 7" 0 0 0
+"Fencer Scroll 8" 0 0 0
+"Fencer Scroll 9" 0 0 0
+"Fencer Scroll 10" 0 0 0
+"Spearman Scroll 1" 0 0 0
+"Spearman Scroll 2" 0 0 0
+"Spearman Scroll 3" 0 0 0
+"Spearman Scroll 4" 0 0 0
+"Spearman Scroll 5" 0 0 0
+"Spearman Scroll 6" 0 0 0
+"Spearman Scroll 7" 0 0 0
+"Spearman Scroll 8" 0 0 0
+"Spearman Scroll 9" 0 0 0
+"Spearman Scroll 10" 0 0 0

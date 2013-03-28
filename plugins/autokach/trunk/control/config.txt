@@ -1,5 +1,5 @@
 # Please Read the Users Manual
-# The Manual is located at http://openkore.sourceforge.net/manual/
+# The Manual is located at http://wiki.openkore.com/index.php?title=Manual
 
 ######## Login options and server-specific options ########
 
@@ -9,16 +9,23 @@ username
 password
 loginPinCode
 char
-sex
-serverEncoding Russian
+
+# Poseidon Settings (http://wiki.openkore.com/index.php/PoseidonServer)
+# They must be the same as Query Server config in Poseidon.txt
+poseidonServer 127.0.0.1
+poseidonPort 24390
 
 bindIp
 # For an overview of all servertypes please go to the following URL:
-# http://www.openkore.com/wiki/index.php/ServerType#English
+# http://wiki.openkore.com/index.php?title=ServerType
 serverType 0
 
 # 1 = hook into RO client, 2 = Act as stand-alone proxy, proxy = act as true proxy
+# http://wiki.openkore.com/index.php/XKore
 XKore 0
+XKore_port 2350
+XKore_dll NetRedirect.dll
+XKore_autoAttachIfOneExe 1
 XKore_silent 1
 XKore_bypassBotDetection 0
 XKore_exeName ragexe.exe
@@ -85,6 +92,7 @@ attackEquip_armor
 attackEquip_shoes
 attackEquip_arrow
 
+#You need the breakTime plugin: http://wiki.openkore.com/index.php?title=BreakTime
 autoBreakTime {
 	startTime
 	stopTime
@@ -138,6 +146,8 @@ dcOnPM 0
 dcOnZeny 0
 dcOnStorageFull 1
 dcOnPlayer 0
+dcOnServerShutDown 0
+dcOnServerClose 0
 
 follow 0
 followTarget
@@ -149,6 +159,8 @@ followDistanceMin 3
 followLostStep 12
 followSitAuto 0
 followBot 0
+followRandom 0
+followRandomDistance 4
 
 itemsTakeAuto 2
 itemsTakeAuto_party 0
@@ -158,7 +170,6 @@ itemsMaxWeight_sellOrStore 48
 itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
 itemsTakeAuto_new 0
-    
 
 lockMap
 lockMap_x
@@ -190,16 +201,17 @@ saveMap_warpChatCommand
 
 shopAuto_open 0
 shop_random 0
+shop_useSkill 1
 
 sitAuto_hp_lower 40
 sitAuto_hp_upper 100
 sitAuto_sp_lower 0
 sitAuto_sp_upper 0
+sitAuto_follow 0
 sitAuto_over_50 0
 sitAuto_idle 0
 sitAuto_look
 sitAuto_look_from_wall
-
 
 statsAddAuto 0
 statsAddAuto_list
@@ -226,6 +238,7 @@ teleportAuto_deadly 1
 teleportAuto_useSkill 3
 teleportAuto_useChatCommand
 teleportAuto_allPlayers 0
+teleportAuto_notPlayers
 teleportAuto_atkCount 0
 teleportAuto_atkMiss 10
 teleportAuto_unstuck 0
@@ -244,6 +257,8 @@ dealAuto 1
 dealAuto_names
 partyAuto 1
 partyAutoShare 0
+partyAutoShareItem 0
+partyAutoShareItemDiv 0
 guildAutoDeny 1
 
 verbose 1
@@ -261,6 +276,7 @@ logSystemChat 1
 logEmoticons
 logConsole 0
 logAppendUsername 1
+logAppendServer
 
 chatTitleOversize 0
 shopTitleOversize 0
@@ -271,6 +287,7 @@ ignoreAll 0
 itemHistory 0
 autoTalkCont 0
 noAutoSkill 0
+portalCompile 1
 portalRecord 2
 missDamage 0
 
@@ -278,6 +295,9 @@ tankersList
 
 repairAuto 0
 repairAuto_list
+
+status_mapProperty 0
+status_mapType 0
 
 removeActorWithDistance
 
@@ -363,6 +383,13 @@ homunculus_autoFeedAllowedMaps
 homunculus_hungerMin 11
 homunculus_hungerMax 24
 
+# Turn on/off pet autofeeding
+pet_autoFeed 1
+# Feed pet when meet the hunger value
+pet_hunger 25
+# Return pet when meet the hunger value
+pet_return 20
+
 ######## Block options ########
 # You can copy & paste any block multiple times. So if you want to
 # configure two attack skills, just duplicate the attackSkillSlot block.
@@ -382,6 +409,7 @@ attackSkillSlot {
 	whenStatusInactive
 	whenFollowing
 	spirit
+	amuletType
 	aggressives
 	previousDamage
 	stopWhenHit 0
@@ -391,6 +419,7 @@ attackSkillSlot {
 	disabled 0
 	monsters
 	notMonsters
+	monstersCount
 	maxAttempts 0
 	maxUses 0
 	target_whenStatusActive
@@ -418,6 +447,9 @@ attackComboSlot {
 	dist 1.5
 	isSelfSkill 1
 	target_deltaHp
+	monsters
+	notMonsters
+	monstersCount
 }
 
 doCommand {
@@ -431,9 +463,11 @@ doCommand {
 	whenStatusInactive
 	whenFollowing
 	spirit
+	amuletType
 	aggressives
 	monsters
 	notMonsters
+	monstersCount
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -445,7 +479,6 @@ doCommand {
 	inMap
 	manualAI 0
 }
-
 
 useSelf_skill {
 	lvl 10
@@ -461,9 +494,11 @@ useSelf_skill {
 	whenStatusInactive
 	whenFollowing
 	spirit
+	amuletType
 	aggressives
 	monsters
 	notMonsters
+	monstersCount
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -476,9 +511,9 @@ useSelf_skill {
 
 useSelf_skill_smartHeal 1
 
-
 partySkill {
 	lvl 10
+	dist 3
 	maxCastTime 0
 	minCastTime 0
 	hp
@@ -491,9 +526,11 @@ partySkill {
 	whenStatusInactive
 	whenFollowing
 	spirit
+	amuletType
 	aggressives
 	monsters
 	notMonsters
+	monstersCount
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -515,7 +552,6 @@ partySkill {
 	inInventory
 	isSelfSkill 0
 }
-
 
 autoSwitch_default_rightHand
 autoSwitch_default_leftHand
@@ -546,6 +582,8 @@ equipAuto {
 	shoes
 	arrow
 	monsters
+	notMonsters
+	monstersCount
 	weight 0
 	whileSitting 0
 	hp
@@ -558,6 +596,7 @@ equipAuto {
 	whenStatusInactive
 	whenFollowing
 	spirit
+	amuletType
 	aggressives
 	stopWhenHit 0
 	inLockOnly 0
@@ -586,9 +625,11 @@ useSelf_item {
 	whenStatusInactive
 	whenFollowing
 	spirit
+	amuletType
 	aggressives
 	monsters
 	notMonsters
+	monstersCount
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -658,10 +699,6 @@ debugPacket_include
 debugPacket_include_dumpMethod
 debugDomains
 
-#Poseidon - antiHackShield 
-poseidonServer 127.0.0.1
-poseidonPort 24390
-gameGuard 1
 ######## Macros Setups ########
 
 macro_orphans reregister
