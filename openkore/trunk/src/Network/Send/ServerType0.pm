@@ -105,6 +105,7 @@ sub new {
 		'0827' => ['char_delete2', 'a4', [qw(charID)]], # 6
 		'082B' => ['char_delete2_cancel', 'a4', [qw(charID)]], # 6
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
+		'09A1' => ['sync_received_characters'],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
