@@ -192,7 +192,10 @@ sub iterate {
 					$portals_lut{$from}{dest}{$to}{cost},
 					$field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y},
 					$self->{actor}{zeny}), "route";
-				$self->initMapCalculator(); # Redo MAP router
+					AI::clear(qw/move route mapRoute/);
+					message T("Stopped all movement\n"), "success";
+# TODO: need to pave another route
+#				$self->initMapCalculator(); # Redo MAP router
 			}
 
 		} elsif ( $self->{maxTime} && time - $self->{time_start} > $self->{maxTime} ) {
