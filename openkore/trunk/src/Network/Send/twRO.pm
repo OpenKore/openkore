@@ -25,7 +25,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'0819' => ['buy_bulk_buyer', 'x2 a4 a4 v a*', [qw(buyerID buyingStoreID zeny itemInfo)]],
 		);
 	
 	foreach my $switch (keys %packets) {
