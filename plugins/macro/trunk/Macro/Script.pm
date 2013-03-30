@@ -257,21 +257,37 @@ sub next {
 			newThen($then, $self, $errtpl);
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 		} elsif ($then eq "{") { # If the condition is false and are using block of commands, will be skipped
-			my $searchEnd;
 			my $countBlockIf = 1;
 			while ($countBlockIf) {
 				$self->{line}++;
-				$searchEnd = ${$macro{$self->{name}}}[$self->{line}];
+				my $searchEnd = ${$macro{$self->{name}}}[$self->{line}];
 				
 				if ($searchEnd =~ /if.*{/) {
 					$countBlockIf++;
-				} elsif ($searchEnd eq '}') {
+				} elsif (($searchEnd eq '}') || ($searchEnd =~ /}\s*else\s*{/ && $countBlockIf == 1)) {
 					$countBlockIf--;
 				}
 			}
-			$self->{line} = $self->{line};
 		}
 		$self->{line}++;
+		$self->{timeout} = 0
+
+	##########################################
+	# If arriving at a line 'else', it should be skipped -
+	#  it will never be activated if coming from a false 'if'
+	} elsif ($line =~ /}\s*else\s*{/) {
+			my $countBlockIf = 1;
+			while ($countBlockIf) {
+				$self->{line}++;
+				my $searchEnd = ${$macro{$self->{name}}}[$self->{line}];
+				
+				if ($searchEnd =~ /if.*{/) {
+					$countBlockIf++;
+				} elsif (($searchEnd eq '}') || ($searchEnd =~ /}\s*else\s*{/ && $countBlockIf == 1)) {
+					$countBlockIf--;
+				}
+			}
+
 		$self->{timeout} = 0
 
 	##########################################
