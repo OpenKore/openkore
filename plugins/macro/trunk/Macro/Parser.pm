@@ -34,7 +34,7 @@ sub parseMacroFile {
 
 	my %block;
 	my $inBlock = 0;
-	my $inBlockIf = 0;
+	my $countBlockIf = 0;
 	my ($macro_subs, @perl_lines);
 	open my $fp, "<:utf8", $file or return 0;
 	while (<$fp>) {
@@ -64,9 +64,9 @@ sub parseMacroFile {
 
 		if (%block && $block{type} eq "macro") {
 			if ($_ eq "}") {
-				if ($inBlockIf) { # If the '}' is being used to terminate a block of commands from 'if'
+				if ($countBlockIf) { # If the '}' is being used to terminate a block of commands from 'if'
 					push(@{$macro{$block{name}}}, '}');
-					$inBlockIf--;
+					$countBlockIf--;
 				} else {
 					undef %block
 				}
@@ -74,7 +74,7 @@ sub parseMacroFile {
 				push(@{$macro{$block{name}}}, $_);
 				
 				if ($_ =~ /if.*{/) {
-					$inBlockIf++;
+					$countBlockIf++;
 				}
 			}
 			next
@@ -83,7 +83,12 @@ sub parseMacroFile {
 		if (%block && $block{type} eq "auto") {
 			if ($_ eq "}") {
 				if ($block{loadmacro}) {
-					undef $block{loadmacro}
+					if ($countBlockIf) {
+						push(@{$macro{$block{loadmacro_name}}}, '}');
+						$countBlockIf--;
+					} else {
+						undef $block{loadmacro}
+					}
 				} else {
 					undef %block
 				}
@@ -93,7 +98,11 @@ sub parseMacroFile {
 				$automacro{$block{name}}->{call} = $block{loadmacro_name};
 				$macro{$block{loadmacro_name}} = []
 			} elsif ($block{loadmacro}) {
-				push(@{$macro{$block{loadmacro_name}}}, $_)
+				push(@{$macro{$block{loadmacro_name}}}, $_);
+				
+				if ($_ =~ /if.*{/) {
+					$countBlockIf++;
+				}
 			} else {
 				my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
 				unless (defined $key) {
