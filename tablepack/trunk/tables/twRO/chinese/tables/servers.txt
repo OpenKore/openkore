@@ -1,16 +1,16 @@
-# This file contains information about master servers.
+ï»¿# This file contains information about master servers.
 
 #####################
 # Official RO Servers
 
 ## http://ro.gameflier.com/
-[¥xÆW - ¤ë¶O¦øªA¾¹ (¬dº¸´µ¡B·RÄRµ·)]
+[å°ç£ - æœˆè²»ä¼ºæœå™¨ (æŸ¥çˆ¾æ–¯ã€æ„›éº—çµ²)]
 ip 220.130.113.209
 port 6900
 master_version 5
 version 211
 serverType twRO
-serverEncoding Traditional Chinese
+serverEncoding Big5
 charBlockSize 144
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -18,13 +18,13 @@ recvpackets recvpackets_paid.txt
 addTableFolders twRO
 captcha 0
 
-[¥xÆW - ¦ÑªB¤Í¦øªA¾¹ (§K¶O¬dº¸´µ¡B§K¶O·RÄRµ·)]
+[å°ç£ - è€æœ‹å‹ä¼ºæœå™¨ (å…è²»æŸ¥çˆ¾æ–¯ã€å…è²»æ„›éº—çµ²)]
 ip 220.130.113.235
 port 6900
 master_version 5
 version 211
 serverType twRO
-serverEncoding Traditional Chinese
+serverEncoding Big5
 charBlockSize 144
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -32,13 +32,13 @@ recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
-[¥xÆW - §K¶O¦øªA¾¹ (Å]¤ıªi§Q¡B¶Àª÷ªi§Q)]
+[å°ç£ - å…è²»ä¼ºæœå™¨ (é­”ç‹æ³¢åˆ©ã€é»ƒé‡‘æ³¢åˆ©)]
 ip 220.130.113.238
 port 6900
 master_version 5
 version 211
 serverType twRO
-serverEncoding Traditional Chinese
+serverEncoding Big5
 charBlockSize 144
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -46,13 +46,13 @@ recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
-[¥xÆW - §K¶O¦øªA¾¹ (ªi§Q¡B¤Ú­·¯S¡B¤pÂû¡B­ô¥¬ÆF¡B¤ë©]¿ß)]
+[å°ç£ - å…è²»ä¼ºæœå™¨ (æ³¢åˆ©ã€å·´é¢¨ç‰¹ã€å°é›ã€å“¥å¸ƒéˆã€æœˆå¤œè²“)]
 ip 220.130.113.221
 port 6900
 master_version 5
 version 211
 serverType twRO
-serverEncoding Traditional Chinese
+serverEncoding Big5
 charBlockSize 144
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -60,13 +60,13 @@ recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
-[¥xÆW - §K¶O¦øªA¾¹ (´cÅ]ªi§Q¡B¤Ñ¨Ïªi§Q¡Bªi§Q¤§¤ı)]
+[å°ç£ - å…è²»ä¼ºæœå™¨ (æƒ¡é­”æ³¢åˆ©ã€å¤©ä½¿æ³¢åˆ©ã€æ³¢åˆ©ä¹‹ç‹)]
 ip 220.130.113.222
 port 6900
 master_version 5
 version 211
 serverType twRO
-serverEncoding Traditional Chinese
+serverEncoding Big5
 charBlockSize 144
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -74,13 +74,13 @@ recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
-[¥xÆW - §K¶O¦øªA¾¹ (±m­i¾ô)]
+[å°ç£ - å…è²»ä¼ºæœå™¨ (å½©è™¹æ©‹)]
 ip 220.130.113.234
 port 6900
 master_version 5
 version 211
 serverType twRO
-serverEncoding Traditional Chinese
+serverEncoding Big5
 charBlockSize 144
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -88,13 +88,13 @@ recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
-[¥xÆW - ¥ş°Ï¦øªA¾¹ (´¶¶©¼w©Ô)]
+[å°ç£ - å…¨å€ä¼ºæœå™¨ (æ™®éš†å¾·æ‹‰)]
 ip 220.130.113.208
 port 6900
 master_version 5
 version 211
 serverType twRO
-serverEncoding Traditional Chinese
+serverEncoding Big5
 charBlockSize 144
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -102,13 +102,13 @@ recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
-[¥xÆW - ´ú¸Õ¦øªA¾¹: Sakray]
+[å°ç£ - æ¸¬è©¦ä¼ºæœå™¨: Sakray]
 ip 61.220.62.26
 port 6900
 master_version 5
 version 211
 serverType twRO
-serverEncoding Traditional Chinese
+serverEncoding Big5
 charBlockSize 144
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -158,7 +158,7 @@ addTableFolders mRO
 ip localhost
 port 6901
 serverType twRO
-serverEncoding Traditional Chinese
+serverEncoding Big5
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets_free.txt
