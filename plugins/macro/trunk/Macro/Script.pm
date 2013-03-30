@@ -247,7 +247,7 @@ sub next {
 	# if statement: if (foo = bar) goto label?
 	# Unlimited If Statement by: ezza @ http://forums.openkore.com/
 	} elsif ($line =~ /^if\s/) {
-		my ($text, $then) = $line =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop)\s*/;
+		my ($text, $then) = $line =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop|{|)\s*/;
 
 		# The main trick is parse all the @special keyword and vars 1st,
 		$text = parseCmd($text, $self);
@@ -256,7 +256,27 @@ sub next {
 		if (multi($savetxt, $self, $errtpl)) {
 			newThen($then, $self, $errtpl);
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
+		} elsif ($then eq "{") { # If the condition is false and are using block of commands, will be skipped
+			my $searchEnd;
+			my $inBlockIf = 1;
+			while ($inBlockIf) {
+				$self->{line}++;
+				$searchEnd = ${$macro{$self->{name}}}[$self->{line}];
+				
+				if ($searchEnd =~ /if.*{/) {
+					$inBlockIf++;
+				} elsif ($searchEnd eq '}') {
+					$inBlockIf--;
+				}
+			}
+			$self->{line} = $self->{line};
 		}
+		$self->{line}++;
+		$self->{timeout} = 0
+
+	##########################################
+	# end block of if
+	} elsif ($line eq '}') {
 		$self->{line}++;
 		$self->{timeout} = 0
 

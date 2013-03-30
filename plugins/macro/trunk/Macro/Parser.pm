@@ -34,6 +34,7 @@ sub parseMacroFile {
 
 	my %block;
 	my $inBlock = 0;
+	my $inBlockIf = 0;
 	my ($macro_subs, @perl_lines);
 	open my $fp, "<:utf8", $file or return 0;
 	while (<$fp>) {
@@ -63,9 +64,18 @@ sub parseMacroFile {
 
 		if (%block && $block{type} eq "macro") {
 			if ($_ eq "}") {
-				undef %block
+				if ($inBlockIf) { # If the '}' is being used to terminate a block of commands from 'if'
+					push(@{$macro{$block{name}}}, '}');
+					$inBlockIf--;
+				} else {
+					undef %block
+				}
 			} else {
-				push(@{$macro{$block{name}}}, $_)
+				push(@{$macro{$block{name}}}, $_);
+				
+				if ($_ =~ /if.*{/) {
+					$inBlockIf++;
+				}
 			}
 			next
 		}
@@ -125,7 +135,7 @@ sub parseMacroFile {
 			next
 		}
 
-		my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
+		my ($key, $value) = $_ =~ /(?:^(.*?)\s|})+(.*)/;
 		unless (defined $key) {
 			warning "$file: ignoring '$_' (munch, munch, strange food)\n";
 			next
