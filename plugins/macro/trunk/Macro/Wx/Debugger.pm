@@ -137,10 +137,16 @@ sub updateSource {
 		$self->{sourceName} = $name;
 		
 		my $i;
+		my $indentation = 0;
 		for ($i = 0; $i < @{$macro{$name}}; $i++) {
+			if (${$macro{$name}}[$i - 1] =~ /if.*{/) {
+				$indentation++;
+			} elsif (${$macro{$name}}[$i] eq '}') {
+				$indentation--;
+			}
 			$self->{source}->InsertStringItem ($i, '');
 			$self->{source}->SetItem ($i, 1, $i);
-			$self->{source}->SetItem ($i, 2, ${$macro{$name}}[$i]);
+			$self->{source}->SetItem ($i, 2, ("    " x $indentation) . ${$macro{$name}}[$i]);
 		}
 		
 		$self->{source}->InsertStringItem ($i, '');
