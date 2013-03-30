@@ -51,7 +51,10 @@ sub new {
 *reconstruct_quest_update_mission_hunt = *Network::Receive::ServerType0::reconstruct_quest_update_mission_hunt_v2;
 
 sub sync_received_characters {
-	for (1..2) { # the client sends 2 packets (captured from twRO)
+	my $count;
+	#TODO: FIXME better support
+	($config{XKore} == 1)?$count = 1:$count = 2;
+	for (1..$count) { # the client sends 2 packets (captured from twRO)
 		$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
 	}
 }
