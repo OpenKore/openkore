@@ -73,7 +73,7 @@ sub parseMacroFile {
 			} else {
 				push(@{$macro{$block{name}}}, $_);
 				
-				if ($_ =~ /if.*{/) {
+				if ($_ =~ /^if.*{/) {
 					$countBlockIf++;
 				}
 			}
@@ -100,7 +100,7 @@ sub parseMacroFile {
 			} elsif ($block{loadmacro}) {
 				push(@{$macro{$block{loadmacro_name}}}, $_);
 				
-				if ($_ =~ /if.*{/) {
+				if ($_ =~ /^if.*{/) {
 					$countBlockIf++;
 				}
 			} else {

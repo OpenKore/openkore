@@ -139,7 +139,7 @@ sub updateSource {
 		my $i;
 		my $indentation = 0;
 		for ($i = 0; $i < @{$macro{$name}}; $i++) {
-			if (${$macro{$name}}[$i - 1] =~ /if.*{/ || ${$macro{$name}}[$i - 1] eq '} else {') {
+			if (${$macro{$name}}[$i - 1] =~ /^if.*{/ || ${$macro{$name}}[$i - 1] =~ /}\s*else\s*{/) {
 				$indentation++;
 			} elsif (${$macro{$name}}[$i] eq '}' || ${$macro{$name}}[$i] =~ /}\s*else\s*{/) {
 				$indentation--;
