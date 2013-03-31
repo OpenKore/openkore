@@ -262,7 +262,7 @@ sub next {
 				$self->{line}++;
 				my $searchEnd = ${$macro{$self->{name}}}[$self->{line}];
 				
-				if ($searchEnd =~ /if.*{/) {
+				if ($searchEnd =~ /^if.*{/) {
 					$countBlockIf++;
 				} elsif (($searchEnd eq '}') || ($searchEnd =~ /}\s*else\s*{/ && $countBlockIf == 1)) {
 					$countBlockIf--;
@@ -281,7 +281,7 @@ sub next {
 				$self->{line}++;
 				my $searchEnd = ${$macro{$self->{name}}}[$self->{line}];
 				
-				if ($searchEnd =~ /if.*{/) {
+				if ($searchEnd =~ /^if.*{/) {
 					$countBlockIf++;
 				} elsif (($searchEnd eq '}') || ($searchEnd =~ /}\s*else\s*{/ && $countBlockIf == 1)) {
 					$countBlockIf--;
