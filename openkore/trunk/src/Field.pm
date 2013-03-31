@@ -407,7 +407,7 @@ sub nameToBaseName {
 	
 	my ($instanceID);
 
-	if ($name =~ /^(\d{3})(\d@.*)/) { # instanced maps, ex: 0021@cata
+	if ($name =~ /^(\W{3})(\d@.*)/) { # instanced maps, ex: 0021@cata
 		$instanceID = $1;
 		$name = $2;
 	}
