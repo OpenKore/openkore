@@ -6267,6 +6267,11 @@ sub warp_portal_list {
 			"list");
 	}
 	message("--------------------------------------------------\n", "list");
+	if ($args->{type} == 26 && AI::action eq 'teleport') {
+		# We have already successfully used the Teleport skill.
+		$messageSender->sendWarpTele(26, AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
+		AI::dequeue;
+	}
 }
 
 sub mail_refreshinbox {
