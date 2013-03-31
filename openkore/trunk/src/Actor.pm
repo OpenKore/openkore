@@ -574,7 +574,7 @@ sub setStatus {
 					$_[0]->{_actor}->setStatus($handle, 0);
 					error "BUG: setStatus($handle, 0) failed?\n" if defined $_[0];
 				},#now
-				seconds => $tick / 1000 - 1,
+				seconds => $tick / 1000,
 			));
 		}
 		
