@@ -319,9 +319,9 @@ sub iterate {
 					$self->{stage} = '';
 
 				} else {
+					$self->{time_step} = time if ($cur_x != $self->{old_x} || $cur_y != $self->{old_y});
 					$self->{old_x} = $cur_x;
 					$self->{old_y} = $cur_y;
-					$self->{time_step} = time if ($cur_x != $self->{old_x} || $cur_y != $self->{old_y});
 					debug "Route $self->{actor} - next step moving to ($self->{new_x}, $self->{new_y}), index $self->{index}, $stepsleft steps left\n", "route";
 					my $task = new Task::Move(
 						actor => $self->{actor},
