@@ -6861,13 +6861,13 @@ sub instance_window_join {
 sub instance_window_leave {
 	my ($self, $args) = @_;
 	# TYPE_NOTIFY =  0x0; Ihis one will make Window, as Client logic do.
-	if($args->{type} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
+	if($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
 		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
-	} elsif($args->{type} == 2) { # TYPE_DESTROY_ENTER_TIMEOUT =  0x2
+	} elsif($args->{flag} == 2) { # TYPE_DESTROY_ENTER_TIMEOUT =  0x2
 		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
-	} elsif($args->{type} == 3) { # TYPE_DESTROY_USER_REQUEST =  0x3
+	} elsif($args->{flag} == 3) { # TYPE_DESTROY_USER_REQUEST =  0x3
 		message T("The Memorial Dungeon has been removed.\n"), "info";
-	} elsif ($args->{type} == 4) { # TYPE_CREATE_FAIL =  0x4
+	} elsif ($args->{flag} == 4) { # TYPE_CREATE_FAIL =  0x4
 		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
 	} else {
 		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
