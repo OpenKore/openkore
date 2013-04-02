@@ -266,6 +266,15 @@ sub next {
 					$countBlockIf++;
 				} elsif (($searchEnd eq '}') || ($searchEnd =~ /}\s*else\s*{/ && $countBlockIf == 1)) {
 					$countBlockIf--;
+				} elsif ($searchEnd =~ /}\s*elsif\s+\(\s*(.*)\s*\).*/ && $countBlockIf == 1) {
+					# If the condition of 'elsif' is true, the commands of your block will be executed,
+					#  if false, will not run.
+					$text = parseCmd($1, $self);
+					if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
+					$savetxt = particle($text, $self, $errtpl);
+					if (multi($savetxt, $self, $errtpl)) {
+						$countBlockIf--;
+					}
 				}
 			}
 		}
@@ -273,9 +282,9 @@ sub next {
 		$self->{timeout} = 0
 
 	##########################################
-	# If arriving at a line 'else', it should be skipped -
+	# If arriving at a line 'else' or 'elsif', it should be skipped -
 	#  it will never be activated if coming from a false 'if'
-	} elsif ($line =~ /}\s*else\s*{/) {
+	} elsif ($line =~ /}\s*else\s*{/ || $line =~ /}\s*elsif\s+\(\s*(.*)\s*\).*/) {
 			my $countBlockIf = 1;
 			while ($countBlockIf) {
 				$self->{line}++;
@@ -283,7 +292,8 @@ sub next {
 				
 				if ($searchEnd =~ /^if.*{/) {
 					$countBlockIf++;
-				} elsif (($searchEnd eq '}') || ($searchEnd =~ /}\s*else\s*{/ && $countBlockIf == 1)) {
+				} elsif (($searchEnd eq '}') ||
+					($countBlockIf == 1 && ($searchEnd =~ /}\s*else\s*{/ || $searchEnd =~ /}\s*elsif\s+\(\s*(.*)\s*\).*/))) {
 					$countBlockIf--;
 				}
 			}
