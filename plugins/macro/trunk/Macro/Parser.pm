@@ -57,7 +57,7 @@ sub parseMacroFile {
 				%block = (name => $value, type => "sub")
 			} else {
 				%block = (type => "bogus");
-				warning "$file: ignoring line '$_' (munch, munch, strange block)\n"
+				warning "$file: ignoring line '$_' in line $. (munch, munch, strange block)\n"
 			}
 			next
 		}
@@ -71,11 +71,14 @@ sub parseMacroFile {
 					undef %block
 				}
 			} else {
-				push(@{$macro{$block{name}}}, $_);
-				
-				if ($_ =~ /^if.*{/) {
+				if (!$countBlockIf && ($_ =~ /}\s*else\s*{/ || $_ =~ /}\s*elsif\s+\(\s*(.*)\s*\).*/)) {
+					warning "$file: ignoring '$_' in line $. (munch, munch, not found the 'if')\n";
+					next
+				} elsif ($_ =~ /^if.*{/) {
 					$countBlockIf++;
 				}
+
+				push(@{$macro{$block{name}}}, $_);
 			}
 			next
 		}
@@ -98,15 +101,18 @@ sub parseMacroFile {
 				$automacro{$block{name}}->{call} = $block{loadmacro_name};
 				$macro{$block{loadmacro_name}} = []
 			} elsif ($block{loadmacro}) {
-				push(@{$macro{$block{loadmacro_name}}}, $_);
-				
-				if ($_ =~ /^if.*{/) {
+				if (!$countBlockIf && ($_ =~ /}\s*else\s*{/ || $_ =~ /}\s*elsif\s+\(\s*(.*)\s*\).*/)) {
+					warning "$file: ignoring '$_' in line $. (munch, munch, not found the 'if')\n";
+					next
+				} elsif ($_ =~ /^if.*{/) {
 					$countBlockIf++;
 				}
+
+				push(@{$macro{$block{loadmacro_name}}}, $_);
 			} else {
 				my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
 				unless (defined $key) {
-					warning "$file: ignoring '$_' (munch, munch, not a pair)\n";
+					warning "$file: ignoring '$_' in line $. (munch, munch, not a pair)\n";
 					next
 				}
 				if ($amSingle{$key}) {
@@ -114,7 +120,7 @@ sub parseMacroFile {
 				} elsif ($amMulti{$key}) {
 					push(@{$automacro{$block{name}}->{$key}}, $value)
 				} else {
-					warning "$file: ignoring '$_' (munch, munch, unknown automacro keyword)\n"
+					warning "$file: ignoring '$_' in line $. (munch, munch, unknown automacro keyword)\n"
 				}
 			}
 			next
@@ -146,7 +152,7 @@ sub parseMacroFile {
 
 		my ($key, $value) = $_ =~ /(?:^(.*?)\s|})+(.*)/;
 		unless (defined $key) {
-			warning "$file: ignoring '$_' (munch, munch, strange food)\n";
+			warning "$file: ignoring '$_' in line $. (munch, munch, strange food)\n";
 			next
 		}
 
