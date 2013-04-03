@@ -36,7 +36,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0072' => ['sendSkillUse'], # TODO
+		'0072' => ['skill_use', 'v x4 V v x9 a4', [qw(lv skillID targetID)]],#25
 		'0085' => ['actor_look_at', 'x5 C x2 C', [qw(head body)]],
 		'0089' => ['sync', 'x2 V', [qw(time)]], # TODO
 		'0094' => ['storage_item_add', 'x5 v x V', [qw(index amount)]],
@@ -54,47 +54,13 @@ sub new {
 	$self;
 }
 
-# 0x0072,25,useskilltoid,6:10:21
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-	my $msg;
-
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	$msg = pack('v x4 V v x9 a4', 0x0072, $lv, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
-}
-
-# 0x007e,102,useskilltoposinfo,5:9:12:20:22
 sub sendSkillUseLocInfo {
 	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-
 	my $msg = pack('v x3 v x2 v x v x6 v Z80', 0x007E, $lv, $ID, $x, $y, $moreinfo);
-
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
-# 0x0085,11,changedir,7:10
-
-# 0x0089,8,ticksend,4
-
-# 0x008c,11,getcharnamerequest,7
-
-# 0x0094,14,movetokafra,7:10
-
-# 0x009b,26,wanttoconnection,4:9:17:21:25
-
-# 0x009f,14,useitem,4:10
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg = pack('v x2 v x4 a4', 0x009F, $ID, $targetID);
@@ -102,7 +68,6 @@ sub sendItemUse {
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
-# 0x00a2,15,solvecharname,11
 sub sendGetCharacterName {
 	my ($self, $ID) = @_;
 	my $msg = pack('v x9 a4', 0x00A2, $ID);
@@ -110,27 +75,7 @@ sub sendGetCharacterName {
 	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
-#//# 0x00a7,8,walktoxy,5
-=pod
-sub sendMove {
-	my $self = shift;
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-	my $msg = pack('v x3 a3', 0x00A7, getCoordString($x, $y, 1));
-	$self->sendToServer($msg);
-	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
-=cut
-
-# 0x00f5,8,takeitem,4
-
-# 0x00f7,22,movefromkafra,14:18
-
-# 0x0113,22,useskilltopos,5:9:12:20
-
-# 0x0116,10,dropitem,5:8
-
-# 0x0190,19,actionrequest,5:18
+1;
 
 =pod
 //2007-02-12aSakexe
@@ -151,5 +96,3 @@ packet_ver: 22
 0x0116,10,dropitem,5:8
 0x0190,19,actionrequest,5:18
 =cut
-
-1;

@@ -20,8 +20,7 @@ package Network::Send::kRO::RagexeRE_2008_09_10a;
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2008_08_27a);
 
-use Log qw(message warning error debug);
-use Utils qw(getTickCount getHex);
+use Log qw(debug);
 
 sub version {
 	return 25; # looks a lot like 23, except that 25 inherits from 24
@@ -36,50 +35,28 @@ sub new {
 		'0190' => undef,
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0438' => ['sendSkillUse', 'a2 a2 a4', [qw(ID lv targetID)]],
+		'0438' => ['skill_use', 'v3 a4', [qw(lv skillID targetID)]],#10
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
 		map_login 0436
 		actor_action 0437
+		skill_use 0438
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	$self;
 }
 
-# 0x0436,19,wanttoconnection,2:6:10:14:18
-
-# 0x0437,7,actionrequest,2:6
-
-# 0x0438,10,useskilltoid,2:4:6
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-	my $msg;
-
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	$msg = pack('v3 a4', 0x0438, $lv, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
-}
-
-# 0x0439,8,useitem,2:4
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg = pack('v2 a4', 0x0439, $ID, $targetID);
 	$self->sendToServer($msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
+
+1;
 
 =pod
 //2008-09-10aRagexeRE
@@ -89,5 +66,3 @@ packet_ver: 25
 0x0438,10,useskilltoid,2:4:6
 0x0439,8,useitem,2:4
 =cut
-
-1;

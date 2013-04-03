@@ -61,6 +61,7 @@ sub new {
 		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0102' => ['party_setting', 'V', [qw(exp)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
+		'0113' => ['skill_use', 'v*', [qw(lv skillID targetID)]],
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0149' => ['alignment', 'a4 C v', [qw(targetID type point)]],
@@ -932,16 +933,6 @@ sub sendSellBulk {
 
 	my $msg = pack("C*", 0xC9, 0x00) . pack("v*", length($sellMsg) + 4) . $sellMsg;
 	$self->sendToServer($msg);
-}
-
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-	my $msg;
-
-	$msg = pack("C*", 0x13, 0x01).pack("v*",$lv,$ID).$targetID;
-
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendStorageAddFromCart {

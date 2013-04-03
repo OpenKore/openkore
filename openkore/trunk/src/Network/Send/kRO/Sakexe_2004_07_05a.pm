@@ -20,8 +20,7 @@ package Network::Send::kRO::Sakexe_2004_07_05a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_0);
 
-use Log qw(message warning error debug);
-use Utils qw(getTickCount getCoordString);
+use Log qw(debug);
 
 sub version {
 	return 6;
@@ -34,6 +33,7 @@ sub new {
 	my %packets = (
 		'0072' => ['map_login', 'x3 a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0085' => ['character_move', 'x3 a3', [qw(coords)]],
+		'0113' => ['skill_use', 'v x2 v x3 v a4', [qw(lv skillID targetID)]],#15
 		'0116' => ['skill_use_location', 'x2 v x3 v3', [qw(lv skillID x y)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 	);
@@ -42,43 +42,21 @@ sub new {
 	$self;
 }
 
-# 0x0072,22,wanttoconnection,5:9:13:17:21
-
-# 0x0085,8,walktoxy,5
-
-# 0x00a7,13,useitem,5:9
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
-
 	my $msg = pack('v x3 v x2 a4', 0x00A7 ,$ID, $targetID);
-
 	$self->sendToServer($msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
-# 0x0113,15,useskilltoid,4:9:11
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-
-	my $msg = pack('v x2 v x3 v a4', 0x0113, $lv, $ID, $targetID);
-
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
-}
-
-# 0x0116,15,useskilltopos,4:9:11:13
-
-# 0x0190,95,useskilltoposinfo,4:9:11:13:15
 sub sendSkillUseLocInfo {
 	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-
 	my $msg = pack('v x2 v x3 v3 Z80', 0x0190, $lv, $ID, $x, $y, $moreinfo);
-
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
-# 0x0208,14,friendslistreply,2:6:10
+1;
 
 =pod
 //2004-07-05aSakexe
@@ -91,5 +69,3 @@ packet_ver: 6
 0x0190,95,useskilltoposinfo,4:9:11:13:15
 0x0208,14,friendslistreply,2:6:10
 =cut
-
-1;

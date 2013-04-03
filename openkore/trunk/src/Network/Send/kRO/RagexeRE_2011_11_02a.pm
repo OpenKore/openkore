@@ -25,6 +25,7 @@ sub new {
 	my %packets = (
 		'022D' => undef,
 		# TODO 0x0281,36,storagepassword,0
+		'02C4' => ['skill_use', 'v3 a4', [qw(lv skillID targetID)]],#10
 		'0369' => undef,
 		# TODO 0x0811,-1,itemlistwindowselected,2:4:8
 		# TODO 0x0835,-1,reqopenbuyingstore,2:4:8:9:89
@@ -46,30 +47,11 @@ sub new {
 	my %handlers = qw(
 		map_login 083C
 		actor_action 08AA
+		skill_use 02C4
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	$self;
-}
-
-# 0x02c4,10,useskilltoid,2:4:6
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-	my $msg;
-
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	$msg = pack('v3 a4', 0x02C4, $lv, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
 
 1;

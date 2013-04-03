@@ -1,6 +1,6 @@
 #########################################################################
-#  OpenKore - Packet sending
-#  This module contains functions for sending packets to the server.
+#  OpenKore - Packet Receiveing
+#  This module contains functions for Receiveing packets to the server.
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -20,12 +20,6 @@ package Network::Receive::kRO::RagexeRE_2008_08_27a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2009_04_08a);
 
-use Log qw(message warning error debug);
-use Utils qw(getTickCount getHex getCoordString);
-
-# TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw($char);
-
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
@@ -44,8 +38,7 @@ sub new {
 	return $self;
 }
 
-
-
+1;
 
 =pod
 //2008-08-27aRagexeRE
@@ -71,5 +64,3 @@ packet_ver: 23
 0x02e4,11
 0x02e5,9
 =cut
-
-1;

@@ -34,7 +34,7 @@ sub new {
 		'0437' => ['character_move', 'a3', [qw(coords)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'07E4' => ['item_take', 'a4', [qw(ID)]], 
-		'083C' => ['sendSkillUse', 'a2 a2 a4', [qw(ID lv targetID)]],
+		'083C' => ['skill_use', 'v3 a4', [qw(lv skillID targetID)]],#10
 		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -47,7 +47,7 @@ sub new {
 		item_drop 0362
 		item_take 07E4
 		map_login 022D
-		sendSkillUse 083C
+		skill_use 083C
 		skill_use_location 0438
 		sync 035F
 	);
@@ -55,25 +55,6 @@ sub new {
 	
 	$self;
 } 
-# 0x083C,10,useskilltoid,2:4:6
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-	my $msg;
-
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	$msg = pack('v3 a4', 0x083C, $lv, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
-}
 
 1;
 

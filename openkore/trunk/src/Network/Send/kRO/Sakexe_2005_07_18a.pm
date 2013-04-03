@@ -20,12 +20,9 @@ package Network::Send::kRO::Sakexe_2005_07_18a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_06_28a);
 
-use Log qw(message warning error debug);
+use Log qw(debug);
 use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
-
-# TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw($char);
+use Utils qw(getHex);
 
 sub version {
 	return 18;
@@ -36,6 +33,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0072' => ['skill_use', 'v x3 V x2 v x2 a4', [qw(lv skillID targetID)]],#19
 		'0085' => ['actor_look_at', 'x4 C x3 C', [qw(head body)]],
 		'0089' => ['sync', 'x V', [qw(time)]],
 		'008C' => ['actor_info_request', 'x5 a4', [qw(ID)]],
@@ -53,47 +51,13 @@ sub new {
 	$self;
 }
 
-# 0x0072,19,useskilltoid,5:11:15
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-	my $msg;
-
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	$msg = pack('v x3 V x2 v x2 a4', 0x0072, $lv, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
-}
-
-# 0x007e,110,useskilltoposinfo,9:15:23:28:30
 sub sendSkillUseLocInfo {
 	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-
 	my $msg = pack('v x7 v x4 v x6 v x3 v Z80', 0x007E, $lv, $ID, $x, $y, $moreinfo);
-
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
-# 0x0085,11,changedir,6:10
-
-# 0x0089,7,ticksend,3
-
-# 0x008c,11,getcharnamerequest,7
-
-# 0x0094,21,movetokafra,12:17
-
-# 0x009b,31,wanttoconnection,3:13:22:26:30
-
-# 0x009f,12,useitem,3:8
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg = pack('v x v x3 a4', 0x009F, $ID, $targetID);
@@ -101,7 +65,6 @@ sub sendItemUse {
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
-# 0x00a2,18,solvecharname,14
 sub sendGetCharacterName {
 	my ($self, $ID) = @_;
 	my $msg = pack('v x12 a4', 0x00A2, $ID);
@@ -109,25 +72,11 @@ sub sendGetCharacterName {
 	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
-# 0x00a7,15,walktoxy,12
-
-# 0x00f5,7,takeitem,3
-
-# 0x00f7,13,movefromkafra,5:9
-
-# 0x0113,30,useskilltopos,9:15:23:28
-
-# 0x0116,12,dropitem,6:10
-
-# 0x0190,21,actionrequest,5:20
-
-# 0x023f,2,mailrefresh,0
 sub sendMailboxOpen {
 	$_[0]->sendToServer(pack('v', 0x023F));
 	debug "Sent mailbox open.\n", "sendPacket", 2;
 }
 
-# 0x0241,6,mailread,2
 sub sendMailRead {
 	my ($self, $mailID) = @_;
 	my $msg = pack('v V', 0x0241, $mailID);
@@ -135,7 +84,6 @@ sub sendMailRead {
 	debug "Sent read mail.\n", "sendPacket", 2;
 }
 
-# 0x0243,6,maildelete,2
 sub sendMailDelete {
 	my ($self, $mailID) = @_;
 	my $msg = pack('v V', 0x0243, $mailID);
@@ -143,7 +91,6 @@ sub sendMailDelete {
 	debug "Sent delete mail.\n", "sendPacket", 2;
 }
 
-# 0x0244,6,mailgetattach,2
 sub sendMailGetAttach {
 	my ($self, $mailID) = @_;
 	my $msg = pack('v V', 0x0244, $mailID);
@@ -151,7 +98,6 @@ sub sendMailGetAttach {
 	debug "Sent mail get attachment.\n", "sendPacket", 2;
 }
 
-# 0x0246,4,mailwinopen,2
 sub sendMailOperateWindow {
 	my ($self, $window) = @_;
 	my $msg = pack('v C x', 0x0246, $window);
@@ -159,7 +105,6 @@ sub sendMailOperateWindow {
 	debug "Sent mail window.\n", "sendPacket", 2;
 }
 
-# 0x0247,8,mailsetattach,2:4
 sub sendMailSetAttach {
 	my $self = $_[0];
 	my $amount = $_[1];
@@ -169,7 +114,6 @@ sub sendMailSetAttach {
 	debug "Sent mail set attachment.\n", "sendPacket", 2;
 }
 
-# 0x024b,4,auctioncancelreg,0
 sub sendMailSend {
 	my ($self, $receiver, $title, $message) = @_;
 	my $msg = pack('v2 Z24 a40 C Z*', 0x0248, length($message)+70 , stringToBytes($receiver), stringToBytes($title), length($message), stringToBytes($message));
@@ -177,7 +121,6 @@ sub sendMailSend {
 	debug "Sent mail send.\n", "sendPacket", 2;
 }
 
-# 0x024c,8,auctionsetitem,0
 sub sendAuctionAddItem {
 	my ($self, $index, $amount) = @_;
 	my $msg = pack('v2 V', 0x024C, $index, $amount);
@@ -185,7 +128,6 @@ sub sendAuctionAddItem {
 	debug "Sent Auction Add Item.\n", "sendPacket", 2;
 }
 
-# 0x024e,6,auctioncancel,0
 sub sendAuctionCancel {
 	my ($self, $id) = @_;
 	my $msg = pack('v V', 0x024E, $id);
@@ -193,13 +135,14 @@ sub sendAuctionCancel {
 	debug "Sent Auction Cancel.\n", "sendPacket", 2;
 }
 
-# 0x024f,10,auctionbid,0
 sub sendAuctionBuy {
 	my ($self, $id, $bid) = @_;
 	my $msg = pack('v V2', 0x024F, $id, $bid);
 	$self->sendToServer($msg);
 	debug "Sent Auction Buy.\n", "sendPacket", 2;
 }
+
+1;
 
 =pod
 //2005-07-18aSakexe
@@ -241,5 +184,3 @@ packet_ver: 18
 0x0251,2
 0x0252,-1
 =cut
-
-1;

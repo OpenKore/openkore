@@ -666,6 +666,20 @@ sub sendBuyBulkbuyer {
 	debug "Sent bulk buy buyer: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$r_array)."\n", "sendPacket";
 }
 
+sub sendSkillUse {
+	my ($self, $ID, $lv, $targetID) = @_;
+### need to check Hook###
+	my %args;
+	Plugins::callHook('packet_pre/sendSkillUse', \%args);
+	if ($args{return}) {
+		$self->sendToServer($args{msg});
+		return;
+	}
+##########################
+	$self->sendToServer($self->reconstruct({switch => 'skill_use', lv => $lv, skillID => $ID, targetID => $targetID}));
+	debug "Skill Use: $ID\n", "sendPacket", 2;
+}
+
 sub sendSkillUseLoc {
 	my ($self, $ID, $lv, $x, $y) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'skill_use_location', lv => $lv, skillID => $ID, x => $x, y => $y}));
