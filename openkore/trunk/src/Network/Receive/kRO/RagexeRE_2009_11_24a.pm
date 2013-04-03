@@ -1,6 +1,6 @@
 #########################################################################
-#  OpenKore - Packet sending
-#  This module contains functions for sending packets to the server.
+#  OpenKore - Packet Receiveing
+#  This module contains functions for Receiveing packets to the server.
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -37,6 +37,8 @@ sub new {
 	return $self;
 }
 
+1;
+
 =pod
 //2009-11-24aRagexeRE
 //0x07fc,10
@@ -44,5 +46,3 @@ sub new {
 //0x07fe,26
 //0x07ff,-1
 =cut
-
-1;

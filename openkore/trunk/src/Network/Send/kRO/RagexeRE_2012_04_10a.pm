@@ -29,6 +29,7 @@ sub new {
 		# TODO 0x0366,90,useskilltoposinfo,2:4:6:8:10
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		# TODO 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
+		'083C' => ['skill_use', 'v3 a4', [qw(lv skillID targetID)]],#10
 		'0865' => undef,
 		'086A' => undef,
 		'086C' => ['storage_item_add', 'v V', [qw(index amount)]],
@@ -73,30 +74,11 @@ sub new {
 		item_drop 0891
 		storage_item_add 086C
 		storage_item_remove 08A6
+		skill_use 083C
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	$self;
-}
-
-# 0x083C,10,useskilltoid,2:4:6
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-	my $msg;
-
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	$msg = pack('v3 a4', 0x083C, $lv, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
 
 # 0x0884,6,solvecharname,2

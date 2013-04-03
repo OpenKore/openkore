@@ -1,6 +1,6 @@
 #########################################################################
-#  OpenKore - Packet sending
-#  This module contains functions for sending packets to the server.
+#  OpenKore - Packet Receiveing
+#  This module contains functions for Receiveing packets to the server.
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -14,7 +14,6 @@
 ########################################################################
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
-
 # this is an experimental class
 # this serverType is used for kRO Sakray RE
 # basically when we don't know where to put a new packet, we put it here and move it to the right class later
@@ -23,8 +22,6 @@ package Network::Receive::kRO::RagexeRE_0;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2012_04_10a);
-
-use Log qw(message warning error debug);
 
 sub new {
 	my ($class) = @_;
@@ -39,9 +36,5 @@ sub new {
 
 	return $self;
 }
-
-=pod
-
-=cut
 
 1;

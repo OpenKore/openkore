@@ -44,6 +44,7 @@ sub new {
 		# TODO 0x0884,-1,searchstoreinfo,2:4:5:9:13:14:15
 		'0885' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0887' => ['sync', 'V', [qw(time)]],
+		'0889' => ['skill_use', 'v3 a4', [qw(lv skillID targetID)]],#10
 		'0890' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0893' => undef,
 		'0897' => undef,
@@ -68,6 +69,7 @@ sub new {
 		item_drop 02C4
 		storage_item_add 093B
 		storage_item_remove 0963
+		skill_use 0889
 		skill_use_location 0438
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -96,26 +98,6 @@ sub sendGetCharacterName {
 	my ($self, $ID) = @_;
 	$self->sendToServer(pack('v a4', 0x0368, $ID));
 	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
-}
-
-# 0x0889,10,useskilltoid,2:4:6
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-	my $msg;
-
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	$msg = pack('v3 a4', 0x0889, $lv, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
 
 1;

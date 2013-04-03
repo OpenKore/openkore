@@ -20,11 +20,8 @@ package Network::Send::kRO::RagexeRE_2008_08_27a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2009_04_08a); #looks weird, inheriting from a newer file... but this is what eA has and we want to be able to play on eA servers
 
-use Log qw(message warning error debug);
-use Utils qw(getTickCount getHex getCoordString);
-
-# TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw($char);
+use Log qw(debug);
+use Utils qw(getHex);
 
 sub version {
 	return 24;
@@ -35,6 +32,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0072' => ['skill_use', 'v x7 V x2 v x a4', [qw(lv skillID targetID)]],#22
 		'0085' => ['actor_look_at', 'x2 C x4 C', [qw(head body)]],
 		'0089' => ['sync', 'x5 V', [qw(time)]], # TODO
 		'008C' => ['actor_info_request', 'x8 a4', [qw(ID)]],
@@ -54,33 +52,13 @@ sub new {
 	my %handlers = qw(
 		map_login 009B
 		actor_action 0190
+		skill_use 0072
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	$self;
 }
 
-# 0x0072,22,useskilltoid,9:15:18
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-	my $msg;
-
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	$msg = pack('v x7 V x2 v x a4', 0x0072, $lv, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
-}
-
-# 0x007e,105,useskilltoposinfo,10:14:18:23:25
 sub sendSkillUseLocInfo {
 	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
 
@@ -90,17 +68,6 @@ sub sendSkillUseLocInfo {
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
-# 0x0085,10,changedir,4:9
-
-# 0x0089,11,ticksend,7
-
-# 0x008c,14,getcharnamerequest,10
-
-# 0x0094,19,movetokafra,3:15
-
-# 0x009b,34,wanttoconnection,7:15:25:29:33
-
-# 0x009f,20,useitem,7:20 -> 20 has to be 16?
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg = pack('v x5 v x7 a4', 0x009F, $ID, $targetID);
@@ -108,7 +75,6 @@ sub sendItemUse {
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
-# 0x00a2,14,solvecharname,10
 sub sendGetCharacterName {
 	my ($self, $ID) = @_;
 	my $msg = pack('v x8 a4', 0x00A2, $ID);
@@ -116,18 +82,7 @@ sub sendGetCharacterName {
 	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
-# 0x00a7,9,walktoxy,6
-
-# 0x00f5,11,takeitem,7
-
-# 0x00f7,17,movefromkafra,3:13
-
-# 0x0113,25,useskilltopos,10:14:18:23
-
-# 0x0116,17,dropitem,6:15
-
-# 0x0190,23,actionrequest,9:22
-
+1;
 
 =pod
 //2008-08-27aRagexeRE
@@ -153,5 +108,3 @@ packet_ver: 24
 0x02e4,11
 0x02e5,9
 =cut
-
-1;

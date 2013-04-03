@@ -1,6 +1,6 @@
 #########################################################################
-#  OpenKore - Packet sending
-#  This module contains functions for sending packets to the server.
+#  OpenKore - Packet Receiveing
+#  This module contains functions for Receiveing packets to the server.
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -20,7 +20,7 @@ package Network::Receive::kRO::RagexeRE_2009_09_22a;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2009_08_25a);
 
-use Log qw(message warning error debug);
+use Log qw(warning error debug);
 
 use Globals qw($captcha_state);
 
@@ -81,6 +81,8 @@ sub captcha_answer {
 	Plugins::callHook ('captcha_answer', {flag => $args->{flag}});
 }
 
+1;
+
 =pod
 //2009-09-22aRagexeRE
 0x07e5,8
@@ -89,5 +91,3 @@ sub captcha_answer {
 0x07e8,-1
 0x07e9,5
 =cut
-
-1;

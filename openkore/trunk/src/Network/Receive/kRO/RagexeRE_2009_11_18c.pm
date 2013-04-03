@@ -1,6 +1,6 @@
 #########################################################################
-#  OpenKore - Packet sending
-#  This module contains functions for sending packets to the server.
+#  OpenKore - Packet Receiveing
+#  This module contains functions for Receiveing packets to the server.
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -18,7 +18,7 @@
 package Network::Receive::kRO::RagexeRE_2009_11_18c;
 
 use strict;
-use base qw(Network::Receive::kRO::RagexeRE_2009_11_04a);
+use base qw(Network::Receive::kRO::RagexeRE_2009_11_17a);
 
 sub new {
 	my ($class) = @_;
@@ -34,9 +34,9 @@ sub new {
 	return $self;
 }
 
+1;
+
 =pod
 //2009-11-18cRagexeRE
 0x07fb,25
 =cut
-
-1;

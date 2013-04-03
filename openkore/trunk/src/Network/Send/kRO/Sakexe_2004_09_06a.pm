@@ -20,12 +20,8 @@ package Network::Send::kRO::Sakexe_2004_09_06a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2004_08_17a);
 
-use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
-
-# TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw($char %config);
+use Log qw(debug);
+use Utils qw(getHex);
 
 sub version {
 	return 10;
@@ -51,7 +47,7 @@ sub new {
 		'00F7' => undef,
 		'0113' => ['item_take', 'x5 a4', [qw(ID)]],
 		'0116' => ['sync', 'x5 V', [qw(time)]],
-		'0190' => undef,
+		'0190' => ['skill_use', 'v x7 V x2 v x a4', [qw(lv skillID targetID)]],#22
 		'0193' => ['storage_item_remove', 'x v x8 V', [qw(index amount)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -68,6 +64,7 @@ sub new {
 		item_drop 0094
 		storage_item_add 007E
 		storage_item_remove 0193
+		skill_use 0190
 		skill_use_location 00A7
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -75,7 +72,6 @@ sub new {
 	$self;
 }
 
-# 0x0072,20,useitem,9:20
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg = pack('v x7 v x9 a4', 0x0072, $ID, $targetID);
@@ -83,27 +79,13 @@ sub sendItemUse {
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
-# 0x007e,19,movetokafra,3:15
-
-# 0x0085,23,actionrequest,9:22
-
-# 0x0089,9,walktoxy,6
-
-# 0x008c,105,useskilltoposinfo,10:14:18:23:25
 sub sendSkillUseLocInfo {
 	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-
 	my $msg = pack('v x8 v x2 v x2 v x3 v Z80', 0x008C, $lv, $ID, $x, $y, $moreinfo);
-
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
-# 0x0094,17,dropitem,6:15
-
-# 0x009b,14,getcharnamerequest,10
-
-# 0x00a2,14,solvecharname,10
 sub sendGetCharacterName {
 	my ($self, $ID) = @_;
 	my $msg = pack('v x8 a4', 0x00A2, $ID);
@@ -111,43 +93,12 @@ sub sendGetCharacterName {
 	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
-# 0x00a7,25,useskilltopos,10:14:18:23
-
-# 0x00f3,10,changedir,4:9
-
-# 0x00f5,34,wanttoconnection,7:15:25:29:33
-
-# 0x00f7,2,closekafra,0
 sub sendStorageClose {
 	$_[0]->sendToServer(pack('v', 0x00F7));
 	debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
-# 0x0113,11,takeitem,7
-
-# 0x0116,11,ticksend,7
-
-# 0x0190,22,useskilltoid,9:15:18
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-	my $msg;
-
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	$msg = pack('v x7 V x2 v x a4', 0x0190, $lv, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
-}
-
-# 0x0193,17,movefromkafra,3:13
+1;
 
 =pod
 //2004-09-06aSakexe
@@ -170,5 +121,3 @@ packet_ver: 10
 0x0190,22,useskilltoid,9:15:18
 0x0193,17,movefromkafra,3:13
 =cut
-
-1;

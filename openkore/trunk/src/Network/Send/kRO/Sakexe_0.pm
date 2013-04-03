@@ -59,6 +59,7 @@ sub new {
 		'00F3' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
+		'0113' => ['skill_use', 'v3 a4', [qw(lv skillID targetID)]],#10
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0149' => ['alignment'], # TODO
@@ -630,30 +631,9 @@ sub sendAddSkillPoint {
 }
 
 # 0x0113,10,useskilltoid,2:4:6
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-	my $msg;
-
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	$msg = pack('v3 a4', 0x0113, $lv, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
-}
-
 # 0x0114,31
 # 0x0115,35
-
 # 0x0116,10,useskilltopos,2:4:6:8
-
 # 0x0117,18
 
 # 0x0118,2,stopattack,0

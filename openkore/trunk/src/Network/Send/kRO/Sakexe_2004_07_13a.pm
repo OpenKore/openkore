@@ -20,11 +20,7 @@ package Network::Send::kRO::Sakexe_2004_07_13a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2004_07_05a);
 
-use Log qw(message warning error debug);
-use Utils qw(getTickCount getCoordString);
-
-# TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw($char);
+use Log qw(debug);
 
 sub version {
 	return 7;
@@ -39,6 +35,7 @@ sub new {
 		'0085' => ['character_move', 'x4 a3', [qw(coords)]],
 		'009B' => ['actor_look_at', 'x3 C x6 C', [qw(head body)]],
 		'009F' => ['item_take', 'x4 a4', [qw(ID)]],
+		'0113' => ['skill_use', 'v x5 V v x2 a4', [qw(lv skillID targetID)]],#19
 		'0116' => ['skill_use_location', 'x5 v2 x4 v2', [qw(lv skillID x y)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -46,15 +43,6 @@ sub new {
 	$self;
 }
 
-# 0x0072,39,wanttoconnection,12:22:30:34:38
-
-# 0x0085,9,walktoxy,6
-
-# 0x009b,13,changedir,5:12
-
-# 0x009f,10,takeitem,6
-
-# 0x00a7,17,useitem,6:13
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg = pack('v x4 v x5 a4', 0x00A7, $ID, $targetID);
@@ -62,36 +50,14 @@ sub sendItemUse {
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
-# 0x0113,19,useskilltoid,7:9:15
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	my $msg = pack('v x5 V v x2 a4', 0x0113, $lv, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Skill Use: $ID\n", "sendPacket", 2;
-}
-
-# 0x0116,19,useskilltopos,7:9:15:17
-
-# 0x0190,99,useskilltoposinfo,7:9:15:17:19
 sub sendSkillUseLocInfo {
 	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-
 	my $msg = pack('v x5 v2 x4 v2 Z80', 0x0190, $lv, $ID, $x, $y, $moreinfo);
-
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
+
+1;
 
 =pod
 //2004-07-13aSakexe
@@ -105,5 +71,3 @@ packet_ver: 7
 0x0116,19,useskilltopos,7:9:15:17
 0x0190,99,useskilltoposinfo,7:9:15:17:19
 =cut
-
-1;
