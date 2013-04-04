@@ -1,0 +1,19 @@
+# Route from Comodo
+# Journey time: approximately 0 minutes and 15 seconds
+
+automacro loop1 {
+hp > 1
+run-once 1
+call move_auto
+}
+
+macro move_auto {
+log Passo 1
+do move comodo @rand(205,210) @rand(140,145)
+log Passo 2
+do move comodo @rand(185,190) @rand(145,155)
+log Passo 3
+do move comodo @rand(200,210) @rand(155,160)
+log Restarting
+call move_auto
+}

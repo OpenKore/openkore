@@ -1,0 +1,26 @@
+Format		,*.spr
+Description	,Sprite List Format
+Byte-order	,Little-endian
+SampleFile	,?
+File size	,?
+
+Offset	,Size		,Name			,Type		,Value	,Expected		,RawData	,Description					,Correct
+0x0		,2			,Magic			,string		,SP		,SP				,53 50		,File signature					,yes
+0x2		,1			,MajorVersion	,byte		,1		,"1,2,3,4,5"	,01			,Major file version				,yes
+0x3		,1			,MinorVersion	,byte		,2		,?				,02			,Minor file version				,yes
+0x4		,2			,Image count	,short		,11		,greater than 0	,0B 00		,Images in file					,probably
+0x6		,2			,Unknown		,unknown	,0		,?				,00 00		,								,
+Images repeat (Image Count)
+0x8		,2			,Width			,short		,35		,greater than 0	,23 00		,Image width					,yes
+0xA		,2			,Height			,short		,30		,greater than 0	,1E 00		,Image Height					,yes
+0xC		,2			,Data size		,short		,720	,greater than 0	,D0 02		,Image data size				,yes
+0xE		,Data Size	,Data			,Binary		,*		,*				,*			,Image data in custom RLE format,yes
+loop
+Pallete repeat 1024 times
+0x1FDC	,1			,Red			,byte		,200	,*				,C8			,Red color						,yes
+0x1FDD	,1			,Green			,byte		,248	,*				,F8			,Green color					,yes
+0x1FDE	,1			,Blue			,byte		,211	,*				,D3			,Blue color						,yes
+0x1FDF	,1			,Alpha			,byte		,0		,normally 0		,00			,Alpha color					,yes
+loop
+
+00 bytes of Image data area encoded in RLE format, if you find a 00 byte the next byte is the number of times of it repeat, each byte is a index for a RGBA color in pallete

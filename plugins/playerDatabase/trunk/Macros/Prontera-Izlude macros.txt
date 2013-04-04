@@ -1,0 +1,59 @@
+# Route from Prontera and Izlude
+# Journey time: approximately 6 minutes and 40 seconds
+
+automacro loop1 {
+hp > 1
+run-once 1
+call move_auto
+}
+
+macro move_auto {
+log Passo 1
+do move prontera @rand(150,160) @rand(25,30)
+log Passo 2
+do move prontera @rand(160,155) @rand(325,330)
+log Passo 3
+do move prontera @rand(120,125) @rand(310,320)
+log Passo 4
+do move prontera @rand(100,110) @rand(290,300)
+log Passo 5
+do move prontera @rand(50,55) @rand(330,340)
+log Passo 6
+do move prontera @rand(60,75) @rand(200,215)
+log Passo 7
+do move prontera @rand(30,35) @rand(200,215)
+log Passo 8
+do move prontera @rand(80,85) @rand(95,100)
+log Passo 9
+do move prontera @rand(90,95) @rand(80,85)
+log Passo 10
+do move prontera @rand(80,85) @rand(50,65)
+log Passo 11
+do move prontera @rand(150,160) @rand(25,30)
+log Passo 12
+do move prontera @rand(145,155) @rand(100,120)
+log Passo 13
+do move prontera @rand(235,240) 148
+log Passo 14
+do move prontera 280 @rand(200,210)
+log Passo 15
+do move prontera 211 186
+log Passo 16
+do move prontera 195 185
+log Passo 17
+do move prontera 188 173
+log Passo 18
+do move prontera 176 173
+log Passo 19
+do move prontera 173 191
+log Passo 20
+do move prt_fild08 160 360
+log Passo 21
+do move prt_fild08 190 355
+log Passo 22
+do move izlude 143 40
+log Passo 23
+do move izlude 95 100
+log Restarting
+call move_auto
+}

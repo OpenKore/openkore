@@ -1,0 +1,31 @@
+# Route from Morroc
+# Journey time: approximately 3 minutes and 45 seconds
+
+automacro loop1 {
+hp > 1
+run-once 1
+call move_auto
+}
+
+macro move_auto {
+log Passo 1
+do move morocc @rand(155,160) @rand(40,50)
+log Passo 2
+do move morocc @rand(155,160) 85
+log Passo 3
+do move morocc @rand(160,175) 95
+log Passo 4
+do move morocc 149 98
+log Passo 5
+do move moc_ruins 116 77
+log Passo 6
+do move moc_ruins 74 141
+log Passo 7
+do move moc_ruins 60 158
+log Passo 8
+do move moc_ruins 47 145
+log Passo 9
+do move moc_fild19 106 100
+log Restarting
+call move_auto
+}

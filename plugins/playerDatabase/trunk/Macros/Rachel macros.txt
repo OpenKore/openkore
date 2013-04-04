@@ -1,0 +1,25 @@
+# Route from Rachel
+# Journey time: approximately 3 minutes and 25 seconds
+
+automacro loop1 {
+hp > 1
+run-once 1
+call move_auto
+}
+
+macro move_auto {
+log Passo 1
+do move rachel @rand(115,120) @rand(130,140)
+log Passo 2
+do move ra_temple 120 175
+log Passo 3
+do move ra_temple 95 150
+log Passo 4
+do move ra_fild12 @rand(40,60) @rand(230,210)
+log Passo 5
+do move rachel @rand(130,140) @rand(110,120)
+log Passo 6
+do move rachel 130 @rand(30,60)
+log Restarting
+call move_auto
+}

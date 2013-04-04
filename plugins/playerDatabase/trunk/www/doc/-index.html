@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ragnarok Act</title>
+    
+    <link rel="stylesheet" type="text/css" href="http://documentup.com/stylesheets/screen.css">
+    
+    
+
+    
+
+    <!-- Typekit -->
+    
+      <script type="text/javascript">
+        (function() {
+          var config = {
+            kitId: 'hjp0pft',
+            scriptTimeout: 3000
+          };
+          var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/( |^)wf-loading( |$)/g,"");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script");tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(a&&a!="complete"&&a!="loaded")return;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+        })();
+      </script>
+    
+  </head>
+  <body><div id="container">
+  <div id="nav">
+    
+      <div id="header">
+        <a href="#" id="logo">Ragnarok Act</a>
+      </div>
+    
+    <ul id="sections">
+      
+        <li>
+          <a href="#introducao">Introdução</a>
+          
+            <ul>
+              
+                <li>
+                  <a href="#introducao/licenca">Licença</a>
+                </li>
+              
+                <li>
+                  <a href="#introducao/abstracao">Abstração</a>
+                </li>
+              
+                <li>
+                  <a href="#introducao/termos-simbolos-e-formatacao-usada">Termos, símbolos e formatação usada</a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+        <li>
+          <a href="#armazenamento">Armazenamento</a>
+          
+            <ul>
+              
+                <li>
+                  <a href="#armazenamento/extensao">Extensão</a>
+                </li>
+              
+                <li>
+                  <a href="#armazenamento/ordenacao-dos-bytes">Ordenação dos bytes</a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+        <li>
+          <a href="#formato">Formato</a>
+          
+            <ul>
+              
+                <li>
+                  <a href="#formato/versao">Versão</a>
+                </li>
+              
+                <li>
+                  <a href="#formato/estruturas">Estruturas</a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+        <li>
+          <a href="#desenho">Desenho</a>
+          
+            <ul>
+              
+                <li>
+                  <a href="#desenho/posicionamento">Posicionamento</a>
+                </li>
+              
+                <li>
+                  <a href="#desenho/escala">Escala</a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+    </ul>
+    
+    
+  </div>
+  <div id="content">
+    
+    <h1>Especificação do formato de arquivo Ragnarok Action</h1>
+<ul>
+<li>Autor: Luis Henrique(HwapX)</li>
+<li>Licença: Public Documentation License (<a href=""><a href="http://www.openoffice.org/licenses/PDL.html">http://www.openoffice.org/licenses/PDL.html</a></a>)</li>
+<li>Contribuidores<ul>
+<li>KeplerBR</li>
+<li>Sergio OpenRagnarok</li>
+</ul>
+</li>
+<li>Outras Fontes<ul>
+<li><a href=""><a href="http://mist.in/gratia/ro/spr/ActFileFormatFix.html">http://mist.in/gratia/ro/spr/ActFileFormatFix.html</a></a></li>
+<li>OpenRagnarok(<a href=""><a href="http://www.open-ragnarok.org/">http://www.open-ragnarok.org/</a></a>)</li>
+<li>Wikipedia(<a href=""><a href="http://www.wikipedia.org/">http://www.wikipedia.org/</a></a>)</li>
+</ul>
+</li>
+<li>Download:<ul>
+<li>PDF <a href=""><a href="http://url.com">http://url.com</a></a></li>
+<li>?</li>
+</ul>
+</li>
+<li>Lançamento: 20/06/2013</li>
+<li>Ultima Modificação: 20/06/2013</li>
+<li>Versão: 0.1</li>
+</ul>
+<h2 id='introducao'>Introdução</h2 id='introducao'>
+<h3 id='introducao/licenca'>Licença</h3 id='introducao/licenca'>
+<p>O conteúdo deste documento está sujeito aos termos da licença <a href="http://www.openoffice.org/licenses/PDL.html">Public Document License</a>, você somente deve utiliza-la caso esteja de acordo com os termos da licença.
+
+</p>
+<p>Esta <strong>não é uma documentação oficial</strong> e foi escrita com base em especificações e códigos de terceiros(Todos devidamente citados em Fontes).
+
+</p>
+<p>A licença cobre somente a documentação e não o formato sobre o qual fala, este está sobre os termos de licença impostos pela <a href="http://www.gravity.co.kr/">GRAVITY</a> empresa responsável pelo jogo.
+
+</p>
+<h3 id='introducao/abstracao'>Abstração</h3 id='introducao/abstracao'>
+<p>Esse documento contém a descrição do formato binário do Ragnarok Action, o qual é usado para armazenar as animações dos objetos do jogo.
+
+</p>
+<h3 id='introducao/termos-simbolos-e-formatacao-usada'>Termos, símbolos e formatação usada</h3 id='introducao/termos-simbolos-e-formatacao-usada'>
+<h4>Referencias</h4>
+<p><a href="#">Exemplo</a>
+
+</p>
+<h4>Números</h4>
+<p>São exibidos em diversos formatos.
+
+</p>
+<ul>
+<li><p>Decimal</p>
+<p>  Não tem nenhuma marcação <code>1024</code></p>
+</li>
+<li><p>Hexadecimal</p>
+<p>  Prefixados com <code>0x</code>, exemplo <code>0x21</code></p>
+</li>
+</ul>
+<h4>Dados</h4>
+<p>Pequenos trechos do arquivo são mostrados da seguinte forma <code>41 43 05 02</code> onde cada byte é separado por um espaço.
+
+</p>
+<p>Grandes trechos são assim.
+
+</p>
+<blockquote>
+<p><strong>00000000</strong> 41 43 05 02 68 00 47 00 D8 03 47 00 04 00 00 00 03 00 <strong>AC..h.G...G.......</strong>
+
+</p>
+</blockquote>
+<p>Offset seguido pelos dados em hexadecimal e por fim sua representação em texto.<br><em>Nota</em>: O Ponto(<strong>.</strong>) é utilizado para indicar caracteres não imprimiveis.
+
+</p>
+<h4>Termos</h4>
+<ul>
+<li><p><em>Não Usado</em></p>
+<p>  Indica que o dados não são mais utilizados e devem ser ignorados na leitura e preenchidos com zeros na escrita.</p>
+</li>
+<li><p><em>Desconhecido</em></p>
+<p>  Descreve campos que tem dados, porem com função desconhecida, normalmente estes campos devem manter os mesmos valores descritos.</p>
+</li>
+<li><p><em>Offset</em></p>
+<p>  Indica a localização de um valor dentro do arquivo.</p>
+</li>
+</ul>
+<h4>Campos de dados</h4>
+<p>Quando citado fora de um exemplo de código os tipos de dados são representados da seguinte forma.
+
+</p>
+<p><strong>nome</strong>: <strong>tipo</strong><em>(tamanho)[quantidade]</em> = <em>valor</em>
+
+</p>
+<p><code>nome</code> e <code>tipo</code> são obrigatorios, <code>tamanho</code> só é utilizado em strings.
+
+</p>
+<h4>Tipos de dados</h4>
+<ul>
+<li>string
+  Representa textos.</li>
+<li>byte
+  Representa um inteiro de 8 bits.</li>
+<li>short
+  Representa inteiros de 16 bits.</li>
+<li>int
+  Representa inteiros de 32 bits.</li>
+<li>float
+  Representa um numero com ponto fluante de 32 bits.</li>
+<li>estruturas
+  Veja estruturas.</li>
+</ul>
+<h4>Estruturas</h4>
+<p>Estruturas são um conjunto de campos encapsulados, normalmente utilizada para encapsular dados relacionados em algo mais abstrato, são representadas da seguinte forma.
+
+</p>
+<ul>
+<li><strong>nome</strong><ul>
+<li><strong>campo</strong></li>
+<li><strong>campo</strong></li>
+</ul>
+</li>
+</ul>
+<p>Elas podem ter um numero indefinido de campos, também pode ter outras estruturas aninhadas como se fosse um campo, nesse caso o <code>nome</code> delas também é o tipo do campo.<br>Também é possivel utilizar o valor de outro campo acima para setar o tamanho e/ou quantidade de outro campo.
+
+</p>
+<ul>
+<li><strong>Header</strong><ul>
+<li><strong>magic</strong>: string[2] = &quot;AC&quot;</li>
+<li><strong>version</strong><ul>
+<li><strong>minor</strong>: byte</li>
+<li><strong>major</strong>: byte</li>
+</ul>
+</li>
+<li><strong>ActionCount</strong>: short</li>
+<li><strong>Unknown</strong>: byte[10]</li>
+<li><strong>Actions</strong>: Action[ActionCount]</li>
+</ul>
+</li>
+</ul>
+<p>É possivel também 
+
+
+</p>
+<h4>Exemplos de código</h4>
+<p>São exemplos de código em linguagens variadas
+</p>
+<pre><code class="c"><span class="function"><span class="title">fseek</span><span class="params">(handle, <span class="number">10</span>, <span class="variable">SEEK_CUR</span>)</span>;</code></pre>
+<h2 id='armazenamento'>Armazenamento</h2 id='armazenamento'>
+<h3 id='armazenamento/extensao'>Extensão</h3 id='armazenamento/extensao'>
+<p>O arquivo tem a extensão <code>.act</code>, porem também pode ser identificado pelos 2 primeiros bytes(aka Magic Header).
+
+</p>
+<h3 id='armazenamento/ordenacao-dos-bytes'>Ordenação dos bytes</h3 id='armazenamento/ordenacao-dos-bytes'>
+<p>A ordem dos bytes indica como um dado é armazenado, existem dois tipos de ordenação Little-Endian e Big-Endian.
+
+</p>
+<ul>
+<li><p>Little-Endian</p>
+<p>  Neste formato os números são armazenados com o bit menos significativo á esquerda.<br>  Exemplo: <code>0x43F4</code> é armazenado como <code>F4 43</code></p>
+</li>
+<li><p>Big-Endian</p>
+<p>  Neste formato  os números são armazenados com o bit menos significativo á direita.<br>  Exemplo: <code>0x43F4</code> é armazenado como <code>43 F4</code></p>
+</li>
+</ul>
+<p>Este formato de arquivo armazena os dados em Little-Endian <a href=""><a href="http://en.wikipedia.org/wiki/Endianness">http://en.wikipedia.org/wiki/Endianness</a></a>.
+
+
+</p>
+<h2 id='formato'>Formato</h2 id='formato'>
+<h3 id='formato/versao'>Versão</h3 id='formato/versao'>
+<p>Existem varias versões deste arquivo, infelizmente nem todas estão documentadas aqui por falta de informações sobre elas.
+
+</p>
+<p>Até o momento pelo que se pode constatar a cada versão campos são adicionados, porem nunca são removidos ou tem sua função alterada.
+
+</p>
+<p>Esse documento só descreve o formato da versão <code>2.0</code> á <code>2.5</code>.
+
+</p>
+<h3 id='formato/estruturas'>Estruturas</h3 id='formato/estruturas'>
+<p>O arquivo é constituído de varias estruturas que serão citadas abaixo.
+
+</p>
+<p>Observações:
+
+</p>
+<p>A ordem que as estruturas aparecem  não é necessariamente a ordem em que você vai ler elas no arquivo.
+
+</p>
+<p>Alguns campos das estruturas só existem em determinadas versões
+
+</p>
+<p>Estruturas que se repetem somente uma vez e são autoexplicativas estão aninhadas, leve isso em consideração durante leitura.
+
+</p>
+<p>Algumas estruturas definidas aqui não estão confirmadas como corretas e os dados quando lidos não fazem muito sentido, isso pode ser porque elas não são mais utilizadas e estão com dados arbitrários ou porque estão realmente incorretas, porem todas tem o tamanho correto permitindo a leitura sem desvios.
+
+</p>
+<h4>Header</h4>
+<p>Contém as informações básicas para a leitura do arquivo como versão e quantidade de Actions contidas nele.
+
+</p>
+<ul>
+<li><strong>Magic</strong>: string(2) = &quot;AC&quot;<br>  Usado para identificar o arquivo</li>
+<li><strong>Version</strong>:<ul>
+<li><strong>Minor</strong>: byte</li>
+<li><strong>Major</strong>: byte</li>
+</ul>
+</li>
+<li><strong>ActionCount</strong>: short
+  Quantidade de Actions no arquivo</li>
+<li><strong>Unknown</strong>: byte[10]</li>
+<li><strong>Actions</strong>: Action[ActionCount]</li>
+</ul>
+<h4>Coordenates</h4>
+<p>Definida do código do OpenRagnarok em outras especificações é tratada como desconhecida.
+
+</p>
+<ul>
+<li><strong>Left</strong>: int</li>
+<li><strong>Top</strong>: int</li>
+<li><strong>Right</strong>: int</li>
+<li><strong>Bottom</strong>: int</li>
+</ul>
+<h4>Action</h4>
+<ul>
+<li><strong>FrameCount</strong>: int32</li>
+<li><strong>Frames</strong>: Frame[FrameCount]</li>
+</ul>
+<h4>Frame</h4>
+<ul>
+<li>Coord_1: Coordenates<blockquote>
+<p><em>Desconhecido</em></p>
+</blockquote>
+</li>
+<li>Coord_2: Coordenates<blockquote>
+<p><em>Desconhecido</em></p>
+</blockquote>
+</li>
+<li>Sprite: uint32<blockquote>
+<p>Indica a quantidade de Sprites utilizados neste Frame</p>
+</blockquote>
+</li>
+<li>Sprites: Sprite[Sprite count]</li>
+<li><em>if Header.Version.Major &gt;= 2</em></li>
+<li>Sound index: int32</li>
+<li><em>if Header.Version.Minor &gt;= 3</em></li>
+<li>Attach Point count: int32</li>
+<li>Attach Points: AttachPoint[Attach Point count]</li>
+</ul>
+<h4>Sprite</h4>
+<p>Contém as informações necessárias para montar o Frame.
+
+</p>
+<ul>
+<li>X: int32</li>
+<li>Y: int32</li>
+<li>Sprite: int32</li>
+<li>Mirror: boolean(int32)</li>
+<li>*if Header.Version.Major &gt;= 2</li>
+<li>Color: int32<ul>
+<li>Red: byte</li>
+<li>Green: byte</li>
+<li>Blue: byte</li>
+<li>Alpha: byte</li>
+</ul>
+</li>
+<li>Scale<ul>
+<li>X: float</li>
+<li><em>if Header.Version.Minor &gt;= 4</em></li>
+<li>Y: float</li>
+<li>Angle: int32</li>
+<li>Type: int32</li>
+</ul>
+</li>
+<li>AttachPoint</li>
+<li>Unknown: int32</li>
+<li>X: int32</li>
+<li>Y: int32</li>
+<li>Attributes: int32</li>
+</ul>
+<h4>Sounds</h4>
+<p>Armazena o caminho dos arquivos de som tocados na animação.
+
+</p>
+<p>O nome dos arquivos está codificado em gb18030.
+
+</p>
+<ul>
+<li>Count: int32</li>
+<li>Filenames: char[Count][40]</li>
+</ul>
+<h4>Delays: float[Header.ActionCount]</h4>
+<h2 id='desenho'>Desenho</h2 id='desenho'>
+<h3 id='desenho/posicionamento'>Posicionamento</h3 id='desenho/posicionamento'>
+<h3 id='desenho/escala'>Escala</h3 id='desenho/escala'>
+
+  </div>
+</div></body>
+</html>

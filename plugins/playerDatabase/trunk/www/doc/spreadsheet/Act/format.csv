@@ -1,0 +1,8 @@
+Description	,Action List
+Byte-order	,little-endian
+
+Name		,Size	,Type	,Value
+Magic		,2		,string	,AC
+MajorVersion,1		,byte	,1 to 5
+MinorVersion,1		,byte	,?
+Animations	,2		,short	,>0
