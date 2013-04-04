@@ -1,0 +1,24 @@
+# Route from Al De Baran
+# Journey time: approximately 2 minutes and 20 seconds
+automacro loop1 {
+hp > 1
+run-once 1
+call move_auto
+}
+
+macro move_auto {
+log Passo 1
+do move aldebaran 165 112
+log Passo 2
+do move aldebaran 139 128
+log Passo 3
+do move alde_alche 27 180
+log Passo 4
+do move aldebaran @rand(133,145) @rand(238,230)
+log Passo 5
+do move aldebaran @rand(100,105) @rand(150,135)
+log Passo 6
+do move aldebaran 153 140
+log Restarting
+call move_auto
+}

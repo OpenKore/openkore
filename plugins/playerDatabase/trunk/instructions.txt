@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+* Tools
+Contains routines to rename files from the GRF and generate SQL based on from GRF files
+
+---------------------------------------------------------------------------
+* Macros
+Contains macros to scroll through the cities and collect information from players
+
+---------------------------------------------------------------------------
+* www
+Site files
+
+---------------------------------------------------------------------------
+* Plugins
+Contains the plugins used exclusively for this project.
+Tip: use the plugin "recordEmblem" inside the plugins folder from SVN
+
+---------------------------------------------------------------------------
+* data base
+Data base files

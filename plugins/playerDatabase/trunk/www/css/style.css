@@ -1,0 +1,162 @@
+<style type="text/css">
+
+html, body {
+	height:100%;
+} 
+
+body {
+	margin:0; 
+	padding:0;
+	}
+	
+ * html #all {
+	height: 100%;
+	display: table;
+ }
+
+#underlinemenu{
+	width: 100%;
+	height: 20%;
+	border: 2px;
+	
+}
+
+#underlinemenu ul{
+	padding: 3px 0 4px 0;
+	margin: 0;
+	text-align: left; 
+}
+
+#underlinemenu ul li{
+	display: inline;
+}
+
+#underlinemenu ul li a{
+	color: #494949;
+	padding: 3px 1px 2px 1px;
+	margin-right: 10px;
+	text-decoration: none;
+	border-bottom: 2px solid gray;
+}
+
+#underlinemenu ul li a:hover, .underlinemenu ul li a.selected{
+	border-bottom-color: black;
+}
+
+#top {
+	float: left;
+	width:100%;
+	background: #FFF url(Images/bg.jpg) repeat;
+	border: 1px groove #8B7B8B;
+	clear:both;
+}
+
+#tbTop {
+	display: table;
+	width:100%;
+}
+
+#left {
+	float: left;
+	width: 45%;
+	display:table;
+}
+
+#right {
+	text-align: center;
+	float: left;
+	margin-left: 3px;
+	width: 50%;
+	display:table;
+}
+
+#botton {
+	float:left;
+	width:100%;
+	text-align: center;
+	display:table;
+}
+
+#userMessage {
+	text-align: right; 
+	display: table;
+}
+
+#all {
+	width:100%;
+	height: 100%;
+	display:table;
+}
+
+.menu {
+	clear: both;
+	display:table;
+}
+
+.container {
+	width: 1300px;
+	display:table;
+}
+
+.personagem {
+	float: left;
+	width: 400px; 
+	height: 300px;
+	margin-left: 2px;
+	display:table;
+	
+}
+
+.pTable {
+	width: 400px; 
+	height: 300px;
+	text-align: left;
+	font-size: 16;
+	margin-left: 2px;
+	display: table;
+}
+
+.name {
+	font-size:12;
+	text-align: left;
+	display: table;
+}
+
+.p {
+	width: 100px; 
+	height: 300px;
+	display: table;
+}
+
+.pagination {
+	width: 100%; 
+	text-align: center;
+	display:table;
+	clear:both;
+
+}
+
+.content {
+	widht: 100%;
+	height: 100%;
+	clear: both;
+	display:table;
+}
+
+#jump {
+	width: 100%;
+	height: 1%;	
+	display: table;
+	visibility:hidden;
+	clear:both;
+}
+
+#item {
+	display: table;
+}
+
+#itemName {
+	display: table;
+}
+
+</style>

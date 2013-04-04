@@ -1,0 +1,49 @@
+format	,act
+testfile,1_??.act
+order	,little-endian
+
+offset	,size	,name			,type			,value		,HexRawData	,Extra					,Correct
+0x0		,2		,Magic			,string			,AC			,41 43		,						,yes
+0x2		,1		,MajorVersion	,byte			,4			,04			,						,yes
+0x3		,1		,MinorVersion	,byte			,2			,02			,						,yes
+0x4		,2		,Animations		,unsigned short	,0x68		,68 00		,						,probably
+0x6		,10		,Unknown		,unknown		,			,			,						,
+
+	0x10	,4		,Frames			,unsigned int	,3			,03 00 00 00,						,
+
+		0x14	,32		,Unknown		,unknown		,			,			,						,
+		0x34	,4		,SubFrames		,unsigned int	,2			,02 00 00 00,						,
+
+			0x38	,4		,X				,int			,1			,01 00 00 00,						,
+			0x3C	,4		,Y				,int			,-65		,BF FF FF FF,
+			0x40	,4		,Image			,int			,-1			,FF FF FF FF,
+			0x44	,4		,Direction		,unsigned int	,0			,00 00 00 00,
+			0x48	,4		,Color			,unsigned int	,0xFFFFFFFF	,FF FF FF FF,Red Green Blue Alpha
+			0x4C	,4		,Scale X		,float			,1.0		,00 00 80 3F,						,yes
+			0x50	,4		,Scale Y		,float			,1.0		,00 00 80 3F,						,yes
+			0x54	,4		,Rotation		,int			,0			,00 00 00 00,
+			0x58	,4		,DontJump		,int			,0			,00 00 00 00,
+
+			0x5C	,4		,X				,int			,1			,01 00 00 00
+			0x60	,4		,Y				,int			,-65		,BF FF FF FF,
+			0x64	,4		,Image			,unsigned int	,0			,00 00 00 00,
+			0x68	,4		,Direction		,unsigned int	,0			,00 00 00 00,
+			0x6C	,4		,Color			,unsigned int	,0xFFFFFFFF	,FF FF FF FF,Red Green Blue Alpha
+			0x70	,4		,Scale X		,float			,1.0		,00 00 80 3F,						,yes
+			0x74	,4		,Scale Y		,float			,1.0		,00 00 80 3F,						,yes
+			0x78	,4		,Rotation		,int			,0			,00 00 00 00,
+			0x7C	,4		,DontJump		,int			,0			,00 00 00 00,
+		
+		0x80	,32		,Unknown		,unknown		,			,			,						,
+		0xA0	,4		,SubFrames		,unsigned int	,65			,41 00 00 00,						,
+			
+			
+		
+		...
+		0xC4	,4		,
+		0xC8	,4		,Direction		,unsigned int	,0			,00 00 00 00,
+		0xCC	,4		,Color			,unsigned int	,0xFFFFFFFF	,FF FF FF FF,Red Green Blue Alpha
+		0xD0	,4		,Scale Y		,float			,1.0		,00 00 80 3F,
+		0xD4	,4		,Scale Y		,float			,1.0		,00 00 80 3F,
+		0xD8	,4		,Rotation		,int			,0			,00 00 00 00,
+		0xDC	,4		,DontJump		,int			,0			,00 00 00 00,

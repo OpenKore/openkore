@@ -1,0 +1,26 @@
+TODO: Incomplete!!
+
+---------------------------------------------------------------------------
+* nameGeneratingEquipment.php
+Generate the equipment name displayed in the style official client
+
+example:
+- Entry: http://127.0.0.1/bROPlayer/gerarnomeequipamentos.php?item_id=1649&slot1=4001&slot2=0&slot3=0&slot4=0&refine=2
+- Returns: + 2 Cajado Raffine da Fortuna
+
+---------------------------------------------------------------------------
+* loginMySQL.php
+Log in database
+
+---------------------------------------------------------------------------
+* top10.php
+Line graph of the last seven days of the score Top10
+
+---------------------------------------------------------------------------
+* error404.php
+Page for error 404.
+When someone access, will save the address of the page or the page that led to error 404 in the database.
+
+---------------------------------------------------------------------------
+* draw_act
+Draw image using SPR and ACT from GRF

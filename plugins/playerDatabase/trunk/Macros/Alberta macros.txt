@@ -1,0 +1,41 @@
+# Route from Alberta
+# Journey time: approximately 3 minutes and 20 seconds
+
+automacro loop1 {
+hp > 1
+run-once 1
+call move_auto
+}
+
+macro move_auto {
+log Passo 1
+do move alberta 240 115
+log Passo 2
+do move alberta 240 90
+log Passo 3
+do move alberta 240 65
+log Passo 4
+do move alberta 240 45
+log Passo 5
+do move alberta @rand(115,120) @rand(70,55)
+log Passo 6
+do move alberta @rand(115,120) 48
+log Passo 7
+do move alberta 52 48
+log Passo 8
+do move alberta 52 48
+log Passo 9
+do move alberta 21 233
+log Passo 10
+do move alberta 103 169
+log Passo 11
+do move alberta 75 67
+log Passo 12
+do move alberta @rand(115,120) @rand(65,55)
+log Passo 13
+do move alberta 165 73
+log Passo 14
+do move alberta @rand(150,170) @rand(75,50)
+log Restarting
+call move_auto
+}

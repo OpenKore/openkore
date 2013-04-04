@@ -1,0 +1,33 @@
+# Route from Yuno
+# Journey time: approximately 1 minutes and 30 seconds
+
+automacro loop1 {
+hp > 1
+run-once 1
+call move_auto
+}
+
+macro move_auto {
+log Passo 1
+do move yuno @rand(140,145) 180
+log Passo 2
+do move yuno @rand(165,170) 180
+log Passo 3
+do move yuno @rand(165,170) 160
+log Passo 4
+do move yuno @rand(140,145) 160
+log Passo 5
+do move yuno 155 @rand(120,130)
+log Passo 6
+do move yuno 145 100
+log Passo 7
+do move yuno @rand(150,160) @rand(89,80)
+log Passo 8
+do move yuno_fild04 231 288
+log Passo 9
+do move yuno @rand(150,160) @rand(89,80)
+log Passo 10
+do move yuno 170 100
+log Restarting
+call move_auto
+}
