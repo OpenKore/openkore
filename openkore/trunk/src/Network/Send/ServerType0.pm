@@ -61,7 +61,7 @@ sub new {
 		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0102' => ['party_setting', 'V', [qw(exp)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
-		'0113' => ['skill_use', 'v*', [qw(lv skillID targetID)]],
+		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0149' => ['alignment', 'a4 C v', [qw(targetID type point)]],
