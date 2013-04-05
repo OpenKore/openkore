@@ -31,7 +31,6 @@ sub new {
 # TODO 0x0360,6,reqclickbuyingstore,2
 		'0362' => undef,
 		'0364' => undef,
-		'0366' => undef,#90
 # TODO 0x0369,26,friendslistadd,2
 		'0436' => undef,
 		'0437' => ['character_move', 'a3', [qw(coords)]],
