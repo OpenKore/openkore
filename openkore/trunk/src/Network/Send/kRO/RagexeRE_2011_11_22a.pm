@@ -23,6 +23,7 @@ sub new {
 		'02C4' => undef,
 		'0362' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
 		'0364' => undef,
+		'0366' => undef,
 		'0369' => undef,
 		'0436' => ['item_drop', 'v2', [qw(index amount)]],#6
 		'0815' => undef,
@@ -33,10 +34,11 @@ sub new {
 		'088A' => undef,
 		'0892' => ['character_move', 'a3', [qw(coords)]],#5
 		'0893' => ['item_take', 'a4', [qw(ID)]],#6
+		'0896' => ['actor_look_at', 'v C', [qw(head body)]],#5
 		'0897' => undef,
 		'0898' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		'0899' => ['sync', 'V', [qw(time)]],#6
-		'08A1' => ['skill_use', 'v3 a4', [qw(lv skillID targetID)]],#10
+		'08A1' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'08A4' => ['storage_item_add', 'v V', [qw(index amount)]],#8
 		'08AA' => undef,
 		'08AD' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
@@ -46,6 +48,7 @@ sub new {
 	my %handlers = qw(
 		actor_action 022D
 		actor_info_request 0898
+		actor_look_at 0896
 		character_move 0892
 		item_drop 0436
 		item_take 0893
@@ -95,7 +98,7 @@ TODO: 0x0815,2,searchstoreinfonextpage,0
 TODO: 0x0366,12,searchstoreinfolistitemclick,2:6:10
 0x0892,5,walktoxy,2
 0x0899,6,ticksend,2
-TODO: 0x0896,5,changedir,2:4
+0x0896,5,changedir,2:4
 0x0893,6,takeitem,2
 0x0436,6,dropitem,2:4
 0x08A4,8,movetokafra,2:4
