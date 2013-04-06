@@ -14,12 +14,14 @@
 package Network::Receive::twRO;
 
 use strict;
+use Time::HiRes;
+
 use Globals;
 use base qw(Network::Receive::ServerType0);
 use Log qw(message warning error debug);
 use Network::MessageTokenizer;
 use I18N qw(bytesToString stringToBytes);
-use Utils qw(timeOut);
+use Utils qw(timeOut getHex);
 
 sub new {
 	my ($class) = @_;
@@ -27,8 +29,8 @@ sub new {
 	my %packets = (
 		'006D' => ['character_creation_successful', 'a4 V9 v V2 v14 Z24 C6 v2', [qw(charID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag)]],
 		'0097' => ['private_message', 'v Z28 Z*', [qw(len privMsgUser privMsg)]],
-		'082D' => ['received_characters2', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
-		'08B9' => ['account_id', 'x4 V v', [qw(accountID unknown)]], # 12
+		'082D' => ['characters_slots_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
+		'08B9' => ['second_passwd_login', 'x4 a4 v', [qw(accountID unknown)]], # 12
 	);
 
 	foreach my $switch (keys %packets) {
@@ -51,35 +53,31 @@ sub new {
 *reconstruct_quest_update_mission_hunt = *Network::Receive::ServerType0::reconstruct_quest_update_mission_hunt_v2;
 
 sub sync_received_characters {
-	my $count;
-	#TODO: FIXME better support
-	($config{XKore} == 1)?$count = 1:$count = 2;
-	for (1..$count) { # the client sends 2 packets (captured from twRO)
+	my ($self, $args) = @_;
+	if ($config{'XKore'} ne '1') {
 		$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
 	}
 }
 
-sub received_characters2 {
-        my ($self, $args) = @_;
+sub characters_slots_info {
+	my ($self, $args) = @_;
 
-        Scalar::Util::weaken(my $weak = $self);
-        my $timeout = {timeout => 6, time => time};
+	$charSvrSet{total_slot} = $args->{total_slot} if (exists $args->{total_slot});
+	$charSvrSet{normal_slot} = $args->{normal_slot} if (exists $args->{normal_slot});
+	$charSvrSet{premium_slot} = $args->{premium_slot} if (exists $args->{premium_slot});
+	$charSvrSet{billing_slot} = $args->{billing_slot} if (exists $args->{billing_slot});
+	$charSvrSet{producible_slot} = $args->{producible_slot} if (exists $args->{producible_slot});
+	$charSvrSet{valid_slot} = $args->{valid_slot} if (exists $args->{valid_slot});
 
-        $self->{charSelectTimeoutHook} = Plugins::addHook('Network::serverConnect/special' => sub {
-                if ($weak && timeOut($timeout)) {
-                        $weak->received_characters({charInfo => '', RAW_MSG_SIZE => 4});
-                }
-        });
+	$timeout{charlogin}{time} = time;
+}
 
-        $self->{charSelectHook} = Plugins::addHook(charSelectScreen => sub {
-                if ($weak) {
-                        Plugins::delHook(delete $weak->{charSelectTimeoutHook}) if $weak->{charSelectTimeoutHook};
-                }
-        });
+# This is ten second-level password for 2013/3/29 upgrading of twRO
+sub second_passwd_login {
+	my ($self, $args) = @_;
 
-        $timeout{charlogin}{time} = time;
-
-        $self->received_characters($args);
+	my $accountID = $args->{accountID};
+	debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
 }
 
 1;
