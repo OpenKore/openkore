@@ -1455,8 +1455,8 @@ sub createCharacter {
 	} elsif ($slot !~ /^\d+$/) {
 		$interface->errorDialog(TF("Slot \"%s\" is not a valid number.", $slot), 0);
 		return 0;
-	} elsif ($slot < 0 || $slot > 4) {
-		$interface->errorDialog(T("The slot must be comprised between 0 and 4."), 0); # TODO: private servers allow more slots
+	} elsif (exists $charSvrSet{total_slot} && ($slot < 0 || $slot > $charSvrSet{total_slot})) {
+		$interface->errorDialog(T("The slot must be comprised between 0 and $charSvrSet{total_slot}."), 0);
 		return 0;
 	} elsif ($chars[$slot]) {
 		$interface->errorDialog(TF("Slot %s already contains a character (%s).", $slot, $chars[$slot]{name}), 0);
