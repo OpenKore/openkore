@@ -42,6 +42,7 @@ sub new {
 		actor_info_request 0368
 		actor_name_request 0369
 		party_setting 07D7
+		buy_bulk_vender 0801
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
