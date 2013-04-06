@@ -4129,6 +4129,14 @@ sub received_characters {
 	my ($self, $args) = @_;
 	message T("Received characters from Character Server\n"), "connection";
 	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER);
+	
+	$charSvrSet{total_slot} = $args->{total_slot} if (exists $args->{total_slot});
+	$charSvrSet{normal_slot} = $args->{normal_slot} if (exists $args->{normal_slot});
+	$charSvrSet{premium_slot} = $args->{premium_slot} if (exists $args->{premium_slot});
+	$charSvrSet{billing_slot} = $args->{billing_slot} if (exists $args->{billing_slot});
+	$charSvrSet{producible_slot} = $args->{producible_slot} if (exists $args->{producible_slot});
+	$charSvrSet{valid_slot} = $args->{valid_slot} if (exists $args->{valid_slot});
+
 	undef $conState_tries;
 	undef @chars;
 
