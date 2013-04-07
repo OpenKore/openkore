@@ -204,7 +204,7 @@ sub map_loaded {
 			next if (!$cart{'inventory'}[$i] || !%{$cart{'inventory'}[$i]});
 			my $item = $cart{'inventory'}[$i];
 			$item->{index} = $i;
-			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10 || $item->{type} == 16) {
+			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) {
 				push @stackable, $item;
 			} else {
 				push @nonstackable, $item;
@@ -259,7 +259,7 @@ sub map_loaded {
 		my @stackable;
 		my @nonstackable;
 		foreach my $item (@{$char->inventory->getItems()}) {
-			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10 || $item->{type} == 16) {
+			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) {
 				push @stackable, $item;
 			} else {
 				push @nonstackable, $item;
