@@ -307,6 +307,11 @@ sub checkPerson {
 		if ($dist > 0) {
 			return (distance($char->{pos_to}, $player->{pos_to}) <= $dist)?1:0
 		}
+		my $val = sprintf("%d %d %s", $player->{pos_to}{x}, $player->{pos_to}{y}, $field->baseName);
+		$varStack{".lastPlayerName"} = $player->name;
+		$varStack{".lastPlayerPos"} = $val;
+		$varStack{".lastPlayerLevel"} = $player->{lv};
+		$varStack{".lastPlayerJob"} = $player->job;
 		return 1
 	}
 	return 0
