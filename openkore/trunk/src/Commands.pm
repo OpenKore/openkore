@@ -4856,10 +4856,6 @@ sub cmdUseItemOnMonster {
 	} elsif (!$char->inventory->get($arg1)) {
 		error TF("Error in function 'im' (Use Item on Monster)\n" .
 			"Inventory Item %s does not exist.\n", $arg1);
-	} elsif (!$char->inventory->get($arg1)->usable) {
-		# TODO: $item->use already checks whether item is usable
-		error TF("Error in function 'im' (Use Item on Monster)\n" .
-			"Inventory Item %s is not of type Usable.\n", $arg1);
 	} elsif ($monstersID[$arg2] eq "") {
 		error TF("Error in function 'im' (Use Item on Monster)\n" .
 			"Monster %s does not exist.\n", $arg2);
@@ -4882,9 +4878,6 @@ sub cmdUseItemOnPlayer {
 	} elsif (!$char->inventory->get($arg1)) {
 		error TF("Error in function 'ip' (Use Item on Player)\n" .
 			"Inventory Item %s does not exist.\n", $arg1);
-	} elsif (!$char->inventory->get($arg1)->usable) {
-		error TF("Error in function 'ip' (Use Item on Player)\n" .
-			"Inventory Item %s is not of type Usable.\n", $arg1);
 	} elsif ($playersID[$arg2] eq "") {
 		error TF("Error in function 'ip' (Use Item on Player)\n" .
 			"Player %s does not exist.\n", $arg2);
@@ -4908,11 +4901,6 @@ sub cmdUseItemOnSelf {
 	if (!$item) {
 		error TF("Error in function 'is' (Use Item on Yourself)\n" .
 			"Inventory Item %s does not exist.\n", $args);
-		return;
-	}
-	if (!$item->usable) {
-		error TF("Error in function 'is' (Use Item on Yourself)\n" .
-			"Inventory Item %s is not of type Usable.\n", $item);
 		return;
 	}
 	$item->use;
