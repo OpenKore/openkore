@@ -312,6 +312,8 @@ sub checkPerson {
 		$varStack{".lastPlayerPos"} = $val;
 		$varStack{".lastPlayerLevel"} = $player->{lv};
 		$varStack{".lastPlayerJob"} = $player->job;
+		$varStack{".lastPlayerAccountId"} = $player->{nameID};
+		$varStack{".lastPlayerBinId"} = $player->{binID};
 		return 1
 	}
 	return 0
