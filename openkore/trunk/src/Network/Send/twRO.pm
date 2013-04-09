@@ -26,7 +26,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'0090' => ['char_create', 'a24 C v2', [qw(name, slot, hair_style, hair_color)]],
+		'0970' => ['char_create', 'a24 C v2', [qw(name, slot, hair_style, hair_color)]],
 		'08B8' => ['send_pin_password','a4 a4', [qw(accountID pin)]],
 		'08BA' => ['new_pin_password','a4 a4', [qw(accountID pin)]],
 		);
