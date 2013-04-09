@@ -25,6 +25,8 @@ use Math::BigInt;
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+	$self->{char_create_version} = 1;
+
 	my %packets = (
 		'0970' => ['char_create', 'a24 C v2', [qw(name, slot, hair_style, hair_color)]],
 		'08B8' => ['send_pin_password','a4 a4', [qw(accountID pin)]],
