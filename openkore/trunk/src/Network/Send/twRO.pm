@@ -20,13 +20,17 @@ use base qw(Network::Send::ServerType0);
 use Log qw(error debug);
 use I18N qw(stringToBytes);
 use Utils qw(getTickCount getHex getCoordString);
+use Math::BigInt;
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
+		'0090' => ['char_create', 'a24 C v2', [qw(name, slot, hair_style, hair_color)]],
+		'08B8' => ['send_pin_password','a4 a4', [qw(accountID pin)]],
+		'08BA' => ['new_pin_password','a4 a4', [qw(accountID pin)]],
 		);
-	
+
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
@@ -43,10 +47,75 @@ sub new {
 		actor_name_request 0369
 		party_setting 07D7
 		buy_bulk_vender 0801
+		char_create 0970
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
+}
+
+# 0x0970,31
+sub sendCharCreate {
+	my ($self, $slot, $name, $hair_style, $hair_color) = @_;
+
+	my $msg = pack('C2 a24 C v2', 0x70, 0x09, stringToBytes($name), $slot, $hair_color, $hair_style);
+	$self->sendToServer($msg);
+	debug "Sent sendCharCreate\n", "sendPacket", 2;
+}
+
+# randomizePin function/algorithm by Kurama, ever_boy_, kLabMouse and Iniro. cleanups by Revok
+sub randomizePinCode {
+	my ($seed, $pin) = @_;
+
+	$seed =  Math::BigInt->new($seed);
+	my $mulfactor = 0x3498;
+	my $addfactor = 0x881234;
+	my @keypad_keys_order = ('0'..'9');
+
+	# calculate keys order (they are randomized based on seed value)
+	if (@keypad_keys_order >= 1) {
+		my $k = 2;
+		for (my $pos = 1; $pos < @keypad_keys_order; $pos++) {
+			$seed = $addfactor + $seed * $mulfactor & 0xFFFFFFFF; # calculate next seed value
+			my $replace_pos = $seed % $k;
+			if ($pos != $replace_pos) {
+				my $old_value = $keypad_keys_order[$pos];
+				$keypad_keys_order[$pos] = $keypad_keys_order[$replace_pos];
+				$keypad_keys_order[$replace_pos] = $old_value;
+			}
+			$k++;
+		}
+	}
+	# associate keys values with their position using a hash
+	my %keypad;
+	for (my $pos = 0; $pos < @keypad_keys_order; $pos++) { $keypad{@keypad_keys_order[$pos]} = $pos; }
+	my $pin_reply = '';
+	my @pin_numbers = split('',$pin);
+	foreach (@pin_numbers) { $pin_reply .= $keypad{$_}; }
+	return $pin_reply;
+}
+
+sub sendLoginPinCode {
+	my ($self, $seed, $type) = @_;
+
+	my $pin = randomizePinCode($seed, $config{loginPinCode});
+	my $msg;
+	if ($type == 0) {
+		$msg = $self->reconstruct({
+			switch => 'send_pin_password',
+			accountID => $accountID,
+			pin => $pin,
+		});
+	} elsif ($type == 1) {
+		$msg = $self->reconstruct({
+			switch => 'new_pin_password',
+			accountID => $accountID,
+			pin => $pin,
+		});
+	}
+	$self->sendToServer($msg);
+	$timeout{charlogin}{time} = time;
+	debug "Sent loginPinCode\n", "sendPacket", 2;
 }
 
 1;

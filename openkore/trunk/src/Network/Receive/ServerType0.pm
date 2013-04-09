@@ -1499,7 +1499,7 @@ sub character_creation_successful {
 	$char->{headgear}{low} = 0;
 	$char->{headgear}{top} = 0;
 	$char->{headgear}{mid} = 0;
-	$char->{nameID} = unpack("V", $accountID); 
+	$char->{nameID} = unpack("V", $accountID);
 	#$char->{lv} = 1;
 	#$char->{lv_job} = 1;
 	$char->{sex} = $accountSex2;
@@ -1632,14 +1632,14 @@ sub chat_info {
 	$chat->{limit} = $args->{limit};
 	$chat->{public} = $args->{public};
 	$chat->{num_users} = $args->{num_users};
-	
+
 	Plugins::callHook('packet_chatinfo', {
 	  title => $title,
 	  ownerID => $args->{ownerID},
 	  limit => $args->{limit},
 	  public => $args->{public},
 	  num_users => $args->{num_users}
-	});	
+	});
 }
 
 sub chat_join_result {
@@ -2431,7 +2431,7 @@ sub guild_broken {
 	my $flag = $args->{flag};
 
 	if ($flag == 2) {
-		error T("Guild can not be undone: there are still members in the guild\n");		
+		error T("Guild can not be undone: there are still members in the guild\n");
 	} elsif ($flag == 1) {
 		error T("Guild can not be undone: invalid key\n");
 	} elsif ($flag == 0) {
@@ -2440,7 +2440,7 @@ sub guild_broken {
 		undef $char->{guildID};
 		undef %guild;
 	} else {
-		error TF("Guild can not be undone: unknown reason (flag: %s)\n", $flag);		
+		error TF("Guild can not be undone: unknown reason (flag: %s)\n", $flag);
 	}
 }
 
@@ -3468,30 +3468,30 @@ sub message_string {
 	if (@msgTable[$args->{msg_id}++]) { # show message from msgstringtable
 		warning T(@msgTable[$args->{msg_id}++]."\n");
 		$self->mercenary_off() if ($args->{msg_id} >= 0x04F2 && $args->{msg_id} <= 0x04F5);
-		
+
 	} else {
 		if ($args->{msg_id} == 0x04F2) {
 			message T("Mercenary soldier's duty hour is over.\n"), "info";
 			$self->mercenary_off ();
-	
+
 		} elsif ($args->{msg_id} == 0x04F3) {
 			message T("Your mercenary soldier has been killed.\n"), "info";
 			$self->mercenary_off ();
-	
+
 		} elsif ($args->{msg_id} == 0x04F4) {
 			message T("Your mercenary soldier has been fired.\n"), "info";
 			$self->mercenary_off ();
-	
+
 		} elsif ($args->{msg_id} == 0x04F5) {
 			message T("Your mercenary soldier has ran away.\n"), "info";
 			$self->mercenary_off ();
-			
+
 		} elsif ($args->{msg_id} ==	0x054D) {
 			message T("View player equip request denied.\n"), "info";
-	
+
 		} elsif ($args->{msg_id} == 0x06AF) {
 			message T("You need to be at least base level 10 to send private messages.\n"), "info";
-	
+
 		} else {
 			warning TF("msg_id: %s gave unknown results in: %s\n", $args->{msg_id}, $self->{packet_list}{$args->{switch}}->[0]);
 		}
@@ -3585,7 +3585,7 @@ sub npc_sell_list {
 	}
 	undef $talk{buyOrSell};
 	message T("Ready to start selling items\n");
-	
+
 	debug "You can sell:\n", "info";
 	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
 		my ($index, $price, $price_overcharge) = unpack("v L L", substr($args->{itemsdata},$i,($i + 10)));
@@ -3717,7 +3717,7 @@ sub npc_talk_close {
 	$ai_v{npc_talk}{talk} = 'close';
 	$ai_v{npc_talk}{time} = time;
 	undef %talk;
-	
+
 	Plugins::callHook('npc_talk_done', {ID => $ID});
 }
 
@@ -3956,7 +3956,7 @@ sub booking_update {
 # 0x80B
 sub booking_delete {
 	my ($self, $args) = @_;
-	
+
 	message TF("Deleted reserve group index %s\n", $args->{index});
 }
 
@@ -4394,6 +4394,10 @@ sub private_message_sent {
 	shift @lastpm;
 }
 
+sub sync_received_characters {
+	my ($self, $args) = @_;
+}
+
 sub received_characters {
 	return if ($net->getState() == Network::IN_GAME);
 	my ($self, $args) = @_;
@@ -4466,7 +4470,7 @@ sub received_characters {
 	}
 
 	my $nChars = 0;
-	foreach (@chars) { $nChars++ if($_); } 
+	foreach (@chars) { $nChars++ if($_); }
 
 	# FIXME better support for multiple received_characters packets
 	if ($args->{switch} eq '099D' && $args->{RAW_MSG_SIZE} >= ($blockSize * 3)) {
@@ -4483,10 +4487,12 @@ sub received_characters {
 	# it doesn't work...
 	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
 	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $config{serverType} == 2);
-	if (charSelectScreen(1) == 1) {
-		$firstLoginMap = 1;
-		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-		$sentWelcomeMessage = 1;
+	if ($args->{switch} ne '099D') {
+		if (charSelectScreen(1) == 1) {
+			$firstLoginMap = 1;
+			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+			$sentWelcomeMessage = 1;
+		}
 	}
 }
 
@@ -5074,14 +5080,14 @@ sub skill_use_failed {
 		29 => T('Must have at least 1% of base XP'),
 		83 => T('Location not allowed to create chatroom/market')
 		);
-	
+
 	my $errorMessage;
 	if (exists $failtype{$type}) {
 		$errorMessage = $failtype{$type};
 	} else {
 		$errorMessage = 'Unknown error';
 	}
-	
+
 	warning TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill";
 	Plugins::callHook('packet_skillfail', {
 		skillID     => $skillID,
@@ -6079,7 +6085,7 @@ sub unit_levelup {
 	} elsif ($type == MAKEITEM_AM_SUCCESS_EFFECT) {
 		message TF("%s successfully created a potion!\n", $actor), "refine";
 	} elsif ($type == MAKEITEM_AM_FAIL_EFFECT) {
-		message TF("%s failed to create a potion!\n", $actor), "refine";	
+		message TF("%s failed to create a potion!\n", $actor), "refine";
 	} else {
 		message TF("%s unknown unit_levelup effect (%d)\n", $actor, $type);
 	}
@@ -6437,13 +6443,13 @@ sub rates_info {
 		death => { total => $args->{death} },
 		drop => { total => $args->{drop} },
 	);
-	
+
 	# get details
 	for (my $offset = 0; $offset < length($args->{detail}); $offset += 7) {
 		my ($type, $exp, $death, $drop) = unpack("C s3", substr($args->{detail}, $offset, 7));
 		$rates{exp}{$type} = $exp; $rates{death}{$type} = $death; $rates{drop}{$type} = $drop;
 	}
-	 
+
 	# we have 4 kinds of detail:
 	# $rates{exp or drop or death}{DETAIL_KIND}
 	# 0 = base server exp (?)
@@ -7344,7 +7350,7 @@ sub open_buying_store_fail { #0x812
 sub buying_store_found {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
-	
+
 	if (!$buyerLists{$ID} || !%{$buyerLists{$ID}}) {
 		binAdd(\@buyerListsID, $ID);
 		Plugins::callHook('packet_buying', {ID => unpack 'V', $ID});
@@ -7363,7 +7369,7 @@ sub buying_store_lost {
 
 sub buying_store_items_list {
 	my($self, $args) = @_;
-	
+
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $headerlen = 16;
@@ -7373,8 +7379,8 @@ sub buying_store_items_list {
 	$buyerID = $args->{buyerID};
 	$buyingStoreID = $args->{buyingStoreID};
 	my $player = Actor::get($buyerID);
-	
-	message TF("%s\n" .	
+
+	message TF("%s\n" .
 	"#   Name                                      Type           Amount       Price\n",
 		center(' Buyer: ' . $player->nameIdx . ' ', 79, '-')), "list";
 	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=9) {
@@ -7451,17 +7457,17 @@ sub buyer_lost {
 
 sub battlefield_position {
 	my ($self, $args) = @_;
-	
+
 	my $ID = $args->{ID};
 	my $name = $args->{name};
 }
 
 sub battlefield_hp {
 	my ($self, $args) = @_;
-	
+
 	my $ID = $args->{ID};
 	my $name = $args->{name};
-	
+
 }
 
 sub guild_member_map_change {
@@ -7471,7 +7477,7 @@ sub guild_member_map_change {
 
 sub guild_member_add {
 	my ($self, $args) = @_;
-	
+
 	my $name = bytesToString($args->{name});
 	message TF("Guild member added: %s\n",$name), "guildchat";
 }
@@ -7482,7 +7488,7 @@ sub millenium_shield {
 
 sub skill_post_delaylist {
 	my ($self, $args) = @_;
-	
+
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	for (my $i = 4; $i < $args->{msg_size}; $i += 6){
@@ -7502,7 +7508,7 @@ sub msg_string {
 sub skill_msg {
 	my ($self, $args) = @_;
 	message TF("id: %s msgid: %s\n", $args->{id}, $args->{msgid}), "info";
-	
+
 	#	'07E6' => ['skill_msg', 'v V', [qw(id msgid)]], #TODO: PACKET_ZC_MSG_SKILL     **msgtable
 }
 
@@ -7518,14 +7524,14 @@ sub quest_all_list2 {
 		($questID, $active, $time_start, $time, $mission_amount) = unpack('V C V2 v', $msg);
 		$questList->{$questID}->{active} = $active;
 		debug "$questID $active\n", "info";
-		
+
 		my $quest = \%{$questList->{$questID}};
 		$quest->{time_start} = $time_start;
 		$quest->{time} = $time;
 		$quest->{mission_amount} = $mission_amount;
 		debug "$questID $time_start $time $mission_amount\n", "info";
 		$i += 15;
-		
+
 		if ($mission_amount > 0) {
 			for (my $j = 0 ; $j < $mission_amount ; $j++) {
 				$msg = substr($args->{message}, $i, 32);
