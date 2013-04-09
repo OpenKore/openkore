@@ -3944,6 +3944,16 @@ sub cmdRelog {
 		@cmdQueueList = ();
 		$cmdQueue = 0;
 		relog($arg);
+	} elsif ($arg =~ /^\d+\.\.\d+$/) {
+		# range support
+		my @numbers = split(/\.\./, $arg);
+		if ($numbers[0] > $numbers[1]) {
+			error T("Invalid range in function 'relog'\n");
+		} else {
+			@cmdQueueList = ();
+			$cmdQueue = 0;
+			relog(rand($numbers[1] - $numbers[0])+$numbers[0]);
+		}
 	} else {
 		error T("Syntax Error in function 'relog' (Log out then log in.)\n" .
 			"Usage: relog [delay]\n");
