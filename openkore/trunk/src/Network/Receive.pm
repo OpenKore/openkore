@@ -1461,7 +1461,7 @@ sub inventory_item_removed {
 	}
 }
 
-# 01D2
+# 012D
 sub shop_skill {
 	my ($self, $args) = @_;
 
@@ -1469,7 +1469,7 @@ sub shop_skill {
 	my $number = $args->{number};
 	message TF("You can sell %s items!\n", $number);
 	
-	main::openShop();
+	main::openShop() if ($config{XKore} eq '0');
 }
 
 # 01D0 (spirits), 01E1 (coins), 08CF (amulets)
