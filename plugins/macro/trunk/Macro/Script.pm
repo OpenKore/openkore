@@ -440,48 +440,7 @@ sub next {
 		$self->{timeout} = $self->{macro_delay} unless defined $self->{mainline_delay} && defined $self->{subline_delay};
 		return $self->{result} if $self->{result}
 	##########################################
-	# sleep command - different of the command "pause", the "sleep"
-	#  will not stop all actions, but only the macro
-	} elsif ($line =~ /^sleep/) {
-		if ($line =~ /;/) {
-			run_sublines($line, $self);
-			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-			$self->{timeout} = $self->{macro_delay} unless defined $self->{mainline_delay} && defined $self->{subline_delay}
-		}
-		else {
-			my ($tmp) = $line =~ /^sleep\s*(.*)/;
-			$onHold = 1;
-			
-			if (defined $tmp) {
-				my $result = parseCmd($tmp, $self);
-				if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-				unless (defined $result) {$self->{error} = "$errtpl: $tmp failed"}
-				else {
-					warning "MACRO 1: $result\n";
-					$taskManager->add(Task::Timeout->new(
-						name => 'macroSleep',
-						weak => 1,
-						function => sub {
-							$self->{line}++;
-							return $self->{result} if $self->{result};
-							$onHold = 0},
-						seconds => $result,
-					));
-				}
-			} else {
-				$taskManager->add(Task::Timeout->new(
-					name => 'macroSleep',
-					weak => 1,
-					function => sub {
-						$self->{line}++;
-						return $self->{result} if $self->{result};
-						$onHold = 0},
-					seconds => $self->{macro_delay},
-				));
-			}
-		}
-	##########################################
-	# pause command - different of the command "sleep", the "pause" will stop all actions of BOT
+	# pause command
 	} elsif ($line =~ /^pause/) {
 		if ($line =~ /;/) {
 			run_sublines($line, $self);
