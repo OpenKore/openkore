@@ -24,9 +24,10 @@ sub getCharacters {
 	my ($self, $session) = @_;
 	my @chars;
 	if (!$session->{dummy} && $char) {
-		for (my $i = 0; $i < 5; $i++) {
-			push @chars, $char;
-		}
+		#for (my $i = 0; $i < 5; $i++) {
+		#	push @chars, $char;
+		#}
+		push @chars, $char;
 	} else {
 		$session->{dummy} = 1;
 		for (my $i = 0; $i < 5; $i++) {
