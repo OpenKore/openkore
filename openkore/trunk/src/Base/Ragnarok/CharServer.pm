@@ -9,7 +9,7 @@ use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
 use Misc;
 use I18N qw(stringToBytes);
-use Globals qw(%config);
+use Globals qw(%config $accountID);
 
 use constant SESSION_TIMEOUT => 120;
 use constant DUMMY_CHARACTER => {
@@ -37,6 +37,7 @@ use constant DUMMY_CHARACTER => {
 	}
 };
 
+our $nChar = 0;
 
 sub new {
 	my $class = shift;
@@ -86,16 +87,125 @@ sub game_login {
 		$client->close();
 
 	} else {
-		no encoding 'utf8';
-		use bytes;
+		$self->{sessionStore}->mark($session);
+		$client->{session} = $session;
+		$session->{time} = time;
+		$client->send($args->{accountID});
 
-		# Show list of characters.
+		my $output = '';
+		if ($self->{recvPacketParser}{packet_lut}{received_characters} eq '099D') {
+			$output = $self->{recvPacketParser}->reconstruct({
+				switch => 'characters_slots_info',
+				total_slot => $charSvrSet{total_slot},
+				normal_slot => $charSvrSet{normal_slot},
+				premium_slot => $charSvrSet{premium_slot},
+				billing_slot => $charSvrSet{billing_slot},
+				producible_slot => $charSvrSet{producible_slot},
+				valid_slot => $charSvrSet{valid_slot},
+			}).$self->{recvPacketParser}->reconstruct({
+			switch => 'sync_received_characters',
+				nCount => 2,
+			});
+			$client->send($output);
+
+		} else {
+			no encoding 'utf8';
+			use bytes;
+	
+			# Show list of characters.
+			my $output = '';
+			my $index = -1;
+			foreach my $char ($self->getCharacters($session)) {
+				$index++;
+				next if (!$char);
+	
+				$output .= pack(
+					$self->{recvPacketParser}->received_characters_unpackString,
+					$char->{charID},	# character ID
+					$char->{exp},		# base experience
+					$char->{zeny},		# zeny
+					$char->{exp_job},	# job experience
+					$char->{lv_job},
+					$char->{opt1},
+					$char->{opt2},
+					$char->{option},
+					0,
+					0,
+					$char->{points_free},
+					$char->{hp},
+					$char->{hp_max},
+					$char->{sp},
+					$char->{sp_max},
+					$char->{walk_speed} * 1000,
+					$char->{jobID},
+					$char->{hair_style},
+					$char->{weapon}, # FIXME
+					$char->{lv},
+					$char->{points_skill},
+					$char->{headgear}{low},
+					$char->{shield}, # FIXME
+					$char->{headgear}{top},
+					$char->{headgear}{mid},
+					$char->{hair_color},
+					$char->{clothes_color},
+					stringToBytes($char->{name}),
+					$char->{str},
+					$char->{agi},
+					$char->{vit},
+					$char->{int},
+					$char->{dex},
+					$char->{luk},
+					$index,
+					1,
+				);
+			}
+			# FIXME
+	        	if ($self->{serverType} == 8){
+				$output = pack('C20') . $output;
+			}
+	
+			# SECURITY NOTE: the session should be marked as belonging to this
+			# character server only. Right now there is the possibility that
+			# someone can login to another character server with a session
+			# that was already handled by this one.
+	
+			$self->{sessionStore}->mark($session);
+			$client->{session} = $session;
+			$session->{time} = time;
+			$client->send($args->{accountID});
+			if ($config{XKore_altCharServer} == 1){
+				$client->send(pack('C2 v', 0x72, 0x00, length($output) + 4) . $output);
+			}else{
+				$client->send($self->{recvPacketParser}->reconstruct({
+					switch => 'received_characters',
+					charInfo => $output,
+					
+					# "if number of characters exceed 0 on selecting window, connection to game can't not be made" (sic)
+					total_slot => $index + 1,
+					
+					# slots in premium range are displayed as "Not Available"
+					premium_start_slot => $index + 1,
+					premium_end_slot => $index + 1,
+				}));
+			}
+		}
+	}
+}
+
+sub sendCharInfo {
+	no encoding 'utf8';
+	use bytes;
+	my ($self, $args, $client) = @_;
+	my $session = $client->{session};
+
+	# Show list of characters.
+	if ($session) {
 		my $output = '';
 		my $index = -1;
 		foreach my $char ($self->getCharacters($session)) {
 			$index++;
 			next if (!$char);
-
+	
 			$output .= pack(
 				$self->{recvPacketParser}->received_characters_unpackString,
 				$char->{charID},	# character ID
@@ -132,41 +242,30 @@ sub game_login {
 				$char->{int},
 				$char->{dex},
 				$char->{luk},
-				$index,
-				1,
+				0, 0, 0,
+				$field->baseName,
+				0,
 			);
 		}
 		# FIXME
-        	if ($self->{serverType} == 8){
+	    	if ($self->{serverType} == 8){
 			$output = pack('C20') . $output;
 		}
-
+	
 		# SECURITY NOTE: the session should be marked as belonging to this
 		# character server only. Right now there is the possibility that
 		# someone can login to another character server with a session
 		# that was already handled by this one.
-
-		$self->{sessionStore}->mark($session);
-		$client->{session} = $session;
-		$session->{time} = time;
-		$client->send($args->{accountID});
+	
 		if ($config{XKore_altCharServer} == 1){
 			$client->send(pack('C2 v', 0x72, 0x00, length($output) + 4) . $output);
 		}else{
 			$client->send($self->{recvPacketParser}->reconstruct({
 				switch => 'received_characters',
 				charInfo => $output,
-				
-				# "if number of characters exceed 0 on selecting window, connection to game can't not be made" (sic)
-				total_slot => $index + 1,
-				
-				# slots in premium range are displayed as "Not Available"
-				premium_start_slot => $index + 1,
-				premium_end_slot => $index + 1,
 			}));
 		}
 	}
-
 }
 
 sub char_login {
@@ -204,9 +303,30 @@ sub char_login {
 	$client->close();
 }
 
+sub sync_received_characters {
+	my ($self, $args, $client) = @_;
+	if ($nChar == 0) {
+		&sendCharInfo;
+		$nChar = 1;
+	} else {
+		$client->send($self->{recvPacketParser}->reconstruct({
+			switch => 'login_pin_code_request',
+			seed => 0,
+			accountID => $accountID,
+			flag => 7,
+		}));
+		$nChar = 0;
+	}
+}
+
 sub ban_check {
 	# Ban check.
 	# Doing nothing seems to work.
+	my ($self, $ID, $client) = @_;
+	$client->send($self->{recvPacketParser}->reconstruct({
+		switch => 'sync_request',
+		accountID => $ID,
+	}));
 }
 
 sub char_create {
