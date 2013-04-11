@@ -31,7 +31,7 @@ sub new {
 	my %packets = (
 		'006D' => ['character_creation_successful', 'a4 V9 v V2 v14 Z24 C6 v2 Z*', [qw(charID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag mapname)]],
 		'0097' => ['private_message', 'v Z28 Z*', [qw(len privMsgUser privMsg)]],
-		'082D' => ['characters_slots_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
+		'082D' => ['characters_slots_info', 'v C5 x20', [qw(packet_len normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]], # len: 12
 	);
 
@@ -56,6 +56,8 @@ sub new {
 
 sub sync_received_characters {
 	my ($self, $args) = @_;
+	$charSvrSet{sync_Count} = $args->{sync_Count} if (exists $args->{sync_Count});
+
 	if ($config{'XKore'} ne '1') {
 		$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
 	}
@@ -64,7 +66,7 @@ sub sync_received_characters {
 sub characters_slots_info {
 	my ($self, $args) = @_;
 
-	$charSvrSet{total_slot} = $args->{total_slot} if (exists $args->{total_slot});
+	$charSvrSet{packet_len} = $args->{packet_len} if (exists $args->{packet_len});
 	$charSvrSet{normal_slot} = $args->{normal_slot} if (exists $args->{normal_slot});
 	$charSvrSet{premium_slot} = $args->{premium_slot} if (exists $args->{premium_slot});
 	$charSvrSet{billing_slot} = $args->{billing_slot} if (exists $args->{billing_slot});
