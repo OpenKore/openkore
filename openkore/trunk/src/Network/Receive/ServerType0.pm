@@ -498,7 +498,7 @@ sub new {
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
-		'082D' => ['received_characters', 'v C x2 C2 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]],
+		'082D' => ['received_characters', 'v C5 x20 a*', [qw(packet_len normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
 		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
 		'083E' => ['login_error', 'V Z20', [qw(type date)]],
 		'084B' => ['item_appeared', 'a4 v2 C v4', [qw(ID nameID unknown1 identified x y unknown2 amount)]], # 19 TODO   provided by try71023, modified sofax222
@@ -520,7 +520,7 @@ sub new {
 		'0976' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'097A' => ['quest_all_list2', 'v3 a*', [qw(len count unknown message)]],
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
-		'09A0' => ['sync_received_characters', 'a4', [qw(unknown)]],
+		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
 	};
 
 	# Item RECORD Struct's
@@ -4150,10 +4150,7 @@ sub party_users_info {
 
 	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
 		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
-
-
 	}
-
 }
 
 sub pet_capture_result {
@@ -4396,6 +4393,7 @@ sub private_message_sent {
 
 sub sync_received_characters {
 	my ($self, $args) = @_;
+	my $nCount = $args->{sync_Count};
 }
 
 sub received_characters {
@@ -4403,7 +4401,7 @@ sub received_characters {
 	my ($self, $args) = @_;
 	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER);
 
-	$charSvrSet{total_slot} = $args->{total_slot} if (exists $args->{total_slot});
+	$charSvrSet{packet_len} = $args->{packet_len} if (exists $args->{packet_len});
 	$charSvrSet{normal_slot} = $args->{normal_slot} if (exists $args->{normal_slot});
 	$charSvrSet{premium_slot} = $args->{premium_slot} if (exists $args->{premium_slot});
 	$charSvrSet{billing_slot} = $args->{billing_slot} if (exists $args->{billing_slot});
