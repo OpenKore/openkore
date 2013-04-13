@@ -9,7 +9,7 @@ use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
 use Misc;
 use I18N qw(stringToBytes);
-use Globals qw(%config $accountID);
+use Globals qw(%config $accountID $field %charSvrSet);
 
 use constant SESSION_TIMEOUT => 120;
 use constant DUMMY_CHARACTER => {
