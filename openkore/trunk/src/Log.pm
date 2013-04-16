@@ -290,6 +290,8 @@ sub message {
 # See the description for Log.pm for more details about the parameters.
 sub warning {
 	my ($message, $domain, $level) = @_;
+	$level = 5 if existsInList($config{squelchDomains}, $domain);
+	$level = 0 if existsInList($config{verboseDomains}, $domain);
 	return processMsg("warning",
 		$message,
 		$domain,
