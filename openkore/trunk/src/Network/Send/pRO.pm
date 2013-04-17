@@ -22,8 +22,37 @@ use I18N qw(stringToBytes);
 use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
-   my ($class) = @_;
-   return $class->SUPER::new(@_);
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'09A1' => ['sync_received_characters_09A1'],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
+	my %handlers = qw(
+		sync 0360
+		character_move 035F
+		actor_info_request 0368
+		actor_look_at 0361
+		item_take 0362
+		item_drop 0363
+		storage_item_add 0364
+		storage_item_remove 0365
+		skill_use_location 0366
+		party_setting 07D7
+		buy_bulk_vender 0801
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
+}
+
+sub sendCharDelete {
+	my ($self, $charID, $email) = @_;
+	my $msg = pack("C*", 0xFB, 0x01) .
+			$charID . pack("a50", stringToBytes($email));
+	$self->sendToServer($msg);
 }
 
 1;
