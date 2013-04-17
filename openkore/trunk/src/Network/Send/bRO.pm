@@ -24,20 +24,19 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-
-		'0811' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'08AC' => ['character_move','a3', [qw(coords)]],		
-		'0895' => ['sync', 'V', [qw(time)]],
-		'0951' => ['actor_look_at', 'v C', [qw(head body)]],				
-		'0965' => ['item_take', 'a4', [qw(ID)]],
-		'08A8' => ['item_drop', 'v2', [qw(index amount)]],		
-		'0935' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'089C' => ['storage_item_remove', 'v V', [qw(index amount)]],
-		'087F' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'0954' => ['actor_info_request', 'a4', [qw(ID)]],	
-		'094A' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],	
-		'095D' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
-		'08A3' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0436' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0437' => ['character_move','a3', [qw(coords)]],
+		'035F' => ['sync', 'V', [qw(time)]],
+		'091C' => ['actor_look_at', 'v C', [qw(head body)]],
+		'0363' => ['item_take', 'a4', [qw(ID)]],
+		'0896' => ['item_drop', 'v2', [qw(index amount)]],
+		'085A' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'0966' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
+		'0940' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0952' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'0802' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
 		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
@@ -46,20 +45,18 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
 	
 	my %handlers = qw(
-
-		actor_action 0811
-		character_move 08AC
-		sync 0895
-		actor_look_at 0951		
-		item_take 0965
-		item_drop 08A8
-		storage_item_add 0935
-		storage_item_remove 089C
-		skill_use_location 087F
-		actor_info_request 0954		
-		map_login 094A
-		party_join_request_by_name 095D
-		homunculus_command 08A3
+		actor_action 0436
+		character_move 0437
+		sync 035F
+		actor_look_at 091C
+		item_take 0363
+		item_drop 0896
+		storage_item_add 085A
+		storage_item_remove 0966
+		skill_use_location 0438
+		actor_info_request 096A
+		map_login 0940
+		homunculus_command 0802
 		master_login 02B0
 		party_setting 07D7
 		buy_bulk_vender 0801
@@ -91,13 +88,13 @@ sub encryptMessageID
 	{
 		# Saving Last Informations for Debug Log
 		my $oldMID = $MID;
-		my $oldKey = ($enc_val1 >> 8 >> 8) & 0x7FFF;
+		my $oldKey = ($enc_val1 >> 16) & 0x7FFF;
 		
 		# Calculating the Encryption Key
-		$enc_val1 = $enc_val1->bmul($enc_val3)->badd($enc_val2) & 0xFFFFFFFF;
+		$enc_val1 = $enc_val1->bmul($enc_val2)->badd($enc_val3) & 0xFFFFFFFF;
 	
 		# Xoring the Message ID
-		$MID = ($MID ^ (($enc_val1 >> 8 >> 8) & 0x7FFF)) & 0xFFFF;
+		$MID = ($MID ^ (($enc_val1 >> 16) & 0x7FFF));
 		$$r_message = pack("v", $MID) . substr($$r_message, 2);
 
 		# Debug Log
@@ -117,9 +114,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x0969, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x0878, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x0969, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x0878, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
@@ -177,11 +174,11 @@ sub sendPartyJoinRequestByName
 sub PrepareKeys()
 {
 	# K
-	$enc_val1 = Math::BigInt->new('0x28AB0A40');
+	$enc_val1 = Math::BigInt->new('0xE813F3A');
 	# M
-	$enc_val3 = Math::BigInt->new('0x32A06D1A');
+	$enc_val2 = Math::BigInt->new('0x2E495E5D');
 	# A
-	$enc_val2 = Math::BigInt->new('0x0EE337E4');
+	$enc_val3 = Math::BigInt->new('0x43D84918');
 }
 
 sub sendLoginPinCode {
