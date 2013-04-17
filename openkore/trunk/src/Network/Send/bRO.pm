@@ -56,6 +56,7 @@ sub new {
 		skill_use_location 0438
 		actor_info_request 096A
 		map_login 0940
+		party_join_request_by_name 0952
 		homunculus_command 0802
 		master_login 02B0
 		party_setting 07D7
@@ -173,12 +174,12 @@ sub sendPartyJoinRequestByName
 
 sub PrepareKeys()
 {
-	# K
-	$enc_val1 = Math::BigInt->new('0xE813F3A');
-	# M
-	$enc_val2 = Math::BigInt->new('0x2E495E5D');
-	# A
-	$enc_val3 = Math::BigInt->new('0x43D84918');
+		# K
+		$enc_val1 = Math::BigInt->new('0x0e813f3a');
+		# M
+		$enc_val2 = Math::BigInt->new('0x2e495e5d');
+		# A
+		$enc_val3 = Math::BigInt->new('0x43d84918');
 }
 
 sub sendLoginPinCode {
