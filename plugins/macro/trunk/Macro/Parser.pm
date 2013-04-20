@@ -74,7 +74,7 @@ sub parseMacroFile {
 				if (!$countBlockIf && ($_ =~ /}\s*else\s*{/ || $_ =~ /}\s*elsif\s+\(\s*(.*)\s*\).*/)) {
 					warning "$file: ignoring '$_' in line $. (munch, munch, not found the 'if')\n";
 					next
-				} elsif ($_ =~ /^if.*{/) {
+				} elsif ($_ =~ /^if\s+\(.*\).*{/) {
 					$countBlockIf++;
 				}
 
@@ -104,7 +104,7 @@ sub parseMacroFile {
 				if (!$countBlockIf && ($_ =~ /}\s*else\s*{/ || $_ =~ /}\s*elsif\s+\(\s*(.*)\s*\).*/)) {
 					warning "$file: ignoring '$_' in line $. (munch, munch, not found the 'if')\n";
 					next
-				} elsif ($_ =~ /^if.*{/) {
+				} elsif ($_ =~ /^if\s+\(.*\).*{/) {
 					$countBlockIf++;
 				}
 
