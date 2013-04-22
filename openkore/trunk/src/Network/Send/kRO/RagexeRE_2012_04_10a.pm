@@ -30,7 +30,7 @@ sub new {
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0438' => undef,
 # TODO 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
-		'083C' => ['skill_use', 'v3 a4', [qw(lv skillID targetID)]],#10
+		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0865' => undef,
 		'086A' => undef,
 		'086C' => ['storage_item_add', 'v V', [qw(index amount)]],
