@@ -42,6 +42,7 @@ use Task::ErrorReport;
 use Match;
 use Translation;
 use I18N qw(stringToBytes);
+use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
 
 our %handlers;
 our %completions;
@@ -4255,17 +4256,17 @@ sub cmdStatAdd {
 	} else {
 		my $ID;
 		if ($arg eq "str") {
-			$ID = 0x0D;
+			$ID = STATUS_STR;
 		} elsif ($arg eq "agi") {
-			$ID = 0x0E;
+			$ID = STATUS_AGI;
 		} elsif ($arg eq "vit") {
-			$ID = 0x0F;
+			$ID = STATUS_VIT;
 		} elsif ($arg eq "int") {
-			$ID = 0x10;
+			$ID = STATUS_INT;
 		} elsif ($arg eq "dex") {
-			$ID = 0x11;
+			$ID = STATUS_DEX;
 		} elsif ($arg eq "luk") {
-			$ID = 0x12;
+			$ID = STATUS_LUK;
 		}
 
 		$char->{$arg} += 1;
