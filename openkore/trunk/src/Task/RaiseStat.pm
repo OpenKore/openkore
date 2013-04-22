@@ -26,6 +26,7 @@ use Modules 'register';
 use Globals qw(%config $net $char $messageSender);
 use Log qw(message debug error);
 use Translation qw(T TF);
+use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
 
 sub new {
 	my $class = shift;
@@ -81,14 +82,13 @@ sub raise {
 	);
 	
 	message TF("Auto-adding stat %s to %s\n", $item->{stat}, $expectedValue);
-	# TODO: move these IDs to Network
 	$messageSender->sendAddStatusPoint({
-		str => 0x0d,
-		agi => 0x0e,
-		vit => 0x0f,
-		int => 0x10,
-		dex => 0x11,
-		luk => 0x12,
+		str => STATUS_STR,
+		agi => STATUS_AGI,
+		vit => STATUS_VIT,
+		int => STATUS_INT,
+		dex => STATUS_DEX,
+		luk => STATUS_LUK,
 	}->{$item->{stat}});
 	
 	sub {
