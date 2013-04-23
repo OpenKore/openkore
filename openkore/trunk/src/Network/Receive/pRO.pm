@@ -33,7 +33,7 @@ sub new {
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
 		'082D' => ['received_characters_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
-		'09A0' => ['sync_received_characters_09A0', 'V', [qw(count)]],
+		'09A0' => ['sync_received_characters', 'V', [qw(count)]],
 	);
 
 	foreach my $switch (keys %packets) {
@@ -75,10 +75,12 @@ sub received_characters_info {
 	$self->received_characters($args);
 }
 
-sub sync_received_characters_09A0 {
+sub sync_received_characters {
    my ($self, $args) = @_;
-   for (my $count = $args->{count}; $count >= 1; $count--) {
-      $messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters_09A1'}));
+   if ($config{'XKore'} ne '1') {
+	   for (my $count = $args->{count}; $count >= 1; $count--) {
+	      $messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters_09A1'}));
+	   }
    }
 }
 
