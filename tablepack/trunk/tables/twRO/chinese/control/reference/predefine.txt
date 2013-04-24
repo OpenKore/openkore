@@ -1,0 +1,18 @@
+monster condition
+	attackComboSlot
+	attackSkillSlot
+	monsterSkill
+	equipAuto
+
+self condition
+	attackComboSlot
+	attackSkillSlot
+	doCommand
+	useSelf_item
+	useSelf_skill
+	partySkill
+	monsterSkill
+	equipAuto
+
+playerCondition
+	partySkill
