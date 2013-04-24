@@ -30,7 +30,7 @@ use encoding 'utf8';
 use Carp::Assert;
 use Digest::MD5;
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync @lastpm %lastpm @privMsgUsers);
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout);
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
@@ -221,6 +221,44 @@ sub injectAdminMessage {
 	# Packet Prefix Encryption Support
 	#$self->encryptMessageID(\$message);
 	$self->{net}->clientSend($message);
+}
+
+##
+# String pinEncode(int seed, int pin)
+# pin: the PIN code
+# key: the encryption seed/key
+#
+# Another version of the PIN Encode Function, used to hide the real PIN code, using seed/key.
+sub pinEncode {
+	# randomizePin function/algorithm by Kurama, ever_boy_, kLabMouse and Iniro. cleanups by Revok
+	my ($seed, $pin) = @_;
+
+	$seed = Math::BigInt->new($seed);
+	my $mulfactor = 0x3498;
+	my $addfactor = 0x881234;
+	my @keypad_keys_order = ('0'..'9');
+
+	# calculate keys order (they are randomized based on seed value)
+	if (@keypad_keys_order >= 1) {
+		my $k = 2;
+		for (my $pos = 1; $pos < @keypad_keys_order; $pos++) {
+			$seed = $addfactor + $seed * $mulfactor & 0xFFFFFFFF; # calculate next seed value
+			my $replace_pos = $seed % $k;
+			if ($pos != $replace_pos) {
+				my $old_value = $keypad_keys_order[$pos];
+				$keypad_keys_order[$pos] = $keypad_keys_order[$replace_pos];
+				$keypad_keys_order[$replace_pos] = $old_value;
+			}
+			$k++;
+		}
+	}
+	# associate keys values with their position using a hash
+	my %keypad;
+	for (my $pos = 0; $pos < @keypad_keys_order; $pos++) { $keypad{@keypad_keys_order[$pos]} = $pos; }
+	my $pin_reply = '';
+	my @pin_numbers = split('',$pin);
+	foreach (@pin_numbers) { $pin_reply .= $keypad{$_}; }
+	return $pin_reply;
 }
 
 ##
@@ -439,10 +477,6 @@ sub sendMapLogin {
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
 
-# Small Necessary Control
-my $cl_players = {};
-my $cl_timer = 0;
-
 sub sendMapLoaded {
 	my $self = shift;
 	$syncSync = pack("V", getTickCount());
@@ -543,21 +577,7 @@ sub reconstruct_private_message {
 sub sendPrivateMsg
 {
 	my ($self, $user, $message) = @_;
-
-	if ( !$cl_players->{$user} ) { $cl_players->{$user} = 0; }
-	my $size =  keys(%$cl_players);
-	if ( $size > (3+3) && $cl_timer == 0 ) { $cl_timer = time; }
-	if ( $cl_timer != 0 && (time - $cl_timer) > (30+30) ) { $cl_timer = 0; $cl_players = {}; }
-
-	if ( $cl_timer == 0 ) 
-	{
-		$self->sendToServer($self->reconstruct({
-			switch => 'private_message',
-			privMsg => $message,
-			privMsgUser => $user,
-		}));	
-	}
-	else { shift @lastpm; }
+	Misc::validate($user)?$self->sendToServer($self->reconstruct({ switch => 'private_message', privMsg => $message, privMsgUser => $user, })):return;
 }
 
 sub sendLook {
@@ -874,6 +894,29 @@ sub sendReplySyncRequestEx
 	# print "Dispatching Sync Ex Reply : 0x" . $pid . "\n";		
 	# Debug Log
 	debug "Sent Reply Sync Request Ex\n", "sendPacket", 2;
+}
+
+sub sendLoginPinCode {
+	my ($self, $seed, $type) = @_;
+
+	my $pin = pinEncode($seed, $config{loginPinCode});
+	my $msg;
+	if ($type == 0) {
+		$msg = $self->reconstruct({
+			switch => 'send_pin_password',
+			accountID => $accountID,
+			pin => $pin,
+		});
+	} elsif ($type == 1) {
+		$msg = $self->reconstruct({
+			switch => 'new_pin_password',
+			accountID => $accountID,
+			pin => $pin,
+		});
+	}
+	$self->sendToServer($msg);
+	$timeout{charlogin}{time} = time;
+	debug "Sent loginPinCode\n", "sendPacket", 2;
 }
 
 1;
