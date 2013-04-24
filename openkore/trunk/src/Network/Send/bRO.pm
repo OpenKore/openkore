@@ -173,9 +173,9 @@ sub PrepareKeys()
 	# K
 	$enc_val1 = Math::BigInt->new('0x0e813f3a');
 	# M
-	$enc_val2 = Math::BigInt->new('0x2e495e5d');
+	$enc_val3 = Math::BigInt->new('0x2e495e5d');
 	# A
-	$enc_val3 = Math::BigInt->new('0x43d84918');
+	$enc_val2 = Math::BigInt->new('0x43d84918');
 }
 
 1;
