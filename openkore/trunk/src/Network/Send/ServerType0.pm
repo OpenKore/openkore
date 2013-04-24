@@ -107,6 +107,9 @@ sub new {
 		'082B' => ['char_delete2_cancel', 'a4', [qw(charID)]], # 6
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
 		'09A1' => ['sync_received_characters'],
+		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
+		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
+		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -988,55 +991,6 @@ sub sendStoragePassword {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
 	$self->sendToServer($msg);
-}
-
-sub sendLoginPinCode {
-	my $self = shift;
-	# String's with PIN codes
-	my $pin1 = shift;
-	my $pin2 = shift;
-        # Actually the Key
-	my $key_v = shift;
-	# 2 = set password
-	# 3 = enter password
-	my $type = shift;
-	my $encryptionKey = shift;
-
-	my $msg;
-	if ($pin1 !~ /^\d*$/) {
-		ArgumentException->throw("PIN code 1 must contain only digits.");
-	}
-	if ($type == 2 && $pin2 !~ /^\d*$/) {
-		ArgumentException->throw("PIN code 2 must contain only digits.");
-	}
-	if (!$encryptionKey) {
-		ArgumentException->throw("No encryption key given.");
-	}
-
-	my $crypton = new Utils::Crypton(pack("V*", @{$encryptionKey}), 32);
-	my $num1 = pin_encode($pin1, $key_v);
-	my $num2 = pin_encode($pin2, $key_v);
-	if ($type == 2) {
-		if ((length($pin1) > 3) && (length($pin1) < 9) && (length($pin2) > 3) && (length($pin2) < 9)) {
-			my $ciphertextblock1 = $crypton->encrypt(pack("V*", $num1, 0, 0, 0)); 
-			my $ciphertextblock2 = $crypton->encrypt(pack("V*", $num2, 0, 0, 0));
-			$msg = pack("C C v", 0x3B, 0x02, $type).$ciphertextblock1.$ciphertextblock2;
-			$self->sendToServer($msg);
-		} else {
-			ArgumentException->throw("Both PIN codes must be more than 3 and less than 9 characters long.");
-		}
-	} elsif ($type == 3) {
-		if ((length($pin1) > 3) && (length($pin1) < 9)) {
-			my $ciphertextblock1 = $crypton->encrypt(pack("V*", $num1, 0, 0, 0)); 
-			my $ciphertextblock2 = $crypton->encrypt(pack("V*", 0, 0, 0, 0)); 
-			$msg = pack("C C v", 0x3B, 0x02, $type).$ciphertextblock1.$ciphertextblock2;
-			$self->sendToServer($msg);
-		} else {
-			ArgumentException->throw("PIN code 1 must be more than 3 and less than 9 characters long.");
-		}
-	} else {
-		ArgumentException->throw("The 'type' argument has invalid value ($type).");
-	}
 }
 
 sub sendSuperNoviceDoriDori {
