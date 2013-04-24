@@ -168,7 +168,7 @@ clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 #addTableFolders translated/kRO_english;kRO
 addTableFolders kRO
 
-[Malaysia - mRO: Poring King]
+[Malaysia - mRO: Poring King (Iris1,Iris2,Penril,Odin,Thor)]
 ip 202.71.105.25
 port 6900
 master_version 16
@@ -338,7 +338,7 @@ recvpackets recvpackets_paid.txt
 addTableFolders twRO
 captcha 0
 
-[Taiwan - twRO: Free (ChaosFree, IrisFree)]
+[Taiwan - twRO: Free (ChaosFree, IrisFree, LokiFree)]
 ip 220.130.113.235
 port 6900
 master_version 5
@@ -352,7 +352,7 @@ recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
-[Taiwan - twRO: Free (Poring King, Devil Poring King)]
+[Taiwan - twRO: Free (Devil King Poring, Golden Poring)]
 ip 220.130.113.238
 port 6900
 master_version 5
@@ -380,7 +380,7 @@ recvpackets recvpackets_free.txt
 addTableFolders twRO
 captcha 0
 
-[Taiwan - twRO: Free (Devil Poring, Angel Poring)]
+[Taiwan - twRO: Free (King of Poring, Devil Poring, Angel Poring)]
 ip 220.130.113.222
 port 6900
 master_version 5

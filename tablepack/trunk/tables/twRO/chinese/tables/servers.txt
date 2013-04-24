@@ -18,7 +18,7 @@ recvpackets recvpackets_paid.txt
 addTableFolders twRO
 captcha 0
 
-[台灣 - 老朋友伺服器 (免費查爾斯、免費愛麗絲)]
+[台灣 - 老朋友伺服器 (免費查爾斯、免費愛麗絲, 免費洛奇)]
 ip 220.130.113.235
 port 6900
 master_version 5
