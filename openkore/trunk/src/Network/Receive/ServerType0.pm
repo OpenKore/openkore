@@ -4487,13 +4487,12 @@ sub received_characters {
 	# it doesn't work...
 	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
 	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $config{serverType} == 2);
-	#if ($args->{switch} ne '099D') { # NOTE: what was this supposed to do? is this server specific?
-		if (charSelectScreen(1) == 1) {
-			$firstLoginMap = 1;
-			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-			$sentWelcomeMessage = 1;
-		}
-	#}
+	return if ($args->{switch} eq '099D' && $config{serverType} eq 'twRO');
+	if (charSelectScreen(1) == 1) {
+		$firstLoginMap = 1;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+		$sentWelcomeMessage = 1;
+	}
 }
 
 sub received_character_ID_and_Map {
