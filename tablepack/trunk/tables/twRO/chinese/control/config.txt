@@ -71,7 +71,7 @@ XKore_silent 0
 XKore_bypassBotDetection 0
 # XKore１是否開啟反官方外掛偵測功能？ [０ = 不使用] [１ = 使用]
 XKore_exeName ragfree.exe
-# XKore１模式所對應的 RO 主程式檔名 [免費 = ragfree.exe] [全區 = RagAll.exe] [月費老朋友 = Ragexe.exe]
+# XKore１模式所對應的 RO 主程式檔名 [免費 = ragfree.exe] [全區 = RagAll.exe] [月費老朋友 = Ragexe.exe] [老朋友 = RagOld.exe]
 XKore_port 2350
 # XKore１模式所對應的 RO 主程式連接埠 [一般不需要修改]
 XKore_dll NetRedirect.dll
