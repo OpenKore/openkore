@@ -280,6 +280,7 @@ logAppendServer
 
 chatTitleOversize 0
 shopTitleOversize 0
+pmNoValidate 1
 
 sleepTime 10000
 
