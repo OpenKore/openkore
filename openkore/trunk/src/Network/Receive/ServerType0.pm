@@ -4473,7 +4473,7 @@ sub received_characters {
 	foreach (@chars) { $nChars++ if($_); }
 
 	# FIXME better support for multiple received_characters packets
-	if ($args->{switch} eq '099D' && $args->{RAW_MSG_SIZE} >= ($blockSize * 3)) {
+	if ($args->{switch} eq '099D' && $args->{RAW_MSG_SIZE} >= ($blockSize * 3)) { #charBlockSize: 144
 		$net->setState(1.5);
 		if ($nChars < $charSvrSet{normal_slot} && $config{'XKore'} ne '1') {
 			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
@@ -4487,7 +4487,7 @@ sub received_characters {
 	# it doesn't work...
 	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
 	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $config{serverType} == 2);
-	return if ($args->{switch} eq '099D' && $config{serverType} eq 'twRO');
+	return if ($args->{switch} eq '099D' && $config{serverType} eq 'twRO'); #charBlockSize: 144
 	if (charSelectScreen(1) == 1) {
 		$firstLoginMap = 1;
 		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
