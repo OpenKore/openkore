@@ -621,6 +621,7 @@ minStorageZeny 80
 # zeny 少於此數值，不存倉 ［開倉庫需要 $$］
 storageAuto_notAfterDeath 0
 # 是否避免每次死亡趴回城後就進行存倉［及賣物］  ［0 = 不使用］［1 = 使用］
+pmNoValidate 1
 
 
 #════════════
