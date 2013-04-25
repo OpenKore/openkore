@@ -1113,6 +1113,7 @@ sub actor_info {
 	my $monster = $monstersList->getByID($args->{ID});
 	if ($monster) {
 		my $name = bytesToString($args->{name});
+		$name =~ s/^\s+|\s+$//g;
 		debug "Monster Info: $name ($monster->{binID})\n", "parseMsg", 2;
 		$monster->{name_given} = $name;
 		$monster->{info} = 1;
