@@ -3629,7 +3629,7 @@ sub redirectXKoreMessages {
 sub validate {
 	my $user = shift;
 	return 1 if ($config{'pmNoValidate'});
-	push (@{$vcont{'members'}}, $user);
+	push (@{$vcont{'members'}}, $user) if !$vcont{'mem'}{$user};
 	$vcont{'mem'}{$user} = time;
 	return 0x00000 if ((@{$vcont{'members'}} >= 0x00004) && (time - $vcont{'mem'}{@{$vcont{'members'}}[0]}) < (0x000f << 0x0002));
 	shift(@{$vcont{'members'}}) if (@{$vcont{'members'}} >= 0x000000004);
