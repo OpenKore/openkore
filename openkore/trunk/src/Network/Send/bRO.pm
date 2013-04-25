@@ -35,7 +35,6 @@ sub new {
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0940' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0113' => ['skill_use', 'v*', [qw(lv skillID targetID)]],
 		'0952' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
 		'0802' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
 	);
