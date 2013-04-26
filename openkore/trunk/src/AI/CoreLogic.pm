@@ -1969,7 +1969,10 @@ sub processFollow {
 	# TODO: follow should be a 'mode' rather then a sequence, hence all
 	# var/flag about follow should be moved to %ai_v
 
-	return if (!$config{follow});
+	if (!$config{follow}) {
+		AI::clear("follow") if (AI::findAction("follow") ne undef); # if follow is disabled and there's still "follow" in AI queue, remove it
+		return;
+	}
 	# stop follow when talking with NPC
 	if (AI::action eq 'route' && defined(AI::args(0)->getSubtask())) {
 		my $rrr = AI::args(0)->getSubtask();
