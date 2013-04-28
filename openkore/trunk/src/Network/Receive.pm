@@ -904,7 +904,12 @@ sub actor_died_or_disappeared {
 				debug "Player Disappeared in an unknown way: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg_presence";
 				$player->{disappeared} = 1;
 			}
-
+			
+			if ($ID ~~ @venderListsID) {
+				binRemove(\@venderListsID, $ID);
+				delete $venderLists{$ID};
+			}
+			
 			$player->{gone_time} = time;
 			$players_old{$ID} = $player->deepCopy();
 			Plugins::callHook('player_disappeared', {player => $player});
