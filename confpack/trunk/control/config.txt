@@ -74,6 +74,7 @@ attackCheckLOS 0
 attackLooters 0
 attackChangeTarget 1
 aggressiveAntiKS 0
+attackAutoSearch 0
 
 autoMoveOnDeath 0
 autoMoveOnDeath_x
