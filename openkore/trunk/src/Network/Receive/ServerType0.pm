@@ -1929,7 +1929,7 @@ sub devotion {
 	}
 	$devotionList->{$args->{sourceID}}->{range} = $args->{range};
 
-	message "$msg", "devotion";
+	message TF("$msg"), "devotion";
 }
 
 sub egg_list {
