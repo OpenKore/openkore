@@ -137,6 +137,14 @@ prontera 29 207 payon 161 58 1200 1 c r2 c r2
 prontera 29 207 morocc 156 47 1200 1 c r2 c r3
 prontera 29 207 gef_fild10 52 326 1700 1 c r2 c r4
 prontera 29 207 alberta 117 56 1800 1 c r2 c r5
+geffen 120 62 prontera 116 72 1200 c r2 c r0
+geffen 120 62 aldebaran 168 112 1200 c r2 c r1
+geffen 120 62 gef_fild10 52 326 1700 c r2 c r2
+geffen 120 62 mjolnir_02 99 351 1700 c r2 c r3
+geffen 203 123 prontera 116 72 2000 c r2 c r0
+geffen 203 123 aldebaran 168 112 1200 c r2 c r1
+geffen 203 123 gef_fild10 52 326 1700 c r2 c r2
+geffen 203 123 mjolnir_02 99 351 1700 c r2 c r3
 payon 175 226 prontera 116 72 1200 1 c r2 c r0
 payon 175 226 alberta 117 56 1200 1 c r2 c r1
 payon 175 226 morocc 156 47 1200 1 c r2 c r2
