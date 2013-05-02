@@ -844,32 +844,32 @@ treasure_n2.rsw#依斯魯得島遇難船 2樓#
 
 que_house_s.rsw#詭異的屋#
 
-//依斯魯得島複製地圖----------------2012 06 04------------- 
-prt_fild08d.rsw#普隆德拉區域# 
-prt_fild08c.rsw#普隆德拉區域# 
-prt_fild08b.rsw#普隆德拉區域# 
+//依斯魯得島複製地圖----------------2012 06 04-------------
+prt_fild08d.rsw#普隆德拉區域#
+prt_fild08c.rsw#普隆德拉區域#
+prt_fild08b.rsw#普隆德拉區域#
 prt_fild08a.rsw#普隆德拉區域#
-iz_ac01_d.rsw#魔法學院1樓# 
-iz_ac02_d.rsw#魔法學院2樓# 
-iz_ac01_c.rsw#魔法學院1樓# 
-iz_ac02_c.rsw#魔法學院2樓# 
-iz_ac01_b.rsw#魔法學院1樓# 
-iz_ac02_b.rsw#魔法學院2樓# 
-iz_ac01_a.rsw#魔法學院1樓# 
-iz_ac02_a.rsw#魔法學院2樓# 
-izlude_d.rsw#衛星都市 依斯魯得島# 
-izlude_c.rsw#衛星都市 依斯魯得島# 
-izlude_b.rsw#衛星都市 依斯魯得島# 
-izlude_a.rsw#衛星都市 依斯魯得島# 
+iz_ac01_d.rsw#魔法學院1樓#
+iz_ac02_d.rsw#魔法學院2樓#
+iz_ac01_c.rsw#魔法學院1樓#
+iz_ac02_c.rsw#魔法學院2樓#
+iz_ac01_b.rsw#魔法學院1樓#
+iz_ac02_b.rsw#魔法學院2樓#
+iz_ac01_a.rsw#魔法學院1樓#
+iz_ac02_a.rsw#魔法學院2樓#
+izlude_d.rsw#衛星都市 依斯魯得島#
+izlude_c.rsw#衛星都市 依斯魯得島#
+izlude_b.rsw#衛星都市 依斯魯得島#
+izlude_a.rsw#衛星都市 依斯魯得島#
 //依斯魯得島renewal ---------------------2012 06 04-------------
-iz_int.rsw#印特羅# 
-iz_int01.rsw#印特羅# 
-iz_int02.rsw#印特羅# 
-iz_int03.rsw#印特羅# 
-iz_int04.rsw#印特羅# 
-iz_ac01.rsw#魔法學院1樓# 
-iz_ac02.rsw#魔法學院2樓# 
-iz_ng01.rsw#忍者新手教學地圖# 
+iz_int.rsw#印特羅#
+iz_int01.rsw#印特羅#
+iz_int02.rsw#印特羅#
+iz_int03.rsw#印特羅#
+iz_int04.rsw#印特羅#
+iz_ac01.rsw#魔法學院1樓#
+iz_ac02.rsw#魔法學院2樓#
+iz_ng01.rsw#忍者新手教學地圖#
 treasure_n1.rsw#依斯魯得島 遇難船 1樓#
 treasure_n2.rsw#依斯魯得島 遇難船 2樓#
 
@@ -878,3 +878,11 @@ bif_fild01.rsw#彩虹橋南部#
 bif_fild02.rsw#彩虹橋北部#
 1@mist.rsw#霧林迷宮#
 mora.rsw#草精族穆拉村#
+
+//------------
+malaya.rsw#馬來港#
+ma_fild01.rsw#巴勒攸 馬西瓦哥#
+ma_fild02.rsw#普勒斯特#
+ma_scene01.rsw#巴庫暴龍湖#
+ma_in01.rsw#噩夢醫院 1樓#
+ma_dun01.rsw#馬來港 內部#
