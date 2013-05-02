@@ -20,7 +20,7 @@ use Globals;
 use Log qw(message warning error debug);
 use Translation;
 use Misc;
-use Utils qw(timeOut);
+use Utils qw(timeOut getFormattedDate);
 use I18N qw(bytesToString stringToBytes);
 
 use Time::HiRes qw(time);
