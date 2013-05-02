@@ -2966,22 +2966,7 @@ sub processAutoTeleport {
 			}
 		}
 		$timeout{ai_teleport_away}{time} = time;
-	}
-	
-	##### TELEPORT SEARCH MONSTER #####
-	if ($safe && timeOut($timeout{ai_teleport_search}) && $config{teleportAuto_search} && !$char->{dead} && $config{lockMap} eq $field->baseName) {
-	#Search in lockmap only
-		foreach (@monstersID) {
-			next unless $_;
-			my $teleport_search = mon_control($monsters{$_}{name},$monsters{$_}{nameID})->{teleport_search};
-			return if $teleport_search == 1;
-		}
-		message TF("Teleporting to search monsters\n"), "teleport";
-		$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
-		$timeout{ai_teleport_search}{time} = time;
-		return;
-	}
-	
+	}	
 
 	##### TELEPORT IDLE / PORTAL #####
 	if ($config{teleportAuto_idle} && (AI::action ne "" || !AI::SlaveManager::isIdle)) {
