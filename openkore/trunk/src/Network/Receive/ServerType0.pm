@@ -1925,6 +1925,7 @@ sub devotion {
 		last if unpack("V", $ID) == 0;
 		$devotionList->{$args->{sourceID}}->{targetIDs}->{$ID} = $i;
 		my $actor = Actor::get($ID);
+		#FIXME: Need a better display
 		$msg .= skillUseNoDamage_string($source, $actor, 0, 'devotion');
 	}
 	$devotionList->{$args->{sourceID}}->{range} = $args->{range};
