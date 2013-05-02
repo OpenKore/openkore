@@ -76,4 +76,6 @@ xmas_x.rsw#Lutie, the Snow Village#
 moc_para01.rsw#Eden land#
 malaya.rsw#Port Malaya#
 ma_in01.rsw#Inside of Malaya#
-malangdo.rsw#Malangdo#
+malangdo.rsw#Malangdo Island#
+mal_in01.rsw#Inside Malangdo Island 1#
+mal_in02.rsw#Inside Malangdo Island 2#
