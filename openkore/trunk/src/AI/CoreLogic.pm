@@ -2969,7 +2969,7 @@ sub processAutoTeleport {
 	}
 	
 	##### TELEPORT SEARCH MONSTER #####
-	if ($safe && timeOut($timeout{ai_teleport_search}) && $config{attackAutoSearch} && !$char->{dead} && $config{lockMap} eq $field->baseName) {
+	if ($safe && timeOut($timeout{ai_teleport_search}) && $config{teleportAuto_search} && !$char->{dead} && $config{lockMap} eq $field->baseName) {
 	#Search in lockmap only
 		foreach (@monstersID) {
 			next unless $_;
