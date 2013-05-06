@@ -555,6 +555,7 @@ sub initConnectVars {
 	initMapChangeVars();
 	if ($char) {
 		$char->{skills} = {};
+		delete $char->{spirits};
 		delete $char->{mute_period};
 		delete $char->{muted};
 		delete $char->{party};
