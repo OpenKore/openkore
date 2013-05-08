@@ -120,6 +120,7 @@ sub new {
 	
 	Plugins::addHook('packet_pre/received_characters' => sub {
 		$self->{lockCharScreen} = 2;
+		$timeout{charlogin}{time} = time;
 	});
 	
 	Plugins::addHook(charSelectScreen => sub {
