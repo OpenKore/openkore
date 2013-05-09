@@ -318,6 +318,27 @@ sub request {
 		}
 	}
 	my @statuses = (keys %{$char->{statuses}});
+	
+#Show storage
+	my (@storageUnusable, @storageUsable, @storageEquipment);
+	my (@storageUnusableAmount, @storageUsableAmount, @storageEquipmentAmount);
+	my (@storageUnusableID, @storageUsableID, @storageEquipmentID);
+	for (my $i; $i < @storageID; $i++) {
+		my $item = $storage{$storageID[$i]};
+		if ($item->usable) {
+			push @storageUsableID, $item->{nameID};
+			push @storageUsable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
+			push @storageUsableAmount, $item->{amount};
+		} elsif ($item->equippable) {
+			push @storageEquipmentID, $item->{nameID};
+			push @storageEquipment, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
+			push @storageEquipmentAmount, $item->{amount};
+		} else {
+			push @storageUnusableID, $item->{nameID};
+			push @storageUnusable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
+			push @storageUnusableAmount, $item->{amount};
+		}
+	}
 
 # Show members of the clan
 	my ($i, $name, $class, $lvl, $title, $online, $ID, $charID);
@@ -477,6 +498,7 @@ sub request {
 		{ url => '/npcs.html', title => T('NPC List'), image => 'icon-th-list' },
 		{ url => '/skills.html', title => T('Skill List'), image => 'icon-th-list' },
 		{ url => '/homunculos.html', title => T('Homunculos') },
+		{ url => '/storage.html', title => T('Storage') },
 	);
 
 	%keywords =	(
@@ -600,6 +622,16 @@ sub request {
 		'homunculusSkillsLevel' => \@homunculoSkillsLevel,
 		'homunculusSkillsJS' => \@homunculoSkillsJS,
 		'homunculusSkillsPoints' => defined $char->{homunculus}{points_skill} ? $char->{homunculus}{points_skill} : 'N/A',
+	# Storage
+		'storageUsable' => \@storageUsable,
+		'storageUsableAmount' => \@storageUsableAmount,
+		'storageUnusableAmount' => \@storageUnusableAmount,
+		'storageUnusable' => \@storageUnusable,
+		'storageUnusableID' => \@storageUnusableID,
+		'storageUsableID' => \@storageUsableID,
+		'storageEquipment' => \@storageEquipment,
+		'storageEquipmentID' => \@storageEquipmentID,
+		'storageEquipmentAmount' => \@storageEquipmentAmount,
 	# Character infos general
 		'characterStatuses' => \@statuses, # Never used
 		'characterSkillPoints' => $char->{points_skill},
