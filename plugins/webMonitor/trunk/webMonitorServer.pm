@@ -175,21 +175,23 @@ sub consoleLogHTML {
 
 # TODO merge with chist command somehow, new API?
 # TODO chat_log_file's contents are formatted and look different
-sub chatLogHTML {
+sub loadTextToHTML {
+	my ($file) = @_;
 	my @parts;
-
-	my $bw = eval { File::ReadBackwards->new($Settings::chat_log_file) }
+	
+	my $bw = eval { File::ReadBackwards->new($file) }
 	or return do {
 		if ($@ =~ 'perhaps you forgot to load "File::ReadBackwards"' || $@ =~ 'Can\'t locate object method "new" via package "File::ReadBackwards"') {
 			'<span class="msg_web"><a href="http://search.cpan.org/perldoc?File::ReadBackwards">File::ReadBackwards</a> is required to retrieve chat log.' . "\n" . '</span>'
 		} else {
-			'<span class="msg_error_default">Error while retrieving file \'' . $Settings::chat_log_file . '\' chat log:' . "\n" . encode_entities($@) . '</span>'
+			'<span class="msg_error_default">Error while retrieving file \'' . $file . "\n" . encode_entities($@) . '</span>'
 		}
 	};
 
 	defined &HTML::Entities::encode
 	or return '<span class="msg_web"><a href="http://search.cpan.org/perldoc?HTML::Entities">HTML::Entities</a> is required to display chat log.' . "\n" . '</span>';
 
+	push @parts, '<noscript><span class="msg_web">Load $file:</span></noscript>';
 	while (defined(my $line = $bw->readline)) {
 		push @parts, encode_entities($line);
 		# TODO: make the message size configurable
@@ -245,6 +247,8 @@ sub request {
 	$filename =~ s/new_.../new_zone01/;
 
 	my $csrf_pass = $resources{csrf} eq $csrf;
+
+# TODO: It is necessary to optimize this function to load the variables what we really needed, and not everything!
 
 # Collect data for the tab Report
 	# Experience
@@ -319,24 +323,30 @@ sub request {
 	}
 	my @statuses = (keys %{$char->{statuses}});
 	
-#Show storage
+# Show storage
 	my (@storageUnusable, @storageUsable, @storageEquipment);
 	my (@storageUnusableAmount, @storageUsableAmount, @storageEquipmentAmount);
 	my (@storageUnusableID, @storageUsableID, @storageEquipmentID);
-	for (my $i; $i < @storageID; $i++) {
+	my (@storageUnusableGetButton, @storageUsableGetButton, @storageEquipmentGetButton);
+	for (my $i = 0; $i < @storageID; $i++) {
 		my $item = $storage{$storageID[$i]};
+		next if (!$item);
+		
 		if ($item->usable) {
 			push @storageUsableID, $item->{nameID};
 			push @storageUsable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @storageUsableAmount, $item->{amount};
+			push @storageUsableGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $i . '">' . T('Get') . '</a></td><td></td>' if ($storage{opened});
 		} elsif ($item->equippable) {
 			push @storageEquipmentID, $item->{nameID};
 			push @storageEquipment, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @storageEquipmentAmount, $item->{amount};
+			push @storageEquipmentGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $i . '">' . T('Get') . '</a></td><td></td>' if ($storage{opened});
 		} else {
 			push @storageUnusableID, $item->{nameID};
 			push @storageUnusable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @storageUnusableAmount, $item->{amount};
+			push @storageUnusableGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $i . '">' . T('Get') . '</a></td><td></td>' if ($storage{opened});
 		}
 	}
 
@@ -510,7 +520,8 @@ sub request {
 	# Logs
 		'consoleColors' => consoleColorsCSS,
 		'consoleLog' => consoleLogHTML,
-		'chatLog' => chatLogHTML,
+		'chatLog' => loadTextToHTML($Settings::chat_log_file),
+		'storageLog' => loadTextToHTML($Settings::storage_log_file),
 	# NPC
 		'npcBinID' => \@npcBinID, # Never used
 		'npcName' => \@npcName,
@@ -626,12 +637,15 @@ sub request {
 		'storageUsable' => \@storageUsable,
 		'storageUsableAmount' => \@storageUsableAmount,
 		'storageUnusableAmount' => \@storageUnusableAmount,
+		'storageUnusableGetButton' => \@storageUnusableGetButton,
 		'storageUnusable' => \@storageUnusable,
 		'storageUnusableID' => \@storageUnusableID,
 		'storageUsableID' => \@storageUsableID,
+		'storageUsableGetButton' => \@storageUsableGetButton,
 		'storageEquipment' => \@storageEquipment,
 		'storageEquipmentID' => \@storageEquipmentID,
 		'storageEquipmentAmount' => \@storageEquipmentAmount,
+		'storageEquipmentGetButton' => \@storageEquipmentGetButton,
 	# Character infos general
 		'characterStatuses' => \@statuses, # Never used
 		'characterSkillPoints' => $char->{points_skill},
