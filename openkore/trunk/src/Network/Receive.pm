@@ -1489,11 +1489,14 @@ sub revolving_entity {
 	my $entityType;
 
 	my $actor = Actor::get($sourceID);
-	if ($lastSwitch eq '01D0') {
+	if ($args->{switch} eq '01D0') {
+		# Translation Comment: Spirit sphere of the monks
 		$entityType = T('spirit');
-	} elsif ($lastSwitch eq '01E1') {
+	} elsif ($args->{switch} eq '01E1') {
+		# Translation Comment: Coin of the gunslinger
 		$entityType = T('coin');
-	} elsif ($lastSwitch eq '08CF') {
+	} elsif ($args->{switch} eq '08CF') {
+		# Translation Comment: Amulet of the warlock
 		$entityType = T('amulet');
 	} else {
 		$entityType = T('entity unknown');
@@ -1502,11 +1505,19 @@ sub revolving_entity {
 	if ($sourceID eq $accountID && $entityNum != $char->{spirits}) {
 		$char->{spirits} = $entityNum;
 		$char->{amuletType} = $entityElement;
-		$entityElement ? message TF("You have %s %s(s) of %s now\n", $entityNum, $entityType, $entityElement), "parseMsg_statuslook", 1 : message TF("You have %s %s(s) now\n", $entityNum, $entityType), "parseMsg_statuslook", 1;
+		$entityElement ?
+			# Translation Comment: Message displays following: quantity, the name of the entity and its element
+			message TF("You have %s %s(s) of %s now\n", $entityNum, $entityType, $entityElement), "parseMsg_statuslook", 1 :
+			# Translation Comment: Message displays following: quantity and the name of the entity
+			message TF("You have %s %s(s) now\n", $entityNum, $entityType), "parseMsg_statuslook", 1;
 	} elsif ($entityNum != $actor->{spirits}) {
 		$actor->{spirits} = $entityNum;
 		$actor->{amuletType} = $entityElement;
-		$entityElement ? message TF("%s has %s %s(s) of %s now\n", $actor, $entityNum, $entityType, $entityElement), "parseMsg_statuslook", 1 : message TF("%s has %s %s(s) now\n", $actor, $entityNum, $entityType), "parseMsg_statuslook", 1;
+		$entityElement ?
+			# Translation Comment: Message displays following: actor, quantity, the name of the entity and its element
+			message TF("%s has %s %s(s) of %s now\n", $actor, $entityNum, $entityType, $entityElement), "parseMsg_statuslook", 1 :
+			# Translation Comment: Message displays following: actor, quantity and the name of the entity
+			message TF("%s has %s %s(s) now\n", $actor, $entityNum, $entityType), "parseMsg_statuslook", 1;
 	}
 }
 
