@@ -2895,6 +2895,54 @@ moc_para01 158 26 moc_para01 55 27
 # moc_paraup 179 90 moc_paraup 41 185
 moc_para01 30 10 prontera 116 72
 
+# Malangdo
+mal_in01 18 161 malangdo 112 167
+malangdo 112 167 mal_in01 17 163
+mal_in01 75 174 mal_in01 18 173
+mal_in01 18 173 mal_in01 72 173
+mal_in01 124 175 mal_in01 73 170
+mal_in01 73 170 mal_in01 124 172
+mal_in01 30 119 malangdo 113 151
+malangdo 113 151 mal_in01 28 118
+mal_in01 67 118 mal_in01 20 119
+mal_in01 20 119 mal_in01 65 117
+mal_in01 38 217 malangdo 119 137
+malangdo 119 137 mal_in01 36 216
+mal_in01 75 222 mal_in01 11 218
+mal_in01 11 218 mal_in01 76 220
+mal_in01 140 213 mal_in01 79 219
+mal_in01 79 219 mal_in01 140 216
+mal_in01 18 78 malangdo 135 109
+malangdo 135 109 mal_in01 19 76
+mal_in01 67 66 mal_in01 18 67
+mal_in01 18 67 mal_in01 65 65
+mal_dun01 30 230 malangdo 73 239
+malangdo 73 239 mal_dun01 33 230
+mal_in01 163 13 malangdo 135 276
+malangdo 135 276 mal_in01 164 15
+mal_in01 9 16 malangdo 240 150
+malangdo 240 150 mal_in01 11 17
+mal_in01 67 12 mal_in01 20 15
+mal_in01 20 15 mal_in01 65 11
+mal_in02 60 61 malangdo 162 163
+malangdo 162 163 mal_in02 58 61
+mal_in02 34 60 mal_in02 51 60
+mal_in02 51 60 mal_in02 31 60
+mal_in02 64 87 mal_in02 63 66
+mal_in02 63 66 mal_in02 63 89
+mal_in02 63 35 mal_in02 63 53
+mal_in02 63 53 mal_in02 63 33
+mal_in02 102 87 mal_in02 101 66
+mal_in02 101 66 mal_in02 101 89
+mal_in02 101 35 mal_in02 101 53
+mal_in02 101 53 mal_in02 101 33
+mal_in02 140 87 mal_in02 137 66
+mal_in02 137 66 mal_in02 139 89
+mal_in02 139 35 mal_in02 137 53
+mal_in02 137 53 mal_in02 139 33
+mal_in02 159 61 mal_in02 142 60
+mal_in02 142 60 mal_in02 162 61
+
 #------------------------------
 xmas 139 307 evt_xmas 129 129 0 c r1
 
