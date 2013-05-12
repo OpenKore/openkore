@@ -10821,8 +10821,8 @@ Bandeira Nacional utilizada pela torcida durante a Copa do Mundo.
 Peso: ^7777771^000000
 #
 7550#
-Troque-o pelos seguintes itens: Chapéu de Caça [1], Máscara de Tigre, Chapéu de Arara Azul [1] e Chapéu de Engenheiro [1].
-Esta promoção está disponível apenas até a manutenção do dia 20/03/2013.
+Troque-o pelos seguintes itens: Tônicos de Hwergelmir[10], Nove Caudas Cozidas[10], Línguas no Vapor[10], Poções Brancas Leves[50], 10 x Seguro Estendido e Água Milagrosa[50].
+Esta promoção está disponível apenas até a manutenção do dia 15/05/2013.
 ^ff0000Este ticket pode ser negociado, colocado no carrinho, pode ser transferido para o armazém, mas não pode ser derrubado no chão.^000000
 ^ff0000Após o término do evento, os tickets serão removidos das contas de jogo.^000000
 Atenção! Certifique-se de que seu personagem possui espaço e peso disponíveis para receber todos os itens.
@@ -15525,8 +15525,7 @@ Uma caixa contendo 10 Espelhos Convexos. Frágil!
 Espelho Convexo - ^000088A pessoa que possui o espelho pode detectar a aparição de MVPs.^000000
 Tem um período de duração de 10 minutos e perde o efeito se o personagem sair do mapa. Alguns MVPs não podem ser detectados.
 Peso: ^7777771^000000
-Negociação: ^777777Pode ser colocado na Kafra mas não pode ser derrubado, negociado e nem colocado no carrinho^000000
-#
+
 12913#
 Uma caixa contendo 20 Pergaminhos de Bênção em nível 10.
 Pergaminho de Bênção - ^000088Permite o uso da habilidade "Bênção" em nível 10.^000000
@@ -20278,8 +20277,8 @@ Classes que utilizam: ^777777Todas^000000
 7608#
 Ticket promocional criado pela Corporação Kafra.
 Troque-o por um item aleatório na NPC de Promoções Especiais em Prontera, coordenadas 141 226.
-Esta promoção está disponível apenas até a manutenção do dia 13/02, então troque agora mesmo seu ticket!
-^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 13/02. O item conseguido na troca com A NPC é aleatório!^000000 Boa sorte!
+Esta promoção está disponível apenas até a manutenção do dia 08/05, então troque agora mesmo seu ticket!
+^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 08/05. O item conseguido na troca com A NPC é aleatório!^000000 Boa sorte!
 Peso: ^7777771^000000
 #
 //7608#
@@ -21416,8 +21415,8 @@ Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes
 #
 
 2531#
-Uma capa misteriosa com um feitiço protetor. Converte a tolerância a magia do usuário em DEF.
-Quando o usuário sobre ataque físico, há chance de reduzir dano em 20% por 2 segundos.
+Uma capa misteriosa com um feitiço protetor. Converte a defesa mágica do usuário em defesa física
+Ao receber ataque físico, há chance de reduzir dano em 20% por 2 segundos.
 Em troca, reduz DEFM em 20% por 2 segundos.
 Tipo de Item: ^777777Capa^000000
 Defesa: ^77777713^000000
@@ -22589,7 +22588,7 @@ Nível necessário: ^77777738^000000
 Classes que utilizam: ^777777Todas^000000
 #
 5208#
-Um universitário teve a brilhante idéia de petrificar um Rideword e transformá-lo em chapéu para protestar contra o número abusivo de livros que deveriam ler. O tiro saiu pela culatra, já que a criatura continuou a distribuir suas dentadas ocasionais – especialmente quando o usuário tinha caspa ou piolho! 
+Um universitário teve a brilhante ideia de petrificar um Rideword e transformá-lo em chapéu para protestar contra o número abusivo de livros que deveriam ler. O tiro saiu pela culatra, já que a criatura continuou a distribuir suas dentadas ocasionais – especialmente quando o usuário tinha caspa ou piolho! 
 Quando equipado, o usuário perde 10 HP a cada 5 segundos.
 Converte 8% do dano causado a um oponente em HP quando o usuário atacar com golpes corpo-a-corpo. A chance de sucesso é de 5%.
 Converte 4% do dano causado a um oponente em SP quando o usuário atacar com golpes corpo-a-corpo. A chance de sucesso é de 1%.
@@ -35395,7 +35394,7 @@ Um ornamento feito com Chifres de Búfalo.
 Você pode sentir todo seu poder apenas observando este acessório.
 Velocidade de Ataque + 1
 Adiciona + 1 na Velocidade de Ataque quando equipado com o Chifre de Bisão.
-Tipo : ^777777Acessorio^000000
+Tipo : ^777777Acessório^000000
 Defesa : ^7777770^000000
 Peso : ^77777710^000000
 Nível necessário : ^77777710^000000
@@ -36928,8 +36927,7 @@ Classe : ^777777Evoluções de Espadachim T., Mercador T. e Gatuno T.^000000
 Um elmo feito em homenagem ao deus romano Mercúrio, encarregado de usar sua incrível velocidade para levar as mensagens de Júpiter.
 Cuidado ao usá-lo em Arunafeltz, já que símbolos de outros deuses não costumam ser muito bem vistos por alguns adoradores de Freya.
 Pra sua sorte, o elmo é capaz de acelerar alguns dos seus reflexos.
-Ataque Crítico + 3.
-Aumenta a Velocidade de Ataque em 3%.
+Ataque Crítico + 3, Aumenta a Velocidade de Ataque em 3%.
 Quando refinada em +7 ou +8, é somado ao bônus anterior + 2 de Ataque Crítico e aumenta a Velocidade de Ataque em +2%.
 Quando refinada em +9 ou mais, é somado ao bônus anterior + 2 de Ataque Crítico e aumenta a Velocidade de Ataque em +2%.
 Tipo : ^777777Equipamento para cabeça^000000
@@ -37357,7 +37355,6 @@ Peso: ^7777771^000000
 #
 
 4491#
-Carta Selada da Atiradora de Elite Cecil
 Chance de 5% de absorver 10% do dano físico causado ao inimigo pelo usuário como HP, mas também reduz a recuperação de HP em 100%.
 Caso arma equipada possua o refinamento acima de +14, o ganho de HP será aumentado mais 5% por dano causado.
 Tipo de Item: ^777777Carta^000000
@@ -38082,7 +38079,7 @@ Peso: ^7777771^000000
 #
 
 4504#
-Carta de Eddga. ^0000ffDeixa o usuário sob efeito de "Vigor" permanente, Máx. HP -50%. 
+^0000ffDeixa o usuário sob efeito de "Vigor" permanente, Máx. HP -50%. 
 Se o item com esta carta tiver refinamento +15 ou superior, Máx. HP -35%^000000
 Combine com um item para utilizar sua propriedade. Não pode ser removida depois de combinada.
 Classe: ^777777Carta^000000
@@ -38558,7 +38555,8 @@ Classes : ^777777Todos exceto Aprendiz^000000
 18703#
 
 Um pequeno broto da Árvore da Vida, Yggdrasil. Cultivado a partir de uma Semente de Yggdrasil, graças às suas capacidades curativas, o broto era usado nas refeições para evitar intoxicação alimentar, até os aventureiros passarem a usá-lo como forma de prevenção a envenenamentos.
-Aumenta em 20% a loterância contra o status Veneno.
+Aumenta em 20% a tolerância contra o status Veneno.
+
 Tipo : ^777777Equipamento para Cabeça^000000    
 Defesa : ^7777770^000000
 
@@ -38754,10 +38752,8 @@ Classes :  ^777777Todas^000000
 
 
 17042#
-^ff0000Este item não pode ser trocado entre contas de jogo.^000000
 Uma caixa contendo 10 pergaminhos de Transformação - Poring.
 _
-^ff0000Este item não pode ser trocado entre contas de jogo.^000000
 Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Poring' por 20 minutos.
 Aumenta o dano critico em 25% durante a transformação.
 ^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
@@ -38765,7 +38761,6 @@ Peso : ^7777771^000000
 #
 
 12663#
-^ff0000Este item não pode ser trocado entre contas de jogo.^000000
 Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Poring' por 20 minutos.
 Aumenta o dano critico em 25% durante a transformação.
 ^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
@@ -39914,7 +39909,7 @@ Classe: ^777777Arcebispo^000000
 
 15029#
 Abençoa o usuário com a propriedade Sagrada.
-Diminui o consumo de SP de Clementia para 50
+Diminui o consumo de SP de Clementia em 50
 INT +1, DEFM +10
 Tipo : ^777777Manto^000000
 Defesa : ^77777722^000000
@@ -39943,7 +39938,7 @@ Diminui em 2 segundos o tempo de conjuração de Sacramento, Lauda Agnus e Lauda
 Tipo : ^777777Cajado^000000
 Ataque : ^77777730^000000
 Peso : ^77777750^000000
-Arma Nível : ^7777774^000000
+Arma Nível : ^7777773^000000
 Nível Necessário : ^777777100^000000
 Classe: ^777777Arcebispo^000000
 #
@@ -40127,9 +40122,7 @@ Classes : ^777777Todas^000000
 #
 
 12851#
-Um ovo leve como uma pluma, que revela o talento daquele que o abrir. 
-
-Peso : ^7777771^000000
+Um ovo leve como uma pluma, que revela o talento daquele que o abrir. Peso : ^7777771^000000
 #
 
 18664#
@@ -40497,6 +40490,7 @@ Classe: ^777777Todas as Classes^000000
 #
 6417#
 Fruta dos gatos madura. Os humanos acham que é normal e tem um gosto ruim, mas é bem valorizada em Malangdo.
+^FF0000Não pode ser trocada entre contas^000000
 Peso: ^7777770^000000
 #
 6418#
@@ -40606,24 +40600,29 @@ Peso: ^7777771^000000
 #
 16770#
 Caixa com 10 frutas dos gatos. Uma pequena quantidade de comida enlatada está incluída como bônus.
+_
 Fruta dos gatos madura. Os humanos acham que é normal e tem um gosto ruim, mas é bem valorizada em Malangdo.
+^FF0000Não pode ser trocada entre contas^000000
 Peso: ^7777770^000000
-^ff0000Após aberto, o item não será restituído.^000000.
+_
+^ff0000Esta caixa pode ser negociada normalmente. Após aberto, o item não será restituído.^000000.
 Peso: ^7777771^000000
 #
 16771#
 Caixa com 40 frutas dos gatos. Uma pequena quantidade de comida enlatada está incluída como bônus.
 Fruta dos gatos madura. Os humanos acham que é normal e tem um gosto ruim, mas é bem valorizada em Malangdo.
+^FF0000Não pode ser trocada entre contas^000000
 Peso: ^7777770^000000
-^ff0000Após aberto, o item não será restituído.^000000.
+^ff0000Esta caixa pode ser negociada normalmente. Após aberto, o item não será restituído.^000000.
 Peso: ^7777771^000000
 #
 16979#
 Caixa com 4 frutas dos gatos. Uma pequena quantidade de comida enlatada está incluída como bônus.
 
 Fruta dos gatos madura. Os humanos acham que é normal e tem um gosto ruim, mas é bem valorizada em Malangdo.
+^FF0000Não pode ser trocada entre contas^000000
 Peso: ^7777770^000000
-^ff0000Após aberto, o item não será restituído.^000000.
+^ff0000Esta caixa pode ser negociada normalmente. Após aberto, o item não será restituído.^000000.
 Peso: ^7777771^000000
 #
 17013#
@@ -40900,23 +40899,14 @@ Se refinado acima do +7, recuperação usando o item Peixe Cru +100%. ^000000
 
 Tipo : ^777777Equipamento para Cabeça^000000 
 Defesa : ^77777713^000000
-
-
 Equipa em : ^777777Topo^000000  
-Peso : ^77777730^000000
-
-Nível Necessário : ^77777710^000000
+Peso : ^77777730^000000Nível Necessário : ^77777710^000000
 
 Classe: ^777777Todas^000000
 #
 
 18692#
-When attend open audition for singers, let this hat wear.
-Yourself and mic in a body may appeal to judge.
-
-^0000FFDES + 2, SOR + 1.^000000 
-
-Tipo : ^777777Equipamento para Cabeça^000000    
+Se você usa esta peruca, não é preciso que lhe esclareçam tudo no Preto ou Branco, nem que expliquem o ABC de como as coisas funcionam. Midgard é um lugar sombrio, e muitas vezes parece que Eles Não Se Importam com a Gente. Mas apesar das coisas às vezes serem como um Thriller de horror, você sabe que é capaz de ajudar a Curar o Mundo. Basta colocar sua cara de Bad boy e encarar os desafios! Sem esquecer, é claro, do estilo, coisa que você tem de sobra, parecendo até um Andarilho da Lua, como dizem seus amigos, Billi e Jean. Afinal, como a peruca indica, você é um membro do grupo musical, Jeca são Five!^0000FFDES + 2, SOR + 1.^000000 Tipo : ^777777Equipamento para Cabeça^000000    
 Defesa : ^7777773^000000
 
 Equipa em : ^777777Topo^000000    
@@ -40926,19 +40916,128 @@ Classe: ^777777Todas exceto Aprendiz^000000
 #
 
 12850#
-You can get one of precious items from Sealed Vesper Card, Sealed Sniper Card, Premium Reset_Stone_Box, Puppy-Eared Hat, Enriched Elunium Box and so on.
-Peso : ^7777771^000000
+Um ovo que dizem ter sido atingido por Energia Celeste após uma tentativa frustrada do exímio piloto de Espaço-plano Beijamin Grão de alcançar um buraco negro. Ao voltar para casa, Beijamin percebeu que seu corpo e a carga de Ovos que carregava haviam absorvido parte da Energia Celeste, ganhando poderes grandiosos.Peso : ^7777771^000000
 #
 
 18700#
-Gothic rabbit ribbon hat that is arrogant  and cute.
-^0000FFINT + 1.^000000 
+Essa cartola foi usada pela popular Raruri Zusumia durante o Festival da Páscoa em Comodo. Famosa por suas músicas melancólicas, Raruri também ficou conhecida por insistir em teorias malucas como a existência de seres de outras dimensões, viajantes do tempo na Torre do Relógio ou pessoas com poderes psíquicos como a habilidade de refletir feitiços. Claro que a única maluquice são todas essas coisas existirem e apenas Raruri não perceber... De toda forma, a cantora transformou simples orelhinhas de coelho em um cobiçado item da moda!^0000FFINT + 1.^000000 
+
 Tipo : ^777777Equipamento para Cabeça^000000    
 Defesa : ^7777773^000000
+
 Equipa em : ^777777Topo^000000    
 Peso : ^77777750^000000
+
 Classe: ^777777Todas^000000
 #
 
+14531#
+^ff0000Este item não pode ser negociado^000000
+Um pergaminho encantado magicamente para apurar a mira do usuário. Aumenta em +30 a Precisão por 30 minutos.
+Se o usuário for nocauteado, o efeito se dissipará.
+^ffffff_^000000
+Peso : ^7777771^000000
+#
+
+18856#
+Este chapéu foi criado pelo Guardião de Midgard, Torin Tigerfist. No formato de um tigre branco, considerado pelo Shura como seu guia espiritual, ele também representa seu estilo favorito de artes marciais. Claro que quem conhece o Torin já imaginava que ele também poderia aprontar alguma gracinha com o chapéu, e talvez seja por isso que surgiu o boato que ao lutar com ele, você pode acabar se transformando em um MVP. Só há um jeito de descobrir a verdade: você está pronto?
+FOR + 2, DES + 2.
+Aumenta o dano em monstros do tipo Bruto conforme o refinamento do chapéu.
+Chance de transformar o personagem em Eddga sempre que for atacado ou enquanto estiver atacando. A chance de transformação aumenta conforme o nível de refinamento do chapéu. 
+Quando se transformar em Eddga, o personagem perde 5 SP a cada segundo.
+
+Tipo : ^777777Equipamento para Cabeça^000000    
+Defesa : ^77777710^000000
+
+Equipa em : ^777777Topo^000000  
+Peso : ^77777740^000000
+Nível Necessário : ^7777771^000000
+
+Classe: ^777777Todas^000000
+#
+
+
+
+
+//------------------April2013 Items---------------------------------
+
+18647#
+Este tapa-olho no formato de uma estrela azul foi criado em homenagem ao famoso Mecânico pirata, Franco. Considerado meio excêntrico por vestir apenas uma sunga e partes modificadas de M.E.C.H.A. nos braços e por adorar refrigerantes como o Sograt Cola, Franco ficou SUUPER emocionado quando descobriu que a estilista marinha Leira criaria um item para homenageá-lo, apesar de achar que seria super divertido se no lugar do tapa-olho ela tivesse criado uma espécie de nariz super metálico.
+Resistência a Atordoamento +15% .
+Tipo : ^777777Equipamento para Cabeça^000000    
+Defesa : ^7777770^000000
+Equipa em : ^777777Meio^000000  
+Peso : ^77777710^000000
+Classe : ^777777Todas^000000
+#
+
+18648#
+Então você acreditou no seu amigo quando ele disse que seria engraçado ir até Lutie dar uma lambida naqueles postes de metal no formato de bengalas de alcaçuz? Você realmente pensou que fossem doces de verdade? Nem te passou pela cabeça que por causa do frio, sua língua ficaria congelada e grudada? Bem, ao menos você conseguiu se desgrudar, depois que cinco pessoas pararam de rir pra te puxar. E não precisa se preocupar, não está nem um pouco esquisito, imagina! E daí que até demônios estão fugindo quando veem você? Considere isso um bônus, seu linguarudo! Como seu amigo falou, no fim você ficou ótimo assim. E você sempre acredita no seu amigo, não é?
+Reduz em 3% o dano contra monstros do tipo Demônio
+Tipo : ^777777Equipamento para Cabeça^000000    
+Defesa : ^7777770^000000
+Equipa em : ^777777Baixo^000000 
+Peso : ^77777710^000000
+Classe : ^777777Todas^000000
+#
+
+12853#
+Ovos que a Princesa Taekwon Redynarok trouxe de seu planeta natal, Naramat. Assim como Redynarok, esses ovos adquiriram poderes incríveis ao absorver energia solar, lunar e estelar.
+Peso : ^7777771^000000
+#
+
+17178#
+Uma caixa contendo 50 garrafas de Água Milagrosa.
+-
+Água Milagrosa
+Uma mistura feita a partir de Poções da Vida com um toque de limão.
+Recupera 4% do HP Máximo a cada 3 segundos por 10 minutos.
+Não é efetivo quando o personagem entra em Frenesi.
+^000088Se você foi nocauteado, o efeito desaparecerá^000000-
+^ff0000Uma vez aberta, esta caixa não poderá ser reembolsada^000000
+Peso : ^7777771^000000
+#
+
+
+12832#
+Uma mistura feita a partir de Poções da Vida, mas com um toque de limão.
+Recupera 4% do HP Máximo a cada 3 segundos por 10 minutos.
+Não é efetivo quando o personagem entra em Frenesi.
+^000088Se você foi nocauteado, o efeito desaparecerá.^000000Peso : ^7777771^000000
+#
+
+
+17224#
+Uma caixa contendo 10 Bolinhos Divinos
+-
+Bolinho Divino
+Este bolinho contém tudo que qualquer pessoa necessite para se manter bem alimentada por muito tempo.
+Todos os atributos +10, Ataque +30, ATQM +30 por 30 minutos.
+^ff0000Atenção! Este item não é cumulativo com outros itens de alteração de atributos.^000000
+Peso : ^7777771^000000
+-
+^ff0000Uma vez aberta, esta caixa não poderá ser reembolsada^000000
+Peso : ^7777771^000000
+#
+
+
+12883#
+Este bolinho contém tudo que qualquer pessoa necessite para se manter bem alimentada por muito tempo.
+Todos os atributos +10, Ataque +30, ATQM +30 por 30 minutos.
+^ff0000Atenção! Este item não é cumulativo com outros itens de alteração de atributos.^000000
+Peso : ^7777771^000000
+#
+
+1562#
+Um livro que registrou a história de incontáveis batalhas, incluindo as estratégias usadas por seu escritor.
+Chance de conjurar Bênção nível 3. Se o personagem tiver Bênção em sua árvore de habilidades, o nível aprendido será usado.
+Int +3
+Tipo : ^777777Livro^000000      
+Ataque : ^777777110^000000
+Peso : ^77777770^000000
+Nível da Arma : ^7777774^000000
+Nível Necessário : ^77777780^000000
+Equipa em : ^777777Sacerdote/Sábio/Mestre Taekwon ^000000
+#
 
 //file end
