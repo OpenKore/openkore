@@ -497,17 +497,19 @@ sub request {
 	
 # Show self shop
 	my (@selfShopItemID, @selfShopItemAmount, @selfShopItemPrice, @selfShopItemName, $selfShopButton);
-	for my $item (@articles) {
-		next if (!$item);
-		
-		push @selfShopItemID, $item->{nameID};
-		push @selfShopItemAmount, $item->{quantity};
-		push @selfShopItemPrice, formatNumber($item->{price});
-		push @selfShopItemName, $item->{name};
+	if ($shopstarted) {
+		for my $item (@articles) {
+			next if (!$item);
+			
+			push @selfShopItemID, $item->{nameID};
+			push @selfShopItemAmount, $item->{quantity};
+			push @selfShopItemPrice, formatNumber($item->{price});
+			push @selfShopItemName, $item->{name};
+		}
+		$selfShopButton = '<a href="/handler?csrf='.$csrf.'&command=closeshop" class="btn btn-danger btn-mini pull-right"><i class="icon-shopping-cart icon-white"></i> closeshop</a>';
+	} else {
+		$selfShopButton = '<a href="/handler?csrf='.$csrf.'&command=openshop" class="btn btn-success btn-mini pull-right"><i class="icon-shopping-cart icon-white"></i> openshop</a>';
 	}
-	$selfShopButton = ($shopstarted) ? 
-		'<a href="/handler?csrf='.$csrf.'&command=closeshop" class="btn btn-danger btn-mini pull-right"><i class="icon-shopping-cart icon-white"></i> closeshop</a>' :
-		'<a href="/handler?csrf='.$csrf.'&command=openshop" class="btn btn-success btn-mini pull-right"><i class="icon-shopping-cart icon-white"></i> openshop</a>';
 
 # Menu list
 	my @menu = (
