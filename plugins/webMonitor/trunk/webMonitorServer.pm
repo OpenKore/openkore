@@ -494,6 +494,20 @@ sub request {
 			push @homunculoSkillsJS, $homunculoAct;
 		}
 	}
+	
+# Show self shop
+	my (@selfShopItemID, @selfShopItemAmount, @selfShopItemPrice, @selfShopItemName, $selfShopButton);
+	for my $item (@articles) {
+		next if (!$item);
+		
+		push @selfShopItemID, $item->{nameID};
+		push @selfShopItemAmount, $item->{quantity};
+		push @selfShopItemPrice, formatNumber($item->{price});
+		push @selfShopItemName, $item->{name};
+	}
+	$selfShopButton = ($shopstarted) ? 
+		'<a href="/handler?csrf='.$csrf.'&command=closeshop" class="btn btn-danger btn-mini pull-right"><i class="icon-shopping-cart icon-white"></i> closeshop</a>' :
+		'<a href="/handler?csrf='.$csrf.'&command=openshop" class="btn btn-success btn-mini pull-right"><i class="icon-shopping-cart icon-white"></i> openshop</a>';
 
 # Menu list
 	my @menu = (
@@ -504,7 +518,7 @@ sub request {
 		{ url => '/console.html', title => T('Console') },
 		{ url => '/chat.html', title => T('Chat Log'), image => 'icon-comment' },
 		{ url => '/guild.html', title => T('Guild') },
-		{ url => '/shop.html', title => T('Vender List'), image => 'icon-shopping-cart' },
+		{ url => '/shop.html', title => T('Shop'), image => 'icon-shopping-cart' },
 		{ url => '/npcs.html', title => T('NPC List'), image => 'icon-th-list' },
 		{ url => '/skills.html', title => T('Skill List'), image => 'icon-th-list' },
 		{ url => '/homunculos.html', title => T('Homunculos') },
@@ -522,6 +536,7 @@ sub request {
 		'consoleLog' => consoleLogHTML,
 		'chatLog' => loadTextToHTML($Settings::chat_log_file),
 		'storageLog' => loadTextToHTML($Settings::storage_log_file),
+		'shopLog' => loadTextToHTML($Settings::shop_log_file),
 	# NPC
 		'npcBinID' => \@npcBinID, # Never used
 		'npcName' => \@npcName,
@@ -570,6 +585,12 @@ sub request {
 		'shopType' => \@type, # Never used
 		'shopID' => \@id, # Never used
 		'shopJS' => \@shopJS,
+		'selfShopItemAmount' => \@selfShopItemAmount,
+		'selfShopItemPrice' => \@selfShopItemPrice,
+		'selfShopItemName' => \@selfShopItemName,
+		'selfShopItemID' => \@selfShopItemID,
+		'selfShopTitle' => $shop{title},
+		'selfShopButton' => $selfShopButton,
 	# Skills
 		'skillsIco' => \@skillsIco,
 		'skillsIcoUp' => \@skillsIcoUp,
