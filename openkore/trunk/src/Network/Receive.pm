@@ -451,6 +451,7 @@ sub actor_display {
 	# TODO: use object_type? this this the table?
 	# i figure, if the players homunculus/mercenary can differentiate between npc/monster, so can kore
 	# and i think this might have something to do with it
+	# 20130512 - we should REALLY use this as others method (checking hair style in order to identify pets...?) are really obsolete and buggy / - revok
 =pod
   PC_TYPE =  0x0,
   NPC_TYPE =  0x1,
@@ -527,7 +528,7 @@ sub actor_display {
 
 		} else {
 			# Actor might be a monster
-			if ($args->{hair_style} == 0x64) {
+			if ($args->{hair_style} == 0x64 || $args->{object_type} == 0x5) {
 				# Actor is a pet
 				$actor = $petsList->getByID($args->{ID});
 				if (!defined $actor) {
