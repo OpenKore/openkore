@@ -43,6 +43,25 @@ use Utils::Exceptions;
 use Utils::Crypton;
 use Translation;
 
+# TODO: use object_type? this this the table?
+# i figure, if the players homunculus/mercenary can differentiate between npc/monster, so can kore
+# and i think this might have something to do with it
+# 20130512 - we should REALLY use this as others method (checking hair style in order to identify pets...?) are really obsolete and buggy / - revok
+# object_type constants for &actor_display
+use constant {
+	PC_TYPE => 0x0,
+	NPC_TYPE => 0x1,
+	ITEM_TYPE => 0x2,
+	SKILL_TYPE => 0x3,
+	UNKNOWN_TYPE => 0x4,
+	NPC_MOB_TYPE => 0x5,
+	NPC_EVT_TYPE => 0x6,
+	NPC_PET_TYPE => 0x7,
+	NPC_HO_TYPE => 0x8,
+	NPC_MERSOL_TYPE => 0x9,
+	NPC_ELEMENTAL_TYPE => 0xa
+};
+
 ######################################
 ### CATEGORY: Class methods
 ######################################
@@ -448,23 +467,6 @@ sub actor_display {
 		close DUMP;
 	}
 =cut
-	# TODO: use object_type? this this the table?
-	# i figure, if the players homunculus/mercenary can differentiate between npc/monster, so can kore
-	# and i think this might have something to do with it
-	# 20130512 - we should REALLY use this as others method (checking hair style in order to identify pets...?) are really obsolete and buggy / - revok
-=pod
-  PC_TYPE =  0x0,
-  NPC_TYPE =  0x1,
-  ITEM_TYPE =  0x2,
-  SKILL_TYPE =  0x3,
-  UNKNOWN_TYPE =  0x4,
-  NPC_MOB_TYPE =  0x5,
-  NPC_EVT_TYPE =  0x6,
-  NPC_PET_TYPE =  0x7,
-  NPC_HO_TYPE =  0x8,
-  NPC_MERSOL_TYPE =  0x9,
-  NPC_ELEMENTAL_TYPE =  0xa,
-=cut
 	#### Step 1: create/get the correct actor object ####
 	if ($jobs_lut{$args->{type}}) {
 		unless ($args->{type} > 6000) {
@@ -528,7 +530,7 @@ sub actor_display {
 
 		} else {
 			# Actor might be a monster
-			if ($args->{hair_style} == 0x64 || $args->{object_type} == 0x5) {
+			if ($args->{hair_style} == 0x64 || $args->{object_type} == NPC_PET_TYPE) {
 				# Actor is a pet
 				$actor = $petsList->getByID($args->{ID});
 				if (!defined $actor) {
