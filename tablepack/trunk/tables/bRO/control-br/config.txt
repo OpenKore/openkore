@@ -3,8 +3,8 @@
 # Codificação:  ANSI -> UTF8 Without boom
 # Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
 #############################################################################################
-# * Wiki do OpenKoreem português:
-#     http://wiki.revok.com.br/
+# * Wiki do OpenKore em português:
+#     http://w.openkore-brasil.com/
 # * Wiki do OpenKore internacional:
 #     http://openkore.com
 ###############################################################################
@@ -216,6 +216,7 @@ saveMap_warpChatCommand
 shopAuto_open 0
 shop_random 0
 shop_useSkill 1
+shop_useSkill_delay 5
 
 sitAuto_hp_lower 40
 sitAuto_hp_upper 100

@@ -3225,7 +3225,7 @@ sub cmdOpenShop {
 	
 	if ($config{'shop_useSkill'}) {
 		# This method is responsible to NOT uses a bug in which openkore opens the shop,
-		# using a vending skill and awaiting the response of the package and then open the shop
+		# using a vending skill and then open the shop
 		my $skill = new Skill(auto => "MC_VENDING");
 
 		require Task::UseSkill;
@@ -3234,7 +3234,16 @@ sub cmdOpenShop {
 			skill => $skill,
 			priority => Task::USER_PRIORITY
 		);
-		my $task = new Task::ErrorReport(task => $skillTask);
+		my $task = new Task::Chained(
+			name => 'openShop',
+			tasks => [
+				new Task::ErrorReport(task => $skillTask),
+				Task::Timeout->new(
+					function => sub {main::openShop()},
+					seconds => $config{shop_useSkill_delay},
+				)
+			]
+		);
 		$taskManager->add($task);
 	} else {
 		# This method is responsible to uses a bug in which openkore opens the shop
