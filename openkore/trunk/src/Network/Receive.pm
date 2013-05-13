@@ -467,35 +467,76 @@ sub actor_display {
 		close DUMP;
 	}
 =cut
-	#### Step 1: create/get the correct actor object ####
-	if ($jobs_lut{$args->{type}}) {
-		unless ($args->{type} > 6000) {
-			# Actor is a player
-			$actor = $playersList->getByID($args->{ID});
-			if (!defined $actor) {
-				$actor = new Actor::Player();
-				$actor->{appear_time} = time;
-				# New actor_display packets include the player's name
-				$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
-				$mustAdd = 1;
-			}
-			$actor->{nameID} = $nameID;
+
+	#### Step 0: determine object type ####
+	my $object_class;
+	if (defined $args->{object_type}) {
+		if ($args->{type} == 45) { # portals use the same object_type as NPCs
+			$object_class = 'Actor::Portal';
 		} else {
-			# Actor is a homunculus or a mercenary
-			$actor = $slavesList->getByID($args->{ID});
-			if (!defined $actor) {
-				$actor = ($char->{slaves} && $char->{slaves}{$args->{ID}})
-				? $char->{slaves}{$args->{ID}} : new Actor::Slave ($args->{type});
-
-				$actor->{appear_time} = time;
-				$actor->{name_given} = bytesToString($args->{name}) if exists $args->{name};
-				$actor->{jobId} = $args->{type} if exists $args->{type};
-				$mustAdd = 1;
-			}
-			$actor->{nameID} = $nameID;
+			$object_class = {
+				PC_TYPE => 'Actor::Player',
+				# NPC_TYPE? # not encountered, NPCs are NPC_EVT_TYPE
+				# SKILL_TYPE? # not encountered
+				# UNKNOWN_TYPE? # not encountered
+				NPC_MOB_TYPE => 'Actor::Monster',
+				NPC_EVT_TYPE => 'Actor::NPC', # both NPCs and portals
+				NPC_PET_TYPE => 'Actor::Pet',
+				NPC_HO_TYPE => 'Actor::Slave',
+				# NPC_MERSOL_TYPE? # not encountered
+				# NPC_ELEMENTAL_TYPE? # not encountered
+			}->{$args->{object_type}};
 		}
+	}
 
-	} elsif ($args->{type} == 45) {
+	unless (defined $object_class) {
+		if ($jobs_lut{$args->{type}}) {
+			unless ($args->{type} > 6000) {
+				$object_class = 'Actor::Player';
+			} else {
+				$object_class = 'Actor::Slave';
+			}
+		} elsif ($args->{type} == 45) {
+			$object_class = 'Actor::Portal';
+
+		} elsif ($args->{type} >= 1000) {
+			if ($args->{hair_style} == 0x64) {
+				$object_class = 'Actor::Pet';
+			} else {
+				$object_class = 'Actor::Monster';
+			}
+		} else {   # ($args->{type} < 1000 && $args->{type} != 45 && !$jobs_lut{$args->{type}})
+			$object_class = 'Actor::NPC';
+		}
+	}
+	
+	#### Step 1: create the actor object ####
+	
+	if ($object_class eq 'Actor::Player') {
+		# Actor is a player
+		$actor = $playersList->getByID($args->{ID});
+		if (!defined $actor) {
+			$actor = new Actor::Player();
+			$actor->{appear_time} = time;
+			# New actor_display packets include the player's name
+			$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
+			$mustAdd = 1;
+		}
+		$actor->{nameID} = $nameID;
+	} elsif ($object_class eq 'Actor::Slave') {
+		# Actor is a homunculus or a mercenary
+		$actor = $slavesList->getByID($args->{ID});
+		if (!defined $actor) {
+			$actor = ($char->{slaves} && $char->{slaves}{$args->{ID}})
+			? $char->{slaves}{$args->{ID}} : new Actor::Slave ($args->{type});
+
+			$actor->{appear_time} = time;
+			$actor->{name_given} = bytesToString($args->{name}) if exists $args->{name};
+			$actor->{jobId} = $args->{type} if exists $args->{type};
+			$mustAdd = 1;
+		}
+		$actor->{nameID} = $nameID;
+	} elsif ($object_class eq 'Actor::Portal') {
 		# Actor is a portal
 		$actor = $portalsList->getByID($args->{ID});
 		if (!defined $actor) {
@@ -514,61 +555,44 @@ sub actor_display {
 			# servers to auto-ban bots.)
 		}
 		$actor->{nameID} = $nameID;
-
-	} elsif ($args->{type} >= 1000) { # FIXME: in rare cases RO uses a monster sprite for NPC's (JT_ZHERLTHSH = 0x4b0 = 1200) ==> use object_type ?
-		my $obj_type = (defined $args->{object_type}) ? $args->{object_type} : -1;
-		# Actor might be a monster NPC
-		if ($obj_type == 6) {
-			$actor = $npcsList->getByID($args->{ID});
-			if (!defined $actor) {
-				$actor = new Actor::NPC();
-				$actor->{appear_time} = time;
-				$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
-				$mustAdd = 1;
+	} elsif ($object_class eq 'Actor::Pet') {
+		# Actor is a pet
+		$actor = $petsList->getByID($args->{ID});
+		if (!defined $actor) {
+			$actor = new Actor::Pet();
+			$actor->{appear_time} = time;
+			if ($monsters_lut{$args->{type}}) {
+				$actor->setName($monsters_lut{$args->{type}});
 			}
-			$actor->{nameID} = $nameID;
+			$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : "Unknown";
+			$mustAdd = 1;
 
-		} else {
-			# Actor might be a monster
-			if ($args->{hair_style} == 0x64 || $args->{object_type} == NPC_PET_TYPE) {
-				# Actor is a pet
-				$actor = $petsList->getByID($args->{ID});
-				if (!defined $actor) {
-					$actor = new Actor::Pet();
-					$actor->{appear_time} = time;
-					if ($monsters_lut{$args->{type}}) {
-						$actor->setName($monsters_lut{$args->{type}});
-					}
-					$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : "Unknown";
-					$mustAdd = 1;
-
-					# Previously identified monsters could suddenly be identified as pets.
-					if ($monstersList->getByID($args->{ID})) {
-						$monstersList->removeByID($args->{ID});
-					}
-				}
-
-			} else {
-				# Actor really is a monster
-				$actor = $monstersList->getByID($args->{ID});
-				if (!defined $actor) {
-					$actor = new Actor::Monster();
-					$actor->{appear_time} = time;
-					if ($monsters_lut{$args->{type}}) {
-						$actor->setName($monsters_lut{$args->{type}});
-					}
-					#$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : "Unknown";
-					$actor->{name_given} = "Unknown";
-					$actor->{binType} = $args->{type};
-					$mustAdd = 1;
-				}
+			# Previously identified monsters could suddenly be identified as pets.
+			if ($monstersList->getByID($args->{ID})) {
+				$monstersList->removeByID($args->{ID});
 			}
-
+			
+			# Why do monsters and pets use nameID as type?
+			$actor->{nameID} = $args->{type};
+			
+		}
+	} elsif ($object_class eq 'Actor::Monster') {
+		$actor = $monstersList->getByID($args->{ID});
+		if (!defined $actor) {
+			$actor = new Actor::Monster();
+			$actor->{appear_time} = time;
+			if ($monsters_lut{$args->{type}}) {
+				$actor->setName($monsters_lut{$args->{type}});
+			}
+			#$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : "Unknown";
+			$actor->{name_given} = "Unknown";
+			$actor->{binType} = $args->{type};
+			$mustAdd = 1;
+			
 			# Why do monsters and pets use nameID as type?
 			$actor->{nameID} = $args->{type};
 		}
-
-	} else {	# ($args->{type} < 1000 && $args->{type} != 45 && !$jobs_lut{$args->{type}})
+	} elsif ($object_class eq 'Actor::NPC') {
 		# Actor is an NPC
 		$actor = $npcsList->getByID($args->{ID});
 		if (!defined $actor) {
@@ -579,7 +603,6 @@ sub actor_display {
 		}
 		$actor->{nameID} = $nameID;
 	}
-
 
 	#### Step 2: update actor information ####
 	$actor->{ID} = $args->{ID};
