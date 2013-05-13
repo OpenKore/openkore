@@ -1,5 +1,11 @@
 # This file contains information about master servers.
 
+# To change displayed string in server list, use "title" option.
+
+# Do not change server identifiers (in []),
+# except for when subservers were changed or reordered
+# in such a way it requires user confirmation to correctly select a subserver
+
 #####################
 # Official RO Servers
 
@@ -67,8 +73,9 @@ paddedPackets_attackID 0x89
 paddedPackets_skillUseID 0x113
 addTableFolders euRO
 
-## http://www.ragnarokonline.fr
+## http://www.ragnarokeurope.com/
 [France - fRO]
+title France - fRO (ragnarokeurope.com): Chaos
 ip 62.23.1.52
 port 6900
 master_version 31
@@ -97,6 +104,7 @@ charBlockSize 116
 
 # Renewal
 [International - iRO: Ymir/Yggdrasil/Valkyrie]
+title International - iRO: Chaos (Renewal-compatible)
 ip 128.241.92.162
 port 6900
 master_version 1
@@ -122,6 +130,7 @@ addTableFolders iRO
 
 #Pre-renewal
 [International - iRO: Loki Classic]
+title International - iRO: Loki (Classic-compatible)
 ip 128.241.92.162
 port 6900
 master_version 1

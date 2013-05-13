@@ -406,12 +406,16 @@ sub processServerSettings {
 		my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
 		my $choice = $interface->showMenu(
 			T("Please choose a master server to connect to."),
-			\@servers,
+			[map { $masterServers{$_}{title} || $_ } @servers],
 			title => T("Master servers"));
 		if ($choice == -1) {
 			exit;
 		} else {
-			configModify('master', $servers[$choice], 1);
+			bulkConfigModify({
+				master => $servers[$choice],
+				# present server selection on master change
+				server => '',
+			}, 1);
 		}
 	}
 
