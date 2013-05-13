@@ -404,6 +404,7 @@ sub processServerSettings {
 
 	if ($config{master} eq "" || $config{master} =~ /^\d+$/ || !exists $masterServers{$config{master}}) {
 		my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
+		@servers = grep { not $masterServers{$_}{dead} } @servers;
 		my $choice = $interface->showMenu(
 			T("Please choose a master server to connect to."),
 			[map { $masterServers{$_}{title} || $_ } @servers],
@@ -423,6 +424,12 @@ sub processServerSettings {
 	# Parse server settings
 	my $master = $masterServer = $masterServers{$config{master}};
 	
+	# Stop if server now marked as dead
+	if ($master->{dead}) {
+		$interface->errorDialog($master->{dead_message} || TF("Server you've selected (%s) is now marked as dead.", $master->{title} || $config{master}));
+		exit;
+	}
+
 	# Check for required options
 	if (my @missingOptions = grep { $master->{$_} eq '' } qw(ip port master_version version serverType)) {
 		$interface->errorDialog(TF("Required server options are not set: %s\n", "@missingOptions"));
