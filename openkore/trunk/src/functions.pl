@@ -413,8 +413,9 @@ sub processServerSettings {
 		} else {
 			bulkConfigModify({
 				master => $servers[$choice],
-				# present server selection on master change
+				# ask for server and character if we're connected to "new" master server
 				server => '',
+				char => '',
 			}, 1);
 		}
 	}
