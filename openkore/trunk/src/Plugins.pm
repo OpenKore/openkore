@@ -100,6 +100,7 @@ sub loadAll {
 	my @folders = Settings::getPluginsFolders();
 	foreach my $file (getFilesFromDirs(\@folders, 'pl|lp', 'cvs', 1)) {
 		load("$file->{dir}/$file->{name}$file->{ext}") if (&$condition($file->{name}));
+		return if $quit;
 	}
 }
 

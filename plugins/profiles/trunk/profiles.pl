@@ -15,7 +15,7 @@ package profiles;
 use strict;
 use File::Spec;
 use Plugins;
-use Globals qw($interface);
+use Globals qw($interface $quit);
 
 my $profile_folder = "profiles";
 
@@ -53,7 +53,7 @@ sub onStart {
       );
 
    if ($choice == -1) {
-      exit;
+      $quit = 1;
 
    } else {
 
