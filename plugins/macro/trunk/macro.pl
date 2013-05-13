@@ -88,7 +88,7 @@ sub Unload {
 
 sub cleanup {
 	message "cleaning up\n";
-	Settings::removeFile($cfID);
+	Settings::removeFile($cfID) if defined $cfID;
 	Log::delHook($loghook);
 	foreach (@{$autohooks}) {Plugins::delHook($_)}
 	undef $autohooks;
