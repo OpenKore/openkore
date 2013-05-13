@@ -3089,7 +3089,7 @@ sub processAutoShopOpen {
 	}
 
 	if ($config{'shopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && !$shopstarted
-		&& $field->baseName eq $config{'lockMap'}) {
+		&& $field->baseName eq $config{'lockMap'} && !$taskManager->countTasksByName('openShop')) {
 		if ($config{'shop_useSkill'}) {
 			my $skill = new Skill(auto => "MC_VENDING");
 
@@ -3099,7 +3099,16 @@ sub processAutoShopOpen {
 				skill => $skill,
 				priority => Task::USER_PRIORITY
 			);
-			my $task = new Task::ErrorReport(task => $skillTask);
+			my $task = new Task::Chained(
+				name => 'openShop',
+				tasks => [
+					new Task::ErrorReport(task => $skillTask),
+					Task::Timeout->new(
+						function => sub {main::openShop()},
+						seconds => $config{shop_useSkill_delay},
+					)
+				]
+			);
 			$taskManager->add($task);
 		} else {
 			main::openShop();
