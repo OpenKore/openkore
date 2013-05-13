@@ -73,6 +73,7 @@ sub mainLoop {
 	} elsif ($state == STATE_LOAD_PLUGINS) {
 		Log::message("$Settings::versionText\n");
 		loadPlugins();
+		return if $quit;
 		Log::message("\n");
 		Plugins::callHook('start');
 		$state = STATE_LOAD_DATA_FILES;
@@ -117,10 +118,10 @@ sub loadPlugins {
 			"The error message is:\n" .
 			"%s",
 			$Settings::NAME, $e->message));
-		exit 1;
+		$quit = 1;
 	} elsif (my $e = caught('Plugin::DeniedException')) {
 		$interface->errorDialog($e->message);
-		exit 1;
+		$quit = 1;
 	} elsif ($@) {
 		die $@;
 	}
@@ -277,13 +278,15 @@ sub loadDataFiles {
 		$interface->errorDialog(TF(
 			"The file %s must be in UTF-8 encoding.",
 			$e->textfile));
-		exit 1;
+		$quit = 1;
 	} elsif (my $e = caught('FileNotFoundException')) {
 		$interface->errorDialog(TF("Unable to load the file %s.", $e->filename));
-		exit 1;
+		$quit = 1;
 	} elsif ($@) {
 		die $@;
 	}
+	return if $quit;
+
 	Plugins::callHook('start3');
 
 	if ($config{'adminPassword'} eq 'x' x 10) {
@@ -331,7 +334,8 @@ sub initNetworking {
 	if ($@) {
 		# Problem with networking.
 		$interface->errorDialog($@);
-		exit 1;
+		$quit = 1;
+		return;
 	}
 
 	if ($sys{bus}) {
@@ -384,14 +388,16 @@ sub promptFirstTimeInformation {
 		if (!$config{username}) {
 			$msg = $interface->query(T("Please enter your Ragnarok Online username."));
 			if (!defined($msg)) {
-				exit;
+				$quit = 1;
+				return;
 			}
 			configModify('username', $msg, 1);
 		}
 		if (!$config{password}) {
 			$msg = $interface->query(T("Please enter your Ragnarok Online password."), isPassword => 1);
 			if (!defined($msg)) {
-				exit;
+				$quit = 1;
+				return;
 			}
 			configModify('password', $msg, 1);
 		}
@@ -410,7 +416,8 @@ sub processServerSettings {
 			[map { $masterServers{$_}{title} || $_ } @servers],
 			title => T("Master servers"));
 		if ($choice == -1) {
-			exit;
+			$quit = 1;
+			return;
 		} else {
 			bulkConfigModify({
 				master => $servers[$choice],
@@ -427,13 +434,15 @@ sub processServerSettings {
 	# Stop if server now marked as dead
 	if ($master->{dead}) {
 		$interface->errorDialog($master->{dead_message} || TF("Server you've selected (%s) is now marked as dead.", $master->{title} || $config{master}));
-		exit;
+		$quit = 1;
+		return;
 	}
 
 	# Check for required options
 	if (my @missingOptions = grep { $master->{$_} eq '' } qw(ip port master_version version serverType)) {
 		$interface->errorDialog(TF("Required server options are not set: %s\n", "@missingOptions"));
-		exit;
+		$quit = 1;
+		return;
 	}
 	
 	foreach my $serverOption ('serverType', 'chatLangCode', 'storageEncryptKey', 'gameGuard', 'charBlockSize',

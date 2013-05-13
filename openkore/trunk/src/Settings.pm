@@ -509,6 +509,7 @@ sub loadAll {
 	foreach my $object (@{$files->getItems()}) {
 		Plugins::callHook('loadfiles', {files => \@{$files->getItems}, current => $i});
 		loadByHandle($object->{index}, $progressHandler);
+		return if $Globals::quit;
 		$i++;
 	}
 	
