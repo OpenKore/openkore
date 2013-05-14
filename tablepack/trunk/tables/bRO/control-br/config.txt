@@ -216,7 +216,6 @@ saveMap_warpChatCommand
 shopAuto_open 0
 shop_random 0
 shop_useSkill 1
-shop_useSkill_delay 5
 
 sitAuto_hp_lower 40
 sitAuto_hp_upper 100
