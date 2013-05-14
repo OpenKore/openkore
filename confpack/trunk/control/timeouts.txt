@@ -128,6 +128,7 @@ ai_cartAuto 0.15
 ai_cartAutoCheck 3
 ai_avoidcheck 0.5
 ai_shop 4
+ai_shop_useskill_delay 5
 
 # delay between repairAuto
 ai_repair 4

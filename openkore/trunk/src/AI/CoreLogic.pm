@@ -3105,7 +3105,7 @@ sub processAutoShopOpen {
 					new Task::ErrorReport(task => $skillTask),
 					Task::Timeout->new(
 						function => sub {main::openShop()},
-						seconds => $config{shop_useSkill_delay},
+						seconds => $timeout{ai_shop_useskill_delay}{timeout},
 					)
 				]
 			);
