@@ -26,7 +26,6 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'09A1' => ['sync_received_characters_09A1'],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
