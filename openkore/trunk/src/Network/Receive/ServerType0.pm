@@ -4396,7 +4396,14 @@ sub private_message_sent {
 
 sub sync_received_characters {
 	my ($self, $args) = @_;
-	my $nCount = $args->{sync_Count};
+
+	$charSvrSet{sync_Count} = $args->{sync_Count} if (exists $args->{sync_Count});
+
+	unless ($net->clientAlive) {
+		for (1..$args->{sync_Count}) {
+			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
+		}
+	}
 }
 
 sub received_characters {
@@ -4476,6 +4483,7 @@ sub received_characters {
 	# FIXME better support for multiple received_characters packets
 	if ($args->{switch} eq '099D' && $args->{RAW_MSG_SIZE} >= ($blockSize * 3)) { #charBlockSize: 144
 		$net->setState(1.5);
+		# FIXME really needed in both this and 09A0 sync_received_characters?
 		if ($nChars < $charSvrSet{normal_slot} && $config{'XKore'} ne '1') {
 			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
 		}
