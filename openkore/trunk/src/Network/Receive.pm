@@ -471,14 +471,14 @@ sub actor_display {
 			$object_class = 'Actor::Portal';
 		} else {
 			$object_class = {
-				Network::Receive::PC_TYPE => 'Actor::Player',
+				PC_TYPE, 'Actor::Player',
 				# NPC_TYPE? # not encountered, NPCs are NPC_EVT_TYPE
 				# SKILL_TYPE? # not encountered
 				# UNKNOWN_TYPE? # not encountered
-				Network::Receive::NPC_MOB_TYPE => 'Actor::Monster',
-				Network::Receive::NPC_EVT_TYPE => 'Actor::NPC', # both NPCs and portals
-				Network::Receive::NPC_PET_TYPE => 'Actor::Pet',
-				Network::Receive::NPC_HO_TYPE => 'Actor::Slave',
+				NPC_MOB_TYPE, 'Actor::Monster',
+				NPC_EVT_TYPE, 'Actor::NPC', # both NPCs and portals
+				NPC_PET_TYPE, 'Actor::Pet',
+				NPC_HO_TYPE, 'Actor::Slave',
 				# NPC_MERSOL_TYPE? # not encountered
 				# NPC_ELEMENTAL_TYPE? # not encountered
 			}->{$args->{object_type}};
