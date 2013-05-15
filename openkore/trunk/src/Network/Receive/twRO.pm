@@ -31,7 +31,7 @@ sub new {
 	my %packets = (
 		'006D' => ['character_creation_successful', 'a4 V9 v V2 v14 Z24 C6 v2 Z*', [qw(charID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag mapname)]],
 		'0097' => ['private_message', 'v Z28 Z*', [qw(len privMsgUser privMsg)]],
-		'082D' => ['characters_slots_info', 'v C5 x20', [qw(packet_len normal_slot premium_slot billing_slot producible_slot valid_slot)]],
+		'082D' => ['received_characters_info', 'v C5 x20', [qw(packet_len normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 	);
 
 	foreach my $switch (keys %packets) {
@@ -63,7 +63,7 @@ sub sync_received_characters {
 	}
 }
 
-sub characters_slots_info {
+sub received_characters_info {
 	my ($self, $args) = @_;
 
 	$charSvrSet{packet_len} = $args->{packet_len} if (exists $args->{packet_len});
