@@ -43,10 +43,6 @@ use Utils::Exceptions;
 use Utils::Crypton;
 use Translation;
 
-# TODO: use object_type? this this the table?
-# i figure, if the players homunculus/mercenary can differentiate between npc/monster, so can kore
-# and i think this might have something to do with it
-# 20130512 - we should REALLY use this as others method (checking hair style in order to identify pets...?) are really obsolete and buggy / - revok
 # object_type constants for &actor_display
 use constant {
 	PC_TYPE => 0x0,
@@ -475,20 +471,21 @@ sub actor_display {
 			$object_class = 'Actor::Portal';
 		} else {
 			$object_class = {
-				PC_TYPE => 'Actor::Player',
+				Network::Receive::PC_TYPE => 'Actor::Player',
 				# NPC_TYPE? # not encountered, NPCs are NPC_EVT_TYPE
 				# SKILL_TYPE? # not encountered
 				# UNKNOWN_TYPE? # not encountered
-				NPC_MOB_TYPE => 'Actor::Monster',
-				NPC_EVT_TYPE => 'Actor::NPC', # both NPCs and portals
-				NPC_PET_TYPE => 'Actor::Pet',
-				NPC_HO_TYPE => 'Actor::Slave',
+				Network::Receive::NPC_MOB_TYPE => 'Actor::Monster',
+				Network::Receive::NPC_EVT_TYPE => 'Actor::NPC', # both NPCs and portals
+				Network::Receive::NPC_PET_TYPE => 'Actor::Pet',
+				Network::Receive::NPC_HO_TYPE => 'Actor::Slave',
 				# NPC_MERSOL_TYPE? # not encountered
 				# NPC_ELEMENTAL_TYPE? # not encountered
 			}->{$args->{object_type}};
 		}
-	}
 
+	}
+	
 	unless (defined $object_class) {
 		if ($jobs_lut{$args->{type}}) {
 			unless ($args->{type} > 6000) {
@@ -1650,5 +1647,6 @@ sub login_pin_new_code_result {
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
 	}
 }
+
 
 1;
