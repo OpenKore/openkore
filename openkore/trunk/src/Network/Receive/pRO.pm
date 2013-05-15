@@ -79,7 +79,7 @@ sub sync_received_characters {
    my ($self, $args) = @_;
    if ($config{'XKore'} ne '1') {
 	   for (my $count = $args->{count}; $count >= 1; $count--) {
-	      $messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters_09A1'}));
+	      $messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
 	   }
    }
 }

@@ -75,7 +75,7 @@ sub received_characters_info {
 
 sub unknown_09A0 {
 	for (1..10) { # the client sends ten packets
-		$messageSender->sendToServer($messageSender->reconstruct({switch => 'unknown_09A1'}));
+		$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
 	}
 }
 
