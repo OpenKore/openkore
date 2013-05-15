@@ -79,7 +79,6 @@ sub received_characters {
 	my ($self, $args) = @_;
 	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER);
 
-	$charSvrSet{packet_len} = $args->{packet_len} if (exists $args->{packet_len});
 	$charSvrSet{normal_slot} = $args->{normal_slot} if (exists $args->{normal_slot});
 	$charSvrSet{premium_slot} = $args->{premium_slot} if (exists $args->{premium_slot});
 	$charSvrSet{billing_slot} = $args->{billing_slot} if (exists $args->{billing_slot});

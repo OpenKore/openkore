@@ -96,7 +96,6 @@ sub game_login {
 		if ($self->{recvPacketParser}{packet_lut}{received_characters} eq '099D') {
 			$output = $self->{recvPacketParser}->reconstruct({
 				switch => 'received_characters_info',
-				packet_len => $charSvrSet{packet_len},
 				normal_slot => $charSvrSet{normal_slot},
 				premium_slot => $charSvrSet{premium_slot},
 				billing_slot => $charSvrSet{billing_slot},
