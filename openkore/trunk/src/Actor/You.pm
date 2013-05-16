@@ -75,6 +75,9 @@ sub new {
 	$self->{configPrefix} = '';
 	$self->{dcOnEmptyItems} = '';
 
+	require Utils::ActorHashTie;
+	tie %{$self->{equipment}}, 'Tie::ActorHash';
+
 	return $self;
 }
 
