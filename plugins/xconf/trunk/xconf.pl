@@ -1,7 +1,7 @@
 # xConf plugin by 4epT (ICQ 2227733)
 # Based on Lims idea
 # Version: 4
-# Last changes 24.04.2013
+# Last changes 15.05.2013
 # Plug-in for change mon_control/pickupitems/items_control/priority files, using console commands.
 #
 # Examples of commands:
@@ -45,7 +45,7 @@ sub xConf {
 		($key, $value) = $args =~ /(name)(?:\s)(.*)/;
 		$shopname = 1 if $key eq 'name';
 	}
-	($key, $value) = $args =~ /([\s\S]+?)(?:\s)([\-\d\.]+[\s\S]*)/ if !$shopname;
+	($key, $value) = $args =~ /([\s\S]+?)(?:\s)([\-\d\.(\.\.)]+[\s\S]*)/ if !$shopname;
 	$key = $args if !$key;
 	$key =~ s/\s+$//g;
 debug "KEY: $key, VALUE: $value\n";
@@ -117,7 +117,7 @@ debug "$type '$name' is found in file '$file2'.\n";
 		} else {
 			for my $sale (@{$shop{items}}) {
 				if (lc($sale->{name}) eq lc($key)) {
-					$oldval = "$sale->{price} $sale->{amount}";
+					$oldval = ($sale->{priceMax}) ? "$sale->{price}..$sale->{priceMax} $sale->{amount}" : "$sale->{price} $sale->{amount}";
 					last;
 				}
 			}
@@ -175,10 +175,11 @@ debug "Change old record: ";
 	}
 	if ($used == 0) {
 debug "New record: ";
+	my ($price, $amount) = split(/\s+/, $value);
 		if ($file eq 'shop.txt') {
-			push (@lines, $key.'	'.@value)
+			push (@lines, $key.'	'.$price.'	'.$amount)
 		} else {
-			push (@lines, $key.' '.@value)
+			push (@lines, $key.' '.$value)
 		}
 	}
 	}
