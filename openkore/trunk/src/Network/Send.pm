@@ -324,6 +324,10 @@ sub sendRaw {
 sub parse_master_login {
 	my ($self, $args) = @_;
 	
+	if (exists $args->{password_md5_hex}) {
+		$args->{password_md5} = pack 'H*', $args->{password_md5_hex};
+	}
+
 	if (exists $args->{password_rijndael}) {
 		my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
 		my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
@@ -414,7 +418,7 @@ sub sendMasterSecureLogin {
 		version => $version || $self->version,
 		master_version => $master_version,
 		username => $username,
-		password_md5 => $self->secureLoginHash($password, $salt, $type),
+		password_salted_md5 => $self->secureLoginHash($password, $salt, $type),
 		clientInfo => $account > 0 ? $account - 1 : 0,
 	}));
 }

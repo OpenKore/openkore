@@ -3,6 +3,7 @@
 package Base::Ragnarok::AccountServer;
 
 use strict;
+use Digest::MD5;
 use Exception::Class qw(
 	Base::Ragnarok::AccountServer::AccountNotFound
 	Base::Ragnarok::AccountServer::PasswordIncorrect
@@ -77,12 +78,18 @@ sub master_login {
 		sessionID => $sessionID,
 		sessionID2 => $sessionID
 	);
-	my $result = $self->login(
-		\%session, $args->{username},
-		exists $args->{password_md5}
-			? sub { $args->{password_md5} eq $self->{sendPacketParser}->secureLoginHash($_[0], $self->secureKey($client), $masterServer->{secureLogin}) }
-			: sub { $args->{password} eq $_[0] }
-	);
+
+	my $password_check = do {
+		if (defined $args->{password_salted_md5}) {
+			sub { $args->{password_salted_md5} eq $self->{sendPacketParser}->secureLoginHash($_[0], $self->secureKey($client), $masterServer->{secureLogin}) }
+		} elsif (defined $args->{password_md5}) {
+			sub { $args->{password_md5} eq Digest::MD5->new->add($_[0])->digest }
+		} else {
+			sub { $args->{password} eq $_[0] }
+		}
+	};
+
+	my $result = $self->login(\%session, $args->{username}, $password_check);
 	if ($result == LOGIN_SUCCESS) {
 		$self->{sessionStore}->add(\%session);
 		$session{state} = 'About to select character';
