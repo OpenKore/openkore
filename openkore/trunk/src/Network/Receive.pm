@@ -870,7 +870,7 @@ sub actor_died_or_disappeared {
 		$char->{deathCount}++;
 		$char->{dead} = 1;
 		$char->{dead_time} = time;
-		if($char->{equipment}{arrow}{type}==19){
+		if ($char->{equipment}{arrow} && $char->{equipment}{arrow}{type} == 19) {
 			delete $char->{equipment}{arrow};
 		}
 
