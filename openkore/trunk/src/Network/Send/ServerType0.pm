@@ -75,8 +75,8 @@ sub new {
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'01DB' => ['secure_login_key_request'], # len 2
-		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_md5 master_version)]],
-		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_md5 master_version clientInfo)]],
+		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
+		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 		'021D' => ['less_effect'], # TODO
