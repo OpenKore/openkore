@@ -262,11 +262,11 @@ sub next {
 				$self->{line}++;
 				my $searchEnd = ${$macro{$self->{name}}}[$self->{line}];
 				
-				if ($searchEnd =~ /^if\s+\(.*\).*{/) {
+				if ($searchEnd =~ /^if.*{$/) {
 					$countBlockIf++;
-				} elsif (($searchEnd eq '}') || ($searchEnd =~ /}\s*else\s*{/ && $countBlockIf == 1)) {
+				} elsif (($searchEnd eq '}') || ($searchEnd =~ /^}\s*else\s*{$/ && $countBlockIf == 1)) {
 					$countBlockIf--;
-				} elsif ($searchEnd =~ /}\s*elsif\s+\(\s*(.*)\s*\).*/ && $countBlockIf == 1) {
+				} elsif ($searchEnd =~ /^}\s*elsif\s+\(\s*(.*)\s*\).*{$/ && $countBlockIf == 1) {
 					# If the condition of 'elsif' is true, the commands of your block will be executed,
 					#  if false, will not run.
 					$text = parseCmd($1, $self);
@@ -284,16 +284,16 @@ sub next {
 	##########################################
 	# If arriving at a line 'else' or 'elsif', it should be skipped -
 	#  it will never be activated if coming from a false 'if'
-	} elsif ($line =~ /}\s*else\s*{/ || $line =~ /}\s*elsif\s+\(\s*(.*)\s*\).*/) {
+	} elsif ($line =~ /^}\s*else\s*{/ || $line =~ /^}\s*elsif\s*\(.*\)\s*{$/) {
 			my $countBlockIf = 1;
 			while ($countBlockIf) {
 				$self->{line}++;
 				my $searchEnd = ${$macro{$self->{name}}}[$self->{line}];
 				
-				if ($searchEnd =~ /^if\s+\(.*\).*{/) {
+				if ($searchEnd =~ /^if.*{$/) {
 					$countBlockIf++;
 				} elsif (($searchEnd eq '}') ||
-					($countBlockIf == 1 && ($searchEnd =~ /}\s*else\s*{/ || $searchEnd =~ /}\s*elsif\s+\(\s*(.*)\s*\).*/))) {
+					($countBlockIf == 1 && ($searchEnd =~ /^}\s*else\s*{/ || $searchEnd =~ /^}\s*elsif\s*\(.*\)\s*{$/))) {
 					$countBlockIf--;
 				}
 			}
