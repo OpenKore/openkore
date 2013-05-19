@@ -71,11 +71,11 @@ sub parseMacroFile {
 					undef %block
 				}
 			} else {
-				if (!$countBlockIf && ($_ =~ /}\s*else\s*{/ || $_ =~ /}\s*elsif\s+\(\s*(.*)\s*\).*/)) {
+				if ($_ =~ /^if.*{$/) {
+					$countBlockIf++;
+				} elsif (!$countBlockIf && ($_ =~ /^}\s*else\s*{$/ || $_ =~ /}\s*elsif\s*\(.*\)\s*{$/)) {
 					warning "$file: ignoring '$_' in line $. (munch, munch, not found the 'if')\n";
 					next
-				} elsif ($_ =~ /^if\s+\(.*\).*{/) {
-					$countBlockIf++;
 				}
 
 				push(@{$macro{$block{name}}}, $_);
@@ -101,11 +101,11 @@ sub parseMacroFile {
 				$automacro{$block{name}}->{call} = $block{loadmacro_name};
 				$macro{$block{loadmacro_name}} = []
 			} elsif ($block{loadmacro}) {
-				if (!$countBlockIf && ($_ =~ /}\s*else\s*{/ || $_ =~ /}\s*elsif\s+\(\s*(.*)\s*\).*/)) {
+				if ($_ =~ /^if.*{$/) {
+					$countBlockIf++;
+				} elsif (!$countBlockIf && ($_ =~ /^}\s*else\s*{$/ || $_ =~ /}\s*elsif\s*\(.*\)\s*{$/)) {
 					warning "$file: ignoring '$_' in line $. (munch, munch, not found the 'if')\n";
 					next
-				} elsif ($_ =~ /^if\s+\(.*\).*{/) {
-					$countBlockIf++;
 				}
 
 				push(@{$macro{$block{loadmacro_name}}}, $_);
