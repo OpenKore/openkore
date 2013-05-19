@@ -205,6 +205,18 @@ sub loadTextToHTML {
 	"@parts"
 }
 
+sub characterSlots {
+	my @slots;
+	for my $slot (@Actor::Item::slots) {
+		my $item = $char->{equipment}{$slot};
+		my $name = $item ? $item->{name} : '-';
+		($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) ?
+			push (@slots, sprintf("%-15s: %s x %s\n", $slot, $name, $item->{amount})) :
+			push (@slots, sprintf("%-15s: %s\n", $slot, $name));
+	}
+	"@slots\n"
+}
+
 # "hookShopList" is used on tab "Shop".
 my ($shopNumber, @price, @number, @listName, @listAmount, @upgrade, @cards, @type, @id, @shopJS);
 sub hookShopList {
@@ -526,7 +538,7 @@ sub request {
 		{ url => '/homunculos.html', title => T('Homunculos') },
 		{ url => '/storage.html', title => T('Storage') },
 	);
-
+	
 	%keywords =	(
 		socketPort => int($webMonitorPlugin::socketServer && $webMonitorPlugin::socketServer->getPort),
 		csrf => $csrf,
@@ -683,17 +695,6 @@ sub request {
 		'characterID' => unpack("V", $char->{ID}), # Never used
 		'characterHairColor'=> $haircolors{$char->{hair_color}}, # Never used
 		'characterGuildName' => $char->{guild}{name},
-		'characterLeftHand' => $char->{equipment}{leftHand}{name} || 'none', # Never used
-		'characterRightHand' => $char->{equipment}{rightHand}{name} || 'none', # Never used
-		'characterTopHead' => $char->{equipment}{topHead}{name} || 'none', # Never used
-		'characterMidHead' => $char->{equipment}{midHead}{name} || 'none', # Never used
-		'characterLowHead' => $char->{equipment}{lowHead}{name} || 'none', # Never used
-		'characterRobe' => $char->{equipment}{robe}{name} || 'none', # Never used
-		'characterArmor' => $char->{equipment}{armor}{name} || 'none', # Never used
-		'characterShoes' => $char->{equipment}{shoes}{name} || 'none', # Never used
-		'characterLeftAccessory' => $char->{equipment}{leftAccessory}{name} || 'none', # Never used
-		'characterRightAccessory' => $char->{equipment}{rightAccessory}{name} || 'none', # Never used
-		'characterArrow' => $char->{equipment}{arrow}{name} || 'none', # Never used
 		'characterZeny' => formatNumber($char->{'zeny'}),
 		'characterStr' => $char->{str},
 		'characterStrBonus' => $char->{str_bonus},
@@ -729,7 +730,7 @@ sub request {
 		'characterFlee' => $char->{flee},
 		'characterFleeBonus' => $char->{flee_bonus},
 		'characterSpirits' => $char->{spirits} || '-', # Never used
-	
+		'characterSlots' => characterSlots,
 		'characterBaseExp' => $char->{exp},
 		'characterBaseMax' => $char->{exp_max},
 		'characterBasePercent' => $char->{exp_max} ?
