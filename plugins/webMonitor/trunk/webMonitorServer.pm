@@ -509,7 +509,7 @@ sub request {
 	
 # Show self shop
 	my (@selfShopItemID, @selfShopItemAmount, @selfShopItemPrice, @selfShopItemName, $selfShopButton);
-	if ($shopstarted) {
+	if ($shopstarted && $char->{skills}{MC_VENDING}{lv} && $cart{exists} && $char->cartActive && $shop{title_line}) {
 		for my $item (@articles) {
 			next if (!$item);
 			
@@ -519,8 +519,10 @@ sub request {
 			push @selfShopItemName, $item->{name};
 		}
 		$selfShopButton = '<a href="/handler?csrf='.$csrf.'&command=closeshop" class="btn btn-danger btn-mini pull-right"><i class="icon-shopping-cart icon-white"></i> closeshop</a>';
-	} else {
+	} elsif (!$shopstarted && $char->{skills}{MC_VENDING}{lv} && $cart{exists} && $char->cartActive && $shop{title_line}) {
 		$selfShopButton = '<a href="/handler?csrf='.$csrf.'&command=openshop" class="btn btn-success btn-mini pull-right"><i class="icon-shopping-cart icon-white"></i> openshop</a>';
+	} else {
+		$selfShopButton = " "
 	}
 
 # Menu list
