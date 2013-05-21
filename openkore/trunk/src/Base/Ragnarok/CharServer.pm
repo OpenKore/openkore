@@ -154,12 +154,13 @@ sub game_login {
 					$char->{int},
 					$char->{dex},
 					$char->{luk},
-					$index,
-					1,
+					0, 0, 1,
+					$field->baseName,
+					0,
 				);
 			}
 			# FIXME
-	        	if ($self->{serverType} == 8){
+			if ($self->{serverType} == 8 || $self->{serverType} =~ /^kRO_/){
 				$output = pack('C20') . $output;
 			}
 	
@@ -171,7 +172,6 @@ sub game_login {
 			$self->{sessionStore}->mark($session);
 			$client->{session} = $session;
 			$session->{time} = time;
-			$client->send($args->{accountID});
 			if ($config{XKore_altCharServer} == 1){
 				$client->send(pack('C2 v', 0x72, 0x00, length($output) + 4) . $output);
 			}else{
@@ -180,12 +180,16 @@ sub game_login {
 					charInfo => $output,
 					
 					# "if number of characters exceed 0 on selecting window, connection to game can't not be made" (sic)
-					total_slot => $index + 1,
+					total_slot => $charSvrSet{normal_slot} || 9,
 					
 					# slots in premium range are displayed as "Not Available"
-					premium_start_slot => $index + 1,
-					premium_end_slot => $index + 1,
-				}));
+					premium_start_slot => $charSvrSet{normal_slot} || 9,
+					premium_end_slot => $charSvrSet{normal_slot} || 9,
+
+					normal_slot => $charSvrSet{normal_slot} || 9,
+					premium_slot => $charSvrSet{premium_slot} || 9,
+					billing_slot => $charSvrSet{billing_slot} || 9,
+				}). pack('C2 x4 a4 v', 0xB9, 0x08, $args->{accountID}, 0));
 			}
 		}
 	}
