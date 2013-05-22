@@ -72,18 +72,17 @@ sub new {
 sub encryptMessageID {
 	my ($self, $r_message, $MID) = @_;
 	
-	# Checking In-Game State
-	if (($self->{net}->getState() != Network::IN_GAME) && (sprintf("%04X",$MID) ne $self->{packet_lut}{map_login})) {
-		# turn off keys
-		$self->{encryption}->{key_1} = 0; $self->{encryption}->{key_2} = 0; $self->{encryption}->{key_3} = 0;
-		return;
-	} elsif (!$self->{encryption}->{key_1}) {
+	if (sprintf("%04X",$MID) eq $self->{packet_lut}{map_login}) {
 		# K
 		$self->{encryption}->{key_1} = Math::BigInt->new(498822262);
 		# A
 		$self->{encryption}->{key_2} = Math::BigInt->new(1768126699);
 		# M
 		$self->{encryption}->{key_3} = Math::BigInt->new(1868856914);
+	} elsif ($self->{net}->getState() != Network::IN_GAME) {
+		$self->{encryption}->{key_1} = 0;
+		$self->{encryption}->{key_2} = 0;
+		return;
 	}
 		
 	# Checking if Encryption is Activated
