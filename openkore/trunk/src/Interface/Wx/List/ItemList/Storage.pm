@@ -86,7 +86,7 @@ sub _onRightClick {
 	my @menu;
 	push @menu, {title => $title};
 	
-	my ($canCart) = (%cart && $cart{exists});
+	my ($canCart) = (%cart && $char->cartActive);
 	
 	push @menu, {title => T('Move all to inventory') . "\tDblClick", callback => sub { $self->_onActivate; }};
 	push @menu, {title => T('Move all to cart'), callback => sub { $self->_onCart; }} if $canCart;

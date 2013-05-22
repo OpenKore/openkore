@@ -135,7 +135,7 @@ sub _onRightClick {
 	my @menu;
 	push @menu, {title => $title};
 	
-	my ($canStorage, $canCart) = (%storage && $storage{opened}, %cart && $cart{exists});
+	my ($canStorage, $canCart) = (%storage && $storage{opened}, %cart && $char->cartActive);
 	
 	if (@selection == 1) {
 		my ($item) = @selection;

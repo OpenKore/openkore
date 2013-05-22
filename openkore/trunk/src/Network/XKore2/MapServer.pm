@@ -193,7 +193,7 @@ sub map_loaded {
 	}
 
 	# Send cart information includeing the items
-	if (($cart{exists} || $char->cartActive) && $RunOnce) {
+	if ($char->cartActive && $RunOnce) {
 		$output = pack('C2 v2 V2', 0x21, 0x01, $cart{items}, $cart{items_max}, ($cart{weight} * 10), ($cart{weight_max} * 10));
 		$client->send($output);
 		

@@ -1490,6 +1490,12 @@ sub inventory_item_removed {
 	}
 }
 
+# 012B
+sub cart_off {
+	undef $cart{exists};
+	message T("Cart released.\n"), "success";
+}
+
 # 012D
 sub shop_skill {
 	my ($self, $args) = @_;
