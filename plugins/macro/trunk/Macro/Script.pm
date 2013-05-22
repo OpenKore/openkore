@@ -495,19 +495,43 @@ sub next {
 	# call command
 	} elsif ($line =~ /^call\s+/) {
 		my ($tmp) = $line =~ /^call\s+(.*)/;
+		my $name = $tmp;
+		my $args;
+		my $cparms;
+		
+		my $calltimes = 1;
+		
 		if ($tmp =~ /\s/) {
-			my ($name, $times) = $tmp =~ /(.*?)\s+(.*)/;
+			($name, $args) = $tmp =~ /^(\S+?)\s+(.+)/;
+			my ($times);
+			if ($args =~ /(\d+)\s+(--.*)/) {
+				($times, $cparms) = $args =~ /(\d+)?\s+?(--.*)?/;
+			} elsif ($args =~ /^\d+/) {
+				$times = $args;
+			}  elsif ($args =~ /^--.*/) {
+				$cparms = $args;
+			}
+			
+			# times parser
 			my $ptimes = parseCmd($times, $self);
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-			if (defined $ptimes && $ptimes =~ /\d+/) {$self->{subcall} = new Macro::Script($name, $ptimes, undef, undef, $self->{interruptible})}
-			else {$self->{subcall} = new Macro::Script($name, undef, undef, undef, $self->{interruptible})}
+			if (defined $ptimes && $ptimes =~ /\d+/) { $calltimes = $ptimes; }; # do we have a valid repeat value?
 		}
-		else {$self->{subcall} = new Macro::Script($tmp, 1, undef, undef, $self->{interruptible})}
-		unless (defined $self->{subcall}) {$self->{error} = "$errtpl: failed to call script"}
-		else {
+		
+		$self->{subcall} = new Macro::Script($name, $calltimes, undef, undef, $self->{interruptible});
+		
+		unless (defined $self->{subcall}) {
+			$self->{error} = "$errtpl: failed to call script";
+		} else {
+			my @new_params = substr($cparms, 2) =~ /"[^"]+"|\S+/g;
+			foreach my $p (1..@new_params) {
+				$varStack{".param".$p} = $new_params[$p-1];
+				$varStack{".param".$p} = substr($varStack{".param".$p}, 1, -1) if ($varStack{".param".$p} =~ /^".*"$/); # remove quotes
+			}
+			
 			$self->{subcall}->regSubmacro;
 			$self->{line}++; # point to the next line to be executed in the caller
-			$self->{timeout} = $self->{macro_delay}
+			$self->{timeout} = $self->{macro_delay};
 		}
 	##########################################
 	# set command
