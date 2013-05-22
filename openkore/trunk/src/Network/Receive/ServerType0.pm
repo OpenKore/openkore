@@ -189,6 +189,7 @@ sub new {
 		'0123' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0124' => ['cart_item_added', 'v V v C3 a8', [qw(index amount nameID identified broken upgrade cards)]],
 		'0125' => ['cart_item_removed', 'v V', [qw(index amount)]],
+		'012B' => ['cart_off'],
 		'012C' => ['cart_add_failed', 'C', [qw(fail)]],
 		'012D' => ['shop_skill', 'v', [qw(number)]],
 		'0131' => ['vender_found', 'a4 A80', [qw(ID title)]],

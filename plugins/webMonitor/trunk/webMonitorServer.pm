@@ -509,7 +509,7 @@ sub request {
 	
 # Show self shop
 	my (@selfShopItemID, @selfShopItemAmount, @selfShopItemPrice, @selfShopItemName, $selfShopButton);
-	if ($shopstarted && $char->{skills}{MC_VENDING}{lv} && $cart{exists} && $char->cartActive && $shop{title_line}) {
+	if ($shopstarted && $char->{skills}{MC_VENDING}{lv} && $char->cartActive && $shop{title_line}) {
 		for my $item (@articles) {
 			next if (!$item);
 			

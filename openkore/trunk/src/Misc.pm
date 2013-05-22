@@ -4259,7 +4259,7 @@ sub makeShop {
 		return;
 	}
 
-	if (!$cart{exists} && !$char->cartActive) {
+	if (!$char->cartActive) {
 		error T("You need this with a cart in order to create a shop!\n");
 		return;
 	}

@@ -818,9 +818,7 @@ sub cmdCart {
 	my (undef, $input) = @_;
 	my ($arg1, $arg2) = split(' ', $input, 2);
 
-	my $hasCart = ($cart{exists} or $char && $char->cartActive);
-
-	if (!$hasCart) {
+	if (!$char->cartActive) {
 		error T("Error in function 'cart' (Cart Management)\n" .
 			"You do not have a cart.\n");
 		return;
@@ -874,10 +872,7 @@ sub cmdCart {
 			return;
 		}
 		$messageSender->sendCompanionRelease();
-		if ($net && $net->getState() == Network::IN_GAME) {
-			message T("Cart released.\n"), "success";
-			$cart{exists} = 0;
-		}
+		message T("Trying to released the cart...\n");
 	} elsif ($arg1 eq "change") {
 		if (!$net || $net->getState() != Network::IN_GAME) {
 			error TF("You must be logged in the game to use this command (%s)\n", 'cart ' . $arg1);
