@@ -12,7 +12,7 @@
 package Network::Send::kRO::RagexeRE_2012_03_07f;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2011_11_02a);
+use base qw(Network::Send::kRO::RagexeRE_2011_12_20b);
 
 use Log qw(debug);
 use Utils qw(getHex);
@@ -26,18 +26,19 @@ sub new {
 	$self->{char_create_version} = 1;
 
 	my %packets = (
-		'022D' => undef,
+		'0067' => undef,
 		'02C4' => ['item_drop', 'v2', [qw(index amount)]],
+		'035F' => undef,
 # TODO 0x0360,6,reqclickbuyingstore,2
 		'0362' => undef,
-		'0364' => undef,
 # TODO 0x0369,26,friendslistadd,2
+		'0369' => undef,
 		'0436' => undef,
 		'0437' => ['character_move', 'a3', [qw(coords)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'07E4' => undef,
 # TODO 0x0815,-1,reqopenbuyingstore,2:4:8:9:89
 # TODO 0x0817,2,reqclosebuyingstore,0
-		'0835' => undef,
 # TODO 0x0861,36,storagepassword,0
 # TODO 0x0863,5,hommenu,4
 		'0865' => ['item_take', 'a4', [qw(ID)]],
@@ -48,9 +49,7 @@ sub new {
 		'0887' => ['sync', 'V', [qw(time)]],
 		'0889' => ['skill_use', 'v3 a4', [qw(lv skillID targetID)]],#10
 		'0890' => ['actor_look_at', 'v C', [qw(head body)]],
-		'0893' => undef,
-		'0898' => undef,
-		'0899' => undef,
+		'0896' => undef,
 		'08A1' => undef,
 		'08A4' => undef,
 		'08AD' => undef,
@@ -64,18 +63,19 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
-		map_login 086A
-		sync 0887
-		character_move 0437
 		actor_action 0885
 		actor_info_request 096A
 		actor_look_at 0890
-		item_take 0865
+		char_create 0970
+		character_move 0437
 		item_drop 02C4
-		storage_item_add 093B
-		storage_item_remove 0963
+		item_take 0865
+		map_login 086A
 		skill_use 0889
 		skill_use_location 0438
+		storage_item_add 093B
+		storage_item_remove 0963
+		sync 0887
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	

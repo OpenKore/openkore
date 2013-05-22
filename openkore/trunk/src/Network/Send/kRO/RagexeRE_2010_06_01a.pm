@@ -25,7 +25,8 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0825' => ['master_login', 'x2 V C Z24 x27 Z17 Z15 a32', [qw(version master_version username ip mac_hyphen_separated password)]], # not used by default
+# available via masterLogin_packet in servers.txt
+	'0825' => ['master_login', 'x2 V C Z24 x27 Z17 Z15 a32', [qw(version master_version username ip mac_hyphen_separated password)]], # not used by default
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
