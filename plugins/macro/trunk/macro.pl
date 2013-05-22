@@ -253,18 +253,26 @@ sub commandHandler {
 			return
 		}
 		my ($repeat, $oAI, $exclusive, $mdelay, $orphan) = (1, 0, 0, undef, undef);
-		my $cparms = 0;
+		my $cparms;
 		for (my $idx = 0; $idx <= @params; $idx++) {
 			if ($params[$idx] eq '-repeat') {$repeat += $params[++$idx]}
 			if ($params[$idx] eq '-overrideAI') {$oAI = 1}
 			if ($params[$idx] eq '-exclusive') {$exclusive = 1}
 			if ($params[$idx] eq '-macro_delay') {$mdelay = $params[++$idx]}
 			if ($params[$idx] eq '-orphan') {$orphan = $params[++$idx]}
-			if ($params[$idx] eq '--') {splice @params, 0, ++$idx; $cparms = 1; last}
+			if ($params[$idx] =~ /^--/) {$cparms = substr(join(' ', map { "$_" } @params), 2); last}
 		}
 		
 		delete $varStack{$_} for grep /^\.param\d+$/, keys %varStack;
-		if ($cparms) {foreach my $p (1..@params) {$varStack{".param".$p} = $params[$p-1]}}
+		if ($cparms) {
+			#parse macro parameters
+			my @new_params = $cparms =~ /"[^"]+"|\S+/g;
+			foreach my $p (1..@new_params) {
+				$varStack{".param".$p} = $new_params[$p-1];
+				$varStack{".param".$p} = substr($varStack{".param".$p}, 1, -1) if ($varStack{".param".$p} =~ /^".*"$/); # remove quotes
+			}
+		}
+		
 		$queue = new Macro::Script($arg, $repeat);
 		if (!defined $queue) {error "macro $arg not found or error in queue\n"}
 		else {
