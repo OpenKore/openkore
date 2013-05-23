@@ -612,7 +612,7 @@ sub actor_display {
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
 	# 0086 would need that?
-	#$actor->{object_type} = $args->{object_type};
+	$actor->{object_type} = $args->{object_type} if (defined $args->{object_type});
 
 	if (UNIVERSAL::isa($actor, "Actor::Player")) {
 		# None of this stuff should matter if the actor isn't a player... => does matter for a guildflag npc!
