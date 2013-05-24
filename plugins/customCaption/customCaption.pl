@@ -88,10 +88,9 @@ sub unload {
 # Subs
 
 sub onKStart {
-	if (!$config{windowTitle}) {
-		configModify('windowTitle', '%n: B%basel (%baseperc), %jobl (%jobperc) : p%w : %pos %map - OpenKore', silent => 1);
-	}
-
+	#if (!$config{windowTitle}) {
+	#	configModify('windowTitle', '%n: B%basel (%baseperc), %jobl (%jobperc) : p%w : %pos %map - OpenKore', silent => 1);
+	#}
 }
 
 sub setTitle {
@@ -99,17 +98,18 @@ sub setTitle {
 	if ($net->getState() == Network::IN_GAME) {
 		my $charName;
 		$charName = $char->{name} if ($char);
-		my ($hpab, $spab, $hpp, $spp, $basePercent, $jobPercent, $weight, $pos, $map, $zeny, $class, $ptname);
+		my ($hpab, $spab, $hpp, $spp, $basePercent, $jobPercent, $weight, $pos, $map, $zeny, $class, $ptname, $server);
 		$args->{return} = $config{windowTitle};
 		# get in-game variables
 		$basePercent = sprintf("%.2f", $char->{exp} / $char->{exp_max} * 100) if ($char->{exp_max});$jobPercent = sprintf("%.2f", $char->{exp_job} / $char->{exp_job_max} * 100) if ($char->{exp_job_max});
 		$weight = int($char->{weight} / $char->{weight_max} * 100) . "%" if ($char->{weight_max});$ptname = $char->{'party'}{'name'} if ($char->{'party'}{'name'}); $class = $jobs_lut{$char->{'jobID'}};
-		$map = $field->name if ($field);$pos = " $char->{pos_to}{x},$char->{pos_to}{y}" if ($char->{pos_to});$hpab = $char->{'hp'}."/".$char->{'hp_max'}  if $char->{'hp_max'};$spab = $char->{'sp'}."/".$char->{'sp_max'} if $char->{'sp_max'};
+		$map = $field->name if ($field);$pos = "$char->{pos_to}{x},$char->{pos_to}{y}" if ($char->{pos_to});$hpab = $char->{'hp'}."/".$char->{'hp_max'}  if $char->{'hp_max'};$spab = $char->{'sp'}."/".$char->{'sp_max'} if $char->{'sp_max'};
 		$hpp = int($char->{'hp'}/$char->{'hp_max'} * 100)."%" if $char->{'hp_max'};$spp = int($char->{'sp'}/$char->{'sp_max'} * 100)."%" if $char->{'sp_max'};$zeny = formatNumber($char->{'zeny'}) if (defined($char->{'zeny'}));
+		$server = $servers[$config{'server'}]{'name'};
 		# replace string
-		$args->{return} =~ s/%n/$charName/;$args->{return} =~ s/%basel/$char->{lv}/;$args->{return} =~ s/%jobl/$char->{lv_job}/;$args->{return} =~ s/%baseperc/$basePercent/;$args->{return} =~ s/%jobperc/$jobPercent/;$args->{return} =~ s/%w/$weight/;
-		$args->{return} =~ s/%pos/$pos/;$args->{return} =~ s/%map/$map/;$args->{return} =~ s/%hpab/$hpab/;$args->{return} =~ s/%spab/$spab/;$args->{return} =~ s/%hpp/$hpp/;$args->{return} =~ s/%spp/$spp/;$args->{return} =~ s/%z/$zeny/;
-		$args->{return} =~ s/%c/$class/;$args->{return} =~ s/%pt/$ptname/;
+		$args->{return} =~ s/%conf\{(.*)\}/$config{$1}/;$args->{return} =~ s/%n/$charName/;$args->{return} =~ s/%basel/$char->{lv}/;$args->{return} =~ s/%jobl/$char->{lv_job}/;$args->{return} =~ s/%baseperc/$basePercent/;$args->{return} =~ s/%jobperc/$jobPercent/;
+		$args->{return} =~ s/%w/$weight/;$args->{return} =~ s/%pos/$pos/;$args->{return} =~ s/%map/$map/;$args->{return} =~ s/%hpab/$hpab/;$args->{return} =~ s/%spab/$spab/;$args->{return} =~ s/%hpp/$hpp/;$args->{return} =~ s/%spp/$spp/;
+		$args->{return} =~ s/%z/$zeny/;$args->{return} =~ s/%c/$class/;$args->{return} =~ s/%pt/$ptname/;$args->{return} =~ s/%server/$server/;
 	}
 }
 
