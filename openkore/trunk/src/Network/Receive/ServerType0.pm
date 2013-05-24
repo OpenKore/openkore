@@ -1132,13 +1132,20 @@ sub area_spell {
 	my $y = $args->{y};
 	my $type = $args->{type};
 	my $fail = $args->{fail};
+	my $binID;
+
+	if ($spells{$ID} && $spells{$ID}{'sourceID'} eq $sourceID) {
+		$binID = binFind(\@spellsID, $ID);
+		$binID = binAdd(\@spellsID, $ID) if ($binID eq "");
+	} else {
+		$binID = binAdd(\@spellsID, $ID);
+	}
 
 	$spells{$ID}{'sourceID'} = $sourceID;
 	$spells{$ID}{'pos'}{'x'} = $x;
 	$spells{$ID}{'pos'}{'y'} = $y;
 	$spells{$ID}{'pos_to'}{'x'} = $x;
 	$spells{$ID}{'pos_to'}{'y'} = $y;
-	my $binID = binAdd(\@spellsID, $ID);
 	$spells{$ID}{'binID'} = $binID;
 	$spells{$ID}{'type'} = $type;
 	if ($type == 0x81) {
