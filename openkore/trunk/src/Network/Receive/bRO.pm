@@ -25,6 +25,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
 		'0367' => ['sync_request_ex'],  
 		'085A' => ['sync_request_ex'],  
 		'085B' => ['sync_request_ex'],  
