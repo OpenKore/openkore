@@ -80,9 +80,8 @@ sub encryptMessageID {
 		# M
 		$self->{encryption}->{key_3} = Math::BigInt->new(1868856914);
 	} elsif ($self->{net}->getState() != Network::IN_GAME) {
-		$self->{encryption}->{key_1} = 0;
-		$self->{encryption}->{key_2} = 0;
-		return;
+		# Turn off keys
+		$self->{encryption}->{key_1} = 0; $self->{encryption}->{key_2} = 0; return;
 	}
 		
 	# Checking if Encryption is Activated
