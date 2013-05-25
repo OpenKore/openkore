@@ -886,3 +886,9 @@ ma_fild02.rsw#普勒斯特#
 ma_scene01.rsw#巴庫暴龍湖#
 ma_in01.rsw#噩夢醫院 1樓#
 ma_dun01.rsw#馬來港 內部#
+
+//------------深淵迴廊
+gld2_ald.rsw#二期公會密穴(艾爾帕蘭)#
+gld2_gef.rsw#二期公會密穴(吉芬)#
+gld2_pay.rsw#二期公會密穴(斐揚)#
+gld2_prt.rsw#二期公會密穴(普隆德拉)#
