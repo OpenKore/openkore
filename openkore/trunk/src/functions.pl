@@ -439,7 +439,13 @@ sub processServerSettings {
 	}
 
 	# Check for required options
-	if (my @missingOptions = grep { $master->{$_} eq '' } qw(ip port master_version version serverType)) {
+	my @options;
+	if ($config{'XKore'} eq "1") {
+		@options = 'serverType';
+	} else {
+		@options = qw(ip port master_version version serverType);
+	}
+	if (my @missingOptions = grep { $master->{$_} eq '' } @options) {
 		$interface->errorDialog(TF("Required server options are not set: %s\n", "@missingOptions"));
 		$quit = 1;
 		return;
