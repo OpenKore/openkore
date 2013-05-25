@@ -79,3 +79,4 @@ ma_in01.rsw#Inside of Malaya#
 malangdo.rsw#Malangdo Island#
 mal_in01.rsw#Inside Malangdo Island 1#
 mal_in02.rsw#Inside Malangdo Island 2#
+zhakastia.rsw#Zhakastia City#
