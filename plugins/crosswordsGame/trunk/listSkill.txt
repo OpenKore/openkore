@@ -1,0 +1,1024 @@
+Wind Walker
+Ruwach
+Shattering Strike
+Coin Craft
+Magnificat
+Nugget Craft
+Cart Boost
+Battle Machine Craft
+Stealth
+Counter Instinct
+Steal Lunch Money
+Heater
+Alchemy
+Potion Synthesis
+Arrow Vulcan
+Sheltering Bliss
+Marionette Control
+Clashing Spiral
+Traumatic Blow
+Vital Strike
+Pneuma
+Napalm Vulcan
+Zen
+Mind Breaker
+Foresight
+Blinding Mist
+Fiber Lock
+Meteor Assault
+Create Deadly Poison
+Mom, Dad, I love you!
+Mom, Dad, I miss you!
+Come to me, honey~
+Sprint
+Tornado Stance
+Tornado Kick
+Heel Drop Stance
+Heel Drop
+Teleport
+Roundhouse Stance
+Roundhouse
+Counter Kick Stance
+Counter Kick
+Tumbling
+Flying Kick
+Peaceful Break
+Happy Break
+Kihop
+Mild Wind
+Leap
+Solar, Lunar and Stellar Perception
+Solar Heat
+Lunar Heat
+Stellar Heat
+Solar Protection
+Warp Portal
+Lunar Protection
+Stellar Protection
+Solar, Lunar and Stellar Opposition
+Solar Wrath
+Lunar Wrath
+Stellar Wrath
+Solar Blessings
+Lunar Blessings
+Stellar Blessings
+Solar, Lunar and Stellar Shadow 
+Permanent Development
+Solar, Lunar and Stellar Team-Up
+Solar, Lunar and Stellar Courier 
+Solar, Lunar and Stellar Union 
+Type
+Soul
+Alchemist Spirit
+Aid Berserk Potion
+Monk Spirit
+Heal
+Taekwon Master Spirit
+Sage Spirit
+Weapon Quicken
+Crusader Spirit
+Super Novice Spirit
+Knight Spirit
+Wizard Spirit
+Priest Spirit
+Bard and Dancer Spirits
+Tropic
+Rogue Spirit
+Assassin Spirit
+Blacksmith Spirit
+Advanced Adrenaline Rush
+Hunter Spirit
+Soul Linker Spirit
+Kaizel
+Kaahi
+Increase Agility
+Kaupe
+Kaite
+Kaina
+Estin
+Estun
+Esma
+Eswoo
+Eske
+Eska
+Preserve
+Full Divestment
+Upgrade Weapon
+Aid Condensed Potion
+Full Chemical Protection
+Decrease Agility
+Rapid Smiting
+Spiritual Thrift
+Double Bolt
+Ganbantein
+Gravitational Field
+High Speed Cart Ram
+Maximum Power-Thrust
+Longing for Freedom
+Hermode's Rod
+Tarot Card of Fate
+Acid Bomb
+Cultivate Plant
+Taekwon Mission
+1st Transcendent Spirit
+One Handed Quicken
+Aqua Benedicta
+Spiritual Potion Creation 1
+Spiritual Potion Creation 2
+Spiritual Potion Creation 3
+Beast Charge
+Coin Flip
+Enchant Blade
+Coin Fling
+Wind Cutter
+Triple Action
+Dragon Howling
+Bull's Eye
+Refresh
+Last Stand
+Storm Blast
+Gunslinger's Panic
+Venom Impression
+Increase Accuracy
+New Poison Creation
+Magical Bullet
+Counter Slash
+Cracker
+Cloaking Exceed
+Single Action
+Cross Ripper Slasher
+Snake Eyes
+Clementia
+Sword Mastery
+Signum Crucis
+Tracking
+Disarm
+Wounding Shot
+Trigger Happy Shot
+Desperado
+Gatling Feaver
+Crowd Control Shot
+Full Blast
+Spread Attack
+Gunslinger Mine
+Dagger Throwing Practice
+Throw Shuriken
+Throw Kunai
+Throw Huuma Shuriken
+Throw Coins
+Angelus
+Haze Slasher
+Shadow Leap
+Shadow Slash
+Cicada Skin Shed
+Mirror Image
+Ninja Mastery
+Flaming Petals
+Blaze Shield
+Exploding Dragon
+Freezing Spear
+Watery Evasion
+Snow Flake Draft
+Wind Blade
+Lightning Jolt
+First Wind
+Blessing
+Killing Strike
+Munak Fighting
+Bongun Neutral
+Puti Taming
+White Potion
+Mental Errands
+Card Pitcher
+Kick the Baby
+Body Study
+Alter Body
+Pet Memory
+Pet Teleport
+Bongun Gain
+Munak Gain
+Mission Timing
+Cure
+Munak Ball
+Pet Scroll
+Bongun Gathering
+Munak Gathering
+Bongun Exclude
+Bongun Drift
+Bongun Wall Rush
+Munak Wall Rush
+Bongun Wallshift
+Munak Wall Crash
+Munak Reincarnation
+Bongun Equip
+Deathknight Spirit
+Soul Collector's Spirit
+Ninja Spirit
+Enlarge Weight Limit
+Spiritual Potion Creation 4
+Berserk Kaizer
+Dark Power
+Death Passive
+Death Attack
+Death Speed
+Death Defense
+Death Critical
+Death HP
+Death SP
+Death Reset
+Ranking
+Death Triple
+Energy
+Discount
+Slash
+Coil
+Wave
+Rebirth
+Aura
+Freezer
+Change Attack
+Death Punish
+Death Poison
+Instant
+Warning
+Ranked Knife
+Death Gradisu
+Gauge
+G Time
+Overcharge
+G Skill
+G Kill
+Acceleration
+Double Block
+Melee Block
+Far Black
+Front Attack
+Dangerous Attack
+Twin Attack
+Wind Attack
+Water Attack
+Cloud
+First Slot
+Head Defense
+Pushcart
+Transform
+Explosion
+Reward
+Crush
+Item Rebuild
+Illusion
+Neutralize
+Runner
+Transfer
+Wall
+To El Dicastes
+Revenge
+Earplug
+Contract
+Black
+Item Appraisal
+Magic Cart
+Copy
+Crystal
+Experience
+Cart Swing
+Rebuild
+Job Change
+Eternal Darkness
+Guardian
+Time Out
+Time
+Zeny Rank
+Accessory mix
+Earthquake
+Circle of Fire
+Vending
+Tidal Weapon
+Dragon Fear
+Pulse Strike
+Hell's Judgement
+Bedlam
+Frozen Heart
+Bloody Party
+Medusa's Stare
+Confusion Rule
+Morpheus Slumber
+Evil Land
+Mammonite
+Slow Cast
+Critical Wounds
+Stone Skin
+Deadzone
+Cursed Fate
+Stunning Gaze
+Vampire's Gift
+Souless Defeat
+Increase Capacity
+Hell's Power
+Owl's Eye
+Goodnight, Sweety
+Monster's Cry
+Blowing Wind !!
+Thank You So Much!!
+Summer Dream
+Reverse Orcish
+Sing along with the Singing Crystal's tune:
+Vulture's Eye
+Improve Concentration
+Double Strafe
+Healing Hands
+Moonlight
+Xeno Slasher
+Stein Wand
+Lava Slide
+Arrow Shower
+Contract With Kafra
+Two Handed Sword Mastery
+Double Attack
+Land Mine
+Regain
+Fire Cloak
+Improve Dodge
+Wind Slash
+Steal
+Hiding
+Envenom
+Detoxify
+Resurrection
+Spear Mastery
+Guardian Research
+Pierce
+Sandman
+Tender
+Fire Mantle
+Brandish Spear
+Hurricane
+Spear Stab
+Spear Boomerang
+Two Hand Quicken
+Counter Attack
+Bowling Bash
+Charge Attack
+Quest
+Shrink
+Sonic Acceleration
+Venom Knife
+Close Confine
+Sight Blaster
+Peco Peco Ride
+Elemental Change - Water
+Phantasmic Arrow
+Pang Voice
+Charming Wink
+Dubious Salesmanship
+Greed
+Redemptio
+Spiritual Bestowment
+Excruciating Palm
+Elemental Change - Ground
+Elemental Change - Fire
+Elemental Change - Wind
+Increase HP Recovery
+Cavalier Mastery
+High Heal
+Duple Strike
+Benediction
+Mace Mastery
+Water Screen
+Impositio Manus
+Hurricange Attack
+Suffragium
+Aspersio
+B.S Sacramenti 
+Sienna Execrate
+Crimson Rock
+Summon Lightning Ball
+Reading Spell Book
+Sanctuary
+Bomb Cluster
+Warg Strike
+Camouflage
+Maze Trap
+Madogear License
+Flame Launcher
+Hover
+Slow Poison
+Analyze
+Repair
+Power Swing
+Divest FAW 
+Shadow Formation
+Deadly Infection
+Masquerade-Laziness
+Status Recovery
+Bloody Lust 
+Cannon Spear
+Reflect Damage
+Shield Spell
+Banding
+Earth Drive
+Sky Blow
+Kyrie Eleison
+Lightning Walk
+Gates of Hell
+Gentle Touch-Convert
+Lover Symphony
+Harmonize
+Gloria
+Song of Despair
+Circle of Nature
+Lex Divina
+Lerad's Dew
+Fire Walk
+Diamond Dust
+Striking
+Arrullo
+Turn Undead
+Spirit Sympathy
+Wind Insignia
+Cart Remodeling
+Thorn Trap
+Crazy Vines
+Lex Aeterna
+Mixed Cooking
+Guild Extension
+Sacrament
+Magnus Exorcismus
+Open Buying Store
+Bash
+Fire Pillar
+Remove Trap
+Recuperate
+Sightrasher
+Water Drop
+Fire Ivy
+Typhoon Mist
+Meteor Storm
+Jupitel Thunder
+Lord of Vermilion
+Waterball
+Ice Wall
+Frost Nova
+Storm Gust
+Earth Spike
+Heaven's Drive
+Quagmire
+Sense
+Brain Surgery
+Accelerated Flight
+Needle Of Paralyze
+Style Change
+Volcanic Ash
+Iron Tempering
+Guild Glory
+Steel Tempering
+Provoke
+Enchanted Stone Craft
+Arrow Repel
+Mental Cure
+Research Oridecon
+Water Barrier
+Smith Dagger
+Typhoon Mist Attack
+Smith Sword
+Smith Two-handed Sword
+Smith Axe
+Smith Mace
+Smith Brass Knuckle
+Smith Spear
+Hilt Binding
+Ore Discovery
+Weaponry Research
+Repair Weapon
+Skin Tempering
+Hammerfall
+Guild Leadership
+Adrenaline Rush
+Magnum Break
+Weapon Perfection
+Focused Arrow Strike
+Compress
+Power Thrust
+Wind Step
+Maximize Power
+Stone Hammer
+Skid Trap
+Anklesnare
+Shockwave Trap
+Flasher
+Freezing Trap
+Blast Mine
+Claymore Trap
+Talkie Box
+Sonic Wave
+Hundred Spears
+Ignition Break
+Dragon Breath
+Rune Mastery
+Crushing Strike
+Beastbane
+Vitality
+Determination
+Phantom Thrust
+Cross Impact
+New Poison Research
+Antidote
+Weapon Blocking
+Falconry Mastery
+Poisonous Smoke
+Phantom Menace
+Rolling Cutter
+Judex
+Adoramus
+Cantocandidus
+Endure
+Steel Crow
+Lauda Ramus
+Clearance
+Duple Magic
+Blitz Beat
+Detect
+Spring Trap
+Wind Curtain
+Righthand Mastery
+Rock Crusher
+Lefthand Mastery
+Katar Mastery
+Cloaking
+Sonic Blow
+Grimtooth
+Enchant Poison
+Radius
+Hell Inferno
+Earth Strain
+Poison React
+Summon Water Ball
+Freezing Spell
+Venom Dust
+Warg Mastery
+Warg Bite
+Trap Research
+Venom Splasher
+Knuckle Boost
+Ice Launcher
+Front Slide
+First Aid
+Magnetic Field
+Axe Mastery 
+Axe Tornado 
+Play Dead
+Triangle Shot
+Masquerade-Enervation
+Increase SP Recovery
+HP Recovery While Moving
+Feint Bomb
+Vanishing Point
+Pinpoint Attack
+Fatal Blow
+Moonslasher
+Hesperus Lit
+Earth Shaker
+Berserk
+Knuckle Arrow
+Power Absorb
+Gentle Touch-Silence
+Arrow Crafting
+Moonlight Serenade
+Sand Attack
+Back Slide
+Find Stone
+Siren's Voice
+Improvised Song
+Stone Fling
+Sinking Melody
+Cart Revolution
+Poison Burst
+Warmer
+Spirit Control 
+Change Cart
+Spirit Cure
+Earth Insignia
+Crazy Uproar
+Blood Sucker
+Holy Light
+Bomb Creation
+Cold Heart
+Energy Coat
+Call of Guardian
+Sight
+Zephyr
+Fire Arrow
+Rock Crusher Attack
+Napalm Beat
+Castling
+Caprice
+Pain Killer
+Silvervein Rush
+C.B.C (Continual Break Combo)
+Sharp Gaze
+Safety Wall
+Decrease AGI
+Solid Skin
+Fire Bomb
+Stone Rain
+Soul Strike
+Gank
+Mug
+Back Stab
+Stalk
+Sightless Mind
+Divest Weapon
+Divest Shield
+Divest Armor
+Divest Helm
+Snatch
+Scribble
+Battle Command
+Piece
+Remover
+Slyness
+Faux Urgent Call
+Cold Bolt
+Haggle
+G Pain
+Defending Aura
+Intimidate
+Dragon Combo
+Divest Accessory 
+Glorious Wounds
+Axe Mastery
+Strengthen Guardians
+Official Guild Approval
+Potion Research
+Stone Shield
+Prepare Potion
+Scapegoat
+Bomb
+Crash
+Acid Terror
+Shield Press
+Guard
+Aid Potion
+Summon Flora
+Frenzy
+Shield Reflect
+Summon Marine Sphere
+Parry
+Pyroclastic
+Granitic Armor
+Alchemical Weapon
+Magma Flow
+Tinder Breaker
+Synthesized Shield
+Heilige Stange
+Goldene Ferse
+Full Heal
+Synthetic Armor
+Petrology
+Silent Breeze
+Biochemical Helm
+Eraser Cutter
+Overed Boost
+Light Of Regenerate
+Bioethics
+Poison Mist
+Call Legion
+Self-Destruction
+Biotechnology
+Create Elemental Converter
+Wild Storm
+Frost Driver
+Creature Creation
+S.B.R.44
+Flitting
+Blood Lust
+Cultivation
+Adamantium Skin
+Cursed Soil
+Mental Charge
+Flame Control
+Urgent Escape
+Overbrand
+Call of Odin
+Call Homunculus
+Lightning Ride
+Lion's Howl
+Tiger Cannon
+Vaporize
+Change Material
+Item Sling
+Mandragora Howl
+Drillmaster
+Hell Plant
+Fire Expansion
+Demonic Fire 
+Heal Homunculus
+Thorn Wall
+Crescent Elbow
+Geneticist Cart Boost
+Homunculus Resurrection
+Cart Cannon
+Cart Tornado
+Faith
+Water Screw Attack
+Water Screw
+Ice Needle
+Fire Wave Attack
+Fire Wave
+Fire Bomb Attack
+Smite
+Upheaval
+Amistr Bulwark
+Chaotic Blessings
+Shield Boomerang
+Midnight Frenzy
+E.Q.C (Eternal Quick Combo)
+Gust
+Chilly Air
+Cooler
+Regeneration
+Holy Cross
+Killing Cloud
+Aquaplay
+Elemental Action
+Grand Cross
+Water Insignia
+Rising Dragon
+Power Implantation
+Sacrifice
+Call Aqua
+Basic Skill
+Stone Curse
+Resistant Souls
+Eucharistica
+Silentium
+Spear Quicken
+Call Tera
+Iron Fists
+Call Ventus
+Spiritual Cadence
+Analyze Element
+Summon Spirit Sphere
+Varetyr Spear
+Spiritual Sphere Absorption
+Extreme Vacuum
+Raging Trifecta Blow
+Power of Gaia
+Snap
+Gentle Touch-Energy Gain
+Flee
+Earth Grave
+Occult Impaction
+Spell Fist
+Throw Spirit Sphere
+Electric Walk
+Mental Strength
+Infinite Humming
+Root
+Swing Dance
+Fury
+Saturday Night Fever
+Guillotine Fist
+Fire Ball
+Raging Quadruple Blow
+Song of Destruction
+Raging Thrust
+Dances with Wargs
+Study
+Song Of Mana
+Cast Cancel
+White Imprison
+Magic Rod
+Stasis
+Spell Breaker
+Tetra Vortex
+Free Cast
+Great Echo
+Hindsight
+Arrow Storm
+Endow Blaze
+Warg Ride
+Endow Tsunami
+Magenta Trap
+Endow Tornado
+Pile Bunker
+Endow Quake
+Dragonology
+Neutral Barrier
+Volcano
+FAW Silver Sniper
+Deluge
+Body Painting
+Whirlwind
+Fire Wall
+Magnetic Earth
+Gloomy Shyness
+Dispell
+Vanguard Force
+Hocus-pocus
+Genesis Ray
+Mono Cell
+Fallen Empire
+Class Change
+Windmill
+Monster Chant
+Gentle Touch-Cure
+Grampus Morph
+Deep Sleep Lullaby
+Grim Reaper
+Death Valley
+Gold Digger
+Severe Rainstorm
+Beastly Hypnosis
+Windmill Rush
+Questioning
+Reverberation
+Gravity
+Metallic Sound
+Leveling
+Voice Lessons
+Suicide
+Echo Song
+Rejuvenation
+Dominion Impulse
+Coma
+Fire Bolt
+Amp
+Warcry from Beyond
+Encore
+Gentle Touch-Revitalize
+Lullaby
+Psychic Wave
+Mental Sensing
+Call Agni
+Down Tempo
+Fire Insignia
+Battle Theme
+Cursed Circle
+Harmonic Lick
+Spore Explosion
+Classical Pluck
+Rampage Blast
+Power Cord
+Special Pharmacy 
+Acoustic Rhythm
+Restoration
+Ragnarok
+Inspiration
+Music Lessons
+Piety
+Melody Strike
+Prestige
+Unchained Serenade
+Power of Odin
+Unbarring Octave
+Exceed Break
+Perfect Tablature
+Lightning Bolt
+Impressive Riff
+Burst Attack
+Magic Strings
+Song of Lutie
+Trample
+Dance Lessons
+Maelstrom
+Slinging Arrow
+Chaos Panic 
+Hip Shaker
+Dimensional Door
+Dazzler
+Manhole 
+Focus Ballet
+Pyrotechnic
+Slow Grace
+Masquerade-Weakness
+Lady Luck
+Masquerade-Unlucky
+Gypsy's Kiss
+Masquerade-Ignorance
+Masquerade-Gloomy
+Invisibility
+Shadow Spell
+Reproduce
+Fatal Menace
+FAW Magic Decoy
+Loving Touch
+Axe Boomerang
+Undying Love
+Thunder Storm
+Romantic Rendeavous!!
+Fire Earth Research 
+Tomahawk Throwing
+Stealth Field
+Infrared Scan
+Cooldown
+Elemental Shift
+Suicidal Destruction
+Remodel Mainframe
+Arm Cannon
+Vulcan Arm
+Ice Trap
+Fire Trap
+Verdure Trap
+Cobalt Trap
+Keen Nose
+Warg Teeth
+Warg Dash
+Electric Shock
+Detonator
+Aimed Bolt 
+Main Ranger
+Fear Breeze
+Release
+Summon Stone
+Summon Fire Ball
+Chain Lightning
+Comet
+Drain Life
+Recognized Spell
+Divine Protection
+Marsh Of Abyss
+Jack Frost
+Frost Misty
+Soul Expansion
+Duple Light
+Expiatio
+Aura Blade
+Renovatio
+Lauda Agnus
+Spear Dynamo
+Oratio
+Relax
+Praefatio
+Epiclesis
+Coluseo Heal
+Ancilla
+Assumptio
+Hallucination Walk
+Basilica
+Venom Pressure
+Meditation
+Weapon Crush
+Soul Drain
+Poisonous Weapon
+Stave Crasher
+Dark Illusion
+Mystical Amplification
+Abundance
+Gloria Domini
+Demon Bane
+Martyr's Reckoning
+Skin of Stone
+Battle Chant
+Giant Growth
+Raging Palm Strike
+Millenium Shield
+Glacier Fist
+Dragon Training
+Chain Crush Combo
+Death Bound
+Indulge
+Instruction Change
+Soul Exhale
+Stahl Horn
+Soul Siphon
+Magic Mirror
+Advanced Katar Mastery
+Dream
+Space
+Urgent Call
+Enchant Deadly Poison
+Nightmare
+Soul Destroyer
+Gunslinger Spirit
+Falcon Eyes
+Falcon Assault
+Ninja Aura
+Flip Tatami
+Chain Action
+Shadow Hiding
+Cross Slash
+Soul Cutter
+Kunai Explosion
+Kunai Splash
+Rapid Throw
+Swirling Petal
+Makibishi
+Pure Soul
+Illusion - Shadow
+Illusion - Shock
+Illusion - Death
+Fire Charm
+Ice Charm
+Wind Charm
+Earth Charm
+Release Ninja Spell
+Cast Ninja Spell
+Illusion - Bewitch
+16th Night
+Shadow Trampling
+Empty Shadow
+Shadow Warrior
+Distorted Crescent
+Moonlight Fantasy
+Ominous Moonlight

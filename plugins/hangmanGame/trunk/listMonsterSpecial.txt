@@ -1,0 +1,980 @@
+scorpion	24	Small	Insect	508	625	0	0
+poring	1	Medium	Plant	512	619	0	0
+test egg	2	Small	Insect	0	0	0	0
+hornet	8	Small	Insect	518	0	0	0
+familiar	8	Small	Beast	507	645	0	0
+thief bug larva	1	Small	Formless	0	0	0	0
+fabre	2	Small	Insect	705	1501	0	0
+pupa	2	Small	Insect	938	1002	0	0
+condor	5	Medium	Beast	916	582	0	0
+willow	4	Medium	Plant	1067	1066	0	0
+chonchon	4	Small	Insect	742	1002	0	0
+roda frog	5	Medium	Fish	0	0	0	0
+wolf	25	Medium	Beast	919	578	0	0
+spore	16	Medium	Plant	7033	578	0	0
+zombie	15	Medium	Undead	0	0	0	0
+archer skeleton	31	Medium	Undead	507	1701	0	0
+thief bug female	10	Medium	Insect	716	1002	0	0
+creamy	16	Small	Insect	712	692	0	0
+peco peco	19	Large	Beast	0	582	0	0
+mandragora	12	Medium	Plant	706	1967	0	0
+thief bug male	19	Medium	Insect	729	1116	0	0
+werewolf	80	Large	Formless	0	1912	0	0
+orc warrior	24	Medium	Demi-Human	1304	1301	0	0
+wormtail	14	Medium	Plant	721	10015	0	0
+snake	15	Medium	Beast	954	578	0	0
+munak	30	Medium	Undead	2305	1558	0	0
+raptice	17	Medium	Beast	0	0	0	0
+soldier skeleton	29	Medium	Undead	1201	1216	0	0
+isis	47	Large	Demon	954	731	0	0
+anacondaq	23	Medium	Beast	508	756	0	0
+poporing	14	Medium	Plant	1207	512	0	0
+verit	38	Medium	Undead	2612	639	0	0
+elder willow	20	Medium	Plant	690	604	0	0
+thara frog	22	Medium	Fish	918	0	0	0
+hunter fly	42	Small	Insect	2259	1226	0	0
+ghoul	40	Medium	Undead	934	1260	0	0
+side winder	43	Medium	Beast	926	509	0	0
+osiris	78	Medium	Undead	5053	1285	0	0
+baphomet	81	Large	Demon	985	984	0	0
+golem	25	Large	Formless	715	998	0	0
+mummy	37	Medium	Undead	525	508	0	0
+steel chonchon	17	Small	Insect	998	1002	0	0
+seahorse	18	Small	Fish	0	0	0	0
+obeaune	31	Medium	Fish	951	748	0	0
+marc	36	Medium	Fish	717	509	0	0
+doppelganger	72	Medium	Demon	985	984	0	0
+peco peco egg	3	Small	Formless	713	736	0	0
+thief bug egg	4	Small	Insect	737	1002	0	0
+picky	3	Small	Beast	715	0	0	0
+picky	4	Small	Beast	715	10012	0	0
+thief bug	6	Small	Insect	1002	0	0	0
+rocker	9	Medium	Insect	752	703	0	0
+thief bug female	10	Medium	Insect	716	1002	0	0
+thief bug male	19	Medium	Insect	729	1116	0	0
+muka	17	Large	Plant	1451	1002	0	0
+smokie	18	Small	Beast	912	729	0	0
+yoyo	21	Small	Beast	756	578	0	0
+metaller	22	Medium	Insect	935	1914	0	0
+mistress	74	Small	Insect	985	16001	0	0
+bigfoot	25	Large	Beast	518	756	0	0
+nightmare	49	Large	Demon	1261	984	0	0
+santa poring	3	Medium	Plant	512	0	0	0
+lunatic	3	Small	Beast	515	622	0	0
+megalodon	24	Medium	Undead	603	624	0	0
+strouf	48	Large	Fish	720	956	0	0
+vadon	19	Small	Fish	757	717	0	0
+cornutus	23	Small	Fish	943	717	0	0
+hydra	14	Small	Plant	517	0	0	0
+swordfish	30	Large	Fish	1117	956	0	0
+kukre	11	Small	Fish	928	623	0	0
+pirate skeleton	25	Medium	Undead	756	628	0	0
+kaho	60	Medium	Demon	716	970	0	0
+crab	20	Small	Fish	0	757	0	0
+shellfish	15	Small	Fish	0	757	0	0
+turtle	3	Small	Fish	0	0	0	0
+skeleton	10	Medium	Undead	2609	0	0	0
+poison spore	19	Medium	Plant	921	912	0	0
+red plant	1	Small	Plant	914	708	2269	0
+blue plant	1	Small	Plant	522	514	2270	0
+green plant	1	Small	Plant	704	521	2270	0
+yellow plant	1	Small	Plant	707	914	2269	0
+white plant	1	Small	Plant	521	703	2269	0
+shining plant	1	Small	Plant	518	607	714	0
+black mushroom	1	Small	Plant	921	921	7033	0
+red mushroom	1	Small	Plant	921	921	7033	0
+golden thief bug	64	Large	Insect	985	984	0	0
+orc hero	77	Large	Demi-Human	985	1387	0	0
+vocal	18	Medium	Insect	645	1917	0	0
+toad	10	Medium	Fish	971	5125	0	0
+mastering	2	Medium	Plant	512	531	0	0
+dragon fly	8	Small	Insect	625	533	0	0
+vagabond wolf	24	Medium	Beast	725	626	0	0
+eclipse	6	Medium	Beast	622	2355	0	0
+ambernite	13	Large	Insect	757	1002	0	0
+andre	17	Small	Insect	1002	757	0	0
+angeling	20	Medium	Angel	512	714	0	0
+ant egg	4	Small	Formless	1002	0	0	0
+anubis	75	Large	Demi-Human	2617	1614	0	0
+argiope	41	Large	Insect	719	0	0	0
+argos	25	Large	Insect	508	10017	0	0
+baphomet jr.	50	Small	Demon	508	2405	0	0
+bathory	44	Medium	Demi-Human	1006	637	0	0
+caramel	23	Small	Beast	1408	0	0	0
+coco	17	Small	Beast	2402	578	0	0
+deniro	19	Small	Insect	1002	757	0	0
+desert wolf	27	Medium	Beast	756	1217	0	0
+desert wolf baby	9	Small	Beast	13011	582	0	0
+deviace	47	Medium	Fish	1256	756	0	0
+deviruchi	46	Small	Demon	912	756	0	0
+dokebi	33	Small	Demon	1501	1005	0	0
+drainliar	24	Small	Beast	7006	756	0	0
+drake	70	Medium	Undead	985	1189	0	0
+drops	3	Medium	Plant	512	620	0	0
+dustiness	21	Small	Insect	507	0	0	0
+eddga	65	Large	Beast	985	13046	0	0
+eggyra	24	Medium	Formless	645	757	0	0
+evil druid	58	Large	Undead	7478	509	0	0
+flora	26	Large	Plant	905	748	0	0
+frilldora	30	Medium	Beast	507	912	0	0
+ghostring	18	Medium	Demon	714	695	0	0
+giearth	29	Small	Demon	1001	0	0	0
+hode	26	Medium	Beast	7021	632	0	0
+horn	18	Medium	Insect	943	0	0	0
+horong	34	Small	Formless	633	970	0	0
+jakk	38	Medium	Formless	535	0	0	0
+joker	57	Large	Demi-Human	984	695	0	0
+khalitzburg	63	Large	Undead	509	1127	0	0
+magnolia	26	Small	Demon	508	12127	0	0
+mantis	26	Medium	Insect	721	507	0	0
+marduk	40	Large	Demi-Human	691	642	0	0
+marina	21	Small	Plant	631	0	0	0
+marine sphere	28	Small	Plant	10003	0	0	0
+marionette	41	Small	Demon	2407	5141	0	0
+marse	31	Small	Fish	1007	514	0	0
+martin	18	Small	Beast	10010	2224	0	0
+matyr	31	Medium	Beast	514	0	0	0
+maya	81	Large	Insect	985	2005	0	0
+medusa	79	Medium	Demon	967	1007	0	0
+minorous	52	Large	Beast	1301	568	0	0
+moonlight flower	67	Medium	Demon	985	1648	0	0
+myst	38	Large	Formless	605	514	0	0
+orc skeleton	28	Medium	Undead	511	0	0	0
+orc zombie	24	Medium	Undead	0	0	0	0
+pasana	61	Medium	Demi-Human	2522	0	0	0
+petite	44	Medium	Dragon	912	606	0	0
+petite	45	Medium	Dragon	912	606	0	0
+pharaoh	93	Large	Demi-Human	1552	1231	0	0
+phen	26	Medium	Fish	756	0	0	0
+phreeoni	69	Large	Beast	985	13047	0	0
+piere	18	Small	Insect	1002	757	0	0
+plankton	10	Small	Plant	630	645	0	0
+rafflesia	17	Small	Plant	711	509	0	0
+raydric	52	Large	Demi-Human	1004	7054	0	0
+requiem	35	Medium	Demi-Human	2308	7477	0	0
+sandman	34	Medium	Formless	1257	1622	0	0
+savage	26	Large	Beast	757	526	0	0
+savage babe	7	Small	Beast	1010	627	0	0
+scorpion king	50	Large	Demi-Human	509	0	0	0
+skeleton worker	30	Medium	Undead	1003	1002	0	0
+sohee	33	Medium	Demon	507	662	0	0
+soldier andre	22	Small	Insect	943	0	0	0
+soldier deniro	29	Small	Insect	1001	0	0	0
+soldier piere	23	Small	Insect	943	0	0	0
+stainer	16	Small	Insect	943	1002	0	0
+tarou	11	Small	Beast	0	0	0	0
+vitata	20	Small	Insect	526	756	0	0
+zenorc	31	Medium	Demi-Human	640	0	0	0
+zerom	23	Medium	Demi-Human	1002	1002	0	0
+whisper	34	Small	Demon	0	0	0	0
+nine tail	51	Medium	Beast	525	756	0	0
+zombie dragon	1	Large	Dragon	0	0	0	0
+thief mushroom	1	Small	Plant	0	0	0	0
+chonchon	4	Small	Insect	742	0	0	0
+fabre	1	Small	Insect	705	1501	0	0
+whisper	34	Small	Undead	0	0	0	0
+giant whisper	34	Small	Demon	0	0	0	0
+switch	1	Medium	Formless	0	0	0	0
+bongun	32	Medium	Undead	508	508	0	0
+orc archer	49	Medium	Demi-Human	507	509	0	0
+orc lord	74	Large	Demi-Human	985	16000	0	0
+mimic	51	Medium	Formless	2626	757	0	0
+wraith	53	Large	Undead	2505	731	0	0
+alarm	58	Medium	Formless	7026	912	0	0
+arclouse	59	Medium	Insect	997	912	0	0
+rideword	59	Small	Formless	7015	1006	0	0
+skeleton prisoner	52	Medium	Undead	2408	934	0	0
+zombie prisoner	53	Medium	Undead	2408	985	0	0
+dark priest	79	Medium	Demon	2319	1241	0	0
+punk	43	Small	Plant	601	2502	0	0
+zherlthsh	63	Medium	Demi-Human	1970	2291	0	0
+rybio	71	Large	Demon	984	709	0	0
+phendark	73	Large	Demi-Human	1971	0	0	0
+mysteltainn	76	Large	Formless	999	984	0	0
+tirfing	71	Medium	Formless	999	984	0	0
+executioner	65	Large	Formless	999	984	0	0
+anolian	61	Medium	Fish	2625	984	0	0
+sting	61	Medium	Formless	10007	719	0	0
+wander man	74	Medium	Demon	984	1164	0	0
+cramp	56	Small	Beast	510	984	0	0
+filamentous	51	Medium	Insect	757	509	0	0
+brilight	46	Small	Insect	610	509	0	0
+iron fist	47	Medium	Insect	998	0	0	0
+high orc	52	Large	Demi-Human	756	508	0	0
+choco	43	Small	Beast	532	607	0	0
+stem worm	40	Medium	Plant	1454	608	0	0
+penomena	57	Medium	Fish	1258	716	0	0
+knight of abyss	79	Large	Demi-Human	985	984	0	0
+desert wolf	27	Medium	Beast	756	0	0	0
+savage	26	Large	Beast	757	0	0	0
+high orc	52	Large	Demi-Human	756	508	0	0
+orc	24	Medium	Demi-Human	1304	1301	0	0
+poison spore	19	Medium	Plant	0	0	0	0
+choco	43	Small	Beast	532	607	0	0
+kobold	36	Medium	Demi-Human	2104	0	0	0
+goblin	25	Medium	Demi-Human	2104	507	0	0
+phen	26	Medium	Fish	756	0	0	0
+fabre	2	Small	Insect	705	1501	0	0
+pupa	2	Small	Insect	938	1002	0	0
+creamy	16	Small	Insect	712	0	0	0
+peco peco egg	3	Small	Formless	713	736	0	0
+peco peco	19	Large	Beast	0	582	0	0
+yoyo	19	Small	Beast	578	582	0	0
+smoking orc	24	Medium	Demi-Human	1304	1301	0	0
+ant egg	4	Small	Formless	1002	0	0	0
+andre	17	Small	Insect	1002	757	0	0
+piere	18	Small	Insect	1002	757	0	0
+deniro	19	Small	Insect	1002	757	0	0
+picky	3	Small	Beast	715	0	0	0
+picky	4	Small	Beast	715	0	0	0
+marin	15	Medium	Plant	529	5035	0	0
+sasquatch	30	Large	Beast	727	757	0	0
+christmas jakk	38	Medium	Formless	7175	7174	0	0
+christmas goblin	25	Medium	Demi-Human	2104	2236	0	0
+christmas cookie	28	Small	Demi-Human	688	507	0	0
+antonio	10	Medium	Plant	530	2236	0	0
+cruiser	35	Medium	Formless	13150	756	0	0
+myst case	38	Medium	Formless	731	529	0	0
+chepet	42	Medium	Demi-Human	508	2508	0	0
+knight of windstorm	77	Large	Formless	985	5007	0	0
+garm	73	Large	Beast	985	984	0	0
+gargoyle	48	Medium	Demon	1769	757	0	0
+raggler	21	Small	Beast	2225	756	0	0
+neraid	40	Small	Beast	757	985	0	0
+pest	40	Small	Beast	0	756	0	0
+injustice	51	Medium	Undead	660	1255	0	0
+goblin archer	28	Small	Demi-Human	1705	514	0	0
+gryphon	72	Large	Beast	984	996	0	0
+dark frame	59	Medium	Demon	1000	747	0	0
+wild rose	38	Small	Beast	528	2244	0	0
+mutant dragon	65	Large	Dragon	7296	2527	0	0
+wind ghost	51	Medium	Demon	996	1615	0	0
+merman	53	Medium	Demi-Human	1460	756	0	0
+cookie	25	Small	Demi-Human	12001	529	0	0
+aster	18	Small	Fish	512	0	0	0
+carat	51	Medium	Demon	0	509	0	0
+bloody knight	82	Large	Formless	1417	985	0	0
+clock	60	Medium	Formless	7027	985	0	0
+clock tower manager	63	Large	Formless	7026	7027	0	0
+alligator	42	Medium	Beast	0	756	0	0
+dark lord	80	Large	Demon	985	5162	0	0
+orc lady	31	Medium	Demi-Human	7477	2338	0	0
+megalith	45	Large	Formless	985	757	0	0
+alice	62	Medium	Demi-Human	12128	12002	0	0
+raydric archer	52	Medium	Demon	1715	985	0	0
+greatest general	40	Medium	Formless	508	686	0	0
+stalactic golem	60	Large	Formless	0	985	0	0
+tri joint	32	Small	Insect	0	757	0	0
+steam goblin	35	Medium	Demi-Human	13104	757	0	0
+sage worm	43	Small	Beast	689	5012	0	0
+kobold archer	33	Small	Demi-Human	1711	756	0	0
+chimera	70	Large	Beast	1364	984	0	0
+hugeling	1	Large	Plant	512	512	512	0
+archer guardian	74	Large	Demi-Human	0	0	0	0
+knight guardian	86	Large	Demi-Human	0	0	0	0
+soldier guardian	56	Small	Insect	0	0	0	0
+emperium	90	Small	Angel	0	0	0	0
+maya purple	81	Large	Insect	10006	7481	0	0
+skeleton general	73	Medium	Undead	13035	2274	0	0
+wraith dead	74	Large	Undead	603	568	0	0
+mini demon	68	Small	Demon	1009	1478	0	0
+creamy fear	62	Small	Insect	2726	522	0	0
+killer mantis	56	Medium	Insect	1262	2108	0	0
+owl baron	75	Large	Demon	693	5045	0	0
+kobold leader	65	Medium	Demi-Human	525	526	0	0
+ancient mummy	64	Medium	Undead	756	757	0	0
+zombie master	62	Medium	Undead	1260	2324	0	0
+goblin leader	64	Medium	Demi-Human	508	5113	0	0
+caterpillar	64	Small	Insect	505	508	0	0
+am mut	61	Small	Demon	616	746	0	0
+dark illusion	77	Large	Demon	509	1162	0	0
+giant hornet	56	Small	Insect	722	1736	0	0
+giant spider	55	Large	Insect	1096	7053	0	0
+ancient worm	67	Large	Insect	938	7054	0	0
+leib olmai	58	Large	Beast	969	7053	0	0
+cat o\' nine tails	76	Medium	Demon	969	617	0	0
+panzer goblin	59	Medium	Demi-Human	13158	994	0	0
+gajomart	63	Small	Formless	2131	994	0	0
+majoruros	66	Large	Beast	2611	1000	0	0
+gullinbursti	62	Large	Beast	2627	912	0	0
+turtle general	97	Large	Beast	1141	658	0	0
+mobster	61	Medium	Demi-Human	525	505	0	0
+permeter	63	Medium	Beast	522	605	0	0
+assaulter	71	Medium	Demi-Human	13300	603	0	0
+solider	70	Medium	Beast	518	1519	0	0
+fur seal	63	Medium	Beast	525	746	0	0
+heater	68	Medium	Beast	7054	7068	0	0
+freezer	72	Medium	Beast	7053	689	0	0
+owl duke	75	Large	Demon	1513	5045	0	0
+dragon tail	61	Medium	Insect	601	602	0	0
+spring rabbit	58	Medium	Beast	510	509	0	0
+sea otter	59	Medium	Beast	746	7053	0	0
+assaulter	59	Medium	Demon	0	0	0	0
+apocalypse	66	Large	Formless	2506	999	0	0
+lava golem	77	Large	Formless	1818	0	0	0
+blazer	43	Medium	Demon	0	0	0	0
+geographer	56	Medium	Plant	0	0	0	0
+grand peco	58	Large	Beast	0	582	0	0
+succubus	85	Medium	Demon	1472	505	0	0
+fake angel	65	Small	Angel	12020	1974	0	0
+goat	69	Medium	Beast	508	511	0	0
+lord of death	94	Large	Demon	1306	1529	0	0
+incubus	75	Medium	Demon	2613	509	0	0
+the paper	56	Medium	Formless	0	0	0	0
+harpy	70	Medium	Demon	1820	0	0	0
+elder	64	Large	Demi-Human	616	7027	0	0
+demon pungus	56	Small	Demon	0	0	0	0
+nightmare terror	78	Large	Demon	695	1261	0	0
+driller	52	Medium	Beast	0	0	0	0
+grizzly	68	Large	Beast	0	0	0	0
+diabolic	67	Small	Demon	0	0	0	0
+explosion	46	Small	Beast	0	0	0	0
+deleter	66	Medium	Dragon	0	0	0	0
+deleter	65	Medium	Dragon	0	0	0	0
+sleeper	67	Medium	Formless	1622	7043	0	0
+gig	60	Small	Beast	0	0	0	0
+archangeling	60	Medium	Angel	2317	7294	0	0
+dracula	85	Large	Demon	1557	0	0	0
+violy	75	Medium	Demi-Human	12020	1902	0	0
+galapago	61	Small	Beast	5111	582	0	0
+rotar zairo	25	Large	Formless	912	910	0	0
+mummy	37	Medium	Undead	0	0	0	0
+zombie	15	Medium	Undead	0	0	0	0
+baphomet	68	Large	Demon	2111	2621	2256	0
+karakasa	30	Medium	Formless	746	13012	0	0
+shinobi	69	Medium	Demi-Human	7157	13013	0	0
+poison toad	46	Medium	Beast	526	1246	0	0
+antique firelock	47	Medium	Undead	525	13152	0	0
+miyabi ningyo	33	Medium	Demon	13014	1904	0	0
+tengu	65	Large	Demon	12128	687	0	0
+kapha	41	Medium	Fish	1915	13008	0	0
+dokebi	1	Small	Formless	0	0	0	0
+bloody butterfly	55	Medium	Insect	1962	0	0	0
+rice cake boy	27	Small	Demi-Human	7187	0	0	0
+live peach tree	53	Medium	Plant	603	0	0	0
+peach tree bullet	0	Small	Formless	0	0	0	0
+evil cloud hermit	56	Large	Formless	757	693	0	0
+wild ginseng	46	Small	Plant	1951	578	0	0
+ginseng bullet	0	Small	Formless	0	0	0	0
+baby leopard	32	Small	Beast	537	0	0	0
+wicked nymph	63	Medium	Demon	12002	1918	0	0
+zipper bear	35	Medium	Beast	0	0	0	0
+evil snake lord	73	Large	Beast	7226	661	0	0
+familiar	8	Small	Beast	0	0	0	0
+archer skeleton	31	Medium	Undead	0	0	0	0
+isis	43	Large	Demon	0	0	0	0
+hunter fly	42	Small	Insect	0	0	0	0
+ghoul	39	Medium	Undead	0	0	0	0
+side winder	43	Medium	Beast	0	0	0	0
+obeaune	31	Medium	Fish	0	0	0	0
+marc	36	Medium	Fish	0	0	0	0
+nightmare	49	Large	Demon	0	0	0	0
+poison spore	19	Medium	Plant	0	0	0	0
+argiope	41	Large	Insect	0	0	0	0
+argos	25	Large	Insect	0	0	0	0
+baphomet jr.	50	Small	Demon	0	0	0	0
+desert wolf	27	Medium	Beast	0	0	0	0
+deviruchi	46	Small	Demon	0	0	0	0
+drainliar	24	Small	Beast	0	0	0	0
+evil druid	58	Large	Undead	0	0	0	0
+jakk	38	Medium	Formless	0	0	0	0
+joker	57	Large	Demi-Human	0	0	0	0
+khalitzburg	63	Large	Undead	0	0	0	0
+high orc	52	Large	Demi-Human	0	0	0	0
+stem worm	40	Medium	Plant	0	0	0	0
+penomena	57	Medium	Fish	0	0	0	0
+sasquatch	30	Large	Beast	0	0	0	0
+cruiser	35	Medium	Formless	0	0	0	0
+chepet	42	Medium	Demi-Human	0	0	0	0
+raggler	21	Small	Beast	0	0	0	0
+injustice	51	Medium	Undead	0	0	0	0
+gryphon	72	Large	Beast	0	0	0	0
+dark frame	59	Medium	Demon	0	0	0	0
+mutant dragon	65	Large	Dragon	0	0	0	0
+wind ghost	51	Medium	Demon	0	0	0	0
+merman	53	Medium	Demi-Human	0	0	0	0
+orc lady	31	Medium	Demi-Human	0	0	0	0
+raydric archer	52	Medium	Demon	0	0	0	0
+tri joint	32	Small	Insect	0	0	0	0
+kobold archer	33	Small	Demi-Human	0	0	0	0
+chimera	70	Large	Beast	0	0	0	0
+mantis	26	Medium	Insect	0	0	0	0
+marduk	40	Large	Demi-Human	0	0	0	0
+marionette	41	Small	Demon	0	0	0	0
+matyr	31	Medium	Beast	0	0	0	0
+minorous	52	Large	Beast	0	0	0	0
+orc skeleton	28	Medium	Undead	0	0	0	0
+orc zombie	24	Medium	Undead	0	0	0	0
+pasana	61	Medium	Demi-Human	0	0	0	0
+petite	44	Medium	Dragon	0	0	0	0
+petite	45	Medium	Dragon	0	0	0	0
+raydric	52	Large	Demi-Human	0	0	0	0
+requim	35	Medium	Demi-Human	0	0	0	0
+skeleton worker	30	Medium	Undead	0	0	0	0
+zerom	23	Medium	Demi-Human	0	0	0	0
+nine tail	51	Medium	Beast	0	0	0	0
+bongun	32	Medium	Undead	0	0	0	0
+orc archer	49	Medium	Demi-Human	0	0	0	0
+mimic	51	Medium	Formless	0	0	0	0
+wraith	53	Large	Undead	0	0	0	0
+alarm	58	Medium	Formless	0	0	0	0
+arclouse	59	Medium	Insect	0	0	0	0
+rideword	59	Small	Formless	0	0	0	0
+skeleton prisoner	52	Medium	Undead	0	0	0	0
+zombie prisoner	53	Medium	Undead	0	0	0	0
+punk	43	Small	Plant	0	0	0	0
+zherlthsh	63	Medium	Demi-Human	0	0	0	0
+rybio	71	Large	Demon	0	0	0	0
+phendark	73	Large	Demi-Human	0	0	0	0
+mysteltainn	76	Large	Formless	0	0	0	0
+tirfing	71	Medium	Formless	0	0	0	0
+executioner	65	Large	Formless	0	0	0	0
+anolian	63	Medium	Fish	0	0	0	0
+sting	61	Medium	Formless	0	0	0	0
+wander man	74	Medium	Demon	0	0	0	0
+dokebi	33	Small	Demon	0	0	0	0
+incantation samurai	71	Large	Demi-Human	13303	1235	0	0
+dryad	50	Medium	Plant	2270	7100	0	0
+beetle king	34	Small	Insect	0	0	0	0
+stone shooter	42	Medium	Plant	7049	0	0	0
+stone shooter bullet	0	Small	Formless	0	0	0	0
+wooden golem	51	Large	Plant	7201	921	0	0
+wootan shooter	39	Medium	Demi-Human	7182	5116	0	0
+wootan fighter	41	Medium	Demi-Human	7198	5116	0	0
+parasite	49	Medium	Plant	1969	711	0	0
+parasite bullet	0	Small	Formless	0	0	0	0
+pori pori	99	Medium	Plant	2655	7126	2110	0
+gibbet	58	Large	Demon	604	0	0	0
+dullahan	62	Medium	Undead	0	0	0	0
+loli ruri	71	Large	Demon	2718	0	0	0
+disguise	55	Medium	Demon	2504	2529	0	0
+bloody murderer	72	Large	Demi-Human	1229	13002	0	0
+quve	40	Small	Undead	0	0	0	0
+lude	36	Small	Undead	12001	0	0	0
+hylozoist	51	Small	Demon	757	5113	0	0
+amon ra	88	Large	Demi-Human	1552	607	0	0
+hyegun	56	Medium	Undead	0	0	0	0
+civil servant	62	Medium	Beast	0	0	0	0
+dancing dragon	54	Medium	Dragon	0	0	0	0
+garm baby	61	Medium	Beast	0	0	0	0
+increase soil	51	Medium	Formless	0	0	0	0
+li me mang ryang	48	Medium	Demon	0	0	0	0
+bacsojin	72	Large	Demi-Human	747	0	2234	0
+chung e	49	Medium	Demi-Human	5024	0	5042	0
+boiled rice	15	Medium	Plant	0	0	0	0
+alice	62	Medium	Demi-Human	0	0	0	0
+ancient mummy	64	Medium	Undead	0	0	0	0
+antique firelock	47	Medium	Undead	0	0	0	0
+baby leopard	32	Small	Beast	0	0	0	0
+bathory	44	Medium	Demi-Human	0	0	0	0
+bloody butterfly	55	Medium	Insect	0	0	0	0
+clock tower manager	63	Large	Formless	0	0	0	0
+clock	60	Medium	Formless	0	0	0	0
+dark snake lord	73	Large	Beast	0	0	0	0
+dracula	85	Large	Demon	0	0	0	0
+evil cloud hermit	56	Large	Formless	0	0	0	0
+explosion	46	Small	Beast	0	0	0	0
+fur seal	63	Medium	Beast	0	0	0	0
+goblin leader	64	Medium	Demi-Human	0	0	0	0
+golem	25	Large	Formless	0	0	0	0
+greatest general	40	Medium	Formless	0	0	0	0
+incantation samurai	71	Large	Demi-Human	0	0	0	0
+kapha	41	Medium	Fish	0	0	0	0
+karakasa	30	Medium	Formless	0	0	0	0
+kobold leader	65	Medium	Demi-Human	0	0	0	0
+lava golem	77	Large	Formless	0	0	0	0
+live peach tree	53	Medium	Plant	0	0	0	0
+marse	31	Small	Fish	0	0	0	0
+miyabi ningyo	33	Medium	Demon	0	0	0	0
+myst	38	Large	Formless	0	0	0	0
+nightmare terror	78	Large	Demon	0	0	0	0
+parasite	49	Medium	Plant	0	0	0	0
+poison toad	46	Medium	Beast	0	0	0	0
+rotar zairo	25	Large	Formless	0	0	0	0
+sandman	34	Medium	Formless	0	0	0	0
+scorpion	24	Small	Insect	0	0	0	0
+shinobi	69	Medium	Demi-Human	0	0	0	0
+smokie	18	Small	Beast	0	0	0	0
+soldier skeleton	29	Medium	Undead	0	0	0	0
+tengu	65	Large	Demon	0	0	0	0
+wicked nymph	63	Medium	Demon	0	0	0	0
+wild ginseng	46	Small	Plant	0	0	0	0
+wraith dead	74	Large	Undead	0	0	0	0
+ancient worm	67	Large	Insect	0	0	0	0
+angeling	20	Medium	Angel	0	0	0	0
+bloody knight	82	Large	Formless	0	0	0	0
+cramp	56	Small	Beast	0	0	0	0
+deviace	47	Medium	Fish	0	0	0	0
+drops	3	Medium	Plant	0	0	0	0
+elder	64	Large	Demi-Human	0	0	0	0
+elder willow	20	Medium	Plant	0	0	0	0
+flora	26	Large	Plant	0	0	0	0
+ghostring	18	Medium	Demon	0	0	0	0
+goblin archer	28	Small	Demi-Human	0	0	0	0
+horong	34	Small	Formless	0	0	0	0
+hydra	14	Small	Plant	0	0	0	0
+incubus	75	Medium	Demon	0	0	0	0
+vocal	18	Medium	Insect	0	0	0	0
+deviling	31	Medium	Demon	983	694	0	0
+tao gunka	70	Large	Demon	1002	2231	0	0
+tamruan	52	Large	Demon	0	0	0	0
+mime monkey	40	Medium	Plant	741	619	0	0
+leaf cat	38	Small	Beast	567	7298	0	0
+kraben	50	Medium	Formless	7286	603	0	0
+christmas orc	24	Medium	Demi-Human	644	7174	0	0
+mandragora	12	Medium	Plant	0	0	0	0
+geographer	56	Medium	Plant	0	0	0	0
+lunatic	29	Small	Beast	0	0	0	0
+gangster	40	Medium	Demi-Human	0	0	0	0
+ancient mummy	52	Medium	Undead	0	0	0	0
+freezer	72	Medium	Beast	0	0	0	0
+marin	15	Medium	Plant	0	0	0	0
+tamruan	52	Large	Demon	0	0	0	0
+gargoyle	48	Medium	Demon	0	0	0	0
+blazzer	43	Medium	Demon	0	0	0	0
+giant whisper	34	Small	Demon	0	0	0	0
+heater	68	Medium	Beast	0	0	0	0
+permeter	63	Medium	Beast	0	0	0	0
+solider	70	Medium	Beast	0	0	0	0
+bigfoot	25	Large	Beast	0	0	0	0
+giant hornet	56	Small	Insect	0	0	0	0
+dark illusion	77	Large	Demon	0	0	0	0
+garm baby	61	Medium	Beast	0	0	0	0
+christmas goblin	25	Medium	Demi-Human	0	0	0	0
+thief bug male	19	Medium	Insect	0	0	0	0
+dancing dragon	54	Medium	Dragon	0	0	668	0
+munak	30	Medium	Undead	0	12017	12016	0
+bongun	32	Medium	Undead	0	12017	12016	0
+hyegun	56	Medium	Undead	0	12017	12016	0
+metaling	26	Small	Formless	13103	7312	0	0
+mineral	56	Small	Formless	715	969	0	0
+obsidian	50	Small	Formless	1263	0	0	0
+pitman	43	Large	Undead	1041	7327	0	0
+waste stove	68	Large	Formless	604	7319	0	0
+ungoliant	69	Large	Insect	718	2406	0	0
+porcellio	28	Small	Insect	7326	0	0	0
+noxious	35	Medium	Formless	0	603	0	0
+venomous	42	Medium	Formless	0	603	0	0
+teddy bear	71	Small	Formless	2652	985	0	0
+waste stove	68	Large	Formless	0	0	0	0
+porcellio	43	Small	Insect	0	0	0	0
+hellion revenant	88	Medium	Demon	7337	0	0	0
+anopheles	23	Small	Insect	0	0	0	0
+mole	36	Small	Beast	0	0	0	0
+hill wind	43	Medium	Beast	0	0	0	0
+bacsojin	85	Large	Demi-Human	2700	2234	0	0
+chung e	59	Medium	Demi-Human	0	5042	0	0
+gremlin	53	Large	Demon	0	603	0	0
+beholder	56	Small	Formless	0	603	0	0
+seyren	91	Medium	Demon	2317	13421	0	0
+eremes	87	Medium	Demon	678	2336	0	0
+harword	83	Medium	Demi-Human	2318	603	0	0
+magaleta	90	Medium	Demi-Human	603	2504	0	0
+shecil	82	Medium	Demi-Human	603	1745	0	0
+katrinn	92	Medium	Demi-Human	5085	2404	0	0
+lord knight seyren	99	Medium	Demi-Human	0	0	617	0
+assassin cross eremes	99	Medium	Demi-Human	0	0	617	0
+whitesmith harword	99	Medium	Demi-Human	0	0	617	0
+high priest magaleta	99	Medium	Demi-Human	0	0	617	0
+sniper shecil	99	Medium	Demi-Human	0	0	617	0
+high wizard katrinn	99	Medium	Demi-Human	0	0	617	0
+lord knight seyren	99	Medium	Demi-Human	1166	1415	0	0
+assassin cross eremes	99	Medium	Demi-Human	1265	13002	0	0
+whitesmith harword	99	Medium	Demi-Human	1369	1368	0	0
+high priest magaleta	99	Medium	Demi-Human	1528	1560	0	0
+sniper shecil	99	Medium	Demi-Human	1720	1724	0	0
+high wizard katrinn	99	Medium	Demi-Human	1618	2319	0	0
+ygnizem	58	Medium	Demi-Human	1152	2317	0	0
+whikebain	62	Medium	Demi-Human	2620	13004	0	0
+armaia	66	Medium	Demi-Human	1302	1307	0	0
+erend	59	Medium	Demi-Human	2324	1523	0	0
+kavac	60	Medium	Demi-Human	2402	2404	0	0
+rawrel	61	Medium	Demi-Human	2333	2607	0	0
+ygnizem	79	Medium	Demi-Human	2406	1130	0	0
+whikebain	62	Medium	Demi-Human	0	0	0	0
+armaia	66	Medium	Demi-Human	0	0	0	0
+erend	59	Medium	Demi-Human	0	0	0	0
+kavac	60	Medium	Demi-Human	0	0	0	0
+rawrel	61	Medium	Demi-Human	0	0	0	0
+photon cannon	66	Medium	Formless	0	0	0	0
+archdam	79	Large	Demi-Human	13167	0	0	0
+dimik	77	Medium	Formless	0	0	0	0
+monemus	88	Large	Formless	0	0	0	0
+venatu	77	Medium	Formless	0	0	0	0
+gemini-s58	72	Medium	Formless	7479	12040	0	0
+removal	55	Medium	Undead	972	5120	0	0
+photon cannon	46	Medium	Formless	0	0	0	0
+archdam	57	Large	Angel	0	0	0	0
+vesper	97	Large	Beast	2661	2662	0	0
+orc baby	21	Small	Demi-Human	7269	0	0	0
+green iguana	54	Medium	Beast	606	511	0	0
+lady tanee	89	Large	Plant	617	1716	0	0
+bacsojin	85	Large	Demi-Human	0	0	0	0
+spring rabbit	12	Medium	Beast	0	0	0	0
+kraben	70	Medium	Formless	521	521	0	0
+breeze	56	Medium	Formless	2269	996	0	0
+plasma	56	Small	Formless	0	0	0	0
+plasma	43	Small	Formless	0	0	0	0
+plasma	47	Small	Formless	0	0	0	0
+plasma	49	Small	Formless	0	0	0	0
+plasma	44	Small	Formless	0	0	0	0
+deathword	65	Medium	Formless	7479	7480	0	0
+ancient mimic	60	Large	Formless	2417	2610	0	0
+observation	81	Medium	Angel	2210	7435	0	0
+shelter	80	Medium	Angel	7442	0	0	0
+retribution	79	Medium	Angel	1158	7442	0	0
+solace	77	Medium	Angel	1909	7442	0	0
+thanatos odium	92	Large	Undead	2520	0	0	0
+thanatos despero	88	Large	Undead	2419	0	0	0
+thanatos maero	83	Medium	Undead	2354	0	0	0
+thanatos dolor	83	Small	Undead	5128	0	0	0
+thanatos	99	Large	Demon	2515	2655	0	0
+thanatos odium	92	Large	Undead	0	0	0	0
+thanatos despero	88	Large	Undead	0	0	0	0
+thanatos maero	83	Medium	Undead	0	0	0	0
+thanatos dolor	83	Small	Undead	0	0	0	0
+acidus	80	Large	Dragon	1269	2114	0	0
+ferus	70	Large	Dragon	994	5122	0	0
+novus	42	Small	Dragon	0	0	0	0
+acidus	76	Large	Dragon	996	7446	0	0
+ferus	69	Large	Dragon	997	7445	0	0
+novus	43	Small	Dragon	0	0	0	0
+detale	90	Large	Dragon	1417	5002	0	0
+hydro	89	Large	Dragon	12085	5124	0	0
+dragon egg	43	Medium	Dragon	720	728	0	0
+jakk	99	Medium	Formless	0	0	0	0
+shecil damon	82	Medium	Demi-Human	0	0	0	0
+photon cannon	66	Medium	Formless	0	0	0	0
+poring	1	Medium	Plant	0	0	0	0
+lunatic	3	Small	Beast	0	0	0	0
+savage babe	7	Small	Beast	0	0	0	0
+desert wolf baby	9	Small	Beast	0	0	0	0
+baphomet jr.	50	Small	Demon	0	0	0	0
+deviruchi	46	Small	Demon	0	0	0	0
+doppelganger	72	Large	Angel	0	0	0	0
+treasure chest	98	Small	Formless	0	0	0	0
+kiel	90	Medium	Formless	0	0	0	0
+kiel d-01	90	Medium	Formless	1242	2650	0	0
+alicel	75	Medium	Demon	985	2517	0	0
+aliot	75	Medium	Demon	985	13405	0	0
+aliza	69	Medium	Demi-Human	661	2123	0	0
+constant	55	Small	Formless	0	0	0	0
+alicel	75	Medium	Demon	0	0	0	0
+aliot	75	Medium	Demon	0	0	0	0
+christmas cookie	28	Small	Demi-Human	0	0	0	0
+carat	51	Medium	Demon	0	0	0	0
+myst case	38	Medium	Formless	0	0	0	0
+wild rose	38	Small	Beast	0	0	0	0
+constant	55	Small	Demon	0	0	0	0
+aliza	69	Medium	Demi-Human	0	0	0	0
+snake	15	Medium	Beast	0	0	0	0
+anacondaq	23	Medium	Beast	0	0	0	0
+medusa	79	Medium	Demon	0	0	0	0
+red plant	1	Small	Plant	0	0	0	0
+valkyrie randgris	99	Large	Angel	7024	0	0	0
+skogul	70	Medium	Demon	757	1271	0	0
+frus	69	Medium	Demon	757	0	0	0
+skeggiold	81	Small	Angel	2322	2353	0	0
+skeggiold	83	Small	Angel	2322	2353	0	0
+hydro	89	Large	Dragon	0	0	0	0
+acidus	80	Large	Dragon	0	0	0	0
+ferus	70	Large	Dragon	0	0	0	0
+acidus	76	Large	Dragon	0	0	0	0
+ferus	69	Large	Dragon	0	0	0	0
+skogul	70	Medium	Demon	0	0	0	0
+frus	69	Medium	Demon	0	0	0	0
+skeggiold	81	Small	Angel	0	0	0	0
+skeggiold	83	Small	Angel	0	0	0	0
+valkyrie	99	Large	Angel	0	0	0	0
+angeling	99	Small	Angel	0	0	0	0
+deviling	99	Small	Angel	0	0	0	0
+gloom under night	89	Large	Formless	1377	0	0	0
+agav	73	Medium	Demi-Human	7563	0	0	0
+echio	69	Medium	Demi-Human	7563	2366	0	0
+vanberk	59	Medium	Demi-Human	7563	0	0	0
+isilla	62	Medium	Demi-Human	7563	0	0	0
+hodremlin	61	Medium	Demon	1061	2426	0	0
+seeker	65	Small	Formless	1375	0	0	0
+snowier	60	Large	Formless	1819	991	0	0
+siroma	42	Small	Formless	0	991	0	0
+ice titan	60	Large	Formless	0	995	0	0
+gazeti	55	Medium	Demon	0	0	0	0
+ktullanux	98	Large	Beast	607	0	0	0
+muscipular	57	Medium	Plant	631	0	0	0
+drosera	46	Medium	Plant	905	0	0	0
+roween	31	Medium	Beast	0	0	0	0
+galion	44	Medium	Beast	0	0	0	0
+stapo	23	Small	Formless	1821	0	0	0
+atroce	82	Large	Beast	5123	1175	0	0
+agav	73	Medium	Demi-Human	0	0	0	0
+echio	69	Medium	Demi-Human	0	0	0	0
+ice titan	60	Large	Formless	0	0	0	0
+iceicle	38	Small	Formless	7066	7066	0	0
+rafflesia	17	Small	Plant	0	0	0	0
+galion	44	Medium	Beast	0	0	0	0
+soccer ball	1	Small	Formless	0	0	0	0
+megalith	45	Large	Formless	0	0	0	0
+roween	31	Medium	Beast	0	0	0	0
+bloody knight	82	Large	Angel	1620	617	7578	0
+aunoe	62	Medium	Demi-Human	2610	2601	0	0
+fanat	62	Medium	Demi-Human	5172	13027	0	0
+treasure chest	99	Small	Formless	0	0	0	0
+lord knight seyren	99	Medium	Demi-Human	0	0	0	0
+assassin cross eremes	99	Medium	Demi-Human	0	0	0	0
+whitesmith harword	99	Medium	Demi-Human	0	0	0	0
+high priest magaleta	99	Medium	Demi-Human	0	0	0	0
+sniper shecil	99	Medium	Demi-Human	0	0	0	0
+high wizard katrinn	99	Medium	Demi-Human	0	0	0	0
+lord knight seyren	99	Medium	Demi-Human	0	0	0	0
+assassin cross eremes	99	Medium	Demi-Human	0	0	0	0
+whitesmith harword	99	Medium	Demi-Human	0	0	0	0
+high priest magaleta	99	Medium	Demi-Human	0	0	0	0
+sniper shecil	99	Medium	Demi-Human	0	0	0	0
+high wizard katrinn	99	Medium	Demi-Human	0	0	0	0
+smokie	18	Small	Beast	0	0	0	0
+lude	99	Small	Formless	0	0	0	0
+hydro	99	Large	Angel	7444	0	0	0
+moonlight flower	80	Medium	Beast	0	0	0	0
+rice cake	12	Medium	Formless	7613	7613	0	0
+gourd	12	Medium	Formless	0	0	0	0
+detale	99	Large	Angel	12100	0	0	0
+alarm	58	Medium	Formless	0	0	0	0
+bathory	44	Medium	Demi-Human	0	0	0	0
+bigfoot	25	Large	Beast	0	0	0	0
+desert wolf	27	Medium	Beast	0	0	0	0
+deviruchi	46	Small	Demon	0	0	0	0
+freezer	72	Medium	Beast	0	0	0	0
+garm baby	61	Medium	Beast	0	0	0	0
+christmas goblin	25	Medium	Demi-Human	0	0	0	0
+myst	38	Large	Formless	0	0	0	0
+sasquatch	30	Large	Beast	0	0	0	0
+gullinbrusti	20	Large	Beast	0	0	0	0
+sword guardian	86	Large	Demi-Human	1176	0	0	0
+bow guardian	80	Large	Demi-Human	0	0	0	0
+salamander	91	Large	Formless	2621	2364	0	0
+ifrit	99	Large	Formless	1133	2345	0	0
+kasa	85	Large	Formless	1730	1626	0	0
+salamander	91	Large	Formless	0	0	0	0
+kasa	85	Large	Formless	0	0	0	0
+magmaring	40	Small	Formless	0	0	0	0
+imp	76	Small	Demon	12374	0	0	0
+knocker	50	Small	Demon	2124	1732	0	0
+byorgue	86	Medium	Demi-Human	2530	7110	0	0
+golden savage	99	Large	Beast	5159	12238	12239	0
+snake lord\'s minion	15	Medium	Beast	0	0	0	0
+snake lord\'s minion	23	Medium	Beast	0	0	0	0
+snake lord\'s minion	43	Medium	Beast	0	0	0	0
+snake lord\'s minion	47	Large	Demon	0	0	0	0
+treasure box	98	Small	Formless	7720	12245	0	0
+dream metal	90	Small	Formless	0	0	0	0
+poring	98	Medium	Angel	0	0	0	0
+baphomet	50	Large	Demon	0	0	0	0
+osiris	60	Medium	Undead	0	0	0	0
+orc hero	50	Large	Demi-Human	0	0	0	0
+mobster	61	Medium	Demi-Human	0	0	0	0
+angeling	99	Small	Angel	0	0	0	0
+deviling	99	Small	Angel	0	0	0	0
+muka	17	Large	Plant	1451	1002	0	0
+poison spore	19	Medium	Plant	921	912	0	0
+magnolia	26	Small	Demon	7744	12127	0	0
+marin	15	Medium	Plant	529	5035	0	0
+plankton	10	Small	Plant	630	645	0	0
+mandragora	12	Medium	Plant	706	1967	0	0
+coco	17	Small	Beast	2402	7748	0	0
+choco	43	Small	Beast	7749	607	0	0
+martin	18	Small	Beast	10010	2224	0	0
+spring rabbit	25	Medium	Beast	0	0	0	0
+zombie slaughter	77	Medium	Undead	0	0	0	0
+ragged zombie	75	Medium	Undead	13107	0	0	0
+hell poodle	71	Small	Demon	919	537	0	0
+banshee	81	Medium	Demon	7054	0	0	0
+banshee	81	Medium	Demon	0	0	0	0
+flame skull	60	Small	Demon	0	0	0	0
+necromancer	88	Medium	Undead	609	7117	0	0
+fallen bishop	80	Medium	Demon	1614	0	0	0
+hell fly	66	Small	Insect	0	0	0	0
+beelzebub	98	Small	Demon	0	0	0	0
+beelzebub	98	Large	Demon	985	742	0	0
+lord of the dead	99	Large	Demon	0	0	0	0
+shining plant	1	Small	Plant	914	0	0	0
+eclipse pet	6	Medium	Beast	0	0	0	0
+wood goblin	42	Medium	Plant	7032	574	0	0
+les	39	Medium	Plant	521	510	0	0
+baba yaga	49	Medium	Demi-Human	519	580	0	0
+uzhas	61	Medium	Demi-Human	579	603	0	0
+mavka	63	Medium	Plant	748	510	0	0
+gopinich	85	Large	Beast	7444	5007	0	0
+mavka	63	Medium	Plant	0	0	0	0
+freezer	72	Medium	Beast	0	0	0	0
+garm baby	61	Medium	Beast	0	0	0	0
+marozka\'s guard	73	Large	Beast	0	0	0	0
+the immortal koshei	85	Large	Beast	0	0	0	0
+valkyrie	99	Large	Angel	0	0	0	0
+lolo ruri	71	Large	Demon	0	0	0	0
+knight of the abyss	79	Large	Demi-Human	0	0	0	0
+pouring	50	Small	Plant	0	0	0	0
+seyren	91	Medium	Demon	0	0	0	0
+katrinn	92	Medium	Demi-Human	0	0	0	0
+baphomet	81	Large	Demon	0	0	0	0
+zombie	12	Medium	Undead	0	0	0	0
+sword guardian	86	Large	Demi-Human	0	0	0	0
+archer guardian	80	Large	Demi-Human	0	0	0	0
+condor	5	Small	Angel	0	0	0	0
+bomb poring	28	Small	Formless	0	0	0	0
+barricade	98	Large	Formless	0	0	0	0
+barricade	98	Large	Formless	0	0	0	0
+food storage	90	Large	Formless	0	0	0	0
+food depot	90	Large	Formless	0	0	0	0
+neutrality flag	90	Large	Formless	0	0	0	0
+lion flag	90	Large	Formless	0	0	0	0
+eagle flag	90	Large	Formless	0	0	0	0
+satan morroc	99	Large	Demon	0	0	0	0
+wounded morroc	99	Large	Demon	7798	0	0	0
+jakk	38	Medium	Formless	535	0	0	0
+whisper	34	Small	Demon	0	0	0	0
+deviruchi	46	Small	Demon	0	0	0	0
+great demon baphomet	98	Large	Demon	2327	1466	0	0
+piamette	90	Small	Demi-Human	0	0	0	0
+wish maiden	98	Large	Angel	0	0	0	0
+garden keeper	80	Small	Formless	0	0	0	0
+garden watcher	81	Medium	Angel	0	0	0	0
+blue flower	98	Medium	Plant	0	0	0	0
+red flower	98	Medium	Plant	0	0	0	0
+yellow flower	98	Medium	Plant	0	0	0	0
+constant	55	Small	Formless	0	0	0	0
+piamette	90	Small	Demi-Human	0	0	0	0
+ygnizem	58	Medium	Demi-Human	0	0	0	0
+camp guardian	86	Large	Demi-Human	0	0	0	0
+camp guardian	80	Large	Demi-Human	0	0	0	0
+treasure chest	99	Small	Formless	0	0	0	0
+naght sieger	99	Large	Demon	2514	7294	0	0
+entweihen crothen	90	Medium	Demon	1618	7291	0	0
+thorny skeleton	89	Small	Demon	0	0	0	0
+thorn of recovery	89	Small	Demon	0	0	0	0
+thorn of magic	89	Small	Demon	0	0	0	0
+thorn of purification	89	Small	Demon	0	0	0	0
+christmas thief	10	Medium	Demi-Human	0	0	0	0
+new year doll	49	Medium	Demi-Human	0	0	0	0
+nightmare	30	Large	Beast	0	0	0	0
+wild rose	38	Small	Beast	0	0	0	0
+doppelganger	72	Medium	Demon	0	0	0	0
+ygnizem	79	Medium	Demi-Human	0	0	0	0
+strouf	48	Large	Fish	720	956	0	0
+marc	36	Medium	Fish	717	509	0	0
+obeune	31	Medium	Fish	951	748	0	0
+vadon	19	Small	Fish	757	717	0	0
+marina	21	Small	Plant	631	0	0	0
+poring	1	Medium	Plant	0	0	0	0
+banshee master	84	Medium	Demon	934	2135	0	0
+beholder master	70	Medium	Formless	603	2749	0	0
+cobalt mineral	72	Medium	Formless	715	969	0	0
+heavy metaling	73	Small	Formless	13038	7312	0	0
+hell apocalips	86	Large	Formless	985	2391	0	0
+zukadam	82	Large	Demi-Human	13167	2390	0	0
+kubkin	85	Medium	Demi-Human	0	507	0	0
+safeguard chief	88	Large	Demi-Human	0	0	0	0
+orc sniper	85	Medium	Demi-Human	0	0	0	0
+depraved orc spirit	87	Medium	Undead	0	0	0	0
+shaman cargalache	58	Medium	Demi-Human	0	0	0	0
+dandelion member	37	Medium	Demi-Human	0	0	0	0
+tatacho	106	Medium	Beast	516	0	0	0
+centipede	110	Medium	Insect	955	943	0	0
+nepenthes	75	Medium	Plant	993	905	0	0
+hillslion	105	Small	Beast	7063	7054	0	0
+hardrock mammoth	115	Large	Beast	2257	985	0	0
+tendrillion	113	Medium	Beast	7197	7008	0	0
+cornus	108	Medium	Beast	2257	1420	0	0
+naga	111	Large	Beast	954	1408	0	0
+luciola vespa	104	Medium	Insect	526	943	0	0
+pinguicula	80	Medium	Plant	7188	712	0	0
+bacsojin	85	Large	Demi-Human	0	0	0	0
+tatacho	106	Medium	Beast	0	0	0	0
+hillslion	105	Small	Beast	0	0	0	0
+centipede larva	80	Small	Insect	955	943	0	0
+male game master	50	Medium	Demi-Human	0	0	0	0
+female game master	50	Medium	Demi-Human	0	0	0	0
+spring rabbit	50	Medium	Beast	0	0	0	0
+white lady	72	Large	Demi-Human	6065	6066	0	0
+evil nymph	63	Medium	Demon	6066	6067	0	0
+plasma	44	Small	Formless	0	0	0	0
+plasma	49	Small	Formless	0	0	0	0
+plasma	43	Small	Formless	6067	0	0	0
+woomawang	82	Large	Demon	0	0	0	0
+woomawang	82	Medium	Demon	0	0	0	0
+ox	66	Large	Demon	0	0	0	0
+ghoul	40	Medium	Undead	0	0	0	0
+zombie	15	Medium	Undead	0	0	0	0
+draco	82	Medium	Dragon	518	0	0	0
+draco egg	67	Medium	Dragon	0	0	0	0
+dark pinguicula	83	Medium	Plant	0	0	0	0
+aqua elemental	83	Large	Formless	0	0	0	0
+rata	107	Medium	Demi-Human	0	0	0	0
+duneyrr	107	Medium	Demi-Human	1384	0	0	0
+ancient tree	102	Large	Plant	0	0	0	0
+rhyncho	85	Medium	Formless	0	0	0	0
+phylla	85	Medium	Formless	0	0	0	0
+nidhoggr\'s shadow	117	Large	Dragon	1417	2554	0	0
+dark shadow	114	Small	Formless	1385	0	0	0
+bradium golem	101	Large	Formless	0	0	0	0
+mystcase	10	Medium	Formless	7174	529	0	0
+runaway dandelion member	90	Medium	Demi-Human	511	7032	0	0
+dark shadow	114	Small	Formless	0	0	0	0
+minorous	1	Large	Beast	0	0	0	0
+minorous	10	Large	Beast	2289	577	0	0
+hiden priest	90	Large	Demon	0	0	0	0
+dandelion	80	Medium	Demi-Human	0	0	0	0
+forest guardian	50	Small	Demon	0	0	0	0
+golden tulip	1	Small	Plant	0	0	0	0
+baby desert wolf	9	Small	Beast	0	0	0	0
+nihility zem	90	Small	Insect	0	0	0	0
+valkyrie randgris	53	Medium	Undead	0	0	0	0
+valkyrie randgris	90	Medium	Angel	0	0	0	0
+valkyrie randgris	90	Medium	Angel	0	0	0	0
+executioner	65	Large	Formless	0	0	0	0
+tirfing	71	Medium	Formless	0	0	0	0
+mysteltainn	76	Large	Formless	0	0	0	0
+silver sniper	100	Medium	Formless	0	0	0	0
+magic decoy	100	Medium	Formless	0	0	0	0
+magic decoy	100	Medium	Formless	0	0	0	0
+magic decoy	100	Medium	Formless	0	0	0	0
+magic decoy	100	Medium	Formless	0	0	0	0
+naga	99	Large	Beast	0	0	0	0
+dark pinguicula	1	Medium	Plant	0	0	0	0
+bradium golem	99	Large	Formless	0	0	0	0
+aqua elemental	1	Medium	Plant	0	0	0	0
+baphomet	1	Large	Demon	0	0	0	0
+dark lord	1	Medium	Plant	0	0	0	0
+dimik	1	Medium	Plant	0	0	0	0
+bathory	1	Medium	Plant	0	0	0	0
+incubus	1	Medium	Plant	0	0	0	0
+zherlthsh	1	Medium	Plant	0	0	0	0
+cramp	1	Medium	Plant	0	0	0	0
+mimic	1	Medium	Plant	0	0	0	0
+disguise	1	Medium	Plant	0	0	0	0
+alice	1	Medium	Plant	0	0	0	0
+stapo	1	Medium	Plant	0	0	0	0
+poporing	1	Medium	Plant	0	0	0	0
+drops	1	Medium	Plant	0	0	0	0
+magmaring	1	Medium	Plant	0	0	0	0
+metaling	1	Medium	Plant	0	0	0	0
+anopheles	1	Medium	Plant	0	0	0	0
+anopheles	1	Medium	Plant	0	0	0	0
+boitata	93	Large	Formless	1422	1471	0	0
+iara	79	Medium	Fish	995	2334	0	0
+piranha	75	Medium	Fish	1249	13027	0	0
+headless mule	80	Large	Demon	1269	2317	0	0
+jaguar	71	Medium	Beast	0	0	0	0
+toucan	70	Small	Beast	0	0	0	0
+curupira	68	Medium	Demon	0	0	0	0
+vadon	1	Medium	Plant	0	0	0	0
+shadow of deception	105	Medium	Demon	0	0	0	0
+shadow of illusion	105	Medium	Demon	0	0	0	0
+shadow of pleasure	105	Medium	Demon	0	0	0	0
+crystal	1	Medium	Plant	0	0	0	0
+crystal	1	Medium	Plant	0	0	0	0
+suspicious hydra	34	Small	Plant	0	0	0	0
+piranha	75	Medium	Fish	0	0	0	0
+hornet	1	Medium	Plant	0	0	0	0
+giant hornet	1	Medium	Plant	0	0	0	0
+luciola vespa	1	Medium	Plant	0	0	0	0
+zanzou	1	Medium	Demi-Human	0	0	0	0
