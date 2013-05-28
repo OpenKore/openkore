@@ -1548,12 +1548,16 @@ sub drop {
 sub dumpData {
 	my $msg = shift;
 	my $silent = shift;
+	my $desc = shift;
 	my $dump;
 	my $puncations = quotemeta '~!@#$%^&*()_+|\"\'';
+	my $messageID = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
 	$dump = "\n\n================================================\n" .
 		getFormattedDate(int(time)) . "\n\n" .
-		length($msg) . " bytes\n\n";
+		($desc == 1 ? 'Send ' : 'Recv ') . #0 = Recv (default), 1 = Send
+		$messageID . ' [' .
+		length($msg) . " bytes]\n\n";
 
 	for (my $i = 0; $i < length($msg); $i += 16) {
 		my $line;

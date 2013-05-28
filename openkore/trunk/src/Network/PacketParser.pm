@@ -449,10 +449,10 @@ sub process {
 sub parse_pre {
 	my ($self, $mode, $switch, $msg) = @_;
 	my $values = {
-		'Network::Receive' => ['<< Received packet:', 'received', 'Recv', 'recv', 'parseMsg/pre'],
-		'Network::ClientReceive' => ['<< Sent by RO client:', 'ro_sent', 'Send', 'send', 'RO_sendMsg_pre'],
+		'Network::Receive' => ['<< Received packet:', 'received', 'Recv', 'parseMsg/pre'],
+		'Network::ClientReceive' => ['<< Sent by RO client:', 'ro_sent', 'ROSend', 'RO_sendMsg_pre'],
 	}->{$mode} or return;
-	my ($title, $config_suffix, $desc_key, $dumpMethod5_word, $hook) = @$values;
+	my ($title, $config_suffix, $desc_key, $hook) = @$values;
 	
 	if ($config{'debugPacket_'.$config_suffix} && !existsInList($config{'debugPacket_exclude'}, $switch) ||
 		$config{'debugPacket_include_dumpMethod'} && existsInList($config{'debugPacket_include'}, $switch))
@@ -472,11 +472,11 @@ sub parse_pre {
 		} elsif ($config{debugPacket_include_dumpMethod} == 3) {
 			Misc::dumpData($msg, 1);
 		} elsif ($config{debugPacket_include_dumpMethod} == 4) {
-			open my $dump, '>>', 'DUMP_lines.txt';
+			open my $dump, '>>', 'DUMP_LINE.txt';
 			print $dump unpack('H*', $msg) . "\n";
 		} elsif ($config{debugPacket_include_dumpMethod} == 5) {
 			open my $dump, '>>', 'DUMP_HEAD.txt';
-			print $dump sprintf("%-4s %2d %s%s\n", substr(unpack('H*', $msg), 2, 2) . substr(unpack('H*', $msg), 0, 2), length($msg), $dumpMethod5_word, $label);
+			print $dump sprintf("%-4s %2d %s%s\n", $switch, length($msg), $desc_key, $label);
 		}
 	}
 	

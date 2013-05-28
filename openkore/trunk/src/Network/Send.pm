@@ -291,14 +291,30 @@ sub sendToServer {
 
 	$net->serverSend($msg);
 	$bytesSent += length($msg);
-
-	if ($config{debugPacket_sent} && !existsInList($config{debugPacket_exclude}, $messageID)) {
+	
+	if ($config{debugPacket_sent} && !existsInList($config{debugPacket_exclude}, $messageID) && $config{debugPacket_include_dumpMethod} < 3) {
 		my $label = $packetDescriptions{Send}{$messageID} ?
 			"[$packetDescriptions{Send}{$messageID}]" : '';
 		if ($config{debugPacket_sent} == 1) {
 			debug(sprintf("Sent packet    : %-4s    [%2d bytes]  %s\n", $messageID, length($msg), $label), "sendPacket", 0);
 		} else {
 			Misc::visualDump($msg, ">> Sent packet: $messageID  $label");
+		}
+	}
+	
+	if ($config{'debugPacket_include_dumpMethod'} && !existsInList($config{debugPacket_exclude}, $messageID) && existsInList($config{'debugPacket_include'}, $messageID)) {
+		my $label = $packetDescriptions{Send}{$messageID} ?
+			"[$packetDescriptions{Send}{$messageID}]" : '';
+		if ($config{debugPacket_include_dumpMethod} == 3 && existsInList($config{'debugPacket_include'}, $messageID)) {
+			#Security concern: Dump only when you included the header in config
+			Misc::dumpData($msg, 1, 1);
+		} elsif ($config{debugPacket_include_dumpMethod} == 4) {
+			open my $dump, '>>', 'DUMP_LINE.txt';
+			print $dump unpack('H*', $msg) . "\n";
+		} elsif ($config{debugPacket_include_dumpMethod} == 5 && existsInList($config{'debugPacket_include'}, $messageID)) {
+			#Security concern: Dump only when you included the header in config
+			open my $dump, '>>', 'DUMP_HEAD.txt';
+			print $dump sprintf("%-4s %2d %s%s\n", $messageID, length($msg), 'Send', $label);
 		}
 	}
 }
@@ -681,13 +697,13 @@ sub reconstruct_buy_bulk_buyer {
 
 sub sendBuyBulkbuyer {
 	my ($self, $buyerID, $r_array, $buyingStoreID) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'buy_bulk_buyer',
-		buyerID => $buyerID,
-		buyingStoreID => $buyingStoreID,
-		items => $r_array,
-	}));
-	debug "Sent bulk buy buyer: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$r_array)."\n", "sendPacket";
+	my $msg = pack('v2', 0x0819, 4+8*@{$r_array});
+	$msg .= pack ('a4 a4', $buyerID, $buyingStoreID);
+	for (my $i = 0; $i < @{$r_array}; $i++) {
+		debug 'Send Buying Buyer Request: '.$r_array->[$i]{itemIndex}.'zzz'.$r_array->[$i]{itemID}.'zzz'.$r_array->[$i]{amount}."\n", "sendPacket", 2;
+		$msg .= pack('v3', $r_array->[$i]{itemIndex}, $r_array->[$i]{itemID}, $r_array->[$i]{amount});
+	}
+	$self->sendToServer($msg);
 }
 
 sub sendSkillUse {
@@ -921,6 +937,12 @@ sub sendLoginPinCode {
 	$self->sendToServer($msg);
 	$timeout{charlogin}{time} = time;
 	debug "Sent loginPinCode\n", "sendPacket", 2;
+}
+
+sub sendCloseBuyShop {
+	my $self = shift;
+	$self->sendToServer($self->reconstruct({switch => 'buy_bulk_closeShop'}));
+	debug "Buying Shop Closed\n", "sendPacket", 2;
 }
 
 1;
