@@ -492,11 +492,13 @@ sub new {
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20
 		'0810' => ['open_buying_store', 'c', [qw(amount)]],
 		'0812' => ['open_buying_store_fail', 'v', [qw(result)]],
+		'0813' => ['open_buying_store_item_list', 'v a4 V', [qw(len AID zeny)]],
 		'0814' => ['buying_store_found', 'a4 Z*', [qw(ID title)]],
 		'0816' => ['buying_store_lost', 'a4', [qw(ID)]],
 		'0818' => ['buying_store_items_list', 'v a4 a4', [qw(len buyerID buyingStoreID zeny)]],
 		'081C' => ['buying_store_item_delete', 'v2 V', [qw(index amount zeny)]],
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
+		'0824' => ['buying_store_fail', 'v2', [qw(result itemID)]],
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'082D' => ['received_characters', 'x2 C5 x20 a*', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
@@ -7288,6 +7290,51 @@ sub open_buying_store_fail { #0x812
 	}
 }
 
+sub open_buying_store_item_list {
+	my ($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $headerlen = 12;
+	
+	undef @selfBuyerItemList;
+	
+	#started a shop.
+	message TF("Buying Shop opened!\n"), "BuyShop";
+	@articles = ();
+	$articles = 0;
+	my $index = 0;
+
+	message TF("%s\n" .
+	"#   Name                                      Type           Amount       Price\n",
+		center(' Buyer Shop ', 79-7, '-')), "list";
+	for (my $i = $headerlen; $i < $msg_size; $i += 9) {
+		my $item = {};
+
+		($item->{price},
+		$item->{amount},
+		$item->{type},
+		$item->{nameID})	= unpack('V v C v', substr($msg, $i, 9));
+
+		$item->{name} = itemName($item);
+		$selfBuyerItemList[$index] = $item;
+
+		Plugins::callHook('packet_open_buying_store', {
+			name => $item->{name},
+			amount => $item->{amount},
+			price => $item->{price},
+			type => $item->{type}
+		});
+
+		message(swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
+			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
+			"list");
+			
+		$index++;
+	}
+}
+
 sub buying_store_found {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
@@ -7320,14 +7367,15 @@ sub buying_store_items_list {
 	$buyerID = $args->{buyerID};
 	$buyingStoreID = $args->{buyingStoreID};
 	my $player = Actor::get($buyerID);
+	my $index = 0;
 
 	message TF("%s\n" .
 	"#   Name                                      Type           Amount       Price\n",
-		center(' Buyer: ' . $player->nameIdx . ' ', 79, '-')), "list";
+		center(' Buyer: ' . $player->nameIdx . ' ', 79-7, '-')), "list";
+	
 	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=9) {
 		my $item = {};
-		my $index = 0;
-
+		
 		($item->{price},
 		$item->{amount},
 		$item->{type},
@@ -7335,7 +7383,6 @@ sub buying_store_items_list {
 
 		$item->{name} = itemName($item);
 		$buyerItemList[$index] = $item;
-		$index++;
 
 		debug("Item added to Buying Store: $item->{name} - $item->{price} z\n", "buying_store", 2);
 
@@ -7352,6 +7399,8 @@ sub buying_store_items_list {
 			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
 			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
 			"list");
+		
+		$index++;
 	}
 	message("-------------------------------------------------------------------------------\n", "list");
 

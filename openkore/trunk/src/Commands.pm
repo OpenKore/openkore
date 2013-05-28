@@ -82,6 +82,7 @@ sub initHandlers {
 	cl                 => \&cmdChatRoom,
 	clearlog           => \&cmdChatLogClear,
 	closeshop          => \&cmdCloseShop,
+	closebuyshop       => \&cmdCloseBuyShop,
 	conf               => \&cmdConf,
 	connect            => \&cmdConnect,
 	damage             => \&cmdDamage,
@@ -1181,6 +1182,15 @@ sub cmdCloseShop {
 		return;
 	}
 	main::closeShop();
+}
+
+sub cmdCloseBuyShop {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+	$messageSender->sendCloseBuyShop();
+	message TF("Buying shop closed.\n", "BuyShop");
 }
 
 sub cmdConf {
@@ -5184,15 +5194,19 @@ sub cmdBuyer {
 			"buyer %s does not exist.\n", $arg1);
 	} elsif ($arg2 eq "") {
 		# FIXME not implemented
+		undef @buyerItemList;
+		undef $buyerID;
+		undef $buyingStoreID;
 		$messageSender->sendEnteringBuyer($buyerListsID[$arg1]);
 	} elsif ($buyerListsID[$arg1] ne $buyerID) {
 		error T("Error in function 'buyer' (Buyer Shop)\n" .
 			"Buyer ID is wrong.\n");
 	} else {
+		print "test\n";
 		if ($arg3 <= 0) {
 			$arg3 = 1;
 		}
-		$messageSender->sendBuyBulkbuyer($buyerID, [{itemIndex  => $arg2, amount => $arg3}], $buyingStoreID);
+		$messageSender->sendBuyBulkbuyer($buyerID, [{itemIndex => $arg2, itemID => $buyerItemList[$arg2]->{nameID}, amount => $arg3}], $buyingStoreID);
 	}
 }
 
