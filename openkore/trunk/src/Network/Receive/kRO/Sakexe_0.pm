@@ -512,6 +512,7 @@ sub new {
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
+		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 	);
 
 	foreach my $switch (keys %packets) {

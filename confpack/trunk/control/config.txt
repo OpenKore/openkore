@@ -422,6 +422,7 @@ attackSkillSlot {
 	monstersCount
 	maxAttempts 0
 	maxUses 0
+	target_hp
 	target_whenStatusActive
 	target_whenStatusInactive
 	target_deltaHp
@@ -446,6 +447,7 @@ attackComboSlot {
 	waitBeforeUse
 	dist 1.5
 	isSelfSkill 1
+	target_hp
 	target_deltaHp
 	monsters
 	notMonsters
