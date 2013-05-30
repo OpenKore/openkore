@@ -34,7 +34,6 @@ sub new {
 # TODO 0x0369,26,friendslistadd,2
 		'0369' => undef,
 		'0436' => undef,
-		'0437' => ['character_move', 'a3', [qw(coords)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'07E4' => undef,
 # TODO 0x0815,-1,reqopenbuyingstore,2:4:8:9:89
@@ -67,7 +66,6 @@ sub new {
 		actor_info_request 096A
 		actor_look_at 0890
 		char_create 0970
-		character_move 0437
 		item_drop 02C4
 		item_take 0865
 		map_login 086A

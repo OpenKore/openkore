@@ -523,6 +523,7 @@ sub new {
 		'0903' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0975' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0976' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'097A' => ['quest_all_list2', 'v3 a*', [qw(len count unknown message)]],
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],

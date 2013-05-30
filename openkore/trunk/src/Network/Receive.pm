@@ -1548,6 +1548,16 @@ sub revolving_entity {
 	}
 }
 
+# 0977
+sub monster_hp_info { 
+	my ($self, $args) = @_; 
+	my $monster = $monstersList->getByID($args->{ID}); 
+	$monster->{hp} = $args->{hp}; 
+	$monster->{hp_max} = $args->{hp_max}; 
+	
+	debug sprintf("Monster %s has hp %s/%s (%s%)\n", $monster->name, $monster->{hp}, $monster->{hp_max}, $monster->{hp} * 100 / $monster->{hp_max}), "parseMsg_damage"; 
+}
+
 ##
 # account_id({accountID})
 #
