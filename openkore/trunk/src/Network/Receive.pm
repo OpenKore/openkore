@@ -1575,9 +1575,9 @@ sub account_id {
 #
 # Name of the partner character, sent to everyone around right before casting "I miss you".
 sub marriage_partner_name {
-	#my ($self, $args) = @_;
-	# TODO save and display with the next skill use message?
-	#... = $args->{name};
+	my ($self, $args) = @_;
+	
+	message TF("Marriage partner name: %s\n", $args->{name});
 }
 
 sub login_pin_code_request {
