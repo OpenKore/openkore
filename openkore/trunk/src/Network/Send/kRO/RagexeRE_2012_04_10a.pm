@@ -28,7 +28,6 @@ sub new {
 # TODO 0x0360,6,reqclickbuyingstore,2
 # TODO 0x0366,90,useskilltoposinfo,2:4:6:8:10
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0437' => ['character_move', 'a3', [qw(coords)]],
 # TODO 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0865' => undef,
@@ -69,7 +68,6 @@ sub new {
 		map_login 094B
 		sync 0886
 		actor_action 0369
-		character_move 0437
 		actor_info_request 0889
 		actor_look_at 0871
 		item_take 0938
