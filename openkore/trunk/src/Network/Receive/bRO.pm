@@ -26,6 +26,8 @@ sub new {
 	
 	my %packets = (
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
+		'08B9' => ['login_pin_code_request', 'V V v', [qw(seed accountID flag)]],
+		'08BB' => ['login_pin_new_code_result', 'v V', [qw(flag seed)]],
 		'07EC' => ['sync_request_ex'],
 		'085A' => ['sync_request_ex'],
 		'085B' => ['sync_request_ex'],
@@ -269,6 +271,75 @@ sub sync_request_ex {
 
 	# Dispatching Sync Ex Reply
 	$messageSender->sendReplySyncRequestEx($SyncID);
+}
+
+sub login_pin_new_code_result {
+	my ($self, $args) = @_;
+	
+	if ($args->{flag} == 2) {
+		# PIN code invalid.
+		error T("PIN code is invalid, don't use sequences or repeated numbers.\n");
+		configModify('loginPinCode', '', 1);
+		return if (!($self->queryAndSaveLoginPinCode(T("PIN code is invalid, don't use sequences or repeated numbers.\n"))));
+		
+		# there's a bug in bRO where you can use letters or symbols or even a string as your PIN code.
+		# as a result this will render you unable to login again (forever?) using the official client
+		# and this is detectable and can result in a permanent ban. we're using this code in order to
+		# prevent this. - revok 17.12.2012
+		while ((($config{loginPinCode} =~ /[^0-9]/) || (length($config{loginPinCode}) != 4)) &&
+			!($self->queryAndSaveLoginPinCode("Your PIN should never contain anything but exactly 4 numbers.\n"))) {
+			error T("Your PIN should never contain anything but exactly 4 numbers.\n");
+		}
+		
+		$messageSender->sendLoginPinCode($args->{seed}, 0);
+	}
+
+}
+
+sub login_pin_code_request {
+	my ($self, $args) = @_;
+	
+	if (($args->{seed} == 0) && ($args->{accountID} == 0) && ($args->{flag} == 0)) {
+		message T("PIN code is correct.\n"), "success";
+		# call charSelectScreen
+		$self->{lockCharScreen} = 0;
+		if (charSelectScreen(1) == 1) {
+			$firstLoginMap = 1;
+			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+			$sentWelcomeMessage = 1;
+		}
+	} elsif ($args->{flag} == 1) {
+		# PIN code query request.
+		message T("Server requested PIN password in order to select your character.\n"), "connection";
+		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
+		$messageSender->sendLoginPinCode($args->{seed}, 0);
+		#$messageSender->sendCharLogin($config{char});
+	} elsif ($args->{flag} == 2) {
+		# PIN code has never been set before, so set it.
+		warning T("PIN password is not set for this account.\n"), "connection";
+		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
+		
+		while ((($config{loginPinCode} =~ /[^0-9]/) || (length($config{loginPinCode}) != 4)) &&
+			!($self->queryAndSaveLoginPinCode("Your PIN should never contain anything but exactly 4 numbers.\n"))) {
+			error T("Your PIN should never contain anything but exactly 4 numbers.\n");
+		}
+		$messageSender->sendLoginPinCode($args->{seed}, 1);
+	} elsif ($args->{flag} == 5) {
+		# PIN code invalid.
+		error T("PIN code is invalid, don't use sequences or repeated numbers.\n");
+		configModify('loginPinCode', '', 1);
+		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is invalid. Please re-enter your login PIN code."))));
+		$messageSender->sendLoginPinCode($args->{seed}, 0);
+	} elsif ($args->{flag} == 8) {
+		# PIN code incorrect.
+		error T("PIN code is incorrect.\n");
+		configModify('loginPinCode', '', 1);
+		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code."))));
+		$messageSender->sendLoginPinCode($args->{seed}, 0);
+	} else {
+		debug("login_pin_code_request: unknown flag $args->{flag}\n");
+	}
+	$timeout{master}{time} = time;
 }
 
 *parse_quest_update_mission_hunt = *Network::Receive::ServerType0::parse_quest_update_mission_hunt_v2;
