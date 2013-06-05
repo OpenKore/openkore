@@ -78,9 +78,15 @@ sub storeList {
 			(lc($name) eq lc($config{$prefix.$i}))
 			)
 		{
-			message "$name found!!! Buying it for $price (max price: $maxPrice).\n";
-			$messageSender->sendBuyBulkVender($venderID, [{itemIndex => $number, amount => $maxAmount}], $venderCID);
-			configModify($prefix.$i."_disabled", 1);
+			if ($amount >= $maxAmount) {
+				message "$name found!!! Buying it for $price (max price: $maxPrice).\n";
+				$messageSender->sendBuyBulkVender($venderID, [{itemIndex => $number, amount => $maxAmount}], $venderCID);
+				configModify($prefix.$i."_disabled", 1);
+			} else {
+				message "$name found ($amount of $maxAmount)!!! Buying it for $price (max price: $maxPrice).\n";
+				$messageSender->sendBuyBulkVender($venderID, [{itemIndex => $number, amount => $amount}], $venderCID);
+				configModify($prefix.$i."_maxAmount", ($maxAmount - $amount));
+			}
 		}
 		$i++;
 	}
