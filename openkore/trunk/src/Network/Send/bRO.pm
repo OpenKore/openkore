@@ -37,9 +37,6 @@ sub new {
 		'091A' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0941' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'091F' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
-		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
-		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
-		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
@@ -61,8 +58,6 @@ sub new {
 		master_login 02B0
 		party_setting 07D7
 		buy_bulk_vender 0801
-		send_pin_password 08B8
-		new_pin_password 08BA
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -180,61 +175,6 @@ sub PrepareKeys()
 		$enc_val2 = Math::BigInt->new('0x783c7361');
 		# A
 		$enc_val3 = Math::BigInt->new('0x43b3132b');
-}
-
-sub sendLoginPinCode {
-	my ($self, $seed, $type) = @_;
-	
-	my $pin = randomizePinCode($seed, $config{loginPinCode});
-	my $msg;
-	if ($type == 0) {
-		$msg = $self->reconstruct({
-			switch => 'send_pin_password',
-			accountID => $accountID,
-			pin => $pin,
-		});
-	} elsif ($type == 1) {
-		$msg = $self->reconstruct({
-			switch => 'new_pin_password',
-			accountID => $accountID,
-			pin => $pin,
-		});
-	}
-	$self->sendToServer($msg);
-	$timeout{charlogin}{time} = time;
-	debug "Sent loginPinCode\n", "sendPacket", 2;	
-}
-
-# randomizePin function/algorithm by Kurama, ever_boy_, kLabMouse and Iniro. cleanups by Revok
-sub randomizePinCode {
-	my ($seed, $pin) = @_;
-	$seed =  Math::BigInt->new($seed);
-	my $mulfactor = 0x3498;
-	my $addfactor = 0x881234;
-	my @keypad_keys_order = ('0'..'9');
-	# calculate keys order (they are randomized based on seed value)
-	if (@keypad_keys_order >= 1) {
-		my $k = 2;
-		for (my $pos = 1; $pos < @keypad_keys_order; $pos++) {
-			$seed = $addfactor + $seed * $mulfactor & 0xFFFFFFFF; # calculate next seed value
-			my $replace_pos = $seed % $k;
-			if ($pos != $replace_pos) {
-				my $old_value = $keypad_keys_order[$pos];
-				$keypad_keys_order[$pos] = $keypad_keys_order[$replace_pos];
-				$keypad_keys_order[$replace_pos] = $old_value;
-			}
-			$k++;
-		}
-	}
-	# associate keys values with their position using a hash
-	my %keypad;
-	for (my $pos = 0; $pos < @keypad_keys_order; $pos++) { $keypad{@keypad_keys_order[$pos]} = $pos; }
-	my $pin_reply = '';
-	my @pin_numbers = split('',$pin);
-	foreach (@pin_numbers) {
-		$pin_reply .= $keypad{$_};
-	}
-	return $pin_reply;
 }
 
 1;
