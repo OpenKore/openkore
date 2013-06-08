@@ -34,7 +34,7 @@ sub new {
 		'0437' => ['character_move', 'a3', [qw(coords)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'07E4' => ['item_take', 'a4', [qw(ID)]], 
-		'083C' => ['skill_use', 'v3 a4', [qw(lv skillID targetID)]],#10
+		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
