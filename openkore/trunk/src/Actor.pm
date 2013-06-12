@@ -578,16 +578,16 @@ sub setStatus {
 			));
 		}
 		
-		if ($char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name}) {
+		if ($char->{party} && $char->{party}{users} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name}) {
 			$again = 'again' if $char->{party}{users}{$self->{ID}}{statuses}{$handle};
 			$char->{party}{users}{$self->{ID}}{statuses}{$handle} = {};
 		}
 	} else {
 		# Skill de-activated (expired)
-		return unless $self->{statuses}{$handle}; # silent when "again no status"
+		return unless ($self->{statuses} && $self->{statuses}{$handle}); # silent when "again no status"
 		$again = 'no longer';
 		delete $self->{statuses}{$handle};
-		delete $char->{party}{users}{$self->{ID}}{statuses}{$handle} if ($char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name});
+		delete $char->{party}{users}{$self->{ID}}{statuses}{$handle} if ($char->{party} && $char->{party}{users} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name});
 	}
 	message
 		Misc::status_string($self, defined $statusName{$handle} ? $statusName{$handle} : $handle, $again, $flag ? $tick/1000 : 0),
