@@ -231,7 +231,7 @@ sub scanConfigAndCheck {
 	foreach my $slot (values %equipSlot_lut) {
 		if (exists $config{"${prefix}_$slot"}){
 			my $item = Actor::Item::get($config{"${prefix}_$slot"}, undef, 1);
-			$count++ if ($item && $char->{equipment} && ($char->{equipment}{$slot}{name} ne $item->{name}));
+			$count++ if ($item && $char->{equipment} && (!$char->{equipment}{$slot} || $char->{equipment}{$slot}{name} ne $item->{name}));
 		}
 	}
 	return $count;
