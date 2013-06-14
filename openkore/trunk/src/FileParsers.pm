@@ -568,15 +568,16 @@ sub parsePortals {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	open FILE, "<", $file;
-	while (my $line = <FILE>) {
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
 		next if $line =~ /^#/;
 		$line =~ s/\cM|\cJ//g;
 		$line =~ s/\s+/ /g;
 		$line =~ s/^\s+|\s+$//g;
 		$line =~ s/(.*)[\s\t]+#.*$/$1/;
 		
-		if ($line =~ /^([\w|@]+)\s(\d{1,3})\s(\d{1,3})\s([\w|@]+)\s(\d{1,3})\s(\d{1,3})\s?(.*)/) {
+		if ($line =~ /^([\w|@|-]+)\s(\d{1,3})\s(\d{1,3})\s([\w|@|-]+)\s(\d{1,3})\s(\d{1,3})\s?(.*)/) {
 		my ($source_map, $source_x, $source_y, $dest_map, $dest_x, $dest_y, $misc) = ($1, $2, $3, $4, $5, $6, $7);
 			my $portal = "$source_map $source_x $source_y";
 			my $dest = "$dest_map $dest_x $dest_y";
@@ -601,7 +602,6 @@ sub parsePortals {
 		}
 		
 	}
-	close FILE;
 	return 1;
 }
 
@@ -1294,7 +1294,7 @@ sub updateMonsterLUT {
 
 sub updatePortalLUT {
 	my ($file, $src, $x1, $y1, $dest, $x2, $y2) = @_;
-	open FILE, ">> $file";
+	open FILE, ">>:utf8", $file;
 	print FILE "$src $x1 $y1 $dest $x2 $y2\n";
 	close FILE;
 }
