@@ -485,7 +485,7 @@ sub actor_display {
 		}
 
 	}
-	
+
 	unless (defined $object_class) {
 		if ($jobs_lut{$args->{type}}) {
 			unless ($args->{type} > 6000) {
@@ -506,9 +506,9 @@ sub actor_display {
 			$object_class = 'Actor::NPC';
 		}
 	}
-	
+
 	#### Step 1: create the actor object ####
-	
+
 	if ($object_class eq 'Actor::Player') {
 		# Actor is a player
 		$actor = $playersList->getByID($args->{ID});
@@ -568,10 +568,10 @@ sub actor_display {
 			if ($monstersList->getByID($args->{ID})) {
 				$monstersList->removeByID($args->{ID});
 			}
-			
+
 			# Why do monsters and pets use nameID as type?
 			$actor->{nameID} = $args->{type};
-			
+
 		}
 	} elsif ($object_class eq 'Actor::Monster') {
 		$actor = $monstersList->getByID($args->{ID});
@@ -585,7 +585,7 @@ sub actor_display {
 			$actor->{name_given} = "Unknown";
 			$actor->{binType} = $args->{type};
 			$mustAdd = 1;
-			
+
 			# Why do monsters and pets use nameID as type?
 			$actor->{nameID} = $args->{type};
 		}
@@ -927,12 +927,12 @@ sub actor_died_or_disappeared {
 				debug "Player Disappeared in an unknown way: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg_presence";
 				$player->{disappeared} = 1;
 			}
-			
+
 			if ($ID ~~ @venderListsID) {
 				binRemove(\@venderListsID, $ID);
 				delete $venderLists{$ID};
 			}
-			
+
 			$player->{gone_time} = time;
 			$players_old{$ID} = $player->deepCopy();
 			Plugins::callHook('player_disappeared', {player => $player});
@@ -1332,17 +1332,17 @@ sub show_eq {
 	my ($self, $args) = @_;
 
 	my $jump = 26;
-	
+
 	my $unpack_string  = "v ";
 	   $unpack_string .= "v C2 v v C2 ";
 	   $unpack_string .= "a8 ";
 	   $unpack_string .= "a6"; #unimplemented in eA atm
-	   
+
 	if (exists $args->{robe}) {  # check packet version
 		$unpack_string .= "v "; # ??
 		$jump += 2;
 	}
-	
+
 	for (my $i = 0; $i < length($args->{equips_info}); $i += $jump) {
 		my ($index,
 			$ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, # typical for nonstackables
@@ -1391,10 +1391,10 @@ sub show_eq_msg_self {
 # 043D
 sub skill_post_delay {
 	my ($self, $args) = @_;
-	
+
 	my $skillName = (new Skill(idn => $args->{ID}))->getName;
 	my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : ' Delay';
-	
+
 	$char->setStatus($skillName.$status, 1, $args->{time});
 }
 
@@ -1437,7 +1437,7 @@ sub char_delete2_cancel_result {
 	} else {
 		error TF("Unknown error when trying to cancel the deletion of the character! (Error number: %s)\n", $result);
 	}
-	
+
 	charSelectScreen;
 }
 
@@ -1549,13 +1549,15 @@ sub revolving_entity {
 }
 
 # 0977
-sub monster_hp_info { 
-	my ($self, $args) = @_; 
-	my $monster = $monstersList->getByID($args->{ID}); 
-	$monster->{hp} = $args->{hp}; 
-	$monster->{hp_max} = $args->{hp_max}; 
-	
-	debug sprintf("Monster %s has hp %s/%s (%s%)\n", $monster->name, $monster->{hp}, $monster->{hp_max}, $monster->{hp} * 100 / $monster->{hp_max}), "parseMsg_damage"; 
+sub monster_hp_info {
+	my ($self, $args) = @_;
+	my $monster = $monstersList->getByID($args->{ID});
+	if ($monster) {
+		$monster->{hp} = $args->{hp};
+		$monster->{hp_max} = $args->{hp_max};
+
+		debug TF("Monster %s has hp %s/%s (%s%)\n", $monster->name, $monster->{hp}, $monster->{hp_max}, $monster->{hp} * 100 / $monster->{hp_max}), "parseMsg_damage";
+	}
 }
 
 ##
@@ -1576,7 +1578,7 @@ sub account_id {
 # Name of the partner character, sent to everyone around right before casting "I miss you".
 sub marriage_partner_name {
 	my ($self, $args) = @_;
-	
+
 	message TF("Marriage partner name: %s\n", $args->{name});
 }
 
@@ -1644,13 +1646,13 @@ sub login_pin_code_request {
 
 sub login_pin_new_code_result {
 	my ($self, $args) = @_;
-	
+
 	if ($args->{flag} == 2) {
 		# PIN code invalid.
 		error T("PIN code is invalid, don't use sequences or repeated numbers.\n");
 		configModify('loginPinCode', '', 1);
 		return if (!($self->queryAndSaveLoginPinCode(T("PIN code is invalid, don't use sequences or repeated numbers.\n"))));
-		
+
 		# there's a bug in bRO where you can use letters or symbols or even a string as your PIN code.
 		# as a result this will render you unable to login again (forever?) using the official client
 		# and this is detectable and can result in a permanent ban. we're using this code in order to
@@ -1659,7 +1661,7 @@ sub login_pin_new_code_result {
 			!($self->queryAndSaveLoginPinCode("Your PIN should never contain anything but exactly 4 numbers.\n"))) {
 			error T("Your PIN should never contain anything but exactly 4 numbers.\n");
 		}
-		
+
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
 	}
 }
