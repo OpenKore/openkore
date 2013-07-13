@@ -25,7 +25,7 @@ sub new {
 	my %packets = (
 		'022D' => undef,
 		# TODO 0x0281,36,storagepassword,0
-		'02C4' => ['skill_use', 'v3 a4', [qw(lv skillID targetID)]],#10
+		'02C4' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0369' => undef,
 		# TODO 0x0811,-1,itemlistwindowselected,2:4:8
 		# TODO 0x0835,-1,reqopenbuyingstore,2:4:8:9:89

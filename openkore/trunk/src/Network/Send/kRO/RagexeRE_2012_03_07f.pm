@@ -46,7 +46,7 @@ sub new {
 # TODO 0x0884,-1,searchstoreinfo,2:4:5:9:13:14:15
 		'0885' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0887' => ['sync', 'V', [qw(time)]],
-		'0889' => ['skill_use', 'v3 a4', [qw(lv skillID targetID)]],#10
+		'0889' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0890' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0896' => undef,
 		'08A1' => undef,
