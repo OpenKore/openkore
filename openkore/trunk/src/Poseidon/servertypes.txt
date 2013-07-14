@@ -21,3 +21,7 @@ decrypt_mid_keys 0x5c18014b 0x503e1282 0x6e6b29c1 # K M A
 charBlockSize 116
 charListPacket 0x82d
 maploginPacket 0366
+[tRO_2013-07-09th]
+decrypt_mid 1
+decrypt_mid_keys 0x6441767a 0x71020102 0x48c21f02 # K M A
+charBlockSize 144
