@@ -194,7 +194,7 @@ sub DecryptMessageID
 		$MID = ($MID ^ (($enc_val1 >> 16) & 0x7FFF));
 
 		# Debug Log
-		print sprintf("Decrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $MID, $oldKey, ($enc_val1 >> 16) & 0x7FFF);
+		# print sprintf("Decrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $MID, $oldKey, ($enc_val1 >> 16) & 0x7FFF);
 	}
 	
 	return $MID;
