@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# tRO (Thai) for 2013-07-09thRagexe
+# tRO (Thai) for 2013-07-12aRagexe
 # Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Receive::tRO;
 
