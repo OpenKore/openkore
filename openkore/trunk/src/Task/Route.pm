@@ -231,6 +231,8 @@ sub iterate {
 			} else {
 				debug "$self->{actor} reached the destination.\n", "route";
 			}
+
+			Plugins::callHook('route_success');
 			$self->setDone();
 
 		} elsif ($self->{old_x} == $cur_x && $self->{old_y} == $cur_y && timeOut($self->{time_step}, 3)) {
@@ -342,6 +344,8 @@ sub iterate {
 				} else {
 					debug "$self->{actor} reached the destination.\n", "route";
 				}
+
+				Plugins::callHook('route_success');
 				$self->setDone();
 			}
 		}
