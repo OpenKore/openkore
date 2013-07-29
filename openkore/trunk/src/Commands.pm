@@ -3342,8 +3342,23 @@ sub cmdParty {
 			"Can't leave party - you're not in a party.\n");
 	} elsif ($arg1 eq "leave") {
 		$messageSender->sendPartyLeave();
+	} elsif ($arg1 eq "request" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
+		error T("Error in function 'party request' (Request to Join Party)\n" .
+			"Can't request a join - you're not in a party.\n");
+	} elsif ($arg1 eq "request") {
+		unless ($arg2 =~ /\D/) {
+			if ($playersID[$arg2] eq "") {
+				error TF("Error in function 'party request' (Request to Join Party)\n" .
+					"Can't request to join party - player %s does not exist.\n", $arg2);
+			} else {
+				$messageSender->sendPartyJoinRequest($playersID[$arg2]);
+			}
+		} else {
+			message TF("Requesting player %s to join your party.\n", $arg2);
+			$messageSender->sendPartyJoinRequestByName ($arg2);
+		}
 	# party leader specific commands
-	} elsif ($arg1 eq "request" || $arg1 eq "share" || $arg1 eq "shareitem" || $arg1 eq "sharediv" || $arg1 eq "kick" || $arg1 eq "leader") {
+	} elsif ($arg1 eq "share" || $arg1 eq "shareitem" || $arg1 eq "sharediv" || $arg1 eq "kick" || $arg1 eq "leader") {
 		my $party_admin;
 		# check if we are the party leader before using leader specific commands.
 		for (my $i = 0; $i < @partyUsersID; $i++) {
@@ -3356,22 +3371,6 @@ sub cmdParty {
 			error TF("Error in function 'party %s'\n" .
 			"You must be the party leader in order to use this !\n", $arg1);
 			return;
-		} elsif ($arg1 eq "request" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-			error T("Error in function 'party request' (Request to Join Party)\n" .
-				"Can't request a join - you're not in a party.\n");
-		} elsif ($arg1 eq "request") {
-			unless ($arg2 =~ /\D/) {
-				if ($playersID[$arg2] eq "") {
-					error TF("Error in function 'party request' (Request to Join Party)\n" .
-						"Can't request to join party - player %s does not exist.\n", $arg2);
-				} else {
-					$messageSender->sendPartyJoinRequest($playersID[$arg2]);
-				}
-			} else {
-				message TF("Requesting player %s to join your party.\n", $arg2);
-				$messageSender->sendPartyJoinRequestByName ($arg2);
-			}
-
 		} elsif ($arg1 eq "share" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
 			error T("Error in function 'party share' (Set Party Share EXP)\n" .
 				"Can't set share - you're not in a party.\n");
