@@ -5,7 +5,7 @@
             <div class="span9">
 			<div class="tabbable">
 				<ul class="nav nav-tabs">
-					<li><a href="#usable" data-toggle="tab">Usable</a></li>
+					<li class="active"><a href="#usable" data-toggle="tab">Usable</a></li>
      				<li><a href="#unusable" data-toggle="tab">Unusable</a></li>
 					<li><a href="#equipment" data-toggle="tab">Equipment</a></li>
 					<li><a href="#log" data-toggle="tab">Log</a></li>
