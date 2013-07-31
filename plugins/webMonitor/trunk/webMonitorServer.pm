@@ -335,6 +335,25 @@ sub request {
 	}
 	my @statuses = (keys %{$char->{statuses}});
 	
+# Show cart
+	my (@cartItemName, @cartItemAmount, @cartItemJS, @cartItemID);
+	my $cartActive = 'disabled';
+	
+	if ($char->cartActive) {
+		$cartActive = undef;
+		for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
+			next if (!$cart{'inventory'}[$i] || !%{$cart{'inventory'}[$i]});
+			
+			my $itemName = $cart{'inventory'}[$i]{'name'};
+			$itemName .= T(" -- Not Identified") if !$cart{inventory}[$i]{identified};
+			
+			push @cartItemName, $itemName;
+			push @cartItemAmount, $cart{'inventory'}[$i]{'amount'};
+			push @cartItemJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=cart+get+' . $i . '">' . T('Get') . '</a></td>';
+			push @cartItemID, $cart{'inventory'}[$i]{'nameID'};
+		}
+	}
+
 # Show storage
 	my (@storageUnusable, @storageUsable, @storageEquipment);
 	my (@storageUnusableAmount, @storageUsableAmount, @storageEquipmentAmount);
@@ -575,6 +594,12 @@ sub request {
 		'usableID' => \@usableID,
 		'equipmentID' => \@equipmentID,
 		'uequipmentID' => \@uequipmentID,
+	# Cart item
+		'cartActive' => $cartActive,
+		'cartItemName' => \@cartItemName,
+		'cartItemAmount' => \@cartItemAmount,
+		'cartItemJS' => \@cartItemJS,
+		'cartItemID' => \@cartItemID,
 	# Guild
 		'guildLv' => $guild{lv},
 		'guildExp' => $guild{exp},

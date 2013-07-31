@@ -9,6 +9,7 @@
 					<li><a href="#unusable" data-toggle="tab">Unusable</a></li>
 					<li><a href="#equipped" data-toggle="tab">Equipped</a></li>
 					<li><a href="#unequipped" data-toggle="tab">Unequipped</a></li>
+					<li class="{cartActive}"><a href="#cart" data-toggle="tab">Cart</a></li> 
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane active" id="usable">
@@ -74,7 +75,22 @@
 						{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{uequipmentID}.gif"/></td><td>1</td><td class="left">{inventoryUnequipped}</td>{inventoryUnequippedJS}</tr>{endLoop}
 						</tbody>
 						</table>
-					</div>		
+					</div>
+					<div class="tab-pane" id="cart">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Amount</th>
+								<th>Item</th>
+								<th>Get</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{cartItemID}.gif"/></td><td>{cartItemAmount}</td><td class="left">{cartItemName}</td>{cartItemJS}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>	
 				</div>
 			</div>			
             </div>
