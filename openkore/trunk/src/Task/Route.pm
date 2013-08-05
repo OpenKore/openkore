@@ -232,7 +232,7 @@ sub iterate {
 				debug "$self->{actor} reached the destination.\n", "route";
 			}
 
-			Plugins::callHook('route_success');
+			Plugins::callHook('route', {status => 'success'});
 			$self->setDone();
 
 		} elsif ($self->{old_x} == $cur_x && $self->{old_y} == $cur_y && timeOut($self->{time_step}, 3)) {
@@ -270,6 +270,7 @@ sub iterate {
 				warning $msg, "route";
 				Misc::useTeleport(1) if $config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'};
 				$self->setError(STUCK, T("Stuck during route."));
+				Plugins::callHook('route', {status => 'stuck'});
 			} else {
 				$self->{time_step} = time;
 			}
@@ -345,7 +346,7 @@ sub iterate {
 					debug "$self->{actor} reached the destination.\n", "route";
 				}
 
-				Plugins::callHook('route_success');
+				Plugins::callHook('route', {status => 'success'});
 				$self->setDone();
 			}
 		}
