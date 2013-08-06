@@ -110,9 +110,9 @@ sub sendStoragePassword {
 	my $type = shift;
 	my $msg;
 	if ($type == 3) {
-		$msg = pack("v v", 0x0898, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+		$msg = pack("v v", 0x095B, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	} elsif ($type == 2) {
-		$msg = pack("v v", 0x0898, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+		$msg = pack("v v", 0x095B, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
@@ -170,11 +170,11 @@ sub sendPartyJoinRequestByName
 sub PrepareKeys()
 {
 		# K
-		$enc_val1 = Math::BigInt->new('0x65537612');
+		$enc_val1 = Math::BigInt->new('0x70124782');
 		# M
-		$enc_val2 = Math::BigInt->new('0x5b2a38ea');
+		$enc_val2 = Math::BigInt->new('0x66825682');
 		# A
-		$enc_val3 = Math::BigInt->new('0x2eea1eea');
+		$enc_val3 = Math::BigInt->new('0x56825682');
 }
 
 1;
