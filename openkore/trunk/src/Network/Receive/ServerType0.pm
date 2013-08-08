@@ -6947,15 +6947,16 @@ sub adopt_request {
 # 0293
 sub boss_map_info {
 	my ($self, $args) = @_;
+	my $bossName = bytesToString($args->{name});
 
 	if ($args->{flag} == 0) {
 		message T("You cannot find any trace of a Boss Monster in this area.\n"), "info";
 	} elsif ($args->{flag} == 1) {
-		message TF("MVP Boss %s is now on location: (%d, %d)\n", $args->{name}, $args->{x}, $args->{y}), "info";
+		message TF("MVP Boss %s is now on location: (%d, %d)\n", $bossName, $args->{x}, $args->{y}), "info";
 	} elsif ($args->{flag} == 2) {
-		message TF("MVP Boss %s has been detected on this map!\n", $args->{name}), "info";
+		message TF("MVP Boss %s has been detected on this map!\n", $bossName), "info";
 	} elsif ($args->{flag} == 3) {
-		message TF("MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n", $args->{name}, $args->{hours}, $args->{minutes}), "info";
+		message TF("MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n", $bossName, $args->{hours}, $args->{minutes}), "info";
 	} else {
 		debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
@@ -7297,9 +7298,9 @@ sub open_buying_store_item_list {
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $headerlen = 12;
-	
+
 	undef @selfBuyerItemList;
-	
+
 	#started a shop.
 	message TF("Buying Shop opened!\n"), "BuyShop";
 	@articles = ();
@@ -7331,7 +7332,7 @@ sub open_buying_store_item_list {
 			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
 			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
 			"list");
-			
+
 		$index++;
 	}
 }
@@ -7373,10 +7374,10 @@ sub buying_store_items_list {
 	message TF("%s\n" .
 	"#   Name                                      Type           Amount       Price\n",
 		center(' Buyer: ' . $player->nameIdx . ' ', 79-7, '-')), "list";
-	
+
 	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=9) {
 		my $item = {};
-		
+
 		($item->{price},
 		$item->{amount},
 		$item->{type},
@@ -7400,7 +7401,7 @@ sub buying_store_items_list {
 			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
 			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
 			"list");
-		
+
 		$index++;
 	}
 	message("-------------------------------------------------------------------------------\n", "list");
