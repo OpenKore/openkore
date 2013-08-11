@@ -496,6 +496,7 @@ sub new {
 		'0814' => ['buying_store_found', 'a4 Z*', [qw(ID title)]],
 		'0816' => ['buying_store_lost', 'a4', [qw(ID)]],
 		'0818' => ['buying_store_items_list', 'v a4 a4', [qw(len buyerID buyingStoreID zeny)]],
+		'081B' => ['buying_store_update', 'v2 V', [qw(itemID count zeny)]],
 		'081C' => ['buying_store_item_delete', 'v2 V', [qw(index amount zeny)]],
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
 		'0824' => ['buying_store_fail', 'v2', [qw(result itemID)]],
@@ -7335,6 +7336,7 @@ sub open_buying_store_item_list {
 
 		$index++;
 	}
+	message TF("\n-------------------------------------------------------------------------------\n"), "list";
 }
 
 sub buying_store_found {
@@ -7371,8 +7373,8 @@ sub buying_store_items_list {
 	my $player = Actor::get($buyerID);
 	my $index = 0;
 
-	message TF("%s\n" .
-	"#   Name                                      Type           Amount       Price\n",
+	message TF("%s\n"), "list";
+	message TF("#   Name                                      Type           Amount       Price\n",
 		center(' Buyer: ' . $player->nameIdx . ' ', 79-7, '-')), "list";
 
 	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=9) {
@@ -7404,7 +7406,7 @@ sub buying_store_items_list {
 
 		$index++;
 	}
-	message("-------------------------------------------------------------------------------\n", "list");
+	message TF("------------------------------------------------------------------------\n"), "list";
 
 	Plugins::callHook('packet_buying_store2', {
 		venderID => $buyerID,
@@ -7413,12 +7415,23 @@ sub buying_store_items_list {
 }
 
 sub buying_store_item_delete {
+	#my($self, $args) = @_;
+	#return unless changeToInGameState();
+	#my $item = $char->inventory->getByServerIndex($args->{index});
+	#if ($item) {
+	#	buyingstoreitemdelete($item->{invIndex}, $args->{amount});
+	#	Plugins::callHook('buying_store_item_delete', {index => $item->{invIndex}});
+	#}
+}
+
+sub buying_store_update {
 	my($self, $args) = @_;
-	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{index});
-	if ($item) {
-		buyingstoreitemdelete($item->{invIndex}, $args->{amount});
-		Plugins::callHook('buying_store_item_delete', {index => $item->{invIndex}});
+	if(@selfBuyerItemList) {
+		for(my $i = 0; $i < @selfBuyerItemList; $i++) {
+			print "$_->{amount}          $args->{count}\n";
+			$_->{amount} = $args->{count} if($_->{itemID} == $args->{itemID});
+			print "$_->{amount}          $args->{count}\n";
+		}
 	}
 }
 

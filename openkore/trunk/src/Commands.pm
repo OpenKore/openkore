@@ -72,6 +72,7 @@ sub initHandlers {
 	booking			   => \&cmdBooking,
 	buy                => \&cmdBuy,
 	buyer			   => \&cmdBuyer,
+	bs				   => \&cmdBuyShopInfoSelf,
 	c                  => \&cmdChat,
 	card               => \&cmdCard,
 	cart               => \&cmdCart,
@@ -193,6 +194,7 @@ sub initHandlers {
 	verbose            => \&cmdVerbose,
 	version            => \&cmdVersion,
 	vl                 => \&cmdVenderList,
+	vs				   => \&cmdShopInfoSelf,
 	warp               => \&cmdWarp,
 	weight             => \&cmdWeight,
 	where              => \&cmdWhere,
@@ -4119,6 +4121,28 @@ sub cmdShopInfoSelf {
 		('-'x79), formatNumber($shopEarned), formatNumber($char->{zeny}), 
 		formatNumber($priceAfterSale), formatNumber($priceAfterSale + $char->{zeny})), "list";
 }
+
+sub cmdBuyShopInfoSelf {
+	if (!@selfBuyerItemList) {
+		error T("You do not have a buying shop open.\n");
+		return;
+	}
+	# FIXME: Read the packet the server sends us to determine
+	# the shop title instead of using $shop{title}.
+	message TF("%s\n" .
+	"#   Name                                      Type           Amount       Price\n",
+		center(' Buyer Shop ', 79-7, '-')), "list";
+	my $index = 0;
+	for my $item (@selfBuyerItemList) {
+		next unless $item;
+		message(swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
+			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
+			"list");
+	}
+	message TF("-------------------------------------------------------------------------------\n"), "list";
+}
+
 
 sub cmdSit {
 	if (!$net || $net->getState() != Network::IN_GAME) {

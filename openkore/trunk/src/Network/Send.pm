@@ -696,11 +696,13 @@ sub reconstruct_buy_bulk_buyer {
 }
 
 sub sendBuyBulkbuyer {
+	#FIXME not working yet
+	#field index still wrong and remain unknown
 	my ($self, $buyerID, $r_array, $buyingStoreID) = @_;
 	my $msg = pack('v2', 0x0819, 4+8*@{$r_array});
 	$msg .= pack ('a4 a4', $buyerID, $buyingStoreID);
 	for (my $i = 0; $i < @{$r_array}; $i++) {
-		debug 'Send Buying Buyer Request: '.$r_array->[$i]{itemIndex}.'zzz'.$r_array->[$i]{itemID}.'zzz'.$r_array->[$i]{amount}."\n", "sendPacket", 2;
+		debug 'Send Buying Buyer Request: '.$r_array->[$i]{itemIndex}.' '.$r_array->[$i]{itemID}.' '.$r_array->[$i]{amount}."\n", "sendPacket", 2;
 		$msg .= pack('v3', $r_array->[$i]{itemIndex}, $r_array->[$i]{itemID}, $r_array->[$i]{amount});
 	}
 	$self->sendToServer($msg);
