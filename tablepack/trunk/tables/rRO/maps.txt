@@ -1,3 +1,46 @@
+//--- Old Glastheim ---///
+
+gl_cas02_.rsw#Гластхейм, 2-й уровень#
+gl_chyard_.rsw#Кладбище Гластхейма#
+1@gl_k.rsw#Старый Гластхейм (1й этаж)#
+2@gl_k.rsw#Старый Гластхейм (2й этаж)#
+
+// ---------- Port Malaya ------------			
+malaya.rsw#Порт Малайя#			
+ma_fild01.rsw#Таинственная деревня#			
+ma_fild02.rsw#Лес#			
+ma_scene01.rsw#Озеро Баконавы#			
+ma_in01.rsw#Порт Малайя#			
+ma_dun01.rsw#Госпиталь (1-й этаж)#			
+1@ma_h.rsw#Госпиталь (2-й этаж)#			
+1@ma_c.rsw#Логово Бувоя#			
+1@ma_b.rsw#Убежище Баконавы#			
+ma_zif01.rsw#Джипни#			
+ma_zif02.rsw#Джипни#			
+ma_zif03.rsw#Джипни#			
+ma_zif04.rsw#Джипни#			
+ma_zif05.rsw#Джипни#			
+ma_zif06.rsw#Джипни#			
+ma_zif07.rsw#Джипни#			
+ma_zif08.rsw#Джипни#			
+ma_zif09.rsw#Джипни#
+
+//WOE TE
+te_prt_gld.rsw#Царство Валькирий ТЕ#
+te_prtcas01.rsw#Геобург#
+te_prtcas02.rsw#Рихальт#
+te_prtcas03.rsw#Вигнер#
+te_prtcas04.rsw#Хайн#
+te_prtcas05.rsw#Нерий#
+teg_dun01.rsw#Подземелье гильдии#
+te_alde_gld.rsw#Луина ТЕ#
+te_aldecas1.rsw#Гларис#
+te_aldecas2.rsw#Дифорте#
+te_aldecas3.rsw#Сорин#
+te_aldecas4.rsw#Бенет#
+te_aldecas5.rsw#Дорблю#
+teg_dun02.rsw#Подземелье гильдии#
+//
 lhz_dun04.rsw#Соматологическая лаборатория, 4-й уровень #
 que_lhz.rsw#Соматологическая лаборатория, 4-й уровень #
 1@lhz.rsw#Лаборатория Борсева #
