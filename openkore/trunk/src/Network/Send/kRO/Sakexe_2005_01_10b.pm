@@ -21,7 +21,6 @@ use strict;
 use base qw(Network::Send::kRO::Sakexe_2004_12_13a);
 
 use Log qw(debug);
-use Utils qw(getHex);
 
 sub version {
 	return 15;
@@ -40,7 +39,7 @@ sub new {
 		'0094' => ['storage_item_add', 'x8 v x4 V', [qw(index amount)]],
 		'009B' => ['map_login', 'x a4 x5 a4 x7 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'009F' => undef,
-		'00A2' => undef,
+		'00A2' => ['actor_name_request', 'x5 a4', [qw(ID)]],
 		'00A7' => ['character_move', 'x8 a3', [qw(coords)]],
 		'00F3' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'00F5' => ['item_take', 'x3 a4', [qw(ID)]],
@@ -53,14 +52,15 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
-		map_login 009B
 		actor_action 0190
-		public_chat 00F3
 		actor_look_at 0085
+		actor_name_request 00A2
 		item_take 00F5
-		storage_item_remove 00F7
+		map_login 009B
+		public_chat 00F3
 		skill_use 0072
 		skill_use_location 0113
+		storage_item_remove 00F7
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
@@ -79,13 +79,6 @@ sub sendItemUse {
 	my $msg = pack('v x3 v x6 a4', 0x009F, $ID, $targetID);
 	$self->sendToServer($msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
-}
-
-sub sendGetCharacterName {
-	my ($self, $ID) = @_;
-	my $msg = pack('v x5 a4', 0x00A2, $ID);
-	$self->sendToServer($msg);
-	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendStorageClose {

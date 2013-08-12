@@ -21,7 +21,6 @@ use strict;
 use base qw(Network::Send::kRO::Sakexe_2004_08_17a);
 
 use Log qw(debug);
-use Utils qw(getHex);
 
 sub version {
 	return 10;
@@ -34,13 +33,13 @@ sub new {
 	my %packets = (
 		'0072' => undef,
 		'007E' => ['storage_item_add', 'x v x10 V', [qw(index amount)]],
-		'007E' => undef,
 		'0085' => ['actor_action', 'x7 a4 x9 C', [qw(targetID type)]],
 		'0089' => ['character_move', 'x4 a3', [qw(coords)]],
 		'008C' => undef,
 		'009B' => ['actor_info_request', 'x8 a4', [qw(ID)]],
 		'0094' => ['item_drop', 'x4 v x7 v', [qw(index amount)]],
 		'009F' => ['public_chat', 'x2 Z*', [qw(message)]],
+		'00A2' => ['actor_name_request', 'x8 a4', [qw(ID)]],
 		'00A7' => ['skill_use_location', 'x8 v x2 v x2 v x3 v', [qw(lv skillID x y)]],
 		'00F3' => ['actor_look_at', 'x2 C x4 C', [qw(head body)]],
 		'00F5' => ['map_login', 'x5 a4 x4 a4 x6 a4 V C', [qw(accountID charID sessionID tick sex)]],
@@ -53,19 +52,20 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
-		map_login 00F5
-		sync 0116
-		character_move 0089
 		actor_action 0085
-		public_chat 009F
 		actor_info_request 009B
 		actor_look_at 00F3
+		actor_name_request 00A2
+		character_move 0089
 		item_take 0113
 		item_drop 0094
-		storage_item_add 007E
-		storage_item_remove 0193
+		map_login 00F5
+		public_chat 009F
 		skill_use 0190
 		skill_use_location 00A7
+		storage_item_add 007E
+		storage_item_remove 0193
+		sync 0116
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
@@ -84,13 +84,6 @@ sub sendSkillUseLocInfo {
 	my $msg = pack('v x8 v x2 v x2 v x3 v Z80', 0x008C, $lv, $ID, $x, $y, $moreinfo);
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendGetCharacterName {
-	my ($self, $ID) = @_;
-	my $msg = pack('v x8 a4', 0x00A2, $ID);
-	$self->sendToServer($msg);
-	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendStorageClose {

@@ -20,12 +20,7 @@ package Network::Send::kRO::Sakexe_2007_02_12a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2007_02_05a);
 
-use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
-
-# TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw($char);
+use Log qw(debug);
 
 sub version {
 	return 22;
@@ -42,6 +37,7 @@ sub new {
 		'0094' => ['storage_item_add', 'x5 v x V', [qw(index amount)]],
 		'009B' => ['map_login', 'x2 a4 x a4 x4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'008C' => ['actor_info_request', 'x5 a4', [qw(ID)]],
+		'00A2' => ['actor_name_request', 'x9 a4', [qw(ID)]],
 		# 00A7 unchanged
 		'00F5' => ['item_take', 'x2 a4', [qw(ID)]],
 		'00F7' => ['storage_item_remove', 'x12 v x2 V', [qw(index amount)]],
@@ -66,13 +62,6 @@ sub sendItemUse {
 	my $msg = pack('v x2 v x4 a4', 0x009F, $ID, $targetID);
 	$self->sendToServer($msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
-}
-
-sub sendGetCharacterName {
-	my ($self, $ID) = @_;
-	my $msg = pack('v x9 a4', 0x00A2, $ID);
-	$self->sendToServer($msg);
-	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 1;

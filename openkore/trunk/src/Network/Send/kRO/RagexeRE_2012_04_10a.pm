@@ -14,9 +14,6 @@ package Network::Send::kRO::RagexeRE_2012_04_10a;
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2012_03_07f);
 
-use Log qw(debug);
-use Utils qw(getHex);
-
 sub version { 30 }
 
 sub new {
@@ -34,7 +31,7 @@ sub new {
 		'086A' => undef,
 		'086C' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'0871' => ['actor_look_at', 'v C', [qw(head body)]],
-# TODO 0x0884,6,solvecharname,2
+		'0884' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0885' => undef, # TODO 0x0885,5,hommenu,2:4
 		'0886' => ['sync', 'V', [qw(time)]],
 		'0887' => undef,
@@ -65,26 +62,21 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
-		map_login 094B
-		sync 0886
 		actor_action 0369
 		actor_info_request 0889
 		actor_look_at 0871
-		item_take 0938
+		actor_name_request 0884
 		item_drop 0891
+		item_take 0938
+		map_login 094B
+		skill_use 083C
 		storage_item_add 086C
 		storage_item_remove 08A6
-		skill_use 083C
+		sync 0886
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	$self;
-}
-
-sub sendGetCharacterName {
-	my ($self, $ID) = @_;
-	$self->sendToServer(pack('v a4', 0x0884, $ID));
-	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 1;

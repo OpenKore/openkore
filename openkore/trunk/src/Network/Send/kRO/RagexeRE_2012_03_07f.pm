@@ -31,13 +31,14 @@ sub new {
 		'035F' => undef,
 # TODO 0x0360,6,reqclickbuyingstore,2
 		'0362' => undef,
-# TODO 0x0369,26,friendslistadd,2
+		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0369' => undef,
 		'0436' => undef,
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'07E4' => undef,
 # TODO 0x0815,-1,reqopenbuyingstore,2:4:8:9:89
 # TODO 0x0817,2,reqclosebuyingstore,0
+		'0838' => undef,
 # TODO 0x0861,36,storagepassword,0
 # TODO 0x0863,5,hommenu,4
 		'0865' => ['item_take', 'a4', [qw(ID)]],
@@ -65,6 +66,7 @@ sub new {
 		actor_action 0885
 		actor_info_request 096A
 		actor_look_at 0890
+		actor_name_request 0368
 		char_create 0970
 		item_drop 02C4
 		item_take 0865
@@ -91,12 +93,6 @@ sub sendSkillUseLocInfo {
 	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
 	$self->sendToServer(pack('v5 Z80', 0x0366, $lv, $ID, $x, $y, $moreinfo));
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendGetCharacterName {
-	my ($self, $ID) = @_;
-	$self->sendToServer(pack('v a4', 0x0368, $ID));
-	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 1;

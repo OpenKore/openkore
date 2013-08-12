@@ -21,7 +21,6 @@ use strict;
 use base qw(Network::Send::kRO::Sakexe_2004_09_06a);
 
 use Log qw(debug);
-use Utils qw(getHex);
 
 sub version {
 	return 11;
@@ -37,6 +36,7 @@ sub new {
 		'0089' => ['character_move', 'x9 a3', [qw(coords)]],
 		'0094' => ['item_drop', 'x10 v x3 v', [qw(index amount)]],
 		'009B' => ['actor_info_request', 'x4 a4', [qw(ID)]],
+		'00A2' => ['actor_name_request', 'x4 a4', [qw(ID)]],
 		'00A7' => ['skill_use_location', 'x4 v x12 v x v x2 v', [qw(lv skillID x y)]],
 		'00F3' => ['actor_look_at', 'x6 C x8 C', [qw(head body)]],
 		'00F5' => ['map_login', 'x8 a4 x3 a4 x2 a4 V C', [qw(accountID charID sessionID tick sex)]],
@@ -62,13 +62,6 @@ sub sendSkillUseLocInfo {
 	my $msg = pack('v x14 v x2 v x v x2 v Z80', 0x008C, $lv, $ID, $x, $y, $moreinfo);
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendGetCharacterName {
-	my ($self, $ID) = @_;
-	my $msg = pack('v x4 a4', 0x00A2, $ID);
-	$self->sendToServer($msg);
-	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 1;

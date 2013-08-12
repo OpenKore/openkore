@@ -21,7 +21,6 @@ use strict;
 use base qw(Network::Send::kRO::Sakexe_2004_11_15a);
 
 use Log qw(debug);
-use Utils qw(getHex);
 
 sub version {
 	return 14;
@@ -44,6 +43,7 @@ sub new {
 		'00A7' => ['character_move', 'x2 a3', [qw(coords)]],
 		'00F3' => ['actor_look_at', 'x C x3 C', [qw(head body)]],
 		'00F5' => ['map_login', 'x a4 x3 a4 x6 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'00F7' => ['actor_name_request', 'x8 a4', [qw(ID)]],
 		'0113' => undef,
 		'0116' => ['item_drop', 'x2 v x4 v', [qw(index amount)]],
 		'0193' => ['storage_item_remove', 'x2 v x11 V', [qw(index amount)]],
@@ -51,16 +51,17 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
-		sync 0089
-		character_move 00A7
 		actor_action 009F
-		public_chat 0085
 		actor_info_request 008C
+		actor_name_request 00F7
+		character_move 00A7
 		item_take 00A2
 		item_drop 0116
-		storage_item_add 0094
+		public_chat 0085
 		skill_use 0072
 		skill_use_location 007E
+		storage_item_add 0094
+		sync 0089
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
@@ -70,13 +71,6 @@ sub new {
 sub sendStorageClose {
 	$_[0]->sendToServer(pack('v', 0x009B));
 	debug "Sent Storage Done\n", "sendPacket", 2;
-}
-
-sub sendGetCharacterName {
-	my ($self, $ID) = @_;
-	my $msg = pack('v x8 a4', 0x00F7, $ID);
-	$self->sendToServer($msg);
-	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendSkillUseLocInfo {
