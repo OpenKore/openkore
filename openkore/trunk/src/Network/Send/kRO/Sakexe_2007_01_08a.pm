@@ -21,7 +21,6 @@ use strict;
 use base qw(Network::Send::kRO::Sakexe_2007_01_02a);
 
 use Log qw(debug);
-use Utils qw(getHex);
 
 sub version {
 	return 21;
@@ -38,6 +37,7 @@ sub new {
 		'008C' => ['actor_info_request', 'x11 a4', [qw(ID)]],
 		'0094' => ['storage_item_add', 'x2 v x7 V', [qw(index amount)]],
 		'009B' => ['map_login', 'x5 a4 x10 a4 x a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'00A2' => ['actor_name_request', 'x4 a4', [qw(ID)]],
 		'00A7' => ['character_move', 'x3 a3', [qw(coords)]],
 		'00F5' => ['item_take', 'x5 a4', [qw(ID)]],
 		'00F7' => ['storage_item_remove', 'x v x6 V', [qw(index amount)]],
@@ -62,13 +62,6 @@ sub sendItemUse {
 	my $msg = pack('v x5 v x8 a4', 0x009F, $ID, $targetID);
 	$self->sendToServer($msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
-}
-
-sub sendGetCharacterName {
-	my ($self, $ID) = @_;
-	my $msg = pack('v x4 a4', 0x00A2, $ID);
-	$self->sendToServer($msg);
-	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 1;

@@ -21,7 +21,6 @@ use strict;
 use base qw(Network::Send::kRO::Sakexe_2004_07_13a);
 
 use Log qw(debug);
-use Utils qw(getHex);
 
 sub version {
 	return 8;
@@ -41,6 +40,7 @@ sub new {
 		'009B' => ['character_move', 'x a3', [qw(coords)]],
 		'009F' => ['actor_look_at', 'x3 C x6 C', [qw(head body)]],
 		'00A2' => undef,
+		'00A7' => ['actor_name_request', 'x6 a4', [qw(ID)]],
 		'00F3' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'00F5' => undef,
 		'00F7' => ['sync', 'x4 V', [qw(time)]],
@@ -54,19 +54,20 @@ sub new {
 	# since there is only one available switch alternative per kRO ST,
 	# this setup for $self->{packet_lut} is not really required
 	my %handlers = qw(
-		map_login 007E
-		sync 00F7
-		character_move 009B
 		actor_action 0193
-		public_chat 00F3
 		actor_info_request 0089
 		actor_look_at 009F
+		actor_name_request 00A7
+		character_move 009B
 		item_take 0094
 		item_drop 0072
-		storage_item_add 0113
-		storage_item_remove 0190
+		map_login 007E
+		public_chat 00F3
 		skill_use 0085
 		skill_use_location 008C
+		storage_item_add 0113
+		storage_item_remove 0190
+		sync 00F7
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
@@ -80,13 +81,6 @@ sub sendSkillUseLocInfo {
 
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendGetCharacterName {
-	my ($self, $ID) = @_;
-	my $msg = pack('v x6 a4', 0x00a7, $ID);
-	$self->sendToServer($msg);
-	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendItemUse {
