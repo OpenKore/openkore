@@ -7373,8 +7373,8 @@ sub buying_store_items_list {
 	my $player = Actor::get($buyerID);
 	my $index = 0;
 
-	message TF("%s\n"), "list";
-	message TF("#   Name                                      Type           Amount       Price\n",
+	message TF("%s\n".
+		"#   Name                                      Type           Amount       Price\n",
 		center(' Buyer: ' . $player->nameIdx . ' ', 79-7, '-')), "list";
 
 	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=9) {
