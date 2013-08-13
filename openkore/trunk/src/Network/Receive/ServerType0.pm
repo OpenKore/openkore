@@ -1648,8 +1648,9 @@ sub chat_info {
 	$chat->{num_users} = $args->{num_users};
 
 	Plugins::callHook('packet_chatinfo', {
-	  title => $title,
+	  chatID => $args->{ID},
 	  ownerID => $args->{ownerID},
+	  title => $title,
 	  limit => $args->{limit},
 	  public => $args->{public},
 	  num_users => $args->{num_users}
