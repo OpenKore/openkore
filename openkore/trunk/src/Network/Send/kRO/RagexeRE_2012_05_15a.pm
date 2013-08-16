@@ -13,7 +13,6 @@ package Network::Send::kRO::RagexeRE_2012_05_15a;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2012_04_10a);
-use I18N qw(stringToBytes);
 use Log qw(debug);
 
 sub new {
@@ -22,7 +21,7 @@ sub new {
 	
 	my %packets = (
 		'0364' => ['item_drop', 'v2', [qw(index amount)]],#6
-		'0369' => undef,
+		'0369' => ['friend_request', 'a*', [qw(username)]],#26
 		'0437' => undef,
 		'0438' => undef,
 		'085A' => ['storage_item_add', 'v V', [qw(index amount)]],#8
@@ -32,7 +31,7 @@ sub new {
 		'08A5' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		'08A6' => undef,
 		'087C' => ['character_move','a3', [qw(coordString)]],#5
-		'087D' => ['sync', 'x5 V', [qw(time)]],#6
+		'087D' => ['sync', 'V', [qw(time)]],#6
 		'0886' => undef,
 		'0889' => undef,
 		'0891' => undef,
@@ -55,6 +54,7 @@ sub new {
 		actor_look_at 08AC
 		actor_name_request 0957
 		character_move 087C
+		friend_request 0369
 		homunculus_command 094B
 		item_drop 0364
 		item_take 0964
@@ -68,17 +68,6 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	$self;
-}
-
-#0x0369,26,friendslistadd,2
-sub sendFriendRequest {
-	my ($self, $name) = @_;
-	my $binName = stringToBytes($name);
-	$binName = substr($binName, 0, 24) if (length($binName) > 24);
-	$binName = $binName . chr(0) x (24 - length($binName));
-	my $msg = pack("C*", 0x02, 0x02) . $binName;
-	$self->sendToServer($msg);
-	debug "Sent Request to be a friend: $name\n", "sendPacket";
 }
 
 #0x094B,5,hommenu,2:4
@@ -123,7 +112,7 @@ sub sendStoragePassword {
 =cut
 //2012-05-15aRagexeRE
 0x01FD,15,repairitem,2
-0x0369,26,friendslistadd,2
++0x0369,26,friendslistadd,2
 +0x094B,5,hommenu,2:4
 0x089A,36,storagepassword,0
 0x0288,-1,cashshopbuy,4:8

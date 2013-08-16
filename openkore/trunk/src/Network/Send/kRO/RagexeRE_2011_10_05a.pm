@@ -24,6 +24,7 @@ sub new {
 	
 	my %packets = (
 		'0202' => undef,
+		'023B' => undef,
 		'035F' => undef,
 		'0362' => undef,
 		'0364' => ['character_move', 'a3', [qw(coords)]],
@@ -36,6 +37,7 @@ sub new {
 		'07E4' => undef,
 		'0815' => ['item_take', 'a4', [qw(ID)]],
 		'0817' => ['sync', 'V', [qw(time)]],
+		'0835' => ['friend_request', 'a*', [qw(username)]],#26
 		'0838' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0885' => ['item_drop', 'v2', [qw(index amount)]],
 		'088A' => ['actor_info_request', 'a4', [qw(ID)]],
@@ -50,6 +52,7 @@ sub new {
 		actor_look_at 0366
 		actor_name_request 0838
 		character_move 0364
+		friend_request 0835
 		item_drop 0885
 		item_take 0815
 		skill_use_location 0369

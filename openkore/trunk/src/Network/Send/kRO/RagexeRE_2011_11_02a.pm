@@ -27,7 +27,9 @@ sub new {
 		# TODO 0x0281,36,storagepassword,0
 		'02C4' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0369' => undef,
+		'0436' => ['friend_request', 'a*', [qw(username)]],#26
 		# TODO 0x0811,-1,itemlistwindowselected,2:4:8
+		'0835' => undef,
 		# TODO 0x0835,-1,reqopenbuyingstore,2:4:8:9:89
 		'083C' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		# TODO 0x088b,2,searchstoreinfonextpage,0
@@ -45,8 +47,9 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
-		map_login 083C
 		actor_action 08AA
+		friend_request 0436
+		map_login 083C
 		skill_use 02C4
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;

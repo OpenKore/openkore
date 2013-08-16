@@ -73,6 +73,7 @@ sub new {
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'01DB' => ['secure_login_key_request'], # len 2
+		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
@@ -1411,14 +1412,6 @@ sub sendRepairItem {
 # TODO
 
 # 0x0201,-1
-
-# 0x0202,26,friendslistadd,2
-sub sendFriendRequest {
-	my ($self, $name) = @_;
-	my $msg = pack('v Z24', 0x0202, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Request to be a friend: $name\n", "sendPacket";
-}
 
 # 0x0203,10,friendslistremove,2:6
 sub sendFriendRemove {

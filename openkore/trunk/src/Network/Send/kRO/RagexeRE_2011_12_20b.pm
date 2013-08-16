@@ -31,7 +31,7 @@ sub new {
 		'0437' => ['character_move','a4', [qw(coordString)]],#5
 		'07E4' => ['item_take', 'a4', [qw(ID)]],#6
 		'0835' => undef,
-		'0892' => undef,
+		'0892' => ['friend_request', 'a*', [qw(username)]],#26
 		'0893' => undef,
 		'0898' => undef,
 		'0899' => undef,
@@ -44,6 +44,7 @@ sub new {
 		actor_action 0369
 		actor_info_request 08AD
 		character_move 0437
+		friend_request 0892
 		item_take 07E4
 		map_login 08A4
 		sync 035F

@@ -23,6 +23,7 @@ sub new {
 	my %packets = (
 		'0202' => ['actor_look_at', 'v C', [qw(head body)]],
 		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'023B' => ['friend_request', 'a*', [qw(username)]],#26
 		'035F' => ['sync', 'V', [qw(time)]],
 		'0360' => undef,
 		'0361' => undef,
@@ -44,6 +45,7 @@ sub new {
 		actor_info_request 08AD
 		actor_look_at 0202
 		character_move 0437
+		friend_request 023B
 		item_drop 0362
 		item_take 07E4
 		map_login 022D
