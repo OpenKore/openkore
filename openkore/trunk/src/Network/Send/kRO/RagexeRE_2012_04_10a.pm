@@ -38,7 +38,7 @@ sub new {
 		'0889' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0890' => undef,
 		'0891' => ['item_drop', 'v2', [qw(index amount)]],
-# TODO 0x089C,26,friendslistadd,2
+		'089C' => ['friend_request', 'a*', [qw(username)]],#26
 		'08A6' => ['storage_item_remove', 'v V', [qw(index amount)]],
 # TODO 0x08D7,28,battlegroundreg,2:4
 # TODO 0x08E5,41,bookingregreq,2:4
@@ -66,6 +66,7 @@ sub new {
 		actor_info_request 0889
 		actor_look_at 0871
 		actor_name_request 0884
+		friend_request 0369
 		item_drop 0891
 		item_take 0938
 		map_login 094B

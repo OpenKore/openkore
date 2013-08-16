@@ -896,6 +896,19 @@ sub sendFriendListReply {
 	debug "Sent Reject friend request\n", "sendPacket";
 }
 
+sub sendFriendRequest {
+	my ($self, $name) = @_;
+	my $binName = stringToBytes($name);
+	$binName = substr($binName, 0, 24) if (length($binName) > 24);
+	$binName = $binName . chr(0) x (24 - length($binName));
+	$self->sendToServer($self->reconstruct({
+		switch => 'friend_request',
+		username => $binName,
+
+	}));
+	debug "Sent Request to be a friend: $name\n", "sendPacket";
+}
+
 sub sendSkillSelect {
 	my ($self, $skillID, $why) = @_;
 	$self->sendToServer($self->reconstruct({

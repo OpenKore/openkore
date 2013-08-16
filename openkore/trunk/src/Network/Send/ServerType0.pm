@@ -77,6 +77,7 @@ sub new {
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
 		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
+		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 		'021D' => ['less_effect'], # TODO
@@ -430,18 +431,6 @@ sub sendEquip {
 
 # 0x0208,11,friendslistreply,2:6:10
 # Reject:0/Accept:1
-
-sub sendFriendRequest {
-	my ($self, $name) = @_;
-
-	my $binName = stringToBytes($name);
-	$binName = substr($binName, 0, 24) if (length($binName) > 24);
-	$binName = $binName . chr(0) x (24 - length($binName));
-	my $msg = pack("C*", 0x02, 0x02) . $binName;
-
-	$self->sendToServer($msg);
-	debug "Sent Request to be a friend: $name\n", "sendPacket";
-}
 
 sub sendFriendRemove {
 	my ($self, $accountID, $charID) = @_;
