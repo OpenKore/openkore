@@ -15,6 +15,7 @@ use strict;
 use base qw(Network::Send::kRO::RagexeRE_2011_10_05a);
 
 use Log qw(debug);
+use I18N qw(stringToBytes);
 
 sub version { 28 }
 
@@ -33,9 +34,8 @@ sub new {
 		# TODO 0x0835,-1,reqopenbuyingstore,2:4:8:9:89
 		'083C' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		# TODO 0x088b,2,searchstoreinfonextpage,0
-		# TODO 0x088d,26,partyinvite2,2
 		# 0x890,8 ?
-		# TODO 0x0898,5,hommenu,4
+		'0898' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		# TODO 0x089b,2,reqclosebuyingstore,0
 		# TODO 0x089e,-1,reqtradebuyingstore,2:4:8:12
 		# TODO 0x08a1,6,reqclickbuyingstore,2
@@ -43,6 +43,8 @@ sub new {
 		# TODO 0x08a5,18,bookingregreq,2:4:6
 		'08AA' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		# TODO 0x08ab,-1,searchstoreinfo,2:4:5:9:13:14:15
+		'02C4' => undef,
+		'088d' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -51,6 +53,8 @@ sub new {
 		friend_request 0436
 		map_login 083C
 		skill_use 02C4
+		homunculus_command 0898
+		party_join_request_by_name 088d
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	

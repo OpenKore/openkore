@@ -29,18 +29,11 @@ sub new {
 	
 	my %packets = (
 		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]],
+		'022D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	$self;
-}
-
-# 0x022d,5,hommenu,4
-sub sendHomunculusCommand {
-	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0:get stats, 1:feed or 2:fire
-	my $msg = pack ('v2 C', 0x022D, $type, $command);
-	$self->sendToServer ($msg);
-	debug "Sent Homunculus Command $command", "sendPacket", 2;
 }
 
 # 0x0232,9,hommoveto,6

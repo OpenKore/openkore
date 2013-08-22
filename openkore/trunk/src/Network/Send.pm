@@ -909,6 +909,28 @@ sub sendFriendRequest {
 	debug "Sent Request to be a friend: $name\n", "sendPacket";
 }
 
+sub sendHomunculusCommand {
+	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0:get stats, 1:feed or 2:fire
+	$self->sendToServer($self->reconstruct({
+		switch => 'homunculus_command',
+		commandType => $type,
+		commandID => $command,
+	}));
+	debug "Sent Homunculus Command $command", "sendPacket", 2;
+}
+
+sub sendPartyJoinRequestByName 
+{
+	my ($self, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_join_request_by_name',
+		partyName => stringToBytes ($name),
+	}));	
+	
+	debug "Sent Request Join Party (by name): $name\n", "sendPacket", 2;
+}
+
 sub sendSkillSelect {
 	my ($self, $skillID, $why) = @_;
 	$self->sendToServer($self->reconstruct({
