@@ -40,7 +40,8 @@ sub new {
 # TODO 0x0817,2,reqclosebuyingstore,0
 		'0838' => undef,
 # TODO 0x0861,36,storagepassword,0
-# TODO 0x0863,5,hommenu,4
+		'0898' => undef,
+		'0863' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		'0865' => ['item_take', 'a4', [qw(ID)]],
 		'086A' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 # TODO 0x0870,-1,itemlistwindowselected,2:4:8
@@ -54,11 +55,12 @@ sub new {
 		'08A4' => undef,
 		'08AD' => undef,
 # TODO 0x0926,18,bookingregreq,2:4:6
-# TODO 0x0929,26,partyinvite2,2
 		'093B' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'0963' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0970' => ['char_create'],#31
+		'088d' => undef,
+		'0929' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -74,9 +76,11 @@ sub new {
 		map_login 086A
 		skill_use 0889
 		skill_use_location 0438
+		homunculus_command 0863
 		storage_item_add 093B
 		storage_item_remove 0963
 		sync 0887
+		party_join_request_by_name 0929
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	

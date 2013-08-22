@@ -32,7 +32,8 @@ sub new {
 		'086C' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'0871' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0884' => ['actor_name_request', 'a4', [qw(ID)]],
-		'0885' => undef, # TODO 0x0885,5,hommenu,2:4
+		'0863' => undef,
+		'0885' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		'0886' => ['sync', 'V', [qw(time)]],
 		'0887' => undef,
 		'0889' => ['actor_info_request', 'a4', [qw(ID)]],
@@ -50,7 +51,6 @@ sub new {
 # TODO 0x08F5,-1,bookingsummonmember,2:4
 # TODO 0x08FB,6,bookingcanceljoinparty,2
 # TODO 0x0907,5,moveitem,2:4
-# TODO 0x091C,26,partyinvite2,2
 		'0938' => ['item_take', 'a4', [qw(ID)]],
 		'093B' => undef,
 # TODO 0x0945,-1,itemlistwindowselected,2:4:8
@@ -58,6 +58,8 @@ sub new {
 # TODO 0x0961,36,storagepassword,0
 		'0963' => undef,
 		'096A' => undef,
+		'0929' => undef,
+		'091C' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -66,6 +68,7 @@ sub new {
 		actor_info_request 0889
 		actor_look_at 0871
 		actor_name_request 0884
+		homunculus_command 0885
 		friend_request 0369
 		item_drop 0891
 		item_take 0938
@@ -74,6 +77,7 @@ sub new {
 		storage_item_add 086C
 		storage_item_remove 08A6
 		sync 0886
+		party_join_request_by_name 091C
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	

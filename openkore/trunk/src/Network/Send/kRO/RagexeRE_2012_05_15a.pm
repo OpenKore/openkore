@@ -42,9 +42,12 @@ sub new {
 		'0923' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		'0938' => undef,
 		'0947' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
+		'0885' => undef,
 		'094B' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		'0957' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0964' => ['item_take', 'a4', [qw(ID)]],#6
+		'091C' => undef,
+		'091F' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -64,21 +67,11 @@ sub new {
 		storage_item_add 085A
 		storage_item_remove 0869
 		sync 087D
+		party_join_request_by_name 091F
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	$self;
-}
-
-#0x094B,5,hommenu,2:4
-sub sendHomunculusCommand {
-	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0:get stats, 1:feed or 2:fire
-	$self->sendToServer($self->reconstruct({
-		switch => 'homunculus_command',
-		commandType => $type,
-		commandID => $command,
-	}));
-	debug "Sent Homunculus Command $command", "sendPacket", 2;
 }
 
 #0x08A2,90,useskilltoposinfo,2:4:6:8:10
