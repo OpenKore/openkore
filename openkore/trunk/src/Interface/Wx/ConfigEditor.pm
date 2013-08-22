@@ -214,7 +214,7 @@ sub downloadManual {
 				my $progress = 0;
 				if ($size > 0) {
 					my $len = 0;
-					$size->getData($len);
+					$downloader->getData($len);
 					$progress = $len / $size * 100;
 				}
 				$gauge->SetValue($progress);
