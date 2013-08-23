@@ -84,6 +84,7 @@ sub new {
 		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
+		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'035F' => ['character_move', 'a3', [qw(coords)]],
 		'0360' => ['sync', 'V', [qw(time)]],
 		'0361' => ['actor_look_at', 'v C', [qw(head body)]],
@@ -742,14 +743,6 @@ sub _binName {
 	$name = substr ($name, 0, 24) if 24 < length $name;
 	$name .= "\x00" x (24 - length $name);
 	return $name;
-}
-
-sub sendPartyJoinRequestByName {
-	my $self = shift;
-	my $name = shift;
-	my $msg = pack ('C*', 0xc4, 0x02) . _binName ($name);
-	$self->sendToServer($msg);
-	debug "Sent Request Join Party (by name): $name\n", "sendPacket", 2;
 }
 
 sub sendPartyJoinRequestByNameReply {

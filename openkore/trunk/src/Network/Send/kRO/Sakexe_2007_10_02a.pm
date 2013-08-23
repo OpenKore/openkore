@@ -20,7 +20,7 @@ package Network::Send::kRO::Sakexe_2007_10_02a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2007_05_07a);
 
-use Log qw(message warning error debug);
+use Log qw(message debug);
 use I18N qw(stringToBytes);
 
 # TODO: maybe we should try to not use globals in here at all but instead pass them on?
@@ -28,7 +28,14 @@ use Globals qw(%config);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
+	$self;
 }
 
 # 0x0288,10,cashshopbuy,2:4:6
@@ -53,14 +60,6 @@ sub sendHotkey {
 	my $msg = pack('v2 C V v', 0x02BA, $index, $type, $ID, $lv);
 	$self->sendToServer($msg);
 	debug "Sent Hotkey.\n", "sendPacket", 2;
-}
-
-# 0x02c4,26,partyinvite2,2
-sub sendPartyJoinRequestByName {
-	my ($self, $name) = @_;
-	my $msg = pack('v Z24', 0x02C4, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Party Invite to: $name\n", "sendPacket", 2;
 }
 
 # 0x02c7,7,replypartyinvite2,2:6

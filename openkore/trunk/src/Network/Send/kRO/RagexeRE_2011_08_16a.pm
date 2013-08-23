@@ -9,37 +9,37 @@
 #  also distribute the source code.
 #  See http:#//www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
-
 package Network::Send::kRO::RagexeRE_2011_08_16a;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2010_11_24a);
-use Log qw(debug);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
-		'0202' => ['actor_look_at', 'v C', [qw(head body)]],
-		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0202' => ['actor_look_at', 'v C', [qw(head body)]],#5
+		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
 		'023B' => ['friend_request', 'a*', [qw(username)]],#26
-		'035F' => ['sync', 'V', [qw(time)]],
+		'02C4' => undef,
+		'035F' => ['sync', 'V', [qw(time)]],#6
 		'0360' => undef,
 		'0361' => undef,
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],
+		'0362' => ['item_drop', 'v2', [qw(index amount)]],#6
 		'0366' => undef,
 		'0368' => undef,
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		'0436' => undef,
-		'0437' => ['character_move', 'a3', [qw(coords)]],
-		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'07E4' => ['item_take', 'a4', [qw(ID)]], 
+		'0437' => ['character_move', 'a3', [qw(coords)]],#5
+		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
+		'07E4' => ['item_take', 'a4', [qw(ID)]],#6
+		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
-		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],
+		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],#6
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0369
 		actor_info_request 08AD
@@ -49,12 +49,13 @@ sub new {
 		item_drop 0362
 		item_take 07E4
 		map_login 022D
+		party_join_request_by_name 0802
 		skill_use 083C
 		skill_use_location 0438
 		sync 035F
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	$self;
 } 
 
@@ -63,11 +64,11 @@ sub new {
 =cut
 //2011-08-16aRagexeRE
 0x01FD,15,repairitem,2
-0x023B,26,friendslistadd,2
++0x023B,26,friendslistadd,2
 0x0361,5,hommenu,2:4
 0x088F,36,storagepassword,0
 0x0288,-1,cashshopbuy,4:8
-0x0802,26,partyinvite2,2
++0x0802,26,partyinvite2,2
 +0x022D,19,wanttoconnection,2:6:10:14:18
 +0x0369,7,actionrequest,2:6
 +0x083C,10,useskilltoid,2:4:6
@@ -90,15 +91,15 @@ sub new {
 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0835,2,searchstoreinfonextpage,0
 0x0838,12,searchstoreinfolistitemclick,2:6:10
-0x0437,5,walktoxy,2
-0x035F,6,ticksend,2
-0x0202,5,changedir,2:4
-0x07E4,6,takeitem,2
-0x0362,6,dropitem,2:4
++0x0437,5,walktoxy,2
++0x035F,6,ticksend,2
++0x0202,5,changedir,2:4
++0x07E4,6,takeitem,2
++0x0362,6,dropitem,2:4
 0x07EC,8,movetokafra,2:4
 0x0364,8,movefromkafra,2:4
-0x0438,10,useskilltopos,2:4:6:8
++0x0438,10,useskilltopos,2:4:6:8
 0x0366,90,useskilltoposinfo,2:4:6:8:10
-0x08AD,6,getcharnamerequest,2
++0x08AD,6,getcharnamerequest,2
 0x0368,6,solvecharname,2 
 =pod

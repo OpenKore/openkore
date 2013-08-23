@@ -30,9 +30,11 @@ sub new {
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0437' => ['character_move','a4', [qw(coordString)]],#5
 		'07E4' => ['item_take', 'a4', [qw(ID)]],#6
+		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'0835' => undef,
 		'0892' => ['friend_request', 'a*', [qw(username)]],#26
 		'0893' => undef,
+		'0895' => undef,
 		'0898' => undef,
 		'0899' => undef,
 		'08A4' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
@@ -47,6 +49,7 @@ sub new {
 		friend_request 0892
 		item_take 07E4
 		map_login 08A4
+		party_join_request_by_name 0802
 		sync 035F
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
