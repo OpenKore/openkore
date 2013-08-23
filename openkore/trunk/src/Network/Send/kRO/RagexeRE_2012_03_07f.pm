@@ -15,7 +15,6 @@ use strict;
 use base qw(Network::Send::kRO::RagexeRE_2011_12_20b);
 
 use Log qw(debug);
-use Utils qw(getHex);
 use I18N qw(stringToBytes);
 
 sub version { 29 }
@@ -27,43 +26,43 @@ sub new {
 
 	my %packets = (
 		'0067' => undef,
-		'02C4' => ['item_drop', 'v2', [qw(index amount)]],
+		'02C4' => ['item_drop', 'v2', [qw(index amount)]],#6
 		'035F' => undef,
 # TODO 0x0360,6,reqclickbuyingstore,2
 		'0362' => undef,
-		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
+		'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'0369' => ['friend_request', 'a*', [qw(username)]],#26
 		'0436' => undef,
-		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
 		'07E4' => undef,
-# TODO 0x0815,-1,reqopenbuyingstore,2:4:8:9:89
+		'0802' => undef,
+		# TODO 0x0815,-1,reqopenbuyingstore,2:4:8:9:89
 # TODO 0x0817,2,reqclosebuyingstore,0
 		'0838' => undef,
 # TODO 0x0861,36,storagepassword,0
 		'0898' => undef,
 		'0863' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
-		'0865' => ['item_take', 'a4', [qw(ID)]],
-		'086A' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0865' => ['item_take', 'a4', [qw(ID)]],#6
+		'086A' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
 # TODO 0x0870,-1,itemlistwindowselected,2:4:8
 # TODO 0x0884,-1,searchstoreinfo,2:4:5:9:13:14:15
-		'0885' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0887' => ['sync', 'V', [qw(time)]],
+		'0885' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
+		'0887' => ['sync', 'V', [qw(time)]],#6
 		'0889' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
-		'0890' => ['actor_look_at', 'v C', [qw(head body)]],
+		'0890' => ['actor_look_at', 'v C', [qw(head body)]],#5
 		'0896' => undef,
 		'08A1' => undef,
 		'08A4' => undef,
 		'08AD' => undef,
 # TODO 0x0926,18,bookingregreq,2:4:6
-		'093B' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0963' => ['storage_item_remove', 'v V', [qw(index amount)]],
-		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
+		'093B' => ['storage_item_add', 'v V', [qw(index amount)]],#8
+		'0963' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'096A' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		'0970' => ['char_create'],#31
-		'088d' => undef,
-		'0929' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'0929' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0885
 		actor_info_request 096A
@@ -71,19 +70,19 @@ sub new {
 		actor_name_request 0368
 		char_create 0970
 		friend_request 0369
+		homunculus_command 0863
 		item_drop 02C4
 		item_take 0865
 		map_login 086A
+		party_join_request_by_name 0929
 		skill_use 0889
 		skill_use_location 0438
-		homunculus_command 0863
 		storage_item_add 093B
 		storage_item_remove 0963
 		sync 0887
-		party_join_request_by_name 0929
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	$self;
 }
 
@@ -105,7 +104,6 @@ sub sendSkillUseLocInfo {
 =cut
 // what is?
 		'0281' => undef,
-		'02C4' => undef,
 		'0363' => undef,
 		'0436' => undef,
 		'0811' => undef, # TODO 0x0811,-1,reqtradebuyingstore,2:4:8:12

@@ -35,10 +35,12 @@ sub new {
 		'0437' => undef,
 		'0438' => undef,
 		'07E4' => undef,
+		'0802' => undef,
 		'0815' => ['item_take', 'a4', [qw(ID)]],
 		'0817' => ['sync', 'V', [qw(time)]],
 		'0835' => ['friend_request', 'a*', [qw(username)]],#26
 		'0838' => ['actor_name_request', 'a4', [qw(ID)]],
+		'083C' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'0885' => ['item_drop', 'v2', [qw(index amount)]],
 		'088A' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0893' => ['storage_item_add', 'v V', [qw(index amount)]],
@@ -55,6 +57,7 @@ sub new {
 		friend_request 0835
 		item_drop 0885
 		item_take 0815
+		party_join_request_by_name 083C
 		skill_use_location 0369
 		storage_item_add 0893
 		storage_item_remove 0897

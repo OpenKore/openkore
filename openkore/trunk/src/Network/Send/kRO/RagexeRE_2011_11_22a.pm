@@ -17,7 +17,7 @@ use base qw(Network::Send::kRO::RagexeRE_2011_11_02a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'022D' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		'02C4' => undef,
@@ -32,8 +32,10 @@ sub new {
 		'083C' => undef,
 		'0885' => undef,
 		'088A' => undef,
+		'088D' => undef,
 		'0892' => ['character_move', 'a3', [qw(coords)]],#5
 		'0893' => ['item_take', 'a4', [qw(ID)]],#6
+		'0895' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'0896' => ['actor_look_at', 'v C', [qw(head body)]],#5
 		'0897' => undef,
 		'0898' => ['actor_info_request', 'a4', [qw(ID)]],#6
@@ -44,7 +46,7 @@ sub new {
 		'08AD' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 022D
 		actor_info_request 0898
@@ -53,6 +55,7 @@ sub new {
 		item_drop 0436
 		item_take 0893
 		map_login 0835
+		party_join_request_by_name 0895
 		skill_use 08A1
 		skill_use_location 08AD
 		storage_item_add 08A4
@@ -60,7 +63,7 @@ sub new {
 		sync 0899
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	$self;
 }
 
@@ -73,7 +76,7 @@ TODO: 0x0891,26,friendslistadd,2
 TODO: 0x089E,5,hommenu,2:4
 TODO: 0x0364,36,storagepassword,0
 TODO: 0x0288,-1,cashshopbuy,4:8
-TODO: 0x0895,26,partyinvite2,2
+0x0895,26,partyinvite2,2
 0x0835,19,wanttoconnection,2:6:10:14:18
 0x022D,7,actionrequest,2:6
 0x08A1,10,useskilltoid,2:4:6
