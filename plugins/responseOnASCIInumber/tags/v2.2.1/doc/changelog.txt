@@ -1,8 +1,3 @@
-v.3 by 4epT (24/08/2013)
-- optimized plugin
-- remove the extra variables
-- add new number
-
 v.2.2.1 by Windows98SE (08/06/2008)
 - change name&prefix from responseOnASCIInumber to ASCIInumberKiller (b'cus my anti-bot set is name "ACkiller, ActorKiller" ^^")
 - update note (you must read my note in plugin befor use "ASCIInumberKiller")
