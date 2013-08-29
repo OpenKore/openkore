@@ -55,7 +55,10 @@ sub new {
 
 sub sync_received_characters {
 	my ($self, $args) = @_;
-	$charSvrSet{sync_Count} = $args->{sync_Count} if (exists $args->{sync_Count});
+	if (exists $args->{sync_Count}) {
+		$charSvrSet{sync_Count} = $args->{sync_Count};
+		$charSvrSet{sync_CountDown} = $args->{sync_Count};
+	}
 
 	if ($config{'XKore'} ne '1') {
 		# FIXME twRO client really sends only one sync_received_characters?
