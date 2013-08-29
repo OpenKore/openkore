@@ -63,6 +63,7 @@ sub sync_received_characters {
 	if ($config{'XKore'} ne '1') {
 		# FIXME twRO client really sends only one sync_received_characters?
 		$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
+		$charSvrSet{sync_CountDown}--;
 	}
 }
 
