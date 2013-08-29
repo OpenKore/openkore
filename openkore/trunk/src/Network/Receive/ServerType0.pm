@@ -4513,7 +4513,7 @@ sub received_characters {
 	# it doesn't work...
 	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
 	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $config{serverType} == 2);
-	return if ($args->{switch} eq '099D' && $config{serverType} eq 'twRO'); #charBlockSize: 144
+
 	if (charSelectScreen(1) == 1) {
 		$firstLoginMap = 1;
 		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
