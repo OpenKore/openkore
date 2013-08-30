@@ -4498,7 +4498,7 @@ sub received_characters {
 	foreach (@chars) { $nChars++ if($_); }
 
 	# FIXME better support for multiple received_characters packets
-	if ($args->{switch} eq '099D') {
+	if ($args->{switch} eq '099D' && $config{serverType} eq 'twRO') {
 		$net->setState(1.5);
 		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1') {
 			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
