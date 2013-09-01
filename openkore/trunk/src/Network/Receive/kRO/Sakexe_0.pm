@@ -511,6 +511,8 @@ sub new {
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
+		'08D0' => ['equip_item', 'v3 C', [qw(index type viewid success)]],
+		'08D1' => ['unequip_item', 'v2 C', [qw(index type success)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 	);
@@ -1681,7 +1683,14 @@ sub emoticon {
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByServerIndex($args->{index});
-	if (!$args->{success}) {
+
+	if (exists $args->{viewid}) {
+		$success = $args->{viewid};
+	} else {
+		$success = $args->{success};
+	}
+	
+	if (!$success) {
 		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{invIndex});
 	} else {
 		$item->{equipped} = $args->{type};
