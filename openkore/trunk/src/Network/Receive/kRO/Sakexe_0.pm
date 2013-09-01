@@ -1683,6 +1683,7 @@ sub emoticon {
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $success = 0;
 
 	if (exists $args->{viewid}) {
 		$success = $args->{viewid};
