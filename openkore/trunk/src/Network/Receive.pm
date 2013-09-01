@@ -382,6 +382,9 @@ sub account_server_info {
 
 	# FIXME better support for multiple received_characters packets
 	undef @chars;
+	if ($config{'XKore'} eq '1') {
+		$incomingMessages->nextMessageMightBeAccountID();
+	}
 }
 
 sub connection_refused {
