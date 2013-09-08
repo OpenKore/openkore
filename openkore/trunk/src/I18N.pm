@@ -21,7 +21,7 @@
 package I18N;
 
 use strict;
-use Globals qw(%config);
+use Globals qw($masterServer);
 use Exporter;
 use base qw(Exporter);
 use Encode qw(encode decode);
@@ -46,19 +46,19 @@ define_alias("Arabic"				=> "cp1256");
 # Returns: $data converted to a String.
 # Requires:
 #     defined($data)
-#     $config{serverEncoding} must be a correct encoding name, or empty.
+#     $masterServer->{serverEncoding} must be a correct encoding name, or empty.
 # Ensures:
 #     defined(result)
 #     I18N::isUTF8(result)
 #
 # Convert a human-readable message (sent by the RO server) into a String.
-# This function uses $config{serverEncoding} to determine the encoding.
+# This function uses $masterServer->{serverEncoding} to determine the encoding.
 #
 # This function should only be used for strings sent by the RO server.
 #
 # This symbol is exportable.
 sub bytesToString {
-	return decode($config{serverEncoding} || "Western", $_[0]);
+	return decode($masterServer->{serverEncoding} || "Western", $_[0]);
 }
 
 ##
@@ -66,7 +66,7 @@ sub bytesToString {
 # str: The string to convert.
 # Requires:
 #     defined($str)
-#     $config{serverEncoding} must be a correct encoding name, or empty.
+#     $masterServer->{serverEncoding} must be a correct encoding name, or empty.
 # Ensures: defined(result)
 #
 # Convert a String into a text encoding used by the RO server.
@@ -74,7 +74,7 @@ sub bytesToString {
 #
 # This symbol is exportable.
 sub stringToBytes {
-	return encode($config{serverEncoding} || "Western", $_[0]);
+	return encode($masterServer->{serverEncoding} || "Western", $_[0]);
 }
 
 ##

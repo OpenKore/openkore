@@ -512,7 +512,7 @@ sub parseChat {
 
 sub reconstructChat {
 	my ($self, $args) = @_;
-	$args->{message} = '|00' . $args->{message} if $config{chatLangCode} && $config{chatLangCode} ne 'none';
+	$args->{message} = '|00' . $args->{message} if $masterServer->{chatLangCode};
 	$args->{message} = stringToBytes($char->{name}) . ' : ' . stringToBytes($args->{message});
 }
 

@@ -2514,7 +2514,7 @@ sub countCastOn {
 # Strip the language code character from a chat message.
 sub stripLanguageCode {
 	my $r_msg = shift;
-	if ($config{chatLangCode} && $config{chatLangCode} ne "none") {
+	if ($masterServer->{chatLangCode}) {
 		if ($$r_msg =~ /^\|..(.*)/) {
 			$$r_msg = $1;
 			return 1;

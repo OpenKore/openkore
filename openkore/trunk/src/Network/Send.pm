@@ -526,7 +526,7 @@ sub parse_character_move {
 
 sub reconstruct_character_move {
 	my ($self, $args) = @_;
-	$args->{coords} = getCoordString(@{$args}{qw(x y)}, $config{serverType} == 0);
+	$args->{coords} = getCoordString(@{$args}{qw(x y)}, $masterServer->{serverType} == 0);
 }
 
 sub sendMove {
@@ -589,7 +589,7 @@ sub parse_private_message {
 
 sub reconstruct_private_message {
 	my ($self, $args) = @_;
-	$args->{privMsg} = '|00' . $args->{privMsg} if $config{chatLangCode} && $config{chatLangCode} ne 'none';
+	$args->{privMsg} = '|00' . $args->{privMsg} if $masterServer->{chatLangCode};
 	$args->{privMsg} = stringToBytes($args->{privMsg});
 	$args->{privMsgUser} = stringToBytes($args->{privMsgUser});
 }
@@ -876,7 +876,7 @@ sub parse_actor_move {
 
 sub reconstruct_actor_move {
 	my ($self, $args) = @_;
-	$args->{coords} = getCoordString(@{$args}{qw(x y)}, !($config{serverType} > 0));
+	$args->{coords} = getCoordString(@{$args}{qw(x y)}, !($masterServer->{serverType} > 0));
 }
 
 sub sendHomunculusMove {

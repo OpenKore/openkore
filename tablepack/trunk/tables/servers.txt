@@ -567,6 +567,7 @@ addTableFolders pserver/RMS;eA;translated/kRO_english;kRO
 # clientside: ? (2010-01-26aRagexeRE.exe)
 # serverside: ?
 [KoreRO]
+dead 1
 ip kronos.sca-gaming.net
 port 6900
 private 1
