@@ -22,9 +22,7 @@ use base qw(Network::Send::kRO::Sakexe_2007_05_07a);
 
 use Log qw(message debug);
 use I18N qw(stringToBytes);
-
-# TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw(%config);
+use Globals qw($masterServer);
 
 sub new {
 	my ($class) = @_;
@@ -38,7 +36,6 @@ sub new {
 	$self;
 }
 
-# 0x0288,10,cashshopbuy,2:4:6
 sub sendCashShopBuy {
 	my ($self, $ID, $amount, $points) = @_;
 	my $msg = pack('v v2 V', 0x0288, $ID, $amount, $points);
@@ -46,7 +43,6 @@ sub sendCashShopBuy {
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
 }
 
-# 0x02b6,7,queststate,2:6
 sub sendQuestState {
 	my ($self, $questID, $state) = @_;
 	my $msg = pack('v V C', 0x02B6, $questID, $state);
@@ -54,7 +50,6 @@ sub sendQuestState {
 	debug "Sent Quest State.\n", "sendPacket", 2;
 }
 
-# 0x02ba,11,hotkey,2:4:5:9
 sub sendHotkey {
 	my ($self, $index, $type, $ID, $lv) = @_;
 	my $msg = pack('v2 C V v', 0x02BA, $index, $type, $ID, $lv);
@@ -62,7 +57,6 @@ sub sendHotkey {
 	debug "Sent Hotkey.\n", "sendPacket", 2;
 }
 
-# 0x02c7,7,replypartyinvite2,2:6
 sub sendPartyJoinRequestByNameReply { # long name lol
 	my ($self, $accountID, $flag) = @_;
 	my $msg = pack('v a4 C', 0x02C7, $accountID, $flag);
@@ -70,7 +64,6 @@ sub sendPartyJoinRequestByNameReply { # long name lol
 	debug "Sent reply Party Invite.\n", "sendPacket", 2;
 }
 
-# 0x02d6,6,viewplayerequip,2
 sub sendShowEquipPlayer {
 	my ($self, $ID) = @_;
 	my $msg = pack('v a4', 0x02D6, $ID);
@@ -78,7 +71,6 @@ sub sendShowEquipPlayer {
 	debug "Sent Show Equip Player.\n", "sendPacket", 2;
 }
 
-# 0x02d8,10,equiptickbox,6
 sub sendShowEquipTickbox {
 	my ($self, $flag) = @_;
 	my $msg = pack('v V2', 0x02D8, 0, $flag);
@@ -86,18 +78,16 @@ sub sendShowEquipTickbox {
 	debug "Sent Show Equip Tickbox: flag.\n", "sendPacket", 2;
 }
 
-# 0x02db,-1,battlechat,2:4
 sub sendBattlegroundChat {
 	my ($self, $message) = @_;
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-
+	$message = "|00$message" if $masterServer->{chatLangCode};
 	$message = stringToBytes($message); # Type: Bytes
-
 	my $data = pack('v2 Z*', 0x02DB, length($message)+5, $message);
-
 	$self->sendToServer($data);
 	debug "Sent Battleground chat.\n", "sendPacket", 2;
 }
+
+1;
 
 =pod
 //2007-02-27aSakexe to 2007-10-02aSakexe
@@ -155,5 +145,3 @@ sub sendBattlegroundChat {
 0x02df,36
 0x02e0,34
 =cut
-
-1;

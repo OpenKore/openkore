@@ -451,9 +451,8 @@ sub processServerSettings {
 		return;
 	}
 	
-	foreach my $serverOption ('serverType', 'chatLangCode', 'storageEncryptKey', 'gameGuard', 'charBlockSize',
-				'paddedPackets', 'paddedPackets_attackID', 'paddedPackets_skillUseID',
-				'mapServer_ip', 'mapServer_port') {
+	foreach my $serverOption ('storageEncryptKey', 'gameGuard','paddedPackets','paddedPackets_attackID',
+				'paddedPackets_skillUseID', 'mapServer_ip', 'mapServer_port') {
 		if ($master->{$serverOption} ne '' && $config{$serverOption} ne $master->{$serverOption}) {
 			# Delete Wite Space
 			# why only one, if deleting any?
@@ -463,12 +462,6 @@ sub processServerSettings {
 			# Set config
 			configModify($serverOption, $master->{$serverOption});
 		}
-	}
-
-	if ($master->{serverEncoding} ne '' && $config{serverEncoding} ne $master->{serverEncoding}) {
-		configModify('serverEncoding', $master->{serverEncoding});
-	} elsif ($config{serverEncoding} eq '') {
-		configModify('serverEncoding', 'Western');
 	}
 	
 	# Process adding Custom Table folders

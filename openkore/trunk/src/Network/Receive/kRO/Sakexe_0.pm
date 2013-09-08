@@ -3052,7 +3052,7 @@ sub login_error {
 		error TF("Connect failed, something is wrong with the login settings:\n" .
 			"version: %s\n" .
 			"master_version: %s\n" .
-			"serverType: %s\n", $master->{version}, $master->{master_version}, $config{serverType}), "connection";
+			"serverType: %s\n", $master->{version}, $master->{master_version}, $masterServer->{serverType}), "connection";
 		relog(30);
 	} elsif ($args->{type} == 6) {
 		error TF("The server is temporarily blocking your connection until %s\n", $args->{date}), "connection";
@@ -4212,7 +4212,7 @@ sub received_characters {
 	# gradeA says it's supposed to send this packet here, but
 	# it doesn't work...
 	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
-	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $config{serverType} == 2);
+	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $masterServer->{serverType} == 2);
 	if (charSelectScreen(1) == 1) {
 		$firstLoginMap = 1;
 		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;

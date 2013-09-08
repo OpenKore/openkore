@@ -347,8 +347,8 @@ sub checkServer {
 			$self->{nextPort} = $master->{port};
 			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
 			eval {
-				$packetParser = Network::Receive->create($self, $config{serverType});
-				$messageSender = Network::Send->create($self, $config{serverType});
+				$packetParser = Network::Receive->create($self, $masterServer->{serverType});
+				$messageSender = Network::Send->create($self, $masterServer->{serverType});
 			};
 			if (my $e = caught('Exception::Class::Base')) {
 				$interface->errorDialog($e->message());
@@ -524,17 +524,17 @@ sub modifyPacketOut {
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
 	if (($switch eq "007E" && (
-			$config{serverType} == 0 ||
-			$config{serverType} == 1 ||
-			$config{serverType} == 2 ||
-			$config{serverType} == 6 )) ||
+			$masterServer->{serverType} == 0 ||
+			$masterServer->{serverType} == 1 ||
+			$masterServer->{serverType} == 2 ||
+			$masterServer->{serverType} == 6 )) ||
 		($switch eq "0089" && (
-			$config{serverType} == 3 ||
-			$config{serverType} == 5 )) ||
+			$masterServer->{serverType} == 3 ||
+			$masterServer->{serverType} == 5 )) ||
 		($switch eq "0116" &&
-			$config{serverType} == 4 ) ||
+			$masterServer->{serverType} == 4 ) ||
 		($switch eq "00F3" &&
-		  $config{serverType} == 10)) { #for vRO
+		  $masterServer->{serverType} == 10)) { #for vRO
 		# Intercept the RO client's sync
 
 		$msg = "";

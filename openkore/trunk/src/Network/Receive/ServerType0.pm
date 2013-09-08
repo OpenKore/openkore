@@ -3269,7 +3269,7 @@ sub login_error {
 		error TF("Connect failed, something is wrong with the login settings:\n" .
 			"version: %s\n" .
 			"master_version: %s\n" .
-			"serverType: %s\n", $master->{version}, $master->{master_version}, $config{serverType}), "connection";
+			"serverType: %s\n", $master->{version}, $master->{master_version}, $masterServer->{serverType}), "connection";
 		relog(30);
 	} elsif ($args->{type} == REFUSE_BLOCK_TEMPORARY) {
 		error TF("The server is temporarily blocking your connection until %s\n", $args->{date}), "connection";
@@ -4498,7 +4498,7 @@ sub received_characters {
 	foreach (@chars) { $nChars++ if($_); }
 
 	# FIXME better support for multiple received_characters packets
-	if ($args->{switch} eq '099D' && $config{serverType} eq 'twRO') {
+	if ($args->{switch} eq '099D' && $masterServer->{serverType} eq 'twRO') {
 		$net->setState(1.5);
 		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1') {
 			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
@@ -4512,7 +4512,7 @@ sub received_characters {
 	# gradeA says it's supposed to send this packet here, but
 	# it doesn't work...
 	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
-	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $config{serverType} == 2);
+	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $masterServer->{serverType} == 2);
 
 	if (charSelectScreen(1) == 1) {
 		$firstLoginMap = 1;

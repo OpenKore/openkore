@@ -16,9 +16,6 @@ poseidonServer 127.0.0.1
 poseidonPort 24390
 
 bindIp
-# For an overview of all servertypes please go to the following URL:
-# http://wiki.openkore.com/index.php?title=ServerType
-serverType 0
 
 # 1 = hook into RO client, 2 = Act as stand-alone proxy, proxy = act as true proxy
 # http://wiki.openkore.com/index.php/XKore

@@ -93,7 +93,7 @@ sub sendAttack {
 
 sub sendChat {
 	my ($self, $message) = @_;
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
+	$message = "|00$message" if $masterServer->{chatLangCode};
 
 	my ($data, $charName); # Type: Bytes
 	$message = stringToBytes($message); # Type: Bytes

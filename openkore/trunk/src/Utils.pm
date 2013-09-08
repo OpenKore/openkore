@@ -30,7 +30,7 @@ use base qw(Exporter);
 use Config;
 use FastUtils;
 
-use Globals qw(%config);
+use Globals qw($masterServer);
 use Utils::DataStructures (':all', '!/^binFind$/');
 
 
@@ -780,7 +780,7 @@ sub getCoordString {
 	shiftPack(\$coords, $y, 10);
 	shiftPack(\$coords, 0, 4);
 	$coords = substr($coords, 1)
-		if (($config{serverType} == 0) || $nopadding);
+		if (($masterServer->{serverType} == 0) || $nopadding);
 	
 	return $coords;
 }
@@ -796,7 +796,7 @@ sub getCoordString2 {
 	shiftPack(\$coords, $y, 10);
 	shiftPack(\$coords, 0, 28);
 	$coords = substr($coords, 1)
-		if (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5) || $nopadding);
+		if (($masterServer->{serverType} == 0) || ($masterServer->{serverType} == 3) || ($masterServer->{serverType} == 5) || $nopadding);
 	
 	return $coords;
 }
