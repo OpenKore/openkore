@@ -452,7 +452,7 @@ sub processServerSettings {
 	}
 	
 	foreach my $serverOption ('storageEncryptKey', 'gameGuard','paddedPackets','paddedPackets_attackID',
-				'paddedPackets_skillUseID', 'mapServer_ip', 'mapServer_port') {
+				'paddedPackets_skillUseID') {
 		if ($master->{$serverOption} ne '' && $config{$serverOption} ne $master->{$serverOption}) {
 			# Delete Wite Space
 			# why only one, if deleting any?
