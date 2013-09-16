@@ -1,0 +1,17 @@
+ansidecl.h
+bfdlink.h
+bin-bugs.h
+config.h
+demangle.h
+dis-asm.h
+filenames.h
+fnmatch.h
+fopen-same.h
+hashtab.h
+ieee.h
+libiberty.h
+messages.h
+objalloc.h
+progress.h
+safe-ctype.h
+symcat.h

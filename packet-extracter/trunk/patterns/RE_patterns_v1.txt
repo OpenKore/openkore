@@ -1,0 +1,58 @@
+RE PacketLenMap function offset:
+89 ?? ?? 89 ?? ?? 89 ?? ?? 89 ?? ?? 89 ?? 8B ?? ?? 83 ?? 04 89 ?? ?? ?? ?? 89 ?? ?? E8 offset:[?? ?? ?? ??] 8B ?? ?? 8B C6
+8B ?? 89 ?? ?? ?? E8 ?? ?? ?? ?? C7 44 24 14 ?? ?? ?? ?? 8B ?? E8 offset:[?? ?? ?? ??] C7 44 24 14
+83 ?? ?? 8D ?? ?? 89 ?? ?? C7 45 ?? ?? ?? ?? ?? E8 ?? ?? ?? ?? 8B ?? C7 ?? ?? ?? ?? ?? ?? E8 offset:[67 01 00 00] 8B ?? ?? 8B C6
+
+Find Ref to g_PacketLen:
+8B ?? ?? 8D ?? ?? 25 FF FF 00 00 ?? ?? B9 offset:[?? ?? ?? ??]
+56 8D ?? ?? ?? 52 B9 offset:[?? ?? ?? ??] E8 ?? ?? ?? ?? 8B ?? ??
+
+Function (0): -> __alloca_probe
+51 3D 00 10 00 00 8D 4C 24 08 72 14 81 E9 00 10 00 00 2D 00 10 00 00 85 01 3D 00 10 00 00 73 EC 2B C8 8B C4 85 01 8B E1 8B 08 8B 40 04 50 C3
+
+Function (1) [Key Function]: -> print_packet1
+55 8B EC 8B C1 8B 4D 08 8B 11 8B 4D 0C 89 10 8B 11 89 50 04 8B 49 04 89 48 08 5D C2 08 00
+
+Function (2): -> dummy
+55 8B EC 83 EC 08 53 56 8B 15 ?? ?? ?? ?? 57 8B F9 B0 01 8B 4F 04 8B F1 8B 59 04 3B DA 74 22 8B 45 0C 8B 00 89 45 F8
+55 8B EC 83 EC 10 53 8B D9 56 57 8B 7B 04 8D 4D F4 C6 45 FF 01 8B 77 04 E8 ?? ?? ?? ?? 8B ?? ?? ?? ?? ?? 3B F2
+55 8B EC 8B C1 8B 4D 08 8B 11 8B 4D 0C 89 10 8A 11 88 50 04 5D C2 08 00
+55 8B EC 8B C1 8B 4D 08 8B 11 89 10 8B 51 04 89 50 04 8B 49 08 89 48 08 5D C2 04 00
+55 8B EC 51 53 8B D9 8B 0D ?? ?? ?? ?? 56 8B 53 04 57 8B FA B0 01 8B 72 04 3B F1 74 22 8B 45 0C 8B 00 89 45 FC
+55 8B EC 83 EC 08 8B 45 0C 8D 55 F8 50 52 E8 ?? ?? ?? ?? 8B 08 8B 40 04 88 45 FC 8B 45 08 89 08
+55 8B EC 8B C1 56 8B 4D 08 8B 11 83 C1 04 89 10 8D 50 04 8B 31 89 32 8B 71 04 89 72 04 5E 8B 49 08 89 4A 08 5D C2 04 00
+55 8B EC 51 53 8B D9 8B ?? ?? ?? ?? ?? 56 8B 53 04 57 8B FA B0 01 8B 72 04 3B F1 74 22 8B 45 0C 8B 00 89 45 FC 8B 45 FC 8B FE 3B 46 0C 0F 9C C0
+
+Function (3) [Key Function]: -> set_packet_len
+55 8B EC 8B 55 0C 8B C1 8B 4D 08 89 08 89 50 04 5D C2 08 00
+
+Function (4) [Key Function]: -> set_packet_len2
+55 8B EC 8B 55 0C 8B C1 8B 4D 08 89 08 8B 4D 10 89 50 04 89 48 08 5D C2 0C 00
+
+Function (5) [Key Function]: -> print_packet2
+55 8B EC 8B 45 0C 8B 08 8B 45 08 89 08 8B 4D 10 8B 11 89 50 04 8B 49 04 89 48 08 5D C3
+55 8B EC 8B 45 0C 56 8B 75 08 57 8B 08 8B 45 10 8B FE 8B 10 8B 40 04 89 0F 89 57 04 89 47 08 8B C6 5F 5E 5D C3
+
+Function (6) [Key Function]: -> print_packet3
+51 55 8B 6C 24 10 56 57 8B F9 8B 77 04 8B 46 04 80 78 19 00 B1 01 88 4C 24 0C 75 21 8B 55 00 90
+
+Function (7) [Key Function]: -> print_packet4
+55 8B EC 8B C1 56 8B 4D 08 8B 11 8D 48 04 89 10 8B 55 0C 8B 32 89 31 8B 72 04 89 71 04 5E 8B 52 08 89 51 08 5D C2 08 00
+
+Function (8) [Key Function]: -> print_packet5
+55 8B EC 8B 45 0C 56 8B 08 8B 45 08 89 08 8B 4D 10 8D 50 04 8B 31 89 32 8B 71 04 89 72 04 5E 8B 49 08 89 4A 08 5D C3
+
+Function (9) [Key Function]: -> print_packet6
+51 55 8B 6C 24 10 56 57 8B F9 8B 77 04 8B 46 04 80 78 1D 00 B1 01 88 4C 24 0C 75 21 8B 55 00 90
+
+Function (10) [Key Function]: -> print_packet7
+55 8B EC 83 EC 10 8B 45 0C 8B 55 14 53 8B D9 8B 4D 10 56 8B 75 08 89 4D F8 8B 4B 04 89 75 F0 89 45 F4 89 55 FC 8B 71 04
+83 EC 18 8B 44 24 20 8B 54 24 24 56 8B 74 24 2C 57 8B 7C 24 24 89 44 24 14 8D 44 24 10 89 54 24 18 50 8D 54 24 0C 52 89
+
+
+
+
+
+
+
+

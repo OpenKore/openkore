@@ -1,0 +1,31 @@
+PureFORM_Project_Begin
+Project¶RO Tools
+Window¶1¶#Window_0¶13500416¶#PB_Window_SystemMenu|#PB_Window_SizeGadget|#PB_Window_MinimizeGadget|#PB_Window_TitleBar¶Packet Length Extractor¶392¶291¶465¶268¶0¶10¶10¶0¶5000¶5000¶0¶-1¶0¶
+StringGadget¶16¶#Window_0_StringGadget_15¶1¶-1¶-1¶0¶0¶25¶0¶0¶¶¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶60¶5¶365¶20¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+ButtonGadget¶17¶#Window_0_ButtonGadget_16¶1¶-1¶-1¶0¶0¶0¶0¶0¶¶...¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶430¶5¶30¶20¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+TextGadget¶18¶#Window_0_TextGadget_17¶1¶-1¶-1¶0¶0¶26¶0¶0¶¶File Path:¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶10¶10¶45¶15¶0¶0¶0¶0¶0¶0¶0¶-1¶-16777216¶-1¶-1¶¶0¶¶0¶0
+PanelGadget¶35¶#Window_0_PanelGadget_34¶1¶-1¶-1¶2¶0¶19¶0¶0¶¶¶¶-1¶0¶¶¶0¶0¶1¶1¶3¶5¶30¶455¶205¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶Generate recvpackets.txt·Auto-Patcher¶0¶¶0¶0
+ButtonGadget¶36¶#Window_0_ButtonGadget_35¶1¶-1¶-1¶0¶0¶0¶0¶0¶¶E&xit¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶385¶240¶75¶25¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+ButtonGadget¶37¶#ButtonGadget_36¶1¶-1¶-1¶0¶0¶0¶0¶0¶¶&About¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶305¶240¶75¶25¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+ContainerGadget¶38¶#Window_0_ContainerGadget_37¶1¶35¶19¶1¶0¶5¶0¶4¶#PB_Container_Single¶¶¶-1¶0¶¶¶0¶0¶1¶0¶0¶0¶0¶450¶180¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+ContainerGadget¶39¶#Window_0_ContainerGadget_38¶1¶35¶19¶1¶1¶5¶0¶4¶#PB_Container_Single¶¶¶-1¶0¶¶¶0¶0¶1¶0¶0¶0¶0¶450¶180¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+StringGadget¶40¶#Window_0_StringGadget_39¶1¶38¶5¶0¶0¶25¶0¶4¶#ES_Multiline¶¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶5¶5¶440¶95¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+ButtonGadget¶41¶#Window_0_ButtonGadget_40¶1¶38¶5¶0¶0¶0¶0¶0¶¶Start¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶370¶105¶75¶70¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+OptionGadget¶43¶#Window_0_OptionGadget_42¶1¶38¶5¶0¶0¶18¶0¶0¶¶Fastest¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶15¶125¶85¶15¶0¶0¶0¶0¶0¶0¶0¶-1¶-16777216¶-1¶-1¶¶0¶¶0¶0
+OptionGadget¶44¶#Window_0_OptionGadget_43¶1¶38¶5¶0¶0¶18¶0¶0¶¶Fast¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶15¶140¶85¶15¶0¶0¶0¶0¶0¶0¶0¶-1¶-16777216¶-1¶-1¶¶0¶¶0¶0
+OptionGadget¶45¶#Window_0_OptionGadget_44¶1¶38¶5¶0¶0¶18¶0¶0¶¶Normal¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶15¶155¶85¶15¶0¶0¶0¶0¶0¶0¶0¶-1¶-16777216¶-1¶-1¶¶0¶¶0¶0
+Frame3DGadget¶42¶#Window_0_Frame3DGadget_41¶1¶38¶5¶0¶0¶11¶0¶0¶¶Extraction Type¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶5¶105¶115¶70¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+CheckBoxGadget¶47¶#Window_0_CheckBoxGadget_46¶1¶38¶5¶0¶0¶3¶0¶0¶¶Find StorageKey¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶140¶105¶95¶20¶0¶0¶0¶0¶0¶0¶0¶-1¶-16777216¶-1¶-1¶¶0¶¶0¶0
+StringGadget¶48¶#Window_0_StringGadget_47¶1¶38¶5¶0¶0¶25¶0¶0¶¶¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶135¶125¶225¶45¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+Frame3DGadget¶46¶#Window_0_Frame3DGadget_45¶1¶38¶5¶0¶0¶11¶0¶0¶¶¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶130¶110¶235¶65¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+StringGadget¶49¶#Window_0_StringGadget_48¶1¶39¶5¶0¶0¶25¶0¶4¶#ES_Multiline¶¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶5¶5¶440¶95¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+ButtonGadget¶50¶#Window_0_ButtonGadget_49¶1¶39¶5¶0¶0¶0¶0¶0¶¶Patch¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶370¶105¶75¶70¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+CheckBoxGadget¶51¶#Window_0_CheckBoxGadget_50¶1¶39¶5¶0¶0¶3¶0¶0¶¶Disable Game-Guard¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶5¶115¶130¶15¶0¶0¶0¶0¶0¶0¶0¶-1¶-16777216¶-1¶-1¶¶0¶¶0¶0
+CheckBoxGadget¶52¶#Window_0_CheckBoxGadget_51¶1¶39¶5¶0¶0¶3¶0¶0¶¶No-SP Teleport¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶5¶135¶130¶15¶0¶0¶0¶0¶0¶0¶0¶-1¶-16777216¶-1¶-1¶¶0¶¶0¶0
+CheckBoxGadget¶53¶#Window_0_CheckBoxGadget_52¶1¶39¶5¶0¶0¶3¶0¶0¶¶Stand Alone¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶5¶155¶130¶15¶0¶0¶0¶0¶0¶0¶0¶-1¶-16777216¶-1¶-1¶¶0¶¶0¶0
+CheckBoxGadget¶54¶#Window_0_CheckBoxGadget_53¶1¶39¶5¶0¶0¶3¶0¶0¶¶Read Data Folder¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶135¶115¶110¶15¶0¶0¶0¶0¶0¶0¶0¶-1¶-16777216¶-1¶-1¶¶0¶¶0¶0
+CheckBoxGadget¶55¶#Window_0_CheckBoxGadget_54¶1¶39¶5¶0¶0¶3¶0¶0¶¶More Zoom Range¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶135¶135¶110¶15¶0¶0¶0¶0¶0¶0¶0¶-1¶-16777216¶-1¶-1¶¶0¶¶0¶0
+CheckBoxGadget¶56¶#Window_0_CheckBoxGadget_55¶1¶39¶5¶0¶0¶3¶0¶0¶¶Multiple Window¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶135¶155¶110¶15¶0¶0¶0¶0¶0¶0¶0¶-1¶-16777216¶-1¶-1¶¶0¶¶0¶0
+CheckBoxGadget¶57¶#Window_0_CheckBoxGadget_56¶1¶39¶5¶0¶0¶3¶0¶0¶¶Mouse Freedom¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶255¶115¶105¶15¶0¶0¶0¶0¶0¶0¶0¶-1¶-16777216¶-1¶-1¶¶0¶¶0¶0
+ButtonGadget¶58¶#Window_0_ButtonGadget_57¶1¶39¶5¶0¶0¶0¶0¶0¶¶Other Patches¶¶-1¶0¶¶¶0¶0¶0¶0¶0¶255¶145¶110¶25¶0¶0¶0¶0¶0¶0¶0¶-1¶-1¶-1¶-1¶¶0¶¶0¶0
+PureFORM_Project_End
