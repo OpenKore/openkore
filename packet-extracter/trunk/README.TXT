@@ -1,15 +1,15 @@
-This module contains tools for extracting packet lengths from Ragexe.exe.
+# http://forums.openkore.com/viewtopic.php?f=36
+This module contains tools for extracting packet lengths from your ragexe file name.
 
-disasm is version 0.25 of the Win32Program Disassembler:
-http://www.geocities.com/~sangcho/disasm.html
-It's modified so it can be compiled on Linux.
+USAGE
 
+Variant 1 (for noobs):
+1) Download start.exe from http://misc.openkore.com and unpack to the same folder where packet_extract.pl is placed (optional)
+2) copy target .exe file to the same folder where packet_extract.pl is placed
+3) run packet_extract.bat to save extracted packets to text file.
 
-First, you use disasm to disassemble Ragexe.exe:
-
-	./disasm Ragexe.exe > disassembled.txt
-
-Then, you run extract-packets.pl to extract packet lengths from 
-disassembled.txt:
-
-	./extract-packets.pl disassembled.txt recvpackets.txt
+Variant 2 (for profi):
+1) Download start.exe from http://misc.openkore.com and unpack to the same folder where packet_extract.pl is placed (optional)
+3) copy target .exe file to the same folder where packet_extract.pl is placed
+4) run "start.exe ! packet_extract.pl your_exe_name.exe" or "perl packet_extract.pl your_exe_name.exe" to generate extractor.exe
+5) run "extractor.exe > recvpackets.txt" to save extracted packets to text file.

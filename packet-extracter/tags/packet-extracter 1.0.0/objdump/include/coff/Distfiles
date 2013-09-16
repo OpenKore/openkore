@@ -1,0 +1,6 @@
+ecoff.h
+external.h
+i386.h
+internal.h
+pe.h
+sym.h
