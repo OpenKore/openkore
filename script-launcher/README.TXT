@@ -25,4 +25,4 @@ generator)
 
 Website
 -------
-http://www.openkore.com/wiki/index.php/Script_Launcher
+http://web.archive.org/web/20090329022044/http://www.openkore.com/wiki/index.php/Script_Launcher
