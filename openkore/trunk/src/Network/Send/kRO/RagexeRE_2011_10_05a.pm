@@ -7,7 +7,7 @@
 #  Basically, this means that you're allowed to modify and distribute
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
-#  See http:#//www.gnu.org/licenses/gpl.html for the full license.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
 package Network::Send::kRO::RagexeRE_2011_10_05a;
 
@@ -24,54 +24,54 @@ sub new {
 	
 	my %packets = (
 		'0202' => undef,
-		'023B' => undef,
+		'022D' => undef,
+		'023B' => ['item_drop', 'v2', [qw(index amount)]],#6
+		'02C4' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10 
 		'035F' => undef,
+		'0361' => undef,
 		'0362' => undef,
-		'0364' => ['character_move', 'a3', [qw(coords)]],
-		'0365' => undef,
-		'0366' => ['actor_look_at', 'v C', [qw(head body)]],
-		'0367' => undef,
-		'0369' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'0437' => undef,
-		'0438' => undef,
+		'0364' => undef,
+		'0367' => ['sync', 'V', [qw(time)]],#6
+		'0369' => undef,
+		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19 
 		'07E4' => undef,
-		'0802' => undef,
-		'0815' => ['item_take', 'a4', [qw(ID)]],
-		'0817' => ['sync', 'V', [qw(time)]],
+		'07EC' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
+		'0802' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'08A7' => ['item_take', 'a4', [qw(ID)]],#6
+		'0815' => ['actor_look_at', 'v C', [qw(head body)]],#5
 		'0835' => ['friend_request', 'a*', [qw(username)]],#26
-		'0838' => ['actor_name_request', 'a4', [qw(ID)]],
 		'083C' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
-		'0885' => ['item_drop', 'v2', [qw(index amount)]],
-		'088A' => ['actor_info_request', 'a4', [qw(ID)]],
-		'0893' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0897' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0885' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0887' => ['actor_info_request', 'a4', [qw(ID)]],#6
+		'08A4' => ['storage_item_add', 'v V', [qw(index amount)]],#8
 		'08AD' => undef,
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
-		actor_info_request 088A
-		actor_look_at 0366
-		actor_name_request 0838
-		character_move 0364
+		actor_action 07EC
+		actor_info_request 0887
+		actor_look_at 0815
 		friend_request 0835
-		item_drop 0885
-		item_take 0815
+		homunculus_command 0885
+		item_drop 023B
+		item_take 08A7
+		map_login 0436
 		party_join_request_by_name 083C
-		skill_use_location 0369
-		storage_item_add 0893
-		storage_item_remove 0897
-		sync 0817
+		skill_use 02C4
+		storage_item_add 08A4
+		storage_item_remove 0802
+		sync 0367
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	$self;
 }
 
-# 0x08ad,90,useskilltoposinfo,2:4:6:8:10
+# 0x0366,90,useskilltoposinfo,2:4:6:8:10
 sub sendSkillUseLocInfo {
 	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-	$self->sendToServer(pack('v5 Z80', 0x08AD, $lv, $ID, $x, $y, $moreinfo));
+	$self->sendToServer(pack('v5 Z80', 0x0366, $lv, $ID, $x, $y, $moreinfo));
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
@@ -80,15 +80,15 @@ sub sendSkillUseLocInfo {
 =cut
 //2011-10-05aRagexeRE
 0x01FD,15,repairitem,2
-0x0835,26,friendslistadd,2
-0x0885,5,hommenu,2:4
++0x0835,26,friendslistadd,2
++0x0885,5,hommenu,2:4
 0x089B,36,storagepassword,0
 0x0288,-1,cashshopbuy,4:8
-0x083C,26,partyinvite2,2
-0x0436,19,wanttoconnection,2:6:10:14:18
-0x07EC,7,actionrequest,2:6
-0x02C4,10,useskilltoid,2:4:6
-0x0439,8,useitem,2:4
++0x083C,26,partyinvite2,2
++0x0436,19,wanttoconnection,2:6:10:14:18
++0x07EC,7,actionrequest,2:6
++0x02C4,10,useskilltoid,2:4:6
++0x0439,8,useitem,2:4
 0x0889,-1,itemlistwindowselected,2:4:8
 0x0361,18,bookingregreq,2:4:6
 0x0803,4
@@ -107,16 +107,16 @@ sub sendSkillUseLocInfo {
 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0202,2,searchstoreinfonextpage,0
 0x0838,12,searchstoreinfolistitemclick,2:6:10
-0x0437,5,walktoxy,2
-0x0367,6,ticksend,2
-0x0815,5,changedir,2:4
-0x08A7,6,takeitem,2
-0x023B,6,dropitem,2:4
-0x08A4,8,movetokafra,2:4
-0x0802,8,movefromkafra,2:4
-0x0438,10,useskilltopos,2:4:6:8
-0x0366,90,useskilltoposinfo,2:4:6:8:10
-0x0887,6,getcharnamerequest,2
-0x0368,6,solvecharname,2
++0x0437,5,walktoxy,2
++0x0367,6,ticksend,2
++0x0815,5,changedir,2:4
++0x08A7,6,takeitem,2
++0x023B,6,dropitem,2:4
++0x08A4,8,movetokafra,2:4
++0x0802,8,movefromkafra,2:4
++0x0438,10,useskilltopos,2:4:6:8
++0x0366,90,useskilltoposinfo,2:4:6:8:10
++0x0887,6,getcharnamerequest,2
++0x0368,6,solvecharname,2
 0x08D7,28,battlegroundreg,2:4 //Added to prevent disconnections
 =pod

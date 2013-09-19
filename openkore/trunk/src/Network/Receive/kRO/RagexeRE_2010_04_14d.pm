@@ -7,7 +7,7 @@
 #  Basically, this means that you're allowed to modify and distribute
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
-#  See http:#//www.gnu.org/licenses/gpl.html for the full license.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
 #  $Revision: 6687 $
 #  $Id: kRO.pm 6687 2009-04-19 19:04:25Z technologyguild $

@@ -9,76 +9,62 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
-package Network::Send::kRO::RagexeRE_2011_08_16a;
+package Network::Send::kRO::RagexeRE_2012_02_07b;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2010_11_24a);
+use base qw(Network::Send::kRO::RagexeRE_2011_12_20b);
+
+use Log qw(debug);
+use Utils qw(getHex);
+use I18N qw(stringToBytes);
+
+sub version { 29 }
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+	$self->{char_create_version} = 1;
 
 	my %packets = (
-		'0202' => ['actor_look_at', 'v C', [qw(head body)]],#5
-		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
-		'023B' => ['friend_request', 'a*', [qw(username)]],#26
-		'02C4' => undef,
-		'035F' => ['sync', 'V', [qw(time)]],#6
-		'0360' => undef,
-		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],#6
-		'0363' => undef,
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
-		'0365' => undef,
-		'0366' => undef,
-		'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
-		'0436' => undef,
-		'0437' => ['character_move', 'a3', [qw(coords)]],#5
-		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
-		'07E4' => ['item_take', 'a4', [qw(ID)]],#6
-		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
-		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
-		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],#6
+	'0202' => ['actor_look_at', 'v C', [qw(head body)]],#5
+	'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
+	'023B' => ['friend_request', 'a*', [qw(username)]],#26
+	'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+	'0362' => ['item_drop', 'v2', [qw(index amount)]],#6
+	'0891' => undef,
+	'0892' => undef,
+	'08A4' => undef,
+	'08AD' => undef,
+	'096A' => ['actor_info_request', 'a4', [qw(ID)]],#6
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-
+	
 	my %handlers = qw(
-		actor_action 0369
-		actor_info_request 08AD
-		actor_name_request 0368
+		actor_info_request 096A
 		actor_look_at 0202
-		character_move 0437
 		friend_request 023B
 		homunculus_command 0361
 		item_drop 0362
-		item_take 07E4
 		map_login 022D
-		party_join_request_by_name 0802
-		skill_use 083C
-		skill_use_location 0438
-		storage_item_add 07EC
-		storage_item_remove 0364
-		sync 035F
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-
+	
 	$self;
-} 
+}
+
 
 1;
 
 =cut
-//2011-08-16aRagexeRE
+//2012-02-07bRagexeRE
 0x01FD,15,repairitem,2
 +0x023B,26,friendslistadd,2
 +0x0361,5,hommenu,2:4
-0x088F,36,storagepassword,0
+0x0815,36,storagepassword,0
 0x0288,-1,cashshopbuy,4:8
 +0x0802,26,partyinvite2,2
 +0x022D,19,wanttoconnection,2:6:10:14:18
-+0x0369,7,actionrequest,2:6
+0x0369,7,actionrequest,2:6
 +0x083C,10,useskilltoid,2:4:6
 +0x0439,8,useitem,2:4
 0x0281,-1,itemlistwindowselected,2:4:8
@@ -92,14 +78,14 @@ sub new {
 0x0809,50
 0x080A,18
 0x080B,6
-0x0815,-1,reqopenbuyingstore,2:4:8:9:89
-0x0817,2,reqclosebuyingstore,0
+0x0817,-1,reqopenbuyingstore,2:4:8:9:89
+0x0940,2,reqclosebuyingstore,0
 0x0360,6,reqclickbuyingstore,2
 0x0811,-1,reqtradebuyingstore,2:4:8:12
 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0835,2,searchstoreinfonextpage,0
 0x0838,12,searchstoreinfolistitemclick,2:6:10
-+0x0437,5,walktoxy,2
+0x0437,5,walktoxy,2
 +0x035F,6,ticksend,2
 +0x0202,5,changedir,2:4
 +0x07E4,6,takeitem,2
@@ -108,6 +94,9 @@ sub new {
 +0x0364,8,movefromkafra,2:4
 +0x0438,10,useskilltopos,2:4:6:8
 0x0366,90,useskilltoposinfo,2:4:6:8:10
-+0x08AD,6,getcharnamerequest,2
-+0x0368,6,solvecharname,2 
++0x096A,6,getcharnamerequest,2
++0x0368,6,solvecharname,2
+0x0907,5,moveitem,2:4
+0x0908,5
+0x08D7,28,battlegroundreg,2:4 //Added to prevent disconnections
 =pod

@@ -7,7 +7,7 @@
 #  Basically, this means that you're allowed to modify and distribute
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
-#  See http:#//www.gnu.org/licenses/gpl.html for the full license.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
 package Network::Send::kRO::RagexeRE_2010_08_03a;
 

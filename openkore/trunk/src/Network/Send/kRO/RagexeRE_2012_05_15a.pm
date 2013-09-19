@@ -7,7 +7,7 @@
 #  Basically, this means that you're allowed to modify and distribute
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
-#  See http:#//www.gnu.org/licenses/gpl.html for the full license.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
 package Network::Send::kRO::RagexeRE_2012_05_15a;
 
@@ -24,30 +24,32 @@ sub new {
 		'0369' => ['friend_request', 'a*', [qw(username)]],#26
 		'0437' => undef,
 		'0438' => undef,
+		'083C' => undef,
 		'085A' => ['storage_item_add', 'v V', [qw(index amount)]],#8
 		'0869' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
 		'086C' => undef,
 		'0871' => undef,
-		'08A5' => ['actor_info_request', 'a4', [qw(ID)]],#6
-		'08A6' => undef,
 		'087C' => ['character_move','a3', [qw(coordString)]],#5
 		'087D' => ['sync', 'V', [qw(time)]],#6
+		'0884' => undef,
+		'0885' => undef,
 		'0886' => undef,
 		'0889' => undef,
 		'0891' => undef,
-#		'08A2' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#90
+		'089C' => undef,
+		'08A5' => ['actor_info_request', 'a4', [qw(ID)]],#6
+		'08A6' => undef,
 		'08A8' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
 		'08AC' => ['actor_look_at', 'v C', [qw(head body)]],#5
 		'08AD' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
+		'091C' => undef,
+		'091F' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'0923' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		'0938' => undef,
-		'0947' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-		'0885' => undef,
+		'0947' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'094B' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
-		'0957' => ['actor_name_request', 'a4', [qw(ID)]],
+		'0957' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'0964' => ['item_take', 'a4', [qw(ID)]],#6
-		'091C' => undef,
-		'091F' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -109,7 +111,7 @@ sub sendStoragePassword {
 +0x094B,5,hommenu,2:4
 0x089A,36,storagepassword,0
 0x0288,-1,cashshopbuy,4:8
-0x091F,26,partyinvite2,2
++0x091F,26,partyinvite2,2
 +0x08A8,19,wanttoconnection,2:6:10:14:18
 +0x0923,7,actionrequest,2:6
 +0x0947,10,useskilltoid,2:4:6
@@ -124,7 +126,7 @@ sub sendStoragePassword {
 0x087E,12,searchstoreinfolistitemclick,2:6:10
 +0x087C,5,walktoxy,2
 +0x087D,6,ticksend,2
-0x08AC,5,changedir,2:4
++0x08AC,5,changedir,2:4
 +0x0964,6,takeitem,2
 +0x0364,6,dropitem,2:4
 +0x085A,8,movetokafra,2:4
@@ -132,7 +134,7 @@ sub sendStoragePassword {
 +0x08AD,10,useskilltopos,2:4:6:8
 +0x08A2,90,useskilltoposinfo,2:4:6:8:10
 +0x08A5,6,getcharnamerequest,2
-0x0957,6,solvecharname,2
++0x0957,6,solvecharname,2
 0x08E5,41,bookingregreq,2:4	//Added to prevent disconnections
 0x08E6,4
 0x08E7,10,bookingsearchreq,2

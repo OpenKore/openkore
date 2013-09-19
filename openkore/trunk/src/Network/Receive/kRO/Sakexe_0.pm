@@ -1,6 +1,6 @@
 #########################################################################
-#  OpenKore - Packet sending
-#  This module contains functions for sending packets to the server.
+#  OpenKore - Packet Receiveing
+#  This module contains functions for Receiveing packets to the server.
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -20,28 +20,13 @@ package Network::Receive::kRO::Sakexe_0;
 use strict;
 use Network::Receive::kRO ();
 use base qw(Network::Receive::kRO);
-
-use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
-
-# TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
-
-
 ############# TEMPORARY?
 use Time::HiRes qw(time usleep);
 
 use AI;
-use Globals qw($char %timeout $net %config @chars $conState $conState_tries $messageSender $field);
 use Log qw(message warning error debug);
-use Translation;
-use Network;
-use Utils qw(makeCoordsDir makeCoordsXY makeCoordsFromTo);
-
 
 # from old receive.pm
-use Time::HiRes qw(time usleep);
 use encoding 'utf8';
 use Carp::Assert;
 use Scalar::Util;
@@ -57,7 +42,6 @@ use Actor::Item;
 use Actor::Unknown;
 use Field;
 use Settings;
-use Log qw(message warning error debug);
 use FileParsers;
 use Interface;
 use Misc;
@@ -67,22 +51,18 @@ use Network::Send ();
 use Plugins;
 use Utils;
 use Skill;
-use AI;
 use Utils::Assert;
 use Utils::Exceptions;
 use Utils::Crypton;
 use Translation;
-use I18N qw(bytesToString);
+use I18N qw(bytesToString stringToBytes);
 # from old receive.pm
-###############################
-
-
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
+	my $self = $class->SUPER::new();
 
-	my %packets = (
+	$self->{packet_list} = {
 		'0069' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], # -1
 		'006A' => ['login_error', 'C Z20', [qw(type date)]], # 23
 		'006B' => ['received_characters', 'v C3 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # struct varies a lot, this one is from XKore 2
@@ -92,7 +72,6 @@ sub new {
 		'006F' => ['character_deletion_successful'], # 2
 		'0070' => ['character_deletion_failed', 'C',[qw(error_code)]], # 6
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], # 28
-		# 0x0072 is sent packet
 		'0073' => ['map_loaded', 'V a3 C2', [qw(syncMapSync coords xSize ySize)]], # 11
 		'0074' => ['map_load_error', 'C', [qw(error)]], # 3
 		'0075' => ['changeToInGameState'], # -1
@@ -106,134 +85,82 @@ sub new {
 		'007F' => ['received_sync', 'V', [qw(time)]], # 6
 		'0080' => ['actor_died_or_disappeared', 'a4 C', [qw(ID type)]], # 7
 		'0081' => ['errors', 'C', [qw(type)]], # 3
-		# 0x0082 is sent packet
 		'0083' => ['quit_accept'], # 2
 		'0084' => ['quit_refuse'], # 2
-		# 0x0085 is sent packet
 		'0086' => ['actor_display', 'a4 a6 V', [qw(ID coords tick)]], # 16
 		'0087' => ['character_moves', 'a4 a6', [qw(move_start_time coords)]], # 12
 		'0088' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]], # 10
-		# 0x0089 is sent packet
 		'008A' => ['actor_action', 'a4 a4 a4 V2 v2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]], # 29
-		# 0x008b,2
-		# 0x008c is sent packet
 		'008D' => ['public_chat', 'v a4 Z*', [qw(len ID message)]], # -1
 		'008E' => ['self_chat', 'v Z*', [qw(len message)]], # -1
-		# // 0x008f,0
-		# 0x0090 is sent packet
 		'0091' => ['map_change', 'Z16 v2', [qw(map x y)]], # 22
 		'0092' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # 28
 		'0093' => ['npc_ack_enable'], # 2
-		# 0x0094 is sent packet
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]], # 30
-		# 0x0096 is sent packet
 		'0097' => ['private_message', 'v Z24 Z*', [qw(len privMsgUser privMsg)]], # -1
 		'0098' => ['private_message_sent', 'C', [qw(type)]], # 3
-		# 0x0099 is sent packet
 		'009A' => ['system_chat', 'v a4 a*', [qw(len domain message)]], # -1
-		# 0x009B is sent packet
 		'009C' => ['actor_look_at', 'a4 v C', [qw(ID head body)]], # 9
 		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]], # 17
 		'009E' => ['item_appeared', 'a4 v C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]], # 17
-		# 0x009F is sent packet
 		'00A0' => ['inventory_item_added', 'v3 C3 a8 v C2', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]], # 23
 		'00A1' => ['item_disappeared', 'a4', [qw(ID)]], # 6
-		# 0x00a2 is sent packet
 		'00A3' => ['inventory_items_stackable'], # -1
 		'00A4' => ['inventory_items_nonstackable'], # -1
 		'00A5' => ['storage_items_stackable'], # -1
 		'00A6' => ['storage_items_nonstackable'], # -1
-		# 0x00a7 is sent packet
 		'00A8' => ['use_item', 'v2 C', [qw(index amount success)]], # 7
-		# 0x00a9 is sent packet
 		'00AA' => ['equip_item', 'v2 C', [qw(index type success)]], # 7
-		# 0x00ab is sent packet
 		'00AC' => ['unequip_item', 'v2 C', [qw(index type success)]], # 7
-		# // 0x00ad,0
-		# 0x00ae,-1
 		'00AF' => ['inventory_item_removed', 'v2', [qw(index amount)]], # 6
 		'00B0' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'00B1' => ['exp_zeny_info', 'v V', [qw(type val)]], # 8
-		# 0x00b2 is sent packet
 		'00B3' => ['switch_character', 'C', [qw(result)]], # 3
 		'00B4' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]], # -1
 		'00B5' => ['npc_talk_continue', 'a4', [qw(ID)]], # 6
 		'00B6' => ['npc_talk_close', 'a4', [qw(ID)]], # 6
 		'00B7' => ['npc_talk_responses'], # -1
-		# 0x00b8 is sent packet
-		# 0x00b9 is sent packet
-		# 0x00ba is sent packet
-		# 0x00bb is sent packet
 		'00BC' => ['stats_added', 'v C C', [qw(type result val)]], # 6
 		'00BD' => ['stats_info', 'v C12 v14', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical stance manner)]],
 		'00BE' => ['stats_points_needed', 'v C', [qw(type val)]], # 5
-		# 0x00bf is sent packet
 		'00C0' => ['emoticon', 'a4 C', [qw(ID type)]], # 7
-		# 0x00c1 is sent packet
 		'00C2' => ['users_online', 'V', [qw(users)]], # 6
 		'00C3' => ['job_equipment_hair_change', 'a4 C2', [qw(ID part number)]], # 8
 		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]], # 6
-		# 0x00c5 is sent packet
 		'00C6' => ['npc_store_info'], # -1
 		'00C7' => ['npc_sell_list', 'v a*', [qw(len itemsdata)]], # -1
-		# 0x00c8 is sent packet
-		# 0x00c9 is sent packet
 		'00CA' => ['buy_result', 'C', [qw(fail)]], # 3
 		'00CB' => ['sell_result', 'C', [qw(fail)]], # 3
-		# 0x00cc is sent packet
 		'00CD' => ['disconnect_character', 'C', [qw(result)]], # 3
-		# 0x00d0 is sent packet
 		'00D1' => ['ignore_player_result', 'C2', [qw(type error)]], # 4
 		'00D2' => ['ignore_all_result', 'C2', [qw(type error)]], # 4
-		# 0x00d3 is sent packet
 		'00D4' => ['whisper_list', 'v', [qw(len)]], # -1
-		# 0x00d5 is sent packet
 		'00D6' => ['chat_created', 'C', [qw(result)]], # 3
 		'00D7' => ['chat_info', 'v a4 a4 v2 C a*', [qw(len ownerID ID limit num_users public title)]], # -1
 		'00D8' => ['chat_removed', 'a4', [qw(ID)]],
-		# 0x00d9 is sent packet
 		'00DA' => ['chat_join_result', 'C', [qw(type)]], # 3
 		'00DB' => ['chat_users'], # -1
 		'00DC' => ['chat_user_join', 'v Z24', [qw(num_users user)]], # 28
 		'00DD' => ['chat_user_leave', 'v Z24 C', [qw(num_users user flag)]], # 29
-		# 0x00de is sent packet
 		'00DF' => ['chat_modified', 'v a4 a4 v2 C a*', [qw(len ownerID ID limit num_users public title)]], # -1
-		# 0x00e0 is sent packet
 		'00E1' => ['chat_newowner', 'V Z24', [qw(type user)]], # 30 # type = role
-		# 0x00e2 is sent packet
-		# 0x00e3 is sent packet
-		# 0x00e4 is sent packet
 		'00E5' => ['deal_request', 'Z24', [qw(user)]], # 26
-		# 0x00e6 is sent packet
 		'00E7' => ['deal_begin', 'C', [qw(type)]], # 3
-		# 0x00e8 is sent packet
 		'00E9' => ['deal_add_other', 'V v C3 a8', [qw(amount nameID identified broken upgrade cards)]], # 19
 		'00EA' => ['deal_add_you', 'v C', [qw(index fail)]], # 5
-		# 0x00eb is sent packet
 		'00EC' => ['deal_finalize', 'C', [qw(type)]], # 3
-		# 0x00ed is sent packet
 		'00EE' => ['deal_cancelled'], # 2
-		# 0x00ef is sent packet
 		'00F0' => ['deal_complete', 'C', [qw(fail)]], # 3
 		'00F1' => ['deal_undo'], # 2
 		'00F2' => ['storage_opened', 'v2', [qw(items items_max)]], # 6
-		# 0x00f3 is sent packet
 		'00F4' => ['storage_item_added', 'v V v C3 a8', [qw(index amount nameID identified broken upgrade cards)]], # 21
-		# 0x00f5 is sent packet
 		'00F6' => ['storage_item_removed', 'v V', [qw(index amount)]], # 8
-		# 0x00f7 is sent packet
 		'00F8' => ['storage_closed'], # 2
-		# 0x00f9 is sent packet
 		'00FA' => ['party_organize_result', 'C', [qw(fail)]], # 3
 		'00FB' => ['party_users_info', 'v Z*', [qw(len party_name)]], # -1
-		# 0x00fc is sent packet
 		'00FD' => ['party_invite_result', 'Z24 C', [qw(name type)]], # 27
 		'00FE' => ['party_invite', 'a4 Z24', [qw(ID name)]], # 30
-		# 0x00ff is sent packet
-		# 0x0100 is sent packet
 		'0101' => ['party_exp', 'V', [qw(type)]], # 6
-		# 0x0102 is sent packet
-		# 0x0103 is sent packet
 		'0104' => ['party_join', 'a4 V v2 C Z24 Z24 Z16', [qw(ID role x y type name user map)]], # 79
 		'0105' => ['party_leave', 'a4 Z24 C', [qw(ID name flag)]], # 31
 		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]], # 10
@@ -249,18 +176,12 @@ sub new {
 		'010F' => ['skills_list'], # -1
 		# 0x0110 # TODO
 		'0111' => ['skill_add', 'v V v3 Z24 C', [qw(skillID target lv sp range name upgradable)]], # 39
-		# 0x0112 is sent packet
-		# 0x0113 is sent packet
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 31
 		'0115' => ['skill_use_position', 'v a4 a4 V3 v5 C', [qw(skillID sourceID targetID tick src_speed dst_speed x y damage level option type)]], # 35
-		# 0x0116 is sent packet
 		'0117' => ['skill_use_location', 'v a4 v3 V', [qw(skillID sourceID lv x y tick)]], # 18
-		# 0x0118 is sent packet
 		'0119' => ['character_status', 'a4 v3 C', [qw(ID opt1 opt2 option stance)]], # 13
 		'011A' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID success)]], # 15
-		# 0x011b is sent packet
 		'011C' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
-		# 0x011d is sent packet
 		'011E' => ['memo_success', 'C', [qw(fail)]], # 3
 		'011F' => ['area_spell', 'a4 a4 v2 C2', [qw(ID sourceID x y type fail)]], # 16
 		'0120' => ['area_spell_disappears', 'a4', [qw(ID)]], # 6
@@ -269,206 +190,132 @@ sub new {
 		'0123' => ['cart_items_stackable'], # -1
 		'0124' => ['cart_item_added', 'v V v C3 a8', [qw(index amount nameID identified broken upgrade cards)]], # 21
 		'0125' => ['cart_item_removed', 'v V', [qw(index amount)]], # 8
-		# 0x0126 is sent packet
-		# 0x0127 is sent packet
-		# 0x0128 is sent packet
-		# 0x0129 is sent packet
-		# 0x012a is sent packet
 		'012B' => ['cart_off'], # 2
 		'012C' => ['cart_add_failed', 'C', [qw(fail)]], # 3
 		'012D' => ['shop_skill', 'v', [qw(number)]], # 4
-		# 0x012e is sent packet
-		# 0x012f is sent packet
-		# 0x0130 is sent packet
 		'0131' => ['vender_found', 'a4 A80', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
 		'0133' => ['vender_items_list', 'v a4', [qw(len venderID)]], # -1
-		# 0x0134 is sent packet
 		'0135' => ['vender_buy_fail', 'v2 C', [qw(index amount fail)]], # 7
 		'0136' => ['vending_start'], # -1
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]], # 6
-		# 0x0138 is sent packet
 		'0139' => ['monster_ranged_attack', 'a4 v5', [qw(ID sourceX sourceY targetX targetY range)]], # 16
 		'013A' => ['attack_range', 'v', [qw(type)]], # 4
 		'013B' => ['arrow_none', 'v', [qw(type)]], # 4
 		'013C' => ['arrow_equipped', 'v', [qw(index)]], # 4
 		'013D' => ['hp_sp_changed', 'v2', [qw(type amount)]], # 6
 		'013E' => ['skill_cast', 'a4 a4 v3 V2', [qw(sourceID targetID x y skillID type wait)]], # 24
-		# 0x013f is sent packet
-		# 0x0140 is sent packet
 		'0141' => ['stat_info2', 'V2 l', [qw(type val val2)]], # 14
 		'0142' => ['npc_talk_number', 'a4', [qw(ID)]], # 6
-		# 0x0143 is sent packet
 		'0144' => ['minimap_indicator', 'a4 V3 C5', [qw(npcID type x y ID blue green red alpha)]], # 23
 		'0145' => ['image_show', 'Z16 C', [qw(name type)]], # 19
-		# 0x0146 is sent packet
 		'0147' => ['item_skill', 'v V v3 Z24 C', [qw(skillID targetType skillLv sp range skillName upgradable)]], # 39
 		'0148' => ['resurrection', 'a4 v', [qw(targetID type)]], # 8
-		# 0x0149 is sent packet
 		'014A' => ['manner_message', 'V', [qw(type)]], # 6
 		'014B' => ['GM_silence', 'C Z24', [qw(type name)]], # 27
 		'014C' => ['guild_allies_enemy_list'], # -1
-		# 0x014d is sent packet
 		'014E' => ['guild_master_member', 'V', [qw(type)]], # 6
-		# 0x014f is sent packet
 		'0150' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string)]], # 110
-		# 0x0151 is sent packet
 		'0152' => ['guild_emblem', 'v a4 a4 a*', [qw(len guildID emblemID emblem)]], # -1
-		# 0x0153 is sent packet
 		'0154' => ['guild_members_list'], # -1
-		# 0x0155 is sent packet
 		'0156' => ['guild_member_position_changed', 'v V3', [qw(len accountID charID positionID)]], # -1 # FIXME: this is a variable len message, can hold multiple entries
-		# 0x0157 is sent packet
 		# 0x0158,-1 # TODO
-		# 0x0159 is sent packet
 		'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]], # 66
-		# 0x015b is sent packet
 		'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message account)]], # 90
-		# 0x015d is sent packet
 		'015E' => ['guild_broken', 'V', [qw(flag)]], # 6 # clif_guild_broken
 		'015F' => ['guild_disband', 'Z40', [qw(reason)]], # 42
 		'0160' => ['guild_member_setting_list'], # -1
-		# 0x0161 is sent packet
 		'0162' => ['guild_skills_list'], # -1
 		'0163' => ['guild_expulsionlist'], # -1
 		'0164' => ['guild_other_list'], # -1
-		# 0x0165 is sent packet
 		'0166' => ['guild_members_title_list'], # -1
 		'0167' => ['guild_create_result', 'C', [qw(type)]], # 3
-		# 0x0168 is sent packet
 		'0169' => ['guild_invite_result', 'C', [qw(type)]], # 3
 		'016A' => ['guild_request', 'a4 Z24', [qw(ID name)]], # 30
-		# 0x016b is sent packet
 		'016C' => ['guild_name', 'a4 a4 V C a4 Z24', [qw(guildID emblemID mode is_master interSID guildName)]], # 43
 		'016D' => ['guild_member_online_status', 'a4 a4 V', [qw(ID charID online)]], # 14
-		# 0x016e is sent packet
 		'016F' => ['guild_notice', 'Z60 Z120', [qw(subject notice)]], # 182
-		# 0x0170 is sent packet
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID guildName)]], # 30
-		# 0x0172 is sent packet
 		'0173' => ['guild_alliance', 'C', [qw(flag)]], # 3
 		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(len ID mode sameID exp position_name)]], # -1 # FIXME: this is a var len message!!!
-		# 0x0175 is sent packet
 		'0176' => ['guild_member_info', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
 		'0177' => ['identify_list'], # -1
-		# 0x0178 is sent packet
 		'0179' => ['identify', 'v C', [qw(index flag)]], # 5
-		# 0x017a is sent packet
 		'017B' => ['card_merge_list'], # -1
-		# 0x017c is sent packet
 		'017D' => ['card_merge_status', 'v2 C', [qw(item_index card_index fail)]], # 7
-		# 0x017e is sent packet
 		'017F' => ['guild_chat', 'v Z*', [qw(len message)]], # -1
-		# 0x0180 is sent packet
 		'0181' => ['guild_opposition_result', 'C', [qw(flag)]], # 3 # clif_guild_oppositionack
 		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
-		# 0x0183 is sent packet
 		'0184' => ['guild_unally', 'a4 V', [qw(guildID flag)]], # 10 # clif_guild_delalliance
 		'0185' => ['guild_alliance_added', 'a4 a4 Z24', [qw(opposition alliance_guildID name)]], # 34 # clif_guild_allianceadded
 		# // 0x0186,0
 		'0187' => ['sync_request', 'a4', [qw(ID)]], # 6
 		'0188' => ['item_upgrade', 'v3', [qw(type index upgrade)]], # 8
 		'0189' => ['no_teleport', 'v', [qw(fail)]], # 4
-		# 0x018a is sent packet
 		'018B' => ['quit_response', 'v', [qw(fail)]], # 4
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]], # 29
 		'018D' => ['forge_list'], # -1
-		# 0x018e is sent packet
 		'018F' => ['refine_result', 'v2', [qw(fail nameID)]], # 6
-		# 0x0190 is sent packet
 		'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # 86 # talkie box message
 		'0192' => ['map_change_cell', 'v3 Z16', [qw(x y type map_name)]], # 24 # ex. due to ice wall
-		# 0x0193 is sent packet
 		'0194' => ['character_name', 'a4 Z24', [qw(ID name)]], # 30
 		'0195' => ['actor_info', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]], # 102
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]], # 9
-		# 0x0197 is sent packet
-		# 0x0198 is sent packet
 		'0199' => ['map_property', 'v', [qw(type)]], #4
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]], # 14
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]], # 10
-		# 0x019c is sent packet
-		# 0x019d is sent packet
 		'019E' => ['pet_capture_process'], # 2
-		# 0x019f is sent packet
 		'01A0' => ['pet_capture_result', 'C', [qw(success)]], # 3
-		# 0x01a1 is sent packet
 		'01A2' => ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]], # 35
 		'01A3' => ['pet_food', 'C v', [qw(success foodID)]], # 5
 		'01A4' => ['pet_info2', 'C a4 V', [qw(type ID value)]], # 11
-		# 0x01a5 is sent packet
 		'01A6' => ['egg_list'], # -1
-		# 0x01a7 is sent packet
-		# 0x01a8 is sent packet
-		# 0x01a9 is sent packet
 		'01AA' => ['pet_emotion', 'a4 V', [qw(ID type)]], # 10
 		'01AB' => ['actor_muted', 'a4 v V', [qw(ID duration)]], # 12
 		'01AC' => ['actor_trapped', 'a4', [qw(ID)]], # 6
 		'01AD' => ['arrowcraft_list'], # -1
-		# 0x01ae is sent packet
-		# 0x01af is sent packet
 		'01B0' => ['monster_typechange', 'a4 C V', [qw(ID type nameID)]], # 11
 		'01B1' => ['show_digit', 'C V', [qw(type value)]], # 7
-		# 0x01b2 is sent packet
 		'01B3' => ['npc_image', 'Z64 C', [qw(npc_image type)]], # 67
 		'01B4' => ['guild_emblem_update', 'a4 a4 a2', [qw(ID guildID emblemID)]], # 12
 		'01B5' => ['account_payment_info', 'V2', [qw(D_minute H_minute)]], # 18
 		'01B6' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16 V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)]], # 114
-		# 0x01b7 is sent packet
 		'01B8' => ['guild_zeny', 'C', [qw(result)]], # 3
 		'01B9' => ['cast_cancelled', 'a4', [qw(ID)]], # 6
-		# 0x01ba is sent packet
-		# 0x01bb is sent packet
-		# 0x01bc is sent packet
-		# 0x01bd is sent packet
 		'01BE' => ['ask_pngameroom'], # 2
-		# 0x01bf is sent packet
-		# 0x01c0 is sent packet
 		'01C1' => ['remaintime_reply', 'V3', [qw(result expire_date remain_time)]], # 14
 		'01C2' => ['remaintime_info', 'V2', [qw(type remain_time)]], # 10
 		'01C3' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], # -1
 		'01C4' => ['storage_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]], # 22
 		'01C5' => ['cart_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]], # 22
-		# 0x01c6 is sent packet
 		'01C7' => ['encryption_acknowledge'], # 2
 		'01C8' => ['item_used', 'v2 a4 v C', [qw(index itemID ID remaining success)]], # 13
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]], # 97
 		# // 0x01ca,0
-		# 0x01cb is sent packet
 		'01CC' => ['monster_talk', 'a4 C3', [qw(ID stateID skillID arg)]], # 9
 		'01CD' => ['sage_autospell', 'a*', [qw(autospell_list)]], # 30
-		# 0x01ce is sent packet
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]], # 28
 		'01D0' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]], # 8
 		'01D1' => ['blade_stop', 'a4 a4 V', [qw(sourceID targetID active)]], # 14
 		'01D2' => ['combo_delay', 'a4 V', [qw(ID delay)]], # 10
 		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type term ID)]], # 35
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]], # 6
-		# 0x01d5 is sent packet
 		'01D6' => ['map_property2', 'v', [qw(type)]], # 4
 		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]], # 11 # TODO: inconsistent with C structs
 		'01D8' => ['actor_exists', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]], # 54 # standing
 		'01D9' => ['actor_connected', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 53 # spawning
 		'01DA' => ['actor_moved', 'a4 v9 V v5 a4 a2 v2 C2 a6 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 60 # walking
-		# 0x01db is sent packet
 		# 0x01dc,-1 # TODO
-		# 0x01dd is sent packet
 		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 33
-		# 0x01df is sent packet
 		'01E0' => ['GM_req_acc_name', 'a4 Z24', [qw(targetID accountName)]], # 30
 		'01E1' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]], # 8
 		'01E2' => ['marriage_req', 'a4 a4 Z24', [qw(AID GID name)]], # 34 # TODO: rename vars?
-		# 0x01e3 is sent packet
 		'01E4' => ['marriage_start'], # 2
-		# 0x01e5 is sent packet
 		'01E6' => ['marriage_partner_name', 'Z24', [qw(name)]],  # 26
-		# 0x01e7 is sent packet
-		# 0x01e8 is sent packet
 		'01E9' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]], # 81
 		'01EA' => ['married', 'a4', [qw(ID)]], # 6
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]], # 10
 		'01EC' => ['guild_member_map_change', 'a4 a4 Z16', [qw(GDID AID mapName)]], # 26 # TODO: change vars, add sub
-		# 0x01ed is sent packet
 		'01EE' => ['inventory_items_stackable'], # -1
 		'01EF' => ['cart_items_stackable'], # -1
 		'01F0' => ['storage_items_stackable'], # -1
@@ -478,24 +325,14 @@ sub new {
 		'01F4' => ['deal_request', 'Z24 a4 v', [qw(user ID level)]], # 32
 		'01F5' => ['deal_begin', 'C a4 v', [qw(type targetID level)]], # 9
 		'01F6' => ['adopt_request', 'a4 a4 Z24', [qw(sourceID targetID name)]], # 34
-		# 0x01f7 is sent packet
 		'01F8' => ['adopt_start'], # 2
-		# 0x01e9 is sent packet
-		# 0x01fa is sent packet
-		# 0x01fb is sent packet
 		'01FC' => ['repair_list'], # -1
-		# 0x01fd is sent packet
 		'01FE' => ['repair_result', 'v C', [qw(nameID flag)]], # 5
 		'01FF' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
-		# 0x0200 is sent packet
 		'0201' => ['friend_list'], # -1
-		# 0x0202 is sent packet
-		# 0x0203 is sent packet
-		# 0x0204 is sent packet
 		'0205' => ['divorced', 'Z24', [qw(name)]], # 26 # clif_divorced
 		'0206' => ['friend_logon', 'a4 a4 C', [qw(friendAccountID friendCharID isNotOnline)]], # 11
 		'0207' => ['friend_request', 'a4 a4 Z24', [qw(accountID charID name)]], # 34
-		# 0x0208 is sent packet
 		'0209' => ['friend_response', 'v a4 a4 Z24', [qw(type accountID charID name)]], # 36
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]], # 10
 		# // 0x020b,0
@@ -515,11 +352,7 @@ sub new {
 		'08D1' => ['unequip_item', 'v2 C', [qw(index type success)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
-	);
-
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
+	};
 
 	# TODO: this is a hack
 	# after the implementation of complex struct unpacking, the solution will be more elegant
