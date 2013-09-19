@@ -685,11 +685,7 @@ sub sendIgnoreListGet {
 
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
-	my $msg;
-	
-	$msg = pack("C*", 0xA7, 0x00).pack("v*",$ID) .
-		$targetID;
-
+	my $msg = pack("C*", 0xA7, 0x00).pack("v*",$ID) .$targetID;
 	$self->sendToServer($msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
