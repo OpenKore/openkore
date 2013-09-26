@@ -266,14 +266,16 @@ sub selectSkill {
                             main::timeOut($delay{$prefix.$i."_blockDelayAfterUse"}) &&
                             ((!$config{$prefix.$i."_target"}) || existsInList($config{$prefix.$i."_target"}, $currentTarget->{'name'})) &&
                             ((!$config{$prefix.$i."_notTarget"}) || !existsInList($config{$prefix.$i."_notTarget"}, $currentTarget->{'name'})) &&
-                     ((!$config{$prefix.$i."_Element"}) || (existsInList($config{$prefix.$i."_Element"}, $element) || existsInList($config{$prefix.$i."_Element"}, $element.$element_lvl))) &&
-                     ((!$config{$prefix.$i."_notElement"}) || (!existsInList($config{$prefix.$i."_notElement"}, $element) && !existsInList($config{$prefix.$i."_notElement"}, $element.$element_lvl))) &&
-                     ((!$config{$prefix.$i."_Race"}) || existsInList($config{$prefix.$i."_Race"}, $race)) &&
-                     ((!$config{$prefix.$i."_notRace"}) || !existsInList($config{$prefix.$i."_notRace"}, $race)) &&
-                     ((!$config{$prefix.$i."_Size"}) || existsInList($config{$prefix.$i."_Size"}, $size)) &&
-                     ((!$config{$prefix.$i."_notSize"}) || !existsInList($config{$prefix.$i."_notSize"}, $size)) &&
-                     ((!$config{$prefix.$i."_notImmovable"}) || ($monsterDB{$ID}{mode} & MD_CANMOVE)) &&
-                     (round(distance($charpos, $monsterpos)) <= $config{$prefix.$i."_dist"})
+                    		((!$config{$prefix.$i."_Element"}) || (existsInList($config{$prefix.$i."_Element"}, $element) || existsInList($config{$prefix.$i."_Element"}, $element.$element_lvl))) &&
+                     	    ((!$config{$prefix.$i."_notElement"}) || (!existsInList($config{$prefix.$i."_notElement"}, $element) && !existsInList($config{$prefix.$i."_notElement"}, $element.$element_lvl))) &&
+                    	    ((!$config{$prefix.$i."_Race"}) || existsInList($config{$prefix.$i."_Race"}, $race)) &&
+                    	    ((!$config{$prefix.$i."_notRace"}) || !existsInList($config{$prefix.$i."_notRace"}, $race)) &&
+                     	    ((!$config{$prefix.$i."_Size"}) || existsInList($config{$prefix.$i."_Size"}, $size)) &&
+                     	    ((!$config{$prefix.$i."_notSize"}) || !existsInList($config{$prefix.$i."_notSize"}, $size)) &&
+                     	    ((!$config{$prefix.$i."_notImmovable"}) || ($monsterDB{$ID}{mode} & MD_CANMOVE)) &&
+							((!$config{$prefix.$i."_whenStatusActive"}) || ($char->statusActive($config{$prefix.$i."_whenStatusActive"}))) &&
+							((!$config{$prefix.$i."_whenStatusInactive"}) || (!$char->statusActive($config{$prefix.$i."_whenStatusInactive"}))) &&
+                     	    (round(distance($charpos, $monsterpos)) <= $config{$prefix.$i."_dist"})
                     ) {
                      my $monsterID = $currentTarget->{type};
                      my $castLevel = 10;
