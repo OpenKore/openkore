@@ -187,7 +187,7 @@ sub choose {
                     AI::dequeue;
             } elsif (!$currentTarget) {
                     AI::dequeue;
-            } elsif ($args->{'stage'} eq 'skillUse') {
+            } elsif (($args->{'stage'} eq 'skillUse')) {
                     main::ai_skillUse(
                         $args->{'handle'},
                         $args->{'lvl'},
@@ -195,8 +195,11 @@ sub choose {
                         $args->{'minCastTime'},
                         $args->{'target'}
                     );
+					#$currentTarget = "";
                     $args->{'stage'} = 'end';
-            } 
+            } else {
+				AI::dequeue;
+			}
     }
     if ($currentTarget && AI::action eq "attack") {
             selectSkill();
@@ -293,6 +296,7 @@ sub selectSkill {
                      }
                      $i++;
                      next if $fellThrough;
+					 last if ($damageNeeded <= 0);
                             $skill{'lvl'} = $castLevel;
                             $skill{'maxCastTime'} = $config{$prefix.$i."_maxCastTime"};
                             $skill{'minCastTime'} = $config{$prefix.$i."_minCastTime"};
