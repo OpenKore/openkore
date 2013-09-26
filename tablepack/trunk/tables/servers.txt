@@ -93,9 +93,10 @@ charBlockSize 116
 
 # Renewal
 [International - iRO: Ymir/Yggdrasil/Valkyrie]
+# http://playragnarok.com
 title International - iRO: Chaos (Renewal-compatible)
 ip 128.241.92.162
-port 6900
+port 6800
 master_version 1
 version 18
 serverType iRO
@@ -106,8 +107,9 @@ addTableFolders iRO
 charBlockSize 144
 
 [International - iRO: Sakray]
+# http://playragnarok.com
 ip 128.241.92.162
-port 6900
+port 6800
 master_version 14
 version 18
 serverType iRO
@@ -119,9 +121,10 @@ addTableFolders iRO
 
 #Pre-renewal
 [International - iRO: Loki Classic]
+# http://playragnarok.com
 title International - iRO: Loki (Classic-compatible)
 ip 128.241.92.162
-port 6900
+port 6800
 master_version 1
 version 18
 serverType iRO_Classic

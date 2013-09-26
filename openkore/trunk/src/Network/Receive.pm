@@ -1396,9 +1396,9 @@ sub skill_post_delay {
 	my ($self, $args) = @_;
 
 	my $skillName = (new Skill(idn => $args->{ID}))->getName;
-	my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : ' Delay';
+	my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : 'Delay';
 
-	$char->setStatus($skillName.$status, 1, $args->{time});
+	$char->setStatus($skillName." ".$status, 1, $args->{time});
 }
 
 # 0828,14
