@@ -655,7 +655,7 @@ pvp_n_5-3.gnd#job_wizard.gnd#
 pvp_n_6-3.gnd#job_wizard.gnd#
 pvp_n_7-3.gnd#job_wizard.gnd#
 pvp_n_8-3.gnd#job_wizard.gnd#
-pvp_n_1-4.gnd#job_priest.gnd#
+pvp_n_1-4.gnd#abyss_03.gnd#
 pvp_n_2-4.gnd#job_priest.gnd#
 pvp_n_3-4.gnd#job_priest.gnd#
 pvp_n_4-4.gnd#job_priest.gnd#
@@ -695,7 +695,7 @@ pvp_n_5-3.gat#job_wizard.gat#
 pvp_n_6-3.gat#job_wizard.gat#
 pvp_n_7-3.gat#job_wizard.gat#
 pvp_n_8-3.gat#job_wizard.gat#
-pvp_n_1-4.gat#job_priest.gat#
+pvp_n_1-4.gat#abyss_03.gat#
 pvp_n_2-4.gat#job_priest.gat#
 pvp_n_3-4.gat#job_priest.gat#
 pvp_n_4-4.gat#job_priest.gat#
@@ -735,7 +735,7 @@ pvp_n_5-3.rsw#job_wizard.rsw#
 pvp_n_6-3.rsw#job_wizard.rsw#
 pvp_n_7-3.rsw#job_wizard.rsw#
 pvp_n_8-3.rsw#job_wizard.rsw#
-pvp_n_1-4.rsw#job_priest.rsw#
+pvp_n_1-4.rsw#abyss_03.rsw#
 pvp_n_2-4.rsw#job_priest.rsw#
 pvp_n_3-4.rsw#job_priest.rsw#
 pvp_n_4-4.rsw#job_priest.rsw#
@@ -812,7 +812,7 @@ nguild_gef.gnd#gefg_cas01.gnd#
 АЇАъАОЕНЖдАМЅє\map\pvp_n_6-3.bmp#АЇАъАОЕНЖдАМЅє\map\job_wizard.bmp#
 АЇАъАОЕНЖдАМЅє\map\pvp_n_7-3.bmp#АЇАъАОЕНЖдАМЅє\map\job_wizard.bmp#
 АЇАъАОЕНЖдАМЅє\map\pvp_n_8-3.bmp#АЇАъАОЕНЖдАМЅє\map\job_wizard.bmp#
-АЇАъАОЕНЖдАМЅє\map\pvp_n_1-4.bmp#АЇАъАОЕНЖдАМЅє\map\job_priest.bmp#
+АЇАъАОЕНЖдАМЅє\map\pvp_n_1-4.bmp#АЇАъАОЕНЖдАМЅє\map\abyss_03.bmp#
 АЇАъАОЕНЖдАМЅє\map\pvp_n_2-4.bmp#АЇАъАОЕНЖдАМЅє\map\job_priest.bmp#
 АЇАъАОЕНЖдАМЅє\map\pvp_n_3-4.bmp#АЇАъАОЕНЖдАМЅє\map\job_priest.bmp#
 АЇАъАОЕНЖдАМЅє\map\pvp_n_4-4.bmp#АЇАъАОЕНЖдАМЅє\map\job_priest.bmp#

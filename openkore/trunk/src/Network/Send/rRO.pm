@@ -25,7 +25,6 @@ sub new {
 	my %packets = (
 		'0090' => ['sendTalk'],
 		'00A7' => ['sendItemUse'],
-		'00A9' => ['sendEquip'],
 		'00AB' => ['sendUnequip'],
 		'00BB' => ['sendAddStatusPoint'],
 		'00B8' => ['sendTalkResponse'],
@@ -35,7 +34,12 @@ sub new {
 		'0146' => ['sendTalkCancel'],
 		'0364' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'0365' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0844' => ['sendCachShopOpen'],#2
+		'084A' => ['sendCachShopClose'],#2
 		'08B8' => ['security_code'],#10
+		'08C9' => ['request_cashitems'],#2
+		'0907' => ['item_to_favorite', 'v C', [qw(index flag)]],#5 TODO where 'flag'=0|1 (0 - move item to favorite tab, 1 - move back) 
+		'0998' => ['sendEquip'],#8
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
@@ -50,6 +54,7 @@ sub new {
 		item_take 0362
 		party_setting 07D7
 		skill_use 0113
+		skill_use_location 0366
 		storage_item_add 0364
 		storage_item_remove 0365
 	);
@@ -58,5 +63,11 @@ sub new {
 	return $self;
 }
 
+sub sendEquip {
+	my ($self, $index, $type) = @_;
+	my $msg = pack('v2 V', 0x0998, $index, $type);
+	$self->sendToServer($msg);
+	debug "Sent Equip: $index Type: $type\n" , 2;
+}
 
 1;
