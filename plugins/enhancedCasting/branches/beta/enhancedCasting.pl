@@ -185,6 +185,8 @@ sub choose {
             my $args = AI::args;
             if ($args->{'stage'} eq 'end') {
                     AI::dequeue;
+            } elsif (!$currentTarget) {
+                    AI::dequeue;
             } elsif ($args->{'stage'} eq 'skillUse') {
                     main::ai_skillUse(
                         $args->{'handle'},
@@ -194,9 +196,7 @@ sub choose {
                         $args->{'target'}
                     );
                     $args->{'stage'} = 'end';
-            } elsif (!$currentTarget) {
-                    $args->{'stage'} = 'end';
-            }
+            } 
     }
     if ($currentTarget && AI::action eq "attack") {
             selectSkill();
