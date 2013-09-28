@@ -20,8 +20,10 @@ prt_in.rsw#Inside Prontera#
 prt_castle.rsw#Prontera Castle#
 prt_church.rsw#the Santuary#
 izlude.rsw#Izlude Town#
+izlude_a.rsw#Satellite city Izlude#
 izlude_in.rsw#Inside Izlude#
 izlu2dun.rsw#Byalan Island#
+iz_int01.rsw#Intro#
 monk_in.rsw#Inside St.Abbey#
 prt_are_in.rsw#Waiting room#
 arena_room.rsw#Waiting room#
