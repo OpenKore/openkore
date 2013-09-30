@@ -289,7 +289,7 @@ sub selectSkill {
                     last;
                 } elsif ($angle == 270) {
                     $skill{'adjust'}{'x'} = $charpos->{'x'};
-                    $skill{'sadjust'}{'y'} = $charpos->{'y'} - ($config{$prefix . $i . "_stepBack"} || 1);
+                    $skill{'adjust'}{'y'} = $charpos->{'y'} - ($config{$prefix . $i . "_stepBack"} || 1);
                     $skill{'stage'} = 'adjust';
                     AI::queue('castBetween', \%skill);
                     last;
@@ -417,7 +417,8 @@ sub selectSkill {
                 $delay{$prefix . $i . "_blockDelayBeforeUse"}{'set'} = 0;
                 debug("Selected level $skill{'lvl'} for $skill{'handle'} to attack $currentTarget->{'name_given'}\n", 'enhancedCasting', 1);
                 last;
-            } elseif((checkCoordsCondition($prefix . $i . "_coords", \%skill)) &&
+            } elsif (
+				  (checkCoordsCondition($prefix . $i . "_coords", \%skill)) &&
                   main::timeOut($delay{$prefix . $skillObj->getHandle . "_skillDelay"}) &&
                   main::timeOut($delay{$prefix . $i . "_blockDelayAfterUse"}) &&
                   ((!$config{$prefix . $i . "_target"}) || existsInList($config{$prefix . $i . "_target"}, $currentTarget->{'name'})) &&
