@@ -1637,6 +1637,7 @@ sub cmdExp {
 		$elasped = 0;
 		$totalelasped = 0;
 		undef %itemChange;
+		$char->{'deathCount'} = 0;
 		$bytesSent = 0;
 		$packetParser->{bytesProcessed} = 0 if $packetParser;
 		message T("Exp counter reset.\n"), "success";
