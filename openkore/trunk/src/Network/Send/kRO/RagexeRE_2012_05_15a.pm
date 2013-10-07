@@ -12,7 +12,7 @@
 package Network::Send::kRO::RagexeRE_2012_05_15a;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2012_04_10a);
+use base qw(Network::Send::kRO::RagexeRE_2012_04_18a);
 use Log qw(debug);
 
 sub new {
@@ -25,27 +25,27 @@ sub new {
 		'0437' => undef,
 		'0438' => undef,
 		'083C' => undef,
+		'07EC' => undef,
+		'022D' => undef,
 		'085A' => ['storage_item_add', 'v V', [qw(index amount)]],#8
 		'0869' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
-		'086C' => undef,
-		'0871' => undef,
+		'0202' => undef,
 		'087C' => ['character_move','a3', [qw(coordString)]],#5
 		'087D' => ['sync', 'V', [qw(time)]],#6
-		'0884' => undef,
-		'0885' => undef,
-		'0886' => undef,
-		'0889' => undef,
-		'0891' => undef,
-		'089C' => undef,
+		'0368' => undef,
+		'0361' => undef,
+		'035F' => undef,
+		'096A' => undef,
+		'0362' => undef,
+		'023B' => undef,
 		'08A5' => ['actor_info_request', 'a4', [qw(ID)]],#6
-		'08A6' => undef,
 		'08A8' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
 		'08AC' => ['actor_look_at', 'v C', [qw(head body)]],#5
 		'08AD' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
-		'091C' => undef,
+		'0802' => undef,
 		'091F' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'0923' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
-		'0938' => undef,
+		'07E4' => undef,
 		'0947' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'094B' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		'0957' => ['actor_name_request', 'a4', [qw(ID)]],#6
