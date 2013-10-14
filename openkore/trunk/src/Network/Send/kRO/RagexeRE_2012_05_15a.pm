@@ -30,7 +30,7 @@ sub new {
 		'085A' => ['storage_item_add', 'v V', [qw(index amount)]],#8
 		'0869' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
 		'0202' => undef,
-		'087C' => ['character_move','a3', [qw(coordString)]],#5
+		'087C' => ['character_move','a3', [qw(coords)]],#5
 		'087D' => ['sync', 'V', [qw(time)]],#6
 		'0368' => undef,
 		'0361' => undef,
