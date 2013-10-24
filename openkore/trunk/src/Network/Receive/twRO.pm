@@ -82,8 +82,8 @@ sub received_characters_info {
 sub message_string { #twRO msgtable
 	my ($self, $args) = @_;
 
-	if (@msgTable[$args->{msg_id}++]) { # show message from msgstringtable
-		warning T(@msgTable[$args->{msg_id}++]."\n");
+	if ($msgTable[++$args->{msg_id}]) { # show message from msgstringtable
+		warning T($msgTable[$args->{msg_id}]."\n");
 		$self->mercenary_off() if ($args->{msg_id} >= 1267 && $args->{msg_id} <= 1270);
 
 	} else {
@@ -108,16 +108,16 @@ sub message_string { #twRO msgtable
 
 		} elsif ($args->{msg_id} == 1712) {
 			warning T("You need to be at least base level 10 to send private messages.\n"), "info";
-			
+
 		} elsif ($args->{msg_id} == 1924) {
 			warning T("Please try again after the current operation (i.e. NPC chat, crafting)\n"), "info";
-			
+
 		} elsif ($args->{msg_id} == 1774) {
 			warning T("You cannot equip this item due to the level required\n"), "info";
-			
+
 		} elsif ($args->{msg_id} == 1775) {
 			warning T("You cannot use this item due to the level required\n"), "info";
-			
+
 		} else {
 			warning TF("msg_id: %s gave unknown results in: %s\n", $args->{msg_id}, $self->{packet_list}{$args->{switch}}->[0]);
 		}
