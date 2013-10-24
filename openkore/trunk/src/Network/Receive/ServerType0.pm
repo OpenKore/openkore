@@ -3481,8 +3481,8 @@ sub mercenary_off {
 sub message_string {
 	my ($self, $args) = @_;
 
-	if (@msgTable[$args->{msg_id}++]) { # show message from msgstringtable
-		warning T(@msgTable[$args->{msg_id}++]."\n");
+	if ($msgTable[++$args->{msg_id}]) { # show message from msgstringtable
+		warning T($msgTable[$args->{msg_id}]."\n");
 		$self->mercenary_off() if ($args->{msg_id} >= 0x04F2 && $args->{msg_id} <= 0x04F5);
 
 	} else {
