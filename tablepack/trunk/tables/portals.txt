@@ -2962,4 +2962,19 @@ mal_in02 142 60 mal_in02 162 61
 xmas 139 307 evt_xmas 129 129 0 c r1
 
 #EP-14.2
+mora 182 74 bif_fild02 286 327
+bif_fild02 285 332 mora 179 74 0 c r0 n 
 bif_fild02 292 351 ecl_fild01 205 76
+ecl_fild01 207 72 bif_fild02 294 350
+ecl_fild01 182 82 ecl_tdun01 60 13
+ecl_tdun01 61 11 ecl_fild01 182 85
+ecl_tdun01 67 106 ecl_tdun02 60 88
+ecl_tdun02 60 90 ecl_tdun01 70 105
+ecl_tdun02 52 9 ecl_tdun03 47 13
+ecl_tdun03 49 11 ecl_tdun02 50 11
+ecl_tdun03 50 46 ecl_tdun04 26 24
+ecl_tdun04 26 26 ecl_tdun03 50 44
+ecl_fild01 97 322 eclage 100 28
+eclage 98 26 ecl_fild01 99 317
+eclage 299 309 ecl_in01 47 11
+ecl_in01 47 8 eclage 297 307
