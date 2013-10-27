@@ -519,7 +519,11 @@ sub actor_display {
 			$actor = new Actor::Player();
 			$actor->{appear_time} = time;
 			# New actor_display packets include the player's name
-			$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
+			if ($args->{switch} eq "0086") {
+				$actor->{name} = $args->{name};
+			} else {
+				$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
+			}
 			$mustAdd = 1;
 		}
 		$actor->{nameID} = $nameID;
