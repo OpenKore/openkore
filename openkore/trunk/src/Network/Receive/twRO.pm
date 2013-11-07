@@ -21,7 +21,7 @@ use base qw(Network::Receive::ServerType0);
 use Log qw(message warning error debug);
 use Network::MessageTokenizer;
 use Misc;
-use Utils qw(timeOut getHex);
+use Utils;
 use Translation;
 use I18N qw(bytesToString stringToBytes);
 
@@ -32,6 +32,9 @@ sub new {
 		'006D' => ['character_creation_successful', 'a4 V9 v V2 v14 Z24 C6 v2 Z*', [qw(charID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag mapname)]],
 		'0097' => ['private_message', 'v Z28 Z*', [qw(len privMsgUser privMsg)]],
 		'082D' => ['received_characters_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
+		'08FF' => ['actor_status_active2', 'a4 v V4', [qw(ID type tick unknown1 unknown2 unknown3)]],
+		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
+		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 	);
 
 	foreach my $switch (keys %packets) {
@@ -123,4 +126,79 @@ sub message_string { #twRO msgtable
 		}
 	}
 }
+
+#08FF
+sub actor_status_active2 {
+	my ($self, $args) = @_;
+
+	return unless Network::Receive::changeToInGameState();
+	my ($type, $ID, $tick, $unknown1, $unknown2, $unknown3) = @{$args}{qw(type ID tick unknown1 unknown2 unknown3)};
+	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
+	$cart{type} = $unknown1 if ($type == 673 && defined $unknown1 && ($ID eq $accountID)); # for Cart active
+	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
+	($args->{actor} = Actor::get($ID))->setStatus($status, 1, $tick == 9999 ? undef : $tick, $args->{unknown1});
+}
+
+#099B
+sub map_property3 {
+	my ($self, $args) = @_;
+
+	if($config{'status_mapType'}){
+		$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
+		grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
+		map {[$_, defined $mapTypeHandle{$_} ? $mapTypeHandle{$_} : "UNKNOWN_MAPTYPE_$_"]}
+		0 .. List::Util::max $args->{type}, keys %mapTypeHandle;
+	}
+
+	$pvp = {6 => 1, 8 => 2, 19 => 3}->{$args->{type}};
+	if ($pvp) {
+		Plugins::callHook('pvp_mode', {
+			pvp => $pvp # 1 PvP, 2 GvG, 3 Battleground
+		});
+	}
+}
+
+#099F
+sub area_spell_multiple2 {
+	my ($self, $args) = @_;
+
+	# Area effect spells; including traps!
+	my $len = $args->{len} - 4;
+	my $spellInfo = $args->{spellInfo};
+	my $msg = "";
+	my $binID;
+	my ($ID, $sourceID, $x, $y, $type, $range, $fail);
+	for (my $i = 0; $i < $len; $i += 18) {
+		$msg = substr($spellInfo, $i, 18);
+		($ID, $sourceID, $x, $y, $type, $range, $fail) = unpack('a4 a4 v3 X2 C2', $msg);
+
+		if ($spells{$ID} && $spells{$ID}{'sourceID'} eq $sourceID) {
+			$binID = binFind(\@spellsID, $ID);
+			$binID = binAdd(\@spellsID, $ID) if ($binID eq "");
+		} else {
+			$binID = binAdd(\@spellsID, $ID);
+		}
+	
+		$spells{$ID}{'sourceID'} = $sourceID;
+		$spells{$ID}{'pos'}{'x'} = $x;
+		$spells{$ID}{'pos'}{'y'} = $y;
+		$spells{$ID}{'pos_to'}{'x'} = $x;
+		$spells{$ID}{'pos_to'}{'y'} = $y;
+		$spells{$ID}{'binID'} = $binID;
+		$spells{$ID}{'type'} = $type;
+		if ($type == 0x81) {
+			message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
+		}
+		debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y)\n", "skill", 2;
+	}
+
+	Plugins::callHook('packet_areaSpell', {
+		fail => $fail,
+		sourceID => $sourceID,
+		type => $type,
+		x => $x,
+		y => $y
+	});
+}
+
 1;
