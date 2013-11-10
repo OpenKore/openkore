@@ -41,6 +41,7 @@ sub new {
 		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],#6
+		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],#10
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
@@ -56,6 +57,7 @@ sub new {
 		item_take 07E4
 		map_login 022D
 		party_join_request_by_name 0802
+		send_pin_password 08B8
 		skill_use 083C
 		skill_use_location 0438
 		storage_item_add 07EC
