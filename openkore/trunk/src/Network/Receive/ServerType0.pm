@@ -1943,7 +1943,7 @@ sub devotion {
 	}
 	$devotionList->{$args->{sourceID}}->{range} = $args->{range};
 
-	message "$msg", "devotion";
+	message TF("$msg"), "devotion";
 }
 
 sub egg_list {
@@ -2691,6 +2691,7 @@ sub guild_name {
 	$char->{guildID} = $guildID;
 	$char->{guild}{emblem} = $emblemID;
 
+	$messageSender->sendGuildMasterMemberCheck();
 	$messageSender->sendGuildRequestInfo(0);	#requests for guild info packet 01B6 and 014C
 	$messageSender->sendGuildRequestInfo(1);	#requests for guild member packet 0166 and 0154
 	debug "guild name: $guildName\n";
