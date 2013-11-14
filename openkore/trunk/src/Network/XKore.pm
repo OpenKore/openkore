@@ -339,13 +339,13 @@ sub inject {
 		}
 	}
 	if (!$dll) {
-		$@ = T("Cannot find $dllName. Please check your installation.");
+		$@ = TF("Cannot find %s. Please check your installation.", $dllName);
 		return 0;
 	}
 	if (Utils::Win32::InjectDLL($pid, $dll)) {
 		return 1;
 	} else {
-		$@ = T("Unable to inject $dll");
+		$@ = TF("Unable to inject %s",$dll);
 		return undef;
 	}
 }

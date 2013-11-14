@@ -1456,10 +1456,10 @@ sub createCharacter {
 		$interface->errorDialog(TF("Slot \"%s\" is not a valid number.", $slot), 0);
 		return 0;
 	} elsif (exists $charSvrSet{total_slot} && ($slot < 0 || $slot > $charSvrSet{total_slot})) {
-		$interface->errorDialog(T("The slot must be comprised between 0 and $charSvrSet{total_slot}."), 0);
+		$interface->errorDialog(TF("The slot must be comprised between 0 and %s.", $charSvrSet{total_slot}), 0);
 		return 0;
 	} elsif (exists $charSvrSet{normal_slot} && ($slot < 0 || $slot > $charSvrSet{normal_slot})) {
-		$interface->errorDialog(T("The slot must be comprised between 0 and $charSvrSet{normal_slot}."), 0);
+		$interface->errorDialog(TF("The slot must be comprised between 0 and %s.", $charSvrSet{normal_slot}), 0);
 		return 0;
 	} elsif ($chars[$slot]) {
 		$interface->errorDialog(TF("Slot %s already contains a character (%s).", $slot, $chars[$slot]{name}), 0);
