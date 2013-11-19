@@ -396,6 +396,75 @@ sub new {
 	return $self;
 }
 
+use constant {
+	REFUSE_INVALID_ID => 0x0,
+	REFUSE_INVALID_PASSWD => 0x1,
+	REFUSE_ID_EXPIRED => 0x2,
+	ACCEPT_ID_PASSWD => 0x3,
+	REFUSE_NOT_CONFIRMED => 0x4,
+	REFUSE_INVALID_VERSION => 0x5,
+	REFUSE_BLOCK_TEMPORARY => 0x6,
+	REFUSE_BILLING_NOT_READY => 0x7,
+	REFUSE_NONSAKRAY_ID_BLOCKED => 0x8,
+	REFUSE_BAN_BY_DBA => 0x9,
+	REFUSE_EMAIL_NOT_CONFIRMED => 0xa,
+	REFUSE_BAN_BY_GM => 0xb,
+	REFUSE_TEMP_BAN_FOR_DBWORK => 0xc,
+	REFUSE_SELF_LOCK => 0xd,
+	REFUSE_NOT_PERMITTED_GROUP => 0xe,
+	REFUSE_WAIT_FOR_SAKRAY_ACTIVE => 0xf,
+	REFUSE_NOT_CHANGED_PASSWD => 0x10,
+	REFUSE_BLOCK_INVALID => 0x11,
+	REFUSE_WARNING => 0x12,
+	REFUSE_NOT_OTP_USER_INFO => 0x13,
+	REFUSE_OTP_AUTH_FAILED => 0x14,
+	REFUSE_SSO_AUTH_FAILED => 0x15,
+	REFUSE_NOT_ALLOWED_IP_ON_TESTING => 0x16,
+	REFUSE_OVER_BANDWIDTH => 0x17,
+	REFUSE_OVER_USERLIMIT => 0x18,
+	REFUSE_UNDER_RESTRICTION => 0x19,
+	REFUSE_BY_OUTER_SERVER => 0x1a,
+	REFUSE_BY_UNIQUESERVER_CONNECTION => 0x1b,
+	REFUSE_BY_AUTHSERVER_CONNECTION => 0x1c,
+	REFUSE_BY_BILLSERVER_CONNECTION => 0x1d,
+	REFUSE_BY_AUTH_WAITING => 0x1e,
+	REFUSE_DELETED_ACCOUNT => 0x63,
+	REFUSE_ALREADY_CONNECT => 0x64,
+	REFUSE_TEMP_BAN_HACKING_INVESTIGATION => 0x65,
+	REFUSE_TEMP_BAN_BUG_INVESTIGATION => 0x66,
+	REFUSE_TEMP_BAN_DELETING_CHAR => 0x67,
+	REFUSE_TEMP_BAN_DELETING_SPOUSE_CHAR => 0x68,
+	REFUSE_USER_PHONE_BLOCK => 0x69,
+	ACCEPT_LOGIN_USER_PHONE_BLOCK => 0x6a,
+	ACCEPT_LOGIN_CHILD => 0x6b,
+	REFUSE_IS_NOT_FREEUSER => 0x6c,
+	REFUSE_INVALID_ONETIMELIMIT => 0x6d,
+	REFUSE_CHANGE_PASSWD_FORCE => 0x6e,
+	REFUSE_OUTOFDATE_PASSWORD => 0x6f,
+	REFUSE_NOT_CHANGE_ACCOUNTID => 0xf0,
+	REFUSE_NOT_CHANGE_CHARACTERID => 0xf1,
+	REFUSE_SSO_AUTH_BLOCK_USER => 0x1394,
+	REFUSE_SSO_AUTH_GAME_APPLY => 0x1395,
+	REFUSE_SSO_AUTH_INVALID_GAMENUM => 0x1396,
+	REFUSE_SSO_AUTH_INVALID_USER => 0x1397,
+	REFUSE_SSO_AUTH_OTHERS => 0x1398,
+	REFUSE_SSO_AUTH_INVALID_AGE => 0x1399,
+	REFUSE_SSO_AUTH_INVALID_MACADDRESS => 0x139a,
+	REFUSE_SSO_AUTH_BLOCK_ETERNAL => 0x13c6,
+	REFUSE_SSO_AUTH_BLOCK_ACCOUNT_STEAL => 0x13c7,
+	REFUSE_SSO_AUTH_BLOCK_BUG_INVESTIGATION => 0x13c8,
+	REFUSE_SSO_NOT_PAY_USER => 0x13ba,
+	REFUSE_SSO_ALREADY_LOGIN_USER => 0x13bb,
+	REFUSE_SSO_CURRENT_USED_USER => 0x13bc,
+	REFUSE_SSO_OTHER_1 => 0x13bd,
+	REFUSE_SSO_DROP_USER => 0x13be,
+	REFUSE_SSO_NOTHING_USER => 0x13bf,
+	REFUSE_SSO_OTHER_2 => 0x13c0,
+	REFUSE_SSO_WRONG_RATETYPE_1 => 0x13c1,
+	REFUSE_SSO_EXTENSION_PCBANG_TIME => 0x13c2,
+	REFUSE_SSO_WRONG_RATETYPE_2 => 0x13c3,
+};
+
 ############# TEMPORARY!!!! ###############
 
 #######################################
@@ -2849,8 +2918,8 @@ sub login_error {
 	my ($self, $args) = @_;
 
 	$net->serverDisconnect();
-	if ($args->{type} == 0) {
-		error T("Account name doesn't exist\n"), "connection";
+	if ($args->{type} == REFUSE_INVALID_ID) {
+		error TF("Account name [%s] doesn't exist\n", $config{'username'}), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
 			my $username = $interface->query(T("Enter your Ragnarok Online username again."));
 			if (defined($username)) {
@@ -2862,7 +2931,7 @@ sub login_error {
 				return;
 			}
 		}
-	} elsif ($args->{type} == 1) {
+	} elsif ($args->{type} == REFUSE_INVALID_PASSWD) {
 		error TF("Password Error for account [%s]\n", $config{'username'}), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
 			my $password = $interface->query(T("Enter your Ragnarok Online password again."), isPassword => 1);
@@ -2875,22 +2944,31 @@ sub login_error {
 				return;
 			}
 		}
-	} elsif ($args->{type} == 3) {
+	} elsif ($args->{type} == ACCEPT_ID_PASSWD) {
 		error T("The server has denied your connection.\n"), "connection";
-	} elsif ($args->{type} == 4) {
+	} elsif ($args->{type} == REFUSE_NOT_CONFIRMED) {
 		$interface->errorDialog(T("Critical Error: Your account has been blocked."));
 		$quit = 1 unless ($net->clientAlive());
-	} elsif ($args->{type} == 5) {
+	} elsif ($args->{type} == REFUSE_INVALID_VERSION) {
 		my $master = $masterServer;
 		error TF("Connect failed, something is wrong with the login settings:\n" .
 			"version: %s\n" .
 			"master_version: %s\n" .
-			"serverType: %s\n", $master->{version}, $master->{master_version}, $masterServer->{serverType}), "connection";
+			"serverType: %s\n", $master->{version}, $master->{master_version}, $config{serverType}), "connection";
 		relog(30);
-	} elsif ($args->{type} == 6) {
+	} elsif ($args->{type} == REFUSE_BLOCK_TEMPORARY) {
 		error TF("The server is temporarily blocking your connection until %s\n", $args->{date}), "connection";
+	} elsif ($args->{type} == REFUSE_USER_PHONE_BLOCK) { #Phone lock
+		error T("Please dial to activate the login procedure.\n"), "connection";
+		Plugins::callHook('dial');
+		relog(10);
+	} elsif ($args->{type} == ACCEPT_LOGIN_USER_PHONE_BLOCK) {
+		error T("Mobile Authentication: Max number of simultaneous IP addresses reached.\n"), "connection";
+	} else {
+		error TF("The server has denied your connection for unknown reason (%d).\n", $args->{type}), 'connection';
 	}
-	if ($args->{type} != 5 && $versionSearch) {
+
+	if ($args->{type} != REFUSE_INVALID_VERSION && $versionSearch) {
 		$versionSearch = 0;
 		writeSectionedFileIntact(Settings::getTableFilename("servers.txt"), \%masterServers);
 	}
