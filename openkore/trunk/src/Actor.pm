@@ -389,7 +389,7 @@ sub selfString {
 sub name {
 	my ($self) = @_;
 
-	return $self->{name} || "Unknown #".unpack("V1", $self->{ID});
+	return $self->{name} || T("Unknown #").unpack("V1", $self->{ID});
 }
 
 ##

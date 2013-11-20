@@ -25,18 +25,11 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
-		'00AA' => ['equip_item', 'v3 C', [qw(index type viewID success)]], # 9
+		'00AA' => ['equip_item', 'v3 C', [qw(index type viewid success)]], # 9
 	);
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
-
-	# TODO: what is the unknown field? (related to the equipview system?)
-	$self->{nested}{items_nonstackable}{type3} = {
-		len => 28,
-		types => 'v2 C2 v2 C2 a8 l v2',
-		keys => [qw(index nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType unknown)],
-	};
 
 	return $self;
 }

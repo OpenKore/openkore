@@ -2660,7 +2660,7 @@ sub misc_effect {
 	my $actor = Actor::get($args->{ID});
 	message sprintf(
 		$actor->verb(T("%s use effect: %s\n"), T("%s uses effect: %s\n")),
-		$actor, defined $effectName{$args->{effect}} ? $effectName{$args->{effect}} : "Unknown #$args->{effect}"
+		$actor, defined $effectName{$args->{effect}} ? $effectName{$args->{effect}} : T("Unknown #")."$args->{effect}"
 	), 'effect'
 }
 
@@ -3483,7 +3483,7 @@ sub message_string {
 	my ($self, $args) = @_;
 
 	if ($msgTable[++$args->{msg_id}]) { # show message from msgstringtable.txt
-		warning T($msgTable[$args->{msg_id}]."\n");
+		warning "$msgTable[$args->{msg_id}]\n";
 		$self->mercenary_off() if ($args->{msg_id} >= 1267 && $args->{msg_id} <= 1270);
 	} else {
 		warning TF("Unknown message_string: %s. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{msg_id});
@@ -3545,7 +3545,7 @@ sub mvp_other {
 	my ($self, $args) = @_;
 	my $display = Actor::get($args->{ID});
 	message TF("%s become MVP!\n", $display);
-	chatLog("k", TF("%s became MVP!\n", $display));
+	chatLog("k", TF("%s become MVP!\n", $display));
 }
 
 sub mvp_you {
@@ -3772,7 +3772,7 @@ sub npc_talk_responses {
 		push @{$talk{responses}}, $response if ($response ne "");
 	}
 
-	$talk{responses}[@{$talk{responses}}] = "Cancel Chat";
+	$talk{responses}[@{$talk{responses}}] = T("Cancel Chat");
 
 	$ai_v{'npc_talk'}{'talk'} = 'select';
 	$ai_v{'npc_talk'}{'time'} = time;
@@ -3905,15 +3905,16 @@ sub booking_search_request {
 		return;
 	}
 
-	message "-------------- Booking Search ---------------\n";
+	message T("-------------- Booking Search ---------------\n");
 	for (my $offset = 0; $offset < length($args->{innerData}); $offset += 48) {
 		my ($index, $charName, $expireTime, $level, $mapID, @job) = unpack("V Z24 V s8", substr($args->{innerData}, $offset, 48));
-		message swrite(T("Name: @<<<<<<<<<<<<<<<<<<<<<<<<	Index: @>>>>\n" .
-						 "Created: @<<<<<<<<<<<<<<<<<<<<<	Level: @>>>\n" .
-						 "MapID: @<<<<<\n".
-						 "Job: @<<<< @<<<< @<<<< @<<<< @<<<<\n" .
-						 "---------------------------------------------"),
-					   [bytesToString($charName), $index, getFormattedDate($expireTime), $level, $mapID, @job]), "booking";
+		message swrite(
+			T("Name: \@<<<<<<<<<<<<<<<<<<<<<<<<	Index: \@>>>>\n" .
+			"Created: \@<<<<<<<<<<<<<<<<<<<<<	Level: \@>>>\n" .
+			"MapID: \@<<<<<\n".
+			"Job: \@<<<< \@<<<< \@<<<< \@<<<< \@<<<<\n" .
+			"---------------------------------------------"),
+			[bytesToString($charName), $index, getFormattedDate($expireTime), $level, $mapID, @job]), "booking";
 	}
 }
 
@@ -5074,11 +5075,11 @@ sub skill_use_failed {
 		6 => T('Wrong Weapon Type'),
 		7 => T('Red Gem Needed'),
 		8 => T('Blue Gem Needed'),
-		9 => T('90% Overweight'),
+		9 => TF('%s Overweight', '90%'),
 		10 => T('Requirement'),
 		13 => T('Need this within the water'),
 		19 => T('Full Amulet'),
-		29 => T('Must have at least 1% of base XP'),
+		29 => TF('Must have at least %s of base XP', '1%'),
 		83 => T('Location not allowed to create chatroom/market')
 		);
 
@@ -6382,7 +6383,7 @@ sub rates_info {
 	message TF("EXP Rates: %s\% (Base %s\% + Premium %s\% + Server %s\% + Plus %s\%) \n", $rates{exp}{total}, $rates{exp}{0}, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3}), "info";
 	message TF("Drop Rates: %s\% (Base %s\% + Premium %s\% + Server %s\% + Plus %s\%) \n", $rates{drop}{total}, $rates{drop}{0}, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3}), "info";
 	message TF("Death Penalty: %s\% (Base %s\% + Premium %s\% + Server %s\% + Plus %s\%) \n", $rates{death}{total}, $rates{death}{0}, $rates{death}{1}, $rates{death}{2}, $rates{death}{3}), "info";
-	message T("=====================================================================\n"), "info";
+	message "=====================================================================\n", "info";
 }
 
 sub premium_rates_info {
@@ -7313,7 +7314,7 @@ sub open_buying_store_item_list {
 
 		$index++;
 	}
-	message TF("\n-------------------------------------------------------------------------------\n"), "list";
+	message "\n-------------------------------------------------------------------------------\n", "list";
 }
 
 sub buying_store_found {
@@ -7383,7 +7384,7 @@ sub buying_store_items_list {
 
 		$index++;
 	}
-	message TF("------------------------------------------------------------------------\n"), "list";
+	message "------------------------------------------------------------------------\n", "list";
 
 	Plugins::callHook('packet_buying_store2', {
 		venderID => $buyerID,

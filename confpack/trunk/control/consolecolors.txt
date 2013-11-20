@@ -50,4 +50,4 @@ default yellow
 info yellow
 
 [debug]
-default default
+default gray

@@ -1639,7 +1639,7 @@ sub getNPCName {
 	} elsif ((my $monster = $monstersList->getByID($ID))) {
 		return $monster->name;
 	} else {
-		return "Unknown #" . unpack("V1", $ID);
+		return T("Unknown #") . unpack("V1", $ID);
 	}
 }
 
@@ -3577,11 +3577,11 @@ sub compilePortals {
 
 	# Print warning for missing fields
 	if (%missingMap) {
-		warning TF("----------------------------Error Summary----------------------------\n");
+		warning T("----------------------------Error Summary----------------------------\n");
 		warning TF("Missing: %s.fld\n", $_) foreach (sort keys %missingMap);
-		warning TF("Note: LOS information for the above listed map(s) will be inaccurate;\n" .
+		warning T("Note: LOS information for the above listed map(s) will be inaccurate;\n" .
 			"      however it is safe to ignore if those map(s) are not used\n");
-		warning TF("----------------------------Error Summary----------------------------\n");
+		warning "---------------------------------------------------------------------\n";
 	}
 }
 

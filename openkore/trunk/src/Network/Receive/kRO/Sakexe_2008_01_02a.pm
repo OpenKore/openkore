@@ -26,9 +26,9 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'02E8' => ['inventory_items_stackable'], # -1
-		'02E9' => ['cart_items_stackable'], # -1
-		'02EA' => ['storage_items_stackable'], # -1
+		'02E8' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02E9' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02EA' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'02EB' => ['map_loaded', 'V a3 C2 v', [qw(syncMapSync coords xSize ySize font)]], # 13
 		'02EC' => ['actor_exists', 'C a4 v3 V v5 V v5 a4 a4 V C2 a6 C2 v2', [qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords xSize ySize lv font)]], # 67 # Moving # TODO: C struct is different
 		'02ED' => ['actor_connected', 'a4 v3 V v10 a4 a4 V C2 a3 C2 v2', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords xSize ySize lv font)]], # 59 # Spawning
