@@ -344,7 +344,7 @@ sub account_server_info {
 
 	@servers = @{$args->{servers}};
 
-	message T("--------- Servers ----------\n" .
+	message T("---------------------- Servers -----------------------\n" .
 			"#   Name                  Users  IP              Port\n"), 'connection';
 	for (my $num = 0; $num < @servers; $num++) {
 		message(swrite(
@@ -352,7 +352,7 @@ sub account_server_info {
 			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}]
 		), 'connection');
 	}
-	message("-------------------------------\n", 'connection');
+	message("------------------------------------------------------\n", 'connection');
 
 	if ($net->version != 1) {
 		message T("Closing connection to Account Server\n"), 'connection';
@@ -376,7 +376,7 @@ sub account_server_info {
 			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';
 
 		} else {
-			message TF("Server %s selected\n",$config{server}), 'connection';
+			message TF("Selected server: %s\n", @servers[$config{server}]->{name}), 'connection';
 		}
 	}
 
@@ -390,7 +390,7 @@ sub account_server_info {
 sub connection_refused {
 	my ($self, $args) = @_;
 
-	error TF("The server has denied your connection (%d).\n", $args->{error}), 'connection';
+	error TF("The server has denied your connection (error: %d).\n", $args->{error}), 'connection';
 }
 
 *actor_exists = *actor_display_compatibility;
@@ -1238,7 +1238,7 @@ sub account_payment_info {
 	message  T("============= Account payment information =============\n"), "info";
 	message TF("Pay per day  : %s day(s) %s hour(s) and %s minute(s)\n", $D_d, $D_h, $D_m), "info";
 	message TF("Pay per hour : %s day(s) %s hour(s) and %s minute(s)\n", $H_d, $H_h, $H_m), "info";
-	message  T("-------------------------------------------------------\n"), "info";
+	message  "-------------------------------------------------------\n", "info";
 }
 
 # TODO
@@ -1261,13 +1261,13 @@ sub minimap_indicator {
 	my $indicator = T("minimap indicator");
 	if (defined $args->{type}) {
 		unless ($args->{type} == 1 || $args->{type} == 2) {
-			$indicator .= " (unknown type $args->{type})";
+			$indicator .= TF(" (unknown type %d)", $args->{type});
 		}
 	} elsif (defined $args->{effect}) {
 		if ($args->{effect} == 1) {
 			$indicator = T("*Quest!*");
 		} elsif ($args->{effect}) { # 0 is no effect
-			$indicator = "unknown effect $args->{effect}";
+			$indicator = TF("unknown effect %d", $args->{effect});
 		}
 	}
 

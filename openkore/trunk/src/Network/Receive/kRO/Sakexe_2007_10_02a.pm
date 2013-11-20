@@ -33,52 +33,30 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]], # 12
-
 		'02A6' => ['gameguard_request'], # 22
-		# 0x02a7,22
-		# 0x02a8,162
-		# 0x02a9,58
-
 		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
-
 		'02B1' => ['quest_all_list', 'v V', [qw(len amount)]], # -1
 		'02B2' => ['quest_all_mission', 'v V', [qw(len amount)]], # -1
 		'02B3' => ['quest_add', 'V C V2 v', [qw(questID active time amount)]], # 107
 		'02B4' => ['quest_delete', 'V', [qw(questID)]], # 6
-		'02B5' => ['quest_update_mission_hunt', 'v2', [qw(len amount)]], # -1
-		# 0x02b6 is sent packet
+		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],#-1
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]], # 7
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]], # 22
 		'02B9' => ['hotkeys'], # 191 # hotkeys:27
-
 		'02BB' => ['equipitem_damaged', 'v a4', [qw(slot ID)]], # 8
-		# 0x02bc,6
-		# 0x02bf,10
-		# 0x02c0,2
 		'02C1' => ['main_chat', 'v a4 a4 a*', [qw(len accountID color message)]], # -1
-		# 0x02c2,-1
-
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]], # 30
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]], # 30
-
-		# 0x02c8 is sent packet
 		'02C9' => ['party_allow_invite', 'C', [qw(type)]], # 3
-		# 0x02ca,3
-		# 0x02cb,20
 		'02CC' => ['instance_window_queue', 'C', [qw(flag)]], # 4
-		# 0x02cd,26
 		'02CE' => ['instance_window_leave', 'V a4', [qw(flag enter_limit_date)]], # 10
-
-		# 0x02cf is sent packet
-		'02D0' => ['inventory_items_nonstackable'], # -1
-		'02D1' => ['storage_items_nonstackable'], # -1
-		'02D2' => ['cart_items_nonstackable'], # -1
+		'02D0' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02D1' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'02D3' => ['bind_on_equip', 'v', [qw(index)]], # 4
 		'02D4' => ['inventory_item_added', 'v3 C3 a8 v C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]], # 29
 		'02D5' => ['isvr_disconnect'], # 2
-
 		'02D7' => ['show_eq', 'v Z24 v7 C a*', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex equips_info)]], # -1 #type is job
-
 		'02D9' => ['show_eq_msg_other', 'V2', [qw(unknown flag)]], # 10
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]], # 3
 		'02DC' => ['battleground_message', 'v a4 Z24 Z*', [qw(len ID name message)]], # -1

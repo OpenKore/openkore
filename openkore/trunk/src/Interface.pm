@@ -114,7 +114,7 @@ sub query {
 	my $message = shift;
 	my %args = @_;
 
-	$args{title} = "Query" if (!defined $args{title});
+	$args{title} = T("Query") if (!defined $args{title});
 	$args{cancelable} = 1 if (!exists $args{cancelable});
 
 	my $title = "------------ $args{title} ------------";

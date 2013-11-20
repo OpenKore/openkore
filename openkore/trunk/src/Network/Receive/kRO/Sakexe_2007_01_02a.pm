@@ -57,9 +57,9 @@ sub new {
 
 		'0293' => ['boss_map_info', 'C V2 v2 x4 Z40 C11', [qw(flag x y hours minutes name unknown)]], # 70
 		'0294' => ['book_read', 'a4 a4', [qw(bookID page)]], # 10
-		'0295' => ['inventory_items_nonstackable'], # -1
-		'0296' => ['storage_items_nonstackable'], # -1
-		'0297' => ['cart_items_nonstackable'], # -1
+		'0295' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0296' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0297' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]], # 8
 		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]], # 6
 		'029A' => ['inventory_item_added', 'v3 C3 a8 v C2 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]], # 27

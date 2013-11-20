@@ -63,7 +63,7 @@ sub account_server_info {
 		$num++;
 	}
 
-	message T("--------- Servers ----------\n" .
+	message T("---------------------- Servers -----------------------\n" .
 			"#   Name                  Users  IP              Port\n"), 'connection';
 	for (my $num = 0; $num < @servers; $num++) {
 		message(swrite(
@@ -71,7 +71,7 @@ sub account_server_info {
 			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}]
 		), 'connection');
 	}
-	message("-------------------------------\n", 'connection');
+	message("------------------------------------------------------\n", 'connection');
 
 	if ($net->version != 1) {
 		message T("Closing connection to Account Server\n"), 'connection';
@@ -95,7 +95,7 @@ sub account_server_info {
 			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';	
 			
 		} else {
-			message TF("Server %s selected\n",$config{server}), 'connection';
+			message TF("Selected server: %s\n", @servers[$config{server}]->{name}), 'connection';
 		}
 	}
 }

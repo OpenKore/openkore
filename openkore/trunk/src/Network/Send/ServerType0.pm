@@ -987,53 +987,43 @@ sub sendSuperNoviceExplosion {
 }
 
 sub sendTalk {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack("C*", 0x90, 0x00) . $ID . pack("C*",0x01);
+	my ($self, $ID) = @_;
+	my $msg = pack('v a4 C', 0x0090, $ID, 1);
 	$self->sendToServer($msg);
 	debug "Sent talk: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendTalkCancel {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack("C*", 0x46, 0x01) . $ID;
+	my ($self, $ID) = @_;
+	my $msg = pack('v a4', 0x0146, $ID);
 	$self->sendToServer($msg);
 	debug "Sent talk cancel: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendTalkContinue {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack("C*", 0xB9, 0x00) . $ID;
+	my ($self, $ID) = @_;
+	my $msg = pack('v a4', 0x00B9, $ID);
 	$self->sendToServer($msg);
 	debug "Sent talk continue: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendTalkResponse {
-	my $self = shift;
-	my $ID = shift;
-	my $response = shift;
-	my $msg = pack("C*", 0xB8, 0x00) . $ID. pack("C1",$response);
+	my ($self, $ID, $response) = @_;
+	my $msg = pack('v a4 C', 0x00B8, $ID ,$response);
 	$self->sendToServer($msg);
 	debug "Sent talk respond: ".getHex($ID).", $response\n", "sendPacket", 2;
 }
 
 sub sendTalkNumber {
-	my $self = shift;
-	my $ID = shift;
-	my $number = shift;
-	my $msg = pack("C*", 0x43, 0x01) . $ID .
-			pack("V1", $number);
+	my ($self, $ID, $number) = @_;
+	my $msg = pack('v a4 V', 0x0143, $ID, $number);
 	$self->sendToServer($msg);
 	debug "Sent talk number: ".getHex($ID).", $number\n", "sendPacket", 2;
 }
 
 sub sendTalkText {
-	my $self = shift;
-	my $ID = shift;
-	my $input = stringToBytes(shift);
-	my $msg = pack("C*", 0xD5, 0x01) . pack("v*", length($input)+length($ID)+5) . $ID . $input . chr(0);
+	my ($self, $ID, $input) = @_;
+	my $msg = pack('v2 a4 Z*', 0x01D5, length($input)+length($ID)+5, $ID, stringToBytes($input));
 	$self->sendToServer($msg);
 	debug "Sent talk text: ".getHex($ID).", $input\n", "sendPacket", 2;
 }
