@@ -49,6 +49,7 @@ sub new {
 		'08A4' => ['storage_item_add', 'v V', [qw(index amount)]],#8
 		'08AA' => undef,
 		'08AD' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
+		'0907' => ['item_to_favorite', 'v C', [qw(index flag)]],#5 TODO where 'flag'=0|1 (0 - move item to favorite tab, 1 - move back) 
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 

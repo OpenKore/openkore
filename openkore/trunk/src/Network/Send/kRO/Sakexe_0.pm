@@ -67,7 +67,7 @@ sub new {
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
-		'0187' => ['ban_check'], # TODO
+		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
@@ -82,6 +82,7 @@ sub new {
 		'0808' => ['booking_update', 'v6', [qw(job0 job1 job2 job3 job4 job5)]],
 		'0827' => ['char_delete2', 'a4', [qw(charID)]], # 6
 		'082B' => ['char_delete2_cancel', 'a4', [qw(charID)]], # 6
+		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -1285,6 +1286,15 @@ sub sendAutoSpell {
 	my ($self, $ID) = @_;
 	my $msg = pack('v V', 0x01CE, $ID);
 	$self->sendToServer($msg);
+}
+
+sub sendBanCheck {
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'ban_check',
+		accountID => $ID,
+	}));
+	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
 }
 
 # 0x01cf,28
