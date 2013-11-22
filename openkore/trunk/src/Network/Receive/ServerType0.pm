@@ -4471,9 +4471,6 @@ sub received_characters {
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 	}
 
-	my $nChars = 0;
-	foreach (@chars) { $nChars++ if($_); }
-
 	# FIXME better support for multiple received_characters packets
 	if ($args->{switch} eq '099D' && $masterServer->{serverType} eq 'twRO') {
 		$net->setState(1.5);

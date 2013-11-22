@@ -377,6 +377,16 @@ sub new {
 				types => 'v2 C2 v2 C2 a8 l v2',
 				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType sprite_id)],
 			},
+			type5 => {
+				len => 27,
+				types => 'v2 C v2 C a8 l v2 C',
+				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+			},
+			type6 => {
+				len => 31,
+				types => 'v2 C V2 C a8 l v2 C',
+				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id flag)],
+			},
 		},
 		items_stackable => {
 			type1 => {
@@ -393,6 +403,16 @@ sub new {
 				len => 22,
 				types => 'v2 C2 v2 a8 l',
 				keys => [qw(index nameID type identified amount type_equip cards expire)],
+			},
+			type5 => {
+				len => 22,
+				types => 'v2 C v2 a8 l C',
+				keys => [qw(index nameID type amount type_equip cards expire identified)],
+			},
+			type6 => {
+				len => 24,
+				types => 'v2 C v V a8 l C',
+				keys => [qw(index nameID type amount type_equip cards expire flag)],
 			},
 		},
 	};
@@ -495,7 +515,20 @@ sub items_nonstackable {
 		 $args->{switch} eq '02D1' || # storage
 		 $args->{switch} eq '02D2'    # cart
 	) {
-		return $items->{type3};
+		return $items->{$rpackets{'00AA'} == 7 ? 'type3' : 'type4'};
+
+	} elsif ($args->{switch} eq '0901' # inventory
+		|| $args->{switch} eq '0976' # storage
+		|| $args->{switch} eq '0903' # cart
+	) {
+		return $items->{type5};
+
+	} elsif ($args->{switch} eq '0992' ||# inventory
+		$args->{switch} eq '0994' ||# cart
+		$args->{switch} eq '0996'	# storage
+	) {
+		return $items->{type6};
+
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -523,6 +556,19 @@ sub items_stackable {
 		 $args->{switch} eq '02E9'    # cart
 	) {
 		return $items->{type3};
+
+	} elsif ($args->{switch} eq '0900' # inventory
+		|| $args->{switch} eq '0975' # storage
+		|| $args->{switch} eq '0902' # cart
+	) {
+		return $items->{type5};
+
+	} elsif ($args->{switch} eq '0991' ||# inventory
+		$args->{switch} eq '0993' ||# cart
+		$args->{switch} eq '0995'	# storage
+	) {
+		return $items->{type6};
+
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -3978,7 +4024,6 @@ sub private_message_sent {
 sub received_characters {
 	return if ($net->getState() == Network::IN_GAME);
 	my ($self, $args) = @_;
-	message T("Received characters from Character Server\n"), "connection";
 	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER);
 
 	$charSvrSet{total_slot} = $args->{total_slot} if (exists $args->{total_slot});
@@ -3993,7 +4038,6 @@ sub received_characters {
 	$charSvrSet{valid_slot} = $args->{valid_slot} if (exists $args->{valid_slot});
 
 	undef $conState_tries;
-	undef @chars;
 
 	Plugins::callHook('parseMsg/recvChars', $args->{options});
 	if ($args->{options} && exists $args->{options}{charServer}) {
@@ -4002,6 +4046,8 @@ sub received_characters {
 		$charServer = $net->serverPeerHost . ":" . $net->serverPeerPort;
 	}
 
+	# PACKET_HC_ACCEPT_ENTER2 contains no character info
+	return unless exists $args->{charInfo};
 
 	my $blockSize = $self->received_characters_blockSize();
 	for (my $i = $args->{RAW_MSG_SIZE} % $blockSize; $i < $args->{RAW_MSG_SIZE}; $i += $blockSize) {
@@ -4012,17 +4058,18 @@ sub received_characters {
 			$hp,$maxHp,$sp,$maxSp, $walkspeed, $jobId,$hairstyle, $weapon, $level, $skillpt,$headLow, $shield,$headTop,$headMid,$hairColor,
 			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename, $unknown, $mapname, $deleteDate) =
 			unpack($unpack_string, substr($args->{RAW_MSG}, $i));
-
 		$chars[$slot] = new Actor::You;
+
+		# Re-use existing $char object instead of re-creating it.
+		# Required because existing AI sequences (eg, route) keep a reference to $char.
+		$chars[$slot] = $char if $char && $char->{ID} eq $accountID && $char->{charID} eq $cID;
+
 		$chars[$slot]{ID} = $accountID;
 		$chars[$slot]{charID} = $cID;
 		$chars[$slot]{exp} = $exp;
 		$chars[$slot]{zeny} = $zeny;
 		$chars[$slot]{exp_job} = $jobExp;
 		$chars[$slot]{lv_job} = $jobLevel;
-		$chars[$slot]{opt1} = $opt1;
-		$chars[$slot]{opt2} = $opt2;
-		$chars[$slot]{option} = $option;
 		$chars[$slot]{hp} = $hp;
 		$chars[$slot]{hp_max} = $maxHp;
 		$chars[$slot]{sp} = $sp;
@@ -4049,10 +4096,8 @@ sub received_characters {
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 	}
 
-	# gradeA says it's supposed to send this packet here, but
-	# it doesn't work...
-	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
-	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $masterServer->{serverType} == 2);
+	message T("Received characters from Character Server\n"), "connection";
+
 	if (charSelectScreen(1) == 1) {
 		$firstLoginMap = 1;
 		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
@@ -5344,85 +5389,6 @@ sub storage_password_result {
 
 	# $args->{val}
 	# unknown, what is this for?
-}
-
-sub login_pin_code_request {
-	my ($self, $args) = @_;
-	my $done;
-
-	if ($args->{flag} == 0) {
-		# PIN code has never been set before, so set it.
-		return if ($config{loginPinCode} eq '' && !queryAndSaveLoginPinCode());
-		my @key = split /[, ]+/, $masterServer->{PINEncryptKey};
-		if (!@key) {
-			$interface->errorDialog(T("Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."));
-			quit();
-			return;
-		}
-		$messageSender->sendLoginPinCode($config{loginPinCode}, $config{loginPinCode}, $args->{key}, 2, \@key);
-
-	} elsif ($args->{flag} == 1) {
-		# PIN code query request.
-		return if ($config{loginPinCode} eq '' && !queryAndSaveLoginPinCode());
-		my @key = split /[, ]+/, $masterServer->{PINEncryptKey};
-		if (!@key) {
-			$interface->errorDialog(T("Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."));
-			quit();
-			return;
-		}
-		$messageSender->sendLoginPinCode($config{loginPinCode}, 0, $args->{key}, 3, \@key);
-
-	} elsif ($args->{flag} == 2) {
-		message T("Login PIN code has been changed successfully.\n");
-
-	} elsif ($args->{flag} == 3) {
-		warning TF("Failed to change the login PIN code. Please try again.\n");
-
-		configModify('loginPinCode', '', silent => 1);
-		my $oldPin = queryLoginPinCode(T("Please enter your old login PIN code:"));
-		if (!defined($oldPin)) {
-			return;
-		}
-
-		my $newPinCode = queryLoginPinCode(T("Please enter a new login PIN code:"));
-		if (!defined($newPinCode)) {
-			return;
-		}
-		configModify('loginPinCode', $newPinCode, silent => 1);
-
-		my @key = split /[, ]+/, $masterServer->{PINEncryptKey};
-		if (!@key) {
-			$interface->errorDialog(T("Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."));
-			quit();
-			return;
-		}
-		$messageSender->sendLoginPinCode($oldPin, $newPinCode, $args->{key},  2, \@key);
-
-	} elsif ($args->{flag} == 4) {
-		# PIN code incorrect.
-		configModify('loginPinCode', '', 1);
-		return if (!queryAndSaveLoginPinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code.")));
-
-		my @key = split /[, ]+/, $masterServer->{PINEncryptKey};
-		if (!@key) {
-			$interface->errorDialog(T("Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."));
-			quit();
-			return;
-		}
-		$messageSender->sendPinCode($config{loginPinCode}, 0, $args->{key}, 3, \@key);
-
-	} elsif ($args->{flag} == 5) {
-		# PIN Entered 3 times Wrong, Disconnect
-		warning T("You have entered 3 incorrect login PIN codes in a row. Reconnecting...\n");
-		configModify('loginPinCode', '', silent => 1);
-		$timeout_ex{master}{time} = time;
-		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
-		$net->serverDisconnect();
-
-	} else {
-		debug("login_pin_code_request: unknown flag $args->{flag}\n");
-	}
-	$timeout{master}{time} = time;
 }
 
 sub initialize_message_id_encryption {

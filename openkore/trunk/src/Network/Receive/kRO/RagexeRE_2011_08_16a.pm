@@ -17,12 +17,21 @@ package Network::Receive::kRO::RagexeRE_2011_08_16a;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2010_11_24a);
+use Globals qw(%items_lut %timeout %charSvrSet);
+use Log qw(debug);
+use Misc qw(center);
+use Translation;
+use Utils qw(formatNumber swrite);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'08B9' => ['account_id', 'x4 a4 x2', [qw(accountID)]], # 12
+		#'08B9' => ['account_id', 'x4 a4 x2', [qw(accountID)]], # 12
+		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]],
+		'08CA' => ['cashitem', 'v3 a*', [qw(len amount tabcode itemInfo)]],#-1
+		'082D' => ['received_characters_info', 'x2 C5 x20 a*', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
+		
 	);
 
 	foreach my $switch (keys %packets) {
@@ -33,7 +42,56 @@ sub new {
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
+	Plugins::addHook('packet_pre/received_characters' => sub {
+		$self->{lockCharScreen} = 2;
+	});
+	
+	Plugins::addHook(charSelectScreen => sub {
+		$_[1]{return} = $self->{lockCharScreen};
+	});
+	
 	return $self;
+}
+
+sub received_characters_info {
+	my ($self, $args) = @_;
+
+	$charSvrSet{normal_slot} = $args->{normal_slot} if (exists $args->{normal_slot});
+	$charSvrSet{premium_slot} = $args->{premium_slot} if (exists $args->{premium_slot});
+	$charSvrSet{billing_slot} = $args->{billing_slot} if (exists $args->{billing_slot});
+	$charSvrSet{producible_slot} = $args->{producible_slot} if (exists $args->{producible_slot});
+	$charSvrSet{valid_slot} = $args->{valid_slot} if (exists $args->{valid_slot});
+
+	$timeout{charlogin}{time} = time;
+}
+my %cashitem_tab = (
+	0 => 'New',
+	1 => 'Stock',
+	2 => 'Rent',
+	3 => 'Caps',
+	4 => 'Potions',
+	5 => 'Scrolls',
+	6 => 'Decoration',
+	7 => 'Expense',
+);
+
+sub cashitem {
+	my ($self, $args) = @_;
+	my $tabcode = $args->{tabcode};
+	my $jump = 6;
+	my $unpack_string  = "v V";
+	debug TF("%s\n" .
+		"#   Name                               Price\n",
+		center(' Tab: ' . $cashitem_tab{$tabcode} . ' ', 44, '-')), "list";
+	for (my $i = 0; $i < length($args->{itemInfo}); $i += $jump) {
+		my ($ID, $price) = unpack($unpack_string, substr($args->{itemInfo}, $i));
+		my $name = $items_lut{$ID};
+		debug(swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>>>>>C",
+			[$i, $name, formatNumber($price)]),
+			"list");
+
+		}
 }
 
 1;

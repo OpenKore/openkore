@@ -16,6 +16,32 @@ package Network::Receive::kRO::RagexeRE_2011_11_22a;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2011_11_02a);
+use Globals qw($char);
+use Log qw(message);
+
+sub new {
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
+		'0908' => ['inventory_item_favorite', 'v C', [qw(index flag)]],#5
+	);
+
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
+	return $self;
+}
+
+sub inventory_item_favorite {
+	my ($self, $args) = @_;
+	my $item = $char->inventory->getByServerIndex($args->{index});
+	if ($args->{flag}) {
+		message TF("Inventory Item removed from favorite tab: %s\n", $item), "storage";
+	} else {
+		message TF("Inventory Item move to favorite tab: %s\n", $item), "storage";
+	}
+}
 
 1;
 
