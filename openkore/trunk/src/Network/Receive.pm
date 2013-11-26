@@ -1592,8 +1592,15 @@ sub marriage_partner_name {
 sub login_pin_code_request {
 	# This is ten second-level password login for 2013/3/29 upgrading of twRO
 	my ($self, $args) = @_;
-
-	if (($args->{seed} == 0) && ($args->{flag} == 0)) {
+	# flags:
+	# 0 - correct
+	# 1 - requested (already defined)
+	# 2 - requested (not defined)
+	# 3 - expired
+	# 5 - invalid (official servers?)
+	# 7 - disabled?
+	# 8 - incorrect
+	if ($args->{flag} == 0) { # removed check for seed 0, eA/rA/brA sends a normal seed.
 		message T("PIN code is correct.\n"), "success";
 		# call charSelectScreen
 		$self->{lockCharScreen} = 0;
@@ -1613,6 +1620,16 @@ sub login_pin_code_request {
 	} elsif ($args->{flag} == 2) {
 		# PIN code has never been set before, so set it.
 		warning T("PIN password is not set for this account.\n"), "connection";
+		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
+
+		while ((($config{loginPinCode} =~ /[^0-9]/) || (length($config{loginPinCode}) != 4)) &&
+		  !($self->queryAndSaveLoginPinCode("Your PIN should never contain anything but exactly 4 numbers.\n"))) {
+			error T("Your PIN should never contain anything but exactly 4 numbers.\n");
+		}
+		$messageSender->sendLoginPinCode($args->{seed}, 1);
+	} elsif ($args->{flag} == 3) {
+		# should we use the same one again? is it possible?
+		warning T("PIN password expired.\n"), "connection";
 		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
 
 		while ((($config{loginPinCode} =~ /[^0-9]/) || (length($config{loginPinCode}) != 4)) &&

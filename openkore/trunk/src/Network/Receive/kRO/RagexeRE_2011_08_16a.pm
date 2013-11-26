@@ -47,7 +47,7 @@ sub new {
 	});
 	
 	Plugins::addHook(charSelectScreen => sub {
-		$_[1]{return} = $self->{lockCharScreen};
+		$_[1]{pin_return} = $self->{lockCharScreen};
 	});
 	
 	return $self;

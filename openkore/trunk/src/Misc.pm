@@ -1176,6 +1176,7 @@ sub charSelectScreen {
 	return 1 if $net->clientAlive;
 
 	Plugins::callHook('charSelectScreen', \%plugin_args);
+	return $plugin_args{pin_return} if ($plugin_args{pin_return});
 	return $plugin_args{return} if ($plugin_args{return});
 
 	if ($plugin_args{autoLogin} && @chars && $config{char} ne "" && $chars[$config{char}]) {
