@@ -137,14 +137,6 @@ prontera 29 207 payon 161 58 1200 1 c r2 c r2
 prontera 29 207 morocc 156 47 1200 1 c r2 c r3
 prontera 29 207 gef_fild10 52 326 1700 1 c r2 c r4
 prontera 29 207 alberta 117 56 1800 1 c r2 c r5
-geffen 120 62 prontera 116 72 1200 c r2 c r0
-geffen 120 62 aldebaran 168 112 1200 c r2 c r1
-geffen 120 62 gef_fild10 52 326 1700 c r2 c r2
-geffen 120 62 mjolnir_02 99 351 1700 c r2 c r3
-geffen 203 123 prontera 116 72 2000 c r2 c r0
-geffen 203 123 aldebaran 168 112 1200 c r2 c r1
-geffen 203 123 gef_fild10 52 326 1700 c r2 c r2
-geffen 203 123 mjolnir_02 99 351 1700 c r2 c r3
 payon 175 226 prontera 116 72 1200 1 c r2 c r0
 payon 175 226 alberta 117 56 1200 1 c r2 c r1
 payon 175 226 morocc 156 47 1200 1 c r2 c r2
@@ -246,6 +238,9 @@ new_2-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 
 new_3-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
 new_4-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
 new_5-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
+
+new_1-3 97 41 izlude_in 74 167 0 c r1 c c r1 c
+new_4-3 101 41 prt_church 172 19 0 c r1 c c r1
 
 # Izlude Arena
 arena_room 105 93 prt_are_in 60 14 0 c r0
@@ -2867,7 +2862,7 @@ alberta_in 75 39 moc_para01 31 14 c c r0
 alberta 27 238 moc_para01 31 14 c c r0
 geffen_in 160 104 moc_para01 31 14 c c r0
 payon_in02 58 58 moc_para01 31 14 c c r0
-izlude 134 97 moc_para01 31 14 c c r0
+izlude 134 98 moc_para01 31 14 c c r0
 izlude_in 68 162 moc_para01 31 14 c c r0
 
 # Eden HQ
@@ -2946,27 +2941,9 @@ mal_in02 142 60 mal_in02 162 61
 #------------------------------
 xmas 139 307 evt_xmas 129 129 0 c r1
 
-
 valkyrie 49 72 valkyrie 49 67
 valkyrie 49 67 valkyrie 49 75
-new_2-2 100 6 new_2-1 148 112
-new_2-1 148 112 new_2-2 100 9
-new_4-2 100 6 new_4-1 148 112
-new_4-1 148 112 new_4-2 100 9
-new_1-2 100 6 new_1-1 148 112
-new_1-1 148 112 new_1-2 100 9
-new_3-2 100 6 new_3-1 148 112
-new_3-1 148 112 new_3-2 100 9
-new_4-2 100 6 new_4-1 148 112
-new_4-1 148 112 new_4-2 100 9
-new_5-2 100 6 new_5-1 148 112
-new_5-1 148 112 new_5-2 100 9
-new_1-2 100 6 new_1-1 148 112
-new_1-1 148 112 new_1-2 100 9
-new_3-2 100 6 new_3-1 148 112
-new_3-1 148 112 new_3-2 100 9
-new_2-2 100 6 new_2-1 148 112
-new_2-1 148 112 new_2-2 100 9
+
 yuno_fild12 23 226 yuno_fild11 364 218
 yuno_fild11 364 218 yuno_fild12 26 230
 prt_fild09 383 251 moc_fild01 25 242
@@ -2975,25 +2952,14 @@ dewata 44 252 dew_fild01 373 212
 dew_dun02 305 30 dew_fild01 48 65
 dew_fild01 48 65 dew_dun02 302 30
 
-new_1-2 100 6 new_1-1 148 112
+# Novicegrounds
 new_1-1 148 112 new_1-2 100 9
-new_2-2 100 6 new_2-1 148 112
+new_1-2 100 6 new_1-1 148 112
 new_2-1 148 112 new_2-2 100 9
-new_4-2 100 6 new_4-1 148 112
+new_2-2 100 6 new_2-1 148 112
+new_3-1 148 112 new_3-2 100 9
+new_3-2 100 6 new_3-1 148 112
 new_4-1 148 112 new_4-2 100 9
-new_1-2 100 6 new_1-1 148 112
-new_1-1 148 112 new_1-2 100 9
-new_1-2 100 6 new_1-1 148 112
-new_1-1 148 112 new_1-2 100 9
-new_2-2 100 6 new_2-1 148 112
-new_2-1 148 112 new_2-2 100 9
-new_2-2 100 6 new_2-1 148 112
-new_2-1 148 112 new_2-2 100 9
-new_3-2 100 6 new_3-1 148 112
-new_3-1 148 112 new_3-2 100 9
-new_3-2 100 6 new_3-1 148 112
-new_3-1 148 112 new_3-2 100 9
-new_2-2 100 6 new_2-1 148 112
-new_2-1 148 112 new_2-2 100 9
-new_3-2 100 6 new_3-1 148 112
-new_3-1 148 112 new_3-2 100 9
+new_4-2 100 6 new_4-1 148 112
+new_5-1 148 112 new_5-2 100 9
+new_5-2 100 6 new_5-1 148 112
