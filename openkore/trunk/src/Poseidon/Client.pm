@@ -22,6 +22,7 @@ use Bus::MessageParser;
 use Bus::Messages qw(serialize);
 use Utils qw(dataWaiting);
 use Plugins;
+use Misc;
 
 use constant DEFAULT_POSEIDON_SERVER_PORT => 24390;
 use constant POSEIDON_SUPPORT_URL => 'http://wiki.openkore.com/index.php?title=Poseidon';
@@ -70,6 +71,8 @@ sub query {
 			"to support GameGuard, you must use the Poseidon " .
 			"server. Please read " . POSEIDON_SUPPORT_URL .
 			" for more information.\n";
+		# unsafe to continue, disconnect
+		offlineMode();
 		return;
 	}
 
@@ -108,6 +111,7 @@ sub getResult {
 		error "The Poseidon server closed the connection unexpectedly or could not respond " . 
 			"to your request due to a server bandwidth issue. Please report this bug.\n";
 		$self->{socket} = undef;
+		offlineMode();
 		return undef;
 	}
 
@@ -116,6 +120,7 @@ sub getResult {
 		if ($ID ne "Poseidon Reply") {
 			error "The Poseidon server sent a wrong reply ID ($ID). Please report this bug.\n";
 			$self->{socket} = undef;
+			offlineMode();
 			return undef;
 		} else {
 			$self->{socket} = undef;
