@@ -29,6 +29,7 @@ use base qw(Network::PacketParser);
 use encoding 'utf8';
 use Carp::Assert;
 use Digest::MD5;
+use Math::BigInt;
 
 use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout);
 use I18N qw(bytesToString stringToBytes);

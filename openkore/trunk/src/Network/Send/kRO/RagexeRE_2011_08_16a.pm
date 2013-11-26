@@ -42,6 +42,7 @@ sub new {
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],#10
+		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 

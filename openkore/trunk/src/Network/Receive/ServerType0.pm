@@ -1052,10 +1052,15 @@ sub map_loaded {
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
 	} else {
+		
+		$messageSender->sendSync(1); # tested at bRO 2013.11.26 - revok
+		
 		$messageSender->sendGuildMasterMemberCheck();
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		$messageSender->sendGuildRequestInfo(0);
+		$messageSender->sendGuildRequestInfo(0); 
+		
+		$messageSender->sendGuildRequestInfo(0); # tested at bRO 2013.11.26, this is sent two times and i don't know why - revok
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 		$messageSender->sendGuildRequestInfo(1);
