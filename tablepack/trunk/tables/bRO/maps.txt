@@ -509,20 +509,20 @@ que_job01.rsw#Taverna Particular #
 abyss_01.rsw#Caverna Subterrânea do Lago do Abismo #
 abyss_02.rsw#Caverna Subterrânea do Lago do Abismo #
 abyss_03.rsw#Caverna Subterrânea do Lago do Abismo #
-tha_t01.rsw#Torre de Thanatos – Andar Inferior #
-tha_t02.rsw#Torre de Thanatos – Andar Inferior #
-tha_t03.rsw#Torre de Thanatos – Andar Inferior #
-tha_t04.rsw#Torre de Thanatos – Andar Inferior #
-tha_t05.rsw#Torre de Thanatos – Andar Superior #
-tha_t06.rsw#Torre de Thanatos – Andar Superior #
-tha_t07.rsw#Torre de Thanatos – Andar Superior #
-tha_t08.rsw#Torre de Thanatos – Andar Superior #
-tha_t09.rsw#Torre de Thanatos – Andar Superior #
-tha_t10.rsw#Torre de Thanatos – Andar Superior #
-tha_t11.rsw#Torre de Thanatos – Andar Superior #
-tha_t12.rsw#Torre de Thanatos – Andar Superior #
-thana_step.rsw#Torre de Thanatos – Andar Superior #
-thana_boss.rsw#Torre de Thanatos – Área Desconhecida #
+tha_t01.rsw#Torre de Thanatos  Andar Inferior #
+tha_t02.rsw#Torre de Thanatos  Andar Inferior #
+tha_t03.rsw#Torre de Thanatos  Andar Inferior #
+tha_t04.rsw#Torre de Thanatos  Andar Inferior #
+tha_t05.rsw#Torre de Thanatos  Andar Superior #
+tha_t06.rsw#Torre de Thanatos  Andar Superior #
+tha_t07.rsw#Torre de Thanatos  Andar Superior #
+tha_t08.rsw#Torre de Thanatos  Andar Superior #
+tha_t09.rsw#Torre de Thanatos  Andar Superior #
+tha_t10.rsw#Torre de Thanatos  Andar Superior #
+tha_t11.rsw#Torre de Thanatos  Andar Superior #
+tha_t12.rsw#Torre de Thanatos  Andar Superior #
+thana_step.rsw#Torre de Thanatos  Andar Superior #
+thana_boss.rsw#Torre de Thanatos  Área Desconhecida #
 thana_scene01.rsw#Entrada da Torre de Thanatos #
 job_soul.rsw#Seu Coração #
 job_star.rsw#O Sol, a Lua e as Estrelas #
@@ -581,7 +581,7 @@ yuno_fild10.rsw#Campos de Juno#
 kh_kiehl02.rsw#Aposentos de Kiehl#
 kh_kiehl01.rsw#Aposentos de Kiehl#
 kh_dun02.rsw#Fábrica de Robôs - Nível 2#
-kh_dun01.rsw#Fábrica de Robôs – Nível 1#
+kh_dun01.rsw#Fábrica de Robôs  Nível 1#
 kh_mansion.rsw#Mansão de Kiel Hyre#
 kh_rossi.rsw#A Mansão Rosimier#
 kh_school.rsw#Academia Kiel Hyre#
@@ -805,4 +805,37 @@ mal_dun01.rsw#Área de Coral Estrelado#
 1@pump.rsw#Esgotos de malangdo#
 2@pump.rsw#Esgotos de malangdo#
 
-moc_para01.rsw#Garden of Eden#
+
+//------2013 Abyss and Biolab 4th----------------------
+lhz_dun04.rsw#Laboratório de Somatologia #
+que_lhz.rsw#Laboratório de Somatologia #
+1@lhz.rsw#Laboratório de Wolfchev#
+gld_dun01_2.rsw#2º calabouço da Guilda#
+gld_dun02_2.rsw#2º calabouço da Guilda#
+gld_dun03_2.rsw#2º calabouço da Guilda#
+gld_dun04_2.rsw#2º calabouço da Guilda#
+gld2_ald.rsw#Portal do Abismo: Lágrimas do Herói#
+gld2_gef.rsw#Portal do Abismo: Colina dos Mortos#
+gld2_pay.rsw#Portal do Abismo: Ventos Ancestrais#
+gld2_prt.rsw#Portal do Abismo: Caminho do Guerreiro#
+
+// ---------- Port Malaya To add ------------
+malaya.rsw#Porto Malaya#
+ma_fild01.rsw#Baryo Mahiwaga#
+ma_fild02.rsw#Floresta#
+ma_scene01.rsw#Lago Bakonawa#
+ma_in01.rsw#Interior de Malaya#
+ma_dun01.rsw#Hospital de Bangungot, 1º andar#
+1@ma_h.rsw#Hospital de Bangungot, 2º andar#
+1@ma_c.rsw#Caverna Buwaya#
+1@ma_b.rsw#Esconderijo Bakonawa#
+ma_zif01.rsw#Interior de Jeepney#
+ma_zif02.rsw#Interior de Jeepney#
+ma_zif03.rsw#Interior de Jeepney#
+ma_zif04.rsw#Interior de Jeepney#
+ma_zif05.rsw#Interior de Jeepney#
+ma_zif06.rsw#Interior de Jeepney#
+ma_zif07.rsw#Interior de Jeepney#
+ma_zif08.rsw#Interior de Jeepney#
+ma_zif09.rsw#Interior de Jeepney#
+job_ko.rsw#Lugar Escondido#

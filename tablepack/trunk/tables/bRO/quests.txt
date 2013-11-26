@@ -2084,7 +2084,7 @@ Ele ainda resiste... Como posso fazê-lo revelar a verdade? Talvez haja algo que
 ... Por favor, deixe-me só. Eu perdi o amor da minha vida por algo estúpido que fiz no passado. Se quiser me castigar, vá em frente...#
 Vá ao jardim da Freya.#
 
-// ¾Æ¿äÅ¸¾ß : Œc¾ç²á Äù½ºÆ® (ayo_tom.sc)
+// ¾Æ¿äÅ¸¾ß : c¾ç²á Äù½ºÆ® (ayo_tom.sc)
 
 8123#O prato mais famosa de Ayotaya, Sopa Tailandesa#SG_FEEL#QUE_NOIMAGE#
 Todos podem preparar Sopa Tailandesa, entretanto, eu recomendo que você visite ^3131FFMali^000000. Ela é a melhor cozinheira. Por que não pergunta se ela pode cozinhar para você?#
@@ -3792,8 +3792,8 @@ Encontre a mão de Torpy fora da vila.#
 Encontre a mãe de Torpy#
 
 12045#Acalmando a criança chorona 2#SG_FEEL#QUE_NOIMAGE#
-Entregue a mensagem da mãe para Torpy. [Eu voltarei…] #
-Eu voltarei…  #
+Entregue a mensagem da mãe para Torpy. [Eu voltarei] #
+Eu voltarei  #
 
 12046#Acalmando a criança chorona 3#SG_FEEL#QUE_NOIMAGE#
 Encontre o pai de Torpy, causador de todos os problemas. Ele deve estar escondido em algum lugar da vila.#
@@ -4844,7 +4844,7 @@ Derrote 30 Munaks do calabouço de Payon.#
 Colete 40 Flores de Planta Carnívora do sul de Comodo.#
 #
 3263#Pedidos!#SG_FEEL#QUE_NOIMAGE#
-Colete 30 Chifres de Dokebi e Toras da caverna de Payon.#
+Colete 30 Chifres de Dokebi e 30 Troncos da caverna de Payon.#
 #
 
 
@@ -5337,7 +5337,7 @@ Colete 10 Patas de Urso e 5 Peles de Animal#
 
 8276#Missões de Caçada#SG_FEEL#QUE_NOIMAGE#
 Colete os itens do Pierre, Andre e Deniro do Formigueiro Infernal.#
-Colete 20 Scells e 20 Garletas#
+Colete 20 Peles de Verme e 20 Garletas#
 
 8277#Missões de Caçada#SG_FEEL#QUE_NOIMAGE#
 Colete os itens do Yoyo, Koko e Fumacento do mapa a leste de Ayothaya.#
@@ -5579,7 +5579,7 @@ Cace 20 Condores a sul de Morroc.#
 #
 
 11116#Caçada de Monstros#SG_FEEL#QUE_NOIMAGE#
-Cace 10 Rockers e colete 4 Pernas de Gafanhoto a sudoeste de Prontera.#
+Cace 10 Rockers e colete 10 Pernas de Gafanhoto a sudoeste de Prontera.#
 #
 
 11117#Caçada de Monstros#SG_FEEL#QUE_NOIMAGE#
@@ -6284,7 +6284,7 @@ Você é nosso herói! Nossa raça está prosperando graças a você, pena que e
 Entregando suas comidas, Argiope.#
 
 7204#A flor da Primavera#SG_FEEL#QUE_NOIMAGE#
-‘Bomy’, a pequena menina de Lutie, quer saber sobre as flores da primavera. Você prometeu que traria as tais flores. Entretanto aqueles 5 Enorme Galho de Cerejeira...#
+Bomy, a pequena menina de Lutie, quer saber sobre as flores da primavera. Você prometeu que traria as tais flores. Entretanto aqueles 5 Enorme Galho de Cerejeira...#
 Leve para Bomy seus presentes da primavera#
 
 //-------------ep13.3 Ep 13.3
@@ -7144,39 +7144,39 @@ Eu visitei o Tabuleiro de Xadrez dos ermitões para refinar o elixir da tempesta
 Perto de gon_dun02 252 198#
 
 //-- 2010 ???? 14.1 ep14_1_rofe.sc
-1109#Lope e Euridi — Sobreviventes da névoa da floresta.#SG_FEEL#QUE_NOIMAGE#
+1109#Lope e Euridi  Sobreviventes da névoa da floresta.#SG_FEEL#QUE_NOIMAGE#
 Encontre a Estalagem da Vila de Mora e pergunte sobre o paradeiro de Lope.#
 #
 
-1110#Lope e Euridi — Vítimas da névoa.#SG_FEEL#QUE_NOIMAGE#
+1110#Lope e Euridi  Vítimas da névoa.#SG_FEEL#QUE_NOIMAGE#
 Você encontra alguém chamado Pitt. Ele diz que Lope deve estar vivo, mas não sabe onde ele está.#
 Volte a falar com Euridi e conte para ela o que você descobriu.#
 
-1111#Lope e Euridi — A névoa da floresta.#SG_FEEL#QUE_NOIMAGE#
+1111#Lope e Euridi  A névoa da floresta.#SG_FEEL#QUE_NOIMAGE#
 Procure as ^0000FFPistas sobre Lope^000000 na floresta e leve-as para Pitt. Trinta devem ser suficientes.#
 #
 
-1112#Lope e Euridi — Labirinto.#SG_FEEL#QUE_NOIMAGE#
+1112#Lope e Euridi  Labirinto.#SG_FEEL#QUE_NOIMAGE#
 Pitt não está ajudando muito. É melhor você levar as pistas sobre Lope para Euridi. Talvez sejam úteis para ela.#
 #
 
-1113#Lope e Euridi — Promessa quebrada.#SG_FEEL#QUE_NOIMAGE#
+1113#Lope e Euridi  Promessa quebrada.#SG_FEEL#QUE_NOIMAGE#
 Quando se juntam as pistas, percebe-se que Pitt deve ter tido algo a ver com o que aconteceu com Lope...#
 #
 
-1114#Lope e Euridi — O custo do sacrifício.#SG_FEEL#QUE_NOIMAGE#
+1114#Lope e Euridi  O custo do sacrifício.#SG_FEEL#QUE_NOIMAGE#
 Pitt lhe entrega o Anel de Lope e confessa o que fez. Você precisa contar a Euridi o que aconteceu.#
 #
 
-1115#Lope e Euridi — Canção do Abismo.#SG_FEEL#QUE_NOIMAGE#
+1115#Lope e Euridi  Canção do Abismo.#SG_FEEL#QUE_NOIMAGE#
 Enquanto Euridi canta para Lope, a amiga dela diz que ouviu falar de um homem suspeito perto da entrada da floresta.#
 #
 
-1116#Lope e Euridi — Canção dos Mortos.#SG_FEEL#QUE_NOIMAGE#
+1116#Lope e Euridi  Canção dos Mortos.#SG_FEEL#QUE_NOIMAGE#
 Você encontra Lope, mas ele lhe pede para dizer a Euridi que se transformou em pó. Ele não pode mais estar com ela da maneira como desejavam.#
 #
 
-1117#Lope e Euridi — Promessa eterna.#SG_FEEL#QUE_NOIMAGE#
+1117#Lope e Euridi  Promessa eterna.#SG_FEEL#QUE_NOIMAGE#
 Naturalmente, quando você entrega o Anel de Lope para Euridi, ela não aceita bem a notícia...#
 Fale com a Amiga de Euridi.#
 
@@ -7949,7 +7949,7 @@ O Diretor dos Cat Gamers quer mudar sua imagem assustadora.#
 Deixe-me perguntar ao Gerente Cat quem é aprovado pelo Diretor dos Cat Gamers.#
 
 5067#Imagem assustadora-(2)#SG_FEEL#QUE_NOIMAGE#
-O Gerente Cat disse "Imagem assustadora... isso é mesmo difícil... Por que não desistir... Isso seria mais fácil.... recolher reclamações... !! Eu ouvi que, às vezes, o exército faz isso...”#
+O Gerente Cat disse "Imagem assustadora... isso é mesmo difícil... Por que não desistir... Isso seria mais fácil.... recolher reclamações... !! Eu ouvi que, às vezes, o exército faz isso...#
 Diga ao Diretor dos Cat Gamers para trazer uma caixa para recolher reclamações.#
 
 5068#Recolher reclamações#SG_FEEL#QUE_NOIMAGE#
@@ -8694,3 +8694,702 @@ Você está encarregado dos esgotos, normal por 7 dias.#
 12274#Serviço semanal difícil nos esgotos em progresso.#SG_FEEL#QUE_NOIMAGE#
 Você já tem 1 solicitação de serviço. Já que você já o fez, não pode receber nova solicitação por 7 dias.#
 Você está encarregado dos esgotos, difícil por 7 dias.#
+
+//-- Competição de investimentos em Castelos (conteúdo do Abismo)
+7349#Vote#SG_FEEL#QUE_NOIMAGE#
+Você já votou na região para a conexão com o portal. Não é possível votar novamente até que a eleição termine.#
+#
+
+//==== Missão do laboratório biológico 5109 - 5125
+5109#Rumor sério#SG_FEEL#QUE_NOIMAGE#
+Há rumores de que os experimentos com humanos, que pensávamos ter parado, prosseguem. O que está havendo? É preciso verificar isso.#
+Vamos encontrar o local dos experimentos com humanos.#
+
+5110#O rumor#SG_FEEL#QUE_NOIMAGE#
+Você encontrou Wolfchev, que está envolvido nos rumores sobre experimentos com humanos.#
+Siga-o.#
+
+5111#Para o laboratório#SG_FEEL#QUE_NOIMAGE#
+Para escapar das cobaias humanas, vá ao laboratório de Wolfchev.#
+O laboratório de Wolfchev está diretamente ao norte.#
+
+5112#Acesso limitado ao laboratório#SG_FEEL#QUE_NOIMAGE#
+Por enquanto, não é possível acessar o sistema de entrada do laboratório.#
+Tempo de espera para entrar (3 dias - 72 horas)#
+
+5113#[Segurança] Lorde#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha o Lorde Seyren!#
+
+5114#[Segurança] Paladino#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha o Paladino Randel!#
+
+5115#[Segurança] Suma Sacerdotisa#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha a Sumo Sacerdotisa Margaretha!#
+
+5116#[Segurança] Mestre#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha o Mestre Chen!#
+
+5117#[Segurança] Arquimaga#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha a Arquimaga Kathryne!#
+
+5118#[Segurança] Professor#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha a Professora Celia!#
+
+5119#[Segurança] Mestre-ferreiro#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha o Mestre-ferreiro Howard!#
+
+5120#[Segurança] Criador#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha o Criador Flamel!#
+
+5121#[Segurança] Algoz#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha o Algoz Eremes!#
+
+5122#[Segurança] Desordeira#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha o Desordeira Gertie!#
+
+5123#[Segurança] Atiradora de Elite#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha a Atiradora de Elite Cecil!#
+
+5124#[Segurança] Menestrel#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha o Menestrel Alphochio!#
+
+5125#[Segurança] Cigana#SG_FEEL#QUE_NOIMAGE#
+Para deter as cobaias humanas à solta, você precisa cuidar do monstro-chefe.#
+Detenha a Cigana Trentini!#
+//-------- Paradise team mid-level quests 2013.10
+7214#Treino Avançado - Passo 1 - Comodo#SG_FEEL#QUE_NOIMAGE#
+Encontre o Membro do Grupo Éden em frente à entrada da caverna norte de Comodo#
+Fale com Romeo#
+
+7215#Treino Avançado - Passo 1.1 - Comodo#SG_FEEL#QUE_NOIMAGE#
+Romeo pediu para que você derrotasse Golems Estalactíticos.#
+Derrote 3 Golem Estalactítico#
+
+7216#Treino Avançado - Passo 1.2 - Comodo#SG_FEEL#QUE_NOIMAGE#
+Agora que você já sabe como é, derrote mais Golems Estalactíticos.#
+Derrote 10 Golem Estalactítico#
+
+7217#Treino Avançado - Passo 1.3 - Comodo#SG_FEEL#QUE_NOIMAGE#
+Romeo te passou uma última missão. Derrote Guerreiros Wootan e Dríades para conseguir alguns itens#
+Traga 5 Ombreiras, 7 Folhas Afiadas#
+
+7218#Reporte para Uru#SG_FEEL#QUE_NOIMAGE#
+Você completou este passo do Grupo Éden. Você pode voltar para a sede do Grupo Éden.#
+Reporte para Uru#
+
+7219#Treino Avançado - Passo 2 - Glast Heim#SG_FEEL#QUE_NOIMAGE#
+Procure o Oficial do Grupo Éden em Glast-heim. Johan está em frente ao monastério de Glast Heim#
+Encontre Johan#
+
+7220#Treino Avançado - Passo 2.1 - Alma Penada#SG_FEEL#QUE_NOIMAGE#
+Johan asked to defeat evil creature 'WRAITH' on 1 floor in monastry.#
+Derrote 20 Almas Penadas#
+
+7221#Treino Avançado - Passo 2.2 - Druida Malígno#SG_FEEL#QUE_NOIMAGE#
+Há alguns druidas no monastério. Entretanto, eles foram corrompidos e não salvam pessoas. Vamos dá-los a paz eterna#
+Derrote 10 Druida Malígno#
+
+7222#Reporte para Uru#SG_FEEL#QUE_NOIMAGE#
+Johan informou que a missão foi completa. Você deve voltar para o Grupo Éden.#
+Reporte para Uru#
+
+7223#Treino Avançado - Passo 3 - Einbroch#SG_FEEL#QUE_NOIMAGE#
+Você deve encontrar o Membro do Grupo Éden, Giren, ao sul de Einbroch para sua próxima missão.#
+Fale com Giren#
+
+7224#Treino Avançado - Passo 3.1 - Porcellio#SG_FEEL#QUE_NOIMAGE#
+Giren, um cara muito relaxado, pediu para você caçar alguns Porcellios.#
+Derrote 30 Porcellios#
+
+7225#Treino Avançado - Passo 3.2 - Nuvem Tóxica#SG_FEEL#QUE_NOIMAGE#
+Os cidadãos de Einbroch pedira para derrotar Nuvens Tóxicas, mas Giren não deu a mínima.#
+Não precisa derrotar Nuvem Tóxica#
+
+7226#Treino Avançado - Passo 3.3 - Nuvem Venenosa#SG_FEEL#QUE_NOIMAGE#
+Essa missão é um pedido de 100% dos cidadãos de Einbroch.#
+Derrote 30 Nuvens Venenosas#
+
+7227#Treino Avançado - Passo 3.4 - Nuvem Venenosa#SG_FEEL#QUE_NOIMAGE#
+Um cidadão pediu, mas é muito importante. Alguns Ursinhos podem causar o caos. Giren pediu para ter cuidado com esse poderoso inimigo.#
+Derrote 5 Ursinhos#
+
+7228#Reporte para Uru#SG_FEEL#QUE_NOIMAGE#
+Missão completa. Volte ao Grupo Éden.#
+Reporte para Uru#
+
+7229#Treino Avançado - Passo 4 - Caverna de Gelo#SG_FEEL#QUE_NOIMAGE#
+A missão continua na Caverna de Gelo localizada ao Norte de Rachel. Procure por Naomi na entrada da Caverna.#
+Fale com Naomi#
+
+7230#Treino Avançado - Passo 4.1 - Siromas#SG_FEEL#QUE_NOIMAGE#
+after all, there was a mission which is reflected a request from villagers. let's go defeat SIROMA who is bothering ice collecting.#
+Derrote 30 Siromas#
+
+7231#Treino Avançado - Passo 4.2 - Siromas de novo#SG_FEEL#QUE_NOIMAGE#
+Você precisa derrotar Siromas novamente para Naomi. Ela planeja fazer Lama Gelada com 30 Cubos de Gelo, 1 Molho Doce e 1 Leite.#
+Derrote 30 Siromas e recolha o material para fazer Raspadinha#
+
+7232#Reporte para Uru#SG_FEEL#QUE_NOIMAGE#
+Você completou a missão. Está na hora de voltar ao Grupo Éden.#
+Reporte para Uru#
+
+7233#Treino Avançado - Passo 5 - Ash Vacuum#SG_FEEL#QUE_NOIMAGE#
+Uru pediu para que você encontre Magret no Acampamento da Expedição da Aliança em Ash Vacuum.#
+Encontre Magret#
+
+7234#Treino Avançado - Passo 5.1 - Pedido de Magret#SG_FEEL#QUE_NOIMAGE#
+Magret precisa encontrar seus colegas Miru e Mineh. Encontre Miru a oeste e Mine a leste do acampamento. Vá primeiro até Miru.#
+Encontre Miru e Mine#
+
+7235#Treino Avançado - Passo 5.1 - As Razões de Miru#SG_FEEL#QUE_NOIMAGE#
+Os gêmeos Miru e Mineh estão brigado e querem provar que estão certos ao seu modo. Miru pediu para que você derrotasse uma Nephentes.#
+Derrote uma Nephentes#
+
+7236#Treino Avançado - Passo 5.2 - As Razões de Mineh#SG_FEEL#QUE_NOIMAGE#
+Mine pediu ajuda pra derrotar Pinguiculas. Você precisará derrotar 5 delas.#
+Derrote 5 Pinguiculas#
+
+7237#Reporte para Uru#SG_FEEL#QUE_NOIMAGE#
+Magrot pediu discrição sobre o caso de Miru e Mineh. Reporte apenas o necessário para Uru.#
+Reporte para Uru#
+
+7238#Recado para Thorn (Fácil)#SG_FEEL#QUE_NOIMAGE#
+Você tem um recado para Thorn, o exímio ferreiro do Grupo Éden. Traga o que ele pediu para seu objetivo.#
+20 Minério de Ferro, 10 Ferro#
+
+7239#Recado para Thorn (Normal)#SG_FEEL#QUE_NOIMAGE#
+Um recado para Thorn, o ferreiro do Grupo Éden. Traga o que ele pediu para seu objetivo .A melhor alternativa é derrotando Minérios!#
+Traga 20 Placa de Ferro Usada#
+
+7240#A Garantia de Thorn para equipamentos#SG_FEEL#QUE_NOIMAGE#
+Como recompensa pela missão, Thorn prometeu encantar um dos seus Equipamentos do Grupo Éden. Você pode encantar a Capa II do Grupo Éden, Armadura do Grupo Éden ou Botas IV do Grupo Éden. O encantamento será aleatório.#
+#
+
+7241#Recado para Thorn#SG_FEEL#QUE_NOIMAGE#
+Thorn parece não precisar de mais nada. Visite-o amanhã.#
+#
+
+// ---------- Port Malaya Update ------------
+//------------port malaya daily quests
+7350#Vila Cautelosa#SG_FEEL#QUE_NOIMAGE#
+Primeira vez no Porto Malaya. Ainda é meio confuso, mas é melhor ver Phong, o Mumbaki, na vila como disseram. Tenho certeza de que ele vai me ajudar.#
+Fale com Phong, o Mumbaki.#
+
+7351#Melhor que Meu Botão Antigo#SG_FEEL#QUE_NOIMAGE#
+Aldeões estão tentando arrancar meus botões e puxar minhas mangas. Vamos distribuir Água-benta e Gemas Azuis a eles. Isso pode acalmá-los por um tempo.#
+Entregue os itens Sagrados a Pedro, Nardo, Pandoi, Woeon, Talah e Romel#
+
+7352#O Marinheiro Quer um Botão#SG_FEEL#QUE_NOIMAGE#
+Um dos aldeões que quer um amuleto para carregar.#
+#
+
+7353#O Velho Quer um Botão#SG_FEEL#QUE_NOIMAGE#
+Um dos aldeões que quer um amuleto para carregar.#
+#
+
+7354#O Jovem Quer um Botão#SG_FEEL#QUE_NOIMAGE#
+Um dos aldeões que quer um amuleto para carregar.#
+#
+
+7355#O Mercador Quer um Botão#SG_FEEL#QUE_NOIMAGE#
+Um dos aldeões que quer um amuleto para carregar.#
+#
+
+7356#A Garotinha Quer um Botão#SG_FEEL#QUE_NOIMAGE#
+Um dos aldeões que quer um amuleto para carregar.#
+#
+
+7357#Homem de Meia-idade Quer um Botão#SG_FEEL#QUE_NOIMAGE#
+Um dos aldeões que quer um amuleto para carregar.#
+#
+
+7358#Por Que Querem Botões#SG_FEEL#QUE_NOIMAGE#
+Não dá pra entender os aldeões aqui. Preciso perguntar a Phong, o Mumbaki, por que são obcecados por botões aqui.#
+Pedir conselhos a Phong, o Mumbaki.#
+
+7359#Entregar Item Sagrado ao Marinheiro#SG_FEEL#QUE_NOIMAGE#
+Melhor que nada.#
+#
+
+7360#Entregar Item Sagrado ao Velho#SG_FEEL#QUE_NOIMAGE#
+Melhor que nada.#
+#
+
+7361#Entregar Item Sagrado ao Jovem#SG_FEEL#QUE_NOIMAGE#
+Melhor que nada.#
+#
+
+7362#Entregar Item Sagrado ao Mercador#SG_FEEL#QUE_NOIMAGE#
+Melhor que nada.#
+#
+
+7363#Entregar Item Sagrado à Garotinha#SG_FEEL#QUE_NOIMAGE#
+Melhor que nada.#
+#
+
+7364#Entregar Item Sagrado ao Homem de Meia-idade#SG_FEEL#QUE_NOIMAGE#
+Melhor que nada.#
+#
+
+7365#Melhor que Meu Botão Antigo-2#SG_FEEL#QUE_NOIMAGE#
+Ouviu o conselho de Phong, o Mumbaki, e entregou os itens sagrados aos aldeões para levarem como amuletos. Vou perguntar a ele sobre o que devo fazer em seguida.#
+Falar sério com Mumbaki.#
+
+7366#Proteção Espiritual Tradicional e Garota Sem-vergonha-1#SG_FEEL#QUE_NOIMAGE#
+A neta de Phong, o Mumbaki, Imelda, cria Proteções Espirituais Tradicionais. Recebeu um pedido para obter materiais para fazer essas proteções. Sal das praias a noroeste, Bambu de Baryo e Cruzes de Prata de Pandoi.#
+6 Sacolas de Sal, 6 Bambus Afiados, 6 Cruzes de Prata#
+
+7367#Proteção Espiritual Tradicional e Garota Sem-vergonha-2#SG_FEEL#QUE_NOIMAGE#
+Espere a garota terminar de fazer as Proteções Espirituais. Não vai demorar muito. Talvez uma xícara de chá para matar o tempo...#
+#
+
+7368#Entregue a Proteção Espiritual-Pedro#SG_FEEL#QUE_NOIMAGE#
+Entregue a Proteção Espiritual finalizada a Pedro, o Marinheiro, no porto.#
+#
+
+7369#Entregue a Proteção Espiritual-Nardo#SG_FEEL#QUE_NOIMAGE#
+Entregue a Proteção Espiritual finalizada a Nardo, o Velho, na vila.#
+#
+
+7370#Entregue a Proteção Espiritual-Pandoi#SG_FEEL#QUE_NOIMAGE#
+Entregue a Proteção Espiritual finalizada a Pandoi, o Ferreiro Novato.#
+#
+
+7371#Entregue a Proteção Espiritual-Woeon#SG_FEEL#QUE_NOIMAGE#
+Entregue a Proteção Espiritual finalizada a Woeon, o Colecionador.#
+#
+
+7372#Entregue a Proteção Espiritual-Talah#SG_FEEL#QUE_NOIMAGE#
+Entregue a Proteção Espiritual finalizada para a gracinha da Talah.#
+#
+
+7373#Entregue a Proteção Espiritual-Romel#SG_FEEL#QUE_NOIMAGE#
+Entregue a Proteção Espiritual finalizada ao pai de Talah, Romel.#
+#
+
+7374#Amor e Proteção Espiritual para Todos#SG_FEEL#QUE_NOIMAGE#
+Imelda pede a você que entregue as Proteções Espirituais finalizadas aos aldeões amedrontados. Total de 6 aldeões.#
+#
+
+7375#Amor e Proteção Espiritual para Todos Continua#SG_FEEL#QUE_NOIMAGE#
+O efeito da Proteção Espiritual não dura tanto tempo. Vou ajudar Imelda a distribuir as Proteções Espirituais depois de um dia.#
+#
+
+7376#O Velho e o Caldeirão de Ferro Fundido-1#SG_FEEL#QUE_NOIMAGE#
+Eles dizem que há uma pequena tribo chamada Baryo Mahiwaga, fora da cidade do Porto Malaya. Recebeu um pedido para pegar Caldeirões de Ferro Fundido do monstro chamado Bakonawa e distribuir àqueles que os querem.#
+Entregue um Caldeirão de Ferro Fundido a Kiko, o Mumbaki#
+
+7377#O Velho e o Caldeirão de Ferro Fundido-2#SG_FEEL#QUE_NOIMAGE#
+Entregou um Caldeirão de Ferro Fundido a Kiko, o Mumbaki, em Baryo Mahiwaga, e recebeu uma Proteção Espiritual como recompensa. Vamos relatar isso a Nardo para tornar a entrega oficial.#
+Entregar Proteção Espiritual a Nardo#
+
+7378#O Velho e o Caldeirão de Ferro Fundido-Comércio Comum#SG_FEEL#QUE_NOIMAGE#
+O Caldeirão de Ferro Fundido é um item que é constantemente golpeado, e acaba sempre se quebrando. É por isso que caldeirões são procurados com frequência. Encontre-se com Nardo depois de um dia. Ele lhe dará a data de entrega do Caldeirão de Ferro Fundido.#
+#
+
+7379#Pastor da Paz#SG_FEEL#QUE_NOIMAGE#
+Entregou as Proteções Espirituais aos 6 aldeões de acordo com as instruções de Imelda. Parece que acabei de ajudar a trazer a paz e a estabilidade para essa vila. Vamos compartilhar este sucesso com Imelda.#
+#
+
+7380#Forjar uma Proteção Espiritual Tradicional#SG_FEEL#QUE_NOIMAGE#
+Prometi reunir materiais para criar Proteções Espirituais. Sal pode ser recolhido das praias a noroeste, Bambu de Baryo e Cruzes de Prata de Pandoi.#
+6 Sacolas de Sal, 6 Bambus Afiados, 6 Cruzes de Prata#
+
+7381#Procura Elevada de Materiais de Proteção Espiritual#SG_FEEL#QUE_NOIMAGE#
+Proteções Espirituais são sempre uma necessidade, então, os materiais estão sempre esgotados. Visite Imelda depois de um dia. Com certeza, ela pedirá mais materiais.#
+#
+
+7382#Entregar para Pedro#SG_FEEL#QUE_NOIMAGE#
+Proteção Espiritual entregue a Pedro!#
+#
+
+7383#Entregar para Nardo#SG_FEEL#QUE_NOIMAGE#
+Proteção Espiritual entregue a Nardo!#
+#
+
+7384#Entregar para Pandoi#SG_FEEL#QUE_NOIMAGE#
+Proteção Espiritual entregue a Pandoi!#
+#
+
+7385#Entregar a Woeon#SG_FEEL#QUE_NOIMAGE#
+Proteção Espiritual entregue a Woeon!#
+#
+
+7386#Entregar a Talah#SG_FEEL#QUE_NOIMAGE#
+Proteção Espiritual entregue a Talah!#
+#
+
+7387#Entregar a Romel#SG_FEEL#QUE_NOIMAGE#
+Proteção Espiritual entregue a Romel!#
+#
+
+7388#Filha de Marie#SG_FEEL#QUE_NOIMAGE#
+Vamos encontrar a ^4d4dffCamiseta do Avesso^000000  da filha de Marie que a perdeu na floresta. Esta camiseta deve ter sido pega por um animal ou um monstro.#
+#
+
+7389#Entregar a Camiseta à Filha de Marie#SG_FEEL#QUE_NOIMAGE#
+Entreguei a Camiseta à Filha de Marie. A menina vai vestir a camiseta e poderá ir para casa em segurança. Preciso que Marie saiba que tudo está bem agora.#
+#
+
+7390#Preocupado com a Filha de Marie#SG_FEEL#QUE_NOIMAGE#
+Pela história da menina, parece que existe um espírito malicioso que engana as pessoas e as faz se perder. Isso significa que a criança pode se perder novamente. Se estiver preocupado, visite-as novamente.#
+#
+
+7391#Jejeling e Jejellopy#SG_FEEL#QUE_NOIMAGE#
+O colecionador Woeon coleta Jejellopys e pediu para que você o ajude a recolhê-los. Cace Jejelings nas proximidades e colecione os Jejellopys que eles derrubam. Entregar 30 Jejellopys a Woeon.#
+Entregar 30 Jejellopys a Woeon#
+
+7392#Colecione Jejellopys Regularmente#SG_FEEL#QUE_NOIMAGE#
+Jejellopys são produzidos para serem usados em vários produtos. Woeon precisará de quantos Jejellopys conseguir. Vamos visitá-lo, quando tiver tempo livre.#
+#
+
+7393#Lâmina de Prata Brilhante#SG_FEEL#QUE_NOIMAGE#
+O sonho do Ferreiro Aprendiz, Pandoi, é fazer uma Lâmina de Prata. Colete 10 Braceletes de Prata de monstros no hospital.#
+10 Braceletes de Prata, e derrote Manananggal e Tiyanak#
+
+7394#Amanhã Brilhante#SG_FEEL#QUE_NOIMAGE#
+Volte para Pandoi depois de um dia. Se ele falhou ao criar uma Lâmina de Prata, precisará de sua ajuda para obter mais Braceletes de Prata.#
+#
+
+7395#Fantasma no Barco da Travessia#SG_FEEL#QUE_NOIMAGE#
+Decidiu ver por conta própria se a história de Pedro sobre o Barco da Travessia assombrado é verdade. Os fantasmas por aqui parecem ter medo de mim, então, é melhor não ter medo de embarcar.#
+Investigue o Barco da Travessia.#
+
+
+7396#Alma Nervosa no Barco da Travessia#SG_FEEL#QUE_NOIMAGE#
+Foi maltratado no Barco da Travessia pelo espírito de uma garota nervosa. Vamos buscar uma solução.#
+Fale com Pedro, o Marinheiro.#
+
+7397#Conselho de Phong, o Mumbaki#SG_FEEL#QUE_NOIMAGE#
+Phong, o Mumbaki, disse para não evitar o espírito, mas para abraçá-lo e acalmá-lo. Vamos procurar flores para oferecer. Você pode obter flores dos animais e monstros próximos.#
+3 Flores Elegantes, 3 Flores Misteriosas, 3 Flores Bonitas#
+
+7398#Buquê de Oferenda Recomendado por Mumbaki#SG_FEEL#QUE_NOIMAGE#
+Phong, o Mumbaki, abençoou as flores que você trouxe e fez com elas um Buquê de Oferenda. Vamos levar este buquê ao Fantasma Diwata no Barco da Travessia.#
+Oferecer o Buquê a Diwata.#
+
+7399#História do Fantasma Diwata#SG_FEEL#QUE_NOIMAGE#
+Diwata disse ser maltratada por fantasmas nativos por ser de fora da vila. O Barco da Travessia está preso por causa da alma poderosa de Diwata.#
+Compartilhar essa informação com Pedro.#
+
+7400#Mumbaki do Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+7401#Todos a Bordo do Barco da Travessia#SG_FEEL#QUE_NOIMAGE#
+Parece que o Barco da Travessia vai funcionar normalmente por enquanto. Mas vamos verificá-lo novamente amanhã. Ainda há chances de fantasmas nativos estarem maltratando Diwata.#
+#
+
+7402#Buquê para Diwata#SG_FEEL#QUE_NOIMAGE#
+Decidi criar um buquê para acalmar Diwata, que estava sendo maltratada por fantasmas nativos. Junte flores para serem abençoadas por Phong, o Mumbaki.#
+3 Flores Elegantes, 3 Flores Misteriosas, 3 Flores Bonitas#
+
+7403#Travessia Normalizada#SG_FEEL#QUE_NOIMAGE#
+Diwata se acalmou depois de receber o buquê. O Barco da Travessia pode navegar novamente. Vamos informar Pedro.#
+#
+
+7404#Livre-se dos Jejelings#SG_FEEL#QUE_NOIMAGE#
+Decidi ajudar alguns vendedores ambulantes de Baryo a eliminar Jejelings. Tente eliminar 20 Jejelings hoje.#
+20 Jejelings#
+
+7405#Livre-se dos Jejelings - Mesma Hora Amanhã#SG_FEEL#QUE_NOIMAGE#
+Livrar-se dos Jejelings é um projeto em andamento que precisa de muita ajuda. Para participar, encontre o Guarda depois de um dia.#
+#
+
+7406#Concordou em Recolher Ossos!#SG_FEEL#QUE_NOIMAGE#
+Recolha ossos para o cão de guarda, Vantai. Os ossos coletados devem ser purificados. Leve os Ossos de Espírito Maligno recolhidos para que Kiko, o Mumbaki, os purifique.#
+10 Ossos de Espírito Maligno, 10 Águas-bentas#
+
+7407#Osso Purificado#SG_FEEL#QUE_NOIMAGE#
+Recebeu Ossos Purificados de Espírito depois do ritual de Kiko, o Mumbaki. Vamos levá-los a Dhong.#
+Entregar 10 Ossos Purificados de Espírito a Dhong10.#
+
+7408#Concorda em Voltar Amanhã?#SG_FEEL#QUE_NOIMAGE#
+Dhong, o Guarda de Baryo Mahiwaga, quer mais ossos para dar a Vantai amanhã. Vamos visitá-lo novamente daqui a um dia.#
+#
+
+7409#Olho por Olho!#SG_FEEL#QUE_NOIMAGE#
+Budidai, o Bom Capre, não aguenta ver seus amigos sendo maltratados por Bongisungisus. Os Bongisungisus são poderosos demais para Budidai aguentar, e agora ele pede sua ajuda para se livrar do monstro caolho.#
+Elimine 10 Bongisungisus#
+
+7410#Ensine Outra Lição Amanhã!#SG_FEEL#QUE_NOIMAGE#
+Capre Budidai disse que Bongisungisus não vão embora apenas com isso e pede que você continue a eliminá-los. Volte depois de um dia.#
+#
+
+//----------bakonawa entry quest
+1174#Rumor, Tempo e Lenda#SG_FEEL#QUE_NOIMAGE#
+Traga a Tábula Geffen à neta do Velho Contador de Lendas.#
+Fale com a Neta do Velho ao norte do porto de Malaya.#
+
+1175#Rumor, Tempo e Lenda#SG_FEEL#QUE_NOIMAGE#
+Entregue a Tábula Geffen ao Velho Contador de Lendas.#
+Fale com o Velho Contador de Lendas em Malaya.#
+
+1176#Rumor, Tempo e Lenda#SG_FEEL#QUE_NOIMAGE#
+Encontre o Colono Malaya a noroeste da floresta e localize o Mercador Viajante.#
+Fale com o Colono Malaya a noroeste da floresta.#
+
+1177#Rumor, Tempo e Lenda#SG_FEEL#QUE_NOIMAGE#
+Encontre o Colono Malaya na vila Baryo Mahiwaga e localize o Mercador Viajante.#
+Fale com o Colono Malaya na vila Baryo Mahiwaga.#
+
+1178#Rumor, Tempo e Lenda#SG_FEEL#QUE_NOIMAGE#
+Investigue os registros gravados na rocha da vila Baryo Mahiwaga.#
+Investigue a rocha na vila Baryo Mahiwaga.#
+
+1179#Rumor, Tempo e Lenda#SG_FEEL#QUE_NOIMAGE#
+A lenda se desvenda e a identidade do filho da velha é revelada. Volte a Malaya e conte ao Velho Contador de Lendas.#
+Fale com o Velho Contador de Lendas em Malaya.#
+
+1180#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Encontre 2 Pertences Perdidos de Twignut rondando no campo de Baryo Mahiwaga e entregue-os ao Pai da Pessoa Desaparecida.#
+Fale com o Pai da Pessoa Desaparecida em Malaya.#
+
+1181#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Encontre 7 Pertences Perdidos de Twignut rondando no campo de Baryo Mahiwaga e entregue-os ao Amigo da Pessoa Desaparecida.#
+Fale com o Amigo da Pessoa Desaparecida em Malaya.#
+
+1182#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Encontre 3 Pertences Perdidos de Twignut rondando no campo de Baryo Mahiwaga e entregue-os ao Filho da Pessoa Desaparecida.#
+Fale com o Filho da Pessoa Desaparecida em Malaya.#
+
+1183#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Encontre 5 Pertences Perdidos de Twignut rondando no campo de Baryo Mahiwaga e entregue-os à Mãe da Pessoa Desaparecida.#
+Fale com a Mãe da Pessoa Desaparecida em Malaya.#
+
+1184#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Conseguiu encontrar a Pessoa Desaparecida. Relate ao Chefe.#
+Fale com o Chefe em Malaya.#
+
+1185#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+A Jovem Cartomante pede ajuda. Vamos lá.#
+Fale com a Jovem Cartomante em Malaya.#
+
+1186#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Elimine 15 Tikbalangs no campo de Baryo Mahiwaga.#
+Fale com a Jovem Cartomante em Malaya.#
+
+1187#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Relate o pedido da Jovem Cartomante ao Chefe.#
+Fale com o Chefe em Malaya.#
+
+1188#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Vá encontrar o Trabalhador Hostil no campo de Baryo Mahiwaga perto da entrada do Porto Malaya para instalarem uma armadilha juntos.#
+Investigue perto do Trabalhador Hostil no campo de Baryo Mahiwaga.#
+
+1189#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Vá encontrar o Trabalhador Queixoso no campo de Baryo Mahiwaga perto da entrada do Lago Bakonawa para instalarem uma armadilha juntos.#
+Investigue perto do Trabalhador Queixoso no campo de Baryo Mahiwaga.#
+
+1190#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Vá encontrar o Trabalhador Covarde no campo de Baryo Mahiwaga perto da entrada do Lago Bakonawa para instalarem uma armadilha juntos.#
+Investigue perto do Trabalhador Covarde no Lago Bakonawa.#
+
+1191#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Vá encontrar o Trabalhador Melancólico perto do Lago Bakonawa para instalarem uma armadilha juntos.#
+Investigue perto do Trabalhador Melancólico em Malaya.#
+
+1192#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Vá encontrar o Trabalhador Maravilhado perto do Lago Bakonawa para instalarem uma armadilha juntos.#
+Investigue perto do Trabalhador Maravilhado em Malaya.#
+
+1193#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Monte a  armadilha. Relate ao Chefe.#
+Fale com o Chefe em Malaya.#
+
+
+//-- port malaya
+12278#Rumo ao Lago Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Entrou no lago para impedir Bakonawa. Não acho que preciso voltar ao lago essa semana.#
+#
+
+12279#Livre-se de Bakonawa#SG_FEEL#QUE_NOIMAGE#
+Uma luta terrível acontecerá se Bakonawa for deixado como está. Ele precisa ser eliminado.#
+#
+
+
+// PH local, hospital 2nd floor- port malaya
+9222#Livre-se de Bangungot do 2º Andar do Hospital#SG_FEEL#QUE_NOIMAGE#
+Encontre e mate ^0000FFBangungot^000000 e depois volte para a enfermeira.#
+#
+
+9223#Haverá Paz no Hospital?#SG_FEEL#QUE_NOIMAGE#
+Haverá paz no hospital depois que ^0000FFBangungot^000000 for derrotado? Vamos encontrar a enfermeira depois.#
+#
+
+9224#Explore o 2º Andar do Hospital#SG_FEEL#QUE_NOIMAGE#
+Investigue o ^0000FF2º Andar do Hospital^000000 que está infestado de energia sombria.#
+#
+
+//-- port malaya
+11284#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Parece sujo, mas as Bandagens Podres estão ensopadas em um líquido especial e possuem poderes mágicos. Só são necessárias 2 dessas bandagens para cobrir os dois pés.#
+Entregue 2 Bandagens Podres e fale novamente.#
+
+11285#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Não sei se a porta está fechada ou se está emperrada já que não dá para abrir sozinha, então, vamos fazer isso juntos!#
+Abrir a porta com Las.#
+
+11286#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Empurrou a porta com toda sua força, mas ela não se moveu.#
+Fale com Las.#
+
+11287#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Entrarei em contato com a sede novamente. Você não quer perguntar aos aldeões sobre o hospital?#
+Fale com a garota da vila na direita.#
+
+11288#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Eu realmente não sei. O hospital esteve fechado por tanto tempo. É estranha a vinda de uma nova enfermeira.#
+A garota da vila parece não saber muito. Volte a Las.#
+
+11289#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+A sede não me enviaria a um lugar assim se não tivesse certeza. Por que não tenta falar com outro aldeão?#
+Fale com o homem da vila ao norte do hospital.#
+
+11290#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Terei que relatar essa informação rapidamente. Desculpe, mas você iria para estalagem no meio da vila com a enfermeira?#
+Volte para Las por enquanto.#
+
+11291#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Meus pés doem e não consigo mais me mover. Você pode ir à estalagem sozinho?#
+Encontre o doutor na estalagem no centro da vila.#
+
+11292#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Eu não posso ir ao hospital agora porque tenho pacientes para cuidar. Volte ao hospital com a chave e diga a ela "Faça o que quiser".#
+Volte a Las.#
+
+11293#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Você coloca a chave na fechadura da Porta do Hospital. Mas a porta não parece estar trancada.#
+Fale com Las.#
+
+11294#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Parece que a voz está vindo do gramado perto da Entrada do Hospital.#
+Investigar os arredores.#
+
+11295#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Não pensei muito a fundo sobre isso, mas me lembro de ver um graveto quando fui lá, há muito tempo, logo depois da morte de minha avó.#
+Investigue os arredores do hospital.#
+
+11296#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Puxou o graveto enfiado profundamente. A atmosfera melancólica do hospital parece ter dobrado.#
+Melhor levar este amuleto a Las.#
+
+11297#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Você poderia visitar minha avó? Vou dar a volta para verificar essa parte do hospital.#
+Visite sua avó a oeste da vila.#
+
+11298#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Eu esperava que algo assim fosse acontecer quando eles cortaram a árvore antiga na vila para construir o hospital.#
+Continue falando com a avó.#
+
+11299#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+A Enfermeira Las pode estar em perigo sozinha na frente do hospital.#
+Voltar ao hospital.#
+
+11300#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Vamos juntos, já que a porta do 1º andar está aberta.#
+Fale com Las dentro do hospital.#
+
+11301#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Eu já olhei por aqui, mas posso ter deixado passar algum detalhe. Você poderia dar uma olhada na entrada para o 2º andar?#
+Investigar a entrada do 2º andar.#
+
+11302#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Encontrou um amuleto. Vamos procurar mais. Engraçado encontrar algo assim em um lugar como este, não é?#
+Está perto.#
+
+11303#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Como a enfermeira passou com a entrada trancada?#
+Volte a Las.#
+
+11304#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Será que a avó que colou o amuleto fora do hospital não sabe sobre este amuleto?#
+Fale com a avó.#
+
+11305#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Pediu que o Xamã ao norte da vila criasse isso.#
+Visite o Xamã ao norte da vila.#
+
+11306#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Sinto algo muito macabro vindo de você.#
+Recebeu um amuleto. Volte a Las.#
+
+11307#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Vamos colar esse amuleto naquele que vimos na entrada do 2º andar. Pode ajudar a bloquear a energia sinistra daquele.#
+Colar o amuleto sobre o outro da entrada do 2º andar.#
+
+11308#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Assim que você colou o amuleto sobre o outro, a energia sinistra se esvaneceu, como Las disse que aconteceria.#
+Parece que Las estava brincando com você. Fale com a enfermeira na frente do hospital.#
+
+11309#Enfermeira no Porto Malaya#SG_FEEL#QUE_NOIMAGE#
+Você não só interrompeu meu trabalho, como também a trouxe para a sala, o que o torna responsável. Não pense em fugir.#
+Livre-se do Bangungot e volte.#
+
+
+//-  port malaya
+2271#Segredos na Floresta#SG_FEEL#QUE_NOIMAGE#
+Um Guarda do Porto Malaya disse que os aldeões estão falando de um tesouro.#
+Fale com os aldeões reunidos no Porto Malaya.#
+
+2272#Segredos na Floresta#SG_FEEL#QUE_NOIMAGE#
+Segundo a declaração de um aldeão, Totoy, da estalagem, pode saber onde está o tesouro.#
+Fale com Totoy.#
+
+2273#Segredos na Floresta#SG_FEEL#QUE_NOIMAGE#
+O Mestre de Caça na Loja de Artesanato pode saber sobre o monstro.#
+Fale com o Mestre de Caça.#
+
+2274#Segredos na Floresta#SG_FEEL#QUE_NOIMAGE#
+O Mestre de Caça pediu para você coletar 10 amostras de animal do lugar onde Totoy viu um monstro.#
+Pegue 10 Amostras de Animal.#
+
+2275#Segredos na Floresta#SG_FEEL#QUE_NOIMAGE#
+Estudar as amostras coletadas com muita dificuldade com o Mestre de Caça.#
+#
+
+2276#Segredos na Floresta#SG_FEEL#QUE_NOIMAGE#
+Totoy viu o terrível Buwaya. Relate isso ao Guarda!#
+Fale com o Líder da Guarda.#
+
+2277#Segredos na Floresta#SG_FEEL#QUE_NOIMAGE#
+O Guarda pede para atirar uma bomba de fumaça onde Buwaya apareceu pela segurança dos aldeões.#
+Encontre o lugar onde Buwaya apareceu e atire uma bomba de fumaça.#
+
+2278#Segredos na Floresta#SG_FEEL#QUE_NOIMAGE#
+Missão cumprida! Melhor devolver Ed a Totoy primeiro.#
+Fale com Totoy.#
+
+2279#Segredos na Floresta#SG_FEEL#QUE_NOIMAGE#
+Totoy agradeceu e o deixou sozinho um instante para pegar sua recompensa.#
+Fale com Totoy.#
+
+2280#Segredos na Floresta#SG_FEEL#QUE_NOIMAGE#
+Acabou seu serviço com Totoy. Agora vamos falar com o Líder da Guarda sobre Buwaya.#
+Fale com o Líder da Guarda.#
+
+2281#Livre-se de Buwaya#SG_FEEL#QUE_NOIMAGE#
+Derrote Buwaya na Caverna de Buwaya e depois volte ao Líder da Guarda.#
+Livre-se de Buwaya#
+
+//--  port malaya
+4229#Demônio na Caverna#SG_FEEL#QUE_NOIMAGE#
+As pessoas dizem que o monstro não está aparecendo no momento. Melhor voltar amanhã.#
+Buwaya se esconde#
+
+//------- halloween 2013
+11378#Doce ou Travessura#SG_FEEL#QUE_NOIMAGE#
+Colete 30 abóboras orgânicas ou inorgânicas, e entregue para o Chef Doceiro#
+Entrega de Abóboras#
