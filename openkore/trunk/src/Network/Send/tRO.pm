@@ -12,13 +12,7 @@
 # tRO (Thai)
 package Network::Send::tRO;
 use strict;
-use Globals;
-use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
-use Log qw(error debug);
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
-use Math::BigInt;
 
 sub new {
 	my ($class) = @_;
@@ -31,6 +25,7 @@ sub new {
 		'0922' => ['actor_look_at', 'v C', [qw(head body)]],
 		'07E4' => ['item_take', 'a4', [qw(ID)]],
 		'0362' => ['item_drop', 'v2', [qw(index amount)]],
+		'0869' => ['storage_password'],
 		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
@@ -50,6 +45,7 @@ sub new {
 		actor_look_at 0922
 		item_take 07E4
 		item_drop 0362
+		storage_password 0869
 		storage_item_add 07EC
 		storage_item_remove 0364
 		skill_use_location 0438
@@ -64,24 +60,6 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	$self->cryptKeys(0x4d8e77b2, 0x6e7b6757, 0x46ae0414);
 	return $self;
-}
-
-sub sendStoragePassword {
-	my $self = shift;
-	# 16 byte packed hex data
-	my $pass = shift;
-	# 2 = set password ?
-	# 3 = give password ?
-	my $type = shift;
-	my $msg;
-	if ($type == 3) {
-		$msg = pack("v v", 0x0869, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
-	} elsif ($type == 2) {
-		$msg = pack("v v", 0x0869, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
-	} else {
-		ArgumentException->throw("The 'type' argument has invalid value ($type).");
-	}
-	$self->sendToServer($msg);
 }
 
 1;

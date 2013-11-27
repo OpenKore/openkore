@@ -187,7 +187,7 @@ sub encryptMessageID {
 			my $oldKey = ($self->{encryption}->{crypt_key} >> 16) & 0x7FFF;
 			
 			# Calculating the Encryption Key
-			$self->{encryption}->{crypt_key} = $self->{encryption}->{crypt_key}->bmul($self->{encryption}->{crypt_key_3})->badd($self->{encryption}->{crypt_key_2}) & 0xFFFFFFFF;
+			$self->{encryption}->{crypt_key} = ($self->{encryption}->{crypt_key} * $self->{encryption}->{crypt_key_3} + $self->{encryption}->{crypt_key_2}) & 0xFFFFFFFF;
 		
 			# Xoring the Message ID
 			$messageID = ($messageID ^ (($self->{encryption}->{crypt_key} >> 16) & 0x7FFF)) & 0xFFFF;
@@ -678,6 +678,25 @@ sub sendStorageGet {
 	my ($self, $index, $amount) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'storage_item_remove', index => $index, amount => $amount}));
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
+}
+
+sub sendStoragePassword {
+	my $self = shift;
+	# 16 byte packed hex data
+	my $pass = shift;
+	# 2 = set password ?
+	# 3 = give password ?
+	my $type = shift;
+	my $msg;
+	my $mid = hex($self->{packet_lut}{storage_password});
+	if ($type == 3) {
+		$msg = pack("v v", $mid, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+	} elsif ($type == 2) {
+		$msg = pack("v v", $mid, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+	} else {
+		ArgumentException->throw("The 'type' argument has invalid value ($type).");
+	}
+	$self->sendToServer($msg);
 }
 
 sub parse_party_chat {

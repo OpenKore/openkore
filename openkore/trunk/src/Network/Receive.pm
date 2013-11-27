@@ -1603,7 +1603,6 @@ sub login_pin_code_request {
 	if ($args->{flag} == 0) { # removed check for seed 0, eA/rA/brA sends a normal seed.
 		message T("PIN code is correct.\n"), "success";
 		# call charSelectScreen
-		$self->{lockCharScreen} = 0;
 		if (charSelectScreen(1) == 1) {
 			$firstLoginMap = 1;
 			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
@@ -1690,5 +1689,106 @@ sub login_pin_new_code_result {
 	}
 }
 
+#08FF
+sub actor_status_active2 {
+	my ($self, $args) = @_;
+	return unless Network::Receive::changeToInGameState();
+	my ($type, $ID, $tick, $unknown1, $unknown2, $unknown3) = @{$args}{qw(type ID tick unknown1 unknown2 unknown3)};
+	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
+	$cart{type} = $unknown1 if ($type == 673 && defined $unknown1 && ($ID eq $accountID)); # for Cart active
+	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
+	($args->{actor} = Actor::get($ID))->setStatus($status, 1, $tick == 9999 ? undef : $tick, $args->{unknown1});
+}
+
+
+#099B
+sub map_property3 {
+	my ($self, $args) = @_;
+
+	if($config{'status_mapType'}){
+		$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
+		grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
+		map {[$_, defined $mapTypeHandle{$_} ? $mapTypeHandle{$_} : "UNKNOWN_MAPTYPE_$_"]}
+		0 .. List::Util::max $args->{type}, keys %mapTypeHandle;
+	}
+
+	$pvp = {6 => 1, 8 => 2, 19 => 3}->{$args->{type}};
+	if ($pvp) {
+		Plugins::callHook('pvp_mode', {
+			pvp => $pvp # 1 PvP, 2 GvG, 3 Battleground
+		});
+	}
+}
+
+#099F
+sub area_spell_multiple2 {
+	my ($self, $args) = @_;
+
+	# Area effect spells; including traps!
+	my $len = $args->{len} - 4;
+	my $spellInfo = $args->{spellInfo};
+	my $msg = "";
+	my $binID;
+	my ($ID, $sourceID, $x, $y, $type, $range, $fail);
+	for (my $i = 0; $i < $len; $i += 18) {
+		$msg = substr($spellInfo, $i, 18);
+		($ID, $sourceID, $x, $y, $type, $range, $fail) = unpack('a4 a4 v3 X2 C2', $msg);
+
+		if ($spells{$ID} && $spells{$ID}{'sourceID'} eq $sourceID) {
+			$binID = binFind(\@spellsID, $ID);
+			$binID = binAdd(\@spellsID, $ID) if ($binID eq "");
+		} else {
+			$binID = binAdd(\@spellsID, $ID);
+		}
+	
+		$spells{$ID}{'sourceID'} = $sourceID;
+		$spells{$ID}{'pos'}{'x'} = $x;
+		$spells{$ID}{'pos'}{'y'} = $y;
+		$spells{$ID}{'pos_to'}{'x'} = $x;
+		$spells{$ID}{'pos_to'}{'y'} = $y;
+		$spells{$ID}{'binID'} = $binID;
+		$spells{$ID}{'type'} = $type;
+		if ($type == 0x81) {
+			message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
+		}
+		debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y)\n", "skill", 2;
+	}
+
+	Plugins::callHook('packet_areaSpell', {
+		fail => $fail,
+		sourceID => $sourceID,
+		type => $type,
+		x => $x,
+		y => $y
+	});
+}
+
+sub sync_request_ex {
+	my ($self, $args) = @_;
+	
+	# Debug Log
+	# message "Received Sync Ex : 0x" . $args->{switch} . "\n";
+	
+	# Computing Sync Ex - By Fr3DBr
+	my $PacketID = $args->{switch};
+	
+	# Getting Sync Ex Reply ID from Table
+	my $SyncID = $self->{sync_ex_reply}->{$PacketID};
+	
+	# Cleaning Leading Zeros
+	$PacketID =~ s/^0+//;	
+	
+	# Cleaning Leading Zeros	
+	$SyncID =~ s/^0+//;
+	
+	# Debug Log
+	#error sprintf("Received Ex Packet ID : 0x%s => 0x%s\n", $PacketID, $SyncID);
+
+	# Converting ID to Hex Number
+	$SyncID = hex($SyncID);
+
+	# Dispatching Sync Ex Reply
+	$messageSender->sendReplySyncRequestEx($SyncID);
+}
 
 1;
