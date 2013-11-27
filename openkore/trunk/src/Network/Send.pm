@@ -169,25 +169,50 @@ sub encrypt {
 ##
 # void $messageSender->encryptMessageID(r_message)
 sub encryptMessageID {
-	use bytes;
+	#use bytes;
 	my ($self, $r_message) = @_;
-
-	if ($self->{net}->getState() != Network::IN_GAME) {
-		$enc_val1 = 0;
-		$enc_val2 = 0;
-		return;
-	}
-
 	my $messageID = unpack("v", $$r_message);
-	if ($enc_val1 != 0 && $enc_val2 != 0) {
-		# Prepare encryption
-		$enc_val1 = (0x000343FD * $enc_val1) + $enc_val2;
-		$enc_val1 = $enc_val1 % 2 ** 32;
-		debug (sprintf("enc_val1 = %x", $enc_val1) . "\n", "sendPacket", 2);
-		# Encrypt message ID
-		$messageID = $messageID ^ (($enc_val1 >> 16) & 0x7FFF);
-		$messageID &= 0xFFFF;
-		$$r_message = pack("v", $messageID) . substr($$r_message, 2);
+	
+	if ($self->{encryption}->{crypt_key_3}) {
+		if (sprintf("%04X",$messageID) eq $self->{packet_lut}{map_login}) {
+			$self->{encryption}->{crypt_key} = $self->{encryption}->{crypt_key_1};
+		} elsif ($self->{net}->getState() != Network::IN_GAME) {
+			# Turn off keys
+			$self->{encryption}->{crypt_key} = 0; return;
+		}
+			
+		# Checking if Encryption is Activated
+		if ($self->{encryption}->{crypt_key} > 0) {
+			# Saving Last Informations for Debug Log
+			my $oldMID = $messageID;
+			my $oldKey = ($self->{encryption}->{crypt_key} >> 16) & 0x7FFF;
+			
+			# Calculating the Encryption Key
+			$self->{encryption}->{crypt_key} = $self->{encryption}->{crypt_key}->bmul($self->{encryption}->{crypt_key_3})->badd($self->{encryption}->{crypt_key_2}) & 0xFFFFFFFF;
+		
+			# Xoring the Message ID
+			$messageID = ($messageID ^ (($self->{encryption}->{crypt_key} >> 16) & 0x7FFF)) & 0xFFFF;
+			$$r_message = pack("v", $messageID) . substr($$r_message, 2);
+
+			# Debug Log	
+			debug (sprintf("Encrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $messageID, $oldKey, ($self->{encryption}->{crypt_key} >> 16) & 0x7FFF), "sendPacket", 0) if $config{debugPacket_sent};
+		}
+	} else {
+		if ($self->{net}->getState() != Network::IN_GAME) {
+			$enc_val1 = 0;
+			$enc_val2 = 0;
+			return;
+		}
+
+		my $messageID = unpack("v", $$r_message);
+		if ($enc_val1 != 0 && $enc_val2 != 0) {
+			# Prepare encryption
+			$enc_val1 = ((0x000343FD * $enc_val1) + $enc_val2)& 0xFFFFFFFF;
+			debug (sprintf("enc_val1 = %x", $enc_val1) . "\n", "sendPacket", 2);
+			# Encrypt message ID
+			$messageID = ($messageID ^ (($enc_val1 >> 16) & 0x7FFF)) & 0xFFFF;
+			$$r_message = pack("v", $messageID) . substr($$r_message, 2);
+		}
 	}
 }
 
@@ -288,7 +313,7 @@ sub sendToServer {
 	# encrypt(\$msg, $msg);
 
 	# Packet Prefix Encryption Support
-	$self->encryptMessageID(\$msg, unpack("v", $msg));
+	$self->encryptMessageID(\$msg);
 
 	$net->serverSend($msg);
 	$bytesSent += length($msg);
