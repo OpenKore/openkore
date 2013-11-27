@@ -3085,37 +3085,35 @@ sub cmdMove {
 					error T("No portals exist.\n");
 				}
 			} else {
-				if ($field && ($map_or_portal ne $field->name())) {
-					$map_or_portal =~ s/^(\w{3})?(\d@.*)/$2/; # remove instance. is it possible to move to an instance? if not, we could throw an error here
-					# TODO: implement Field::sourceName function here once they are implemented there - 2013.11.26
-					my $file = $map_or_portal.'.fld';
-					$file = File::Spec->catfile($Settings::fields_folder, $file) if ($Settings::fields_folder);
-					$file .= ".gz" if (! -f $file); # compressed file
-					if (-f $file) {
-						# valid map
-						my $map_name = $maps_lut{"${map_or_portal}.rsw"}?$maps_lut{"${map_or_portal}.rsw"}:
-							T('Unknown Map');
-						if ($dist) {
-							message TF("Calculating route to: %s(%s): %s, %s (Distance: %s)\n",
-								$map_name, $map_or_portal, $x, $y, $dist), "route";
-						} elsif ($x ne "") {
-							message TF("Calculating route to: %s(%s): %s, %s\n",
-								$map_name, $map_or_portal, $x, $y), "route";
-						} else {
-							message TF("Calculating route to: %s(%s)\n",
-								$map_name, $map_or_portal), "route";
-						}
-						main::ai_route($map_or_portal, $x, $y,
-						attackOnRoute => 1,
-						noSitAuto => 1,
-						notifyUponArrival => 1,
-						distFromGoal => $dist);
+				$map_or_portal =~ s/^(\w{3})?(\d@.*)/$2/; # remove instance. is it possible to move to an instance? if not, we could throw an error here
+				# TODO: implement Field::sourceName function here once they are implemented there - 2013.11.26
+				my $file = $map_or_portal.'.fld';
+				$file = File::Spec->catfile($Settings::fields_folder, $file) if ($Settings::fields_folder);
+				$file .= ".gz" if (! -f $file); # compressed file
+				if (-f $file) {
+					# valid map
+					my $map_name = $maps_lut{"${map_or_portal}.rsw"}?$maps_lut{"${map_or_portal}.rsw"}:
+						T('Unknown Map');
+					if ($dist) {
+						message TF("Calculating route to: %s(%s): %s, %s (Distance: %s)\n",
+							$map_name, $map_or_portal, $x, $y, $dist), "route";
+					} elsif ($x ne "") {
+						message TF("Calculating route to: %s(%s): %s, %s\n",
+							$map_name, $map_or_portal, $x, $y), "route";
 					} else {
-						# FileNotFoundException->throw("No corresponding field file found for field '$map_or_portal'.");
-						# fld file not found
-						error TF("Cannot load field %s\n", $map_or_portal);
-						error TF("Map %s does not exist\n", $map_or_portal);
+						message TF("Calculating route to: %s(%s)\n",
+							$map_name, $map_or_portal), "route";
 					}
+					main::ai_route($map_or_portal, $x, $y,
+					attackOnRoute => 1,
+					noSitAuto => 1,
+					notifyUponArrival => 1,
+					distFromGoal => $dist);
+				} else {
+					# FileNotFoundException->throw("No corresponding field file found for field '$map_or_portal'.");
+					# fld file not found
+					error TF("Cannot load field %s\n", $map_or_portal);
+					error TF("Map %s does not exist\n", $map_or_portal);
 				}
 			}
 		}
