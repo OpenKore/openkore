@@ -120,21 +120,8 @@ sub new {
 		received_characters 099D
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-
-	return $self;
-}
-
-sub sync_request_ex {
-	my ($self, $args) = @_;
 	
-	# Debug Log
-	# message "Received Sync Ex : 0x" . $args->{switch} . "\n";
-	
-	# Computing Sync Ex - By Fr3DBr
-	my $PacketID = $args->{switch};
-	
-	# Sync Ex Reply Array
-	my %sync_ex_question_reply = (
+	$self->{sync_ex_reply} = {
 		'0367' => '02C4',
 		'085A' => '0884',
 		'085B' => '0885',
@@ -219,25 +206,9 @@ sub sync_request_ex {
 		'093D' => '0967',
 		'093E' => '0968',
 		'093F' => '0969',
-	);
-	
-	# Getting Sync Ex Reply ID from Table
-	my $SyncID = $sync_ex_question_reply{$PacketID};
-	
-	# Cleaning Leading Zeros
-	$PacketID =~ s/^0+//;	
-	
-	# Cleaning Leading Zeros	
-	$SyncID =~ s/^0+//;
-	
-	# Debug Log
-	# print sprintf("Received Ex Packet ID : 0x%s => 0x%s\n", $PacketID, $SyncID);
+	};
 
-	# Converting ID to Hex Number
-	$SyncID = hex($SyncID);
-
-	# Dispatching Sync Ex Reply
-	$messageSender->sendReplySyncRequestEx($SyncID);
+	return $self;
 }
 
 1;

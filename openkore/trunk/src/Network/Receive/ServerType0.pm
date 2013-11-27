@@ -518,6 +518,7 @@ sub new {
 		'08CB' => ['rates_info', 's4 a*', [qw(len exp death drop detail)]],
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]],
+		'08FF' => ['actor_status_active2', 'a4 v V4', [qw(ID type tick unknown1 unknown2 unknown3)]],
 		'0900' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0901' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0902' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
@@ -528,6 +529,9 @@ sub new {
 		'097A' => ['quest_all_list2', 'v3 a*', [qw(len count unknown message)]],
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
+		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
+		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
+		'09CF' => ['gameguard_request']
 	};
 
 	# Item RECORD Struct's
@@ -2399,7 +2403,7 @@ sub gameguard_grant {
 sub gameguard_request {
 	my ($self, $args) = @_;
 
-	return if ($net->version == 1 && $config{gameGuard} ne '2');
+	return if (($net->version == 1 && $config{gameGuard} ne '2') || ($config{gameGuard} == 0));
 	Poseidon::Client::getInstance()->query(
 		substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE})
 	);
@@ -4492,11 +4496,14 @@ sub received_characters {
 	# it doesn't work...
 	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
 	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $masterServer->{serverType} == 2);
-
-	if (charSelectScreen(1) == 1) {
-		$firstLoginMap = 1;
-		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-		$sentWelcomeMessage = 1;
+	if (!$masterServer->{pinCode}) {
+		if (charSelectScreen(1) == 1) {
+			$firstLoginMap = 1;
+			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+			$sentWelcomeMessage = 1;
+		}
+	} else {
+		message T("Waiting for PIN code request\n"), "connection";
 	}
 }
 

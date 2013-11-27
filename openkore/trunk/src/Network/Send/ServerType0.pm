@@ -81,7 +81,9 @@ sub new {
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 		'021D' => ['less_effect'], # TODO
+		'022D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]],
+		'023B' => ['storage_password'],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
@@ -327,14 +329,6 @@ sub sendChatRoomLeave {
 	my $msg = pack("C*", 0xE3, 0x00);
 	$self->sendToServer($msg);
 	debug "Sent Leave Chat Room\n", "sendPacket", 2;
-}
-
-# 0x022d,5,hommenu,4
-sub sendHomunculusCommand {
-	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0:get stats, 1:feed or 2:fire
-	my $msg = pack ('v2 C', 0x022D, $type, $command);
-	$self->sendToServer($msg);
-	debug "Sent Homunculus Command $command", "sendPacket", 2;
 }
 
 sub sendCompanionRelease {
@@ -953,24 +947,6 @@ sub sendStorageGetToCart {
 	$msg = pack("C*", 0x28, 0x01) . pack("v*", $index) . pack("V*", $amount);
 	$self->sendToServer($msg);
 	debug "Sent Storage Get From Cart: $index x $amount\n", "sendPacket", 2;
-}
-
-sub sendStoragePassword {
-	my $self = shift;
-	# 16 byte packed hex data
-	my $pass = shift;
-	# 2 = set password ?
-	# 3 = give password ?
-	my $type = shift;
-	my $msg;
-	if ($type == 3) {
-		$msg = pack("C C v", 0x3B, 0x02, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
-	} elsif ($type == 2) {
-		$msg = pack("C C v", 0x3B, 0x02, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
-	} else {
-		ArgumentException->throw("The 'type' argument has invalid value ($type).");
-	}
-	$self->sendToServer($msg);
 }
 
 sub sendSuperNoviceDoriDori {
