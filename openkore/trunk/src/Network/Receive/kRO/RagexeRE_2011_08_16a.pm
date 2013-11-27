@@ -42,14 +42,6 @@ sub new {
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
-	Plugins::addHook('packet_pre/received_characters' => sub {
-		$self->{lockCharScreen} = 2;
-	});
-	
-	Plugins::addHook(charSelectScreen => sub {
-		$_[1]{pin_return} = $self->{lockCharScreen};
-	});
-	
 	return $self;
 }
 

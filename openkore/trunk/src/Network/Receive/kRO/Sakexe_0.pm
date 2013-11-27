@@ -4098,10 +4098,14 @@ sub received_characters {
 
 	message T("Received characters from Character Server\n"), "connection";
 
-	if (charSelectScreen(1) == 1) {
-		$firstLoginMap = 1;
-		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-		$sentWelcomeMessage = 1;
+	if (!$masterServer->{pinCode}) {
+		if (charSelectScreen(1) == 1) {
+			$firstLoginMap = 1;
+			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+			$sentWelcomeMessage = 1;
+		}
+	} else {
+		message T("Waiting for PIN code request\n"), "connection";
 	}
 }
 
