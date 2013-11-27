@@ -63,43 +63,12 @@ sub new {
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
+	$self->{encryption} = {
+						'crypt_key_1' => Math::BigInt->new(0x4d8e77b2),
+						'crypt_key_2' => Math::BigInt->new(0x6e7b6757),
+						'crypt_key_3' => Math::BigInt->new(0x46ae0414),
+					};
 	return $self;
-}
-
-# Local Servertype Globals
-my $map_login = 0;
-my $enc_val3 = 0;
-		
-sub encryptMessageID 
-{
-	my ($self, $r_message, $MID) = @_;
-	
-	# Checking In-Game State
-	if ($self->{net}->getState() != Network::IN_GAME && !$map_login) { $enc_val1 = 0; $enc_val2 = 0; return; }
-	
-	# Turn Off Map Login Flag
-	if ($map_login)	{ $map_login = 0; }
-		
-	# Checking if Encryption is Activated
-	if ($enc_val1 != 0 && $enc_val2 != 0) 
-	{
-		# Saving Last Informations for Debug Log
-		my $oldMID = $MID;
-		my $oldKey = ($enc_val1 >> 16) & 0x7FFF;
-		
-		# Calculating the Encryption Key
-		$enc_val1 = $enc_val1->bmul($enc_val2)->badd($enc_val3) & 0xFFFFFFFF;
-	
-		# Xoring the Message ID
-		$MID = ($MID ^ (($enc_val1 >> 16) & 0x7FFF));
-		$$r_message = pack("v", $MID) . substr($$r_message, 2);
-
-		# Debug Log
-		if ($config{debugPacket_sent} == 1) 
-		{		
-			debug(sprintf("Encrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $MID, $oldKey, ($enc_val1 >> 8 >> 8) & 0x7FFF), "sendPacket", 0);
-		}
-	}
 }
 
 sub sendStoragePassword {
@@ -118,39 +87,6 @@ sub sendStoragePassword {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
 	$self->sendToServer($msg);
-}
-
-sub sendMapLogin 
-{
-	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
-	my $msg;
-
-	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	
-	if ( $map_login == 0 ) { PrepareKeys(); $map_login = 1; }
-
-	# Reconstructing Packet 
-	$msg = $self->reconstruct({
-		switch => 'map_login',
-		accountID => $accountID,
-		charID => $charID,
-		sessionID => $sessionID,
-		tick => getTickCount,
-		sex => $sex,
-	});
-
-	$self->sendToServer($msg);
-	debug "Sent sendMapLogin\n", "sendPacket", 2;
-}
-
-sub PrepareKeys()
-{
-		# K
-		$enc_val1 = Math::BigInt->new('0x4d8e77b2');
-		# M
-		$enc_val2 = Math::BigInt->new('0x46ae0414');
-		# A
-		$enc_val3 = Math::BigInt->new('0x6e7b6757');
 }
 
 1;
