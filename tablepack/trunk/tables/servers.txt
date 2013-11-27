@@ -20,10 +20,11 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Western
-gameGuard 2
+gameGuard 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders bRO
 charBlockSize 124
+pinCode 1
 
 [Brazil - bRO: Odin]
 ip 200.229.50.36
@@ -36,10 +37,11 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Western
-gameGuard 2
+gameGuard 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders bRO
 charBlockSize 124
+pinCode 1
 
 [Brazil - bRO: Thor]
 ip 200.229.50.3
@@ -52,10 +54,11 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Western
-gameGuard 2
+gameGuard 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders bRO
 charBlockSize 124
+pinCode 1
 
 ## http://euro-ro.net/
 [Europe - euRO]
