@@ -62,12 +62,7 @@ sub new {
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
-	$self->{encryption} = {
-						'crypt_key_1' => Math::BigInt->new(0x4d8e77b2),
-						'crypt_key_2' => Math::BigInt->new(0x6e7b6757),
-						'crypt_key_3' => Math::BigInt->new(0x46ae0414),
-					};
+	$self->cryptKeys(0x4d8e77b2, 0x6e7b6757, 0x46ae0414);
 	return $self;
 }
 
