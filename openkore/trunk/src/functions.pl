@@ -579,6 +579,7 @@ sub initConnectVars {
 		delete $char->{mute_period};
 		delete $char->{muted};
 		delete $char->{party};
+		delete $self->{statuses};
 	}
 	undef @skillsID;
 	undef @partyUsersID;
