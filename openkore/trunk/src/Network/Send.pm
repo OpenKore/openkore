@@ -169,7 +169,6 @@ sub encrypt {
 ##
 # void $messageSender->encryptMessageID(r_message)
 sub encryptMessageID {
-	#use bytes;
 	my ($self, $r_message) = @_;
 	my $messageID = unpack("v", $$r_message);
 	
@@ -198,6 +197,7 @@ sub encryptMessageID {
 			debug (sprintf("Encrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $messageID, $oldKey, ($self->{encryption}->{crypt_key} >> 16) & 0x7FFF), "sendPacket", 0) if $config{debugPacket_sent};
 		}
 	} else {
+		use bytes;
 		if ($self->{net}->getState() != Network::IN_GAME) {
 			$enc_val1 = 0;
 			$enc_val2 = 0;
@@ -214,6 +214,15 @@ sub encryptMessageID {
 			$$r_message = pack("v", $messageID) . substr($$r_message, 2);
 		}
 	}
+}
+
+sub cryptKeys {
+	my $self = shift;
+	$self->{encryption} = {
+		'crypt_key_1' => Math::BigInt->new(shift),
+		'crypt_key_2' => Math::BigInt->new(shift),
+		'crypt_key_3' => Math::BigInt->new(shift),
+	};
 }
 
 ##
