@@ -732,6 +732,7 @@ sub mainLoop_initialized {
 	$data = $net->clientRecv;
 	if (defined($data) && length($data) > 0) {
 		my $type;
+		$messageSender->encryptMessageID(\$data);
 		$outgoingClientMessages->add($data);
 		$net->serverSend($_) for $messageSender->process(
 			$outgoingClientMessages, $clientPacketHandler
