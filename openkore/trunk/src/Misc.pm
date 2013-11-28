@@ -296,7 +296,12 @@ sub configModify {
 		if (!defined $oldval) {
 			$oldval = "not set";
 		}
-
+		
+		if ($config{$key} eq $val) {
+			message TF("Config '%s' is already %s\n", $key, $val), "info";
+			return;
+		}
+		
 		if (!defined $val) {
 			message TF("Config '%s' unset (was %s)\n", $key, $oldval), "info";
 		} else {
