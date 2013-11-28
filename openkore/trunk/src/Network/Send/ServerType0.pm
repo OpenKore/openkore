@@ -331,6 +331,14 @@ sub sendChatRoomLeave {
 	debug "Sent Leave Chat Room\n", "sendPacket", 2;
 }
 
+# 0x022d,5,hommenu,4
+sub sendHomunculusCommand {
+	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0:get stats, 1:feed or 2:fire
+	my $msg = pack ('v2 C', 0x022D, $type, $command);
+	$self->sendToServer($msg);
+	debug "Sent Homunculus Command $command", "sendPacket", 2;
+}
+
 sub sendCompanionRelease {
 	my $msg = pack("C*", 0x2A, 0x01);
 	$_[0]->sendToServer($msg);
