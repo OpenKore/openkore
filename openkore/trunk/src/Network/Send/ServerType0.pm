@@ -113,6 +113,7 @@ sub new {
 		'082B' => ['char_delete2_cancel', 'a4', [qw(charID)]], # 6
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
+		'08C9' => ['request_cashitems'],#2
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
 		'09A1' => ['sync_received_characters'],
 		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
