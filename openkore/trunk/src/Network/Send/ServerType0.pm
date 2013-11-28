@@ -999,7 +999,8 @@ sub sendTalkNumber {
 
 sub sendTalkText {
 	my ($self, $ID, $input) = @_;
-	my $msg = pack('v2 a4 Z*', 0x01D5, length($input)+length($ID)+5, $ID, stringToBytes($input));
+	$input = stringToBytes($input);
+	my $msg = pack('v2 a4 Z*', 0x01D5, length($input)+length($ID)+5, $ID, $input);
 	$self->sendToServer($msg);
 	debug "Sent talk text: ".getHex($ID).", $input\n", "sendPacket", 2;
 }
