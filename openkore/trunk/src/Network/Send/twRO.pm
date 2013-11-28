@@ -48,6 +48,7 @@ sub new {
 		party_setting 07D7
 		buy_bulk_vender 0801
 		char_create 0970
+		storage_password 023B
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
