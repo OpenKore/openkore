@@ -527,9 +527,9 @@ sub new {
 		'0976' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'097A' => ['quest_all_list2', 'v3 a*', [qw(len count unknown message)]],
-		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
+		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 		'09CF' => ['gameguard_request']
 	};
@@ -1056,15 +1056,15 @@ sub map_loaded {
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
 	} else {
-		
-		$messageSender->sendSync(1); # tested at bRO 2013.11.26 - revok
-		
+
+		$messageSender->sendSync(1) if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.26 - revok
+
 		$messageSender->sendGuildMasterMemberCheck();
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		$messageSender->sendGuildRequestInfo(0); 
-		
-		$messageSender->sendGuildRequestInfo(0); # tested at bRO 2013.11.26, this is sent two times and i don't know why - revok
+		$messageSender->sendGuildRequestInfo(0);
+
+		$messageSender->sendGuildRequestInfo(0) if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.26, this is sent two times and i don't know why - revok
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 		$messageSender->sendGuildRequestInfo(1);
