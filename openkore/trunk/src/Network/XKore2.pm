@@ -67,7 +67,8 @@ sub start {
 		['Network::clientAlive', \&clientAlive],
 		['Network::clientSend', \&clientSend],
 		['Network::clientRecv', \&clientRecv],
-		['mainLoop_pre', \&mainLoop]
+		['mainLoop_pre', \&mainLoop],
+		['disconnected', \&disconnectClients]
 	);
 }
 
@@ -158,6 +159,10 @@ sub mainLoop {
 		$mapServer->iterate();
 		$sessionStore->removeTimedOutSessions();
 	}
+}
+
+sub disconnectClients {
+	# DC clients here
 }
 
 1;
