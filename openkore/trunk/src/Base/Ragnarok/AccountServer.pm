@@ -19,7 +19,7 @@ use Utils qw(getHex);
 use Utils::Exceptions;
 use Network::Receive::ServerType0; # constants only
 
-use enum qw(LOGIN_SUCCESS ACCOUNT_NOT_FOUND PASSWORD_INCORRECT ACCOUNT_BANNED);
+use enum qw(LOGIN_SUCCESS ACCOUNT_NOT_FOUND PASSWORD_INCORRECT ACCOUNT_BANNED SERVER_REFUSED);
 
 
 sub new {
@@ -136,6 +136,12 @@ sub master_login {
 		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'login_error',
 			type => Network::Receive::ServerType0::REFUSE_NOT_CONFIRMED,
+		}));
+		$client->close();
+	} elsif ($result == SERVER_REFUSED) {
+		$client->send($self->{recvPacketParser}->reconstruct({
+			switch => 'login_error',
+			type => Network::Receive::ServerType0::ACCEPT_ID_PASSWD,
 		}));
 		$client->close();
 	} else {
