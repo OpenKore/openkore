@@ -9,7 +9,7 @@ use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
 use Misc;
 use I18N qw(stringToBytes);
-use Globals qw(%config $accountID $field %charSvrSet);
+use Globals qw(%config $accountID $field %charSvrSet $masterServer);
 
 use constant SESSION_TIMEOUT => 120;
 use constant DUMMY_CHARACTER => {
@@ -159,6 +159,7 @@ sub game_login {
 					0,
 				);
 			}
+			
 			# FIXME
 			if ($self->{serverType} == 8 || $self->{serverType} =~ /^kRO_/){
 				$output = pack('C20') . $output;
@@ -175,21 +176,38 @@ sub game_login {
 			if ($config{XKore_altCharServer} == 1){
 				$client->send(pack('C2 v', 0x72, 0x00, length($output) + 4) . $output);
 			}else{
-				$client->send($self->{recvPacketParser}->reconstruct({
-					switch => 'received_characters',
-					charInfo => $output,
-					
-					# "if number of characters exceed 0 on selecting window, connection to game can't not be made" (sic)
-					total_slot => $charSvrSet{normal_slot} || 9,
-					
-					# slots in premium range are displayed as "Not Available"
-					premium_start_slot => $charSvrSet{normal_slot} || 9,
-					premium_end_slot => $charSvrSet{normal_slot} || 9,
+				# construct packet
+				my $data;
+				if ($masterServer->{serverType} eq 'bRO') {
+					# 0x82D
+					# len normal_slot premium_slot billing_slot producible_slot valid_slot charInfo
+					#my $
+					$data = pack('v2 C5 x20 a*', 0x82D, 29+length($output),
+																			$charSvrSet{normal_slot} || 9,
+																			$charSvrSet{premium_slot} || 0,
+																			$charSvrSet{billing_slot} || 0,
+																			$charSvrSet{producible_slot} || 0,
+																			$charSvrSet{valid_slot} || 9,
+																			$output);
+				} else {
+					$data = $self->{recvPacketParser}->reconstruct({ # will always reconstruct 006B
+						switch => 'received_characters',
+						charInfo => $output,
+						
+						# "if number of characters exceed 0 on selecting window, connection to game can't not be made" (sic)
+						total_slot => $charSvrSet{normal_slot} || 9,
+						
+						# slots in premium range are displayed as "Not Available"
+						premium_start_slot => $charSvrSet{normal_slot} || 9,
+						premium_end_slot => $charSvrSet{normal_slot} || 9,
 
-					normal_slot => $charSvrSet{normal_slot} || 9,
-					premium_slot => $charSvrSet{premium_slot} || 9,
-					billing_slot => $charSvrSet{billing_slot} || 9,
-				}). pack('C2 x4 a4 v', 0xB9, 0x08, $args->{accountID}, 0));
+						normal_slot => $charSvrSet{normal_slot} || 9,
+						premium_slot => $charSvrSet{premium_slot} || 9,
+						billing_slot => $charSvrSet{billing_slot} || 9,
+					});
+				}
+				$data .= pack('C2 x4 a4 v', 0xB9, 0x08, $args->{accountID}, 0); #add accountID
+				$client->send($data);
 			}
 		}
 	}
