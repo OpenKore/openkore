@@ -116,6 +116,7 @@ sub new {
 		'08C9' => ['request_cashitems'],#2
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
 		'09A1' => ['sync_received_characters'],
+		'09D0' => ['gameguard_reply'],
 		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
