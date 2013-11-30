@@ -1042,4 +1042,28 @@ sub sendRequestCashItemsList {
 	debug "Requesting cashItemsList\n", "sendPacket", 2;
 }
 
+sub sendCashShopOpen {
+	my $self = shift;
+	$self->sendToServer($self->reconstruct({switch => 'cash_shop_open'}));
+	debug "Requesting sendCashShopOpen\n", "sendPacket", 2;
+}
+
+sub sendCashBuy {
+	my $self = shift;
+	my ($item_id, $item_amount, $tab_code) = @_;
+	#"len count item_id item_amount tab_code"
+	$self->sendToServer($self->reconstruct({
+				switch => 'cash_shop_buy_items',
+				len => 16, # always 16 for current implementation
+				count => 1, # current _kore_ implementation only allow us to buy 1 item at time
+				item_id => $item_id,
+				item_amount => $item_amount,
+				tab_code => $tab_code
+			}
+		)
+	);
+	debug "Requesting sendCashShopOpen\n", "sendPacket", 2;
+}
+
+
 1;
