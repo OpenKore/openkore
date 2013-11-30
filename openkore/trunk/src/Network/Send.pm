@@ -1036,4 +1036,10 @@ sub sendCloseBuyShop {
 	debug "Buying Shop Closed\n", "sendPacket", 2;
 }
 
+sub sendRequestCashItemsList {
+	my $self = shift;
+	$self->sendToServer($self->reconstruct({switch => 'request_cashitems'}));
+	debug "Requesting cashItemsList\n", "sendPacket", 2;
+}
+
 1;

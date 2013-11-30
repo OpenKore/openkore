@@ -228,7 +228,7 @@ sub serverDisconnect {
 				
 				if (defined(my $rplen = $incomingMessages->{rpackets}{my $switch = Network::MessageTokenizer::getMessageID($incoming)})) {
 					my $inlen = do { no encoding 'utf8'; use bytes; length $incoming };
-					if ($rplen > $inlen) {
+					if (($rplen->{length} > $inlen) || ($rplen->{minLength} > $inlen)) { # check for minLength too, if defined
 						warning TF("Only %d bytes in the buffer, when %s's packet length is supposed to be %d (wrong recvpackets?)\n", $inlen, $switch, $rplen);
 					}
 				}

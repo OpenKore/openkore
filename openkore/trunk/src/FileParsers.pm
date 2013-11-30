@@ -52,6 +52,7 @@ our @EXPORT = qw(
 	parsePortalsLOS
 	parsePriority
 	parseResponses
+	parseRecvpackets
 	parseROLUT
 	parseRODescLUT
 	parseROSlotsLUT
@@ -789,6 +790,32 @@ sub parseROQuestsLUT {
 			undef $data; undef $flag;
 		}
 	}
+	
+	return 1;
+}
+
+sub parseRecvpackets {
+	my ($file, $r_hash) = @_;
+
+	%{$r_hash} = ();
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		next if (length($line) == 0);
+
+		my ($packetID, $length, $minLength, $repeat, $function) = split /\s+/, $line, 5;
+		$packetID =~ s/^(0x[0-9a-f]+)$/hex $1/e;
+		$r_hash->{$packetID}{length} = $length;
+		$r_hash->{$packetID}{minLength} = $minLength;
+		$r_hash->{$packetID}{repeat} = $repeat; # unused
+		$r_hash->{$packetID}{function} = $function; # can be used as description instead of packetdescriptions.txt, if defined.
+		#use Log 'warning';
+		#warning $r_hash->{$key}." ".$key."\n";
+	}
+	close FILE;
 	
 	return 1;
 }

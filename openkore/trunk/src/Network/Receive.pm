@@ -1791,4 +1791,44 @@ sub sync_request_ex {
 	$messageSender->sendReplySyncRequestEx($SyncID);
 }
 
+sub cash_shop_list {
+	my ($self, $args) = @_;
+	my $tabcode = $args->{tabcode};
+	my $jump = 6;
+	my $unpack_string  = "v V";
+	my %cashitem_tab = (
+		0 => 'New',
+		1 => 'Stock',
+		2 => 'Rent',
+		3 => 'Caps',
+		4 => 'Potions',
+		5 => 'Scrolls',
+		6 => 'Decoration',
+		7 => 'Expense',
+	);
+	debug TF("%s\n" .
+		"#   Name                               Price\n",
+		center(' Tab: ' . $cashitem_tab{$tabcode} . ' ', 44, '-')), "list";
+	for (my $i = 0; $i < length($args->{itemInfo}); $i += $jump) {
+		my ($ID, $price) = unpack($unpack_string, substr($args->{itemInfo}, $i));
+		my $name = $items_lut{$ID};
+		push(@{$cashShop{list}[$tabcode]}, {item_id => $ID, price => $price}); # add to cashshop
+		debug(swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>>>>>C",
+			[$i, $name, formatNumber($price)]),
+			"list");
+
+		}
+}
+
+sub cash_window_shop_open {
+	my ($self, $args) = @_;
+	#'0845' => ['cash_window_shop_open', 'v2', [qw(cash_points kafra_points)]],
+	message TF("Cash Points: %dC, Kafra Points: %dC\n", formatNumber $args->{cash_points}, formatNumber $args->{kafra_points});
+	$cashShop{points} = (
+							cash => $args->{cash_points},
+							kafra => $args->{kafra_points}
+						);
+}
+
 1;

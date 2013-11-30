@@ -112,7 +112,7 @@ sub new {
 		'00A5' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'00A6' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'00A8' => ['use_item', 'v x2 C', [qw(index amount)]],
-		'00AA' => ($rpackets{'00AA'} == 7) # or 9
+		'00AA' => ($rpackets{'00AA'}{length} == 7) # or 9
 			? ['equip_item', 'v2 C', [qw(index type success)]]
 			: ['equip_item', 'v3 C', [qw(index type viewid success)]],
 		'00AC' => ['unequip_item', 'v2 C', [qw(index type success)]],
@@ -389,7 +389,7 @@ sub new {
 		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]],
 		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]],
 		'029A' => ['inventory_item_added', 'v3 C3 a8 v C2 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
-		'029B' => ($rpackets{'029B'} == 72 # or 80
+		'029B' => ($rpackets{'029B'}{length} == 72 # or 80
 			? ['mercenary_init', 'a4 v8 Z24 v5 V v2',		[qw(ID atk matk hit critical def mdef flee aspd name level hp hp_max sp sp_max contract_end faith summons)]]
 			: ['mercenary_init', 'a4 v8 Z24 v V5 v V2 v',	[qw(ID atk matk hit critical def mdef flee aspd name level hp hp_max sp sp_max contract_end faith summons kills attack_range)]]
 		),
@@ -505,6 +505,7 @@ sub new {
 		'082D' => ['received_characters', 'x2 C5 x20 a*', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
 		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
 		'083E' => ['login_error', 'V Z20', [qw(type date)]],
+		'0845' => ['cash_window_shop_open', 'v2', [qw(cash_points kafra_points)]],
 		'084B' => ['item_appeared', 'a4 v2 C v4', [qw(ID nameID unknown1 identified x y unknown2 amount)]], # 19 TODO   provided by try71023, modified sofax222
 		'0856' => ['actor_moved', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
 		'0857' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
@@ -515,6 +516,7 @@ sub new {
 		'08BB' => ['login_pin_new_code_result', 'v V', [qw(flag seed)]],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
+		'08CA' => ['cash_shop_list', 'v3 a*', [qw(len amount tabcode itemInfo)]],#-1
 		'08CB' => ['rates_info', 's4 a*', [qw(len exp death drop detail)]],
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]],
@@ -913,7 +915,7 @@ sub items_nonstackable {
 		 $args->{switch} eq '02D1' || # storage
 		 $args->{switch} eq '02D2'    # cart
 	) {
-		return $items->{$rpackets{'00AA'} == 7 ? 'type3' : 'type4'};
+		return $items->{$rpackets{'00AA'}{length} == 7 ? 'type3' : 'type4'};
 	} elsif ($args->{switch} eq '0901' # inventory
 		|| $args->{switch} eq '0976' # storage
 		|| $args->{switch} eq '0903' # cart
@@ -1080,6 +1082,7 @@ sub map_loaded {
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 
 	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
+	$messageSender->sendRequestCashItemsList() if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.30, request for cashitemslist
 }
 
 sub actor_look_at {
