@@ -515,7 +515,7 @@ sub items_nonstackable {
 		 $args->{switch} eq '02D1' || # storage
 		 $args->{switch} eq '02D2'    # cart
 	) {
-		return $items->{$rpackets{'00AA'} == 7 ? 'type3' : 'type4'};
+		return $items->{$rpackets{'00AA'}{length} == 7 ? 'type3' : 'type4'};
 
 	} elsif ($args->{switch} eq '0901' # inventory
 		|| $args->{switch} eq '0976' # storage

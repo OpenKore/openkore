@@ -179,7 +179,7 @@ sub loadDataFiles {
 		onLoaded => \&processServerSettings );
 	# Load RecvPackets.txt second
  	Settings::addTableFile(Settings::getRecvPacketsFilename(),
- 		loader => [\&parseDataFile2, \%rpackets]);
+ 		loader => [\&parseRecvpackets, \%rpackets]);
 
 	# Add 'Old' table pack, if user set
 	if ( $sys{locale_compat} == 1) {
@@ -583,6 +583,7 @@ sub initConnectVars {
 	}
 	undef @skillsID;
 	undef @partyUsersID;
+	undef %cashShop;
 	$useArrowCraft = 1;
 }
 
@@ -732,9 +733,9 @@ sub mainLoop_initialized {
 	$data = $net->clientRecv;
 	if (defined($data) && length($data) > 0) {
 		my $type;
-		$messageSender->encryptMessageID(\$data);
+		#$messageSender->encryptMessageID(\$data);
 		$outgoingClientMessages->add($data);
-		$net->serverSend($_) for $messageSender->process(
+		$messageSender->sendToServer($_) for $messageSender->process(
 			$outgoingClientMessages, $clientPacketHandler
 		);
 	}
@@ -744,8 +745,8 @@ sub mainLoop_initialized {
 		my $result = Poseidon::Client::getInstance()->getResult();
 		if (defined($result)) {
 			debug "Received Poseidon result.\n", "poseidon";
-			$messageSender->encryptMessageID(\$result, unpack("v", $result));
-			$net->serverSend($result);
+			#$messageSender->encryptMessageID(\$result, unpack("v", $result));
+			$messageSender->sendToServer($result);
 		}
 	}
 

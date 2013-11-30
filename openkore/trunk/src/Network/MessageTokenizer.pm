@@ -35,7 +35,9 @@ use enum qw(KNOWN_MESSAGE UNKNOWN_MESSAGE ACCOUNT_ID);
 sub new {
 	my ($class, $rpackets) = @_;
 	assert(defined $rpackets) if DEBUG;
+	#Log::warning (Data::Dumper::Dumper($rpackets)."\n");
 	my %self = (
+		
 		rpackets => $rpackets,
 		buffer => ''
 	);
@@ -116,8 +118,11 @@ sub readNext {
 
 	my $switch = getMessageID($$buffer);
 	my $rpackets = $self->{rpackets};
-	my $size = $rpackets->{$switch};
+	my $size = $rpackets->{$switch}{length};
+	
 	my $result;
+	
+	#Log::warning sprintf("Packet %s %d %d \n", $switch, $rpackets->{$switch}{length}, $size);
 
 	my $nextMessageMightBeAccountID = $self->{nextMessageMightBeAccountID};
 	$self->{nextMessageMightBeAccountID} = undef;
@@ -166,6 +171,24 @@ sub readNext {
 		$$type = UNKNOWN_MESSAGE;
 	}
 	return $result;
+}
+
+# ragnarok servers
+sub slicePacket {
+	my ($self, $data, $additional_data) = @_;
+	# temporary hack for new recvpackets format
+	my $switch = getMessageID($data);
+	my $real_length = $self->{rpackets}{$switch}{length};	
+	my $packet;
+	if (($real_length > 0) # packet size is not variable
+			&& (length($data) > $real_length)) { 
+		$packet = substr($data, 0, $real_length);
+		$$additional_data = substr($data, $real_length); # sliced data
+	} else { # packet is at correct size
+		$packet = $data;
+		$$additional_data = undef;
+	}
+	return $packet; # real packet
 }
 
 1;

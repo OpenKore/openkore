@@ -188,9 +188,9 @@ sub reconstruct {
 	my $packet = pack("v $packString", hex $switch, $packString && @{$args}{@$varNames});
 	
 	if (exists $rpackets{$switch}) {
-		if ($rpackets{$switch} > 0) {
+		if ($rpackets{$switch}{length} > 0) {
 			# fixed length packet, pad/truncate to the correct length
-			$packet = pack('a'.(0+$rpackets{$switch}), $packet);
+			$packet = pack('a'.(0+$rpackets{$switch}{length}), $packet);
 		} else {
 			# variable length packet, store its length in the packet
 			substr($packet, 2, 2) = pack('v', length $packet);
@@ -457,9 +457,8 @@ sub parse_pre {
 	if ($config{'debugPacket_'.$config_suffix} && !existsInList($config{'debugPacket_exclude'}, $switch) ||
 		$config{'debugPacket_include_dumpMethod'} && existsInList($config{'debugPacket_include'}, $switch))
 	{
-		my $label = $packetDescriptions{$desc_key}{$switch} ?
-			" - $packetDescriptions{$desc_key}{$switch}" : '';
-		
+		#my $label = $packetDescriptions{$desc_key}{$switch} ? " - $packetDescriptions{$desc_key}{$switch}" : '';
+		my $label = $rpackets{$switch}{function}?" - ".$rpackets{$switch}{function}:($packetDescriptions{$desc_key}{$switch} ? " - $packetDescriptions{$desc_key}{$switch}" : '');
 		if ($config{'debugPacket_'.$config_suffix} == 1) {
 			debug sprintf("%-24s %-4s%s [%2d bytes]%s\n", $title, $switch, $label, length($msg)), 'parseMsg', 0;
 		} elsif ($config{'debugPacket_'.$config_suffix} == 2) {
