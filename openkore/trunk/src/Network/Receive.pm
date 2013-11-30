@@ -1796,22 +1796,31 @@ sub cash_shop_list {
 	my $tabcode = $args->{tabcode};
 	my $jump = 6;
 	my $unpack_string  = "v V";
+	# CASHSHOP_TAB_NEW => 0x0,
+	# CASHSHOP_TAB_POPULAR => 0x1,
+	# CASHSHOP_TAB_LIMITED => 0x2,
+	# CASHSHOP_TAB_RENTAL => 0x3,
+	# CASHSHOP_TAB_PERPETUITY => 0x4,
+	# CASHSHOP_TAB_BUFF => 0x5,
+	# CASHSHOP_TAB_RECOVERY => 0x6,
+	# CASHSHOP_TAB_ETC => 0x7
+	# CASHSHOP_TAB_MAX => 8
 	my %cashitem_tab = (
 		0 => 'New',
-		1 => 'Stock',
-		2 => 'Rent',
-		3 => 'Caps',
-		4 => 'Potions',
-		5 => 'Scrolls',
-		6 => 'Decoration',
-		7 => 'Expense',
+		1 => 'Popular',
+		2 => 'Limited',
+		3 => 'Rental',
+		4 => 'Perpetuity',
+		5 => 'Buff',
+		6 => 'Recovery',
+		7 => 'Etc',
 	);
 	debug TF("%s\n" .
 		"#   Name                               Price\n",
 		center(' Tab: ' . $cashitem_tab{$tabcode} . ' ', 44, '-')), "list";
 	for (my $i = 0; $i < length($args->{itemInfo}); $i += $jump) {
 		my ($ID, $price) = unpack($unpack_string, substr($args->{itemInfo}, $i));
-		my $name = $items_lut{$ID};
+		my $name = itemNameSimple($ID);
 		push(@{$cashShop{list}[$tabcode]}, {item_id => $ID, price => $price}); # add to cashshop
 		debug(swrite(
 			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>>>>>C",
@@ -1821,14 +1830,38 @@ sub cash_shop_list {
 		}
 }
 
-sub cash_window_shop_open {
+sub cash_shop_open_result {
 	my ($self, $args) = @_;
 	#'0845' => ['cash_window_shop_open', 'v2', [qw(cash_points kafra_points)]],
-	message TF("Cash Points: %dC, Kafra Points: %dC\n", formatNumber $args->{cash_points}, formatNumber $args->{kafra_points});
-	$cashShop{points} = (
+	message TF("Cash Points: %sC - Kafra Points: %sC\n", formatNumber ($args->{cash_points}), formatNumber ($args->{kafra_points}));
+	$cashShop{points} = {
 							cash => $args->{cash_points},
 							kafra => $args->{kafra_points}
-						);
+						};
+}
+
+sub cash_shop_buy_result {
+	my ($self, $args) = @_;
+		# TODO: implement result messages:
+		# SUCCESS			= 0x0,
+		# WRONG_TAB?		= 0x1, // we should take care with this, as it's detectable by the server
+		# SHORTTAGE_CASH		= 0x2,
+		# UNKONWN_ITEM		= 0x3,
+		# INVENTORY_WEIGHT		= 0x4,
+		# INVENTORY_ITEMCNT		= 0x5,
+		# RUNE_OVERCOUNT		= 0x9,
+		# EACHITEM_OVERCOUNT		= 0xa,
+		# UNKNOWN			= 0xb,
+	if ($args->{result} > 0) {
+		error TF("Error while buying %s from cash shop. Error code: %s\n", itemNameSimple($args->{item_id}), $args->{result});
+	} else {
+		message TF("Bought %s from cash shop. Current CASH: %s\n", itemNameSimple($args->{item_id}), formatNumber($args->{updated_points})), "success";
+		$cashShop{points}->{cash} = $args->{updated_points};
+	}
+	
+	debug sprintf("Got result ID [%s] while buying %s from CASH Shop. Current CASH: %s \n", $args->{result}, itemNameSimple($args->{item_id}), formatNumber($args->{updated_points}));
+
+	
 }
 
 1;

@@ -76,6 +76,7 @@ sub initHandlers {
 	c                  => \&cmdChat,
 	card               => \&cmdCard,
 	cart               => \&cmdCart,
+	cash			   => \&cmdCash,
 	charselect         => \&cmdCharSelect,
 	chat               => \&cmdChatRoom,
 	chist              => \&cmdChist,
@@ -890,6 +891,107 @@ sub cmdCart {
 	} else {
 		error TF("Error in function 'cart'\n" .
 			"Command '%s' is not a known command.\n", $arg1);
+	}
+}
+
+sub cmdCash {
+	my (undef, $args) = @_;
+	my ($sub_cmd, $arg) = split(/\s+/,$args, 2);
+	if ($sub_cmd eq 'buy') {
+		if ($arg =~ /^\s+$/) {
+			error T("Syntax Error in function 'cash' (Cash shop)\n" .
+				"Usage: cash <buy|points>\n");
+			return;
+		}
+		my $int_arg;
+		#my $r_arg;
+		if ($arg =~ s/(\d+)$//) { # ending with number
+			$int_arg = $1;
+		}
+		$arg =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
+		$arg =~ s/\s+$//g;	# Remove trailing whitespace
+		
+		my $amount;
+		my $item;
+		
+		if ($arg && $int_arg) { # recebi item (nao sei se é ID ou nome) e quantidade
+			$amount = $int_arg;
+			$item = $arg;
+		} elsif (!$arg && $int_arg) { # recebi itemID, sem quantidade
+			$amount = 1;
+			$item = $int_arg;
+		} elsif ($arg && !$int_arg) { # recebi nome do item, sem quantidade
+			$amount = 1;
+			$item = $arg;
+		} else {
+			error TF("Error in function 'cash buy': item %s not found or shop list is not ready yet.", itemNameSimple($item));
+			return;
+		}
+		
+		if ($item !~ /^\d+$/) {
+			# transform itemName into itemID
+			$item = itemNameToID($item);
+			if (!$item) {
+				error TF("Error in function 'cash buy': invalid item name or tables needs to be updated \n");
+				return;
+			}
+		}
+		
+		$messageSender->sendCashShopOpen() unless (defined $cashShop{points});
+		
+		for (my $tab = 0; $tab < @{$cashShop{list}}; $tab++) {
+			foreach my $itemloop (@{$cashShop{list}[$tab]}) {
+				if ($itemloop->{item_id} == $item) {
+					# found item! ... but do we have the money?
+					unless ((defined $cashShop{points}) && ($itemloop->{price} > $cashShop{points}->{cash})) {
+						# buy item
+						message TF("Buying %s from cash shop \n", itemNameSimple($itemloop->{item_id}));
+						$messageSender->sendCashBuy($itemloop->{item_id}, $amount, $tab);
+						return;
+					} else {
+						error TF("Not enough cash to buy item %s (%sC), we have %sC\n", itemNameSimple($itemloop->{item_id}), formatNumber($itemloop->{price}), formatNumber($cashShop{points}->{cash}));
+						return;
+					}
+				}
+			} 
+		}
+		
+		error TF("Error in function 'cash buy': item %s not found or shop list is not ready yet.", itemNameSimple($item));
+		return;
+		
+	} elsif ($sub_cmd eq 'points') {
+		if (defined $cashShop{points}) {
+			message TF("Cash Points: %sC - Kafra Points: %sC\n", formatNumber($cashShop{points}->{cash}), formatNumber($cashShop{points}->{kafra}));
+		} else {
+			$messageSender->sendCashShopOpen();
+		}
+	} elsif ($sub_cmd eq 'list') {
+		my %cashitem_tab = (
+			0 => 'New',
+			1 => 'Popular',
+			2 => 'Limited',
+			3 => 'Rental',
+			4 => 'Perpetuity',
+			5 => 'Buff',
+			6 => 'Recovery',
+			7 => 'Etc',
+		);
+		
+		for (my $tabcode = 0; $tabcode < @{$cashShop{list}}; $tabcode++) {
+			message TF("%s\n" .
+				"ItemID   Name                               Price\n",
+				center(' Tab: ' . $cashitem_tab{$tabcode} . ' ', 44, '-')), "list";
+			
+			foreach my $itemloop (@{$cashShop{list}[$tabcode]}) {
+				message(swrite(
+					"@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>>>>>C",
+					[$itemloop->{item_id}, itemNameSimple($itemloop->{item_id}), formatNumber($itemloop->{price})]),
+					"list");
+			}
+		}
+	} else {
+		error T("Syntax Error in function 'cash' (Cash shop)\n" .
+			"Usage: cash <buy|points|list>\n");
 	}
 }
 

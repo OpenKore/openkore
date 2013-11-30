@@ -85,6 +85,7 @@ our @EXPORT = (
 	cardName
 	itemName
 	itemNameSimple
+	itemNameToID
 	buyingstoreitemdelete/,
 
 	# File Parsing and Writing
@@ -1847,6 +1848,18 @@ sub itemName {
 	$display .= " [$numSlots]" if $numSlots;
 
 	return $display;
+}
+
+sub itemNameToID {
+	my $itemName = lc shift;
+	return if !$itemName;
+	$itemName =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
+	$itemName =~ s/\s+$//g;	# Remove trailing whitespace
+	for my $hashID (keys %items_lut) {
+		if ($itemName eq lc($items_lut{$hashID})) {
+			return $hashID;
+		}
+	}
 }
 
 ##
