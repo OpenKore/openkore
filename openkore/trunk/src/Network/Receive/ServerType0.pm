@@ -1084,6 +1084,7 @@ sub map_loaded {
 
 	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
 	$messageSender->sendRequestCashItemsList() if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.30, request for cashitemslist
+	$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
 }
 
 sub actor_look_at {
