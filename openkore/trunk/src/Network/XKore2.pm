@@ -39,12 +39,14 @@ sub start {
 	$sessionStore = new Base::Ragnarok::SessionStore();
 	$mapServer = new Network::XKore2::MapServer(
 		host => $publicIP,
+		port => $config{XKore_listenPort_map} || 6900,
 		serverType => $masterServer->{serverType},
 		rpackets => \%rpackets,
 		sessionStore => $sessionStore
 	);
 	$charServer = new Network::XKore2::CharServer(
 		host => $publicIP,
+		port => $config{XKore_listenPort_char} || 6900,
 		serverType => $masterServer->{serverType},
 		rpackets => \%rpackets,
 		mapServer => $mapServer,
