@@ -62,6 +62,7 @@ our %amMulti = (
 	'cartweight' => 1,   # check: cart weight
 	'soldout' => 1,      # check: sold out shop slots
 	'zeny' => 1,         # check: player's zeny
+	'cash' => 1,         # check: player's cash
 	'player' => 1,       # check: player name near
 	'equipped' => 1,     # check: equipment
 	'status' => 1,       # check: player's status

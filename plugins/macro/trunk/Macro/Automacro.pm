@@ -292,6 +292,8 @@ sub checkItem {
 	my $what;
 	if ($where eq 'inv')  {$what = getInventoryAmount($item)}
 	if ($where eq 'cart') {$what = getCartAmount($item)}
+	if ($where eq 'inv')  {return 0 unless (time > $ai_v{'inventory_time'}); $what = getInventoryAmount($item);};
+	if ($where eq 'cart') {return 0 unless (time > $ai_v{'cart_time'}); $what = getCartAmount($item)};
 	if ($where eq 'shop') {return 0 unless $shopstarted; $what = getShopAmount($item)}
 	if ($where eq 'stor') {return 0 unless $::storage{opened}; $what = getStorageAmount($item)}
 
@@ -778,6 +780,7 @@ sub automacroCheck {
 		foreach my $i (@{$automacro{$am}->{cartweight}}) {next CHKAM unless checkPercent($i, "cweight")}
 		foreach my $i (@{$automacro{$am}->{soldout}})    {next CHKAM unless checkCond(getSoldOut(), $i)}
 		foreach my $i (@{$automacro{$am}->{zeny}})       {next CHKAM unless checkCond($char->{zeny}, $i)}
+		foreach my $i (@{$automacro{$am}->{cash}})       {next CHKAM unless checkCond($cashShop{points}->{cash}?$cashShop{points}->{cash}:0, $i)}
 		foreach my $i (@{$automacro{$am}->{player}})     {next CHKAM unless checkPerson($i)}
 		foreach my $i (@{$automacro{$am}->{equipped}})   {next CHKAM unless checkEquip($i)}
 		foreach my $i (@{$automacro{$am}->{status}})     {next CHKAM unless checkStatus($i)}
