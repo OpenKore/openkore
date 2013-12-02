@@ -820,5 +820,10 @@ sub guild_info_request {
 	$args->{mangle} = 2;
 }
 
+sub sync_request_ex {
+	my ($self, $args, $client) = @_;
+	$args->{mangle} = 2;
+}
+
 1;
 
