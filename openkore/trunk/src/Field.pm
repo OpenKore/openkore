@@ -289,7 +289,7 @@ sub loadFile {
 	my $distFile = $filename;
 	$distFile =~ s/\.fld(\.gz)?$/.dist/i;
 	if ($loadDistanceMap) {
-		if (!-f $distFile || !$self->loadDistanceMap($distFile, $width, $height)) {
+		if ((!-f $distFile && !-f $distFile.'.gz') || !$self->loadDistanceMap($distFile, $width, $height)) {
 			# (Re)create the distance map.
 			my $f;
 			$self->{dstMap} = Utils::makeDistMap($fieldData, $width, $height);
@@ -327,36 +327,60 @@ sub loadFile {
 sub loadDistanceMap {
 	my ($self, $filename, $width, $height) = @_;
 	my ($f, $distData);
-
-	if (open($f, "<", $filename)) {
+	
+	$filename .= '.gz' if (-f $filename.'.gz');
+	
+	if ($filename =~ /\.gz$/) {
+		use bytes;
+		no encoding 'utf8';
+		
+		my $gz = gzopen($filename, 'rb');
+		if (!$gz) {
+			IOException->throw("Cannot open $filename for reading.");
+			return;
+		} else {
+			$distData = '';
+			while (!$gz->gzeof()) {
+				my $buf;
+				if ($gz->gzread($buf) >= 0) {
+					$distData .= $buf;
+				} else {
+					IOException->throw("An error occured while decompressing $filename.");
+					return;
+				}
+			}
+			$gz->gzclose();
+		}
+	} elsif (open($f, "<", $filename)) {
 		binmode $f;
 		local($/);
 		$distData = <$f>;
 		close $f;
-
-		# Get file version.
- 		my $dversion = 0;
- 		if (substr($distData, 0, 2) eq "V#") {
- 			$dversion = unpack("xx v", substr($distData, 0, 4, ''));
- 		}
-
- 		# Get map width and height.
- 		my ($dw, $dh) = unpack("v v", substr($distData, 0, 4, ''));
-
-		# Version 0 files had a bug when height != width
-		# Version 1 files did not treat walkable water as walkable, all version 0 and 1 maps need to be rebuilt.
-		# Version 2 and greater have no know bugs, so just do a minimum validity check.
-		# Version 3 (the current version) adds better support for walkable water blocks.
-		# If the distance map version is smaller than 3, regenerate the distance map.
-
-		if ($dversion >= 3 && $width == $dw && $height == $dh) {
-			$self->{dstMap} = $distData;
-			return 1;
-		} else {
-			return 0;
-		}
 	} else {
 		IOException->throw("Cannot open distance map $filename for reading.");
+		return;
+	}
+	
+	# Get file version.
+	my $dversion = 0;
+	if (substr($distData, 0, 2) eq "V#") {
+		$dversion = unpack("xx v", substr($distData, 0, 4, ''));
+	}
+
+	# Get map width and height.
+	my ($dw, $dh) = unpack("v v", substr($distData, 0, 4, ''));
+
+	# Version 0 files had a bug when height != width
+	# Version 1 files did not treat walkable water as walkable, all version 0 and 1 maps need to be rebuilt.
+	# Version 2 and greater have no know bugs, so just do a minimum validity check.
+	# Version 3 (the current version) adds better support for walkable water blocks.
+	# If the distance map version is smaller than 3, regenerate the distance map.
+
+	if ($dversion >= 3 && $width == $dw && $height == $dh) {
+		$self->{dstMap} = $distData;
+		return 1;
+	} else {
+		return 0;
 	}
 }
 
