@@ -1,211 +1,211 @@
 # http://openkore-brasil.com 
 # http://revok.com.br/ 
-# RO packet extractor v2 by Revok [18:22 (UTC -03:00) 26-11-2013] 
-# Packet with AsProtect 
-# Target: 2013-11-26aRagexe.exe 
-# MD5: F94B1C88433F16D7196A261468DFD9CB  CRC32: 807FD379 
-# MID Encryption keys are K: 1701607027 M: 747196614 A: 1785990933
+# RO packet extractor v666 do capeta by Revok [17:58 (UTC -03:00) 03-12-2013] 
+# Unpacked or Unknown .exe Packer 
+# Target: 2013-12-03Ragexe.exe 
+# MD5: ?  CRC32: ? 
+# MID Encryption keys are K: 306729564 M: 986793068 A: 679100536
 # PIN addfactor: 0x881234 and multfactor: 0x3498
 # Storage Encryption keys are K: 050B6F79, 0202C179, 0E20120, 04FA43E3, 0179B6C8, 05973DF2, 07D8D6B, 08CB9ED9
 
 # Packet ID | Packet Length | Packet Min Length | Repeat Factor | Packet Description
-0941 7 7 0		# [send::actor_action]
-0880 10 10 0
-094A 5 5 0		# [send::character_move]
-0367 6 6 0		# [send::sync]
-0898 5 5 0		# [send::actor_look_at]
-0929 6 6 0		# [send::item_take]
-089D 6 6 0		# [send::item_drop]
-0957 8 8 0		# [send::storage_item_add]
-02C4 8 8 0		# [send::storage_item_remove]
-035F 10 10 0	# [send::skill_use_location]
-0889 90 90 0
-0369 6 6 0		# [send::actor_info_request]
-094D 6 6 0
-0438 12 12 0
-0937 2 2 0
-0883 -1 15 0	# [send::booking_register]
-092B -1 12 0
-088A 6 6 0
-0965 2 2 0
-085E -1 89 0
-0885 18 18 0
-0948 8 8 0
-092F -1 12 0
-089E 19 19 0	# [send::map_login]
-0863 26 26 0	# [send::party_join_request_by_name]
-07E4 4 4 0
-089F 26 26 0
-023B 5 5 0		# [send::homunculus_command]
-0884 36 36 0	# [send::storage_packet]
-091D 2 2 0		# [receive::sync_request_ex]
-0944 2 2 0		# [receive::sync_request_ex]
-0860 2 2 0		# [receive::sync_request_ex]
-087F 2 2 0		# [receive::sync_request_ex]
-0932 2 2 0		# [receive::sync_request_ex]
-0938 2 2 0		# [receive::sync_request_ex]
-0954 2 2 0		# [receive::sync_request_ex]
-095A 2 2 0		# [receive::sync_request_ex]
-092D 2 2 0		# [receive::sync_request_ex]
-0870 2 2 0		# [receive::sync_request_ex]
-0950 2 2 0		# [receive::sync_request_ex]
-0893 2 2 0		# [receive::sync_request_ex]
-0963 2 2 0		# [receive::sync_request_ex]
-08A9 2 2 0		# [receive::sync_request_ex]
-0896 2 2 0		# [receive::sync_request_ex]
-0925 2 2 0		# [receive::sync_request_ex]
-0202 2 2 0		# [receive::sync_request_ex]
-0943 2 2 0		# [receive::sync_request_ex]
-095D 2 2 0		# [receive::sync_request_ex]
-08AD 2 2 0		# [receive::sync_request_ex]
-0926 2 2 0		# [receive::sync_request_ex]
-094B 2 2 0		# [receive::sync_request_ex]
-093C 2 2 0		# [receive::sync_request_ex]
-0437 2 2 0		# [receive::sync_request_ex]
-0947 2 2 0		# [receive::sync_request_ex]
-0365 2 2 0		# [receive::sync_request_ex]
-0956 2 2 0		# [receive::sync_request_ex]
-086C 2 2 0		# [receive::sync_request_ex]
-088F 2 2 0		# [receive::sync_request_ex]
-08A3 2 2 0		# [receive::sync_request_ex]
-08A1 2 2 0		# [receive::sync_request_ex]
-0959 2 2 0		# [receive::sync_request_ex]
-0876 2 2 0		# [receive::sync_request_ex]
-0951 2 2 0		# [receive::sync_request_ex]
-087B 2 2 0		# [receive::sync_request_ex]
-0436 2 2 0		# [receive::sync_request_ex]
-0875 2 2 0		# [receive::sync_request_ex]
-0922 2 2 0		# [receive::sync_request_ex]
-0952 2 2 0		# [receive::sync_request_ex]
-0867 2 2 0		# [receive::sync_request_ex]
-0879 2 2 0		# [receive::sync_request_ex]
-0942 2 2 0		# [receive::sync_request_ex]
-0817 2 2 0		# [receive::sync_request_ex]
-091E 2 2 0		# [receive::sync_request_ex]
-0924 2 2 0		# [receive::sync_request_ex]
-086F 2 2 0		# [receive::sync_request_ex]
-085D 2 2 0		# [receive::sync_request_ex]
+0369 7 7 0		# [send::actor_action]
+083C 10 10 0
+0437 5 5 0		# [send::character_move]
+035F 6 6 0		# [send::sync]
+0885 5 5 0		# [send::actor_look_at]
+085D 6 6 0		# [send::item_take]
+088C 6 6 0		# [send::item_drop]
+0438 8 8 0		# [send::storage_item_add]
+0932 8 8 0		# [send::storage_item_remove]
+0364 10 10 0	# [send::skill_use_location]
+0366 90 90 0
+096A 6 6 0		# [send::actor_info_request]
+0361 6 6 0
+02C4 12 12 0
+0835 2 2 0
+0819 -1 15 0	# [send::booking_register]
+0811 -1 12 0
+0360 6 6 0
+0817 2 2 0
+0202 -1 89 0
+088D 18 18 0
+094B 8 8 0
+089C -1 12 0
+0365 19 19 0	# [send::map_login]
+0838 26 26 0	# [send::party_join_request_by_name]
+0924 4 4 0
+0815 26 26 0
+0943 5 5 0		# [send::homunculus_command]
+089D 36 36 0	# [send::storage_packet]
+0367 2 2 0		# [receive::sync_request_ex]
 085A 2 2 0		# [receive::sync_request_ex]
-0877 2 2 0		# [receive::sync_request_ex]
-0955 2 2 0		# [receive::sync_request_ex]
-088B 2 2 0		# [receive::sync_request_ex]
-0882 2 2 0		# [receive::sync_request_ex]
-0865 2 2 0		# [receive::sync_request_ex]
-094E 2 2 0		# [receive::sync_request_ex]
-087C 2 2 0		# [receive::sync_request_ex]
-08A4 2 2 0		# [receive::sync_request_ex]
-0878 2 2 0		# [receive::sync_request_ex]
-0966 2 2 0		# [receive::sync_request_ex]
-093E 2 2 0		# [receive::sync_request_ex]
-0927 2 2 0		# [receive::sync_request_ex]
-095B 2 2 0		# [receive::sync_request_ex]
-0891 2 2 0		# [receive::sync_request_ex]
-0964 2 2 0		# [receive::sync_request_ex]
-0869 2 2 0		# [receive::sync_request_ex]
-086B 2 2 0		# [receive::sync_request_ex]
-0897 2 2 0		# [receive::sync_request_ex]
-0888 2 2 0		# [receive::sync_request_ex]
-0935 2 2 0		# [receive::sync_request_ex]
-08A6 2 2 0		# [receive::sync_request_ex]
+085B 2 2 0		# [receive::sync_request_ex]
+085C 2 2 0		# [receive::sync_request_ex]
+0362 2 2 0		# [receive::sync_request_ex]
+085E 2 2 0		# [receive::sync_request_ex]
+085F 2 2 0		# [receive::sync_request_ex]
+0860 2 2 0		# [receive::sync_request_ex]
 0861 2 2 0		# [receive::sync_request_ex]
-0886 2 2 0		# [receive::sync_request_ex]
-088C 2 2 0		# [receive::sync_request_ex]
-0281 2 2 0		# [receive::sync_request_ex]
-0933 2 2 0		# [receive::sync_request_ex]
-0945 2 2 0		# [receive::sync_request_ex]
-093F 2 2 0		# [receive::sync_request_ex]
-0919 2 2 0		# [receive::sync_request_ex]
 0862 2 2 0		# [receive::sync_request_ex]
+0863 2 2 0		# [receive::sync_request_ex]
+0864 2 2 0		# [receive::sync_request_ex]
+0865 2 2 0		# [receive::sync_request_ex]
+0866 2 2 0		# [receive::sync_request_ex]
+0867 2 2 0		# [receive::sync_request_ex]
+0868 2 2 0		# [receive::sync_request_ex]
+0869 2 2 0		# [receive::sync_request_ex]
+086A 2 2 0		# [receive::sync_request_ex]
+086B 2 2 0		# [receive::sync_request_ex]
+086C 2 2 0		# [receive::sync_request_ex]
+086D 2 2 0		# [receive::sync_request_ex]
+086E 2 2 0		# [receive::sync_request_ex]
+086F 2 2 0		# [receive::sync_request_ex]
+0870 2 2 0		# [receive::sync_request_ex]
+0871 2 2 0		# [receive::sync_request_ex]
+0872 2 2 0		# [receive::sync_request_ex]
+0873 2 2 0		# [receive::sync_request_ex]
+0886 2 2 0		# [receive::sync_request_ex]
+0875 2 2 0		# [receive::sync_request_ex]
+0876 2 2 0		# [receive::sync_request_ex]
+0877 2 2 0		# [receive::sync_request_ex]
+0878 2 2 0		# [receive::sync_request_ex]
+0879 2 2 0		# [receive::sync_request_ex]
+087A 2 2 0		# [receive::sync_request_ex]
+087B 2 2 0		# [receive::sync_request_ex]
+087C 2 2 0		# [receive::sync_request_ex]
+087D 2 2 0		# [receive::sync_request_ex]
+087E 2 2 0		# [receive::sync_request_ex]
+087F 2 2 0		# [receive::sync_request_ex]
+0880 2 2 0		# [receive::sync_request_ex]
+0881 2 2 0		# [receive::sync_request_ex]
+0882 2 2 0		# [receive::sync_request_ex]
+0883 2 2 0		# [receive::sync_request_ex]
+0917 2 2 0		# [receive::sync_request_ex]
+0918 2 2 0		# [receive::sync_request_ex]
+0919 2 2 0		# [receive::sync_request_ex]
+091A 2 2 0		# [receive::sync_request_ex]
+091B 2 2 0		# [receive::sync_request_ex]
+091C 2 2 0		# [receive::sync_request_ex]
+091D 2 2 0		# [receive::sync_request_ex]
+091E 2 2 0		# [receive::sync_request_ex]
+091F 2 2 0		# [receive::sync_request_ex]
+0920 2 2 0		# [receive::sync_request_ex]
+0921 2 2 0		# [receive::sync_request_ex]
+0922 2 2 0		# [receive::sync_request_ex]
+0923 2 2 0		# [receive::sync_request_ex]
+0281 2 2 0		# [receive::sync_request_ex]
+0925 2 2 0		# [receive::sync_request_ex]
+0926 2 2 0		# [receive::sync_request_ex]
+0927 2 2 0		# [receive::sync_request_ex]
+0928 2 2 0		# [receive::sync_request_ex]
+0929 2 2 0		# [receive::sync_request_ex]
 092A 2 2 0		# [receive::sync_request_ex]
-0835 2 2 0		# [receive::sync_request_ex]
+092B 2 2 0		# [receive::sync_request_ex]
+092C 2 2 0		# [receive::sync_request_ex]
+092D 2 2 0		# [receive::sync_request_ex]
 092E 2 2 0		# [receive::sync_request_ex]
-0361 2 2 0		# [receive::sync_request_ex]
-08A5 2 2 0		# [receive::sync_request_ex]
+092F 2 2 0		# [receive::sync_request_ex]
 0930 2 2 0		# [receive::sync_request_ex]
-0873 2 2 0		# [send::sync_ex_question_reply]
-085C 2 2 0		# [send::sync_ex_question_reply]
-086D 2 2 0		# [send::sync_ex_question_reply]
-0360 2 2 0		# [send::sync_ex_question_reply]
-091F 2 2 0		# [send::sync_ex_question_reply]
-08AA 2 2 0		# [send::sync_ex_question_reply]
-0923 2 2 0		# [send::sync_ex_question_reply]
-095C 2 2 0		# [send::sync_ex_question_reply]
-091B 2 2 0		# [send::sync_ex_question_reply]
-0890 2 2 0		# [send::sync_ex_question_reply]
-0362 2 2 0		# [send::sync_ex_question_reply]
-0918 2 2 0		# [send::sync_ex_question_reply]
-091A 2 2 0		# [send::sync_ex_question_reply]
-0960 2 2 0		# [send::sync_ex_question_reply]
-0363 2 2 0		# [send::sync_ex_question_reply]
-0928 2 2 0		# [send::sync_ex_question_reply]
-0864 2 2 0		# [send::sync_ex_question_reply]
-0892 2 2 0		# [send::sync_ex_question_reply]
-0917 2 2 0		# [send::sync_ex_question_reply]
-08AC 2 2 0		# [send::sync_ex_question_reply]
-08AB 2 2 0		# [send::sync_ex_question_reply]
+0931 2 2 0		# [receive::sync_request_ex]
+0436 2 2 0		# [receive::sync_request_ex]
+0933 2 2 0		# [receive::sync_request_ex]
+0934 2 2 0		# [receive::sync_request_ex]
+0935 2 2 0		# [receive::sync_request_ex]
+0936 2 2 0		# [receive::sync_request_ex]
+0937 2 2 0		# [receive::sync_request_ex]
+0887 2 2 0		# [receive::sync_request_ex]
+0939 2 2 0		# [receive::sync_request_ex]
+093A 2 2 0		# [receive::sync_request_ex]
+093B 2 2 0		# [receive::sync_request_ex]
+093C 2 2 0		# [receive::sync_request_ex]
+093D 2 2 0		# [receive::sync_request_ex]
+093E 2 2 0		# [receive::sync_request_ex]
+093F 2 2 0		# [receive::sync_request_ex]
+088A 2 2 0		# [send::sync_ex_question_reply]
 0368 2 2 0		# [send::sync_ex_question_reply]
-0920 2 2 0		# [send::sync_ex_question_reply]
-095F 2 2 0		# [send::sync_ex_question_reply]
-0946 2 2 0		# [send::sync_ex_question_reply]
-0895 2 2 0		# [send::sync_ex_question_reply]
-08A2 2 2 0		# [send::sync_ex_question_reply]
-086A 2 2 0		# [send::sync_ex_question_reply]
-0962 2 2 0		# [send::sync_ex_question_reply]
-0958 2 2 0		# [send::sync_ex_question_reply]
-08A7 2 2 0		# [send::sync_ex_question_reply]
-083C 2 2 0		# [send::sync_ex_question_reply]
-0838 2 2 0		# [send::sync_ex_question_reply]
-0866 2 2 0		# [send::sync_ex_question_reply]
-0811 2 2 0		# [send::sync_ex_question_reply]
-0872 2 2 0		# [send::sync_ex_question_reply]
-087D 2 2 0		# [send::sync_ex_question_reply]
-0940 2 2 0		# [send::sync_ex_question_reply]
-094C 2 2 0		# [send::sync_ex_question_reply]
-0366 2 2 0		# [send::sync_ex_question_reply]
-0819 2 2 0		# [send::sync_ex_question_reply]
-089C 2 2 0		# [send::sync_ex_question_reply]
-0939 2 2 0		# [send::sync_ex_question_reply]
-093A 2 2 0		# [send::sync_ex_question_reply]
-0967 2 2 0		# [send::sync_ex_question_reply]
-0802 2 2 0		# [send::sync_ex_question_reply]
-0871 2 2 0		# [send::sync_ex_question_reply]
-0936 2 2 0		# [send::sync_ex_question_reply]
-0934 2 2 0		# [send::sync_ex_question_reply]
-085B 2 2 0		# [send::sync_ex_question_reply]
-094F 2 2 0		# [send::sync_ex_question_reply]
-0931 2 2 0		# [send::sync_ex_question_reply]
-085F 2 2 0		# [send::sync_ex_question_reply]
-0887 2 2 0		# [send::sync_ex_question_reply]
-0868 2 2 0		# [send::sync_ex_question_reply]
-0894 2 2 0		# [send::sync_ex_question_reply]
-093B 2 2 0		# [send::sync_ex_question_reply]
-093D 2 2 0		# [send::sync_ex_question_reply]
-08A8 2 2 0		# [send::sync_ex_question_reply]
-0815 2 2 0		# [send::sync_ex_question_reply]
-087A 2 2 0		# [send::sync_ex_question_reply]
-087E 2 2 0		# [send::sync_ex_question_reply]
-096A 2 2 0		# [send::sync_ex_question_reply]
-0949 2 2 0		# [send::sync_ex_question_reply]
-091C 2 2 0		# [send::sync_ex_question_reply]
-07EC 2 2 0		# [send::sync_ex_question_reply]
-095E 2 2 0		# [send::sync_ex_question_reply]
-088E 2 2 0		# [send::sync_ex_question_reply]
-0953 2 2 0		# [send::sync_ex_question_reply]
-08A0 2 2 0		# [send::sync_ex_question_reply]
-0921 2 2 0		# [send::sync_ex_question_reply]
-092C 2 2 0		# [send::sync_ex_question_reply]
-0881 2 2 0		# [send::sync_ex_question_reply]
-089B 2 2 0		# [send::sync_ex_question_reply]
-0969 2 2 0		# [send::sync_ex_question_reply]
-0364 2 2 0		# [send::sync_ex_question_reply]
-086E 2 2 0		# [send::sync_ex_question_reply]
-0968 2 2 0		# [send::sync_ex_question_reply]
-089A 2 2 0		# [send::sync_ex_question_reply]
-0899 2 2 0		# [send::sync_ex_question_reply]
-022D 2 2 0		# [send::sync_ex_question_reply]
 0874 2 2 0		# [send::sync_ex_question_reply]
-088D 2 2 0		# [send::sync_ex_question_reply]
+0938 2 2 0		# [send::sync_ex_question_reply]
+088E 2 2 0		# [send::sync_ex_question_reply]
+0888 2 2 0		# [send::sync_ex_question_reply]
+0889 2 2 0		# [send::sync_ex_question_reply]
+0884 2 2 0		# [send::sync_ex_question_reply]
+088B 2 2 0		# [send::sync_ex_question_reply]
+0363 2 2 0		# [send::sync_ex_question_reply]
+0940 2 2 0		# [send::sync_ex_question_reply]
+0802 2 2 0		# [send::sync_ex_question_reply]
+088F 2 2 0		# [send::sync_ex_question_reply]
+0890 2 2 0		# [send::sync_ex_question_reply]
+0891 2 2 0		# [send::sync_ex_question_reply]
+0892 2 2 0		# [send::sync_ex_question_reply]
+0893 2 2 0		# [send::sync_ex_question_reply]
+0894 2 2 0		# [send::sync_ex_question_reply]
+0895 2 2 0		# [send::sync_ex_question_reply]
+0896 2 2 0		# [send::sync_ex_question_reply]
+0897 2 2 0		# [send::sync_ex_question_reply]
+0898 2 2 0		# [send::sync_ex_question_reply]
+0899 2 2 0		# [send::sync_ex_question_reply]
+089A 2 2 0		# [send::sync_ex_question_reply]
+089B 2 2 0		# [send::sync_ex_question_reply]
+07E4 2 2 0		# [send::sync_ex_question_reply]
+023B 2 2 0		# [send::sync_ex_question_reply]
+089E 2 2 0		# [send::sync_ex_question_reply]
+089F 2 2 0		# [send::sync_ex_question_reply]
+08A0 2 2 0		# [send::sync_ex_question_reply]
+08A1 2 2 0		# [send::sync_ex_question_reply]
+08A2 2 2 0		# [send::sync_ex_question_reply]
+08A3 2 2 0		# [send::sync_ex_question_reply]
+08A4 2 2 0		# [send::sync_ex_question_reply]
+08A5 2 2 0		# [send::sync_ex_question_reply]
+08A6 2 2 0		# [send::sync_ex_question_reply]
+08A7 2 2 0		# [send::sync_ex_question_reply]
+08A8 2 2 0		# [send::sync_ex_question_reply]
+08A9 2 2 0		# [send::sync_ex_question_reply]
+08AA 2 2 0		# [send::sync_ex_question_reply]
+08AB 2 2 0		# [send::sync_ex_question_reply]
+08AC 2 2 0		# [send::sync_ex_question_reply]
+08AD 2 2 0		# [send::sync_ex_question_reply]
+0941 2 2 0		# [send::sync_ex_question_reply]
+0942 2 2 0		# [send::sync_ex_question_reply]
+022D 2 2 0		# [send::sync_ex_question_reply]
+0944 2 2 0		# [send::sync_ex_question_reply]
+0945 2 2 0		# [send::sync_ex_question_reply]
+0946 2 2 0		# [send::sync_ex_question_reply]
+0947 2 2 0		# [send::sync_ex_question_reply]
+0948 2 2 0		# [send::sync_ex_question_reply]
+0949 2 2 0		# [send::sync_ex_question_reply]
+094A 2 2 0		# [send::sync_ex_question_reply]
+07EC 2 2 0		# [send::sync_ex_question_reply]
+094C 2 2 0		# [send::sync_ex_question_reply]
+094D 2 2 0		# [send::sync_ex_question_reply]
+094E 2 2 0		# [send::sync_ex_question_reply]
+094F 2 2 0		# [send::sync_ex_question_reply]
+0950 2 2 0		# [send::sync_ex_question_reply]
+0951 2 2 0		# [send::sync_ex_question_reply]
+0952 2 2 0		# [send::sync_ex_question_reply]
+0953 2 2 0		# [send::sync_ex_question_reply]
+0954 2 2 0		# [send::sync_ex_question_reply]
+0955 2 2 0		# [send::sync_ex_question_reply]
+0956 2 2 0		# [send::sync_ex_question_reply]
+0957 2 2 0		# [send::sync_ex_question_reply]
+0958 2 2 0		# [send::sync_ex_question_reply]
+0959 2 2 0		# [send::sync_ex_question_reply]
+095A 2 2 0		# [send::sync_ex_question_reply]
+095B 2 2 0		# [send::sync_ex_question_reply]
+095C 2 2 0		# [send::sync_ex_question_reply]
+095D 2 2 0		# [send::sync_ex_question_reply]
+095E 2 2 0		# [send::sync_ex_question_reply]
+095F 2 2 0		# [send::sync_ex_question_reply]
+0960 2 2 0		# [send::sync_ex_question_reply]
 0961 2 2 0		# [send::sync_ex_question_reply]
+0962 2 2 0		# [send::sync_ex_question_reply]
+0963 2 2 0		# [send::sync_ex_question_reply]
+0964 2 2 0		# [send::sync_ex_question_reply]
+0965 2 2 0		# [send::sync_ex_question_reply]
+0966 2 2 0		# [send::sync_ex_question_reply]
+0967 2 2 0		# [send::sync_ex_question_reply]
+0968 2 2 0		# [send::sync_ex_question_reply]
+0969 2 2 0		# [send::sync_ex_question_reply]
 0187 6 6 0
 0081 3 3 0
 01C6 4 4 0
@@ -325,114 +325,114 @@
 01AE 4 4 0
 025B 6 6 0
 01AF 4 4 0
-01B9 6 6 1		# [receive::cast_cancelled]
-01CD 30 30 1	# [receive::sage_autospell]
+01B9 6 6 0		# [receive::cast_cancelled]
+01CD 30 30 0	# [receive::sage_autospell]
 01CE 6 6 0
 0443 8 8 0		# [send::skill_select]
-01CF 28 28 1	# [receive::devotion]
-01D0 8 8 1		# [receive::revolving_entity]
-01E1 8 8 1		# [receive::revolving_entity]
-01D1 14 14 1	# [receive::blade_stop]
-01D2 10 10 1	# [receive::combo_delay]
+01CF 28 28 0	# [receive::devotion]
+01D0 8 8 0		# [receive::revolving_entity]
+01E1 8 8 0		# [receive::revolving_entity]
+01D1 14 14 0	# [receive::blade_stop]
+01D2 10 10 0	# [receive::combo_delay]
 0094 6 6 0		# [send::actor_info_request]
-0095 30 30 1	# [receive::actor_info]
-0195 102 102 1	# [receive::actor_info]
+0095 30 30 0	# [receive::actor_info]
+0195 102 102 0	# [receive::actor_info]
 0193 6 6 0		# [send::actor_name_request]
 0175 6 6 0
 0176 106 106 0
-0079 53 53 1	# [receive::actor_connected]
+0079 53 53 0	# [receive::actor_connected]
 019D 6 6 0
-014C -1 4 1		# [receive::guild_allies_enemy_list]
+014C -1 4 0		# [receive::guild_allies_enemy_list]
 014D 2 2 0		# [send::guild_check]
-014E 6 6 1		# [receive::guild_master_member]
+014E 6 6 0		# [receive::guild_master_member]
 014F 6 6 0		# [send::guild_info_request]
-0150 110 110 1
-01B6 114 114 1	# [receive::guild_info]
+0150 110 110 0
+01B6 114 114 0	# [receive::guild_info]
 0151 6 6 0		# [send::guild_emblem_request]
-0152 -1 12 1	# [receive::guild_emblem]
+0152 -1 12 0	# [receive::guild_emblem]
 0153 -1 4 0
-0154 -1 4 1		# [receive::guild_members_list]
-0166 -1 4 1		# [receive::guild_members_title_list]
+0154 -1 4 0		# [receive::guild_members_list]
+0166 -1 4 0		# [receive::guild_members_title_list]
 0155 -1 4 0
-0156 -1 4 1		# [receive::guild_member_position_changed]
+0156 -1 4 0		# [receive::guild_member_position_changed]
 0157 6 6 0
 0159 54 54 0
-015A 66 66 1	# [receive::guild_leave]
+015A 66 66 0	# [receive::guild_leave]
 015B 54 54 0
-015C 90 90 1	# [receive::guild_expulsion]
+015C 90 90 0	# [receive::guild_expulsion]
 015D 42 42 0
-015E 6 6 1		# [receive::guild_broken]
-015F 42 42 1
-0160 -1 4 1		# [receive::guild_member_setting_list]
+015E 6 6 0		# [receive::guild_broken]
+015F 42 42 0
+0160 -1 4 0		# [receive::guild_member_setting_list]
 0161 -1 4 0
-0162 -1 6 1		# [receive::guild_skills_list]
-0163 -1 4 1		# [receive::guild_expulsionlist]
-0164 -1 4 1
+0162 -1 6 0		# [receive::guild_skills_list]
+0163 -1 4 0		# [receive::guild_expulsionlist]
+0164 -1 4 0
 0165 30 30 0
-0167 3 3 1		# [receive::guild_create_result]
+0167 3 3 0		# [receive::guild_create_result]
 0168 14 14 0
-0169 3 3 1		# [receive::guild_invite_result]
-016A 30 30 1	# [receive::guild_request]
+0169 3 3 0		# [receive::guild_invite_result]
+016A 30 30 0	# [receive::guild_request]
 016B 10 10 0
 0149 9 9 0		# [send::alignment]
-014A 6 6 1		# [receive::manner_message]
-014B 27 27 1	# [receive::GM_silence]
+014A 6 6 0		# [receive::manner_message]
+014B 27 27 0	# [receive::GM_silence]
 016E 186 186 0
-016F 182 182 1	# [receive::guild_notice]
+016F 182 182 0	# [receive::guild_notice]
 017E -1 4 0		# [send::guild_chat]
-017F -1 4 1		# [receive::guild_chat]
+017F -1 4 0		# [receive::guild_chat]
 0165 30 30 0
-0166 -1 4 1		# [receive::guild_members_title_list]
-0167 3 3 1		# [receive::guild_create_result]
+0166 -1 4 0		# [receive::guild_members_title_list]
+0167 3 3 0		# [receive::guild_create_result]
 0168 14 14 0
-0169 3 3 1		# [receive::guild_invite_result]
-016A 30 30 1	# [receive::guild_request]
+0169 3 3 0		# [receive::guild_invite_result]
+016A 30 30 0	# [receive::guild_request]
 016B 10 10 0
-016C 43 43 1	# [receive::guild_name]
-016C 43 43 1	# [receive::guild_name]
-016D 14 14 1	# [receive::guild_member_online_status]
-01F2 20 20 1	# [receive::guild_member_online_status]
+016C 43 43 0	# [receive::guild_name]
+016C 43 43 0	# [receive::guild_name]
+016D 14 14 0	# [receive::guild_member_online_status]
+01F2 20 20 0	# [receive::guild_member_online_status]
 0170 14 14 0
-0171 30 30 1	# [receive::guild_ally_request]
+0171 30 30 0	# [receive::guild_ally_request]
 0172 10 10 0
-0173 3 3 1		# [receive::guild_alliance]
-0174 -1 4 1		# [receive::guild_position_changed]
+0173 3 3 0		# [receive::guild_alliance]
+0174 -1 4 0		# [receive::guild_position_changed]
 0180 6 6 0
-0181 3 3 1		# [receive::guild_opposition_result]
-0182 106 106 1	# [receive::guild_member_add]
+0181 3 3 0		# [receive::guild_opposition_result]
+0182 106 106 0	# [receive::guild_member_add]
 0183 10 10 0
-0184 10 10 1	# [receive::guild_unally]
-0185 34 34 1	# [receive::guild_alliance_added]
-019E 2 2 1		# [receive::pet_capture_process]
+0184 10 10 0	# [receive::guild_unally]
+0185 34 34 0	# [receive::guild_alliance_added]
+019E 2 2 0		# [receive::pet_capture_process]
 019F 6 6 0
-01A0 3 3 1		# [receive::pet_capture_result]
+01A0 3 3 0		# [receive::pet_capture_result]
 01A1 3 3 0
-01A2 37 37 1	# [receive::pet_info]
-01A3 5 5 1		# [receive::pet_food]
-01A4 11 11 1	# [receive::pet_info2]
+01A2 37 37 0	# [receive::pet_info]
+01A3 5 5 0		# [receive::pet_food]
+01A4 11 11 0	# [receive::pet_info2]
 01A5 26 26 0
-01A6 -1 4 1		# [receive::egg_list]
+01A6 -1 4 0		# [receive::egg_list]
 01A7 4 4 0
 01A8 4 4 0
 01A9 6 6 0
-01AA 10 10 1	# [receive::pet_emotion]
+01AA 10 10 0	# [receive::pet_emotion]
 01CA 3 3 0
-01B0 11 11 1	# [receive::monster_typechange]
-01B1 7 7 1
+01B0 11 11 0	# [receive::monster_typechange]
+01B1 7 7 0
 01BA 26 26 0
 01BB 26 26 0
 01BC 26 26 0
 01BD 26 26 0
 01C0 2 2 0
-01C1 14 14 1
-01C2 10 10 1
-01D3 35 35 1	# [receive::sound_effect]
+01C1 14 14 0
+01C2 10 10 0
+01D3 35 35 0	# [receive::sound_effect]
 01D5 -1 8 0
-01D4 6 6 1		# [receive::npc_talk_text]
+01D4 6 6 0		# [receive::npc_talk_text]
 01DF 6 6 0
-01F3 10 10 1	# [receive::misc_effect]
-0284 14 14 1	# [receive::GANSI_RANK]
-01FF 10 10 1	# [receive::high_jump]
+01F3 10 10 0	# [receive::misc_effect]
+0284 14 14 0	# [receive::GANSI_RANK]
+01FF 10 10 0	# [receive::high_jump]
 01ED 2 2 0
 01E7 2 2 0
 01B7 6 6 0
@@ -441,290 +441,290 @@
 01CB 9 9 0
 01F9 6 6 0
 01E5 6 6 0
-0201 -1 4 1		# [receive::friend_list]
+0201 -1 4 0		# [receive::friend_list]
 0203 10 10 0
-0205 26 26 1	# [receive::divorced]
-0206 11 11 1	# [receive::friend_logon]
-0207 34 34 1	# [receive::friend_request]
+0205 26 26 0	# [receive::divorced]
+0206 11 11 0	# [receive::friend_logon]
+0207 34 34 0	# [receive::friend_request]
 0208 14 14 0	# [send::friend_response]
-0209 36 36 1	# [receive::friend_response]
-020A 10 10 1	# [receive::friend_removed]
-020E 32 32 1	# [receive::taekwon_packets]
+0209 36 36 0	# [receive::friend_response]
+020A 10 10 0	# [receive::friend_removed]
+020E 32 32 0	# [receive::taekwon_packets]
 0212 26 26 0
 0213 26 26 0
-0214 42 42 1
-0215 6 6 1		# [receive::gospel_buff_aligned]
-0216 6 6 1		# [receive::adopt_reply]
+0214 42 42 0
+0215 6 6 0		# [receive::gospel_buff_aligned]
+0216 6 6 0		# [receive::adopt_reply]
 0217 2 2 0
 0218 2 2 0
 0225 2 2 0
-0219 282 282 1	# [receive::top10_blacksmith_rank]
-021A 282 282 1	# [receive::top10_alchemist_rank]
-0226 282 282 1	# [receive::top10_taekwon_rank]
-0282 284 284 1
-021B 10 10 1	# [receive::blacksmith_points]
-021C 10 10 1	# [receive::alchemist_point]
-0224 10 10 1	# [receive::taekwon_rank]
-0280 12 12 1
-0285 6 6 1
+0219 282 282 0	# [receive::top10_blacksmith_rank]
+021A 282 282 0	# [receive::top10_alchemist_rank]
+0226 282 282 0	# [receive::top10_taekwon_rank]
+0282 284 284 0
+021B 10 10 0	# [receive::blacksmith_points]
+021C 10 10 0	# [receive::alchemist_point]
+0224 10 10 0	# [receive::taekwon_rank]
+0280 12 12 0
+0285 6 6 0
 0286 4 4 0
 021D 6 6 0		# [send::less_effect]
 021E 6 6 0
-021F 66 66 1
+021F 66 66 0
 0222 6 6 0
-0221 -1 4 1		# [receive::upgrade_list]
-0220 10 10 1
-0223 8 8 1		# [receive::upgrade_message]
-0073 11 11 1	# [receive::map_loaded]
+0221 -1 4 0		# [receive::upgrade_list]
+0220 10 10 0
+0223 8 8 0		# [receive::upgrade_message]
+0073 11 11 0	# [receive::map_loaded]
 0074 3 3 0
-0075 -1 11 1	# [receive::changeToInGameState]
-0076 9 9 1
-0077 5 5 1		# [receive::changeToInGameState]
-0078 55 55 1	# [receive::actor_exists]
-007A 58 58 1	# [receive::changeToInGameState]
-007B 60 60 1	# [receive::actor_moved]
-007C 44 44 1	# [receive::actor_spawned]
-007F 6 6 1		# [receive::received_sync]
-0080 7 7 1		# [receive::actor_died_or_disappeared]
-0083 2 2 1
-0084 2 2 1
-0086 16 16 1	# [receive::actor_display]
-0087 12 12 1	# [receive::character_moves]
-0088 10 10 1	# [receive::actor_movement_interrupted]
-08CD 10 10 1
-008A 29 29 1	# [receive::actor_action]
-008B 23 23 1
-008D -1 8 1		# [receive::public_chat]
-008E -1 4 1		# [receive::self_chat]
-0091 22 22 1	# [receive::map_change]
-0092 28 28 1	# [receive::map_changed]
-0093 2 2 1
-0097 -1 32 1	# [receive::private_message]
-0098 3 3 1		# [receive::private_message_sent]
-009A -1 4 1		# [receive::system_chat]
-009C 9 9 1		# [receive::actor_look_at]
-009D 17 17 1	# [receive::item_exists]
-009E 17 17 1	# [receive::item_appeared]
-00A0 23 23 1	# [receive::inventory_item_added]
-00A1 6 6 1		# [receive::item_disappeared]
-00A3 -1 4 1		# [receive::inventory_items_stackable]
-00A4 -1 4 1		# [receive::inventory_items_nonstackable]
-00A5 -1 4 1		# [receive::storage_items_stackable]
-00A6 -1 4 1		# [receive::storage_items_nonstackable]
-00A8 7 7 1		# [receive::use_item]
-00AA 9 9 1		# [receive::equip_item]
-00AC 7 7 1		# [receive::unequip_item]
-00AE -1 4 1
-00AF 6 6 1		# [receive::inventory_item_removed]
-00B0 8 8 1		# [receive::stat_info]
-00B1 8 8 1		# [receive::stat_info]
+0075 -1 11 0	# [receive::changeToInGameState]
+0076 9 9 0
+0077 5 5 0		# [receive::changeToInGameState]
+0078 55 55 0	# [receive::actor_exists]
+007A 58 58 0	# [receive::changeToInGameState]
+007B 60 60 0	# [receive::actor_moved]
+007C 44 44 0	# [receive::actor_spawned]
+007F 6 6 0		# [receive::received_sync]
+0080 7 7 0		# [receive::actor_died_or_disappeared]
+0083 2 2 0
+0084 2 2 0
+0086 16 16 0	# [receive::actor_display]
+0087 12 12 0	# [receive::character_moves]
+0088 10 10 0	# [receive::actor_movement_interrupted]
+08CD 10 10 0
+008A 29 29 0	# [receive::actor_action]
+008B 23 23 0
+008D -1 8 0		# [receive::public_chat]
+008E -1 4 0		# [receive::self_chat]
+0091 22 22 0	# [receive::map_change]
+0092 28 28 0	# [receive::map_changed]
+0093 2 2 0
+0097 -1 32 0	# [receive::private_message]
+0098 3 3 0		# [receive::private_message_sent]
+009A -1 4 0		# [receive::system_chat]
+009C 9 9 0		# [receive::actor_look_at]
+009D 17 17 0	# [receive::item_exists]
+009E 17 17 0	# [receive::item_appeared]
+00A0 23 23 0	# [receive::inventory_item_added]
+00A1 6 6 0		# [receive::item_disappeared]
+00A3 -1 4 0		# [receive::inventory_items_stackable]
+00A4 -1 4 0		# [receive::inventory_items_nonstackable]
+00A5 -1 4 0		# [receive::storage_items_stackable]
+00A6 -1 4 0		# [receive::storage_items_nonstackable]
+00A8 7 7 0		# [receive::use_item]
+00AA 9 9 0		# [receive::equip_item]
+00AC 7 7 0		# [receive::unequip_item]
+00AE -1 4 0
+00AF 6 6 0		# [receive::inventory_item_removed]
+00B0 8 8 0		# [receive::stat_info]
+00B1 8 8 0		# [receive::stat_info]
 00B3 3 3 0		# [receive::switch_character]
-00B4 -1 8 1		# [receive::npc_talk]
-00B5 6 6 1		# [receive::npc_talk_continue]
-00B6 6 6 1		# [receive::npc_talk_close]
-00B7 -1 8 1		# [receive::npc_talk_responses]
-00BC 6 6 1		# [receive::stats_added]
-00BD 44 44 1	# [receive::stats_info]
-00BE 5 5 1		# [receive::stat_info]
-00C0 7 7 1		# [receive::emoticon]
-00C2 6 6 1		# [receive::users_online]
-00C3 8 8 1		# [receive::job_equipment_hair_change]
-00C4 6 6 1		# [receive::npc_store_begin]
-00C6 -1 4 1		# [receive::npc_store_info]
-00C7 -1 4 1		# [receive::npc_sell_list]
-00CA 3 3 1		# [receive::buy_result]
-00CB 3 3 1		# [receive::sell_result]
-00CD 3 3 1
-00D1 4 4 1		# [receive::ignore_player_result]
-00D2 4 4 1		# [receive::ignore_all_result]
-00D4 -1 4 1		# [receive::whisper_list]
-00D6 3 3 1		# [receive::chat_created]
-00D7 -1 17 1	# [receive::chat_info]
-00D8 6 6 1		# [receive::chat_removed]
-00DA 3 3 1		# [receive::chat_join_result]
-00DB -1 8 1		# [receive::chat_users]
-00DC 28 28 1	# [receive::chat_user_join]
-00DD 29 29 1	# [receive::chat_user_leave]
-00DF -1 17 1	# [receive::chat_modified]
-00E1 30 30 1	# [receive::chat_newowner]
-00E5 26 26 1	# [receive::deal_request]
-00E7 3 3 1		# [receive::deal_begin]
-00E9 19 19 1	# [receive::deal_add_other]
-00EA 5 5 1		# [receive::deal_add_you]
-00EC 3 3 1		# [receive::deal_finalize]
-00EE 2 2 1		# [receive::deal_cancelled]
-00F0 3 3 1		# [receive::deal_complete]
-00F1 2 2 1
-00F2 6 6 1		# [receive::storage_opened]
-00F4 21 21 1	# [receive::storage_item_added]
-00F6 8 8 1		# [receive::storage_item_removed]
-00F8 2 2 1		# [receive::storage_closed]
-00FA 3 3 1		# [receive::party_organize_result]
-00FB -1 28 1	# [receive::party_users_info]
-00FD 27 27 1	# [receive::party_invite_result]
-00FE 30 30 1	# [receive::party_invite]
-0101 6 6 1		# [receive::party_exp]
-0104 79 79 1	# [receive::party_join]
-0105 31 31 1	# [receive::party_leave]
-0106 10 10 1	# [receive::party_hp_info]
-0107 10 10 1	# [receive::party_location]
-0109 -1 8 1		# [receive::party_chat]
-010A 4 4 1		# [receive::mvp_item]
-010B 6 6 1		# [receive::mvp_you]
-010C 6 6 1		# [receive::mvp_other]
-010D 2 2 1
-010E 11 11 1	# [receive::skill_update]
-010F -1 4 1		# [receive::skills_list]
-02B1 -1 8 1		# [receive::quest_all_list]
-02B2 -1 8 1		# [receive::quest_all_mission]
-02B5 -1 6 1		# [receive::quest_update_mission_hunt]
-0110 10 10 1	# [receive::skill_use_failed]
-0111 39 39 1	# [receive::skill_add]
-0114 31 31 1	# [receive::skill_use]
-0115 35 35 1
-0117 18 18 1	# [receive::skill_use_location]
-0119 13 13 1	# [receive::character_status]
-0229 15 15 1	# [receive::character_status]
-011A 15 15 1	# [receive::skill_used_no_damage]
-011C 68 68 1	# [receive::warp_portal_list]
-011E 3 3 1		# [receive::memo_success]
-011F 16 16 1	# [receive::area_spell]
-0120 6 6 1		# [receive::area_spell_disappears]
-0121 14 14 1	# [receive::cart_info]
-0122 -1 4 1		# [receive::cart_items_nonstackable]
-0123 -1 4 1		# [receive::cart_items_stackable]
-0124 21 21 1	# [receive::cart_item_added]
-0125 8 8 1		# [receive::cart_item_removed]
-012B 2 2 1
-012C 3 3 1		# [receive::cart_add_failed]
-012D 4 4 1		# [receive::shop_skill]
-0131 86 86 1	# [receive::vender_found]
-0132 6 6 1		# [receive::vender_lost]
-0133 -1 8 1		# [receive::vender_items_list]
-0135 7 7 1		# [receive::vender_buy_fail]
-0136 -1 8 1		# [receive::vending_start]
-0137 6 6 1		# [receive::shop_sold]
-0139 16 16 1	# [receive::monster_ranged_attack]
-013A 4 4 1		# [receive::attack_range]
-013B 4 4 1		# [receive::arrow_none]
-013C 4 4 1		# [receive::arrow_equipped]
-013D 6 6 1		# [receive::hp_sp_changed]
-013E 24 24 1	# [receive::skill_cast]
-0141 14 14 1	# [receive::stat_info2]
-0142 6 6 1		# [receive::npc_talk_number]
-0144 23 23 1	# [receive::minimap_indicator]
-0145 19 19 1
-0147 39 39 1	# [receive::item_skill]
-0148 8 8 1		# [receive::resurrection]
-0177 -1 4 1		# [receive::identify_list]
-0179 5 5 1		# [receive::identify]
-017B -1 4 1		# [receive::card_merge_list]
-017D 7 7 1		# [receive::card_merge_status]
-0188 8 8 1		# [receive::item_upgrade]
-0189 4 4 1		# [receive::no_teleport]
+00B4 -1 8 0		# [receive::npc_talk]
+00B5 6 6 0		# [receive::npc_talk_continue]
+00B6 6 6 0		# [receive::npc_talk_close]
+00B7 -1 8 0		# [receive::npc_talk_responses]
+00BC 6 6 0		# [receive::stats_added]
+00BD 44 44 0	# [receive::stats_info]
+00BE 5 5 0		# [receive::stat_info]
+00C0 7 7 0		# [receive::emoticon]
+00C2 6 6 0		# [receive::users_online]
+00C3 8 8 0		# [receive::job_equipment_hair_change]
+00C4 6 6 0		# [receive::npc_store_begin]
+00C6 -1 4 0		# [receive::npc_store_info]
+00C7 -1 4 0		# [receive::npc_sell_list]
+00CA 3 3 0		# [receive::buy_result]
+00CB 3 3 0		# [receive::sell_result]
+00CD 3 3 0
+00D1 4 4 0		# [receive::ignore_player_result]
+00D2 4 4 0		# [receive::ignore_all_result]
+00D4 -1 4 0		# [receive::whisper_list]
+00D6 3 3 0		# [receive::chat_created]
+00D7 -1 17 0	# [receive::chat_info]
+00D8 6 6 0		# [receive::chat_removed]
+00DA 3 3 0		# [receive::chat_join_result]
+00DB -1 8 0		# [receive::chat_users]
+00DC 28 28 0	# [receive::chat_user_join]
+00DD 29 29 0	# [receive::chat_user_leave]
+00DF -1 17 0	# [receive::chat_modified]
+00E1 30 30 0	# [receive::chat_newowner]
+00E5 26 26 0	# [receive::deal_request]
+00E7 3 3 0		# [receive::deal_begin]
+00E9 19 19 0	# [receive::deal_add_other]
+00EA 5 5 0		# [receive::deal_add_you]
+00EC 3 3 0		# [receive::deal_finalize]
+00EE 2 2 0		# [receive::deal_cancelled]
+00F0 3 3 0		# [receive::deal_complete]
+00F1 2 2 0
+00F2 6 6 0		# [receive::storage_opened]
+00F4 21 21 0	# [receive::storage_item_added]
+00F6 8 8 0		# [receive::storage_item_removed]
+00F8 2 2 0		# [receive::storage_closed]
+00FA 3 3 0		# [receive::party_organize_result]
+00FB -1 28 0	# [receive::party_users_info]
+00FD 27 27 0	# [receive::party_invite_result]
+00FE 30 30 0	# [receive::party_invite]
+0101 6 6 0		# [receive::party_exp]
+0104 79 79 0	# [receive::party_join]
+0105 31 31 0	# [receive::party_leave]
+0106 10 10 0	# [receive::party_hp_info]
+0107 10 10 0	# [receive::party_location]
+0109 -1 8 0		# [receive::party_chat]
+010A 4 4 0		# [receive::mvp_item]
+010B 6 6 0		# [receive::mvp_you]
+010C 6 6 0		# [receive::mvp_other]
+010D 2 2 0
+010E 11 11 0	# [receive::skill_update]
+010F -1 4 0		# [receive::skills_list]
+02B1 -1 8 0		# [receive::quest_all_list]
+02B2 -1 8 0		# [receive::quest_all_mission]
+02B5 -1 6 0		# [receive::quest_update_mission_hunt]
+0110 10 10 0	# [receive::skill_use_failed]
+0111 39 39 0	# [receive::skill_add]
+0114 31 31 0	# [receive::skill_use]
+0115 35 35 0
+0117 18 18 0	# [receive::skill_use_location]
+0119 13 13 0	# [receive::character_status]
+0229 15 15 0	# [receive::character_status]
+011A 15 15 0	# [receive::skill_used_no_damage]
+011C 68 68 0	# [receive::warp_portal_list]
+011E 3 3 0		# [receive::memo_success]
+011F 16 16 0	# [receive::area_spell]
+0120 6 6 0		# [receive::area_spell_disappears]
+0121 14 14 0	# [receive::cart_info]
+0122 -1 4 0		# [receive::cart_items_nonstackable]
+0123 -1 4 0		# [receive::cart_items_stackable]
+0124 21 21 0	# [receive::cart_item_added]
+0125 8 8 0		# [receive::cart_item_removed]
+012B 2 2 0
+012C 3 3 0		# [receive::cart_add_failed]
+012D 4 4 0		# [receive::shop_skill]
+0131 86 86 0	# [receive::vender_found]
+0132 6 6 0		# [receive::vender_lost]
+0133 -1 8 0		# [receive::vender_items_list]
+0135 7 7 0		# [receive::vender_buy_fail]
+0136 -1 8 0		# [receive::vending_start]
+0137 6 6 0		# [receive::shop_sold]
+0139 16 16 0	# [receive::monster_ranged_attack]
+013A 4 4 0		# [receive::attack_range]
+013B 4 4 0		# [receive::arrow_none]
+013C 4 4 0		# [receive::arrow_equipped]
+013D 6 6 0		# [receive::hp_sp_changed]
+013E 24 24 0	# [receive::skill_cast]
+0141 14 14 0	# [receive::stat_info2]
+0142 6 6 0		# [receive::npc_talk_number]
+0144 23 23 0	# [receive::minimap_indicator]
+0145 19 19 0
+0147 39 39 0	# [receive::item_skill]
+0148 8 8 0		# [receive::resurrection]
+0177 -1 4 0		# [receive::identify_list]
+0179 5 5 0		# [receive::identify]
+017B -1 4 0		# [receive::card_merge_list]
+017D 7 7 0		# [receive::card_merge_status]
+0188 8 8 0		# [receive::item_upgrade]
+0189 4 4 0		# [receive::no_teleport]
 018B 4 4 0		# [receive::quit_response]
-018C 29 29 1	# [receive::sense_result]
-018D -1 4 1		# [receive::forge_list]
-018F 6 6 1		# [receive::refine_result]
-0191 86 86 1	# [receive::talkie_box]
-0192 24 24 1	# [receive::map_change_cell]
-0194 30 30 1	# [receive::character_name]
-0196 9 9 1		# [receive::actor_status_active]
-028A 18 18 1	# [receive::character_status]
-0199 4 4 1		# [receive::map_property]
-019A 14 14 1	# [receive::pvp_rank]
-019B 10 10 1	# [receive::unit_levelup]
-01AB 12 12 1	# [receive::stat_info]
-01AC 6 6 1		# [receive::actor_trapped]
-01AD -1 4 1		# [receive::arrowcraft_list]
-025A -1 4 1		# [receive::cooking_list]
-01B3 67 67 1	# [receive::npc_image]
-01B4 12 12 1	# [receive::guild_emblem_update]
+018C 29 29 0	# [receive::sense_result]
+018D -1 4 0		# [receive::forge_list]
+018F 6 6 0		# [receive::refine_result]
+0191 86 86 0	# [receive::talkie_box]
+0192 24 24 0	# [receive::map_change_cell]
+0194 30 30 0	# [receive::character_name]
+0196 9 9 0		# [receive::actor_status_active]
+028A 18 18 0	# [receive::character_status]
+0199 4 4 0		# [receive::map_property]
+019A 14 14 0	# [receive::pvp_rank]
+019B 10 10 0	# [receive::unit_levelup]
+01AB 12 12 0	# [receive::stat_info]
+01AC 6 6 0		# [receive::actor_trapped]
+01AD -1 4 0		# [receive::arrowcraft_list]
+025A -1 4 0		# [receive::cooking_list]
+01B3 67 67 0	# [receive::npc_image]
+01B4 12 12 0	# [receive::guild_emblem_update]
 01B5 18 18 0	# [receive::account_payment_info]
-01B8 3 3 1
-01C3 -1 16 1	# [receive::local_broadcast]
-01C4 22 22 1	# [receive::storage_item_added]
-01C5 22 22 1	# [receive::cart_item_added]
-01C8 13 13 1	# [receive::item_used]
-01C9 97 97 1	# [receive::area_spell]
-01CC 9 9 1
-01D6 4 4 1		# [receive::map_property2]
-01D7 11 11 1	# [receive::player_equipment]
-01D8 54 54 1	# [receive::actor_exists]
-022A 58 58 1	# [receive::actor_exists]
-01D9 53 53 1	# [receive::actor_connected]
-022B 57 57 1	# [receive::actor_connected]
-01DA 60 60 1	# [receive::actor_moved]
-022C 65 65 1	# [receive::actor_moved]
-01DE 33 33 1	# [receive::skill_use]
-01E0 30 30 1	# [receive::GM_req_acc_name]
-01E2 34 34 1
-01E4 2 2 1
-01E6 26 26 1	# [receive::marriage_partner_name]
-01E9 81 81 1	# [receive::party_join]
-01EA 6 6 1		# [receive::married]
-01EB 10 10 1	# [receive::guild_location]
-01EC 26 26 1	# [receive::guild_member_map_change]
-01EE -1 4 1		# [receive::inventory_items_stackable]
-01EF -1 4 1		# [receive::cart_items_stackable]
-01F0 -1 4 1		# [receive::storage_items_stackable]
-01F4 32 32 1	# [receive::deal_request]
-01F5 9 9 1		# [receive::deal_begin]
-01F6 34 34 1	# [receive::adopt_request]
-0253 3 3 1
+01B8 3 3 0
+01C3 -1 16 0	# [receive::local_broadcast]
+01C4 22 22 0	# [receive::storage_item_added]
+01C5 22 22 0	# [receive::cart_item_added]
+01C8 13 13 0	# [receive::item_used]
+01C9 97 97 0	# [receive::area_spell]
+01CC 9 9 0
+01D6 4 4 0		# [receive::map_property2]
+01D7 11 11 0	# [receive::player_equipment]
+01D8 54 54 0	# [receive::actor_exists]
+022A 58 58 0	# [receive::actor_exists]
+01D9 53 53 0	# [receive::actor_connected]
+022B 57 57 0	# [receive::actor_connected]
+01DA 60 60 0	# [receive::actor_moved]
+022C 65 65 0	# [receive::actor_moved]
+01DE 33 33 0	# [receive::skill_use]
+01E0 30 30 0	# [receive::GM_req_acc_name]
+01E2 34 34 0
+01E4 2 2 0
+01E6 26 26 0	# [receive::marriage_partner_name]
+01E9 81 81 0	# [receive::party_join]
+01EA 6 6 0		# [receive::married]
+01EB 10 10 0	# [receive::guild_location]
+01EC 26 26 0	# [receive::guild_member_map_change]
+01EE -1 4 0		# [receive::inventory_items_stackable]
+01EF -1 4 0		# [receive::cart_items_stackable]
+01F0 -1 4 0		# [receive::storage_items_stackable]
+01F4 32 32 0	# [receive::deal_request]
+01F5 9 9 0		# [receive::deal_begin]
+01F6 34 34 0	# [receive::adopt_request]
+0253 3 3 0
 0254 3 3 0
-01F8 2 2 1
-01FC -1 4 1		# [receive::repair_list]
-01FE 5 5 1		# [receive::repair_result]
+01F8 2 2 0
+01FC -1 4 0		# [receive::repair_list]
+01FE 5 5 0		# [receive::repair_result]
 0227 18 18 0	# [receive::gameguard_request]
 0228 18 18 0
 0232 9 9 0		# [send::actor_move]
 0233 11 11 0
 0234 6 6 0
-0230 12 12 1	# [receive::homunculus_info]
-022E 71 71 1	# [receive::homunculus_property]
+0230 12 12 0	# [receive::homunculus_info]
+022E 71 71 0	# [receive::homunculus_property]
 027D 62 62 0
-0235 -1 4 1		# [receive::skills_list]
-0239 11 11 1	# [receive::skill_update]
-022F 5 5 1		# [receive::homunculus_food]
+0235 -1 4 0		# [receive::skills_list]
+0239 11 11 0	# [receive::skill_update]
+022F 5 5 0		# [receive::homunculus_food]
 0231 26 26 0
 0237 2 2 0
-0238 282 282 1	# [receive::top10_pk_rank]
-0236 10 10 1
+0238 282 282 0	# [receive::top10_pk_rank]
+0236 10 10 0
 023A 4 4 0		# [receive::storage_password_request]
 023C 6 6 0		# [receive::storage_password_result]
 023D 6 6 0
 023E 8 8 0		# [receive::storage_password_request]
 023F 2 2 0
-0240 -1 8 1		# [receive::mail_refreshinbox]
+0240 -1 8 0		# [receive::mail_refreshinbox]
 0241 6 6 0
-0242 -1 99 1	# [receive::mail_read]
+0242 -1 99 0	# [receive::mail_read]
 0243 6 6 0
-0257 8 8 1		# [receive::mail_delete]
+0257 8 8 0		# [receive::mail_delete]
 0244 6 6 0
-0245 3 3 1		# [receive::mail_getattachment]
+0245 3 3 0		# [receive::mail_getattachment]
 0246 4 4 0
 0247 8 8 0
 0248 -1 68 0
-0249 3 3 1		# [receive::mail_send]
-024A 70 70 1	# [receive::mail_new]
+0249 3 3 0		# [receive::mail_send]
+024A 70 70 0	# [receive::mail_new]
 024B 4 4 0
 024C 8 8 0
 024D 12 12 0
 024E 6 6 0
 024F 10 10 0
-0250 3 3 1		# [receive::auction_result]
+0250 3 3 0		# [receive::auction_result]
 0251 34 34 0
-0252 -1 12 1	# [receive::auction_item_request_search]
-0255 5 5 1		# [receive::mail_setattachment]
-0256 5 5 1		# [receive::auction_add_item]
+0252 -1 12 0	# [receive::auction_item_request_search]
+0255 5 5 0		# [receive::mail_setattachment]
+0256 5 5 0		# [receive::auction_add_item]
 0258 2 2 0
 0259 3 3 0		# [receive::gameguard_grant]
 025C 4 4 0
-025D 6 6 1		# [receive::auction_my_sell_stop]
+025D 6 6 0		# [receive::auction_my_sell_stop]
 025E 4 4 0
-025F 6 6 1		# [receive::auction_windows]
-0260 6 6 1		# [receive::mail_window]
+025F 6 6 0		# [receive::auction_windows]
+0260 6 6 0		# [receive::mail_window]
 0261 11 11 0
 0262 11 11 0
 0263 11 11 0
@@ -743,22 +743,22 @@
 0271 40 40 0
 0272 44 44 0
 0273 30 30 0
-0274 8 8 1		# [receive::mail_return]
+0274 8 8 0		# [receive::mail_return]
 0275 37 37 0	# [send::game_login]
 0276 -1 51 0
 0277 84 84 0
 0278 2 2 0
 0279 2 2 0
-027A -1 4 1
+027A -1 4 0
 027B 14 14 0	# [receive::premium_rates_info]
 027C 60 60 0
 027E -1 6 0
 027F 8 8 0
-0283 6 6 1		# [receive::account_id]
-0287 -1 8 1		# [receive::cash_dealer]
+0283 6 6 0		# [receive::account_id]
+0287 -1 8 0		# [receive::cash_dealer]
 0288 6 6 0
-0289 8 8 1		# [receive::cash_buy_fail]
-0444 -1 8 1		# [receive::cash_item_list]
+0289 8 8 0		# [receive::cash_buy_fail]
+0444 -1 8 0		# [receive::cash_item_list]
 0445 6 6 0
 028B -1 4 0
 028C 46 46 0
@@ -766,22 +766,22 @@
 028E 4 4 0
 028F 6 6 0
 0290 4 4 0
-0291 4 4 1		# [receive::message_string]
+0291 4 4 0		# [receive::message_string]
 0292 2 2 0
-0293 70 70 1	# [receive::boss_map_info]
-0294 10 10 1	# [receive::book_read]
-0295 -1 4 1		# [receive::inventory_items_nonstackable]
-0296 -1 4 1		# [receive::storage_items_nonstackable]
-0297 -1 4 1		# [receive::cart_items_nonstackable]
-0298 8 8 1		# [receive::rental_time]
-0299 6 6 1		# [receive::rental_expired]
-029A 27 27 1	# [receive::inventory_item_added]
-029B 80 80 1	# [receive::mercenary_init]
+0293 70 70 0	# [receive::boss_map_info]
+0294 10 10 0	# [receive::book_read]
+0295 -1 4 0		# [receive::inventory_items_nonstackable]
+0296 -1 4 0		# [receive::storage_items_nonstackable]
+0297 -1 4 0		# [receive::cart_items_nonstackable]
+0298 8 8 0		# [receive::rental_time]
+0299 6 6 0		# [receive::rental_expired]
+029A 27 27 0	# [receive::inventory_item_added]
+029B 80 80 0	# [receive::mercenary_init]
 029C 66 66 0
-029D -1 4 1		# [receive::skills_list]
-029E 11 11 1
+029D -1 4 0		# [receive::skills_list]
+029E 11 11 0
 029F 3 3 0
-02A2 8 8 1		# [receive::stat_info]
+02A2 8 8 0		# [receive::stat_info]
 02A5 8 8 0
 02A6 -1 10 0	# [receive::gameguard_request]
 02A7 -1 10 0
@@ -790,147 +790,147 @@
 02AC 6 6 0		# [receive::cash_password_result]
 02AD 8 8 0		# [receive::login_pin_code_request]
 02B0 85 85 0	# [send::master_login]
-02B8 22 22 1	# [receive::party_show_picker]
-02BB 8 8 1
-02B9 191 191 1	# [receive::hotkeys]
+02B8 22 22 0	# [receive::party_show_picker]
+02BB 8 8 0
+02B9 191 191 0	# [receive::hotkeys]
 02BA 11 11 0
 02BC 6 6 0
-02B3 107 107 1	# [receive::quest_add]
-02B4 6 6 1		# [receive::quest_delete]
+02B3 107 107 0	# [receive::quest_add]
+02B4 6 6 0		# [receive::quest_delete]
 02B6 7 7 0
-02B7 7 7 1		# [receive::quest_active]
-02C1 -1 12 1
-02C2 -1 6 1
-02C5 30 30 1	# [receive::party_invite_result]
+02B7 7 7 0		# [receive::quest_active]
+02C1 -1 12 0
+02C2 -1 6 0
+02C5 30 30 0	# [receive::party_invite_result]
 02C8 3 3 0
-02C9 3 3 1		# [receive::party_allow_invite]
-02C6 30 30 1	# [receive::party_invite]
+02C9 3 3 0		# [receive::party_allow_invite]
+02C6 30 30 0	# [receive::party_invite]
 02C7 7 7 0
-02CB 65 65 1	# [receive::instance_window_start]
-02CC 4 4 1		# [receive::instance_window_queue]
-02CD 71 71 1	# [receive::instance_window_join]
-02CE 10 10 1	# [receive::instance_window_leave]
+02CB 65 65 0	# [receive::instance_window_start]
+02CC 4 4 0		# [receive::instance_window_queue]
+02CD 71 71 0	# [receive::instance_window_join]
+02CE 10 10 0	# [receive::instance_window_leave]
 02CF 6 6 0
-02D5 2 2 1		# [receive::ISVR_DISCONNECT]
-02D0 -1 4 1		# [receive::inventory_items_nonstackable]
-02D1 -1 4 1		# [receive::storage_items_nonstackable]
-02D2 -1 4 1		# [receive::cart_items_nonstackable]
-02D3 4 4 1
-02D4 29 29 1	# [receive::inventory_item_added]
+02D5 2 2 0		# [receive::ISVR_DISCONNECT]
+02D0 -1 4 0		# [receive::inventory_items_nonstackable]
+02D1 -1 4 0		# [receive::storage_items_nonstackable]
+02D2 -1 4 0		# [receive::cart_items_nonstackable]
+02D3 4 4 0
+02D4 29 29 0	# [receive::inventory_item_added]
 02D6 6 6 0
-02D7 -1 43 1	# [receive::show_eq]
+02D7 -1 43 0	# [receive::show_eq]
 02D8 10 10 0
-02D9 10 10 1	# [receive::show_eq_msg_other]
-02DA 3 3 1		# [receive::show_eq_msg_self]
+02D9 10 10 0	# [receive::show_eq_msg_other]
+02DA 3 3 0		# [receive::show_eq_msg_self]
 02DB -1 4 0
-02DC -1 32 1	# [receive::battleground_message]
-02DD 32 32 1	# [receive::battleground_emblem]
-02DE 6 6 1		# [receive::battleground_score]
-02DF 36 36 1	# [receive::battleground_position]
-02E0 34 34 1	# [receive::battleground_hp]
-02E1 33 33 1	# [receive::actor_action]
+02DC -1 32 0	# [receive::battleground_message]
+02DD 32 32 0	# [receive::battleground_emblem]
+02DE 6 6 0		# [receive::battleground_score]
+02DF 36 36 0	# [receive::battleground_position]
+02E0 34 34 0	# [receive::battleground_hp]
+02E1 33 33 0	# [receive::actor_action]
 02E2 8 8 0
 02E3 10 10 0
 02E4 6 6 0
 02E5 5 5 0
 02E6 6 6 0
-02E7 -1 6 1		# [receive::map_property]
-02E8 -1 4 1		# [receive::inventory_items_stackable]
-02E9 -1 4 1		# [receive::cart_items_stackable]
-02EA -1 4 1		# [receive::storage_items_stackable]
-02EB 13 13 1	# [receive::map_loaded]
-02EC 67 67 1	# [receive::actor_exists]
-02ED 59 59 1	# [receive::actor_connected]
-02EE 60 60 1	# [receive::actor_moved]
-02EF 8 8 1		# [receive::font]
-02F0 10 10 1	# [receive::progress_bar]
+02E7 -1 6 0		# [receive::map_property]
+02E8 -1 4 0		# [receive::inventory_items_stackable]
+02E9 -1 4 0		# [receive::cart_items_stackable]
+02EA -1 4 0		# [receive::storage_items_stackable]
+02EB 13 13 0	# [receive::map_loaded]
+02EC 67 67 0	# [receive::actor_exists]
+02ED 59 59 0	# [receive::actor_connected]
+02EE 60 60 0	# [receive::actor_moved]
+02EF 8 8 0		# [receive::font]
+02F0 10 10 0	# [receive::progress_bar]
 02F1 2 2 0
-02F2 2 2 1		# [receive::progress_bar_stop]
+02F2 2 2 0		# [receive::progress_bar_stop]
 035C 2 2 0
 035D -1 16 0
 035E 2 2 0
 03DD 18 18 0
 03DE 18 18 0
 0439 8 8 0
-043D 8 8 1		# [receive::skill_post_delay]
-043E -1 4 1		# [receive::skill_post_delaylist]
-043F 25 25 1	# [receive::actor_status_active]
-0440 10 10 1	# [receive::millenium_shield]
-0441 4 4 1		# [receive::skill_delete]
-0442 -1 8 1		# [receive::sage_autospell]
+043D 8 8 0		# [receive::skill_post_delay]
+043E -1 4 0		# [receive::skill_post_delaylist]
+043F 25 25 0	# [receive::actor_status_active]
+0440 10 10 0	# [receive::millenium_shield]
+0441 4 4 0		# [receive::skill_delete]
+0442 -1 8 0		# [receive::sage_autospell]
 0443 8 8 0		# [send::skill_select]
-0446 14 14 1	# [receive::minimap_indicator]
+0446 14 14 0	# [receive::minimap_indicator]
 0448 -1 4 0
 0449 4 4 0		# [receive::hack_shield_alarm]
 044A 6 6 0
 044B 2 2 0
 0447 2 2 0
 07D7 8 8 0		# [send::party_setting]
-07D8 8 8 1		# [receive::party_exp]
-07D9 268 268 1	# [receive::hotkeys]
+07D8 8 8 0		# [receive::party_exp]
+07D9 268 268 0	# [receive::hotkeys]
 07DA 6 6 0
-07DB 8 8 1		# [receive::stat_info]
+07DB 8 8 0		# [receive::stat_info]
 07DC 6 6 0
-07DD 54 54 1
+07DD 54 54 0
 07DE 30 30 0
 07DF 54 54 0
 07E0 58 58 0
-07E1 15 15 1	# [receive::skill_update]
-07E2 8 8 1		# [receive::msg_string]
-07E3 6 6 1		# [receive::skill_exchange_item]
-07E6 8 8 1		# [receive::skill_msg]
+07E1 15 15 0	# [receive::skill_update]
+07E2 8 8 0		# [receive::msg_string]
+07E3 6 6 0		# [receive::skill_exchange_item]
+07E6 8 8 0		# [receive::skill_msg]
 07E5 4 4 0
 07E8 -1 4 0		# [receive::captcha_image]
 07E7 32 32 0
 07E9 5 5 0		# [receive::captcha_answer]
 07EA 2 2 0
-07EB -1 8 1
-07ED 10 10 1
+07EB -1 8 0
+07ED 10 10 0
 07EE 6 6 0
-07EF 8 8 1
+07EF 8 8 0
 07F0 6 6 0
-07F1 18 18 1
-07F2 8 8 1
-07F3 6 6 1
+07F1 18 18 0
+07F2 8 8 0
+07F3 6 6 0
 07F4 3 3 0
 07F5 6 6 0
-07F6 14 14 1	# [receive::exp]
-07F7 -1 69 1	# [receive::actor_exists]
-07F8 -1 62 1	# [receive::actor_connected]
-07F9 -1 63 1	# [receive::actor_moved]
-07FA 8 8 1		# [receive::inventory_item_removed]
-07FB 25 25 1	# [receive::skill_cast]
-07FC 10 10 1	# [receive::party_leader]
-07FD -1 7 1		# [receive::special_item_obtain]
-07FE 26 26 1	# [receive::sound_effect]
-0800 -1 12 1	# [receive::vender_items_list]
+07F6 14 14 0	# [receive::exp]
+07F7 -1 69 0	# [receive::actor_exists]
+07F8 -1 62 0	# [receive::actor_connected]
+07F9 -1 63 0	# [receive::actor_moved]
+07FA 8 8 0		# [receive::inventory_item_removed]
+07FB 25 25 0	# [receive::skill_cast]
+07FC 10 10 0	# [receive::party_leader]
+07FD -1 7 0		# [receive::special_item_obtain]
+07FE 26 26 0	# [receive::sound_effect]
+0800 -1 12 0	# [receive::vender_items_list]
 0801 -1 12 0	# [send::buy_bulk_vender]
-0803 4 4 1		# [receive::booking_register_request]
+0803 4 4 0		# [receive::booking_register_request]
 0804 14 14 0	# [send::booking_search]
-0805 -1 5 1		# [receive::booking_search_request]
+0805 -1 5 0		# [receive::booking_search_request]
 0806 2 2 0		# [send::booking_delete]
-0807 4 4 1		# [receive::booking_delete_request]
+0807 4 4 0		# [receive::booking_delete_request]
 0808 14 14 0	# [send::booking_update]
-0809 50 50 1	# [receive::booking_insert]
-080A 18 18 1	# [receive::booking_update]
-080B 6 6 1		# [receive::booking_delete]
+0809 50 50 0	# [receive::booking_insert]
+080A 18 18 0	# [receive::booking_update]
+080B 6 6 0		# [receive::booking_delete]
 080C 2 2 0
-080D 3 3 1
-080E 14 14 1	# [receive::party_hp_info]
-080F 20 20 1	# [receive::deal_add_other]
-0810 3 3 1		# [receive::open_buying_store]
-0812 8 8 1		# [receive::open_buying_store_fail]
-0813 -1 12 1
-0814 86 86 1	# [receive::buying_store_found]
-0816 6 6 1		# [receive::buying_store_lost]
-0818 -1 16 1	# [receive::buying_store_items_list]
-081A 4 4 1
-0824 6 6 1
-081B 10 10 1
-081C 10 10 1	# [receive::buying_store_item_delete]
-081D 22 22 1
-081E 8 8 1		# [receive::stat_info]
-081F -1 9 1
+080D 3 3 0
+080E 14 14 0	# [receive::party_hp_info]
+080F 20 20 0	# [receive::deal_add_other]
+0810 3 3 0		# [receive::open_buying_store]
+0812 8 8 0		# [receive::open_buying_store_fail]
+0813 -1 12 0
+0814 86 86 0	# [receive::buying_store_found]
+0816 6 6 0		# [receive::buying_store_lost]
+0818 -1 16 0	# [receive::buying_store_items_list]
+081A 4 4 0
+0824 6 6 0
+081B 10 10 0
+081C 10 10 0	# [receive::buying_store_item_delete]
+081D 22 22 0
+081E 8 8 0		# [receive::stat_info]
+081F -1 9 0
 0820 11 11 0
 0821 2 2 0
 0822 9 9 0
@@ -939,7 +939,7 @@
 0826 4 4 0
 0836 -1 7 0
 0837 3 3 0
-0839 66 66 1	# [receive::guild_expulsion]
+0839 66 66 0	# [receive::guild_expulsion]
 083A 5 5 0
 083B 2 2 0
 083D 6 6 0
@@ -961,7 +961,7 @@
 0848 -1 6 0
 0849 12 12 0
 084A 2 2 0
-084B 19 19 1	# [receive::item_appeared]
+084B 19 19 0	# [receive::item_appeared]
 084C 10 10 0
 084D 10 10 0
 084E 5 5 0
@@ -972,10 +972,10 @@
 0852 2 2 0
 0853 -1 4 0
 0854 -1 4 0
-0856 -1 71 1	# [receive::actor_moved]
-0857 -1 65 1	# [receive::actor_exists]
-0858 -1 64 1	# [receive::actor_connected]
-0859 -1 45 1	# [receive::show_eq]
+0856 -1 71 0	# [receive::actor_moved]
+0857 -1 65 0	# [receive::actor_exists]
+0858 -1 64 0	# [receive::actor_connected]
+0859 -1 45 0	# [receive::show_eq]
 08B1 -1 4 0
 082D -1 29 0	# [receive::received_characters]
 08B2 -1 6 0
@@ -1004,8 +1004,8 @@
 08C0 -1 10 0
 08C1 2 2 0
 08C2 2 2 0
-08C7 -1 19 1	# [receive::area_spell]
-08C8 34 34 1	# [receive::actor_action]
+08C7 -1 19 0	# [receive::area_spell]
+08C8 34 34 0	# [receive::actor_action]
 08C9 2 2 0
 08CA -1 8 0
 08CB -1 10 0	# [receive::rates_info]
@@ -1013,76 +1013,76 @@
 08CC 109 109 0
 08CE 2 2 0
 08CF 10 10 0	# [receive::revolving_entity]
-08D0 9 9 1
-08D1 7 7 1
-08D2 10 10 1	# [receive::high_jump]
+08D0 9 9 0
+08D1 7 7 0
+08D2 10 10 0	# [receive::high_jump]
 08D3 10 10 0
 08D4 8 8 0
 08D5 -1 8 0
 08D6 6 6 0
-08D7 28 28 1
-08D8 27 27 1
-08D9 30 30 1
-08DA 26 26 1
-08DB 27 27 1
-08DC 26 26 1
-08DD 27 27 1
-08DE 27 27 1
-08DF 50 50 1
-08E0 51 51 1
-08E1 51 51 1
+08D7 28 28 0
+08D8 27 27 0
+08D9 30 30 0
+08DA 26 26 0
+08DB 27 27 0
+08DC 26 26 0
+08DD 27 27 0
+08DE 27 27 0
+08DF 50 50 0
+08E0 51 51 0
+08E1 51 51 0
 08E2 27 27 0
 08E3 126 126 0
 08E4 6 6 0
 08FC 30 30 0
 08FD 6 6 0
-08FE -1 4 1
-08FF 24 24 1
-0900 -1 4 1		# [receive::inventory_items_stackable]
-0901 -1 4 1		# [receive::inventory_items_nonstackable]
-0902 -1 4 1		# [receive::cart_items_stackable]
-0903 -1 4 1		# [receive::cart_items_nonstackable]
-0904 -1 4 1
-0905 -1 4 1
-0906 -1 45 1
+08FE -1 4 0
+08FF 24 24 0
+0900 -1 4 0		# [receive::inventory_items_stackable]
+0901 -1 4 0		# [receive::inventory_items_nonstackable]
+0902 -1 4 0		# [receive::cart_items_stackable]
+0903 -1 4 0		# [receive::cart_items_nonstackable]
+0904 -1 4 0
+0905 -1 4 0
+0906 -1 45 0
 0907 5 5 0
-0908 5 5 1
-090A 26 26 1
-090D -1 10 1
+0908 5 5 0
+090A 26 26 0
+090D -1 10 0
 090E 2 2 0
-0910 10 10 1
-0911 30 30 1
-0912 10 10 1
-0913 30 30 1
-0914 -1 80 1
-090F -1 73 1
-0915 -1 74 1
-0916 26 26 1
-096B 4 4 1
-096C 6 6 1
-096D -1 4 1
-096E -1 4 1
-096F 7 7 1
-0971 6 6 1
-0972 -1 9 1
-0973 7 7 1
-0974 2 2 1
-0975 -1 28 1	# [receive::storage_items_stackable]
-0976 -1 28 1	# [receive::storage_items_nonstackable]
-0977 14 14 1
+0910 10 10 0
+0911 30 30 0
+0912 10 10 0
+0913 30 30 0
+0914 -1 80 0
+090F -1 73 0
+0915 -1 74 0
+0916 26 26 0
+096B 4 4 0
+096C 6 6 0
+096D -1 4 0
+096E -1 4 0
+096F 7 7 0
+0971 6 6 0
+0972 -1 9 0
+0973 7 7 0
+0974 2 2 0
+0975 -1 28 0	# [receive::storage_items_stackable]
+0976 -1 28 0	# [receive::storage_items_nonstackable]
+0977 14 14 0
 0978 6 6 0
 0979 50 50 0
-097A -1 8 1		# [receive::quest_all_list2]
+097A -1 8 0		# [receive::quest_all_list2]
 097C 4 4 0
-097D 288 288 1
-097E 12 12 1
-097F -1 8 1
-0980 7 7 1
+097D 288 288 0
+097E 12 12 0
+097F -1 8 0
+0980 7 7 0
 0981 -1 12 0
 0982 7 7 0
-0983 29 29 1
-0984 28 28 1
-0985 -1 4 1
+0983 29 29 0
+0984 28 28 0
+0985 -1 4 0
 0986 10 10 0
 0987 -1 41 0	# [send::master_login]
 0988 6 6 0
@@ -1093,22 +1093,22 @@
 098B 2 2 0
 098C 4 4 0
 098F -1 8 0
-0990 31 31 1
-0991 -1 4 1
-0992 -1 4 1
-0993 -1 4 1
-0994 -1 4 1
-0995 -1 28 1
-0996 -1 28 1
-0997 -1 45 1
-0998 8 8 1
-0999 11 11 1
-099A 9 9 1
-099B 8 8 1
+0990 31 31 0
+0991 -1 4 0
+0992 -1 4 0
+0993 -1 4 0
+0994 -1 4 0
+0995 -1 28 0
+0996 -1 28 0
+0997 -1 45 0
+0998 8 8 0
+0999 11 11 0
+099A 9 9 0
+099B 8 8 0
 099C 6 6 0
 099D -1 4 0		# [receive::received_characters]
 099E 12 12 0
-099F -1 22 1
+099F -1 22 0
 09A0 6 6 0		# [receive::sync_received_characters]
 09A1 2 2 0		# [send::sync_received_characters]
 09A2 6 6 0
@@ -1151,20 +1151,20 @@
 09C8 -1 13 0
 09C9 -1 4 0
 09CA -1 23 0
-09CB 17 17 1
+09CB 17 17 0
 09CC -1 4 0
-09CD 8 8 1
-09CE 102 102 1
+09CD 8 8 0
+09CE 102 102 0
 09CF -1 4 0
 09D0 -1 4 0
-09D1 14 14 1
+09D1 14 14 0
 09D2 -1 28 0
 09D3 -1 28 0
 09D4 2 2 0
-09D5 -1 4 1
-09D6 -1 4 1
-09D8 2 2 1
-09D7 -1 4 1
+09D5 -1 4 0
+09D6 -1 4 0
+09D8 2 2 0
+09D7 -1 4 0
 09D9 4 4 0
 09DA 6 6 0
 09E0 -1 40 0
