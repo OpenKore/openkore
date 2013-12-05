@@ -47,7 +47,7 @@ sub new {
 		'093C', '0966', '093D', '0967', '093E', '0968', '093F', '0969'
 	};
 	
-	foreach my $key (keys %{$self->{sync_ex_reply}}) { $packets{$key} => ['sync_request_ex']; }
+	foreach my $key (keys %{$self->{sync_ex_reply}}) { $packets{$key} = ['sync_request_ex']; }
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
 	
 	return $self;
