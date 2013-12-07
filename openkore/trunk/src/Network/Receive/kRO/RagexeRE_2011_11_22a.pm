@@ -18,6 +18,7 @@ use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2011_11_02a);
 use Globals qw($char);
 use Log qw(message);
+use Translation;
 
 sub new {
 	my ($class) = @_;
