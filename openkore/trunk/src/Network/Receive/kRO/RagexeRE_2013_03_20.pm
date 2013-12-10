@@ -30,7 +30,7 @@ sub new {
 		'0999' => ['equip_item', 'v V v C', [qw(index type viewID success)]], #11
 		'099A' => ['unequip_item', 'v V C', [qw(index type success)]],#9
 #		'099B' => ['map_property', 'v a*', [qw(type info_table)]], # -1 # int[] mapInfoTable 
-		'09A0' => ['sync_received_characters', 'v a*', [qw(len charInfo)]],
+		'09A0' => ['sync_received_characters', 'v a*', [qw(len sync_Count)]],
 	);
 	
 	foreach my $switch (keys %packets) {
