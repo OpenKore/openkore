@@ -2585,7 +2585,7 @@ sub processAutoEquip {
 			if ((!$config{"equipAuto_${i}_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
 			 && (!$config{"equipAuto_${i}_whileSitting"} || ($config{"equipAuto_${i}_whileSitting"} && $char->{sitting}))
 			 && (!$config{"equipAuto_${i}_target"} || (defined $monster && existsInList($config{"equipAuto_$i" . "_target"}, $monster->{name})))
-			 && checkMonsterCondition("equipAuto_${i}_target", $monster)
+			 && (defined $monster && checkMonsterCondition("equipAuto_${i}_target", $monster))
 			 && checkSelfCondition("equipAuto_$i")
 			 && Actor::Item::scanConfigAndCheck("equipAuto_$i")
 			) {
