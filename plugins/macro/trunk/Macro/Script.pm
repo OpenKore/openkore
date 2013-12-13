@@ -506,16 +506,16 @@ sub next {
 			my ($times);
 			if ($args =~ /(\d+)\s+(--.*)/) {
 				($times, $cparms) = $args =~ /(\d+)?\s+?(--.*)?/;
+				$times = parseCmd($args, $self);
+				$cparms = parseCmd($args, $self);
 			} elsif ($args =~ /^\d+/) {
-				$times = $args;
+				$times = parseCmd($args, $self);
 			}  elsif ($args =~ /^--.*/) {
-				$cparms = $args;
+				$cparms = parseCmd($args, $self);
 			}
-			
-			# times parser
-			my $ptimes = parseCmd($times, $self);
+
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-			if (defined $ptimes && $ptimes =~ /\d+/) { $calltimes = $ptimes; }; # do we have a valid repeat value?
+			if (defined $times && $times =~ /\d+/) { $calltimes = $times; }; # do we have a valid repeat value?
 		}
 		
 		$self->{subcall} = new Macro::Script($name, $calltimes, undef, undef, $self->{interruptible});
