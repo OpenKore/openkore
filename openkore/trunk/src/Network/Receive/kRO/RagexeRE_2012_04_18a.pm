@@ -19,7 +19,7 @@ use base qw(Network::Receive::kRO::RagexeRE_2012_04_10a);
 
 1;
 
-=cut
+=pod
 //2012-04-18aRagexeRE
 0x01FD,15,repairitem,2
 0x023B,26,friendslistadd,2
@@ -79,4 +79,4 @@ use base qw(Network::Receive::kRO::RagexeRE_2012_04_10a);
 0x08CF,10 //Amulet spirits
 0x08d2,10
 0x0977,14 //Monster HP Bar
-=pod
+=cut

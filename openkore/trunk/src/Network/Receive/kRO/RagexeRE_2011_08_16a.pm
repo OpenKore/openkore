@@ -88,7 +88,7 @@ sub cashitem {
 
 1;
 
-=cut
+=pod
 //2011-08-16aRagexeRE
 0x01FD,15,repairitem,2
 0x023B,26,friendslistadd,2
@@ -129,4 +129,4 @@ sub cashitem {
 0x0366,90,useskilltoposinfo,2:4:6:8:10
 0x08AD,6,getcharnamerequest,2
 0x0368,6,solvecharname,2 
-=pod
+=cut

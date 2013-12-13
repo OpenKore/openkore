@@ -18,6 +18,7 @@ use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2012_06_18a);
 use Globals qw (%ai_v $char %charSvrSet %equipSlot_lut %equipSlot_rlut %equipTypes_lut $messageSender $net %timeout);
 use Log qw (message warning);
+use Translation;
 
 sub new {
 	my ($class) = @_;
@@ -30,7 +31,15 @@ sub new {
 		'0999' => ['equip_item', 'v V v C', [qw(index type viewID success)]], #11
 		'099A' => ['unequip_item', 'v V C', [qw(index type success)]],#9
 #		'099B' => ['map_property', 'v a*', [qw(type info_table)]], # -1 # int[] mapInfoTable 
-		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
+		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],#6
+		'0990' => ['inventory_item_added', 'v3 C3 a8 V C2 V v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire bindOnEquipType)]],#31
+		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0993' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
+		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
+
 	);
 	
 	foreach my $switch (keys %packets) {

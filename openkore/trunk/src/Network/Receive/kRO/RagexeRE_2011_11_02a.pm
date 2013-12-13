@@ -19,7 +19,7 @@ use base qw(Network::Receive::kRO::RagexeRE_2011_10_05a);
 
 1;
 
-=cut
+=pod
 //2011-11-02aRagexeRE
 0x01FD,15,repairitem,2
 0x0436,26,friendslistadd,2
@@ -61,4 +61,4 @@ use base qw(Network::Receive::kRO::RagexeRE_2011_10_05a);
 0x088A,6,getcharnamerequest,2
 0x0838,6,solvecharname,2
 0x08D7,28,battlegroundreg,2:4 //Added to prevent disconnections
-=pod
+=cut

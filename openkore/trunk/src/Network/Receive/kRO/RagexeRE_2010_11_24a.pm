@@ -36,7 +36,7 @@ sub new {
 
 1;
 
-=cut
+=pod
 //2010-11-24aRagexeRE
 0x01FD,15,repairitem,2
 0x0202,26,friendslistadd,2
@@ -77,4 +77,4 @@ sub new {
 0x0367,90,useskilltoposinfo,2:4:6:8:10
 0x0368,6,getcharnamerequest,2
 0x0369,6,solvecharname,2
-=pod
+=cut

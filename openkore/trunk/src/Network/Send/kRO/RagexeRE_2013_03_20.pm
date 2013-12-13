@@ -55,7 +55,7 @@ sub new {
 		'094C' => ['actor_name_request', 'a4', [qw(ID)]],#6
 #		'00A9' => undef,
 		'0998' => ['sendEquip'],#8
-		'09A1' => ['sync_received_characters'],
+		'09A1' => ['sync_received_characters'],#2
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
