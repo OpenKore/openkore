@@ -19,7 +19,7 @@ use base qw(Network::Receive::kRO::RagexeRE_2012_05_15a);
 
 1;
 
-=cut
+=pod
 0x01FD,15,repairitem,2
 0x023B,26,friendslistadd,2
 0x0361,5,hommenu,2:4
@@ -80,4 +80,4 @@ use base qw(Network::Receive::kRO::RagexeRE_2012_05_15a);
 0x0977,14
 0x0983,29
 0x08c9,2
-=pod
+=cut

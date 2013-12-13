@@ -36,7 +36,6 @@ sub new {
 		'0365' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0844' => ['sendCachShopOpen'],#2
 		'084A' => ['sendCachShopClose'],#2
-		'08B8' => ['security_code'],#10
 		'08C9' => ['request_cashitems'],#2
 		'0907' => ['item_to_favorite', 'v C', [qw(index flag)]],#5 TODO where 'flag'=0|1 (0 - move item to favorite tab, 1 - move back) 
 		'0998' => ['sendEquip'],#8

@@ -42,6 +42,7 @@ pauseCharServer 0
 pauseMapServer 0
 ignoreInvalidLogin 0
 secureLogin_requestCode
+whenInGame_requestCashPoints 0
 
 message_length_max 80
 
