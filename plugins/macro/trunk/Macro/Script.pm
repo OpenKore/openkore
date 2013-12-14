@@ -10,7 +10,7 @@ use Utils;
 use Globals;
 use AI;
 use Macro::Data;
-use Macro::Parser qw(parseCmd);
+use Macro::Parser qw(parseCmd isNewCommandBlock);
 use Macro::Utilities qw(cmpr);
 use Macro::Automacro qw(releaseAM lockAM);
 use Log qw(message warning);
@@ -256,7 +256,7 @@ sub next {
 		if (multi($savetxt, $self, $errtpl)) {
 			newThen($then, $self, $errtpl);
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-		} elsif ($then eq "{") { # If the condition is false and are using block of commands, will be skipped
+		} elsif ($then eq "{") { # If the condition is false because "if" this is not using the command block
 			my $countBlockIf = 1;
 			while ($countBlockIf) {
 				$self->{line}++;
@@ -282,26 +282,71 @@ sub next {
 		$self->{timeout} = 0
 
 	##########################################
-	# If arriving at a line 'else' or 'elsif', it should be skipped -
-	#  it will never be activated if coming from a false 'if'
-	} elsif ($line =~ /^}\s*else\s*{/ || $line =~ /^}\s*elsif\s*\(.*\)\s*{$/) {
-			my $countBlockIf = 1;
-			while ($countBlockIf) {
-				$self->{line}++;
-				my $searchEnd = ${$macro{$self->{name}}}[$self->{line}];
-				
-				if ($searchEnd =~ /^if.*{$/) {
-					$countBlockIf++;
-				} elsif (($searchEnd eq '}') ||
-					($countBlockIf == 1 && ($searchEnd =~ /^}\s*else\s*{/ || $searchEnd =~ /^}\s*elsif\s*\(.*\)\s*{$/))) {
-					$countBlockIf--;
-				}
+	# If arriving at a line 'else', 'elsif' or 'case', it should be skipped -
+	#  it will never be activated if coming from a false 'if' or a previous 'case' has not been called
+	} elsif ($line =~ /^}\s*else\s*{/ || $line =~ /^}\s*elsif.*{$/ || $line =~ /^case/ || $line =~ /^else/) {
+		my $countCommandBlock = 1;
+		while ($countCommandBlock) {
+			$self->{line}++;
+			my $searchEnd = ${$macro{$self->{name}}}[$self->{line}];
+			
+			if (isNewCommandBlock($searchEnd)) {
+				$countCommandBlock++;
+			} elsif ($searchEnd eq '}') {
+				$countCommandBlock--;
 			}
+		}
 
 		$self->{timeout} = 0
 
 	##########################################
-	# end block of if
+	# switch statement:
+	} elsif ($line =~ /^switch.*{$/) {
+		my ($firstPartCondition) = $line =~ /^switch\s*\(\s*(.*)\s*\)\s*{$/;
+
+		my $countBlocks = 1;
+		while ($countBlocks) {
+			$self->{line}++;
+			my $searchNextCase = ${$macro{$self->{name}}}[$self->{line}];
+			
+			if ($searchNextCase =~ /^else/) {
+				my ($then) = $searchNextCase =~ /^else\s*(.*)/;
+				newThen($then, $self, $errtpl);
+				if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
+				last;
+			}
+			
+			my ($secondPartCondition, $then) = $searchNextCase =~ /^case\s*\(\s*(.*)\s*\)\s*(.*)/;
+			next if (!$secondPartCondition);
+			
+			my $completCondition = $firstPartCondition . ' ' . $secondPartCondition;
+			my $text = parseCmd($completCondition, $self);
+			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
+			my $savetxt = particle($text, $self, $errtpl);
+			if (multi($savetxt, $self, $errtpl)) {
+				newThen($then, $self, $errtpl);
+				if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
+				last;
+			} elsif ($searchNextCase =~ /^case.*{$/) {
+				my $countCommandBlock = 1;
+				while ($countCommandBlock) {
+					$self->{line}++;
+					my $searchEnd = ${$macro{$self->{name}}}[$self->{line}];
+					
+					if (isNewCommandBlock($searchEnd)) {
+						$countCommandBlock++;
+					} elsif ($searchEnd eq '}') {
+						$countCommandBlock--;
+					}
+				}
+			}
+		}
+		
+		$self->{line}++;
+		$self->{timeout} = 0
+	
+	##########################################
+	# end block of "if" or "switch"
 	} elsif ($line eq '}') {
 		$self->{line}++;
 		$self->{timeout} = 0
