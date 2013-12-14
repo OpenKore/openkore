@@ -6,8 +6,8 @@ use encoding 'utf8';
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(parseMacroFile parseCmd);
-our @EKSPORT_OK = qw(parseCmd);
+our @EXPORT = qw(parseMacroFile parseCmd isNewCommandBlock);
+our @EKSPORT_OK = qw(parseCmd isNewCommandBlock);
 
 use Globals;
 use Utils qw/existsInList/;
@@ -34,7 +34,7 @@ sub parseMacroFile {
 
 	my %block;
 	my $inBlock = 0;
-	my $countBlockIf = 0;
+	my $macroCountOpenBlock = 0;
 	my ($macro_subs, @perl_lines);
 	open my $fp, "<:utf8", $file or return 0;
 	while (<$fp>) {
@@ -64,31 +64,38 @@ sub parseMacroFile {
 
 		if (%block && $block{type} eq "macro") {
 			if ($_ eq "}") {
-				if ($countBlockIf) { # If the '}' is being used to terminate a block of commands from 'if'
+				if ($macroCountOpenBlock) { # If the '}' is being used to terminate a block of commands from 'if'
 					push(@{$macro{$block{name}}}, '}');
-					$countBlockIf--;
+					
+					if ($macroCountOpenBlock) {
+						$macroCountOpenBlock--;
+					}
 				} else {
 					undef %block
 				}
 			} else {
-				if ($_ =~ /^if.*{$/) {
-					$countBlockIf++;
-				} elsif (!$countBlockIf && ($_ =~ /^}\s*else\s*{$/ || $_ =~ /}\s*elsif\s*\(.*\)\s*{$/)) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not found the 'if')\n";
+				if (isNewCommandBlock($_)) {
+					$macroCountOpenBlock++
+				} elsif (!$macroCountOpenBlock && ($_ =~ /^}\s*else\s*{$/ || $_ =~ /}\s*elsif.*{$/ || $_ =~ /^case.*{$/ || $_ =~ /^else*{$/)) {
+					warning "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
 					next
 				}
 
 				push(@{$macro{$block{name}}}, $_);
 			}
+			
 			next
 		}
 
 		if (%block && $block{type} eq "auto") {
 			if ($_ eq "}") {
 				if ($block{loadmacro}) {
-					if ($countBlockIf) {
+					if ($macroCountOpenBlock) {
 						push(@{$macro{$block{loadmacro_name}}}, '}');
-						$countBlockIf--;
+						
+						if ($macroCountOpenBlock) {
+							$macroCountOpenBlock--;
+						}
 					} else {
 						undef $block{loadmacro}
 					}
@@ -101,10 +108,10 @@ sub parseMacroFile {
 				$automacro{$block{name}}->{call} = $block{loadmacro_name};
 				$macro{$block{loadmacro_name}} = []
 			} elsif ($block{loadmacro}) {
-				if ($_ =~ /^if.*{$/) {
-					$countBlockIf++;
-				} elsif (!$countBlockIf && ($_ =~ /^}\s*else\s*{$/ || $_ =~ /}\s*elsif\s*\(.*\)\s*{$/)) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not found the 'if')\n";
+				if (isNewCommandBlock($_)) {
+					$macroCountOpenBlock++
+				} elsif (!$macroCountOpenBlock && ($_ =~ /^}\s*else\s*{$/ || $_ =~ /}\s*elsif.*{$/ || $_ =~ /^case.*{$/ || $_ =~ /^else*{$/)) {
+					warning "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
 					next
 				}
 
@@ -123,6 +130,7 @@ sub parseMacroFile {
 					warning "$file: ignoring '$_' in line $. (munch, munch, unknown automacro keyword)\n"
 				}
 			}
+			
 			next
 		}
 		
@@ -352,6 +360,17 @@ sub parseCmd {
 
 	$cmd = subvars($cmd);
 	return $cmd
+}
+
+# check if on the line there commands that open new command blocks
+sub isNewCommandBlock {
+	my ($line) = @_;
+	
+	if ($line =~ /^if.*{$/ || $line =~ /^case.*{$/ || $line =~ /^switch.*{$/ || $line =~ /^else.*{$/) {
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 1;
