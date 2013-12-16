@@ -1639,7 +1639,7 @@ sub login_pin_code_request {
 	} elsif ($args->{flag} == 5) {
 		# PIN code invalid.
 		error T("PIN code is invalid, don't use sequences or repeated numbers.\n");
-		configModify('loginPinCode', '', 1);
+		# configModify('loginPinCode', '', 1);
 		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is invalid. Please re-enter your login PIN code."))));
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
 	} elsif ($args->{flag} == 7) {
@@ -1657,7 +1657,7 @@ sub login_pin_code_request {
 	} elsif ($args->{flag} == 8) {
 		# PIN code incorrect.
 		error T("PIN code is incorrect.\n");
-		configModify('loginPinCode', '', 1);
+		#configModify('loginPinCode', '', 1);
 		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code."))));
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
 	} else {
@@ -1673,7 +1673,7 @@ sub login_pin_new_code_result {
 	if ($args->{flag} == 2) {
 		# PIN code invalid.
 		error T("PIN code is invalid, don't use sequences or repeated numbers.\n");
-		configModify('loginPinCode', '', 1);
+		#configModify('loginPinCode', '', 1);
 		return if (!($self->queryAndSaveLoginPinCode(T("PIN code is invalid, don't use sequences or repeated numbers.\n"))));
 
 		# there's a bug in bRO where you can use letters or symbols or even a string as your PIN code.
