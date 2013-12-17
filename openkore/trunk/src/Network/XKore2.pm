@@ -62,6 +62,7 @@ sub start {
 		sessionStore => $sessionStore
 	);
 	$hooks = Plugins::addHooks(
+		['packet_pre/sync_request_ex', \&sync_request_ex],
 		['packet_pre/map_loaded', \&map_loaded],
 		['packet_pre/map_changed', \&map_changed],
 		['packet_pre/initialize_message_id_encryption', \&initialize_message_id_encryption],
@@ -80,6 +81,12 @@ sub start {
 # Stop the X-Kore 2 subsystem.
 sub stop {
 	Plugins::delHooks($hooks);
+}
+
+# let kore handle this.
+sub sync_request_ex {
+	my ($self, $args, $client) = @_;
+	$args->{mangle} = 2;
 }
 
 sub map_loaded {
