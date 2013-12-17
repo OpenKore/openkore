@@ -189,7 +189,7 @@ sub checkLevel {
 
 # checks for player's jobclass #############################
 sub checkClass {
-	return 0 unless defined $char->{jobID};
+	return 0 unless defined $char;
 	my $class = $_[0];
 	if ($class =~ /^\s*\$/) {
 		my ($var) = $class =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
@@ -206,7 +206,7 @@ sub checkPercent {
 	my ($arg, $what) = @_;
 	my ($cond, $amount) = $arg =~ /([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*%?|\d+%?|\d+\s*\.{2}\s*\d+%?)\s*$/;
 	if ($what =~ /^(?:hp|sp|weight)$/) {
-		return 0 unless (defined $char->{$what} && defined $char->{$what."_max"});
+		return 0 unless (defined $char && defined $char->{$what} && defined $char->{$what."_max"});
 		if ($amount =~ /^\s*(?:\d+|\d+\s*\.{2}\s*\d+)%$/ && $char->{$what."_max"}) {
 			$amount =~ s/%$//;
 			return cmpr(($char->{$what} / $char->{$what."_max"} * 100), $cond, $amount)
@@ -263,7 +263,7 @@ sub checkStatus {
 	}
 
 	my $status = $_[0];
-	return ($status =~ s/^not +//i xor $char->statusActive($status));
+	return ($status =~ s/^not +//i xor $char->statusActive($status)) if defined $char;
 }
 
 # checks for item conditions ##############################
@@ -673,7 +673,7 @@ sub lockAM {
 # parses automacros and checks conditions #################
 sub automacroCheck {
 	my ($trigger, $args) = @_;
-	return unless $conState == 5 || $trigger =~ /^(?:charSelectScreen|Network)/;
+	return unless $conState == 5 || $trigger =~ /^(?:charSelectScreen|Network|packet)/;
 
 	# do not run an automacro if there's already a macro running and the running
 	# macro is non-interruptible
