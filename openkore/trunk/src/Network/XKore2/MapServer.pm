@@ -778,6 +778,7 @@ sub request_cashitems {
 sub send_cash_list {
 	my ($self, $client) = @_;
 	# '08CA' => ['cashitem', 'v3 a*', [qw(len amount tabcode itemInfo)]],#-1
+	return unless defined $cashShop{list};
 	my $pack_string  = "v V";
 	for (my $tab = 0; $tab < @{$cashShop{list}}; $tab++) {
 		my $item_block;
@@ -816,11 +817,6 @@ sub guild_check {
 }
 
 sub guild_info_request {
-	my ($self, $args, $client) = @_;
-	$args->{mangle} = 2;
-}
-
-sub sync_request_ex {
 	my ($self, $args, $client) = @_;
 	$args->{mangle} = 2;
 }
