@@ -25,10 +25,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	
-	my %packets = (
-	);
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-
 	my %handlers = qw(
 		sync 0360
 		character_move 035F
@@ -38,6 +34,7 @@ sub new {
 		item_drop 0363
 		storage_item_add 0364
 		storage_item_remove 0365
+		storage_password 023B
 		skill_use_location 0366
 		party_setting 07D7
 		buy_bulk_vender 0801
