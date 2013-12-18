@@ -88,7 +88,10 @@ sub new {
 		} else {
 			$self->{budget} = $config{route_maxWarpFee};
 		}
+	} else {
+		$self->{budget} = $char->{zeny};
 	}
+	
 	$self->{maxTime} = $args{maxTime} || $timeout{ai_route_calcRoute}{timeout};
 
 	$self->{stage} = INITIALIZE;
