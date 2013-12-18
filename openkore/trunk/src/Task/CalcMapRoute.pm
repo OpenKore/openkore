@@ -140,6 +140,7 @@ sub iterate {
 					my $penalty = int(($entry->{dest}{$dest}{steps} ne '') ? $routeWeights{NPC} : $routeWeights{PORTAL});
 					$openlist->{"$portal=$dest"}{walk} = $penalty + scalar @{$self->{solution}};
 					$openlist->{"$portal=$dest"}{zeny} = $entry->{dest}{$dest}{cost};
+					$openlist->{"$portal=$dest"}{allow_ticket} = $entry->{dest}{$dest}{allow_ticket};
 				}
 			}
 		}
@@ -213,8 +214,9 @@ sub searchStep {
 	#foreach my $parent (keys %{$openlist})
 	{
 		my ($portal, $dest) = split /=/, $parent;
-		if ($self->{budget} ne '' && $openlist->{$parent}{zeny} > $self->{budget}) {
+		if ($self->{budget} ne '' && !($char->inventory->getByNameID(7060) && $openlist->{$parent}{allow_ticket}) && ($openlist->{$parent}{zeny} > $self->{budget})) {
 			# This link is too expensive
+			# We should calculate the entire route cost
 			delete $openlist->{$parent};
 			next;
 		} else {
