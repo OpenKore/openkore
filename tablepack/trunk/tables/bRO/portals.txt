@@ -226,21 +226,13 @@ new_3-2 46 172 new_3-2 78 106
 new_4-2 46 172 new_4-2 78 106
 new_5-2 46 172 new_5-2 78 106
 
-new_1-3 96 174 new_1-4 99 10 0 c r0 c
-new_2-3 96 174 new_2-4 99 10 0 c r0 c
-new_3-3 96 174 new_3-4 99 10 0 c r0 c
-new_4-3 96 174 new_4-4 99 10 0 c r0 c
-new_5-3 96 174 new_5-4 99 10 0 c r0 c
-
-# Training Grounds exit
-new_1-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
-new_2-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
-new_3-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
-new_4-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
-new_5-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
-
 new_1-3 97 41 izlude_in 74 167 0 c r1 c c r1 c
+
+new_1-3 101 41 prt_church 172 19 0 c r1 c c r1
+new_2-3 101 41 prt_church 172 19 0 c r1 c c r1
+new_3-3 101 41 prt_church 172 19 0 c r1 c c r1
 new_4-3 101 41 prt_church 172 19 0 c r1 c c r1
+new_5-3 101 41 prt_church 172 19 0 c r1 c c r1
 
 # Izlude Arena
 arena_room 105 93 prt_are_in 60 14 0 c r0
@@ -2837,10 +2829,10 @@ prontera 271 213 moc_para01 31 14 c c r0
 #morocc 161 97 moc_para01 31 14 c c r0 does not exist in bRO
 moc_ruins 68 164 moc_para01 31 14 c c r0
 moc_prydb1 53 126 moc_para01 31 14 c c r0
-amatsu 102 152 moc_para01 31 14 c c r0
+amatsu 100 145 moc_para01 31 14 c c r0
 brasilis 194 221 moc_para01 31 14 c c r0
 geffen 132 66 moc_para01 31 14 c c r0
-geffen 196 147 moc_para01 31 14 c c r0
+#geffen 196 147 moc_para01 31 14 c c r0 does not exist in bRO
 payon 177 111 moc_para01 31 14 c c r0
 aldebaran 133 119 moc_para01 31 14 c c r0
 einbroch 244 200 moc_para01 31 14 c c r0
@@ -2963,3 +2955,5 @@ new_4-1 148 112 new_4-2 100 9
 new_4-2 100 6 new_4-1 148 112
 new_5-1 148 112 new_5-2 100 9
 new_5-2 100 6 new_5-1 148 112
+moc_para01 100 27 moc_para01 102 92
+
