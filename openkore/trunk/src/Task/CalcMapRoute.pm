@@ -223,6 +223,7 @@ sub searchStep {
 			# MOVE this entry into the CLOSELIST
 			$closelist->{$parent}{walk}   = $openlist->{$parent}{walk};
 			$closelist->{$parent}{zeny}  = $openlist->{$parent}{zeny};
+			$closelist->{$parent}{allow_ticket}  = $openlist->{$parent}{allow_ticket};
 			$closelist->{$parent}{parent} = $openlist->{$parent}{parent};
 			# Then delete in from OPENLIST
 			delete $openlist->{$parent};
@@ -242,6 +243,7 @@ sub searchStep {
 					($arg{dest_map}, $arg{dest_pos}{x}, $arg{dest_pos}{y}) = split(' ', $to);
 					$arg{walk} = $closelist->{$this}{walk};
 					$arg{zeny} = $closelist->{$this}{zeny};
+					$arg{allow_ticket} = $closelist->{$this}{allow_ticket};
 					$arg{steps} = $portals_lut{$from}{dest}{$to}{steps};
 
 					unshift @{$self->{mapSolution}}, \%arg;
@@ -254,6 +256,7 @@ sub searchStep {
 				$closelist->{$walk}{walk} = scalar @{$self->{solution}} + $closelist->{$parent}{$dest}{walk};
 				$closelist->{$walk}{parent} = $parent;
 				$closelist->{$walk}{zeny} = $closelist->{$parent}{zeny};
+				$closelist->{$walk}{allow_ticket} = $closelist->{$parent}{allow_ticket};
 				$self->{found} = $walk;
 				$self->{done} = 1;
 				$self->{mapSolution} = [];
@@ -265,6 +268,7 @@ sub searchStep {
 					($arg{map}, $arg{pos}{x}, $arg{pos}{y}) = split / /, $from;
 					$arg{walk} = $closelist->{$this}{walk};
 					$arg{zeny} = $closelist->{$this}{zeny};
+					$arg{allow_ticket} = $closelist->{$this}{allow_ticket};
 					$arg{steps} = $portals_lut{$from}{dest}{$to}{steps};
 
 					unshift @{$self->{mapSolution}}, \%arg;
@@ -289,6 +293,7 @@ sub searchStep {
 						$openlist->{"$child=$subchild"}{parent} = $parent;
 						$openlist->{"$child=$subchild"}{walk} = $thisWalk;
 						$openlist->{"$child=$subchild"}{zeny} = $closelist->{$parent}{zeny} + $portals_lut{$child}{dest}{$subchild}{cost};
+						$openlist->{"$child=$subchild"}{allow_ticket} = $closelist->{$parent}{allow_ticket};
 					}
 				}
 			}
