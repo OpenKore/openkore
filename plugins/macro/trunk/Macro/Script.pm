@@ -218,6 +218,22 @@ sub next {
 	# TODO: separate line advancing and timeout setting
 	
 	my $errtpl = "error in ".$self->{line};
+
+	# "If" postfix control
+	if ($line =~ /.+\s+if\s*\(.*\)$/) {
+		my ($text) = $line =~ /.+\s+if\s*\(\s*(.*)\s*\)$/;
+		$text = parseCmd($text, $self);
+		if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
+		my $savetxt = particle($text, $self, $errtpl);
+		if (multi($savetxt, $self, $errtpl)) {
+			$line =~ s/\s+if\s*\(.*\)$//;
+		} else {
+			$self->{line}++;
+			$self->{timeout} = 0;
+			return "";
+		}
+	}
+	
 	##########################################
 	# jump to label: goto label
 	if ($line =~ /^goto\s/) {
