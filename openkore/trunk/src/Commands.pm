@@ -4237,6 +4237,11 @@ sub cmdSkills {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 	if ($arg1 eq "") {
+		if (!$char || !$char->{skills}) {
+			error T("Syntax Error in function 'skills' (Skills Functions)\n" .
+			"Skills list is not ready yet.\n");
+			return;
+		}
 		my $msg = T("----------Skill List-----------\n" .
 			"   # Skill Name                          Lv      SP\n");
 		for my $handle (@skillsID) {
