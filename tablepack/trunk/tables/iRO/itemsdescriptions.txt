@@ -240,6 +240,7 @@ Bottled apple juice
 that's easy to digest.
 ^000088Recovers a suitable
 amount of HP^000000.
+Also used to feed Little Poring pets
 ^ffffff_^000000
 Weight : ^7777774^000000
 #
@@ -367,14 +368,15 @@ items and equipment.^000000
 Weight : ^7777775^000000
 #
 612#
-^000088Item Crafting Item^000000
+^000088Crafting Item^000000
 A disposable, miniature blast furnace that can be easily carried. Used to manufacture metals.
+Purchased for 25 zeny from Christopher at the Geffen Blacksmith Guild.
 Required when using the skills [Iron Tempering], [Steel Tempering] and [Enchanted Stone Craft]
 ^ffffff_^000000
 Weight : ^77777720^000000
 #
 613#
-^000088Item Crafting Item^000000
+^000088Crafting Item^000000
 A disposable hammer
 made out of well-tempered steel. Necessary tool in crafting ^000088Level 1 Weapons^000000.
 Required when using the level 1 [Smith] skills.
@@ -382,7 +384,7 @@ Required when using the level 1 [Smith] skills.
 Weight : ^77777720^000000
 #
 614#
-^000088Item Crafting Item^000000
+^000088Crafting Item^000000
 A disposable hammer
 made out of pure gold. Necessary tool in crafting ^000088Level 2 Weapons^000000.
 Required when using the level 2 [Smith] skills.
@@ -390,7 +392,7 @@ Required when using the level 2 [Smith] skills.
 Weight : ^77777730^000000
 #
 615#
-^000088Item Crafting Item^000000
+^000088Crafting Item^000000
 A disposable hammer
 made out of Oridecon.
 Necessary tool in crafting ^000088Level 3 Weapons^000000.
@@ -468,6 +470,7 @@ An ordinary, thornless wildflower that doesn't have any particular scent.
 Weight : ^7777771^000000
 #
 713#
+^000088Quest Item^000000
 An empty bottle
 that can be used
 for carrying liquid.
@@ -475,13 +478,16 @@ for carrying liquid.
 Weight : ^7777772^000000
 #
 756#
+^000088Crafting Item^000000
 Raw ore that
 mostly consists
 of Oridecon metal.
 ^ffffff_^000000
+Can be combined to create 1 Oridecon used to refine Level 3 & 4 Weapons
 Weight : ^77777720^000000
 #
 984#
+^000088Crafting Item^000000
 Pure Oridecon metal.
 Widely known as the
 Blessed Metal, it can
@@ -493,37 +499,52 @@ them. Used to temper
 Weight : ^77777720^000000
 #
 757#
+^000088Crafting Item^000000
 Raw ore that
 mostly consists
 of Elunium metal.
 ^ffffff_^000000
+Can be combined to create 1 Elunium used to refine Armor
 Weight : ^77777720^000000
 #
 985#
+^000088Crafting Item^000000
 A very light, non-toxic metal used for refining and toughening ^000088Armor^000000.
 ^ffffff_^000000
 Weight : ^77777720^000000
 #
 714#
+^000088Special Item^000000
 Merely owning this
 gloriously resplendent
 gem is said to be a sign of being chosen by fate
 to wield great power.
+This is used to create a Guild.
+Type the command ^ff0000/guild^000000 followed by the desired guild name to create a new guild.
 ^ffffff_^000000
 Weight : ^777777100^000000
 #
 715#
 An enchanted crystal that is used in conjuction with certain magic spells. Once used, it is powerless and immediately destroyed.
 ^ffffff_^000000
+Can be exchanged with Jade in Payon
+2 Red Gemstones -> 1 Yellow Gemstone
+2 Yellow Gemstone -> 1 Blue Gemstone
 Weight : ^7777773^000000
 #
 716#
 An enchanted crystal that is used in conjuction with certain magic spells. Once used, it is powerless and immediately destroyed.
+Can be exchanged with Jade in Payon
+2 Blue Gemstones -> 1 Red Gemstone
+2 Red Gemstone -> 1 Yellow Gemstone
 ^ffffff_^000000
 Weight : ^7777773^000000
 #
 717#
 An enchanted crystal that is used in conjuction with certain magic spells. Once used, it is powerless and immediately destroyed.
+Can be exchanged with Jade in Payon
+2 Blue Gemstones -> 1 Red Gemstone
+2 Yellow Gemstone -> 1 Blue Gemstone
 ^ffffff_^000000
 Weight : ^7777773^000000
 #
@@ -1204,11 +1225,13 @@ grinded herbs.
 Weight : ^77777715^000000
 #
 986#
+^000088Crafting Item^000000
 A smithing tool on which heated metals are placed so that they can be shaped by hammering. Used in the making of common products.
 ^ffffff_^000000
 Weight : ^77777750^000000
 #
 987#
+^000088Crafting Item^000000
 An anvil, made of pure
 Oridecon, that's used
 to make quality goods.
@@ -1216,43 +1239,51 @@ to make quality goods.
 Weight : ^77777770^000000
 #
 988#
+^000088Crafting Item^000000
 An anvil, made of pure Gold, that's used in the manufacture of high quality products. 
 ^ffffff_^000000
 Weight : ^77777790^000000
 #
 989#
+^000088Crafting Item^000000
 An anvil, made of pure Emperium, that's used to manufacture products of the highest quality.
 ^ffffff_^000000
 Weight : ^777777100^000000
 #
 990#
+^000088Crafting Item^000000
 A vivid red ore that glows from inside with an orange yellow light. Possesses the Fire property and can form the enchanted stone, Flame Heart, when refined.
 ^ffffff_^000000
 Weight : ^7777775^000000
 #
 991#
+^000088Crafting Item^000000
 A sky colored ore that
 glows with the light of the deep ocean depths. Possesses the ^6996ADWater^000000 property and forms the enchanted stone, Mystic Frozen, when refined.
 ^ffffff_^000000
 Weight : ^7777775^000000
 #
 992#
+^000088Crafting Item^000000
 A lemon colored ore that contains a pale, greenish light. Possesses the Wind property and forms the enchanted stone, Rough Wind, when refined.
 ^ffffff_^000000
 Weight : ^7777775^000000
 #
 993#
+^000088Crafting Item^000000
 A blue-green ore imbued with a faint, mesmerizing light. Possesses the Earth property and forms the enchanted stone, Great Nature, when refined.
 ^ffffff_^000000
 Weight : ^7777775^000000
 #
 994#
+^000088Crafting Item^000000
 A dark red, heart
 shaped stone enchanted with the Fire property.
 ^ffffff_^000000
 Weight : ^77777730^000000
 #
 995#
+^000088Crafting Item^000000
 A light blue, crystal
 stone enchanted with
 the ^6996ADWater^000000 property.
@@ -1260,51 +1291,63 @@ the ^6996ADWater^000000 property.
 Weight : ^77777730^000000
 #
 996#
+^000088Crafting Item^000000
 A pale green, lightning bolt shaped stone imbued with the Wind property.
 ^ffffff_^000000
 Weight : ^77777730^000000
 #
 997#
+^000088Crafting Item^000000
 A citrus colored, bud
 shaped stone enchanted with the Earth property.
 ^ffffff_^000000
 Weight : ^77777730^000000
 #
 998#
+^000088Crafting Item^000000
 Malleable, silver-white metal that's very light weight and easy to temper. Commonly used to create arms and other goods.
 ^ffffff_^000000
 Weight : ^7777775^000000
 #
 999#
+^000088Crafting Item^000000
 An iron and carbon alloy known for its structural durability and usually used in the crafting of high-quality arms.
 ^ffffff_^000000
 Weight : ^77777710^000000
 #
 1000#
+^000088Crafting Item^000000
 A small stellar crystal, fallen from the heavens, which can be used to craft strengthened weapons.
 ^ffffff_^000000
+
 Weight : ^77777710^000000
 #
 1001#
+^000088Crafting Item^000000
 Stardust which can
 form a Star Crumb
 after being refined.
 ^ffffff_^000000
+Can be refined to Star Crumb with Level 1 [Enchanted Stone Craft]
 Weight : ^7777771^000000
 #
 1002#
+^000088Crafting Item^000000
 An impure ore
 that forms Iron
 after being refined.
 ^ffffff_^000000
+Can be refined to Iron with Level 1 [Iron Tempering]
 Weight : ^77777715^000000
 #
 1003#
+^000088Crafting Item^000000
 A black mineral
 substance that can
 form Steel once it is
 combined with Iron.
 ^ffffff_^000000
+Can be purchased from Christopher at the Geffen Blacksmith Guild.
 Weight : ^7777775^000000
 #
 1004#
@@ -1346,12 +1389,14 @@ religious symbolism.
 Weight : ^77777710^000000
 #
 1010#
+^000088Crafting Item^000000
 A metal that can be
 used to strengthen and upgrade Level 1 Weapons.
 ^ffffff_^000000
 Weight : ^77777720^000000
 #
 1011#
+^000088Crafting Item^000000
 A metal that can be
 used to strengthen and upgrade Level 2 Weapons.
 ^ffffff_^000000
@@ -11456,6 +11501,7 @@ Weight : ^77777715^000000
 668#
 A red envelope which is given to children on New Year's Day.
 It seems to contain something that will make its recipient very happy.
+Open this to receive a random amount of zeny ranging from 1,000 - 10,000.
 ^ffffff_^000000
 Weight : ^7777772^000000
 #
@@ -12812,90 +12858,105 @@ An exclusive red potion for Novices!
 Weight : ^7777770^000000
 #
 686#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 3 Earth Spike^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 687#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 5 Earth Spike^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 688#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 3 Cold Bolt^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 689#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 5 Cold Bolt^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 690#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 3 Fire Bolt^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 691#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 5 Fire Bolt^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 692#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 3 Lightening Bolt^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 693#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 5 Lightening Bolt^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 694#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 3 Soul Strike^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 695#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 5 Soul Strike^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 696#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 1 Fire Ball^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 697#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 5 Fire Ball^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 698#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 1 Fire Wall^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 699#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 5 Fire Wall^000000.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 700#
+^000088Spell Scroll Item^000000
 A spell scroll which was made by the essence of ancient magic.
 Allows to use ^000088Level 1 Frost Diver^000000.
 ^ffffff_^000000
@@ -15013,7 +15074,7 @@ Weight : ^7777771^000000
 #
 4302#
 Tao Gunka Card.
-Max HP +100%, DEF - 50 and MDEF - 50.
+Max HP +100%, DEF - 50% and MDEF - 50%.
 Class : ^777777Card^000000
 Compound on: ^777777Armor^000000
 Weight : ^7777771^000000
@@ -15522,7 +15583,7 @@ Class : ^777777Card^000000
 Compound on: ^777777Accessory^000000
 Weight : ^7777771^000000
 #
-// ------¤Ñmobile item -------
+// ------Â¤Åƒmobile item -------
 2511#
 A manteau which is worn by soldier skeletons.
 Str +2, Dex +2, Luk +2.
@@ -15985,6 +16046,7 @@ Weight : ^77777720^000000
 #
 12134#
 A Red envelope filled with good fortune, given by married couples to friends and family to celebrate new beginnings.
+
 Weight : ^7777771^000000
 #
 // ------- China 1st and 2nd anniversary event items --------
@@ -18636,7 +18698,7 @@ random food item.
 ^FFFFFF ^000000
 Weight : ^77777720^000000
 #
-// -------------- Ãß°¡½ºÅ³¿ë ¾ÆÀÌÅÛ --------------
+// -------------- Ä‚ÃŸÂ°Ä„ËÅŸÄ¹Å‚Å¼Ã« Å¾Ä†Å”ÄšÄ¹Å° --------------
 1771#
 A throwing knife
 laced with toxin that
@@ -19621,7 +19683,7 @@ sublimely delicious.
 ^FFFFFF ^000000
 Weight : ^7777777^000000
 #
-// ------------ ¿ä¸®Á¦Á¶ --------------
+// ------------ Å¼Ã¤Â¸Å½ÃÅšÃÅ› --------------
 
 7472#
 Level 1 Recipes
@@ -21600,7 +21662,7 @@ and September 25th 2007.^000000
 Weight : ^7777770^000000
 #
 //--------------------11.1 Rachel------------------------
-// -------------------------- ¼ÒÄÏÀÎÃ¦Æ® ½Å±Ô¹«±âÃß°¡ ----------------------------
+// -------------------------- ÅºÅ‡Ã„ÄÅ”ÃÄ‚ÅšÄ†Å½ ËÄ¹Ä…Ã”Å¡Å¤Ä…Ã¢Ä‚ÃŸÂ°Ä„ ----------------------------
 
 1816#
 A pair of fierce claws
@@ -22037,10 +22099,10 @@ Jobs: ^777777All Jobs^000000
 #
 
 
-// ------------------- 2006 »ó¹İ±â ½Å±Ôcard Ãß°¡.-----------------------
-//¿µ¹®±Ç 11.1 ¿¡¼­ ¾÷µ¥ÀÌÆ® Á¦¿ÜÇÏ±â·Î ÇÕ´Ï´Ù.
+// ------------------- 2006 Å¥Ã³Å¡ÃÄ…Ã¢ ËÄ¹Ä…Ã”card Ä‚ÃŸÂ°Ä„.-----------------------
+//Å¼Ä¾Å¡Å½Ä…Ã‡ 11.1 Å¼Ä„ÅºÂ­ Å¾Ã·Ä¾Ä½Å”ÄšÄ†Å½ ÃÅšÅ¼ÃœÃ‡ÄÄ…Ã¢Ë‡Ã Ã‡ÅÂ´ÄÂ´Å®.
 
-// ------------- ¾Æ·ç³ª »ó¹İ±â -----------
+// ------------- Å¾Ä†Ë‡Ã§Å‚Å Å¥Ã³Å¡ÃÄ…Ã¢ -----------
 
 7561#
 A frozen heart that
@@ -22161,7 +22223,7 @@ Acolyte Classes;
 Soul Linker Job^000000
 #
 
-//----------------------20060610 ½Å±ÔÃß°¡¾ÆÀÌÅÛ-------------------------
+//----------------------20060610 ËÄ¹Ä…Ã”Ä‚ÃŸÂ°Ä„Å¾Ä†Å”ÄšÄ¹Å°-------------------------
 5169#
 A white mask with
 red blush that is
@@ -22284,7 +22346,7 @@ Required Level : ^77777740^000000
 Jobs: ^777777All Jobs^000000
 #
 
-// -------------- 2006 Ãß°¡¾ÆÀÌÅÛ -------------
+// -------------- 2006 Ä‚ÃŸÂ°Ä„Å¾Ä†Å”ÄšÄ¹Å° -------------
 
 5184#
 Once owned by a famous
@@ -22413,7 +22475,7 @@ Level Requirement: ^77777710^000000
 Jobs: ^777777Every
 Job except Novice^000000
 #
-// ------------- ¹Ì±¹ ÇØÀûÀÇ ³¯ ÀÌº¥Æ® ¾ÆÀÌÅÛ --------------
+// ------------- Å¡ÄšÄ…Å¡ Ã‡Å˜Å”Å±Å”Ã‡ Å‚Å» Å”ÄšÅŸÄ½Ä†Å½ Å¾Ä†Å”ÄšÄ¹Å° --------------
 7875#
 A recovered Treasure box
 that was Lost by 
@@ -22978,8 +23040,6 @@ A box that contains
 ^ffffff_^000000
 Battle Manual - Increases^FFFFFF  ^000000 EXP rate to 150% for
 a 30 minute duration.
-^ff0000180% for 30 minutes until 12/13/2011^000000
-^ffffff_^000000
 Weight : ^7777771^000000
 #
 12901#
@@ -23082,13 +23142,13 @@ Weight : ^7777771^000000
 #
 12909#
 A box containing
-10 Kafra Name Cards.
+10 Kafra Cards.
 ^ffffff_^000000
-Kafra Name Card -
+Kafra Card -
 Summons the Kafra
 Service when used.
 ^ffffff_^000000
-^ff0000This will open all 3 storages.^000000
+^ff0000This will open all 3 storages from anywhere in the world.^000000
 Weight : ^7777771^000000
 #
 12910#
@@ -23175,6 +23235,7 @@ Weight : ^7777771^000000
 12917#
 A box containing
 20 Wind Walker Scrolls.^FFFFFF   ^000000 (Lvl 10 Wind Walker Scrolls)
+Lvl 10 Wind Walker gives +20% Walking Speed, +5 Flee
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -23598,8 +23659,6 @@ explains effective
 battle methods.
 ^000088EXP rate increases to^000000
 ^000088150% for 30 minutes.^000000
-^ff0000180% for 30 minutes until 12/13/2011^000000
-^ffffff_^000000
 Weight : ^7777771^000000
 #
 12209#
@@ -23622,8 +23681,6 @@ Sweet, tasty bubble
 gum. Item drop rate
 increases by 100%
 for 30 minutes.
-^ff0000150% for 30 minutes until 12/13/2011^000000
-^ffffff_^000000
 Weight : ^7777771^000000
 #
 12211#
@@ -23666,7 +23723,6 @@ Novice Class.
 Weight : ^7777770^000000
 #
 12214#
-^FF0000This item will be discontinued from sale starting on June 21, 2011^000000
 A clean convex
 mirror that can be
 used to detect the
@@ -24547,7 +24603,7 @@ Weapon Level: ^7777774^000000
 Required Level : ^7777771^000000
 Jobs: ^777777Priest, Monk^000000
 #
-// ------------------- 2006 »ó¹İ±â ½Å±Ôcard Ãß°¡.-----------------------
+// ------------------- 2006 Å¥Ã³Å¡ÃÄ…Ã¢ ËÄ¹Ä…Ã”card Ä‚ÃŸÂ°Ä„.-----------------------
 
 4332#
 ATK +5, Int +1
@@ -25402,7 +25458,7 @@ Compound on: ^777777Weapon^000000
 Weight : ^7777771^000000
 #
 
-// ------------- Ã¥ÀĞ±â ----------------------
+// ------------- Ä‚Ä½Å”ÄÄ…Ã¢ ----------------------
 
 11001#
 A new novel from best
@@ -25483,7 +25539,7 @@ fiction author.
 Weight : ^7777771^000000
 #
 
-// ----------------------- Åä¸£È­»ê Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
+// ----------------------- Ä¹Ã¤Â¸ÅÄŒÂ­Å¥Ä™ Ã„Å¯ËÅŸÄ†Å½ Å¾Ä†Å”ÄšÄ¹Å° ----------------------
 7704#
 A device that can
 measure the ground's
@@ -25505,7 +25561,7 @@ by a Geologist.
 Weight : ^7777770^000000
 #
 
-// ---------------------- Åä¸£È­»ê ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ----------------------
+// ---------------------- Ä¹Ã¤Â¸ÅÄŒÂ­Å¥Ä™ ËÄ¹Ä…Ã” Å”ÄºÅŸÅ„ Å¾Ä†Å”ÄšÄ¹Å° ----------------------
 1370#
 A gigantic and
 ridiculously heavy
@@ -26332,7 +26388,7 @@ the item effect will disappear.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ---------------- ÀÎµµ³×½Ã¾Æ °¡º­¿î Ä³½¬ ¾ÆÀÌÅÛ --------------	
+// ---------------- Å”ÃÄ¾Ä¾Å‚Ã—ËÄ‚Å¾Ä† Â°Ä„ÅŸÂ­Å¼Ã® Ã„Å‚ËÅ¹ Å¾Ä†Å”ÄšÄ¹Å° --------------	
 	
 12999#	
 A box that contains	
@@ -26868,7 +26924,7 @@ Weight : ^77777750^000000
 Required Level: ^77777730^000000
 Jobs : ^777777All^000000
 #
-// ------------- 2007 ÇÒ·ÎÀ© ÃàÁ¦¸ğÀÚ ---------------
+// ------------- 2007 Ã‡Å‡Ë‡ÃÅ”Å  Ä‚Å•ÃÅšÂ¸Ä‘Å”Ãš ---------------
 5356#
 A pumpkin hat for
 celebrating Halloween:
@@ -26896,7 +26952,7 @@ that have shaped
 your life.							
 ^ffffff_^000000							
 #							
-// -------- 2007 ÀÏº» ¿¬¸» Ä³½¬¾ÆÀÌÅÛ ----------							
+// -------- 2007 Å”ÄÅŸÅ¥ Å¼Å¹Â¸Å¥ Ã„Å‚ËÅ¹Å¾Ä†Å”ÄšÄ¹Å° ----------							
 5380#							
 A gaping fish head							
 fashioned into a hat.							
@@ -27069,7 +27125,7 @@ abnormal statuses^000088,
 ^ffffff_^000000			
 Weight : ^77777715^000000			
 #			
-// ----- Å©¸®½º¸¶½º ÀÌº¥Æ® »êÅ¸ ¼ö¿° --------					
+// ----- Ä¹Å Â¸Å½ËÅŸÂ¸Å›ËÅŸ Å”ÄšÅŸÄ½Ä†Å½ Å¥Ä™Ä¹Â¸ ÅºÃ¶Å¼Â° --------					
 //5811#					
 //A beard that makes					
 //you want to laugh					
@@ -27143,7 +27199,7 @@ outside of the machine.
 Weight : ^7777770^000000							
 #
 //----------------------- 2008 Lunar New Year Event ----------
-// ----------- ´ë¸¸ Æê Ãß°¡ ------------------						
+// ----------- Â´Ã«Â¸Â¸ Ä†Ä™ Ä‚ÃŸÂ°Ä„ ------------------						
 9038#						
 An egg in which the						
 New Year Doll Cute						
@@ -27165,15 +27221,6 @@ Class : ^777777Food^000000
 Weight : ^7777778^000000					
 #						
 				
-668#						
-A small red packet,						
-seemingly containing						
-some exciting gift,						
-that is given by						
-adults to children.						
-^ffffff_^000000						
-Weight : ^7777772^000000						
-#						
 7770#						
 Steamed glutinous						
 rice that is used 
@@ -27213,7 +27260,7 @@ Luk +21.
 ^ffffff_^000000						
 Weight : ^77777710^000000						
 #						
-//============2008 ¹Ì±¹ ¼¼ÀÎÆ®ÆĞÆ®¸¯ ÀÌº¥Æ® ¾ÆÀÌÅÛ============					
+//============2008 Å¡ÄšÄ…Å¡ ÅºÅºÅ”ÃÄ†Å½Ä†ÄÄ†Å½Â¸Å» Å”ÄšÅŸÄ½Ä†Å½ Å¾Ä†Å”ÄšÄ¹Å°============					
 12715#					
 [This item will be removed
 
@@ -27254,7 +27301,7 @@ A treasure box that belongs to a would-be pirate J Roger in Comodo.
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-// ---------------------- ¿ëº´¼ÒÈ¯¼­ -------------------------------
+// ---------------------- Å¼Ã«ÅŸÂ´ÅºÅ‡ÄŒÅ»ÅºÂ­ -------------------------------
 
 12153#
 Summon a 1st
@@ -27466,7 +27513,7 @@ targeted Mercenary.
 ^ffffff_^000000
 Weight : ^77777710^000000
 #
-// ------------------ ¿ëº´¿ë Æ÷¼Ç ------------------
+// ------------------ Å¼Ã«ÅŸÂ´Å¼Ã« Ä†Ã·ÅºÃ‡ ------------------
 12241#
 A Concentration Potion
 for Mercenaries that
@@ -27492,7 +27539,7 @@ Attack Speed.
 Weight : ^77777720^000000
 #
 
-// ---------------- ¸±·¹ÀÌ Äù½ºÆ® ¾ÆÀÌÅÛ ------------------
+// ---------------- Â¸Ä…Ë‡Å¡Å”Äš Ã„Å¯ËÅŸÄ†Å½ Å¾Ä†Å”ÄšÄ¹Å° ------------------
 7730#
 A ticket proving
 that the bearer has
@@ -27617,7 +27664,7 @@ a new mission.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// -------------- 11.3 ÀâÅÛ -------------------
+// -------------- 11.3 Å”Ã¢Ä¹Å° -------------------
 7751#
 A worn-out white
 cloth that can be
@@ -27658,7 +27705,7 @@ Merchant NPCs.
 Weight : ^7777771^000000
 #
 
-// ------------ Äù½ºÆ® ¾ÆÀÌÅÛ -----------------
+// ------------ Ã„Å¯ËÅŸÄ†Å½ Å¾Ä†Å”ÄšÄ¹Å° -----------------
 7755#
 Much of the writing
 on this note isn't
@@ -27677,7 +27724,7 @@ Weight : ^7777771^000000
 #
 
 
-// ------------------- 11.3 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ --------------------------
+// ------------------- 11.3 ËÄ¹Ä…Ã” Å”ÄºÅŸÅ„ Å¾Ä†Å”ÄšÄ¹Å° --------------------------
 2122#
 A magnificent
 platinum shield that
@@ -29081,7 +29128,7 @@ Required Level : ^77777770^000000
 Jobs: ^777777Gunslinger Job^000000
 #
 
-// ------------ 11.3 Äù½ºÆ® ¾ÆÀÌÅÛ --------------
+// ------------ 11.3 Ã„Å¯ËÅŸÄ†Å½ Å¾Ä†Å”ÄšÄ¹Å° --------------
 7722#
 A loan document
 that includes the
@@ -29128,7 +29175,7 @@ seal of the King of the Rune-Midgarts Kingdom.
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-// ----------------- 20070808 ½Å±ÔCard 34Á¾ -----------------
+// ----------------- 20070808 ËÄ¹Ä…Ã”Card 34ÃÅ¾ -----------------
 4408#
 Increases Physical
 damage to Holy,
@@ -29487,7 +29534,7 @@ it's been cooked.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------------------- ¸¶·ÂÀÌ ±EEcardÃ¸ ------------------
+// ------------------- Â¸Å›Ë‡Ã‚Å”Äš Ä…ÂEÂEcardÄ‚Â¸ ------------------
 12246#
 Powerful spirits are 
 sealed within this album.  
@@ -29496,7 +29543,7 @@ if the seal is undone?
 ^ffffff_^000000
 Weight : ^7777775^000000
 #
-// -------- ¹Ì±¹ ÀÌº¥Æ® ¾ÆÀÌÅÛ ----------------
+// -------- Å¡ÄšÄ…Å¡ Å”ÄšÅŸÄ½Ä†Å½ Å¾Ä†Å”ÄšÄ¹Å° ----------------
 5409#
 A hat, symbolizing western frontiers, made to celebrate the festival.
 Int +2 , Vit +2 , SP +50
@@ -29516,7 +29563,7 @@ Head Position : ^777777Upper-Mid-Lower^000000
 Weight : ^77777720^000000
 Job : ^777777All^000000
 #
-// -------- ¹Ì±¹ Æä½ºÆ¼¹ú Æ¼ÄÏ ----------
+// -------- Å¡ÄšÄ…Å¡ Ä†Ã¤ËÅŸÄ†ÅºÅ¡Ãº Ä†ÅºÃ„Ä ----------
 7919#
 Evidence that you really enjoyed the festival!
 ^ffffff_^000000
@@ -29524,13 +29571,13 @@ This item cannot be dropped, traded, mailed or vended.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// -------- ¹Ì±¹ ÀÌº¥Æ® ¾ÆÀÌÅÛ ----------------				
+// -------- Å¡ÄšÄ…Å¡ Å”ÄšÅŸÄ½Ä†Å½ Å¾Ä†Å”ÄšÄ¹Å° ----------------				
 6025#				
 A towel that helps you remember those that have passed on.				
 ^ffffff_^000000				
 Weight : ^7777770^000000				
 #
-// -------- ÃÊº¸ÀÚÁ¸ ¾ÆÀÌÅÛ -----------
+// -------- Ä‚Ä˜ÅŸÂ¸Å”ÃšÃÂ¸ Å¾Ä†Å”ÄšÄ¹Å° -----------
 12323#
 An enchanted fly's wing that instantly sends its user to a random spot when waved in the air. ^000088Instant teleport.^000000
 ^ffffff_^000000
@@ -29656,7 +29703,7 @@ A tribute to luck and fortune throughout the year.
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-// ---------- ¸ğ¹ÙÀÏ °Ë»çÆí ÅÃÆ½½º ----------
+// ---------- Â¸Ä‘Å¡Å®Å”Ä Â°Ã‹Å¥Ã§Ä†Ã­ Ä¹Ä‚Ä†ËËÅŸ ----------
 5129#
 A mysterious bird's nest that makes the wearer feel like flying.
 Agi +2
@@ -29689,7 +29736,7 @@ Required Level : ^77777730^000000
 Jobs : ^777777Magician Class/Soul Linker^000000
 #
 
-// ------------------Áß±¹ÀÌº¥Æ® ºÀ°ü--------------------
+// ------------------ÃÃŸÄ…Å¡Å”ÄšÅŸÄ½Ä†Å½ ÅŸÅ”Â°Ã¼--------------------
 5152#
 A heavy-looking hat which is decorated with blue and silver gems. It looks suitable for splendid events like weddings.
 Additional 10% tolerance to Stun.
@@ -29763,7 +29810,7 @@ Required Level : ^77777730^000000
 Jobs : ^777777All^000000
 #
 
-// ------------------ 2006 ÀÏº» ¾Ö´Ï¹ö¼­¸® Headgear -----------------
+// ------------------ 2006 Å”ÄÅŸÅ¥ Å¾Ã–Â´ÄÅ¡Ã¶ÅºÂ­Â¸Å½ Headgear -----------------
 5211#
 A tiny and cute hat that can decorate a part of the head.
 This hat, along with a pretty dress, makes the wearer want to go on a picnic.
@@ -29780,7 +29827,7 @@ Required Level : ^77777720^000000
 Jobs : ^777777All^000000
 #
 
-// ------------------ ºê¶óÁú °¡¹ß ½Ã¸®Áî -----------------------
+// ------------------ ÅŸÄ™Å›Ã³ÃÃº Â°Ä„Å¡ÃŸ ËÄ‚Â¸Å½ÃÃ® -----------------------
 5273#
 Wig with green, white and red colors.
 When equipped, increases movement speed.
@@ -29821,7 +29868,7 @@ Location : ^777777Upper-Mid^000000    Weight : ^77777710^000000
 Jobs : ^777777All^000000
 #
 
-// --------------- ºê¶óÁú Ä³½¬ ¾ÆÀÌÅÛ 20070605 ------------
+// --------------- ÅŸÄ™Å›Ã³ÃÃº Ã„Å‚ËÅ¹ Å¾Ä†Å”ÄšÄ¹Å° 20070605 ------------
 5307#
 A hat made with tropical fruits. It looks delicious.
 MDEF + 3
@@ -29831,7 +29878,7 @@ Location : ^777777Upper^000000    Weight : ^77777740^000000
 Jobs : ^777777All^000000
 #
 
-// -------------- ÅÂ±¹ Ä³½¬¾ÆÀÌÅÛ Headgear Ãß°¡ 20070809 --------------
+// -------------- Ä¹Ã‚Ä…Å¡ Ã„Å‚ËÅ¹Å¾Ä†Å”ÄšÄ¹Å° Headgear Ä‚ÃŸÂ°Ä„ 20070809 --------------
 5325#
 A weird item that spreads a strange-shaped beam around the eyes. It seems to have been made in outer space.
 ATK, MATK + 2%, Dex + 1
@@ -29843,7 +29890,7 @@ Required Level : ^77777710^000000
 Jobs : ^777777All^000000
 #
 
-// -------------- 2007³â 9¿ù ÀÏº» ¸ğ¹ÙÀÏ Headgear 13Á¾ -----------------
+// -------------- 2007Å‚Ã¢ 9Å¼Å¯ Å”ÄÅŸÅ¥ Â¸Ä‘Å¡Å®Å”Ä Headgear 13ÃÅ¾ -----------------
 5333#
 A hat designed to transmit electric waves. Sometimes it receives electric waves from external worlds.
 MDEF + 2
@@ -29986,7 +30033,7 @@ Required Level : ^77777710^000000
 Jobs : ^777777All^000000
 #
 
-// --------- ÅÂ±¹ ¸ğÀÚ ¾ÆÀÌÅÛ -------------
+// --------- Ä¹Ã‚Ä…Å¡ Â¸Ä‘Å”Ãš Å¾Ä†Å”ÄšÄ¹Å° -------------
 5387#
 A hairband that mixes Kafra Style and Cat Hairband Style. It looks so cute!
 Inflicts a random abnormal status to an enemy when physically attacked.
@@ -29997,7 +30044,7 @@ Required Level : ^77777730^000000
 Jobs : ^777777All^000000
 #
 
-// -------------- 2008 ÀÏº» ¾ÆÀÌÅÛ Á¦ 2Åº -----------------
+// -------------- 2008 Å”ÄÅŸÅ¥ Å¾Ä†Å”ÄšÄ¹Å° ÃÅš 2Ä¹ÅŸ -----------------
 5401#
 Dark-colored plastic frame Locs.
 Int + 1, MDEF + 2
@@ -30047,7 +30094,7 @@ Required Level : ^77777780^000000
 Jobs : ^777777All^000000
 #
 
-// --------------- ÇÊ¸®ÆÇ ÀÚÃ¼Á¦ÀÛ Headgear 7Á¾ -------------
+// --------------- Ã‡Ä˜Â¸Å½Ä†Ã‡ Å”ÃšÄ‚ÅºÃÅšÅ”Å° Headgear 7ÃÅ¾ -------------
 5372#
 A magical kitty hat which shows various expressions on its face.
 Reduces Cast Delay of all skills by 3%.
@@ -30182,7 +30229,7 @@ Jobs : ^777777All^000000
 Weight : ^7777771^000000
 #
 
-// ------¾Ëµ¥¹Ù¶õÅÍº¸Æ®·¢------
+// ------Å¾Ã‹Ä¾Ä½Å¡Å®Å›Å‘Ä¹ÃÅŸÂ¸Ä†Å½Ë‡Ë˜------
 12016#
 A potion which increases the moving speed of a character for a set duration.
 ^ffffff_^000000
@@ -30194,7 +30241,7 @@ A potion which decreases the moving speed of a character for a set duration.
 Weight : ^77777710^000000
 #
 
-// ---------- ÇÊ¸®ÇÉ 4¿ù ¹Ú½º ÆĞÅ°Áö ----------------
+// ---------- Ã‡Ä˜Â¸Å½Ã‡Ã‰ 4Å¼Å¯ Å¡ÃšËÅŸ Ä†ÄÄ¹Â°ÃÃ¶ ----------------
 13994#
 A box containing 5 Speed Potions.
 ^ff0000For this item, the cancellation of purchase or refund is not allowed.^000000
@@ -30227,7 +30274,7 @@ A box that contains 1 coupon to dye your clothes to the original color.
 This item is not refundable and also not transferable.
 Weight : ^7777771^000000
 #
-// -------- ¹Ì±¹ ÀÌº¥Æ® ¾ÆÀÌÅÛ ----------------
+// -------- Å¡ÄšÄ…Å¡ Å”ÄšÅŸÄ½Ä†Å½ Å¾Ä†Å”ÄšÄ¹Å° ----------------
 2776#
 This trusty towel truly is the sidearm of an experienced adventurer.
 Allowing one to remain cool in the face of adversity.
@@ -30238,7 +30285,7 @@ Cannot be Dropped or Traded.
 ^ffffff_^000000
 Weight : ^77777710^000000
 #
-// ------------- ½Å±Ô ½Å±Ş ¾ÆÀÌÅÛ GOD ITEMS --------------
+// ------------- ËÄ¹Ä…Ã” ËÄ¹Ä…Å¢ Å¾Ä†Å”ÄšÄ¹Å° GOD ITEMS --------------
 2383#
 Brynhild is one of the valiant valkyries, meaning 'the warrior's armor'.
 Base level*20 MHP increase. Base Lv*5 MSP increase.
@@ -30325,7 +30372,7 @@ You can exchange it for a gift.
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-// ---------------- Å×½ºÆ®¿ë Ä³½¬¾ÆÀÌÅÛ »óÀÚ Town B-wings -----------------
+// ---------------- Ä¹Ã—ËÅŸÄ†Å½Å¼Ã« Ã„Å‚ËÅ¹Å¾Ä†Å”ÄšÄ¹Å° Å¥Ã³Å”Ãš Town B-wings -----------------
 13849#
 A box containing 5 scrolls on which the towns of Run Midgartz are written. You may be moving to the town when using it.
 "Prontera", "Geffen", "Payon", "Morocc", "Al De Baran", "Alberta"
@@ -30390,7 +30437,7 @@ Warning: If no town is selected, the item will disappear.
 Weight : ^7777771^000000
 #
 
-// ----------- 20071004 Ä³½Ã¾ÆÀÌÅÛ -----------
+// ----------- 20071004 Ã„Å‚ËÄ‚Å¾Ä†Å”ÄšÄ¹Å° -----------
 14582#
 An enchanted butterfly's wing that instantly sends its user to the towns of the Rune Midgarts Kingdom.
 Locations: "Prontera", "Geffen", "Payon", "Morroc", "Al De Baran" or "Alberta" when waved in the air.
@@ -30784,7 +30831,7 @@ Jobs : ^777777All^000000
 #
 
 // --------------------- Ep. 12 --------------------------
-// ------------- ÀüÀå º¸»ó ¾ÆÀÌÅÛ ---------------
+// ------------- Å”Ã¼Å”Äº ÅŸÂ¸Å¥Ã³ Å¾Ä†Å”ÄšÄ¹Å° ---------------
 13036#
 A dagger especially used for assassinations such as killing Demihumans.
 Str + 1, Agi + 1
@@ -31504,7 +31551,7 @@ A sealed paper envelope. It seems to contain an important message in it.
 Weight : ^7777771^000000
 #
 
-// ------------ ¸Ş¸ğ¸®¾ó ´øÀü º¸»óÅÛ ----------------
+// ------------ Â¸Å¢Â¸Ä‘Â¸Å½Å¾Ã³ Â´Å™Å”Ã¼ ÅŸÂ¸Å¥Ã³Ä¹Å° ----------------
 13412#
 One of the twin swords of Naght Sieger. The blue blade shows the sharpness of this sword.
 When attacking there is a chance that for 5 seconds you will completely disregard the defense of the opponent.
@@ -31564,7 +31611,7 @@ Required Level : ^77777770^000000
 Jobs: ^777777All Transcendent Jobs except Novice^000000
 #
 
-//¸ğ·ÎÅ© ÄÁÆ¼³ÙÅ» °¡µå ÀÎÁõ¼­
+//Â¸Ä‘Ë‡ÃÄ¹Å  Ã„ÃÄ†ÅºÅ‚Å®Ä¹Å¥ Â°Ä„Ä¾Äº Å”ÃÃÅ‘ÅºÂ­
 7826#
 It certifies that this adventurer has enough power and courage to be a member of the Continental Guard.
 ^ffffff_^000000
@@ -31573,7 +31620,7 @@ Continental Guard. Balrog.
 Weight : ^7777770^000000
 #
 
-// ------------ ¸¶¿Õ ¸ğ·ÎÅ© ----------------
+// ------------ Â¸Å›Å¼Å Â¸Ä‘Ë‡ÃÄ¹Å  ----------------
 2536#
 Lucifer's skin, cursed by the devil's language. It can be worn as a robe.
 MDEF +2, MaxHP +200,
@@ -31688,7 +31735,7 @@ Weight : ^77777725^000000
 Jobs: ^777777Transcendent 2nd Class or higher^000000
 #
 
-// ---------- ÇÒÂ¦ Å×½ºÆ® -----------
+// ---------- Ã‡Å‡Ã‚Åš Ä¹Ã—ËÅŸÄ†Å½ -----------
 2129#
 A thick book that contains basic skills for the clergy. 
 HP, SP Recovery 3%. Int + 1.
@@ -32017,7 +32064,7 @@ Required Level : ^77777770^000000
 Jobs : ^777777Priest, Sage, Taekwon Master^000000
 #
 
-// ------------- ÀüÀå ÈÖÀå ---------------
+// ------------- Å”Ã¼Å”Äº ÄŒÃ–Å”Äº ---------------
 7828#
 A badge that is provided to warriors who have brought great honor from the Battlefield. 
 ^ffffff_^000000
@@ -32027,7 +32074,7 @@ A badge that is provided to warriors who have brought great honor from the Battl
 ^ffffff_^000000
 #
 
-// -------- ºÀÀÎÀÇ ½ÅÀü ¾ÆÀÌÅÛ ------------
+// -------- ÅŸÅ”Å”ÃÅ”Ã‡ ËÄ¹Å”Ã¼ Å¾Ä†Å”ÄšÄ¹Å° ------------
 6001#
 An essence of fire that is holding the pure spirit of Thor, god of thunder. It has the mysterious force to restrain vices and darkness.
 ^ffffff_^000000
@@ -32046,14 +32093,14 @@ A pendant that was been used to confine wandered souls from unknown places.
 Weight : ^7777771^000000
 #
 
-// ----------------- ¸¶·ÂÀÌ ±êµç ¹ÙÆ÷¸ŞÆ® ÀÎÇü -----------------
+// ----------------- Â¸Å›Ë‡Ã‚Å”Äš Ä…Ä™Ä¾Ã§ Å¡Å®Ä†Ã·Â¸Å¢Ä†Å½ Å”ÃÃ‡Ã¼ -----------------
 6004#
 A Doll imbued with Baphomet's curse. It seems to be compounded with something.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 
-// ------------------- 12.1 Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
+// ------------------- 12.1 Ã„Å¯ËÅŸÄ†Å½ Å¾Ä†Å”ÄšÄ¹Å° ----------------------
 7798#
 A dark fragment imbued with a gloomy spirit. Once you stare into it, you might feel absorbed into it.
 ^ffffff_^000000
@@ -32066,7 +32113,7 @@ You might feel a strong dangerous power from this crystal. When you are close to
 Weight : ^7777771^000000
 #
 
-// --------------- ÇÊ¸®ÇÉ ÀÚÃ¼Á¦ÀÛ Åõ±¸ 7Á¾ ----
+// --------------- Ã‡Ä˜Â¸Å½Ã‡Ã‰ Å”ÃšÄ‚ÅºÃÅšÅ”Å° Ä¹Å‘Ä…Â¸ 7ÃÅ¾ ----
 5374#
 A headgear forged from the horns of the Unsealed Baphomet.
 Increases Physical Damage to Demihuman monsters by 12%.
@@ -32078,7 +32125,7 @@ Weight : ^77777780^000000
 Jobs: ^777777All Jobs^000000
 #
 
-// ------------------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------------
+// ------------------- Å”ÄšÅŸÄ½Ä†Å½ Å¾Ä†Å”ÄšÄ¹Å° ------------------
 6000#
 A dark ash imbued with mysterious magical power and darkness.
 ^ffffff_^000000
@@ -32115,7 +32162,7 @@ Stepmother - karma from a previous life?"
 Weight : ^7777771^000000
 #
 
-// ------------------ ÇÏ¾Ç Å×½ºÆ® (¼ÒÄÏ)----------------
+// ------------------ Ã‡ÄÅ¾Ã‡ Ä¹Ã—ËÅŸÄ†Å½ (ÅºÅ‡Ã„Ä)----------------
 1568#
 A hefty book with
 a hard cover that has
@@ -32781,7 +32828,7 @@ Contains:
 5x Regeneration Potion,
 4x Mega Resist Potion,
 50x WoE White Potions, and
-25x WoE Blue Potions."						
+25x WoE Blue Potions.
 
 Cannot be dropped or placed in Cart.
 Weight : ^7777771^000000
@@ -33091,7 +33138,6 @@ Has a chance of casting Greed while attacking.
 12312#
 A Battle Manual that takes twice as long to read.
 150% Exp/Jexp for 60 minutes.
-^ff0000180% for 60 minutes until 12/13/2011^000000
 Can only be stored.
 ^ffffff_^000000
 Weight : ^7777771^000000
@@ -33410,7 +33456,7 @@ A box containing one Crown of Deceit
 Weight : ^7777771^000000
 #
 
-// 2009-01-16 ¹Ì±¹ ¿äÃ» ¾ÆÀÌÅÛ
+// 2009-01-16 Å¡ÄšÄ…Å¡ Å¼Ã¤Ä‚Å¥ Å¾Ä†Å”ÄšÄ¹Å°
 6125#
 A box that brings a feeling of prosperity. Every time you think about opening it you resist the temptation. Perhaps a professional ^00FF00"Gift Opener"^000000  could be of assistance.
 ^FF0000You must be above base level 40 in order to have a Gift Opener open this box^000000
@@ -33440,7 +33486,7 @@ Weight : ^7777771^000000
 ^FF0000This item can only be opened until Aug. 25, 2009^000000
 #
 
-//¹ß·»Å¸ÀÎ
+//Å¡ÃŸË‡Å¥Ä¹Â¸Å”Ã
 12742#
 A box containing a ring which is an exchanging gift for Valentine's Day.
 ^ffffff_^000000
@@ -33496,7 +33542,7 @@ Weight : ^7777770^000000
 Jobs : ^777777All Jobs^000000
 #
 
-// ----------- Æ÷¸µ´ëÀü º¸»óÇ° ¾ÆÀÌÅÛ ------------01/07/09
+// ----------- Ä†Ã·Â¸Ä¾Â´Ã«Å”Ã¼ ÅŸÂ¸Å¥Ã³Ã‡Â° Å¾Ä†Å”ÄšÄ¹Å° ------------01/07/09
 2765#					
 A fine figure of a Novice. A mere glance at it makes you feel like you have more strength.					
 HP + 70, extra effect of HP + 30 when equipped on Novice			
@@ -33561,18 +33607,18 @@ Weight : ^7777770^000000
 Jobs : ^777777All^000000					
 #						
 			
-// ---------------- Æ÷¸µÄÚÀÎ -----------------			
+// ---------------- Ä†Ã·Â¸Ä¾Ã„ÃšÅ”Ã -----------------			
 7539#			
 A small coin with a monster Poring engraved in it.			
 #			
 			
-// ------------- ÀüÅõÈÖÀå ---------------			
+// ------------- Å”Ã¼Ä¹Å‘ÄŒÃ–Å”Äº ---------------			
 7773#			
 A badge indicating that the wearer is currently participated in the war.  It was taken off from a failure of the battle.			
 ^ffffff_^000000			
 #			
 		
-// 2009-02-16 ¹Ì±¹ º¸º´±Ã ½Ö¾î±Ã Ãß°¡			
+// 2009-02-16 Å¡ÄšÄ…Å¡ ÅŸÂ¸ÅŸÂ´Ä…Ä‚ ËÃ–Å¾Ã®Ä…Ä‚ Ä‚ÃŸÂ°Ä„			
 5512#
 This diadem honors Aquarius, the 11th astrological sign in the zodiac calendar. Its power increases defense from Wind attacks. 
 Str + 2, FLEE + 10, 
@@ -34326,7 +34372,7 @@ Beautiful long, white colored horn with the very strong magical power. It can be
 Weight : ^7777771^000000
 #
 
-// --------- EP13 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ---------------
+// --------- EP13 ËÄ¹Ä…Ã” Å”ÄºÅŸÅ„ Å¾Ä†Å”ÄšÄ¹Å° ---------------
 5398#
 Headgear made of the skull of a dragon. So hard that it does not easily break.
 Str +2, MDEF +5,
@@ -34968,7 +35014,7 @@ A pie covered with sweet chocolate.  This isn't pretty but the taste is excellen
 ^ffffff_^000000
 Weight : ^77777730^000000
 
-// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ ----------
+// ---------- Ä¹Å Â¸Å½Â°Ä¹ ÅŸÂ¸Å¥Ã³ Å¾Ä†Å”ÄšÄ¹Å° ----------
 13416#
 Physical Attack against Demihuman monsters +75%.
 Ignore 20% of Physical Defense of Demihuman monsters.
@@ -35247,7 +35293,7 @@ Class : ^777777Twohand Axe^000000
 Attack : ^777777220^000000
 Weight : ^7777770^000000
 Weapon Lv : ^7777774^000000
-Required Lv : ^77777780^000000
+Required Level : ^77777780^000000
 Job : ^777777Swordman Class / Merchant Class^000000
 #
 
@@ -35329,7 +35375,7 @@ Class : ^777777Revolver^000000
 Attack : ^77777780^000000
 Weight : ^7777770^000000 
 Weapon Level : ^7777774^000000
-Required Lv : ^77777780^000000
+Required Level : ^77777780^000000
 Job : ^777777Gunslinger^000000
 #
 
@@ -35395,7 +35441,7 @@ Class : ^777777Grenade Launcher^000000
 Attack : ^777777330^000000
 Weight : ^7777770^000000
 Weapon Level : ^7777774^000000
-Required Lv : ^77777780^000000
+Required Level : ^77777780^000000
 Job : ^777777Gunslinger^000000
 #
 
@@ -35441,7 +35487,7 @@ Required Level : ^77777781^000000
 Job : ^777777All excpet Novice Class^000000
 #
 
-// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ Ãß°¡ Defense±¸ ----------
+// ---------- Ä¹Å Â¸Å½Â°Ä¹ ÅŸÂ¸Å¥Ã³ Å¾Ä†Å”ÄšÄ¹Å° Ä‚ÃŸÂ°Ä„ DefenseÄ…Â¸ ----------
 2445#
 HP & SP +5%
 Class : ^777777Footwear^000000
@@ -35493,7 +35539,7 @@ Weight : ^7777770^000000
 Jobs : ^777777All Jobs except Novice^000000
 #
 
-// ----------- ¿¡ÇÇ¼Òµå 13 ³¬½Ã ------------
+// ----------- Å¼Ä„Ã‡Ã‡ÅºÅ‡Ä¾Äº 13 Å‚Å¹ËÄ‚ ------------
 2775#
 Artificially made fishing lure.
 Decrease the fishing casting time by 1 seconds.
@@ -35512,7 +35558,7 @@ Weight : ^77777720^000000
 Job : ^777777All^000000
 #
 
-// ----------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------
+// ----------- Å”ÄšÅŸÄ½Ä†Å½ Å¾Ä†Å”ÄšÄ¹Å° ------------
 2443#
 Waterproof boots.
 Decrease fishing casting time by 2 seconds.
@@ -35552,7 +35598,6 @@ Weight : ^7777771^000000
 12411#
 This well written, detailed manual explains High Efficiency battle methods.
 ^000088EXP rate increases to 200% for 15 minutes.^000000
-^ff0000Duration is 30 minutes until October 2, 2013^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -35560,7 +35605,6 @@ Weight : ^7777771^000000
 12412#
 A High Efficiency bubble gum that packs double the punch.
 ^000088Item drop rate increases by 200% for 15 minutes.^000000
-^ff0000Duration is 30 minutes until October 2, 2013^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -35570,7 +35614,6 @@ A box containing 10 High Efficiency Battle Manuals.
 ^ffffff_^000000
 High Efficiency Battle Manual - This well written, detailed manual explains High Efficiency battle methods.
 ^000088EXP rate increases to 200% for 15 minutes.^000000
-^ff0000230% for 15 minutes until 12/13/2011^000000
 Weight : ^7777771^000000
 
 16268#
@@ -35760,7 +35803,7 @@ Restore 10% of Max HP.
 Weight : ^7777771^000000
 #
 
-//--------------------¹Ì±¹ Ä³½¬ 2009.10.07---------------------------
+//--------------------Å¡ÄšÄ…Å¡ Ã„Å‚ËÅ¹ 2009.10.07---------------------------
 1194#
 ^000088Rental Item^000000
 A gruesome sword used
@@ -36581,7 +36624,7 @@ Weight : ^7777771^000000
 6287#
 If you give this coupon to the Stylist Dinorah Lacostt at Prontera or Eden Group Headquarters, she will dye your costume to 1 of 3 different color variations.
 ^ffffff_^000000
-^ff0000This item can be traded, stored, and vended^000000"
+^ff0000This item can be traded, stored, and vended^000000
 Weight : ^7777770^000000
 #
 6288#
@@ -36679,7 +36722,6 @@ battle methods.
 ^000088EXP rate increases to^000000
 ^000088150% for 30 minutes.^000000
 ^ff0000This item is character bound.^000000
-^ff0000180% for 30 minutes until 12/13/2011^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -36703,7 +36745,6 @@ Sweet, tasty bubble
 gum. Item drop rate
 increases by 100%
 for 30 minutes.
-^ff0000150% for 30 minutes until 12/13/2011^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -37018,7 +37059,6 @@ when used.
 Weight : ^7777771^000000
 #
 12472#
-^FF0000This item will be discontinued from sale starting on June 21, 2011^000000
 A clean convex
 mirror that can be
 used to detect the
@@ -37597,7 +37637,6 @@ A box that contains
 ^ffffff_^000000
 Battle Manual - Increases^FFFFFF  ^000000 EXP rate to 150% for
 a 30 minute duration.
-^ff0000180% for 30 minutes until 12/13/2011^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -38412,7 +38451,12 @@ placeholder
 placeholder
 #
 5320#
-placeholder
+All Stats +2
+Location : ^777777Upper^000000
+Defense : ^7777778^000000
+Required Level: ^7777771^000000
+Jobs: ^777777All^000000
+Weight : ^77777750^000000
 #
 5321#
 placeholder
@@ -38714,7 +38758,15 @@ placeholder
 placeholder
 #
 5254#
-placeholder
+A hat made to resemble a little dead deviling which has charming side-spreading eyes.
+Atk & Matk +2
+If refined to +7 or higher, increases EXP gained from each kill by 1%.
+Class : ^777777Headgear^000000
+Location : ^777777Upper^000000
+Defense : ^7777771^000000
+Weight : ^77777750^000000
+Required Level : ^77777720^000000
+Job : ^777777All Classes^000000
 #
 5225#
 A hat by those leading the way to celebrations.
@@ -44075,7 +44127,7 @@ A manual that explains the most efficient way to battle. It is a very detailed a
 Weight : ^7777770^000000
 #
 5667#
-This frightening hooded mask is so scary that you don¡¯t have to worry about the nasty ghosts bothering you as you Trick or Treat!  
+This frightening hooded mask is so scary that you donÄ„Å»t have to worry about the nasty ghosts bothering you as you Trick or Treat!  
 Increases tolerance to Undead and Demon type monsters by 10%
 If refined to +7 or higher, has a chance of adding Critical Rate +30% and Hit +10 for 10 seconds while physically attacking.
 Class : ^777777Headgear^000000
@@ -45865,9 +45917,7 @@ Jobs : ^777777All^000000
 A hat which resembles a cute Leaf Cat. The power to cure dwells within it.
 Agi +2
 Has a low chance of auto casting Level 3 Heal on the user when receiving physical melee attack.
-^ff0000Event stats from Jan 6th - Feb 3rd 2011^000000
-^0000ffWearing this gives you an extra option of hunting 300 Leaf Cats in Ayothaya.^000000
-^cc0000+5 or higher, gives special 30% bonus EXP for Leaf Cat hunting quest in Ayothaya.^000000
+
 ^00cc00+7 or higher, gives 25% extra EXP for every monster killed and decreases attack of monsters in Ayothaya Dungeon by 30% except for Whispers.^000000
 ^ff0000This item can be traded, stored, and put into a cart^000000
 Class : ^777777Headgear^000000
@@ -45920,7 +45970,7 @@ After cast delay reduced by 3%.
 If refined to +7 or higher, reduces damage from all elemental properties by 5%.
 Class : ^777777Headgear^000000
 Defense: ^77777710^000000
-Location : ^777777Upper^000000
+Location : ^777777Upper & Middle^000000
 Weight : ^77777720^000000
 Required Level: ^7777771^000000
 Jobs : ^777777All^000000
@@ -46068,7 +46118,13 @@ placeholder
 placeholder
 #
 5498#
-placeholder
+Made out of a Wolf King's fur and feels like you're surrounded by a dignified force when worn but basically worn for its looks.
+Class : ^777777Costume^000000
+Location: ^777777Upper ^000000
+Defense : ^7777770^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
 #
 5524#
 placeholder
@@ -46391,7 +46447,6 @@ Weight : ^7777771^000000
 14545#
 This well written, detailed manual explains Extremely Efficient battle methods.
 ^000088EXP rate increases to 300% for 30 minutes.^000000
-^ff0000330% for 30 minutes until 12/13/2011^000000
 ^ff0000Can be traded, stored, and vended^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
@@ -46851,7 +46906,7 @@ Contains the following:
 Weight :  ^7777771^000000
 #
 
-// ---------- Ep13.3 Äù½ºÆ®¾ÆÀÌÅÛ ------------
+// ---------- Ep13.3 Ã„Å¯ËÅŸÄ†Å½Å¾Ä†Å”ÄšÄ¹Å° ------------
 2463#
 ^ff0000This item cannot be traded with others.^000000
 It has a message inscribed - Feline boots of a forgotten era, with both an unpolished and polished beauty.
@@ -46939,7 +46994,7 @@ An old piece of sheet music filled with notes inscribed in blue ink.
 Weight : ^7777771^000000
 #
 
-// ---------- EP13.3 ½Å±Ô ¾ÆÀÌÅÛ ------------
+// ---------- EP13.3 ËÄ¹Ä…Ã” Å¾Ä†Å”ÄšÄ¹Å° ------------
 6321#
 A sturdy helm with hooked horns. Can be sold to Item Collectors.
 Weight : ^7777771^000000
@@ -47142,13 +47197,13 @@ Weapon Level : ^7777773^000000
 Required Level : ^777777105^000000
 Jobs : ^7777773rd Class Archer Type^000000
 #
-//---------- EP13.3 ¾÷µ¥ÀÌÆ® ÀÌÈÄ º¯°æ µÇ´Â ¾ÆÀÌÅÛ(±âÁ¸ ¾ÆÀÌÅÛ »èÁ¦ÇÏ°í ¾Æ·¡ Ãß°¡) ------------
-//4229 ´ç ¹ø¿ªÀº ÇØ´ç ¾ÆÀÌÅÛÀÇ ¿ø·¡ ÀÚ¸®·Î º¹»çµÇ°í Çö À§Ä¡´Â »èÁ¦ µÊ.
-//2140 ´ç ¹ø¿ªÀº ÇØ´ç ¾ÆÀÌÅÛÀÇ ¿ø·¡ ÀÚ¸®·Î º¹»çµÇ°í Çö À§Ä¡´Â »èÁ¦ µÊ.
-//2794 ´ç ¹ø¿ªÀº ÇØ´ç ¾ÆÀÌÅÛÀÇ ¿ø·¡ ÀÚ¸®·Î º¹»çµÇ°í Çö À§Ä¡´Â »èÁ¦ µÊ.
-//15002 ´ç ¹ø¿ªÀº ÇØ´ç ¾ÆÀÌÅÛÀÇ ¿ø·¡ ÀÚ¸®·Î º¹»çµÇ°í Çö À§Ä¡´Â »èÁ¦ µÊ.
-//1549  ´ç ¹ø¿ªÀº ÇØ´ç ¾ÆÀÌÅÛÀÇ ¿ø·¡ ÀÚ¸®·Î º¹»çµÇ°í Çö À§Ä¡´Â »èÁ¦ µÊ.
-// ----------¾Æ·¡ ¾ÆÀÌÅÛµéÀº µ¥¿ÍÅ¸ ¾÷µ¥ÀÌÆ® ½Ã¿¡µµ µé¾î°¡´Â ¾ÆÀÌÅÛµé·Î µ¥¿ÍÅ¸ ¾÷µ¥ÀÌÆ® ÀÌÈÄ¶ó¸é º°µµ·Î Ãß°¡ÇÒ ÇÊ¿ä¾øÀ½ ------------
+//---------- EP13.3 Å¾Ã·Ä¾Ä½Å”ÄšÄ†Å½ Å”ÄšÄŒÃ„ ÅŸÅ»Â°Ä‡ Ä¾Ã‡Â´Ã‚ Å¾Ä†Å”ÄšÄ¹Å°(Ä…Ã¢ÃÂ¸ Å¾Ä†Å”ÄšÄ¹Å° Å¥ÄÃÅšÃ‡ÄÂ°Ã­ Å¾Ä†Ë‡Ä„ Ä‚ÃŸÂ°Ä„) ------------
+//4229 Â´Ã§ Å¡Å™Å¼ÅÅ”ÅŸ Ã‡Å˜Â´Ã§ Å¾Ä†Å”ÄšÄ¹Å°Å”Ã‡ Å¼Å™Ë‡Ä„ Å”ÃšÂ¸Å½Ë‡Ã ÅŸÅ¡Å¥Ã§Ä¾Ã‡Â°Ã­ Ã‡Ã¶ Å”Â§Ã„Ä„Â´Ã‚ Å¥ÄÃÅš Ä¾Ä˜.
+//2140 Â´Ã§ Å¡Å™Å¼ÅÅ”ÅŸ Ã‡Å˜Â´Ã§ Å¾Ä†Å”ÄšÄ¹Å°Å”Ã‡ Å¼Å™Ë‡Ä„ Å”ÃšÂ¸Å½Ë‡Ã ÅŸÅ¡Å¥Ã§Ä¾Ã‡Â°Ã­ Ã‡Ã¶ Å”Â§Ã„Ä„Â´Ã‚ Å¥ÄÃÅš Ä¾Ä˜.
+//2794 Â´Ã§ Å¡Å™Å¼ÅÅ”ÅŸ Ã‡Å˜Â´Ã§ Å¾Ä†Å”ÄšÄ¹Å°Å”Ã‡ Å¼Å™Ë‡Ä„ Å”ÃšÂ¸Å½Ë‡Ã ÅŸÅ¡Å¥Ã§Ä¾Ã‡Â°Ã­ Ã‡Ã¶ Å”Â§Ã„Ä„Â´Ã‚ Å¥ÄÃÅš Ä¾Ä˜.
+//15002 Â´Ã§ Å¡Å™Å¼ÅÅ”ÅŸ Ã‡Å˜Â´Ã§ Å¾Ä†Å”ÄšÄ¹Å°Å”Ã‡ Å¼Å™Ë‡Ä„ Å”ÃšÂ¸Å½Ë‡Ã ÅŸÅ¡Å¥Ã§Ä¾Ã‡Â°Ã­ Ã‡Ã¶ Å”Â§Ã„Ä„Â´Ã‚ Å¥ÄÃÅš Ä¾Ä˜.
+//1549  Â´Ã§ Å¡Å™Å¼ÅÅ”ÅŸ Ã‡Å˜Â´Ã§ Å¾Ä†Å”ÄšÄ¹Å°Å”Ã‡ Å¼Å™Ë‡Ä„ Å”ÃšÂ¸Å½Ë‡Ã ÅŸÅ¡Å¥Ã§Ä¾Ã‡Â°Ã­ Ã‡Ã¶ Å”Â§Ã„Ä„Â´Ã‚ Å¥ÄÃÅš Ä¾Ä˜.
+// ----------Å¾Ä†Ë‡Ä„ Å¾Ä†Å”ÄšÄ¹Å°Ä¾Ã©Å”ÅŸ Ä¾Ä½Å¼ÃÄ¹Â¸ Å¾Ã·Ä¾Ä½Å”ÄšÄ†Å½ ËÄ‚Å¼Ä„Ä¾Ä¾ Ä¾Ã©Å¾Ã®Â°Ä„Â´Ã‚ Å¾Ä†Å”ÄšÄ¹Å°Ä¾Ã©Ë‡Ã Ä¾Ä½Å¼ÃÄ¹Â¸ Å¾Ã·Ä¾Ä½Å”ÄšÄ†Å½ Å”ÄšÄŒÃ„Å›Ã³Â¸Ã© ÅŸÂ°Ä¾Ä¾Ë‡Ã Ä‚ÃŸÂ°Ä„Ã‡Å‡ Ã‡Ä˜Å¼Ã¤Å¾Å™Å”Ë ------------
 4760#
 MATK + 1%,
 Fixed casting time reduced by 1%.
@@ -47410,12 +47465,28 @@ A very cute egg scroll. It feels so fancy that makes you expect something from i
 Weight : ^7777771^000000
 #
 12545#
-A very cute egg scroll. It feels so fancy that makes you expect something from it.
+1 Kafra Card Box
+4 Wind Walk 10 Scroll Boxes
+3 All In One Ring Boxes
 Weight : ^7777771^000000
 #
 12577#
-A very cute, football looking scroll. Limited Edition! It feels so fancy that makes you expect something from it.
-Weight : ^7777771^000000
+A box that contains 1 Rideword Hat
+Description
+A hat designed to mimic the look of a terrible magic book which attacks people.
+When physically melee attacking, there is a 5% chance to recover 8% of your damage as HP.
+When physically melee attacking, there is a 1% chance to recover 4% of your damage as SP.
+Drains 10 HP every 5 seconds while equipped.
+^ffffff_^000000
+^ff0000If refined to +9 or higher, the HP and SP recovery is doubled^000000
+Slot : ^7777771^000000
+Class : ^777777Headgear^000000
+Location : ^777777Upper^000000
+Defense : ^7777773^000000
+Weight : ^77777730^000000
+Level : ^77777740^000000
+Job : ^777777All^000000
+Box Weight : ^7777771^000000
 #
 12595#
 A box that contains 1 Incarnation of Morocc Doll
@@ -47814,11 +47885,7 @@ Matk +3%
 A box that contains 1 Scallywag's Hat
 Description:
 Aaarrrgghhhh, this hat be made out of bona fide unidentified dead animal leather. With time, aging and weathering, most of the hat formed into it's current shape and dyed a bright red.
-^ff0000Effect until October 4th, 2011^000000
-^0000ffIncreases EXP gained by 10%
-If refined to 5, EXP gained increases to 15%.
-If refined to 7, EXP gained increases to 25%.
-Increases EXP gained by 10% for every refine level above 7.^000000
+Str +1
 Class : ^777777Headgear^000000
 Location: ^777777Upper^000000
 Defense: ^7777771^000000
@@ -47829,7 +47896,7 @@ Jobs: ^777777All^000000
 
 5774#
 Aaarrrgghhhh, this hat be made out of bona fide unidentified dead animal leather. With time, aging and weathering, most of the hat formed into it's current shape and dyed a bright red.
-
+Str +1
 Class : ^777777Headgear^000000
 Location: ^777777Upper^000000
 Defense: ^7777771^000000
@@ -48094,7 +48161,6 @@ Jobs : ^777777All^000000
 #
 19509#
 Have the appearance of wearing the wings of a butterfly as your ears with this accessory.
-^ff0000This item is account bound^000000
 Class : ^777777Costume^000000
 Location: ^777777Middle^000000
 Defense : ^7777770^000000
@@ -48104,7 +48170,6 @@ Jobs : ^777777All^000000
 #
 19510#
 You can look like you just rolled off the assembly line with these bolt-on ear accessories.
-^ff0000This item is account bound^000000
 Class : ^777777Costume^000000
 Location: ^777777Middle^000000
 Defense : ^7777770^000000
@@ -48114,7 +48179,6 @@ Jobs : ^777777All^000000
 #
 19513#
 A simple bird beak. Wearing this won't make you less fearful of things.
-^ff0000This item is account bound^000000
 Class : ^777777Lower^000000
 Location: ^777777Upper ^000000
 Defense : ^7777770^000000
@@ -48124,7 +48188,6 @@ Jobs : ^777777All^000000
 #
 19514#
 A neatly trimmed mustache reminiscent of the style worn by an 'Old Timey' actor from the past.
-^ff0000This item is account bound^000000
 Class : ^777777Costume^000000
 Location: ^777777Upper ^000000
 Defense : ^7777770^000000
@@ -48134,7 +48197,6 @@ Jobs : ^777777All^000000
 #
 19515#
 A simple yellow hat with a long feather in it. Fashionistas wear it to the side lest they be shunned.
-^ff0000This item is account bound^000000
 Class : ^777777Costume^000000
 Location: ^777777Upper ^000000
 Defense : ^7777770^000000
@@ -48144,7 +48206,6 @@ Jobs : ^777777All^000000
 #
 19516#
 A newly hatched baby bird chirps it's tunes on a twig of dreams.
-^ff0000This item is account bound^000000
 Class : ^777777Costume^000000
 Location: ^777777Upper ^000000
 Defense : ^7777770^000000
@@ -48154,7 +48215,6 @@ Jobs : ^777777All^000000
 #
 19517#
 A roosters dignified comb. But don't be fooled while wearing this or the yolk's on you!
-^ff0000This item is account bound^000000
 Class : ^777777Costume^000000
 Location: ^777777Upper ^000000
 Defense : ^7777770^000000
@@ -48164,7 +48224,6 @@ Jobs : ^777777All^000000
 #
 19518#
 Share your happiness with others with this brightly colored rainbow.
-^ff0000This item is account bound^000000
 Class : ^777777Costume^000000
 Location: ^777777Upper ^000000
 Defense : ^7777770^000000
@@ -48174,7 +48233,6 @@ Jobs : ^777777All^000000
 #
 19519#
 A dark thunder cloud that rivals the bolts created by Thor... well maybe not.
-^ff0000This item is account bound^000000
 Class : ^777777Costume^000000
 Location: ^777777Upper ^000000
 Defense : ^7777770^000000
@@ -48184,7 +48242,6 @@ Jobs : ^777777All^000000
 #
 19520#
 When it rains it pours. Especially when it's only raining above your head.
-^ff0000This item is account bound^000000
 Class : ^777777Costume^000000
 Location: ^777777Upper ^000000
 Defense : ^7777770^000000
@@ -48194,7 +48251,6 @@ Jobs : ^777777All^000000
 #
 19521#
 A circular shaped bowler hat reminiscent of the style worn by an 'Old Timey' actor from the past.
-^ff0000This item is account bound^000000
 Class : ^777777Costume^000000
 Location: ^777777Upper ^000000
 Defense : ^7777770^000000
@@ -48204,7 +48260,6 @@ Jobs : ^777777All^000000
 #
 19522#
 A mini red crown affixed to a headband and worn off to the side. Though not a true symbol of royalty, this crown does have a regal air about it.
-^ff0000This item is account bound^000000
 Class : ^777777Costume^000000
 Location: ^777777Upper ^000000
 Defense : ^7777770^000000
@@ -48326,7 +48381,6 @@ Weight : ^7777771^000000
 #
 
 12416#
-^ff0000Available from Nov. 23 - Dec. 6, 2011^000000.
 Opening it will certainly give you:
 -1x Safe to 7 Chance Box (1 of 3, Safe to 7 Headgear, Body Armor or Weapon Certificate)
 ^FFFFFF_^000000
@@ -48429,20 +48483,23 @@ Weight: ^7777771^000000
 
 6535#
 ^ff0000This item cannot be dropped, traded, mailed or vended.^000000
-A material to create Raccoon Hurray Team's Christmas Sock¡¦ though you're sure they mean Stocking
+A material to create Raccoon Hurray Team's Christmas SockÄ„Åš though you're sure they mean Stocking
 Weight : ^7777771^000000
 #
 6536#
 ^ff0000This item cannot be dropped, traded, mailed or vended.^000000
-A material to create Raccoon Hurray Team's Christmas Sock¡¦ though you're sure they mean Stocking
+A material to create Raccoon Hurray Team's Christmas SockÄ„Åš though you're sure they mean Stocking
 Weight : ^7777771^000000
 #
 18671#
 A Christmas hairband. Sporting the face Christmas' most famous reindeer Rudolf.
-During the Christmas season, has a chance of casting Increase Agi while physically attacking.
+During the Christmas season, has a chance of casting Increase Agi while attacking.
 Increases the healing potency of Carrots while worn.
-Class : ^777777Headgear^000000 Def : ^7777775^000000
-Location : ^777777Upper ^000000Weight : ^77777720^000000
+^ff0000Increase Agi effect and potency of Carrot heal will be removed on March 5, 2014^000000
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location : ^777777Upper ^000000
+Weight : ^77777720^000000
 Required Lv. : ^77777730^000000
 Jobs : ^777777All^000000
 #
@@ -48981,7 +49038,7 @@ Job : ^777777"Archbishop^000000
 A mace that strikes like the Judges gavel in deciding the fate of evil.
 Physical and Magical Attacks have a chance to increase damage by 40% to Demon monsters for 7 seconds.
 MATK + 180, STR + 2, INT + 2.
-If worn with Judgement Golves, Shoes and Shawl, increase Damage against Undead by 30%.
+If worn with Judgement Robe, Shoes and Shawl, increase Damage against Undead by 30%.
 Increase damage of Adoramus by 200%, and increase SP cost of Adoramus by 30.
 Type : ^777777Mace^000000
 Attack : ^777777170^000000
@@ -49009,7 +49066,7 @@ Job : ^777777"Archbishop^000000
 A mace that strikes like the Judges gavel in deciding the fate of evil.
 Physical and Magical Attacks have a chance to increase damage by 20% to Demon monsters for 7 seconds.
 MATK + 140, STR + 1, INT + 1.
-If worn with Judgement Gloves, Shoes and Shawl, increase Damage against Undead by 15%.
+If worn with Judgement Robe, Shoes and Shawl, increase Damage against Undead by 15%.
 Increase damage of Adoramus by 200%, and increase SP cost of Adoramus by 30.
 Type : ^777777Mace^000000
 Attack : ^777777170^000000
@@ -49042,6 +49099,10 @@ Job : ^777777Rune Knight^000000
 2477#
 Shoes that have long been known to be from the world of darkness.
 LUK + 3, MSP + 30.
+If worn with Sapha Hood, Cloth and Ring,
+Flee +10, Critical +15, Critical +40%
+Increases damage of Cross Impact by 20%
+Increases SP costs of skills by 10%
 Class : ^777777Shoes^000000
 Defense : ^77777718^000000
 Weight : ^77777740^000000
@@ -49097,6 +49158,10 @@ Job : ^777777Rune Knight^000000
 2577#
 A manteau that contains the reliquery remains of an ancient Assassin
 FLEE + 12, Inflict 1% more damage with Critical attacks per refine level.
+If worn with Sapha Cloth, Shoes and Ring,
+Flee +10, Critical +15, Critical +40%
+Increases damage of Cross Impact by 20%
+Increases SP costs of skills by 10%
 Class : ^777777Garment^000000
 Defense : ^77777713^000000
 Weight : ^77777710^000000
@@ -49153,6 +49218,10 @@ Job : ^777777Rune Knight^000000
 #
 2886#
 A ring that has long been known to be from the world of darkness.
+If worn with Sapha Hood, Shoes and Cloth,
+Flee +10, Critical +15, Critical +40%
+Increases damage of Cross Impact by 20%
+Increases SP costs of skills by 10%
 Class : ^777777Accessory^000000
 Defense : ^7777770^000000
 Weight : ^77777710^000000
@@ -49220,9 +49289,10 @@ Job : ^777777Rune Knight^000000
 Armor that contains the reliquery remains of an ancient Assassin.
 LUK + 3, Has a chance of auto-casting Meteor Assault level 1 while physically attacking.
 If higher level of this skill is learned then it will be cast.
-If worn with Greaves, shoes and accessory,
-Flee +10, Critical +15, Increases damage of Cross Impact by 20
-Increases SP costs of skills by 10
+If worn with Sapha Hood, Shoes and Ring,
+Flee +10, Critical +15, Critical +40%
+Increases damage of Cross Impact by 20%
+Increases SP costs of skills by 10%
 Class : ^777777Armor^000000
 Defense : ^77777745^000000
 Weight : ^77777710^000000
@@ -49760,8 +49830,7 @@ Available by quest until February 7, 2012 in celebration of the Year of the Drag
 12% tolerance to Dragon Race monsters
 8% damage to Dragon Race monsters
 5% bonus XP when fighting Dragons.
-^770000Cannot be upgraded
-Account Bound^000000
+^770000Cannot be upgraded^000000
 Class : ^777777Costume Headgear^000000
 Location : ^777777Upper^000000
 Defense: ^7777770^000000
@@ -50031,7 +50100,7 @@ Weight : ^7777772^000000
 Wearing these items will give you the presence of the tastiest poultry in all of Rune Midgard.
 A box that contains 1 of each:
 -1x Costume: Chicken Beak
--1x Costume: Rooster¡¯s Comb
+-1x Costume: RoosterÄ„Å»s Comb
 This box can be stored and traded, the items inside are account bound.
 Box Weight : ^7777771^000000
 #
@@ -50269,24 +50338,24 @@ Compound on : ^777777Shoes^000000
 Weight : ^7777771^000000
 #
 4483#
-ÀÏÁ¤È®·ü(5%)·Î Àû¿¡°Ô ÁØ ´ë¹ÌÁöÀÇ 5% ¸¦ ÀÚ½ÅÀÇ SP·Î Èí¼ö ÇÑ´Ù. 15Á¦·Ã ÀÌ»óÀÏ °æ¿ì Èí¼öÇÒ È®·üÀÌ 7%·Î Áõ°¡.
+Å”ÄÃÂ¤ÄŒÅ½Ë‡Ã¼(5%)Ë‡Ã Å”Å±Å¼Ä„Â°Ã” ÃÅ˜ Â´Ã«Å¡ÄšÃÃ¶Å”Ã‡ 5% Â¸Åš Å”ÃšËÄ¹Å”Ã‡ SPË‡Ã ÄŒÃ­ÅºÃ¶ Ã‡ÅƒÂ´Å®. 15ÃÅšË‡Ä‚ Å”ÄšÅ¥Ã³Å”Ä Â°Ä‡Å¼Ä› ÄŒÃ­ÅºÃ¶Ã‡Å‡ ÄŒÅ½Ë‡Ã¼Å”Äš 7%Ë‡Ã ÃÅ‘Â°Ä„.
 Class : ^777777Card^000000
-Compound on : ^777777¹«±â^000000
+Compound on : ^777777Å¡Å¤Ä…Ã¢^000000
 Weight : ^7777771^000000
 #
 4484#
-Áª½ºÅæÀ» ¼Ò¸ğÇÏ´Â ¸¶¹ıµéÀ» ¼Ò¸ğ¾øÀÌ »ç¿ë°¡´ÉÇÏ°Ô ÇÑ´Ù.
-½ºÅ³ »ç¿ë½Ã SP¼Ò¸ğ·®ÀÌ 50% Áõ°¡ÇÑ´Ù.
-15Á¦·Ã ÀÌ»ó ÀÏ °æ¿ì ½ºÅ³ »ç¿ë½Ã SP¼Ò¸ğ·®ÀÌ 35% Áõ°¡.
+ÃÅËÅŸÄ¹Ä‡Å”Å¥ ÅºÅ‡Â¸Ä‘Ã‡ÄÂ´Ã‚ Â¸Å›Å¡Ã½Ä¾Ã©Å”Å¥ ÅºÅ‡Â¸Ä‘Å¾Å™Å”Äš Å¥Ã§Å¼Ã«Â°Ä„Â´Ã‰Ã‡ÄÂ°Ã” Ã‡ÅƒÂ´Å®.
+ËÅŸÄ¹Å‚ Å¥Ã§Å¼Ã«ËÄ‚ SPÅºÅ‡Â¸Ä‘Ë‡Å½Å”Äš 50% ÃÅ‘Â°Ä„Ã‡ÅƒÂ´Å®.
+15ÃÅšË‡Ä‚ Å”ÄšÅ¥Ã³ Å”Ä Â°Ä‡Å¼Ä› ËÅŸÄ¹Å‚ Å¥Ã§Å¼Ã«ËÄ‚ SPÅºÅ‡Â¸Ä‘Ë‡Å½Å”Äš 35% ÃÅ‘Â°Ä„.
 Class : ^777777Card^000000
 Compound on : ^777777Headgear^000000
 Weight : ^7777771^000000
 #
 4485#
-¼º¼Ó¼º, ¾Ï¼Ó¼º, Ãµ»çÇü, ¾Ç¸¶Çü ¸ó½ºÅÍ¿¡°Ô ¹°¸® µ¥¹ÌÁö 20% Ãß°¡.
-15Á¦·Ã ÀÌ»óÀÏ °æ¿ì, ¼º¼Ó¼º, ¾Ï¼Ó¼º, Ãµ»çÇü, ¾Ç¸¶Çü ¸ó½ºÅÍ¿¡°Ô ¹°¸® µ¥¹ÌÁö 10% Ãß°¡ Áõ°¡.
+ÅºÅŸÅºÃ“ÅºÅŸ, Å¾ÄÅºÃ“ÅºÅŸ, Ä‚Ä¾Å¥Ã§Ã‡Ã¼, Å¾Ã‡Â¸Å›Ã‡Ã¼ Â¸Ã³ËÅŸÄ¹ÃÅ¼Ä„Â°Ã” Å¡Â°Â¸Å½ Ä¾Ä½Å¡ÄšÃÃ¶ 20% Ä‚ÃŸÂ°Ä„.
+15ÃÅšË‡Ä‚ Å”ÄšÅ¥Ã³Å”Ä Â°Ä‡Å¼Ä›, ÅºÅŸÅºÃ“ÅºÅŸ, Å¾ÄÅºÃ“ÅºÅŸ, Ä‚Ä¾Å¥Ã§Ã‡Ã¼, Å¾Ã‡Â¸Å›Ã‡Ã¼ Â¸Ã³ËÅŸÄ¹ÃÅ¼Ä„Â°Ã” Å¡Â°Â¸Å½ Ä¾Ä½Å¡ÄšÃÃ¶ 10% Ä‚ÃŸÂ°Ä„ ÃÅ‘Â°Ä„.
 Class : ^777777Card^000000
-Compound on : ^777777°©¿Ê^000000
+Compound on : ^777777Â°Å Å¼Ä˜^000000
 Weight : ^7777771^000000
 #
 2573#
@@ -50423,7 +50492,7 @@ Weight : ^7777770^000000
 Jobs: ^777777All^000000
 #
 
-// ---------- Port Malaya ½Å±Ô ¾ÆÀÌÅÛ ------------
+// ---------- Port Malaya ËÄ¹Ä…Ã” Å¾Ä†Å”ÄšÄ¹Å° ------------
 2169#
 Sturdy yet light, practical shield made from rattan.
 1% damage decrease from boss monsters per
@@ -50704,7 +50773,7 @@ Jobs : ^777777Guillotine Cross^000000
 1291#
 Increases damage to Demihuman monsters by 50%
 Increases damage of Cross Impact by 30%
-Decreases Flee by 30%
+Decreases Flee by 30
 Class : ^777777Katar ^000000
 Attack : ^777777200^000000
 Weight : ^777777150^000000
@@ -50830,7 +50899,7 @@ Weight : ^77777730^000000
 #
 
 19580#
-The ornamental version of long dead Pharaoh Amset-Ra¡¯s headdress. It is lightweight and can be worn over your existing hat-
+The ornamental version of long dead Pharaoh Amset-RaÄ„Å»s headdress. It is lightweight and can be worn over your existing hat-
 For decorative use.
 Class : ^777777Costume^000000
 Location: ^777777Upper & Lower^000000
@@ -50842,9 +50911,6 @@ Jobs : ^777777All^000000
 
 19581#
 The lucky, well-worn hat of former adventurer Mort Whimsey.
-During the Event, gives a chance of dropping artifact fragments while worn.
-These can be traded in to re-enter the Anniversary instance dungeon.
-This feature will be enabled on 6/12/12 when the instance dungeon is made available.
 Class : ^777777Costume^000000
 Location: ^777777Upper & Lower^000000
 Defense : ^7777770^000000
@@ -50859,7 +50925,6 @@ East Costume Set :
 Costume Sakkat
 Costume Dark Blindfold,
 Costume Angry Mouth
-Untradable
 Class : ^777777Costume^000000
 Location: ^777777Upper^000000
 Defense : ^7777770^000000
@@ -50874,7 +50939,6 @@ East Costume Set :
 Costume Sakkat
 Costume Dark Blindfold,
 Costume Angry Mouth
-Untradable
 Class : ^777777Costume^000000
 Location: ^777777Middle^000000
 Defense : ^7777770^000000
@@ -50889,7 +50953,6 @@ East Costume Set :
 Costume Sakkat
 Costume Dark Blindfold,
 Costume Angry Mouth
-Untradable
 Class : ^777777Costume^000000
 Location: ^777777Lower^000000
 Defense : ^7777770^000000
@@ -50971,7 +51034,7 @@ Class : ^777777Headgear^000000
 Defense : ^7777775^000000
 Location : ^777777Upper & Middle^000000
 Weight : ^7777770^000000
-Required Lv : ^7777770^000000
+Required Level : ^7777770^000000
 Jobs : ^777777All^000000
 #
 18543#
@@ -51022,7 +51085,7 @@ Class : ^777777Headgear^000000
 Defense : ^7777773^000000
 Location : ^777777Upper ^000000
 Weight : ^77777720^000000
-Required Lv : ^7777771^000000
+Required Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000
 #
 18571#
@@ -51038,12 +51101,13 @@ Jobs : ^777777All^000000
 #
 5788#
 Mysterious glasses which are said to show objects stereoscopically.
-Increase 4% of the Magical Damage inflicted to Neutral type monsters. Decrease 5% of the damage getting from Neutral type monsters.
+Increase 4% of the Magical Damage inflicted to Formless type monsters.
+Reduces Neutral elemental damage received by 5%.
 Class : ^777777Headgear^000000
 Defense : ^7777771^000000
 Location : ^777777Middle ^000000
 Weight : ^77777720^000000
-Required Lv : ^77777710^000000
+Required Level : ^77777710^000000
 Jobs : ^777777All Jobs^000000
 #
 18638#
@@ -51090,7 +51154,7 @@ Class : ^777777Headgear^000000
 Defense : ^7777770^000000
 Location : ^777777Lower^000000
 Weight : ^77777720^000000
-Required Lv : ^77777720^000000
+Required Level : ^77777720^000000
 Location : ^777777All except Novice^000000
 #
 18643#
@@ -51100,7 +51164,7 @@ Class : ^777777Headgear^000000
 Defense : ^7777770^000000
 Location : ^777777Lower^000000
 Weight : ^77777720^000000
-Required Lv : ^77777720^000000
+Required Level : ^77777720^000000
 Location : ^777777All except Novice^000000
 #
 18644#
@@ -51110,7 +51174,7 @@ Class : ^777777Headgear^000000
 Defense : ^7777770^000000
 Location : ^777777Lower^000000
 Weight : ^77777720^000000
-Required Lv : ^77777720^000000
+Required Level : ^77777720^000000
 Location : ^777777All except Novice^000000
 #
 18645#
@@ -54207,7 +54271,7 @@ for everyone else...^000000
 Box Weight : ^7777771^000000
 #
 
-//-------½É¿¬ÀÇÈ¸¶û Ãß°¡ ¾ÆÀÌÅÛ------------
+//-------ËÃ‰Å¼Å¹Å”Ã‡ÄŒÂ¸Å›Å± Ä‚ÃŸÂ°Ä„ Å¾Ä†Å”ÄšÄ¹Å°------------
 1293#
 *Stats during WoE & PVP
 Reduces the target's Def and Mdef to 1 on successful hit. This effect does not work with skills.
@@ -55074,7 +55138,7 @@ Jobs : ^777777All^000000
 //Malangdo
 1198#
 ^000088Rental Item^000000
-A fish used as a cutlass for it¡¯s long knife-like shape. It is cold to the touch.
+A fish used as a cutlass for itÄ„Å»s long knife-like shape. It is cold to the touch.
 CRI + 20, Critical Damage 50% increase.
 when Attacking causes freeze at regular rate.
 if base level is over 100, ATK + 50 
@@ -55252,7 +55316,7 @@ Weight : ^7777771^000000
 16749#
 A box that has snow crab from malangdo area (1 hour rental)
 ^000088Rental Item^000000
-Crabs usually, live in sand or mud but this is used as a bow for some odd reason¡¦
+Crabs usually, live in sand or mud but this is used as a bow for some odd reasonÄ„Åš
 LUK + 3, critical damage increase 50%.
 if base LV over100, ranged  physical Attack +20%
 Class : ^777777bow^000000 Attack : ^777777120^000000
@@ -55266,7 +55330,7 @@ Weight : ^7777771^000000
 16750#
 A box that has snow crab from malangdo area (7 days rental)
 ^000088Rental Item^000000
-Crabs usually, live in sand or mud but this is used as a bow for some odd reason¡¦
+Crabs usually, live in sand or mud but this is used as a bow for some odd reasonÄ„Åš
 LUK + 3, critical damage increase 50%.
 if base LV over100, ranged  physical Attack +20%
 Class : ^777777bow^000000 Attack : ^777777120^000000
@@ -55279,7 +55343,7 @@ Weight : ^7777771^000000
 #
 18107#
 ^000088Rental Item^000000
-Crabs usually, live in sand or mud but this is used as a bow for some odd reason¡¦
+Crabs usually, live in sand or mud but this is used as a bow for some odd reasonÄ„Åš
 LUK + 3, critical damage 50%.
 if base LV over100, ranged  physical Attack +20%
 Class : ^777777bow^000000 Attack : ^777777120^000000
@@ -55576,7 +55640,7 @@ Weight : ^7777775^000000
 #
 12636#
 Delicious canned food from Malangdo.
-You will think about the sea and see the sights  of  Malangdo in your mind when you eat it¡¦ Transports you to Malangdo when consumed.
+You will think about the sea and see the sights  of  Malangdo in your mind when you eat itÄ„Åš Transports you to Malangdo when consumed.
 Weight : ^7777770^000000
 #
 12637#
@@ -55700,6 +55764,12 @@ Even when worn on your head and can re-generate itself slowly when eaten.
 Event effect: Small chance to drop restorative Pizza consumables when attacking monsters.
 When upgraded to +7 gives 3% chance to use agi up Lv 1 when hit with a physical attack
 When upgraded to +9 or higher gives SP regen +15% HP regen +15%
+Class : ^777777Headgear^000000
+Defense: ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^77777760^000000
+Required Level : ^7777771^000000
+Jobs: ^777777All^000000
 #
 
 4848#
@@ -55834,8 +55904,8 @@ The key ingredient to build the cookie house for Raccoon Hooray team for Christm
 Weight : ^7777771^000000
 #
 6682#
-^ff0000This Item Account Bounds.^000000
-The bag has a lot of goods that Raccoon Hooray team borrowed without permission. You should give this back to the owner.
+^ff0000This Item Account Bound^000000
+The bag has a lot of goods that the Raccoon Hooray team borrowed without permission. You should give this back to the owner.
 Weight : ^7777771^000000
 #
 18850#
@@ -55856,7 +55926,6 @@ Jobs : ^777777All^000000
 19707#
 Christmas hat that Raccoon Hooray team 'borrowed' from Santa.
 It is very helpful for the Raccoons to keep warm since they're currently homeless.
-^ff0000Adds 25% EXP bonus for any monster killed until May 7, 2013^000000
 Class : ^777777Costume^000000
 Location : ^777777Upper ^000000
 Weight : ^7777770^000000
@@ -56259,7 +56328,7 @@ Applicable Job : ^777777Ninja Class^000000
 Special Kunai designed to hold gunpowder in the handle for explosion on target and surroundings. Careful handling is required!
 Class : ^777777Throwing Weapon^000000
 Atk : ^77777750^000000
-Weight : ^7777773^000000      Property : ^777777¹«^000000
+Weight : ^7777773^000000      Property : ^777777Å¡Å¤^000000
 Level Limit : ^777777100^000000
 #
 13311#
@@ -56757,7 +56826,6 @@ Job : ^777777All jobs^000000
 A moroccan style lamp that has lucky powers in it.
 Hmm, rubbing it doesn't seem to make any genies pop out...
 LUK + 10
-^ff0000Account Bound^000000
 Class : ^777777Costume Headgear^000000
 Defense : ^7777770^000000
 Location : ^777777Upper ^000000
@@ -56777,7 +56845,7 @@ Weight : ^7777775^000000
 A necklace from Ettlang the ancestor of ancient Laphine. It shows his will to revive Bifrost.
 MDEF + 10.
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^7777775^000000
 Required Level : ^777777100^000000
 Job : ^777777All^000000
@@ -56787,9 +56855,9 @@ Job : ^777777All^000000
 A little broach made as the shape of Laphine's wing.
 Provides the ability to return to Eclage.
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^7777771^000000
-Required LV : ^77777790^000000
+Required Level : ^77777790^000000
 Job : ^777777All^000000
 #
 2917#
@@ -56798,9 +56866,9 @@ MHP + 100, MSP + 20
 ATK +1 per 10 points of STR.
 ATK +1% when STR is 110 or higher
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 2918#
@@ -56809,9 +56877,9 @@ MHP + 100, MSP + 20
 MATK +1 per 10 points of INT.
 MATK +1% when INT is 110 or higher
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 2919#
@@ -56820,9 +56888,9 @@ MHP + 100, MSP + 20
 FLEE+1 per 10 points of AGI.
 Perfect Dodge +1 when AGI is 110 or higher
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 2920#
@@ -56831,9 +56899,9 @@ MHP + 100, MSP + 20
 MHP+50 per 10 points of VIT
 MHP + 1% when VIT is 110 or higher. 
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 2921#
@@ -56842,9 +56910,9 @@ MHP + 100, MSP + 20
 HIT+1 per 10 points of DEX.
 Range ATK + 1% when DEX is 110 or higher.
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 2922#
@@ -56853,9 +56921,9 @@ MHP + 100, MSP + 20
 CRIT+1 per 10 points of LUK.
 Critical damage 1% when LUK is 110 or higher.
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 2923#
@@ -56864,9 +56932,9 @@ MHP + 100, MSP + 20
 ATK +1 per 10 points of STR.
 ATK +1% when STR is 110 or higher
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 2924#
@@ -56875,9 +56943,9 @@ MHP + 100, MSP + 20
 MATK +1 per 10 points of INT.
 MATK +1% when INT is 110 or higher
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 2925#
@@ -56886,9 +56954,9 @@ MHP + 100, MSP + 20
 FLEE+1 per 10 points of AGI.
 Perfect Dodge +1 when AGI is 110 or higher
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 2926#
@@ -56897,9 +56965,9 @@ MHP + 100, MSP + 20
 MHP+50 per 10 points of VIT
 MHP + 1% when VIT is 110 or higher. 
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 2927#
@@ -56908,9 +56976,9 @@ MHP + 100, MSP + 20
 HIT+1 per 10 points of DEX.
 Range ATK + 1% when DEX is 110 or higher.
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 2928#
@@ -56919,9 +56987,9 @@ MHP + 100, MSP + 20
 CRIT+1 per 10 points of LUK.
 Critical damage 1% when LUK is 110 or higher.
 Class : ^777777Accessary^000000 
-Def : ^7777770^000000
+Defense : ^7777770^000000
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 6081#
@@ -57050,7 +57118,7 @@ Wolf face shaped fluffy hood. Useful when you cannot sleep well.
 Class : ^777777Costume^000000
 Location : ^777777Upper ^000000 
 Weight : ^77777730^000000
-Required LV : ^77777770^000000
+Required Level : ^77777770^000000
 Job : ^777777All^000000
 #
 19545#
@@ -57058,7 +57126,7 @@ Lousy black hat for school kids.
 Class : ^777777Costume^000000
 Location : ^777777Upper ^000000 
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 19546#
@@ -57066,7 +57134,7 @@ A Helm of 'Battle Princess' who serves Odin.
 Class : ^777777Costume^000000
 Location : ^777777Upper ^000000 
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 19547#
@@ -57074,7 +57142,7 @@ Copied hat of Baby Deviruchi.
 Class : ^777777Costume^000000
 Location : ^777777Upper ^000000 
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 19548#
@@ -57082,7 +57150,7 @@ Frog god shaped Hat.
 Class : ^777777Costume^000000
 Location : ^777777Upper ^000000 
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 19549#
@@ -57090,7 +57158,7 @@ Goat shape helm gives spot light for the user.
 Class : ^777777Costume^000000
 Location : ^777777Upper ^000000 
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 19550#
@@ -57098,7 +57166,7 @@ Wear this when you want to look cute for your beloved.
 Class : ^777777Costume^000000
 Location : ^777777Middle ^000000 
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 19551#
@@ -57106,7 +57174,7 @@ Modeled after the long ears of a fairy, when worn you can hear fairys playing in
 Class : ^777777Costume^000000
 Location : ^777777Middle ^000000 
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 19552#
@@ -57114,7 +57182,7 @@ A little flower leaf. The whole world seems pretty and happy.
 Class : ^777777Costume^000000
 Location : ^777777Low ^000000 
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 19553#
@@ -57122,14 +57190,14 @@ A dark mask for assassins.
 Class : ^777777Costume^000000
 Location : ^777777Low ^000000 
 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 19554#
 A smily face mask eastern style, sculpted carefully. Makes you feel like home.
 Class : ^777777Costume^000000
 Location : ^777777Middle Low^000000 Weight : ^77777710^000000
-Required LV : ^777777100^000000
+Required Level : ^777777100^000000
 Job : ^777777All^000000
 #
 2904#
@@ -57331,7 +57399,7 @@ Jobs : ^777777Warlock^000000
 18795#
 ^FF0000Can be obtained from Poring Festival or Item Mall.^000000
 ^FF0000This item is Account Bound^000000
-A hat named after the mysterious bird that sings at night. It¡¯s song is used to cause night blindness to mask its true form in order to eat humans that stray too deep into the forest.
+A hat named after the mysterious bird that sings at night. ItÄ„Å»s song is used to cause night blindness to mask its true form in order to eat humans that stray too deep into the forest.
 -Reduces fixed casting time of all skills by 5% for each level of Voice Lessons learned.
 -If upgraded to +7 or higher, increases Severe Rainstorm damage by 25%.
 -If upgraded to +9 or higher, Increases MaxSP by 200
@@ -57379,19 +57447,17 @@ Jobs : ^777777All^000000
 An armored helmet created from melting down battle worn armors donated by powerful gladiators of times past. Only the most distinguished duelists can wear this helmet. 
 Maximum HP+100 
 Low chance to reflect magical damage 
-^ff0000Account Bound^000000
 Class : ^777777Headgear^000000
 Location : ^777777Upper^000000
-Weight : ^77777780^000000
+Weight : ^77777730^000000
 Defense : ^7777776^000000
-Required Level : ^77777780^000000
+Required Level : ^77777775^000000
 Jobs : ^777777All^000000
 #
 
 5657#
 A long smoking pipe used to promote peace.
 Reduces Damage from Demon and Undead monsters by 5%.
-^ff0000Account Bound^000000
 Class : ^777777Headgear^000000
 Location : ^777777Lower^000000
 Weight : ^77777710^000000
@@ -57633,9 +57699,9 @@ RWC Crown of victory
 All Stats + 7, MDEF + 5.
 Indestructible
 Immunity to Stun, Curse and Blind
-Class : ^777777Helm^000000 Defense : ^77777712^000000
+Class : ^777777Headgear^000000 Defense : ^77777712^000000
 Location : ^777777Upper ^000000Weight : ^77777750^000000
-Required Lv : ^7777771^000000
+Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 #
 18780#
@@ -57644,9 +57710,9 @@ RWC Crown of victory
 All Stats + 5, MDEF + 3.
 indestructible
 Immunity to Stun and Curse
-Class : ^777777Helm^000000 Defense : ^77777712^000000
+Class : ^777777Headgear^000000 Defense : ^77777712^000000
 Location : ^777777Upper ^000000Weight : ^77777750^000000
-Required Lv : ^7777771^000000
+Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 #
 18781#
@@ -57655,9 +57721,9 @@ RWC Crown of victory
 All Stats + 3, MDEF + 1.
 indestructible
 Immunity to Curse
-Class : ^777777Helm^000000 Defense : ^77777712^000000
+Class : ^777777Headgear^000000 Defense : ^77777712^000000
 Location : ^777777Upper ^000000Weight : ^77777750^000000
-Required Lv : ^7777771^000000
+Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 #
 18796#
@@ -57666,9 +57732,9 @@ RWC Crown of victory
 All Stats + 2.
 indestructible
 Immunity to Curse
-Class : ^777777Helm^000000 Defense : ^77777712^000000
+Class : ^777777Headgear^000000 Defense : ^77777712^000000
 Location : ^777777Upper ^000000Weight : ^77777750^000000
-Required Lv : ^7777771^000000
+Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 #
 
@@ -57732,8 +57798,8 @@ Type : ^777777Monster Egg^000000
 11058#
 "Too easy! Yoyo.. Even Fabre can handle this!"
 A combining manual easier than instant cook book. Just follow what they are saying.
-"^ff0000Caution : To start combination, you must double click this Combination Kit item.^000000"
-"^ff0000Cuation : You must have all Ingredients ready before combination.^000000"
+^ff0000Caution : To start combination, you must use a Combination Kit item.^000000
+^ff0000Caution : You must have all Ingredients ready before combining or the Combination Kit will be wasted.^000000
 Weight : ^7777771^000000
 #
 11551#
@@ -57777,9 +57843,9 @@ This will take you back to the Ninja occupation office in Amaz village.
 Weight : ^7777770^000000
 #
 12846#
-Novice Poring's favorate apple.
+Little Poring's favorite apple.
 Take a bit of its freshness.
-Type : ^777777Taiming Item^000000
+Type : ^777777Taming Item^000000
 Weight : ^7777775^000000
 #
 12847#
@@ -57788,7 +57854,10 @@ Basic tool box used to be given out free for merchant wanabees.
 Weight : ^7777771^000000
 #
 12849#
-Variety mixture kit with all kinds of items inside. Somehow we even have cooking tools in it also.
+^000088Crafting Item^000000
+^000088Cooking Item^000000
+A kit that combines various items. It even has cooking tools inside.
+^ff0000Caution : You must have all Ingredients ready before combining or the Combination Kit will be wasted.^000000
 Weight : ^7777771^000000
 #
 13116#
@@ -58101,4 +58170,733 @@ High Efficiency Battle Manual - This well written, detailed manual explains High
 ^000088EXP rate increases to 200% for 15 minutes.^000000
 ^ff0000Duration is 30 minutes until October 2, 2013^000000
 Weight : ^7777771^000000
+#
+
+19892#
+A hat named after the mysterious bird that sings at night.
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper ^000000
+Weight : ^77777710^000000
+Job : ^777777All Jobs^000000
+#
+19893#
+Just an ordinary black magician's hat.  For some reason, you feel somewhat extraordinary while wearing it.
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper ^000000
+Weight : ^77777710^000000
+Job : ^777777All Jobs^000000
+#
+19894#
+A ribbon once worn by a shrine maiden as she fought off hordes of demons and youkai.
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper ^000000
+Weight : ^77777710^000000
+Job : ^777777All Jobs^000000
+#
+19895#
+A hat that promotes a sophisticated yet sleepy look. It once belonged to an ancient magician who was well known for her vast knowledge and lazy behaviour, to the point she was nicknamed "The Great Unmoving Library."
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper ^000000
+Weight : ^77777710^000000
+Job : ^777777All Jobs^000000
+#
+
+13827#
+A fantastic box that contains costumes that can be worn by everyone!
+^ff0000This box is account bound but the hats inside are not^000000
+Description:
+Randomly gives one of the following Costumes:
+^0000ffCostume:_Night_Sparrow_Hat^000000
+^0000ffCostume:_Ordinary_Black_Magician_Hat^000000
+^0000ffCostume:_Shrine_Maiden_Hat^000000
+^0000ffCostume:_Magician's_Night_Cap^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+
+21003#
+An oriental sword
+named after a legendary Japanese swordsmith.
+Curses its owner
+by a low chance.
+Critical rate +30%
+Increases Attack
+Speed.(Decreases Attack After Delay by 8%)
+Class :
+^777777Two-handed Sword^000000
+Attack Strength: ^777777155^000000
+Weight : ^777777100^000000
+Weapon Level: ^7777774^000000
+Required Level : ^77777748^000000
+Jobs: ^777777Swordman Class^000000
+#
+
+4505#
+MATK + 20, MSP - 1%.
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+4506#
+DEX + 2, If you are AN Archer class, increase addtional DEX + 1 per 3 refine levelS.
+Class : ^777777Card^000000
+Compound on : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4510#
+When short distance attacking, has a chance of inflicting deep sleep to enemies with certain rate.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4511#
+Magic attacks have a chance of silencing enemies.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4513#
+Increase Critical damage by 2%.
+If Thief class, Increase additionally 1% per 2 refine.
+Class : ^777777Card^000000
+Compound on : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4515#
+Reduce damage from Plant type enemies by 30%.
+Class : ^777777Card^000000
+Compound on : ^777777Å¡Ä‡Ä†Ä^00000000
+Weight : ^7777771^000000
+#
+4516#
+DEF + 50, FLEE - 25.
+Class : ^777777Card^000000
+Compound on : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+4518#
+Physical and Ranged Attacks have a chance of inflicting the burning status to enemies.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4521#
+Increase critical attacks by 15%.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4531#
+Magic attacks have a chance of inflicting curse status to enemies.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+
+
+22669#
+Inside it contains 1 October Spooky Box
+^ff0000A box that can be traded / stored / vended.^000000
+The box, which seems to have soul in it.
+It looks like the box is keeping a straight face and it might be because of contents in it.
+Weight : ^77777720^000000
+#
+22670#
+The invitation from the world of dead
+When this scroll is torn up, either you can go to  Niflheim or breathing hard, falling down with a heart attack
+Weight : ^7777771^000000
+#
+19917#
+Pumpkin hat with gloomy mood.
+Class : ^777777Costume^000000
+Location : ^777777Upper^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+19918#
+Quve's mask, who is one of the mascots of  Niflheim
+Class : ^777777Costume^000000
+Location : ^777777Middle & Lower^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+6804#
+There is a sticker on this pumpkin that says "Certified Organic" -Blasphemous Alex [Nifflheim].
+Weight : ^7777771^000000
+#
+6805#
+Frankly, it is hard to distinguish this with organic one
+It doesn't even have a sticker on it 
+Weight : ^7777771^000000
+#
+19919#
+Quve's mask, who is one of the mascots of  Niflheim
+Class : ^777777Costume^000000
+Location : ^777777Middle & Lower^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+19920#
+Whisper's mask. It has been even more stronger than before
+Class : ^777777Costume^000000
+Location : ^777777Upper-Middle-Lower^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+19903#
+A dark and old hat with a witch's power.
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+
+17307#
+Lady Lucy presents this fine lucky box for your pleasure!
+When opened the opener receives from the box one of the following.
+Deviruchi Transformation Scroll x 15
+Poring Transformation Scroll x 15
++10 Food Box
+Safe to 7 All Pack
+KVM Badge x 400
+Battle ManualX3 6
+Very Red Juice 10
+Costume: Gloomy Pumpkin
+Costume: Lude Mask
+Costtume: Quve Mask
+Costume: Witches Mask
+Deviling Hat
+Whikibain Ears - Animated
+
+Weight : ^7777770^000000
+#
+17317#
+Lady Lucy presents this fine lucky box for your pleasure!
+When opened this crate gives 5 October Spooky boxes.
+Each of of the lucky boxes contain one of the following.
+Deviruchi Transformation Scroll x 15
+Poring Transformation Scroll x 15
++10 Food Box
+Safe to 7 All Pack
+KVM Badge x 400
+Battle ManualX3 6
+Very Red Juice 10
+Costume: Gloomy Pumpkin
+Costume: Lude Mask
+Costtume: Quve Mask
+Costume: Witches Mask
+Deviling Hat
+Whikibain Ears - Animated
+
+Weight : ^7777770^000000
+#
+
+5300#
+Champion's Helm
+Defense : ^7777774^000000
+Location : ^777777Upper ^000000
+Weight : ^77777780^000000
+Required Level : ^77777745^000000
+Job : ^777777All jobs^000000
+#
+
+22508#
+^ff0000Cannot be tradable with other accounts.^000000
+Emblem only for Paradise team member. it is made to be easy to carry.
+When using this by upgrading the function, it is possible to go back to the town.
+Reuse waiting time: 120min
+Weight : ^7777770^000000
+#
+6549#
+^ff0000Cannot be tradable with other accounts.^000000
+Paper coupon which has a cute painting and letters on it given as a reward for requests taken from Gelkah in Eden Group. Give these to Gelkah in Eden Group Headquarters and exchange them for prizes.
+Weight : ^7777770^000000
+#
+
+2183#
+Angel's Shield for Super Novice. Contains sacred demon resistance power.
+Reduce 5% damage from Demon type monsters.
+Reduce 5% damage from all element attacks except Neutral type attacks.
+All Stats +2 when equipped with ^777777Improved Angel's Reincarnation^000000
+Class : ^777777Shield^000000
+Defense : ^77777730^000000
+Weight : ^77777740^000000
+Required Level : ^77777799^000000
+Job : ^777777Novice^000000
+#
+2956#
+Magical ring that reduces damage towards the wearer.
+DEF + 10 , MDEF + 5, All Stats + 1.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^77777750^000000
+Job : ^777777All except Novice^000000
+#
+2957#
+Fire Spirit king's power ring. Once worn, your weapon will spout its boiling spirit power.
+A good pair with ^777777Advanced Ring Of Resonance^000000 Item.
+STR + 3
+VIT + 2
+ATK + 20
+Resistance to fire damage + 10%
+When dealing physical damage, autocasts various skills.
+When equipped in combination with Advanced Ring of Resonance, the autocast skills increases.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^77777785^000000
+Job : ^7777772nd Job and over/Taekwon Master/Soul Linker/Kagero/Oboro^000000
+#
+2958#
+Missing pair ring for ^777777Advanced Ring Of Flame Lord^000000. Equipping together will bring extra effects for both rings.
+AGI + 3
+VIT + 1
+MDEF + 2
+MATK + 10
+When recieving physical damage, autocasts various skills.
+Class : ^777777Accessory^000000
+Defense : ^7777772^000000
+Weight : ^77777710^000000
+Required Level : ^77777785^000000
+Job : ^7777772nd Job and over/Taekwon Master/Soul Linker/Kakero/Oboro^000000
+#
+6623#
+An energy source that helps you increase the ability of certain items
+Contains a small amount of energy.
+Weight : ^7777771^000000
+#
+6624#
+A refined energy source that helps you increase the ability of certain items.
+Contains an advanced concentrated form of energy.
+Weight : ^7777771^000000
+#
+6625#
+^ff0000Account Bound^000000
+A mighty energy source that helps you increase the ability of certain items
+The purest form of Energy Crystal.
+Weight : ^7777771^000000
+#
+15068#
+Angel's robe for Super Novices. Hugs you like it's only made for you!
+MDEF + 30.
+When equipped in combination with Advanced Angelic Cardigan, Damage from neutral element -5%
+^777777Angelic's item set bonus^000000 : Protection, Reincarnation, Guard, Cardigan, Angel's Kiss
+HP+900, SP+100, chance to cast assumptio when taking physical damage.
+Class : ^777777Armour^000000
+Defense : ^77777740^000000
+Weight : ^77777760^000000
+Required Level : ^77777799^000000
+Job : ^777777Novice class^000000
+#
+18760#
+Talented Wizard's magic hat. It looks weird, but works just fine. Remodeled for extra effect.
+INT + 2 , SP + 150.
+Each Refine adds MATK + 1
+When refined to +7 or higher, each refine adds INT +1.
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location : ^777777Upper ^000000
+Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Job : ^777777Magic Class/Soul Linker^000000
+#
+18761#
+Healthy live rabbit looking wizard hat. Very firm and strong item. Remodeled for extra effect.
+DEX + 1, AGI + 1, SP + 50.
+Each refine adds SP + 5
+When refined to +7 or higher, each refine adds DEX + 1.
+Class : ^777777Headgear^000000
+Defense : ^7777776^000000
+Location : ^777777Upper ^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Job : ^777777Magic Class/Acolyte Class/Soul Linker^000000
+#
+18762#
+A replica of Assassin troops' secret hiding mask. Slick shape. Remodeled for extra effect.
+AGI + 2, LUK + 2
+When refined to +7 or higher, +4 Perfect Flee
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location : ^777777Upper ^000000
+Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Job : ^777777All except Novice^000000
+#
+18763#
+A weird looking hat made for circus clown. Remodeled for extra effect.
+LUK + 2, MDEF + 5.
+When refined to +7 or higher, Increases critical damage by 5%
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Location : ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All except Novice^000000
+#
+18764#
+Rabbit ear decorated hairlace. Looks pretty, but hard to stand it straight. Remodeled for extra effect.
+LUK + 2
+When refined to +7 or higher, CRIT + 5
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Location : ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18765#
+Big hat for old pirate captain. Grotesque looks represents its owner himself very well. Worn out too much.
+Vit + 1 MHP + 5%
+When refined to +7 or higher, Neutral Resist + 1%
+When refiend to +9 or higher, MaxHP + 3%
+Class : ^777777Headgear^000000
+Defense : ^77777710^000000
+Location : ^777777Upper ^000000
+Weight : ^77777750^000000
+Required Level : ^77777799^000000
+Job : ^777777All except Novice^000000
+#
+18766#
+High defense rate helm with angels' feather attached. Unknown creator.
+AGI +1, LUK +1, MDEF +3
+When refiend to +7 or higher, AGI + 2, LUK + 2
+When refined to +9 or higher, Attack Speed + 1
+Class : ^777777Headgear^000000
+Defense : ^77777710^000000
+Location : ^777777Upper ^000000
+Weight : ^777777160^000000
+Required Level : ^77777799^000000
+Job : ^7777772nd Job and over/Taekwon Master/Soul Linker/Kakero/Oboro^000000
+#
+18767#
+Gold Winged hat that is a symbol for the great Sun God. Don't ask how to walk in this hat.
+STR +3, INT +2, ATK +10, MATK +10.
+When refined to +7 or higher, ATK + 15, MATK + 15
+When refined to +9 or higher, ATK + 15, MATK + 15
+Class : ^777777Headgear^000000
+Defense : ^7777774^000000
+Location : ^777777Upper Middle ^000000
+Weight : ^777777240^000000
+Required Level : ^77777799^000000
+Job : ^7777772nd Job and over/Taekwon Master/Soul Linker/Kakero/Oboro^000000
+#
+18768#
+A heavy helm made of firm bone that has a solid defense rate.
+Increases received shadow property damage by 15%
+Decreases neutral properly damage by 2%
+When refiend to +7 or higher, decreases neutral property damage by 2%.
+When refined to +9 or higher, decreases neutral property damage by 2%.
+Class : ^777777Headgear^000000
+Defense : ^77777715^000000
+Location : ^777777Upper ^000000
+Weight : ^77777780^000000
+Required Level : ^77777770^000000
+Job : ^777777Swordmas Class/Merchant Class^000000
+#
+18769#
+Monster Munak's hat. Big hat with an anonymous charm attached. It has been remodeled for extra effect.
+Decreases damage from Undead monsters by 10%.
+When refined to +7 or higher, increases damage against Undead monsters by 10%.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location : ^777777Upper Middle Low ^000000
+Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18770#
+Monster Bongun used to wear this hat with charm attached as a point. It has been remodeled for extra effect.
+Decreases damage from demon monsters by 10%.
+When refined to +7, increases damage against demon monsters by 10%.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location : ^777777Upper Middle Low ^000000
+Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18771#
+A mask worn by the dark hero of sad love story. Look into it you can feel his sadness.
+ATK +5, MATK +5
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location : ^777777Middle ^000000
+Weight : ^77777720^000000
+Required Level : ^77777720^000000
+Job : ^777777All^000000
+#
+18772#
+Fancy glasses helps you see long distances. Made with compressed glass.
+DEX + 1
+Ranged attack damage +1%.
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location : ^777777Middle ^000000
+Weight : ^77777710^000000
+Required Level : ^77777750^000000
+Job : ^777777Archer Class^000000
+#
+18773#
+A fish fin looking helm that protects Swordmen. This doesn't help you breathe under water.
+MHP +300, additional MaxHP given based on character's Base Level.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location : ^777777Middle ^000000
+Weight : ^77777730^000000
+Required Level : ^77777765^000000
+Job : ^777777Swordman Class^000000
+#
+18774#
+Dark mask for famous assassins. Calms you down just by wearing it.
+CRI +1, Critical damage +1%
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Location : ^777777Low ^000000
+Weight : ^77777710^000000
+Required Level : ^77777770^000000
+Job : ^777777Assassin, Priest Class^000000
+#
+18775#
+Steel made mask. Focussing on utility only. Protects your face from any kind of fire impacts.
+Fire property resistance + 10%
+DEX +5, LUK+ 5.
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
+Location : ^777777Middle & Lower^000000
+Weight : ^77777730^000000
+Required Level : ^77777750^000000
+Job : ^777777Merchant Class^000000
+#
+18776#
+An accessory blessed by a Super Novice guardian angel.
+SP Recovery Rate + 30%
+When used in combination with Advanced Angelic Cardigan, ATK + 10
+Class : ^777777Headgear^000000
+Defense : ^7777776^000000
+Location : ^777777Upper ^000000
+Weight : ^77777730^000000
+Required Level : ^77777799^000000
+Job : ^777777Novice Class^000000
+#
+20710#
+A cardigan for Super Novice guardian angel. Keeps you warm in any weather condition.
+HP Recovery Rate + 50%
+When used in combination with Advanced Angelic Protection, AGI + 5, Flee + 10
+Class : ^777777Clothing^000000
+Defense : ^7777776^000000
+Weight : ^77777740^000000
+Required Level : ^77777799^000000
+Job : ^777777Novice Class^000000
+#
+22014#
+Awkwardly designed shoes though you can see the creator's intention to make these shoes with higher quality.
+MaxHP/MaxSP +12%
+Extra DEF/MDEF based on refine rate
+Class : ^777777Shoes^000000
+Defense : ^77777713^000000
+Weight : ^77777750^000000
+Required Level : ^77777785^000000
+Job : ^7777772nd Job and over/Taekwon Master/Soul Linker/Kakero/Oboro^000000
+#
+22015#
+A sandle for Super Novice's guardian angel. Looks like this will boost up your jumping ability.
+MaxHP + 500, MaxSP + 100
+When used in combination with Advanced Angel's Kiss, MATK + 20
+Class : ^777777Shoes^000000
+Defense : ^7777778^000000
+Weight : ^77777730^000000
+Required Level : ^77777799^000000
+Job : ^777777Novice Class^000000
+#
+17450#
+Lady Lucy presents this fine groove pack for your pleasure!
+Always gives 1 Safe to 7 Chance Box and
+randomly gives one of the following:
+-1x Battle Manual X3
+-2x Bloody Branch
+-3x HE Bubble Gum
+-1x Safe to 7 Chance Box
+-10 Bowman Scroll 10
+-1x Safe to 10 Certificate
+-1x Gangster Scarf
+Weight : ^7777771^000000
+#
+
+17451#
+Lady Lucy presents this fine Black Friday lucky box for your pleasure!
+Randomly Contains one of the following:
+8 Battle Manuals x 3
+6 Blood Dead Branches
+10 HE Bubble Gum
+4 Safe to +7 Chance Boxes
+1 Safe to +10 Certificate
+1 Fallen Angel Wing
+1 Turkey on your Head Hat
+1 Rudolf Hairband
+1 Cd In Mouth
+Weight : ^7777771^000000
+#
+
+17458#
+A box with Steam Starter ring. Available for 30days..
+^ffffff_^000000
+Steam Starter ring -
+A ring maed for new Ragnarok users who started through steam.
+[HEAL] Lv 1 is available.
+The lower level your character has, the better aquired exp when you hunt monsters.
+Mazimum 100% increase, and the effect will disappear when the character Lv is reached Lv.101.
+^ff0000Once you open the item, you will not be able to refund. .^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+17459#
+In the world of Rune Midgards, the Kafra Company is the one stop shop for storage, teleportation and adventuring supplies.
+For new players joining from Steam, they are offering this special Welcome to Ragnarok Care Package.
+This one-time purchasable box comes with useful equipment and consumables for getting started in Ragnarok Online! 
+Following items are in it.
+^ffffff_^000000
+Equipment: 
+Rideword Hat
+Chick Hat
+Observer
+Immune Shield Box
+4x All in One Ring Rentals
+Shoes[1]
+Muffler[1]
+Mantle[1]
+Poring Fedora Hat
+Consumables:
+Heavy Lifter Box - increases weight limit
+10 Battle Manual - boosts EXP
+10 Bubble Gum - boosts monster Drops
+Halter Lead - A rental mount for 30 days
+Wind Walk Scrolls [100]- Increases walking speed and flee
+Kafra Cards [20] - Access storage from anywhere
+Red Envelope [50] - Get a zeny when opened
+Yellow Butterfly Wing [10] Teleport to major city
+Omni Clothing Dye [6] Change your character's clothing color
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+17460#
+A box with items that is for new users in Ragnarok.
+Following items are in it.
+^ffffff_^000000
+Pecopeco Hairband
+AloraÄ„Å»s Costume Box
+Omni Clothing Dye
+Robo Eye
+Adventurer Travel Box
+30 Day Halter Lead Box
+All In One Ring Rent box
+Heavy Lifter Box
+^ff0000Once you open the item, you will not be able to refund. .^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+28324#
+A ring for new users who start Ragnarok.
+[HEAL] Lv 1 is available.
+The lower level your character has, the better aquired exp when you hunt monsters.
+Mazimum 100% increase, and the effect will disappear when the character Lv is reached Lv.101.
+Class : ^777777Accessory^000000 Defense : ^7777770^000000
+Weight : ^7777771^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+
+19976#
+ A hat which cats of Malangdo wear in Christmas season.
+Moving and attack speed are increased during Christmas event.
+(After attack, 10% of delay is decreased)
+Class : ^777777Head Gear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+22685#
+Open it when I'm alone.
+Before open it, nobody know what it is inside.
+(This item will be deleted with Christmas event closing.)
+^ff0000Cannot be traded with others.^000000
+Weight : ^7777770^000000
+#
+6821#
+A token proves to become a member of solo.
+I was born solo and I'll live with solo.
+Couple means betrayal!
+^ff0000Cannot be traded with others.^000000
+Weight : ^7777770^000000
+#
+22686#
+A cookie which I will eat alone in Christmas.
+I'm not lonely. I'm not lonely.
+Recover 5% of HP and SP.
+Weight : ^7777775^000000
+#
+12200#
+Christmas limited cake.
+When you use it, recover small HP, Start 3 level Magnificat  skill.
+(This item will be deleted with Christmas event closing.)
+Weight : ^7777775^000000
+#
+14207#
+A box that contains
+1 Battle Manuals.
+^ffffff_^000000
+Battle Manual - Increases^FFFFFF  ^000000 EXP rate to 150% for
+a 30 minute duration.
+Weight : ^7777771^000000
+#
+5544#
+A hat that many magicians wear while conjuring spells.
+Int +2
+SP +50
+Class : ^777777Headgear^000000
+Defense : ^7777776^000000
+Location : ^777777Upper^000000
+Weight : ^7777770^000000
+Jobs : ^777777All^000000
+#
+
+17453#
+A festive Christmas Stocking that will open to one of the following:
+7x Battle Manual X3
+2x +20 Stat Food Box
+12x HE Bubble Gum
+30x Mental Potion
+1x Evil Marcher Hat
+1x Chibi Pope
+1x Wandering Wolf Helm
+1x Rudolf Hairband
+1x Hankie in Mouth
+1x Heroic Backpack
+Box Weight : ^7777771^000000
+#
+17454#
+A box that contains 5 Christmas Stocking Boxes
+Description:
+A festive Christmas Stocking that will open to one of the following:
+7x Battle Manual X3
+2x +20 Stat Food Box
+12x HE Bubble Gum
+30x Mental Potion
+1x Evil Marcher Hat
+1x Chibi Pope
+1x Wandering Wolf Helm
+1x Rudolf Hairband
+1x Hankie in Mouth
+1x Heroic Backpack
+Box Weight : ^7777771^000000
 #
