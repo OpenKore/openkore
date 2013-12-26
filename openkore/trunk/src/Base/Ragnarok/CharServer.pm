@@ -31,6 +31,7 @@ use constant DUMMY_CHARACTER => {
 	vit => 1,
 	dex => 1,
 	luk => 1,
+	int => 1,
 	look => {
 		head => 3,
 		body => 3
@@ -155,7 +156,7 @@ sub game_login {
 					$char->{dex},
 					$char->{luk},
 					0, 0, 1,
-					$field->baseName,
+					$field?$field->baseName:'prontera',
 					0,
 				);
 			}
