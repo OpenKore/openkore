@@ -32,7 +32,15 @@ use Utils qw(shiftPack getTickCount getCoordString);
 use Log qw(debug warning error);
 
 my $RunOnce = 1;
-
+	
+sub new {
+	my $class = shift;
+	my $self = $class->SUPER::new(@_);
+	debug "XKore 2 Map Server started \n";
+	$self->{kore_map_loaded_hook} = Plugins::addHook('packet/map_loaded', \&kore_map_loaded, $self);
+	return $self;
+}
+	
 # Overrided method.
 sub onClientNew {
 	my ($self, $client, $index) = @_;
@@ -45,6 +53,22 @@ sub onClientNew {
 	# In here we store messages that the RO client wants to
 	# send to the server.
 	$client->{outbox} = new Network::MessageTokenizer($self->getRecvPackets());
+	push (@{$self->{clients}}, $client); # keep a list of clients
+	# TODO: remove disconnected clients
+}
+sub kore_map_loaded {
+	my (undef, $args, $self) = @_;
+	foreach my $client (@{$self->{clients}}) {
+		if ($client->{session}{dummy}) {
+			$client->send($self->{recvPacketParser}->reconstruct({
+				switch => 'map_change',
+				map => $field->name() . ".gat",
+				x => $char->{pos_to}{x},
+				y => $char->{pos_to}{y},
+			}));
+			$client->{session}{dummy} = 0;			
+		}
+	}
 }
 
 sub cryptKeys {
@@ -137,12 +161,11 @@ sub map_loaded {
 	# Do this just in case $client->{session}{dummy} was set after
 	# the user logs in.
 	$char->{ID} = $client->{session}{accountID};
-	
-	$self->send_avoid_sprite_error_hack($client);
+	$self->send_player_info($client, $char);
+	$self->send_avoid_sprite_error_hack($client, $char);
 	$self->send_npc_info($client);
 	$self->send_welcome($client);
-	$self->send_player_info($client);
-	$self->send_inventory($client);
+	$self->send_inventory($client, $char);
 	$self->send_ground_items($client);
 	$self->send_portals($client);
 	$self->send_npcs($client);
@@ -153,7 +176,7 @@ sub map_loaded {
 	$self->send_chatrooms($client);
 	$self->send_ground_skills($client);
 	$self->send_friends_list($client);
-	$self->send_party_list($client);
+	$self->send_party_list($client, $char);
 	$self->send_pet($client);
 	
 	$args->{mangle} = 2;
@@ -214,7 +237,7 @@ sub send_pet {
 	}
 }
 sub send_party_list {
-	my ($self, $client) = @_;
+	my ($self, $client, $char) = @_;
 	my $data = undef;
 	if ($char->{party}) {
 		my $num = 0;
@@ -411,7 +434,7 @@ sub send_welcome {
 }
 
 sub send_player_info {
-	my ($self, $client) = @_;
+	my ($self, $client, $char) = @_;
 	my $data = undef;
 	
 	# Player stats.
@@ -551,10 +574,10 @@ sub send_player_info {
 }
 
 sub send_inventory {
-	my ($self, $client) = @_;
+	my ($self, $client, $char) = @_;
 	my $data = undef;
 	# Send cart information includeing the items
-	if ($char->cartActive && $RunOnce) {
+	if (!$client->{session}{dummy} && $char->cartActive && $RunOnce) {
 		$data = pack('C2 v2 V2', 0x21, 0x01, $cart{items}, $cart{items_max}, ($cart{weight} * 10), ($cart{weight_max} * 10));
 		$client->send($data);
 		
@@ -677,7 +700,7 @@ sub send_npc_info {
 }
 
 sub send_avoid_sprite_error_hack {
-	my ($self, $client) = @_;
+	my ($self, $client, $char) = @_;
 	my $data = pack('C15', 0x29, 0x02, 0xA7, 0x94, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40);
 	$client->send($data);
 	$data = $self->{recvPacketParser}->reconstruct({
