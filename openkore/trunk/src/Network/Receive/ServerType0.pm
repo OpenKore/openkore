@@ -7051,6 +7051,7 @@ sub reconstruct_quest_update_mission_hunt_v2 {
 sub quest_update_mission_hunt {
 	my ($self, $args) = @_;
 	for my $mob (@{$args->{mobs}}) {
+		message TF("Quest [%s] - defeated [%s] progress (%d/%d) \n", $quests_lut{$mob->{questID}} ? $quests_lut{$mob->{questID}}{title} : '',  $questList->{$mob->{questID}}{missions}{$mob->{mobID}}->{mobName}, $mob->{count}, $mob->{goal}), "info";
 		@{$questList->{$mob->{questID}}{missions}{$mob->{mobID}}}{@$_} = @{$mob}{@$_} for [qw(mobID goal count)];
 	}
 }
