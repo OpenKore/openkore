@@ -2386,7 +2386,11 @@ sub processAutoSkillUse {
 
 				$smartHeal_lv = $i;
 				$sp_req = 10 + ($i * 3);
-				$amount = (int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8)) * $meditatioBonus;
+				if ($config{useSelf_skill_smartHeal} == 2) {
+					$amount = (int(($char->{lv} + $char->{int} + $char->{'int_bonus'}) / 5) * 30) * ($i / 10) * (1 + $meditatioBonus) + ($char->{'attack_magic_min'});
+				} else {
+					$amount = (int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8)) * $meditatioBonus;
+				} 
 				if ($char->{sp} < $sp_req) {
 					$smartHeal_lv--;
 					last;
@@ -2505,7 +2509,11 @@ sub processPartySkillUse {
 
 				$smartHeal_lv = $i;
 				$sp_req = 10 + ($i * 3);
-				$amount = (int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8)) * $modifier;
+				if ($config{useSelf_skill_smartHeal} == 2) {
+					$amount = (int(($char->{lv} + $char->{int} + $char->{'int_bonus'}) / 5) * 30) * ($i / 10) * (1 + $modifier) + ($char->{'attack_magic_min'});
+				} else {
+					$amount = (int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8)) * $modifier;
+				} 
 				if ($char->{sp} < $sp_req) {
 					$smartHeal_lv--;
 					last;
