@@ -38,6 +38,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	debug "XKore 2 Map Server started \n";
 	$self->{kore_map_loaded_hook} = Plugins::addHook('packet/map_loaded', \&kore_map_loaded, $self);
+	$self->{kore_disconnected} = Plugins::addHook('disconnected', \&kore_disconnected, $self);
 	return $self;
 }
 	
@@ -67,6 +68,18 @@ sub kore_map_loaded {
 				y => $char->{pos_to}{y},
 			}));
 			$client->{session}{dummy} = 0;			
+		}
+	}
+}
+
+sub kore_disconnected {
+	my (undef, $args, $self) = @_;
+	if (!$config{XKore_silent}) {
+		foreach my $client (@{$self->{clients}}) {
+			$client->send($self->{recvPacketParser}->reconstruct({
+				switch => 'system_chat',
+				message => 'OpenKore disconnected, please wait...',
+			}));
 		}
 	}
 }
@@ -164,7 +177,6 @@ sub map_loaded {
 	$self->send_player_info($client, $char);
 	$self->send_avoid_sprite_error_hack($client, $char);
 	$self->send_npc_info($client);
-	$self->send_welcome($client);
 	$self->send_inventory($client, $char);
 	$self->send_ground_items($client);
 	$self->send_portals($client);
@@ -178,6 +190,7 @@ sub map_loaded {
 	$self->send_friends_list($client);
 	$self->send_party_list($client, $char);
 	$self->send_pet($client);
+	$self->send_welcome($client);
 	
 	$args->{mangle} = 2;
 	$RunOnce = 0;
