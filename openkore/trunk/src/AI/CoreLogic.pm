@@ -2354,7 +2354,7 @@ sub processAutoItemUse {
 
 ##### AUTO-SKILL USE #####
 sub processAutoSkillUse {
-	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack))
+	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack teleport) )
 	|| (AI::action eq "skill_use" && AI::args->{tag} eq "attackSkill")) {
 		my %self_skill;
 		for (my $i = 0; exists $config{"useSelf_skill_$i"}; $i++) {
