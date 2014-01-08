@@ -619,6 +619,8 @@ sub main {
 		}
 		$args->{dmgTo_last} = $target->{dmgTo};
 	}
+	
+	Plugins::callHook('AI::Attack::main', {target => $target})
 }
 
 1;
