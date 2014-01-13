@@ -592,6 +592,13 @@ sub setStatus {
 	message
 		Misc::status_string($self, defined $statusName{$handle} ? $statusName{$handle} : $handle, $again, $flag ? $tick/1000 : 0),
 		"parseMsg_statuslook", ($self->{ID} eq $accountID or $char->{slaves} && $char->{slaves}{$self->{ID}}) ? 1 : 2;
+		
+	Plugins::callHook('Actor::setStatus::change', {
+		handle => $handle,
+		flag => $flag,
+		tick => $tick,
+		actor_type => ref($self)
+	});
 }
 
 ##
