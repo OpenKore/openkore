@@ -19,20 +19,20 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0950' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'088A' => ['character_move','a3', [qw(coords)]],
-		'0367' => ['sync', 'V', [qw(time)]],
-		'0362' => ['actor_look_at', 'v C', [qw(head body)]],
-		'089F' => ['item_take', 'a4', [qw(ID)]],
-		'0817' => ['item_drop', 'v2', [qw(index amount)]],
-		'0941' => ['storage_password'],
-		'0363' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'092D' => ['storage_item_remove', 'v V', [qw(index amount)]],
-		'0962' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'087F' => ['actor_info_request', 'a4', [qw(ID)]],
-		'0931' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0897' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
-		'0811' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
+		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0437' => ['character_move','a3', [qw(coords)]],
+		'0887' => ['sync', 'V', [qw(time)]],
+		'0918' => ['actor_look_at', 'v C', [qw(head body)]],
+		'0360' => ['item_take', 'a4', [qw(ID)]],
+		'0946' => ['item_drop', 'v2', [qw(index amount)]],
+		'08AD' => ['storage_password'],
+		'0819' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'0886' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
+		'0882' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0963' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
+		'086E' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
@@ -45,7 +45,7 @@ sub new {
 	
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	$self->cryptKeys(407731339, 738092129, 1551722485);
+	$self->cryptKeys(516447572, 1857494034, 242571268);
 	
 	return $self;
 }
