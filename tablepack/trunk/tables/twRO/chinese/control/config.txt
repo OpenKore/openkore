@@ -1222,7 +1222,7 @@ followRandomDistance 4
 # 完全同前面的對怪物技能 attackSkillSlot 區塊，
 # 僅有區塊名稱 useSelf_skil 不同，若需要其它選項，請參考前面。
 
-useSelf_skill_smartHeal 1
+useSelf_skill_smartHeal 2
 # 自己補血時自動調整治癒術等級以節省SP
 
 useSelf_skill {
