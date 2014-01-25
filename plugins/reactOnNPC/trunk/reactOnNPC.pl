@@ -45,9 +45,9 @@ sub onNPCTalk
 
 	$msg = I18N::bytesToString($msg);
 
-	if (!defined %reactOnNPC || $reactOnNPC{action})
+	if (!%reactOnNPC || $reactOnNPC{action})
 	{
-		undef %reactOnNPC if defined %reactOnNPC;
+		undef %reactOnNPC if %reactOnNPC;
 		$reactOnNPC{index} = 0;
 		$reactOnNPC{ID} = $ID;
 		$reactOnNPC{msg}[$reactOnNPC{index}] = $msg;
