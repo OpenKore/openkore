@@ -2310,8 +2310,6 @@ hu_fild04 381 187 hu_fild05 34 202
 hu_fild05 32 202 hu_fild04 379 187
 hu_fild05 91 42 hu_fild07 80 369
 hu_fild07 80 371 hu_fild05 91 44
-hu_fild07 35 351 yuno_fild02 384 338
-yuno_fild02 384 340 hu_fild07 37 351
 hu_fild07 56 36 yuno_fild09 47 375
 yuno_fild09 47 377 hu_fild07 56 38
 hu_fild07 226 36 yuno_fild09 220 372
