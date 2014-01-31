@@ -30,6 +30,8 @@ sub new {
 	
 	my %packets = (
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
+		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
+		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
@@ -62,20 +64,6 @@ sub sendPartyJoinRequestByNameReply { # long name lol
 	my $msg = pack('v a4 C', 0x02C7, $accountID, $flag);
 	$self->sendToServer($msg);
 	debug "Sent reply Party Invite.\n", "sendPacket", 2;
-}
-
-sub sendShowEquipPlayer {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4', 0x02D6, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Show Equip Player.\n", "sendPacket", 2;
-}
-
-sub sendShowEquipTickbox {
-	my ($self, $flag) = @_;
-	my $msg = pack('v V2', 0x02D8, 0, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Show Equip Tickbox: flag.\n", "sendPacket", 2;
 }
 
 sub sendBattlegroundChat {

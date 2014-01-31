@@ -82,6 +82,9 @@ sub new {
 		'0808' => ['booking_update', 'v6', [qw(job0 job1 job2 job3 job4 job5)]],
 		'0827' => ['char_delete2', 'a4', [qw(charID)]], # 6
 		'082B' => ['char_delete2_cancel', 'a4', [qw(charID)]], # 6
+		'0844' => ['cash_shop_open'],#2
+		'0848' => ['cash_shop_buy_items', 's s V V s', [qw(len count item_id item_amount tab_code)]], #item_id, item_amount and tab_code could be repeated in order to buy multiple itens at once
+		'084A' => ['cash_shop_close'],#2
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;

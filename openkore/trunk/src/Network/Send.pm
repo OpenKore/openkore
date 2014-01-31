@@ -933,6 +933,7 @@ sub reconstruct_actor_move {
 	$args->{coords} = getCoordString(@{$args}{qw(x y)}, !($masterServer->{serverType} > 0));
 }
 
+# should be called sendSlaveMove...
 sub sendHomunculusMove {
 	my ($self, $ID, $x, $y) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'actor_move', ID => $ID, x => $x, y => $y}));
@@ -1065,5 +1066,57 @@ sub sendCashBuy {
 	debug "Requesting sendCashShopOpen\n", "sendPacket", 2;
 }
 
+sub sendShowEquipPlayer {
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({
+				switch => 'view_player_equip_request',
+				ID => $ID
+			}
+		)
+	);
+	debug "Sent Show Equip Player.\n", "sendPacket", 2;
+}
+
+sub sendShowEquipTickbox {
+	my ($self, $flag) = @_;
+	$self->sendToServer($self->reconstruct({
+				switch => 'equip_window_tick',
+				type => 0, # is it always zero?
+				value => $flag
+			}
+		)
+	);
+	debug "Sent Show Equip Tickbox: flag.\n", "sendPacket", 2;
+}
+
+# should be sendSlaveAttack...
+sub sendHomunculusAttack {
+	my $self = shift;
+	my $slaveID = shift;
+	my $targetID = shift;
+	my $flag = shift;	
+	$self->sendToServer($self->reconstruct({
+				switch => 'slave_attack',
+				slaveID => $slaveID,
+				targetID => $targetID,
+				flag => $flag
+			}
+		)
+	);
+	debug "Sent Slave attack: ".getHex($targetID)."\n", "sendPacket", 2;
+}
+
+# should be sendSlaveStandBy...
+sub sendHomunculusStandBy {
+	my $self = shift;
+	my $slaveID = shift;
+	$self->sendToServer($self->reconstruct({
+				switch => 'slave_move_to_master',
+				slaveID => $slaveID
+			}
+		)
+	);
+	debug "Sent Slave standby\n", "sendPacket", 2;
+}
 
 1;

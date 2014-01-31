@@ -30,6 +30,8 @@ sub new {
 	my %packets = (
 		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]],
 		'022D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
+		'0234' => ['slave_move_to_master', 'a4', [qw(slaveID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -39,20 +41,8 @@ sub new {
 # 0x0232,9,hommoveto,6
 
 # 0x0233,11,homattack,0
-sub sendHomunculusAttack {
-	my ($self, $homunID, $targetID, $flag) = @_;
-	my $msg = pack('v a4 a4 C', 0x0233, $homunID, $targetID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Homunculus attack: ".getHex($targetID)."\n", "sendPacket", 2;
-}
 
 # 0x0234,6,hommovetomaster,0
-sub sendHomunculusStandBy {
-	my ($self, $homunID) = @_;
-	my $msg = pack('v a4', 0x0234, $homunID);
-	$self->sendToServer($msg);
-	debug "Sent Homunculus standby\n", "sendPacket", 2;
-}
 
 =pod
 //2005-04-25aSakexe
