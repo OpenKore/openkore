@@ -82,11 +82,15 @@ sub new {
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 		'021D' => ['less_effect'], # TODO
 		'022D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
-		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]],
+		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]], # should be called slave_move...
+		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
+		'0234' => ['slave_move_to_master', 'a4', [qw(slaveID)]],
 		'023B' => ['storage_password'],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
+		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
 		'035F' => ['character_move', 'a3', [qw(coords)]],
 		'0360' => ['sync', 'V', [qw(time)]],
 		'0361' => ['actor_look_at', 'v C', [qw(head body)]],
@@ -334,14 +338,6 @@ sub sendChatRoomLeave {
 	my $msg = pack("C*", 0xE3, 0x00);
 	$self->sendToServer($msg);
 	debug "Sent Leave Chat Room\n", "sendPacket", 2;
-}
-
-# 0x022d,5,hommenu,4
-sub sendHomunculusCommand {
-	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0:get stats, 1:feed or 2:fire
-	my $msg = pack ('v2 C', 0x022D, $type, $command);
-	$self->sendToServer($msg);
-	debug "Sent Homunculus Command $command", "sendPacket", 2;
 }
 
 sub sendCompanionRelease {
@@ -624,24 +620,6 @@ sub sendGuildSetAlly {
 			$charID;
 	$self->sendToServer($msg);
 
-}
-
-sub sendHomunculusAttack {
-	my $self = shift;
-	my $homunID = shift;
-	my $targetID = shift;
-	my $flag = shift;
-	my $msg = pack("C*", 0x33, 0x02) . $homunID . $targetID . pack("C1", $flag);
-	$self->sendToServer($msg);
-	debug "Sent Homunculus attack: ".getHex($targetID)."\n", "sendPacket", 2;
-}
-
-sub sendHomunculusStandBy {
-	my $self = shift;
-	my $homunID = shift;
-	my $msg = pack("C*", 0x34, 0x02) . $homunID;
-	$self->sendToServer($msg);
-	debug "Sent Homunculus standby\n", "sendPacket", 2;
 }
 
 sub sendHomunculusName {
@@ -1265,20 +1243,6 @@ sub sendQuestState {
 	my $msg = pack("v V C", 0x02B6, $questID, $state);
 	$self->sendToServer($msg);
 	debug "Sent Quest State.\n", "sendPacket", 2;
-}
-
-sub sendShowEquipPlayer {
-	my ($self, $ID) = @_;
-	my $msg = pack("v a4", 0x02D6, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Show Equip Player.\n", "sendPacket", 2;
-}
-
-sub sendShowEquipTickbox {
-	my ($self, $flag) = @_;
-	my $msg = pack("v V2", 0x02D8, 0, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Show Equip Tickbox: flag.\n", "sendPacket", 2;
 }
 
 sub sendBattlegroundChat {
