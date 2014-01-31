@@ -276,7 +276,7 @@ sub new {
 		'01B5' => ['account_payment_info', 'V2', [qw(D_minute H_minute)]],
 		'01B6' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z20', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string)]],
 		'01B9' => ['cast_cancelled', 'a4', [qw(ID)]],
-		'01C3' => ['local_broadcast', 'x2 a3 x9 Z*', [qw(color message)]],
+		'01C3' => ['local_broadcast', 'v V v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
 		'01C4' => ['storage_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'v2 a4 v C', [qw(index itemID ID remaining success)]],
@@ -2249,39 +2249,6 @@ sub homunculus_food {
 	}
 }
 
-use constant {
-	HO_PRE_INIT => 0x0,
-	HO_RELATIONSHIP_CHANGED => 0x1,
-	HO_FULLNESS_CHANGED => 0x2,
-	HO_ACCESSORY_CHANGED => 0x3,
-	HO_HEADTYPE_CHANGED => 0x4,
-};
-
-# 0230
-# TODO: what is type?
-sub homunculus_info {
-	my ($self, $args) = @_;
-	debug "homunculus_info type: $args->{type}\n";
-	if ($args->{state} == HO_PRE_INIT) {
-		my $state = $char->{homunculus}{state}
-			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
-		$char->{homunculus} = Actor::get($args->{ID});
-		$char->{homunculus}{state} = $state if (defined $state);
-		$char->{homunculus}{map} = $field->baseName;
-		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
-			AI::SlaveManager::addSlave ($char->{homunculus});
-		}
-	} elsif ($args->{state} == HO_RELATIONSHIP_CHANGED) {
-		$char->{homunculus}{intimacy} = $args->{val} if $char->{homunculus};
-	} elsif ($args->{state} == HO_FULLNESS_CHANGED) {
-		$char->{homunculus}{hunger} = $args->{val} if $char->{homunculus};
-	} elsif ($args->{state} == HO_ACCESSORY_CHANGED) {
-		$char->{homunculus}{accessory} = $args->{val} if $char->{homunculus};
-	} elsif ($args->{state} == HO_HEADTYPE_CHANGED) {
-		#
-	}
-}
-
 # 029B
 sub mercenary_init {
 	my ($self, $args) = @_;
@@ -3231,17 +3198,6 @@ sub hp_sp_changed {
 		$char->{sp} += $amount;
 		$char->{sp} = $char->{sp_max} if ($char->{sp} > $char->{sp_max});
 	}
-}
-
-sub local_broadcast {
-	my ($self, $args) = @_;
-	my $message = bytesToString($args->{message});
-	stripLanguageCode(\$message);
-	chatLog("lb", "$message\n");# if ($config{logLocalBroadcast});
-	message "$message\n", "schat";
-	Plugins::callHook('packet_localBroadcast', {
-		Msg => $message
-	});
 }
 
 sub login_error {
@@ -4252,40 +4208,6 @@ sub pet_info2 {
 	} elsif ($type == 5) {
 		# You own pet with this ID
 		$pet{ID} = $ID;
-	}
-}
-
-sub player_equipment {
-	my ($self, $args) = @_;
-
-	my ($sourceID, $type, $ID1, $ID2) = @{$args}{qw(sourceID type ID1 ID2)};
-	my $player = ($sourceID ne $accountID)? $playersList->getByID($sourceID) : $char;
-	return unless $player;
-
-	if ($type == 0) {
-		# Player changed job
-		$player->{jobID} = $ID1;
-
-	} elsif ($type == 2) {
-		if ($ID1 ne $player->{weapon}) {
-			message TF("%s changed Weapon to %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
-			$player->{weapon} = $ID1;
-		}
-		if ($ID2 ne $player->{shield}) {
-			message TF("%s changed Shield to %s\n", $player, itemName({nameID => $ID2})), "parseMsg_statuslook", 2;
-			$player->{shield} = $ID2;
-		}
-	} elsif ($type == 3) {
-		$player->{headgear}{low} = $ID1;
-	} elsif ($type == 4) {
-		$player->{headgear}{top} = $ID1;
-	} elsif ($type == 5) {
-		$player->{headgear}{mid} = $ID1;
-	} elsif ($type == 9) {
-		if ($player->{shoes} && $ID1 ne $player->{shoes}) {
-			message TF("%s changed Shoes to: %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
-		}
-		$player->{shoes} = $ID1;
 	}
 }
 
@@ -5914,29 +5836,6 @@ sub initialize_message_id_encryption {
 	}
 }
 
-# TODO: known prefixes (chat domains): micc | ssss | ...
-sub system_chat {
-	my ($self, $args) = @_;
-
-	my $message = bytesToString($args->{message});
-	if (substr($message,0,4) eq 'micc') {
-		$message = bytesToString(substr($args->{message},34));
-	}
-	$message =~ s/\000//g; # remove null charachters
-	$message =~ s/^(tool[0-9a-fA-F]{6})//g; # remove those annoying toolDDDDDD from bRO (and maybe some other server?)
-	$message =~ s/^ssss//g; # remove those annoying ssss from bRO (and maybe some other server?)
-	$message =~ s/^ +//g; $message =~ s/ +$//g; # remove whitespace in the beginning and the end of $message
-	stripLanguageCode(\$message);
-	chatLog("s", "$message\n") if ($config{logSystemChat});
-	# Translation Comment: System/GM chat
-	message TF("[GM] %s\n", $message), "schat";
-	ChatQueue::add('gm', undef, undef, $message);
-
-	Plugins::callHook('packet_sysMsg', {
-	Msg => $message
-	});
-}
-
 sub top10_alchemist_rank {
 	my ($self, $args) = @_;
 
@@ -6190,45 +6089,6 @@ sub vending_start {
 	}
 	message(('-'x79)."\n", "list");
 	$shopEarned ||= 0;
-}
-
-sub warp_portal_list {
-	my ($self, $args) = @_;
-
-	# strip gat extension
-	($args->{memo1}) = $args->{memo1} =~ /^(.*)\.gat/;
-	($args->{memo2}) = $args->{memo2} =~ /^(.*)\.gat/;
-	($args->{memo3}) = $args->{memo3} =~ /^(.*)\.gat/;
-	($args->{memo4}) = $args->{memo4} =~ /^(.*)\.gat/;
-	# Auto-detect saveMap
-	if ($args->{type} == 26) {
-		configModify('saveMap', $args->{memo2}) if ($args->{memo2} && $config{'saveMap'} ne $args->{memo2});
-	} elsif ($args->{type} == 27) {
-		configModify('saveMap', $args->{memo1}) if ($args->{memo1} && $config{'saveMap'} ne $args->{memo1});
-	}
-
-	$char->{warp}{type} = $args->{type};
-	undef @{$char->{warp}{memo}};
-	push @{$char->{warp}{memo}}, $args->{memo1} if $args->{memo1} ne "";
-	push @{$char->{warp}{memo}}, $args->{memo2} if $args->{memo2} ne "";
-	push @{$char->{warp}{memo}}, $args->{memo3} if $args->{memo3} ne "";
-	push @{$char->{warp}{memo}}, $args->{memo4} if $args->{memo4} ne "";
-
-	message T("----------------- Warp Portal --------------------\n" .
-		"#  Place                           Map\n"), "list";
-	for (my $i = 0; $i < @{$char->{warp}{memo}}; $i++) {
-		message(swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",
-			[$i, $maps_lut{$char->{warp}{memo}[$i].'.rsw'},
-			$char->{warp}{memo}[$i]]),
-			"list");
-	}
-	message("--------------------------------------------------\n", "list");
-	if ($args->{type} == 26 && AI::action eq 'teleport') {
-		# We have already successfully used the Teleport skill.
-		$messageSender->sendWarpTele(26, AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
-		AI::dequeue;
-	}
 }
 
 sub mail_refreshinbox {
@@ -7482,6 +7342,11 @@ sub guild_member_add {
 
 sub millenium_shield {
 	my ($self, $args) = @_;
+}
+
+sub skill_delete {
+	my ($self, $args) = @_;
+	my $skill_name = (new Skill(idn => $args->{ID}))->getName;
 }
 
 sub skill_post_delaylist {
