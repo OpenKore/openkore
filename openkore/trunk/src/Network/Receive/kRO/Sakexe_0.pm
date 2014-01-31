@@ -99,7 +99,7 @@ sub new {
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]], # 30
 		'0097' => ['private_message', 'v Z24 Z*', [qw(len privMsgUser privMsg)]], # -1
 		'0098' => ['private_message_sent', 'C', [qw(type)]], # 3
-		'009A' => ['system_chat', 'v a4 a*', [qw(len domain message)]], # -1
+		'009A' => ['system_chat', 'v a*', [qw(len message)]], # -1
 		'009C' => ['actor_look_at', 'a4 v C', [qw(ID head body)]], # 9
 		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]], # 17
 		'009E' => ['item_appeared', 'a4 v C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]], # 17
@@ -285,7 +285,7 @@ sub new {
 		'01BE' => ['ask_pngameroom'], # 2
 		'01C1' => ['remaintime_reply', 'V3', [qw(result expire_date remain_time)]], # 14
 		'01C2' => ['remaintime_info', 'V2', [qw(type remain_time)]], # 10
-		'01C3' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], # -1
+		'01C3' => ['local_broadcast', 'v V v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
 		'01C4' => ['storage_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]], # 22
 		'01C5' => ['cart_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]], # 22
 		'01C7' => ['encryption_acknowledge'], # 2
@@ -1925,39 +1925,6 @@ sub homunculus_food {
 	}
 }
 
-use constant {
-	HO_PRE_INIT => 0x0,
-	HO_RELATIONSHIP_CHANGED => 0x1,
-	HO_FULLNESS_CHANGED => 0x2,
-	HO_ACCESSORY_CHANGED => 0x3,
-	HO_HEADTYPE_CHANGED => 0x4,
-};
-
-# 0230
-# TODO: what is type?
-sub homunculus_info {
-	my ($self, $args) = @_;
-	debug "homunculus_info type: $args->{type}\n";
-	if ($args->{state} == HO_PRE_INIT) {
-		my $state = $char->{homunculus}{state}
-			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
-		$char->{homunculus} = Actor::get($args->{ID});
-		$char->{homunculus}{state} = $state if (defined $state);
-		$char->{homunculus}{map} = $field->baseName;
-		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
-			AI::SlaveManager::addSlave ($char->{homunculus});
-		}
-	} elsif ($args->{state} == HO_RELATIONSHIP_CHANGED) {
-		$char->{homunculus}{intimacy} = $args->{val} if $char->{homunculus};
-	} elsif ($args->{state} == HO_FULLNESS_CHANGED) {
-		$char->{homunculus}{hunger} = $args->{val} if $char->{homunculus};
-	} elsif ($args->{state} == HO_ACCESSORY_CHANGED) {
-		$char->{homunculus}{accessory} = $args->{val} if $char->{homunculus};
-	} elsif ($args->{state} == HO_HEADTYPE_CHANGED) {
-		#
-	}
-}
-
 # 029B
 sub mercenary_init {
 	my ($self, $args) = @_;
@@ -2919,12 +2886,6 @@ sub hp_sp_changed {
 	}
 }
 
-sub local_broadcast {
-	my ($self, $args) = @_;
-	my $message = bytesToString($args->{message});
-	message "$message\n", "schat";
-}
-
 sub login_error {
 	my ($self, $args) = @_;
 
@@ -3875,40 +3836,6 @@ sub pet_info2 {
 	} elsif ($type == 5) {
 		# You own pet with this ID
 		$pet{ID} = $ID;
-	}
-}
-
-sub player_equipment {
-	my ($self, $args) = @_;
-
-	my ($sourceID, $type, $ID1, $ID2) = @{$args}{qw(sourceID type ID1 ID2)};
-	my $player = ($sourceID ne $accountID)? $playersList->getByID($sourceID) : $char;
-	return unless $player;
-
-	if ($type == 0) {
-		# Player changed job
-		$player->{jobID} = $ID1;
-
-	} elsif ($type == 2) {
-		if ($ID1 ne $player->{weapon}) {
-			message TF("%s changed Weapon to %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
-			$player->{weapon} = $ID1;
-		}
-		if ($ID2 ne $player->{shield}) {
-			message TF("%s changed Shield to %s\n", $player, itemName({nameID => $ID2})), "parseMsg_statuslook", 2;
-			$player->{shield} = $ID2;
-		}
-	} elsif ($type == 3) {
-		$player->{headgear}{low} = $ID1;
-	} elsif ($type == 4) {
-		$player->{headgear}{top} = $ID1;
-	} elsif ($type == 5) {
-		$player->{headgear}{mid} = $ID1;
-	} elsif ($type == 9) {
-		if ($player->{shoes} && $ID1 ne $player->{shoes}) {
-			message TF("%s changed Shoes to: %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
-		}
-		$player->{shoes} = $ID1;
 	}
 }
 
@@ -5418,46 +5345,6 @@ sub switch_character {
 	$net->serverDisconnect();
 }
 
-sub reconstruct_system_chat {
-	my ($self, $args) = @_;
-
-	$args->{domain} = 'ssss' unless exists $args->{domain};
-}
-
-# TODO: known prefixes (chat domains): micc | ssss | blue | tool
-sub system_chat {
-	my ($self, $args) = @_;
-
-	my $domain = bytesToString($args->{domain});
-	my ($name, $message, $color);
-
-	if ($domain eq 'micc') {
-		($name, $color, $message) = unpack('Z24 a6 a*', $args->{message});
-		$name = bytesToString($name);
-		$color = bytesToString($color);
-		$message = bytesToString($message);
-	} elsif ($domain eq 'ssss') { # forces color yellow?
-		$message = bytesToString($args->{message});
-	} elsif ($domain eq 'blue') { # forces color blue?
-		$message = bytesToString($args->{message});
-	} elsif ($domain eq 'tool') { # not seen before?
-		$message = bytesToString($args->{message});
-	} else { # possible?
-		$message = $domain . bytesToString($args->{message});
-	}
-
-	# TODO: hande different types of messages
-	stripLanguageCode(\$message);
-	chatLog("s", "$message\n") if ($config{logSystemChat});
-	# Translation Comment: System/GM chat
-	message TF("[GM] %s\n", $message), "schat";
-	ChatQueue::add('gm', undef, undef, $message);
-
-	Plugins::callHook('packet_sysMsg', {
-		Msg => $message
-	});
-}
-
 sub top10_alchemist_rank {
 	my ($self, $args) = @_;
 
@@ -5705,40 +5592,6 @@ sub vending_start {
 	message(('-'x79)."\n", "list");
 	$shopstarted = 1;
 	$shopEarned ||= 0;
-}
-
-sub warp_portal_list {
-	my ($self, $args) = @_;
-
-	# strip gat extension
-	($args->{memo1}) = $args->{memo1} =~ /^(.*)\.gat/;
-	($args->{memo2}) = $args->{memo2} =~ /^(.*)\.gat/;
-	($args->{memo3}) = $args->{memo3} =~ /^(.*)\.gat/;
-	($args->{memo4}) = $args->{memo4} =~ /^(.*)\.gat/;
-	# Auto-detect saveMap
-	if ($args->{type} == 26) {
-		configModify('saveMap', $args->{memo2}) if ($args->{memo2} && $config{'saveMap'} ne $args->{memo2});
-	} elsif ($args->{type} == 27) {
-		configModify('saveMap', $args->{memo1}) if ($args->{memo1} && $config{'saveMap'} ne $args->{memo1});
-	}
-
-	$char->{warp}{type} = $args->{type};
-	undef @{$char->{warp}{memo}};
-	push @{$char->{warp}{memo}}, $args->{memo1} if $args->{memo1} ne "";
-	push @{$char->{warp}{memo}}, $args->{memo2} if $args->{memo2} ne "";
-	push @{$char->{warp}{memo}}, $args->{memo3} if $args->{memo3} ne "";
-	push @{$char->{warp}{memo}}, $args->{memo4} if $args->{memo4} ne "";
-
-	message T("----------------- Warp Portal --------------------\n" .
-		"#  Place                           Map\n"), "list";
-	for (my $i = 0; $i < @{$char->{warp}{memo}}; $i++) {
-		message(swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",
-			[$i, $maps_lut{$char->{warp}{memo}[$i].'.rsw'},
-			$char->{warp}{memo}[$i]]),
-			"list");
-	}
-	message("--------------------------------------------------\n", "list");
 }
 
 sub mail_refreshinbox {

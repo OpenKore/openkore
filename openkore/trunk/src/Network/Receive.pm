@@ -1245,6 +1245,39 @@ sub account_payment_info {
 sub reconstruct_minimap_indicator {
 }
 
+use constant {
+	HO_PRE_INIT => 0x0,
+	HO_RELATIONSHIP_CHANGED => 0x1,
+	HO_FULLNESS_CHANGED => 0x2,
+	HO_ACCESSORY_CHANGED => 0x3,
+	HO_HEADTYPE_CHANGED => 0x4,
+};
+
+# 0230
+# TODO: what is type?
+sub homunculus_info {
+	my ($self, $args) = @_;
+	debug "homunculus_info type: $args->{type}\n", "homunculus";
+	if ($args->{state} == HO_PRE_INIT) {
+		my $state = $char->{homunculus}{state}
+			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
+		$char->{homunculus} = Actor::get($args->{ID}) if ($char->{homunculus}{ID} ne $args->{ID});
+		$char->{homunculus}{state} = $state if (defined $state);
+		$char->{homunculus}{map} = $field->baseName;
+		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
+			AI::SlaveManager::addSlave ($char->{homunculus});
+		}
+	} elsif ($args->{state} == HO_RELATIONSHIP_CHANGED) {
+		$char->{homunculus}{intimacy} = $args->{val} if $char->{homunculus};
+	} elsif ($args->{state} == HO_FULLNESS_CHANGED) {
+		$char->{homunculus}{hunger} = $args->{val} if $char->{homunculus};
+	} elsif ($args->{state} == HO_ACCESSORY_CHANGED) {
+		$char->{homunculus}{accessory} = $args->{val} if $char->{homunculus};
+	} elsif ($args->{state} == HO_HEADTYPE_CHANGED) {
+		#
+	}
+}
+
 ##
 # minimap_indicator({bool show, Actor actor, int x, int y, int red, int green, int blue, int alpha [, int effect]})
 # show: whether indicator is shown or cleared
@@ -1280,6 +1313,19 @@ sub minimap_indicator {
 		"with the color %s\n", $args->{actor}, $indicator, @{$args}{qw(x y)}, $color_str),
 		'effect';
 	}
+}
+
+sub local_broadcast {
+	my ($self, $args) = @_;
+	my $message = bytesToString($args->{message});
+	my $color = uc(sprintf("%06x", $args->{color})); # hex code
+	stripLanguageCode(\$message);
+	chatLog("lb", "$message\n");# if ($config{logLocalBroadcast});
+	message "$message\n", "schat";
+	Plugins::callHook('packet_localBroadcast', {
+		Msg => $message,
+		color => $color
+	});
 }
 
 sub parse_sage_autospell {
@@ -1404,6 +1450,77 @@ sub skill_post_delay {
 
 	$char->setStatus($skillName." ".$status, 1, $args->{time});
 }
+
+# TODO: known prefixes (chat domains): micc | ssss | blue | tool
+sub system_chat {
+	my ($self, $args) = @_;
+	my $message = bytesToString($args->{message});
+	$message =~ s/\000//g; # remove null charachters
+	my $prefix;
+	my $color;
+	if ($message =~ s/^ssss//g) {  # forces color yellow, or WoE indicator?
+		$prefix = T('[WoE]');
+	} elsif ($message =~ s/^blue//g) {  # forces color blue
+		$prefix = T('[S]');
+	} elsif ($message =~ /^tool([0-9a-fA-F]{6})(.*)/) {
+		($color, $message) = $message =~ /^tool([0-9a-fA-F]{6})(.*)/;
+		$prefix = T('[S]');
+	} else {
+		$prefix = T('[S]');
+	}
+	$message =~ s/^ +//g; $message =~ s/ +$//g; # remove whitespace in the beginning and the end of $message
+	stripLanguageCode(\$message);
+	chatLog("s", "$message\n") if ($config{logSystemChat});
+	# Translation Comment: System/GM chat
+	message TF("%s %s\n", $prefix, $message), "schat";
+	ChatQueue::add('gm', undef, undef, $message);
+
+	Plugins::callHook('packet_sysMsg', {
+		Msg => $message,
+		color => $color
+	});
+}
+
+sub warp_portal_list {
+	my ($self, $args) = @_;
+
+	# strip gat extension
+	($args->{memo1}) = $args->{memo1} =~ /^(.*)\.gat/;
+	($args->{memo2}) = $args->{memo2} =~ /^(.*)\.gat/;
+	($args->{memo3}) = $args->{memo3} =~ /^(.*)\.gat/;
+	($args->{memo4}) = $args->{memo4} =~ /^(.*)\.gat/;
+	# Auto-detect saveMap
+	if ($args->{type} == 26) {
+		configModify('saveMap', $args->{memo2}) if ($args->{memo2} && $config{'saveMap'} ne $args->{memo2});
+	} elsif ($args->{type} == 27) {
+		configModify('saveMap', $args->{memo1}) if ($args->{memo1} && $config{'saveMap'} ne $args->{memo1});
+	}
+
+	$char->{warp}{type} = $args->{type};
+	undef @{$char->{warp}{memo}};
+	push @{$char->{warp}{memo}}, $args->{memo1} if $args->{memo1} ne "";
+	push @{$char->{warp}{memo}}, $args->{memo2} if $args->{memo2} ne "";
+	push @{$char->{warp}{memo}}, $args->{memo3} if $args->{memo3} ne "";
+	push @{$char->{warp}{memo}}, $args->{memo4} if $args->{memo4} ne "";
+
+	message T("----------------- Warp Portal --------------------\n" .
+		"#  Place                           Map\n"), "list";
+	for (my $i = 0; $i < @{$char->{warp}{memo}}; $i++) {
+		message(swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",
+			[$i, $maps_lut{$char->{warp}{memo}[$i].'.rsw'},
+			$char->{warp}{memo}[$i]]),
+			"list");
+	}
+	message("--------------------------------------------------\n", "list");
+	
+	if ($args->{type} == 26 && AI::inQueue('teleport')) {
+		# We have already successfully used the Teleport skill.
+		$messageSender->sendWarpTele(26, AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
+		AI::dequeue;
+	}
+}
+
 
 # 0828,14
 sub char_delete2_result {
@@ -1862,6 +1979,40 @@ sub cash_shop_buy_result {
 	debug sprintf("Got result ID [%s] while buying %s from CASH Shop. Current CASH: %s \n", $args->{result}, itemNameSimple($args->{item_id}), formatNumber($args->{updated_points}));
 
 	
+}
+
+sub player_equipment {
+	my ($self, $args) = @_;
+
+	my ($sourceID, $type, $ID1, $ID2) = @{$args}{qw(sourceID type ID1 ID2)};
+	my $player = ($sourceID ne $accountID)? $playersList->getByID($sourceID) : $char;
+	return unless $player;
+
+	if ($type == 0) {
+		# Player changed job
+		$player->{jobID} = $ID1;
+
+	} elsif ($type == 2) {
+		if ($ID1 ne $player->{weapon}) {
+			message TF("%s changed Weapon to %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
+			$player->{weapon} = $ID1;
+		}
+		if ($ID2 ne $player->{shield}) {
+			message TF("%s changed Shield to %s\n", $player, itemName({nameID => $ID2})), "parseMsg_statuslook", 2;
+			$player->{shield} = $ID2;
+		}
+	} elsif ($type == 3) {
+		$player->{headgear}{low} = $ID1;
+	} elsif ($type == 4) {
+		$player->{headgear}{top} = $ID1;
+	} elsif ($type == 5) {
+		$player->{headgear}{mid} = $ID1;
+	} elsif ($type == 9) {
+		if ($player->{shoes} && $ID1 ne $player->{shoes}) {
+			message TF("%s changed Shoes to: %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
+		}
+		$player->{shoes} = $ID1;
+	}
 }
 
 1;
