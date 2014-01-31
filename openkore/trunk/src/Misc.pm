@@ -1351,7 +1351,7 @@ sub checkMonsterCleanness {
 	my $monster = $monstersList->getByID($ID);
 
 	# If party attacked monster, or if monster attacked/missed party
-	if ($monster->{dmgFromParty} > 0 || $monster->{missedFromParty} > 0 || $monster->{dmgToParty} > 0 || $monster->{missedToParty} > 0) {
+	if ($config{attackAuto_party} && ($monster->{dmgFromParty} > 0 || $monster->{missedFromParty} > 0 || $monster->{dmgToParty} > 0 || $monster->{missedToParty} > 0)) {
 		return 1;
 	}
 
@@ -3821,6 +3821,10 @@ sub checkSelfCondition {
 		if ($config{$prefix."_homunculus_dead"}) {
 			return 0 unless ($char->{homunculus}{state} & 4);
 		}
+		
+		if ($config{$prefix."_homunculus_resting"}) {
+			return 0 unless ($char->{homunculus}{state} & 2);
+		}
 	}
 
 	if ($config{$prefix."_mercenary"} =~ /\S/) {
@@ -3863,6 +3867,16 @@ sub checkSelfCondition {
 						|| $config{$prefix."_equip_robe"}
 						);
 		return 0 unless ($char->{sp} >= $skill->getSP($config{$prefix . "_lvl"} || $char->getSkillLevel($skill)));
+	}
+	
+	if (defined $config{$prefix . "_skill"}) {
+		foreach my $input (split / *, */, $config{$prefix."_skill"}) {
+			my ($skillName, $reqLevel) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
+			$reqLevel = '>0' if $reqLevel eq '';
+			my $skill = Skill->new(auto => $skillName);
+			my $skillLevel = $char->getSkillLevel($skill);
+ 			return 0 if !inRange($skillLevel, $reqLevel);
+		}
 	}
 
 	if (defined $config{$prefix . "_aggressives"}) {
