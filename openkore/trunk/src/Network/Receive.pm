@@ -1455,6 +1455,9 @@ sub skill_post_delay {
 sub system_chat {
 	my ($self, $args) = @_;
 	my $message = bytesToString($args->{message});
+	if ($args->{domain} eq 'micc') {
+		$message = bytesToString(substr($args->{message},30));
+	}
 	$message =~ s/\000//g; # remove null charachters
 	my $prefix;
 	my $color;
