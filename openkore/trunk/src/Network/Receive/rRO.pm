@@ -26,9 +26,6 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
-		'0845' => ['cash_shop_open', 'V', [qw(cash_point)]],#6
-#		'08B9' => ['account_id', 'x4 a4 x2', [qw(accountID)]], # 12 
-		'08CA' => ['cashitem', 'v3 a*', [qw(len amount tabcode itemInfo)]],#-1
 		'0990' => ['inventory_item_added', 'v3 C3 a8 V C2 V v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire bindOnEquipType)]],#31
 		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
@@ -75,34 +72,6 @@ sub new {
 		},
 	};
 	return $self;
-}
-my %cashitem_tab = (
-	0 => 'New',
-	1 => 'Stock',
-	2 => 'Rent',
-	3 => 'Caps',
-	4 => 'Potions',
-	5 => 'Scrolls',
-	6 => 'Decoration',
-	7 => 'Expense',
-);
-sub cashitem {
-	my ($self, $args) = @_;
-	my $tabcode = $args->{tabcode};
-	my $jump = 6;
-	my $unpack_string  = "v V";
-	debug TF("%s\n" .
-		"#   Name                               Price\n",
-		center(' Tab: ' . $cashitem_tab{$tabcode} . ' ', 44, '-')), "list";
-	for (my $i = 0; $i < length($args->{itemInfo}); $i += $jump) {
-		my ($ID, $price) = unpack($unpack_string, substr($args->{itemInfo}, $i));
-		my $name = $items_lut{$ID};
-		debug(swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>>>>>C",
-			[$i, $name, formatNumber($price)]),
-			"list");
-
-		}
 }
 
 sub items_nonstackable {
