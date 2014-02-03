@@ -1455,14 +1455,13 @@ sub skill_post_delay {
 sub system_chat {
 	my ($self, $args) = @_;
 	my $message = bytesToString($args->{message});
-	if ($args->{domain} eq 'micc') {
-		$message = bytesToString(substr($args->{message},30));
-	}
-	$message =~ s/\000//g; # remove null charachters
 	my $prefix;
 	my $color;
 	if ($message =~ s/^ssss//g) {  # forces color yellow, or WoE indicator?
 		$prefix = T('[WoE]');
+	# micc = micc<24 characters, this is the sender name. seems like it's null padded><hex color code><message>
+	} elsif ($message =~ s/^micc.{24}([0-9a-fA-F]{6})//g) {
+		$prefix = T('[S]');
 	} elsif ($message =~ s/^blue//g) {  # forces color blue
 		$prefix = T('[S]');
 	} elsif ($message =~ /^tool([0-9a-fA-F]{6})(.*)/) {
@@ -1471,6 +1470,7 @@ sub system_chat {
 	} else {
 		$prefix = T('[S]');
 	}
+	$message =~ s/\000//g; # remove null charachters
 	$message =~ s/^ +//g; $message =~ s/ +$//g; # remove whitespace in the beginning and the end of $message
 	stripLanguageCode(\$message);
 	chatLog("s", "$message\n") if ($config{logSystemChat});
@@ -1480,7 +1480,8 @@ sub system_chat {
 
 	Plugins::callHook('packet_sysMsg', {
 		Msg => $message,
-		color => $color
+		MsgColor => $color,
+		MsgUser => undef # TODO: implement this value, we can get this from "micc" messages by regex.
 	});
 }
 
