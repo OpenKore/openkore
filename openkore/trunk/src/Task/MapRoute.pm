@@ -336,6 +336,11 @@ sub iterate {
 					# Portal is reachable from current position
 					# >> Then "route" to it
 					debug "Portal route within same map.\n", "route";
+					my %plugin_args;
+					$plugin_args{object} = $self;
+					$plugin_args{solution} = \@solution;
+					Plugins::callHook('Task::MapRoute::iterate::route_portal_near', \%plugin_args);
+					return 0 if ($plugin_args{return});
 					$self->{teleportTries} = 0;
 					my $task = new Task::Route(
 						actor => $self->{actor},
