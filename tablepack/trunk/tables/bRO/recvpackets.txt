@@ -1,10 +1,10 @@
 # http://openkore-brasil.com 
 # http://revok.com.br/ 
-# RO packet extractor v0 Revok [12:48 (UTC -03:00) 04-02-2014] 
+# RO packet extractor v0 Revok [11:35 (UTC -03:00) 11-02-2014] 
 # Unpacked or Unknown .exe Packer 
-# Target: 2014-02-04aRagexe.exe 
+# Target: 2014-02-11aRagexe.exe 
 # MD5: ?  CRC32: ? 
-# MID Encryption keys are K: 1359504764 M: 350098981 A: 790321456
+# MID Encryption keys are K: 1437414373 M: 1778657935 A: 818683896
 # PIN addfactor: 0x881234 and multfactor: 0x3498
 # Storage Encryption keys are K: 050B6F79, 0202C179, 0E20120, 04FA43E3, 0179B6C8, 05973DF2, 07D8D6B, 08CB9ED9
 
@@ -13,13 +13,13 @@
 083C 10 10 0
 0437 5 5 0		send::character_move
 035F 6 6 0		send::sync
-0965 5 5 0		send::actor_look_at
-07E4 6 6 0		send::item_take
-0362 6 6 0		send::item_drop
-07EC 8 8 0		send::storage_item_add
+0923 5 5 0		send::actor_look_at
+0940 6 6 0		send::item_take
+0202 6 6 0		send::item_drop
+023B 8 8 0		send::storage_item_add
 0364 8 8 0		send::storage_item_remove
 0438 10 10 0	send::skill_use_location
-023B 90 90 0
+0366 90 90 0
 096A 6 6 0		send::actor_info_request
 0368 6 6 0
 0838 12 12 0
@@ -32,12 +32,12 @@
 0365 18 18 0
 0363 8 8 0
 0281 -1 12 0
-08A7 19 19 0	send::map_login
+0362 19 19 0	send::map_login
 0802 26 26 0	send::party_join_request_by_name
-0886 4 4 0
-0894 26 26 0
-0928 5 5 0		send::homunculus_command
-0366 36 36 0	send::storage_packet
+0436 4 4 0
+07E4 26 26 0
+0863 5 5 0		send::homunculus_command
+07EC 36 36 0	send::storage_packet
 0367 2 2 0		receive::sync_request_ex
 085A 2 2 0		receive::sync_request_ex
 085B 2 2 0		receive::sync_request_ex
@@ -48,7 +48,7 @@
 0860 2 2 0		receive::sync_request_ex
 0861 2 2 0		receive::sync_request_ex
 0862 2 2 0		receive::sync_request_ex
-0863 2 2 0		receive::sync_request_ex
+022D 2 2 0		receive::sync_request_ex
 0864 2 2 0		receive::sync_request_ex
 0865 2 2 0		receive::sync_request_ex
 0866 2 2 0		receive::sync_request_ex
@@ -93,12 +93,12 @@
 0920 2 2 0		receive::sync_request_ex
 0921 2 2 0		receive::sync_request_ex
 0922 2 2 0		receive::sync_request_ex
-0923 2 2 0		receive::sync_request_ex
+0361 2 2 0		receive::sync_request_ex
 0924 2 2 0		receive::sync_request_ex
 0925 2 2 0		receive::sync_request_ex
 0926 2 2 0		receive::sync_request_ex
 0927 2 2 0		receive::sync_request_ex
-022D 2 2 0		receive::sync_request_ex
+0928 2 2 0		receive::sync_request_ex
 0929 2 2 0		receive::sync_request_ex
 092A 2 2 0		receive::sync_request_ex
 092B 2 2 0		receive::sync_request_ex
@@ -124,8 +124,8 @@
 093F 2 2 0		receive::sync_request_ex
 02C4 2 2 0		send::sync_ex_question_reply
 0884 2 2 0		send::sync_ex_question_reply
-0940 2 2 0		send::sync_ex_question_reply
 0885 2 2 0		send::sync_ex_question_reply
+0886 2 2 0		send::sync_ex_question_reply
 0887 2 2 0		send::sync_ex_question_reply
 0888 2 2 0		send::sync_ex_question_reply
 0889 2 2 0		send::sync_ex_question_reply
@@ -139,7 +139,7 @@
 0891 2 2 0		send::sync_ex_question_reply
 0892 2 2 0		send::sync_ex_question_reply
 0893 2 2 0		send::sync_ex_question_reply
-0202 2 2 0		send::sync_ex_question_reply
+0894 2 2 0		send::sync_ex_question_reply
 0895 2 2 0		send::sync_ex_question_reply
 0896 2 2 0		send::sync_ex_question_reply
 0897 2 2 0		send::sync_ex_question_reply
@@ -158,7 +158,7 @@
 08A4 2 2 0		send::sync_ex_question_reply
 08A5 2 2 0		send::sync_ex_question_reply
 08A6 2 2 0		send::sync_ex_question_reply
-0436 2 2 0		send::sync_ex_question_reply
+08A7 2 2 0		send::sync_ex_question_reply
 08A8 2 2 0		send::sync_ex_question_reply
 08A9 2 2 0		send::sync_ex_question_reply
 08AA 2 2 0		send::sync_ex_question_reply
@@ -201,7 +201,7 @@
 0962 2 2 0		send::sync_ex_question_reply
 0963 2 2 0		send::sync_ex_question_reply
 0964 2 2 0		send::sync_ex_question_reply
-0361 2 2 0		send::sync_ex_question_reply
+0965 2 2 0		send::sync_ex_question_reply
 0966 2 2 0		send::sync_ex_question_reply
 0967 2 2 0		send::sync_ex_question_reply
 0968 2 2 0		send::sync_ex_question_reply
