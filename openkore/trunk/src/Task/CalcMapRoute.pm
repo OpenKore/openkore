@@ -159,6 +159,7 @@ sub iterate {
 			delete $self->{dest}{field};
 			$self->setDone();
 			debug "Map Solution Ready for traversal.\n", "route";
+			debug sprintf("%s\n", $self->getRouteString()), "route";
 
 		} elsif ($self->{done}) {
 			my $destpos = "$self->{dest}{pos}{x},$self->{dest}{pos}{y}";
