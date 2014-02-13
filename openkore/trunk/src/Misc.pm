@@ -4379,6 +4379,7 @@ sub closeShop {
 	$messageSender->sendCloseShop();
 
 	$shopstarted = 0;
+	$articles = 0;
 	$timeout{'ai_shop'}{'time'} = time;
 	message T("Shop closed.\n");
 }
