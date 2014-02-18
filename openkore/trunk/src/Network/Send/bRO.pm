@@ -19,19 +19,19 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0437' => ['character_move','a3', [qw(coords)]],
-		'035F' => ['sync', 'V', [qw(time)]],
-		'0923' => ['actor_look_at', 'v C', [qw(head body)]],
-		'0940' => ['item_take', 'a4', [qw(ID)]],
-		'0202' => ['item_drop', 'v2', [qw(index amount)]],
-		'07EC' => ['storage_password'],
-		'023B' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],
-		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0898' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0879' => ['character_move','a3', [qw(coords)]],
+		'0959' => ['sync', 'V', [qw(time)]],
+		'08A5' => ['actor_look_at', 'v C', [qw(head body)]],
+		'07EC' => ['item_take', 'a4', [qw(ID)]],
+		'0946' => ['item_drop', 'v2', [qw(index amount)]],
+		'08A8' => ['storage_password'],
+		'0948' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'08A2' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0838' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
-		'0362' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
+		'0882' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0890' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
 		'0863' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
 	);
 	
@@ -45,7 +45,7 @@ sub new {
 	
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	$self->cryptKeys(818683896, 1437414373, 1778657935);
+	$self->cryptKeys(2102264814, 263472901, 423169590);
 	
 	return $self;
 }
