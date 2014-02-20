@@ -484,7 +484,7 @@ sub ai_route { $char->route(@_) }
 #sellAuto for items_control - chobit andy 20030210
 sub ai_sellAutoCheck {
 	foreach my $item (@{$char->inventory->getItems()}) {
-		next if ($item->{equipped});
+		next if ($item->{equipped} || $item->{unsellable});
 		my $control = Misc::items_control($item->{name});
 		if ($control->{sell} && $item->{amount} > $control->{keep}) {
 			return 1;
