@@ -3545,16 +3545,22 @@ sub npc_sell_list {
 		$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 		my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 	}
-	undef $talk{buyOrSell};
-	message T("Ready to start selling items\n");
-
-	debug "You can sell:\n", "info";
+	
+	debug T("You can sell:\n"), "info";
 	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
 		my ($index, $price, $price_overcharge) = unpack("v L L", substr($args->{itemsdata},$i,($i + 10)));
 		my $item = $char->inventory->getByServerIndex($index);
 		$item->{sellable} = 1; # flag this item as sellable
-		debug "[$item->{amount} x $item->{name}] for $price_overcharge z each. \n", "info";
+		debug TF("[%s x %s] for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
 	}
+	
+	foreach my $item (@{$char->inventory->getItems()}) {
+		next if ($item->{equipped} || $item->{sellable});
+		$item->{unsellable} = 1; # flag this item as unsellable
+	}
+	
+	undef $talk{buyOrSell};
+	message T("Ready to start selling items\n");
 
 	# continue talk sequence now
 	$ai_v{npc_talk}{time} = time;
