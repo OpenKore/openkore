@@ -1179,7 +1179,7 @@ sub charSelectScreen {
 		           join("\n", @charNames)),
 		           "connection");
 	}
-	return 1 if $net->clientAlive;
+	return 1 if ($net->clientAlive && $net->version);
 
 	Plugins::callHook('charSelectScreen', \%plugin_args);
 	return $plugin_args{pin_return} if ($plugin_args{pin_return});
