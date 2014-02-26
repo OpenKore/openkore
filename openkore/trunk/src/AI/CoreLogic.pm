@@ -1229,6 +1229,10 @@ sub processAutoStorage {
 				# Storage not yet opened; stop and wait until it's open
 				return;
 			}
+			
+			my %pluginArgs;
+			Plugins::callHook("AI_storage_open", \%pluginArgs); # we can hook here to perform actions BEFORE any storage function
+			return if ($pluginArgs{return});
 
 			if (!$args->{getStart}) {
 				$args->{done} = 1;
