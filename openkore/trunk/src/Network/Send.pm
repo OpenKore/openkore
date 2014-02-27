@@ -615,6 +615,48 @@ sub sendGetCharacterName {
 	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
+sub sendTalk {
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'npc_talk', ID => $ID, type => 1}));
+	debug "Sent talk: ".getHex($ID)."\n", "sendPacket", 2;
+}
+
+sub sendTalkCancel {
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'npc_talk_cancel', ID => $ID}));
+	debug "Sent talk cancel: ".getHex($ID)."\n", "sendPacket", 2;
+}
+
+sub sendTalkContinue {
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'npc_talk_continue', ID => $ID}));
+	debug "Sent talk continue: ".getHex($ID)."\n", "sendPacket", 2;
+}
+
+sub sendTalkResponse {
+	my ($self, $ID, $response) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'npc_talk_response', ID => $ID, response => $response}));
+	debug "Sent talk respond: ".getHex($ID).", $response\n", "sendPacket", 2;
+}
+
+sub sendTalkNumber {
+	my ($self, $ID, $number) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'npc_talk_number', ID => $ID, value => $number}));
+	debug "Sent talk number: ".getHex($ID).", $number\n", "sendPacket", 2;
+}
+
+sub sendTalkText {
+	my ($self, $ID, $input) = @_;
+	$input = stringToBytes($input);
+	$self->sendToServer($self->reconstruct({
+		switch => 'npc_talk_text',
+		len => length($input)+length($ID)+5,
+		ID => $ID,
+		text => $input
+	}));
+	debug "Sent talk text: ".getHex($ID).", $input\n", "sendPacket", 2;
+}
+
 sub parse_private_message {
 	my ($self, $args) = @_;
 	$args->{privMsg} = bytesToString($args->{privMsg});

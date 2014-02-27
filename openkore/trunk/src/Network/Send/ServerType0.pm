@@ -50,12 +50,15 @@ sub new {
 		'0085' => ['character_move', 'a3', [qw(coords)]],
 		'0089' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
+		'0090' => ['npc_talk', 'a4 C', [qw(ID type)]],
 		'0094' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
 		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'009F' => ['item_take', 'a4', [qw(ID)]],
 		'00A2' => ['item_drop', 'v2', [qw(index amount)]],
 		'00B2' => ['restart', 'C', [qw(type)]],
+		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
+		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00F3' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
@@ -64,6 +67,8 @@ sub new {
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
+		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
+		'0146' => ['npc_talk_cancel', 'a4', [qw(ID)]],
 		'0149' => ['alignment', 'a4 C v', [qw(targetID type point)]],
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
@@ -74,6 +79,7 @@ sub new {
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
+		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
 		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
@@ -951,49 +957,6 @@ sub sendSuperNoviceExplosion {
 	my $msg = pack("C*", 0xED, 0x01);
 	$_[0]->sendToServer($msg);
 	debug "Sent Super Novice Explosion\n", "sendPacket", 2;
-}
-
-sub sendTalk {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4 C', 0x0090, $ID, 1);
-	$self->sendToServer($msg);
-	debug "Sent talk: ".getHex($ID)."\n", "sendPacket", 2;
-}
-
-sub sendTalkCancel {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4', 0x0146, $ID);
-	$self->sendToServer($msg);
-	debug "Sent talk cancel: ".getHex($ID)."\n", "sendPacket", 2;
-}
-
-sub sendTalkContinue {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4', 0x00B9, $ID);
-	$self->sendToServer($msg);
-	debug "Sent talk continue: ".getHex($ID)."\n", "sendPacket", 2;
-}
-
-sub sendTalkResponse {
-	my ($self, $ID, $response) = @_;
-	my $msg = pack('v a4 C', 0x00B8, $ID ,$response);
-	$self->sendToServer($msg);
-	debug "Sent talk respond: ".getHex($ID).", $response\n", "sendPacket", 2;
-}
-
-sub sendTalkNumber {
-	my ($self, $ID, $number) = @_;
-	my $msg = pack('v a4 V', 0x0143, $ID, $number);
-	$self->sendToServer($msg);
-	debug "Sent talk number: ".getHex($ID).", $number\n", "sendPacket", 2;
-}
-
-sub sendTalkText {
-	my ($self, $ID, $input) = @_;
-	$input = stringToBytes($input);
-	my $msg = pack('v2 a4 Z*', 0x01D5, length($input)+length($ID)+5, $ID, $input);
-	$self->sendToServer($msg);
-	debug "Sent talk text: ".getHex($ID).", $input\n", "sendPacket", 2;
 }
 
 # 0x011b,20,useskillmap,2:4

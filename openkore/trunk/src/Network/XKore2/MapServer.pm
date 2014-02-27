@@ -120,6 +120,12 @@ sub gameguard_reply {
 	}
 }
 
+sub npc_talk_continue {
+	my ($self, $args, $client) = @_;
+	# TODO: Mangle every npc_talk packet during talkNPC sequences
+	$args->{mangle} = 2 if ($config{autoTalkCont});
+}
+
 # Overrided method.
 sub getCharInfo {
 	my ($self, $session) = @_;
