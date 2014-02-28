@@ -176,17 +176,32 @@ sub iterate {
 			my $time = $1;
 			$ai_v{npc_talk}{time} = time + $time;
 			$self->{time} = time + $time;
-
-		} elsif ( $step =~ /^t=(.*)/i ) {
-			# Send NPC talk text.
-			$messageSender->sendTalkText($talk{ID}, $1);
-
+			
 		} elsif ( $step =~ /^a=(.*)/i ) {
 			# Run a command.
 			my $command = $1;
 			$ai_v{npc_talk}{time} = time + $timeResponse - 4;
 			$self->{time} = time + $timeResponse - 4;
 			Commands::run($command);
+			
+		} elsif ( $step =~ /c/i ) {
+			# Click Next.
+			if ($npcTalkType eq 'next') {
+				$messageSender->sendTalkContinue($talk{ID});
+			} else {
+				$self->setError(WRONG_NPC_INSTRUCTIONS,
+					T("According to the given NPC instructions, the Next button " .
+					"must now be clicked on, but that's not possible."));
+				$self->cancelTalk();
+			}
+
+		} elsif ( $step !~ /c/i && $ai_v{npc_talk}{talk} eq 'next') {
+			debug "Auto-continuing NPC Talk - next detected \n", 'ai_npcTalk';
+			$messageSender->sendTalkContinue($talk{ID});
+			return;
+		} elsif ( $step =~ /^t=(.*)/i ) {
+			# Send NPC talk text.
+			$messageSender->sendTalkText($talk{ID}, $1);
 
 		} elsif ( $step =~ /d(\d+)/i ) {
 			# Send NPC talk number.
@@ -198,17 +213,6 @@ sub iterate {
 				$messageSender->sendTalk($self->{ID});
 			} else {
 				$messageSender->sendAction($self->{ID}, 0);
-			}
-
-		} elsif ( $step =~ /c/i ) {
-			# Click Next.
-			if ($npcTalkType eq 'next') {
-				$messageSender->sendTalkContinue($talk{ID});
-			} else {
-				$self->setError(WRONG_NPC_INSTRUCTIONS,
-					T("According to the given NPC instructions, the Next button " .
-					"must now be clicked on, but that's not possible."));
-				$self->cancelTalk();
 			}
 
 		} elsif ( $step =~ /r(\d+)/i ) {
