@@ -4437,6 +4437,7 @@ sub received_characters {
 		}
 	} else {
 		message T("Waiting for PIN code request\n"), "connection";
+		$timeout{'charlogin'}{'time'} = time;
 	}
 }
 
