@@ -48,17 +48,21 @@ sub __start {
 
 
 	#### Start the server, if not already running. ####
-	my $daemon = new Utils::Daemon("OpenKore-Bus");
-	eval {
-		$daemon->init(\&startServer);
-	};
-	if (my $e = caught('Utils::Daemon::AlreadyRunning')) {
-		my $address = $e->info->{host} . ":" . $e->info->{port};
-		print STDERR "The bus server is already running at port $address\n";
-		exit 2;
-	} elsif ($@) {
-		print "Cannot start bus server: $@\n";
-		exit 3;
+	if ($options{nodaemon}) {
+		my $daemon = new Utils::Daemon("OpenKore-Bus");
+		eval {
+			$daemon->init(\&startServer);
+		};
+		if (my $e = caught('Utils::Daemon::AlreadyRunning')) {
+			my $address = $e->info->{host} . ":" . $e->info->{port};
+			print STDERR "The bus server is already running at port $address\n";
+			exit 2;
+		} elsif ($@) {
+			print "Cannot start bus server: $@\n";
+			exit 3;
+		}
+	} else {
+		&startServer();
 	}
 
 	if (!$options{quiet}) {
