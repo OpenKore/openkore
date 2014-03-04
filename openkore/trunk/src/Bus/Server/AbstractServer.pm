@@ -71,7 +71,7 @@ sub send {
 	my ($self, $clientID, $messageID, $args) = @_;
 
 	my $client = $self->{BAS_busClients}{$clientID};
-	if ($client) {
+	if ($client && $client->getSocket()->connected) {
 		return $client->send(serialize($messageID, $args));
 	} else {
 		return -1;
