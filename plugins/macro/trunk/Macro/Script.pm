@@ -370,15 +370,14 @@ sub next {
 	##########################################
 	# while statement: while (foo <= bar) as label
 	} elsif ($line =~ /^while\s/) {
-		my ($first, $cond, $last, $label) = $line =~ /^while\s+\(\s*"?(.*?)"?\s+([<>=!]+?)\s+"?(.*?)"?\s*\)\s+as\s+(.*)/;
-		if (!defined $first || !defined $cond || !defined $last || !defined $label) {$self->{error} = "$errtpl: syntax error in while statement"}
-		else {
-			my $pfirst = parseCmd($first, $self); my $plast = parseCmd($last, $self);
-			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-			unless (defined $pfirst && defined $plast) {$self->{error} = "$errtpl: either '$first' or '$last' has failed"}
-			elsif (!cmpr($pfirst, $cond, $plast)) {$self->{line} = $self->{label}->{"end ".$label}}
-			$self->{line}++
+		my ($text, $label) = $line =~ /^while\s+\(\s*(.*)\s*\)\s+as\s+(.*)/;
+		my $text = parseCmd($text, $self);
+		if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
+		my $savetxt = particle($text, $self, $errtpl);
+		if (!multi($savetxt, $self, $errtpl)) {
+			$self->{line} = $self->{label}->{"end ".$label};
 		}
+		$self->{line}++;
 		$self->{timeout} = 0
 	##########################################
 	# pop value from variable: $var = [$list]
