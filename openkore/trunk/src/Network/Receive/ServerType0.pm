@@ -4110,13 +4110,12 @@ sub party_users_info {
 		}
 		$char->{party}{users}{$ID} = new Actor::Party();
 		$char->{party}{users}{$ID}{name} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
-		message TF("Party Member: %s\n", $char->{party}{users}{$ID}{name}), "party", 1;
 		$char->{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
 		$char->{party}{users}{$ID}{admin} = !(unpack("C1", substr($msg, $i + 44, 1)));
 		$char->{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
 		$char->{party}{users}{$ID}->{ID} = $ID;
+		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
 	}
-
 	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
 		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
 	}
