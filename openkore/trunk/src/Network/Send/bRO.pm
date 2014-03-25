@@ -19,22 +19,22 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'08A4' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'089A' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-		'0929' => ['character_move','a3', [qw(coords)]],
-		'087D' => ['sync', 'V', [qw(time)]],
-		'088E' => ['actor_look_at', 'v C', [qw(head body)]],
-		'08A0' => ['item_take', 'a4', [qw(ID)]],
-		'0870' => ['item_drop', 'v2', [qw(index amount)]],
-		'0437' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0892' => ['storage_item_remove', 'v V', [qw(index amount)]],
-		'094C' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'089B' => ['actor_info_request', 'a4', [qw(ID)]],
-		'023B' => ['actor_name_request', 'a4', [qw(ID)]],
-		'093E' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'08A1' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
-		'0957' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
-		'0959' => ['storage_password'],
+		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
+		'0437' => ['character_move','a3', [qw(coords)]],
+		'035F' => ['sync', 'V', [qw(time)]],
+		'092E' => ['actor_look_at', 'v C', [qw(head body)]],
+		'07E4' => ['item_take', 'a4', [qw(ID)]],
+		'0362' => ['item_drop', 'v2', [qw(index amount)]],
+		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0202' => ['actor_info_request', 'a4', [qw(ID)]],
+		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
+		'086E' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
+		'0888' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
+		'0817' => ['storage_password'],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
@@ -47,7 +47,7 @@ sub new {
 	
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	$self->cryptKeys(1777739431, 2039561443, 1464942498);
+	$self->cryptKeys(378471902, 1593005323, 341802953);
 	
 	return $self;
 }
