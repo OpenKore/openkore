@@ -16,6 +16,7 @@ poseidonServer 127.0.0.1
 poseidonPort 24390
 
 bindIp
+forceMapIP
 
 # 1 = hook into RO client, 2 = Act as stand-alone proxy, proxy = act as true proxy
 # http://wiki.openkore.com/index.php/XKore
@@ -31,6 +32,7 @@ XKore_exeName ragexe.exe
 XKore_listenIp 127.0.0.1
 XKore_listenPort 6901
 XKore_publicIp 127.0.0.1
+XKore_ID
 
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
@@ -58,6 +60,7 @@ attackAuto_party 1
 attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
 attackAuto_inLockOnly 1
+attackAuto_notInTown 1
 attackDistance 1.5
 attackDistanceAuto 0
 attackMaxDistance 2.5
@@ -115,9 +118,11 @@ autoSleepMin 900
 autoSleepSeed 900
 
 autoResponse 0
+autoResponseOnHeal 0
 
 autoSpell
 
+avoidGM_namePattern
 avoidGM_near 0
 avoidGM_near_inTown 0
 avoidGM_talk 0
@@ -146,8 +151,11 @@ dcOnStorageFull 1
 dcOnPlayer 0
 dcOnServerShutDown 0
 dcOnServerClose 0
+dcOnJobLevel
+dcOnLevel
 
 follow 0
+followCheckLOS 0
 followTarget
 followEmotion 1
 followEmotion_distance 4
@@ -265,6 +273,16 @@ squelchDomains
 verboseDomains
 beepDomains
 beepDomains_notInTown
+friendlyAID
+showTime
+showTimeDomains
+showTimeDomainsFormat
+wx_map_maxAutoSize 300
+wx_map_monsterSticking 1
+wx_map_npcSticking 1
+wx_map_playersSticking 1
+wx_map_portalSticking 5
+wx_npcTalk
 
 logChat 0
 logPrivateChat 1
@@ -274,7 +292,8 @@ logSystemChat 1
 logEmoticons
 logConsole 0
 logAppendUsername 1
-logAppendServer
+logAppendServer 0
+monsterLog 0
 
 chatTitleOversize 0
 shopTitleOversize 0
@@ -353,6 +372,7 @@ homunculus_route_step 15
 homunculus_tankMode 0
 homunculus_tankModeTarget
 
+homunculus_StandByAuto 0
 homunculus_teleportAuto_hp 10
 homunculus_teleportAuto_maxDmg 500
 homunculus_teleportAuto_maxDmgInLock 0
@@ -511,6 +531,8 @@ useSelf_skill {
 
 useSelf_skill_smartHeal 1
 
+partySkillDistance 0..8
+
 partySkill {
 	lvl 10
 	dist 3
@@ -551,6 +573,14 @@ partySkill {
 	target_dead 0
 	inInventory
 	isSelfSkill 0
+}
+
+monsterSkill {
+	target
+	maxUses
+	# Skill Use Conditions, including isSelfSkill
+	# Self Conditions
+	# Target Monster Conditions
 }
 
 autoSwitch_default_rightHand
@@ -649,6 +679,7 @@ sellAuto 0
 sellAuto_npc
 sellAuto_standpoint
 sellAuto_distance 5
+sellAuto_npc_steps s e
 
 storageAuto 0
 storageAuto_npc
@@ -656,9 +687,11 @@ storageAuto_distance 5
 storageAuto_npc_type 1
 storageAuto_npc_steps
 storageAuto_password
+storageEncryptKey
 storageAuto_keepOpen 0
 storageAuto_useChatCommand
-relogAfterStorage 1
+storageAuto_notAfterDeath
+relogAfterStorage 0
 minStorageZeny 50
 
 npcTimeResponse
@@ -680,3 +713,7 @@ debugPacket_exclude
 debugPacket_include
 debugPacket_include_dumpMethod
 debugDomains
+logToFile_Debug
+logToFile_Errors
+logToFile_Messages
+logToFile_Warnings
