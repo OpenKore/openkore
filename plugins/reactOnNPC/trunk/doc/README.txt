@@ -1,8 +1,9 @@
-NAME: reactOnNPC v.2.0.0
-COMPABILITY: OpenKore v.2.0.5.1 or later
+NAME: reactOnNPC v.2.0.1
+COMPABILITY: OpenKore SVN 8855 or later
 LICENCE: This plugin is licensed under the GNU GPL
 COPYRIGHT: Copyright 2006 by hakore
 TOPIC: http://forums.openkore.com/viewtopic.php?f=34&t=198
+DOWNLOAD: http://sourceforge.net/p/openkore/code/HEAD/tree/plugins/reactOnNPC/trunk/
 
 Introduction:
 -------------
@@ -78,14 +79,14 @@ Note: If this option is not specified, the block will be triggered on any type o
 
 * msg_(number) (message|regexp)
 
-This is a list of attributes that specifies the lines of messages that should be checked on the NPC conversation. The number starts from 0 and increses in increments of 1.
+This is a list of attributes that specifies the lines of messages that should be checked on the NPC conversation. The number starts from 0 and increases in increments of 1.
 
 You can specify either a simple message or a regexp.
 
 
 *useColors (boolean flag) v.1.1.0
 
-By default, matching of NPC messages with the specified patterns on the msg_ attributes exclues the color codes (e.g. ^FF0000). If this attribute is set to 1, the pattern matching will include the color codes so you can inspect these codes on the process.
+By default, matching of NPC messages with the specified patterns on the msg_ attributes excludes the color codes (e.g. ^FF0000). If this attribute is set to 1, the pattern matching will include the color codes so you can inspect these codes on the process.
 
 
 *delay (seconds) v.2.0.0
@@ -112,7 +113,7 @@ The pattern can be a simple string or a regexp.
 
 
 #(line number)~(match index)
-If you use capturing parenthsis in the regexp you specified on a msg_# attribute, 
+If you use capturing parenthesis in the regexp you specified on a msg_# attribute, 
 this keyword will be resolved to the value of the captured string. 
 The line number corresponds to the number of the msg_# attribute where the regexp is used, 
 while the match index corresponds to the index of the captured string.
@@ -168,13 +169,13 @@ PROBLEM:
 
 SOLUTION:
 reactOnNPC talk num @eval(my $color1 = #1~1;my $color2 = #2~1;my $color3 = #3~1;my $color4 = #4~1;my $number1 = #1~2;my $number2 = #2~2;my $number3 = #3~2;my $number4 = #4~2;my $numberout = 0; if ($color1 eq '^000000'@) {$numberout = $number1;} if ($color2 eq '^000000'@) {$numberout = $number2;} if ($color3 eq '^000000'@) {$numberout = $number3;} if ($color4 eq '^000000'@) {$numberout = $number4;} my @@colors = split /\^/,$numberout; my $anwser = ''; foreach my $number (@@colors@) { if ($number eq /000000(\d+@)/@) {$anwser .= $1;}} return $anwser;){
-        type number
-        useColors 1
-        msg_0 [Bot Check]
-        msg_1 /(\^[0-9a-fA-F]{6})Type: (.+)/i
-        msg_2 /(\^[0-9a-fA-F]{6})Type: (.+)/i
-        msg_3 /(\^[0-9a-fA-F]{6})Type: (.+)/i
-        msg_4 /(\^[0-9a-fA-F]{6})Type: (.+)/i
+	type number
+	useColors 1
+	msg_0 [Bot Check]
+	msg_1 /(\^[0-9a-fA-F]{6})Type: (.+)/i
+	msg_2 /(\^[0-9a-fA-F]{6})Type: (.+)/i
+	msg_3 /(\^[0-9a-fA-F]{6})Type: (.+)/i
+	msg_4 /(\^[0-9a-fA-F]{6})Type: (.+)/i
 }
 
 
@@ -202,3 +203,57 @@ DISCLAIMER
 THIS PLUGIN IS DISTRIBUTED "AS IS" AND WITHOUT WARRANTIES AS TO PERFORMANCE OF MERCHANTABILITY OR ANY OTHER WARRANTIES WHETHER EXPRESSED OR IMPLIED. NO WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE IS OFFERED.
 THE USER MUST ASSUME THE ENTIRE RISK OF USING THE PLUGIN. 
 
+
+=======================
+= Example (CasperRO): =
+=======================
+	NPC Exists: Gold Room (143, 169) (ID 111267256) - (2)
+	----------Responses-----------
+	#  Response
+	0  Proceed
+	1  Ignore
+	2  Cancel Chat
+	-------------------------------
+	Gold Room: Type 'talk resp #' to choose a response.
+	Gold Room: READ CAREFULLY
+	Gold Room: This is the antiBot login
+	Gold Room: Please enter the input number correctly ###### << if you see that .. and what is it color...enter the input number same as the ##### color
+	Gold Room: Auto-continuing talking
+	Gold Room: For Example
+	Gold Room: ^ffff001021177^000000
+	Gold Room: ^5500001009311^000000
+	Gold Room: ^0000ff1014758^000000
+	Gold Room: ^550000##########^000000
+	Gold Room: So the answer would be
+	Gold Room: 1009311, Because they are in the same color of ######
+	Gold Room: So lets now Proceed to the anti-BOT
+	Gold Room: Auto-continuing talking
+	Gold Room: ^F8F8FF4355750^000000^FFA5007154336^000000^F7F7FF1581^000000^F5F9FD683^000000
+	Gold Room: ^FFF9EE5010961^000000^A52A2A7489013^000000^F5F9FD1581^000000^FFF9EE683^000000
+	Gold Room: ^F5F9FD9730339^000000^FF00007896091^000000^F7F7FF1581^000000^FFF9EE683^000000
+	Gold Room: ^F8F8FF8184673^000000^0000FF1536013^000000^F5F9FD1581^000000^F5F9FD683^000000
+	Gold Room: ^FFF9EE2116097^000000^0080001429644^000000^F5F9FD1581^000000^FFF9EE683^000000
+	Gold Room: ^F5F9FD3373750^000000^9400D38887188^000000^F7F7FF1581^000000^F5F9FD683^000000
+	Gold Room: 0#^FFF9EE###^0000FF #####^F8F8FF######^F5F9FD#^FFF9FA#^F7F7FF##
+	Gold Room: Auto-continuing talking
+	Gold Room: Type 'talk num <number #>' to input a number.
+	Reacting to NPC. Executing command "talk num 1536013".
+	Gold Room: Auto-continuing talking
+	Gold Room: ^4233F4zxcv33^000000!
+	Gold Room: Thanks For Entering the Number Correctly....
+	Gold Room: Auto-continuing talking
+	Map Change: force_1-1.gat (100, 100)
+
+SOLUTION:
+	reactOnNPC talk num @eval(my $color = '#6~1';$color = 'FF8C00' if($color eq 'FFA500'@);my @@array = ('#0~1','#0~2','#0~3','#0~4','#1~1','#1~2','#1~3','#1~4','#2~1','#2~2','#2~3','#2~4','#3~1','#3~2','#3~3','#3~4','#4~1','#4~2','#4~3','#4~4','#5~1','#5~2','#5~3','#5~4'@);my $answer = 1;for($i = 0; $i <= 24; $i++@) {if (@@array[$i] eq $color@) {$answer = @@array[$i+1]}}return $answer) {
+		type number
+		useColors 1
+		delay 2
+		msg_0 /\^[0-9a-fA-F]{6}\d+\^000000\^([0-9a-fA-F]{6})(\d+)\^000000\^([0-9a-fA-F]{6})(\d+)\^000000/
+		msg_1 /\^[0-9a-fA-F]{6}\d+\^000000\^([0-9a-fA-F]{6})(\d+)\^000000\^([0-9a-fA-F]{6})(\d+)\^000000/
+		msg_2 /\^[0-9a-fA-F]{6}\d+\^000000\^([0-9a-fA-F]{6})(\d+)\^000000\^([0-9a-fA-F]{6})(\d+)\^000000/
+		msg_3 /\^[0-9a-fA-F]{6}\d+\^000000\^([0-9a-fA-F]{6})(\d+)\^000000\^([0-9a-fA-F]{6})(\d+)\^000000/
+		msg_4 /\^[0-9a-fA-F]{6}\d+\^000000\^([0-9a-fA-F]{6})(\d+)\^000000\^([0-9a-fA-F]{6})(\d+)\^000000/
+		msg_5 /\^[0-9a-fA-F]{6}\d+\^000000\^([0-9a-fA-F]{6})(\d+)\^000000\^([0-9a-fA-F]{6})(\d+)\^000000/
+		msg_6 /0.*\^(0000FF|A52A2A|9400D3|FFA500|008000|FF0000)\s?#/
+	}
