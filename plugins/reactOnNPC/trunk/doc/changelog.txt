@@ -1,3 +1,7 @@
+3/30/2014 (v.2.0.1)
+- fixed a bug that occurs when using "delay"
+- corrected the syntax
+
 6/25/2008 (v.2.0.0)
 - Fix compatibility bug for SVN version.
 - Added attribute: delay
