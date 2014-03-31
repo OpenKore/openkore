@@ -11,8 +11,9 @@ package reactOnNPC;
 
 use strict;
 use Plugins;
-use Log qw(message debug);
 use Globals qw(%config);
+use Log qw(message debug);
+use Utils qw (timeOut);
 
 Plugins::register('reactOnNPC', "react on NPC messages", \&Unload, \&Unload);
 
