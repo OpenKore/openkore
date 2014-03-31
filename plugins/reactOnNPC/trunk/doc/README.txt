@@ -204,9 +204,9 @@ THIS PLUGIN IS DISTRIBUTED "AS IS" AND WITHOUT WARRANTIES AS TO PERFORMANCE OF M
 THE USER MUST ASSUME THE ENTIRE RISK OF USING THE PLUGIN. 
 
 
-=======================
-= Example (CasperRO): =
-=======================
+======================
+= Example (CasperRO) =
+======================
 	NPC Exists: Gold Room (143, 169) (ID 111267256) - (2)
 	----------Responses-----------
 	#  Response
@@ -256,4 +256,38 @@ SOLUTION:
 		msg_4 /\^[0-9a-fA-F]{6}\d+\^000000\^([0-9a-fA-F]{6})(\d+)\^000000\^([0-9a-fA-F]{6})(\d+)\^000000/
 		msg_5 /\^[0-9a-fA-F]{6}\d+\^000000\^([0-9a-fA-F]{6})(\d+)\^000000\^([0-9a-fA-F]{6})(\d+)\^000000/
 		msg_6 /0.*\^(0000FF|A52A2A|9400D3|FFA500|008000|FF0000)\s?#/
+	}
+
+=====================
+= Example (VitalRO) =
+=====================
+	Gold Room: Do you want to go to Gold room ?
+	Gold Room: It Will Cost You 1,000,000 Zeny
+	----------Responses-----------
+	#  Response
+	0  Yes
+	1  No
+	2  Cancel Chat
+	-------------------------------
+	Gold Room: Type 'talk resp #' to choose a response.
+	Gold Room: Auto-continuing talking
+	Gold Room: Bot Checking...
+	Gold Room: Enter the ^FF0000RED COLOR^000000 Code..
+	Gold Room:
+	Gold Room: ^0055FFiFO ^FF0000dq5C@xCmV^0055FF f*^000000
+	Gold Room: Type 'talk text' (Respond to NPC)
+	[reactOnNPC] Reacting to NPC. Executing command "talk text dq5C@xCmV".
+	Gold Room: Auto-continuing talking
+	Gold Room: Done,..you may proceed into Gold Room by paying ^FF00001000000 zeny.
+	Gold Room: Done talking
+
+SOLUTION:
+	reactOnNPC talk text @eval(my $color1 = '#1~1';my $color2 = '#3~1';if ($color1 eq $color2@) {return '#3~2'}) {
+		type text
+		useColors 1
+		delay 2
+		msg_0 /Bot Checking.../
+		msg_1 /Enter the \^([0-9a-fA-F]{6})RED COLOR\^000000 Code./
+		msg_2 /^\s$/
+		msg_3 /\s+\^([0-9a-fA-F]{6})(\S+)\^[0-9a-fA-F]{6}\s+/
 	}
