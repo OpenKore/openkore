@@ -41,6 +41,7 @@ list white
 info white
 equip grey
 teleport yellow
+plugin gray
 
 [error]
 default red
