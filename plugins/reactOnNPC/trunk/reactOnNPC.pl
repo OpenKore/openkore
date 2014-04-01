@@ -1,18 +1,87 @@
 # =======================
-# reactOnNPC v.2.0.1
+# reactOnNPC v.2.0.2
 # =======================
 # This plugin is licensed under the GNU GPL
-# Copyright 2006 by hakore
+# Copyright 2006 by hakore [mod by windows98SE and ya4ept]
 #
 # http://forums.openkore.com/viewtopic.php?f=34&t=198
 # http://sourceforge.net/p/openkore/code/HEAD/tree/plugins/reactOnNPC/trunk/
+#
+# Example (put in config.txt):
+#
+# reactOnNPC_debug 1
+# reactOnNPC talk text @eval(my $color1 = '#1~1';my $color2 = '#3~1';if ($color1 eq $color2@) {return '#3~2'}) {
+#	type text
+#	useColors 1
+#	respIgnoreColor 1
+#	delay 2
+#	msg_0 /Bot Checking.../
+#	msg_1 /Enter the \^([0-9a-fA-F]{6})RED COLOR\^000000 Code./
+#	msg_2 /^\s$/
+#	msg_3 /\s+\^([0-9a-fA-F]{6})(\S+)\^[0-9a-fA-F]{6}\s+/
+# Shared SelfCondition (see http://openkore.com/index.php/Category:Self_Condition):
+#	disabled 0
+#	whenStatusActive 
+#	whenStatusInactive
+#	onAction
+#	notOnAction
+#	inMap
+#	notInMap
+#	inLockOnly
+#	notInTown
+#	timeout
+#	notWhileSitting
+#	manualAI
+#	whenIdle
+#	hp
+#	sp
+#	weight
+#	zeny
+#	spirit
+#	amuletType
+#	homunculus
+#	homunculus_hp
+#	homunculus_sp
+#	homunculus_dead
+#	homunculus_resting
+#	mercenary
+#	mercenary_hp
+#	mercenary_sp
+#	mercenary_whenStatusActive
+#	mercenary_whenStatusInactive
+#	aggressives
+#	partyAggressives
+#	stopWhenHit
+#	whenFollowing
+#	monstersCount
+#	monsters
+#	notMonsters
+#	defendMonsters
+#	inInventory
+#	inCart
+#	whenGround
+#	whenNotGround
+#	whenPermitSkill
+#	whenNotPermitSkill
+#	onlyWhenSafe
+#	whenEquipped
+#	whenNotEquipped
+#	whenWater
+#	equip_leftAccessory
+#	equip_rightAccessory
+#	equip_leftHand
+#	equip_rightHand
+#	equip_robe
+#	whenFlag
+#	whenNotFlag
+# }
 
 package reactOnNPC;
 
 use strict;
 use Plugins;
 use Globals qw(%config);
-use Log qw(message debug);
+use Log qw(message);
 use Utils qw (timeOut);
 
 Plugins::register('reactOnNPC', "react on NPC messages", \&Unload, \&Unload);
@@ -40,13 +109,14 @@ sub Unload {
 };
 
 sub onNPCTalk {
+	return if !$config{"reactOnNPC_0"};
 	my (undef, $args) = @_;
 	my $ID = unpack("V", substr($args->{RAW_MSG}, 4, 4));
 	my $msg = unpack("Z*", substr($args->{RAW_MSG}, 8));
 
 	$msg = I18N::bytesToString($msg);
 
-	if (!%reactOnNPC || $reactOnNPC{action}) 	{
+	if (!%reactOnNPC || $reactOnNPC{action}) {
 		undef %reactOnNPC if %reactOnNPC;
 		$reactOnNPC{index} = 0;
 		$reactOnNPC{ID} = $ID;
@@ -55,13 +125,14 @@ sub onNPCTalk {
 		$reactOnNPC{index}++;
 		$reactOnNPC{msg}[$reactOnNPC{index}] = $msg;
 	}
-	debug "[reactOnNPC] NPC message saved ($reactOnNPC{index}): \"$msg\".\n", "reactOnNPC";
+	message "[reactOnNPC] NPC message saved ($reactOnNPC{index}): \"$msg\".\n", "plugin" if $config{"reactOnNPC_debug"};
 }
 
 sub onNPCAction {
+	return if !$config{"reactOnNPC_0"};
 	my $type = substr(shift, 16);
 	$reactOnNPC{action} = $type;
-	debug "[reactOnNPC] onNPCAction type is: $type.\n", "reactOnNPC";
+	message "[reactOnNPC] onNPCAction type is: $type.\n", "plugin" if $config{"reactOnNPC_debug"};
 
 	if ($type eq 'responses') {
 		my $args = shift;
@@ -76,15 +147,19 @@ sub onNPCAction {
 
 	my $i = 0;
 	while (exists $config{"reactOnNPC_$i"}) {
-		if (
-			!$config{"reactOnNPC_$i"}
-			|| !main::checkSelfCondition("reactOnNPC_$i")
-			|| ($config{"reactOnNPC_${i}_type"} && $config{"reactOnNPC_${i}_type"} ne $type)
-		) {
-			debug "[reactOnNPC] Conditions for reactOnNPC_$i not met.\n", "reactOnNPC";
+		if ($config{"reactOnNPC_${i}_type"} && $config{"reactOnNPC_${i}_type"} ne $type) {
+			# Report if type not met
+			message "[reactOnNPC] Conditions for reactOnNPC_$i (npc:${type}, rect:".$config{"reactOnNPC_${i}_type"}.") 'type' not met.\n", "plugin" if $config{"reactOnNPC_debug"};
+			$i++;
+			next;
+		} elsif (!main::checkSelfCondition("reactOnNPC_$i")) {
+			# Report if checkSelfCondition not met
+			message "[reactOnNPC] Conditions for reactOnNPC_$i 'checkSelfCondition' not met.\n", "plugin" if $config{"reactOnNPC_debug"};
 			$i++;
 			next;
 		}
+		# Report if  checkSelfCondition and type met <Yee ha!!>
+		message "[reactOnNPC] Conditions for reactOnNPC_$i (npc:${type} , rect:".$config{"reactOnNPC_${i}_type"}.") is met.\n", "plugin" if $config{"reactOnNPC_debug"};
 		my $j = 0;
 		my $ok = 1;
 		while (exists $config{"reactOnNPC_${i}_msg_$j"}) {
@@ -92,10 +167,10 @@ sub onNPCAction {
 			if (exists $reactOnNPC{msg}[$j]) {
 				$msg = $reactOnNPC{msg}[$j];
 				# Remove RO color codes
-				$msg =~ s/\^[a-fA-F0-9]{6}//g unless ($config{"reactOnNPC_${i}_useColors"});
+				$msg =~ s/\^[A-F0-9]{6}//g unless ($config{"reactOnNPC_${i}_useColors"});
 			}
-			if (!defined $msg || !match($j, $msg, $config{"reactOnNPC_${i}_msg_$j"})) {
-				debug "[reactOnNPC] One or more lines doesn't match for \"reactOnNPC_$i\" ($j).\n", "reactOnNPC";
+			if (!defined $msg || !match("msg", $j, $msg, $config{"reactOnNPC_${i}_msg_$j"})) {
+				message "[reactOnNPC] One or more lines doesn't match for \"reactOnNPC_$i\" ($j).\n", "plugin" if $config{"reactOnNPC_debug"};
 				$ok = 0;
 				last;
 			}
@@ -113,14 +188,16 @@ sub onNPCAction {
 				if ($kw eq 'eval') {
 					$eval = eval $eval_expr;
 				} elsif ($kw eq 'resp') {
-					$i = 0;
-					foreach (@{$reactOnNPC{responses}}) {
-						if (match(undef, $_, $eval_expr)) {
+					my $k = 0;
+					foreach my $rIC (@{$reactOnNPC{responses}}){
+						# Remove RO color codes <npc response>
+						$rIC =~ s/\^[A-F0-9]{6}//ig if($config{"reactOnNPC_${i}_respIgnoreColor"});
+						if(match("response", $k, $rIC, $eval_expr)){
 							last;
 						}
-						$i++;
+						$k++;
 					}
-					$eval = $i;
+				$eval = $k;
 				}
 				$expr = quotemeta $expr;
 				$cmd =~ s/\@$kw\($expr\)/$eval/g;
@@ -131,10 +208,12 @@ sub onNPCAction {
 					time => time,
 					timeout => $delay
 				};
-				debug "[reactOnNPC] React to NPC with delay. Execute command \"$cmd\" after $delay seconds.\n", "success";
+				message "[reactOnNPC] React to NPC with delay. Execute command \"$cmd\" after $delay seconds.\n", "plugin" if $config{"reactOnNPC_debug"};
 				push @reactOnNPC, $params;
+				undef %reactOnNPC;
 			} else {
 				message "[reactOnNPC] Reacting to NPC. Executing command \"$cmd\".\n", "success";
+				undef %reactOnNPC;
 				Commands::run($cmd);
 			}
 			last;
@@ -156,9 +235,9 @@ sub onCheckCmd {
 }
 
 sub match {
-	my ($line, $subject, $pattern) = @_;
-
-	debug "[reactOnNPC] Matching \"$subject\" to \"$pattern\" ($line)... ", "reactOnNPC";
+	my ($type,$line, $subject, $pattern) = @_;
+	# $head for report matching in one line ^^"
+	my $head = "[reactOnNPC] Matching [$type ($line)] \"$subject\" to \"$pattern\" ...";
 	if (my ($re, $ci) = $pattern =~ /^\/(.+?)\/(i?)$/) {
 		if (($ci && $subject =~ /$re/i) || (!$ci && $subject =~ /$re/)) {
 			if (defined $line) {
@@ -167,14 +246,15 @@ sub match {
 					$reactOnNPC{match}[$line][$index] = ${$index};
 				}
 			}
-			debug "regexp ok.\n", "reactOnNPC";
+			message "$head regexp ok.\n", "plugin" if $config{"reactOnNPC_debug"};
 			return 1;
 		}
 	} elsif ($subject eq $pattern) {
-		debug "ok.\n", "reactOnNPC";
+		message "$head ok.\n", "plugin" if $config{"reactOnNPC_debug"};
 		return 1;
 	}
-	debug "doesn't match.\n", "reactOnNPC";
+	message "$head doesn't match.\n", "plugin" if $config{"reactOnNPC_debug"};
+
 }
 
 1;
