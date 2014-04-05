@@ -46,7 +46,7 @@ sub new {
 		'00F7' => undef,
 		'0113' => ['item_take', 'x5 a4', [qw(ID)]],
 		'0116' => ['sync', 'x5 V', [qw(time)]],
-		'0190' => ['skill_use', 'v x7 V x2 v x a4', [qw(lv skillID targetID)]],#22
+		'0190' => ['skill_use', 'x7 V x2 v x a4', [qw(lv skillID targetID)]],#22
 		'0193' => ['storage_item_remove', 'x v x8 V', [qw(index amount)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;

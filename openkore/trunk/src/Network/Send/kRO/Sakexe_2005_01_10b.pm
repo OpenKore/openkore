@@ -31,7 +31,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0072' => ['skill_use', 'v x7 V x4 v x4 a4', [qw(lv skillID targetID)]],#26
+		'0072' => ['skill_use', 'x7 V x4 v x4 a4', [qw(lv skillID targetID)]],#26
 		'007E' => undef,
 		'0085' => ['actor_look_at', 'x10 C x9 C', [qw(head body)]],
 		'0089' => ['sync', 'x3 V', [qw(time)]],

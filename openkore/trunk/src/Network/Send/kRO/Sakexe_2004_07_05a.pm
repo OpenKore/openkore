@@ -33,7 +33,7 @@ sub new {
 	my %packets = (
 		'0072' => ['map_login', 'x3 a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0085' => ['character_move', 'x3 a3', [qw(coords)]],
-		'0113' => ['skill_use', 'v x2 v x3 v a4', [qw(lv skillID targetID)]],#15
+		'0113' => ['skill_use', 'x2 v x3 v a4', [qw(lv skillID targetID)]],#15
 		'0116' => ['skill_use_location', 'x2 v x3 v3', [qw(lv skillID x y)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 	);
