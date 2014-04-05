@@ -41,7 +41,7 @@ sub new {
 		'00F5' => ['map_login', 'x10 a4 x2 a4 x2 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0113' => ['item_take', 'x4 a4', [qw(ID)]],
 		'0116' => ['sync', 'x4 V', [qw(time)]],
-		'0190' => ['skill_use', 'v x5 V x v x2 a4', [qw(lv skillID targetID)]],#20
+		'0190' => ['skill_use', 'x5 V x v x2 a4', [qw(lv skillID targetID)]],#20
 		'0193' => ['storage_item_remove', 'x8 v x10 V', [qw(index amount)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;

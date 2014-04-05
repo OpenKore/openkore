@@ -72,6 +72,12 @@ sub new {
 
 	return $self;
 }
+
+sub battleground_score {
+	my ($self, $args) = @_;
+	message TF("Battleground score - Lions: '%d' VS Eagles: '%d'\n", $args->{score_lion}, $args->{score_eagle}), "info";
+}
+
 sub main_chat {
 	my ($self, $args) = @_;
 	my $message = bytesToString($args->{message});

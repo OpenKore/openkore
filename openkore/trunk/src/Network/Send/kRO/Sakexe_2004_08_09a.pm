@@ -33,7 +33,7 @@ sub new {
 	my %packets = (
 		'0072' => ['item_drop', 'x6 v x5 v', [qw(index amount)]],
 		'007E' => ['map_login', 'x7 a4 x8 a4 x3 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0085' => ['skill_use', 'v x9 V x3 v x2 a4', [qw(lv skillID targetID)]],#26
+		'0085' => ['skill_use', 'x9 V x3 v x2 a4', [qw(lv skillID targetID)]],#26
 		'0089' => ['actor_info_request', 'x6 a4', [qw(ID)]],
 		'008C' => ['skill_use_location', 'x3 v x8 v x12 v x7 v', [qw(lv skillID x y)]],
 		'0094' => ['item_take', 'x7 a4', [qw(ID)]],
