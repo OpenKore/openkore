@@ -26,6 +26,9 @@ char
 # 命令"charselect 1" 回到角色選擇畫面會清除角色編號
 bindIp
 # 如果您的電腦有多個 IP 地址，你可以選擇要使用哪一個 要是您不確定，這個選項您應該保留空白。
+forceMapIP
+# 指定地圖伺服器IP [ twRO 請留空 ]
+
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 # 倉庫加密金鑰編碼
 
@@ -216,6 +219,11 @@ attackAuto_inLockOnly 1
 #  0 = 任何地圖都會進行攻擊
 #  1 = 在鎖定的地圖以外的地圖若受魔物攻擊才會反擊回去
 #  2 = 不允許進行任何鎖定地圖以外的攻擊行動 ［直接衝到鎖定地圖，不論中途是否被魔物追擊］
+
+attackAuto_notInTown 1
+# 是否不會在城鎮地圖內進行攻擊
+#  0 = 在城鎮地圖都會進行攻擊
+#  1 = 不會在城鎮地圖都會進行攻擊
 
 
 #════════════════
@@ -1225,6 +1233,9 @@ followRandomDistance 4
 useSelf_skill_smartHeal 2
 # 自己補血時自動調整治癒術等級以節省SP
 
+partySkillDistance 0..8
+# 設定向隊友施放技能的距離限制 [.. 為 範圍, 0..8 = 0 至 8 格範圍]
+
 useSelf_skill {
 	lvl 10
 	maxCastTime 0
@@ -1570,6 +1581,8 @@ followSitAuto 0
 # 是否自動跟著主人坐下
 followBot 0
 # 主人是否也是 Bot
+followCheckLOS 0
+# 會否向向主人的方向進行checkLOS [有待更正]
 
 
 #════════════
@@ -1593,6 +1606,16 @@ autoResponse 0
 # 建議不要開啟此功能，因為設定不好會弄巧成拙，反被看出是 BOT
 # 若開啟此功能，務必要修改 /contro/responses.txt
 # responses.txt 對話腳本檔，支援變數，有興趣請自行研究
+
+autoResponseOnHeal 0
+# 是否要設定自動回應補血功能 [施放者向被施放者回應]
+# 若開啟此功能，務必要修改 /contro/responses.txt
+# 此設定只會知會被施放者
+# 若開啟此功能，務必要修改 /contro/responses.txt
+# responses.txt 對話腳本檔，支援變數，有興趣請自行研究
+# 設定函數：skillgoodM 及 skillbadM [成功及失敗的答覆]
+# 參考：recv/ST0.pm
+
 
 #══════════════
 #║ 自動加點數 ║
@@ -1680,6 +1703,11 @@ doCommand {
 avoidGM_near 0
 # 偵測到 GM 在附近時要做的動作？
 # 0 = 不迴避 GM、1 = 瞬移後斷線、2 = 直接斷線、3 = 瞬移;、4 = 瞬移回城
+
+avoidGM_namePattern
+# 偵測到附近有 角色/GM 名稱含有此字時回避
+# 例：avoidGM_namePattern 官方
+# 會自動回避名字含有 官方 的角色
 
 avoidGM_near_inTown 0
 # 在城內遇到 GM 時是否要做上一個選項所設定的動作
@@ -1806,6 +1834,11 @@ dcOnPlayer 0
 # 有任何玩家出現在視線範圍內時是否要斷線結束
 # 註：假如是掛見不得人的地圖的話，例如：未開放地圖，PVP 夢靨模式。
 
+dcOnLevel 0
+# 基本等級升級時是否要斷線結速
+
+dcOnJobLevel 0
+# 技能等級升級時是否要斷線結速
 
 
 #════════════════════════════
@@ -1851,6 +1884,9 @@ homunculus_tankMode 0
 # 生命體肉頓模式，0 = 關閉、1 = 開啟
 homunculus_tankModeTarget
 # 生命體肉盾目標 ［玩家名字］
+
+homunculus_StandByAuto 0
+# 當生命體不在視野時是否命令生命體站在原地直至玩家找到生命體，0 = 關閉、1 = 開啟
 
 #═══════════════
 #║ 生命體-瞬移 ║
@@ -2095,6 +2131,8 @@ logAppendUsername 1
 # 是否依照帳號及角色位置分檔記錄
 logAppendServer 0
 # 是否依照伺服器分檔記錄
+monsterLog 0
+# 是否記錄殺死怪物數量及資料
 
 #═══════════════════════
 #║ LOG 紀錄檔 ［其它］ ║
@@ -2144,6 +2182,37 @@ sleepTime 50000
 # 但是，如果您同時打開數個外掛 情況下，值 50000 是建議的
 # 它一般不建議設定值高於 200000，因為它會使你的外掛沒回應。
 
+whenInGame_requestCashPoints 0
+# 連接到地圖伺服器時是否馬上打開商城介面
+# twRO 未經測試之設定
+
+friendlyAID
+# 當此好友上線時, 會顯示對方資料 [角色AID]
+
+showTimeDomains
+# 指定某domain訊息是否顯示時間
+
+showTimeDomainsFormat
+# 指定showTimeDomains顯示時間的格式 (有待更進)
+
+wx_map_maxAutoSize 300
+# 指定WX地圖顯示的大小限制 [此設定會同時限制Width和Height] [預設值為300]
+
+wx_map_monsterSticking 1
+# 指定WX地圖內怪物點和滑鼠觸發選單的距離 [建議勿修改] [1或以上 = 距離, -1 = 關閉此功能]
+
+wx_map_npcSticking 1
+# 指定WX地圖內NPC點和滑鼠觸發選單的距離 [建議勿修改] [1或以上 = 距離, -1 = 關閉此功能]
+
+wx_map_playersSticking 1
+# 指定WX地圖內角色點和滑鼠觸發選單的距離 [建議勿修改] [1或以上 = 距離, -1 = 關閉此功能]
+
+wx_map_portalSticking 5
+# 指定WX地圖內傳送點和滑鼠觸發選單的距離 [建議勿修改] [1或以上 = 距離, -1 = 關閉此功能]
+
+wx_npcTalk
+# 是否顯示NPC對話框 [1 = 使用, 0或空白 = 關閉此功能]
+
 #═════════════════
 #║               ║
 #║ 除錯模式 設定 ║
@@ -2159,4 +2228,10 @@ debugPacket_exclude
 debugPacket_include
 debugPacket_include_dumpMethod
 debugDomains
+logToFile_Messages
+logToFile_Errors
+logToFile_Debug
+logToFile_Warnings
 
+showTime 0
+# debug訊息內是否在每句訊息開首加上時間
