@@ -1778,8 +1778,8 @@ sub processAutoCart {
 				}
 			}
 			cartGet(\@getItems);
+			$AI::Timeouts::autoCart = time;
 		}
-		$AI::Timeouts::autoCart = time;
 	}
 }
 
