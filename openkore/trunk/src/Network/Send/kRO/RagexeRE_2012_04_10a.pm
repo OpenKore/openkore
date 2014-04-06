@@ -42,6 +42,7 @@ sub new {
 		'0891' => ['item_drop', 'v2', [qw(index amount)]],#6
 		'089C' => ['friend_request', 'a*', [qw(username)]],#26
 		'08A6' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'08C9' => ['request_cashitems'],#2
 # TODO 0x08D7,28,battlegroundreg,2:4
 # TODO 0x08E5,41,bookingregreq,2:4
 # TODO 0x08E7,10,bookingsearchreq,2
