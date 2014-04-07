@@ -1,38 +1,31 @@
-#########################################################################
-#  OpenKore - Telesearch Plugin v2
-#  Copyright (c) 2006 ViVi
+# =======================
+# Tele-Search v2.1
+# =======================
+# This plugin is licensed under the GNU GPL
+# Copyright (c) 2006 by ViVi [mod by ya4ept]
 #
-# This plugin is licensed under Creative Commons "Attribution-NonCommercial-ShareAlike 2.5"
+# http://forums.openkore.com/viewtopic.php?f=34&t=134
+# http://sourceforge.net/p/openkore/code/HEAD/tree/plugins/tele-search%20v2/trunk/
 #
-# You are free:
-#    * to copy, distribute, display, and perform the work
-#    * to make derivative works
-# 
-# Under the following conditions:
-#    * by Attribution: You must attribute the work in the manner specified by the author or licensor.
-#    * Noncommercial: You may not use this work for commercial purposes.
-#    * Share Alike: If you alter, transform, or build upon this work, you may distribute the resulting work only under a license identical to this one.
+# Example (put in config.txt):
+#	route_randomWalk 1
+#	teleport_search 1
+#	teleport_search_minSp 10
 #
-#    * For any reuse or distribution, you must make clear to others the license terms of this work.
-#    * Any of these conditions can be waived if you get permission from the copyright holder.
-#
-# Your fair use and other rights are in no way affected by the above.
-#
-# This is a human-readable summary of the Legal Code ( Full License: http://creativecommons.org/licenses/by-nc-sa/2.5/legalcode ). 
-# Disclaimer: http://creativecommons.org/licenses/disclaimer-popup?lang=en
-# 
-#########################################################################
+# Put in timeouts.txt:
+#	ai_teleport_search 5
+
 package telesearchV2;
 
 use strict;
 use Plugins;
-use Settings;
+use Globals qw($char %config $net %timeout);
 use Log qw(message error);
-use Utils;
-use AI;
-use Globals;
+use Utils qw(timeOut);
 
-Plugins::register('Tele-Search v2', 'Alternative tele-search v2.', \&unload);
+
+Plugins::register('Tele-Search v2', 'Alternative tele-search v2.', \&unload, \&unload);
+
 my $hooks = Plugins::addHooks(
 	['AI_pre',\&search, undef],
 	['map_loaded', \&MapLoaded, undef],
@@ -47,10 +40,12 @@ if ($net && $net->getState() == Network::IN_GAME) {
 }
 
 sub unload {
-    Plugins::delHooks($hooks);
-	message("Unloaded Teleport search v2.\n","info");
+	Plugins::delHooks($hooks);
+	undef $maploaded;
+	undef $allow_tele;
+	message "Tele-Search v2 plugin unloading or reloading\n", 'success';
 }
-	   
+
 sub MapLoaded {
 	$maploaded = 1;
 }
@@ -63,29 +58,16 @@ sub checkIdle {
 	}
 }
 
-sub canTeleport {
-	$config{'teleport_search_minSp'} = 10 if (!$config{'teleport_search_minSp'});
-	my $item = $char->inventory->getByName("Fly Wing");
-	
-	if ((!$config{'teleportAuto_useSkill'} && $item) || # Using flywings
-		($config{'teleportAuto_useSkill'} > 1) || # Using no SP for teleport
-		($config{'teleportAuto_useSkill'} == 1 && $config{'teleport_search_minSp'} <= $char->{sp})) { # Using SP to teleport
-		return 1;
-	} else {
-		return 0;
-	}
-}
-
 sub search {
 	if ($config{'teleport_search'} && Misc::inLockMap() && $timeout{'ai_teleport_search'}{'timeout'}) {
-		
-		if ($maploaded && !$allow_tele)  {
+
+		if ($maploaded && !$allow_tele) {
 			$timeout{'ai_teleport_search'}{'time'} = time;
 			$allow_tele = 1;
-                        
+
 		# Check if we're allowed to teleport, if map is loaded, timeout has passed and we're just looking for targets.
-		} elsif ($maploaded && $allow_tele && timeOut($timeout{'ai_teleport_search'}) && checkIdle() && canTeleport()) {
-			message("Attemping to tele-search.\n","info");
+		} elsif ($maploaded && $allow_tele && timeOut($timeout{'ai_teleport_search'}) && checkIdle()) {
+			message ("Attemping to tele-search.\n","info");
 			$allow_tele = 0;
 			$maploaded = 0;
 			# Attempt to teleport, give error and unload plugin if we cant.
@@ -98,13 +80,13 @@ sub search {
 		} elsif (!checkIdle()) {
 			$timeout{'ai_teleport_search'}{'time'} = time;
 		}
-		
-        # Oops! timeouts.txt is missing a crucial value, lets use the default value ;)
-        } elsif (!$timeout{'ai_teleport_search'}{'timeout'}) {
+
+		# Oops! timeouts.txt is missing a crucial value, lets use the default value ;)
+		} elsif (!$timeout{'ai_teleport_search'}{'timeout'}) {
 			error ("timeouts.txt missing setting! Using default timeout of 5 seconds.\n");
 			$timeout{'ai_teleport_search'}{'timeout'} = 5;
 			return;
-        }
+		}
 }
 
-return 1;
+1;
