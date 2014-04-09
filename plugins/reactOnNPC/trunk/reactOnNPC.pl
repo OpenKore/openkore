@@ -167,7 +167,7 @@ sub onNPCAction {
 			if (exists $reactOnNPC{msg}[$j]) {
 				$msg = $reactOnNPC{msg}[$j];
 				# Remove RO color codes
-				$msg =~ s/\^[A-F0-9]{6}//g unless ($config{"reactOnNPC_${i}_useColors"});
+				$msg =~ s/\^[a-fA-F0-9]{6}//g unless ($config{"reactOnNPC_${i}_useColors"});
 			}
 			if (!defined $msg || !match("msg", $j, $msg, $config{"reactOnNPC_${i}_msg_$j"})) {
 				message "[reactOnNPC] One or more lines doesn't match for \"reactOnNPC_$i\" ($j).\n", "plugin" if $config{"reactOnNPC_debug"};
@@ -191,8 +191,8 @@ sub onNPCAction {
 					my $k = 0;
 					foreach my $rIC (@{$reactOnNPC{responses}}){
 						# Remove RO color codes <npc response>
-						$rIC =~ s/\^[A-F0-9]{6}//ig if($config{"reactOnNPC_${i}_respIgnoreColor"});
-						if(match("response", $k, $rIC, $eval_expr)){
+						$rIC =~ s/\^[a-fA-F0-9]{6}//g if($config{"reactOnNPC_${i}_respIgnoreColor"});
+						if (match("response", $k, $rIC, $eval_expr)) {
 							last;
 						}
 						$k++;
@@ -235,7 +235,7 @@ sub onCheckCmd {
 }
 
 sub match {
-	my ($type,$line, $subject, $pattern) = @_;
+	my ($type, $line, $subject, $pattern) = @_;
 	# $head for report matching in one line ^^"
 	my $head = "[reactOnNPC] Matching [$type ($line)] \"$subject\" to \"$pattern\" ...";
 	if (my ($re, $ci) = $pattern =~ /^\/(.+?)\/(i?)$/) {

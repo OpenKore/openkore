@@ -150,7 +150,7 @@ Attribute definitions:
 	By default, matching of NPC messages with the specified patterns on the msg_ attributes excludes the color codes (e.g. ^FF0000).
 	If this attribute is set to 1, the pattern matching will include the color codes so you can inspect these codes on the process.
 
-* respIgnoreColor
+* respIgnoreColor (boolean flag)
 	Remove RO color codes <npc response>
 
 * delay (seconds)
@@ -355,4 +355,58 @@ SOLUTION:
 		msg_1 /Enter the \^([0-9a-fA-F]{6})RED COLOR\^000000 Code./
 		msg_2 /^\s$/
 		msg_3 /\s+\^([0-9a-fA-F]{6})(\S+)\^[0-9a-fA-F]{6}\s+/
+	}
+
+=======================
+= Example (SpartanRO) =
+=======================
+	BotKiller Guard: For security reasons we must to interrogate you, please find a safe place. [5 sec.]
+	Unknown #118383673: [Kafra]
+	Unknown #118383673: >>> Who doesn't lie? <<<
+	Unknown #118383673:
+	Unknown #118383673: 1) udigurs: 'Your Job Level is 60'
+	Unknown #118383673: 2) cafaju: 'Your Level is 255'
+	Unknown #118383673: 3) rilitst: 'Your Max SP is 1468'
+	Unknown #118383673: 4) fafele: 'Your Max HP is 51789'
+	Unknown #118383673: Auto-continuing talking
+	----------Responses-----------
+	# Response
+	0 fafele
+	1 rilitst
+	2 cafaju
+	3 udigurs
+	4 Cancel Chat
+	-------------------------------
+	Unknown #118383673: Type 'talk resp #' to choose a response.
+	[reactOnNPC] Reacting to NPC. Executing command "talk resp 2".
+	You are no longer: look: GM Perfect Hide
+	You are no longer: look: Ruwach
+	You are no longer: look: Orc Head
+	[Guild] 100% of effectiveness.
+	You are now: Increase Agility (Duration: 300s)
+
+SOLUTION:
+	reactOnNPC talk resp @resp(@eval(my @@a = ('#3~2','#4~2','#5~2','#6~2'@);my @@b = ('#3~6','#4~6','#5~6','#6~6'@);my @@c = ('#3~1','#4~1','#5~1','#6~1'@);my $anwser = 'error';for (my $z = 0; $z <= 3; $z++@) {if (@@a[$z] eq 'Level' && @@b[$z] == $::char->{lv}@) {$anwser = @@c[$z];}elsif (@@a[$z] eq 'Job Level' && @@b[$z] == $::char->{lv_job}@) {$anwser = @@c[$z];}elsif (@@a[$z] eq 'Max HP' && @@b[$z] == $::char->{hp_max}@) {$anwser = @@c[$z];}elsif (@@a[$z] eq 'Max SP' && @@b[$z] == $::char->{sp_max}@) {$anwser = @@c[$z];}}return $anwser;)) {
+		type responses
+		respIgnoreColor 1
+		delay 5
+		msg_0 /\[Kafra\]/
+		msg_1 />>> Who doesn't lie\? <<</
+		msg_2 /.*/
+		msg_3 /\d\) (\w+): 'Your (Level|(Job Level)|(Max HP)|(Max SP)) is (\d+)'/
+		msg_4 /\d\) (\w+): 'Your (Level|(Job Level)|(Max HP)|(Max SP)) is (\d+)'/
+		msg_5 /\d\) (\w+): 'Your (Level|(Job Level)|(Max HP)|(Max SP)) is (\d+)'/
+		msg_6 /\d\) (\w+): 'Your (Level|(Job Level)|(Max HP)|(Max SP)) is (\d+)'/
+	}
+	reactOnNPC talk resp @resp(@eval(my @@a = ('#3~2','#4~2','#5~2','#6~2'@);my @@b = ('#3~6','#4~6','#5~6','#6~6'@);my @@c = ('#3~1','#4~1','#5~1','#6~1'@);my $anwser = 'error';for (my $z = 0; $z <= 3; $z++@) {if (@@a[$z] eq 'Level' && @@b[$z] != $::char->{lv}@) {$anwser = @@c[$z];}elsif (@@a[$z] eq 'Job Level' && @@b[$z] != $::char->{lv_job}@) {$anwser = @@c[$z];}elsif (@@a[$z] eq 'Max HP' && @@b[$z] != $::char->{hp_max}@) {$anwser = @@c[$z];}elsif (@@a[$z] eq 'Max SP' && @@b[$z] != $::char->{sp_max}@) {$anwser = @@c[$z];}}return $anwser;)) {
+		type responses
+		respIgnoreColor 1
+		delay 5
+		msg_0 /\[Kafra\]/
+		msg_1 />>> Who lies\? <<</
+		msg_2 /.*/
+		msg_3 /\d\) (\w+): 'Your (Level|(Job Level)|(Max HP)|(Max SP)) is (\d+)'/
+		msg_4 /\d\) (\w+): 'Your (Level|(Job Level)|(Max HP)|(Max SP)) is (\d+)'/
+		msg_5 /\d\) (\w+): 'Your (Level|(Job Level)|(Max HP)|(Max SP)) is (\d+)'/
+		msg_6 /\d\) (\w+): 'Your (Level|(Job Level)|(Max HP)|(Max SP)) is (\d+)'/
 	}
