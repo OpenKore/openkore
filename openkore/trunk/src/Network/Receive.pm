@@ -1452,6 +1452,11 @@ sub skill_post_delay {
 }
 
 # TODO: known prefixes (chat domains): micc | ssss | blue | tool
+# micc = micc<24 characters, this is the sender name. seems like it's null padded><hex color code><message>
+# micc = Player Broadcast   The struct: micc<23bytes player name+some hex><\x00><colour code><full message>
+# The first player name is used for detecting the player name only according to the disassembled client.
+# The full message contains the player name at the first 22 bytes
+# TODO micc.* is currently unstricted, however .{24} and .{23} do not detect chinese with some reasons, please improve this regex if necessary
 sub system_chat {
 	my ($self, $args) = @_;
 	my $message = bytesToString($args->{message});
@@ -1459,8 +1464,8 @@ sub system_chat {
 	my $color;
 	if ($message =~ s/^ssss//g) {  # forces color yellow, or WoE indicator?
 		$prefix = T('[WoE]');
-	# micc = micc<24 characters, this is the sender name. seems like it's null padded><hex color code><message>
-	} elsif ($message =~ s/^micc.{24}([0-9a-fA-F]{6})//g) {
+	} elsif ($message =~ /^micc.{12,23}(\0[0-9a-fA-F]{6})(.*)/) {
+		($color, $message) = $message =~ /^micc.*(\0{2}[0-9a-fA-F]{6})(.*)/;
 		$prefix = T('[S]');
 	} elsif ($message =~ s/^blue//g) {  # forces color blue
 		$prefix = T('[S]');
