@@ -96,7 +96,7 @@ Please select a Deal Type.#
 Invalid Command#
 Leave party#
 Expel from party#
-Send Messages#
+Send Message#
 1:1 Chat#
 Information#
 Party Setup#
@@ -155,8 +155,8 @@ You got %s (%d).#
 [Alt] + [=]: Fix the interval error between letters.#
 [F10]: To toggle Chat Window size; [Alt] + [F10]: Toggle Chat Window On or Off#
 How to Whisper: Enter a Character's Name on the left side of chat window and type your message on the right side. The Tab key helps you move between these boxes.#
-/!,/?,/ho,/lv,/lv2,/swt,/ic,/an,/ag,/$,/….,/thx,/wah,/sry,/heh,/swt2,/hmm,/no1,/??,/omg,/oh,/X,/hp,/go,/sob,/gg,/kis,/kis2,/pif,/ok: Emotion icons corresponding to Alt + (1~9) Ctrl + (-=\\)#
-How to Speak to Party: Add % in front of every message.(Example: \%Hello\)#
+/!,/?,/ho,/lv,/lv2,/swt,/ic,/an,/ag,/$,/вЂ¦.,/thx,/wah,/sry,/heh,/swt2,/hmm,/no1,/??,/omg,/oh,/X,/hp,/go,/sob,/gg,/kis,/kis2,/pif,/ok: Emotion icons corresponding to Alt + (1~9) Ctrl + (-=\\)#
+How to Speak to Party: Add '%' in front of every message.(Example: \%Hello\)#
 You haven't learned enough Basic Skills to Trade.#
 You haven't learned enough Basic Skills to use Emotion icons.#
 You haven't learned enough Basic Skills to Sit.#
@@ -167,7 +167,7 @@ You haven't learned enough skills for Pking.#
 Buying Items#
 Item Shop#
 Selling Items#
-Item Inventory#
+Storage#
  is put on.#
  is taken off.#
 To add names on the Whispering List#
@@ -207,8 +207,8 @@ Steal has failed.#
 Trade#
 Envenom skill has failed.#
 You cannot use this ID on this server.#
-Speed has increased.#
-Speed has decreased.#
+Your Speed has increased.#
+Your Speed has decreased.#
 /memo: To memorize a place as Warp Point (If you are an Acolyte Class character)#
 Random Area#
 Select an Area to Warp#
@@ -240,10 +240,10 @@ Basic Information#
 The skill cannot be used with this weapon.#
 Buying %s has been failed. Out of Stock. Current Stock %d.#
 You've been disconnected due to a time gap between you and the server.#
-Please equip arrows first.#
+Please equip the proper ammunition first.#
 You can't attack or use skills because you've exceeded the Weight Limit.#
 You can't use skills because you've exceeded the Weight Limit.#
-Arrow has been equipped.#
+Ammunition has been equipped.#
 Red Gemstone required.#
 Blue Gemstone required.#
 Strength#
@@ -254,7 +254,7 @@ Dexterity#
 Luck#
 Attack Power#
 Defense#
-Acccuracy Rate#
+Accuracy Rate#
 Critical Attack#
 Assigned Guild#
 Status Points to allocate#
@@ -297,15 +297,15 @@ Toggle Item Amount.#
 Character will be deleted after ^ff0000%d^000000 seconds. Press Cancel to quit.#
 You cannot trade more than 10 types of items per trade.#
 You are underaged.#
-E-mail Address (Case Sensitive).#
+Please enter the deletion password.#
 E-mail Address (Case Sensitive).#
 Character Deletion has failed because you have entered an incorrect e-mail address.#
 Enter Second Serial Cord of your Social Security number.#
 Character Deletion has failed because you have entered an incorrect SSN.#
 You can't sell more than 15 types of Items at one time.#
 You are underaged and cannot join this server.#
-HP/SP will not be restored when your carried weight is over 50% of the Weight Limit.#
-You can't use Skills or Attack while your carried weight is over 90% of your Weight Limit.#
+HP/SP will not be restored when your carried weight is over 50%% of the Weight Limit.#
+You can't use Skills or Attack while your carried weight is over 90%% of your Weight Limit.#
 Your HP/SP are now being restored naturally.#
 Attack and Skills are now available.#
 Your Game's Exe File is not the latest version.#
@@ -359,8 +359,8 @@ Are you sure that you want to leave?#
 Register as a Friend#
 Open 1:1 Chat between Friends#
 Open 1:1 Chat#
-Open 1:1 Chat not between Friends#
-Alarm when you recieve a 1 on 1 Chat#
+Open 1:1 Chat between Strangers#
+Alarm when you recieve a 1:1 Chat#
 Are you sure that you want to expel?#
 %s has withdrawn from the guild.#
 Secession Reason: %s#
@@ -375,7 +375,7 @@ You can't modify Party Setup.#
 Guild has been Created.#
 You are already in a Guild.#
 That Guild Name already exists.#
- Guild has sent you a invitation. Would you like to join this Guild?#
+ Guild has sent you an invitation. Would you like to join this Guild?#
 He/She is already in a Guild.#
 Offer Rejected#
 Offer Accepted#
@@ -399,8 +399,8 @@ They have too many Alliances.#
 You have too many Alliances.#
 Set this guild as an Alliance#
 Guild was successfully disbanded.#
-You have failed to disorganize the guild due to your incorrect SSN.#
-You have failed to disorganize the guild because there are guildsmen still present.#
+You have failed to disband the guild due to your incorrect SSN.#
+You have failed to disband the guild because there are guildsmen still present.#
 Set this guild as an Antagonist#
 Choose Hair Color#
 You need the necessary item to create a Guild.#
@@ -440,7 +440,7 @@ You didn't pay for this ID. Would you like to pay for it now?#
 Server is jammed due to overpopulation. Please try again after few minutes.#
 Server still recognizes your last log-in. Please try again after a few minutes.#
 Release Falcon#
-Dismount PecoPeco#
+Dismount#
 Small#
 Med#
 Big#
@@ -453,9 +453,9 @@ You are prohibited to log in until %s.#
 's Ice #
 's Wind #
 's Earth #
-38.144.194.2#
+211.239.161.246#
 6900#
-http://iro.raganrokonline.com#
+http://www.ragnarok.co.kr#
 Kill %s#
 Very Strong#
 Very Very Strong#
@@ -604,8 +604,8 @@ Only the numbers (0~9) are available.#
 You cannot sell unidentified items.#
 Item at 0 Zeny exists. Do you wish to continue?#
 [New Emotion List]#
-A message to the BETA users in Japan-> Let's rejoin Kung-Ho#
-A message to users terminated in payment from Japan -> Pay bills. Pay twice#
+N/A#
+N/A#
 Character in the same account already joined.#
 (%d ppl) - over the age 18#
 Provoke initiated.#
@@ -654,13 +654,13 @@ Weapon destroyed.#
 Weapon has just been released from destroyed status.#
 Invisibility initiated.#
 Invisibility canceled.#
-Sorry. It is delayed due to the process of payment. Please re-connect in a minute#
+Sorry. It is delayed due to the process of payment. Please re-connect in a minute.#
 You must unequip ammunition first.#
 Arrow List#
 Cart List#
 You must have a Pushcart.#
 You cannot open a Chat Window.#
-Please visit the Raganrok Homepage and make a user account. It's free for the three days of user account#
+Registering an account is the first step to accessing the game. Do you want to visit the registration page now?#
 You cannot use this item while sitting.#
 Your use of skills and chat will be blocked for the next %d minutes.#
 Your use of skills and chat have been reinstated.#
@@ -908,7 +908,7 @@ Help me out~ Please~ T_T#
 /notalkmsg2: Hides chat messages(including guild chat). On Off#
 Show chat messages. [/nm2 ON]#
 Hide chat messages(including guild chat) [/nm2 OFF]#
-Upgradeable Weapons#
+Upgradable Weapons#
 Weapons upgraded: %s#
 Weapons upgraded: %s#
 You cannot upgrade %s until you level up your Upgrade Weapon skill.#
@@ -951,7 +951,7 @@ Please enter Away Message.#
 /desp#
 /dice#
 /pk: Shows top 10 Slayers in the server.#
-[POINT] You have been rewarded with % Slayer rank points. Your point total is %d.#
+[POINT] You have been rewarded with %d Slayer rank points. Your point total is %d.#
 Evolution Available#
 You have decided to delete this Homunculus ^ff0000^ff0000. When deleted, the homunculus and its history will be deleted and they cannot be restored in the future. Would you like to continue?#
 Save Homunculus status as a file.#
@@ -1060,7 +1060,7 @@ Sale Status#
 Purchase Status#
 Item#
 Name#
-Current Bid / Max Bid#
+Current Bid / Buyout#
 Seller#
 Buyer#
 End Time#
@@ -1091,7 +1091,7 @@ You have failed to place a bid.#
 You do not have enough zeny.#
 Armor#
 Card#
-Misc.#
+Misc#
 Bid#
 Search#
 You have ended the auction.#
@@ -1123,7 +1123,7 @@ Soul Linker (Male)#
 Soul Linker (Female)#
 Please check the connection, more than 2 accounts are connected with Internet Cafe Time Plan.#
 Your account is using monthly payment. (Remaining day: %d day)#
-Your account is using time limited. (Remaining time: %d hour % minute % second)#
+Your account is using time limited. (Remaining time: %d hour %d minute %d second)#
 This item cannot be mailed.#
 You cannot accept any more items. Please try again later.#
 Male#
@@ -1313,8 +1313,8 @@ Incorrect or nonexistent ID.#
 Do you really want to purchase these items? You will spend %d Regular Cash Points and %d Free Cash Points.#
 %d hour(s) has passed.#
 %d hour(s) %d minute(s) has passed.#
-Please stop playing the game, and take a break. Exp and other features will be reduced to 50%.#
-Please stop playing the game since you'll need to rest. Exp and other features will be fixed to 0%.#
+Please stop playing the game, and take a break. Exp and other features will be reduced to 50%%.#
+Please stop playing the game since you'll need to rest. Exp and other features will be fixed to 0%%.#
 Quest List#
 RO Shop#
 Memorial Dungeon, '%s' is booked.#
@@ -1374,17 +1374,17 @@ This account has not been confirmed by connecting to the safe communication key.
 The number of accounts connected to this IP has exceeded the limit.#
 You have received a new quest.#
 ^777777Acquirement conditions:#
-View Skill Info.#
+View Skill Info#
 Once used, skill points cannot be re-allocated. Would you like to use the skill points?#
-1st Job#
-2nd Job#
+1st#
+2nd#
 This account has been used for illegal program or hacking program. Block Time: %s#
 The possibility of exposure to illegal program, PC virus infection or Hacking Tool has been detected. Please execute licensed client. Our team is trying to make a best environment for Ro players.#
 You are currently playing in the best game environment. Please enjoy the Ragnarok.#
-Job Exp points from hunting monsters are increased by 1.5x for 30 minutes.#
-Exp points from hunting monsters are increased by 1.25x for 30 minutes.#
-EXP points from hunting monsters are increased by 2x for 30 minutes.#
-EXP points from hunting monsters are increased by 1.5x for 60 minutes.#
+Job Exp points from hunting monsters are increased by 50%% for 30 minutes.#
+Exp points from hunting monsters are increased by 25%% for 30 minutes.#
+EXP points from hunting monsters are increased by 100%% for 30 minutes.#
+EXP points from hunting monsters are increased by 50%% for 60 minutes.#
 Unable to organize a party in this map.#
 (%s) are currently in restricted map to join a party.#
 Simple Item Shop#
@@ -1393,29 +1393,29 @@ RoK Point: %d RoK Point#
 Free Cash: %d Cash#
 An user of this server cannot connect to free server#
 Your password has expired. Please log in again#
-3rd Job#
-Cannot use this skill to the target.#
-No MSG 02#
+3rd#
+This skill can't be used on that target.#
+You can't use skill because you have exceeded the number Ancilla possession limit#
 Unable to use the skill to exceed the number of Ancilla.#
 Holy water is required.#
 Ancilla is required.#
 Cannot be duplicated within a certain distance.#
 This skill requires other skills to be used.#
-This map is not a chat.#
-3 hours have passed#
-5 hours have passed#
-Either ini file is missing or altered. Install game guard setup file to fix the problem.#
-A program has been found that conflicts with game guard.#
-Security program has been identified that there is a conflict with the game.#
-The client is not normal. Please connect a normal client.#
+Chat is not allowed in this map#
+3 hours have passed since.#
+5 hours have passed since.#
+Game guard initialization error or previous version game guard file is installed. Please re-install the setup file and try again#
+Either ini file is missing or altered. Install game guard setup file to fix the problem#
+There is a program found that conflicts with game guard#
+Incorrect client. Please run a normal client#
 Thank you to accept mobile authentication.#
-This skill cannot be used alone.#
-This skill can only be used in a particular direction.#
+This skill can't be used alone#
+This skill can be used to certain direction only#
 Cannot summon spheres anymore.#
-There is no spheres was summoned.#
+There is no summoned sphere.#
 There is no imitation skills available.#
-This skill cannot be used to duplicate.#
-Cannot use your skill.#
+You can't reuse this skill#
+Skill can't be used in this state#
 You have exceeded the maximum amount of possession of another item.#
 No administrative privileges. Must first run the program with administrator privileges.#
 nProtect KeyCrypt not the same. Please restart the program and the computer first.#
@@ -1433,7 +1433,7 @@ Painful Tears is required.#
 Throat Lozenge is required.#
 Cooperation is only available with Weapon Blocking.#
 Poisoned weapons is required.#
-Items can only be used when Mado Gear is mounted.#
+Item can only be used when Mado Gear is mounted.#
 Vulcan Bullet is required.#
 Mado Gear Fuel is required.#
 Liquid Cold Bullet is required.#
@@ -1448,60 +1448,60 @@ Please equipped with a Hovering Booster.#
 [Pyrexia] Poison effect was applied to the weapon.#
 [Oblivion] Poison effect was applied to the weapon.#
 [Leech] Poison effect was applied to the weapon.#
-Can be used only if Hovering state is available.#
-Please equipped with a Self-Destruct Mechanism.#
-Please equipped with a Shape Shift.#
-Poison is required.#
+Can only be used in Hovering state.#
+Please equip a Self-Destruct Mechanism.#
+Please equip a Shape Shift.#
+Guillotine Cross Poison is required.#
 Please equipped with a Cooling System.#
 Please equipped with a Magnetic Field Generator.#
 Please equipped with a Barrier Generator.#
 Please equipped with a Optical Camouflage Generator.#
 Please equipped with a Repair Kit.#
 Monkey Wrench is required.#
-[%s] Cannot use the skills.#
-%d higher level is impossible to remove.#
-Cannot be used without Magic Gear equipped.#
-Dismount Dragon.#
-Dismount Magic Gear.#
-Item#
+[%s] Cannot use the skills due to cooldown delay.#
+Deletion is impossible for over level %d#
+Can't be used while on Magic Gear.#
+Dismount Dragon#
+Dismount Magic Gear#
+I#
 Cash#
-Weapons#
 Armors#
+Weapons#
 Ammo#
 Card#
-Etc#
-Guitar#
-Seems that you have screwed something up. Hack shield file does not have the correct file version. Please reinstall the client and try again to screw it.#
-The skill requires a spellbook.#
-You are asleep due to diffuclty in reading spellbook.#
-The lack of save points.#
-Magic can not read the book anymore.#
+M#
+Client response time has passed so connection is terminated#
+Incorrect version of hack shield file. Please reinstall the client#
+[Magic Book] is required.#
+Feel sleepy since Magic Book is too difficult to understand.#
+Not enough saved point.#
+Can't read a Magic Book anymore.#
 Face Paint is required.#
 Brush is required.#
-Waiting time has been exceeded. Please log in again.#
-DANGER! The same account is logged in already. Please log in again after correcting the duty to stop the progression of mobile authentication for a while.#
-DANGER!! Located in the same account is now waiting for mobile authentication. Please log in again after correcting the duty to stop the progression of mobile authentication for a while.#
+Waiting time has passed. Please log in again#
+Watch out! Same account is already logged in. Stop mobile verification and log in again after changing your password#
+Watch out! Same account is waiting for mobile verification. Stop mobile verification and log in again after changing your password#
 Game setting window#
-Graphic setting#
-Sound Setting#
+Graphics Settings#
+Sound Settings#
 Press a key to assign. Pressing 'ESC' will remove the assigned key.#
 Unable to specify a single key.#
 Unable to specify the key assigned.#
-'%s' is used to duplicate the shortcut key. Do you want to change it?#
+Duplicated with ['%s']. Do you still want to change?#
 Initialization is stored in the shortcut key settings. Do you want to initialized?#
 Skill Bar#
 Interface#
 Macros#
-Shortcut Key Setting#
+Shortcut Settings#
 BGM#
 Effect#
 Skin#
-Only sound to enter the chatroom: On#
-Only sound to enter the chatroom: Off#
+Chat room entrance sound on#
+Chat room entrance sound off#
 /tingonly: you can hear only sound like a chat room entry.#
-/fist#
+/rock#
 /scissors#
-/bo#
+/paper#
 /love#
 /mobile#
 /mail#
@@ -1517,6 +1517,7 @@ Only sound to enter the chatroom: Off#
 /panic#
 /whisp#
 Not Assigned#
+Only available when cart is mounted.#
 [Thorny Seed] is required.#
 [Bloodsucker Seed] is required.#
 Cannot be used anymore.#
@@ -1529,15 +1530,14 @@ Cannot be used anymore.#
 [Acid Bottle] is required.#
 [Bottom Man-Eating Plant] is required.#
 [Pot of Mandragora] is required.#
-Party leader instructions#
-Or delegate the real party leader?#
-Available.#
-cannot be delegated as party leader.#
+Party delegation#
+Do you want to delegate the real party?#
+Party cannot be delegated.#
 Immutable#
-[%s] is %d are necessary.#
+[%s] required '%d' amount.#
 Is now refining the value lowered.#
-[%s] can be used are equipped with#
-Field list#
+Need to put on [%s] in order to use.#
+Battle field entrance setting#
 Battlefield - [%s] you sign up?#
 Admission application complete.#
 It was unregistered and not be able to enter the state.#
@@ -1557,10 +1557,10 @@ Has already been applied.#
 Registration has been cancelled because of the excessive waiting time.#
 Unregistered because admission requirements are not matching.#
 Was unregistered and error.#
-[%s] is the skills of collaboration.#
-Integration of skills is a particular skill.#
-%d requires a total mind bullets#
-Bullet is required.#
+The skill need [%s].#
+The skill need a particular skill.#
+Requires %d mind bullets#
+Mind Bullet is required.#
 Cannot create rune stone more than the maximum amount.#
 Not able to receive battle field list. Please check and try again#
 Level is not high enough to enter#
@@ -1611,8 +1611,8 @@ You dropped %s (%d).#
 [%s] Quest - defeated [%s] progress (%d/%d)#
 The Quest %s has been removed.#
 [%s] has #
-%d' EXP #
-%d' Job EXP #
+You acquired '%d' Experience Points#
+You acquired '%d' Job Experience Points#
  gained.#
  has lost.#
 From [%s], '%d' coins were stolen.#
@@ -1624,8 +1624,8 @@ Quest Info Message Display#
 Battlefield Message Display#
 [%s] is #
 casting [%s].#
-Activate lock function.#
-Deactivate lock function.#
+Activate lock function#
+Deactivate lock function#
 [%s] has won [%s] from '%s'.#
 Swordman#
 Magician#
@@ -1705,7 +1705,7 @@ Status Information Off: Status icon description is disabled.#
 It is not possible to purchase the same item more than %d pieces at a time#
 It is not possible to purchase the same item more than %d pieces at a time#
 Can purchase upto %d pieces of the same item at a time.#
-Settings will saved to [%s\\%s] when you normally exit.#
+User customized key is saved to [%s\%s]#
 [%s] is currently on trade and cannot accept the request.#
 RO_HELP#
 Anvil does not exist.#
@@ -1746,11 +1746,11 @@ You purchased all items.#
 Failed to deal because you have not enough Zeny.#
 You have sold %s. Amount: %d. Total Zeny: %dz#
 %s item could not be sold because you do not have the wanted amount of items.#
+You have not registered to sell the item.Please Register to sell item.#
 You don't have any summoned spirits.#
 This is a restricted server.#
 OTP password is 6 digits long.#
 OTP information is unavailable. Please contact your administrator.#
-OTP authentication failed.#
 Party ad has been added.#
 Recruit party members#
 Roles#
@@ -1793,8 +1793,8 @@ You will not be disconnect from the game.#
 It is available only for 12 hours.#
 Your account is blocked due to illegal use of the game account.#
 Your account is blocked because there may exist a bug with your account.#
-Increases base exp and job exp gained by killing monsters up to 75% for 30 minutes.#
-Increases base exp and job exp gained by killing monsters up to 50% for 30 minutes.#
+Increases base exp and job exp gained by killing monsters up to 75%% for 30 minutes.#
+Increases base exp and job exp gained by killing monsters up to 50%% for 30 minutes.#
 No sales information.#
 Failed to search any further.#
 The selected item does not exist.#
@@ -1814,8 +1814,8 @@ The selected name or prefix/suffix does not exist.#
 You can purchase up to 10 items.#
 Some items could not be purchased.#
 Enter your birthday (e.g: 20101126)#
-An unknown error has occured.#
-A database error has occured.#
+Now Logging Out.#
+A database error has occurred.#
 Please leave your guild first in order to remove your character.#
 Please leave your party first in order to remove your character.#
 You cannot delete this character because the delete time has not expired yet.#
@@ -1829,7 +1829,7 @@ results have been found.#
 Failed to remove result.#
 No results have been found.#
 No payment information has been found.#
-Get a screenshot during trading#
+Screenshot Trade On/Off#
 [Trade_%s]#
 Death due to the auto insurance young people are spending.#
 Chat Dialog#
@@ -1845,29 +1845,29 @@ Cart is empty.#
 First page#
 Last page#
 New#
-Popular#
+Headgears#
 Limited#
-Rental#
-Equipment#
-Buffs#
-Heal#
+Rental Equipment#
+Permanent Equipment#
+Scrolls#
+Consumables#
 Other#
 Cost#
 Quantity#
 Total#
-Free cache: %s C#
-Used cache: %s C#
+Free Cash : %s C#
+CashPoints : %s C#
 You cannot summon a monster in this area.#
-The cache usage has exceeded the total amount of#
+Exceeded total free cash#
 Content has been saved in [SaveData_ExMacro%d]#
 %d seconds left until you can use#
-~ [Windows] must be equipped with.#
+Must be equipped with [spear].#
 Available only on the dragon.#
 Unable to proceed due to exceeding capacity.#
 Real name has not been verified. Go to name verification site.#
 Please select slot you are going to save.#
 Congratulation %s,  Acquired '%s' !#
-~ Gloomy state can not be used in#
+Unable to use in gloomy state#
 Purchased products has exceeded the total price.#
 Cannot join a party in this map.#
 Cannot leave a party in this map.#
@@ -1876,12 +1876,12 @@ Real Name#
 ID Number#
 E-mail#
 Invalid input#
-~ Jenny to the other party has failed to pay.#
-~ Its job is not#
-~ That gender is not a#
-User information identification is successful.#
-Name does not match. Please rewrite.#
-ID number does not match. Please rewrite.#
+Failed to send the zeny #
+This is not a relevant job#
+This is not a relevant gender#
+User information identification was successful.#
+Name does not match. Please retry.#
+ID number does not match. Please retry.#
 Service is currently unavailable. Please try again later.#
 Unable to attack while riding.#
 Unable to cast the skill while riding.#
@@ -1890,7 +1890,7 @@ Secured authentication is successful.#
 Succeeded in creating 2nd password.#
 2nd password has been deleted.#
 2nd password has been corrected.#
-~Password is incorrect.(%d Hoenameum)#
+Password is incorrect.#
 Failed to create 2nd password.#
 Failed to delete 2nd password.#
 Failed to correct 2nd password.#
@@ -1904,8 +1904,8 @@ Use the set security password failed.#
 Use secure passwords. Will be applied to your next login.#
 Use the set security password failed.#
 Added to the security of your account password is set.#
-The numbers below the 4-digit by using the mouse button click.#
-As input an incorrect password three times or more, will be terminated.#
+Use the mouse to enter the 4-digit password below.#
+Typing an incorrect password 3 times will shut down the client.#
 ITEM#
 SKILL#
 TACTIC#
@@ -1916,65 +1916,65 @@ BUFF#
 AUTO EQUIPED#
 1st. ATTACK#
 ATTACK#
-Next attack time: #
+Next attack time : #
 When died#
 When invited to a party#
 Pickup Item#
-Over 85% Weight#
+Over 85%% Weight#
 Any work in progress (NPC dialog, manufacturing ...) quit and try again.#
-Monster Job hunting experience that you can get through the doubling of %d is %.2 f minutes.#
+Monster Job hunting experience that you can get through the doubling of %d is %.2f minutes.#
 SaveData_ExMacro %d#
- set contents [%s] is stored in#
+Settings for [%s] are stored in.#
 Security level#
 The current character is a party or join the guild can not be deleted.#
 Objects can be used only near the wall.#
-%s:%d %s party to obtain level.#
-The reins of the state board items that are not available.#
-This skill requires the experience of one percent.#
-10000000000000000 experimental values??: #
-Rob de rate: #
+%s : Level %d %s party to obtain level.#
+While boarding reins is not available for items.#
+This skill requires 1%% experience.#
+Experience value: #
+Drop rate: #
 Death Penalty: #
-%d%%(PC room%d%%+ TPLUS%d%%+ Premium%d%%+%s server%d%%)#
+%d%% (PCroom %d%% + TPLUS %d%% + Premium %d%% + %s Server %d%%)#
 Amount of party members to cast the skill Chorus SP is low.#
-Possession of a character relative to the transaction exceeds hangyeryang kinds of items is not possible.#
-Hangyeryang relative excess of the characters deal with possession of the item is not possible.#
-Possession of the item purchased is not possible to exceed hangyeryang.#
-Waiting for an AD.#
+Relative character that has possession of the items can not trade because amount is exceeded..#
+Relative character that has possession of the item amount which exceeds makes it impossible to trade.#
+Amounts are exceeded the possession of the item is not available for purchase.#
+Advertising is pending registration.#
 With the following files and text content Ragnarok Official Website -> Support -> Contact Us to submit your comments by:#
-Has caused an error in billing system haetseup (%d)#
-Rune items are owned by more than the number of failed purchases.#
-Is the number of individual items purchased exceeds failed.#
-An unknown error has occurred and the purchase failed.#
+Has caused an error in billing system(%d)#
+Failed purchase of runes, items exceed the maximum number that can be held.#
+Exceeded the number of individual items, purchase failed.#
+Purchase failed due to an unknown error.#
 Please try again later.#
-Kunayi item is only available in one state to mount.#
-Please try to recruit a minimum level value.#
-Jondagihoeksa will not be receiving the item to the NPC. Please secure a hold of the window space.#
+Kunai must be equipped to use this skill..#
+Please enter the value of the minimum level to be recruited.#
+Jonda agency receipt of the item to the NPC is not possible. Gaining possession of the free space of the window.#
 This skill is only available in the siege.#
 This skill is available only to the player.#
 Forbidden to wear the state can not be worn.#
 Current location of the shop and chat room creation is disabled.#
 Elapsed time: %d:%d:%d / %d:%d:%d#
-Speed: X 1/4#
-Speed: X 1/2#
-Speed: X 1  #
-Speed: X 2  #
-Speed: X 4  #
-Speed: X 8  #
-Speed: X 16 #
-Speed: Unknown#
-Service Info: %s#
-Character Name: %s#
-Map Name: %s#
+Speed : X 1/4 #
+Speed : X 1/2 #
+Speed : X 1   #
+Speed : X 2   #
+Speed : X 4   #
+Speed : X 8   #
+Speed : X 16  #
+Speed : Unknown#
+Service Info : %s#
+Character Name : %s#
+Map Name : %s#
 Record Time: %d-%01d-%01d %d: %02d: %02d#
 Play Time: %02d: %02d: %02d#
 No Replay File.#
 Server No Matching#
 Replay Option Setting#
-Enter the file name.#
+Enter File Name#
 Set Replay Save Data#
 Set Rec Option#
-%.1f %%Pos?:%d:%d:%d#
-%.1f %%Pos?:????#
+%.1f %% Pos->:%d:%d:%d#
+%.1f %% Pos->:cannot move#
 Start#
 Stop#
 Input FileName -> Start#
@@ -1986,8 +1986,8 @@ Party & Friends#
 Chat#
 Shortcuts#
 Automatic filename generation#
-Duplicate File Checking a#
-There are the same file.#
+Checking for duplicate files#
+The same file exists already.#
 Record Start#
  is Saved.#
 Weight: %3d / %3d#
@@ -2004,79 +2004,79 @@ NoCtrl#
 Battleground#
 (Character/Total Slot)#
 Premium Service#
-Premium#
+Premium #
 Service#
 Billing Service#
-Billing#
+Billing #
 Command List#
 LEVEL#
 MAP#
 JOB#
 Not Available#
-[Guardian Angel of Protection is not available if manrepil#
-I really want to move?#
-Failed to move the character slot.#
+[Protection of Guardian Angel] You can't use it when you reach the highest level.#
+Do you really want to move?#
+Failed to move Char slot.#
 Character name is invalid.#
-Quest Window#
+Show Quest#
 Depending on the protection of youth, and 0:00 to 6:00 while under the age of 16 of your game use is limited.#
 Depending on the protection of youth, 0:00 to 6:00 ^ff0000 under the age of 16 ^000000 limit your use of the game and the game ends.#
-To change the character name should withdraw from the guild.#
-To change the character name should withdraw from the party.#
-Character Name changes to an unknown error failed.#
-Is ready to change character slots already. (%D)#
-Is ready to change character names already. (%D)#
-Want to change the length of the name exceeds the maximum dimensions and character name change failed.#
-Contain words that you can not use the character name change failed.#
-Name change because it is forbidden to change the character name has failed.#
+In order to change the character name, you must leave the guild.#
+In order to change the character name, you must leave the party.#
+Character name change failed, due an unknown error.#
+Ready to change character slot in.(%d)#
+Ready to change character name in.(%d)#
+Length exceeds the maximum size of the character name you want to change.#
+Name contains invalid characters. Character name change failed.#
+The name change is prohibited. Character name change failed.#
 Complete#
-Minutes to get %d%d%% will increase with experience.#
-To summon chonamatseupnida%02d.#
-The party you %s (%s) is summoned to. Summoned at %d zeny is consumed.#
-Summon the target#
+During %d minutes your Exp will increase by %d%%.#
+%02d seconds left until summon.#
+Your party leader summons you to %s (%s). Warp costs %d Zeny.#
+Summon target#
 Block List#
-To register a party ads Jenny is consumed %d#
-Jenny party for advertising is low.#
-) Nimes join the party approval#
-) Nimes join the party denied#
-) Nimes Equipment Window View#
-18 Hangul letters, 36 letters in English can be entered#
-To support#
-1:01 Conversation#
+%d Zeny will be spent for making party ad.#
+Insufficient Zeny for making party ad.#
+) party: accept invitation#
+) party: decline invitation#
+) party: show equipment window#
+Up to 36 english letters can be entered#
+Enter#
+1:1 Chat#
 Block#
-Jenny, to be summoned to the party is insufficient.#
-Notes section, write to the party advertising.#
-Ten thousand and two party party ads may be registered.#
-Is already party advertising supported.#
+Insufficient Zeny for recall.#
+Input your party ad.#
+Only party leader can register party ad.#
+You have already accepted this ad.#
 For#
-Equip#
-Private#
- Drop an item lock#
-Find party alarm#
-Party formed a#
-Party withdrew#
-Party invitation#
-Party Name Registration#
-Invite a character name#
-Your request has been sent to you join the party.#
-Nimkkeseo refused to join the party.#
-Nimkkeseo Party has accepted.#
+Eqp#
+Fav#
+ Drop Lock: On/Off#
+Party Alarm#
+Create Party#
+Leave Party#
+Party Invitation#
+Party Name:#
+Player Name:#
+ has recieved an invitation to join your party.#
+ rejected your party invitation.#
+ accepted your party invitation.#
 Recruitment is already a party.#
-Are the same conditions as the previous search.#
-After leaving the guild is available.#
-Withdrawal is available after the party.#
-Map, the user should not have summoned recall.#
-Do not recall the party with maps.#
-Summons has been denied.#
+Same conditions such as the previous search.#
+Guild after withdrawl.#
+Party after secession.#
+The player can not be summoned to this map.#
+Party Leader is on a map that is restricted to summon players.#
+Summon has been denied.#
 Can not be summoned.#
-Party invitations can be bought to the party.#
-Enter the search ahyitemmyeong:#
+Only the leader can invite.#
+Search item:#
 You must enter a character name.#
 You must enter the name of the party.#
 Guild Companion#
-Can not be joined in the guild.#
-Guild formed#
-Create a guild name#
-Help organize guild#
+Join a guild or start your own!#
+Create Guild#
+Guild Name#
+Guild System#
 What is the guild system#
 You must enter the name of your guild.#
 Supported at the party was rejected.#
@@ -2085,82 +2085,82 @@ Possible escape area.#
 Replay File List#
 File info#
 File List#
-%s Items will not be a deal.#
-Disband the guild#
-Disband the guild name#
-Not connected or non-existent characters.#
-Falcon failed to call.#
-%d%% (default 100%%+ Premium %d%%+%s server %d%%)#
-That user is currently participating in the siege.#
-It is possible to change the same maepeseoman party.#
-In the current regional party can not be changed.#
+%s Item deal not possible.#
+Disband the Guild#
+Enter Guild Name#
+The character is not online or does not exist.#
+Failed to call Falcon.#
+%d%%(default 100%%+ Premium%d%%+%s Server%d%%)#
+This user is currently participating in the siege.#
+It is only possible to change the party leader while on the same map.#
+In the current region it is not possible to change the party.#
 Gryphon making#
 Delete: %d/%d - %d:%d:%d#
-Invited to participate in the guild because the current siege can not be.#
-Have signed up on the battlefield, waiting for admission.#
-Students are full.#
-Unresolved is the name of the battlefield.#
-Unresolved is the type of application.#
-Sleeps exceeded.#
-Entry level is not correct.#
-Have received a request for a duplicate.#
-Jaejeopsokhu, please re-apply.#
-Occupation is not correct.#
-Ten thousand and two party or guildmaster may apply.#
-Team members are using the battlefield is not possible to apply it.#
-Standby position battle has been canceled.#
-Jeonjangmyeong is wrong.#
-No waiting in order of battle positions.#
-Length of your choice, so the atmosphere is currently available will be canceled.#
-Position was clear the battlefield.#
+You can't invite characters in WoE maps.#
+You are now in the battlefield queue.#
+Queuing has finished.#
+Invalid name of the battlefield.#
+Invalid type of application.#
+People count exceeded.#
+Your level doesn't fit this battlefield rules.#
+Duplicate application.#
+After reconnecting, please re-apply.#
+Your class can't participate in this battlefield.#
+Only party leader / guild master can apply.#
+You can't apply while your team member is already on a battlefield.#
+You have left the battlefield queue.#
+Wrong battlefield name.#
+You are not in the battlefield queue list#
+The selected arena is unavailable; your application has been cancelled#
+You have left the queue#
 Are you sure you want to join a battleground?#
-Battlefield application system perspective#
-Admission application and can not move the battlefield situation, the space#
-A. Different types of battle can not be applied simultaneously.#
-Two. Personal / party / guild battle can not be applied simultaneously.#
-Three. Party, the party bought the battlefield application may apply,#
-Off-line or off-line in the queue, the party is missing.#
-Four. Battlefield battlefield maps application can apply everywhere except a,#
-Ipjanghan position villages, fields, dungeons, if not the general store when returning characters will be moved to the coordinates.#
-5 Length of the compensation and other services in each town through the battlefield battlefield recruiters in the waiting room please use#
+[Battlefield application rules]#
+Application and position into the battlefield cannot be applied under this circumtances#
+1. Different types of battle can not be applied simultaneously.#
+2. Personal / party / guild battle can not be applied simultaneously.#
+3. Parties can only be applied by their party leaders.#
+Offline party members won't proceed to the queue.#
+4. You can add request to enter the arena from any map except for those who don't allow teleport/warp.#
+When the battle is finished your character will be returned to the current spot or (if it's not possible) to the save point.#
+5. You can view and choose rewards in the arena waiting room.#
 Request help battle position#
 %s battle begins.#
-Do you want to go to war?#
+Do you want to enter the arena?#
 [Note]#
-Current position villages, fields, or the general dungeon#
-If you are not saved to the location of the battlefield after the end of#
-Will go back.#
-Requests are waiting for the results of others.#
+When the battle is finished your character will#
+be returned to the current spot or (if it's not#
+possible) to the save point.#
+Waiting for the opponents.#
 Battlefield position request#
-Accept standby time: %d seconds#
+Accept standby time:%d seconds#
 Standby position#
-Battlefield name: %s#
-Persons required length: %d#
-Turn my standby: %d#
+Battlefield name:%s#
+Persons required:%d#
+Your position:%d#
 Name:#
 Goal:#
-Persons of the battlefield configuration:#
-Participation conditions:#
-Compensation (W):#
-Compensation (D):#
-Compensation (L):#
-Individuals have signed up to the battlefield. Is that correct?#
-Parties have signed up to the battlefield. Is that correct?#
-Guild have signed up to the battlefield. Is that correct?#
+Format:#
+Level:#
+Win:#
+Draw:#
+Loss:#
+Do you want to participate in the individuals battle?#
+Do you want to participate in the parties battle?#
+Do you want to participate in the guilds battle?#
 Battleground List#
 %d VS %d#
-Base LV %d More than#
-Base LV %d More than#
-Base LV %d ~ %d#
-Protection#
-[The maps may not apply.]#
-[Length about 1 minute wait time to reapply, you will require.]#
-[You must sign up first to the party.]#
-[A party may apply to bought.]#
-[Adults There are many parties that are connected.]#
-[Guild must sign up first.]#
-[Guild bought application is available.]#
-[Guild Adults will often connected.]#
+LV %d and lower#
+LV %d and higher#
+LV %d ~ %d#
+No restrictions#
+[You can't apply on this map.]#
+[You must wait about 1 minute to apply.]#
+[You must be in a party.]#
+[Only party leader can apply.]#
+[Too many party members online.]#
+[You must be in a guild.]#
+[Only guild master can apply.]#
+[Too many guild members online.]#
 Moving Book#
 Move#
 Rename#
@@ -2168,7 +2168,7 @@ Make Character#
 http://ro.game.gnjoy.com/#
 (%s) Server#
 Item Merge#
-Two or more of the same type Please select an item.#
+Two or more of the same type. Please select an item.#
 Item merge is successful.#
 Combining items will be only one kind at a time.#
 You cannot have more than 30,000 stacked items.#
@@ -2176,8 +2176,8 @@ Rotate left#
 Rotate right#
 (%s) to view the old server information#
 Existing server information#
-^ff0000 existing server: ^0000ff#
-^ff0000 existing kaerikmyeong: ^0000ff#
+^ff0000Existing server: ^0000ff#
+^ff0000Existing character: ^0000ff#
 Show monster HP bar when attacking.#
 Hide monster HP bar when attacking..#
 Merge does not exist as an item#
@@ -2187,7 +2187,7 @@ Pen#
 Rec#
 Epi#
 Loc#
-Evnt#
+Evt#
 New#
 Monsters to kill#
 Rewards#
@@ -2195,10 +2195,10 @@ Required Items#
 Time Limit#
 Deadline#
 Search#
-Leads to the goal#
-Road Information#
-Find information#
-Change the view mode#
+Navigation#
+Back to Navigation#
+View List#
+Toggle Minimap#
 Change the color of the instructions guide#
 Exit#
 Change the default UI#
@@ -2208,67 +2208,67 @@ All#
 Map#
 Npc#
 Mob#
-Set the search word (Ex: word word ...#
+Enter search string... (Ex: word word ...#
 Scroll#
-Moving scrolling dungeons apply#
+Use Scroll?#
 Service#
-Mobile services are allowed#
+Use Kafra Warp?#
 Plane#
-Applied to move airships#
->> Failure to read the target information.#
-<< Notice >>#
-<< Searching... >>#
+Use Airship?#
+>> Failed to read the target information.#
+>> Destination <<#
+<< Goal... >>#
 -----------#
 Navigation#
-== Search Results (%d)==#
-Npc) %s: %s#
-Mob) %s: %s#
-Map) %s#
-======== The resulting information ==========#
-Distance: %d Sell %d WarpMove#
-Target Map: %s(%s)#
-Goal: %s(%d, %d)#
+= Found (%d) ==#
+Npc)%s:%s#
+Mob)%s:%s#
+Map)%s#
+======== Results ==========#
+Dist  %d Cell %d WarpMove#
+Coords %s(%s)#
+Goal:%s (%d,%d)#
 Boss#
 General#
-Goal: %s(%s)#
+Goal :#
 Goal: (%d, %d)#
-======= Route guidance information =======#
+======= Guidance =======#
 %2d) Item:%s => %s Use!#
 %2d) %s(%d,%d)=>(%d,%d)#
 E%2d) %s(%d,%d)=>(%d,%d)#
 E%2d) %s#
-Attention! Are you sure you want to quit?#
-Navigation help:#
+Do you want to cancel navigation?#
+How to Use Navigation#
 ------------------- Instruction --------------------#
-1. /navigation      /navi#
-  ex)/navi prontera 100 100 -> map name, 100, 100#
-2. /navigation2      /navi2#
-  ex) /navi2 prontera 100 90 1 1 1#
--> map name, location(100 90), scroll/ zeny/ plane (1:Enabled 0: Disabled)#
-? /navi2 If you must attach the coordinates of the location should be less in the 3-digit#
-3. $$all   All items output (Type nine minutes nine minutes to the item can be kind of output.)#
-4. $$lv30   Monsters of the appropriate level output#
-5. $$lv20~30   Monsters of the corresponding output level range#
--------------------  Explanation  --------------------#
-1. The search is classified as Map, NPC and Monster#
-2. Search commands. Rule contains all the information you want to search for the string is printed.#
-   ex)Search: Kaf of Prontera -> Will display all Prontera Kafra's.#
-3. When you select an item from a list of the information is printed.#
-  Information is output when the button is clicked goal to lead the way to that goal.#
-4.scrool/ zeny/ plane By checking the box as many times as you want can be a faster route guidance.#
-5. Guide button is pressed, the result list window lists the chapters will change directions.#
-6. Use the button below to use the Search List Window#
-  [Results List Window] <-> [directions Information Window view mode can be changed to#
-Level: %d (Boss)#
-Level: %d (General)#
+1) /Navigation or /navi#
+ex) /navi prontera 100 100 -> /navi "MAPNAME", 100, 100#
+2) /Navigation2 or /navi2 #
+ex) /navi2 prontera 100 111#
+-> MAPNAME location (100 90), Scroll | Zeny | Plane (1: Enable or 0: Disable)#
+-> /navi2 goes with the case with location coordinates. They must be no less than 3 characters #
+3) $$all Output all the items (Can take a while...) #
+4) $$lv30 monsters are placed in the output #
+5) $$lv20~30 monsters in that level range are placed in the output #
+-------------------  Description  --------------------#
+1) One can search for monsters, npcs, maps, or all at once#
+2) You can press the search button to get results. It will out put the results depending on what rule you choose#
+ex) Drop down box -> Select "Npc", then type in the box "Kafra". Results will now be displayed#
+3) When you select an item from a list, information about it are displayed.#
+-> When button is clicked, it will point you towards your destination if available#
+4) Scroll | Zeny | Plane options can be checked to find a faster route#
+5) Guide button is pressed, the result list window displays where routes can change direction#
+6) Using the button below, search results can be found#
+-> [Results List Window] <-> [View Modes can be switched]#
+Level:%d (Boss)#
+Level:%d (Mob)#
 Water %d#
 Earth %d#
 Fire %d#
-Pungsokseong %d#
 Wind %d#
 Poison %d#
 Holy %d#
 Shadow %d#
+Ghost %d#
 Undead %d#
 Neutral %d#
 Medium#
@@ -2284,46 +2284,284 @@ Demi-human#
 Angel#
 Dragon#
 Formless#
-%s Click to move#
-Npc Using mobile services#
-NPC Click#
-%s Movement#
-Airships move#
+Click to move %s#
+Move to the Kafra Service Npc#
+Click the NPC#
+Move %s#
+Move to the Airship Service#
 By Warp#
-End points: ( %d %d )#
-That does not support the navigation area.#
-To find the purpose is unclear.#
-Does not meet the matching map.#
-Failure from information about the community setting.#
-Information about the set point of arrival failed!#
-Failure to find the road#
-Locating players fail#
-No information for navigation.#
-The map is a map that does not support those directions.#
-Please specify your goals.#
-Arrival.#
-Route guidance is started.#
-Monster is the map you are looking for.#
-Map is a map that you are looking for.#
+End Points: (%d %d)#
+That does not support the navigation area#
+The purpose is unclear#
+Does not meet the map requirement#
+Information Failure | Change settings#
+Failed to set info for location!#
+Failed to find a path#
+Failed to find players #
+No Information#
+Map doesn't support directions#
+Please specify target goals.#
+Found#
+Directions were started#
+Is the map that your looking for mob#
+Map appears on the guide you are looking for#
 Please navigate using the item#
-Information, please go to the location.#
-The goal arrived map.#
-Npc arrived there to find the map. Please go to Npc#
-Mob you are looking for a map, this form has arrived.#
-The goal is the same as before.#
-Please go in the direction indicated.#
-The goal is here.#
+To find the location, please go to#
+Arrived at the target map#
+Arrived on the map that has the Npc your looking for. Go to that NPC#
+You have arrived at the mob you were looking for#
+You have reached your goal#
+Please go to indicated direction.#
+The goal has been reached#
 Navigation >: %s#
-Navigation >: Guide to %s (a) by#
-Navigation >: Map(%s) Please go to#
-Navigation >: Map(%s) Please go to select#
-Navigation >: Please go to airship#
-Navigation >: Use the warp to the next area, please go.#
+Navigation >: Guidance to %s (A) By using#
+Navigation >: (%s) map, please move to#
+Navigation >: Goal Map: (%s), Please go to Kafra#
+Navigation >: Please go to the airship#
+Navigation >: Use the warp to reach the next area#
 Item: #
 $$#
 $$lv#
 ~#
 $$all#
-~2326#
-~2327#
-~2328#
+Confirm Deal#
+Below is the total cost:#
+ Zeny to complete the transaction.#
+Press buy to confirm.#
+%.1f%% (PCRoom %.1f%% + TPLUS %.1f%% + Premium %.1f%% + %sServer %.1f%%)#
+Card Book#
+%d%% [ ( Basic 100%% + %sServer %d%% ) * Active %.1f ]#
+%d%% [ Basic 100%% + %sServer %d%% ]#
+This is PK region. Minors,Please leave immediately.#
+Fatigue#
+Health and gaming revenue is 100%%.#
+Fatigue because it is now a guest of the gaming revenue is down 50 percent.Hope for the proper health#
+Now because it is a non-health to the health of the guests want to offline games. If you still are online gaming revenue because the damage to the health of the game falls to 0%% again after 5 hours will be restored offline.#
+Online since %d minutes#
+Online Time: %d#
+Online since %d hours and %d minutes#
+/monsterhp : Show the hp of attacked monster. On off#
+Skills points : #
+There is no response from the authentification server. Please try again#
+Please change your password#
+http://www.ragnarok.co.kr#
+Guest access is prohibited#
+Your System is been Shutdown, %1.2d-%1.2d-%1.2d %1.2d:%1.2d:%1.2d is the end time.#
+Selected System Shutdown is activated in your account,Time Left: %1.2d hours %1.2d minutes.#
+Replay#
+Macro#
+Webbrowser#
+Navigation#
+UAEURL#
+Clan Information#
+Clan Level#
+Clan Name#
+Clan Mark#
+Ally Clan#
+Antagonist Clan#
+Send to Clan#
+ClanMaster Name#
+Number of Members#
+Castles Owned#
+Clan Chat Messages#
+Go to Page Charged.#
+https://gfb.gameflier.com/Billing/ingame/index_new.asp?#
+Create char#
+Name does not match#
+Enter the name of character#
+Sex Selection Window#
+Editing of the File Detected#
+Items obtained by opening the item is character bounded (can not move to storage). Do you want to open the box?#
+Game Settings#
+Game System#
+Game Commands#
+Game Command ON/OFF#
+Macro#
+Trading is prohibited in this Map#
+Vending is prohibited in this Map#
+In this Map,Effect of Mirace of Sun and Moon is nullified.#
+Ranking Board#
+Rank#
+Name#
+Points#
+BlackSmith#
+Alchemist#
+Taekwon#
+Killer#
+7 vs 7#
+RuneKnight#
+Warlock#
+Ranger#
+Mechanic#
+GuillotineCross#
+Archbishop#
+RoyalGuard#
+Sorcerer#
+Minstrel#
+Wanderer#
+Genetic#
+ShadowChaser#
+Sura#
+Kagerou#
+Oboro#
+Select Ranking Type#
+Ranking Type#
+Currently,Server is full.           ^0000ffPeople Currently Waiting : %d                    Expected Waiting Time : %dSeconds#
+Currently,Server is full.           ^0000ffPeople Currently Waiting : %d                    Expected Waiting Time : %dMinutes %d Seconds#
+CBT is not an invited user#
+------------------- Instruction --------------------#
+1) /Navigation or /navi ex) /navi prontera 100 100 -> /navi "MAPNAME", 100, 100#
+2) /Navigation2 or /navi2 ex) /navi2 prontera 100 111 -> MAPNAME location (100 90), Scroll | Zeny | Plane (1: Enable or 0: Disable)#
+-> /navi2 goes with the case with location coordinates. They must be no less than 3 characters #
+3) $$all Output all the items (Can take a while...) #
+4) $$lv30 monsters are placed in the output #
+5) $$lv20~30 monsters in that level range are placed in the output #
+1 vs 1#
+Costume#
+%d First character of the profession is more than information. Please contact the Customer Care Center. ErrorCode(%d)#
+(%s) %d / %d#
+%s-%s(%d/%d)#
+Server Exceeded the maximum number of users,Cannot Connect anymore users.#
+Server Connection Failed (%d)#
+Login Timeout Permitted#
+Login Authentication Failed from Authentication Server.#
+Guild Cannot use Space in the name.#
+Hey,Hello There#
+Available Time will End on %d month %d hour %d:%d#
+You've lot of time,Play in Peace.#
+Your hours will be terminated within this week. Please Charge before termination.#
+Your hours will be terminated within 24 hours.Please Charge Quickly.#
+Current Time Left:%d hours.Charge the game for uninterrupted play.#
+Current Time Left:%d minutes.Charge the game for uninterrupted play.#
+Time Left: %d hours %d minutes#
+%d%% ( Basic 100%% + PCRoom %d%% + Premium %d%% + %sServer %d%% )#
+After %d hours %d minutes, your game will be terminated.#
+This Account is permanently Banned.#
+This Account is banned.\nTermination Time:%04d-%02d-%02d %02d:%02d #
+Monster(Tab)#
+Map(Alt)#
+Product Information#
+Find Information#
+Non-Process#
+Kafra#
+(Arrival)#
+Mob)%s:%s(%s)#
+Distribution:%s#
+Very Plenty#
+Plenty#
+Normal#
+Low#
+Very Low#
+The bank is not available. Please try again in a few minutes.#
+Bank balance is low.#
+You don't have enough zeny#
+Minimum Deposit Amount: 1 zeny#
+Minimum Withdrawal Amount: 1 zeny#
+You cannot hold more than 2,147,483,647 billion#
+your account is lock by mobil otp#
+MOTP auth fail#
+For %d minutes,Job Experience obtained from monster is increased by %d%%#
+Current Zeny: %s Zeny#
+Zeny#
+The Maximum amount is 2,147,483,647 zeny#
+Your bullet is not enough#
+You entered more than 1 Billion Zeny, the price will be set to 1 Billion Zeny.#
+AuthTicket is Not Valid#
+ErrorCategory : %d, ErrorCode : %d (%d,%d,%d,%d)#
+%d%% ( Basic 100%% + Premium %d%% + PCCafe %d%% + %s Server %d%% )#
+ %d Minutes to get through the monsters of the basic item drop rates increased to %d%%.#
+%d %.2d minutes when monsters of basic items that can be obtained through the drop rates increased to %d%%.#
+The price of %s#
+100000000#
+ ^ff0000%d^0000ffbillion#
+10000000#
+ ^ff0000%d^0000ffmillion#
+^0000ffZeny ^000000Over.\nEnter the Amount?#
+Safety check more than 10million Zeny#
+https://www.warpportal.com/account/login.aspx?ReturnUrl=%2faccount%2fpayment.aspx#
+https://kepler.warpportal.com/steam/purchase/?step=1&steamid=76561198071003044&game=rose&accountname=khanhtest111&lang=en#
+A giant crevice appeared in Bifrost, the bridge between Splendide, the end of the world and the floating continent of Alfheim, and you do not know the source of the labyrinth forest.#
+This is a marker indicating the end of the trip, a new world is opening indicators! Guardian, such as the lyrics to the temptation was gradually losing the soul.#
+For thousands of years, a mysterious melody has mesmerized the guardian. After a millennia of slumber, the guardian became confused about what he had been protecting all these years, and began to suspect that he might be the one who has been sealed and hidden away.#
+When the melody reached its peak, a giant crevice appeared in Bifrost, the bridge between Splendide, the end of the world and the floating continent of Alfheim. As a result, the two worlds were cut off from each other, causing a big problem for the people.#
+Now, the only way to get to Bifrost is through the Labyrinth Forest. Nobody knows how the forest came to exist, and nobody has ever come out of it alive...#
+Swallowed countless adventurers to put a hell of confusion, wandering in the forest labyrinth of nowhere, like the heart of a woman was being extend deeper confusion.#
+You can enter only numbers.#
+Exchange or store window is active and can not register the withdrawal.#
+Go to#
+Item Compare#
+Now you are trying to mount the gun equipped with bullet does not meet#
+Now you are trying to mount the guns and bullets will not fit mounted#
+Has not registered to sell the item. Please register to sell the item#
+ITEM#
+Guild storage is not available.#
+Guild is not subscribed to. After signing up, please use #
+Two other guild members are in use. Please use it after a while.#
+Storage Permission#
+Guild Storage#
+You do not have permission to use guild storage.#
+Limited Sale Registration Window#
+Item DB Name#
+Item DB Number#
+Number of Sale#
+Sale Start Time#
+Time to sell#
+Please enter number you want to sell#
+Enter start time of sale#
+Start time does not match the scope of sales.#
+Please enter the time#
+Please enter the Item DB Name#
+Item ID lookup failed. Please try again later#
+>> ItemName : %s / Price : %dc / Quantity : %d / TimeOfSale : %dMonth:%dDay:%dMinute:%dSecond ~ %dMonth:%dDay:%dMinute:%Second#
+Registration successful#
+Registration failure. Please try again later.#
+Item has already been registered. Please try again later.#
+Failed to delete the item. Please try again later.#
+%s item has been deleted.#
+Special#
+Sales limited sale item update# 
+Discontinued#
+Quantity update is required #
+The %d is out of stock or to buy as much as#
+%s Items are on sale#
+%s time-out or sale of the items sold has been shut down due to the limited sales #
+/limitedsale#
+http://www.ragnarokeurope.com/news/home-r70.html#
+http://www.ragnarokeurope.com/index.php?rubrique=70&Steam#
+Item purchase successful#
+You do not have enough items.#
+Name of the character that cannot be invited.#
+You cannot invite the character to the guild.#
+Item already Sold,Purchase Failed..#
+ЗцАз А§ДЎїЎј­ їцЗБ АејТё¦ ±вѕп ЗТ јц ѕшЅАґПґЩ.#
+Cannot purchase item, You exceeded the weight.#
+No.#
+Item#
+Number#
+Name#
+Time#
+Input/Output#
+Log does not exist.#
+Entire#
+Insert Symbol#
+Remaining Time#
+Guild Storage Logs#
+100 entries are displayed.#
+Guild Storage is open only for 2 minutes, and will close automatically.#
+Incorrect GameSamba ID. Please Try Again.#
+%s [%d Option] : %d Quantity#
+Requires a Coin.#
+%d Coins are required.#
+Gatling Gun should be equipped with bullets.#
+Shotguns should be equipped with bullets.#
+Rifle should be equipped with bullets.#
+Pair of Revolver should be equipped with bullets.#
+јєјУјє єнёґА» АеВшЗШѕЯ ЗХґПґЩ#
+Item Sell History#
+Item Purchase History#
+Grenade Launcher should be equipped with bullets.#
+[ИчЖ®№и·І],[ёЕµеґПЅє ДµЅЅ·Ї],[ЗГ·ЎЖјіС ѕЛЕН] АЗ Иї°ъµйАє БЯГёЗПї© »зїлЗТ јц ѕшЅАґПґЩ.#
+Cannot use skill in this map.#
+If you are using a guild warehouse warehouse all items will disappear.#
+http://ragnarok.gamesamba.com/paytest.html#
+Please enter a password to login.#
