@@ -102,11 +102,15 @@ sub game_login {
 				billing_slot => $charSvrSet{billing_slot},
 				producible_slot => $charSvrSet{producible_slot},
 				valid_slot => $charSvrSet{valid_slot},
-			}).$self->{recvPacketParser}->reconstruct({
-			switch => 'sync_received_characters',
-				sync_Count => $charSvrSet{sync_Count},
 			});
+			if ($charSvrSet{sync_Count} > 0) {
+				$output .= $self->{recvPacketParser}->reconstruct({
+					switch => 'sync_received_characters',
+					sync_Count => $charSvrSet{sync_Count},
+				});
+			}
 			$client->send($output);
+			&sendCharInfo if ($charSvrSet{sync_Count} == 0);
 
 		} else {
 			no encoding 'utf8';
