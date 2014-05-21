@@ -63,6 +63,7 @@ use Misc;
 use Commands;
 use Utils;
 use Translation qw/T TF/;
+use FileParsers;
 
 our $CVS;
 our ($iterationTime, $updateUITime, $updateUITime2);
@@ -455,7 +456,11 @@ sub createMenuBar {
 	$self->addMenu($infoMenu, T('&Monsters').'	Alt-M',	sub { Commands::run("ml"); });
 	$self->addMenu($infoMenu, T('&NPCs'),		sub { Commands::run("nl"); });
 	$infoMenu->AppendSeparator;
-	$self->addMenu($infoMenu, T('&Experience Report'),	sub { Commands::run("exp"); });
+	$self->addMenu($infoMenu, T('&Experience Report'),	sub {
+		$self->openWindow (T('Report'), 'Interface::Wx::StatView::Exp', 1) 
+	});
+	$self->addMenu($infoMenu, T('&Item Change Report'),	sub { Commands::run("exp item"); });
+	$self->addMenu($infoMenu, T('&Monsiter Kill Report'),	sub { Commands::run("exp monster"); });
 	$menu->Append($infoMenu, T('I&nfo'));
 
 	# View menu
@@ -494,15 +499,106 @@ sub createMenuBar {
 	
 	$self->addMenu ($viewMenu, T('&Font...'), \&onFontChange, T('Change console font'));
 	$self->addMenu($viewMenu, T('Clear Console'), sub {my $self = shift; $self->{console}->Remove(0, 40000)}, T('Clear content of console'));
+	$self->addMenu($viewMenu, T('Clear Chat History'), sub {Commands::run("cl")}, T('Clear chat history'));
+	$self->addMenu($viewMenu, T('Clear Item History'), sub {Commands::run("cil")}, T('Clear item history'));
 	
 	$menu->Append($viewMenu, T('&View'));
 	
-	$self->{aliasMenu} = new Wx::Menu;
-	$menu->Append ($self->{aliasMenu}, T('&Alias'));
+	# Merchant menu
+	my $merchantMenu = new Wx::Menu;
+	$menu->Append($merchantMenu, T('&Merchant'));
+	$self->addMenu($merchantMenu, T('Accept deal'), sub {Commands::run("deal")}, T('Accept/Finalise current deal'));
+	$self->addMenu($merchantMenu, T('Reject deal'), sub {Commands::run("deal no")}, T('Reject current deal'));
+	$self->addMenu($merchantMenu, T('Deal information'), sub {Commands::run("dl")}, T('View the information of current deal'));
 	
+	$merchantMenu->AppendSeparator;
+	$self->addMenu($merchantMenu, T('Ignore all deals (0)'), sub {Commands::run("conf dealAuto 0")}, T('Ignore all incoming deal requests'));
+	$self->addMenu($merchantMenu, T('Reject all deals (1)'), sub {Commands::run("conf dealAuto 1")}, T('Reject all incoming deal requests'));
+	$self->addMenu($merchantMenu, T('Accept all deals (2)'), sub {Commands::run("conf dealAuto 2")}, T('Accept all incoming deal requests'));
+	
+	$merchantMenu->AppendSeparator;
+	$self->addMenu($merchantMenu, T('Open shop'), sub {Commands::run("openshop")}, T('Open shop'));
+	$self->addMenu($merchantMenu, T('Close shop'), sub {Commands::run("closeshop")}, T('Close shop'));
+	$self->addMenu($merchantMenu, T('Current shop status'), sub {Commands::run("al")}, T('View your shop status'));
+	$self->addMenu($merchantMenu, T('Nearby shop list'), sub {Commands::run("vl")}, T('View shops nearby'));
+	
+	$merchantMenu->AppendSeparator;
+	$self->addMenu($merchantMenu, T('Reload shop.txt'), sub {Commands::run("reload shop.txt")}, T('Reload shop.txt'));
+	$self->addMenu($merchantMenu, T('Test your shop'), sub {Commands::run("testshop")}, T('Test your shop'));
+		
+
+	# Command menu
+	my $commandMenu = new Wx::Menu;
+	$menu->Append($commandMenu, T('&Command'));
+	$self->addMenu($commandMenu, T('Teleport'), sub {Commands::run("tele")}, T('Teleport'));
+	$self->addMenu($commandMenu, T('Memo position'), sub {Commands::run("memo")}, T('Memorise the current coordinate for teleport'));
+	$commandMenu->AppendSeparator;
+	$self->addMenu($commandMenu, T('Sit down'), sub {Commands::run("sit")}, T('Sit down'));
+	$self->addMenu($commandMenu, T('Stand up'), sub {Commands::run("stand")}, T('Stand up'));
+	$commandMenu->AppendSeparator;
+	$self->addMenu($commandMenu, T('Auto storage'), sub {Commands::run("autostorage")}, T('Auto storage'));
+	$self->addMenu($commandMenu, T('Auto buying'), sub {Commands::run("autobuy")}, T('Auto buying'));
+	$self->addMenu($commandMenu, T('Auto selling'), sub {Commands::run("autosell")}, T('Auto selling'));
+	$commandMenu->AppendSeparator;
+	
+	# Party menu
+	$self->{partyMenu} = new Wx::Menu;
+	$self->addMenu($self->{partyMenu}, T('Party information'), sub {Commands::run("party")}, T('Party information'));
+	$self->{partyMenu}->AppendSeparator;
+	$self->addMenu($self->{partyMenu}, T('Disable party share (0)'), sub {Commands::run("party share 0")}, T('Disable sharing party EXP'));
+	$self->addMenu($self->{partyMenu}, T('Enable party share (1)'), sub {Commands::run("party share 1")}, T('Enable sharing party EXP'));
+	$self->{partyMenu}->AppendSeparator;
+	$self->addMenu($self->{partyMenu}, T('Auto ignore party request (0)'), sub {Commands::run("conf partyAuto 0")}, T('Ignore all incoming party request'));
+	$self->addMenu($self->{partyMenu}, T('Auto reject party request (1)'), sub {Commands::run("conf partyAuto 1")}, T('Reject all incoming party request'));
+	$self->addMenu($self->{partyMenu}, T('Auto accept party request (2)'), sub {Commands::run("conf partyAuto 2")}, T('Accept all incoming party request'));
+	$self->{partyMenu}->AppendSeparator;
+	$self->addMenu($self->{partyMenu}, T('Accept party request'), sub {Commands::run("party join 1")}, T('Accept incoming party request'));
+	$self->addMenu($self->{partyMenu}, T('Reject party request'), sub {Commands::run("party join 0")}, T('Reject incoming party request'));
+	$self->addMenu($self->{partyMenu}, T('Leave party'), sub {Commands::run("party leave")}, T('Leave the current party'));
+	$commandMenu->AppendSubMenu($self->{partyMenu}, T('&Party'), T('Party'));
+	
+	#Friend menu
+	$self->{friendMenu} = new Wx::Menu;
+	$self->addMenu($self->{friendMenu}, T('Friend list'), sub {Commands::run("friend")}, 'Friend list');
+	$self->{friendMenu}->AppendSeparator;
+	$self->addMenu($self->{friendMenu}, T('Auto accept friend request'), sub {Commands::run("friend accept")}, 'Auto accept all incoming friend requests');
+	$self->addMenu($self->{friendMenu}, T('Auto reject friend request'), sub {Commands::run("friend reject")}, 'Auto reject all incoming friend requests');
+	$commandMenu->AppendSubMenu($self->{friendMenu}, T('&Friend'), T('Friend'));
+	
+	#Guild menu
+	$self->{guildMenu} = new Wx::Menu;
+	$self->addMenu($self->{guildMenu}, T('Guild information'), sub {Commands::run("guild info")}, 'Guild information');
+	$self->addMenu($self->{guildMenu}, T('Guild member'), sub {Commands::run("guild member")}, 'Guild memberinformation');
+	$self->{guildMenu}->AppendSeparator;
+	$self->addMenu($self->{guildMenu}, T('Auto accept guild request'), sub {Commands::run("guild join 1")}, 'Auto accept all incoming guild requests');
+	$self->addMenu($self->{guildMenu}, T('Auto reject guild request'), sub {Commands::run("guild join 0")}, 'Auto reject all incoming guild requests');
+	$commandMenu->AppendSubMenu($self->{guildMenu}, T('&Guild'), T('Guild'));
+	
+	$commandMenu->AppendSeparator;
+	$self->{aliasMenu} = new Wx::Menu;
+	$commandMenu->AppendSubMenu($self->{aliasMenu}, T('&Alias'), T('Alias'));
+
 	# Settings menu
 	my $settingsMenu = new Wx::Menu;
-	$self->createSettingsMenu($settingsMenu) if ($self->can('createSettingsMenu'));
+	$self->createSettingsMenu($settingsMenu) if ($self->can('createSettingsMenuz'));
+	$self->addMenu($settingsMenu, T('Reload config.txt'), sub {Commands::run("reload config.txt")}, T('Reload config.txt'));
+	$self->addMenu($settingsMenu, T('Reload All Configs'), sub {Commands::run("reload all")}, T('Reload All Configs'));
+	$settingsMenu->AppendSeparator;
+	$self->{iDeal} = $self->addMenu($settingsMenu, T('Close All PM'), sub {Commands::run("conf ignoreAll 1")}, T('Ignore all PM from all people'));
+	$self->{iDeal} = $self->addMenu($settingsMenu, T('Open All PM'), sub {Commands::run("conf ignoreAll 0")}, T('Accept all PM from all people'));
+	$settingsMenu->AppendSeparator;
+	$self->{iDeal} = $self->addMenu($settingsMenu, T('Turn off random routing'), sub {Commands::run("conf route_randomWalk 0")}, T('Not randomly walking in the map'));
+	$self->{iDeal} = $self->addMenu($settingsMenu, T('Turn on random routing (1)'), sub {Commands::run("conf route_randomWalk 1")}, T('Randomly walking in the map'));
+	$self->{iDeal} = $self->addMenu($settingsMenu, T('Turn on random routing (2)'), sub {Commands::run("conf route_randomWalk 2")}, T('Randomly walking in the map without walking into portals'));
+	$settingsMenu->AppendSeparator;
+	$self->{iDeal} = $self->addMenu($settingsMenu, T('Turn off auto attacking'), sub {Commands::run("conf attackAuto 0")}, T('Not attacking no matter being attacked'));
+	$self->{iDeal} = $self->addMenu($settingsMenu, T('Turn on auto attacking (1)'), sub {Commands::run("conf attackAuto 1")}, T('Attack the enemy when the enemy is attacking you'));
+	$self->{iDeal} = $self->addMenu($settingsMenu, T('Turn on auto attacking (2)'), sub {Commands::run("conf attackAuto 2")}, T('Auto attack enemies nearby'));
+	$settingsMenu->AppendSeparator;
+	$self->{iDeal} = $self->addMenu($settingsMenu, T('Turn off item picking'), sub {Commands::run("conf itemsTakeAuto 0")}, T('Not picking any items'));
+	$self->{iDeal} = $self->addMenu($settingsMenu, T('Turn on item picking (1)'), sub {Commands::run("conf itemsTakeAuto 1")}, T('Picking items after killing all the enemies'));
+	$self->{iDeal} = $self->addMenu($settingsMenu, T('Turn on item picking (2)'), sub {Commands::run("conf itemsTakeAuto 2")}, T('Picking items each time killing an enemy'));
+	$settingsMenu->AppendSeparator;
 	$self->addMenu($settingsMenu, T('&Advanced...'), \&onAdvancedConfig, T('Edit advanced configuration options.'));
 	$menu->Append($settingsMenu, T('&Settings'));
 	$self->createSettingsMenu2($settingsMenu) if ($self->can('createSettingsMenu2'));
@@ -511,6 +607,7 @@ sub createMenuBar {
 	my $helpMenu = new Wx::Menu();
 	$self->addMenu($helpMenu, T('&Manual') . "\tF1", \&onManual, T('Read the manual'));
 	$self->addMenu($helpMenu, T('&Forum') . "\tShift-F1", \&onForum, T('Visit the forum'));
+	#Custom link for different localisation
 	$self->createHelpMenu($helpMenu) if ($self->can('createHelpMenu'));
 	$menu->Append($helpMenu, T('&Help'));
 }
