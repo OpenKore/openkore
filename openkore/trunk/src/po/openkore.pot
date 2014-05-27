@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-20 01:28+0100\n"
+"POT-Creation-Date: 2014-05-21 23:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -595,6 +595,14 @@ msgstr ""
 msgid "Weight"
 msgstr ""
 
+#: ../Interface/Wx/List/ItemList/Cart.pm:76
+msgid " items"
+msgstr ""
+
+#: ../Interface/Wx/List/ItemList/Cart.pm:77
+msgid " total)"
+msgstr ""
+
 #: ../Interface/Wx/List/ItemList/Cart.pm:88
 #: ../Interface/Wx/List/ItemList/Storage.pm:91
 msgid "Move all to inventory"
@@ -979,415 +987,787 @@ msgstr ""
 msgid "Enter 'c' to continue...\n"
 msgstr ""
 
-#: ../Interface/Wx.pm:249
+#: ../Interface/Vx.pm:205
+msgid "~OpenKore"
+msgstr ""
+
+#: ../Interface/Vx.pm:208
+msgid "~View"
+msgstr ""
+
+#: ../Interface/Wx.pm:250
 msgid "Query"
 msgstr ""
 
-#: ../Interface/Wx.pm:284
+#: ../Interface/Wx.pm:285
 msgid "Menu"
 msgstr ""
 
-#: ../Interface/Wx.pm:341
+#: ../Interface/Wx.pm:342
 msgid "Fatal error"
 msgstr ""
 
-#: ../Interface/Wx.pm:341
+#: ../Interface/Wx.pm:342
 msgid "Error"
 msgstr ""
 
-#: ../Interface/Wx.pm:410 ../Interface/Wx.pm:642
+#: ../Interface/Wx.pm:411 ../Interface/Wx.pm:739
 msgid "Console"
 msgstr ""
 
-#: ../Interface/Wx.pm:431
+#: ../Interface/Wx.pm:432
 msgid "&Pause Botting"
 msgstr ""
 
-#: ../Interface/Wx.pm:431
+#: ../Interface/Wx.pm:432
 msgid "Pause all automated botting activity"
 msgstr ""
 
-#: ../Interface/Wx.pm:432
+#: ../Interface/Wx.pm:433
 msgid "&Manual Botting"
 msgstr ""
 
-#: ../Interface/Wx.pm:432
+#: ../Interface/Wx.pm:433
 msgid "Pause automated botting and allow manual control"
 msgstr ""
 
-#: ../Interface/Wx.pm:433
+#: ../Interface/Wx.pm:434
 msgid "&Automatic Botting"
 msgstr ""
 
-#: ../Interface/Wx.pm:433
+#: ../Interface/Wx.pm:434
 msgid "Resume all automated botting activity"
 msgstr ""
 
-#: ../Interface/Wx.pm:435
+#: ../Interface/Wx.pm:436
 msgid "Copy Last 100 Lines of Text"
 msgstr ""
 
-#: ../Interface/Wx.pm:436
+#: ../Interface/Wx.pm:437
 msgid "Minimize to &Tray"
 msgstr ""
 
-#: ../Interface/Wx.pm:436
+#: ../Interface/Wx.pm:437
 msgid "Minimize to a small task bar tray icon"
 msgstr ""
 
-#: ../Interface/Wx.pm:438
+#: ../Interface/Wx.pm:439
 msgid "Respawn"
 msgstr ""
 
-#: ../Interface/Wx.pm:438
+#: ../Interface/Wx.pm:439
 msgid "Teleport to save point"
 msgstr ""
 
-#: ../Interface/Wx.pm:439
+#: ../Interface/Wx.pm:440
 msgid "&Relog"
 msgstr ""
 
-#: ../Interface/Wx.pm:439
+#: ../Interface/Wx.pm:440
 msgid "Disconnect and reconnect"
 msgstr ""
 
-#: ../Interface/Wx.pm:440
+#: ../Interface/Wx.pm:441
 msgid "&Character Select"
 msgstr ""
 
-#: ../Interface/Wx.pm:443
+#: ../Interface/Wx.pm:444
 msgid "Exit to the character selection screen"
 msgstr ""
 
-#: ../Interface/Wx.pm:444
+#: ../Interface/Wx.pm:445
 msgid "E&xit"
 msgstr ""
 
-#: ../Interface/Wx.pm:444
+#: ../Interface/Wx.pm:445
 msgid "Exit this program"
 msgstr ""
 
-#: ../Interface/Wx.pm:445
+#: ../Interface/Wx.pm:446
 msgid "P&rogram"
 msgstr ""
 
-#: ../Interface/Wx.pm:449
+#: ../Interface/Wx.pm:450
 msgid "&Status"
 msgstr ""
 
-#: ../Interface/Wx.pm:450
+#: ../Interface/Wx.pm:451
 msgid "S&tatistics"
 msgstr ""
 
-#: ../Interface/Wx.pm:451
+#: ../Interface/Wx.pm:452
 msgid "&Inventory"
 msgstr ""
 
-#: ../Interface/Wx.pm:452
+#: ../Interface/Wx.pm:453
 msgid "S&kills"
 msgstr ""
 
-#: ../Interface/Wx.pm:454
+#: ../Interface/Wx.pm:455
 msgid "&Players"
 msgstr ""
 
-#: ../Interface/Wx.pm:455
+#: ../Interface/Wx.pm:456
 msgid "&Monsters"
 msgstr ""
 
-#: ../Interface/Wx.pm:456
+#: ../Interface/Wx.pm:457
 msgid "&NPCs"
 msgstr ""
 
-#: ../Interface/Wx.pm:458 ../Interface/Wx.pm:489
+#: ../Interface/Wx.pm:459 ../Interface/Wx.pm:494
 msgid "&Experience Report"
 msgstr ""
 
-#: ../Interface/Wx.pm:459
-msgid "I&nfo"
-msgstr ""
-
-#: ../Interface/Wx.pm:464
-msgid "&Map"
-msgstr ""
-
-#: ../Interface/Wx.pm:464
-msgid "Show where you are on the current map"
-msgstr ""
-
-#: ../Interface/Wx.pm:467
-msgid "&Info Bar"
-msgstr ""
-
-#: ../Interface/Wx.pm:467
-msgid "Show or hide the information bar."
-msgstr ""
-
-#: ../Interface/Wx.pm:470
-msgid "Chat &Log"
-msgstr ""
-
-#: ../Interface/Wx.pm:470
-msgid "Show or hide the chat log."
-msgstr ""
-
-#: ../Interface/Wx.pm:472 ../Interface/Wx.pm:1128
-msgid "Status"
-msgstr ""
-
-#: ../Interface/Wx.pm:473 ../Interface/Wx.pm:1135
-msgid "Homunculus"
-msgstr ""
-
-#: ../Interface/Wx.pm:474 ../Interface/Wx.pm:1142
-msgid "Mercenary"
-msgstr ""
-
-#: ../Interface/Wx.pm:475 ../Interface/Wx.pm:1149
-msgid "Pet"
-msgstr ""
-
-#: ../Interface/Wx.pm:479 ../Interface/Wx.pm:1156
-msgid "Inventory"
-msgstr ""
-
-#: ../Interface/Wx.pm:480 ../Interface/Wx.pm:1163
-msgid "Cart"
-msgstr ""
-
-#: ../Interface/Wx.pm:481 ../Interface/Wx.pm:1170
-msgid "Storage"
-msgstr ""
-
-#: ../Interface/Wx.pm:485 ../Interface/Wx.pm:1177
-msgid "Emotions"
-msgstr ""
-
-#: ../Interface/Wx.pm:490
+#: ../Interface/Wx.pm:460 ../Interface/Wx.pm:495
 msgid "Report"
 msgstr ""
 
-#: ../Interface/Wx.pm:495
+#: ../Interface/Wx.pm:462
+msgid "&Item Change Report"
+msgstr ""
+
+#: ../Interface/Wx.pm:463
+msgid "&Monsiter Kill Report"
+msgstr ""
+
+#: ../Interface/Wx.pm:464
+msgid "I&nfo"
+msgstr ""
+
+#: ../Interface/Wx.pm:469
+msgid "&Map"
+msgstr ""
+
+#: ../Interface/Wx.pm:469
+msgid "Show where you are on the current map"
+msgstr ""
+
+#: ../Interface/Wx.pm:472
+msgid "&Info Bar"
+msgstr ""
+
+#: ../Interface/Wx.pm:472
+msgid "Show or hide the information bar."
+msgstr ""
+
+#: ../Interface/Wx.pm:475
+msgid "Chat &Log"
+msgstr ""
+
+#: ../Interface/Wx.pm:475
+msgid "Show or hide the chat log."
+msgstr ""
+
+#: ../Interface/Wx.pm:477 ../Interface/Wx.pm:1225
+msgid "Status"
+msgstr ""
+
+#: ../Interface/Wx.pm:478 ../Interface/Wx.pm:1232
+msgid "Homunculus"
+msgstr ""
+
+#: ../Interface/Wx.pm:479 ../Interface/Wx.pm:1239
+msgid "Mercenary"
+msgstr ""
+
+#: ../Interface/Wx.pm:480 ../Interface/Wx.pm:1246
+msgid "Pet"
+msgstr ""
+
+#: ../Interface/Wx.pm:484 ../Interface/Wx.pm:1253
+msgid "Inventory"
+msgstr ""
+
+#: ../Interface/Wx.pm:485 ../Interface/Wx.pm:1260
+msgid "Cart"
+msgstr ""
+
+#: ../Interface/Wx.pm:486 ../Interface/Wx.pm:1267
+msgid "Storage"
+msgstr ""
+
+#: ../Interface/Wx.pm:490 ../Interface/Wx.pm:1274
+msgid "Emotions"
+msgstr ""
+
+#: ../Interface/Wx.pm:500
 msgid "&Font..."
 msgstr ""
 
-#: ../Interface/Wx.pm:495
+#: ../Interface/Wx.pm:500
 msgid "Change console font"
 msgstr ""
 
-#: ../Interface/Wx.pm:496
+#: ../Interface/Wx.pm:501
 msgid "Clear Console"
 msgstr ""
 
-#: ../Interface/Wx.pm:496
+#: ../Interface/Wx.pm:501
 msgid "Clear content of console"
 msgstr ""
 
-#: ../Interface/Wx.pm:498
+#: ../Interface/Wx.pm:502
+msgid "Clear Chat History"
+msgstr ""
+
+#: ../Interface/Wx.pm:502
+msgid "Clear chat history"
+msgstr ""
+
+#: ../Interface/Wx.pm:503
+msgid "Clear Item History"
+msgstr ""
+
+#: ../Interface/Wx.pm:503
+msgid "Clear item history"
+msgstr ""
+
+#: ../Interface/Wx.pm:505
 msgid "&View"
 msgstr ""
 
-#: ../Interface/Wx.pm:501
-msgid "&Alias"
+#: ../Interface/Wx.pm:509
+msgid "&Merchant"
 msgstr ""
 
-#: ../Interface/Wx.pm:506
-msgid "&Advanced..."
+#: ../Interface/Wx.pm:510
+msgid "Accept deal"
 msgstr ""
 
-#: ../Interface/Wx.pm:506
-msgid "Edit advanced configuration options."
+#: ../Interface/Wx.pm:510
+msgid "Accept/Finalise current deal"
 msgstr ""
 
-#: ../Interface/Wx.pm:507
-msgid "&Settings"
+#: ../Interface/Wx.pm:511
+msgid "Reject deal"
+msgstr ""
+
+#: ../Interface/Wx.pm:511
+msgid "Reject current deal"
 msgstr ""
 
 #: ../Interface/Wx.pm:512
-msgid "&Manual"
+msgid "Deal information"
 msgstr ""
 
 #: ../Interface/Wx.pm:512
-msgid "Read the manual"
-msgstr ""
-
-#: ../Interface/Wx.pm:513
-msgid "&Forum"
-msgstr ""
-
-#: ../Interface/Wx.pm:513
-msgid "Visit the forum"
+msgid "View the information of current deal"
 msgstr ""
 
 #: ../Interface/Wx.pm:515
-msgid "&Help"
+msgid "Ignore all deals (0)"
+msgstr ""
+
+#: ../Interface/Wx.pm:515
+msgid "Ignore all incoming deal requests"
+msgstr ""
+
+#: ../Interface/Wx.pm:516
+msgid "Reject all deals (1)"
+msgstr ""
+
+#: ../Interface/Wx.pm:516
+msgid "Reject all incoming deal requests"
+msgstr ""
+
+#: ../Interface/Wx.pm:517
+msgid "Accept all deals (2)"
+msgstr ""
+
+#: ../Interface/Wx.pm:517
+msgid "Accept all incoming deal requests"
+msgstr ""
+
+#: ../Interface/Wx.pm:520
+msgid "Open shop"
+msgstr ""
+
+#: ../Interface/Wx.pm:521
+msgid "Close shop"
+msgstr ""
+
+#: ../Interface/Wx.pm:522
+msgid "Current shop status"
+msgstr ""
+
+#: ../Interface/Wx.pm:522
+msgid "View your shop status"
+msgstr ""
+
+#: ../Interface/Wx.pm:523
+msgid "Nearby shop list"
+msgstr ""
+
+#: ../Interface/Wx.pm:523
+msgid "View shops nearby"
+msgstr ""
+
+#: ../Interface/Wx.pm:526
+msgid "Reload shop.txt"
+msgstr ""
+
+#: ../Interface/Wx.pm:527
+msgid "Test your shop"
+msgstr ""
+
+#: ../Interface/Wx.pm:532
+msgid "&Command"
+msgstr ""
+
+#: ../Interface/Wx.pm:533
+msgid "Teleport"
+msgstr ""
+
+#: ../Interface/Wx.pm:534
+msgid "Memo position"
+msgstr ""
+
+#: ../Interface/Wx.pm:534
+msgid "Memorise the current coordinate for teleport"
+msgstr ""
+
+#: ../Interface/Wx.pm:536
+msgid "Sit down"
+msgstr ""
+
+#: ../Interface/Wx.pm:537
+msgid "Stand up"
 msgstr ""
 
 #: ../Interface/Wx.pm:539
-msgid "Use Wx NPC Talk"
+msgid "Auto storage"
 msgstr ""
 
 #: ../Interface/Wx.pm:540
-msgid "Open a dialog when talking with NPCs"
+msgid "Auto buying"
 msgstr ""
 
-#: ../Interface/Wx.pm:544
-msgid "Use Wx captcha"
+#: ../Interface/Wx.pm:541
+msgid "Auto selling"
 msgstr ""
 
-#: ../Interface/Wx.pm:545
-msgid "Open a dialog when receiving a captcha"
+#: ../Interface/Wx.pm:546
+msgid "Party information"
+msgstr ""
+
+#: ../Interface/Wx.pm:548
+msgid "Disable party share (0)"
+msgstr ""
+
+#: ../Interface/Wx.pm:548
+msgid "Disable sharing party EXP"
 msgstr ""
 
 #: ../Interface/Wx.pm:549
-msgid "Show route on map"
+msgid "Enable party share (1)"
 msgstr ""
 
-#: ../Interface/Wx.pm:550
-msgid "Show route solution steps"
+#: ../Interface/Wx.pm:549
+msgid "Enable sharing party EXP"
 msgstr ""
 
-#: ../Interface/Wx.pm:563
-msgid "HP: "
+#: ../Interface/Wx.pm:551
+msgid "Auto ignore party request (0)"
+msgstr ""
+
+#: ../Interface/Wx.pm:551
+msgid "Ignore all incoming party request"
+msgstr ""
+
+#: ../Interface/Wx.pm:552
+msgid "Auto reject party request (1)"
+msgstr ""
+
+#: ../Interface/Wx.pm:552
+msgid "Reject all incoming party request"
+msgstr ""
+
+#: ../Interface/Wx.pm:553
+msgid "Auto accept party request (2)"
+msgstr ""
+
+#: ../Interface/Wx.pm:553
+msgid "Accept all incoming party request"
+msgstr ""
+
+#: ../Interface/Wx.pm:555
+msgid "Accept party request"
+msgstr ""
+
+#: ../Interface/Wx.pm:555
+msgid "Accept incoming party request"
+msgstr ""
+
+#: ../Interface/Wx.pm:556
+msgid "Reject party request"
+msgstr ""
+
+#: ../Interface/Wx.pm:556
+msgid "Reject incoming party request"
+msgstr ""
+
+#: ../Interface/Wx.pm:557
+msgid "Leave party"
+msgstr ""
+
+#: ../Interface/Wx.pm:557
+msgid "Leave the current party"
+msgstr ""
+
+#: ../Interface/Wx.pm:558
+msgid "&Party"
+msgstr ""
+
+#: ../Interface/Wx.pm:558
+msgid "Party"
+msgstr ""
+
+#: ../Interface/Wx.pm:562
+msgid "Friend list"
+msgstr ""
+
+#: ../Interface/Wx.pm:564
+msgid "Auto accept friend request"
+msgstr ""
+
+#: ../Interface/Wx.pm:565
+msgid "Auto reject friend request"
+msgstr ""
+
+#: ../Interface/Wx.pm:566
+msgid "&Friend"
+msgstr ""
+
+#: ../Interface/Wx.pm:566
+msgid "Friend"
+msgstr ""
+
+#: ../Interface/Wx.pm:570
+msgid "Guild information"
+msgstr ""
+
+#: ../Interface/Wx.pm:571
+msgid "Guild member"
 msgstr ""
 
 #: ../Interface/Wx.pm:573
-msgid "SP: "
+msgid "Auto accept guild request"
 msgstr ""
 
-#: ../Interface/Wx.pm:582
-msgid "Exp: "
+#: ../Interface/Wx.pm:574
+msgid "Auto reject guild request"
+msgstr ""
+
+#: ../Interface/Wx.pm:575
+msgid "&Guild"
+msgstr ""
+
+#: ../Interface/Wx.pm:575
+msgid "Guild"
+msgstr ""
+
+#: ../Interface/Wx.pm:579
+msgid "&Alias"
+msgstr ""
+
+#: ../Interface/Wx.pm:579
+msgid "Alias"
+msgstr ""
+
+#: ../Interface/Wx.pm:584
+msgid "Reload config.txt"
+msgstr ""
+
+#: ../Interface/Wx.pm:585
+msgid "Reload All Configs"
+msgstr ""
+
+#: ../Interface/Wx.pm:587
+msgid "Close All PM"
+msgstr ""
+
+#: ../Interface/Wx.pm:587
+msgid "Ignore all PM from all people"
+msgstr ""
+
+#: ../Interface/Wx.pm:588
+msgid "Open All PM"
+msgstr ""
+
+#: ../Interface/Wx.pm:588
+msgid "Accept all PM from all people"
+msgstr ""
+
+#: ../Interface/Wx.pm:590
+msgid "Turn off random routing"
+msgstr ""
+
+#: ../Interface/Wx.pm:590
+msgid "Not randomly walking in the map"
+msgstr ""
+
+#: ../Interface/Wx.pm:591
+msgid "Turn on random routing (1)"
+msgstr ""
+
+#: ../Interface/Wx.pm:591
+msgid "Randomly walking in the map"
+msgstr ""
+
+#: ../Interface/Wx.pm:592
+msgid "Turn on random routing (2)"
+msgstr ""
+
+#: ../Interface/Wx.pm:592
+msgid "Randomly walking in the map without walking into portals"
+msgstr ""
+
+#: ../Interface/Wx.pm:594
+msgid "Turn off auto attacking"
+msgstr ""
+
+#: ../Interface/Wx.pm:594
+msgid "Not attacking no matter being attacked"
 msgstr ""
 
 #: ../Interface/Wx.pm:595
+msgid "Turn on auto attacking (1)"
+msgstr ""
+
+#: ../Interface/Wx.pm:595
+msgid "Attack the enemy when the enemy is attacking you"
+msgstr ""
+
+#: ../Interface/Wx.pm:596
+msgid "Turn on auto attacking (2)"
+msgstr ""
+
+#: ../Interface/Wx.pm:596
+msgid "Auto attack enemies nearby"
+msgstr ""
+
+#: ../Interface/Wx.pm:598
+msgid "Turn off item picking"
+msgstr ""
+
+#: ../Interface/Wx.pm:598
+msgid "Not picking any items"
+msgstr ""
+
+#: ../Interface/Wx.pm:599
+msgid "Turn on item picking (1)"
+msgstr ""
+
+#: ../Interface/Wx.pm:599
+msgid "Picking items after killing all the enemies"
+msgstr ""
+
+#: ../Interface/Wx.pm:600
+msgid "Turn on item picking (2)"
+msgstr ""
+
+#: ../Interface/Wx.pm:600
+msgid "Picking items each time killing an enemy"
+msgstr ""
+
+#: ../Interface/Wx.pm:602
+msgid "&Advanced..."
+msgstr ""
+
+#: ../Interface/Wx.pm:602
+msgid "Edit advanced configuration options."
+msgstr ""
+
+#: ../Interface/Wx.pm:603
+msgid "&Settings"
+msgstr ""
+
+#: ../Interface/Wx.pm:608
+msgid "&Manual"
+msgstr ""
+
+#: ../Interface/Wx.pm:608
+msgid "Read the manual"
+msgstr ""
+
+#: ../Interface/Wx.pm:609
+msgid "&Forum"
+msgstr ""
+
+#: ../Interface/Wx.pm:609
+msgid "Visit the forum"
+msgstr ""
+
+#: ../Interface/Wx.pm:612
+msgid "&Help"
+msgstr ""
+
+#: ../Interface/Wx.pm:636
+msgid "Use Wx NPC Talk"
+msgstr ""
+
+#: ../Interface/Wx.pm:637
+msgid "Open a dialog when talking with NPCs"
+msgstr ""
+
+#: ../Interface/Wx.pm:641
+msgid "Use Wx captcha"
+msgstr ""
+
+#: ../Interface/Wx.pm:642
+msgid "Open a dialog when receiving a captcha"
+msgstr ""
+
+#: ../Interface/Wx.pm:646
+msgid "Show route on map"
+msgstr ""
+
+#: ../Interface/Wx.pm:647
+msgid "Show route solution steps"
+msgstr ""
+
+#: ../Interface/Wx.pm:660
+msgid "HP: "
+msgstr ""
+
+#: ../Interface/Wx.pm:670
+msgid "SP: "
+msgstr ""
+
+#: ../Interface/Wx.pm:679
+msgid "Exp: "
+msgstr ""
+
+#: ../Interface/Wx.pm:692
 msgid "Weight: "
 msgstr ""
 
-#: ../Interface/Wx.pm:628
+#: ../Interface/Wx.pm:725
 msgid "Command"
 msgstr ""
 
-#: ../Interface/Wx.pm:628
+#: ../Interface/Wx.pm:725
 msgid "Public chat"
 msgstr ""
 
-#: ../Interface/Wx.pm:628
+#: ../Interface/Wx.pm:725
 msgid "Party chat"
 msgstr ""
 
-#: ../Interface/Wx.pm:628
+#: ../Interface/Wx.pm:725
 msgid "Guild chat"
 msgstr ""
 
-#: ../Interface/Wx.pm:646 ../Interface/Wx.pm:927 ../Interface/Wx.pm:1081
-#: ../Interface/Wx.pm:1083 ../Interface/Wx.pm:1084 ../Interface/Wx.pm:1095
-#: ../Interface/Wx.pm:1270
+#: ../Interface/Wx.pm:743 ../Interface/Wx.pm:1024 ../Interface/Wx.pm:1178
+#: ../Interface/Wx.pm:1180 ../Interface/Wx.pm:1181 ../Interface/Wx.pm:1192
+#: ../Interface/Wx.pm:1367
 msgid "Chat Log"
 msgstr ""
 
-#: ../Interface/Wx.pm:669
+#: ../Interface/Wx.pm:766
 msgid "Map"
 msgstr ""
 
-#: ../Interface/Wx.pm:762
+#: ../Interface/Wx.pm:859
 #, perl-format
 msgid "Loading files... %.0f%%"
 msgstr ""
 
-#: ../Interface/Wx.pm:764
+#: ../Interface/Wx.pm:861
 msgid "Initializing..."
 msgstr ""
 
-#: ../Interface/Wx.pm:766
+#: ../Interface/Wx.pm:863
 msgid "Not connected"
 msgstr ""
 
-#: ../Interface/Wx.pm:768
+#: ../Interface/Wx.pm:865
 msgid "Connecting..."
 msgstr ""
 
-#: ../Interface/Wx.pm:791
+#: ../Interface/Wx.pm:888
 msgid "Paused"
 msgstr ""
 
-#: ../Interface/Wx.pm:906
+#: ../Interface/Wx.pm:1003
 msgid "You're not logged in.\n"
 msgstr ""
 
-#: ../Interface/Wx.pm:1005 ../Interface/Wx.pm:1006 ../Interface/Wx.pm:1010
-#: ../Interface/Wx.pm:1061
+#: ../Interface/Wx.pm:1102 ../Interface/Wx.pm:1103 ../Interface/Wx.pm:1107
+#: ../Interface/Wx.pm:1158
 msgid "Advanced Configuration"
 msgstr ""
 
-#: ../Interface/Wx.pm:1019
+#: ../Interface/Wx.pm:1116
 msgid "All"
 msgstr ""
 
-#: ../Interface/Wx.pm:1042
+#: ../Interface/Wx.pm:1139
 msgid "&Revert"
 msgstr ""
 
-#: ../Interface/Wx.pm:1043
+#: ../Interface/Wx.pm:1140
 msgid "Revert settings to before you opened the selected category"
 msgstr ""
 
-#: ../Interface/Wx.pm:1056
+#: ../Interface/Wx.pm:1153
 msgid "&Close"
 msgstr ""
 
-#: ../Interface/Wx.pm:1057
+#: ../Interface/Wx.pm:1154
 msgid "Close this panel/dialog"
 msgstr ""
 
-#: ../Interface/Wx.pm:1193
+#: ../Interface/Wx.pm:1290
 msgid "NPC Talk"
 msgstr ""
 
-#: ../Interface/Wx.pm:1227
+#: ../Interface/Wx.pm:1324
 #, perl-format
 msgid "Taking item %s\n"
 msgstr ""
 
-#: ../Interface/Wx.pm:1298
+#: ../Interface/Wx.pm:1395
 #, perl-format
 msgid "Mouse over: %s, %s"
 msgstr ""
 
-#: ../Interface/Wx.pm:1302
+#: ../Interface/Wx.pm:1399
 #, perl-format
 msgid "Portal at %s %s  -  Destination: %s, at %s %s"
 msgstr ""
 
-#: ../Interface/Wx.pm:1307 ../Interface/Wx.pm:1317
+#: ../Interface/Wx.pm:1404 ../Interface/Wx.pm:1414
 #, perl-format
 msgid "%s at %s, %s"
 msgstr ""
 
-#: ../Interface/Wx.pm:1312
+#: ../Interface/Wx.pm:1409
 #, perl-format
 msgid "%s at %s, %s  -  Class: %s"
 msgstr ""
 
-#: ../Interface/Wx.pm:1335
+#: ../Interface/Wx.pm:1432
 msgid ""
 "Error in function 'move' (Move Player)\n"
 "Unable to walk while inside a chat room!\n"
 "Use the command: chat leave\n"
 msgstr ""
 
-#: ../Interface/Wx.pm:1339
+#: ../Interface/Wx.pm:1436
 msgid ""
 "Error in function 'move' (Move Player)\n"
 "Unable to walk while the shop is open!\n"
 "Use the command: closeshop\n"
 msgstr ""
 
-#: ../Interface/Wx.pm:1352
+#: ../Interface/Wx.pm:1449
 #, perl-format
 msgid "Moving to Portal %s, %s\n"
 msgstr ""
 
-#: ../Interface/Wx.pm:1376
+#: ../Interface/Wx.pm:1473
 #, perl-format
 msgid "Moving to %s, %s\n"
 msgstr ""
