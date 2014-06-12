@@ -1464,8 +1464,8 @@ sub system_chat {
 	my $color;
 	if ($message =~ s/^ssss//g) {  # forces color yellow, or WoE indicator?
 		$prefix = T('[WoE]');
-	} elsif ($message =~ /^micc.{12,23}(\0[0-9a-fA-F]{6})(.*)/) {
-		($color, $message) = $message =~ /^micc.*(\0{2}[0-9a-fA-F]{6})(.*)/;
+	} elsif ($message =~ /^micc.{12,24}([0-9a-fA-F]{6})(.*)/) {
+		($color, $message) = $message =~ /^micc.*([0-9a-fA-F]{6})(.*)/;
 		$prefix = T('[S]');
 	} elsif ($message =~ s/^blue//g) {  # forces color blue
 		$prefix = T('[S]');

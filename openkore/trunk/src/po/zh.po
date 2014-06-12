@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-21 23:16+0100\n"
-"PO-Revision-Date: 2014-05-27 16:41-0000\n"
+"PO-Revision-Date: 2014-06-12 01:49-0000\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
+"Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh\n"
 "X-Generator: Poedit 1.6.5\n"
 
 #: ../../openkore.pl:129
@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "您的 Windows TCP/IP stack 壞了. 請閱讀\n"
 "  %s\n"
-"以學習如何解決."
+"以解決問題."
 
 #: ../../openkore.pl:140
 msgid ""
@@ -37,7 +37,7 @@ msgstr ""
 "請刪除你的整個OpenKore源文件夾，並重新下載應有盡有。"
 
 #: ../../openkore.pl:146 ../../openkore.pl:166
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of the XSTools library is too old.\n"
 "Please upgrade it from %s"
@@ -55,7 +55,7 @@ msgstr ""
 "請參閱 %s 以更新它"
 
 #: ../../openkore.pl:155
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of XSTools library is incompatible.\n"
 "Please upgrade it from %s"
@@ -64,7 +64,7 @@ msgstr ""
 "請參閱 %s 以更新它"
 
 #: ../../openkore.pl:163
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of (wx)start.exe is too old.\n"
 "Please upgrade it from %s"
@@ -113,11 +113,11 @@ msgstr "你自己"
 
 #: ../Actor/You.pm:88
 msgid "you"
-msgstr "先快速的看過這些腳色的大概，一些技巧"
+msgstr "you"
 
 #: ../Actor/You.pm:89
 msgid "You"
-msgstr "在 API 中"
+msgstr "You"
 
 #: ../Actor/You.pm:225
 #, perl-format
@@ -244,9 +244,9 @@ msgstr ""
 " 重新嘗試中..."
 
 #: ../AI/CoreLogic.pm:596 ../AI/CoreLogic.pm:1964
-#, fuzzy, perl-format
+#, perl-format
 msgid "Calculating random route to: %s: %s, %s\n"
-msgstr "計算隨機路徑至: %s(%s): %s, %s\n"
+msgstr "計算隨機路徑至: %s: %s, %s\n"
 
 #: ../AI/CoreLogic.pm:644
 msgid "Timeout equiping for skill\n"
@@ -280,9 +280,9 @@ msgid "Moving to %s - %d,%d\n"
 msgstr "正在移動至 %s - %d,%d\n"
 
 #: ../AI/CoreLogic.pm:920
-#, fuzzy, perl-format
+#, perl-format
 msgid "Moving to %s\n"
-msgstr "%s; 移動至 (%s, %s)\n"
+msgstr "移動至 %s\n"
 
 #: ../AI/CoreLogic.pm:938
 msgid "Disconnecting on death!\n"
@@ -387,19 +387,19 @@ msgid "Invalid coordinates specified for lockMap, coordinates are unwalkable\n"
 msgstr "無效的randomWalk指定座標(座標點是無法走動區域); randomWalk disabled\n"
 
 #: ../AI/CoreLogic.pm:1826
-#, fuzzy, perl-format
+#, perl-format
 msgid "Calculating lockMap route to: %s(%s): %s, %s\n"
-msgstr "計算路徑至: %s(%s): %s, %s\n"
+msgstr "計算路徑至鎖定地圖: %s(%s): %s, %s\n"
 
 #: ../AI/CoreLogic.pm:1828
-#, fuzzy, perl-format
+#, perl-format
 msgid "Calculating lockMap route to: %s(%s)\n"
-msgstr "計算路徑至: %s(%s)\n"
+msgstr "計算路徑至鎖定地圖: %s(%s)\n"
 
 #: ../AI/CoreLogic.pm:1875
-#, fuzzy, perl-format
+#, perl-format
 msgid "Auto-adding stat %s\n"
-msgstr "自動加技能點 %s\n"
+msgstr "自動加属性點 %s\n"
 
 #: ../AI/CoreLogic.pm:1946
 msgid "Coordinate lockmap is used; randomWalk disabled\n"
@@ -540,9 +540,9 @@ msgid "Pet hunger reaches the feed value.\n"
 msgstr "寵物飢餓值達到該餵食值。\n"
 
 #: ../AI/Slave.pm:184
-#, fuzzy, perl-format
+#, perl-format
 msgid "Found %s!\n"
-msgstr "找到我的主人了!\n"
+msgstr "找到 %s!\n"
 
 #: ../AI/Slave.pm:189
 msgid "Stand By Homun\n"
@@ -559,7 +559,7 @@ msgid "Trying to find %s at location %d, %d (you are currently at %d, %d)\n"
 msgstr "嘗試尋找您的人工生命體在位置 %d, %d (您現在位置在 %d, %d)\n"
 
 #: ../AI/Slave.pm:209
-#, fuzzy, perl-format
+#, perl-format
 msgid "You lost %s!\n"
 msgstr "您失去了 %s zeny.\n"
 
@@ -618,13 +618,12 @@ msgid "Weight"
 msgstr "重量"
 
 #: ../Interface/Wx/List/ItemList/Cart.pm:76
-#, fuzzy
 msgid " items"
-msgstr "已賣出 %s 物品.\n"
+msgstr " 物品"
 
 #: ../Interface/Wx/List/ItemList/Cart.pm:77
 msgid " total)"
-msgstr "總)"
+msgstr "total)"
 
 #: ../Interface/Wx/List/ItemList/Cart.pm:88
 #: ../Interface/Wx/List/ItemList/Storage.pm:91
@@ -668,9 +667,9 @@ msgid "Sell all"
 msgstr "技能 %s 失敗 (%s)\n"
 
 #: ../Interface/Wx/List/ItemList/Storage.pm:79
-#, fuzzy, perl-format
+#, perl-format
 msgid "%d items"
-msgstr "已賣出 %s 物品.\n"
+msgstr ""
 
 #: ../Interface/Wx/List/ItemList/Storage.pm:80
 #, perl-format
@@ -682,9 +681,8 @@ msgid " (Equipped)"
 msgstr "(已裝備)"
 
 #: ../Interface/Wx/List/ItemList.pm:33
-#, fuzzy
 msgid " (Not identified)"
-msgstr "尚未鑑定"
+msgstr " (尚未鑑定)"
 
 #: ../Interface/Wx/StatView/Exp.pm:15
 msgid "Botting time"
@@ -805,11 +803,8 @@ msgstr "ASPD"
 
 #: ../Interface/Wx/StatView/Homunculus.pm:43
 #: ../Interface/Wx/StatView/You.pm:40
-#, fuzzy
 msgid "Skill point"
-msgstr ""
-"\n"
-"技能點數: %d\n"
+msgstr "技能點數"
 
 #: ../Interface/Wx/StatView/Homunculus.pm:44
 #: ../Interface/Wx/StatView/Pet.pm:21
@@ -865,7 +860,6 @@ msgid "Job"
 msgstr "Job"
 
 #: ../Interface/Wx/StatView/You.pm:24
-#, fuzzy
 msgid "Str"
 msgstr "Str"
 
@@ -894,9 +888,8 @@ msgid "Walk speed"
 msgstr "移動速度"
 
 #: ../Interface/Wx/StatView/You.pm:39
-#, fuzzy
 msgid "Status point"
-msgstr "狀態: %s \n"
+msgstr "屬性點"
 
 #: ../Interface/Wx/ConfigEditor.pm:24
 msgid "Categories:"
@@ -907,7 +900,6 @@ msgid "Click on one of the categories on the left to begin."
 msgstr "點擊在左邊的類別開始。"
 
 #: ../Interface/Wx/ConfigEditor.pm:163
-#, fuzzy
 msgid "Option"
 msgstr "Option"
 
@@ -916,7 +908,6 @@ msgid "Value"
 msgstr "值"
 
 #: ../Interface/Wx/ConfigEditor.pm:196
-#, fuzzy
 msgid "Downloading"
 msgstr "Downloading"
 
@@ -949,7 +940,6 @@ msgid "Continue talking / submit response"
 msgstr "繼續對話/回應"
 
 #: ../Interface/Wx/NpcTalk.pm:77
-#, fuzzy
 msgid "&Auto"
 msgstr "&Auto"
 
@@ -985,14 +975,12 @@ msgid "Respond to NPC"
 msgstr "回應NPC"
 
 #: ../Interface/Wx/NpcTalk.pm:263
-#, fuzzy
 msgid "Done talking"
-msgstr "結束交談\n"
+msgstr "結束交談"
 
 #: ../Interface/Wx/PasswordDialog.pm:36
-#, fuzzy
 msgid "Enter password"
-msgstr "請輸入密碼:"
+msgstr "請輸入密碼"
 
 #: ../Interface/Wx/PasswordDialog.pm:69
 msgid "OK"
@@ -1097,23 +1085,20 @@ msgid "Respawn"
 msgstr "復活"
 
 #: ../Interface/Wx.pm:439
-#, fuzzy
 msgid "Teleport to save point"
-msgstr "正在瞬移以避免傳點\n"
+msgstr "正在瞬移以避免傳點"
 
 #: ../Interface/Wx.pm:440
 msgid "&Relog"
 msgstr "重新登錄"
 
 #: ../Interface/Wx.pm:440
-#, fuzzy
 msgid "Disconnect and reconnect"
 msgstr "斷線並重新連線"
 
 #: ../Interface/Wx.pm:441
-#, fuzzy
 msgid "&Character Select"
-msgstr "角色選擇"
+msgstr "返回角色選擇"
 
 #: ../Interface/Wx.pm:444
 #, fuzzy
@@ -1142,7 +1127,6 @@ msgid "S&tatistics"
 msgstr "統計"
 
 #: ../Interface/Wx.pm:452
-#, fuzzy
 msgid "&Inventory"
 msgstr "物品"
 
@@ -1207,12 +1191,10 @@ msgid "Show or hide the chat log."
 msgstr "顯示或隱藏的聊天記錄。"
 
 #: ../Interface/Wx.pm:477 ../Interface/Wx.pm:1225
-#, fuzzy
 msgid "Status"
 msgstr "狀態"
 
 #: ../Interface/Wx.pm:478 ../Interface/Wx.pm:1232
-#, fuzzy
 msgid "Homunculus"
 msgstr "人工生命體"
 
@@ -1225,7 +1207,6 @@ msgid "Pet"
 msgstr "寵物"
 
 #: ../Interface/Wx.pm:484 ../Interface/Wx.pm:1253
-#, fuzzy
 msgid "Inventory"
 msgstr "物品欄"
 
@@ -1234,7 +1215,6 @@ msgid "Cart"
 msgstr "手推車"
 
 #: ../Interface/Wx.pm:486 ../Interface/Wx.pm:1267
-#, fuzzy
 msgid "Storage"
 msgstr "倉庫"
 
@@ -1252,7 +1232,7 @@ msgstr "修改字體"
 
 #: ../Interface/Wx.pm:501
 msgid "Clear Console"
-msgstr "清除Console"
+msgstr "清除Console介面"
 
 #: ../Interface/Wx.pm:501
 msgid "Clear content of console"
@@ -1327,7 +1307,6 @@ msgid "Accept all deals (2)"
 msgstr "接受所有交易邀請 (2)"
 
 #: ../Interface/Wx.pm:517
-#, fuzzy
 msgid "Accept all incoming deal requests"
 msgstr "接受所有組隊邀請"
 
@@ -1388,7 +1367,6 @@ msgid "Stand up"
 msgstr "站起"
 
 #: ../Interface/Wx.pm:539
-#, fuzzy
 msgid "Auto storage"
 msgstr "自動回倉"
 
@@ -1421,52 +1399,42 @@ msgid "Enable sharing party EXP"
 msgstr "開啟隊伍經驗均分"
 
 #: ../Interface/Wx.pm:551
-#, fuzzy
 msgid "Auto ignore party request (0)"
 msgstr "自動拒絕組隊請求 (0)"
 
 #: ../Interface/Wx.pm:551
-#, fuzzy
 msgid "Ignore all incoming party request"
 msgstr "自動拒絕所有的組隊請求"
 
 #: ../Interface/Wx.pm:552
-#, fuzzy
 msgid "Auto reject party request (1)"
 msgstr "自動拒絕組隊請求 (1)"
 
 #: ../Interface/Wx.pm:552
-#, fuzzy
 msgid "Reject all incoming party request"
 msgstr "自動拒絕所有組隊請求"
 
 #: ../Interface/Wx.pm:553
-#, fuzzy
 msgid "Auto accept party request (2)"
 msgstr "自動接受組隊請求 (2)"
 
 #: ../Interface/Wx.pm:553
-#, fuzzy
 msgid "Accept all incoming party request"
 msgstr "自動接受所有組隊請求"
 
 #: ../Interface/Wx.pm:555
-#, fuzzy
 msgid "Accept party request"
 msgstr "接受組隊請求"
 
 #: ../Interface/Wx.pm:555
-#, fuzzy
 msgid "Accept incoming party request"
 msgstr "接受組隊請求"
 
 #: ../Interface/Wx.pm:556
-#, fuzzy
 msgid "Reject party request"
 msgstr "拒絕組隊請求"
 
 #: ../Interface/Wx.pm:556
-#, fuzzy
 msgid "Reject incoming party request"
 msgstr "拒絕組隊要求"
 
@@ -1483,7 +1451,6 @@ msgid "&Party"
 msgstr "隊伍"
 
 #: ../Interface/Wx.pm:558
-#, fuzzy
 msgid "Party"
 msgstr "隊伍"
 
@@ -1492,12 +1459,10 @@ msgid "Friend list"
 msgstr "好友列表"
 
 #: ../Interface/Wx.pm:564
-#, fuzzy
 msgid "Auto accept friend request"
 msgstr "自動接受好友請求"
 
 #: ../Interface/Wx.pm:565
-#, fuzzy
 msgid "Auto reject friend request"
 msgstr "自動拒絕好友請求"
 
@@ -1510,22 +1475,18 @@ msgid "Friend"
 msgstr "好友"
 
 #: ../Interface/Wx.pm:570
-#, fuzzy
 msgid "Guild information"
 msgstr "公會資訊"
 
 #: ../Interface/Wx.pm:571
-#, fuzzy
 msgid "Guild member"
 msgstr "公會會員"
 
 #: ../Interface/Wx.pm:573
-#, fuzzy
 msgid "Auto accept guild request"
 msgstr "自動接受公會邀請"
 
 #: ../Interface/Wx.pm:574
-#, fuzzy
 msgid "Auto reject guild request"
 msgstr "自動拒絕入公會邀請"
 
@@ -1534,7 +1495,6 @@ msgid "&Guild"
 msgstr "公會"
 
 #: ../Interface/Wx.pm:575
-#, fuzzy
 msgid "Guild"
 msgstr "公會"
 
@@ -1603,7 +1563,6 @@ msgid "Not attacking no matter being attacked"
 msgstr "即使被攻擊亦不進行攻擊"
 
 #: ../Interface/Wx.pm:595
-#, fuzzy
 msgid "Turn on auto attacking (1)"
 msgstr "開啟自動攻擊 (1)"
 
@@ -1612,7 +1571,6 @@ msgid "Attack the enemy when the enemy is attacking you"
 msgstr "當敵人攻擊時進行反擊"
 
 #: ../Interface/Wx.pm:596
-#, fuzzy
 msgid "Turn on auto attacking (2)"
 msgstr "開啟自動攻擊 (2)"
 
@@ -1743,22 +1701,18 @@ msgid "Map"
 msgstr "地圖"
 
 #: ../Interface/Wx.pm:859
-#, fuzzy, perl-format
 msgid "Loading files... %.0f%%"
 msgstr "正在載入檔案 %.0f%%"
 
 #: ../Interface/Wx.pm:861
-#, fuzzy
 msgid "Initializing..."
 msgstr "初始化中..."
 
 #: ../Interface/Wx.pm:863
-#, fuzzy
 msgid "Not connected"
 msgstr "尚未連線"
 
 #: ../Interface/Wx.pm:865
-#, fuzzy
 msgid "Connecting..."
 msgstr "連線中"
 
@@ -1767,7 +1721,6 @@ msgid "Paused"
 msgstr "已暫停"
 
 #: ../Interface/Wx.pm:1003
-#, fuzzy
 msgid "You're not logged in.\n"
 msgstr "你尚未登入。\n"
 
@@ -1801,17 +1754,14 @@ msgid "NPC Talk"
 msgstr "NPC對話"
 
 #: ../Interface/Wx.pm:1324
-#, fuzzy, perl-format
 msgid "Taking item %s\n"
 msgstr "與 %s 結束對話.\n"
 
 #: ../Interface/Wx.pm:1395
-#, fuzzy, perl-format
 msgid "Mouse over: %s, %s"
-msgstr "您的座標: %s, %s\n"
+msgstr "您的座標: %s, %s"
 
 #: ../Interface/Wx.pm:1399
-#, perl-format
 msgid "Portal at %s %s  -  Destination: %s, at %s %s"
 msgstr "門戶網站%s %s -目的地： %s ，在%s %s"
 
@@ -2785,7 +2735,7 @@ msgstr "無法撿取物品 (您被冰凍了嗎?)\n"
 #: ../Network/Receive/ServerType0.pm:2856
 #, perl-format
 msgid "Cannot pickup item (failure code %d)\n"
-msgstr "無法撿取物品 (failure code %d)\n"
+msgstr "無法撿取物品 (錯誤代碼: %d)\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2510
 #: ../Network/Receive/ServerType0.pm:2880
@@ -4516,14 +4466,14 @@ msgstr "您施展 %s 於地面座標 (%d, %d)\n"
 #: ../Network/Receive/ServerType0.pm:6826
 #, perl-format
 msgid "MVP Boss %s has been detected on this map!\n"
-msgstr "MVP的老闆%s已檢測到這個地圖！\n"
+msgstr "MVP %s已檢測到這個地圖！\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6227
 #: ../Network/Receive/ServerType0.pm:6828
 #, perl-format
 msgid ""
 "MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n"
-msgstr "MVP的老闆%s已經死了，但會再次產卵%d小時（S）和%d分鐘（次）。\n"
+msgstr "MVP %s 已經死亡，復活時間為 %d小時 %d分鐘。\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6275
 #: ../Network/Receive/ServerType0.pm:6876
@@ -4916,15 +4866,15 @@ msgstr ""
 
 #: ../Network/Receive/ServerType0.pm:6273
 msgid "EXP Rates: %s% (Base %s% + Premium %s% + Server %s% + Plus %s%) \n"
-msgstr "EXP率： %s %（基數%S%+溢價%S%+服務器%s%+加%S%）\n"
+msgstr "EXP率： %s %（基數%s%+溢價%s%+服務器%s%+加%s%）\n"
 
 #: ../Network/Receive/ServerType0.pm:6274
 msgid "Drop Rates: %s% (Base %s% + Premium %s% + Server %s% + Plus %s%) \n"
-msgstr "下降率： %s %（基數%S%+溢價%S%+服務器%s%+加%S%）\n"
+msgstr "下降率： %s %（基數%s%+溢價%s%+服務器%s%+加%s%）\n"
 
 #: ../Network/Receive/ServerType0.pm:6275
 msgid "Death Penalty: %s% (Base %s% + Premium %s% + Server %s% + Plus %s%) \n"
-msgstr "死刑： %s %（基數%S%+溢價%S%+服務器%s%+加%S%）\n"
+msgstr "死刑： %s %（基數%s%+溢價%s%+服務器%s%+加%s%）\n"
 
 #: ../Network/Receive/ServerType0.pm:6617
 #, fuzzy, perl-format
@@ -5314,7 +5264,7 @@ msgstr "%s 站了起來.\n"
 
 #: ../Network/Receive.pm:1062
 msgid "Miss!"
-msgstr "錯過！"
+msgstr "Miss!"
 
 #: ../Network/Receive.pm:1238
 msgid "============= Account payment information =============\n"
