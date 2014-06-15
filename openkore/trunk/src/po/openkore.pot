@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-21 23:16+0100\n"
+"POT-Creation-Date: 2014-06-13 18:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -481,12 +481,12 @@ msgstr ""
 msgid "Teleporting to avoid portal\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:3028
+#: ../AI/CoreLogic.pm:3028 ../Misc.pm:1322
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr ""
 
-#: ../AI/CoreLogic.pm:3029
+#: ../AI/CoreLogic.pm:3029 ../Misc.pm:1323
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr ""
@@ -593,14 +593,6 @@ msgstr ""
 
 #: ../Interface/Wx/List/ItemList/Cart.pm:14 ../Interface/Wx/StatView/You.pm:23
 msgid "Weight"
-msgstr ""
-
-#: ../Interface/Wx/List/ItemList/Cart.pm:76
-msgid " items"
-msgstr ""
-
-#: ../Interface/Wx/List/ItemList/Cart.pm:77
-msgid " total)"
 msgstr ""
 
 #: ../Interface/Wx/List/ItemList/Cart.pm:88
@@ -985,14 +977,6 @@ msgstr ""
 
 #: ../Interface/Socket.pm:162
 msgid "Enter 'c' to continue...\n"
-msgstr ""
-
-#: ../Interface/Vx.pm:205
-msgid "~OpenKore"
-msgstr ""
-
-#: ../Interface/Vx.pm:208
-msgid "~View"
 msgstr ""
 
 #: ../Interface/Wx.pm:250
@@ -2152,7 +2136,7 @@ msgstr ""
 #: ../Network/Receive/kRO/Sakexe_0.pm:1490
 #: ../Network/Receive/kRO/Sakexe_0.pm:2296
 #: ../Network/Receive/ServerType0.pm:1893
-#: ../Network/Receive/ServerType0.pm:2644
+#: ../Network/Receive/ServerType0.pm:2644 ../Misc.pm:1649
 msgid "Unknown #"
 msgstr ""
 
@@ -2265,7 +2249,8 @@ msgid "Critical Error: Dual login prohibited - Someone trying to login!\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1698
-#: ../Network/Receive/ServerType0.pm:2102
+#: ../Network/Receive/ServerType0.pm:2102 ../Misc.pm:1075 ../Misc.pm:1089
+#: ../Misc.pm:3508 ../Misc.pm:3529
 #, perl-format
 msgid "Disconnect for %s seconds...\n"
 msgstr ""
@@ -5679,6 +5664,636 @@ msgstr ""
 msgid "Casting is supposed to be finished now, but nothing happened."
 msgstr ""
 
+#: ../Misc.pm:252
+#, perl-format
+msgid "Authorized user '%s' for admin\n"
+msgstr ""
+
+#: ../Misc.pm:254
+#, perl-format
+msgid "Revoked admin privilages for user '%s'\n"
+msgstr ""
+
+#: ../Misc.pm:302
+#, perl-format
+msgid "Config '%s' is already %s\n"
+msgstr ""
+
+#: ../Misc.pm:307
+#, perl-format
+msgid "Config '%s' unset (was %s)\n"
+msgstr ""
+
+#: ../Misc.pm:309 ../Misc.pm:348
+#, perl-format
+msgid "Config '%s' set to %s (was %s)\n"
+msgstr ""
+
+#: ../Misc.pm:346
+#, perl-format
+msgid "Config '%s' set to %s (was *not-displayed*)\n"
+msgstr ""
+
+#: ../Misc.pm:365
+#, perl-format
+msgid "Timeout '%s' set to %s (was %s)\n"
+msgstr ""
+
+#: ../Misc.pm:914
+#, perl-format
+msgid ""
+"No suitable browser detected. Please launch your favorite browser and go "
+"to:\n"
+"%s"
+msgstr ""
+
+#: ../Misc.pm:959
+#, perl-format
+msgid "actorAdded: %s %s (%s), size %s\n"
+msgstr ""
+
+#: ../Misc.pm:998
+#, perl-format
+msgid "actorRemoved: %s %s (%s), size %s\n"
+msgstr ""
+
+#: ../Misc.pm:1072
+msgid "Disconnecting to avoid GM!\n"
+msgstr ""
+
+#: ../Misc.pm:1073
+#, perl-format
+msgid "*** The GM %s talked to you, auto disconnected ***\n"
+msgstr ""
+
+#: ../Misc.pm:1087
+#, perl-format
+msgid "Disconnecting to avoid %s!\n"
+msgstr ""
+
+#: ../Misc.pm:1088
+#, perl-format
+msgid "*** %s talked to you, auto disconnected ***\n"
+msgstr ""
+
+#: ../Misc.pm:1143
+msgid ""
+"-------  Character @< ---------\n"
+"Name: @<<<<<<<<<<<<<<<<<<<<<<<<\n"
+"Job:  @<<<<<<<      Job Exp: @<<<<<<<\n"
+"Lv:   @<<<<<<<      Str: @<<<<<<<<\n"
+"J.Lv: @<<<<<<<      Agi: @<<<<<<<<\n"
+"Exp:  @<<<<<<<      Vit: @<<<<<<<<\n"
+"HP:   @||||/@||||   Int: @<<<<<<<<\n"
+"SP:   @||||/@||||   Dex: @<<<<<<<<\n"
+"zeny: @<<<<<<<<<<  Luk: @<<<<<<<<\n"
+"-------------------------------"
+msgstr ""
+
+#: ../Misc.pm:1162
+#, perl-format
+msgid ""
+"\n"
+"     -> It will be deleted lefting %s!"
+msgstr ""
+
+#: ../Misc.pm:1165
+#, perl-format
+msgid "Slot %d: %s (%s, level %d/%d)%s"
+msgstr ""
+
+#: ../Misc.pm:1176
+#, perl-format
+msgid ""
+"------------- Character List -------------\n"
+"%s\n"
+"------------------------------------------\n"
+msgstr ""
+
+#: ../Misc.pm:1195
+msgid "Create a new character"
+msgstr ""
+
+#: ../Misc.pm:1198
+msgid "Delete or cancel the deletion a character"
+msgstr ""
+
+#: ../Misc.pm:1200
+msgid "Delete a character"
+msgstr ""
+
+#: ../Misc.pm:1203
+msgid "There are no characters on this account.\n"
+msgstr ""
+
+#: ../Misc.pm:1205
+msgid ""
+"Please use the : \"conf char switch\" command, if you are switching your "
+"account.\n"
+msgstr ""
+
+#: ../Misc.pm:1212
+msgid "Please choose a character or an action."
+msgstr ""
+
+#: ../Misc.pm:1213
+msgid "Character selection"
+msgstr ""
+
+#: ../Misc.pm:1239
+msgid ""
+"Please enter the desired properties for your characters, in this form:\n"
+"(slot) \"(name)\" [ (hairstyle) [(haircolor)] ]"
+msgstr ""
+
+#: ../Misc.pm:1242
+msgid ""
+"Please enter the desired properties for your characters, in this form:\n"
+"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) "
+"[(haircolor)] ] ]"
+msgstr ""
+
+#: ../Misc.pm:1252
+msgid "You didn't specify enough parameters."
+msgstr ""
+
+#: ../Misc.pm:1256
+#, perl-format
+msgid "Creating character \"%s\" in slot \"%s\"...\n"
+msgstr ""
+
+#: ../Misc.pm:1264
+msgid "Select the character you want to delete."
+msgstr ""
+
+#: ../Misc.pm:1266
+msgid "Delete character"
+msgstr ""
+
+#: ../Misc.pm:1287
+#, perl-format
+msgid ""
+"Are you ABSOLUTELY SURE you want to delete:\n"
+"%s"
+msgstr ""
+
+#: ../Misc.pm:1288
+msgid "No, don't delete"
+msgstr ""
+
+#: ../Misc.pm:1288
+msgid "Yes, delete"
+msgstr ""
+
+#: ../Misc.pm:1289
+msgid "Confirm delete"
+msgstr ""
+
+#: ../Misc.pm:1295
+#, perl-format
+msgid "Deleting character %s...\n"
+msgstr ""
+
+#: ../Misc.pm:1324
+msgid "** Exiting...\n"
+msgstr ""
+
+#: ../Misc.pm:1460
+msgid "We're not currently connected to the character login server."
+msgstr ""
+
+#: ../Misc.pm:1463
+#, perl-format
+msgid "Slot \"%s\" is not a valid number."
+msgstr ""
+
+#: ../Misc.pm:1466 ../Misc.pm:1469
+#, perl-format
+msgid "The slot must be comprised between 0 and %s."
+msgstr ""
+
+#: ../Misc.pm:1472
+#, perl-format
+msgid "Slot %s already contains a character (%s)."
+msgstr ""
+
+#: ../Misc.pm:1475
+msgid "Name must not be longer than 23 characters."
+msgstr ""
+
+#: ../Misc.pm:1493
+msgid "Stats must be comprised between 1 and 9."
+msgstr ""
+
+#: ../Misc.pm:1500
+msgid "The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10."
+msgstr ""
+
+#: ../Misc.pm:1599
+msgid "Message Dumped into DUMP.txt!\n"
+msgstr ""
+
+#: ../Misc.pm:1740 ../Misc.pm:4435
+#, perl-format
+msgid "Inventory Item Removed: %s (%d) x %d\n"
+msgstr ""
+
+#: ../Misc.pm:1745
+#, perl-format
+msgid "Run out of Arrow/Bullet: %s (%d)\n"
+msgstr ""
+
+#: ../Misc.pm:2185
+msgid "Error: No description available.\n"
+msgstr ""
+
+#: ../Misc.pm:2186
+#, perl-format
+msgid ""
+"===============Item Description===============\n"
+"Item: %s (ID: %s)\n"
+"\n"
+msgstr ""
+
+#: ../Misc.pm:2227
+msgid "Exiting...\n"
+msgstr ""
+
+#: ../Misc.pm:2235
+msgid ""
+"Openkore will stay disconnected. Type \"connect\" in order to connect "
+"again.\n"
+msgstr ""
+
+#: ../Misc.pm:2246
+#, perl-format
+msgid "Relogging in %d seconds...\n"
+msgstr ""
+
+#: ../Misc.pm:2470 ../Misc.pm:2478 ../Misc.pm:2484 ../Misc.pm:2490
+#, perl-format
+msgid "Found perfectly hidden %s\n"
+msgstr ""
+
+#: ../Misc.pm:2559
+#, perl-format
+msgid "%s does not exist.\n"
+msgstr ""
+
+#: ../Misc.pm:2599
+msgid "Teleporting because of attack miss\n"
+msgstr ""
+
+#: ../Misc.pm:2603
+#, perl-format
+msgid "Teleporting after attacking a monster %d times\n"
+msgstr ""
+
+#: ../Misc.pm:2609
+#, perl-format
+msgid "%s (%s) has been provoked, searching another monster\n"
+msgstr ""
+
+#: ../Misc.pm:2758
+#, perl-format
+msgid "%s hit %s. Teleporting...\n"
+msgstr ""
+
+#: ../Misc.pm:2764
+#, perl-format
+msgid "%s can kill %s with the next %d dmg. Teleporting...\n"
+msgstr ""
+
+#: ../Misc.pm:2771
+#, perl-format
+msgid "%s hit %s for more than %d dmg. Teleporting...\n"
+msgstr ""
+
+#: ../Misc.pm:2778
+#, perl-format
+msgid "%s hit %s for more than %d dmg in lockMap. Teleporting...\n"
+msgstr ""
+
+#: ../Misc.pm:2784
+#, perl-format
+msgid "%s hit %s while you are sitting. Teleporting...\n"
+msgstr ""
+
+#: ../Misc.pm:2792
+#, perl-format
+msgid "%s hit %s for a total of more than %d dmg. Teleporting...\n"
+msgstr ""
+
+#: ../Misc.pm:2799
+#, perl-format
+msgid "%s hit %s for a total of more than %d dmg in lockMap. Teleporting...\n"
+msgstr ""
+
+#: ../Misc.pm:2804
+#, perl-format
+msgid "%s hit %s when %s HP is under %d. Teleporting...\n"
+msgstr ""
+
+#: ../Misc.pm:2805
+msgid "your"
+msgstr ""
+
+#: ../Misc.pm:2805
+msgid "its"
+msgstr ""
+
+#: ../Misc.pm:2836
+#, perl-format
+msgid "%s %s target to aggressive %s\n"
+msgstr ""
+
+#: ../Misc.pm:2837
+msgid "change"
+msgstr ""
+
+#: ../Misc.pm:2837
+msgid "changes"
+msgstr ""
+
+#: ../Misc.pm:2850
+#, perl-format
+msgid "%s has been provoked, searching another monster\n"
+msgstr ""
+
+#: ../Misc.pm:3002
+msgid "Using Teleport Skill Level 2 though we not have it!\n"
+msgstr ""
+
+#: ../Misc.pm:3063
+msgid "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n"
+msgstr ""
+
+#: ../Misc.pm:3068
+msgid "You don't have the Teleport skill or a Fly Wing\n"
+msgstr ""
+
+#: ../Misc.pm:3070
+msgid "You don't have the Teleport skill or a Butterfly Wing\n"
+msgstr ""
+
+#: ../Misc.pm:3132
+#, perl-format
+msgid "---------- Storage %s -----------\n"
+msgstr ""
+
+#: ../Misc.pm:3139
+msgid "Not Identified"
+msgstr ""
+
+#: ../Misc.pm:3141
+msgid "Broken"
+msgstr ""
+
+#: ../Misc.pm:3145
+#, perl-format
+msgid ""
+"\n"
+"Capacity: %d/%d\n"
+msgstr ""
+
+#: ../Misc.pm:3149
+msgid "Storage logged\n"
+msgstr ""
+
+#: ../Misc.pm:3152
+#, perl-format
+msgid "Unable to write to %s\n"
+msgstr ""
+
+#: ../Misc.pm:3299
+#, perl-format
+msgid "%s %s %s (Dmg: %s) (Delay: %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:3301
+msgid "attack"
+msgstr ""
+
+#: ../Misc.pm:3301
+msgid "attacks"
+msgstr ""
+
+#: ../Misc.pm:3311
+#, perl-format
+msgid "%s %s %s on %s (Delay: %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:3313
+msgid "are casting"
+msgstr ""
+
+#: ../Misc.pm:3313
+msgid "is casting"
+msgstr ""
+
+#: ../Misc.pm:3315
+#, perl-format
+msgid "location (%d, %d)"
+msgstr ""
+
+#: ../Misc.pm:3326 ../Misc.pm:3341
+msgid "use"
+msgstr ""
+
+#: ../Misc.pm:3326 ../Misc.pm:3341
+msgid "uses"
+msgstr ""
+
+#: ../Misc.pm:3328 ../Misc.pm:3343
+#, perl-format
+msgid "(Lv: %s)"
+msgstr ""
+
+#: ../Misc.pm:3329
+msgid "on"
+msgstr ""
+
+#: ../Misc.pm:3331
+#, perl-format
+msgid "(Dmg: %s)"
+msgstr ""
+
+#: ../Misc.pm:3331
+msgid "Miss"
+msgstr ""
+
+#: ../Misc.pm:3332
+#, perl-format
+msgid "(Delay: %sms)"
+msgstr ""
+
+#: ../Misc.pm:3344
+msgid "on location"
+msgstr ""
+
+#: ../Misc.pm:3369
+#, perl-format
+msgid "%s %s: %s%s\n"
+msgstr ""
+
+#: ../Misc.pm:3371
+msgid "are now"
+msgstr ""
+
+#: ../Misc.pm:3371
+msgid "is now"
+msgstr ""
+
+#: ../Misc.pm:3372
+msgid "are again"
+msgstr ""
+
+#: ../Misc.pm:3372
+msgid "is again"
+msgstr ""
+
+#: ../Misc.pm:3373
+msgid "are no longer"
+msgstr ""
+
+#: ../Misc.pm:3373
+msgid "is no longer"
+msgstr ""
+
+#: ../Misc.pm:3375
+#, perl-format
+msgid "(Duration: %ss)"
+msgstr ""
+
+#: ../Misc.pm:3465
+#, perl-format
+msgid "GM %s is nearby, teleport & disconnect for %d seconds"
+msgstr ""
+
+#: ../Misc.pm:3470
+#, perl-format
+msgid "GM %s is nearby, disconnect for %s seconds"
+msgstr ""
+
+#: ../Misc.pm:3476
+#, perl-format
+msgid "GM %s is nearby, teleporting"
+msgstr ""
+
+#: ../Misc.pm:3481
+#, perl-format
+msgid "GM %s is nearby, respawning"
+msgstr ""
+
+#: ../Misc.pm:3506
+#, perl-format
+msgid "%s (%s) is nearby, disconnecting...\n"
+msgstr ""
+
+#: ../Misc.pm:3507
+#, perl-format
+msgid "*** Found %s (%s) nearby and disconnected ***\n"
+msgstr ""
+
+#: ../Misc.pm:3513
+#, perl-format
+msgid "Teleporting to avoid player %s (%s)\n"
+msgstr ""
+
+#: ../Misc.pm:3514
+#, perl-format
+msgid "*** Found %s (%s) nearby and teleported ***\n"
+msgstr ""
+
+#: ../Misc.pm:3527
+#, perl-format
+msgid "%s is nearby, disconnecting...\n"
+msgstr ""
+
+#: ../Misc.pm:3528
+#, perl-format
+msgid "*** Found %s nearby and disconnected ***\n"
+msgstr ""
+
+#: ../Misc.pm:3564
+#, perl-format
+msgid "Processing map %s...\n"
+msgstr ""
+
+#: ../Misc.pm:3599
+#, perl-format
+msgid "Wrote portals Line of Sight table to '%s'\n"
+msgstr ""
+
+#: ../Misc.pm:3603
+msgid "----------------------------Error Summary----------------------------\n"
+msgstr ""
+
+#: ../Misc.pm:3604
+#, perl-format
+msgid "Missing: %s.fld\n"
+msgstr ""
+
+#: ../Misc.pm:3605
+msgid ""
+"Note: LOS information for the above listed map(s) will be inaccurate;\n"
+"      however it is safe to ignore if those map(s) are not used\n"
+msgstr ""
+
+#: ../Misc.pm:3754
+#, perl-format
+msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
+msgstr ""
+
+#: ../Misc.pm:4301
+msgid "A shop has already been opened.\n"
+msgstr ""
+
+#: ../Misc.pm:4308
+msgid "You don't have the Vending skill.\n"
+msgstr ""
+
+#: ../Misc.pm:4313
+msgid "You need this with a cart in order to create a shop!\n"
+msgstr ""
+
+#: ../Misc.pm:4318
+msgid "Your shop does not have a title.\n"
+msgstr ""
+
+#: ../Misc.pm:4354
+msgid "There are no items to sell.\n"
+msgstr ""
+
+#: ../Misc.pm:4369
+msgid "Trying to set up shop...\n"
+msgstr ""
+
+#: ../Misc.pm:4375
+msgid "A shop has not been opened.\n"
+msgstr ""
+
+#: ../Misc.pm:4384
+msgid "Shop closed.\n"
+msgstr ""
+
+#: ../Misc.pm:4405 ../functions.pl:273
+#, perl-format
+msgid "Loading %s...\n"
+msgstr ""
+
+#: ../Misc.pm:4413
+msgid "All files were loaded\n"
+msgstr ""
+
+#: ../Misc.pm:4417
+#, perl-format
+msgid ""
+"The file %s must be valid UTF-8 encoded, which it is \n"
+"currently not. To solve this prolem, please use Notepad\n"
+"to save that file as valid UTF-8."
+msgstr ""
+
 #: ../functions.pl:115
 #, perl-format
 msgid ""
@@ -5688,11 +6303,6 @@ msgid ""
 "\n"
 "The error message is:\n"
 "%s"
-msgstr ""
-
-#: ../functions.pl:273
-#, perl-format
-msgid "Loading %s...\n"
 msgstr ""
 
 #: ../functions.pl:279

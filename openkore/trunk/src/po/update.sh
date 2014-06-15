@@ -25,6 +25,7 @@ xgettext --from-code=utf-8 -L Perl --force-po -o openkore.pot --keyword=T --keyw
 	../Poseidon/*.pm \
 	../Task/*.pm \
 	../*.pm \
+	../Misc.pm \
 	../functions.pl
 sed 's/charset=CHARSET/charset=UTF-8/; s/^# SOME DESCRIPTIVE TITLE\.$/# LANGUAGE translation for OpenKore/; s/# This file is distributed under the same license as the PACKAGE package\./# This file is distributed under the same license as OpenKore./' openkore.pot > openkore.pot.2
 mv openkore.pot.2 openkore.pot

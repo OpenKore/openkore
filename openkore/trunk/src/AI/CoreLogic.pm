@@ -901,6 +901,7 @@ sub processAutoBreakTime {
 sub processDead {
 	if (AI::action eq "dead" && !$char->{dead}) {
 		AI::dequeue;
+		$char->setStatus('Dead', 0);
 
 		if ($char->{resurrected}) {
 			# We've been resurrected
@@ -927,6 +928,13 @@ sub processDead {
 	} elsif (AI::action ne "dead" && AI::action ne "deal" && $char->{'dead'}) {
 		AI::clear();
 		AI::queue("dead");
+		$char->setStatus('Dead', 1);
+		
+		my $dt = getFormattedDate(int(time));
+		push @deadTime, $dt;
+		if ($config{logDead}) {
+			deadLog($dt);
+		}
 	}
 
 	if (AI::action eq "dead" && $config{dcOnDeath} != -1 && time - $char->{dead_time} >= $timeout{ai_dead_respawn}{timeout}) {
@@ -1500,8 +1508,10 @@ sub processAutoSell {
 
 				return;
 			}
-			$args->{'done'} = 1;
-
+			$args->{'done'} = 1;			
+			
+			Plugins::callHook("AI_sell_auto");
+			
 			# Form list of items to sell
 			my @sellItems;
 			foreach my $item (@{$char->inventory->getItems()}) {

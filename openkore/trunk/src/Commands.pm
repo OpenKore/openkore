@@ -88,6 +88,7 @@ sub initHandlers {
 	conf               => \&cmdConf,
 	connect            => \&cmdConnect,
 	damage             => \&cmdDamage,
+	dead			   => \&cmdDeadTime,
 	deal               => \&cmdDeal,
 	debug              => \&cmdDebug,
 	dl                 => \&cmdDealList,
@@ -5858,6 +5859,26 @@ sub cmdStorage_list {
 	$msg .= "-------------------------------\n";
 	$msg .= TF("Capacity: %d/%d\n", $storage{items}, $storage{items_max});
 	$msg .= "-------------------------------\n";
+	message($msg, "list");
+}
+
+sub cmdDeadTime {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	my $msg;
+	if (@deadTime) {
+		$msg = "---------------Dead Time Record----------------\n";
+		my $i = 1;
+		foreach my $dead (@deadTime) {
+			$msg .= "[".$i."] ". $dead."\n";
+		}
+		
+		$msg .= "[list]-----------------------------------------------\n";
+	} else {
+		$msg = "You have not died yet.\n";
+	}
 	message($msg, "list");
 }
 
