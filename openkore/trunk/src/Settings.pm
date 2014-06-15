@@ -110,6 +110,7 @@ our $shop_log_file;
 our $sys_file;
 our $monster_log_file;
 our $item_log_file;
+our $dead_log_file;
 
 our $interface;
 our $lockdown;
@@ -207,6 +208,7 @@ sub parseArguments {
 	$shop_log_file = File::Spec->catfile($logs_folder, "shop_log.txt");
 	$monster_log_file = File::Spec->catfile($logs_folder, "monster_log.txt");
 	$item_log_file = File::Spec->catfile($logs_folder, "item_log.txt");
+	$dead_log_file = File::Spec->catfile($logs_folder, "dead_log.txt");
 	if (!defined $interface) {
 		if ($ENV{OPENKORE_DEFAULT_INTERFACE} && $ENV{OPENKORE_DEFAULT_INTERFACE} ne "") {
 			$interface = $ENV{OPENKORE_DEFAULT_INTERFACE};

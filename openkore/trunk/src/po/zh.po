@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-21 23:16+0100\n"
+"POT-Creation-Date: 2014-06-13 18:17+0100\n"
 "PO-Revision-Date: 2014-06-12 01:49-0000\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
-"Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
 "X-Generator: Poedit 1.6.5\n"
 
 #: ../../openkore.pl:129
@@ -503,12 +503,12 @@ msgstr "因閒置而瞬移\n"
 msgid "Teleporting to avoid portal\n"
 msgstr "正在瞬移以避免傳點\n"
 
-#: ../AI/CoreLogic.pm:3028
+#: ../AI/CoreLogic.pm:3028 ../Misc.pm:1322
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr "現在的地圖(%s)不在允許的地圖清單裡.\n"
 
-#: ../AI/CoreLogic.pm:3029
+#: ../AI/CoreLogic.pm:3029 ../Misc.pm:1323
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr "** 現在的地圖(%s)不在允許的地圖清單裡.\n"
@@ -616,14 +616,6 @@ msgstr "下次餵食值： %d 飢餓值\n"
 #: ../Interface/Wx/List/ItemList/Cart.pm:14 ../Interface/Wx/StatView/You.pm:23
 msgid "Weight"
 msgstr "重量"
-
-#: ../Interface/Wx/List/ItemList/Cart.pm:76
-msgid " items"
-msgstr " 物品"
-
-#: ../Interface/Wx/List/ItemList/Cart.pm:77
-msgid " total)"
-msgstr "total)"
 
 #: ../Interface/Wx/List/ItemList/Cart.pm:88
 #: ../Interface/Wx/List/ItemList/Storage.pm:91
@@ -1015,14 +1007,6 @@ msgstr "請按 E 或 Q 以結束本程式.\n"
 #, fuzzy
 msgid "Enter 'c' to continue...\n"
 msgstr "請按 C 繼續...\n"
-
-#: ../Interface/Vx.pm:205
-msgid "~OpenKore"
-msgstr "~OpenKore"
-
-#: ../Interface/Vx.pm:208
-msgid "~View"
-msgstr "~View"
 
 #: ../Interface/Wx.pm:250
 msgid "Query"
@@ -1701,6 +1685,7 @@ msgid "Map"
 msgstr "地圖"
 
 #: ../Interface/Wx.pm:859
+#, perl-format
 msgid "Loading files... %.0f%%"
 msgstr "正在載入檔案 %.0f%%"
 
@@ -1754,14 +1739,17 @@ msgid "NPC Talk"
 msgstr "NPC對話"
 
 #: ../Interface/Wx.pm:1324
+#, perl-format
 msgid "Taking item %s\n"
 msgstr "與 %s 結束對話.\n"
 
 #: ../Interface/Wx.pm:1395
+#, perl-format
 msgid "Mouse over: %s, %s"
 msgstr "您的座標: %s, %s"
 
 #: ../Interface/Wx.pm:1399
+#, perl-format
 msgid "Portal at %s %s  -  Destination: %s, at %s %s"
 msgstr "門戶網站%s %s -目的地： %s ，在%s %s"
 
@@ -2192,7 +2180,7 @@ msgstr "對方正在進行另一個交易中.\n"
 #: ../Network/Receive/kRO/Sakexe_0.pm:1490
 #: ../Network/Receive/kRO/Sakexe_0.pm:2296
 #: ../Network/Receive/ServerType0.pm:1893
-#: ../Network/Receive/ServerType0.pm:2644
+#: ../Network/Receive/ServerType0.pm:2644 ../Misc.pm:1649
 #, fuzzy
 msgid "Unknown #"
 msgstr "未知域,"
@@ -2310,7 +2298,8 @@ msgid "Critical Error: Dual login prohibited - Someone trying to login!\n"
 msgstr "嚴重錯誤: 雙重登入障礙 - 有別人正試著登入!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1698
-#: ../Network/Receive/ServerType0.pm:2102
+#: ../Network/Receive/ServerType0.pm:2102 ../Misc.pm:1075 ../Misc.pm:1089
+#: ../Misc.pm:3508 ../Misc.pm:3529
 #, perl-format
 msgid "Disconnect for %s seconds...\n"
 msgstr "斷線 %s 秒...\n"
@@ -5178,8 +5167,8 @@ msgstr "對於類型為 '%s' 的伺服器無法載入訊息剖析器."
 #: ../Network/PacketParser.pm:136
 #, perl-format
 msgid ""
-"An error occured while loading the server message parser for server type "
-"'%s':\n"
+"An error occured while loading the server message parser for server type '%"
+"s':\n"
 "%s"
 msgstr ""
 "載入伺服器類型為 '%s' 的訊息剖析器時發生錯誤:\n"
@@ -5214,8 +5203,8 @@ msgstr "伺服器拒絕了您的連線.\n"
 #: ../Network/Receive.pm:446
 #, perl-format
 msgid ""
-"Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,"
-"%d)\n"
+"Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%"
+"d)\n"
 msgstr ""
 "與關地圖中刪除演員坐標：（ %d ， %d ） - >（ %d ， %d ），現場最大：（ %d ， "
 "%d ）\n"
@@ -5893,6 +5882,690 @@ msgstr "技能無法施展, 已嘗試 %d 次."
 msgid "Casting is supposed to be finished now, but nothing happened."
 msgstr "此刻詠唱應該已經結束, 但卻沒有發生任何事."
 
+#: ../Misc.pm:252
+#, perl-format
+msgid "Authorized user '%s' for admin\n"
+msgstr "授權使用者 '%s' 管理權限\n"
+
+#: ../Misc.pm:254
+#, perl-format
+msgid "Revoked admin privilages for user '%s'\n"
+msgstr "撤銷管理權限於使用者 '%s'\n"
+
+#: ../Misc.pm:302
+#, fuzzy, perl-format
+msgid "Config '%s' is already %s\n"
+msgstr "原設定 '%s' 為 %s\n"
+
+#: ../Misc.pm:307
+#, perl-format
+msgid "Config '%s' unset (was %s)\n"
+msgstr "Config '%s' 取消設定 (原為 %s)\n"
+
+#: ../Misc.pm:309 ../Misc.pm:348
+#, perl-format
+msgid "Config '%s' set to %s (was %s)\n"
+msgstr "Config '%s' 設定為 %s (原為 %s)\n"
+
+#: ../Misc.pm:346
+#, perl-format
+msgid "Config '%s' set to %s (was *not-displayed*)\n"
+msgstr "Config '%s' 設定為 %s (原為 *not-displayed*)\n"
+
+#: ../Misc.pm:365
+#, perl-format
+msgid "Timeout '%s' set to %s (was %s)\n"
+msgstr "Timeout '%s' 設定為 %s (原為 %s)\n"
+
+#: ../Misc.pm:914
+#, perl-format
+msgid ""
+"No suitable browser detected. Please launch your favorite browser and go "
+"to:\n"
+"%s"
+msgstr ""
+"沒有偵測到合適的瀏覽器. 請啟動您喜歡的瀏覽器並前往:\n"
+"%s"
+
+#: ../Misc.pm:959
+#, fuzzy, perl-format
+msgid "actorAdded: %s %s (%s), size %s\n"
+msgstr "倉庫物品加入: %s (%d) x %s\n"
+
+#: ../Misc.pm:998
+#, fuzzy, perl-format
+msgid "actorRemoved: %s %s (%s), size %s\n"
+msgstr "手推車物品已移除: %s (%d) x %s\n"
+
+#: ../Misc.pm:1072
+msgid "Disconnecting to avoid GM!\n"
+msgstr "斷線以迴避GM!\n"
+
+#: ../Misc.pm:1073
+#, perl-format
+msgid "*** The GM %s talked to you, auto disconnected ***\n"
+msgstr "*** GM %s 與您說話, 自動斷線 ***\n"
+
+#: ../Misc.pm:1087
+#, perl-format
+msgid "Disconnecting to avoid %s!\n"
+msgstr "斷線以迴避 %s!\n"
+
+#: ../Misc.pm:1088
+#, perl-format
+msgid "*** %s talked to you, auto disconnected ***\n"
+msgstr "*** %s 與您說話, 自動斷線 ***\n"
+
+#: ../Misc.pm:1143
+msgid ""
+"-------  Character @< ---------\n"
+"Name: @<<<<<<<<<<<<<<<<<<<<<<<<\n"
+"Job:  @<<<<<<<      Job Exp: @<<<<<<<\n"
+"Lv:   @<<<<<<<      Str: @<<<<<<<<\n"
+"J.Lv: @<<<<<<<      Agi: @<<<<<<<<\n"
+"Exp:  @<<<<<<<      Vit: @<<<<<<<<\n"
+"HP:   @||||/@||||   Int: @<<<<<<<<\n"
+"SP:   @||||/@||||   Dex: @<<<<<<<<\n"
+"zeny: @<<<<<<<<<<  Luk: @<<<<<<<<\n"
+"-------------------------------"
+msgstr ""
+"---------  角色 @< ------------\n"
+"名稱: @<<<<<<<<<<<<<<<<<<<<<<<<\n"
+"Job:  @<<<<<<<      Job Exp: @<<<<<<<\n"
+"Lv:   @<<<<<<<      Str: @<<<<<<<<\n"
+"J.Lv: @<<<<<<<      Agi: @<<<<<<<<\n"
+"Exp:  @<<<<<<<      Vit: @<<<<<<<<\n"
+"HP:   @||||/@||||   Int: @<<<<<<<<\n"
+"SP:   @||||/@||||   Dex: @<<<<<<<<\n"
+"Zenny: @<<<<<<<<<<  Luk: @<<<<<<<<\n"
+"-------------------------------"
+
+#: ../Misc.pm:1162
+#, fuzzy, perl-format
+msgid ""
+"\n"
+"     -> It will be deleted lefting %s!"
+msgstr "您現在JOB等級為 %s\n"
+
+#: ../Misc.pm:1165
+#, fuzzy, perl-format
+msgid "Slot %d: %s (%s, level %d/%d)%s"
+msgstr "角色格 %d: %s (%s, level %d/%d)"
+
+#: ../Misc.pm:1176
+#, perl-format
+msgid ""
+"------------- Character List -------------\n"
+"%s\n"
+"------------------------------------------\n"
+msgstr ""
+"---------------- 角色清單 ----------------\n"
+"%s\n"
+"------------------------------------------\n"
+
+#: ../Misc.pm:1195
+msgid "Create a new character"
+msgstr "新建一個角色"
+
+#: ../Misc.pm:1198
+#, fuzzy
+msgid "Delete or cancel the deletion a character"
+msgstr "刪除一個角色"
+
+#: ../Misc.pm:1200
+msgid "Delete a character"
+msgstr "刪除一個角色"
+
+#: ../Misc.pm:1203
+#, fuzzy
+msgid "There are no characters on this account.\n"
+msgstr "無角色在此帳號.\n"
+
+#: ../Misc.pm:1205
+msgid ""
+"Please use the : \"conf char switch\" command, if you are switching your "
+"account.\n"
+msgstr ""
+
+#: ../Misc.pm:1212
+msgid "Please choose a character or an action."
+msgstr "請選擇一個角色或一個行動."
+
+#: ../Misc.pm:1213
+msgid "Character selection"
+msgstr "角色選擇"
+
+#: ../Misc.pm:1239
+#, fuzzy
+msgid ""
+"Please enter the desired properties for your characters, in this form:\n"
+"(slot) \"(name)\" [ (hairstyle) [(haircolor)] ]"
+msgstr ""
+"請鍵入所需的素質給您的角色, 用以下的格式:\n"
+"(角色格) \"(名稱)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (髮型) [(髮"
+"色)] ] ]"
+
+#: ../Misc.pm:1242
+msgid ""
+"Please enter the desired properties for your characters, in this form:\n"
+"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) "
+"[(haircolor)] ] ]"
+msgstr ""
+"請鍵入所需的素質給您的角色, 用以下的格式:\n"
+"(角色格) \"(名稱)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (髮型) [(髮"
+"色)] ] ]"
+
+#: ../Misc.pm:1252
+msgid "You didn't specify enough parameters."
+msgstr "您並沒有指定足夠的參數."
+
+#: ../Misc.pm:1256
+#, perl-format
+msgid "Creating character \"%s\" in slot \"%s\"...\n"
+msgstr "新建角色 \"%s\" 在角色格 \"%s\"...\n"
+
+#: ../Misc.pm:1264
+msgid "Select the character you want to delete."
+msgstr "請選擇您想要刪除的角色."
+
+#: ../Misc.pm:1266
+msgid "Delete character"
+msgstr "刪除角色"
+
+#: ../Misc.pm:1287
+#, perl-format
+msgid ""
+"Are you ABSOLUTELY SURE you want to delete:\n"
+"%s"
+msgstr ""
+"您絕對確定要刪除嗎:\n"
+"%s"
+
+#: ../Misc.pm:1288
+msgid "No, don't delete"
+msgstr "不, 不要刪除"
+
+#: ../Misc.pm:1288
+msgid "Yes, delete"
+msgstr "是的, 刪除"
+
+#: ../Misc.pm:1289
+msgid "Confirm delete"
+msgstr "確認刪除"
+
+#: ../Misc.pm:1295
+#, perl-format
+msgid "Deleting character %s...\n"
+msgstr "角色 %s 刪除中...\n"
+
+#: ../Misc.pm:1324
+msgid "** Exiting...\n"
+msgstr "** 結束中...\n"
+
+#: ../Misc.pm:1460
+msgid "We're not currently connected to the character login server."
+msgstr "我們目前尚未與角色登入伺服器連接."
+
+#: ../Misc.pm:1463
+#, perl-format
+msgid "Slot \"%s\" is not a valid number."
+msgstr "角色格 \"%s\" 不是一個有效的數字."
+
+#: ../Misc.pm:1466 ../Misc.pm:1469
+#, fuzzy, perl-format
+msgid "The slot must be comprised between 0 and %s."
+msgstr "角色格必須在0和4之間構成."
+
+#: ../Misc.pm:1472
+#, perl-format
+msgid "Slot %s already contains a character (%s)."
+msgstr "角色格 %s 已經包含了一個角色 (%s)."
+
+#: ../Misc.pm:1475
+msgid "Name must not be longer than 23 characters."
+msgstr "名稱不可長於23個字元."
+
+#: ../Misc.pm:1493
+msgid "Stats must be comprised between 1 and 9."
+msgstr "素質點必須在1和9中間構成."
+
+#: ../Misc.pm:1500
+msgid "The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10."
+msgstr "Str + Int, Agi + Luk 與 Vit + Dex 的和必須都等於10."
+
+#: ../Misc.pm:1599
+msgid "Message Dumped into DUMP.txt!\n"
+msgstr "訊息已轉儲至 DUMP.txt!\n"
+
+#: ../Misc.pm:1740 ../Misc.pm:4435
+#, fuzzy, perl-format
+msgid "Inventory Item Removed: %s (%d) x %d\n"
+msgstr "倉庫物品已移除: %s (%d) x %s\n"
+
+#: ../Misc.pm:1745
+#, fuzzy, perl-format
+msgid "Run out of Arrow/Bullet: %s (%d)\n"
+msgstr "箭矢/子彈已裝備: %s (%d)\n"
+
+#: ../Misc.pm:2185
+msgid "Error: No description available.\n"
+msgstr "錯誤: 無有效的描述.\n"
+
+#: ../Misc.pm:2186
+#, fuzzy, perl-format
+msgid ""
+"===============Item Description===============\n"
+"Item: %s (ID: %s)\n"
+"\n"
+msgstr ""
+"===================物品描述===================\n"
+"物品: %s\n"
+"\n"
+
+#: ../Misc.pm:2227
+msgid "Exiting...\n"
+msgstr "結束中...\n"
+
+#: ../Misc.pm:2235
+msgid ""
+"Openkore will stay disconnected. Type \"connect\" in order to connect "
+"again.\n"
+msgstr ""
+
+#: ../Misc.pm:2246
+#, perl-format
+msgid "Relogging in %d seconds...\n"
+msgstr "在 %d 秒後重新登入...\n"
+
+#: ../Misc.pm:2470 ../Misc.pm:2478 ../Misc.pm:2484 ../Misc.pm:2490
+#, fuzzy, perl-format
+msgid "Found perfectly hidden %s\n"
+msgstr "消除絕對隱藏 %s\n"
+
+#: ../Misc.pm:2559
+#, perl-format
+msgid "%s does not exist.\n"
+msgstr "%s 並不存在.\n"
+
+#: ../Misc.pm:2599
+msgid "Teleporting because of attack miss\n"
+msgstr "因攻擊Miss而瞬移\n"
+
+#: ../Misc.pm:2603
+#, perl-format
+msgid "Teleporting after attacking a monster %d times\n"
+msgstr "因攻擊魔物超過 %d 次而瞬移\n"
+
+#: ../Misc.pm:2609
+#, perl-format
+msgid "%s (%s) has been provoked, searching another monster\n"
+msgstr "%s (%s) 已被挑釁, 尋找其它魔物中\n"
+
+#: ../Misc.pm:2758
+#, fuzzy, perl-format
+msgid "%s hit %s. Teleporting...\n"
+msgstr "被 %s 傷害超過 %d. 瞬移中...\n"
+
+#: ../Misc.pm:2764
+#, fuzzy, perl-format
+msgid "%s can kill %s with the next %d dmg. Teleporting...\n"
+msgstr "被 %s 傷害超過 %d. 瞬移中...\n"
+
+#: ../Misc.pm:2771
+#, fuzzy, perl-format
+msgid "%s hit %s for more than %d dmg. Teleporting...\n"
+msgstr "被 %s 傷害超過 %d. 瞬移中...\n"
+
+#: ../Misc.pm:2778
+#, fuzzy, perl-format
+msgid "%s hit %s for more than %d dmg in lockMap. Teleporting...\n"
+msgstr "在鎖定地圖中被 %s 傷害超過 %d. 瞬移中...\n"
+
+#: ../Misc.pm:2784
+#, fuzzy, perl-format
+msgid "%s hit %s while you are sitting. Teleporting...\n"
+msgstr "%s 在您坐著時攻擊您. 瞬移中...\n"
+
+#: ../Misc.pm:2792
+#, fuzzy, perl-format
+msgid "%s hit %s for a total of more than %d dmg. Teleporting...\n"
+msgstr "被 %s 傷害的總值超過 %d. 瞬移中...\n"
+
+#: ../Misc.pm:2799
+#, fuzzy, perl-format
+msgid "%s hit %s for a total of more than %d dmg in lockMap. Teleporting...\n"
+msgstr "在鎖定地圖中被 %s 傷害的總值超過 %d. 瞬移中...\n"
+
+#: ../Misc.pm:2804
+#, fuzzy, perl-format
+msgid "%s hit %s when %s HP is under %d. Teleporting...\n"
+msgstr "%s 在您HP過低時攻擊您. 瞬移中...\n"
+
+#: ../Misc.pm:2805
+#, fuzzy
+msgid "your"
+msgstr "you"
+
+#: ../Misc.pm:2805
+#, fuzzy
+msgid "its"
+msgstr "Vit"
+
+#: ../Misc.pm:2836
+#, fuzzy, perl-format
+msgid "%s %s target to aggressive %s\n"
+msgstr "改為目標為主動: %s (%s)\n"
+
+#: ../Misc.pm:2837
+msgid "change"
+msgstr ""
+
+#: ../Misc.pm:2837
+msgid "changes"
+msgstr ""
+
+#: ../Misc.pm:2850
+#, fuzzy, perl-format
+msgid "%s has been provoked, searching another monster\n"
+msgstr "%s (%s) 已被挑釁, 尋找其它魔物中\n"
+
+#: ../Misc.pm:3002
+msgid "Using Teleport Skill Level 2 though we not have it!\n"
+msgstr "使用二級瞬移技能中, 雖然我們無此技能!\n"
+
+#: ../Misc.pm:3063
+msgid "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n"
+msgstr "無蒼翅或蝴翅, 降回使用技能瞬移\n"
+
+#: ../Misc.pm:3068
+msgid "You don't have the Teleport skill or a Fly Wing\n"
+msgstr "您並沒有瞬移技能或蒼蠅翅膀\n"
+
+#: ../Misc.pm:3070
+msgid "You don't have the Teleport skill or a Butterfly Wing\n"
+msgstr "您並沒有瞬移技能或蝴蝶翅膀\n"
+
+#: ../Misc.pm:3132
+#, perl-format
+msgid "---------- Storage %s -----------\n"
+msgstr "----------- 倉庫 %s -------------\n"
+
+#: ../Misc.pm:3139
+msgid "Not Identified"
+msgstr "尚未鑑定"
+
+#: ../Misc.pm:3141
+msgid "Broken"
+msgstr "壞掉的"
+
+#: ../Misc.pm:3145
+#, perl-format
+msgid ""
+"\n"
+"Capacity: %d/%d\n"
+msgstr ""
+"\n"
+"容量: %d/%d\n"
+
+#: ../Misc.pm:3149
+msgid "Storage logged\n"
+msgstr "倉庫資訊已記錄\n"
+
+#: ../Misc.pm:3152
+#, fuzzy, perl-format
+msgid "Unable to write to %s\n"
+msgstr "無法重新載入 %s\n"
+
+#: ../Misc.pm:3299
+#, fuzzy, perl-format
+msgid "%s %s %s (Dmg: %s) (Delay: %sms)\n"
+msgstr "%s %s %s - 傷害: %s (延遲 %s)\n"
+
+#: ../Misc.pm:3301
+#, fuzzy
+msgid "attack"
+msgstr "Matk"
+
+#: ../Misc.pm:3301
+msgid "attacks"
+msgstr ""
+
+#: ../Misc.pm:3311
+#, fuzzy, perl-format
+msgid "%s %s %s on %s (Delay: %sms)\n"
+msgstr "%s %s %s - 傷害: %s (延遲 %s)\n"
+
+#: ../Misc.pm:3313
+#, fuzzy
+msgid "are casting"
+msgstr "您正坐著.\n"
+
+#: ../Misc.pm:3313
+#, fuzzy
+msgid "is casting"
+msgstr "%s 正坐著.\n"
+
+#: ../Misc.pm:3315
+#, fuzzy, perl-format
+msgid "location (%d, %d)"
+msgstr "位置 %s (%s) : %d, %d\n"
+
+#: ../Misc.pm:3326 ../Misc.pm:3341
+#, fuzzy
+msgid "use"
+msgstr "已暫停"
+
+#: ../Misc.pm:3326 ../Misc.pm:3341
+#, fuzzy
+msgid "uses"
+msgstr "已暫停"
+
+#: ../Misc.pm:3328 ../Misc.pm:3343
+#, fuzzy, perl-format
+msgid "(Lv: %s)"
+msgstr "Lv %s"
+
+#: ../Misc.pm:3329
+#, fuzzy
+msgid "on"
+msgstr "無"
+
+#: ../Misc.pm:3331
+#, fuzzy, perl-format
+msgid "(Dmg: %s)"
+msgstr "傷害: %s"
+
+#: ../Misc.pm:3331
+#, fuzzy
+msgid "Miss"
+msgstr "Miss!"
+
+#: ../Misc.pm:3332
+#, fuzzy, perl-format
+msgid "(Delay: %sms)"
+msgstr "傷害: %s"
+
+#: ../Misc.pm:3344
+#, fuzzy
+msgid "on location"
+msgstr "解決方法\n"
+
+#: ../Misc.pm:3369
+#, fuzzy, perl-format
+msgid "%s %s: %s%s\n"
+msgstr "%s 有 %s "
+
+#: ../Misc.pm:3371
+#, fuzzy
+msgid "are now"
+msgstr "您正坐著.\n"
+
+#: ../Misc.pm:3371
+msgid "is now"
+msgstr ""
+
+#: ../Misc.pm:3372
+#, fuzzy
+msgid "are again"
+msgstr "您正坐著.\n"
+
+#: ../Misc.pm:3372
+#, fuzzy
+msgid "is again"
+msgstr "%s 正坐著.\n"
+
+#: ../Misc.pm:3373
+#, fuzzy
+msgid "are no longer"
+msgstr "正要攻擊: %s\n"
+
+#: ../Misc.pm:3373
+#, fuzzy
+msgid "is no longer"
+msgstr "%s 已解除禁言\n"
+
+#: ../Misc.pm:3375
+#, fuzzy, perl-format
+msgid "(Duration: %ss)"
+msgstr "傷害: %s"
+
+#: ../Misc.pm:3465
+#, perl-format
+msgid "GM %s is nearby, teleport & disconnect for %d seconds"
+msgstr "GM %s 在附近, 瞬移並斷線 %d 秒"
+
+#: ../Misc.pm:3470
+#, perl-format
+msgid "GM %s is nearby, disconnect for %s seconds"
+msgstr "GM %s 在附近, 斷線 %s 秒"
+
+#: ../Misc.pm:3476
+#, perl-format
+msgid "GM %s is nearby, teleporting"
+msgstr "GM %s 在附近, 瞬移中"
+
+#: ../Misc.pm:3481
+#, perl-format
+msgid "GM %s is nearby, respawning"
+msgstr "GM %s 在附近, 瞬移回城中"
+
+#: ../Misc.pm:3506
+#, perl-format
+msgid "%s (%s) is nearby, disconnecting...\n"
+msgstr "%s (%s) 在附近, 斷線中...\n"
+
+#: ../Misc.pm:3507
+#, perl-format
+msgid "*** Found %s (%s) nearby and disconnected ***\n"
+msgstr "*** 發現 %s (%s) 在附近且已斷線 ***\n"
+
+#: ../Misc.pm:3513
+#, perl-format
+msgid "Teleporting to avoid player %s (%s)\n"
+msgstr "瞬移以避開玩家 %s (%s)\n"
+
+#: ../Misc.pm:3514
+#, perl-format
+msgid "*** Found %s (%s) nearby and teleported ***\n"
+msgstr "*** 發現 %s (%s) 在附近且已瞬移 ***\n"
+
+#: ../Misc.pm:3527
+#, perl-format
+msgid "%s is nearby, disconnecting...\n"
+msgstr "%s 在附近, 斷線中...\n"
+
+#: ../Misc.pm:3528
+#, perl-format
+msgid "*** Found %s nearby and disconnected ***\n"
+msgstr "*** 發現 %s 在附近且已斷線 ***\n"
+
+#: ../Misc.pm:3564
+#, perl-format
+msgid "Processing map %s...\n"
+msgstr "處理地圖 %s 中...\n"
+
+#: ../Misc.pm:3599
+#, perl-format
+msgid "Wrote portals Line of Sight table to '%s'\n"
+msgstr "Wrote portals Line of Sight table to '%s'\n"
+
+#: ../Misc.pm:3603
+msgid "----------------------------Error Summary----------------------------\n"
+msgstr ""
+"----------------------------Error Summary----------------------------\n"
+
+#: ../Misc.pm:3604
+#, perl-format
+msgid "Missing: %s.fld\n"
+msgstr "遺失: %s.fld\n"
+
+#: ../Misc.pm:3605
+msgid ""
+"Note: LOS information for the above listed map(s) will be inaccurate;\n"
+"      however it is safe to ignore if those map(s) are not used\n"
+msgstr ""
+"注意: 以上列出的地圖的 LOS 資訊不正確;\n"
+"      然而假如這些地圖沒有使用到的話是可安全被忽略的\n"
+
+#: ../Misc.pm:3754
+#, perl-format
+msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
+msgstr "無效的 NPC 資訊對於 autoBuy, autoSell 或 autoStorage! (%s)\n"
+
+#: ../Misc.pm:4301
+msgid "A shop has already been opened.\n"
+msgstr "一個露店已被開啟.\n"
+
+#: ../Misc.pm:4308
+msgid "You don't have the Vending skill.\n"
+msgstr "您並沒有開設露店的技能.\n"
+
+#: ../Misc.pm:4313
+msgid "You need this with a cart in order to create a shop!\n"
+msgstr ""
+
+#: ../Misc.pm:4318
+msgid "Your shop does not have a title.\n"
+msgstr "您的露店沒有店名.\n"
+
+#: ../Misc.pm:4354
+msgid "There are no items to sell.\n"
+msgstr "無物品賣出.\n"
+
+#: ../Misc.pm:4369
+#, fuzzy
+msgid "Trying to set up shop...\n"
+msgstr "試著讓他回來\n"
+
+#: ../Misc.pm:4375
+msgid "A shop has not been opened.\n"
+msgstr "一個露店尚未開啟.\n"
+
+#: ../Misc.pm:4384
+msgid "Shop closed.\n"
+msgstr "露店已關閉.\n"
+
+#: ../Misc.pm:4405 ../functions.pl:273
+#, perl-format
+msgid "Loading %s...\n"
+msgstr "正在載入 %s...\n"
+
+#: ../Misc.pm:4413
+#, fuzzy
+msgid "All files were loaded\n"
+msgstr "沒有物品被丟棄.\n"
+
+#: ../Misc.pm:4417
+#, perl-format
+msgid ""
+"The file %s must be valid UTF-8 encoded, which it is \n"
+"currently not. To solve this prolem, please use Notepad\n"
+"to save that file as valid UTF-8."
+msgstr ""
+"%s 這個檔案必須是有效的 UTF-8 編碼, 但它目前不是.\n"
+"為了解決這個問題, 請使用記事本開啟\n"
+"並將檔案以有效的 UTF-8 儲存."
+
 #: ../functions.pl:115
 #, perl-format
 msgid ""
@@ -5908,11 +6581,6 @@ msgstr ""
 "\n"
 "錯誤的訊息為:\n"
 "%s"
-
-#: ../functions.pl:273
-#, perl-format
-msgid "Loading %s...\n"
-msgstr "正在載入 %s...\n"
 
 #: ../functions.pl:279
 #, perl-format
@@ -6040,6 +6708,18 @@ msgstr "%s尚未連線 - %s"
 #, perl-format
 msgid "%sConnecting - %s"
 msgstr "%s連線中 - %s"
+
+#~ msgid " items"
+#~ msgstr " 物品"
+
+#~ msgid " total)"
+#~ msgstr "total)"
+
+#~ msgid "~OpenKore"
+#~ msgstr "~OpenKore"
+
+#~ msgid "~View"
+#~ msgstr "~View"
 
 #, fuzzy
 #~ msgid "Teleporting to auto-buy\n"
@@ -6546,9 +7226,6 @@ msgstr "%s連線中 - %s"
 #~ msgid "Config '%s' is not displayed\n"
 #~ msgstr "設定 '%s' 不可顯示\n"
 
-#~ msgid "Config '%s' is %s\n"
-#~ msgstr "原設定 '%s' 為 %s\n"
-
 #~ msgid "Config '%s' is not set\n"
 #~ msgstr "Config '%s' 未設定\n"
 
@@ -6699,9 +7376,6 @@ msgstr "%s連線中 - %s"
 #~ msgstr ""
 #~ "'drop' 功能語法錯誤 (丟掉物品欄的物品)\n"
 #~ "使用方法: drop <物品編號> [<數量>]\n"
-
-#~ msgid "No items were dropped.\n"
-#~ msgstr "沒有物品被丟棄.\n"
 
 #~ msgid ""
 #~ "Syntax Error in function 'e' (Emotion)\n"
@@ -6991,9 +7665,6 @@ msgstr "%s連線中 - %s"
 #~ "'skills desc' 功能錯誤 (技能描述)\n"
 #~ "技能 %s 並不存在.\n"
 
-#~ msgid "Error: No description available.\n"
-#~ msgstr "錯誤: 無有效的描述.\n"
-
 #~ msgid ""
 #~ "===============Skill Description===============\n"
 #~ "Skill: %s\n"
@@ -7197,9 +7868,6 @@ msgstr "%s連線中 - %s"
 
 #~ msgid "Inventory is empty\n"
 #~ msgstr "物品欄是空的\n"
-
-#~ msgid "Not Identified"
-#~ msgstr "尚未鑑定"
 
 #~ msgid "-----------Inventory-----------\n"
 #~ msgstr "------------物品欄-------------\n"
@@ -7470,406 +8138,8 @@ msgstr "%s連線中 - %s"
 #~ msgid "Press ENTER to continue...\n"
 #~ msgstr "請按 ENTER 以繼續...\n"
 
-#~ msgid "Authorized user '%s' for admin\n"
-#~ msgstr "授權使用者 '%s' 管理權限\n"
-
-#~ msgid "Revoked admin privilages for user '%s'\n"
-#~ msgstr "撤銷管理權限於使用者 '%s'\n"
-
-#~ msgid "Config '%s' unset (was %s)\n"
-#~ msgstr "Config '%s' 取消設定 (原為 %s)\n"
-
-#~ msgid "Config '%s' set to %s (was %s)\n"
-#~ msgstr "Config '%s' 設定為 %s (原為 %s)\n"
-
-#~ msgid "Config '%s' set to %s (was *not-displayed*)\n"
-#~ msgstr "Config '%s' 設定為 %s (原為 *not-displayed*)\n"
-
-#~ msgid "Timeout '%s' set to %s (was %s)\n"
-#~ msgstr "Timeout '%s' 設定為 %s (原為 %s)\n"
-
-#~ msgid ""
-#~ "No suitable browser detected. Please launch your favorite browser and go "
-#~ "to:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "沒有偵測到合適的瀏覽器. 請啟動您喜歡的瀏覽器並前往:\n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid "actorAdded: %s %s (%s), size %s\n"
-#~ msgstr "倉庫物品加入: %s (%d) x %s\n"
-
-#, fuzzy
-#~ msgid "actorRemoved: %s %s (%s), size %s\n"
-#~ msgstr "手推車物品已移除: %s (%d) x %s\n"
-
-#~ msgid "Disconnecting to avoid GM!\n"
-#~ msgstr "斷線以迴避GM!\n"
-
-#~ msgid "*** The GM %s talked to you, auto disconnected ***\n"
-#~ msgstr "*** GM %s 與您說話, 自動斷線 ***\n"
-
-#~ msgid "Disconnecting to avoid %s!\n"
-#~ msgstr "斷線以迴避 %s!\n"
-
-#~ msgid "*** %s talked to you, auto disconnected ***\n"
-#~ msgstr "*** %s 與您說話, 自動斷線 ***\n"
-
-#~ msgid ""
-#~ "-------  Character @< ---------\n"
-#~ "Name: @<<<<<<<<<<<<<<<<<<<<<<<<\n"
-#~ "Job:  @<<<<<<<      Job Exp: @<<<<<<<\n"
-#~ "Lv:   @<<<<<<<      Str: @<<<<<<<<\n"
-#~ "J.Lv: @<<<<<<<      Agi: @<<<<<<<<\n"
-#~ "Exp:  @<<<<<<<      Vit: @<<<<<<<<\n"
-#~ "HP:   @||||/@||||   Int: @<<<<<<<<\n"
-#~ "SP:   @||||/@||||   Dex: @<<<<<<<<\n"
-#~ "zeny: @<<<<<<<<<<  Luk: @<<<<<<<<\n"
-#~ "-------------------------------"
-#~ msgstr ""
-#~ "---------  角色 @< ------------\n"
-#~ "名稱: @<<<<<<<<<<<<<<<<<<<<<<<<\n"
-#~ "Job:  @<<<<<<<      Job Exp: @<<<<<<<\n"
-#~ "Lv:   @<<<<<<<      Str: @<<<<<<<<\n"
-#~ "J.Lv: @<<<<<<<      Agi: @<<<<<<<<\n"
-#~ "Exp:  @<<<<<<<      Vit: @<<<<<<<<\n"
-#~ "HP:   @||||/@||||   Int: @<<<<<<<<\n"
-#~ "SP:   @||||/@||||   Dex: @<<<<<<<<\n"
-#~ "Zenny: @<<<<<<<<<<  Luk: @<<<<<<<<\n"
-#~ "-------------------------------"
-
-#~ msgid "Slot %d: %s (%s, level %d/%d)"
-#~ msgstr "角色格 %d: %s (%s, level %d/%d)"
-
-#~ msgid ""
-#~ "------------- Character List -------------\n"
-#~ "%s\n"
-#~ "------------------------------------------\n"
-#~ msgstr ""
-#~ "---------------- 角色清單 ----------------\n"
-#~ "%s\n"
-#~ "------------------------------------------\n"
-
-#~ msgid "Create a new character"
-#~ msgstr "新建一個角色"
-
-#~ msgid "Delete a character"
-#~ msgstr "刪除一個角色"
-
-#~ msgid "Please choose a character or an action."
-#~ msgstr "請選擇一個角色或一個行動."
-
-#~ msgid "Character selection"
-#~ msgstr "角色選擇"
-
-#~ msgid ""
-#~ "Please enter the desired properties for your characters, in this form:\n"
-#~ "(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) "
-#~ "[(haircolor)] ] ]"
-#~ msgstr ""
-#~ "請鍵入所需的素質給您的角色, 用以下的格式:\n"
-#~ "(角色格) \"(名稱)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (髮型) [(髮"
-#~ "色)] ] ]"
-
-#~ msgid "You didn't specify enough parameters."
-#~ msgstr "您並沒有指定足夠的參數."
-
-#~ msgid "Creating character \"%s\" in slot \"%s\"...\n"
-#~ msgstr "新建角色 \"%s\" 在角色格 \"%s\"...\n"
-
-#~ msgid "Select the character you want to delete."
-#~ msgstr "請選擇您想要刪除的角色."
-
-#~ msgid "Delete character"
-#~ msgstr "刪除角色"
-
-#~ msgid ""
-#~ "Are you ABSOLUTELY SURE you want to delete:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "您絕對確定要刪除嗎:\n"
-#~ "%s"
-
-#~ msgid "No, don't delete"
-#~ msgstr "不, 不要刪除"
-
-#~ msgid "Yes, delete"
-#~ msgstr "是的, 刪除"
-
-#~ msgid "Confirm delete"
-#~ msgstr "確認刪除"
-
-#~ msgid "Deleting character %s...\n"
-#~ msgstr "角色 %s 刪除中...\n"
-
-#~ msgid "** Exiting...\n"
-#~ msgstr "** 結束中...\n"
-
-#~ msgid "We're not currently connected to the character login server."
-#~ msgstr "我們目前尚未與角色登入伺服器連接."
-
-#~ msgid "Slot \"%s\" is not a valid number."
-#~ msgstr "角色格 \"%s\" 不是一個有效的數字."
-
-#~ msgid "The slot must be comprised between 0 and 4."
-#~ msgstr "角色格必須在0和4之間構成."
-
-#~ msgid "Slot %s already contains a character (%s)."
-#~ msgstr "角色格 %s 已經包含了一個角色 (%s)."
-
-#~ msgid "Name must not be longer than 23 characters."
-#~ msgstr "名稱不可長於23個字元."
-
-#~ msgid "Stats must be comprised between 1 and 9."
-#~ msgstr "素質點必須在1和9中間構成."
-
-#~ msgid "The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10."
-#~ msgstr "Str + Int, Agi + Luk 與 Vit + Dex 的和必須都等於10."
-
-#~ msgid "Message Dumped into DUMP.txt!\n"
-#~ msgstr "訊息已轉儲至 DUMP.txt!\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "===============Item Description===============\n"
-#~ "Item: %s (ID: %s)\n"
-#~ "\n"
-#~ msgstr ""
-#~ "===================物品描述===================\n"
-#~ "物品: %s\n"
-#~ "\n"
-
-#~ msgid "Exiting...\n"
-#~ msgstr "結束中...\n"
-
-#~ msgid "Relogging in %d seconds...\n"
-#~ msgstr "在 %d 秒後重新登入...\n"
-
-#, fuzzy
-#~ msgid "Found perfectly hidden %s\n"
-#~ msgstr "消除絕對隱藏 %s\n"
-
-#~ msgid "%s does not exist.\n"
-#~ msgstr "%s 並不存在.\n"
-
-#~ msgid "Teleporting because of attack miss\n"
-#~ msgstr "因攻擊Miss而瞬移\n"
-
-#~ msgid "Teleporting after attacking a monster %d times\n"
-#~ msgstr "因攻擊魔物超過 %d 次而瞬移\n"
-
-#~ msgid "%s (%s) has been provoked, searching another monster\n"
-#~ msgstr "%s (%s) 已被挑釁, 尋找其它魔物中\n"
-
-#, fuzzy
-#~ msgid "%s hit %s. Teleporting...\n"
-#~ msgstr "被 %s 傷害超過 %d. 瞬移中...\n"
-
-#, fuzzy
-#~ msgid "%s can kill %s with the next %d dmg. Teleporting...\n"
-#~ msgstr "被 %s 傷害超過 %d. 瞬移中...\n"
-
-#, fuzzy
-#~ msgid "%s hit %s for more than %d dmg. Teleporting...\n"
-#~ msgstr "被 %s 傷害超過 %d. 瞬移中...\n"
-
-#, fuzzy
-#~ msgid "%s hit %s for more than %d dmg in lockMap. Teleporting...\n"
-#~ msgstr "在鎖定地圖中被 %s 傷害超過 %d. 瞬移中...\n"
-
-#, fuzzy
-#~ msgid "%s hit %s while you are sitting. Teleporting...\n"
-#~ msgstr "%s 在您坐著時攻擊您. 瞬移中...\n"
-
-#, fuzzy
-#~ msgid "%s hit %s for a total of more than %d dmg. Teleporting...\n"
-#~ msgstr "被 %s 傷害的總值超過 %d. 瞬移中...\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "%s hit %s for a total of more than %d dmg in lockMap. Teleporting...\n"
-#~ msgstr "在鎖定地圖中被 %s 傷害的總值超過 %d. 瞬移中...\n"
-
-#, fuzzy
-#~ msgid "%s hit %s when %s HP is under %d. Teleporting...\n"
-#~ msgstr "%s 在您HP過低時攻擊您. 瞬移中...\n"
-
-#, fuzzy
-#~ msgid "%s %s target to aggressive %s\n"
-#~ msgstr "改為目標為主動: %s (%s)\n"
-
-#, fuzzy
-#~ msgid "%s has been provoked, searching another monster\n"
-#~ msgstr "%s (%s) 已被挑釁, 尋找其它魔物中\n"
-
-#~ msgid "Using Teleport Skill Level 2 though we not have it!\n"
-#~ msgstr "使用二級瞬移技能中, 雖然我們無此技能!\n"
-
-#~ msgid "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n"
-#~ msgstr "無蒼翅或蝴翅, 降回使用技能瞬移\n"
-
-#~ msgid "You don't have the Teleport skill or a Fly Wing\n"
-#~ msgstr "您並沒有瞬移技能或蒼蠅翅膀\n"
-
-#~ msgid "You don't have the Teleport skill or a Butterfly Wing\n"
-#~ msgstr "您並沒有瞬移技能或蝴蝶翅膀\n"
-
-#~ msgid "---------- Storage %s -----------\n"
-#~ msgstr "----------- 倉庫 %s -------------\n"
-
-#~ msgid "Broken"
-#~ msgstr "壞掉的"
-
-#~ msgid ""
-#~ "\n"
-#~ "Capacity: %d/%d\n"
-#~ msgstr ""
-#~ "\n"
-#~ "容量: %d/%d\n"
-
-#~ msgid "Storage logged\n"
-#~ msgstr "倉庫資訊已記錄\n"
-
-#, fuzzy
-#~ msgid "%s %s %s (Dmg: %s) (Delay: %sms)\n"
-#~ msgstr "%s %s %s - 傷害: %s (延遲 %s)\n"
-
-#, fuzzy
-#~ msgid "are casting"
-#~ msgstr "您正坐著.\n"
-
-#, fuzzy
-#~ msgid "is casting"
-#~ msgstr "%s 正坐著.\n"
-
-#, fuzzy
-#~ msgid "location (%d, %d)"
-#~ msgstr "位置 %s (%s) : %d, %d\n"
-
-#, fuzzy
-#~ msgid "(Lv: %s)"
-#~ msgstr "Lv %s"
-
-#, fuzzy
-#~ msgid "on"
-#~ msgstr "無"
-
-#, fuzzy
-#~ msgid "(Dmg: %s)"
-#~ msgstr "傷害: %s"
-
-#, fuzzy
-#~ msgid "(Delay: %sms)"
-#~ msgstr "傷害: %s"
-
-#, fuzzy
-#~ msgid "on location"
-#~ msgstr "解決方法\n"
-
-#, fuzzy
-#~ msgid "%s %s: %s%s\n"
-#~ msgstr "%s 有 %s "
-
-#, fuzzy
-#~ msgid "are again"
-#~ msgstr "您正坐著.\n"
-
-#, fuzzy
-#~ msgid "is again"
-#~ msgstr "%s 正坐著.\n"
-
-#, fuzzy
-#~ msgid "are no longer"
-#~ msgstr "正要攻擊: %s\n"
-
-#, fuzzy
-#~ msgid "is no longer"
-#~ msgstr "%s 已解除禁言\n"
-
-#~ msgid "GM %s is nearby, teleport & disconnect for %d seconds"
-#~ msgstr "GM %s 在附近, 瞬移並斷線 %d 秒"
-
-#~ msgid "GM %s is nearby, disconnect for %s seconds"
-#~ msgstr "GM %s 在附近, 斷線 %s 秒"
-
-#~ msgid "GM %s is nearby, teleporting"
-#~ msgstr "GM %s 在附近, 瞬移中"
-
-#~ msgid "GM %s is nearby, respawning"
-#~ msgstr "GM %s 在附近, 瞬移回城中"
-
-#~ msgid "%s (%s) is nearby, disconnecting...\n"
-#~ msgstr "%s (%s) 在附近, 斷線中...\n"
-
-#~ msgid "*** Found %s (%s) nearby and disconnected ***\n"
-#~ msgstr "*** 發現 %s (%s) 在附近且已斷線 ***\n"
-
-#~ msgid "Teleporting to avoid player %s (%s)\n"
-#~ msgstr "瞬移以避開玩家 %s (%s)\n"
-
-#~ msgid "*** Found %s (%s) nearby and teleported ***\n"
-#~ msgstr "*** 發現 %s (%s) 在附近且已瞬移 ***\n"
-
-#~ msgid "%s is nearby, disconnecting...\n"
-#~ msgstr "%s 在附近, 斷線中...\n"
-
-#~ msgid "*** Found %s nearby and disconnected ***\n"
-#~ msgstr "*** 發現 %s 在附近且已斷線 ***\n"
-
-#~ msgid "Processing map %s...\n"
-#~ msgstr "處理地圖 %s 中...\n"
-
-#~ msgid "Wrote portals Line of Sight table to '%s'\n"
-#~ msgstr "Wrote portals Line of Sight table to '%s'\n"
-
-#~ msgid ""
-#~ "----------------------------Error Summary----------------------------\n"
-#~ msgstr ""
-#~ "----------------------------Error Summary----------------------------\n"
-
-#~ msgid "Missing: %s.fld\n"
-#~ msgstr "遺失: %s.fld\n"
-
-#~ msgid ""
-#~ "Note: LOS information for the above listed map(s) will be inaccurate;\n"
-#~ "      however it is safe to ignore if those map(s) are not used\n"
-#~ msgstr ""
-#~ "注意: 以上列出的地圖的 LOS 資訊不正確;\n"
-#~ "      然而假如這些地圖沒有使用到的話是可安全被忽略的\n"
-
-#~ msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
-#~ msgstr "無效的 NPC 資訊對於 autoBuy, autoSell 或 autoStorage! (%s)\n"
-
-#~ msgid "A shop has already been opened.\n"
-#~ msgstr "一個露店已被開啟.\n"
-
-#~ msgid "You don't have the Vending skill.\n"
-#~ msgstr "您並沒有開設露店的技能.\n"
-
-#~ msgid "Your shop does not have a title.\n"
-#~ msgstr "您的露店沒有店名.\n"
-
-#~ msgid "There are no items to sell.\n"
-#~ msgstr "無物品賣出.\n"
-
 #~ msgid "Shop opened (%s) with %d selling items.\n"
 #~ msgstr "露店 (%s) 已開啟並含有 %d 個要賣的物品.\n"
-
-#~ msgid "A shop has not been opened.\n"
-#~ msgstr "一個露店尚未開啟.\n"
-
-#~ msgid "Shop closed.\n"
-#~ msgstr "露店已關閉.\n"
-
-#~ msgid ""
-#~ "The file %s must be valid UTF-8 encoded, which it is \n"
-#~ "currently not. To solve this prolem, please use Notepad\n"
-#~ "to save that file as valid UTF-8."
-#~ msgstr ""
-#~ "%s 這個檔案必須是有效的 UTF-8 編碼, 但它目前不是.\n"
-#~ "為了解決這個問題, 請使用記事本開啟\n"
-#~ "並將檔案以有效的 UTF-8 儲存."
 
 #~ msgid "Unable to reload code: %s not found\n"
 #~ msgstr "無法重新載入程式碼: %s 未被發現\n"
@@ -7894,9 +8164,6 @@ msgstr "%s連線中 - %s"
 
 #~ msgid "Reloading %s...\n"
 #~ msgstr "重新載入 %s...\n"
-
-#~ msgid "Unable to reload %s\n"
-#~ msgstr "無法重新載入 %s\n"
 
 #~ msgid "Reloaded.\n"
 #~ msgstr "已重新載入.\n"
@@ -8111,10 +8378,6 @@ msgstr "%s連線中 - %s"
 #, fuzzy
 #~ msgid "Total players: %s \n"
 #~ msgstr "總傷害取得: %s\n"
-
-#, fuzzy
-#~ msgid "There are no players near you.\n"
-#~ msgstr "無角色在此帳號.\n"
 
 #~ msgid "Player \"%s\" does not exist.\n"
 #~ msgstr "玩家 \"%s\" 並不存在.\n"

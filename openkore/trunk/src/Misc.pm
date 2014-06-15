@@ -91,7 +91,8 @@ our @EXPORT = (
 	# File Parsing and Writing
 	qw/chatLog
 	shopLog
-	monsterLog/,
+	monsterLog
+	deadLog/,
 
 	# Logging
 	qw/itemLog/,
@@ -830,6 +831,13 @@ sub monsterLog {
 	close MONLOG;
 }
 
+sub deadLog {
+	my $crud = shift;
+	return if (!$config{'logDead'});
+	open DEADLOG, ">>:utf8", $Settings::dead_log_file;
+	print DEADLOG "[DEAD] $crud\n";
+	close DEADLOG;
+}
 
 #########################################
 #########################################

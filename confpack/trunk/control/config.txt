@@ -296,6 +296,7 @@ logConsole 0
 logAppendUsername 1
 logAppendServer 0
 monsterLog 0
+logDead 0
 
 chatTitleOversize 0
 shopTitleOversize 0
