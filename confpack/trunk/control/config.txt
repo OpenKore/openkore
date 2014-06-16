@@ -260,6 +260,8 @@ teleportAuto_equip_leftAccessory
 teleportAuto_equip_rightAccessory
 teleportAuto_lostHomunculus
 teleportAuto_useItemForRespawn
+teleportAuto_item1
+teleportAuto_item2
 
 dealAuto 1
 dealAuto_names

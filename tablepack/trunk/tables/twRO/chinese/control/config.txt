@@ -977,6 +977,15 @@ equipAuto {
 #		技能的等級
 #	dist
 #       施法距離 ［魔法最大攻擊為9格，戰士系需要較短距離］
+#   	施法距離 (如要使用 3格或以下範圍的話 請使用 <3) [可使用運算子: < <= = => > !]
+#		沒有使用運算子是當作使用 = 
+#		例: <3 	小於3, 不等於3
+#		例: <=3 小於及等於3
+#		例: =3	只有等於3
+#		例: =>3	大於及等於3
+#		例: >3	大於3, 不等於3
+#		例: !3	不等於3
+#		例: dist 3 與dist =3 一樣
 #	maxCastTime
 # 	 	使用此技能所需最長時間［秒］，施展成功即會繼續AI動作，
 #	 	不需等到延遲時間結束［一般攻擊型法術最好設8~10秒］
@@ -1284,8 +1293,16 @@ useSelf_skill {
 # partySkill 進階設定: [Self Condition] + [Skill Use Condition] + [Player Condition]
 #
 # partySkill {
-# 	dist 3
-#   	施法距離
+# 	dist <=3
+#   	施法距離 (如要使用 3格或以下範圍的話 請使用 <3) [可使用運算子: < <= = => > !]
+#		沒有使用運算子是當作使用 = 
+#		例: <3 	小於3, 不等於3
+#		例: <=3 小於及等於3
+#		例: =3	只有等於3
+#		例: =>3	大於及等於3
+#		例: >3	大於3, 不等於3
+#		例: !3	不等於3
+#		例: dist 3 與dist =3 一樣
 #	target
 # 	 	輔助技能施放對象的玩家名字
 #	target_hp
@@ -1320,7 +1337,7 @@ useSelf_skill {
 
 partySkill {
 	lvl 10
-	dist 3
+	dist <=3
 	maxCastTime 0
 	minCastTime 0
 	hp
@@ -1540,7 +1557,10 @@ teleportAuto_lostHomunculus 0
 # 失去人工生命體時是否要瞬移
 teleportAuto_useItemForRespawn 0
 # 是否使用物品回城，例如：蝴蝶翅膀
-
+teleportAuto_item1
+# 是否自訂當前地圖瞬移的道具名稱 [留空為使用 蒼蠅翅膀]
+teleportAuto_item2
+# 是否自訂回城的道具名稱 [留空為使用 蝴蝶翅膀]
 
 
 #═══════════════════════════
