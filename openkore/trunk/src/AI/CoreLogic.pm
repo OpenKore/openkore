@@ -762,12 +762,17 @@ sub processTake {
 			}
 
 		} elsif (timeOut($timeout{ai_take})) {
-			my %vec;
-			my $direction;
-			getVector(\%vec, $item->{pos}, $myPos);
-			$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
-			$messageSender->sendLook($direction, 0) if ($direction != $char->{look}{body});
-			$messageSender->sendTake($item->{ID});
+			if ($config{'itemsTakeGreed'} && $char->{skills}{BS_GREED}{lv} >= 1) {
+					my $skill = new Skill(handle => 'BS_GREED');
+					ai_skillUse2($skill, $char->{skills}{BS_GREED}{lv}, 1, 0, $char, "BS_GREED");
+			} else {
+				my %vec;
+				my $direction;
+				getVector(\%vec, $item->{pos}, $myPos);
+				$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
+				$messageSender->sendLook($direction, 0) if ($direction != $char->{look}{body});
+				$messageSender->sendTake($item->{ID});
+			}
 			$timeout{ai_take}{time} = time;
 		}
 	}

@@ -423,8 +423,8 @@ sub moveAlongVector {
 	if ($dist) {
 		my %norm;
 		normalize(\%norm, $r_vec);
-		$result->{x} = $$r_pos{'x'} + $norm{'x'} * $dist;
-		$result->{y} = $$r_pos{'y'} + $norm{'y'} * $dist;
+		$result->{x} = round($$r_pos{'x'} + $norm{'x'} * $dist);
+		$result->{y} = round($$r_pos{'y'} + $norm{'y'} * $dist);
 	} else {
 		$result->{x} = $$r_pos{'x'} + $$r_vec{'x'};
 		$result->{y} = $$r_pos{'y'} + $$r_vec{'y'};
