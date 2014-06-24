@@ -12,7 +12,7 @@
 package Network::Send::kRO::RagexeRE_2011_11_02a;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2011_10_05a);
+use base qw(Network::Send::kRO::RagexeRE_2011_10_25a);
 
 sub version { 28 }
 
@@ -21,43 +21,44 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'023B' => undef,
+		'02C4' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
+		'035F' => undef,
+		'0363' => undef,
 		'0364' => ['character_move', 'a3', [qw(coords)]],#6
 		'0365' => undef,
 		'0366' => ['actor_look_at', 'v C', [qw(head body)]],#5
-		'0367' => undef,
 		'0368' => undef,
 		'0369' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
 		'0436' => ['friend_request', 'a*', [qw(username)]],#26
 		'0437' => undef,
-		'0438' => undef,
 		'07EC' => undef,
 		# TODO 0x0811,-1,itemlistwindowselected,2:4:8
-		'0802' => undef,
 		'0815' => ['item_take', 'a4', [qw(ID)]],#6
 		'0817' => ['sync', 'V', [qw(time)]],#6
-		'0835' => undef,
 		# TODO 0x0835,-1,reqopenbuyingstore,2:4:8:9:89
+		'0835' => undef,
 		'0838' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'083C' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
 		'0885' => ['item_drop', 'v2', [qw(index amount)]],#6 
-		'0887' => undef,
 		'088A' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		# TODO 0x088b,2,searchstoreinfonextpage,0
+		'088D' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		# 0x890,8 ?
+		'0893' => ['storage_item_add', 'v V', [qw(index amount)]],#8
+		'0894' => undef,
 		'0897' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
 		'0898' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		# TODO 0x089b,2,reqclosebuyingstore,0
+		'089B' => undef,
 		# TODO 0x089e,-1,reqtradebuyingstore,2:4:8:12
 		# TODO 0x08a1,6,reqclickbuyingstore,2
 		# TODO 0x08a2,12,searchstoreinfolistitemclick,2:6:10
-		'08A4' => undef,
 		# TODO 0x08a5,18,bookingregreq,2:4:6
-		'08A7' => undef,
+		'08A6' => undef,
+		'08A8' => undef,
 		'08AA' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		# TODO 0x08ab,-1,searchstoreinfo,2:4:5:9:13:14:15
-		'088D' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
-		'0893' => ['storage_item_add', 'v V', [qw(index amount)]],#8
+		'08AD' => undef,
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
@@ -72,6 +73,7 @@ sub new {
 		item_take 0815
 		map_login 083C
 		party_join_request_by_name 088D
+		skill_use 02C4
 		skill_use_location 0369
 		storage_item_add 0893
 		storage_item_remove 0897
