@@ -54,22 +54,22 @@ my @NPCresponses;
 #
 # <response> - Any text that contained in NPC response choice(s) or number.
 my %imageTable = (
-	'cbot_1' => 'poring'
-	'cbot_2' => 'lunatic'
-	'cbot_3' => 'fabre'
-	'cbot_4' => 'drops'
+	'cbot_1' => 'poring',
+	'cbot_2' => 'lunatic',
+	'cbot_3' => 'fabre',
+	'cbot_4' => 'drops',
 
-	'29028246' => '1'
-	'29029000' => '2'
-	'29029754' => '3'
-	'29030508' => '4'
-	'29031262' => '5'
-	'29032016' => '6'
+	'29028246' => '1',
+	'29029000' => '2',
+	'29029754' => '3',
+	'29030508' => '4',
+	'29031262' => '5',
+	'29032016' => '6',
 
-	'one' => '1'
-	'two' => '2'
-	'three' => '3'
-	'four' => '4'
+	'one' => '1',
+	'two' => '2',
+	'three' => '3',
+	'four' => '4',
 
 	'botcheck1' => '234',
 	'botcheck2' => '786',
