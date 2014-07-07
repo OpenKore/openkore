@@ -1816,7 +1816,7 @@ sub itemName {
 		# Alchemist-made potion
 		#
 		# Ignore the "cards" inside.
-	} elsif ($cards[0] == 65280) {
+	} elsif ($cards[0] == 65280 || $cards[0] == 1) {
 		# Pet egg
 		# cards[0] == 65280
 		# substr($item->{cards}, 2, 4) = packed pet ID
@@ -1830,7 +1830,7 @@ sub itemName {
 		my $elementName = $elements_lut{$elementID};
 		my $starCrumbs = ($cards[1] >> 8) / 5;
 		if ($starCrumbs >= 1 && $starCrumbs <= 3 ) {
-			$prefix .= ('V'x$starCrumbs)."S " if $starCrumbs;
+			$prefix .= (T("V")x$starCrumbs).T("S ") if $starCrumbs;
 		}
 		# $prefix .= "$elementName " if ($elementName ne "");
 		$suffix = "$elementName" if ($elementName ne "");
@@ -1848,7 +1848,7 @@ sub itemName {
 	my $numSlots = $itemSlotCount_lut{$item->{nameID}} if ($prefix eq "");
 
 	my $display = "";
-	$display .= "BROKEN " if $item->{broken};
+	$display .= T("BROKEN ") if $item->{broken};
 	$display .= "+$item->{upgrade} " if $item->{upgrade};
 	$display .= $prefix if $prefix;
 	$display .= $name;

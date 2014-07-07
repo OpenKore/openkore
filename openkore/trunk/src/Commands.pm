@@ -2888,7 +2888,7 @@ sub cmdInventory {
 		foreach my $item (@{$char->inventory->getItems()}) {
 			if ($item->usable) {
 				push @useable, $item->{invIndex};
-			} elsif ($item->equippable) {
+			} elsif ($item->equippable && $item->{type_equip} != 0) {
 				my %eqp;
 				$eqp{index} = $item->{index};
 				$eqp{binID} = $item->{invIndex};
