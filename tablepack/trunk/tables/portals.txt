@@ -2994,3 +2994,27 @@ aethra 71 132 aethra_in 127 126
 aethra 90 168 aethra_in 199 176
 aethra_in 127 122 aethra 71 132
 aethra_in 199 172 aethra 90 168
+
+caspen 137 237 casp_in01 178 269
+caspen 181 228 casp_in01 58 182
+caspen 104 265 casp_in01 174 190
+caspen 151 198 casp_auct02 40 32
+caspen 136 198 casp_auct02 40 36
+caspen 117 232 cmd_in02 178 132
+caspen 170 236 ayo_in01 13 94
+caspen 96 205 ayo_in02 100 151
+caspen 267 277 casp_dun01 28 43
+casp_in01 178 264 caspen 137 237
+casp_in01 58 179 caspen 181 228
+casp_in01 77 187 caspen 181 228
+casp_in01 159 205 caspen 104 265
+casp_in01 54 240 caspen 136 198
+casp_in01 110 240 caspen 136 201
+casp_in01 82 187 casp_in01 73 188
+casp_in01 231 203 casp_in01 159 205
+casp_in01 191 205 casp_in01 262 203
+casp_in01 262 203 casp_in01 191 201
+casp_in01 174 180 casp_in01 262 203
+ayo_in01 10 94 caspen 170 236
+casp_auct02 40 36 caspen 151 198
+casp_dun01 23 38 caspen 267 277
