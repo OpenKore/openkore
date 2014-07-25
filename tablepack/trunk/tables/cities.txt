@@ -82,3 +82,6 @@ malangdo.rsw#Malangdo Island#
 mal_in01.rsw#Inside Malangdo Island 1#
 mal_in02.rsw#Inside Malangdo Island 2#
 zhakastia.rsw#Zhakastia City#
+caspen.rsw#Caspen, the Village of Beginnings#
+casp_in01.rsw#Caspen Inn#
+casp_in02.rsw#Caspen Inn#
