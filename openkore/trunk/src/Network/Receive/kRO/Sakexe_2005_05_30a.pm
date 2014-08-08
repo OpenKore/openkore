@@ -21,9 +21,9 @@ use strict;
 use base qw(Network::Receive::kRO::Sakexe_2005_05_23a);
 
 use Globals qw(%config $char);
+use I18N qw(bytesToString);
+use Log qw(message);
 use Misc qw(configModify);
-
-use Log qw(message warning error debug);
 
 sub new {
 	my ($class) = @_;
@@ -42,20 +42,30 @@ sub new {
 	return $self;
 }
 
-# 022E
-sub homunculus_property {	# attack_range param was added
+# attack_range param was added
+sub homunculus_property {
 	my ($self, $args) = @_;
-	$self->SUPER::homunculus_property($args);
-	
-	my $slave = $char->{homunculus};
 
-	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack range?
-	if ($config{homunculus_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range}) {
+	my $slave = $char->{homunculus} or return;
+
+	foreach (@{$args->{KEYS}}) {
+		$slave->{$_} = $args->{$_};
+	}
+	$slave->{name} = bytesToString($args->{name});
+
+	Network::Receive::kRO::Sakexe_0::slave_calcproperty_handler($slave, $args);
+	Network::Receive::kRO::Sakexe_0::homunculus_state_handler($slave, $args);
+
+	# ST0's counterpart for ST kRO, since it attempts to support all servers
+	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
+	# or make function in Actor class
+	if ($config{homunculus_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range} && exists $slave->{attack_range}) {
 		message TF("Autodetected attackDistance for homunculus = %s\n", $slave->{attack_range}), "success";
 		configModify('homunculus_attackDistance', $slave->{attack_range}, 1);
 		configModify('homunculus_attackMaxDistance', $slave->{attack_range}, 1);
 	}
 }
+
 
 =pod
 //2005-05-30aSakexe

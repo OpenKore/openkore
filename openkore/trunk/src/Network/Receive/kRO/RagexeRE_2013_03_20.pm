@@ -26,7 +26,6 @@ sub new {
 	my %packets = (
 		'082D' => ['received_characters_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'084B' => ['item_appeared', 'a4 v2 C v4', [qw(ID nameID unknown1 identified x y unknown2 amount)]], # 19 TODO   provided by try71023, modified sofax222
-		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0999' => ['equip_item', 'v V v C', [qw(index type viewID success)]], #11
 		'099A' => ['unequip_item', 'v V C', [qw(index type success)]],#9
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]], #8
@@ -38,7 +37,7 @@ sub new {
 		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
-
+		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],#-1
 	);
 	
 	foreach my $switch (keys %packets) {

@@ -948,9 +948,10 @@ sub processDead {
 	}
 
 	if (AI::action eq "dead" && $config{dcOnDeath} && $config{dcOnDeath} != -1) {
-		message T("Disconnecting on death!\n");
+		message T("Auto disconnecting on death!\n");
 		chatLog("k", T("*** You died, auto disconnect! ***\n"));
-		$quit = 1;
+		$messageSender->sendQuit();
+		quit();
 	}
 }
 
@@ -1252,8 +1253,9 @@ sub processAutoStorage {
 				
 				# if storage is full disconnect if it says so in conf
 				if(defined $storage{items_max} && @storageID >= $storage{items_max} && $config{'dcOnStorageFull'}) {
-					error T("Disconnecting because storage is full!\n");
-					chatLog("k", T("Disconnecting because storage is full!\n"));
+					$messageSender->sendQuit();
+					error T("Auto disconnecting on StorageFull!\n");
+					chatLog("k", T("*** Your storage is full , disconnect! ***\n"));
 					quit();
 				}
 
@@ -1404,8 +1406,9 @@ sub processAutoStorage {
 			if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'} && ai_storageAutoCheck()) {
 				error T("Character is still overweight after storageAuto (storage is full?)\n");
 				if ($config{dcOnStorageFull}) {
-					error T("Disconnecting on storage full!\n");
-					chatLog("k", T("Disconnecting on storage full!\n"));
+					$messageSender->sendQuit();
+					error T("Auto disconnecting on StorageFull!\n");
+					chatLog("k", T("*** Your storage is full , disconnect! ***\n"));
 					quit();
 				}
 			}
@@ -3151,10 +3154,12 @@ sub processAutoShopOpen {
 sub processDcOnPlayer {
 	# Disconnect when a player is detected
 	if (!$field->isCity && !AI::inQueue("storageAuto", "buyAuto") && $config{dcOnPlayer}
-	    && ($config{'lockMap'} eq "" || $field->baseName eq $config{'lockMap'})
-	    && !isSafe() && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
-
-		$quit = 1;
+		&& ($config{'lockMap'} eq "" || $field->baseName eq $config{'lockMap'})
+		&& !isSafe() && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
+	$messageSender->sendQuit();
+	error T("Auto disconnecting on Player!\n");
+	chatLog("k", T("*** Nearby is another player, auto disconnect! ***\n"));
+	quit();
 	}
 }
 

@@ -1202,7 +1202,9 @@ sub arrow_none {
 	if ($type == 0) {
 		delete $char->{'arrow'};
 		if ($config{'dcOnEmptyArrow'}) {
-			$interface->errorDialog(T("Please equip arrow first."));
+			message T("Auto disconnecting on EmptyArrow!\n");
+			chatLog("k", T("*** Your Arrows is ended, auto disconnect! ***\n"));
+			$messageSender->sendQuit();
 			quit();
 		} else {
 			error T("Please equip arrow first.\n");
@@ -1227,7 +1229,7 @@ sub arrowcraft_list {
 
 	undef @arrowCraftID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
-		my $ID = unpack("v1", substr($msg, $i, 2));
+		my $ID = unpack("v", substr($msg, $i, 2));
 		my $item = $char->inventory->getByNameID($ID);
 		binAdd(\@arrowCraftID, $item->{invIndex});
 	}
@@ -1280,21 +1282,16 @@ sub card_merge_list {
 	my $msg = $args->{RAW_MSG};
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
-	my ($len) = unpack("x2 v1", $msg);
-
-	my $display;
-	$display .= T("-----Card Merge Candidates-----\n");
+	my ($len) = unpack("x2 v", $msg);
 
 	my $index;
 	for (my $i = 4; $i < $len; $i += 2) {
-		$index = unpack("v1", substr($msg, $i, 2));
+		$index = unpack("v", substr($msg, $i, 2));
 		my $item = $char->inventory->getByServerIndex($index);
 		binAdd(\@cardMergeItemsID, $item->{invIndex});
-		$display .= "$item->{invIndex} $item->{name}\n";
 	}
 
-	$display .= "-------------------------------\n";
-	message $display, "list";
+	Commands::run('card mergelist');
 }
 
 sub card_merge_status {
@@ -1962,13 +1959,15 @@ sub devotion {
 
 sub egg_list {
 	my ($self, $args) = @_;
-	message T("----- Egg Hatch Candidates -----\n"), "list";
+	my $msg = center(T(" Egg Hatch Candidates "), 38, '-') ."\n";
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
-		my $index = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
+		my $index = unpack("v", substr($args->{RAW_MSG}, $i, 2));
 		my $item = $char->inventory->getByServerIndex($index);
-		message "$item->{invIndex} $item->{name}\n", "list";
+		$msg .=  "$item->{invIndex} $item->{name}\n";
 	}
-	message "------------------------------\n", "list";
+	$msg .= ('-'x38) . "\n".
+			T("Ready to use command 'pet [hatch|h] #'\n");
+	message $msg, "list";
 }
 
 sub emoticon {
@@ -2069,8 +2068,9 @@ sub errors {
 		($config{dcOnDisconnect} &&
 		$args->{type} != 3 &&
 		$args->{type} != 10))) {
-		message T("Lost connection; exiting\n");
-		$quit = 1;
+		error T("Auto disconnecting on Disconnect!\n"), "connection";
+		chatLog("k", T("*** You disconnected, auto quit! ***\n"));
+		quit();
 	}
 
 	$net->setState(1);
@@ -2083,20 +2083,27 @@ sub errors {
 	}
 	if ($args->{type} == 0) {
 		# FIXME BAN_SERVER_SHUTDOWN is 0x1, 0x0 is BAN_UNFAIR
-		error T("Server shutting down\n"), "connection";
-		if($config{'dcOnServerShutDown'} == 1) {
-			$quit = 1;
+		if ($config{'dcOnServerShutDown'} == 1) {
+			error T("Auto disconnecting on ServerShutDown!\n");
+			chatLog("k", T("*** Server shutting down , disconnect! ***\n"));
+			quit();
+		} else {
+			error T("Server shutting down\n"), "connection";
 		}
 	} elsif ($args->{type} == 1) {
-		error T("Error: Server is closed\n"), "connection";
 		if($config{'dcOnServerClose'} == 1) {
-			$quit = 1;
+			error T("Auto disconnecting on ServerClose!\n");
+			chatLog("k", T("*** Server is closed , disconnect! ***\n"));
+			quit();
+		} else {
+			error T("Error: Server is closed\n"), "connection";
 		}
 	} elsif ($args->{type} == 2) {
 		if ($config{'dcOnDualLogin'} == 1) {
 			$interface->errorDialog(TF("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
 				"%s will now immediately 	disconnect.", $Settings::NAME));
-			$quit = 1;
+			chatLog("k", T("*** DualLogin, auto disconnect! ***\n"));
+			quit();
 		} elsif ($config{'dcOnDualLogin'} >= 2) {
 			error T("Critical Error: Dual login prohibited - Someone trying to login!\n"), "connection";
 			message TF("Disconnect for %s seconds...\n", $config{'dcOnDualLogin'}), "connection";
@@ -3551,7 +3558,7 @@ sub npc_sell_list {
 		my ($index, $price, $price_overcharge) = unpack("v L L", substr($args->{itemsdata},$i,($i + 10)));
 		my $item = $char->inventory->getByServerIndex($index);
 		$item->{sellable} = 1; # flag this item as sellable
-		debug TF("[%s x %s] for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
+		debug TF("%s x %s for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
 	}
 	
 	foreach my $item (@{$char->inventory->getItems()}) {
@@ -3596,34 +3603,23 @@ sub npc_store_info {
 		# TODO: use itemName() or itemNameSimple()?
 		my $display = ($items_lut{$ID} ne "")
 			? $items_lut{$ID}
-			: "Unknown ".$ID;
+			: T("Unknown ").$ID;
 		$store->{name} = $display;
 		$store->{nameID} = $ID;
 		$store->{type} = $type;
 		$store->{price} = $price;
+		# Real RO client can be receive this message without NPC Information. We should mimic this behavior.
+		$store->{npcName} = (defined $talk{ID}) ? getNPCName($talk{ID}) : T('Unknown') if ($storeList == 0);
 		debug "Item added to Store: $store->{name} - $price z\n", "parseMsg", 2;
 		$storeList++;
 	}
-
-	# Real RO client can be receive this message without NPC Information. We should mimic this behavior.
-	my $name = (defined $talk{ID}) ? getNPCName($talk{ID}) : 'Unknown';
 
 	$ai_v{npc_talk}{talk} = 'store';
 	# continue talk sequence now
 	$ai_v{'npc_talk'}{'time'} = time;
 
 	if (AI::action ne 'buyAuto') {
-		message TF("----------%s's Store List-----------\n" .
-			"#  Name                    Type               Price\n", $name), "list";
-		my $display;
-		for (my $i = 0; $i < @storeList; $i++) {
-			$display = $storeList[$i]{'name'};
-			message(swrite(
-				"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>z",
-				[$i, $display, $itemTypes_lut{$storeList[$i]{'type'}}, $storeList[$i]{'price'}]),
-				"list");
-		}
-		message("-------------------------------\n", "list");
+		Commands::run('store');
 	}
 }
 
@@ -3753,15 +3749,8 @@ sub npc_talk_responses {
 	$ai_v{'npc_talk'}{'talk'} = 'select';
 	$ai_v{'npc_talk'}{'time'} = time;
 
-	my $list = T("----------Responses-----------\n" .
-		"#  Response\n");
-	for (my $i = 0; $i < @{$talk{responses}}; $i++) {
-		$list .= swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-			[$i, $talk{responses}[$i]]);
-	}
-	$list .= "-------------------------------\n";
-	message($list, "list");
+	Commands::run('talk resp');
+
 	my $name = getNPCName($ID);
 	Plugins::callHook('npc_talk_responses', {
 						ID => $ID,
@@ -4204,7 +4193,8 @@ sub pet_info2 {
 
 	} elsif ($type == 3) {
 		# accessory info for any pet in range
-		#debug "Pet accessory info: $value\n";
+		$pet{accessory} = $value;
+		debug "Pet accessory info: $value\n";
 
 	} elsif ($type == 4) {
 		# performance info for any pet in range
@@ -4298,8 +4288,9 @@ sub private_message {
 	});
 
 	if ($config{dcOnPM} && $AI == AI::AUTO) {
-		chatLog("k", T("*** You were PM'd, auto disconnect! ***\n"));
 		message T("Disconnecting on PM!\n");
+		chatLog("k", T("*** You were PM'd, auto disconnect! ***\n"));
+		$messageSender->sendQuit();
 		quit();
 	}
 }
@@ -5046,7 +5037,6 @@ sub skill_use_failed {
 	});
 }
 
-
 # Skill used on a set of map tile coordinates.
 # Examples: Warp Portal/Teleport, Bard/Dancer skills, etc.
 #
@@ -5407,7 +5397,9 @@ our %stat_info_handlers = (
 		return unless $actor->isa('Actor::You');
 
 		if ($config{dcOnMute} && $actor->{muted}) {
+			error TF("*** %s have been muted for %d minutes, auto disconnect! ***\n", $actor, $actor->{mute_period}/60);
 			chatLog("k", TF("*** %s have been muted for %d minutes, auto disconnect! ***\n", $actor, $actor->{mute_period}/60));
+			$messageSender->sendQuit();
 			quit();
 		}
 	},
@@ -5468,6 +5460,7 @@ our %stat_info_handlers = (
 		return unless $actor->isa('Actor::You');
 
 		if ($config{dcOnZeny} && $actor->{zeny} <= $config{dcOnZeny}) {
+			$messageSender->sendQuit();
 			$interface->errorDialog(TF("Disconnecting due to zeny lower than %s.", $config{dcOnZeny}));
 			$quit = 1;
 		}
@@ -6079,9 +6072,8 @@ sub vending_start {
 
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
-	message TF("%s\n" .
-		"#  Name                                          Type        Amount       Price\n",
-		center(" $shop{title} ", 79, '-')), "list";
+	my $display = center(" $shop{title} ", 79, '-') . "\n" .
+		T("#  Name                                        Type         Amount        Price\n");
 	for (my $i = 8; $i < $msg_size; $i += 22) {
 		my $number = unpack("v1", substr($msg, $i + 4, 2));
 		my $item = $articles[$number] = {};
@@ -6096,14 +6088,14 @@ sub vending_start {
 		$item->{name} = itemName($item);
 		$articles++;
 
-		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
+		debug ("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
 
-		message(swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>z",
-			[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, formatNumber($item->{price})]),
-			"list");
+		$display .= swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<  @>>>>>  @>>>>>>>>>z",
+			[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, formatNumber($item->{price})]);
 	}
-	message(('-'x79)."\n", "list");
+	$display .= ('-'x79) . "\n";
+	message $display, "list";
 	$shopEarned ||= 0;
 }
 
