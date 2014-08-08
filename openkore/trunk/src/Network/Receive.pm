@@ -332,27 +332,28 @@ sub account_server_info {
 	# any servers with lastLoginIP lastLoginTime?
 	# message TF("Last login: %s from %s\n", @{$args}{qw(lastLoginTime lastLoginIP)}) if ...;
 
-	message swrite(
-		T("-----------Account Info------------\n" .
-		"Account ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
+	message 
+		center(T(" Account Info "), 34, '-') ."\n" .
+		swrite(
+		T("Account ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
 		"Sex:        \@<<<<<<<<<<<<<<<<<<<<<\n" .
 		"Session ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
-		"            \@<<<<<<<<< \@<<<<<<<<<<\n" .
-		"-----------------------------------"),
+		"            \@<<<<<<<<< \@<<<<<<<<<<\n"),
 		[unpack('V',$accountID), getHex($accountID), $sex_lut{$accountSex}, unpack('V',$sessionID), getHex($sessionID),
-		unpack('V',$sessionID2), getHex($sessionID2)]), 'connection';
+		unpack('V',$sessionID2), getHex($sessionID2)]) .
+		('-'x34) . "\n", 'connection';
 
 	@servers = @{$args->{servers}};
 
-	message T("---------------------- Servers -----------------------\n" .
-			"#   Name                  Users  IP              Port\n"), 'connection';
+	my $msg = center(T(" Servers "), 53, '-') ."\n" .
+			T("#   Name                  Users  IP              Port\n");
 	for (my $num = 0; $num < @servers; $num++) {
-		message(swrite(
+		$msg .= swrite(
 			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
-			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}]
-		), 'connection');
+			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}]);
 	}
-	message("------------------------------------------------------\n", 'connection');
+	$msg .= ('-'x53) . "\n";
+	message $msg, "connection";
 
 	if ($net->version != 1) {
 		message T("Closing connection to Account Server\n"), 'connection';
@@ -565,10 +566,11 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::Pet();
 			$actor->{appear_time} = time;
-			if ($monsters_lut{$args->{type}}) {
-				$actor->setName($monsters_lut{$args->{type}});
-			}
-			$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : "Unknown";
+			$actor->{name} = $args->{name};
+#			if ($monsters_lut{$args->{type}}) {
+#				$actor->setName($monsters_lut{$args->{type}});
+#			}
+			$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : T("Unknown");
 			$mustAdd = 1;
 
 			# Previously identified monsters could suddenly be identified as pets.
@@ -1512,16 +1514,15 @@ sub warp_portal_list {
 	push @{$char->{warp}{memo}}, $args->{memo3} if $args->{memo3} ne "";
 	push @{$char->{warp}{memo}}, $args->{memo4} if $args->{memo4} ne "";
 
-	message T("----------------- Warp Portal --------------------\n" .
-		"#  Place                           Map\n"), "list";
+	my $msg = center(T(" Warp Portal "), 50, '-') ."\n".
+		T("#  Place                           Map\n");
 	for (my $i = 0; $i < @{$char->{warp}{memo}}; $i++) {
-		message(swrite(
+		$msg .= swrite(
 			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",
-			[$i, $maps_lut{$char->{warp}{memo}[$i].'.rsw'},
-			$char->{warp}{memo}[$i]]),
-			"list");
+			[$i, $maps_lut{$char->{warp}{memo}[$i].'.rsw'}, $char->{warp}{memo}[$i]]);
 	}
-	message("--------------------------------------------------\n", "list");
+	$msg .= ('-'x50) . "\n";
+	message $msg, "list";
 	
 	if ($args->{type} == 26 && AI::inQueue('teleport')) {
 		# We have already successfully used the Teleport skill.

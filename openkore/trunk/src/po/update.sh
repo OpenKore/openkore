@@ -5,6 +5,7 @@ set -e
 
 LANGUAGES="tl id pt zh_CN zh th ko ru de"
 
+
 echo "Extracting messages from source..."
 xgettext --from-code=utf-8 -L Perl --force-po -o openkore.pot --keyword=T --keyword=TF \
 	--add-comments='Translation Comment:' \

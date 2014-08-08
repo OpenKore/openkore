@@ -153,7 +153,7 @@ sub serverConnect {
 			Proto		=> 'tcp',
 			Timeout		=> 4);
 	($self->{remote_socket} && inet_aton($self->{remote_socket}->peerhost()) eq inet_aton($host)) ?
-		message T("connected\n") :
+		message T("connected\n"), "connection" :
 		error(TF("couldn't connect: %s (error code %d)\n", "$!", int($!)), "connection");
 	if ($self->getState() != Network::NOT_CONNECTED) {
 		$incomingMessages->nextMessageMightBeAccountID();
@@ -463,7 +463,9 @@ sub checkConnection {
 
 		} elsif (timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
 			if ($config{dcOnMaxReconnections} && $config{dcOnMaxReconnections} <= $reconnectCount) {
-				$quit = 1;
+				message T("Auto disconnecting on MaxReconnections!\n");
+				chatLog("k", T("*** Exceeded the maximum number attempts to reconnect, auto disconnect! ***\n"));
+				quit();
 				return;
 			}
 			error T("Timeout on Account Server, reconnecting...\n"), "connection";
@@ -612,9 +614,9 @@ sub checkConnection {
 		if(!$self->serverAlive()) {
 			Plugins::callHook('disconnected');
 			if ($config{dcOnDisconnect}) {
-				chatLog("k", T("*** You disconnected, auto quit! ***\n"));
 				error T("Disconnected from Map Server, exiting...\n"), "connection";
-				$quit = 1;
+				chatLog("k", T("*** You disconnected, auto quit! ***\n"));
+				quit();
 			} else {
 				error TF("Disconnected from Map Server, connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
 				$timeout_ex{master}{time} = time;
@@ -627,8 +629,9 @@ sub checkConnection {
 			error T("Timeout on Map Server, "), "connection";
 			Plugins::callHook('disconnected');
 			if ($config{dcOnDisconnect}) {
-				error T("exiting...\n"), "connection";
-				$quit = 1;
+				error T("Auto disconnecting on Disconnect!\n"), "connection";
+				chatLog("k", T("*** You disconnected, auto quit! ***\n"));
+				quit();
 			} else {
 				error TF("connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
 				$timeout_ex{master}{time} = time;

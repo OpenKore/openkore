@@ -20,20 +20,6 @@ package Network::Receive::kRO::Sakexe_2005_06_22a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2005_06_08a);
 
-sub new {
-	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'022E' => ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]], # 71
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
-}
-
 =pod
 //2005-06-22aSakexe
 0x022e,71
