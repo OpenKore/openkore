@@ -2870,6 +2870,31 @@ sub cmdIhist {
 	}
 }
 
+
+=pod
+=head2 cmdInventory
+
+Console command that displays a character's inventory contents
+- With pretty text headers
+- Items are displayed from lowest index to highest index, but, grouped
+  in the following sub-categories:
+  eq - Equipped Items (such as armour, shield, weapon in L/R/both hands)
+  neq- Non-equipped equipment items
+  nu - Non-usable items
+  u - Usable (consumable) items
+
+All items that are not identified will be suffixed with
+"-- Not Identified" on the end.
+
+Syntax: i [eq|neq|nu|u|desc <IndexNumber>]
+
+Invalid arguments to this command will display an error message to 
+inform and correct the user.
+
+All text strings for headers, and to indicate Non-identified or pending
+sale items should be translatable.
+
+=cut
 sub cmdInventory {
 	# Display inventory items
 	my (undef, $args) = @_;
@@ -2911,8 +2936,46 @@ sub cmdInventory {
 				push @non_useable, $item->{invIndex};
 			}
 		}
-
+		# Start header -- Note: Title is translatable.
 		my $msg = center(T(" Inventory "), 50, '-') ."\n";
+
+		if ($arg1 eq "" || $arg1 eq "eq") {
+			# Translation Comment: List of equipment items worn by character
+			$msg .= T("-- Equipment (Equipped) --\n");
+			foreach my $item (@equipment) {
+				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? T("Will be sold") : "";
+				$display = sprintf("%-3d  %s -- %s", $item->{binID}, $item->{name}, $item->{equipped});
+				$msg .= sprintf("%-57s %s\n", $display, $sell);
+			}
+		}
+
+		if ($arg1 eq "" || $arg1 eq "neq") {
+			# Translation Comment: List of equipment items NOT worn
+			$msg .= T("-- Equipment (Not Equipped) --\n");
+			foreach my $item (@uequipment) {
+				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? T("Will be sold") : "";
+				$display = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
+				$display .= " x $item->{amount}" if $item->{amount} > 1;
+				$display .= $item->{identified};
+				$msg .= sprintf("%-57s %s\n", $display, $sell);
+			}
+		}
+
+		if ($arg1 eq "" || $arg1 eq "nu") {
+			# Translation Comment: List of non-usable items
+			$msg .= T("-- Non-Usable --\n");
+			for ($i = 0; $i < @non_useable; $i++) {
+				$index = $non_useable[$i];
+				my $item = $char->inventory->get($index);
+				$display = $item->{name};
+				$display .= " x $item->{amount}";
+				# Translation Comment: Tell if the item is marked to be sold
+				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? T("Will be sold") : "";
+				$msg .= swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
+					[$index, $display, $sell]);
+			}
+		}
 
 		if ($arg1 eq "" || $arg1 eq "u") {
 			# Translation Comment: List of usable items
@@ -2929,44 +2992,7 @@ sub cmdInventory {
 			}
 		}
 
-		if ($arg1 eq "" || $arg1 eq "neq") {
-			# Translation Comment: List of equipments
-			$msg .= T("\n-- Equipment (Not Equipped) --\n");
-			foreach my $item (@uequipment) {
-				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? T("Will be sold") : "";
-				$display = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
-				$display .= " x $item->{amount}" if $item->{amount} > 1;
-				$display .= $item->{identified};
-				$msg .= sprintf("%-57s %s\n", $display, $sell);
-			}
-		}
-
-		if ($arg1 eq "" || $arg1 eq "nu") {
-			# Translation Comment: List of non-usable items
-			$msg .= T("\n-- Non-Usable --\n");
-			for ($i = 0; $i < @non_useable; $i++) {
-				$index = $non_useable[$i];
-				my $item = $char->inventory->get($index);
-				$display = $item->{name};
-				$display .= " x $item->{amount}";
-				# Translation Comment: Tell if the item is marked to be sold
-				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? T("Will be sold") : "";
-				$msg .= swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
-					[$index, $display, $sell]);
-			}
-		}
-
-		if ($arg1 eq "" || $arg1 eq "eq") {
-			# Translation Comment: List of usable equipments
-			$msg .= T("\n-- Equipment (Equipped) --\n");
-			foreach my $item (@equipment) {
-				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? T("Will be sold") : "";
-				$display = sprintf("%-3d  %s -- %s", $item->{binID}, $item->{name}, $item->{equipped});
-				$msg .= sprintf("%-57s %s\n", $display, $sell);
-			}
-		}
-		$msg .= ('-'x50) . "\n";
+		$msg .= ('-'x50) . "\n"; #Add footer onto end of list.
 		message $msg, "list";
 
 	} elsif ($arg1 eq "desc" && $arg2 ne "") {
@@ -2977,6 +3003,7 @@ sub cmdInventory {
 			"Usage: i [<u|eq|neq|nu|desc>] [<inventory item>]\n");
 	}
 }
+
 
 sub cmdInventory_desc {
 	my ($name) = @_;
