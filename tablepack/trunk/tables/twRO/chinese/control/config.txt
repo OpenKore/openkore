@@ -408,6 +408,8 @@ itemsTakeAuto_new 0
 #   	人工生命體 SP 範圍
 #	homunculus_dead
 #   	人工生命體死亡時 〔1 = 死亡時觸發〕
+#   homunculus_resting
+#		人工生命體已安歌時
 #	mercenary_hp
 #		傭兵 HP 範圍
 # 	mercenary_sp
@@ -482,6 +484,7 @@ useSelf_item {
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
+	homunculus_resting
 	mercenary_hp
 	mercenary_sp
 	mercenary_whenStatusActive
@@ -861,6 +864,8 @@ attackEquip_rightAccessory
 #   	人工生命體 SP 範圍
 #	homunculus_dead
 #   	人工生命體死亡時 〔1 = 死亡時觸發〕
+#   homunculus_resting
+#		人工生命體已安歌時
 #	onAction
 #   	當 AI 為 ... 時 〔請參考指令 ai print〕
 #	whenStatusActive
@@ -904,7 +909,6 @@ attackEquip_rightAccessory
 # }
 
 
-
 equipAuto {
 	topHead
 	midHead
@@ -927,6 +931,7 @@ equipAuto {
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
+	homunculus_resting
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -1004,6 +1009,8 @@ equipAuto {
 #	 	人工生命體 SP 範圍限制
 #	homunculus_dead
 #	 	人工生命體死亡時
+#   homunculus_resting
+#		人工生命體已安歌時
 #	onAction
 #	 	當 AI 為 ... 時
 #	whenStatusActive
@@ -1089,6 +1096,7 @@ attackSkillSlot {
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
+	homunculus_resting
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -1241,6 +1249,17 @@ followRandomDistance 4
 # 「TO 自己」輔助技能區塊可用的選項，
 # 完全同前面的對怪物技能 attackSkillSlot 區塊，
 # 僅有區塊名稱 useSelf_skil 不同，若需要其它選項，請參考前面。
+#
+# 人工生命體設定參考
+#
+#useSelf_skill 召喚生命體 {
+#	homunculus_resting 1
+#}
+#
+#useSelf_skill 復活生命體 {
+#	homunculus_dead 1
+#}
+#
 
 useSelf_skill_smartHeal 2
 # 自己補血時自動調整治癒術等級以節省SP
@@ -1257,6 +1276,7 @@ useSelf_skill {
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
+	homunculus_resting
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -1348,6 +1368,7 @@ partySkill {
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
+	homunculus_resting
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -1695,6 +1716,7 @@ doCommand {
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
+	homunculus_resting
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -1940,29 +1962,12 @@ homunculus_teleportAuto_totalDmgInLock 0
 #═══════════════
 # 生命體是否自動餵食
 homunculus_autoFeed 1
-
-homunculus_autoFeedAllowedMaps
-# 哪張地圖才會餵食生命體? ［空白表示全部地圖］
-
 # 生命體的餵食的滿足度設定［11~24餵一次親密度+1］
-homunculus_hungerMin 11
-# 最小值
-homunculus_hungerMax 24
-# 最大值
-
-# 生命體飢餓的時候餵食的時間延遲值 預設隨機：10 和 60 秒
-homunculus_hungerTimeoutMax 60
-# 最大值
-homunculus_hungerTimeoutMin 10
-# 最小值
-
-# 以下兩項是設定親密度餵食標準 介於此值之間將不會餵食
-homunculus_intimacyMax 999
-# 最大值
-homunculus_intimacyMin 911
-# 最小值
-
-
+homunculus_hunger 15
+# 當飢餓度多少時收回生命體
+homunculus_return 11
+# 哪張地圖才會餵食生命體? ［空白表示全部地圖］
+homunculus_autoFeedAllowedMaps
 
 #════════
 #║ 傭兵 ║

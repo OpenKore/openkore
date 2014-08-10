@@ -3833,11 +3833,11 @@ sub checkSelfCondition {
 		}
 
 		if ($config{$prefix."_homunculus_dead"}) {
-			return 0 unless ($char->{homunculus}{state} & 4);
+			return 0 unless ($char->{homunculus}{state} & 4); # 4 = dead
 		}
 		
 		if ($config{$prefix."_homunculus_resting"}) {
-			return 0 unless ($char->{homunculus}{state} & 2);
+			return 0 unless ($char->{homunculus}{state} & 2); # 2 = rest
 		}
 	}
 

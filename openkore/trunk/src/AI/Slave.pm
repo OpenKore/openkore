@@ -749,7 +749,7 @@ sub processAutoAttack {
 
 		if (!$config{$slave->{configPrefix}.'tankMode'} || $foundTankee) {
 			# This variable controls how far monsters must be away from portals and players.
-			my $portalDist = $config{'attackMinPortalDistance'} || 4;
+			my $portalDist = $config{'attackMinPortalDistance'} || 0; # Homun do not have effect on portals
 			my $playerDist = $config{'attackMinPlayerDistance'};
 			$playerDist = 1 if ($playerDist < 1);
 		
@@ -765,6 +765,7 @@ sub processAutoAttack {
 			my @aggressives;
 			my @partyMonsters;
 			my @cleanMonsters;
+			my $myPos = calcPosition($slave);
 
 			# List aggressive monsters
 			@aggressives = AI::ai_getPlayerAggressives($slave->{ID}) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
@@ -773,22 +774,14 @@ sub processAutoAttack {
 			foreach (@monstersID) {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
-				# Ignore ignored monsters in mon_control.txt
-				if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
-					next if ( ($control->{attack_auto} ne "" && $control->{attack_auto} <= 0)
-						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
-						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-						);
-				}
+				next if !$field->isWalkable($monster->{pos}{x}, $monster->{pos}{y}); # this should NEVER happen
+				next if !checkLineWalkable($myPos, $monster->{pos}); # ignore unrecheable monster. there's a bug in bRO's gef_fild06 where a lot of petites are bugged in some unrecheable cells
 
 				my $pos = calcPosition($monster);
 
 				# List monsters that party members are attacking
 				if ($config{$slave->{configPrefix}.'attackAuto_party'} && $attackOnRoute
-				 && ((($monster->{dmgFromYou} || $monster->{dmgFromParty}) && $config{$slave->{configPrefix}.'attackAuto_party'} != 2) ||
-				     $monster->{dmgToYou} || $monster->{dmgToParty} || $monster->{missedYou} || $monster->{missedToParty})
+				 && ($monster->{dmgFromYou} || $monster->{dmgFromParty} || $monster->{dmgToYou} || $monster->{dmgToParty} || $monster->{missedYou} || $monster->{missedToParty})
 				 && timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @partyMonsters, $_;
 					next;
@@ -797,14 +790,15 @@ sub processAutoAttack {
 				### List normal, non-aggressive monsters. ###
 
 				# Ignore monsters that
-				# - Have a status (such as poisoned), because there's a high chance
+				# - Have a status (such as poisoned), because there's a high chance (WHY?)
 				#   they're being attacked by other players
 				# - Are inside others' area spells (this includes being trapped).
 				# - Are moving towards other players.
 				# - Are behind a wall
-				next if (( $monster->{statuses} && scalar(keys %{$monster->{statuses}}) )
-					|| objectInsideSpell($monster)
+				next if (#( $monster->{statuses} && scalar(keys %{$monster->{statuses}}) ) || 
+					objectInsideSpell($monster)
 					|| objectIsMovingTowardsPlayer($monster));
+					
 				if ($config{$slave->{configPrefix}.'attackCanSnipe'}) {
 					next if (!checkLineSnipable($slave->{pos_to}, $pos));
 				} else {
@@ -821,19 +815,20 @@ sub processAutoAttack {
 						}
 					}
 				}
-
+				
+				my $control = mon_control($monster->{name});
 				if ($config{$slave->{configPrefix}.'attackAuto'} >= 2
-				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou} && $safe
+				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
+				 && $attackOnRoute >= 2 && $safe
 				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
+				 && !$monster->{dmgFromYou}
 				 && timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @cleanMonsters, $_;
 				}
 			}
 
-
 			### Step 2: Pick out the "best" monster ###
 
-			my $myPos = calcPosition($slave);
 			my $highestPri;
 
 			# Look for the aggressive monster that has the highest priority
@@ -868,16 +863,6 @@ sub processAutoAttack {
 					my $pos = calcPosition($monster);
 					# Don't attack monsters near portals
 					next if (positionNearPortal($pos, $portalDist));
-
-					# Don't attack ignored monsters
-					if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
-						next if ( ($control->{attack_auto} == -1)
-							|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
-							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-							|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-							|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-							);
-					}
 
 					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
 						$smallestDist = $dist;
