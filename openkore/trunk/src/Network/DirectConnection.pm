@@ -463,12 +463,12 @@ sub checkConnection {
 
 		} elsif (timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
 			if ($config{dcOnMaxReconnections} && $config{dcOnMaxReconnections} <= $reconnectCount) {
-				message T("Auto disconnecting on MaxReconnections!\n");
+				error T("Auto disconnecting on MaxReconnections!\n");
 				chatLog("k", T("*** Exceeded the maximum number attempts to reconnect, auto disconnect! ***\n"));
-				quit();
+				$quit = 1;
 				return;
 			}
-			error T("Timeout on Account Server, reconnecting...\n"), "connection";
+			message TF("Timeout on Account Server, reconnecting. Wait %s seconds...\n", $timeout{'reconnect'}{'timeout'}), "connection";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 			$self->serverDisconnect;
@@ -614,11 +614,11 @@ sub checkConnection {
 		if(!$self->serverAlive()) {
 			Plugins::callHook('disconnected');
 			if ($config{dcOnDisconnect}) {
-				error T("Disconnected from Map Server, exiting...\n"), "connection";
-				chatLog("k", T("*** You disconnected, auto quit! ***\n"));
-				quit();
+				error T("Auto disconnecting on Disconnect!\n");
+				chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
+				$quit = 1;
 			} else {
-				error TF("Disconnected from Map Server, connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
+				message TF("Disconnected from Map Server, connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
 				$timeout_ex{master}{time} = time;
 				$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 				$self->setState(Network::NOT_CONNECTED);
@@ -629,9 +629,9 @@ sub checkConnection {
 			error T("Timeout on Map Server, "), "connection";
 			Plugins::callHook('disconnected');
 			if ($config{dcOnDisconnect}) {
-				error T("Auto disconnecting on Disconnect!\n"), "connection";
-				chatLog("k", T("*** You disconnected, auto quit! ***\n"));
-				quit();
+				error T("Auto disconnecting on Disconnect!\n");
+				chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
+				$quit = 1;
 			} else {
 				error TF("connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
 				$timeout_ex{master}{time} = time;

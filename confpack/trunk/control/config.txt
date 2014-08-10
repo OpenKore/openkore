@@ -141,6 +141,7 @@ cachePlayerNames_maxSize 100
 
 clientSight 20
 
+dcPause 1
 dcOnDeath 0
 dcOnDualLogin 0
 dcOnDisconnect 0
