@@ -948,7 +948,7 @@ sub processDead {
 	}
 
 	if (AI::action eq "dead" && $config{dcOnDeath} && $config{dcOnDeath} != -1) {
-		message T("Auto disconnecting on death!\n");
+		error T("Auto disconnecting on death!\n");
 		chatLog("k", T("*** You died, auto disconnect! ***\n"));
 		$messageSender->sendQuit();
 		quit();
@@ -3156,10 +3156,10 @@ sub processDcOnPlayer {
 	if (!$field->isCity && !AI::inQueue("storageAuto", "buyAuto") && $config{dcOnPlayer}
 		&& ($config{'lockMap'} eq "" || $field->baseName eq $config{'lockMap'})
 		&& !isSafe() && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
-	$messageSender->sendQuit();
-	error T("Auto disconnecting on Player!\n");
-	chatLog("k", T("*** Nearby is another player, auto disconnect! ***\n"));
-	quit();
+			$messageSender->sendQuit();
+			error T("Auto disconnecting on Player!\n");
+			chatLog("k", T("*** Nearby is another player, auto disconnect! ***\n"));
+			quit();
 	}
 }
 

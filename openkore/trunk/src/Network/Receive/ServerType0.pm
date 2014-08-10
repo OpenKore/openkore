@@ -1202,7 +1202,7 @@ sub arrow_none {
 	if ($type == 0) {
 		delete $char->{'arrow'};
 		if ($config{'dcOnEmptyArrow'}) {
-			message T("Auto disconnecting on EmptyArrow!\n");
+			error T("Auto disconnecting on EmptyArrow!\n");
 			chatLog("k", T("*** Your Arrows is ended, auto disconnect! ***\n"));
 			$messageSender->sendQuit();
 			quit();
@@ -2068,9 +2068,9 @@ sub errors {
 		($config{dcOnDisconnect} &&
 		$args->{type} != 3 &&
 		$args->{type} != 10))) {
-		error T("Auto disconnecting on Disconnect!\n"), "connection";
-		chatLog("k", T("*** You disconnected, auto quit! ***\n"));
-		quit();
+		error T("Auto disconnecting on Disconnect!\n");
+		chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
+		$quit = 1;
 	}
 
 	$net->setState(1);
@@ -2085,28 +2085,28 @@ sub errors {
 		# FIXME BAN_SERVER_SHUTDOWN is 0x1, 0x0 is BAN_UNFAIR
 		if ($config{'dcOnServerShutDown'} == 1) {
 			error T("Auto disconnecting on ServerShutDown!\n");
-			chatLog("k", T("*** Server shutting down , disconnect! ***\n"));
-			quit();
+			chatLog("k", T("*** Server shutting down , auto disconnect! ***\n"));
+			$quit = 1;
 		} else {
 			error T("Server shutting down\n"), "connection";
 		}
 	} elsif ($args->{type} == 1) {
 		if($config{'dcOnServerClose'} == 1) {
 			error T("Auto disconnecting on ServerClose!\n");
-			chatLog("k", T("*** Server is closed , disconnect! ***\n"));
-			quit();
+			chatLog("k", T("*** Server is closed , auto disconnect! ***\n"));
+			$quit = 1;
 		} else {
 			error T("Error: Server is closed\n"), "connection";
 		}
 	} elsif ($args->{type} == 2) {
 		if ($config{'dcOnDualLogin'} == 1) {
-			$interface->errorDialog(TF("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
-				"%s will now immediately 	disconnect.", $Settings::NAME));
+			error (TF("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
+				"%s will now immediately 	disconnect.\n", $Settings::NAME));
 			chatLog("k", T("*** DualLogin, auto disconnect! ***\n"));
 			quit();
 		} elsif ($config{'dcOnDualLogin'} >= 2) {
-			error T("Critical Error: Dual login prohibited - Someone trying to login!\n"), "connection";
-			message TF("Disconnect for %s seconds...\n", $config{'dcOnDualLogin'}), "connection";
+			error T("Critical Error: Dual login prohibited - Someone trying to login!\n");
+			message TF("Reconnecting, wait %s seconds...\n", $config{'dcOnDualLogin'}), "connection";
 			$timeout_ex{'master'}{'timeout'} = $config{'dcOnDualLogin'};
 		} else {
 			error T("Critical Error: Dual login prohibited - Someone trying to login!\n"), "connection";
@@ -4288,7 +4288,7 @@ sub private_message {
 	});
 
 	if ($config{dcOnPM} && $AI == AI::AUTO) {
-		message T("Disconnecting on PM!\n");
+		message T("Auto disconnecting on PM!\n");
 		chatLog("k", T("*** You were PM'd, auto disconnect! ***\n"));
 		$messageSender->sendQuit();
 		quit();
@@ -5397,7 +5397,7 @@ our %stat_info_handlers = (
 		return unless $actor->isa('Actor::You');
 
 		if ($config{dcOnMute} && $actor->{muted}) {
-			error TF("*** %s have been muted for %d minutes, auto disconnect! ***\n", $actor, $actor->{mute_period}/60);
+			error TF("Auto disconnecting, %s have been muted for %s minutes!\n", $actor, $actor->{mute_period}/60);
 			chatLog("k", TF("*** %s have been muted for %d minutes, auto disconnect! ***\n", $actor, $actor->{mute_period}/60));
 			$messageSender->sendQuit();
 			quit();
@@ -5461,8 +5461,9 @@ our %stat_info_handlers = (
 
 		if ($config{dcOnZeny} && $actor->{zeny} <= $config{dcOnZeny}) {
 			$messageSender->sendQuit();
-			$interface->errorDialog(TF("Disconnecting due to zeny lower than %s.", $config{dcOnZeny}));
-			$quit = 1;
+			error (TF("Auto disconnecting due to zeny lower than %s!\n", $config{dcOnZeny}));
+			chatLog("k", T("*** You have no money, auto disconnect! ***\n"));
+			quit();
 		}
 	},
 	#VAR_SEX
