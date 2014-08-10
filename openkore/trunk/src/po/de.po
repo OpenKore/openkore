@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gKore (OpenKore 2.0.5.1)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-10 04:47+0400\n"
+"POT-Creation-Date: 2014-08-10 16:34-0600\n"
 "PO-Revision-Date: 2010-11-29 20:08+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: German <thrice007@yahoo.de>\n"
@@ -74,7 +74,7 @@ msgstr ""
 "Die Version von (wx)start.exe ist zu alt.\n"
 "Bitte upgraden: %s"
 
-#: ../../openkore.pl:184
+#: ../../openkore.pl:194
 msgid "Bye!\n"
 msgstr "Bye!\n"
 
@@ -94,7 +94,7 @@ msgstr ""
 msgid "Inventory Item: %s is already equipped in slot: %s\n"
 msgstr "Item '%s' equipped.\n"
 
-#: ../Actor/Item.pm:455 ../Commands.pm:4946
+#: ../Actor/Item.pm:455 ../Commands.pm:4974
 #, perl-format
 msgid "No such equipped Inventory Item: %s in slot: %s\n"
 msgstr ""
@@ -115,7 +115,7 @@ msgstr ""
 msgid "you"
 msgstr ""
 
-#: ../Actor/You.pm:89 ../Commands.pm:1503
+#: ../Actor/You.pm:89 ../Commands.pm:1504
 msgid "You"
 msgstr ""
 
@@ -523,12 +523,16 @@ msgstr "Kein LOS von %s (%s,%s) bis Portal auf Position (%s,%s).\n"
 msgid "Unable to calculate a route to %s target, dropping target\n"
 msgstr "Kann keine Route zum Ziel finden, Ziel gedroppt\n"
 
-#: ../AI/Slave/Homunculus.pm:48
+#: ../AI/Slave/Homunculus.pm:34
+msgid "Homunculus hunger reaches the return value.\n"
+msgstr ""
+
+#: ../AI/Slave/Homunculus.pm:44
 #, perl-format
 msgid "Auto-feeding %s (%d hunger).\n"
 msgstr ""
 
-#: ../AI/Slave/Homunculus.pm:50
+#: ../AI/Slave/Homunculus.pm:46
 #, perl-format
 msgid "Next feeding at: %d hunger.\n"
 msgstr ""
@@ -1603,7 +1607,7 @@ msgstr ""
 msgid "SP: "
 msgstr ""
 
-#: ../Interface/Wx.pm:679 ../Commands.pm:2035
+#: ../Interface/Wx.pm:679 ../Commands.pm:2036
 msgid "Exp: "
 msgstr ""
 
@@ -1720,14 +1724,14 @@ msgstr "%s; laufe nach (%s, %s)\n"
 msgid "%s at %s, %s  -  Class: %s"
 msgstr "%s %s %s - Dmg: %s (Delay %s)\n"
 
-#: ../Interface/Wx.pm:1432 ../Commands.pm:3198
+#: ../Interface/Wx.pm:1432 ../Commands.pm:3226
 msgid ""
 "Error in function 'move' (Move Player)\n"
 "Unable to walk while inside a chat room!\n"
 "Use the command: chat leave\n"
 msgstr ""
 
-#: ../Interface/Wx.pm:1436 ../Commands.pm:3202
+#: ../Interface/Wx.pm:1436 ../Commands.pm:3230
 msgid ""
 "Error in function 'move' (Move Player)\n"
 "Unable to walk while the shop is open!\n"
@@ -3000,8 +3004,8 @@ msgid "%s: Type 'store' to start buying, or type 'sell' to start selling\n"
 msgstr "%s: Schreib 'store' um einzukaufen oder 'sell' zum Verkaufen\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3374
-#: ../Network/Receive/ServerType0.pm:3606 ../Commands.pm:1531
-#: ../Commands.pm:1539
+#: ../Network/Receive/ServerType0.pm:3606 ../Commands.pm:1532
+#: ../Commands.pm:1540
 #, fuzzy
 msgid "Unknown "
 msgstr "Unbekanntes Feld,"
@@ -3031,7 +3035,7 @@ msgid "%s: Type 'talk num <number #>' to input a number.\n"
 msgstr "%s: Schreib 'talk num <Zahl #>' um eine Zahl einzugeben.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3515
-#: ../Network/Receive/ServerType0.pm:3747 ../Commands.pm:4730
+#: ../Network/Receive/ServerType0.pm:3747 ../Commands.pm:4758
 #, fuzzy
 msgid "Cancel Chat"
 msgstr "%s: Gespräch beendet\n"
@@ -5275,7 +5279,7 @@ msgstr "Spieler gestorben: %s (%d) %s %s\n"
 msgid "Slave Died: %s (%d) %s\n"
 msgstr "Spieler gestorben: %s (%d) %s %s\n"
 
-#: ../Network/Receive.pm:1033 ../Commands.pm:4408
+#: ../Network/Receive.pm:1033 ../Commands.pm:4436
 msgid "You are sitting.\n"
 msgstr "Du sitzt nun.\n"
 
@@ -5391,11 +5395,11 @@ msgstr ""
 msgid "%s %s\n"
 msgstr "%s hat %s "
 
-#: ../Network/Receive.pm:1517 ../Commands.pm:5352
+#: ../Network/Receive.pm:1517 ../Commands.pm:5380
 msgid " Warp Portal "
 msgstr ""
 
-#: ../Network/Receive.pm:1518 ../Commands.pm:5353
+#: ../Network/Receive.pm:1518 ../Commands.pm:5381
 #, fuzzy
 msgid "#  Place                           Map\n"
 msgstr ""
@@ -5595,7 +5599,7 @@ msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Network/Receive.pm:1963 ../Commands.pm:990
+#: ../Network/Receive.pm:1963 ../Commands.pm:991
 #, perl-format
 msgid "Cash Points: %sC - Kafra Points: %sC\n"
 msgstr ""
@@ -5973,21 +5977,21 @@ msgstr "Berechne Route zum Master: %s (%s,%s)\n"
 msgid "Calculating route to: %s(%s): %d, %d\n"
 msgstr "Berechne Route nach: %s(%s): %d, %d\n"
 
-#: ../ChatQueue.pm:282 ../Commands.pm:3229 ../Commands.pm:3248
+#: ../ChatQueue.pm:282 ../Commands.pm:3257 ../Commands.pm:3276
 #, perl-format
 msgid "Calculating route to: %s(%s)\n"
 msgstr "Berechne Route nach: %s(%s)\n"
 
-#: ../ChatQueue.pm:289 ../Commands.pm:3257
+#: ../ChatQueue.pm:289 ../Commands.pm:3285
 #, perl-format
 msgid "Map %s does not exist\n"
 msgstr "Map %s existiert nicht\n"
 
-#: ../Commands.pm:292
+#: ../Commands.pm:293
 msgid "Cannot use pause command now.\n"
 msgstr ""
 
-#: ../Commands.pm:307
+#: ../Commands.pm:308
 #, fuzzy, perl-format
 msgid ""
 "Unknown command '%s'. Please read the documentation for a list of commands.\n"
@@ -5996,40 +6000,40 @@ msgstr ""
 "Unbekannter Befehl '%s'.Bitte lies das Manual um eine Liste von Befehlen zu "
 "erhalten.\n"
 
-#: ../Commands.pm:473
+#: ../Commands.pm:474
 msgid "AI sequences cleared\n"
 msgstr "AI Sequenzen gelöscht\n"
 
-#: ../Commands.pm:477
+#: ../Commands.pm:478
 #, fuzzy
 msgid " AI Sequence "
 msgstr "AI Sequenzen gelöscht\n"
 
-#: ../Commands.pm:492
+#: ../Commands.pm:493
 msgid "AI is already set to auto mode\n"
 msgstr "AI ist bereits im Automode (ai auto)\n"
 
-#: ../Commands.pm:496 ../Commands.pm:530
+#: ../Commands.pm:497 ../Commands.pm:531
 msgid "AI set to auto mode\n"
 msgstr "AI ist nun im Automode (ai auto)\n"
 
-#: ../Commands.pm:501
+#: ../Commands.pm:502
 msgid "AI is already set to manual mode\n"
 msgstr "AI ist schon im manuellen Modus (ai manual)\n"
 
-#: ../Commands.pm:505 ../Commands.pm:526
+#: ../Commands.pm:506 ../Commands.pm:527
 msgid "AI set to manual mode\n"
 msgstr "AI ist nun im manuellen Modus (ai manual)\n"
 
-#: ../Commands.pm:510
+#: ../Commands.pm:511
 msgid "AI is already off\n"
 msgstr "AI ist schon aus (ai off)\n"
 
-#: ../Commands.pm:514 ../Commands.pm:522
+#: ../Commands.pm:515 ../Commands.pm:523
 msgid "AI turned off\n"
 msgstr "AI ist nun aus (ai off)\n"
 
-#: ../Commands.pm:534
+#: ../Commands.pm:535
 msgid ""
 "Syntax Error in function 'ai' (AI Commands)\n"
 "Usage: ai [ clear | print | ai_v | auto | manual | off ]\n"
@@ -6037,70 +6041,70 @@ msgstr ""
 "Syntax Error in Funktion 'ai' (AI Befehle)\n"
 "Benutzung: ai [ clear | print | ai_v | auto | manual | off ]\n"
 
-#: ../Commands.pm:543 ../Commands.pm:2201
+#: ../Commands.pm:544 ../Commands.pm:2202
 #, perl-format
 msgid "ai_seq (off) = %s\n"
 msgstr "ai_seq (aus) = %s\n"
 
-#: ../Commands.pm:545 ../Commands.pm:2203
+#: ../Commands.pm:546 ../Commands.pm:2204
 #, perl-format
 msgid "ai_seq (manual) = %s\n"
 msgstr "ai_seq (manuell) = %s\n"
 
-#: ../Commands.pm:547 ../Commands.pm:2205
+#: ../Commands.pm:548 ../Commands.pm:2206
 #, perl-format
 msgid "ai_seq (auto) = %s\n"
 msgstr "ai_seq (auto) = %s\n"
 
-#: ../Commands.pm:549 ../Commands.pm:2207
+#: ../Commands.pm:550 ../Commands.pm:2208
 msgid "solution\n"
 msgstr "Lösung\n"
 
-#: ../Commands.pm:550
+#: ../Commands.pm:551
 #, perl-format
 msgid "Active tasks: %s\n"
 msgstr "Aktive Tasks: %s\n"
 
-#: ../Commands.pm:551
+#: ../Commands.pm:552
 #, perl-format
 msgid "Inactive tasks: %s\n"
 msgstr "Inaktive Tasks: %s\n"
 
-#: ../Commands.pm:556 ../Commands.pm:693 ../Commands.pm:703 ../Commands.pm:712
-#: ../Commands.pm:747 ../Commands.pm:888 ../Commands.pm:895 ../Commands.pm:902
-#: ../Commands.pm:909 ../Commands.pm:1085 ../Commands.pm:1100
-#: ../Commands.pm:1119 ../Commands.pm:1307 ../Commands.pm:1315
-#: ../Commands.pm:1411 ../Commands.pm:1594 ../Commands.pm:1608
-#: ../Commands.pm:1651 ../Commands.pm:1686 ../Commands.pm:1881
-#: ../Commands.pm:1932 ../Commands.pm:2093 ../Commands.pm:2105
-#: ../Commands.pm:2115 ../Commands.pm:2129 ../Commands.pm:2226
-#: ../Commands.pm:2281 ../Commands.pm:2291 ../Commands.pm:2300
-#: ../Commands.pm:2330 ../Commands.pm:2352 ../Commands.pm:2368
-#: ../Commands.pm:2385 ../Commands.pm:2394 ../Commands.pm:2410
-#: ../Commands.pm:2419 ../Commands.pm:2428 ../Commands.pm:2437
-#: ../Commands.pm:2452 ../Commands.pm:2467 ../Commands.pm:2483
-#: ../Commands.pm:2499 ../Commands.pm:2600 ../Commands.pm:2797
-#: ../Commands.pm:2829 ../Commands.pm:3067 ../Commands.pm:3099
-#: ../Commands.pm:3150 ../Commands.pm:3301 ../Commands.pm:3387
-#: ../Commands.pm:3517 ../Commands.pm:3534 ../Commands.pm:3956
-#: ../Commands.pm:4046 ../Commands.pm:4066 ../Commands.pm:4078
-#: ../Commands.pm:4210 ../Commands.pm:4253 ../Commands.pm:4327
-#: ../Commands.pm:4346 ../Commands.pm:4691 ../Commands.pm:4839
-#: ../Commands.pm:4886 ../Commands.pm:4931 ../Commands.pm:4964
-#: ../Commands.pm:4987 ../Commands.pm:5009 ../Commands.pm:5029
-#: ../Commands.pm:5146 ../Commands.pm:5210 ../Commands.pm:5271
-#: ../Commands.pm:5321 ../Commands.pm:5443 ../Commands.pm:5559
-#: ../Commands.pm:5675 ../Commands.pm:5724 ../Commands.pm:5747
-#: ../Commands.pm:5760 ../Commands.pm:5860
+#: ../Commands.pm:557 ../Commands.pm:694 ../Commands.pm:704 ../Commands.pm:713
+#: ../Commands.pm:748 ../Commands.pm:889 ../Commands.pm:896 ../Commands.pm:903
+#: ../Commands.pm:910 ../Commands.pm:1086 ../Commands.pm:1101
+#: ../Commands.pm:1120 ../Commands.pm:1308 ../Commands.pm:1316
+#: ../Commands.pm:1412 ../Commands.pm:1595 ../Commands.pm:1609
+#: ../Commands.pm:1652 ../Commands.pm:1687 ../Commands.pm:1882
+#: ../Commands.pm:1933 ../Commands.pm:2094 ../Commands.pm:2106
+#: ../Commands.pm:2116 ../Commands.pm:2130 ../Commands.pm:2227
+#: ../Commands.pm:2282 ../Commands.pm:2292 ../Commands.pm:2301
+#: ../Commands.pm:2331 ../Commands.pm:2353 ../Commands.pm:2369
+#: ../Commands.pm:2386 ../Commands.pm:2395 ../Commands.pm:2411
+#: ../Commands.pm:2420 ../Commands.pm:2429 ../Commands.pm:2438
+#: ../Commands.pm:2453 ../Commands.pm:2468 ../Commands.pm:2484
+#: ../Commands.pm:2500 ../Commands.pm:2601 ../Commands.pm:2798
+#: ../Commands.pm:2830 ../Commands.pm:3095 ../Commands.pm:3127
+#: ../Commands.pm:3178 ../Commands.pm:3329 ../Commands.pm:3415
+#: ../Commands.pm:3545 ../Commands.pm:3562 ../Commands.pm:3984
+#: ../Commands.pm:4074 ../Commands.pm:4094 ../Commands.pm:4106
+#: ../Commands.pm:4238 ../Commands.pm:4281 ../Commands.pm:4355
+#: ../Commands.pm:4374 ../Commands.pm:4719 ../Commands.pm:4867
+#: ../Commands.pm:4914 ../Commands.pm:4959 ../Commands.pm:4992
+#: ../Commands.pm:5015 ../Commands.pm:5037 ../Commands.pm:5057
+#: ../Commands.pm:5174 ../Commands.pm:5238 ../Commands.pm:5299
+#: ../Commands.pm:5349 ../Commands.pm:5471 ../Commands.pm:5587
+#: ../Commands.pm:5703 ../Commands.pm:5752 ../Commands.pm:5775
+#: ../Commands.pm:5788 ../Commands.pm:5888
 #, perl-format
 msgid "You must be logged in the game to use this command '%s'\n"
 msgstr ""
 
-#: ../Commands.pm:566
+#: ../Commands.pm:567
 msgid " Item To Craft "
 msgstr ""
 
-#: ../Commands.pm:576
+#: ../Commands.pm:577
 msgid ""
 "Error in function 'arrowcraft' (Create Arrows)\n"
 "Type 'arrowcraft use' to get list.\n"
@@ -6108,7 +6112,7 @@ msgstr ""
 "Fehler in Funktion 'arrowcraft' (Arrowherstellung)\n"
 "Gib 'arrowcraft use' ein um eine Liste mit Befehlen zu erhalten.\n"
 
-#: ../Commands.pm:583
+#: ../Commands.pm:584
 msgid ""
 "Error in function 'arrowcraft' (Create Arrows)\n"
 "You don't have Arrow Making Skill.\n"
@@ -6116,7 +6120,7 @@ msgstr ""
 "Fehler in Funktion 'arrowcraft' (Arrowherstellung)\n"
 "Du hast kein Arrowcraft-Skill.\n"
 
-#: ../Commands.pm:591 ../Commands.pm:833 ../Commands.pm:836
+#: ../Commands.pm:592 ../Commands.pm:834 ../Commands.pm:837
 #, perl-format
 msgid ""
 "Error in function 'arrowcraft forceuse #' (Create Arrows)\n"
@@ -6125,7 +6129,7 @@ msgstr ""
 "Fehler in Funktion 'arrowcraft forceuse #' (Arrowherstellung)\n"
 "Du hast Item %s nicht in deinem Inventar.\n"
 
-#: ../Commands.pm:598
+#: ../Commands.pm:599
 msgid ""
 "Error in function 'arrowcraft' (Create Arrows)\n"
 "Usage: arrowcraft [<identify #>]\n"
@@ -6135,7 +6139,7 @@ msgstr ""
 "Benutzung: arrowcraft [<identify #>]\n"
 "Gib 'arrowcraft use' ein um eine Liste mit Befehlen zu erhalten.\n"
 
-#: ../Commands.pm:609
+#: ../Commands.pm:610
 #, perl-format
 msgid ""
 "Error in function 'a' (Attack Monster)\n"
@@ -6144,7 +6148,7 @@ msgstr ""
 "Fehler in Funktion 'a' (Attackiere Monster)\n"
 "Monster %s existiert nicht.\n"
 
-#: ../Commands.pm:621
+#: ../Commands.pm:622
 msgid ""
 "Syntax Error in function 'a' (Attack Monster)\n"
 "Usage: attack <monster # | no | yes >\n"
@@ -6152,12 +6156,12 @@ msgstr ""
 "Syntax Error in Funktion 'a' (Attackiere Monster)\n"
 "Benutzung: attack <monster # | no | yes >\n"
 
-#: ../Commands.pm:634
+#: ../Commands.pm:635
 #, perl-format
 msgid "Stopped attacking %s (%s)\n"
 msgstr "Angriff von %s (%s)  gestoppt\n"
 
-#: ../Commands.pm:645
+#: ../Commands.pm:646
 msgid ""
 "Syntax Error in function 'auth' (Overall Authorize)\n"
 "Usage: auth <username> <flag>\n"
@@ -6165,28 +6169,28 @@ msgstr ""
 "Syntax Error in Funktion 'auth' (Authorisierung)\n"
 "Nutzung: auth <username> <flag>\n"
 
-#: ../Commands.pm:653
+#: ../Commands.pm:654
 msgid "Initiating auto-buy.\n"
 msgstr "Initiiere auto-buy.\n"
 
-#: ../Commands.pm:662
+#: ../Commands.pm:663
 #, fuzzy
 msgid " Items to sell (simulation) "
 msgstr "----------------- Items zum Craften -----------------\n"
 
-#: ../Commands.pm:663
+#: ../Commands.pm:664
 msgid "Amount  Item Name\n"
 msgstr ""
 
-#: ../Commands.pm:681
+#: ../Commands.pm:682
 msgid "Initiating auto-sell.\n"
 msgstr "Initiiere auto-sell.\n"
 
-#: ../Commands.pm:687
+#: ../Commands.pm:688
 msgid "Initiating auto-storage.\n"
 msgstr "Initiiere auto-storage.\n"
 
-#: ../Commands.pm:723
+#: ../Commands.pm:724
 #, fuzzy
 msgid ""
 "Syntax Error in function 'buy' (Buy Store Item)\n"
@@ -6195,7 +6199,7 @@ msgstr ""
 "Syntax Error in Funktion 'buy' (Kaufe Item)\n"
 "Nutzung: buy <item #> [<amount>]\n"
 
-#: ../Commands.pm:728
+#: ../Commands.pm:729
 #, perl-format
 msgid ""
 "Error in function 'buy' (Buy Store Item)\n"
@@ -6204,17 +6208,17 @@ msgstr ""
 "Error in Funktion 'buy' (Kaufe Item)\n"
 "Store-Item %s existiert nicht.\n"
 
-#: ../Commands.pm:757
+#: ../Commands.pm:758
 msgid ""
 "Error in function 'bingbing' (Change look direction)\n"
 "Can't use command while not connected to server.\n"
 msgstr ""
 
-#: ../Commands.pm:762
+#: ../Commands.pm:763
 msgid "Cancelling card merge.\n"
 msgstr "Abbruch der Card-Benutzung.\n"
 
-#: ../Commands.pm:764
+#: ../Commands.pm:765
 msgid ""
 "Error in function 'card mergecancel' (Cancel a card merge request)\n"
 "You are not currently in a card merge session.\n"
@@ -6222,12 +6226,12 @@ msgstr ""
 "Error in Funktion 'card mergecancel' (Abbrechen der Card-Benutzung)\n"
 "Du benutzt im Moment keine Card.\n"
 
-#: ../Commands.pm:770
+#: ../Commands.pm:771
 #, fuzzy
 msgid " Card Merge Candidates "
 msgstr "-----Folgende Cards stehen zu Verfügung-----\n"
 
-#: ../Commands.pm:780
+#: ../Commands.pm:781
 msgid ""
 "Error in function 'card mergelist' (List availible card merge items)\n"
 "You are not currently in a card merge session.\n"
@@ -6235,7 +6239,7 @@ msgstr ""
 "Fehler in Funktion 'card mergelist' (Listet vorhandene Cards)\n"
 "Du benutzt im Moment keine Card.\n"
 
-#: ../Commands.pm:791
+#: ../Commands.pm:792
 #, perl-format
 msgid ""
 "Error in function 'card merge' (Finalize card merging onto item)\n"
@@ -6244,7 +6248,7 @@ msgstr ""
 "Fehler in Funktion 'card merge' (Benutzung abschließen)\n"
 "Das Item %s ist nicht in der Liste.\n"
 
-#: ../Commands.pm:794
+#: ../Commands.pm:795
 msgid ""
 "Error in function 'card merge' (Finalize card merging onto item)\n"
 "You are not currently in a card merge session.\n"
@@ -6252,7 +6256,7 @@ msgstr ""
 "Fehler in Funktion 'card merge' (Abschließen der Benutzung)\n"
 "Du benutzt zurzeit keine Card.\n"
 
-#: ../Commands.pm:799
+#: ../Commands.pm:800
 msgid ""
 "Syntax Error in function 'card merge' (Finalize card merging onto item)\n"
 "Usage: card merge <item number>\n"
@@ -6263,12 +6267,12 @@ msgstr ""
 "<item number> - Ziffer des Items. Gib 'card mergelist' ein um eine Liste zu "
 "erhalten.\n"
 
-#: ../Commands.pm:808
+#: ../Commands.pm:809
 #, perl-format
 msgid "Sending merge list request for %s...\n"
 msgstr "Sende Liste %s...\n"
 
-#: ../Commands.pm:811
+#: ../Commands.pm:812
 #, perl-format
 msgid ""
 "Error in function 'card use' (Request list of items for merging with card)\n"
@@ -6277,7 +6281,7 @@ msgstr ""
 "Fehler in Funktion 'card use' (Liste anfordern)\n"
 "Card %s existiert nicht.\n"
 
-#: ../Commands.pm:815
+#: ../Commands.pm:816
 msgid ""
 "Syntax Error in function 'card use' (Request list of items for merging with "
 "card)\n"
@@ -6288,12 +6292,12 @@ msgstr ""
 "Nutzung: card use <item number>\n"
 "<item number> - Zahl des Items. Gib 'i' ein, um eine Liste zu erhalten.\n"
 
-#: ../Commands.pm:820
+#: ../Commands.pm:821
 #, fuzzy
 msgid " Card List "
 msgstr "Skill Point"
 
-#: ../Commands.pm:843
+#: ../Commands.pm:844
 msgid ""
 "Syntax Error in function 'card' (Card Compounding)\n"
 "Usage: card <use|mergelist|mergecancel|merge>\n"
@@ -6301,7 +6305,7 @@ msgstr ""
 "Syntax Error in Funktion 'card' (Card Verbindung)\n"
 "Nutzung: card <use|mergelist|mergecancel|merge>\n"
 
-#: ../Commands.pm:853
+#: ../Commands.pm:854
 msgid ""
 "Error in function 'cart' (Cart Management)\n"
 "You do not have a cart.\n"
@@ -6309,23 +6313,23 @@ msgstr ""
 "Error in Funktion 'cart' (Cart Management)\n"
 "Du bestitzt kein Cart.\n"
 
-#: ../Commands.pm:858
+#: ../Commands.pm:859
 msgid "Cart inventory is not available.\n"
 msgstr "Cart Inventar nicht verfügbar.\n"
 
-#: ../Commands.pm:862
+#: ../Commands.pm:863
 msgid " Cart "
 msgstr ""
 
-#: ../Commands.pm:863
+#: ../Commands.pm:864
 msgid "#  Name\n"
 msgstr ""
 
-#: ../Commands.pm:867
+#: ../Commands.pm:868
 msgid " -- Not Identified"
 msgstr " -- Nicht identifiziert"
 
-#: ../Commands.pm:870
+#: ../Commands.pm:871
 #, perl-format
 msgid ""
 "\n"
@@ -6334,7 +6338,7 @@ msgstr ""
 "\n"
 "Kapazität: %d/%d  Gewicht: %d/%d\n"
 
-#: ../Commands.pm:877
+#: ../Commands.pm:878
 #, perl-format
 msgid ""
 "Syntax Error in function 'cart desc' (Show Cart Item Description)\n"
@@ -6343,7 +6347,7 @@ msgstr ""
 "Syntax Error in Funktion 'cart desc' (Zeige Cart Itembeschreibung)\n"
 "'%s' ist keine gültige Item Nummer.\n"
 
-#: ../Commands.pm:880
+#: ../Commands.pm:881
 #, perl-format
 msgid ""
 "Error in function 'cart desc' (Show Cart Item Description)\n"
@@ -6352,15 +6356,15 @@ msgstr ""
 "Error in Funktion 'cart desc' (Zeige Cart Itembeschreibung)\n"
 "Cart Item %s existiert nicht.\n"
 
-#: ../Commands.pm:906
+#: ../Commands.pm:907
 msgid "Trying to released the cart...\n"
 msgstr ""
 
-#: ../Commands.pm:915
+#: ../Commands.pm:916
 msgid "Usage: cart change <1-5>\n"
 msgstr ""
 
-#: ../Commands.pm:918
+#: ../Commands.pm:919
 #, perl-format
 msgid ""
 "Error in function 'cart'\n"
@@ -6369,7 +6373,7 @@ msgstr ""
 "Error in Funktion 'cart'\n"
 "Befehl '%s' ist ungültig.\n"
 
-#: ../Commands.pm:928
+#: ../Commands.pm:929
 #, fuzzy
 msgid ""
 "Syntax Error in function 'cash' (Cash shop)\n"
@@ -6378,7 +6382,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'c' (Chat)\n"
 "Benutzung: c <Nachricht>\n"
 
-#: ../Commands.pm:953 ../Commands.pm:985
+#: ../Commands.pm:954 ../Commands.pm:986
 #, fuzzy, perl-format
 msgid ""
 "Error in function 'cash buy': item %s not found or shop list is not ready "
@@ -6387,66 +6391,66 @@ msgstr ""
 "Fehler bei Funktion 'talk num' (NPC antworten)\n"
 "%s ist keine gültige Zahl.\n"
 
-#: ../Commands.pm:961
+#: ../Commands.pm:962
 msgid ""
 "Error in function 'cash buy': invalid item name or tables needs to be "
 "updated \n"
 msgstr ""
 
-#: ../Commands.pm:974
+#: ../Commands.pm:975
 #, perl-format
 msgid "Buying %s from cash shop \n"
 msgstr ""
 
-#: ../Commands.pm:978
+#: ../Commands.pm:979
 #, perl-format
 msgid "Not enough cash to buy item %s (%sC), we have %sC\n"
 msgstr ""
 
-#: ../Commands.pm:996
+#: ../Commands.pm:997
 msgid "New"
 msgstr ""
 
-#: ../Commands.pm:997
+#: ../Commands.pm:998
 msgid "Popular"
 msgstr ""
 
-#: ../Commands.pm:998
+#: ../Commands.pm:999
 msgid "Limited"
 msgstr ""
 
-#: ../Commands.pm:999
+#: ../Commands.pm:1000
 msgid "Rental"
 msgstr ""
 
-#: ../Commands.pm:1000
+#: ../Commands.pm:1001
 msgid "Perpetuity"
 msgstr ""
 
-#: ../Commands.pm:1001
+#: ../Commands.pm:1002
 msgid "Buff"
 msgstr ""
 
-#: ../Commands.pm:1002
+#: ../Commands.pm:1003
 msgid "Recovery"
 msgstr ""
 
-#: ../Commands.pm:1003
+#: ../Commands.pm:1004
 msgid "Etc"
 msgstr ""
 
-#: ../Commands.pm:1008
+#: ../Commands.pm:1009
 msgid " Tab: "
 msgstr ""
 
-#: ../Commands.pm:1009
+#: ../Commands.pm:1010
 #, fuzzy
 msgid "ID      Item Name                            Price\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:1020
+#: ../Commands.pm:1021
 #, fuzzy
 msgid ""
 "Syntax Error in function 'cash' (Cash shop)\n"
@@ -6455,7 +6459,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'c' (Chat)\n"
 "Benutzung: c <Nachricht>\n"
 
-#: ../Commands.pm:1029
+#: ../Commands.pm:1030
 msgid ""
 "Syntax Error in function 'cart add' (Add Item to Cart)\n"
 "Usage: cart add <item>\n"
@@ -6463,7 +6467,7 @@ msgstr ""
 "Syntax Error bei Funktion 'cart add'  (Item zum Cart hinzufügen)\n"
 "Nutzung: cart add <item>\n"
 
-#: ../Commands.pm:1043
+#: ../Commands.pm:1044
 #, perl-format
 msgid ""
 "Error in function 'cart add' (Add Item to Cart)\n"
@@ -6472,7 +6476,7 @@ msgstr ""
 "Error in Funktion 'cart add' (Item zum Cart hinzufügen)\n"
 "Item %s existiert nicht.\n"
 
-#: ../Commands.pm:1058
+#: ../Commands.pm:1059
 msgid ""
 "Syntax Error in function 'cart get' (Get Item from Cart)\n"
 "Usage: cart get <cart item>\n"
@@ -6480,7 +6484,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'cart get' (Item aus Cart nehmen)\n"
 "Benutzung: cart get <cart Item>\n"
 
-#: ../Commands.pm:1071
+#: ../Commands.pm:1072
 #, perl-format
 msgid ""
 "Error in function 'cart get' (Get Item from Cart)\n"
@@ -6489,7 +6493,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'cart get' (Item aus Cart nehmen)\n"
 "Cart Item %s exisitert nicht.\n"
 
-#: ../Commands.pm:1105
+#: ../Commands.pm:1106
 #, fuzzy, perl-format
 msgid ""
 "Syntax Error in function '%1$s' (Chat)\n"
@@ -6498,11 +6502,11 @@ msgstr ""
 "Syntaxfehler bei Funktion 'c' (Chat)\n"
 "Benutzung: c <Nachricht>\n"
 
-#: ../Commands.pm:1114
+#: ../Commands.pm:1115
 msgid "Chat log cleared.\n"
 msgstr "Chat log gelöscht.\n"
 
-#: ../Commands.pm:1134
+#: ../Commands.pm:1135
 msgid ""
 "Error in function 'chat bestow' (Bestow Admin in Chat)\n"
 "You are not in a Chat Room.\n"
@@ -6510,7 +6514,7 @@ msgstr ""
 "Fehler in Funktion 'chat bestow' (Adminrechte)\n"
 "Du bist in keinem Chat.\n"
 
-#: ../Commands.pm:1137
+#: ../Commands.pm:1138
 msgid ""
 "Syntax Error in function 'chat bestow' (Bestow Admin in Chat)\n"
 "Usage: chat bestow <user #>\n"
@@ -6518,7 +6522,7 @@ msgstr ""
 "Fehler in Funktion 'chat bestow' (Adminrechte)\n"
 "Benutzung: chat bestow <Spieler #>\n"
 
-#: ../Commands.pm:1140
+#: ../Commands.pm:1141
 #, perl-format
 msgid ""
 "Error in function 'chat bestow' (Bestow Admin in Chat)\n"
@@ -6527,7 +6531,7 @@ msgstr ""
 "Fehler in Funktion 'chat bestow' (Adminrechte)\n"
 "Spieler %s exisitert nicht; Schreib 'chat info' um eine Liste zu erhalten\n"
 
-#: ../Commands.pm:1153
+#: ../Commands.pm:1154
 msgid ""
 "Syntax Error in function 'chatmod' (Modify Chat Room)\n"
 "Usage: chat modify \"<title>\" [<limit #> <public flag> <password>]\n"
@@ -6535,7 +6539,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'chatmod' (Chat verändert)\n"
 "Benutzung: chat modify \"<Name>\" [<Limit #> <Pub #> <Passwort>]\n"
 
-#: ../Commands.pm:1169
+#: ../Commands.pm:1170
 msgid ""
 "Error in function 'chat kick' (Kick from Chat)\n"
 "You are not in a Chat Room.\n"
@@ -6543,7 +6547,7 @@ msgstr ""
 "Fehler bei Funktion 'chat kick' (Aus Chat kicken)\n"
 "Du bist in keinem Chat.\n"
 
-#: ../Commands.pm:1172
+#: ../Commands.pm:1173
 msgid ""
 "Syntax Error in function 'chat kick' (Kick from Chat)\n"
 "Usage: chat kick <user #>\n"
@@ -6551,7 +6555,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'chat kick' (Aus Chat kicken)\n"
 "Benutzung: chat kick <Spieler #>\n"
 
-#: ../Commands.pm:1175
+#: ../Commands.pm:1176
 #, perl-format
 msgid ""
 "Error in function 'chat kick' (Kick from Chat)\n"
@@ -6560,7 +6564,7 @@ msgstr ""
 "Fehler bei Funktion 'chat kick' (Aus Chat kicken)\n"
 "Spieler %s exisitert nicht\n"
 
-#: ../Commands.pm:1186
+#: ../Commands.pm:1187
 msgid ""
 "Syntax Error in function 'chat join' (Join Chat Room)\n"
 "Usage: chat join <chat room #> [<password>]\n"
@@ -6568,7 +6572,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'chat join' (Chat betreten)\n"
 "Benutzung: chat join <Chat #> [<Passwort>]\n"
 
-#: ../Commands.pm:1189
+#: ../Commands.pm:1190
 msgid ""
 "Error in function 'chat join' (Join Chat Room)\n"
 "You are already in a chat room.\n"
@@ -6576,7 +6580,7 @@ msgstr ""
 "Fehler bei Funktion 'chat join' (Chat betreten)\n"
 "Du bist bereits in einem Chat.\n"
 
-#: ../Commands.pm:1192
+#: ../Commands.pm:1193
 #, perl-format
 msgid ""
 "Error in function 'chat join' (Join Chat Room)\n"
@@ -6585,7 +6589,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'chat join' (Chat betreten)\n"
 "Chat %s existiert nicht.\n"
 
-#: ../Commands.pm:1200
+#: ../Commands.pm:1201
 msgid ""
 "Error in function 'chat leave' (Leave Chat Room)\n"
 "You are not in a Chat Room.\n"
@@ -6593,7 +6597,7 @@ msgstr ""
 "Fehler bei Funktion 'chat leave' (Chat verlassen)\n"
 "Du bist in keinem Chat.\n"
 
-#: ../Commands.pm:1213
+#: ../Commands.pm:1214
 msgid ""
 "Syntax Error in function 'chat create' (Create Chat Room)\n"
 "Usage: chat create \"<title>\" [<limit #> <public flag> <password>]\n"
@@ -6601,7 +6605,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'chat create' (Chat erstellen)\n"
 "Benutzung: chat create \"<Name>\"[<Limit #> <Pub> <Passwort>]\n"
 
-#: ../Commands.pm:1216
+#: ../Commands.pm:1217
 msgid ""
 "Error in function 'chat create' (Create Chat Room)\n"
 "You are already in a chat room.\n"
@@ -6609,12 +6613,12 @@ msgstr ""
 "Syntaxfehler bei Funktion 'chat create' (Chat erstellen)\n"
 "Du bist bereits in einem Chat.\n"
 
-#: ../Commands.pm:1237
+#: ../Commands.pm:1238
 #, fuzzy
 msgid " Chat Room List "
 msgstr "Chat erstellt\n"
 
-#: ../Commands.pm:1238
+#: ../Commands.pm:1239
 #, fuzzy
 msgid ""
 "#   Title                                  Owner                Users   "
@@ -6624,15 +6628,15 @@ msgstr ""
 "#  Name                                          Typ        Anzahl       "
 "Preis\n"
 
-#: ../Commands.pm:1253
+#: ../Commands.pm:1254
 msgid "There is no chat room info - you are not in a chat room\n"
 msgstr "Keine Chatinfo vorhanden - du bist in keinem Chat\n"
 
-#: ../Commands.pm:1255
+#: ../Commands.pm:1256
 msgid " Chat Room Info "
 msgstr ""
 
-#: ../Commands.pm:1256
+#: ../Commands.pm:1257
 #, fuzzy
 msgid "Title                                  Users   Pub/Priv\n"
 msgstr ""
@@ -6640,11 +6644,11 @@ msgstr ""
 "Name                                      Anzahl  Preis\n"
 
 #. Translation Comment: Users in chat room
-#: ../Commands.pm:1263
+#: ../Commands.pm:1264
 msgid "-- Users --\n"
 msgstr "-- Spieler --\n"
 
-#: ../Commands.pm:1276
+#: ../Commands.pm:1277
 msgid ""
 "Syntax Error in function 'chat' (Chat room management)\n"
 "Usage: chat <create|modify|join|kick|leave|info|list|bestow>\n"
@@ -6652,7 +6656,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'chat' (Chat Management)\n"
 "Benutzung: chat <create|modify|join|kick|leave|info|list|bestow>\n"
 
-#: ../Commands.pm:1287
+#: ../Commands.pm:1288
 msgid ""
 "Syntax Error in function 'chist' (Show Chat History)\n"
 "Usage: chist [<number of entries #>]\n"
@@ -6660,21 +6664,21 @@ msgstr ""
 "Syntaxfehler bei Funktion 'chist' (Chatlog zeigen)\n"
 "Benutzung: chist [<Anzahl Einträge #>]\n"
 
-#: ../Commands.pm:1292
+#: ../Commands.pm:1293
 msgid " Chat History "
 msgstr ""
 
-#: ../Commands.pm:1301 ../Commands.pm:2868
+#: ../Commands.pm:1302 ../Commands.pm:2869
 #, perl-format
 msgid "Unable to open %s\n"
 msgstr "Kann %s nicht öffnen\n"
 
-#: ../Commands.pm:1319
+#: ../Commands.pm:1320
 #, fuzzy
 msgid "Buying shop closed.\n"
 msgstr "Shop geschlossen.\n"
 
-#: ../Commands.pm:1350
+#: ../Commands.pm:1351
 msgid ""
 "Syntax Error in function 'conf' (Change a Configuration Key)\n"
 "Usage: conf <variable> [<value>|none]\n"
@@ -6682,44 +6686,44 @@ msgstr ""
 "Syntaxfehler bei Funktion 'conf' (Config ändern)\n"
 "Benutzung: conf <variable> [<Wert>|none]\n"
 
-#: ../Commands.pm:1354
+#: ../Commands.pm:1355
 #, perl-format
 msgid "Config variable %s doesn't exist\n"
 msgstr "Config %s existiert nicht \n"
 
-#: ../Commands.pm:1359
+#: ../Commands.pm:1360
 #, perl-format
 msgid "Config '%s' is not displayed\n"
 msgstr "Config '%s' wird nicht angezeigt\n"
 
-#: ../Commands.pm:1362
+#: ../Commands.pm:1363
 #, perl-format
 msgid "Config '%s' is %s\n"
 msgstr "Config '%s' ist %s\n"
 
-#: ../Commands.pm:1364
+#: ../Commands.pm:1365
 #, fuzzy, perl-format
 msgid "Config '%s' is not set\n"
 msgstr "Config '%s' wird nicht angezeigt\n"
 
-#: ../Commands.pm:1388
+#: ../Commands.pm:1389
 msgid "Damage Taken Report:\n"
 msgstr "Erlittener Schaden:\n"
 
-#: ../Commands.pm:1397
+#: ../Commands.pm:1398
 #, perl-format
 msgid "Total Damage Taken: %s\n"
 msgstr "Gesamter erlittener Schaden: %s\n"
 
-#: ../Commands.pm:1398
+#: ../Commands.pm:1399
 msgid "End of report.\n"
 msgstr "End des Reports.\n"
 
-#: ../Commands.pm:1402
+#: ../Commands.pm:1403
 msgid "Damage Taken Report reset.\n"
 msgstr "Erlittener Schaden Report zurücksetzen.\n"
 
-#: ../Commands.pm:1404
+#: ../Commands.pm:1405
 msgid ""
 "Syntax error in function 'damage' (Damage Report)\n"
 "Usage: damage [reset]\n"
@@ -6727,7 +6731,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'damage' (Schadensreport)\n"
 "Benutzung: damage [reset]\n"
 
-#: ../Commands.pm:1419
+#: ../Commands.pm:1420
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
 "You are already in a deal\n"
@@ -6735,7 +6739,7 @@ msgstr ""
 "Fehler bei Funktion 'deal' (Handel)\n"
 "Du handelst gerade mit einer anderen Person\n"
 
-#: ../Commands.pm:1422
+#: ../Commands.pm:1423
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
 "You must first cancel the incoming deal\n"
@@ -6743,7 +6747,7 @@ msgstr ""
 "Fehler bei Funktion 'deal' (Handel)\n"
 "Du musst zuerst das Angebot ablehnen\n"
 
-#: ../Commands.pm:1425
+#: ../Commands.pm:1426
 #, perl-format
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
@@ -6752,12 +6756,12 @@ msgstr ""
 "Fehler bei Funktion 'deal' (Handel)\n"
 "Spieler %s existiert nicht\n"
 
-#: ../Commands.pm:1430
+#: ../Commands.pm:1431
 #, perl-format
 msgid "Attempting to deal %s\n"
 msgstr "Versuchel %s anzuhandeln\n"
 
-#: ../Commands.pm:1434
+#: ../Commands.pm:1435
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
 "There is no incoming/current deal to cancel\n"
@@ -6765,7 +6769,7 @@ msgstr ""
 "Fehler bei Funktion 'deal' (Handel)\n"
 "Es gibt keinen Handel, den du ablehnen könntest\n"
 
-#: ../Commands.pm:1442
+#: ../Commands.pm:1443
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
 "There is no deal to accept\n"
@@ -6773,7 +6777,7 @@ msgstr ""
 "Fehler bei Funktion 'deal' (Handel)\n"
 "Es gibt keinen Handel, den du annehmen könntest\n"
 
-#: ../Commands.pm:1445
+#: ../Commands.pm:1446
 #, perl-format
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
@@ -6782,7 +6786,7 @@ msgstr ""
 "Fehler bei Funktion 'deal' (Handel)\n"
 "Kann Handel nicht abschließen - %s hat noch nicht angenommen\n"
 
-#: ../Commands.pm:1448
+#: ../Commands.pm:1449
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
 "You already accepted the final deal\n"
@@ -6790,11 +6794,11 @@ msgstr ""
 "Fehler bei Funktion 'deal' (Handel)\n"
 "Du hast schon angenommen\n"
 
-#: ../Commands.pm:1455
+#: ../Commands.pm:1456
 msgid "You accepted the final Deal\n"
 msgstr "Handel erfolgreich angenommen\n"
 
-#: ../Commands.pm:1461
+#: ../Commands.pm:1462
 msgid ""
 "Error in function 'deal_add' (Add Item to Deal)\n"
 "No deal in progress\n"
@@ -6802,7 +6806,7 @@ msgstr ""
 "Fehler bei Funktion 'deal_add' (Item zum Handel hinzufügen)\n"
 "Kein Handel gestartet\n"
 
-#: ../Commands.pm:1464
+#: ../Commands.pm:1465
 msgid ""
 "Error in function 'deal_add' (Add Item to Deal)\n"
 "Can't add any Items - You already finalized the deal\n"
@@ -6810,7 +6814,7 @@ msgstr ""
 "Fehler bei Funktion 'deal_add' (Item zum Handel hinzufügen)\n"
 "Kann kein Item hinzufügen - Der Handel wurde schon angenommen\n"
 
-#: ../Commands.pm:1467
+#: ../Commands.pm:1468
 #, perl-format
 msgid ""
 "Error in function 'deal_add' (Add Item to Deal)\n"
@@ -6819,7 +6823,7 @@ msgstr ""
 "Fehler bei Funktion 'deal_add' (Item zum Handel hinzufügen)\n"
 "Item %s existiert nicht im Inventar.\n"
 
-#: ../Commands.pm:1470
+#: ../Commands.pm:1471
 msgid ""
 "Error in function 'deal_add' (Add Item to Deal)\n"
 "Amount must either be a number, or not specified.\n"
@@ -6827,16 +6831,16 @@ msgstr ""
 "Fehler bei Funktion 'deal_add' (Item zum Handel hinzufügen)\n"
 "Anzahl muss entweder eine Zahl oder leer sein.\n"
 
-#: ../Commands.pm:1481
+#: ../Commands.pm:1482
 msgid "You can't add any more items to the deal\n"
 msgstr "Mehr Items können dem Deal nicht hinzugefügt werdenl\n"
 
-#: ../Commands.pm:1488
+#: ../Commands.pm:1489
 #, perl-format
 msgid "You put forward %sz to Deal\n"
 msgstr " %sz wurde dem Deal zugefügt\n"
 
-#: ../Commands.pm:1491
+#: ../Commands.pm:1492
 msgid ""
 "Syntax Error in function 'deal' (Deal a player)\n"
 "Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n"
@@ -6844,27 +6848,27 @@ msgstr ""
 "Syntaxfehler bei Funktion 'deal' (Handel)\n"
 "Benutzung: deal [<Spieler #| no | add>] [<Item #>] [<Anzahl>]\n"
 
-#: ../Commands.pm:1498
+#: ../Commands.pm:1499
 msgid "There is no deal list - You are not in a deal\n"
 msgstr "Keine Deal-Liste vorhanden - Du befindest dich in keinem Deal\n"
 
-#: ../Commands.pm:1501
+#: ../Commands.pm:1502
 msgid " Current Deal "
 msgstr ""
 
-#: ../Commands.pm:1505 ../Commands.pm:1508
+#: ../Commands.pm:1506 ../Commands.pm:1509
 msgid " - Finalized"
 msgstr ""
 
-#: ../Commands.pm:1553
+#: ../Commands.pm:1554
 msgid "zeny: @<<<<<<<<<<<<<<<<<<<<<<<   zeny: @<<<<<<<<<<<<<<<<<<<<<<<"
 msgstr ""
 
-#: ../Commands.pm:1579
+#: ../Commands.pm:1580
 msgid " Debug information "
 msgstr ""
 
-#: ../Commands.pm:1580
+#: ../Commands.pm:1581
 #, fuzzy, perl-format, perl-brace-format
 msgid ""
 "ConState: %s\t\tConnected: %s\n"
@@ -6883,7 +6887,7 @@ msgstr ""
 "Last AI() call: %.2f secs ago\n"
 "-------------------------------------------\n"
 
-#: ../Commands.pm:1615
+#: ../Commands.pm:1616
 msgid ""
 "Syntax Error in function 'drop' (Drop Inventory Item)\n"
 "Usage: drop <item #> [<amount>]\n"
@@ -6891,11 +6895,11 @@ msgstr ""
 "Syntaxfehler bei Funktion 'drop' (Gegenstand wegwerfen)\n"
 "Benutzung: Drop <Item #> [<Anzahl>]\n"
 
-#: ../Commands.pm:1634
+#: ../Commands.pm:1635
 msgid "No items were dropped.\n"
 msgstr "Keine Items gedropped.\n"
 
-#: ../Commands.pm:1659
+#: ../Commands.pm:1660
 msgid ""
 "Syntax Error in function 'e' (Emotion)\n"
 "Usage: e <command>\n"
@@ -6904,26 +6908,26 @@ msgstr ""
 "Benutzung: e <Emoticon>\n"
 
 #. Translation Comment: List of equiped items on each slot
-#: ../Commands.pm:1681 ../Commands.pm:4926
+#: ../Commands.pm:1682 ../Commands.pm:4954
 msgid "Slots:\n"
 msgstr "Slots:\n"
 
-#: ../Commands.pm:1699
+#: ../Commands.pm:1700
 #, perl-format
 msgid "No such non-equipped Inventory Item: %s\n"
 msgstr ""
 
-#: ../Commands.pm:1704
+#: ../Commands.pm:1705
 #, perl-format
 msgid "Inventory Item %s (%s) can't be equipped.\n"
 msgstr "Item %s (%s) kann nich equipped werden.\n"
 
-#: ../Commands.pm:1717
+#: ../Commands.pm:1718
 #, fuzzy
 msgid "Character equipment not yet ready\n"
 msgstr "Charakter gelöscht.\n"
 
-#: ../Commands.pm:1732
+#: ../Commands.pm:1733
 msgid ""
 "Syntax Error in function 'eval' (Evaluate a Perl expression)\n"
 "Usage: eval <expression>\n"
@@ -6931,19 +6935,19 @@ msgstr ""
 "Syntaxfehler bei Funktion 'eval' (Perlbefehl ausführen)\n"
 "Benutzung: eval <Ausdruck>\n"
 
-#: ../Commands.pm:1768
+#: ../Commands.pm:1769
 msgid "Exp counter reset.\n"
 msgstr "Expzähler zurückgesetzt.\n"
 
-#: ../Commands.pm:1773
+#: ../Commands.pm:1774
 msgid "Exp report not yet ready\n"
 msgstr ""
 
-#: ../Commands.pm:1800
+#: ../Commands.pm:1801
 msgid " Exp Report "
 msgstr ""
 
-#: ../Commands.pm:1801
+#: ../Commands.pm:1802
 #, fuzzy, perl-format
 msgid ""
 "Botting time : %s\n"
@@ -6973,34 +6977,34 @@ msgstr ""
 "Bytes gesendet   : %s\n"
 "Bytes erhalten   : %s\n"
 
-#: ../Commands.pm:1829
+#: ../Commands.pm:1830
 msgid " Monster Killed Count "
 msgstr ""
 
-#: ../Commands.pm:1830
+#: ../Commands.pm:1831
 #, fuzzy
 msgid "#   ID     Name                    Count\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:1839
+#: ../Commands.pm:1840
 #, perl-format
 msgid "Total number of killed monsters: %s\n"
 msgstr "Getötete Monster: %s\n"
 
-#: ../Commands.pm:1847
+#: ../Commands.pm:1848
 msgid " Item Change Count "
 msgstr ""
 
-#: ../Commands.pm:1848
+#: ../Commands.pm:1849
 #, fuzzy
 msgid "Name                           Count\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:1861
+#: ../Commands.pm:1862
 msgid ""
 "Syntax error in function 'exp' (Exp Report)\n"
 "Usage: exp [<report | monster | item | reset>]\n"
@@ -7008,15 +7012,15 @@ msgstr ""
 "Syntaxfehler bei Funktion 'exp' (EXP-Report)\n"
 "Benutzung: exp [<report | monster | item | reset>]\n"
 
-#: ../Commands.pm:1872
+#: ../Commands.pm:1873
 msgid "Your falcon is active\n"
 msgstr "Dein Falke ist aktiv\n"
 
-#: ../Commands.pm:1874
+#: ../Commands.pm:1875
 msgid "Your falcon is inactive\n"
 msgstr "Dein Falke ist inaktiv\n"
 
-#: ../Commands.pm:1878
+#: ../Commands.pm:1879
 msgid ""
 "Error in function 'falcon release' (Remove Falcon Status)\n"
 "You don't possess a falcon.\n"
@@ -7024,7 +7028,7 @@ msgstr ""
 "Fehler bei Funktion 'falcon release' (Falken freilassen)\n"
 "Du besitzt keinen Falken.\n"
 
-#: ../Commands.pm:1892
+#: ../Commands.pm:1893
 msgid ""
 "Syntax Error in function 'follow' (Follow Player)\n"
 "Usage: follow <player #>\n"
@@ -7032,7 +7036,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'follow' (Spieler folgen)\n"
 "Benutzung: follow <Spieler #>\n"
 
-#: ../Commands.pm:1899
+#: ../Commands.pm:1900
 #, perl-format
 msgid ""
 "Error in function 'follow' (Follow Player)\n"
@@ -7041,75 +7045,75 @@ msgstr ""
 "Fehler in Funktion 'follow' (Spieler folgen)\n"
 "Spieler %s ist entweder nicht sichtbar oder nicht online in der Party.\n"
 
-#: ../Commands.pm:1921
+#: ../Commands.pm:1922
 msgid " Friends "
 msgstr ""
 
-#: ../Commands.pm:1922
+#: ../Commands.pm:1923
 #, fuzzy
 msgid "#   Name                      Online\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:1939
+#: ../Commands.pm:1940
 #, perl-format
 msgid "Player %s does not exist\n"
 msgstr "Spieler #%s existiert nicht\n"
 
-#: ../Commands.pm:1941
+#: ../Commands.pm:1942
 msgid "Player name has not been received, please try again\n"
 msgstr "Spielername nicht erhalten, bitte versuche es erneut\n"
 
-#: ../Commands.pm:1951
+#: ../Commands.pm:1952
 #, perl-format
 msgid "%s is already your friend\n"
 msgstr "%s ist bereits in deiner Friendlist\n"
 
-#: ../Commands.pm:1953
+#: ../Commands.pm:1954
 #, perl-format
 msgid "Requesting %s to be your friend\n"
 msgstr "Friendrequest an %s geschickt\n"
 
-#: ../Commands.pm:1960 ../Commands.pm:1987
+#: ../Commands.pm:1961 ../Commands.pm:1988
 #, perl-format
 msgid "Friend #%s does not exist\n"
 msgstr "Friend #%s existiert nicht\n"
 
-#: ../Commands.pm:1963
+#: ../Commands.pm:1964
 #, perl-format
 msgid "Attempting to remove %s from your friend list\n"
 msgstr "Versuche %s aus der Friendlist zu entfernen\n"
 
-#: ../Commands.pm:1969
+#: ../Commands.pm:1970
 msgid "Can't accept the friend request, no incoming request\n"
 msgstr "Kann Friendrequest nicht annehmen, kein einkommendes Angebot\n"
 
-#: ../Commands.pm:1971
+#: ../Commands.pm:1972
 #, perl-format
 msgid "Accepting the friend request from %s\n"
 msgstr "Friendrequest von %s angenommen\n"
 
-#: ../Commands.pm:1978
+#: ../Commands.pm:1979
 msgid "Can't reject the friend request - no incoming request\n"
 msgstr "Kann Friendangebot nicht ablehnen, da keins geschickt wurde\n"
 
-#: ../Commands.pm:1980
+#: ../Commands.pm:1981
 #, perl-format
 msgid "Rejecting the friend request from %s\n"
 msgstr "Friendrequest von %s abgelehnt\n"
 
-#: ../Commands.pm:1991
+#: ../Commands.pm:1992
 #, perl-format
 msgid "Friend %s has been added to the PM list as %s\n"
 msgstr "Friend %s ist bereits in der PM Liste als %s\n"
 
-#: ../Commands.pm:1994
+#: ../Commands.pm:1995
 #, perl-format
 msgid "Friend %s is already in the PM list\n"
 msgstr "Friend %s ist bereits in der PM Liste\n"
 
-#: ../Commands.pm:1999
+#: ../Commands.pm:2000
 msgid ""
 "Syntax Error in function 'friend' (Manage Friends List)\n"
 "Usage: friend [request|remove|accept|reject|pm]\n"
@@ -7117,79 +7121,79 @@ msgstr ""
 "Syntaxfehler bei Funktion 'friend' (Friendlist Management)\n"
 "Benutzung: friend [request|remove|accept|reject|pm]\n"
 
-#: ../Commands.pm:2009
+#: ../Commands.pm:2010
 msgid "Error: Can't detect slaves - character is not yet ready\n"
 msgstr ""
 
-#: ../Commands.pm:2019
+#: ../Commands.pm:2020
 msgid "Error: Unknown command in cmdSlave\n"
 msgstr ""
 
-#: ../Commands.pm:2028
+#: ../Commands.pm:2029
 #, fuzzy
 msgid "Error: No slave detected.\n"
 msgstr "Fehler: Kein Homunculus gefunden.\n"
 
-#: ../Commands.pm:2038
+#: ../Commands.pm:2039
 msgid "Kills: "
 msgstr ""
 
-#: ../Commands.pm:2045
+#: ../Commands.pm:2046
 msgid "Intimacy:"
 msgstr ""
 
-#: ../Commands.pm:2048
+#: ../Commands.pm:2049
 msgid "Faith:"
 msgstr ""
 
-#: ../Commands.pm:2053 ../Commands.pm:2054 ../Commands.pm:2055
-#: ../Commands.pm:2056 ../Commands.pm:2057 ../Commands.pm:2058
+#: ../Commands.pm:2054 ../Commands.pm:2055 ../Commands.pm:2056
+#: ../Commands.pm:2057 ../Commands.pm:2058 ../Commands.pm:2059
 msgid "N/A"
 msgstr ""
 
-#: ../Commands.pm:2061
+#: ../Commands.pm:2062
 msgid " Slave Status "
 msgstr ""
 
-#: ../Commands.pm:2062
+#: ../Commands.pm:2063
 msgid ""
-"Name: @<<<<<<<<<<<<<<<<<<<<<<<<<  HP: @>>>>>>>>>>>>>>>>>>\n"
-"Type: @<<<<<<<<<<<<<<<<<<<<<<<<<  SP: @>>>>>>>>>>>>>>>>>>\n"
-"Job:  @<<<<<<<<<<<<<<<\n"
+"Name: @<<<<<<<<<<<<<<<<<<<<<<<<< HP: @>>>>>>>>>>>>>>>>>>\n"
+"Type: @<<<<<<<<<<<<<<<<<<<<<<<<< SP: @>>>>>>>>>>>>>>>>>>\n"
+"Job: @<<<<<<<<<<<<<<<\n"
 "Level: @<<  @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"
 msgstr ""
 
-#: ../Commands.pm:2067
+#: ../Commands.pm:2068
 msgid ""
-"Atk:  @>>>     Matk:     @>>>     Hunger:       @>>>\n"
-"Hit:  @>>>     Critical: @>>>     @<<<<<<<<<    @>>>\n"
-"Def:  @>>>     Mdef:     @>>>     Accessory:    @>>>\n"
-"Flee: @>>>     Aspd:     @>>>     Summons:      @>>>\n"
+"Atk: @>>>    Matk:     @>>>    Hunger:      @>>>\n"
+"Hit: @>>>    Critical: @>>>    @<<<<<<<<<   @>>>\n"
+"Def: @>>>    Mdef:     @>>>    Accessory:   @>>>\n"
+"Flee:@>>>    Aspd:     @>>>    Summons:     @>>>\n"
 "Range: @>>     Skill pt: @>>>     Contract End:  @<<<<<<<<<<\n"
 msgstr ""
 
-#: ../Commands.pm:2082 ../Commands.pm:3114
+#: ../Commands.pm:2083 ../Commands.pm:3142
 #, perl-format
 msgid "Statuses: %s \n"
 msgstr ""
 
-#: ../Commands.pm:2089
+#: ../Commands.pm:2090
 #, fuzzy
 msgid "This slave can not be feeded\n"
 msgstr "Mit diesem Item kann nicht gehandelt werden.\n"
 
-#: ../Commands.pm:2097
+#: ../Commands.pm:2098
 msgid ""
 "Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"
 msgstr ""
 "Dein Homunculus ist nicht hungrig. Wenn du es nun fütterst verringert sich "
 "die Loyalität.\n"
 
-#: ../Commands.pm:2100
+#: ../Commands.pm:2101
 msgid "Feeding your homunculus.\n"
 msgstr "Homunculus wird gefüttert.\n"
 
-#: ../Commands.pm:2119
+#: ../Commands.pm:2120
 #, fuzzy, perl-format
 msgid ""
 "Error in function '%s move' (Slave Move)\n"
@@ -7198,47 +7202,47 @@ msgstr ""
 "Fehler bei Funktion 'homun move' (Homunculus bewegen)\n"
 "Ungültige Koordinaten (%s, %s).\n"
 
-#: ../Commands.pm:2137
+#: ../Commands.pm:2138
 #, fuzzy
 msgid "Slave AI sequences cleared\n"
 msgstr "AI Sequenzen gelöscht\n"
 
-#: ../Commands.pm:2141
+#: ../Commands.pm:2142
 #, fuzzy
 msgid " Slave AI Sequence "
 msgstr "AI Sequenzen gelöscht\n"
 
-#: ../Commands.pm:2153
+#: ../Commands.pm:2154
 #, fuzzy
 msgid "Slave AI is already set to auto mode\n"
 msgstr "AI ist bereits im Automode (ai auto)\n"
 
-#: ../Commands.pm:2157 ../Commands.pm:2191
+#: ../Commands.pm:2158 ../Commands.pm:2192
 #, fuzzy
 msgid "Slave AI set to auto mode\n"
 msgstr "AI ist nun im Automode (ai auto)\n"
 
-#: ../Commands.pm:2162
+#: ../Commands.pm:2163
 #, fuzzy
 msgid "Slave AI is already set to manual mode\n"
 msgstr "AI ist schon im manuellen Modus (ai manual)\n"
 
-#: ../Commands.pm:2166 ../Commands.pm:2187
+#: ../Commands.pm:2167 ../Commands.pm:2188
 #, fuzzy
 msgid "Slave AI set to manual mode\n"
 msgstr "AI ist nun im manuellen Modus (ai manual)\n"
 
-#: ../Commands.pm:2173 ../Commands.pm:2183
+#: ../Commands.pm:2174 ../Commands.pm:2184
 #, fuzzy
 msgid "Slave AI turned off\n"
 msgstr "AI ist nun aus (ai off)\n"
 
-#: ../Commands.pm:2175
+#: ../Commands.pm:2176
 #, fuzzy
 msgid "Slave AI is already off\n"
 msgstr "AI ist schon aus (ai off)\n"
 
-#: ../Commands.pm:2195
+#: ../Commands.pm:2196
 #, fuzzy, perl-format
 msgid ""
 "Syntax Error in function 'slave ai' (Slave AI Commands)\n"
@@ -7247,19 +7251,19 @@ msgstr ""
 "Syntax Error in Funktion 'ai' (AI Befehle)\n"
 "Benutzung: ai [ clear | print | ai_v | auto | manual | off ]\n"
 
-#: ../Commands.pm:2211
+#: ../Commands.pm:2212
 #, fuzzy
 msgid " Slave Skill List "
 msgstr "Skill Point"
 
-#: ../Commands.pm:2212
+#: ../Commands.pm:2213
 #, fuzzy
 msgid "   # Skill Name                     Lv      SP\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:2220 ../Commands.pm:4247
+#: ../Commands.pm:2221 ../Commands.pm:4275
 #, perl-format
 msgid ""
 "\n"
@@ -7268,7 +7272,7 @@ msgstr ""
 "\n"
 "Skill Points: %d\n"
 
-#: ../Commands.pm:2231
+#: ../Commands.pm:2232
 #, fuzzy, perl-format
 msgid ""
 "Error in function '%s skills add' (Add Skill Point)\n"
@@ -7277,7 +7281,7 @@ msgstr ""
 "Fehler bei Funktion 'skills add' (Skills hinzufügen)\n"
 "Skill %s existiert nicht.\n"
 
-#: ../Commands.pm:2234
+#: ../Commands.pm:2235
 #, fuzzy, perl-format
 msgid ""
 "Error in function '%s skills add' (Add Skill Point)\n"
@@ -7286,7 +7290,7 @@ msgstr ""
 "Fehler bei Funktion 'skills add' (Skills hinzufügen)\n"
 "Nicht ausreichend Skillpunkte vorhanden, um %s zu erhöhen\n"
 
-#: ../Commands.pm:2243
+#: ../Commands.pm:2244
 #, fuzzy, perl-format
 msgid ""
 "Error in function '%s skills desc' (Skill Description)\n"
@@ -7295,21 +7299,21 @@ msgstr ""
 "Fehler bei Funktion 'skills desc' (Skillbeschreibung)\n"
 "Skill %s existiert nicht.\n"
 
-#: ../Commands.pm:2246 ../Commands.pm:4276 ../Misc.pm:2193
+#: ../Commands.pm:2247 ../Commands.pm:4304 ../Misc.pm:2193
 msgid "Error: No description available.\n"
 msgstr "Fehler: Keine Beschreibung vorhanden.\n"
 
-#: ../Commands.pm:2247 ../Commands.pm:4277
+#: ../Commands.pm:2248 ../Commands.pm:4305
 #, fuzzy
 msgid " Skill Description "
 msgstr "Skill Point"
 
-#: ../Commands.pm:2248
+#: ../Commands.pm:2249
 #, fuzzy, perl-format
 msgid "Skill: %s"
 msgstr "Skill Point"
 
-#: ../Commands.pm:2254
+#: ../Commands.pm:2255
 #, fuzzy, perl-format
 msgid ""
 "Syntax Error in function 'slave skills' (Slave Skills Functions)\n"
@@ -7318,12 +7322,12 @@ msgstr ""
 "Syntaxfehler bei Funktion 'skills' (Skills)\n"
 "Benutzung: skills [<add |desc>] [<Skill #>\n"
 
-#: ../Commands.pm:2264
+#: ../Commands.pm:2265
 #, fuzzy
 msgid "The name can not exceed 24 characters\n"
 msgstr "Neuen Charakter erstellen"
 
-#: ../Commands.pm:2267
+#: ../Commands.pm:2268
 #, fuzzy, perl-format
 msgid ""
 "Syntax Error in function 'slave rename' (Slave Rename)\n"
@@ -7332,11 +7336,11 @@ msgstr ""
 "Syntaxfehler bei Funktion 'guild create' (Gilde erstellen)\n"
 "Benutzung: guild create <Name>\n"
 
-#: ../Commands.pm:2271
+#: ../Commands.pm:2272
 msgid "His homunculus has been named or not under conditions to be renamed!\n"
 msgstr ""
 
-#: ../Commands.pm:2275
+#: ../Commands.pm:2276
 #, fuzzy, perl-format
 msgid ""
 "Usage: %s <feed | s | status | move | standby | ai | aiv | skills | delete | "
@@ -7344,66 +7348,66 @@ msgid ""
 msgstr ""
 "Benutzung: homun < feed | s | status | move | standby | ai | aiv | skills>\n"
 
-#: ../Commands.pm:2309
+#: ../Commands.pm:2310
 #, perl-format
 msgid "Usage: %s <MESSAGE>\n"
 msgstr ""
 
-#: ../Commands.pm:2341
+#: ../Commands.pm:2342
 msgid ""
 "Usage: gmmapmove <FIELD>\n"
 "FIELD is a field name including .gat extension, like: gef_fild01.gat\n"
 msgstr ""
 
-#: ../Commands.pm:2359
+#: ../Commands.pm:2360
 msgid ""
 "Usage: gmsummon <player name>\n"
 "Summon a player.\n"
 msgstr ""
 
-#: ../Commands.pm:2375
+#: ../Commands.pm:2376
 msgid "Usage: gmdc <player_AID>\n"
 msgstr ""
 
-#: ../Commands.pm:2400
+#: ../Commands.pm:2401
 msgid "Usage: gmcreate (<MONSTER_NAME> || <Item_Name>) \n"
 msgstr ""
 
-#: ../Commands.pm:2443
+#: ../Commands.pm:2444
 msgid "Usage: gmmute <ID> <minutes>\n"
 msgstr ""
 
-#: ../Commands.pm:2458
+#: ../Commands.pm:2459
 msgid "Usage: gmunmute <ID> <minutes>\n"
 msgstr ""
 
-#: ../Commands.pm:2473
+#: ../Commands.pm:2474
 msgid "Usage: gmwarpto <Player Name>\n"
 msgstr ""
 
-#: ../Commands.pm:2489
+#: ../Commands.pm:2490
 msgid "Usage: gmrecall [<Character Name> | <User Name>]\n"
 msgstr ""
 
-#: ../Commands.pm:2505
+#: ../Commands.pm:2506
 msgid "Usage: gmremove [<Character Name> | <User Name>]\n"
 msgstr ""
 
-#: ../Commands.pm:2520
+#: ../Commands.pm:2521
 msgid "You must be logged in the game to request guild information\n"
 msgstr ""
 
-#: ../Commands.pm:2522
+#: ../Commands.pm:2523
 msgid ""
 "Guild information is not yet available. You must login to the game and use "
 "the 'guild' command first\n"
 msgstr ""
 
-#: ../Commands.pm:2526
+#: ../Commands.pm:2527
 msgid "Requesting guild information...\n"
 msgstr "Warten auf Gildeninformationen...\n"
 
-#: ../Commands.pm:2545
+#: ../Commands.pm:2546
 #, fuzzy
 msgid ""
 "Enter command to view guild information: guild <info | member | request | "
@@ -7411,17 +7415,17 @@ msgid ""
 msgstr ""
 "Gib einen Befehl ein, um die Gildeninfo anzuzeigen: guild <info | member>\n"
 
-#: ../Commands.pm:2547
+#: ../Commands.pm:2548
 #, perl-format
 msgid "Type 'guild %s' again to view the information.\n"
 msgstr "Schreib 'guild %s' um Infos zu erhalten.\n"
 
-#: ../Commands.pm:2551
+#: ../Commands.pm:2552
 #, fuzzy
 msgid " Guild Information "
 msgstr "Warten auf Gildeninformationen...\n"
 
-#: ../Commands.pm:2552
+#: ../Commands.pm:2553
 #, perl-format
 msgid ""
 "Name    : %s\n"
@@ -7432,27 +7436,27 @@ msgid ""
 msgstr ""
 
 #. Translation Comment: List of allies. Keep the same spaces of the - Guild Information - tag.
-#: ../Commands.pm:2561
+#: ../Commands.pm:2562
 #, perl-format
 msgid "Ally    : %s (%s)\n"
 msgstr "Allys    : %s (%s)\n"
 
 #. Translation Comment: List of enemies. Keep the same spaces of the - Guild Information - tag.
-#: ../Commands.pm:2565
+#: ../Commands.pm:2566
 #, fuzzy, perl-format
 msgid "Enemy   : %s (%s)\n"
 msgstr "Allys    : %s (%s)\n"
 
-#: ../Commands.pm:2572 ../Commands.pm:2673
+#: ../Commands.pm:2573 ../Commands.pm:2674
 msgid "No guild member information available.\n"
 msgstr "Keine Guildmemberinfo vorhanden.\n"
 
-#: ../Commands.pm:2576
+#: ../Commands.pm:2577
 #, fuzzy
 msgid " Guild  Member "
 msgstr "Guildmember %s hat sich eingeloggt.\n"
 
-#: ../Commands.pm:2577
+#: ../Commands.pm:2578
 #, fuzzy
 msgid ""
 "#  Name                       Job           Lv  Title                    "
@@ -7464,16 +7468,16 @@ msgstr ""
 
 #. Translation Comment: Guild member online
 #. Translation Comment: Is the party user on list online?
-#: ../Commands.pm:2589 ../Commands.pm:3362 ../Commands.pm:3369
-#: ../Commands.pm:3565
+#: ../Commands.pm:2590 ../Commands.pm:3390 ../Commands.pm:3397
+#: ../Commands.pm:3593
 msgid "Yes"
 msgstr "Ja"
 
-#: ../Commands.pm:2589 ../Commands.pm:3369 ../Commands.pm:3565
+#: ../Commands.pm:2590 ../Commands.pm:3397 ../Commands.pm:3593
 msgid "No"
 msgstr "Nein"
 
-#: ../Commands.pm:2605
+#: ../Commands.pm:2606
 msgid ""
 "Syntax Error in function 'guild join' (Accept/Deny Guild Join Request)\n"
 "Usage: guild join <flag>\n"
@@ -7481,7 +7485,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'guild join' (Guildrequest annehmen/ablehnen)\n"
 "Benutzung: guild koin <0/1>\n"
 
-#: ../Commands.pm:2609
+#: ../Commands.pm:2610
 msgid ""
 "Error in function 'guild join' (Join/Request to Join Guild)\n"
 "Can't accept/deny guild request - no incoming request.\n"
@@ -7489,15 +7493,15 @@ msgstr ""
 "Fehler bei Funktion 'guild join' (Gilde joinen oder anfragen)\n"
 "Kann Request nicht annehmen/ablehnen - Kein einkommendes Request.\n"
 
-#: ../Commands.pm:2617
+#: ../Commands.pm:2618
 msgid "You accepted the guild join request.\n"
 msgstr "Du bist der Gilde beigetreten.\n"
 
-#: ../Commands.pm:2619
+#: ../Commands.pm:2620
 msgid "You denied the guild join request.\n"
 msgstr "Gildenangebot abgelehnt.\n"
 
-#: ../Commands.pm:2624
+#: ../Commands.pm:2625
 msgid ""
 "Syntax Error in function 'guild create' (Create Guild)\n"
 "Usage: guild create <name>\n"
@@ -7505,40 +7509,40 @@ msgstr ""
 "Syntaxfehler bei Funktion 'guild create' (Gilde erstellen)\n"
 "Benutzung: guild create <Name>\n"
 
-#: ../Commands.pm:2631
+#: ../Commands.pm:2632
 msgid "You are not in a guild.\n"
 msgstr "Du bist in keiner Gilde.\n"
 
-#: ../Commands.pm:2636 ../Commands.pm:2649 ../Commands.pm:3033
+#: ../Commands.pm:2637 ../Commands.pm:2650 ../Commands.pm:3061
 #, perl-format
 msgid "Player %s does not exist.\n"
 msgstr "Spieler %s existiert nicht\n"
 
-#: ../Commands.pm:2639
+#: ../Commands.pm:2640
 #, perl-format
 msgid "Sent guild join request to %s\n"
 msgstr "Gildenanfrage geschickt an %s\n"
 
-#: ../Commands.pm:2644
+#: ../Commands.pm:2645
 msgid ""
 "No guild information available. Type guild to refresh and then try again.\n"
 msgstr "Keine Gildeninfo vorhanden. Schreib 'guild' um zu aktualisieren.\n"
 
-#: ../Commands.pm:2651
+#: ../Commands.pm:2652
 msgid "You must be guildmaster to set an alliance\n"
 msgstr "Du musst der Gildenleader sein um eine Allianz zu formen\n"
 
-#: ../Commands.pm:2655
+#: ../Commands.pm:2656
 #, perl-format
 msgid "Sent guild alliance request to %s\n"
 msgstr "Gildenangebot an %s geschickt\n"
 
-#: ../Commands.pm:2660
+#: ../Commands.pm:2661
 #, perl-format
 msgid "Sending guild leave: %s\n"
 msgstr "Grund des Verlassens: %s\n"
 
-#: ../Commands.pm:2664
+#: ../Commands.pm:2665
 msgid ""
 "Syntax Error in function 'guild break' (Break Guild)\n"
 "Usage: guild break <guild name>\n"
@@ -7546,12 +7550,12 @@ msgstr ""
 "Syntaxfehler bei Funktion 'guild break' (Gilde auflösen)\n"
 "Benutzung: guild break <Gildenname>\n"
 
-#: ../Commands.pm:2668
+#: ../Commands.pm:2669
 #, perl-format
 msgid "Sending guild break: %s\n"
 msgstr "Sende Guildbreak: %s\n"
 
-#: ../Commands.pm:2684
+#: ../Commands.pm:2685
 #, perl-format
 msgid ""
 "Error in function 'guild kick' (Kick Guild Member)\n"
@@ -7560,7 +7564,7 @@ msgstr ""
 "Fehler bei Funktion 'guild kick' (Kicke Gildenmitglied)\n"
 "Fehlerhaftes Gildenmitglied '%s'.\n"
 
-#: ../Commands.pm:2688
+#: ../Commands.pm:2689
 msgid ""
 "Syntax Error in function 'guild kick' (Kick Guild Member)\n"
 "Usage: guild kick <number> <reason>\n"
@@ -7568,41 +7572,41 @@ msgstr ""
 "Syntaxfehler bei Funktion 'guild kick' (Kicke Gildenmitglied)\n"
 "Benutzung: guild kick <Zahl> <Grund>\n"
 
-#: ../Commands.pm:2705
+#: ../Commands.pm:2706
 msgid " Available commands "
 msgstr ""
 
-#: ../Commands.pm:2743
+#: ../Commands.pm:2744
 #, perl-format
 msgid "The command \"%s\" doesn't exist.\n"
 msgstr "Der Befehl \"%s\" existiert nicht. \n"
 
-#: ../Commands.pm:2745
+#: ../Commands.pm:2746
 #, perl-format
 msgid "These commands don't exist: %s\n"
 msgstr "Diese Befehle gibt es nicht: %s\n"
 
-#: ../Commands.pm:2747
+#: ../Commands.pm:2748
 msgid "Type 'help' to see a list of all available commands.\n"
 msgstr "Schreib 'help' um eine Liste mit allen Befehlen zu erhalten.\n"
 
-#: ../Commands.pm:2762
+#: ../Commands.pm:2763
 #, perl-format
 msgid " Help for '%s' "
 msgstr ""
 
-#: ../Commands.pm:2802
+#: ../Commands.pm:2803
 #, fuzzy
 msgid " Identify List "
 msgstr "Nicht identifiziert"
 
-#: ../Commands.pm:2812
+#: ../Commands.pm:2813
 msgid ""
 "The identify list is empty, please use the identify skill or a magnifier "
 "first.\n"
 msgstr ""
 
-#: ../Commands.pm:2815
+#: ../Commands.pm:2816
 #, perl-format
 msgid ""
 "Error in function 'identify' (Identify Item)\n"
@@ -7611,7 +7615,7 @@ msgstr ""
 "Fehler bei Funktion 'identify' (Item identifizieren)\n"
 "Item %s existiert nicht\n"
 
-#: ../Commands.pm:2822
+#: ../Commands.pm:2823
 msgid ""
 "Syntax Error in function 'identify' (Identify Item)\n"
 "Usage: identify [<identify #>]\n"
@@ -7619,7 +7623,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'identify' (Item identifizieren)\n"
 "Benutzung: identify [<identify #>]\n"
 
-#: ../Commands.pm:2835
+#: ../Commands.pm:2836
 msgid ""
 "Syntax Error in function 'ignore' (Ignore Player/Everyone)\n"
 "Usage: ignore <flag> <name | all>\n"
@@ -7627,7 +7631,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'ignore' (Spieler ignorieren)\n"
 "Benutzung: ignore <0/1> <Name | all>\n"
 
-#: ../Commands.pm:2852
+#: ../Commands.pm:2853
 msgid ""
 "Syntax Error in function 'ihist' (Show Item History)\n"
 "Usage: ihist [<number of entries #>]\n"
@@ -7635,61 +7639,51 @@ msgstr ""
 "Syntaxfehler bei Funktion 'ihist' (Itemlog)\n"
 "Benutzung ihist [<number of entries #>]\n"
 
-#: ../Commands.pm:2858
+#: ../Commands.pm:2859
 msgid " Item History "
 msgstr ""
 
-#: ../Commands.pm:2879
+#: ../Commands.pm:2905
 msgid "Inventory is empty\n"
 msgstr "Inventar ist leer\n"
 
 #. Translation Comment: Mark to tell item not identified
 #. Translation Comment: Mark to show not identified items
-#: ../Commands.pm:2903 ../Commands.pm:5804 ../Misc.pm:3153
+#: ../Commands.pm:2929 ../Commands.pm:5832 ../Misc.pm:3153
 msgid "Not Identified"
 msgstr "Nicht identifiziert"
 
-#: ../Commands.pm:2914
-#, fuzzy
+#: ../Commands.pm:2940
 msgid " Inventory "
 msgstr "Inventar ist leer\n"
 
-#. Translation Comment: List of usable items
-#: ../Commands.pm:2918 ../Commands.pm:5814
-msgid "-- Usable --\n"
-msgstr "-- Nutzbare Items --\n"
+#. Translation Comment: List of equipment items worn by character
+#: ../Commands.pm:2944
+msgid "-- Equipment (Equipped) --\n"
+msgstr "-- Equipment (Equipped) --\n"
 
 #. Translation Comment: Tell if the item is marked to be sold
-#: ../Commands.pm:2924 ../Commands.pm:2935 ../Commands.pm:2952
-#: ../Commands.pm:2963
+#: ../Commands.pm:2946 ../Commands.pm:2956 ../Commands.pm:2973
+#: ../Commands.pm:2988
 msgid "Will be sold"
 msgstr "Wird verkauft"
 
-#. Translation Comment: List of equipments
-#: ../Commands.pm:2933
-#, fuzzy
-msgid ""
-"\n"
-"-- Equipment (Not Equipped) --\n"
+#. Translation Comment: List of equipment items NOT worn
+#: ../Commands.pm:2954
+msgid "-- Equipment (Not Equipped) --\n"
 msgstr "-- Equipment (Nicht Equipped) --\n"
 
 #. Translation Comment: List of non-usable items
-#: ../Commands.pm:2945 ../Commands.pm:5841
-#, fuzzy
-msgid ""
-"\n"
-"-- Non-Usable --\n"
+#: ../Commands.pm:2966
+msgid "-- Non-Usable --\n"
 msgstr "-- Nicht-nutzbare Items --\n"
 
-#. Translation Comment: List of usable equipments
-#: ../Commands.pm:2961
-#, fuzzy
-msgid ""
-"\n"
-"-- Equipment (Equipped) --\n"
-msgstr "-- Equipment (Equipped) --\n"
+#. Translation Comment: List of usable items
+#: ../Commands.pm:2982 ../Commands.pm:5842
+msgid "-- Usable --\n"
+msgstr "-- Nutzbare Items --\n"
 
-#: ../Commands.pm:2975
+#: ../Commands.pm:3002
 msgid ""
 "Syntax Error in function 'i' (Inventory List)\n"
 "Usage: i [<u|eq|neq|nu|desc>] [<inventory item>]\n"
@@ -7697,7 +7691,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'i' (Inventar)\n"
 "Benutzung: i [<u|eq|neq|nu|desc>] [<Item>]\n"
 
-#: ../Commands.pm:2985
+#: ../Commands.pm:3013
 #, perl-format
 msgid ""
 "Error in function 'i' (Inventory Item Description)\n"
@@ -7706,23 +7700,22 @@ msgstr ""
 "Fehler bei Funktion 'i' (Inventar)\n"
 "Item %s existiert nicht\n"
 
-#: ../Commands.pm:2994
+#: ../Commands.pm:3022
 #, fuzzy
 msgid " Item List "
 msgstr "Skill Point"
 
-#: ../Commands.pm:2995
-#, fuzzy
+#: ../Commands.pm:3023
 msgid "   # Name                           Coord\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:3009
+#: ../Commands.pm:3037
 msgid "Item log cleared.\n"
 msgstr "Item-Log gelöscht.\n"
 
-#: ../Commands.pm:3045
+#: ../Commands.pm:3073
 msgid ""
 "Syntax Error in function 'look' (Look a Direction)\n"
 "Usage: look <body dir> [<head dir>]\n"
@@ -7730,7 +7723,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'lool' (In eine bestimmte Richtung schauen)\n"
 "Benutzung: look <Körper> [<Kopf>]\n"
 
-#: ../Commands.pm:3055
+#: ../Commands.pm:3083
 msgid ""
 "Syntax Error in function 'lookp' (Look at Player)\n"
 "Usage: lookp <player #>\n"
@@ -7738,7 +7731,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'lookp' (Spieler ansehen)\n"
 "Benutzung: lookp <Spieler #>\n"
 
-#: ../Commands.pm:3058
+#: ../Commands.pm:3086
 #, perl-format
 msgid ""
 "Error in function 'lookp' (Look at Player)\n"
@@ -7747,7 +7740,7 @@ msgstr ""
 "Fehler bei Funktion 'lookp' (Spieler ansehen)\n"
 "'%s' ist kein gültiger Spieler.\n"
 
-#: ../Commands.pm:3074
+#: ../Commands.pm:3102
 #, perl-format
 msgid ""
 "Error in function '%s' (Manual Move)\n"
@@ -7756,27 +7749,27 @@ msgstr ""
 "Fehler bei Funktion '%s' (Manuelles Bewegen)\n"
 "Benutzung: %s [Distanz]\n"
 
-#: ../Commands.pm:3109
+#: ../Commands.pm:3137
 msgid " Monster Info "
 msgstr ""
 
-#: ../Commands.pm:3110
+#: ../Commands.pm:3138
 #, perl-format
 msgid ""
 "%s (%d)\n"
 "Walk speed: %s secs per block\n"
 msgstr ""
 
-#: ../Commands.pm:3118
+#: ../Commands.pm:3146
 #, fuzzy, perl-format
 msgid "Monster \"%s\" does not exist.\n"
 msgstr "Spieler \"%s\" existiert nicht.\n"
 
-#: ../Commands.pm:3122
+#: ../Commands.pm:3150
 msgid " Monster List "
 msgstr ""
 
-#: ../Commands.pm:3123
+#: ../Commands.pm:3151
 #, fuzzy
 msgid ""
 "#   Name                        ID      DmgTo DmgFrom  Distance    "
@@ -7786,7 +7779,7 @@ msgstr ""
 "#   Name                        ID      DmgTo DmgFrom  Distanz    "
 "Koordinaten\n"
 
-#: ../Commands.pm:3176
+#: ../Commands.pm:3204
 #, fuzzy
 msgid ""
 "Syntax Error in function 'move' (Move Player)\n"
@@ -7797,47 +7790,47 @@ msgstr ""
 "Syntaxfehler bei Funktion 'move' (Bewegen)\n"
 "Benutzung: move <x> <y> &| <map>\n"
 
-#: ../Commands.pm:3194
+#: ../Commands.pm:3222
 msgid "Stopped all movement\n"
 msgstr "Bewegung gestoppt\n"
 
-#: ../Commands.pm:3208
+#: ../Commands.pm:3236
 #, perl-format
 msgid "Move into portal number %s (%s,%s)\n"
 msgstr "Gehe in Portal # %s (%s,%s)\n"
 
-#: ../Commands.pm:3212
+#: ../Commands.pm:3240
 msgid "No portals exist.\n"
 msgstr "Keine Portale vorhanden.\n"
 
-#: ../Commands.pm:3223 ../Commands.pm:3242
+#: ../Commands.pm:3251 ../Commands.pm:3270
 #, fuzzy, perl-format
 msgid "Calculating route to: %s(%s): %s, %s (Distance: %s)\n"
 msgstr "Berechne Route nach: %s(%s): %s, %s\n"
 
-#: ../Commands.pm:3226 ../Commands.pm:3245
+#: ../Commands.pm:3254 ../Commands.pm:3273
 #, perl-format
 msgid "Calculating route to: %s(%s): %s, %s\n"
 msgstr "Berechne Route nach: %s(%s): %s, %s\n"
 
-#: ../Commands.pm:3240
+#: ../Commands.pm:3268
 #, fuzzy
 msgid "Unknown Map"
 msgstr "Unbekanntes Feld,"
 
-#: ../Commands.pm:3267
+#: ../Commands.pm:3295
 #, fuzzy
 msgid " NPC List "
 msgstr "Skill Point"
 
-#: ../Commands.pm:3268
+#: ../Commands.pm:3296
 #, fuzzy
 msgid "#    Name                         Coordinates   ID\n"
 msgstr ""
 "-----------NPC Liste-----------\n"
 "#    Name                         Koordinaten   ID\n"
 
-#: ../Commands.pm:3281
+#: ../Commands.pm:3309
 msgid ""
 "Syntax Error in function 'nl' (List NPCs)\n"
 "Usage: nl [<npc #>]\n"
@@ -7845,7 +7838,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'nl' (NPCs listen)\n"
 "Benutzung: nl [<NPC #>]\n"
 
-#: ../Commands.pm:3344
+#: ../Commands.pm:3372
 msgid ""
 "Error in function 'party' (Party Functions)\n"
 "Can't list party - you're not in a party.\n"
@@ -7853,11 +7846,11 @@ msgstr ""
 "Fehler bei Funktion 'party' (Partyeinstellungen)\n"
 "Kann Party nicht auflisten - du bist in keiner Party.\n"
 
-#: ../Commands.pm:3347
+#: ../Commands.pm:3375
 msgid " Party Information "
 msgstr ""
 
-#: ../Commands.pm:3348
+#: ../Commands.pm:3376
 #, fuzzy, perl-format
 msgid ""
 "Party name: %s\n"
@@ -7868,7 +7861,7 @@ msgstr ""
 "%s\n"
 "#      Name                  Map                    Online    HP\n"
 
-#: ../Commands.pm:3393
+#: ../Commands.pm:3421
 msgid ""
 "Syntax Error in function 'party create' (Organize Party)\n"
 "Usage: party create <party name>\n"
@@ -7876,7 +7869,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'party create' (Party erstellen)\n"
 "Benutzung: party create <Partyname>\n"
 
-#: ../Commands.pm:3400
+#: ../Commands.pm:3428
 msgid ""
 "Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n"
 "Usage: party join <flag>\n"
@@ -7884,7 +7877,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'party join' (Partyangebot annehmen/ablehnen)\n"
 "Benutzung: party join <0/1>\n"
 
-#: ../Commands.pm:3403
+#: ../Commands.pm:3431
 msgid ""
 "Error in function 'party join' (Join/Request to Join Party)\n"
 "Can't accept/deny party request - no incoming request.\n"
@@ -7892,7 +7885,7 @@ msgstr ""
 "Fehler bei Funktion 'party join' (Party beitreten)\n"
 "Kann Partyangebot nicht annehmen/ablehnen - kein einkommendes Angebot.\n"
 
-#: ../Commands.pm:3413
+#: ../Commands.pm:3441
 msgid ""
 "Error in function 'party leave' (Leave Party)\n"
 "Can't leave party - you're not in a party.\n"
@@ -7900,7 +7893,7 @@ msgstr ""
 "Fehler bei Funktion 'party leave' (Party verlassen)\n"
 "Kann Party nicht verlassen - du bist in keiner Party.\n"
 
-#: ../Commands.pm:3418
+#: ../Commands.pm:3446
 msgid ""
 "Error in function 'party request' (Request to Join Party)\n"
 "Can't request a join - you're not in a party.\n"
@@ -7908,7 +7901,7 @@ msgstr ""
 "Fehler bei Funktion 'party request' (Invite)\n"
 "Kann Angebot nicht  schicken - du bist in keiner Party.\n"
 
-#: ../Commands.pm:3423
+#: ../Commands.pm:3451
 #, perl-format
 msgid ""
 "Error in function 'party request' (Request to Join Party)\n"
@@ -7917,17 +7910,17 @@ msgstr ""
 "Fehler bei Funktion 'party request' (Invite)\n"
 "Kann Angebot nicht schicken - Spieler %s existiert nicht.\n"
 
-#: ../Commands.pm:3429
+#: ../Commands.pm:3457
 #, fuzzy, perl-format
 msgid "Requesting player %s to join your party.\n"
 msgstr "Friendrequest an %s geschickt\n"
 
-#: ../Commands.pm:3438
+#: ../Commands.pm:3466
 #, fuzzy
 msgid "You are the party leader.\n"
 msgstr "Du hast die Party verlassen\n"
 
-#: ../Commands.pm:3443
+#: ../Commands.pm:3471
 #, fuzzy, perl-format
 msgid ""
 "Error in function 'party %s'\n"
@@ -7936,7 +7929,7 @@ msgstr ""
 "Fehler bei Funktion 'party leave' (Party verlassen)\n"
 "Kann Party nicht verlassen - du bist in keiner Party.\n"
 
-#: ../Commands.pm:3447 ../Commands.pm:3465
+#: ../Commands.pm:3475 ../Commands.pm:3493
 msgid ""
 "Error in function 'party share' (Set Party Share EXP)\n"
 "Can't set share - you're not in a party.\n"
@@ -7944,7 +7937,7 @@ msgstr ""
 "Fehler bei Funktion 'party share' (Share)\n"
 "Kann nicht auf Even Share umstellen - du bist in keiner Party.\n"
 
-#: ../Commands.pm:3450 ../Commands.pm:3468
+#: ../Commands.pm:3478 ../Commands.pm:3496
 msgid ""
 "Syntax Error in function 'party share' (Set Party Share EXP)\n"
 "Usage: party share <flag>\n"
@@ -7952,7 +7945,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'party share' (Share)\n"
 "Benutzung: party share <0/1>\n"
 
-#: ../Commands.pm:3456
+#: ../Commands.pm:3484
 #, fuzzy
 msgid ""
 "Error in function 'party shareitem' (Set Party Share Item)\n"
@@ -7961,7 +7954,7 @@ msgstr ""
 "Fehler bei Funktion 'party share' (Share)\n"
 "Kann nicht auf Even Share umstellen - du bist in keiner Party.\n"
 
-#: ../Commands.pm:3459
+#: ../Commands.pm:3487
 #, fuzzy
 msgid ""
 "Syntax Error in function 'party shareitem' (Set Party Share Item)\n"
@@ -7970,7 +7963,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'party share' (Share)\n"
 "Benutzung: party share <0/1>\n"
 
-#: ../Commands.pm:3475
+#: ../Commands.pm:3503
 msgid ""
 "Error in function 'party kick' (Kick Party Member)\n"
 "Can't kick member - you're not in a party.\n"
@@ -7978,7 +7971,7 @@ msgstr ""
 "Fehler bei Funktion 'party kick' (Partymember kicken)\n"
 "Kann Spieler nicht kicken - du bist in keiner Party.\n"
 
-#: ../Commands.pm:3478
+#: ../Commands.pm:3506
 msgid ""
 "Syntax Error in function 'party kick' (Kick Party Member)\n"
 "Usage: party kick <party member #>\n"
@@ -7986,7 +7979,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'party kick' (Partymember kicken)\n"
 "Benutzung: party kick <Partymember #>\n"
 
-#: ../Commands.pm:3481
+#: ../Commands.pm:3509
 #, perl-format
 msgid ""
 "Error in function 'party kick' (Kick Party Member)\n"
@@ -7995,7 +7988,7 @@ msgstr ""
 "Fehler bei Funktion 'party kick' (Partymember kicken)\n"
 "Kann %s nicht kicken, da dieser nicht existiert.\n"
 
-#: ../Commands.pm:3488
+#: ../Commands.pm:3516
 #, fuzzy
 msgid ""
 "Error in function 'party leader' (Change Party Leader)\n"
@@ -8004,7 +7997,7 @@ msgstr ""
 "Fehler bei Funktion 'party leave' (Party verlassen)\n"
 "Kann Party nicht verlassen - du bist in keiner Party.\n"
 
-#: ../Commands.pm:3491
+#: ../Commands.pm:3519
 #, fuzzy
 msgid ""
 "Syntax Error in function 'party leader' (Change Party Leader)\n"
@@ -8013,7 +8006,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'party create' (Party erstellen)\n"
 "Benutzung: party create <Partyname>\n"
 
-#: ../Commands.pm:3494
+#: ../Commands.pm:3522
 #, fuzzy, perl-format
 msgid ""
 "Error in function 'party leader' (Change Party Leader)\n"
@@ -8022,7 +8015,7 @@ msgstr ""
 "Fehler bei Funktion 'party kick' (Partymember kicken)\n"
 "Kann %s nicht kicken, da dieser nicht existiert.\n"
 
-#: ../Commands.pm:3500
+#: ../Commands.pm:3528
 #, fuzzy
 msgid ""
 "Syntax Error in function 'party' (Party Management)\n"
@@ -8032,17 +8025,17 @@ msgstr ""
 "Syntaxfehler bei Funktion 'party' (Party Management)\n"
 "Benutzung: party [<create|join|request|leave|share|kick>]\n"
 
-#: ../Commands.pm:3511
+#: ../Commands.pm:3539
 #, fuzzy
 msgid "Your Pecopeco is active\n"
 msgstr "Dein Pecopeco ist aktiv"
 
-#: ../Commands.pm:3513
+#: ../Commands.pm:3541
 #, fuzzy
 msgid "Your Pecopeco is inactive\n"
 msgstr "Dein Pecopeco ist inaktiv"
 
-#: ../Commands.pm:3521
+#: ../Commands.pm:3549
 msgid ""
 "Error in function 'pecopeco release' (Remove Pecopeco Status)\n"
 "You don't possess a Pecopeco.\n"
@@ -8050,7 +8043,7 @@ msgstr ""
 "Fehler bei Funktion 'pecopeco release' (Peco freilassen)\n"
 "Du bist nicht im Besitz eines Pecos.\n"
 
-#: ../Commands.pm:3540
+#: ../Commands.pm:3568
 #, fuzzy, perl-format
 msgid ""
 "Error in function 'pet capture|c' (Capture Pet)\n"
@@ -8059,7 +8052,7 @@ msgstr ""
 "Fehler in Funktion 'a' (Attackiere Monster)\n"
 "Monster %s existiert nicht.\n"
 
-#: ../Commands.pm:3546
+#: ../Commands.pm:3574
 #, fuzzy, perl-format
 msgid ""
 "Error in function 'pet [capture|c]' (Capture Pet)\n"
@@ -8068,7 +8061,7 @@ msgstr ""
 "Fehler bei Funktion 'talk text' (NPC antworten)\n"
 "Du musst etwas eingeben.\n"
 
-#: ../Commands.pm:3555
+#: ../Commands.pm:3583
 #, fuzzy, perl-format
 msgid ""
 "Error in function 'pet [hatch|h] #' (Hatch Pet)\n"
@@ -8077,7 +8070,7 @@ msgstr ""
 "Fehler bei Funktion 'take' (Item aufheben)\n"
 "Item %s existiert nicht.\n"
 
-#: ../Commands.pm:3560
+#: ../Commands.pm:3588
 msgid ""
 "Error in function 'pet' (Pet Management)\n"
 "You don't have a pet.\n"
@@ -8085,56 +8078,56 @@ msgstr ""
 "Fehler bei Funktion 'pet' (Pet Management)\n"
 "Du hast kein Pet.\n"
 
-#: ../Commands.pm:3564
+#: ../Commands.pm:3592
 msgid " Pet Status "
 msgstr ""
 
-#: ../Commands.pm:3565
+#: ../Commands.pm:3593
 #, perl-format
 msgid "Name: %-24s Renameable: %s\n"
 msgstr ""
 
-#: ../Commands.pm:3566
+#: ../Commands.pm:3594
 #, perl-format
 msgid "Type: %-24s Level: %s\n"
 msgstr ""
 
-#: ../Commands.pm:3567
+#: ../Commands.pm:3595
 #, perl-format
 msgid "Accessory: %-19s Hungry: %s\n"
 msgstr ""
 
-#: ../Commands.pm:3568
+#: ../Commands.pm:3596
 #, fuzzy, perl-format
 msgid "                               Friendly: %s\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:3590
+#: ../Commands.pm:3618
 msgid ""
 "Usage: pet [capture|hatch|status|info|feed|performance|return|unequip|name "
 "<name>]\n"
 msgstr ""
 
-#: ../Commands.pm:3596
+#: ../Commands.pm:3624
 #, fuzzy
 msgid " Pet List "
 msgstr "Skill Point"
 
-#: ../Commands.pm:3597
+#: ../Commands.pm:3625
 #, fuzzy
 msgid "#   Name                      Type             Distance  Coordinates\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:3621
+#: ../Commands.pm:3649
 #, fuzzy
 msgid " Guild Player List "
 msgstr "Skill Point"
 
-#: ../Commands.pm:3622 ../Commands.pm:3661 ../Commands.pm:3777
+#: ../Commands.pm:3650 ../Commands.pm:3689 ../Commands.pm:3805
 #, fuzzy
 msgid ""
 "#    Name                                Sex   Lv   Job         Dist Coord\n"
@@ -8142,42 +8135,42 @@ msgstr ""
 "-----------Player List-----------\n"
 "#    Name                                Sex   Lv  Job         Dist  Koord\n"
 
-#: ../Commands.pm:3646
+#: ../Commands.pm:3674
 #, fuzzy, perl-format
 msgid "Total guild players: %s\n"
 msgstr "Gesamter erlittener Schaden: %s\n"
 
-#: ../Commands.pm:3648 ../Commands.pm:3687 ../Commands.pm:3795
+#: ../Commands.pm:3676 ../Commands.pm:3715 ../Commands.pm:3823
 #, fuzzy, perl-format
 msgid "Total players: %s \n"
 msgstr "Gesamter erlittener Schaden: %s\n"
 
-#: ../Commands.pm:3650 ../Commands.pm:3689 ../Commands.pm:3796
+#: ../Commands.pm:3678 ../Commands.pm:3717 ../Commands.pm:3824
 #, fuzzy
 msgid "There are no players near you.\n"
 msgstr "Auf diesem Account sind keine Chars vorhanden.\n"
 
-#: ../Commands.pm:3660
+#: ../Commands.pm:3688
 #, fuzzy
 msgid " Party Player List "
 msgstr "Gesamter erlittener Schaden: %s\n"
 
-#: ../Commands.pm:3685
+#: ../Commands.pm:3713
 #, fuzzy, perl-format
 msgid "Total party players: %s \n"
 msgstr "Gesamter erlittener Schaden: %s\n"
 
-#: ../Commands.pm:3699
+#: ../Commands.pm:3727
 #, perl-format
 msgid "Player \"%s\" does not exist.\n"
 msgstr "Spieler \"%s\" existiert nicht.\n"
 
-#: ../Commands.pm:3732
+#: ../Commands.pm:3760
 #, fuzzy
 msgid " Player Info "
 msgstr "Ignoriere Spieler\n"
 
-#: ../Commands.pm:3734
+#: ../Commands.pm:3762
 #, fuzzy, perl-format
 msgid ""
 "Account ID: %s (Hex: %s)\n"
@@ -8212,42 +8205,42 @@ msgstr ""
 "Lower headgear: %-19s Hair color:      %-19s\n"
 "Walk speed: %s Sekunden/Block\n"
 
-#: ../Commands.pm:3760
+#: ../Commands.pm:3788
 msgid "Player is dead.\n"
 msgstr "Spieler ist tot.\n"
 
-#: ../Commands.pm:3762
+#: ../Commands.pm:3790
 msgid "Player is sitting.\n"
 msgstr "Spieler sitzt nun.\n"
 
-#: ../Commands.pm:3766
+#: ../Commands.pm:3794
 msgid "Player is facing towards you.\n"
 msgstr "Spieler schaut dich an.\n"
 
-#: ../Commands.pm:3768
+#: ../Commands.pm:3796
 #, perl-format
 msgid ""
 "\n"
 "Statuses: %s \n"
 msgstr ""
 
-#: ../Commands.pm:3776
+#: ../Commands.pm:3804
 #, fuzzy
 msgid " Player List "
 msgstr "Spieler ist tot.\n"
 
-#: ../Commands.pm:3808
+#: ../Commands.pm:3836
 msgid " Currently loaded plugins "
 msgstr ""
 
-#: ../Commands.pm:3809
+#: ../Commands.pm:3837
 #, fuzzy
 msgid "#   Name                 Description\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:3828
+#: ../Commands.pm:3856
 msgid ""
 "Syntax Error in function 'plugin reload' (Reload Plugin)\n"
 "Usage: plugin reload <plugin name|plugin number#|\"all\">\n"
@@ -8255,7 +8248,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'plugin reload' (Plugin neu laden)\n"
 "Benutzung: plugin reload <Pluginname|Pluginnummer #|\"all\">\n"
 
-#: ../Commands.pm:3846
+#: ../Commands.pm:3874
 msgid ""
 "Error in function 'plugin reload' (Reload Plugin)\n"
 "The specified plugin names do not exist.\n"
@@ -8263,7 +8256,7 @@ msgstr ""
 "Fehler bei Funktion 'plugin reload' (Plugin neu laden)\n"
 "Der Plugin existiert nicht.\n"
 
-#: ../Commands.pm:3858
+#: ../Commands.pm:3886
 msgid ""
 "Syntax Error in function 'plugin load' (Load Plugin)\n"
 "Usage: plugin load <filename|\"all\">\n"
@@ -8271,17 +8264,17 @@ msgstr ""
 "Syntaxfehler bei Funktion 'plugin load' (Plugin laden)\n"
 "Benutzung: plugin load <Dateiname|\"all\">\n"
 
-#: ../Commands.pm:3880 ../Commands.pm:3899
+#: ../Commands.pm:3908 ../Commands.pm:3927
 #, perl-format
 msgid "Plugin %s unloaded.\n"
 msgstr "Plugin %s gestoppt.\n"
 
-#: ../Commands.pm:3882
+#: ../Commands.pm:3910
 #, perl-format
 msgid "'%s' is not a valid plugin number.\n"
 msgstr "'%s' ist keine gültige Pluginnummer.\n"
 
-#: ../Commands.pm:3886
+#: ../Commands.pm:3914
 msgid ""
 "Syntax Error in function 'plugin unload' (Unload Plugin)\n"
 "Usage: plugin unload <plugin name|plugin number#|\"all\">\n"
@@ -8289,14 +8282,14 @@ msgstr ""
 "Syntaxfehler bei Funktion 'plugin unload' (Plugin deaktivieren)\n"
 "Benutzung: plugin unload <Pluginname|Pluginnummer #|\"all\">\n"
 
-#: ../Commands.pm:3905
+#: ../Commands.pm:3933
 #, fuzzy
 msgid " Plugin command syntax "
 msgstr ""
 "Plugin beinhaltet Syntaxfehler:\n"
 "%s"
 
-#: ../Commands.pm:3906
+#: ../Commands.pm:3934
 #, fuzzy
 msgid ""
 "Command:                                              Description:\n"
@@ -8316,28 +8309,28 @@ msgstr ""
 " plugin reload <plugin name|plugin number#|\"all\">      Plugin neuladen\n"
 "-----------------------------------------------------\n"
 
-#: ../Commands.pm:3915
+#: ../Commands.pm:3943
 msgid "Syntax Error in function 'plugin' (Control Plugins)\n"
 msgstr "Syntaxfehler bei Funktion 'plugin' (Pluginkontrolle)\n"
 
-#: ../Commands.pm:3922
+#: ../Commands.pm:3950
 #, fuzzy
 msgid " PM List "
 msgstr "Skill Point"
 
-#: ../Commands.pm:3936
+#: ../Commands.pm:3964
 #, fuzzy
 msgid " Portal List "
 msgstr "Keine Portale vorhanden.\n"
 
-#: ../Commands.pm:3937
+#: ../Commands.pm:3965
 #, fuzzy
 msgid "#    Name                                Coordinates\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:3963
+#: ../Commands.pm:3991
 msgid ""
 "Syntax Error in function 'pm' (Private Message)\n"
 "Usage: pm (username) (message)\n"
@@ -8347,7 +8340,7 @@ msgstr ""
 "Benutzung: pm (Spielername) (Nachricht)\n"
 "       pm (<#>) (Nachricht)\n"
 
-#: ../Commands.pm:3969
+#: ../Commands.pm:3997
 #, perl-format
 msgid ""
 "Error in function 'pm' (Private Message)\n"
@@ -8356,7 +8349,7 @@ msgstr ""
 "Fehler bei Funktion 'pm' (PM)\n"
 "Schnellantwort %s existiert nicht\n"
 
-#: ../Commands.pm:3972
+#: ../Commands.pm:4000
 msgid ""
 "Error in function 'pm' (Private Message)\n"
 "You have not pm-ed anyone before\n"
@@ -8364,7 +8357,7 @@ msgstr ""
 "Fehler bei Funktion 'pm' (PM)\n"
 "Du hast vorher keinen angewhispert\n"
 
-#: ../Commands.pm:3997
+#: ../Commands.pm:4025
 msgid ""
 "Syntax Error in function 'reload' (Reload Configuration Files)\n"
 "Usage: reload <name|\"all\">\n"
@@ -8372,11 +8365,11 @@ msgstr ""
 "Syntaxfehler bei Funktion 'reload' (Neu laden)\n"
 "Benutzung: reload <Name|\"all\">\n"
 
-#: ../Commands.pm:4032
+#: ../Commands.pm:4060
 msgid "Invalid range in function 'relog'\n"
 msgstr ""
 
-#: ../Commands.pm:4039
+#: ../Commands.pm:4067
 msgid ""
 "Syntax Error in function 'relog' (Log out then log in.)\n"
 "Usage: relog [delay]\n"
@@ -8384,19 +8377,19 @@ msgstr ""
 "Syntaxfehler bei Funktion 'relog' (Relog)\n"
 "Benutzung: relog [Sekunden]\n"
 
-#: ../Commands.pm:4054
+#: ../Commands.pm:4082
 #, fuzzy, perl-format
 msgid "Attempting to repair item: %s\n"
 msgstr "Versuchel %s anzuhandeln\n"
 
-#: ../Commands.pm:4056
+#: ../Commands.pm:4084
 #, perl-format
 msgid ""
 "Item with index: %s does either not exist in the 'Repair List' or the list "
 "is empty.\n"
 msgstr ""
 
-#: ../Commands.pm:4059
+#: ../Commands.pm:4087
 #, fuzzy
 msgid ""
 "Syntax Error in function 'repair' (Repair player's items.)\n"
@@ -8405,32 +8398,32 @@ msgstr ""
 "Syntaxfehler bei Funktion 'repair' (Item reparieren)\n"
 "Benutzung: repair [Item #]\n"
 
-#: ../Commands.pm:4088 ../Commands.pm:4101
+#: ../Commands.pm:4116 ../Commands.pm:4129
 msgid "Your sell list is empty.\n"
 msgstr "Deine Verkaufsliste ist leer.\n"
 
-#: ../Commands.pm:4090
+#: ../Commands.pm:4118
 #, fuzzy
 msgid " Sell List "
 msgstr "Skill Point"
 
-#: ../Commands.pm:4091
+#: ../Commands.pm:4119
 #, fuzzy
 msgid "#   Item                           Amount\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:4104
+#: ../Commands.pm:4132
 #, perl-format
 msgid "Sold %s items.\n"
 msgstr "%s Items verkauft.\n"
 
-#: ../Commands.pm:4109
+#: ../Commands.pm:4137
 msgid "Sell list has been cleared.\n"
 msgstr "Verkaufsliste gelöscht.\n"
 
-#: ../Commands.pm:4112
+#: ../Commands.pm:4140
 msgid ""
 "Syntax Error in function 'sell' (Sell Inventory Item)\n"
 "Usage: sell <inventory item index #> [<amount>]\n"
@@ -8444,21 +8437,21 @@ msgstr ""
 "       sell done\n"
 "       sell cancel\n"
 
-#: ../Commands.pm:4125
+#: ../Commands.pm:4153
 #, perl-format
 msgid "%s (%s) is already in the sell list.\n"
 msgstr "%s (%s) ist bereits in der Verkaufsliste.\n"
 
-#: ../Commands.pm:4138
+#: ../Commands.pm:4166
 #, perl-format
 msgid "Added to sell list: %s (%s) x %s\n"
 msgstr "Zur Verkaufsliste hinzugefügt: %s (%s) x %s\n"
 
-#: ../Commands.pm:4140
+#: ../Commands.pm:4168
 msgid "Type 'sell done' to sell everything in your sell list.\n"
 msgstr "Schreib 'sell done' um alles in deiner Verkaufsliste zu verkaufen.\n"
 
-#: ../Commands.pm:4143
+#: ../Commands.pm:4171
 #, perl-format
 msgid ""
 "Error in function 'sell' (Sell Inventory Item)\n"
@@ -8467,16 +8460,16 @@ msgstr ""
 "Fehler bei Funktion 'sell' (Item verkaufen)\n"
 "'%s' ist ungültig.\n"
 
-#: ../Commands.pm:4152
+#: ../Commands.pm:4180
 #, perl-format
 msgid "You must be connected to the server to use this command (%s)\n"
 msgstr ""
 
-#: ../Commands.pm:4161
+#: ../Commands.pm:4189
 msgid "You do not have a shop open.\n"
 msgstr "Es ist kein Shop offen.\n"
 
-#: ../Commands.pm:4167
+#: ../Commands.pm:4195
 #, fuzzy
 msgid ""
 "#  Name                                   Type        Qty  Price           "
@@ -8486,7 +8479,7 @@ msgstr ""
 "#  Name                                     Typ         #       Preis   "
 "Verk.\n"
 
-#: ../Commands.pm:4178
+#: ../Commands.pm:4206
 #, fuzzy, perl-format
 msgid ""
 "You have earned: %sz.\n"
@@ -8500,12 +8493,12 @@ msgstr ""
 "Max. Eingenommen:  %sz.\n"
 "Max. Zeny:    %sz.\n"
 
-#: ../Commands.pm:4190
+#: ../Commands.pm:4218
 #, fuzzy
 msgid "You do not have a buying shop open.\n"
 msgstr "Es ist kein Shop offen.\n"
 
-#: ../Commands.pm:4196
+#: ../Commands.pm:4224
 #, fuzzy
 msgid ""
 "#   Name                                      Type           Amount       "
@@ -8515,7 +8508,7 @@ msgstr ""
 "#  Name                                          Typ        Anzahl       "
 "Preis\n"
 
-#: ../Commands.pm:4234
+#: ../Commands.pm:4262
 #, fuzzy
 msgid ""
 "Syntax Error in function 'skills' (Skills Functions)\n"
@@ -8524,19 +8517,19 @@ msgstr ""
 "Fehler bei Funktion 'skills desc' (Skillbeschreibung)\n"
 "Skill %s existiert nicht.\n"
 
-#: ../Commands.pm:4238
+#: ../Commands.pm:4266
 #, fuzzy
 msgid " Skill List "
 msgstr "Skill Point"
 
-#: ../Commands.pm:4239
+#: ../Commands.pm:4267
 #, fuzzy
 msgid "   # Skill Name                          Lv      SP\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:4258
+#: ../Commands.pm:4286
 #, perl-format
 msgid ""
 "Error in function 'skills add' (Add Skill Point)\n"
@@ -8545,7 +8538,7 @@ msgstr ""
 "Fehler bei Funktion 'skills add' (Skills hinzufügen)\n"
 "Skill %s existiert nicht.\n"
 
-#: ../Commands.pm:4261
+#: ../Commands.pm:4289
 #, perl-format
 msgid ""
 "Error in function 'skills add' (Add Skill Point)\n"
@@ -8554,7 +8547,7 @@ msgstr ""
 "Fehler bei Funktion 'skills add' (Skills hinzufügen)\n"
 "Nicht ausreichend Skillpunkte vorhanden, um %s zu erhöhen\n"
 
-#: ../Commands.pm:4264
+#: ../Commands.pm:4292
 #, fuzzy, perl-format
 msgid ""
 "Error in function 'skills add' (Add Skill Point)\n"
@@ -8563,7 +8556,7 @@ msgstr ""
 "Fehler bei Funktion 'skills add' (Skills hinzufügen)\n"
 "Skill %s existiert nicht.\n"
 
-#: ../Commands.pm:4273
+#: ../Commands.pm:4301
 #, perl-format
 msgid ""
 "Error in function 'skills desc' (Skill Description)\n"
@@ -8572,7 +8565,7 @@ msgstr ""
 "Fehler bei Funktion 'skills desc' (Skillbeschreibung)\n"
 "Skill %s existiert nicht.\n"
 
-#: ../Commands.pm:4278
+#: ../Commands.pm:4306
 #, fuzzy, perl-format
 msgid ""
 "Skill: %s\n"
@@ -8581,7 +8574,7 @@ msgstr ""
 "\n"
 "Skill Points: %d\n"
 
-#: ../Commands.pm:4284
+#: ../Commands.pm:4312
 msgid ""
 "Syntax Error in function 'skills' (Skills Functions)\n"
 "Usage: skills [<add | desc>] [<skill #>]\n"
@@ -8589,12 +8582,12 @@ msgstr ""
 "Syntaxfehler bei Funktion 'skills' (Skills)\n"
 "Benutzung: skills [<add |desc>] [<Skill #>\n"
 
-#: ../Commands.pm:4291
+#: ../Commands.pm:4319
 #, fuzzy
 msgid " Slave List "
 msgstr "Skill Point"
 
-#: ../Commands.pm:4292
+#: ../Commands.pm:4320
 #, fuzzy
 msgid ""
 "#   Name                                   Type         Distance    "
@@ -8603,18 +8596,18 @@ msgstr ""
 "-----------Player List-----------\n"
 "#    Name                                Sex   Lv  Job         Dist  Koord\n"
 
-#: ../Commands.pm:4312
+#: ../Commands.pm:4340
 msgid " Area Effects List "
 msgstr ""
 
-#: ../Commands.pm:4313
+#: ../Commands.pm:4341
 #, fuzzy
 msgid "  # Type                 Source                   X   Y\n"
 msgstr ""
 "-----------AoE Liste-----------\n"
 "  # Type                 Quelle                   X   Y\n"
 
-#: ../Commands.pm:4352
+#: ../Commands.pm:4380
 msgid ""
 "Syntax Error in function 'stat_add' (Add Status Point)\n"
 "Usage: stat_add <str | agi | vit | int | dex | luk>\n"
@@ -8622,7 +8615,7 @@ msgstr ""
 "Fehler bei Funktion 'stat_add' (Stats hinzufügen)\n"
 "Benutzung: stat_add <str | agi | vit | int | dex | luk>\n"
 
-#: ../Commands.pm:4356
+#: ../Commands.pm:4384
 msgid ""
 "Error in function 'stat_add' (Add Status Point)\n"
 "You cannot add more stat points than 99\n"
@@ -8630,7 +8623,7 @@ msgstr ""
 "Fehler bei Funktion 'stat_add' (Stats hinzufügen)\n"
 "Du kannst Stats nicht höher als 99 statten.\n"
 
-#: ../Commands.pm:4360
+#: ../Commands.pm:4388
 #, perl-format
 msgid ""
 "Error in function 'stat_add' (Add Status Point)\n"
@@ -8639,20 +8632,20 @@ msgstr ""
 "Fehler bei Funktion 'stat_add' (Stats hinzufügen)\n"
 "Nicht ausreichend Statpunkte vorhanden um %s zu erhöhen\n"
 
-#: ../Commands.pm:4386
+#: ../Commands.pm:4414
 #, fuzzy
 msgid "Character stats information not yet available.\n"
 msgstr "Cart Inventar nicht verfügbar.\n"
 
-#: ../Commands.pm:4389
+#: ../Commands.pm:4417
 msgid "None"
 msgstr "Keine"
 
-#: ../Commands.pm:4390
+#: ../Commands.pm:4418
 msgid " Char Stats "
 msgstr ""
 
-#: ../Commands.pm:4392
+#: ../Commands.pm:4420
 #, fuzzy, perl-format
 msgid ""
 "Str: @<<+@<< #@< Atk:  @<<+@<< Def:  @<<+@<<\n"
@@ -8677,16 +8670,16 @@ msgstr ""
 "Laufgeschwindigkeit: %.2f Sekunden/Block\n"
 "--------------------------------"
 
-#: ../Commands.pm:4418
+#: ../Commands.pm:4446
 #, fuzzy
 msgid "Character status information not yet available.\n"
 msgstr "Cart Inventar nicht verfügbar.\n"
 
-#: ../Commands.pm:4465
+#: ../Commands.pm:4493
 msgid " Status "
 msgstr ""
 
-#: ../Commands.pm:4467
+#: ../Commands.pm:4495
 #, fuzzy, perl-format
 msgid ""
 "@<<<<<<<<<<<<<<<<<<<<<<<         HP: @>>>>>>>>>>>>>>>>>>\n"
@@ -8715,7 +8708,7 @@ msgstr ""
 "Dauer des letzten Monsters (sec): @>>>>>>>\n"
 "--------------------------------------------------------"
 
-#: ../Commands.pm:4508
+#: ../Commands.pm:4536
 #, fuzzy
 msgid ""
 "Syntax Error in function 'storage' (Storage Functions)\n"
@@ -8738,32 +8731,32 @@ msgstr ""
 "       storage desc <storage_item_#>\n"
 "       storage log"
 
-#: ../Commands.pm:4519
+#: ../Commands.pm:4547
 msgid ""
 "No information about storage; it has not been opened before in this session\n"
 msgstr "Keine Informationen über Storage vorhanden.\n"
 
-#: ../Commands.pm:4529
+#: ../Commands.pm:4557
 #, perl-format
 msgid "Inventory Item '%s' does not exist.\n"
 msgstr "Item '%s' existiert nicht.\n"
 
-#: ../Commands.pm:4534
+#: ../Commands.pm:4562
 #, perl-format
 msgid "Inventory Item '%s' is equipped.\n"
 msgstr "Item '%s' equipped.\n"
 
-#: ../Commands.pm:4550
+#: ../Commands.pm:4578
 #, perl-format
 msgid "Cart Item '%s' does not exist.\n"
 msgstr "Cart Item '%s' existiert nicht.\n"
 
-#: ../Commands.pm:4576 ../Commands.pm:4592
+#: ../Commands.pm:4604 ../Commands.pm:4620
 #, perl-format
 msgid "Storage Item '%s' does not exist.\n"
 msgstr "Storage Item '%s' existiert nicht.\n"
 
-#: ../Commands.pm:4614
+#: ../Commands.pm:4642
 #, perl-format
 msgid ""
 "Error in function 'storage desc' (Show Storage Item Description)\n"
@@ -8772,19 +8765,19 @@ msgstr ""
 "Fehler bei Funktion 'storage desc' (Storage Itembeschreibung)\n"
 "Item %s existiert nicht.\n"
 
-#: ../Commands.pm:4627
+#: ../Commands.pm:4655
 #, perl-format
 msgid " Store List (%s) "
 msgstr ""
 
-#: ../Commands.pm:4628
+#: ../Commands.pm:4656
 #, fuzzy
 msgid "#  Name                    Type                  Price\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:4645
+#: ../Commands.pm:4673
 #, perl-format
 msgid ""
 "Error in function 'store desc' (Store Item Description)\n"
@@ -8793,7 +8786,7 @@ msgstr ""
 "Fehler bei Funktion 'store desc' (Storage Itembeschreibung)\n"
 "Item %s existiert nicht.\n"
 
-#: ../Commands.pm:4651
+#: ../Commands.pm:4679
 msgid ""
 "Syntax Error in function 'store' (Store Functions)\n"
 "Usage: store [<desc>] [<store item #>]\n"
@@ -8801,7 +8794,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'store' (Storage)\n"
 "Benutzung: store [<desc>] [<store item #>]\n"
 
-#: ../Commands.pm:4659
+#: ../Commands.pm:4687
 msgid ""
 "Syntax Error in function 'switchconf' (Switch Configuration File)\n"
 "Usage: switchconf <filename>\n"
@@ -8809,7 +8802,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'switchconf' (Config wechseln)\n"
 "Benutzung: switchconf <Dateiname>\n"
 
-#: ../Commands.pm:4662
+#: ../Commands.pm:4690
 #, perl-format
 msgid ""
 "Syntax Error in function 'switchconf' (Switch Configuration File)\n"
@@ -8818,12 +8811,12 @@ msgstr ""
 "Syntaxfehler bei Funktion 'switchconf' (Config wechseln)\n"
 "Datei %s existiert nicht.\n"
 
-#: ../Commands.pm:4666
+#: ../Commands.pm:4694
 #, perl-format
 msgid "Switched config file to \"%s\".\n"
 msgstr "Config Datei geändert zu \"%s\".\n"
 
-#: ../Commands.pm:4673
+#: ../Commands.pm:4701
 msgid ""
 "Syntax Error in function 'take' (Take Item)\n"
 "Usage: take <item #>\n"
@@ -8831,7 +8824,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'take' (Items aufheben)\n"
 "Benutzung: take <Item #>\n"
 
-#: ../Commands.pm:4676
+#: ../Commands.pm:4704
 msgid ""
 "Error in function 'take first' (Take Item)\n"
 "There are no items near.\n"
@@ -8839,7 +8832,7 @@ msgstr ""
 "Fehler bei Funktion 'take first' (Item aufheben)\n"
 "Es gibt keine Items in der Nähe.\n"
 
-#: ../Commands.pm:4682
+#: ../Commands.pm:4710
 #, perl-format
 msgid ""
 "Error in function 'take' (Take Item)\n"
@@ -8848,7 +8841,7 @@ msgstr ""
 "Fehler bei Funktion 'take' (Item aufheben)\n"
 "Item %s existiert nicht.\n"
 
-#: ../Commands.pm:4699
+#: ../Commands.pm:4727
 #, perl-format
 msgid ""
 "Error in function 'talk' (Talk to NPC)\n"
@@ -8857,7 +8850,7 @@ msgstr ""
 "Fehler bei Funktion 'talk' (Mit NPC reden)\n"
 "NPC %s existiert nicht.\n"
 
-#: ../Commands.pm:4706
+#: ../Commands.pm:4734
 #, perl-format
 msgid ""
 "Error in function 'talk %s' (Respond to NPC)\n"
@@ -8866,7 +8859,7 @@ msgstr ""
 "Fehler bei Funktion 'Talk %s' (NPC antworten)\n"
 "Du redest zurzeit mit keinem NPC.\n"
 
-#: ../Commands.pm:4711
+#: ../Commands.pm:4739
 msgid ""
 "Error in function 'talk resp' (Respond to NPC)\n"
 "No NPC response list available.\n"
@@ -8874,15 +8867,15 @@ msgstr ""
 "Fehler bei Funktion 'talk resp' (NPC antworten)\n"
 "Keine NPC-Liste vorhanden.\n"
 
-#: ../Commands.pm:4715
+#: ../Commands.pm:4743
 msgid " Responses ("
 msgstr ""
 
-#: ../Commands.pm:4716
+#: ../Commands.pm:4744
 msgid "#  Response\n"
 msgstr ""
 
-#: ../Commands.pm:4726
+#: ../Commands.pm:4754
 #, perl-format
 msgid ""
 "Error in function 'talk resp' (Respond to NPC)\n"
@@ -8891,7 +8884,7 @@ msgstr ""
 "Fehler bei Funktion 'talk resp' (NPC antworten)\n"
 "Antwort %s existiert nicht.\n"
 
-#: ../Commands.pm:4738
+#: ../Commands.pm:4766
 msgid ""
 "Error in function 'talk num' (Respond to NPC)\n"
 "You must specify a number.\n"
@@ -8899,7 +8892,7 @@ msgstr ""
 "Fehler bei Funktion 'talk num' (NPC antworten)\n"
 "Du musst eine Zahl eingeben.\n"
 
-#: ../Commands.pm:4742
+#: ../Commands.pm:4770
 #, perl-format
 msgid ""
 "Error in function 'talk num' (Respond to NPC)\n"
@@ -8908,7 +8901,7 @@ msgstr ""
 "Fehler bei Funktion 'talk num' (NPC antworten)\n"
 "%s ist keine gültige Zahl.\n"
 
-#: ../Commands.pm:4751
+#: ../Commands.pm:4779
 msgid ""
 "Error in function 'talk text' (Respond to NPC)\n"
 "You must specify a string.\n"
@@ -8916,7 +8909,7 @@ msgstr ""
 "Fehler bei Funktion 'talk text' (NPC antworten)\n"
 "Du musst etwas eingeben.\n"
 
-#: ../Commands.pm:4758
+#: ../Commands.pm:4786
 msgid ""
 "Error in function 'talk cont' (Continue Talking to NPC)\n"
 "You are not talking to any NPC.\n"
@@ -8924,11 +8917,11 @@ msgstr ""
 "Fehler bei Funktion 'talk cont' (Weiterreden)\n"
 "Du redest zurzeit mit keinem NPC.\n"
 
-#: ../Commands.pm:4766
+#: ../Commands.pm:4794
 msgid "You are not talking to any NPC.\n"
 msgstr "Du redest mit keinem NPC.\n"
 
-#: ../Commands.pm:4775
+#: ../Commands.pm:4803
 #, fuzzy
 msgid ""
 "Syntax Error in function 'talk' (Talk to NPC)\n"
@@ -8938,7 +8931,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'talk' (Mit NPC reden)\n"
 "Benutzung: talk <NPC # | cont | resp | num> [<Antwort #>|<Nummer #>]\n"
 
-#: ../Commands.pm:4785
+#: ../Commands.pm:4813
 msgid ""
 "Syntax Error in function 'talknpc' (Talk to an NPC)\n"
 "Usage: talknpc <x> <y> <sequence>\n"
@@ -8946,12 +8939,12 @@ msgstr ""
 "Syntaxfehler bei Funktion 'talknpc' (Mit NPC reden)\n"
 "Benutzung: talknpc <x> <y> <Sequenz>\n"
 
-#: ../Commands.pm:4790
+#: ../Commands.pm:4818
 #, perl-format
 msgid "Talking to NPC at (%d, %d) using sequence: %s\n"
 msgstr "Rede mit NPC (%d, %d) - Sequenz: %s\n"
 
-#: ../Commands.pm:4799
+#: ../Commands.pm:4827
 #, fuzzy
 msgid ""
 "Syntax Error in function 'tank' (Tank for a Player/Slave)\n"
@@ -8960,7 +8953,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'tank' (Tanken)\n"
 "Benutzung: tank <Spieler #|Spielername>\n"
 
-#: ../Commands.pm:4807
+#: ../Commands.pm:4835
 #, perl-format
 msgid ""
 "Error in function 'tank' (Tank for a Player)\n"
@@ -8969,7 +8962,7 @@ msgstr ""
 "Fehler bei Funktion 'tank' (Tanken)\n"
 "Spieler %s existiert nicht.\n"
 
-#: ../Commands.pm:4831
+#: ../Commands.pm:4859
 #, fuzzy, perl-format
 msgid ""
 "Error in function 'tank' (Tank for a Player/Slave)\n"
@@ -8978,19 +8971,19 @@ msgstr ""
 "Fehler bei Funktion 'tank' (Tanken)\n"
 "Spieler %s existiert nicht.\n"
 
-#: ../Commands.pm:4856
+#: ../Commands.pm:4884
 #, fuzzy
 msgid "Name                                           Amount           Price\n"
 msgstr ""
 "%s\n"
 "Name                                      Anzahl  Preis\n"
 
-#: ../Commands.pm:4861
+#: ../Commands.pm:4889
 #, perl-format
 msgid "Total of %d items to sell.\n"
 msgstr "Summe der zu verkaufenden Items: %dl\n"
 
-#: ../Commands.pm:4871
+#: ../Commands.pm:4899
 msgid ""
 "Syntax Error in function 'timeout' (set a timeout)\n"
 "Usage: timeout <type> [<seconds>]\n"
@@ -8998,7 +8991,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'timeout' (Timeout setzen)\n"
 "Benutzung: timeout <Typ> [<Sekunden>]\n"
 
-#: ../Commands.pm:4874
+#: ../Commands.pm:4902
 #, perl-format
 msgid ""
 "Error in function 'timeout' (set a timeout)\n"
@@ -9007,12 +9000,12 @@ msgstr ""
 "Fehler bei Funktion 'timeout' (Timeout setzen)\n"
 "Timeout %s existiert nicht\n"
 
-#: ../Commands.pm:4877
+#: ../Commands.pm:4905
 #, perl-format
 msgid "Timeout '%s' is %s\n"
 msgstr "Timeout '%s' ist %s\n"
 
-#: ../Commands.pm:4893
+#: ../Commands.pm:4921
 msgid ""
 "Function 'top10' (Show Top 10 Lists)\n"
 "Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|"
@@ -9022,7 +9015,7 @@ msgstr ""
 "Benutzung: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|"
 "taekwon|pvp>\n"
 
-#: ../Commands.pm:4904
+#: ../Commands.pm:4932
 msgid ""
 "Syntax Error in function 'top10' (Show Top 10 Lists)\n"
 "Usage: top10 <b|a|t|p> |\n"
@@ -9034,16 +9027,16 @@ msgstr ""
 "             <black|alche|tk|pk> |\n"
 "             <blacksmith|alchemist|taekwon|pvp>\n"
 
-#: ../Commands.pm:4945
+#: ../Commands.pm:4973
 msgid "undefined"
 msgstr ""
 
-#: ../Commands.pm:4951
+#: ../Commands.pm:4979
 #, fuzzy, perl-format
 msgid "Inventory Item %s (%s) can't be unequipped.\n"
 msgstr "Item %s (%s) kann nich equipped werden.\n"
 
-#: ../Commands.pm:4972
+#: ../Commands.pm:5000
 msgid ""
 "Syntax Error in function 'im' (Use Item on Monster)\n"
 "Usage: im <item #> <monster #>\n"
@@ -9051,7 +9044,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'im' (Item auf Monster)\n"
 "Benutzung: im <Item #> <Monster #>\n"
 
-#: ../Commands.pm:4975
+#: ../Commands.pm:5003
 #, perl-format
 msgid ""
 "Error in function 'im' (Use Item on Monster)\n"
@@ -9060,7 +9053,7 @@ msgstr ""
 "Fehler bei Funktion 'im' (Item auf Monster)\n"
 "Item %s existiert nicht.\n"
 
-#: ../Commands.pm:4978
+#: ../Commands.pm:5006
 #, perl-format
 msgid ""
 "Error in function 'im' (Use Item on Monster)\n"
@@ -9069,7 +9062,7 @@ msgstr ""
 "Fehler bei Funktion 'im' (Item auf Monster)\n"
 "Monster %s existiert nicht.\n"
 
-#: ../Commands.pm:4994
+#: ../Commands.pm:5022
 msgid ""
 "Syntax Error in function 'ip' (Use Item on Player)\n"
 "Usage: ip <item #> <player #>\n"
@@ -9077,7 +9070,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'ip' (Item auf Spieler)\n"
 "Benutzung: ip <Item #> <Spieler #>\n"
 
-#: ../Commands.pm:4997
+#: ../Commands.pm:5025
 #, perl-format
 msgid ""
 "Error in function 'ip' (Use Item on Player)\n"
@@ -9086,7 +9079,7 @@ msgstr ""
 "Fehler bei Funktion 'ip' (Item auf Spieler)\n"
 "Item %s existiert nicht.\n"
 
-#: ../Commands.pm:5000
+#: ../Commands.pm:5028
 #, perl-format
 msgid ""
 "Error in function 'ip' (Use Item on Player)\n"
@@ -9095,7 +9088,7 @@ msgstr ""
 "Fehler bei Funktion 'ip' (Item auf Spieler)\n"
 "Spieler %s existiert nicht.\n"
 
-#: ../Commands.pm:5014
+#: ../Commands.pm:5042
 msgid ""
 "Syntax Error in function 'is' (Use Item on Yourself)\n"
 "Usage: is <item>\n"
@@ -9103,7 +9096,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'is' (Item auf sich selbst)\n"
 "Benutzung: is <Item> \n"
 
-#: ../Commands.pm:5020
+#: ../Commands.pm:5048
 #, perl-format
 msgid ""
 "Error in function 'is' (Use Item on Yourself)\n"
@@ -9112,7 +9105,7 @@ msgstr ""
 "Fehler bei Funktion 'is' (Item auf sich selbst)\n"
 "Item %s existiert nicht.\n"
 
-#: ../Commands.pm:5040
+#: ../Commands.pm:5068
 msgid ""
 "Syntax error in function 'sl' (Use Skill on Location)\n"
 "Usage: sl <skill #> <x> <y> [level]\n"
@@ -9120,7 +9113,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'sl' (Skill auf Feld)\n"
 "Benutzung: sl <Skill #> <x> <y> [level]\n"
 
-#: ../Commands.pm:5044
+#: ../Commands.pm:5072
 msgid ""
 "Error in function 'sl' (Use Skill on Location)\n"
 "Invalid coordinates given.\n"
@@ -9128,7 +9121,7 @@ msgstr ""
 "Fehler bei Funktion 'sl' (Skill auf Feld)\n"
 "Ungültige Koordinaten.\n"
 
-#: ../Commands.pm:5059
+#: ../Commands.pm:5087
 msgid ""
 "Syntax error in function 'ss' (Use Skill on Self)\n"
 "Usage: ss <skill #> [level]\n"
@@ -9136,7 +9129,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'ss' (Skill auf sich selbst)\n"
 "Benutzung: ss <Skill #> [level]\n"
 
-#: ../Commands.pm:5069
+#: ../Commands.pm:5097
 msgid ""
 "Syntax error in function 'sp' (Use Skill on Player)\n"
 "Usage: sp <skill #> <player #> [level]\n"
@@ -9144,7 +9137,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'sp' (Skill auf Spieler)\n"
 "Benutzung: sp <Skill #> <Spieler #> [level]\n"
 
-#: ../Commands.pm:5075
+#: ../Commands.pm:5103
 #, perl-format
 msgid ""
 "Error in function 'sp' (Use Skill on Player)\n"
@@ -9153,7 +9146,7 @@ msgstr ""
 "Fehler bei Funktion 'sp' (Skill auf Spieler)\n"
 "Spieler '%s' existiert nicht.\n"
 
-#: ../Commands.pm:5085
+#: ../Commands.pm:5113
 msgid ""
 "Syntax error in function 'sm' (Use Skill on Monster)\n"
 "Usage: sm <skill #> <monster #> [level]\n"
@@ -9161,7 +9154,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'sm' (Skill auf Monster)\n"
 "Benutzung: sm <Skill #> <Monster #> [level]\n"
 
-#: ../Commands.pm:5091
+#: ../Commands.pm:5119
 #, perl-format
 msgid ""
 "Error in function 'sm' (Use Skill on Monster)\n"
@@ -9170,7 +9163,7 @@ msgstr ""
 "Fehler bei Funktion 'sm' (Skill auf Monster)\n"
 "Monster %d existiert nicht.\n"
 
-#: ../Commands.pm:5101
+#: ../Commands.pm:5129
 #, fuzzy
 msgid ""
 "Syntax error in function 'ssl' (Use Skill on Slave)\n"
@@ -9179,7 +9172,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'sp' (Skill auf Spieler)\n"
 "Benutzung: sp <Skill #> <Spieler #> [level]\n"
 
-#: ../Commands.pm:5107
+#: ../Commands.pm:5135
 #, fuzzy, perl-format
 msgid ""
 "Error in function 'ssl' (Use Skill on Slave)\n"
@@ -9188,7 +9181,7 @@ msgstr ""
 "Fehler bei Funktion 'sp' (Skill auf Spieler)\n"
 "Spieler '%s' existiert nicht.\n"
 
-#: ../Commands.pm:5117
+#: ../Commands.pm:5145
 msgid ""
 "Syntax error in function 'ssp' (Use Skill on Area Spell Location)\n"
 "Usage: ssp <skill #> <spell #> [level]\n"
@@ -9196,12 +9189,12 @@ msgstr ""
 "Syntaxfehler bei Funktion 'ssp' (Flächenskill)\n"
 "Benutzung: ssp <Skill #> <Zauber #> [level]\n"
 
-#: ../Commands.pm:5123
+#: ../Commands.pm:5151
 #, perl-format
 msgid "Spell %d does not exist.\n"
 msgstr "Spell %d existiert nicht.\n"
 
-#: ../Commands.pm:5154
+#: ../Commands.pm:5182
 msgid ""
 "Syntax error in function 'vender' (Vender Shop)\n"
 "Usage: vender <vender # | end> [<item #> <amount>]\n"
@@ -9209,7 +9202,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'vender' (Vender)\n"
 "Benutzung: vender <Vender # | end> [<Item #> <Anzahl>]\n"
 
-#: ../Commands.pm:5161
+#: ../Commands.pm:5189
 #, perl-format
 msgid ""
 "Error in function 'vender' (Vender Shop)\n"
@@ -9218,7 +9211,7 @@ msgstr ""
 "Fehler bei Funktion 'vender' (Vender)\n"
 "Vender %s existiert nicht.\n"
 
-#: ../Commands.pm:5166
+#: ../Commands.pm:5194
 msgid ""
 "Error in function 'vender' (Vender Shop)\n"
 "Vender ID is wrong.\n"
@@ -9226,28 +9219,28 @@ msgstr ""
 "Fehler bei Funktion 'vender' (Vender)\n"
 "Vender ID ist falsch.\n"
 
-#: ../Commands.pm:5177
+#: ../Commands.pm:5205
 msgid " Vender List "
 msgstr ""
 
-#: ../Commands.pm:5178 ../Commands.pm:5194
+#: ../Commands.pm:5206 ../Commands.pm:5222
 #, fuzzy
 msgid "#    Title                                 Coords      Owner\n"
 msgstr ""
 "-----------Vender Liste-----------\n"
 "#   Title                                Koords     Verkäufer\n"
 
-#: ../Commands.pm:5193
+#: ../Commands.pm:5221
 msgid " Buyer List "
 msgstr ""
 
-#: ../Commands.pm:5233
+#: ../Commands.pm:5261
 msgid ""
 "Syntax Error in function 'booking recruit' (Booking recruit)\n"
 "Usage: booking recruit \"<level>\" \"<MapID>\" \"<job 1 ~ 6x>\"\n"
 msgstr ""
 
-#: ../Commands.pm:5264
+#: ../Commands.pm:5292
 #, fuzzy
 msgid ""
 "Syntax error in function 'booking'\n"
@@ -9256,7 +9249,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'exp' (EXP-Report)\n"
 "Benutzung: exp [<report | monster | item | reset>]\n"
 
-#: ../Commands.pm:5279
+#: ../Commands.pm:5307
 #, fuzzy
 msgid ""
 "Syntax error in function 'buyer' (Buyer Shop)\n"
@@ -9265,7 +9258,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'vender' (Vender)\n"
 "Benutzung: vender <Vender # | end> [<Item #> <Anzahl>]\n"
 
-#: ../Commands.pm:5286
+#: ../Commands.pm:5314
 #, fuzzy, perl-format
 msgid ""
 "Error in function 'buyer' (Buyer Shop)\n"
@@ -9274,7 +9267,7 @@ msgstr ""
 "Fehler bei Funktion 'vender' (Vender)\n"
 "Vender %s existiert nicht.\n"
 
-#: ../Commands.pm:5295
+#: ../Commands.pm:5323
 #, fuzzy
 msgid ""
 "Error in function 'buyer' (Buyer Shop)\n"
@@ -9283,7 +9276,7 @@ msgstr ""
 "Fehler bei Funktion 'vender' (Vender)\n"
 "Vender ID ist falsch.\n"
 
-#: ../Commands.pm:5327
+#: ../Commands.pm:5355
 #, fuzzy
 msgid ""
 "Error in function 'warp' (Open/List Warp Portal)\n"
@@ -9292,36 +9285,36 @@ msgstr ""
 "Fehler bei Funktion 'warp' (Warp Portal öffnen)\n"
 "Benutzung: warp <Mape Name | Map Nummer # | list >\n"
 
-#: ../Commands.pm:5332 ../Commands.pm:5348
+#: ../Commands.pm:5360 ../Commands.pm:5376
 msgid "You didn't cast warp portal.\n"
 msgstr "Du hast kein Warp Portal gecastet.\n"
 
-#: ../Commands.pm:5337
+#: ../Commands.pm:5365
 #, perl-format
 msgid "Invalid map number %s.\n"
 msgstr "Ungültige Mapnummer %s.\n"
 
-#: ../Commands.pm:5341 ../Commands.pm:5371
+#: ../Commands.pm:5369 ../Commands.pm:5399
 #, perl-format
 msgid "Attempting to open a warp portal to %s (%s)\n"
 msgstr "Versuche Portal zu öffnen: %s (%s)\n"
 
-#: ../Commands.pm:5363
+#: ../Commands.pm:5391
 #, fuzzy
 msgid "Attempting to cancel the warp portal\n"
 msgstr "Versuche Portal zu öffnen: %s (%s)\n"
 
-#: ../Commands.pm:5367
+#: ../Commands.pm:5395
 #, perl-format
 msgid "Map '%s' does not exist.\n"
 msgstr "Map '%s' existiert nicht.\n"
 
-#: ../Commands.pm:5379
+#: ../Commands.pm:5407
 #, fuzzy
 msgid "Character weight information not yet available.\n"
 msgstr "Cart Inventar nicht verfügbar.\n"
 
-#: ../Commands.pm:5387
+#: ../Commands.pm:5415
 msgid ""
 "Syntax error in function 'weight' (Inventory Weight Info)\n"
 "Usage: weight [item weight]\n"
@@ -9329,36 +9322,36 @@ msgstr ""
 "Syntaxfehler bei Funktion 'weight' (Gewichtsinfo)\n"
 "Benutzung: weight [Itemgewicht]\n"
 
-#: ../Commands.pm:5393
+#: ../Commands.pm:5421
 msgid "Weight: %s/%s (%s%)\n"
 msgstr "Gewicht: %s/%s (%s%)\n"
 
-#: ../Commands.pm:5397 ../Commands.pm:5403
+#: ../Commands.pm:5425 ../Commands.pm:5431
 #, perl-format
 msgid "You can carry %s%s before %s overweight.\n"
 msgstr "Du kannst noch %s%s tragen bevor %s Overweight.\n"
 
-#: ../Commands.pm:5400 ../Commands.pm:5406
+#: ../Commands.pm:5428 ../Commands.pm:5434
 #, perl-format
 msgid "You are %s overweight.\n"
 msgstr "%s Overweight.\n"
 
-#: ../Commands.pm:5412
+#: ../Commands.pm:5440
 #, fuzzy
 msgid "Location not yet available.\n"
 msgstr "Cart Inventar nicht verfügbar.\n"
 
-#: ../Commands.pm:5416
+#: ../Commands.pm:5444
 #, fuzzy, perl-format
 msgid "Location: %s : (baseName: %s) : %d, %d\n"
 msgstr "Position %s (%s) : %d, %d\n"
 
-#: ../Commands.pm:5429
+#: ../Commands.pm:5457
 #, fuzzy
 msgid "Character information not yet available.\n"
 msgstr "Cart Inventar nicht verfügbar.\n"
 
-#: ../Commands.pm:5434
+#: ../Commands.pm:5462
 #, perl-format
 msgid ""
 "Name:    %s (Level %s %s %s)\n"
@@ -9369,49 +9362,49 @@ msgstr ""
 "Char ID: %s\n"
 "Acct ID: %s\n"
 
-#: ../Commands.pm:5453
+#: ../Commands.pm:5481
 msgid "Usage: ms <receiver> <title> <message>\n"
 msgstr ""
 
-#: ../Commands.pm:5463
+#: ../Commands.pm:5491
 msgid "Usage: mo <mail #>\n"
 msgstr ""
 
-#: ../Commands.pm:5466 ../Commands.pm:5495 ../Commands.pm:5529
-#: ../Commands.pm:5543
+#: ../Commands.pm:5494 ../Commands.pm:5523 ../Commands.pm:5557
+#: ../Commands.pm:5571
 #, perl-format
 msgid "No mail found with index: %s. (might need to re-open mailbox)\n"
 msgstr ""
 
-#: ../Commands.pm:5468 ../Commands.pm:5497 ../Commands.pm:5531
-#: ../Commands.pm:5545
+#: ../Commands.pm:5496 ../Commands.pm:5525 ../Commands.pm:5559
+#: ../Commands.pm:5573
 #, fuzzy
 msgid "Mailbox has not been opened or is empty.\n"
 msgstr "Du hast keinen Shop offen.\n"
 
-#: ../Commands.pm:5482
+#: ../Commands.pm:5510
 msgid "Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n"
 msgstr ""
 
-#: ../Commands.pm:5486
+#: ../Commands.pm:5514
 msgid ""
 "Syntax error in function 'mw' (mailbox window)\n"
 "Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n"
 msgstr ""
 
-#: ../Commands.pm:5504
+#: ../Commands.pm:5532
 #, fuzzy
 msgid "Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n"
 msgstr ""
 "Syntaxfehler bei Funktion 'im' (Item auf Monster)\n"
 "Benutzung: im <Item #> <Monster #>\n"
 
-#: ../Commands.pm:5513
+#: ../Commands.pm:5541
 #, fuzzy, perl-format
 msgid "Item with index or name: %s does not exist in inventory.\n"
 msgstr "Cart Item '%s' existiert nicht.\n"
 
-#: ../Commands.pm:5516
+#: ../Commands.pm:5544
 #, fuzzy
 msgid ""
 "Syntax error in function 'ma' (mail attachment control)\n"
@@ -9420,7 +9413,7 @@ msgstr ""
 "Syntaxfehler bei Funktion 'im' (Item auf Monster)\n"
 "Benutzung: im <Item #> <Monster #>\n"
 
-#: ../Commands.pm:5520
+#: ../Commands.pm:5548
 #, fuzzy
 msgid ""
 "Usage: ma (get <mail #>)|(add [zeny <amount>]|[item <amount> (<item #>|<item "
@@ -9429,160 +9422,167 @@ msgstr ""
 "Syntaxfehler bei Funktion 'im' (Item auf Monster)\n"
 "Benutzung: im <Item #> <Monster #>\n"
 
-#: ../Commands.pm:5526
+#: ../Commands.pm:5554
 msgid "Usage: md <mail #>\n"
 msgstr ""
 
-#: ../Commands.pm:5540
+#: ../Commands.pm:5568
 msgid "Usage: mr <mail #>\n"
 msgstr ""
 
-#: ../Commands.pm:5553
+#: ../Commands.pm:5581
 msgid "Mail commands: ms, mi, mo, md, mw, mr, ma\n"
 msgstr ""
 
-#: ../Commands.pm:5570
+#: ../Commands.pm:5598
 msgid "Usage: aua (<item #>|<item name>) <amount>\n"
 msgstr ""
 
-#: ../Commands.pm:5581
+#: ../Commands.pm:5609
 msgid "Usage: auc <current price> <instant buy price> <hours>\n"
 msgstr ""
 
-#: ../Commands.pm:5589
+#: ../Commands.pm:5617
 msgid "Usage: aub <id> <price>\n"
 msgstr ""
 
-#: ../Commands.pm:5593 ../Commands.pm:5617 ../Commands.pm:5632
+#: ../Commands.pm:5621 ../Commands.pm:5645 ../Commands.pm:5660
 #, perl-format
 msgid ""
 "No auction item found with index: %s. (might need to re-open auction "
 "window)\n"
 msgstr ""
 
-#: ../Commands.pm:5595 ../Commands.pm:5619 ../Commands.pm:5634
+#: ../Commands.pm:5623 ../Commands.pm:5647 ../Commands.pm:5662
 #, fuzzy
 msgid "Auction window has not been opened or is empty.\n"
 msgstr "Du hast keinen Shop offen.\n"
 
-#: ../Commands.pm:5605
+#: ../Commands.pm:5633
 msgid "Usage: aui (selling|buying)\n"
 msgstr ""
 
-#: ../Commands.pm:5613
+#: ../Commands.pm:5641
 msgid "Usage: aud <index>\n"
 msgstr ""
 
-#: ../Commands.pm:5628
+#: ../Commands.pm:5656
 msgid "Usage: aue <index>\n"
 msgstr ""
 
-#: ../Commands.pm:5644
+#: ../Commands.pm:5672
 msgid ""
 "Usage: aus <type> [<price>|<text>]\n"
 "      types (0:Armor 1:Weapon 2:Card 3:Misc 4:By Text 5:By Price 6:Sell 7:"
 "Buy)\n"
 msgstr ""
 
-#: ../Commands.pm:5652
+#: ../Commands.pm:5680
 msgid "Usage: aus 5 <text>\n"
 msgstr ""
 
-#: ../Commands.pm:5659
+#: ../Commands.pm:5687
 msgid "Usage: aus 6 <price>\n"
 msgstr ""
 
-#: ../Commands.pm:5664
+#: ../Commands.pm:5692
 msgid ""
 "Possible value's for the <type> parameter are:\n"
 "(0:Armor 1:Weapon 2:Card 3:Misc 4:By Text 5:By Price 6:Sell 7:Buy)\n"
 msgstr ""
 
-#: ../Commands.pm:5669
+#: ../Commands.pm:5697
 msgid "Auction commands: aua, aur, auc, aub, aui, aud, aue, aus\n"
 msgstr ""
 
-#: ../Commands.pm:5685
+#: ../Commands.pm:5713
 msgid "Usage: quest set <questID> <on|off>\n"
 msgstr ""
 
-#: ../Commands.pm:5689
+#: ../Commands.pm:5717
 msgid "Quest List"
 msgstr ""
 
-#: ../Commands.pm:5693
+#: ../Commands.pm:5721
 msgid "active"
 msgstr ""
 
-#: ../Commands.pm:5693
+#: ../Commands.pm:5721
 msgid "inactive"
 msgstr ""
 
-#: ../Commands.pm:5707
+#: ../Commands.pm:5735
 msgid "Quest Info"
 msgstr ""
 
-#: ../Commands.pm:5709
+#: ../Commands.pm:5737
 #, fuzzy, perl-format
 msgid "Objective: %s\n"
 msgstr "Aktive Tasks: %s\n"
 
-#: ../Commands.pm:5712
+#: ../Commands.pm:5740
 #, fuzzy
 msgid "Unknown quest\n"
 msgstr "Unbekannter Fehler %s\n"
 
-#: ../Commands.pm:5715
+#: ../Commands.pm:5743
 msgid "Usage: quest info <questID>\n"
 msgstr ""
 
-#: ../Commands.pm:5718
+#: ../Commands.pm:5746
 #, fuzzy
 msgid "Quest commands: set, list, info\n"
 msgstr "Diese Befehle gibt es nicht: %s\n"
 
-#: ../Commands.pm:5732
+#: ../Commands.pm:5760
 #, fuzzy, perl-format
 msgid "Requesting equipment information for: %s\n"
 msgstr "Warten auf Gildeninformationen...\n"
 
-#: ../Commands.pm:5734
+#: ../Commands.pm:5762
 #, perl-format
 msgid "No player found with specified information: %s\n"
 msgstr ""
 
-#: ../Commands.pm:5736
+#: ../Commands.pm:5764
 msgid "Usage: showeq p <index|name|partialname>\n"
 msgstr ""
 
-#: ../Commands.pm:5741
+#: ../Commands.pm:5769
 msgid "Usage: showeq [p <index|name|partialname>] | [me <on|off>]\n"
 msgstr ""
 
-#: ../Commands.pm:5754
+#: ../Commands.pm:5782
 #, fuzzy, perl-format
 msgid "Item with 'Cooking List' index: %s not found.\n"
 msgstr "Kann Code nicht neu laden: %s nicht gefunden\n"
 
-#: ../Commands.pm:5767
+#: ../Commands.pm:5795
 #, fuzzy, perl-format
 msgid "Item with name or id: %s not found.\n"
 msgstr "Kann Code nicht neu laden: %s nicht gefunden\n"
 
-#: ../Commands.pm:5811
+#: ../Commands.pm:5839
 #, fuzzy
 msgid " Storage "
 msgstr "Storage gespeichert\n"
 
-#: ../Commands.pm:5827
+#: ../Commands.pm:5855
 #, fuzzy
 msgid ""
 "\n"
 "-- Equipment --\n"
 msgstr "-- Equipment --\n"
 
+#: ../Commands.pm:5869
+#, fuzzy
+msgid ""
+"\n"
+"-- Non-Usable --\n"
+msgstr "-- Nicht-nutzbare Items --\n"
+
 #. Translation Comment: Storage Capacity
-#: ../Commands.pm:5853 ../Misc.pm:3159
+#: ../Commands.pm:5881 ../Misc.pm:3159
 #, perl-format
 msgid ""
 "\n"
@@ -9591,11 +9591,11 @@ msgstr ""
 "\n"
 "Kapazität: %d/%d\n"
 
-#: ../Commands.pm:5865
+#: ../Commands.pm:5893
 msgid " Dead Time Record "
 msgstr ""
 
-#: ../Commands.pm:5872
+#: ../Commands.pm:5900
 #, fuzzy
 msgid "You have not died yet.\n"
 msgstr "Du bist gestorben\n"
