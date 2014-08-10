@@ -77,6 +77,8 @@ ai_wipe_check 30
 
 # Every x seconds, check pet hungry for feeding
 ai_petFeed 60
+# Every x seconds, check homun hungry for feeding
+ai_homunFeed 60
 
 # Send the sit/stand packet at most every x second
 ai_sit 1
