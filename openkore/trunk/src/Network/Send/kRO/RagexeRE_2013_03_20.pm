@@ -56,6 +56,8 @@ sub new {
 #		'00A9' => undef,
 		'0998' => ['sendEquip'],#8
 		'09A1' => ['sync_received_characters'],#2
+		'0815' => undef,
+		'0938' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -64,6 +66,7 @@ sub new {
 		actor_info_request 0898
 		actor_look_at 093F
 		actor_name_request 094C
+		buy_bulk_openShop 0938
 		character_move 0881
 		friend_request 086D
 		homunculus_command 0897

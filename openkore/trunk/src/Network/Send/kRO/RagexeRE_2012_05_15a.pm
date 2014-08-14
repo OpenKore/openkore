@@ -50,6 +50,12 @@ sub new {
 		'094B' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		'0957' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'0964' => ['item_take', 'a4', [qw(ID)]],#6
+		'0360' => undef,
+		'091A' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
+		'0817' => undef,
+		'092C' => ['buy_bulk_closeShop'],#2
+		'0815' => undef,
+		'0891' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -58,6 +64,9 @@ sub new {
 		actor_info_request 08A5
 		actor_look_at 08AC
 		actor_name_request 0957
+		buy_bulk_closeShop 092C
+		buy_bulk_openShop 0891
+		buy_bulk_request 091A
 		character_move 087C
 		friend_request 0369
 		homunculus_command 094B
@@ -117,9 +126,9 @@ sub sendStoragePassword {
 +0x0947,10,useskilltoid,2:4:6
 +0x0439,8,useitem,2:4
 0x0366,-1,itemlistwindowselected,2:4:8
-0x0891,-1,reqopenbuyingstore,2:4:8:9:89
-0x092C,2,reqclosebuyingstore,0
-0x091A,6,reqclickbuyingstore,2
++0x0891,-1,reqopenbuyingstore,2:4:8:9:89
++0x092C,2,reqclosebuyingstore,0
++0x091A,6,reqclickbuyingstore,2
 0x096A,-1,reqtradebuyingstore,2:4:8:12
 0x0817,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0367,2,searchstoreinfonextpage,0

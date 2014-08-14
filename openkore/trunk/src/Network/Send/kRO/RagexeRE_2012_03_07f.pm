@@ -31,15 +31,12 @@ sub new {
 		'023B' => undef,
 		'02C4' => ['item_drop', 'v2', [qw(index amount)]],#6
 		'035F' => undef,
-# TODO 0x0360,6,reqclickbuyingstore,2
 		'0361' => undef,
 		'0362' => undef,
 		'0364' => undef,
 		'0369' => ['friend_request', 'a*', [qw(username)]],#26
 		'07E4' => undef,
 		'0802' => undef,
-# TODO 0x0815,-1,reqopenbuyingstore,2:4:8:9:89
-# TODO 0x0817,2,reqclosebuyingstore,0
 		'083C' => undef,
 		'0863' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		'0865' => ['item_take', 'a4', [qw(ID)]],#6
@@ -56,12 +53,17 @@ sub new {
 		'093B' => ['storage_item_add', 'v V', [qw(index amount)]],#8
 		'0963' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
 		'0970' => ['char_create'],#31
+		'0940' => undef,
+		'0817' => ['buy_bulk_closeShop'],#2
+		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
 		actor_action 0885
 		actor_look_at 0890
+		buy_bulk_closeShop 0817
+		buy_bulk_openShop 0815
 		char_create 0970
 		friend_request 0369
 		homunculus_command 0863
@@ -107,9 +109,9 @@ sub sendSkillUseLocInfo {
 +0x0889,10,useskilltoid,2:4:6
 +0x0439,8,useitem,2:4
 0x0870,-1,itemlistwindowselected,2:4:8
-0x0815,-1,reqopenbuyingstore,2:4:8:9:89
-0x0817,2,reqclosebuyingstore,0
-0x0360,6,reqclickbuyingstore,2
++0x0815,-1,reqopenbuyingstore,2:4:8:9:89
++0x0817,2,reqclosebuyingstore,0
++0x0360,6,reqclickbuyingstore,2
 0x0811,-1,reqtradebuyingstore,2:4:8:12
 0x0884,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0835,2,searchstoreinfonextpage,0

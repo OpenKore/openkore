@@ -24,7 +24,8 @@ sub new {
 		'023B' => ['friend_request', 'a*', [qw(username)]],#26
 		'02C4' => undef,
 		'035F' => ['sync', 'V', [qw(time)]],#6
-		'0360' => undef,
+		'0817' => undef,
+		'0360' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
 		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		'0362' => ['item_drop', 'v2', [qw(index amount)]],#6
 		'0363' => undef,
@@ -43,7 +44,10 @@ sub new {
 		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],#10
 		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
-	);
+		'0817' => ['buy_bulk_closeShop'],#2
+		'0811' => undef,
+		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
+		);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
@@ -51,6 +55,9 @@ sub new {
 		actor_info_request 08AD
 		actor_name_request 0368
 		actor_look_at 0202
+		buy_bulk_closeShop 0817
+		buy_bulk_openShop 0815
+		buy_bulk_request 0360
 		character_move 0437
 		friend_request 023B
 		homunculus_command 0361
@@ -95,9 +102,9 @@ sub new {
 0x0809,50
 0x080A,18
 0x080B,6
-0x0815,-1,reqopenbuyingstore,2:4:8:9:89
-0x0817,2,reqclosebuyingstore,0
-0x0360,6,reqclickbuyingstore,2
++0x0815,-1,reqopenbuyingstore,2:4:8:9:89
++0x0817,2,reqclosebuyingstore,0
++0x0360,6,reqclickbuyingstore,2
 0x0811,-1,reqtradebuyingstore,2:4:8:12
 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0835,2,searchstoreinfonextpage,0
