@@ -52,6 +52,8 @@ sub new {
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		'094C' => undef,
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
+		'0938' => undef,
+		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -60,6 +62,7 @@ sub new {
 		actor_info_request 096A
 		actor_look_at 0362
 		actor_name_request 0368
+		buy_bulk_openShop 0815
 		character_move 0437
 		friend_request 0962
 		homunculus_command 0931
@@ -106,9 +109,9 @@ sub sendSkillUseLocInfo {
 +0x0366,90,useskilltoposinfo,2:4:6:8:10
 +0x096A,6,getcharnamerequest,2
 +0x0368,6,solvecharname,2
-0x0815,-1,reqopenbuyingstore,2:4:8:9:89
-0x0817,2,reqclosebuyingstore,0
-0x0360,6,reqclickbuyingstore,2
++0x0815,-1,reqopenbuyingstore,2:4:8:9:89
++0x0817,2,reqclosebuyingstore,0
++0x0360,6,reqclickbuyingstore,2
 0x0811,-1,reqtradebuyingstore,2:4:8:12
 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0835,2,searchstoreinfonextpage,0

@@ -118,6 +118,7 @@ sub new {
 		'0808' => ['booking_update', 'v6', [qw(job0 job1 job2 job3 job4 job5)]],
 		'0811' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
 		'0815' => ['buy_bulk_closeShop'],
+		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0819' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
 		'0827' => ['char_delete2', 'a4', [qw(charID)]], # 6
 		'082B' => ['char_delete2_cancel', 'a4', [qw(charID)]], # 6
@@ -1245,13 +1246,6 @@ sub sendCaptchaAnswer {
 	my ($self, $answer) = @_;
 	my $msg = pack('v2 a4 a24', 0x07E7, 0x20, $accountID, $answer);
 	$self->sendToServer($msg);
-}
-
-sub sendEnteringBuyer {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0x17, 0x08) . $ID;
-	$self->sendToServer($msg);
-	debug "Sent Entering Buyer: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendProgress {

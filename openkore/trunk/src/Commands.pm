@@ -55,187 +55,186 @@ our %customCommands;
 
 sub initHandlers {
 	%handlers = (
-	a                  => \&cmdAttack,
-	ai                 => \&cmdAI,
-	aiv                => \&cmdAIv,
-	al                 => \&cmdShopInfoSelf,
-	arrowcraft         => \&cmdArrowCraft,
-	as                 => \&cmdAttackStop,
-	autobuy            => \&cmdAutoBuy,
-	autosell           => \&cmdAutoSell,
-	autostorage        => \&cmdAutoStorage,
-	auth               => \&cmdAuthorize,
-	bangbang           => \&cmdBangBang,
-	bingbing           => \&cmdBingBing,
-	bg                 => \&cmdChat,
-	bl				   => \&cmdBuyerList,
-	booking			   => \&cmdBooking,
-	buy                => \&cmdBuy,
-	buyer			   => \&cmdBuyer,
-	bs				   => \&cmdBuyShopInfoSelf,
-	c                  => \&cmdChat,
-	card               => \&cmdCard,
-	cart               => \&cmdCart,
-	cash			   => \&cmdCash,
-	charselect         => \&cmdCharSelect,
-	chat               => \&cmdChatRoom,
-	chist              => \&cmdChist,
-	cil                => \&cmdItemLogClear,
-	cl                 => \&cmdChatRoom,
-	clearlog           => \&cmdChatLogClear,
-	closeshop          => \&cmdCloseShop,
-	closebuyshop       => \&cmdCloseBuyShop,
-	conf               => \&cmdConf,
-	connect            => \&cmdConnect,
-	damage             => \&cmdDamage,
-	dead			   => \&cmdDeadTime,
-	deal               => \&cmdDeal,
-	debug              => \&cmdDebug,
-	dl                 => \&cmdDealList,
-	doridori           => \&cmdDoriDori,
-	drop               => \&cmdDrop,
-	dump               => \&cmdDump,
-	dumpnow            => \&cmdDumpNow,
-	e                  => \&cmdEmotion,
-	eq                 => \&cmdEquip,
-	eval               => \&cmdEval,
-	exp                => \&cmdExp,
-	falcon             => \&cmdFalcon,
-	follow             => \&cmdFollow,
-	friend             => \&cmdFriend,
-	h                  => \&cmdSlave,
-	homun              => \&cmdSlave,
-	merc               => \&cmdSlave,
-	g                  => \&cmdChat,
-	getplayerinfo      => \&cmdGetPlayerInfo,
-	getcharname		   => \&cmdGetCharacterName,
+	a					=> \&cmdAttack,
+	ai					=> \&cmdAI,
+	aiv					=> \&cmdAIv,
+	al					=> \&cmdShopInfoSelf,
+	arrowcraft			=> \&cmdArrowCraft,
+	as					=> \&cmdAttackStop,
+	autobuy				=> \&cmdAutoBuy,
+	autosell			=> \&cmdAutoSell,
+	autostorage			=> \&cmdAutoStorage,
+	auth				=> \&cmdAuthorize,
+	bangbang			=> \&cmdBangBang,
+	bingbing			=> \&cmdBingBing,
+	bg					=> \&cmdChat,
+	bl					=> \&cmdBuyerList,
+	booking				=> \&cmdBooking,
+	buy					=> \&cmdBuy,
+	buyer				=> \&cmdBuyer,
+	bs					=> \&cmdBuyShopInfoSelf,
+	c					=> \&cmdChat,
+	card				=> \&cmdCard,
+	cart				=> \&cmdCart,
+	cash				=> \&cmdCash,
+	charselect			=> \&cmdCharSelect,
+	chat				=> \&cmdChatRoom,
+	chist				=> \&cmdChist,
+	cil					=> \&cmdItemLogClear,
+	cl					=> \&cmdChatRoom,
+	clearlog			=> \&cmdChatLogClear,
+	closeshop			=> \&cmdCloseShop,
+	closebuyshop		=> \&cmdCloseBuyShop,
+	conf				=> \&cmdConf,
+	connect				=> \&cmdConnect,
+	damage				=> \&cmdDamage,
+	dead				=> \&cmdDeadTime,
+	deal				=> \&cmdDeal,
+	debug				=> \&cmdDebug,
+	dl					=> \&cmdDealList,
+	doridori			=> \&cmdDoriDori,
+	drop				=> \&cmdDrop,
+	dump				=> \&cmdDump,
+	dumpnow				=> \&cmdDumpNow,
+	e					=> \&cmdEmotion,
+	eq					=> \&cmdEquip,
+	eval				=> \&cmdEval,
+	exp					=> \&cmdExp,
+	falcon				=> \&cmdFalcon,
+	follow				=> \&cmdFollow,
+	friend				=> \&cmdFriend,
+	homun				=> \&cmdSlave,
+	merc				=> \&cmdSlave,
+	g					=> \&cmdChat,
+	getplayerinfo		=> \&cmdGetPlayerInfo,
+	getcharname			=> \&cmdGetCharacterName,
 	# GM Commands - Start
-	gmb                => \&cmdGmb,
-	gmbb               => \&cmdGmb,
-	gmnb               => \&cmdGmb,
-	gmlb               => \&cmdGmb,
-	gmlbb              => \&cmdGmb,
-	gmlnb              => \&cmdGmb,
-	gmmapmove          => \&cmdGmmapmove,
-	gmcreate           => \&cmdGmcreate,
-	gmhide             => \&cmdGmhide,
-	gmwarpto           => \&cmdGmwarpto,
-	gmsummon           => \&cmdGmsummon,
-	gmrecall           => \&cmdGmrecall,
-	gmremove           => \&cmdGmremove,
-	gmdc               => \&cmdGmdc,
-	gmresetskill       => \&cmdGmresetskill,
-	gmresetstate       => \&cmdGmresetstate,
-	gmmute             => \&cmdGmmute,
-	gmunmute           => \&cmdGmunmute,
-	gmkillall          => \&cmdGmkillall,
+	gmb					=> \&cmdGmb,
+	gmbb				=> \&cmdGmb,
+	gmnb				=> \&cmdGmb,
+	gmlb				=> \&cmdGmb,
+	gmlbb				=> \&cmdGmb,
+	gmlnb				=> \&cmdGmb,
+	gmmapmove			=> \&cmdGmmapmove,
+	gmcreate			=> \&cmdGmcreate,
+	gmhide				=> \&cmdGmhide,
+	gmwarpto			=> \&cmdGmwarpto,
+	gmsummon			=> \&cmdGmsummon,
+	gmrecall			=> \&cmdGmrecall,
+	gmremove			=> \&cmdGmremove,
+	gmdc				=> \&cmdGmdc,
+	gmresetskill		=> \&cmdGmresetskill,
+	gmresetstate		=> \&cmdGmresetstate,
+	gmmute				=> \&cmdGmmute,
+	gmunmute			=> \&cmdGmunmute,
+	gmkillall			=> \&cmdGmkillall,
 	# GM Commands - End
-	guild              => \&cmdGuild,
-	help               => \&cmdHelp,
-	i                  => \&cmdInventory,
-	identify           => \&cmdIdentify,
-	ignore             => \&cmdIgnore,
-	ihist              => \&cmdIhist,
-	il                 => \&cmdItemList,
-	im                 => \&cmdUseItemOnMonster,
-	ip                 => \&cmdUseItemOnPlayer,
-	is                 => \&cmdUseItemOnSelf,
-	kill               => \&cmdKill,
-	look               => \&cmdLook,
-	lookp              => \&cmdLookPlayer,
-	memo               => \&cmdMemo,
-	ml                 => \&cmdMonsterList,
-	move               => \&cmdMove,
-	nl                 => \&cmdNPCList,
-	openshop           => \&cmdOpenShop,
-	p                  => \&cmdChat,
-	party              => \&cmdParty,
-	pecopeco           => \&cmdPecopeco,
-	pet                => \&cmdPet,
-	petl               => \&cmdPetList,
-	pl                 => \&cmdPlayerList,
-	plugin             => \&cmdPlugin,
-	pm                 => \&cmdPrivateMessage,
-	pml                => \&cmdPMList,
-	portals            => \&cmdPortalList,
-	quit               => \&cmdQuit,
-	rc                 => \&cmdReloadCode,
-	rc2                 => \&cmdReloadCode2,
-	reload             => \&cmdReload,
-	relog              => \&cmdRelog,
-	repair             => \&cmdRepair,
-	respawn            => \&cmdRespawn,
-	s                  => \&cmdStatus,
-	sell               => \&cmdSell,
-	send               => \&cmdSendRaw,
-	sit                => \&cmdSit,
-	skills             => \&cmdSkills,
-	sll                => \&cmdSlaveList,
-	spells             => \&cmdSpells,
-	storage            => \&cmdStorage,
-	store              => \&cmdStore,
-	sl                 => \&cmdUseSkill,
-	sm                 => \&cmdUseSkill,
-	sp                 => \&cmdUseSkill,
-	ss                 => \&cmdUseSkill,
-	ssl                => \&cmdUseSkill,
-	ssp                => \&cmdUseSkill,
-	st                 => \&cmdStats,
-	stand              => \&cmdStand,
-	stat_add           => \&cmdStatAdd,
-	switchconf         => \&cmdSwitchConf,
-	take               => \&cmdTake,
-	talk               => \&cmdTalk,
-	talknpc            => \&cmdTalkNPC,
-	tank               => \&cmdTank,
-	tele               => \&cmdTeleport,
-	testshop           => \&cmdTestShop,
-	timeout            => \&cmdTimeout,
-	top10              => \&cmdTop10,
-	uneq               => \&cmdUnequip,
-	vender             => \&cmdVender,
-	verbose            => \&cmdVerbose,
-	version            => \&cmdVersion,
-	vl                 => \&cmdVenderList,
-	vs				   => \&cmdShopInfoSelf,
-	warp               => \&cmdWarp,
-	weight             => \&cmdWeight,
-	where              => \&cmdWhere,
-	who                => \&cmdWho,
-	whoami             => \&cmdWhoAmI,
+	guild				=> \&cmdGuild,
+	help				=> \&cmdHelp,
+	i					=> \&cmdInventory,
+	identify			=> \&cmdIdentify,
+	ignore				=> \&cmdIgnore,
+	ihist				=> \&cmdIhist,
+	il					=> \&cmdItemList,
+	im					=> \&cmdUseItemOnMonster,
+	ip					=> \&cmdUseItemOnPlayer,
+	is					=> \&cmdUseItemOnSelf,
+	kill				=> \&cmdKill,
+	look				=> \&cmdLook,
+	lookp				=> \&cmdLookPlayer,
+	memo				=> \&cmdMemo,
+	ml					=> \&cmdMonsterList,
+	move				=> \&cmdMove,
+	nl					=> \&cmdNPCList,
+	openshop			=> \&cmdOpenShop,
+	p					=> \&cmdChat,
+	party				=> \&cmdParty,
+	pecopeco			=> \&cmdPecopeco,
+	pet					=> \&cmdPet,
+	petl				=> \&cmdPetList,
+	pl					=> \&cmdPlayerList,
+	plugin				=> \&cmdPlugin,
+	pm					=> \&cmdPrivateMessage,
+	pml					=> \&cmdPMList,
+	portals				=> \&cmdPortalList,
+	quit				=> \&cmdQuit,
+	rc					=> \&cmdReloadCode,
+	rc2					=> \&cmdReloadCode2,
+	reload				=> \&cmdReload,
+	relog				=> \&cmdRelog,
+	repair				=> \&cmdRepair,
+	respawn				=> \&cmdRespawn,
+	s					=> \&cmdStatus,
+	sell				=> \&cmdSell,
+	send				=> \&cmdSendRaw,
+	sit					=> \&cmdSit,
+	skills				=> \&cmdSkills,
+	sll					=> \&cmdSlaveList,
+	spells				=> \&cmdSpells,
+	storage				=> \&cmdStorage,
+	store				=> \&cmdStore,
+	sl					=> \&cmdUseSkill,
+	sm					=> \&cmdUseSkill,
+	sp					=> \&cmdUseSkill,
+	ss					=> \&cmdUseSkill,
+	ssl					=> \&cmdUseSkill,
+	ssp					=> \&cmdUseSkill,
+	st					=> \&cmdStats,
+	stand				=> \&cmdStand,
+	stat_add			=> \&cmdStatAdd,
+	switchconf			=> \&cmdSwitchConf,
+	take				=> \&cmdTake,
+	talk				=> \&cmdTalk,
+	talknpc				=> \&cmdTalkNPC,
+	tank				=> \&cmdTank,
+	tele				=> \&cmdTeleport,
+	testshop			=> \&cmdTestShop,
+	timeout				=> \&cmdTimeout,
+	top10				=> \&cmdTop10,
+	uneq				=> \&cmdUnequip,
+	vender				=> \&cmdVender,
+	verbose				=> \&cmdVerbose,
+	version				=> \&cmdVersion,
+	vl					=> \&cmdVenderList,
+	vs					=> \&cmdShopInfoSelf,
+	warp				=> \&cmdWarp,
+	weight				=> \&cmdWeight,
+	where				=> \&cmdWhere,
+	who					=> \&cmdWho,
+	whoami				=> \&cmdWhoAmI,
 
-	m                  => \&cmdMail,	# see commands
-	ms                 => \&cmdMail,	# send
-	mi                 => \&cmdMail,	# inbox
-	mo                 => \&cmdMail,	# open
-	md                 => \&cmdMail,	# delete
-	mw                 => \&cmdMail,	# window
-	mr                 => \&cmdMail,	# return
-	ma                 => \&cmdMail,	# attachement
+	m					=> \&cmdMail,	# see commands
+	ms					=> \&cmdMail,	# send
+	mi					=> \&cmdMail,	# inbox
+	mo					=> \&cmdMail,	# open
+	md					=> \&cmdMail,	# delete
+	mw					=> \&cmdMail,	# window
+	mr					=> \&cmdMail,	# return
+	ma					=> \&cmdMail,	# attachement
 
-	au                 => \&cmdAuction,	# see commands
-	aua                => \&cmdAuction,	# add item
-	aur                => \&cmdAuction, # remove item
-	auc                => \&cmdAuction,	# create auction
-	aue                => \&cmdAuction,	# auction end
-	aus                => \&cmdAuction,	# search auction
-	aub                => \&cmdAuction, # make bid
-	aui                => \&cmdAuction, # info on buy/sell
-	aud                => \&cmdAuction, # delete auction
+	au					=> \&cmdAuction,	# see commands
+	aua					=> \&cmdAuction,	# add item
+	aur					=> \&cmdAuction,	# remove item
+	auc					=> \&cmdAuction,	# create auction
+	aue					=> \&cmdAuction,	# auction end
+	aus					=> \&cmdAuction,	# search auction
+	aub					=> \&cmdAuction,	# make bid
+	aui					=> \&cmdAuction,	# info on buy/sell
+	aud					=> \&cmdAuction,	# delete auction
 
-	quest			   => \&cmdQuest,
-	showeq			   => \&cmdShowEquip,
-	cook			   => \&cmdCooking,
-	refine			   => \&cmdWeaponRefine,
+	quest				=> \&cmdQuest,
+	showeq				=> \&cmdShowEquip,
+	cook				=> \&cmdCooking,
+	refine				=> \&cmdWeaponRefine,
 
-	north              => \&cmdManualMove,
-	south              => \&cmdManualMove,
-	east               => \&cmdManualMove,
-	west               => \&cmdManualMove,
-	northeast          => \&cmdManualMove,
-	northwest          => \&cmdManualMove,
-	southeast          => \&cmdManualMove,
-	southwest          => \&cmdManualMove,
+	north				=> \&cmdManualMove,
+	south				=> \&cmdManualMove,
+	east				=> \&cmdManualMove,
+	west				=> \&cmdManualMove,
+	northeast			=> \&cmdManualMove,
+	northwest			=> \&cmdManualMove,
+	southeast			=> \&cmdManualMove,
+	southwest			=> \&cmdManualMove,
 	captcha			   => \&cmdAnswerCaptcha
 	);
 }
@@ -937,10 +936,10 @@ sub cmdCash {
 		}
 		$arg =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
 		$arg =~ s/\s+$//g;	# Remove trailing whitespace
-		
+
 		my $amount;
 		my $item;
-		
+
 		if ($arg && $int_arg) { # recebi item (nao sei se é ID ou nome) e quantidade
 			$amount = $int_arg;
 			$item = $arg;
@@ -954,7 +953,7 @@ sub cmdCash {
 			error TF("Error in function 'cash buy': item %s not found or shop list is not ready yet.", itemNameSimple($item));
 			return;
 		}
-		
+
 		if ($item !~ /^\d+$/) {
 			# transform itemName into itemID
 			$item = itemNameToID($item);
@@ -963,9 +962,9 @@ sub cmdCash {
 				return;
 			}
 		}
-		
+
 		$messageSender->sendCashShopOpen() unless (defined $cashShop{points});
-		
+
 		for (my $tab = 0; $tab < @{$cashShop{list}}; $tab++) {
 			foreach my $itemloop (@{$cashShop{list}[$tab]}) {
 				if ($itemloop->{item_id} == $item) {
@@ -982,10 +981,10 @@ sub cmdCash {
 				}
 			} 
 		}
-		
+
 		error TF("Error in function 'cash buy': item %s not found or shop list is not ready yet.", itemNameSimple($item));
 		return;
-		
+
 	} elsif ($sub_cmd eq 'points') {
 		if (defined $cashShop{points}) {
 			message TF("Cash Points: %sC - Kafra Points: %sC\n", formatNumber($cashShop{points}->{cash}), formatNumber($cashShop{points}->{kafra}));
@@ -1003,7 +1002,7 @@ sub cmdCash {
 			6 => T('Recovery'),
 			7 => T('Etc'),
 		);
-		
+
 		my $msg;
 		for (my $tabcode = 0; $tabcode < @{$cashShop{list}}; $tabcode++) {
 			$msg .= center(T(' Tab: ') . $cashitem_tab{$tabcode} . ' ', 50, '-') ."\n".
@@ -2012,7 +2011,7 @@ sub cmdSlave {
 	}
 
 	my $slave;
-	if ($cmd eq 'homun' || $cmd eq 'h') {
+	if ($cmd eq 'homun') {
 		$slave = $char->{homunculus};
 	} elsif ($cmd eq 'merc') {
 		$slave = $char->{mercenary};
@@ -2060,15 +2059,15 @@ sub cmdSlave {
 
 		my $msg = swrite(
 		center(T(" Slave Status "), 78, '-') . "\n" .
-		T("Name: \@<<<<<<<<<<<<<<<<<<<<<<<<< HP: \@>>>>>>>>>>>>>>>>>>\n" .
-		"Type: \@<<<<<<<<<<<<<<<<<<<<<<<<< SP: \@>>>>>>>>>>>>>>>>>>\n" .
-		"Job: \@<<<<<<<<<<<<<<<\n" .
+		T("Name: \@<<<<<<<<<<<<<<<<<<<<<<<<<  HP: \@>>>>>>>>>>>>>>>>>>\n" .
+		"Type: \@<<<<<<<<<<<<<<<<<<<<<<<<<  SP: \@>>>>>>>>>>>>>>>>>>\n" .
+		"Job:  \@<<<<<<<<<<<<<<<\n" .
 		"Level: \@<<  \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n") .
 		"\n" .
-		T("Atk: \@>>>    Matk:     \@>>>    Hunger:      \@>>>\n" .
-		"Hit: \@>>>    Critical: \@>>>    \@<<<<<<<<<   \@>>>\n" .
-		"Def: \@>>>    Mdef:     \@>>>    Accessory:   \@>>>\n" .
-		"Flee:\@>>>    Aspd:     \@>>>    Summons:     \@>>>\n" .
+		T("Atk:  \@>>>     Matk:     \@>>>     Hunger:       \@>>>\n" .
+		"Hit:  \@>>>     Critical: \@>>>     \@<<<<<<<<<    \@>>>\n" .
+		"Def:  \@>>>     Mdef:     \@>>>     Accessory:    \@>>>\n" .
+		"Flee: \@>>>     Aspd:     \@>>>     Summons:      \@>>>\n" .
 		"Range: \@>>     Skill pt: \@>>>     Contract End:  \@<<<<<<<<<<\n"),
 		[$slave->{'name'}, $hp_string,
 		$slave->{'actorType'}, $sp_string,
@@ -3003,7 +3002,6 @@ sub cmdInventory {
 			"Usage: i [<u|eq|neq|nu|desc>] [<inventory item>]\n");
 	}
 }
-
 
 sub cmdInventory_desc {
 	my ($name) = @_;
@@ -4220,8 +4218,8 @@ sub cmdBuyShopInfoSelf {
 	}
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
-	my $msg = center(" Buyer Shop ", 79, '-') ."\n".
-		T("#   Name                                      Type           Amount       Price\n");
+	my $msg = center(" Buyer Shop ", 72, '-') ."\n".
+		T("#   Name                               Type           Amount       Price\n");
 	my $index = 0;
 	for my $item (@selfBuyerItemList) {
 		next unless $item;
@@ -4229,7 +4227,7 @@ sub cmdBuyShopInfoSelf {
 			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
 			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]);
 	}
-	$msg .= ('-'x79) . "\n";
+	$msg .= ('-'x72) . "\n";
 	message $msg, "list";
 }
 
@@ -4425,13 +4423,13 @@ sub cmdStats {
 		"Luk: \@<<+\@<< #\@< Guild: \@<<<<<<<<<<<<<<<<<<<<<<<\n\n" .
 		"Hair color: \@<<<<<<<<<<<<<<<<<\n" .
 		"Walk speed: %.2f secs per block", $char->{walk_speed}),
-	[$char->{'str'}, $char->{'str_bonus'}, $char->{'points_str'}, $char->{'attack'}, $char->{'attack_bonus'}, $char->{'def'}, $char->{'def_bonus'},
-	$char->{'agi'}, $char->{'agi_bonus'}, $char->{'points_agi'}, $char->{'attack_magic_min'}, '~', $char->{'attack_magic_max'}, $char->{'def_magic'}, $char->{'def_magic_bonus'},
-	$char->{'vit'}, $char->{'vit_bonus'}, $char->{'points_vit'}, $char->{'hit'}, $char->{'flee'}, $char->{'flee_bonus'},
-	$char->{'int'}, $char->{'int_bonus'}, $char->{'points_int'}, $char->{'critical'}, $char->{'attack_speed'},
-	$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'},
-	$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $guildName,
-	"$haircolors{$char->{hair_color}} ($char->{hair_color})"]);
+		[$char->{'str'}, $char->{'str_bonus'}, $char->{'points_str'}, $char->{'attack'}, $char->{'attack_bonus'}, $char->{'def'}, $char->{'def_bonus'},
+		$char->{'agi'}, $char->{'agi_bonus'}, $char->{'points_agi'}, $char->{'attack_magic_min'}, '~', $char->{'attack_magic_max'}, $char->{'def_magic'}, $char->{'def_magic_bonus'},
+		$char->{'vit'}, $char->{'vit_bonus'}, $char->{'points_vit'}, $char->{'hit'}, $char->{'flee'}, $char->{'flee_bonus'},
+		$char->{'int'}, $char->{'int_bonus'}, $char->{'points_int'}, $char->{'critical'}, $char->{'attack_speed'},
+		$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'},
+		$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $guildName,
+		"$haircolors{$char->{hair_color}} ($char->{hair_color})"]);
 
 	$msg .= T("You are sitting.\n") if $char->{sitting};
 	$msg .= ('-'x44) . "\n";
@@ -5323,11 +5321,10 @@ sub cmdBuyer {
 		error T("Error in function 'buyer' (Buyer Shop)\n" .
 			"Buyer ID is wrong.\n");
 	} else {
-		print "test\n";
 		if ($arg3 <= 0) {
 			$arg3 = 1;
 		}
-		$messageSender->sendBuyBulkbuyer($buyerID, [{itemIndex => $arg2, itemID => $buyerItemList[$arg2]->{nameID}, amount => $arg3}], $buyingStoreID);
+		$messageSender->sendBuyBulkBuyer($buyerID, [{itemIndex => $arg2, itemID => $buyerItemList[$arg2]->{nameID}, amount => $arg3}], $buyingStoreID);
 	}
 }
 
@@ -5881,7 +5878,7 @@ sub cmdStorage_list {
 	$msg .= TF("\nCapacity: %d/%d\n", $storage{items}, $storage{items_max}) .
 			('-'x50) . "\n";
 	message $msg, "list";
-		}
+}
 
 sub cmdDeadTime {
 	if (!$net || $net->getState() != Network::IN_GAME) {

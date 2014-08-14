@@ -495,7 +495,7 @@ sub new {
 		'0813' => ['open_buying_store_item_list', 'v a4 V', [qw(len AID zeny)]],
 		'0814' => ['buying_store_found', 'a4 Z*', [qw(ID title)]],
 		'0816' => ['buying_store_lost', 'a4', [qw(ID)]],
-		'0818' => ['buying_store_items_list', 'v a4 a4', [qw(len buyerID buyingStoreID zeny)]],
+		'0818' => ['buying_store_items_list', 'v a4 a4 V', [qw(len buyerID buyingStoreID zeny)]],
 		'081B' => ['buying_store_update', 'v2 V', [qw(itemID count zeny)]],
 		'081C' => ['buying_store_item_delete', 'v2 V', [qw(index amount zeny)]],
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
@@ -6048,7 +6048,6 @@ sub vender_lost {
 sub vender_buy_fail {
 	my ($self, $args) = @_;
 
-	my $reason;
 	if ($args->{fail} == 1) {
 		error TF("Failed to buy %s of item #%s from vender (insufficient zeny).\n", $args->{amount}, $args->{index});
 	} elsif ($args->{fail} == 2) {
@@ -7166,13 +7165,11 @@ sub open_buying_store_item_list {
 
 	#started a shop.
 	message TF("Buying Shop opened!\n"), "BuyShop";
-	@articles = ();
-	$articles = 0;
+# what is:
+#	@articles = ();
+#	$articles = 0;
 	my $index = 0;
 
-	message TF("%s\n" .
-	"#   Name                                      Type           Amount       Price\n",
-		center(' Buyer Shop ', 79-7, '-')), "list";
 	for (my $i = $headerlen; $i < $msg_size; $i += 9) {
 		my $item = {};
 
@@ -7191,14 +7188,9 @@ sub open_buying_store_item_list {
 			type => $item->{type}
 		});
 
-		message(swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
-			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
-			"list");
-
 		$index++;
 	}
-	message "\n-------------------------------------------------------------------------------\n", "list";
+	Commands::run('bs');
 }
 
 sub buying_store_found {
@@ -7227,6 +7219,7 @@ sub buying_store_items_list {
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $headerlen = 16;
+	my $zeny = $args->{zeny};
 	undef @buyerItemList;
 	undef $buyerID;
 	undef $buyingStoreID;
@@ -7235,9 +7228,8 @@ sub buying_store_items_list {
 	my $player = Actor::get($buyerID);
 	my $index = 0;
 
-	message TF("%s\n".
-		"#   Name                                      Type           Amount       Price\n",
-		center(' Buyer: ' . $player->nameIdx . ' ', 79-7, '-')), "list";
+	my $msg = center(T(" Buyer: ") . $player->nameIdx . ' ', 79, '-') ."\n".
+		T("#   Name                                      Type           Amount       Price\n");
 
 	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=9) {
 		my $item = {};
@@ -7250,7 +7242,7 @@ sub buying_store_items_list {
 		$item->{name} = itemName($item);
 		$buyerItemList[$index] = $item;
 
-		debug("Item added to Buying Store: $item->{name} - $item->{price} z\n", "buying_store", 2);
+		debug "Item added to Buying Store: $item->{name} - $item->{price} z\n", "buying_store", 2;
 
 		Plugins::callHook('packet_buying_store', {
 			buyerID => $buyerID,
@@ -7261,14 +7253,14 @@ sub buying_store_items_list {
 			type => $item->{type}
 		});
 
-		message(swrite(
+		$msg .= swrite(
 			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
-			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
-			"list");
+			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]);
 
 		$index++;
 	}
-	message "------------------------------------------------------------------------\n", "list";
+	$msg .= "\n" . TF("Price limit: %s Zeny\n", $zeny) . ('-'x79) . "\n";
+	message $msg, "list";
 
 	Plugins::callHook('packet_buying_store2', {
 		venderID => $buyerID,
@@ -7277,13 +7269,29 @@ sub buying_store_items_list {
 }
 
 sub buying_store_item_delete {
-	#my($self, $args) = @_;
-	#return unless changeToInGameState();
-	#my $item = $char->inventory->getByServerIndex($args->{index});
-	#if ($item) {
+	my($self, $args) = @_;
+	return unless changeToInGameState();
+	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $zeny = $args->{amount} * $args->{zeny};
+	if ($item) {
 	#	buyingstoreitemdelete($item->{invIndex}, $args->{amount});
+		inventoryItemRemoved($item->{invIndex}, $args->{amount});
 	#	Plugins::callHook('buying_store_item_delete', {index => $item->{invIndex}});
-	#}
+	}
+	message TF("You have sold %s. Amount: %s. Total zeny: %sz\n", $item, $args->{amount}, $zeny);# msgstring 1747
+}
+
+sub buying_store_fail {
+	my ($self, $args) = @_;
+	if ($args->{result} == 5) {
+		error T("The deal has failed.\n");# msgstring 58
+	} 	elsif ($args->{result} == 6) {
+		error TF("%s item could not be sold because you do not have the wanted amount of items.\n", itemNameSimple($args->{itemID}));# msgstring 1748
+	} 	elsif ($args->{result} == 7) {
+		error T("Failed to deal because you have not enough Zeny.\n");# msgstring 1746
+	} else {
+		error TF("Unknown 'buying_store_fail' result: %s.\n", $args->{result});
+	}
 }
 
 sub buying_store_update {

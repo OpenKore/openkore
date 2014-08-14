@@ -35,8 +35,6 @@ sub new {
 		# TODO 0x0811,-1,itemlistwindowselected,2:4:8
 		'0815' => ['item_take', 'a4', [qw(ID)]],#6
 		'0817' => ['sync', 'V', [qw(time)]],#6
-		# TODO 0x0835,-1,reqopenbuyingstore,2:4:8:9:89
-		'0835' => undef,
 		'0838' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'083C' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
 		'0885' => ['item_drop', 'v2', [qw(index amount)]],#6 
@@ -48,10 +46,9 @@ sub new {
 		'0894' => undef,
 		'0897' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
 		'0898' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
-		# TODO 0x089b,2,reqclosebuyingstore,0
-		'089B' => undef,
 		# TODO 0x089e,-1,reqtradebuyingstore,2:4:8:12
-		# TODO 0x08a1,6,reqclickbuyingstore,2
+		'0360' => undef,
+		'08A1' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
 		# TODO 0x08a2,12,searchstoreinfolistitemclick,2:6:10
 		# TODO 0x08a5,18,bookingregreq,2:4:6
 		'08A6' => undef,
@@ -59,6 +56,8 @@ sub new {
 		'08AA' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		# TODO 0x08ab,-1,searchstoreinfo,2:4:5:9:13:14:15
 		'08AD' => undef,
+		'089B' => ['buy_bulk_closeShop'],#2
+		'0835' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
@@ -66,6 +65,9 @@ sub new {
 		actor_action 08AA
 		actor_look_at 0366
 		actor_name_request 0838
+		buy_bulk_closeShop 089B
+		buy_bulk_openShop 0835
+		buy_bulk_request 08A1
 		character_move 0364
 		friend_request 0436
 		homunculus_command 0898
@@ -109,9 +111,9 @@ sub new {
 0x0809,50
 0x080A,18
 0x080B,6
-0x0835,-1,reqopenbuyingstore,2:4:8:9:89
-0x089B,2,reqclosebuyingstore,0
-0x08A1,6,reqclickbuyingstore,2
++0x0835,-1,reqopenbuyingstore,2:4:8:9:89
++0x089B,2,reqclosebuyingstore,0
++0x08A1,6,reqclickbuyingstore,2
 0x089E,-1,reqtradebuyingstore,2:4:8:12
 0x08AB,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x088B,2,searchstoreinfonextpage,0

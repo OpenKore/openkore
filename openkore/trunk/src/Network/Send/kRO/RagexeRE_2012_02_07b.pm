@@ -26,22 +26,28 @@ sub new {
 	$self->{char_create_version} = 1;
 
 	my %packets = (
-	'0202' => ['actor_look_at', 'v C', [qw(head body)]],#5
-	'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
-	'023B' => ['friend_request', 'a*', [qw(username)]],#26
-	'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
-	'0362' => ['item_drop', 'v2', [qw(index amount)]],#6
-	'0891' => undef,
-	'0892' => undef,
-	'08A4' => undef,
-	'08AD' => undef,
-	'096A' => ['actor_info_request', 'a4', [qw(ID)]],#6
+		'0202' => ['actor_look_at', 'v C', [qw(head body)]],#5
+		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
+		'023B' => ['friend_request', 'a*', [qw(username)]],#26
+		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0362' => ['item_drop', 'v2', [qw(index amount)]],#6
+		'0891' => undef,
+		'0892' => undef,
+		'08A4' => undef,
+		'08AD' => undef,
+		'096A' => ['actor_info_request', 'a4', [qw(ID)]],#6
+		'0940' => ['buy_bulk_closeShop'],#2
+		'0815' => undef,
+		'0817' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
+
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
 		actor_info_request 096A
 		actor_look_at 0202
+		buy_bulk_closeShop 0940
+		buy_bulk_openShop 0817
 		friend_request 023B
 		homunculus_command 0361
 		item_drop 0362
@@ -78,9 +84,9 @@ sub new {
 0x0809,50
 0x080A,18
 0x080B,6
-0x0817,-1,reqopenbuyingstore,2:4:8:9:89
-0x0940,2,reqclosebuyingstore,0
-0x0360,6,reqclickbuyingstore,2
++0x0817,-1,reqopenbuyingstore,2:4:8:9:89
++0x0940,2,reqclosebuyingstore,0
++0x0360,6,reqclickbuyingstore,2
 0x0811,-1,reqtradebuyingstore,2:4:8:12
 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0835,2,searchstoreinfonextpage,0

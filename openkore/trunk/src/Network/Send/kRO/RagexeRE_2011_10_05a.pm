@@ -27,7 +27,8 @@ sub new {
 		'022D' => undef,
 		'023B' => ['item_drop', 'v2', [qw(index amount)]],#6
 		'02C4' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10 
-		'035F' => undef,
+		'0360' => undef,
+		'035F' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
 		'0361' => undef,
 		'0362' => undef,
 		'0364' => undef,
@@ -45,13 +46,16 @@ sub new {
 		'0887' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		'08A4' => ['storage_item_add', 'v V', [qw(index amount)]],#8
 		'08AD' => undef,
-	);
+		'0365' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
+		);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
 		actor_action 07EC
 		actor_info_request 0887
 		actor_look_at 0815
+		buy_bulk_openShop 0365
+		buy_bulk_request 035F
 		friend_request 0835
 		homunculus_command 0885
 		item_drop 023B
@@ -100,9 +104,9 @@ sub sendSkillUseLocInfo {
 0x0809,50
 0x080A,18
 0x080B,6
-0x0365,-1,reqopenbuyingstore,2:4:8:9:89
-0x0817,2,reqclosebuyingstore,0
-0x035F,6,reqclickbuyingstore,2
++0x0365,-1,reqopenbuyingstore,2:4:8:9:89
++0x0817,2,reqclosebuyingstore,0
++0x035F,6,reqclickbuyingstore,2
 0x0811,-1,reqtradebuyingstore,2:4:8:12
 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0202,2,searchstoreinfonextpage,0

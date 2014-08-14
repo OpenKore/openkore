@@ -49,6 +49,12 @@ sub new {
 		'08A1' => undef,
 		'08A4' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
 		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],#6
+		'088C' => undef,
+		'0360' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
+		'08A9' => undef,
+		'0817' => ['buy_bulk_closeShop'],#2
+		'0887' => undef,
+		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -57,6 +63,9 @@ sub new {
 		actor_info_request 08AD
 		actor_look_at 0891
 		actor_name_request 0368
+		buy_bulk_closeShop 0817
+		buy_bulk_openShop 0815
+		buy_bulk_request 0360
 		character_move 0437
 		friend_request 0892
 		homunculus_command 0362
@@ -109,9 +118,9 @@ sub sendMove {
 0x0809,50
 0x080A,18
 0x080B,6
-0x0815,-1,reqopenbuyingstore,2:4:8:9:89
-0x0817,2,reqclosebuyingstore,0
-0x0360,6,reqclickbuyingstore,2
++0x0815,-1,reqopenbuyingstore,2:4:8:9:89
++0x0817,2,reqclosebuyingstore,0
++0x0360,6,reqclickbuyingstore,2
 0x0811,-1,reqtradebuyingstore,2:4:8:12
 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0835,2,searchstoreinfonextpage,0

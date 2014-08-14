@@ -50,7 +50,11 @@ sub new {
 		'08AA' => undef,
 		'08AD' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
 		'0907' => ['item_to_favorite', 'v C', [qw(index flag)]],#5 TODO where 'flag'=0|1 (0 - move item to favorite tab, 1 - move back) 
-	);
+		'088C' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
+		'089B' => undef,
+		'08A9' => ['buy_bulk_closeShop'],#2
+		'0887' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
+		);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
@@ -58,6 +62,9 @@ sub new {
 		actor_info_request 0898
 		actor_look_at 0896
 		actor_name_request 035F
+		buy_bulk_closeShop 08A9
+		buy_bulk_openShop 0887
+		buy_bulk_request 088C
 		character_move 0892
 		friend_request 0891
 		homunculus_command 089E
@@ -101,9 +108,9 @@ sub new {
 0x0809,50
 0x080A,18
 0x080B,6
-0x0887,-1,reqopenbuyingstore,2:4:8:9:89
-0x08A9,2,reqclosebuyingstore,0
-0x088C,6,reqclickbuyingstore,2
++0x0887,-1,reqopenbuyingstore,2:4:8:9:89
++0x08A9,2,reqclosebuyingstore,0
++0x088C,6,reqclickbuyingstore,2
 0x089D,-1,reqtradebuyingstore,2:4:8:12
 0x07EC,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0815,2,searchstoreinfonextpage,0

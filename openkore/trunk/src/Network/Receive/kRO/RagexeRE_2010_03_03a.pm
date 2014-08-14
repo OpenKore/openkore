@@ -19,20 +19,14 @@ package Network::Receive::kRO::RagexeRE_2010_03_03a;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2010_02_23a);
+use Log qw(message);
+use Translation;
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		#//0x0810,3
-		#//0x0811,-1
-		#//0x0812,86
-		#//0x0813,6
-		#//0x0814,6
-		#//0x0815,-1
-		#//0x0817,-1
-		#//0x0818,6
-		#//0x0819,4
+		'0810' => ['open_buying_store', 'c', [qw(amount)]], #3
 	);
 
 	foreach my $switch (keys %packets) {
@@ -40,6 +34,12 @@ sub new {
 	}
 
 	return $self;
+}
+
+sub open_buying_store {
+	my($self, $args) = @_;
+	my $amount = $args->{amount};
+	message TF("Your buying store can buy %d items \n", $amount);
 }
 
 =pod

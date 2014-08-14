@@ -19,18 +19,23 @@ package Network::Send::kRO::RagexeRE_2010_04_20a;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2010_04_14d);
-use Log qw(debug);
-use Utils qw(getHex);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
-}
-sub sendEnteringBuyer {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0x17, 0x08) . $ID;
-	$self->sendToServer($msg);
-	debug "Sent Entering Buyer: ".getHex($ID)."\n", "sendPacket", 2;
+	my $self = $class->SUPER::new(@_);
+	$self->{char_create_version} = 1;
+
+	my %packets = (
+		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
+	my %handlers = qw(
+		buy_bulk_request 0817
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
+	$self;
 }
 
 =pod

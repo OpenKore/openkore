@@ -22,7 +22,6 @@ sub new {
 	
 	my %packets = (
 		'02C4' => undef,
-# TODO 0x0360,6,reqclickbuyingstore,2
 # TODO 0x0366,90,useskilltoposinfo,2:4:6:8:10
 		'0368' => undef,
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
@@ -100,9 +99,9 @@ sub new {
 +0x083C,10,useskilltoid,2:4:6
 +0x0439,8,useitem,2:4
 0x0945,-1,itemlistwindowselected,2:4:8
-0x0815,-1,reqopenbuyingstore,2:4:8:9:89
-0x0817,2,reqclosebuyingstore,0
-0x0360,6,reqclickbuyingstore,2
++0x0815,-1,reqopenbuyingstore,2:4:8:9:89
++0x0817,2,reqclosebuyingstore,0
++0x0360,6,reqclickbuyingstore,2
 0x0811,-1,reqtradebuyingstore,2:4:8:12
 0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0835,2,searchstoreinfonextpage,0

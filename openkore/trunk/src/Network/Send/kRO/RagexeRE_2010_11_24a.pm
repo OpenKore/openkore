@@ -43,13 +43,19 @@ sub new {
 		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
 		'0369' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'0368' => ['actor_info_request', 'a4', [qw(ID)]],#6
-	);
+		'0811' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
+		'0815' => ['buy_bulk_closeShop'],#2
+		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
+		);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
 		actor_info_request 0368
 		actor_look_at 0361
 		actor_name_request 0369
+		buy_bulk_closeShop 0815
+		buy_bulk_openShop 0811
+		buy_bulk_request 0817
 		character_move 035F
 		item_drop 0363
 		item_take 0362
@@ -95,9 +101,9 @@ sub sendSkillUseLocInfo {
 0x0809,50
 0x080A,18
 0x080B,6
-0x0811,-1,reqopenbuyingstore,2:4:8:9:89
-0x0815,2,reqclosebuyingstore,0
-0x0817,6,reqclickbuyingstore,2
++0x0811,-1,reqopenbuyingstore,2:4:8:9:89
++0x0815,2,reqclosebuyingstore,0
++0x0817,6,reqclickbuyingstore,2
 0x0819,-1,reqtradebuyingstore,2:4:8:12
 0x0835,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0838,2,searchstoreinfonextpage,0

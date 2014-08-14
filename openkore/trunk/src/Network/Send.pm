@@ -791,7 +791,7 @@ sub reconstruct_buy_bulk_buyer {
 	$args->{itemInfo} = pack '(a4)*', map { pack 'v2', @{$_}{qw(amount itemIndex)} } @{$args->{items}};
 }
 
-sub sendBuyBulkbuyer {
+sub sendBuyBulkBuyer {
 	#FIXME not working yet
 	#field index still wrong and remain unknown
 	my ($self, $buyerID, $r_array, $buyingStoreID) = @_;
@@ -802,6 +802,12 @@ sub sendBuyBulkbuyer {
 		$msg .= pack('v3', $r_array->[$i]{itemIndex}, $r_array->[$i]{itemID}, $r_array->[$i]{amount});
 	}
 	$self->sendToServer($msg);
+}
+
+sub sendEnteringBuyer {
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'buy_bulk_request', ID => $ID}));
+	debug "Sent Entering Buyer: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendSkillUse {
