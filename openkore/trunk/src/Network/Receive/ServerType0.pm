@@ -526,10 +526,20 @@ sub new {
 		'0901' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0902' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0903' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0906' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
 		'0975' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0976' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'097A' => ['quest_all_list2', 'v3 a*', [qw(len count unknown message)]],
+		'0990' => ['inventory_item_added', 'v3 C3 a8 V C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
+		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0993' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0997' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
+		'099F' => ['area_spell', 'x2 a4 a4 v2 v', [qw(ID sourceID x y type)]],
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
@@ -565,6 +575,11 @@ sub new {
 				types => 'v2 C v2 C a8 l v2 C',
 				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
 			},
+			type6 => {
+				len => 31,
+				types => 'v2 C V2 C a8 l v2 C',
+				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+			},
 		},
 		items_stackable => {
 			type1 => {
@@ -585,6 +600,11 @@ sub new {
 			type5 => {
 				len => 22,
 				types => 'v2 C v2 a8 l C',
+				keys => [qw(index nameID type amount type_equip cards expire identified)],
+			},
+			type6 => {
+				len => 24,
+				types => 'v2 C v V a8 l C',
 				keys => [qw(index nameID type amount type_equip cards expire identified)],
 			},
 		},
@@ -920,8 +940,15 @@ sub items_nonstackable {
 	} elsif ($args->{switch} eq '0901' # inventory
 		|| $args->{switch} eq '0976' # storage
 		|| $args->{switch} eq '0903' # cart
+		|| $args->{switch} eq '0906' # other player
 	) {
 		return $items->{type5};
+	} elsif ($args->{switch} eq '0992' # inventory
+		|| $args->{switch} eq '0994' # cart
+		|| $args->{switch} eq '0996' # storage
+		|| $args->{switch} eq '0997' # other player
+	) {
+		return $items->{type6};
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -957,6 +984,11 @@ sub items_stackable {
 	) {
 		return $items->{type5};
 
+	} elsif ($args->{switch} eq '0991' # inventory
+		|| $args->{switch} eq '0993' # cart
+		|| $args->{switch} eq '0995' # storage
+	) {
+		return $items->{type6};
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -5657,6 +5689,35 @@ sub storage_item_removed {
 		delete $storage{$index};
 		binRemove(\@storageID, $index);
 	}
+}
+
+sub character_equip {
+	my ($self, $args) = @_;
+
+	my @items;
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_character_equip',
+		debug_str => 'Other Character Equipment',
+		items => [$self->parse_items_nonstackable($args)],
+		adder => sub { push @items, $_[0] },
+	});
+
+	# Sort items by the rough order they'd show up in the official client.
+	my @bits = qw( 8 9 0 10 11 12 4 2 1 5 6 3 7 );
+	foreach my $item ( @items ) {
+		$item->{sort} |= ( ( $item->{equipped} >> $bits[$_] ) & 1 ) << $_ foreach 0 .. $#bits;
+	}
+
+	my $w = 0;
+	$w = max( $w, length $_ ) foreach values %equipTypes_lut;
+
+	my $msg = '';
+	$msg .= T("---------Equipment List--------\n");
+	$msg .= "Name: $args->{name}\n";
+	$msg .= TF("%-${w}s : %s\n", $equipTypes_lut{$_->{equipped}}, $_->{name}) foreach sort { $a->{sort} <=> $b->{sort} } @items;
+	$msg .= "-------------------------------\n";
+	message($msg, "list");
 }
 
 sub storage_items_nonstackable {
