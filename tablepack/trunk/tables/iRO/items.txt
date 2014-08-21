@@ -4906,8 +4906,8 @@
 12391#RWC_Groove_Pack#
 12403#RWC_Groove_Pack_2#
 12493#Groovy_Dragon_Box#
-12545#Fortune_EggҐґ#
-12577#Fortune_EggҐµ#
+12545#Fortune_Egg#
+12577#Fortune_Egg#
 12595#Incarnation_Of_Morocc_Doll_Box#
 12641#New_Recruit_Pack#
 12654#Recruit's_Mount_Gift#
