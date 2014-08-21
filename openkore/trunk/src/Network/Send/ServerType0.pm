@@ -435,7 +435,7 @@ sub sendEnteringVender {
 
 sub sendEquip {
 	my ($self, $index, $type) = @_;
-	my $msg = pack("C*", 0xA9, 0x00) . pack("v*", $index) .  pack("v*", $type);
+	my $msg = pack 'vvV', 0x0998, $index, $type;
 	$self->sendToServer($msg);
 	debug "Sent Equip: $index Type: $type\n" , 2;
 }
