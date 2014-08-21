@@ -18,3 +18,9 @@
 1024 Visual Helmet
 2048 Visual Eye Mask
 4096 Visual Lower Mask
+65536 Shadow Armor
+131072 Shadow Weapon
+262144 Shadow Shield
+524288 Shadow Shoes
+1048576 Shadow Right Accessory
+2097152 Shadow Left Accessory
