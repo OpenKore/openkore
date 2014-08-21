@@ -75,27 +75,18 @@ our %equipSlot_lut = (
 	'8192' => 'costumeRobe',
 	'16384' => 'costumeFloor',
 	# 0x2000 => LOCATION_COSTUME_FLOOR,
-	'32768'   => 'arrow' #just use an made up ID since arrow doesn't have any
+	'32768'   => 'arrow', #just use an made up ID since arrow doesn't have any
 	# 0xffff8000 => LOCATION_ARROW,
+	'65536'   => 'shadowArmor',
+	'131072'  => 'shadowRightHand',
+	'262144'  => 'shadowLeftHand',
+	'524288'  => 'shadowShoes',
+	'1048576' => 'shadowRightAccessory',
+	'2097152' => 'shadowLeftAccessory',
 );
 our %equipSlot_rlut = (
-	'Item'           => 0,
-	'lowHead'        => 1,
-	'rightHand'      => 2,
-	'robe'           => 4,
-	'rightAccessory' => 8,
-	'armor'          => 16,
-	'leftHand'       => 32,
-	'shoes'          => 64,
-	'leftAccessory'  => 128,
-	'topHead'        => 256,
-	'midHead'        => 512,
-	'costumeTopHead' => 1024,
-	'costumeMidHead' => 2048,
-	'costumeLowHead' => 4096,
-	'costumeRobe' => 8192,
-	'costumeFloor' => 16384,
-	'arrow'          => '' #arrow seems not to have any ID
+	( map { $equipSlot_lut{$_} => $_ } keys %equipSlot_lut ),
+	'arrow' => '',    #arrow seems not to have any ID
 );
 our %elements_lut;
 our %directions_lut;
