@@ -539,6 +539,8 @@ sub new {
 		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0997' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
+		'0999' => ['equip_item', 'vVvC', [qw(index type viewid failure)]],
+		'099A' => ['unequip_item', 'vVC', [qw(index type success)]],
 		'099F' => ['area_spell', 'x2 a4 a4 v2 v', [qw(ID sourceID x y type)]],
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
@@ -2070,7 +2072,8 @@ sub emoticon {
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByServerIndex($args->{index});
-	if (!$args->{success}) {
+	$args->{failure} = 2 if !$args->{success} && $args->{switch} eq '00AA';
+	if ($args->{failure}) {
 		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{invIndex});
 	} else {
 		$item->{equipped} = $args->{type};
