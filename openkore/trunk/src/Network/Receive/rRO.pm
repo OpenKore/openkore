@@ -35,26 +35,12 @@ sub new {
 		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 		'0908' => ['inventory_item_favorite', 'v C', [qw(index flag)]],#5
 		'0997' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],#-1
-		'0999' => ['equip_item', 'v V v C', [qw(index type viewID success)]], #11
-		'099A' => ['unequip_item', 'v V C', [qw(index type success)]],#9
 	);
 
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
-	
-	my %handlers = qw(
-#		account_id 08B9
-		inventory_item_added 0990
-		inventory_item_favorite 0908
-		inventory_items_nonstackable 0992
-		inventory_items_stackable 0991
-		unequip_item 099A
-		show_eq 0997
-		cash_shop_open 0845
-	);
-	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	$self->{nested} = {
 		items_nonstackable => { # EQUIPMENTITEM_EXTRAINFO
 			type6 => {
@@ -137,30 +123,6 @@ sub parse_items_stackable {
 			message T ("Warning: unknown flag!\n");
 		}
 	})
-}
-
-sub equip_item {
-	my ($self, $args) = @_;
-	my $item = $char->inventory->getByServerIndex($args->{index});
-	if ($args->{success}) {
-		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{invIndex});
-	} else {
-		$item->{equipped} = $args->{type};
-		if ($args->{type} == 10 || $args->{type} == 32768) {
-			$char->{equipment}{arrow} = $item;
-		} else {
-			foreach (%equipSlot_rlut){
-				if ($_ & $args->{type}){
-					next if $_ == 10; # work around Arrow bug
-					next if $_ == 32768;
-					$char->{equipment}{$equipSlot_lut{$_}} = $item;
-				}
-			}
-		}
-		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{invIndex},
-			$equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
-	}
-	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 }
 
 sub inventory_item_favorite {

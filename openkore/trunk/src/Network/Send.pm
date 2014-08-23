@@ -1142,7 +1142,7 @@ sub sendHomunculusAttack {
 	my $self = shift;
 	my $slaveID = shift;
 	my $targetID = shift;
-	my $flag = shift;	
+	my $flag = shift;
 	$self->sendToServer($self->reconstruct({
 				switch => 'slave_attack',
 				slaveID => $slaveID,
@@ -1165,6 +1165,18 @@ sub sendHomunculusStandBy {
 		)
 	);
 	debug "Sent Slave standby\n", "sendPacket", 2;
+}
+
+sub sendEquip {
+	my ($self, $index, $type) = @_;
+	$self->sendToServer($self->reconstruct({
+				switch => 'send_equip',
+				index => $index,
+				type => $type
+			}
+		)
+	);
+	debug "Sent Equip: $index Type: $type\n" , 2;
 }
 
 1;
