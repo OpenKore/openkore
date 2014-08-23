@@ -54,6 +54,7 @@ sub new {
 		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'009F' => ['item_take', 'a4', [qw(ID)]],
 		'00A2' => ['item_drop', 'v2', [qw(index amount)]],
+		'00A9' => ['send_equip', 'v2', [qw(index type)]],#6
 		'00B2' => ['restart', 'C', [qw(type)]],
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
@@ -233,15 +234,6 @@ sub sendItemUse {
 
 # 0x00a8,7
 # 0x00a8,7
-
-# 0x00a9,6,equipitem,2:4
-sub sendEquip {
-	my ($self, $index, $type) = @_;
-	my $msg = pack('v3', 0x00A9, $index, $type);
-	$self->sendToServer($msg);
-	debug "Sent Equip: $index Type: $type\n" , 2;
-}
-
 # 0x00aa,7
 
 # 0x00ab,4,unequipitem,2

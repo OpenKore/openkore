@@ -37,15 +37,6 @@ sub new {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
 
-	my %handlers = qw(
-		received_characters 099D
-		actor_exists 0856
-		actor_connected 0857
-		actor_moved 0858
-		account_id 0283
-	);
-	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
 	return $self;
 }
 

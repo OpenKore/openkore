@@ -54,7 +54,7 @@ sub new {
 		'0368' => undef,
 		'094C' => ['actor_name_request', 'a4', [qw(ID)]],#6
 #		'00A9' => undef,
-		'0998' => ['sendEquip'],#8
+		'0998' => ['send_equip', 'v V', [qw(index type)]],#8
 		'09A1' => ['sync_received_characters'],#2
 		'0815' => undef,
 		'0938' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
@@ -74,6 +74,7 @@ sub new {
 		item_take 0933
 		map_login 0888
 		party_join_request_by_name 086F
+		send_equip 0998
 		skill_use 089B
 		skill_use_location 0959
 		storage_item_add 08AC
@@ -85,31 +86,6 @@ sub new {
 	$self;
 }
 
-sub sendEquip {
-	my ($self, $index, $type) = @_;
-	my $msg = pack('v2 V', 0x0998, $index, $type);
-	$self->sendToServer($msg);
-	debug "Sent Equip: $index Type: $type\n" , 2;
-}
-
-=pod
-sub sendMasterLogin {
-	my ($self, $username, $password, $master_version, $version) = @_;
-	my $msg;
-$msg = pack ("x2 V C Z24 x27 Z15 Z17 a*", );
-
-	$msg = pack("v C x", 0x0825, $version) . 
-			pack("V x", $master_version) .
-			pack("a5 x46", 'email') .
-			pack("a17", '11-11-11-11-11-11') .
-			pack("a15", '192.168.100.100') .
-			pack("a* a", $username, '#') .
-			pack("a*", $password);
-	$self->sendToServer($msg);
-
-	debug "Sent sendMasterLogin\n", "sendPacket", 2;
-}
-=cut
 1;
 =pod
 //2013-03-20Ragexe (Judas)
