@@ -49,6 +49,7 @@ sub new {
 		buy_bulk_vender 0801
 		char_create 0970
 		storage_password 023B
+		send_equip 00A9
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
