@@ -541,11 +541,10 @@ sub new {
 		'0997' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
 		'0999' => ['equip_item', 'v V v C', [qw(index type viewID success)]], #11
 		'099A' => ['unequip_item', 'v V C', [qw(index type success)]],#9
-		'099F' => ['area_spell', 'x2 a4 a4 v2 v', [qw(ID sourceID x y type)]],
-		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
+		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
 		'09CF' => ['gameguard_request']
 	};
 
