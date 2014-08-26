@@ -165,7 +165,7 @@ sub iterate {
 				$slave->sendMove ($char->{pos_to}{x}, $char->{pos_to}{y});
 				debug sprintf("Slave follow move (distance: %.2f)\n", $slave->distance()), 'homunculus';
 			}
-	
+=pod
 		# homunculus is found
 		} elsif ($slave->{slave_lost}) {
 			if ($slave_dist < MAX_DISTANCE) {
@@ -207,7 +207,7 @@ sub iterate {
 		} elsif ($slave->{actorType} eq 'Homunculus' && $slave_dist >= MAX_DISTANCE && !$slave->{slave_lost}) {
 			$slave->{slave_lost} = 1;
 			message TF("You lost %s!\n", $slave), 'homunculus';
-	 
+=cut
 		# if your homunculus is idle, make it move near you
 		} elsif (
 			$slave->{slave_AI} == AI::AUTO
