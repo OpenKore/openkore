@@ -224,6 +224,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 serverEncoding Tagalog
 charBlockSize 144
 addTableFolders pRO
+pinCode 1
 
 [Philippines - pRO: Valhalla]
 ip 202.57.117.44
@@ -242,6 +243,7 @@ serverEncoding Tagalog
 charBlockSize 144
 gameGuard 1
 addTableFolders pRO
+pinCode 1
 
 [Philippines - pRO: Valkyrie]
 ip 202.57.118.235
@@ -261,6 +263,7 @@ charBlockSize 144
 gameGuard 1
 recvpackets recvpackets.txt
 addTableFolders pRO
+pinCode 1
 
 [Philippines - pRO: New Loki]
 ip 202.57.117.44
@@ -280,6 +283,7 @@ charBlockSize 144
 gameGuard 1
 recvpackets recvpackets.txt
 addTableFolders pRO
+pinCode 1
 
 [Philippines - pRO: New Iris]
 ip 202.57.117.80
@@ -299,6 +303,7 @@ charBlockSize 144
 gameGuard 1
 recvpackets recvpackets.txt
 addTableFolders pRO
+pinCode 1
 
 [Philippines - pRO: Sakray]
 ip 202.57.118.235
@@ -317,6 +322,7 @@ serverEncoding Tagalog
 charBlockSize 144
 recvpackets recvpackets.txt
 addTableFolders pRO
+pinCode 1
 
 ## http://www.raggame.ru/
 [Russia - rRO-Renewal]
