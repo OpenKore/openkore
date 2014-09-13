@@ -173,41 +173,6 @@ clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 #addTableFolders translated/kRO_english;kRO
 addTableFolders kRO
 
-[Malaysia - mRO: Poring King (Iris1,Iris2,Penril,Odin,Thor)]
-ip 202.71.105.25
-port 6900
-master_version 16
-version 211
-serverType mRO
-charBlockSize 116
-serverEncoding Western
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-addTableFolders mRO
-
-[Malaysia - mRO: freyia - carnival]
-ip 220.130.114.212
-port 6900
-master_version 17
-version 211
-serverType mRO
-charBlockSize 116
-serverEncoding Western
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-addTableFolders mRO
-
-[Malaysia - mRO: Prontera Free Server]
-# Prontera / Sara Free
-ip 202.71.105.101
-port 6900
-master_version 17
-version 211
-serverType twRO
-charBlockSize 116
-serverEncoding Western
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-addTableFolders mRO
-
 [Philippines - pRO: New Chaos]
 ip 202.57.117.45
 port 6900
@@ -497,22 +462,6 @@ addTableFolders tRO
 charBlockSize 112
 gameguard 1
 
-## http://ro.tahadi.com/
-[aRO - Middle East]
-ip 83.138.187.152
-port 6900
-master_version 35
-version 1
-serverType aRO
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverEncoding Arabic
-gameGuard 1
-addTableFolders aRO;Old
-charBlockSize 112
-
 ## http://ro.kunlun.com/
 [cRO - China]
 ip 118.186.39.226
@@ -591,3 +540,17 @@ serverEncoding Western
 charBlockSize 112
 chatLangCode 1
 addTableFolders pserver/KoreRO;eA;kRO/RagexeRE_2010_07_14a;translated/kRO_english;kRO
+
+# clientside: ? (2010-07-30aRagexeRE.exe)
+# serverside: ?
+[AegisRO]
+ip 23.88.84.215
+port 6900
+private 1
+master_version 14
+version 26
+serverType kRO_RagexeRE_2010_07_14a
+serverEncoding Western
+charBlockSize 112
+chatLangCode 0
+addTableFolders pserver/AegisRO;eA;kRO/RagexeRE_2010_07_14a;translated/kRO_english;kRO
