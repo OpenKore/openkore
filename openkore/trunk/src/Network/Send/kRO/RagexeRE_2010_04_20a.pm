@@ -23,7 +23,6 @@ use base qw(Network::Send::kRO::RagexeRE_2010_04_14d);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	$self->{char_create_version} = 1;
 
 	my %packets = (
 		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
