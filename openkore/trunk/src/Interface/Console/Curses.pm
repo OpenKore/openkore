@@ -34,10 +34,25 @@ use Settings qw/%sys/;
 
 use constant MAXHISTORY => 50;
 
+our $keymap = {
+	'[11~' => KEY_F( 1 ),
+	'[12~' => KEY_F( 2 ),
+	'[13~' => KEY_F( 3 ),
+	'[14~' => KEY_F( 4 ),
+};
+
+our $attrtable;
+
 sub new {
 	my %interface = ();
 	bless \%interface, __PACKAGE__;
 	my $self = \%interface;
+
+	foreach ( keys %$keymap ) {
+		my $h = $keymap;
+		$h = $h->{$_} ||= {} foreach split //, $_;
+		$h->{match} = $keymap->{$_};
+	}
 
 	initscr;
 	idlok 1;
@@ -58,6 +73,39 @@ sub new {
 	init_pair(6, COLOR_MAGENTA, -1);
 	init_pair(7, COLOR_CYAN, -1);
 	init_pair(8, COLOR_WHITE, -1);
+	init_pair(9, -1, COLOR_BLACK);
+	init_pair(10, -1, COLOR_RED);
+	init_pair(11, -1, COLOR_GREEN);
+	init_pair(12, -1, COLOR_YELLOW);
+	init_pair(13, -1, COLOR_BLUE);
+	init_pair(14, -1, COLOR_MAGENTA);
+	init_pair(15, -1, COLOR_CYAN);
+	init_pair(16, -1, COLOR_WHITE);
+	$attrtable = {
+		normal     => A_NORMAL,
+		underline  => A_UNDERLINE,
+		reverse    => A_REVERSE,
+		blink      => A_BLINK,
+		dim        => A_DIM,
+		bold       => A_BOLD,
+		black      => COLOR_PAIR( 1 ),
+		red        => COLOR_PAIR( 2 ),
+		green      => COLOR_PAIR( 3 ),
+		yellow     => COLOR_PAIR( 4 ),
+		blue       => COLOR_PAIR( 5 ),
+		magenta    => COLOR_PAIR( 6 ),
+		cyan       => COLOR_PAIR( 7 ),
+		white      => COLOR_PAIR( 8 ),
+		bg_black   => COLOR_PAIR( 9 ),
+		bg_red     => COLOR_PAIR( 10 ),
+		bg_green   => COLOR_PAIR( 11 ),
+		bg_yellow  => COLOR_PAIR( 12 ),
+		bg_blue    => COLOR_PAIR( 13 ),
+		bg_magenta => COLOR_PAIR( 14 ),
+		bg_cyan    => COLOR_PAIR( 15 ),
+		bg_white   => COLOR_PAIR( 16 ),
+	};
+
 	$self->{winStatus} = newwin(4, 0, 0, 0);
 	$self->{winObjects} = newwin($LINES-5, 15, 4, $COLS-15);
 	$self->{winLog} = newwin($LINES-5, $COLS-15, 4, 0);
@@ -201,8 +249,29 @@ sub readEvents {
 	my $ch = getch();
 	return undef if ($ch eq ERR);
 
+	my $event_was_yank = 0;
+
 	my $ret;
 	while ($ch ne ERR) {
+		if ( ord( $ch ) == 27 ) {
+
+			# Escape sequence. These should be caught by Curses, but sometimes are not.
+			# Attempt to translate.
+			my $h = $keymap;
+			my @seq;
+			my $ch2;
+			while ( $h && ( $ch2 = getch() ) ne ERR ) {
+				push @seq, $ch2;
+				if ( defined $h->{$ch2}->{match} ) {
+					$ch  = $h->{$ch2}->{match};
+					@seq = ();
+					last;
+				}
+				$h = $h->{$ch2};
+			}
+			ungetch( pop @seq ) while @seq;
+		}
+
 		if ($ch eq "\r" || $ch eq KEY_ENTER) {
 			# Enter
 			$ret = $self->{inputBuffer};
@@ -214,19 +283,32 @@ sub readEvents {
 			}
 			$self->{inputHistoryPos} = 0;
 			last;
-		} elsif ((ord($ch) == 9 || ord($ch) == 127 || $ch eq KEY_BACKSPACE) && $self->{inputBuffer}) {
+		} elsif (ord($ch) == 8 || ord($ch) == 127 || $ch eq KEY_BACKSPACE) {
 			# Backspace
-			$self->{inputBuffer} = substr($self->{inputBuffer}, 0, $self->{inputPos} - 1) . substr($self->{inputBuffer}, $self->{inputPos});
-			$self->{inputPos}--;
-		} elsif (ord($ch) == 12) {
-			# Ctrl-L
+			if ($self->{inputBuffer} ne '' && $self->{inputPos} > 0) {
+				$self->{inputBuffer} = substr($self->{inputBuffer}, 0, $self->{inputPos} - 1) . substr($self->{inputBuffer}, $self->{inputPos});
+				$self->{inputPos}--;
+			}
+		} elsif (ord($ch) == 4 || ord($ch) == 330) {
+			# Delete
+			if ($self->{inputBuffer} ne '' && $self->{inputPos} < length $self->{inputBuffer}) {
+				$self->{inputBuffer} = substr($self->{inputBuffer}, 0, $self->{inputPos}) . substr($self->{inputBuffer}, $self->{inputPos} + 1);
+			}
+		} elsif (ord($ch) == 12 || $ch eq KEY_RESIZE) {
+			# Ctrl-L: Redraw screen
 			clear;
 			$self->updateLayout;
+		} elsif (ord($ch) == 25) {
+			# Ctrl-Y: Paste yank buffer
+			$self->{inputBuffer} = substr($self->{inputBuffer}, 0, $self->{inputPos}) . $self->{yankBuffer} . substr($self->{inputBuffer}, $self->{inputPos});
+			$self->{inputPos} += length $self->{yankBuffer};
 		} elsif (ord($ch) == 21) {
-			# Ctrl-U
-			undef $self->{inputBuffer};
+			# Ctrl-U: Clear left of cursor
+			$self->{yankBuffer} = substr( $self->{inputBuffer}, 0, $self->{inputPos} ) . $self->{yankAccumulator};
+			$self->{inputBuffer} = substr $self->{inputBuffer}, $self->{inputPos};
 			$self->{inputPos} = 0;
 			$self->{inputHistoryPos} = 0;
+			$event_was_yank = 1;
 		} elsif ($ch == KEY_LEFT) {
 			# Cursor left
 			$self->{inputPos}-- if ($self->{inputPos} > 0);
@@ -264,13 +346,29 @@ sub readEvents {
 			$self->toggleWindow("Chat");
 			$self->updateLayout;
 		} elsif (ord($ch) == 18) {
-			# Ctrl+R
-			# Display skills
-			$self->{objectsMode} = $self->{objectsMode} eq 'skills' ? undef : 'skills';
-		} elsif (ord($ch) == 5) {
-			# Ctrl+E
-			# Display inventory
-			$self->{objectsMode} = $self->{objectsMode} eq 'inventory' ? undef : 'inventory';
+			# Ctrl+R: Rotate objectsMode
+			$self->{objectsMode}
+				= !$self->{objectsMode} ? 'skills'
+				: $self->{objectsMode} eq 'skills' ? 'inventory'
+				:                                    undef;
+		} elsif (ord($ch) == 1 || $ch == KEY_HOME) {
+			# Ctrl+A: Beginning of line
+			$self->{inputPos} = 0;
+		} elsif (ord($ch) == 5 || $ch == KEY_END) {
+			# Ctrl+E: End of line
+			$self->{inputPos} = length $self->{inputBuffer};
+		} elsif (ord($ch) == 23) {
+			# Ctrl+W: Erase word
+			my $pos = $self->{inputPos};
+			$pos-- while $pos && substr( $self->{inputBuffer}, $pos - 1, 1 ) =~ /\s/o;
+			$pos-- while $pos && substr( $self->{inputBuffer}, $pos - 1, 1 ) =~ /\S/o;
+			$self->{yankBuffer} = substr( $self->{inputBuffer}, $pos, $self->{inputPos} - $pos ) . $self->{yankAccumulator};
+			$self->{inputBuffer} = substr( $self->{inputBuffer}, 0, $pos ) . substr( $self->{inputBuffer}, $self->{inputPos} );
+			$self->{inputPos} = $pos;
+			$event_was_yank = 1;
+		} elsif (length $ch > 1) {
+			# Unhandled Curses special character. Ignore.
+			Log::message("Console::Curses: Unknown special character [$ch]. Ignoring.\n");
 		} elsif (ord($ch) >= 32 && ord($ch) <= 126) {
 			# Normal character
 			$self->{inputBuffer} = substr($self->{inputBuffer}, 0, $self->{inputPos}) . $ch . substr($self->{inputBuffer}, $self->{inputPos});
@@ -279,8 +377,10 @@ sub readEvents {
 		$ch = getch();
 	}
 
+	$self->{yankAccumulator} = $event_was_yank ? $self->{yankBuffer} : '';
+
 	my $pos = 0;
-	$pos += 10 while (length($self->{inputBuffer}) - $pos >= $COLS);
+	$pos += 10 while length $self->{inputBuffer} >= $pos + $COLS;
 	erase $self->{winInput};
 	addstr $self->{winInput}, 0, 0, substr($self->{inputBuffer}, $pos);
 	noutrefresh $self->{winInput};
@@ -297,33 +397,16 @@ sub printw {
 	my $picture = shift;
 	my @params = @_;
 
-	my %attrtable = (
-		normal => A_NORMAL,
-		underline => A_UNDERLINE,
-		reverse => A_REVERSE,
-		blink => A_BLINK,
-		dim => A_DIM,
-		bold => A_BOLD,
-		black => COLOR_PAIR(1),
-		red => COLOR_PAIR(2),
-		green => COLOR_PAIR(3),
-		yellow => COLOR_PAIR(4),
-		blue => COLOR_PAIR(5),
-		magenta => COLOR_PAIR(6),
-		cyan => COLOR_PAIR(7),
-		white => COLOR_PAIR(8)
-	);
-
 	$^A = '';
 	formline $picture, @params;
 	my @text = split(/{([^}]+)}/, $^A);
 	move $win, $line, $col;
 	for (my $i = 0; $i < @text; $i += 2) {
-		if (grep { exists $attrtable{$_} } split /\|/, $text[$i+1]) {
+		if (grep { exists $attrtable->{$_} } split /\|/, $text[$i+1]) {
 			addstr $win, $text[$i];
 			attrset $win, A_NORMAL;
 			foreach my $attr (split(/\|/, $text[$i+1])) {
-				attron $win, $attrtable{$attr} if $attrtable{$attr};
+				attron $win, $attrtable->{$attr} if $attrtable->{$attr};
 			}
 		} else {
 			addstr $win, $text[$i] . (defined $text[$i+1] ? "{$text[$i+1]}" : '');
@@ -333,7 +416,7 @@ sub printw {
 		if ($text[$i+1] ne "") {
 			attrset $win, A_NORMAL;
 			foreach my $attr (split(/\|/, $text[$i+1])) {
-				attron $win, $attrtable{$attr} if $attrtable{$attr};
+				attron $win, $attrtable->{$attr} if $attrtable->{$attr};
 			}
 		}
 =cut
@@ -506,27 +589,28 @@ sub updateStatus {
 	my $mapTitle = $field->isCity ? 'City' : 'Map';
 	
 	my ($i, $args);
+	my $pos = calcPosition( $char );
 	if ('' ne ($i = AI::findAction ('attack')) and $args = AI::args ($i) and $args = Actor::get ($args->{ID})) {
 		$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => {red}@*{normal}",
-			$mapTitle, $field->name, $char->{pos}{x}, $char->{pos}{y}, $args->name);
+			$mapTitle, $field->name, $pos->{x}, $pos->{y}, $args->name);
 	} elsif ('' ne ($i = AI::findAction ('follow')) and $args = AI::args ($i) and $args->{following} || $args->{ai_follow_lost}) {
 		$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => {cyan}@*{normal}",
-			$mapTitle, $field->name, $char->{pos}{x}, $char->{pos}{y}, $args->{name});
+			$mapTitle, $field->name, $pos->{x}, $pos->{y}, $args->{name});
 	} else {
 		if ('' ne ($i = Utils::DataStructures::binFindReverse (\@AI::ai_seq, 'route')) and $args = AI::args ($i)) {
 			if ($args->{dest}{map} eq $field->baseName) {
 				$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => (@*,@*)",
-					$mapTitle, $field->name, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
+					$mapTitle, $field->name, $pos->{x}, $pos->{y}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
 			} elsif (!defined $args->{dest}{pos}{x}) {
 				$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => @*",
-					$mapTitle, $field->name, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{map});
+					$mapTitle, $field->name, $pos->{x}, $pos->{y}, $args->{dest}{map});
 			} else {
 				$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => @* (@*,@*)",
-					$mapTitle, $field->name, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{map}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
+					$mapTitle, $field->name, $pos->{x}, $pos->{y}, $args->{dest}{map}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
 			}
 		} else {
 			$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*)",
-				$mapTitle, $field->name, $char->{pos}{x}, $char->{pos}{y});
+				$mapTitle, $field->name, $pos->{x}, $pos->{y});
 		}
 	}
 
@@ -545,6 +629,8 @@ sub updateStatus {
 	$self->{heartBeat} = !$self->{heartBeat};
 	addstr $self->{winStatus}, 0, 0, $self->{heartBeat} ? ":" : ".";
 
+	Plugins::callHook( 'curses/updateStatus' );
+
 	noutrefresh $self->{winStatus};
 }
 
@@ -558,7 +644,7 @@ sub updateObjects {
 	my $namelen = $self->{winObjectsWidth} - 9;
 	erase $self->{winObjects};
 
-	my $display = $self->{objectsMode} ? $self->{objectsMode} : $sys{curses_objects} || 'players, monsters, items, npcs';
+	my $display = $self->{objectsMode} ? $self->{objectsMode} : $sys{curses_objects} || 'players, monsters, slaves, items, npcs';
 	
 	for (split /\s*,\s*/, $display) {
 		my ($objectsID, $objects, $style) = ([], {}, 'normal');
@@ -566,6 +652,8 @@ sub updateObjects {
 			($objectsID, $objects, $style) = (\@playersID, \%players, 'cyan');
 		} elsif ($_ eq 'monsters') {
 			($objectsID, $objects, $style) = (\@monstersID, \%monsters, 'red');
+		} elsif ($_ eq 'slaves') {
+			($objectsID, $objects, $style) = (\@slavesID, \%slaves, 'green');
 		} elsif ($_ eq 'items') {
 			($objectsID, $objects, $style) = (\@itemsID, \%items, 'green');
 		} elsif ($_ eq 'npcs') {
@@ -584,6 +672,7 @@ sub updateObjects {
 		for (my $i = 0; $i < @$objectsID && $line < $self->{winObjectsHeight}; $i++) {
 			my $id = $objectsID->[$i];
 			next if ($id eq "");
+			next if $config{monster_filter} && $objectsID == \@monstersID && $objects->{$id}->{name_given} !~ /$config{monster_filter}/igs;
 			
 			my $lineStyle = $style;
 			if ($_ eq 'players') {
@@ -602,8 +691,9 @@ sub updateObjects {
 			}
 			
 			$self->printw($self->{winObjects}, $line++, 0, "{bold|$lineStyle}@## {$lineStyle}@".("<"x$namelen)." {normal}@#",
-				$_ eq 'skills' ? ($objects->{$id}{ID}, Skill->new (handle => $id)->getName, $objects->{$id}{lv})
+				  $_ eq 'skills'    ? ($objects->{$id}{ID}, Skill->new (handle => $id)->getName, $objects->{$id}{lv})
 				: $_ eq 'inventory' ? ($i, $objects->{$id}{name}, $objects->{$id}{amount})
+				: $_ eq 'slaves'    ? ($i, $objects->{$id}->name.($objects->{$id}->{given_name} && $objects->{$id}->name ne $objects->{$id}->{given_name} ? " [$objects->{$id}->{given_name}]" : ''), distance($char->{pos}, $objects->{$id}{pos}))
 				: ($i, $objects->{$id}->name, distance($char->{pos}, $objects->{$id}{pos}))
 			);
 		}
@@ -651,6 +741,8 @@ sub updateObjects {
 		$self->printw($self->{winObjects}, $line++, 0, "{bold|blue}@# {blue}@".("<"x$namelen)." {normal}@#", $i, $name, $dist);
 	}
 =cut
+
+	Plugins::callHook( 'curses/updateObjects' );
 
 	noutrefresh $self->{winObjects};
 }
