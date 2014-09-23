@@ -118,7 +118,7 @@ PathFinding_run(session, r_array)
 				HV *pos = (HV *) sv_2mortal ((SV *) newHV ());
 				hv_store (pos, "x", 1, newSViv (session->solution.array[i].x), 0);
 				hv_store (pos, "y", 1, newSViv (session->solution.array[i].y), 0);
-				av_store (array, size - i, newRV ((SV *) pos));
+				av_store (array, size - 1 - i, newRV ((SV *) pos));
 			}
 			RETVAL = size;
 
