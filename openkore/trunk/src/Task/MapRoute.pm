@@ -85,7 +85,7 @@ sub new {
 	my $self = $class->SUPER::new(@_, autostop => 1, autofail => 0, mutexes => ['movement']);
 
 	unless ($args{actor}->isa('Actor') and $args{map}) {
-		ArgumentException->throw(error => "Invalid arguments.");
+		ArgumentException->throw(error => "Task::MapRoute: Invalid arguments.");
 	}
 
 	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal',
@@ -158,6 +158,8 @@ sub iterate {
 		shift @{$self->{mapSolution}};
 
 	} elsif ( $self->{mapSolution}[0]{steps} ) {
+		my $dist = $self->{mapSolution}[0]{dist} || 10;
+
 		# If current solution has conversation steps specified
 		if ( $self->{substage} eq 'Waiting for Warp' ) {
 			$self->{timeout} = time unless $self->{timeout};
@@ -175,7 +177,7 @@ sub iterate {
 				}
 			}
 
-		} elsif (distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) <= 10) {
+		} elsif (distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) <= $dist) {
 			my ($from,$to) = split /=/, $self->{mapSolution}[0]{portal};
 			if (($self->{actor}{zeny} >= $portals_lut{$from}{dest}{$to}{cost}) || ($char->inventory->getByNameID(7060) && $portals_lut{$from}{dest}{$to}{allow_ticket})) {
 				# We have enough money for this service.
@@ -206,13 +208,13 @@ sub iterate {
 		} elsif ( Task::Route->getRoute(\@solution, $field, $self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) ) {
 			# NPC is reachable from current position
 			# >> Then "route" to it
-			debug "Walking towards the NPC\n", "route";
+			debug "Walking towards the NPC, dist $dist\n", "route";
 			my $task = new Task::Route(
 				actor => $self->{actor},
 				x => $self->{mapSolution}[0]{pos}{x},
 				y => $self->{mapSolution}[0]{pos}{y},
 				maxTime => $self->{maxTime},
-				distFromGoal => 10 - distance($self->{mapSolution}[0]{pos}, $solution[-1]),
+				distFromGoal => $dist,
 				avoidWalls => $self->{avoidWalls},
 				solution => \@solution
 			);
@@ -230,7 +232,7 @@ sub iterate {
 		my $distFromGoal = $self->{pyDistFromGoal}
 			? $self->{pyDistFromGoal}
 			: ($self->{distFromGoal} ? $self->{distFromGoal} : 0);
-		if ( $distFromGoal + 2 > distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos})) {
+		if ( $self->{mapSolution}[0]{routed} || $distFromGoal + 2 > distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos})) {
 			# We need to specify +2 because sometimes the exact spot is occupied by someone else
 			shift @{$self->{mapSolution}};
 
@@ -253,6 +255,7 @@ sub iterate {
 				solution => \@solution
 			);
 			$self->setSubtask($task);
+			$self->{mapSolution}[0]{routed} = 1;
 
 		} else {
 			warning TF("No LOS from %s (%s,%s) to Final Destination at (%s,%s).\n",
