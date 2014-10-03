@@ -11,6 +11,7 @@ moc_castle.rsw#Morroc Castle#
 moc_ruins.rsw#Morroc Ruins#
 morocc.rsw#Morroc Town#
 morocc_in.rsw#Inside Morroc#
+que_job01.rsw#Private Pub#
 pay_arche.rsw#Archer Village#
 payon.rsw#Payon Town#
 payon_in01.rsw#Inside Payon#
