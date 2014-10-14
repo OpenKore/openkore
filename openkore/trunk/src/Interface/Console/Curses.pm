@@ -130,6 +130,8 @@ sub new {
 		['postloadfiles', sub { $self->loadfiles (@_); }],
 	);
 
+	$self->history_load;
+
 	return \%interface;
 }
 
@@ -274,14 +276,10 @@ sub readEvents {
 
 		if ($ch eq "\r" || $ch eq KEY_ENTER) {
 			# Enter
+			$self->history_add( $self->{inputBuffer} );
 			$ret = $self->{inputBuffer};
 			undef $self->{inputBuffer};
 			$self->{inputPos} = 0;
-			if (length($ret) > 0 && $ret ne $self->{inputHistory}[0]) {
-				unshift @{$self->{inputHistory}}, $ret;
-				pop @{$self->{inputHistory}} if (@{$self->{inputHistory}} > MAXHISTORY);
-			}
-			$self->{inputHistoryPos} = 0;
 			last;
 		} elsif (ord($ch) == 8 || ord($ch) == 127 || $ch eq KEY_BACKSPACE) {
 			# Backspace
@@ -307,7 +305,6 @@ sub readEvents {
 			$self->{yankBuffer} = substr( $self->{inputBuffer}, 0, $self->{inputPos} ) . $self->{yankAccumulator};
 			$self->{inputBuffer} = substr $self->{inputBuffer}, $self->{inputPos};
 			$self->{inputPos} = 0;
-			$self->{inputHistoryPos} = 0;
 			$event_was_yank = 1;
 		} elsif ($ch == KEY_LEFT) {
 			# Cursor left
@@ -317,13 +314,11 @@ sub readEvents {
 			$self->{inputPos}++ if ($self->{inputPos} < length($self->{inputBuffer}));
 		} elsif ($ch == KEY_UP) {
 			# Input history
-			$self->{inputHistoryPos}++ if (defined $self->{inputHistory}[$self->{inputHistoryPos}]);
-			$self->{inputBuffer} = $self->{inputHistory}[$self->{inputHistoryPos}-1];
+			$self->{inputBuffer} = $self->history_back;
 			$self->{inputPos} = length($self->{inputBuffer});
 		} elsif ($ch == KEY_DOWN) {
 			# Input history
-			$self->{inputHistoryPos}-- if ($self->{inputHistoryPos} > 0);
-			$self->{inputBuffer} = $self->{inputHistoryPos} ? $self->{inputHistory}[$self->{inputHistoryPos}-1] : "";
+			$self->{inputBuffer} = $self->history_forward;
 			$self->{inputPos} = length($self->{inputBuffer});
 		} elsif ($ch == KEY_PPAGE) {
 			# TODO: Scrollback buffer
@@ -806,6 +801,84 @@ sub loadfiles {
 	}
 	
 	$self->updateStatus;
+}
+
+# This history stuff should be extracted into a separate object that can work with any interface.
+
+sub history_max {
+    $config{history_max} || MAXHISTORY
+}
+
+sub history_file {
+    File::Spec->catfile( $Settings::logs_folder, sprintf '%s_%s_%s.txt', 'history', $config{username}, $config{char} );
+}
+
+sub history_load {
+    my ( $self ) = @_;
+
+    $self->{inputPos}        = 0;
+    $self->{inputHistoryPos} = 0;
+    $self->{inputHistory}    = [];
+
+    my $log_fp;
+    return if !open $log_fp, '<', $self->history_file;
+    seek $log_fp, 0, 2;
+
+    # Load up log lines from the end of the file.
+    my $pos = tell $log_fp;
+    my $buf = '';
+    while ( $pos && scalar( split $buf, "\n" ) <= $self->history_max ) {
+        my $offset = $pos < 8192 ? $pos : 8192;
+        $pos -= $offset;
+        seek $log_fp, 0, $pos;
+        my $tmp = '';
+        read $log_fp, $tmp, $offset;
+        substr $buf, 0, 0, $tmp;
+    }
+    @{ $self->{inputHistory} } = reverse split /[\r\n]+/, $buf;
+    splice @{ $self->{inputHistory} }, 0, @{ $self->{inputHistory} } - $self->history_max if @{ $self->{inputHistory} } > $self->history_max;
+
+    # Strip the timestamps.
+    s/^\[.*?\] // foreach @{ $self->{inputHistory} };
+}
+
+sub history_forward {
+    my ( $self ) = @_;
+    $self->{inputHistoryPos}-- if $self->{inputHistoryPos};
+    $self->history_get;
+}
+
+sub history_back {
+    my ( $self ) = @_;
+    $self->{inputHistoryPos}++ if $self->{inputHistoryPos} < @{ $self->{inputHistory} };
+    $self->history_get;
+}
+
+sub history_get {
+    my ( $self ) = @_;
+    return '' if !$self->{inputHistoryPos};
+    $self->{inputHistory}->[ $self->{inputHistoryPos} - 1 ];
+}
+
+sub history_add {
+    my ( $self, $msg ) = @_;
+
+    $self->{inputHistoryPos} = 0;
+
+    return if !$msg;
+    return if @{ $self->{inputHistory} } && $msg eq $self->{inputHistory}->[0];
+
+    unshift @{ $self->{inputHistory} }, $msg;
+    pop @{ $self->{inputHistory} } while @{ $self->{inputHistory} } > $self->history_max;
+
+    my $log_fp = $self->{log_fp};
+    if ( !$log_fp ) {
+        my $log = File::Spec->catfile( $Settings::logs_folder, sprintf '%s_%s_%s.txt', 'history', $config{username}, $config{char} );
+        open $log_fp, '>>', $log;
+        select( ( select( $log_fp ), $|++ )[0] ) if $log_fp;
+        $self->{log_fp} = $log_fp;
+    }
+    print $log_fp "[" . localtime() . "] $msg\n" if $log_fp;
 }
 
 1;
