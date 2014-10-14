@@ -653,7 +653,7 @@ sub processSkillUse {
 				AI::dequeue;
 				${$args->{ret}} = 'target gone' if ($args->{ret});
 
-			} elsif ($char->{sitting}) {
+			} elsif ($char->{sitting} && !$char->{statuses}->{EFST_TENSIONRELAX}) {
 				AI::suspend;
 				stand();
 
