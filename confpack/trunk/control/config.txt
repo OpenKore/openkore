@@ -726,3 +726,4 @@ logToFile_Debug
 logToFile_Errors
 logToFile_Messages
 logToFile_Warnings
+history_max
