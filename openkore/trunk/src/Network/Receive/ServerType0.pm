@@ -5733,7 +5733,7 @@ sub storage_items_nonstackable {
 		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
 	});
 
-	$storageTitle = exists $args->{title} ? $args->{title} : undef;
+	$storageTitle = $args->{title} ? $args->{title} : undef;
 }
 
 sub storage_items_stackable {
@@ -5755,7 +5755,7 @@ sub storage_items_stackable {
 		},
 	});
 
-	$storageTitle = exists $args->{title} ? $args->{title} : undef;
+	$storageTitle = $args->{title} ? $args->{title} : undef;
 }
 
 sub storage_opened {
