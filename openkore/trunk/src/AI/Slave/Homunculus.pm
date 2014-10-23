@@ -26,21 +26,18 @@ sub iterate {
 		# We don't need random and feeding limit. They don't prevent from banning or being suspicious.
 		$config{homunculus_hunger} = 15 if (!$config{homunculus_hunger} || $config{homunculus_return} > $config{homunculus_hunger}); #Fix value instead of random
 		$config{homunculus_return} = 11 if (!$config{homunculus_return} || $config{homunculus_hunger} < $config{homunculus_return}); #Fix value instead of random
-		$timeout{ai_homunFeed} = 60 if (!$timeout{ai_homunFeed}); #Timeout value : Default 60sec
+		$timeout{ai_homunFeed}{timeout} = 60 if (!$timeout{ai_homunFeed}{timeout}); #Timeout value : Default 60sec
 	
-		if (timeOut($slave->{feed_time}, $timeout{ai_homunFeed}) && $slave->{hunger} <= $config{homunculus_hunger} && $config{homunculus_autoFeed} && (existsInList($config{homunculus_autoFeedAllowedMaps}, $field->baseName) || !$config{homunculus_autoFeedAllowedMaps})) {
-			$slave->{feed_time} = time;
+		if (timeOut($timeout{ai_homunFeed}) && $slave->{hunger} <= $config{homunculus_hunger} && $config{homunculus_autoFeed} && (existsInList($config{homunculus_autoFeedAllowedMaps}, $field->baseName) || !$config{homunculus_autoFeedAllowedMaps})) {
+			$timeout{ai_homunFeed}{time} = time;
 			message TF("Auto-feeding %s (%d hunger).\n", $slave, $slave->{hunger}), 'slave';
 			$messageSender->sendHomunculusCommand(1);
-			
-		} elsif (!$slave->{feed_time}) { #First time entry
-			$slave->{feed_time} = time;
-			
-		} elsif (timeOut($slave->{feed_time}, $timeout{ai_homunFeed}) && $slave->{hunger} <= $config{homunculus_return}) {
+
+		} elsif (timeOut($timeout{ai_homunFeed}) && $slave->{hunger} <= $config{homunculus_return}) {
 			message TF("Homunculus hunger reaches the return value.\n", 'slave');
 			my $skill = new Skill(handle => 'AM_REST');
 			AI::ai_skillUse2($skill, $char->{skills}{BS_GREED}{lv}, 1, 0, $char, "AM_REST");
-			$slave->{feed_time} = time; #timeout trick
+			$timeout{ai_homunFeed}{time} = time; #timeout trick
 
 		} else {
 			$slave->SUPER::iterate;

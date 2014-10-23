@@ -1849,7 +1849,7 @@ sub cmdExp {
 		for my $item (sort keys %itemChange) {
 			next unless $itemChange{$item};
 			$msg .= swrite(
-				"@<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<",
+				"@<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<",
 				[$item, $itemChange{$item}]);
 		}
 		$msg .= ('-'x36) . "\n";
