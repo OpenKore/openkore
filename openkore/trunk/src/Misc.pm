@@ -1464,7 +1464,7 @@ sub createCharacter {
 	my $slot = shift;
 	my $name = shift;
 
-	if ($net->getState() != 3) {
+	if ($net->getState() != 3 && !$net->getState() != 1.5) {
 		$interface->errorDialog(T("We're not currently connected to the character login server."), 0);
 		return 0;
 	} elsif ($slot !~ /^\d+$/) {
