@@ -130,7 +130,9 @@ sub new {
 		['postloadfiles', sub { $self->loadfiles (@_); }],
 	);
 
-	$self->history_load;
+	$self->{inputPos}    = 0;
+	$self->{inputBuffer} = '';
+	$self->history_init;
 
 	return \%interface;
 }
@@ -384,6 +386,14 @@ sub readEvents {
 	return ($ret ne "") ? $ret : undef;
 }
 
+sub swrite {
+	my $self = shift;
+	my $picture = shift;
+	$^A = '';
+	formline $picture, @_;
+	return "$^A";
+}
+
 sub printw {
 	my $self = shift;
 	my $win = shift;
@@ -569,57 +579,94 @@ sub updateStatus {
 
 	return unless $char;
 
-	erase $self->{winStatus};
-	my $width = int($self->{winStatusWidth} / 2);
+	my $homun = $char->{homunculus} || {};
+	my $bar_types = {
+		char       => { title => 'Char' },
+		status     => { title => 'Status' },
+		hom_status => { title => 'HStatu' },
+		location   => { title => 'Map' },
 
-	$self->printw($self->{winStatus}, 0, 0, "{bold|yellow} Char: {bold|white}@*{normal} (@*@*@*@*",
-		$char->{name}, $jobs_lut{$char->{jobID}}, " - ", $sex_lut{$char->{sex}}, ")");
-	my $bexpbar = $self->makeBar($width-24, $char->{exp}, $char->{exp_max});
-	$self->printw($self->{winStatus}, 1, 0, "{bold|yellow}   Base:{normal} @<< $bexpbar (@#.##%)",
-		$char->{lv}, $char->{exp_max} ? $char->{exp} / $char->{exp_max} * 100 : 0);
-	my $jexpbar = $self->makeBar($width-24, $char->{exp_job}, $char->{exp_job_max});
-	$self->printw($self->{winStatus}, 2, 0, "{bold|yellow}    Job:{normal} @<< $jexpbar (@#.##%)",
-		$char->{lv_job}, $char->{exp_job_max} ? $char->{exp_job} / $char->{exp_job_max} * 100 : 0);
-	
-	my $mapTitle = $field->isCity ? 'City' : 'Map';
-	
-	my ($i, $args);
-	my $pos = calcPosition( $char );
-	if ('' ne ($i = AI::findAction ('attack')) and $args = AI::args ($i) and $args = Actor::get ($args->{ID})) {
-		$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => {red}@*{normal}",
-			$mapTitle, $field->name, $pos->{x}, $pos->{y}, $args->name);
-	} elsif ('' ne ($i = AI::findAction ('follow')) and $args = AI::args ($i) and $args->{following} || $args->{ai_follow_lost}) {
-		$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => {cyan}@*{normal}",
-			$mapTitle, $field->name, $pos->{x}, $pos->{y}, $args->{name});
-	} else {
-		if ('' ne ($i = Utils::DataStructures::binFindReverse (\@AI::ai_seq, 'route')) and $args = AI::args ($i)) {
-			if ($args->{dest}{map} eq $field->baseName) {
-				$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => (@*,@*)",
-					$mapTitle, $field->name, $pos->{x}, $pos->{y}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
-			} elsif (!defined $args->{dest}{pos}{x}) {
-				$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => @*",
-					$mapTitle, $field->name, $pos->{x}, $pos->{y}, $args->{dest}{map});
-			} else {
-				$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => @* (@*,@*)",
-					$mapTitle, $field->name, $pos->{x}, $pos->{y}, $args->{dest}{map}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
+		base => { title => 'Base', cur => $char->{exp},     max => $char->{exp_max},     valtext => sprintf '%3d', $char->{lv} },
+		job  => { title => 'Job',  cur => $char->{exp_job}, max => $char->{exp_job_max}, valtext => sprintf '%3d', $char->{lv_job} },
+
+		hp       => { title => 'HP',     cur => $char->{hp},        max => $char->{hp_max},     color1 => 'bold|red',  color2 => 'bold|green', threshold => 15 },
+		sp       => { title => 'SP',     cur => $char->{sp},        max => $char->{sp_max},     color1 => 'bold|blue', color2 => '',           threshold => 0 },
+		weight   => { title => 'Weight', cur => $char->{weight},    max => $char->{weight_max}, color1 => 'cyan',      color2 => 'red',        threshold => 50 },
+		hunger   => { title => 'Hunger', cur => $homun->{hunger},   max => 100,                 color1 => 'red',       color2 => 'green',      threshold => 0 },
+		intimacy => { title => 'Loyal',  cur => $homun->{intimacy}, max => 1000,                color1 => 'red',       color2 => 'green',      threshold => 10 },
+		hom_hp   => { title => 'Hom HP', cur => $homun->{hp},       max => $homun->{hp_max},    color1 => 'bold|red',  color2 => 'bold|green', threshold => 0 },
+		hom_sp   => { title => 'Hom SP', cur => $homun->{sp},       max => $homun->{sp_max},    color1 => 'bold|blue', color2 => '',           threshold => 0 },
+	};
+	my $bars = [
+		{ col => 0, row => 0, type => $config{"bar_1_1"} || 'char' },
+		{ col => 0, row => 1, type => $config{"bar_1_2"} || 'base' },
+		{ col => 0, row => 2, type => $config{"bar_1_3"} || 'job' },
+		{ col => 0, row => 3, type => $config{"bar_1_4"} || 'location' },
+		{ col => 1, row => 0, type => $config{"bar_2_1"} || 'hp' },
+		{ col => 1, row => 1, type => $config{"bar_2_2"} || 'sp' },
+		{ col => 1, row => 2, type => $config{"bar_2_3"} || 'weight' },
+		{ col => 1, row => 3, type => $config{"bar_2_4"} || 'status' },
+		{ col => 2, row => 0, type => $config{"bar_3_1"} || $char->{homunculus} && 'hom_hp' || '' },
+		{ col => 2, row => 1, type => $config{"bar_3_2"} || $char->{homunculus} && 'hunger' || '' },
+		{ col => 2, row => 2, type => $config{"bar_3_3"} || $char->{homunculus} && 'intimacy' || '' },
+		{ col => 2, row => 3, type => $config{"bar_3_4"} || $char->{homunculus} && 'hom_status' || '' },
+	];
+	my $cols = 2;
+	foreach my $bar ( @$bars ) {
+        next if !$bar_types->{ $bar->{type} };
+
+		$bar->{$_} = $bar_types->{ $bar->{type} }->{$_} foreach keys %{ $bar_types->{ $bar->{type} } };
+
+		if ( $bar->{type} eq 'char' ) {
+			$bar->{text} = $self->swrite( '{bold|white}@*{normal} (@* - @*)', $char->{name}, $jobs_lut{ $char->{jobID} }, $sex_lut{ $char->{sex} } );
+		} elsif ( $bar->{type} eq 'status' ) {
+			$bar->{text} = $char->statusesString;
+		} elsif ( $bar->{type} eq 'hom_status' ) {
+			$bar->{text} = eval { $homun->can( 'statusesString' ) } ? $homun->statusesString : 'No homunculus summoned.';
+		} elsif ( $bar->{type} eq 'location' ) {
+			my $pos = calcPosition( $char );
+			$bar->{title} = 'City' if $field->isCity;
+			$bar->{text} = $self->swrite( '@* (@*,@*)', $field->name, $pos->{x}, $pos->{y} );
+			my ( $i, $args );
+			if ( ( $i = AI::findAction( 'attack' ) ) ne '' and $args = AI::args( $i ) and $args = Actor::get( $args->{ID} ) ) {
+				$bar->{text} .= $self->swrite( ' => {red}@*{normal}', $args->name );
+			} elsif ( ( $i = AI::findAction( 'follow' ) ) ne '' and $args = AI::args( $i ) and $args->{following} || $args->{ai_follow_lost} ) {
+				$bar->{text} .= $self->swrite( ' => {cyan}@*{normal}', $args->{name} );
+			} elsif ( ( $i = Utils::DataStructures::binFindReverse( \@AI::ai_seq, 'route' ) ) ne '' and $args = AI::args( $i ) ) {
+				if ( $args->{dest}{map} eq $field->baseName ) {
+					$bar->{text} .= $self->swrite( ' => (@*,@*)', $args->{dest}{pos}{x}, $args->{dest}{pos}{y} );
+				} elsif ( !defined $args->{dest}{pos}{x} ) {
+					$bar->{text} .= $self->swrite( ' => @*', $args->{dest}{map} );
+				} else {
+					$bar->{text} .= $self->swrite( ' => @* (@*,@*)', $args->{dest}{map}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y} );
+				}
 			}
-		} else {
-			$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*)",
-				$mapTitle, $field->name, $pos->{x}, $pos->{y});
+		} elsif ( $bar->{type} eq 'intimacy' ) {
+			$bar->{title} = 'Cordial' if $homun->{intimacy} <= 910;
+			$bar->{title} = 'Neutral' if $homun->{intimacy} <= 750;
+			$bar->{title} = 'Shy'     if $homun->{intimacy} <= 250;
+			$bar->{title} = 'Awkwrd'  if $homun->{intimacy} <= 100;
+			$bar->{title} = 'Hate'    if $homun->{intimacy} <= 10;
 		}
+		$cols = max( $cols, $bar->{col} + 1 ) if $bar->{type};
 	}
 
-	vline $self->{winStatus}, 0, $width-1, 0, $self->{winStatusHeight};
-	my $hpbar = $self->makeBar($width-29, $char->{hp}, $char->{hp_max}, "bold|red", 15, "bold|green");
-	$self->printw($self->{winStatus}, 0, $width, "{bold|yellow}     HP:{normal} @####/@#### $hpbar (@##%)",
-		$char->{hp}, $char->{hp_max}, $char->{hp_max} ? int($char->{hp} / $char->{hp_max} * 100) : 0);
-	my $spbar = $self->makeBar($width-29, $char->{sp}, $char->{sp_max}, "bold|blue");
-	$self->printw($self->{winStatus}, 1, $width, "{bold|yellow}     SP:{normal} @####/@#### $spbar (@##%)",
-		$char->{sp}, $char->{sp_max}, $char->{sp_max} ? int($char->{sp} / $char->{sp_max} * 100) : 0);
-	my $weightbar = $self->makeBar($width-29, $char->{weight}, $char->{weight_max}, "cyan", 50, "red");
-	$self->printw($self->{winStatus}, 2, $width, "{bold|yellow} Weight:{normal} @####/@#### $weightbar (@##%)",
-		$char->{weight}, $char->{weight_max}, $char->{weight_max} ? int($char->{weight} / $char->{weight_max} * 100) : 0);
-	$self->printw($self->{winStatus}, 3, $width, "{bold|yellow} Status:{normal} @*", $char->statusesString);
+	erase $self->{winStatus};
+	my $width = int( ( $self->{winStatusWidth} + 3 ) / $cols - 3 );
+
+	foreach ( 1 .. ( $cols - 1 ) ) {
+		vline $self->{winStatus}, 0, ( $width + 3 ) * $_ - 2, 0, $self->{winStatusHeight};
+	}
+	foreach my $bar ( @$bars ) {
+		next if !$bar->{type};
+        next if !$bar_types->{ $bar->{type} };
+		if ( !defined $bar->{text} ) {
+			my $val_str = $self->swrite( $bar->{valtext} || '@####/@####', $bar->{cur}, $bar->{max} );
+			my $bar_str = $self->makeBar( $width - 18 - length $val_str, $bar->{cur}, $bar->{max}, $bar->{color1}, $bar->{threshold}, $bar->{color2} );
+			$bar->{text} = $self->swrite( "$val_str $bar_str (@##.#%)", !$bar->{max} ? 0 : 100 * $bar->{cur} / $bar->{max} );
+		}
+		$self->printw( $self->{winStatus}, $bar->{row}, $bar->{col} * ( $width + 3 ), "{bold|yellow}@>>>>>:{normal} @*", $bar->{title}, $bar->{text} );
+	}
 
 	$self->{heartBeat} = !$self->{heartBeat};
 	addstr $self->{winStatus}, 0, 0, $self->{heartBeat} ? ":" : ".";
@@ -790,6 +837,8 @@ sub loadfiles {
 			text => $param->{files}[$param->{current} - 1]{name},
 		};
 	} else {
+		$self->history_load;
+
 		Plugins::delHooks ($self->{loadingHooks});
 		delete $self->{loadingHooks};
 		$self->{loading} = {
@@ -806,79 +855,84 @@ sub loadfiles {
 # This history stuff should be extracted into a separate object that can work with any interface.
 
 sub history_max {
-    $config{history_max} || MAXHISTORY
+	$config{history_max} || MAXHISTORY
 }
 
 sub history_file {
-    File::Spec->catfile( $Settings::logs_folder, sprintf '%s_%s_%s.txt', 'history', $config{username}, $config{char} );
+	File::Spec->catfile( $Settings::logs_folder, sprintf '%s_%s_%s.txt', 'history', $config{username}, $config{char} );
+}
+
+sub history_init {
+	my ( $self ) = @_;
+
+	$self->{inputHistoryPos} = 0;
+	$self->{inputHistory}    = [];
 }
 
 sub history_load {
-    my ( $self ) = @_;
+	my ( $self ) = @_;
 
-    $self->{inputPos}        = 0;
-    $self->{inputHistoryPos} = 0;
-    $self->{inputHistory}    = [];
+	$self->history_init;
 
-    my $log_fp;
-    return if !open $log_fp, '<', $self->history_file;
-    seek $log_fp, 0, 2;
+	my $log_fp;
+	return if !open $log_fp, '<', $self->history_file;
+	seek $log_fp, 0, 2;
 
-    # Load up log lines from the end of the file.
-    my $pos = tell $log_fp;
-    my $buf = '';
-    while ( $pos && scalar( split $buf, "\n" ) <= $self->history_max ) {
-        my $offset = $pos < 8192 ? $pos : 8192;
-        $pos -= $offset;
-        seek $log_fp, 0, $pos;
-        my $tmp = '';
-        read $log_fp, $tmp, $offset;
-        substr $buf, 0, 0, $tmp;
-    }
-    @{ $self->{inputHistory} } = reverse split /[\r\n]+/, $buf;
-    splice @{ $self->{inputHistory} }, 0, @{ $self->{inputHistory} } - $self->history_max if @{ $self->{inputHistory} } > $self->history_max;
+	# Load up log lines from the end of the file.
+	my $pos = tell $log_fp;
+	my $buf = '';
+	while ( $pos && scalar( split $buf, "\n" ) <= $self->history_max ) {
+		my $offset = $pos < 8192 ? $pos : 8192;
+		$pos -= $offset;
+		seek $log_fp, 0, $pos;
+		my $tmp = '';
+		read $log_fp, $tmp, $offset;
+		substr $buf, 0, 0, $tmp;
+	}
+	@{ $self->{inputHistory} } = reverse split /[\r\n]+/, $buf;
+	splice @{ $self->{inputHistory} }, $self->history_max if @{ $self->{inputHistory} } > $self->history_max;
 
-    # Strip the timestamps.
-    s/^\[.*?\] // foreach @{ $self->{inputHistory} };
+	# Strip the timestamps.
+	s/^\[.*?\] // foreach @{ $self->{inputHistory} };
 }
 
 sub history_forward {
-    my ( $self ) = @_;
-    $self->{inputHistoryPos}-- if $self->{inputHistoryPos};
-    $self->history_get;
+	my ( $self ) = @_;
+	$self->{inputHistoryPos}-- if $self->{inputHistoryPos};
+	$self->history_get;
 }
 
 sub history_back {
-    my ( $self ) = @_;
-    $self->{inputHistoryPos}++ if $self->{inputHistoryPos} < @{ $self->{inputHistory} };
-    $self->history_get;
+	my ( $self ) = @_;
+	$self->{inputHistoryPos}++ if $self->{inputHistoryPos} < @{ $self->{inputHistory} };
+	$self->history_get;
 }
 
 sub history_get {
-    my ( $self ) = @_;
-    return '' if !$self->{inputHistoryPos};
-    $self->{inputHistory}->[ $self->{inputHistoryPos} - 1 ];
+	my ( $self ) = @_;
+	return '' if !$self->{inputHistoryPos};
+	$self->{inputHistory}->[ $self->{inputHistoryPos} - 1 ];
 }
 
 sub history_add {
-    my ( $self, $msg ) = @_;
+	my ( $self, $msg ) = @_;
 
-    $self->{inputHistoryPos} = 0;
+	$self->{inputHistoryPos} = 0;
 
-    return if !$msg;
-    return if @{ $self->{inputHistory} } && $msg eq $self->{inputHistory}->[0];
+	return if !$msg;
+	return if @{ $self->{inputHistory} } && $msg eq $self->{inputHistory}->[0];
 
-    unshift @{ $self->{inputHistory} }, $msg;
-    pop @{ $self->{inputHistory} } while @{ $self->{inputHistory} } > $self->history_max;
+	unshift @{ $self->{inputHistory} }, $msg;
+	pop @{ $self->{inputHistory} } while @{ $self->{inputHistory} } > $self->history_max;
 
-    my $log_fp = $self->{log_fp};
-    if ( !$log_fp ) {
-        my $log = File::Spec->catfile( $Settings::logs_folder, sprintf '%s_%s_%s.txt', 'history', $config{username}, $config{char} );
-        open $log_fp, '>>', $log;
-        select( ( select( $log_fp ), $|++ )[0] ) if $log_fp;
-        $self->{log_fp} = $log_fp;
-    }
-    print $log_fp "[" . localtime() . "] $msg\n" if $log_fp;
+	my $log_fp = $self->{log_fp};
+	if ( !$log_fp || $self->{log_file} ne $self->history_file ) {
+		open $log_fp, '>>', $self->history_file;
+		select( ( select( $log_fp ), $|++ )[0] ) if $log_fp;
+		$self->{log_fp}   = $log_fp;
+		$self->{log_file} = $self->history_file;
+	}
+	print $log_fp "[" . localtime() . "] $msg\n" if $log_fp;
 }
 
 1;
