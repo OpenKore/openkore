@@ -1422,7 +1422,8 @@ partySkill {
 # }
 
 autoSpell
-
+autoSpell_safe 0
+# 使否限制某部份技能不能使用自動唸咒 [可保留 0]
 
 
 
@@ -2163,6 +2164,12 @@ monsterLog 0
 # 是否記錄殺死怪物數量及資料
 logDead 0
 # 是否記錄死亡時間
+logToFile_Errors 0
+# 是否記錄錯誤訊息記錄
+logToFile_Messages 0
+# 是否記錄所有訊息記錄
+logToFile_Warnings 0
+# 是否記錄警告訊息記錄
 
 #═══════════════════════
 #║ LOG 紀錄檔 ［其它］ ║
