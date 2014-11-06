@@ -884,7 +884,7 @@ sub history_load {
 	while ( $pos && scalar( split $buf, "\n" ) <= $self->history_max ) {
 		my $offset = $pos < 8192 ? $pos : 8192;
 		$pos -= $offset;
-		seek $log_fp, 0, $pos;
+		seek $log_fp, $pos, 0;
 		my $tmp = '';
 		read $log_fp, $tmp, $offset;
 		substr $buf, 0, 0, $tmp;
