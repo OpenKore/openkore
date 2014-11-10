@@ -596,6 +596,8 @@ sub updateStatus {
 		intimacy => { title => 'Loyal',  cur => $homun->{intimacy}, max => 1000,                color1 => 'red',       color2 => 'green',      threshold => 10 },
 		hom_hp   => { title => 'Hom HP', cur => $homun->{hp},       max => $homun->{hp_max},    color1 => 'bold|red',  color2 => 'bold|green', threshold => 0 },
 		hom_sp   => { title => 'Hom SP', cur => $homun->{sp},       max => $homun->{sp_max},    color1 => 'bold|blue', color2 => '',           threshold => 0 },
+
+		attack_target_hp => { title => 'Atk HP' },
 	};
 	my $bars = [
 		{ col => 0, row => 0, type => $config{"bar_1_1"} || 'char' },
@@ -647,6 +649,13 @@ sub updateStatus {
 			$bar->{title} = 'Shy'     if $homun->{intimacy} <= 250;
 			$bar->{title} = 'Awkwrd'  if $homun->{intimacy} <= 100;
 			$bar->{title} = 'Hate'    if $homun->{intimacy} <= 10;
+		} elsif ( $bar->{type} eq 'attack_target_hp' ) {
+			my $target;
+			my $i = AI::findAction('attack');
+			if ( $i ne '' && ( $target = Actor::get( AI::args( $i )->{ID} ) ) ) {
+				$bar->{cur} = $target->{hp};
+				$bar->{max} = $target->{hp_max};
+			}
 		}
 		$cols = max( $cols, $bar->{col} + 1 ) if $bar->{type};
 	}
@@ -717,12 +726,15 @@ sub updateObjects {
 			next if $config{monster_filter} && $objectsID == \@monstersID && $objects->{$id}->{name_given} !~ /$config{monster_filter}/igs;
 			
 			my $lineStyle = $style;
-			if ($_ eq 'players') {
-				$lineStyle = 'yellow' if $char->{party}{users}{$id};
-			} elsif ($_ eq 'skills') {
+			my $idx = $i;
+			my $name;
+			my $count;
+			if ($_ eq 'skills') {
+				($idx,$name,$count) = ($objects->{$id}{ID}, Skill->new(handle => $id)->getName, $objects->{$id}{lv});
 				$lineStyle = 'normal' unless $objects->{$id}{sp};
 				$lineStyle = 'blue' unless $objects->{$id}{lv} || $objects->{$id}{up};
 			} elsif ($_ eq 'inventory') {
+				($idx,$name,$count) = ($i, $objects->{$id}{name}, $objects->{$id}{amount});
 				if ($objects->{$id}->usable) {
 					$lineStyle = 'green';
 				} elsif ($objects->{$id}{equipped}) {
@@ -730,13 +742,22 @@ sub updateObjects {
 				} elsif ($objects->{$id}->equippable) {
 					$lineStyle = 'blue';
 				}
+			} else {
+				($idx,$name,$count) = ($i, $objects->{$id}->name, distance($char->{pos}, $objects->{$id}{pos}));
+				$lineStyle = 'yellow' if $char->{party}{users}{$id};
 			}
-			
+
+			if ($_ eq 'slaves') {
+				$name .= " [$objects->{$id}->{given_name}]" if $objects->{$id}->{given_name} && $objects->{$id}->name ne $objects->{$id}->{given_name};
+			}
+
+			if ($namelen > 10 + 1 + 10 && $objects->{$id}->{hp_max}) {
+				my $bar = $self->makeBar( 10, $objects->{$id}->{hp}, $objects->{$id}->{hp_max} );
+				$name = $self->swrite( '@' . ( '<' x ($namelen - 11) ) . ' @' . ( '<' x 9 ), $name, $bar );
+			}
+
 			$self->printw($self->{winObjects}, $line++, 0, "{bold|$lineStyle}@## {$lineStyle}@".("<"x$namelen)." {normal}@#",
-				  $_ eq 'skills'    ? ($objects->{$id}{ID}, Skill->new (handle => $id)->getName, $objects->{$id}{lv})
-				: $_ eq 'inventory' ? ($i, $objects->{$id}{name}, $objects->{$id}{amount})
-				: $_ eq 'slaves'    ? ($i, $objects->{$id}->name.($objects->{$id}->{given_name} && $objects->{$id}->name ne $objects->{$id}->{given_name} ? " [$objects->{$id}->{given_name}]" : ''), distance($char->{pos}, $objects->{$id}{pos}))
-				: ($i, $objects->{$id}->name, distance($char->{pos}, $objects->{$id}{pos}))
+				$idx, $name, $count
 			);
 		}
 		if ($_ eq 'skills' && $line < $self->{winObjectsHeight}) {
