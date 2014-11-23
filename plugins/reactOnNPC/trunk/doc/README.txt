@@ -410,3 +410,38 @@ SOLUTION:
 		msg_5 /\d\) (\w+): 'Your (Level|(Job Level)|(Max HP)|(Max SP)) is (\d+)'/
 		msg_6 /\d\) (\w+): 'Your (Level|(Job Level)|(Max HP)|(Max SP)) is (\d+)'/
 	}
+
+===========================
+= Example (bbs.xy-ro.com) =
+===========================
+	You are now: state: Frozen
+	You are now: look: GM Perfect Hide
+	Unknown #110004319: If A1 is U, what is:J4(Uppercase)
+	Unknown #110004319:    A B C D E F G H I J
+	Unknown #110004319:  ---------Antibot---------
+	Unknown #110004319: 1| U X J S M B T S W T
+	Unknown #110004319: 2| V Y H W I V D V R E
+	Unknown #110004319: 3| N O S Y C O M F Y C
+	Unknown #110004319: 4| B M A F O E L V U W
+	Unknown #110004319: Auto-continuing talking
+	NPC Exists: Unknown #110004319 (153, 96) (ID 110004319) - (13)
+	Unknown #110004319: Type 'talk text' (Respond to NPC)
+	[reactOnNPC] Reacting to NPC. Executing command "talk text W".
+	Unknown #110004319:  ---------Antibot---------
+	Unknown #110004319: Congratulations, I wish you a happy game.
+	You are no longer: state: Frozen
+	You are no longer: look: GM Perfect Hide
+	Unknown #110004319: Done talking
+
+SOLUTION:
+	reactOnNPC talk text @eval(my $a = '#0~1'; my $b = #0~2-1; my @@A =('#3~1', '#4~1', '#5~1', '#6~1'@); my @@B =('#3~2', '#4~2', '#5~2', '#6~2'@); my @@C =('#3~3', '#4~3', '#5~3', '#6~3'@); my @@D =('#3~4', '#4~4', '#5~4', '#6~4'@); my @@E =('#3~5', '#4~5', '#5~5', '#6~5'@); my @@F =('#3~6', '#4~6', '#5~6', '#6~6'@); my @@G =('#3~7', '#4~7', '#5~7', '#6~7'@); my @@H =('#3~8', '#4~8', '#5~8', '#6~8'@); my @@I =('#3~9', '#4~9', '#5~9', '#6~9'@); my @@J =('#3~10', '#4~10', '#5~10', '#6~10'@); my @@answer; if ($a eq 'A'@) {@@answer = @@A} elsif ($a eq 'B'@) {@@answer = @@B} elsif ($a eq 'C'@) {@@answer = @@C} elsif ($a eq 'D'@) {@@answer = @@D} elsif ($a eq 'E'@) {@@answer = @@E} elsif ($a eq 'F'@) {@@answer = @@F} elsif ($a eq 'G'@) {@@answer = @@G} elsif ($a eq 'H'@) {@@answer = @@H} elsif ($a eq 'I'@) {@@answer = @@I} elsif ($a eq 'J'@) {@@answer = @@J} return @@answer[$b]) {
+		type text
+		delay 2
+		msg_0 /..A1..\w,......:(\w)(\d)\(..\)/
+		msg_1 /. A.B.C.D.E.F.G.H.I.J/
+		msg_2 /---------.......---------/
+		msg_3 /1\| (\w).(\w).(\w).(\w).(\w).(\w).(\w).(\w).(\w).(\w)/
+		msg_4 /2\| (\w).(\w).(\w).(\w).(\w).(\w).(\w).(\w).(\w).(\w)/
+		msg_5 /3\| (\w).(\w).(\w).(\w).(\w).(\w).(\w).(\w).(\w).(\w)/
+		msg_6 /4\| (\w).(\w).(\w).(\w).(\w).(\w).(\w).(\w).(\w).(\w)/
+	}

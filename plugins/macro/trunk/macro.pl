@@ -73,21 +73,21 @@ sub onstart3 {
 
 # onReload
 sub Reload {
-	message "macro plugin reloading, ";
+	message "macro plugin reloading, ", 'success';
 	&cleanup;
 	&onstart3
 }
 
 # onUnload
 sub Unload {
-	message "macro plugin unloading, ";
+	message "macro plugin unloading, ", 'success';
 	&cleanup;
 	Plugins::delHooks($hooks);
 	Commands::unregister($chooks);
 }
 
 sub cleanup {
-	message "cleaning up\n";
+	message "cleaning up\n", 'success';
 	Settings::removeFile($cfID) if defined $cfID;
 	Log::delHook($loghook);
 	foreach (@{$autohooks}) {Plugins::delHook($_)}
