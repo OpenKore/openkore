@@ -522,7 +522,7 @@ sub new {
 		'08CB' => ['rates_info', 's4 a*', [qw(len exp death drop detail)]],
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]],
-		'08FF' => ['actor_status_active2', 'a4 v V4', [qw(ID type tick unknown1 unknown2 unknown3)]],
+		'08FF' => ['actor_status_active', 'a4 v V4', [qw(ID type tick unknown1 unknown2 unknown3)]],
 		'0900' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0901' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0902' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
@@ -1155,19 +1155,6 @@ sub actor_movement_interrupted {
 	if ($char->{homunculus} && $char->{homunculus}{ID} eq $actor->{ID}) {
 		AI::clear("move");
 	}
-}
-
-# TODO: translation-friendly messages
-sub actor_status_active {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-#	my ($type, $ID, $flag, $tick) = @{$args}{qw(type ID flag tick)};
-	my ($type, $ID, $flag, $tick, $unknown1, $unknown2, $unknown3) = @{$args}{qw(type ID flag tick unknown1 unknown2 unknown3)};
-	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
-	$cart{type} = $unknown1 if ($type == 673 && defined $unknown1 && ($ID eq $accountID)); # for Cart active
-	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
-	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick == 9999 ? undef : $tick);
 }
 
 sub actor_trapped {

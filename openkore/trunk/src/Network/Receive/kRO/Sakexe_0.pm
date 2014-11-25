@@ -739,19 +739,6 @@ sub actor_muted {
 	}
 }
 
-# TODO: translation-friendly messages
-sub actor_status_active {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-	my ($type, $ID, $flag, $tick) = @{$args}{qw(type ID flag tick)};
-
-	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
-
-	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
-	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick);
-}
-
 sub actor_trapped {
 	my ($self, $args) = @_;
 	# original comment was that ID is not a valid ID
