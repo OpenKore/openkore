@@ -3,4 +3,4 @@ Benchmark.xs
 HttpReader.xs
 Whirlpool.xs
 Rijndael.xs
-make_xs_cpp.pl
+make_xs.cpp.pl

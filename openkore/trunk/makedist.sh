@@ -7,16 +7,18 @@ VERSION=2.0.6
 DIRS=(.
 	src
 	src/build
-	src/scons-local-0.98.5
-	src/scons-local-0.98.5/SCons
-	src/scons-local-0.98.5/SCons/compat
-	src/scons-local-0.98.5/SCons/Node
-	src/scons-local-0.98.5/SCons/Options
-	src/scons-local-0.98.5/SCons/Platform
-	src/scons-local-0.98.5/SCons/Scanner
-	src/scons-local-0.98.5/SCons/Script
-	src/scons-local-0.98.5/SCons/Tool
-	src/scons-local-0.98.5/SCons/Variables
+	src/scons-local-2.0.1
+	src/scons-local-2.0.1/SCons
+	src/scons-local-2.0.1/SCons/compat
+	src/scons-local-2.0.1/SCons/Node
+	src/scons-local-2.0.1/SCons/Options
+	src/scons-local-2.0.1/SCons/Platform
+	src/scons-local-2.0.1/SCons/Scanner
+	src/scons-local-2.0.1/SCons/Script
+	src/scons-local-2.0.1/SCons/Tool
+	src/scons-local-2.0.1/SCons/Tool/MSCommon
+	src/scons-local-2.0.1/SCons/Tool/packaging
+	src/scons-local-2.0.1/SCons/Variables
 	src/deps
 	src/deps/Carp
 	src/deps/Class
@@ -25,6 +27,9 @@ DIRS=(.
 	src/deps/Devel
 	src/deps/Exception
 	src/deps/File
+	src/deps/List
+	src/deps/Text
+	src/deps/Tie
 	src/deps/SVN
 	src/deps/Data/YAML
 	src/po
@@ -38,13 +43,25 @@ DIRS=(.
 	src/Base/WebServer
 	src/Bus
 	src/Bus/Server
+	src/doc
+	src/doc/data
+	src/doc/srcdoc
 	src/Interface
 	src/Interface/Console
+	src/Interface/Win32
 	src/Interface/Wx
 	src/Interface/Wx/DockNotebook
+	src/Interface/Wx/List
+	src/Interface/Wx/List/ItemList
+	src/Interface/Wx/StatView
+	src/MediaServer
 	src/Network
 	src/Network/Receive
+	src/Network/Receive/iRO
+	src/Network/Receive/kRO
 	src/Network/Send
+	src/Network/Send/iRO
+	src/Network/Send/kRO
 	src/Network/XKore2
 	src/Task
 	src/Poseidon
@@ -52,6 +69,16 @@ DIRS=(.
 	src/Utils/StartupNotification
 	src/auto/XSTools
 	src/auto/XSTools/misc
+	src/auto/XSTools/OSL
+	src/auto/XSTools/OSL/doc
+	src/auto/XSTools/OSL/IO
+	src/auto/XSTools/OSL/Net
+	src/auto/XSTools/OSL/Net/Unix
+	src/auto/XSTools/OSL/Net/Win32
+	src/auto/XSTools/OSL/test/unit
+	src/auto/XSTools/OSL/Threading
+	src/auto/XSTools/OSL/Threading/Unix
+	src/auto/XSTools/OSL/Threading/Win32
 	src/auto/XSTools/PathFinding
 	src/auto/XSTools/unix
 	src/auto/XSTools/win32
@@ -188,8 +215,8 @@ dir=`cd "$PACKAGEDIR"; pwd`
 if [[ "$SEMIBINDIST" != "1" ]]; then
 	findConfpackDir
 	findTablepackDir
-	make -C "$confpackDir" distdir DISTDIR="$dir/control" || err
-	make -C "$tablepackDir" distdir DISTDIR="$dir/tables" || err
+	make -C "$confpackDir" distdir DISTDIR="$PACKAGEDIR/control" || err
+	make -C "$tablepackDir" distdir DISTDIR="$PACKAGEDIR/tables" || err
 fi
 
 # Convert openkore.pl to Unix line format, otherwise Unix users can't
@@ -208,10 +235,10 @@ if [[ "$BINDIST" == "1" ]]; then
 	# Win32 Wx binary
 	cp wxstart.exe "$PACKAGEDIR/" || err
 	rm -f "$PACKAGEDIR/start.exe"
-	zip -9r "$PACKAGE-wx-$VERSION.zip" "$PACKAGEDIR" || err
+	zip -9r "$PACKAGE-$VERSION-win32_WX.zip" "$PACKAGEDIR" || err
 
 	echo "$PACKAGE-$VERSION-win32.zip created"
-	echo "$PACKAGE-wx-$VERSION.zip created"
+	echo "$PACKAGE-$VERSION-win32_wx.zip created"
 
 elif [[ "$SEMIBINDIST" != "1" ]]; then
 	# Create tarball

@@ -12,6 +12,7 @@ InventoryListTest.pm
 items.txt
 items_control.txt
 itemslotcounttable.txt
+ItemsTest.pm
 maps.txt
 NetworkTest.pm
 ObjectListTest.pm
@@ -20,7 +21,6 @@ PluginsHookTest.pm
 portals.txt
 resnametable.txt
 RijndaelTest.pm
-SConscript
 server.pl
 SetTest.pm
 SKILL_id_handle.txt
