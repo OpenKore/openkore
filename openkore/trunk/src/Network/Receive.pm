@@ -1823,15 +1823,15 @@ sub login_pin_new_code_result {
 
 sub actor_status_active {
 	my ($self, $args) = @_;
-	return unless Network::Receive::changeToInGameState();
-	my ($type, $ID, $flag, $tick, $unknown1, $unknown2, $unknown3, $unknown4) = @{$args}{qw(type ID flag tick unknown1 unknown2 unknown3 unknown4)};
+	return unless changeToInGameState();
+	my ($type, $ID, $tick, $unknown1, $unknown2, $unknown3, $unknown4) = @{$args}{qw(type ID tick unknown1 unknown2 unknown3 unknown4)};
+	my $flag = (exists $args->{flag}) ? $args->{flag} : 1;
 	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
 	$cart{type} = $unknown1 if ($type == 673 && defined $unknown1 && ($ID eq $accountID)); # for Cart active
 	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
 #	($args->{actor} = Actor::get($ID))->setStatus($status, 1, $tick == 9999 ? undef : $tick, $args->{unknown1}); # need test for '08FF'
 	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick == 9999 ? undef : $tick);
 }
-
 
 #099B
 sub map_property3 {
