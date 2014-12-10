@@ -8,15 +8,14 @@ msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-10 16:34-0600\n"
-"PO-Revision-Date: 2010-11-29 20:09+0100\n"
-"Last-Translator: manticora <the-manticora@yandex.ru>\n"
+"PO-Revision-Date: 2014-12-02 01:53-0000\n"
+"Last-Translator: \n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
-"Language: \n"
+"Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Traditional Chinese\n"
-"X-Poedit-Country: TAIWAN\n"
+"X-Generator: Poedit 1.6.5\n"
 
 #: ../../openkore.pl:129
 #, perl-format
@@ -939,787 +938,748 @@ msgstr "請按 ENTER 以繼續...\n"
 
 #: ../Interface/Wx.pm:250 ../Interface.pm:117
 msgid "Query"
-msgstr ""
+msgstr "詢問"
 
 #: ../Interface/Wx.pm:285
 msgid "Menu"
-msgstr ""
+msgstr "菜單"
 
 #: ../Interface/Wx.pm:342
 msgid "Fatal error"
-msgstr ""
+msgstr "嚴重錯誤"
 
 #: ../Interface/Wx.pm:342
 msgid "Error"
-msgstr ""
+msgstr "錯誤"
 
 #: ../Interface/Wx.pm:411 ../Interface/Wx.pm:739
 msgid "Console"
-msgstr ""
+msgstr "Console"
 
 #: ../Interface/Wx.pm:432
 msgid "&Pause Botting"
-msgstr ""
+msgstr "停止掛機"
 
 #: ../Interface/Wx.pm:432
 msgid "Pause all automated botting activity"
-msgstr ""
+msgstr "暫停所有自動掛機"
 
 #: ../Interface/Wx.pm:433
 msgid "&Manual Botting"
-msgstr ""
+msgstr "手動掛機"
 
 #: ../Interface/Wx.pm:433
 msgid "Pause automated botting and allow manual control"
-msgstr ""
+msgstr "暫停自動掛機並允許手動控制"
 
 #: ../Interface/Wx.pm:434
 msgid "&Automatic Botting"
-msgstr ""
+msgstr "自動掛機"
 
 #: ../Interface/Wx.pm:434
 msgid "Resume all automated botting activity"
-msgstr ""
+msgstr "恢復所有自動掛機活動"
 
 #: ../Interface/Wx.pm:436
 msgid "Copy Last 100 Lines of Text"
-msgstr ""
+msgstr "複製最後100行"
 
 #: ../Interface/Wx.pm:437
 msgid "Minimize to &Tray"
-msgstr ""
+msgstr "最小化到托盤"
 
 #: ../Interface/Wx.pm:437
 msgid "Minimize to a small task bar tray icon"
-msgstr ""
+msgstr "最小化到一個小任務欄"
 
 #: ../Interface/Wx.pm:439
 msgid "Respawn"
-msgstr ""
+msgstr "復活"
 
 #: ../Interface/Wx.pm:439
-#, fuzzy
 msgid "Teleport to save point"
-msgstr "正在瞬移以避免傳點\n"
+msgstr "正在瞬移以避免傳點"
 
 #: ../Interface/Wx.pm:440
 msgid "&Relog"
-msgstr ""
+msgstr "重新登錄"
 
 #: ../Interface/Wx.pm:440
-#, fuzzy
 msgid "Disconnect and reconnect"
-msgstr "因死亡而自動斷線!\n"
+msgstr "斷線並重新連線"
 
 #: ../Interface/Wx.pm:441
-#, fuzzy
 msgid "&Character Select"
-msgstr "角色選擇"
+msgstr "返回角色選擇"
 
 #: ../Interface/Wx.pm:444
 #, fuzzy
 msgid "Exit to the character selection screen"
-msgstr "角色選擇"
+msgstr "退出到角色選擇"
 
 #: ../Interface/Wx.pm:445
 msgid "E&xit"
-msgstr ""
+msgstr "離開"
 
 #: ../Interface/Wx.pm:445
 #, fuzzy
 msgid "Exit this program"
-msgstr "請按 ENTER 以結束本程式.\n"
+msgstr "結束本程式"
 
 #: ../Interface/Wx.pm:446
 msgid "P&rogram"
-msgstr ""
+msgstr "程式"
 
 #: ../Interface/Wx.pm:450
 msgid "&Status"
-msgstr ""
+msgstr "狀態"
 
 #: ../Interface/Wx.pm:451
 msgid "S&tatistics"
-msgstr ""
+msgstr "統計"
 
 #: ../Interface/Wx.pm:452
-#, fuzzy
 msgid "&Inventory"
-msgstr "物品欄是空的\n"
+msgstr "物品"
 
 #: ../Interface/Wx.pm:453
 msgid "S&kills"
-msgstr ""
+msgstr "技能"
 
 #: ../Interface/Wx.pm:455
 msgid "&Players"
-msgstr ""
+msgstr "玩家"
 
 #: ../Interface/Wx.pm:456
 msgid "&Monsters"
-msgstr ""
+msgstr "怪物"
 
 #: ../Interface/Wx.pm:457
 msgid "&NPCs"
-msgstr ""
+msgstr "NPC"
 
 #: ../Interface/Wx.pm:459 ../Interface/Wx.pm:494
 msgid "&Experience Report"
-msgstr ""
+msgstr "經驗值報告"
 
 #: ../Interface/Wx.pm:460 ../Interface/Wx.pm:495
 msgid "Report"
-msgstr ""
+msgstr "報告"
 
 #: ../Interface/Wx.pm:462
 msgid "&Item Change Report"
-msgstr ""
+msgstr "道具變更報告"
 
 #: ../Interface/Wx.pm:463
 msgid "&Monsiter Kill Report"
-msgstr ""
+msgstr "殺敵報告"
 
 #: ../Interface/Wx.pm:464
 msgid "I&nfo"
-msgstr ""
+msgstr "資訊"
 
 #: ../Interface/Wx.pm:469
 msgid "&Map"
-msgstr ""
+msgstr "地圖"
 
 #: ../Interface/Wx.pm:469
 msgid "Show where you are on the current map"
-msgstr ""
+msgstr "顯示您在當前地圖上的位置"
 
 #: ../Interface/Wx.pm:472
 msgid "&Info Bar"
-msgstr ""
+msgstr "資訊欄"
 
 #: ../Interface/Wx.pm:472
 msgid "Show or hide the information bar."
-msgstr ""
+msgstr "顯示或隱藏資訊欄。"
 
 #: ../Interface/Wx.pm:475
 msgid "Chat &Log"
-msgstr ""
+msgstr "聊天和記錄"
 
 #: ../Interface/Wx.pm:475
 msgid "Show or hide the chat log."
-msgstr ""
+msgstr "顯示或隱藏的聊天記錄。"
 
 #: ../Interface/Wx.pm:477 ../Interface/Wx.pm:1225
-#, fuzzy
 msgid "Status"
-msgstr "狀態: %s \n"
+msgstr "狀態"
 
 #: ../Interface/Wx.pm:478 ../Interface/Wx.pm:1232
-#, fuzzy
 msgid "Homunculus"
-msgstr "您的人工生命體已死亡!\n"
+msgstr "人工生命體"
 
 #: ../Interface/Wx.pm:479 ../Interface/Wx.pm:1239
 msgid "Mercenary"
-msgstr ""
+msgstr "僱傭兵"
 
 #: ../Interface/Wx.pm:480 ../Interface/Wx.pm:1246
 msgid "Pet"
-msgstr ""
+msgstr "寵物"
 
 #: ../Interface/Wx.pm:484 ../Interface/Wx.pm:1253
-#, fuzzy
 msgid "Inventory"
-msgstr "物品欄是空的\n"
+msgstr "物品欄"
 
 #: ../Interface/Wx.pm:485 ../Interface/Wx.pm:1260
 msgid "Cart"
-msgstr ""
+msgstr "手推車"
 
 #: ../Interface/Wx.pm:486 ../Interface/Wx.pm:1267
-#, fuzzy
 msgid "Storage"
-msgstr "倉庫資訊已記錄\n"
+msgstr "倉庫"
 
 #: ../Interface/Wx.pm:490 ../Interface/Wx.pm:1274
 msgid "Emotions"
-msgstr ""
+msgstr "表情"
 
 #: ../Interface/Wx.pm:500
 msgid "&Font..."
-msgstr ""
+msgstr "字體"
 
 #: ../Interface/Wx.pm:500
 msgid "Change console font"
-msgstr ""
+msgstr "修改字體"
 
 #: ../Interface/Wx.pm:501
 msgid "Clear Console"
-msgstr ""
+msgstr "清除Console介面"
 
 #: ../Interface/Wx.pm:501
 msgid "Clear content of console"
-msgstr ""
+msgstr "清除Console內容"
 
 #: ../Interface/Wx.pm:502
 msgid "Clear Chat History"
-msgstr ""
+msgstr "清除聊天記錄"
 
 #: ../Interface/Wx.pm:502
 msgid "Clear chat history"
-msgstr ""
+msgstr "清除聊天記錄"
 
 #: ../Interface/Wx.pm:503
-#, fuzzy
 msgid "Clear Item History"
-msgstr ""
-"\n"
-"技能點數: %d\n"
+msgstr "清除物品記錄"
 
 #: ../Interface/Wx.pm:503
 msgid "Clear item history"
-msgstr ""
+msgstr "清除物品記錄"
 
 #: ../Interface/Wx.pm:505
 msgid "&View"
-msgstr ""
+msgstr "查看"
 
 #: ../Interface/Wx.pm:509
 msgid "&Merchant"
-msgstr ""
+msgstr "交易"
 
 #: ../Interface/Wx.pm:510
 msgid "Accept deal"
-msgstr ""
+msgstr "接受交易"
 
 #: ../Interface/Wx.pm:510
 msgid "Accept/Finalise current deal"
-msgstr ""
+msgstr "接受/完成當前交易"
 
 #: ../Interface/Wx.pm:511
 msgid "Reject deal"
-msgstr ""
+msgstr "拒絕交易"
 
 #: ../Interface/Wx.pm:511
 msgid "Reject current deal"
-msgstr ""
+msgstr "拒絕當前交易"
 
 #: ../Interface/Wx.pm:512
-#, fuzzy
 msgid "Deal information"
-msgstr "正在獲得公會資訊...\n"
+msgstr "交易訊息"
 
 #: ../Interface/Wx.pm:512
 msgid "View the information of current deal"
-msgstr ""
+msgstr "查看當前交易的訊息"
 
 #: ../Interface/Wx.pm:515
 msgid "Ignore all deals (0)"
-msgstr ""
+msgstr "忽略所有交易 (0)"
 
 #: ../Interface/Wx.pm:515
 msgid "Ignore all incoming deal requests"
-msgstr ""
+msgstr "忽略所有交易邀請"
 
 #: ../Interface/Wx.pm:516
 msgid "Reject all deals (1)"
-msgstr ""
+msgstr "拒絕所有交易邀請 (1)"
 
 #: ../Interface/Wx.pm:516
 msgid "Reject all incoming deal requests"
-msgstr ""
+msgstr "拒絕所有交易邀請"
 
 #: ../Interface/Wx.pm:517
 msgid "Accept all deals (2)"
-msgstr ""
+msgstr "接受所有交易邀請 (2)"
 
 #: ../Interface/Wx.pm:517
-#, fuzzy
 msgid "Accept all incoming deal requests"
-msgstr "自動接受組隊要求\n"
+msgstr "接受所有組隊邀請"
 
 #: ../Interface/Wx.pm:520
 msgid "Open shop"
-msgstr ""
+msgstr "開啟賣物商店"
 
 #: ../Interface/Wx.pm:521
 msgid "Close shop"
-msgstr ""
+msgstr "關閉賣物商店"
 
 #: ../Interface/Wx.pm:522
 msgid "Current shop status"
-msgstr ""
+msgstr "目前商店狀態"
 
 #: ../Interface/Wx.pm:522
 msgid "View your shop status"
-msgstr ""
+msgstr "查看您的商店狀態"
 
 #: ../Interface/Wx.pm:523
 msgid "Nearby shop list"
-msgstr ""
+msgstr "附近的商店名單"
 
 #: ../Interface/Wx.pm:523
 msgid "View shops nearby"
-msgstr ""
+msgstr "查看附近的商店"
 
 #: ../Interface/Wx.pm:526
 msgid "Reload shop.txt"
-msgstr ""
+msgstr "重新載入 shop.txt"
 
 #: ../Interface/Wx.pm:527
 msgid "Test your shop"
-msgstr ""
+msgstr "測試賣物商店"
 
 #: ../Interface/Wx.pm:532
 msgid "&Command"
-msgstr ""
+msgstr "指令"
 
 #: ../Interface/Wx.pm:533
 msgid "Teleport"
-msgstr ""
+msgstr "瞬移"
 
 #: ../Interface/Wx.pm:534
 msgid "Memo position"
-msgstr ""
+msgstr "記憶當前位置"
 
 #: ../Interface/Wx.pm:534
 msgid "Memorise the current coordinate for teleport"
-msgstr ""
+msgstr "記憶當前坐標"
 
 #: ../Interface/Wx.pm:536
 msgid "Sit down"
-msgstr ""
+msgstr "坐下"
 
 #: ../Interface/Wx.pm:537
 msgid "Stand up"
-msgstr ""
+msgstr "站起"
 
 #: ../Interface/Wx.pm:539
-#, fuzzy
 msgid "Auto storage"
-msgstr "倉庫資訊已記錄\n"
+msgstr "自動回倉"
 
 #: ../Interface/Wx.pm:540
 msgid "Auto buying"
-msgstr ""
+msgstr "自動買物"
 
 #: ../Interface/Wx.pm:541
 msgid "Auto selling"
-msgstr ""
+msgstr "自動賣物"
 
 #: ../Interface/Wx.pm:546
-#, fuzzy
 msgid "Party information"
-msgstr "正在獲得公會資訊...\n"
+msgstr "隊伍訊息"
 
 #: ../Interface/Wx.pm:548
 msgid "Disable party share (0)"
-msgstr ""
+msgstr "停止隊伍經驗均分 (0)"
 
 #: ../Interface/Wx.pm:548
 msgid "Disable sharing party EXP"
-msgstr ""
+msgstr "停止隊伍經驗均分"
 
 #: ../Interface/Wx.pm:549
 msgid "Enable party share (1)"
-msgstr ""
+msgstr "開啟隊伍經驗均分 (1)"
 
 #: ../Interface/Wx.pm:549
 msgid "Enable sharing party EXP"
-msgstr ""
+msgstr "開啟隊伍經驗均分"
 
 #: ../Interface/Wx.pm:551
-#, fuzzy
 msgid "Auto ignore party request (0)"
-msgstr "自動拒絕組隊要求\n"
+msgstr "自動拒絕組隊請求 (0)"
 
 #: ../Interface/Wx.pm:551
-#, fuzzy
 msgid "Ignore all incoming party request"
-msgstr "自動拒絕組隊要求\n"
+msgstr "自動拒絕所有的組隊請求"
 
 #: ../Interface/Wx.pm:552
-#, fuzzy
 msgid "Auto reject party request (1)"
-msgstr "自動接受組隊要求\n"
+msgstr "自動拒絕組隊請求 (1)"
 
 #: ../Interface/Wx.pm:552
-#, fuzzy
 msgid "Reject all incoming party request"
-msgstr "自動接受組隊要求\n"
+msgstr "自動拒絕所有組隊請求"
 
 #: ../Interface/Wx.pm:553
-#, fuzzy
 msgid "Auto accept party request (2)"
-msgstr "自動接受組隊要求\n"
+msgstr "自動接受組隊請求 (2)"
 
 #: ../Interface/Wx.pm:553
-#, fuzzy
 msgid "Accept all incoming party request"
-msgstr "自動接受組隊要求\n"
+msgstr "自動接受所有組隊請求"
 
 #: ../Interface/Wx.pm:555
-#, fuzzy
 msgid "Accept party request"
-msgstr "自動接受組隊要求\n"
+msgstr "接受組隊請求"
 
 #: ../Interface/Wx.pm:555
-#, fuzzy
 msgid "Accept incoming party request"
-msgstr "自動接受組隊要求\n"
+msgstr "接受組隊請求"
 
 #: ../Interface/Wx.pm:556
-#, fuzzy
 msgid "Reject party request"
-msgstr "自動接受組隊要求\n"
+msgstr "拒絕組隊請求"
 
 #: ../Interface/Wx.pm:556
-#, fuzzy
 msgid "Reject incoming party request"
-msgstr "自動拒絕組隊要求\n"
+msgstr "拒絕組隊要求"
 
 #: ../Interface/Wx.pm:557
 msgid "Leave party"
-msgstr ""
+msgstr "離開隊伍"
 
 #: ../Interface/Wx.pm:557
 msgid "Leave the current party"
-msgstr ""
+msgstr "離開當前隊伍"
 
 #: ../Interface/Wx.pm:558
 msgid "&Party"
-msgstr ""
+msgstr "隊伍"
 
 #: ../Interface/Wx.pm:558
-#, fuzzy
 msgid "Party"
-msgstr "[隊伍] %s\n"
+msgstr "隊伍"
 
 #: ../Interface/Wx.pm:562
 msgid "Friend list"
-msgstr ""
+msgstr "好友列表"
 
 #: ../Interface/Wx.pm:564
-#, fuzzy
 msgid "Auto accept friend request"
-msgstr "自動接受組隊要求\n"
+msgstr "自動接受好友請求"
 
 #: ../Interface/Wx.pm:565
-#, fuzzy
 msgid "Auto reject friend request"
-msgstr "拒絕從 %s 傳過來的成為好友的邀請\n"
+msgstr "自動拒絕好友請求"
 
 #: ../Interface/Wx.pm:566
 msgid "&Friend"
-msgstr ""
+msgstr "好友"
 
 #: ../Interface/Wx.pm:566
 msgid "Friend"
-msgstr ""
+msgstr "好友"
 
 #: ../Interface/Wx.pm:570
-#, fuzzy
 msgid "Guild information"
-msgstr "正在獲得公會資訊...\n"
+msgstr "公會資訊"
 
 #: ../Interface/Wx.pm:571
-#, fuzzy
 msgid "Guild member"
-msgstr "公會會員 %s 已登入了.\n"
+msgstr "公會會員"
 
 #: ../Interface/Wx.pm:573
-#, fuzzy
 msgid "Auto accept guild request"
-msgstr "您接受了加入公會的邀請.\n"
+msgstr "自動接受公會邀請"
 
 #: ../Interface/Wx.pm:574
-#, fuzzy
 msgid "Auto reject guild request"
-msgstr "您拒絕了加入公會的邀請.\n"
+msgstr "自動拒絕入公會邀請"
 
 #: ../Interface/Wx.pm:575
 msgid "&Guild"
-msgstr ""
+msgstr "公會"
 
 #: ../Interface/Wx.pm:575
-#, fuzzy
 msgid "Guild"
-msgstr "[公會] %s\n"
+msgstr "公會"
 
 #: ../Interface/Wx.pm:579
 msgid "&Alias"
-msgstr ""
+msgstr "自訂義"
 
 #: ../Interface/Wx.pm:579
 msgid "Alias"
-msgstr ""
+msgstr "自訂義"
 
 #: ../Interface/Wx.pm:584
 msgid "Reload config.txt"
-msgstr ""
+msgstr "重新載入 config.txt"
 
 #: ../Interface/Wx.pm:585
 msgid "Reload All Configs"
-msgstr ""
+msgstr "重新載入所有設定檔"
 
 #: ../Interface/Wx.pm:587
 msgid "Close All PM"
-msgstr ""
+msgstr "關閉所有密頻"
 
 #: ../Interface/Wx.pm:587
 msgid "Ignore all PM from all people"
-msgstr ""
+msgstr "忽略所有密頻"
 
 #: ../Interface/Wx.pm:588
 msgid "Open All PM"
-msgstr ""
+msgstr "打開所有密頻"
 
 #: ../Interface/Wx.pm:588
 msgid "Accept all PM from all people"
-msgstr ""
+msgstr "接受所有密頻"
 
 #: ../Interface/Wx.pm:590
 msgid "Turn off random routing"
-msgstr ""
+msgstr "關閉隨機移動"
 
 #: ../Interface/Wx.pm:590
 msgid "Not randomly walking in the map"
-msgstr ""
+msgstr "不在此地圖內隨機移動"
 
 #: ../Interface/Wx.pm:591
 msgid "Turn on random routing (1)"
-msgstr ""
+msgstr "開啟隨機移動 (1)"
 
 #: ../Interface/Wx.pm:591
 msgid "Randomly walking in the map"
-msgstr ""
+msgstr "在地圖內隨機移動"
 
 #: ../Interface/Wx.pm:592
 msgid "Turn on random routing (2)"
-msgstr ""
+msgstr "開啟隨機移動 (2)"
 
 #: ../Interface/Wx.pm:592
 msgid "Randomly walking in the map without walking into portals"
-msgstr ""
+msgstr "在地圖上隨機移動並不走進任何傳送點"
 
 #: ../Interface/Wx.pm:594
 msgid "Turn off auto attacking"
-msgstr ""
+msgstr "關閉自動攻擊"
 
 #: ../Interface/Wx.pm:594
 msgid "Not attacking no matter being attacked"
-msgstr ""
+msgstr "即使被攻擊亦不進行攻擊"
 
 #: ../Interface/Wx.pm:595
-#, fuzzy
 msgid "Turn on auto attacking (1)"
-msgstr "正要攻擊: %s\n"
+msgstr "開啟自動攻擊 (1)"
 
 #: ../Interface/Wx.pm:595
 msgid "Attack the enemy when the enemy is attacking you"
-msgstr ""
+msgstr "當敵人攻擊時進行反擊"
 
 #: ../Interface/Wx.pm:596
-#, fuzzy
 msgid "Turn on auto attacking (2)"
-msgstr "正要攻擊: %s\n"
+msgstr "開啟自動攻擊 (2)"
 
 #: ../Interface/Wx.pm:596
 msgid "Auto attack enemies nearby"
-msgstr ""
+msgstr "自動攻擊附近的敵人"
 
 #: ../Interface/Wx.pm:598
 msgid "Turn off item picking"
-msgstr ""
+msgstr "關閉撿物"
 
 #: ../Interface/Wx.pm:598
 msgid "Not picking any items"
-msgstr ""
+msgstr "不撿取任何物品"
 
 #: ../Interface/Wx.pm:599
 msgid "Turn on item picking (1)"
-msgstr ""
+msgstr "開啟撿物 (1)"
 
 #: ../Interface/Wx.pm:599
 msgid "Picking items after killing all the enemies"
-msgstr ""
+msgstr "殺死所有敵人後才開始撿物"
 
 #: ../Interface/Wx.pm:600
 msgid "Turn on item picking (2)"
-msgstr ""
+msgstr "開啟撿物 (2)"
 
 #: ../Interface/Wx.pm:600
 msgid "Picking items each time killing an enemy"
-msgstr ""
+msgstr "每殺死一個敵人時撿取物品"
 
 #: ../Interface/Wx.pm:602
 msgid "&Advanced..."
-msgstr ""
+msgstr "高級"
 
 #: ../Interface/Wx.pm:602
 msgid "Edit advanced configuration options."
-msgstr ""
+msgstr "編輯高級設定。"
 
 #: ../Interface/Wx.pm:603
 msgid "&Settings"
-msgstr ""
+msgstr "設定"
 
 #: ../Interface/Wx.pm:608
 msgid "&Manual"
-msgstr ""
+msgstr "說明"
 
 #: ../Interface/Wx.pm:608
 msgid "Read the manual"
-msgstr ""
+msgstr "閱讀手冊"
 
 #: ../Interface/Wx.pm:609
 msgid "&Forum"
-msgstr ""
+msgstr "論壇"
 
 #: ../Interface/Wx.pm:609
 msgid "Visit the forum"
-msgstr ""
+msgstr "瀏覽論壇"
 
 #: ../Interface/Wx.pm:612
 msgid "&Help"
-msgstr ""
+msgstr "說明"
 
 #: ../Interface/Wx.pm:636
 msgid "Use Wx NPC Talk"
-msgstr ""
+msgstr "使用 Wx NPC對話"
 
 #: ../Interface/Wx.pm:637
 msgid "Open a dialog when talking with NPCs"
-msgstr ""
+msgstr "與NPC對話時打開對話框"
 
 #: ../Interface/Wx.pm:641
 msgid "Use Wx captcha"
-msgstr ""
+msgstr "使用Wx 驗證碼"
 
 #: ../Interface/Wx.pm:642
 msgid "Open a dialog when receiving a captcha"
-msgstr ""
+msgstr "收到驗證碼時打開對話框"
 
 #: ../Interface/Wx.pm:646
 msgid "Show route on map"
-msgstr ""
+msgstr "在地圖上顯示路線"
 
 #: ../Interface/Wx.pm:647
 msgid "Show route solution steps"
-msgstr ""
+msgstr "顯示移動路線"
 
 #: ../Interface/Wx.pm:660
 msgid "HP: "
-msgstr ""
+msgstr "HP："
 
 #: ../Interface/Wx.pm:670
 msgid "SP: "
-msgstr ""
+msgstr "SP："
 
 #: ../Interface/Wx.pm:679 ../Commands.pm:2036
 msgid "Exp: "
-msgstr ""
+msgstr "經驗值："
 
 #: ../Interface/Wx.pm:692
 msgid "Weight: "
-msgstr ""
+msgstr "重量："
 
 #: ../Interface/Wx.pm:725
 msgid "Command"
-msgstr ""
+msgstr "指令"
 
 #: ../Interface/Wx.pm:725
 msgid "Public chat"
-msgstr ""
+msgstr "公共聊天"
 
 #: ../Interface/Wx.pm:725
 msgid "Party chat"
-msgstr ""
+msgstr "隊伍聊天"
 
 #: ../Interface/Wx.pm:725
 msgid "Guild chat"
-msgstr ""
+msgstr "公會聊天"
 
 #: ../Interface/Wx.pm:743 ../Interface/Wx.pm:1024 ../Interface/Wx.pm:1178
 #: ../Interface/Wx.pm:1180 ../Interface/Wx.pm:1181 ../Interface/Wx.pm:1192
 #: ../Interface/Wx.pm:1367
 msgid "Chat Log"
-msgstr ""
+msgstr "聊天記錄"
 
 #: ../Interface/Wx.pm:766
 msgid "Map"
-msgstr ""
+msgstr "地圖"
 
 #: ../Interface/Wx.pm:859
-#, fuzzy, perl-format
+#, perl-format
 msgid "Loading files... %.0f%%"
-msgstr "正在載入 %s...\n"
+msgstr "正在載入檔案 %.0f%%"
 
 #: ../Interface/Wx.pm:861
-#, fuzzy
 msgid "Initializing..."
-msgstr "結束中...\n"
+msgstr "初始化中..."
 
 #: ../Interface/Wx.pm:863
-#, fuzzy
 msgid "Not connected"
-msgstr "%s尚未連線 - %s"
+msgstr "尚未連線"
 
 #: ../Interface/Wx.pm:865
-#, fuzzy
 msgid "Connecting..."
-msgstr "連線中 (%s:%s)... "
+msgstr "連線中"
 
 #: ../Interface/Wx.pm:888
 msgid "Paused"
-msgstr ""
+msgstr "已暫停"
 
 #: ../Interface/Wx.pm:1003
-#, fuzzy
 msgid "You're not logged in.\n"
-msgstr "公會會員 %s 已登入了.\n"
+msgstr "你尚未登入。\n"
 
 #: ../Interface/Wx.pm:1102 ../Interface/Wx.pm:1103 ../Interface/Wx.pm:1107
 #: ../Interface/Wx.pm:1158
 msgid "Advanced Configuration"
-msgstr ""
+msgstr "高級設定"
 
 #: ../Interface/Wx.pm:1116
 msgid "All"
-msgstr ""
+msgstr "全部"
 
 #: ../Interface/Wx.pm:1139
 msgid "&Revert"
-msgstr ""
+msgstr "復原"
 
 #: ../Interface/Wx.pm:1140
 msgid "Revert settings to before you opened the selected category"
-msgstr ""
+msgstr "恢復之前的類別設定"
 
 #: ../Interface/Wx.pm:1153
 msgid "&Close"
-msgstr ""
+msgstr "關閉"
 
 #: ../Interface/Wx.pm:1154
 msgid "Close this panel/dialog"
-msgstr ""
+msgstr "關閉面板/對話"
 
 #: ../Interface/Wx.pm:1290
 msgid "NPC Talk"
-msgstr ""
+msgstr "NPC對話"
 
 #: ../Interface/Wx.pm:1324
-#, fuzzy, perl-format
+#, perl-format
 msgid "Taking item %s\n"
 msgstr "與 %s 結束對話.\n"
 
 #: ../Interface/Wx.pm:1395
-#, fuzzy, perl-format
+#, perl-format
 msgid "Mouse over: %s, %s"
-msgstr "您的座標: %s, %s\n"
+msgstr "您的座標: %s, %s"
 
 #: ../Interface/Wx.pm:1399
 #, perl-format
 msgid "Portal at %s %s  -  Destination: %s, at %s %s"
-msgstr ""
+msgstr "門戶網站%s %s -目的地： %s ，在%s %s"
 
 #: ../Interface/Wx.pm:1404 ../Interface/Wx.pm:1414
 #, fuzzy, perl-format
@@ -1737,6 +1697,9 @@ msgid ""
 "Unable to walk while inside a chat room!\n"
 "Use the command: chat leave\n"
 msgstr ""
+"在功能錯誤'移動'（移機）\n"
+"無法走路，而裡面聊天室\n"
+"用命令：聊天休假\n"
 
 #: ../Interface/Wx.pm:1436 ../Commands.pm:3230
 msgid ""
@@ -1744,6 +1707,9 @@ msgid ""
 "Unable to walk while the shop is open!\n"
 "Use the command: closeshop\n"
 msgstr ""
+"在功能錯誤'移動'（移機）\n"
+"無法走路，而店是開\n"
+"使用命令：！closeshop \n"
 
 #: ../Interface/Wx.pm:1449
 #, fuzzy, perl-format
@@ -5125,7 +5091,7 @@ msgstr "*** 您被禁言了 %s 分鐘, 自動斷線! ***\n"
 #: ../Network/DirectConnection.pm:471
 #, fuzzy, perl-format
 msgid "Timeout on Account Server, reconnecting. Wait %s seconds...\n"
-msgstr "角色伺服器逾時, 重新連線中...\n"
+msgstr "帳號伺服器逾時, 重新連線中...\n"
 
 #: ../Network/DirectConnection.pm:494
 msgid "Connecting to Character Server...\n"
@@ -5236,8 +5202,8 @@ msgstr "主伺服器"
 #, fuzzy
 msgid "#   Name                  Users  IP              Port\n"
 msgstr ""
-"%s\n"
-"名稱                                      數量    價格 \n"
+"--------- 伺服器 -----------\n"
+"#   名稱                  使用者 IP              Port\n"
 
 #: ../Network/Receive.pm:394
 #, fuzzy, perl-format
@@ -6164,9 +6130,8 @@ msgid "Initiating auto-buy.\n"
 msgstr "自動購買初始化.\n"
 
 #: ../Commands.pm:663
-#, fuzzy
 msgid " Items to sell (simulation) "
-msgstr "----------------- 物品至手推車 -----------------\n"
+msgstr ""
 
 #: ../Commands.pm:664
 msgid "Amount  Item Name\n"
@@ -6284,11 +6249,8 @@ msgstr ""
 "<item number> - 卡片於物品欄中的代碼. 請輸入 'i' 以獲得代碼.\n"
 
 #: ../Commands.pm:821
-#, fuzzy
 msgid " Card List "
 msgstr ""
-"\n"
-"技能點數: %d\n"
 
 #: ../Commands.pm:844
 msgid ""
@@ -6311,8 +6273,9 @@ msgid "Cart inventory is not available.\n"
 msgstr "手推車物品欄無效.\n"
 
 #: ../Commands.pm:863
+#, fuzzy
 msgid " Cart "
-msgstr ""
+msgstr "手推車"
 
 #: ../Commands.pm:864
 msgid "#  Name\n"
@@ -6660,8 +6623,9 @@ msgstr ""
 "使用方法: chist [<要顯示的行數>]\n"
 
 #: ../Commands.pm:1293
+#, fuzzy
 msgid " Chat History "
-msgstr ""
+msgstr "清除聊天記錄"
 
 #: ../Commands.pm:1302 ../Commands.pm:2869
 #, perl-format
@@ -6846,8 +6810,9 @@ msgid "There is no deal list - You are not in a deal\n"
 msgstr "無交易清單 - 您並沒有在交易\n"
 
 #: ../Commands.pm:1502
+#, fuzzy
 msgid " Current Deal "
-msgstr ""
+msgstr "拒絕當前交易"
 
 #: ../Commands.pm:1506 ../Commands.pm:1509
 msgid " - Finalized"
@@ -6858,8 +6823,9 @@ msgid "zeny: @<<<<<<<<<<<<<<<<<<<<<<<   zeny: @<<<<<<<<<<<<<<<<<<<<<<<"
 msgstr ""
 
 #: ../Commands.pm:1580
+#, fuzzy
 msgid " Debug information "
-msgstr ""
+msgstr "交易訊息"
 
 #: ../Commands.pm:1581
 #, fuzzy, perl-format, perl-brace-format
@@ -6936,8 +6902,9 @@ msgid "Exp report not yet ready\n"
 msgstr "經驗值報告尚未準備好\n"
 
 #: ../Commands.pm:1801
+#, fuzzy
 msgid " Exp Report "
-msgstr ""
+msgstr "經驗值報告"
 
 #: ../Commands.pm:1802
 #, fuzzy, perl-format
@@ -6970,8 +6937,9 @@ msgstr ""
 "位元組接收  : %s\n"
 
 #: ../Commands.pm:1830
+#, fuzzy
 msgid " Monster Killed Count "
-msgstr ""
+msgstr "殺敵報告"
 
 #: ../Commands.pm:1831
 #, fuzzy
@@ -6986,8 +6954,9 @@ msgid "Total number of killed monsters: %s\n"
 msgstr "總共殺死的魔物數量: %s\n"
 
 #: ../Commands.pm:1848
+#, fuzzy
 msgid " Item Change Count "
-msgstr ""
+msgstr "道具變更報告"
 
 #: ../Commands.pm:1849
 #, fuzzy
@@ -7038,15 +7007,16 @@ msgstr ""
 "玩家 %s 不是不可見就是不在線上隊伍中.\n"
 
 #: ../Commands.pm:1922
+#, fuzzy
 msgid " Friends "
-msgstr ""
+msgstr "好友"
 
 #: ../Commands.pm:1923
 #, fuzzy
 msgid "#   Name                      Online\n"
 msgstr ""
-"%s\n"
-"名稱                                      數量    價格 \n"
+"-------------- 好友 ----------------\n"
+"#   名字                      是否上線\n"
 
 #: ../Commands.pm:1940
 #, perl-format
@@ -7254,16 +7224,14 @@ msgstr ""
 #: ../Commands.pm:2212
 #, fuzzy
 msgid " Slave Skill List "
-msgstr ""
-"\n"
-"技能點數: %d\n"
+msgstr "目標已死亡\n"
 
 #: ../Commands.pm:2213
 #, fuzzy
 msgid "   # Skill Name                     Lv      SP\n"
 msgstr ""
-"%s\n"
-"名稱                                      數量    價格 \n"
+"-----------技能清單------------\n"
+"   # 技能名稱                       Lv      SP\n"
 
 #: ../Commands.pm:2221 ../Commands.pm:4275
 #, perl-format
@@ -7315,9 +7283,7 @@ msgstr ""
 #: ../Commands.pm:2249
 #, fuzzy, perl-format
 msgid "Skill: %s"
-msgstr ""
-"\n"
-"技能點數: %d\n"
+msgstr "技能"
 
 #: ../Commands.pm:2255
 #, fuzzy, perl-format
@@ -7429,7 +7395,7 @@ msgstr "請再輸入 'guild %s' 一次以查看資訊.\n"
 #: ../Commands.pm:2552
 #, fuzzy
 msgid " Guild Information "
-msgstr "正在獲得公會資訊...\n"
+msgstr "公會資訊"
 
 #: ../Commands.pm:2553
 #, perl-format
@@ -7460,7 +7426,7 @@ msgstr "無有效公會會員資訊.\n"
 #: ../Commands.pm:2577
 #, fuzzy
 msgid " Guild  Member "
-msgstr "公會會員 %s 已登入了.\n"
+msgstr "公會會員"
 
 #: ../Commands.pm:2578
 #, fuzzy
@@ -7646,8 +7612,9 @@ msgstr ""
 "使用方法: ihist [<number of entries #>]\n"
 
 #: ../Commands.pm:2859
+#, fuzzy
 msgid " Item History "
-msgstr ""
+msgstr "清除物品記錄"
 
 #: ../Commands.pm:2905
 msgid "Inventory is empty\n"
@@ -7660,8 +7627,9 @@ msgid "Not Identified"
 msgstr "尚未鑑定"
 
 #: ../Commands.pm:2940
+#, fuzzy
 msgid " Inventory "
-msgstr "物品欄是空的\n"
+msgstr "物品欄"
 
 #. Translation Comment: List of equipment items worn by character
 #: ../Commands.pm:2944
@@ -7709,16 +7677,14 @@ msgstr ""
 #: ../Commands.pm:3022
 #, fuzzy
 msgid " Item List "
-msgstr ""
-"\n"
-"技能點數: %d\n"
+msgstr "清除物品記錄"
 
 #: ../Commands.pm:3023
 #, fuzzy
 msgid "   # Name                           Coord\n"
 msgstr ""
-"%s\n"
-"名稱                                      數量    價格 \n"
+"-----------物品清單------------\n"
+"   # 名稱                            座標\n"
 
 #: ../Commands.pm:3037
 msgid "Item log cleared.\n"
@@ -7759,8 +7725,9 @@ msgstr ""
 "使用方法: %s [距離]\n"
 
 #: ../Commands.pm:3137
+#, fuzzy
 msgid " Monster Info "
-msgstr ""
+msgstr "怪物"
 
 #: ../Commands.pm:3138
 #, perl-format
@@ -7775,8 +7742,9 @@ msgid "Monster \"%s\" does not exist.\n"
 msgstr "玩家 \"%s\" 並不存在.\n"
 
 #: ../Commands.pm:3150
+#, fuzzy
 msgid " Monster List "
-msgstr ""
+msgstr "怪物"
 
 #: ../Commands.pm:3151
 #, fuzzy
@@ -7829,11 +7797,8 @@ msgid "Unknown Map"
 msgstr "未知域,"
 
 #: ../Commands.pm:3295
-#, fuzzy
 msgid " NPC List "
 msgstr ""
-"\n"
-"技能點數: %d\n"
 
 #: ../Commands.pm:3296
 #, fuzzy
@@ -7859,8 +7824,9 @@ msgstr ""
 "無法列出隊伍 - 您並沒有在一個隊伍中.\n"
 
 #: ../Commands.pm:3375
+#, fuzzy
 msgid " Party Information "
-msgstr ""
+msgstr "隊伍訊息"
 
 #: ../Commands.pm:3376
 #, fuzzy, perl-format
@@ -8122,11 +8088,8 @@ msgid ""
 msgstr ""
 
 #: ../Commands.pm:3624
-#, fuzzy
 msgid " Pet List "
 msgstr ""
-"\n"
-"技能點數: %d\n"
 
 #: ../Commands.pm:3625
 #, fuzzy
@@ -8138,9 +8101,7 @@ msgstr ""
 #: ../Commands.pm:3649
 #, fuzzy
 msgid " Guild Player List "
-msgstr ""
-"\n"
-"技能點數: %d\n"
+msgstr "總傷害取得: %s\n"
 
 #: ../Commands.pm:3650 ../Commands.pm:3689 ../Commands.pm:3805
 #, fuzzy
@@ -8250,11 +8211,8 @@ msgid " Currently loaded plugins "
 msgstr ""
 
 #: ../Commands.pm:3837
-#, fuzzy
 msgid "#   Name                 Description\n"
 msgstr ""
-"%s\n"
-"名稱                                      數量    價格 \n"
 
 #: ../Commands.pm:3856
 msgid ""
@@ -8331,11 +8289,8 @@ msgid "Syntax Error in function 'plugin' (Control Plugins)\n"
 msgstr "'plugin' 功能語法錯誤 (控制Plugins)\n"
 
 #: ../Commands.pm:3950
-#, fuzzy
 msgid " PM List "
 msgstr ""
-"\n"
-"技能點數: %d\n"
 
 #: ../Commands.pm:3964
 #, fuzzy
@@ -8346,8 +8301,8 @@ msgstr "無傳送點存在.\n"
 #, fuzzy
 msgid "#    Name                                Coordinates\n"
 msgstr ""
-"%s\n"
-"名稱                                      數量    價格 \n"
+"------------傳點清單-------------\n"
+"#    名稱                                座標\n"
 
 #: ../Commands.pm:3991
 msgid ""
@@ -8422,11 +8377,8 @@ msgid "Your sell list is empty.\n"
 msgstr "您的賣物清單是空的.\n"
 
 #: ../Commands.pm:4118
-#, fuzzy
 msgid " Sell List "
 msgstr ""
-"\n"
-"技能點數: %d\n"
 
 #: ../Commands.pm:4119
 #, fuzzy
@@ -8549,8 +8501,8 @@ msgstr ""
 #, fuzzy
 msgid "   # Skill Name                          Lv      SP\n"
 msgstr ""
-"%s\n"
-"名稱                                      數量    價格 \n"
+"-----------技能清單------------\n"
+"   # 技能名稱                       Lv      SP\n"
 
 #: ../Commands.pm:4286
 #, perl-format
@@ -8593,9 +8545,7 @@ msgstr ""
 msgid ""
 "Skill: %s\n"
 "\n"
-msgstr ""
-"\n"
-"技能點數: %d\n"
+msgstr "技能"
 
 #: ../Commands.pm:4312
 msgid ""
@@ -8608,9 +8558,7 @@ msgstr ""
 #: ../Commands.pm:4319
 #, fuzzy
 msgid " Slave List "
-msgstr ""
-"\n"
-"技能點數: %d\n"
+msgstr "目標已死亡\n"
 
 #: ../Commands.pm:4320
 #, fuzzy
@@ -9587,7 +9535,7 @@ msgstr "無法重新載入程式碼: %s 未被發現\n"
 #: ../Commands.pm:5839
 #, fuzzy
 msgid " Storage "
-msgstr "倉庫資訊已記錄\n"
+msgstr "倉庫"
 
 #: ../Commands.pm:5855
 #, fuzzy
@@ -10052,8 +10000,9 @@ msgid "V"
 msgstr ""
 
 #: ../Misc.pm:1833
+#, fuzzy
 msgid "S "
-msgstr ""
+msgstr "SP："
 
 #: ../Misc.pm:1851
 msgid "BROKEN "
@@ -10727,296 +10676,6 @@ msgstr "%s尚未連線 - %s"
 msgid "%sConnecting - %s"
 msgstr "%s連線中 - %s"
 
-#~ msgid "*** You disconnected, auto quit! ***\n"
-#~ msgstr "*** 您已斷線, 自動結束! ***\n"
-
-#~ msgid "Disconnecting on PM!\n"
-#~ msgstr "因密語而斷線中!\n"
-
-#~ msgid "You've been muted for %s minutes, auto disconnect!\n"
-#~ msgstr "您被禁言 %s 分鐘, 自動斷線!\n"
-
-#~ msgid "Timeout on Account Server, reconnecting...\n"
-#~ msgstr "帳號伺服器逾時, 重新連線中...\n"
-
-#~ msgid "Disconnected from Map Server, exiting...\n"
-#~ msgstr "從地圖伺服器斷線, 結束中...\n"
-
-#~ msgid "Party Member: %s\n"
-#~ msgstr "隊伍成員: %s\n"
-
-#, fuzzy
-#~ msgid "Unknown lookID"
-#~ msgstr "未知域,"
-
-#~ msgid "Please equip arrow first."
-#~ msgstr "請先裝備箭矢."
-
-#~ msgid "Lost connection; exiting\n"
-#~ msgstr "失去連線; 結束中\n"
-
-#~ msgid "exiting...\n"
-#~ msgstr "結束中...\n"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "#  Name                                          Type        Amount       "
-#~ "Price\n"
-#~ msgstr ""
-#~ "%s\n"
-#~ "#  名稱                                          類型        數量         "
-#~ "價格\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "----------%s's Store List-----------\n"
-#~ "#  Name                    Type               Price\n"
-#~ msgstr ""
-#~ "----------商店物品清單-----------\n"
-#~ "#  名稱                    類型           價格\n"
-
-#~ msgid ""
-#~ "----------Responses-----------\n"
-#~ "#  Response\n"
-#~ msgstr ""
-#~ "------------回應--------------\n"
-#~ "#  回應\n"
-
-#~ msgid ""
-#~ "----------------- Warp Portal --------------------\n"
-#~ "#  Place                           Map\n"
-#~ msgstr ""
-#~ "------------------- 傳送點 -----------------------\n"
-#~ "#  地點                            地圖\n"
-
-#~ msgid "------ AI Sequence ---------------------\n"
-#~ msgstr "------ AI 序列 -------------------------\n"
-
-#~ msgid "------ AI Sequences --------------------\n"
-#~ msgstr "------ AI 序列 -------------------------\n"
-
-#~ msgid "----------------- Item To Craft -----------------\n"
-#~ msgstr "----------------- 物品至手推車 -----------------\n"
-
-#~ msgid "-----------Card List-----------\n"
-#~ msgstr "-----------卡片清單------------\n"
-
-#~ msgid ""
-#~ "-------------Cart--------------\n"
-#~ "#  Name\n"
-#~ msgstr ""
-#~ "------------手推車-------------\n"
-#~ "#  名稱\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "%s\n"
-#~ "ItemID   Name                               Price\n"
-#~ msgstr ""
-#~ "%s\n"
-#~ "名稱                                      數量    價格 \n"
-
-#~ msgid ""
-#~ "------------------------------- Chat Room List "
-#~ "--------------------------------\n"
-#~ "#   Title                                  Owner                Users   "
-#~ "Type\n"
-#~ msgstr ""
-#~ "--------------------------------- 聊天室清單 "
-#~ "----------------------------------\n"
-#~ "#   聊天室名稱                             擁有人               使用者  類"
-#~ "型\n"
-
-#~ msgid ""
-#~ "-----------Chat Room Info-----------\n"
-#~ "Title                     Users   Public/Private\n"
-#~ msgstr ""
-#~ "-------------聊天室資訊-------------\n"
-#~ "聊天室名稱                使用者  公開/私人\n"
-
-#~ msgid "------ Chat History --------------------\n"
-#~ msgstr "------ 聊天歷史記錄 --------------------\n"
-
-#~ msgid "-----------Current Deal-----------\n"
-#~ msgstr "------------目前的交易------------\n"
-
-#~ msgid "zeny: %-25s zeny: %-14s"
-#~ msgstr "金錢: %-25s 金錢: %-14s"
-
-#~ msgid ""
-#~ "-[Monster Killed Count]-----------------------\n"
-#~ "#   ID     Name                      Count\n"
-#~ msgstr ""
-#~ "-[殺死的魔物計算]-----------------------------\n"
-#~ "#   ID     名稱                       計數\n"
-
-#~ msgid ""
-#~ "-[Item Change Count]--------------------------\n"
-#~ "Name                                    Count\n"
-#~ msgstr ""
-#~ "-[物品改變量計算]-----------------------------\n"
-#~ "名稱                                     計數\n"
-
-#~ msgid ""
-#~ "------------- Friends --------------\n"
-#~ "#   Name                      Online\n"
-#~ msgstr ""
-#~ "-------------- 好友 ----------------\n"
-#~ "#   名字                      是否上線\n"
-
-#, fuzzy
-#~ msgid "--------- Slave AI Sequence ------------\n"
-#~ msgstr "------ AI 序列 -------------------------\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "--------Slave Skill List-------\n"
-#~ "   # Skill Name                     Lv      SP\n"
-#~ msgstr ""
-#~ "-----------技能清單------------\n"
-#~ "   # 技能名稱                       Lv      SP\n"
-
-#~ msgid ""
-#~ "===============Skill Description===============\n"
-#~ "Skill: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "===================技能描述====================\n"
-#~ "技能: %s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "---------- Guild Information ----------\n"
-#~ "Name    : @<<<<<<<<<<<<<<<<<<<<<<<<\n"
-#~ "Lv      : @<<\n"
-#~ "Exp     : @>>>>>>>>>/@<<<<<<<<<<\n"
-#~ "Master  : @<<<<<<<<<<<<<<<<<<<<<<<<\n"
-#~ "Connect : @>>/@<<"
-#~ msgstr ""
-#~ "-------------- 公會資訊 ---------------\n"
-#~ "名稱    : @<<<<<<<<<<<<<<<<<<<<<<<<\n"
-#~ "等級    : @<<\n"
-#~ "經驗值  : @>>>>>>>>>/@<<<<<<<<<<\n"
-#~ "公會會長: @<<<<<<<<<<<<<<<<<<<<<<<<\n"
-#~ "Connect : @>>/@<<"
-
-#~ msgid ""
-#~ "------------ Guild  Member ------------\n"
-#~ "#  Name                       Job        Lv  Title                    "
-#~ "Online\n"
-#~ msgstr ""
-#~ "-------------- 公會會員 ---------------\n"
-#~ "#  名字                       職業       Lv  稱號                     是否"
-#~ "上線\n"
-
-#~ msgid "--------------- Available commands ---------------\n"
-#~ msgstr "------------------- 有效的指令 -------------------\n"
-
-#~ msgid "---------Identify List--------\n"
-#~ msgstr "-----------鑑定清單-----------\n"
-
-#~ msgid "------ Item History --------------------\n"
-#~ msgstr "------ 物品歷史記錄 --------------------\n"
-
-#~ msgid "-----------Inventory-----------\n"
-#~ msgstr "------------物品欄-------------\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "------------------ Item List ------------------\n"
-#~ "   # Name                           Coord\n"
-#~ msgstr ""
-#~ "-----------物品清單------------\n"
-#~ "   # 名稱                            座標\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "------------------ Monster Info ------------------\n"
-#~ "%s (%d)\n"
-#~ "-------------------------------------------------\n"
-#~ "Walk speed: %s secs per block\n"
-#~ msgstr ""
-#~ "---------------- 角色清單 ----------------\n"
-#~ "%s\n"
-#~ "------------------------------------------\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "----------------Pet Status----------------\n"
-#~ "Name: %-23s Accessory: %s\n"
-#~ msgstr ""
-#~ "------------寵物狀態------------\n"
-#~ "名稱: %-23s 裝飾品: %s"
-
-#, fuzzy
-#~ msgid ""
-#~ "------------Pet List------------\n"
-#~ "#   Name                                               Distance    "
-#~ "Coordinates\n"
-#~ msgstr ""
-#~ "------------玩家清單-------------\n"
-#~ "#    名稱                                性別  Lv  Job         距離  座"
-#~ "標\n"
-
-#~ msgid ""
-#~ "--------- Currently loaded plugins ---------\n"
-#~ "#   Name              Description\n"
-#~ msgstr ""
-#~ "----------- 目前已載入的 plugins -----------\n"
-#~ "#   名稱              描述\n"
-
-#~ msgid "-----------PM List-----------\n"
-#~ msgstr "----------密頻清單-----------\n"
-
-#~ msgid ""
-#~ "-----------Portal List-----------\n"
-#~ "#    Name                                Coordinates\n"
-#~ msgstr ""
-#~ "------------傳點清單-------------\n"
-#~ "#    名稱                                座標\n"
-
-#~ msgid ""
-#~ "------------- Sell list -------------\n"
-#~ "#   Item                           Amount\n"
-#~ msgstr ""
-#~ "------------- 賣物清單 --------------\n"
-#~ "#   物品                           數量\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "----------Store List-----------\n"
-#~ "#  Name                    Type           Price\n"
-#~ msgstr ""
-#~ "----------商店物品清單-----------\n"
-#~ "#  名稱                    類型           價格\n"
-
-#~ msgid ""
-#~ "----------Responses-----------\n"
-#~ "NPC: %s\n"
-#~ "#  Response\n"
-#~ msgstr ""
-#~ "------------回應--------------\n"
-#~ "NPC: %s\n"
-#~ "#  回應\n"
-
-#~ msgid ""
-#~ "-----------Vender List-----------\n"
-#~ "#   Title                                Coords     Owner\n"
-#~ msgstr ""
-#~ "----------露天商店清單-----------\n"
-#~ "#   商店名稱                             座標       擁有人\n"
-
-#~ msgid "Capacity: %d/%d\n"
-#~ msgstr "容量: %d/%d\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "----------Skill List-----------\n"
-#~ "   # Skill Name                          Lv      SP\n"
-#~ msgstr ""
-#~ "-----------技能清單------------\n"
-#~ "   # 技能名稱                       Lv      SP\n"
-
 #~ msgid "Auto-storaging due to insufficient %s\n"
 #~ msgstr "因 %s 不足而啟動自動存倉功能\n"
 
@@ -11098,18 +10757,67 @@ msgstr "%s連線中 - %s"
 #~ msgid "Auto-adding stat %s\n"
 #~ msgstr "自動加技能點 %s\n"
 
+#~ msgid "Please equip arrow first."
+#~ msgstr "請先裝備箭矢."
+
+#~ msgid "Lost connection; exiting\n"
+#~ msgstr "失去連線; 結束中\n"
+
 #~ msgid "Minimap indicator at location %d, %d with the color %s cleared\n"
 #~ msgstr "小地圖指標位於座標 %d, %d 並使用顏色 %s 標示清楚\n"
 
+#~ msgid ""
+#~ "----------Responses-----------\n"
+#~ "#  Response\n"
+#~ msgstr ""
+#~ "------------回應--------------\n"
+#~ "#  回應\n"
+
+#~ msgid "You've been muted for %s minutes, auto disconnect!\n"
+#~ msgstr "您被禁言 %s 分鐘, 自動斷線!\n"
+
 #~ msgid "[GM] %s\n"
 #~ msgstr "[GM] %s\n"
+
+#~ msgid ""
+#~ "%s\n"
+#~ "#  Name                                          Type        Amount       "
+#~ "Price\n"
+#~ msgstr ""
+#~ "%s\n"
+#~ "#  名稱                                          類型        數量         "
+#~ "價格\n"
+
+#~ msgid ""
+#~ "----------------- Warp Portal --------------------\n"
+#~ "#  Place                           Map\n"
+#~ msgstr ""
+#~ "------------------- 傳送點 -----------------------\n"
+#~ "#  地點                            地圖\n"
 
 #, fuzzy
 #~ msgid "Quest: %s is now %s.\n"
 #~ msgstr "魔物 %s (%d) 現在為: %s\n"
 
+#, fuzzy
+#~ msgid ""
+#~ "----------%s's Store List-----------\n"
+#~ "#  Name                    Type               Price\n"
+#~ msgstr ""
+#~ "----------商店物品清單-----------\n"
+#~ "#  名稱                    類型           價格\n"
+
 #~ msgid "Server %s selected\n"
 #~ msgstr "伺服器 %s 已選擇\n"
+
+#~ msgid "*** You disconnected, auto quit! ***\n"
+#~ msgstr "*** 您已斷線, 自動結束! ***\n"
+
+#~ msgid "Disconnected from Map Server, exiting...\n"
+#~ msgstr "從地圖伺服器斷線, 結束中...\n"
+
+#~ msgid "exiting...\n"
+#~ msgstr "結束中...\n"
 
 #~ msgid "-------------------------------------------------------\n"
 #~ msgstr "-------------------------------------------------------\n"
@@ -11120,6 +10828,123 @@ msgstr "%s連線中 - %s"
 #~ msgid "Unable to inject NetRedirect.dll"
 #~ msgstr "無法引入 NetRedirect.dll"
 
+#~ msgid "------ AI Sequence ---------------------\n"
+#~ msgstr "------ AI 序列 -------------------------\n"
+
+#~ msgid "------ AI Sequences --------------------\n"
+#~ msgstr "------ AI 序列 -------------------------\n"
+
+#~ msgid "-----------Card List-----------\n"
+#~ msgstr "-----------卡片清單------------\n"
+
+#~ msgid ""
+#~ "-------------Cart--------------\n"
+#~ "#  Name\n"
+#~ msgstr ""
+#~ "------------手推車-------------\n"
+#~ "#  名稱\n"
+
+#~ msgid ""
+#~ "------------------------------- Chat Room List "
+#~ "--------------------------------\n"
+#~ "#   Title                                  Owner                Users   "
+#~ "Type\n"
+#~ msgstr ""
+#~ "--------------------------------- 聊天室清單 "
+#~ "----------------------------------\n"
+#~ "#   聊天室名稱                             擁有人               使用者  類"
+#~ "型\n"
+
+#~ msgid ""
+#~ "-----------Chat Room Info-----------\n"
+#~ "Title                     Users   Public/Private\n"
+#~ msgstr ""
+#~ "-------------聊天室資訊-------------\n"
+#~ "聊天室名稱                使用者  公開/私人\n"
+
+#~ msgid "------ Chat History --------------------\n"
+#~ msgstr "------ 聊天歷史記錄 --------------------\n"
+
+#~ msgid "-----------Current Deal-----------\n"
+#~ msgstr "------------目前的交易------------\n"
+
+#~ msgid "zeny: %-25s zeny: %-14s"
+#~ msgstr "金錢: %-25s 金錢: %-14s"
+
+#~ msgid ""
+#~ "-[Monster Killed Count]-----------------------\n"
+#~ "#   ID     Name                      Count\n"
+#~ msgstr ""
+#~ "-[殺死的魔物計算]-----------------------------\n"
+#~ "#   ID     名稱                       計數\n"
+
+#~ msgid ""
+#~ "-[Item Change Count]--------------------------\n"
+#~ "Name                                    Count\n"
+#~ msgstr ""
+#~ "-[物品改變量計算]-----------------------------\n"
+#~ "名稱                                     計數\n"
+
+#, fuzzy
+#~ msgid "--------- Slave AI Sequence ------------\n"
+#~ msgstr "------ AI 序列 -------------------------\n"
+
+#~ msgid ""
+#~ "===============Skill Description===============\n"
+#~ "Skill: %s\n"
+#~ "\n"
+#~ msgstr ""
+#~ "===================技能描述====================\n"
+#~ "技能: %s\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "---------- Guild Information ----------\n"
+#~ "Name    : @<<<<<<<<<<<<<<<<<<<<<<<<\n"
+#~ "Lv      : @<<\n"
+#~ "Exp     : @>>>>>>>>>/@<<<<<<<<<<\n"
+#~ "Master  : @<<<<<<<<<<<<<<<<<<<<<<<<\n"
+#~ "Connect : @>>/@<<"
+#~ msgstr ""
+#~ "-------------- 公會資訊 ---------------\n"
+#~ "名稱    : @<<<<<<<<<<<<<<<<<<<<<<<<\n"
+#~ "等級    : @<<\n"
+#~ "經驗值  : @>>>>>>>>>/@<<<<<<<<<<\n"
+#~ "公會會長: @<<<<<<<<<<<<<<<<<<<<<<<<\n"
+#~ "Connect : @>>/@<<"
+
+#~ msgid ""
+#~ "------------ Guild  Member ------------\n"
+#~ "#  Name                       Job        Lv  Title                    "
+#~ "Online\n"
+#~ msgstr ""
+#~ "-------------- 公會會員 ---------------\n"
+#~ "#  名字                       職業       Lv  稱號                     是否"
+#~ "上線\n"
+
+#~ msgid "--------------- Available commands ---------------\n"
+#~ msgstr "------------------- 有效的指令 -------------------\n"
+
+#~ msgid "---------Identify List--------\n"
+#~ msgstr "-----------鑑定清單-----------\n"
+
+#~ msgid "------ Item History --------------------\n"
+#~ msgstr "------ 物品歷史記錄 --------------------\n"
+
+#~ msgid "-----------Inventory-----------\n"
+#~ msgstr "------------物品欄-------------\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "------------------ Monster Info ------------------\n"
+#~ "%s (%d)\n"
+#~ "-------------------------------------------------\n"
+#~ "Walk speed: %s secs per block\n"
+#~ msgstr ""
+#~ "---------------- 角色清單 ----------------\n"
+#~ "%s\n"
+#~ "------------------------------------------\n"
+
 #~ msgid "Shop opened (%s) with %d selling items.\n"
 #~ msgstr "露店 (%s) 已開啟並含有 %d 個要賣的物品.\n"
 
@@ -11127,8 +10952,55 @@ msgstr "%s連線中 - %s"
 #~ msgid "You can gather %d items.\n"
 #~ msgstr "您可以賣 %s 個物品!\n"
 
+#, fuzzy
+#~ msgid ""
+#~ "-----------Pet Status-----------\n"
+#~ "Name: %-23s Accessory: %s\n"
+#~ msgstr ""
+#~ "------------寵物狀態------------\n"
+#~ "名稱: %-23s 裝飾品: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "------------Pet List------------\n"
+#~ "#   Name                                               Distance    "
+#~ "Coordinates\n"
+#~ msgstr ""
+#~ "------------玩家清單-------------\n"
+#~ "#    名稱                                性別  Lv  Job         距離  座"
+#~ "標\n"
+
+#~ msgid ""
+#~ "--------- Currently loaded plugins ---------\n"
+#~ "#   Name              Description\n"
+#~ msgstr ""
+#~ "----------- 目前已載入的 plugins -----------\n"
+#~ "#   名稱              描述\n"
+
+#~ msgid "-----------PM List-----------\n"
+#~ msgstr "----------密頻清單-----------\n"
+
+#~ msgid ""
+#~ "------------- Sell list -------------\n"
+#~ "#   Item                           Amount\n"
+#~ msgstr ""
+#~ "------------- 賣物清單 --------------\n"
+#~ "#   物品                           數量\n"
+
 #~ msgid "-----------Storage-------------\n"
 #~ msgstr "------------倉庫---------------\n"
+
+#~ msgid "Capacity: %d/%d\n"
+#~ msgstr "容量: %d/%d\n"
+
+#~ msgid ""
+#~ "----------Responses-----------\n"
+#~ "NPC: %s\n"
+#~ "#  Response\n"
+#~ msgstr ""
+#~ "------------回應--------------\n"
+#~ "NPC: %s\n"
+#~ "#  回應\n"
 
 #~ msgid ""
 #~ "Error in function 'im' (Use Item on Monster)\n"
@@ -11150,6 +11022,13 @@ msgstr "%s連線中 - %s"
 #~ msgstr ""
 #~ "'is' 功能錯誤 (使用物品在自己身上)\n"
 #~ "物品欄的物品 %s 非可使用物品.\n"
+
+#~ msgid ""
+#~ "-----------Vender List-----------\n"
+#~ "#   Title                                Coords     Owner\n"
+#~ msgstr ""
+#~ "----------露天商店清單-----------\n"
+#~ "#   商店名稱                             座標       擁有人\n"
 
 #, fuzzy
 #~ msgid "%s\n"
@@ -11247,6 +11126,10 @@ msgstr "%s連線中 - %s"
 #, fuzzy
 #~ msgid "%s is out of look: %s.\n"
 #~ msgstr "倉庫: %s 已罄\n"
+
+#, fuzzy
+#~ msgid "%s are %s: %s%s\n"
+#~ msgstr "%s 有 %s "
 
 #, fuzzy
 #~ msgid "Found your Slave!\n"
