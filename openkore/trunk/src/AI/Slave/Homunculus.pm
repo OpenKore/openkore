@@ -36,7 +36,7 @@ sub iterate {
 		} elsif (timeOut($timeout{ai_homunFeed}) && $slave->{hunger} <= $config{homunculus_return}) {
 			message TF("Homunculus hunger reaches the return value.\n", 'slave');
 			my $skill = new Skill(handle => 'AM_REST');
-			AI::ai_skillUse2($skill, $char->{skills}{BS_GREED}{lv}, 1, 0, $char, "AM_REST");
+			AI::ai_skillUse2($skill, $char->{skills}{AM_REST}{lv}, 1, 0, $char, "AM_REST");
 			$timeout{ai_homunFeed}{time} = time; #timeout trick
 
 		} else {

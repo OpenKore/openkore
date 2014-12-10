@@ -1302,12 +1302,24 @@ sub openNpcTalk {
 
 sub onManual {
 	my $self = shift;
-	launchURL('http://wiki.openkore.com/index.php?title=Manual');
+	my $url;
+	if ($config{'manualURL'}) {
+		$url = $config{'manualURL'};
+	} else {
+		$url = 'http://wiki.openkore.com/index.php?title=Manual';
+	}
+	launchURL($url);
 }
 
 sub onForum {
 	my $self = shift;
-	launchURL('http://forums.openkore.com/');
+	my $url;
+	if ($config{'forumURL'}) {
+		$url = $config{'forumURL'};
+	} else {
+		$url = 'http://forums.openkore.com';
+	}
+	launchURL($url);
 }
 
 sub onItemListActivate {

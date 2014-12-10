@@ -355,7 +355,14 @@ sub attack {
 	} #END OF BLOCK AUTOEQUIP
 }
 
-sub sendSit { $messageSender->sendAction(undef, ACTION_SIT) }
+sub sendSit { 
+	if ($config{'sitTensionRelax'} > 0 && $char->{skills}{LK_TENSIONRELAX}{lv} > 0) {
+		my $skill = new Skill(handle => 'LK_TENSIONRELAX');
+		AI::ai_skillUse2($skill, $char->{skills}{LK_TENSIONRELAX}{lv}, 1, 0, $char, "LK_TENSIONRELAX");
+	} else {
+		$messageSender->sendAction(undef, ACTION_SIT);
+	}
+}
 sub sendStand { $messageSender->sendAction(undef, ACTION_STAND) }
 sub sendMove { $messageSender->sendMove(@_[1, 2]) }
 

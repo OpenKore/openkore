@@ -1747,6 +1747,7 @@ sub cmdEval {
 sub cmdExp {
 	my (undef, $args) = @_;
 	my $knownArg;
+	my $msg;
 
 	# exp report
 	my ($arg1) = $args =~ /^(\w+)/;
@@ -1774,7 +1775,11 @@ sub cmdExp {
 		return;
 	}
 
-	if (($arg1 eq "") || ($arg1 eq "report")) {
+	if ($arg1 eq "output") {
+		open(F, ">>:utf8", "$Settings::logs_folder/exp.txt");
+	}
+	
+	if (($arg1 eq "") || ($arg1 eq "report") || ($arg1 eq "output")) {
 		$knownArg = 1;
 		my ($endTime_EXP, $w_sec, $bExpPerHour, $jExpPerHour, $EstB_sec, $percentB, $percentJ, $zenyMade, $zenyPerHour, $EstJ_sec, $percentJhr, $percentBhr);
 		$endTime_EXP = time;
@@ -1797,7 +1802,7 @@ sub cmdExp {
 		}
 		$char->{deathCount} = 0 if (!defined $char->{deathCount});
 
-		my $msg = center(T(" Exp Report "), 50, '-') ."\n".
+		$msg .= center(T(" Exp Report "), 50, '-') ."\n".
 				TF( "Botting time : %s\n" .
 					"BaseExp      : %s %s\n" .
 					"JobExp       : %s %s\n" .
@@ -1821,12 +1826,12 @@ sub cmdExp {
 		}
 	}
 
-	if (($arg1 eq "monster") || ($arg1 eq "report")) {
+	if (($arg1 eq "monster") || ($arg1 eq "report") || ($arg1 eq "output")) {
 		my $total;
 
 		$knownArg = 1;
 
-		my $msg = center(T(" Monster Killed Count "), 40, '-') ."\n".
+		$msg .= center(T(" Monster Killed Count "), 40, '-') ."\n".
 			T("#   ID     Name                    Count\n");
 		for (my $i = 0; $i < @monsters_Killed; $i++) {
 			next if ($monsters_Killed[$i] eq "");
@@ -1838,13 +1843,15 @@ sub cmdExp {
 		$msg .= "\n" .
 			TF("Total number of killed monsters: %s\n", $total) .
 			('-'x40) . "\n";
-		message $msg, "list";
+		if ($arg1 eq "monster" || $arg1 eq "") {
+			message $msg, "list";
+		}
 	}
 
-	if (($arg1 eq "item") || ($arg1 eq "report")) {
+	if (($arg1 eq "item") || ($arg1 eq "report") || ($arg1 eq "output")) {
 		$knownArg = 1;
 
-		my $msg = center(T(" Item Change Count "), 36, '-') ."\n".
+		$msg .= center(T(" Item Change Count "), 36, '-') ."\n".
 			T("Name                           Count\n");
 		for my $item (sort keys %itemChange) {
 			next unless $itemChange{$item};
@@ -1854,7 +1861,11 @@ sub cmdExp {
 		}
 		$msg .= ('-'x36) . "\n";
 		message $msg, "list";
-
+		
+		if ($arg1 eq "output") {
+			print F $msg;
+			close(F);
+		}
 	}
 
 	if (!$knownArg) {

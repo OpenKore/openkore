@@ -2250,6 +2250,8 @@ wx_map_portalSticking 5
 wx_npcTalk
 # 是否顯示NPC對話框 [1 = 使用, 0或空白 = 關閉此功能]
 
+forumURL http://optw.nva-hk.com
+
 #═════════════════
 #║               ║
 #║ 除錯模式 設定 ║
