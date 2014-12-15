@@ -550,7 +550,8 @@ sub new {
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
-		'09CF' => ['gameguard_request']
+		'09CF' => ['gameguard_request'],
+		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
 	};
 
 	# Item RECORD Struct's
