@@ -645,10 +645,10 @@ ice_dun02.rsw#Ice Cave#
 ice_dun03.rsw#Ice Cave#
 ice_dun04.rsw#Ice Cave#
 fro_foot.rsw#Football Championship#
-waiting1.rsw#Ascenceur vers l'arène ''Tombeau''#
-waiting2.rsw#Ascenceur vers l'arène ''Tombeau''#
-waiting3.rsw#Ascenceur vers l'arène ''Ruines''#
-waiting4.rsw#Ascenceur vers l'arène ''Ruines''#
+waiting1.rsw#Ascenceur vers l'arene ''Tombeau''#
+waiting2.rsw#Ascenceur vers l'arene ''Tombeau''#
+waiting3.rsw#Ascenceur vers l'arene ''Ruines''#
+waiting4.rsw#Ascenceur vers l'arene ''Ruines''#
 arug_cas01.rsw#Valfreyja Realm Guild#
 arug_cas02.rsw#Valfreyja Realm Guild#
 arug_cas03.rsw#Valfreyja Realm Guild#
@@ -661,19 +661,19 @@ schg_cas03.rsw#Nidhoggur Realm Guild#
 schg_cas04.rsw#Nidhoggur Realm Guild#
 schg_cas05.rsw#Nidhoggur Realm Guild#
 sch_gld.rsw#Nidhoggur Realm#
-rst_warp.rsw#Antre de Shiki#
+rst_warp.rsw#Couloir Spirituel#
 rst_main.rsw#Esprit de Kayleb#
 rst_s1.rsw#Souvenir de Kayleb#
 rst_s2.rsw#Souvenir de Kayleb#
-rst_s3.rsw#Salle de l'épreuve#
+rst_s3.rsw#Souvenir de Kayleb#
 rst_s4.rsw#Souvenir de Kayleb#
-hallo_mark.rsw#Chemin vers le marché de Niflheim#
-hallo_nif.rsw#Marché de Nilfheim#
+hallo_mark.rsw#Chemin vers le march?de Niflheim#
+hallo_nif.rsw#March?de Nilfheim#
 evt_zombie.rsw#Echapper aux monstres#
 airplane_y.rsw#Airship de Veins#
 airplane_ym.rsw#Coeur de l'Airship#
-airport_v.rsw#Aérogare de Veins#
-1@cata.rsw#Catacom#
+airport_v.rsw#A?ogare de Veins#
+1@cata.rsw#Catacomb#
 2@cata.rsw#Sealed Shrine#
 e_tower.rsw#Misty Island#
 1@tower.rsw#Endless Tower#
@@ -683,8 +683,8 @@ e_tower.rsw#Misty Island#
 5@tower.rsw#Endless Tower#
 6@tower.rsw#Endless Tower(Unknown Area)#
 bat_room.rsw#Battle Field Waiting Room#
-bat_a01.rsw#Tiera Canyon#
-bat_a02.rsw#Tiera Canyon#
+bat_a01.rsw#Tierra Canyon#
+bat_a02.rsw#Tierra Canyon#
 bat_b01.rsw#Flavian#
 bat_b02.rsw#Flavian#
 que_qsch01.rsw#Fallacious Okolnir#
@@ -706,13 +706,13 @@ mosk_dun01.rsw#Forest#
 mosk_dun02.rsw#Deep Forest#
 mosk_dun03.rsw#Bottomless Forest#
 cave.rsw#Cave Village#
-pri_z1.rsw#Salle de la méditation (Prison du Valhalla)#
-pri_z2.rsw#Salle de la méditation (Prison du Valhalla)#
-pri_z3.rsw#Salle de la méditation (Prison du Valhalla)#
-pri_z4.rsw#Salle de la méditation (Prison du Valhalla)#
-pri_z5.rsw#Salle de la méditation (Prison du Valhalla)#
-pri_z6.rsw#Salle de la méditation (Prison du Valhalla)#
-pri_z7.rsw#Salle de la méditation (Prison du Valhalla)#
+pri_z1.rsw#Salle de la meditation (Prison du Valhalla)#
+pri_z2.rsw#Salle de la meditation (Prison du Valhalla)#
+pri_z3.rsw#Salle de la meditation (Prison du Valhalla)#
+pri_z4.rsw#Salle de la meditation (Prison du Valhalla)#
+pri_z5.rsw#Salle de la meditation (Prison du Valhalla)#
+pri_z6.rsw#Salle de la meditation (Prison du Valhalla)#
+pri_z7.rsw#Salle de la meditation (Prison du Valhalla)#
 abbeyq1.rsw#Monastery#
 abbeyq2.rsw#Monastery#
 abbeyq3.rsw#Monastery#
@@ -721,19 +721,19 @@ tak_wait.rsw#Fhlaston Paradise#
 tak_run.rsw#King Baz-Ton: Challenge#
 tak_swd.rsw#King Baz-Ton: Challenge#
 tak_warp.rsw#King Baz-Ton: Challenge#
-pol_test.rsw#Marchez avec élégance#
+pol_test.rsw#Marchez avec elegance#
 apr_maze.rsw#Passage secret sous marin#
 ij_hq.rsw#Prison labyrinthique#
 ij_und.rsw#Passage secret de la bibliotheque#
 ij_lab1.rsw#Mini-Jeu Trouve les drapeaux#
-ij_lab2.rsw#Temple caché#
+ij_lab2.rsw#Temple cache#
 ij_jail.rsw#Salle d'attente#
-pirate_ship.rsw#Navire de pêche d'Alberta#
+pirate_ship.rsw#Navire de peche d'Alberta#
 11el_fhl.rsw#Fhlaston Paradise#
 11el_expl.rsw#Fhlaston Paradise#
 11el_tem.rsw#Temple Mondoshaman#
 bac_maze.rsw#Vers le correcteur#
-14j_maze.rsw#Prison labyrinthique#
+14j_maze.rsw#Repaire#
 mgc_s.rsw#Salle de jeux#
 mgc_m.rsw#Salle d'attente#
 22_yakushi.rsw#Labyrinthe de Kabuto#
@@ -748,7 +748,79 @@ tak1_run.rsw#King Baz-Ton: Challenge#
 tak1_top.rsw#King Baz-Ton: Challenge#
 tak1_pil.rsw#King Baz-Ton: Challenge#
 waiting5.rsw#Salle d'attente#
-waiting6.rsw#Arène Spirit Extractor#
+waiting6.rsw#Arene Spirit Extractor#
 pvp_flo.rsw#Ile du Printemps#
-ch_house.rsw#Maison des Community Helper# du Printemps#
 ch_house.rsw#Maison des Community Helper#
+sva_en.rsw#The Gods Hallways#
+sva_her.rsw#Hermod Headquarter#
+sva_ull.rsw#Ull Headquarter#
+sva_fild01.rsw#The Stone Desert#
+sva_fild02.rsw#The Autumn Hills#
+sva_fild03.rsw#The Winter Plains#
+sva_fild04.rsw#The Luxurious Mountain#
+sva_fild05.rsw#The Magical Trees Woods#
+sva_fild06.rsw#The Gods Blessing#
+sva_god1.rsw#The Gods Trial#
+bat_c01.rsw#Krieger von Midgards#
+bat_c02.rsw#Krieger von Midgards#
+bat_c03.rsw#Krieger von Midgards#
+mid_camp.rsw#Interior of the Midgards Allied Forces Post#
+mid_campin.rsw#Interior of the Midgards Allied Forces Post#
+man_fild01.rsw#Manuk Field#
+man_fild03.rsw#Manuk Field#
+spl_fild02.rsw#Splendide Field#
+spl_fild03.rsw#Splendide Field#
+moc_fild22b.rsw#Crack of Dimension#
+que_dan01.rsw#Hugel Field#
+que_dan02.rsw#Interior of the Abandoned House in Yuno#
+schg_que01.rsw#Prairie of Morestone#
+schg_dun01.rsw#Subterranean Dungeon of Guild#
+arug_que01.rsw#Prairie of Morestone#
+arug_dun01.rsw#Subterranean Dungeon of Guild#
+1@orcs.rsw#Subterranean Cave of Orc#
+2@orcs.rsw#Subterranean Cave of Orc#
+1@nyd.rsw#Nidhoggur's Nest#
+2@nyd.rsw#Nidhoggur's Nest#
+nyd_dun01.rsw#Yggdrasil Root#
+nyd_dun02.rsw#Yggdrasil Root#
+manuk.rsw#Manuk, the Mining Town#
+man_fild02.rsw#Manuk Field#
+man_in01.rsw#Inside Manuk#
+splendide.rsw#Splendide, the Laphine Basecamp#
+spl_fild01.rsw#Splendide Field#
+spl_in01.rsw#Inside the Splendide Command Post#
+spl_in02.rsw#Inside Splendide# 
+itemmall_p.rsw#Item mall#
+itemmall_s.rsw#Item mall#
+brasilis.rsw#Brasilis#
+bra_in01.rsw#Inside Brasilis#
+bra_fild01.rsw#Brasilis Field#
+bra_dun01.rsw#Cave behind Waterfall#
+bra_dun02.rsw#Cave behind Waterfall#
+evt_hello.rsw#Halloween Field#
+dicastes01.rsw#El Dicastes, the Capital of Sapha#
+dicastes02.rsw#Brumbeld Jorhi Forest#
+dic_in01.rsw#Inside of Dicastes#
+dic_fild01.rsw#Kamidal in the Skirts of Mountain#
+dic_fild02.rsw#Kamidal in the Skirts of Mountain#
+dic_dun01.rsw#Kamidal Tunnel#
+dic_dun02.rsw#Skarava Hall#
+malaya.rsw#Port Malaya#
+ma_fild01.rsw#Baryo Mahiwaga#
+ma_fild02.rsw#Forest#
+ma_scene01.rsw#Bakonawa Lake#
+ma_in01.rsw#Inside of Malaya#
+ma_dun01.rsw#Bangungot Hospital 1F#
+1@ma_h.rsw#Bangungot Hospital 2F#
+1@ma_c.rsw#Buwaya Cave#
+1@ma_b.rsw#Bakonawa Hideout#
+ma_zif01.rsw#Inside of Jeepney#
+ma_zif02.rsw#Inside of Jeepney#
+ma_zif03.rsw#Inside of Jeepney#
+ma_zif04.rsw#Inside of Jeepney#
+ma_zif05.rsw#Inside of Jeepney#
+ma_zif06.rsw#Inside of Jeepney#
+ma_zif07.rsw#Inside of Jeepney#
+ma_zif08.rsw#Inside of Jeepney#
+ma_zif09.rsw#Inside of Jeepney#
+job_ko.rsw#Hidden Place#
