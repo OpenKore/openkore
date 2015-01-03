@@ -22,7 +22,7 @@ package Network::Receive;
 use strict;
 use Network::PacketParser; # import
 use base qw(Network::PacketParser);
-use encoding 'utf8';
+use utf8;
 use Carp::Assert;
 use Scalar::Util;
 use Socket qw(inet_aton inet_ntoa);
@@ -773,6 +773,7 @@ typedef enum <unnamed-tag> {
 
 		} elsif ($actor->isa('Actor::NPC')) {
 			message TF("NPC Exists: %s (%d, %d) (ID %d) - (%d)\n", $actor->name, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
+			Plugins::callHook('npc_exist', {npc => $actor});
 
 		} elsif ($actor->isa('Actor::Portal')) {
 			message TF("Portal Exists: %s (%s, %s) - (%s)\n", $actor->name, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $actor->{binID}), "portals", 1;
@@ -937,7 +938,7 @@ sub actor_died_or_disappeared {
 				$player->{disappeared} = 1;
 			}
 
-			if ($ID ~~ @venderListsID) {
+			if (grep { $ID eq $_ } @venderListsID) {
 				binRemove(\@venderListsID, $ID);
 				delete $venderLists{$ID};
 			}
@@ -1113,6 +1114,12 @@ sub actor_action {
 
 		} elsif ($char->{slaves} && $char->{slaves}{$args->{targetID}}) {
 			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent}) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
+
+		} elsif ($args->{sourceID} eq $args->{targetID}) {
+			message("$status $msg");
+
+		} elsif ($config{showAllDamage}) {
+			message("$status $msg");
 
 		} else {
 			debug("$msg", 'parseMsg_damage');
@@ -1510,6 +1517,7 @@ sub warp_portal_list {
 		configModify('saveMap', $args->{memo2}) if ($args->{memo2} && $config{'saveMap'} ne $args->{memo2});
 	} elsif ($args->{type} == 27) {
 		configModify('saveMap', $args->{memo1}) if ($args->{memo1} && $config{'saveMap'} ne $args->{memo1});
+		configModify( "memo$_", $args->{"memo$_"} ) foreach grep { $args->{"memo$_"} ne $config{"memo$_"} } 1 .. 4;
 	}
 
 	$char->{warp}{type} = $args->{type};
@@ -1831,6 +1839,15 @@ sub actor_status_active {
 	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
 #	($args->{actor} = Actor::get($ID))->setStatus($status, 1, $tick == 9999 ? undef : $tick, $args->{unknown1}); # need test for '08FF'
 	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick == 9999 ? undef : $tick);
+	# Rolling Cutter counters.
+	if ( $type == 0x153 && $char->{spirits} != $unknown1 ) {
+		$char->{spirits} = $unknown1 || 0;
+		if ( $ID eq $accountID ) {
+			message TF( "You have %s %s(s) now\n", $char->{spirits}, 'counters' ), "parseMsg_statuslook", 1;
+		} else {
+			message TF( "%s has %s %s(s) now\n", $args->{actor}, $char->{spirits}, 'counters' ), "parseMsg_statuslook", 1;
+		}
+	}
 }
 
 #099B
