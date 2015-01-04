@@ -2001,7 +2001,7 @@ sub slave_calcproperty_handler {
 	$slave->{hp_max}       = ($args->{hp_max} > 0) ? $args->{hp_max} : $args->{hp};
 	$slave->{sp_max}       = ($args->{sp_max} > 0) ? $args->{sp_max} : $args->{sp};
 
-	$slave->{attack_speed}     = int (200 - (($args->{attack_delay} < 10) ? 10 : ($args->{attack_delay} / 10)));
+	$slave->{attack_speed}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
 	$slave->{hpPercent}    = ($slave->{hp} / $slave->{hp_max}) * 100;
 	$slave->{spPercent}    = ($slave->{sp} / $slave->{sp_max}) * 100;
 }
