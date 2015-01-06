@@ -4730,7 +4730,7 @@ sub cmdTalk {
 	}
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
-	my ($arg2) = $args =~ /^\w+ (\d+)/;
+	my ($arg2) = $args =~ /^\w+ (-?\d+)/;
 
 	if ($arg1 =~ /^\d+$/ && $npcsID[$arg1] eq "") {
 		error TF("Error in function 'talk' (Talk to NPC)\n" .
@@ -4775,11 +4775,11 @@ sub cmdTalk {
 		error T("Error in function 'talk num' (Respond to NPC)\n" .
 			"You must specify a number.\n");
 
-	} elsif ($arg1 eq "num" && !($arg2 =~ /^\d+$/)) {
+	} elsif ($arg1 eq "num" && !($arg2 =~ /^-?\d+$/)) {
 		error TF("Error in function 'talk num' (Respond to NPC)\n" .
 			"%s is not a valid number.\n", $arg2);
 
-	} elsif ($arg1 eq "num" && $arg2 =~ /^\d+$/) {
+	} elsif ($arg1 eq "num" && $arg2 =~ /^-?\d+$/) {
 		$messageSender->sendTalkNumber($talk{'ID'}, $arg2);
 
 	} elsif ($arg1 eq "text") {
