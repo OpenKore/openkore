@@ -209,6 +209,10 @@ runFromTarget_dist 6
 saveMap
 saveMap_warpToBuyOrSell 1
 saveMap_warpChatCommand
+memo1
+memo2
+memo3
+memo4
 
 shopAuto_open 0
 shop_random 0
@@ -289,7 +293,9 @@ wx_map_monsterSticking 1
 wx_map_npcSticking 1
 wx_map_playersSticking 1
 wx_map_portalSticking 5
+wx_map_route
 wx_npcTalk
+showAllDamage 0
 
 logChat 0
 logPrivateChat 1
