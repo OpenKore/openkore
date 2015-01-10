@@ -17,6 +17,7 @@ bus 0
 # computer, specify the host and port here.
 bus_server_host
 bus_server_port
+bus_userAgent
 
 
 ###### Vx interface settings ######
