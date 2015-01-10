@@ -1494,7 +1494,7 @@ sub system_chat {
 	stripLanguageCode(\$message);
 	chatLog("s", "$message\n") if ($config{logSystemChat});
 	# Translation Comment: System/GM chat
-	message TF("%s %s\n", $prefix, $message), "schat";
+	message "$prefix  $message\n", "schat";
 	ChatQueue::add('gm', undef, undef, $message);
 
 	Plugins::callHook('packet_sysMsg', {

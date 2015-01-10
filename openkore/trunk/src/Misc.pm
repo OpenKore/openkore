@@ -1784,9 +1784,9 @@ sub monsterName {
 # Resolve the name of a simple item
 sub itemNameSimple {
 	my $ID = shift;
-	return 'Unknown' unless defined($ID);
-	return 'None' unless $ID;
-	return $items_lut{$ID} || "Unknown #$ID";
+	return T("Unknown") unless defined($ID);
+	return T("None") unless $ID;
+	return $items_lut{$ID} || T("Unknown #")."$ID";
 }
 
 ##
@@ -1912,12 +1912,12 @@ sub storageGet {
 sub headgearName {
 	my ($lookID) = @_;
 
-	return "Nothing" if $lookID == 0;
+	return T("Nothing") if $lookID == 0;
 
 	my $itemID = $headgears_lut[$lookID];
 
 	if (!defined($itemID)) {
-		return "Unknown lookID $lookID";
+		return T("Unknown lookID") . $lookID;
 	}
 
 	return main::itemName({nameID => $itemID});
@@ -3705,7 +3705,7 @@ sub getActorName {
 	my $id = shift;
 
 	if (!$id) {
-		return 'Nothing';
+		return T("Nothing");
 	} else {
 		my $hash = Actor::get($id);
 		return $hash->nameString;
