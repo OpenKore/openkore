@@ -343,9 +343,10 @@ sub initNetworking {
 		require Bus::Handlers;
 		my $host = $sys{bus_server_host};
 		my $port = $sys{bus_server_port};
+		my $userAgent = $sys{bus_userAgent};
 		$host = undef if ($host eq '');
 		$port = undef if ($port eq '');
-		$bus = new Bus::Client(host => $host, port => $port);
+		$bus = new Bus::Client(host => $host, port => $port, userAgent => $userAgent);
 		our $busMessageHandler = new Bus::Handlers($bus);
 	}
 	
