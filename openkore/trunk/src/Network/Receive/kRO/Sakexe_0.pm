@@ -1998,12 +1998,16 @@ sub homunculus_state_handler {
 sub slave_calcproperty_handler {
 	my ($slave, $args) = @_;
 	# so we don't devide by 0
+	# wtf
+=pod
 	$slave->{hp_max}       = ($args->{hp_max} > 0) ? $args->{hp_max} : $args->{hp};
 	$slave->{sp_max}       = ($args->{sp_max} > 0) ? $args->{sp_max} : $args->{sp};
+=cut
 
 	$slave->{attack_speed}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
-	$slave->{hpPercent}    = ($slave->{hp} / $slave->{hp_max}) * 100;
-	$slave->{spPercent}    = ($slave->{sp} / $slave->{sp_max}) * 100;
+	$slave->{hpPercent}    = $slave->{hp_max} ? ($slave->{hp} / $slave->{hp_max}) * 100 : undef;
+	$slave->{spPercent}    = $slave->{sp_max} ? ($slave->{sp} / $slave->{sp_max}) * 100 : undef;
+	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : undef;
 }
 
 sub gameguard_grant {
