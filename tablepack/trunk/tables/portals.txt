@@ -384,12 +384,16 @@ alde_dun01 292 306 alde_dun02 43 20
 alde_dun01 302 25 c_tower1 123 22
 alde_dun02 43 20 alde_dun01 292 306
 alde_dun02 122 169 c_tower3 42 41
+alde_dun02 187 234 alde_dun04 32 74
 alde_dun02 279 250 alde_dun03 12 267
 alde_dun03 12 267 alde_dun02 279 250
 alde_dun03 191 31 c_tower3 212 159
 alde_dun03 276 48 c_tower1 235 226
 alde_dun03 277 183 c_tower2 24 24
 alde_dun03 264 16 alde_dun04 78 268 0 c r2 c
+alde_dun04 32 74 alde_dun02 187 239
+alde_dun04 208 58 alde_dun04 268 74
+alde_dun04 272 74 alde_dun04 208 58
 aldeba_in 24 224 aldebaran 51 218
 aldeba_in 27 34 aldebaran 72 197
 aldeba_in 27 71 aldeba_in 27 102
@@ -547,18 +551,48 @@ amatsu 248 160 ama_in01 76 178
 amatsu 248 292 ama_fild01 75 30
 anthell01 253 32 anthell02 32 267
 anthell02 32 267 anthell01 253 32
-ayothaya 276 176 ayo_fild01 32 240
-ayothaya 202 161 ayo_in01 31 108
 ayothaya 62 104 ayo_in01 191 183
+ayothaya 111 109 ayo_in01 180 129
+ayothaya 129 86 ayo_in01 21 178
+ayothaya 130 75 ayo_in01 17 153
+ayothaya 130 97 ayo_in01 177 129
+ayothaya 165 90 ayo_in01 77 174
+ayothaya 173 77 ayo_in01 85 149
+ayothaya 177 90 ayo_in01 95 175
+ayothaya 192 150 ayo_in01 10 94
+ayothaya 202 140 ayo_in01 31 78
+ayothaya 202 161 ayo_in01 31 108
 ayothaya 208 283 ayo_in02 100 152
+ayothaya 211 150 ayo_in01 50 94
+ayothaya 229 69 ayo_in01 137 192
+ayothaya 276 176 ayo_fild01 32 240
+ayo_in01 10 94 ayothaya 189 150
+ayo_in01 13 82 ayo_in01 18 14
+ayo_in01 13 107 ayo_in01 132 27
+ayo_in01 17 153 ayothaya 132 73
+ayo_in01 21 14 ayo_in01 13 82
+ayo_in01 23 176 ayothaya 129 86
+ayo_in01 31 78 ayothaya 202 137
+ayo_in01 31 111 ayothaya 202 161
+ayo_in01 46 183 ayothaya 130 97
+ayo_in01 48 82 ayo_in01 63 14
+ayo_in01 48 107 ayo_in01 179 27
+ayo_in01 50 94 ayothaya 214 150
+ayo_in01 60 14 ayo_in01 48 82
+ayo_in01 73 174 ayo_in01 184 194
+ayo_in01 85 149 ayothaya 173 74
+ayo_in01 98 175 ayothaya 177 90
+ayo_in01 135 27 ayo_in01 13 107
+ayo_in01 137 195 ayothaya 229 69
+ayo_in01 176 27 ayo_in01 48 107
+ayo_in01 177 129 ayothaya 111 109
+ayo_in01 194 183 ayothaya 62 104
+ayo_in02 100 148 ayothaya 208 283
 ayo_fild01 32 240 ayothaya 273 176
 ayo_fild01 129 197 ayo_fild02 100 100 0 c c c c c r0 c c c
 ayo_fild01 129 197 ayo_fild02 30 135 c w1 c w1 c1 w1 c1 w1 c1 r0 c w1 c w1 c n
 ayo_fild02 285 149 ayo_dun01 275 18
 ayo_fild02 25 154 ayo_fild01 115 200 c r0 c n
-ayo_in01 31 111 ayothaya 202 161
-ayo_in01 194 183 ayothaya 62 104
-ayo_in02 100 148 ayothaya 208 283
 ayo_dun01 274 14 ayo_fild02 279 150
 ayo_dun01 24 283 ayo_dun02 23 26 c n
 ayo_dun02 24 22 ayo_dun01 24 279
@@ -1312,6 +1346,7 @@ payon 136 158 payon_in01 20 129
 payon 130 169 payon_in01 13 139
 payon 189 233 payon_in03 149 39
 payon 187 233 payon_in03 149 39
+payon 270 152 payon_in01 90 9
 pay_arche 36 131 pay_dun00 21 186
 pay_arche 81 17 payon 228 329
 pay_arche 145 165 payon_in02 64 56
@@ -1438,6 +1473,7 @@ payon_in01 10 17 payon_in01 10 38
 payon_in01 56 50 payon 151 127
 payon_in01 23 129 payon 136 158
 payon_in01 13 139 payon 130 172
+payon_in01 86 9 payon 270 152
 payon_in01 22 26 payon_in01 30 81
 payon_in01 26 115 payon_in01 30 126
 payon_in01 26 164 payon_in01 30 151
@@ -2995,26 +3031,42 @@ aethra 90 168 aethra_in 199 176
 aethra_in 127 122 aethra 71 132
 aethra_in 199 172 aethra 90 168
 
-caspen 137 237 casp_in01 178 269
-caspen 181 228 casp_in01 58 182
-caspen 104 265 casp_in01 174 190
-caspen 151 198 casp_auct02 40 32
-caspen 136 198 casp_auct02 40 36
-caspen 117 232 cmd_in02 178 132
-caspen 170 236 ayo_in01 13 94
+ashroom 24 78 pallet 41 68
+ashroom 37 27 ashroom 90 63
+ashroom 81 56 pallet 24 44
+ashroom 90 66 ashroom 37 27
+
+pallet 24 44 ashroom 81 58
+pallet 41 68 ashroom 22 94
+pallet 51 28 ashroom 24 78
+pallet 53 49 plt_in 35 55
+
+plt_in 19 62 plt_in 114 61
+plt_in 35 52 pallet 53 49
+plt_in 111 61 plt_in 19 62
+plt_in 131 69 saladuelo 44 17
+
+saladuelo 44 17 plt_in 127 68
+
 caspen 96 205 ayo_in02 100 151
+caspen 104 265 casp_in01 174 190
+caspen 117 232 cmd_in02 178 132
+caspen 136 198 casp_auct02 40 36
+caspen 137 237 casp_in01 178 269
+caspen 151 198 casp_auct02 40 32
+caspen 170 236 ayo_in01 13 94
+caspen 181 228 casp_in01 58 182
 caspen 267 277 casp_dun01 28 43
-casp_in01 178 264 caspen 137 237
+casp_in01 54 240 caspen 136 198
 casp_in01 58 179 caspen 181 228
 casp_in01 77 187 caspen 181 228
-casp_in01 159 205 caspen 104 265
-casp_in01 54 240 caspen 136 198
-casp_in01 110 240 caspen 136 201
 casp_in01 82 187 casp_in01 73 188
-casp_in01 231 203 casp_in01 159 205
-casp_in01 191 205 casp_in01 262 203
-casp_in01 262 203 casp_in01 191 201
+casp_in01 110 240 caspen 136 201
+casp_in01 159 205 caspen 104 265
 casp_in01 174 180 casp_in01 262 203
-ayo_in01 10 94 caspen 170 236
+casp_in01 178 264 caspen 137 237
+casp_in01 191 205 casp_in01 262 203
+casp_in01 231 203 casp_in01 159 205
+casp_in01 262 203 casp_in01 191 201
 casp_auct02 40 36 caspen 151 198
 casp_dun01 23 38 caspen 267 277
