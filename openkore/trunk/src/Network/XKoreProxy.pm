@@ -294,7 +294,7 @@ sub checkProxy {
 			$self->serverDisconnect();
 		}
 
-		close($self->{proxy});
+		close $self->{proxy} if $self->{proxy};
 		$self->{waitClientDC} = undef;
 		debug "Removing pending packet from queue\n" if (defined $self->{packetPending});
 		$self->{packetPending} = '';
