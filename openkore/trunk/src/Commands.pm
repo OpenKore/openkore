@@ -2031,13 +2031,17 @@ sub cmdSlave {
 	}
 	my $string = $cmd;
 
-	if (
-		!$slave || !$slave->{appear_time} || (
-			$slave->{actorType} eq 'Homunculus' and $slave->{state} & 2 || $slave->{state} & 4
-		)
-	) {
+	if (!$slave || !$slave->{appear_time}) {
 		error T("Error: No slave detected.\n");
 
+	} elsif ($slave->{actorType} eq 'Homunculus' && $slave->{state} & 2) {
+			my $skill = new Skill(handle => 'AM_CALLHOMUN');
+			error TF("Homunculus is in rest, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
+
+	} elsif ($slave->{actorType} eq 'Homunculus' && $slave->{state} & 4) {
+			my $skill = new Skill(handle => 'AM_RESURRECTHOMUN');
+			error TF("Homunculus is dead, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
+		
 	} elsif ($subcmd eq "s" || $subcmd eq "status") {
 		my $hp_string = $slave->{hp}. '/' .$slave->{hp_max} . ' (' . sprintf("%.2f",$slave->{hpPercent}) . '%)';
 		my $sp_string = $slave->{sp}."/".$slave->{sp_max}." (".sprintf("%.2f",$slave->{spPercent})."%)";

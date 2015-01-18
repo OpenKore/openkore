@@ -227,6 +227,7 @@ sitAuto_over_50 0
 sitAuto_idle 1
 sitAuto_look
 sitAuto_look_from_wall
+sitTensionRelax 0
 
 statsAddAuto 0
 statsAddAuto_list
@@ -296,6 +297,8 @@ wx_map_portalSticking 5
 wx_map_route
 wx_npcTalk
 showAllDamage 0
+manualURL http://wiki.openkore.com/index.php?title=Manual
+forumURL http://forums.openkore.com
 
 logChat 0
 logPrivateChat 1
@@ -364,6 +367,7 @@ mercenary_teleportAuto_dropTarget 0
 mercenary_teleportAuto_dropTargetKS 0
 mercenary_teleportAuto_totalDmg 0
 mercenary_teleportAuto_totalDmgInLock 0
+mercenary_teleportAuto_attackedWhenSitting 0
 
 ######## Homunculus Support ########
 
@@ -387,6 +391,9 @@ homunculus_route_step 15
 homunculus_tankMode 0
 homunculus_tankModeTarget
 
+homunculus_runFromTarget 0
+homunculus_runFromTarget_dist 6
+
 homunculus_StandByAuto 0
 homunculus_teleportAuto_hp 10
 homunculus_teleportAuto_maxDmg 500
@@ -397,15 +404,12 @@ homunculus_teleportAuto_dropTarget 0
 homunculus_teleportAuto_dropTargetKS 0
 homunculus_teleportAuto_totalDmg 0
 homunculus_teleportAuto_totalDmgInLock 0
+homunculus_teleportAuto_attackedWhenSitting 0
 
 # intimacyMax / Min sets a threshhold of when not to feed your homunculus
 # If intimacy is HIGHER than the minimum or LOWER/EQUAL to the max, we wont feed.
 homunculus_intimacyMax 999
 homunculus_intimacyMin 911
-
-# How long should we wait between feeding? default: random between 10 and 60 seconds
-homunculus_hungerTimeoutMax 60
-homunculus_hungerTimeoutMin 10
 
 # Turn on/off homunculus autofeeding
 homunculus_autoFeed 1

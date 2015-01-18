@@ -808,7 +808,7 @@ typedef enum <unnamed-tag> {
 
 			Plugins::callHook('player_connected', {player => $actor});
 		} else {
-			debug "Unknown Connected: $args->{type} - ", "parseMsg";
+			debug "Unknown Connected: $args->{type} - \n", "parseMsg";
 		}
 
 	} elsif ($args->{switch} eq "007B" ||
@@ -986,6 +986,7 @@ sub actor_died_or_disappeared {
 		my $slave = $slavesList->getByID($ID);
 		if ($args->{type} == 1) {
 			message TF("Slave Died: %s (%d) %s\n", $slave->name, $slave->{binID}, $slave->{actorType});
+			$slave->{state} = 4;
 		} else {
 			if ($args->{type} == 0) {
 				debug "Slave Disappeared: " . $slave->name . " ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
@@ -1275,6 +1276,7 @@ sub homunculus_info {
 		$char->{homunculus}{map} = $field->baseName;
 		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
 			AI::SlaveManager::addSlave ($char->{homunculus});
+			$char->{homunculus}{appear_time} = time;
 		}
 	} elsif ($args->{state} == HO_RELATIONSHIP_CHANGED) {
 		$char->{homunculus}{intimacy} = $args->{val} if $char->{homunculus};
