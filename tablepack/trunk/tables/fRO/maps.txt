@@ -645,10 +645,10 @@ ice_dun02.rsw#Ice Cave#
 ice_dun03.rsw#Ice Cave#
 ice_dun04.rsw#Ice Cave#
 fro_foot.rsw#Football Championship#
-waiting1.rsw#Ascenceur vers l'arene ''Tombeau''#
-waiting2.rsw#Ascenceur vers l'arene ''Tombeau''#
-waiting3.rsw#Ascenceur vers l'arene ''Ruines''#
-waiting4.rsw#Ascenceur vers l'arene ''Ruines''#
+waiting1.rsw#Ascenceur vers l'ar?e ''Tombeau''#
+waiting2.rsw#Ascenceur vers l'ar?e ''Tombeau''#
+waiting3.rsw#Ascenceur vers l'ar?e ''Ruines''#
+waiting4.rsw#Ascenceur vers l'ar?e ''Ruines''#
 arug_cas01.rsw#Valfreyja Realm Guild#
 arug_cas02.rsw#Valfreyja Realm Guild#
 arug_cas03.rsw#Valfreyja Realm Guild#
@@ -706,13 +706,13 @@ mosk_dun01.rsw#Forest#
 mosk_dun02.rsw#Deep Forest#
 mosk_dun03.rsw#Bottomless Forest#
 cave.rsw#Cave Village#
-pri_z1.rsw#Salle de la meditation (Prison du Valhalla)#
-pri_z2.rsw#Salle de la meditation (Prison du Valhalla)#
-pri_z3.rsw#Salle de la meditation (Prison du Valhalla)#
-pri_z4.rsw#Salle de la meditation (Prison du Valhalla)#
-pri_z5.rsw#Salle de la meditation (Prison du Valhalla)#
-pri_z6.rsw#Salle de la meditation (Prison du Valhalla)#
-pri_z7.rsw#Salle de la meditation (Prison du Valhalla)#
+pri_z1.rsw#Salle de la m?itation (Prison du Valhalla)#
+pri_z2.rsw#Salle de la m?itation (Prison du Valhalla)#
+pri_z3.rsw#Salle de la m?itation (Prison du Valhalla)#
+pri_z4.rsw#Salle de la m?itation (Prison du Valhalla)#
+pri_z5.rsw#Salle de la m?itation (Prison du Valhalla)#
+pri_z6.rsw#Salle de la m?itation (Prison du Valhalla)#
+pri_z7.rsw#Salle de la m?itation (Prison du Valhalla)#
 abbeyq1.rsw#Monastery#
 abbeyq2.rsw#Monastery#
 abbeyq3.rsw#Monastery#
@@ -721,15 +721,15 @@ tak_wait.rsw#Fhlaston Paradise#
 tak_run.rsw#King Baz-Ton: Challenge#
 tak_swd.rsw#King Baz-Ton: Challenge#
 tak_warp.rsw#King Baz-Ton: Challenge#
-pol_test.rsw#Marchez avec elegance#
+pol_test.rsw#Marchez avec ??ance#
 apr_maze.rsw#Passage secret sous marin#
-ij_hq.rsw#Prison labyrinthique#
-ij_und.rsw#Passage secret de la bibliotheque#
+ij_hq.rsw#Repaire#
+ij_und.rsw#Passage secret#
 ij_lab1.rsw#Mini-Jeu Trouve les drapeaux#
-ij_lab2.rsw#Temple cache#
+ij_lab2.rsw#Temple cach?#
 ij_jail.rsw#Salle d'attente#
-pirate_ship.rsw#Navire de peche d'Alberta#
-11el_fhl.rsw#Fhlaston Paradise#
+pirate_ship.rsw#Navire de p?he d'Alberta#
+11el_fhl.rsw#Infinity House#
 11el_expl.rsw#Fhlaston Paradise#
 11el_tem.rsw#Temple Mondoshaman#
 bac_maze.rsw#Vers le correcteur#
@@ -748,7 +748,7 @@ tak1_run.rsw#King Baz-Ton: Challenge#
 tak1_top.rsw#King Baz-Ton: Challenge#
 tak1_pil.rsw#King Baz-Ton: Challenge#
 waiting5.rsw#Salle d'attente#
-waiting6.rsw#Arene Spirit Extractor#
+waiting6.rsw#Ar?e Spirit Extractor#
 pvp_flo.rsw#Ile du Printemps#
 ch_house.rsw#Maison des Community Helper#
 sva_en.rsw#The Gods Hallways#
@@ -824,3 +824,17 @@ ma_zif07.rsw#Inside of Jeepney#
 ma_zif08.rsw#Inside of Jeepney#
 ma_zif09.rsw#Inside of Jeepney#
 job_ko.rsw#Hidden Place#
+//14.2
+eclage.rsw#Eclage#
+ecl_fild01.rsw#Blooming Flower Land#
+ecl_in01.rsw#Inside of Eclage#
+ecl_in02.rsw#Inside of Eclage#
+ecl_in03.rsw#Inside of Eclage#
+ecl_in04.rsw#Inside of Eclage#
+1@ecl.rsw#Eclage Interior#
+ecl_tdun01.rsw#Bifrost Floor 1#
+ecl_tdun02.rsw#Bifrost Floor 2#
+ecl_tdun03.rsw#Bifrost Floor 3#
+ecl_tdun04.rsw#Bifrost Floor 4#
+ecl_hub01.rsw#Eclage Perimeter#
+que_avan01.rsw#Avant's Laboratory#
