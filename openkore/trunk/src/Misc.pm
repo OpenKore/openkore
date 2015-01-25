@@ -1742,6 +1742,7 @@ sub inInventory {
 sub inventoryItemRemoved {
 	my ($invIndex, $amount) = @_;
 
+	return if $amount == 0;
 	my $item = $char->inventory->get($invIndex);
 	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
 		# This item is not an equipped arrow
