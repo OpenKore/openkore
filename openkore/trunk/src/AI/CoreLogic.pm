@@ -1562,9 +1562,9 @@ sub processAutoBuy {
 		my $needitem;
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "follow") && timeOut($timeout{'ai_buyAuto'}) && time > $ai_v{'inventory_time'}) {
 		undef $ai_v{'temp'}{'found'};
-		my $i = 0;
-		while (1) {
-			last if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"});
+		
+		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
+			next if (!$config{"buyAuto_$i"} || $config{"buyAuto_${i}_disabled"});
 			my $item = $char->inventory->getByName($config{"buyAuto_$i"});
 			if ($config{"buyAuto_$i"."_minAmount"} ne "" && $config{"buyAuto_$i"."_maxAmount"} ne ""
 				&& (checkSelfCondition("buyAuto_$i"))
@@ -1580,7 +1580,6 @@ sub processAutoBuy {
 					$needitem = "$bai";
 				} else {$needitem = "$needitem, $bai";}
 			}
-			$i++;
 		}
 		$ai_v{'temp'}{'ai_route_index'} = AI::findAction("route");
 		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
