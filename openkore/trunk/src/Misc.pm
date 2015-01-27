@@ -2267,6 +2267,7 @@ sub relog {
 sub sendMessage {
 	my ($sender, $type, $msg, $user) = @_;
 	my ($j, @msgs, $oldmsg, $amount, $space);
+	my $msgMaxLen = $config{'message_length_max'} || 80;
 
 	@msgs = split /\\n/, $msg;
 	for ($j = 0; $j < @msgs; $j++) {
@@ -2279,17 +2280,17 @@ sub sendMessage {
 				$msg[$i] = " ";
 				$space = 1;
 			}
-			if (length($msg[$i]) > $config{'message_length_max'}) {
-				while (length($msg[$i]) >= $config{'message_length_max'}) {
+			if (length($msg[$i]) > $msgMaxLen) {
+				while (length($msg[$i]) >= $msgMaxLen) {
 					$oldmsg = $msg;
 					if (length($msg)) {
-						$amount = $config{'message_length_max'};
+						$amount = $msgMaxLen;
 						if ($amount - length($msg) > 0) {
-							$amount = $config{'message_length_max'} - 1;
+							$amount = $msgMaxLen - 1;
 							$msg .= " " . substr($msg[$i], 0, $amount - length($msg));
 						}
 					} else {
-						$amount = $config{'message_length_max'};
+						$amount = $msgMaxLen;
 						$msg .= substr($msg[$i], 0, $amount);
 					}
 					sendMessage_send($sender, $type, $msg, $user);
@@ -2297,7 +2298,7 @@ sub sendMessage {
 					undef $msg;
 				}
 			}
-			if (length($msg[$i]) && length($msg) + length($msg[$i]) <= $config{'message_length_max'}) {
+			if (length($msg[$i]) && length($msg) + length($msg[$i]) <= $msgMaxLen) {
 				if (length($msg)) {
 					if (!$space) {
 						$msg .= " " . $msg[$i];
