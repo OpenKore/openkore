@@ -1564,7 +1564,7 @@ sub processAutoBuy {
 		undef $ai_v{'temp'}{'found'};
 		
 		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
-			next if (!$config{"buyAuto_$i"} || $config{"buyAuto_${i}_disabled"});
+			next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
 			my $item = $char->inventory->getByName($config{"buyAuto_$i"});
 			if ($config{"buyAuto_$i"."_minAmount"} ne "" && $config{"buyAuto_$i"."_maxAmount"} ne ""
 				&& (checkSelfCondition("buyAuto_$i"))
