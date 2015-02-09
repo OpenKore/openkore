@@ -4647,7 +4647,7 @@
 5758#Dying_Swan#
 5760#Driver_Band#
 
-// ---------3Â÷ ÀüÁ÷Äù½ºÆ®---------
+// ---------3ì‹· ìƒ¼ì‡·ì“¹ë¶ºìš®---------
 12380#Job_Change_Flute#
 12381#Ancient_Language_Scroll#
 12382#Ancient_Language_Scroll#
@@ -4664,7 +4664,7 @@
 6153#Special_Exchange_Coupon#
 6154#Broken_Horn_Pipe#
 
-// ---------- ÇÑ±¹ ÃÊº¸ÀÚ¼ö·ÃÀå -----------
+// ---------- ìŸ‘ë†¹ ìŠëª¸ìƒšë³¶ëŸƒìƒ¥ -----------
 2819#Swordman_Manual#
 2820#Thief_Manual#
 2821#Acolyte_Manual#
@@ -4832,7 +4832,7 @@
 18541#Little_Feather_Hat#
 18542#Benevolent_Guardian#
 
-// ---------- EP13.3 ½Å±Ô ¾ÆÀÌÅÛ ------------
+// ---------- EP13.3 ë·…ë‡” ë»†ìƒŒì—› ------------
 6321#Rake_Horn_Helm#
 6322#Antler_Helm#
 6323#Twin_Horn_Helm#
@@ -4856,7 +4856,7 @@
 16010#Red_Ether_Bag#
 18103#Mystic_Bow#
 
-// ---------- Ep13.3 Äù½ºÆ®¾ÆÀÌÅÛ ------------
+// ---------- Ep13.3 ì“¹ë¶ºìš®ë»†ìƒŒì—› ------------
 2463#Feral_Boots#
 2564#Feral_Tail#
 2843#Golden_Bell#
@@ -4907,7 +4907,7 @@
 12391#RWC_Groove_Pack#
 12403#RWC_Groove_Pack_2#
 12493#Groovy_Dragon_Box#
-12545#Fortune_Egg¥´#
+12545#Fortune_Eggê–´#
 12577#Rideword_Hat_Box#
 12595#Incarnation_Of_Morocc_Doll_Box#
 12641#New_Recruit_Pack#
@@ -5324,7 +5324,7 @@
 19529#Costume:_Angel_Wing#
 19502#Costume:_Goggles#
 
-// ---------- Port Malaya ½Å±Ô ¾ÆÀÌÅÛ ------------
+// ---------- Port Malaya ë·…ë‡” ë»†ìƒŒì—› ------------
 2169#Kalasag#
 2170#Kalasag(Bayani)#
 2491#Bangungot_Boots_of_Nightmare#
@@ -5633,7 +5633,7 @@
 19413#Classic_Red_Framed_Glasses_Box#
 19414#Classic_Evolved_Pipe_Box#
 
-//----------½É¿¬ÀÇÈ¸¶û Ãß°¡ ¾ÆÀÌÅÛ--------- 
+//----------ë·‰ë¾¬ìƒ‡ì¢¸ë›» ìŸë‚¡ ë»†ìƒŒì—›--------- 
 1293#Bellum_Jamadhar#
 1294#Bellum_Scale#
 1395#Bellum_Buster#
