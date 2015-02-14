@@ -149,6 +149,12 @@ saveMap_warpToBuyOrSell 0
 saveMap_warpChatCommand
 # 是否使用聊天欄輸入指令來瞬移回城 填入指令，留空白不開啟此功能
 
+memo1
+memo2
+memo3
+memo4
+# 用於儲存傳送之陣的地圖
+
 #═══════════════════════
 #║ 其它細節［人孔,傳陣］ ║
 #═══════════════════════
@@ -537,6 +543,7 @@ useSelf_item {
 #   npc NPC資料
 #   minAmount 1
 #   maxAmount 10
+#	disabled 0
 # }
 #
 # buyAuo 進階設定: [Self Condition]
@@ -562,6 +569,8 @@ useSelf_item {
 #	zeny
 #		身上的金錢
 #		可設定 大於 [>] 小於 [<] 等於 [= 或 直接輸入數字]
+#	disabled 0
+#		是否停用此buyAuto 〔1 = 停用〕
 #		
 # }
 #═══ 自訂買物 ════
@@ -574,6 +583,7 @@ buyAuto {
 	price
 	minAmount 2
 	maxAmount 3
+	disabled 0
 }
 
 
@@ -985,15 +995,7 @@ equipAuto {
 #		技能的等級
 #	dist
 #       施法距離 ［魔法最大攻擊為9格，戰士系需要較短距離］
-#   	施法距離 (如要使用 3格或以下範圍的話 請使用 <3) [可使用運算子: < <= = => > !]
-#		沒有使用運算子是當作使用 = 
-#		例: <3 	小於3, 不等於3
-#		例: <=3 小於及等於3
-#		例: =3	只有等於3
-#		例: =>3	大於及等於3
-#		例: >3	大於3, 不等於3
-#		例: !3	不等於3
-#		例: dist 3 與dist =3 一樣
+#   	施法距離 [可使用運算子: < <= = => > !]
 #	maxCastTime
 # 	 	使用此技能所需最長時間［秒］，施展成功即會繼續AI動作，
 #	 	不需等到延遲時間結束［一般攻擊型法術最好設8~10秒］
@@ -1316,16 +1318,9 @@ useSelf_skill {
 # partySkill 進階設定: [Self Condition] + [Skill Use Condition] + [Player Condition]
 #
 # partySkill {
-# 	dist <=3
-#   	施法距離 (如要使用 3格或以下範圍的話 請使用 <3) [可使用運算子: < <= = => > !]
-#		沒有使用運算子是當作使用 = 
-#		例: <3 	小於3, 不等於3
-#		例: <=3 小於及等於3
-#		例: =3	只有等於3
-#		例: =>3	大於及等於3
-#		例: >3	大於3, 不等於3
-#		例: !3	不等於3
-#		例: dist 3 與dist =3 一樣
+# 	dist
+#       施法距離 ［魔法最大攻擊為9格，戰士系需要較短距離］
+#   	施法距離 [可使用運算子: < <= = => > !]
 #	target
 # 	 	輔助技能施放對象的玩家名字
 #	target_hp
@@ -1360,7 +1355,6 @@ useSelf_skill {
 
 partySkill {
 	lvl 10
-	dist <=3
 	maxCastTime 0
 	minCastTime 0
 	hp
@@ -1957,6 +1951,12 @@ homunculus_teleportAuto_totalDmg 0
 # 生命體被同一隻怪物打，累積共損多少 HP 就飛走
 homunculus_teleportAuto_totalDmgInLock 0
 # 生命體在鎖定地圖，被同一隻怪物打，累積共損多少 HP 就飛走 
+homunculus_teleportAuto_attackedWhenSitting 0
+# 生命體回否在人物坐立時被攻擊而飛走
+homunculus_runFromTarget 0
+#
+homunculus_runFromTarget_dist 6
+#
 
 #═══════════════
 #║ 生命體-餵食 ║
@@ -1964,6 +1964,10 @@ homunculus_teleportAuto_totalDmgInLock 0
 # 生命體是否自動餵食
 homunculus_autoFeed 1
 # 生命體的餵食的滿足度設定［11~24餵一次親密度+1］
+homunculus_intimacyMax 999
+# 停止餵食的滿足度最大值
+homunculus_intimacyMin 911
+# 停止餵食的滿足度最小值
 homunculus_hunger 15
 # 當飢餓度多少時收回生命體
 homunculus_return 11
@@ -2249,6 +2253,12 @@ wx_map_portalSticking 5
 
 wx_npcTalk
 # 是否顯示NPC對話框 [1 = 使用, 0或空白 = 關閉此功能]
+
+wx_map_route
+#
+
+showAllDamage 0
+#
 
 forumURL http://optw.nva-hk.com
 

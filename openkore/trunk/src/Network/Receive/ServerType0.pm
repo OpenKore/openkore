@@ -6047,7 +6047,7 @@ sub vender_items_list {
 
 	message TF("%s\n" .
 		"#   Name                                      Type           Amount       Price\n",
-		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), "list";
+		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), ($config{showDomain_Shop}?$config{showDomain_Shop}:"list");
 	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=22) {
 		my $item = {};
 		my $index;
@@ -6082,9 +6082,9 @@ sub vender_items_list {
 		message(swrite(
 			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
 			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
-			"list");
+			($config{showDomain_Shop}?$config{showDomain_Shop}:"list"));
 	}
-	message("-------------------------------------------------------------------------------\n", "list");
+	message("-------------------------------------------------------------------------------\n", ($config{showDomain_Shop}?$config{showDomain_Shop}:"list"));
 
 	Plugins::callHook('packet_vender_store2', {
 		venderID => $venderID,
