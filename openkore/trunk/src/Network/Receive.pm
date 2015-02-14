@@ -772,7 +772,7 @@ typedef enum <unnamed-tag> {
 			Plugins::callHook('player_exist', {player => $actor});
 
 		} elsif ($actor->isa('Actor::NPC')) {
-			message TF("NPC Exists: %s (%d, %d) (ID %d) - (%d)\n", $actor->name, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
+			message TF("NPC Exists: %s (%d, %d) (ID %d) - (%d)\n", $actor->name, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $actor->{nameID}, $actor->{binID}), ($config{showDomain_NPC}?$config{showDomain_NPC}:"parseMsg_presence"), 1;
 			Plugins::callHook('npc_exist', {npc => $actor});
 
 		} elsif ($actor->isa('Actor::Portal')) {
