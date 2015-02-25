@@ -298,6 +298,7 @@ wx_map_playersSticking 1
 wx_map_portalSticking 5
 wx_map_route
 wx_npcTalk
+wx_captcha
 showAllDamage 0
 manualURL http://wiki.openkore.com/index.php?title=Manual
 forumURL http://forums.openkore.com
@@ -739,4 +740,4 @@ logToFile_Debug
 logToFile_Errors
 logToFile_Messages
 logToFile_Warnings
-history_max
+history_max 50

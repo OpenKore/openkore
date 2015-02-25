@@ -580,7 +580,7 @@ sub createMenuBar {
 
 	# Settings menu
 	my $settingsMenu = new Wx::Menu;
-	$self->createSettingsMenu($settingsMenu) if ($self->can('createSettingsMenuz'));
+	$self->createSettingsMenu($settingsMenu) if ($self->can('createSettingsMenu'));
 	$self->addMenu($settingsMenu, T('Reload config.txt'), sub {Commands::run("reload config.txt")}, T('Reload config.txt'));
 	$self->addMenu($settingsMenu, T('Reload All Configs'), sub {Commands::run("reload all")}, T('Reload All Configs'));
 	$settingsMenu->AppendSeparator;
