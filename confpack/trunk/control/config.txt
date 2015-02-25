@@ -281,6 +281,8 @@ guildAutoDeny 1
 
 verbose 1
 showDomain 0
+showDomain_NPC parseMsg_presence
+showDomain_Shop list
 squelchDomains
 verboseDomains
 beepDomains
