@@ -90,3 +90,5 @@ angus.rsw#Zombies#
 novice.rsw#Avid Welcome Grounds#
 rentb7.rsw#House 07#
 city.rsw#The main city#
+n_castle.rsw#NGuild#
+Hyrule.rsw#Hyrule#
