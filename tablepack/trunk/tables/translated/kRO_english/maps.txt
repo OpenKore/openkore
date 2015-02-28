@@ -1637,3 +1637,4 @@ terminus.rsw#Temporal Terminus#
 guild_vs7.rsw#DreamerRO PvP Arena#
 hero_camp.rsw#Hero Division's Camp#
 phtownall.rsw#Hero Camp#
+Hyrule.rsw#Hyrule#
