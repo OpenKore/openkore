@@ -2,7 +2,7 @@
 # Modified by 4epT (04.04.2011)
 #
 # This software is open source, licensed under the GNU General Public
-# License, version 3.
+# License, version 4.
 ######################
 # alertSound($event)
 # $event: unique event name
@@ -12,16 +12,16 @@
 # The config option "alertSound_#_eventList" should have a comma seperated list of all the desired events.
 #
 # Supported events:
-#death, emotion, teleport, map change, monster <monster name>, GM near, private GM chat, private chat,
-#public GM chat, npc chat, public chat, system message
+#	death, emotion, teleport, map change, monster <monster name>, player <player name>, player *, GM near,
+#	private GM chat, private chat, public GM chat, npc chat, public chat, system message
 #
 # example:
-# alertSound - {
-#	eventList monster Poring
-#	notInTown 1
-#	inLockOnly 0
-#	play sounds\birds.wav
-#}
+#	alertSound - {
+#		eventList monster Poring
+#		notInTown 1
+#		inLockOnly 0
+#		play sounds\birds.wav
+#	}
 ######################
 package alertsound;
 
@@ -84,9 +84,19 @@ sub monster {
 }
 sub player {
 # eventList player <player name>
+# eventlist player *
 # eventList GM near
 	my (undef, $args) = @_;
 	my $name = $args->{player}{name};
+	
+	for (my $i = 0; exists $config{"alertSound_".$i."_eventList"}; $i++) {
+		next if (!$config{"alertSound_".$i."_eventList"});
+		if (Utils::existsInList($config{"alertSound_".$i."_eventList"}, "player *")) {
+			alertSound("player *");
+			return;
+		}
+	}
+
 	if ($name =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
 		alertSound("GM near");
 	} else {

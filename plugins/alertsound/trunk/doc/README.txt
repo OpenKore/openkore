@@ -1,5 +1,5 @@
 AUTHOR: 4epT
-Version 3
+Version 4
 
 alertSound($event)
 $event: unique event name
@@ -9,8 +9,8 @@ Plays a sound if plugin alertSound is enabled (see sys.txt), and if a sound is s
 The config option "alertSound_#_eventList" should have a comma seperated list of all the desired events.
 
 Supported events:
-death, emotion, teleport, map change, monster <monster name>, GM near, private GM chat, private chat,
-public GM chat, npc chat, public chat, system message
+	death, emotion, teleport, map change, monster <monster name>, player <player name>, player *, GM near,
+	private GM chat, private chat, public GM chat, npc chat, public chat, system message
 
 example config.txt:
 
