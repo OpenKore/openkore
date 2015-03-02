@@ -1,8 +1,10 @@
 # alertsound plugin by joseph
 # Modified by 4epT (04.04.2011)
 #
+# Alert Plugin Version 4
+#
 # This software is open source, licensed under the GNU General Public
-# License, version 4.
+# License, ver. (2 * (2 + cos(pi)))
 ######################
 # alertSound($event)
 # $event: unique event name
