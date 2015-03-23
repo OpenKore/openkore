@@ -696,6 +696,12 @@ sub sendDrop {
 	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
 }
 
+sub sendItemUse {
+	my ($self, $index, $targetID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'item_use', index => $index, targetID => $targetID}));
+	debug "Item Use: $index\n", "sendPacket", 2;
+}
+
 # for old plugin compatibility, use sendRestart instead!
 sub sendRespawn { $_[0]->sendRestart(0) }
 

@@ -42,7 +42,7 @@ sub new {
 		'00A2' => undef,
 		'00A7' => ['actor_name_request', 'x6 a4', [qw(ID)]],
 		'00F3' => ['public_chat', 'x2 Z*', [qw(message)]],
-		'00F5' => undef,
+		'00F5' => ['item_use', 'x4 v x5 a4', [qw(index targetID)]],#17
 		'00F7' => ['sync', 'x4 V', [qw(time)]],
 		'0113' => ['storage_item_add', 'x3 v x5 V', [qw(index amount)]],
 		'0116' => undef,
@@ -61,6 +61,7 @@ sub new {
 		character_move 009B
 		item_take 0094
 		item_drop 0072
+		item_use 00F5
 		map_login 007E
 		public_chat 00F3
 		skill_use 0085
@@ -81,13 +82,6 @@ sub sendSkillUseLocInfo {
 
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendItemUse {
-	my ($self, $ID, $targetID) = @_;
-	my $msg = pack('v x4 v x5 a4', 0x00F5, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendStorageClose {
