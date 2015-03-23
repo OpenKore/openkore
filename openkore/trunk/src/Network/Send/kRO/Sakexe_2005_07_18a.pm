@@ -38,6 +38,7 @@ sub new {
 		'008C' => ['actor_info_request', 'x5 a4', [qw(ID)]],
 		'0094' => ['storage_item_add', 'x10 v x3 V', [qw(index amount)]],
 		'009B' => ['map_login', 'x a4 x6 a4 x5 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'009F' => ['item_use', 'x v x3 a4', [qw(index targetID)]],#12
 		'00A2' => ['actor_name_request', 'x12 a4', [qw(ID)]],
 		'00A7' => ['character_move', 'x10 a3', [qw(coords)]],
 		'00F5' => ['item_take', 'x a4', [qw(ID)]],
@@ -56,13 +57,6 @@ sub sendSkillUseLocInfo {
 	my $msg = pack('v x7 v x4 v x6 v x3 v Z80', 0x007E, $lv, $ID, $x, $y, $moreinfo);
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendItemUse {
-	my ($self, $ID, $targetID) = @_;
-	my $msg = pack('v x v x3 a4', 0x009F, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendMailboxOpen {

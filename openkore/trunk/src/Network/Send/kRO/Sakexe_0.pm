@@ -54,6 +54,7 @@ sub new {
 		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'009F' => ['item_take', 'a4', [qw(ID)]],
 		'00A2' => ['item_drop', 'v2', [qw(index amount)]],
+		'00A7' => ['item_use', 'v a4', [qw(index targetID)]],#8
 		'00A9' => ['send_equip', 'v2', [qw(index type)]],#6
 		'00B2' => ['restart', 'C', [qw(type)]],
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
@@ -223,14 +224,6 @@ sub sendGMMessage {
 # 0x00a4,-1
 # 0x00a5,-1
 # 0x00a6,-1
-
-# 0x00a7,8,useitem,2:4
-sub sendItemUse {
-	my ($self, $ID, $targetID) = @_;
-	my $msg = pack('v2 a4', 0x00A7, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Sent Item Use: $ID\n", "sendPacket", 2;
-}
 
 # 0x00a8,7
 # 0x00a8,7

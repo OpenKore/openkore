@@ -31,6 +31,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0072' => ['item_use', 'x3 v x2 a4', [qw(index targetID)]],#13
 		'007E' => ['storage_item_add', 'x4 v x V', [qw(index amount)]],
 		'0085' => ['actor_action', 'x2 a4 x6 C', [qw(targetID type)]],
 		'0094' => ['item_drop', 'x4 v x2 v', [qw(index amount)]],
@@ -47,13 +48,6 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	$self;
-}
-
-sub sendItemUse {
-	my ($self, $ID, $targetID) = @_;
-	my $msg = pack('v x3 v x2 a4', 0x0072, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendSkillUseLocInfo {

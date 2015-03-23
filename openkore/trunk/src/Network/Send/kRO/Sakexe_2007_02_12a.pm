@@ -36,6 +36,7 @@ sub new {
 		'0089' => ['sync', 'x2 V', [qw(time)]], # TODO
 		'0094' => ['storage_item_add', 'x5 v x V', [qw(index amount)]],
 		'009B' => ['map_login', 'x2 a4 x a4 x4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'009F' => ['item_use', 'x2 v x4 a4', [qw(index targetID)]],#14
 		'008C' => ['actor_info_request', 'x5 a4', [qw(ID)]],
 		'00A2' => ['actor_name_request', 'x9 a4', [qw(ID)]],
 		# 00A7 unchanged
@@ -55,13 +56,6 @@ sub sendSkillUseLocInfo {
 	my $msg = pack('v x3 v x2 v x v x6 v Z80', 0x007E, $lv, $ID, $x, $y, $moreinfo);
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendItemUse {
-	my ($self, $ID, $targetID) = @_;
-	my $msg = pack('v x2 v x4 a4', 0x009F, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
 1;

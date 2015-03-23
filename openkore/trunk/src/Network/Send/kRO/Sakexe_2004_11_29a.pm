@@ -46,6 +46,7 @@ sub new {
 		'00F7' => ['actor_name_request', 'x8 a4', [qw(ID)]],
 		'0113' => undef,
 		'0116' => ['item_drop', 'x2 v x4 v', [qw(index amount)]],
+		'0190' => ['item_use', 'x v x6 a4', [qw(index targetID)]],#15
 		'0193' => ['storage_item_remove', 'x2 v x11 V', [qw(index amount)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -57,6 +58,7 @@ sub new {
 		character_move 00A7
 		item_take 00A2
 		item_drop 0116
+		item_use 0190
 		public_chat 0085
 		skill_use 0072
 		skill_use_location 007E
@@ -78,13 +80,6 @@ sub sendSkillUseLocInfo {
 	my $msg = pack('v x2 v x3 v x11 v x4 v Z80', 0x0113, $lv, $ID, $x, $y, $moreinfo);
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendItemUse {
-	my ($self, $ID, $targetID) = @_;
-	my $msg = pack('v x v x6 a4', 0x0190, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendWeaponRefine {

@@ -20,8 +20,6 @@ package Network::Send::kRO::Sakexe_2008_09_10a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2008_08_20a);
 
-use Log qw(debug);
-
 sub version {
 	return 23; # looks a lot like 25, except that 25 inherits from 24
 }
@@ -36,24 +34,19 @@ sub new {
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
+		'0439' => ['item_use', 'v2 a4', [qw(index targetID)]],#8
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
-		map_login 0436
 		actor_action 0437
+		item_use 0439
+		map_login 0436
 		skill_use 0438
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	$self;
-}
-
-sub sendItemUse {
-	my ($self, $ID, $targetID) = @_;
-	my $msg = pack('v2 a4', 0x0439, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
 1;

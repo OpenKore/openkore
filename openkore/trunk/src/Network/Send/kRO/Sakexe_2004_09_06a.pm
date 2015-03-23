@@ -31,7 +31,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0072' => undef,
+		'0072' => ['item_use', 'x7 v x9 a4', [qw(index targetID)]],#24 Here is error, the packet length should be 20
 		'007E' => ['storage_item_add', 'x v x10 V', [qw(index amount)]],
 		'0085' => ['actor_action', 'x7 a4 x9 C', [qw(targetID type)]],
 		'0089' => ['character_move', 'x4 a3', [qw(coords)]],
@@ -59,6 +59,7 @@ sub new {
 		character_move 0089
 		item_take 0113
 		item_drop 0094
+		item_use 0072
 		map_login 00F5
 		public_chat 009F
 		skill_use 0190
@@ -70,13 +71,6 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	$self;
-}
-
-sub sendItemUse {
-	my ($self, $ID, $targetID) = @_;
-	my $msg = pack('v x7 v x9 a4', 0x0072, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendSkillUseLocInfo {

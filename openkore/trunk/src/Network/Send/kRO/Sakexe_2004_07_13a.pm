@@ -35,19 +35,13 @@ sub new {
 		'0085' => ['character_move', 'x4 a3', [qw(coords)]],
 		'009B' => ['actor_look_at', 'x3 C x6 C', [qw(head body)]],
 		'009F' => ['item_take', 'x4 a4', [qw(ID)]],
+		'00A7' => ['item_use', 'x4 v x5 a4', [qw(index targetID)]],#17
 		'0113' => ['skill_use', 'x5 V v x2 a4', [qw(lv skillID targetID)]],#19
 		'0116' => ['skill_use_location', 'x5 v2 x4 v2', [qw(lv skillID x y)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	$self;
-}
-
-sub sendItemUse {
-	my ($self, $ID, $targetID) = @_;
-	my $msg = pack('v x4 v x5 a4', 0x00A7, $ID, $targetID);
-	$self->sendToServer($msg);
-	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendSkillUseLocInfo {
