@@ -4765,8 +4765,8 @@ sub sense_result {
 			$args->{spirit}, $args->{undead}), "list";
 }
 
-# Your shop has sold an item
-# Need a hook.
+# Your shop has sold an item -- one packet sent per item sold.
+#
 sub shop_sold {
 	my ($self, $args) = @_;
 
@@ -4781,6 +4781,21 @@ sub shop_sold {
 	my $msg = TF("sold: %s - %s %sz\n", $amount, $articles[$number]{name}, $earned);
 	shopLog($msg);
 	message($msg, "sold");
+
+	# Call hook before we possibly remove $articles[$number] or
+	# $articles itself as a result of the sale.
+	Plugins::callHook(
+		'vending_item_sold',
+		{
+			#These first two entries are equivalent to $args' contents.
+			'vendShopIndex' => $number,
+			'amount' => $amount,
+			'vendArticle' => $articles[$number], #This is a hash
+		}
+	);
+
+	# Adjust the shop's articles for sale, and notify if the sold
+	# item and/or the whole shop has been sold out.
 	if ($articles[$number]{quantity} < 1) {
 		message TF("sold out: %s\n", $articles[$number]{name}), "sold";
 		#$articles[$number] = "";
@@ -4789,7 +4804,8 @@ sub shop_sold {
 			closeShop();
 		}
 	}
-}
+}##end shop_sold()
+
 
 # TODO:
 # Add 'dispose' support
@@ -5485,6 +5501,12 @@ our %stat_info_handlers = (
 
 		return unless $actor->isa('Actor::You');
 
+		Plugins::callHook('zeny_change', {
+			zeny	=> $actor->{zeny},
+			change	=> $change,
+		});
+
+
 		if ($config{dcOnZeny} && $actor->{zeny} <= $config{dcOnZeny}) {
 			$messageSender->sendQuit();
 			error (TF("Auto disconnecting due to zeny lower than %s!\n", $config{dcOnZeny}));
@@ -6012,6 +6034,8 @@ sub users_online {
 	message TF("There are currently %s users online\n", $args->{users}), "info";
 }
 
+
+# You see a vender!  Add them to the visible venders list.
 sub vender_found {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
@@ -6100,6 +6124,8 @@ sub vender_lost {
 	delete $venderLists{$ID};
 }
 
+
+# Buy from a vending shop -- failed for one of 2+ reasons
 sub vender_buy_fail {
 	my ($self, $args) = @_;
 
