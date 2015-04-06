@@ -53,9 +53,14 @@ sub onMapCommand {
 
     if ( !@params ) {
         Log::message("map: Usage\n");
+        Log::message("  map legend             - display what the various map characters mean\n");
         Log::message("  map [width] [height]   - display map (default size: 30 15)\n");
         Log::message("  map set x y            - set a map cell\n");
         return;
+    }
+
+    if ($params[0] eq 'legend') {
+        
     }
 
     if ( !$char || !$char->{pos} ) {
