@@ -18733,3 +18733,7 @@ Exploring ^8B4513Geffen in the cracks ^000000 #
 62835#2015 Spotlight Juno#SG_FEEL#QUE_NOIMAGE#
 Complete all quests in the Juno Area to receive a bonus reward from Victoria Quest#
 #
+
+62836#Annie's Raffle#SG_FEEL#QUE_NOIMAGE#
+Annie is on raffle collecting duties and she says that she's thirsty#
+1 Milk#
