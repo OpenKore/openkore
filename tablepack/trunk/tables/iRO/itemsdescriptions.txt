@@ -65538,3 +65538,2978 @@ Class : ^777777Card^000000
 Location : ^777777armor^000000
 Weight : ^7777771^000000
 #
+
+2177#
+The Shield of the Lord of Death
+Increase damage to Boss-type monsters by 2%
+Receive 10% more damage from normal monsters.
+^99FF66Set Bonus^000000
+^00FF00Lord of Death^000000
+^00FF00Shield of Death^000000
+Increase damage to Boss-type monsters by 5%
+if Lord of Death refined +7 above, additional 5% damage to Boss-type monsters.
+Class : ^777777Shield^000000 Def : ^777777150^000000
+weight : ^777777200^000000
+Required Lv : ^77777790^000000
+Jobs : ^777777All^000000
+#
+2189#
+A rag doll that Piamette is using for both attack and defense? It looks so real and alive!
+Increases resistance to all properties by 5%.
+MDEF +6, DEX +1.
+^99FF66Set Bonus^000000
+^00FF00Piamette's Ribbon^000000
+Increases resistance to all properties by 2% per refine, when refine level is over 6.
+Class : ^777777Sheild^000000 Defense : ^77777740^000000
+Weight : ^77777710^000000
+Required LV : ^77777730^000000
+Job : ^777777All jobs^000000
+#
+2190#
+A shield made in honor of the fallen warrior of Asgard.
+MHP + 500, MSP + 50
+Increases resistance from all properties by 10%
+If refined to 14 and above, enables use of Stone Curse Level 5
+Type : ^777777Shield^000000 Defense : ^777777150^000000
+Weight : ^77777720^000000
+Required Level : ^777777130^000000
+Job : ^7777773rd Job Classes Only^000000
+#
+2495#
+Egir's shoes , it looks suppporting your capacity
+can not be destroyed
+magic, archer, acolyte Class can increase MHP with 5 times of base lv
+sword, merchant, thief calss can increase MSP with 2 times of job lv
+Class : ^777777shoes^000000 Def : ^77777713^000000
+weight : ^77777730^000000
+Required Lv : ^777777110^000000
+Jobs : ^777777All^000000
+#
+2914#
+a legend eye that had lost all knowledge and magic instead.
+INT + 4, MDEF + 3, casting time + 3%
+Class : ^777777Accessory^000000 Def : ^7777771^000000
+Weight : ^77777710^000000
+Req Level : ^777777all level^000000
+Jobs : ^777777over 2nd Jobs^000000
+#
+2979#
+Fleet belongs aroma of dark fruit, to bite.
+All State 1.
+Under , Lv3 triggered auto spell Frost Nova a chance.
+HP +15% jobs at the time along with the mother of delicious strawberry.
+Tolerance + 10% for fire attribute attack.
+Increased 30% long-range physical attack power.
+Class: ^777777 Accessory ^000000 DEF: ^7777771 ^000000
+Weight: ^77777750 ^000000
+Req LV: ^7777771 ^000000
+jobs: ^777777except novice All Jobs ^000000
+#
+5860#
+Enhanced version of Army Cap from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class: ^777777Headgear^000000 Defense: ^7777770^000000
+Location: ^777777Upper ^000000 Weight: ^77777710^000000
+Required Level: ^77777760^000000
+Jobs : ^777777All^000000
+#
+5861#
+Enhanced version of Kafra Band from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class: ^777777Headgear^000000 Defense: ^7777770^000000
+Location: ^777777Upper ^000000 Weight: ^77777710^000000
+Required Level: ^77777760^000000
+Jobs : ^777777All^000000
+#
+5862#
+Enhanced version of Sweet Gent from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class: ^777777Headgear^000000 Defense: ^7777770^000000
+Location: ^777777Upper ^000000 Weight: ^77777710^000000
+Required Level: ^77777760^000000
+Jobs : ^777777All^000000
+#
+5863#
+Enhanced version of Zoro Mask from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 2%
+Item Class: ^777777Headgear^000000 Defense: ^7777772^000000
+Location: ^777777Mid ^000000 Weight: ^77777710^000000
+Required Level: ^77777770^000000
+Jobs : ^777777All^000000
+#
+5878#
+A blue rose that can never exist.
+This is a total dream to make it to geneticists.
+With physical critical attacks, Aspersio Lv1 can be activated with a certain chance.
+LUK + 1.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^77777730^000000
+Required LV : ^77777730^000000
+Job : ^777777all jobs^000000
+#
+5879#
+Sunglasses shaped like Poring.
+This is the season item for your fashion.
+While attacking physically, increase 5% damage against Plant type monsters.
+Decrease 5% damage from Plant type monsters.
+Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Mid ^000000Weight : ^77777720^000000
+Required LV : ^77777710^000000
+Job : ^777777all jobs^000000
+#
+5880#
+A whistle that makes you cheer up.
+STR + 1.
+When being attacked, Magnificat Lv 1 can be activated by a certain chance.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^77777710^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+15061#
+Egir's armor. It looks like you gonna swin in water
+all stat  + 1.
+can not be destroyed
+magic, archer, acolyte Class can increase mute resistance 50%.
+sword, merchant, thief calss can increase stun resistance  50%.
+Class : ^777777armor^000000 Def : ^77777755^000000
+weight : ^777777260^000000
+Required Lv : ^777777110^000000
+Jobs : ^777777All^000000
+#
+15088#
+The cloth worn by student for school.
+AGI+2, LUK+1.
+MHP increase according to Base Lv x3 
+MSP increase according to Base Lv x1/2
+Series : ^777777Armor^000000 Defense : ^77777725^000000
+Weight : ^77777750^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+15113#
+Angel's armor to fight against devils.
+Increase 3% damage against Undead type monster.
+With 6 refine Lv, increase 1% damage against Undead type monster per 1 refine Lv.
+Class : ^777777armor^000000 Defense : ^77777730^000000
+Weight : ^77777750^000000
+Required LV : ^77777750^000000
+Job : ^777777all jobs^000000
+#
+15118#
+A newly crafted armor.
+May look ordinary but shows promise when refined.
+Happy 10th Anniversary pRO!
+More than 10 Refine LV resistance against human type monster by -2%.
+When equipped by Sword Man and Merchant classes, DEF +40, ATK +5%.
+When equipped by Thief and Archer classes, DEF +10, MDEF +10, ASPD +2.
+When equipped by Magician and Acolyte classes, MDEF +20, MATK +5%.
+More than Refine LV 12 with adding Fire Property, MaxHP +7%, MaxSP +5%.
+Class : ^777777Armor^000000 Defense : ^77777740^000000
+Weight : ^777777100^000000
+Required LV : ^777777110^000000
+Jobs : ^7777773rd Job Only^000000
+#
+15119#
+A newly crafted manteau.
+May look ordinary but shows promise when refined.
+Happy 10th Anniversary pRO!
+More than 10 Refine LV resistance against human type monster by -1%.
+Decrease damages from WoE Guardians by -25%.
+More than Refine Lv 12, MDEF +5, MaxHP +5%, MaxSP +2%, Nothing property resistance +5%.
+Class : ^777777outer^000000 Defense : ^77777715^000000
+Weight : ^77777730^000000
+Required LV : ^777777110^000000
+Jobs : ^7777773rd Job Only^000000
+#
+15120#
+A newly crafted shoes.
+May look ordinary but shows promise when refined.
+Happy 10th Anniversary pRO!
+More than 10 Refine LV resistance against human type monster by -1%.
+Increase MaxHP 10 times based on Base LV.
+More than Refine Lv 12, MaxHP +8%, MaxSP +8%.
+Class : ^777777Shoes^000000 Defense : ^77777720^000000
+Weight : ^77777730^000000
+Required LV : ^777777110^000000
+Jobs : ^7777773rd Job Only^000000
+#
+18585#
+A hairband that attracts men.
+You can wear it when you want to look sexy.
+Your sexiness increases to 100%
+VIT + 3, INT + 2, STR + 1
+If refined to 9, increase ATK and MATK by 2%
+If refined to 12, reduce fix casting time by 10%
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000weight : ^7777771^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18586#
+A hairband that attracts men.
+You can wear it when you want to look sexy.
+Your sexiness increases to 100%
+VIT + 2, INT + 3, STR + 1
+If refined to 9, increase ATK and MATK by 2%
+If refined to 12, reduce fix casting time by 10%
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000weight : ^7777771^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18587#
+A hairband that attracts men.
+You can wear it when you want to look sexy.
+Your sexiness increases to 100%
+VIT + 2, INT + 1, STR + 3.
+If refined to 9, increase ATK and MATK by 2%
+If refined to 12, reduce fix casting time by 10%
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000weight : ^7777771^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18588#
+A hairband that attracts men.
+You can wear it when you want to look sexy.
+Your sexiness increases to 100%
+VIT + 1, INT + 3, STR + 2
+If refined to 9, increase ATK and MATK by 2%
+If refined to 12, reduce fix casting time by 10%
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000weight : ^7777771^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18590#
+a hairband made with gold string
+decrease magic damage 5% from evel monster type
+increase registance 5% from evel monster type
+MDEF + 3.
+Class : ^777777headgear^000000 Defense : ^7777773^000000
+location : ^777777upper ^000000Weight : ^77777720^000000
+Req Lev : ^77777710^000000
+Job : ^777777all jobs^000000
+#
+18602#
+Fresh watermelon sliced well to be eaten in one bite.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Low ^000000Weight : ^77777710^000000
+Req LV : ^77777730^000000
+Jobs : ^777777All^000000
+#
+18605#
+Hat of black feathers made by the power of demons who to bless the arrival of the Dark Ages.
+MDEF + 3.
+grant dark type of propertu to the weapon when it is from physical attack.
+increase +10 % of damage from Holy ,angel type of monster
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000Weight : ^77777720^000000
+Req LV : ^77777710^000000
+Jobs : ^777777All^000000
+#
+18608#
+A pair of small red ribbons which can be used to decorate the hair of little girls.
+Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Mid^000000    Weight : ^77777710^000000
+Required lvl : ^77777745^000000
+Available Job : ^777777Every Job^000000
+#
+18609#
+A blinkers that was enchanted by a dark magic.
+Never be blinded. Tolerance against Stun effect+2%.
+Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Middle^000000    Weight : ^77777710^000000
+Job : ^777777Every Job except Novice^000000
+#
+18627#
+A dried leaf thinking of hometown.
+Increase 3% damage to plant type of monster.
+Series : ^777777Headgear^000000 Def : ^7777770^000000
+location: ^777777lower ^000000 weight : ^7777775^000000
+Req Lv : ^77777710^000000
+Jobs : ^777777All^000000
+#
+18628#
+Bu~oi to achieve it is asleep as dead. To even worry about whether wake up sleeping on the defenseless too.
+MDEF + 5.
+MHP + 2%,  decrese -5% of damange from demi human monster
+if equipped with manteau of boss tare, able to decrease -10% of damage and MHP +3% from demi human monsters
+Class : ^777777headgear^000000 Defense : ^7777775^000000
+Location : ^777777Upper ^000000Weight : ^77777750^000000
+Req Level : ^77777750^000000
+Jobs : ^777777All^000000
+#
+18629#
+A celebration hat for Desert Wolves, makes you feel like a member of the pack.
+15% damage to small-type monsters.
+With a pet desert wolf, additional 5% damage to small-type monsters.
+Adds 5% intimacy if the stat is close friends.
+class : ^777777headgear^000000 def : ^7777770^000000
+location: ^777777upper ^000000 weight : ^77777730^000000
+Jobs : ^777777All^000000
+#
+18650#
+a mouth would have been advocated as unknowingly 'RWC! Fighting!
+you will have lots of extra effect when trying physical and magical attack with normal rate
+will disappear after RWC match.
+Class : ^777777headgear^000000 Defense : ^7777770^000000
+Location : ^777777low ^000000Weight : ^7777775^000000
+Req Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19651#
+a mouth would have been advocated as unknowingly 'RWC! Fighting!
+you will have lots of extra effect when trying physical and magical attack with normal rate
+will disappear after RWC match.
+Class : ^777777Clothes^000000 Defense : ^7777770^000000
+Location : ^777777low ^000000Weight : ^7777770^000000
+Req Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18653#
+a headphone from Devil Deviruchi. It is good to block the noise from outside
+increase resistance of Stun 50%
+if it with Magician, Archer, Acolyte class, increase stun resistance 5%, if Cute pet intimacy is close friend, increase addtioanl stun resistance 15%
+Class : ^777777Headgear^000000    Defense : ^7777778^000000
+Location : ^777777Upper^000000    Weight : ^77777720^000000
+Req Level : ^77777730^000000
+Jobs : ^777777All^000000
+#
+18655#
+Yet decadent in single-lens glasses with wings, I blow out the charm of secret. I do not know why, but it is said Goe-Do we use habitually.
+Agi +2.
+cast Steal LV1 at normal chance
+unable to refine
+Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Mid^000000    Weight : ^77777710^000000
+Req Level : ^77777750^000000
+Jobs : ^777777All jobs ^000000
+#
+18658#
+The beard which asdignity of the holy Santa.
++2% of physical damage from dark type of monsters
+if equipped with 'Holy Christmas Tress'  MDEF + 3, able to drop "bush de noel '.
+Class : ^777777headgear^000000 Defense : ^7777770^000000
+Location : ^777777low ^000000Weight : ^77777710^000000
+Req Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18669#
+The hat is made with leather. You will feel the fashion sense after worn it.
+DEX+2, HP+1%.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location :  ^777777Upper^000000    Weight : ^77777720^000000
+Level Requirement :  ^777777None^000000
+Job : ^777777All Job except Novice^000000
+#
+18674#
+a hat that has sharp wings.you feel like to fly
+AGI + 3, ASPD + 1%, every 10 sec SP - 5.
+Class : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777720^000000
+Req Level : ^777777none^000000
+Jobs : ^777777All except Novice^000000
+#
+18675#
+Green apple on the head, everyone is going to bite it.
+DEX+2, HIT+5.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location :  ^777777Upper^000000    Weight : ^77777720^000000
+Level Requirement :  ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+18677#
+A pretty cherry twig, everyone wants to have it.
+Damage to plant type monster +2%
+Unable to refine.
+Series : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Lower^000000  Weight : ^77777720^000000
+Level Requirement :  ^77777720^000000
+Job : ^777777All Job Except Novice^000000
+#
+18678#
+Made use of the shape of the Leek.
+Reduces 2% damage taken from small size monsters.
+Unrefinable.
+Series : ^777777Headgear^000000    Defense : ^7777770^000000
+Location :  ^777777Lower^000000    Weight : ^77777720^000000
+Level Requirement :  ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+18679#
+an unique abacus 
+item check LV 1' available
+unable to refine
+Class : ^777777headgear^000000    Def : ^7777770^000000
+Location : ^77777low^000000    Weight : ^77777720^000000
+Req Level : ^77777720^000000
+Jobs : ^777777all Jobs except novice^000000
+#
+18680#
+The hat made according to Roda Frog, but it is made into square shape.
+AGI+1.
+Experience from Insect class monster +5%.
+Cannot refine.
+Series : ^777777Headgear^000000    Defense : ^7777772^000000
+Location :  ^777777Upper^000000    Weight : ^77777720^000000
+Level Requirement :  ^77777735^000000
+Job : ^777777All^000000
+#
+18681#
+A cute hat with ear of puppy.
+VIT+2, HP+100.
+Series : ^777777Headgear^000000    Defense : ^7777772^000000
+Location :  ^777777Upper^000000    Weight : ^77777720^000000
+Level Requirement :  ^777777None^000000
+Job : ^777777All^000000
+#
+18682#
+The tears won't stop
+Class : ^777777headgear^000000   
+Def : ^7777771^000000
+Location : ^777777mid^000000    
+Weight : ^77777710^000000
+Req Level : ^777777none^000000
+Jobs : ^777777All^000000
+#
+18683#
+It seems like a delicious carrot, but it cannot eat. It is specially made for Bunny Bund and has special effect if you equip them together.
+Reduces 3% damage taken from Plant class monsters.
+Have chance to autospell Lv.1 High Jump when receive physical damage if equip together with Bunny Band.
+Cannot refine.
+Series : ^777777Headgear^000000    Defense : ^7777771^000000
+Location :  ^777777Lower^000000    Weight : ^77777720^000000
+Level Requirement :  ^777777None^000000
+Job : ^777777All^000000
+#
+18684#
+Do you want be taller? Wear it now!
+STR+3, INT+2.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location :  ^777777Upper^000000    Weight : ^77777720^000000
+Level Requirement :  ^777777None^000000
+Job : ^777777All Job except Novice^000000
+#
+18685#
+Using a form decorative star of the Stardust, the hair band that was created. It can be expressed more than my best to be lively is that.
++ EXP 5% from none-type of monster, and + 10% of damage from it 
+Class : ^777777headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^777777100^000000
+Req Level : ^77777710^000000
+Jobs : ^777777All^000000
+#
+18690#
+Wearing dizziness imitation of giants "Sirt 'of the flame that would burn the world, you can feel the heat to get angry.
+STR + 1, ATK + 1%.
+Class : ^777777headgear^000000    Defense : ^7777770^000000
+Location : ^777777Mid^000000
+Weight : ^77777740^000000
+Req Level : ^77777750^000000
+jobs : ^777777all jobs jobs^000000
+#
+18691#
+A hat made in the appearance of black dragon's ascension.  A helm that applied the Black Dragon's will, has fabulous side view and always keeps the side view.
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18692#
+Karaoke party begins ~~
+Integrate your hat with microphone, it can attract the attention of the judges.
+DEX+2, LUK+1.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+18693#
+The headgear is made according to the sleeping kitty.
+Increase damage inflicted on Brute Monsters by 2%.
+Series : ^777777Headgear^000000    Defense : ^7777774^000000
+Location : ^777777Upper^000000    Weight : ^77777720^000000
+Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+18694#
+You will feel in a fairy tale after worn it.
+CRI + 10.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777720^000000
+Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+18695#
+Usually,  Myo tribe wears this Headgear. It makes you to a dignified lady.
+INT + 2.
+Class : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777740^000000
+Required Level : ^77777720^000000
+Job : ^777777All Jobs except Novice^000000
+#
+18696#
+Top of head orange that makes smooth and glossy hair.
+Available skill 'Mammonite 2Lv'.
+Class : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777740^000000
+Required Level : ^77777720^000000
+Job : ^777777All Jobs except Novice^000000
+#
+18697#
+It is made with the shape of the syringes. It look like a nurse is injecting for the patient.
+Cannot refine.
+Series : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Lower^000000    Weight : ^77777720^000000
+Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+18698#
+Cheese snack that melts away in the mouth.
+Refine unavailable.
+Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Lower^000000    Weight : ^77777720^000000
+Required Level : ^77777720^000000
+Job : ^777777All Jobs except Novice^000000
+#
+18699#
+Hat that looks like a starving big fish eats man 
+Receive 15% less damage from water property monster. When hunting monsters, dropped Fresh Fish with low chance.
+Refine unavailable.
+Class : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^777777120^000000
+Job : ^777777All Jobs^000000
+#
+18700#
+Gothic rabbit ribbon hat that is arrogant  and cute.
+INT + 1.
+Class : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Job : ^777777All Jobs^000000
+#
+18701#
+A helm known as ancient civil servant wore. It symbolizes great wisdom.
+INT + 3, DEX + 2, LUK + 1.
+When equipped weapon is book type, decreases 3% of casting time.
+Refine unavailable.
+Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Required Level : ^77777770^000000
+Job : ^777777All Jobs except Novice^000000
+#
+18702#
+It is coated lots of cream like a Santa Claus but doesn't want to shave.
+Refine unavailable.
+Class : ^777777Headgear^000000    Defense : ^7777771^000000
+Location : ^777777Lower^000000    Weight : ^7777775^000000
+Required Level : ^77777710^000000
+Job : ^777777All Jobs^000000
+#
+18706#
+Can Hat whick looks so sad. Alms for the poor when I wear this!
+LUK + 3.
+Class : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777740^000000
+Required LV : ^77777720^000000
+jobs : ^777777all jobs without Novice^000000
+#
+18707#
+Wear it will scare the surrounding people!
+FLEE +20.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000      Weight : ^77777750^000000
+Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+18708#
+Delicious candy in the head, people always wanted to get down to eat.
+Can use [Heal] LV3.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777720^000000
+Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+18709#
+The most suitable cap to wear in the warm winter!
+MaxSP + 100.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+18711#
+Do you want be trendy and fashion? Wear it now!
+Unrefinable.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Middle^000000    Weight : ^77777740^000000
+Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000
+#
+18712#
+The useful tools for refreshing in the summer.
+Cannot refine.
+Series : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Lower^000000    Weight : ^77777720^000000
+Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000"
+#
+18713#
+Hat of warm fur made ??to mimic the shape of a monkey. I like everyone young and old.
+DEX + 1, AGI + 1, FLEE + 10.
+Class : ^777777Headgear^000000    Defense : ^7777776^000000
+Location : ^777777Upper^000000    Weight : ^77777730^000000
+Req Level : ^77777720^000000
+Jobs : ^777777All jobs Jobs^000000
+#
+18714#
+The Hippo Hat made from Africa. You will feel are swimming in the Nile River like a Hippo after worn it.
+Reduces Water Element attack by 10%, Have low rate to cast Frost Nova LV1.
+Series : ^777777Headgear^000000    Defense : ^7777775^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Level Requirement : ^77777710^000000
+Job : ^777777All^000000
+#
+18716#
+The sweet and delicious Strawberry in the mouth.
+Cannot refine.
+Series : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Lower^000000    Weight : ^7777775^000000
+Level Requirement : ^77777710^000000
+Job : ^777777All^000000
+#
+18718#
+The white hairband trimmed with red and blue roses. 
+Increases Attack Speed by 3%, reduces Floating Casting Time by 3%.
+VIT + 1, INT + 1.
+Series : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777720^000000
+Level Requirement : ^77777730^000000
+Job : ^777777All^000000
+#
+18727#
+a hat from Sedora. Big botton is cute
+decrease damage -5% from fish type of monster
+increase HP recovery +50% when having sushi, raw fish
+if refined is over lv 7 , additional HP recovery +100% with sushi, raw fish
+if euipped with Sea Otter Card, additional HP recovery +50% with sushi, raw fish
+Class : ^777777headgear^000000 Def : ^77777713^000000
+location : ^777777upper ^000000weight : ^77777730^000000
+Required Lv : ^77777710^000000
+Jobs : ^777777All^000000
+#
+18728#
+Egir's headgear. When Egir sets are all together, shows power of sea
+Class : ^777777headgear^000000 Def : ^77777710^000000
+location : ^777777upper ^000000weight : ^77777780^000000
+Required Lv : ^777777110^000000
+Jobs : ^777777All^000000
+#
+18729#
+Thank you for supporting our SMART RWC 2012 Team Pilipinas.
+Decreases 10% damage from human property monsters.
+Increases Mastela_Fruit's recovery by 30%.
+Decrease 3% of variable casting.
+When refining with Lv over +12, decreases additional 1% variable casting. 
+When refining with Lv over +14, decreases additional 1% variable casting (Total 5%).
+Class : ^777777Headgear^000000 Defense : ^7777776^000000
+Location : ^777777Upper ^000000Weight : ^77777715^000000
+Required Level : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+18739#
+Express your love to your mother.
+LUK + 1.
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18740#
+His ascension was like the flashing of light,
+His plumage was beauteous and his presence ravishing.
+Only death awaits those who've seen it.
+Type : ^777777Costume^000000 Defense : ^7777770^000000
+Position : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All Jobs^000000 
+#
+18741#
+To feel the fear of those who see in the eerie paranormal.
+Class: ^777777Costume ^000000 DEF: ^7777770 ^000000
+Location: ^777777Upper ^000000 Weight: ^7777770 ^000000
+Req LV: ^7777771 ^000000
+jobs: ^777777All Jobs ^000000
+#
+18742#
+A strong feeling of being one with the night skies.
+Type : ^777777Costume^000000 Defense : ^7777770^000000
+Position : ^777777Mid ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All Jobs^000000 
+#
+18743#
+The soul of the Chung E, it is scary and horrible.
+Series : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000 
+#
+18744#
+Sparkle emanating from the body.
+Type : ^777777Costume^000000 Defense : ^7777770^000000
+Position : ^777777Mid ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All Jobs^000000 
+#
+18745#
+A long stick with an addictive choco. You can't seem to get enough of it.
+SP + 50.
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Position : ^777777Lower ^000000Weight : ^7777770^000000
+Require LV : ^77777710^000000
+Equipped by : ^777777All Jobs^000000
+#
+18746#
+You can see continuos cold breathe.
+INT + 1.
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Position : ^777777Lower ^000000Weight : ^77777710^000000
+Require LV : ^77777710^000000
+Equipped by : ^777777All Jobs^000000
+#
+18747#
+A threathening eye. Others suddenly becomes easy targets.
+DEX + 1.
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Position : ^777777Mid ^000000Weight : ^77777710^000000
+Require LV : ^7777771^000000
+Equipped by : ^777777All Jobs^000000
+#
+18748#
+An eastern hat that brings mercy and luck.
+LUK + 2, DEX + 2.
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Position : ^777777Upper ^000000Weight : ^7777770^000000
+Require LV : ^7777771^000000
+Equipped by : ^777777All Jobs^000000
+#
+18749#
+You feel as strong as a Majoruros.
+HP + 100, STR + 2.
+Series : ^777777Headgear^000000 Defense : ^7777778^000000
+Position : ^777777Upper ^000000Weight : ^77777750^000000
+Require LV : ^7777771^000000
+Equipped by : ^777777All Jobs^000000
+#
+18750#
+Gives you a feeling of advantage over your enemies.
+Decrease 2% damage against human-type
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Position : ^777777Lower ^000000Weight : ^7777775^000000
+Require LV : ^77777710^000000
+Equipped by : ^777777All Jobs^000000
+#
+18753#
+The hat is made according to the traditional food during Dragon Boat Festival. It is tasty and delicious.
+LUK+1.
+Have chance to drop Rice Ball after defeat monster
+Series : ^777777Headgear^000000 Defense : ^7777776^000000
+Location : ^777777Upper ^000000 Weight : ^7777777^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18754#
+Cursed mask inspired by creepy vampire fang. Drains life it will.
+Drains 5% HP out of the damage given to the enemy.
+Disables autorecovery for HP and SP.
+Cannot be refined nor destroyed
+Class : ^777777Helm^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^77777730^000000
+Required LV : ^77777740^000000
+Job : ^777777All^000000
+#
+18797#
+A beautiful featherlike hat made by feathers of angels. It makes you high with its tenderness and you can move very pleasantly.
+AGI + 1 , LUK + 1
+MDEF + 3
+Decrease 3% damages when being attacked by Demons.
+Class : ^777777Headgear^000000    Defense : ^7777774^000000
+Location : ^777777Upper^000000    Weight : ^77777710^000000
+jobs : ^777777all jobs without Novice^000000
+#
+18798#
+A beautiful featherlike hat made by feathers of angels. It makes you high with its tenderness and you can move very pleasantly.
+AGI + 1 , LUK + 1
+MDEF + 3
+Decrease 3% damages when being attacked by Demons.
+Class : ^777777Headgear^000000    Defense : ^7777774^000000
+Location : ^777777Upper^000000    Weight : ^77777710^000000
+jobs : ^777777all jobs without Novice^000000
+#
+18805#
+Eclipse hat from lunatic leader
+LUK + 3, MDEF+ 5.
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper ^000000weight : ^77777730^000000
+Req Lv : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18806#
+a black-rabbit hat that might be in magic show 
+AGI + 3, DEX + 2.
+when getting attack, agi increase lv5 for himself
+Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper ^000000weight : ^77777730^000000
+Req Lv : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18807#
+The hat is made according to the shape of citron. It make people always to eat on it.
+LUK +3, VIT +2.
+Reduces damage from Plant monster by 10%.
+Series : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777740^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All Job except Nvice^000000
+#
+18808#
+^ff0000This item cannot trade with others account.^000000
+Everyone will feels your eye sight is shaper if you wear this glasses.
+AGI +1.
+Series : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Middle ^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18814#
+^ff0000This item cannot be traded with other account.^000000f
+The symbol of good student, it represents the enthusiastic in helping.
+VIT+1, INT+2.
+Series : ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All Job except Novice^000000
+#
+18815#
+^ff0000This item cannot be traded with other account.^000000f
+The symbol of naughty student, it represents the devil and troublesome.
+VIT+1, STR+2.
+Series : ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All Job except Novice^000000
+#
+18816#
+The symbol of good student, it represents the enthusiastic in helping.
+VIT+2, INT+2, LUK+1.
+If equipped with Red Pencil In Mouth and School Uniform, MATK increase according to Base Lv, (BaseLv 1/3, Maxmimum Lv150), EXP from monster +5%.
+Series : ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All Job except Novice^000000
+#
+18817#
+The symbol of naughty student, it represents the devil and troublesome.
+VIT+2, STR+2, LUK+1.
+If equipped with Blue Pencil In Mouth and School Uniform, ATK increase according Base Lv (BaseLv 1/3, maximum Lv150), EXP from monster +5%.
+Series : ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All Job except Novice^000000
+#
+18818#
+The red pencil in the mouth.
+HIT+3.
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18819#
+The blue pencil in the mouth.
+HIT+3.
+Series : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000 Weight : ^77777710^000000
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000
+#
+18822#
+Wing-like ears made of burning flames.
+When attacking physically, Magnum Break Lv1 can be activated automatically with a certain chance.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^77777710^000000
+Required LV : ^77777730^000000
+Jobs : ^777777All^000000
+#
+18823#
+ASPD + 1%.
+Resistance to Wind property attacks + 5%.
+When having more than pure AGI 108, increase ASPD + 1, ASPD 1%.
+When wearing with Imperial Spear, Imperial Guard, increase skill attach power 20% of Cannon Spear, Shield Press, Banishing Point.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^77777750^000000
+Required LV : ^77777770^000000
+Jobs : ^777777All^000000
+#
+18824#
+Recovery a certain amount of HP and SP with a certain chance when attacking physically or magically.
+When wearing with Bankruptcy Of Heart, increase MaxHP +100, 1% resistance to Nothing property attacks per 1 refine level for Bankruptcy Of Heart.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Midlower ^000000Weight : ^77777749^000000
+Required LV : ^77777749^000000
+Jobs : ^777777All^000000
+#
+18825#
+INT + 1, DEX + 1.
+Class : ^777777Headgear^000000 Defense : ^7777778^000000
+Location : ^777777Upper ^000000Weight : ^777777120^000000
+Required LV : ^77777738^000000
+Jobs : ^777777All^000000
+#
+18827#
+A holy circlet symbolized Valkyrie's apprentice which punish all the evil people.
+STR + 1.
+Additional physical damage 10% against Darkness, Demon Monsters.
+Equipped with Ears of Angel's Wing, you can transform into Randgris by a certain chance.
+Increase Randgris transformation chance per 1 refine grade.
+When transforming into Randgris, lose 30 HP per every sec, HIT -10, nomal physical attacks excluding skills can be splashed up to 9 slots.
+Class : ^777777Headgear^000000 Defense : ^77777710^000000
+Location : ^777777Upper ^000000Weight : ^77777730^000000
+Required LV : ^77777750^000000
+Jobs : ^777777All^000000
+#
+18832#
+A celebration hat for the sworn of 666th Gigue family grand master.
+Certain chance of activating 2 LV Adrenalin Rush skill when performing physical attacks.
+2 LV Adrenalin Rush skill activation chance goes up when playing with Cute pet, Baphomet junior.
+Extra 2 LV Adrenalin Rush skill activation chance goes up when friendly rate is "best friend".
+Class : ^777777Helm^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^77777730^000000
+Required LV : ^7777771^000000
+Job : ^777777All^000000
+#
+18833#
+A brand-new hairband designed by combining flower wreaths and Marine.
+All state +1. MDEF +2.
+When being attacked physically, it can activate Frost Diver Lv 3 with a certain chance.
+When attacking physically, it can activate Coldbolt Lv 5 with a certain chance.
+^ff0000It cannot be traded with another account.^000000
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000Weight : ^7777771^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18834#
+A Sakura-shaped hairband.
+LUK +3.
+When being attacked physically, it can activate Assumptio Lv 3 with a certain chance.
+^ff0000It cannot be traded with another account.^000000
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18837#
+A whistle to cheer you up!
+STR +2.
+^ff0000It cannot be traded with another account.^000000
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^77777710^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18838#
+A hat applied a special engine which can move Angeling's wings. This engine seems to have a myterious function.
+All State + 1.
+ATK, MATK + 2.
+Additional ATK, MATK + 2 per 1 refine grade.
+Transform into Angeling for 5 sec by a certain chance when attacking physically or magically.
+When transforming with a phycial attack, ASPD +2 for 5 sec.
+When transforming with a magical attack, decrease Floating Casting time for 5 sec.
+Transformation success chance will be increased per each refine grade.
+#
+18839#
+Cute Poring-shaped pink sunglasses. It can protect your eyes from sunshines and even look cute.
+DEX + 1.
+Decrease 5% Floating Casting time.
+Class : ^777777Headgear^000000 Defense : ^77777710^000000
+Location : ^777777Middle ^000000Weight : ^77777710^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18852#
+A delicious strawberry, so delicious that you'd rather put in on your head than eat it?
+All State +1.
+If refined to +12 or higher, ASPD +2
+Class : ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper ^000000Weight : ^77777715^000000
+Required Level : ^77777730^000000
+Job : ^777777All jobs^000000
+#
+18853#
+A delicious strawberry, so delicious that you'd rather put in on your head than eat it?
+All State +1.
+If refined to +12 or higher, ASPD +2
+Class : ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper ^000000Weight : ^77777715^000000
+Required Level : ^77777730^000000
+Job : ^777777All jobs^000000
+#
+18858#
+A mysterious angeling balloon from LU! Live 2013.
+MHP + 200.
+ASPD + 1.
+Class: ^777777Headgear ^000000 DEF: ^7777775 ^000000
+Location: ^777777Low ^000000 Weight: ^7777775 ^000000
+Req LV: ^7777771 ^000000
+jobs: ^777777All Jobs ^000000
+#
+18859#
+We shall fly far higher in the sky flapping big Angel ring.
+DEX + 1.
+MATK + 2%.
+MHP + 100.
+Class: ^777777Headgear ^000000 DEF: ^7777775 ^000000
+Location: ^777777Low ^000000 Weight: ^7777775 ^000000
+Req LV: ^7777771 ^000000
+jobs: ^777777All Jobs ^000000
+#
+18866#
+A silk hat of Owlduke. It can boost magic attack powers.
+INT + 1, AGI + 1.
+When attacking magically, Mystical Amplification LV 2 can be activated with a certain chance.
+With more than 6 refine Lv, the chance to activate Mystical Amplification will be increased based on refine Lv.
+With wearing One Eyed Glass, the chance to activate Mystical Amplification LV 2 will be increased.
+With equipping Owl Baron Card, Mystical Amplification LV 4 can be activated with a certain chance.
+With equipping Owl Baron Card and Owl Duke Card, Mystical Amplification LV 6 can be activated with a certain chance.
+With equipping Walking Stick, the chance to activate  Mystical Amplification will be increased per each refine Lv.
+With more than 10 refine Lv of Walking Stick, decrease 20% Floating Casting time.
+Class : ^777777Headgear^000000 Defense : ^77777715^000000
+Location : ^777777Upper ^000000Weight : ^77777750^000000
+Required LV : ^77777770^000000
+Job : ^777777all jobs^000000
+#
+18867#
+One of the holy weapon of Rudra, the God of storm.
+Increase 2% physical attack power for a long distance.
+DEX + 1.
+With equipping Bow Of Rudra, increase 3% damage when physically long distance attacking.
+With more than 7 refine Lv of Bow Of Rudra, increase additional 5% damage when physically long distance attacking.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^77777730^000000
+Required LV : ^77777748^000000
+Job : ^777777all jobs^000000
+#
+18883#
+Wearing this hat, it seems to control myself by Black Witch's magic.
+All State + 3
+Additional recovery 30% of Fruit Of Mastela.
+With more than 10 refine grade, FLEE + 2, ASPD + 1.
+With more than 14 refine grade, additional FLEE + 2, ASPD + 1.
+Class : ^777777Headgear^000000 Defense : ^7777777^000000
+Location : ^777777Upper ^000000Weight : ^77777740^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18885#
+A colorful headgear for JeJemon. It created a massive trend locally during 2010-2011 era.
+INT + 3, STR + 2
+Increase resistance against human type monsters by 11%
+Increase the healing effect of Mastela Fruit by 70% 
+Type : ^777777Headgear^000000 Defense : ^7777778^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Required Level : ^77777770^000000
+Job : ^777777All Jobs^000000
+#
+18886#
+A seven colored hat shaped like an octopus. Watch out! It is really dangerous.
+VIT + 2, DEX + 2.
+All State + 3, MaxHP + 10%, MaxSP + 10%.
+Cannot be refined, Indestructible.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^77777750^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18887#
+A hairband that attracts individuals.
+You can wear it when you want to look sexy.
+Sexiness increases by 100%
+VIT + 3, MDEF + 5, MATK + 2%
+If refined to 9, MDEF + 5 and MATK 4%
+If refined to 12, reduce fix casting time by 10%
+Type : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+18888#
+A hairband that attracts individuals.
+You can wear it when you want to look sexy.
+Sexiness increases by 100%
+INT +5  LUK + 5 ATK +2%  MATK + 5%
+If refined to 9,  increase ATK and MATK by 4%
+If refined to 12, reduce fix casting time by 10%
+Type : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+18889#
+A hairband that attracts individuals.
+You can wear it when you want to look sexy.
+Sexiness increases by 100%
+AGI + 5, LUK + 5, ATK + 5%
+If refined to 9, increase ATK and MATK by 5%
+If refined to 12, reduce fix casting time by 10%
+Type : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+18890#
+A hairband that attracts individuals.
+You can wear it when you want to look sexy.
+Sexiness increases by 100%
+INT + 5,  LUK + 5, ATK + 2%,  MATK + 5%
+If refined to 9,  ATK  and MATK increase 4%.
+If refined to 12, decrease stat casting time 10%
+Type : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+18891#
+A hat made to look like a husky's face. Makes you want to pet it.
+ATK + 5%, MATK +5%
+When attacking physically, adds 1% chance to cast Wind Walk Level 5
+For every refine, increases chance to cast Wind Walk by 0.3% 
+^FF0000Winner of pRO's Headgear-making contest 2012
+Created by Cyber Pikachu of pRO Valkyrie Server^000000
+Type : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Upper ^000000Weight : ^77777750^000000
+Required Level : ^77777770^000000
+Job : ^777777All Jobs^000000
+#
+18893#
+I feel the power of a flame dragon flowing inside me!
+Increase resistance against Dragon and Demi-human by 8%
+Increases healing effect of Meat by 200%
+if refined to 12, increase MHP + 7%, MSP + 3%
+^FF0000Winner of pRO's Headgear-making contest 2012
+Created by bladetip of pRO Valkyrie Server^000000
+Type : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Upper ^000000Weight : ^777777100^000000
+Required Level : ^77777710^000000
+Job : ^777777All Jobs^000000
+#
+18894#
+"Walk on a rainbow trail; walk on a trail of song, and all about you will be beauty. 
+There is a way out of every dark mist, over a rainbow trail. - Robert Motherwell"
+Reduces damage from Demi-human by 5%
+^FF0000Concept by Clarissa Morgenstern of pRO New Chaos Server^000000
+Type : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Mid ^000000Weight : ^77777750^000000
+Required Level : ^77777770^000000
+Job : ^777777All Jobs^000000
+#
+18896#
+"No one ever approaches perfection except by stealth,
+and unknown to themselves. - William Hazzlit"
+Increases resistance from Fire Property by 8%
+^FF0000Concept by -*[FS]Evaine*- of pRO Valkyrie Server^000000
+Type : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Mid ^000000Weight : ^77777720^000000
+Required Level : ^77777750^000000
+Job : ^777777All Jobs^000000
+#
+18898#
+A gorgeous crown made with Trunk of Yggdrasil imbued with the power of
+Mother Nature to the heralds of Philippine Ragnarok Online.
+All Stat + 5, MHP + 100, MSP + 50
+If refined to 8 and above, adds 1% to MHP and reduces fix casting time by 1% for every refine level
+Type : ^777777Headgear^000000 Defense : ^7777776^000000
+Location : ^777777Upper ^000000Weight : ^77777720^000000
+Required Level : ^77777760^000000
+Job : ^777777All Jobs^000000
+#
+18907#
+A panda clinging to its master. Somehow you'd feel braver with it around.
+Reduce damage from human-type monsters by 5%
+Increases damage to medium-type monsters by 10%
+When refined to 9 above, randomly auto-casts 'Scream Lv.2' when physically attacked.
+Class : ^777777Headgear^000000
+Location : ^777777Upper ^000000
+Defense : ^7777778^000000
+Weight : ^77777720^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18911#
+Lovely petals dropping from a pair of red flowers.
+DEX +5
+Reduce damage from earth-type monsters by 3%
+Reduce damage from human-type monsters by 10%
+When refined to 12 above, reflects physical damages by 5%
+Class : ^777777Headgear^000000
+Location : ^777777Upper ^000000
+Defense : ^77777710^000000
+Weight : ^77777720^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18912#
+A pigeon perched on his master's shoulder.
+All State +1
+Randomly auto-casts 'Ruwach Lv.1' when physically attacked.
+If equipped with Angel Wing, 5% bonus EXP earned when killing monsters.
+Unrefinable
+Class : ^777777Headgear^000000
+Location : ^777777Middle ^000000
+Defense : ^7777775^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18913#
+A gossiping raven that talks all day long.
+All State +1
+Randomly auto-casts 'Ruwach Lv.1' when physically attacked.
+If equipped with Grand Circlet, 5% bonus EXP earned when killing monsters.
+Unrefinable
+Class : ^777777Headgear^000000
+Location : ^777777Middle ^000000
+Defense : ^7777775^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18914#
+A cute baby deviling that chases his master all day.
+All State + 1
+Randomly auto-casts 'Blessing Lv.7' when attacking physically.
+Unrefinable
+Class : ^777777Headgear^000000
+Location : ^777777Middle ^000000
+Defense : ^7777775^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18915#
+Scary but beautiful. Blood is still dripping from the wings, don't ask how it was acquired.
+HP +200
+FLEE +1
+Unrefinable
+Class : ^777777Headgear^000000
+Location : ^777777Middle ^000000
+Defense : ^7777775^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18916#
+A balloon shaped like a bear. It is often mistaken as a Poring.
+STR +1, LUK +1
+MaxHP +50
+Unrefinable
+Class : ^777777Headgear^000000
+Location : ^777777Lower ^000000
+Defense : ^7777775^000000
+Weight : ^77777720^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18919#
+A common familiar often summoned by vampires. Very useful in scouting danger ahead of time.
+FLEE + 5
+When equipped with Magestic Goat[1], STR +3 and FLEE +5
+Unrefinable
+Class : ^777777Headgear^000000
+Location : ^777777Lower ^000000
+Defense : ^7777775^000000
+Weight : ^77777720^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+18944#
+A balloon made afte a small and shy devil.
+All State + 1.
+Physical and Magic damage +1% to devil type monsters.
+Class : ^777777Headgear^000000 Def : ^7777775^000000
+Location : ^777777Upper ^000000Weight : ^77777720^000000
+Req LvL : ^7777771^000000
+Job : ^777777All^000000
+#
+18945#
+Nothin you need to worry in the World when wearing this on your head.
+MDEF + 3.
+DEX + 2, INT + 2.
+FLEE -1.
+MaxHP + 2%, MaxSP + 30.
+Skill 'Magnificat' 1LvL available.
+Class : ^777777Headgear^000000 Def : ^7777772^000000
+Location : ^777777Upper ^000000Weight : ^77777730^000000
+Req LvL : ^77777730^000000
+Job : ^777777All^000000
+#
+18946#
+Nothin you need to worry in the World when wearing this on your head.
+MDEF + 3.
+STR + 2, LUK + 2
+FLEE -1.
+MaxHP + 1%, MaxSP + 15.
+Class : ^777777Headgear^000000 Def : ^7777772^000000
+Location : ^777777Upper ^000000Weight : ^77777730^000000
+Req LvL : ^77777730^000000
+Job : ^777777All^000000
+#
+18953#
+A newly crafted cap.
+It's already quite powerful but can still be refined, more power the better.
+Happy 10th Anniversary pRO!
+STR +2, INT +2, DEX +2.
+Increase resistance against human type monster by -5%.
+Increase healing effect of Slim White Potion, White Potion and Siege White Potion by +50%.
+More than 10 Refine LV resistance against human type monster by additional -5%.
+Increase healing effect of Slim White Potion, White Potion and Siege White Potion by additional +50%.
+More than 12 Refine LV, MaxHP +5%, MaxSP +2%.
+Class : ^777777Headgear^000000 Defense : ^77777710^000000
+Location: ^777777Upper ^000000 Weight : ^77777710^000000
+Required LV : ^77777725^000000
+Jobs : ^777777All^000000
+#
+18956#
+Colorful sugar sprinkled above on a delicious chocolate.
+Str +1, Int +1, Luk +1
+Class : ^777777Headgear^000000 Def : ^7777771^000000
+Location : ^777777Lower ^000000Weight : ^77777710^000000
+Req LvL : ^7777771^000000
+Job : ^777777All^000000
+#
+18961#
+A hat made after fluffy monster Lunatic.
+Class : ^777777Headgear^000000 Def : ^7777772^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Req LvL : ^7777771^000000
+Job : ^777777All^000000
+#
+18962#
+Cute panda balloon!
+All State +1, ASPD +1.
+Cannot be enchanted nor destructed.
+Class : ^777777Headgear^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^77777720^000000
+Req LvL : ^7777771^000000
+Job : ^777777All^000000
+#
+18963#
+A hat made after pretty mocking bird.
+LUK +1.
+Class : ^777777Headgear^000000 Def : ^7777775^000000
+Location : ^777777Middle ^000000Weight : ^77777710^000000
+Req LvL : ^7777771^000000
+Job : ^777777All^000000
+#
+18964#
+A crown with sacred aura all over it.
+ALL state +2
+Cure Lv1 and Status Recovery Lv1 available
+Class : ^777777Headgear^000000 Def : ^7777775^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Req LvL : ^7777771^000000
+Job : ^777777All^000000
+#
+18965#
+Bubble that makes a razor slippery. It is very dangerous to step on the bubble on the floor because it is too slippery
+Casts Quagmire Lv 1 at a certain chance, when Phy. Atk is given
+Resistance to bleeding +30
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777775^000000
+Required LVL : ^77777780^000000
+Job : ^777777All^000000
+#
+18967#
+A 'Poring' jinn who makes wishes come true hovers around.
+STR + 1, INT + 1, LUK + 1.
+Class : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Lower ^000000Weight : ^7777775^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+18968#
+A 'Marine' jinn who makes wishes come true hovers around.
+INT + 1, DEX + 1, MHP + 100.
+ATK + 5, MATK + 5.
+Class : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Lower ^000000Weight : ^7777775^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+18986#
+A clever bird which immitates human voice
+LUK +1.
+Class : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Middle^000000Weight : ^77777710^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+18987#
+Modeled after Jormungandr the Midgard Serpent. Effect of blood is strengthened  with its presence. 
+ALL Status +2.
+Reduces 5% of casting delay after using skill.
+Reduce damage from Human-type monster by 10%.
+Increases recovery effect of Blood in Skull by 50%.
+If refined to +7 above, ASPD +1, additional Blood in Skull recovery +20%.
+If refined to +10 above, additional Reduction 5% of casting delay after using skill.
+Class : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Required LV : ^77777770^000000
+Job : ^777777all jobs^000000
+#
+18992#
+An over-sized, pure red ribbon enchanted with hidden magical powers.
+HIT +5, Perfect Dodge +3
+When equipped with Sinobi Card, ASPD +1% per refine.
+When equipped with Alligator Card, HP recovery and SP recovery +4% per refine.
+When equipped with Blood Butterfly Card, variable casting -2%, Fire Wall damage +5% per refine.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^77777718^000000
+Required LVL : ^77777715^000000
+Job : ^777777All^000000
+#
+18993#
+A pink flower hat enchanted with magical powers so cute it weakens other humans' attacks.
+FLEE + 2, MATK + 5%
+Decrease damage by Human-type monsters by 5%
+MATK + 10, MSP + 10 per refine, when refine level is over 12
+Class : ^777777Headgear^000000 Defense : ^77777710^000000
+Location : ^777777Upper ^000000Weight : ^77777730^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+18994#
+AGI + 3, STR + 2
+Decrease 5% damage dealt by Medium-sized monster
+Increase 5% damage dealt to Medium-sized monster
+ATK + 1 per refine, when refine level is over 10
+Class : ^777777Headgear^000000 Defense : ^77777710^000000
+Location : ^777777Upper ^000000Weight : ^77777730^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+18996#
+A pure white-laced ribbon enchanted with magical powers that increases it's wearers vitality.
+VIT + 2, INT + 3, MATK + 3%
+Increase damage to Wind-type monster by 5%
+VIT +1 per refine, when refine level is over 12 (+5 at max)
+Class : ^777777Headgear^000000 Defense : ^77777710^000000
+Location : ^777777Upper ^000000Weight : ^77777730^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+19005#
+- 1% Damage when hit by a Human-type monster
+Class : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Lower ^000000Weight : ^77777720^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+19013#
+A scary headgear which makes enemies run away.
+STR +3, VIT +1.
+Class : ^777777Headgear^000000 Defense : ^7777778^000000
+Location : ^777777Upper ^000000Weight : ^77777730^000000
+Required LV : ^77777730^000000
+Job : ^777777all jobs^000000
+#
+19536#
+Korusaju decorated with beautiful roses. .
+INT + 1
+increase EXP 1%
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000 Weight : ^7777770^000000
+Req Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19542#
+You can get strong power if you resist its sweetness!
+Class : ^777777Costume^000000
+Location : ^777777Mid ^000000 Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19544#
+The "cru" is a pet Roriri. That there tends to be surprised that it is trivial little sensitive.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000 Weight : ^7777770^000000
+Req Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19566#
+A Samurai mask to protect its neck.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19573#
+a girlish hairband that has small heart and lace.
+Class : ^777777Clothes^000000
+location : ^777777Upper ^000000 Weight : ^7777770^000000
+Req Lv : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19589#
+A beatiful helm shaped as a rising angel's wing.
+Wearing this item makes you feel little bit dizzy, but soon it will fresh you up.
+Class : ^777777Costume ^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777All^000000
+#
+19607#
+The power of love made change to this chick.
+Need delicate care.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777All^000000
+#
+19649#
+A white kitten looking cute hairlace.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777All^000000
+#
+19652#
+A hat worn by a well-known magician. Rabbit is peeping out, and we don't know what is going to pop out next.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^77777780^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19653#
+A hat which gives you a holy power and celestial melody in the rim of the ear.
+With celestial protection power, angel guards you from an enemy attack.
+^ff0000This item cannot be traded with other accounts.^000000
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19655#
+A long and big bonnet. It is not sure when it is used for.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777770^000000
+Job : ^777777All^000000
+#
+19656#
+A useful and broad-brimmed hat providing a big shadow, and once worn by a famous minstrel.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19657#
+A captain's dignified hat with heavy color. It is famous for being worn by a vessel's leader.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19658#
+A hat just fit for summer vacation. It prevents face from tanning by the strong sunlight.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19659#
+A woolly hat made for warming heads, but it seems that some people wear it for fashion.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19660#
+Marco's favorite hat. Inside you can find a short phrase Andrea had written, 'His memories to you...'.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19661#
+A sweet bonnet.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19677#
+A mysterious ring floating above your head. It feels like that you don't have a soul?!
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19678#
+A cute ribbon with small bells. The bells seem to jingle.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19679#
+White round eyes make you look innocent and cute.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19681#
+A silver shining hair accessory with a star at the center.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19682#
+A cute santa poring is tumbling on your head!
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19683#
+The sweetest yummy candy for good children.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19684#
+A funky afro wig! The warmer your head, the warmer your heart.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19688#
+A hairband decorated with small flowers.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19691#
+The symbol of an honor student!
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19692#
+An antique pipe for making a perfect fashion of captain.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19693#
+A hat which seems to stack a few of the most popular monster, Poring.
+Are they Angeling at the bottom, Masterling in the middle, Poring at the top?
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19694#
+A hairpin shaped like a windmill rolling. Can you check the wind velocity with this?
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19713#
+A four leaf clover. It brings you with good luck.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19714#
+A cute doll shaped like Lady Tanee.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19715#
+A scarf worn over the head for protecting hair against the wind.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19716#
+A doll patterned on popular monster Alice. It sounds like 'Master, cheer up!'
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19717#
+A butterfly shaped ribbon for girls, pretty boys can also wear it.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19722#
+A dark-colored plastic frame glasses. Why don't you try this on?
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19723#
+A crown blessed with holy fire.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19726#
+Scarlet rose in a mouth. Did they even remove the thorns?
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19727#
+A hat made to resemble a little dead deviling which has charming side-spreaded eyes.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19744#
+A black huge ribbon looks tidy.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19745#
+A marching hat with sacred force.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19749#
+A splendid soul ring with angel's blessing given to sincere believers.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19750#
+A white huge ribbon looks tidy.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19751#
+A myterious crown decorated with a white left-wing and a black right-wing.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19752#
+A wing-shaped accessory with purple roses.
+Class : ^777777Costume^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19753#
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+#
+19755#
+Huge earrings symbolized Yin and Yang.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19757#
+A hat shaped like a lily. It makes you calm and silent.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19758#
+Even though it is a frog, a gentle man is waiting for a lovely girl who can dispel his curse.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19759#
+A colorful umbrella that you don't need to grab by your hands. Very useful for rainy seasons in Philippines.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19761#
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19762#
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19767#
+A cute hair accessory decorated with cherry blossoms and bells. It reminds you of old memories.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19768#
+A pink flowered wreath.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19769#
+A headgear looks like the ears of a mischievous fairy.
+Class : ^777777Costume^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19770#
+An oriental glass with various colors. Take your free time with this.
+Class : ^777777Costume^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19771#
+A beautiful hairpin looks like a blue butterfly.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19772#
+An interesting hat decorated with honeybee-like stripes and feelers.
+You feel like gathering the honey!
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19773#
+A cute hairpin shaped like an angeling. When wearing this, you feel like a feather.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19774#
+A laurel wreath used for the coronation of the emperor. It symbolizes glory and victory.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19776#
+A headgear looks like the ears of a mischievous fairy.
+Class : ^777777Costume^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19789#
+A felt hat for gentlemen. It shows your gentleness and tenderness.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19790#
+A wedding veil for women. You can be misunderstood with wearing this, if you're a boy.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19802#
+A hat shaped like a fox with nine tails. It makes you warm, definitely.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19803#
+A hairband decorated with a pinwheel. It makes you cool!
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19804#
+A red hairpin with a spining round windmill.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19805#
+A magic scroll which high class ninja use. It has a myterious power.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19806#
+A fancy hairpin which you can feel spring flowers.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19807#
+A brave headgear that no one can block.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19808#
+A broiling sun
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+19809#
+This hat is for festival that represent west frontier in one country.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+19810#
+This headgear is the figuration of soul of fire Lfrit's ear. It looks hot but when you equip, it's not at all.
+Class : ^777777Costume^000000
+Location : ^777777Middle^000000Weight : ^7777770^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+19811#
+Drinking beer after shower it is good~!!
+Prohibition underager drinking
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+19812#
+Big Hibiscus flower. It is only found in Ayothaya.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+19813#
+Ice cream is best in hot summer.  Be careful freezing brain.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+19814#
+Wig with Yellow, Orange and Gold
+Class : ^77777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+19815#
+Ten gallon hat gets along with Lolita fashion
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+19816#
+The motif of this hat is monster Pecopeco
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+19817#
+A fire-breathing Machine
+It is blazing forever
+Class : ^777777Costume^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+19818#
+A scary rag doll with bloods.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19822#
+A yellow bandana wearing by a pacifist. Some bloods are on it.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19824#
+You can be chic and cynical with wearing this.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19825#
+A bandage covers scars of eyes.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19827#
+A hat shaped like Homunculus Amistr.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19828#
+A hat worn by old soldiers.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19829#
+A straw hat for the hot summer. You might want to cut the grass and celebrate the harvest with wearing this.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19830#
+A black glasses for your fashion and eye protection.
+Class : ^777777Costume^000000
+Location : ^777777MId ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19831#
+Too shy to attack someone, Filir!
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19832#
+A hat shaped like the popular monster poring! It is not made by rubber.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19833#
+Bind your hair with this cute accessory. A little ribbon makes you charm.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19834#
+A hat to protect your eyes from sunshines.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19835#
+A hat with a cute Lif doll. It looks at you from your head.
+It can be popular to who likes a little girl.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19836#
+A headgear made by horns of a magestic goat. It has some strong religious meaning.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19839#
+A hat shaped like Homunculus Vanilmirth. It's very cold and mushy.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19841#
+A legendary headgear.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19842#
+A hat with small brown puppy.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19873#
+A hat for Brazilian carnival. You can dance everywhere with wearing this.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19874#
+A tiara for Brazilian carnival. You can dance everywhere with wearing this.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19877#
+A blindfold with scary eyes. It is said those eyes are moving sometimes. 
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19878#
+A cute rabbit doll that you can put it on your head.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19879#
+A sexy gorgeous hairband for you!
+Every man chases you as soon as wearing this!
+Increase your sex appeal 100%.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19880#
+A hairband with the shiny golden star.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19883#
+A hood motivated by Piamette.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19896#
+A headgear to commemorate pRO's 10th Anniversary!
+Happy 10th Anniversary pRO!
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location: ^777777Upper ^000000 Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19952#
+A bubble gum expanding like balloon. Can be blown very big depending on one's ability.
+Caution: You might look a bit punky.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19953#
+A hat brings happy feeling as much to hold a parade unconsciously.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19954#
+A mysterious glasses which shows objects in 3-dimentional.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19956#
+Cruiser's hat. It somehow gives an urge to march.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19957#
+A safety equipment for motor scooter riding.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19958#
+A Hat worn in church choir.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19959#
+Argiope put on top of head. Be careful, sometimes it might move fiercely.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19960#
+Chains for controlling puppets. It feels like I have become a doll.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19984#
+A hat popularly worn in always-winter country. When worn, memories of trains and happiness faintly recollects.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19985#
+A crown adorned with special crystals.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19986#
+A hat designed after a fluffy monster Lunatic.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19987#
+A woolly hat made for warming heads, but it seems that some people wear it for fashion.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19988#
+A crown made from Elder Branch.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19989#
+A smooth hairband made from sheep's fur and horn. 
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19990#
+A hat redesigned after Rabbit-eared knit hat.
+It reminds about snow rabbit.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19991#
+An armor made from pure white flower.
+The flowers bloom before winter and called 'message of the spring'.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19992#
+It is so cold that white breathe is coming from the mouth.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+19994#
+A headgear to commemorate saLU-salo event!
+Meet up, mingle and make friends, all in the name of online gaming fun.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+19997#
+A very dangerous hat! Nobody knows when it explodes.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19998#
+A turtle hat with poweful dragon scales.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+20014#
+^ff0000It cannot be traded with other accounts.^000000
+Replica of an Emancipator's tall black hat. 
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20015#
+^ff0000It cannot be traded with other accounts.^000000
+Replica of an Emancipator's beard. 
+Class : ^777777Costume^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20016#
+^ff0000It cannot be traded with other accounts.^000000
+A fine dining experience is always better with lobster
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20019#
+^ff0000Cannot be traded with other accounts.^000000
+This hat is for those artiest who comtributed to the community.
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv.: ^7777771^000000
+Job : ^777777All job^000000
+#
+20035#
+A blue rose that can never exist.
+This is a total dream to make it to geneticists.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+20037#
+A silk hat of Owlduke. 
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+20700#
+Egir's Manteau. It looks defending your body
+can not be destroyed
+magic, Archer, Acolyte class- perfect evasion + 5.
+increase perfect evasion with 2 times of refined lv
+Sword/Merchant/Thieg Class can reflect damage +5% 
+increase damage reflection with 2 times of refiend lv
+Class : ^777777robe^000000 Def : ^77777710^000000
+weight : ^77777730^000000
+Required Lv : ^777777110^000000
+Jobs : ^777777All^000000
+#
+20706#
+Bag that mimics the "Amistr" Oh homunculus.
+ALL Status + 1.
+Tolerance + 5% for the attribute all attacks.
+class : ^777777clothes^000000 Def: ^77777718^000000
+Weight: ^77777750 ^000000
+Req LV: ^7777771 ^000000
+jobs: ^777777All Jobs ^000000
+#
+20707#
+Wings made from a legendary mythical beast of an East Asian culture.
+ALL Status + 1
+Resistance to Demi-human monsters + 5%
+Series : ^777777Garment^000000 Defense : ^77777718^000000
+Weight : ^7777770^000000 
+Level Requirement : ^7777771^000000
+Job : ^777777All^000000 
+#
+20725#
+A huge ribbon worn by Piamette. Blessed with strong magical power.
+MATK +10, INT +1, DEX +1.
+^99FF66Set Bonus^000000
+^00FF00Mad Bunny^000000
+When magically attacking, a certain chance to transform into Piamette for 10 sec.
+While transformed, consumes 30HP each second but adds MATK +5 for every 3 refine upgrade.
+Chance to transform increases as refine goes higher.
+Class : ^777777Garment^000000 Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required LV : ^77777730^000000
+Job : ^777777All jobs^000000
+#
+20734#
+^000088Rental Item^000000
+A manteau with wind spirit power. It is protected by winds all the time.
+Increase 10% resistance against Wind property attacks.
+Decrease 10% resistance from Earth property attacks.
+Increase 5% resistance against long distance attacks.
+Increase 1% resistance against long distance attacks per each refine Lv.
+Indestructible.
+Class : ^777777Garment^000000 Defense : ^77777710^000000
+Weight : ^77777730^000000
+Required LV : ^77777771^000000
+Job : ^777777All^000000
+#
+20735#
+^000088Rental Item^000000
+A manteau with fire spirit powers.
+It is protected by flames all the time.
+Decrease 10% damage from Fire property attacks.
+Increase 10% damage from Water property attacks.
+Reflect 10% of physical damage to be received.
+Damage can be increased as twice as that of refine Lv.
+Indestructible.
+Class : ^777777Garment^000000 Defense : ^77777710^000000
+Weight : ^77777730^000000
+Required LV : ^77777771^000000
+Job : ^777777All^000000
+#
+20745#
+^000088Rental Item^000000
+A manteau with water spirit. It is protected by water all the time.
+Decrease 10% damage against Water property attacks.
+Increase 10% damage from Wind property attacks.
+When being physically attacked by a short distance attacks, it can activate Freezing by a certain chance.
+With more than 6 refine Lv, Freezing chance will be increased per each refine Lv.
+With more than 10 refine Lv, additional Freezing chance will be increased.
+Indestructible.
+Class : ^777777Garment^000000 Defense : ^77777710^000000
+Weight : ^77777730^000000
+Required LV : ^77777771^000000
+Job : ^777777All^000000
+#
+20747#
+^000088Rental Item^000000
+A manteau with Earth spirit, It is protected by stones all the time.
+Decrease 10% damage against Water property attacks.
+Increase 10% damage from Fire property attacks.
+When being physically attacked by both short range and long distance, it can activate Stone Curse by a certain chance in 5*5 cells around yourself.
+With more than 5 refine Lv, increase the chance for Stone Curse per 1 reine Lv.
+Indestructible.
+Class : ^777777Garment^000000 Defense : ^77777710^000000
+Weight : ^77777730^000000
+Required LV : ^77777771^000000
+Job : ^777777All^000000
+#
+20752#
+Shiny Golden Wings. A symbol of the Elite.
+If base STR is 90+, All State +1, MaxHP,MaxSP +1%, STR + 1 for each refine upgrade.
+If base AGI is 90+, All State +1, MaxHP,MaxSP +1%, AGI + 1 for each refine upgrade.
+If base VIT is 90+, All State +1, MaxHP,MaxSP +1%, VIT + 1 for each refine upgrade.
+If base INT is 90+, All State +1, MaxHP,MaxSP +1%, INT + 1 for each refine upgrade.
+If base DEX is 90+, All State +1, MaxHP,MaxSP +1%, DEX + 1 for each refine upgrade.
+If base LUK is 90+, All State +1, MaxHP,MaxSP +1%, LUK + 1 for each refine upgrade.
+When hunting monsters, EXP and DROP rate increased by 10%.
+Location : ^777777Garment^000000 Defense : ^77777715^000000
+Weight : ^77777710^000000
+Required LV : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20757#
+^ff0000Cannot be traded with others.^000000
+Colorful wings sent from the heavens.
+All State + 3.
+Able to use Lv.3 [Increase AGI]. 
+Class : ^777777Garment^000000 Def : ^77777710^000000
+Weight : ^7777770^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+20758#
+^ff0000Cannot be traded with others.^000000
+Colorful wings sent from the heavens.
+All State + 3.
+Able to use Lv.3 [Increase AGI]. 
+Class : ^777777Garment^000000 Def : ^77777710^000000
+Weight : ^7777770^000000
+Required LVL : ^7777771^000000
+Job : ^777777All^000000
+#
+18604#
+Mask in the shape of a king of the brave Falcon sky. The power of the wind is put.
+Additional physical damage 5% in water type monster.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location: ^777777Mid-Low ^000000 Weight : ^77777730^000000
+Req LV : ^77777750^000000
+Jobs : ^777777All^000000
+#
+18606#
+jewel tears the last shed before the Princess Adelaide to corruption in the dark has been crystallized. I can feel the gentle heart.
+MATK + 3%.
+Increased 1% heal amount when using heel, Sanctuary, Potion Pitcher, Highness heel, the Koruruseohiru
+Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Mid-Low ^000000Weight : ^77777710^000000
+Req LV : ^77777730^000000
+Jobs : ^777777All^000000
+#
+18649#
+a mask from Lude face motive.
+when physical attack, will cast shout 1 lv in a regular rate.
+Series : ^777777headgear^000000    Defense : ^7777771^000000
+location: ^777777mid-low ^000000 weight : ^77777710^000000
+Req LV : ^7777771^000000
+job : ^777777all^000000
+#
+18824#
+Recovery a certain amount of HP and SP with a certain chance when attacking physically or magically.
+When wearing with Bankruptcy Of Heart, increase MaxHP +100, 1% resistance to Nothing property attacks per 1 refine level for Bankruptcy Of Heart.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Midlower ^000000Weight : ^77777749^000000
+Required LV : ^77777749^000000
+Jobs : ^777777All^000000
+#
+19680#
+A funny mask that children love to put on.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Mid Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19747#
+A mask worn by the despair of Thanatos. It seems very popular of its cute design.
+Class : ^777777Costume^000000
+Location : ^777777Mid Lower ^000000 Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19801#
+A hat shaped like a white fox. People say that some east countries worship the white fox as a god.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Mid Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19882#
+Wearing it, you might want to compound CO2 and H2O into carbohydrate by the solar energy.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Mid Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+18637#
+Helmet generals of the kingdom was the cry of the ancient continent was using. Weather in general that the word of command many soldiers outpouring from all over the body Using this pitch.
+STR + 2, VIT + 1.
+if refined lv8, able to increase the move speed
+Class : ^777777headgear^000000 Defense : ^7777774^000000
+Location : ^777777upper-mid ^000000Weight : ^77777770^000000
+Req Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19539#
+Hair ornament took the name of Valkyrie 'Reginleif'. Those who wear it, and receive the gift of God.
+All State + 1.
+Class : ^777777Costume^000000
+Location : ^777777Upper-Mid ^000000 Weight : ^7777770^000000
+Req Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19540#
+Ear plugs in the form of a white rabbit small and cute.
+AGI + 1, FLEE + 2.
+Class : ^777777Costume^000000
+Location : ^777777Upper-Mid ^000000 Weight : ^7777770^000000
+Req Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19555#
+A solid hat decorated very colorful, which was from the far east.
+Class : ^777777Costume^000000
+Location : ^777777Upper Mid ^000000 Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19574#
+it looks from a headgear which was owned by deat
+Type : ^777777Costume Equipment^000000
+Location : ^777777Upper-mid ^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+19598#
+Can feel a high dignity of the Northern Wolf Tribe. 
+It is made out of Wolf King's fur and feels like you've surrounded by some kind of dignified force when worn.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19710#
+A hair ornament made from Valkyrie's Feathers and precious gems. Rumored to protect it's wearer from any harm.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19748#
+A headgear jewelled with love jewels. You can find your true love with wearing it.
+Class : ^777777Costume^000000
+Location : ^777777Upper Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19754#
+A legendary veil which can be used by only truly loved couple.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19756#
+A hat blessed by Holy Mother. It can bless other people even by self-sacrifice.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19760#
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19775#
+A funky afro wig that is so so popular to teenagers! You can dance disco with it any time!
+Class : ^777777Costume^000000
+Location : ^777777Upper Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19819#
+A hood for Necromencers wearing at their evil worships.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19837#
+A hat worn by priests for their religious ceremony.
+It resembls the ancient Asara fairy.
+Class : ^777777Costume^000000
+Location : ^777777Upper Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19840#
+A hat symbolizes the sun with huge golden wings. Do not ask how you can walk while wearing it.
+Class : ^777777Costume^000000
+Location : ^777777Upper Mid ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+18575#
+suspicious box that has eyebrow 
+unable to refine, MDEF + 10.
+when close attack, can get random skill with regular rate.
+Class : ^777777Headgear^000000 Def : ^77777710^000000
+Location : ^777777Upper-mid-low ^000000 weight : ^77777750^000000
+Req Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+19556#
+A traditional artistic mask from a far eastern country.
+Class : ^777777Costume^000000
+Location : ^777777Upper Mid Lower ^000000 Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19725#
+Looks like you are wearing paper bag on your head!
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper Mid Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19743#
+A hat sculpted like Anubis, an egyptian god of the dead. It belongs to the holy priests who make a mummy.
+Class : ^777777Costume^000000
+Location: ^777777Upper Mid Lower ^000000 Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19746#
+A purple hoody with a deep shade. Red eyes in the dark hoody make people scary.
+Class : ^777777Costume^000000
+Location : ^777777Upper Mid Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Jobs : ^777777All^000000
+#
+19821#
+A hat of monster Hyegun. It was worn out, but very powerful.
+Class : ^777777Costume^000000
+Location : ^777777Upper Mid Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19838#
+You look very cunnniing with wearing this mask.
+Class : ^777777Costume^000000
+Location : ^777777Upper Mid Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19875#
+A rabbit doll hat made by a very famous artist.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper Mid Lower ^000000 Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19881#
+A newly designed love rabbit hood for the new year.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper Mid Lower ^000000Weight : ^7777770^000000
+Required LV : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+19951#
+A yellow colored paper box with eye holes. You can play super awesome just by yourself.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper Mid Lower ^000000Weight : ^7777770^000000
+Req Lvl. : ^7777771^000000
+Job : ^777777All^000000
+#
+4507#
+Additional 30% damage to Scaraba.
+When defeat the enemy, Drop the ticket of Scaraba.
+Class : ^777777Card^000000
+Location : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4512#
+Increasing healing 3%.
+The Acolyte Class, when refine 2 times, the healing increase additional 1%.
+Class : ^777777Card^000000
+Location : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4514#
+20% addtional damage to immortal monster.
+Class : ^777777Card^000000
+Location : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4517#
+INT + 2,
+If used by mage-type, INT +1 for every 3 refinements
+Class : ^777777Card^000000
+Location : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4519#
+20% additional damage to angel type of monster
+Class : ^777777Card^000000
+Location : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4520#
+STR + 3.
+cast panic to enemy when receiving physical and magic attck
+Class : ^777777Card^000000
+Location : ^777777Clothes^000000
+Weight : ^7777771^000000
+#
+4522#
+When attack closely, make enemy to freeze.
+Class : ^777777Card^000000
+Location : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4523#
+The armor type is changed to water type.
+10% damage decreased from seafood.
+Class : ^777777Card^000000
+Location : ^777777armor^000000
+Weight : ^7777771^000000
+#
+4524#
+STR + 2, Sword Class, when refine 3 times, the STR is increased addtional +1.
+Class : ^777777Card^000000
+Location : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4525#
+FLEE + 10.
+[Hiding] 1Lv, [Surprise attack] 1Lv available to use.
+[Surprise attack] make enemy to bleed.
+Class : ^777777Card^000000
+Location : ^777777Upper^000000
+Weight : ^7777771^000000
+#
+4526#
+MSP + 5%, MDEF + 50.
+Class : ^777777Card^000000
+Location : ^777777armor^000000
+Weight : ^7777771^000000
+#
+4527#
+MHP + 10%, DEF + 100.
+Class : ^777777Card^000000
+Location : ^777777armor^000000
+Weight : ^7777771^000000
+#
+4528#
+MATK + 2%, per  2 refine MATK + 1%, MHP - 1%.
+Class : ^777777Card^000000
+Location : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4529#
+ATK + 2%, per  2 refine ATK + 1%, MSP - 1%.
+Class : ^777777Card^000000
+Location : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4530#
+LUK + 2, per 3 refineLUK + 1 for merchant class
+Class : ^777777Card^000000
+Location : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4532#
+AGI + 1.
+cast agility increase 1lv for himself.
+Class : ^777777Card^000000
+Location : ^777777shoes^000000
+Weight : ^7777771^000000
+#
+4533#
+cast black when magic attack
+Class : ^777777Card^000000
+Location : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4534#
+MHP + 12%.
+[waterball] 5Lv available.
+Class : ^777777Card^000000
+Location : ^777777armor^000000
+Weight : ^7777771^000000
+#
+16652#
+2010 winter collection, Flame Scroll. Limited edition only!
+Weight : ^7777771^000000
+#
+6606#
+^ff0000Unable to trade with other accounts.^000000
+A special coupon needed to learn how to make new and cute cart decorations!
+There are 3 new designs!!!
+weight : ^7777771^000000
+#
+6707#
+Chief Hair Designer Jeremy's hairstyle change coupon. He can make you ultimately stylish!
+Weight : ^7777771^000000
+#
+12853#
+Have chance to obtain various precious item, including Mistress Card, Sealed Berzebub Card, Sealed Eddga Card, Hankie In Mouth, Snowman Hat,  Cat Ears Beret, Immuned Shield and etc.
+Weight : ^7777771^000000
+#
+12860#
+Thanks to the mother of selfless giving, present it to your mother.
+Recover 50% HP&SP, and grant Assumptio Lv3 after used.
+Weight : ^77777720^000000
+#
+15041#
+The armor that made by power of mythic creature, Boitata
+FLEE + 5, MHP + 5%, MDEF + 3.
+resist for attribute "NOTHING" bonus 7%
+class : ^777777Armor^000000 Def : ^7777775^000000
+Weight : ^77777760^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All^000000
+#
+18509#
+A special cap with a neon sign above, dedicated to celebrating RWC 2010 in Indonesia.
+Increase resistance against human type monster by 10%, CRI + 10.
+Increase the healing effect of Red Potion and White Potion by 100%.
+LUK + 5, ASPD + 1, ATK, MATK + 3%.
+Class : ^777777Headgear^000000 Defense : ^7777776^000000
+Location : ^777777Upper^000000 Weight : ^77777710^000000
+Required lv : ^77777715^000000
+Jobs : ^777777 All jobs except Novices^000000
+#
+2481#
+Black leather boots engraved Rune.
+Unable to destroy.
+When pure STR is 90 or higher, ATK + 10. When pure STR is 120 or higher, ATK + 10 additionally.
+When pure INT is 90 or higher, MATK + 3%. When pure INT is 120 or higher, MATK + 2% additionally.
+Class : ^777777Shoes^000000 Defence : ^7777775^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+12710#
+A sweet and sour desert made by Guyak. It would be great when it's cool.
+Gives double movement Speed for 5 minutes.
+^ffffff_^000000
+Weight : ^77777720^000000
+#
+14517#
+ A scroll which enables using LV 5 Chemical Protection Helm skill. It has some mysterious letters written on the scroll.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+14518#
+ A scroll which enables using LV 5 Chemical Protection Shield skill. It has some mysterious letters written on the scroll.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+14519#
+ A scroll which enables using LV 5 Chemical Protection Armor skill. It has some mysterious letters written on the scroll.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+14520#
+ A scroll which enables using LV 5 Chemical Protection Weapon skill. It has some mysterious letters written on the scroll.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
