@@ -49186,7 +49186,12 @@ Jobs: ^777777All^000000
 placeholder
 #
 5656#
-placeholder
+Class : ^777777Headgear^000000
+Location: ^777777Upper^000000
+Defense: ^7777777^000000
+Weight : ^777777100^000000
+Required Level : ^77777750^000000
+Jobs: ^777777All^000000
 #
 5665#
 placeholder
@@ -65345,7 +65350,7 @@ April Lucky Baskets randomly contain one of the following;
 5cnt Battle Manual x 3
 5cnt Bloody Dead Branch
 6cnt He Bubble Gum
-2cnt Safe to 7 All Box
+2cnt Safe to 7 Chance Box
 Crown of Deceit
 Heroric Backpack
 Miniglasses[1]
@@ -68512,4 +68517,1623 @@ Weight : ^7777771^000000
  A scroll which enables using LV 5 Chemical Protection Weapon skill. It has some mysterious letters written on the scroll.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+1273#
+If it is wet by, blood will be screaming so called as Bloody Roar. It has great affect to Human class enemy.
+Ignore defense of human class' enemy. Recover HP 3 in every 5 seconds.
+Weapon Class: ^777777Katar^000000   Attack Strength : ^777777148^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777774^000000
+Required Level : ^7777771^000000
+Jobs : ^777777Assassin^000000
+#
+1322#
+A blue axe with huge power.
+STR +5, INT +5.
+Class : ^777777One handed axe^000000 Attack : ^777777180^000000
+Weight : ^777777180^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777100^000000
+Job : ^777777Generic Class^000000
+#
+1323#
+A golden axe with brutal power.
+STR +8, INT +8.
+Class : ^777777One handed axe^000000 Attack : ^777777180^000000
+Weight : ^777777180^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777120^000000
+Job : ^777777Generic Class^000000
+#
+1383#
+Additional 10% damage on Undead monsters.
+Add the chance of auto casting Lv. 5 Blessing on the wearer with each attack.
+Holy Property.
+Item Class: ^777777Axe^000000    Attack Strength : ^777777200^000000
+Weight : ^777777150^000000
+Weapon Level : ^7777774^000000
+Required Level : ^77777760^000000
+Jobs : ^777777Merchant Class^000000
+#
+1441#
+A blue spear with huge power.
+STR +5, AGI +5.
+Class : ^777777Spear^000000 Attack : ^777777180^000000
+Weight : ^777777120^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777100^000000
+Job : ^777777Royal Guard Class^000000
+#
+1442#
+A golden spear with brutal power.
+STR +8, AGI +8.
+Class : ^777777Spear^000000 Attack : ^777777180^000000
+Weight : ^777777120^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777120^000000
+Job : ^777777Royal Guard Class^000000
+#
+1490#
+The mini size of spear from the Giants who were guardians in Ancient temple. There are no man brought this real power.
+ASPD - 10, when you release the equip SP - 600.
+add 20 sec on delay for reuse of Clashing Spiral.
+When pure STR is over 120, add ATK 300.
+Class : ^777777Two Handed Spear^000000 Attack : ^77777720^000000
+Weight : ^7777772000^000000
+Weapon Lv. : ^7777774^000000
+Required Lv. : ^777777140^000000
+Job : ^777777Rune Knight^000000
+#
+1676#
+An infernal staff from hell. Only true demons are able control it's full power. People say that a Prince from Hell used this weapon for his army.
+Decrease aftercast delay 10%.
+With more than Base LV 100, MATK +30.
+With more than 9 refine level, Blind can be activated by a certain chance. SP consumption will be decreasd 10% when using skills.
+MATK + 150
+Class : ^777777One handed Staff^000000 Attack : ^77777760^000000
+Weight : ^777777120^000000
+Weapon LV : ^7777774^000000
+Required LV : ^77777780^000000
+Jobs : ^777777Magician, Acolyte, Soul Linker^000000
+#
+1677#
+A blue wand with huge power.
+DEX +5, INT +5.
+MATK + 170
+Class : ^777777Wand^000000 Attack : ^77777750^000000
+Weight : ^7777770^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777100^000000
+Job : ^777777Warlock Class^000000
+#
+1678#
+A golden wand with brutal power.
+DEX +8, INT +8.
+MATK + 170
+Class : ^777777Wand^000000 Attack : ^77777750^000000
+Weight : ^7777770^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777120^000000
+Job : ^777777Warlock Class^000000
+#
+1936#
+A blue violin with huge power.
+DEX +5, VIT +5.
+Class : ^777777Musical Instrument^000000 Attack : ^777777180^000000
+Weight : ^777777150^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777100^000000
+Job : ^777777Minstrel Class^000000
+#
+1937#
+A golden violin with brutal power.
+DEX +8, VIT +8.
+Class : ^777777Musical Instrument^000000 Attack : ^777777180^000000
+Weight : ^777777150^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777120^000000
+Job : ^777777Minstrel Class^000000
+#
+1991#
+A blue whip with huge power.
+DEX +5, VIT +5.
+Class : ^777777Whip^000000 Attack : ^777777180^000000
+Weight : ^777777150^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777100^000000
+Job : ^777777Wanderer Class^000000
+#
+1992#
+A golden whip with brutal power.
+DEX +8, VIT +8.
+Class : ^777777Whip^000000 Attack : ^777777180^000000
+Weight : ^777777150^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777120^000000
+Job : ^777777Wanderer Class^000000
+#
+2006#
+A staff that possesses holy force and holds bright sunshine in it.
+INT + 6.
+SP + 150, MATK + 18%.
+Item Class : ^777777Two-handed Staff^000000 Attack Strength : ^77777780^000000
+Weight : ^777777190^000000
+Required Level : ^77777760^000000
+Jobs : ^777777Mage Class^000000
+#
+2137#
+^000088Rental Item^000000
+A shield used by Gne, the messenger of Freyja while she served as a Valkyrie.
+Reduces damage from Demihuman monsters by 30%
+MaxHP + 5%
+Adds 20% resistance against Water, Fire Property attacks.
+Item Class : ^777777Shield^000000    Defense : ^7777775^000000
+Weight : ^7777770^000000
+Required Level : ^77777795^000000
+Jobs : ^777777All Transcendent Jobs except Novice^000000
+#
+2141#
+^000088Rental Item^000000
+A spiritual shield granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+Reduce damage from Medium-sized monsters by 25%
+Item Class: ^777777Shield^000000 Defense : ^7777775^000000
+Weight : ^77777730^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2142#
+^000088Rental Item^000000
+A spiritual shield granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+Reduce damage from Medium-sized monsters by 25%
+Item Class: ^777777Shield^000000 Defense : ^7777775^000000
+Weight : ^77777730^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2143#
+^000088Rental Item^000000
+A spiritual shield granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+Reduce damage from Medium-sized monsters by 25%
+Item Class: ^777777Shield^000000 Defense : ^7777775^000000
+Weight : ^77777730^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2144#
+^000088Rental Item^000000
+A spiritual shield granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+Reduce damage from Medium-sized monsters by 25%
+Item Class: ^777777Shield^000000 Defense : ^7777775^000000
+Weight : ^77777730^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2149#
+MHP + 3%
+Class: ^777777Shield^000000 DEF: ^7777775^000000
+Weight : ^77777715^000000
+Required Level: ^7777771^000000
+Jobs: ^777777All Jobs^000000
+#
+2150#
+MHP + 3%
+Class: ^777777Shield^000000 DEF: ^7777776^000000
+Weight : ^77777730^000000
+Required Level: ^7777771^000000
+Jobs: ^777777Swordman Class, Acolyte Class, Merchant Class, Thief Class, Bard, Dancer^000000
+#
+2151#
+MHP + 3%
+Class: ^777777Shield^000000 DEF: ^7777778^000000
+Weight : ^77777765^000000
+Required Level: ^7777771^000000
+Jobs: ^777777Swordman Class^000000
+#
+2164#
+a shield that has internal resistance.
+decrease damage 5% from dark monster type
+decrease damage 5% from fire monster type
+Class : ^777777Shield^000000 Defense : ^77777750^000000
+Weight : ^777777130^000000
+Req Lev : ^77777765^000000
+Job : ^777777all jobs^000000
+#
+2176#
+a cursed book that makes horror
+MDEF + 5.
+when taken physical damage, cast special stun to all enemies within 5*5 sell bound
+if upgraded is over 7, can have +1 lv state with high chance.
+if upgraded is over 9, can have +1 lv state with high chance.
+Series : ^777777shield^000000 Defense : ^77777780^000000
+Weight : ^77777750^000000
+Level Requirement : ^77777765^000000
+Job : ^777777all^000000
+#
+2358#
+An evening dress worn by an Angel. You will feel blessed when you wear it.
+LUK + 4.
+Item Class : ^777777Armor^000000
+Defense : ^7777775^000000
+Weight : ^777777100^000000
+Jobs : ^777777All^000000
+#
+2441#
+A sandals received as a gift from Comodo Environmental Commission.
+It seems to match perfect with Comodo beach.
+STR + 1, INT + 1, AGI + 1
+^8B4513 + 10% resistance to Fire property and + 5 ^000000
+^8B4513Flee when worn with Beach Manteau^000000
+Class : ^777777Shoes^000000      DEF : ^7777770^000000 
+Weight : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2451#
+^000088Rental Item^000000
+A pair of spiritual sandals granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+MaxHP + 8%, MaxSP + 8%.
+Item Class: ^777777Shoes^000000 Defense : ^7777775^000000
+Weight : ^77777740^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2452#
+^000088Rental Item^000000
+A pair of spiritual sandals granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+MaxHP + 8%, MaxSP + 8%.
+Item Class: ^777777Shoes^000000 Defense : ^7777775^000000
+Weight : ^77777740^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2453#
+^000088Rental Item^000000
+A pair of spiritual sandals granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+MaxHP + 8%, MaxSP + 8%.
+Item Class: ^777777Shoes^000000 Defense : ^7777775^000000
+Weight : ^77777740^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2454#
+^000088Rental Item^000000
+A pair of spiritual sandals granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+MaxHP + 8%, MaxSP + 8%.
+Item Class: ^777777Shoes^000000 Defense : ^7777775^000000
+Weight : ^77777740^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2459#
+MHP + 3%
+Class: ^777777Shoes^000000 DEF: ^7777774^000000
+Weight : ^77777720^000000
+Required Level: ^7777771^000000
+Jobs: ^777777All Jobs except Novice^000000
+#
+2460#
+MHP + 3%
+Class: ^777777Shoes^000000 DEF: ^7777776^000000
+Weight : ^77777730^000000
+Required Level: ^7777771^000000
+Jobs: ^777777Swordman,Merchant,Thief Classes,Archer,Taekwon Class,Gunslinger^000000
+#
+2461#
+MHP + 3%
+Class: ^777777Shoes^000000 DEF: ^7777777^000000
+Weight : ^77777740^000000
+Required Level: ^77777765^000000
+Jobs: ^777777Knight, Crusader^000000
+#
+2464#
+Let the ass-kicking commence!
+STR + 1, INt + 1, DEX + 1.
+Increase MaxHP +10%, Increase MaxSP +5%
+Reduce damage from Demi-Humans by 2%
+When worn with No Fear Underwear and No Fear Belt-Cannot be frozen, Increase EXP Gain by 5%.
+Item Class : ^777777Shoes^000000 Defense : ^7777776^000000
+Weight : ^7777770^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2546#
+A manteau received as a gift from Comodo Environmental Commission.
+It seems to match perfect with Comodo beach.
+STR + 1, INT + 1
+^8B4513 + 10% resistance to Fire property and + 5 ^000000
+^8B4513Flee when worn with Beach Sandals^000000
+Class : ^777777Garment^000000      DEF : ^7777770^000000 
+Weight : ^77777760^000000
+Job : ^777777All^000000
+#
+2548#
+^000088Rental Item^000000
+A scarf, usually worn around the neck and shoulders for warmth.
+Reduces damage from Demihuman monsters by 10%
+MaxHP + 10%
+Add 5% resistance against Water, Fire, Holy, Shadow Property attacks.
+Item Class : ^777777Garment^000000  Defense : ^7777775^000000
+Weight : ^7777770^000000
+Required Level : ^77777795^000000
+Jobs : ^777777All Transcendent Jobs except Novice^000000
+#
+2555#
+^000088Rental Item^000000
+A spiritual scarf granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+Flee +15, Reduce damage from Neutral property by 15%
+Item Class: ^777777Robe^000000 Defense : ^7777770^000000
+Weight : ^77777740^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2556#
+^000088Rental Item^000000
+A spiritual scarf granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+Flee +15, Reduce damage from Neutral property by 15%
+Item Class: ^777777Robe^000000 Defense : ^7777770^000000
+Weight : ^77777740^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2557#
+^000088Rental Item^000000
+A spiritual scarf granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+Flee +15, Reduce damage from Neutral property by 15%
+Item Class: ^777777Robe^000000 Defense : ^7777770^000000
+Weight : ^77777740^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2558#
+^000088Rental Item^000000
+A spiritual scarf granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+Flee +15, Reduce damage from Neutral property by 15%
+Item Class: ^777777Robe^000000 Defense : ^7777770^000000
+Weight : ^77777740^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2561#
+MHP + 3%
+Class: ^777777Garment^000000 DEF: ^7777773^000000
+Weight : ^77777710^000000
+Required Level: ^7777771^000000
+Jobs: ^777777All Jobs^000000
+#
+2562#
+MHP + 3%
+Class: ^777777Garment^000000 DEF: ^7777774^000000
+Weight : ^77777720^000000
+Required Level: ^7777771^000000
+Jobs: ^777777All Jobs except Novice^000000
+#
+2563#
+MHP + 3%
+Class: ^777777Garment^000000 DEF: ^7777776^000000
+Weight : ^77777730^000000
+Required Level: ^7777771^000000
+Jobs: ^777777Swordman,Merchant,Thief Classes,Taekwon Class^000000
+#
+2565#
+A colorful beach towel used as protection from the sun.
+MDEF +3, FLEE +7
+Resistance to Neutral property attacks +7%, 
+Class : ^777777Robe^000000 Def : ^7777772^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+2566#
+^000088Rental Item^000000
+A wing made of all lights that exist in the world. It's name means 'Light of the gods'.
+15% immunity from physicall attacks of all attributes.
+FLEE + 15, MDEF + 2.
+Enables use of the skill ^FF0000Teleport Lv1^000000.
+Can not be refined and destroyed.
+Class : ^777777Garment^000000    Defense : ^77777720^000000
+Weight : ^7777770^000000
+Required Lv : ^77777747^000000
+Job : ^777777All Jobs^000000
+#
+2579#
+a shawl with magical needlework in it
+MDEF + 3.
+when using all skills, decrease SP -5%, MaxSP + 3%.
+if refined lv 6 over, add  MaxSP 3%.
+Class : ^777777costume^000000 Defense : ^7777778^000000
+Weight : ^77777770^000000
+Req Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2596#
+a magical manteau with property resistance in it 
+decrease damage -5% from fire property monster
+increase damage +5% from evil type monster
+if equipped with Sharel Shield, can decrease damage 1% from evil type monster per refined lv 1
+if equipped with Sharel Shield, can increase damage 1% from fire property monster per refined lv 1
+Class : ^777777robe^000000    Def : ^77777720^000000
+weight : ^77777770^000000
+Required level : ^77777765^000000
+Jobs : ^777777All Jobs Jobs available^000000
+#
+2598#
+a magical manteau with property in it
+decrese damage -5% from undead property monster
+increase damage +5% from demi-human monster
+if equipped with Ramor Shield , each refined lv 1 can decrease damage 1% from demi-human monster
+if equipped with Ramor Shield , each refined lv 1 can decrease damage 1% from undead property monster
+Class : ^777777robe^000000    Def : ^77777720^000000
+weight : ^77777770^000000
+Req level : ^77777765^000000
+Jobs : ^777777All Jobs Jobs available^000000
+#
+2663#
+It covers with pine resin to prevent slippery hands. It helps to increasing an accuracy rate.
+HIT + 15 , STR + 1.
+Item Class : ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^77777790^000000
+Required Level : ^77777775^000000
+Jobs : ^777777All^000000
+#
+2664#
+To be a fashionista you need this Scarf to complete your style.
+DEX + 2, INT + 1
+Item Class : ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^77777720^000000
+Required Level : ^77777775^000000
+Jobs : ^777777All Jobs except Novice^000000
+#
+2682#
+A mysterious ring that is blessed by the Spirit of Water.
+Class : ^777777Accessory^000000
+Defense : ^7777771^000000      Weight : ^77777710^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All except Novice^000000
+#
+2683#
+A mysterious ring that is blessed by the Spirit of Fire.
+Class : ^777777Accessory^000000
+Defense : ^7777771^000000      Weight : ^77777710^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All except Novice^000000
+#
+2684#
+A mysterious ring that is blessed by the Spirit of Wind.
+Class : ^777777Accessory^000000
+Defense : ^7777771^000000      Weight : ^77777710^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All except Novice^000000
+#
+2685#
+A mysterious ring that is blessed by the Spirit of Earth.
+Class : ^777777Accessory^000000
+Defense : ^7777771^000000      Weight : ^77777710^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All except Novice^000000
+#
+2751#
+A badge which can get when they graduate the probationary period of magical school with high grade.
+Just a symbolic meaning only for probationer magicians?
+INT + 2, MATK + 3%, MHP + 100.
+Class : ^777777Accessory^000000
+Def : ^7777770^000000      Weight : ^77777710^000000
+Jobs : ^777777All^000000
+#
+2753#
+^000088Rental Item^000000
+A ring that has special power in each shape.
+Receive 15% more EXP from ^000088Neutral monsters^000000.
+Item Class: ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2754#
+^000088Rental Item^000000
+A ring that has special power in each shape.
+Receive 15% more EXP from ^000088Undead monsters^000000.
+Item Class: ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2755#
+^000088Rental Item^000000
+A ring that has special power in each shape.
+Receive 15% more EXP from ^000088Animal Class monsters^000000.
+Item Class: ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2756#
+^000088Rental Item^000000
+A ring that has special power in each shape.
+Receive 15% more EXP from ^000088Plant monsters^000000.
+Item Class: ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2757#
+^000088Rental Item^000000
+A ring that has special power in each shape.
+Receive 15% more EXP from ^000088Insect type monsters^000000.
+Item Class: ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2758#
+^000088Rental Item^000000
+A ring that has special power in each shape.
+Receive 15% more EXP from ^000088Fish type monsters^000000.
+Item Class: ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2759#
+^000088Rental Item^000000
+A ring that has special power in each shape.
+Receive 15% more EXP from ^000088Demon monsters^000000.
+Item Class: ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2760#
+^000088Rental Item^000000
+A ring that has special power in each shape.
+Receive 15% more EXP from ^000088Demi Human monsters^000000.
+Item Class: ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2761#
+^000088Rental Item^000000
+A ring that has special power in each shape.
+Receive 15% more EXP from ^000088Angel type monsters^000000.
+Item Class: ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2762#
+^000088Rental Item^000000
+A ring that has special power in each shape.
+Receive 15% more EXP from ^000088Dragon type monsters^000000.
+Item Class: ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2763#
+^000088Rental Item^000000
+A unique ring adorned with skull. Engraved are the words '^990000Forever, until Death...^000000.'
+ATK + 5%, MATK + 5%
+MaxHP + 5%, Cast Delay reduced by 5%
+Enables use of Lv.1 Sight.
+Item Class : ^777777Accessory^000000
+Defense : ^7777770^000000      Weight : ^7777770^000000
+Required Level : ^77777795^000000
+Jobs : ^777777All Transcendent Jobs except Novice^000000
+#
+2811#
+^000088Rental Item^000000
+A spiritual bracelet granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+All stats +1.
+Item Class: ^777777Accessory^000000 Defense : ^7777771^000000
+Weight : ^77777720^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2812#
+^000088Rental Item^000000
+A spiritual bracelet granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+All stats +1.
+Item Class: ^777777Accessory^000000 Defense : ^7777771^000000
+Weight : ^77777720^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2813#
+^000088Rental Item^000000
+A spiritual bracelet granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+All stats +1.
+Item Class: ^777777Accessory^000000 Defense : ^7777771^000000
+Weight : ^77777720^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2814#
+^000088Rental Item^000000
+A spiritual bracelet granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+All stats +1.
+Item Class: ^777777Accessory^000000 Defense : ^7777771^000000
+Weight : ^77777720^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2828#
+MHP + 3%. MSP + 50.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight : ^77777710^000000
+Required Level: ^7777771^000000
+Jobs: ^777777All Jobs^000000
+#
+2829#
+Enable to use [Greed] skill.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight : ^7777770^000000
+Required Level: ^77777710^000000
+Jobs: ^777777All Jobs except Novice^000000
+#
+2833#
+^000088Rental Item^000000
+An awesome ring that is only given to the members of the Order of Odin.
+All State + 1.
+Enable to use new skill called "Odin's Recall"
+Item Class : ^777777Accessory^000000 Defense : ^7777770^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+2845#
+Strap this on and shut them up!
+MDEF + 2, ATK + 5%, MATK  +5%.
+Reduce damage from Demi-Humans by 2%
+When worn with No Fear Shoes and No Fear Underwear-Cannot be frozen, Increase EXP Gain by 5%.
+Item Class : ^777777Accessory^000000 Defense : ^7777772^000000
+Weight : ^7777770^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+2855#
+Morocc twon Hyuke's black tail style. It doesn't seem to be moving.
+ASPD + 3%, Critical + 7.
+Equip with [Whikebain's Black Ears], extra critical attack damage + 10%.
+Equip with [Whikebain's Black Ears], Critical +5 if [Whikebain's Black Ears]'s refined more than +7
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required lv : ^77777745^000000
+Jobs : ^777777All^000000
+#
+2856#
+^000088Rental Item^000000
+A legendary belt rumored to be owned by Thor, the god of thunder. Increases its wearer's strength.
+STR + 20, MDEF + 3
+When pure STR is 120, gives 5% physical damage to Boss monsters.
+Class : ^777777Accessory^000000
+Defense : ^7777771^000000      Weight : ^7777770^000000
+Required Lv : ^77777747^000000
+Job : ^777777All Jobs^000000
+#
+2857#
+^000088Rental Item^000000
+A legendary necklace worn by Freija, the goddess of beauty.
+STR, AGI, DEX, VIT +3 
+INT, LUK +5
+MDEF +2
+Increase HP restoration of [Heal] and [Sanctuary] by 3% when they are cast by wearer.
+Class : ^777777Accessory^000000
+Defense : ^7777771^000000      Weight : ^7777770^000000
+Required Lv : ^77777747^000000
+Job : ^777777All Jobs^000000
+#
+2874#
+An ornament made with Buffalo's horn.
+You can feel wild buffalo's power just by looking at it.
+Aspd+1
+Additional Aspd+1 when equipped with Bison Horn.
+Class: ^777777Accessory^000000
+DEF : ^7777770^000000
+Weight: ^77777710^000000
+Level Requirement : ^77777710^000000
+Job: ^777777All Jobs^000000
+#
+2881#
+a necklace for implmenting best of royal palace food.
+DEX + 2, MATK + 20.
+when used with Orleans globe, can have MATK + 20,  with Orleans uniform , can have stat casting 15% decrese, when with Orleans server, can have MATK + 2 increse for shield 1
+Class : ^777777Accessory^000000 Def : ^7777770^000000
+Weight : ^77777710^000000
+Required Level  : ^7777770^000000
+Jobs : ^777777All^000000
+#
+2936#
+a special ring for recovery. Feels energetic
+VIT + 1, MHP + 250, MaxHP + 10%.
+[Heal] increase recovery 5% from item 
+cannot be refined, destroyed
+Class : ^777777accessory^000000
+Def : ^7777775^000000 weight : ^77777710^000000
+Jobs : ^777777All Jobs available^000000
+#
+4486#
+Reduce Floating Cast Time by 15%.
+Series : ^777777Card ^000000
+Compound : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+4487#
+ATK, CRI, HIT is increased depending on the 50% of wearer's job level divided by 10. Autospell Earthquaker Lv2 by a certain chance when receiving physical attack.
+Series : ^777777Card ^000000
+Compound : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+4488#
+When character receives damage, there will be certain rate of activating Auto Spell to cast Level5 skill of Meteor Storm.
+Series : ^777777Card ^000000
+Compound : ^777777Shoe^000000
+Weight : ^7777771^000000
+#
+4489#
+Reduce 15% of normal SP amount required to perform the skill.
+Series : ^777777Card ^000000
+Device : ^777777Helmet^000000
+Weight : ^7777771^000000
+#
+4490#
+increase agility 1 lv availabe.
+if refine over 15 lv, agi 5lv available
+Class : ^777777Card^000000
+Jobs : ^777777shoes^000000
+weight : ^7777771^000000
+#
+4491#
+Adds 5% chance of absorbing 10% of the physical damage inflicted on an enemy by the wearer as HP, but also reduces HP Recovery by 100%.
+If compounded equipment is refined to +15 and above, 5% chance of absorbing 10% of the physical damage inflicted on an enemy by the wearer as HP,
+Series : ^777777Card ^000000
+Compound : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4492#
+increase resistance 40%. VIT + 3.
+additional 20% of resistance stun if refine is over 15 lv
+Class : ^777777Card^000000
+Jobs : ^777777Headgear^000000
+weight : ^7777771^000000
+#
+4493#
+MaxHP + 50%, DEF, MDEF - 50.
+if refine is over 15, MaxHP + 75%, DEF,  MDEF - 50.
+Class : ^777777Card^000000
+Location : ^777777armor^000000
+weight : ^7777771^000000
+#
+4494#
+attack increase 10% 
+auto spell magnum break cast Lv10 at regular rate
+if refine is ver level15, additional attck increase 5% 
+Class : ^777777Card^000000
+Jobs : ^777777weapon^000000
+Weight : ^7777771^000000
+#
+4495#
+all status  + 1,
+when having physical damage, cast L raison Lv5
+if over INT 99, you can more opportunity for casting
+if refine is over 15, cast Giriae L raison Lv8 
+Class : ^777777Card^000000
+Jobs : ^777777Shoe^000000
+Weight : ^7777771^000000
+#
+4496#
+50% damage to small, mid, big monster.
+if upgrade LV 15, 75% damage to small, mid, big monster.
+Class : ^777777Card^000000
+Location : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+4497#
+when physical attack, cast storm gast Lv1 
+when attack near and far , can cast ice move.
+if refine is over 15, more chance
+Class : ^777777Card^000000
+Jobs : ^777777weapon^000000
+Weight : ^7777771^000000
+#
+4498#
+MHP -60%, MSP +50%.
+when hunting monster, can get banana and its recovery rate is 50%.
+if refine is over 15 , MHP -50%, MSP +50%, can get banan and its recovery rate is added 30%
+Class : ^777777Card^000000
+Jobs : ^777777Shoe^000000
+Weight : ^7777771^000000
+#
+4499#
+Pierce Defense of normal monsters.
+HP of wearer will not recover automatically and losses 888 HP every 5 seconds.
+When equipped, wearers will losses 999 HP.
+If compounded equipment is refined to +15 and above, wearer will losses 777 HP every 8 seconds.
+Series : ^777777Card^000000
+Compound : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4500#
+Can reflex 15% damage to enemies when being physically attacked in short range.
+If compounded equipment is refined to +15 and above, can reflex 25% damage to enemies.
+Series : ^777777Card ^000000
+Compound : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+4501#
+Adds a chance of autocasting Lv.1 Assumptio on the wearer each time the wearer is physically or magically attacked.
+If compounded equipment is refined to +15 and above, it has higher chance to autocast the skill.
+Series : ^777777Card ^000000
+Compound : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+4502#
+Adds a 5% chance of destroying an enemy's weapo and a 4% chance of destroying its armor each time the wearer physically attacks.
+If compounded equipment is refined to +15 and above, has a 8% chance of destroying an enemy's weapo and a 6% chance of destroying its armor each time the wearer physically attacks.
+Series : ^777777Card ^000000
+Compound : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4503#
+Ignores 15% of Boss Monster's Magic Defense Rate when inflicting magic attacks againts them.
+If compounded equipment is refined to +15 and above, Ignores 25% of Boss Monster's Magic Defense Rate when inflicting magic attacks againts them.
+Dex + 2
+Series : ^777777Card ^000000
+Compound : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4504#
+Unlimited use of [Endure] skill.
+Reduces 50% MaxHP,
+If compounded equipment is refined to +15 and above, Reduces 35% MaxHP.
+Series : ^777777Card ^000000
+Compound : ^777777Shoes^000000
+Weight : ^7777771^000000
+#
+4536#
+ATK + 15.
+When physical attack, 50% attack speed increased during 10 second.
+When more than 15 refine, ATK + 25. 75% physical attack speed increased during 10 second.
+Class : ^777777card^000000
+Equip : ^777777weapon^000000
+Weight : ^7777771^000000
+#
+4537#
+accuracy rate   + 50.
+if refine is over15, accuracy rate   + 75.
+Class : ^777777Card^000000
+Jobs : ^777777Weapon^000000
+weight : ^7777771^000000
+#
+4538#
+Increases the effect of the Heal, Santuary and Potion Pitcher skills by 15% when they are cast by the wearer, but also increases SP Comsumption by 30%.
+If compounded equipment is refined to +15 and above, increases the effect of the Heal, Santuary and Potion Pitcher skills by 25% when they are cast by the wearer, but also increases SP Comsumption by 20%.
+Series : ^777777Card^000000
+Compound : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4539#
+MATK+5%, MaxSP-50%.
+Increases magic damage to Demihuman and Angel monsters by 25%.
+If compounded equipment is refined to +15 and above,
+MATK+8%, MaxSP-50%.
+Increases magic damage to Demihuman and Angel monsters by 33%.
+Series : ^777777Card^000000
+Compound : ^777777Shoe^000000
+Weight : ^7777771^000000
+#
+4540#
+There is a certain rate to inflict Coma status on enemies,
+There is a certain rate to inflict Stunned, Cursed, Silence, Poisoned, Wound status in melee combat.
+If compounded equipment is refined to +15 and above, the rate to inflict the status above is increased.
+Series : ^777777Card ^000000
+Compound : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4541#
+The wearer's attack will ignore the MDEF of regular monsters,
+Increase Floating Casting Time by 150% and reduces SP Recovery by 150%, drains 3000 SP when the compounded headgear is unequipped.
+If compounded equipment is refined to +15 and above, increase Floating Casting Time by 120%, reduces SP Recovery by 120%, drains 2000 SP when the compounded headgear is unequipped.
+Series : ^777777Card ^000000
+Compound : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4542#
+resistance 40% against ICING.
+when dealing magical attack, land protection 1LV cast 
+MDEF - 20.
+if upgrade 15 LV, resistance 60^ against ICING.
+Class : ^777777Card^000000
+Location : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+4543#
+cast Freeze at 25% when receiving physical damage.
+when refine 15 lv, cast 40% of freeze
+Class : ^777777Card^000000
+Jobs : ^777777armor^000000
+weight : ^7777771^000000
+#
+4543#
+cast Freeze at 25% when receiving physical damage.
+when refine 15 lv, cast 40% of freeze
+Class : ^777777Card^000000
+Jobs : ^777777armor^000000
+weight : ^7777771^000000
+#
+4544#
+INT+3.
+Have chance resist to Darkness and Curse.
+If compounded equipment is refined to +15 and above, have higher chance resist to Darkness and Curse.
+Series : ^777777Card^000000
+Compound : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4549#
+Player will be able to see enemies that are in Hiding or Clocking status.
+ALL Status +1.
+Can use Lv1 [Ruwach] skill.
+Series : ^777777Card^000000
+Compound : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4550#
+if bow Class , skill 'arror storm'  attack + 50% , CRI + 5, HIT + 5.
+long distance physical  attack, critical damage + 20%
+every refined lv 4, ciritical damage + 1%.
+autospell 'fantastic arror' lv 1 cast with normal chance
+Class : ^777777Card^000000
+Jobs : ^777777Weapon^000000
+weight : ^7777771^000000
+#
+5130#
+A mask  which looks like scary monster. If you ever see the monster you can't even scream by fear.
+Add the chance of auto casting 'Mute' on an enemy when the user receives Physical Damage. MDEF + 1.
+Item Class: ^777777Headgear^000000    Defense : ^7777770^000000
+Equipped On : ^777777Upper, Mid^^000000   Weight: ^77777770^000000
+Required Level: ^77777775^000000
+Jobs: ^7777772-1 and 2-2 Classes^000000
+#
+5132#
+A hat which is patterned after Angeling, the mother of Porings. It has spirit to protect their species from Human. 
+Reduce 10% damage taken from DemiHuman Monsters.
+Item Class: ^777777Headgear^000000    Defense : ^7777772^000000
+Equipped On : ^777777Upper^000000    Weight: ^77777770^000000
+Required Level: ^77777738^000000
+Jobs : ^777777All^000000
+#
+5144#
+It seems like a Hat but specially redesigned for the gamblers.
+LUK + 5
+Weapon Class : ^777777Headgear^000000    Defense Rate : ^7777772^000000
+Equipped On : ^777777Upper^000000    Weight : ^77777720^000000
+Applicable Job : ^777777Every Job^000000
+#
+5145#
+A hat especially designed for Carnival festival.
+All Stats + 3.
+Item will be disappeard on April 13 2006.
+Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Upper^000000    Weight : ^77777710^000000
+Jobs : ^777777All^000000
+#
+5148#
+A ceremonial headgear for Guildmasters. Rare item. Awarded in Level Up LIVE Event, Sept 30, 2006.
+INT + 2.
+Weapon Class : ^777777Headgear^000000    Defensive power : ^7777770^000000
+Equipped on : ^777777Upper^000000
+Weight  : ^77777750^000000
+Applicable Job : ^777777All Jobs^000000
+#
+5149#
+A silver tiara encrusted with diamonds with a star crystal centerpiece. Romantic, graceful, and elegant!
+DEX + 2.
+Class : ^777777Headgear^000000    Defense  : ^7777770^000000
+Equipped on : ^777777Upper^000000
+Weight  : ^77777710^000000
+Available Job : ^777777All Jobs^000000
+#
+5150#
+A hat which has color of Brazil national flag. It increases speed during when event is held.
+Item Class: ^777777Headgear^000000    Defense : ^7777771^000000
+Equipped On : ^777777Upper^000000
+Weight : ^77777710^000000
+Jobs : ^777777All^000000
+#
+5153#
+A hairpin designed to resemble a popular monster, Angeling.
+It makes a wearer lightened. FLEE + 5.
+If putting it on with wearing 'a dress of angel', Luk + 6, Flee +5, Int +2 will be given.
+#
+5154#
+Father's sunglasses. It seems elegant and dignified when worn.
+Item Class : ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Mid^000000    Weight : ^77777710^000000
+Available Job : ^777777All^000000
+#
+5155#
+A fake white colored moustache, symbol of experience and well aged sophistication.
+ATK + 20
+Item Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Lower^000000    Weight : ^77777710^000000
+Job : ^777777All^000000
+#
+5156#
+Father's mask. Would be useful when caught a flu.
+MATK + 1%.
+Item Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Lower^000000    Weight : ^77777710^000000
+Available Job : ^777777All^000000
+#
+5179#
+A tiara that has shimmering gold color. A big star in the middle of tiara is impressive
+INT + 2.
+Class : ^777777Headgear^000000    Defense  : ^7777770^000000
+Equipped on : ^777777Upper^000000
+Weight  : ^77777710^000000
+Available Job : ^777777All Jobs^000000
+#
+5180#
+A hat made for a national holiday of somewhere in western country.
+VIT + 1.
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper^000000 Weight :^77777710^000000
+Jobs : ^777777All^000000
+#
+5181#
+A headgear covers over the half of a face to hide the identiry of its wearer. A 'must buy' item for those who want to be Devil Lord.
+STR + 2.
+Item Class : ^777777Headgear^000000    Defense Rate : ^7777773^000000
+Head Position : ^777777Upper, Mid^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Applicable Jobs : ^777777Swordman Class/Merchant Class/Thief Class ^000000
+#
+5189#
+It has the appearance of a Maple Leaf in autumn. You have a feeling of sorrow when you equip it.
+MHP + 40, MSP + 40.
+Item Class: ^777777Headgear^000000    Defense: ^7777770^000000
+Head Position: ^777777 Upper ^000000
+Weight: ^77777710^000000
+Jobs : ^777777All^000000
+#
+5200#
+Marco's favorite Hat. There's handwriting written inner side of the hat. It says 'delicating his memories to you..'
+Item Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Upper^000000    Weight : ^77777730^000000
+Available Job : ^777777All^000000
+#
+5205#
+An honourable laurel wreath that was given to a winner by an emperor of some country in ancient days.  
+All stats +10, Mdef +3
+Item class : ^777777Headgear^000000
+Head position : ^777777Upper.Mid^000000
+Required Level : ^7777773^000000    Weight : ^777777100^000000
+Applicable Jobs : ^777777All^000000
+#
+5207#
+A dazzling beautiful golden ring which is blessed by an angel.It is given to a great believer.
+Add 5% tolerance against attack of holy property, Luk +1
+Item Class : ^777777Headgear^000000    Defense Rate : ^7777770^000000
+Head Position : ^777777Upper^000000    Weight : ^77777710^000000
+Applicable Jobs : ^777777All^000000
+#
+5209#
+A yellow basball cap worn to keep the sun from your eyes.
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000    Weight : ^77777730^000000
+Available Job : ^777777Every Job except Novice Class^000000
+#
+5252#
+A hat made to resemble the monster, Nine tails. proud of its great heat-retainablity.
+AGI + 1, Dex + 1
+While damaged, Gloria LV 1 is casted with some chances.
+Item Class : ^777777Headgear^000000    Def : ^7777771^000000
+Head Position : ^777777Upper^000000    Weight : ^77777730^000000
+Level limit : ^77777720^000000
+Jobs : ^777777All^000000
+#
+5257#
+A halo and a pair of wings that are floating above a head. The item makes the wearer to look like a spirit that is walking on the earth.
+MDEF + 2
+Add a chance of auto casting level 1 Assumptio on the wearer when the wearer receives physical attack.
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Head Position : ^777777Upper^000000    Weight : ^77777730^000000
+Required Level. : ^77777720^000000
+Jobs : ^777777All Jobs except Novice^000000
+#
+5259#
+A hat made in the form of a big animal found in one oriental country.
+The body it grows but kind is pure and it is. It will ask with the long nose and to inhale it scatters to wide scope.
+VIT + 1
+Add a 1% chance of auto casting Level 3 Water Ball on the enemy when attacking.
+Enables use of Level 1 Aqua Benedicta.
+Item Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^77777750^000000
+Available Job : ^777777All^000000
+#
+5260#
+A Hat worn by Cookie Xmas, 'the idol of Toy Dungeon'. It covers the ears to protect from cold weather.
+AGI + 1
+Perfect Dodge + 5, Inflict 5% more damage with Critical Attack.
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Available Job : ^777777All^000000
+#
+5261#
+A silver headgear with star in the middle gorgeously glittering its color.
+INT + 2
+If worn by Magician Class characters, MATK bonus increases according to the wearer's JOB LEVEL.
+If worn by Acolyte Class characters, SP Consumption decreases according to the wearer's JOB LEVEL.
+If worn by Archer Class characters, MSP increases according tothe wearer's JOB LEVEL.
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Available Job : ^777777All^000000
+#
+5262#
+A gold headgear with star in the middle gorgeously glittering its color.
+STR + 2
+Indestructible.
+If worn by Swordman, Merchant or Thief classes and the character's base DEX is lower than 55, DEX bonus increases according to the wearer's JOBLEVEL.
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Jobs : ^777777All^000000
+#
+5263#
+An headgear which is made of many kinds of property rings. It looks very luxurious and charming.
+Adds 1% of resistance to Water, Wind, Fire property.
+Curse an enemy with 3% of probability when you attack. 
+Class : ^777777Headgear^000000    Defense : ^7777771^000000
+Location : ^777777Upper,Mid,Lower^000000    Weight : ^77777710^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All except Novice^000000
+#
+5264#
+A spirit of Austrailia.
+All Status + 2
+Item Class : ^777777Headgear^000000    Defense : ^7777774^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Available Job : ^777777All^000000
+#
+5271#
+A heavy looking hat with blue and silver jewery decorations. It will match with magnificent events.
+MDEF + 3. Depends on its Upgrade Level, damage from Boss monsters reduces.
+Item Class : ^777777Headgear^000000    Defense : ^7777774^000000
+Location : ^777777Upper-Mid^000000
+Weight : ^77777750^000000
+Available Job : ^777777All^000000
+#
+5272#
+A mask with child's clownish face on it.
+A chance of auto casting level 5 Provoke when attacking physically.
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Mid, Lower^000000
+Weight : ^77777710^000000
+Available Job : ^777777All^000000
+#
+5278#
+It's a piece of ribbon that hangs to one side when worn that was created out of old Flags that was torn by bullets.
+Item Class : ^777777Headgear^000000    Defense : ^7777771^000000
+Head Position : ^777777Upper^000000    Weight : ^77777710^000000
+Required Level. : ^77777720^000000
+Jobs : ^777777All Jobs except Novice^000000
+#
+5303#
+Wreath, interlaced in the magic fire from the grasses, Assembled during the day of summer solstice.
+It protects owner from the evil forces.
+MDEF + 5, MSP + 50
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000    Weight : ^77777730^000000
+Jobs : ^777777All^000000
+#
+5332#
+A mask that imbued with the sweet whispers of Loki .
+Perfect Dodge + 3.
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Middle, Lower^000000    Weight : ^77777720^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+5406#
+A hat which can get when they graduate the clergyman school with high grade.
+There's saying that this hat is suitable only for the man who has strong belief for god.
+INT + 1, DEX + 2, VIT + 1.
+Reduces 5% of casting delay after use a skill.
+Class : ^777777Headgear^000000    Def : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Jobs : ^777777All^000000
+#
+5407#
+A hat which can get when they graduate the magician school with high grade.
+There's a saying that this hat can be a standard for distingusihing a elite magician.
+INT + 2, DEX + 2.
+Autocast Lv 1 Assumptio for yourself by low chance when cast magical attack.
+Class : ^777777Headgear^000000    Def : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Jobs : ^777777All^000000
+#
+5429#
+A hobgoblin's cute hat. 
+Increases HP and SP recovery rate by 5%.
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000    Weight : ^77777710^000000
+Jobs : ^777777All^000000
+#
+5462#
+Spiked Scarf
+VIT + 1.
+Reduces damage from Demi-Human class monsters by 1%,
+Increases damage to Demi-Human class monsters by 1%.
+Item Class: ^777777Headgear^000000    Defense : ^7777771^000000
+Location : ^777777Lower^000000    Weight : ^77777710^000000
+Required Level : ^77777790^000000
+Jobs : ^777777All^000000
+#
+5463#
+Rainbow Scarf
+INT + 1. MDEF + 2.
+MATK + 1%
+Item Class: ^777777Headgear^000000    Defense : ^7777771^000000
+Location : ^777777Lower^000000    Weight : ^77777710^000000
+Required Level : ^77777790^000000
+Jobs : ^777777All^000000
+#
+5464#
+Zaha doll hat which resembles angel of Zaha. It looks great on your head.
+INT+2
+Able to use Lv.3 [Magnificat]. 
+Can't be refined.
+Item Class : ^777777Headgear^000000    Defense : ^7777771^000000
+Location : ^777777Upper ^000000    Weight : ^7777770^000000
+Jobs : ^777777All^000000
+#
+5478#
+A Classic hat.
+STR + 2, MHP + 300
+Item Class: ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Jobs : ^777777All^000000
+#
+5489#
+A yellow tredy hat has a "love daddy" logo. 
+Thailand people wear it to admire king.
+DEX + 2.
+Item Class : ^777777Headgear^000000    DEF : ^7777770^000000
+Item Position : ^777777Upper^000000
+Weight : ^77777710^000000
+Jobs : ^777777All^000000
+#
+5491#
+Not many people can stand a hot and steamy sand storm that is from far north Brazil.  But these natives are well known for standing against heat and humidity with less water and food.
+STR + 2.
+Add 10 % resistance to Fire Property attacks.
+Item Class: ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777780^000000
+Jobs : ^777777All^000000
+#
+5496#
+Props for the table game. It used to be a tool of gamble. 
+Sum of the each sides of symmetry is always 7. 
+Luk + 4
+Cannot be upgraded.
+Item Class: ^777777Headgear^000000    Defense : ^7777773^000000
+Location : ^777777Upper^000000    Weight : ^77777730^000000
+Required Level : ^77777750^000000
+Jobs : ^777777All^000000
+#
+5504#
+A specially made wedding veil to celebrate the sixth year anniversary of RO. 
+It is also used to show "someone's love and affection".
+MDEF + 10
+Item Class: ^777777Headgear^000000    Defense : ^7777775^000000
+Location : ^777777Upper,Mid,Lower^000000    Weight : ^77777750^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All^000000
+#
+5505#
+A hat worn by priests when performing a sacrificial rite. 
+Shape of a hat resembles the ancient fairies of Asara.
+Enables use of Lv.1 Don't Forget Me skill when equipped by Dancer jobs.
+Dex +2, Luk + 2
+Item Class: ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper,Mid^000000    Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Jobs : ^777777All^000000
+#
+5518#
+A headgear made from the horns of Baphomet.
+12% additional tolerance against Demi-Human monsters.
+Increase certain amount of ATK based on wearer's Job lv.
+Item Class : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Upper^000000 Weight : ^77777780^000000
+Required Level : ^77777750^000000
+Jobs : ^777777All^000000
+#
+5519#
+You seems to sing a song like Bard.
+INT +2.
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Item Position: ^777777Upper ^000000 Weight : ^77777780^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5540#
+^000088Rental Item^000000
+A spiritual circlet granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+STR + 1, INT + 1, DEX + 1.
+Item Class: ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper^000000 Weight : ^77777770^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+5541#
+^000088Rental Item^000000
+A spiritual circlet granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+STR + 1, INT + 1, DEX + 1.
+Item Class: ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper^000000 Weight : ^77777770^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+5542#
+^000088Rental Item^000000
+A spiritual circlet granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+STR + 1, INT + 1, DEX + 1.
+Item Class: ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper^000000 Weight : ^77777770^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+5543#
+^000088Rental Item^000000
+A spiritual circlet granted by Freya. It appears very sturdy, but it will eventually disappear and return to Freya's realm, Folkvangr.
+STR + 1, INT + 1, DEX + 1.
+Item Class: ^777777Headgear^000000 Defense : ^7777774^000000
+Location : ^777777Upper^000000 Weight : ^77777770^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+5552#
+^000088Rental Item^000000
+Limited Promo! Summer Festival Grand Circlet! 4 weeks rental item.
+STR + 3, INT + 3, MDEF + 3.
+Item Class: ^777777Headgear^000000 Defense : ^7777778^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777770^000000
+Jobs : ^777777All^000000
+#
+5553#
+^000088Rental Item^000000
+Limited Promo! Summer Festival Bunny Band! 4 weeks rental item.
+MDEF + 4, Reduces damage from Demihuman monsters by 9%.
+Item Class: ^777777Headgear^000000 Defense : ^7777777^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777770^000000
+Jobs : ^777777All^000000
+#
+5554#
+Ridiculous Octopus with a gentleman's hat. It feels like it's making fun of me as I look at it.
+AGI +2, Low chance of autocast Lv.5 [Provoke] when attacked physically.
+Indestructable.
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777720^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+5556#
+Very warm hat which a monster 'Fur Seal' is wearing.
+INT + 1, Low chance of autocast Lv. 1 [Frost Nova] when attacked physically.
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper,Mid,Lower^000000  Weight : ^77777750^000000
+Required Level : ^77777755^000000
+Jobs : ^777777All^000000
+#
+5557#
+A hat which resembles the wild cat, Wild Rose.
+AGI + 3.
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777750^000000
+Required Level : ^77777720^000000
+Jobs : ^777777Every Job Except Novice^000000
+#
+5558#
+This hat is a legend to the people from whild festival world.
+Low chance of dropping 'Blue Herb' when hunt a Plant type monster.
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All^000000
+#
+5563#
+Doll-hat which resembles 'Dolor of Thanatos'. People say that this doll speaks.
+Indestructable.
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Required Level : ^7777770^000000
+Jobs : ^777777All^000000
+#
+5567#
+A hat to commemorate the Sinulog Festival, you felt stronger while wearing it.
+STR + 2, Increase attack speed (Decrease delay 2% after attack)
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Lower^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5573#
+Baby Dokkaebi's strong firm horn. Some say this brings you wealth.
+Drops jewelry when killing monsters with low chance, with physical attack activates mammonite Lv5 by certain chance.(Spends zeny when activating, not available without zeny.)
+Class : ^777777Headgear^000000 Defense : ^7777776^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Required Level : ^7777770^000000
+Jobs : ^777777All^000000
+#
+5575#
+A hat made modeled on rice ball. It will give souvenir to you for the picnic.
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper^000000 Weight : ^77777710^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All^000000
+#
+5578#
+A hat that is given to brave sailors.
+AGI + 2.
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Item Position : ^777777Upper ^000000 Weight : ^7777771^000000
+Required Level : ^7777770^000000
+Jobs : ^777777All^000000
+#
+5591#
+A turban imported from fire burning desert that used by brave warrior who became a legend since several centuries ago.
+Indestructible. Cannot be upgraded.
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper^000000 Weight : ^77777710^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All^000000
+#
+5595#
+A horn imbued with spirit of devil. Could feel full of vital force from it.
+MDEF + 2.
+If worn by Swordman/Merchant/Thief Class, AGI + 2, decrease damage of Neutral , Water property by (Job Lv / 14), increase VIT.
+If worn by Wizard/Acolyte/Archer Class, INT + 2, DEX + 2, damage of Neutral , Water property by (Job Lv / 14).
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper^000000 Weight : ^77777740^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5603#
+A legendary crown, awarded to Official Ambassadors of Philippine Ragnarok Online Mister, Miss and Chixilog of the Year
+All Status + 3
+Class : ^777777Headgear^000000 Def : ^7777778^000000
+Location : ^777777Upper ^000000Weight : ^777777250^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5604#
+A legenedary crown, awarded to Philippine Ragnarok Online's 1st Runner Ups of Mister, Miss and Chixilog of the Year
+All Status + 2
+Class : ^777777Headgear^000000 Def : ^7777776^000000
+Location : ^777777Upper ^000000Weight : ^777777250^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5605#
+A legendary crown, awarded to Philippine Ragnarok Online's 2nd Runner Ups of Mister, Miss and Chixilog of the Year
+All Status + 1
+Class : ^777777Headgear^000000 Def : ^7777774^000000
+Location : ^777777Upper ^000000Weight : ^777777250^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5609#
+If you wear this, it feels like you become a fancy Chung aristocrat.
+LUK + 3, Mdef +4, Def+5
+When receiving any physical attack,  Mammonite Lv5 will be activated at a low rate.
+(If you have no zeny, it won't be activated.)
+Item Class : ^777777Headgear^000000    Defense : ^7777775^000000
+Location : ^777777Upper^000000    Weight : ^77777750^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All^000000
+#
+5610#
+Earrings made of ice and other special chemicals. If you wear these, you can beat off the heat by its cool energy!
+LUK + 1.
+When receiving any physical attack, Autospell Coldbolt Lv5 will be activated at a low rate.
+Item Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Mid ^000000 Weight : ^77777710^000000
+Required Level : ^77777710^000000
+Jobs : ^777777All^000000
+#
+5691#
+This is something that many sailors of Alberta wear when sailing through the seven seas. It helps prevent seasickness and its bright color makes it easier to see men who have fallen overboard.
+DEX + 1.
+Provides 20% resistance to poison.
+Indestructable.
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Upper^000000 Weight : ^7777771^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5692#
+This is a good companion to have when spending months sailing on a ship. Sailors of Alberta also believe that it is a good luck charm against bad luck and curses.
+DEX + 1.
+20% resistance to Curse
+Indestructable.
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Upper^000000 Weight : ^7777771^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5693#
+It's what's inside the man that makes him who he really is. Got the Balls for it?
+STR + 1, INT + 1, DEX + 1.
+MaxHP + 700.
+Reduce damage from Demi-Humans by 2%
+When worn with No Fear Shoes and No Fear Belt-Cannot be frozen, Increase EXP Gain by 5%.
+Item Class : ^777777Headgear^000000 Defense : ^77777710^000000
+Location : ^777777Upper ^000000 Weight : ^7777770^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All^000000
+#
+5694#
+Got Game?
+VIT + 1, MaxHP + 100.
+Reduce damage from Demi-Humans by 2%
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Upper ^000000 Weight : ^7777770^000000
+Required Level : ^77777720^000000
+Jobs : ^777777All Jobs Except Novice^000000
+#
+5761#
+This cute Sloth must think you look like a tree. At least it warms the top of your head.
+AGI + 2.
+Chance to use the skill Sonic Blow Level 5 when you attack physically in short distance .
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper ^000000 Weight : ^77777780^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5762#
+A hat similar to the MVP Duneyrr.
+ALL State + 1, MDEF + 5.
+2% resistence to human and animal monsters.
+Item Class : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5763#
+A hairband that attracts men.
+You can wear it when you want to look sexy.
+Your sexyness increases to 100 %
+AGI + 2, MDEF+3
+Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000    Weight : ^77777720^000000
+Jobs : ^777777All^000000
+#
+15021#
+MaxHP+3%
+Class : ^777777Armor^000000
+Defense : ^77777745^000000
+Weight : ^77777715^000000
+Jobs: ^777777Every Job except Novice^000000
+#
+
+
+17580#
+Each Groove Pack will always give you ^0000ff1 Bloody Branch^000000 and ^0000ff1 Kitcoin^000000 and contains one of the following at random: 
+Mental Potion 10 cnt
+HE Bubble Gum 3 cnt
+Transformation Scroll Marduk 10 cnt
+Fish In Mouth
+Scooter Hat
+Ancient Admiral Helm
+Tomboy Fairy Ears
+Isabella Blue Ears
+Blush[1]
+Weight : ^7777771^000000
+^ff0000Box Account Bound^000000
 #
