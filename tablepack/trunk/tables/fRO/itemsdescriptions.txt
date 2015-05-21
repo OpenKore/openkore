@@ -28602,7 +28602,7 @@ A ticket that can be exchanged for a hair color. Give it to Ella Debochveu in Pr
 Weight : ^7777770^000000
 #
 32704#
-A ticket that can be exchanged for a new hair style. Give it to Ella UnebËlcoupp in Prontera.
+A ticket that can be exchanged for a new hair style. Give it to Ella UnebÓ°¨coupp in Prontera.
 Weight : ^7777770^000000
 #
 32703#
@@ -29138,15 +29138,15 @@ Puissiez-vous rester
 Weight : ^7777771^000000
 #
 7983#
-jeune ‡ jamais!
+jeune ÓÄ†jamais!
 Weight : ^7777771^000000
 #
 7984#
-Que votre rÍve
+Que votre rÓ©∂e
 Weight : ^7777771^000000
 #
 7985#
-se rÈalise!
+se rÓ•°lise!
 Weight : ^7777771^000000
 #
 7986#
@@ -29158,11 +29158,11 @@ voeux!
 Weight : ^7777771^000000
 #
 7988#
-Puissiez-vous Ítre
+Puissiez-vous Ó©¥re
 Weight : ^7777771^000000
 #
 7989#
-heureux ‡ jamais!
+heureux ÓÄ†jamais!
 Weight : ^7777771^000000
 #
 7990#
@@ -29340,7 +29340,7 @@ Jobs : ^777777All^000000
 When you have it, you can feel a splendid aristocratic atmosphere of chung.
 LUK + 3.
 When you are under physical attack, it uses Lv5 Mammonite skill by low chance.
-(if you donít have zeny, it doesn't work.)
+(if you donÈâ¥ have zeny, it doesn't work.)
 Class : ^777777Head Gear^000000
 Defense : ^7777775^000000
 Slot : ^777777Upper^000000
@@ -29411,7 +29411,7 @@ Knight, Merchant, Thief class AGI +2, Reduce damage and increase VIT of Neutral,
 Mage, Archer, Acolyte class INT +2,  Reduce damage and increase VIT of Neutral, Water properties 
 (Based on Job Lv/14).
 Class : ^777777Head Gear^000000
-DÈfense : ^7777772^000000
+DÓ•¶ense : ^7777772^000000
 Emplacement : ^777777Upper^000000
 Weight : ^77777740^000000
 Niveau requis : ^7777771^000000
@@ -29423,7 +29423,7 @@ Casting Loud Exclamation as regular change while use physical attack
 ASPD + 5%
 Can not be refined.
 Class : ^777777Head Gear^000000
-DÈfense : ^7777770^000000
+DÓ•¶ense : ^7777770^000000
 Emplacement : ^777777Upper^000000
 Weight : ^77777710^000000
 Niveau requis : ^77777730^000000
@@ -32337,7 +32337,7 @@ Location : ^777777Upper^000000Weight : ^77777750^000000
 Required Level : ^77777730^000000
 Jobs : ^777777All^000000
 Secret Effects (Required a set item)
-When equipped with [Evolved Smoking Pipe] and white feathers refined to 5 or higher, Hit + 1°¢MaxHP + 2% at every 2 refinements.
+When equipped with [Evolved Smoking Pipe] and white feathers refined to 5 or higher, Hit + 1ÍÜ¢MaxHP + 2% at every 2 refinements.
 #
 18574#
 The headgear made similarly from master of the dead's.
@@ -32367,7 +32367,7 @@ Location : ^777777Upper,Mid,Lower^000000 Weight : ^77777750^000000
 Required Level : ^77777720^000000
 Jobs : ^777777All^000000
 Secret Effects (Required a set item)
-When equipped with [Lesser Elemental Ring(ItemCode : 2680)], Hindsight°∏Weapon Perfection Lv2(1%)°πaddtionally with any Hindsight of either Lesser Elemental Ring or Wunderkammer.
+When equipped with [Lesser Elemental Ring(ItemCode : 2680)], HindsightÍÜ∏Weapon Perfection Lv2(1%)ÍÜπaddtionally with any Hindsight of either Lesser Elemental Ring or Wunderkammer.
 #
 18583#
 A doll made up to put on head. It just mood like hearing miaow
@@ -32396,7 +32396,7 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 18620#
-A pink heart-shaped eye patch. Seems like going well with a nurse°Øs cap.
+A pink heart-shaped eye patch. Seems like going well with a nurseÍÜØs cap.
 Class : ^777777Headgear^000000 Defense : ^7777772^000000
 Location : ^777777Mid^000000 Weight : ^7777775^000000
 Required Level : ^77777720^000000
@@ -32435,7 +32435,7 @@ Jobs : ^777777All^000000
 18901#
 A traditional hat which is often worn during folk festivals.  
 VIT+ 3, Increase HP recovery by 10 %
-If worn with Weiﬂwurst Sp recovery will be increased by 10%
+If worn with Wei√üwurst Sp recovery will be increased by 10%
 Class : ^777777Helmet^000000
 Defense : ^7777775^000000
 Position : ^777777Upper^000000
@@ -32566,7 +32566,7 @@ Required Level. : ^7777771^000000
 Jobs : ^777777All^000000
 #
 19737#
-Big hat for captain pirate. This could show the prestige of captian pirates, but itís worn out much.t
+Big hat for captain pirate. This could show the prestige of captian pirates, but itÈâ≥ worn out much.t
 Class : ^777777Costume^000000
 Position : ^777777upper ^000000 Weight : ^7777770^000000
 Required Level. : ^7777771^000000
@@ -33392,7 +33392,7 @@ Required Level : ^77777780^000000
 Jobs : ^777777Magician, Acolyte, Soul Linker^000000
 #
 18987#
-Jˆrmungandr the Midgard Serpent, give him some blood to activate his power.
+JÔô≤mungandr the Midgard Serpent, give him some blood to activate his power.
 All Status +2.
 Cast time, delay after using skills - 5%.
 Reduce damage from Human type monster -10%.
@@ -34286,7 +34286,7 @@ Required Lv. : ^7777771^000000
 Job : ^777777All^000000
 #
 19913#
-Animal's feaces, or PoopÖIt cannot be said directly so people call it 'that thing'.
+Animal's feaces, or PoopËïât cannot be said directly so people call it 'that thing'.
 Class : ^777777Costume^000000 Defense : ^7777770^000000
 Location : ^777777Top ^000000 Weight : ^7777770^000000
 Required Lv. : ^7777771^000000
@@ -35007,7 +35007,7 @@ Req Lvl. : ^7777771^000000
 Job : ^777777All^000000
 #
 19652#
-A hat worn by a well-known magician. Rabbit is peeping out, and we donít know what is going to pop out next.
+A hat worn by a well-known magician. Rabbit is peeping out, and we donÈâ¥ know what is going to pop out next.
 Class : ^777777Costume Equipment^000000 Defense : ^7777771^000000
 Location : ^777777Upper ^000000Weight : ^77777780^000000
 Req Lvl. : ^7777771^000000
@@ -35023,7 +35023,7 @@ Req Lvl. : ^7777771^000000
 Job : ^777777All^000000
 #
 19654#
-This old airship captain's hat would make you think: 'That white horn was only the part of the hatÖ'
+This old airship captain's hat would make you think: 'That white horn was only the part of the hatËîß
 Class : ^777777Costume Equipment^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
 Req Lvl. : ^7777771^000000
@@ -39349,7 +39349,7 @@ Weight : ^77777720^000000
 
 9028#
 An egg in which a Rice Cake Cute Pet rests. Can be hatched by using a Pet Incubator.
-Class : ^777777Monsterís Egg^000000
+Class : ^777777MonsterÈâ≥ Egg^000000
 #
 
 7613#
@@ -48361,7 +48361,7 @@ Jobs : ^777777All Jobs^000000
 A hat that is provided only for members of the Paradise Team.
 It's designed to go well with a suit.
 Class : ^777777Helmet^000000 Defense : ^7777775^000000
-¿ßƒ°: ^777777Upper ^000000 Weight : ^7777770^000000
+ÏÇßÏí°: ^777777Upper ^000000 Weight : ^7777770^000000
 Required Level : ^77777712^000000
 Jobs : ^777777All Jobs^000000
 #
@@ -48786,7 +48786,7 @@ Jobs : ^777777All Jobs^000000
 ^00008830 days Rental Item.^000000
 A hat that holds spirit of sun. 
 Reduce Demi-human damage by 10%.
-Add chance to cast Lv1 °∞Sight°± skill or Lv1 °∞Sight Thrasher°± when being hit by physical or magical attacks.
+Add chance to cast Lv1 ÍÜ∞SightÍÜ± skill or Lv1 ÍÜ∞Sight ThrasherÍÜ± when being hit by physical or magical attacks.
 Class : ^777777Headgear^000000    Defense : ^7777771^000000
 Location : ^777777Upper,Middle^000000 Weight : ^7777770^000000
 Required Level : ^77777760^000000
@@ -49384,7 +49384,7 @@ Weight : ^7777771^000000
 6285#
 This is the manual book for producing Enrich_White_PotionZ, vitata500, Enriched cell juice.
 Enriched white potionZ : ^000088Cylinder 10  + white potion 20  + white herb 10  + alchol 1 ^000000
-vitata 500 : ^000088cylinder 10  + grape 10 + honey 10 + + Blue Herb 10 ∞≥^000000
+vitata 500 : ^000088cylinder 10  + grape 10 + honey 10 + + Blue Herb 10 ÎÇ≥^000000
 Enrich Celermine Juice : ^000088Empty Testtube 10 + Awakening Potion 5 + Concentration Potion 5 + Spicy Sauce 5^000000
 Cure Free : ^000088Empty Testtube 10 + Panacea 5 + Green Herb 20 + Mastela Fruit 1 + Yggdrasil Leaf 1^000000
 Weight : ^7777771^000000
@@ -49551,12 +49551,12 @@ A jar of Gulaman made from strawberry flavored gelatin.
 Weight : ^7777771^000000
 #
 7744#
-A jar of °∞Leche Flan°± made from creamy eggs and milk. 
+A jar of ÍÜ∞Leche FlanÍÜ± made from creamy eggs and milk. 
  
 Weight : ^7777771^000000
 #
 7745#
-A jar of °∞Ube°± made from yummy sweet purple yams. 
+A jar of ÍÜ∞UbeÍÜ± made from yummy sweet purple yams. 
  
 Weight : ^7777771^000000
 #
@@ -49566,22 +49566,22 @@ A jar of Sago made of Tapioca cooked in brown sugar.
 Weight : ^7777771^000000
 #
 7747#
-A jar of °∞Langka°± made of sweetened Jackfruit.
+A jar of ÍÜ∞LangkaÍÜ± made of sweetened Jackfruit.
  
 Weight : ^7777771^000000
 #
 7748#
-A jar of °∞Sweet Beans°± made of sweetened Kidney beans. 
+A jar of ÍÜ∞Sweet BeansÍÜ± made of sweetened Kidney beans. 
  
 Weight : ^7777771^000000
 #
 7749#
-A jar of °∞Sweet bananas°± made of firm and ripe bananas cooked in sugar syrup.
+A jar of ÍÜ∞Sweet bananasÍÜ± made of firm and ripe bananas cooked in sugar syrup.
  
 Weight : ^7777771^000000
 #
 7750#
-A jar of °∞Macapuno°± made from young coconut meat cooked in sugar syrup. 
+A jar of ÍÜ∞MacapunoÍÜ± made from young coconut meat cooked in sugar syrup. 
  
 Weight : ^7777771^000000
 #
@@ -50367,7 +50367,7 @@ Weight : ^7777770^000000
 #
 
 
-// ---------- Ep13.3 ƒ˘Ω∫∆Ææ∆¿Ã≈€ ------------
+// ---------- Ep13.3 ÏìπÎ∂∫ÏöÆÎªÜÏÉåÏóõ ------------
 12580#
 A trial product which has been researched from the Geffen Magic Academy for a long time.
 This magical scroll is able to search which items are on sale, which items are being purchased, and can locate the searched vendor.
@@ -50412,7 +50412,7 @@ Class : ^777777All Job Class^000000
 #
 2843#
 ^ff0000This item cannot be traded with others.^000000
-It has a message inscribed - An accessory hung over a beast neck to show dignity.†
+It has a message inscribed - An accessory hung over a beast neck to show dignity.¬†
 SP + 50.
 #
 2844#
@@ -50427,17 +50427,17 @@ Weight : ^7777770^000000
 #
 6305#
 ^ff0000This item cannot be traded with others.^000000
-A piece of skin that is frozen solid. Something is very strange about it...†
+A piece of skin that is frozen solid. Something is very strange about it...¬†
 Weight : ^7777770^000000
 #
 6306#
 ^ff0000This item cannot be traded with others.^000000
-A mass made of somebody or something's blood. It is not similar to any human or creatures blood that you've ever seen before.†
+A mass made of somebody or something's blood. It is not similar to any human or creatures blood that you've ever seen before.¬†
 Weight : ^7777770^000000
 #
 6307#
 ^ff0000This item cannot be traded with others.^000000
-Mineral with an odd pulse similar to the dimensional crack. You sense a magic that is not of this world from it.†
+Mineral with an odd pulse similar to the dimensional crack. You sense a magic that is not of this world from it.¬†
 Weight : ^7777770^000000
 #
 6308#
@@ -52663,7 +52663,7 @@ Long Ranged Attack Damage +4%.
 4834#
 Long Ranged Attack Damage +6%.
 #
-//-------Ω…ø¨¿«»∏∂˚ √ﬂ∞° æ∆¿Ã≈€------------
+//-------Î∑âÎæ¨ÏÉáÏ¢∏Îõª ÏèüÎÇ° ÎªÜÏÉåÏóõ------------
 1293#
 *Stats during WoE & PVP
 Reduces the target's Def and Mdef to 1 on successful hit. This effect does not work with skills.
@@ -53071,7 +53071,7 @@ Weapon Level : ^7777774^000000
 Required Level : ^77777795^000000
 Jobs: ^777777Swordman Class^000000
 #
-//ª˝¥¯4√˛
+//ÎØΩÎì∏4Ïèæ
 1290#
 The Katar that the accessin who never lose targets in any situation used. He even used his luck to focus on the target.
 Increases Hit Success rate depending on Base Luck.
