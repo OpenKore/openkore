@@ -560,6 +560,7 @@ sub parseMonControl {
 			$r_hash->{$key}{attack_hp} = $args[6];
 			$r_hash->{$key}{attack_sp} = $args[7];
 			$r_hash->{$key}{weight} = $args[8];
+			$r_hash->{$key}{dist} = $args[9];
 		}
 	}
 	return 1;

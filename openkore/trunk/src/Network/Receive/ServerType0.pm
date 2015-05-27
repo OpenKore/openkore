@@ -553,6 +553,8 @@ sub new {
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
 		'09CF' => ['gameguard_request'],
 		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
+		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
+		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
 	# Item RECORD Struct's
@@ -7542,6 +7544,12 @@ sub show_script {
 	my ($self, $args) = @_;
 	
 	debug "$args->{ID}\n", 'parseMsg';
+}
+
+sub senbei_amount {
+	my ($self, $args) = @_;
+	
+	$char->{senbei} = $args->{senbei};
 }
 
 1;
