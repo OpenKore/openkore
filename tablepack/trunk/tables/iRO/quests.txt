@@ -18737,3 +18737,11 @@ Complete all quests in the Juno Area to receive a bonus reward from Victoria Que
 62836#Annie's Raffle#SG_FEEL#QUE_NOIMAGE#
 Annie is on raffle collecting duties and she says that she's thirsty#
 1 Milk#
+
+15072#Don't Trash Comodo#SG_FEEL#QUE_NOIMAGE#
+Collect 20 Pieces of trash and return to the Comodo Cleaning Lady#
+#
+
+15071#Don't Trash Comodo#SG_FEEL#QUE_NOIMAGE#
+You should be able to assist the Comodo Cleaning Lady Again Tomorrow#
+#

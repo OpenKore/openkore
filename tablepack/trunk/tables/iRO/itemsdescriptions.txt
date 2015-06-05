@@ -54891,17 +54891,7 @@ Weight : ^77777740^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
-19039#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Armor is not Tradable^000000
-Buckler that offers 20% resistance to All Race Damage
-^CC0000This item is not Refinable^000000
-Class : ^777777Shield^000000
-Def ^7777777^000000
-Weight : ^77777760^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
-#
+
 19035#
 ^CC0000This Rental Armor is not Tradable^000000
 Shoes that offer similar effect as a Matyr Carded +6 Shoes
@@ -54935,17 +54925,7 @@ Weight : ^77777740^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
-19038#
-^CC0000This Rental Armor is not Tradable^000000
-Garment that offer similar effect as a Whisper carded +6 Muffler.
-Flee + 15, take 20% more damage from Ghost Property.
-^CC0000This item is not Refinable^000000
-Class : ^777777Muffler^000000
-Def ^7777776^000000
-Weight : ^77777740^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
-#
+
 19111#
 ^00CC00A Tradable Box that contains 10 Dungeon Teleport Scroll 1s^000000
 A scroll on which
@@ -55215,40 +55195,8 @@ Required Level : ^7777771^000000
 Jobs: ^777777Archer Class;
 Thief and Rogue Jobs^000000
 #
-20135#
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Earth Element Targets^000000
-A rare pistol that
-is only produced when
-it is specially ordered.^FFFFFF ^000000 The engraving of its
-creator's name can be
-used by experts to
-authenticate this gun.
-Hit - 10.
-^CC0000This item is not Refinable^000000
-Class : ^777777Pistol^000000
-Attack : ^77777791^000000
-Weight : ^77777750^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs :^777777Gunslinger^000000
-#
-20136#
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Earth Element Targets^000000
-A high performance
-rifle whose shots have
-long range and great
-power. Hit +10,
-Critical +10%.
-^CC0000This item is not Refinable^000000
-Class : ^777777Rifle^000000
-Attack : ^777777141^000000
-Weight : ^77777770^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs :^777777Gunslinger^000000
-#
+
+
 20137#
 ^CC0000This Rental Weapon is not Tradable^000000
 ^0000CC20% Bonus Attack Damage to Earth Element Targets^000000
@@ -70136,4 +70084,138 @@ Isabella Blue Ears
 Blush[1]
 Weight : ^7777771^000000
 ^ff0000Box Account Bound^000000
+#
+
+
+22652#
+A strange box that seems to contain a random headgear...
+Weight : ^7777771^000000
+#
+
+12642#
+A strange box that seems to random fruit...
+Weight : ^7777771^000000
+#
+
+12609#
+A strange box that seems to random ore...
+Weight : ^7777771^000000
+#
+
+12535#
+A pile of berries can be seen inside.
+Weight : ^7777771^000000
+#
+
+
+17594#
+When opened this box contains one of the following.
+Battle Manual X3 6cnt
+Bloody Dead Branch 6cnt
+HE Bubble Gum 7cnt
+Girl's Naivety 30cnt
+Costume: Gryphon Hat
+Amistr Bag
+Costume: Wings of Victory
+Skull Cap
+Sedora Hat
+Chilly Breath
+Loki Assassin's Mask
+Weight : ^7777771^000000
+^ff0000Box Account Bound^000000
+#
+
+17595#
+When opened this box contains
+
+1cnt Safe to 10 Certificate
+
+as well as five boxes which when opened contain one of the following.
+
+Battle Manual X3 6cnt
+Bloody Dead Branch 6cnt
+HE Bubble Gum 7cnt
+Girl's Naivety 30cnt
+Costume: Gryphon Hat
+Amistr Bag
+Costume: Wings of Victory
+Skull Cap
+Sedora Hat
+Chilly Breath
+Loki Assassin's Mask
+Weight : ^7777771^000000
+^ff0000Box Account Bound^000000
+#
+
+19038#
+A Crown that celebrates the 12th Anniversary of Ragnarok Online.
+Item Set
+12th Anniversary Crown
+12th Anniversary ElvenEars
+
+If worn together the following bonuses may be gain.
++7 or Higher
+Crit +120
+Hit +12
++9 or Higher
+Max HP + 1200
+Max SP + 120
+Weight : ^7777771^000000
+#
+19039#
+Elven Ears that celebrate the 12th Anniversary of Ragnarok Online.
+Item Set
+12th Anniversary Crown
+12th Anniversary ElvenEars
+
+If worn together the following bonuses may be gain.
++7 or Higher
+Crit +120
+Hit +12
++9 or Higher
+Max HP + 1200
+Max SP + 120
+Weight : ^7777771^000000
+#
+20135#
+A Crown that celebrates the 12th Anniversary of Ragnarok Online.
+Item Set
+Costume: 12th Anniversary Crown
+Costume: 12th Anniversary ElvenEars
+
+If worn together increases all stats by +12
+Weight : ^7777771^000000
+#
+20136#
+Elven Ears that celebrate the 12th Anniversary of Ragnarok Online.
+Item Set
+Costume: 12th Anniversary Crown
+Costume: 12th Anniversary ElvenEars
+
+If worn together increases all stats by +12
+Weight : ^7777771^000000
+#
+5948#
+A mask for Assassins
+Increases attack speed by 10%
+Decreases ATK/MATK by 10%
+Def: 1
+Weight : ^7777771^000000
+Equippable by Assassins Only
+#
+20306#
+A strange hat that seems to be attracted to people skilled in the arts...
+Weight : ^7777771^000000
+#
+5949#
+This stylish hat is always in seasons. When worn it fills it's wearer with a sense of confidence.
+Increases Resistance to Demi Human by 10%
+Weight : ^7777771^000000
+#
+5963#
+These headphones are the latest style in the more hip regions of Rune Midgard.
+Increases MATK by a % equal to the refine level of the item.
+If refined to greater than +6 Increases the damage of Reverbration by 30% and subtracts 18 from the SP Cost
+If refined to greater than +9 decreases the after cast delay of Metallic Sound
+Weight : ^7777771^000000
 #

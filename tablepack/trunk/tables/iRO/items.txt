@@ -2957,7 +2957,7 @@
 7196#Shoulder_Protector#
 7197#Tough_Vines#
 7198#Huge_Leaf#
-7199#Unknown_Coupon#
+7199#12th_Anniversary_Coupon#
 7200#Elastic_Band#
 7201#Log#
 7202#Pincher_of_Beetle#
@@ -8246,3 +8246,17 @@
 28701#Ru_Gold_Knife#
 28702#Ru_Gold_Ashura#
 17580#Freshly_May-d_Groove_Pack#
+
+22652#Brilliant_Hat_Box#
+12642#Fruit_Of_Mastela_Box#
+12609#Old_Ore_Box#
+19038#12th_Anniversary_Crown#
+19039#12th_Anniversary_ElvenEars#
+20135#Costume:_12th_Anniversary_Crown#
+20136#Costume:_12th_Anniversary_ElvenEars#
+17594#12th_Anniversary_Celebraton_Lucky_Box#
+17595#12th_Anniversary_Celebraton_Lucky_Crate#
+20306#C_Artist_Hat#
+5948#Loki_Assassin_Mask#
+5949#Bra_Hat#
+5963#Wing_Headphone#
