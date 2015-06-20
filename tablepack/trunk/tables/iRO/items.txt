@@ -8260,3 +8260,5 @@
 5948#Loki_Assassin_Mask#
 5949#Bra_Hat#
 5963#Wing_Headphone#
+13581#Old_pRO_Box#
+17349#The_Summer_Picnic_Hat_Box#

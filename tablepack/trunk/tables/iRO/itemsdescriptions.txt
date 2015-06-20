@@ -66564,10 +66564,8 @@ Required LV : ^7777771^000000
 Jobs : ^777777All^000000
 #
 18885#
-A colorful headgear for JeJemon. It created a massive trend locally during 2010-2011 era.
+A colorful headgear for JeJeling. 
 INT + 3, STR + 2
-Increase resistance against human type monsters by 11%
-Increase the healing effect of Mastela Fruit by 70% 
 Type : ^777777Headgear^000000 Defense : ^7777778^000000
 Location : ^777777Upper ^000000Weight : ^77777710^000000
 Required Level : ^77777770^000000
@@ -66848,7 +66846,6 @@ Job : ^777777All^000000
 #
 18962#
 Cute panda balloon!
-All State +1, ASPD +1.
 Cannot be enchanted nor destructed.
 Class : ^777777Headgear^000000 Def : ^7777770^000000
 Location : ^777777Lower ^000000Weight : ^77777720^000000
@@ -70218,4 +70215,20 @@ Increases MATK by a % equal to the refine level of the item.
 If refined to greater than +6 Increases the damage of Reverbration by 30% and subtracts 18 from the SP Cost
 If refined to greater than +9 decreases the after cast delay of Metallic Sound
 Weight : ^7777771^000000
+#
+13581#
+Old pRO Item. Opens in to 50 Insurance Items
+#
+17349#
+The Summer Picnic Hat Box opens into any of the following cute headgears.
+Costume: Puppy Hat
+Costume: Katusa
+Costume: Black Glasses
+Costume: Scarf
+Costume: Vicious Stop Bandage
+Costume: Piamette Hood
+Costume: Owl Duke Silk Hat
+Jejecap
+Panda Balloon
+Happy Parrot
 #
