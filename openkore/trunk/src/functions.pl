@@ -111,7 +111,8 @@ sub loadPlugins {
 	eval {
 		Plugins::loadAll();
 	};
-	if (my $e = caught('Plugin::LoadException')) {
+	my $e;
+	if ($e = caught('Plugin::LoadException')) {
 		$interface->errorDialog(TF("This plugin cannot be loaded because of a problem in the plugin. " .
 			"Please notify the plugin's author about this problem, " .
 			"or remove the plugin so %s can start.\n\n" .
@@ -119,7 +120,7 @@ sub loadPlugins {
 			"%s",
 			$Settings::NAME, $e->message));
 		$quit = 1;
-	} elsif (my $e = caught('Plugin::DeniedException')) {
+	} elsif ($e = caught('Plugin::DeniedException')) {
 		$interface->errorDialog($e->message);
 		$quit = 1;
 	} elsif ($@) {
@@ -274,12 +275,13 @@ sub loadDataFiles {
 		};
 		Settings::loadAll($progressHandler);
 	};
-	if (my $e = caught('UTF8MalformedException')) {
+	my $e;
+	if ($e = caught('UTF8MalformedException')) {
 		$interface->errorDialog(TF(
 			"The file %s must be in UTF-8 encoding.",
 			$e->textfile));
 		$quit = 1;
-	} elsif (my $e = caught('FileNotFoundException')) {
+	} elsif ($e = caught('FileNotFoundException')) {
 		$interface->errorDialog(TF("Unable to load the file %s.", $e->filename));
 		$quit = 1;
 	} elsif ($@) {
