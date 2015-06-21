@@ -16,6 +16,8 @@
 package ChatQueue;
 
 use strict;
+use warnings;
+
 use Time::HiRes qw(time);
 
 use AI;
@@ -264,12 +266,6 @@ sub processChatCommand {
 		} else {
 	 		# map x y
 	 		($map, $x, $y) = @args;
-		}
-
-		if ($map eq "") {
-	 		$x eq "" || $y eq ""
-		} else {
-	 		$x ne "" && $y ne ""
 		}
 
 		if ($map ne "" || ($x ne "" && $y ne "")) {
