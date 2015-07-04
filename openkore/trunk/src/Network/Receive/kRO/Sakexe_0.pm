@@ -352,6 +352,8 @@ sub new {
 		'08D1' => ['unequip_item', 'v2 C', [qw(index type success)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
+		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
+		'02F2' => ['progress_bar_stop'],
 	};
 
 	# Item RECORD Struct's
@@ -6437,6 +6439,7 @@ sub disconnect_character {
 sub character_block_info {
 	#TODO
 }
+
 1;
 
 =pod

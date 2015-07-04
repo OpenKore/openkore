@@ -1185,4 +1185,11 @@ sub sendEquip {
 	debug "Sent Equip: $index Type: $type\n" , 2;
 }
 
+sub sendProgress {
+	my ($self) = @_;
+	my $msg = pack("C*", 0xf1, 0x02);
+	$self->sendToServer($msg);
+	debug "Sent Progress Bar Finish\n", "sendPacket", 2;
+}
+
 1;

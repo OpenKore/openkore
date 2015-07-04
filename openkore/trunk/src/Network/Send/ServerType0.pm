@@ -1243,13 +1243,6 @@ sub sendCaptchaAnswer {
 	$self->sendToServer($msg);
 }
 
-sub sendProgress {
-	my ($self) = @_;
-	my $msg = pack("C*", 0xf1, 0x02);
-	$self->sendToServer($msg);
-	debug "Sent Progress Bar Finish\n", "sendPacket", 2;
-}
-
 # 0x0204,18
 
 1;
