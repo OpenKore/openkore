@@ -7228,23 +7228,6 @@ sub buyer_items
 	}
 }
 
-sub progress_bar {
-	my($self, $args) = @_;
-	message TF("Progress bar loading (time: %d).\n", $args->{time}), 'info';
-	$taskManager->add(
-		new Task::Chained(tasks => [new Task::Wait(seconds => $args->{time}),
-		new Task::Function(function => sub {
-			 $messageSender->sendProgress();
-			 message TF("Progress bar finished.\n"), 'info';
-			 $_[0]->setDone;
-		})]));
-}
-
-sub progress_bar_stop {
-	my($self, $args) = @_;
-	message TF("Progress bar finished.\n", 'info');
-}
-
 sub open_buying_store { #0x810
 	my($self, $args) = @_;
 	my $amount = $args->{amount};
