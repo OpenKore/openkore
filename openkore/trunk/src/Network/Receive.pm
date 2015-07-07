@@ -2066,4 +2066,118 @@ sub progress_bar_stop {
 	message TF("Progress bar finished.\n", 'info');
 }
 
+# 02B1
+sub quest_all_list {
+	my ($self, $args) = @_;
+	$questList = {};
+	for (my $i = 8; $i < $args->{amount}*5+8; $i += 5) {
+		my ($questID, $active) = unpack('V C', substr($args->{RAW_MSG}, $i, 5));
+		$questList->{$questID}->{active} = $active;
+		debug "$questID $active\n", "info";
+	}
+}
+
+# 02B2
+# note: this packet shows all quests + their missions and has variable length
+sub quest_all_mission {
+	my ($self, $args) = @_;
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
+	for (my $i = 8; $i < $args->{amount}*104+8; $i += 104) {
+		my ($questID, $time_start, $time, $mission_amount) = unpack('V3 v', substr($args->{RAW_MSG}, $i, 14));
+		my $quest = \%{$questList->{$questID}};
+		$quest->{time_start} = $time_start;
+		$quest->{time} = $time;
+		debug "$questID $time_start $time $mission_amount\n", "info";
+		for (my $j = 0; $j < $mission_amount; $j++) {
+			my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 14+$i+$j*30, 30));
+			my $mission = \%{$quest->{missions}->{$mobID}};
+			$mission->{mobID} = $mobID;
+			$mission->{count} = $count;
+			$mission->{mobName} = bytesToString($mobName);
+			debug "- $mobID $count $mobName\n", "info";
+		}
+	}
+}
+
+# 02B3
+# note: this packet shows all missions for 1 quest and has fixed length
+sub quest_add {
+	my ($self, $args) = @_;
+	my $questID = $args->{questID};
+	my $quest = \%{$questList->{$questID}};
+
+	unless (%$quest) {
+		message TF("Quest: %s has been added.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID), "info";
+	}
+
+	$quest->{time_start} = $args->{time_start};
+	$quest->{time} = $args->{time};
+	$quest->{active} = $args->{active};
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
+	for (my $i = 0; $i < $args->{amount}; $i++) {
+		my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 17+$i*30, 30));
+		my $mission = \%{$quest->{missions}->{$mobID}};
+		$mission->{mobID} = $mobID;
+		$mission->{count} = $count;
+		$mission->{mobName} = bytesToString($mobName);
+		debug "- $mobID $count $mobName\n", "info";
+	}
+}
+
+# 02B4
+sub quest_delete {
+	my ($self, $args) = @_;
+	my $questID = $args->{questID};
+	message TF("Quest: %s has been deleted.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID), "info";
+	delete $questList->{$questID};
+}
+
+sub parse_quest_update_mission_hunt {
+	my ($self, $args) = @_;
+	@{$args->{mobs}} = map {
+		my %result; @result{qw(questID mobID count)} = unpack 'V2 v', $_; \%result
+	} unpack '(a10)*', $args->{mobInfo};
+}
+
+sub reconstruct_quest_update_mission_hunt {
+	my ($self, $args) = @_;
+	$args->{mobInfo} = pack '(a10)*', map { pack 'V2 v', @{$_}{qw(questID mobID count)} } @{$args->{mobs}};
+}
+
+sub parse_quest_update_mission_hunt_v2 {
+	my ($self, $args) = @_;
+	@{$args->{mobs}} = map {
+		my %result; @result{qw(questID mobID goal count)} = unpack 'V2 v2', $_; \%result
+	} unpack '(a12)*', $args->{mobInfo};
+}
+
+sub reconstruct_quest_update_mission_hunt_v2 {
+	my ($self, $args) = @_;
+	$args->{mobInfo} = pack '(a12)*', map { pack 'V2 v2', @{$_}{qw(questID mobID goal count)} } @{$args->{mobs}};
+}
+
+# 02B5
+sub quest_update_mission_hunt {
+   my ($self, $args) = @_;
+   my ($questID, $mobID, $goal, $count) = unpack('V2 v2', substr($args->{RAW_MSG}, 6));
+   my $quest = \%{$questList->{$questID}};
+   my $mission = \%{$quest->{missions}->{$mobID}};
+   $mission->{goal} = $goal;
+   $mission->{count} = $count;
+   debug "- $questID $mobID $count $goal\n", "info";
+}
+
+# 02B7
+sub quest_active {
+	my ($self, $args) = @_;
+	my $questID = $args->{questID};
+
+	message $args->{active}
+		? TF("Quest %s is now active.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID)
+		: TF("Quest %s is now inactive.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID)
+	, "info";
+
+	$questList->{$args->{questID}}->{active} = $args->{active};
+}
+
 1;
