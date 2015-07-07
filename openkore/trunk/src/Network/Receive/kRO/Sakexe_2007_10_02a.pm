@@ -37,7 +37,7 @@ sub new {
 		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
 		'02B1' => ['quest_all_list', 'v V', [qw(len amount)]], # -1
 		'02B2' => ['quest_all_mission', 'v V', [qw(len amount)]], # -1
-		'02B3' => ['quest_add', 'V C V2 v', [qw(questID active time amount)]], # 107
+		'02B3' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]], # 107
 		'02B4' => ['quest_delete', 'V', [qw(questID)]], # 6
 		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],#-1
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]], # 7
