@@ -164,7 +164,7 @@ sub finishAttacking {
 	AI::dequeue;
 	if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
 		message T("Target died\n"), "ai_attack";
-		Plugins::callHook("target_died");
+		Plugins::callHook("target_died", {monster => $monsters_old{$ID}});
 		monKilled();
 
 		# Pickup loot when monster's dead
