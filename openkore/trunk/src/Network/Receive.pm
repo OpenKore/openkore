@@ -777,7 +777,8 @@ typedef enum <unnamed-tag> {
 
 		} elsif ($actor->isa('Actor::Portal')) {
 			message TF("Portal Exists: %s (%s, %s) - (%s)\n", $actor->name, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $actor->{binID}), "portals", 1;
-
+			Plugins::callHook('portal_exist', {portal => $actor});
+			
 		} elsif ($actor->isa('Actor::Monster')) {
 			debug sprintf("Monster Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
 

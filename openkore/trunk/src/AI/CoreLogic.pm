@@ -523,6 +523,14 @@ sub processPortalRecording {
 		updatePortalLUT(Settings::getTableFilename("portals.txt"),
 				$destMap, $destPos{x}, $destPos{y},
 				$sourceMap, $sourcePos{x}, $sourcePos{y});
+		Plugins::callHook('portal_exist2', {
+			srcMap => $destMap,
+			srcx => $destPos{x},
+			srcy => $destPos{y},
+			dstMap => $sourceMap,
+			dstx => $sourcePos{x},
+			dsty => $sourcePos{y}
+		});
 	}
 
 	# Record information about the source portal
@@ -540,6 +548,14 @@ sub processPortalRecording {
 		updatePortalLUT(Settings::getTableFilename("portals.txt"),
 				$sourceMap, $sourcePos{x}, $sourcePos{y},
 				$destMap, $char->{pos}{x}, $char->{pos}{y});
+		Plugins::callHook('portal_exist2', {
+			srcMap => $sourceMap,
+			srcx => $sourcePos{x},
+			srcy => $sourcePos{y},
+			dstMap => $destMap,
+			dstx => $char->{pos}{x},
+			dsty => $char->{pos}{y}
+		});
 	}
 }
 
