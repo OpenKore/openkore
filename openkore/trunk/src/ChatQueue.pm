@@ -80,14 +80,15 @@ sub clear {
 sub processFirst {
 	return unless @queue;
 	my $cmd = shift @queue;
-	return if ($cmd->{user} eq $char->{name});
+	my $user = $cmd->{user} || '';
+	return if ($user eq $char->{name});
 
 	my $type = $cmd->{type};
-	my $user = $cmd->{user};
 	my $msg = $cmd->{msg};
+	my $userID = $cmd->{userID};
 
 	return if ( $user ne ""
-		&& (avoidGM_talk($user, $msg) || avoidList_talk($user, $msg, unpack("V1", $cmd->{userID}))) );
+		&& (avoidGM_talk($user, $msg) || avoidList_talk($user, $msg, unpack("V1", $userID))) );
 
 
 	# If the user is not authorized to use chat commands,
@@ -103,7 +104,8 @@ sub processFirst {
 
 	# If the user is authorized to use chat commands,
 	# check whether his message is a chat command, and execute it.
-	my $callSign = quotemeta $config{callSign};
+	my $callSign = '';
+	$callSign = quotemeta $config{"callSign"} if ($config{"callSign"});
 	if ($overallAuth{$user} && ( $type eq "pm" || $msg =~ /^\b*$callSign\b*/i )) {
 		my $msg2 = $msg;
 		$msg2 =~ s/^\b*$callSign\b* *//i;
