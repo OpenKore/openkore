@@ -39,6 +39,7 @@ secureAdminPassword 1
 adminPassword
 callSign
 commandPrefix ;
+callSignGM 0
 
 pauseCharServer 0
 pauseMapServer 0

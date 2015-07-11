@@ -15,8 +15,9 @@
 
 package ChatQueue;
 
-use strict;
-use warnings;
+#TODO: Review and test the whole document before adding them back
+#use strict; 
+#use warnings;
 
 use Time::HiRes qw(time);
 
@@ -106,7 +107,7 @@ sub processFirst {
 	# check whether his message is a chat command, and execute it.
 	my $callSign = '';
 	$callSign = quotemeta $config{"callSign"} if ($config{"callSign"});
-	if ($overallAuth{$user} && ( $type eq "pm" || $msg =~ /^\b*$callSign\b*/i )) {
+	if ($overallAuth{$user} && $callSign && ( $type eq "pm" || $msg =~ /^\b*$callSign\b*/i )) {
 		my $msg2 = $msg;
 		$msg2 =~ s/^\b*$callSign\b* *//i;
 		$msg2 =~ s/ *$//;
