@@ -107,9 +107,9 @@ sub processFirst {
 	# check whether his message is a chat command, and execute it.
 	my $callSign = '';
 	$callSign = quotemeta $config{"callSign"} if ($config{"callSign"});
-	if ($overallAuth{$user} && $callSign && ( $type eq "pm" || $msg =~ /^\b*$callSign\b*/i )) {
+	if ($overallAuth{$user} && ( $type eq "pm" || $msg =~ /^\b$callSign\b/i )) {
 		my $msg2 = $msg;
-		$msg2 =~ s/^\b*$callSign\b* *//i;
+		$msg2 =~ s/^\b$callSign\b *//i;
 		$msg2 =~ s/ *$//;
 		return if processChatCommand($type, $user, $msg2);
 	}
