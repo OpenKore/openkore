@@ -301,9 +301,9 @@ sub configModify {
 		
 		if ($config{$key} eq $val) {
 			if ($val) {
-				message TF("Config '%s' is already *None*\n", $key), "info";
-			}else{
 				message TF("Config '%s' is already %s\n", $key, $val), "info";
+			}else{
+				message TF("Config '%s' is already *None*\n", $key), "info";
 			}
 			return;
 		}
