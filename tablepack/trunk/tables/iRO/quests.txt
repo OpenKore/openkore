@@ -18745,3 +18745,343 @@ Collect 20 Pieces of trash and return to the Comodo Cleaning Lady#
 15071#Don't Trash Comodo#SG_FEEL#QUE_NOIMAGE#
 You should be able to assist the Comodo Cleaning Lady Again Tomorrow#
 #
+
+
+//----------EP14.3_Flaming Basin and Doom Prayers
+
+1264#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Collect 15 Burning Feathers from Fire Condors.#
+Talk to Base Investigator.#
+
+1265#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Find a scout somewhere in the Flaming Basin.#
+Talk to the scout.#
+
+1266#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Collect 20 Scout Journals from Fire Sandmen.#
+Talk to the scout.#
+
+1267#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Report to Base Investigator with news about the scout.#
+Talk to Base Investigator.#
+
+1268#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Cull the monsters; hunt 20 Fire Sandmen.#
+Talk to Base Investigator.#
+
+1269#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Cull the monsters; hunt 20 Fire Frilldoras.#
+Talk to Base Investigator.#
+
+1270#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+See if the Doom Prayers are really blessed. Collect 40 Blessing Stones from Fire Golems.#
+Talk to Doom Prayers Leader.#
+
+1271#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+No miracle happened.#
+Talk to Doom Prayers Leader.#
+
+1272#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+See if the Doom Prayers are really blessed. Collect 30 Monster Blood from Fire Sandmen and Fire Frilldoras.#
+Talk to Doom Prayers Leader.#
+
+1273#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+The leader had diarrhea and couldn't levitate himself. Talk to Doom Prayers Second-in-command.#
+Talk to Doom Prayers Second-in-command.#
+
+1274#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Collect 30 Fire Golem Teeth and 30 Fire Frilldora Napes for the Doom Prayers.#
+Talk to Doom Prayers Second-in-command.#
+
+1275#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Something special did happen, though it scared everyone who witnessed it.#
+Talk to Doom Prayers Leader.#
+
+1297#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Meet Doom Prayers Leader to the northwest of the Base.#
+Talk to Doom Prayers Leader.#
+
+
+// Episode 14.3 Rebuilding the Destroyed Desert City, Morroc
+
+5251#wood Supply Mission#SG_FEEL#QUE_NOIMAGE#
+Exit through the southern gate (moc_fild12) of Morroc and collect 10 Wood. You do not have to deliver them at once.#
+Supply 10 Woods.#
+
+5252#[Pending] Wood Supply Mission#SG_FEEL#QUE_NOIMAGE#
+There's enough wood for now. Come back later.#
+Waiting Time: 3 hours#
+
+5253#Wood Delivery Mission#SG_FEEL#QUE_NOIMAGE#
+Collect 100 Woods from Piled Wood, and take them to the central castle construction site.#
+Deliver 100 Woods.#
+
+5254#[Pending] Wood Delivery Mission#SG_FEEL#QUE_NOIMAGE#
+No new orders for wood have been received. Come back later.#
+Waiting Time: 3 hours#
+
+5255#Rope Making Mission#SG_FEEL#QUE_NOIMAGE#
+Rope materials: 10 Pointed Scales, 10 Cobwebs, 10 Tendons, 10 Thin Stems, and 10 Tough Scale-like Stems. Collect just two kinds of materials.#
+Supply 2 kinds of rope materials.#
+
+5256#[Pending] Rope Making Mission#SG_FEEL#QUE_NOIMAGE#
+There's enough rope for now. Come back later.#
+Waiting Time: 3 hours#
+
+5257#Rope Delivery Mission#SG_FEEL#QUE_NOIMAGE#
+Collect 100 lengths of rope from Coiled Rope, and take them to the central castle construction site.#
+Deliver 100 Ropes.#
+
+5258#[Pending] Rope Delivery Mission#SG_FEEL#QUE_NOIMAGE#
+No new orders for rope have been received. Come back later.#
+Waiting Time: 3 hours#
+
+5259#Brick Making Mission#SG_FEEL#QUE_NOIMAGE#
+1 Brick is made up of 1 Sand Grain and 1 Fine Sand. Feed them to Mimic to create a Brick.#
+Supply 10 Bricks.#
+
+5260#[Pending] Brick Making Mission#SG_FEEL#QUE_NOIMAGE#
+There are enough bricks for now. Come back later.#
+Waiting Time: 3 hours#
+
+5261#Brick Delivery Mission#SG_FEEL#QUE_NOIMAGE#
+Collect 100 Bricks from Piled Bricks, and take them to the central castle construction site.#
+Deliver 100 Bricks.#
+
+5262#[Pending] Brick Delivery Mission#SG_FEEL#QUE_NOIMAGE#
+No new orders for bricks have been received. Come back later.#
+Waiting Time: 3 hours#
+
+5263#Snack Order#SG_FEEL#QUE_NOIMAGE#
+You can bring any dish in the list I gave you: Bomber Steak, Herb Marinade Beef, Lutie Lady's Pancake, Shiny Marinade Beef, Tentacle Cheese Gratin, Lutie Cold Noodle, Steamed Bat Wing in Pumpkin, Chile Shrimp Gratin, Honey Herbal Tea, Morroc Fruit Wine, Mastela Fruit Wine, Red Mushroom Wine, Fruit Mix, Cream Sandwich, Green Salad, Peach Cake, Clam Soup, Seasoned Jellyfish, Spicy Fried Bao, Awfully Bitter Bracer, Fried Sweet Potato, Steamed Ancient Lips, Fried Scorpion Tails, and Lucky Soup.#
+Deliver 1 dish.#
+
+5264#[Pending] Snack Order#SG_FEEL#QUE_NOIMAGE#
+It's the recess before the next snack preparation begins.#
+Waiting Time: 3 hours#
+
+5265#Purging the Land (1)#SG_FEEL#QUE_NOIMAGE#
+Purge the land that Morroc has left tainted with evil. Eliminate 10 Valkyrie-type Morroc Reincarnations.#
+#
+
+5266#Purging the Land (2)#SG_FEEL#QUE_NOIMAGE#
+Purge the land that Morroc has left tainted with evil. Eliminate 10 Clay-type Morroc Reincarnations.#
+#
+
+5267#Purging the Land (3)#SG_FEEL#QUE_NOIMAGE#
+Purge the land that Morroc has left tainted with evil. Eliminate 10 Exorcist-type Morroc Reincarnations.#
+#
+
+5268#Purging the Land (4)#SG_FEEL#QUE_NOIMAGE#
+Purge the land that Morroc has left tainted with evil. Eliminate 10 Ghost-type Morroc Reincarnations.#
+#
+
+5269#[Pending] Purging the Land#SG_FEEL#QUE_NOIMAGE#
+Take rest until the next subjugation mission begins.#
+Waiting Time: 3 hours#
+
+5270#Worker Transport#SG_FEEL#QUE_NOIMAGE#
+Take the worker to a suitable construction site at once.#
+#
+
+5271#Worker Transport#SG_FEEL#QUE_NOIMAGE#
+The Supervisor wants to keep the worker. Dismiss the worker in the Mercenary Information window, and then talk to the Supervisor again.#
+#
+
+5272#Worker Transport#SG_FEEL#QUE_NOIMAGE#
+The Supervisor wants to keep the worker. Dismiss the worker in the Mercenary Information window, and then talk to the Supervisor again.#
+#
+
+5273#Worker Transport#SG_FEEL#QUE_NOIMAGE#
+The Supervisor wants to keep the worker. Dismiss the worker in the Mercenary Information window, and then talk to the Supervisor again.#
+#
+
+5274#Worker Transport#SG_FEEL#QUE_NOIMAGE#
+The Supervisor wants to keep the worker. Dismiss the worker in the Mercenary Information window, and then talk to the Supervisor again.#
+#
+
+5275#[Pending] Worker Transport#SG_FEEL#QUE_NOIMAGE#
+No new workers have arrived. Come back later.#
+Waiting Time: 3 hours#
+
+//--- Episode 14.3
+
+7578#Rampaging Box#SG_FEEL#QUE_NOIMAGE#
+The Flaming Basin is overrun with animated boxes with hostile intent. Subjugate the boxes and identify them.#
+1 Bradium Box#
+
+7579#Collecting Bradiums#SG_FEEL#QUE_NOIMAGE#
+Those rampaging boxes are enchanted Bradium Boxes. Subjugate the boxes and collect Bradium Boxes.#
+10 Bradium Box#
+
+7580#Collecting Every Day#SG_FEEL#QUE_NOIMAGE#
+You've decided to collect Bradium Boxes every day to try to thwart Chesher's scheme. Come back to Hasranta tomorrow.#
+Wait for one day.#
+
+7581#Eliminating Risks#SG_FEEL#QUE_NOIMAGE#
+Distorted Morroc Reincarnations, Blazing Morroc Reincarnations, and Freezing Morroc Reincarnations are the biggest threat to our subjugation operation. Please take care of them.#
+#
+
+7582#Daily Cleaning#SG_FEEL#QUE_NOIMAGE#
+Leave them to other subjugators for now. You deserve a rest.#
+Wait for one day.#
+
+7583#Collecting Mana#SG_FEEL#QUE_NOIMAGE#
+Laphine Magic Scholar Avant has asked you to collect Mana Crystallines from those abnormally strong Demons. This quest can be performed with the Alliance quest, Eliminating Risks.#
+3 Mana Crystallines#
+
+7584#Unending Battle#SG_FEEL#QUE_NOIMAGE#
+The Demons are siphoning off the mana to maintain their strength. You've decided to come back to Avant every day, to help him collect Mana Crystallines.#
+Wait for one day.#
+
+//--- ep14.3 part2 end of morocc
+
+7593#Demon God Subjugation#SG_FEEL#QUE_NOIMAGE#
+It's time to finish the job: eliminate Morroc in the Temple of the Demon God.#
+#
+
+7594#Frost Spider and Fire Wolf#SG_FEEL#QUE_NOIMAGE#
+Eliminate Morroc's creations and his followers: Frost Spider Brinaranea and Fire Wolf Muspellskoll.#
+#
+
+7595#Wandering Orb Magic#SG_FEEL#QUE_NOIMAGE#
+Collect the mana stolen from Yggdrasil and the Orb: hit and scatter Brilliant Manas, Life Manas, and Earth Manas.#
+#
+
+7596#Qualifications of the Guests#SG_FEEL#QUE_NOIMAGE#
+To enter the Temple of the Demon God, you need a key. Eliminate Gatekeeper Ahat and Shnaim, and use their souls to open the temple entrance.#
+1 Ahat's Soul, 1 Shnaim's Soul#
+
+7597#Fall of the False God#SG_FEEL#QUE_NOIMAGE#
+You defeated Demon God Morroc, who wanted to create a new world and play God. Report to Commander Hiva Agip.#
+Report to the Commander.#
+
+7598#Caged God#SG_FEEL#QUE_NOIMAGE#
+Confined in his own world, the Demon God is cursed to suffer for eternity. Come back tomorrow and put him out of his misery once more.#
+Come back tomorrow.#
+
+7599#Unending Hunt#SG_FEEL#QUE_NOIMAGE#
+The hunting continues until every single Demon in the Temple of the Demon God is eliminated. Adjutant Abidal asked you to come back when you are fully rested.#
+Come back tomorrow.#
+
+7600#Promising Tomorrow#SG_FEEL#QUE_NOIMAGE#
+The Orb of Eclage and Yggdrasil have lost a substantial amount of mana, and thus the mana collection work continues until most of it is retrieved. Take a rest and come back to Hishieh before you move on to the Temple of the Demon God.#
+Come back tomorrow.#
+
+7601#Temple of the Demon God Phase 1#SG_FEEL#QUE_NOIMAGE#
+Eliminate Frost Spider Brinaranea to move on to the next area.#
+#
+
+7602#Temple of the Demon God Phase 1 Completed#SG_FEEL#QUE_NOIMAGE#
+You defeated Frost Spider Brinaranea.#
+#
+
+7603#Temple of the Demon God Phase 2#SG_FEEL#QUE_NOIMAGE#
+Eliminate Fire Wolf Muspellskoll to move on to the next area.#
+#
+
+7604#Temple of the Demon God Phase 2 Completed#SG_FEEL#QUE_NOIMAGE#
+You defeated Fire Wolf Muspellskoll.#
+#
+
+7605#Guardian's Blessing#SG_FEEL#QUE_NOIMAGE#
+Your latest contract with the Guardian has not yet expired. No new contracts can be made until then.#
+#
+
+
+// EP 14.3 Morse's Cave
+
+9318#Pursuing Hiding Morroc#SG_FEEL#QUE_NOIMAGE#
+The ^8B4513Senior Tracker^000000's message: Please enter the ^0000FFRed Flower^000000 and defeat Morroc.#
+Defeat the ^8B4513hiding Morroc and his lackeys^000000.#
+
+9319#Pursuing Hiding Morroc Continues#SG_FEEL#QUE_NOIMAGE#
+The ^8B4513Senior Tracker^000000's message: Please come back tomorrow and help me pursue Morroc.#
+Come back after ^8B451323 hours^000000.#
+
+//-- ep 14.3
+11349#Dimensional Travel#SG_FEEL#QUE_NOIMAGE#
+He lost consciousness again, exhausting himself just from talking. You should give him Monster's Feed to eat.#
+Monster's Feed#
+
+11350#Dimensional Travel#SG_FEEL#QUE_NOIMAGE#
+You fed him Monster's Feed. Resume conversation.#
+Resume conversation.#
+
+11351#Dimensional Travel#SG_FEEL#QUE_NOIMAGE#
+Talk to Tamarin at the oasis near the northwestern Sphinx.#
+Talk to Tamarin.#
+
+11352#Dimensional Travel#SG_FEEL#QUE_NOIMAGE#
+Talk to Tamarin at the Dimensional Crack.#
+Move to the Dimensional Crack.#
+
+11353#Dimensional Travel#SG_FEEL#QUE_NOIMAGE#
+Move to the 2nd floor and find the Dimensional Crack covered with dirt.#
+Find the Crack on the 2nd floor.#
+
+11354#Specimen Collection#SG_FEEL#QUE_NOIMAGE#
+You teleported through the Crack.#
+Talk to Barget Tiblack.#
+
+11355#Specimen Collection#SG_FEEL#QUE_NOIMAGE#
+Investigate 20 fire pits and collect 50 Burning Insect Shells from Firebugs.#
+Investigate fire pits.#
+
+11356#Specimen Collection#SG_FEEL#QUE_NOIMAGE#
+Pick 50 Sonias and collect 50 stems.#
+Talk to Tamarin.#
+
+11357#Specimen Collection#SG_FEEL#QUE_NOIMAGE#
+Pick 25 Sonias and collect 25 stems. Meet Tamarin by the big rock in the center of the place.#
+Meet Tamarin.#
+
+11358#Specimen Collection#SG_FEEL#QUE_NOIMAGE#
+Return to Barget Tiblack in the Base.#
+Talk to Barget Tiblack.#
+
+11359#Antidote#SG_FEEL#QUE_NOIMAGE#
+Deliver 25 Delicious Stems to Instructor Rugen standing down below.#
+Talk to Instructor Rugen.#
+
+11360#Antidote#SG_FEEL#QUE_NOIMAGE#
+Feed Delicious Stems to the Intoxicated Patients.#
+Intoxicated Patient#
+
+11361#Antidote#SG_FEEL#QUE_NOIMAGE#
+The patients have gotten better. Talk to Instructor Rugen.#
+Talk to Instructor Rugen.#
+
+11362#Antidote#SG_FEEL#QUE_NOIMAGE#
+The Delicious Stems have proven to be effective. Return to Barget Tiblack.#
+Talk to Barget Tiblack.#
+
+// ep14.3 Nightmarish Jitterbug
+13181#Nightmarish Jitterbug#SG_FEEL#QUE_NOIMAGE#
+Register your name to the Temporary Guildsman List.#
+#
+
+13182#Nightmarish Jitterbug: Waiting#SG_FEEL#QUE_NOIMAGE#
+You have used Runane's warp.#
+#
+
+13183#Nightmarish Jitterbug: Completed#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+//-- ep 14.3 Isle of Bios
+15005#Memorial Dungeon: Isle of Bios#SG_FEEL#QUE_NOIMAGE#
+Isle of Bios becomes accessible for 23 hours after each exploration. You can enter it again after:#
+23-hour downtime.#
+
+15006#Isle of Bios Exploration#SG_FEEL#QUE_NOIMAGE#
+Memorial dungeon: Isle of Bios Exploration: Beginning#
+Isle of Bios Exploration: Beginning#
+
+15007#Memorial Dungeon: Isle of Bios#SG_FEEL#QUE_NOIMAGE#
+Isle of Bios allows reentry for the first 5 minutes after its opening. Its entrance closes after:#
+Reenter in 5 minutes.#
+
+15008#Memorial Dungeon: Isle of Bios#SG_FEEL#QUE_NOIMAGE#
+You cleared the dungeon in 5 minutes after you entered it. Isle of Bios is now closed for the next 23 hours.#
+23-hour downtime.#
