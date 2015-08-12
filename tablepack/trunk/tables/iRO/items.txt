@@ -8262,3 +8262,100 @@
 5963#Wing_Headphone#
 13581#Old_pRO_Box#
 17349#The_Summer_Picnic_Hat_Box#
+17350#Mid_Year_Madness_Box#
+17603#July_Groove_Pack#
+17604#End_Of_Summer_Lucky_Box#
+17605#End_Of_Summer_Lucky_Crate#
+
+
+//-------------EP 14.3----------
+22035#Hero_Nependess_Shoes#
+22036#Hero_Silverleather_Boots#
+22037#Hero_Ungoliant_Boots#
+2981#Hero_Ring#
+2988#Hero_Ring_Of_Newoz#
+2989#Floral_Bracelet_Of_Igu#
+2990#Pendant_Of_Harmony#
+2991#Pendant_Of_Chaos#
+2992#Pendant_Of_Maelstorm#
+15100#Frozen_Breastplate#
+15101#Harden_Breastplate#
+15093#Hero_Plate#
+15094#Hero_Magic_Coat#
+15095#Hero_Judgement_Shawl#
+15096#Hero_Trade_Mail#
+15097#Hero_Hidden_Cloth#
+15098#Hero_Taget_Suits#
+18122#Gigantic_Bow#
+18123#Bow_Of_Storm#
+4890#MDEF+1#
+4891#MDEF+3#
+4892#MDEF+5#
+4893#DEF+15#
+4894#ATK + 4%#
+4895#ATK + 5%#
+4896#MATK + 2%#
+4897#MATK + 3%#
+4898#MATK + 4%#
+4899#MATK + 5%#
+4900#MHP+5%#
+4908#Darklord_Essence_Force1#
+4909#Darklord_Essence_Force2#
+4910#Darklord_Essence_Force3#
+4911#Darklord_Essence_Intelligence1#
+4912#Darklord_Essence_Intelligence2#
+4901#MDEF+7#
+4913#Darklord_Essence_Intelligence3#
+4902#DEF+18#
+4914#Darklord_Essence_Speed1#
+4903#DEF+21#
+4915#Darklord_Essence_Speed2#
+4904#ATK + 6%#
+4916#Darklord_Essence_Speed3#
+4905#ATK + 7%#
+4917#Darklord_Essence_Vitality1#
+4906#MATK + 6%#
+4918#Darklord_Essence_Vitality2#
+4907#MATK + 7%#
+4919#Darklord_Essence_Vitality3#
+4920#Darklord_Essence_Concentration1#
+4921#Darklord_Essence_Concentration2#
+4922#Darklord_Essence_Concentration3#
+4923#Darklord_Essence_Luck1#
+4924#Darklord_Essence_Luck2#
+4925#Darklord_Essence_Luck3#
+4559#Lord_Morocc_Card#
+4882#ATK + 1%#
+4883#MATK + 1%#
+6684#TokenOfHero#
+6713#Soul_Of_Ahat#
+6714#Soul_Of_Shnaim#
+6715#Darklord_Soulpiece#
+6708#Mana_crystal#
+6719#Tooth_Of_Jitterbug#
+22535#Worker_Summon_Scroll#
+22536#Worker_Summon_Scroll#
+22537#PrizeOfHero#
+22566#Frost_Crystal#
+22567#Squad_Prize#
+22568#Nydhogg_Summon_Scroll#
+1934#Contabass#
+1989#Gymnastics_Ribbon#
+1935#Ukulele_Of_Newoz#
+1990#Floral_Mic_Of_Igu#
+12530#Mastela_Fruit_Box#
+6685#MoroccMerit#
+22535#WorkerScroll#
+22536#WorkerScroll#
+6686#Brick#
+6687#LongRopes#
+6688#Wood#
+6689#Burning_Bug_Skin#
+6690#Yummy_Stem#
+6691#Burning_Feather#
+6692#Patrol_Log#
+6693#Stone_Of_Blessing#
+6694#Monster_Blood#
+6695#Tooth_Of_FlameGolem#
+6696#Neck_Of_FlameFrilldora#
+6698#Hatchet#

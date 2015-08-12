@@ -1,77 +1,118 @@
 //file start 20090317
 
 501#
-^000088HP Recovery Item^000000
-A potion made from
-ground Red Herbs that
-restores ^000088about 45 HP^000000.
-Weight : ^7777777^000000
+^808080A potion made from ground Red Herbs.^000000
+
+Type: Consumable
+Class: HP Recovery
+Weight: 7
+Required Level: 1
+
+Base Heal Value ^00800045^000000 to ^00800065^000000HP
 #
+
 502#
-^000088HP Recovery Item^000000
-A potion made from ground
-Red and Yellow Herbs that
-restores ^000088about 105 HP^000000. 
-Weight : ^77777710^000000
+^808080A potion made from ground Red and Yellow Herbs.^000000
+
+Type: Consumable
+Class: HP Recovery
+Weight: 10
+Required Level: 1
+
+Base Heal Value ^008000105^000000 to ^008000145^000000HP
 #
+
 503#
-^000088HP Recovery Item^000000
-A potion made from
-ground Yellow Herbs that restores about ^000088175 HP^000000.
-Weight : ^77777713^000000
+^808080A potion made from ground Yellow Herbs.^000000
+
+Type: Consumable
+Class: HP Recovery
+Weight: 13
+Required Level: 1
+
+Base Heal Value ^008000175^000000 to ^008000235^000000HP
 #
+
 504#
-^000088HP Recovery Item^000000
-A potion made from
-ground White Herbs that restores about ^000088325 HP^000000.
-Weight : ^77777715^000000
+^808080A potion made from ground White Herbs.^000000
+
+Type: Consumable
+Class: HP Recovery
+Weight: 15
+Required Level: 1
+
+Base Heal Value ^008000325^000000 to ^008000405^000000HP
 #
+
 505#
-^000088HP Recovery Item^000000
-A potion made from
-ground Blue Herbs that restores about ^00008860 SP^000000.
-Weight : ^77777715^000000
+^808080A potion made from ground Blue Herbs.^000000
+
+Type: Consumable
+Class: SP Recovery
+Weight: 15
+Required Level: 1
+
+Base Heal Value ^00800040^000000 to ^00800060^000000SP
 #
+
 506#
-^000088Status Recovery Item^000000
-A potion which cures ^000088Poison^000000, ^000088Silence^000000, ^000088Blind^000000 and ^000088Chaos^000000 status effects.
-Weight : ^7777777^000000
+^808080A potion made from ground Green Herbs.^000000
+
+Type: Consumable
+Class: Status Recovery
+Weight: 7
+Required Level: 1
+
+Cures ^008000Poison^000000, ^008000Silence^000000, ^008000Blind^000000 and ^008000Chaos^000000 status effects.
+
 #
 507#
-^000088HP Recovery Item^000000
-^000088Potion Crafting Item^000000
-A weak medicinal herb which heals wounds.
-^000088Recovers a little HP^000000.
-^ffffff_^000000
-Weight : ^7777773^000000
+^808080Reddish herbs found in the wild. Often from monsters just slain. For some reason Midgardians still have no problem eating these.^000000
+
+Type: Consumable
+Class: HP Recovery
+Weight: 3
+Required Level: 1
+
+Base Heal Value ^00800018^000000 to ^00800028^000000HP
+
+Can be used in Potion Crafting.
 #
 508#
-^000088HP Recovery Item^000000
-^000088Potion Crafting Item^000000
-A valuable medicinal
-herb which efficiently
-heals wounds.
-^000088Recovers a little HP^000000.
-^ffffff_^000000
-Weight : ^7777775^000000
+^808080Yellow herbs found in the wild. These give a slightly stronger hit than Red Herbs.^000000
+
+Type: Consumable
+Class: HP Recovery
+Weight: 5
+Required Level: 1
+
+Base Heal Value ^00800038^000000 to ^00800058^000000HP
+
+Can be used in Potion Crafting.
 #
 509#
-^000088HP Recovery Item^000000
-^000088Potion Crafting Item^000000
-A valuable medicinal
-herb which greatly
-heals wounds.
-^000088Recovers a little HP^000000.
-^ffffff_^000000
-Weight : ^7777777^000000
+^808080White herbs found in the wild. Any alchemist can tell you... this is the good stuff.^000000
+
+Type: Consumable
+Class: HP Recovery
+Weight: 7
+Required Level: 1
+
+Base Heal Value ^00800075^000000 to ^008000115^000000HP
+
+Can be used in Potion Crafting.
 #
 510#
-^000088SP Recovery Item^000000
-^000088Potion Crafting Item^000000
-A very valuable medicinal herb whose unique aroma gratifies one's spirit.
-^000088Recovers a little SP^000000.
-^ffffff_^000000
-Weight : ^7777777^000000
+^808080Blue herbs found in the wild. May be habit forming. Please consult your biochemist before use.^000000
+
+Type: Consumable
+Class: SP Recovery
+Weight: 7
+Required Level: 1
+
+Base Heal Value ^00800015^000000 to ^00800030^000000SP
+
+Can be used in Potion Crafting.
 #
 511#
 ^000088Status Recovery Item^000000
@@ -66157,9 +66198,8 @@ Required Lv : ^777777110^000000
 Jobs : ^777777All^000000
 #
 18729#
-Thank you for supporting our SMART RWC 2012 Team Pilipinas.
+Thank you for supporting pRO SMART RWC 2012 Team Pilipinas.
 Decreases 10% damage from human property monsters.
-Increases Mastela_Fruit's recovery by 30%.
 Decrease 3% of variable casting.
 When refining with Lv over +12, decreases additional 1% variable casting. 
 When refining with Lv over +14, decreases additional 1% variable casting (Total 5%).
@@ -66519,8 +66559,6 @@ jobs: ^777777All Jobs ^000000
 18859#
 We shall fly far higher in the sky flapping big Angel ring.
 DEX + 1.
-MATK + 2%.
-MHP + 100.
 Class: ^777777Headgear ^000000 DEF: ^7777775 ^000000
 Location: ^777777Low ^000000 Weight: ^7777775 ^000000
 Req LV: ^7777771 ^000000
@@ -66687,7 +66725,6 @@ Job : ^777777All Jobs^000000
 A panda clinging to its master. Somehow you'd feel braver with it around.
 Reduce damage from human-type monsters by 5%
 Increases damage to medium-type monsters by 10%
-When refined to 9 above, randomly auto-casts 'Scream Lv.2' when physically attacked.
 Class : ^777777Headgear^000000
 Location : ^777777Upper ^000000
 Defense : ^7777778^000000
@@ -70231,4 +70268,696 @@ Costume: Owl Duke Silk Hat
 Jejecap
 Panda Balloon
 Happy Parrot
+#
+
+17350#
+The Mid Year Madness Box, brought to you by the Kafra Corp.
+Contains one of the following items.
+Cheesy Snack In Mouth
+Aqua Bunny Band
+Maroon Bunny Band
+Golden Bunny Band
+Gray Bunny Band
+Costume: Lolita Ten Gallon Hat
+Costume: Marvelous Wig
+Costume: Necromancer Hood
+Costume: Asara Fairy Hat
+Angeling Bubble
+Clinging Panda
+Costume: Tomboy Fairy
+Heroic Back Pack
+Fallen Angel Wings
+Arch Angel wings
+#
+
+17603#
+This July heats up with the steamy new Groove Pack!
+
+Always gives 1 Safe to 7 Chance Box
+ 
+Gives one of the following at random:
+Battle ManualX3 2 cnt
+HE Bubble Gum 2 cnt
+Bubbling Gum in Mouth
+Leaf Cat Hat
+Thoughtful Hat Box
+Isabella Red Ear
+Cherry Twig in Mouth
+Evil Marcher Hat
+Costume: Miracle Blue Rose
+#
+
+17604#
+Celebrate the end of summer with this new lucky box!
+ 
+Gives one of the following at random:
+lv. 10 Lancer Merc Scroll x 30
+lv. 10 Fencer Merc Scroll x 30
+lv. 10 Archer Merc Scroll x 30
+Battlemanual(X3) x 6
+Blood Dead Branch x 6
+He Bubble Gum x 7
+Puppy Ears Hat
+Costume Wedding Veil
+Costume Paper Bag Hat
+Wunderkammer
+Geode Monocle
+RWC2012 MVP Hat
+Prize Medals x 2500
+#
+
+17605#
+Celebrate the end of summer with this new lucky crate!
+Always Contains 1 Safe to 10 Certificate
+Contains 5 End of Summer Lucky Boxes which give one of the following at random:
+lv. 10 Lancer Merc Scroll x 30
+lv. 10 Fencer Merc Scroll x 30
+lv. 10 Archer Merc Scroll x 30
+Battlemanual(X3) x 6
+Blood Dead Branch x 6
+He Bubble Gum x 7
+Puppy Ears Hat
+Costume Wedding Veil
+Costume Paper Bag Hat
+Wunderkammer
+Geode Monocle
+RWC2012 MVP Hat
+Prize Medals x 2500
+#
+
+1934#
+The largest bowed string instrument of the viola family is also known as a double bass. Its giant frame and heavy weight make it a deadly weapon.
+MATK +120.
+Improvised Song cooldown -2 seconds.
+Class: ^777777Musical Instrument^000000 ATK: ^777777180^000000
+Weight: ^77777725^000000
+Weapon Level: ^7777773^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Minstrel^000000
+#
+1989#
+A component of rhythmic gymnastics.
+MATK +120.
+Increases Attack Speed. (-20% post-attack delay)
+Class: ^777777Whip^000000 ATK: ^777777150^000000
+Weight: ^77777730^000000
+Weapon Level: ^7777773^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Wanderer^000000
+#
+
+1935#
+Newoz's ukulele in a color that complements his clothes.
+Windmill Rush reduces consumed SP -20.
+Arrow Vulcan damage +200% when equipped with Newoz's Winged Ring.
+Arrow Vulcan increase consumed SP 50.
+Class: ^777777Musical Instrument^000000 ATK: ^777777160^000000
+Weight: ^777777100^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Minstrel^000000
+#
+
+1990#
+IGU's whip plus microphone. It looks a bit menacing.
+Moonlit Serenade consumes -SP 20.
+Arrow Vulcan damage +200% when equipped with IGU's Floral Bracelet.
+Class: ^777777Whip^000000 ATK: ^777777160^000000
+Weight: ^777777100^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Wanderer^000000
+#
+
+22035#
+Made of Nepenthes leaves, a known muscle relaxant, these shoes help you cast skills quickly. 
+Floating Casting Time -10%.
+Additional -5% when Upgraded to +8. After that, additional -1% every Upgrade level.
+Additional -3% when Upgraded to +11. After that, additional -3% every Upgrade level (up to +13).
+Class: ^777777Shoes^000000 DEF: ^77777710^000000
+Weight: ^77777730^000000
+Required Level: ^777777160^000000
+Equip To: ^777777All Classes^000000
+#
+22036#
+These Silver Fox leather shoes provide optimum friction, facilitating safe movement.
+Ranged Attack Strength +5%.
+Additional Ranged Attack Strength +1% when upgraded to +8 and above (up to +13).
+Class: ^777777Shoes^000000 DEF: ^77777715^000000
+Weight: ^77777730^000000
+Required Level: ^777777160^000000
+Equip To: ^777777All Classes^000000
+#
+22037#
+Dyed with Ungoliant body fluid that promotes clarity of mind, these boots help you focus.
+Skills consume -5% SP.
+Skills consume an additional -1% SP when upgraded to +8 and every Upgrade level after that (up to +13).
+Class: ^777777Shoes^000000 DEF: ^77777710^000000
+Weight: ^77777730^000000
+Required Level: ^777777160^000000
+Equip To: ^777777All Classes^000000
+#
+
+
+2981#
+A ring made for warriors on the quest to defeat Morroc.
+When Enchanted, it lends its owner the power to confront Morroc.
+^ff0000Cannot be traded to another game account.^000000
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777720^000000
+Required Level: ^777777160^000000
+Equip To: ^777777All Classes^000000
+#
+2988#
+Newoz's winged ring.
+Decreases Floating Casting Time for all skills by 25%.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Minstrel^000000
+#
+2989#
+IGU's flower bracelet.
+Decreases Floating Casting Time for all skills by 25%.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Wanderer^000000
+#
+2990#
+Pendant of Harmony.
+MATK +6%
+HP recovery +50%, SP recovery +50%.
+Holy Resistance +5%.
+Physical attacks cast Level 1 Auto Spell Renovatio.
+Physical attacks from enemies cast Level 3 Sanctuary.
+STR -5.
+All Stats +5 when equipped with Pendant of Chaos.
+Magic attacks from enemies cast Level 1 Auto Spell Maelstrom.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^777777130^000000
+Equip To: ^7777773rd Classes^000000
+#
+2991#
+Pendant of Chaos.
+ATK +6%
+Shadow Resistance +5%.
+Never affected by the Chaos effect.
+Physical attacks add a chance of casting Chaos on targets.
+Physical attacks from enemies create a chance of casting Chaos on all enemies in an 11*11 cell area around you.
+INT -5.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^777777130^000000
+Equip To: ^7777773rd Classes^000000
+#
+2992#
+Pendant of Maelstrom.
+ATK +6%, MATK +6%.
+All stats +1.
+Magic attacks from enemies cast Level 1 Auto Spell Maelstrom.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^777777130^000000
+Equip To: ^7777773rd Classes^000000
+#
+15100#
+A frozen breastplate that creates a cold steam.
+The armor is perpetually endowed with Water Property.
+Class: ^777777Armor^000000 DEF: ^77777720^000000
+Weight: ^777777150^000000
+Required Level: ^777777130^000000
+Equip To: ^7777773rd Classes^000000
+#
+15101#
+A stiff breastplate that emanates unshakeable strength.
+The armor is perpetually endowed with Earth Property.
+Class: ^777777Armor^000000 DEF: ^77777720^000000
+Weight: ^777777150^000000
+Required Level: ^777777130^000000
+Equip To: ^7777773rd Classes^000000
+#
+15093#
+MDEF + 5.
+Max HP/SP +5%.
+ATK +10, MATK +10, HIT +10, FLEE +10.
+Banishing Point damage +10%.
+Storm Blast damage +10%.
+Physical attacks add a chance of auto-casting Level 10 Auto Spell Healing/Storm Gust.
+The casting chance increases according to the Upgrade level.
+Class: ^777777Armor^000000 DEF: ^777777120^000000
+Weight: ^777777400^000000
+Required Level: ^777777160^000000
+Equip To: ^7777773rd Swordsman Classes^000000
+#
+15094#
+Max HP/SP +5%.
+MATK +10, FLEE +10.
+Crimson Rock and Psychic Wave damage +10%.
+Odd numbered Upgrade levels increase Floating Casting Time +20% and prevent casting interruption.
+Even numbered Upgrade levels increase MDEF + 1 and reduce Floating Casting Time -1%.
+Class: ^777777Armor^000000 DEF: ^77777750^000000
+Weight: ^77777780^000000
+Required Level: ^777777160^000000
+Equip To: ^7777773rd Mage Classes^000000
+#
+15095#
+Max HP/SP +5%.
+ATK +10, MATK +10, HIT +10, FLEE +10.
+Dragon Combo, Sky Blow, and Earth Shaker damage +10%.
+Judex and Adoramus damage +10%.
+Magic attacks add a chance of auto-casting Level 1 Lex Aeterna.
+Physical attacks add a chance of auto-casting Level 10 Kyrie Eleison.
+The auto-casting chances increase according to the Upgrade level.
+Class: ^777777Armor^000000 DEF: ^77777777^000000
+Weight: ^77777750^000000
+Required Level: ^777777160^000000
+Equip To: ^7777773rd Acolyte Classes^000000
+#
+15096#
+MDEF +5.
+Max HP/SP +5%, ATK + 10, MATK + 10.
+If pure STR is 90 or greater, then STR +1 every 2 Upgrade levels.
+If pure INT is 90 or greater, then INT +1 every 2 Upgrade levels.
+If pure VIT is 90 or greater, then VIT +1 every 2 Upgrade levels.
+If pure AGI is 90 or greater, then AGI +1 every 2 Upgrade levels.
+If pure DEX is 90 or greater, then DEX +1 every 2 Upgrade levels.
+If pure LUK is 90 or greater, then LUK +1 every 2 Upgrade levels.
+Melee Physical attacks add a chance of casting Stun, Poison, Silence, and Curse.
+The casting chance upgrades according to the Upgrade level.
+Class: ^777777Armor^000000 DEF: ^777777100^000000
+Weight: ^77777750^000000
+Required Level: ^777777160^000000
+Equip To: ^7777773rd Merchant Classes^000000
+#
+15097#
+Max HP/SP +5%.
+Fatal Menace and Triangle Shot damages +10%.
+Cross Impact and Cross Ripper Slasher damage +10%.
+Successful Physical attacks add a chance of CRI +20, FLEE +20, ATK +10%, and MATK + 10% for 10 seconds. 
+The casting chance upgrades according to the Upgrade level.
+Class: ^777777Armor^000000 DEF: ^77777770^000000
+Weight: ^77777720^000000
+Required Level: ^777777160^000000
+Equip To: ^7777773rd Thief Classes^000000
+#
+15098#
+Max HP/SP +5%.
+All Stats +1, Ranged Physical Attack Strength +3%, ASPD +1.
+Physical attacks add a low chance of auto-casting Level 10 Improve Concentration/Double Strafe.
+The casting chance increases according to the Upgrade level.
+Class: ^777777Armor^000000 DEF: ^77777760^000000
+Weight: ^77777720^000000
+Required Level: ^777777160^000000
+Equip To: ^7777773rd Archer Classes^000000
+#
+18122#
+An oversized bow with slow shooting speed and poor accuracy. Each and every arrow it shoots, though, is powerful enough to kill their victims at once. 
+Ranged Physical Attack Strength +40%.
+Decreases Attack Speed (+15% post-attack delay).
+Hit -50.
+Class: ^777777Bow^000000 ATK: ^777777195^000000
+Weight: ^777777300^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Ranger^000000
+#
+18123#
+The power of a storm given form.
+Ranged Physical Attack Strength +30%.
+Severe Rainstorm cooldown -2 seconds.
+Severe Rainstorm consumes +15 SP.
+Class: ^777777Bow^000000 ATK: ^777777160^000000
+Weight: ^777777150^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777130^000000
+Equip To: ^7777773rd Archer Classes^000000
+#
+4890#
+MDEF + 1
+#
+4891#
+MDEF + 3
+#
+4892#
+MDEF + 5
+#
+4893#
+DEF + 15
+#
+4894#
+ATK + 4%.
+#
+4895#
+ATK + 5%.
+#
+4896#
+MATK + 2%.
+#
+4897#
+MATK + 3%.
+#
+4898#
+MATK + 4%.
+#
+4899#
+MATK + 5%.
+#
+
+4908#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+STR + 1
+ATK + 3
+INT - 1
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4909#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+STR + 2
+ATK + 6
+INT - 2
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4910#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+STR + 4
+ATK + 12
+INT - 4
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4911#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+INT + 1
+MATK + 3
+STR - 1
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4912#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+INT + 2
+MATK + 6
+STR - 2
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4901#
+MDEF + 7
+#
+4913#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+INT + 4
+MATK + 12
+STR - 4
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4902#
+DEF + 18
+#
+4914#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+AGI + 1
+Evade + 2
+VIT - 1
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4903#
+DEF + 21
+#
+4915#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+AGI + 2
+Evade + 4
+VIT - 2
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4904#
+ATK + 6%.
+#
+4916#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+AGI + 4
+Evade + 8
+VIT - 4
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4905#
+ATK + 7%.
+#
+4917#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+VIT + 1
+DEF + 3
+MDEF + 2
+AGI - 1
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4906#
+MATK + 6%.
+#
+4918#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+VIT + 2
+DEF + 6
+MDEF + 4
+AGI - 2
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4907#
+MATK + 7%.
+#
+4919#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+VIT + 4
+DEF + 12
+MDEF + 8
+AGI - 4
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4920#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+DEX + 1
+Hit + 2
+LUK - 1
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4921#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+DEX + 2
+Hit + 4
+LUK - 2
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4922#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+DEX + 4
+Hit + 8
+LUK - 4
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4923#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+LUK + 1
+Critical + 1
+DEX - 1
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4924#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+LUK + 2
+Critical + 2
+DEX - 2
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4925#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+LUK + 4
+Critical + 4
+DEX - 4
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4559#
+ASPD + 1
+MSP - 10%
+Class : ^777777Card^000000
+Location : ^777777Shoes^000000
+Weight : ^7777771^000000
+#
+4882#
+ATK + 1%.
+#
+4883#
+MATK + 1%.
+#
+6684#
+Certifies its bearer as a distinguished warrior.
+Weight: ^7777770^000000
+#
+6713#
+Dark tribe Ahat's soul created by Morocc.
+You need this to open the true gate of the war against Dark lord.
+^ff0000This item cannot be traded with other account.^000000
+Weight : ^7777770^000000
+#
+6714#
+Dark tribe Shnaim's soul created by Morocc.
+You need this to open the true gate of the war against Dark lord.
+^ff0000This item cannot be traded with other account.^000000
+Weight : ^7777770^000000
+#
+6715#
+Dark Lord's soul piece.
+Feel the power of the Great Dark Lord Morocc.
+^ff0000This item cannot be traded with other account.^000000
+Weight : ^7777771^000000
+#
+6708#
+This crystallized mana
+is extracted from evil Demons, but its energy is untainted.
+#
+6719#
+A tooth pulled from the monster piano, Jitterbug. It's shaped like a piano key.
+^ffffff_^000000
+Weight: ^77777710^000000
+#
+22535#
+A scroll that summons a worker.
+Take the worker to a construction site suited to his skills. 
+^ff0000Cannot be traded to another game account.^000000
+Weight: ^7777771^000000
+#
+22536#
+A scroll that summons a worker.
+Take the worker to a construction site suited to his skills.
+^ff0000Cannot be traded to another game account.^000000
+Weight : ^7777771^000000
+#
+22537#
+Rewarded to warriors on the quest to defeat Morroc.
+Weight: ^77777710^000000
+#
+22566#
+A frost from the beginning. The melting never happened after the begin of the World.
+Creepy cold wakes you up so good.
+Clear burn damage effect
+Weight : ^7777770^000000
+#
+22567#
+A prize box for Morocc adventure troops.
+Weight : ^77777710^000000
+#
+22568#
+A spell scroll summoning Nydhogg
+#
+
+12530#
+A box containing the essence of Mastela Fruit. Be careful when opening.
+Weight : ^7777770^000000
+"^ff0000Caution - Item can be lost if you are possessing more than weight or quantity limit when opening the box!^000000"
+#
+6685#
+A certificate given to people who rebuild the Morocc
+^ff0000It cannot be traded with other accounts.^000000
+Weight : ^7777770^000000
+#
+22535#
+A scroll which can summon a worker
+Take him to set location
+It cannot be traded with other accounts.^000000
+Weight : ^7777771^000000
+#
+22536#
+A scroll which can summon a worker
+Take him to set location
+It cannot be traded with other accounts.^000000
+Weight : ^7777771^000000
+#
+6686#
+Building material for rebuilding Morocc
+^ff0000It cannot be traded with other accounts.^000000
+Weight : ^777777200^000000
+#
+6687#
+Building material for rebuilding Morocc^ff0000It cannot be traded with other accounts.^000000
+Weight : ^777777200^000000
+#
+6688#
+Building material for rebuilding Morocc^ff0000It cannot be traded with other accounts.^000000
+Weight : ^777777200^000000
+#
+6689#
+Very hot worm shell. it is popular to use substitude to keep warm the body. 
+^ff0000It cannot be traded with other accounts.^000000
+Weight : ^7777770^000000
+#
+6690#
+A Primeval plant stem. it is warm.
+Even the taste is good!
+^ff0000It cannot be traded with other accounts.^000000
+Weight : ^7777770^000000
+#
+6691#
+A feather of Condor. the fire from the feather moves to other places, it damages alot.
+Weight : ^7777770^000000
+#
+6692#
+Patrol log of Flame Basin.
+It doesn't look written in detail
+Weight : ^7777770.1^000000
+#
+6693#
+Body part of Gorem. it looks ugly.
+Weight : ^7777771^000000
+#
+6694#
+Blood of Monsters in Flame Basin. you will never know if it is good or bad for you.
+Weight : ^7777771^000000
+#
+6695#
+Tooth of Flame Golem.
+Heavy but sharp at the edge.
+Weight : ^77777710^000000
+#
+6696#
+Neck of Filldora the Flame.
+Weight : ^7777771^000000
+#
+6698#
+A simple Axe that Lamberjacks use. Do not expect too much on it.
+Weight : ^777777100^000000
 #
