@@ -387,7 +387,7 @@ sub new {
 			type6 => {
 				len => 31,
 				types => 'v2 C V2 C a8 l v2 C',
-				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id flag)],
+				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
 			},
 		},
 		items_stackable => {
