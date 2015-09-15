@@ -1481,6 +1481,9 @@ sub system_chat {
 	my $color;
 	if ($message =~ s/^ssss//g) {  # forces color yellow, or WoE indicator?
 		$prefix = T('[WoE]');
+	} elsif ($message =~ /^micc.*\0\0([0-9a-fA-F]{6})(.*)/) { #appears in twRO   ## [micc][name][\x00\x00][unknown][\x00\x00][color][name][blablabla][message]
+		($color, $message) = $message =~ /^micc.*\0\0([0-9a-fA-F]{6})(.*)/;
+		$prefix = T('[S]');
 	} elsif ($message =~ /^micc.{12,24}([0-9a-fA-F]{6})(.*)/) {
 		($color, $message) = $message =~ /^micc.*([0-9a-fA-F]{6})(.*)/;
 		$prefix = T('[S]');
@@ -1497,7 +1500,7 @@ sub system_chat {
 	stripLanguageCode(\$message);
 	chatLog("s", "$message\n") if ($config{logSystemChat});
 	# Translation Comment: System/GM chat
-	message "$prefix  $message\n", "schat";
+	message "$prefix $message\n", "schat";
 	ChatQueue::add('gm', undef, undef, $message) if ($config{callSignGM});
 
 	Plugins::callHook('packet_sysMsg', {
