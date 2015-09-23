@@ -54420,51 +54420,7 @@ Weapon Level: ^7777772^000000
 Required Level : ^7777771^000000
 Jobs : ^777777Assassin^000000
 #
-20171#
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A really big hammer.
-^CC0000This item is not Refinable^000000
-Class : ^777777Axe^000000
-Attack Strength: ^777777141^000000
-Weight : ^777777200^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman
-and Merchant Classes^000000
-#
-20172#
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A triple pronged
-spear that can also
-be used for fishing.
-^CC0000This item is not Refinable^000000
-Class : ^777777Spear^000000
-Attack Strength: ^777777180^000000
-Weight : ^777777120^000000
-Weapon Level: ^7777773^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman Class^000000
-#
-20173#
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A heavy, giant
-shuriken shaped
-like a bladed wheel.
-Each short range
-physical attack has
-a low chance of
-inflicting the Bleeding^FFFFFF  ^000000 status on enemies.
-^CC0000This item is not Refinable^000000
-Class : ^777777Huuma^000000
-Attack : ^77777792^000000
-Weight : ^777777250^000000
-Weapon Level: ^7777774^000000
-Required Level : ^7777771^000000
-Jobs :^777777Ninja^000000
-#
+
 20174#
 ^CC0000This Rental Weapon is not Tradable^000000
 ^0000CC40% Bonus Attack Damage to Water Element Targets^000000
@@ -54480,24 +54436,6 @@ Weapon Level: ^7777772^000000
 Required Level : ^7777771^000000
 Jobs: ^777777Archer Class;
 Thief and Rogue Jobs^000000
-#
-20175#
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A rare pistol that
-is only produced when
-it is specially ordered.^FFFFFF ^000000 The engraving of its
-creator's name can be
-used by experts to
-authenticate this gun.
-Hit - 10.
-^CC0000This item is not Refinable^000000
-Class : ^777777Pistol^000000
-Attack : ^77777791^000000
-Weight : ^77777750^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs :^777777Gunslinger^000000
 #
 20176#
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -55187,20 +55125,6 @@ Weapon Level: ^7777772^000000
 Required Level : ^7777771^000000
 Jobs: ^777777Swordman
 and Merchant Classes^000000
-#
-20132#
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Earth Element Targets^000000
-A triple pronged
-spear that can also
-be used for fishing.
-^CC0000This item is not Refinable^000000
-Class : ^777777Spear^000000
-Attack Strength: ^777777180^000000
-Weight : ^777777120^000000
-Weapon Level: ^7777773^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman Class^000000
 #
 20133#
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -70353,7 +70277,7 @@ Class: ^777777Musical Instrument^000000 ATK: ^777777180^000000
 Weight: ^77777725^000000
 Weapon Level: ^7777773^000000
 Required Level: ^777777130^000000
-Equip To: ^777777Minstrel^000000
+Equip To: ^777777Maestro^000000
 #
 1989#
 A component of rhythmic gymnastics.
@@ -70369,19 +70293,22 @@ Equip To: ^777777Wanderer^000000
 1935#
 Newoz's ukulele in a color that complements his clothes.
 Windmill Rush reduces consumed SP -20.
-Arrow Vulcan damage +200% when equipped with Newoz's Winged Ring.
+When equipped with Newoz's Winged Ring.
+Arrow Vulcan damage +200% 
 Arrow Vulcan increase consumed SP 50.
 Class: ^777777Musical Instrument^000000 ATK: ^777777160^000000
 Weight: ^777777100^000000
 Weapon Level: ^7777774^000000
 Required Level: ^777777130^000000
-Equip To: ^777777Minstrel^000000
+Equip To: ^777777Maestro^000000
 #
 
 1990#
 IGU's whip plus microphone. It looks a bit menacing.
 Moonlit Serenade consumes -SP 20.
-Arrow Vulcan damage +200% when equipped with IGU's Floral Bracelet.
+When equipped with IGU's Floral Bracelet,
+Arrow Vulcan damage +200% 
+Arrow Vulcan increase consumed SP 50.
 Class: ^777777Whip^000000 ATK: ^777777160^000000
 Weight: ^777777100^000000
 Weapon Level: ^7777774^000000
@@ -70434,7 +70361,7 @@ Decreases Floating Casting Time for all skills by 25%.
 Class: ^777777Accessory^000000 DEF: ^7777770^000000
 Weight: ^77777710^000000
 Required Level: ^777777130^000000
-Equip To: ^777777Minstrel^000000
+Equip To: ^777777Maestro^000000
 #
 2989#
 IGU's flower bracelet.
@@ -70960,4 +70887,223 @@ Weight : ^7777771^000000
 6698#
 A simple Axe that Lamberjacks use. Do not expect too much on it.
 Weight : ^777777100^000000
+#
+
+
+17351#Stanley's Shadow Jewelry Box contains one of the following.
+Shadow Physical Earring
+Shadow Magical Earring
+Shadow Power Earring
+Shadow Hard Earring
+Shadow Wise Earring
+Shadow Athena Earring
+Shadow Intelligence Earring
+Shadow Power Pendant
+Shadow Resist Spell Pendant
+Shadow Rapid Pendant
+Shadow Caster Pendant
+Shadow Intelligence Pendant
+Shadow Physical Pendant
+Shadow Magical Pendant
+#
+17352#Stanley's Shadow Footgear Box contains one of the following.
+Shadow Vital Shoes
+Shadow Athletic Shoes
+Shadow Bloody Shoes
+Shadow Liberation Shoes
+Shadow Chemical Shoes
+Shadow Clamorous Shoes
+Shadow Insecticide Shoes
+Shadow Fisher Shoes
+Shadow Seraphim Shoes
+Shadow Beholder Shoes
+Shadow Divine Shoes
+Shadow Dragoon Shoes
+Shadow Champion Shoes
+#
+17353#Stanley's Shadow Shield Box contains one of the following.
+Shadow Cranial Shield
+Shadow Safeguard Shield
+Shadow Brutal Shield
+Shadow Gargantua Shield
+Shadow Homer's Shield
+Shadow Dragoon Shield
+Shadow Satanic SHield
+Shadow Flameguard Shield
+Shadow Requiem Shield
+Shadow Cadi SHield
+Shadow Vital Shield
+Shadow Athena SHield
+Shadow Athletic SHield
+#
+17354#Stanley's Shadow Weapon Box contains one of the following.
+Shadow Dexterous Weapon
+Shadow Kingbird Weapon
+Shadow Critial Hit Weapon
+Shadow Healing Weapon
+Shadow Lucky Weapon
+Shadow Magical Weapon
+Shadow Physical Weapon
+#
+17355#Stanley's Shadow Armor Box contains one of the following.
+Shadow Breezy Armor
+Shadow Immune Armor
+Shadow Hard Armor
+Shadow Ancient Armor
+Shadow Critical Armor
+Shadow Dexterous Armor
+Shadow Lucky Armor
+#
+20132#
+Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Bottom ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20153#
+Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20154#
+Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20155#
+Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20156#
+Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Bottom ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20171#
+Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20172#
+Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20173#
+Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20175#
+Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20152#
+Class : ^777777Costume_Equipment^000000Defense : ^7777770^000000
+Location : ^777777Upper-mid-Bottom ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+
+17614#
+^ff0000It cannot be traded with other accounts.^000000
+Early fall cotume box.
+Contains one of the following
+Costume Subject Aura
+Costume Monochrome Cap
+Costume Maple Which Falls
+Costume Ladys Feather Hat
+Costume Fan In Mouth
+Costume Sepia Cap
+Costume Pumpkin Head
+Costume Lude Hood
+Costume Diabolic Headphone
+Costume Straw Rice Bag
+^ff0000Once it is opened, you cannot get refund on it.^000000
+Weight : ^7777771^000000
+#
+17606#
+Drake's got alot of junk in his sunken trunk and the Kafra Corp's corps of corpse explorers have recovered his booty from secret underwater caverns.
+Always contains
+1cnt Battle Manualx3
+
+Randomly Gives one of the following
+2cnt Battle Manualx3
+3cnt HE Bubble Gum
+250cnt Prize Medals
+1 Bloody Dead Branch
+Bra Hat
+Wing Headphone
+CD In Mouth
+Jin Marin Balloon
+Happy Parrot[1]
+Fallen Angel Wing
+#
+
+24111#
+These shoes lets the magic just flow through you.
+Increase Max HP by 10 per refine level
+Reduces SP Cost of skills by 1%
+If refined to +7 or higher
+Increases SP receovery by 5
+
+When the Spellflow Shadow Set is worn together
+Spell Casting can no longer be interrupted
+Increases SP Costs of skills by 40%
+Reduces SP Cost of skills for each refine level of the set.
+Class : ^777777Shadow^000000
+Location : ^777777Shoes^000000 Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+24112#
+This armor lets the magic just flow through you.
+Increase Max HP by 10 per refine level
+Reduces SP Cost of skills by 1%
+If refined to +7 or higher reduces SP Cost of skills by 1%
+If refined to +9 or higher further reduces SP Cost of skills by 1%
+
+When the Spellflow Shadow Set is worn together
+Spell Casting can no longer be interrupted
+Increases SP Costs of skills by 40%
+Reduces SP Cost of skills for each refine level of the set.
+Class : ^777777Shadow^000000
+Location : ^777777Armor ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+24113#
+This shield lets the magic just flow through you.
+Increase Max HP by 10 per refine level
+Reduces SP Cost of skills by 1%
+If refined to +7 or higher increase Max SP by 1%
+
+When the Spellflow Shadow Set is worn together
+Spell Casting can no longer be interrupted
+Increases SP Costs of skills by 40%
+Reduces SP Cost of skills for each refine level of the set.
+
+Class : ^777777Shadow^000000
+Location : ^777777Shield^000000 Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777all jobs^000000
+#
+17629#
+^ff0000It cannot be traded with other accounts.^000000
+Always contains 1 Spellflow Shadow Set
+Which consists of
+1 Spellflow Shadow Shoes
+1 Spellflow Shadow Armor
+1 Spellflow Shadow Shield
+Weight : ^7777771^000000
 #
