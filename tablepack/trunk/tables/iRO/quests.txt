@@ -18758,7 +18758,7 @@ Find a scout somewhere in the Flaming Basin.#
 Talk to the scout.#
 
 1266#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
-Collect 20 Scout Journals from Fire Sandmen.#
+Collect 20 Patrol Logs from Fire Sandmen.#
 Talk to the scout.#
 
 1267#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
@@ -18919,7 +18919,7 @@ You've decided to collect Bradium Boxes every day to try to thwart Chesher's sch
 Wait for one day.#
 
 7581#Eliminating Risks#SG_FEEL#QUE_NOIMAGE#
-Distorted Morroc Reincarnations, Blazing Morroc Reincarnations, and Freezing Morroc Reincarnations are the biggest threat to our subjugation operation. Please take care of them.#
+Morocc Fire Vassal, Morocc Twisted Vassal, and Morocc Cold Vassal are the biggest threat to our subjugation operation. Please take care of them.#
 #
 
 7582#Daily Cleaning#SG_FEEL#QUE_NOIMAGE#
@@ -19085,3 +19085,35 @@ Reenter in 5 minutes.#
 15008#Memorial Dungeon: Isle of Bios#SG_FEEL#QUE_NOIMAGE#
 You cleared the dungeon in 5 minutes after you entered it. Isle of Bios is now closed for the next 23 hours.#
 23-hour downtime.#
+
+62854#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+You have started the 2015 quest. This flag is so that you can repeat it next year.#
+#
+
+62855#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Talk to Captain Smith about paying for ship's guards.#
+#
+
+62856#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Talk to Captain Jones about paying for ship's guards.#
+#
+
+62857#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Talk to Captain Le Beou about paying for ship's guards.#
+#
+
+62858#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Talk to Captain Threepwood about paying for ship's guards.#
+#
+
+62859#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Find the retired pirate Butterbeard.#
+#
+
+62860#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Hunt Crewmembers of the Pirate Captain Le Picard#
+Once you have completed Le Picard and His crew return to E.A.C. Rep for a reward.#
+
+62861#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Defeat the Pirate Captain Le Picard#
+Once you have completed Le Picard and His crew return to E.A.C. Rep for a reward.#

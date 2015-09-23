@@ -5519,11 +5519,7 @@
 20168#Rental_Saharic_Wire#
 20169#Rental_Saharic_Bastard_Sword#
 20170#Rental_Saharic_Jur#
-20171#Rental_Saharic_HammerAxe#
-20172#Rental_Saharic_Trident#
-20173#Rental_Saharic_Huuma_Giant_Wheel#
 20174#Rental_Saharic_Crossbow#
-20175#Rental_Saharic_Garrison#
 20176#Rental_Saharic_Cyclone#
 20177#Rental_Saharic_Drifter#
 20178#Rental_Saharic_Destroyer#
@@ -5572,7 +5568,6 @@
 20129#Rental_Underneath_Bastard_Sword#
 20130#Rental_Underneath_Jur#
 20131#Rental_Underneath_HammerAxe#
-20132#Rental_Underneath_Trident#
 20133#Rental_Underneath_Huuma_Giant_Wheel#
 20134#Rental_Underneath_Crossbow#
 20135#Rental_Underneath_Garrison#
@@ -6488,11 +6483,11 @@
 17348#Bloody_Valentine_Lucky_Box#
 17349#Immuned_Armor_Shadow_Box#
 17350#Hard_Armor_Shadow_Box#
-17351#Ancient_Armor_Shadow_Box#
-17352#Critical_Armor_Shadow_Box#
-17353#Kingbird_Weapon_Shadow_Box#
-17354#Cri_Hit_Weapon_Shadow_Box#
-17355#Healing_Weapon_Shadow_Box#
+17351#Stanley's_Shadow_Jewelry_Box#
+17352#Stanley's_Shadow_Footgear_Box#
+17353#Stanley's_Shadow_Shield_Box#
+17354#Stanley's_Shadow_Weapon_Box#
+17355#Stanley's_Shadow_Armor_Box#
 17356#Lucky_Weapon_Shadow_Box#
 17357#Power_Earring_Shadow_Box#
 17358#Int_Pendant_Shadow_Box#
@@ -6676,7 +6671,7 @@
 6740#Recovery_Stone(slot_1)#
 6741#Recovery_Skill_Stone(slot_1)#
 6742#Recovery_Stone(slot_2)#
-6743#HP_Stone(slot_2)#
+6743#HP+1%_Stone(slot_2)#
 6744#SP_Stone(slot_2)#
 6745#Recovery_Stone(slot_3)#
 6636#STR_Stone(slot_1)#
@@ -6720,7 +6715,7 @@
 4937#Attack_mid1#
 4938#Attack_small1#
 6716#Cri_stone(slot_1)#
-6717#HP_stone(slot_2)#
+6717#HP+50_Stone(slot_2)#
 6718#Magic_stone(slot_3)#
 4884#HIT + 1#
 4926#Cri_1Lv#
@@ -7074,7 +7069,7 @@
 19657#placeholder#
 19658#placeholder#
 19659#placeholder#
-19660#placeholder#
+19660#Costume:_Coppola's_Hat#
 19661#Costume:_Sweet_Bonnet#
 19677#Costume:_Soulless_Wing#
 19678#Costume:_Bell_Ribbon#
@@ -8274,7 +8269,7 @@
 22037#Hero_Ungoliant_Boots#
 2981#Hero_Ring#
 2988#Hero_Ring_Of_Newoz#
-2989#Floral_Bracelet_Of_Igu#
+2989#Floral_Bracelet_Of_Aigu#
 2990#Pendant_Of_Harmony#
 2991#Pendant_Of_Chaos#
 2992#Pendant_Of_Maelstorm#
@@ -8327,7 +8322,7 @@
 4559#Lord_Morocc_Card#
 4882#ATK + 1%#
 4883#MATK + 1%#
-6684#TokenOfHero#
+6684#Token_Of_Hero#
 6713#Soul_Of_Ahat#
 6714#Soul_Of_Shnaim#
 6715#Darklord_Soulpiece#
@@ -8335,20 +8330,20 @@
 6719#Tooth_Of_Jitterbug#
 22535#Worker_Summon_Scroll#
 22536#Worker_Summon_Scroll#
-22537#PrizeOfHero#
+22537#Prize_Of_Hero#
 22566#Frost_Crystal#
 22567#Squad_Prize#
 22568#Nydhogg_Summon_Scroll#
 1934#Contabass#
 1989#Gymnastics_Ribbon#
 1935#Ukulele_Of_Newoz#
-1990#Floral_Mic_Of_Igu#
+1990#Floral_Mic_Of_Aigu#
 12530#Mastela_Fruit_Box#
-6685#MoroccMerit#
-22535#WorkerScroll#
-22536#WorkerScroll#
+6685#Morocc_Merit#
+22535#Worker_Scroll#
+22536#Worker_Scroll#
 6686#Brick#
-6687#LongRopes#
+6687#Long_Rope#
 6688#Wood#
 6689#Burning_Bug_Skin#
 6690#Yummy_Stem#
@@ -8356,6 +8351,22 @@
 6692#Patrol_Log#
 6693#Stone_Of_Blessing#
 6694#Monster_Blood#
-6695#Tooth_Of_FlameGolem#
-6696#Neck_Of_FlameFrilldora#
+6695#Golem's_Fiery_Stone_Tooth#
+6696#Frilldora's_Fiery_Nape#
 6698#Hatchet#
+20132#C_Subject_Aura#
+20153#C_Monochrome_Cap#
+20154#C_Maple_Which_Falls#
+20155#C_Ladys_Feather_Hat#
+20156#C_Fan_In_Mouth#
+20171#C_Sepia_Cap#
+20172#C_Pumpkin_Head#
+20173#C_Lude_Hood#
+20175#C_Diabolic_Headphone#
+20152#C_Straw_Rice_Bag#
+17614#Early_Fall_Costume_Box#
+17606#Drake's_Prize_Pack#
+24111#Spellflow_Shadow_Shoes#
+24112#Spellflow_Shadow_Armor#
+24113#Spellflow_Shadow_Shield#
+17629#Spellflow_Shadow_Pack#
