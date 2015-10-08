@@ -3989,6 +3989,33 @@ sub cmdPortalList {
 	} elsif ($arg eq 'recompile') {
 		Settings::loadByRegexp(qr/portals/);
 		Misc::compilePortals() if Misc::compilePortals_check();
+	} elsif ($arg =~ /^add (.*)$/) { #Manual adding portals
+		#Command: portals add mora 56 25 bif_fild02 176 162
+		#Command: portals add y_airport 143 43 y_airport 148 51 0 c r0 c r0
+		print $args."TEST\n";
+		my ($srcMap, $srcX, $srcY, $dstMap, $dstX, $dstY, $seq) = $args =~ /^add ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3}) ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3})(.*)$/; #CHECKING
+		my $srcfile = $srcMap.'.fld';
+		$srcfile = File::Spec->catfile($Settings::fields_folder, $srcfile) if ($Settings::fields_folder);
+		my $dstfile = $dstMap.'.fld';
+		$dstfile = File::Spec->catfile($Settings::fields_folder, $dstfile) if ($Settings::fields_folder);
+		print "GOOD\n" if (-f $srcfile && -f $dstfile);
+		if ($srcX > 0 && $srcY > 0 && $dstX > 0 && $dstY > 0
+			&& -f $srcfile && -f $dstfile) { #found map and valid corrdinates	
+			if ($seq) {
+				message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s) [%s]\n", $srcMap, $srcX, $srcY, $dstMap, $dstX, $dstY, $seq), "portalRecord";
+				
+				FileParsers::updatePortalLUT2(Settings::getTableFilename("portals.txt"),
+					$srcMap, $srcX, $srcY,
+					$dstMap, $dstX, $dstY,
+					$seq);		
+			} else {
+				message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n", $srcMap, $srcX, $srcY, $dstMap, $dstX, $dstY), "portalRecord";
+				
+				FileParsers::updatePortalLUT(Settings::getTableFilename("portals.txt"),
+					$srcMap, $srcX, $srcY,
+					$dstMap, $dstX, $dstY);		
+			}
+		}
 	}
 }
 
