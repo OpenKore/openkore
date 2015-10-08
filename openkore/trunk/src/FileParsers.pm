@@ -70,6 +70,7 @@ our @EXPORT = qw(
 	writeSectionedFileIntact
 	updateMonsterLUT
 	updatePortalLUT
+	updatePortalLUT2
 	updateNPCLUT
 );
 
@@ -560,7 +561,6 @@ sub parseMonControl {
 			$r_hash->{$key}{attack_hp} = $args[6];
 			$r_hash->{$key}{attack_sp} = $args[7];
 			$r_hash->{$key}{weight} = $args[8];
-			$r_hash->{$key}{dist} = $args[9];
 		}
 	}
 	return 1;
@@ -1324,6 +1324,14 @@ sub updatePortalLUT {
 	my ($file, $src, $x1, $y1, $dest, $x2, $y2) = @_;
 	open FILE, ">>:utf8", $file;
 	print FILE "$src $x1 $y1 $dest $x2 $y2\n";
+	close FILE;
+}
+
+#Add: NPC talk Sequence
+sub updatePortalLUT2 {
+	my ($file, $src, $x1, $y1, $dest, $x2, $y2, $seq) = @_;
+	open FILE, ">>:utf8", $file;
+	print FILE "$src $x1 $y1 $dest $x2 $y2 $seq\n";
 	close FILE;
 }
 
