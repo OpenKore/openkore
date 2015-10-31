@@ -4801,11 +4801,13 @@ sub cmdTalk {
 		foreach my $testResponse (@{$talk{'responses'}}) {
 			if ($testResponse =~ /$regex/ || ($postCondition eq 'i' && $testResponse =~ /$regex/i)) {
 				$messageSender->sendTalkResponse($talk{'ID'}, $index);
+				return;
 			}
 		} continue {
 			$index++;
 		}
-		message "[TEST]Error in function 'talk text' (Respond to NPC) | No match was found on responses.\n";
+		error TF("Error in function 'talk resp' (Respond to NPC)\n" .
+			"No match was found on responses with regex %s .\n", $regex);
 	} elsif ($arg1 eq "resp" && $arg2 ne "" && $talk{'responses'}[$arg2] eq "") {
 		error TF("Error in function 'talk resp' (Respond to NPC)\n" .
 			"Response %s does not exist.\n", $arg2);
