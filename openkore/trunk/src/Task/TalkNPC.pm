@@ -241,13 +241,14 @@ sub iterate {
 				$messageSender->sendAction($self->{ID}, 0);
 			}
 
-		} elsif ( $step =~ /^r(?:(\d+)|=(.+)|~(.+))/i ) {
+		} elsif ( $step =~ /^r(?:(\d+)|=(.+)|~\/(.*?)\/(i?))/i ) {
 			# Choose a menu item.
 			my $choice = $1;
 			if ($npcTalkType eq 'select' and $2 || $3) {
 				# Choose a menu item by matching options against a regular expression.
 				my $pattern = $2 ? "^\Q$2\E\$" : $3;
-				( $choice ) = grep { $talk{responses}[$_] =~ $pattern } 0..$#{$talk{responses}};
+				my $postCondition = $4;
+				( $choice ) = grep { $postCondition ? $talk{responses}[$_] =~ /$pattern/i : $talk{responses}[$_] =~ /$pattern/ } 0..$#{$talk{responses}};
 				if (defined $choice && $choice < $#{$talk{responses}}) {
 					$messageSender->sendTalkResponse($talk{ID}, $choice + 1);
 				} elsif (defined $choice) {
