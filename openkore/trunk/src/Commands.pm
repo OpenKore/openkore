@@ -4761,8 +4761,13 @@ sub cmdTalk {
 	}
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
-	my ($arg2) = $args =~ /^\w+ (-?\d+)/;
-
+	$args =~ s/^\w+\s+//;
+	my $arg2;
+	if ($args =~ /^(-?\d+)/) {
+		$arg2 = $1;
+	} else {
+		($arg2) = $args =~ /^(\/.*?\/\w?)$/;
+	}
 	if ($arg1 =~ /^\d+$/ && $npcsID[$arg1] eq "") {
 		error TF("Error in function 'talk' (Talk to NPC)\n" .
 			"NPC %s does not exist\n", $arg1);
@@ -4789,7 +4794,18 @@ sub cmdTalk {
 		}
 		$msg .= ('-'x40) . "\n";
 		message $msg, "list";
-
+	} elsif ($arg1 eq "resp" && $arg2 =~ /^\/(.*?)\/(\w?)$/) {
+		my $regex = $1;
+		my $postCondition = $2;
+		my $index = 1;
+		foreach my $testResponse (@{$talk{'responses'}}) {
+			if ($testResponse =~ /$regex/ || ($postCondition eq 'i' && $testResponse =~ /$regex/i)) {
+				$messageSender->sendTalkResponse($talk{'ID'}, $index);
+			}
+		} continue {
+			$index++;
+		}
+		message "[TEST]Error in function 'talk text' (Respond to NPC) | No match was found on responses.\n";
 	} elsif ($arg1 eq "resp" && $arg2 ne "" && $talk{'responses'}[$arg2] eq "") {
 		error TF("Error in function 'talk resp' (Respond to NPC)\n" .
 			"Response %s does not exist.\n", $arg2);
