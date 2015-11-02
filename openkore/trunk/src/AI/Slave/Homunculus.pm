@@ -13,13 +13,13 @@ sub checkSkillOwnership { $_[1]->getOwnerType == Skill::OWNER_HOMUN }
 
 sub iterate {
 	my $slave = shift;
-	
+
 	# homunculus is in rest
 	if ($slave->{state} & 2) {
-	
+
 	# homunculus is dead / not present
 	} elsif ($slave->{state} & 4) {
-	
+
 	# homunculus is alive
 	} elsif ($slave->{appear_time} && $field->baseName eq $slave->{map}) {
 		# auto-feed homunculus
@@ -29,7 +29,7 @@ sub iterate {
 		$config{homunculus_hunger} = 15 if (!$config{homunculus_hunger} || $config{homunculus_return} > $config{homunculus_hunger}); #Fix value instead of random
 		$config{homunculus_return} = 11 if (!$config{homunculus_return} || $config{homunculus_hunger} < $config{homunculus_return}); #Fix value instead of random
 		$timeout{ai_homunFeed}{timeout} = 60 if (!$timeout{ai_homunFeed}{timeout}); #Timeout value : Default 60sec
-	
+
 		# Stop feeding when homunculus reaches 999~1000 intimacy, its useless to keep feeding from this point on
 		# you can starve it till it gets 911 hunger (actually you can starve it till 1 but we wanna keep its intimacy loyal).
 		if (($slave->{intimacy} >= $config{homunculus_intimacyMax}) && $slave->{feed}) {
@@ -38,9 +38,9 @@ sub iterate {
 		} elsif (($slave->{intimacy} <= $config{homunculus_intimacyMin}) && !$slave->{feed}) {
 			$slave->{feed} = 1
 		}
-		
+
 		if (timeOut($timeout{ai_homunFeed})
-			&& $slave->{feed}
+			#&& $slave->{feed}
 			&& $slave->{hunger} <= $config{homunculus_hunger}
 			&& $config{homunculus_autoFeed}
 			&& (existsInList($config{homunculus_autoFeedAllowedMaps}, $field->baseName) || !$config{homunculus_autoFeedAllowedMaps})) {

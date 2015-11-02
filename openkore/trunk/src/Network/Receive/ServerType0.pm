@@ -2353,11 +2353,12 @@ sub homunculus_state_handler {
 	}
 
 	if (($args->{state} & ~8) > 1) {
-		foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
-			delete $char->{skills}{$handle};
-		}
-		$char->{homunculus}->clear();
-		undef @{$char->{homunculus}{slave_skillsID}};
+		#Disabled these code as homun skills are not resent to client, so we shouldnt do deleting skill sets in this place.
+		#foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
+		#	delete $char->{skills}{$handle};
+		#}
+		$char->{homunculus}->clear(); #TODO: Check for memory leak?
+		#undef @{$char->{homunculus}{slave_skillsID}};
 		if (defined $slave->{state} && $slave->{state} != $args->{state}) {
 			if ($args->{state} & 2) {
 				message T("Your Homunculus was vaporized!\n"), 'homunculus';
@@ -5023,6 +5024,11 @@ sub skill_use {
 	}
 	$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $args->{damage} == 0;
 
+	#EFST_MAGICPOWER OVERRIDE
+	if ($args->{sourceID} eq $accountID	&& $char->statusActive('EFST_MAGICPOWER') && $args->{skillID} != 366) {
+		$char->setStatus("EFST_MAGICPOWER", 0);
+	}
+	
 	Plugins::callHook('packet_skilluse', {
 			'skillID' => $args->{skillID},
 			'sourceID' => $args->{sourceID},
@@ -5107,6 +5113,11 @@ sub skill_use_location {
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
 	message $disp, $domain;
 
+	#EFST_MAGICPOWER OVERRIDE
+	if ($args->{sourceID} eq $accountID	&& $char->statusActive('EFST_MAGICPOWER') && $args->{skillID} != 366) {
+		$char->setStatus("EFST_MAGICPOWER", 0);
+	}
+	
 	Plugins::callHook('packet_skilluse', {
 		'skillID' => $skillID,
 		'sourceID' => $sourceID,
@@ -5186,6 +5197,12 @@ sub skill_used_no_damage {
 			}
 		}
 	}
+	
+	#EFST_MAGICPOWER OVERRIDE
+	if ($args->{sourceID} eq $accountID	&& $char->statusActive('EFST_MAGICPOWER') && $args->{skillID} != 366) {
+		$char->setStatus("EFST_MAGICPOWER", 0);
+	}
+	
 	Plugins::callHook('packet_skilluse', {
 		skillID => $args->{skillID},
 		sourceID => $args->{sourceID},
