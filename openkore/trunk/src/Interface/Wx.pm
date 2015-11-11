@@ -748,7 +748,16 @@ sub createSplitterContent {
 	$chatLog->addColor("p", 164, 0, 143);
 	$chatLog->addColor("g", 0, 177, 108);
 	$chatLog->addColor("warning", 214, 93, 0);
-
+	
+	$page = $notebook->newPage(2, T('Team Chat Log'), 1);
+	my $TchatLog = $self->{TchatLog} = new Interface::Wx::LogView($page);
+	$page->set($TchatLog);
+	$TchatLog->addColor("p", 164, 0, 143);
+	
+	$page = $notebook->newPage(3, T('Guild Chat Log'), 2);
+	my $GchatLog = $self->{GchatLog} = new Interface::Wx::LogView($page);
+	$page->set($GchatLog);
+	$GchatLog->addColor("g", 0, 177, 108);
 
 	## Parallel to the notebook is another sub-splitter
 	my $subSplitter = new Wx::SplitterWindow($splitter, 583,
