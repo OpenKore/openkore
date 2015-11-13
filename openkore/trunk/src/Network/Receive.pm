@@ -1918,6 +1918,49 @@ sub area_spell_multiple2 {
 	});
 }
 
+#09CA
+sub area_spell_multiple3 {
+	my ($self, $args) = @_;
+
+	# Area effect spells; including traps!
+	my $len = $args->{len} - 4;
+	my $spellInfo = $args->{spellInfo};
+	my $msg = "";
+	my $binID;
+	my ($ID, $sourceID, $x, $y, $type, $range, $fail);
+	for (my $i = 0; $i < $len; $i += 19) {
+		$msg = substr($spellInfo, $i, 19);
+		($ID, $sourceID, $x, $y, $type, $range, $fail) = unpack('a4 a4 v3 X3 C2', $msg);
+
+		if ($spells{$ID} && $spells{$ID}{'sourceID'} eq $sourceID) {
+			$binID = binFind(\@spellsID, $ID);
+			$binID = binAdd(\@spellsID, $ID) if ($binID eq "");
+		} else {
+			$binID = binAdd(\@spellsID, $ID);
+		}
+	
+		$spells{$ID}{'sourceID'} = $sourceID;
+		$spells{$ID}{'pos'}{'x'} = $x;
+		$spells{$ID}{'pos'}{'y'} = $y;
+		$spells{$ID}{'pos_to'}{'x'} = $x;
+		$spells{$ID}{'pos_to'}{'y'} = $y;
+		$spells{$ID}{'binID'} = $binID;
+		$spells{$ID}{'type'} = $type;
+		if ($type == 0x81) {
+			message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
+		}
+		debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y)\n", "skill", 2;
+	}
+
+	Plugins::callHook('packet_areaSpell', {
+		fail => $fail,
+		sourceID => $sourceID,
+		type => $type,
+		x => $x,
+		y => $y
+	});
+}
+
 sub sync_request_ex {
 	my ($self, $args) = @_;
 	
