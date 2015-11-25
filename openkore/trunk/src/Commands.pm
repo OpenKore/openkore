@@ -4832,7 +4832,7 @@ sub cmdTalk {
 		$messageSender->sendTalkNumber($talk{'ID'}, $arg2);
 
 	} elsif ($arg1 eq "text") {
-		my ($arg2) = $args =~ /^\w+ (.*)/;
+		my ($arg2) = $args =~ /^(.*)/;
 		if ($arg2 eq "") {
 			error T("Error in function 'talk text' (Respond to NPC)\n" .
 				"You must specify a string.\n");
