@@ -1413,7 +1413,16 @@ sub cmdDeal {
 	}
 
 	my (undef, $args) = @_;
-	my @arg = split / /, $args;
+	my @arg = parseArgs( $args );
+
+	if ( $arg[0] && $arg[0] !~ /^(\d+|no|add)$/ ) {
+		my ( $partner ) = grep { $_->name eq $arg[0] } @{ $playersList->getItems };
+		if ( !$partner ) {
+			error TF( "Unknown player [%s]. Player not nearby?\n", $arg[0] );
+			return;
+		}
+		$arg[0] = $partner->{binID};
+	}
 
 	if (%currentDeal && $arg[0] =~ /\d+/) {
 		error T("Error in function 'deal' (Deal a Player)\n" .
@@ -1469,16 +1478,22 @@ sub cmdDeal {
 	} elsif ($arg[0] eq "add" && $arg[2] && $arg[2] !~ /\d+/) {
 		error T("Error in function 'deal_add' (Add Item to Deal)\n" .
 			"Amount must either be a number, or not specified.\n");
-	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/) {
-		if ($currentDeal{you_items} < 10) {
-			my $item = $char->inventory->get($arg[1]);
+	} elsif ($arg[0] eq "add" && $arg[1] =~ /^(\d+(?:-\d+)?,?)+$/) {
+		my $max_items = $config{dealMaxItems} || 10;
+		my @items = Actor::Item::getMultiple($arg[1]);
+		my $n = $currentDeal{you_items};
+		if ($n >= $max_items) {
+			error T("You can't add any more items to the deal\n"), "deal";
+		}
+		while (@items && $n < $max_items) {
+			my $item = shift @items;
+			next if $item->{equipped};
 			my $amount = $item->{amount};
 			if (!$arg[2] || $arg[2] > $amount) {
 				$arg[2] = $amount;
 			}
 			dealAddItem($item, $arg[2]);
-		} else {
-			error T("You can't add any more items to the deal\n"), "deal";
+			$n++;
 		}
 	} elsif ($arg[0] eq "add" && $arg[1] eq "z") {
 		if (!$arg[2] && !($arg[2] eq "0") || $arg[2] > $char->{'zeny'}) {
@@ -1487,6 +1502,22 @@ sub cmdDeal {
 		$currentDeal{'you_zeny'} = $arg[2];
 		message TF("You put forward %sz to Deal\n", formatNumber($arg[2])), "deal";
 
+	} elsif ($arg[0] eq "add" && $arg[1] !~ /^\d+$/) {
+		my $max_items = $config{dealMaxItems} || 10;
+		if ($currentDeal{you_items} > $max_items) {
+			error T("You can't add any more items to the deal\n"), "deal";
+		}
+		my $items = [ grep { $_ && lc( $_->{name} ) eq lc( $arg[1] ) && !$_->{equipped} } @{ $char->inventory->getItems } ];
+		my $n = $currentDeal{you_items};
+		my $a = $arg[2] || 1;
+		my $c = 0;
+		while ($n < $max_items && $c < $a && @$items) {
+			my $item = shift @$items;
+			my $amount = $arg[2] && $a - $c < $item->{amount} ? $a - $c : $item->{amount};
+			dealAddItem($item, $amount);
+			$n++;
+			$c += $amount;
+		}
 	} else {
 		error T("Syntax Error in function 'deal' (Deal a player)\n" .
 			"Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n");
