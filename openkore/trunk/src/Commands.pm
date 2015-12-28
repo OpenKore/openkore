@@ -4263,13 +4263,13 @@ sub cmdShopInfoSelf {
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
 	my $msg = center(" $shop{title} ", 79, '-') ."\n".
-		T("#  Name                                   Type        Qty  Price           Sold\n");
+		T("#  Name                               Type            Amount        Price  Sold\n");
 	my $priceAfterSale=0;
 	my $i = 1;
 	for my $item (@articles) {
 		next unless $item;
 		$msg .= swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @<<< @<<<<<<<<<<<<z  @<<<",
+		   "@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @>>>>",
 			[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, formatNumber($item->{price}), $item->{sold}]);
 		$priceAfterSale += ($item->{quantity} * $item->{price});
 	}
@@ -4863,12 +4863,11 @@ sub cmdTalk {
 		$messageSender->sendTalkNumber($talk{'ID'}, $arg2);
 
 	} elsif ($arg1 eq "text") {
-		my ($arg2) = $args =~ /^(.*)/;
-		if ($arg2 eq "") {
+		if ($args eq "") {
 			error T("Error in function 'talk text' (Respond to NPC)\n" .
 				"You must specify a string.\n");
 		} else {
-			$messageSender->sendTalkText($talk{'ID'}, $arg2);
+			$messageSender->sendTalkText($talk{'ID'}, $args);
 		}
 
 	} elsif ($arg1 eq "cont" && !%talk) {
