@@ -31410,73 +31410,7 @@ Attack : ^77777710^000000
 Weight : ^7777770.2^000000
 Property:^777777Neutral^000000
 #
-13201#
-A small silver bullet^FFFFFF    ^000000 imbued with holy power.
-Class : ^777777Bullet^000000
-Attack : ^77777715^000000
-Weight : ^7777770.2^000000
-Property:^777777Holy^000000
-#
-13202#
-A bloody red bullet
-that may cause the
-Bleeding effect on an
-enemy by a low chance.
-Class : ^777777Bullet^000000
-Attack : ^77777730^000000
-Weight : ^7777770.2^000000
-Property:^777777Neutral^000000
-#
-13203#
-A grenade launcher
-bullet imbued with
-the Fire property.
-Class : ^777777Bullet^000000
-Attack : ^77777750^000000
-Weight : ^7777770.5^000000
-Property:^777777Fire^000000
-#
-13204#
-A grenade launcher
-bullet imbued with
-the Wind property.
-Class : ^777777Bullet^000000
-Attack : ^77777750^000000
-Weight : ^7777770.5^000000
-Property:^777777Wind^000000
-#
-13205#
-A grenade launcher
-bullet that contains
-deadly poison; has a
-low chance of inflicting^FFFFFF ^000000 the Poison status
-on enemies.
-Class : ^777777Bullet^000000
-Attack : ^77777750^000000
-Weight : ^7777770.5^000000
-Property:^777777Poison^000000
-#
-13206#
-A grenade launcher
-bullet imbued with
-the Shadow property;
-has a low chance of
-inflicting the Blind
-status on enemies.
-Class : ^777777Bullet^000000
-Attack : ^77777750^000000
-Weight : ^7777770.5^000000
-Property:^777777Shadow^000000
-#
-13207#
-A grenade launcher
-bullet imbued with
-the Water property.
-Class : ^777777Bullet^000000
-Attack : ^77777750^000000
-Weight : ^7777770.5^000000
-Property:^777777Water^000000
-#
+
 // ------------------ ???? ???? ------------------------
 13250#
 A cross shaped dagger
@@ -62115,6 +62049,7 @@ Job : ^777777All^000000
 
 5600#
 Given as a reward to creative members of the community to say 'thank you' for their help in contributing to the game.
++3 to all stats until 2-18-2016
 Class : ^777777Costume^000000
 Defense : ^7777770^000000
 Location : ^777777Upper ^000000
@@ -66472,9 +66407,9 @@ Required Level : ^77777730^000000
 Job : ^777777All jobs^000000
 #
 18858#
-A mysterious angeling balloon from LU! Live 2013.
+A mysterious angeling balloon.
 MHP + 200.
-ASPD + 1.
+ASPD + 1%.
 Class: ^777777Headgear ^000000 DEF: ^7777775 ^000000
 Location: ^777777Low ^000000 Weight: ^7777775 ^000000
 Req LV: ^7777771 ^000000
@@ -67725,64 +67660,6 @@ Job : ^777777All^000000
 A hat popularly worn in always-winter country. When worn, memories of trains and happiness faintly recollects.
 Class : ^777777Costume^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
-#
-19985#
-A crown adorned with special crystals.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
-#
-19986#
-A hat designed after a fluffy monster Lunatic.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
-#
-19987#
-A woolly hat made for warming heads, but it seems that some people wear it for fashion.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
-#
-19988#
-A crown made from Elder Branch.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
-#
-19989#
-A smooth hairband made from sheep's fur and horn. 
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Middle ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
-#
-19990#
-A hat redesigned after Rabbit-eared knit hat.
-It reminds about snow rabbit.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
-#
-19991#
-An armor made from pure white flower.
-The flowers bloom before winter and called 'message of the spring'.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
-#
-19992#
-It is so cold that white breathe is coming from the mouth.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
 Req Lvl. : ^7777771^000000
 Job : ^777777All^000000
 #
@@ -71106,4 +70983,1208 @@ Which consists of
 1 Spellflow Shadow Armor
 1 Spellflow Shadow Shield
 Weight : ^7777771^000000
+#
+
+17356#
+The Spooktober Lucky Box contains one of the following at random
+Prize Medal x2000
+Black Devil's Mask[0]
+HE Bubble Gum x7
+Amistr Bag
+Pegasus Wing Ears
+Kirin Wing
+Blood Sucker
+Banshe Master Kiss
+Batlle Muanual X3 6cnt
+Very Red Juice (Tame Item)x20
+Costume: Lady Tanee Doll
+Costume: Evil Druid Hood
+Costume: Necromancer Hood
+Transformation Scroll: Banshee x30
+Transformation Scroll: Deviruchi x30 
+#
+
+
+17461#
+The Kafra girls found a warehouse of these out back and decided to sell them early this year. Get your winter time clothes early!
+Contains one of the following by chance:
+Costume Rabbit Ear Knit Hat
+Costume Ice Wing Ear
+Costume Aura Quartz Crown
+Costume Lunatic Hat
+Costume Blue Fur Hat
+Costume Elder Crown
+Costume Mouton Life
+Costume Snow Rabbit Knit Hat
+Costume Galanthus Guard
+Costume Chilly Breath
+Weight : ^7777771^000000
+#
+
+
+
+19780#
+Cute hat for your everyday wear.
+Class : ^777777Costume^000000
+Location :  ^777777Upper ^000000Weight : ^7777770^000000
+Required lvl : ^7777771^000000
+Job : ^777777All^000000
+#
+19826#
+Earringa made with ice and extra chemicals. Why is it so chilly when you wear it?
+Class : ^777777Costume^000000
+Location :  ^777777Middle ^000000Weight : ^7777770^000000
+Required lvl : ^7777771^000000
+Job : ^777777All^000000
+#
+19985#
+A crown made with rare crystals.
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location :  ^777777Upper ^000000Weight : ^7777770^000000
+Required lvl : ^7777771^000000
+Job : ^777777All^000000
+#
+19986#
+A fluffy looking hat.
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location :  ^777777Upper ^000000Weight : ^7777770^000000
+Required lvl : ^7777771^000000
+Job : ^777777All^000000
+#
+19987#
+Warm hat for cold times. Sometimes people wear this just because it looks cool.
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location :  ^777777Upper ^000000Weight : ^7777770^000000
+Required lvl : ^7777771^000000
+Job : ^777777All^000000
+#
+19988#
+A crown made from an elder's branch.
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location :  ^777777Upper ^000000Weight : ^7777770^000000
+Required lvl : ^7777771^000000
+Job : ^777777All^000000
+#
+19989#
+A hairband made with lamb's wool and horn.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location :  ^777777Middle ^000000Weight : ^7777770^000000
+Required lvl : ^7777771^000000
+Job : ^777777All^000000
+#
+19990#
+A replica of Rabbit ear hat.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location :  ^777777Upper ^000000Weight : ^7777770^000000
+Required lvl : ^7777771^000000
+Job : ^777777All^000000
+#
+19991#
+An armor made of purified white flower.
+Some say flowers are the harbringers of Spring.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location :  ^777777Upper ^000000Weight : ^7777770^000000
+Required lvl : ^7777771^000000
+Job : ^777777All^000000
+#
+19992#
+It's so cold, even your breath is cold.
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location :  ^777777Lower ^000000Weight : ^7777770^000000
+Required lvl : ^7777771^000000
+Job : ^777777All^000000
+#
+
+17645#
+A groove pack containing many items to celebrate the holiday season..
+Always contains the followings
+1x Safe to 7 Chance Box
+2x Kit Coins
+
+Contains one of the following at random
+Turkey on your Head Hat
+HE Bubble Gum
+Choco Donut
+Costume Sleeping Kitty Cat
+Costume Arch Angel Wing
+Bloody Dead Branch x 2
+Chibi Pope Hat
++20 Basic Food Pack
+
+#
+
+17357#
+The 2015 Black Friday Lucky Box!
+
+This limited time box will only be available for a short amount of time.
+
+Contains one of the following by chance
+Battle Manual X3 5cnt
+Bloody Dead Branch 4cnt
+HE Bubble Gum 5 cnt
+Safe to 7 Chance Box 2cnt
+Witch's Pumpkin Hat
+Angeling Wooly Hat
+Rudolf Hairband
+Sunglases [1]
+Costume: Holy Marching Hat
+Costume: Lolita Ten Gallon Hat
+Costume: Romantic White Flower
+#
+
+17358#
+The 2015 Cybering Monday Groove Box!
+
+This limited time box will only be available for a short amount of time.
+
+Contains one of the following by chance
+Battle Manual X3 2cnt
+HE Battle Manual 3cnt
+Costume: Chilly Breath
+Bear Balloon
+Costume: Muschievous Fair
+Black Frame Glasses [1]
+#
+
+
+13201#
+^808080An outdated small silver bullet imbued with holy power.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 15
+Property: Holy
+Weight: 0.2
+#
+13202#
+^808080An outdated bloody red bullet that may cause the Bleeding effect on an enemy by a low chance.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 30
+Property: Neutral
+Weight: 0.2
+^FFFFFF_^000000
+A 1% chance of inflicting ^800000Bleed^000000 status on the target when dealing physical attacks.
+#
+13203#
+^808080An outdated Grenade ammunition that inflicts Fire Elemental Damage.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Grenade
+Base Attack: 50
+Property: Fire
+Weight: 0.5
+#
+13204#
+^808080An outdated Grenade ammunition that inflicts Wind Elemental Damage.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Grenade
+Base Attack: 50
+Property: Wind
+Weight: 0.5
+#
+13205#
+^808080An outdated Grenade ammunition loaded with a deadly toxin.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Grenade
+Base Attack: 50
+Property: Poison
+Weight: 0.5
+^FFFFFF_^000000
+A 5% chance of inflicting ^800000Poison^000000 status on the target when dealing physical attacks.
+#
+13206#
+^808080An outdated Grenade ammunition that inflicts Shadow Elemental Damage.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Grenade
+Base Attack: 50
+Property: Shadow
+Weight: 0.5
+^FFFFFF_^000000
+A 5% chance of inflicting ^800000Blind^000000 status on the target when dealing physical attacks.
+#
+13207#
+^808080An outdated Grenade ammunition that inflicts Water Elemental Damage.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Grenade
+Base Attack: 50
+Property: Water
+Weight: 0.5
+#
+13215#
+^808080This shell can penetrate even the thickest armor.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Shell
+Base Attack: 50
+Property: Neutral
+Weight: 0.2
+Required Level: 100
+#
+13216#
+^808080A bullet that is endowed with the power of Fire.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 40
+Property: Fire
+Weight: 0.2
+Required Level: 100
+#
+13217#
+^808080A bullet that is endowed with the power of Ice.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 40
+Property: Water
+Weight: 0.2
+Required Level: 100
+#
+13218#
+^808080A bullet that is endowed with the power of Lightning.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 40
+Property: Wind
+Weight: 0.2
+Required Level: 100
+#
+13219#
+^808080A bullet that is endowed with the power of Earth.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 40
+Property: Earth
+Weight: 0.2
+Required Level: 100
+#
+13220#
+^808080A silver bullet that is dipped in holy water.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 40
+Property: Holy
+Weight: 0.2
+Required Level: 100
+#
+13221#
+^808080A small silver bullet imbued with holy power.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 15
+Property: Holy
+Weight: 0.2
+#
+13222#
+^808080A bloody red bullet that may cause the Bleed effect on an enemy by a low chance.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 30
+Property: Neutral
+Weight: 0.2
+^FFFFFF_^000000
+A X% chance of inflicting ^800000Bleed^000000 status on the target when dealing physical attacks.
+#
+13223#
+^808080A grenade launcher sphere imbued with the Fire property.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Grenade
+Base Attack: 50
+Property: Fire
+Weight: 0.5
+#
+13224#
+^808080A grenade launcher sphere imbued with the Wind property.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Grenade
+Base Attack: 50
+Property: Wind
+Weight: 0.5
+#
+13225#
+^808080A grenade launcher sphere that contains deadly poison.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Grenade
+Base Attack: 50
+Property: Poison
+Weight: 0.5
+^FFFFFF_^000000
+A X% chance of inflicting ^800000Poison^000000 status on the target when dealing physical attacks.
+#
+13226#
+^808080A grenade launcher sphere imbued with the Shadow property.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Grenade
+Base Attack: 50
+Property: Shadow
+Weight: 0.5
+^FFFFFF_^000000
+A 5% chance of inflicting ^800000Blind^000000 status on the target when dealing physical attacks.
+#
+13227#
+^808080A grenade launcher sphere imbued with the Freeze effect.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Grenade
+Base Attack: 50
+Property: Water
+Weight: 0.5
+#
+
+28201#
+^808080This grenade launcher is named after the Southern Cross, which symbolizes death.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Grenade Launcher
+Base Attack: 480
+Property: Neutral
+Weight: 200
+Weapon Level: 3
+Required Level: 141
+Required Job: Rebellion
+^FFFFFF_^000000
+A 10% chance of casting ^0000FFLevel 1 Cross Slash^000000 on the target when dealing physical attacks.
+A 3% chance of inflicting ^800000Curse^000000 status on the target when dealing physical attacks.
+#
+28202#
+^808080This grenade launcher is named after the Southern Cross, which symbolizes death.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Grenade Launcher
+Base Attack: 480
+Property: Neutral
+Weight: 200
+Weapon Level: 3
+Required Level: 141
+Required Job: Rebellion
+^FFFFFF_^000000
+A 10% chance of casting ^0000FFLevel 1 Cross Slash^000000 on the target when dealing physical attacks.
+A 3% chance of inflicting ^800000Curse^000000 status on the target when dealing physical attacks.
+#
+13120#
+^808080A pair of guns that have a white body and a red barrel.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Revolver
+Base Attack: 150
+Property: Neutral
+Weight: 80
+Weapon Level: 3
+Required Level: 99
+Required Job: Gunslinger Jobs
+^FFFFFF_^000000
+Increases damage of ^0000FFDesperado^000000, ^0000FFFallen Angel^000000 by 20%.
+A X% chance of inflicting ^800000Ignition^000000 status on the target when dealing physical attacks.
+#
+13122#
+^808080A high-end gun whose design is focused on performance.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Revolver
+Base Attack: 200
+Property: Neutral
+Weight: 100
+Weapon Level: 3
+Required Level: 140
+Required Job: Rebellion
+^FFFFFF_^000000
+HIT + 5
+Attack Delay + 10%
+Increases damage dealt with long-ranged attacks by 30%.
+#
+13189#
+^808080This medium-size assault rifle boasts superior firepower and Accuracy.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Rifle
+Base Attack: 240
+Property: Neutral
+Weight: 120
+Weapon Level: 3
+Required Level: 105
+Required Job: Rebellion
+^FFFFFF_^000000
+HIT + 20
+CRIT + 30
+#
+13190#
+^808080This modified rifle shoots specially-treated bullets that causes the Delay effect with damage.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Rifle
+Base Attack: 260
+Property: Neutral
+Weight: 130
+Weapon Level: 3
+Required Level: 140
+Required Job: Rebellion
+^FFFFFF_^000000
+HIT + 10
+CRIT + 15
+A X% chance of casting ^0000FFLevel 1 Decrease Agility^000000 on the target when dealing physical attacks.
+#
+13192#
+^808080A shotgun whose devastating firepower is dwarfed by its miserable Accuracy.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Shotgun
+Base Attack: 400
+Property: Neutral
+Weight: 200
+Weapon Level: 3
+Required Level: 108
+Required Job: Rebellion
+^FFFFFF_^000000
+HIT - 50
+Attack Delay - 10%
+Attack Range + 5
+#
+13193#
+^808080A brother to the Shotgun Rolling Stone, this gun is equipped with a special device for additional Lightning damage.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Shotgun
+Base Attack: 280
+Property: Neutral
+Weight: 180
+Weapon Level: 3
+Required Level: 120
+Required Job: Rebellion
+^FFFFFF_^000000
+HIT - 10
+Attack Delay - 10%
+A X% chance of casting ^0000FFLevel 5 Thunder Storm^000000 on the target when dealing physical attacks.
+#
+13194#
+^808080This semi-auto shotgun provides an enhanced rate of fire at the cost of bullet damage.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Shotgun
+Attack: 250
+Property: Neutral
+Weight: 140
+Weapon Level: 3
+Required Level: 140
+Required Job: Rebellion
+^FFFFFF_^000000
+HIT - 25
+ASPD + 25%
+#
+13124#
+^808080A high-end gun whose design is focused on performance.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Revolver
+Attack: 200
+Property: Neutral
+Weight: 100
+Weapon Level: 3
+Required Level: 140
+Required Job: Rebellion
+^FFFFFF_^000000
+HIT + 5
+Attack Delay + 10%
+Increases damage dealt with long-ranged attacks by 30%.
+#
+13195#
+^808080This modified rifle shoots specially treated bullets that causes the Delay effect with damage.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Rifle
+Base Attack: 260
+Property: Neutral
+Weight: 130
+Weapon Level: 3
+Required Level: 140
+Required Job: Rebellion
+^FFFFFF_^000000
+HIT + 10
+CRIT + 15
+A X% chance of casting ^0000FFLevel 1 Decrease Agility^000000 on the target when dealing physical attacks.
+#
+13196#
+^808080This semi-auto shotgun provides an enhanced rate of fire at the cost of bullet damage.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Shotgun
+Base Attack: 250
+Property: Neutral
+Weight: 140
+Weapon Level: 3
+Required Level: 140
+Required Job: Rebellion
+^FFFFFF_^000000
+HIT - 25
+ASPD + 25%
+#
+13198#
+^808080This powerful Gatling gun has ability to shoot a volley of bullets in a fraction of a second.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Gatling Gun
+Base Attack: 250
+Property: Neutral
+Weight: 250
+Weapon Level: 4
+Required Level: 140
+Required Job: Rebellion
+^FFFFFF_^000000
+HIT - 25
+CRIT + 10
+Increases damage dealt with long-ranged attacks by 30%.
+#
+13199#
+^808080This powerful Gatling gun has ability to shoot a volley of bullets in a fraction of a second.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Gatling Gun
+Base Attack: 250
+Property: Neutral
+Weight: 250
+Weapon Level: 4
+Required Level: 140
+Required Job: Rebellion
+^FFFFFF_^000000
+HIT - 25
+CRIT + 10
+Increases damage dealt with long-ranged attacks by 30%.
+#
+28200#
+^808080This grenade launcher is praised for its great firepower.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Grenade Launcher
+Base Attack: 410
+Property: Neutral
+Weight: 240
+Weapon Level: 3
+Required Level: 110
+Required Job: Rebellion
+^FFFFFF_^000000
+A X% chance of inflicting ^800000Blind^000000, ^800000Stun^000000 status on the target when dealing physical attacks.
+#
+22744#
+^808080Contains 500 armor-piercing shells that penetrate even the thickest armor.^000000
+^FFFFFF_^000000
+^FF0000If the ammunition in your inventory exceeds over 30,000, it can be lost.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 25
+#
+22745#
+^808080Contains 500 bullets that are endowed with the power of Fire.^000000
+^FFFFFF_^000000
+^FF0000If the ammunition in your inventory exceeds over 30,000, it can be lost.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 25
+#
+22746#
+^808080Contains 500 bullets that are endowed with the power of Ice.^000000
+^FFFFFF_^000000
+^FF0000If the ammunition in your inventory exceeds over 30,000, it can be lost.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 25
+#
+22747#
+^808080Contains 500 bullets that are endowed with the power of Lightning.^000000
+^FFFFFF_^000000
+^FF0000If the ammunition in your inventory exceeds over 30,000, it can be lost.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 25
+#
+22748#
+^808080Contains 500 magic stone bullets that are endowed with the power of Earth.^000000
+^FFFFFF_^000000
+^FF0000If the ammunition in your inventory exceeds over 30,000, it can be lost.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 25
+#
+22749#
+^808080Contains bullets that are dipped in holy water.^000000
+^FFFFFF_^000000
+^FF0000If the ammunition in your inventory exceeds over 30,000, it can be lost.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 25
+#
+6747#
+^808080Standard sized gun part. Perfect for use in the production of a pistol class weapon.^000000
+^FFFFFF_^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Quest
+Weight: 0
+#
+13118#
+^808080Amateur skill. No other word to describe.^000000
+^FFFFFF_^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Pistol
+Base Attack: 0
+Property: Neutral
+Weight: 10
+Weapon Level: 1
+Required Level: 1
+Required Job: Gunslinger Jobs
+#
+13119#
+^808080Mysterious pistol made by an amateur with the aid of some magic touch from a master of gunnery.^000000
+^FFFFFF_^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Pistol
+Base Attack: 100
+Property: Neutral
+Weight: 10
+Weapon Level: 3
+Required Level: 99
+Required Job: Gunslinger Jobs
+#
+6746#
+^808080Standard sized gun part. Sadly poorly made and unusable.^000000
+^FFFFFF_^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Quest
+Weight: 0
+#
+13210#
+^808080A bullet that is made for the Slug Shot skill. It can be used as normal shot but does not give high damage. It's considerably light as a slug bullet but gives low damage.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 30
+Property: Neutral
+Weight: 25
+#
+13213#
+^808080A bullet that is made for the Slug Shot skill. It can be used as normal shot but does not give high damage. It's easy to use for Slug Shot but heavy to carry and expensive.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 30
+Property: Neutral
+Weight: 100
+#
+13212#
+^808080A bullet that is made for the Slug Shot skill. It can be used as a normal shot but does not give high damage. Since this is for Slug Shot, it's heavy but you can expect high damage.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 30
+Property: Neutral
+Weight: 75
+#
+13211#
+^808080A bullet that is made for the Slug Shot skill. It can be used as normal shot but does not give high damage.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 30
+Property: Neutral
+Weight: 50
+#
+13214#
+^808080A bullet that is made for the Slug Shot skill. It can be used as normal shot but does not give high damage. You might wonder what it is made of, because it's too expensive and heavy.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 30
+Property: Neutral
+Weight: 120
+#
+7663#
+^808080Full metal jacket, known as FMJ. Penetration will be maximized to give high damage.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0.2
+^FFFFFF_^000000
+When using ^0000FFMass Spiral^000000, this will be consumed.
+#
+7664#
+^808080Athletic type of mine that can be used for grenade launcher.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0.3
+^FFFFFF_^000000
+When using ^0000FFHowling Mine^000000, this will be consumed.
+#
+7665#
+^808080Missile for grenade launcher that has the nickname 'Evil Tail'. Trace the target and give damage.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 10
+^FFFFFF_^000000
+When using ^0000FFDragon Tail^000000, this will be consumed.
+#
+22738#
+^808080500 holy silver bullet is in it.^000000
+^FFFFFF_^000000
+^FF0000If the ammunition in your inventory exceeded over 30,000, it can be lost.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 25
+#
+13221#
+^808080Silver bullet that is holy spirit.^000000
+^FFFFFF_^000000
+Type: Ammunition
+Class: Bullet
+Base Attack: 15
+Property: Holy
+Weight: 0.2
+#
+13197#
+^808080Remodelled Gatling gun made from a common model. It's useful.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Gatling Gun
+Base Attack: 220
+Property: Neutral
+Weight: 250
+Weapon Level: 2
+Required Level: 106
+Required Job: Rebellion Jobs
+#
+
+20434#
+This gunslinger doll perches on your head.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000 Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+
+20196#
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+
+22737#
+^808080Contains 500 bullets that have a chance to cause bleeding.^000000
+^FFFFFF_^000000
+^FF0000If the ammunition in your inventory exceeds over 30,000, it can be lost.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 25
+#
+
+24198#
+A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
+Decreases DMG from Neutral property physical and magical attacks by 1%.
+If refined to +7, additionally decreases DMG from Neutral property physical and magical attacks by 1%.
+If refined to +9, additionally decreases DMG from Neutral property physical and magical attacks by 1%.
+If the set consisting of Basis Shadow Shield and Basis Shadow Armor is worn together,
+decreases DMG from Neutral property physical and magical attacks by 2%.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Shield^000000 Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24199#
+A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
+Decreases DMG from Shadow property physical and magical attacks by 1%.
+If refined to +7, additionally decreases DMG from Shadow property physical and magical attacks by 1%.
+If refined to +9, additionally decreases DMG from Shadow property physical and magical attacks by 1%.
+If the set consisting of Hallowed Shadow Shield and Hallowed Shadow Armor is worn together,
+decreases DMG from Shadow property physical and magical attacks by 2%.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Shield^000000 Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24200#
+A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
+Decreases DMG from Water property physical and magical attacks by 1%.
+If refined to +7, additionally decreases DMG from Water property physical and magical attacks by 1%.
+If refined to +9, additionally decreases DMG from Water property physical and magical attacks by 1%.
+If the set consisting of Saharic Shadow Shield and Saharic Shadow Armor is worn together,
+additionally decreases DMG from Water property physical and magical attacks by 2%.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Shield^000000 Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24201#
+A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
+Decreases DMG from Earth property physical and magical attacks by 1%.
+If refined to +7, additionally decreases DMG from Earth property physical and magical attacks by 1%.
+If refined to +9, additionally decreases DMG from Earth property physical and magical attacks by 1%.
+If the set consisting of Underneath Shadow Shield and Underneath Shadow Armor is worn together,
+additionally decreases DMG from Earth property physical and magical attacks by 2%.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Shield^000000 Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24202#
+A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
+Decreases DMG from Fire property physical and magical attacks by 1%.
+If refined to +7, additionally decreases DMG from Fire property physical and magical attacks by 1%.
+If refined to +9, additionally decreases DMG from Fire property physical and magical attacks by 1%.
+If the set consisting of Flame Shadow Shield and Flame Shadow Armor is worn together,
+additionally decreases DMG from Fire property physical and magical attacks by 2%.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Shield^000000 Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24203#
+A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
+Decreases DMG from Wind property physical and magical attacks by 1%.
+If refined to +7, additionally decreases DMG from Wind property physical and magical attacks by 1%.
+If refined to +9, additionally decreases DMG from Wind property physical and magical attacks by 1%.
+If the set consisting of Windy Shadow Shield and Windy Shadow Armor is worn together,
+additionally decreases DMG from Wind property physical and magical attacks by 2%.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Shield^000000 Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24204#
+A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
+Decreases DMG from Poison property physical and magical attacks by 1%.
+If refined to +7, additionally decreases DMG from Poison property physical and magical attacks by 1%.
+If refined to +9, additionally decreases DMG from Poison property physical and magical attacks by 1%.
+If the set consisting of Envenom Shadow Shield and Envenom Shadow Armor is worn together,
+additionally decreases DMG from Poison property physical and magical attacks by 2%.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Shield^000000 Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24205#
+A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
+Decreases DMG from Holy property physical and magical attacks by 1%.
+If refined to +7, additionally decreases DMG from Holy property physical and magical attacks by 1%.
+If refined to +9, additionally decreases DMG from Holy property physical and magical attacks by 1%.
+If the set consisting of Damned Shadow Shield and Damned Shadow Armor is worn together,
+additionally decreases DMG from Holy property physical and magical attacks by 2%.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Shield^000000 Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24206#
+A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
+Decreases DMG from Ghost property physical and magical attacks by 1%.
+If refined to +7, additionally decreases DMG from Ghost property physical and magical attacks by 1%.
+If refined to +9, additionally decreases DMG from Ghost property physical and magical attacks by 1%.
+If the set consisting of Geist Shadow Shield and Geist Shadow Armor is worn together,
+additionally decreases DMG from Ghost property physical and magical attacks by 2%.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Shield^000000 Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24207#
+A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
+Decreases DMG from Undead property physical and magical attacks by 1%.
+If refined to +7, additionally decreases DMG from Undead property physical and magical attacks by 1%.
+If refined to +9, additionally decreases DMG from Undead property physical and magical attacks by 1%.
+If the set consisting of Divine Shadow Shield and Divine Shadow Armor is worn together,
+additionally decreases DMG from Undead property physical and magical attacks by 2%.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Shield^000000 Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+
+
+
+24186#
+An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
+Increases additional physical and magical DMG inflicted on Neutral property monsters by 1%.
+Increases additional physical and magical DMG inflicted on Neutral property monsters by 1% per every 2 refine levels.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Armor^000000Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+
+24187#
+An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
+Increases additional physical and magical DMG inflicted on Shadow property monsters by 1%.
+Increases additional physical and magical DMG inflicted on Shadow property monsters by 1% per every 2 refine levels.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Armor^000000Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24188#
+An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
+Increases additional physical and magical DMG inflicted on Water property monsters by 1%.
+Increases additional physical and magical DMG inflicted on Water property monsters by 1% per every 2 refine levels.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Armor^000000Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24189#
+An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
+Increases additional physical and magical DMG inflicted on Earth property monsters by 1%.
+Increases additional physical and magical DMG inflicted on Earth property monsters by 1% per every 2 refine levels.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Armor^000000Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24190#
+An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
+Increases additional physical and magical DMG inflicted on Fire property monsters by 1%.
+Increases additional physical and magical DMG inflicted on Fire property monsters by 1% per every 2 refine levels.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Armor^000000Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24191#
+An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
+Increases additional physical and magical DMG inflicted on Wind property monsters by 1%.
+Increases additional physical and magical DMG inflicted on Wind property monsters by 1% per every 2 refine levels.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Armor^000000Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24192#
+An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
+Increases additional physical and magical DMG inflicted on Poison property monsters by 1%.
+Increases additional physical and magical DMG inflicted on Poison property monsters by 1% per every 2 refine levels.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Armor^000000Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24193#
+An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
+Increases additional physical and magical DMG inflicted on Holy property monsters by 1%.
+Increases additional physical and magical DMG inflicted on Holy property monsters by 1% per every 2 refine levels.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Armor^000000Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24194#
+An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
+Increases additional physical and magical DMG inflicted on Ghost property monsters by 1%.
+Increases additional physical and magical DMG inflicted on Ghost property monsters by 1% per every 2 refine levels.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Armor^000000Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+24195#
+An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
+Increases additional physical and magical DMG inflicted on Undead property monsters by 1%.
+Increases additional physical and magical DMG inflicted on Undead property monsters by 1% per every 2 refine levels.
+Type: ^777777Shadow equipment^000000
+Location : ^777777Armor^000000 Weight : ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+
+
+17361#
+The Shadow Resistance Box provides armor and shields that will help with resisting certain elemental types.
+Contains one of the following by chance.
+
+Basis Shadow Armor
+Hallowed Shadow Armor
+Saharic Shadow Armor
+Underneath Shadow Armor
+Flame Shadow Armor
+Windy Shadow Armor
+Envenom Shadow Armor
+Damned Shadow Armor
+Geist Shadow Armor
+Divine Shadow Armor
+Basis Shadow Shield
+Hallowed Shadow Shield
+Saharic Shadow Shield
+Underneath Shadow Shield
+Flame Shadow Shield
+Windy Shadow Shield
+Envenom Shadow Shield
+Damned Shadow Shield
+Geist Shadow Shield
+Divine Shadow Shield
+#
+
+17360#
+Holly Joliday Lucky Boxes contain one of the following at random:
+Heroic Backpack
+Skull Cap
+Black Devil Mask
+Odacious Angeling Balloon
+Isabella Brownt Ear
+Costume: Shelter Wing Ears
+Bloody Dead Branch x 4
+Mystical Amplification Scroll x 100
+lv 10 Fencer Mercenary Scroll x 30
+Boy's Pureheart x 30
+#
+
+17359#
+The Holly Joliday Crate contains 5 Holly Joliday Lucky Boxes and 1 Safe to 10 Certificate.
+
+Holly Joliday Lucky Boxes contain one of the following at random:
+Heroic Backpack
+Skull Cap
+Black Devil Mask
+Odacious Angeling Balloon
+Isabella Brownt Ear
+Costume: Shelter Wing Ears
+Bloody Dead Branch x 4
+Mystical Amplification Scroll x 100
+lv 10 Fencer Mercenary Scroll x 30
+Boy's Pureheart x 30
+#
+
+17528#
+Just in time for Christmas is our assortment of fun wintertime costume hats! For 300 points you can let it go with this stylish box. Gives one of the following at random when opened
+Costume: Pink Wool Hat
+Costume: Blue Frozen Rose
+Costume: Mint Choco Hat
+Costume: Eclipse Hat
+Costume: Water Knit Hat
+Costume: Snowman Hat
+Costume: Large Ribbon Muffler
+Costume: Blue Drooping Kitty
+Costume: Gift of Snow
+Costume: Hello Mother
+#
+
+17362#
+2015 may be nearly over but the Kafra corp has one last surprise. These items won't be back for a long time so it's the perfect time to pick up a box today!
+
+Contains one of the following at random: 
+
+Midgard Serpent Hat
+Poker Card in Mouth
+Majouros Horn
+Rolf Von Gigue the 666th
+Silver Bunny Band
+BLue Bunny Band
+Orange Bunny Band
+Violet Bunny Band
+Magic Card Album x2
+KVM Badge x 800
+Heroic Backpack
+#
+
+20235#
+A rose said to blossom only on a frozen land. It never melts down due to the special process.
+Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
+Location: ^777777Lower ^000000Weight: ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+20236#
+A hat features pretty blue color symbolizing love for mother
+Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
+Location: ^777777Upper ^000000Weight: ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+20237#
+A woolen hat made in order to stay the head warm.
+Some people wear it for their style rather than for keeping warmth.
+Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
+Location: ^777777Upper ^000000Weight: ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+20238#
+A doll made to put on a head.
+ You must be imagining if you hear a cat cry or feel something moves on your head.
+Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
+Location: ^777777Upper ^000000Weight: ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+20239#
+A large ribbon muffler
+Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
+Location: ^777777Lower ^000000Weight: ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+20240#
+A present of snow
+Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
+Location: ^777777Lower ^000000Weight: ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+20241#
+A hat modeled after Eclipse, the leader of Lunatics
+Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
+Location: ^777777Upper ^000000Weight: ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+20242#
+A costume hat modeled after the snowman called Snownow keeping the town Lutie.
+Surprisingly, snow falls on your head when you wear it.
+Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
+Location: ^777777Upper ^000000Weight: ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+20243#
+A choco mint bonnet
+Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
+Location: ^777777Upper ^000000Weight: ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+19936#
+A neatted cap with sacred water god power.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Lv. req : ^7777771^000000
+Job : ^777777All^000000
+#
+17528#
+Costama Egg 30
+^ff0000Untradable with other accounts.^000000
+Weight: ^7777771^000000
 #

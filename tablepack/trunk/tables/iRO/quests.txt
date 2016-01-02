@@ -19117,3 +19117,47 @@ Once you have completed Le Picard and His crew return to E.A.C. Rep for a reward
 62861#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
 Defeat the Pirate Captain Le Picard#
 Once you have completed Le Picard and His crew return to E.A.C. Rep for a reward.#
+
+60868#Red Lichtern Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Red Lichtern monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Red Lichtern monsters.#
+
+60869#Blue Lichtern Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Blue Lichtern monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Blue Lichtern monsters.#
+
+62866#Parcel Reward Service#SG_FEEL#QUE_NOIMAGE#
+Visit Dally Quen for your reward.#
+#
+62867#Parcel Service#SG_FEEL#QUE_NOIMAGE#
+Wait 16 hours between deliveries.#
+#
+
+62868#Parcel Service Victoria Qwest#SG_FEEL#QUE_NOIMAGE#
+Find Victoria Qwest in Comodo.#
+#
+62869#Parcel Service R I Pete#SG_FEEL#QUE_NOIMAGE#
+Find R I Pete in Niffleheim.#
+#
+62870#Parcel Service Ice Cold Austin#SG_FEEL#QUE_NOIMAGE#
+Find Ice Cold Austin in Lutie.#
+#
+62871#Parcel Service Ishmael#SG_FEEL#QUE_NOIMAGE#
+Find Ishmael in Izlude.#
+#
+62872#Parcel Service Victoria Qwest#SG_FEEL#QUE_NOIMAGE#
+Find 25 Mud Lumps for Victoria.#
+#
+62873#Parcel Service Victoria Qwest#SG_FEEL#QUE_NOIMAGE#
+Deliver the Package to B Rick and Mortah.#
+#
+62874#Parcel Service R I Pete#SG_FEEL#QUE_NOIMAGE#
+Deliver the slippers to A M Live.#
+#
+
+62875#Parcel Service Ice Cold Austin#SG_FEEL#QUE_NOIMAGE#
+Deliver 15 Well Baked Cookies to Austin's friends in Veins.#
+#
+62876#Parcel Service Ishmael#SG_FEEL#QUE_NOIMAGE#
+Deliver 20 Fishtail to Jiro in Amatsu.#
+#
