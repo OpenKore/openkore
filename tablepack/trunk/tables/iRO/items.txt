@@ -6482,7 +6482,7 @@
 17354#Stanley's_Shadow_Weapon_Box#
 17355#Stanley's_Shadow_Armor_Box#
 17356#Spooktober_Lucky_Box#
-17363#Power_Pendant_Shadow_Box#
+17363#January_Groove_Pack#
 17364#Int_Earring_Shadow_Box#
 17365#Dexterous_Weapon_Shadow_Box#
 17366#Vital_Shield_Shadow_Box#
@@ -8464,3 +8464,11 @@
 20243#Costume_Choco_Mint_Bonnet#
 19936#Costume_Gigantic_Water_Cap#
 17528#Costama_Frozen_II#
+
+24090#Stability_Shield_Shadow#
+24099#Unfreezing_Weapon_Shadow#
+24100#Unfreezing_Earing_Shadow#
+24101#Unfreezing_Pendant_Shadow#
+
+20470#Costume_Sweet_Chocolate_Hat#
+17667#Heart's_Foundation_Lucky_Box#

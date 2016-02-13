@@ -19161,3 +19161,41 @@ Deliver 15 Well Baked Cookies to Austin's friends in Veins.#
 62876#Parcel Service Ishmael#SG_FEEL#QUE_NOIMAGE#
 Deliver 20 Fishtail to Jiro in Amatsu.#
 #
+
+62877#Dally Quen Bonus Ticket#SG_FEEL#QUE_NOIMAGE#
+Visit Dally Quen for your reward.#
+#
+
+62878#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Talk with Deviling to hear out his story!#
+#
+62879#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Talk with Angeling to try and see if she prefers any particular present!#
+#
+62880#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Talk with townspeople in order to see what kind of gifts Angeling may like.#
+#
+62881#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Report to Deviling with your findings. Help him decide what gift to give!#
+#
+62882#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Help Deviling give a chocolate box to Angeling to show his feelings! Find Master Chocolatier Kevin for assistance! #
+#
+62883#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Collect 10 Candy and 50 Apple. Return to Master Chocolatier Kevin to make a chocolate box.#
+#
+62884#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Help deviling create a beautiful bouquet to give to Angeling! Report to Expert Florist Maya for assistance!#
+#
+62885#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Collect 5 Illusion_Flower and 10 Love Flower in order to make a bouquet. Return to Expert Florist Maya to make bouquet.#
+#
+62886#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Help Deviling create a Valentine's Card to give to Angeling! Seek out Master Artist Bruno for assistance!#
+#
+62887#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Kill to collect 5 Burning Heartss and 10 Slick Paper in order to make the card.#
+#
+62888#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Help Deviling talk to Angeling!#
+#
