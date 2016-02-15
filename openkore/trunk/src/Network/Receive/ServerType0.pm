@@ -24,7 +24,7 @@ use Log qw(message warning error debug);
 use Task::Wait;
 use Task::Function;
 use Task::Chained;
-use encoding 'utf8';
+use utf8;
 use Carp::Assert;
 use Scalar::Util;
 use Exception::Class ('Network::Receive::InvalidServerType', 'Network::Receive::CreationError');

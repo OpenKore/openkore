@@ -39,7 +39,7 @@ use Exporter;
 use base qw(Exporter);
 use Time::HiRes qw(time);
 use IO::Socket::INET;
-use encoding 'utf8';
+use utf8;
 use Scalar::Util;
 use File::Spec;
 

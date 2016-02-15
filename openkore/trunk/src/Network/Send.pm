@@ -26,7 +26,7 @@ package Network::Send;
 use strict;
 use Network::PacketParser; # import
 use base qw(Network::PacketParser);
-use encoding 'utf8';
+use utf8;
 use Carp::Assert;
 use Digest::MD5;
 use Math::BigInt;

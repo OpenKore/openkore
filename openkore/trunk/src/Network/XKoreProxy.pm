@@ -24,7 +24,7 @@ use base qw(Exporter);
 use Exporter;
 use IO::Socket::INET;
 use Time::HiRes qw(time usleep);
-use encoding 'utf8';
+use utf8;
 
 use Modules 'register';
 use Globals;

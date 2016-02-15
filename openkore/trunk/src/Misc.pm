@@ -27,7 +27,7 @@ use Carp::Assert;
 use Data::Dumper;
 use Compress::Zlib;
 use base qw(Exporter);
-use encoding 'utf8';
+use utf8;
 
 use Globals;
 use Log qw(message warning error debug);

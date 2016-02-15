@@ -5,7 +5,7 @@ use warnings;
 use Time::HiRes qw(sleep);
 use Bus::Server::AbstractServer;
 use base qw(Bus::Server::AbstractServer);
-use encoding 'utf8';
+use utf8;
 
 # Client state constants.
 use constant NOT_IDENTIFIED => 1;

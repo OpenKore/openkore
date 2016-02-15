@@ -22,7 +22,7 @@ use Time::HiRes qw(time);
 use Carp::Assert;
 use IO::Socket;
 use Text::ParseWords;
-use encoding 'utf8';
+use utf8;
 
 use Globals;
 use Log qw(message warning error debug);

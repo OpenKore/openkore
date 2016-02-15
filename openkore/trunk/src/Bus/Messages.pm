@@ -308,7 +308,7 @@ sub dataToValue {
 }
 
 # sub testPerformance {
-# 	use encoding 'utf8';
+# 	use utf8;
 # 	use Time::HiRes qw(time);
 # 
 # 	my $begin = time;
@@ -327,7 +327,7 @@ sub dataToValue {
 # }
 # 
 # sub testCorrectness {
-# 	use encoding 'utf8';
+# 	use utf8;
 # 	no warnings;
 # 	my $data = serialize("foo", { hello => "world", foo => "bar", int => 1234567 });
 # 	my $ID;

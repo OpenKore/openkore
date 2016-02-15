@@ -30,7 +30,7 @@ use strict;
 use Wx ':everything';
 use Wx::RichText;
 use base qw(Wx::RichTextCtrl);
-use encoding 'utf8';
+use utf8;
 
 use Globals qw(%consoleColors $interface);
 use Utils::StringScanner;
