@@ -20,7 +20,7 @@
 package Network::PacketParser;
 
 use strict;
-use encoding 'utf8';
+use utf8;
 use base qw(Exporter);
 use Carp::Assert;
 use Scalar::Util;

@@ -26,7 +26,7 @@ use strict;
 use warnings;
 no warnings 'redefine';
 use Time::HiRes qw(usleep);
-use encoding 'utf8';
+use utf8;
 
 use Modules 'register';
 use Globals qw(%config $quit);

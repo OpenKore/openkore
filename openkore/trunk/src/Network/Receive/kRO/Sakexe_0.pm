@@ -27,7 +27,7 @@ use AI;
 use Log qw(message warning error debug);
 
 # from old receive.pm
-use encoding 'utf8';
+use utf8;
 use Carp::Assert;
 use Scalar::Util;
 use Exception::Class ('Network::Receive::InvalidServerType', 'Network::Receive::CreationError');

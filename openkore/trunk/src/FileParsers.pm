@@ -24,7 +24,7 @@ use strict;
 use File::Spec;
 use Exporter;
 use base qw(Exporter);
-#use encoding 'utf8';
+#use utf8;
 use Carp;
 use Text::Balanced qw(extract_delimited);
 

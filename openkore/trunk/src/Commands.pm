@@ -23,7 +23,7 @@ use strict;
 use warnings;
 no warnings qw(redefine uninitialized);
 use Time::HiRes qw(time);
-use encoding 'utf8';
+use utf8;
 
 use Modules 'register';
 use Globals;
@@ -2844,7 +2844,7 @@ sub cmdIdentify {
 		return;
 	}
 	my (undef, $arg1) = @_;
-	if ($arg1 eq "" && defined @identifyID) {
+	if ($arg1 eq "" && @identifyID) {
 		my $msg = center(T(" Identify List "), 50, '-') ."\n";
 		for (my $i = 0; $i < @identifyID; $i++) {
 			next if ($identifyID[$i] eq "");
@@ -2854,7 +2854,7 @@ sub cmdIdentify {
 		}
 		$msg .= ('-'x50) . "\n";
 		message $msg, "list";
-	} elsif (!defined @identifyID) {
+	} elsif (!@identifyID) {
 		error T("The identify list is empty, please use the identify skill or a magnifier first.\n");
 	} elsif ($arg1 =~ /^\d+$/) {
 		if ($identifyID[$arg1] eq "") {

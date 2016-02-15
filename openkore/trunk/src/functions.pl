@@ -14,7 +14,7 @@ use IO::Socket;
 use Text::ParseWords;
 use Carp::Assert;
 use Config;
-use encoding 'utf8';
+use utf8;
 
 use Globals;
 use Modules;
@@ -265,7 +265,7 @@ sub loadDataFiles {
 	Settings::addTableFile('effects.txt', loader => [\&parseDataFile2, \%effectName], mustExist => 0);
 	Settings::addTableFile('msgstringtable.txt', loader => [\&parseArrayFile, \@msgTable], mustExist => 0);
 
-	use encoding 'utf8';
+	use utf8;
 
 	Plugins::callHook('start2');
 	eval {
