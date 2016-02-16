@@ -45,7 +45,7 @@ sub sell_result {
 
 sub sendSellComplete {
 	my ($self) = @_;
-	$self->sendToServer(pack 'C*', 0xD4, 0x09);
+	$messageSender->sendToServer(pack 'C*', 0xD4, 0x09);
 }
 
 1;
