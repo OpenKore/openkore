@@ -17,6 +17,8 @@ package Network::Receive::fRO;
 use strict;
 use base 'Network::Receive::ServerType0';
 
+use Globals qw( $messageSender );
+
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
