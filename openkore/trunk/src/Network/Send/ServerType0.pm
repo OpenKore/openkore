@@ -445,16 +445,6 @@ sub sendFriendRemove {
 	debug "Sent Remove a friend\n", "sendPacket";
 }
 
-sub sendProduceMix {
-	my ($self, $ID,
-		# nameIDs for added items such as Star Crumb or Flame Heart
-		$item1, $item2, $item3) = @_;
-
-	my $msg = pack("v5", 0x018E, $ID, $item1, $item2, $item3);
-	$self->sendToServer($msg);
-	debug "Sent Forge, Produce Item: $ID\n" , 2;
-}
-
 =pod
 sub sendGetCharacterName {
 	my ($self, $ID) = @_;

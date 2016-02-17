@@ -1779,12 +1779,16 @@ sub exp_zeny_info {
 			message TF("You gained %s zeny.\n", formatNumber($change));
 		} elsif ($change < 0) {
 			message TF("You lost %s zeny.\n", formatNumber(-$change));
-			if ($config{dcOnZeny} && $args->{val} <= $config{dcOnZeny}) {
-				$messageSender->sendQuit();
-				error (TF("Auto disconnecting due to zeny lower than %s!\n", $config{dcOnZeny}));
-				chatLog("k", T("*** You have no money, auto disconnect! ***\n"));
-				quit();
-			}
+		}
+		Plugins::callHook('zeny_change', {
+			zeny	=> $args->{val},
+			change	=> $change,
+		});
+		if ($config{dcOnZeny} && $args->{val} <= $config{dcOnZeny}) {
+			$messageSender->sendQuit();
+			error (TF("Auto disconnecting due to zeny lower than %s!\n", $config{dcOnZeny}));
+			chatLog("k", T("*** You have no money, auto disconnect! ***\n"));
+			quit();
 		}
 		$char->{zeny} = $args->{val};
 		debug "zeny: $args->{val}\n", "parseMsg";
@@ -1802,21 +1806,6 @@ sub exp_zeny_info {
 		debug("Required Job Exp: $args->{val}\n", "parseMsg");
 		message TF("BaseExp: %s | JobExp: %s\n", $monsterBaseExp, $monsterJobExp), "info", 2 if ($monsterBaseExp);
 	}
-}
-
-sub forge_list {
-	my ($self, $args) = @_;
-
-	message T("========Forge List========\n");
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 8) {
-		my $viewID = unpack('v', substr($args->{RAW_MSG}, $i, 2));
-		message "$viewID $items_lut{$viewID}\n";
-		# always 0x0012
-		#my $unknown = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
-		# ???
-		#my $charID = substr($args->{RAW_MSG}, $i+4, 4);
-	}
-	message "=========================\n";
 }
 
 # TODO: test optimized unpacking
@@ -4959,6 +4948,11 @@ sub stat_info {
 	} elsif ($args->{type} == 11) {
 		$char->{lv} = $args->{val};
 		message TF("You are now level %s\n", $args->{val}), "success";
+
+		Plugins::callHook('base_level_changed', {
+			level	=> $args->{val}
+		});
+
 		if ($config{dcOnLevel} && $char->{lv} >= $config{dcOnLevel}) {
 			message TF("Disconnecting on level %s!\n", $config{dcOnLevel});
 			chatLog("k", TF("Disconnecting on level %s!\n", $config{dcOnLevel}));
@@ -5016,6 +5010,11 @@ sub stat_info {
 	} elsif ($args->{type} == 55) {
 		$char->{lv_job} = $args->{val};
 		message TF("You are now job level %s\n", $args->{val}), "success";
+		
+		Plugins::callHook('job_level_changed', {
+			level	=> $args->{val}
+		});
+		
 		if ($config{dcOnJobLevel} && $char->{lv_job} >= $config{dcOnJobLevel}) {
 			message TF("Disconnecting on job level %s!\n", $config{dcOnJobLevel});
 			chatLog("k", TF("Disconnecting on job level %s!\n", $config{dcOnJobLevel}));

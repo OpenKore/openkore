@@ -2170,21 +2170,6 @@ sub errors {
 	}
 }
 
-sub forge_list {
-	my ($self, $args) = @_;
-
-	message T("========Forge List========\n");
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 8) {
-		my $viewID = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
-		message "$viewID $items_lut{$viewID}\n";
-		# always 0x0012
-		#my $unknown = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
-		# ???
-		#my $charID = substr($args->{RAW_MSG}, $i+4, 4);
-	}
-	message "=========================\n";
-}
-
 sub friend_list {
 	my ($self, $args) = @_;
 
@@ -5494,6 +5479,10 @@ our %stat_info_handlers = (
 
 		return unless $actor->isa('Actor::You');
 
+		Plugins::callHook('base_level_changed', {
+			level	=> $actor->{lv}
+		});
+
 		if ($config{dcOnLevel} && $actor->{lv} >= $config{dcOnLevel}) {
 			message TF("Disconnecting on level %s!\n", $config{dcOnLevel});
 			chatLog("k", TF("Disconnecting on level %s!\n", $config{dcOnLevel}));
@@ -5592,6 +5581,10 @@ our %stat_info_handlers = (
 		message sprintf($actor->verb("%s are now job level %d\n", "%s is now job level %d\n"), $actor, $actor->{lv_job}), "success", $actor->isa('Actor::You') ? 1 : 2;
 
 		return unless $actor->isa('Actor::You');
+		
+		Plugins::callHook('job_level_changed', {
+			level	=> $actor->{lv_job}
+		});
 
 		if ($config{dcOnJobLevel} && $actor->{lv_job} >= $config{dcOnJobLevel}) {
 			message TF("Disconnecting on job level %d!\n", $config{dcOnJobLevel});

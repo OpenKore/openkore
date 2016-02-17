@@ -730,15 +730,19 @@ typedef enum <unnamed-tag> {
 	if ($mustAdd) {
 		if (UNIVERSAL::isa($actor, "Actor::Player")) {
 			$playersList->add($actor);
+			Plugins::callHook('add_player_list', $actor);
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::Monster")) {
 			$monstersList->add($actor);
+			Plugins::callHook('add_monster_list', $actor);
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::Pet")) {
 			$petsList->add($actor);
+			Plugins::callHook('add_pet_list', $actor);
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::Portal")) {
 			$portalsList->add($actor);
+			Plugins::callHook('add_portal_list', $actor);
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::NPC")) {
 			my $ID = $args->{ID};
@@ -747,9 +751,11 @@ typedef enum <unnamed-tag> {
 				$actor->setName($npcs_lut{$location});
 			}
 			$npcsList->add($actor);
+			Plugins::callHook('add_npc_list', $actor);
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::Slave")) {
 			$slavesList->add($actor);
+			Plugins::callHook('add_slave_list', $actor);
 		}
 	}
 
@@ -966,6 +972,7 @@ sub actor_died_or_disappeared {
 		$portal->{disappeared} = 1;
 		$portal->{gone_time} = time;
 		$portals_old{$ID} = $portal->deepCopy();
+		Plugins::callHook('portal_disappeared', {portal => $portal});
 		$portalsList->remove($portal);
 
 	} elsif (defined $npcsList->getByID($ID)) {
@@ -974,6 +981,7 @@ sub actor_died_or_disappeared {
 		$npc->{disappeared} = 1;
 		$npc->{gone_time} = time;
 		$npcs_old{$ID} = $npc->deepCopy();
+		Plugins::callHook('npc_disappeared', {npc => $npc});
 		$npcsList->remove($npc);
 
 	} elsif (defined $petsList->getByID($ID)) {
@@ -981,6 +989,7 @@ sub actor_died_or_disappeared {
 		debug "Pet Disappeared: " . $pet->name . " ($pet->{binID})\n", "parseMsg";
 		$pet->{disappeared} = 1;
 		$pet->{gone_time} = time;
+		Plugins::callHook('pet_disappeared', {pet => $pet});
 		$petsList->remove($pet);
 
 	} elsif (defined $slavesList->getByID($ID)) {
@@ -2227,6 +2236,21 @@ sub quest_active {
 	, "info";
 
 	$questList->{$args->{questID}}->{active} = $args->{active};
+}
+
+sub forge_list {
+	my ($self, $args) = @_;
+
+	message T("========Forge List========\n");
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 8) {
+		my $viewID = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
+		message "$viewID $items_lut{$viewID}\n";
+		# always 0x0012
+		#my $unknown = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
+		# ???
+		#my $charID = substr($args->{RAW_MSG}, $i+4, 4);
+	}
+	message "=========================\n";
 }
 
 1;
