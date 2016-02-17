@@ -1003,17 +1003,6 @@ sub sendCardMerge {
 # 0x018c,29
 # 0x018d,-1
 
-# 0x018e,10,producemix,2:4:6:8
-sub sendProduceMix {
-	my ($self, $ID,
-		# nameIDs for added items such as Star Crumb or Flame Heart
-		$item1, $item2, $item3) = @_;
-
-	my $msg = pack('v5', 0x018E, $ID, $item1, $item2, $item3);
-	$self->sendToServer($msg);
-	debug "Sent Forge, Produce Item: $ID\n" , 2;
-}
-
 # 0x018f,6
 
 # 0x0190,90,useskilltoposinfo,2:4:6:8:10
