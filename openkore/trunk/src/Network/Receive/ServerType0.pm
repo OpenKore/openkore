@@ -3559,6 +3559,7 @@ sub npc_image {
 	} else {
 		debug "NPC image: $imageName ($args->{type})\n", "parseMsg";
 	}
+	$talk{image} = $imageName;
 }
 
 sub npc_sell_list {
@@ -3645,7 +3646,7 @@ sub npc_talk {
 
 	$talk{ID} = $args->{ID};
 	$talk{nameID} = unpack 'V', $args->{ID};
-	$talk{msg} = bytesToString ($args->{msg});
+	my $msg = bytesToString ($args->{msg});
 
 =pod
 	my $newmsg;
@@ -3661,6 +3662,11 @@ sub npc_talk {
 
 	# Remove RO color codes
 	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
+	$msg =~ s/\^[a-fA-F0-9]{6}//g;
+ 
+	# Prepend existing conversation.
+	$talk{msg} .= "\n" if $talk{msg};
+	$talk{msg} .= $msg;
 
 	$ai_v{npc_talk}{talk} = 'initiated';
 	$ai_v{npc_talk}{time} = time;
@@ -3672,7 +3678,7 @@ sub npc_talk {
 						name => $name,
 						msg => $talk{msg},
 						});
-	message "$name: $talk{msg}\n", "npc";
+	message "$name: $msg\n", "npc";
 }
 
 sub npc_talk_close {
