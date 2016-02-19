@@ -197,6 +197,16 @@ sub iterate {
 		my $step = $self->{steps}[0];
 		my $npcTalkType = $ai_v{npc_talk}{talk};
 
+		while ( $step =~ /^if~\/(.*?)\/,(.*)/i ) {
+			my ( $regex, $code ) = ( $1, $2 );
+			if ( "$talk{msg}:$talk{image}" =~ /$regex/s ) {
+				$step = $code;
+			} else {
+				shift @{ $self->{steps} };
+				$step = $self->{steps}->[0];
+			}
+		}
+
 		if ($step =~ /^w(\d+)/i) {
 			# Wait x seconds.
 			my $time = $1;
