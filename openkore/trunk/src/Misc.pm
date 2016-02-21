@@ -2340,7 +2340,7 @@ sub sendMessage_send {
 			msg => $msg,
 			user => $user
 		);
-		push @lastpm, {%lastpm};
+		push @lastpm, {%lastpm} if ($user !~ '#\w+');
 		$sender->sendPrivateMsg($user, $msg);
 	} elsif ($type eq "k") {
 		$sender->injectMessage($msg);

@@ -12,41 +12,54 @@
 package Network::Send::kRO::RagexeRE_2011_08_16a;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2010_11_24a);
+use base qw(Network::Send::kRO::RagexeRE_2010_12_28a);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
+#		'0361' => undef,
 		'0202' => ['actor_look_at', 'v C', [qw(head body)]],#5
-		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
-		'023B' => ['friend_request', 'a*', [qw(username)]],#26
-		'02C4' => undef,
-		'035F' => ['sync', 'V', [qw(time)]],#6
-		'0817' => undef,
-		'0360' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
-		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],#6
-		'0363' => undef,
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
-		'0365' => undef,
-		'0366' => undef,
-		'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		'0436' => undef,
+		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
+#		'0202' => undef,
+		'023B' => ['friend_request', 'a*', [qw(username)]],#26
+#		'0360' => undef,
+		'035F' => ['sync', 'V', [qw(time)]],#6
+#		'0817' => undef,
+		'0360' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
+#		'022D' => undef,
+		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0363' => undef,
+		'0362' => ['item_drop', 'v2', [qw(index amount)]],#6
+		'0365' => undef,
+		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+#		'0369' => undef,
+		'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
+#		'0437' => undef,
+		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
+#		'035F' => undef,
 		'0437' => ['character_move', 'a3', [qw(coords)]],#5
+		'0366' => undef,
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
+#		'0362' => undef,
 		'07E4' => ['item_take', 'a4', [qw(ID)]],#6
+#		'0364' => undef,
 		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'02C4' => undef,
 		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
+#		'0438' => undef,
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
+#		'0368' => undef,
 		'08AD' => ['actor_info_request', 'a4', [qw(ID)]],#6
-		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],#10
+#		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],#10
 		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
+#		'0815' => undef,
 		'0817' => ['buy_bulk_closeShop'],#2
 		'0811' => undef,
 		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
+
 		);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
