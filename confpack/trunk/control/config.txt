@@ -410,19 +410,14 @@ homunculus_teleportAuto_totalDmg 0
 homunculus_teleportAuto_totalDmgInLock 0
 homunculus_teleportAuto_attackedWhenSitting 0
 
-# intimacyMax / Min sets a threshhold of when not to feed your homunculus
-# If intimacy is HIGHER than the minimum or LOWER/EQUAL to the max, we wont feed.
-homunculus_intimacyMax 999
-homunculus_intimacyMin 911
-
 # Turn on/off homunculus autofeeding
 homunculus_autoFeed 1
+# Feed homunculus when meet the hunger value (homunculus_hunger > homunculus_return)
+homunculus_hunger 15
+# Return homunculus when meet the hunger value
+homunculus_return 11
 # In Wich maps should we allow feeding? (leave empty for any map)
 homunculus_autoFeedAllowedMaps
-
-# Feed homunculus between MIN and MAX value (example: between 11 and 25)
-homunculus_hungerMin 11
-homunculus_hungerMax 24
 
 # Turn on/off pet autofeeding
 pet_autoFeed 1
