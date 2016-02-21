@@ -132,7 +132,7 @@ sub iterate {
 			}
 
 			if ($target && $target->{statuses}->{EFFECTSTATE_BURROW}) {
-				$self->setError(NPC_NOT_FOUND, TF("NPC is hidden."));
+				$self->setError(NPC_NOT_FOUND, T("NPC is hidden."));
 				$target = undef;
 			}
 

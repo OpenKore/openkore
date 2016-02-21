@@ -5551,7 +5551,7 @@ sub vending_start {
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
 	my $display = center(" $shop{title} ", 79, '-') . "\n" .
-		T("#  Name                                        Type         Amount        Price\n");
+		T("#  Name                                   Type            Amount          Price\n");
 	for (my $i = 8; $i < $msg_size; $i += 22) {
 		my $number = unpack("v1", substr($msg, $i + 4, 2));
 		my $item = $articles[$number] = {};
@@ -5569,7 +5569,7 @@ sub vending_start {
 		debug ("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
 
 		$display .= swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<  @>>>>>  @>>>>>>>>>z",
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<  @>>>>  @>>>>>>>>>>>z",
 			[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, formatNumber($item->{price})]);
 	}
 	$display .= ('-'x79) . "\n";

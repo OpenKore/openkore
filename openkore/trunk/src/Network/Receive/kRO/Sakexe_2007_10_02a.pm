@@ -81,14 +81,22 @@ sub battleground_score {
 sub main_chat {
 	my ($self, $args) = @_;
 	my $message = bytesToString($args->{message});
+	stripLanguageCode(\$message);
+	$message =~ s/.$//;
 	my ($domain, $chatMsgUser, $chatMsg);
 	if (($domain, $chatMsgUser, $chatMsg) = $message =~ /\[(.*)\] (.*?): (.*)/) {
 		$chatMsgUser =~ s/ $//;
-		stripLanguageCode(\$chatMsg);
 		$message = "[$domain] $chatMsgUser: $chatMsg";
 	} 
 	chatLog("M", "$message\n") if ($config{logSystemChat});
 	message "$message\n", "schat";
+
+	Plugins::callHook('packet_mainChat', {
+		accountID => $args->{accountID},
+		MsgColor => $args->{color},
+		MsgUser => $chatMsgUser,
+		Msg => $chatMsg,
+	});
 }
 
 =pod

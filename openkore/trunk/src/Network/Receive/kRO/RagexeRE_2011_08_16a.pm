@@ -16,31 +16,27 @@
 package Network::Receive::kRO::RagexeRE_2011_08_16a;
 
 use strict;
-use base qw(Network::Receive::kRO::RagexeRE_2010_11_24a);
+use base qw(Network::Receive::kRO::RagexeRE_2010_12_28a);
 use Globals qw(%charSvrSet %timeout);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		#'08B9' => ['account_id', 'x4 a4 x2', [qw(accountID)]], # 12
-		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]],
-		'08CA' => ['cashitem', 'v3 a*', [qw(len amount tabcode itemInfo)]],#-1
-		'08CA' => ['cash_shop_list', 'v3 a*', [qw(len amount tabcode itemInfo)]],#-1
 		'082D' => ['received_characters_info', 'x2 C5 x20 a*', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
 		'0845' => ['cash_shop_open_result', 'v2', [qw(cash_points kafra_points)]],#10
 		'0849' => ['cash_shop_buy_result', 'V s V', [qw(item_id result updated_points)]],#16
-		
+		'0856' => ['actor_exists', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
+		'0857' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
+		'0858' => ['actor_moved', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # standing provided by try71023
+		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]],
+		'08CA' => ['cash_shop_list', 'v3 a*', [qw(len amount tabcode itemInfo)]],#-1
 	);
 
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
-	my %handlers = qw(
-		account_id 08B9
-	);
-	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 

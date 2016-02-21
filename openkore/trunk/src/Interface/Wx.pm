@@ -88,6 +88,7 @@ sub OnInit {
 		['initialized',                         sub { $self->onInitialized(@_); }],
 		['ChatQueue::add',                      $onChat],
 		['packet_selfChat',                     $onChat],
+		['packet_mainChat',                     $onChat],
 		['packet_privMsg',                      $onChat],
 		['packet_sentPM',                       $onChat],
 		['mainLoop_pre',                        sub { $self->onUpdateUI(); }],
@@ -1397,6 +1398,8 @@ sub onChatAdd {
 	} elsif ($hook eq "packet_selfChat") {
 		# only display this message if it's a real self-chat
 		$self->{chatLog}->add("[$tmpdate[2]:$tmpdate[1]] $params->{user}: $params->{msg}\n", "selfchat") if ($params->{user});
+	} elsif ($hook eq "packet_mainChat") {
+		$self->{chatLog}->add("[$tmpdate[2]:$tmpdate[1]] $params->{MsgUser}: $params->{Msg}\n", "schat") if ($params->{MsgUser});
 	} elsif ($hook eq "packet_privMsg") {
 		$self->{chatLog}->add("([$tmpdate[2]:$tmpdate[1]] From: $params->{privMsgUser}): $params->{privMsg}\n", "pm");
 	} elsif ($hook eq "packet_sentPM") {
