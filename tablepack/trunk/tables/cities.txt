@@ -92,3 +92,6 @@ rentb7.rsw#House 07#
 city.rsw#The main city#
 n_castle.rsw#NGuild#
 Hyrule.rsw#Hyrule#
+quiz_00.rsw#Desafio das Perguntas#
+bliss.rsw#Bliss, Hidden Village#
+ra_temsky.rsw#Pope's Room (Sky Garden)#

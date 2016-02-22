@@ -291,6 +291,8 @@ pinCode 1
 
 ## http://www.raggame.ru/
 [Russia - rRO-Renewal]
+dead 1
+dead_message rRO was closed on 16 November 2015.
 ip 109.105.144.106
 port 6900
 version 112112
@@ -471,7 +473,6 @@ serverType kRO_RagexeRE_2009_11_04a
 serverEncoding Western
 addTableFolders translated/kRO_english;kRO
 
-
 # this is for XKore 2 client only, it won't affect XKore 2 server
 # configure serverType, serverEncoding, charBlockSize according to your server
 [XKore 2]
@@ -483,33 +484,32 @@ addTableFolders translated/kRO_english;kRO
 charBlockSize
 clientHash 0123456789abcdef0123456789abcdef
 
-
-# clientside: kRO_RagexeRE_2010_11_09a (RMS-2012-06-20.exe)
-# serverside: ? (eAthena Version SVN r15067:15135M)
-[RMS Test Server]
-ip 69.197.158.197
+[RMS Renewal Test Server]
+# http://play.ratemyserver.net
+ip 69.197.167.236
 port 6900
-private 1
+version 51
 master_version 2
-version 20
-serverType kRO_RagexeRE_2010_08_03a
+serverType kRO_RagexeRE_2014_10_22b
 serverEncoding Western
-charBlockSize 132
-addTableFolders pserver/RMS;eA;translated/kRO_english;kRO
+charBlockSize 147
+addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
+#clientHash 6e1d7aae3838cd7aec434cd10ef861e9
+clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
+pinCode 1
 
-# clientside: kRO_RagexeRE_2010_11_09a (RMS-2012-06-20.exe)
-# serverside: ? (eAthena Version SVN r15067:15135M)
-[RMS Test Server 3rd Job]
-ip 69.197.158.197
+[RMS Pre-Re Test Server]
+# http://play.ratemyserver.net
+ip 69.197.167.236
 port 6901
-private 1
+version 51
 master_version 2
-version 20
-serverType kRO_RagexeRE_2010_08_03a
+serverType kRO_RagexeRE_2014_10_22b
 serverEncoding Western
-charBlockSize 132
-addTableFolders pserver/RMS;eA;translated/kRO_english;kRO
-
+charBlockSize 147
+addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
+clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
+pinCode 1
 
 # clientside: ? (2010-01-26aRagexeRE.exe)
 # serverside: ?
