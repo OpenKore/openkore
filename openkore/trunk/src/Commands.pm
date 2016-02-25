@@ -2744,7 +2744,7 @@ sub cmdHelp {
 	my @unknown;
 	my @found;
 
-	my @commands = (@commands_req)? @commands_req : (sort keys %descriptions);
+	my @commands = (@commands_req)? @commands_req : (sort keys %descriptions, grep { $customCommands{$_}->{desc} } keys %customCommands);
 
 #	my ($message,$cmd);
 
@@ -2793,7 +2793,7 @@ sub cmdHelp {
 		error T("Type 'help' to see a list of all available commands.\n");
 	}
 	$msg .= ('='x79) . "\n" unless @commands_req;
-	message $msg, "list" unless @commands_req;
+	message $msg, "list" if $msg;
 }
 
 sub helpIndent {
