@@ -47,7 +47,6 @@ use lib 'src';
 use Exporter;
 use base qw(Exporter);
 use Carp::Assert;
-use UNIVERSAL qw(isa);
 use FindBin qw($RealBin);
 use Getopt::Long;
 use File::Path qw/make_path/;
