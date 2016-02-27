@@ -29,7 +29,6 @@ use strict;
 use warnings;
 use Time::HiRes qw(time sleep);
 use Exception::Class ('Plugin::LoadException', 'Plugin::DeniedException');
-use UNIVERSAL;
 
 use Modules 'register';
 use Globals;

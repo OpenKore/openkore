@@ -15,7 +15,6 @@ package Utils::Assert;
 use strict;
 use Carp::Assert;
 use Exporter;
-use UNIVERSAL;
 use Scalar::Util qw(blessed);
 use base qw(Exporter);
 
