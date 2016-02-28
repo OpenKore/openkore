@@ -1,8 +1,0 @@
-####################################
-# Merchant Options
-####################################
-sellAuto 0
-sellAuto_npc
-sellAuto_distance 5
-
-

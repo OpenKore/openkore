@@ -1,5 +1,0 @@
-<?php
-
-$fallback = 'ru';
-
-?>

@@ -1,2 +1,0 @@
-wxHideConsole 1
-ipc 0

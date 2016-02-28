@@ -1,0 +1,27 @@
+# Debug logs
+config.log
+errors.txt
+logs
+
+
+# Auto generated files
+*.pyc
+*.dist
+*.o
+*.os
+.sconf_temp
+.sconsign.dblite
+src/test/consoleui-test
+src/auto/XSTools/PaddedPackets/PaddedPackets.xs.cpp
+src/auto/XSTools/PathFinding/PathFinding.xs.cpp
+src/auto/XSTools/Translation/Translation.xs.cpp
+src/auto/XSTools/XSTools.so
+src/auto/XSTools/libXSTools.so
+src/auto/XSTools/misc/fastutils.cpp
+src/auto/XSTools/misc/misc.c
+src/auto/XSTools/unix/unix.cpp
+src/auto/XSTools/utils/perl/Benchmark.cpp
+src/auto/XSTools/utils/perl/HttpReader.cpp
+src/auto/XSTools/utils/perl/Rijndael.xs.cpp
+src/auto/XSTools/utils/perl/Whirlpool.c
+src/test/http-reader-test

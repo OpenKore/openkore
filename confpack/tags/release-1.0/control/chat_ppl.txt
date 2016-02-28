@@ -1,2 +1,0 @@
-# control\chat_ppl.txt
-# This file is auto-generated, do not change

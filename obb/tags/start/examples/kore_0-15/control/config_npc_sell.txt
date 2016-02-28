@@ -1,8 +1,0 @@
-####################################
-# Merchant Options
-####################################
-sellAuto 1
-sellAuto_npc prt_in 126 76
-sellAuto_distance 5
-
-

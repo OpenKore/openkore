@@ -1,4 +1,0 @@
-# Growing UP!!
-statsAddAuto 0
-statsAddAuto_list 11dex 11vit 11str 11agi 21vit 21dex 31vit 21str 31dex 71vit 51str 99vit 87str
-
