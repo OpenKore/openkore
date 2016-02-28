@@ -1,0 +1,12 @@
+Hello!
+
+The OpenKore project is migrating from SVN to Git and changing sites to GitHub.
+
+The SVN repository here on SourceForge is now in read-only mode.
+
+You can find more information on the following pages:
+
+http://openkore.com/index.php/Git
+http://forums.openkore.com/viewtopic.php?f=0&t=211255
+https://github.com/openkore
+
