@@ -1,9 +1,0 @@
-####################################
-# Merchant Options
-####################################
-#buyAuto Red Potion {
-#	npc prt_in 126 76 
-#	distance 5
-#	minAmount 5
-#	maxAmount 200
-#}

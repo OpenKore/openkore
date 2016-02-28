@@ -1,5 +1,0 @@
-1 Petrified
-2 Frozen
-3 Stunned
-4 Sleeping
-6 Petrifying

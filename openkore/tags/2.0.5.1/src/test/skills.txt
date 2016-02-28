@@ -1,3 +1,0 @@
-1 NV_BASIC Basic Skill
-5 SM_BASH Bash
-34 AL_BLESSING Blessing

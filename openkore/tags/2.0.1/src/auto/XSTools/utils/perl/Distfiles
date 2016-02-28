@@ -1,4 +1,0 @@
-typemap
-Benchmark.xs
-HttpReader.xs
-Whirlpool.xs
