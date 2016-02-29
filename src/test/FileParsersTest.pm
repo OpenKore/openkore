@@ -61,7 +61,7 @@ sub start {
 			parseDataFile_lc('pickupitems.txt', \%pickupitems);
 			
 			is(pickupitems(NOT_CONFIGURED_ITEM), 1, 'all');
-			is(pickupitems($_), 2, $_) for @{$item_names_part[0]};
+			is(pickupitems($_), 2, $_) for grep {!/Bowman Scroll 1/} @{$item_names_part[0]};
 			is(pickupitems($_), -1, $_) for @{$item_names_part[1]};
 		};
 	}}
