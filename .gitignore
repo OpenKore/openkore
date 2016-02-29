@@ -1,6 +1,7 @@
 # Debug logs
 config.log
 errors.txt
+benchmark-results.txt
 logs
 
 
