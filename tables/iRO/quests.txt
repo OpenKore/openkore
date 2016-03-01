@@ -1,0 +1,4 @@
+!include quests-official.txt
+!include quests-openkore.txt
+
+# Any additional local modifications go after this line.

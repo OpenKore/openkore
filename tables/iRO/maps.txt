@@ -1,0 +1,4 @@
+!include maps-official.txt
+!include maps-openkore.txt
+
+# Any additional local modifications go after this line.
