@@ -60,6 +60,7 @@ lhz_in01.rsw#Rekenber Corporation Headquarters#
 lhz_in02.rsw#Inside Lighthalzen#
 lhz_in03.rsw#Inside Lighthalzen#
 einbroch.rsw#Einbroch, the City of Steel#
+einbech.rsw#Einbech, the mining village#
 ein_in01.rsw#Inside Einbroch#
 jawaii.rsw#Jawaii, the Honeymoon Island#
 jawaii_in.rsw#Inside Jawaii#
@@ -77,8 +78,20 @@ xmas_in.rsw#Inside Lutie#
 xmas.rsw#Lutie, Snow Village#
 xmas_x.rsw#Lutie, the Snow Village#
 moc_para01.rsw#Eden land#
+moc_paraup.rsw#Eden Upstairs#
+mid_camp.rsw#Rune Midgard Allied Forces Post#
+splendide.rsw#Forest Village Splendide#
+spl_in01.rsw#Inside Splendide 01#
+spl_in02.rsw#Inside Splendide 02#
+malangdo.rsw#Malangdo Island#
+mal_in01.rsw#Inside Malangdo 01#
+mal_in02.rsw#Inside Malangdo 02#
 malaya.rsw#Port Malaya#
 ma_in01.rsw#Inside of Malaya#
+mora.rsw#Mora Village#
+dicastes01.rsw#El Dicastes, the Sapha Capital#
+dicastes02.rsw#Dicastes Diel#
+dic_in01.rsw#Inside of El Dicastes#
 malangdo.rsw#Malangdo Island#
 mal_in01.rsw#Inside Malangdo Island 1#
 mal_in02.rsw#Inside Malangdo Island 2#
