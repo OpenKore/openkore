@@ -14,7 +14,7 @@
 package Network::Send::ServerType18;
 
 use strict;
-use Globals qw($char $syncSync $net %config);
+use Globals qw($char $syncSync $net %config $masterServer);
 use Network::Send::ServerType11;
 use Network::PaddedPackets;
 use base qw(Network::Send::ServerType0);

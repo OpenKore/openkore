@@ -16,7 +16,6 @@ my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest Rijnd
 	FileParsersTest
 	NetworkTest
 	FieldTest
-	eAthenaTest
 );
 if ($^O eq 'MSWin32') {
 	push @tests, qw(HttpReaderTest);

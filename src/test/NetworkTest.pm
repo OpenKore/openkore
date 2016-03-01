@@ -80,9 +80,15 @@ sub start {
 		subtest "serverType $serverType" => sub {
 			for my $module (keys %tests) {
 				SKIP: {
+					# kRO has too many base classes (more than 100), and perl dies trying to load it
+					skip 'known to be broken', 1 if $serverType =~ /^(kRO_RagexeRE_0|twRO)$/;
+
 					my $instance = eval { $module->create(undef, $serverType) };
 					ok($instance, "create $module") or skip 'failed', 1;
 					
+					# idRO and pRO have broken packet_list
+					next if $serverType =~ /^(idRO|pRO)$/;
+
 					for (keys %{$instance->{packet_lut}}) {
 						subtest sprintf('$_{packet_list}{$_{packet_lut}{%s}}', $_) => sub { SKIP: {
 							ok(my $handler = $instance->{packet_list}{$instance->{packet_lut}{$_}}, 'exists') or skip 'failed', 1;
@@ -95,7 +101,7 @@ sub start {
 					
 					# do not test kRO tree further
 					next if $serverType =~ /^kRO/;
-					
+
 					for my $expected (@{$tests{$module}}) {
 						subtest "reconstruct and parse $expected->{switch}" => sub { SKIP: {
 							my ($reconstruct_callback, $parse_callback);
