@@ -1,5 +1,5 @@
 all 9 9 9 9 9
-501 2 3 4 5 6
+Red Potion 2 3 4 5 6
 Apple 2 3 4 5 6
 MoNsTeR's FeEd 2 3 4 5 6
 Caixinha "Noite Feliz" 2 3 4 5 6
