@@ -1,0 +1,4 @@
+!include items-official.txt
+!include items-openkore.txt
+
+# Any additional local modifications go after this line.
