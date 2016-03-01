@@ -1,0 +1,4 @@
+!include skillnametable-official.txt
+!include skillnametable-openkore.txt
+
+# Any additional local modifications go after this line.
