@@ -1,3 +1,6 @@
+# Spelling fixes.
+7144#Potion_Creation_Guide#
+
 # Disambiguate items with identical names.
 # There are a lot of these, but not all of them are actually used by the game.
 664#Gift_Box_(Red)#
