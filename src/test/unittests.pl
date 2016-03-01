@@ -8,7 +8,9 @@ use lib "$RealBin/../deps";
 use List::MoreUtils;
 
 use Test::More qw(no_plan);
-my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest RijndaelTest
+my @tests = qw(
+    Utils::TextReaderTest
+	CallbackListTest ObjectListTest ActorListTest WhirlpoolTest RijndaelTest
 	SetTest SkillTest InventoryListTest
 	ItemsTest
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
@@ -25,8 +27,10 @@ if ($^O eq 'MSWin32') {
 @tests = @ARGV if (@ARGV);
 foreach my $module (@tests) {
 	$module =~ s/\.pm$//;
+	my $file = $module;
+	$file =~ s{::}{/}g;
 	eval {
-		require "${module}.pm";
+		require "$file.pm";
 	};
 	if ($@) {
 		$@ =~ s/\(\@INC contains: .*?\) //s;
