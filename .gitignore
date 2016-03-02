@@ -26,3 +26,8 @@ src/auto/XSTools/utils/perl/HttpReader.cpp
 src/auto/XSTools/utils/perl/Rijndael.xs.cpp
 src/auto/XSTools/utils/perl/Whirlpool.c
 src/test/http-reader-test
+
+# Auto-generated files.
+tables/**/portalsLOS.txt
+tables/**/npcs.txt
+tables/**/monsters.txt
