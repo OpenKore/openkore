@@ -1,0 +1,5 @@
+parent A
+!include child.txt
+parent B
+!include child/a.txt
+parent C
