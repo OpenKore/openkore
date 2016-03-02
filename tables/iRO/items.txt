@@ -1,4 +1,6 @@
+# Please don't modify this file. Make any changes in items-custom.txt instead.
+
 !include items-official.txt
 !include items-openkore.txt
 
-# Any additional local modifications go after this line.
+!include_create_if_missing items-custom.txt
