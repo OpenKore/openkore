@@ -1,4 +1,6 @@
+# Please don't modify this file. Make any changes in maps-custom.txt instead.
+
 !include maps-official.txt
 !include maps-openkore.txt
 
-# Any additional local modifications go after this line.
+!include_create_if_missing maps-custom.txt

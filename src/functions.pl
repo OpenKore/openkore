@@ -238,7 +238,7 @@ sub loadDataFiles {
 	Settings::addTableFile('portals.txt',
 		loader => [\&parsePortals, \%portals_lut]);
 	Settings::addTableFile('portalsLOS.txt',
-		loader => [\&parsePortalsLOS, \%portals_los]);
+		loader => [\&parsePortalsLOS, \%portals_los], mustExist => 0);
 	Settings::addTableFile('sex.txt',
 		loader => [\&parseDataFile2, \%sex_lut]);
 	Settings::addTableFile('SKILL_id_handle.txt',

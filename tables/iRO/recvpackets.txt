@@ -1,4 +1,6 @@
+# Please don't modify this file. Make any changes in recvpackets-custom.txt instead.
+
 !include recvpackets-official.txt
 !include recvpackets-openkore.txt
 
-# Any additional local modifications go after this line.
+!include_create_if_missing recvpackets-custom.txt

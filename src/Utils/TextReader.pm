@@ -71,14 +71,18 @@ sub DESTROY {
 #
 # Add a file to the list of files to be processed. Files are processed in a LIFO manner.
 sub add {
-	my ( $self, $file ) = @_;
+	my ( $self, $file, $options ) = @_;
 
 	if ( grep { $_->{file} eq $file } @{ $self->{files} } ) {
 		IOException->throw( TF( 'File [%s] cannot include itself.', $file ) );
 	}
 
 	my $handle;
-	if (! -e $file) {
+	if (! -e $file && $options->{create_if_missing}) {
+		if (!open($handle, '>', $file)) {
+			IOException->throw( TF( 'File [%s] cannot be created: $!', $file, $! ) );
+		}
+	} elsif (! -e $file) {
 		FileNotFoundException->throw( TF( 'File [%s] does not exist.', $file ) );
 	} elsif (!open($handle, "<", $file)) {
 		IOException->throw(error => $!);
@@ -153,6 +157,13 @@ sub readLine {
 		my ( $vol, $dir ) = File::Spec->splitpath( $self->{files}->[-1]->{file} );
 		$file = File::Spec->catpath( $vol, $dir, $file );
 		$self->add( $file );
+		$line = $self->readLine;
+	}
+	if ( $line =~ /^\s*!include_create_if_missing\s+(.*?)\s*$/os ) {
+		my $file = $1;
+		my ( $vol, $dir ) = File::Spec->splitpath( $self->{files}->[-1]->{file} );
+		$file = File::Spec->catpath( $vol, $dir, $file );
+		$self->add( $file, { create_if_missing => 1 } );
 		$line = $self->readLine;
 	}
 
