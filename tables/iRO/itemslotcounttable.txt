@@ -1,4 +1,0 @@
-!include itemslotcounttable-official.txt
-!include itemslotcounttable-openkore.txt
-
-# Any additional local modifications go after this line.

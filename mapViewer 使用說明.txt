@@ -1,0 +1,63 @@
+#mapViewer - OpenKore 地圖顯示器
+
+********
+功能介紹
+
+*	顯示人物所在的地圖和坐標
+*	點擊地圖取得坐標
+*	OpenKore多開支援
+
+********
+程序需求
+
+1.	.NET framework 4.0
+
+1a.	下載點: https://www.microsoft.com/zh-tw/download/details.aspx?id=17718
+
+********
+安裝教學
+
+1.	請將mapViewer.exe 放置在OpenKore資料夾內 (與start.exe同一資料夾)。
+
+
+********
+使用教學
+
+1.	執行OpenKore (start.exe)。
+2.	執行mapViewer.exe。
+3.	等待人物進入伺服器後按[重新整理]。
+4.	下拉人物選擇欄並選取你需要觀看的人物。
+4.1.	如顯示 找不到OpenKore，請確認人物已進入伺服器及檔案執行權限問題。
+5.	點擊地圖拿取坐標。
+
+********
+疑難排解
+
+Q1.	檔案無法執行，該怎麼辦?
+
+A1.	程序需求.NET framework 4.0，請確定已安裝好。
+
+Q2.	人物選擇欄一直顯示 找不到OpenKore，該怎魔辦?
+
+A2.	請嘗試按[重新整理]，並確定人物已進入地圖。如果問題仍然存在，請嘗試使用系統管理員執行mapViewer程序。
+
+Q3.	人物選擇了，但地圖空白，該怎麼辦?
+
+A3.	mapViewer程序只會辨認fields資料夾的，所以請將程序放置於OpenKore資料夾內 (與start.exe同一資料夾)。
+
+Q4.	這裡找不到我的問題，該怎麼辦?
+
+A4.	那麻煩你到我們的Facebook專頁或OPTW論壇發問了阿。
+
+********
+聯絡資料
+********
+
+Facebook 專頁: https://www.facebook.com/openkoretw
+
+OPTW論壇: http://optw.nva-hk.com
+Ro露天市集: http://ro.nva-hk.com
+
+OpenKore 英文官方站: http://www.openkore.com
+
+Copyright windhamwong, OpenKore

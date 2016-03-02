@@ -1,4 +1,0 @@
-!include recvpackets-official.txt
-!include recvpackets-openkore.txt
-
-# Any additional local modifications go after this line.

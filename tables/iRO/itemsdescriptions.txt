@@ -1,4 +1,0 @@
-!include itemsdescriptions-official.txt
-!include itemsdescriptions-openkore.txt
-
-# Any additional local modifications go after this line.

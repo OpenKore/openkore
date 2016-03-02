@@ -1,6 +1,0 @@
-You're probably most interested in the function process_data()
-in processing.c. It processes packets received from a client.
-So that function is where you should look when you want to extend the
-protocol.
-
-main() in dataserver.c is where data files are loaded.

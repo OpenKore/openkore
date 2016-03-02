@@ -1,3 +1,0 @@
-KNOWN BUGS:
-FUTURE FEATURES:Finish mATK code (weapons and equipment)
-IDEAS:Extend to allow use with non cast skills, finish implementing casting between you and target.
