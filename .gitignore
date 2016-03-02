@@ -4,6 +4,14 @@ errors.txt
 benchmark-results.txt
 logs
 
+# Backup files
+*~
+.#*
+*.old
+*.bak
+*.BAK
+*.orig
+*.rej
 
 # Auto generated files
 *.pyc
