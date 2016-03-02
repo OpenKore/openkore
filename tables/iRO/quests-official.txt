@@ -19199,3 +19199,28 @@ Kill to collect 5 Burning Heartss and 10 Slick Paper in order to make the card.#
 62888#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
 Help Deviling talk to Angeling!#
 #
+
+
+9335#Search for shards of Gigantes#SG_FEEL#QUE_NOIMAGE#
+Message from ^8B4513Professor Bernhard ^000000: I ask that you enter the ^0000FF fissure of time^000000 and bring back shards of Gigantes.#
+Obtained shard from Ancient Gigantes. #
+
+9336#Go back to Professor Bernhard#SG_FEEL#QUE_NOIMAGE#
+Message from ^8B4513 Professor Bernhard^000000: I donꆯt have enough shards to create powerful weapons, come back when there is enough energy to open the dimensional door.#
+Reunited after 7 days.#
+
+9337#Wrapping up the Adventure#SG_FEEL#QUE_NOIMAGE#
+Talk to ^8B4513Fenrir^000000 and go back to time fissure Professor Bernhard.. #
+Reunite with Professor Bernhard.#
+
+15050#Memorial Dungeon: Airship Assault#SG_FEEL#QUE_NOIMAGE#
+Entry to dungeon is prohibited after 23 hours of entry. Entry is possible after the deadline written below.#
+Reentry within 23 hours is not permitted#
+
+15051#Memorial Dungeon: Airship Assault#SG_FEEL#QUE_NOIMAGE#
+Reentry is possible for 5 minutes after entering dungeon. Entry is possible starting from the deadline written below.#
+Reentry possible within 5 minutes after entry#
+
+15052#Memorial Dungeon: Airship Assault#SG_FEEL#QUE_NOIMAGE#
+Dungeon has been cleared within 5 minutes of entry so entry to dungeon is prohibited for 23 hours.#
+Reentry within 23 hours is not permitted#
