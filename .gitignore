@@ -26,3 +26,12 @@ src/auto/XSTools/utils/perl/HttpReader.cpp
 src/auto/XSTools/utils/perl/Rijndael.xs.cpp
 src/auto/XSTools/utils/perl/Whirlpool.c
 src/test/http-reader-test
+
+# Local modifications of official files.
+tables/iRO/items-custom.txt
+tables/iRO/itemsdescriptions-custom.txt
+tables/iRO/itemslotcounttable-custom.txt
+tables/iRO/maps-custom.txt
+tables/iRO/quests-custom.txt
+tables/iRO/recvpackets-custom.txt
+tables/iRO/skillnametable-custom.txt
