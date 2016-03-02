@@ -72285,3 +72285,175 @@ Location: Upper Weight: 30
 Required Level: 50
 Jobs: All
 #
+
+
+
+//----hero trail 3
+28310#
+^808080Sarah's left earring. It might help you to use Sarah's power if worn.^000000
+^FFFFFF_^000000
+^ff0000Account Bound^000000
+^FFFFFF_^000000
+Type: Accessory 
+DEF: 0
+Weight: 0
+Required Level: 145
+Required Job: All classes
+^FFFFFF_^000000
+Enables to use skill Heal Lv.1.
+#
+28311#
+^808080Sarah's right earring. It might help you to use Sarah's power if worn.^000000
+^FFFFFF_^000000
+^ff0000Account Bound^000000
+^FFFFFF_^000000
+Type: Accessory 
+DEF: 0
+Weight: 0
+Required Level: 145
+Required Job: All classes
+^FFFFFF_^000000
+Enables to use skill Teleport Lv.1.
+#
+15121#
+^808080The robe once worn by Sarah, enstilling mystical power.^000000
+^FFFFFF_^000000
+Type: Armor
+DEF: 35
+Weight: 80
+Required Level: 145
+Required Job: All classes
+^FFFFFF_^000000
+When using magic attacks has a small chance of increasing mATK by 8*the refine level of the robe for a short period of time.
+#
+4610#
+Type: Card
+Slot Into: Armor
+Weight: 1
+^FFFFFF_^000000
+If the user receives damage greater than their current maximum HP amount, this card will decrease the damage received by a large amount.
+#
+4939#
+CRI +2
+#
+4940#
+CRI +4
+#
+4941#
+CRI +6
+#
+4942#
+Perfect Dodge +3
+#
+4943#
+Perfect Dodge +4
+#
+4944#
+Perfect Dodge +5
+#
+4945#
+SP Cost -2%
+#
+4946#
+SP Cost -4%
+#
+4947#
+SP Cost -6%
+#
+4948#
+Delay after Skill -2%
+#
+4949#
+Delay after Skill -4%
+#
+4950#
+Delay after Skill -6%
+#
+6803#
+^808080Piece of Ancient Gigantes type monster. Maybe a researcher of some kind would see value in it.^000000
+Weight: ^7777771^000000
+#
+
+19914#
+^808080Airship Captain Felrockꆮs Hat^000000
+^FFFFFF_^000000
+Type: Costume
+Location: Upper
+Weight: 0
+Required Level: 1
+Required Job: All
+#
+15116#
+Armor worn by traveler riding the Airship. 
+It is an object robbed by monsters during the Airship attack incident.
+
+refining impossible, Trade impossible.
+If equipped together with Airship armor, Airship cloak, Airship boots, MaxHP + 25%, MaxSP + 25%, unlimited movement acceleration.
+Type : ^777777Armor^000000    Defense : ^777777100^000000
+Weight : ^7777770^000000
+Required Level : ^777777125^000000
+Job : ^777777All^000000
+
+MaxHP + 1000, MaxSP + 100, MDEF + 10.
+All State + 1.
+#
+20743#
+Cloak worn by traveler riding the Airship.
+It is an object robbed by monsters during the Airship attack incident.
+Nothing tolerance 10% increase, Flee + 20, Floating Casting 20% decrease.
+refining impossible, Trade impossible.
+Type : ^777777Robe^000000  Defense : ^77777725^000000
+Weight : ^7777770^000000
+Required Level : ^777777125^000000
+Job : ^777777All^000000
+#
+22046#
+Boots worn by traveler riding the Airship.
+It is an object robbed by monsters during the Airship attack incident.
+AGI + 1.
+Attack rate increase (Delay after attack 10% reduction).
+refining impossible, Trade impossible.
+Type : ^777777Shoes^000000  Defense : ^77777726^000000
+Weight : ^7777770^000000
+Required Level : ^777777125^000000
+Job : ^777777All^000000
+#
+15117#
+Airship captain Felrockꆮs possessions.
+Resolved the airship attack incident and acquired as a trophy.
+MaxHP + 500, MaxSP + 50, MDEF + 10.
+All State + 1.
+If 7 refined, MaxHP + 500, MaxSP + 50.
+If 9 refined, MaxHP + 200, MaxSP + 20.
+If 12 refined, MaxHP + 300, MaxSP + 30.
+If equipped together with Felrockꆮs Armor, Felrockꆮs Cloak, Felrockꆮs Boots, MaxHP + 25%, MaxSP + 25%, unlimited movement acceleration, if total refined is 30 or over, additional MaxHP + 5%, MaxSP + 5%.
+Type : ^777777Armor^000000    Defense : ^77777770^000000
+Weight : ^77777775^000000
+Required Level : ^777777125^000000
+Job : ^777777All^000000
+#
+20744#
+Airship captain Felrockꆮs possessions.
+Resolved the airship attack incident and acquired as a trophy.
+Neutral tolerance 10% increase, Flee + 20.
+Floating Casting 10% decrease.
+If 7 refined, Variable Cast time 10% decrease.
+If 9 refined, Variable Cast time 10% decrease.
+If 12 refined, Variable Cast time 5% decrease.
+Type : ^777777Robe^000000    Defense : ^77777712^000000
+Weight : ^77777740^000000
+Required Level : ^777777125^000000
+Job : ^777777All^000000
+#
+22047#
+Airship captain Felrockꆮs possessions.
+Resolved the airship attack incident and acquired as a trophy.
+AGI + 1, Attack rate increase (Delay after attack 5% reduction).
+If 7 refined, AGI + 1, Delay after attack extra 5% decrease
+If 9 refined, AGI + 1, Delay after attack extra 5% decrease
+If 12 refined, ASPD + 1.
+Type : ^777777Shoes^000000    Defense : ^77777713^000000
+Weight : ^77777725^000000
+Required Level : ^777777125^000000
+Job : ^777777All^000000
+#
