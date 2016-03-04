@@ -437,6 +437,19 @@ sub loadByHandle {
 	} else {
 		$filename = $object->{name};
 	}
+
+	# If we should auto-create this file, do so.
+	# Prefer the default folder, which is the last folder in the list of folders.
+	if ( ( !defined( $filename ) || !-f $filename ) && $object->{createIfMissing} ) {
+		my @dirs = $object->{type} == CONTROL_FILE_TYPE ? @controlFolders : @tablesFolders;
+		my $dir = ( grep { -d $_ } @dirs )[-1];
+		my $fp;
+		if ( $dir && open $fp, '>>', "$dir/$object->{name}" ) {
+			close $fp;
+			$filename = "$dir/$object->{name}";
+		}
+	}
+
 	if (!defined($filename) || ! -f $filename) {
 		return unless $object->{mustExist};
 		
@@ -684,6 +697,7 @@ sub _addFile {
 		type => $type,
 		name => $name,
 		mustExist  => exists($options{mustExist}) ? $options{mustExist} : 1,
+		createIfMissing => $options{createIfMissing},
 		autoSearch => exists($options{autoSearch}) ? $options{autoSearch} : 1,
 		onLoaded => exists($options{onLoaded}) ? $options{onLoaded} : undef,
 		internalName => exists($options{internalName}) ? $options{internalName} : undef,
