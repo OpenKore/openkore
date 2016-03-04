@@ -431,13 +431,15 @@ sub loadByHandle {
 	my $internalFilename = $object->{internalName} || $object->{name};
 
 	#hooks of type 'pre_load_' make it possible to change the filename before openkore searches for it (this filename must contain file name and file path)
-	my %pre_load = (internalFilename => $internalFilename, filename => \$filename);
-	Plugins::callHook('pre_load_'.$internalFilename, \%pre_load);
-	if (!$pre_load{return} && $object->{autoSearch} && $object->{type} == CONTROL_FILE_TYPE) {
+	my $pre_load = {internalFilename => $internalFilename, filename => $filename};
+	Plugins::callHook('pre_load_'.$internalFilename, $pre_load);
+	if ($pre_load->{return}) {
+		 $filename = $pre_load->{filename};
+	} elsif ($object->{autoSearch} && $object->{type} == CONTROL_FILE_TYPE) {
 		$filename = _findFileFromFolders($object->{name}, \@controlFolders);
-	} elsif (!$pre_load{return} && $object->{autoSearch} && $object->{type} == TABLE_FILE_TYPE) {
+	} elsif ($object->{autoSearch} && $object->{type} == TABLE_FILE_TYPE) {
 		$filename = _findFileFromFolders($object->{name}, \@tablesFolders);
-	} elsif (!$pre_load{return} && !$object->{autoSearch}) {
+	} elsif (!$object->{autoSearch}) {
 		$filename = $object->{name};
 	}
 
