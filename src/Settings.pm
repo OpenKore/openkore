@@ -428,26 +428,17 @@ sub loadByHandle {
 	assert(defined $object) if DEBUG;
 
 	my $filename;
-	my $internalFilename;
-	if ($object->{'autoSearch'}) {
-		$internalFilename = $object->{'name'};
-	} else {
-		$internalFilename = $object->{'internalName'};
-	}
+	my $internalFilename = $object->{internalName} || $object->{name};
 
 	#hooks of type 'pre_load_' make it possible to change the filename before openkore searches for it (this filename must contain file name and file path)
 	my %pre_load = (internalFilename => $internalFilename, filename => \$filename);
 	Plugins::callHook('pre_load_'.$internalFilename, \%pre_load);
-	unless ($pre_load{return}) {
-		if ($object->{autoSearch}) {
-			if ($object->{type} == CONTROL_FILE_TYPE) {
-				$filename = _findFileFromFolders($object->{name}, \@controlFolders);
-			} else {
-				$filename = _findFileFromFolders($object->{name}, \@tablesFolders);
-			}
-		} else {
-			$filename = $object->{name};
-		}
+	if (!$pre_load{return} && $object->{autoSearch} && $object->{type} == CONTROL_FILE_TYPE) {
+		$filename = _findFileFromFolders($object->{name}, \@controlFolders);
+	} elsif (!$pre_load{return} && $object->{autoSearch} && $object->{type} == TABLE_FILE_TYPE) {
+		$filename = _findFileFromFolders($object->{name}, \@tablesFolders);
+	} elsif (!$pre_load{return} && !$object->{autoSearch}) {
+		$filename = $object->{name};
 	}
 
 	# If we should auto-create this file, do so.
