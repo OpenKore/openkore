@@ -3,7 +3,7 @@ package Git;
 use strict;
 use warnings;
 
-use IO::Uncompress::Inflate qw( inflate );
+use Compress::Zlib;
 
 sub detect_git {
     my ( $file ) = @_;
@@ -15,9 +15,20 @@ sub detect_git {
     my $head_file = open( $fp, '<', "$git_dir/HEAD" ) && <$fp> =~ /ref: (.*)/ && $1;
     return if !$head_file;
 
-    my $sha = open( $fp, '<', "$git_dir/$head_file" ) && <$fp>;
+    # The SHA may be in its own file in .git/refs/heads (the normal case), or it may be in .git/packed-refs (right after `git gc`).
+    my $sha;
+    if ( open $fp, '<', "$git_dir/$head_file" ) {
+        $sha = <$fp>;
+        close $fp;
+        chomp $sha;
+    } elsif ( open $fp, '<', "$git_dir/packed-refs" ) {
+        while ( <$fp> ) {
+            ( $sha ) = /^(\w+) \Q$head_file\E$/;
+            last if $sha;
+        }
+        close $fp;
+    }
     return if !$sha;
-    chomp $sha;
 
     my $timestamp = commit_timestamp( git_get_commit( $git_dir, $sha ) );
 
@@ -44,8 +55,8 @@ sub git_get_commit {
     my $loose_path = sprintf '%s/objects/%s/%s', $git_dir, substr( $sha, 0, 2 ), substr $sha, 2;
     if ( -f $loose_path ) {
         open my $fp, '<', $loose_path;
-        my $out = '';
-        inflate( $fp, \$out );
+        my $out = git_inflate( $fp );
+        close $fp;
         return $out;
     }
 
@@ -106,10 +117,15 @@ sub git_get_commit {
 sub git_inflate {
     my ( $fp ) = @_;
 
-    my $data = '';
-    inflate( $fp, \$data );
+    my $inflate = inflateInit();
 
-    $data;
+    my $out = '';
+    my $buf = '';
+    while ( !length $buf && read $fp, $buf, 2048 ) {
+        $out .= $inflate->inflate( $buf );
+    }
+
+    $out;
 }
 
 sub git_commit_date {
