@@ -8472,3 +8472,29 @@
 
 20470#Costume_Sweet_Chocolate_Hat#
 17667#Heart's_Foundation_Lucky_Box#
+
+//---- hero trail 3
+28310#Sarah's_Left_Earring#
+28311#Sarah's_Right_Earring#
+15121#Sarah's_Battle_Robe#
+4610#Sarah_Card#
+4939#CRI_Lv2#
+4940#CRI_Lv3#
+4941#CRI_Lv4#
+4942#Parrying_Lv1#
+4943#Parrying_Lv2#
+4944#Parrying_Lv3#
+4945#Economy_Lv1#
+4946#Economy_Lv2#
+4947#Economy_Lv3#
+4948#After_Skill_Delay_Lv1#
+4949#After_Skill_Delay_Lv2#
+4950#After_Skill_Delay_Lv3#
+6803#Shard_of_Gigantes#
+19914#Felrockꆮs_Hat#
+15116#Airshipꆮs_Armor#
+20743#Airshipꆮs_Cloak#
+22046#Airshipꆮs_Boots#
+15117#Felrockꆮs_Armor#
+20744#Felrockꆮs_Cloak#
+22047#Felrockꆮs_Boots#

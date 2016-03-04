@@ -1,4 +1,4 @@
-//-- ГЦБѕ°»ЅЕ їААь 11:13 2013-04-23 є»ј­№ц
+//-- 쏖솾낻뷅 뿀샼 11:13 2013-04-23 못벭맶
 
 
 // Izlude tutorial map
@@ -859,3 +859,60 @@ morocc_mem.rsw#Memory of Morroc#
 payon_mem.rsw#Memory of Payon#
 moc_paraup.rsw#Inside of Paradise Group Building in Morroc 2nd floor#
 
+//냸벺샼 TE 몹믧룊 
+te_prt_gld.rsw#Gloria#
+te_prtcas01.rsw#Gaebolg#
+te_prtcas02.rsw#Richard#
+te_prtcas03.rsw#Wigner#
+te_prtcas04.rsw#Heine#
+te_prtcas05.rsw#Nerious#
+teg_dun01.rsw#Subterranean Guild Dungeon#
+te_alde_gld.rsw#Kafragarten#
+te_aldecas1.rsw#Leilah#
+te_aldecas2.rsw#Pavianne#
+te_aldecas3.rsw#Jasmine#
+te_aldecas4.rsw#Roxie#
+te_aldecas5.rsw#Curly Sue#
+teg_dun02.rsw#Subterranean Guild Dungeon#
+
+//냭벺룞룰뢮뻳듸샼
+gl_cas02_.rsw#2nd Hall#
+gl_chyard_.rsw#Churchyard#
+2@gl_k.rsw#1st floor of Old Glast Heim Chivalry#
+1@gl_k.rsw#2nd floor of Old Glast Heim Chivalry#
+
+//Hero's trail
+1@face.rsw#Faceworm's Nest#
+1@sara.rsw#Sara's Memory#
+dali.rsw#Dimensional Gap#
+
+//뾵뿵샇죧샻
+dali02.rsw#Dimensional Gap#
+1@tnm1.rsw#Masin Tower Top floor#
+1@tnm2.rsw#Masin Tower Top floor#
+1@tnm3.rsw#Morocc Castle's basement#
+1@ge_st.rsw#Geffen Magic  Competition#
+1@gef.rsw#Geffen Magic  Competition#
+1@gef_in.rsw#Geffen Magic  Competition#
+1@spa.rsw#Palace of Ghost#
+
+1@def01.rsw#Wave Dungeon - forest#
+
+//뷃냨얾뎪샌욮룞뻮듸샼
+c_tower2_.rsw#Clock Town of twisted time 2nd floor#
+c_tower3_.rsw#Clock Town of twisted time 3rd floor#
+
+//EP.14.3
+moro_vol.rsw#Flame Basin#
+moro_cav.rsw#Flame cave#
+1@dth1.rsw#Bios Island#
+1@dth2.rsw#Bios Island#
+1@dth3.rsw#Bios Island#
+1@rev.rsw#Mors Cave#
+1@eom.rsw#Masin war#
+1@jtb.rsw#Jitterbug of Nightmare#
+
+// 뾵뿵샇 죧샻3
+1@glast.rsw#Old Glastheim#
+1@air1.rsw#Aircraft#
+1@air2.rsw#Aircraft#

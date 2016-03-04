@@ -734,7 +734,7 @@ GC_CREATENEWPOISON#ew_Poison_Creation#
 GC_ANTIDOTE#Anti_Dote#
 GC_POISONINGWEAPON#Poisonous_Weapon#
 GC_WEAPONBLOCKING#Weapon_Blocking#
-GC_COUNTERSLASH#īCounter_Slash#
+GC_COUNTERSLASH#쒫Counter_Slash#
 GC_WEAPONCRUSH#Weapon_Crush#
 GC_VENOMPRESSURE#Venom_Pressure#
 GC_POISONSMOKE#Poisonous_Smoke#
