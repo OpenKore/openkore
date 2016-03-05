@@ -1,1 +1,0 @@
-# OpenKore modifications to maps-official.txt go here.

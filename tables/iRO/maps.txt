@@ -1,4 +1,9 @@
-!include maps-official.txt
-!include maps-openkore.txt
+# Please don't modify this file. Make any changes in maps-custom.txt instead.
 
-# Any additional local modifications go after this line.
+# Include file from official client.
+!include official/maps.txt
+
+# OpenKore modifications to the official client file go here.
+
+# Include untracked local modifications.
+!include_create_if_missing maps-custom.txt
