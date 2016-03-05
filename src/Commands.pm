@@ -3287,7 +3287,7 @@ sub cmdMove {
 				# map
 				$map_or_portal =~ s/^(\w{3})?(\d@.*)/$2/; # remove instance. is it possible to move to an instance? if not, we could throw an error here
 				# TODO: implement Field::sourceName function here once they are implemented there - 2013.11.26
-				my $file = $map_or_portal.'.fld.gz';
+				my $file = $map_or_portal.'.fld';
 				$file = File::Spec->catfile($Settings::fields_folder, $file) if ($Settings::fields_folder);
 				$file .= ".gz" if (! -f $file); # compressed file
 				if ($maps_lut{"${map_or_portal}.rsw"}) {
@@ -4025,10 +4025,12 @@ sub cmdPortalList {
 		#Command: portals add y_airport 143 43 y_airport 148 51 0 c r0 c r0
 		print $args."TEST\n";
 		my ($srcMap, $srcX, $srcY, $dstMap, $dstX, $dstY, $seq) = $args =~ /^add ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3}) ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3})(.*)$/; #CHECKING
-		my $srcfile = $srcMap.'.fld.gz';
+		my $srcfile = $srcMap.'.fld';
 		$srcfile = File::Spec->catfile($Settings::fields_folder, $srcfile) if ($Settings::fields_folder);
-		my $dstfile = $dstMap.'.fld.gz';
+		$srcfile .= ".gz" if (! -f $srcfile); # compressed file
+		my $dstfile = $dstMap.'.fld';
 		$dstfile = File::Spec->catfile($Settings::fields_folder, $dstfile) if ($Settings::fields_folder);
+		$dstfile .= ".gz" if (! -f $dstfile); # compressed file
 		print "GOOD\n" if (-f $srcfile && -f $dstfile);
 		if ($srcX > 0 && $srcY > 0 && $dstX > 0 && $dstY > 0
 			&& -f $srcfile && -f $dstfile) { #found map and valid corrdinates	
