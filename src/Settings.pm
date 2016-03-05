@@ -428,13 +428,18 @@ sub loadByHandle {
 	assert(defined $object) if DEBUG;
 
 	my $filename;
-	if ($object->{autoSearch}) {
-		if ($object->{type} == CONTROL_FILE_TYPE) {
-			$filename = _findFileFromFolders($object->{name}, \@controlFolders);
-		} else {
-			$filename = _findFileFromFolders($object->{name}, \@tablesFolders);
-		}
-	} else {
+	my $internalFilename = $object->{internalName} || $object->{name};
+
+	#hooks of type 'pre_load_' make it possible to change the filename before openkore searches for it (this filename must contain file name and file path)
+	my $pre_load = {internalFilename => $internalFilename, filename => $filename};
+	Plugins::callHook('pre_load_'.$internalFilename, $pre_load);
+	if ($pre_load->{return}) {
+		 $filename = $pre_load->{filename};
+	} elsif ($object->{autoSearch} && $object->{type} == CONTROL_FILE_TYPE) {
+		$filename = _findFileFromFolders($object->{name}, \@controlFolders);
+	} elsif ($object->{autoSearch} && $object->{type} == TABLE_FILE_TYPE) {
+		$filename = _findFileFromFolders($object->{name}, \@tablesFolders);
+	} elsif (!$object->{autoSearch}) {
 		$filename = $object->{name};
 	}
 
@@ -467,12 +472,26 @@ sub loadByHandle {
 		$progressHandler->($filename, $object->{type});
 	}
 
+	#hooks of type 'load_' make it possible to change file loader so plugins can change the parsing method of a file
+	#hooks of type 'pos_load_' make it possible to manipulate the extracted data after the parsing is over for a given file or simply do something when it ends.
+	my $load = {filename => $filename};
+	my $pos_load = {filename => $filename};
 	if (ref($object->{loader}) eq 'ARRAY') {
 		my @array = @{$object->{loader}};
 		my $loader = shift @array;
-		$loader->($filename, @array);
+		$load->{args} = \@array;
+		Plugins::callHook('load_'.$internalFilename, $load);
+		unless ($load->{return}) {
+			$loader->($filename, @array);
+		}
+		$pos_load->{args} = \@array;
+		Plugins::callHook('pos_load_'.$internalFilename, $pos_load);
 	} else {
-		$object->{loader}->($filename);
+		Plugins::callHook('load_'.$internalFilename, $load);
+		unless ($load->{return}) {
+			$object->{loader}->($filename);
+		}
+		Plugins::callHook('pos_load_'.$internalFilename, $pos_load);
 	}
 
 	# Call onLoaded Handler after file beeng loaded without exceptions.
