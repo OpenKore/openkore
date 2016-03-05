@@ -474,24 +474,24 @@ sub loadByHandle {
 
 	#hooks of type 'load_' make it possible to change file loader so plugins can change the parsing method of a file
 	#hooks of type 'pos_load_' make it possible to manipulate the extracted data after the parsing is over for a given file or simply do something when it ends.
-	my %load = (filename => $filename);
-	my %pos_load = (filename => $filename);
+	my $load = {filename => $filename};
+	my $pos_load = {filename => $filename};
 	if (ref($object->{loader}) eq 'ARRAY') {
 		my @array = @{$object->{loader}};
 		my $loader = shift @array;
-		$load{args} = \@array;
-		Plugins::callHook('load_'.$internalFilename, \%load);
-		unless ($load{return}) {
+		$load->{args} = \@array;
+		Plugins::callHook('load_'.$internalFilename, $load);
+		unless ($load->{return}) {
 			$loader->($filename, @array);
 		}
-		$pos_load{args} = \@array;
-		Plugins::callHook('pos_load_'.$internalFilename, \%pos_load);
+		$pos_load->{args} = \@array;
+		Plugins::callHook('pos_load_'.$internalFilename, $pos_load);
 	} else {
-		Plugins::callHook('load_'.$internalFilename, \%load);
-		unless ($load{return}) {
+		Plugins::callHook('load_'.$internalFilename, $load);
+		unless ($load->{return}) {
 			$object->{loader}->($filename);
 		}
-		Plugins::callHook('pos_load_'.$internalFilename, \%pos_load);
+		Plugins::callHook('pos_load_'.$internalFilename, $pos_load);
 	}
 
 	# Call onLoaded Handler after file beeng loaded without exceptions.
