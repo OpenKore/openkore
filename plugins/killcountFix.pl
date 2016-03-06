@@ -37,6 +37,8 @@ sub onAdd {
 	
 	if (exists $quests_kill_count{$args->{'questID'}} && exists $quests_kill_count{$args->{'questID'}}{$args->{'mobID'}}) {
 		$questList->{$args->{'questID'}}{'missions'}{$args->{'mobID'}}{'goal'} = $quests_kill_count{$args->{'questID'}}{$args->{'mobID'}};
+		message "[killcountFix] New mission without goal. Quest id: '".$args->{'questID'}."' | Mob id: '".$args->{'mobID'}."'\n", "system";
+		message "[killcountFix] Guessing goal is '".$quests_kill_count{$args->{'questID'}}{$args->{'mobID'}}."'\n", "system";
 	}
 	
 	return;
@@ -76,8 +78,8 @@ sub updateQuestsKillcount {
 
 	$quests_kill_count{$questID}{$mobID} = $goal;
 
-	warning "Updating quests_killcount.txt to add new info\n";
-	warning "Adding goal of ".$goal." to mobID ".$mobID." in quest ".$questID."\n";
+	message "[killcountFix] Updating file to add new info\n", "system";
+	message "[killcountFix] Adding goal of ".$goal." to mobID ".$mobID." in quest ".$questID."\n", "system";
 
 	open REWRITE, ">:utf8", $file;
 	print REWRITE to_json(\%quests_kill_count, {utf8 => 1, pretty => 1, canonical => 1});
