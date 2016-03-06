@@ -38,7 +38,7 @@ sub onAdd {
 	if (exists $quests_kill_count{$args->{'questID'}} && exists $quests_kill_count{$args->{'questID'}}{$args->{'mobID'}}) {
 		$questList->{$args->{'questID'}}{'missions'}{$args->{'mobID'}}{'goal'} = $quests_kill_count{$args->{'questID'}}{$args->{'mobID'}};
 		message "[killcountFix] New mission without goal. Quest id: '".$args->{'questID'}."' | Mob id: '".$args->{'mobID'}."'\n", "system";
-		message "[killcountFix] Guessing goal is '".$quests_kill_count{$args->{'questID'}}{$args->{'mobID'}}."'\n", "system";
+		message "[killcountFix] Setting goal to saved info '".$quests_kill_count{$args->{'questID'}}{$args->{'mobID'}}."'\n", "system";
 	}
 	
 	return;
