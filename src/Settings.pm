@@ -79,7 +79,7 @@ our $VERSION = 'what-will-become-2.1';
 #our $SVN = T(" (SVN Version) ");
 our $WEBSITE = 'http://www.openkore.com/';
 # Translation Comment: Version String
-our $versionText = "*** $NAME ${VERSION} ( r" . (getSVNRevision() || '?') . ' ) - ' . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
+our $versionText = "*** $NAME ${VERSION} ( version " . (getGitRevision() || '?') . ' ) - ' . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
 our $welcomeText = TF("Welcome to %s.", $NAME);
 
 
@@ -179,6 +179,7 @@ sub parseArguments {
 		'interface=s',        \$interface,
 		'lockdown',           \$lockdown,
 		'help',	              \$options{help},
+		'version|v',          \$options{version},
 
 		'no-connect',         \$no_connect
 	);
@@ -217,6 +218,7 @@ sub parseArguments {
 	}
 
 	return 0 if ($options{help});
+	return 0 if ($options{version});
 	if (! -d $logs_folder) {
 		#if (!mkdir($logs_folder)) {
 		if (! make_path($logs_folder)) {
@@ -284,6 +286,7 @@ sub getUsageText {
 		--interface=NAME          Which interface to use at startup.
 		--lockdown                Disable potentially insecure features.
 		--help                    Displays this help message.
+		--version                 Displays the program version.
 
 		Developer options:
 		--no-connect              Do not connect to any servers.
@@ -570,6 +573,18 @@ sub getSVNRevision {
 	} else {
 		return;
 	}
+}
+
+##
+# int Settings::getGitRevision()
+#
+# Return OpenKore's Git revision number, or undef if that information cannot be retrieved.
+sub getGitRevision {
+    use Git;
+    my $git = Git::detect_git( $RealBin );
+    return if !$git;
+    my ( $sec, $min, $hour, $day, $month, $year ) = gmtime( $git->{timestamp} );
+    sprintf '%7.7s_%04d-%02d-%02d', $git->{sha}, $year + 1900, $month + 1, $day;
 }
 
 sub loadSysConfig {

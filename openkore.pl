@@ -104,7 +104,11 @@ sub __start {
 sub parseArguments {
 	eval {
 		if (!Settings::parseArguments()) {
-			print Settings::getUsageText();
+			if ($Settings::options{version}) {
+				print "$Settings::versionText\n";
+			} else {
+				print Settings::getUsageText();
+			}
 			exit 1;
 		}
 	};
