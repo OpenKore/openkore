@@ -15,7 +15,7 @@ use JSON;
 Plugins::register('killcountFix', 'fixes killcount quest goals on some servers', \&Unload, \&Unload);
 
 my $hooks = Plugins::addHooks(
-	['start2',                \&onstart3, undef],
+	['start2',                \&onstart2, undef],
 	['quest_mission_updated', \&onUpdate, undef],
 	['quest_mission_added',   \&onAdd,    undef]
 );
