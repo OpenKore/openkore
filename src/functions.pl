@@ -262,7 +262,6 @@ sub loadDataFiles {
 	Settings::addTableFile('skillsarea.txt', loader => [\&parseDataFile2, \%skillsArea]);
 	Settings::addTableFile('skillsencore.txt', loader => [\&parseList, \%skillsEncore]);
 	Settings::addTableFile('quests.txt', loader => [\&parseROQuestsLUT, \%quests_lut], mustExist => 0);
-	Settings::addTableFile('quests_killcount.txt', loader => [\&parseROQuestsKillcount, \%quests_kill_count], mustExist => 0);
 	Settings::addTableFile('effects.txt', loader => [\&parseDataFile2, \%effectName], mustExist => 0);
 	Settings::addTableFile('msgstringtable.txt', loader => [\&parseArrayFile, \@msgTable], mustExist => 0);
 

@@ -2153,10 +2153,13 @@ sub quest_all_mission {
 			my $mission = \%{$quest->{missions}->{$mobID}};
 			$mission->{mobID} = $mobID;
 			$mission->{count} = $count;
-			if (exists $quests_kill_count{$questID} && exists $quests_kill_count{$questID}{$mobID}) {
-				$mission->{goal} = $quests_kill_count{$questID}{$mobID};
-			}
 			$mission->{mobName} = bytesToString($mobName);
+			Plugins::callHook('quest_mission_added', {
+				questID => $questID,
+				mobID => $mobID,
+				count => $count
+				
+			});
 			debug "- $mobID $count $mobName\n", "info";
 		}
 	}
@@ -2182,10 +2185,12 @@ sub quest_add {
 		my $mission = \%{$quest->{missions}->{$mobID}};
 		$mission->{mobID} = $mobID;
 		$mission->{count} = $count;
-		if (exists $quests_kill_count{$questID} && exists $quests_kill_count{$questID}{$mobID}) {
-			$mission->{goal} = $quests_kill_count{$questID}{$mobID};
-		}
 		$mission->{mobName} = bytesToString($mobName);
+		Plugins::callHook('quest_mission_added', {
+				questID => $questID,
+				mobID => $mobID,
+				count => $count
+		});
 		debug "- $mobID $count $mobName\n", "info";
 	}
 }
@@ -2232,13 +2237,12 @@ sub quest_update_mission_hunt {
 		my $mission = \%{$quest->{missions}->{$mobID}};
 		$mission->{goal} = $goal;
 		$mission->{count} = $count;
-		
-		if (!exists $quests_kill_count{$questID}             #received questID isn't in %quests_kill_count
-		|| !exists $quests_kill_count{$questID}{$mobID}      #received mobID from quest questID isn't in %quests_kill_count
-		|| $quests_kill_count{$questID}{$mobID} != $goal) {  #received quest goal is different from %quests_kill_count
-			FileParsers::updateQuestsKillcount(Settings::getTableFilename("quests_killcount.txt"), $questID, $mobID, $goal);
-		}
-		#received quest goal is the same as in %quests_kill_count
+		Plugins::callHook('quest_mission_updated', {
+				questID => $questID,
+				mobID => $mobID,
+				count => $count,
+				goal => $goal
+		});
 	}
 }
 

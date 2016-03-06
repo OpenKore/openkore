@@ -30,11 +30,9 @@ use Text::Balanced qw(extract_delimited);
 
 use Utils;
 use Utils::TextReader;
-use Globals;
 use Plugins;
 use Log qw(warning error debug);
 use Translation qw/T TF/;
-use JSON;
 
 our @EXPORT = qw(
 	parseArrayFile
@@ -74,8 +72,6 @@ our @EXPORT = qw(
 	updatePortalLUT
 	updatePortalLUT2
 	updateNPCLUT
-	parseROQuestsKillcount
-	updateQuestsKillcount
 );
 
 
@@ -1325,30 +1321,18 @@ sub updateMonsterLUT {
 }
 
 sub updatePortalLUT {
-	my ($file, $sourceMap, $sourceX, $sourceY, $destMap, $destX, $destY) = @_;
-	
-	my $plugin_args = {file => $file, sourceMap => $sourceMap, sourceX => $sourceX, sourceY => $sourceY, destMap => $destMap, destX => $destX, destY => $destY};
-	Plugins::callHook('updatePortalLUT', $plugin_args);
-	
-	unless ($plugin_args->{return}) {
-		open FILE, ">>:utf8", $file;
-		print FILE "$sourceMap $sourceX $sourceY $destMap $destX $destY\n";
-		close FILE;
-	}
+	my ($file, $src, $x1, $y1, $dest, $x2, $y2) = @_;
+	open FILE, ">>:utf8", $file;
+	print FILE "$src $x1 $y1 $dest $x2 $y2\n";
+	close FILE;
 }
 
 #Add: NPC talk Sequence
 sub updatePortalLUT2 {
-	my ($file, $sourceMap, $sourceX, $sourceY, $destMap, $destX, $destY, $steps) = @_;
-	
-	my $plugin_args = {file => $file, sourceMap => $sourceMap, sourceX => $sourceX, sourceY => $sourceY, destMap => $destMap, destX => $destX, destY => $destY, steps => $steps};
-	Plugins::callHook('updatePortalLUT2', $plugin_args);
-	
-	unless ($plugin_args->{return}) {
-		open FILE, ">>:utf8", $file;
-		print FILE "$sourceMap $sourceX $sourceY $destMap $destX $destY $steps\n";
-		close FILE;
-	}
+	my ($file, $src, $x1, $y1, $dest, $x2, $y2, $seq) = @_;
+	open FILE, ">>:utf8", $file;
+	print FILE "$src $x1 $y1 $dest $x2 $y2 $seq\n";
+	close FILE;
 }
 
 sub updateNPCLUT {
@@ -1357,37 +1341,6 @@ sub updateNPCLUT {
 	open FILE, ">>:utf8", $file;
 	print FILE "$location $name\n";
 	close FILE;
-}
-
-sub parseROQuestsKillcount {
-    my $file = shift;
-	my $quests_kill_count_ref = shift;
-	undef %{$quests_kill_count_ref};
-
-	open FILE, "<:utf8", $file;
-	my @lines = <FILE>;
-	close(FILE);
-	chomp @lines;
-	my $jsonString = join('',@lines);
-
-	my %quests = %{from_json($jsonString, { utf8  => 1 } )};
-
-	%$quests_kill_count_ref = %quests;
-
-	return 1;
-}
-
-sub updateQuestsKillcount {
-	my ($file, $questID, $mobID, $goal) = @_;
-
-	$quests_kill_count{$questID}{$mobID} = $goal;
-
-	warning "Updating quests_killcount.txt to add new info\n";
-	warning "Adding goal of ".$goal." to mobID ".$mobID." in quest ".$questID."\n";
-
-	open REWRITE, ">:utf8", $file;
-	print REWRITE to_json(\%quests_kill_count, {utf8 => 1, pretty => 1, canonical => 1});
-	close(REWRITE);
 }
 
 1;
