@@ -2153,6 +2153,9 @@ sub quest_all_mission {
 			my $mission = \%{$quest->{missions}->{$mobID}};
 			$mission->{mobID} = $mobID;
 			$mission->{count} = $count;
+			if (exists $quests_kill_count{$questID} && exists $quests_kill_count{$questID}{$mobID}) {
+				$mission->{goal} = $quests_kill_count{$questID}{$mobID};
+			}
 			$mission->{mobName} = bytesToString($mobName);
 			debug "- $mobID $count $mobName\n", "info";
 		}
@@ -2179,6 +2182,9 @@ sub quest_add {
 		my $mission = \%{$quest->{missions}->{$mobID}};
 		$mission->{mobID} = $mobID;
 		$mission->{count} = $count;
+		if (exists $quests_kill_count{$questID} && exists $quests_kill_count{$questID}{$mobID}) {
+			$mission->{goal} = $quests_kill_count{$questID}{$mobID};
+		}
 		$mission->{mobName} = bytesToString($mobName);
 		debug "- $mobID $count $mobName\n", "info";
 	}
@@ -2218,13 +2224,22 @@ sub reconstruct_quest_update_mission_hunt_v2 {
 
 # 02B5
 sub quest_update_mission_hunt {
-   my ($self, $args) = @_;
-   my ($questID, $mobID, $goal, $count) = unpack('V2 v2', substr($args->{RAW_MSG}, 6));
-   my $quest = \%{$questList->{$questID}};
-   my $mission = \%{$quest->{missions}->{$mobID}};
-   $mission->{goal} = $goal;
-   $mission->{count} = $count;
-   debug "- $questID $mobID $count $goal\n", "info";
+	my ($self, $args) = @_;
+	my ($questID, $mobID, $goal, $count) = unpack('V2 v2', substr($args->{RAW_MSG}, 6));
+	debug "- $questID $mobID $count $goal\n", "info";
+	if ($questID) {
+		my $quest = \%{$questList->{$questID}};
+		my $mission = \%{$quest->{missions}->{$mobID}};
+		$mission->{goal} = $goal;
+		$mission->{count} = $count;
+		
+		if (!exists $quests_kill_count{$questID}             #received questID isn't in %quests_kill_count
+		|| !exists $quests_kill_count{$questID}{$mobID}      #received mobID from quest questID isn't in %quests_kill_count
+		|| $quests_kill_count{$questID}{$mobID} != $goal) {  #received quest goal is different from %quests_kill_count
+			FileParsers::updateQuestsKillcount(Settings::getTableFilename("quests_killcount.txt"), $questID, $mobID, $goal);
+		}
+		#received quest goal is the same as in %quests_kill_count
+	}
 }
 
 # 02B7

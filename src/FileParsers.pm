@@ -30,9 +30,11 @@ use Text::Balanced qw(extract_delimited);
 
 use Utils;
 use Utils::TextReader;
+use Globals;
 use Plugins;
 use Log qw(warning error debug);
 use Translation qw/T TF/;
+use JSON;
 
 our @EXPORT = qw(
 	parseArrayFile
@@ -72,6 +74,8 @@ our @EXPORT = qw(
 	updatePortalLUT
 	updatePortalLUT2
 	updateNPCLUT
+	parseROQuestsKillcount
+	updateQuestsKillcount
 );
 
 
@@ -1353,6 +1357,37 @@ sub updateNPCLUT {
 	open FILE, ">>:utf8", $file;
 	print FILE "$location $name\n";
 	close FILE;
+}
+
+sub parseROQuestsKillcount {
+    my $file = shift;
+	my $quests_kill_count_ref = shift;
+	undef %{$quests_kill_count_ref};
+
+	open FILE, "<:utf8", $file;
+	my @lines = <FILE>;
+	close(FILE);
+	chomp @lines;
+	my $jsonString = join('',@lines);
+
+	my %quests = %{from_json($jsonString, { utf8  => 1 } )};
+
+	%$quests_kill_count_ref = %quests;
+
+	return 1;
+}
+
+sub updateQuestsKillcount {
+	my ($file, $questID, $mobID, $goal) = @_;
+
+	$quests_kill_count{$questID}{$mobID} = $goal;
+
+	warning "Updating quests_killcount.txt to add new info\n";
+	warning "Adding goal of ".$goal." to mobID ".$mobID." in quest ".$questID."\n";
+
+	open REWRITE, ">:utf8", $file;
+	print REWRITE to_json(\%quests_kill_count, {utf8 => 1, pretty => 1, canonical => 1});
+	close(REWRITE);
 }
 
 1;
