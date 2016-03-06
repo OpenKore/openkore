@@ -1,1 +1,0 @@
-# OpenKore modifications to itemsdescriptions-official.txt go here.
