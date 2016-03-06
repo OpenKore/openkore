@@ -1,3 +1,5 @@
+moc_prydn1.rsw#Base da Pirâmide 01 - Pesadelo#
+moc_prydn2.rsw#Base da Pirâmide 02 - Pesadelo#
 gld_dun04.rsw#Calabouço do Feudo de Britoniah#
 gld_dun03.rsw#Calabouço do Feudo das Valquírias#
 gld_dun02.rsw#Calabouço do Feudo de Luina#
@@ -509,20 +511,20 @@ que_job01.rsw#Taverna Particular #
 abyss_01.rsw#Caverna Subterrânea do Lago do Abismo #
 abyss_02.rsw#Caverna Subterrânea do Lago do Abismo #
 abyss_03.rsw#Caverna Subterrânea do Lago do Abismo #
-tha_t01.rsw#Torre de Thanatos  Andar Inferior #
-tha_t02.rsw#Torre de Thanatos  Andar Inferior #
-tha_t03.rsw#Torre de Thanatos  Andar Inferior #
-tha_t04.rsw#Torre de Thanatos  Andar Inferior #
-tha_t05.rsw#Torre de Thanatos  Andar Superior #
-tha_t06.rsw#Torre de Thanatos  Andar Superior #
-tha_t07.rsw#Torre de Thanatos  Andar Superior #
-tha_t08.rsw#Torre de Thanatos  Andar Superior #
-tha_t09.rsw#Torre de Thanatos  Andar Superior #
-tha_t10.rsw#Torre de Thanatos  Andar Superior #
-tha_t11.rsw#Torre de Thanatos  Andar Superior #
-tha_t12.rsw#Torre de Thanatos  Andar Superior #
-thana_step.rsw#Torre de Thanatos  Andar Superior #
-thana_boss.rsw#Torre de Thanatos  Área Desconhecida #
+tha_t01.rsw#Torre de Thanatos – Andar Inferior #
+tha_t02.rsw#Torre de Thanatos – Andar Inferior #
+tha_t03.rsw#Torre de Thanatos – Andar Inferior #
+tha_t04.rsw#Torre de Thanatos – Andar Inferior #
+tha_t05.rsw#Torre de Thanatos – Andar Superior #
+tha_t06.rsw#Torre de Thanatos – Andar Superior #
+tha_t07.rsw#Torre de Thanatos – Andar Superior #
+tha_t08.rsw#Torre de Thanatos – Andar Superior #
+tha_t09.rsw#Torre de Thanatos – Andar Superior #
+tha_t10.rsw#Torre de Thanatos – Andar Superior #
+tha_t11.rsw#Torre de Thanatos – Andar Superior #
+tha_t12.rsw#Torre de Thanatos – Andar Superior #
+thana_step.rsw#Torre de Thanatos – Andar Superior #
+thana_boss.rsw#Torre de Thanatos – Área Desconhecida #
 thana_scene01.rsw#Entrada da Torre de Thanatos #
 job_soul.rsw#Seu Coração #
 job_star.rsw#O Sol, a Lua e as Estrelas #
@@ -581,7 +583,7 @@ yuno_fild10.rsw#Campos de Juno#
 kh_kiehl02.rsw#Aposentos de Kiehl#
 kh_kiehl01.rsw#Aposentos de Kiehl#
 kh_dun02.rsw#Fábrica de Robôs - Nível 2#
-kh_dun01.rsw#Fábrica de Robôs  Nível 1#
+kh_dun01.rsw#Fábrica de Robôs – Nível 1#
 kh_mansion.rsw#Mansão de Kiel Hyre#
 kh_rossi.rsw#A Mansão Rosimier#
 kh_school.rsw#Academia Kiel Hyre#
@@ -839,3 +841,21 @@ ma_zif07.rsw#Interior de Jeepney#
 ma_zif08.rsw#Interior de Jeepney#
 ma_zif09.rsw#Interior de Jeepney#
 job_ko.rsw#Lugar Escondido#
+
+//-----------WOE TE 05-26-2015----------
+te_prt_gld.rsw#Gloria#
+te_prtcas01.rsw#Gaebolg#
+te_prtcas02.rsw#Richard#
+te_prtcas03.rsw#Wigner#
+te_prtcas04.rsw#Heine#
+te_prtcas05.rsw#Nerius#
+teg_dun01.rsw#Guild basement dungeon#
+te_alde_gld.rsw#Kafra Garten#
+te_aldecas1.rsw#Sofia#
+te_aldecas2.rsw#Denise#
+te_aldecas3.rsw#Marianne#
+te_aldecas4.rsw#Bianca#
+te_aldecas5.rsw#Deborah#
+teg_dun02.rsw#Guild basement dungeon#
+//--------christmas event 2015------
+niflxmas.rsw#Deadman's land Niffelheim#
