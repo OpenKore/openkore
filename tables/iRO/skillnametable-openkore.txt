@@ -1,8 +1,0 @@
-# OpenKore modifications to skillnametable-official.txt go here.
-AB_PRAEFATIO#Praefatio#
-AB_SECRAMENT#Sacrament#
-GC_COUNTERSLASH#Counter_Slash#
-GN_MIX_COOKING#Mixed_Cooking#
-PR_STRECOVERY#Status_Recovery#
-RA_CAMOUFLAGE#Camouflage#
-RA_DETONATOR#Detonator#
