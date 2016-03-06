@@ -1,1 +1,0 @@
-# OpenKore modifications to itemslotcounttable-official.txt go here.
