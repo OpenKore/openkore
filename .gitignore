@@ -4,6 +4,9 @@ errors.txt
 benchmark-results.txt
 logs
 
+# Plugin files
+/profiles
+
 # Backup files
 *~
 .#*
