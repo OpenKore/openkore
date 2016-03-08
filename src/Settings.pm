@@ -54,6 +54,7 @@ use File::Spec;
 use Translation qw(T TF);
 use Utils::ObjectList;
 use Utils::Exceptions;
+use List::MoreUtils qw( uniq );
 
 use enum qw(CONTROL_FILE_TYPE TABLE_FILE_TYPE);
 
@@ -157,9 +158,9 @@ sub parseArguments {
 	undef $interface;
 	undef $lockdown;
 
-	local $SIG{__WARN__} = sub {
-		ArgumentException->throw($_[0]);
-	};
+	# Allow plugins to have their own command line options.
+	Getopt::Long::Configure( 'pass_through' );
+
 	GetOptions(
 		'control=s',          \$options{control},
 		'tables=s',           \$options{tables},
@@ -291,6 +292,17 @@ sub getUsageText {
 		Developer options:
 		--no-connect              Do not connect to any servers.
 	};
+	my $data = { options => [] };
+	Plugins::callHook( usage => $data );
+	if ( @{ $data->{options} } ) {
+		foreach my $plugin ( uniq sort map { $_->{plugin} || 'unknown' } @{ $data->{options} } ) {
+			$text .= "\nOptions for the '$plugin' plugin:\n";
+			foreach ( grep { $plugin eq ( $_->{plugin} || 'unknown' ) } @{ $data->{options} } ) {
+				$text .= sprintf "%-2s %-22s %s\n", $_->{short} || '', $_->{long} || '', $_->{description} || '';
+			}
+		}
+	}
+	$text =~ s/\n*$/\n/s;
 	$text =~ s/^\n//s;
 	$text =~ s/^\t\t?//gm;
 	return $text;

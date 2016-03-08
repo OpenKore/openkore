@@ -16,19 +16,33 @@ use strict;
 use File::Spec;
 use Plugins;
 use Globals qw($interface $quit);
+use Getopt::Long;
+use Settings qw( %sys );
 
-my $profile_folder = "profiles";
+our $profile_folder = "profiles";
+our $profile;
 
 return unless
 Plugins::register('profiles', 'Profiles Selector', \&on_unload);
 
 my $hooks = Plugins::addHooks(
+      ['parse_command_line', \&onParseCommandLine],
+      ['usage', \&onUsage],
       ['start', \&onStart]
    );
 
 sub on_unload {
    Plugins::delHook($hooks);
    undef $profile_folder;
+}
+
+sub onUsage {
+	my ( undef, $params ) = @_;
+	push @{ $params->{options} }, { plugin => 'profiles', long => '--profile=PROFILE', description => 'profile to use (default: prompt)' };
+}
+
+sub onParseCommandLine {
+	GetOptions( 'profile=s' => \$profile );
 }
 
 sub onStart {
@@ -46,19 +60,24 @@ sub onStart {
 
    @profiles = sort { $a cmp $b } @profiles;
 
-   my $choice = $interface->showMenu(
-         "Please choose a Profiles folder.",
-         \@profiles,
-         title => "Profiles Selector"
-      );
+	if ( $profile && !grep { $_ eq $profile } @profiles ) {
+		printf "Unknown profile [%s] requested.\n", $profile;
+		$profile = undef;
+	}
 
-   if ($choice == -1) {
-      $quit = 1;
+	if ( !$profile && @profiles ) {
+		my $choice = $interface->showMenu(	#
+			"Please choose a Profiles folder.",
+			\@profiles,
+			title => "Profiles Selector"
+		);
 
-   } else {
+		return $quit = 1 if $choice == -1;
 
-      unshift @Settings::controlFolders, File::Spec->catdir($profile_folder, $profiles[$choice]);
-   }
+		$profile = $profiles[$choice];
+	}
+
+	unshift @Settings::controlFolders, File::Spec->catdir( $profile_folder, $profile ) if $profile;
 }
 
 return 1;
