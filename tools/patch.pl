@@ -13,6 +13,8 @@ use YAML::Syck;
 
 $|++;
 
+sub ftp;
+
 my $ua = LWP::UserAgent->new;
 
 my $opt = get_options(
@@ -81,7 +83,7 @@ foreach ( reverse @$recent_patches ) {
     unlink "$file.yml";
 
     print "Downloading file [$file]... ";
-    $ua->get( $url, ':content_file' => $file );
+    ftp->get( $_ => $file );
     print "done.\n";
 
     my $time = ftp_data( $_ )->{time};
@@ -162,14 +164,13 @@ sub patch_list {
     [ grep {$_} map { m{^(\d+)\s+([^/\s]+)$} && $2 } split /[\r\n]+/, $ua->get( $opt->{list_url} )->content ];
 }
 
-sub ftp;
-
 sub ftp {
     our $ftp;
     if ( !$ftp ) {
         my $uri = URI->new( $opt->{download_base_url} );
-        $ftp = Net::FTP->new( $uri->host );
+        $ftp = Net::FTP->new( $uri->host, Passive => 1 );
         $ftp->login;
+        $ftp->binary;
         $ftp->cwd( $uri->path );
     }
     $ftp;
