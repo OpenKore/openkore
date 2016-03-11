@@ -6483,7 +6483,7 @@
 17355#Stanley's_Shadow_Armor_Box#
 17356#Spooktober_Lucky_Box#
 17363#January_Groove_Pack#
-17364#Int_Earring_Shadow_Box#
+17364#March_Groove_Pack#
 17365#Dexterous_Weapon_Shadow_Box#
 17366#Vital_Shield_Shadow_Box#
 17367#Athletic_Shoes_Shadow_Box#
@@ -8498,3 +8498,4 @@
 15117#Felrockꆮs_Armor#
 20744#Felrockꆮs_Cloak#
 22047#Felrockꆮs_Boots#
+19526#Costume:_Helm#
