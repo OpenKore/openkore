@@ -123,6 +123,7 @@ sub getFilesFromDirs {
 			}
 		}
 	}
+	@files = sort {$a->{'name'} cmp $b->{'name'}} @files;
 	return @files;
 }
 
