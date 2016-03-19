@@ -8499,3 +8499,12 @@
 20744#Felrockꆮs_Cloak#
 22047#Felrockꆮs_Boots#
 19526#Costume:_Helm#
+20217#Costume_Veil#
+20218#Costume_Spell_Circuit#
+20191#Costume_Black_Cat_Ears_Beret#
+20195#Costume_Scratching_Cat#
+20071#Costume_Lost_Wolf_Puppy#
+20041#Costume_Earth_Goddess_Flower#
+20031#Costume_Bunny_Head_Dress#
+20011#Costume_Lightning_Speed#
+17506#Paddys_Costume_Pack#

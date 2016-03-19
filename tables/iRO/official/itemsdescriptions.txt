@@ -54750,16 +54750,7 @@ Weapon Level: ^7777773^000000
 Required Level : ^7777771^000000
 Jobs : ^777777Gunslinger^000000
 #
-20011#
-^CC0000This Rental Armor is not Tradable^000000
-Buckler that offers 20% resistance to All Race Damage
-^CC0000This item is not Refinable^000000
-Class : ^777777Shield^000000
-Def ^7777777^000000
-Weight : ^77777760^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
-#
+
 20021#
 ^CC0000This Rental Armor is not Tradable^000000
 Shoes that offer similar effect as a Matyr Carded +6 Shoes
@@ -54782,17 +54773,7 @@ Weight : ^77777740^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
-20031#
-^CC0000This Rental Armor is not Tradable^000000
-Garment that offer similar effect as a Raydric carded +6 Muffler.
-Resist Neutral Damage 15%
-^CC0000This item is not Refinable^000000
-Class : ^777777Muffler^000000
-Def ^7777776^000000
-Weight : ^77777740^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
-#
+
 20032#
 ^CC0000This Rental Armor is not Tradable^000000
 Garment that offer similar effect as a Whisper carded +6 Muffler.
@@ -72477,4 +72458,92 @@ Leek In Mouth
 
 19526#
 A lightweight replica of the famous warrior's helmet, the latest in Rune-Midgards fashion. It won't really protect you from anything.
+#
+
+
+20218#
+^ff0000From 3-17-2016 to 6-01-2016 will increase Luk by 5 and enable the dropping of Green Ale Items.^000000
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20219#
+^ff0000From 3-17-2016 to 6-01-2016 will increase Luk by 5 and enable the dropping of Green Ale Items.^000000
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+
+20191#
+^ff0000From 3-17-2016 to 6-01-2016 will increase Luk by 5 and enable the dropping of Green Ale Items.^000000
+Class : ^777777Costume equipment^000000 Defense : ^7777775^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+
+20195#
+^ff0000From 3-17-2016 to 6-01-2016 will increase Luk by 5 and enable the dropping of Green Ale Items.^000000
+Class : ^777777Costume equipment^000000Defense : ^7777770^000000
+Location : ^777777Mid-bottom ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20071#
+^ff0000From 3-17-2016 to 6-01-2016 will increase Luk by 5 and enable the dropping of Green Ale Items.^000000
+A lost wolf puppy, maybe you should carry it like its mother to comfort it.
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+
+20041#
+^ff0000From 3-17-2016 to 6-01-2016 will increase Luk by 5 and enable the dropping of Green Ale Items.^000000
+Class : ^777777Costume Gear^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+
+20031#
+^ff0000From 3-17-2016 to 6-01-2016 will increase Luk by 5 and enable the dropping of Green Ale Items.^000000
+Class : ^777777Costume Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All^000000
+#
+
+20011#
+^ff0000From 3-17-2016 to 6-01-2016 will increase Luk by 5 and enable the dropping of Green Ale Items.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required lvl : ^7777771^000000
+Job : ^777777All^000000
+
+#
+
+17506#
+Celebrate St Paddy's Day with a random costume stolen from O'Riley
+^ff0000From 3-17-2016 to 6-01-2016 will increase Luk by 5 and enable the dropping of Green Ale Items.^000000
+Contains one of the following
+Costume Veil
+Costume Spell Circuit
+Costume Black Cat Ears Beret
+Costume Scratching Cat
+Costume Lost Wolf Puppy
+Costume Earth Goddess Flower
+Costume Bunny Head Dress
+Costume Lightning Speed
+#
+
+20217#
+^ff0000From 3-17-2016 to 6-01-2016 will increase Luk by 5 and enable the dropping of Green Ale Items.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle Bottom ^000000Weight : ^7777770^000000
+Required lvl : ^7777771^000000
+Job : ^777777All^000000
+
 #
