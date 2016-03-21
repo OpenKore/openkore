@@ -12,7 +12,7 @@ use AI;
 use Macro::Data;
 use Macro::Parser qw(parseCmd isNewCommandBlock);
 use Macro::Utilities qw(cmpr);
-use Macro::Automacro qw(releaseAM lockAM);
+use Macro::Automacro qw(releaseAM lockAM recheckAM);
 use Log qw(message warning);
 
 our ($rev) = q$Revision: 6782 $ =~ /(\d+)/;
@@ -538,6 +538,20 @@ sub next {
 		$self->{timeout} = 0 unless defined $self->{mainline_delay} && defined $self->{subline_delay};
 		return $self->{result} if $self->{result}
 	##########################################
+	# recheck command
+	} elsif ($line =~ /^recheck\s+/) {
+		if ($line =~ /;/) {run_sublines($line, $self); if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}}
+		else {
+			my ($tmp) = $line =~ /^recheck\s+(.*)/;
+			if (!recheckAM(parseCmd($tmp, $self))) {
+				if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
+				$self->{error} = "$errtpl: releasing $tmp failed"
+			}
+		}
+		$self->{line}++;
+		$self->{timeout} = 0 unless defined $self->{mainline_delay} && defined $self->{subline_delay};
+		return $self->{result} if $self->{result}
+	##########################################
 	# lock command
 	} elsif ($line =~ /^lock\s+/) {
 		if ($line =~ /;/) {run_sublines($line, $self); if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}}
@@ -556,6 +570,7 @@ sub next {
 	} elsif ($line =~ /^call\s+/) {
 		my ($tmp) = $line =~ /^call\s+(.*)/;
 		my $name = $tmp;
+		if ($name =~ /^\$/) { parseCmd($name, $self); }
 		my $args;
 		my $cparms;
 		
@@ -734,7 +749,14 @@ sub run_sublines {
 				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}"; last}
 				$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: releasing $tmp failed in ($e)"; last
 			}
-		
+		##########################################
+		# recheck command
+		} elsif ($e =~ /^recheck\s+/) {
+			my ($tmp) = $e =~ /^recheck\s+(.*)/;
+			if (!recheckAM(parseCmd($tmp, $self))) {
+				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}"; last}
+				$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: rechecking $tmp failed in ($e)"; last
+			}
 		# pause command
 		} elsif ($e =~ /^pause/) {
 			my ($tmp) = $e =~ /^pause\s*(.*)/;
@@ -841,7 +863,7 @@ sub newThen {
 sub statement {
 	my ($temp_multi, $self, $errtpl) = @_;
 	my ($first, $cond, $last) = $temp_multi =~ /^\s*"?(.*?)"?\s+([<>=!~]+?)\s+"?(.*?)"?\s*$/;
-	if (!defined $first || !defined $cond || !defined $last) {$self->{error} = "$errtpl: syntax error in if statement"}
+	if (!defined $first || !defined $cond || !defined $last) {$self->{error} = "$errtpl: syntax error in if statement ($temp_multi)"}
 	else {
 		my $pfirst = parseCmd(refined_macroKeywords($first), $self); my $plast = parseCmd(refined_macroKeywords($last), $self);
 		if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}

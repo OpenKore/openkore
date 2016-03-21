@@ -123,16 +123,20 @@ sub hookOnDemand {
 			if (!defined $load{'packet_skilluse'}) {$load{'packet_skilluse'} = 1}
 		}
 		if (defined $automacro{$a}->{areaSpell} && !defined $load{'packet_areaSpell'}) {$load{'packet_areaSpell'} = 1}
-		if (defined $automacro{$a}->{pm} && !defined $load{'packet_privMsg'}) {$load{'packet_privMsg'} = 1}
-		if (defined $automacro{$a}->{pubm} && !defined $load{'packet_pubMsg'}) {$load{'packet_pubMsg'} = 1}	
-		if (defined $automacro{$a}->{system} && !defined $load{'packet_sysMsg'}) {$load{'packet_sysMsg'} = 1;}
-		if (defined $automacro{$a}->{party} && !defined $load{'packet_partyMsg'}) {$load{'packet_partyMsg'} = 1}
-		if (defined $automacro{$a}->{guild} && !defined $load{'packet_guildMsg'}) {$load{'packet_guildMsg'} = 1}
+		if (defined $automacro{$a}->{message} && $automacro{$a}->{message} =~ /^pm/ && !defined $load{'packet_privMsg'}) {$load{'packet_privMsg'} = 1}
+		if (defined $automacro{$a}->{message} && $automacro{$a}->{message} =~ /^pub/ && !defined $load{'packet_pubMsg'}) {$load{'packet_pubMsg'} = 1}	
+		if (defined $automacro{$a}->{message} && $automacro{$a}->{message} =~ /^sys/ && !defined $load{'packet_sysMsg'}) {$load{'packet_sysMsg'} = 1;}
+		if (defined $automacro{$a}->{message} && $automacro{$a}->{message} =~ /^party/ && !defined $load{'packet_partyMsg'}) {$load{'packet_partyMsg'} = 1}
+		if (defined $automacro{$a}->{message} && $automacro{$a}->{message} =~ /^guild/ && !defined $load{'packet_guildMsg'}) {$load{'packet_guildMsg'} = 1}
+		if (defined $automacro{$a}->{message} && $automacro{$a}->{message} =~ /^npc/ && !defined $load{'npc_talk'}) {$load{'npc_talk'} = 1}
+		if (defined $automacro{$a}->{message} && $automacro{$a}->{message} =~ /^self/ && !defined $load{'packet_selfChat'}) {$load{'packet_selfChat'} = 1}
+		if (defined $automacro{$a}->{message} && $automacro{$a}->{message} =~ /^local/ && !defined $load{'packet_localBroadcast'}) {$load{'packet_localBroadcast'} = 1}
 		if (defined $automacro{$a}->{mapchange} && !defined $load{'packet_mapChange'}) {$load{'packet_mapChange'} = 1}
 		if (defined $automacro{$a}->{hook} && !defined $load{$automacro{$a}->{hook}}) {$load{$automacro{$a}->{hook}} = 1}
 		if (defined $automacro{$a}->{console} && !defined $hookToLog) {$hookToLog = 1}
 		if (defined $automacro{$a}->{playerguild} && !defined $load{'player'}) {$load{'player'} = 1}
 		if (defined $automacro{$a}->{playerguild} && !defined $load{'charNameUpdate'}) {$load{'charNameUpdate'} = 1}
+		if (defined $automacro{$a}->{targetdied} && !defined $load{'target_died'}) {$load{'target_died'} = 1}
 	}
 	foreach my $l (keys %load) {
 		message "[macro] hooking to $l\n";
