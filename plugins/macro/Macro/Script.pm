@@ -10,10 +10,11 @@ use Utils;
 use Globals;
 use AI;
 use Macro::Data;
-use Macro::Parser qw(parseCmd isNewCommandBlock);
-use Macro::Utilities qw(cmpr);
-use Macro::Automacro qw(releaseAM lockAM);
-use Log qw(message warning);
+use Macro::Parser qw(parseCmd);
+use Macro::Utilities qw(cmpr $force_pause);
+use Macro::Automacro qw(releaseAM lockAM clearTimeoutAM);
+use Log qw(debug message warning);
+use Time::HiRes;
 
 our ($rev) = q$Revision: 6782 $ =~ /(\d+)/;
 
@@ -150,7 +151,7 @@ sub error {
 
 # re-sets the timer
 sub ok {
-	$_[0]->{time} = time
+	$_[0]->{time} = Time::HiRes::time
 }
 
 # scans the script for labels
@@ -166,9 +167,12 @@ sub scanLabels {
 			my ($label) = ${$script}[$line] =~ /\s+as\s+(.*)/;
 			$labels{$label} = $line
 		}
+		if (${$script}[$line] =~ /^else\s+(.*)/) {
+			$labels{"else $1"} = $line;
+		}
 		if (${$script}[$line] =~ /^end\s+/) {
 			my ($label) = ${$script}[$line] =~ /^end\s+(.*)/;
-			$labels{"end ".$label} = $line
+			$labels{"end ".$label} = $line;
 		}
 	}
 	return %labels
@@ -216,27 +220,13 @@ sub next {
 	}
 	
 	# TODO: separate line advancing and timeout setting
+    debug( sprintf( "[macro] %3d : %s\n", $self->{line}, $line ), 'macro' );
 	
 	my $errtpl = "error in ".$self->{line};
-
-	# "If" postfix control
-	if ($line =~ /.+\s+if\s*\(.*\)$/) {
-		my ($text) = $line =~ /.+\s+if\s*\(\s*(.*)\s*\)$/;
-		$text = parseCmd($text, $self);
-		if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-		my $savetxt = particle($text, $self, $errtpl);
-		if (multi($savetxt, $self, $errtpl)) {
-			$line =~ s/\s+if\s*\(.*\)$//;
-		} else {
-			$self->{line}++;
-			$self->{timeout} = 0;
-			return "";
-		}
-	}
-	
 	##########################################
 	# jump to label: goto label
 	if ($line =~ /^goto\s/) {
+#message "next goto ".__LINE__."\n";
 		my ($tmp) = $line =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)/;
 		if (exists $self->{label}->{$tmp}) {$self->{line} = $self->{label}->{$tmp}}
 		else {$self->{error} = "$errtpl: cannot find label $tmp"}
@@ -244,18 +234,38 @@ sub next {
 	##########################################
 	# declare block ending: end label
 	} elsif ($line =~ /^end\s/) {
+#message "next end ".__LINE__."\n";
 		my ($tmp) = $line =~ /^end\s+(.*)/;
 		if (exists $self->{label}->{$tmp}) {$self->{line} = $self->{label}->{$tmp}}
-		else {$self->{error} = "$errtpl: cannot find block start for $tmp"}
+		else {$self->{line}++}
+		$self->{timeout} = 0
+	##########################################
+	# else statement: else label
+	} elsif ($line =~ /^else\s+(.*)/) {
+#message "next else ".__LINE__."\n";
+		$self->{line} = $self->{label}->{"end $1"} || $self->{line};
+		$self->{line}++;
+		$self->{timeout} = 0
+	} elsif ($line =~ /^break\s+(.*)/) {
+#message "next break ".__LINE__."\n";
+		$self->{line} = $self->{label}->{"end $1"} || $self->{line};
+		$self->{line}++;
+		$self->{timeout} = 0
+	} elsif ($line =~ /^next\s+(.*)/) {
+#message "next next ".__LINE__."\n";
+		$self->{line} = $self->{label}->{"$1"} || $self->{line};
+		$self->{line}++;
 		$self->{timeout} = 0
 	##########################################
 	# macro block: begin
 	} elsif ($line eq '[') {
+#message "next block begin ".__LINE__."\n";
 		$self->{macro_block} = 1;
 		$self->{line}++
 	##########################################
 	# macro block: end
 	} elsif ($line eq ']') {
+#message "next block end ".__LINE__."\n";
 		$self->{macro_block} = 0;
 		$self->{timeout} = 0;
 		$self->{line}++
@@ -263,128 +273,45 @@ sub next {
 	# if statement: if (foo = bar) goto label?
 	# Unlimited If Statement by: ezza @ http://forums.openkore.com/
 	} elsif ($line =~ /^if\s/) {
-		my ($text, $then) = $line =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop|{|)\s*/;
-
+#message "next if ".__LINE__."\n";
+		my ($text, $then, $label) = $line =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop|\$[a-z].*|then\s+(.+)|break\s+(\S+))\s*/;
+		my ($text, $then, $label) = $line =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop|\$[a-z].*|then\s+(.+)|(?:break|next)\s+(?:\S+))\s*/;
 		# The main trick is parse all the @special keyword and vars 1st,
 		$text = parseCmd($text, $self);
 		if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 		my $savetxt = particle($text, $self, $errtpl);
 		if (multi($savetxt, $self, $errtpl)) {
-			newThen($then, $self, $errtpl);
-			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-		} elsif ($then eq "{") { # If the condition is false because "if" this is not using the command block
-			my $countBlockIf = 1;
-			while ($countBlockIf) {
-				$self->{line}++;
-				my $searchEnd = ${$macro{$self->{name}}}[$self->{line}];
-				
-				if ($searchEnd =~ /^if.*{$/) {
-					$countBlockIf++;
-				} elsif (($searchEnd eq '}') || ($searchEnd =~ /^}\s*else\s*{$/ && $countBlockIf == 1)) {
-					$countBlockIf--;
-				} elsif ($searchEnd =~ /^}\s*elsif\s+\(\s*(.*)\s*\).*{$/ && $countBlockIf == 1) {
-					# If the condition of 'elsif' is true, the commands of your block will be executed,
-					#  if false, will not run.
-					$text = parseCmd($1, $self);
-					if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-					$savetxt = particle($text, $self, $errtpl);
-					if (multi($savetxt, $self, $errtpl)) {
-						$countBlockIf--;
-					}
-				}
-			}
-		}
-		$self->{line}++;
-		$self->{timeout} = 0
-
-	##########################################
-	# If arriving at a line 'else', 'elsif' or 'case', it should be skipped -
-	#  it will never be activated if coming from a false 'if' or a previous 'case' has not been called
-	} elsif ($line =~ /^}\s*else\s*{/ || $line =~ /^}\s*elsif.*{$/ || $line =~ /^case/ || $line =~ /^else/) {
-		my $countCommandBlock = 1;
-		while ($countCommandBlock) {
-			$self->{line}++;
-			my $searchEnd = ${$macro{$self->{name}}}[$self->{line}];
-			
-			if (isNewCommandBlock($searchEnd)) {
-				$countCommandBlock++;
-			} elsif ($searchEnd eq '}') {
-				$countCommandBlock--;
-			}
-		}
-
-		$self->{timeout} = 0
-
-	##########################################
-	# switch statement:
-	} elsif ($line =~ /^switch.*{$/) {
-		my ($firstPartCondition) = $line =~ /^switch\s*\(\s*(.*)\s*\)\s*{$/;
-
-		my $countBlocks = 1;
-		while ($countBlocks) {
-			$self->{line}++;
-			my $searchNextCase = ${$macro{$self->{name}}}[$self->{line}];
-			
-			if ($searchNextCase =~ /^else/) {
-				my ($then) = $searchNextCase =~ /^else\s*(.*)/;
+			if (!$label) {
 				newThen($then, $self, $errtpl);
 				if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-				last;
 			}
-			
-			my ($secondPartCondition, $then) = $searchNextCase =~ /^case\s*\(\s*(.*)\s*\)\s*(.*)/;
-			next if (!$secondPartCondition);
-			
-			my $completCondition = $firstPartCondition . ' ' . $secondPartCondition;
-			my $text = parseCmd($completCondition, $self);
-			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-			my $savetxt = particle($text, $self, $errtpl);
-			if (multi($savetxt, $self, $errtpl)) {
-				newThen($then, $self, $errtpl);
-				if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-				last;
-			} elsif ($searchNextCase =~ /^case.*{$/) {
-				my $countCommandBlock = 1;
-				while ($countCommandBlock) {
-					$self->{line}++;
-					my $searchEnd = ${$macro{$self->{name}}}[$self->{line}];
-					
-					if (isNewCommandBlock($searchEnd)) {
-						$countCommandBlock++;
-					} elsif ($searchEnd eq '}') {
-						$countCommandBlock--;
-					}
-				}
-			}
+		} elsif ($label) {
+			$self->{line} = $self->{label}->{"else $label"} || $self->{label}->{"end $label"} || $self->{line};
 		}
-		
-		$self->{line}++;
-		$self->{timeout} = 0
-	
-	##########################################
-	# end block of "if" or "switch"
-	} elsif ($line eq '}') {
 		$self->{line}++;
 		$self->{timeout} = 0
 
 	##########################################
 	# while statement: while (foo <= bar) as label
 	} elsif ($line =~ /^while\s/) {
-		my ($text, $label) = $line =~ /^while\s+\(\s*(.*)\s*\)\s+as\s+(.*)/;
-		my $text = parseCmd($text, $self);
-		if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-		my $savetxt = particle($text, $self, $errtpl);
-		if (!multi($savetxt, $self, $errtpl)) {
-			$self->{line} = $self->{label}->{"end ".$label};
+		my ($first, $cond, $last, $label) = $line =~ /^while\s+\(\s*"?(.*?)"?\s+([<>=!]+?)\s+"?(.*?)"?\s*\)\s+as\s+(.*)/;
+#message "next while ".__LINE__." [$first] [$cond] [$last] [$label]\n";
+		if (!defined $first || !defined $cond || !defined $last || !defined $label) {$self->{error} = "$errtpl: syntax error in while statement"}
+		else {
+			my $pfirst = parseCmd($first, $self); my $plast = parseCmd($last, $self);
+			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
+			unless (defined $pfirst && defined $plast) {$self->{error} = "$errtpl: either '$first' or '$last' has failed"}
+			elsif (!cmpr($pfirst, $cond, $plast)) {$self->{line} = $self->{label}->{"end ".$label}}
+			$self->{line}++
 		}
-		$self->{line}++;
 		$self->{timeout} = 0
 	##########################################
 	# pop value from variable: $var = [$list]
-	} elsif ($line =~ /^\$[a-z][a-z\d]*\s+=\s+\[\s*\$[a-z][a-z\d]*\s*\]$/i) {
-		if ($line =~ /;/) {run_sublines($line, $self); if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}}
-		else {
-			my ($var, $list) = $line =~ /^\$([a-z][a-z\d]*?)\s+=\s+\[\s*\$([a-z][a-z\d]*?)\s*\]$/i;
+	} elsif ($line =~ /^\$[a-z][a-z_\d]*\s+=\s+\[\s*\$[a-z][a-z_\d]*\s*\]$/i) {
+#message "next pop value ".__LINE__."\n";
+#		if ($line =~ /;/) {run_sublines($line, $self); if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}}
+#		else {
+			my ($var, $list) = $line =~ /^\$([a-z][a-z_\d]*?)\s+=\s+\[\s*\$([a-z][a-z_\d]*?)\s*\]$/i;
 			my $listitems = ($varStack{$list} or "");
 			my $val;
 			if (($val) = $listitems =~ /^(.*?)(?:,|$)/) {
@@ -393,41 +320,26 @@ sub next {
 			}
 			else {$val = $listitems}
 			$varStack{$var} = $val;
-		}
+#		}
 		$self->{line}++;
 		$self->{timeout} = 0 unless defined $self->{mainline_delay} && defined $self->{subline_delay};
 		return $self->{result} if $self->{result}
 	##########################################
 	# set variable: $variable = value
 	} elsif ($line =~ /^\$[a-z]/i) {
-		my ($var, $val);
-		if ($line =~ /;/) {run_sublines($line, $self); if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}} 
-		else {
-			if (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
-				my $pval = parseCmd($val, $self);
-				if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-				if (defined $pval) {
-					if ($pval =~ /^\s*(?:undef|unset)\s*$/i && exists $varStack{$var}) {undef $varStack{$var}}
-					else {$varStack{$var} = $pval}
-				}
-				else {$self->{error} = "$errtpl: $val failed"}
-			}
-			elsif (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
-				if ($val eq '++') {$varStack{$var} = ($varStack{$var} or 0)+1}
-				else {$varStack{$var} = ($varStack{$var} or 0)-1}
-			}
-			else {$self->{error} = "$errtpl: unrecognized assignment"}
-		}
+#message "next assign ".__LINE__."\n";
+		$self->parse_assign( $line );
+		$self->{error} = "$errtpl: $self->{error}" if $self->{error};
 		$self->{line}++;
 		$self->{timeout} = 0 unless defined $self->{mainline_delay} && defined $self->{subline_delay};
-		return $self->{result} if $self->{result}
+		return $self->{result} if $self->{result};
 	##########################################
 	# set doublevar: ${$variable} = value
 	} elsif ($line =~ /^\$\{\$[.a-z]/i) {
 		my ($dvar, $val);
 		if ($line =~ /;/) {run_sublines($line, $self); if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}}
 		else {
-			if (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}\s+=\s+(.*)/i) {
+			if (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z_\d]*?)\}\s+=\s+(.*)/i) {
 				my $var = $varStack{$dvar};
 				unless (defined $var) {$self->{error} = "$errtpl: $dvar not defined"}
 				else {
@@ -440,7 +352,7 @@ sub next {
 					}
 				}
 			}
-			elsif (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}([+-]{2})$/i) {
+			elsif (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z_\d]*?)\}([+-]{2})$/i) {
 				my $var = $varStack{$dvar};
 				unless (defined $var) {$self->{error} = "$errtpl: $dvar undefined"}
 				else {
@@ -502,6 +414,7 @@ sub next {
 	##########################################
 	# pause command
 	} elsif ($line =~ /^pause/) {
+		$force_pause++;
 		if ($line =~ /;/) {
 			run_sublines($line, $self);
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
@@ -538,6 +451,20 @@ sub next {
 		$self->{timeout} = 0 unless defined $self->{mainline_delay} && defined $self->{subline_delay};
 		return $self->{result} if $self->{result}
 	##########################################
+	# cleartimeout command
+	} elsif ($line =~ /^cleartimeout\s+/) {
+		if ($line =~ /;/) {run_sublines($line, $self); if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}}
+		else {
+			my ($tmp) = $line =~ /^cleartimeout\s+(.*)/;
+			if (!clearTimeoutAM(parseCmd($tmp, $self))) {
+				if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
+				$self->{error} = "$errtpl: clearing timeout for $tmp failed"
+			}
+		}
+		$self->{line}++;
+		$self->{timeout} = 0 unless defined $self->{mainline_delay} && defined $self->{subline_delay};
+		return $self->{result} if $self->{result}
+	##########################################
 	# lock command
 	} elsif ($line =~ /^lock\s+/) {
 		if ($line =~ /;/) {run_sublines($line, $self); if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}}
@@ -554,44 +481,23 @@ sub next {
 	##########################################
 	# call command
 	} elsif ($line =~ /^call\s+/) {
-		my ($tmp) = $line =~ /^call\s+(.*)/;
-		my $name = $tmp;
-		my $args;
-		my $cparms;
-		
-		my $calltimes = 1;
-		
-		if ($tmp =~ /\s/) {
-			($name, $args) = $tmp =~ /^(\S+?)\s+(.+)/;
-			my ($times);
-			if ($args =~ /(\d+)\s+(--.*)/) {
-				($times, $cparms) = $args =~ /(\d+)?\s+?(--.*)?/;
-				$times = parseCmd($args, $self);
-				$cparms = parseCmd($args, $self);
-			} elsif ($args =~ /^\d+/) {
-				$times = parseCmd($args, $self);
-			}  elsif ($args =~ /^--.*/) {
-				$cparms = parseCmd($args, $self);
+		my $text = parseCmd($line, $self);
+		my ($name, $args) = $text =~ /^call\s+(\w+)(?:\s+(.*))?/;
+		$varStack{".param$_"} = undef foreach 1 .. 10, 's';
+		if ($args) {
+			my @args = parseArgs($args);
+			$varStack{'.params'} = $args;
+			foreach (1 .. @args){
+				$varStack{".param$_"} = $args[$_ - 1];
 			}
-
-			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-			if (defined $times && $times =~ /\d+/) { $calltimes = $times; }; # do we have a valid repeat value?
 		}
-		
-		$self->{subcall} = new Macro::Script($name, $calltimes, undef, undef, $self->{interruptible});
-		
-		unless (defined $self->{subcall}) {
-			$self->{error} = "$errtpl: failed to call script";
-		} else {
-			my @new_params = substr($cparms, 2) =~ /"[^"]+"|\S+/g;
-			foreach my $p (1..@new_params) {
-				$varStack{".param".$p} = $new_params[$p-1];
-				$varStack{".param".$p} = substr($varStack{".param".$p}, 1, -1) if ($varStack{".param".$p} =~ /^".*"$/); # remove quotes
-			}
-			
+		$self->{subcall} = new Macro::Script($name, 1, undef, undef, $self->{interruptible});
+		if (defined $self->{subcall}) {
 			$self->{subcall}->regSubmacro;
 			$self->{line}++; # point to the next line to be executed in the caller
 			$self->{timeout} = $self->{macro_delay};
+		} else {
+			$self->{error} = "$errtpl: failed to call script";
 		}
 	##########################################
 	# set command
@@ -636,6 +542,23 @@ sub next {
 	if (defined $self->{error}) {return} else {return ""}
 }
 
+sub parse_assign {
+    my ( $self, $line ) = @_;
+
+    if ( my ( $var, $val ) = $line =~ /^\$([a-z][a-z_\d]*?)\s+=\s+(.*)/i ) {
+        my $pval = parseCmd( $val, $self );
+        $self->{error} ||= "$val failed" if !defined $pval;
+        return if $self->{error};
+        $varStack{$var} = $pval =~ /^\s*(undef|unset)\s*$/io ? undef : $pval;
+    } elsif ( my ( $var, $val ) = $line =~ /^\$([a-z][a-z_\d]*?)(\+\+|--)$/i ) {
+        $varStack{$var} += $val eq '++' ? 1 : -1;
+    } else {
+        $self->{error} = 'unrecognized assignment';
+        return;
+    }
+
+    return 1;
+}
 
 sub run_sublines {
 	my ($real_line, $self) = @_;
@@ -654,8 +577,8 @@ sub run_sublines {
 		
 		##########################################
 		# pop value from variable: $var = [$list]
-		if ($e =~ /^\$[a-z][a-z\d]*\s+=\s+\[\s*\$[a-z][a-z\d]*\s*\]$/i) {
-			($var, $list) = $e =~ /^\$([a-z][a-z\d]*?)\s+=\s+\[\s*\$([a-z][a-z\d]*?)\s*\]$/i;
+		if ($e =~ /^\$[a-z][a-z_\d]*\s+=\s+\[\s*\$[a-z][a-z_\d]*\s*\]$/i) {
+			($var, $list) = $e =~ /^\$([a-z][a-z_\d]*?)\s+=\s+\[\s*\$([a-z][a-z_\d]*?)\s*\]$/i;
 			my $listitems = ($varStack{$list} or "");
 			if (($val) = $listitems =~ /^(.*?)(?:,|$)/) {
 				$listitems =~ s/^(?:.*?)(?:,|$)//;
@@ -667,7 +590,7 @@ sub run_sublines {
 				
 		# set variable: $variable = value
 		} elsif ($e =~ /^\$[a-z]/i) {
-			if (($var, $val) = $e =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
+			if (($var, $val) = $e =~ /^\$([a-z][a-z_\d]*?)\s+=\s+(.*)/i) {
 				my $pval = parseCmd($val, $self);
 				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}"; last}
 				if (defined $pval) {
@@ -676,7 +599,7 @@ sub run_sublines {
 				}
 				else {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $e failed"; last}
 			}
-			elsif (($var, $val) = $e =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
+			elsif (($var, $val) = $e =~ /^\$([a-z][a-z_\d]*?)([+-]{2})$/i) {
 				if ($val eq '++') {$varStack{$var} = ($varStack{$var} or 0)+1} else {$varStack{$var} = ($varStack{$var} or 0)-1}
 			}
 			else {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: unrecognized assignment in ($e)"; last}
@@ -684,7 +607,7 @@ sub run_sublines {
 				
 		# set doublevar: ${$variable} = value
 		} elsif ($e =~ /^\$\{\$[.a-z]/i) {
-			if (($dvar, $val) = $e =~ /^\$\{\$([.a-z][a-z\d]*?)\}\s+=\s+(.*)/i) {
+			if (($dvar, $val) = $e =~ /^\$\{\$([.a-z][a-z_\d]*?)\}\s+=\s+(.*)/i) {
 				$var = $varStack{$dvar};
 				unless (defined $var) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $dvar not defined in ($e)"; last}
 				else {
@@ -697,7 +620,7 @@ sub run_sublines {
 					}
 				}
 			}
-			elsif (($dvar, $val) = $e =~ /^\$\{\$([.a-z][a-z\d]*?)\}([+-]{2})$/i) {
+			elsif (($dvar, $val) = $e =~ /^\$\{\$([.a-z][a-z_\d]*?)\}([+-]{2})$/i) {
 				$var = $varStack{$dvar};
 				unless (defined $var) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: undefined $dvar in ($e)"; last}
 				else {if ($val eq '++') {$varStack{"#$var"} = ($varStack{"#$var"} or 0)+1} else {$varStack{"#$var"} = ($varStack{"#$var"} or 0)-1}}
@@ -733,6 +656,14 @@ sub run_sublines {
 			if (!releaseAM(parseCmd($tmp, $self))) {
 				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}"; last}
 				$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: releasing $tmp failed in ($e)"; last
+			}
+				
+		# cleartimeout command
+		} elsif ($e =~ /^cleartimeout\s+(.*)/) {
+			my $tmp = $1;
+			if (!clearTimeoutAM(parseCmd($tmp, $self))) {
+				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}"; last}
+				$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: clearing timeout for $tmp failed in ($e)"; last
 			}
 		
 		# pause command
@@ -814,6 +745,7 @@ sub newThen {
 		else {$self->{error} = "$errtpl: cannot find label $tmp"}
 	}
 	elsif ($then =~ /^call\s+/) {
+		$then = parseCmd($then, $self) || $then;
 		my ($tmp) = $then =~ /^call\s+(.*)/;
 		if ($tmp =~ /\s/) {
 			my ($name, $times) = $tmp =~ /(.*?)\s+(.*)/;
@@ -834,7 +766,10 @@ sub newThen {
 			$self->{timeout} = $self->{macro_delay}
 		}
 	}
+	elsif ($then =~ /^break\s+(\S+)/) { $self->{line} = $self->{label}->{"end $1"} || $self->{line}; }
+	elsif ($then =~ /^next\s+(\S+)/) { $self->{line} = $self->{label}->{$1} ? $self->{label}->{$1} - 1 : $self->{line}; }
 	elsif ($then eq "stop") {$self->{finished} = 1}
+	elsif ($then =~ /^\$[a-z]/) { $self->parse_assign( $then ); }
 }
 
 

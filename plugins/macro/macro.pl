@@ -73,22 +73,22 @@ sub onstart3 {
 
 # onReload
 sub Reload {
-	message "macro plugin reloading, ", 'success';
+	message "macro plugin reloading, ";
 	&cleanup;
 	&onstart3
 }
 
 # onUnload
 sub Unload {
-	message "macro plugin unloading, ", 'success';
+	message "macro plugin unloading, ";
 	&cleanup;
 	Plugins::delHooks($hooks);
 	Commands::unregister($chooks);
 }
 
 sub cleanup {
-	message "cleaning up\n", 'success';
-	Settings::removeFile($cfID) if defined $cfID;
+	message "cleaning up\n";
+	Settings::removeFile($cfID);
 	Log::delHook($loghook);
 	foreach (@{$autohooks}) {Plugins::delHook($_)}
 	undef $autohooks;
@@ -172,7 +172,7 @@ sub commandHandler {
 			"macro reset [automacro]: resets run-once status for all or given automacro(s)\n";
 		return
 	}
-	my ($arg, @params) = split(/\s+/, $_[1]);
+	my ($arg, @params) = Utils::parseArgs($_[1]);
 	### parameter: list
 	if ($arg eq 'list') {
 		message(sprintf("The following macros are available:\n%smacros%s\n","-"x10,"-"x9), "list");
@@ -190,11 +190,21 @@ sub commandHandler {
 			message(sprintf("macro %s\n", $queue->name), "list");
 			message(sprintf("status: %s\n", $queue->registered?"running":"waiting"));
 			my %tmp = $queue->timeout;
-			message(sprintf("delay: %ds\n", $tmp{timeout}));
-			message(sprintf("line: %d\n", $queue->line));
+			message(sprintf("delay: %ds (%s)\n", $tmp{timeout}, scalar localtime($tmp{time}+$tmp{timeout})));
+			message(sprintf("line: %d: %s\n", $queue->line, $macro{$queue->name}->[$queue->line]));
 			message(sprintf("override AI: %s\n", $queue->overrideAI?"yes":"no"));
 			message(sprintf("paused: %s\n", $onHold?"yes":"no"));
 			message(sprintf("finished: %s\n", $queue->finished?"yes":"no"));
+            for ( my $m = $queue ; $m ; $m = $m->{subcall} ) {
+                my @flags = ();
+                push @flags, $m->registered ? 'running' : 'waiting';
+                push @flags, sprintf( 'delay=%ds (%s)', $m->{timeout}, $m->{time} + $m->{timeout} ) if $m->{time} + $m->{timeout} > time;
+                push @flags, 'ai_overridden' if $m->overrideAI;
+                push @flags, 'paused'        if $onHold;
+                push @flags, 'finished'      if $m->finished;
+                message( sprintf( "%s (line %d) : %s\n", $m->name, $m->line, $macro{ $m->name }->[ $m->line ] ) );
+                message( sprintf( "  %s\n", "@flags" ) ) if @flags;
+            }
 		} else {
 			message "There's no macro currently running.\n"
 		}
@@ -253,26 +263,21 @@ sub commandHandler {
 			return
 		}
 		my ($repeat, $oAI, $exclusive, $mdelay, $orphan) = (1, 0, 0, undef, undef);
-		my $cparms;
+		my $cparms = 0;
 		for (my $idx = 0; $idx <= @params; $idx++) {
 			if ($params[$idx] eq '-repeat') {$repeat += $params[++$idx]}
 			if ($params[$idx] eq '-overrideAI') {$oAI = 1}
 			if ($params[$idx] eq '-exclusive') {$exclusive = 1}
 			if ($params[$idx] eq '-macro_delay') {$mdelay = $params[++$idx]}
 			if ($params[$idx] eq '-orphan') {$orphan = $params[++$idx]}
-			if ($params[$idx] =~ /^--/) {$cparms = substr(join(' ', map { "$_" } @params), 2); last}
+			if ($params[$idx] eq '--') {splice @params, 0, ++$idx; $cparms = 1; last}
 		}
 		
-		delete $varStack{$_} for grep /^\.param\d+$/, keys %varStack;
+		delete $varStack{".param$_"} foreach 1 .. 10, 's';
 		if ($cparms) {
-			#parse macro parameters
-			my @new_params = $cparms =~ /"[^"]+"|\S+/g;
-			foreach my $p (1..@new_params) {
-				$varStack{".param".$p} = $new_params[$p-1];
-				$varStack{".param".$p} = substr($varStack{".param".$p}, 1, -1) if ($varStack{".param".$p} =~ /^".*"$/); # remove quotes
-			}
+			$varStack{'.params'} = join ' ', @params;
+			foreach my $p (1..@params) {$varStack{".param".$p} = $params[$p-1]}
 		}
-		
 		$queue = new Macro::Script($arg, $repeat);
 		if (!defined $queue) {error "macro $arg not found or error in queue\n"}
 		else {

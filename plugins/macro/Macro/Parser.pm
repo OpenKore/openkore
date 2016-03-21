@@ -2,12 +2,12 @@
 package Macro::Parser;
 
 use strict;
-use encoding 'utf8';
+use utf8;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(parseMacroFile parseCmd isNewCommandBlock);
-our @EKSPORT_OK = qw(parseCmd isNewCommandBlock);
+our @EXPORT = qw(parseMacroFile parseCmd);
+our @EKSPORT_OK = qw(parseCmd);
 
 use Globals;
 use Utils qw/existsInList/;
@@ -34,7 +34,6 @@ sub parseMacroFile {
 
 	my %block;
 	my $inBlock = 0;
-	my $macroCountOpenBlock = 0;
 	my ($macro_subs, @perl_lines);
 	open my $fp, "<:utf8", $file or return 0;
 	while (<$fp>) {
@@ -57,48 +56,24 @@ sub parseMacroFile {
 				%block = (name => $value, type => "sub")
 			} else {
 				%block = (type => "bogus");
-				warning "$file: ignoring line '$_' in line $. (munch, munch, strange block)\n"
+				warning "$file: ignoring line '$_' (munch, munch, strange block)\n"
 			}
 			next
 		}
 
 		if (%block && $block{type} eq "macro") {
 			if ($_ eq "}") {
-				if ($macroCountOpenBlock) { # If the '}' is being used to terminate a block of commands from 'if'
-					push(@{$macro{$block{name}}}, '}');
-					
-					if ($macroCountOpenBlock) {
-						$macroCountOpenBlock--;
-					}
-				} else {
-					undef %block
-				}
+				undef %block
 			} else {
-				if (isNewCommandBlock($_)) {
-					$macroCountOpenBlock++
-				} elsif (!$macroCountOpenBlock && ($_ =~ /^}\s*else\s*{$/ || $_ =~ /}\s*elsif.*{$/ || $_ =~ /^case.*{$/ || $_ =~ /^else*{$/)) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
-					next
-				}
-
-				push(@{$macro{$block{name}}}, $_);
+				push(@{$macro{$block{name}}}, $_)
 			}
-			
 			next
 		}
 
 		if (%block && $block{type} eq "auto") {
 			if ($_ eq "}") {
 				if ($block{loadmacro}) {
-					if ($macroCountOpenBlock) {
-						push(@{$macro{$block{loadmacro_name}}}, '}');
-						
-						if ($macroCountOpenBlock) {
-							$macroCountOpenBlock--;
-						}
-					} else {
-						undef $block{loadmacro}
-					}
+					undef $block{loadmacro}
 				} else {
 					undef %block
 				}
@@ -108,18 +83,11 @@ sub parseMacroFile {
 				$automacro{$block{name}}->{call} = $block{loadmacro_name};
 				$macro{$block{loadmacro_name}} = []
 			} elsif ($block{loadmacro}) {
-				if (isNewCommandBlock($_)) {
-					$macroCountOpenBlock++
-				} elsif (!$macroCountOpenBlock && ($_ =~ /^}\s*else\s*{$/ || $_ =~ /}\s*elsif.*{$/ || $_ =~ /^case.*{$/ || $_ =~ /^else*{$/)) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
-					next
-				}
-
-				push(@{$macro{$block{loadmacro_name}}}, $_);
+				push(@{$macro{$block{loadmacro_name}}}, $_)
 			} else {
 				my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
 				unless (defined $key) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not a pair)\n";
+					warning "$file: ignoring '$_' (munch, munch, not a pair)\n";
 					next
 				}
 				if ($amSingle{$key}) {
@@ -127,15 +95,15 @@ sub parseMacroFile {
 				} elsif ($amMulti{$key}) {
 					push(@{$automacro{$block{name}}->{$key}}, $value)
 				} else {
-					warning "$file: ignoring '$_' in line $. (munch, munch, unknown automacro keyword)\n"
+					warning "$file: ignoring '$_' (munch, munch, unknown automacro keyword)\n"
 				}
 			}
-			
 			next
 		}
 		
 		if (%block && $block{type} eq "sub") {
-			if ($_ eq "}") {
+			if ($_ =~ /\{.*\};$/) {push(@perl_lines, $_)}
+			elsif ($_ =~ /\};?$/) {
 				if ($inBlock > 0) {
 					push(@perl_lines, $_);
 					$inBlock--;
@@ -158,9 +126,9 @@ sub parseMacroFile {
 			next
 		}
 
-		my ($key, $value) = $_ =~ /(?:^(.*?)\s|})+(.*)/;
+		my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
 		unless (defined $key) {
-			warning "$file: ignoring '$_' in line $. (munch, munch, strange food)\n";
+			warning "$file: ignoring '$_' (munch, munch, strange food)\n";
 			next
 		}
 
@@ -324,17 +292,17 @@ sub parseCmd {
 		elsif ($kw eq 'storamount') {$ret = getStorageAmount($arg)}
 		elsif ($kw eq 'config')     {$ret = getConfig($arg)}
 		elsif ($kw eq 'arg')        {$ret = getWord($arg)}
-		elsif ($kw eq 'eval')       {$ret = eval($arg) unless $Settings::lockdown}
+		elsif ($kw eq 'eval')       {$ret = eval($arg); $@ ? message("eval [$arg] failed: $@\n") : "" unless $Settings::lockdown; }
 		elsif ($kw eq 'listitem')   {$ret = getArgFromList($arg)}
-		elsif ($kw eq 'listlenght') {$ret = getListLenght($arg)}
+		elsif ($kw eq 'listlength') {$ret = getListLenght($arg)}
 		elsif ($kw eq 'nick')       {$arg = subvars($targ, 1); $ret = q4rx2($arg)}
+		elsif ($kw eq 'response')   {$ret = ((grep { $talk{responses}[$_-1] =~ /$arg/is } 1..@{$talk{responses}||[]})[0] || 0) - 1}
 		return unless defined $ret;
 		return $cmd if $ret eq '_%_';
-		$targ = q4rx $targ;
 		unless ($randomized) {
-			$cmd =~ s/\@$kw\s*\(\s*$targ\s*\)/$ret/g
+			$cmd =~ s/\@$kw\s*\(\s*\Q$targ\E\s*\)/$ret/g
 		} else {
-			$cmd =~ s/\@$kw\s*\(\s*$targ\s*\)/$ret/
+			$cmd =~ s/\@$kw\s*\(\s*\Q$targ\E\s*\)/$ret/
 		}
 	}
 	
@@ -360,17 +328,6 @@ sub parseCmd {
 
 	$cmd = subvars($cmd);
 	return $cmd
-}
-
-# check if on the line there commands that open new command blocks
-sub isNewCommandBlock {
-	my ($line) = @_;
-	
-	if ($line =~ /^if.*{$/ || $line =~ /^case.*{$/ || $line =~ /^switch.*{$/ || $line =~ /^else.*{$/) {
-		return 1;
-	} else {
-		return 0;
-	}
 }
 
 1;
