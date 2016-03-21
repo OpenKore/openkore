@@ -75,7 +75,7 @@ sub commandHandler {
 	
 	message "[PC] Looking for loaded files in old profile '".$profiles::profile."' to unload \n", "system";
 	foreach my $file (@{$Settings::files->getItems}) {
-		next if ($file->{'type'} != 0);
+		next if ($file->{'type'} != Settings::CONTROL_FILE_TYPE);
 		my $filepath;
 		if ($file->{'autoSearch'} == 1) {
 			$filepath = Settings::_findFileFromFolders($file->{'name'}, \@Settings::controlFolders);
@@ -105,13 +105,16 @@ sub commandHandler {
 			my $name = $file->{'autoSearch'} == 1 ? $file->{'name'} : $file->{'internalName'};
 			if ($name eq $filename) {
 				$reloadFiles{$file->{'index'}} = $filename;
-				message "[PC] Unloading '".$filename."' from base control folder\n";
+				message "[PC] Unloading '".$filename."' other control folder\n";
 			}
 		}
 	}
 	
-	shift @Settings::controlFolders;
-	unshift @Settings::controlFolders, $new_profile_folder;
+	foreach my $folder (@Settings::controlFolders) {
+		if ($folder eq $profiles::profile) {
+			$folder = $new_profile_folder;
+		}
+	}
 
 	my $progressHandler = sub {
 		my ($filename) = @_;
@@ -119,13 +122,17 @@ sub commandHandler {
 	};
 	
 	message "[PC] Loading files\n", "system";
+	my @files;
 	foreach my $file_index (keys %reloadFiles) {
 		my $file = $Settings::files->get($file_index);
 		if ($file->{'autoSearch'} == 0) {
 			$file->{'name'} = Settings::_findFileFromFolders($file->{'internalName'}, \@Settings::controlFolders);
 		}
-		Settings::loadByHandle($file_index, $progressHandler);
+		push (@files, $file);
 	}
+	
+	Settings::loadFiles(\@files, $progressHandler);
+	
 	message "[PC] Loading over, profile '".$new_profile."' loaded\n", "system";
 	$profiles::profile = $new_profile;
 }
