@@ -26,6 +26,11 @@ sub commandHandler {
 		error "[PC] Profiles plugin not loaded\n";
 		return;
 	}
+
+	if (!grep { $_ eq File::Spec->catdir($profiles::profile_folder, $profiles::profile) } @Settings::controlFolders) {
+		error "[PC] Profile loaded by profiles plugin not found in control folder list\n";
+		return;
+	}
 	
 	opendir my $d, $profiles::profile_folder;
 	my @conlist = readdir($d);
@@ -110,11 +115,7 @@ sub commandHandler {
 		}
 	}
 	
-	foreach my $folder (@Settings::controlFolders) {
-		if ($folder eq $profiles::profile) {
-			$folder = $new_profile_folder;
-		}
-	}
+	@Settings::controlFolders = map { $_ eq File::Spec->catdir($profiles::profile_folder, $profiles::profile) ? $new_profile_folder : $_ } @Settings::controlFolders;
 
 	my $progressHandler = sub {
 		my ($filename) = @_;
