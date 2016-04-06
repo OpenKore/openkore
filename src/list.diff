@@ -1,0 +1,1581 @@
+Index: Actor.pm
+===================================================================
+--- Actor.pm	(revision 9000)
++++ Actor.pm	(working copy)
+@@ -628,7 +628,7 @@
+ sub cartActive {
+ 	my ($self) = @_;
+ 	
+-	if ($cart{exists} ||
++	if ($self->cart->{exists} ||
+ 		$self->statusActive('EFFECTSTATE_PUSHCART, EFFECTSTATE_PUSHCART2, EFFECTSTATE_PUSHCART3, EFFECTSTATE_PUSHCART4, EFFECTSTATE_PUSHCART5')) {
+ 		return 1;
+ 	}
+Index: Actor/You.pm
+===================================================================
+--- Actor/You.pm	(revision 9000)
++++ Actor/You.pm	(working copy)
+@@ -26,6 +26,9 @@
+ use Log qw(message);
+ use base qw(Actor);
+ use InventoryList;
++use InventoryList::Inventory;
++use InventoryList::Storage;
++use InventoryList::Cart;
+ use Network::PacketParser;
+ use Translation;
+ use Utils;
+@@ -71,7 +74,9 @@
+ sub new {
+ 	my ($class) = @_;
+ 	my $self = $class->SUPER::new('You');
+-	$self->{__inventory} = new InventoryList();
++	$self->{__inventory} = new InventoryList::Inventory();
++	$self->{__storage} = new InventoryList::Storage();
++	$self->{__cart} = new InventoryList::Cart();
+ 	$self->{configPrefix} = '';
+ 	$self->{dcOnEmptyItems} = '';
+ 
+@@ -117,6 +122,24 @@
+ }
+ 
+ ##
++# InventoryList $char->storage()
++# Ensures: defined(result)
++#
++# Get the storage list for this character.
++sub storage {
++	return $_[0]->{__storage};
++}
++
++##
++# InventoryList $char->cart()
++# Ensures: defined(result)
++#
++# Get the cart list for this character.
++sub cart {
++	return $_[0]->{__cart};
++}
++
++##
+ # float $char->weight_percent()
+ #
+ # Returns your weight percentage (between 0 and 100).
+Index: AI/CoreLogic.pm
+===================================================================
+--- AI/CoreLogic.pm	(revision 9000)
++++ AI/CoreLogic.pm	(working copy)
+@@ -981,7 +981,7 @@
+ 		if (!$amount || $amount > $item->{amount}) {
+ 			$amount = $item->{amount};
+ 		}
+-		$messageSender->sendStorageGet($item->{index}, $amount) if $storage{opened};
++		$messageSender->sendStorageGet($item->{index}, $amount) if $char->storage->isOpened();
+ 		AI::args->{time} = time;
+ 		AI::dequeue if !@{AI::args->{items}};
+ 	}
+@@ -993,14 +993,14 @@
+ sub processCartAdd {
+ 	if (AI::action eq "cartAdd" && timeOut(AI::args)) {
+ 		my $item = AI::args->{items}[0];
+-		my $i = $item->{index};
+-		my $invItem = $char->inventory->get($i);
++		my $index = $item->{index};
++		my $amount = $item->{amount};
++		my $invItem = $char->inventory->getByServerIndex($index);
+ 		if ($invItem) {
+-			my $amount = $item->{amount};
+ 			if (!$amount || $amount > $invItem->{amount}) {
+ 				$amount = $invItem->{amount};
+ 			}
+-			$messageSender->sendCartAdd($invItem->{index}, $amount);
++			$messageSender->sendCartAdd($index, $amount);
+ 		}
+ 		shift @{AI::args->{items}};
+ 		AI::args->{time} = time;
+@@ -1013,14 +1013,14 @@
+ sub processCartGet {
+ 	if (AI::action eq "cartGet" && timeOut(AI::args)) {
+ 		my $item = AI::args->{items}[0];
+-		my $i = $item->{index};
+-
+-		if ($cart{inventory}[$i]) {
+-			my $amount = $item->{amount};
+-			if (!$amount || $amount > $cart{inventory}[$i]{amount}) {
+-				$amount = $cart{inventory}[$i]{amount};
++		my $index = $item->{index};
++		my $amount = $item->{amount};
++		my $cartItem = $char->cart->getByServerIndex($index);
++		if ($cartItem) {
++			if (!$amount || $amount > $cartItem->{amount}) {
++				$amount = $cartItem->{amount};
+ 			}
+-			$messageSender->sendCartGet($i, $amount);
++			$messageSender->sendCartGet($index, $amount);
+ 		}
+ 		shift @{AI::args->{items}};
+ 		AI::args->{time} = time;
+@@ -1089,7 +1089,7 @@
+ 		  && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
+ 		  && !$ai_v{sitAuto_forcedBySitCommand}
+ 		  && !AI::inQueue("storageAuto")
+-		  && $char->inventory->size() > 0) {
++		  && $char->inventory->isReady()) {
+ 
+ 		# Initiate autostorage when we're low on some item, and getAuto is set
+ 		my $needitem = "";
+@@ -1097,7 +1097,7 @@
+ 		Misc::checkValidity("AutoStorage part 1");
+ 		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
+ 			next unless ($config{"getAuto_$i"});
+-			if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
++			if ($char->storage->isOpened() && !$char->storage->getByName($config{"getAuto_$i"})) {
+ 				foreach (keys %items_lut) {
+ 					if ((lc($items_lut{$_}) eq lc($config{"getAuto_$i"})) && ($items_lut{$_} ne $config{"getAuto_$i"})) {
+ 						configModify("getAuto_$i", $items_lut{$_});
+@@ -1115,7 +1115,7 @@
+ 				  $amount < $config{"getAuto_${i}_maxAmount"})
+ 			    )
+ 			) {
+-				if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
++				if ($char->storage->isOpened() && !$char->storage->getByName($config{"getAuto_$i"})) {
+ =pod
+ 					#This works only for last getAuto item
+ 					if ($config{"getAuto_${i}_dcOnEmpty"}) {
+@@ -1125,7 +1125,7 @@
+ 					}
+ =cut
+ 				} else {
+-					if ($storage{openedThisSession} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
++					if ($char->storage->isOpenedThisSession() && !$char->storage->getByName($config{"getAuto_$i"})) {
+ 					} else {
+ 							my $sti = $config{"getAuto_$i"};
+ 							if ($needitem eq "") {
+@@ -1143,7 +1143,7 @@
+ 
+ 		# Only autostorage when we're on an attack route, or not moving
+ 		if ((!defined($routeIndex) || $attackOnRoute > 1) && $needitem ne "" &&
+-			$char->inventory->size() > 0 ){
++			$char->inventory->isReady()){
+ 	 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
+ 			AI::queue("storageAuto");
+ 		}
+@@ -1190,7 +1190,7 @@
+ 				$do_route = 1;
+ 			} else {
+ 				my $distance_from_char = distance($args->{npc}{pos}, $char->{pos_to});
+-				if (($distance_from_char > AI::args->{distance}) && !defined($args->{sentStore}) && !defined($ai_v{temp}{storage_opened})) {
++				if (($distance_from_char > AI::args->{distance}) && !defined($args->{sentStore}) && !$char->storage->isOpened()) {
+ 					$do_route = 1;
+ 				}
+ 			}
+@@ -1240,7 +1240,7 @@
+ 					ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'});
+ 				}
+ 
+-				delete $ai_v{temp}{storage_opened};
++				#delete $ai_v{temp}{storage_opened};
+ 				$args->{sentStore} = 1;
+ 
+ 				# NPC talk retry
+@@ -1249,7 +1249,7 @@
+ 				return;
+ 			}
+ 
+-			if (!defined $ai_v{temp}{storage_opened}) {
++			if (!$char->storage->isOpened()) {
+ 				# NPC talk retry
+ 				if (timeOut($AI::Timeouts::storageOpening, 40)) {
+ 					undef $args->{sentStore};
+@@ -1268,7 +1268,7 @@
+ 				$args->{done} = 1;
+ 				
+ 				# if storage is full disconnect if it says so in conf
+-				if(defined $storage{items_max} && @storageID >= $storage{items_max} && $config{'dcOnStorageFull'}) {
++				if($char->storage->isOpenedThisSession() && $char->storage->checkFull() && $config{'dcOnStorageFull'}) {
+ 					$messageSender->sendQuit();
+ 					error T("Auto disconnecting on StorageFull!\n");
+ 					chatLog("k", T("*** Your storage is full , disconnect! ***\n"));
+@@ -1305,8 +1305,8 @@
+ 				# we don't really need to check if we have a cart
+ 				# if we don't have one it will not find any items to loop through
+ 				$args->{cartNextItem} = 0 unless $args->{cartNextItem};
+-				for (my $i = $args->{cartNextItem}; $i < @{$cart{inventory}}; $i++) {
+-					my $item = $cart{inventory}[$i];
++				for (my $i = $args->{cartNextItem}; $i < @{$char->cart->getItems()}; $i++) {
++					my $item = $char->cart->getItems()->[$i];
+ 					next unless ($item && %{$item});
+ 
+ 					my $control = items_control($item->{name});
+@@ -1324,7 +1324,7 @@
+ 						$args->{cartLastIndex} = $item->{index};
+ 						$messageSender->sendStorageAddFromCart($item->{index}, $item->{amount} - $control->{keep});
+ 						$timeout{ai_storageAuto}{time} = time;
+-						$args->{cartNextItem} = $i + 1;
++						$args->{cartNextItem} = $i;
+ 						return;
+ 					}
+ 				}
+@@ -1363,12 +1363,14 @@
+ 						next;
+ 					}
+ 					my $invItem = $char->inventory->getByName($itemName);
+-					my $amount = $char->inventory->sumByName($itemName); # total amount of the same name items
++					my $invAmount = $char->inventory->sumByName($itemName);
++					my $storeItem = $char->storage->getByName($itemName);
++					my $storeAmount = $char->storage->sumByName($itemName);
+ 					$item{name} = $itemName;
+ 					$item{inventory}{index} = $invItem ? $invItem->{invIndex} : undef;
+-					$item{inventory}{amount} = $invItem ? $amount : 0;
+-					$item{storage}{index} = findKeyString(\%storage, "name", $item{name});
+-					$item{storage}{amount} = ($item{storage}{index} ne "")? $storage{$item{storage}{index}}{amount} : 0;
++					$item{inventory}{amount} = $invItem ? $invAmount : 0;
++					$item{storage}{index} = $storeItem ? $storeItem->{invIndex} : undef;
++					$item{storage}{amount} = $storeItem ? $storeAmount : 0;
+ 					$item{max_amount} = $config{"getAuto_$args->{index}"."_maxAmount"};
+ 					$item{amount_needed} = $item{max_amount} - $item{inventory}{amount};
+ 					$item{dcOnEmpty} = $config{"getAuto_$args->{index}"."_dcOnEmpty"};
+@@ -1381,7 +1383,7 @@
+ 					# Try at most 3 times to get the item
+ 					if (($item{amount_get} > 0) && ($args->{retry} < 3)) {
+ 						message TF("Attempt to get %s x %s from storage, retry: %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}), "storage", 1;
+-						$messageSender->sendStorageGet($item{storage}{index}, $item{amount_get});
++						$messageSender->sendStorageGet($storeItem->{index}, $item{amount_get});
+ 						$timeout{ai_storageAuto}{time} = time;
+ 						$args->{retry}++;
+ 						return;
+@@ -1494,7 +1496,7 @@
+ 			$ai_v{'temp'}{'do_route'} = 1;
+ 		} else {
+ 			$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
+-			if (($ai_v{'temp'}{'distance'} > AI::args->{distance}) && !defined($args->{sentSell})) { #  && !defined($ai_v{temp}{storage_opened})
++			if (($ai_v{'temp'}{'distance'} > AI::args->{distance}) && !defined($args->{sentSell})) {
+ 				$ai_v{'temp'}{'do_route'} = 1;
+ 			}
+ 		}
+@@ -1767,38 +1769,34 @@
+ 		if (timeOut($AI::Timeouts::autoCart, $timeout) && $char->cartActive) {
+ 			my @addItems;
+ 			my @getItems;
+-			my $cartInventory = $cart{inventory};
+ 			my $max;
+ 
+-			if ($config{cartMaxWeight} && $cart{weight} < $config{cartMaxWeight}) {
+-				foreach my $item (@{$char->inventory->getItems()}) {
+-					next if ($item->{broken} && $item->{type} == 7); # dont auto-cart add pet eggs in use
+-					next if ($item->{equipped});
+-					my $control = items_control($item->{name});
+-					if ($control->{cart_add} && $item->{amount} > $control->{keep}) {
++			if ($config{cartMaxWeight} && $char->cart->{weight} < $config{cartMaxWeight}) {
++				foreach my $invItem (@{$char->inventory->getItems()}) {
++					next if ($invItem->{broken} && $invItem->{type} == 7); # dont auto-cart add pet eggs in use
++					next if ($invItem->{equipped});
++					my $control = items_control($invItem->{name});
++					if ($control->{cart_add} && $invItem->{amount} > $control->{keep}) {
+ 						my %obj;
+-						$obj{index} = $item->{invIndex};
+-						$obj{amount} = $item->{amount} - $control->{keep};
++						$obj{index} = $invItem->{index};
++						$obj{amount} = $invItem->{amount} - $control->{keep};
+ 						push @addItems, \%obj;
+-						debug "Scheduling $item->{name} ($item->{invIndex}) x $obj{amount} for adding to cart\n", "ai_autoCart";
++						debug "Scheduling $invItem->{name} ($invItem->{invIndex}) x $obj{amount} for adding to cart\n", "ai_autoCart";
+ 					}
+ 				}
+ 				cartAdd(\@addItems);
+ 			}
+ 
+-			$max = @{$cartInventory};
+-			for (my $i = 0; $i < $max; $i++) {
+-				my $cartItem = $cartInventory->[$i];
+-				next unless ($cartItem);
++			foreach my $cartItem (@{$char->cart->getItems()}) {
+ 				my $control = items_control($cartItem->{name});
+ 				next unless ($control->{cart_get});
+ 
+-				my $item = $char->inventory->getByName($cartItem->{name});
++				my $invItem = $char->inventory->getByName($cartItem->{name});
+ 				my $amount;
+-				if (!$item) {
++				if (!$invItem) {
+ 					$amount = $control->{keep};
+-				} elsif ($item->{amount} < $control->{keep}) {
+-					$amount = $control->{keep} - $item->{amount};
++				} elsif ($invItem->{amount} < $control->{keep}) {
++					$amount = $control->{keep} - $invItem->{amount};
+ 				}
+ 				if ($amount > $cartItem->{amount}) {
+ 					$amount = $cartItem->{amount};
+@@ -1805,10 +1803,10 @@
+ 				}
+ 				if ($amount > 0) {
+ 					my %obj;
+-					$obj{index} = $i;
++					$obj{index} = $cartItem->{index};
+ 					$obj{amount} = $amount;
+ 					push @getItems, \%obj;
+-					debug "Scheduling $cartItem->{name} ($i) x $obj{amount} for getting from cart\n", "ai_autoCart";
++					debug "Scheduling $cartItem->{name} ($cartItem->{index}) x $obj{amount} for getting from cart\n", "ai_autoCart";
+ 				}
+ 			}
+ 			cartGet(\@getItems);
+@@ -2379,7 +2377,7 @@
+ 					$timeout{ai_item_use_auto}{time} = time;
+ 					debug qq~Auto-item use: $item->{name}\n~, "ai";
+ 					last;
+-				} elsif ($config{"useSelf_item_${i}_dcOnEmpty"} && $char->inventory->size() > 0) {
++				} elsif ($config{"useSelf_item_${i}_dcOnEmpty"} && $char->inventory->isReady()) {
+ 					error TF("Disconnecting on empty %s!\n", $config{"useSelf_item_$i"});
+ 					chatLog("k", TF("Disconnecting on empty %s!\n", $config{"useSelf_item_$i"}));
+ 					quit();
+Index: Commands.pm
+===================================================================
+--- Commands.pm	(revision 9000)
++++ Commands.pm	(working copy)
+@@ -854,66 +854,37 @@
+ 			"You do not have a cart.\n");
+ 		return;
+ 
+-	} elsif (!defined $cart{'inventory'}) {
++	} elsif (!$char->cart->isReady()) {
+ 		error T("Cart inventory is not available.\n");
+ 		return;
+ 
+-	} elsif ($arg1 eq "") {
+-		my $msg = center(T(" Cart "), 50, '-') ."\n".
+-			T("#  Name\n");
+-		for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
+-			next if (!$cart{'inventory'}[$i] || !%{$cart{'inventory'}[$i]});
+-			my $display = "$cart{'inventory'}[$i]{'name'} x $cart{'inventory'}[$i]{'amount'}";
+-			$display .= T(" -- Not Identified") if !$cart{inventory}[$i]{identified};
+-			$msg .= sprintf("%-2d %-34s\n", $i, $display);
+-		}
+-		$msg .= TF("\nCapacity: %d/%d  Weight: %d/%d\n",
+-			int($cart{'items'}), int($cart{'items_max'}), int($cart{'weight'}), int($cart{'weight_max'}));
+-		$msg .= ('-'x50) . "\n";
+-		message $msg, "list";
+-
++	} elsif ($arg1 eq "" || $arg1 eq "eq" || $arg1 eq "nu" || $arg1 eq "u") {
++		cmdCart_list($arg1);
++		
+ 	} elsif ($arg1 eq "desc") {
+-		if (!($arg2 =~ /\d+/)) {
+-			error TF("Syntax Error in function 'cart desc' (Show Cart Item Description)\n" .
+-				"'%s' is not a valid cart item number.\n", $arg2);
+-		} elsif (!$cart{'inventory'}[$arg2]) {
+-			error TF("Error in function 'cart desc' (Show Cart Item Description)\n" .
+-				"Cart Item %s does not exist.\n", $arg2);
+-		} else {
+-			printItemDesc($cart{'inventory'}[$arg2]{'nameID'});
+-		}
++		cmdCart_desc($arg2);
++		
++	} elsif (($arg1 eq "add" || $arg1 eq "get" || $arg1 eq "release" || $arg1 eq "change") && (!$net || $net->getState() != Network::IN_GAME)) {
++		error TF("You must be logged in the game to use this command '%s'\n", 'cart ' .$arg1);
++			return;
+ 
+ 	} elsif ($arg1 eq "add") {
+-		if (!$net || $net->getState() != Network::IN_GAME) {
+-			error TF("You must be logged in the game to use this command '%s'\n", 'cart ' .$arg1);
+-			return;
+-		}
+ 		cmdCart_add($arg2);
+ 
+ 	} elsif ($arg1 eq "get") {
+-		if (!$net || $net->getState() != Network::IN_GAME) {
+-			error TF("You must be logged in the game to use this command '%s'\n", 'cart ' .$arg1);
+-			return;
+-		}
+ 		cmdCart_get($arg2);
+ 
+ 	} elsif ($arg1 eq "release") {
+-		if (!$net || $net->getState() != Network::IN_GAME) {
+-			error TF("You must be logged in the game to use this command '%s'\n", 'cart ' .$arg1);
+-			return;
+-		}
+ 		$messageSender->sendCompanionRelease();
+ 		message T("Trying to released the cart...\n");
++	
+ 	} elsif ($arg1 eq "change") {
+-		if (!$net || $net->getState() != Network::IN_GAME) {
+-			error TF("You must be logged in the game to use this command '%s'\n", 'cart ' .$arg1);
+-			return;
+-		}
+ 		if ($arg2 =~ m/^[1-5]$/) {
+ 			$messageSender->sendChangeCart($arg2);
+ 		} else {
+ 			error T("Usage: cart change <1-5>\n");
+ 		}
++	
+ 	} else {
+ 		error TF("Error in function 'cart'\n" .
+ 			"Command '%s' is not a known command.\n", $arg1);
+@@ -920,6 +891,151 @@
+ 	}
+ }
+ 
++sub cmdCart_desc {
++	my $arg = shift;
++	if (!($arg =~ /\d+/)) {
++		error TF("Syntax Error in function 'cart desc' (Show Cart Item Description)\n" .
++			"'%s' is not a valid cart item number.\n", $arg);
++	} else {
++		my $item = $char->cart->get($arg);
++		if (!$item) {
++			error TF("Error in function 'cart desc' (Show Cart Item Description)\n" .
++				"Cart Item %s does not exist.\n", $arg);
++		} else {
++			printItemDesc($item->{nameID});
++		}
++	}
++}
++
++sub cmdCart_list {
++	my $type = shift;
++	message "$type\n";
++
++	my @useable;
++	my @equipment;
++	my @non_useable;
++	my ($i, $display, $index);
++	
++	foreach my $item (@{$char->cart->getItems()}) {
++		if ($item->usable) {
++			push @useable, $item->{invIndex};
++		} elsif ($item->equippable) {
++			my %eqp;
++			$eqp{index} = $item->{index};
++			$eqp{binID} = $item->{invIndex};
++			$eqp{name} = $item->{name};
++			$eqp{amount} = $item->{amount};
++			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
++			$eqp{type} = $itemTypes_lut{$item->{type}};
++			push @equipment, \%eqp;
++		} else {
++			push @non_useable, $item->{invIndex};
++		}
++	}
++
++	my $msg = center(T(" Cart "), 50, '-') ."\n".
++			T("#  Name\n");
++
++	if (!$type || $type eq 'u') {
++		$msg .= T("-- Usable --\n");
++		for (my $i = 0; $i < @useable; $i++) {
++			$index = $useable[$i];
++			my $item = $char->cart->get($index);
++			$display = $item->{name};
++			$display .= " x $item->{amount}";
++			$msg .= swrite(
++				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
++				[$index, $display]);
++		}
++	}
++
++	if (!$type || $type eq 'eq') {
++		$msg .= T("\n-- Equipment --\n");
++		foreach my $item (@equipment) {
++			## altered to allow for Arrows/Ammo which will are stackable equip.
++			$display = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
++			$display .= " x $item->{amount}" if $item->{amount} > 1;
++			$display .= $item->{identified};
++			$msg .= sprintf("%-57s\n", $display);
++		}
++	}
++
++	if (!$type || $type eq 'nu') {
++		$msg .= T("\n-- Non-Usable --\n");
++		for (my $i = 0; $i < @non_useable; $i++) {
++			$index = $non_useable[$i];
++			my $item = $char->cart->get($index);
++			$display = $item->{name};
++			$display .= " x $item->{amount}";
++			$msg .= swrite(
++				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
++				[$index, $display]);
++		}
++	}
++
++	$msg .= TF("\nCapacity: %d/%d  Weight: %d/%d\n",
++			$char->cart->{items}, $char->cart->{items_max}, $char->cart->{weight}, $char->cart->{weight_max}).
++			('-'x50) . "\n";
++	message $msg, "list";
++}
++
++sub cmdCart_add {
++	my ($name) = @_;
++
++	if (!defined $name) {
++		error T("Syntax Error in function 'cart add' (Add Item to Cart)\n" .
++			"Usage: cart add <item>\n");
++		return;
++	}
++
++	my $amount;
++	if ($name =~ /^(.*?) (\d+)$/) {
++		$name = $1;
++		$amount = $2;
++	}
++
++	my $item = Match::inventoryItem($name);
++
++	if (!$item) {
++		error TF("Error in function 'cart add' (Add Item to Cart)\n" .
++			"Inventory Item %s does not exist.\n", $name);
++		return;
++	}
++
++	if (!$amount || $amount > $item->{amount}) {
++		$amount = $item->{amount};
++	}
++	$messageSender->sendCartAdd($item->{index}, $amount);
++}
++
++sub cmdCart_get {
++	my ($name) = @_;
++
++	if (!defined $name) {
++		error T("Syntax Error in function 'cart get' (Get Item from Cart)\n" .
++			"Usage: cart get <cart item>\n");
++		return;
++	}
++
++	my $amount;
++	if ($name =~ /^(.*?) (\d+)$/) {
++		$name = $1;
++		$amount = $2;
++	}
++
++	my $item = Match::cartItem($name);
++	if (!$item) {
++		error TF("Error in function 'cart get' (Get Item from Cart)\n" .
++			"Cart Item %s does not exist.\n", $name);
++		return;
++	}
++
++	if (!$amount || $amount > $item->{amount}) {
++		$amount = $item->{amount};
++	}
++	$messageSender->sendCartGet($item->{index}, $amount);
++}
++
+ sub cmdCash {
+ 	my (undef, $args) = @_;
+ 	my ($sub_cmd, $arg) = split(/\s+/,$args, 2);
+@@ -1022,63 +1138,6 @@
+ 	}
+ }
+ 
+-sub cmdCart_add {
+-	my ($name) = @_;
+-
+-	if (!defined $name) {
+-		error T("Syntax Error in function 'cart add' (Add Item to Cart)\n" .
+-			"Usage: cart add <item>\n");
+-		return;
+-	}
+-
+-	my $amount;
+-	if ($name =~ /^(.*?) (\d+)$/) {
+-		$name = $1;
+-		$amount = $2;
+-	}
+-
+-	my $item = Match::inventoryItem($name);
+-
+-	if (!$item) {
+-		error TF("Error in function 'cart add' (Add Item to Cart)\n" .
+-			"Inventory Item %s does not exist.\n", $name);
+-		return;
+-	}
+-
+-	if (!$amount || $amount > $item->{amount}) {
+-		$amount = $item->{amount};
+-	}
+-	$messageSender->sendCartAdd($item->{index}, $amount);
+-}
+-
+-sub cmdCart_get {
+-	my ($name) = @_;
+-
+-	if (!defined $name) {
+-		error T("Syntax Error in function 'cart get' (Get Item from Cart)\n" .
+-			"Usage: cart get <cart item>\n");
+-		return;
+-	}
+-
+-	my $amount;
+-	if ($name =~ /^(.*?) (\d+)$/) {
+-		$name = $1;
+-		$amount = $2;
+-	}
+-
+-	my $item = Match::cartItem($name);
+-	if (!$item) {
+-		error TF("Error in function 'cart get' (Get Item from Cart)\n" .
+-			"Cart Item %s does not exist.\n", $name);
+-		return;
+-	}
+-
+-	if (!$amount || $amount > $item->{amount}) {
+-		$amount = $item->{amount};
+-	}
+-	$messageSender->sendCartGet($item->{index}, $amount);
+-}
+-
+ sub cmdCharSelect {
+ 	my (undef,$arg1) = @_;
+ 	if (!$net || $net->getState() != Network::IN_GAME) {
+@@ -2945,8 +3004,13 @@
+ 	my (undef, $args) = @_;
+ 	my ($arg1) = $args =~ /^(\w+)/;
+ 	my ($arg2) = $args =~ /^\w+ (.+)/;
+-
+-	if (!$char || $char->inventory->size() == 0) {
++	
++	if (!$char || !$char->inventory->isReady()) {
++		error "Inventory is not available\n";
++		return;
++	}
++	
++	if ($char->inventory->size() == 0) {
+ 		error T("Inventory is empty\n");
+ 		return;
+ 	}
+@@ -4585,26 +4649,32 @@
+ }
+ 
+ sub cmdStorage {
+-	if ($storage{opened} || $storage{openedThisSession}) {
++	if ($char->storage->isOpenedThisSession()) {
+ 		my (undef, $args) = @_;
+ 
+ 		my ($switch, $items) = split(' ', $args, 2);
+ 		if (!$switch || $switch eq 'eq' || $switch eq 'u' || $switch eq 'nu') {
+ 			cmdStorage_list($switch);
+-		} elsif ($switch eq 'add' && $storage{opened}) {
+-			cmdStorage_add($items);
+-		} elsif ($switch eq 'addfromcart'  && $storage{opened}) {
+-			cmdStorage_addfromcart($items);
+-		} elsif ($switch eq 'get'  && $storage{opened}) {
+-			cmdStorage_get($items);
+-		} elsif ($switch eq 'gettocart'  && $storage{opened}) {
+-			cmdStorage_gettocart($items);
+-		} elsif ($switch eq 'close'  && $storage{opened}) {
+-			cmdStorage_close();
+ 		} elsif ($switch eq 'log') {
+ 			cmdStorage_log();
+ 		} elsif ($switch eq 'desc') {
+ 			cmdStorage_desc($items);
++		} elsif ($switch eq 'add' || $switch eq 'addfromcart' || $switch eq 'get' || $switch eq 'gettocart' || $switch eq 'close') {
++			if ($char->storage->isOpened()) {
++				if ($switch eq 'add') {
++					cmdStorage_add($items);
++				} elsif ($switch eq 'addfromcart') {
++					cmdStorage_addfromcart($items);
++				} elsif ($switch eq 'get') {
++					cmdStorage_get($items);
++				} elsif ($switch eq 'gettocart') {
++					cmdStorage_gettocart($items);
++				} elsif ($switch eq 'close') {
++					cmdStorage_close();
++				}
++			} else {
++				error T("Cannot get/add/close storage because storage is not opened\n");
++			}
+ 		} else {
+ 			error T("Syntax Error in function 'storage' (Storage Functions)\n" .
+ 				"Usage: storage [<eq|u|nu>]\n" .
+@@ -4668,7 +4738,9 @@
+ 	for my $name (@names) {
+ 		if ($name =~ /^(\d+)\-(\d+)$/) {
+ 			for my $i ($1..$2) {
+-				push @items, $storage{$storageID[$i]} if ($storage{$storageID[$i]});
++				my $item = $char->storage->get($i);
++				#push @items, $item->{index} if ($item);
++				push @items, $item if ($item);
+ 			}
+ 
+ 		} else {
+@@ -4677,6 +4749,7 @@
+ 				error TF("Storage Item '%s' does not exist.\n", $name);
+ 				next;
+ 			}
++			#push @items, $item->{index};
+ 			push @items, $item;
+ 		}
+ 	}
+@@ -5905,23 +5978,22 @@
+ 	my @useable;
+ 	my @equipment;
+ 	my @non_useable;
+-
+-	for (my $i = 0; $i < @storageID; $i++) {
+-		next if ($storageID[$i] eq "");
+-		my $item = $storage{$storageID[$i]};
++	my ($i, $display, $index);
++	
++	foreach my $item (@{$char->storage->getItems()}) {
+ 		if ($item->usable) {
+-			push @useable, $item;
++			push @useable, $item->{invIndex};
+ 		} elsif ($item->equippable) {
+ 			my %eqp;
+-			$eqp{binID} = $i;
++			$eqp{index} = $item->{index};
++			$eqp{binID} = $item->{invIndex};
+ 			$eqp{name} = $item->{name};
+-			$eqp{type} = $itemTypes_lut{$item->{type}};
+-			## Add amt so we can give quantities for ammo.
+ 			$eqp{amount} = $item->{amount};
+ 			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
++			$eqp{type} = $itemTypes_lut{$item->{type}};
+ 			push @equipment, \%eqp;
+ 		} else {
+-			push @non_useable, $item;
++			push @non_useable, $item->{invIndex};
+ 		}
+ 	}
+ 
+@@ -5930,12 +6002,12 @@
+ 	if (!$type || $type eq 'u') {
+ 		$msg .= T("-- Usable --\n");
+ 		for (my $i = 0; $i < @useable; $i++) {
+-			my $item = $useable[$i];
+-			my $binID = $item->{binID};
+-			my $display = $item->{name};
++			$index = $useable[$i];
++			my $item = $char->storage->get($index);
++			$display = $item->{name};
+ 			$display .= " x $item->{amount}";
+ 			$msg .= swrite(
+-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+-				[$binID, $display]);
++				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
++				[$index, $display]);
+ 		}
+ 	}
+ 
+Index: Match.pm
+===================================================================
+--- Match.pm	(revision 9000)
++++ Match.pm	(working copy)
+@@ -91,18 +91,17 @@
+ #
+ # Find an item in cart.
+ sub cartItem {
+-	my ($name) = @_;
+-
++	my ($name) = lc shift;
++	my $item;
+ 	if ($name =~ /^\d+$/) {
+ 		# A number was provided
+-		return unless $cart{inventory}[$name] && %{$cart{inventory}[$name]};
+-		return $cart{inventory}[$name];
++		$item = $char->cart->get($name);
++	} else {
++		# A name was provided; match it
++		$item = $char->cart->getByName($name);
+ 	}
+-
+-	# A name was provided; match it
+-	my $index = findIndexString_lc($cart{inventory}, 'name', $name);
+-	return unless defined($index);
+-	return $cart{inventory}[$index];
++	return $item if ($item);
++	return undef; # Not found
+ }
+ 
+ ##
+@@ -113,19 +112,15 @@
+ # Find an item in storage.
+ sub storageItem {
+ 	my ($name) = lc shift;
+-
++	my $item;
+ 	if ($name =~ /^\d+$/) {
+ 		# A number was provided
+-		return unless defined($storageID[$name]); # Invalid number
+-		return $storage{$storageID[$name]};
++		$item = $char->storage->get($name);
++	} else {
++		# A name was provided; match it
++		$item = $char->storage->getByName($name);
+ 	}
+-
+-	# A name was provided; match it
+-	my $index;
+-	for my $ID (@storageID) {
+-		my $item = $storage{$ID};
+-		return $item if lc($item->{name}) eq $name;
+-	}
++	return $item if ($item);
+ 	return undef; # Not found
+ }
+ 
+Index: Misc.pm
+===================================================================
+--- Misc.pm	(revision 9000)
++++ Misc.pm	(working copy)
+@@ -195,8 +195,6 @@
+ 	checkSelfCondition
+ 	checkPlayerCondition
+ 	checkMonsterCondition
+-	findCartItemInit
+-	findCartItem
+ 	makeShop
+ 	openShop
+ 	closeShop
+@@ -1764,6 +1762,42 @@
+ 	$itemChange{$item->{name}} -= $amount;
+ }
+ 
++##
++# storageItemRemoved($invIndex, $amount)
++#
++# Removes $amount of $invIndex from $char->{storage}.
++# Also prints a message saying the item was removed
++sub storageItemRemoved {
++	my ($invIndex, $amount) = @_;
++
++	return if $amount == 0;
++	my $item = $char->storage->get($invIndex);
++	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $invIndex, $amount), "storage";
++	$item->{amount} -= $amount;
++	if ($item->{amount} <= 0) {
++		$char->storage->remove($item);
++	}
++	$itemChange{$item->{name}} -= $amount;
++}
++
++##
++# cartItemRemoved($invIndex, $amount)
++#
++# Removes $amount of $invIndex from $char->{cart}.
++# Also prints a message saying the item was removed
++sub cartItemRemoved {
++	my ($invIndex, $amount) = @_;
++
++	return if $amount == 0;
++	my $item = $char->cart->get($invIndex);
++	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $invIndex, $amount), "cart";
++	$item->{amount} -= $amount;
++	if ($item->{amount} <= 0) {
++		$char->cart->remove($item);
++	}
++	$itemChange{$item->{name}} -= $amount;
++}
++
+ # Resolve the name of a card
+ sub cardName {
+ 	my $cardID = shift;
+@@ -3150,11 +3184,9 @@
+ 
+ 	if (open($f, ">:utf8", $Settings::storage_log_file)) {
+ 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
+-		for (my $i = 0; $i < @storageID; $i++) {
+-			next if (!$storageID[$i]);
+-			my $item = $storage{$storageID[$i]};
++		foreach my $item (@{$char->storage->getItems()}) {
+ 
+-			my $display = sprintf "%2d %s x %s", $i, $item->{name}, $item->{amount};
++			my $display = sprintf "%2d %s x %s", $item->{invIndex}, $item->{name}, $item->{amount};
+ 			# Translation Comment: Mark to show not identified items
+ 			$display .= " -- " . T("Not Identified") if !$item->{identified};
+ 			# Translation Comment: Mark to show broken items
+@@ -3162,7 +3194,7 @@
+ 			print $f "$display\n";
+ 		}
+ 		# Translation Comment: Storage Capacity
+-		print $f TF("\nCapacity: %d/%d\n", $storage{items}, $storage{items_max});
++		print $f TF("\nCapacity: %d/%d\n", $char->storage->{items}, $char->storage->{items_max});
+ 		print $f "-------------------------------\n";
+ 		close $f;
+ 
+@@ -3972,6 +4004,7 @@
+ 	}
+ 
+ 	if ($config{$prefix."_inInventory"}) {
++		return 0 if (!$char->inventory->isReady());
+ 		foreach my $input (split / *, */, $config{$prefix."_inInventory"}) {
+ 			my ($itemName, $count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
+ 			$count = '>0' if $count eq '';
+@@ -3981,12 +4014,12 @@
+ 	}
+ 
+ 	if ($config{$prefix."_inCart"}) {
++		return 0 if (!$char->cart->isReady());
+ 		foreach my $input (split / *, */, $config{$prefix."_inCart"}) {
+ 			my ($item,$count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
+ 			$count = '>0' if $count eq '';
+-			my $iX = findIndexString_lc($cart{inventory}, "name", $item);
+- 			my $item = $cart{inventory}[$iX];
+-			return 0 if !inRange(!defined $iX ? 0 : $item->{amount}, $count);
++			my $item = $char->cart->getByName($item);
++			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
+ 		}
+ 	}
+ 
+@@ -4269,45 +4302,6 @@
+ }
+ 
+ ##
+-# findCartItemInit()
+-#
+-# Resets all "found" flags in the cart to 0.
+-sub findCartItemInit {
+-	for (@{$cart{inventory}}) {
+-		next unless $_ && %{$_};
+-		undef $_->{found};
+-	}
+-}
+-
+-##
+-# findCartItem($name [, $found [, $nounid]])
+-#
+-# Returns the integer index into $cart{inventory} for the cart item matching
+-# the given name, or undef.
+-#
+-# If an item is found, the "found" value for that item is set to 1. Items
+-# cannot be found again until you reset the "found" flags using
+-# findCartItemInit(), if $found is true.
+-#
+-# Unidentified items will not be returned if $nounid is true.
+-sub findCartItem {
+-	my ($name, $found, $nounid) = @_;
+-
+-	$name = lc($name);
+-	my $index = 0;
+-	for (@{$cart{inventory}}) {
+-		if (lc($_->{name}) eq $name &&
+-		    !($found && $_->{found}) &&
+-			!($nounid && !$_->{identified})) {
+-			$_->{found} = 1;
+-			return $index;
+-		}
+-		$index++;
+-	}
+-	return undef;
+-}
+-
+-##
+ # makeShop()
+ #
+ # Returns an array of items to sell. The array can be no larger than the
+@@ -4346,16 +4340,15 @@
+ 	findCartItemInit();
+ 	shuffleArray(\@{$shop{items}}) if ($config{'shop_random'} eq "2");
+ 	for my $sale (@{$shop{items}}) {
+-		my $index = findCartItem($sale->{name}, 1, 1);
+-		next unless defined($index);
++		my $cart_item = $char->cart->getByName($sale->{name});
++		next unless ($cart_item);
+ 
+ 		# Found item to vend
+-		my $cart_item = $cart{inventory}[$index];
+ 		my $amount = $cart_item->{amount};
+ 
+ 		my %item;
+ 		$item{name} = $cart_item->{name};
+-		$item{index} = $index;
++		$item{index} = $cart_item->{index};
+ 			if ($sale->{priceMax}) {
+ 				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
+ 			} else {
+Index: Network/Receive/kRO/Sakexe_0.pm
+===================================================================
+--- Network/Receive/kRO/Sakexe_0.pm	(revision 9000)
++++ Network/Receive/kRO/Sakexe_0.pm	(working copy)
+@@ -936,86 +936,6 @@
+ 	undef $cardMergeIndex;
+ }
+ 
+-sub cart_info {
+-	my ($self, $args) = @_;
+-
+-	$cart{items} = $args->{items};
+-	$cart{items_max} = $args->{items_max};
+-	$cart{weight} = int($args->{weight} / 10);
+-	$cart{weight_max} = int($args->{weight_max} / 10);
+-	$cart{exists} = 1;
+-	debug "[cart_info] received.\n", "parseMsg";
+-}
+-
+-sub cart_add_failed {
+-	my ($self, $args) = @_;
+-
+-	my $reason;
+-	if ($args->{fail} == 0) {
+-		$reason = T('overweight');
+-	} elsif ($args->{fail} == 1) {
+-		$reason = T('too many items');
+-	} else {
+-		$reason = TF("Unknown code %s",$args->{fail});
+-	}
+-	error TF("Can't Add Cart Item (%s)\n", $reason);
+-}
+-
+-sub cart_items_nonstackable {
+-	my ($self, $args) = @_;
+-
+-	$self->_items_list({
+-		# TODO: different classes for inventory/cart/storage items
+-		class => 'Actor::Item',
+-		hook => 'packet_cart',
+-		debug_str => 'Non-Stackable Cart Item',
+-		items => [$self->parse_items_nonstackable($args)],
+-		getter => sub { $cart{inventory}[$_[0]{index}] },
+-		adder => sub { $cart{inventory}[$_[0]{index}] = $_[0] },
+-	});
+-
+-	$ai_v{'inventory_time'} = time + 1;
+-	$ai_v{'cart_time'} = time + 1;
+-}
+-
+-sub cart_items_stackable {
+-	my ($self, $args) = @_;
+-
+-	$self->_items_list({
+-		class => 'Actor::Item',
+-		hook => 'packet_cart',
+-		debug_str => 'Stackable Cart Item',
+-		items => [$self->parse_items_stackable($args)],
+-		getter => sub { $cart{inventory}[$_[0]{index}] },
+-		adder => sub { $cart{inventory}[$_[0]{index}] = $_[0] },
+-	});
+-
+-	$ai_v{'inventory_time'} = time + 1;
+-	$ai_v{'cart_time'} = time + 1;
+-}
+-
+-sub cart_item_added {
+-	my ($self, $args) = @_;
+-
+-	my $item = $cart{inventory}[$args->{index}] ||= Actor::Item->new;
+-	if ($item->{amount}) {
+-		$item->{amount} += $args->{amount};
+-	} else {
+-		$item->{index} = $args->{index};
+-		$item->{nameID} = $args->{nameID};
+-		$item->{amount} = $args->{amount};
+-		$item->{identified} = $args->{identified};
+-		$item->{broken} = $args->{broken};
+-		$item->{upgrade} = $args->{upgrade};
+-		$item->{cards} = $args->{cards};
+-		$item->{type} = $args->{type} if (exists $args->{type});
+-		$item->{name} = itemName($item);
+-	}
+-	message TF("Cart Item Added: %s (%d) x %s\n", $item->{name}, $args->{index}, $args->{amount});
+-	$itemChange{$item->{name}} += $args->{amount};
+-	$args->{item} = $item;
+-}
+-
+ sub cash_dealer {
+ 	my ($self, $args) = @_;
+ 
+@@ -1063,21 +983,6 @@
+ 	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
+ }
+ 
+-sub cart_item_removed {
+-	my ($self, $args) = @_;
+-
+-	my ($index, $amount) = @{$args}{qw(index amount)};
+-
+-	my $item = $cart{inventory}[$index];
+-	$item->{amount} -= $amount;
+-	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $index, $amount);
+-	$itemChange{$item->{name}} -= $amount;
+-	if ($item->{amount} <= 0) {
+-		$cart{'inventory'}[$index] = undef;
+-	}
+-	$args->{item} = $item;
+-}
+-
+ sub change_to_constate25 {
+ 	$net->setState(2.5);
+ 	undef $accountID;
+@@ -2626,36 +2531,8 @@
+ 		Plugins::callHook('packet_inventory', {index => $item->{invIndex}});
+ =cut
+ 	}
+-
+-	$ai_v{'inventory_time'} = time + 1;
+-	$ai_v{'cart_time'} = time + 1;
+ }
+ 
+-sub inventory_items_stackable {
+-	my ($self, $args) = @_;
+-	return unless changeToInGameState();
+-
+-	$self->_items_list({
+-		class => 'Actor::Item',
+-		hook => 'packet_inventory',
+-		debug_str => 'Stackable Inventory Item',
+-		items => [$self->parse_items_stackable($args)],
+-		getter => sub { $char->inventory->getByServerIndex($_[0]{index}) },
+-		adder => sub { $char->inventory->add($_[0]) },
+-		callback => sub {
+-			my ($local_item) = @_;
+-
+-			if (defined $char->{arrow} && $local_item->{index} == $char->{arrow}) {
+-				$local_item->{equipped} = 32768;
+-				$char->{equipment}{arrow} = $local_item;
+-			}
+-		}
+-	});
+-
+-	$ai_v{'inventory_time'} = time + 1;
+-	$ai_v{'cart_time'} = time + 1;
+-}
+-
+ sub item_appeared {
+ 	my ($self, $args) = @_;
+ 	return unless changeToInGameState();
+@@ -3110,7 +2987,6 @@
+ 		delete $char->{permitSkill};
+ 		delete $char->{encoreSkill};
+ 	}
+-	$cart{exists} = 0;
+ 	undef %guild;
+ 
+ 	Plugins::callHook('Network::Receive::map_changed', {
+@@ -5086,115 +4962,6 @@
+ 	}
+ }
+ 
+-sub storage_closed {
+-	message T("Storage closed.\n"), "storage";
+-	delete $ai_v{temp}{storage_opened};
+-	delete $storage{opened};
+-	Plugins::callHook('packet_storage_close');
+-
+-	# Storage log
+-	writeStorageLog(0);
+-
+-	if ($char->{dcOnEmptyItems} ne "") {
+-		message TF("Disconnecting on empty %s!\n", $char->{dcOnEmptyItems});
+-		chatLog("k", TF("Disconnecting on empty %s!\n", $char->{dcOnEmptyItems}));
+-		quit();
+-	}
+-}
+-
+-sub storage_item_added {
+-	my ($self, $args) = @_;
+-
+-	my $index = $args->{index};
+-	my $amount = $args->{amount};
+-
+-	my $item = $storage{$index} ||= Actor::Item->new;
+-	if ($item->{amount}) {
+-		$item->{amount} += $amount;
+-	} else {
+-		binAdd(\@storageID, $index);
+-		$item->{nameID} = $args->{nameID};
+-		$item->{index} = $index;
+-		$item->{amount} = $amount;
+-		$item->{type} = $args->{type};
+-		$item->{identified} = $args->{identified};
+-		$item->{broken} = $args->{broken};
+-		$item->{upgrade} = $args->{upgrade};
+-		$item->{cards} = $args->{cards};
+-		$item->{name} = itemName($item);
+-		$item->{binID} = binFind(\@storageID, $index);
+-	}
+-	message TF("Storage Item Added: %s (%d) x %s\n", $item->{name}, $item->{binID}, $amount), "storage", 1;
+-	$itemChange{$item->{name}} += $amount;
+-	$args->{item} = $item;
+-}
+-
+-sub storage_item_removed {
+-	my ($self, $args) = @_;
+-
+-	my ($index, $amount) = @{$args}{qw(index amount)};
+-
+-	my $item = $storage{$index};
+-	$item->{amount} -= $amount;
+-	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $item->{binID}, $amount), "storage";
+-	$itemChange{$item->{name}} -= $amount;
+-	$args->{item} = $item;
+-	if ($item->{amount} <= 0) {
+-		delete $storage{$index};
+-		binRemove(\@storageID, $index);
+-	}
+-}
+-
+-sub storage_items_nonstackable {
+-	my ($self, $args) = @_;
+-
+-	$self->_items_list({
+-		class => 'Actor::Item',
+-		hook => 'packet_storage',
+-		debug_str => 'Non-Stackable Storage Item',
+-		items => [$self->parse_items_nonstackable($args)],
+-		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
+-	});
+-
+-	$storageTitle = exists $args->{title} ? $args->{title} : undef;
+-}
+-
+-sub storage_items_stackable {
+-	my ($self, $args) = @_;
+-
+-	undef %storage;
+-	undef @storageID;
+-
+-	$self->_items_list({
+-		class => 'Actor::Item',
+-		hook => 'packet_storage',
+-		debug_str => 'Stackable Storage Item',
+-		items => [$self->parse_items_stackable($args)],
+-		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
+-		callback => sub {
+-			my ($local_item) = @_;
+-
+-			$local_item->{amount} = $local_item->{amount} & ~0x80000000;
+-		},
+-	});
+-
+-	$storageTitle = exists $args->{title} ? $args->{title} : undef;
+-}
+-
+-sub storage_opened {
+-	my ($self, $args) = @_;
+-	$storage{items} = $args->{items};
+-	$storage{items_max} = $args->{items_max};
+-
+-	$ai_v{temp}{storage_opened} = 1;
+-	if (!$storage{opened}) {
+-		$storage{opened} = 1;
+-		$storage{openedThisSession} = 1;
+-		message defined $storageTitle ? TF("Storage '%s' opened.\n", $storageTitle) : T("Storage opened.\n"), "storage";
+-		Plugins::callHook('packet_storage_open');
+-	}
+-}
+-
+ sub storage_password_request {
+ 	my ($self, $args) = @_;
+ 
+Index: Network/Receive/ServerType0.pm
+===================================================================
+--- Network/Receive/ServerType0.pm	(revision 9000)
++++ Network/Receive/ServerType0.pm	(working copy)
+@@ -1370,86 +1370,6 @@
+ 	undef $cardMergeIndex;
+ }
+ 
+-sub cart_info {
+-	my ($self, $args) = @_;
+-
+-	$cart{items} = $args->{items};
+-	$cart{items_max} = $args->{items_max};
+-	$cart{weight} = int($args->{weight} / 10);
+-	$cart{weight_max} = int($args->{weight_max} / 10);
+-	$cart{exists} = 1;
+-	debug "[cart_info] received.\n", "parseMsg";
+-}
+-
+-sub cart_add_failed {
+-	my ($self, $args) = @_;
+-
+-	my $reason;
+-	if ($args->{fail} == 0) {
+-		$reason = T('overweight');
+-	} elsif ($args->{fail} == 1) {
+-		$reason = T('too many items');
+-	} else {
+-		$reason = TF("Unknown code %s",$args->{fail});
+-	}
+-	error TF("Can't Add Cart Item (%s)\n", $reason);
+-}
+-
+-sub cart_items_nonstackable {
+-	my ($self, $args) = @_;
+-
+-	$self->_items_list({
+-		# TODO: different classes for inventory/cart/storage items
+-		class => 'Actor::Item',
+-		hook => 'packet_cart',
+-		debug_str => 'Non-Stackable Cart Item',
+-		items => [$self->parse_items_nonstackable($args)],
+-		getter => sub { $cart{inventory}[$_[0]{index}] },
+-		adder => sub { $cart{inventory}[$_[0]{index}] = $_[0] },
+-	});
+-
+-	$ai_v{'inventory_time'} = time + 1;
+-	$ai_v{'cart_time'} = time + 1;
+-}
+-
+-sub cart_items_stackable {
+-	my ($self, $args) = @_;
+-
+-	$self->_items_list({
+-		class => 'Actor::Item',
+-		hook => 'packet_cart',
+-		debug_str => 'Stackable Cart Item',
+-		items => [$self->parse_items_stackable($args)],
+-		getter => sub { $cart{inventory}[$_[0]{index}] },
+-		adder => sub { $cart{inventory}[$_[0]{index}] = $_[0] },
+-	});
+-
+-	$ai_v{'inventory_time'} = time + 1;
+-	$ai_v{'cart_time'} = time + 1;
+-}
+-
+-sub cart_item_added {
+-	my ($self, $args) = @_;
+-
+-	my $item = $cart{inventory}[$args->{index}] ||= Actor::Item->new;
+-	if ($item->{amount}) {
+-		$item->{amount} += $args->{amount};
+-	} else {
+-		$item->{index} = $args->{index};
+-		$item->{nameID} = $args->{nameID};
+-		$item->{amount} = $args->{amount};
+-		$item->{identified} = $args->{identified};
+-		$item->{broken} = $args->{broken};
+-		$item->{upgrade} = $args->{upgrade};
+-		$item->{cards} = $args->{cards};
+-		$item->{type} = $args->{type} if (exists $args->{type});
+-		$item->{name} = itemName($item);
+-	}
+-	message TF("Cart Item Added: %s (%d) x %s\n", $item->{name}, $args->{index}, $args->{amount});
+-	$itemChange{$item->{name}} += $args->{amount};
+-	$args->{item} = $item;
+-}
+-
+ sub cash_dealer {
+ 	my ($self, $args) = @_;
+ 
+@@ -1498,21 +1418,6 @@
+ 	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
+ }
+ 
+-sub cart_item_removed {
+-	my ($self, $args) = @_;
+-
+-	my ($index, $amount) = @{$args}{qw(index amount)};
+-
+-	my $item = $cart{inventory}[$index];
+-	$item->{amount} -= $amount;
+-	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $index, $amount);
+-	$itemChange{$item->{name}} -= $amount;
+-	if ($item->{amount} <= 0) {
+-		$cart{'inventory'}[$index] = undef;
+-	}
+-	$args->{item} = $item;
+-}
+-
+ sub change_to_constate25 {
+ 	$net->setState(2.5);
+ 	undef $accountID;
+@@ -2976,36 +2881,8 @@
+ 			}
+ 		}
+ 	});
+-
+-	$ai_v{'inventory_time'} = time + 1;
+-	$ai_v{'cart_time'} = time + 1;
+ }
+ 
+-sub inventory_items_stackable {
+-	my ($self, $args) = @_;
+-	return unless changeToInGameState();
+-
+-	$self->_items_list({
+-		class => 'Actor::Item',
+-		hook => 'packet_inventory',
+-		debug_str => 'Stackable Inventory Item',
+-		items => [$self->parse_items_stackable($args)],
+-		getter => sub { $char->inventory->getByServerIndex($_[0]{index}) },
+-		adder => sub { $char->inventory->add($_[0]) },
+-		callback => sub {
+-			my ($local_item) = @_;
+-
+-			if (defined $char->{arrow} && $local_item->{index} == $char->{arrow}) {
+-				$local_item->{equipped} = 32768;
+-				$char->{equipment}{arrow} = $local_item;
+-			}
+-		}
+-	});
+-
+-	$ai_v{'inventory_time'} = time + 1;
+-	$ai_v{'cart_time'} = time + 1;
+-}
+-
+ sub item_appeared {
+ 	my ($self, $args) = @_;
+ 	return unless changeToInGameState();
+@@ -3459,7 +3336,6 @@
+ 		delete $char->{permitSkill};
+ 		delete $char->{encoreSkill};
+ 	}
+-	$cart{exists} = 0;
+ 	undef %guild;
+ 
+ 	Plugins::callHook('Network::Receive::map_changed', {
+@@ -5668,65 +5544,6 @@
+ 	}
+ }
+ 
+-sub storage_closed {
+-	message T("Storage closed.\n"), "storage";
+-	delete $ai_v{temp}{storage_opened};
+-	delete $storage{opened};
+-	Plugins::callHook('packet_storage_close');
+-
+-	# Storage log
+-	writeStorageLog(0);
+-
+-	if ($char->{dcOnEmptyItems} ne "") {
+-		message TF("Disconnecting on empty %s!\n", $char->{dcOnEmptyItems});
+-		chatLog("k", TF("Disconnecting on empty %s!\n", $char->{dcOnEmptyItems}));
+-		quit();
+-	}
+-}
+-
+-sub storage_item_added {
+-	my ($self, $args) = @_;
+-
+-	my $index = $args->{index};
+-	my $amount = $args->{amount};
+-
+-	my $item = $storage{$index} ||= Actor::Item->new;
+-	if ($item->{amount}) {
+-		$item->{amount} += $amount;
+-	} else {
+-		binAdd(\@storageID, $index);
+-		$item->{nameID} = $args->{nameID};
+-		$item->{index} = $index;
+-		$item->{amount} = $amount;
+-		$item->{type} = $args->{type};
+-		$item->{identified} = $args->{identified};
+-		$item->{broken} = $args->{broken};
+-		$item->{upgrade} = $args->{upgrade};
+-		$item->{cards} = $args->{cards};
+-		$item->{name} = itemName($item);
+-		$item->{binID} = binFind(\@storageID, $index);
+-	}
+-	message TF("Storage Item Added: %s (%d) x %s\n", $item->{name}, $item->{binID}, $amount), "storage", 1;
+-	$itemChange{$item->{name}} += $amount;
+-	$args->{item} = $item;
+-}
+-
+-sub storage_item_removed {
+-	my ($self, $args) = @_;
+-
+-	my ($index, $amount) = @{$args}{qw(index amount)};
+-
+-	my $item = $storage{$index};
+-	$item->{amount} -= $amount;
+-	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $item->{binID}, $amount), "storage";
+-	$itemChange{$item->{name}} -= $amount;
+-	$args->{item} = $item;
+-	if ($item->{amount} <= 0) {
+-		delete $storage{$index};
+-		binRemove(\@storageID, $index);
+-	}
+-}
+-
+ sub character_equip {
+ 	my ($self, $args) = @_;
+ 
+@@ -5756,56 +5573,6 @@
+ 	message($msg, "list");
+ }
+ 
+-sub storage_items_nonstackable {
+-	my ($self, $args) = @_;
+-
+-	$self->_items_list({
+-		class => 'Actor::Item',
+-		hook => 'packet_storage',
+-		debug_str => 'Non-Stackable Storage Item',
+-		items => [$self->parse_items_nonstackable($args)],
+-		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
+-	});
+-
+-	$storageTitle = $args->{title} ? $args->{title} : undef;
+-}
+-
+-sub storage_items_stackable {
+-	my ($self, $args) = @_;
+-
+-	undef %storage;
+-	undef @storageID;
+-
+-	$self->_items_list({
+-		class => 'Actor::Item',
+-		hook => 'packet_storage',
+-		debug_str => 'Stackable Storage Item',
+-		items => [$self->parse_items_stackable($args)],
+-		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
+-		callback => sub {
+-			my ($local_item) = @_;
+-
+-			$local_item->{amount} = $local_item->{amount} & ~0x80000000;
+-		},
+-	});
+-
+-	$storageTitle = $args->{title} ? $args->{title} : undef;
+-}
+-
+-sub storage_opened {
+-	my ($self, $args) = @_;
+-	$storage{items} = $args->{items};
+-	$storage{items_max} = $args->{items_max};
+-
+-	$ai_v{temp}{storage_opened} = 1;
+-	if (!$storage{opened}) {
+-		$storage{opened} = 1;
+-		$storage{openedThisSession} = 1;
+-		message defined $storageTitle ? TF("Storage '%s' opened.\n", $storageTitle) : T("Storage opened.\n"), "storage";
+-		Plugins::callHook('packet_storage_open');
+-	}
+-}
+-
+ sub storage_password_request {
+ 	my ($self, $args) = @_;
+ 
+Index: Network/XKore2/MapServer.pm
+===================================================================
+--- Network/XKore2/MapServer.pm	(revision 9000)
++++ Network/XKore2/MapServer.pm	(working copy)
+@@ -20,7 +20,7 @@
+ 	$portalsList $npcsList $monstersList $playersList $petsList
+ 	@friendsID %friends %pet @partyUsersID %spells
+ 	@chatRoomsID %chatRooms @venderListsID %venderLists $hotkeyList
+-	%config $questList %cart $incomingMessages $masterServer $messageSender
++	%config $questList $incomingMessages $masterServer $messageSender
+ 	%cashShop
+ );
+ use Base::Ragnarok::MapServer;
+@@ -516,7 +516,7 @@
+ #					$data .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $char->{ID}, 1);
+ 					if ($statusID == 673) {
+ 						# for Cart active
+-						$data .= pack('C2 v a4 C V4', 0x3F, 0x04, $statusID, $char->{ID}, 1, 9999, $cart{type}, 0, 0);
++						$data .= pack('C2 v a4 C V4', 0x3F, 0x04, $statusID, $char->{ID}, 1, 9999, $char->cart->{type}, 0, 0);
+ 					} elsif ($statusID == 622) {
+ 						# sit
+ 						$data .= pack('C2 v a4 C V4', 0x3F, 0x04, $statusID, $char->{ID}, 1, 9999, 1, 0, 0);
+@@ -597,16 +597,14 @@
+ 	my $data = undef;
+ 	# Send cart information includeing the items
+ 	if (!$client->{session}{dummy} && $char->cartActive && $RunOnce) {
+-		$data = pack('C2 v2 V2', 0x21, 0x01, $cart{items}, $cart{items_max}, ($cart{weight} * 10), ($cart{weight_max} * 10));
++		$data = pack('C2 v2 V2', 0x21, 0x01, $char->cart->{items}, $char->cart->{items_max}, ($char->cart->{weight} * 10), ($char->cart->{weight_max} * 10));
+ 		$client->send($data);
+ 		
+ 		my @stackable;
+ 		my @nonstackable;
+ 		my $n = 0;
+-		for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
+-			next if (!$cart{'inventory'}[$i] || !%{$cart{'inventory'}[$i]});
+-			my $item = $cart{'inventory'}[$i];
+-			$item->{index} = $i;
++		foreach my $item (@{$char->cart->getItems()}) {
++			$item->{index} = $i;#TEST
+ 			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) {
+ 				push @stackable, $item;
+ 			} else {

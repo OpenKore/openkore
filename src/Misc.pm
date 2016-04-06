@@ -195,8 +195,6 @@ our @EXPORT = (
 	checkSelfCondition
 	checkPlayerCondition
 	checkMonsterCondition
-	findCartItemInit
-	findCartItem
 	makeShop
 	openShop
 	closeShop
@@ -1764,6 +1762,42 @@ sub inventoryItemRemoved {
 	$itemChange{$item->{name}} -= $amount;
 }
 
+##
+# storageItemRemoved($invIndex, $amount)
+#
+# Removes $amount of $invIndex from $char->{storage}.
+# Also prints a message saying the item was removed
+sub storageItemRemoved {
+	my ($invIndex, $amount) = @_;
+
+	return if $amount == 0;
+	my $item = $char->storage->get($invIndex);
+	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $invIndex, $amount), "storage";
+	$item->{amount} -= $amount;
+	if ($item->{amount} <= 0) {
+		$char->storage->remove($item);
+	}
+	$itemChange{$item->{name}} -= $amount;
+}
+
+##
+# cartItemRemoved($invIndex, $amount)
+#
+# Removes $amount of $invIndex from $char->{cart}.
+# Also prints a message saying the item was removed
+sub cartItemRemoved {
+	my ($invIndex, $amount) = @_;
+
+	return if $amount == 0;
+	my $item = $char->cart->get($invIndex);
+	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $invIndex, $amount), "cart";
+	$item->{amount} -= $amount;
+	if ($item->{amount} <= 0) {
+		$char->cart->remove($item);
+	}
+	$itemChange{$item->{name}} -= $amount;
+}
+
 # Resolve the name of a card
 sub cardName {
 	my $cardID = shift;
@@ -3150,11 +3184,9 @@ sub writeStorageLog {
 
 	if (open($f, ">:utf8", $Settings::storage_log_file)) {
 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
-		for (my $i = 0; $i < @storageID; $i++) {
-			next if (!$storageID[$i]);
-			my $item = $storage{$storageID[$i]};
+		foreach my $item (@{$char->storage->getItems()}) {
 
-			my $display = sprintf "%2d %s x %s", $i, $item->{name}, $item->{amount};
+			my $display = sprintf "%2d %s x %s", $item->{invIndex}, $item->{name}, $item->{amount};
 			# Translation Comment: Mark to show not identified items
 			$display .= " -- " . T("Not Identified") if !$item->{identified};
 			# Translation Comment: Mark to show broken items
@@ -3162,7 +3194,7 @@ sub writeStorageLog {
 			print $f "$display\n";
 		}
 		# Translation Comment: Storage Capacity
-		print $f TF("\nCapacity: %d/%d\n", $storage{items}, $storage{items_max});
+		print $f TF("\nCapacity: %d/%d\n", $char->storage->{items}, $char->storage->{items_max});
 		print $f "-------------------------------\n";
 		close $f;
 
@@ -3972,6 +4004,7 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_inInventory"}) {
+		return 0 if (!$char->inventory->isReady());
 		foreach my $input (split / *, */, $config{$prefix."_inInventory"}) {
 			my ($itemName, $count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
@@ -3981,12 +4014,12 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_inCart"}) {
+		return 0 if (!$char->cart->isReady());
 		foreach my $input (split / *, */, $config{$prefix."_inCart"}) {
 			my ($item,$count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
-			my $iX = findIndexString_lc($cart{inventory}, "name", $item);
- 			my $item = $cart{inventory}[$iX];
-			return 0 if !inRange(!defined $iX ? 0 : $item->{amount}, $count);
+			my $item = $char->cart->getByName($item);
+			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
 		}
 	}
 
@@ -4269,45 +4302,6 @@ sub checkMonsterCondition {
 }
 
 ##
-# findCartItemInit()
-#
-# Resets all "found" flags in the cart to 0.
-sub findCartItemInit {
-	for (@{$cart{inventory}}) {
-		next unless $_ && %{$_};
-		undef $_->{found};
-	}
-}
-
-##
-# findCartItem($name [, $found [, $nounid]])
-#
-# Returns the integer index into $cart{inventory} for the cart item matching
-# the given name, or undef.
-#
-# If an item is found, the "found" value for that item is set to 1. Items
-# cannot be found again until you reset the "found" flags using
-# findCartItemInit(), if $found is true.
-#
-# Unidentified items will not be returned if $nounid is true.
-sub findCartItem {
-	my ($name, $found, $nounid) = @_;
-
-	$name = lc($name);
-	my $index = 0;
-	for (@{$cart{inventory}}) {
-		if (lc($_->{name}) eq $name &&
-		    !($found && $_->{found}) &&
-			!($nounid && !$_->{identified})) {
-			$_->{found} = 1;
-			return $index;
-		}
-		$index++;
-	}
-	return undef;
-}
-
-##
 # makeShop()
 #
 # Returns an array of items to sell. The array can be no larger than the
@@ -4346,16 +4340,15 @@ sub makeShop {
 	findCartItemInit();
 	shuffleArray(\@{$shop{items}}) if ($config{'shop_random'} eq "2");
 	for my $sale (@{$shop{items}}) {
-		my $index = findCartItem($sale->{name}, 1, 1);
-		next unless defined($index);
+		my $cart_item = $char->cart->getByName($sale->{name});
+		next unless ($cart_item);
 
 		# Found item to vend
-		my $cart_item = $cart{inventory}[$index];
 		my $amount = $cart_item->{amount};
 
 		my %item;
 		$item{name} = $cart_item->{name};
-		$item{index} = $index;
+		$item{index} = $cart_item->{index};
 			if ($sale->{priceMax}) {
 				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
 			} else {

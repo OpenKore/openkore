@@ -628,7 +628,7 @@ sub statusActive {
 sub cartActive {
 	my ($self) = @_;
 	
-	if ($cart{exists} ||
+	if ($self->cart->{exists} ||
 		$self->statusActive('EFFECTSTATE_PUSHCART, EFFECTSTATE_PUSHCART2, EFFECTSTATE_PUSHCART3, EFFECTSTATE_PUSHCART4, EFFECTSTATE_PUSHCART5')) {
 		return 1;
 	}

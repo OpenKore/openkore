@@ -76,6 +76,7 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
+	Plugins::delHook($self->{hook}) if $self->{hook};
 	$self->clear();
 	$self->SUPER::DESTROY();
 }

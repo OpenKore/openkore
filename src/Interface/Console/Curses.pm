@@ -592,7 +592,7 @@ sub updateStatus {
 		hp       => { title => 'HP',     cur => $char->{hp},        max => $char->{hp_max},     color1 => 'bold|red',  color2 => 'bold|green', threshold => 15 },
 		sp       => { title => 'SP',     cur => $char->{sp},        max => $char->{sp_max},     color1 => 'bold|blue', color2 => '',           threshold => 0 },
 		weight   => { title => 'Weight', cur => $char->{weight},    max => $char->{weight_max}, color1 => 'cyan',      color2 => 'red',        threshold => 50 },
-		cart     => { title => 'Cart W', cur => $cart{weight},      max => $cart{weight_max},   color1 => 'cyan',      color2 => '',           threshold => 0 },
+		cart     => { title => 'Cart W', cur => $char->cart->{weight},      max => $char->cart->{weight_max},   color1 => 'cyan',      color2 => '',           threshold => 0 },
 		hunger   => { title => 'Hunger', cur => $homun->{hunger},   max => 100,                 color1 => 'red',       color2 => 'green',      threshold => 0 },
 		intimacy => { title => 'Loyal',  cur => $homun->{intimacy}, max => 1000,                color1 => 'red',       color2 => 'green',      threshold => 10 },
 		hom_hp   => { title => 'Hom HP', cur => $homun->{hp},       max => $homun->{hp_max},    color1 => 'bold|red',  color2 => 'bold|green', threshold => 0 },
