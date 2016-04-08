@@ -4430,7 +4430,7 @@ sub received_characters {
 	## Note to devs: If other official servers support > 3 characters, then
 	## you should add these other serverTypes to the list compared here:
 	if (($args->{switch} eq '099D') && 
-		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO ))
+		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO idRO ))
 	) {
 		$net->setState(1.5);
 		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1') {
