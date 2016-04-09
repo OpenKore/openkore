@@ -26,6 +26,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %handlers = qw(
+		storage_password 023B
 		sync 0360
 		character_move 035F
 		actor_info_request 0368
