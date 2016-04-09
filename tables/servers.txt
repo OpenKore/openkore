@@ -84,7 +84,7 @@ master_version 12
 version 2
 patchserver wpatch.ragnarok.co.id
 patchpath /patch02
-serverType iRO
+serverType idRO
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
