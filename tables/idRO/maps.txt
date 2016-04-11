@@ -1,3 +1,20 @@
+//공성전 TE 복사맵 
+te_prt_gld.rsw#Gloria#
+te_prtcas01.rsw#Gaebolg#
+te_prtcas02.rsw#Richard#
+te_prtcas03.rsw#Wigner#
+te_prtcas04.rsw#Heine#
+te_prtcas05.rsw#Nerious#
+teg_dun01.rsw#Subterranean Dungeon of Guild#
+te_alde_gld.rsw#Kafragaten#
+te_aldecas1.rsw#Glaris#
+te_aldecas2.rsw#Defolty#
+te_aldecas3.rsw#Sorin#
+te_aldecas4.rsw#Bennit#
+te_aldecas5.rsw#W#
+teg_dun02.rsw#Subterranean Dungeon of Guild#
+
+
 gefenia04.rsw#Geffenia #
 gefenia03.rsw#Geffenia #
 gefenia02.rsw#Geffenia #
@@ -805,3 +822,42 @@ bra_in01.rsw#Dalam Brasilis#
 bra_fild01.rsw#Kota Brasilis#
 bra_dun01.rsw#Pintu masuk Gua Air terjun#
 bra_dun02.rsw#Di dalam Gua Air terjun#
+
+// ---------- Port Malaya ------------
+malaya.rsw#Port Malaya#
+ma_fild01.rsw#Baryo Mahiwaga#
+ma_fild02.rsw#Hutan#
+ma_scene01.rsw#Danau Bakonawa#
+ma_in01.rsw#Inside of Malaya#
+ma_dun01.rsw#Bangungot Hospital 1F#
+1@ma_h.rsw#Bangungot Hospital 2F#
+1@ma_c.rsw#Gua Buwaya#
+1@ma_b.rsw#Tempat Persembunyian Bakonawa#
+ma_zif01.rsw#Inside of Jeepney#
+ma_zif02.rsw#Inside of Jeepney#
+ma_zif03.rsw#Inside of Jeepney#
+ma_zif04.rsw#Inside of Jeepney#
+ma_zif05.rsw#Inside of Jeepney#
+ma_zif06.rsw#Inside of Jeepney#
+ma_zif07.rsw#Inside of Jeepney#
+ma_zif08.rsw#Inside of Jeepney#
+ma_zif09.rsw#Inside of Jeepney#
+job_ko.rsw#Tempat tersembunyi#
+
+malangdo.rsw#Malangdo#
+mal_in01.rsw#Malangdo#
+mal_in02.rsw#Malangdo#
+mal_dun01.rsw#malangdo Dungeon#
+1@cash.rsw#Gua Octopus#
+1@pump.rsw#Culvert Dungeon#
+2@pump.rsw#Culvert Dungeon2#
+
+
+//생체던전
+lhz_dun04.rsw#Human Experimentation Laboratory B4#
+que_lhz.rsw#Human Experimentation Laboratory B4#
+1@lhz.rsw#Wolfchev's Lab#
+
+//-크리스마스 이벤트 신규 추가 맵 지역정보
+
+niflxmas.rsw#Deadman's land Niffelheim#
