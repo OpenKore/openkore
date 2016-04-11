@@ -1140,13 +1140,9 @@
 1472#Staff_of_Soul#
 1473#Wizardry_Staff#
 1529#Iron_Driver#
-1530#Mjollnir#
 1531#Spanner#
 1599#Angra_Manyu#
 2109#Memorize_Book#
-2410#Sleipnir#
-2629#Magingiorde#
-2630#Brysinggamen#
 5020#Kafra_Band#
 5021#Bankruptcy_of_heart#
 5022#Helm_of_Sun#
@@ -2360,7 +2356,7 @@
 
 //_----------2006_Christmas----------
 
-12200#Xmas_Cake#
+12200#Christmas_Cake#
 5204#Rudolph's_Nose#
 5136#Antonio's_Santa_Hat#
 12225#Sweet_Candy_Cane#
@@ -4149,7 +4145,6 @@
 6078#Stone_Fragment#
 6079#Flower_Of_Alfheim#
 6080#Manuk_Coin#
-6081#Splandide_Coin#
 6082#Spirit_Of_Alfheim#
 6084#Bradium_Fragments#
 6085#Shaggy_Muffler#
@@ -5114,7 +5109,7 @@
 12361#Delicious_Ice_Flakes#
 12363#Fit_Well_Pipe#
 12370#Gril's_Naivety#
-12739#Flower_Of_Snow#
+12739#Snow_Flower#
 9043#Marionette_Egg#
 9045#Whisper_Egg#
 9052#Incubus_Egg#
@@ -5868,8 +5863,6 @@
 2566#Half_Asprika#
 16625#Half_Asprika_box_7days#
 17308#Half_Asprika_box_1day#
-2181#Hervor#
-2020#Jormungand#
 18570#Ancient_Gold_Deco#
 2949#Silversmith_Bracelet#
 18813#New_Wave_Sunglasses#
@@ -5994,13 +5987,12 @@
 6682#Bag_Of_Goods#
 7909#Stolen_Cookie#
 7910#Stolen_Candy#
-19976#Cat_Santa_Hat#
+19976#Cat_Santa_Hat_Costume#
 22685#Solo_Christmas_Gift#
 6821#Solo_Troops_Badge#
 22686#Solo_Cookie#
 12354#Buche_De_Noel#
 2784#Oh_Holy_Night#
-12200#Event_Cake#
 7908#Lousie_Beauty_coupon#
 5466#Wind_Milestone#
 22018#Shoes_Of_Wise_Man#
@@ -6148,7 +6140,7 @@
 19607#Love_Chick_Hat#
 19649#White_Kitten_Ears#
 19661#Sweet_Bonnet#
-19685#Shiny_Santa_Poring_Hat#
+19685#ShineSantaPoring_Hat_Costume#
 2190#Ancient_Shield_Of_Aeon#
 18885#Jejecap#
 18887#Aqua_Bunny_Band#
@@ -6317,11 +6309,11 @@
 17526#Majestic_Lucky_Egg#
 
 //--------------- Update Xmas Event 20141224 ---------------
-19982#Hat#
-19707#Hat#
-20222#Hat#
-19955#Hat#
-19697#Hat#
+19982#Santa_Hat_Costume#
+19707#Polar_Bear_Cap_Costume#
+20222#Blue_Pigtail_Santa_Hat_Costume#
+19955#Mini_Tree_J_Costume#
+19697#Rudolph_Santa_Hat_Costume#
 11565#White_Potion_B#
 11568#Red_Slim_Potion_B#
 11572#Blue_Potion#
@@ -6350,10 +6342,10 @@
 22553#Rainbow_Cake_B#
 
 //--------------- Update Blessing Egg 20141224 ---------------
-2196#Shield#
-18937#Accessory#
-18938#Accessory#
-18925#Accessory#
+2196#White_Gold_Shield#
+18937#Memories_Of_Lovers#
+18938#Astro_Circle#
+18925#GodOfWinds_Fan#
 17532#Blessing_Lucky_Egg#
 
 //--------------- Update Garnet Egg 20150128 ---------------
@@ -6364,3 +6356,349 @@
 15123#Whikebain_Suit#
 21013#Hetairoi_Sword#
 21012#Some_Wizard_MagicSword#
+
+//--------------- Update Erzulie Lucky Egg 20150304 ---------------
+19047#Angeling_KnitCap#
+20155#C_Ladys_Feather_Hat#
+2198#Lapine_Shield#
+19048#Elemental_Clothes#
+17572#Erzulie_Lucky_Egg#
+
+//--------------- Update Limited Gold Weapon 20150325 ---------------
+1323#Ru_Gold_Axe#
+1937#Ru_Gold_Violin#
+1992#Ru_Gold_Whip#
+28104#Ru_Gold_Axe_M#
+28601#Ru_Gold_Book#
+1678#Ru_Gold_Wand#
+1442#Ru_Gold_Spear#
+13452#Ru_Gold_Sword#
+18127#Ru_Gold_Bow#
+16037#Ru_Gold_Mace#
+28006#Ru_Gold_Katar#
+28700#Ru_Gold_Dagger#
+28701#Ru_Gold_Knife#
+28702#Ru_Gold_Ashura#
+
+//--------------- Update Venus Lucky Egg 20150408 ---------------
+18559#Fafnir_Skin#
+18560#Fafnir_Mask#
+20131#C_Clock_Tower_Manager#
+5562#Good_Wedding_Veil#
+17584#Venus_Lucky_Egg#
+
+
+//--- 14.2
+6564#Captive_Hatchling#
+2915#Ettlang_Keepsake#
+2916#Fairy_Wing#
+2917#Str_Glove#
+2918#Int_Glove#
+2919#Agi_Glove#
+2920#Vit_Glove#
+2921#Dex_Glove#
+2922#Luk_Glove#
+2923#Str_Glove_#
+2924#Int_Glove_#
+2925#Agi_Glove_#
+2926#Vit_Glove_#
+2927#Dex_Glove_#
+2928#Luk_Glove_#
+6081#Splendide_Coin#
+6539#Old_Left_Lapine#
+6540#Golden_Leaf#
+6541#Avant_Research_Data#
+6542#Star_Shape_Mushroom#
+6545#Firm_Hair#
+6546#Younger_Bro_Letter#
+6547#Stained_Research_Book#
+6548#Piece_Of_Lapine_Wing#
+6552#Mail_Package#
+6553#Leaf_Made_Wood#
+6554#Seed_Box#
+6555#Birthday_Candle#
+6557#Fancy_Fairy_Wing#
+6558#Pile_Of_Acorn#
+6559#Eye_Drops#
+6560#Leaf_Bookmark#
+6561#Dustball#
+6562#Tiny_Mouse_Tail#
+6563#Weeds#
+12812#Snow_Flip#
+12813#Peony_Mommy#
+12814#Slapping_Herb#
+12815#Yggdrasil_Dust#
+19543#Oliver_Wolf_Hood#
+19545#C_Boy's_Cap#
+19546#C_Valkyrie_Helm#
+19547#C_Deviruchi_Cap#
+19548#C_Frog_Cap#
+19549#C_Magestic_Goat#
+19550#C_Blush#
+19551#C_Elven_Ears#
+19552#C_Centimental_Flower#
+19553#C_Assassin_Mask_#
+19554#C_Hahoe_Mask#
+
+//--- 29042015
+12532#Royal_Jelly_Box2#
+12293#Dried_Yggdrasilberry#
+12292#Unripe_Yggdrasilberry#
+12531#White_Potion_Box#
+
+//--------------- Update Amora Lucky Egg 20150506---------------
+17588#Amora_Lucky_Egg#
+18564#Love_Piece#
+20171#C_Sepia_Cap#
+28342#Critical_Anklet#
+18563#Heart_Wing_Hairband#
+
+//--------------- Update New Costume 20150603---------------
+20130#C_Whisper_Tall_Hat#
+20132#C_Aura_Of_Thought#
+20154#C_Maple_Which_Falls#
+19910#C_Halloween_Hat#
+20195#C_Scratching_Cat#
+
+
+//--------------- Update Sograt Lucky Egg 20150617---------------
+20099#Flying_Ljosalfar#
+19024#Protect_Feathers#
+17598#Sograt_Lucky_Scroll#
+
+//--------------- Update Sanctuary Lucky Egg 20150715---------------
+22072#Hikingboots#
+20218#C_Spell_Circuit#
+21019#Onimaru#
+17607#Sanctuary_Lucky_Egg#
+16043#Meteor_Strike#
+
+//--------------- Update Chronosian Lucky Egg 20150819---------------
+17613#Chronosian_Lucky_Eggl#
+20220#C_Dark_Night_Veil#
+5943#Owl_viscount_Silk_Hat#
+1682#Shadow_Staff#
+1940#Trumpet_Shell#
+
+//--------------- Update Cyborg Lucky Egg 20150909---------------
+20315#C_Analyze_Eye#
+20316#C_Seraph_Wing_Helm#
+22082#Polyhedron_Shoes#
+28372#Imperial_Ring#
+17628#Cyborg_Lucky_Egg#
+
+//--------------- Update WOE TE 20151007---------------
+//----- WOE TE
+1299#TE_Woe_Katarr#
+1319#TE_Woe_Axe#
+1399#TE_Woe_Two_Handed_Axe#
+1437#TE_Woe_Pike#
+1495#TE_Woe_Lance#
+1530#Mjolnir#
+1591#TE_Woe_Book#
+1667#TE_Woe_Staff#
+1834#TE_Woe_Fist#
+1932#TE_Woe_Guitar#
+1987#TE_Woe_Rope#
+2019#TE_Woe_Two_Hand_Staff#
+2020#Jormungand#
+2021#Ganbantein#
+2178#TE_Woe_Buckler#
+2179#TE_Woe_Shield#
+2180#TE_Woe_Magic_Guard#
+2181#Hervor#
+2182#Hervor_Alvitr#
+2410#Sleipnir#
+2496#TE_Woe_Shoes#
+2497#TE_Woe_Boots#
+2498#TE_Woe_Magic_Sandal#
+2629#Magingiorde#
+2630#Brysinggamen#
+2944#TE_Ring_Of_Protection#
+2945#TE_Ring_Of_Rage#
+2946#TE_Ring_Of_Defiance#
+6592#Small_Wooden_Chest#
+6594#Magic_Bronze_Bullion#
+6595#Hammer_Of_Velund#
+6596#Anvil_Of_Velund#
+6597#Bracelet_Of_Velund#
+6598#Rib_Of_Jormungand#
+6599#Spirit_Of_Hugin#
+6600#Spirit_Of_Munin#
+6601#Chisel_Of_Giant#
+6602#Secret_Of_Rune#
+6603#Skin_Of_Hraesvelg#
+6604#Essence_Of_Rune#
+6605#Muspellium#
+7056#Payroll_Of_Kafra#
+11557#TE_White_Potion#
+11558#TE_White_Slim_Potion#
+13083#TE_Woe_Knife#
+13117#TE_Woe_Pistol#
+13184#TE_Woe_Rifle#
+13185#TE_Woe_Gatling#
+13186#TE_Woe_Shotgun#
+13187#TE_Woe_Grenade#
+13317#TE_Woe_Huuma#
+13439#TE_Woe_Sword#
+15062#TE_Woe_Coat#
+15063#TE_Woe_Chain_Mail#
+15064#TE_Woe_Mage_Coat#
+16025#TE_Woe_Mace#
+18118#TE_Woe_Bow#
+18732#TE_Woe_Cap#
+18733#TE_Woe_Bone_Helm#
+18734#TE_Woe_Magic_Eyes#
+18736#Censor_Bar_#
+20702#TE_Woe_Muffler#
+20703#TE_Woe_Manteau#
+20704#TE_Woe_Magic_Manteau#
+21006#TE_Woe_Two_Hand_Sword#
+2950#Rune_Ring#
+2951#Kvasir_Ring_Blue#
+2952#Kvasir_Ring_Red#
+2953#Kvasir_Ring_Green#
+2954#Kvasir_Ring_Brown#
+6615#Siege_Guild_Coin#
+12873#TE_Potion_Box#
+12874#Frost_Giant_Blood#
+12875#Golem_Stone#
+12876#Elf_Tear_Stun#
+12877#Elf_Tear_Stone_Curse#
+12878#Elf_Tear_Freezing#
+12879#Elf_Tear_Sleep#
+12880#Elf_Tear_Curse#
+12881#Elf_Tear_Silence#
+12882#Elf_Tear_Blind#
+12888#Siege_Kit_Box#
+15067#Rune_Suit#
+18755#Feather_Beret_#
+19585#C_Feather_Beret#
+20709#Mana_Manteau#
+22012#Mana_Boots#
+12399#Castle Treasure Box#
+
+//--------------- Update CASH ITEM 20151007---------------
+5966#KarduiEar#
+5967#Flying Galapago#
+5968#DVAngelNurseCap#
+5969#QueenAnzRevenge#
+28321#Falconer_Claw#
+4876#Runaway_Magic#
+4517#Cendrawasih_Card#
+
+//--------------- Update Undine Lucky Egg 20151015---------------
+20324#C_Pigeon_Hat#
+20325#C_Little_Aquarium#
+28903#Scutum#
+19082#Bio_Protector#
+17633#Undine_Lucky_Egg#
+
+//--------------- Update halloween 20151028---------------
+20397#Jakk#
+25132#Pumpkin_Deco#
+25133#Dried_White_Stem#
+11605#Cookie_Bat#
+
+//--------------- Update Smithy Lucky Egg 20151118---------------
+17648#Smithy_Lucky_Egg#
+
+//--------------- Update Costume December 20151202---------------
+17461#Frozen Egg Costume#
+19780#Costume_Rabbit_Ear_Knit_Hat#
+19826#Costume_Ice_Wing_Ear#
+19985#Costume_Aura_Quartz_Crown#
+19986#Costume_Lunatic_Hat#
+19987#Costume_Blue_Fur_Hat#
+19988#Costume_Elder_Crown#
+19989#Costume_Mouton_Life#
+19990#Costume_Snow_Rabbit_Knit_Hat#
+19991#Costume_Galanthus_Guard#
+19992#Costume_Chilly_Breath#
+
+//--------------- Update Ganymede Lucky Egg 20151216---------------
+20033#C_Buddhist_Priest_Crown#
+20783#Hero_Cape#
+28377#Magical_Ring#
+5973#Ancient_Elven_Ear_J#
+17659#Ganymede_Lucky_Egg#
+
+//--------------- Update Christmas 20151223---------------
+20798#Costume_Reaper's_Grace#
+25143#Gift_Stuffed_Doll#
+25144#Bridge_Postured_Doll#
+25145#Burnt_Spector_Doll#
+25146#Cold_Blooded_Queen_Doll#
+25147#Well_Eatenl_Rabbit_Doll#
+25148#Cute_Starved_Demon_Doll#
+25149#Doll_With_Warm_Scarf#
+25150#Hugging_Alice_Pilow#
+11567#Novice_Potion_B#
+
+//--------------- Update Costume Seaside 20160106---------------
+17497#Seaside_Costume_Scroll#
+20105#Costume_Fish_Head_Hat#
+20106#Costume_Classic_Hat#
+20107#Costume_Fish_In_Mouth#
+20108#Costume_Blind_Glasses#
+20109#Costume_Jolly_Roger#
+20112#Aqua_Ten_Gallon_Hat#
+20113#Star_Reading_Hat#
+20115#Under_Rim_Glasses#
+20116#Mermaid_Headphone#
+20117#Raspberry_Mousse_Hat#
+
+//--------------- Update Last Angel Lucky Egg 20160120---------------
+5980#C_Classical_Fhat#
+18867#Vajra#
+5971#Moon_Eyepatch#
+5972#Chatty_Parrot#
+17665#LastAngel_LuckyScroll#
+
+//--------------- Update Headgear Costume 20160210---------------
+17470#Headgear Costume Scroll#
+19584#Costume_Pirate_Dagger#
+19884#Costume_Vanargandr_Helm#
+20005#Costume_Pegasus_Wing_Ears#
+20006#Costume_Dark_Knight_Mask#
+20007#Costume_Bullock_Helm_J#
+20008#Costume_General_Helmet#
+20009#Costume_Dragon_Skull#
+20010#Costume_Rainbow_Wing_Ears#
+20011#Costume_Lightning_Speed#
+20012#Costume_Double_Horn_Helm#
+
+//--------------- Update Valentine 20160217---------------
+20470#C_SweetChocolate_Hat#
+6345#Love_Ball#
+
+//--------------- Update Costume grandprize 20160217---------------
+5914#C_Flutter_Butterfly#
+5979#C_Angel_Fluttering#
+
+//--------------- Update Valkyrie Lucky Egg 20160224---------------
+16051#Valkyrie_Hammer#
+5985#Noble_Mask#
+28386#Fallen_Monk_Rosary#
+20797#Etran_Shirt#
+17671#Valkyrie_Lucky_Egg#
+
+//--------------- Update Costume March 20160310---------------
+17481#Flower Blossom Scroll#
+20039#C_Butterfly_Wing_Ear_J#
+20040#C_Rose_Crown#
+20041#C_Earth_Goddess_Flower#
+20042#C_Hermose_Cap#
+20043#C_Red_Cherry_Blossom#
+20044#C_Carmen_Miranda_Hat#
+20045#C_Samambaia#
+20046#C_Decoration_bluerose#
+20047#C_Pray_Cherry_Blossom#
+20048#C_Wind_Of_The_Prairie#
+
+//--------------- Update Splash Rainbow Lucky Egg 20160323---------------
+5919#Camellia_Hair_Pin#
+22069#Lian_Shoes#
+2195#Lian_Shield#
+20753#Lian_Robe#
+17674#Splash_Rainbow_Lucky_Egg#
