@@ -103,8 +103,9 @@ sub __start {
 # Parse command-line arguments.
 sub parseArguments {
 	eval {
-		if (!Settings::parseArguments()) {
-			print Settings::getUsageText();
+		Settings::parseArguments();
+		if ($Settings::options{version}) {
+			print "$Settings::versionText\n";
 			exit 1;
 		}
 	};
@@ -115,6 +116,30 @@ sub parseArguments {
 		}
 		exit 1;
 	} elsif ($@) {
+		die $@;
+	}
+}
+
+# Make sure there aren't any unhandled arguments left.
+sub checkEmptyArguments {
+	if ( $Settings::options{help} ) {
+		print Settings::getUsageText();
+		exit 1;
+	}
+	eval {
+		use Getopt::Long;
+		local $SIG{__WARN__} = sub { ArgumentException->throw( $_[0] ); };
+		# Turn off the "pass_through" option so any remaining options will be considered an error.
+		Getopt::Long::Configure( 'default' );
+		GetOptions();
+	};
+	if ( my $e = caught( 'IOException', 'ArgumentException' ) ) {
+		print "Error: $e\n";
+		if ( $e->isa( 'ArgumentException' ) ) {
+			print Settings::getUsageText();
+		}
+		exit 1;
+	} elsif ( $@ ) {
 		die $@;
 	}
 }

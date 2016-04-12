@@ -1282,6 +1282,14 @@ sub processAutoStorage {
 					next if $item->{equipped};
 					next if ($item->{broken} && $item->{type} == 7); # dont store pet egg in use
 
+					if (defined($args->{lastInventoryCount}) &&  defined($args->{lastNameID}) &&
+					    $args->{lastNameID} == $item->{nameID} &&
+					    $args->{lastInventoryCount} == @{$char->inventory->getItems()}
+					) {
+						error TF("Unable to store %s.\n", $item->{name});
+						next;
+					}
+
 					my $control = items_control($item->{name});
 
 					debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
@@ -1294,6 +1302,8 @@ sub processAutoStorage {
 						}
 						undef $args->{done};
 						$args->{lastIndex} = $item->{index};
+						$args->{lastNameID} = $item->{nameID};
+						$args->{lastInventoryCount} = scalar(@{$char->inventory->getItems()});
 						$messageSender->sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{nextItem} = $i;

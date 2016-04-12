@@ -94,7 +94,7 @@ ai_safe_stand_up 2
 
 ai_skill_use 0.75
 ai_skill_use_giveup 1
-ai_item_use_auto 0.5
+ai_item_use_auto 0.2
 ai_item_equip_auto 0.75
 ai_equipAuto_skilluse_giveup 5
 ai_equip_giveup 2

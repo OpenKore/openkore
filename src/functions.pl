@@ -126,6 +126,10 @@ sub loadPlugins {
 	} elsif ($@) {
 		die $@;
 	}
+
+	# Allow plugins to use command line arguments.
+	Plugins::callHook( 'parse_command_line' );
+	main::checkEmptyArguments();
 }
 
 sub loadDataFiles {
@@ -230,15 +234,15 @@ sub loadDataFiles {
 	Settings::addTableFile('maps.txt',
 		loader => [\&parseROLUT, \%maps_lut]);
 	Settings::addTableFile('monsters.txt',
-		loader => [\&parseDataFile2, \%monsters_lut]);
+		loader => [\&parseDataFile2, \%monsters_lut], createIfMissing => 1);
 	Settings::addTableFile('npcs.txt',
-		loader => [\&parseNPCs, \%npcs_lut]);
+		loader => [\&parseNPCs, \%npcs_lut], createIfMissing => 1);
 	Settings::addTableFile('packetdescriptions.txt',
 		loader => [\&parseSectionedFile, \%packetDescriptions], mustExist => 0);
 	Settings::addTableFile('portals.txt',
 		loader => [\&parsePortals, \%portals_lut]);
 	Settings::addTableFile('portalsLOS.txt',
-		loader => [\&parsePortalsLOS, \%portals_los]);
+		loader => [\&parsePortalsLOS, \%portals_los], createIfMissing => 1);
 	Settings::addTableFile('sex.txt',
 		loader => [\&parseDataFile2, \%sex_lut]);
 	Settings::addTableFile('SKILL_id_handle.txt',

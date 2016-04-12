@@ -1,0 +1,25 @@
+# 魔物條件 Monster Condition
+# 適用於: partySkill
+# 所有數字條件均可使用 大於 [>] 小於 [<] 等於 [= 或 直接輸入數字]
+#	target_deltaHp
+#		目標魔物的 HP 改變量〔傷害減血為負值〕 〔target_dist < -3000〕  
+#   target_dist
+#   	當施放對象與玩家達到指定距離時 〔此設定為條件觸發, 並非可使用距離〕〔target_dist > 5〕  
+#   target_misses
+#    	目標 攻擊 玩家 Miss 次數範圍才觸發 〔target_misses > 3〕
+#		miss是源於 怪物  〔target_misses 5 為 miss 5次就放棄〕 
+#   target_totalMisses
+#    	玩家 攻擊 目標 Miss 次數範圍才觸發 〔target_totalMisses < 3〕
+#		miss是源於 玩家  〔target_totalMisses 5 為 miss 5次就放棄〕 
+#	target_whenStatusActive
+#		當目標 處於 某種狀態時
+#	target_whenStatusInactive
+#		當目標 不為 某種狀態時
+#	target_whenGround
+#		當目標腳下 有 此地面技能時使用
+#   target_whenNotGround
+#    	當目標腳下 沒有 此地面技能時使用
+#	target_whenShieldEquipped
+#		當目標有裝備盾牌時使用 〔0=不使用〕〔1=使用〕
+#	target_whenWeaponEquipped
+#		當目標有裝備武器時使用 〔0=不使用〕〔1=使用〕

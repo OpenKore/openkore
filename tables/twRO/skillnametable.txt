@@ -1,4 +1,4 @@
-SN_WINDWALK#風之步#
+﻿SN_WINDWALK#風之步#
 AL_RUWACH#光獵#
 WS_MELTDOWN#野蠻凶砍#
 WS_CREATECOIN#金錢鑄造#

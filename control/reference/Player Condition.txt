@@ -1,0 +1,45 @@
+# 玩家條件 Player Condition
+# 適用於: attackComboSlot, attackSkillSlot, monsterSkill, equipAuto
+# 所有數字條件均可使用 大於 [>] 小於 [<] 等於 [= 或 直接輸入數字]
+#	target
+# 		輔助技能施放對象的玩家名字
+#	target_hp
+#		施放對象的 HP 範圍
+#	target_dist
+#   	當施放對象與玩家達到指定距離時 〔此設定為條件觸發, 並非可使用距離〕〔target_dist > 5〕  
+#	target_isJob
+#		施放對象 是 此英文職業名時
+#	target_isNotJob
+# 		施放對象 不是 此英文職業名時
+#	target_whenStatusActive
+#		施放對象 在 這個狀態時
+#	target_whenStatusInactive
+# 		施放對象 不在 這個狀態時
+#	target_isGuild
+#		只對這些公會的"成員"使用  格式:公會名稱   使用逗號 , 分開
+#	target_isNotGuild
+#		不對這些公會的"成員"使用  格式:公會名稱   使用逗號 , 分開
+#	target_whenShieldEquipped
+#		當目標有裝備盾牌時使用 〔0=不使用〕〔1=使用〕
+#	target_whenWeaponEquipped
+#		當目標有裝備武器時使用 〔0=不使用〕〔1=使用〕
+#	target_aggressives
+# 		施放對象被魔物圍攻的隻數 〔隻數前面建議加上 > 大於 或 < 小於 符號〕〔target_aggressives > 3〕
+#	target_monsters
+# 	 施放對象被以上的魔物攻擊時 〔魔物名稱以逗號隔開〕〔施放對象被該魔物攻擊至減血才觸發〕
+#	target_defendMonsters
+# 	 施放對象被以上的魔物視為目標時 〔魔物名稱以逗號隔開〕〔一般使用target_monsters已經足夠〕
+#	target_timeout
+#  	 指定每次對施放對象使用此技能的間隔時間〔秒〕，預設值 0
+#	target_deltaHp
+#		目標魔物的 HP 改變量〔傷害減血為負值〕 〔target_dist < -3000〕  
+#	target_dead
+# 	 施放對象死亡時 〔大多應用於復活術〕
+#	target_whenGround
+#		當目標腳下 有 此地面技能時使用
+#   target_whenNotGround
+#    	當目標腳下 沒有 此地面技能時使用
+#	target_isNotMyDevotee
+#		當施放對象並非玩家犧牲對象時 〔1=不是玩家對象〕
+#	target_timeout
+#		指定每次對施放對象使用此技能的間隔時間〔秒〕，預設值 0
