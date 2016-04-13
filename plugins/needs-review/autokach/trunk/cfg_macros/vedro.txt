@@ -1,0 +1,359 @@
+#Vedro-manticora utils
+#Здесь следует настраивать автоскупку и автопродажу в городах
+
+macro conftown {
+	if ($.map != prontera) goto notprontera
+		do conf autoMoveOnDeath 1
+		do conf autoMoveOnDeath_x @rand(53,62)
+		do conf autoMoveOnDeath_y @rand(62,68)
+		do conf autoMoveOnDeath_map prontera
+		
+		do conf storageAuto 1
+		do conf storageAuto_npc prontera 151 29
+		do conf sellAuto 1
+		do conf sellAuto_npc prt_in 126 76
+		do conf sellAuto_standpoint prt_in 131 71
+		do conf sellAuto_distance 5
+		
+		#Настраиваем покупку потов/мяса
+		#do conf buyHP Meat
+		do conf buyHP.block Red Potion
+		do conf buyHP.npc prt_in 126 76
+		do conf buyHP.standpoint  prt_in 131 71
+		do conf buyHP.distance 5
+		do conf buyHP.price 50
+		do conf buyHP.minAmount 2
+		do conf buyHP.maxAmount 15
+		do conf buyHP.zeny > 1000
+		do conf buyHP.disabled 1
+		#Настраиваем конфиги, чтобы не циклилось.
+		do iconf Red Potion 0 0 0
+		#do conf useHP Novice Potion, Meat
+		do conf useHP.block Novice Potion, Red Potion
+		goto end
+	:notprontera
+	if ($.map != izlude) goto notizlude
+		[
+		do conf autoMoveOnDeath 1
+		do conf autoMoveOnDeath_x @rand(87,99)
+		do conf autoMoveOnDeath_y @rand(122,137)
+		do conf autoMoveOnDeath_map izlude
+		
+		do conf storageAuto 1
+		do conf storageAuto_npc izlude 134 88
+		#поты#do conf sellAuto_npc izlude_in 115 61#Площадка перед нпц#(112,57) - (119,52)
+		#мясник
+		do conf sellAuto 1
+		do conf sellAuto_npc izlude 105 99
+		do conf sellAuto_standpoint none
+		do conf sellAuto_distance 5
+		
+		#Настраиваем покупку потов/мяса
+		#do conf buyHP Meat
+		do conf buyHP.block Meat
+		do conf buyHP.npc izlude 105 99
+		do conf buyHP.standpoint none
+		do conf buyHP.distance 5
+		do conf buyHP.price 50
+		do conf buyHP.minAmount 2
+		do conf buyHP.maxAmount 15
+		do conf buyHP.zeny > 1000
+		do conf buyHP.disabled 0
+		#Настраиваем конфиги, чтобы не циклилось.
+		do iconf Meat 0 0 0
+		#do conf useHP Novice Potion, Meat
+		do conf useHP.block Novice Potion, Meat
+		]
+		goto end
+	:notizlude
+	if ($.map != payon) goto notpayon
+		[
+		do conf autoMoveOnDeath 1
+		do conf autoMoveOnDeath_x @rand(181,196)
+		do conf autoMoveOnDeath_y @rand(115,127)
+		do conf autoMoveOnDeath_map payon
+		
+		do conf storageAuto 1
+		do conf storageAuto_npc payon 181 104
+		do conf sellAuto 1
+		do conf sellAuto_npc payon 159 96
+		do conf sellAuto_standpoint none
+		do conf sellAuto_distance 5
+		
+		#Настраиваем покупку потов/мяса
+		#do conf buyHP Meat
+		do conf buyHP.block Red Potion
+		do conf buyHP.npc payon 159 96
+		do conf buyHP.standpoint none
+		do conf buyHP.distance 5
+		do conf buyHP.price 50
+		do conf buyHP.minAmount 2
+		do conf buyHP.maxAmount 15
+		do conf buyHP.zeny > 1000
+		do conf buyHP.disabled 0
+		#Настраиваем конфиги, чтобы не циклилось.
+		do iconf Red Potion 0 0 0
+		#do conf useHP Novice Potion, Meat
+		do conf useHP.block Novice Potion, Meat, Red Potion
+		]
+		goto end
+	:notpayon
+	
+	# if ($.map != pay_arche) goto notpayarche
+		# [
+		# do conf autoMoveOnDeath 0
+		# do conf autoMoveOnDeath_x none
+		# do conf autoMoveOnDeath_y none
+		# do conf autoMoveOnDeath_map none
+		
+		# do conf storageAuto 1
+		# do conf storageAuto_npc pay_arche 55 123
+
+		# do conf sellAuto 1
+		# do conf sellAuto_npc payon_in02 87 34
+		# do conf sellAuto_standpoint none
+		# do conf sellAuto_distance 5
+		
+		# #Настраиваем покупку потов/мяса
+		# #do conf buyHP Red Potion
+		# do conf buyHP.block Red Potion
+		# do conf buyHP.npc payon_in02 87 34
+		# do conf buyHP.standpoint none
+		# do conf buyHP.distance 5
+		# do conf buyHP.price 50
+		# do conf buyHP.minAmount 2
+		# do conf buyHP.maxAmount 15
+		# do conf buyHP.zeny > 1000
+		# do conf buyHP.disabled 1
+		# #Настраиваем конфиги, чтобы не циклилось.
+		# do iconf Red Potion 15 0 0
+		# do conf useHP.block Novice Potion, Red Potion
+		# ]
+		# goto end
+	# :notpayarche
+
+
+	if ($.map != morocc) goto notmorocc
+		[
+		do conf autoMoveOnDeath 1
+		do conf autoMoveOnDeath_x @rand(203,233)
+		do conf autoMoveOnDeath_y @rand(266,257)
+		do conf autoMoveOnDeath_map morocc
+		
+		do conf storageAuto 1
+		do conf storageAuto_npc morocc 160 258
+		#Лавочник
+		do conf sellAuto 1
+		do conf sellAuto_npc morocc 151 243
+		do conf sellAuto_standpoint none
+		do conf sellAuto_distance 5
+		
+		#Настраиваем покупку потов/мяса
+		#do conf buyHP Meat
+		do conf buyHP.block Meat
+		do conf buyHP.npc morocc 157 72
+		do conf buyHP.standpoint none
+		do conf buyHP.distance 5
+		do conf buyHP.price 50
+		do conf buyHP.minAmount 2
+		do conf buyHP.maxAmount 15
+		do conf buyHP.zeny > 1000
+		do conf buyHP.disabled 0
+		#Настраиваем конфиги, чтобы не циклилось.
+		do iconf Meat 0 0 0
+		#do conf useHP Novice Potion, Meat
+		do conf useHP.block Novice Potion, Meat
+		]
+
+		goto end
+	:notmorocc
+	if ($.map != geffen) goto notgeffen
+		[
+		do conf autoMoveOnDeath 1
+		do conf autoMoveOnDeath_x @rand(104,128)
+		do conf autoMoveOnDeath_y @rand(96,102)
+		do conf autoMoveOnDeath_map geffen
+		
+		do conf storageAuto 1
+		do conf storageAuto_npc geffen 120 62
+		#Торговец городскими мечами
+		do conf sellAuto 1
+		do conf sellAuto_npc geffen_in 22 171
+		do conf sellAuto_standpoint none
+		do conf sellAuto_distance 5
+		
+		#Настраиваем покупку потов
+		do conf buyHP.block Red Potion
+		do conf buyHP.npc geffen_in 77 167
+		do conf buyHP.standpoint none
+		do conf buyHP.distance 5
+		do conf buyHP.price 50
+		do conf buyHP.minAmount 2
+		do conf buyHP.maxAmount 25
+		do conf buyHP.zeny > 2000
+		do conf buyHP.disabled 0
+		#Настраиваем конфиги, чтобы не циклилось.
+		do iconf Red Potion 25 0 0
+		#do conf useHP Novice Potion, Meat
+#		if (@inventory(Novice Potion) == -1) goto NoNovice
+			do conf useHP.block Novice Potion, Red Potion 
+#			goto end
+#		:NoNovice
+#			do conf useHP.block Red Potion 
+		]
+		goto end
+	:notgeffen
+	if ($.map != alberta) goto notalberta
+		[
+		do conf autoMoveOnDeath 1
+		do conf autoMoveOnDeath_x @rand(104,128)
+		do conf autoMoveOnDeath_y @rand(96,102)
+		do conf autoMoveOnDeath_map alberta
+		
+		do conf storageAuto 1
+		do conf storageAuto_npc alberta 113 60
+		#Торговец городскими мечами
+		do conf sellAuto 1
+		do conf sellAuto_npc alberta_in 182 97
+		do conf sellAuto_standpoint alberta_in 185 89
+		#do conf sellAuto_distance 5
+		
+		#Настраиваем покупку потов
+		do conf buyHP.block Red Potion
+		do conf buyHP.npc alberta_in 182 97
+		do conf buyHP.standpoint alberta_in 185 89
+		#do conf buyHP.distance 5
+		do conf buyHP.price 50
+		do conf buyHP.minAmount 2
+		do conf buyHP.maxAmount 25
+		do conf buyHP.zeny > 2000
+		do conf buyHP.disabled 0
+		#Настраиваем конфиги, чтобы не циклилось.
+		do iconf Red Potion 25 0 0
+		]
+		pause 2
+		do conf useHP.block Novice Potion, Meat, Red Potion 
+		pause 2
+		goto end
+	:notalberta
+		
+	:end
+}
+
+#Этот макрос следует вызывать, когда вы хотите сохраниться в городе 
+
+macro savetown {
+	if ($.map != prontera) goto notprontera
+		do move prontera 150 30 
+		pause @rand(2,3)
+		do talknpc 151 29 w2 c w2 r0 w2 c
+		do conf saveMap prontera
+		pause @rand(2,3)
+		goto end
+	:notprontera
+	if ($.map != izlude) goto notizlude
+		do move izlude 129 87
+		pause @rand(2,3)
+		do talknpc 134 88 w2 c w2 r0 w2 c
+		do conf saveMap izlude
+		pause @rand(2,3)
+		goto end
+	:notizlude
+	if ($.map != payon) goto notpayon
+		do move payon 178 101
+		pause @rand(2,3)
+		do talknpc 181 104 w2 c w2 r0 w2 c
+		do conf saveMap payon
+		pause @rand(2,3)
+		goto end
+	:notpayon
+	if ($.map != morocc) goto notmorocc
+		do move morocc 158 268
+		pause @rand(2,3)
+		do talknpc 160 258 w2 c w2 r0 w2 c
+		do conf saveMap morocc
+		pause @rand(2,3)
+		goto end
+	:notmorocc
+	if ($.map != geffen) goto notgeffen
+		do move geffen 120 67
+		pause @rand(2,3)
+		do talknpc 120 62 w2 c w2 r0 w2 c
+		do conf saveMap geffen
+		pause @rand(2,3)
+		goto end
+	:notgeffen
+	if ($.map != alberta) goto notalberta
+		do move alberta @rand(110,116) @rand(52,55)
+		pause @rand(2,3)
+		do talknpc 113 60 w2 c w2 r0 w2 c
+		do conf saveMap alberta
+		pause @rand(2,3)
+		goto end
+	:notalberta
+	:end
+}
+
+
+
+
+
+
+#########################################################
+#		      UPGRADE MACROS			#
+#########################################################
+macro lvl1weap {
+	do move 61 65 prt_in
+	do talk @npc (56 68)
+	pause 2
+	do talk resp 0
+	pause 2
+	do talk num 7
+	call upgrade_righthand 7
+}
+
+macro lvl2weap {
+	do move 61 65 prt_in
+	do talk @npc (56 68)
+	pause 2
+	do talk resp 1
+	pause 2
+	do talk num 6
+	call upgrade_righthand 6
+}
+
+macro upgrade_righthand {
+	do talk @npc (63 60)
+	pause 2
+	do talk resp 3
+	pause 2
+	do talk resp 0
+	pause 2
+}
+
+macro buy_blade {
+	log We can afford a blade now! Let's go get one!
+	do move 168 128 prt_in
+	do talk @npc (172 130)
+	pause 2
+	do store
+	pause 2
+	do buy @store (Blade)
+	pause 2
+	do eq Blade [3]
+	log Sweet! A blade!
+}
+
+macro buy_bastard {
+	log Buying a Bastard Sword!
+	do move 62 123 izlude_in
+	do talk @npc (60 127)
+	pause 2
+	do store
+	pause 2
+	do buy 12
+	pause 2
+	do eq Bastard Sword [2]
+}
+
+

@@ -1,0 +1,231 @@
+#manticora
+#Квест: Соки.
+
+
+macro SokiStart {
+	log Начинаем квест: приготовление соков.
+	do move stop
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	if (@inventory(Meat) != -1) goto ok
+		do conf lockMap izlude
+		do conf QuestPart Soki0
+		goto end
+	:ok
+		do conf lockMap prontera
+		do conf QuestPart Soki1
+	:end	
+}
+
+automacro QuestSoki0 {
+	location izlude
+	eval $::config{QuestPart} eq "Soki0"
+	run-once 1
+	call QuestSoki0M
+}
+macro QuestSoki0M {
+	do conf lockMap none
+	if (@inventory(Meat) != -1) goto ok
+		do move izlude @rand(113,114) @rand(95,102)
+		do talknpc 105 99 b b0,1 e
+	:ok
+	do conf lockMap prontera
+	do conf QuestPart Soki1
+}
+
+
+automacro QuestSoki1 {
+	location prontera
+	eval $::config{QuestPart} eq "Soki1"
+	run-once 1
+	call QuestSoki1M
+}
+macro QuestSoki1M {
+	do conf lockMap none
+	if (@inventory(Meat) != -1) goto ok
+		log У нас должно быть мясо в кармане, но его нет!
+		log макрос останавливается. положите мясо в карман или начните с начала.
+		stop
+	:ok
+	log Заходим в гостиницу.
+	do move prontera 204 192
+	pause @rand(3,5)
+	log Поднимаемся на второй этаж гостиницы.
+	do move prt_in 70 143
+	pause @rand(3,5)
+	log Подходим к маме с сыном.
+	do move prt_in 49 165
+	pause @rand(3,5)
+	log Говорим с сыном, мясо ему не давать!
+	pause @rand(3,5)
+	do talknpc 47 173 c r1 c r1
+	do conf QuestPart Soki2
+# Морис: [Морис]
+# Морис: Нет, не хочу...
+# Морис: Я не хочу есть фрукты!
+# Морис: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Поговорить
+# 1  Показать мясо
+# 2  Отмена
+# 3  Cancel Chat
+# -------------------------------
+# Морис: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Морис: [Морис]
+# Морис: Мясо! Как я голоден!
+# Морис: Вы не могли бы дать мне хотя бы кусочек?
+# Морис: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Дать мясо
+# 1  Не давать мясо
+# 2  Cancel Chat
+# -------------------------------
+# Морис: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Морис: [Морис]
+# Морис: Ууу... Взрослые все одинаковы!
+# Морис: Done talking	
+}
+
+automacro QuestSoki2 {
+	location prt_in
+	eval $::config{QuestPart} eq "Soki2"
+	run-once 1
+	call QuestSoki2M
+}
+macro QuestSoki2M {
+	log Говорим с мамой.
+	pause @rand(2,3)
+	do talknpc 49 172 c
+	pause @rand(2,3)
+	log Квест выполнен, теперь можно идти в пайон и делать у неписи соки.
+	do conf QuestDone @config(QuestDone) Soki
+	do conf QuestPart none
+	[
+	log move payon_in03 186 144 - Подойти к неписи, которая делает соки
+	log talknpc 188 146 c r0 c r0 c r1 c d5 - Сделать яблочный сок, 5 бутылок
+	log talknpc 188 146 c r0 c r1 c r1 c d5 - Сделать банановый сок, 5 бутылок
+	log talknpc 188 146 c r0 c r2 c r1 c d5 - Сделать морковный сок, 5 бутылок
+	log talknpc 188 146 c r0 c r3 c r1 c d5 - Сделать виноградный сок, 5 бутылок
+	]
+# do talknpc 188 146 c r0 c r0 c r1 c d1
+# #do talknpc 188 146 c r0 c rX, где X равен:
+# # 0  Яблочный сок
+# # 1  Банановый сок
+# # 2  Морковный сок
+# # 3  Виноградный сок
+	
+# Мариен: [Домохозяйка Мариен]
+# Мариен: Он не ест ничего, кроме мяса...
+# Мариен: Может, попробовать нарезать ему фрукты? Или размять?
+# Мариен: Type 'talk cont' to continue talking
+# talk cont
+# Мариен: [Домохозяйка Мариен]
+# Мариен: Я слышала, что где-то есть
+# Мариен: человек, который умеет выжимать
+# Мариен: сок из свежих фруктов. Он живет
+# Мариен: толи в Пайоне, толи в Морроке...
+# Мариен: Done talking
+}
+
+
+# log Идем в Пайон.
+# do move prontera @rand(269,274) @rand(200,203)
+# do talknpc 282 200 c r2 c r2
+# log Заходим в портал, который ведет к неписи, варящей соки.
+# do move payon 155 328
+# do move payon_in03 186 144
+# log Например, делаем яблочный сок, одну бутылку.
+# do talknpc 188 146 c r0 c r0 c r1 c d1
+# #do talknpc 188 146 c r0 c rX, где X равен:
+# # 0  Яблочный сок
+# # 1  Банановый сок
+# # 2  Морковный сок
+# # 3  Виноградный сок
+
+# log Или, например, делаем яблочный сок, сколько получится.
+# do talknpc 188 146 c r0 c r0 c r0
+
+# # talk 1
+# # Маркхансен: [Торговец Маркхансен]
+# # Маркхансен: Добро пожаловать. Вам нужен фруктовый сок?
+# # Маркхансен: Type 'talk cont' to continue talking
+# # talk cont
+# # ----------Responses-----------
+# # #  Response
+# # 0  Да, нужен.
+# # 1  Как делать соки?
+# # 2  Отмена.
+# # 3  Cancel Chat
+# # -------------------------------
+# # Маркхансен: Type 'talk resp #' to choose a response.
+# # talk resp 0
+
+# # Маркхансен: [Торговец Маркхансен]
+# # Маркхансен: Какой фруктовый сок вам сделать?
+# # Маркхансен: Type 'talk cont' to continue talking
+# # talk cont
+# # ----------Responses-----------
+# # #  Response
+# # 0  Яблочный сок
+# # 1  Банановый сок
+# # 2  Морковный сок
+# # 3  Виноградный сок
+# # 4  Отмена
+# # 5  Cancel Chat
+# # -------------------------------
+# # Маркхансен: Type 'talk resp #' to choose a response.
+# # talk resp 0
+# # Маркхансен: [Торговец Маркхансен]
+# # Маркхансен: Сколько бутылок сока вам нужно?
+# # Маркхансен: Type 'talk cont' to continue talking
+# # talk cont
+# # ----------Responses-----------
+# # #  Response
+# # 0  Смешать все, что есть.
+# # 1  Выбрать количество.
+# # 2  Отмена
+# # 3  Cancel Chat
+# # -------------------------------
+# # Маркхансен: Type 'talk resp #' to choose a response.
+# # talk resp 1
+# # Маркхансен: [Торговец Маркхансен]
+# # Маркхансен: Тогда введите число от 1 до 100.
+# # Маркхансен: Если передумали, введите '0'. Вы
+# # Маркхансен: можете сделать, максимум, 3 бутылок.
+# # Маркхансен: Type 'talk cont' to continue talking
+# # talk cont
+# # Маркхансен: Type 'talk num <number #>' to input a number.
+# # talk num 1
+# # Inventory Item Removed: Apple (22) x 1
+# # Inventory Item Removed: Empty Bottle (16) x 1
+# # You lost 3 zeny.
+# # Item added to inventory: Apple Juice (35) x 1 - Usable
+# # Маркхансен: [Торговец Маркхансен]
+# # Маркхансен: Сок готов! Попробуйте, какой
+# # Маркхансен: вкусный! Приходите еще.
+# # Маркхансен: Done talking
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

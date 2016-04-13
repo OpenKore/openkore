@@ -1,0 +1,172 @@
+.log {
+	width: 100%;
+	height: 350px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	white-space: pre-wrap;
+
+	border: 0;
+	margin: 0;
+	padding: 0.5em;
+	background: black;
+	color: white;
+	font-family: monospace;
+}
+
+.msg_web {
+	color: orange;
+}
+
+canvas{
+	height: 250px;
+	width: 250px;
+
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center; 
+}
+.sidebar-nav { 
+padding: 9px 0; 
+}
+.job {
+	height: 120px;
+	width: 120px;
+}
+.iconSkill{
+	height: 24px;
+	width: 24px;
+}
+.iconUp{padding:3px 28px;}
+#job00 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/b6/Female_Novice_%28Ragnarok_Online%29.png");}
+#job10 {background-image:url("http://cdn.wikimg.net/strategywiki/images/8/8f/Male_Novice_%28Ragnarok_Online%29.png");}
+#job01 {background-image:url("http://cdn.wikimg.net/strategywiki/images/c/c5/Female_Swordsman_%28Ragnarok_Online%29.png");}
+#job11 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/15/Male_Swordsman_%28Ragnarok_Online%29.png");}
+#job02 {background-image:url("http://cdn.wikimg.net/strategywiki/images/0/00/Female_Magician_%28Ragnarok_Online%29.png");}
+#job12 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/f2/Male_Magician_%28Ragnarok_Online%29.png");}
+#job03 {background-image:url("http://cdn.wikimg.net/strategywiki/images/3/32/Female_Archer_%28Ragnarok_Online%29.png");}
+#job13 {background-image:url("http://cdn.wikimg.net/strategywiki/images/7/73/Male_Archer_%28Ragnarok_Online%29.png");}
+#job04 {background-image:url("http://cdn.wikimg.net/strategywiki/images/d/de/Female_Acolyte_%28Ragnarok_Online%29.png");}
+#job14 {background-image:url("http://cdn.wikimg.net/strategywiki/images/6/63/Male_Acolyte_%28Ragnarok_Online%29.png");}
+#job05 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/b7/Female_Merchant_%28Ragnarok_Online%29.png");}
+#job15 {background-image:url("http://cdn.wikimg.net/strategywiki/images/4/40/Male_Merchant_%28Ragnarok_Online%29.png");}
+#job06 {background-image:url("http://cdn.wikimg.net/strategywiki/images/5/5e/Female_Thief_%28Ragnarok_Online%29.png");}
+#job16 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/17/Male_Thief_%28Ragnarok_Online%29.png");}
+#job07 {background-image:url("http://cdn.wikimg.net/strategywiki/images/2/27/Female_Knight_%28Ragnarok_Online%29.png");}
+#job17 {background-image:url("http://cdn.wikimg.net/strategywiki/images/9/9e/Male_Knight_%28Ragnarok_Online%29.png");}
+#job08 {background-image:url("http://cdn.wikimg.net/strategywiki/images/0/0f/Female_Priest_%28Ragnarok_Online%29.png");}
+#job18 {background-image:url("http://cdn.wikimg.net/strategywiki/images/7/77/Male_Priest_%28Ragnarok_Online%29.png");}
+#job09 {background-image:url("http://cdn.wikimg.net/strategywiki/images/7/70/Female_Wizard_%28Ragnarok_Online%29.png");}
+#job19 {background-image:url("http://cdn.wikimg.net/strategywiki/images/0/0c/Male_Wizard_%28Ragnarok_Online%29.png");}
+#job010 {background-image:url("http://cdn.wikimg.net/strategywiki/images/2/22/Female_Blacksmith_%28Ragnarok_Online%29.png");}
+#job110 {background-image:url("http://cdn.wikimg.net/strategywiki/images/6/61/Male_Blacksmith_%28Ragnarok_Online%29.png");}
+#job011 {background-image:url("http://cdn.wikimg.net/strategywiki/images/c/c3/Female_Hunter_%28Ragnarok_Online%29.png");}
+#job111 {background-image:url("http://cdn.wikimg.net/strategywiki/images/d/de/Male_Hunter_%28Ragnarok_Online%29.png");}
+#job012 {background-image:url("http://cdn.wikimg.net/strategywiki/images/2/20/Female_Assassin_%28Ragnarok_Online%29.png");}
+#job112 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/f7/Male_Assassin_%28Ragnarok_Online%29.png");}
+#job014 {background-image:url("http://cdn.wikimg.net/strategywiki/images/a/ae/Female_Crusader_%28Ragnarok_Online%29.png");}
+#job114 {background-image:url("http://cdn.wikimg.net/strategywiki/images/a/a3/Male_Crusader_%28Ragnarok_Online%29.png");}
+#job015 {background-image:url("http://cdn.wikimg.net/strategywiki/images/3/32/Female_Monk_%28Ragnarok_Online%29.png");}
+#job115 {background-image:url("http://cdn.wikimg.net/strategywiki/images/4/43/Male_Monk_%28Ragnarok_Online%29.png");}
+#job016 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/b7/Female_Sage_%28Ragnarok_Online%29.png");}
+#job116 {background-image:url("http://cdn.wikimg.net/strategywiki/images/6/6f/Male_Sage_%28Ragnarok_Online%29.png");}
+#job017 {background-image:url("http://cdn.wikimg.net/strategywiki/images/d/d4/Female_Rogue_%28Ragnarok_Online%29.png");}
+#job117 {background-image:url("http://cdn.wikimg.net/strategywiki/images/6/63/Male_Rogue_%28Ragnarok_Online%29.png");}
+#job018 {background-image:url("http://cdn.wikimg.net/strategywiki/images/8/81/Female_Alchemist_%28Ragnarok_Online%29.png");}
+#job118 {background-image:url("http://cdn.wikimg.net/strategywiki/images/6/67/Male_Alchemist_%28Ragnarok_Online%29.png");}
+#job119 {background-image:url("http://cdn.wikimg.net/strategywiki/images/d/d5/Bard_%28Ragnarok_Online%29.png");}
+#job020 {background-image:url("http://cdn.wikimg.net/strategywiki/images/8/8b/Dancer_%28Ragnarok_Online%29.png");}
+#job023 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/f9/Female_Supernovice_%28Ragnarok_Online%29.png");}
+#job123 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/1d/Male_Supernovice_%28Ragnarok_Online%29.png");}
+#job024 {background-image:url("http://cdn.wikimg.net/strategywiki/images/0/04/Female_Gunslinger_%28Ragnarok_Online%29.png");}
+#job124 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/1e/Male_Gunslinger_%28Ragnarok_Online%29.png");}
+#job025 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/b1/Female_Ninja_%28Ragnarok_Online%29.png");}
+#job125 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/1a/Male_Ninja_%28Ragnarok_Online%29.png");}
+#job04001 {background-image:url("Novice High");}
+#job04001 {background-image:url("Novice High");}
+#job04002 {background-image:url("Swordman High");}
+#job04002 {background-image:url("Swordman High");}
+#job04003 {background-image:url("Magician High");}
+#job04003 {background-image:url("Magician High");}
+#job04004 {background-image:url("Archer High");}
+#job04004 {background-image:url("Archer High");}
+#job04005 {background-image:url("Acolyte High");}
+#job04005 {background-image:url("Acolyte High");}
+#job04006 {background-image:url("Merchant High");}
+#job04006 {background-image:url("Merchant High");}
+#job04007 {background-image:url("Thief High");}
+#job04007 {background-image:url("Thief High");}
+#job04008 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/b3/Female_Lord_Knight_%28Ragnarok_Online%29.png");}
+#job14008 {background-image:url("http://cdn.wikimg.net/strategywiki/images/8/8d/Male_Lord_Knight_%28Ragnarok_Online%29.png");}
+#job04009 {background-image:url("http://cdn.wikimg.net/strategywiki/images/6/63/Female_High_Priest_%28Ragnarok_Online%29.png");}
+#job14009 {background-image:url("http://cdn.wikimg.net/strategywiki/images/9/96/Male_High_Priest_%28Ragnarok_Online%29.png");}
+#job04010 {background-image:url("http://cdn.wikimg.net/strategywiki/images/8/88/Female_High_Wizard_%28Ragnarok_Online%29.png");}
+#job14010 {background-image:url("http://cdn.wikimg.net/strategywiki/images/2/2b/Male_High_Wizard_%28Ragnarok_Online%29.png");}
+#job04011 {background-image:url("http://cdn.wikimg.net/strategywiki/images/8/8d/Female_Mastersmith_%28Ragnarok_Online%29.png");}
+#job14011 {background-image:url("http://cdn.wikimg.net/strategywiki/images/4/45/Male_Mastersmith_%28Ragnarok_Online%29.png");}
+#job04012 {background-image:url("http://cdn.wikimg.net/strategywiki/images/e/ee/Female_Sniper_%28Ragnarok_Online%29.png");}
+#job14012 {background-image:url("http://cdn.wikimg.net/strategywiki/images/2/2b/Male_Sniper_%28Ragnarok_Online%29.png");}
+#job04013 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/fc/Female_Assassin_Cross_%28Ragnarok_Online%29.png");}
+#job14013 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/b4/Male_Assassin_Cross_%28Ragnarok_Online%29.png");}
+#job04015 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/f6/Male_Paladin_%28Ragnarok_Online%29.png");}
+#job14015 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/f5/Female_Paladin_%28Ragnarok_Online%29.png");}
+#job04016 {background-image:url("http://cdn.wikimg.net/strategywiki/images/3/32/Female_Champion_%28Ragnarok_Online%29.png");}
+#job14016 {background-image:url("http://cdn.wikimg.net/strategywiki/images/a/a8/Male_Champion_%28Ragnarok_Online%29.png");}
+#job04017 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/14/Female_Scholar_%28Ragnarok_Online%29.png");}
+#job14017 {background-image:url("http://cdn.wikimg.net/strategywiki/images/d/d2/Male_Scholar_%28Ragnarok_Online%29.png");}
+#job04018 {background-image:url("http://cdn.wikimg.net/strategywiki/images/c/c8/Female_Stalker_%28Ragnarok_Online%29.png");}
+#job14018 {background-image:url("http://cdn.wikimg.net/strategywiki/images/2/2d/Male_Stalker_%28Ragnarok_Online%29.png");}
+#job04019 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/bd/Female_Biochemist_%28Ragnarok_Online%29.png");}
+#job14019 {background-image:url("http://cdn.wikimg.net/strategywiki/images/5/57/Male_Biochemist_%28Ragnarok_Online%29.png");}
+#job04021 {background-image:url("http://cdn.wikimg.net/strategywiki/images/f/f4/Gypsy_%28Ragnarok_Online%29.png");}
+#job14020 {background-image:url("http://cdn.wikimg.net/strategywiki/images/e/ee/Minstrel_%28Ragnarok_Online%29.png");}
+#job04045 {background-image:url("Super Baby");}
+#job14045 {background-image:url("Super Baby");}
+#job04046 {background-image:url("http://cdn.wikimg.net/strategywiki/images/b/bd/Taekwon_Girl_%28Ragnarok_Online%29.png");}
+#job14046 {background-image:url("http://cdn.wikimg.net/strategywiki/images/1/14/Taekwon_Boy_%28Ragnarok_Online%29.png");}
+#job04047 {background-image:url("Star Gladiator");}
+#job14047 {background-image:url("Star Gladiator");}
+#job04048 {background-image:url("Star Gladiator (Union)");}
+#job14048 {background-image:url("Star Gladiator (Union)");}
+#job04049 {background-image:url("Soul Linker");}
+#job14049 {background-image:url("Soul Linker");}
+#job04050 {background-image:url("Gangsi");}
+#job14050 {background-image:url("Gangsi");}
+#job04051 {background-image:url("Death Knight");}
+#job14051 {background-image:url("Death Knight");}
+#job04052 {background-image:url("Dark Collector");}
+#job14052 {background-image:url("Dark Collector");}
+#job04190 {background-image:url("Ex. Super Novice");}
+#job14190 {background-image:url("Ex. Super Novice");}
+#job04191 {background-image:url("Ex. Super Baby");}
+#job14191 {background-image:url("Ex. Super Baby");}
+#job04211 {background-image:url("Kagerou");}
+#job14211 {background-image:url("Kagerou");}
+#job04212 {background-image:url("Oboro");}
+#job14212 {background-image:url("Oboro");}
+#job022{background-image:url("Wedding");}
+#job122 {background-image:url("Wedding");}
+#job026 {background-image:url("Christmas");}
+#job126 {background-image:url("Christmas");}
+#job027 {background-image:url("Summer");}
+#job127 {background-image:url("Summer");}
+#homunculus6001 {background-image:url("http://wiki.openkore.com.br/images/6/6e/6001.png"); background-repeat: no-repeat; background-position:center;}
+#homunculus6002 {background-image:url("http://wiki.openkore.com.br/images/0/0b/6002.PNG"); background-repeat: no-repeat; background-position:center;}
+#homunculus6003 {background-image:url("http://wiki.openkore.com.br/images/1/13/6003.PNG"); background-repeat: no-repeat; background-position:center;}
+#homunculus6004 {background-image:url("http://wiki.openkore.com.br/images/5/51/6004.PNG"); background-repeat: no-repeat; background-position:center;}
+#homunculus6005 {background-image:url("http://wiki.openkore.com.br/images/8/87/6005.PNG"); background-repeat: no-repeat; background-position:center;}
+#homunculus6006 {background-image:url("http://wiki.openkore.com.br/images/d/dc/6006.png"); background-repeat: no-repeat; background-position:center;}
+#homunculus6007 {background-image:url("http://wiki.openkore.com.br/images/3/32/6007.PNG"); background-repeat: no-repeat; background-position:center;}
+#homunculus6008 {background-image:url("http://wiki.openkore.com.br/images/b/ba/6008.PNG"); background-repeat: no-repeat; background-position:center;}
+#homunculus6009 {background-image:url("http://wiki.openkore.com.br/images/6/61/6009.png"); background-repeat: no-repeat; background-position:center;}
+#homunculus6010 {background-image:url("http://wiki.openkore.com.br/images/b/b3/6010.PNG"); background-repeat: no-repeat; background-position:center;}
+#homunculus6011 {background-image:url("http://wiki.openkore.com.br/images/9/9f/6011.PNG"); background-repeat: no-repeat; background-position:center;}
+#homunculus6012 {background-image:url("http://wiki.openkore.com.br/images/b/b9/6012.PNG"); background-repeat: no-repeat; background-position:center;}
+#homunculus6013 {background-image:url("http://wiki.openkore.com.br/images/4/46/6013.PNG"); background-repeat: no-repeat; background-position:center;}
+#homunculus6014 {background-image:url("http://wiki.openkore.com.br/images/2/21/6014.PNG"); background-repeat: no-repeat; background-position:center;}
+#homunculus6015 {background-image:url("http://wiki.openkore.com.br/images/6/64/6015.png"); background-repeat: no-repeat; background-position:center;}
+#homunculus6016 {background-image:url("http://wiki.openkore.com.br/images/5/59/6016.PNG"); background-repeat: no-repeat; background-position:center;}
+#homunculus6048 {background-image:url("http://browiki.org/w/images/0/03/Eira.png");}
+#homunculus6049 {background-image:url("http://browiki.org/w/images/4/40/Beyeri.png");}
+#homunculus6050 {background-image:url("http://browiki.org/w/images/d/d5/Sera.png");}
+#homunculus6051 {background-image:url("http://browiki.org/w/images/a/a6/Dieter.png");}
+#homunculus6052 {background-image:url("http://browiki.org/w/images/9/9f/Eleanor.png");}

@@ -1,0 +1,92 @@
+{{_header.html}}
+
+<script type="application/javascript" defer="defer">
+			function send_command() {
+				var tc = document.getElementById("text_command");
+				var combo = document.getElementById("sel");
+				window.location.href = '../handler?csrf={csrf}&command=' + combo.options[combo.selectedIndex].value + tc.value;
+			}	
+			function submitenter(e) {
+				var keycode;
+				if (window.event) keycode = window.event.keyCode;
+
+				if (keycode == 13) {
+					send_command();
+				}
+			}
+			function exibir() {
+				var escolhido = lista_loja.options[lista_loja.selectedIndex].value;
+
+				window.location.href = '../handler?csrf={csrf}&shop=' + escolhido;
+			}		
+</script>	 
+
+        <div class="span9">
+          <div class="row-fluid">
+            <div class="span9">
+			<div class="tabbable">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#shoplist" data-toggle="tab">Shop list</a></li>
+				<li><a href="#myshop" data-toggle="tab">My shop</a></li>
+				<li><a href="#log" data-toggle="tab">Log</a></li>
+				{selfShopButton}
+			</ul>
+			<div class="tab-content">
+			<div class="tab-pane active" id="shoplist">
+			<pre class="log console">{consoleLog}</pre>
+			<select class="span4" id="lista_loja" onChange="exibir()">
+				<option selected value="">Choose a shop to view</option>
+				{startLoop}{shopListComboBox}{endLoop}
+			</select>
+			<input class="span7" id="text_command" size="16" type="text" onKeyPress="submitenter(this.event)">&nbsp;<button class="btn btn-small" type="button" value="Send command" onClick="send_command()">Send</button><br>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Item</th>
+						<th>Price</th>
+						<th>Amount</th>
+						<th>Buy</th>
+					</tr>
+				</thead>
+				<tbody id="listarItens"><!-- {startLoop} -->
+					<tr>
+						<td><div align="center">{shopNumber}</div></td>
+						<td>{shopName}</td>
+						<td>{shopPrice}</td>
+						<td><div align="center">{shopAmount}</div></td>
+						<td><div align="center">{shopJS}</div></td>
+					</tr><!-- {endLoop} -->
+				</tbody>
+			</table>	
+            </div>
+			<div class="tab-pane" id="myshop">
+			<table class="table table-hover">
+				<div align="center"><b>{selfShopTitle}</b></div>
+				<thead>
+					<tr>
+						<th></th>
+						<th>Item</th>
+						<th>Amount</th>
+						<th>Price</th>
+					</tr>
+				</thead>
+				<tbody>
+					{startLoop}<tr><td><img src="http://db.irowiki.org/image/item/{selfShopItemID}.png"/></td><td>{selfShopItemName}</td><td>{selfShopItemAmount}</td><td>{selfShopItemPrice}</td></tr>{endLoop}
+				</tbody>
+			</table>
+			</div>
+			<div class="tab-pane" id="log">
+			<table class="table table-hover">
+				<tbody>
+					<pre>{shopLog}</pre>
+				</tbody>
+			</table>
+			</div>
+			</div>
+			</div>
+			</div>
+           </div>
+        </div>
+
+{{_footer.html}}

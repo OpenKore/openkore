@@ -1,0 +1,19 @@
+<div class="span3">
+	<h5 class="center">
+		<i class="icon-map-marker"></i> <span class="value_field_description">{characterLocationDescription}</span>
+	</h5>
+	<div class="center">
+		<!-- why canvas? -->
+		<canvas id="map" style="background-image: url('{characterLocationMapURL}')">
+			<form action="/handler" method="GET">
+				<input type="hidden" name="csrf" value="{csrf}"/>
+				<input type="image" alt="{characterLocationMap}" src="{characterLocationMapURL}"/>
+			</form>
+		</canvas>
+	</div>
+	<p>
+		<div class="center" id="coord">
+			<span class="value_char_pos_x">{characterLocationX}</span>, <span class="value_char_pos_y">{characterLocationY}</span>
+		</div>
+	</p>
+</div>

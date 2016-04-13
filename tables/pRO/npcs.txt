@@ -1,0 +1,1793 @@
+﻿airplane 222 67 Karian#job_min1
+airplane 236 63 Hallen#yusa
+airplane 238 54 Adventurer
+airplane 240 64 Exit#airplane1a
+airplane 247 64 Exit#airplane1b
+airplane 250 58 Airship Staff#airplane
+airplane_01 234 65 boom9#airplane
+airplane_01 239 50 boom3#airplane
+airplane_01 239 62 boom1#airplane
+airplane_01 240 64 Exit#airplane_011a
+airplane_01 244 55 boom2#airplane
+airplane_01 245 59 boom4#airplane
+airplane_01 246 54 Airship Captain#02
+airplane_01 247 64 Exit#airplane_011b
+airplane_01 249 50 boom0#airplane
+airplane_01 250 58 Airship Staff#airplane_
+airplane_01 252 63 boom8#airplane
+alb2trea 39 50 Sailor
+alb2trea 57 67 Richard#nk
+alb2trea 59 69 Kafra Employee
+alb2trea 75 101 Bulletin Board#sunken
+alb2trea 87 65 Tool Dealer
+alberta 101 48 Captain Enforcer#albert
+alberta 102 80 Jhonnita
+alberta 104 60 [Quest] First Mate#Ship
+alberta 106 63 Stylist
+alberta 107 59 [Quest] Second Mate#Shi
+alberta 109 71 An event usher#xmas_07
+alberta 111 59 Bulletin Board#alberta
+alberta 113 53 Smile Helper
+alberta 113 60 Kafra Employee
+alberta 114 70 Cool Event Voting Staff
+alberta 117 135 Kid
+alberta 117 68 Halloween Trick Wizard#
+alberta 118 157 Magazine Dealer Tonny#a
+alberta 118 160 Bullet Dealer Tony#airp
+alberta 119 221 Shyailron
+alberta 119 70 Kafra Voting Staff#albe
+alberta 120 206 Alonie#Solo_Play_Box
+alberta 120 53 Stylish Merchant#new30
+alberta 120 60 Guide
+alberta 122 55 [Quest] Messenger Girl#
+alberta 123 221 Deadly Cargo [6]#
+alberta 124 67 Eden Teleport Officer#4
+alberta 127 143 Belder
+alberta 127 64 Continental Messenger#a
+alberta 131 139 Drunken old man
+alberta 136 79 Hat store girl#new30
+alberta 148 53 Cool Event Employee#Giv
+alberta 148 60 Cool Event Employee#Giv
+alberta 151 78 Bebete#Status_Of_Baby_A
+alberta 165 83 Fastidious Old Man
+alberta 167 135 Chef Assistant
+alberta 184 143 Guide#03alberta
+alberta 188 173 Deadly Cargo [1]#
+alberta 189 151 Sailor
+alberta 190 173 Phelix
+alberta 195 151 Paul
+alberta 196 133 Bard#job_min
+alberta 196 146 Crusader#megin2
+alberta 214 77 Captain Janssen
+alberta 215 111 Funfi
+alberta 23 238 Guide
+alberta 232 104 Deadly Cargo [2]#
+alberta 232 106 Gusangs
+alberta 243 43 Deadly Cargo [5]#
+alberta 245 45 Kunyang#0
+alberta 245 66 Moscovia Publicity Rep#
+alberta 245 67 Deadly Cargo [4]#
+alberta 245 69 Kunlun Advertiser#0
+alberta 245 93 Sea Captain#0
+alberta 246 87 Deadly Cargo [3]#
+alberta 247 115 crew of brit ship#bra2
+alberta 247 122 Sailor
+alberta 247 42 Aibakthing#0
+alberta 248 89 Turtle Island scholar
+alberta 248 93 A voyage log
+alberta 26 229 Kafra Employee
+alberta 28 229 Kafra Employee
+alberta 35 241 Sign
+alberta 43 244 Tourist#thai
+alberta 43 49 Poor-looking Merchant
+alberta 45 106 Little Boy
+alberta 53 39 Merchant
+alberta 56 80 Donovan#nk
+alberta 58 80 Merchant
+alberta 62 156 Phina
+alberta 83 96 Naeco
+alberta 88 55 First_Cash_Seller
+alberta 90 62 [Quest] Port Manager#
+alberta 91 55 Second_Cash_Seller
+alberta 91 59 Odin's Cash manager#phi
+alberta 91 60 Kafra Employee#pRO_Prem
+alberta 91 70 Bad food boy
+alberta 93 174 Grandma
+alberta 97 51 Merchant
+alberta 98 202 Guard#s10
+alberta 99 60 [Quest] Elite Mercenary
+alberta_in 18 102 Letter
+alberta_in 180 15 Armor Dealer
+alberta_in 188 21 Weapon Dealer
+alberta_in 23 104 Turtle grandpa
+alberta_in 32 142 Inn Employee
+alberta_in 53 43 Merchant
+alberta_in 70 51 Guarnien
+alde_alche 101 184 Master Alchemist
+alde_alche 13 15 Studying Man
+alde_alche 175 107 Fastidious Alchemist
+alde_alche 24 188 Guild Dealer
+alde_alche 27 185 Alchemist Guildsman
+alde_alche 31 186 Craft Book Salesman#ald
+alde_alche 35 186 Alchemist Union Member#
+alde_alche 38 184 Material Seller#alche
+aldeba_in 142 238 Kafra Service
+aldeba_in 155 240 Kafra Employee#lt3
+aldeba_in 84 166 Kafra Service
+aldeba_in 96 181 Kafra Service
+aldebaran 113 70 Metalworker Manster
+aldebaran 114 56 Rogue Agent#nd0
+aldebaran 117 181 Phracon Young Man 
+aldebaran 121 231 Alchemy Guy 
+aldebaran 127 138 Promotional staff
+aldebaran 128 97 Lotenbruek
+aldebaran 131 97 Virchbruek
+aldebaran 132 184 Girl#prince
+aldebaran 133 108 Soldier
+aldebaran 133 116 An event usher#xmas_02
+aldebaran 133 119 Eden Teleport Officer#5
+aldebaran 134 97 Nuirenbergk
+aldebaran 135 113 Odin's Cash manager#phi
+aldebaran 135 116 Second_Cash_Seller
+aldebaran 135 119 First_Cash_Seller
+aldebaran 135 128 Continental Messenger#a
+aldebaran 136 132 Soul Magician#alde
+aldebaran 136 133 Bulletin Board#clocktow
+aldebaran 136 135 Smile Helper
+aldebaran 137 119 Kafra Employee#pRO_Prem
+aldebaran 138 102 Cool Event Voting Staff
+aldebaran 139 63 Soldier 
+aldebaran 140 130 #jm¾Ëµ¥½Ã°è¾Õ
+aldebaran 142 128 Karian#cmd8
+aldebaran 143 119 Kafra Employee
+aldebaran 143 136 Benjamin Hole 
+aldebaran 145 102 Kafra Voting Staff#alde
+aldebaran 146 106 Bulletin Board#alde
+aldebaran 146 109 Maroll Battle Recruiter
+aldebaran 146 124 Village Girl
+aldebaran 149 97 Hohenshweingaw
+aldebaran 152 63 Merchant#alde
+aldebaran 152 97 Noischvanstein
+aldebaran 165 107 Chef Assistant
+aldebaran 36 135 Guide Soldier#04aldebar
+aldebaran 46 129 Canal Young Man 
+aldebaran 49 93 Weapon Level Young Man 
+aldebaran 60 70 Lady
+aldebaran 64 104 Mr Quaetro
+aldebaran 66 213 Lady#megin
+aldebaran 67 154 Young Mountaineer 
+aldebaran 81 61 Clam-picking Girl 
+aldebaran 86 228 Kid 
+aldebaran 90 170 Slots Young Man
+aldebaran 93 80 Long-leg Youth 
+aldeg_cas04 133 220 Wurzburg
+amatsu 179 107 John
+amatsu 185 115 Druken Man
+amatsu 194 79 Sea Captain#1
+amatsu 207 89 Amatsu Guide
+aru_gld 80 41 Scheit
+aru_gld 80 52 Scheit
+arug_cas01 102 120 Mardol
+arug_cas01 117 120 Mardol
+arug_cas01 118 131 Control Device02#aru01_
+arug_cas03 45 158 Horn
+arug_cas03 65 171 The first guardian ston
+arug_cas05 136 158 Control Device01#aru05_
+bra_dun01 87 43 Pipe#bra
+bra_dun02 67 205 recluse in cave#bra
+bra_dun02 71 200 water lily#bra
+bra_fild01 200 84 Puppy#d2
+bra_fild01 234 101 Puppy#d1
+bra_fild01 245 52 monkey#bra
+bra_fild01 260 60 Puppy#c3
+bra_fild01 59 116 Puppy#a2
+bra_fild01 62 142 Puppy#a3
+bra_fild01 80 163 Puppy#b1
+bra_fild01 98 96 Puppy#a1
+bra_in01 134 189 tap#bra
+bra_in01 138 184 carpet#bra
+bra_in01 142 27 wiser Marta#bra
+bra_in01 144 187 chamber pot#bra
+bra_in01 145 27 brasilis boy#bra
+bra_in01 149 184 door#bra
+bra_in01 151 180 mirror#bra
+bra_in01 206 188 opened half whole#todun
+bra_in01 27 24 hotel keeper#bra1
+bra_in01 7 181 curator#bra
+bra_in01 95 179 Chetro
+brasilis 137 77 Ice-cream beibe
+brasilis 155 165 signpost#bra
+brasilis 180 249 Daniel#bra
+brasilis 181 250 Fabio#bra
+brasilis 185 246 Fedro#bra
+brasilis 187 162 Candy maker
+brasilis 187 244 Mariana#bra
+brasilis 195 231 signpost#bra
+brasilis 197 221 Kafra Employee
+brasilis 201 309 Pet Groomer#bra
+brasilis 203 286 Botanist Karmen#bra
+brasilis 203 64 strange kid#bra
+brasilis 219 97 Brasilis Guide
+brasilis 221 128 Fruit Dealer#bra
+brasilis 240 247 signpost#bra
+brasilis 244 243 Weapon Dealer
+brasilis 252 257 Tool Dealer
+brasilis 270 145 brasilis girl#bra
+brasilis 278 137 signpost#bra
+brasilis 297 307 Angelo#br
+brasilis 303 309 signpost#bra
+brasilis 315 334 Shaman#nk
+brasilis 316 57 crew of brit ship#bra1
+brasilis 56 224 Magician Paje#bra
+brasilis 59 226 Poring#bra
+c_tower3 10 249 Gatekeeper#Riku
+cmd_fild01 55 160 Heap of Earth
+cmd_fild04 267 137 Kid by the sea
+cmd_fild07 136 134 Kafra Employee
+cmd_in01 79 182 Tool Dealer
+cmd_in02 174 89 Ordinary Man#pc1
+cmd_in02 178 86 Stonae
+cmd_in02 178 92 Shalone
+cmd_in02 189 99 Casino gambler
+cmd_in02 190 94 Man#megin
+cmd_in02 88 51 Strange Guy#s
+comodo 106 213 Tropical Fruit Dealer
+comodo 111 163 Beach Trash#comodo17
+comodo 112 182 Munak's grandma
+comodo 129 170 Beach Trash#comodo16
+comodo 135 299 Young Man#sch
+comodo 139 184 Scholar
+comodo 140 86 Cheerless Minstrel
+comodo 142 153 Beach Trash#comodo15
+comodo 152 184 Bafhail#comodo
+comodo 159 316 Woman Roasting Meat#job
+comodo 163 280 Comodo alcohol
+comodo 164 291  Comodo people
+comodo 165 140 Beach Trash#comodo14
+comodo 167 146 Stylist
+comodo 170 137 Raede
+comodo 171 137 Heis
+comodo 176 350 Comodo Tour Leader
+comodo 180 153 Snowtora#1
+comodo 184 108 #jmÄÚ¸ðµµºó»ç
+comodo 184 109 Karian#cmd6
+comodo 185 141 Beach Trash#comodo13
+comodo 185 153 Kafra Employee#pRO_Prem
+comodo 187 153 Hu La Hoop Lady
+comodo 192 119 Kayak Master#job_min
+comodo 193 151 Bor Roben#1
+comodo 195 150 Kafra Employee
+comodo 196 162 Harive#Äµµð»óÀÎ
+comodo 197 149 Comodo Guide#03comodo
+comodo 200 150 Beach Manager#comodo
+comodo 204 148 Devellin
+comodo 204 172 Canell#qsk_dan01
+comodo 209 305 Camping Young Lady
+comodo 210 148 Bulletin Board#comodo
+comodo 210 154 Suspicious Guy
+comodo 211 155 Wandering bard
+comodo 213 310 BBQ Boy
+comodo 215 307 BBQ MAMA
+comodo 216 310 BBQ PAPA
+comodo 218 309 Barbecue Lady
+comodo 219 158 Kachua
+comodo 221 310 Barbecue Man
+comodo 225 164 Chef Assistant
+comodo 228 159 Hair Band Girl
+comodo 237 217 Melon Dye
+comodo 322 178 Comodo Tour Leader
+e_tower 69 117 Purification Stone#102t
+e_tower 81 105 Tower Protection Stone
+ein_in01 16 36 Morriphen
+ein_in01 18 28 Guildsman#BLS
+ein_in01 24 41 Blacksmith Guildsman#mo
+ein_in01 38 29 Paul Spanner
+einbroch 152 46 Bulletin Board#einbroch
+einbroch 155 43 Guide
+einbroch 162 256 Bulletin Board#einbroch
+einbroch 162 317 Guide
+einbroch 224 207 Chef Assistant
+einbroch 228 121 Little Toby#ein-1
+einbroch 232 255 Khowropher
+einbroch 236 191 Young Man#ein
+einbroch 239 205 First_Cash_Seller
+einbroch 242 205 Kafra Employee#ein2
+einbroch 245 205 Second_Cash_Seller
+einbroch 253 203 Bulletin Board
+einbroch 260 128 Gatan#einbroch
+gef_dun01 203 48  #lowentrace1
+gef_dun01 89 192  #lowentrace
+gef_fild05 80 149 Myu#08_hat
+gef_fild08 182 182 #CallGhost
+gef_fild08 182 185 The Wanderer
+gef_fild13 290 243 Jyolbriger
+gef_fild13 297 242 Soldier#277
+gef_fild13 303 243 Jyolbriger
+gef_tower 102 24 Dismal Wizard
+gef_tower 102 34 Merito#12345
+gef_tower 105 172 Point Seller#Sorcerer
+gef_tower 107 36 Dog with white fur
+gef_tower 111 37 Magic Guildsman
+gef_tower 113 161 Karacas#123543
+gef_tower 115 36 Meow
+gef_tower 116 37 Enoz
+gef_tower 118 36 Annoyed Man
+gef_tower 55 142 Bulletin Board#gefdun
+geffen 103 180 Magic school student#ge
+geffen 103 42 Sponiac#09tuto_rhea02
+geffen 109 123 Lefrion
+geffen 109 66 Maroll Battle Recruiter
+geffen 110 117 Ford#11
+geffen 110 200 Sage Welshyun
+geffen 111 104 Cindy#geffen
+geffen 111 48 Woman
+geffen 111 66 [Quest] Mage Hunter#gef
+geffen 112 129 Youlvriger
+geffen 117 37 Cool Event Voting Staff
+geffen 118 62 Guide
+geffen 119 107 Smile Helper
+geffen 119 48 Fountain#s
+geffen 120 132 Yisnelf
+geffen 120 62 Kafra Employee
+geffen 122 37 Kafra Voting Staff#geff
+geffen 122 77 Nia#yagu
+geffen 123 107 Soul Magician#gef
+geffen 124 169 Bossnia staff
+geffen 124 65 Bulletin Board#geffen
+geffen 127 115 Geffen Enforcer#geffen
+geffen 127 130 Berggel
+geffen 128 153 Leblo
+geffen 128 69 An event usher#xmas_03
+geffen 128 90 Continental Messenger#g
+geffen 129 148 Aeroken
+geffen 130 115 Cured Master Thief#geff
+geffen 130 45 First_Cash_Seller
+geffen 130 48 Odin's Cash manager#phi
+geffen 130 50 Second_Cash_Seller
+geffen 131 123 Merlcesdets
+geffen 131 66 [Quest] Magic Merchant#
+geffen 132 38 Bard#2
+geffen 132 66 Eden Teleport Officer#3
+geffen 135 53 Kafra Employee#pRO_prem
+geffen 138 30 Injured Master Thief#ge
+geffen 140 54 [Quest] Elite Mercenary
+geffen 143 126 Kris#edu
+geffen 143 133 Ernie#edu
+geffen 145 130 Sheila#edu
+geffen 146 132 Ancellia
+geffen 146 148 Backalley Merchant
+geffen 147 163 Injured Master Thief#ge
+geffen 151 44 Young Man
+geffen 152 66 Cupet Manager
+geffen 154 143 Dequ'ee
+geffen 156 190 Young Man
+geffen 165 84 [Quest] Gloria#HardenAr
+geffen 165 89 New refining machine#Ha
+geffen 168 175 Sign
+geffen 172 52 Goodman
+geffen 173 88 Merchant#geff
+geffen 175 98 Injured Master Thief#ge
+geffen 178 72 Akkie
+geffen 180 125 Cupet Manager
+geffen 181 114 Aure Dupon
+geffen 190 130 report deliverer#geffen
+geffen 193 152 Pet Groomer
+geffen 196 111 Chef Assistant
+geffen 196 167 Young Woman#sch
+geffen 197 95 Cupet Manager
+geffen 203 116 Guide
+geffen 203 123 Kafra Employee
+geffen 203 146 Citizen
+geffen 207 114 #Hiddne01Easter
+geffen 36 123 Guide#03geffen
+geffen 46 164 Bysliter#BLS
+geffen 59 143 Lady
+geffen 61 174 Sign#M
+geffen 67 180 New_Mage_Manager#M
+geffen 67 87 Ayeepu
+geffen 73 182 Magic school student#ge
+geffen 74 159 father#geffen
+geffen 77 96 Injured Master Thief#ge
+geffen 83 189 SanShee
+geffen 90 130 Scholar
+geffen 90 67 Promotional staff
+geffen 91 36 Rogue Guild Agent#nd1
+geffen_in 109 170 Blacksmith Guildsman#ge
+geffen_in 110 172 Christopher
+geffen_in 22 171 Weapon Dealer
+geffen_in 26 178 Armor Dealer
+geffen_in 30 178 Weapon Dealer
+geffen_in 34 166 Repair Man
+geffen_in 34 170 Young Man
+geffen_in 59 61 Hotel Guest
+geffen_in 59 74 Jesqurienne
+geffen_in 61 72 Aaron
+geffen_in 63 63 Gate Keeper#4
+geffen_in 67 63 PVPNarrator#4
+geffen_in 70 64 Inn Employee
+geffen_in 70 67 Hotel Waitress
+geffen_in 74 144 Trader
+gl_church 139 90 Delicate trace#000003
+gl_church 143 125 Delicate trace#0000010
+gl_church 148 5 Delicate trace#000005
+gl_church 158 100 #Clue of traces
+gl_church 158 103 Delicate trace#000002
+gl_church 173 88 Delicate trace#000001
+gl_church 185 125 Delicate trace#000009
+gl_church 211 94 Delicate trace#000008
+gl_knt02 150 55 Rune Knight Staff
+gl_prison 17 73 [Quest] Mercenary Scout
+glast_01 240 366 Thought of Schmidtz
+glast_01 369 308 Bulletin Board#castle
+glast_01 44 363 Guide, Jungberg
+gon_dun02 195 190 Spirit Detecting Staff#
+hu_fild01 140 163 Tower Keeper
+hu_fild04 235 103 Heap of Earth#mao2_obje
+hu_fild04 321 131 Traces#mao2_object02
+hu_fild04 368 180 Traces#mao2_object03
+hu_fild05 193 98 #fildshout02
+hu_fild05 251 345 #hu_01
+hu_fild05 252 74 #fildshout03
+hu_fild05 276 349 #hu_find_4
+hu_fild05 323 175 #fildshout04
+hu_fild05 335 152 #hu_find_1
+hu_fild05 342 130 Dancer Kim#fild
+hu_fild05 42 205 #hu_find_3
+hu_fild05 65 99 #hu_04
+hu_fild05 69 147 #fildshout10
+hu_fild05 72 104 #hu_03
+hu_fild05 80 239 #fildshout09
+hu_fild05 81 111 #fildshout01
+hu_fild05 89 52 #hu_find_2
+hu_fild06 168 359 Moks Mushrooms#1
+hu_fild06 190 367 Torpy's Mom
+hu_fild06 34 123 Postell Schuwell#1
+hu_in01 205 204 Praying Nun#benew
+hu_in01 246 107 Inn Staff
+hu_in01 256 40 Herico
+hu_in01 267 5 Karian#job_min2
+hu_in01 305 251 Vacant looking Lady#wan
+hu_in01 361 103 Tone-deaf person#job_mi
+hugel 100 103 Perfitz#hg
+hugel 100 174 Strange Man#out
+hugel 100 176 Suspicious Barrel#hugel
+hugel 102 130 Ledrion#hugel
+hugel 102 161 Erjan#hg
+hugel 105 169 Milk Merchant
+hugel 107 67 Torpy
+hugel 126 151 Emily#3459
+hugel 147 103 Ghenirhemin
+hugel 169 112 Old Nikki#hg
+hugel 169 139 Gatan#hugel
+hugel 175 115 Marius#hg
+hugel 209 109 Boatman
+hugel 70 137 Shede
+hugel 76 134 Neha#hg
+hugel 77 167 Fruit Shop
+hugel 84 125 Layoma#hg
+hugel 85 165 Kayplas#hg
+hugel 87 139 Maewan#hg
+hugel 88 168 Cool Event Corp. Staff
+hugel 91 152 Sign
+hugel 98 56 Hugel Guide Granny
+ice_dun01 104 30 #Minsicecave5
+ice_dun01 157 15 #Minsicecave1
+ice_dun01 157 23 #Minsicecave2
+ice_dun01 22 85 #Minsicecave12
+ice_dun01 274 274 Spirit Detecting Staff#
+ice_dun02 120 105 Man in the Ice#cave
+ice_dun02 206 223 Red Flame#sc_f02
+in_moc_16 14 27 Assassin#realman
+in_moc_16 19 33 Guildsman
+in_moc_16 22 20 Sepulchral Merchant
+in_moc_16 23 27 Assassin#realgirl
+in_orcs01 20 109 Stylist
+in_rogue 355 28 Rogue Agent
+in_rogue 359 116 Marybell
+in_rogue 363 122 Rogue Guildsman
+in_rogue 366 46 Rogue Investigator
+in_rogue 376 100 Guild Member#sc01
+in_rogue 376 23 Smithrato
+in_rogue 379 101 Scary Man#sc03
+in_rogue 379 99 Guild Member#sc02
+in_sphinx2 13 146 Stone Statue#2
+in_sphinx2 13 163 Stone Statue#1
+in_sphinx2 212 267 Old Coffin#2
+in_sphinx2 259 213 Old Coffin#1
+in_sphinx4 116 120 [Quest] Mercenary Scout
+iz_dun04 129 227 Summer Ticket Girl#nk2
+iz_dun04 43 46 paratam Callandiva#para
+izlu2dun 104 91 Bulletin Board#izlude
+izlu2dun 106 58 Kafra Employee
+izlu2dun 108 27 Sailor
+izlude 105 92 Vendor from Milk Ranch
+izlude 105 99 Butcher
+izlude 119 121 Cuskoal
+izlude 121 174 Midetz#nk
+izlude 121 87 Guide
+izlude 124 178 Soldier
+izlude 129 118 Smile Helper
+izlude 131 116 Bulletin Board#izlude
+izlude 131 177 Guide#02izlude
+izlude 133 104 Kafra Employee#pRO_Prem
+izlude 134 88 Kafra Employee
+izlude 135 78 Charfri
+izlude 150 118 Dega
+izlude 150 143 Kylick
+izlude 164 138 Pet Groomer
+izlude 171 127 Magazine Dealer Kenny#a
+izlude 171 133 Bullet Dealer Tony#airp
+izlude 171 185 Marriage Staff#Izlude I
+izlude 182 186 Edgar
+izlude 186 57 Scamp
+izlude 201 181 Sailor
+izlude 206 55 Airship Staff#izlude
+izlude 46 139 Mercenary Guild Manager
+izlude 55 74 Bonne
+izlude 56 126 Red
+izlude 56 139 Mercenary Merchant#Swor
+izlude 58 126 Cebalis
+izlude 94 98 Fruit Gardener
+izlude 99 136 Promotional staff
+izlude_in 63 165 sword_out
+izlude_in 68 162 Eden Teleport Officer#6
+izlude_in 74 172 Swordman
+izlude_in 82 163 Shurank
+job_cru 168 110 Create#7
+job_cru 168 115 Create#3
+job_cru 168 150 Create#4
+job_cru 168 17 DescriptionofZombie
+job_cru 168 45 Create#1
+job_cru 168 80 Create#2
+job_cru 24 187 Kight of Guardian
+job_sage 116 97 Testroom#fail
+job_sage 50 165 Guide of Practical Test
+job3_arch01 29 34 Valkyrie#arch
+job3_gen01 12 56 Plantguide#generic
+job3_gen01 18 39 Warning#gen
+job3_gen01 21 67 Super Cultivator#gen
+job3_gen01 24 32 The gaze of Devries
+job3_gen01 25 58 Devries#gen
+job3_gen01 30 58 Aolatura#gen
+job3_gen01 30 63 Congra#gen
+job3_gen01 32 38 Sticky Grass#gen
+job3_gen01 36 45 Muka Tree#gen
+job3_gen01 36 55 Bigibigigrass#gen
+job3_gen01 42 55 Bogi vine#gen
+job3_gen01 7 50 Testing Table #gen
+job3_gen01 74 45 Scattered Stuff#gen7
+job3_gen01 77 41 Scattered Stuff#gen2
+job3_gen01 78 57 Scattered Stuffs#gen3
+job3_gen01 81 81 #dbroom
+job3_gen01 83 20 Bed#gen
+job3_gen01 83 27 Scattered Stuff#gen6
+job3_gen01 83 72 Delivery Box#generic
+job3_gen01 84 45 Scattered Stuff#gen1
+job3_gen01 85 25 Opened Book#gen
+job3_gen01 89 59 Scattered Stuff#gen4
+job3_gen01 90 51 Scattered Stuff#gen5
+job3_gen01 91 48 Demi Calberine#gen
+job3_rang01 30 44 Practical Test Waiting 
+job3_rang02 111 56 Staff Rust#job_ranger09
+job3_rang02 136 21 Summon Monster#job_rang
+job3_rang02 180 78 Test Supervisor Kowsyun
+job3_rang02 241 41 Egg Bomb#job_ranger23
+job3_rang02 243 54 Egg Bomb#job_ranger17
+job3_rang02 244 53 Egg Bomb#job_ranger21
+job3_rang02 246 42 Egg Bomb#job_ranger14
+job3_rang02 246 58 Egg Bomb#job_ranger18
+job3_rang02 247 42 Egg Bomb#job_ranger28
+job3_rang02 249 46 Egg Bomb#job_ranger15
+job3_rang02 251 49 Test Supervisor Freeze#
+job3_rang02 254 50 Egg Bomb#job_ranger22
+job3_rang02 254 52 Egg Bomb#job_ranger27
+job3_rang02 255 56 Egg Bomb#job_ranger19
+job3_rang02 256 43 Egg Bomb#job_ranger16
+job3_rang02 256 52 Egg Bomb#job_ranger25
+job3_rang02 259 41 Egg Bomb#job_ranger24
+job3_rang02 259 58 Egg Bomb#job_ranger26
+job3_rang02 260 48 Egg Bomb#job_ranger20
+job3_rune01 114 50 Rune Knight Velpino
+job3_rune01 40 54 Runes and Rune Knights
+job3_rune01 43 44 The Principles of Runes
+job3_rune01 50 36 Runes, Make & Use
+job3_rune01 55 50 Rune Knight, Renoa
+job3_rune01 58 51 Rune Furnace
+job3_rune01 80 60 Rune Knight Captain
+job3_rune01 90 50 Rune Knight Lunarea
+job3_rune01 90 62 Rune Seller
+job3_rune01 92 62 Kafra Employee
+job3_sha01 22 78 ????#keybox01
+job3_sha01 25 28 ????#keybox02
+job3_sha01 71 27 ????#¿­¼è»óÀÚ04
+job3_sha01 73 80 ????#keybox03
+jupe_cave 147 52 jupe_entrance#2
+jupe_cave 37 55 Scholar
+jupe_core2 149 273 Ghostfire#1
+jupe_core2 149 34 #Acquiring Knowledge
+jupe_core2 150 33 #Acquiring Knowledge
+jupe_core2 242 62 Ghostfire#3
+jupe_core2 272 149 #Foothold
+jupe_core2 288 142 #Door
+jupe_core2 29 150 #Foothold
+jupe_core2 53 75 Ghostfire#2
+lhz_dun01 225 198 #kiz01-4
+lhz_in01 110 174 Gerhart
+lhz_in01 113 150 #kiz07
+lhz_in01 114 181 Representative#li_01
+lhz_in01 199 137 Scientist#li_03
+lhz_in01 203 123 Scientist#li_02
+lhz_in01 204 138 Keshibien
+lhz_in01 206 129 #kiz09
+lhz_in01 214 129 A pile of paper#hg
+lhz_in01 217 121 Repairman#li_01
+lhz_in01 218 141 Alchemist
+lhz_in01 221 131 Scientist#li_01
+lhz_in01 224 140 Kellasus
+lhz_in01 225 122 Skrajjad
+lhz_in01 23 132 Rekenber Guard#li02
+lhz_in01 24 140 Regenschirm Guard#40
+lhz_in01 269 114 A File#li-1
+lhz_in01 273 121 Mad Scientist#li
+lhz_in01 282 166 #kiz10
+lhz_in01 285 169 Researcher#lt1
+lhz_in01 35 226 Rekenber Guard#li01
+lhz_in01 46 125 Rekenber Guard#li03
+lhz_in01 72 195 Guide#lt1
+lhz_in01 72 209 Guide#lt1
+lhz_in01 73 188 Guide#lt2
+lhz_in02 100 134 Hair Dyer#lich
+lhz_in02 100 143 Hair Dresser#li
+lhz_in02 105 21 Jeweler
+lhz_in02 110 286 Cool Event Manager
+lhz_in02 19 274 Maintenance Guy
+lhz_in02 31 145 Tool Dealer
+lhz_in02 32 219 Butcher
+lhz_in02 34 212 Maggie#05
+lhz_in02 36 274 Cool Event Staff#Saera
+lhz_in02 36 284 Cool Event Staff#Cesuna
+lhz_in02 38 145 Gift Merchant
+lhz_in02 40 280 Event Planner
+lhz_in02 47 148 Wedding Shop Dealer
+lhz_in02 85 216 Doll Supplier
+lhz_in02 87 208 Toy Supplier
+lhz_in02 91 155 Assistant Beautician#li
+lhz_in02 91 38 Margaret Merry#hat
+lhz_in03 25 105 Gopal#zen4
+lhz_in03 32 99 Sopheap#zen1
+lhz_in03 39 44 Enquro Carson
+lighthalzen 107 107 Kosit#zen1
+lighthalzen 115 159 Collins#zen1
+lighthalzen 124 129 Vegetable Gardener
+lighthalzen 125 68 Kemp#zen13
+lighthalzen 126 126 Chef Assistant
+lighthalzen 132 103 Sefith#li_01
+lighthalzen 141 162 Old Man
+lighthalzen 147 105 Laqumet#li_02
+lighthalzen 153 86 Maroll Battle Recruiter
+lighthalzen 154 100 Guide
+lighthalzen 154 83 First_Cash_Seller
+lighthalzen 160 124 Karian#cmd3
+lighthalzen 162 109 moonfestivalstaff#09_mo
+lighthalzen 162 126 Little girl#job_min
+lighthalzen 163 83 Second_Cash_Seller
+lighthalzen 163 86 Odin's Cash manager#phi
+lighthalzen 164 100 Kafra Employee
+lighthalzen 164 127 Suspicious Guy#lhz_03
+lighthalzen 164 87 Kafra Employee#pRO_Prem
+lighthalzen 173 167 Switch#1
+lighthalzen 179 170 Ordinary Man#lt1
+lighthalzen 182 102 Lucius#zen5
+lighthalzen 182 89 Relaxed-Looking Lady
+lighthalzen 190 134 Joyce
+lighthalzen 191 134 Dan Song#zen2
+lighthalzen 191 320 Kafra Employee
+lighthalzen 198 285 Jiwon#zen5
+lighthalzen 205 208 Greedy Looking Man#li_0
+lighthalzen 205 284 Harrison#gun
+lighthalzen 207 310 Guide
+lighthalzen 220 122 Vendor from Milk Ranch
+lighthalzen 220 169 Suspicious Guy#lhz_02
+lighthalzen 220 244 Samnang#zen2
+lighthalzen 220 292 Guide
+lighthalzen 220 310 Lighthalzen Guide#light
+lighthalzen 220 311 Guide
+lighthalzen 222 191 Pet Groomer
+lighthalzen 226 210 Nannan
+lighthalzen 230 182 Klaubis#zen3
+lighthalzen 232 156 Sigmund#zen3
+lighthalzen 233 121 Kariya#li_01
+lighthalzen 240 216 Suspicious Guy#lhz_01
+lighthalzen 267 200 Guard
+lighthalzen 294 223 Guard
+lighthalzen 295 227 #kiz05
+lighthalzen 296 239 Berru#lhz_01
+lighthalzen 297 239 Pilia#lhz_01
+lighthalzen 307 224 Guide
+lighthalzen 312 233 Beggar#lhz_02
+lighthalzen 313 301 Sewer Pipe#lt
+lighthalzen 45 59 Janice#zen03
+lighthalzen 65 94 Margie Keays#li_02
+lighthalzen 66 94 Elmer Keays#li_03
+lighthalzen 69 75 Fruit Gardener
+lighthalzen 77 157 Villagomez#li_01
+lighthalzen 78 120 Maivi#zen1
+lighthalzen 88 79 Dono
+lighthalzen 89 73 Sameer#zen15
+lighthalzen 94 248 Cool Event Corp. Staff
+lighthalzen 96 137 Leablem
+man_fild01 103 311 Manuk Piom#tre2
+man_fild01 103 354 Manuk Galtun#door1
+man_fild01 107 233 Soldier#ep13pa0829
+man_fild01 118 238 Mysterious Rock#7
+man_fild01 122 354 Manuk Galtun#door2
+man_fild01 132 47 Cat Hand Agent
+man_fild01 169 260 Phiom
+man_fild01 183 185 Phiom
+man_fild01 188 216 Benknee
+man_fild01 194 189 Manuk Galtun#tre3
+man_fild01 218 163 Kalton
+man_fild01 227 280 Scientist#ep13bs
+man_fild01 241 227 Mysterious Rock#40
+man_fild01 251 180 Youth In Village#ep13bs
+man_fild01 252 116 Manuk Garton#ep13_2dayq
+man_fild01 253 173 Manuk Benknee#tre5
+man_fild01 256 143 Kalton
+man_fild01 266 199 Kalton
+man_fild01 274 239 Soldier#ep13pa0829
+man_fild01 278 177 Villager#ep13_11
+man_fild01 281 177 Villager#ep13_12
+man_fild01 283 288 Worker#ep13bsg6
+man_fild01 286 147 Phiom
+man_fild01 293 203 Manuk Piom#tre4
+man_fild01 304 195 Soldier#ep13pa0829
+man_fild01 315 95 Expedition Scout
+man_fild01 333 128 Worker#ep13bsg4
+man_fild01 336 128 Worker#ep13bsg5
+man_fild01 346 135 Worker#ep13bsg1
+man_fild01 360 137 repairmanep13bs
+man_fild01 372 221 Scientist#lifeguard
+man_fild01 378 276 Manuk Engineer#ep13_2da
+man_fild01 59 261 #evt_lumis
+man_fild01 70 246 Mysterious Rock#8
+man_fild01 80 248 Alberto#ep13bs
+man_fild01 92 155 Mysterious Rock#4
+man_fild01 92 230 Frozen Tree#evt_lumis
+man_fild01 99 334 Manuk Piom#tre1
+man_fild02 132 47 Cat Hand Agent
+man_fild02 88 263 Mysterious Rock#33
+man_fild03 104 248 Mysterious Rock#16
+man_fild03 202 251 Expedition Scout
+man_fild03 227 109 Half-buried Gem#ep132_r
+man_fild03 236 105 Tree Giant#man
+man_fild03 81 198 Mysterious Rock#13
+man_fild03 82 216 Mysterious Rock#14
+man_fild03 91 272 Mysterious Rock#17
+man_fild03 95 301 Mysterious Rock#18
+man_fild03 98 226 Mysterious Rock#15
+man_in01 175 59 Snorren#ep13_13
+man_in01 227 280 Scientist#ep13bs
+man_in01 346 135 Worker#ep13bsg1
+man_in01 378 276 Manuk Engineer#ep13_2da
+man_in01 68 187 Worker#ep13bs1
+man_in01 74 181 Worker#ep13bs2
+manuk 103 311 Manuk Piom#tre2
+manuk 103 354 Manuk Galtun#door1
+manuk 107 233 Soldier#ep13pa0829
+manuk 169 260 Phiom
+manuk 183 185 Phiom
+manuk 188 216 Benknee
+manuk 193 135 Worker#ep13bs
+manuk 194 189 Manuk Galtun#tre3
+manuk 218 163 Kalton
+manuk 225 129 Benknee
+manuk 245 124 Phiom
+manuk 252 116 Manuk Garton#ep13_2dayq
+manuk 256 143 Kalton
+manuk 266 199 Kalton
+manuk 274 239 Soldier#ep13pa0829
+manuk 278 177 Villager#ep13_11
+manuk 281 177 Villager#ep13_12
+manuk 286 147 Phiom
+manuk 293 203 Manuk Piom#tre4
+manuk 304 195 Soldier#ep13pa0829
+manuk 99 334 Manuk Piom#tre1
+mid_camp 123 290 Otto#ep13bs
+mid_camp 129 284 Trap Specialist
+mid_camp 13 143 Camp Guard#man2
+mid_camp 143 306 Breeder Taab#ep13_alba
+mid_camp 146 306 Qpet Breeder#ep13_eden0
+mid_camp 147 256 Rune Midgarts Magician#
+mid_camp 159 282 Cooking soldier#ep13bs
+mid_camp 160 298 Jan#ep13bs
+mid_camp 165 245 Ryosen#ep131_rhea01
+mid_camp 166 248 Sorcerer#ep13bs
+mid_camp 188 254 Monster Scholar#ep13
+mid_camp 191 206 Manager#moc2_finder
+mid_camp 192 239 Notice for criminal#ep1
+mid_camp 197 237 Schwarzwald Mechanic#ep
+mid_camp 199 311 Kidd#ep13_dan01
+mid_camp 203 286 Expedition Messenger#ed
+mid_camp 205 312 #moc2_talkevent01
+mid_camp 206 286 Expedition Messenger
+mid_camp 209 286 Expedition Messenger#ed
+mid_camp 212 237 Camp Guard Captain#man1
+mid_camp 213 286 Guard of expedition
+mid_camp 222 218 Hansenne#ep131_rhea03
+mid_camp 222 283 Marian#ep13bs
+mid_camp 240 270 Botanist#ep13
+mid_camp 247 255 Hue#ep131_rhea02
+mid_camp 255 269 Wet Firewood#moc2_campf
+mid_camp 256 272 Defaria#moc2
+mid_camp 261 284 Instructor#ep13bs
+mid_camp 266 263 Diego#ep13bs
+mid_camp 267 258 Post#ep13bs2
+mid_camp 267 263 Post#ep13bs1
+mid_camp 271 299 Historian Magniffer#edq
+mid_camp 283 198 Baget Teablack#ep13bs
+mid_camp 30 168 Gerard#ep13bs
+mid_camp 336 171 Camp Guard#man1
+mid_camp 45 148 Botanist#ep13_1
+mid_camp 49 154 #env_clear
+mid_camp 52 148 Dirt#ep13
+mid_camp 62 125 Cat Hand Agent
+mid_camp 66 122 Henry Clifford
+mid_camp 69 144 Ferocious Gorurug
+mid_camp 72 94 Fluffy Gyaruk
+mid_camp 75 135 School of Fishes#4
+mid_camp 88 100 Hand Cat Mining Agent
+mid_camp 9 215 Camp Guard#man3
+mid_campin 106 122 Receptionist Brink#ep13
+mid_campin 168 82 Arnafeltz Linguist#ep13
+mid_campin 291 128 #ep13bs
+mid_campin 292 120 Davi#ep13bs
+mid_campin 295 128 Lucas#ep13bs
+mid_campin 372 123 Hue#ep131_rhea06
+mid_campin 375 129 Hansenne#ep131_rhea07
+mid_campin 376 120 United Research Officia
+mid_campin 379 123 Ryosen#ep131_rhea05
+mid_campin 68 185 Pursuit Party Leader#ep
+mid_campin 85 118 Instructor Igrid
+mid_campin 90 121 Hibba Agip
+mid_campin 94 118 Staff Officer Abidal
+mjo_dun02 120 30  #brisingminetimer
+mjo_dun02 124 36  #brisingminewarp
+mjo_dun02 126 34 Grer#1
+mjo_dun02 126 36  #4
+mjo_dun02 78 298 Fearsome Demon#ppl1
+mjo_dun02 88 295 Flaming Spirit Man
+mjo_dun03 200 141 Spirit Detecting Staff#
+mjolnir_02 76 362 Bulletin Board#coal
+mjolnir_02 82 362 Kafra Employee
+mjolnir_02 85 362 Blacksmith Miner
+mjolnir_06 275 50 #mj06_find_2
+mjolnir_06 371 78 #mj06_find_3
+mjolnir_07 157 25 #mj07_find_6
+mjolnir_07 214 373 #mj07_find_2
+mjolnir_07 26 373 #mj07_find_1
+mjolnir_07 26 78 #mj07_find_5
+mjolnir_07 372 355 #mj07_find_3
+mjolnir_07 375 233 #mj07_find_4
+mjolnir_08 36 344 #mj08_find_2
+mjolnir_08 39 239 #mj08_find_1
+moc_fild11 205 52 battle_traces#5
+moc_fild11 39 163 battle_traces#4
+moc_fild12 160 365 Ashe#3
+moc_fild12 160 372 Hit
+moc_fild12 166 369 battle_traces#1
+moc_fild12 173 215 battle_traces#2
+moc_fild12 276 165 battle_traces#3
+moc_fild12 35 303 Bastion City Santoleman
+moc_fild16 199 212  Uncle Assassin#07rhea_
+moc_fild16 204 231 Karian#cmd7
+moc_fild16 206 232 #jmÀüÁ÷¼Ò½Ã
+moc_fild17 213 358 battle_traces#8
+moc_fild17 34 292 battle_traces#10
+moc_fild18 309 257 battle_traces#12
+moc_fild18 346 296 battle_traces#11
+moc_fild19 107 101 Bulletin Board#sphinx
+moc_fild20 349 179 Guard in rift
+moc_fild20 354 174 Continental Guard#12_ed
+moc_fild20 354 183 Continental Guard#11_ed
+moc_fild21 38 193 Morocc Timer#edq
+moc_fild22b 37 196 Guard in rift
+moc_prydb1 39 129 Thief Guide
+moc_ruins 115 147 #ForeignMerchant4
+moc_ruins 118 170 Pet Groomer
+moc_ruins 123 154 Young Man#07rhea_14
+moc_ruins 125 135 Trader
+moc_ruins 128 153 Grampa#07rhea_15
+moc_ruins 131 138 Trader
+moc_ruins 132 144 Wolf Young Man#07rhea_1
+moc_ruins 137 70 Book-Touching Man#garas
+moc_ruins 137 89 Space Gap Guard
+moc_ruins 141 125 Bogus Man
+moc_ruins 143 43 Assassin Boy#07rhea_25
+moc_ruins 154 86 Leablem
+moc_ruins 155 107 Ant Man#07rhea_24
+moc_ruins 52 85 Jeweler
+moc_ruins 59 154 Smile Helper
+moc_ruins 59 157 Kafra Employee
+moc_ruins 61 164 Bulletin Board#pyramid
+moc_ruins 66 164 Thief Trainer#T
+moc_ruins 71 139 Trader
+moc_ruins 75 162 Maroll Battle Recruiter
+moc_ruins 75 171 Suspicious Man#2
+moc_ruins 77 167 Foreign Merchant#aru1
+moc_ruins 86 149 #ForeignMerchant1
+moc_ruins 90 149 Trader
+moc_ruins 91 150 Part-timer
+monk_test 329 61 An Assistant#1
+morocc 102 298 Man
+morocc 106 83 Ibrahim
+morocc 116 39 Rogue Guild Agent#nd4
+morocc 132 111 Little Girl#Jorti
+morocc 134 111 Bard#3
+morocc 142 100 Bossnia staff
+morocc 143 63 Ragged Man#nd
+morocc 147 101 Odin's Cash manager#phi
+morocc 149 105 First_Cash_Seller
+morocc 150 108 Second_Cash_Seller
+morocc 150 120 Soldier - Morroc#07rhea
+morocc 152 110 Bulletin Board#morroc
+morocc 153 286 Guide
+morocc 153 53 Kafra Employee#pRO_Prem
+morocc 154 38 Guide#02morocc
+morocc 156 70 Girl#sc00
+morocc 156 97 Kafra Employee
+morocc 159 113 Chief Balrog
+morocc 160 258 Kafra Employee
+morocc 163 41 An event usher#xmas_06
+morocc 164 108 Injured Recruit#nk
+morocc 165 82 A villager in Morocc#07
+morocc 167 108 Injured Veteran#nk
+morocc 168 265 Sign
+morocc 170 108 Injured Elite#nk
+morocc 176 103 Continental Official
+morocc 180 259 Merchant#morroc
+morocc 201 30 Morroc Hordes
+morocc 202 110 Volunteer-Morroc#07rhea
+morocc 202 244 Volunteer - Morroc#07rh
+morocc 223 102 Volunteer-Morroc#07rhea
+morocc 226 102 Volunteer-Morroc#07rhea
+morocc 240 72 Hans
+morocc 248 159 Young Man#magum1
+morocc 268 287 Volunteer-Morroc#07rhea
+morocc 27 112 Whichebain#BLS
+morocc 273 79 The alleged traveler
+morocc 281 178 Shaze
+morocc 289 230 Citizen
+morocc 37 287 Volunteer-Morroc#07rhea
+morocc 43 108 Sharp-Looking Boy#dan_0
+morocc 45 103 #prtcurse
+morocc 51 41 Seiyablem#moc
+morocc 54 251 Young Man#07rhea_19
+morocc 54 97 Guide
+morocc 60 42 Young Man#moc
+morocc 82 292 Muetro
+morocc 88 133 Volunteer-Morroc#07rhea
+moscovia 149 112 A man#mos13
+moscovia 152 71 Fruit Gardener
+moscovia 161 76 Moscovia Guide
+moscovia 166 145 Aunt, dissappointed#07r
+moscovia 166 53 Moscovia Publicity Rep#
+moscovia 167 97 A lady#mos6
+moscovia 168 135 A lady#mos10
+moscovia 171 71 Berbayeff#npc
+moscovia 178 127 The Blacksmith#07russia
+moscovia 192 80 A lady#mos11
+moscovia 196 71 A young man#mos14
+moscovia 199 110 Vendor from Milk Ranch
+moscovia 202 102 A little boy#mos7
+moscovia 204 188 A lady#mos5
+moscovia 206 81 Bassili Grandpapa#07rus
+moscovia 208 182 Acorn Dealer#mos
+moscovia 211 215 A young man#mos12
+moscovia 211 93 Irina#edq
+moscovia 213 216 Ryubaba#07russia_08
+moscovia 219 229 A middle aged man#mos3
+moscovia 220 172 A young man#mos8
+moscovia 223 191 Kafra Staff
+moscovia 223 210 Little Boy#07russia_09
+moscovia 224 190 #nowinterplz
+moscovia 226 191 Moscovia Guide#02moscov
+moscovia 228 80 A little boy#mos16
+moscovia 233 204 A young man#mos2
+moscovia 252 203 A little girl#mos1
+moscovia 255 203 A little boy#mos4
+nif_in 105 81 #Crayu
+nif_in 115 181 #Piano
+nif_in 118 151 #Piano3
+nif_in 140 177 #Switch
+nif_in 145 23 Tool Dealer
+niflheim 102 54 Mad Man#s
+niflheim 109 254 Egnigem
+niflheim 146 241 Depressing Man
+niflheim 149 81 Yhelle#bard_chick4
+niflheim 153 215 Fayelyn
+niflheim 169 71 #Cemetry 2
+niflheim 185 205 Yhelle#bard_chick2
+niflheim 186 190 A Man pacing up dan dow
+niflheim 187 280 Hein
+niflheim 195 211 Kikandia
+niflheim 198 179 Second_Cash_Seller
+niflheim 200 191 Bulletin Board#nifflhei
+niflheim 201 187 niflheim guide#01niflhe
+niflheim 202 180 Kafra Employee#34
+niflheim 206 179 First_Cash_Seller
+niflheim 208 103 #Cemetry1
+niflheim 209 144 Yhelle#bard_chick5
+niflheim 209 180 Chef Assistant
+niflheim 224 243 Arego
+niflheim 230 276 Red Flame#sc_f03
+niflheim 239 70 Yhelle#bard_chick1
+niflheim 240 193 Kayron
+niflheim 313 70 Pleasant-Featured Lady#
+niflheim 331 72 Waltboughst
+niflheim 350 258 #Cursed Soul
+niflheim 52 147 Kurse
+niflheim 85 203 Yhelle#bard_chick3
+niflheim 90 106 A Spirit#Hugel
+odin_tem01 111 144 hidden3#hg_ma1
+odin_tem01 93 146 Boatman
+odin_tem02 281 275 Valkyrie Illusion#arch
+odin_tem02 282 263 #find_val
+odin_tem02 30 181 #wherearch01
+pay_arche 122 100 Part-timer
+pay_arche 127 154 Sign#arc
+pay_arche 130 113 Alchemist Guildmember#t
+pay_arche 79 31 Bulletin Board#archervi
+pay_arche 85 30 Guide
+pay_gld 133 151 Hong-Roo
+pay_gld 137 160 Hong-Roo
+pay_gld 153 166 Hong-Roo
+pay_gld 199 268 Jukk-Rim-Hyun
+pay_gld 291 135 Chun-Dan
+payg_cas05 273 15 Dosuhlji
+payg_cas05 283 24 Yayula
+payon 101 190  #paypuzz1
+payon 103 113 Ledrion#payon
+payon 103 63 Gaeho
+payon 115 131 KoneKone
+payon 132 235 Monster Scholar#02
+payon 134 211 Young Man
+payon 135 320 Chungwolmang
+payon 137 178 Hakhim
+payon 140 151 Seiyablem#pay
+payon 143 143 Young Man#pay
+payon 143 165 Repair Man
+payon 144 173 Antonio
+payon 145 178 Begnahd
+payon 153 182 Cool Event Voting Staff
+payon 153 94 [Quest] Elite Mercenary
+payon 154 170 Hagin
+payon 157 141 Phoenix
+payon 158 182 Kafra Voting Staff#payo
+payon 159 129 Wooden Floor#paypuzz5
+payon 159 96 Tool Dealer
+payon 160 183 Sign
+payon 161 64 Guide
+payon 163 64 Guide#01payon
+payon 165 150 Bossnia staff
+payon 166 101 Odin's Cash manager#phi
+payon 166 104 First_Cash_Seller
+payon 166 107 Second_Cash_Seller
+payon 166 161 Bamboo Forest Hermitage
+payon 166 165 Red Palace
+payon 166 169 Shadow of Buddha
+payon 166 173 Garden of Heaven
+payon 166 177 Arbor of Light
+payon 168 314 Lospii#payon
+payon 173 111 moonfestivalstaff#09_mo
+payon 173 238 Jade
+payon 175 226 Kafra Employee
+payon 176 85 Young Man
+payon 177 111 Eden Teleport Officer#1
+payon 177 131 Pet Groomer
+payon 178 108 Bulletin Board#payon
+payon 179 66 Dasa#09tuto_rhea07
+payon 181 104 Kafra Employee
+payon 181 172 Bard#4
+payon 182 132 Grout'he Tuccok#hellion
+payon 186 101 An event usher#xmas_05
+payon 186 104 Smile Helper
+payon 189 105 Maroll Battle Recruiter
+payon 190 104 Kafra Employee#pRO_Prem
+payon 191 66 Wise Bull Horn
+payon 192 176 Gooho Ahn
+payon 200 113 Continental Messenger#p
+payon 200 134 Merchant#pay
+payon 206 119 Chef Assistant
+payon 209 127 Servant
+payon 210 110 Drunk
+payon 214 79 Telpitz#BLS
+payon 215 102 Moohyun#job_star
+payon 236 199 Leablem
+payon 239 56 Dried Fish#paypuzz3
+payon 240 160 Vat#paypuzz4
+payon 244 62 Moonho Ahn
+payon 246 154 Lady
+payon 246 158 Woman
+payon 248 159 Old Man#magum1
+payon 249 156 Woman
+payon 65 119 Broom Grandma#07russia_
+payon 69 65 Kimeunbang
+payon 79 171 Friar#G5
+payon 82 109 Pile of Stone#paypuzz2
+payon 91 77 Bag Merchant
+payon_in01 132 62 Inn Employee
+payon_in01 140 53 Gate Keeper#5
+payon_in01 142 50 PVPNarrator#5
+payon_in01 15 119 Weapon Dealer
+payon_in01 180 7 Waitress
+payon_in01 47 59 Archer Wolt
+payon_in01 5 129 Weapon Dealer
+payon_in01 5 134 Inventor Jaax
+payon_in01 5 49 Tool Dealer
+payon_in01 66 64 Archer Zakk
+payon_in01 7 119 Armor Dealer
+payon_in02 64 71 Archer Guildsman
+payon_in02 67 65 Bard Jet#tu
+prontera 101 288 Man
+prontera 102 75 First_Cash_Merchant
+prontera 102 77 Second_Cash_Merchant
+prontera 102 81 Odin's Cash manager#phi
+prontera 104 116 Lion#nk
+prontera 104 49 Fruit Gardener
+prontera 105 87 Gift Merchant
+prontera 106 116 Woman
+prontera 112 48 #suprise_11
+prontera 113 123 Customer Support Info#
+prontera 113 42 Flower Lady
+prontera 113 57 #suprise_7
+prontera 116 82 Traveler#01Easter
+prontera 123 102 Merchant#pron
+prontera 123 83 Maroll Battle Recruiter
+prontera 124 297 Tialfi
+prontera 124 76 Eden Teleport Officer#1
+prontera 125 208 PecoPeco Remover
+prontera 130 213 Riding Creature Master
+prontera 132 125 Bossnia staff
+prontera 134 125 #suprise_12
+prontera 139 282 Cherry Blossom#08spring
+prontera 139 294 Cherry Blossom#08spring
+prontera 140 304 Old Soldier
+prontera 140 331 Glasses-wearer#job_min
+prontera 141 97 Warmhearted woman#job_m
+prontera 142 254 Cherry Blossom#08spring
+prontera 142 264 Cherry Blossom#08spring
+prontera 143 203 Lazrigs
+prontera 144 136 Cherry Blossom#08spring
+prontera 144 146 Cherry Blossom#08spring
+prontera 144 156 Cherry Blossom#08spring
+prontera 144 301 Mage#tu
+prontera 146 101 Cupid#prontera
+prontera 146 194 Svanhilt
+prontera 146 218 Woman#job_min
+prontera 146 86 An event usher#xmas_04
+prontera 146 89 Kafra Employee
+prontera 146 98 Kafra Employee#pRO_prem
+prontera 147 125 Cool Event Voting Staff
+prontera 147 305 Sign
+prontera 147 61 Piercing Expert#pa0829
+prontera 148 192 Festival Adventurer#nk
+prontera 148 326 Chief Officer#edq
+prontera 148 49 Bulletin Board#pron
+prontera 149 202 Jorlo
+prontera 150 280 Saint Gravity#im
+prontera 150 326 Wanted Notice#edq
+prontera 151 191 Festival Veteran#nk
+prontera 151 192 Summer Ticket Girl#nk
+prontera 151 29 Kafra Employee
+prontera 151 330 North Gate-Guide
+prontera 152 192 Pumpkin Hat Researcher#
+prontera 152 279 Juliet#prontera2
+prontera 152 326 Kafra Employee
+prontera 153 353 Messenger#prince1
+prontera 154 187 Guide
+prontera 155 190 Creamhilt
+prontera 155 282 Juliet#prontera3
+prontera 155 285 moonfestivalstaff#09_mo
+prontera 155 40 #jmprt1
+prontera 155 42 #prtjm1
+prontera 155 44 #prtjm2
+prontera 155 46 #prtjm3
+prontera 155 48 #prtjm4
+prontera 155 49 Karian#cmd9
+prontera 156 120 #suprise_20
+prontera 156 185 Event Manager#nk
+prontera 156 188 Halloween Trick Wizard 
+prontera 156 212 Chef Assistant
+prontera 156 218 #suprise_9
+prontera 156 282 Romeo#prontera3
+prontera 156 283 #suprise_19
+prontera 156 321 #suprise_2
+prontera 156 353 #suprise_17
+prontera 157 187 Smile Helper
+prontera 157 196 Ticket Redemption NPC#n
+prontera 158 285 [Info]Reno's Dog#pronte
+prontera 159 191 [Quest] Army Officer#nk
+prontera 159 284 Romeo#prontera2
+prontera 160 133 Norby
+prontera 160 183 Soul Magician#pron
+prontera 160 29 South Gate-Guide
+prontera 160 330 Guard
+prontera 161 192 Ashvacum warfÀÎ
+prontera 161 30 #suprise_6
+prontera 162 166 Valhyrie#arch_pass
+prontera 162 188 [Quest] Odin's Knight#n
+prontera 162 191 Happy Citizen
+prontera 163 178 Magic Gear Master
+prontera 163 194 Traveler#02Easter
+prontera 163 204 Man from Morroc
+prontera 163 53 Promotional staff
+prontera 164 125 Kafra Voting Staff#pron
+prontera 164 304 Continental Messenger#p
+prontera 165 191 Church Worker#
+prontera 165 194 Goyindle
+prontera 165 232 Night Phya
+prontera 165 60 Apprentice Craftsman
+prontera 166 299 Mursen Dragonov#mod
+prontera 167 203 Squegle
+prontera 167 281 New Guild Master#tu
+prontera 168 136 Cherry Blossom#08spring
+prontera 168 146 Cherry Blossom#08spring
+prontera 168 156 Cherry Blossom#08spring
+prontera 168 189 [Quest] Elite Mercenary
+prontera 168 228 Rune Seller
+prontera 170 234 Cherry Blossom#08spring
+prontera 170 244 Cherry Blossom#08spring
+prontera 170 254 Cherry Blossom#08spring
+prontera 170 264 Cherry Blossom#08spring
+prontera 172 282 Cherry Blossom#08spring
+prontera 172 294 Cherry Blossom#08spring
+prontera 174 203 Worldcup Manager#pronte
+prontera 174 328 Yong Man#bard_q1
+prontera 179 192 #suprise_1
+prontera 179 92 Cupet Manager
+prontera 183 333 Aelle#qsk_dan02
+prontera 185 208 Valhyrie#gc_pass
+prontera 197 188 Beeyo
+prontera 202 122 Kid#sch
+prontera 202 297 Rina#Easter
+prontera 204 297 Rina's little friend#Ea
+prontera 216 70 Stellaip
+prontera 218 211 Pet Groomer
+prontera 223 82 #prt_key-1
+prontera 223 99 Soldier
+prontera 224 307 Girl#sim
+prontera 225 303 Young man#sim
+prontera 228 279 Wanderer#07russia_24
+prontera 228 315 Soldier#sim01
+prontera 229 104 Soldier
+prontera 229 310 Ingacio#sim01
+prontera 230 313 Nun#sim01
+prontera 232 313 Nun#sim02
+prontera 232 318 Pecopeco Trainer
+prontera 234 309 Soldier#sim02
+prontera 242 92 Cupet Manager
+prontera 244 169 Leablem
+prontera 247 129 Jayon
+prontera 248 153 Doll Supplier
+prontera 248 212 Busy Boy#prt
+prontera 260 354 Woman#rosa ellenen
+prontera 262 353 Gravestone
+prontera 269 326 Clanux Heffron#hellion
+prontera 282 200 Kafra Employee
+prontera 282 208 East Gate-Guide
+prontera 29 200 West Gate-Guide
+prontera 29 207 Kafra Employee
+prontera 45 67  #prt_key-1-1
+prontera 48 58 Vegetable Gardener
+prontera 54 240 Terno
+prontera 58 182 Flower Girl
+prontera 58 217 Valhyrie#rune_pass
+prontera 64 125 Butcher
+prontera 66 111 Sagle
+prontera 67 212 Cupet Manager
+prontera 73 134 Vendor from Milk Ranch
+prontera 73 140 Milk Vendor
+prontera 78 150 Dairenne
+prontera 92 94 Special item mall guide
+prt_castle 107 58 Soldier#s11
+prt_castle 117 163 Inspector#prince
+prt_castle 121 168 #arm
+prt_castle 164 32 Suffering Man
+prt_castle 35 151 Knight of Guardian
+prt_castle 44 151 Rebarev Doug
+prt_castle 45 169 Leader of Crusader
+prt_castle 48 161 Middle-aged Gentleman#4
+prt_castle 48 164 Crusader#mepan
+prt_castle 76 165 Minister#tu
+prt_castle 80 52 Personnel Record#hidden
+prt_castle 83 67 Recruiter for the brave
+prt_castle 84 51 Librarian
+prt_castle 88 165 Laur
+prt_castle 94 150 #sound_tu
+prt_castle 95 26 Maria, the Royal Sage#p
+prt_castle 95 32 Manly Pakyaw#ppl
+prt_church 100 102 Single Army#Payon
+prt_church 100 128 The king of Midgard
+prt_church 101 102 Single Army#Amatsu
+prt_church 102 102 Single Army#Gonryun
+prt_church 103 71 Henson
+prt_church 103 76 Karna
+prt_church 103 78 Eden Teleport Officer#7
+prt_church 103 88 Praying Minister#arch
+prt_church 108 124 Nun
+prt_church 111 112 Sister Linus
+prt_church 113 103 Praying Man
+prt_church 16 41 High Priest
+prt_church 27 24  Sacrificing Nun
+prt_church 87 127 Pastor#1011
+prt_church 89 108 Bard#sch
+prt_church 95 127 Knight of Temple
+prt_church 97 100 Wedding Staff
+prt_church 97 102 Single Army#Prontera
+prt_church 98 102 Single Army#Geffen
+prt_church 99 102 Single Army#Morocc
+prt_fild01 196 47 Roskva
+prt_fild02 185 269  #2
+prt_fild02 185 270 Dvalin#1
+prt_fild08 159 371 Warrior Recruiter#wop
+prt_fild08 175 374 Bard#brising
+prt_gld 147 136 Lazreagues
+prt_gld 147 140 Lazreagues
+prt_in 161 20 Aleuce
+prt_in 162 11 Carter
+prt_in 162 24 Splendid looking Knight
+prt_in 168 18 Valdes
+prt_in 169 11 Aigie
+prt_in 170 14 Customer#BaZooKa
+prt_in 173 13 Customer#Hans Solo
+prt_in 173 24 Hubite
+prt_in 177 18 Marbi
+prt_in 177 20 Tanhu
+prt_in 180 20 Bartender
+prt_in 234 133 Nami
+prt_in 244 135 Inn Keeper
+prt_in 251 129 Maos
+prt_in 52 140 Gate Keeper#3
+prt_in 56 140 PVPNarrator#3
+prt_in 56 54 Suhnbi
+prt_in 56 68 Vurewell
+prt_in 61 141 Inn Keeper
+prt_in 63 54 Repair Man
+prt_in 63 60 Hollgrehenn
+prt_in 63 69 Dietrich
+prt_in 73 87 Prontera Knight Member
+prt_in 94 172 Karian#job_min3
+prt_monk 136 261 Weapon Merchant#tu
+prt_monk 28 260 Hedrick
+prt_monk 59 247 A Monk#1
+prtg_cas03 181 215 Kafra staff
+prtg_cas03 183 215 Diligo
+pvp_n_room 70 85 Fight Square Reception 
+pvp_n_room 78 85 Fight Square Reception 
+pvp_n_room 86 85 Fight Square Reception 
+pvp_room 70 85 Fight Square Reception 
+pvp_room 77 85 Guild Battle Guide
+pvp_room 78 85 Fight Square Reception 
+pvp_room 86 85 Fight Square Reception 
+pvp_y_room 46 85 Fight Square Reception
+pvp_y_room 54 85 Fight Square Reception 
+pvp_y_room 62 85 Fight Square Reception 
+pvp_y_room 70 85 Fight Square Reception 
+pvp_y_room 77 85 Guild Battle Guide
+pvp_y_room 78 85 Fight Square Reception 
+pvp_y_room 86 85 Fight Square Reception 
+que_dan01 21 35 Dandelion Member#moc2_b
+que_dan01 25 32 Dandelion Member#moc2_b
+que_dan01 26 40 Dandelion Member#moc2_b
+que_dan01 29 34 Rin#moc2_bt_rin02
+que_dan01 31 27 #moc2_event01
+que_dan01 32 27 #moc2_event_on
+que_dan01 34 34 Rin#moc2_bt_rin01
+que_dan01 36 34 Rayan#moc2_bt_r01
+que_dan01 39 37 Dandelion Member#moc2_b
+que_dan01 41 34 Dandelion Member#moc2_b
+que_dan01 49 36 Corpse#moc2_dead01
+que_dan02 102 42 Disfigured Corpse#moc2_
+que_dan02 103 24 Crushed Corpse#moc2_dea
+que_dan02 108 17 Dismembered Corpse#moc2
+que_dan02 115 53 Man#moc2_crazyR01
+que_dan02 115 54 Kidd#moc_extra01
+que_dan02 21 37 #moc2_b1_gate
+que_dan02 92 37 Mutated Corpse#moc2_dea
+que_dan02 99 36 Mutilated Corpse#moc2_d
+que_job01 1 1  #Room1Time
+que_job01 1 2  #Room2Timer
+que_job01 10 16 Marjana#poison
+que_job01 12 13 #room1_warp
+que_job01 143 50 Rayan#moc_room2_2
+que_job01 144 51 #room2_2_warp
+que_job01 144 54 Rin#moc_room2_2
+que_job01 16 21 Valdes#moc_master_1
+que_job01 49 49 Tao#dan_09
+que_job01 80 17 #room2_1_warp
+que_job01 81 79 Idle Knight#dan_08
+que_job01 82 95 ¹Ù Master#moc2_01
+que_job01 84 17 Rin#moc_room2_1
+que_ng 22 62 Tetsu#gungun
+que_ng 28 45 Batshu#gungun
+que_ng 28 50 Boshu#gungun
+que_ng 30 65 Cougar
+que_ng 72 29 Kunai Merchant Kashin#a
+que_ng 72 31 Boonji#nin
+que_ng 72 34 Artisan Kaibara#gungun
+que_ng 73 26 Boonray#nin
+ra_fild01 245 325 Suspicious Man#ra_in01
+ra_fild12 285 208 Apprentice Priestess
+ra_fild12 45 230 Airship Guide#fild
+ra_in01 175 196 Oresa Rava#3rdgc13
+ra_in01 175 364 Armor dealer
+ra_in01 176 389 Weapon dealer
+ra_in01 235 194 Katinshuell
+ra_in01 301 50 Normal-Looking Man#pc
+ra_in01 301 52 Common-Looking Man#pc
+ra_in01 308 59 Waiter#pc
+ra_in01 357 128 Karian#cmd4
+ra_in01 358 130 Old woman#job_min
+ra_in01 361 129 #jmrahelhotel
+ra_in01 376 69 Hotel Employee
+ra_temple 116 174 Nemma
+ra_temple 122 174 Nuria
+ra_temple 148 91 Follower Akarna
+rachel 109 138 Cool Event Corp. Staff
+rachel 120 47 Idle Merchant#ra_in01
+rachel 124 120 Mardol
+rachel 124 130 Banadis
+rachel 124 132 Citizen#1
+rachel 125 144 Eden Teleport Officer#1
+rachel 125 33 Rachel Guard
+rachel 127 117 Child Follower#2
+rachel 132 117 Rhehe Ravies#god_se_fes
+rachel 135 131 Gepun
+rachel 136 120 Syr
+rachel 138 126 Horn
+rachel 138 146 Rachel Guide
+rachel 138 73 Idle Merchant#ra_in01
+rachel 142 136 #em_end
+rachel 144 243 Cheshrumnir Guard
+rachel 149 138 Maroll Battle Recruiter
+rachel 151 155 Kid
+rachel 152 131 Sakjul
+rachel 155 243 Cheshrumnir Guard
+rachel 157 183 Sincere Follower Urstia
+rachel 158 215 Lospii#rachel
+rachel 163 152 imir3#rachel
+rachel 197 137 Bard#aru
+rachel 245 132 Bafhail#rachel
+rachel 268 120 Rachel Guard
+rachel 31 130 Rachel Guard
+rachel 65 80 Vegetable seller
+rachel 76 77 Rachel Priest
+s_atelier 114 117 Part-Timer#sc_yuno
+s_atelier 124 128 RimiGX#sc07_yuno
+s_atelier 136 70 Titika#sc09_ra
+s_atelier 137 60 Part-Timer#sc_ra
+s_atelier 15 65 Part-Timer#sc_lgt
+s_atelier 167 129 Manager#sc06_yuno
+s_atelier 168 65 Manager#sc08_ra
+s_atelier 17 110 Part-Timer#sc_prt
+s_atelier 25 75 Manager#sc10_lgt
+s_atelier 26 68 Vito#sc11_lgt
+s_atelier 29 119 Á¡¿ø ¸Æ½º#sc05_prt
+s_atelier 65 123 Manager#sc04_prt
+s_atelier 70 66 Dumk#sc13_lgh
+s_atelier 73 65 Vicente#sc12_lgt
+schg_cas03 266 197 Bidblind
+schg_cas03 266 206 Bidblind
+schg_cas03 273 205 control device03#sch03_
+schg_cas03 283 197 Bidblind
+schg_cas03 320 283 Bidblind
+schg_cas03 337 283 Bidblind
+schg_cas04 99 77 Hueluid
+schg_cas05 95 247 Schatirnil
+spl_fild02 122 106 ????#ep13_mdplant02
+spl_fild02 232 145 Tree#ep13bs2
+spl_fild02 25 211 Cat Hand Agent
+spl_fild02 27 218 Half-buried Gem#ep132_r
+spl_fild02 295 368 Expedition Scout
+spl_fild02 304 151 Tree#ep13bs4
+spl_fild02 314 165 School of Fishes#1
+spl_fild02 321 169 School of Fishes#2
+spl_fild02 326 171 School of Fishes#3
+spl_fild02 329 191 ????#ep13_mdplant03
+spl_fild02 34 223 Small Fairy#spl
+spl_fild02 348 76 Tree#ep13bs1
+spl_fild02 380 197 Tree#ep13bs3
+spl_fild02 45 214 ????#ep13_mdplant01
+spl_fild03 165 100 School of Fishes#2
+spl_fild03 172 71 Expedition Scout
+spl_fild03 226 151 School of Fishes#2
+spl_fild03 268 230 School of Fishes#2
+spl_fild03 293 253 School of Fishes#2
+spl_fild03 317 190 School of Fishes#2
+spl_in01 110 326 Merchant of Splendide
+spl_in01 122 311 Normal Grade Soldier#ep
+spl_in01 122 314 Upper Grade Soldier#ep1
+spl_in01 154 207 Lafine Staff#ep13_extra
+spl_in01 161 213 Lafine at dinner#ep13_e
+spl_in01 162 202 Lafine taking memo#ep13
+spl_in01 167 207 Silent Lafine#ep13_extr
+spl_in01 172 225 Poet Nell#ep13_extra00
+spl_in01 180 201 Lafine Soldie#ep13_extr
+spl_in01 181 218 Lafine with rest#ep13_e
+spl_in01 182 213 Lafine with rest#ep13_e
+spl_in01 189 207 Lafine Staff#ep13_extra
+spl_in01 190 314 Security Officer#tre
+spl_in01 265 315 #spl_prs1
+spl_in01 281 329 Splendide Guard#tre
+spl_in01 287 306 #spl_prs
+spl_in01 30 324 High Lapine#grenouille
+spl_in01 32 306 Splendide Guard#ep13md0
+spl_in01 97 313 Lafine craftsman#ep13_2
+splendide 139 178 Exhausted Soldier#3
+splendide 159 164 Fairy
+splendide 164 188 Exhausted Soldier#4
+splendide 180 223 Fairy#ep13pa0829
+splendide 188 76 Splendide Soldier#tre1
+splendide 198 178 grumblering soldier#edq
+splendide 201 76 Splendide Soldier#tre2
+splendide 205 139 Exhausted Soldier#1
+splendide 207 97 Mid Lapine#tre3
+splendide 210 95 Mid Lapine#tre4
+splendide 218 193 Fairy#ep13pa0829
+splendide 223 36 Fairy
+splendide 224 230 Fairy
+splendide 229 54 Fairy
+splendide 230 142 Fairy
+splendide 240 164 Sighing Soldier#edq
+splendide 245 243 Fairy
+splendide 262 187 Purifier3
+sword_1-1 16 206 2_blank_2_c
+sword_1-1 222 169 Bruno#job_shu
+sword_1-1 223 167 Master#job_shu
+sword_1-1 223 243 Buddy#job_shuÀÀÁ¢
+sword_1-1 230 242 Test Hall Staff
+sword_1-1 230 245 Medic
+sword_2-1 114 162 3_blank_20_a
+sword_2-1 114 175 3_blank_19_a
+sword_2-1 115 175 3_blank_19_b
+sword_2-1 126 162 3_blank_23_a
+sword_2-1 126 175 3_blank_21_a
+sword_2-1 160 163 3_blank_25_a
+sword_2-1 160 174 3_blank_24_a
+sword_2-1 161 163 3_blank_25_b
+sword_2-1 161 174 3_blank_24_b
+sword_2-1 168 162 3_blank_27_a
+sword_2-1 168 175 3_blank_26_a
+sword_2-1 169 162 3_blank_27_b
+sword_2-1 169 175 3_blank_26_b
+sword_2-1 17 163 3_blank_2_a
+sword_2-1 17 174 3_blank_1_a
+sword_2-1 176 163 3_blank_30_a
+sword_2-1 176 174 3_blank_28_a
+sword_2-1 177 163 3_blank_30_b
+sword_2-1 177 174 3_blank_28_b
+sword_2-1 178 172 3_blank_28_d
+sword_2-1 178 173 3_blank_28_c
+sword_2-1 223 167 Mae#swd_1_success
+sword_2-1 223 205 Buddy#job_shuaneh
+sword_2-1 230 204 Test Hall Staff
+sword_2-1 230 207 Medic
+sword_2-1 26 168 3_blank_3_d
+sword_2-1 28 166 3_blank_3_c
+sword_2-1 29 171 3_blank_3_a
+sword_2-1 31 168 3_blank_3_b
+sword_2-1 36 168 3_blank_4_c
+sword_2-1 36 169 3_blank_4_a
+sword_2-1 37 168 3_blank_4_c
+sword_2-1 37 169 3_blank_4_b
+sword_2-1 40 162 3_blank_7_a
+sword_2-1 40 175 3_blank_5_a
+sword_2-1 46 175 3_blank_8_a
+sword_2-1 76 165 3_blank_14_a
+sword_2-1 76 172 3_blank_13_a
+sword_2-1 94 162 3_blank_18_a
+sword_2-1 94 175 3_blank_15_a
+sword_2-1 95 174 3_blank_15_b
+tha_scene01 139 204 Karian#cmd1
+tha_scene01 140 200 #¹Î½º¿µ¼öÁõ
+tha_t01 140 78 Guide#reward
+tha_t01 149 78 Guide
+thor_v01 64 252 Spirit Detecting Staff#
+treasure01 165 58 Old_Treasure_Box#07russ
+treasure01 24 39 Old Bed#07russia_38
+treasure01 27 115 Open_Treasure_Box#07rus
+treasure01 61 183 Old_Wooden_Box#07russia
+treasure01 98 119 Dirty Wall#07russia_39
+tur_dun01 156 36 Survival Instructor, Re
+tur_dun01 160 81 Skul Stone
+tur_dun01 165 29 Sailor
+tur_dun01 91 169 Test Instructor, Teardr
+tur_dun02 132 251 Turtle tree roots
+tur_dun03 104 171 Knight
+tur_dun03 105 74 Knight Party
+tur_dun03 105 76 Knight leader
+tur_dun03 38 209 Blue Flame#sc_f01
+tur_dun03 67 130 Knight Party
+umbala 102 154 Chef Assistant
+umbala 106 162 Second_Cash_Seller
+umbala 106 165 First_Cash_Seller
+umbala 117 285 Bazo
+umbala 137 227 Umbala Boy#arch
+umbala 139 205 Wootan Young Man#5
+umbala 139 227 Priest#arch
+umbala 140 197 At the Bungy Jump
+umbala 145 217 Chabimatan
+umbala 163 256 Native#_s
+umbala 163 257 Hibilaithan
+umbala 87 160 Kafra Employee
+umbala 92 159 Bertan
+umbala 94 181   
+umbala 99 158 Umbala Guide#02umbala
+valkyrie 44 33 Teleporter
+valkyrie 44 39 Lord Knight#Valkyrie#
+valkyrie 44 42 High Priest#Valkyrie#
+valkyrie 44 47 High Wizard#Valkyrie#
+valkyrie 44 50 MasterSmith#Valkyrie#
+valkyrie 53 39 Paladin#Valkyrie#
+valkyrie 53 42 Champion#Valkyrie#
+valkyrie 53 47 Scholar#Valkyrie#
+valkyrie 53 50 Biochemist#Valkyrie#
+ve_fild03 351 219 #ve_find_1
+ve_fild07 125 128 Boat#Aru
+ve_fild07 128 130 Secret Agent#Aru
+ve_fild07 129 132 Karian#cmd5
+ve_fild07 131 132 =Notice=#job_min
+ve_in 232 117 Drunken Lady#1
+ve_in 232 124 Towner
+ve_in 232 135 Towner
+ve_in 233 116 Drunken Man#vol
+ve_in 234 115 Drunken Lady#2
+ve_in 235 135 Bartender#ve
+ve_in 237 125 King Crab#job_shu
+ve_in 237 131 Female Customer#ve1
+ve_in 238 120 Drunkard#Aru1
+ve_in 239 115 Drunkard#Aru
+ve_in 239 135 Towner
+ve_in 240 131 ???#bcmd
+ve_in 241 128 Sludge Worm#job_shu
+ve_in 242 124 Towner
+ve_in 244 126 Waitress#job_shu
+ve_in 97 149 #Suraryokan¼ö¶óº£¿©°ü
+ve_in 98 159 Fighter#job_shu
+veins 121 199 Old Man
+veins 137 179 Towner
+veins 138 207 Gatan#veins
+veins 148 41 Towner
+veins 159 171 Towner#vol
+veins 161 63 Old Man
+veins 162 34 Towner
+veins 177 147 Old Lady
+veins 181 166 Lockenlock
+veins 187 143 Peddler#3rdgc07
+veins 189 101 Veins Guide
+veins 191 134 Old Man
+veins 208 128 Cool Event Corp. Staff
+veins 221 120 Young Town Native
+veins 227 127 Ivory
+veins 235 126 Old man#3rdgc07
+xmas 132 143 Performance Manager#wan
+xmas 134 112 Snowman
+xmas 140 137 Lutie Guide#xmas
+xmas 142 130 Spectator#xmas1
+xmas 144 52 #Hiddne02Easter
+xmas 145 127 Spectator#xmas2
+xmas 146 136 Christmas clown
+xmas 147 135 Dancer Kim#xmas
+xmas 147 311 Bulletin Board#toy
+xmas 148 127 Soy#xmas
+xmas 148 131 #wandergogo
+xmas 149 127 Mimi#xmas
+xmas 149 135 Guitar Song#xmas
+xmas 151 127 Spectator#xmas3
+xmas 152 127 Kafra Employee#pRO_Prem
+xmas 152 137 Chef Assistant
+xmas 154 129 Spectator#xmas4
+xmas 162 209 Aspiring Wanderer, Soy
+xmas 163 209 Aspiring Wanderer, Mimi
+xmas 176 236 Hairy Uncle
+y_airport 126 43 Airport Staff#y_airport
+y_airport 126 51 Arrival Staff#y_airport
+y_airport 140 63 International Boarding#
+y_airport 143 43 Airport Staff#y_airport
+y_airport 143 49 Arrival Staff#y_airport
+y_airport 145 63 Domestic Boarding#y_air
+y_airport 158 43 Airport Staff#y_airport
+y_airport 158 50 Arrival Staff#y_airport
+yggdrasil01 220 47 #A pilgrimage to the Ho
+yuno 109 167 Heemin
+yuno 110 171 Andlerangh
+yuno 111 156 Euslan#02
+yuno 111 175 Bidblind
+yuno 112 179 Hueluid
+yuno 114 183 Schatirnil
+yuno 118 192 Rmimi Ravies#god_se_fes
+yuno 129 156 Chainheart
+yuno 130 173 Chef Assistant
+yuno 14 262 Airship Staff#yuno01
+yuno 142 183 Airship  Representative
+yuno 143 170 Mr. Click#job_min
+yuno 144 189 Eden Teleport Officer#1
+yuno 146 168 Karian#cmd2
+yuno 150 118 Kafra Employee#pRO_Prem
+yuno 150 228 The Juno soldier
+yuno 150 283 A Juno soldier
+yuno 151 183 Second_Cash_Seller
+yuno 152 187 Kafra Employee
+yuno 153 113 Bulletin Board#juno
+yuno 153 191 Cool Event Voting Staff
+yuno 153 47 Juno Guide
+yuno 157 205 A craftsman of Juno
+yuno 157 87 a Juno resident
+yuno 158 183 Odin's Cash manager#phi
+yuno 162 191 Kafra Voting Staff#yuno
+yuno 163 187 Magic Tool Dealer
+yuno 164 183 First_Cash_Seller
+yuno 164 200 Noyee#G
+yuno 164 46 #Hiddne03Easter
+yuno 165 111 A sage of Juno
+yuno 165 228 The Juno soldier
+yuno 165 283 The Juno soldier
+yuno 166 187 An event usher#xmas_01
+yuno 197 114 Taming Merchant
+yuno 205 103 Mr. King's Shop
+yuno 213 298 A sage Eschealla
+yuno 218 97 Tool Dealer
+yuno 226 107 Tool Dealer
+yuno 227 292 The Juno soldier
+yuno 263 320 The Juno soldier
+yuno 311 195 Historian#prt01
+yuno 327 108 Kafra Employee
+yuno 328 239 A Juno martial artist
+yuno 330 100 Knight#ss
+yuno 333 108 Stylist
+yuno 333 210 Library Master#garas
+yuno 334 182 The Juno soldier
+yuno 335 208 Dog#garas
+yuno 336 203 #garas_catch
+yuno 337 227 A granny of Juno
+yuno 343 204 #garas_eff
+yuno 59 212 Yuno Guide#yuno01
+yuno 88 263 Airship Staff#yuno02
+yuno_fild07 208 175 jupe_entrance
+yuno_fild07 254 176 Buddy#job_shu
+yuno_fild08 69 185 Window#kh
+yuno_fild08 71 170 Grave#kh
+yuno_in02 38 61 President of Academy
+yuno_in02 88 164 Metheus Sylphe#Library
+yuno_in02 93 207 Book of Ymir
+yuno_in03 105 177 Written Tester
+yuno_in03 12 39 #ALICE
+yuno_in03 12 45 #ASSULTER
+yuno_in03 154 35 Academy Staff
+yuno_in03 169 180 Practical Tester
+yuno_in03 176 22 Scroll Merchant#yuno03
+yuno_in03 176 24 Mishuna
+yuno_in03 178 43 Shishi
+yuno_in03 18 100 #CATERPILLAR
+yuno_in03 18 104 #THIEF_BUG__
+yuno_in03 18 108 #TRI_JOINT
+yuno_in03 18 111 #ARCLOUSE
+yuno_in03 18 116 #DRAGON_TAIL
+yuno_in03 19 21 #RAYDRIC
+yuno_in03 19 27 #CHEPET
+yuno_in03 19 33 #VIOLY
+yuno_in03 20 18 Neelisis
+yuno_in03 20 96 #WANDER_MAN
+yuno_in03 26 39 Meto
+yuno_in03 32 102 Biology Professor
+yuno_in03 32 15 Guide of Monster Museum
+yuno_in03 33 21 #DEVIACE
+yuno_in03 33 27 #FUR_SEAL
+yuno_in03 33 33 #SAGEWORM
+yuno_in03 34 110 #yuno
+yuno_in03 37 44 #GALAPAGO
+yuno_in03 38 39 #PENOMANA
+yuno_in03 44 96 #OWL_DUKE
+yuno_in03 46 101 #MARINE_SPHERE
+yuno_in03 46 105 #MANDRAGORA
+yuno_in03 62 176 History Professor

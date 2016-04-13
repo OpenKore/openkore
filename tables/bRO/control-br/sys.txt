@@ -1,0 +1,66 @@
+﻿#############################################################################################
+# A Codificação do texto está correta?
+# Codificação:  ANSI -> UTF8 Without boom
+# Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
+# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+#############################################################################################
+###### Localizar Definições (português do Brasil deixe pt_br) ######
+locale
+ 
+###### Localizar Compatibilidade ######
+# Ativar a compatibilidade do Kore para utilizar versões antigas 2.0 de configs.
+locale_compat 0
+ 
+###### Definições de Interface Wx ######
+wxHideConsole 1
+ 
+ 
+###### Definições de Sistema Bus ######
+# Ativar o bus.
+bus 0
+ 
+# Se quiser conectar a um server já a decorrer ou a um computador diferente,
+# especifique-o em baixo.
+bus_server_host
+bus_server_port
+ 
+ 
+###### Definições de Interface Vx ######
+panelTwo_domains publicchat, pm, guildchat, partychat, pm/sent, list, info, selfchat, schat, error, warning
+panelOne_lineLimit 900
+panelTwo_lineLimit 100
+panelFont Verdana
+menuFont Lucida Console
+sbarFont Arial
+panelOne_height 8
+panelOne_width 60
+panelOne_side top
+panelOne_fontsize 8
+panelTwo_height 4
+panelTwo_width 40
+panelTwo_side bottom
+panelTwo_fontsize 8
+ 
+ 
+###### Definições de Plugin(s) ######
+# Carrega os Plugins <0|1|2|3>
+#   Esta opção controla o carregamento dos plugins ao inicar ou quando carrega todos através do comando "plugin load all".
+#   0 : Não carrega nenhum plugin.
+#   1 : Carrega todos os plugins.
+#   2 : So carrega os plugins que estiverem no loadPlugins_list
+#   3 : Carrega todos os plugins exceto os estão listados no skipPlugins_list
+loadPlugins 1
+ 
+# loadPlugins_list <list>
+# Se o loadPlugins é definido como 2, esta lista ficará separada por vírgulas de nomes dos plugins (nome do arquivo sem a extensão)
+# Especifica quais os arquivos do plugin vão ser carregados na inicialização ou quando o comando "plugin carregar todos" é usado.
+loadPlugins_list macro
+ 
+ 
+# skipPlugins_list <list>
+# Se o loadPlugins é definido como 2, esta lista ficará separada por vírgulas de nomes dos plugins (nome do arquivo sem a extensão)
+# Especifica quais os arquivos do plugin vão ser carregados na inicialização ou quando o comando "plugin carregar todos" é usado.
+skipPlugins_list
+ 
+###### Diversos ######
+sendAnonymousStatisticReport 0

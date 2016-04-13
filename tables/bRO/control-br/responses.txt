@@ -1,0 +1,116 @@
+#############################################################################################
+# A Codificação do texto está correta?
+# Codificação:  ANSI -> UTF8 Without boom
+# Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
+# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+#############################################################################################
+# Consulte a documentação para saber como adicionar respostas
+# http://openkore.com/index.php/Responses.txt
+
+authS Agora você é admin, %$cmd_user. Aproveite! ^^
+authF Você já é um admin, %$cmd_user!
+
+confS1 Essa variavel %$key é...%$value
+confS2 *beep*
+confS2 *boop*
+confS2 Tudo certo.
+confF1 Hein?
+confF2 Eu não vejo essa variavel de configuração
+confF3 Oh, bela tentativa %$cmd_user
+confF3 Acho que não ein
+
+dateS Já chega de Ragnarok %$cmd_user.  Já são %$date
+dateS O que eu sou? um relógio?? (BTW it's %$date)
+
+expS Tempo boteando : %$time\nBaseExp      : %$bExp %$percentBExp\nJobExp       : %$jExp %$percentJExp\nBaseExp/Hour : %$bExpPerHour %$percentBExpPerHour\nJobExp/Hour  : %$jExpPerHour %$percentJExpPerHour\nBase Levelup Time Estimation : %$bLvlUp\nJob Levelup Time Estimation  : %$jLvlUp\nDied : %$numDeaths
+expF Hein?
+expMonsterS1 No  Nome                      Mortos
+expMonsterS2 %$killedMonsters
+expMonsterS3 Numero total de monstros mortos: %$numKilledMonsters
+expItemS1 Nome                                    Mortos
+expItemS2 %$gotItems
+
+followS É pra já!
+followS Liberdade!
+followS Sim sinhô!
+followF Não faço idéia do que você está falando, %$user
+followF Isso não faz sentido ><
+
+followStopS Saquei...
+followStopS Eu sou tão irritante?
+followStopF Você é tão paranoico
+followStopF Como se eu tivesse perseguindo VOCÊ
+
+moveS É pra já!
+moveS Liberdade!
+moveS Sim sinhô!
+moveF Não faço idéia do que você está falando, %$user
+moveF Isso não faz sentido ><
+
+quitS flws
+quitS Tou vazando, manolos
+quitS Vou nessa!
+
+reloadS *beep*
+reloadS *boop*
+reloadS Prontinho.
+
+relogS brb
+relogS ok, já volto..
+
+sitS *boof*
+sitS *plop*
+
+skillgoodM Obrigado.
+skillgoodM Você é tão gentil.
+skillgoodM Ah não, já é o bastante. =)
+skillgoodM
+skillgoodM
+skillgoodM
+
+skillbadM Pra que você fez isso?
+skillbadM Para, por favor!
+skillbadM Eu dise pra parar!
+skillbadM ...
+skillbadM ...
+skillbadM
+skillbadM
+
+standS Certinho ^^
+standS Beleza
+standS certo %$cmd_user, que tal?
+
+statusS HP: %$char_hp / %$char_hp_max   SP: %$char_sp / %$char_sp_max\nBase: %$char_lv  |  %$char_exp / %$char_exp_max\nJob: %$char_lv_job  |  %$char_exp_job / %$char_exp_job_max\nWeight: %$char_weight / %$char_weight_max   Zeny: %$zeny
+
+tankS Leecher
+tankF hein?
+
+tankStopS Isso foi divertido...
+tankStopF Parece que estou tancando por acaso?
+
+thankS nada ^^
+thankS De nada
+thankS Sempre um prazer, mano %$cmd_user
+thankS ^^
+
+timeoutS1 Acho que timeout %$key é %$value
+timeoutS2 *beep*
+timeoutS2 *boop*
+timeoutS2 Tudo certo.
+timeoutF1 Hein?
+timeoutF2 Eu não vejo esse Timeout
+
+verboseOnS Ah, finalmente.
+verboseOnS *gasp* Ah, valeu cara...lh..o.
+verboseOnF Tá parecendo que não posso falar?
+verboseOnF Você provoca, posso muito bem falar...
+
+verboseOffS aff... beleza.
+verboseOffS OMG, tanto faz
+verboseOffF Que droga, já vou ficar quieto
+verboseOffF Ok, certo... já entendi
+
+versionS É %$ver
+
+whereS Me perdeu? Estou em %$map: %$x, %$y
+whereS Tou aqui %$map: %$x, %$y

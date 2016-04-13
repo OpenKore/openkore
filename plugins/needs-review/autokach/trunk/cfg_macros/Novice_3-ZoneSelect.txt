@@ -1,0 +1,115 @@
+﻿# Сохранено в УТФ-8
+###########################################################################################
+####################################Место кача в нубозоне##################################
+###########################################################################################
+
+#Средняя по сложности локация
+automacro NoviceGroundPart25a {
+	location new_1-3
+	eval $::config{QuestPart} eq "NoobZone25"
+	class Novice
+	run-once 1
+	call NoviceGroundPart25aM
+}
+macro NoviceGroundPart25aM {
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do move @rand(94,96) @rand(24,26)
+	do pause @rand(2,3)
+	$str = @eval($::char->{str})
+	if ($str >= 12) goto r1
+		[
+		log =========================================================
+		log = Силы мало (всего $str), идем на легкую карту
+		log =========================================================
+		]
+		do talknpc 95 30 c c c r0 c
+		goto end
+	:r1
+		[
+		log =========================================================
+		log = Силы много (силы аж $str), идем на сложную карту
+		log =========================================================
+		]
+		do talknpc 95 30 c c c r1 c
+		goto end
+	:end
+}
+
+#Локация со слабыми мобами - пеньками и т.д.
+automacro NoviceGroundPart25b {
+	location new_2-3, new_3-3
+	eval $::config{QuestPart} eq "NoobZone25"
+	class Novice
+	run-once 1
+	call NoviceGroundPart25bM
+}
+macro NoviceGroundPart25bM {
+	$str = @eval($::char->{str})
+	if ($str >= 12) goto r1
+		[
+		log =========================================================
+		log = Наш Новис силой не блещет (всего $str), тут ему в самый раз
+		log =========================================================
+		]
+		do conf attackAuto 2
+		do conf route_randomWalk 1
+		do mconf Willow 2 0 0
+		do mconf Fabre 2 0 0
+		do conf QuestPart NoobZone26
+		release DeadinNoviceGround
+		release NoviceGroundPart26
+		goto end
+	:r1
+		[
+		log =========================================================
+		log = Наш Новис сильный (силы аж $str), может качаться на мобах по-сложнее
+		log =========================================================
+		]
+		do conf attackAuto 0
+		do conf route_randomWalk 0
+		do move @rand(94,96) @rand(24,26)
+		do pause @rand(2,3)
+		do talknpc 95 30 c c c r1 c
+		goto end
+	:end
+}
+
+#Локация с сильными мобами - споры и т.д.
+automacro NoviceGroundPart25c {
+	location new_4-3, new_5-3
+	eval $::config{QuestPart} eq "NoobZone25"
+	class Novice
+	run-once 1
+	call NoviceGroundPart25cM
+}
+macro NoviceGroundPart25cM {
+	$str = @eval($::char->{str})
+	if ($str >= 12) goto ok
+		[
+		log =========================================================
+		log = Наш Новис силой не блещет (всего $str), нужно качаться на мобах по-проще
+		log =========================================================
+		]
+		do conf attackAuto 0
+		do conf route_randomWalk 0
+		do move @rand(94,96) @rand(24,26)
+		do pause @rand(2,3)
+		do talknpc 95 30 c c c r0 c
+		goto end
+	:ok
+		[
+		log =========================================================
+		log = Наш Новис сильный (силы аж $str), тут ему в самый раз
+		log =========================================================
+		]
+		do conf attackAuto 2
+		do conf route_randomWalk 1
+		do mconf Spore 2 0 0
+		do mconf Female Thief Bug 0 0 0
+		do conf QuestPart NoobZone26
+		release DeadinNoviceGround
+		release NoviceGroundPart26
+		goto end
+	:end
+}

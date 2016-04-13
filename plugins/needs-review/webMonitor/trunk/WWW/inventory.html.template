@@ -1,0 +1,101 @@
+{{_header.html}}
+
+        <div class="span9">
+          <div class="row-fluid">
+            <div class="span9">
+			<div class="tabbable">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#usable" data-toggle="tab">Usable</a></li>
+					<li><a href="#unusable" data-toggle="tab">Unusable</a></li>
+					<li><a href="#equipped" data-toggle="tab">Equipped</a></li>
+					<li><a href="#unequipped" data-toggle="tab">Unequipped</a></li>
+					<li class="{cartActive}"><a href="#cart" data-toggle="tab">Cart</a></li> 
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="usable">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Amount</th>
+								<th>Item</th>
+								<th>Action</th>
+								<th>Drop</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://db.irowiki.org/image/item/{usableID}.png"/></td><td>{inventoryUsableAmount}</td><td class="left">{inventoryUsable}</td>{inventoryUsableJS}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>
+					<div class="tab-pane" id="unusable">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Amount</th>
+								<th>Item</th>
+								<th>Action</th>
+								<th>Drop</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{unusableID}.gif"/></td><td>{inventoryUnusableAmount}</td><td class="left">{inventoryUnusable}</td><td></td>{inventoryUnusableJS}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>
+					<div class="tab-pane" id="equipped">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Amount</th>
+								<th>Item</th>
+								<th>Action</th>
+								<th>Drop</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{equipmentID}.gif"/></td><td>1</td><td class="left">{inventoryEquipped}</td><td></td>{inventoryEquippedJS}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>
+					<div class="tab-pane" id="unequipped">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Amount</th>
+								<th>Item</th>
+								<th>Action</th>
+								<th>Drop</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{uequipmentID}.gif"/></td><td>1</td><td class="left">{inventoryUnequipped}</td>{inventoryUnequippedJS}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>
+					<div class="tab-pane" id="cart">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Amount</th>
+								<th>Item</th>
+								<th>Get</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{cartItemID}.gif"/></td><td>{cartItemAmount}</td><td class="left">{cartItemName}</td>{cartItemJS}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>	
+				</div>
+			</div>			
+            </div>
+          </div>
+		  
+        </div>
+
+{{_footer.html}}

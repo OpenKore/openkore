@@ -1,0 +1,1436 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+
+<link rel="top" href="./index.php" title="OpenKore Forum Forum Index" />
+<link rel="search" href="./search.php" title="Search" />
+<link rel="help" href="./faq.php" title="FAQ" />
+<link rel="author" href="./memberlist.php" title="Memberlist" />
+<link rel="prev" href="viewtopic.php?t=8648&amp;view=previous" title="View previous topic" />
+<link rel="next" href="viewtopic.php?t=8648&amp;view=next" title="View next topic" />
+<link rel="up" href="viewforum.php?f=15" title="Other Plugins" />
+<link rel="chapter forum" href="viewforum.php?f=1" title="Announcements" />
+<link rel="chapter forum" href="viewforum.php?f=16" title="Frequently Asked Questions" />
+<link rel="chapter forum" href="viewforum.php?f=3" title="Discussion" />
+<link rel="chapter forum" href="viewforum.php?f=4" title="OpenKore & VisualKore Support" />
+<link rel="chapter forum" href="viewforum.php?f=5" title="Botting Tips & Tricks" />
+<link rel="chapter forum" href="viewforum.php?f=19" title="OpenKore forum for Brazilians" />
+<link rel="chapter forum" href="viewforum.php?f=17" title="Plugins FAQ" />
+<link rel="chapter forum" href="viewforum.php?f=18" title="Macro plugin" />
+<link rel="chapter forum" href="viewforum.php?f=15" title="Other Plugins" />
+<link rel="chapter forum" href="viewforum.php?f=6" title="Developers Corner" />
+<link rel="chapter forum" href="viewforum.php?f=7" title="Development Help" />
+<link rel="chapter forum" href="viewforum.php?f=13" title="Commit Queue" />
+<link rel="chapter forum" href="viewforum.php?f=8" title="Trashcan" />
+<link rel="chapter forum" href="viewforum.php?f=9" title="Misc" />
+<link rel="chapter forum" href="viewforum.php?f=12" title="Documentation" />
+<link rel="chapter forum" href="viewforum.php?f=14" title="kRO/PK servers" />
+
+<title>OpenKore Forum :: View topic - reactOnKillSteal: react when kill stealed</title>
+<link rel="stylesheet" href="templates/subSilver/subSilver.css" type="text/css">
+
+<script language="Javascript" type="text/javascript">
+<!--
+	if ( 0 )
+	{
+		window.open('privmsg.php?mode=newpm', '_phpbbprivmsg', 'HEIGHT=225,resizable=yes,WIDTH=400');;
+	}
+//-->
+</script>
+<!-- Begin Syntax Highlighting Mod -->
+<link rel="stylesheet" href="templates/subSilver/geshi.css" type="text/css">
+<!-- End Syntax Highlighting Mod -->
+</head>
+<body bgcolor="#E5E5E5" text="#000000" link="#006699" vlink="#5493B4">
+
+<a name="top"></a>
+
+<table width="100%" cellspacing="0" cellpadding="10" border="0" align="center">
+	<tr>
+		<td class="bodyline"><table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td><a href="/"><img src="/images/logo.jpg" border="0" alt="The OpenKore Website" vspace="1" /></a></td>
+				<td align="center" width="100%" valign="middle"><span class="maintitle">OpenKore Forum</span><br /><span class="gen">OpenKore Development & Support<br />&nbsp; </span>
+				<table cellspacing="0" cellpadding="2" border="0">
+					<tr>
+						<td align="center" valign="top" nowrap="nowrap"><span class="mainmenu">&nbsp;<a href="faq.php" class="mainmenu"><img src="templates/subSilver/images/icon_mini_faq.gif" width="12" height="13" border="0" alt="FAQ" hspace="3" />FAQ</a></span><span class="mainmenu">&nbsp; &nbsp;<a href="search.php" class="mainmenu"><img src="templates/subSilver/images/icon_mini_search.gif" width="12" height="13" border="0" alt="Search" hspace="3" />Search</a>&nbsp; &nbsp;<a href="memberlist.php" class="mainmenu"><img src="templates/subSilver/images/icon_mini_members.gif" width="12" height="13" border="0" alt="Memberlist" hspace="3" />Memberlist</a>&nbsp; &nbsp;<a href="groupcp.php" class="mainmenu"><img src="templates/subSilver/images/icon_mini_groups.gif" width="12" height="13" border="0" alt="Usergroups" hspace="3" />Usergroups</a>&nbsp;
+						</td>
+					</tr>
+					<tr>
+						<td height="25" align="center" valign="top" nowrap="nowrap"><span class="mainmenu">&nbsp;<a href="profile.php?mode=editprofile" class="mainmenu"><img src="templates/subSilver/images/icon_mini_profile.gif" width="12" height="13" border="0" alt="Profile" hspace="3" />Profile</a>&nbsp; &nbsp;<a href="privmsg.php?folder=inbox" class="mainmenu"><img src="templates/subSilver/images/icon_mini_message.gif" width="12" height="13" border="0" alt="You have no new messages" hspace="3" />You have no new messages</a>&nbsp; &nbsp;<a href="login.php?logout=true&amp;sid=844ec04b18d4d0938b2007718a348adc" class="mainmenu"><img src="templates/subSilver/images/icon_mini_login.gif" width="12" height="13" border="0" alt="Log out [ piroJOKE ]" hspace="3" />Log out [ piroJOKE ]</a>&nbsp;</span></td>
+					</tr>
+				</table></td>
+			</tr>
+		</table>
+
+		<br />
+
+
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+  <tr>
+	<td align="left" valign="bottom" colspan="2"><a class="maintitle" href="viewtopic.php?t=8648&amp;start=0&amp;postdays=0&amp;postorder=asc&amp;highlight=">reactOnKillSteal: react when kill stealed</a><br />
+	  <span class="gensmall"><b>Goto page <b>1</b>, <a href="viewtopic.php?t=8648&amp;postdays=0&amp;postorder=asc&amp;start=15">2</a>, <a href="viewtopic.php?t=8648&amp;postdays=0&amp;postorder=asc&amp;start=30">3</a>, <a href="viewtopic.php?t=8648&amp;postdays=0&amp;postorder=asc&amp;start=45">4</a>, <a href="viewtopic.php?t=8648&amp;postdays=0&amp;postorder=asc&amp;start=60">5</a>, <a href="viewtopic.php?t=8648&amp;postdays=0&amp;postorder=asc&amp;start=75">6</a>&nbsp;&nbsp;<a href="viewtopic.php?t=8648&amp;postdays=0&amp;postorder=asc&amp;start=15">Next</a></b><br />
+	  &nbsp; </span></td>
+  </tr>
+</table>
+
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+  <tr>
+	<td align="left" valign="bottom" nowrap="nowrap"><span class="nav"><a href="posting.php?mode=newtopic&amp;f=15"><img src="templates/subSilver/images/lang_english/post.gif" border="0" alt="Post new topic" align="middle" /></a>&nbsp;&nbsp;&nbsp;<a href="posting.php?mode=reply&amp;t=8648"><img src="templates/subSilver/images/lang_english/reply.gif" border="0" alt="Reply to topic" align="middle" /></a></span></td>
+	<td align="left" valign="middle" width="100%"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="index.php" class="nav">OpenKore Forum Forum Index</a>
+	  -> <a href="viewforum.php?f=15" class="nav">Other Plugins</a></span></td>
+  </tr>
+</table>
+
+<table class="forumline" width="100%" cellspacing="1" cellpadding="3" border="0">
+	<tr align="right">
+		<td class="catHead" colspan="2" height="28"><span class="nav"><a href="viewtopic.php?t=8648&amp;view=previous" class="nav">View previous topic</a> :: <a href="viewtopic.php?t=8648&amp;view=next" class="nav">View next topic</a> &nbsp;</span></td>
+	</tr>
+	
+	<tr>
+		<th class="thLeft" width="150" height="26" nowrap="nowrap">Author</th>
+		<th class="thRight" nowrap="nowrap">Message</th>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="57749"></a><b><a href="javascript:emoticon('[b]hakore[/b], ')">hakore</a></b></span><br /><span class="postdetails">Spammer<br /><img src="images/Green/rankspammer.gif" alt="Spammer" title="Spammer" border="0" /><br /><img src="http://www.geocities.com/hakore_ph/nyankoro.gif" alt="" border="0" /><br /><br />Joined: 12 Apr 2005<br />Posts: 682<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=57749#57749"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Sat Jul 02, 2005 8:43 pm<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: reactOnKillSteal: react when kill stealed</span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=57749"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody"><span style="color: darkblue"><span style="font-size: 18px; line-height: normal"><span style="font-weight: bold">reactOnKillSteal v.1.4.1</span></span></span><br />
+by hakore<br />
+<span style="font-style: italic">Minimum Openkore version required: v.1.6.2</span><br />
+<span style="color: green"><span style="font-style: italic"><span style="font-weight: bold">Note.</span> It is possible to run this plugin in v.1.6.1. See <a href="http://openkore.sourceforge.net/forum/viewtopic.php?p=58025#58025">5th post</a> below for details.</span></span><br />
+<br />
+<span style="color: red"><span style="font-weight: bold">Non-KS-botters! It's time we intelligently react when kill stealed!</span></span><br />
+<br />
+<br />
+<br />
+<span style="color: darkblue"><span style="font-weight: bold"><span style="text-decoration: underline">Version changes:</span></span></span><br />
+<br />
+9/1/2005<br />
+- fixed (hopefully) the bug where the plugin reacts on the actions of Unknown #0<br />
+- will now react if both whenPlayerIsKnown and whenPlayerIsUnknown are set to 1 (the same if both of them are set to 0 or unset)<br />
+<br />
+7/30/2005<br />
+- now allows reaction to unknown players (this includes GM in perfect hide and ranged players that kill steals you from afar).<br />
+- options added: whenPlayerIsUnknown (flag), whenPlayerIsKnown (flag)<br />
+- a million thanks to <span style="font-weight: bold">--Roger--</span> for helping me set a test server.<br />
+<br />
+7/25/2005<br />
+<span style="color: red">- IMPORTANT: You have to add <span style="font-weight: bold">reactOnKillSteal 1</span> in config.txt to enable this plugin.</span><br />
+- options added: playerIDs (player IDs), notPlayerIDs (player IDs)<br />
+<br />
+7/13/2005<br />
+- added smart kill stealing detection (see features below)<br />
+- added typing delay simulation (see features below)<br />
+- added forced emoticon delay (see features below)<br />
+<span style="color: red">- INCOMPATIBLE CHANGE: timeout and timeoutSeed inside the reactOnKillSteal blocks are no longer supported. Use reactOnKillSteal_timeout and reactOnKillSteal_timeoutSeed instead (see syntax definition below)</span><br />
+- there is no default value for timeout now since a delay is already resolved for emoticons for which the default timeout is intended to be used.<br />
+<br />
+7/6/2005<br />
+- tested on v.1.6.1, with the modified functions.pl<br />
+- you will now react on monsters attacking you, even if you are not currently attacking them. Useful for mob-training.<br />
+- options added: attackTargetOnly (flag), player_reactionCount (range)<br />
+- added a custom "skill name" Normal Attack to be used in skills and notSkills options. It is used to distinguish normal attacks to skill use.<br />
+- reaction usages are now saved for each player and not for each monsters. Currently, the usage count is only reset when the player leaves the screen. Still finding ways to improve on this.<br />
+<br />
+7/4/2005<br />
+- add support for v.1.6.1. Your functions.pl, however, may need to be modified a bit.<br />
+- changed keyword names @monster and @player to @monsterNum and @playerNum, respectively.<br />
+- fixed a possible bug when using keywords. A player might be named the same as the keywords defined. Placing the replace code for @playerName after all other keyword replacement will prevent this.<br />
+<br />
+7/3/2005<br />
+- first release<br />
+<br />
+<br />
+<br />
+<span style="color: darkblue"><span style="font-weight: bold"><span style="text-decoration: underline">Introduction:</span></span></span><br />
+<br />
+This plugin that allows you to react when kill stealed by automatically using console commands. <br />
+<br />
+<span style="font-style: italic">What is kill steal?</span><br />
+Kill steal, as far as this plugin is concerned, is that event when some other player attacks or use skills on the monster you are already attacking or that which is currently attacking you (for mob training). Kill stealing therefore, as understood by this plugin, is not necessarily a bad thing. For example, when your support priest cast Lex Divina on the monster, this plugin still considers it kill stealing. The options provided let you decide which event is bad, and which is good, so you may react accordingly. For the same example above, you might want to use a /thx emoticon as reaction or just ignore the event by setting other condition options. It's all up to you.<br />
+<br />
+<span style="font-style: italic">Why console command?</span><br />
+Console commands give users flexibility on how they want to react to kill stealing. The most common reactions would be to issue a public chat, a private message or an emoticon. But what if you want to use skills on the target monster when you detect being kill stealed? With console commands, Rogues will have an option to use the Intimidate skill, for example. If you want to be more creative, you could use this plugin in conjuction with the macro plugin.<br />
+<br />
+<br />
+<br />
+<span style="color: darkblue"><span style="font-weight: bold"><span style="text-decoration: underline">config.txt - Syntax definitions:</span></span></span><br />
+<br />
+<ul><li> <span style="font-weight: bold">reactOnKillSteal <span style="font-style: italic">(flag)</span></span> <span style="color: green"><span style="font-style: italic">new in v.1.3</span></span><br />
+flag: 1 = on, 0 = off<br />
+- enables/disables the plugin.<br />
+<br />
+<br />
+<li> <span style="font-weight: bold">reactOnKillSteal_timeout <span style="font-style: italic">(seconds)</span></span> <span style="color: green"><span style="font-style: italic">new in v.1.2</span></span><br />
+- specifies the minimum time to wait before reacting again.<br />
+<br />
+<li> <span style="font-weight: bold">reactOnKillSteal_timeoutSeed <span style="font-style: italic">(seconds)</span></span> <span style="color: green"><span style="font-style: italic">new in v.1.2</span></span><br />
+- if this is set, the timeout will be increased by a random value less than or equal to the specified time (in seconds). Use this to prevent Kore from reacting in fixed time intervals, which makes it more suspicious.<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode">reactOnKillSteal_timeout 2
+reactOnKillSteal_timeoutSeed 5
+
+reactOnKillSteal e 23; e 7;e 6; c wa?; e 16 &#123;
+	altCommand_persist
+&#125;</pre></td>	</tr></table><span class="postbody"><br />
+<br />
+<li> <span style="font-weight: bold">reactOnKillSteal <span style="font-style: italic">(commands)</span></span><br />
+commands: a semi-colon (";") separated list of console commands.<br />
+A random command out of this list will be executed if the conditions are met for this block. This command will be executed the first time you detect a kill steal hit to a monster.<br />
+<br />
+<ul><li> <span style="font-weight: bold">altCommand_# <span style="font-style: italic">(commands)</span></span><br />
+#: change this to an integer starting from 0 (e.g. altCommand_0, altCommand_1)<br />
+commands: a semi-colon (";") separated list of console commands.<br />
+- allows you to specify a sequence of commands to use after the first reaction. Kore will use these commands in sequence, while respecting the given timeout between each reaction, until the next indexed altCommand_# does not exist. An empty value means you want to repeat the last command executed. One command out of the specified list is randomly picked to be executed. <br />
+<span style="font-style: italic">Note: The index is saved for each specific player so you will react with the same sequence, starting from the command reactOnKillSteal, for each one. The index is only reset when the player leaves your screen so if you have reacted the most number of times you have configured Kore to react (i.e. the last altCommand_# is executed for a player), unless altCommand_persist is defined, you will never react for a while until the player leaves your screen or a new reactOnKillSteal block is used.</span><br />
+<br />
+<li> <span style="font-weight: bold">altCommand_persist <span style="font-style: italic">(commands)</span></span><br />
+commands: a semi-colon (";") separated list of console commands.<br />
+- allows you to specify a repeating reaction after you have used all your other altCommand_# options. It's not always necessary.<br />
+<br />
+The altCommand_* options also control how many reactions you will show. e.g. If no <span style="font-style: italic">altCommand_#</span> is defined, you will only show one reaction (that specified in the reactOnKillSteal). If <span style="font-style: italic">altCommand_0</span> and <span style="font-style: italic">altCommand_1</span> are defined, you will show 3 reactions. If <span style="font-style: italic">altCommand_persist</span> is defined, you will have endless number of reactions.<br />
+<span style="font-style: italic">See examples below.</span><br />
+<br />
+<br />
+<li> <span style="font-weight: bold">disabled <span style="font-style: italic">(flag)</span></span><br />
+flag: 1 = on, 0 = off<br />
+- temporarily disable a block completely.<br />
+<br />
+<li> <span style="font-weight: bold">inLockOnly <span style="font-style: italic">(flag)</span></span><br />
+flag: 1 = on, 0 = off<br />
+- only react when in lockMap. If this is set to 1, reactions due to kill stealing will only be enabled if lockMap is set and you are currently in the lockMap.<br />
+<br />
+<li> <span style="font-weight: bold">notParty <span style="font-style: italic">(flag)</span></span><br />
+flag: 1 = on, 0 = off<br />
+- don't react when party members attack your monster. By default, Kore will react when kill stealed, even by your party mates. Set this option to 1 to prevent Kore from reacting when your party attacks your monster. <br />
+<br />
+<li> <span style="font-weight: bold">notTankModeTarget <span style="font-style: italic">(flag)</span></span><br />
+flag: 1 = on, 0 = off<br />
+- don't react when your tankee attacks your monster. By default, Kore will react when kill stealed, even by your tankModeTarget. Set this option to 1 to prevent Kore from reacting when your Tankee attacks your monster.<br />
+<br />
+<li> <span style="font-weight: bold">attackTargetOnly <span style="font-style: italic">(flag)</span></span><br />
+flag: 1 = on, 0 = off<br />
+- only react when your target monster is kill stealed. By default, Kore will react when all monsters who are currently attacking Kore (aggressives) is kill stealed. Set this option to 1 to ignore kill stealing of monsters that you are not attacking.<br />
+<br />
+<br />
+<li> <span style="font-weight: bold">monsters <span style="font-style: italic">(monsters)</span></span><br />
+monsters: a comma-separated list of monster names.<br />
+- only react if the monster being kill stealed is in the list.<br />
+<br />
+<li> <span style="font-weight: bold">notMonsters <span style="font-style: italic">(monsters)</span></span><br />
+monsters: a comma-separated list of monster names.<br />
+- never react if the monster being kill stealed is in the list. It is advised to include MVP/Boss monsters on this list since such monsters are free-for-all and you have no rights to own (and thus react on kill stealing of) a Boss monster.<br />
+<br />
+<br />
+<li> <span style="font-weight: bold">damage <span style="font-style: italic">(range)</span></span><br />
+- only react when the damage done to monster due to the kill steal attack is within this range. If this is not set (or if it is set to 0) Kore will react on kill steals regardless of the damage. If you want to react only on misses, set this to "&lt; 1".<br />
+<br />
+<li> <span style="font-weight: bold">skills <span style="font-style: italic">(skills)</span></span><br />
+skills: a comma-separated list of skill names.<br />
+- only react when the skill used againts our monster is in this list. If this option is empty, Kore will react on any type of attack (whether normal attack or skill). If this is set, Kore will only react on the skills specified; and it will not react to normal attacks unless you specify an item in the list named "Normal Attack".<br />
+<span style="font-style: italic">Note. "Normal Attack" is not a special "skill name" that the plugin uses it to distinguish skills and normal attacks.</span><br />
+<span style="text-decoration: underline">Examples:</span><br />
+1. <span style="font-style: italic">skills Heal, Blessing, Increase AGI</span> - react only when the skill Heal, Blessing or Increase AGI is used, and don't react on normal attacks or any other skills.<br />
+2. <span style="font-style: italic">skills Normal Attack</span> - react only on normal attacks and not on skills.<br />
+3. <span style="font-style: italic">skills Heal, Blessing, Increase AGI, Normal Attack</span> - react only on normal attacks or when the skill Heal, Blessing or Increase AGI is used, don't react on other skills.<br />
+<br />
+<li> <span style="font-weight: bold">notSkills <span style="font-style: italic">(skills)</span></span><br />
+skills: a comma-separated list of skill names.<br />
+- never react when the skill used againts our monster is in this list. If this option is empty, Kore will react on any type of attack (whether normal attack or skill). If this is set, Kore will NOT react on the skills specified; it will still react to normal attacks unless you specify an item in the list named "Normal Attack".<br />
+<span style="font-style: italic">Note. "Normal Attack" is not a valid skill name, but the plugin uses it to distinguish skills and normal attacks.</span><br />
+<span style="text-decoration: underline">Examples:</span><br />
+1. <span style="font-style: italic">notSkills Heal, Blessing, Increase AGI</span> don't react when the skill Heal, Blessing or Increase AGI is used, but react on normal attacks and other skills.<br />
+2. <span style="font-style: italic">notSkills Normal Attack</span> - never react on normal attacks, but react on skills.<br />
+3. <span style="font-style: italic">notSkills Heal, Blessing, Increase AGI, Normal Attack</span> - don't react on normal attacks and when the skill Heal, Blessing or Increase AGI is used; still react on other skills.<br />
+<br />
+<li> <span style="font-weight: bold">isCasting <span style="font-style: italic">(flag)</span></span><br />
+flag: 1 = on, 0 = off<br />
+- only react while the player is still casting a spell.<br />
+<br />
+<br />
+<li> <span style="font-weight: bold">whenPlayerIsUnknown <span style="font-style: italic">(flag)</span></span> <span style="color: green"><span style="font-weight: bold"><span style="font-style: italic">new in v.1.4</span></span></span><br />
+flag: 1 = on, 0 = off<br />
+- if this is enabled, you will only react when the player is unknown or not visible on screen (this includes GM in perfect hide and ranged players that kill steals you from afar).<br />
+<br />
+<li> <span style="font-weight: bold">whenPlayerIsKnown <span style="font-style: italic">(flag)</span></span> <span style="color: green"><span style="font-weight: bold"><span style="font-style: italic">new in v.1.4</span></span></span><br />
+flag: 1 = on, 0 = off<br />
+- if this is enabled, you will only react if the player is known or visible on screen.<br />
+<br />
+<br />
+<li> <span style="font-weight: bold">players <span style="font-style: italic">(players)</span></span><br />
+players: a comma-separated list of player names.<br />
+- only react if the kill stealer is in the list. If this is empty, Kore will react on all players. If the list is specified, Kore will react only on players specified on the list and not on anyone else.<br />
+<br />
+<li> <span style="font-weight: bold">notPlayers <span style="font-style: italic">(players)</span></span><br />
+players: a comma-separated list of player names.<br />
+- never react if the kill stealer is in the list; still react on the rest.<br />
+<br />
+<li> <span style="font-weight: bold">playerIDs <span style="font-style: italic">(player IDs)</span></span> <span style="color: green"><span style="font-style: italic">new in v.1.3</span></span><br />
+player IDs: a comma-separated list of player IDs.<br />
+- only react if the kill stealer is in the list. If this is empty, Kore will react on all players. If the list is specified, Kore will react only on players specified on the list and not on anyone else.<br />
+<br />
+<li> <span style="font-weight: bold">notPlayerIDs <span style="font-style: italic">(player IDs)</span></span> <span style="color: green"><span style="font-style: italic">new in v.1.3</span></span><br />
+player IDs: a comma-separated list of player IDs.<br />
+- never react if the kill stealer is in the list; still react on the rest.<br />
+<br />
+<br />
+<li> <span style="font-weight: bold">player_lvl <span style="font-style: italic">(range)</span></span><br />
+- only react if the kill stealer's level is within the given range. If this is empty, Kore will react reagardless of the player's level.<br />
+<br />
+<li> <span style="font-weight: bold">player_isJob <span style="font-style: italic">(jobs)</span></span><br />
+job classes: comma-separated list of job classes<br />
+- only react if the kill stealer is one of the specified job classes. If this is empty, Kore will react on all job classes. If a list is specified, Kore will react only on job classes specified.<br />
+<br />
+<li> <span style="font-weight: bold">player_isNotJob <span style="font-style: italic">(jobs)</span></span><br />
+job classes: comma-separated list of job classes<br />
+- never react on job classes that appear on this list.<br />
+<br />
+<li> <span style="font-weight: bold">player_sex <span style="font-style: italic">(sex)</span></span><br />
+sex: Boy/Girl<br />
+- only react if the kill stealer if of the specified sex. If this is empty, Kore will react regardless of the player's sex.<br />
+<br />
+<li> <span style="font-weight: bold">player_damage <span style="font-style: italic">(range)</span></span><br />
+- only react if the total damage done by the player to the monster he is kill stealing is within the given range.<br />
+<br />
+<li> <span style="font-weight: bold">player_misses <span style="font-style: italic">(range)</span></span><br />
+- only react if the total misses made by the player to the monster he is kill stealing is within the given range.<br />
+<br />
+<li> <span style="font-weight: bold">player_ksCount <span style="font-style: italic">(range)</span></span><br />
+- only react if the number of unique monsters kill stealed by this player from you is within the given range. This is useful to determine how you will react on players who keep on kill stealing your monster no matter how you react. For example, if this count reaches 5 or more, you may conclude that the kill stealer is a ks-bot who just ignores your warnings. You may also configure the intensity of your reactions on such events.<br />
+<br />
+<li> <span style="font-weight: bold">player_reactionCount <span style="font-style: italic">(range)</span></span><br />
+- only react if the total number of your reactions to the player due to kill stealing is within the given range. The same concept with player_ksCount, except that this counts your reactions. This may be useful to determine how you would react to players who never stop hitting your monster regardless of how many times you have reacted. You can also use this to determine if someone is following you, for example, if this count reaches 20 or more, where you only need 2-3 hits to kill a monster, it means this player never leaves you screen, or follows you around, to kill steal from you everytime. <br />
+<span style="font-style: italic">Note: this is only useful if you have defined multiple altCommand_#s or if altCommand_persist is defined. Since it counts your reactions, the count will not be incremented if you have configured it to react only once (or a few times).<br />
+For example:</span><br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode">reactOnKillSteal e 23; e 16 &#123;
+	altCommand_0
+	altCommand_1
+	altCommand_2
+	player_reactionCount &lt;= 10
+&#125;
+reactOnKillSteal tele &#123;
+	player_reactionCount &gt; 10
+&#125;</pre></td>	</tr></table><span class="postbody"><br />
+The second block will never be called since you will only have a maximum of 4 reactions.</ul></ul><br />
+<br />
+<br />
+<span style="color: darkblue"><span style="font-weight: bold"><span style="text-decoration: underline">Special Features:</span></span></span><br />
+<br />
+1. <span style="font-weight: bold">Special keywords for commands</span><br />
+ To be able to maximize the power offered by console commands used in this plugin, some keywords can be used with commands. These are useful when using the "pm" command, as well as skill use commands.<br />
+<ul><li> <span style="font-weight: bold">@monsterNum</span> - this keyword will be replaced by the monster number of your target. e.g. sm 28 @monsterNum<br />
+<br />
+<li> <span style="font-weight: bold">@monsterName</span> - this keyword will be replaced by the name of your target monster.<br />
+<br />
+<li> <span style="font-weight: bold">@playerNum</span> - this keyword will be replaced by the player number of the kill stealer. e.g. sp 153 @player; follow @playerNum<br />
+<br />
+<li> <span style="font-weight: bold">@playerName</span> - this keyword will be replaced by the name of the kill stealer. e.g. pm @playerName wtf</ul><br />
+2. <span style="font-weight: bold">Smart kill stealing determination.</span> <span style="color: green"><span style="font-style: italic">new in v.1.2</span></span><br />
+The plugin will now only react to kill stealing if you are currently attacking the monster, or the monster is attacking you, AND that monster was never attacked by other players first AND if it hasn't attacked other players before you. The plugin now has a way of determining which monsters are exclusively yours by marking monsters you attack, or attacks you, if those monsters are initially clean.<br />
+<br />
+3. <span style="font-weight: bold">Smart typing simulation</span> <span style="color: green"><span style="font-style: italic">new in v.1.2</span></span><br />
+Commands that use chat (e.g. c, g, p and pm) are now identified and given a timeout delay before executing. It follows Openkore's built-in chat response's simulation of typing based on the number of characters on the chat message divided by a pre-determined character per second rate. You can now use chats as your first reaction without worrying about how realistic it would be when triggered.<br />
+<br />
+4. <span style="font-weight: bold">Forced emoticon delay</span> <span style="color: green"><span style="font-style: italic">new in v.1.2</span></span><br />
+The plugin also ensures that emoticons will have a delay if the previous reaction is also an emoticon. This ensures that an emoticon will fully display before another emoticon may be used so that you will not spam emoticons that overwrite each other.<br />
+<br />
+<br />
+<br />
+<span style="color: darkblue"><span style="font-weight: bold"><span style="text-decoration: underline">Some examples:</span></span></span><br />
+<br />
+# Simple reactions block, only use when the player kills steal you twice or less and when you have reacted less than 3 times.<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode">reactOnKillSteal e 23; e 7;e 6; c wa?; e 16 &#123;
+	altCommand_0 c stop!!; c pls stop; c go away;e 23; e 7;e 6
+	altCommand_1 c it's mine; c kill stealer!; c kilstealr!; c kil stealr!
+	player_reactionCount &lt; 3
+	player_ksCount &lt; 3
+	notParty 1
+&#125;</pre></td>	</tr></table><span class="postbody"><br />
+# Simple reactions block, only use when the player kills steal you twice or less and when you have reacted 3 times or more.<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode">reactOnKillSteal e 40; e 9; c u again?; e 16 &#123;
+	altCommand_0 c @playerName kser; c kill stealer!; c kilstealr!; c kil stealr!; e 40
+	altCommand_1 c got ur screenie; e 40; e 9; c ur hopeless; pm @playerName die ks-bot!
+	player_reactionCount 3-6
+	player_ksCount &lt; 3
+	notParty 1
+&#125;</pre></td>	</tr></table><span class="postbody"><br />
+# Simple reactions block, use when the player kills steal you twice or less and when you have reacted more than 6 times.<br />
+# You will repeatedly use the emoticons /e5 and /... as reaction.<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode">reactOnKillSteal e 40; e 9 &#123;
+	altCommand_persist
+	player_reactionCount &gt; 6
+	player_ksCount &lt; 3
+	notParty 1
+&#125;</pre></td>	</tr></table><span class="postbody"><br />
+# Rogue: always use the Intimidate skill if the player kill steals your target monster 3 times or more<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode">reactOnKillSteal sm 219 @monsterNum &#123;
+	altCommand_0 tele
+	player_ksCount &gt;= 3
+	notParty 1
+	attackTargetOnly 1
+&#125;</pre></td>	</tr></table><span class="postbody"><br />
+# Sage: use the Dispel skill if the player buffs your target monster<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode">reactOnKillSteal sm 289 @monsterNum;e 23; e 7 &#123;
+	altCommand_persist
+	skills Blessing, Increase AGI
+	isCasting 0
+	attackTargetOnly 1
+&#125;</pre></td>	</tr></table><span class="postbody"><br />
+<br />
+<br />
+<br />
+<span style="color: darkblue"><span style="font-weight: bold"><span style="text-decoration: underline">Some tips:</span></span></span><br />
+<br />
+1. <span style="font-style: italic">Keep chat messages short and simple.</span> Always imagine how quick you can type those words and how realistic it would seem if you were to type it yourself. Shorthands are prefered.<br />
+<br />
+2. <span style="font-style: italic">Some typographic/spelling errors seem more realistic.</span> Since you can use random commands, you may want to add erroneous texts as well.<br />
+<br />
+3. <span style="font-style: italic">Be wary of chat filters and limitations!</span> You should very well know that the RO Client has a chat filter which prevents you from sending chat messages that include forbidden words. You might as well not include any in your commands. Never use a slash "/" as the first character of your chat message. If you do need to, prefix it with any character other than a white space.<br />
+<br />
+4. <span style="font-style: italic">Be careful when using the @playerName and @monsterName keywords!</span> Some player and monster names are too long, let alone that some player names contain special characters that are hard to type. It is also not advisable to use a player name as the first word of your chat messages because some player names may start with a slash "/". Note too that monster names are always in proper case.<br />
+<br />
+<br />
+<br />
+<span style="color: darkblue"><span style="font-weight: bold"><span style="text-decoration: underline">TO DO list: (will only work on this upon request)</span></span></span><br />
+<br />
+1. Add a feature that will allow users to define their own command delimiter. The default delimiter, semi-colon (";"), was chosen instead of the usual comma so you could generously use commas in your commands and chat messages. However, there may be cases when you would also need semi-colons in your commands (e.g. when using the eval command).<br />
+<br />
+2. Allow aliases for monster names when using the keyword @monsterName to override the case-sensitive names and allow some shorthands (e.g. GR for Ghostring). Such aliases could be a list (random) as well.<br />
+<br />
+3. Allow limits for the number of characters to be substituted when using the @playerName keyword. This is useful in chat messages to prevent the plugin to substitute full names of players that are very long (e.g. player name I_Want_To_Kill_Everything_In_My_Path could be changed to I_Want_To_ or the like. <span style="font-style: italic">This is rather complicated so it might take a while.</span><br />
+<br />
+<br />
+<br />
+<br />
+<span style="color: darkblue"><span style="font-weight: bold"><span style="text-decoration: underline">reactOnKillSteal.pl - Download instructions:</span></span></span><br />
+<br />
+Download the plugin then save it in your 'plugins' folder.<br />
+<br />
+This is the first plugin I wrote. I were only able to test this on two novice trial accounts. Please feel free to post comments and bug reports. Thanks.</span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+	<br /><br />
+
+	<div align="center"><hr width="95%" /></div>
+	<table width="95%" border="1" cellpadding="2" cellspacing="0" class="attachtable" align="center">
+	<tr>
+		<td width="100%" colspan="3" class="attachheader" align="center"><b><span class="gen">reactOnKillSteal.pl</span></b></td>
+	</tr>
+	<tr>
+		<td width="15%" class="attachrow"><span class="genmed">&nbsp;Description:</span></td>
+		<td width="75%" class="attachrow">
+			<table width="100%" border="0" cellpadding="0" cellspacing="4" align="center">
+			<tr>
+				<td class="attachrow"><span class="genmed">reactOnKillSteal v1.4.1 plugin by hakore</span></td>
+			</tr>
+			</table>
+		</td>
+		<td rowspan="4" align="center" width="10%" class="attachrow"><img src="images/icon_clip.gif" alt="" border="0" /><br /><a href="download.php?id=207" target="_blank" class="genmed"><b>Download</b></a></td>
+	</tr>
+	<tr>
+		<td width="15%" class="attachrow"><span class="genmed">&nbsp;Filename:</span></td>
+		<td width="75%" class="attachrow"><span class="genmed">&nbsp;reactOnKillSteal.pl</span></td>
+	</tr>
+	<tr>
+		<td width="15%" class="attachrow"><span class="genmed">&nbsp;Filesize:</span></td>
+		<td width="75%" class="attachrow"><span class="genmed">&nbsp;12.57 KB</td>
+	</tr>
+	<tr>
+		<td width="15%" class="attachrow"><span class="genmed">&nbsp;Downloaded:</span></td>
+		<td width="75%" class="attachrow"><span class="genmed">&nbsp;55 Time(s)</span></td>
+	</tr>
+	</table>
+	<div align="center"><hr width="95%" /></div>
+
+<span class="postbody"><br />_________________<br /><span style="color: green"><span style="font-size: 9px; line-height: normal">Read the <a href="../manual">Manual</a>.</span> <span style="font-weight: bold">Be creative!</span> <span style="font-size: 9px; line-height: normal">You ARE your bot. <span style="font-style: italic">If your bot acts <span style="font-weight: bold">stupid</span>, then you are...</span> <img src="http://www.geocities.com/hakore_ph/e/ho.gif" border="0" /></span></span></span><span class="gensmall"><br /><br />Last edited by hakore on Thu Sep 01, 2005 4:14 am; edited 40 times in total</span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="57814"></a><b><a href="javascript:emoticon('[b]Savior Sephiroth[/b], ')">Savior Sephiroth</a></b></span><br /><span class="postdetails">Newbie<br /><img src="images/Green/rank0.gif" alt="Newbie" title="Newbie" border="0" /><br /><br /><br />Joined: 24 May 2005<br />Posts: 7<br /></span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=57814#57814"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Sun Jul 03, 2005 3:20 am<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=57814"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">There are one way of the Kore react with one sound on KS??<br />
+<br />
+But my version is 1.6.1. Where have the 1.6.2? CVS??<br />
+<br />
+And Tranks for you great plugin!</span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=14858"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=14858"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="58019"></a><b><a href="javascript:emoticon('[b]hakore[/b], ')">hakore</a></b></span><br /><span class="postdetails">Spammer<br /><img src="images/Green/rankspammer.gif" alt="Spammer" title="Spammer" border="0" /><br /><img src="http://www.geocities.com/hakore_ph/nyankoro.gif" alt="" border="0" /><br /><br />Joined: 12 Apr 2005<br />Posts: 682<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58019#58019"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Sun Jul 03, 2005 8:34 pm<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58019"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">There are more than one way.<br />
+<br />
+At the moment, you can get v.1.6.2 from CVS.</span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"><br />_________________<br /><span style="color: green"><span style="font-size: 9px; line-height: normal">Read the <a href="../manual">Manual</a>.</span> <span style="font-weight: bold">Be creative!</span> <span style="font-size: 9px; line-height: normal">You ARE your bot. <span style="font-style: italic">If your bot acts <span style="font-weight: bold">stupid</span>, then you are...</span> <img src="http://www.geocities.com/hakore_ph/e/ho.gif" border="0" /></span></span></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="58022"></a><b><a href="javascript:emoticon('[b]Red_Rose2005[/b], ')">Red_Rose2005</a></b></span><br /><span class="postdetails">Not So Newbie<br /><img src="images/Green/rank1.gif" alt="Not So Newbie" title="Not So Newbie" border="0" /><br /><br /><br />Joined: 27 Jun 2005<br />Posts: 63<br />Location: Glast Heim</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58022#58022"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Sun Jul 03, 2005 8:38 pm<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58022"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Wooooooowww!!! finally!! the one i've been waiting for.. but but.. im using openkore 1.6.1.. what's the difference with 1.6.1 and cvs? please make one for 1.6.1 pleeeeeeeeease???  <img src="images/smiles/icon_razz.gif" alt="Razz" border="0" /> <br />
+<br />
+But still thank you for this! mwah!  <img src="images/smiles/icon_redface.gif" alt="Embarassed" border="0" /></span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=16635"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=16635"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>   <a href="aim:goim?screenname=none&amp;message=Hello+Are+you+there?"><img src="templates/subSilver/images/lang_english/icon_aim.gif" alt="AIM Address" title="AIM Address" border="0" /></a>  <a href="profile.php?mode=viewprofile&amp;u=16635"><img src="templates/subSilver/images/lang_english/icon_msnm.gif" alt="MSN Messenger" title="MSN Messenger" border="0" /></a><script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="58025"></a><b><a href="javascript:emoticon('[b]hakore[/b], ')">hakore</a></b></span><br /><span class="postdetails">Spammer<br /><img src="images/Green/rankspammer.gif" alt="Spammer" title="Spammer" border="0" /><br /><img src="http://www.geocities.com/hakore_ph/nyankoro.gif" alt="" border="0" /><br /><br />Joined: 12 Apr 2005<br />Posts: 682<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58025#58025"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Sun Jul 03, 2005 9:10 pm<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58025"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Ok, I modified the plugin to support v.1.6.1.<br />
+<br />
+However, there is a <span style="font-weight: bold">plugin call hook</span> that exists in v.1.6.2 CVS that is not found in v.1.6.1. If you really want to make the plugin work in v.1.6.1, you have to add the plugin hook (one line of code) in your functions.pl (somewhere in line 6423). See the lines with the + sign:<br />
+<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr>	  <td><span class="genmed"><b><span style="color: #933;">Perl:</font></b></span></td>	</tr>	<tr>	  <td class="syntax-code"><pre class="perl">	<span class="br0">&#125;</span> <span class="kw1">elsif</span> <span class="br0">&#40;</span><span class="re0">$switch</span> eq <span class="st0">"008A"</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+		<span class="re0">$conState</span> = <span class="nu0">5</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$conState</span> != <span class="nu0">4</span> &amp;&amp; <span class="re0">$xkore</span><span class="br0">&#41;</span>;
+		<span class="kw1">my</span> <span class="br0">&#40;</span><span class="re0">$ID1</span>, <span class="re0">$ID2</span>, <span class="re0">$tick</span>, <span class="re0">$src_speed</span>, <span class="re0">$dst_speed</span>, <span class="re0">$damage</span>, <span class="re0">$param2</span>, <span class="re0">$type</span>, <span class="re0">$param3</span><span class="br0">&#41;</span> = <span class="kw3">unpack</span><span class="br0">&#40;</span><span class="st0">"x2 a4 a4 a4 L1 L1 s1 S1 C1 S1"</span>, <span class="re0">$msg</span><span class="br0">&#41;</span>;
+&nbsp;
+		<span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$type</span> == <span class="nu0">1</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+			<span class="co1"># Take item</span>
+			<span class="kw1">my</span> <span class="br0">&#40;</span><span class="re0">$source</span>, <span class="re0">$verb</span>, <span class="re0">$target</span><span class="br0">&#41;</span> = getActorNames<span class="br0">&#40;</span><span class="re0">$ID1</span>, <span class="re0">$ID2</span>, <span class="st0">'pick up'</span>, <span class="st0">'picks up'</span><span class="br0">&#41;</span>;
+			debug <span class="st0">"$source $verb $target<span class="es0">\n</span>"</span>, <span class="st0">'parseMsg_presence'</span>;
+			<span class="re0">$items</span><span class="br0">&#123;</span><span class="re0">$ID2</span><span class="br0">&#125;</span><span class="br0">&#123;</span>takenBy<span class="br0">&#125;</span> = <span class="re0">$ID1</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$items</span><span class="br0">&#123;</span><span class="re0">$ID2</span><span class="br0">&#125;</span><span class="br0">&#41;</span>;
+		<span class="br0">&#125;</span> <span class="kw1">elsif</span> <span class="br0">&#40;</span><span class="re0">$type</span> == <span class="nu0">2</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+			<span class="co1"># Sit</span>
+			<span class="kw1">my</span> <span class="br0">&#40;</span><span class="re0">$source</span>, <span class="re0">$verb</span><span class="br0">&#41;</span> = getActorNames<span class="br0">&#40;</span><span class="re0">$ID1</span>, <span class="nu0">0</span>, <span class="st0">'are'</span>, <span class="st0">'is'</span><span class="br0">&#41;</span>;
+			<span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$ID1</span> eq <span class="re0">$accountID</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+				message <span class="st0">"You are sitting.<span class="es0">\n</span>"</span>;
+				<span class="re0">$char</span>-&gt;<span class="br0">&#123;</span>sitting<span class="br0">&#125;</span> = <span class="nu0">1</span>;
+			<span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span>
+				debug getActorName<span class="br0">&#40;</span><span class="re0">$ID1</span><span class="br0">&#41;</span>.<span class="st0">" is sitting.<span class="es0">\n</span>"</span>, <span class="st0">'parseMsg'</span>;
+				<span class="re0">$players</span><span class="br0">&#123;</span><span class="re0">$ID1</span><span class="br0">&#125;</span><span class="br0">&#123;</span>sitting<span class="br0">&#125;</span> = <span class="nu0">1</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$players</span><span class="br0">&#123;</span><span class="re0">$ID1</span><span class="br0">&#125;</span><span class="br0">&#41;</span>;
+			<span class="br0">&#125;</span>
+		<span class="br0">&#125;</span> <span class="kw1">elsif</span> <span class="br0">&#40;</span><span class="re0">$type</span> == <span class="nu0">3</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+			<span class="co1"># Stand</span>
+			<span class="kw1">my</span> <span class="br0">&#40;</span><span class="re0">$source</span>, <span class="re0">$verb</span><span class="br0">&#41;</span> = getActorNames<span class="br0">&#40;</span><span class="re0">$ID1</span>, <span class="nu0">0</span>, <span class="st0">'are'</span>, <span class="st0">'is'</span><span class="br0">&#41;</span>;
+			<span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$ID1</span> eq <span class="re0">$accountID</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+				message <span class="st0">"You are standing.<span class="es0">\n</span>"</span>;
+				<span class="re0">$char</span>-&gt;<span class="br0">&#123;</span>sitting<span class="br0">&#125;</span> = <span class="nu0">0</span>;
+			<span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span>
+				debug getActorName<span class="br0">&#40;</span><span class="re0">$ID1</span><span class="br0">&#41;</span>.<span class="st0">" is standing.<span class="es0">\n</span>"</span>, <span class="st0">'parseMsg'</span>;
+				<span class="re0">$players</span><span class="br0">&#123;</span><span class="re0">$ID1</span><span class="br0">&#125;</span><span class="br0">&#123;</span>sitting<span class="br0">&#125;</span> = <span class="nu0">0</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$players</span><span class="br0">&#123;</span><span class="re0">$ID1</span><span class="br0">&#125;</span><span class="br0">&#41;</span>;
+			<span class="br0">&#125;</span>
+		<span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span>
+			<span class="co1"># Attack</span>
+			<span class="kw1">my</span> <span class="re0">$dmgdisplay</span>;
+			<span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$damage</span> == <span class="nu0">0</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+				<span class="re0">$dmgdisplay</span> = <span class="st0">"Miss!"</span>;
+				<span class="re0">$dmgdisplay</span> .= <span class="st0">"!"</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$type</span> == <span class="nu0">11</span><span class="br0">&#41;</span>;
+			<span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span>
+				<span class="re0">$dmgdisplay</span> = <span class="re0">$damage</span>;
+				<span class="re0">$dmgdisplay</span> .= <span class="st0">"!"</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$type</span> == <span class="nu0">10</span><span class="br0">&#41;</span>;
+				<span class="re0">$dmgdisplay</span> .= <span class="st0">" + $param3"</span> <span class="kw1">if</span> <span class="re0">$param3</span>;
+			<span class="br0">&#125;</span>
+&nbsp;
+			updateDamageTables<span class="br0">&#40;</span><span class="re0">$ID1</span>, <span class="re0">$ID2</span>, <span class="re0">$damage</span><span class="br0">&#41;</span>;
+&nbsp;
+			<span class="kw1">my</span> <span class="br0">&#40;</span><span class="re0">$source</span>, <span class="re0">$verb</span>, <span class="re0">$target</span><span class="br0">&#41;</span> = getActorNames<span class="br0">&#40;</span><span class="re0">$ID1</span>, <span class="re0">$ID2</span>, <span class="st0">'attack'</span>, <span class="st0">'attacks'</span><span class="br0">&#41;</span>;
++
++			Plugins::<span class="me2">callHook</span><span class="br0">&#40;</span><span class="st0">'packet_attack'</span>, <span class="br0">&#123;</span>sourceID =&gt; <span class="re0">$ID1</span>, targetID =&gt; <span class="re0">$ID2</span>, msg =&gt; \<span class="re0">$msg</span>, dmg =&gt; <span class="re0">$damage</span><span class="br0">&#125;</span><span class="br0">&#41;</span>;
++
+			<span class="kw1">my</span> <span class="re0">$msg</span> = <span class="st0">"$source $verb $target - Dmg: $dmgdisplay (delay "</span>.<span class="br0">&#40;</span><span class="re0">$src_speed</span>/<span class="nu0">10</span><span class="br0">&#41;</span>.<span class="st0">")"</span>;
+&nbsp;
+			<span class="kw1">my</span> <span class="re0">$status</span> = <span class="kw3">sprintf</span><span class="br0">&#40;</span><span class="st0">"[%3d/%3d]"</span>, percent_hp<span class="br0">&#40;</span><span class="re0">$char</span><span class="br0">&#41;</span>, percent_sp<span class="br0">&#40;</span><span class="re0">$char</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+&nbsp;
+			<span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$ID1</span> eq <span class="re0">$accountID</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+				message<span class="br0">&#40;</span><span class="st0">"$status $msg<span class="es0">\n</span>"</span>, <span class="re0">$damage</span> &gt; <span class="nu0">0</span> ? <span class="st0">"attackMon"</span> : <span class="st0">"attackMonMiss"</span><span class="br0">&#41;</span>;
+				<span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$startedattack</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+					<span class="re0">$monstarttime</span> = <span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+					<span class="re0">$monkilltime</span> = <span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+					<span class="re0">$startedattack</span> = <span class="nu0">0</span>;
+				<span class="br0">&#125;</span>
+				calcStat<span class="br0">&#40;</span><span class="re0">$damage</span><span class="br0">&#41;</span>;
+			<span class="br0">&#125;</span> <span class="kw1">elsif</span> <span class="br0">&#40;</span><span class="re0">$ID2</span> eq <span class="re0">$accountID</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+				<span class="co1"># Check for monster with empty name</span>
+				<span class="kw1">if</span> <span class="br0">&#40;</span>%<span class="br0">&#123;</span><span class="re0">$monsters</span><span class="br0">&#123;</span><span class="re0">$ID1</span><span class="br0">&#125;</span><span class="br0">&#125;</span> &amp;&amp; <span class="re0">$monsters</span><span class="br0">&#123;</span><span class="re0">$ID1</span><span class="br0">&#125;</span><span class="br0">&#123;</span><span class="st0">'name'</span><span class="br0">&#125;</span> eq <span class="st0">""</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+					<span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$config</span><span class="br0">&#123;</span><span class="st0">'teleportAuto_emptyName'</span><span class="br0">&#125;</span> <span class="kw1">ne</span> <span class="st0">'0'</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+						message <span class="st0">"Monster with empty name attacking you. Teleporting...<span class="es0">\n</span>"</span>;
+						useTeleport<span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>;
+					<span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span>
+						<span class="co1"># Delete monster from hash; monster will be</span>
+						<span class="co1"># re-added to the hash next time it moves.</span>
+						<span class="kw3">delete</span> <span class="re0">$monsters</span><span class="br0">&#123;</span><span class="re0">$ID1</span><span class="br0">&#125;</span>;
+					<span class="br0">&#125;</span>
+				<span class="br0">&#125;</span>
+				message<span class="br0">&#40;</span><span class="st0">"$status $msg<span class="es0">\n</span>"</span>, <span class="re0">$damage</span> &gt; <span class="nu0">0</span> ? <span class="st0">"attacked"</span> : <span class="st0">"attackedMiss"</span><span class="br0">&#41;</span>;
+			<span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span>
+				debug<span class="br0">&#40;</span><span class="st0">"$msg<span class="es0">\n</span>"</span>, <span class="st0">'parseMsg_damage'</span><span class="br0">&#41;</span>;
+			<span class="br0">&#125;</span>
+		<span class="br0">&#125;</span></pre></td>	</tr></table><span class="postbody"><br />
+<span style="color: red">I still recommend using v.1.6.2 though.</span></span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"><br />_________________<br /><span style="color: green"><span style="font-size: 9px; line-height: normal">Read the <a href="../manual">Manual</a>.</span> <span style="font-weight: bold">Be creative!</span> <span style="font-size: 9px; line-height: normal">You ARE your bot. <span style="font-style: italic">If your bot acts <span style="font-weight: bold">stupid</span>, then you are...</span> <img src="http://www.geocities.com/hakore_ph/e/ho.gif" border="0" /></span></span></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="58038"></a><b><a href="javascript:emoticon('[b]Maniax 2[/b], ')">Maniax 2</a></b></span><br /><span class="postdetails">Not So Newbie<br /><img src="images/Green/rank1.gif" alt="Not So Newbie" title="Not So Newbie" border="0" /><br /><br /><br />Joined: 26 Apr 2005<br />Posts: 66<br /></span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58038#58038"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Sun Jul 03, 2005 10:13 pm<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58038"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody"></span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>hakore wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">Ok, I modified the plugin to support v.1.6.1.<br />
+<br />
+However, there is a <span style="font-weight: bold">plugin call hook</span> that exists in v.1.6.2 CVS that is not found in v.1.6.1. If you really want to make the plugin work in v.1.6.1, you have to add the plugin hook (one line of code) in your functions.pl (somewhere in line 6423). See the lines with the + sign:<br />
+</td>	</tr></table><span class="postbody"><br />
+<br />
+i didnt find any line 6423 and no "+ sign:" , whats the exact location to put this code in funtions.pl¿</span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=13424"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=13424"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="58041"></a><b><a href="javascript:emoticon('[b]hakore[/b], ')">hakore</a></b></span><br /><span class="postdetails">Spammer<br /><img src="images/Green/rankspammer.gif" alt="Spammer" title="Spammer" border="0" /><br /><img src="http://www.geocities.com/hakore_ph/nyankoro.gif" alt="" border="0" /><br /><br />Joined: 12 Apr 2005<br />Posts: 682<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58041#58041"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Sun Jul 03, 2005 10:25 pm<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58041"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">I said <span style="font-weight: bold">somewhere</span>, so it's not exact, but it's just around there.<br />
+<br />
+The lines with plus (+) sign in the code above means those lines are not yet included the source code, you have to add it. You don't have to include the + sign though when adding it. It's merely a symbol here to tell it's the line to be added.<br />
+<br />
+It's better that you search for this line: </span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode">&#125; elsif &#40;$switch eq &quot;008A&quot;&#41; &#123;</pre></td>	</tr></table><span class="postbody"><br />
+<br />
+Then scroll down a bit and look for this line: </span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode">my &#40;$source, $verb, $target&#41; = getActorNames&#40;$ID1, $ID2, 'attack', 'attacks'&#41;;</pre></td>	</tr></table><span class="postbody"><br />
+<br />
+Now add this piece of code after the line defined above: </span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode">Plugins&#58;&#58;callHook&#40;'packet_attack', &#123;sourceID =&gt; $ID1, targetID =&gt; $ID2, msg =&gt; \$msg, dmg =&gt; $damage&#125;&#41;;</pre></td>	</tr></table><span class="postbody"><br />
+<br />
+Now, does that make sense?</span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"><br />_________________<br /><span style="color: green"><span style="font-size: 9px; line-height: normal">Read the <a href="../manual">Manual</a>.</span> <span style="font-weight: bold">Be creative!</span> <span style="font-size: 9px; line-height: normal">You ARE your bot. <span style="font-style: italic">If your bot acts <span style="font-weight: bold">stupid</span>, then you are...</span> <img src="http://www.geocities.com/hakore_ph/e/ho.gif" border="0" /></span></span></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="58043"></a><b><a href="javascript:emoticon('[b]Maniax 2[/b], ')">Maniax 2</a></b></span><br /><span class="postdetails">Not So Newbie<br /><img src="images/Green/rank1.gif" alt="Not So Newbie" title="Not So Newbie" border="0" /><br /><br /><br />Joined: 26 Apr 2005<br />Posts: 66<br /></span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58043#58043"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Sun Jul 03, 2005 10:28 pm<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58043"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Yes sir  <img src="images/smiles/icon_biggrin.gif" alt="Very Happy" border="0" /> <br />
+<br />
+PD: ur awesome  <img src="images/smiles/icon_cool.gif" alt="Cool" border="0" /></span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=13424"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=13424"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="58159"></a><b><a href="javascript:emoticon('[b]--Roger--[/b], ')">--Roger--</a></b></span><br /><span class="postdetails">Spammer<br /><img src="images/Green/rankspammer.gif" alt="Spammer" title="Spammer" border="0" /><br /><img src="http://img302.imageshack.us/img302/7153/gaara5gf.jpg" alt="" border="0" /><br /><br />Joined: 05 Apr 2005<br />Posts: 755<br />Location: Morocc</span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58159#58159"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Mon Jul 04, 2005 8:56 am<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58159"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Im speechless... This plugin is wonderfull!!!!! <br />
+[joke]Are you a ninja?[/joke]</span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"><br />_________________<br /><span style="font-weight: bold">OpenKore support for brazilians.</span>
+<br />
+<a href="http://www.openkore-brasil.com" target="_blank">http://www.openkore-brasil.com</a></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=11809"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=11809"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="58320"></a><b><a href="javascript:emoticon('[b]Maniax 2[/b], ')">Maniax 2</a></b></span><br /><span class="postdetails">Not So Newbie<br /><img src="images/Green/rank1.gif" alt="Not So Newbie" title="Not So Newbie" border="0" /><br /><br /><br />Joined: 26 Apr 2005<br />Posts: 66<br /></span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58320#58320"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Tue Jul 05, 2005 1:31 am<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58320"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">If i put <br />
+<br />
+altCommand_4 quit<br />
+<br />
+will it work?<br />
+<br />
+Does this works if some1 heal/buffs ur mosnters? or just for normal attacks?<br />
+<br />
+PD: im asking cause i dont have a way to test it <img src="images/smiles/icon_sad.gif" alt="Sad" border="0" /></span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=13424"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=13424"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="58327"></a><b><a href="javascript:emoticon('[b]hakore[/b], ')">hakore</a></b></span><br /><span class="postdetails">Spammer<br /><img src="images/Green/rankspammer.gif" alt="Spammer" title="Spammer" border="0" /><br /><img src="http://www.geocities.com/hakore_ph/nyankoro.gif" alt="" border="0" /><br /><br />Joined: 12 Apr 2005<br />Posts: 682<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58327#58327"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Tue Jul 05, 2005 1:52 am<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58327"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody"></span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Maniax 2 wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">If i put <br />
+skills Heal;Blessing<br />
+- only react when the skill used againts our monster is in this list.</td>	</tr></table><span class="postbody"><br />
+Incorect syntax: Normally, lists are comma-delimited. You only use the semi-colon delimiter for the commands. <span style="color: darkblue">I guess I'll have to update the documentation on the first post to explicitly state the correct list delimiter.</span><br />
+<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Maniax 2 wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">isCasting Increase Agi<br />
+- only react while the player is still casting a spell.</td>	</tr></table><span class="postbody"> <br />
+Incorrect syntax: Read the definition above again. The value is a <span style="font-style: italic">flag</span>, not a <span style="font-style: italic">skill name</span>. The skill name goes in the <span style="font-weight: bold">skills</span> option.<br />
+<br />
+Now, if you do want to react while the kill stealer is casting, you must create a separate block for Heal, since heal is never casted.<br />
+<br />
+e.g.<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode"># For skills Blessing and Increase AGI while casting
+reactOnKillSteal e 23 &#123;
+	skills Blessing, Increase AGI
+	isCasting 1
+#	etc...
+&#125;
+
+# For Heal
+reactOnKillSteal e 23 &#123;
+	skills Heal
+#	etc...
+&#125;
+
+# For all attacks &#40;weapon or skill&#41;
+reactOnKillSteal e 23 &#123;
+#	etc...
+&#125;</pre></td>	</tr></table><span class="postbody"><br />
+<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Maniax 2 wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">it will still react for normal attacks ?</td>	</tr></table><span class="postbody"><br />
+If you specified a value for the <span style="font-weight: bold">skills</span> option, it means you will only react if a player uses at least one of the specified skills on your monster. However, it also means that you will never react on normal attacks. You have to create a separate block for normal attacks (where the skills option is empty).<br />
+<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Maniax 2 wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">and i put<br />
+<br />
+altCommand_4 quit<br />
+<br />
+will it work?<br />
+<br />
+PD: im asking cause i dont have a way to test it <img src="images/smiles/icon_sad.gif" alt="Sad" border="0" /></td>	</tr></table><span class="postbody"><br />
+<span style="font-weight: bold">altCommand_4 quit</span> is fine (assuming you have corrected and sorted out all your other condition options). You will quit Openkore on your fifth reaction (if you do reached that amount of reactions to a single monster).</span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"><br />_________________<br /><span style="color: green"><span style="font-size: 9px; line-height: normal">Read the <a href="../manual">Manual</a>.</span> <span style="font-weight: bold">Be creative!</span> <span style="font-size: 9px; line-height: normal">You ARE your bot. <span style="font-style: italic">If your bot acts <span style="font-weight: bold">stupid</span>, then you are...</span> <img src="http://www.geocities.com/hakore_ph/e/ho.gif" border="0" /></span></span></span><span class="gensmall"><br /><br />Last edited by hakore on Tue Jul 05, 2005 3:04 am; edited 2 times in total</span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="58339"></a><b><a href="javascript:emoticon('[b]Maniax 2[/b], ')">Maniax 2</a></b></span><br /><span class="postdetails">Not So Newbie<br /><img src="images/Green/rank1.gif" alt="Not So Newbie" title="Not So Newbie" border="0" /><br /><br /><br />Joined: 26 Apr 2005<br />Posts: 66<br /></span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58339#58339"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Tue Jul 05, 2005 2:48 am<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58339"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">so if i dont put nothing it will react on ANYTHING that some1 does to the monsters im killing ? <br />
+<br />
+what about if ur having a mob of 3 monsters will it react too if ur not attacking that monster at that time?</span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=13424"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=13424"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="58345"></a><b><a href="javascript:emoticon('[b]hakore[/b], ')">hakore</a></b></span><br /><span class="postdetails">Spammer<br /><img src="images/Green/rankspammer.gif" alt="Spammer" title="Spammer" border="0" /><br /><img src="http://www.geocities.com/hakore_ph/nyankoro.gif" alt="" border="0" /><br /><br />Joined: 12 Apr 2005<br />Posts: 682<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58345#58345"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Tue Jul 05, 2005 3:01 am<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58345"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody"></span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Maniax 2 wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">so if i dont put nothing it will react on ANYTHING that some1 does to the monsters im killing ?</td>	</tr></table><span class="postbody"><br />
+If your conditions are empty, e.g.:<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode">reactOnKillSteal e 23 &#123;
+&#125;</pre></td>	</tr></table><span class="postbody"><br />
+You will always react when kill stealed in any form. Only once though, since there are no altCommand_# defined.<br />
+<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Maniax 2 wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">what about if ur having a mob of 3 monsters will it react too if ur not attacking that monster at that time?</td>	</tr></table><span class="postbody"><br />
+I'll add that feature. At the moment, you will only react when someone kill steals the monster you <span style="font-weight: bold">are currently attacking</span>.</span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"><br />_________________<br /><span style="color: green"><span style="font-size: 9px; line-height: normal">Read the <a href="../manual">Manual</a>.</span> <span style="font-weight: bold">Be creative!</span> <span style="font-size: 9px; line-height: normal">You ARE your bot. <span style="font-style: italic">If your bot acts <span style="font-weight: bold">stupid</span>, then you are...</span> <img src="http://www.geocities.com/hakore_ph/e/ho.gif" border="0" /></span></span></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="58349"></a><b><a href="javascript:emoticon('[b]Maniax 2[/b], ')">Maniax 2</a></b></span><br /><span class="postdetails">Not So Newbie<br /><img src="images/Green/rank1.gif" alt="Not So Newbie" title="Not So Newbie" border="0" /><br /><br /><br />Joined: 26 Apr 2005<br />Posts: 66<br /></span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58349#58349"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Tue Jul 05, 2005 3:35 am<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58349"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">I have tested it in 1.6.1 with a merchant bot , he attacked a pupa , then i come with a novice lvl 2 (lol) and start hitting the same pupa the bot its hitting , but it doesnt respond anything <img src="images/smiles/icon_sad.gif" alt="Sad" border="0" /> , i have used ur fist example config code without the kscount 3 . <br />
+<br />
+i have pasted the callhook thing in funtions pl , have pasted the reactonskillsteal.pl in plugins folder i use the command plugin in bot console to see if the plugin its logged and it is , but the bot doesnt react <img src="images/smiles/icon_sad.gif" alt="Sad" border="0" /><br />
+<br />
+PD: Does the player that its ksing u has to really kill the monster u are attacking ? or it will react if the kser hits the monster?</span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=13424"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=13424"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr>
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="58371"></a><b><a href="javascript:emoticon('[b]hakore[/b], ')">hakore</a></b></span><br /><span class="postdetails">Spammer<br /><img src="images/Green/rankspammer.gif" alt="Spammer" title="Spammer" border="0" /><br /><img src="http://www.geocities.com/hakore_ph/nyankoro.gif" alt="" border="0" /><br /><br />Joined: 12 Apr 2005<br />Posts: 682<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a href="viewtopic.php?p=58371#58371"><img src="templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Posted: Tue Jul 05, 2005 5:24 am<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+				<td valign="top" nowrap="nowrap"><a href="posting.php?mode=quote&amp;p=58371"><img src="templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">To test if it really is working, remove all conditions in the block except for the altCommands. Use this:<br />
+</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code"><pre class="SourceCode">reactOnKillSteal e 23; e 16 &#123;
+	altCommand_0 e 23; e 16;
+	altCommand_1
+	altCommand_2
+	altCommand_3 e 32; e 5; e 23; e 16
+	altCommand_4
+	altCommand_5
+	altCommand_6
+	altCommand_7
+	altCommand_8
+	altCommand_9
+&#125;</pre></td>	</tr></table><span class="postbody"><br />
+Test it again.<br />
+<br />
+If it does react using this config, then the plugin is working. You must have some conditions set that prevents it from doing so (I think it's inLockOnly). <br />
+<br />
+Now if it still doesn't react (after you have edited functions.pl) then there must be a bug, or I'm not able to see every little detail to make it work with v.1.6.1 (I doubt this, though).<br />
+<br />
+Try it first.<br />
+<br />
+<span style="color: darkblue">I just finished re-writing the code so the plugin would react to support mob training (i.e. when players attack monsters attacking you even if it is not your current target). I will post the code tomorrow after I tested it tonight. </span></span>
+<style type="text/css">
+<!--
+td.attachrow		{ font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; }
+td.attachheader     { font: normal 11px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000; background-color: #D1D7DC; }
+table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; color : #000000; border-color : #000000;	border-collapse : collapse; }
+-->
+</style>
+
+<span class="postbody"><br />_________________<br /><span style="color: green"><span style="font-size: 9px; line-height: normal">Read the <a href="../manual">Manual</a>.</span> <span style="font-weight: bold">Be creative!</span> <span style="font-size: 9px; line-height: normal">You ARE your bot. <span style="font-style: italic">If your bot acts <span style="font-weight: bold">stupid</span>, then you are...</span> <img src="http://www.geocities.com/hakore_ph/e/ho.gif" border="0" /></span></span></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a href="profile.php?mode=viewprofile&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a> <a href="privmsg.php?mode=post&amp;u=12633"><img src="templates/subSilver/images/lang_english/icon_pm.gif" alt="Send private message" title="Send private message" border="0" /></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr align="center">
+		<td class="row1" colspan="2" >
+		<script language='JavaScript'>
+        function openAllSmiles(){
+                smiles = window.open('quick_reply.php?mode=smilies', '_phpbbsmilies', 'HEIGHT=300,resizable=yes,scrollbars=yes,WIDTH=250');
+                smiles.focus();
+                return false;
+        }
+
+        function quoteSelection() {
+
+                theSelection = false;
+                theSelection = document.selection.createRange().text; // Get text selection
+
+                if (theSelection) {
+                        // Add tags around selection
+                        emoticon( '[quote]\n' + theSelection + '\n[/quote]\n');
+                        document.post.message.focus();
+                        theSelection = '';
+                        return;
+                }else{
+                        alert('Select a text anywhere on a page and try again');
+                }
+        }
+
+        function storeCaret(textEl) {
+                if (textEl.createTextRange) textEl.caretPos = document.selection.createRange().duplicate();
+        }
+
+        function emoticon(text) {
+                if (document.post.message.createTextRange && document.post.message.caretPos) {
+                        var caretPos = document.post.message.caretPos;
+                        caretPos.text = caretPos.text.charAt(caretPos.text.length - 1) == ' ' ? text + ' ' : text;
+                        document.post.message.focus();
+                } else {
+                        document.post.message.value  += text;
+                        document.post.message.focus();
+                }
+        }
+
+        function checkForm() {
+                formErrors = false;
+                if (document.post.message.value.length < 2) {
+                        formErrors = 'You must enter a message when posting.';
+                }
+                if (formErrors) {
+                        alert(formErrors);
+                        return false;
+                } else {
+                        if (document.post.quick_quote.checked) {
+                                document.post.message.value = document.post.last_msg.value + document.post.message.value;
+                        }
+                        document.post.quick_quote.checked = false;
+                        return true;
+                }
+        }
+</script>
+<form action='posting.php' method='post' name='post' onsubmit='return checkForm(this)'>
+        <input type="hidden" name="sid" value="844ec04b18d4d0938b2007718a348adc">
+
+	<table width="80%" align="center" style="margin-top: 0.2cm;">
+		<tr>
+			<td align="right" width="10%">
+				<div align="center">
+					<img src="images/smiles/icon_biggrin.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :D ');" alt="Very Happy" title="Very Happy" />
+					<img src="images/smiles/icon_smile.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :) ');" alt="Smile" title="Smile" />
+					<img src="images/smiles/icon_sad.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :( ');" alt="Sad" title="Sad" />
+					<img src="images/smiles/icon_surprised.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :o ');" alt="Surprised" title="Surprised" />
+					<img src="images/smiles/icon_eek.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :shock: ');" alt="Shocked" title="Shocked" />
+					<img src="images/smiles/icon_confused.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :? ');" alt="Confused" title="Confused" />
+					<img src="images/smiles/icon_cool.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' 8) ');" alt="Cool" title="Cool" />
+					<img src="images/smiles/icon_lol.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :lol: ');" alt="Laughing" title="Laughing" />
+					<img src="images/smiles/icon_mad.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :x ');" alt="Mad" title="Mad" />
+					<img src="images/smiles/icon_razz.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :P ');" alt="Razz" title="Razz" />
+					<img src="images/smiles/icon_redface.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :oops: ');" alt="Embarassed" title="Embarassed" />
+					<img src="images/smiles/icon_cry.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :cry: ');" alt="Crying or Very sad" title="Crying or Very sad" />
+					<img src="images/smiles/icon_evil.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :evil: ');" alt="Evil or Very Mad" title="Evil or Very Mad" />
+					<img src="images/smiles/icon_twisted.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :twisted: ');" alt="Twisted Evil" title="Twisted Evil" />
+					<img src="images/smiles/icon_rolleyes.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :roll: ');" alt="Rolling Eyes" title="Rolling Eyes" />
+					<img src="images/smiles/icon_wink.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :wink: ');" alt="Wink" title="Wink" />
+					<img src="images/smiles/icon_exclaim.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :!: ');" alt="Exclamation" title="Exclamation" />
+					<img src="images/smiles/icon_question.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :?: ');" alt="Question" title="Question" />
+					<img src="images/smiles/icon_idea.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :idea: ');" alt="Idea" title="Idea" />
+					<img src="images/smiles/icon_arrow.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :arrow: ');" alt="Arrow" title="Arrow" />
+					<img src="images/smiles/icon_neutral.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :| ');" alt="Neutral" title="Neutral" />
+					<img src="images/smiles/icon_mrgreen.gif" border="0" onmouseover="this.style.cursor='hand';" onclick="emoticon(' :mrgreen: ');" alt="Mr. Green" title="Mr. Green" />
+					<p>
+					<INPUT TYPE=button CLASS=BUTTON NAME="SmilesButt" VALUE="all" ONCLICK="openAllSmiles();">
+				</div>
+			</td>
+			<td width="80%">
+
+        <textarea name="message" rows="10" cols="80" wrap="virtual" tabindex="3" class="post" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" style="width: 100%;"></textarea><br>
+
+	<div style="display: none;">
+        <input type='checkbox' name='attach_sig' checked='checked'>Attach signature (signatures can be changed in profile)<br>
+        <input type='checkbox' name='notify' >Notify me when a reply is posted
+	</div>
+
+        <input type='hidden' name='mode' value='reply'>
+        <input type='hidden' name='t' value='8648'>
+        <!--input type='hidden' name='message' value=''-->
+
+
+			</td>
+		</tr>
+	</table>
+
+	<p>
+	<div align="center" style="margin-bottom: 0.25cm;">
+        <input type='submit' name='preview' class='liteoption' value='Preview'>&nbsp;
+        <input type='submit' name='post' class='mainoption' value='Submit'>
+	</div>
+
+</form>
+
+
+		</td>
+	</tr>
+	<tr align="center">
+		<td class="catBottom" colspan="2" height="28"><table cellspacing="0" cellpadding="0" border="0">
+			<tr><form method="post" action="viewtopic.php?t=8648&amp;start=0">
+				<td align="center"><span class="gensmall">Display posts from previous: <select name="postdays"><option value="0" selected="selected">All Posts</option><option value="1">1 Day</option><option value="7">7 Days</option><option value="14">2 Weeks</option><option value="30">1 Month</option><option value="90">3 Months</option><option value="180">6 Months</option><option value="364">1 Year</option></select>&nbsp;<select name="postorder"><option value="asc" selected="selected">Oldest First</option><option value="desc">Newest First</option></select>&nbsp;<input type="submit" value="Go" class="liteoption" name="submit" /></span></td>
+			</form></tr>
+		</table></td>
+	</tr>
+</table>
+
+<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+  <tr>
+	<td align="left" valign="middle" nowrap="nowrap"><span class="nav"><a href="posting.php?mode=newtopic&amp;f=15"><img src="templates/subSilver/images/lang_english/post.gif" border="0" alt="Post new topic" align="middle" /></a>&nbsp;&nbsp;&nbsp;<a href="posting.php?mode=reply&amp;t=8648"><img src="templates/subSilver/images/lang_english/reply.gif" border="0" alt="Reply to topic" align="middle" /></a></span></td>
+	<td align="left" valign="middle" width="100%"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="index.php" class="nav">OpenKore Forum Forum Index</a>
+	  -> <a href="viewforum.php?f=15" class="nav">Other Plugins</a></span></td>
+	<td align="right" valign="top" nowrap="nowrap"><span class="gensmall">All times are GMT + 2 Hours</span><br /><span class="nav">Goto page <b>1</b>, <a href="viewtopic.php?t=8648&amp;postdays=0&amp;postorder=asc&amp;start=15">2</a>, <a href="viewtopic.php?t=8648&amp;postdays=0&amp;postorder=asc&amp;start=30">3</a>, <a href="viewtopic.php?t=8648&amp;postdays=0&amp;postorder=asc&amp;start=45">4</a>, <a href="viewtopic.php?t=8648&amp;postdays=0&amp;postorder=asc&amp;start=60">5</a>, <a href="viewtopic.php?t=8648&amp;postdays=0&amp;postorder=asc&amp;start=75">6</a>&nbsp;&nbsp;<a href="viewtopic.php?t=8648&amp;postdays=0&amp;postorder=asc&amp;start=15">Next</a></span>
+	  </td>
+  </tr>
+  <tr>
+	<td align="left" colspan="3"><span class="nav">Page <b>1</b> of <b>6</b></span></td>
+  </tr>
+</table>
+
+<table width="100%" cellspacing="2" border="0" align="center">
+  <tr>
+	<td width="40%" valign="top" nowrap="nowrap" align="left"><span class="gensmall"><a href="viewtopic.php?t=8648&amp;watch=topic&amp;start=0&amp;sid=844ec04b18d4d0938b2007718a348adc">Watch this topic for replies</a></span><br />
+	  &nbsp;<br />
+	  </td>
+	<td align="right" valign="top" nowrap="nowrap">
+<form method="get" name="jumpbox" action="viewforum.php" onSubmit="if(document.jumpbox.f.value == -1){return false;}"><table cellspacing="0" cellpadding="0" border="0">
+	<tr>
+		<td nowrap="nowrap"><span class="gensmall">Jump to:&nbsp;<select name="f" onchange="if(this.options[this.selectedIndex].value != -1){ forms['jumpbox'].submit() }"><option value="-1">Select a forum</option><option value="-1">&nbsp;</option><option value="-1">Announcement</option><option value="-1">----------------</option><option value="1">Announcements</option><option value="-1">&nbsp;</option><option value="-1">General</option><option value="-1">----------------</option><option value="16">Frequently Asked Questions</option><option value="3">Discussion</option><option value="4">OpenKore & VisualKore Support</option><option value="5">Botting Tips & Tricks</option><option value="19">OpenKore forum for Brazilians</option><option value="-1">&nbsp;</option><option value="-1">Plugins</option><option value="-1">----------------</option><option value="17">Plugins FAQ</option><option value="18">Macro plugin</option><option value="15"selected="selected">Other Plugins</option><option value="-1">&nbsp;</option><option value="-1">Technical</option><option value="-1">----------------</option><option value="6">Developers Corner</option><option value="7">Development Help</option><option value="13">Commit Queue</option><option value="-1">&nbsp;</option><option value="-1">OffTopic</option><option value="-1">----------------</option><option value="8">Trashcan</option><option value="9">Misc</option><option value="12">Documentation</option><option value="14">kRO/PK servers</option></select><input type="hidden" name="sid" value="844ec04b18d4d0938b2007718a348adc" />&nbsp;<input type="submit" value="Go" class="liteoption" /></span></td>
+	</tr>
+</table></form>
+
+<span class="gensmall">You <b>can</b> post new topics in this forum<br />You <b>can</b> reply to topics in this forum<br />You <b>can</b> edit your posts in this forum<br />You <b>can</b> delete your posts in this forum<br />You <b>can</b> vote in polls in this forum<br />You <b>can</b> attach files in this forum<br />You <b>can</b> download files in this forum<br /></span></td>
+  </tr>
+</table>
+
+
+<div align="center"><span class="copyright"><br /><br />
+<!--
+	We request you retain the full copyright notice below including the link to www.phpbb.com.
+	This not only gives respect to the large amount of time given freely by the developers
+	but also helps build interest, traffic and use of phpBB 2.0. If you cannot (for good
+	reason) retain the full copyright we request you at least leave in place the
+	Powered by phpBB line, with phpBB linked to www.phpbb.com. If you refuse
+	to include even this then support on our forums may be affected.
+
+	The phpBB Group : 2002
+// -->
+Powered by <a href="http://www.phpbb.com/" target="_phpbb" class="copyright">phpBB</a> &copy; 2001, 2005 phpBB Group<br /></span></div>
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>
+

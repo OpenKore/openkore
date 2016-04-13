@@ -1,0 +1,198 @@
+﻿#############################################################################################
+# A Codificação do texto está correta?
+# Codificação:  ANSI -> UTF8 Without boom
+# Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
+# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+#############################################################################################
+# Esse arquivo permite controlar a AI específicamente para cada monstro
+#
+# Sintaxe:
+# <monster> <attack> <teleport> <search> <skillcancel> <lv> <joblv> <hp> <sp> <weight>
+#
+# <monster>: Nome ou ID do monstro encontrado no monsters.txt (não é case sensitive)
+#
+# <attack>:
+# -1 para nunca ataque esse monstro, mesmo que ele ataque o bot.
+#  0 para não ataca o monstro por padrão, mas caso ele ataque, o bot o bot irá revidar.
+#  1 para sempre atacar esse monstro caso encontre-o no campo de visão.
+#  2 para sempre atacar esse monstro caso encontre-o no campo de visão, mesmo se o bot estiver sentado.
+#  3 para atacar o monstro uma vez (provocar), em seguida, deixá-lo, útil para mobar.
+#
+# <teleport>:
+# < 0 (-1, -2, etc.) para definir a distância crítica exata para esse monstro. Teletransporta se o monstro atingir.
+# 1 para teletransportar caso o monstro apareça em seu campo de visão.
+# 2 para teletransportar caso o monstro atacar.
+#  -> Isso só é ativado em modo de auto-ataque.
+# 3 para desconectar por 30 segundos caso o monstro apareça em seu campo de visão.
+# >= 4 (4, 5, etc.) para definir o tempo que ficará desconectado (em segundos) caso o monstro apareça em seu campo de visão.
+#
+# <search>: Configure para 1 para teleportar em busca do monstro.
+# Auto-ataque precisa estar habilitado.
+#
+# <skillcancel>: Configure para 1 se você quiser interromper casts dos
+# monstros
+#
+# <lv>: Somente atacar automaticamente esse monstro se o seu nível for maior
+# que o valor especificado.
+#
+# <joblv>: Somente atacar automaticamente esse monstro se o seu job for maior
+# que o valor especificado.
+#
+# <hp>: Somente atacar automaticamente esse monstro se o seu HP for maior
+# que o valor especificado. O HP é especificada em números absolutos.
+#
+# <sp>: Somente atacar automaticamente esse monstro se o seu SP for maior
+# que o valor especificado. O SP é especificada em números absolutos.
+#
+# <weight>: Peso dos monstros aggressivos para ativar as funções na config. Suporta números quebrados (ex 1.8237402).
+# Exemplos:
+#       (config.txt)
+#       teleportAuto_minAggressives 6
+#       teleportAuto_minAggressivesInLock 6
+#
+#       (mon_control.txt)
+#       Hidra 1 0 0 0 0 0 0 0 0.2
+#       Peixe espada 1 0 0 0 0 0 0 0 2
+#
+# Se houver cinco hidras e um peixe espada atacando o bot,
+# ele não vai teleportar pois o valor não é igual ou maior que o teleportAuto_minAggressives (5 * 0,2 + 1 * 2 = 4).
+# No entanto, três pexies espadas fará o bot teletransportar, pois
+# 0 * 0,2 + 2 * 3 = 6
+#
+#
+# Monstros não especificados neste arquivo terá por padrão:
+# <attack> = 1
+ 
+ 
+##### Ovos #####
+Ant's Egg 0 0 0
+PecoPeco's Egg 0 0 0
+Pupa 0 0 0
+Thief Bug's Egg 0 0 0
+ 
+##### Invocados por alquimistas ####
+# Parasita invocada
+1555 0 0 0
+ 
+# Flora invocada
+1575 0 0 0
+ 
+# Hidra invocada
+1579 0 0 0
+ 
+# Mandragora invocada
+1589 0 0 0
+ 
+# Planta Carnívora invocada
+1590 0 0 0
+ 
+##### Plantas #####
+Black Mushroom 0 0 0
+Blue Plant 0 0 0
+Green Plant 0 0 0
+Red Mushroom 0 0 0
+Red Plant 0 0 0
+Shining Plant 0 0 0
+White Plant 0 0 0
+Yellow Plant 0 0 0
+ 
+ 
+##### Homunculus #####
+6001 -1 0 0
+6002 -1 0 0
+6003 -1 0 0
+6004 -1 0 0
+6005 -1 0 0
+6006 -1 0 0
+6007 -1 0 0
+6008 -1 0 0
+6009 -1 0 0
+6010 -1 0 0
+6011 -1 0 0
+6012 -1 0 0
+6013 -1 0 0
+6014 -1 0 0
+6015 -1 0 0
+6016 -1 0 0
+ 
+##### Assistentes #####
+6017 -1 0 0
+6018 -1 0 0
+6019 -1 0 0
+6020 -1 0 0
+6021 -1 0 0
+6022 -1 0 0
+6023 -1 0 0
+6024 -1 0 0
+6025 -1 0 0
+6026 -1 0 0
+6027 -1 0 0
+6028 -1 0 0
+6029 -1 0 0
+6030 -1 0 0
+6031 -1 0 0
+6032 -1 0 0
+6033 -1 0 0
+6034 -1 0 0
+6035 -1 0 0
+6036 -1 0 0
+6037 -1 0 0
+6038 -1 0 0
+6039 -1 0 0
+6040 -1 0 0
+6041 -1 0 0
+6042 -1 0 0
+6043 -1 0 0
+6044 -1 0 0
+6045 -1 0 0
+6046 -1 0 0
+ 
+##### Monstros assistentes #####
+# Mímico (Monstro)
+1191 -1 0 0
+# Mascarado (Monstro)
+1506 -1 0 0
+# Alice (Monstro)
+1275 -1 0 0
+# Rosa Selvagem (Versão assistente, M_WILD_ROSE)
+1965 -1 0 0
+# Doppelganger (Versão assistente, M_DOPPELGANGER)
+1966 -1 0 0
+# Egnigem Cenia (Versão assistente, M_YGNIZEM)
+1967 -1 0 0
+ 
+##### MVPs e mini-boss #####
+Amon Ra 0 1 0
+Archangeling 0 1 0
+Baphomet 0 1 0
+Bacsojin 0 1 0
+Dark Illusion 0 1 0
+Dark Lord 0 1 0
+Detale 0 1 0
+Doppelganger 0 1 0
+Dracula 0 1 0
+Drake 0 1 0
+Eddga 0 1 0
+Dark Snake Lord 0 1 0
+Garm 0 1 0
+Egnigem Cenia 0 1 0
+Golden Thief Bug 0 2 0
+Incantation Samurai 0 1 0
+Lady Tany 0 1 0
+Lord of Death 0 1 0
+Maya 0 1 0
+Maya Purple 0 1 0
+Mistress 0 1 0
+Moonlight 0 1 0
+Mutant Dragon 0 1 0
+Orc Hero 0 1 0
+Orc Lord 0 1 0
+Osiris 0 1 0
+Pharaoh 0 1 0
+Phreeoni 0 1 0
+RSX-0806 0 1 0
+Stormy Knight 0 1 0
+Tao Gunka 0 1 0
+Thanatos 0 1 0
+Turtle General 0 1 0
+Vesper 0 1 0

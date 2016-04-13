@@ -1,0 +1,5 @@
+Coming soon
+Detect GM's attacking your bot in PvP/GvG, skills being cast on monster that you are attacking or are attacking you.
+
+Maybe coming...
+Detect an online GM (maybe, not sure)

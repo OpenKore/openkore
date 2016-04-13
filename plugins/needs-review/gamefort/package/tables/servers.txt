@@ -1,0 +1,24 @@
+# This file contains information about master servers.
+
+####################
+# Private RO Servers
+
+[Localhost]
+ip 127.0.0.1
+port 6900
+master_version 1
+version 20
+serverType 0
+serverEncoding Western
+
+[AngelRO]
+ip 208.43.87.53
+port 6901
+private 1
+master_version 22
+version 20
+serverType kRO_Sakexe_2008_08_20a
+serverEncoding Western
+charBlockSize 112
+recvpackets recvpackets_angelRO.txt
+gamefort_key A049D96AF28B14941DA52EBE4F71028A139B24AC35B546CE57DF60E871B243D3

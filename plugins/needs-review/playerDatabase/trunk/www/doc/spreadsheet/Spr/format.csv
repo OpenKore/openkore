@@ -1,0 +1,25 @@
+Description	,Sprite List
+Byte-order	,Little-endian
+
+Name		,Size	,Type	,Value
+Magic		,2		,string	,SP
+MajorVersion,1		,byte	,1 to 5
+MinorVersion,1		,byte	,?
+ImageCount	,2		,short	,>0
+Unknown		,10		,unknown,*
+
+Image Repeat(ImageCount)
+	Name		,Size	,Type
+	Width		,2		,short
+	Height		,2		,short
+	Size		,2		,short
+	Data		,Size	,Binary
+Loop
+
+Pallete Repeat(1024)
+	Name		,Size	,Type
+	Red			,1		,byte
+	Green		,1		,byte
+	Blue		,1		,byte
+	Alpha		,1		,byte
+Loop

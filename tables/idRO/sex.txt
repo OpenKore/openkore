@@ -1,0 +1,2 @@
+0 Perempuan
+1 Laki-Laki

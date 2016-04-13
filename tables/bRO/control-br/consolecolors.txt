@@ -1,0 +1,59 @@
+#############################################################################################
+# A Codificação do texto está correta?
+# Codificação:  ANSI -> UTF8 Without boom
+# Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
+# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+#############################################################################################
+# Este ficheiro controla as cores que serão usadas para exibir as mesagens no
+# console.
+# Cores disponíveis (use o nome da cor dentro dos parentes!):
+# Preto (black), Cinza Escuro (darkgrey), Cinza (grey), Branco (white)
+# Vermelho (red), Vermelho Escuro (darkred), Amarelo (yellow), Marrom (brown), Verde (green), Verde Escuro (darkgreen),
+# Ciano (cyan), Ciano Escuro (darkcyan), Azul (darkblue), Azul Escuro (magenta), Magenta, Magenta Escuro (darkmagenta),
+# padrão
+#
+# Formato:
+# [Tipo de Mensagem]:
+# <message domain> [foreground color][/background color]
+#
+# Coloque 0 para desativar as cores
+useColors 1
+ 
+[message]
+attackMon cyan
+attackMonMiss cyan
+attacked magenta
+attackedMiss magenta
+ 
+connection darkgreen
+startup darkgreen
+menu yellow
+drop blue
+useItem blue
+ 
+skill green
+selfSkill green
+ 
+success green
+system yellow
+pm yellow
+pm/sent yellow
+publicchat green
+guildchat darkgreen
+partychat brown
+selfchat green
+schat yellow
+list white
+info white
+equip grey
+teleport yellow
+ 
+[error]
+default red
+ 
+[warning]
+default yellow
+info yellow
+ 
+[debug]
+default default

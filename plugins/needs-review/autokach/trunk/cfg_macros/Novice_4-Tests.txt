@@ -1,0 +1,110 @@
+﻿# УТФ-8
+
+automacro NoviceGroundPart26 {
+	class Novice
+	job == 10
+	location new_1-3, new_2-3, new_3-3, new_4-3, new_5-3
+	eval $::config{QuestPart} eq "NoobZone26"
+	run-once 1
+	call NoviceGroundPart26M
+}
+macro NoviceGroundPart26M {
+	[
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	log ================================================
+	log =========Всё, 10 джоб... Го наф отсюда.=========
+	log ================================================
+	]
+	do move @rand(95,97) @rand(169,171)
+	pause @rand(2,3)
+	do talknpc 96 174 w1 c w1 r0
+	pause @rand(3,4)
+	do conf QuestPart NoobZone27
+}
+
+automacro NoviceGroundPart27 {
+	class Novice
+	location new_1-4, new_2-4, new_3-4, new_4-4, new_5-4
+	eval $::config{QuestPart} eq "NoobZone27"
+	run-once 1
+	call NoviceGroundPart27M
+}
+macro NoviceGroundPart27M {
+	[
+	log ================================================
+	log ========Проходим инструктаж по профессиям=======
+	log ================================================
+	]
+	do move @rand(99,101) @rand(21,23)
+	pause @rand(2,3)
+	do talknpc 91 22 w2 c w1 c w1 c w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 r7
+	pause @rand(2,3)
+	do conf QuestPart NoobZone28
+}
+
+
+##########################################################################
+#######################ТЕСТЫ НА КАЖДУЮ ПРОФЕССИЮ##########################
+##########################################################################
+automacro Tests {
+	class Novice
+	location new_1-4, new_2-4, new_3-4, new_4-4, new_5-4
+	eval $::config{QuestPart} eq "NoobZone28"
+	run-once 1
+	call TestsM
+}
+macro TestsM {
+	[
+	log ================================================
+	log ======Проходим тест на выбраную вами профу======
+	log ================================================
+	]
+	pause @rand(2,4)
+	$i = @config(Job)
+	if ($i != 1) goto swordsman
+		do talknpc 100 29 w2 c w1 c w1 c w1 c w1 c w2 r0 w1 c w1 c w1 c w1 c w1 r0 w1 r0 w1 r0 w1 r0 w1 r0 w1 r0 w1 c w1 c w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c w1 c  w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c w1 c w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c  w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w2 c w2
+		goto endtest
+	:swordsman
+	if ($i != 2) goto acolyte
+		do talknpc 100 29 w2 c w1 c w1 c w1 c w1 c w1 r0 w1 c w1 c w1 c w1 c w1 r2 w1 r1 w1 r0 w1 r1 w1 r1 w1 r0 w1 c w1 c w1 r0 w1 c w1 r1 w1 c w1 r0 w1 c w1 r1 w1 c w1 c  w1 r1 w1 c w1 r0 w1 c w1 r0 w1 c w1 r1 w1 c w1 c w1 r1 w1 c w1 r0 w1 c w1 r1 w1 c  w1 r1 w1 c w1 r0 w1 c w1 r1 w1 c w1 r3 w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w2 c w2
+		goto endtest
+	:acolyte
+	if ($i == 9) goto gunslinger
+	if ($i != 3) goto mage
+	:gunslinger
+		do talknpc 100 29 w2 c w1 c w1 c w1 c w1 c w2 r0 w1 c w1 c w1 c w1 c w1 r0 w1 r0 w1 r2 w1 r1 w1 r0 w1 r2 w1 c w1 c w1 r0 w1 c w1 r1 w1 c w1 r1 w1 c w1 r0 w1 c w1 c w1 r1 w1 c w1 r1 w1 c w1 r1 w1 c w1 r1 w1 c w1 c w1 r1 w1 c w1 r0 w1 c w1 r2 w1 c w1 r1 w1 c w1 r0 w1 c w1 r1 w1 c w1 r1 w1 c w1 r2 w1 c w1 c w1 c w1 c w1 c  w1 c w1 c w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w2 c w2
+		goto endtest
+	:mage
+	#Тыквой мона стать в Пайоне, городе лучников, поэтому Тыквы косят под лучников
+	if ($i == 7) goto taekwon
+	if ($i != 4) goto archer
+	:taekwon
+		do talknpc 100 29 w1 c w1 c w1 c w1 c w1 c w1 r0 w1 c w1 c w1 c w1 c w1 r1 w1 r0 w1 r1 w1 r1 w1 r1 w1 r2 w1 c w1 c w1 r1 w1 c w1 r1 w1 c w1 r0 w1 c w1 r1 w1 c w1 c w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c w1 r1 w1 c w1 c w1 r2 w1 c w1 r1 w1 c w1 r1 w1 c w1 r1 w1 c w1 r1 w1 c w1 r3 w1 c w1 r1 w1 c w1 r2 w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w1 c w2
+		goto endtest
+	:archer
+	if ($i != 5) goto thief
+		do talknpc 100 29 w2 c w1 c w1 c w1 c w1 c w2 r0 w1 c w1 c w1 c w1 c w1 r1 w1 r0 w1 r0 w1 r0 w1 r1 w1 r1 w1 c w1 c w1 r0 w1 c w1 r0 w1 c w1 r1 w1 c w1 r0 w1  c w1 c w1 r0 w1 c w1 r1 w1 c w1 r1 w1 c w1 r1 w1 c w1 c w1 r2 w1 c w1 r0 w1 c w1  r2 w1 c w1 r1 w1 c w1 r0 w1 c w1 r3 w1 c w1 r0 w1 c w1 r2 w1 c w1 c w1 c w1 c w1 c  w1 c w1 c w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w2 c w2
+		goto endtest
+	:thief
+	if ($i == 8) goto ninja
+	if ($i != 6) goto merchant
+	:ninja
+		do talknpc 100 29 w2 c w1 c w1 c w1 c w1 c w2 r0 w1 c w1 c w1 c w1 c w1 r1 w1 r0 w1 r1 w1 r0 w1 r0 w1 r1 w1 c w1 c w1 r0 w1 c w1 r0 w1 c w1 r1 w1 c w1 r0 w1  c w1 c w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c w1 c w1 r0 w1 c w1 r0 w1 c w1  r2 w1 c w1 r1 w1 c w1 r0 w1 c w1 r0 w1 c w1 r2 w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c w2 c w2
+		goto endtest
+	:merchant
+	:endtest
+	do conf QuestDone NoobZone
+	do conf QuestPart none
+}
+
+
+##########################################################################
+#######################ТЕСТЫ НА КАЖДУЮ ПРОФЕССИЮ##########################
+##########################################################################
+#1 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0 r0
+#2 r0 r2 r1 r0 r1 r1 r0 r0 r1 r0 r1 r1 r0 r0 r1 r1 r0 r1 r1 r0 r1 r3 r0 r0
+#3 r0 r0 r0 r2 r1 r0 r2 r0 r1 r1 r0 r1 r1 r1 r1 r1 r0 r2 r1 r0 r1 r1 r2 r0
+#4 r0 r1 r0 r1 r1 r1 r2 r1 r1 r0 r1 r0 r0 r0 r1 r2 r1 r1 r1 r1 r3 r1 r2 r0
+#5 r0 r1 r0 r0 r0 r1 r1 r0 r0 r1 r0 r0 r1 r1 r1 r2 r0 r2 r1 r0 r3 r0 r2 r0
+#6 r0 r1 r0 r1 r0 r0 r1 r0 r0 r1 r0 r0 r0 r0 r0 r0 r0 r2 r1 r0 r0 r2 r0 r0

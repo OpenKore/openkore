@@ -1,0 +1,24 @@
+#header {background:#ccc;}
+#info {background:#999;}
+#footer {background:#ccc; font-size:smaller;}
+
+#char-name {font-weight:bold;}
+#char-statuses {float:right; font-size:smaller;}
+#char-statuses > span:not(:last-child):after {content:', ';}
+
+#hp-info > div {background:green;}
+#sp-info > div {background:blue;}
+#exp-info > div {background:gray;}
+#jobexp-info > div {background:gray;}
+#weight-info > div {background:yellow;}
+
+#actorlist > table {font-size:smaller;}
+#actorlist > table th {text-align:left; font-weight:normal;}
+
+#actorlist > table .Player th {color:black;}
+#actorlist > table .Monster th {color:red;}
+#actorlist > table .Homunculus th {color:grey;}
+#actorlist > table .Mercenary th {color:grey;}
+#actorlist > table .NPC th {color:blue;}
+
+#application-link {float:right;}

@@ -1,0 +1,73 @@
+{{_header.html}}
+
+        <div class="span9">
+          <div class="row-fluid">
+            <div class="span9">
+			<div class="tabbable">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#usable" data-toggle="tab">Usable</a></li>
+     				<li><a href="#unusable" data-toggle="tab">Unusable</a></li>
+					<li><a href="#equipment" data-toggle="tab">Equipment</a></li>
+					<li><a href="#log" data-toggle="tab">Log</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="usable">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Amount</th>
+								<th>Item</th>
+								<th>Get</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://db.irowiki.org/image/item/{storageUsableID}.png"/></td><td>{storageUsableAmount}</td><td class="left">{storageUsable}</td>{storageUsableGetButton}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>
+					<div class="tab-pane" id="unusable">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Amount</th>
+								<th>Item</th>
+								<th>Get</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{storageUnusableID}.gif"/></td><td>{storageUnusableAmount}</td><td class="left">{storageUnusable}</td>{storageUnusableGetButton}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>
+					<div class="tab-pane" id="equipment">
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Amount</th>
+								<th>Item</th>
+								<th>Get</th>
+							</tr>
+						</thead>
+						<tbody>
+						{startLoop}<tr><td><img src="http://www.ragdata.com/images/item/small/{storageEquipmentID}.gif"/></td><td>{storageEquipmentAmount}</td><td class="left">{storageEquipment}</td>{storageEquipmentGetButton}</tr>{endLoop}
+						</tbody>
+						</table>
+					</div>
+					<div class="tab-pane" id="log">
+						<table class="table table-hover">
+						<tbody>
+						<pre>{storageLog}</pre>
+						</tbody>
+						</table>
+					</div>
+				</div>
+			</div>			
+            </div>
+          </div>
+		  
+        </div>
+
+{{_footer.html}}

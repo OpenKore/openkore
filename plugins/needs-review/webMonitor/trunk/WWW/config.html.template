@@ -1,0 +1,89 @@
+{{_header.html}}
+
+<script type="application/javascript" defer="defer">
+			function send_command() {
+				var lockMap = document.getElementById("lockMap");
+				window.location.href = '../handler?csrf={csrf}&command=conf lockMap ' + lockMap.value;
+			}
+			function submitenter(e) {
+				var keycode;
+				if (window.event) keycode = window.event.keyCode;
+
+				if (keycode == 13) {
+					send_command();
+				}
+			}
+</script>
+
+        <div class="span9">
+          <div class="row-fluid">
+            <div class="span9">
+			<div class="tabbable">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#config" data-toggle="tab">config</a></li>
+					<li><a href="#macros" data-toggle="tab">macros</a></li>
+					<li><a href="#timeouts" data-toggle="tab">timeouts</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="config">
+					
+						<div class="span8 well">
+						<div class="pull-right"><span class="label label-important">Change your config!</span></div>
+							<br />
+							<div class="input-append" rel="tooltip" title="Insert the map name!">
+							<input class="span7" id="lockMap" type="text" placeholder="lockMap" onKeyPress="submitenter(this.event)">
+							<button class="btn" type="button" onClick="send_command()">Change</button>
+							</div>
+						</div>
+					
+						<div class="span4 well">
+							<div class="pull-right"><span class="label">reloads</span></div>
+							<a class="btn" href="/handler?csrf={csrf}&command=reload+all&page=config.html">all</a><br /><br />
+							<a class="btn" href="/handler?csrf={csrf}&command=reload+config&page=config.html">config</a><br /><br />
+							<a class="btn" href="/handler?csrf={csrf}&command=reload+items_control&page=config.html">items_control</a><br /><br />
+							<a class="btn" href="/handler?csrf={csrf}&command=reload+mon_control&page=config.html">mon_control</a><br /><br />
+							<a class="btn" href="/handler?csrf={csrf}&command=reload+pickupitems&page=config.html">pickupitems</a><br /><br />
+							<a class="btn" href="/handler?csrf={csrf}&command=reload+priority&page=config.html">priority</a><br /><br />
+							<a class="btn" href="/handler?csrf={csrf}&command=reload+shop&page=config.html">shop</a><br />
+						<!--
+						</div>
+						<div class="span4 well">
+						-->
+						<br /><br />
+						<div class="pull-right"><span class="label">route</span></div>
+							<a class="btn" href="/handler?csrf={csrf}&command=sit&page=config.html">sit</a><br /><br />
+							<a class="btn" href="/handler?csrf={csrf}&command=stand&page=config.html">stand</a><br /><br />
+							<a class="btn" href="/handler?csrf={csrf}&command=autobuy&page=config.html">autoBuy</a><br /><br />
+							<a class="btn" href="/handler?csrf={csrf}&command=autosell&page=config.html">autoSell</a><br /><br />
+							<a class="btn" href="/handler?csrf={csrf}&command=autostorage&page=config.html">autoStorage</a><br /><br />
+							<a class="btn" href="/handler?csrf={csrf}&command=tele&page=config.html">tele</a><br />						
+						</div>
+						
+					</div>
+					
+					
+					<div class="tab-pane" id="macros">
+					<p>
+					<a class="btn btn-small btn-warning" href="/handler?csrf={csrf}&command=reload+macros&page=config.html">reload macros.txt</a>
+					<!--
+					<a class="btn btn-small btn-danger" href="/handler?csrf={csrf}&command=ai+off&page=config.html">ai off</a>
+					<a class="btn btn-small btn-warning" href="/handler?csrf={csrf}&command=ai+manual&page=config.html">ai manual</a>
+					<a class="btn btn-small btn-success" href="/handler?csrf={csrf}&command=ai+on&page=config.html">ai on</a>
+					-->
+					</p>
+					</div>
+					
+					
+					<div class="tab-pane" id="timeouts">
+					<a class="btn btn-small btn-warning" href="/handler?csrf={csrf}&command=reload+timeouts&page=config.html">reload timeouts.txt</a>
+					</div>
+					
+	
+				</div>
+			</div>
+            </div>
+          </div>
+		  
+        </div>
+
+{{_footer.html}}

@@ -1,0 +1,16 @@
+0.1:
+
+	* Port to Windows.
+
+Future:
+
+	* Write portals(LOS).txt parser.
+	* Write some developer documentation.
+	* Use memory pools to avoid memory fragmentation and malloc()
+	  overhead.
+	* Configurable socket path/port.
+
+Blue sky future:
+
+	* Plugin support.
+	* On-the-fly data file reloading.

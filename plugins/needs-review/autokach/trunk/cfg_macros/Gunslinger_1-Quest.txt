@@ -1,0 +1,1257 @@
+#manticora, rofan.ru
+#Gunslinger Quest
+###############################
+#Для прохождения квеста нужен лут, лежащий на кафре: 10 Shell, 3 Fluff, 1 Trunk, 3 Zargon, 3 Green Herb, Rainbow Shell, 1 Milk.
+#Всё, кроме Rainbow Shell, нуб достает самостоятельно. Наличие лута на кафре просто ускоряет процесс.
+#3xRainbow Shell ОБЯЗАТЕЛЬНО надо положить на кафру. Нуб просто не сможет это выбить самостоятельно.
+#Квест начинается в Геффене, там бьется нужный лут, зеньги на покупку заргонов.
+#Квест продолжается в Пронтере, там покупается молоко и бьются зеньги на дирибабль
+#Одно полено (Trunk) бьется по ходу квеста в пайоне.
+
+automacro GunslingerBegin {
+	class Novice
+	job == 10
+	location geffen_in, geffen
+	eval $::config{Job} eq "9" and $::config{QuestPart} eq ""
+	run-once 1
+	call GunslingerBeginM
+}
+macro GunslingerBeginM {
+	log Начинаем квест на профу Ганса.
+	do include off Novice
+	do include on Novice_1
+	do conf QuestPart Gunslinger0
+}
+
+
+automacro Gunslinger0 {
+	location geffen_in, geffen
+	eval $::config{QuestPart} eq "Gunslinger0"
+	run-once 1
+	call Gunslinger0M
+}
+macro Gunslinger0M {
+	[
+	log Для прохождения квеста на профу Ганса нам потребуется лежащий на Кафре лут:
+	log 10 Shell, 
+	log 3 Fluff, 
+	log 1 Trunk, 
+	log 3 Zargon, 
+	log 3 Green Herb, 
+	log 3 Rainbow Shell, 
+	log 1 Milk.
+	]
+	pause 7
+	log Если этого лута не будет на складе, то мы попытаемся этот лут или выбить или купить у нпц.
+	pause 3
+	[
+	do iconf Shell 10 0 0
+	do iconf Fluff 3 1 0
+	do iconf Trunk 1 1 0
+	do iconf Zargon 3 1 0 
+	do iconf Green Herb 3 1 0
+	do iconf Rainbow Shell 3 1 0
+	do iconf Milk 1 1 0
+	
+	log За билеты на дирижабль нужно будет заплатить 2400,
+	log нужно будет одно ухо бабочки, это стоит 300,
+	log а за Заргоны нужно будет отдать около 1500.
+	log Молоко стоит не больше 100. Итого 4300 зенег.
+	log Проверим карманы, а затем Кафру на предмет лута.
+	]
+	pause 7
+
+	if (@invamount(Shell) < 10) goto notok
+	if (@invamount(Fluff) < 3) goto notok
+	if (@invamount(Trunk) < 1) goto notok
+	if (@invamount(Zargon) < 3) goto notok
+	if (@invamount(Green Herb) < 3) goto notok
+	if (@invamount(Rainbow Shell) < 3) goto notok
+	if (@invamount(Milk) < 1) goto notok
+		log Удивительно, но лута хватает для прохождения квеста!
+	goto end
+	:notok
+		log Чего-то не хватает в карманах, пойдем смотреть кафру
+		pause @rand(3,5)
+		do move geffen 120 75
+		pause @rand(3,5)
+		do talknpc 120 62 c r1
+		[
+		log Склад открыт, если у нас есть нужный для квеста лут в карманах,
+		log то скидываем весь лут из карманов на склад, чтобы потом со склада взять
+		log ровно столько, сколько нам нужно.
+		]
+		pause @rand(3,5)
+		if (@invamount(Shell) == 0) goto addShell
+			do storage add Shell
+		:addShell
+		if (@invamount(Fluff) == 0) goto addFluff
+			do storage add Fluff
+		:addFluff
+		if (@invamount(Trunk) == 0) goto addTrunk
+			do storage add Trunk
+		:addTrunk
+		if (@invamount(Zargon) == 0) goto addZargon
+			do storage add Zargon
+		:addZargon
+		if (@invamount(Green Herb) == 0) goto addHerb
+			do storage add Green Herb
+		:addHerb
+		if (@invamount(Rainbow Shell) == 0) goto addRainbowShell
+			do storage add Rainbow Shell
+		:addRainbowShell
+		if (@invamount(Milk) == 0) goto addMilk
+			do storage add Milk
+		:addMilk
+		log Берем нужный лут со склада.
+		pause 5
+		do storage get Shell 10
+		do storage get Fluff 3
+		do storage get Trunk 1
+		do storage get Zargon 3
+		do storage get Green Herb 3
+		do storage get Rainbow Shell 3
+		do storage get Milk 1
+		do storage get Butterfly Wing 1
+		do storage close
+	:end
+	pause 5
+	do conf QuestPart Gunslinger1
+}
+
+automacro Gunslinger1 {
+	location geffen
+	eval $::config{QuestPart} eq "Gunslinger1"
+	run-once 1
+	call Gunslinger1M
+}
+macro Gunslinger1M {
+	log Что могли - достали с кафры. Проверим наличие скорлупок.
+	if (@invamount(Shell) >= 10) goto okShell
+		log Не хватает Shell @eval(10 - @invamount(Shell)) шт. Идем охотится на пуп, чон-чонов, фабре.
+		pause 3
+		[
+		do conf attackAuto 2
+		do conf route_randomWalk 1
+		do conf lockMap gef_fild04
+		do mconf all 0 0 0
+		do mconf Pupa 1 0 0
+		do mconf Chonchon 1 0 0
+		do mconf Fabre 1 0 0
+		do mconf Poring 1 0 0
+		do mconf Creamy 0 0 0
+		do conf QuestPart GunslingerShell
+		]
+		stop
+	:okShell
+	log Скорлупок хватает, проверяем лут дальше по списку.
+	do conf QuestPart Gunslinger2
+}
+
+automacro GunslingerShell {
+	class Novice
+	inventory "Shell" >= 10
+	eval $::config{QuestPart} eq "GunslingerShell"
+	run-once 1
+	call GunslingerShellM
+}
+macro GunslingerShellM {
+	log Набили достаточно скорлупок!
+	[
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf lockMap none
+	do mconf all 0 0 0
+	do mconf Pupa 0 0 0
+	do mconf Chonchon 0 0 0
+	do mconf Fabre 0 0 0
+	do mconf Poring 0 0 0
+	do mconf Creamy 0 0 0
+	do conf QuestPart Gunslinger2
+	]
+}
+#Monster Pupa (0) is casting Metamorphosis on itself (time 2000ms)
+automacro GunsAntiCreamy {
+	console /Monster Pupa *. is casting Metamorphosis on itself/
+	call GunsAntiCreamyM
+}
+macro GunsAntiCreamyM {
+	do as
+	pause 4
+}
+
+################################
+################################
+automacro Gunslinger2 {
+	eval $::config{QuestPart} eq "Gunslinger2"
+	run-once 1
+	call Gunslinger2M
+}
+macro Gunslinger2M {
+	log Скорлупок у нас хватает. А как насчет Fluff?
+	if (@invamount(Fluff) >= 3) goto okFluff
+		log Не хватает Fluff @eval(3-@invamount(Fluff)) шт. Идем бить Fluff с фабре.
+		pause 3
+		[
+		do conf attackAuto 2
+		do conf route_randomWalk 1
+		do conf lockMap gef_fild04
+		do mconf all 0 0 0
+		do mconf Pupa 0 0 0
+		do mconf Chonchon 0 0 0
+		do mconf Fabre 1 0 0
+		do mconf Poring 1 0 0
+		do mconf Creamy 0 0 0
+		do conf QuestPart GunslingerFluff
+		]
+		stop
+	:okFluff
+	log Fluff хватает, проверяем лут дальше по списку.
+	do conf QuestPart Gunslinger3
+}
+automacro GunslingerFluff {
+	class Novice
+	inventory "Fluff" >= 3
+	eval $::config{QuestPart} eq "GunslingerFluff"
+	run-once 1
+	call GunslingerFluffM
+}
+macro GunslingerFluffM {
+	log Набили достаточно Fluff!
+	[
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf lockMap none
+	do mconf all 0 0 0
+	do mconf Pupa 0 0 0
+	do mconf Chonchon 0 0 0
+	do mconf Fabre 0 0 0
+	do mconf Poring 0 0 0
+	do mconf Creamy 0 0 0
+	do conf QuestPart Gunslinger3
+	]
+}
+###########################################
+###########################################
+
+automacro Gunslinger3 {
+	eval $::config{QuestPart} eq "Gunslinger3"
+	run-once 1
+	call Gunslinger3M
+}
+macro Gunslinger3M {
+	log В кармане лежит Green Herb @invamount(Green Herb) шт.
+	if (@invamount(Green Herb) >= 3) goto okHerb
+		log Не хватает Green Herb @eval(3-@invamount(Green Herb)) шт.
+		pause 3
+		[
+		do conf attackAuto 2
+		do conf route_randomWalk 0
+		do conf lockMap gef_fild00
+		do conf lockMap_x 55
+		do conf lockMap_y 214
+		do mconf all 0 0 0
+		do mconf Fabre 0 0 0
+		do mconf Poring 0 0 0
+		do mconf Pupa 0 0 0
+		do mconf Poporing 0 0 0
+		do mconf Green Plant 1 0 0
+		do conf QuestPart GunslingerHerb
+		]
+		stop
+	:okHerb
+	log Green Herb хватает, проверяем лут дальше по списку.
+	do conf QuestPart Gunslinger4
+}
+automacro GunslingerHerb {
+	class Novice
+	inventory "Green Herb" >= 3
+	eval $::config{QuestPart} eq "GunslingerHerb"
+	run-once 1
+	call GunslingerHerbM
+}
+macro GunslingerHerbM {
+	[
+	log Набили достаточно Green Herb!
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf lockMap none
+	do conf lockMap_x none
+	do conf lockMap_y none
+	do mconf all 0 0 0
+	do mconf Fabre 0 0 0
+	do mconf Poring 0 0 0
+	do mconf Pupa 0 0 0
+	do mconf Poporing 0 0 0
+	do mconf Green Plant 0 0 0
+	do conf QuestPart Gunslinger4
+	]
+}
+
+###########################################
+###########################################
+
+automacro Gunslinger4 {
+	eval $::config{QuestPart} eq "Gunslinger4"
+	run-once 1
+	call Gunslinger4M
+}
+macro Gunslinger4M {
+	$n = @eval((3 - @invamount(Zargon)))
+	$z = @eval(480*$n)
+	log В кармане лежит Zargon @invamount(Zargon) шт. Надо докупить $n шт., за $z зенег.
+	if (@invamount(Zargon) >= 3) goto okZargon
+		if ($.zeny >= $z) goto zeny
+			[
+			log не хватает зенег, продадим лут!
+			do conf sellAuto 1
+			do conf sellAuto_npc geffen_in 74 144
+			do conf sellAuto_standpoint geffen_in 70 138
+			do conf sellAuto_distance 5
+			do iconf Knife 0 0 1
+			do iconf Club 0 0 1
+			do iconf Bow 0 0 1
+			do iconf Tree Root 0 0 1
+			do iconf Resin 0 0 1
+			do iconf Feather of Birds 0 0 1
+			do iconf Talon 0 0 1
+			do iconf Fine-grained Trunk 0 0 1
+			do iconf Barren Trunk 0 0 1
+			do iconf Solid Trunk 0 0 1
+			do iconf Clover 0 0 1
+			do iconf Sticky Webfoot 0 0 1
+			do iconf Jellopy 0 0 1
+			do iconf Chrysalis 0 0 1
+			do iconf Iron Ore 0 0 1
+			do iconf Powder of Butterfly 0 0 1
+			do iconf Sticky Mucus 0 0 1
+			]
+			do autosell
+			pause 3
+			if ($.zeny >= $z) goto zeny
+				log Мы продали лут, но денег всеравно не хватило. Надо идти кач и зарабатывать зеньги.
+				do conf attackAuto 2
+				do conf route_randomWalk 1
+				do conf lockMap gef_fild04
+				do mconf all 0 0 0
+				do mconf Pupa 1 0 0
+				do mconf Chonchon 1 0 0
+				do mconf Fabre 1 0 0
+				do mconf Poring 1 0 0
+				do mconf Creamy 0 0 0
+			:zeny
+	do conf QuestPart GunslingerZargon
+	stop
+	:okZargon
+	log У нас хватает заргонов, ничего покупать не надо
+	do conf QuestPart Gunslinger5
+}
+automacro GunslingerZargon {
+	class Novice
+	zeny >= 1900
+	eval $::config{QuestPart} eq "GunslingerZargon"
+	run-once 1
+	call GunslingerZargonM
+}
+macro GunslingerZargonM {
+	[
+	log У нас достаточно зенег для покупки Zargon'ов!
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf lockMap none
+	do mconf all 0 0 0
+	do mconf Pupa 0 0 0
+	do mconf Chonchon 0 0 0
+	do mconf Fabre 0 0 0
+	do mconf Poring 0 0 0
+	do mconf Creamy 0 0 0
+
+	do conf sellAuto 0
+	do conf sellAuto_npc none
+	do conf sellAuto_standpoint none
+	]
+
+	do move geffen_in 70 138
+	pause 5
+	$n = @eval((3 - @invamount(Zargon)))
+	do talknpc 74 144 b b2,$n e
+
+	do conf QuestPart Gunslinger5
+}
+####################################################
+####################################################
+automacro Gunslinger5 {
+	eval $::config{QuestPart} eq "Gunslinger5"
+	run-once 1
+	call Gunslinger5M
+}
+macro Gunslinger5M {
+	log Еще раз проверяем лут, который мы добывали в Геффене.
+	if (@invamount(Shell) < 10) goto notok
+	if (@invamount(Fluff) < 3) goto notok
+	if (@invamount(Zargon) < 3) goto notok
+	if (@invamount(Green Herb) < 3) goto notok
+		log Можно уходить из Геффена в Пронту.
+		$kafra = @rand(0,1)
+		if ($kafra == 1) goto kafra1
+			do move geffen 202 122
+			pause @rand(2,5)
+			do talknpc 203 123 c r2 c r0
+			stop
+		:kafra1
+			do move geffen 113 61
+			pause @rand(2,5)
+			do talknpc 120 62 c r2 c r0
+			stop
+	:notok
+	log Плохо дело! Куда-то пропал лут, который мы добывали в Геффене.
+	log Надо посмотреть по карманам на предмет: Shell 10, Fluff 3, Green Herb 3, Zargon 3.
+}
+
+automacro Gunslinger5b {
+	location prontera
+	eval $::config{QuestPart} eq "Gunslinger5"
+	run-once 1
+	call Gunslinger5bM
+}
+macro Gunslinger5bM {
+	log Мы в Пронте. Сохраняемся.
+	pause 5
+	do move prontera 270 206
+	pause @rand(5,8)
+	do talknpc 282 200 c r0
+	pause 5
+	do conf QuestPart Gunslinger6
+}
+
+################################################
+################################################
+automacro Gunslinger6 {
+	location prontera
+	eval $::config{QuestPart} eq "Gunslinger6"
+	run-once 1
+	call Gunslinger6M
+}
+macro Gunslinger6M {
+	log Что там у нас с молоком?
+	if (@invamount(Milk) >= 1) goto notmilk
+		log Нам нужно купить молоко у Молочницы.
+		do move prontera @rand(74,78) @rand(131,138)
+		pause @rand(2,5)
+		do talknpc 73 134 b b0,1 e
+		pause @rand(2,5)
+	:notmilk
+	do conf QuestPart Gunslinger7
+}
+#####################################################
+#####################################################
+automacro Gunslinger7 {
+	location prontera
+	eval $::config{QuestPart} eq "Gunslinger7"
+	run-once 1
+	call Gunslinger7M
+}
+macro Gunslinger7M {
+	log Rainbow Shell.
+	#http://chaos.raggame.prontera.ru/item/1013
+	if (@invamount(Rainbow Shell) >= 3) goto ok
+		log Не хватает Rainbow Shell @eval(3 - @invamount(Rainbow Shell)) шт.
+		log Купите на рынке или выбейте сами. Вот такая вот фигня.
+		do conf QuestPart GunslingerRainbow
+		stop
+	:ok
+		# [
+		# log Rainbow shell
+		# do conf attackAuto 2
+		# do conf route_randomWalk 1
+		# do conf lockMap mjolnir_09
+		# do mconf all 0 0 0
+		# do mconf Pupa 0 0 0
+		# do mconf Stainer 1 0 0
+		# do mconf Lunatic 0 0 0
+		# do mconf Poring 0 0 0
+		# do mconf Chonchon 0 0 0
+		# do mconf Creamy 0 0 0
+		# do mconf Horn 0 0 0
+		# do mconf Wolf 0 0 0
+		# ]
+	do conf QuestPart Gunslinger8
+}
+automacro GunslngerRainbow {
+	class Novice
+	#http://chaos.raggame.prontera.ru/item/1013
+	inventory "Rainbow Shell" >= 3
+	eval $::config{QuestPart} eq "GunslingerRainbow"
+	run-once 1
+	call GunslingerRainbowM
+}
+macro GunslingerRainbowM {
+[
+	log У нас достаточно Rainbow Shell!
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf lockMap none
+	do mconf all 0 0 0
+	do mconf Pupa 0 0 0
+	do mconf Fabre 0 0 0
+	do mconf Lunatic 0 0 0
+	do mconf Poring 0 0 0
+	do mconf Chonchon 0 0 0
+	do mconf Creamy 0 0 0
+	do conf QuestPart Gunslinger8
+]
+}
+############################################
+############################################
+
+automacro Gunslinger8 {
+	location prontera
+	class Novice
+	eval $::config{QuestPart} eq "Gunslinger8"
+	run-once 1
+	call Gunslinger8M
+}
+macro Gunslinger8M {
+	log Нам нужны зеньги на полет на дирибабле и ухи бабочки.
+	if ($.zeny >= 1700) goto zeny
+		log Не хватает зенег на полет до Эйнброха и возврат ухом обратно.
+		log Идем качаться.
+		pause 5
+		[
+		do conf attackAuto 2
+		do conf route_randomWalk 1
+		do conf lockMap prt_fild06
+		do mconf all 0 0 0
+		do mconf Lunatic 1 0 0
+		do mconf Poring 1 0 0
+		do mconf Pupa 1 0 0
+		do mconf Thief Bug's Egg 1 0 0
+		do mconf Thief Bug 1 0 0
+		do conf itemsMaxWeight_sellOrStore 21
+		do conf sellAuto 1
+		do conf sellAuto_npc prontera 73 134
+		do conf sellAuto_standpoint prontera @rand(74,78) @rand(131,138)
+		do conf QuestPart GunslingerZeny
+		]
+		stop
+	:zeny
+	log Хватает зенег на полет до Эйнброха и возврата ухом обратно.
+	do conf lockMap izlude
+	do conf QuestPart Gunslinger9
+}
+automacro GunslingerZeny {
+	class Novice
+	eval $::config{QuestPart} eq "GunslingerZeny"
+	zeny >= 1700
+	run-once 1
+	call GunslingerZenyM
+}
+macro GunslingerZenyM {
+	log Нам хватает зенег для полета в Эйнброх и обратно. Идем в излюд.
+	do conf itemsMaxWeight_sellOrStore 48
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf lockMap izlude
+	do conf QuestPart Gunslinger9
+}
+###################################################
+###################################################
+automacro Gunslinger9 {
+	location izlude, izlude_in
+	class Novice
+	eval $::config{QuestPart} eq "Gunslinger9"
+	run-once 1
+	call Gunslinger9M
+}
+macro Gunslinger9M {
+	log Сохраняемся. Покупаем ухо бабочки и летим до Эйнброха.
+	do conf lockMap none
+	if (@config(saveMap) == izlude) goto savemap
+		do move izlude 129 87
+		pause @rand(2,3)
+		do talknpc 134 88 w2 c w2 r0 w2 c
+		do conf saveMap izlude
+	:savemap
+
+	if (@inventory(Butterfly Wing) >= 1) goto wing
+		do move izlude_in 116 49
+		pause @rand(3,4)
+		do talknpc 115 61 b b9,1 e
+	:wing
+	
+	if ($.zeny >= 1200) goto zeny
+		log Куда-то делись все зеньги! Квест остановлен!
+		stop
+	:zeny
+	log Все условия выполнены, летим в Эйнброх.
+	do move izlude
+	do conf QuestDone @config(QuestDone) Gunslinger10
+	do conf QuestVar1 einbroch
+	do conf QuestPart Diribabl
+}
+###########################################################
+###########################################################
+
+
+###########################################################
+###########################################################
+automacro Gunslinger10 {
+	class Novice
+	location einbroch
+	eval ($::config{QuestDone} =~ m/Gunslinger10/) and ($::config{QuestPart} eq "DiribablDone")
+	run-once 1
+	call Gunslinger10M
+}
+macro Gunslinger10M {
+	log Вот мы и долетели до Эйнброха. Идем к неписи, которая дает квест на профу Ганса.
+	do move einbroch 137 199
+	#Location Ninja - Gunslinger map (que_ng) : 138, 167
+
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/Gunslinger10//
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	do conf QuestDone $s
+	do conf QuestPart Gunslinger11
+}
+
+automacro Gunslinger11 {
+	class Novice
+	location que_ng
+	eval $::config{QuestPart} eq "Gunslinger11"
+	run-once 1
+	call Gunslinger11M
+}
+macro Gunslinger11M {
+	do move que_ng 138 167
+	pause @rand(3,5)
+	do talknpc 152 167 c r1 c r1
+	log уходим в излюд
+	do is Butterfly Wing
+	do conf QuestPart Gunslinger12
+}
+# 0    Мастер Миллер                (152, 167)    66092
+# Мастер Миллер: [Мастер Миллер]
+# Мастер Миллер: Меня зовут Миллер, я инструктор.
+# Мастер Миллер: Кроме того, я охраняю Леди Селену.
+# Мастер Миллер: Не отвлекайте меня по пустякам!
+# Мастер Миллер: Что вы хотите?
+# Мастер Миллер: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Нет, ничего...
+# 1  Я хочу стать Стрелком.
+# 2  Cancel Chat
+# -------------------------------
+# Мастер Миллер: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Мастер Миллер: [Мастер Миллер]
+# Мастер Миллер: Хм... Вы довольно молоды, но по
+# Мастер Миллер: вашим глазам вижу, что у вас
+# Мастер Миллер: большие амбиции. Чтобы стать
+# Мастер Миллер: Стрелком, вам понадобится пройти проверку и курс обучения. Значит, вы решили выбрать эту профессию?
+# Мастер Миллер: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Мне нужно время подумать.
+# 1  Конечно!
+# 2  Cancel Chat
+# -------------------------------
+# Мастер Миллер: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Мастер Миллер: [Мастер Миллер]
+# Мастер Миллер: Отлично! Что ж, тогда приступим.
+# Мастер Миллер: Отнесите это письмо в Пайон
+# Мастер Миллер: Мудрому старику. Он шаман, ему
+# Мастер Миллер: предстоит решить, готовы ли вы
+# Мастер Миллер: стать Стрелком.
+# Мастер Миллер: Done talking
+
+
+
+automacro Gunslinger12 {
+	class Novice
+	location izlude
+	eval $::config{QuestPart} eq "Gunslinger12"
+	run-once 1
+	call Gunslinger12M
+}
+macro Gunslinger12M {
+	log Мы в Излюде. Делаем тп в Пайон, чтобы поговорить со старичком.
+	do move izlude 127 86
+	pause 3
+	do talknpc 134 88 c r2 c r1
+	log Мы в Пайоне.
+	do conf QuestPart Gunslinger13
+}
+
+automacro Gunslinger13 {
+	class Novice
+	location payon
+	eval $::config{QuestPart} eq "Gunslinger13"
+	run-once 1
+	call Gunslinger13M
+}
+macro Gunslinger13M {
+	log Мы в Пайоне. Сохранимся. 
+	do move payon 188 97
+	pause @rand(2,5)
+	do talknpc 181 104 c r0	
+	do conf QuestPart Gunslinger14
+}
+
+##################################################
+##################################################
+##################################################
+automacro Gunslinger14 {
+	class Novice
+	location payon
+	eval $::config{QuestPart} eq "Gunslinger14"
+	run-once 1
+	call Gunslinger14M
+}
+macro Gunslinger14M {
+	log Есть ли у нас в кармане Trunk?
+	if (@invamount(Trunk) >= 1) goto okTrunk
+		log Не хватает Trunk. Идем бить пеньков.
+		pause 3
+		[
+		#do conf attackAuto 2
+		#do conf route_randomWalk 1
+		#do conf lockMap none
+		do mconf all 0 0 0
+		do mconf Willow 1 0 0
+		do mconf Chonchon 0 0 0
+		do mconf Fabre 1 0 0
+		do mconf Poring 1 0 0
+		do mconf Creamy 0 0 0
+		do conf QuestPart GunslingerTrunk
+		]
+		stop
+	:okTrunk
+	log Fluff хватает, проверяем лут дальше по списку.
+	do conf QuestPart Gunslinger15
+}
+automacro GunslingerTrunk {
+	class Novice
+	inventory "Trunk" >= 1
+	eval $::config{QuestPart} eq "GunslingerTrunk"
+	run-once 1
+	call GunslingerTrunkM
+}
+macro GunslingerTrunkM {
+	log Мы выбили полено, ака Trunk.
+	[
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf lockMap none
+	do mconf all 0 0 0
+	do mconf Pupa 0 0 0
+	do mconf Chonchon 0 0 0
+	do mconf Fabre 0 0 0
+	do mconf Poring 0 0 0
+	do mconf Willow 0 0 0
+	do mconf Creamy 0 0 0
+	do conf QuestPart Gunslinger15
+	]
+}
+###########################################
+###########################################
+automacro Gunslinger15 {
+	class Novice
+	location payon
+	eval $::config{QuestPart} eq "Gunslinger15"
+	run-once 1
+	call Gunslinger15M
+}
+macro Gunslinger15M {
+	if (@invamount(Shell) < 10) goto notok
+	if (@invamount(Fluff) < 3) goto notok
+	if (@invamount(Trunk) < 1) goto notok
+	if (@invamount(Zargon) < 3) goto notok
+	if (@invamount(Green Herb) < 3) goto notok
+	if (@invamount(Rainbow Shell) < 3) goto notok
+	if (@invamount(Milk) < 1) goto notok
+		log Необходимый лут есть в наличии. Говорим со старичком, он сообщает, что нужно принести.
+		do move payon 190 66
+		pause 3
+		do talknpc 184 65 c c c c c c
+		do conf QuestPart Gunslinger16
+		goto end
+	:notok
+		log Странно, но после всей этой беготни - не хватает лута.
+		log Проверте лут по карманам: Shell 10, Fluff 3, Trunk 1, Zargon 3, Green Herb 3, Rainbow Shell 3, Milk 1.
+	:end
+}
+# 1    Мудрый старик                (184, 65)     62528
+# ---------------------------------
+# talk 1
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: Ну, здравствуйте. Что за дело
+# Мудрый старик: привело вас ко мне?
+# Мудрый старик: Type 'talk cont' to continue talking
+# talk cont
+# Мудрый старик: [Игрунья]
+# Мудрый старик: Миллер просил передать вам вот это
+# Мудрый старик: письмо. Понимаете, я хочу стать
+# Мудрый старик: Стрелком...
+# Мудрый старик: Type 'talk cont' to continue talking
+# talk cont
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: Миллер, вы сказали? Хм... Черный
+# Мудрый старик: лис присылает ко мне только тех,
+# Мудрый старик: кто, по его мнению, сможет стать
+# Мудрый старик: хорошим Стрелком. Думаю, я знаю,
+# Мудрый старик: зачем он вас сюда прислал.
+# Мудрый старик: Type 'talk cont' to continue talking
+# talk cont
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: По вашим глазам вижу, что вы
+# Мудрый старик: добрый и ответственный человек.
+# Мудрый старик: Вам нужно лишь благословение
+# Мудрый старик: Земли, которое будет защищать
+# Мудрый старик: вас, когда вы станете Стрелком.
+# Мудрый старик: Type 'talk cont' to continue talking
+# talk cont
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: Я могу дать вам доказательство
+# Мудрый старик: того, что вы хотите стать воином
+# Мудрый старик: Земли. Вам нужно будет представить
+# Мудрый старик: его инструктору, который тренирует
+# Мудрый старик: стрелков. Для этого мне понадобится...
+# Мудрый старик: Type 'talk cont' to continue talking
+# talk cont
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: 1 Полено, 3 Пушинки, 3 Заргона,
+# Мудрый старик: 10 Скорлупок, 3 Зеленых травинки и
+# Мудрый старик: 3 Разноцветных панциря.
+# Мудрый старик: Type 'talk cont' to continue talking
+# talk cont
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: Потом вам нужно будет отнести
+# Мудрый старик: доказательство Черному лису, и
+# Мудрый старик: он поможет вам стать Стрелком.
+# Мудрый старик: Done talking
+
+
+###########################################
+###########################################
+automacro Gunslinger16 {
+	class Novice
+	location payon
+	eval $::config{QuestPart} eq "Gunslinger16"
+	run-once 1
+	call Gunslinger16M
+}
+macro Gunslinger16M {
+	if (@invamount(Shell) < 10) goto notok
+	if (@invamount(Fluff) < 3) goto notok
+	if (@invamount(Trunk) < 1) goto notok
+	if (@invamount(Zargon) < 3) goto notok
+	if (@invamount(Green Herb) < 3) goto notok
+	if (@invamount(Rainbow Shell) < 3) goto notok
+	if (@invamount(Milk) < 1) goto notok
+		log Необходимый лут есть в наличии. Отдаем его старичку.
+		do move payon 190 66
+		pause 3
+		do talk @npc(184 65)
+		do conf QuestPart Gunslinger17
+		goto end
+	:notok
+		log Странно, но после всей этой беготни - не хватает лута.
+		log Проверте лут по карманам: Shell 10, Fluff 3, Trunk 1, Zargon 3, Green Herb 3, Rainbow Shell 3, Milk 1.
+	:end
+}
+# 1    Мудрый старик                (184, 65)     62528
+# Inventory Item Removed: Zargon (9) x 3
+# Inventory Item Removed: Fluff (19) x 3
+# Inventory Item Removed: Trunk (5) x 1
+# Inventory Item Removed: Shell (3) x 10
+# Inventory Item Removed: Green Herb (6) x 3
+# Inventory Item Removed: Rainbow Shell (7) x 3
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: А, вы все принесли! Подойдите
+# Мудрый старик: ко мне позже, мне понадобится
+# Мудрый старик: некоторое время.
+# Мудрый старик: Done talking
+
+
+##########################################
+##########################################
+automacro Gunslinger17 {
+	class Novice
+	location payon
+	eval $::config{QuestPart} eq "Gunslinger17"
+	run-once 1
+	call Gunslinger17M
+}
+macro Gunslinger17M {
+	log Говорим со старичком. Он просит принести ему молока
+	do move payon 190 66
+	pause 3
+	do talknpc 184 65 c c c c
+	do conf QuestPart Gunslinger18
+}
+# 0    Мудрый старик                (184, 65)     62528
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: А, вы как раз вовремя. Я давно
+# Мудрый старик: ничего не делал и немного потерял
+# Мудрый старик: сноровку. Зато это навеяло
+# Мудрый старик: воспоминания о молодости...
+# Мудрый старик: Type 'talk cont' to continue talking
+# talk cont
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: Я работаю здесь уже не один
+# Мудрый старик: десяток лет, подбираю подходящих
+# Мудрый старик: кандидатов в Стрелки. Но когда-то
+# Мудрый старик: я, как и вы, был молодым
+# Мудрый старик: путешественником...
+# Мудрый старик: Type 'talk cont' to continue talking
+# talk cont
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: Кажется, только вчера я сам был
+# Мудрый старик: молодым Стрелком, воином Земли.
+# Мудрый старик: Тогда-то я и встретил отца Селены.
+# Мудрый старик: Как быстро летит время...
+# Мудрый старик: Type 'talk cont' to continue talking
+# talk cont
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: Я очень благодарен Селене и
+# Мудрый старик: Черному лису за то, что они
+# Мудрый старик: помогают мне находить новых
+# Мудрый старик: Стрелков. Я уже очень стар, и сам
+# Мудрый старик: не справляюсь. Эх... Такова жизнь...
+# Мудрый старик: Type 'talk cont' to continue talking
+# talk cont
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: Пока вы не ушли, могу я попросить
+# Мудрый старик: вас об услуге? Я так хочу пить, не
+# Мудрый старик: могли бы вы принести мне стакан
+# Мудрый старик: холодного Молока?
+# Мудрый старик: Done talking
+
+
+##########################################
+##########################################
+automacro Gunslinger18 {
+	class Novice
+	location payon
+	eval $::config{QuestPart} eq "Gunslinger18"
+	run-once 1
+	call Gunslinger18M
+}
+macro Gunslinger18M {
+	if (@invamount(Milk) < 1) goto notok
+		log Молоко есть у нас в кармане. Отдаём молоко старичку.
+		do move payon 190 66
+		pause 3
+		do talknpc 184 65 c c
+		do conf QuestPart Gunslinger19
+		goto end
+	:notok
+		log Странно, молоко только что было в кармане. Куда делось?
+	:end
+}
+# talk 0
+# Inventory Item Removed: Milk (8) x 1
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: О, вы принесли молоко!
+# Мудрый старик: Спасибо вам, вы так добры!
+# Мудрый старик: Ах, как вкусно!
+# Мудрый старик: Type 'talk cont' to continue talking
+# talk cont
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: Я восхищаюсь вашим терпением и
+# Мудрый старик: добротой! Этими качествами должен
+# Мудрый старик: обладать каждый Стрелок!
+# Мудрый старик: Type 'talk cont' to continue talking
+# talk cont
+# Мудрый старик: [Мудрый старик]
+# Мудрый старик: Отнесите Миллеру, Черному лису,
+# Мудрый старик: доказательство того, что я одобряю
+# Мудрый старик: ваше желание стать Стрелком.
+# Мудрый старик: Надеюсь, вы станете благородным
+# Мудрый старик: воином Земли и будете использовать
+# Мудрый старик: свое оружие во имя справедливости.
+# Мудрый старик: Done talking
+
+
+########################################
+########################################
+#Идем в излюд на дирибабль до Эйнброха.
+automacro Gunslinger19a {
+	class Novice
+	location payon
+	eval $::config{QuestPart} eq "Gunslinger19"
+	run-once 1
+	call Gunslinger19aM
+}
+macro Gunslinger19aM {
+	log Пайон--кафра--Пронтера--пешком--Излюд--Дирижабль--Юно--Дирижабль--Эйнброх.
+	if ($.zeny < 1200) goto nozeny
+		do move payon 188 97
+		log Так... где тут Кафра?
+		pause @rand(2,5)
+		log А, да вот же она!
+		pause @rand(2,3)
+		do talknpc 181 104 c r2 c r0
+		stop
+	:nozeny
+		log Не хватает зенег на дирижабль до Эйнброха. Надо бить лут.
+		pause 7
+		[
+		do conf attackAuto 2
+		do conf route_randomWalk 1
+		do conf lockMap pay_fild08
+		do mconf all 0 0 0
+		do mconf Poring 1 0 0
+		do mconf Pupa 1 0 0
+		do mconf Willow 1 0 0
+		#Продаем лут
+		do iconf Iron Ore 0 0 1
+		do iconf Chrysalis 0 0 1
+		do iconf Tree Root 0 0 1
+		do iconf Fine-grained Trunk 0 0 1
+		do iconf Jellopy 0 0 1
+		do iconf Apple 0 0 1
+		do iconf Solid Trunk 0 0 1
+		do iconf Barren Trunk 0 0 1
+		do iconf Resin 0 0 1
+		do iconf Shell 0 0 1
+		do iconf Red Herb 0 0 1
+		do iconf Potato 0 0 1
+		do iconf Sticky Mucus 0 0 1
+		do iconf Mushroom Spore 0 0 1
+		
+		do conf itemsMaxWeight_sellOrStore 21
+
+		do conf autoMoveOnDeath 1
+		do conf autoMoveOnDeath_x @rand(181,196)
+		do conf autoMoveOnDeath_y @rand(115,127)
+		do conf autoMoveOnDeath_map payon
+		
+		#do conf storageAuto 1
+		#do conf storageAuto_npc payon 181 104
+		do conf sellAuto 1
+		do conf sellAuto_npc payon 159 96
+		do conf sellAuto_standpoint none
+		do conf sellAuto_distance 5
+		do conf QuestPart GunslingerZenyPayon
+		]
+}
+
+automacro GunslingerZenyPayon {
+	class Novice
+	eval $::config{QuestPart} eq "GunslingerZenyPayon"
+	zeny >= 1700
+	run-once 1
+	delay 10
+	call GunslingerZenyPayonM
+}
+macro GunslingerZenyPayonM {
+	log Нам хватает зенег для полета в Эйнброх и обратно.
+	[
+	do conf itemsMaxWeight_sellOrStore 48
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf lockMap none
+	do conf autoMoveOnDeath 0
+	do conf autoMoveOnDeath_x none
+	do conf autoMoveOnDeath_y none
+	do conf autoMoveOnDeath_map none
+	
+	do conf storageAuto 0
+	do conf storageAuto_npc none
+	do conf sellAuto 0
+	do conf sellAuto_npc none
+	do conf sellAuto_standpoint none
+	do conf sellAuto_distance 5
+	]
+	
+	do move payon 188 97
+	log Так... где тут Кафра?
+	pause @rand(2,5)
+	log А, да вот же она!
+	pause @rand(2,3)
+	do talknpc 181 104 c r2 c r0
+
+	do conf QuestPart Gunslinger19
+}
+
+
+
+automacro Gunslinger19aa {
+	class Novice
+	location prontera
+	eval $::config{QuestPart} eq "Gunslinger19"
+	run-once 1
+	call Gunslinger19aaM
+}
+macro Gunslinger19aaM {
+	log Пронтера--пешком--Излюд--Дирижабль--Юно--Дирижабль--Эйнброх.
+	log Сохраняемся в пронтере
+	do move prontera 150 30 
+	pause @rand(2,3)
+	do talknpc 151 29 w2 c w2 r0 w2 c
+	do conf saveMap prontera
+	pause @rand(2,3)
+	do conf lockMap izlude
+}
+
+
+automacro Gunslinger19b {
+	class Novice
+	location izlude
+	eval $::config{QuestPart} eq "Gunslinger19"
+	run-once 1
+	call Gunslinger19bM
+}
+macro Gunslinger19bM {
+	if (@config(saveMap) == izlude) goto izlude
+		log Сохранимся в Излюде.
+		do move izlude 129 87
+		pause @rand(2,3)
+		do talknpc 134 88 w2 c w2 r0 w2 c
+		do conf saveMap izlude
+	:izlude
+	if ($.zeny < 1200) goto nozeny
+		do conf lockMap none
+		log Летим до Эйнброха.
+		pause @rand(2,3)
+		do conf QuestDone @config(QuestDone) Gunslinger20
+		do conf QuestVar1 einbroch
+		do conf QuestPart Diribabl
+	:nozeny
+}
+###########################################################
+###########################################################
+
+
+###########################################################
+###########################################################
+automacro Gunslinger20 {
+	class Novice
+	location einbroch
+	eval ($::config{QuestDone} =~ m/Gunslinger20/) and ($::config{QuestPart} eq "DiribablDone")
+	run-once 1
+	call Gunslinger20M
+}
+macro Gunslinger20M {
+	log Вот мы и долетели до Эйнброха. Идем к Мюллеру.
+	do move einbroch 137 199
+	#Location Ninja - Gunslinger map (que_ng) : 138, 167
+
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/Gunslinger20//
+	if ($s != "") goto skip
+		$s = none
+	:skip
+	log $s
+	do conf QuestDone $s
+	do conf QuestPart Gunslinger21
+}
+
+automacro Gunslinger21 {
+	class Novice
+	location que_ng
+	eval $::config{QuestPart} eq "Gunslinger21"
+	run-once 1
+	call Gunslinger21M
+}
+macro Gunslinger21M {
+	log Говорим с Миллером во второй раз. Говорим, что старичок из пайона нас рекомендует. Становимся Гансом.
+	do move que_ng 138 167
+	pause @rand(3,5)
+	do talknpc 152 167 c c c c c
+	pause 3
+	if ($.joblvl != 1) goto error
+		[
+		log Не нужную нубо-одежду продать нпц.
+		do iconf Novice False Eggshell 0 0 1
+		do iconf Novice Guard 0 0 1
+		do iconf Novice Main-Gauche 0 0 1
+		do iconf Novice Slippers 0 0 1
+		do iconf Somber Novice Hood 0 0 1
+		do iconf Tattered Novice Ninja Suit 0 0 1
+		log Мы взяли профу Ганса.
+		do conf QuestDone @config(QuestDone) Gunslinger
+		do conf QuestPart none
+		do conf autoSwitch_default_leftHand none
+		do conf autoSwitch_default_rightHand none
+		if (@inventory(Six Shooter [1]) == -1) goto NoGun
+			do conf autoSwitch_default_rightHand Six Shooter [1]
+			do conf autoSwitch_default_leftHand Six Shooter [1]
+			do eq Six Shooter [1]
+		:NoGun
+		if (@inventory(Branch [3]) == -1) goto NoGun2
+			do conf autoSwitch_default_rightHand Branch [3]
+			do conf autoSwitch_default_leftHand Branch [3]
+			do eq Branch [3]
+		:NoGun2
+		
+		
+		]
+	goto end
+	:error 
+		log Персонаж не стал Гансом.
+	:end 
+}
+# 0    Мастер Миллер                (152, 167)    66092
+# talk 0
+# Мастер Миллер: [Мастер Миллер]
+# Мастер Миллер: А, вы принесли доказательство
+# Мастер Миллер: от Мудрого старика! Давно нам
+# Мастер Миллер: не встречались подходящие люди.
+# Мастер Миллер: Я очень вами горжусь!
+# Мастер Миллер: Type 'talk cont' to continue talking
+# talk cont
+# Мастер Миллер: [Мастер Миллер]
+# Мастер Миллер: Если Мудрый старик одобрил вашу
+# Мастер Миллер: кандидатуру, не вижу причины вам
+# Мастер Миллер: отказывать. Хорошо, я сделаю вас
+# Мастер Миллер: Стрелком. Только сначала хочу
+# Мастер Миллер: рассказать вам подробнее об
+# Мастер Миллер: этой профессии.
+# Мастер Миллер: Type 'talk cont' to continue talking
+# talk cont
+# Мастер Миллер: [Мастер Миллер]
+# Мастер Миллер: Если вы становитесь Стрелком, вы
+# Мастер Миллер: должны всегда носить при себе
+# Мастер Миллер: свое оружие. Гильдия Стрелков
+# Мастер Миллер: ведет контроль всего оружия и
+# Мастер Миллер: боеприпасов, так что вы можете
+# Мастер Миллер: получить их только от членов Гильдии.
+# Мастер Миллер: Type 'talk cont' to continue talking
+# talk cont
+# Мастер Миллер: [Мастер Миллер]
+# Мастер Миллер: Это делается по приказу главы
+# Мастер Миллер: гильдии, Леди Селены. Возможно,
+# Мастер Миллер: когда-нибудь вы с ней встретитесь.
+# Мастер Миллер: Type 'talk cont' to continue talking
+# talk cont
+# Мастер Миллер: [Мастер Миллер]
+# Мастер Миллер: Не беспокойтесь, сейчас членов
+# Мастер Миллер: Гильдии Стрелков можно встретить
+# Мастер Миллер: почти везде. Нам приходится
+# Мастер Миллер: регулировать продажу оружия и
+# Мастер Миллер: боеприпасов, чтобы они не попали в руки злых или безответственных людей.
+# Мастер Миллер: Type 'talk cont' to continue talking
+# talk cont
+# Мастер Миллер: [Мастер Миллер]
+# Мастер Миллер: В любом случае, всегда приятно
+# Мастер Миллер: поговорить с другим Стрелком, так
+# Мастер Миллер: что всегда буду рад вас видеть.
+# Мастер Миллер: Да хранит вас сила Земли!
+# You unequip Novice False Eggshell (14) - Helmet
+# You unequip Tattered Novice Ninja Suit (11) - Armour
+# You unequip Novice Guard (16) - Shield
+# You unequip Novice Main-Gauche (15) - One-Handed Weapon
+# You unequip Somber Novice Hood (13) - Cape
+# You unequip Novice Slippers (12) - Foot Wear
+# You are now job level 1
+# Exp gained: 4/0 (0.68%/0.00%)
+# Item added to inventory: Six Shooter [1] (17) x 1 - Gun
+# Мастер Миллер: Done talking

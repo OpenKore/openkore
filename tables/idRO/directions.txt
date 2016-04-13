@@ -1,0 +1,9 @@
+0 Utara
+1 Barat Laut
+2 Barat
+3 Barat Daya
+4 Selatan
+5 Tenggara
+6 Timur
+7 Timur Laut
+8 Utara

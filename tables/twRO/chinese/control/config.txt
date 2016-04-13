@@ -1,0 +1,2326 @@
+﻿# 繁體中文化OpenKore config.txt 17092015
+# 來源: Try71023, howie50417 drkn
+# 修改: Shun
+#
+################注意事項####################
+#1.符號 # 字，OP將不讀取 ， 用來註解說明用 #
+#2.區塊括號 { } 必須成對應                 #
+#  多一少一不可 會造成無法預料的錯誤       #
+############################################
+#═════════════════════════════════════════════════════
+#║                                                   ║
+#║ 伺服器/帳號  此區都可略過外掛執行時會自動提示輸入 ║
+#║                                                   ║
+#═════════════════════════════════════════════════════
+#════════════════════
+#║ 伺服器/帳號/人物 ║
+#════════════════════
+master
+# 主分流名稱
+server
+# 遊戲伺服器編號
+username
+# 遊戲帳號
+password
+# 遊戲密碼
+loginPinCode
+# 登入鍵盤鎖
+char
+# 角色編號 ０ =第一頁左邊、 １ =第一頁中間、 ２ =第一頁右邊
+# 角色編號 ３ =第二頁左邊、 ４ =第二頁中間、 ５ =第二頁右邊
+# 命令"charselect 1" 回到角色選擇畫面會清除角色編號
+bindIp
+# 如果您的電腦有多個 IP 地址，你可以選擇要使用哪一個 要是您不確定，這個選項您應該保留空白。
+forceMapIP
+# 指定地圖伺服器IP [ twRO 請留空 ]
+
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+# 倉庫加密金鑰編碼
+
+#════════════════
+#║ 網路連線細節 ║
+#════════════════
+pauseCharServer 0
+# 連接角色伺服器前等候時間 [ 秒 ]
+pauseMapServer 0
+# 連接地圖伺服器前等候時間 [ 秒 ]
+ignoreInvalidLogin 0
+# 若設為 1，則會忽視 "帳號不存在" 的訊息
+secureLogin_requestCode
+# 安全登入需求碼［16進位］
+# 如果遊戲伺服器要求安全連線，此處輸入安全需求碼
+
+
+
+#═════════════════════════════════════
+#║                                   ║
+#║ X-Kore  內掛模式 與 遠端控制 設定 ║
+#║                                   ║
+#═════════════════════════════════════
+#══════════════════
+#║ XKore 模式選擇 ║
+#══════════════════
+XKore 0
+# ０：不使用
+# １：XKore => RO主程式 => 遊戲伺服器
+# ２：RO主程式 => XKore => 遊戲伺服器
+
+#═════════════════
+#║ XKore １ 選項 ║
+#═════════════════
+XKore_silent 0
+# XKore１模式開啟後，是否要隱藏 Kore 的訊息於 RO 對話欄中？  [０ = 不隱藏] [１ = 隱藏]
+XKore_bypassBotDetection 0
+# XKore１是否開啟反官方外掛偵測功能？ [０ = 不使用] [１ = 使用]
+XKore_exeName ragfree.exe
+# XKore１模式所對應的 RO 主程式檔名 [免費 = ragfree.exe] [全區 = RagAll.exe] [幸福快樂 = Ragtwt.exe] [老朋友 = RagOld.exe]
+XKore_port 2350
+# XKore１模式所對應的 RO 主程式連接埠 [一般不需要修改]
+XKore_dll NetRedirect.dll
+# XKore１模式所使用的動態連接庫檔案名稱 [一般不需要修改]
+XKore_autoAttachIfOneExe 1
+# XKore１模式是否只對應一個 RO 主程式 [一般不需要修改] [０ = 同時有多個 RO 主程式] [１ = 只有一個 RO 主程式]
+
+#═════════════════
+#║ XKore ２ 選項 ║
+#═════════════════
+XKore_listenIp 127.0.0.1
+# XKore２ 綁定 IP，若你的電腦有多個 IP 地址，請選擇一個 ［進階設定，可省略］
+XKore_listenPort 6901
+# XKore２綁定端口 用於多開
+XKore_publicIp 127.0.0.1
+# XKore2 對外開放的 IP ［進階功能，可省略，預設值 127.0.0.1 只有本機能夠連］
+# 遠端登入用，讓 kore 和 RO客戶端，可以是不同台電腦
+
+#════════════
+#║ 遠端控制 ║
+#════════════
+secureAdminPassword 1
+# 是否隨機產生授權密碼
+# 若啟用 XKore２ 內掛模式，此項目因設定為 0 關閉。 ［0 = 關閉此功能］［1 = 開啟此功能］
+adminPassword
+# 授權密碼，當對 Kore 密頻輸入此密碼後，即可取得 kore 控制權
+# 若啟用 XKore２ 內掛模式，此項目為登入遊戲的密碼。
+
+callSign
+# 遠端控制用前導語
+# 請參考官方手冊 Chat Commands 的部份
+commandPrefix ;
+# 內掛模式時，於客戶端對話欄直接下 kore 指令的前導語
+# 填入一個字串，以此字串為開頭的對話，會被視為對 kore 下指令
+# 預設值：;  ［不應修改］
+callSignGM
+# 廣播頻道遠端控制開關［建議設定為 0 關閉］
+
+
+
+#═════════════════
+#║               ║
+#║ 地圖相關 設定 ║
+#║               ║
+#═════════════════
+#════════════
+#║ 鎖定地圖 ║
+#════════════
+lockMap
+# 地圖名稱以 /tables/maps.txt 內的地圖英文名稱為準，後面不加 .rsw
+# 鎖定練功地圖
+# 商人要自動開設露天商店這格必須設為要擺攤的地圖
+# 不然將無法自動開設露天商店 例如: prontera
+
+#════════════════
+#║ 鎖定地圖坐標 ║
+#════════════════
+# 需在整張地圖內隨機移動則可省略
+lockMap_x
+# 鎖定的 X 座標
+lockMap_y
+# 鎖定的 Y 座標
+lockMap_randX
+# 鎖定的 X 座標的左右幾格範圍內
+lockMap_randY
+# 鎖定的 Y 座標的上下幾格範圍內
+
+#══════════════
+#║ 存儲點地圖 ║
+#══════════════
+saveMap
+# 地圖名稱以 /tables/maps.txt 內的地圖英文名稱為準，後面不加 .rsw
+# 角色重生點的地圖名稱，如想使用瞬移回城 必須設定
+# 並不是自動找卡普拉存點
+
+saveMap_warpToBuyOrSell 0
+# 自動買物/賣物或存倉啟動時是否用瞬移的方式回城。
+# ０ = 用走路的
+# １ = 用瞬移 [ saveMap 地圖名稱必須設定]
+
+saveMap_warpChatCommand
+# 是否使用聊天欄輸入指令來瞬移回城 填入指令，留空白不開啟此功能
+
+memo1
+memo2
+memo3
+memo4
+# 用於儲存傳送之陣的地圖
+
+#═══════════════════════
+#║ 其它細節［人孔,傳陣］ ║
+#═══════════════════════
+allowedMaps
+# 地圖名稱以 /tables/maps.txt 內的地圖英文名稱為準，後面不加 .rsw
+# 設定地圖名稱使外掛只被允許在這些地圖中活動
+#［含練功地點、重生點、路過的地圖］，若無設定則此功能不開啟
+allowedMaps_reaction 0
+# 若檢測到角色位於非上面設定的地圖時，做何處理？ ［當被人孔或被傳送之陣傳到不明地區時］
+# 0 = 瞬移回城
+# 1 = 結束程式
+
+
+
+#══════════════════════════════
+#║                            ║
+#║ 攻擊［打怪］ 自動坐下 等設定 ║ 
+#║                            ║
+#══════════════════════════════
+#════════════
+#║ 自動坐下 ║
+#════════════
+# 「高於」不能少於「低於」［會一坐不起］，都設 0 代表關閉功能
+sitAuto_hp_lower 50
+# HP 低於此 % 數，坐下休息
+sitAuto_hp_upper 99
+# HP 高於此 % 數，站起繼續
+
+sitAuto_sp_lower 0
+# SP 低於此 % 數，坐下休息
+sitAuto_sp_upper 0
+# SP 高於此 % 數，站起繼續
+
+sitAuto_over_50 0
+# 負重量超過 50% 時是否要強制坐著
+
+sitAuto_idle 0
+# 發呆過久時是否要坐下
+
+sitAuto_look
+# 自動坐下時，身體和頭，面對哪個方向
+#       8/0
+#    1 ↖ ↑ ↗ 7
+#    2 ←   → 6
+#    3 ↙ ↓ ↘ 5
+#        4
+sitAuto_look_from_wall
+# 坐下時當對面是牆壁時身體和頭，面對哪個方向 ［填入上方號碼］
+
+
+#══════════════
+#║ 攻擊［打怪］ ║
+#══════════════
+attackAuto 2
+# 攻擊模式 ［0 = 不攻擊魔物］［1 = 受魔物攻擊時才攻擊 ］［2 = 自動攻擊魔物，即使是非主動怪］
+
+attackUseWeapon 1
+# 是否使用武器攻擊　［0= 不普攻］［1= 普攻］
+# 如果只使用技能攻擊 須關閉
+
+attackAuto_party 0
+# 是否攻擊隊友正在攻擊的魔物［0= 關］［1= 開］
+
+attackAuto_followTarget 0
+# 是否攻擊主人正在攻擊的魔物 ［0 = 關］［1 = 開］
+
+attackAuto_inLockOnly 1
+# 是否只在鎖定的地圖才進行攻擊
+#  0 = 任何地圖都會進行攻擊
+#  1 = 在鎖定的地圖以外的地圖若受魔物攻擊才會反擊回去
+#  2 = 不允許進行任何鎖定地圖以外的攻擊行動 ［直接衝到鎖定地圖，不論中途是否被魔物追擊］
+
+attackAuto_notInTown 1
+# 是否不會在城鎮地圖內進行攻擊
+#  0 = 在城鎮地圖都會進行攻擊
+#  1 = 不會在城鎮地圖都會進行攻擊
+
+
+#════════════════
+#║ 鎖定魔物路徑 ║
+#════════════════
+attackMaxRouteDistance 30
+# 計算攻擊路徑的距離 依地圖複雜性設定 人物發呆時
+# 或當遇到地圖伺服器逾時 嘗試修改
+# 金字塔這種地圖建議調低一點來防止外掛發呆等問題
+# 狹窄、複雜地圖可設定15~20；一般地圖30；開闊的40；預設:100
+attackMaxRouteTime 2
+# 計算攻擊路徑的時間［秒］，超過自動放棄改鎖定別隻
+attackMinPlayerDistance 1
+# 以魔物為中心多少格範圍內有其他玩家時，放棄攻擊 ［防搶怪］請考慮到弓箭手系或遠距離職業
+attackMinPortalDistance 4
+# 以魔物為中心多少格範圍內有傳點時，放棄鎖定 ［防不小心進入傳點陷入迴圈］
+
+attackChangeTarget 1
+# 是否使用智慧型變換攻擊目標
+# 0=不使用、1=使用、2=使用，且出現 LOS 時，尋找更佳的目標來攻擊。
+# 說明：
+# 鎖定某非主動怪物後，還沒開打，此時附近有高危險的主動怪靠近，
+# 這種情況下，可以自動變換攻擊目標，
+# 捨棄原先鎖定的非主動怪，改成先打靠近中的高危險主動怪。
+# LOS 是指 attackCheckLOS 設為 1 時，正在自動閃避障礙物的情況，
+# 若此時附近剛好出現「沒被障礙物阻擋」的怪物，
+# 就不浪費時間 LOS 了，直接先打沒被阻擋的怪物。
+
+#════════════
+#║ 攻擊距離 ║
+#════════════
+# 肉搏系 1.5 ~ 2.5
+# 法術系 1.5 ~ 9
+# 弓手系 1.5 ~ 15 
+
+attackDistance 1.5
+# 最小可攻擊距離
+attackMaxDistance 2.5
+# 最大可攻擊距離 
+# 此設定相關於角色職業，請參考上面註解列的最佳值，填入合適的數值。
+# 注意，錯誤的設定會導致練功效率下降。
+attackDistanceAuto 0
+# 是否依照人物裝備的武器，自動判斷最佳攻擊距離並寫入 config.txt？
+# 若不知道攻擊距離該設多少，可讓程式去自動判斷。
+
+#══════════════════
+#║ 弓手/法師/遠程 ║
+#══════════════════
+
+runFromTarget 0
+# 是否每次攻擊時前，自動與目標魔物保持距離？
+# 不適合用在主動怪，或無法一擊必殺的怪，
+# 因為第一擊若沒打死怪物，怪物就會追過來，而為了保持距離會一直逃命不攻擊。
+# 適合用在有魔法反制，且可秒殺的非主動怪，
+# 或走非常慢的怪，例如：米糕、史汀，可以一邊跑給牠追，一邊打
+
+runFromTarget_dist 6
+# 若上面項目選擇開啟，要與目標魔物保持的距離 ［格］
+# 不能超過「最大可攻擊距離」，超過會無法攻擊。
+
+attackCanSnipe 0
+# 是否允許跨牆或高低差打怪？
+# 該練功地圖必須為跨牆或高低差也能打怪，才有作用。
+
+autoMakeArrows 0
+# 是否自動製造箭矢 ［要有此技能］
+# 此處僅是開啟功能［製作箭矢設定檔在 /control/arrowcraft.txt］
+
+attackCheckLOS 0
+# 是否判斷魔物與角色中間有無障礙物阻礙攻擊，自動閃避障礙物 
+# 這可以避免因為障礙物阻隔打不到怪物，而原地發呆，
+# 通常打不到魔物時，會在發呆3秒後放棄，改打別隻，
+# 有 LOS 的情況，會自動往旁邊走一格，看能不能避開障礙物攻擊，
+# 不過也有連續走好幾格仍被阻擋的情況，這時可能早已超過 3秒。
+# 此功能有利有幣，請依照練功地圖的地形情況，自行決定是否使用。
+# 使用此功能時 attackDistance 最小攻擊距離必須大於 2
+
+#══════════
+#║ 不常用 ║
+#══════════
+attackLooters 0
+# 是否優先攻擊撿了戰利品的魔物［例如波利吃了物品，優先鎖定它］
+attackNoGiveup 0
+# 永不放棄模式，若設為 1 則就算無法傷害到目標也會繼續鎖定攻擊 ［吃王或肉盾用］
+aggressiveAntiKS 0
+# 若被別人搶怪，是否自動放棄攻擊，改打別隻
+attackAuto_onlyWhenSafe 0
+# 四周沒有人時才攻擊［0=關、1=開］
+
+
+
+#══════════════════════════════
+#║                            ║
+#║ 物品 ［撿取、自動使用］ 設定 ║
+#║                            ║
+#══════════════════════════════
+#════════════
+#║ 撿取物品 ║
+#════════════
+itemsTakeAuto 1
+#  0 = 不撿取打死魔物後撿取掉落物功能
+#  1 = 打死所有魔物後再撿東西
+#  2 = 打完一隻馬上撿即使正處於被魔物圍毆的狀況 
+
+itemsTakeAuto_party 0
+# 是否也撿取隊友打死魔物後掉落的物品
+
+itemsGatherAuto 0
+# 是否撿取地上的無主物品
+#  0 = 不撿取打死魔物後撿取掉落物功能
+#  1 = 打死所有魔物後再撿東西
+#  2 = 打完一隻馬上撿即使正處於被魔物圍毆的狀況
+
+itemsTakeGreed 0
+# 是否使用貪婪技能撿取物品
+
+itemsMaxWeight 89
+# 負重量到達此%數，便不再撿取物品 ［超過 50% 無法回血、回魔］ ［超過 90% 無法攻擊］
+
+itemsMaxWeight_sellOrStore 48
+# 負重量到達此%數，便會啟動自動賣物或存倉功能 ［超過 50% 無法回血、回魔］ ［超過 90% 無法攻擊］ 
+
+itemsMaxNum_sellOrStore 99
+# 物品種類數到達此數，便會啟動自動賣物或存倉功能
+
+cartMaxWeight 7900
+# 手推車到達此重量便不再將物品欄內物品加入手推車［相關檔案 items_control.txt］
+
+
+itemsTakeAuto_new 0
+# 正常情況下建議關閉 開啟可能會造成 無法撿取 無主物品
+# 這會啟用另一組專為弓手系撿取物品的實驗性程式碼，而非原本的撿取程式碼。
+# 如果撿取物品常常失敗的話
+
+#════════════════
+#║ 自動使用物品 ║
+#════════════════
+# 一個區塊只能使用一件物品，區塊是由兩個花括號之間組成。
+# 區塊括號必須成對，有投必須有尾。
+# 可設定多組，請自行複製區塊貼上。
+# 無設定［物品名稱沒有填上］，代表關閉該區塊功能。
+# 請勿在無設定的區塊下建立其他同類設定區傀。
+#
+# 「輔助狀態」名稱，如：覺醒藥水狀態，請查 /tables/skillsstatus.txt。
+# 「不良狀態」名稱，如：中毒、黑暗，請查 /tables/skillsailments.txt 。
+#
+# 設定說明：
+# 1.hp 與 sp 若無特別指定為 %，例如 50%，則數字代表實際數值。
+# 2.可以用 > 大於  或 < 小於 之邏輯運算符號，例如 < 1000 滴血。
+# 3.因為伺服器有 LAG 問題，使用任何物品 ［補血品例外］，請加上 timeout 時間［秒］。
+# 4.依照物品的不同性質，設定時必須加上不同的偵測器，例如：偵測狀態、偵測數量。
+#
+#範例-1："若「不在」覺醒藥水狀態，喝覺醒藥水"
+#useSelf_item 覺醒藥水 {
+#	whenStatusInactive 覺醒藥水狀態
+#}
+#
+#範例-2："血低於多少 %，吃補品"
+#useSelf_item 好吃的魚 {
+#	hp < 75%
+#}
+#
+#範例-3："火箭矢數量小於 100，使用火箭矢筒"
+#useSelf_item 火箭矢筒 {
+#	inInventory 火箭矢 < 100
+#	timeout 3
+#}
+#
+#範例-4："「在」中毒狀態，吃綠草解毒"
+#useSelf_item 綠色藥草 {
+#	whenStatusActive 中毒狀態
+#	timeout 1
+#}
+#
+#useSelf_item {
+#	hp
+#   	HP 範圍 實際血量 或 百分比 例如:hp < 50% 或 hp < 5000
+#	sp
+#   	SP 範圍 實際血量 或 百分比 例如:sp < 50% 或 sp < 5000
+#	homunculus_hp
+#   	人工生命體 HP 範圍
+#	homunculus_sp
+#   	人工生命體 SP 範圍
+#	homunculus_dead
+#   	人工生命體死亡時 〔1 = 死亡時觸發〕
+#	homunculus_resting
+#	人工生命體已安息時
+#	mercenary_hp
+#	傭兵 HP 範圍
+#	mercenary_sp
+#	傭兵 SP 範圍
+#	mercenary_whenStatusActive
+#	當傭兵「在」這個狀態時
+#	mercenary_whenStatusInactive
+#	當傭兵「不在」這個狀態時
+#	onAction
+#   	當 AI 為 ... 時 〔請參考指令 ai print〕
+#	whenStatusActive
+#   	當人物「在」這個狀態時
+#	whenStatusInactive
+#   	當人物「不在」這個狀態時
+#	whenFollowing
+#   	當跟隨時 〔主人名稱〕
+#	spirit
+#   	氣彈數範圍 〔適用於所有可疊狀態球 包括 槍手錢幣, 修羅系氣彈, 影朧符咒〕
+#	amuletType
+#	影朧符咒屬性 〔水/地/火/風〕〔非影朧請留空〕
+#	aggressives
+#   	被魔物圍攻的隻數
+#	partyAggressives
+#	隊友被魔物圍攻的隻數
+#	monsters
+#   	限定針對哪些魔物使用
+#	notMonsters
+#   	限定不對哪些魔物使用
+#	monstersCount
+#	視野來魔物數量 〔不包含notMonsters設置之魔物〕
+#	defendMonsters
+#	限定被哪些怪物攻擊時使用
+#	stopWhenHit
+#   	被攻擊時是否停止使用
+#	whenGround
+#	當人物站在這個範圍技能時
+#	whenNotGround
+#	當人物不是站在這個範圍技能時
+#	inLockOnly
+#   	是否只在鎖定地圖使用
+#	notWhileSitting
+#   	是否不在坐下時使用
+#	notInTown
+#   	是否不在城鎮中使用
+#	timeout
+#	每次使用的間隔時間（秒）
+#	假設此項設定30秒，那麼從施放開始30秒內都不會再施放
+#	inMap
+#   	僅在此地圖上使用 英文地圖名稱
+#	inCart
+#	當手推車內有某項物品，大於或小於某數量時 〔inCart 枯樹枝 < 10〕
+#	inInventory
+#	當身上有某項物品，大於或小於某數量時 〔inInventory 枯樹枝 < 10〕
+#	zeny
+#	身上zeny量
+#	whenEquipped
+#	當人物裝備了這裝備時
+#	whenNotEquipped
+#	當人物沒有裝備了這裝備時
+#	devotees
+#	當犧牲技能連結達到這數字時
+#	disabled
+#   	是否停用本區塊 〔1 = 停用〕
+#	manualAI
+#   	是否只在 AI 為 manual 手動模式時使用
+#}
+#═══ 自訂 使用物品 ════
+
+useSelf_item {
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	homunculus_resting
+	mercenary_hp
+	mercenary_sp
+	mercenary_whenStatusActive
+	mercenary_whenStatusInactive
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	amuletType
+	aggressives
+	partyAggressives
+	monsters
+	notMonsters
+	monstersCount
+	defendMonsters
+	stopWhenHit
+	whenGround
+	whenNotGround
+	inLockOnly
+	notWhileSitting
+	notInTown
+	timeout
+	inMap
+	inCart
+	inInventory
+	zeny
+	whenEquipped
+	whenNotEquipped
+	devotees
+	disabled
+	manualAI
+}
+
+
+
+#════════════════════════════
+#║                          ║
+#║ 自動存倉/買物/賣物　設定 ║
+#║                          ║
+#════════════════════════════
+# 一個區塊只能買一件物品，區塊是由兩個花括號"{}"之間組成。
+# 可設定多組，請自行複製區塊貼上。
+#════════════
+#║ 自動買物 ║ 
+#════════════
+# Npc 座標資料，請參考 /tables/npcs.txt
+# 範例："身上的覺醒藥水少於 1 時啟動買物，買10瓶
+#buyAuto 覺醒藥水 {
+#	npc NPC資料
+#	minAmount 1
+#	maxAmount 10
+#	disabled 0
+#}
+#
+#buyAuo 進階設定: [Self Condition]
+#
+#buyAuto 物品名稱 {
+#	npc
+#	NPC所在的 英文地圖+座標 
+#	※例如  :  payon 159 96
+#	npc_steps
+#	指定跟NPC 對話順序 ［可省略］
+#	只針對需要對話後方能買賣的NPC
+#	standpoint
+#       指定買物時要站的位置 X Y 座標 ［特殊用途，可省略，X Y 中間空一格］
+#       與 NPC 的交易距離最大約可 20 格左右。
+#       某些地方可利用跨建築物與 Npc 交易，來節省繞過去的走路時間。
+#       例如:天津商店 無法計算路徑? 
+#       因為無法走到商人旁邊 所以加上 ama_in01 30 24 就可以了
+#	distance 5
+#       距離 NPC 多少格開啟對話 ［可省略，預設 5］
+#	minAmount 2
+#       身上攜帶量小於此數目，啟動自動買物
+#	maxAmount 50
+#       買到身上攜帶量大於此數目
+#	zeny
+#	身上的金錢
+#	可設定 大於 [>] 小於 [<] 等於 [= 或 直接輸入數字]
+#	disabled 0
+#	是否停用此buyAuto 〔1 = 停用〕
+#		
+#}
+#═══ 自訂買物 ════
+
+buyAuto {
+	npc
+	npc_steps
+	standpoint
+	distance 5
+	price
+	minAmount 2
+	maxAmount 3
+	disabled 0
+}
+
+
+
+#════════════
+#║ 自動賣物 ║ 
+#════════════
+# 要賣的物品，在  /control/items_control.txt 中設定
+
+sellAuto 0
+# 是否開啟自動賣物功能［0 = 不使用］［1 = 開啟自動賣物］
+sellAuto_npc 
+# 自動賣物的 NPC 資料 ［英文地圖+NPC的[座標] ］
+# ※不包含NPC的名字 例如: payon 159 96
+sellAuto_distance 5
+# 距離 NPC 多少格開啟對話
+sellAuto_npc_steps
+# 指定與NPC對話順序 如果不設定的話會用預設方式來對話
+# 格式 sellAuto_npc_steps < NPC 對話代碼 ［特殊用途，可省略］
+sellAuto_standpoint
+# 指定賣物時要站的位置座標 ［特殊用途，可省略］
+
+
+#═════════════
+#║ 自動存倉 ║
+#═════════════
+# 要存倉的物品，在  /control/items_control.txt 中設定
+# Npc 座標資料，請參考 /tables/npcs.txt
+storageAuto 0
+# 是否開啟自動存倉功能［0 = 不使用］［1 = 開啟自動存倉］
+storageAuto_password 
+# 開倉密碼，請直接輸入設定的數字密碼即可
+storageAuto_npc 
+# 自動存倉的 npc 座標資料 ［英文地圖+座標 ］
+# ※不包含NPC的名字 例如:  rachel 109 138
+
+storageAuto_npc_type 1
+# 與 NPC 對話的類型，1=c r1 n，2=c c r1 n，3=自訂，自訂對話命令串寫在下一個設定
+storageAuto_npc_steps
+# 自訂與 NPC 對話命令串 可參考 /tables/npcs.txt
+
+#════════════
+#║ 其它細節 ║
+#════════════
+storageAuto_distance 5
+# 自動存倉時要站在距離 NPC 多遠的位置 預設:5 
+storageAuto_keepOpen 0
+# 是否保持倉庫開啟
+storageAuto_useChatCommand
+# 使用對話欄輸入指令的方式來用倉庫 ［部份伺服器適用］
+relogAfterStorage 0
+# 自動存倉完成後是否要重登 ［0 = 不使用］［1 = 使用］
+minStorageZeny 80
+# zeny 少於此數值，不存倉 ［開倉庫需要 $$］
+storageAuto_notAfterDeath 0
+# 是否避免每次死亡趴回城後就進行存倉［及賣物］  ［0 = 不使用］［1 = 使用］
+pmNoValidate 1
+
+
+#════════════
+#║ 自動取倉 ║
+#════════════
+# 需先開啟自動存倉，才能自動取倉
+# 可設定多組，自行複製區塊貼上
+# 無設定，代表關閉此功能
+# 範例: 身上攜帶量少於 0 時取倉，取出到身上攜帶量 100 不會等到存倉條件到達才去取
+# getAuto 黃色藥水 {
+# minAmount 0
+# maxAmount 100
+# passive 0
+# }
+#
+# getAuto 物品名稱 {
+#	minAmount 0
+#       身上攜帶量，「小於」或「等於」此數目，開始倉庫取物
+#	maxAmount 10
+#		取出到身上攜帶數量「等於」此數目
+#   passive 0
+#       是否只在存倉時，才取出這個物品
+#       預設只要低於 minAmount，就會去取倉，若設為 1，會忍耐到存倉條件到達才去取
+#       視情況使用，通常取倉都是取補品、箭矢，可能沒辦法忍耐到存倉條件到達
+#	dcOnEmpty
+#		當倉庫內沒有只道具時，是否馬上下線 ［0 = 不使用］［1 = 使用］
+# }
+#
+#═══ 自訂 取倉物品 ════
+
+getAuto {
+	minAmount 0
+	maxAmount 10
+	passive 0
+	dcOnEmpty 0
+}
+
+
+
+#════════════════════
+#║                  ║
+#║ 裝備 ［武防］ 設定 ║
+#║                  ║
+#════════════════════
+# 盾牌，在 kore 中是被當作武器 ［手持裝備］來切換。
+#
+# 在自動裝備的概念中，是假設玩家有一套「預設武器」，
+# 平常都用「預設武器」去打怪，
+# 僅有在打特定怪物的時候，才會切換「指定的武器」。
+#════════════
+#║ 自動修理 ║
+#════════════
+repairAuto 0
+# 是否自動修理武器裝備 必須要有此技能的職業
+repairAuto_list
+# 自動修理列表
+
+
+#════════════
+#║ 預設武器 ║
+#════════════
+# 若不符合「切換武器」指定的怪物，皆用預設武器去打。
+# 若是雙手武器，如：弓、雙手劍/斧/矛，左右手武器名稱都設相同。
+autoSwitch_default_rightHand
+# 預設「右手武器」名稱
+
+autoSwitch_default_leftHand
+# 預設「左手武器」或「盾牌」名稱
+
+autoSwitch_default_arrow
+# 預設箭矢名稱
+
+
+
+
+#════════════
+#║ 切換武器 ║
+#════════════
+# 一個區塊只能對應一套武器，但可對應多個魔物名稱，
+# 區塊是由兩個花括號"{}"之間組成。
+# 無設定［魔物名稱沒有填上］，代表關閉該區塊功能。
+# 可設定多組，請自行複製區塊貼上。                    
+# 要用空手攻擊，可在 rightHand 後填入 [NONE]。
+#
+# 範例-1："所有草類，用空手打，攻擊距離重新指定為 1.5"
+# autoSwitch 綠草,紅草,黃草,白草,藍草,光芒草,黑菇,紅菇 {
+#   rightHand [NONE]
+#   distance 1.5
+# }
+#
+# 範例-2："預設武器是銀箭矢，打向日葵時，切換為火箭矢"
+# autoSwitch 邪惡向日葵 {
+#   arrow 火箭矢
+# }
+#
+# 範例-3："依照怪物種族，切換左手盾牌，增加防禦率"
+#   autoSwitch 單眼蟲,彈簧兔,果樹龜 {
+#   leftHand +4 鐵盾 [獸人戰士卡片] [1]
+# }
+#
+# autoSwitch 刺尾蜻蜓 {
+#   leftHand +4 鐵盾 [大腳熊卡片] [1]
+# }
+#
+# 完整區塊功能如下，僅供參考用。
+# 實際使用如上範例，請自行複製區塊，然後選擇合用的項目填上。
+# 註解開頭為「是否」的選項，代表 0=否、1=是，預設皆為 0
+# autoSwitch {
+#	rightHand
+#    「右手武器」名稱
+#	leftHand
+#    「左手武器」或「盾牌」名稱   
+#	arrow
+#     箭矢
+#	distance
+#     攻擊距離［格］，若無特別指定，以主項目：攻擊［打怪］那邊的設定為準。
+#	useWeapon 1
+#     是否使用武器攻擊 ［0=使用技能或法術、1=使用武器］
+#      弓手系切換箭矢，此項務必為 1，否則會不打怪。
+# }
+#
+#═══ 自訂切換武器 ════
+
+autoSwitch {
+	rightHand
+	leftHand
+	arrow
+	distance
+	useWeapon
+}
+
+
+
+#════════════
+#║          ║
+#║ 自動裝備 ║
+#║          ║
+#════════════
+#══════════════════
+#║ 攻擊時自動裝備 ║
+#══════════════════
+# 只有在攻擊怪物時，自動裝備回以下的防具。
+#
+# 適用於「使用技能」時有自動切換防具的情況。
+# 例如：
+# 巫師要用"黑蟻夾"才能對自己施展治癒術補血，
+# 但是身上裝著"黑蟻夾" 放魔法會多耗 25% SP，
+# 所以平時應該預設"劍魚夾"，僅有放治癒術時才切換"黑蟻夾"。
+#
+# 只能設一組。
+# 留空白的項目，代表關閉不使用。
+
+attackEquip_topHead
+# 頭上裝備名
+attackEquip_midHead
+# 頭中裝備名
+attackEquip_lowHead
+# 頭下裝備名
+attackEquip_rightHand
+# 預設的右手武器名稱
+attackEquip_leftHand
+# 預設的左手武器［盾牌］名稱
+attackEquip_armor
+# 衣服裝備名
+attackEquip_robe
+# 披風裝備名
+attackEquip_shoes
+# 鞋子裝備
+attackEquip_arrow
+# 預設的消耗型武器名稱［格式: 火箭矢］
+attackEquip_leftAccessory
+# 左裝飾品裝備名 ［人物觀點，遊戲畫面看到的右邊］
+attackEquip_rightAccessory
+# 右裝飾品裝備名 ［人物觀點，遊戲畫面看到的左邊］
+
+
+
+# 只要條件符合以下設定，則馬上自動裝備回以下的防具。
+#
+#  注意：
+# 若attackEquip和equipAuto都有設定，請注意equipAuto的條件設定，
+# 否則外掛會不停的換裝備，導致不攻擊。
+#
+#
+# 若使用此模式，則請注意 /control/items_control.txt 中相關設定，
+# 依照 AI 順序，kore 在回城自動存倉後，接著才會自動裝備，
+# 所以要避免存倉時，也將防具給存入倉庫，導致無法自動裝備。
+#
+# equipAuto 進階設定: [Self Condition] + [Monster Condition]
+#
+# equipAuto 後面不必填入任何字串。
+# 留空白的項目，代表關閉不使用。
+#equipAuto {
+#	#以下為需要自動裝備的武器及防具#
+# 	topHead
+#   	頭上
+# 	midHead
+#   	頭中
+# 	lowHead
+#   	頭下
+# 	leftHand
+#   	左手武器或盾牌
+# 	rightHand
+#   	右手武器
+# 	leftAccessory
+#   	左裝飾品［角色觀點］，角色資訊視窗內是右邊
+# 	rightAccessory
+#   	右裝飾品［角色觀點］，角色資訊視窗內是左邊
+# 	robe
+#   	披風
+# 	armor
+#   	衣服
+# 	shoes
+#   	鞋子
+# 	arrow
+#   	箭矢
+#	#以下為equipAuto觸發條件#
+# 	monsters
+#   	限定針對哪些魔物使用
+# 	weight 0
+#   	負重百份比數值為多少時更換裝備 ［0=關或 負重量百份比數值］
+# 	whileSitting 0
+#   	當坐下時是否更換裝備 ［0=關、1=開］
+#	hp
+#   	HP 範圍 實際血量 或 百分比 例如:hp < 50% 或 hp < 5000
+#	sp
+#   	SP 範圍 實際血量 或 百分比 例如:sp < 50% 或 sp < 5000
+#	homunculus_hp
+#   	人工生命體 HP 範圍
+#	homunculus_sp
+#   	人工生命體 SP 範圍
+#	homunculus_dead
+#   	人工生命體死亡時 〔1 = 死亡時觸發〕
+#	homunculus_resting
+#	人工生命體已安歌時
+#	onAction
+#   	當 AI 為 ... 時 〔請參考指令 ai print〕
+#	whenStatusActive
+#   	當人物「在」這個狀態時
+#	whenStatusInactive
+#   	當人物「不在」這個狀態時
+#	whenFollowing
+#   	當跟隨時 〔主人名稱〕
+#	spirit
+#   	氣彈數範圍 〔適用於所有可疊狀態球 包括 槍手錢幣, 修羅系氣彈, 朧影符咒〕
+#	amuletType
+#	朧影符咒屬性 〔1 = 水, 2 = 地, 3 = 火, 4 = 風〕〔非朧影請留空〕
+#	aggressives
+#   	被魔物圍攻的隻數
+#	monsters
+#   	限定針對哪些魔物使用
+#	notMonsters
+#   	限定不對哪些魔物使用
+#	monstersCount
+#	當前視野內怪物數量
+#	stopWhenHit
+#   	被攻擊時是否停止使用
+#	inLockOnly
+#   	是否只在鎖定地圖使用
+#	notWhileSitting
+#   	是否不在坐下時使用
+#	notInTown
+#   	是否不在城鎮中使用
+#	timeout
+#   	每次使用的間隔時間（秒）
+#	inMap
+#   	僅在此地圖上使用 英文地圖名稱
+#	inCart
+#	當手推車內有某項物品，大於或小於某數量時 〔inCart 枯樹枝 < 10〕
+#	inInventory
+#   	當身上有某項物品，大於或小於某數量時 〔inInventory 枯樹枝 < 10〕
+#	disabled
+#   	是否停用本區塊 〔1 = 停用〕
+#	manualAI
+#   	是否只在 AI 為 manual 手動模式時使用
+# }
+
+
+equipAuto {
+	topHead
+	midHead
+	lowHead
+	leftHand
+	rightHand
+	leftAccessory
+	rightAccessory
+	robe
+	armor
+	shoes
+	arrow
+	monsters
+	notMonsters
+	monstersCount
+	weight 0
+	whileSitting 0
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	homunculus_resting
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	amuletType
+	aggressives
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	inInventory
+	manualAI 0
+}
+
+
+
+
+#═════════════════════
+#║                   ║
+#║ 技能［魔法］ 設定 ║
+#║                   ║
+#═════════════════════
+#══════════════════
+#║ 使用技能於魔物 ║
+#══════════════════
+# 技能名稱可參考 /tables/skillnametable.txt
+# 技能消耗 sp 可查詢 /tables/skillssp.txt，此為 kore 計算攻擊策略用
+# 你可以複製 & 貼上任何區塊許多次。
+# 所以假如你想要設定兩個以上的攻擊技能，只要再複製 attackSkillSlot 區# 塊再修改即可。
+# 注意：請務必將同一技能的設定寫在花括號 { 與 } 之間。
+#
+# attackSkillSlot 進階設定: [Self Condition] + [Monster Condition] + [Skill Use Condition]
+#
+# 範例 1
+# attackSkillSlot 治癒術 {
+# 	lvl 10
+# 	dist 10
+# 	monsters 腐屍,邪骸戰士
+# }
+# 範例 2
+# attackSkillSlot 神聖之光 {
+# 	lvl 1
+# 	dist 10
+# 	monsters 波波利,魔菇,樹精
+# }
+#
+#attackSkillSlot #技能名稱 {
+#	lvl
+#	技能的等級
+#	dist
+#       施法距離 ［attackSkillSlot 只設定數字］
+#	maxCastTime
+#	使用此技能所需最長時間［秒］，施展成功即會繼續AI動作，
+#	不需等到延遲時間結束［一般攻擊型法術最好設8~10秒］
+#	minCastTime
+#      	使用此技能所需最短時間［秒］，施展成功仍需等到延遲時間結束，才會繼續AI動作
+#	hp
+#	HP 範圍限制　
+#	sp
+#	SP 範圍限制　
+#	homunculus_hp
+#	人工生命體 HP 範圍限制
+#	homunculus_sp
+#	人工生命體 SP 範圍限制
+#	homunculus_dead
+#	人工生命體死亡時
+#	homunculus_resting
+#	人工生命體已安歌時
+#	onAction
+#	當 AI 為 ... 時
+#	whenStatusActive
+#	當處於某種狀態時
+#	whenStatusInactive 
+#	當某種狀態失效時
+#	whenFollowing
+#	當跟隨時　［1＝使用］
+#	whenGround
+#	當自己腳下有此技能時使用　［技能名稱］
+#	whenNotGround 
+#	在自己腳下使用此技能 ［例如:光之障壁］
+#	defendMonsters 
+#	當受到這些魔物攻擊時使用該區塊的技能 ※魔物名稱 多種時使用逗號 ,分隔
+#	spirit
+#	氣彈數範圍
+#	aggressives
+#	被魔物圍攻的隻數　
+#	partyAggressives
+#	當隊友被指定的魔物隻數圍攻時使用
+#	previousDamage
+#      	上一次傷害
+#	stopWhenHit
+#	被攻擊時是否停止使用本技能
+#	inLockOnly 1
+#	是否只在鎖定地圖使用
+#	notWhileSitting
+#       是否不再坐下時使用
+#	notInTown
+#	是否不在城鎮使用
+#	timeout
+#	使用此攻擊技能之間隔時間［秒］
+#	假設此項設定30秒，那麼從施放開始30秒內都不會再施放
+#	disabled
+#	是否關閉本區塊技能
+#	monsters 
+#	限定針對哪些魔物使用
+#	notMonsters 
+#	限定不對哪些魔物使用
+#	maxAttempts
+#	若技能使用失敗，則最多嘗試幾次［施法失敗也算一次］
+#	maxUses
+#	本技能使用幾次［施法成功才算一次］
+#	target_whenStatusActive
+#	當目標處於某種狀態時
+#	target_whenStatusInactive
+#	當目標不為某種狀態時
+#	target_deltaHp
+#	目標魔物的 HP 改變量［大多皆為負值］
+#	target_dist
+#	當目標在距離多少時使用    
+#	target_misses
+#	攻擊目標 Miss 幾次後放棄 
+#	target_totalMisses
+#    	對目標使用技能時 總共Miss幾次 後放棄
+#	target_whenGround
+#	當目標腳下有此技能時使用
+#	target_whenNotGround
+#	在目標腳下使用技能
+#	inInventory
+#	物品欄有某［些］物品時
+#	isSelfSkill
+#	本技能是否為使用在自己身上的技能
+#	inMap
+#    	該區塊僅在此地圖上使用 英文地圖名稱
+#	notInMap 
+#    	該區塊永遠不會在指定的地圖上使用
+#	smartEncore 
+#	該選項可以自動使用[安可]技能 0=關 1=開 用於輔助技 ［自己］
+#	zeny 
+#	當zeny大於多少時使用
+#	manualAI
+#	是否在AI為 手動模式時才使用
+#}
+
+attackSkillSlot {
+	lvl 10
+	dist 1.5
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp > 10
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	homunculus_resting
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	amuletType
+	aggressives
+	previousDamage
+	stopWhenHit 0
+	inLockOnly 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	monsters
+	notMonsters
+	monstersCount
+	maxAttempts 0
+	maxUses 0
+	target_whenStatusActive
+	target_whenStatusInactive
+	target_deltaHp
+	inInventory
+	isSelfSkill 0
+	manualAI 0
+}
+
+
+
+#══════════
+#║ 連續技 ║
+#══════════
+# 以下區塊為施展連續技/組合技。
+#
+# attackComboSlot 進階設定: [Self Condition] + [Monster Condition] + [Skill Use Condition]
+#
+# 有些技能必須在前一技能確實施展成功了，才能使用，
+# 此種技能稱作：連續技。
+#
+# 範例："完整示範如何實現 冰凍 → 雷鳴"
+# 首先，對怪物技能，冰到成功為止
+#attackSkillSlot 冰凍術 {
+#	lvl 10
+#	dist 9
+#	target_whenStatusInactive 冰凍狀態
+#	#當目標怪物「不在」這個狀態時
+#	timeout 0.5
+#	#避免因為 LAG 造成誤判狀態。
+#}
+#
+# 當目標怪物冰住了就會停止攻擊，接著，連續技！
+#attackComboSlot 雷鳴術 {
+#	lvl 10
+#	afterSkill 冰凍術
+#	target_whenStatusActive 冰凍狀態
+#	#當目標怪物「在」這個狀態時
+#}
+# 
+# 亦可以先暴風雪，再去怒雷強擊冰住的怪物。
+# 也可以針對某些怪物才使用。
+# 連續技和普通技的差別是：連續技會對同一隻怪攻擊，而不是打別的怪。
+# 連續技區塊可用的選項，完全同前面的對怪物技能 attackSkillSlot 區塊
+# 以下僅列出不同的部份，若需要其它選項，請參考前面。
+#
+# attackComboSlot {
+# 	afterSkill
+# 		在什麼技能之後接著施展
+#	waitBeforeUse
+# 		施展之前先使用什麼物品
+#	isSelfSkill
+# 		本技能是否為使用在自己身上的技能
+#	target_deltaHp
+#  		施放對象的 HP 改變量 
+# }
+
+attackComboSlot {
+	afterSkill
+	waitBeforeUse
+	dist 1.5
+	isSelfSkill 1
+	target_deltaHp
+	monsters
+	notMonsters
+	monstersCount
+}
+
+
+
+
+
+#══════════════════
+#║ 輔助技［自己］ ║
+#══════════════════
+# 以下區塊為施展在自己身上的輔助技能。
+#
+# useSelf_skill 進階設定: [Self Condition] + [Skill Use Condition]
+#
+# 因伺服器有 LAG 問題，導致在偵測狀態上有延遲，
+# 為避免連續施放，浪費 SP，請適當加上 timeout 參數。
+#
+# 範例-1："當「不在」加速狀態時，給自己加速"
+#useSelf_skill 加速術 {
+#	lvl 10
+#	whenStatusInactive 加速術狀態
+#	notWhileSitting 1
+#	timeout 10
+#}
+#
+# 範例-2："「在」詛咒狀態，用天賜解"
+#useSelf_skill 天使之賜福 {
+#	lvl 1
+#	whenStatusActive 詛咒狀態
+#	timeout 1
+#}
+#
+# 範例-3："當 HP小於 75% 對自己補血，但不是祭司，要靠裝備"
+#useSelf_skill 治癒術 {
+#	lvl 1
+#	hp < 75%
+#	equip_leftHand +4 熾天使之弓
+#	equip_rightHand +4 熾天使之弓
+#	stopWhenHit 1 
+#	正被怪物攻擊時不使用，先把怪清掉
+#}
+#
+# 範例-4：當「不在」心神凝聚狀態時，使用等級10的心神凝聚"
+#useSelf_skill 心神凝聚 {
+#	lvl 10
+#	whenStatusInactive 心神凝聚狀態
+#}
+# 範例-6：當被「蝙蝠弓箭手,幽靈弓箭手,捕蟲草」功擊時在自己腳下施放光之障壁等級1
+#useSelf_skill 光之障壁 {
+#	lvl 1
+#	whenNotGround 光之障壁
+#	defendMonsters 蝙蝠弓箭手,幽靈弓箭手,捕蟲草
+#}
+# 「TO 自己」輔助技能區塊可用的選項，
+# 完全同前面的對怪物技能 attackSkillSlot 區塊，
+# 僅有區塊名稱 useSelf_skil 不同，若需要其它選項，請參考前面。
+#
+# 人工生命體設定參考
+#
+#useSelf_skill 召喚生命體 {
+#	homunculus_resting 1
+#	timeout 10
+#}
+#
+#useSelf_skill 復活生命體 {
+#	homunculus_dead 1
+#	timeout 10
+#}
+#
+
+useSelf_skill_smartHeal 2
+# 自己補血時自動調整治癒術等級以節省SP
+
+useSelf_skill {
+	lvl 10
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	homunculus_resting
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	amuletType
+	aggressives
+	monsters
+	notMonsters
+	monstersCount
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	inInventory
+	manualAI 0
+}
+
+
+
+
+
+
+
+
+#═══════════════════════
+#║ 輔助技［隊友/隊伍］ ║
+#═══════════════════════
+# 
+# 以下區塊為施展至其它玩家身上的輔助技能。
+# 它玩家包括所有人，即使不是隊友也能施展。
+# 大致上同前面的對怪物技能 attackSkillSlot 區塊。
+# 以下僅列出不同處，若需要其它選項，請參考前面。
+#
+# partySkill 進階設定: [Self Condition] + [Skill Use Condition] + [Player Condition]
+#
+#partySkill {
+# 	dist
+#       施法距離 ［魔法最大攻擊為9格，戰士系需要較短距離］
+#   	施法距離 [可使用運算子: < <= = => > !]
+#	target
+# 	輔助技能施放對象的玩家名字
+#	target_hp
+#	施放對象的 HP 範圍
+#	target_isJob
+#	施放對象「是」以上英文職業名時
+#	target_isNotJob
+# 	施放對象「不是」以上英文職業名時
+#	target_whenStatusActive
+#	施放對象「在」這個狀態時
+#	target_whenStatusInactive
+# 	施放對象「不在」這個狀態時
+#	施放對象 離開畫面再相遇 將判斷為沒有狀態 
+#	target_isGuild
+#	只對這些公會的"成員"使用  格式:公會名稱   使用逗號 , 分開
+#	target_isNotGuild
+#	不對這些公會的"成員"使用  格式:公會名稱   使用逗號 , 分開
+#	target_whenShieldEquipped
+#	當目標有裝備盾牌時使用 ［0=不使用］［1=使用］
+#	target_whenWeaponEquipped
+#	當目標有裝備武器時使用 ［0=不使用］［1=使用］
+#	target_aggressives
+# 	施放對象被魔物圍攻的隻數 ［隻數前面要加 > 大於符號］
+#	target_monsters
+# 	施放對象被以上的魔物攻擊時 ［魔物名稱以逗號隔開］
+#	target_timeout
+#  	指定每次對施放對象使用此技能的間隔時間［秒］，預設值 0
+#	target_deltaHp
+# 	施放對象的 HP 改變量 ［大多皆為負值］
+#	target_dead
+# 	施放對象死亡時 ［大多應用於復活術］
+#	notPartyOnly 0
+#	對象不限定於隊友 ［0=關閉］［1=開啟］
+#	開啟後某些功能無法判斷 例如目標血量
+#}
+#
+# 範例 - 1  
+#［當施放對象不在天賜狀態時和被怪物攻擊時,
+# 當自己不處於技能延遲時,給予目標施放天使之賜福,
+# 下次施放間隔150秒］
+#partySkill 天使之賜福 {
+#	whenStatusInactive 動作延遲
+#	target_whenStatusInactive 天使之賜福狀態
+#	target_aggressives > 0
+#	target_timeout 150
+#}
+partySkillDistance 0..8
+# 設定向隊友施放技能的距離限制 [.. 為 範圍, 0..8 = 0 至 8 格範圍]
+
+partySkill {
+	lvl 10
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	homunculus_resting
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	amuletType
+	aggressives
+	monsters
+	notMonsters
+	monstersCount
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	manualAI 0
+	target
+	target_hp
+	target_isJob
+	target_isNotJob
+	target_whenStatusActive
+	target_whenStatusInactive
+	target_aggressives
+	target_monsters
+	target_timeout 0
+	target_deltaHp
+	target_dead 0
+	inInventory
+	isSelfSkill 0
+}
+
+
+
+
+
+
+#═════════════════════
+#║ 賢者/魅影自動唸咒 ║
+#═════════════════════
+# 本選項要與 useSelf_skill 設定自動念咒做搭配。
+# 例如：
+#
+# autoSpell 冰箭術
+# useSelf_skill 自動念咒 {
+#	lvl 10
+#	timeout 10
+#	whenStatusInactive 自動念咒狀態
+#	notWhileSitting 1
+#       stopWhenHit 1
+# }
+
+autoSpell
+autoSpell_safe 0
+# 使否限制某部份技能不能使用自動唸咒 [可保留 0]
+
+
+
+
+#════════════════
+#║ 自訂快速指令 ║
+#════════════════
+# 例如設定：
+# alias_laagg c 好 lag 呀....
+# alias_heal ss 28 5
+# 則輸入 laagg 會送出 "好 lag 呀...." 的公頻字串；
+# 輸入 heal 則會對自己施放技能等級 5 的治癒術［假如角色有此技能的話］
+alias_heal sp 28
+alias_h homun
+#═════════════════════
+#║                   ║
+#║ 移動［路徑］ 設定 ║
+#║                   ║
+#═════════════════════
+#════════════
+#║ 隨機移動 ║
+#════════════
+route_randomWalk 1
+# 是否隨機走動
+# 0 = 不隨機走動
+# 1 = 地圖中隨機走動 [無名島修道院建議選擇此選項才不會出現無法計算路徑]
+# 2 = 地圖中隨機走動但刻意  [避開地圖的傳點] 或 [玩家施放的傳點]
+# 若使用瞬移找怪,則此選項要設為 0
+
+route_randomWalk_inTown 0
+# 是否要在城鎮內隨機走動
+
+#════════════
+#║ 瞬移移動 ║
+#════════════
+route_teleport 0
+# 是否使用連續瞬移來加速到鎖定地圖
+route_teleport_minDistance 150
+# 距離鎖定地圖多少距離時開始用走的
+route_teleport_maxTries 8
+# 在同一地圖上最多瞬移幾次都沒靠近鎖定地圖就放棄，開始用走的
+route_teleport_notInMaps
+# 設定不用瞬移加速移動的地圖名［多個用逗號分隔］
+# 註：有些地圖無法瞬移，或用走的反而比較快
+
+#══════════════════
+#║ 陣亡後移動策略 ║
+#═══════════════
+autoMoveOnDeath 0
+# 死亡回重生點後是否要馬上自動移動到鎖定地圖
+# 0 = 先坐著等血/等魔在自動移動到鎖定地圖、1 = 立即自動移動到鎖定地圖
+
+autoMoveOnDeath_x
+# 死亡回重生點後馬上自動移動至重生地點的座標 X
+# 註：座標可在遊戲中打指令 /where 查詢
+autoMoveOnDeath_y
+# 死亡回重生點後馬上自動移動至重生地點的座標 Y
+
+autoMoveOnDeath_map
+# 死亡回重生點後馬上自動移動至某地圖［例如移動至旅館地圖，回血較快］
+
+#════════════
+#║ 不明地圖 ║
+#════════════
+# 指 /tables/maps.txt 中沒有資料紀錄的地圖
+# 或 RO 改版，而舊版的 kore 沒有對應資料
+
+route_escape_reachedNoPortal 1
+# 是否開啟脫離不明地圖功能
+route_escape_randomWalk 1
+# 是否以隨機走動來脫困
+route_escape_shout
+# 是否以公頻大喊來脫困［輸入內容］
+route_avoidWalls 1
+# 是否避開牆壁來脫困
+
+#════════════
+#║ 其它細節 ║
+#════════════
+route_randomWalk_maxRouteTime 75
+# 隨機走動計算路由最大時間
+route_maxWarpFee
+# 不使用卡普拉傳送，請設0
+# 願意付給 npc 來移動地圖的最高 zeny 價錢，留空白代表無上限
+# 當 npc 索取價格高於這個數目，kore 會計算其它節省路徑，例如用走路的
+# 有些地圖一定要靠 npc 才能到達，計算其它節省路徑可能會卡住
+route_maxNpcTries 5
+# 距離 NPC 多少距離［格］內才開啟對話 ［有些地圖需靠 NPC 移動］
+route_step 15
+# 路徑計算一次移動幾格［預設值 15，不設定也是 15］
+# 當為主人時建議條小移動步數，減少跟隨脫隊
+
+
+
+
+#═════════════════
+#║               ║
+#║ 瞬移迴避 設定 ║
+#║               ║
+#═════════════════
+# 以下設定，若數值為 0 或空白，代表該項忽略
+
+teleportAuto_hp 0
+# HP 百分比在多少以下時瞬移 ［0 = 關閉］
+teleportAuto_sp 0
+# SP 百分比在多少以下時瞬移
+teleportAuto_idle 0
+# 閒置時是否要瞬移 (瞬移找怪必須開啟)
+# 閒置 = OP沒有AI動作  例如:打怪.走動
+teleportAuto_portal 0
+# 靠近地圖傳點時是否要瞬移
+teleportAuto_search 0
+#設定開啟後必須開啟檔案 mon_control.txt 
+#設定開啟魔物 <搜尋模式> 才會開攻擊魔物
+#目前建議設定是為 0
+teleportAuto_minAggressives 0
+# 被多少隻以上的魔物攻擊時瞬移
+teleportAuto_minAggressivesInLock 0
+# 在鎖定地圖被多少隻以上的魔物攻擊時瞬移
+teleportAuto_onlyWhenSafe 0
+# 是否只在沒人看見時瞬移
+teleportAuto_maxDmg
+# 被魔物一次攻擊多少 HP 以上時瞬移
+teleportAuto_maxDmgInLock 0
+# 在鎖定地圖被魔物一次攻擊多少 HP 以上時瞬移
+teleportAuto_deadly 0
+# 再被攻擊一次就會死亡的話是否就瞬移
+teleportAuto_useSkill 0
+# 0 = 使用蒼翅蝴翅瞬移
+# 1 = 使用技能瞬移［會耗 SP 的］
+teleportAuto_useChatCommand
+# 是否用對話欄輸入指令來進行瞬移［部分伺服器可以，填入指令］
+teleportAuto_allPlayers 0
+# 四周有人時瞬移［0=關、1=有玩家出現就瞬移、2=非隊友的玩家出現就瞬移］
+teleportAuto_notPlayers
+# 當遇到指定玩家瞬移 格式:玩家名稱或ID
+teleportAuto_atkCount 0
+# 最多打怪多少下，超過次數不管怪有沒有死都飛走
+teleportAuto_atkMiss 0
+# 打怪 Miss 最多幾下就飛走
+teleportAuto_unstuck 0
+# 嘗試以瞬移解決走路呆住問題
+teleportAuto_lostTarget 0
+# 失去攻擊目標時是否要瞬移
+teleportAuto_dropTarget 0
+# 若無法接近或傷害魔物的話就瞬移
+teleportAuto_dropTargetKS 0
+# 是否為了防止搶到他人的怪而放棄該怪飛走
+teleportAuto_attackedWhenSitting 0
+# 坐下休息時若被魔物攻擊是否要飛走
+teleportAuto_totalDmg 0
+# 被同一隻魔物打超過多少 HP 就飛走
+teleportAuto_totalDmgInLock 0
+# 在鎖定地圖被同一隻魔物打超過多少 HP 就飛走
+teleportAuto_equip_leftAccessory
+# 瞬移時左邊飾品格配備的裝備名稱
+teleportAuto_equip_rightAccessory
+# 瞬移時右邊飾品格配備的裝備名稱
+teleportAuto_lostHomunculus 0
+# 失去人工生命體時是否要瞬移
+teleportAuto_useItemForRespawn 0
+# 是否使用物品回城，例如：蝴蝶翅膀
+teleportAuto_item1
+# 是否自訂當前地圖瞬移的道具名稱 [留空為使用 蒼蠅翅膀]
+teleportAuto_item2
+# 是否自訂回城的道具名稱 [留空為使用 蝴蝶翅膀]
+
+
+#═══════════════════════════
+#║                         ║
+#║ 其它功能［不常用］ 設定 ║
+#║                         ║
+#═══════════════════════════
+#════════════
+#║ 肉盾模式 ║
+#════════════
+tankMode 0
+# 是否開啟肉盾模式 (開啟後會只攻擊魔物一下)
+tankModeTarget
+# 要幫擋的目標玩家名稱
+tankersList
+# 設定可幫你擋怪且可打他正在打的怪的隊友名字 ［多個用逗號分隔］
+
+#════════════
+#║ 跟隨模式 ║
+#════════════
+follow 0
+# 是否開啟跟隨模式
+followTarget
+# 跟隨目標 ［主人，玩家名稱］
+followEmotion 0
+# 若主人秀出表情符號，是否也跟著用表情符號
+followEmotion_distance 4
+# 在距離幾格內偵測到主人有表情符號，才會跟著用表情符號
+followFaceDirection 0
+# 是否永遠面向主人
+followDistanceMax 6
+# 跟隨的最長距離
+followDistanceMin 3
+# 跟隨的最短距離
+followLostStep 50
+# 跟丟主人時，往主人最後出現的方位走幾步以嘗試尋找主人
+followSitAuto 0
+# 是否自動跟著主人坐下
+followBot 0
+# 主人是否也是 Bot
+followCheckLOS 0
+# 會否向向主人的方向進行checkLOS [有待更正]
+followRandom 0
+followRandomDistance 4
+
+#════════════
+#║ 露天商店 ║
+#════════════
+# 需有手推車才能開露天
+# 露天商店販賣物品等設定在 /control/shop.txt，此處只是開啟功能
+
+shopAuto_open 0
+# 是否自動開設露天商店
+shop_random 0
+# 露店擺設商品是否要亂數排列［相關檔案shop.txt］
+shop_useSkill 1
+# 是否使用技能開啟露天 (0=關閉 1=開啟)
+# 建議別關閉
+#════════════
+#║ 自動回應 ║
+#════════════
+
+autoResponse 0
+# 是否要設定自動回覆［模擬玩家之間對話聊天過程，由對話腳本檔自動應答］
+# 相關設定檔［對話腳本］位於 /contro/responses.txt
+# 建議不要開啟此功能，因為設定不好會弄巧成拙，反被看出是 BOT
+# 若開啟此功能，務必要修改 /contro/responses.txt
+# responses.txt 對話腳本檔，支援變數，有興趣請自行研究
+
+autoResponseOnHeal 0
+# 是否要設定自動回應補血功能 [施放者向被施放者回應]
+# 若開啟此功能，務必要修改 /contro/responses.txt
+# 此設定只會知會被施放者
+# 若開啟此功能，務必要修改 /contro/responses.txt
+# responses.txt 對話腳本檔，支援變數，有興趣請自行研究
+# 設定函數：skillgoodM 及 skillbadM [成功及失敗的答覆]
+# 參考：recv/ST0.pm
+
+
+#══════════════
+#║ 自動加點數 ║
+#══════════════
+# 自動加 素質/技能 點數設定 
+# 當升級時，有額外的點數，是否讓 kore 自動加上
+# 此為 AI 全自動加點數，適合掛整月都不去理的
+# 一般天天都會去檢查的玩家，可於 kore 視窗打指令手動加點數
+
+statsAddAuto 0
+# 是否開啟自動加屬性點數
+statsAddAuto_list
+# 要加的屬性 ［逗號區隔］
+#例如
+# 10 vit,10 dex,
+statsAddAuto_dontUseBonus 0
+# 不將 job 加成的素質點也算在內，詳情請參考英文說明書
+statsAdd_over_99 0
+# 是否允許加超過 99 
+# 一二轉加超過 99
+# 三轉最高能到120
+skillsAddAuto 0
+# 是否開啟自動加技能點數
+skillsAddAuto_list
+# 要加的技能 ［逗號區隔］
+#例如 
+# 基本技能 9,
+
+#═════════════════════════
+#║ 自動下console指令巨集 ║
+#═════════════════════════
+# 在某些情況下［可設定］，想要 kore 自己對自己下某個指令
+# 這可以帶來一些彈性的 AI 設計，請於此區段設定
+#
+# doCommand 進階設定: [Self Condition]
+#
+# doCommand 用法與範例，請參考以下連結［目前僅有英文］
+# http://www.openkore.com/index.php/DoCommand
+#
+# OpenKore 可用指令全表，請參閱官方說明書之 console command 部份：
+# http://hakore.bot.nu/openkore/manual/
+#
+# 例如：免服沒有瞬移，而怪物控制中，只有瞬移逃避這個方法
+# 雖然 OpenKore 有原始碼，但不懂程式設計也無法改
+# 這邊可變通一下，改成碰到意外的 MVP 即立刻下指令結束程式斷線
+#
+# 範例：在鎖定地圖遇到獸人酋長就結束程式
+# doCommand quit {
+#   monsters 獸人酋長
+#   inLockOnly 1
+# }
+
+
+doCommand {
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	homunculus_resting
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout
+	disabled 0
+	inInventory
+	inCart
+	inMap
+	manualAI 0
+}
+
+#════════════════════════
+#║                      ║
+#║ 迴避 GM 或 玩家 設定 ║
+#║                      ║
+#════════════════════════
+#═══════════════
+#║ 內定迴避 GM ║
+#═══════════════
+avoidGM_near 0
+# 偵測到 GM 在附近時要做的動作？
+# 0 = 不迴避 GM、1 = 瞬移後斷線、2 = 直接斷線、3 = 瞬移;、4 = 瞬移回城
+
+avoidGM_namePattern
+# 偵測到附近有 角色/GM 名稱含有此字時回避
+# 例：avoidGM_namePattern 官方
+# 會自動回避名字含有 官方 的角色
+
+avoidGM_near_inTown 0
+# 在城內遇到 GM 時是否要做上一個選項所設定的動作
+
+avoidGM_talk 0
+# GM 說話時是否要斷線 ［GM 有時會在廣播頻道說明活動訊息］
+
+avoidGM_reconnect 1800
+# 斷線幾秒後重連
+
+avoidList_inLockOnly 1
+# 是否只限於鎖定地圖做出反應［路過的地圖遇到時當作沒看到］
+
+#═══════════════════
+#║ 迴避 GM 或 玩家 ║
+#═══════════════════
+avoidList 1
+# 是否要依 /contro/avoid.txt 內的設定做出斷線或瞬移的反應
+# 開啟此功能，/contro/avoid.txt 才會生效
+
+avoidList_reconnect 1800
+# 若採取斷線的策略，幾秒後重連
+
+avoidGM_ignoreList
+# 例外名單 玩家名稱，多組用逗號隔開］
+
+
+#════════════
+#║ 自動拒絕 ║
+#════════════
+dealAuto 1
+# 當有人點你交易時要如何處理。
+# 0 = 不處理 
+# 1 = 自動取消所有交易
+# 2 = 自動接受交易並立即按確定
+# 3 = 自動接受交易並在對方按確定後才按確定
+
+dealAuto_names
+# 限制可自動交易的玩家名字
+
+partyAuto 1
+# 當有人邀你組隊時要如何處理。
+# 0 = 不處理
+# 1 = 自動拒絕
+# 2 = 自動接受
+
+partyAutoShare 1
+# 組隊時經驗值是否自動均分 ［隊長才有作用］
+
+partyAutoShareItem 1
+# 道具取得方式是否為組隊隊員全體共有
+
+partyAutoShareItemDiv 1
+# 物品分配方式是否為均等分配
+
+guildAutoDeny 1
+# 是否自動拒絕受邀加入公會
+
+ignoreAll 0
+# 是否對所有人關閉密頻
+
+#════════════
+#║ 其它細節 ║
+#════════════
+cachePlayerNames 1
+# 是否開啟玩家名字快取
+# 每當偵測到附近有玩家時，偵測到的是 UID 編號，
+# UID 編號要解析成玩家名字，需向服務器要求檢索資料，
+# 啟用快取可以避免重復和服務器要求資料，進而節省網路頻寬。
+# 建議值為 1，開啟快取。
+cachePlayerNames_duration 900
+# 玩家名字在快取的保留時間 ［秒］
+cachePlayerNames_maxSize 100
+# 快取玩家名字的最大數量
+# 當超過這個數量，會從最舊的資料開始刪，讓新的資料進入快取。
+
+clientSight 20
+# 偵測玩家 魔物 NPC 的視野範圍
+
+removeActorWithDistance 
+# 設定讓 kore 忽略幾格外的動態資訊 ［玩家、怪物、寵物..最重要的是GM］
+# 在人多的地圖中，若忽略 5 格以外的動態資訊，
+# 可讓 kore 少送出很多 getPlayerInfo 封包，使移動較不 lag。
+# 不過動態資訊亦包括魔物，這代表練功時 5格外的怪物就偵測不到了。
+# 0 = 關閉、>1 以上，格數。
+# 建議保持空白
+
+#═════════════════════════
+#║                       ║
+#║ 特殊情況 AI 處理 設定 ║
+#║                       ║
+#═════════════════════════
+dcOnDeath 0
+# 當角色死亡時，-1 = 不做任何事、0 = 過一段時間後回城、 2 = 直接斷線［結束自動練功］
+
+dcOnDualLogin 0
+# 遇到相同帳號登入時的反應。0 = 立刻重連、 1 = 立刻斷線結束、 >1以上 = 斷線幾秒後重連
+
+dcOnDisconnect 0
+# 網路不通時的反應。0 = 不反應，持續連線。
+
+dcOnEmptyArrow 0
+# 箭矢用光時是否斷線結束 如沒設定自動取箭矢  人物只會走到魔物面前不做任何事情重複再重複的走
+# 很容易就被識為外掛
+
+dcOnMaxReconnections 0
+# 連線失敗最多幾次後就放棄結束。0 = 永不放棄、>1以上 = 次數
+
+dcOnMute 0
+# 被禁言時是否斷線結束 ［魔物沉默術，綠水可解，或系統禁言］
+# 註：關係到法師系角色的施法，還有無限瞬移。
+
+dcOnPM 0
+# 被密語時是否斷線結束
+
+dcOnZeny 0
+# 身上 zeny 少於多少錢時自動斷線結束。0 = 忽略、>1以上 = zeny 數目
+# 註：有時候自動買物來練功，可能會買到沒錢，而 kore 又一直買而陷入迴圈。
+
+dcOnStorageFull 0
+# 自動存倉完成後若身上負重仍高於設定值時［表示倉庫可能滿了］是否自動斷線結束
+# 註：倉庫最大只能存 300 樣物品，每樣物品最高數量 3萬個
+
+dcOnPlayer 0
+# 有任何玩家出現在視線範圍內時是否要斷線結束
+# 註：假如是掛見不得人的地圖的話，例如：未開放地圖，PVP 夢靨模式。
+
+dcOnLevel 0
+# 基本等級升級時是否要斷線結速
+
+dcOnJobLevel 0
+# 技能等級升級時是否要斷線結速
+
+dcOnServerShutDown 0
+dcOnServerClose 0
+#════════════════════════════
+#║                          ║
+#║ 人工生命體 傭兵 寵物設定 ║
+#║                          ║
+#════════════════════════════
+#══════════════
+#║ 人工生命體 ║
+#══════════════
+homunculus_attackAuto 2
+# 攻擊模式。 0 = 為不攻擊 1 = 為跟著主人攻擊 2 = 為主動攻擊
+homunculus_attackAuto_party 1
+# 生命體是否攻擊隊友的魔物
+homunculus_attackAuto_notInTown 1
+# 生命體在城鎮中是否不攻擊 ［1=不在城鎮中攻擊］
+homunculus_attackAuto_onlyWhenSafe 0
+# 生命體只在沒人看到的時候攻擊
+homunculus_attackDistance 1.5
+# 生命體最小攻擊距離
+homunculus_attackMaxDistance 2.5
+# 生命體最大攻擊距離
+homunculus_attackMaxRouteTime 4
+# 生命體離開主人去攻擊的最大時間
+homunculus_attackCanSnipe 0
+# 生命體攻擊時是否允許跨牆或高低差打怪
+homunculus_attackCheckLOS 0
+# 生命體攻擊時是否先偵測與魔物之間有無障礙物自動閃避
+homunculus_attackNoGiveup 0
+# 生命體攻擊時是否永不放棄模式
+homunculus_attackChangeTarget 1
+# 生命體攻擊時是否會轉移目標 ［0=不轉移、1=會轉移、2=若出現LOS情況，尋找更佳目標］
+
+homunculus_followDistanceMax 6
+# 生命體跟隨最大距離
+homunculus_followDistanceMin 3
+# 生命體跟隨最短距離
+
+homunculus_route_step 15
+# 生命體每次計算移動路徑的最大距離
+
+homunculus_tankMode 0
+# 生命體肉頓模式，0 = 關閉、1 = 開啟
+homunculus_tankModeTarget
+# 生命體肉盾目標 ［玩家名字］
+
+homunculus_StandByAuto 0
+# 當生命體不在視野時是否命令生命體站在原地直至玩家找到生命體，0 = 關閉、1 = 開啟
+
+#═══════════════
+#║ 生命體-瞬移 ║
+#═══════════════
+# 瞬移的是煉金/創造主人，生命體會跟著瞬移。
+
+homunculus_teleportAuto_hp 10
+# 生命體 HP 多少 % 百分比以下瞬移 
+homunculus_teleportAuto_maxDmg 500
+# 生命體被怪物打一下，損超過多少 HP 就飛走
+homunculus_teleportAuto_maxDmgInLock 0
+# 生命體在鎖定地圖，被怪物打一下，損超過多少 HP 就飛走
+homunculus_teleportAuto_deadly 1
+# 生命體再被攻擊一次會死亡的話就飛走
+homunculus_teleportAuto_unstuck 0
+# 生命體是否以瞬移嘗試解決走路呆住問題？
+homunculus_teleportAuto_dropTarget 0
+# 生命體是否當放棄攻擊目標魔物時要瞬移
+homunculus_teleportAuto_dropTargetKS 0
+# 生命體是否為了防止搶到他人的怪而放棄該怪飛走？
+homunculus_teleportAuto_totalDmg 0
+# 生命體被同一隻怪物打，累積共損多少 HP 就飛走
+homunculus_teleportAuto_totalDmgInLock 0
+# 生命體在鎖定地圖，被同一隻怪物打，累積共損多少 HP 就飛走 
+homunculus_teleportAuto_attackedWhenSitting 0
+# 生命體回否在人物坐立時被攻擊而飛走
+homunculus_runFromTarget 0
+#
+homunculus_runFromTarget_dist 6
+#
+
+#═══════════════
+#║ 生命體-餵食 ║
+#═══════════════
+# 生命體是否自動餵食
+homunculus_autoFeed 1
+
+# 生命體的餵食的飢餓度設定［11~24餵一次親密度+1］
+# 最小值
+homunculus_hungerMin 11
+# 最大值
+homunculus_hungerMax 24
+
+# 生命體飢餓的時候餵食的時間延遲值 預設隨機：10 和 60 秒
+# 最大值
+homunculus_hungerTimeoutMax 60
+# 最小值
+homunculus_hungerTimeoutMin 10
+
+# 停止餵食的滿足度最大值
+homunculus_intimacyMax 1000
+# 停止餵食的滿足度最小值
+homunculus_intimacyMin 911
+
+# 當飢餓度多少時收回生命體
+homunculus_hunger 15
+# 當飢餓度多少時收回生命體
+homunculus_return 11
+# 哪張地圖才會餵食生命體? ［空白表示全部地圖］
+homunculus_autoFeedAllowedMaps
+
+#════════
+#║ 傭兵 ║
+#════════
+mercenary_attackAuto 2
+# 攻擊模式。 0 = 為不攻擊 1 = 為跟著主人攻擊 2 = 為主動攻擊
+mercenary_attackAuto_party 1
+# 傭兵是否攻擊隊友的怪
+mercenary_attackAuto_notInTown 1
+# 傭兵在城鎮中是否攻擊
+mercenary_attackAuto_onlyWhenSafe 0
+# 生命體只在沒人看到的時候攻擊
+mercenary_attackDistance 1.5
+# 傭兵最小攻擊距離
+mercenary_attackMaxDistance 2.5
+# 傭兵最大攻擊距離
+mercenary_attackMaxRouteTime 4
+# 傭兵離開主人去攻擊的最大時間
+mercenary_attackCanSnipe 0
+# 傭兵攻擊時是否允許跨牆或高低差打怪
+mercenary_attackCheckLOS 0
+# 傭兵攻擊時是否先偵測與魔物之間有無障礙物
+mercenary_attackNoGiveup 0
+# 傭兵攻擊是否會放棄
+mercenary_attackChangeTarget 1
+# 傭兵攻擊是否會轉移目標
+mercenary_followDistanceMax 10
+# 傭兵跟隨最遠距離
+mercenary_followDistanceMin 3
+# 傭兵跟隨最短距離
+mercenary_route_step 15
+# 傭兵路徑值計算一次移動幾格
+mercenary_tankMode 0
+# 傭兵肉頓模式，0 = 關閉、1 = 開啟
+mercenary_tankModeTarget
+# 傭兵肉盾目標 ［玩家名稱］
+mercenary_teleportAuto_hp 10
+# 傭兵 HP 百分比在多少以下時瞬移 ［0 = 關閉］
+mercenary_teleportAuto_maxDmg 500
+# 傭兵被魔物一次攻擊多少 HP 以上時瞬移
+mercenary_teleportAuto_maxDmgInLock 0
+# 傭兵在鎖定地圖被魔物一次攻擊多少 HP 以上時瞬移
+mercenary_teleportAuto_deadly 1
+# 傭兵再被攻擊一次就會死亡的話是否就瞬移
+mercenary_teleportAuto_unstuck 0
+# 傭兵嘗試以瞬移解決走路呆住問題
+mercenary_teleportAuto_dropTarget 0
+# 傭兵若無法接近或傷害魔物的話就瞬移
+mercenary_teleportAuto_dropTargetKS 0
+# 傭兵是否為了防止搶到他人的怪而放棄該怪飛走
+mercenary_teleportAuto_totalDmg 0
+# 傭兵被同一隻魔物打超過多少 HP 就飛走
+mercenary_teleportAuto_totalDmgInLock 0
+# 傭兵在鎖定地圖被同一隻魔物打超過多少 HP 就飛走
+
+
+
+
+#════════
+#║ 寵物 ║
+#════════
+pet_autoFeed 1
+# 開啟/關閉寵物自動餵食
+pet_hunger 25
+# 當飢餓度多少時自動餵食
+pet_return 20
+# 當飢餓度多少時收回寵物蛋
+
+
+
+#═════════
+#║       ║
+#║  設定 ║
+#║       ║
+#═════════
+#════════════
+#║ 排程功能 ║
+#════════════
+# 需安裝 breakTime 插件 http://wiki.openkore.com/index.php?title=BreakTime
+# 以下區塊為設定 Kore 休息［停機］的時間，例如：
+# autoBreakTime Sun {
+#	startTime 21:29
+#	stopTime 01:08
+# }
+# 註：Sun 是英文縮寫禮拜日的意思，此處需用英文縮寫，時間為 24H 
+# 例如：伺服器維修時間
+# 若無設定此功能不開啟
+
+autoBreakTime {
+	startTime
+	stopTime
+}
+
+
+# 以下區塊為設定切換 config 檔的條件，當區塊內的所有條件都符合時，
+# Kore 會自動切換 config 檔，例如：
+# autoConfChange control\config_2.txt {
+#	minTime 3600
+#	varTime 1800
+#	isJob Thief
+# }
+# Kore 會在 3600 秒，至 5400 秒之間，且在角色職業為盜賊時，
+# 切換 config 檔至 control\config_2.txt
+# 可設定多組，若無設定此功能不開啟
+
+
+#════════════
+#║ 自動重啟 ║
+#════════════
+
+autoRestart 0
+# 是否自動重新啟動 ［登出後、再登入］
+autoRestartMin 10800
+# 每隔多少時間［秒］自動重新啟動
+autoRestartSeed 3600
+# 自動重新啟動的變動間隔［秒］
+
+autoRestartSleep
+# 若開啟「自動重新啟動」，則重啟時是否等待一陣子再登入
+autoSleepMin
+# 等待的最少時間間隔［秒］
+autoSleepSeed
+# 等待的時間變動間隔［秒］
+
+#═══════════════
+#║ 終端機 訊息 ║
+#═══════════════
+
+message_length_max 80
+# 訊息文字一行的最大長度［字元］
+
+verbose 1
+# 是否要顯示所有 [訊息域]？
+# 0 = 僅顯示重要的 [訊息域]，如連線資訊、錯誤資訊。
+# 1 = 顯示所有 [訊息域]
+
+showDomain 1
+# 是否顯示所有訊息的定義域
+
+showActorType 0
+# 是否顯示角色類型 例如: Player  Monster  Homunculus  Mercenary
+# 0 = 顯示
+# 1 = 顯示並加[]
+# 2 = 隱藏
+
+squelchDomains
+# 設定某些定義域的訊息不出現在 kore 視窗中
+# attackedMiss 被怪物攻擊 MISS 訊息
+# emotion 表情符號訊息
+# skill 技能訊息
+# schat 擴聲器,伺服系統訊息
+# 用,分開
+# 更多參考 http://wiki.openkore.com/index.php/Domain
+
+verboseDomains
+# 設定某些定義域的訊息要出現
+beepDomains
+# 設定某些定義域的訊息出現的話會嗶 ［電腦發出聲音］
+beepDomains_notInTown
+# 設定某些定義域的訊息若在城鎮中則不嗶
+
+#════════════════
+#║ 檢查新的傳點 ║
+#════════════════
+portalCompile 1
+# 初始化時使用檢查新傳點方式。
+#   0	檢查新的傳點，詢問用戶是否編譯如有發現［舊方式］。
+#   1	檢查新的傳點，如有發現自動編譯。
+#  -1	禁用檢查。 不要編譯傳點。
+
+
+#═══════════════════════
+#║ LOG 紀錄檔 ［交談］ ║
+#═══════════════════════
+logChat 0
+# 是否記錄一般頻道 (聊天室) 訊息［相關資料夾在logs］
+logPrivateChat 0
+# 是否記錄密頻訊息
+logPartyChat 0
+# 是否記錄隊頻訊息
+logGuildChat 0
+# 是否記錄公會頻訊息
+logSystemChat 0
+# 是否記錄伺服系統頻訊息
+logEmoticons 0
+# 是否記錄表情符號訊息
+logConsole 0
+# 是否記錄介面視窗的所有訊息至檔案
+logAppendUsername 1
+# 是否依照帳號及角色位置分檔記錄
+logAppendServer 0
+# 是否依照伺服器分檔記錄
+monsterLog 0
+# 是否記錄殺死怪物數量及資料
+logDead 0
+# 是否記錄死亡時間
+logToFile_Errors 0
+# 是否記錄錯誤訊息記錄
+logToFile_Messages 0
+# 是否記錄所有訊息記錄
+logToFile_Warnings 0
+# 是否記錄警告訊息記錄
+
+#═══════════════════════
+#║ LOG 紀錄檔 ［其它］ ║
+#═══════════════════════
+itemHistory 0
+# 是否記錄物品欄中物品進出記錄
+
+#════════
+#║ 其它 ║
+#════════
+portalRecord 1
+# 設定自動記錄傳點資訊的方法。
+# 0 = 不作用
+# 1 = 自動記錄經過的未知傳點
+# 2 = 1 + 記錄猜測的反方向傳點
+
+missDamage 0
+# 任何你傷害魔物的數值小於此設定值者將會視為 Miss
+# 0 = 關閉此功能、>1以上 = 數值
+
+autoTalkCont 0
+# 是否與 NPC 自動對話至出現選項
+
+npcTimeResponse 10
+# 等待 NPC 回應［秒］，超過時間則放棄
+#與 NPC 對話會等待到指定時間才判定「NPC 無回應」或是「找不到 NPC」
+#但若是在對話中發生 LAG 導致對話命令執行錯誤則會出現以下錯誤訊息
+#根據給定的 NPC 對話命令串，選單項目現在應被選擇，但卻無法執行
+
+chatTitleOversize 0
+# 用 kore 開啟聊天室時，是否允許標題超過 36個字元［遊戲限制］
+# 一般不使用的這個功能，因為這等於宣告大家你用 BOT
+
+shopTitleOversize 0
+# 用 kore 開啟露天商店時時，是否允許標題超過 36個字元［遊戲限制］
+# 一般不使用的這個功能，因為這等於宣告大家你用 BOT
+
+noAutoSkill 0
+# 當角色身上有技能和物品能力相同，例如：蝴蝶翅膀.蒼蠅翅膀
+# 將此選項設為 1，會造成蒼翅使用無效化
+# 開啟後即使在指令中下達使用蝴蝶翅膀，kore仍只會接受使用技能
+
+sleepTime 50000
+# 單位毫秒 ms，kore 在每個 cpu 週期暫停的時間
+# 無須設定，良好的設定可改善 cpu 資源耗用太高的問題
+# 如果你只執行一個或兩個外掛 那麼你應該給它設為默認值 10000
+# 但是，如果您同時打開數個外掛 情況下，值 50000 是建議的
+# 它一般不建議設定值高於 200000，因為它會使你的外掛沒回應。
+
+whenInGame_requestCashPoints 0
+# 連接到地圖伺服器時是否馬上打開商城介面
+# twRO 未經測試之設定
+
+friendlyAID
+# 當此好友上線時, 會顯示對方資料 [角色AID]
+
+showTimeDomains
+# 指定某domain訊息是否顯示時間
+
+showTimeDomainsFormat
+# 指定showTimeDomains顯示時間的格式 (有待更進)
+
+wx_map_maxAutoSize 300
+# 指定WX地圖顯示的大小限制 [此設定會同時限制Width和Height] [預設值為300]
+
+wx_map_monsterSticking 1
+# 指定WX地圖內怪物點和滑鼠觸發選單的距離 [建議勿修改] [1或以上 = 距離, -1 = 關閉此功能]
+
+wx_map_npcSticking 1
+# 指定WX地圖內NPC點和滑鼠觸發選單的距離 [建議勿修改] [1或以上 = 距離, -1 = 關閉此功能]
+
+wx_map_playersSticking 1
+# 指定WX地圖內角色點和滑鼠觸發選單的距離 [建議勿修改] [1或以上 = 距離, -1 = 關閉此功能]
+
+wx_map_portalSticking 5
+# 指定WX地圖內傳送點和滑鼠觸發選單的距離 [建議勿修改] [1或以上 = 距離, -1 = 關閉此功能]
+
+wx_npcTalk
+# 是否顯示NPC對話框 [1 = 使用, 0或空白 = 關閉此功能]
+
+wx_map_route
+#
+
+showAllDamage 0
+#
+
+forumURL http://optw.nva-hk.com
+
+#═════════════════
+#║               ║
+#║ 除錯模式 設定 ║
+#║               ║
+#═════════════════
+# 一般不需要改動以下設定
+debug 0
+debugPacket_unparsed 0
+debugPacket_received 0
+debugPacket_ro_sent 0
+debugPacket_sent 0
+debugPacket_exclude
+debugPacket_include
+debugPacket_include_dumpMethod
+debugDomains
+logToFile_Messages
+logToFile_Errors
+logToFile_Debug
+logToFile_Warnings
+
+showTime 0
+# debug訊息內是否在每句訊息開首加上時間

@@ -1,0 +1,1777 @@
+#Тренировка арчеров
+
+macro ArcherTrainingStart {
+[
+	log Начинаем тренировку Лучников
+	do conf include off Archer_1
+	do conf lockMap payon_in02
+	do conf lockMap_x 64
+	do conf lockMap_y 65
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	do conf QuestPart ArcherTraining0
+]	
+}
+
+automacro ArcherTraining0 {
+	class Archer
+	location payon_in02 64 65
+	eval $::config{QuestPart} eq "ArcherTraining0"
+	run-once 1
+	call ArcherTraining0M
+}
+macro ArcherTraining0M {
+	log Нужная для начала квеста непись (Бард Джет) где-то рядом
+	pause @rand(2,3)
+	do talknpc 67 65 c c c c c r0 c c c
+	do conf lockMap pay_arche
+	do conf lockMap_x none
+	do conf lockMap_y none
+	do conf QuestPart ArcherTraining1
+}
+#1)
+#Бард Джет#tu                 (67, 65) 
+#do move payon_in02 64 65
+#do talknpc 67 65 c c c c c r0 c c c
+# talk 0
+# Бард Джет#tu: [Джет]
+# Бард Джет#tu: Ни один бог не может состариться,
+# Бард Джет#tu: потому что об этом заботится
+# Бард Джет#tu: прекрасная богиня Идун. Она
+# Бард Джет#tu: хранит молодильные яблоки,
+# Бард Джет#tu: о, богиня бессмертия.
+# Бард Джет#tu: Type 'talk cont' to continue talking
+# talk cont
+# Бард Джет#tu: [Джет]
+# Бард Джет#tu: О, вы лучник? Бывали времена,
+# Бард Джет#tu: когда я тоже был лучником. Но я
+# Бард Джет#tu: избрал другую профессию и теперь веселю народ своими песнями и шутками.
+# Бард Джет#tu: Type 'talk cont' to continue talking
+# talk cont
+# Бард Джет#tu: [Джет]
+# Бард Джет#tu: Кстати о птичках...
+# Бард Джет#tu: Хотите, расскажу шутку?!
+# Бард Джет#tu: Вы только послушайте!
+# Бард Джет#tu: *Хм*
+# [dist=3] Бард Джет#tu (0): *!*
+# Бард Джет#tu: Type 'talk cont' to continue talking
+# talk cont
+# Бард Джет#tu: [Джет]
+# Бард Джет#tu: Муравей пришел в бар и говорит,
+# Бард Джет#tu: 'Этот бар продается?'
+# Бард Джет#tu: Хахахахаха!
+# Бард Джет#tu: Буааххахаха!
+# [dist=3] Бард Джет#tu (0): *Heart*
+# Бард Джет#tu: Type 'talk cont' to continue talking
+# talk cont
+# Бард Джет#tu: [Джет]
+# Бард Джет#tu: Хахахаха!
+# Бард Джет#tu: Отлиииично, весело!
+# Бард Джет#tu: Теперь вы попробуйте!
+# Бард Джет#tu: Давайте, пошутите!
+# [dist=3] Бард Джет#tu (0): *Good Game*
+# Бард Джет#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Крик!
+# 1  Cancel Chat
+# -------------------------------
+# Бард Джет#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Unknown #402581: **
+# Бард Джет#tu: [Джет]
+# Бард Джет#tu: Ууух... Не знаю, ничего не понял,
+# Бард Джет#tu: но это впечатляет. Вам точно
+# Бард Джет#tu: надо стать танцовщицей...
+# [dist=3] Бард Джет#tu (0): *Nice One*
+# Бард Джет#tu: Type 'talk cont' to continue talking
+# talk cont
+# Бард Джет#tu: [Джет]
+# Бард Джет#tu: Но перед этим вам придется побыть лучником!
+# Бард Джет#tu: Type 'talk cont' to continue talking
+# talk cont
+# Бард Джет#tu: [Джет]
+# Бард Джет#tu: Я являюсь членом гильдии лучников
+# Бард Джет#tu: 'Икар', которая переехала из
+# Бард Джет#tu: центра смены профессии. Вам предстоит многому научиться.
+# Бард Джет#tu: Type 'talk cont' to continue talking
+# talk cont
+# Бард Джет#tu: [Джет]
+# Бард Джет#tu: Идите учитесь и меняйте профессию.
+# Бард Джет#tu: Тогда вы сможете играть со мной!
+# Бард Джет#tu: Done talking
+
+
+automacro ArcherTraining1 {
+	class Archer
+	location payon_in02, pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining1"
+	run-once 1
+	call ArcherTraining1M
+}
+macro ArcherTraining1M {
+	log Идем в соседнее здание говорить с "Мастер Каварук" (payon_in02 54, 13)
+	pause @rand(2,3)
+	do move payon_in02 50 7
+	pause @rand(2,3)
+	#Косячный разговор!
+	do talknpc 54 13 c r2 c r0 c c c c c c c c c
+	do conf QuestPart ArcherTraining2
+}
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: Здравствуйте, неофит.
+# Мастер Каварук: Я мастер Каварук из гильдии
+# Мастер Каварук: 'Икар'. Я приветствую вас.
+# Мастер Каварук: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Спросить про Икара.
+# 1  Узнать новости.
+# 2  Поговорить о лучниках.
+# 3  Cancel Chat
+# -------------------------------
+# Мастер Каварук: Type 'talk resp #' to choose a response.
+# [dist=9.8] Алач (1): *Flag 8*
+# talk resp 2
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: Я вижу, вы хотите убедиться, что
+# Мастер Каварук: базовые ценности нашей профессии крепко застряли в вашей голове. Желаете прослушать инструкцию по специализации?
+# Мастер Каварук: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Да
+# 1  Нет
+# 2  Cancel Chat
+# -------------------------------
+# Мастер Каварук: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: О да. Тогда, пожалуйста, отдайте
+# Мастер Каварук: эту депешу Сейснер. Она на тренировочной площадке к западу от штаба 'Икара'.
+# Мастер Каварук: Type 'talk cont' to continue talking
+# talk cont
+# Мастер Каварук: Type 'talk cont' to continue talking
+# Мастер Каварук: Вы получаете депешу Каварука для Сейснер.
+# Мастер Каварук: Type 'talk cont' to continue talking
+
+
+automacro ArcherTraining2 {
+	class Archer
+	location payon_in02, pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining2"
+	run-once 1
+	call ArcherTraining2M
+}
+macro ArcherTraining2M {
+	log Говорим первый раз с "Сейснер" (pay_arche 84, 139)
+	pause @rand(2,3)
+	do move pay_arche 84 134
+	pause @rand(2,3)
+	do talknpc 84 139 c c c c c r0 c c c c c c r2 c
+	do conf QuestPart ArcherTraining3
+}
+
+automacro ArcherTraining3 {
+	class Archer
+	location payon_in02, pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining3"
+	run-once 1
+	call ArcherTraining3M
+}
+macro ArcherTraining3M {
+	log Говорим второй раз с "Сейснер" (pay_arche 84, 139)
+	pause @rand(2,3)
+	do move pay_arche 84 134
+	pause @rand(2,3)
+	do talknpc 84 139 c c c c
+	#+1 job 
+	do conf QuestPart ArcherTraining4
+}
+
+#3) Говорим два раза!
+# talk 0
+# #Target: **
+# Сейснер: [Сейснер]
+# Сейснер: Аааааа!
+# Сейснер: Двойной выстрел!
+# #Target: **
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: У меня получилось!
+# Сейснер: Только истинный лучник может
+# Сейснер: сделать такой выстрел!
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: Конечно, я в курсе, что некоторые
+# Сейснер: воры тоже стреляют из лука, но у
+# Сейснер: них все-таки лучше получается обращаться с ножами. Мы, лучники - специалисты по стрелам!
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: Вы показываете Сейснер письмо от
+# Сейснер: мастера Каварука с рекомендацией для вас.
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: Так мастер Каварук хочет, чтобы
+# Сейснер: я учила вас искусству Лучника?
+# Сейснер: Хорошо, и что вы хотите знать?
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Про лучников.
+# 1  Характеристики.
+# 2  Закончить беседу.
+# 3  Cancel Chat
+# -------------------------------
+# Сейснер: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Сейснер: [Сейснер]
+# Сейснер: Лучники специализируются на
+# Сейснер: стрельбе из луков. Обычно мы атакуем с расстояния, потому что, пока мы не научимся как следует уворачиваться, мы откровенно слабы в ближнем бою.
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: Именно поэтому лучники стараются
+# Сейснер: убить противника до того, как он
+# Сейснер: приблизится. И еще мы любим брать в партии тех друзей, кто предпочитает ближний бой.
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: Только новички могут стать
+# Сейснер: лучниками после получения 10-го
+# Сейснер: профессионального уровня и 9-го уровня 'Базовых Навыков'.
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: Опытные лучники могут поменять профессию и стать Охотниками, Бардами, если они мужчины, или Танцовщицами, если женщины.
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: После достижения 99-го уровня вы
+# Сейснер: сможете стать экспертом в своей профессии с помощью Валькирии.
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: Охотники-эксперты называются Снайперы, Барды - Менестрели, а Танцовщицы - Цыганки. Как вам такие перспективы?
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Про лучников.
+# 1  Характеристики.
+# 2  Закончить беседу.
+# 3  Cancel Chat
+# -------------------------------
+# Сейснер: Type 'talk resp #' to choose a response.
+# talk resp 2
+# Сейснер: [Сейснер]
+# Сейснер: Когда лучник выпускает стрелу,
+# Сейснер: он не может остановить ее полет или изменить направление. Именно поэтому лучникам стоит быть очень внимательными в бою.
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: Когда-нибудь я стану достойной лучницей и буду использовать свои умения на благо Мидгарда.
+# Сейснер: Done talking
+# talk 0
+# #Target: **
+# Сейснер: [Сейснер]
+# Сейснер: Аааааа!
+# Сейснер: Двойной выстрел!
+# #Target: **
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: У меня получилось!
+# Сейснер: Только истинный лучник может
+# Сейснер: сделать такой выстрел!
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: Конечно, я в курсе, что некоторые
+# Сейснер: воры тоже стреляют из лука, но у
+# Сейснер: них все-таки лучше получается обращаться с ножами. Мы, лучники - специалисты по стрелам!
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: Спасибо за внимание. Я рассказала
+# Сейснер: вам много всего и искренне
+# Сейснер: надеюсь, что это пригодится вам в жизни.
+# Сейснер: Type 'talk cont' to continue talking
+# talk cont
+# Сейснер: [Сейснер]
+# Сейснер: Если вам достаточно рассказанного, возвращайтесь к мастеру Каваруку. Но если у вас еще есть вопросы, спрашивайте, не стесняйтесь.
+# Сейснер: Done talking
+# Unknown #402581: **
+# You are now job level 2
+# You gained a job level!
+# Exp gained: 0/0 (0.00%/0.00%)
+
+automacro ArcherTraining4 {
+	class Archer
+	location payon_in02, pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining4"
+	run-once 1
+	call ArcherTraining4M
+}
+macro ArcherTraining4M {
+	log Возвращаемся к "Мастер Каварук" (payon_in02 54, 13) 
+	log и говорим, что доставили письмо "Сейснер" (pay_arche 84, 139).
+	log Нас отправляют к "Рейдин Корс" (pay_arche 103, 165).
+	pause @rand(2,3)
+	do move payon_in02 50 7
+	pause @rand(2,3)
+	do talknpc 54 13 c r2 c
+	do conf QuestPart ArcherTraining5
+}
+# Мастер Каварук               (54, 13)      52576
+# talk 0
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: Здравствуйте, неофит.
+# Мастер Каварук: Я мастер Каварук из гильдии
+# Мастер Каварук: 'Икар'. Я приветствую вас.
+# Мастер Каварук: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Спросить про Икара.
+# 1  Узнать новости.
+# 2  Поговорить о лучниках.
+# 3  Cancel Chat
+# -------------------------------
+# Мастер Каварук: Type 'talk resp #' to choose a response.
+# talk resp 2
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: Так, Игрунья, есть ли
+# Мастер Каварук: у вас опыт? Теория - это замечательно, но без практики она мертва.
+# Мастер Каварук: Type 'talk cont' to continue talking
+# talk cont
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: Пришло время обучить вас принципам из первых рук. Поговорите с Рейдином Корсом, он снаружи здания, и он расскажет вам о различных умениях.
+# Мастер Каварук: Done talking
+
+automacro ArcherTraining5 {
+	class Archer
+	location payon_in02, pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining5"
+	run-once 1
+	call ArcherTraining5M
+}
+macro ArcherTraining5M {
+	log Идем к "Рейдин Корс" (pay_arche 103, 165) и говорим с ним в первый раз.
+	pause @rand(2,3)
+	do move pay_arche 105 162
+	pause @rand(2,3)
+	do talknpc 103 165 c r0 c c c r0 c c c c
+	do conf QuestPart ArcherTraining6
+}
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Что такое?
+# Рейдин Корс#tu: Могу я чем-нибудь вам помочь?
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Расскажите про умения.
+# 1  Не думаю...
+# 2  Cancel Chat
+# -------------------------------
+# Рейдин Корс#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Так это мастер Каварук сказал вам
+# Рейдин Корс#tu: прийти ко мне? Хорошо...
+# [dist=3.6] Рейдин Корс#tu (0): *Good Game*
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Хорошо, я очень занят, но найду
+# Рейдин Корс#tu: для вас минутку. Я научу вас всему, что знаю об умениях лучника!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: С этого момента вы должны называть
+# Рейдин Корс#tu: меня Шеф, ясно? Повторяйте за
+# Рейдин Корс#tu: мной, и вы станете вторым лучшим лучником мира! Ну как?
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Отлично, Шеф!
+# 1  Уф, нет, пожалуй!
+# 2  Cancel Chat
+# -------------------------------
+# Рейдин Корс#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Хохо! Начнем!
+# Рейдин Корс#tu: И не забудьте, отныне вы должны
+# Рейдин Корс#tu: называть меня Шеф, ясно?
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Посмотрим...
+# Рейдин Корс#tu: Как много вы знаете?
+# Рейдин Корс#tu: Мммммм...
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: Рейдин Корс смерил вас оценивающим взглядом.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Отлично - вижу, вы совсем новичок
+# Рейдин Корс#tu: в нашем деле! Вам повезло, что вы попали ко мне, учителя лучше меня не найти! Но я должен предупредить, я учу очень быстро! Постарайтесь держать темп.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Хорошо, я готов начать! Возвращайтесь, когда захватите свой верный лук и побольше стрел.
+# Рейдин Корс#tu: Done talking
+
+automacro ArcherTraining6 {
+	class Archer
+	location payon_in02, pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining6"
+	run-once 1
+	call ArcherTraining6M
+}
+macro ArcherTraining6M {
+	log Говорим второй раз с "Рейдин Корс" (pay_arche 103, 165).
+	log Нас варпают в пронту и советуют кач на кондорах, 
+	log (conf lockMap prt_fild09) но там их всего 10 штук!
+	log Поэтому мы пойдем справа от пронты качаться.
+	log Owl's Eye качаем до 3 лвл. 
+	pause @rand(2,3)
+	do move pay_arche 105 162
+	pause @rand(2,3)
+	do talknpc 103 165 c c r0 c r0 c c c c c c r0 c r0 c
+	do conf QuestPart ArcherTraining7
+}
+
+automacro ArcherTraining7 {
+	class Archer
+	location prontera
+	eval $::config{QuestPart} eq "ArcherTraining7"
+	run-once 1
+	call ArcherTraining7M
+}
+macro ArcherTraining7M {
+	log Мы в пронте, сохраняемся, прописываемся, идем качать Owl's Eye до 3 лвл. 
+	pause @rand(2,3)
+	call savetown
+	call conftown
+	do conf lockMap prt_fild06
+	do conf route_randomWalk 1
+	do conf attackAuto 2
+	do conf attackDistanceAuto 1
+	do mconf Thief Bug 0 0 0
+	do mconf Lunatic 1 0 0
+	do mconf Pupa 0 0 0
+	do mconf Poring 1 0 0
+	do mconf Green Plant 0 0 0
+	do mconf Thief Bug's Egg 1 0 0
+	do conf QuestPart ArcherTraining8
+}
+
+automacro ArcherTraining8 {
+	class Archer
+	location prontera, prt_in, prt_fild06
+	eval ($::config{QuestPart} eq "ArcherTraining8") and ($::char->getSkillLevel(new Skill(name => "Owl's Eye")) >= 3)
+	run-once 1
+	call ArcherTraining8M
+}
+macro ArcherTraining8M {
+	log Мы прокачали Owl's Eye до 3 лвл! Идем в Пайон!
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	do conf lockMap none
+	pause @rand(2,3)
+	if (@invamount(Free Ticket for Kafra Transportation) < 1) goto end
+		log Идем к левой кафре в пронте.
+		do move prontera @rand(32,38) @rand(196,200)
+		log Делаем ТП в пайон
+		pause @rand(2,3)
+		do talknpc 29 207 c r2 c r2
+		goto end
+	:end
+	do conf lockMap pay_arche
+	do conf QuestPart ArcherTraining9
+}
+
+
+#Говорим еще два раза раз
+#do move pay_arche 105 162
+#do talknpc 103 165 c c r0 c r0 c c c c c c r0 c r0 c
+#мы в пронте. нам посоветовали кач на Кондорах. (conf lockMap prt_fild09) Но там их всего 10 штук!
+#Надо найти другое место.
+#Owl's Eye качаем до 3 лвл. 
+# -----------NPC List-----------
+# #    Name                         Coordinates   ID
+# 0    Рейдин Корс#tu               (103, 165)    52577
+# 1    Продавец лучников#Bow        (99, 167)     57244
+# 2    Продавщица био-зелий#Bo      (102, 167)    57247
+# 3    Арпесто                      (109, 169)    52578
+# ---------------------------------
+# talk 0
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Готовы? Излишне напоминать, что я
+# Рейдин Корс#tu: не отличаюсь терпением и жалеть никого не буду. Вы станете лучшим лучником в мире, я сказал! После меня, конечно.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Не нравится - выход рядом!
+# Рейдин Корс#tu: Никто тут прыгать вокруг вас не будет.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Научите меня... Шеф!
+# 1  Я ухожу.
+# 2  Cancel Chat
+# -------------------------------
+# Рейдин Корс#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Именно! Это то, чего я хочу! Доверьтесь мне, и вы будете знать об умениях лучника все! Начнем!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Да, Шеф!
+# 1  Cancel Chat
+# -------------------------------
+# Рейдин Корс#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# [dist=3.6] Рейдин Корс#tu (0): *Ok*
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Великолепно!
+# Рейдин Корс#tu: Вы мне нравитесь!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Откройте свое окно умений (Alt+S). Вы увидите два доступных умения: 'Глаз Филина' и 'Двойной Выстрел'. Для начала поговорим об умении 'Глаз Филина'.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Мы, лучники, должны всегда следить за своей целью. Даже ночью жертва не ускользнет от ока совы.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Потому мы и тренируем наше
+# Рейдин Корс#tu: зрение - чтобы видеть, как совы. Если вы не можете прицелиться во врага, вы никудышный лучник! Нам всем нужна точность!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Итак, первое задание - выучить
+# Рейдин Корс#tu: 3-ий уровень 'Глаза Филина'!
+# Рейдин Корс#tu: Если отправиться из Пронтеры на юго-запад, вы найдете Кондоров для тренировки.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Вы, конечно, можете охотиться и в
+# Рейдин Корс#tu: других местах, но если вы не
+# Рейдин Корс#tu: знаете хороших мест для тренировки, последуйте моему великому совету.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Последую, Шеф!
+# 1  Погуляю где-нибудь еще...
+# 2  Cancel Chat
+# -------------------------------
+# Рейдин Корс#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Я отправлю вас в Пронтеру.
+# Рейдин Корс#tu: Не забудьте указания, которые я
+# Рейдин Корс#tu: вам дал. Отправляйтесь на юго-запад от города.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Прямо сейчас!
+# 1  Погодите!
+# 2  Cancel Chat
+# -------------------------------
+# Рейдин Корс#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Когда вы будете преодолевать
+# Рейдин Корс#tu: трудности тренировки, подумайте,
+# Рейдин Корс#tu: что с каждым шагом вы все ближе к
+# Рейдин Корс#tu: званию Второго Лучшего Лучника в мире!
+# [dist=3.6] Рейдин Корс#tu (0): *...*
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Хорошо!
+# Рейдин Корс#tu: Отправляемся в Пронтеру!
+# Рейдин Корс#tu: Done talking
+# MAP Name: prontera.gat
+# Your Coordinates: 116, 72
+
+
+
+automacro ArcherTraining9 {
+	class Archer
+	location pay_arche, payon_in02
+	eval $::config{QuestPart} eq "ArcherTraining9"
+	run-once 1
+	call ArcherTraining9M
+}
+macro ArcherTraining9M {
+	do conf lockMap none
+	log Докладываем "Рейдин Корс", что мы вкачали Owl's Eye до 3 лвл.
+	log Получаем награду - лвл.
+	pause @rand(2,3)
+	do move pay_arche 105 162
+	pause @rand(2,3)
+	do talknpc 103 165 c c c
+	do conf QuestPart ArcherTraining10
+}
+# Рейдин Корс#tu               (103, 165)    52577
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Вы наконец-то вернулись.
+# Рейдин Корс#tu: Вы заставили меня ждать!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# [dist=3.6] Рейдин Корс#tu (0): *!*
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Ваш взгляд кажется мне более
+# Рейдин Корс#tu: острым! А это маленькая награда для вас.
+# Unknown #402581: **
+# You are now level 13
+# You gained a level!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# [dist=3.6] Рейдин Корс#tu (0): *Pfft*
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Неплохо бы повысить до максимума
+# Рейдин Корс#tu: 'Глаз Филина'. Это значит, что
+# Рейдин Корс#tu: надо учиться, пока он не станет 10-го уровня!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Думаю, я поговорю о другом умении
+# Рейдин Корс#tu: на следующей лекции, хорошо?
+# Рейдин Корс#tu: Возвращайтесь, когда будете готовы
+# Рейдин Корс#tu: к чему-то новому.
+# Рейдин Корс#tu: Done talking
+
+
+
+automacro ArcherTraining10 {
+	class Archer
+	location pay_arche, payon_in02
+	eval $::config{QuestPart} eq "ArcherTraining10"
+	run-once 1
+	call ArcherTraining10M
+}
+macro ArcherTraining10M {
+	log Говорим с "Рейдин Корс". Нас варпают в Пронту, идем качать Vulture's Eye до 3 лвл на Мандрагорах.
+	log Для этой цели дали в подарок 300 огнестрел.
+	pause @rand(2,3)
+	do move pay_arche 105 162
+	pause @rand(2,3)
+	do talknpc 103 165 c c r1 c c c c c c c c c c r0
+	do conf QuestPart ArcherTraining11
+}
+
+automacro ArcherTraining11 {
+	class Archer
+	location prontera
+	eval $::config{QuestPart} eq "ArcherTraining11"
+	run-once 1
+	call ArcherTraining11M
+}
+macro ArcherTraining11M {
+	log Идем качаться на Мандрагорах.
+	pause @rand(2,3)
+	do conf autoSwitch_default_arrow Fire Arrow
+	do eq Fire Arrow
+	do iconf Fire Arrow 300 0 0
+	do mconf Mandragora 1 0 0
+	do mconf Thief Bug 0 0 0
+	do mconf Fabre 0 0 0
+	do mconf Lunatic 0 0 0
+	do mconf Pupa 0 0 0
+	#Бежать от цели... дистанцию по больше поставить надо.
+	do conf attackAuto 2
+	do conf route_randomWalk 1
+	do conf attackDistanceAuto 1
+	do conf lockMap prt_fild02
+	do conf QuestPart ArcherTraining12
+}
+
+
+automacro ArcherTraining12 {
+	class Archer
+	location prontera, prt_in, prt_fild02
+	eval ($::config{QuestPart} eq "ArcherTraining12") and ($::char->getSkillLevel(new Skill(name => "Vulture's Eye")) >= 3)
+	run-once 1
+	call ArcherTraining12M
+}
+macro ArcherTraining12M {
+	log Мы прокачали Vulture's Eye до 3 лвл! Идем в Пайон!
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	do conf lockMap none
+	pause @rand(2,3)
+	if (@invamount(Free Ticket for Kafra Transportation) < 1) goto end
+		log Идем к левой кафре в пронте.
+		do move prontera @rand(32,38) @rand(196,200)
+		log Делаем ТП в пайон
+		pause @rand(2,3)
+		do talknpc 29 207 c r2 c r2
+		goto end
+	:end
+	do conf lockMap pay_arche
+	do conf QuestPart ArcherTraining13
+}
+
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Хорошо, откройте свое окно умений.
+# Рейдин Корс#tu: Так как вы уже знаете 3-ий уровень
+# Рейдин Корс#tu: 'Глаза Филина', теперь вы можете
+# Рейдин Корс#tu: увидеть в списке 'Глаз Орла'.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Когда вы думаете об орлах, что вам
+# Рейдин Корс#tu: сразу же приходит в голову?
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Острый, точный взгляд.
+# 1  Вы, Шеф!
+# 2  Cancel Chat
+# -------------------------------
+# Рейдин Корс#tu: Type 'talk resp #' to choose a response.
+# talk resp 1
+# [dist=3.6] Рейдин Корс#tu (0): *Love*
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Хахаха!
+# Рейдин Корс#tu: О да, я знаменит своим невероятным
+# Рейдин Корс#tu: зрением и точностью!
+# Рейдин Корс#tu: *Откашливается* Однако...
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Орлы кружат по небу, находят цель на земле, стремительно падают вниз и уносят добычу в своих когтях.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# [dist=3.6] Рейдин Корс#tu (0): *Heart*
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Не сомневайтесь, орлы могучи!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Умение 'Глаз Орла' позволяет
+# Рейдин Корс#tu: натренировать зрение до степени орлиного. Оно увеличивает точность и не позволяет жертве избежать ваших когтей.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# [dist=3.6] Рейдин Корс#tu (0): *??*
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Я знаю, что вы уже можете стрелять
+# Рейдин Корс#tu: издалека, но не удовлетворяйтесь
+# Рейдин Корс#tu: расстоянием, которое доступно вам сейчас. Выучив 'Глаз Орла', вы сможете поражать цель с еще большей дистанции.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: А теперь второе задание!
+# Рейдин Корс#tu: Идите на охоту на Мандрагор!
+# Рейдин Корс#tu: Мандрагоры не двигаются, так что
+# Рейдин Корс#tu: они идеальны для тренировок атак
+# Рейдин Корс#tu: на дистанции! Желаю вам удачи!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Мандрагоры обычно живут в районе
+# Рейдин Корс#tu: горы Мьелльнир. Я отправлю вас в Пронтеру, идите оттуда на северо-восток - и вы найдете их.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Помните: самое важное - это
+# Рейдин Корс#tu: повышать уровень 'Глаза Орла' и пробовать себя в атаках на дальние дистации.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Это небольшое поощрение. Так как Мандрагора имеет земляной элемент, эти огненные стрелы весьма вам помогут.
+# Item added to inventory: Fire Arrow (13) x 300 - Arrows
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Хорошо!
+# Рейдин Корс#tu: Готовы?
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Всегда!
+# 1  М...минутку!
+# 2  Cancel Chat
+# -------------------------------
+# Рейдин Корс#tu: Type 'talk resp #' to choose a response.
+# talk resp 0
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Хорошо!
+# Рейдин Корс#tu: Вперед!
+# Рейдин Корс#tu: Done talking
+# ---------Map  Info----------
+# MAP Name: prontera.gat
+# Your Coordinates: 116, 72
+
+
+automacro ArcherTraining13 {
+	class Archer
+	location pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining13"
+	run-once 1
+	call ArcherTraining13M
+}
+macro ArcherTraining13M {
+	do conf lockMap none
+	log Докладываем "Рейдин Корс", что мы прокачали Vulture's Eye до 3 лвл.
+	pause @rand(2,3)
+	do move pay_arche 105 162
+	pause @rand(2,3)
+	do talk @npc(103 165)
+	do conf QuestPart ArcherTraining14
+}
+
+###############
+# 2    Рейдин Корс#tu               (103, 165)    52577
+# talk 2
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: А, так вы уже выучили кое-что о
+# Рейдин Корс#tu: 'Глазе Орла'! Ну, что скажете? А вот и маленькая награда перед тем, как мы перейдем к следующему уроку.
+# Item added to inventory: Fire Arrow (13) x 500 - Arrows
+# Рейдин Корс#tu: Done talking
+##################
+
+automacro ArcherTraining14 {
+	class Archer
+	location pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining14"
+	run-once 1
+	call ArcherTraining14M
+}
+macro ArcherTraining14M {
+	log Говорим с "Рейдин Корс", получаем лвл и джоб. Нам показывают скил "Двойной выстрел".
+	pause @rand(2,3)
+	do move pay_arche 105 162
+	pause @rand(2,3)
+	do talknpc 103 165 c c c c c c c c
+	do conf QuestPart ArcherTraining15
+}
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Хорошо...
+# Рейдин Корс#tu: Итак, мы выучили пассивные умения,
+# Рейдин Корс#tu: 'Глаз Филина' и 'Глаз Орла'.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Даже если вы ничего не делаете,
+# Рейдин Корс#tu: пассивные умения продолжают работать. Теперь же пришло время обучить вас активным умениям лучников.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Сегодня я расскажу вам об умении
+# Рейдин Корс#tu: 'Двойной Выстрел'!
+# Рейдин Корс#tu: Ну, что скажете?
+# Рейдин Корс#tu: Впечатляет?
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Согласно названию, 'Двойной Выстрел' позволяет атаковать врага два раза подряд!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: С ростом уровня 'Двойной Выстрел' наносит больше урона. Если повысить умение на максимум, урон будет невероятным!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Держите свой лук и стрелу вот так,
+# Рейдин Корс#tu: сконцентрируйтесь, прицельтесь и
+# Рейдин Корс#tu: выстрелите дважды со всей силы!
+# Рейдин Корс#tu: Практикуйте 'Двойной Выстрел'
+# Рейдин Корс#tu: регулярно, и он поможет вам в жизни!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# You are now job level 8
+# You gained a job level!
+# Exp gained: 45/203 (6.43%/74.63%)
+# [dist=6.3] Рейдин Корс#tu (2): *Nice One*
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Теперь о другом умении... Оно называется 'Град Стрел'. В то время как 'Двойной Выстрел' использует две стрелы, 'Град Стрел' стреляет целым пучком стрел.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Даже я не так хорошо владею
+# Рейдин Корс#tu: 'Градом Стрел', так что у вас есть шанс потренироваться и достигнуть совершенства!
+# [dist=6.3] Рейдин Корс#tu (2): *Heh*
+# Рейдин Корс#tu: Done talking
+
+automacro ArcherTraining15 {
+	class Archer
+	location pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining15"
+	run-once 1
+	call ArcherTraining15M
+}
+macro ArcherTraining15M {
+	log Говорим с "Рейдин Корс". Надо идти на остров-череп,
+	log надо добыть 10 Tentacle с гидр и 1 Crystal Blue с грибов.
+	pause @rand(2,3)
+	do move pay_arche 105 162
+	pause @rand(2,3)
+	do talknpc 103 165 c c c c
+	do conf QuestPart ArcherTraining16
+	#А дальше пешочком, батенька... пешочком.
+}
+
+automacro ArcherTraining16p {
+	class Archer
+	location pay_arche, payon
+	eval $::config{QuestPart} eq "ArcherTraining16"
+	run-once 1
+	call ArcherTraining16pM
+}
+macro ArcherTraining16pM {
+	log Идем в излюд.
+	pause @rand(2,3)
+	#!!!
+	#Вот в этом месте можно сделать проверку на Тентакли и Синий кристал.
+	#
+	#
+	if (@invamount(Free Ticket for Kafra Transportation) < 1) goto end
+		log Идем к Кафре в Пайоне, делаем тп.
+		do move payon @rand(178,181) @rand(99,100)
+		log Делаем тп в пронту.
+		pause @rand(2,3)
+		do talknpc 181 104 w2 c w2 r2 w2 c w2 r0 w2
+		goto end
+	:end
+	do conf lockMap izlude
+}
+
+
+automacro ArcherTraining16 {
+	class Archer
+	location izlude
+	eval $::config{QuestPart} eq "ArcherTraining16"
+	run-once 1
+	call ArcherTraining16M
+}
+macro ArcherTraining16M {
+	log Мы в излюде, сохраняемся, прописываемся.
+	do conf lockMap none
+	call savetown
+	call conftown
+	log Продадим лут из карманов. Он еще с нубозоны у нас лежит.
+	do autosell
+	do conf QuestPart ArcherTraining17
+}
+
+automacro ArcherTraining17 {
+	class Archer
+	location izlude
+	eval $::config{QuestPart} eq "ArcherTraining17"
+	run-once 1
+	call ArcherTraining17M
+}
+macro ArcherTraining17M {
+	log Идем качаться на гидрах и грибах.
+	do conf autoSwitch_default_arrow Arrow
+	do eq Arrow
+	do mconf Hydra 1 0 0
+	do mconf Black Mushroom 1 0 0
+	do mconf Plankton 0 0 0
+	do mconf Vadon 0 0 0
+	do mconf Kukre 0 0 0
+	do mconf Marina 0 0 0
+	do conf lockMap iz_dun00
+	do conf route_randomWalk 1
+	do conf attackAuto 2
+	#Кто умнее - подскажите, как правильно настроить лучника на строячие цели типа гидр
+	do conf attackDistance 7
+	do conf attackDistanceAuto 1
+	do conf attackMaxDistance 10
+	#runFromTarget 0
+	#runFromTarget_dist 6
+	#чтобы отходить от гидр, если слишком близко подошли
+	do conf runFromTarget 1
+	do conf runFromTarget_dist 9
+	do iconf Tentacle 10 0 0
+	do iconf Crystal Blue 1 0 0
+	do conf QuestPart ArcherTraining18
+}
+
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Я обучил вас массе полезных вещей, теперь я хочу убедиться, что все было не зря. Поэтому у нас будет маленький экзамен. Ваша задача: атаковать Гидр!
+# [dist=6.3] Рейдин Корс#tu (2): *Nice One*
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Корабль, на котором можно попасть
+# Рейдин Корс#tu: на остров Байлан, отплывает из Излюда. Садитесь на него.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: В центре острова есть подземелье, где водится много гидр. Правда, подземелье водное, а вода сопротивляется огню, но уязвима к ветру.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Теперь идите и принесите мне
+# Рейдин Корс#tu: 10 Щупалец Гидр и 1 Голубой
+# Рейдин Корс#tu: кристалл, который можно добыть из Грибов. Достаньте все это - и экзамен сдан.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Удачи, Игрунья!
+# Рейдин Корс#tu: Done talking
+
+automacro ArcherTraining18 {
+	class Archer
+	location izlude, izlu2dun, iz_dun00
+	inventory "Tentacle" >= 10
+	inventory "Crystal Blue" >= 1
+	eval $::config{QuestPart} eq "ArcherTraining18"
+	run-once 1
+	call ArcherTraining18M
+}
+macro ArcherTraining18M {
+	log Мы набили достаточно лута. Возврашаемся в Пайон.
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf lockMap izlude
+	do conf QuestPart ArcherTraining19
+}
+
+
+#ТП из Излюда в Пайон.
+automacro ArcherTraining19 {
+	class Archer
+	location izlude
+	eval $::config{QuestPart} eq "ArcherTraining19"
+	run-once 1
+	call ArcherTraining19M
+}
+macro ArcherTraining19M {
+	log Идем в пайон, предъявлять набитый лут.
+	do conf lockMap none
+	pause @rand(2,3)
+	if (@invamount(Free Ticket for Kafra Transportation) < 1) goto end
+		log Идем к кафре в излюде.
+		do move izlude @rand(124,133) @rand(83,92)
+		log Делаем ТП в пайон
+		pause @rand(2,3)
+		do talknpc 134 88 c r2 c r1
+		goto end
+	:end
+	do conf lockMap pay_arche
+	do conf QuestPart ArcherTraining20
+}
+
+#Мы в пайоне, сдаем лут
+automacro ArcherTraining20 {
+	class Archer
+	location pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining20"
+	run-once 1
+	call ArcherTraining20M
+}
+macro ArcherTraining20M {
+	do conf lockMap none
+	log Докладываем "Рейдин Корс", что мы собрали лут. Получаем лвл и джоб, Great Bow [2].
+	pause @rand(2,3)
+	do move pay_arche 105 162
+	pause @rand(2,3)
+	do talknpc 103 165 c
+	pause @rand(2,3)
+	#Не всегда мона одеть новый лук сразу. 18 лвл минимум.
+	do iconf Great Bow [2] 0 0 0
+	if ($.lvl < 18) goto lowlvl
+		do conf autoSwitch_default_rightHand Great Bow [2]
+		do conf autoSwitch_default_leftHand Great Bow [2]
+		do eq Great Bow [2]
+		do iconf Bow [4] 0 0 1
+		goto end
+	:lowlvl
+		log Уровень слишком мал, чтобы таскать Great Bow
+		
+	:end
+	do conf QuestPart ArcherTraining21
+}
+
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Вы вернулись!
+# Рейдин Корс#tu: Посмотрим...
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# [dist=3.6] Рейдин Корс#tu (2): *Nice One*
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Хорошо, сдано! Не забывайте все
+# Рейдин Корс#tu: время тренироваться. Пока вы помните это, у вас есть шанс стать таким же профессионалом, как я!
+# Unknown #398573: **
+# You are now level 17
+# You gained a level!
+# You are now job level 11
+# You gained a job level!
+# Auto-adding stat dex
+# Exp gained: 30/47 (2.68%/7.78%)
+# Item added to inventory: Great Bow [2] (13) x 1 - Weapon
+# Рейдин Корс#tu: Done talking
+
+
+
+#Говорим с Корсом об умении "Концентрация"
+automacro ArcherTraining21 {
+	class Archer
+	location pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining21"
+	run-once 1
+	call ArcherTraining21M
+}
+macro ArcherTraining21M {
+	do conf lockMap none
+	log Говорим с  "Рейдин Корс" об умении "Концентрация".
+	pause @rand(2,3)
+	do move pay_arche 105 162
+	pause @rand(2,3)
+	do talknpc 103 165 c c c c
+	pause @rand(2,3)
+	do conf QuestPart ArcherTraining22
+}
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Хорошо, осталось всего одно
+# Рейдин Корс#tu: умение, которое вам надо выучить. Я считаю, что оно нужно каждому лучнику...
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Откройте свое окно умений.
+# Рейдин Корс#tu: Как видите, у вас не выучено
+# Рейдин Корс#tu: только умение 'Концентрация'.
+# Рейдин Корс#tu: Сейчас я научу вас им пользоваться...
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Первое - сконцентрируйтесь и успокойте свой разум. Натяните тетиву... Одна миллисекунда неуверенности - и вы промахнетесь!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Мы пользуемся умением
+# Рейдин Корс#tu: 'Концентрация', чтобы сохранить спокойствие и максимально поднять характеристики, нужные для стрельбы. Это умение повышает нашу значимость!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Вы можете счесть это бесполезным,
+# Рейдин Корс#tu: но поверьте моему опыту - это очень важное умение!
+# Рейдин Корс#tu: Done talking
+
+
+
+
+
+automacro ArcherTraining22 {
+	class Archer
+	location pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining22"
+	run-once 1
+	call ArcherTraining22M
+}
+macro ArcherTraining22M {
+	do conf lockMap none
+	log "Рейдин Корс" дает задание принести 5 Цветков-людоедов и 20 Стеблей..
+	pause @rand(2,3)
+	do move pay_arche 105 162
+	pause @rand(2,3)
+	do talknpc 103 165 c c c c c c
+	do iconf Fly Wing 10 0 0
+	do iconf Red Potion 10 0 0
+	do iconf Butterfly Wing 1 0 0
+	pause @rand(2,3)
+	do conf QuestPart ArcherTraining23
+}
+# talk 2
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: *Вздыхает*
+# Рейдин Корс#tu: Это ужасно, но боюсь, мы закончили
+# Рейдин Корс#tu: с лекциями.
+# [dist=3.6] Рейдин Корс#tu (2): *Pfft*
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Но это не повод расслабляться!
+# Рейдин Корс#tu: Остались выпускные экзамены!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Сюрприз, да? Задание немного
+# Рейдин Корс#tu: сложновато, но я, чем смогу,
+# Рейдин Корс#tu: помогу, у меня нет причин вам вредить.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Отправляйтесь на гору Мьелльнир и
+# Рейдин Корс#tu: убивайте там Флор. Принесите мне 5 Цветков-людоедов и 20 Стеблей.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Это немного опасно, но у меня есть
+# Рейдин Корс#tu: друг, который присмотрит за вами. Она все еще учится, но...
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Ох...
+# Рейдин Корс#tu: И еще одно.
+# Рейдин Корс#tu: Возьмите немного...
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Эти вещи немного помогут вам,
+# Рейдин Корс#tu: советую не тратить их впустую. А теперь марш на задание, быстренько принесете мне все, отдадите - и свободны!
+# Item added to inventory: Fly Wing (14) x 10 - Usable
+# Item added to inventory: Red Potion (15) x 10 - Usable
+# Item added to inventory: Butterfly Wing (16) x 1 - Usable
+# Рейдин Корс#tu: Done talking
+
+
+
+
+
+
+
+
+
+automacro ArcherTraining23 {
+	class Archer
+	location pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining23"
+	run-once 1
+	call ArcherTraining23M
+}
+macro ArcherTraining23M {
+	do conf lockMap none
+	log "Рейдин Корс" варпает нас на нужную локу (mjolnir_11)
+	pause @rand(2,3)
+	do move pay_arche 105 162
+	pause @rand(2,3)
+	do talknpc 103 165 c c r0
+	pause @rand(2,3)
+	do conf QuestPart ArcherTraining24
+}
+# talk 2
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Помните, вы должны отправиться
+# Рейдин Корс#tu: на гору Мьелльнир и принести мне
+# Рейдин Корс#tu: 5 Цветков-людоедов и 20 Стеблей.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Идите из Пронтеры на северо-
+# Рейдин Корс#tu: восток. Но если хотите, я могу просто отправить вас туда.
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Вперед!
+# 1  Минутку...
+# 2  Cancel Chat
+# -------------------------------
+# Рейдин Корс#tu: Type 'talk resp #' to choose a response.
+# [dist=3.6] Рейдин Корс#tu (2): *Nice One*
+# [dist=3.6] Рейдин Корс#tu (2): *Heart*
+# [dist=3.6] Рейдин Корс#tu (2): *Heh*
+# [dist=3.6] Рейдин Корс#tu (2): *Zeny!*
+# talk resp 0
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Хорошо! При случае передавайте
+# Рейдин Корс#tu: привет моей подружке-послушнице.
+# [dist=3.6] Рейдин Корс#tu (2): *Heh*
+# Рейдин Корс#tu: Done talking
+# MAP Name: mjolnir_11.gat
+# NPC Exists: Unknown #52581 (27, 223) (ID 52581) - (0)
+# Portal Exists: mjolnir_11 -> mjolnir_10 (20, 220) - (0)
+
+
+
+automacro ArcherTraining24 {
+	class Archer
+	location mjolnir_11 25 221
+	eval $::config{QuestPart} eq "ArcherTraining24"
+	run-once 1
+	call ArcherTraining24M
+}
+macro ArcherTraining24M {
+	log Просим послушницу-непись обкастовать нас блесом и аги апом.
+	pause @rand(2,3)
+	do talknpc 27 223 c
+	do conf lockMap mjolnir_11
+	do conf route_randomWalk 1
+	do conf attackAuto 2
+	do mconf Flora 1 0 0
+	do mconf Mandragora 1 0 0
+	do mconf Argiope 0 -7 0
+	do mconf Male Thief Bug 0 -7 0
+	do conf autoSwitch_default_arrow Fire Arrow
+}
+# 0    Послушница#tu                (27, 223)     52581
+# ---------------------------------
+# talk 0
+# Послушница#tu: [Послушница]
+# Послушница#tu: Хрррррр...
+# Послушница#tu: Ччччто?..
+# Послушница#tu: Кто вы?
+# Послушница#tu: **
+# Послушница#tu: Type 'talk cont' to continue talking
+# talk cont
+# Послушница#tu: [Послушница]
+# Послушница#tu: Стойте...
+# Послушница#tu: Вы... *Зевает*
+# Послушница#tu: Спать хочется. Ну, вот вам...
+# You are now: Increase AGI
+# You are now: Blessing
+# Послушница#tu: Done talking
+
+#мы принесли стебельки-цветочки
+
+automacro ArcherTraining25 {
+	class Archer
+	location pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining25"
+	run-once 1
+	call ArcherTraining25M
+}
+macro ArcherTraining25M {
+	do conf lockMap none
+	log "Рейдин Корс", дарим ему стебельки-цветочки
+	pause @rand(2,3)
+	do move pay_arche 105 162
+	pause @rand(2,3)
+	do talknpc 103 165 c c c c c
+	do conf QuestPart ArcherTraining26
+}
+
+
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Ха-ха! Вы уже выглядите не
+# Рейдин Корс#tu: мальчиком, но мужем. Я вижу огонь
+# Рейдин Корс#tu: битв в ваших глазах!
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Вы встретились с послушницей Мафрой? Она такая скромница...
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Я рад сообщить вам, что вы сдали
+# Рейдин Корс#tu: последний экзамен. Возьмите
+# Рейдин Корс#tu: маленькую награду!
+# Unknown #398573: **
+# You are now level 23
+# You gained a level!
+# You are now job level 18
+# You gained a job level!
+# Auto-adding stat dex
+# Exp gained: 116/1063 (5.18%/47.75%)
+# Item added to inventory: Iron Arrow (10) x 500 - Arrows
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Вы уже выглядите как настоящий
+# Рейдин Корс#tu: лучник! Мне больше нечему научить вас. По крайней мере, в области луков.
+# [dist=3.6] Рейдин Корс#tu (2): *Heh*
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Поговорите с мастером Каваруком,
+# Рейдин Корс#tu: кажется, у него что-то есть для вас. Возможно, вас ждет что-то интересное!
+# [dist=3.6] Рейдин Корс#tu (2): *Pfft*
+# Рейдин Корс#tu: Type 'talk cont' to continue talking
+# talk cont
+# Рейдин Корс#tu: [Рейдин Корс]
+# Рейдин Корс#tu: Ну, Игрунья,
+# Рейдин Корс#tu: я стану самым счастливым человеком на земле, если вы достигнете успехов в нашем деле. Я буду следить за вами!
+# [dist=3.6] Рейдин Корс#tu (2): *Nice One*
+# Рейдин Корс#tu: Done talking
+
+automacro ArcherTraining26 {
+	class Archer
+	location payon_in02, pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining26"
+	run-once 1
+	call ArcherTraining26M
+}
+macro ArcherTraining26M {
+	log "Мастер Каварук" (payon_in02 54, 13)
+	pause @rand(2,3)
+	do move payon_in02 50 7
+	pause @rand(2,3)
+	do talknpc 54 13 c r2
+	do conf QuestPart ArcherTraining27
+}
+# talk 0
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: Здравствуйте, неофит.
+# Мастер Каварук: Я мастер Каварук из гильдии
+# Мастер Каварук: 'Икар'. Я приветствую вас.
+# Мастер Каварук: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Спросить про Икара.
+# 1  Узнать новости.
+# 2  Поговорить о лучниках.
+# 3  Cancel Chat
+# -------------------------------
+# Мастер Каварук: Type 'talk resp #' to choose a response.
+# talk resp 2
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: Великолепно! Вы просто молодец!
+# Мастер Каварук: Если потребуется совет, обратитесь
+# Мастер Каварук: к любому члену гильдии, и вы его получите.
+# Мастер Каварук: Done talking
+
+
+
+automacro ArcherTraining27 {
+	class Archer
+	location payon_in02, pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining27"
+	run-once 1
+	call ArcherTraining27M
+}
+macro ArcherTraining27M {
+	log "Мастер Каварук" (payon_in02 54, 13)
+	pause @rand(2,3)
+	do move payon_in02 50 7
+	pause @rand(2,3)
+	do talknpc 54 13 c r1 c c c c
+	do conf QuestPart ArcherTraining28
+}
+####################
+# talk 0
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: Здравствуйте, неофит.
+# Мастер Каварук: Я мастер Каварук из гильдии
+# Мастер Каварук: 'Икар'. Я приветствую вас.
+# Мастер Каварук: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Спросить про Икара.
+# 1  Узнать новости.
+# 2  Поговорить о лучниках.
+# 3  Cancel Chat
+# -------------------------------
+# Мастер Каварук: Type 'talk resp #' to choose a response.
+# talk resp 1
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: О, очень хорошо, что вы здесь,
+# Мастер Каварук: Игрунья. Я только что получил
+# Мастер Каварук: просьбу о помощи от гильдии
+# Мастер Каварук: алхимиков в Альдебаране.
+# Мастер Каварук: Type 'talk cont' to continue talking
+# talk cont
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: Они заботятся о полях Флор, нужных
+# Мастер Каварук: им для работы, но в последнее время стаи Диких Кошек повадились уничтожать их посадки.
+# Мастер Каварук: Type 'talk cont' to continue talking
+# talk cont
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: Хотя алхимики и обладают возможностями для вызова Флоры и могут восстановить поле, но это истощает их ресурсы.
+# Мастер Каварук: Type 'talk cont' to continue talking
+# talk cont
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: Они готовы дать награду, если
+# Мастер Каварук: кто-нибудь принесет им Цветки-людоеды и Стебли, которые помогут им восстанавливать Флор.
+# Мастер Каварук: Type 'talk cont' to continue talking
+# talk cont
+# Мастер Каварук: [Мастер Каварук]
+# Мастер Каварук: Если интересно, возможно, лучше поговорить с членом гильдии алхимиков, который ждет ответа от нас в в магазине дальше по дороге на юг от штаба 'Икара'.
+# Мастер Каварук: Done talking
+################
+
+#Второй раз говорим и нас посылают в пронту
+##############
+automacro ArcherTraining28 {
+	class Archer
+	location payon_in02, pay_arche
+	eval $::config{QuestPart} eq "ArcherTraining28"
+	run-once 1
+	call ArcherTraining28M
+}
+macro ArcherTraining28M {
+	log "Мастер Каварук" (payon_in02 54, 13)
+	pause @rand(2,3)
+	do move payon_in02 50 7
+	pause @rand(2,3)
+	do talknpc 54 13 c r1 c r0 c c c c c
+	do conf QuestPart ArcherTraining30
+}
+###############
+
+
+automacro ArcherTraining30 {
+	class Archer
+	location payon_in02, pay_arche, payon
+	eval $::config{QuestPart} eq "ArcherTraining30"
+	run-once 1
+	call ArcherTraining30M
+}
+macro ArcherTraining30M {
+	log Идем в пронту говорить с Бардом.
+	pause @rand(2,3)
+	if (@invamount(Free Ticket for Kafra Transportation) < 1) goto end
+		log Идем к Кафре в Пайоне, делаем тп.
+		do move payon @rand(178,181) @rand(99,100)
+		log Делаем тп в пронту.
+		pause @rand(2,3)
+		do talknpc 181 104 c r2 c r0
+		goto end
+	:end
+	do conf lockMap prontera
+	do conf QuestPart ArcherTraining31
+}
+
+
+
+automacro ArcherTraining31 {
+	class Archer
+	location prontera
+	eval $::config{QuestPart} eq "ArcherTraining31"
+	run-once 1
+	call ArcherTraining31M
+}
+macro ArcherTraining31M {
+	log Мы в пронте. Идем говорить с бардом.
+	pause @rand(2,3)
+	do move prontera @rand(123,129) 332
+	pause @rand(2,3)
+	do talknpc 126 335 c c r0 c c c c c c c
+	pause @rand(2,3)
+	do conf QuestPart ArcherTraining32
+}
+
+
+automacro ArcherTraining32 {
+	class Archer
+	location prontera
+	eval $::config{QuestPart} eq "ArcherTraining32"
+	run-once 1
+	call ArcherTraining32M
+}
+macro ArcherTraining32M {
+	log Мы в пронте. Идем говорить с лидером ги.
+	pause @rand(2,3)
+	do move prontera 165 @rand(279,283)
+	pause @rand(2,3)
+	do talknpc 167 281 c c
+	pause @rand(2,3)
+	do conf QuestPart ArcherTraining33
+}
+
+
+
+automacro ArcherTraining33 {
+	class Archer
+	location prontera
+	eval $::config{QuestPart} eq "ArcherTraining33"
+	run-once 1
+	call ArcherTraining33M
+}
+macro ArcherTraining33M {
+	log Мы в пронте. Идем говорить с магом.
+	pause @rand(2,3)
+	do move prontera 147 @rand(298,302)
+	pause @rand(2,3)
+	do talknpc 144 301 c c c
+	pause @rand(2,3)
+	do conf QuestPart ArcherTraining34
+}
+
+
+automacro ArcherTraining34 {
+	class Archer
+	location prontera
+	eval $::config{QuestPart} eq "ArcherTraining34"
+	run-once 1
+	call ArcherTraining34M
+}
+macro ArcherTraining34M {
+	log Мы в пронте. Опять идем говорить с бардом.
+	pause @rand(2,3)
+	do move prontera @rand(123,129) 332
+	pause @rand(2,3)
+	do talknpc 126 335 c c c c c c c c w2 c c c c c c c c
+	pause @rand(2,3)
+	do conf QuestPart ArcherTraining35
+}
+
+
+automacro ArcherTraining35 {
+	class Archer
+	location prontera, prt_castle
+	eval $::config{QuestPart} eq "ArcherTraining35"
+	run-once 1
+	call ArcherTraining35M
+}
+macro ArcherTraining35M {
+	log Мы в пронте. Идем говорить с советником при короле.
+	pause @rand(2,3)
+	do move prt_castle 76 163
+	pause @rand(2,3)
+	do talknpc 76 165 c c c c
+	pause @rand(2,3)
+	do talknpc 76 165 c c 
+	pause @rand(2,3)
+	do conf QuestPart ArcherTraining36
+}
+
+
+
+
+automacro ArcherTraining36 {
+	class Archer
+	location prontera, prt_castle, prt_church
+	eval $::config{QuestPart} eq "ArcherTraining36"
+	run-once 1
+	call ArcherTraining36M
+}
+macro ArcherTraining36M {
+	log Мы в пронте. Идем говорить с Пропином в церкви.
+	pause @rand(2,3)
+	do move prt_church 172 19
+	pause @rand(2,3)
+	do talknpc 179 15 c c
+	pause @rand(2,3)
+	do conf QuestPart ArcherTraining37
+}
+
+
+
+automacro ArcherTraining37a {
+	class Archer
+	location prontera, prt_castle, prt_church
+	eval $::config{QuestPart} eq "ArcherTraining37"
+	run-once 1
+	call ArcherTraining37aM
+}
+macro ArcherTraining37aM {
+	log Мы в пронте. Надо в монастырь справа от пронты, идем.
+	do conf lockMap prt_monk
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+}
+
+
+automacro ArcherTraining37b {
+	class Archer
+	location prt_monk, monk_in
+	eval $::config{QuestPart} eq "ArcherTraining37"
+	run-once 1
+	call ArcherTraining37bM
+}
+macro ArcherTraining37bM {
+	log Мы в монастыре, идем к двум мужикам в доме.
+	do conf lockMap none
+	pause @rand(2,3)
+	do move monk_in 21 43
+	pause @rand(2,3)
+	do talknpc 19 43 c c r0 c c c
+	pause @rand(2,3)
+	do conf QuestPart ArcherTraining38
+}
+
+
+automacro ArcherTraining38a {
+	class Archer
+	location prt_monk, monk_in
+	eval $::config{QuestPart} eq "ArcherTraining38"
+	run-once 1
+	call ArcherTraining38aM
+}
+macro ArcherTraining38aM {
+	log Мы в монастыре, надо в пронту к Барду
+	do conf lockMap prontera
+}
+
+
+automacro ArcherTraining38b {
+	class Archer
+	location prontera
+	eval $::config{QuestPart} eq "ArcherTraining38"
+	run-once 1
+	call ArcherTraining38bM
+}
+macro ArcherTraining38bM {
+	log Мы в Пронте, идем говорить с Бардом
+	do conf lockMap none
+	pause @rand(2,3)
+	do move prontera @rand(123,129) 332
+	pause @rand(2,3)
+	do talknpc 126 335 c c c c
+	pause @rand(2,3)
+	do conf QuestPart ArcherTraining39
+}
+
+
+
+automacro ArcherTraining39 {
+	class Archer
+	location prontera
+	eval $::config{QuestPart} eq "ArcherTraining39"
+	run-once 1
+	call ArcherTraining39M
+}
+macro ArcherTraining39M {
+	log Мы в Пронте, возвращаемся в Пайон!
+	if (@invamount(Free Ticket for Kafra Transportation) < 1) goto end
+		log Идем к левой кафре в пронте.
+		do move prontera @rand(32,38) @rand(196,200)
+		log Делаем ТП в пайон
+		pause @rand(2,3)
+		do talknpc 29 207 c r2 c r2
+		goto end
+	:end
+	do conf lockMap pay_arche
+	do conf QuestPart ArcherTraining40
+}
+
+
+
+automacro ArcherTraining40 {
+	class Archer
+	location payon_in02, pay_arche, payon
+	eval $::config{QuestPart} eq "ArcherTraining40"
+	run-once 1
+	call ArcherTraining40M
+}
+macro ArcherTraining40M {
+	log Идем говорить с "Мастер Каварук" (payon_in02 54, 13)
+	pause @rand(2,3)
+	do move payon_in02 50 7
+	pause @rand(2,3)
+	do talknpc 54 13 c r1
+	do conf QuestDone @config(QueustDone) ArcherTraining
+	do conf QuestPart none
+}
+
+#конец, manticora.
+
+
+
+
+
+
+
+
+

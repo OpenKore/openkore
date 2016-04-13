@@ -1,0 +1,137 @@
+﻿# УТФ-8
+
+automacro ArcherQuestBegin {
+	class Novice
+	job == 10
+	location payon_in02 64 65
+  	eval $::config{Job} eq "4" and $::config{QuestPart} eq ""
+	run-once 1
+	call ArcherQuestBeginM
+}
+macro ArcherQuestBeginM {
+	do include off Novice
+	do include on Novice_1
+	$i = @eval(getInventoryAmount("Trunk")+getInventoryAmount("Barren Trunk")*2+getInventoryAmount("Solid Trunk")*3+getInventoryAmount("Fine-grained Trunk")*5)
+	if ($i >= 40) goto ok
+		do conf QuestPart ArcherQuest0
+		goto end
+	:ok
+		do conf QuestPart ArcherQuest2
+	:end
+}
+
+automacro ArcherQuest0 {
+	class Novice
+	eval $::config{QuestPart} eq "ArcherQuest0"
+	run-once 1
+	call ArcherQuest0M
+}
+macro ArcherQuest0M {
+	log Для сдачи квеста на лучника не хватает лута.
+	#do conf lockMap pay_fild08
+	#do conf attackAuto 2
+	#do conf route_randomWalk 1
+	do conf QuestPart ArcherQuest1
+}
+
+automacro ArcherQuest1 {
+	class Novice
+	eval $::config{QuestPart} eq "ArcherQuest1" and ((getInventoryAmount("Trunk")+getInventoryAmount("Barren Trunk")*2+getInventoryAmount("Solid Trunk")*3+getInventoryAmount("Fine-grained Trunk")*5) >= 40)
+	run-once 1
+	call ArcherQuest1M
+}
+macro ArcherQuest1M {
+	log Набили лут для квеста.
+	#do conf lockMap none
+	#do conf attackAuto 0
+	#do conf route_randomWalk 0
+	do conf QuestPart ArcherQuest2
+}
+
+automacro ArcherQuest2 {
+	class Novice
+	eval $::config{QuestPart} eq "ArcherQuest2"
+	run-once 1
+	call ArcherQuest2M
+}
+macro ArcherQuest2M {
+	do move payon_in02 64 65
+	pause @rand(2,3)
+	[
+	log ================================================
+	log ===Говорим с нпц и получаем профу арчера =======
+	log ================================================
+	]
+	pause @rand(2,3)
+	do talknpc 64 71 w1 c w1 r0 w1 c w1 r0 w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c w1 c
+	pause @rand(2,3)
+	[
+	if ($.joblvl != 1) goto error
+		log Не нужную нубо-одежду продать нпц.
+		do iconf Novice False Eggshell 0 0 1
+		do iconf Novice Guard 0 0 1
+		do iconf Novice Main-Gauche 0 0 1
+		do iconf Novice Slippers 0 0 1
+		do iconf Somber Novice Hood 0 0 1
+		do iconf Tattered Novice Ninja Suit 0 0 1
+		log Не нужный ножик тоже следует продать
+		do iconf Knife [3] 0 0 1
+		do iconf Trunk 0 1 0
+		do iconf Fine-grained Trunk 0 0 1
+		do iconf Solid Trunk 0 0 1
+		do iconf Barren Trunk 0 0 1
+		log ============================
+		log = УРА!!!! СТАЛ АРЧЕРОМ!!!
+		log ============================
+		$s = @config(QuestDone)
+		do conf QuestDone $s ArcherQuest
+		do conf QuestPart none
+		do conf lockMap none
+		do conf autoSwitch_default_rightHand none
+		do conf autoSwitch_default_leftHand none
+		if (@inventory(Bow [4]) == -1) goto NoBow
+			do conf autoSwitch_default_rightHand Bow [4]
+			do conf autoSwitch_default_leftHand Bow [4]
+			do conf autoSwitch_default_arrow Arrow
+			do eq Bow [4]
+			do eq Arrow
+		:NoBow
+# -----------Inventory-----------
+# -- Equipment (Equipped) --
+# -- Equipment (Not Equipped) --
+# 19   Bow [4] (Weapon)  -- Not Identified                  
+# 26   Bow [4] (Weapon)     		
+#
+# eq Bow [4]
+# You can't put on Bow [4] (19)
+		if (@inventory(Cotton Shirt) == -1) goto NoShirt
+			do eq Cotton Shirt
+		:NoShirt
+		goto end
+	:error
+		log Ошибка, мы не стали Арчером
+	:end
+	]
+}
+
+
+
+########################################
+###Archer Quest Anti Reconnect Macro####
+########################################
+automacro DisconnectedFromMapServerArcherQuest {
+	location payon_in02
+	class Novice
+	console /(Disconnected from Map Server|The NPC did not respond|You are not talking to any NPC)/
+	#eval $::config{NoobZonePart} eq "DONE" and $::config{ArcherQuestPart} ne "DONE"
+	exclusive 1
+	call DisconnectedFromMapServerArcherQuestM
+}
+macro DisconnectedFromMapServerArcherQuestM {
+	pause 1
+	do reload macro
+	release all
+	do reload conf
+	do relog 7
+	pause 4
+}

@@ -1,0 +1,36 @@
+macro gspot{
+	do conf char 2
+	do move 268 204
+	pause 2
+	do e ho
+	pause 30
+	do e wav
+	pause 2
+	do move 176 186
+	pause 7
+	do quit
+}
+
+macro gopron{
+	do conf char 0
+	pause 2
+	do relog 3
+}
+
+automacro walkTroughAld {
+	map aldebaran
+	call gopron
+     	run-once 1
+}
+
+automacro walkTroughPay {
+	map payon
+	call gopron
+     	run-once 1
+}
+
+automacro walkThroughPr {
+     	map prontera
+     	call gspot
+     	run-once 1
+}

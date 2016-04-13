@@ -1,66 +1,192 @@
-﻿# 繁體中文化OpenKore mon_control.txt 17092015
-# 來源: Try71023, howie50417, drkn
-# 修改: Shun
+# This file allows specific AI control for certain monsters
 #
-# 本檔案可讓你指定面對魔物所要做的 AI 反應
+# Syntax:
+# <monster> <attack> <teleport> <search> <skillcancel> <lv> <joblv> <hp> <sp> <weight>
 #
-# 語法：
-# <魔物名稱> <攻擊模式> <瞬移模式> <搜尋模式> <技能取消> <lv> <joblv> <hp> <sp> <weight>
+# <monster>:  Name of monster as found in monsters.txt (not case sensitive)
 #
-# <魔物名稱>:  由 tables\twRO\monsters.txt 中所列出的魔物名稱（若為英文則大小寫不拘）
+# <attack>:
+# -1 means to leave the monster alone, even if it attacks you.
+#  0 means to leave the monster alone, unless it attacks you.
+#  1 means to always auto-attack this monster.
+#  2 means always aggressive, auto-attack this monster when it appears, even if sitting.
+#  3 means to attack the monster once (provoke) then leave it, useful for mobbing.
 #
-# <攻擊模式>:
-# -1 表示不理魔物，即使牠攻擊你也不會還擊。
-#  0 表示不理魔物，除非牠攻擊你你就會還擊。
-#  1 表示看到魔物就自動攻擊。
-#  2 表示看到魔物就自動攻擊，即使角色在坐著休息也會起身去攻擊。
-#  3 表示只打魔物一下（挑釁）然後就離開，這對拉怪很有用。
+# <teleport>:
+# < 0 (-1, -2, etc.) to set exact critical distance for this monster. Teleport, if the monster reaches it.
+# 1 to teleport if the monster is on the screen.
+# 2 to teleport if the monster attacks you.
+#  -> This is only used in auto-attack mode!
+# 3 to disconnect for 30 seconds if the monster is on your screen.
+# >= 4 (4, 5, etc.) to set the time that will be disconnected (in seconds) if the monster is on your screen.
 #
-# <瞬移模式>:
-# <0 (-1, -2, ...) 表示假如魔物與玩家距離為此數值之正數時瞬移。
-# 1 表示假如魔物在畫面中就瞬移。
-# 2 表示假如魔物攻擊你才瞬移。本設定只在自動攻擊模式開啟時有效。
-# 3 表示假如魔物在畫面中時離線30秒。
-# >=4 (4, 5, ...) 表示假如魔物在畫面中時離線此數值秒數。
+# <search>: Put a 1 to only attack the monster in the search mode.
+# This is only used in auto-attack mode.
 #
-# <搜尋模式>:  若設為 1，則 Kore 只會在搜尋模式時做攻擊。本設定只在自動攻擊模式開啟時有效。
-# 		  
+# <skillcancel>: Set to 1 if you want to interrupt spells casted by this
+# monster.
 #
-# <技能取消>:  假如你想攻擊魔物使牠正在詠唱的技能中斷的話，設為 1。
+# <lv>: Only auto-attack this monster if your level is higher than the
+# specified level.
 #
-# <lv>		: 只有在你的等級高於這個指定的值時才會自動攻擊該魔物。
+# <joblv>: Only auto-attack this monster if your job level is higher than
+# the specified level.
 #
-# <joblv>	: 只有在你的 job 等級高於這個指定的值時才會自動攻擊該魔物。
+# <hp>: Only auto-attack this monster if your HP is higher than the
+# specified amount. The HP is not specified in percentage.
 #
-# <hp>		: 只有在你的 HP 值高於這個指定的量時才會自動攻擊該魔物。
-# 		  注意 HP 值不是以百分比來表示的。
+# <sp>: Only auto-attack this monster if your SP is higher than the
+# specified amount. The SP is not specified in percentage.
 #
-# <sp>		: 只有在你的 SP 值高於這個指定的量時才會自動攻擊該魔物。
-# 		  注意 SP 值不是以百分比來表示的。
-#
-# <weight>	: 設定魔物的加權隻數 (aggressive)（支援小數點如1.8234）。
-# 範例 1：
+# <weight>: Counts this monster as the specified amount aggressives. Supports floating point numbers (eg 1.8237402).
+# Example:
 #	(config.txt)
 #	teleportAuto_minAggressives 6
 #	teleportAuto_minAggressivesInLock 6
 #
 #	(mon_control.txt)
-#	海葵 1 0 0 0 0 0 0 0 0.2
-#	人魚士兵 1 0 0 0 0 0 0 0 2
+#	Hydra 1 0 0 0 0 0 0 0 0.2
+#	Merman 1 0 0 0 0 0 0 0 2
 #
-#	假如有 5 隻海葵與 2 隻人魚士兵正在攻擊 bot，bot 不會飛走，因為魔物
-#	的加權隻數計算為 5*0.2 + 2*1 = 3 隻。但是如果有 2 隻馬克與 2 隻
-#	人魚士兵正在攻擊他的話他會飛走，因為加權隻數為 2*1 + 2*2 = 6 隻。
-# 範例 2：
-#	綠草 -1
-#	不理綠草，即使牠攻擊你也不會還擊。
-# 沒有在這個檔案裡設定到的魔物，或沒有設定值的魔物名稱，預設值一律為：
-# <攻擊模式> = 1
+#	If there's five hydras and two sword fish attacks the bot, it won't
+#	teleport away since the aggressives are counted as 5*0.2 + 2*1 = 3
+#	However, two marcs and two merman will make it tele away because
+#	it sees 2*1* + 2*2 = 6 aggressives.
 #
-# all = 所有魔物 (不含自訂指定魔物)
-all 1 0 0
-#####自訂指定魔物#######
+#
+# Monsters not found in this file, or flags not specified will default to:
+# <attack> = 1
 
 
+##### Eggs #####
+Ant's Egg 0 0 0
+PecoPeco's Egg 0 0 0
+Pupa 0 0 0
+Thief Bug's Egg 0 0 0
+
+##### Alchemist Summons ####
+# Summoned Parasite
+1555 0 0 0 
+
+# Summoned Flora
+1575 0 0 0 
+
+# Summoned Hydra
+1579 0 0 0 
+
+# Summoned Mandragora
+1589 0 0 0 
+
+# Summoned Geographer
+1590 0 0 0 
+
+##### Plants #####
+Black Mushroom 0 0 0
+Blue Plant 0 0 0
+Green Plant 0 0 0
+Red Mushroom 0 0 0
+Red Plant 0 0 0
+Shining Plant 0 0 0
+White Plant 0 0 0
+Yellow Plant 0 0 0
 
 
+##### Homunculus #####
+6001 -1 0 0
+6002 -1 0 0
+6003 -1 0 0
+6004 -1 0 0
+6005 -1 0 0
+6006 -1 0 0
+6007 -1 0 0
+6008 -1 0 0
+6009 -1 0 0
+6010 -1 0 0
+6011 -1 0 0
+6012 -1 0 0
+6013 -1 0 0
+6014 -1 0 0
+6015 -1 0 0
+6016 -1 0 0
+
+##### Mercenary #####
+6017 -1 0 0
+6018 -1 0 0
+6019 -1 0 0
+6020 -1 0 0
+6021 -1 0 0
+6022 -1 0 0
+6023 -1 0 0
+6024 -1 0 0
+6025 -1 0 0
+6026 -1 0 0
+6027 -1 0 0
+6028 -1 0 0
+6029 -1 0 0
+6030 -1 0 0
+6031 -1 0 0
+6032 -1 0 0
+6033 -1 0 0
+6034 -1 0 0
+6035 -1 0 0
+6036 -1 0 0
+6037 -1 0 0
+6038 -1 0 0
+6039 -1 0 0
+6040 -1 0 0
+6041 -1 0 0
+6042 -1 0 0
+6043 -1 0 0
+6044 -1 0 0
+6045 -1 0 0
+6046 -1 0 0
+
+##### Monster Mercenary #####
+# Mimic (Monster)
+1191 -1 0 0
+# Disguise (Monster)
+1506 -1 0 0
+# Alice (Monster)
+1275 -1 0 0
+# Wild Rose (Mercenary version, M_WILD_ROSE)
+1965 -1 0 0
+# Doppelganger (Mercenary version, M_DOPPELGANGER)
+1966 -1 0 0
+# Egnigem Cenia (Mercenary version, M_YGNIZEM)
+1967 -1 0 0
+
+##### MVPs and Dangerous Monsters #####
+Amon Ra 0 1 0
+Archangeling 0 1 0
+Baphomet 0 1 0
+Bacsojin 0 1 0
+Dark Illusion 0 1 0
+Dark Lord 0 1 0
+Detale 0 1 0
+Doppelganger 0 1 0
+Dracula 0 1 0
+Drake 0 1 0
+Eddga 0 1 0
+Dark Snake Lord 0 1 0
+Garm 0 1 0
+Egnigem Cenia 0 1 0
+Golden Thief Bug 0 2 0
+Incantation Samurai 0 1 0
+Lady Tany 0 1 0
+Lord of Death 0 1 0
+Maya 0 1 0
+Maya Purple 0 1 0
+Mistress 0 1 0
+Moonlight 0 1 0
+Mutant Dragon 0 1 0
+Orc Hero 0 1 0
+Orc Lord 0 1 0
+Osiris 0 1 0
+Pharaoh 0 1 0
+Phreeoni 0 1 0
+RSX-0806 0 1 0
+Stormy Knight 0 1 0
+Tao Gunka 0 1 0
+Thanatos 0 1 0
+Turtle General 0 1 0
+Vesper 0 1 0

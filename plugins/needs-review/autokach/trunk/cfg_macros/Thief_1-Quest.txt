@@ -1,0 +1,226 @@
+﻿# UTF-8
+
+automacro ThiefQuestBegin {
+	class Novice
+	job == 10
+	location moc_ruins, morocc
+	eval $::config{Job} eq "5" and $::config{QuestPart} eq ""
+	exclusive 1
+	run-once 1
+	call ThiefQuestBeginM
+}
+macro ThiefQuestBeginM {
+[
+	do include off Novice
+	do include on Novice_1
+	do conf attackAuto 1
+	do conf route_randomWalk 0
+	do conf QuestPart ThiefQuest1
+]
+}
+
+
+automacro ThiefQuestPart1a {
+	location not moc_prydb1
+	eval $::config{QuestPart} eq "ThiefQuest1"
+	run-once 1
+	call ThiefQuestPart1aM
+}
+macro ThiefQuestPart1aM {
+	log Идём в гильдию воров, начать квест
+	do conf lockMap moc_prydb1
+}
+
+
+automacro ThiefQuestPart1b {
+	location moc_prydb1
+	eval $::config{QuestPart} eq "ThiefQuest1"
+	run-once 1
+	call ThiefQuestPart1bM
+}
+macro ThiefQuestPart1bM {
+	log Говорим к нужным НПС, чтобы начать квест
+	do conf lockMap none
+	do move moc_prydb1 44 127
+	pause @rand(3,4)
+	do talknpc 39 129 w1 c w1 r0 w1 c w1 c w1 r0 w1 c w1 c w1 r0 w1 c w1 c w1 r0 w1 c w1 c w1 c w1 r0 w1 c w1 c w1 c w1 c w1 c
+	pause @rand(2,3)
+	do conf QuestPart ThiefQuest2
+}
+
+
+automacro ThiefQuestPart2a {
+	location moc_prydb1
+	eval $::config{QuestPart} eq "ThiefQuest2"
+	run-once 1
+	call ThiefQuestPart2aM
+}
+macro ThiefQuestPart2aM {
+	log Нас послали бить грибы. Топаем к НПС, что отправит нас к грибам
+	pause @rand(2,3)
+	do conf lockMap moc_ruins
+}
+
+
+automacro ThiefQuestPart2b {
+	location moc_ruins
+	eval $::config{QuestPart} eq "ThiefQuest2"
+	run-once 1
+	call ThiefQuestPart2bM
+}
+macro ThiefQuestPart2bM {
+	log Говорим с неписью, хотим пройти на грибо-ферму
+	pause @rand(2,3)
+	do conf lockMap none
+	do move moc_ruins 137 125
+	pause @rand(2,3)
+	do talk @npc(141 125)
+}
+
+
+automacro ThiefQuestPart2c {
+	location job_thief1
+	eval $::config{QuestPart} eq "ThiefQuest2"
+	run-once 1
+	call ThiefQuestPart2cM
+}
+macro ThiefQuestPart2cM {
+	[	
+	do conf route_randomWalk 1
+	do conf attackAuto 2
+	do conf lockMap job_thief1
+	do mconf all 2 0 0
+	do mconf Fabre 2 0 0
+	do mconf Chonchon 2 0 0
+	do mconf Thief Mushroom 2 0 0
+	do mconf Spore 0 0 0
+	do pconf all 1
+	do pconf Orange Gooey Mushroom 2
+	do pconf Orange Net Mushroom 2
+	do conf QuestPart ThiefQuest3
+	release ThiefQuestPart3a
+	]
+}
+
+
+automacro ThiefQuestPart3a {
+	location not job_thief1
+	eval $::config{QuestPart} eq "ThiefQuest3"
+	run-once 1
+	call ThiefQuestPart3aM
+}
+macro ThiefQuestPart3aM {
+	log То ли нас грохнули, то ли мы нечаянно вышли в варп - идем снова на грибоферму
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	do conf lockMap moc_ruins
+	release ThiefQuestPart2b
+	release ThiefQuestPart2c
+	do conf QuestPart ThiefQuest2
+}
+
+
+automacro ThiefQuestPart3b {
+	location job_thief1
+	eval $::config{QuestPart} eq "ThiefQuest3" and (getInventoryAmount("Orange Gooey Mushroom") + getInventoryAmount("Orange Net Mushroom") * 3) > 24
+	run-once 1
+	call ThiefQuestPart3bM
+}
+macro ThiefQuestPart3bM {
+	log Грибы собраны - возвращаемся
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf lockMap none
+	do conf QuestPart ThiefQuest4
+}
+
+automacro ThiefQuestPart4 {
+	location job_thief1
+	eval $::config{QuestPart} eq "ThiefQuest4"
+	run-once 1
+	call ThiefQuestPart4M
+}
+macro ThiefQuestPart4M {
+	do move job_thief1 180 16
+}
+
+
+automacro ThiefQuestPart4a {
+	location moc_ruins
+	eval $::config{QuestPart} eq "ThiefQuest4"
+	run-once 1
+	call ThiefQuestPart4aM
+}
+macro ThiefQuestPart4aM {
+	log Опять в пирамиды, относим набитые грибы
+	pause 2
+	do conf lockMap moc_prydb1
+}
+
+
+automacro ThiefQuestPart4b {
+	location moc_prydb1
+	eval $::config{QuestPart} eq "ThiefQuest4"
+	run-once 1
+	call ThiefQuestPart4bM
+}
+macro ThiefQuestPart4bM {
+	log Перетираем и становимся Вором
+	do conf lockMap none
+	do move moc_prydb1 44 127
+	pause @rand(2,3)
+	do talknpc 42 133 w2 c w1 c w1 c w1 c w1 c w1 c w1 c
+	pause @rand(2,3)
+	if ($.joblvl != 1) goto error
+		[
+		log Не нужную нубо-одежду продать нпц.
+		do iconf Novice False Eggshell 0 0 1
+		do iconf Novice Guard 0 0 1
+		do iconf Novice Main-Gauche 0 0 1
+		do iconf Novice Slippers 0 0 1
+		do iconf Somber Novice Hood 0 0 1
+		do iconf Tattered Novice Ninja Suit 0 0 1
+		log Ура! Стали вором!
+		]
+		if (@inventory(Cotton Shirt) == -1) goto NoShirt
+			do eq Cotton Shirt
+		:NoShirt
+		do conf autoSwitch_default_rightHand [NONE]
+		if (@inventory(Knife [3]) == -1) goto NoKnife
+			do eq Knife [3]
+			do conf autoSwitch_default_rightHand Knife [3]
+		:NoKnife
+		goto end
+	:error 
+		log Персонаж не стал Вором.
+	:end 
+	do conf QuestDone @config(QuestDone) ThiefQuest
+	do conf QuestPart none
+	
+	log Начало квеста: Тренировка воров. Награда - опыт и кривой нож.
+	pause @rand(2,4)
+	call ThiefTrainingStart
+}
+
+
+########################################
+####Thief Quest Anti Reconnect Macro####
+########################################
+automacro DisconnectedFromMapServerThiefQuest {
+	location moc_ruins, moc_prydb1, morocc, job_thief1, moc_pryd01
+	class Novice
+	console /(Disconnected from Map Server|The NPC did not respond|You are not talking to any NPC)/
+	eval $::config{QuestPart} =~ m/ThiefQuest/
+	exclusive 1
+	call DFMSTQ
+}
+
+macro DFMSTQ {
+	pause 1
+	do reload macro
+	release all
+	do reload conf
+	do relog 7
+	pause 4
+}
+

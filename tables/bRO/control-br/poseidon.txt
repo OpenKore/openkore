@@ -1,0 +1,29 @@
+#############################################################################################
+# A Codificação do texto está correta?
+# Codificação:  ANSI -> UTF8 Without boom
+# Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
+# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+#############################################################################################
+# Servidor Ragnarok
+# Aqui defina-se o endereço de IP e a porta onde o Poseidon irá esperar o seu
+#Ragnarok Online Client conectar.
+ragnarokserver_ip=127.0.0.1
+ragnarokserver_port=6900
+ 
+# Servidor de Consulta
+#Aqui você vai definir o endereço IP e a porta onde o Poseidon,
+# Vai continuar esperando que o kore seja aberto para se conectar e enviar as consultas GG/SH.
+queryserver_ip=127.0.0.1
+queryserver_port=24390
+ 
+# Tipo de Servidor
+# Aqui você tem que especificar o tipo de servidor atual,
+# para o poseidon funcionar correctamente!
+# O tipo de servidor disponível agora é apenas: Default, bRO_.* (check servertypes.txt).
+# Você deve modificar esta linha se estiver tendo problema com a lista de personagens
+server_type=bRO_2012-09-19a
+ 
+# Tamanho de Bloco Char
+# Aqui você pode especificar o CharBlockSize desejado no seu cliente.
+# Os tamanhos de bloco disponíveis são: 106, 108, 112, 116, 128, 132 e 136
+CharBlockSize=116

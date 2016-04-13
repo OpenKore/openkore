@@ -1,0 +1,38 @@
+{{_header.html}}
+
+        <div class="span9">
+          <div class="row-fluid">
+            <div class="span9">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Guild: {characterGuildName}</th><th>Master: {guildMaster}</th>
+						<th>Level: {guildLv}</th><th>Connect: <span class="badge badge-success">{guildConnect}</span>/<span class="badge badge-inverse">{guildMember}</span></th>
+						<th>Exp: {guildExp}/{guildExpNext}</th>
+					</tr>
+					<tr>
+						<th><div align="center">Name</div></th>
+						<th><div align="center">Class</div></th>
+						<th><div align="center">Level</div></th>
+						<th><div align="center">Title</div></th>
+						<th><div align="center">Online</div></th>
+					</tr>
+				</thead>
+				<tbody id="listarItens"><!-- {startLoop} -->
+					<tr>
+						<td><div align="center">{guildListMemberName}</div></td>
+						<td><div align="center">{guildListMemberClass}</div></td>
+						<td><div align="center">{guildListMemberLvl}</div></td>
+						<td><div align="center">{guildListMemberTitle}</div></td>
+						<td><div align="center">{guildListMemberOnline}</div></td>
+					</tr><!-- {endLoop} -->
+				</tbody>
+			</table>
+
+            </div>
+
+          </div>
+		  
+        </div>
+
+{{_footer.html}}

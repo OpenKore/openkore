@@ -1,0 +1,84 @@
+{{_header.html}}
+
+        <div class="span9">
+          <div class="row-fluid">
+            <div class="span9">
+				<div class="span3">
+				<div align="center"><div class="thumbnail job" id="job{characterSexID}{characterJobID}"></div></div>
+				<strong>{T HP}</strong>
+				<h6 align="right"><span class="value_char_hp">{characterHP}</span>/<span class="value_char_hp_max">{characterHPMax}</span></h6>
+				<div class="progress progress_char_hp" rel="tooltip" title="{characterHPPercent}%"><div class="bar bar-success" style="width: {characterHPPercent}%;"></div></div>
+				<strong>{T SP}</strong>
+				<h6 align="right"><span class="value_char_sp">{characterSP}</span>/<span class="value_char_sp_max">{characterSPMax}</span></h6>
+				<div class="progress progress_char_sp" rel="tooltip" title="{characterSPPercent}%"><div class="bar" style="width: {characterSPPercent}%;"></div></div>
+				</div>
+				<div class="span3">
+					<table class="table-condensed">
+						<tbody>
+							<tr><td class="left">{T Str}</td><td class="pull-right"><span class="value_char_str">{characterStr}</span>+<span class="value_char_str_bonus">{characterStrBonus}</span>  <a href="/handler?csrf={csrf}&command=stat_add+str&page=index.html" rel="tooltip" title="You need <b>{characterStrPoints}</b> points for add 1 STR point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Agi}</td><td class="pull-right"><span class="value_char_agi">{characterAgi}</span>+<span class="value_char_agi_bonus">{characterAgiBonus}</span>  <a href="/handler?csrf={csrf}&command=stat_add+agi&page=index.html" rel="tooltip" title="You need <b>{characterAgiPoints}</b> points for add 1 AGI point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Vit}</td><td class="pull-right"><span class="value_char_vit">{characterVit}</span>+<span class="value_char_vit_bonus">{characterVitBonus}</span>  <a href="/handler?csrf={csrf}&command=stat_add+vit&page=index.html" rel="tooltip" title="You need <b>{characterVitPoints}</b> points for add 1 VIT point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Int}</td><td class="pull-right"><span class="value_char_int">{characterInt}</span>+<span class="value_char_int_bonus">{characterIntBonus}</span>  <a href="/handler?csrf={csrf}&command=stat_add+int&page=index.html" rel="tooltip" title="You need <b>{characterIntPoints}</b> points for add 1 INT point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Dex}</td><td class="pull-right"><span class="value_char_dex">{characterDex}</span>+<span class="value_char_dex_bonus">{characterDexBonus}</span>  <a href="/handler?csrf={csrf}&command=stat_add+dex&page=index.html" rel="tooltip" title="You need <b>{characterDexPoints}</b> points for add 1 DEX point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td class="left">{T Luk}</td><td class="pull-right"><span class="value_char_luk">{characterLuk}</span>+<span class="value_char_luk_bonus">{characterLukBonus}</span>  <a href="/handler?csrf={csrf}&command=stat_add+luk&page=index.html" rel="tooltip" title="You need <b>{characterLukPoints}</b> points for add 1 LUK point!"><i class="icon-plus-sign"></i></a></td></tr>
+							<tr><td></td></tr>
+							<tr><td class="left">{T Status point}</td><td class="pull-right"><span class="value_char_points_free">{characterFreePoints}</span></td></tr>
+							<br/>
+						</tbody>
+					</table>
+				</div>
+				<div class="span3">
+					<table class="table-condensed">
+						<tbody>
+							<tr><td class="left">{T Atk}</td><td class="pull-right"><span class="value_char_attack">{characterAttack}</span>+<span class="value_char_attack_bonus">{characterAttackBonus}</span></td></tr>
+							<tr><td class="left">{T Matk}</td><td class="pull-right"><span class="value_char_attack_magic_min">{characterAttackMagicMax}</span>~<span class="value_char_attack_magic_max">{characterAttackMagicMin}</span></td></tr>
+							<tr><td class="left">{T Hit}</td><td class="pull-right"><span class="value_char_hit">{characterHit}</span></td></tr>
+							<tr><td class="left">{T Critical}</td><td class="pull-right"><span class="value_char_critical">{characterCritical}</span></td></tr>
+							<tr><td class="left">{T Def}</td><td class="pull-right"><span class="value_char_def">{characterDef}</span>+<span class="value_char_def_bonus">{characterDefBonus}</span></td></tr>
+							<tr><td class="left">{T Mdef}</td><td class="pull-right"><span class="value_char_def_magic">{characterDefMagic}</span>+<span class="value_char_def_magic_bonus">{characterDefMagicBonus}</span></td></tr>
+							<tr><td class="left">{T Flee}</td><td class="pull-right"><span class="value_char_flee">{characterFlee}</span>+<span class="value_char_flee_bonus">{characterFleeBonus}</span></td></tr>
+							<tr><td class="left">{T Aspd}</td><td class="pull-right"><span class="value_char_attack_speed">{characterAttackSpeed}</span></td></tr>
+							<br/>
+						</tbody>
+					</table>
+				</div>
+				<div class="span3">
+					<table class="table-condensed">
+						<tbody>
+							<br/>
+							<tr>Base Level<br/>
+							<h6 align="right"><span class="value_char_exp">{characterBaseExp}</span>/<span class="value_char_exp_max">{characterBaseMax}</span></h6>
+							<div class="progress progress_char_exp" rel="tooltip" title="{characterBasePercent}%"><div class="bar" style="width: {characterBasePercent}%;"></div></div>
+							</tr>
+							<tr>Job Level<br/>
+							<h6 align="right"><span class="value_char_exp_job">{characterJobExp}</span>/<span class="value_char_exp_job_max">{characterJobMax}</span></h6>
+							<div class="progress progress_char_exp_job" rel="tooltip" title="{characterJobPercent}%"><div class="bar" style="width: {characterJobPercent}%;"></div></div>
+							</tr>
+							<tr>Weight<br/>
+							<h6 align="right"><span class="value_char_weight">{characterWeight}</span>/<span class="value_char_weight_max">{characterWeightMax}</span></h6>
+							<div class="progress progress_char_weight" rel="tooltip" title="{characterWeightPercent}%"><div class="bar bar-danger" style="width: {characterWeightPercent}%;"></div></div>
+							</tr>
+							<tr>Zeny<br/>
+							<div class="pull-right"><span class="label label-success"><span class="value_char_zeny">{characterZeny}</span></span></div>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="span4">
+					<table class="table-condensed">
+						<tbody>
+							<br/>
+							<b>Status:</b> {characterStatusesSring}
+							</tr>
+						</tbody>
+					</table>
+				</div>
+            </div><!--/span-->
+			
+			{{_sidebar.html}}
+			
+          </div><!--/row-->
+		  
+        </div><!--/span-->
+
+{{_footer.html}}

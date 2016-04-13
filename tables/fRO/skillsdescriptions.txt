@@ -1,0 +1,6537 @@
+NV_BASIC#
+Skill de Base
+MAX Lv : 9 
+Permet d'utiliser l'interface de base.
+[Level 1] : Permet de faire du commerce
+Autorise l'échange avec d'autres personnes.
+[Level 2] : Permet d'exprimer des émotions
+En utilisant les raccourcis Alt+0~9, Autorise l'utilisation d'une émotion.
+[Level 3] : Permet de s'assoir
+Autorise le personnage à s'assoir permettant de regagner des HP/SP 2 fois plus rapidement.
+Commande:/sit, /stand, ou touche Insert.
+[Level 4] : Permet de créer sa 'chatroom'.
+Autorise le personnage à créer sa propre chatroom.
+[Level 5] : Permet de se joindre à une partie
+Autorise le joueur à se joindre à une partie.
+Commande:/join [Nom de la partie]
+[Level 6] : Permet d'utiliser le stockage
+Autorise à utiliser un surplus d'inventaire.
+[Level 7] : Permet d'organiser sa partie
+Autorise le joueur à créer sa party.
+Commande:/organize [Nom de la party]
+[Level 9] : Permet de changer de profession après le noviciat
+Autorise le joueur à postuler pour une profession de classe 1.
+#
+SM_SWORD#
+Sword Mastery
+MAX Lv : 10
+Type de skill : Passif
+Description: Augmente les dégats avec une épée à une main.
+[Level 1] : ATK +4
+[Level 2] : ATK +8
+[Level 3] : ATK +12
+[Level 4] : ATK +16
+[Level 5] : ATK +20
+[Level 6] : ATK +24
+[Level 7] : ATK +28
+[Level 8] : ATK +32
+[Level 9] : ATK +36
+[Level 10] : ATK +40
+#
+SM_TWOHAND#
+Two-handed Sword Mastery
+MAX Lv : 10
+Skill Requirements : Sword Mastery 1
+Type de skill : Passif
+Description : Augmente les dégats avec une épée à 2 mains.
+[Level 1] : ATK +4
+[Level 2] : ATK +8
+[Level 3] : ATK +12
+[Level 4] : ATK +16
+[Level 5] : ATK +20
+[Level 6] : ATK +24
+[Level 7] : ATK +28
+[Level 8] : ATK +32
+[Level 9] : ATK +36
+[Level 10] : ATK +40
+#
+SM_RECOVERY#
+Increase HP Recovery
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente la récupération de HP. Cela dépend du maximum de la barre de HP.
+[Level 1] : HP toutes les 10 secs +5
+[Level 2] : HP toutes les 10 secs +10
+[Level 3] : HP toutes les 10 secs +15
+[Level 4] : HP toutes les 10 secs +20
+[Level 5] : HP toutes les 10 secs +25
+[Level 6] : HP toutes les 10 secs +30
+[Level 7] : HP toutes les 10 secs +35
+[Level 8] : HP toutes les 10 secs +40
+[Level 9] : HP toutes les 10 secs +45
+[Level 10] : HP toutes les 10 secs +50
+#
+SM_BASH#
+Bash
+Type de skill : Actif
+Cible: Ennemi
+Description : Touche l'ennemi de toutes ses forces. Si vous apprenez Fatal Blow, vous avez une chance d'infliger le status Stun à l'ennemi à partir du niveau 5.
+[Level 1] : +130% ATK
+[Level 2] : +160% ATK
+[Level 3] : +190% ATK
+[Level 4] : +220% ATK
+[Level 5] : +250% ATK
+[Level 6] : +280% ATK
+[Level 7] : +310% ATK
+[Level 8] : +340% ATK
+[Level 9] : +370% ATK
+[Level 10] : +400% ATK
+#
+SM_MAGNUM#
+Magnum Break
+MAX Lv : 10
+Type de skill : Active(Feu)
+Cible: Ennemi
+Description : Attaque large utilisant l'élément Feu. 
+Ajoute 20% d'ATK de feu à l'ATK normal pendant 10 secondes. Consomme quelques HP lors de l'utilisation.
+[Level 1] : +120% ATK
+[Level 2] : +140% ATK
+[Level 3] : +160% ATK
+[Level 4] : +180% ATK
+[Level 5] : +200% ATK
+[Level 6] : +220% ATK
+[Level 7] : +240% ATK
+[Level 8] : +260% ATK
+[Level 9] : +280% ATK
+[Level 10] : +300% ATK
+#
+SM_PROVOKE#
+Provoke
+MAX Lv : 10
+Type de skill : Support
+Cible: Ennemi
+Description : Diminue la défense de l'ennemi tout en augmentant sa force. Inefficace sur les monstres de type Undead.
+[Level 1] : +5% ATK de l'Ennemi, -10% DEF de l'Ennemi
+[Level 2] : +8% ATK de l'Ennemi, -15% DEF de l'Ennemi
+[Level 3] : +11% ATK de l'Ennemi, -20% DEF de l'Ennemi
+[Level 4] : +14% ATK de l'Ennemi, -25% DEF de l'Ennemi
+[Level 5] : +17% ATK de l'Ennemi, -30% DEF de l'Ennemi
+[Level 6] : +20% ATK de l'Ennemi, -35% DEF de l'Ennemi
+[Level 7] : +23% ATK de l'Ennemi, -40% DEF de l'Ennemi
+[Level 8] : +26% ATK de l'Ennemi, -45% DEF de l'Ennemi
+[Level 9] : +29% ATK de l'Ennemi, -50% DEF de l'Ennemi
+[Level 10] : +32% ATK de l'Ennemi, -55% DEF de l'Ennemi
+#
+SM_ENDURE#
+Endure
+MAX Lv : 10
+Skill Requirements : Provoke 5
+Type de skill : Support
+Description : Permet aprés utilisation d'attaquer ou de se déplacer lors d'une frappe ennemie. Seuls la MDEF sont utilisés pendant WoE. Les effets sont annulés si le joueur attaque plus de 7 fois pendant le temps d'utilisation. Une pause de 10 seconds sont nécessaires entre chaque utilisation.
+[Level 1] : Durée 10Secs, MDEF +1
+[Level 2] : Durée 13Secs, MDEF +2
+[Level 3] : Durée 16Secs, MDEF +3
+[Level 4] : Durée 19Secs, MDEF +4
+[Level 5] : Durée 22Secs, MDEF +5
+[Level 6] : Durée 25Secs, MDEF +6
+[Level 7] : Durée 28Secs, MDEF +7
+[Level 8] : Durée 31Secs, MDEF +8
+[Level 9] : Durée 34Secs, MDEF +9
+[Level 10] : Durée 37Secs, MDEF +10
+#
+MG_SRECOVERY#
+Increase SP Recovery
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente la récupération de SP. Le maximum de SP affècte la quantité de points récupérés.
+[Level 1] : +3 SP toutes les 10 secs
+[Level 2] : +6 SP toutes les 10 secs
+[Level 3] : +9 SP toutes les 10 secs
+[Level 4] : +12 SP toutes les 10 secs
+[Level 5] : +15 SP toutes les 10 secs
+[Level 6] : +18 SP toutes les 10 secs
+[Level 7] : +21 SP toutes les 10 secs
+[Level 8] : +24 SP toutes les 10 secs
+[Level 9] : +27 SP toutes les 10 secs
+[Level 10] : +28 SP toutes les 10 secs
+#
+MG_SIGHT#
+Sight
+MAX Lv : 1
+Type de skill : Support(Feu)
+Description : Détecte les ennemis cachés à proximité.
+#
+MG_FIREBOLT#
+Fire Bolt
+MAX Lv : 10
+Type de skill : Active(Feu)
+Cible: Ennemi
+Description : Attaque un ennemi avec des traits de feu tombant du ciel. Chaque trait de feu invoquée blesse l'ennemi en fonction du niveau de MATK du joueur.
+#
+MG_FIREBALL#
+Fire Ball
+MAX Lv : 10
+Skill Requirements : Fire Bolt 4
+Type de skill : Active(Feu)
+Cible: Ennemi
+Description : Invoque une boule de feu pour attaquer sa cible et les ennemis autours. Les ennemis autour subissent les 3/4 des dégats de la cible principale. Au niveau 5, le temps d'invocation et de réutilisation diminue.
+#
+MG_FIREWALL#
+Fire Wall
+MAX Lv : 10
+Skill Requirements : Sight 1, Fire Ball5
+Type de skill : Active(Feu)
+Cible: Sol
+Description : Crée un mur de flammes pour blesser les ennemis qui cherchent à passer au travers.
+#
+MG_COLDBOLT#
+Cold Bolt
+MAX Lv : 10
+Type de skill : Active(Eau)
+Cible: Ennemi
+Description : Attaque un ennemi avec des traits de glace qui tombent du ciel. Chaque trait de glace invoquée blesse l'ennemi en fonction du niveau de MATK du joueur.
+#
+MG_FROSTDIVER#
+Frost Driver
+MAX Lv : 10
+Skill Requirements : Cold Bolt 5
+Type de skill : Active(Eau)
+Cible: Ennemi
+Description : Permet de geler un ennemi pendant un certain laps de temps.
+#
+MG_STONECURSE#
+Stone Curse
+MAX Lv : 10
+Type de skill : Malédiction(Terre)
+Cible: Ennemi
+Description : Permet de maudire un ennemi en le transformant en pierre. Nécessite 1 Red Gemstone.
+#
+MG_LIGHTNINGBOLT#
+Lightning Bolt
+MAX Lv : 10
+Type de skill : Active(Eclair)
+Cible: Ennemi
+Description : Frappe un ennemi d'un éclair.
+#
+MG_THUNDERSTORM#
+Thunder Storm
+MAX Lv : 10
+Skill Requirements : Lightning Bolt 4
+Type de skill : Active(Eclair)
+Cible: Sol
+Description : Lance une tempête d'éclairs sur une zone pour blesser les ennemis à proximité.
+#
+MG_NAPALMBEAT#
+Napalm Beat
+MAX Lv : 10
+Skill Form: Offensive
+Type de skill : Active(Spirituel)
+Cible: Ennemi
+Description : A bonne distance, brûle un ennemi en utilisant des pouvoirs psychiques.
+#
+MG_SOULSTRIKE#
+Soul Strike
+MAX Lv : 10
+Skill Requirements : Napalm Beat 4
+Type de skill : Active(Spirituel)
+Cible: Ennemi
+Description : Invoque des esprits anciens pour attaquer des ennemis. Efficace sur les Undead.
+#
+MG_SAFETYWALL#
+Safety Wall
+MAX Lv : 10
+2Skill Requirements : Napalm Beat 7, Soul Strike 5
+8Skill Requirements : Aspersio 4, Sanctuary 3
+Type de skill : Support(Spirituel)
+Cible: Sol
+Description : Crée un bouclier magique pendant un laps de temps sur la région choisie pour bloquer les attaques au corps à corps. Nécessite 1 Blue Gemstone.
+#
+AL_DP#
+Divine Protection
+MAX Lv : 10
+14Skill Requirements : Cure 1
+Type de skill : Passif
+Description : Augmente sa defense face aux monstres de type Undead et aux Demon.
+[Level 1] : DEF +3
+[Level 2] : DEF +6
+[Level 3] : DEF +9
+[Level 4] : DEF +12
+[Level 5] : DEF +15
+[Level 6] : DEF +18
+[Level 7] : DEF +21
+[Level 8] : DEF +24
+[Level 9] : DEF +27
+[Level 10] : DEF +30
+#
+AL_DEMONBANE#
+Demon Bane
+MAX Lv : 10
+Skill Requirements : Devine Protection 3
+Type de skill : Passif
+Description : Augmente sa force d'attaque face aux monstres de type Undead et aux Demon. Le niveau du joueur affecte les dégats portés aux ennemis.
+[Level 1] : ATK +3
+[Level 2] : ATK +6
+[Level 3] : ATK +9
+[Level 4] : ATK +12
+[Level 5] : ATK +15
+[Level 6] : ATK +18
+[Level 7] : ATK +21
+[Level 8] : ATK +24
+[Level 9] : ATK +27
+[Level 10] : ATK +30
+#
+AL_ANGELUS#
+Angelus
+MAX Lv : 10
+Skill Requirements : Devine Protection 3
+Type de skill : Support
+Description : Augmente la défense de chaque membre du groupe (l'invocateur inclus) pour un certain laps de temps.
+#
+AL_CRUCIS#
+Signum Crucis
+MAX Lv : 10
+Skill Requirements : Demon Bane 3
+Type de skill : Support
+Description : Affaiblis la défense des monstres de type Undead et Ghost présents à l'écran.
+#
+AL_BLESSING#
+Blessing
+MAX Lv : 10
+Skill Requirements : Devine Protection 5
+Type de skill : Support
+Cible : Joueur
+Description : Augmente DEX, INT, STR d'un joueur pour un certain laps de temps. Soigne le joueur du statut Cursed ou stone-cursed.
+#
+AL_HEAL#
+Heal
+MAX Lv : 10
+14Skill Requirements : Faith 10, Demon Bane 5
+Type de skill : Soin
+Cible : Joueur
+Description : Permet au joueur de récupérer des HP. En fonction du niveau du joueur et de son INT, des HP sont ajoutés.
+#
+AL_HOLYWATER#
+Aqua Benedicta
+MAX Lv : 1
+Type de skill : Soin
+Description : Crée de l'Holy Water dans une bouteille vide si le joueur se trouve dans de l'eau.
+#
+AL_CURE#
+Cure
+MAX Lv : 1
+4Skill Requirements : Heal 2 
+14Skill Requirements : Faith 5
+Type de skill : Soin
+Cible : Joueur
+Description : Soigne des statuts anormaux comme Silence, Chaos ou Blind. Jette la Malédiction `Chaos' si utilisé sur les monstres de type Undead.
+#
+AL_INCAGI#
+Increase AGI
+MAX Lv : 10
+Skill Requirements : Heal 3
+Type de skill : Support
+Cible : Joueur
+Description : Augmente la vitesse d'attaque et de déplacement du joueur pour un court moment. Consomme un peu de HP.
+#
+AL_DECAGI#
+Decrease AGI
+MAX Lv : 10
+Skill Requirements : Increase Agility 1
+Type de skill : Support
+Cible : Ennemi
+Description : Diminue la vitesse d'attaque et de déplacement d'un ennemi.
+#
+AL_RUWACH#
+Ruwach
+MAX Lv : 1
+Type de skill : Support
+Description : Détecte les ennemis cachés et envoie le pouvoir sacred force pour les blesser.
+#
+AL_PNEUMA#
+Pneuma
+MAX Lv : 1
+Skill Requirements : Warp Portal 4
+Type de skill : Support
+Cible : Sol
+Description : Protège une zone contre les attaques de missile pour un court laps de temps.
+#
+AL_TELEPORT#
+Teleport
+MAX Lv : 2
+Skill Requirements : Ruwach 1
+Type de skill : Support
+Description : Téléporte à un endroit.
+[Level 1] : Téléporte à un endroit aléatoire.
+[Level 2] : Téléporte au point de sauvegarde du joueur.
+#
+AL_WARP#
+Warp Portal
+MAX Lv : 4
+Skill Requirements : Teleport 2
+Type de skill : Support
+Cible: Sol
+Description : Ouvre une porte dimensionnelle pour se téléporter dans une autre zone. Nécessite un Blue Gemstone.
+[Level 1] : Téléporte au point de sauvegarde.
+[Level 2] : Permet d'utiliser 1 point Memo.
+[Level 3] : Permet d'utiliser 2 point Memo.
+[Level 4] : Permet d'utiliser 3 point Memo.
+[Point Memo] : zone spéciale sauvegardée pour la téléportation. Commande: /memo.
+#
+MC_INCCARRY#
+Enlarge Weight Limit
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente la valeur maximale du poids.
+[Level 1] : Augmente le poids de +200
+[Level 2] : Augmente le poids de +400
+[Level 3] : Augmente le poids de +600
+[Level 4] : Augmente le poids de +800
+[Level 5] : Augmente le poids de +1000
+[Level 6] : Augmente le poids de +1200
+[Level 7] : Augmente le poids de +1400
+[Level 8] : Augmente le poids de +1600
+[Level 9] : Augmente le poids de +1800
+[Level 10] : Augmente le poids de +2000
+#
+MC_DISCOUNT#
+Discount
+MAX Lv : 10
+Skill Requirements : Enlarge Weight Limit 3
+Type de skill : Passif
+Description : Permet d'acheter des items aux NPCs à un prix plus bas.
+[Level 1] : Discount 7%
+[Level 2] : Discount 9%
+[Level 3] : Discount 11%
+[Level 4] : Discount 13%
+[Level 5] : Discount 15%
+[Level 6] : Discount 17%
+[Level 7] : Discount 19%
+[Level 8] : Discount 21%
+[Level 9] : Discount 23%
+[Level 10] : Discount 24%
+#
+MC_OVERCHARGE#
+Overcharge
+MAX Lv : 10
+Skill Requirements : Discount 3
+Type de skill : Passif
+Description : Permet de vendre des items à un prix plus élevé aux NPCs des magasins.
+[Level 1] : Marge ajoutée 7%
+[Level 2] : Marge ajoutée 9%
+[Level 3] : Marge ajoutée 11%
+[Level 4] : Marge ajoutée 13%
+[Level 5] : Marge ajoutée 15%
+[Level 6] : Marge ajoutée 17%
+[Level 7] : Marge ajoutée 19%
+[Level 8] : Marge ajoutée 21%
+[Level 9] : Marge ajoutée 23%
+[Level 10] : Marge ajoutée 24%
+#
+MC_PUSHCART#
+Pushcart
+MAX Lv : 10
+Skill Requirements : Enlarge Weight Limit 5
+Type de skill : Passif
+Description : Permet d'équiper un Cart, charette spéciale de la classe Merchant.
+Les employés Kafra fournissent un pushcart et le raccourcie clavier est Alt-W.
+Aucun item ne peut être activé dans le pushcart.
+#
+MC_IDENTIFY#
+Item Appraisal
+MAX Lv : 1
+Type de skill : Support
+Description : Identifie les items inconnues.
+#
+MC_VENDING#
+Vending
+MAX Lv : 10
+Skill Requirements : Pushcart 3
+Type de skill : Support
+Description : Ouvre un magasin de rue, permettant de fixer ses propres prix.
+Le niveau de skill influence le nombre d'items mis en vente en même temps.
+#
+MC_MAMMONITE#
+Mammonite
+MAX Lv : 10
+Type de skill : Actif
+Cible : Ennemi
+Description : Blesse un ennemi en fonction des Zenys depensés.
+[Level 1] : ATK 150%, 100Z depensés
+[Level 2] : ATK 200%, 200Z depensés
+[Level 3] : ATK 250%, 300Z depensés
+[Level 4] : ATK 300%, 400Z depensés
+[Level 5] : ATK 350%, 500Z depensés
+[Level 6] : ATK 400%, 600Z depensés
+[Level 7] : ATK 450%, 700Z depensés
+[Level 8] : ATK 500%, 800Z depensés
+[Level 9] : ATK 550%, 900Z depensés
+[Level 10] : ATK 600%, 1000Z depensés
+#
+AC_OWL#
+Owl's Eye
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente DEX
+[Level 1] : DEX +1
+[Level 2] : DEX +2
+[Level 3] : DEX +3
+[Level 4] : DEX +4
+[Level 5] : DEX +5
+[Level 6] : DEX +6
+[Level 7] : DEX +7
+[Level 8] : DEX +8
+[Level 9] : DEX +9
+[Level 10] : DEX +10
+#
+AC_VULTURE#
+Vulture's Eye
+MAX Lv : 10
+Skill Requirements : Owl's Eye 3
+17kill Requirements : Owl's Eye 10
+Type de skill : Passif
+Description : Augmente la distance d'attaque et la précision d'un arc.
+[Level 1] : Distance d'attaque +1
+[Level 2] : Distance d'attaque +2
+[Level 3] : Distance d'attaque +3
+[Level 4] : Distance d'attaque +4
+[Level 5] : Distance d'attaque +5
+[Level 6] : Distance d'attaque +6
+[Level 7] : Distance d'attaque +7
+[Level 8] : Distance d'attaque +8
+[Level 9] : Distance d'attaque +9
+[Level 10] : Distance d'attaque +10
+#
+AC_CONCENTRATION#
+Improve Concentration
+MAX Lv : 10
+Skill Requirements : Vulture's Eye 1
+Type de skill : Support
+Description : Augmente DEX et AGI pour un certain laps de temps et détecte les ennemis cachés à proximité.
+#
+AC_DOUBLE#
+Double Strafe
+MAX Lv : 10
+17Skill Requirements : Vulture's Eye 10
+Type de skill : Actif
+Cible : Ennemi
+Description : Touche 2 fois un ennemi en un coup.
+#
+AC_SHOWER#
+Arrow Shower
+MAX Lv : 10
+Skill Requirements : Double Strafe 5
+Type de skill : Actif
+Cible : Ennemi
+Description : Attaque les ennemis à proximité de la cible.
+#
+TF_DOUBLE#
+Double Attack
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente la chance d'attaquer 2 fois avec une arme de classe Dagger. Influence aussi les dégats par la main gauche si utilisation d'une arme de classe katar.
+#
+TF_MISS#
+Improve Dodge
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente les chances d'esquiver.
+#
+TF_STEAL#
+Steal
+MAX Lv : 10
+Type de skill : Support
+Cible : Ennemi
+Description : Augmente les chances de voler un item à un ennemi.
+#
+TF_HIDING#
+Hiding
+MAX Lv : 10
+Skill Requirements : Steal 5
+Type de skill : Support
+Description : Permet de se cacher dans le sol. Possibilité d'être vu par certains skills comme Sight des magiciens.
+#
+TF_POISON#
+Envenom
+MAX Lv : 10
+Skill Form: Offensive (Poison)
+Type de skill : Active(Poison)
+Cible : Ennemi
+Description : Empoissonne un ennemi.
+#
+TF_DETOXIFY#
+Detoxify
+MAX Lv : 1
+Skill Requirements :  Envenom 3
+Type de skill : Support(Poison)
+Description : Soigne du statut Poison.
+#
+KN_SPEARMASTERY#
+Spear Mastery
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente les dégats avec des lances. +1 est ajouté à l'ATK si le joueur chevauche un Pecopeco.
+[Level 1] : ATK +4
+[Level 2] : ATK +8
+[Level 3] : ATK +12
+[Level 4] : ATK +16
+[Level 5] : ATK +20
+[Level 6] : ATK +24
+[Level 7] : ATK +28
+[Level 8] : ATK +32
+[Level 9] : ATK +36
+[Level 10] : ATK +40
+#
+KN_PIERCE#
+Pierce
+MAX Lv : 10
+Skill Requirements : Spear Mastery 1
+Type de skill : Actif
+Cible : Ennemi 
+Description : Transperce un ennemi avec une lance. Attaque plusieurs fois en fonction de la taille du monstre. Activé seulement avec des armes de la classe Spear.
+[Small] : 1 coup
+[Medium] : 2 coups
+[Large] : 3 coups
+#
+KN_BRANDISHSPEAR#
+Brandish Spear
+MAX Lv : 10
+Skill Requirements : Peco Peco Ride 1, Spear Stab 3
+Type de skill : Actif
+Cible : Ennemi 
+Description : Transperce violemment si on chevauche un peco peco. Activé seulement avec des armes de la classe Spear et en chevauchant un Peco Peco .
+#	
+KN_SPEARSTAB#
+Spear Stab
+MAX Lv : 10
+Skill Requirements : Pierce 5
+Type de skill : Actif
+Cible : Ennemi 
+Description : Assome un ennemi avec une lance. Activé seulement avec des armes de la classe spear.
+#
+KN_SPEARBOOMERANG#
+Spear Boomerang
+MAX Lv : 5
+Skill Requirements : Pierce 3
+Type de skill : Actif
+Cible: Ennemi 
+Description : Attaque un ennemi à distance avec une lance. Activé seulement avec des armes de la classe spear.
+#
+KN_TWOHANDQUICKEN#
+Two Hand Quicken
+MAX Lv : 10
+Skill Requirements : Two Handed Sword Mastery 1
+Type de skill : Support
+Description : Augmentela vitesse d'attaque avec une épée à 2 mains.Activé seulement avec des armes de type Two-hand Sword.
+[Level 1] : Durée 30Secs
+[Level 2] : Durée 60Secs
+[Level 3] : Durée 1Min 30Secs
+[Level 4] : Durée 2Mins
+[Level 5] : Durée 2Mins 30Secs
+[Level 6] : Durée 3Mins
+[Level 7] : Durée 3Mins 30Secs
+[Level 8] : Durée 4Mins
+[Level 9] : Durée 4Mins 30Secs
+[Level 10] : Durée 5Mins
+#
+KN_AUTOCOUNTER#
+Counter Attack
+MAX Lv : 5
+Skill Requirements : Two Handed Sword Mastery 1
+Type de skill : Actif
+Cible : Ennemi 
+Description : Contre-Attaque un ennemi avec des dégats critiques.
+#
+KN_BOWLINGBASH#
+Bowling Bash
+MAX Lv : 10
+Skill Requirements : Bash 10, Magnum Break 3, Two Handed Sword Mastery 5, Two Hand Quicken 10, Counter Attack 5 
+Type de skill : Actif
+Cible : Ennemi 
+Description : Attaque un ennemi avec une puissance supérieur le propulsant sur les autres en causant des dégats.
+#
+KN_RIDING#
+Peco Peco Ride
+MAX Lv : 1
+Skill Requirements : Endure 1
+Type de skill : Passif
+Description : Permet aux Knights et aux Crusaders de chevaucher des Peco Peco.
+#
+KN_CAVALIERMASTERY#
+Cavalier Mastery
+MAX Lv : 5
+Skill Requirements : Peco Peco Ride 1
+Type de skill : Passif
+Description : Améliore la vitesse d'attaque quand on chevauche un peco peco. Maîtriser ce skill complétement redonne la vitesse d'attaque d'origine du joueur.
+#
+PR_MACEMASTERY#
+Mace Mastery
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente les dégats avec les armes de type Mace.
+[Level 1] : ATK +3
+[Level 2] : ATK +6
+[Level 3] : ATK +9
+[Level 4] : ATK +12
+[Level 5] : ATK +15
+[Level 6] : ATK +18
+[Level 7] : ATK +21
+[Level 8] : ATK +24
+[Level 9] : ATK +27
+[Level 10] : ATK +30
+#
+PR_IMPOSITIO#
+Impositio Manus
+MAX Lv : 5
+Type de skill : Bénédiction
+Cible : Joueur
+Description : Bénit une personne avec les mains posées dessus. Augmente les dégats des armes pendant 60 Secs.
+[Level 1] : ATK +5
+[Level 2] : ATK +10
+[Level 3] : ATK +15
+[Level 4] : ATK +20
+[Level 5] : ATK +25
+#
+PR_SUFFRAGIUM#
+Suffragium
+MAX Lv : 3
+Skill Requirements : Impositio Manus 2
+Type de skill : Bénédiction
+Cible : Joueur(Invocateur exclu)
+Description : Invocation pour les autres joueurs. Réduit le temps d'invocation pendant un certain laps de temps.
+[Level 1] : Réduction de 15%, Durée 30 secs
+[Level 2] : Réduction de 30%, Durée 20 secs
+[Level 3] : Réduction de 45%, Durée 10 secs
+#
+PR_ASPERSIO#
+Aspersio
+MAX Lv : 5
+Skill Requirements : Aqua Benedicta 1, Impositio Manus 3
+Type de skill : Bénédiction
+Cible : Joueur(Invocateur exclu)
+Description : Baptise un joueur avec de l'eau bénite. Dote une arme de la propriété Holy pendant la durée du sort. Nécessite Holy Water.
+[Level 1] : Durée 1 Min
+[Level 2] : Durée 1 Min 30 Secs
+[Level 3] : Durée 2 Min
+[Level 4] : Durée 2 Min 30 Secs
+[Level 5] : Durée 3 Min
+#
+PR_BENEDICTIO#
+B.S Sacramenti
+MAX Lv : 5
+Skill Requirements : Aspersio 5, Gloria 3
+Type de skill : Bénédiction
+Cible : SolDescription : Benedictio Sanctissimi Sacramenti. Dote les armures de la propriété Holy pour tous les membres à l'écran. Nécessite la présence d'unautre Priest dans le groupe qui prie en même temps.
+#
+PR_SANCTUARY#
+Sanctuary
+MAX Lv : 10
+Skill Requirements :  Heal 1
+Type de skill : Support
+Cible : Sol
+Description : Créer une zone sainte sur le sol. Permet de regagner des HP sur la zone pendant la durée du sort.
+#
+PR_STRECOVERY#
+Status Recovery
+MAX Lv : 1
+Type de skill : Support
+Cible : Joueur
+Description : Soigne les statuts anormaux comme Undead, Frozen, Stone Curse. Inflige le statut Blind aux monstres de type Undead.
+#
+PR_SLOWPOISON#
+Slow Poison
+MAX Lv : 4
+Type de skill : Support
+Cible : Joueur
+Description : Ralentis temportairement la baisse de HP occasionnée par le status Poison.
+#
+ALL_RESURRECTION#
+Resurrection
+MAX Lv : 4
+Skill Requirements : Increase SP Recovery 4, Recovery 1
+Type de skill : Support
+Cible : Joueur Mort
+Description : Rétabli un joueur mort.
+[Level 1] : Rétablissement avec 10% d'HP
+[Level 2] : Rétablissement avec 30% d'HP
+[Level 3] : Rétablissement avec 50% d'HP
+[Level 4] : Rétablissement avec 80% d'HP
+#
+PR_KYRIE#
+Kyrie Eleison
+MAX Lv : 10
+Skill Requirements : Angelus 2
+Type de skill : Eloge
+Description : Créer une barrière autour du joueur. Dure 120 secondes et le niveau de skill influence le nombre d'attaques bloquées. Holy Light annule immédiatement ce skill.
+[Level 1] : Barrière de 12% de MAXHP, Bloque 5 fois
+[Level 2] : Barrière de 14%, Bloque 6 fois
+[Level 3] : Barrière de 16% de MAXHP, Bloque 6 fois
+[Level 4] : Barrière de 18% de MAXHP, Bloque 7 fois
+[Level 5] : Barrière de 20% de MAXHP, Bloque 7 fois
+[Level 6] : Barrière de 22% de MAXHP, Bloque 8 fois
+[Level 7] : Barrière de 24% de MAXHP, Bloque 8 fois
+[Level 8] : Barrière de 26% de MAXHP, Bloque 9 fois
+[Level 9] : Barrière de 28% de MAXHP, Bloque 9 fois
+[Level 10] : Barrière de 30% de MAXHP, Bloque 10 fois
+#
+PR_MAGNIFICAT#
+Magnificat
+MAX Lv : 5
+Type de skill : Eloge
+Description : Double la récupération des HP/SP de tous les membres du groupe pendant la durée du sort.
+#
+PR_GLORIA#
+Gloria
+MAX Lv : 5
+Skill Requirements : Kyrie Eleison 4, Magnificat 3
+Type de skill : Eloge
+Description : Augmente la LUK de 30 pour tous les membres du groupe pendant la durée du sort.
+#
+PR_LEXDIVINA#
+Lex Divina
+MAX Lv : 10
+Skill Requirements : Ruwach1
+Type de skill : Exorcisme
+Cible: Ennemi 
+Description : Inflige le statut Silence pendant un certain laps de temps.
+#
+PR_TURNUNDEAD#
+Turn Undead
+MAX Lv : 10
+Skill Requirements : Resurrection 1, Lex Divina 3
+Type de skill : Exorcisme
+Cible: Ennemi 
+Description : En fonction de la chance, élimine un monstre de type Undead. Blesse sérieusement l'ennemi s'il n'est pas détruit.
+#
+PR_LEXAETERNA#
+Lex Aeterna
+MAX Lv : 1
+Skill Requirements : Lex Divina 5
+Type de skill : Exorcisme
+Cible: Ennemi 
+Description : Permet à une attaque physique d'infliger à l'ennemi visé des dommages multipliés par deux.
+#
+PR_MAGNUS#
+Magnus Exorcismus
+MX Lv : 10
+Skill Requirements :  Turn Undead 3, Lex Aeterna 1, Safety Wall 1
+Type de skill : Exorcisme
+Cible: Sol
+Description : Evoque la grande croix sur le sol pour détruire les monstres de type Demon et Undead. Nécessite un Blue Gemstone.
+#
+WZ_FIREPILLAR#
+Fire Pillar
+MAX Lv : 10
+Skill Requirements : Fire Wall 1
+Type de skill : Active(Feu)
+Cible: Sol
+Description : Invoquer une tour de flames sur une zone choisie pour attaquer les adversaires.
+[Lv 1]: 3 Hits, 3 sec cast time
+[Lv 2]: 4 Hits, 2.7 sec cast time
+[Lv 3]: 5 Hits, 2.4 sec cast time
+[Lv 4]: 6 Hits, 2.1 sec cast time
+[Lv 5]: 7 Hits, 1.8 sec cast time
+[Lv 6]: 8 Hits, 1.5 sec cast time
+[Lv 7]: 9 Hits, 1.2 sec cast time
+[Lv 8]: 10 Hits, 0.9 sec cast time
+[Lv 9]: 11 Hits, 0.6 sec cast time
+[Lv 10]: 12 Hits, 0.3 sec cast time
+
+#
+WZ_SIGHTRASHER#
+Sightrasher
+MAX Lv : 10
+Skill Requirements : Sight 1, Lightning Bolt 1
+Type de skill : Active(Feu)
+Description : Envoie des boules de feu téléguidées autour du joueur. Nécessite le skill Sight.
+#
+WZ_FIREIVY#
+Fire Ivy
+Type de skill : Active(Feu)
+Cible: Sol
+Description : Invoque des lierres en flammes.
+#
+WZ_METEOR#
+Meteor Storm
+MAX Lv : 10
+Skill Requirements : Thunder Storm1, Sightrasher 2
+Type de skill : Active(Feu)
+Cible : Ennemi 
+Description : Envoie de nombreux météors sur et autour de la cible.
+#
+WZ_JUPITEL#
+Jupitel Thunder
+MAX Lv : 10
+Skill Requirements : Napalm Beat 1, Lightning Bolt 1
+Type de skill : Active(Eclair)
+Cible : Ennemi 
+Description : Eclair frappant et repoussant un ennemi.
+#
+WZ_VERMILION#
+Lord of Vermilion
+MAX Lv : 10
+Skill Requirements :  Thunder Storm 1, Jupitel Thunder 5
+Type de skill : Active(Eclair)
+Cible : Sol
+Description : Envoie plusieurs éclairs sur la zone choisie. Le niveau de skill influence les dégats causés et le temps d'invocation.
+#
+WZ_WATERBALL#
+Waterball
+MAX Lv : 5
+Skill Requirements : Cold Bolt 1, Lightning Bolt 1
+Type de skill : Active(Glace)
+Cible : Ennemi 
+Description : Attaque l'ennemi en utilisant l'eau autour du joueur. Le joueur doit se trouver dans de l'eau.
+#
+WZ_ICEWALL#
+Icewall
+MAX Lv : 10
+Skill Requirements : Stone Curse 1, Frost Diver 1
+Type de skill : Support(Glace)
+Cible : Sol
+Description : Créer un mur de glace pour bloquer les ennemis.
+#
+WZ_FROSTNOVA#
+Frost Nova
+MAX Lv : 10
+Skill Requirements : Frost Diver 1, Icewall 1
+Type de skill : Active(Glace)
+Cible : Joueur
+Description : Gèle les ennemis autour du joueur en un seul coup.
+#
+WZ_STORMGUST#
+Storm Gust
+MAX Lv : 10
+Skill Requirements : Frost Diver 1, Jupitel 3
+Type de skill : Active(Glace)
+Cible : Sol
+Description : Invoque un blizzard pour blesser les ennemis.
+#
+WZ_EARTHSPIKE#
+Earth Spike
+MAX Lv : 5
+9Skill Requirements : Stone Curse 1
+16Skill Requirements : Seismic Weapon 1
+Type de skill : Active(Terre)
+Cible: Ennemi 
+Description : Elève le sol ou se trouve l'ennemi.
+#
+WZ_HEAVENDRIVE#
+Heaven's Drive
+MAX Lv : 5
+9Skill Requirements : Earth Spike 3
+16Skill Requirements : Earth Spike 1
+Type de skill : Active(Terre)
+Cible: Sol
+Description : Eleve le sol ou se trouvent les ennemis.
+#
+WZ_QUAGMIRE#
+Quagmire
+MAX Lv : 5
+Skill Requirements : Heaven's Drive 1
+Type de skill : Support(Terre)
+Cible: Sol
+Description : Créer un marais sur la zone choisie pour y diminuer la vitesse, l'AGI et DEX de tous les ennemis de moitié. AGI et DEX des ennemis peuvent diminuer au plus de 50%. Pour les joueurs, ce pouvoir fait subir le même effet.
+#
+WZ_ESTIMATION#
+Sense
+MAX Lv : 1
+Type de skill : Support
+Cible: Monster
+Description : Affiche les caractéristiques d'un monstre.
+#
+BS_IRON#
+Iron Tempering
+MAX Lv : 5
+Type de skill : Passif
+Description : Permet de raffiner du fer. Les chances de succès augmentent avec le niveau d'expérience.
+#
+BS_STEEL#
+Steel Tempering
+MAX Lv : 5
+Skill Requirements : Iron Tempering 1
+Type de skill : Passif
+Description : Permet de raffiner de l'acier. Les chances de succès augmentent avec le niveau d'expérience.
+#
+BS_ENCHANTEDSTONE#
+Enchanted Stone Craft
+MAX Lv : 5
+Skill Requirements : Iron Tempering 1
+Type de skill : Passif
+Description : Permet de créer 4 types de pierres enchantées. Les chances de succès augmentent avec le niveau d'expérience.
+#
+BS_ORIDEOCON#
+Research Oridecon
+MAX Lv : 5
+Skill Requirements : Enchanted Stone Craft 1
+Type de skill : Passif
+Description : Augmente les chances de succès de forger des armes de Lv.3.
+#
+BS_DAGGER#
+Smith Dagger
+MAX Lv : 3
+Type de skill : Passif
+Description : Permet de fabriquer des armes de type Dagger. Les chances de succès augmentent avec le niveau d'expérience.
+#
+BS_SWORD#
+Smith Sword
+MAX Lv : 3
+Skill Requirements : Smith Dagger 1
+Type de skill : Passif
+Description : Permet de fabriquer des armes de type Sword. Les chances de succès augmentent avec le niveau d'expérience.
+#
+BS_TWOHANDSWORD#
+Smith Two-handed Sword
+MAX Lv : 3
+Skill Requirements : Smith Sword 1
+Type de skill : Passif
+Description : Permet de fabriquer des armes de tytpe Two-hand Sword. Les chances de succès augmentent avec le niveau d'expérience.
+#
+BS_AXE#
+Smith Axe
+MAX Lv : 3
+Skill Requirements : Smith Sword 2
+Type de skill : Passif
+Description :Permet de fabriquer des armes de type Axe. Les chances de succès augmentent avec le niveau d'expérience.
+#
+BS_MACE#
+Smith Mace
+MAX Lv : 3
+Skill Requirements : Smith Brass Knuckle 1
+Type de skill : Passif
+Description : Permet de fabriquer des armes de type Mace. Les chances de succès augmentent avec le niveau d'expérience.
+#
+BS_KNUCKLE#
+Smith Brass Knuckle
+MAX Lv : 3
+Skill Requirements : Smith Dagger 1
+Type de skill : Passif
+Description : Permet de fabriquer des armes de type Knuckle. Les chances de succès augmentent avec le niveau d'expérience.
+#
+BS_SPEAR#
+Smith Spear
+MAX Lv : 3
+Skill Requirements : Smith Dagger 2
+Type de skill : Passif
+Description : Permet de fabriquer des armes de type Spear. Les chances de succès augmentent avec le niveau d'expérience.
+#
+BS_HILTBINDING#
+Hilt Binding
+MAX Lv : 1
+Type de skill : Passif
+Description : Ajoute 1 point de STR et 4 points d'ATK. Augmente aussi de 10% la durée des skills Adrenaline Rush, Power Thrust, Weapon Perfection.
+#
+BS_FINDINGORE#
+Ore Discovery
+MAX Lv : 1
+Skill Requirements : Hilt Binding 1, Steel Tempering 1
+Type de skill : Passif
+Description : Augmente les chances de trouver du minerai laissés par les monstres.
+#
+BS_WEAPONRESEARCH#
+Weaponry Research
+MAX Lv : 10
+Skill Requirements : Hilt Binding 1
+Type de skill : Passif
+Description : Améliore les connaissances en arme pour en fabriquer des meilleures.
+
+#
+BS_REPAIRWEAPON#
+Repair Weapon
+MAX Lv : 1
+Skill Requirements : Weaponry Research
+Type de skill : Support
+Cible: Armurie
+Description : Répare les armes endommagées.
+#
+BS_SKINTEMPER#
+Skin Tempering
+MAX Lv : 5
+Type de skill : Passif
+Description : Augmente la tolérance au feu et aux attaques classiques.
+[Level 1] : Résistance au feu +5%, Résistance classique +1%
+[Level 2] : Résistance au feu +10%, Résistance classique +2%
+[Level 3] : Résistance au feu +15%, Résistance classique +3%
+[Level 4] : Résistance au feu +20%, Résistance classique +4%
+[Level 5] : Résistance au feu +25%, Résistance classique +5%
+#
+BS_HAMMERFALL#
+Hammerfall
+MAX Lv : 5
+Type de skill : Support
+Cible: Sol
+Description : Provoque un séïsme dans la zone choisie pour infliger le statut Stun aux ennemis.
+#
+BS_ADRENALINE#
+Adrenaline Rush
+MAX Lv : 5
+Skill Requirements : Hammerfall 2
+Type de skill : Support
+Description : Double la vitesse des attaques avec des massues et des haches pendant la durée du sort.
+#
+BS_WEAPONPERFECT#
+Weapon Perfection
+MAX Lv : 5
+Skill Requirements : Adrenaline Rush 2, Weaponry Research 2
+Type de skill : Support
+Description : Permet d'infliger un maximum de dégats en fonction de la taille de l'ennemi.
+#
+BS_OVERTHRUST#
+Power Thrust
+MAX Lv : 5
+Skill Requirements : Adrenaline Rush 3
+Type de skill : Support
+Description : Augmente l'attaque d'une arme. A 0.1% de chance d'endommager cette arme.
+[Level 1] : ATK +5%
+[Level 2] : ATK +10%
+[Level 3] : ATK +15%
+[Level 4] : ATK +20%
+[Level 5] : ATK +25%
+#
+BS_MAXIMIZE#
+Maximize Power
+MAX Lv : 5
+Skill Requirements : Weapon Perfection 3, Power Thrust 2
+Type de skill : Support
+Description : Amplifie les dégats de l'arme. Consomme des SP pendant la durée du sort. L'utiliser une seconde fois successivement annule le sort.
+#
+HT_SKIDTRAP#
+Skid Trap
+MAX Lv : 5
+Type de skill : Piége caché
+Cible: Sol
+Description : Installe un piége pour faire glisser un ennemi vers une direction. Nécessite l'item Trap.
+[Level 1] : Glisse de 6 cellules, Durée 300 sec
+[Level 2] : Glisse de 7 cellules, Durée 240 sec
+[Level 3] : Glisse de 8 cellules, Durée 180 sec
+[Level 4] : Glisse de 9 cellules, Durée 120 sec
+[Level 5] : Glisse de 10 cellules, Durée 60 sec
+#
+HT_LANDMINE#
+Land Mine
+MAX Lv : 5
+Type de skill : Piége caché
+Cible: Sol
+Description : Installe une mine qui explose si un ennemi marche dessus. Nécessite un  1 Trap.
+[Level 1] : ATK 50%, Durée 65 Secs
+[Level 2] : ATK 75%, Durée 50 Secs
+[Level 3] : ATK 100%, Durée 35 Secs
+[Level 4] : ATK 125%, Durée 20 Secs
+[Level 5] : ATK 150%, Durée 5 Secs
+#
+HT_ANKLESNARE#
+Anklesnare
+MAX lv : 5
+Skill Requirements : Skid Trap 1
+Type de skill : Piége caché
+Cible: Sol
+Description : Installe un piége immobilisant l'ennmi pour un certain laps de temps. Nécessite un  1 Trap. Le niveau d'AGI de l'ennemi influence la durée du piége.
+#
+HT_FLASHER#
+Flasher
+MAX lv : 5
+Skill Requirements : Skid Trap 1
+Type de skill : Piége caché
+Cible: Sol
+Description : Installe un piége aveuglant l'ennemi par un forte lumière. Nécessite  2 Trap.
+[Level 1] : Trap Durée 150 secs	
+[Level 2] : Trap Durée 120 secs
+[Level 3] : Trap Durée 90 secs
+[Level 4] : Trap Durée 60 secs
+[Level 5] : Trap Durée 30 secs
+#
+HT_SHOCKWAVE#
+Shockwave Trap
+MAX Lv : 5
+Skill Requirements : Anklesnare 1
+Type de skill : Piége caché
+Cible: Sol
+Description : Installe un piége qui consomme les SP de l'ennemi. Nécessite  2 Traps.
+[Level 1] : Consomme 20% SP, Durée  200 secs
+[Level 2] : Consomme 35% SP, Durée  160 secs
+[Level 3] : Consomme 50% SP, Durée  120 secs
+[Level 4] : Consomme 65% SP, Durée  80 secs
+[Level 5] : Consomme 80% SP, Durée  40 secs
+#
+HT_SANDMAN#
+Sandman
+MAX Lv : 5
+Skill Requirements : Flasher 1
+Type de skill : Piége caché
+Cible: Sol
+Description : Installe un piége qui assoupi l'ennemi qui marche dessus ainsi que ceux qui l'entoure. Nécessite  1 Trap.
+[Level 1] : Durée  150 Secs
+[Level 2] : Durée  120 Secs
+[Level 3] : Durée  90 Secs
+[Level 4] : Durée  60 Secs
+[Level 5] : Durée  30 Secs
+#
+HT_FREEZINGTRAP#
+Freezing Trap
+MAX Lv : 5
+Skill Requirements : Flasher 1
+Type de skill : Piége caché
+Cible: Sol
+Description : Installe un piége qui gèle l'ennemi qui marche dessus. Nécessite  2 Traps.
+[Level 1] : Durée  150 Secs
+[Level 2] : Durée  120 Secs
+[Level 3] : Durée  90 Secs
+[Level 4] : Durée  60 Secs
+[Level 5] : Durée  30 Secs
+#
+HT_BLASTMINE#
+Blast Mine
+MAX Lv : 5
+Skill Requirements : Sandman 1, Land Mine 1, Freezing Trap 1
+Type de skill : Piége visible
+Cible: Sol
+Description : Installe un piége qui explose aprés un certain laps de temps. Nécessite  1 Trap.
+[Level 1] : Durée 10 Secs
+[Level 2] : Durée  8 Secs
+[Level 3] : Durée  6 Secs
+[Level 4] : Durée  4 Secs
+[Level 5] : Durée  2 Secs
+#
+HT_CLAYMORETRAP#
+Claymore Trap
+MAX Lv : 5
+Type de skill : Piége visible
+Skill Requirements : Blast Mine 1, Shockwave Trap 1
+Cible: Sol
+Description : Installe un piége causant des dégats sur et autour de l'ennemi qui marche dessus. Nécessite  2 Trap.
+[Level 1] : Durée  20 Secs
+[Level 2] : Durée  40 Secs
+[Level 3] : Durée  60 Secs
+[Level 4] : Durée  80 Secs
+[Level 5] : Durée  100 Secs
+#
+HT_REMOVETRAP#
+Remove Trap
+MAX Lv : 1
+11Skill Requirements : Land Mine 1
+17Skill Requirements : Double Strafe 10
+Type de skill : Support
+Cible: Piége installé au Sol
+Description : Enléve un piége. Une fois désinstallé, obtention des items Trap.
+#
+HT_TALKIEBOX#
+Talkie Box
+MAX Lv : 1
+Skill Requirements : Remove Trap 1, Shockwave Trap 1
+Type de skill : Piége caché
+Cible: Sol
+Description : Installe un piége qui affiche les messages enregistrés quand une personne (à la fois le Joueur et le groupe) marche dessus. La durée est de 600secs et nécessite  1 Trap.
+#
+HT_BEASTBANE#
+Beastbane
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente l'ATK contre les monstres de type Brute ou Insect.
+[Level 1] : ATK +4
+[Level 2] : ATK +8
+[Level 3] : ATK +12
+[Level 4] : ATK +16
+[Level 5] : ATK +20
+[Level 6] : ATK +24
+[Level 7] : ATK +28
+[Level 8] : ATK +32
+[Level 9] : ATK +36
+[Level 10] : ATK +40
+#
+HT_FALCON#
+Falconry Mastery
+MAX Lv : 1
+Skill Requirements : Beastbane 1
+Type de skill : Passif
+Description : Permet de louer un faucon à la Guilde des Hunters. 
+#
+HT_STEELCROW#
+Steel Crow
+MAX Lv : 10
+Skill Requirements : Blitz Beat 5
+Type de skill : Passif
+Description : Augmente les attaques du faucon.
+[Level 1] : ATK +6
+[Level 2] : ATK +12
+[Level 3] : ATK +18
+[Level 4] : ATK +24
+[Level 5] : ATK +30
+[Level 6] : ATK +36
+[Level 7] : ATK +42
+[Level 8] : ATK +48
+[Level 9] : ATK +54
+[Level 10] : ATK +60
+#
+HT_BLITZBEAT#
+Blitz Beat
+MAX lv : 5
+Skill Requirements : Falconly Mastery 1
+Type de skill : Actif
+Cible: Ennemi
+Description : Lance une attaque d'un faucon sur une cible choisie. Possibilité que le faucon attaque automatiquement un ennemi attaqué par son maître avec une arme de type Bow. Distance d'attaque du faucon : 3+(Vulture's Eye Lv)
+#
+HT_DETECTING#
+Detect
+MAX Lv : 4
+Skill Requirements : Improve Concentration 1, Falconly Mastery 1
+Type de skill : Support
+Cible: Sol
+Description : Demande au faucon de détecter des ennemis cachés à proximité.
+#
+HT_SPRINGTRAP#
+Spring Trap
+MAX Lv : 5
+Skill Requirements : Remove Trap 1, Falconly Mastery
+Type de skill : Support
+Cible: Trap
+Description : Demande au faucon de détruire un piége.
+#
+AS_RIGHT#
+Righthand Mastery
+MAX Lv : 5
+Type de skill : Passif
+Description : Augmente la puissance de l'attaque d'une arme de la main droite si joueur utilise 2 armes. Si équipé de 2 armes, celle utilisée à la main droite inflige 50% de dégats supplémentaires que d'origine.
+[Level 1] : ATK 60%
+[Level 2] : ATK 70%
+[Level 3] : ATK 80%
+[Level 4] : ATK 90%
+[Level 5] : ATK 100%
+#
+AS_LEFT#
+Lefthand Mastery
+MAX Lv : 5
+Type de skill : Passif
+Description : Augmente la puissance de l'attaque d'une arme de la main gauche si joueur utilise 2 armes. Si équipé de 2 armes, celle utilisée à la main gauche inflige 30% de dégats supplémentaires que d'origine.
+[Level 1] : ATK 40%
+[Level 2] : ATK 50%
+[Level 3] : ATK 60%
+[Level 4] : ATK 70%
+[Level 5] : ATK 80%
+#
+AS_KATAR#
+Katar Mastery
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente les dégats avec les armes de type Katar.
+[Level 1] : ATK +3
+[Level 2] : ATK +6
+[Level 3] : ATK +9
+[Level 4] : ATK +12
+[Level 5] : ATK +15
+[Level 6] : ATK +18
+[Level 7] : ATK +21
+[Level 8] : ATK +24
+[Level 9] : ATK +27
+[Level 10] : ATK +30
+#
+AS_CLOAKING#
+Cloaking
+MAX Lv : 10
+Skill Requirements : Hinding 2
+Type de skill : Support
+Description : Autorise son utilisateur à se deplacer tout en se cachant. Le joueur se déplace rapidement tant qu'il reste collé à un mur, sinon sa vitesse est moindre. Au niveau 1 et 2, le skill n'est utilisable que contre un mur.
+#
+AS_SONICBLOW#
+Sonic Blow
+MAX Lv : 10
+Skill Requirements : Katar Mastery 4
+Type de skill : Actif
+Cible: Ennemi
+Description : Augmente la vitesse d'attaque des armes de type Katar pendant un certains laps de temps. Possibilté de figer l'ennemi.
+#
+AS_GRIMTOOTH#
+Grimtooth
+MAX Lv : 5
+Skill Requirements : Cloaking 2, Sonic Blow 5
+Type de skill : Actif
+Cible: Ennemi
+Description : Attaque un ennemi à proximité avec une arme de type Katar tout en étant caché. Impossible d'attaquer un ennemi à distance.
+#
+AS_ENCHANTPOISON#
+Enchant Poison
+MAX Lv : 10
+Skill Requirements : Envenom 1
+Type de skill : Support(Poison)
+Cible: Joueur
+Description : Ajoute la propriété du poison à l'arme d'un joueur. Possibilité d'empoisonner un ennemi avec l'arme.
+#
+AS_POISONREACT#
+Poison React
+MAX Lv : 10
+Skill Requirements : Enchant Poison 3
+Type de skill : Support(Poison)
+Cible: Joueur
+Description : Renvoie des dégats à l'ennemi si son attaque contient du Poison. Quelque soit l'attaque, vous aurez 50% de probabilité d'être protégé avec le niveau 5 du skill Envenom. Le période et la fréquence de la défense augmente avec le niveau d'expérience. Les SP et les dégats des attaques augmentent. Au niveau maximum, vous utiliserez 45 SP.
+#
+AS_VENOMDUST#
+Venom Dust
+MAX Lv : 10
+Skill Requirements : Enchant Poison 5
+Type de skill : Support(Poison)
+Cible: Sol
+Description : Projète du poison dans la zone choisie et empoisonne tous les ennemis qui s'y trouvent. Nécessite  1 Red Gemstone. Consomme 20 SP. Le temps de défense augmentera de 5sec à chaque niveau. Au niveau maximum, votre temps de défense augmentera de 50 sec.
+#
+AS_SPLASHER#
+Venom Splasher
+MAX Lv : 10
+Skill Requirements : Poison React 5, Venom Dust 5
+Type de skill : Active(Poison)
+Cible: Ennemi
+Description :  Consomme 1 Red Gemstone et utilises un poison sur une cible. Le poison explosera et se répendra de manière à affecter les adversaires autour de la cible.
+#
+NV_FIRSTAID#
+First Aid
+Skill Requirements : Finish Quest
+Type de skill : Soin
+Cible : joueur
+Description : Utilise 3 SP pour soigner 5 HP.
+#
+SM_MOVINGRECOVERY#
+HP Recovery While Moving
+Skill Requirements : Finish Quest
+Type de skill : Passif
+Description : Permet de regagner des HP tout en se déplaçant. Cependant seulement 25% des HP peuvent être récupérer. La récupération de base n'influence pas ce skill.
+#
+AC_MAKINGARROW#
+Arrow Crafting
+Skill Requirements : Finish Quest
+Type de skill : Support
+Cible : Item
+Description : Transforme la cible en flèche. Le classe de l'item cible influence le type de flèche et le nombre de flèches.
+#
+TF_SPRINKLESAND#
+Sand Attack
+Skill Requirements : Finish Quest
+Type de skill : Active(Earth)
+Cible : Ennemi
+Description : Attaque la cible avec un fontaine de sable. Utilisé, ce skill permet d'augmenter les dégats de 130% d'une attaque normale. Peut aussi infliger le statut Blind à la cible par chance.
+#
+MC_CARTREVOLUTION#
+Cart Revolution
+Skill Requirements : Finish Quest
+Type de skill : Actif
+Cible : Ennemi
+Description : Frappe violemment la cible avec un Cart, engendrant des dégats aux alentours. Ce skill augmente les dégats de 150% d'une attaque normale, seulement le poids du chariot influence la puissance de l'attaque.
+#
+AL_HOLYLIGHT#
+Holy Light
+Skill Requirements : Finish Quest
+Type de skill : Active(Saint)
+Cible : Ennemi
+Description : Attaque l'ennemi avec une lumière divine.
+#
+MG_ENERGYCOAT#
+Energy Coat
+Skill Requirements : Finish Quest
+Type de skill : Support
+Cible : Joueur
+Description : Enveloppe le joueur d'une energie divine qui protège et réduit les attaques des ennemis. A chaque attaque, une quantité de SP est utilisée. Cette quantité augmente à mesure des attaques.
+#
+NV_TRICKDEAD#
+Play Dead
+Skill Requirements : Finish Quest, Novice Only
+Type de skill : Support
+Cible : Joueur
+Description : Prétend être mort afin d'éviter les attaques d'ennemis trop forts. Annule le skill si utilisé 2 fois.
+#
+SM_FATALBLOW#
+Fatal Blow
+Skill Requirements : Finish Quest
+Type de skill : Passif
+Description : Possibilité de figer l'ennemi lors d'une attaque avec le skill Bash de niveau 6 ou plus. Les chances de figer l'ennemi augmentent avec le niveau du skill Bash.
+#
+AC_CHARGEARROW#
+Arrow Repel
+Skill Requirements : Finish Quest
+Type de skill : Actif
+Cible : Ennemi
+Description : Tend un arc à son maximum pour utiliser toute sa puissance. La cible sera projetée de 4 cellules.
+#
+TF_BACKSLIDING#
+Back Slide
+Skill Requirements : Finish Quest
+Type de skill : Support
+Cible : Caster
+Description : Recule pour éviter un ennemi sans risque.
+#
+MC_CHANGECART#
+Change Cart
+Skill Requirements : Finish Quest
+Type de skill : Support
+Cible : Caster
+Description : Change l'apparence du chariot parmi 5 choix s'accordant au niveau d'expérience du joueur.
+#
+SM_AUTOBERSERK#
+Berserk
+Skill Requirements : Finish Quest
+Type de skill : Passif
+Description : Déclenche une furie lorsque le niveau d'HP descend en dessous de 25% du maximum de HP. Le statut du joueur devient alors le même que s'il avait été attaqué par le skill "Provoke de niveau 10". Le skill dure tant que le niveau de HP est en dessous des 25% ou qu'un autre skill annule le statut "Provoke".
+#
+TF_PICKSTONE#
+Find Stone
+Skill Requirements : Finish Quest
+Type de skill : Support
+Cible : Sol
+Description : Ramasse des pierres sur le sol.
+#
+TF_THROWSTONE#
+Stone Fling
+Skill Requirements : Finish Quest
+Type de skill : Actif
+Cible : Ennemi
+Description : Inflige 50 points de dégats en perçant la défense de la cible avec une pierre. Nécessite une pierre et peut par chance d'infliger à l'ennemi le statut Stun ou Blind.
+#
+MC_LOUD#
+Crazy Uproar
+Skill Requirements : Finish Quest
+Type de skill : Support
+Cible : Caster
+Description : Cri de motivation. Augmente la STR de 4 points pendant 5 minutes.
+#
+GD_APPROVAL#
+Official Guild Approval
+Type de skill : Passif
+Cible : All Guildsman
+Description : Réception d'un certificat officiel attestant l'adhésion à une Guilde du Royaume Rune Midgard. Les Membres d'une Guilde Officielle peuvent attaquer un territoire d'une autre Guilde.
+#
+GD_KAFRACONTRACT#
+Contract With Kafra
+Type de skill : Passif
+Cible : Guild
+Description : Signe un contrat avec la maison mère de Kafra à Al De Baran. Avec ce contrat, la Guilde peut embaucher un employé de Kafra sur leur territoire.
+#
+GD_GUARDRESEARCH#
+Guardian Research
+Type de skill : Passif
+Cible : Guild
+Description : Etudie la technologie des Gardiens. Avec ces recherches, la Guilde peut utiliser un gardien sur leur territoire.
+#
+GD_EXTENSION#
+Guild Extension
+Type de skill : Passif
+Cible : Guild
+Description : Augmente le nombre de membres d'une Guilde.
+[Level 1] : +4 personnes
+[Level 2] : +8 personnes
+[Level 3] : +12 personnes
+[Level 4] : +16 personnes
+[Level 5] : +20 personnes
+[Level 6] : +24 personnes
+[Level 7] : +28 personnes
+[Level 8] : +32 personnes
+[Level 9] : +36 personnes
+[Level 10] : +40 personnes
+#
+RG_SNATCHER#
+Gank
+MAX lv : 10
+Skill Requirements : Steal 1
+Type de skill : Passif
+Cible : Caster
+Description : Vole des items tout en attaquant. Les chances de succès dépendent du niveau de skill Steal du voleur.
+#
+RG_STEALCOIN#
+Mug
+MAX Lv : 10
+Skill Requirements : Gank 4
+Type de skill : Support
+Cible : Monster
+Description : Vole des zeny aux monstres sélectionnés. En cas de réussite, impossible de voler 2 fois la même cible. Le niveau du skill influence les chances de succès et la quantité de zenys volés.
+#
+RG_BACKSTAP#
+Back Stab
+MAX Lv : 10
+Skill Requirements : Mug 4
+Type de skill : Actif
+Cible : Ennemi
+Description : Seulement possible quand le joueur est derrière sa cible. Touche toujours la cible.
+Une chance d'infliger le statut Stun augmentant selon le Niveau du Skill.
+Utilisable tout en étant caché, seulement le statut caché est annulé lors de l'utilisation de ce skill.
+#
+RG_TUNNELDRIVE#
+Stalk
+MAX Lv : 5
+Skill Requirements : Hiding 1
+Type de skill : Passif
+Cible : Caster
+Description : Autorise le joueur à se déplacer lentement tout en étant caché.
+#
+RG_RAID#
+Sightless Mind
+MAX Lv : 5
+Skill Requirements : Stalk 2, Back Stab 2
+Type de skill : Actif
+Range : 9 cellules autour du joueur
+Description : Ne peut être utilisé qu'en statut 'Hiding'. Inflige des dégâts colatéraux aux adversaires à sa porté, et donne une chance d'infliger les statuts 'Stun' et 'Darkness'. La cible  recevra 20% de dégâts en plus par coup. Les monstres de type Boss recevront seulement 10% de dégâts en plus. Le statut 'Hiding' du lanceur prendra fin après avoir utilisé ce Skill.
+#
+RG_STRIPWEAPON#
+Divest Weapon
+MAX Lv : 5
+Skill Requirements : Divest Armor 5
+Type de skill : Support
+Cible : Ennemi
+Description : Désarme une cible. En combat PvP, la cible ne peut plus utiliser son arme pendant un certain laps de temps. Diminue l'attaque d'un monstre de 10% pendant un court laps de temps.
+La différence de points DEX entre le joueur et sa cible affecte les chances de succès.
+#
+RG_STRIPSHIELD#
+Divest Shield
+MAX LV : 5
+Skill Requirements : Divest Helm 5
+Type de skill : Support
+Cible : Ennemi
+Description : Déséquipe le bouclier de la cible. En combat PvP, la cible ne peut plus s'équiper de son bouclier pendant un certains laps de temps. Diminue la défense des monstres de 10% pendant un court laps de temps.
+La différence de points DEX entre le joueur et sa cible affecte les chances de succès.
+#
+RG_STRIPARMOR#
+Divest Armor
+MAX Lv : 5
+Skill Requirements : Divest Shield 5
+Type de skill : Support
+Cible : Ennemi
+Description : Déséquipe l'armure de la cible. En combat PvP, la cible ne peut plus s'équiper de son armure pendant un certains laps de temps. Diminue la défense des monstres de 10% pendant un court laps de temps.
+La différence de points DEX entre le joueur et sa cible affecte les chances de succès.
+#
+RG_STRIPHELM#
+Divest Helm
+MAX Lv : 5
+Skill Requirements : Mug 2
+Type de skill : Support
+Cible : Ennemi
+Description : Déséquipe le casque de la cible. En combat PvP, la cible ne peut plus s'équiper de son casque pendant un certains laps de temps. Diminue la défense des monstres de 10% pendant un court laps de temps.
+La différence de points DEX entre le joueur et sa cible affecte les chances de succès.
+#
+RG_INTIMIDATE#
+Snatch
+MAX Lv : 5
+Skill Requirements : Back Stab 4, Sightless Mind 5
+Type de skill : Actif
+Cible : Ennemi
+Description : Téléporte le joueur et sa cible dans un lieu au hasard. Inefficace sur les monstres de type Boss. Plus la différence de niveau d'expérience entre le joueur et sa cible est grande, plus les chances de succès sont élevées.
+#
+RG_GRAFFITI#
+Scribble
+MAX Lv : 1
+Skill Requirements : Piece 5
+Type de skill : Support
+Cible : Sol
+Description : Dessine un graffiti autour d'une cellule choisie. Taille maximum de 20 charactères.
+Impossible de dessiner une deuxième fois sur une même cellule tant que le graffiti n'est pas effacé. Nécessite 1 Red Gemstone.
+#
+RG_FLAGGRAFFITI#
+Piece
+MAX Lv : 5
+Skill Requirements : Remover 1
+Type de skill : Support
+Cible : Drapeau
+Description : Dessine un graffiti sur un drapeau. Le graffiti sera affiché à la place de l'emblème.
+Le niveau de skill influence le nombres de graffitis. Nécessite 1 Paint Brush. (Pas encore implémenté)
+#
+RG_CLEANER#
+Remover
+MAX Lv : 1
+Skill Requirements : Slyness
+Type de skill : Support
+Cible : Drapeau
+Description : Efface un graffiti d'un drapeau. Nécessite 1 Wet Duster. (Pas encore implémenté)
+#
+RG_GANGSTER#
+Slyness
+MAX Lv : 1
+Skill Requirements : Divest Shield 3
+Type de skill : Passif
+Description : Si 2 joueur de classe rogue sont assis côte à côte, les monstres n'attaqueront pas. Inefficace contre les monstres de type Boss.
+#
+RG_COMPULSION#
+Haggle
+MAX Lv : 5
+Skill Requirements : Slyness 1
+Type de skill : Passif
+Description : Permet d'achèter des items à des prix plus bas dans les magasins.
+[Level 1] : Discount 9%
+[Level 2] : Discount 13%
+[Level 3] : Discount 17%
+[Level 4] : Discount 21%
+[Level 5] : Discount 25%
+#
+RG_PLAGIARISM#
+Intimidate
+MAX Lv : 10
+Skill Requirements : Snatch 5
+Type de skill : Passif
+Description : Utilise le dernier skill utilisé lors du dernier combat. Le niveau du skill dépend du niveau d'expérience du joueur.
+#
+AM_AXEMASTERY#
+Axe & One-Handed Sword Mastery
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente l'ATK des armes de type Axe et One-handed Sword.
+[Level 1] : ATK +3
+[Level 2] : ATK +6
+[Level 3] : ATK +9
+[Level 4] : ATK +12
+[Level 5] : ATK +15
+[Level 6] : ATK +18
+[Level 7] : ATK +21
+[Level 8] : ATK +24
+[Level 9] : ATK +27
+[Level 10] : ATK +30
+#
+AM_LEARNINGPOTION#
+Potion Research
+MAX Lv : 10
+Type de skill : Passif
+Description : Améliore les potions et facilite la création de potions.
+#
+AM_PHARMACY#
+Prepare Potion
+MAX Lv : 10
+Skill Requirements : Potion Research 5
+Type de skill : Support
+Description : Permet de fabriquer des potions. Nécessite 1 Medicine Bowl, Nécessite pour chaque potion un Potion Creation Guide.
+#
+AM_DEMONSTRATION#
+Bomb
+Type de skill : Active(Feu)
+Cible : Sol
+Description : Enflamme le sol avec un coktail molotov. Ce skill abime l'arme de la cible, Nécessite 1 Bottle Grenade.
+#
+AM_ACIDTERROR#
+Acid Terror
+MAX Lv : 5
+Skill Requirements : Prepare Potion 4
+Type de skill : Actif
+Cible : Ennemi
+Description : Attaque une cible en lançant une bouteille d'acide. Ce skill abime l'arme de la cible. Nécessite 1 Acid Bottle.
+Le niveau de skill influence les chances d'abimer l'armure de la cible.
+#
+AM_POTIONPITCHER#
+Aid Potion
+MAX Lv : 5
+Skill Requirements : Prepare Potion 3
+Type de skill : Support
+Cible : 1 membre de groupe
+Description : Donne des HP en jetant une potion sur un joueur. Le niveau de skill influence l'efficacité et le type de potion utilisable par le joueur.
+[Level 1] : Red Potion Utilisable
+[Level 2] : Orange Potion Utilisable
+[Level 3] : Yellow Potion Utilisable
+[Level 4] : White Potion Utilisable
+[Level 5] : Blue Potion Utilisable
+#
+AM_CANNIBALIZE#
+Summon Flora
+MAX Lv : 5
+Skill Requirements : Prepare Potion 6
+Type de skill : Support
+Cible : Sol
+Description : Invoque un monstre de type Plant sur une cellule choisie pendant une certaine période. Le niveau de skill influence les HP et SP du monstre créés. Nécessite 1 Maneater Bottle.
+A chaque niveau de skill un nouveau monstre est invoqué. Il est impossible d'invoquer des monstres différents en même temps. Au niveau le plus bas, il est possible d'invoquer plusieurs monstres, à partir du niveau 5 le joueur ne peut invoquer qu'un seul monstre.
+#
+AM_SPHEREMINE#
+Summon Marine Sphere
+MAX Lv : 5
+Skill Requirements : Prepare Potion 2
+Type de skill : Support
+Cible : Sol
+Description : Invoque Marine Sphere sur une cellule choisie. Les Marine Spheres lanceront self-destruct en cas d'attaque. Nécessite 1 Marine Sphere Bottle.
+#
+AM_CP_WEAPON#
+Alchemical Weapon
+MAX Lv : 5
+Skill Requirements : Synthetic Armor 3
+Type de skill : Support
+Cible : 1 membre de groupe
+Description : Protège l'arme d'un membre du groupe. Nécessite 1 Glistening Coat.
+Le niveau du skill influence la durée du sort.
+#
+AM_CP_SHIELD#
+Synthesized Shield
+MAX Lv : 5
+Skill Requirements : Biochemical Helm 3
+Type de skill : Support
+Cible : 1 membre de groupe
+Description : Protège le bouclier d'un membre du groupe. Nécessite 1 Glistening Coat.
+Le niveau du skill influence la durée du sort.
+#
+AM_CP_ARMOR#
+Synthetic Armor
+MAX Lv : 5
+Skill Requirements : Synthesized Shield 3
+Type de skill : Support
+Cible : 1 membre de groupe
+Description : Protège l'armure d'un membre du groupe. Nécessite 1 Glistening Coat.
+Le niveau du skill influence la durée du sort.
+#
+AM_CP_HELM#
+Biochemical Helm
+MAX Lv : 5
+Skill Requirements : Prepare Potion 2
+Type de skill : Support
+Cible : 1 membre de groupe
+Description : Protège le casque d'un membre du groupe. Nécessite 1 Glistening Coat.
+Le niveau du skill influence la durée du sort.
+#
+AM_BIOETHICS#
+Bioethics
+Skill Requirements : Finish Quest
+Type de skill : Passif
+Description : Skill indispensable pour créer Homunculus.
+#
+AM_BIOTECHNOLOGY#
+Biotechnology
+Type de skill : Passif
+Description : Etudie les biotechnologies. Augmente les chances de succès de créer Homunculus avec un maximum de HP.
+#
+AM_CREATECREATURE#
+Creature Creation
+Type de skill : Support
+Description : Créer 1 Embryo. Le niveau de skill influence les chances de réussite.
+#
+AM_CULTIVATION#
+Cultivation
+Type de skill : Support
+Description : Developpe un embryon dans un Homunculus. Le niveau de skill influence les chances de réussite. Si le joueur posséde déjà un Homunculus, ce skill n'est pas utilisable.
+#
+AM_FLAMECONTROL#
+Flame Control
+Type de skill : Passif
+Description : Augmente les chances de succès du skill Cultivation ainsi que la résistance au feu.
+#
+AM_CALLHOMUN#
+Call Homunculus
+MAX Lv : 1
+Skill Requirements : Vaporize 1
+Type de skill : Support
+Description : Invoque ou annule l'invocation d'un Homunculus en utilisant des SP.
+#
+AM_REST#
+Vaporize
+MAX Lv : 1
+Skill Requirements : Bioethics 1
+Type de skill : Support
+Description : Tue l'Homunculus.
+#
+AM_DRILLMASTER#
+Drillmaster
+Type de skill : Passif
+Description : Augmente la puissance d'un Homunculus.
+[Level 1] : ATK +3
+[Level 2] : ATK +6
+[Level 3] : ATK +9
+[Level 4] : ATK +12
+[Level 5] : ATK +15
+[Level 6] : ATK +18
+[Level 7] : ATK +21
+[Level 8] : ATK +24
+[Level 9] : ATK +27
+[Level 10] : ATK +30
+#
+AM_HEALHOMUN#
+Heal Homunculus
+Type de skill : Support
+Cible : Homunculus
+Description : Redonne des HP à un Honumculus.
+#
+AM_RESURRECTHOMUN#
+Homunculus Resurrection
+MAX Lv : 5
+Skill Requirements : Call Homunculus 1
+Type de skill : Support
+Cible : Homunculus
+Description : Réssuscite un Homunculus.
+#
+CR_TRUST#
+Faith
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente le maximum de HP et la résitance divine du joueur.
+#
+CR_AUTOGUARD#
+Guard
+Type de skill : Support
+Description : Protège des attaques physiques ainsi que diminue la probabilité des attaques à distance. Après utilisation, le joueur ne peut pas se déplacer pendant 0.3 secondes.
+Nécessite un Shield. Lancer ce sort 2 fois de suite l'annule.
+#
+CR_SHIELDCHARGE#
+Smite
+MAX Lv : 5
+Skill Requirements : Guard 5
+Type de skill : Actif
+Cible : Ennemi
+Description : Frappe violemment un ennemi avec le bouclier. La cible sera projetée en arrière et peut être aussi assommé.
+Nécessite un Shield.
+#
+CR_SHIELDBOOMERANG#
+Shield Boomerang
+MAX Lv : 5
+Skill Requirements : Smite 3
+Type de skill : Actif
+Cible : Ennemi
+Description : Attaque un ennemi à distance en lui lançant un bouclier.
+Les dégats dépendent du statut et du poids du bouclier. Nécessite un Shield.
+#
+CR_REFLECTSHIELD#
+Shield Reflect
+MAX Lv : 10
+Skill Requirements : Shield Boomerang 3
+Type de skill : Support
+Description : Contre-Attaque un ennemi à chacune de ses attaques pendant la durée du sort.
+Utilisable seulement sur les attaques au corps à corps. Nécessite un Shield.
+#
+CR_HOLYCROSS#
+Holy Cross
+MAX Lv : 10
+Skill Requirements : Faith 7
+Type de skill : Actif
+Cible : Ennemi
+Description : 2 attaques répétées à l'aide de la Sainte Croix. DOnne une chance d'infliger le statut 'Blind'. Augmente l'attaque des armes de type Two-handed Axe.
+#
+CR_GRANDCROSS#
+Grand Cross
+MAX Lv : 10
+Skill Requirements : Faith 10, Holy Cross 6
+Type de skill : Actif
+Cible : Sol
+Description : Crée une zone sur le sol qui attaque automatiquement les ennemis autour du joeur. Ce skill utilise 20% de HP, et continue d'utiliser des HP pendant la durée du sort.
+Ce skill ne peut être annulé pendant son incantation. Inflige aux Undead et Demon (excepté les monstres de type Boss) le statut Blind.
+#
+CR_DEVOTION#
+Sacrifice
+MAX Lv : 5
+Skill Requirements :  Grand Cross 4, Shield Reflect 5
+Type de skill : Support
+Cible : 1 membre du groupe en dehors du joueur
+Description : Protège un membre du groupe en recevant tous les coups qui lui sont portés. La différence de niveau doit être de 10 au maximum.
+Si le membre sort de la zone d'influence du skill, le sort est annulé. Les dégats subis par le joueur dépendent du niveau de défense du membre du groupe.
+Si le joueur est en statut Guard ou Defending Aura, le membre du groupe sera protégé de la même façon.
+Ce skill n'est pas utilisable sur des membres de la même profession, Crusader.
+#
+CR_PROVIDENCE#
+Resistant Souls
+MAX Lv : 5
+Skill Requirements : Devine Protection 5, Heal 5
+Type de skill : Support
+Cible : Party
+Description : Augmente la résistance des membres du groupe vis à cis des monstres de type Demon et Holy.
+#
+CR_DEFENDER#
+Defending Aura
+MAX Lv : 5
+Skill Requirements : Shield Boomerang 1
+Type de skill : Support
+Description : Réduit les dégats subis par les attaques à distance. Les dégats subis dépendent du niveau de skill, les attaques et les mouvements du joueur sont ralentis pendant la durée du sort.
+Incanter 2 fois de suite ce sort l'annule. Nécessite un Shield.
+#
+CR_SPEARQUICKEN#
+Spear Quicken
+MAX Lv : 10
+Skill Requirements : Spear Mastery 10
+Type de skill : Actif
+Description : Augmente l'ATK Speed des armes de type Spear. Au plus haut niveau de Spear Quicken, donne une meilleure ATK Speed, et augmente la durée du Skill. Augmente également le pourcentage de Critical Attack et de Flee.
+Utilisable lorsqu'une arme de type Spear est équipée. L'effet disparait lorsque l'arme est déséquipée.
+#
+MO_IRONHAND#
+Iron Fists
+MAX Lv : 10
+Skill Requirements : Demon Bane, Devine Protection 10
+Type de skill : Passif
+Description : Augmente les attaques à mains nues ou avec des poings américains.
+[Level 1] : ATK +3
+[Level 2] : ATK +6
+[Level 3] : ATK +9
+[Level 4] : ATK +12
+[Level 5] : ATK +15
+[Level 6] : ATK +18
+[Level 7] : ATK +21
+[Level 8] : ATK +24
+[Level 9] : ATK +27
+[Level 10] : ATK +30
+#
+MO_SPIRITSRECOVERY#
+Spiritual Cadence
+MAX Lv : 5
+Skill Requirements : Root 2
+Type de skill : Passif
+Description : Redonne un surplus de HP et SP toutes les 10 secondes si le joueur est assis. Si le poids dépasse 50%, la regénération du surplus de HP et SP se fait toutes les 20 secondes.
+#
+MO_CALLSPIRITS#
+Summon Spirit Sphere
+MAX Lv : 5
+Skill Requirements : Iron Fists 2
+Type de skill : Support
+Description : Invoque un esprit. L'esprit aide le joueur en augmentant ses capacités de skill.
+#
+MO_ABSORBSPIRITS#
+Spiritual Sphere Absorption
+MAX Lv : 1
+Skill Requirements : Summon Spirit Sphere 5
+Type de skill : Support
+Description : Absorbe des SP d'un esprit. 1 esprit donne 7 SP. Les esprits peuvent être volés pendant les combats PvP.
+#
+MO_TRIPLEATTACK#
+Raging Trifecta Blow
+MAX Lv : 10
+Skill Requirements : Flee 5
+Type de skill : Passif
+Description : Possibilité de frapper 3 coups. Peut être combiné avec Raging Quadruple Blow.
+#
+MO_BODYRELOCATION#
+Snap
+MAX Lv : 1
+Skill Requirements : Spritual Cadence 2, Guillotine Fist 3, Mental Strength 3
+Type de skill : Support
+Cible : Sol
+Description : Téléporte immédiatement vers une zone choisie s'il n'y a aucun obstacle entre le joueur et la zone d'arrivée.
+Nécessite 1 spirit sphere.
+#
+MO_DODGE#
+Flee
+MAX Lv : 10
+Skill Requirements : Iron Fists 5, Summon Spirit Sphere 5 
+Type de skill : Passif
+Description : Augmente la capacité d'esquive.
+#
+MO_INVESTIGATE#
+Occult Impaction
+MAX Lv : 5
+Skill Requirements : Summmon Spirit Sphere 5
+Type de skill : Actif
+Cible : Ennemi
+Description : Envoie un coup psychique violent à un ennemi. Plus la défense de l'ennemi est élevée plus le coup est puissant.
+Nécessite 1 spirit sphere.
+#
+MO_FINGEROFFENSIVE#
+Throw Spirit Sphere
+MAX Lv : 5
+Skill Requirements : Occult Impaction 3
+Type de skill : Actif
+Cible : Ennemi
+Description : Attaque un enemi à distance en lançant un esprit. Le niveau de skill influence le nombre d'exprits le joueur peut lancer.
+Nécessite 1 Spirit Sphere.
+#
+MO_STEELBODY#
+Mental Strength
+MAX Lv : 5
+Skill Requirements : Raging Thrust 3
+Type de skill : Support
+Description : Maintient la défense et la résistance aux sorts du joueur élevés pendant la durée du sort. La vitesse et les mouvements sont ralentis. Le joueur ne peut utiliser d'autres skills pendant la durée du sort.
+Nécessite 5 Spirit Spheres.
+#
+MO_BLADESTOP#
+Root
+MAX Lv : 5
+Skill Requirements : Flee 5
+Type de skill : Support
+Description : Stop les mouvements du joueur et de la cible pendant la durée du sort. Le joueur et l'ennemi sont paralysés jusqu'à ce que l'un des 2 meurt. Un niveau élevé de ce skill permet au joueur d'utiliser d'autres skills pendant la durée du sort.
+Inutilisable sur les monstres de type Boss. Nécessite 1 spirit sphere.
+[Level 1] : Dure 20 seconds
+[Level 2] : Dure30 seconds, Throw Spirit Sphere
+[Level 3] : Dure 40 seconds, Occult Impaction
+[Level 4] : Dure 50 seconds, Raging Quadruple Blow
+[Level 5] : Dure 60 seconds, Guillotine Fist
+Guillotine Fist est seulement utilisable si le joueur à le statut Fury et posséde 4 Spirit Spheres.
+#
+MO_EXPLOSIONSPIRITS#
+Fury
+MAX Lv : 5
+Skill Requirements : Spiritual Sphere Absorbtion 1
+Type de skill : Support
+Description : Augmente les chances d'infliger des Critical Attack pendant un certain temps. Tant que le statut Critical Explosion est actif, la vitesse de récupération naturelle des SP sera réduite de 50%. Nécessite 5 Spirit Spheres au lancement.
+#
+MO_EXTREMITYFIST#
+Guillotine Fist
+MAX Lv : 5
+Skill Requirements : Fury 3, Throw Spirit Sphere 3
+Type de skill : Actif
+Cible : Ennemi
+Description : Utilisable seulement pendant la durée du statut Fury. Envoie un coup dévastateur en utilisant tous les SP du joueur. Les dégats dépendent du nombre de SP du joueur. Le statut Fury sera annulé après l'utilisation de ce skill.
+Les SP ne seront pas restorés pendant les 5 minutes suivant le sort. Nécessite 5 Spirit Spheres.
+#
+MO_CHAINCOMBO#
+Raging Quadruple Blow
+MAX Lv : 5
+Skill Requirements : Raging Trifecta Blow 5
+Type de skill : Actif
+Cible : Ennemi
+Description : Utilisable seulement pendant la durée de Raging Trifecta Blow. Fait tourner la cible tout en lui infligeant 4 terribles coups. Peut être combiné avec Raging Thrust.
+#
+MO_COMBOFINISH#
+Raging Thrust
+MAX Lv : 5
+Skill Requirements : Raging Quadruple Blow 3
+Type de skill : Actif
+Cible : Ennemi
+Description : Utilisable seulement pendant la durée de Raging Quadruple Blow. Repousse un ennemi en envoyant un thrusting blow. Peut être combiné avec Guillotine Fist.
+#
+SA_ADVANCEDBOOK#
+Study
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente les attaques avec des livres et la vitesse d'attaque.
+[Level 1] : ATK +3, Vitesse d'attaque + 0.5%
+[Level 2] : ATK +6, Vitesse d'attaque + 1%
+[Level 3] : ATK +9, Vitesse d'attaque + 1.5%
+[Level 4] : ATK +12, Vitesse d'attaque + 2%
+[Level 5] : ATK +15, Vitesse d'attaque + 2.5%
+[Level 6] : ATK +18, Vitesse d'attaque + 3%
+[Level 7] : ATK +21, Vitesse d'attaque + 3.5%
+[Level 8] : ATK +24, Vitesse d'attaque + 4%
+[Level 9] : ATK +27, Vitesse d'attaque + 4.5%
+[Level 10] : ATK +30, Vitesse d'attaque + 5%
+#
+SA_CASTCANCEL#
+Cast Cancel
+MAX Lv : 5
+Skill Requirements : Study 2
+Type de skill : Support
+Description : Utilisable seulement pendant une incantation. Ce skill annule un sort et permet au joueur d'agir immédiatement. Le niveau de skill influence la consommation des SP du sort incanté.
+#
+SA_FREECAST#
+Free Cast
+MAX Lv : 10
+Skill Requirements : Cast Cancel 1
+Type de skill : Passif
+Description : Autorise le joueur à se déplacer pendant une incantation. Le niveau de skill affecte la vitesse de déplacement et d'attaque.
+#
+SA_SPELLBREAKER#
+Spell Breaker
+MAX Lv : 5
+Skill Requirements : Magic Rod 1
+Type de skill : Support
+Cible : Ennemi
+Description : Stop l'incantation d'un sort d'un ennemi et recoit les SP du sorts que l'ennemi etait en train de lancer.
+#
+SA_AUTOSPELL#
+Hindsight
+MAX Lv : 10
+Skill Requirements : Free Cast 4
+Type de skill : Support
+Description : Autorise à lancer un sort pendant une attaque physique. Le sort consomme les 2/3 des SP nécessaire au sort lancé.
+[Level 1] : Lv. 3 Napalm Beat 
+[Level 2] : Lv. 1 Cold Bolt, Fire Bolt, Lightning Bolt
+[Level 3] : Lv. 2 Cold Bolt, Fire Bolt, Lightning Bolt 
+[Level 4] : Lv. 3 Cold Bolt, Fire Bolt, Lightning Bolt
+[Level 5] : Lv. 1 Soul Strike
+[Level 6] : Lv. 2 Soul Strike
+[Level 7] : Lv. 3 Soul Strike
+[Level 8] : Lv. 1 Fire Ball
+[Level 9] : Lv. 2 Fire Ball
+[Level 10] : Lv. 1 Frost Diver
+Les niveaux de ce skill sont valables dans la limite des niveaux des autres skills.
+#
+SA_MAGICROD#
+Magic Rod
+MAX Lv : 5
+Skill Requirements : Study 4
+Type de skill : Support
+Description : Enléve la même quatité de SP que l'ennemi a utilisé pour son sort au lieu de recevoir des dégats HP.
+Contre-attaquer avec ce skill enléve 20% des SP à la cible.
+#
+SA_VOLCANO#
+Volcano
+MAX Lv : 5
+Skill Requirements : Endow Blaze 2
+Type de skill : Support
+Cible : Sol
+Description : Crée une zone sur le sol qui amplifie les attaques par le feu. Glace Wall skill ne peut pas être lancé, les skills au sol ne peuvent pas être lancés 2 fois dans cette zone.
+Nécessite 1 Yellow Gemstone.
+#
+SA_DELUGE#
+Deluge
+MAX Lv: 5
+Skill Requirements : Endow Tsunami 2
+Type de skill : Support
+Cible : Sol
+Description : Crée une zone sur le sol qui amplifie les attaques par l'eau et augmente le maximum des HP des joueurs de propriété Water. Autorise l'utilisation des Water Ball et des Aqua Benedicta. Les autres skills au sol ne peuvent pas être lancés 2 fois dans cette zone .
+Nécessite 1 Yellow Gemstone.
+#
+SA_VIOLENTGALE#
+Whirlwind
+MAX lv : 5
+Skill Requirements : Endow Tornado 2
+Type de skill : Support
+Cible : Sol
+Description : Crée une zone sur le sol qui amplifie les attaques par le vent et augmente le taux d'equive des joueurs de propriété Wind. Le skill Fire Wall dure 1,5 fois plus longtemps dans cette zone. Les autres skills au sol ne peuvent pas être lancés 2 fois dans cette zone .
+Nécessite 1 Yellow Gemstone.
+#
+SA_LANDPROTECTOR#
+Magnetic Earth
+MAX Lv : 5
+Skill Requirements : Volcano 3, Deluge 3, Whirlwind 3
+Type de skill : Support
+Cible : Sol
+Description : Crée une zone au Sol qui bloque tous les pouvoirs magiques qui vise cette zone. Annule aussi les sorts précédemment lancés sur cette zone. Les autres skills au sol ne peuvent pas être lancés 2 fois dans cette zone .
+Nécessite 1 Yellow Gemstone, 1 Blue Gemstone.
+#
+SA_FLAMELAUNCHER#
+Endow Blaze
+MAX Lv : 5
+Requirements : Fire Bolt 1, Advanced Book 5
+Type de skill : Support
+Property : Feu
+Cible : Membre de groupe
+Description : Donne la propriété Fire à l'arme du membre du groupe. Le niveau du skill influence les chances de succès, l'arme est détruite en cas d"echec.
+Nécessite 1 Red Blood.
+#
+SA_FROSTWEAPON#
+Endow Tsunami
+MAX Lv : 5
+Skill Requirements : Cold Bolt 1, Study 5
+Type de skill : Support
+Property : Eau
+Cible : Party members
+Description : Donne la propriété Water à l'arme du membre du groupe. Le niveau du skill influence les chances de succès, l'arme est détruite en cas d"echec.
+Nécessite 1 Crystal Blue.
+#
+SA_LIGHTNINGLOADER#
+Endow Tornado
+MAX Lv : 5
+Skill Requirements : Lightning Bolt 1, Study 5
+Type de skill : Support
+Property : Wind
+Cible : Party members
+Description : Donne la propriété Wind à l'arme du membre du groupe. Le niveau du skill influence les chances de succès, l'arme est détruite en cas d"echec.
+Nécessite 1 Wind of Verdure.
+#
+SA_SEISMICWEAPON#
+Endow Quake
+MAX Lv : 5
+Skill Requirements : Stone Curse 1, Study 5
+Type de skill : Support
+Property : Terre
+Cible : Party members
+Description : Donne la propriété Earth à l'arme du membre du groupe. Le niveau du skill influence les chances de succès, l'arme est détruite en cas d"echec.
+Nécessite 1 Green Live.
+#
+SA_DRAGONOLOGY#
+Dragonology
+MAX Lv : 5
+Skill Requirements :  Study 9
+Type de skill : Passif
+Description : Augmente la résistance contre les monstres de type Dragon.
+#
+SA_DISPELL#
+Dispell
+MAX Lv : 5
+Skill Requirements : Spell Breaker 3
+Type de skill : Support
+Cible : caster
+Description : Possibilité d'annuler tous les effets magiques sur le joueur.
+Nécessite 1 Yellow Gemstone.
+#
+SA_ABRACADABRA#
+Hocus-pocus
+MAX Lv : 10
+Skill Requirements : Hindsight 5, Dispell 1, Magnetic Earth 1
+Type de skill : Support
+Cible : Ennemi
+Description : Lance un skill au hasard. Le niveau du skill influence les skills qui peuvent être lancés.
+Nécessite 2 Yellow Gemstones.
+#
+SA_MONOCELL#
+Mono Cell
+Type de skill	 : Active
+Cible	 : Ennemi
+Description	 : Transforme un ennemi en Poring pendant la durée du sort.
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+SA_CLASSCHANGE#
+Class Change
+Type de skill	 : Active
+Cible	 : Ennemi 
+Description	 : Transforme un ennemi en un monstre de type Boss pendant la durée du sort.
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+SA_SUMMONMONSTER#
+Monster Chant
+Type de skill	 : Active
+Cible	 : NA
+Description	 : Aussi utile qu'une Dead Branch
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+SA_REVERSEORCISH#
+Grampus Morph
+Type de skill	 : Active
+Cible	 : Caster
+Description	 : Transforme la cible en Orc pendant la durée du sort.
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+SA_DEATH#
+Grim Reaper
+Type de skill	 : Active
+Cible	 : Ennemi
+Description	 : Donne une mort subite à la cible. La cible ne perd pas de points d'EXP ou d'items
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+SA_FORTUNE#
+Gold Digger
+Type de skill	 : Active
+Cible	 : Ennemi 
+Description	 : Permet d'obtenir autant de Zeny que le niveau d'expérience de la cible.
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+SA_TAMINGMONSTER#
+Beastly Hypnosis
+Type de skill	 : Active
+Cible	 : Ennemi 
+Description	 : Entretien un Animal de compagnie sans l'item nécessaire.
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+SA_QUESTION#
+Questioning
+Type de skill	 : Active
+Cible	 : Ennemi 
+Description	 : La cible affiche une emotion.
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+SA_GRAVITY#
+Gravity
+Type de skill	 : Active
+Cible	 : Caster
+Description	 : Affiche le logo de Gravity au dessus de la tête de la cible. 
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+SA_LEVELUP#
+Leveling
+Type de skill	 : Active
+Cible	 : Caster
+Description	 : Autorise le joueur d'augmenter son niveau d'expérience.
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+SA_INSTANTDEATH#
+Suicide
+Type de skill	 : Active
+Cible	 : Caster
+Description	 : Tue le joueur. EXP est perdue
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+SA_FULLRECOVERY#
+Rejuvenation
+Type de skill	 : Active
+Cible	 : Caster
+Description	 : Recupére tous les HP et SP, Soigne aussi de tous les statuts anormaux.
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+SA_COMA#
+Coma
+Type de skill	 : Active
+Cible	 : Caster
+Description	 : Diminue les HP et SP à 1.
+Etc	 : Sort uniquement utilisable par Hocus-pocus.
+#
+BD_ADAPTATION#
+Amp
+MAX Lv : 1
+Type de skill : Support
+Description : Stoppe une danse ou une chanson. Impossible de relancer ce sort.
+#
+BD_ENCORE#
+Encore
+MAX Lv : 1
+Skill Requirements : Amp 1
+Type de skill : Support
+Description : Relance le dernier sort effectué. Nécessite seulement la moitié des SP.
+#
+BD_LULLABY#
+Lullaby
+MAX Lv : 1
+Skill Requirements : Perfect Tablature 10
+Type de skill : Ensemble skill
+Range : 9 cellules autour du joueur
+Description : Crée une zone avec la possibilité d'infliger le statut Sleep. Les monstres de type Boss ne peuvent être atteints par ce skill.
+#
+BD_RICHMANKIM#
+Mental Sensing
+MAX Lv : 5
+Skill Requirements : Acoustic Rhythm 3
+Type de skill : Ensemble skill
+Range : 9 cellules autour du joueur
+Description : Crée une zone qui augmente l'expérience recu par les joueurs. Le niveau du skill influence la quatité de points d'EXP recus.
+#
+BD_ETERNALCHAOS#
+Down Tempo
+MAX Lv : 1
+Skill Requirements : Classical Pluck 1
+Type de skill : Ensemble skill
+Range : 9 cellules autour du joueur
+Description : Crée une zone ou la défense des personnes tombe à 0.
+#
+BD_DRUMBATTLEFIELD#
+Battle Theme
+MAX Lv : 5
+Skill Requirements : Song of Lutie 10
+Type de skill : Ensemble skill
+Range : 9 cellules autour du joueur
+Description : Crée une zone ou l'attaque et la défense des membres du groupe sont augmentés pendant la durée du sort.
+#
+BD_RINGNIBELUNGEN#
+Harmonic Lick
+MAX Lv : 5
+Skill Requirements : Battle Theme 3
+Type de skill : Ensemble skill
+Range : 9 cellules autour du joueur
+Description : Crée une zone ou les dégats des armes de niveau 4 des membres du groupe sont augmentées.
+#
+BD_ROKISWEIL#
+Classical Pluck
+MAX Lv : 1
+Skill Requirements : Impressive Riff 10
+Type de skill : Ensemble skill
+Range : 9 cellules autour du joueur
+Description : Crée une zone ou tous les skills et les pouvoirs magiques sont interdits. Les monstres de type Boss ne sont pas atteints par ce skill.
+#
+BD_INTOABYSS#
+Power Cord
+MAX Lv : 1
+Skill Requirements : Lullaby 1
+Type de skill : Ensemble skill
+Range : 9 cellules autour du joueur
+Description : Crée une zone ou les membres du groupe peuvent utiliser tous les skills sans les items nécessaires.
+#
+BD_SIEGFRIED#
+Acoustic Rhythm
+MAX Lv : 5
+Skill Requirements : Magic Strings 10
+Type de skill : Ensemble skill
+Range : 9 cellules autour du joueur
+Description : Dote à tous les membres du groupe présent dans la zone toutes les résistances aux éléments (Feu, Eau, Vent, Terre). Augmente de 50% la résitance aux statuts anormaux.
+[Level 1] : Résistance aux éléments augmentée de 60%
+[Level 2] : Résistance aux éléments augmentée de 65%
+[Level 3] : Résistance aux éléments augmentée de 70%
+[Level 4] : Résistance aux éléments augmentée de 75%
+[Level 5] : Résistance aux éléments augmentée de 80%
+#
+BD_RAGNAROK#
+Ragnarok
+#
+BA_MUSICALLESSON#
+Music Lessons
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente les dégats des instruments de musique et améliore la qualité Play skills.
+[Level 1] : ATK +3
+[Level 2] : ATK +6
+[Level 3] : ATK +9
+[Level 4] : ATK +12
+[Level 5] : ATK +15
+[Level 6] : ATK +18
+[Level 7] : ATK +21
+[Level 8] : ATK +24
+[Level 9] : ATK +27
+[Level 10] : ATK +30
+#
+BA_MUSICALSTRIKE#
+Melody Strike
+MAX Lv : 5
+Skill Requirements : Music Lessons 3
+Type de skill : Actif
+Cible : Ennemi
+Description : Tire des flêches avec force. Utilisable pendant un skill musical.
+Nécessite un musical instrumentl Le type de flêche influence le type d'attaque.
+#
+BA_DISSONANCE#
+Unchained Serenade
+MAX Lv : 5
+Skill Requirements : Amp 1, Music Lessons 1
+Type de skill : Actif
+Range : 7 cellules autour du joueur
+Description : Crée une zone qui blesse les ennemis dans son périmètre.
+#
+BA_FROSTJOKE#
+Unbarring Octave
+MAX Lv : 5
+Skill Requirements : Encore 1
+Type de skill : Actif
+Range : Champs de vision du joueurw
+Description : Géle tous les ennemis dans le champs de vision du joueur. Le niveau de skill influence les chances de succès. Les membres de la party peuvent être gelés.
+#
+BA_WHISTLE#
+Perfect Tablature
+MAX Lv : 10
+Skill Requirements : Unchained Serenade 3
+Type de skill : Support
+Range : 7 cellules autour du joueur
+Description : Crée une zone qui améliore les possibilités d'esquive des joueurs .
+#
+BA_ASSASSINCROSS#
+Impressive Riff
+MAX Lv : 10
+Skill Requirements : Unchained Serenade 3
+Type de skill : Support
+Range : 7 cellules autour du joueur
+Description : Crée une zone qui augmente la vitesse d'attaque. Inefficace sur les skills Two-hand Quicken, Adrenalin Rush ou les attaques à distance.
+#
+BA_POEMBRAGI#
+Magic Strings
+MAX Lv : 10
+Skill Requirements : Unchained Serenade 3
+Type de skill : Support
+Range : 7 cellules autour du joueur
+Description : Crée une zone qui réduit le temps d'invocation et le délai entre sorts.
+#
+BA_APPLEIDUN#
+Song of Lutie
+MAX lv : 10
+Skill Requirements : Unchained Serenade 3
+Type de skill : Support
+Range : 7 cellules autour du joueur
+Description : Crée une zone qui augmente le maximum des HP des membres du groupe et améliore la récupération des HP.
+#
+DC_DANCINGLESSON#
+Dance Lessons
+MAX Lv : 10
+Type de skill : Passif
+Description : Augmente les dégats avec les armes de type Whip et les qualités des Dancing skills.
+[Level 1] : ATK +3
+[Level 2] : ATK +6
+[Level 3] : ATK +9
+[Level 4] : ATK +12
+[Level 5] : ATK +15
+[Level 6] : ATK +18
+[Level 7] : ATK +21
+[Level 8] : ATK +24
+[Level 9] : ATK +27
+[Level 10] : ATK +30
+#
+DC_THROWARROW#
+Slinging Arrow
+MAX Lv : 5
+Skill Requirements : Dance Lessons 3
+Type de skill : Actif
+Cible : Ennemi
+Description : Lance des flêches en utilisant un fouet. Utilisable pendant un skill musical.
+Nécessite un Whip. Le type de flêche équipé influence les attaques.
+#
+DC_UGLYDANCE#
+Hip Shaker
+MAX Lv : 5
+Skill Requirements : Amp 1, Dance Lessons 1
+Type de skill : Actif
+Range : 7 cellules autour du joueur
+Description : Crée une zone ou les SP des ennemis sont consommés.
+#
+DC_SCREAM#
+Dazzler
+MAX Lv : 5
+Skill Requirements : Encore 1
+Type de skill : Actif
+Range : 7 cellules autour du joueur
+Description : Stun tous les ennemis présents, le niveau du skill influence les chances de succès. Les membres du groupe peuvent aussi être figés.
+#
+DC_HUMMING#
+Focus Ballet
+MAX Lv : 10
+Skill Requirements : Hip Shaker 3
+Type de skill : Actif
+Range : 7 cellules autour du joueur
+Description : Crée une zone ou la précistion des joueurs est améliorée.
+#
+DC_DONTFORGETME#
+Slow Grace
+MAX Lv : 10
+Skill Requirements : Hip Shaker 3
+Type de skill : Support
+Range : 7 cellules autour du joueur
+Description : Crée une zone ou la vitesse des mouvements et des attaques des ennemis sont diminuées. Annule aussi tout skill qui améliore la vitesse des mouvements et des attaques.
+#
+DC_FORTUNEKISS#
+Lady Luck
+MAX Lv : 10
+Skill Requirements : Hip Shaker 3
+Type de skill : Support
+Range : 7 cellules autour du joueur
+Description : Crée une zone ou les chances de réaliser des attaques critiques sont augmentées.
+#
+DC_SERVICEFORYOU#
+Gypsy's Kiss
+MAX Lv : 10
+Skill Requirements : Hip Shaker 3
+Type de skill : Support
+Range : 9 cellules autour du joueur
+Description : Crée une zone ou le maximum des SP est augmenté et les SP utilisés pour un skill sont diminués.
+#
+WE_MALE#
+Loving Touch
+Type de skill : Skill de Mariage
+Utilisable seulement sur son épouse.
+Utilise ses HP pour soigner son partenaire
+Ce skill consomme 10% des HP du joueur. Il ne peut être utilisé si la quantité de HP est inférieure à 10% de SP. 
+#
+WE_FEMALE#
+Undying Love
+Type de skill : Skill de Mariage
+Utilisable seulement sur son époux.
+Utilise ses SP pour en donner à son partenaire
+Ce skill consomme 10% des SP du joueur. Il ne peut être utilisé si la quantité de SP est inférieure à 10% de SP. 
+#
+WE_CALLPARTNER#
+Romantic Rendezvous
+Type de skill : Skill de Mariage
+Téléporte son partenaire à côté de soi.
+Les partenaires doivent porter leur alliance pour activer ce skill.
+Ne fonctionne pas sur toutes les cartes du jeu.
+#
+LK_AURABLADE#
+Aura Blade
+MAX Lv : 5
+Skill Requirements : Bash 5, Magnum Break 5, Two Hand Sword Mastery 5
+Type de skill : Support
+Description : Enchante une arme pour pour la rendre plus puissante.
+Les dégats ne sont pas influencés par le taux de précision du joueur ou la défense de l'ennemi..
+[Level 1] : Dégats +20
+[Level 2] : Dégats +40
+[Level 3] : Dégats +60
+[Level 4] : Dégats +80
+[Level 5] : Dégats +100
+#
+LK_PARRYING#
+Parry
+MAX Lv : 10
+Skill Requirements : Provoke 5, Two Hand Sword Mastery 10, Two Hand Quicken 3
+Type de skill : Support
+Description : Bloque une attaque utilisant une épée à 2 mains. En cas de succès, le joueur esquive l'attaque de l'ennemi et en même temps lancer une attaque.
+Nécessite une Two-hand Sword.
+[Level 1] : Bloquer +23%
+[Level 2] : Bloquer +26%
+[Level 3] : Bloquer +29%
+[Level 4] : Bloquer +32%
+[Level 5] : Bloquer +35%
+[Level 6] : Bloquer +38%
+[Level 7] : Bloquer +41%
+[Level 8] : Bloquer +44%
+[Level 9] : Bloquer +47%
+[Level 10] : Bloquer +50%
+#
+LK_CONCENTRATION#
+Spear Dynamo
+MAX Lv : 5
+Skill Requirements : Increase HP Recovery 5, Spear Mastery 5, Peco Peco Riding 1
+Type de skill : Support
+Description : Augmente la précision et la force des attaques du joueur et lance le skill Endure en même temps. Cependant la défense du joueur est diminuée pendant la durée du sort.
+[Level 1] : Précision +10%, ATK +5%, DEF -5%
+[Level 2] : Précision +20%, ATK +10%, DEF -10%
+[Level 3] : Précision +30%, ATK +15%, DEF -15%
+[Level 4] : Précision +40%, ATK +20%, DEF -20%
+[Level 5] : Précision +50%, ATK +25%, DEF -25%
+#
+LK_TENSIONRELAX#
+Relax
+MAX Lv : 1
+Requirements : Provoke 5, Advanced HP Recovery 10, Endure 3
+Type de skill : Support
+Description : Augmente la récupération des HP en étant assis ou durant le repos.
+Le skill est annulé si le joueur se tient debout ou utilise un item.
+#
+LK_BERSERK#
+Frenzy
+MAX Lv : 1
+Skill Requirements : Lord Knight Over Job Level 50
+Type de skill : Support
+Description : Augmente le maximum de HP, la vitesse de déplacement et la force des attaques pendant la durée du sort. Cependant, la capacité d'esquive diminue.
+De plus le joueur ne peut que se déplacer et attaquer. Le joueur ne peut pas non plus se soigner avec des skills de soins.
+Ce skill consomme quelques HP par seconde. Enfin après utilisation la regénération des HP et SP est bloquéee pendant 5 minutes.
+#
+PA_PRESSURE#
+Gloria Domini
+MAX Lv : 5
+Skill Requirements : Endure 5, Faith 5, Smite 2
+Type de skill : Actif
+Description : Invoque une crucifix géant pour détruire les ennemis.
+Les dégats sont déterminés et ne dépendent pas des DEF et ATK. Ce skill ne peut être annulé, de plus il réduit de quelques SP des cibles.
+[Level 1] : Dégats 800
+[Level 2] : Dégats 1100
+[Level 3] : Dégats 1400
+[Level 4] : Dégats 1700
+[Level 5] : Dégats 2000
+#
+PA_SACRIFICE#
+Martyr's Reckoning
+MAX Lv : 5
+Skill Requirements : Endure 1, Sacrifice 3
+Type de skill : Actif
+Description : Utilise ses HP pour faire plus de dégats à l'ennemi.
+les 5 attaques suivant ce skill seront affectées.
+[Level 1] : ATK 1 fois
+[Level 2] : ATK 1.1 fois
+[Level 3] : ATK 1.2 fois
+[Level 4] : ATK 1.3 fois
+[Level 5] : ATK 1.4 fois
+#
+PA_GOSPEL#
+Battle Chant
+MAX Lv : 10
+Skill Requirements : Faith 8, Devine Protection 3, Demon Bane 5
+Type de skill : Support
+Range : 7 cellules autour du joueur
+Description : Chante un hymne qui cause des effets négatifs aux ennemis et des effets positifs sur la force du joueur.
+S'applique à tous les joueurs et les ennemis autour du joueur.
+#
+HP_ASSUMPTIO#
+Assumptio
+MAX Lv : 5
+Skill Requirements : Angelus 1, Improved SP Recovery 3, Impositio Manus 3
+Type de skill : Support
+Description : Avec la bénédiction d'un ange, la DEF de la cible augmente de 100% pour la durée du Skill.
+Ne peut pas s'ajouter à Kyrie Eleison. la DEF augmentera de 35% durant War of Emperium ou en zone PvP.
+[Level 1] : Durée 20 Sec
+[Level 2] : Durée 40 Sec
+[Level 3] : Durée 60 Sec
+[Level 4] : Durée 80 Sec
+[Level 5] : Durée 100 Sec
+#
+HP_BASILICA#
+Basilica
+MAX Lv : 5
+Skill Requirements : Gloria 2, Improved SP Recovery 1, Kyrie Eleison 3
+Type de skill : Support
+Description : Bloque tous les ennemis et leurs attaques présents dans le périmètre du skill.
+Nécessite 1 Blue Gemstone, 1 Yellow Gemstone, 1 Red Gemstone et 1 Holy Water.
+Ne peut pas être utilisé contre les monstres de type Boss et en WoE. Si un obstacle existe dans le périmètre du skill, il est impossible de le lancer.
+[Level 1] : Durée 20 Sec
+[Level 2] : Durée 25 Sec
+[Level 3] : Durée 30 Sec
+[Level 4] : Durée 35 Sec
+[Level 5] : Durée 40 Sec
+#
+HP_MEDITATIO#
+Meditation
+MAX Lv : 10
+Skill Requirements : Improved SP Recovery 5, Lex Divina 5, Aspersio 3
+Type de skill : Passif
+Description : Augmente la régénération des SP et le maximum de SP.
+Inflence aussi la quatité de HP régénérée avec le skill heal.
+[Level 1] : Max SP +1%, SP Soin + 3%
+[Level 2] : Max SP +2%, SP Soin  + 6% 
+[Level 3] : Max SP +3%, SP Soin  + 9%
+[Level 4] : Max SP +4%, SP Soin + 12%
+[Level 5] : Max SP +5%, SP Soin + 15%
+[Level 6] : Max SP +6%, SP Soin  + 18%
+[Level 7] : Max SP +7%, SP Soin  + 21%
+[Level 8] : Max SP +8%, SP Soin + 24%
+[Level 9] : Max SP +9%, SP Soin + 27%
+[Level 10] : Max SP +10%, SP Soin + 30%
+#
+HW_SOULDRAIN#
+Soul Drain
+MAX Lv : 10
+Skill Requirements : Improved SP Recovery 5, Soul Strike 7
+Type de skill : Passif
+Description : Augmente le maximum de SP et donne des SP à chaque ennemi vaincu. La quantité de SP gagnée dépend du niveau de l'ennemi.
+[Level 1] : Max SP +2%
+[Level 2] : Max SP +4%
+[Level 3] : Max SP +6%
+[Level 4] : Max SP +8%
+[Level 5] : Max SP +10%
+[Level 6] : Max SP +12%
+[Level 7] : Max SP +14%
+[Level 8] : Max SP +16%
+[Level 9] : Max SP +18%
+[Level 10] : Max SP +20%
+#
+HW_MAGICCRASHER#
+Stave Crasher
+MAX Lv : 1
+Skill Requirements : Improved SP Recovery 1
+Type de skill : Actif
+Description : Attaque physique sur un ennemi. Les dégats infligés dépendent de la défense de la cible et de la force de l'attaque magique.
+#
+HW_MAGICPOWER#
+Mystical Amplification
+MAX Lv : 10
+Type de skill : Support
+Description : Augmente temporairement la force des attaques magiques.
+[Level 1] : MATK +5%
+[Level 2] : MATK +10%
+[Level 3] : MATK +15%
+[Level 4] : MATK +20%
+[Level 5] : MATK +25%
+[Level 6] : MATK +30%
+[Level 7] : MATK +35%
+[Level 8] : MATK +40%
+[Level 9] : MATK +45%
+[Level 10] : MATK +50%
+#
+CH_PALMSTRIKE#
+Raging Palm Strike
+MAX Lv : 5
+Skill Requirements : Iron Fists 7, Summon Spirit Sphere 5
+Type de skill : Actif
+Description : Frappe un ennemi avec les paumes de main. Les dégats apparaissent une seconde après le coup, l'ennemi est projetté alors en arrière.
+Peut seulement être utilisé en état de Fury.
+[Level 1] : ATK +300%
+[Level 2] : ATK +400%
+[Level 3] : ATK +500%
+[Level 4] : ATK +600%
+[Level 5] : ATK +700%
+#
+CH_TIGERFIST#
+Glacier Fist
+MAX Lv : 5
+Skill Requirements : Iron Fists 5, Raging Trifecta Blow 5, Raging Thrust 3
+Type de skill : Actif
+Description : Un skill combo qui peut être utilisé après Raging Quadruple Blow.
+L'ennemi peut être gelé pendant un certain laps de temps.
+Nécessite 1 spirit sphere.
+[Level 1] : ATK +140%, Chance de geler 20%
+[Level 2] : ATK +240%, Chance de geler 30%
+[Level 3] : ATK +340%, Chance de geler 40%
+[Level 4] : ATK +440%, Chance de geler 50%
+[Level 5] : ATK +540%, Chance de geler 60%
+#
+CH_CHAINCRUSH#
+Chain Crush Combo
+MAX Lv : 10
+Skill Requirements : Iron Fists 5, Summon Spirit Sphere 5, Glacier Fist 2
+Type de skill : Actif
+Description : Un skill combo qui peut être utilisé après Glacier Fist.
+Consomme 1 spirit sphere pour faire plus de dégats.
+Après ce skill, il est impossible d'utiliser Guillotine Fist.
+Après le skill Guillotine Fist, il est impossible d'utiliser Chain Crush Combo ou Glacier Fist.
+
+[Level 1] : ATK +500%
+[Level 2] : ATK +600%
+[Level 3] : ATK +700%
+[Level 4] : ATK +800%
+[Level 5] : ATK +900%
+[Level 6] : ATK +1000%
+[Level 7] : ATK +1100%
+[Level 8] : ATK +1200%
+[Level 9] : ATK +1300%
+[Level 10] : ATK +1400%
+#
+PF_HPCONVERSION#
+Indulge
+MAX Lv : 5
+Skill Requirements : Improved SP Recovery 1, Magic Rod 1
+Type de skill : Support
+Description : Utilise 10 % des HP pour regagner des SP.
+[Level 1] : SP régénérés par l'utilisation d'HP * 10 %
+[Level 2] : SP régénérés par l'utilisation d'HP * 20 %
+[Level 3] : SP régénérés par l'utilisation d'HP * 30 %
+[Level 4] : SP régénérés par l'utilisation d'HP * 40 %
+[Level 5] : SP régénérés par l'utilisation d'HP * 50 %
+#
+PF_SOULCHANGE#
+Soul Exhale
+MAX Lv : 1
+Skill Requirements : Magic Rod 3, Spell Breaker 2
+Type de skill : Support
+Description : Echange ses SP avec ceux de la cible. Ne peut pas gagner plus de SP que le maximum de la cible ou du sien.
+#
+PF_SOULBURN#
+Soul Siphon
+MAX Lv : 5
+Skill Requirements : Cast Cancel 5, Magic Rod 3, Dispell 3
+Type de skill : Actif
+Description : Possibilité de diminuer totalement les SP.
+Au niveau 5, Ce skill endommage aussi la cible du double des SP restants du joueur.
+Cependant si ce skill échoue le joueur est blessé.
+Peut seulement être utilisé en zone PvP et WoE.
+[Level 1] : Chance de succès 40%
+[Level 2] : Chance de succès 50%
+[Level 3] : Chance de succès 60%
+[Level 4] : Chance de succès 70%
+[Level 5] : Chance de succès 70%
+#
+ASC_KATAR#
+Advanced Katar Mastery
+MAX Lv : 5
+Skill Requirements : Double Attack 5, Katar Matery 7
+Type de skill : Passif
+Description : Augmente les dégats des armes de type Katar.
+[Level 1] : ATK +12%
+[Level 2] : ATK +14%
+[Level 3] : ATK +16%
+[Level 4] : ATK +18%
+[Level 5] : ATK +20%
+#
+ASC_BREAKER#
+Soul Destroyer
+MAX Lv : 10
+Skill Requirements : Double Attack 5, Envenom 5, Cloaking 3, Enchant Poison 6
+Type de skill : Actif
+Description : Inflige des dégats calculés la somme de la moitié des points de défense et la moitié des points de défense magique de la cible.
+De plus les dégats dépendent de la force de l'attaque et de l'INT du joueur.
+#
+SN_SIGHT#
+Falcon Eyes
+MAX Lv : 10
+Skill Requirements : Owl's Eye 10, Vulture's Eye 10, Improve Concentration 10, Falconly Mastery 1
+Type de skill : Support
+Description : Ajoute 5 points à tous les status et augmente la précision, les dégats de l'arme et le taux de coups critiques durant la durée du sort.
+[Level 1] : Précision +3%, Dégats +2%, Coup Critique +1
+[Level 2] : Précision +6%, Dégats +4%, Coup Critique +2
+[Level 3] : Précision +9%, Dégats +6%, Coup Critique +3
+[Level 4] : Précision +12%, Dégats +8%, Coup Critique +4
+[Level 5] : Précision +15%, Dégats +10%, Coup Critique +5
+[Level 6] : Précision +18%, Dégats +12%, Coup Critique +6
+[Level 7] : Précision +21%, Dégats +14%, Coup Critique +7
+[Level 8] : Précision +24%, Dégats +16%, Coup Critique +8
+[Level 9] : Précision +27%, Dégats +18%, Coup Critique +9
+[Level 10] : Précision +30%, Dégats +20%, Coup Critique +10
+#
+SN_FALCONASSAULT#
+Falcon Assault
+MAX Lv : 5
+Skill Requirements : Vulture's Eye 5, Falconly Mastery 1, Blitz Beat 5, Steel Crow 3
+Type de skill : Actif
+Description : Ordonne au faucon de lancer des attaques sur une cible.
+#
+SN_SHARPSHOOTING#
+Focused Arrow Strike
+MAX lv : 5
+Skill Requirements : Double Strafe 5, Improve Concentration 10
+Type de skill : Actif
+Description : Tire une flêche avec force.
+La flêche file droit et engendre d'énormes dégats aux ennemis sur sa trajectoire.
+Ce skill augmente le taux de coups critiques de +20
+[Level 1] : ATK +150%
+[Level 2] : ATK +200%
+[Level 3] : ATK +250%
+[Level 4] : ATK +300%
+[Level 5] : ATK +350%
+#
+SN_WINDWALK#
+Wind Walker
+MAX Lv : 10
+Skill Requirements : Improve Concentration 9
+Type de skill : Support
+Description : Augmente la vitesse de déplacement et le taux d'esquive du joueur et des membres du groupe.
+Ne peut pas être combiné avec d'autres skills possédants des propriétés similaires.
+De plus les skills qui diminuent la vitesse de mouvement, comme Quagmire, annulent ce skill.
+#
+WS_MELTDOWN#
+Shattering Strike
+MAX Lv : 10
+Skill Requirements : Skin Tempering 3, Hilt Binding 1, Weaponry Research 5, Power Thrust 3
+Type de skill : Support
+Description : Possibilité de détruire l'arme et l'armure de la cible pendant la durée du sort.
+Contre des monstres, ce skill diminue leur force ou leur défense.
+Le niveau du skill affécte les chances de succès.
+[Level 1] : Durée 15 secs
+[Level 2] : Durée 20 secs
+[Level 3] : Durée 25 secs
+[Level 4] : Durée 30 secs
+[Level 5] : Durée 35 secs
+[Level 6] : Durée 40 secs
+[Level 7] : Durée 45 secs
+[Level 8] : Durée 50 secs
+[Level 9] : Durée 55 secs
+[Level 10] : Durée 60 secs
+#
+WS_CREATECOIN#
+Coin Craft
+#
+WS_CREATENUGGET#
+Nugget Craft
+#
+WS_CARTBOOST#
+Cart Boost
+MAX Lv : 1
+Skill Requirements : Push Cart 5, Hilt Binding 1, Cart Revolution, Change Cart
+Type de skill : Support
+Description : Augmente la vitesse de déplacement du joueur avec un chariot.
+De plus les skills diminuant la vitesse d'un joueur sont sans effet.
+#
+WS_SYSTEMCREATE#
+#
+ST_REJECTSWORD#
+Sword Reject
+MAX Lv : 5
+Type de skill : Support
+Description : Seulement utilisable contre les ennemis avec des épées.
+Permet d'esquiver 3 attaques d'un ennemi et de ne recevoir que la moitié des dégats.
+Le niveau du skill influence les chances d'esquive.
+Pendant la durée du sort et contre des monstres, ce skill permet de diminuer de moitié les dégats reçus de l'ennemi.
+[Level 1] : Chance de contre attaque 15%
+[Level 2] : Chance de contre attaque 30%
+[Level 3] : Chance de contre attaque 45%
+[Level 4] : Chance de contre attaque 60%
+[Level 5] : Chance de contre attaque 75%
+#
+CG_ARROWVULCAN#
+Arrow Vulcan
+MAX Lv : 10
+Skill Requirements : Double Strafe 5, Arrow Shower 5, Melody Strike 1
+Type de skill : Actif
+Description : Tire plusieurs flêches contre un ennemi. Les bardes doivent être équipés d'un instrument de musique pour utiliser ce skill. Les danceurs doivent être équipés d'un fouet.
+[Level 1] : ATK 300%
+[Level 2] : ATK 400%
+[Level 3] : ATK 500%
+[Level 4] : ATK 600%
+[Level 5] : ATK 700%
+[Level 6] : ATK 800%
+[Level 7] : ATK 900%
+[Level 8] : ATK 1000%
+[Level 9] : ATK 1100%
+[Level 10] : ATK 1200%
+#
+CG_MOONLIT#
+Sheltering Bliss
+MAX Lv : 5
+Skill Requirements : Improve Concentration 5, Music(Dance) Lessons 7
+Type de skill : Ensemble skill
+Description : Utilisable parun duo composé d'un Bard et d'une Dancer. Une zone de 5*5 cellules est créée autour des joueurs ou aucun ennemi ne peut y pénétrer.
+Cependant cette zone ne protège pas des skills d'attaques magiques ou d'attaques à distance. Si un obstacle est présent sur la zone cible; le skill ne peut être lancé.
+[Level 1] : Durée 20 secs
+[Level 2] : Durée 25 secs
+[Level 3] : Durée 30 secs
+[Level 4] : Durée 35 secs
+[Level 5] : Durée 40 secs
+#
+CG_MARIONETTE#
+Marionette Control
+MAX Lv : 1
+Skill Requirements : Improve Concentration 10, Music(Dance) Lessons 5
+Type de skill : Support
+Description : Parcourt toutes les données du joueur et donne la moitié des points au membre du groupe ciblé.
+Le membre de groupe ne peut pas dépassé les niveaux 99 sur ses statistiques. Ce skill consomme 100 SP.
+Si le membre du groupe est distant de plus de 7 cellules le sort est annulé.
+#
+LK_SPIRALPIERCE#
+Clashing Spiral
+MAX Lv : 5
+Skill Requirements :  Spear Mastery 5, Pierce 5, Riding 1, Spear Stab 5
+Type de skill : Actif
+Description : Envoie des attaques en forme de spiral.
+Le poids de la lance influence la puissance de l'attaque.
+Une fois touché; l'ennmi ne peut pas bougé pendant une seconde.
+Le niveau du skill influence la puissance de l'attaque, mais aussi le temps de l'incantation qui augmente.
+#
+LK_HEADCRUSH#
+Traumatic Blow
+MAX Lv : 5
+Skill Requirements : Spear Mastery 9, Peco Peco Riding 1
+Type de skill : Actif
+Description : Possibilié de frapper fortement et d'infliger le statut Bleed à un ennemi.
+Une fois touché le monstre perd continuellement des HP pendant un laps de temps.
+[Level 1] : ATK 140%
+[Level 2] : ATK 180%
+[Level 3] : ATK 220%
+[Level 4] : ATK 260%
+[Level 5] : ATK 300%
+#
+LK_JOINTBEAT#
+Vital Strike
+MAX Lv : 10
+Skill Requirements :  Spear Mastery 9, Peco Peco Riding 1, Cavalier Mastery 3, Traumatic Blow 3
+Type de skill : Actif
+Description : Nécessite un Spear. Touche un point vital qui met l'ennemi dans un statut critique.
+Le niveau du skill influence la force de l'attaque et les chances de réussite.
+[Level 1] : ATK 60%
+[Level 2] : ATK 70%
+[Level 3] : ATK 80%
+[Level 4] : ATK 90%
+[Level 5] : ATK 100%
+[Level 6] : ATK 110%
+[Level 7] : ATK 120%
+[Level 8] : ATK 130%
+[Level 9] : ATK 140%
+[Level 10] : ATK 150%
+#
+HW_NAPALMVULCAN#
+Napalm Vulcan
+MAX Lv : 5
+Skill Requirements : Napalm Beat 5
+Type de skill : Active(Psychokinesis)
+Cible : Ennemi
+Description : Frappe plusieurs fois un ennemi à distance avec la possibilité de lui infliger le statut Curse en utilisant des pouvoirs psychiques.
+Le niveau du skill influence le nombre des coups infligés.
+#
+CH_SOULCOLLECT#
+Zen
+MAX Lv : 1
+Skill Requirements : Fury 5
+Type de skill : Support
+Description : Incantation de 5 esprits. L'incantation dure 2 secondes.
+#
+PF_MINDBREAKER#
+Mind Breaker
+MAX Lv : 5
+Skill Requirements : Improved SP Recovery 3, Soul Siphon 2
+Type de skill : Support
+Description : Permet de rendre fou un ennemi qui s'attaque automatiquement.
+Ce skill diminue à la fois la MDEF et augmente la MATK de l'ennemi.
+Skill level affects on the success chance.
+[Level 1] : MATK +20%, MDEF -12% de la cible
+[Level 2] : MATK +40%, MDEF -24% de la cible
+[Level 3] : MATK +60%, MDEF -36% de la cible
+[Level 4] : MATK +80%, MDEF -48% de la cible
+[Level 5] : MATK +100%, MDEF -60% de la cible
+#
+PF_MEMORIZE#
+Foresight
+MAX Lv : 1
+Skill Requirements : Study 5, Hindsight 1, Free Cast 5
+Type de skill : Support
+Description : Réduit le temps d'incantation d'un skill pour 5 fois.
+Il n'y a pas de durée limite cependant si le joueur meurt le skill est annulé.
+Le temps d'incantation est de 5 secondes.
+#
+PF_FOGWALL#
+Blinding Mist
+MAX Lv : 1
+Skill Requirements : Whirlwind 2, Deluge 2
+Type de skill : Support
+Description : Crée un brouillard de 5*3 cellules infligeant le statut Blind aux ennemis.
+Toutes attaques à distance ou magiques perdent de leur précision et de leur force.
+Ce skill est utilisable contre les monstres sur des cartes normales et en PvP contre d'autres joueurs.
+#
+PF_SPIDERWEB#
+Fiber Lock
+MAX Lv : 1
+Skill Requirements : Dragonology 4
+Type de skill : Support
+Description : Lance une toile d'araignée pour agripper la cible à un élément. Permet de lancer au maximum 3 toiles.
+La toile dure 8 secondes, Le skill Bomb de la profession alchemist peut bruler les toiles.
+Cependant la toile en flamme causera 2 fois plus de dégats.
+#
+ASC_METEORASSAULT#
+Meteor Assult
+MAX Lv : 10
+Skill Requirements : Katar Mastery 5, Righthand Mastery 3, Sonic Blow 5, Soul Destroyer 10
+Type de skill : Actif
+Description : Frappe les ennemis à distance de 5 cellules autour du joueur. Possibilité de causer des statuts anormaux aux ennemis.
+[Level 1] : ATK 80%
+[Level 2] : ATK 120%
+[Level 3] : ATK 160%
+[Level 4] : ATK 200%
+[Level 5] : ATK 240%
+[Level 6] : ATK 280%
+[Level 7] : ATK 320%
+[Level 8] : ATK 360%
+[Level 9] : ATK 400%
+[Level 10] : ATK 440%
+#
+ASC_CDP#
+Create Deadly Poison
+MAX Lv : 1
+Skill Requirements :  Envenom 10, Detoxify 1, Enchant Poison 5
+Type de skill : Support
+Description : Crée une bouteille d'un poison mortel.
+Nécessite plusieurs éléments: 1 Poison Spore, 1 Venom Canine, 1 Cactus Needle, 1 Bee Sting, 1 Karvodailnirol, 1 Berserk Potion et 1 Empty Bottle
+Les points de DEX et LUK du joueur influencent les chances de réussite. En cas d'echec, 25% du maximum des HP sont utilisés.
+Si un Assassin Cross boit cette potion, le joueur est empoisonné mais sa vitesse d'attaque augmente. Contre les autres professions
+c'est la mort immédiate.
+#
+ASC_EDP#
+Enchant Deadly Poison
+MAX Lv : 5
+Skill Requirements : Create Deadly Poison 1 
+Type de skill : Support
+Description : Enchante une arme avec un poison mortel et d'autres propriétés destructrices sur une arme. Nécessite 1 Deadly Poison Bottle.
+Lors d'une attaque, donne la possibilité d'empoisonner l'ennemi et diminue fortement les HP de la cible pendant un laps de temps.
+Contre des monstres de type Boss, les dégats sont effectifs seulement après l'ajout des propriétés destructrives à l'arme.
+#
+WE_BABY#
+Mom, Dad, I love you!
+Type de skill : Support
+Description : Les parents du joueur ne perdent pas de points d'expérience après la mort.
+Le joueur utilise 10% de son maximum de SP.
+#
+WE_CALLBABY#
+Come to me, honey~
+Type de skill : Support
+Description : Les parents du joueur téléporte l'enfant à leurs côtés.
+#
+WE_CALLPARENT#
+Mom, Dad, I miss you!
+Type de skill : Support
+Description : L'enfant téléporte ses parents à ses côtés.
+#
+TK_RUN#
+Sprint
+MAX Lv : 10
+Type de skill: Déplacement
+Description: Permet au lanceur
+de courir à une très grande vitesse.
+A partir du Lv.7, ce skill 
+met le joueur en mode Spurt,
+qui augmente sa STR pendant
+150 secondes, si celui-ci
+s'arrête de courir et n'a
+aucune arme manuelle. Le status
+Spurt est annulé si joueur
+équipe une arme. Chaque Lv. du 
+Skill Sprint donne+10
+de dégâts manuels au lanceur.
+[Lv 1] 6 sec. pour lancer, 100 SP   [Lv 2] 5 sec. pour lancer, 90 SP
+[Lv 3] 4 sec. pour lancer, 80 SP    [Lv 4] 3 sec. pour lancer, 70 SP
+[Lv 5] 2 sec. pour lancer, 60 SP    [Lv 6] 1 sec. pour lancer, 50 SP
+[Lv 7] 0 sec. pour lancer, 40 SP    [Lv 8] 0 sec. pour lancer, 30 SP
+[Lv 9] 0 sec. pour lancer, 20 SP    [Lv 10] 0 sec. pour lancer, 10 SP
+#
+TK_READYSTORM#
+Tornado Stance
+MAX Lv : 1
+Skill Requirements : Tornado Kick 1
+Type de skill: Posture
+Description: Donne 15% de
+chance d'entrer en Tornado Stance quand le lanceur
+réussi à frapper sa cible.
+Les Soul Linker ne peuvent
+pas utiliser ce skill.
+[Lv 1] 0 sec. pour lancer, 1 SP
+#
+TK_STORMKICK#
+Tornado Kick
+MAX Lv : 7
+Type de skill: Actif
+Description: Le lanceur doit
+être en Tornado Stance
+pour utiliser ce skill qui attaquera
+tous les ennemis dans une zone de 5*5
+cellules autour du joueur.
+Les Soul Linker ne peuvent
+pas utiliser ce skill.
+[Lv 1] 14 SP, 180% ATK
+[Lv 2] 12 SP, 200% ATK
+[Lv 3] 10 SP, 220% ATK
+[Lv 4] 8 SP, 240% ATK
+[Lv 5] 6 SP, 260% ATK
+[Lv 6] 4 SP, 280% ATK
+[Lv 7] 2 SP, 300% ATK
+#
+TK_READYDOWN#
+Heel Drop Stance
+MAX Lv : 1
+Skill Requirements : Heel Drop 1
+Type de skill: Posture
+Description: Donne 15% de
+chance d'entrer automatiquement en Heel Drop Stance quand le 
+lanceur réussi à frapper sa
+cible.
+Les Soul Linker ne peuvent
+pas utiliser ce skill.
+[Lv 1] 0 sec. pour lancer, 1 SP
+#
+TK_DOWNKICK#
+Heel Drop
+MAX Lv : 7
+Type de skill: Actif
+Description: Le lanceur doit 
+être en Heel Drop Stance
+pour utiliser ce skill qui infligera des dégâts et le
+status Stun pendant 3 secondes à la cible.
+Les Soul Linker ne peuvent
+pas utiliser ce skill.
+[Lv 1] 14 SP, 180% ATK
+[Lv 2] 12 SP, 200% ATK
+[Lv 3] 10 SP, 220% ATK
+[Lv 4] 8 SP, 240% ATK
+[Lv 5] 6 SP, 260% ATK
+[Lv 6] 4 SP, 280% ATK
+[Lv 7] 2 SP, 300% ATK
+#
+TK_READYTURN#
+Roundhouse Stance
+MAX Lv : 1
+Skill Requirements : Roundhouse 1
+Type de skill: Posture
+Description: Donne 15% de
+de chance d'entrer en Roundhouse
+Stance quand le lanceur réussi à 
+frapper sa cible.
+Les Soul Linker ne peuvent
+pas utiliser ce skill.
+[Lv 1] 0 sec. pour lancer, 1 SP
+#
+TK_TURNKICK#
+Roundhouse
+MAX Lv : 7
+Type de skill: Actif
+Description: Le lanceur doit
+être en Roundhouse Stance
+pour utiliser ce skill qui causera des
+dégâts à la cible et repoussera ses
+adversaires autour d'elle.
+Les adversaires en question ne
+recevrons aucun dégât.
+Les Soul Linker ne peuvent
+pas utiliser ce skill.
+[Lv 1] 14 SP, 220% ATK
+[Lv 2] 12 SP, 250% ATK
+[Lv 3] 10 SP, 280% ATK
+[Lv 4] 8 SP, 310% ATK
+[Lv 5] 6 SP, 340% ATK
+[Lv 6] 4 SP, 370% ATK
+[Lv 7] 2 SP, 400% ATK
+#
+TK_READYCOUNTER#
+Counter Kick Stance
+MAX Lv : 1
+Skill Requirements : Counter Kick 1
+Type de skill: Posture
+Description: Donne 20% de
+chance d'entrer en Counter Kick Stance
+quand le lanceur réussi à frapper
+sa cible. Les Soul Linker ne peuvent
+pas utiliser ce skill.
+[Lv 1] : 0 sec. pour lancer, 1 SP
+#
+TK_COUNTER#
+Counter Kick
+MAX lv : 7
+Type de skill: Actif
+Description: Le lanceur
+doit être en Counter Kick Stance
+pour utiliser ce skill qui ne ratera
+jamais sa cible.
+Les Soul Linker ne peuvent
+pas utiliser ce skill.
+[Lv 1] 14 SP, 220% ATK
+[Lv 2] 12 SP, 250% ATK
+[Lv 3] 10 SP, 280% ATK
+[Lv 4] 8 SP, 310% ATK
+[Lv 5] 6 SP, 340% ATK
+[Lv 6] 4 SP, 370% ATK
+[Lv 7] 2 SP, 400% ATK0
+#
+TK_DODGE#
+Tumbling
+MAX Lv : 1
+Skill Requirements : Flying Kick 7
+Type de skill: Posture
+Description: Donne 20% de
+chance de bloquer les attaques à
+longue portée. Quand le lanceur
+est en Spurt (après avoir lancé Sprint
+Lv.7 au minimum), Tumbling bloquera
+également les autres types d'attaques.
+[Lv 1] 0 sec. pour lancer, 1 SP
+#
+TK_JUMPKICK#
+Flying Kick
+MAX Lv : 7
+Type de skill: Actif
+Description: Attaque un ennemi distant
+avec un coup de pied qui réduit instantanément l'espace
+entre la cible et le joueur. En mode Tumbling, le Base
+Level du joueur influe sur les dégâts infligés. Cette
+influence sera encore plus importante en mode Sprint.
+Si le joueur est à la fois en modes Spurt et Sprint,
+les dégâts de Flying Kick seront encore améliorés.
+Flying Kick annulera la plupart des status positifs
+de la cible, y compris les Spirit des Soul Linker,
+One-hand Quicked, Kaahi, Kaite, et l'effet des
+Berserk Potion. Cependant, les Stalkers peuvent se
+protéger de cette annulation grâce au skill Preserve.
+Les Soul Linker ne peuvent
+pas utiliser ce skill.
+[Lv 1] 70 SP, 40% ATK
+[Lv 2] 60 SP, 50% ATK
+[Lv 3] 50 SP, 60% ATK
+[Lv 4] 40 SP, 70% ATK
+[Lv 5] 30 SP, 80% ATK
+[Lv 6] 20 SP, 90% ATK
+[Lv 7] 10 SP, 100% ATK
+#
+TK_HPTIME#
+Peaceful Break
+MAX Lv : 10
+Type de skill: Passif
+Description: Si 2 personnages
+de classe Taekwon ou plus s'assoient
+l'un à côté de l'autre, leurs HPs
+seront restaurés. Cette restauration
+est affectée par la VIT et augmentée
+de 30HP par la commande /doridori.
+ [Lv 1] HP +30
+ [Lv 2] HP +60
+ [Lv 3] HP +90
+ [Lv 4] HP +120
+ [Lv 5] HP +150
+ [Lv 6] HP +180
+ [Lv 7] HP +210
+ [Lv 8] HP +240
+ [Lv 9] HP +270
+[Lv 10] HP +300
+#
+TK_SPTIME#
+Happy Break
+MAX Lv : 10
+Type de skill: Passif
+Description: Si 2 personnages
+de classe Taekwon ou plus s'assoient
+l'un à côté de l'autre, leurs SPs
+seront restaurés. Cette restauration
+est affectée par les SPs Max et
+améliorée de 3SP par la commande
+/doridori. Utiliser cette commande la fera durer
+pendant 30 minutes et vous placera en mode
+Enjoyable Rest. Pendant cette durée,
+le lanceur aura une petite chance d'utiliser
+un Level 3 Earth Spike sans qu'il soit consommé.
+Vous avez 10% de chance au Lv.1, et 1% de chance 
+au Lv.10. Utiliser ce Scroll lors dans ce 
+mode coûtera 10SP.
+[Lv 1] SP +3
+[Lv 2] SP +6
+[Lv 3] SP +9
+[Lv 4] SP +12
+[Lv 5] SP +15
+[Lv 6] SP +18
+[Lv 7] SP +21
+[Lv 8] SP +24
+[Lv 9] SP +27
+[Lv 10] SP +30
+#
+TK_POWER#
+Kihop
+MAX Lv : 5
+Type de skill: Passif
+Description: Augmente l'Attack
+Power selon le nombre de membres de
+la party se trouvant sur la même map.
+Les attaques normales, et les skills avec
+500% d'Attack Power, infligeront des
+dégâts supplémentaires selon le level du skill.
+Dégâts additionels par Level
+[Lv 1] +(Party Member*2%)
+[Lv 2] +(Party Member*4%)
+[Lv 3] +(Party Member*6%)
+[Lv 4] +(Party Member*8%)
+[Lv 5] +(Party Member*10%)
+#
+TK_SEVENWIND#
+Mild Wind
+MAX Lv : 7
+Skill Requirements : Peaceful Break 5, Happy Break 5, Kihop 5
+Type de skill: Support
+Description: Invoque un vent
+qui imprègnera les attaques du lanceur d'un élément qui
+dépend du Level du skill utilisé, et ce pendant 5 minutes.
+Comsommation de SP et
+Element de chaque skill Level
+[Lv 1] Earth (20 SP)
+[Lv 2] Wind (20 SP)
+[Lv 3] Water (20 SP)
+[Lv 4] Fire (20 SP)
+[Lv 5] Ghost (50 SP)
+[Lv 6] Shadow (50 SP)
+[Lv 7] Holy (50 SP)
+#
+TK_HIGHJUMP#
+Leap
+MAX Lv : 5
+Type de skill: Déplacement
+Description: Saut jusqu'à
+une case désignée, dans la zone
+d'action du skill. Tant que la case
+sélectionnée est accessible et est dans la
+zone d'action du skill, le lanceur peut
+l'atteindre, en sautant par dessus les
+murs et les obstacles. Leap ne peut
+être utilisée dans les zones où les Fly
+Wings sont désactivées, sauf en War of
+Emperium.
+Temps de Cast & Portée
+du skill par Level
+[Lv 1] 5 sec, 2 cellules
+[Lv 2] 4 sec, 4 cellules
+[Lv 3] 3 sec, 6 cellules
+[Lv 4] 2 sec, 8 cellules
+[Lv 5] 1 sec, 10 cellules
+#
+TK_MISSION#
+Taekwon Mission
+MAX Lv : 1
+Skill Requirements : Kihop 5
+Type de skill: Ranking (/taekwon) 
+Description: Ce skill est
+désactivé quand le personnage passe
+Soul Linker ou Taekwon Master.
+Activer ce skill affichera
+le monstre ciblé lors de la Taekwon Mission
+actuelle du joueur. Les Taekwon Boy et
+Taekwon Girl gagneront 1 Taekwon Mission
+point après avoir vaincu 100 monstres ciblés.
+Une fois cela fait, une nouvelle Taekwon
+Mission sera activée avec cible aléatoire.
+Les Mini Boss et MVP ne seront
+jamais choisis en tant que cible. Les 
+personnages Taekwon faisant partie du top 10
+(ayant le plus de Taekwon Mission points)
+peuvent enchaîner des combos avec
+Tornado Kick, Roundhouse, Heel Drop,
+et Counter Kick. Ces personnages, au Lv.90
+et plus, verront leurs Max HP et Max SP triplés,
+et seront capables d'utiliser tous les skills
+de Taekwon Boy/Girl.
+#
+SG_FEEL#
+Solar, Lunar and Stellar Perception
+MAX Lv : 3
+Type de skill: Alignement
+Description: Désigne la map actuelle
+avec l'un des alignements cosmiques, Solar,
+Lunar ou Stellar, pour l'utilisation de
+certains skills. Il est impossible
+de changer l'alignement cosmique d'une map
+une fois que celui-ci a été défini. Utiliser
+ce skill sur une map alignée cosmiquement
+affichera une liste des alignements de
+maps.
+1 seule map peut être assignée à
+un alignement cosmique.
+[Lv 1] Assigne l'alignement
+Solar à la map actuelle
+[Lv 2] Assigne l'alignement
+Lunar à la map actuelle
+[Lv 3] Assigne l'alignement
+Stellar à la map actuelle
+#
+SG_SUN_WARM#
+Solar Heat
+MAX Lv : 3
+Skill Requirements : Solar, Lunar and Stellar Perception 1
+Type de skill: Actif
+Description: Ce skill n'est
+actif que sur les maps de type
+Solar. Inflige des
+dégâts, absorbe 2SP et repousse
+les monstres autour du lanceur.
+Sur d'autres joueurs, ce skill
+les repoussera et absorbera leurs
+SP de façon continue.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 20 SP, 10 sec
+[Lv 2] 20 SP, 20 sec
+[Lv 3] 20 SP, 60 sec
+#
+SG_MOON_WARM#
+Lunar Heat
+MAX Lv :3
+Skill Requirements : Solar, Lunar and Stellar Perception 2
+Type de skill: Actif
+Description: Ce skill n'est
+actif que sur les maps de type
+Lunar. Inflige des
+dégâts, absorbe 2SP et repousse
+les monstres autour du lanceur.
+Sur d'autres joueurs, ce skill
+les repoussera et absorbera leurs
+SP de façon continue.Coût en SP & Temps de Cast par Level
+[Lv 1] 20 SP, 10 sec
+[Lv 2] 20 SP, 20 sec
+[Lv 3] 20 SP, 60 sec
+#
+SG_STAR_WARM#
+Stellar Heat
+MAX Lv : 3
+Skill Requirements : Solar, Lunar and Stellar Perception 3
+Type de skill: Actif
+Description: Ce skill n'est
+actif que sur les maps de type
+Stellar. Inflige des
+dégâts, absorbe 2SP et repousse
+les monstres autour du lanceur.
+Sur d'autres joueurs, ce skill
+les repoussera et absorbera leurs
+SP de façon continue.Coût en SP & Temps de Cast par Level
+[Lv 1] 10 SP, 10 sec
+[Lv 2] 10 SP, 20 sec
+[Lv 3] 10 SP, 60 sec
+#
+SG_SUN_COMFORT#
+Solar Protection
+MAX Lv : 4
+Skill Requirements : Solar, Lunar and Stellar Perception 1
+Type de skill: Support
+Description: Ce skill n'est
+actif que les jours de type Solar
+(nombres impairs)
+sur les maps de type Solar.
+Réduit les dégâts reçus d'adversaires
+selon cette formule :
+(Base Level + DEX + LUK)/2
+Coût en SP & Durée d'effet par Level
+[Lv 1] 70 SP, 80 sec
+[Lv 2] 60 SP, 160 sec
+[Lv 3] 50 SP, 240 sec
+[Lv 4] 40 SP, 320 sec
+#
+SG_MOON_COMFORT#
+Lunar Protection
+MAX Lv : 4
+Skill Requirements : Solar, Lunar and Stellar Perception 2
+Type de skill: Support
+Description: Ce skill n'est
+actif que les jours de type Lunar
+(nombres pairs)
+sur les maps de type Lunar.
+Augmente le Flee
+selon cette formule :
+(Base Level + DEX + LUK)/10%
+ 
+Coût en SP & Durée d'effet par Level
+[Lv 1] 70 SP, 80 sec
+[Lv 2] 60 SP, 160 sec
+[Lv 3] 50 SP, 240 sec
+[Lv 4] 40 SP, 320 sec
+#
+SG_STAR_COMFORT#
+Stellar Protection
+MAX Lv : 4
+Skill Requirements : Solar, Lunar and Stellar Perception 3
+Type de skill: Support
+Description: Ce skill n'est
+actif que les jours de type Stellar
+(multiples de 5)
+sur les maps de type Stellar.
+Augmente l'Attack Speed
+selon cette formule :
+(Base Level + DEX + LUK)/10%
+Coût en SP & Durée d'effet par Level
+[Lv 1] 70 SP, 80 sec
+[Lv 2] 60 SP, 160 sec
+[Lv 3] 50 SP, 240 sec
+[Lv 4] 40 SP, 320 sec
+#
+SG_HATE#
+Solar, Lunar and Stellar Opposition
+MAX Lv : 3
+Type de skill: Alignement
+Description: Désigne le monstre choisi
+avec l'un des alignements cosmiques, Solar,
+Lunar ou Stellar, pour l'utilisation de
+certains skills. Il est impossible de
+changer l'alignement cosmique d'un monstre
+une fois que celui-ci a été défini. Utiliser
+ce skill sur un monstre aligné cosmiquement
+affichera une liste des alignements de
+monstres.
+1 seul monstre peut être assigné à
+un alignement cosmique.
+[Lv 1] Assigne l'alignement
+Solar au monstre choisi. Limité aux Monstres de taille Small.
+[Lv 2] Assigne l'alignement
+Lunar au monstre choisi. Limité aux Monstres de taille Medium
+possédant 6000HP Max ou plus.
+[Lv 3] Assigne l'alignement
+stellar au monstre choisi. Limité aux Monstres de taille Large
+possédant 20000HP Max ou plus.
+Sur d'autres joueurs, les Jobs peuvent
+être alignés sans limites de taille ou de HP Max.
+#
+SG_SUN_ANGER#
+Solar Wrath
+MAX Lv : 3
+Skill Requirements : Solar, Lunar and Stellar Opposition 1
+Type de skill: Passif
+Description: Augmente
+l'Attack Power contre les monstres
+d'alignement Solar. Le Base Level
+du personnage, ainsi que sa LUK, sa
+DEX et le Level du skill influent
+sur cette augmentation.
+#
+SG_MOON_ANGER#
+Lunar Wrath
+MAX Lv : 3
+Skill Requirements : Solar, Lunar and Stellar Opposition 2
+Type de skill: Passif
+Description: Augmente
+l'Attack Power contre les monstres
+d'alignement Lunar. Le Base Level
+du personnage, ainsi que sa LUK, sa
+DEX et le Level du skill influent
+sur cette augmentation.
+#
+SG_STAR_ANGER#
+Stellar Wrath
+MAX Lv : 3
+Skill Requirements : Solar, Lunar, and Stellar Opposition 3
+Type de skill: Passif
+Description: Augmente
+l'Attack Power contre les monstres
+d'alignement Stellar. Le Base Level
+du personnage, ainsi que sa LUK, sa
+DEX, sa STR et le Level du skill influent
+sur cette augmentation.
+#
+SG_SUN_BLESS#
+Solar Blessings
+MAX Lv : 5
+Skill Requirements : Solar, Lunar and Stellar Perception 1, Solar, Lunar, and Stellar Opposition 1
+Type de skill: Passif
+Description: Augmente l'expérience
+gagnée en combattant les monstres
+d'alignement Solar lors des jours
+de type Solar (nombres pairs).
+[Lv 1] EXP +10%
+[Lv 2] EXP +20%
+[Lv 3] EXP +30%
+[Lv 4] EXP +40%
+[Lv 5] EXP +50%
+#
+SG_MOON_BLESS#
+Lunar Blessings
+MAX Lv : 5
+Skill Requirements : Solar, Lunar and Stellar Perception 2, Solar, Lunar, and Stellar Opposition 2
+Type de skill: Passif
+Description: Augmente l'expérience
+gagnée en combattant les monstres
+d'alignement Lunar lors des jours
+de type Lunar (nombres impairs).
+[Lv 1] EXP +10%
+[Lv 2] EXP +20%
+[Lv 3] EXP +30%
+[Lv 4] EXP +40%
+[Lv 5] EXP +50%
+#
+SG_STAR_BLESS#
+Stellar Blessings
+MAX Lv : 5
+Skill Requirements : Solar, Lunar and Stellar Perception 3, Solar, Lunar, and Stellar Opposition 3
+Type de skill: Passif
+Description: Augmente l'expérience
+gagnée en combattant les monstres
+d'alignement Stellar lors des jours
+de type Stellar (multiples de 5).
+[Lv 1] EXP +20%
+[Lv 2] EXP +40%
+[Lv 3] EXP +60%
+[Lv 4] EXP +80%
+[Lv 5] EXP +100%
+#
+SG_DEVIL#
+Solar, Lunar and Stellar Shadow
+MAX Lv : 10
+Skill Requirements : Job Level 50
+Type de skill: Passif
+Description: Augmente l'Attack
+Speed du joueur en sacrifiant sa vue
+de façon permanente. Plus le niveau
+de ce skill sera haut, plus
+le champs de vision du joueur sera
+réduit, à la façon du status Blind.
+Le Job Lv.50 est nécessaire pour
+activer ce skill.
+[Lv 1] Aspd +3%
+[Lv 2] Aspd +6%
+[Lv 3] Aspd +9%
+[Lv 4] Aspd +12%
+[Lv 5] Aspd +15%
+[Lv 6] Aspd +18%
+[Lv 7] Aspd +21%
+[Lv 8] Aspd +24%
+[Lv 9] Aspd +27%
+[Lv 10] Aspd +30%
+#
+SG_FRIEND#
+Solar, Lunar and Stellar Team-Up
+MAX Lv : 3
+Type de skill: Passif
+Cible: Personnage Monk membre dans la party du lanceur
+Description: Augmente les chances pour
+un personnage de classe Monk de lancer
+Raging Triflecta pendant que le joueur
+utilise Counter Kick, tandis que les
+chances de lancer Counter Kick du
+joueur seront augmentées si le Monk
+lance Ragind Trust.
+[Lv 1] Chance +100%
+[Lv 2] Chance +150%
+[Lv 3] Chance +200%
+#
+SG_KNOWLEDGE#
+Solar, Lunar and Stellar Courier
+MAX Lv : 10
+Type de skill: Passif
+Description: Augmente le
+poids maximum transportable quand le
+joueur se trouve sur une map d'alignement
+solar, Lunar ou Stellar, directement après
+sa connexion à Ragnarok Online. L'effet de ce
+skill est annulé si le
+joueur quitte cet endroit.
+[Lv 1] Poids Max +10%
+[Lv 2] Poids Max +20%
+[Lv 3] Poids Max +30%
+[Lv 4] Poids Max +40%
+[Lv 5] Poids Max +50%
+[Lv 6] Poids Max +60%
+[Lv 7] Poids Max +70%
+[Lv 8] Poids Max +80%
+[Lv 9] Poids Max +90%
+[Lv 10] Poids Max +100%
+#
+SG_FUSION#
+Solar, Lunar and Stellar Union 
+Skill Requirements : Solar, Lunar, and Stellar Courier 9, Sprit State
+Type de skill: Eveil
+Description: Réveille le
+potentiel caché du joueur pour une
+durée de 10 minutes lorsque celui-ci
+est en mode Spirit, permettant au
+lanceur d'utiliser des attaques avec
+100% de précision qui ignoreront la
+défense de l'adversaire, et augmenteront
+la vitesse de déplacement. Cependant,
+2% des HP du lanceur lui seront retirés
+à chaque attaque sur un monstre, et 8%
+à chaque attaque sur un autre joueur.
+Pendant ce skill, attaquer alors que
+les HP du joueur sont inférieurs à 20%
+de ses HP Max le tuera instantanément.
+#
+SL_ALCHEMIST#
+Alchemist Spirit
+MAX Lv : 5
+Type de skill: Support
+Description: Invoque l'esprit
+du plus grand Alchemist de tous les
+temps et imprègne de façon temporaire 
+un Alchemist de ses pouvoirs, améliorant
+les capacités du skill Aid Potion de
+cet Alchemist, qui est influencé par
+le Base Level, et lui permet d'utiliser
+les skills Aid Berserk Potion et
+Spiritual Potion Creation.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+AM_BERSERKPITCHER#
+Aid Berserk Potion
+Skill Requirements : Spirit State
+Type de skill: Support
+Description: Contraint l'effet
+d'imprégnation de Berserk Potion
+sur n'importe quelle classe.
+Cependant, l'augmentation de l'Attack
+Speed dure moitié moins longtemps
+qu'avec une véritable Berserk Potion.
+Chaque utilisation nécessite
+2 Berserk Potion.
+#
+AM_TWILIGHT1#
+Spiritual Potion Creation
+Skill Requirements : Prepare Potion 10, Spirit State
+Type de skill: Support
+Description: Consomme 200SP
+pour 200 essais de créations de White
+Potion toutes les 0,005 secondes.
+Ce skill a le même taux de réussite
+que le skill Prepare Potion et a un
+temps de Cast qui ne sera pas
+influencé par la DEX du lanceur.
+Chaque lancement nécessite les items
+pour créér 200 White Potion.
+#
+AM_TWILIGHT2#
+Spiritual Potion Creation
+Skill Requirements : Prepare Potion 10, Spirit State
+Type de skill: Support
+Description: Ce skill n'est
+accessible qu'à travers le pouvoir
+de l'ange gardien du Super Novice.
+Consomme 200SP pour 200 essais de
+créations de White Potion.
+Ce skill permet à L'Alchemist de
+gagner des Ranking Points, a le
+même taux de réussite que le skill
+Prepare Potion et a un temps de
+cast qui ne sera pas influencé
+par la DEX du lanceur.
+Chaque lancement nécessite les items
+pour créér 200 White Potion.
+#
+AM_TWILIGHT3#
+Spiritual Potion Creation
+Skill Requirements : Prepare Potion 10, Spirit State
+Type de skill: Support
+Description: Ce skill n'est
+accessible qu'à travers le pouvoir
+de l'ange gardien du Taekwon.
+Consomme 200SP pour créer 100
+Alcohols, 50 Acid Bottles et 50
+Bottle Grenade. Chaque lancement
+nécessite 50 Fabrics, 50 Empty
+Bottles et le matériel pour créér
+ces items.
+#
+SL_MONK#
+Monk Spirit
+MAX Lv : 5
+Type de skill: Support
+Description: Invoque l'esprit
+du Monk le plus fort de tous les
+temps et imprègne de façon temporaire 
+le Monk ciblé de ses pouvoirs, améliorant
+le skill Raging Trust au point d'infliger
+des dégâts sur une zone de 5*5 cellules.
+Permet aussi au Monk d'utiliser des skills
+de combo avec un coût en SP réduit, et
+redonne des SPs pendant le Status Fury.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_STAR#
+Taekwon Master Spirit
+MAX Lv : 5
+Type de skill: Support
+Description: Invoque l'esprit
+du plus grand Taekwon Master de tous les
+temps et imprègne de façon temporaire 
+un Taekwon Master ciblé de ses pouvoirs,
+lui permettant d'utiliser le skill
+Solar, Lunar and Stellar Union
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_SAGE#
+Sage Spirit
+MAX Lv : 5
+Type de skill: Support
+Description: Invoque l'esprit
+du plus grand Sage de tous les temps
+et imprègne de façon temporaire un
+Sage ciblé de ses pouvoirs, améliorant
+le skill Hindsight de façon à ce que
+celui-ci lance automatiquement le plus
+haut Level des skills de type Bolt.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_CRUSADER#
+Crusader Spirit
+MAX Lv : 5
+Type de skill: Support
+Description: Invoque l'esprit
+du plus courageux Crusader de tous les temps
+et imprègne de façon temporaire un
+Crusader ciblé de ses pouvoirs. Pour
+toute sa durée, le skill Shield
+Boomerang verra ses dégâts doublés et
+ne ratera jamais sa cible.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_SUPERNOVICE#
+Super Novice Spirit
+Skill Requirements : Taekwon Master Spirit 1
+MAX Lv : 5
+Type de skill: Support
+Description: Invoque l'esprit
+du plus étonnant Super Novice de tous les
+temps et imprègne de façon temporaire un
+Super Novice ciblé de ses pouvoirs. Pour
+toute sa durée, la cible aura une faible
+chance de voir apparaître un Ange Gardien
+qui effacera leur historique de K.O.
+Les Super Novices de Lv. 90 et supérieur
+pourront porter provisoirement toutes
+sortes de chapeaux sans restriction,
+et à partir du Lv. 96, ils pourront
+équiper certaines armes de Lv.4 :
+One-handed Swords, Maces, Axes,
+Staffs et Daggers.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_KNIGHT#
+Knight Spirit
+MAX Lv : 5
+Skill Requirements : Crusader Spirit 1
+Type de skill: Support
+Description: Invoque l'esprit
+du Knight le plus chevaleresque de tous
+les temps et imprègne de façon temporaire
+un Knight ciblé de ses pouvoirs. Pour
+toute la durée du skill, l'utilisation
+de One-hand Quicken sera activée si le
+Skill Two-hand Quicken est maîtrisé
+par la cible.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_WIZARD#
+Wizard Spirit
+MAX Lv : 5
+Skill Requirements : Sage Spirit 1
+Type de skill: Support
+Description: Invoque l'esprit
+du plus puissant Wizard de tous les
+temps et imprègne de façon temporaire
+un Wizard ciblé de ses pouvoirs. Pour
+toute la durée du skill, la cible
+pourra utiliser certains skills sans
+consommer de Gemstones.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_PRIEST#
+Priest Spirit
+MAX Lv : 5
+Skill Requirements : Monk Spirit 1
+Type de skill: Support
+Description: Invoque l'esprit
+du Priest le plus dévoué de tous les
+temps et imprègne de façon temporaire
+un Priest ciblé de ses pouvoirs. Pour
+toute la durée de ce skill, le skill
+Holy Light de la cible verra sa puissance
+d'attaque et son coût en SP multipliés
+par 5.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_BARDDANCER#
+Bard and Dancer Spirits
+MAX Lv : 5
+Type de skill: Support
+Description: Invoque l'esprit
+du saltimbanque le plus créatif de
+tous les temps et imprègne de façon
+temporaire un Bard ou Dancer ciblé
+de ses pouvoirs. Pour toute la durée
+de ce skill, la cible verra sa vitesse
+de déplacement augmentée, verra
+l'effet de ses danses et musiques
+s'appliquer à lui-même, et sera
+capable de lancer des combos avec
+les skills Perfect Tablature, Focus
+Ballet, Impressive Riff, Slow Grace,
+Magic Strings, Lady Luck, Song of Lutie
+and Gypsy's Kiss.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_ROGUE#
+Rogue Spirit
+MAX Lv : 5
+Skill Requirements : Assassin Spirit 1
+Type de skill: Support
+Description: Invoque l'esprit
+du rogue le plus émancipé de tous les
+temps et imprègne de façon temporaire
+un Rogue ciblé de ses pouvoirs,
+améliorantla vitesse de déplacement
+de la cible pour toute la durée du
+Skill Stealth. La cible sera également
+protégé du skill Dispell et recevra
+plus de HP et SP des potions créées
+par un des 10 meilleurs Alchemist
+du Ranking.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_ASSASIN#
+Assassin Spirit
+MAX Lv : 5
+Type de skill: Support
+Description: Invoque l'esprit
+de l'Assassin le plus secret de tous
+les temps et imprègne de façon
+temporaire un Assassin ciblé de ses
+pouvoirs. Pour toute la durée de ce
+skill, la cible verra les dégâts de
+son Sonic Blow augmentés de 100%,
+ainsi que le délais de ce skill
+diminué.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_BLACKSMITH#
+Blacksmith Spirit
+MAX Lv : 5
+Skill Requirements : Alchemist Spirit 1
+Type de skill: Support
+Description: Invoque l'esprit
+du Blacksmith le plus habile de tous
+les temps et imprègne de façon
+temporaire un Blacksmith ciblé de
+ses pouvoirs. Pour toute la durée
+du skill, et si la cible maîtrise
+Adrenaline Rush au Lv.5,
+l'utilisation du skill Advanced
+Adrenaline Rush lui sera accessible.
+Ce skill peut être utilisé avec
+tous les types d'armes sauf les
+Bows, et ne peut être utilisé en
+conjonction avec les skills ayant
+des effets similaires, comme Two-hand
+Quicken, Adrenaline Rush, One Hand
+Quicken, Solar, Lunar and Stellar
+Shadow or Protection, Spear Quicken
+or Impressive Riff.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+BS_ADRENALINE2#
+Advanced Adrenaline Rush
+Skill Requirements : Adrenaline Rush 5, Spirit State
+Type de skill: Support
+Description: Augmente l'Attack
+Speed de toutes les armes excepté
+les Bow. Ne peut être utilisé en
+conjonction avec les skills ayant
+des effets similaires, comme Two-hand
+Quicken, Adrenaline Rush, One Hand
+Quicken, Solar, Lunar and Stellar
+Shadow or Protection, Spear Quicken
+or Impressive Riff.
+#
+SL_HUNTER#
+Hunter Spirit
+MAX Lv : 5
+Skill Requirements : Bard and Dancer Spirit 1
+Type de skill: Support
+Description: Invoque l'esprit
+du Hunter le plus populaire de tous
+les temps et imprègne de façon
+temporaire un Hunter ciblé de ses
+pouvoirs, améliorant de façon
+temporaire le Beast Bane de la cible,
+en fonction de la STR du Hunter.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_SOULLINKER#
+Soul Linker Spirit
+MAX Lv : 5
+Skill Requirements : Taekwon Master Spirit 1
+Type de skill: Support
+Description: Invoque l'esprit
+du Soul Linker le plus talentueux
+de tous les temps et imprègne de
+façon temporaire un Soul Linker
+ciblé de ses pouvoirs, lui 
+permettant de façon temporaire
+l'utilisation des skills de type
+[Ka-] sur n'importe quel personnage.
+Coût en SP & Durée d'effet par Level
+[Lv 1] 460 SP, 150 sec
+[Lv 2] 360 SP, 200 sec
+[Lv 3] 260 SP, 250 sec
+[Lv 4] 160 SP, 300 sec
+[Lv 5] 60 SP, 350 sec
+#
+SL_HIGH#
+1st Transcendent Spirit
+MAX Lv : 5
+Skill Requirements : Super Novice Spirit 5
+Type de skill: Support
+Description: Invoque les
+esprits des plus puissants guerriers
+réincarnés de Classe 1 de tous les
+temps, pour investir leur successeur
+de leurs pouvoirs. Ce skill
+augmentera de façon temporaire les
+Stats de la cible en fonction du
+Base Level de celle-ci, sans que
+ces bonus ne puissent éxcéder +50
+dans chaque Stat.
+Coût en SP & Durée d'effet par Level
+[Lv 1]: 460 SP, 150 sec
+[Lv 2]: 360 SP, 200 sec
+[Lv 3]: 260 SP, 250 sec
+[Lv 4]: 160 SP, 300 sec
+[Lv 5]: 60 SP, 350 sec
+#
+SL_KAIZEL#
+Kaizel
+MAX Lv : 7
+Skill Requirements : Priest Spirit 1
+Type de skill: Support
+Catégorie [Ka-]: Ne peut être
+utilisé que sur des membres de la
+famille du lanceur, ou sur d'autres
+Soul Linker.
+Description: Ressuscite
+automatiquement un personnage
+tué au combat qui sera sous
+l'effet du skill Kyrie Eleison
+pendant 3 secondes après sa
+resurrection. Ce skill fonctionnera
+pendant 30 minutes, et sera annulé
+si la cible est ressuscitée.
+Ce skill est inactif durant la War
+of Emperium.
+Coût en SP & HP restaurés
+par Level
+[Lv 1] 120 SP
+4.5 sec, 10% Max HP
+[Lv 2] 110 SP
+4 sec, 20% Max HP
+[Lv 3] 100 SP
+3.5 sec, 30% Max HP
+[Lv 4] 90 SP
+3 sec, 40% Max HP
+[Lv 5] 80 SP
+2.5 sec, 50% Max HP
+[Lv 6] 70 SP
+2.5 sec, 60% Max HP
+[Lv 7] 60 SP
+2.5 sec, 70% Max HP
+#
+SL_KAAHI#
+Kaahi
+MAX Lv : 7
+Skill Requirements : Priest Spirit 1, Monk Spirit 1, Crusader Spirit 1
+Type de skill: Support
+Catégorie [Ka-]: Ne peut être
+utilisé que sur des membres de la
+famille du lanceur, ou sur d'autres
+Soul Linker.
+Description: Utilise un
+certain nombre de SP pour
+récupérer des HP lorsque un
+ennemi utilise une attaque normale.
+Coût en SP par attaque : 5~35
+Hp régénérés : 200~1,400
+#
+SL_KAUPE#
+Kaupe
+MAX Lv : 3
+Skill Requirements : Assassin Spirit 1, Rogue Spirit 1
+Type de skill: Support
+Catégorie [Ka-]: Ne peut être
+utilisé que sur des membres de la
+famille du lanceur, ou sur d'autres
+Soul Linker.
+Description: Le Status Kaupe
+donne une chance d'esquiver chaque
+attaque physique de l'adversaire
+et dure jusqu'à ce que 10 minutes
+soient passées ou juqsu'à ce que
+le joueur réussisse à esquiver
+une attaque.
+Coût en SP & Chance d'esquiver par Level
+[Lv 1] 20 SP, Dodge +33%
+[Lv 2] 30 SP, Dodge +66%
+[Lv 3] 40 SP, Dodge +100%
+#
+SL_KAITE#
+Kaite
+Skill Requirements : Wizard Spirit 1, Sage Spirit 1
+Type de skill: Support
+Catégorie [Ka-]: Ne peut être
+utilisé que sur des membres de la
+famille du lanceur, ou sur d'autres
+Soul Linker.
+Description: Renvoit la
+plupart des sorts magiques à leur
+lanceur. Les sorts de soin ne
+guériront pas le lanceur d'origine.
+Les sorts magiques lancés par des
+monstres de haut Level ne peuvent
+être renvoyés, bien que ce sort
+ait 100% de chance de renvoyer
+les sorts lancés par d'autres
+joueurs, quel que soit leur 
+Level.
+[Lv 1] 1 Reflection
+6 sec de cast, dure 1 min
+[Lv 2] 1 Reflection
+5.5 sec de cast, dure 2 min
+[Lv 3] 1 Reflection
+5 sec de cast, dure 3 min
+[Lv 4] 1 Reflection
+4.5 sec de cast, dure 4 min
+[Lv 5] 2 Reflections
+4 sec de cast, dure 5 min
+[Lv 6] 2 Reflections
+3.5 sec de cast, dure 6 min
+[Lv 7] 2 Reflections
+3 sec de cast, dure 10 min
+#
+SL_KAINA#
+Kaina
+MAX Lv : 7
+Skill Requirements : Happy Break 1
+Type de skill: Passif
+Description: Augmente les
+SP Max et améliore l'efficacité
+du skill Happy Break. Au Base Level
+10, ce skill réduit la consommation
+de SP des skills Estin, Estun et
+Esma de 3%, en fonction du skill
+Level de Kaina. Au Base Level 80,
+la consommation de SP est réduite
+de 5%, et au Base Level 90, de
+7%.
+Efficacité de Happy Break
+& augmentation des SP Max par Level
+[Lv 1] H.B. +40% , Max SP +30
+[Lv 2] H.B. +50% , Max SP +60
+[Lv 3] H.B. +60% , Max SP +90
+[Lv 4] H.B. +70% , Max SP +120 
+[Lv 5] H.B. +80% , Max SP +150
+[Lv 6] H.B. +90% , Max SP +180
+[Lv 7] H.B. +100% , Max SP +210
+#
+SL_STIN#
+Estin
+MAX Lv : 7
+Skill Requirements : Wizard Spirit 1
+Type de skill: Attaque Magique
+Catégorie [Es-]: Ne peut être
+utilisé que sur des monstres.
+Description: Repousse le
+monstre ciblés de 2 cases. Seuls
+les monstres de taille Small recevront
+des dégâts lorsqu'ils subissent ce
+skill, qui prendra l'Element du skill
+Mild Wind si celui-ci est lancé.
+Au level 7, Estin aura un
+délais de 3 secondes lors duquel
+sera possible le lancement du skill
+Esma.
+[Lv 1] 18 SP, 10% de Dégâts
+[Lv 2] 20 SP, 20% de Dégâts
+[Lv 3] 22 SP, 30% de Dégâts
+[Lv 4] 24 SP, 40% de Dégâts
+[Lv 5] 26 SP, 50% de Dégâts
+[Lv 6] 28 SP, 60% de Dégâts
+[Lv 7] 30 SP, 70% de Dégâts
+#
+SL_STUN#
+Estun
+MAX Lv : 7
+Skill Requirements : Wizard Spirit 1
+Type de skill: Attaque Magique
+Catégorie [Es-]: Ne peut être
+utilisé que sur des monstres.
+Description: Repousse le
+monstre ciblé de 2 cases. Seuls
+les monstres de taille Medium recevront
+des dégâts lorsqu'ils subissent ce
+skill, qui prendra l'Element du skill
+Mild Wind si celui-ci est lancé.
+Au level 7, Estin aura un
+délais de 3 secondes lors duquel
+sera possible le lancement du skill
+Esma.
+[Lv 1] 18 SP, 5% de Dégâts
+[Lv 2] 20 SP, 10% de Dégâts
+[Lv 3] 22 SP, 15% de Dégâts
+[Lv 4] 24 SP, 20% de Dégâts
+[Lv 5] 26 SP, 25% de Dégâts
+[Lv 6] 28 SP, 30% de Dégâts
+[Lv 7] 30 SP, 35% de Dégâts
+#
+SL_SMA#
+Esma
+MAX Lv : 10
+Skill Requirements : Estin 7, Estun 7
+Type de skill: Attaque Magique
+Catégorie [Es-]: Ne peut être
+utilisé que sur des monstres.
+Description: Ce skill ne peut
+être activé que lorsque les conditions
+sont réunies. Une rafale inflige des
+dégâts calculés selon la formule
+suivante : (40 + Base Level)% d'une
+attaque normale, qui prendra l'Element
+du skill Mild Wind.
+Consommation en SP et
+nombre de rafales
+[Lv 1]: 8 SP, 1 rafale
+[Lv 2]: 16 SP, 2 rafales
+[Lv 3]: 24 SP, 3 rafales
+[Lv 4]: 32 SP, 4 rafales
+[Lv 5]: 40 SP, 5 rafales
+[Lv 6]: 48 SP, 6 rafales
+[Lv 7]: 56 SP, 7 rafales
+[Lv 8]: 64 SP, 8 rafales
+[Lv 9]: 72 SP, 9 rafales
+[Lv 10]: 80 SP, 10 rafales
+#
+SL_SWOO#
+Eswoo
+MAX Lv : 7
+Skill Requirements : Priest Spirit 1
+Type de skill: Status Magic
+Catégorie [Es-]: Ne peut être
+utilisé que sur des monstres.
+Description: Recroqueville un
+monstre de façon temporaire
+afin de réduire sa vitesse de
+déplacement. Les monstres de type
+Boss ne seront recroquevillés que
+pendant 1/5 du temps normal. Si ce
+skill est lancé sur un monstre
+déjà recroquevillé, le lanceur
+se verra infligé le status Stun,
+et le monstre visé se remettra
+de ce sort plus rapidement.
+Consommation en SP et
+Durée du skill par Level
+[Lv 1]: 75 SP, 1 sec
+[Lv 2]: 65 SP, 2 sec
+[Lv 3]: 55 SP, 3 sec
+[Lv 4]: 45 SP, 4 sec
+[Lv 5]: 35 SP, 5 sec
+[Lv 6]: 25 SP, 6 sec
+[Lv 7]: 15 SP, 7 sec
+#
+SL_SKE#
+Eske
+MAX Lv : 3
+Skill Requirements : Knight Spirit 1
+Type de skill: Status Magique
+Catégorie [Es-]: Ne peut être
+utilisé que sur des monstres.
+Description: Augmente l'Attack
+Power du monstre visé, le multipliant
+par 4, mais réduit sa défense de
+moitié. Ce skill sera suivi d'un
+délais de 3 secondes lors duquel
+sera possible le lancement du skill
+Esma.
+[Lv 1]: 45 SP, 3 sec cast
+10 sec duration
+[Lv 2]: 30 SP, 2 sec cast
+20 sec duration
+[Lv 3]: 15 SP, 1 sec cast
+30 sec duration
+#
+SL_SKA#
+Eska
+MAX Lv : 3
+Skill Requirements : Monk Spirit 1
+Type de skill: Status Magique
+Catégorie [Es-]: Ne peut être
+utilisé que sur des monstres.
+Description: Place le
+monstre ciblé dans un Status
+similaire au Mental Strenght d'un
+Monk, lors duquel les déplacements
+et l'Attack Speed sont réduits,
+mais la défense et la MDef sont
+améliorés de façon temporaire.
+[Lv 1]: 100 SP, 3 sec de cast
+durée 10 sec
+[Lv 2]: 80 SP, 2 sec de cast
+durée 20 sec
+[Lv 3]: 60 SP, 1 sec de cast
+durée 30 sec
+#
+GD_GLORYWOUNDS#
+Glorious Wounds
+Type de skill : Passif
+Cible : Membres de la Guilde à 5 cellules autour du Leader
+Description : Chaque membre de la Guilde reçoit 5 points bonus de VIT.
+#
+GD_LEADERSHIP#
+Great Leadership
+Type de skill : Passif
+Cible : Membres de la Guilde à 5 cellules autour du Leader
+Description : Chaque membre de la Guilde reçoit 5 points bonus de STR.
+#
+GD_SOULCOLD#
+Cold Heart
+Type de skill : Passif
+Cible : Membres de la Guilde à 5 cellules autour du Leader
+Description : Chaque membre de la Guilde reçoit 5 points bonus de AGI.
+#
+GD_HAWKEYES#
+Sharp Gaze
+Type de skill : Passif
+Cible : Membres de la Guilde à 5 cellules autour du Leader
+Description : Chaque membre de la Guilde reçoit 5 points de bonus DEX.
+#
+GD_BATTLEORDER#
+Battle Command
+Type de skill : Support
+Cible : Membres de la Guilde présent à l'écran
+Description : Ce skill n'est utilisable que pendant les WoE.
+Le Leader augmente la STR, INT et DEX de 5 points à tous les membres de Guilde présents à l'écran. Ce skill dure 1 minute et nécéssite 5 minutes de pause avant toute nouvelle utilisation.
+#
+GD_REGENERATION#
+Regeneration
+Type de skill : Support
+Cible : Membres de la Guilde présent à l'écran
+Description : Ce skill n'est utilisable que pendant les WoE.
+Le Leader augmente la régénération des HP/SP des membres de Guilde présents à l'écran. Ce skill nécessite 5 minutes de pause avant toute nouvelle utilisation.
+[Level 1] : Régénération des HP 2 fois plus rapide
+[Level 2] : Régénération des HP/SP 2 fois plus rapide
+[Level 3] : Régénération des HP/SP 3 fois plus rapide
+#
+GD_RESTORE#
+Restoration
+Type de skill : Support
+Cible : Membres de la Guilde présent à l'écran
+Description : Ce skill n'est utilisable que pendant les WoE.
+Le Leader restaure 90% du maximum des HP/SP des membres de Guild présents à l'écran. Ce skill nécessite 5 minutes de pause avant toute nouvelle utilisation.
+#
+GD_EMERGENCYCALL#
+Urgent Call
+Type de skill : Support
+Cible : Tous les membres de la Guilde
+Description : Ce skill n'est utilisable que pendant les WoE.
+Le Leader téléporte tous les membres de Guilde connectés à ses côtés. Ce skill nécessite 5 minutes de pause avant toute nouvelle utilisation.
+#
+GD_GUARDUP#
+Strengthen Guardians
+Type de skill : Passif
+Description : Augmente la force du Gardien.
+Le niveau du skill influence la force des attaques et la vitesse du Gardien.
+#
+GD_DEVELOPMENT#
+Permanent Development
+Type de skill : Passif
+Description : Ce skill augmente de 50% les chances d'obtenir 1 Developpement Point.
+Le joueur peut donc obtenir 1 ou 2 points de developpement lors d'un changement de niveau.
+#
+ST_PRESERVE#
+Preserve
+MAX Lv : 1
+Skill Requirements : Intimidate 10
+Type de skill : Support
+Description : Ce skill empêche le joueur d'être intimidé par un joueur de profession Rogue pendant 10 minutes.
+#
+ST_FULLSTRIP#
+Full Divestment
+MAX Lv : 5
+Skill Requirements : Divest Weapon 5
+Type de skill : Support
+Cible : Ennemi
+Description : Ce skill permet de lancer 4 différents skills bloquants en même temps.
+Le joueur doit posséder un niveau de DEX supérieur aux ennemis pour augmenter ses chances de succès.
+[Level 1] : Chance de succès7%
+[Level 2] : Chance de succès 9%
+[Level 3] : Chance de succès 11%
+[Level 4] : Chance de succès 13%
+[Level 5] : Chance de succès 15%
+#
+WS_WEAPONREFINE#
+Upgrade Weapon
+MAX Lv : 10
+Skill Requirements : Weaponry Research 10
+Type de skill : Craft
+Description : Raffine les armes.
+Contrairement à la forge des armes, la DEX et la LUK n'influencent pas ce skill
+Le niveau de profession du joueur influence le skill.
+Au niveau 60, le joueur peut raffiner avec les mêmes chances de réussite qu'un NPC.
+Au niveau 65, le joueur possède 5% de chance supplémentaire par rapport à un NPC.
+Au niveau 70, le joueur possède 10% de chance supplémentaire par rapport à un NPC.
+Par exemple, si un NPC posséde 50% de chance de succès, le joueur en aura 60%.
+Raffiner une arme de niveau 1 nécessite des Phracon.
+Raffiner une arme de niveau 2 nécessite des Emveretarcon.
+Raffiner des armes de niveau 3 et 4 nécessite Oridecon.
+ [Level 1] : Raffinage +1 
+ [Level 2] : Raffinage +2
+ [Level 3] : Raffinage +3
+ [Level 4] : Raffinage +4
+ [Level 5] : Raffinage +5
+ [Level 6] : Raffinage +6
+ [Level 7] : Raffinage +7
+ [Level 8] : Raffinage +8
+ [Level 9] : Raffinage +9
+[Level 10] : Raffinage +10
+#
+CR_SLIMPITCHER#
+Aid Condensed Potion
+MAX Lv : 10
+Skill Requirements : Aid Potion 5
+Utilise une condensed potion pour soigner les membres du groupe à distance de 7*7 cellules
+autour d'un point choisi.
+ [Level 1] : Efficacité de la Potion 110%  [Red]
+ [Level 2] : Efficacité de la Potion 120%  [Red]
+ [Level 3] : Efficacité de la Potion 130%  [Red]
+ [Level 4] : Efficacité de la Potion 140%  [Red]
+ [Level 5] : Efficacité de la Potion 150%  [Red]
+ [Level 6] : Efficacité de la Potion 160% [Yellow]
+ [Level 7] : Efficacité de la Potion 170% [Yellow]
+ [Level 8] : Efficacité de la Potion 180% [Yellow]
+ [Level 9] : Efficacité de la Potion 190% [Yellow]
+[Level 10] : Efficacité de la Potion 200% [White]
+#
+CR_FULLPROTECTION#
+Full Chemical Protection
+MAX Lv : 5
+Skill Requirements : Chemical Protection(Helm, Shield, Armor, and Weapon) 5
+Type de skill : Support
+Description : Ce skill permet de lancer 4 différents types de skill chimique de protection en même temps.
+Nécessite 1 Glistening Coat
+[Level 1] : Durée 120 sec
+[Level 2] : Durée 240 sec
+[Level 3] : Durée 360 sec
+[Level 4] : Durée 480 sec
+[Level 5] : Durée 600 sec
+#
+ITM_TOMAHAWK#
+Tomahawk Throwing
+#
+ST_CHASEWALK#
+Stealth
+MAX Lv : 5
+Skill Requirements : Hiding 5, Stalk 3
+Type de skill: Support
+Description: Applique
+un Status spécial lors duquel
+le lancer peut se mouvoir
+sans être détecté par des
+Skills comme Sight, Ruwach ou
+Improve Concentration. Cependant,
+le lanceur laissera derrière
+lui des empreintes de pas, et
+pourra recevoir des dégats
+de skills ayant pour cible le
+sol. Inefficace contre les
+monstres de type Insect,
+Devil et Boss. En War of
+Emperium, ce skill consommera
+5 fois plus de SP qu'en temps
+normal.
+[Lv 1]: 12 SP/10 sec
+70% Vitesse de déplacement
++1 STR added after 1st 10 sec
+[Lv 2]: 14 SP/10 sec
+75% Vitesse de déplacement
++2 STR added after 1st 10 sec
+[Lv 3]: 16 SP/10 sec
+80% Vitesse de déplacement
++4 STR added after 1st 10 sec
+[Lv 4]: 18 SP/10 sec
+85% Vitesse de déplacement
++8 STR added after 1st 10 sec
+[Lv 5]: 20 SP/10 sec
+90% Vitesse de déplacement
++16 STR added after 1st 10 sec
+#
+PA_SHIELDCHAIN#
+Rapid Smiting
+MAX Lv : 5
+Skill Requirements : Shield Boomerang 5
+Range: 4 cells 
+Description: Permet d'attaquer une ennemi avec son bouclier en portant 5 coups.
+Accuracy Rate et le poids et l'upgrade du bouclier font augmenter les dégâts infligés.
+Rapid Smiting a 1 seconde de delai de cast et nécessite un Shield.
+[Lv 1]: +30% Damage
+Success Chance +20
+[Lv 2]: +60% Damage
+Success Chance +20
+[Lv 3]: +90% Damage
+Success Chance +20
+[Lv 4]: +120% Damage
+Success chance +20
+[Lv 5]: +150% Damage
+Success Chance +20
+#
+HP_MANARECHARGE#
+Spiritual Thrift
+MAX Lv : 5
+Skill Requirements : Mace Mastery 10, Demon Bane 10
+Description: Permet de réduire le nombre de sp consommé pour chaque skill.
+Réduction de la consommation des sp par level	
+[Lv 1]: 4%
+[Lv 2]: 8%
+[Lv 3]: 12%
+[Lv 4]: 16%
+[Lv 5]: 20%
+#
+PF_DOUBLECASTING#
+Double Bolt
+MAX Lv : 5
+Skill Requirements : Hindsignts 1
+Description: Permet de relancer automatiquement un skill de type Bolt. La durée du skill est de 90 sec.
+Chance de lancer un double skill par Level:
+[Lv 1]: 40%
+[Lv 2]: 50%
+[Lv 3]: 60%
+[Lv 4]: 70%
+[Lv 5]: 80%
+#
+HW_GANBANTEIN#
+Ganbantein
+MAX Lv : 1
+Skill Requirements : Sense 1, Icewall 1
+Cible: Ground
+Description: Permet de lancer un sort sur 3x3 cases, annulant tous les sorts de zone dans l'aire d'effet.
+Ce skill annule 'Magnetic Earth' dans la zone qui avait été enchantée par le skill.
+Ce skill n'est pas affecté par des items ou skills qui nécessitent des Gemstones.
+Consomme 1 Blue Gemstone et 1 Yellow Gemstone.
+5 secondes de délai de Cast.
+#
+HW_GRAVITATION#
+Gravitational Field
+MAX Lv : 5
+Skill Requirements : Quagmire 1, Stave Crasher 1, Mystical Amplification 10
+Cible: Ground
+Description: Permet d'augmenter la gravité sur une zone de 5x5 cases autour de la cible
+en réduisant la vitesse d'attaque speed des ennemis, et en causant des dommages qui ne tiennent pas compte
+de la défense. Ce skill ne s'applique pas aux monstres de type Boss. Lorsque le skill est lancé, le caster 
+pourra seulement marcher et utiliser une attaque normale. Consomme 1 Blue Gemstone.
+2 secondes de délai de Cast.
+[Lv 1]: 5 Sec de durée
+Vitesse de l'ennemi -5%
+400 Damage/Sec
+[Lv 2]: 6 Sec de durée
+Vitesse de l'ennemi -10%
+600 Damage/Sec
+[Lv 3]: 7 Sec de durée
+Vitesse de l'ennemi -15%
+800 Damage/Sec
+[Lv 4]: 8 Sec de durée
+Vitesse de l'ennemi -20%
+1,000 Damage/Sec
+[Lv 5]: 9 Sec de durée
+Vitesse de l'ennemi-25%
+1,200 Damage/Sec
+#
+WS_CARTTERMINATION#
+High Speed Cart Ram
+MAX Lv : 10
+Skill Requirements : Hammerfall 5, Mammonite 10, Cart Boost 1
+Description: Ce skill n'est utilisable que lorsque 'Cart Boost' est activé. Cela vous
+coûtera des zenys pour lancer 'Pushcart' sur l'ennemi. Vous aurez également une chance de lancer le status Stun. 
+Les  dommages sont en fonction du level du skill, et du poids des items
+ placés dans votre Pushcart.
+[Lv 1]: 600 zeny
+5% Stun Chance
+[Lv 2]: 700 zeny
+10% Stun Chance
+[Lv 3]: 800 zeny
+15% Stun Chance
+[Lv 4]: 900 zeny
+20% Stun Chance
+[Lv 5]: 1,000 zeny
+25% Stun Chance
+[Lv 6]: 1,100 zeny
+30% Stun Chance
+[Lv 7]: 1,200 zeny
+35% Stun Chance
+[Lv 8]: 1,300 zeny
+40% Stun Chance
+[Lv 9]: 1,400 zeny
+45% Stun Chance
+[Lv 10]: 1,500 zeny
+50% Stun Chance
+#
+WS_OVERTHRUSTMAX#
+Maximum Power-Thrust
+MAX Lv : 5
+Skill Requirements : Power Thrust %
+Cible: Caster Only
+Description: Permet d'augmenter les dommages infligés contre une certaine somme de zenys.
+Ce skill n'affectera que le joueur qui le lance.
+Il y a 0.1% chance de casser l'arme à chaque attaque.
+[Lv 1]: ATK +20%, 3,000 zeny
+[Lv 2]: ATK +40%, 3,500 zeny
+[Lv 3]: ATK +60%, 4,000 zeny
+[Lv 4]: ATK +80%, 4,000 zenyaaaa [Lv 5]: ATK+ 100%, 5,000 zeny
+#
+CG_LONGINGFREEDOM#
+Longing for Freedom
+MAX Lv : 5
+Skill Requirements : Marionette Control 1, Hip Shaker 3, Music(Dance) Lessons 10
+Description: Permet de vous déplacer lorsque vous êtes avec un/une partenaire, 
+Ce skill doit être lancé par les deux joueurs.
+Le joueur qui a lancé le skill perdra 3 SP à chaque seconde pendant la durée du skill.
+Longing for Freedom s'annule lorsque la Gypsy ou le Minstrel sort de la zone d'effet du skill,
+meurt, ou utilise un autre skill de chant ou de danse.
+Déplacement & Attack Speeds pendant le skill sont en fonction du Level 
+[Lv 1]: 60%
+[Lv 2]: 70%
+[Lv 3]: 80%
+[Lv 4]: 90%
+[Lv 5]: 100%
+#
+CG_HERMODE#
+Hermode's Rod
+MAX Lv : 5
+Skill Requirements : Improve Concentration 10, Music(Dance) Lessons 10
+Description: Vous devez être à côté du Warp pour pouvoir utiliser ce skill, 
+qui ne marche que pendant War of Emperium. 
+Hermode's Rod annulera tous les status positifs excepté Berserk, des alliés
+sauf pour le joueur qui le lance, mais en échange il repoussera toutes les attaques
+magiques des ennemis. Personne, y compris le joueur qui lance le skill, ne pourra
+utiliser un autre skill pendant la durée de celui-ci. Cependant Hermode's Rod
+s'annulera si vous sortez de sa zone d'effet.
+[Lv 1]: 10 Sec de durée
+[Lv 2]: 20 Sec de durée
+[Lv 3]: 30 Sec de durée
+[Lv 4]: 40 Sec de durée
+[Lv 5]: 50 Sec de durée
+#
+
+CG_TAROTCARD#
+Tarot Card of Fate
+MAX lv : 5
+Skill Requirements : Improve Concentration 10, Hip Shaker 3
+Description: Permet de lancer
+aléatoirement une carte de tarot sur l'ennemi, qui lui infligera un effet.
+Il en existe 14 différentes et le level de ce skill augmente les chances de résussite. 
+3 secondes de délai de Cast.aaa 
+[Lv 1]: 8% de chance de réussir
+[Lv 2]: 16% de chance de réussir
+[Lv 3]: 24% de chance de réussir
+[Lv 4]: 32% de chance de réussir
+[Lv 5]: 40% de chance de réussir
+#
+
+CR_ACIDDEMONSTRATION#
+Acid Bomb
+MAX lv : 10
+Skill Requirements : Bomb 5, Acid Terror 5
+Description: Permet d'attaquer l'ennemi en lancant à la fois une Bottle Grenade et
+une Acid Bottle. Inflige des dommages en fonction du level du skill, de l'INT du joueur qui lance le skill
+et de la VIT de la cible. Ce skill inglige 50% de dommages en moins s'il est
+sur un joueur, mais il peut casser l'arme ou l'armure de la cible.Chaque utilisation
+du skill nécessite 1 Bottle Grenade et 1 Acid Bottle.
+Dommages de l'armure et de l'arme, en fonction du level:
+[Lv 1] 1%
+[Lv 2] 2%
+[Lv 3] 3%
+[Lv 4] 4%
+[Lv 5] 5%
+[Lv 6] 6%
+[Lv 7] 7%
+[Lv 8] 8%
+[Lv 9] 9%
+[Lv 10] 10%
+#
+CR_CULTIVATION#
+Cultivate Plant
+MAX Lv : 2
+Description: Permet d'avoir 50% de chance d'invoquer de manière aléatoire
+un champignon avec des Mushroom Spore, ou une plante avec des Stem. 
+Ce skill n'est pas actif en War of Emperium.
+[Lv 1]: Cultivate Mushrooms
+Nécessite Mushroom Spore
+[Lv 2]: Cultivate Plants
+Nécessite Stem
+#
+KN_ONEHAND#
+One Hand Quicken
+Skill Requirements : Two Hand Quicken 10, Spirit State
+Type de skill: Support
+Description: Augmente la vitesse d'attaque lorsqu'il est utilisé avec une arme de type 'One Handed Sword'.
+L'activation de ce skill annule les effets des potions ayant un efet similaire, 
+mais il est possible de les utiliser après avoir activé 'One Hand Quicken'.
+L'effet sera annulé si vous déséquipé votre Sword.
+#
+HT_POWER#
+Beast Charge
+Skill Requirements : Double Strafe 10, Spirit State
+Type de skill: Actif
+Cible: Ennemi
+Description: Permet d'attaquer avec une forme modifiée de Double Strafe, qui a été développé
+pour infligés d'énormes dommages sur les monstres de type Brute. L'efficacité du skill est liée à votre STR.
+#
+HLIF_HEAL#
+Healing Hands
+MAX Lv : 5
+Description: Restaure les HP du joueur en immitant le skill Heal des Acolytes.
+Le montant des HP restaurés dépend du level du skill, du level de base du joueur et de l'INT.
+Chaque lancement nécessite 1 Condensed Red Potion.
+SP consommés par Level
+[Lv 1]: 13 SP
+[Lv 2]: 16 SP
+[Lv 3]: 19 SP
+[Lv 4]: 22 SP
+[Lv 5]: 25 SP
+#
+HLIF_AVOID#
+Urgent Escape
+MAX Lv : 5
+Description: Augmentre temporairement le vitesse de déplacement du joueur et de l'homonculus
+qui peuvent ainsi s'échapper des situations les plus critiques.
+[Lv 1]: 40 Sec de durée
+Déplacement Speed +10%
+[Lv 2]: 35 Sec de durée
+Déplacement Speed +20%
+[Lv 3]: 30 Sec de durée
+Déplacement Speed +30%
+[Lv 4]: 25 Sec de durée
+Moving Speed +40%
+[Lv 5]: 20 Sec de durée
+Déplacement Speed +50%000000
+#
+HLIF_BRAIN#
+Brain Surgery
+MAX Lv : 5
+Type de skill: Passif
+Description: Altère l'espirt de l'homonculus Lif pour augmenter ses SP MAX, sa régénération de SP 
+et l'efficacité du skill Healing Hands.
+[Lv 1]: Max SP +1%
+SP Recovery +3%
+Healing Hands +2%
+[Lv 2]: Max SP +2%
+SP Recovery +6%
+Healing Hands+4%
+[Lv 3]: Max SP +3%
+SP Recovery +9%
+Healing Hands +6%
+[Lv 4]: Max SP+ 4%
+SP Recovery +12%
+Healing Hands +8%
+[Lv 5]: Max SP +5%
+SP Recovery +15%
+Healing Hands +10%
+#	
+HLIF_CHANGE#
+Mental Charge
+MAX Lv : 3
+Description: Permet d'échanger les MAX SP avec les MAX HP de l'homonculus Lif pendant toute la durée du skill.
+Pendant l'activation du skill, les HP de votre Lif seront restaurés et  il
+effectuera des attaques normales qui infligeront des dommages équivalents à son pouvoir de Magic Attack. 
+Ce skill s'arrête avec la fin de son activation et les HP et SP de votre Lif resteront à 10.
+[Lv 1] 1 Min de durée
+10 Min Cast Delay
+[Lv 2] 3 Min de durée
+15 Min Cast Delay
+[Lv 3] 5 Min de durée
+20 Min Cast Delay
+#
+HAMI_CASTLE#
+Castling
+MAX Lv :5
+Description: Permet de permuter instantanément la position du joueur avec celle de l'homonculus 
+Amistr, les monstres attaqueront donc le joueur au lieu de l'Homonculus Amistr.
+[Lv 1]: 20% de chance de réussir
+[Lv 2]: 40% de chance de réussir
+[Lv 3]: 60% de chance de réussir
+[Lv 4]: 80% de chance de réussir
+[Lv 5]: 100% de chance de réussir
+#
+HAMI_DEFENCE#
+Amistr Bulwark
+MAX Lv :5
+Description: Augmente la défense du joueur et de l'homonculus Amistr pendant la durée du skill.
+[Lv 1]: DEF+ 2
+40 Sec de durée
+[Lv 2]: DEF +4
+35 Sec de durée
+[Lv 3]: DEF +6
+30 Sec de durée
+[Lv 4]: DEF +8
+25 Sec de durée
+[Lv 5]: DEF +10
+20 Sec de durée
+#
+HAMI_SKIN#
+Adamantium Skin
+MAX Lv : 5
+Type de skill: Passif
+Description: Augmente la défense de l'Homonculus, et la régénération de ses MAX HP et SP.
+[Lv 1]: DEF +4
+Max HP +2%
+HP Recovery Rate +5%
+[Lv 2]: DEF +8
+Max HP +4%
+HP Recovery Rate +10%
+[Lv 3]: DEF +12
+Max HP +6%
+HP Recovery Rate +15%
+[Lv 4]: DEF +16
+Max HP +8%
+HP Recovery Rate +20%
+[Lv 5]: DEF +20
+Max HP +10%
+HP Recovery Rate +25%
+#
+HAMI_BLOODLUST#
+Blood Lust
+MAX Lv : 3
+Description: Augmente le pouvoir d'attaque de l'homonculus pendant toute la durée du skill.
+Pendant 'Blood Lust', chaque attaque a une chance de redonner des HP à l'homonculus, équivalents à 20%
+des dommages infligés à la cible.
+[Lv 1]: 1 Min de durée
+Attack Power +130%
+HP Gain Chance +3%
+5 Min Cast Delay
+[Lv 2]: 3 Min de durée
+Attack Power +140%
+HP Gain Chance +6%
+10 Min Cast Delay
+[Lv 3]: 5 Min de durée
+Attack Power +150%
+HP Gain Chance +9%
+15 Min Cast Delay
+#
+HFLI_MOON#
+Moonlight
+MAX Lv :5
+Description: Ordonne à l'homonculus Filir de picorer plusieurs fois à côté d'une cible. [Lv 1]: 1 Peck, Damage +220%
+[Lv 2]: 2 Pecks, Damage +330% [Lv 3]: 2 Pecks, Damage +440%
+[Lv 4]: 2 Pecks, Damage +550% [Lv 5]: 3 Pecks, Damage +660%
+#
+HFLI_FLEET#
+Flitting
+MAX Lv :5
+Description: Augmente temporairement l'attaque et la vitesse de l'homonculus Filir.
+[Lv 1]: Aspd +3
+Attack Power +110%
+60 Sec de durée
+60 Sec Cast Delay
+[Lv 2]: Aspd +6
+Attack Power +115%
+55 Sec de durée
+70 Sec Cast Delay
+[Lv 3]: Aspd +9
+Attack Power +120%
+50 Sec de durée
+80 Sec Cast Delay
+[Lv 4]:Aspd +12
+Attack Power +125%
+45 Sec de durée
+90 Sec Cast Delay
+[Lv 5]:Aspd +15
+Attack Power +130%
+40 Sec de durée
+120 Sec Cast Delay
+#
+HFLI_SPEED#
+Accelerated Flight
+MAX Lv : 5
+Description: Augemente temporairement la Flee Rate de l'homoculus Filir
+lorsque vous le poussez jusqu'à ses llimites physiques.
+[Lv 1]: Flee Rate +20
+60 Sec de durée
+60 Sec Cast Delay
+[Lv 2]: Flee Rate +30
+55 Sec de durée
+70 Sec Cast Delay
+[Lv 3]: Flee Rate +40
+50 Sec de durée
+80 Sec Cast Delay
+[Lv 4]: Flee Rate +50
+45 Sec de durée
+90 Sec Cast Delay
+[Lv 5]: Flee Rate +60
+40 Sec de durée
+120 Sec Cast Delay
+#
+HFLI_SBR44#
+S.B.R.44
+MAX Lv : 3
+Description: Sacrifie l'intimité entre le joueur et son homonculus dans le but d'infliger
+d'énormes dommages à la cible.
+[Lv 1] 
+[Lv 2] 
+[Lv 3] 
+#
+HVAN_CAPRICE#
+Caprice
+MAX Lv : 5
+Description: Permet de lancer de manière aléatoire une skill de type Bolt. 
+Le level du skill lancé dépend du niveau du skill Caprice.
+[Lv 1]: Cast Lv 1 Bolt skill
+[Lv 2]: Cast Lv 2 Bolt skill
+[Lv 3]: Cast Lv 3 Bolt skill
+[Lv 4]: Cast Lv 4 Bolt skill
+[Lv 5]: Cast Lv 5 Bolt skill
+#
+HVAN_CHAOTIC#
+Chaotic Blessings
+MAX Lv :5
+Description: Retaure les HP de manière aléatoire sur une cible ennemie, sur l'homonculus ou sur le
+joueur lui même.
+[Lv 1]: Lv 1 Heal
+20% cible : Homonculus
+30% cible : Maître
+50% cible : Monstre
+[Lv 2]: Lv 1~2 Heal
+50% cible : Homonculus
+10% cible : Maître
+40% cible : Monstre
+[Lv 3]: Lv 1~3 Heal
+25% cible : Homonculus
+50% cible : Maître
+25% cible : Monstre
+[Lv 4]: Lv 1~4 Heal
+60% cible : Homonculus
+4% cible : Maître
+36% cible : Monstre
+[Lv 5]: Lv 1~2 Heal
+34% cible : Homonculus
+33% cible : Maître
+33% cible : Monstre
+#
+HVAN_INSTRUCT#
+Instruction Change
+MAX Lv : 5
+Type de skill: Passif
+Description: Augmente l'INT et la STR de l'Homunculus.
+[Lv 1]: +1 INT, +1 STR
+[Lv 2]: +2 INT, 	+1 STR
+[Lv 3]: +2 INT, +3 STR
+[Lv 4]: +4 INT, +4 STR
+[Lv 5]: +5 INT, +4 STR
+#
+HVAN_EXPLOSION#
+Self-Destruction
+MAX Lv : 3
+Description: Ordonne à l'Homunculus de s'autodétruire dans le but d'infliger des dégâts de zone, 
+proportionels au MAX HP de l'Homunculus, afin de percer la défense de l'ennemi.
+Si l'homonculus parvient à se détruire, l'intimité entre le joueur et son homonculus retombera a 1.
+[Lv 1]: Damage = Max HP*1
+[Lv 2]: Damage = Max HP*1.5
+[Lv 3]: Damage = Max HP*2
+#
+KN_CHARGEATK#
+Charge Attack
+
+Skill Requirements : Finish Quest
+Type de skill: Actif
+Cible: Ennemi
+Description: Vous déplace
+immédiatement près de la cible
+pour infliger des dégâts à courte portée.
+Plus la distance vous qui vous sépare
+de votre cible, plus les dégâts et le temps
+de cast seront élevés.
+#
+CR_SHRINK#
+Shrink
+Skill Requirements : Finish Quest
+Type de skill: Support
+Description: Shrink doit
+être utilisé en même temps que
+le skill Guard pour voir ses
+effets s'appliquer. Quand un
+monstre attaque et active
+l'effet de Guard, ce skill
+donne une chance de repousser
+ce monstre de 2 cellules.
+Le taux de réussite est de 5%
+pour Guard Lv.1, et augmente
+de 5% pour chaque Level
+supplémentaire. Au Lv.10
+du skill Guard, les chances
+de lancer ce skill sont de
+50%. Shrink dure 5 minutes,
+et est annulé s'il est lancé
+une seconde fois.
+#
+AS_SONICACCEL#
+Sonic Acceleration
+Skill Requirements : Finish Quest
+Type de skill: Passif
+Description: Augmente les
+chances de réussite du skill
+Sonic Blow de 50%, et ses
+dégâts de 10%.
+#
+AS_VENOMKNIFE#
+Venom Knife
+Skill Requirements : Finish Quest
+Type de skill: Actif
+Cible: Ennemi
+Description : Empoisonne
+la cible à distance en lançant
+un Venom Knife. Un Venom Knife
+sera consommé.
+#
+RG_CLOSECONFINE#
+Close Confine
+Skill Requirements : Finish Quest
+Type de skill: Actif
+Cible: Ennemi
+Description: Immobilise
+la cible pendant 15 secondes
+tout en bloquant les mouvements
+du lanceur. Le Dodge du
+lanceur est augmenté de 10
+pendant toute la durée du skill.
+Ce skill est annulé dès que
+la cible ou le lanceur meurt
+ou est téléporté.
+#
+WZ_SIGHTBLASTER#
+Sight Blaster
+Skill Requirements : Finish Quest
+Type de skill: Actif
+Cible: Lanceur
+Description : Invoque une
+boule de feu protectrice qui
+encerclera le lanceur pendant
+2 minutes. Quand un adversaire
+s'approche du lanceur, la boule
+de feu lui causera des dégâts
+équivalents à la Magic Attack
+de ce dernier, repoussera
+l'adversaire, et le skill
+prendra fin. L'effet de Sight
+Blaster de repousser l'adversaire
+est inactif en War of Emperium.
+#
+SA_CREATECON#
+Create Elemental Converter
+Skill Requirements : Finish Quest
+Type de skill: Support
+Description: Consomme
+certains items pour créer un
+Elemental Converter qui
+imprègnera les attaques de
+l'utilisateur d'un Element.
+Il y a 4 types de Converter.
+ 
+Items nécessaires
+Fire Converter: 3 Scorpion
+Tails, 1 Blank Scroll
+Earth Converter:
+3 Horns, 1 Blank Scroll
+Wind Converter: 3 Rainbow
+Shells, 1 Blank Scroll
+Water Converter: 3 Snail
+Shells, 1 Blank Scroll
+#
+SA_ELEMENTWATER#
+Elemental Change - Water
+Skill Requirements : Finish Quest
+Type de skill: Actif
+Cible: Ennemi
+Description: Consomme
+1 Elemental Converter
+(Water) afin de
+changer l'élément d'un
+monstre pour l'élément
+Water. Ce skill nécessite un
+Elemental Converter de 
+l'élément concerné, et
+peut échouer.
+#
+SA_ELEMENTGROUND#
+Elemental Change - Earth
+Skill Requirements : Finish Quest
+Type de skill: Actif
+Cible: Ennemi
+Description: Consomme
+1 Elemental Converter
+(Earth) afin de
+changer l'élément d'un
+monstre pour l'élément
+Earth. Ce skill nécessite un
+Elemental Converter de 
+l'élément concerné, et
+peut échouer.
+#
+SA_ELEMENTFIRE#
+Elemental Change - Fire
+Skill Requirements : Finish Quest
+Type de skill: Actif
+Cible: Ennemi
+Description: Consomme
+1 Elemental Converter
+(Fire) afin de
+changer l'élément d'un
+monstre pour l'élément
+Fire. Ce skill nécessite un
+Elemental Converter de 
+l'élément concerné, et
+peut échouer.
+#
+SA_ELEMENTWIND#
+Elemental Change - Wind
+Skill Requirements : Finish Quest
+Type de skill: Actif
+Cible: Ennemi
+Description: Consomme
+1 Elemental Converter
+(Wind) afin de
+changer l'élément d'un
+monstre pour l'élément
+Wind. Ce skill nécessite un
+Elemental Converter de 
+l'élément concerné, et
+peut échouer.
+#
+HT_PHANTASMIC#
+Phantasmic Arrow
+Skill Requirements : Finish Quest
+Type de skill: Actif
+Cible: Ennemi
+Description: Permet au
+lanceur de tirer une flêche
+magique sans avoir besoin
+de l'item Arrow. Inflige
+150% de dégats et repousse
+l'adversaire de 3 cases.
+#
+BA_PANGVOICE#
+Pang Voice
+Skill Requirements : Finish Quest
+Type de skill: Actif
+Cible: Ennemi
+Description: Lance un
+cri à l'attention de l'adversaire
+pour infliger le Status Chaos.
+Pang voice ne peut pas être
+utilisé contre les monstres de
+type Boss.
+#
+DC_WINKCHARM#
+Charming Wink
+Skill Requirements : Finish Quest
+Type de skill: Support
+Cible: Ennemi
+Description: Lance un
+clin d'oeil à l'attention de
+la cible pour l'empêcher
+d'attaquer le lanceur pendant
+10 secondes. Les chances de
+succès de ce skill augmentent
+lorsque le Level du lanceur
+est plus élevé que celui de
+la cible. Utilisé contre
+d'autres joueurs, ce skill
+a une faible chande d'infliger
+le Status Chaos. Charming Wink
+ne peut être utilisé que contre
+les monstres de type Angel,
+Demon et Demi-Human. Ne peut
+être utilisé contre les monstres
+de type Boss.
+#
+BS_UNFAIRLYTRICK#
+Dubious Salesmanship
+Skill Requirements : Finish Quest
+Type de skill: Passif
+Description: Réduit le
+nombre de Zeny utilisés
+par le skill Mammonite de
+10%.
+#
+BS_GREED#
+Greed
+Skill Requirements : Finish Quest
+Type de skill: Support
+Cible: 2 cases autour du lanceur
+Description: Ramasse
+automatiquement tout item
+dans une zone de 2 cases
+autour du lanceur. Ce skill
+ne peut être utilisé en
+ville, sur les maps PvP ou
+en War of Emperium.
+#
+PR_REDEMPTIO#
+Redemptio
+Skill Requirements : Finish Quest
+Type de skill: Support
+Cible: Membres de la party du lanceur
+Description : Sacrifie
+le lanceur pour ressusciter
+tous les membres de la party
+dans son écran, en leur
+rendant 50% de leurs Max HP.
+Plus les membres de party
+ressuscités sont nombreux,
+moins le lanceur aura à
+souffrir de la perte
+d'expérience causé par sa
+mort. Si le lanceur a moins
+d'1% d'expérience pour le
+Base Level en cours, alors
+le skill ne pourra pas être
+lancé.
+#
+MO_KITRANSLATION#
+Spiritual Bestowment
+Skill Requirements : Finish Quest
+Type de skill: Support
+Cible: 1 membre de la party du lanceur
+Description: Transfère les
+Spiritual Shpere du lanceur
+à un membre de sa party.
+Chaque utilisation transfèrera
+1 Spiritual Sphere.
+#
+MO_BALKYOUNG#
+Excruciating Palm
+Skill Requirements : Finish Quest
+Type de skill: Actif
+Cible: Ennemi
+Description: Frappe un
+adversaire de la paume afin
+de lui infliger 300% de dégâts,
+et repousse les adversaires
+près de la cible, en leur
+infligeant le Status Stun
+pendant 2 secondes. Chaque
+utilisation consomme un petit
+nombre de HP.
+#
+
+//----Episode 10.4----
+
+NJ_TOBIDOUGU#
+Dagger Throwing Practice
+MAX Lv : 10
+Type de skill:Passif
+Description: Augmente
+Les dégâts des shurikens.
+[Lv 1]: Atk +3
+[Lv 2]: Atk +6
+[Lv 3]: Atk +9
+[Lv 4]: Atk +12
+[Lv 5]: Atk +15
+[Lv 6]: Atk +18
+[Lv 7]: Atk +21
+[Lv 8]: Atk +24
+[Lv 9]: Atk +27
+[Lv 10]: Atk +30
+#
+NJ_SYURIKEN#
+Throw Shuriken
+MAX Lv : 10
+Skill Requirements : Dagger Throwing Practice 1
+Type de skill:Offensif
+Description: Lance un
+Shuriken vers une cible d'une
+distance pouvant aller jusqu'à
+9 cellules du lanceur.
+Chaque lancé consomme 1 Shuriken.
+[Lv 1]: Dégâts +4
+[Lv 2]: Dégâts +8
+[Lv 3]: Dégâts +12
+[Lv 4]: Dégâts +16
+[Lv 5]: Dégâts +20
+[Lv 6]: Dégâts +24
+[Lv 7]: Dégâts +28
+[Lv 8]: Dégâts +32
+[Lv 9]: Dégâts +36
+[Lv 10]: Dégâts +40
+#
+NJ_KUNAI#
+Throw Kunai
+MAX Lv : 10
+Skill Requirements : Dagger Throwing Practice 5
+Type de skill:Offensif
+Description: Lance un
+Kunai qui frappera 3 fois sa
+cible. Chaque utilisation consomme
+1 Kunai. L'élément de
+l'attaque dépend du type
+de kunai utilisé.
+#
+NJ_HUUMA#
+MAX Lv : 5
+Skill Requirements : Dagger Throwing Practice 5, Throw Kunai 5
+Throw Fuuma Shuriken
+Type de skill:Offensif
+Description: Nécessite
+un arme de type Fuuma. Lance
+un Fuuma Shuriken qui frappera
+sa cible et les adversaires
+environnants. Le total des
+dégâts infligés est partagé
+entre les adversaires frappés
+par ce skill. Augmenter le
+Level de ce skill augmentera
+le nombre de coups portés.
+Montant total des dégâts
+à chaque skill Level
+[Lv 1]: 300% Atk
+[Lv 2]: 450% Atk
+[Lv 3]: 600% Atk
+[Lv 4]: 750% Atk
+[Lv 5]: 900% Atk
+#
+NJ_ZENYNAGE#
+Throw Coins
+MAX Lv : 10
+Skill Requirements : Dagger Throwing Practice 10, Throw Huuma Shuriken 5
+Type de skill:Offensif
+Description: Lance des
+zenys vers une cible pour
+infliger des dégâts, passant
+outre sa défense, équivalents au
+montant en zeny lancé. Ce
+Skill est suivi d'un délais
+de 5 secondes, et ses dégâts
+sont réduits contre les
+monstres de type Boss, ainsi
+qu'en PvP.
+Coût en zenys
+par skill Level
+[Lv 1]: 500~1,000 zeny
+[Lv 2]: 1,000~2,000 zeny
+[Lv 3]: 1,500~3,000 zeny
+[Lv 4]: 2,000~4,000 zeny
+[Lv 5]: 2,500~5,000 zeny
+[Lv 6]: 3,000~6,000 zeny
+[Lv 7]: 3,500~7,000 zeny
+[Lv 8]: 4,000~8,000 zeny
+[Lv 9]: 4,500~9,000 zeny
+[Lv 10]: 5,000~10,000 zeny
+#
+NJ_TATAMIGAESHI#
+Flip Tatami
+MAX Lv : 5
+Type de skill:Offensif
+Description: Retourne un
+tatami, créant une zone de 
+4*4 cellules dans laquelle le
+lanceur est protégé des attaques
+à distance pendant 3 secondes.
+Chanque lancé est suivi d'un
+délais de 3 secondes, et a une
+chance de faire des dégâts et
+de repousser de 3 cellules les
+ennemis qui sont dans la zone
+d'effet du skill.
+Portée d'attaque &
+Dégâts par skill Level
+[Lv 1]: 1 cellule, 110% Atk
+[Lv 2]: 2 cellules, 120% Atk
+[Lv 3]: 2 cellules, 130% Atk
+[Lv 4]: 3 cellules, 140% Atk
+[Lv 5]: 3 cellules, 150% Atk
+#
+NJ_SHADOWJUMP#
+Shadow Leap
+MAX Lv : 5
+Skill Requirements : Flip Tatami 1
+Type de skill:Support
+Description: Shadow 
+Leap ne peut être utilisé
+que quand le lanceur est en
+Status Hide (avec Haze Slasher).
+Ce skill déplace la cible 
+automatiquement vers la 
+cellule cible, en ignorant
+les obstacles.
+Portée par skill Level
+[Lv 1]: 5 cellules
+[Lv 2]: 6 cellules
+[Lv 3]: 7 cellules
+[Lv 4]: 8 cellules
+[Lv 5]: 9 cellules
+#
+NJ_KASUMIKIRI#
+Haze Slasher
+MAX Lv : 10
+Skill Requirements : Shadow Leap 1
+Type de skill:Offensif
+Description: Frappe
+l'adversaire, et met tout de
+suite après le lanceur en
+Status Hide. Peut être suivi
+des skills Shadow Leap ou
+Shadow Slash.
+[Lv 1]: Atk 110%
+[Lv 2]: Atk 120%
+[Lv 3]: Atk 130%
+[Lv 4]: Atk 140%
+[Lv 5]: Atk 150%
+[Lv 6]: Atk 160%
+[Lv 7]: Atk 170%
+[Lv 8]: Atk 180%
+[Lv 9]: Atk 190%
+[Lv 10]: Atk 200%
+#
+NJ_KIRIKAGE#
+Shadow Slash
+MAX Lv : 5
+Skill Requirements : Haze Slasher 5
+Type de skill:Offensif
+Description: Shadow 
+Leap ne peut être utilisé
+que quand le lanceur est en
+Status Hide (avec Haze Slasher).
+Frappe la cible avec une
+attaque dont la portée est
+égale à celle du skill
+Shadow Leap que possède
+le lanceur. Lancer ce skill
+annulera le Status Hide.
+[Lv 1]: 100% Atk, +30% Critical
+[Lv 2]: 200% Atk, +35% Critical
+[Lv 3]: 300% Atk, +40% Critical
+[Lv 4]: 400% Atk, +45% Critical
+[Lv 5]: 500% Atk, +50% Critical
+#
+NJ_UTSUSEMI#
+Cicada Skin Shed
+MAX Lv : 5
+Skill Requirements : Shadow Leap 5
+Type de skill:Support
+Description: Met le
+lanceur en Status Cicada Skin
+Shed, qui permet à celui-ci
+d'esquiver un nombre donné
+d'attaques. Chaque esquive
+est suivie d'un mouvement en
+arrière de 7 cellules. Quand
+le nombre d'attaques atteint
+la limite du skill, ce Status
+est annulé.
+Durée et nombre d'esquives
+Cicada par skill Level
+[Lv 1]: 20 Sec, 1 esquive
+[Lv 2]: 30 Sec, 1 esquives
+[Lv 3]: 40 Sec, 2 esquives
+[Lv 4]: 50 Sec, 2 esquives
+[Lv 5]: 60 Sec, 3 esquives
+#
+NJ_BUNSINJYUTSU#
+Mirror Image
+MAX Lv : 10
+Skill Requirements : Shadow Slash 3, Ninja Aura 1, Cicada Skid Shed 4
+Type de skill:Support
+Description: Mirror
+Image ne peut être utilisé
+que lors du Status Ninja
+Aura, et consomme 1 Shadow
+Orb. Crée une image miroir
+qui permettra au lanceur 
+d'esquiver un certain nombre
+d'attaques à distance ou de
+corps à corps. Ce skill ne
+peut être utilisé pour bloquer
+ou esquiver les attaques
+magiques.
+Durée et nombre d'esquives
+par skill Level
+[Lv 1]: 60 Sec, 1 esquive
+[Lv 2]: 80 Sec, 1 esquive
+[Lv 3]: 100 Sec, 2 esquives
+[Lv 4]: 120 Sec, 2 esquives
+[Lv 5]: 140 Sec, 3 esquives
+[Lv 6]: 160 Sec, 3 esquives
+[Lv 7]: 180 Sec, 4 esquives
+[Lv 8]: 200 Sec, 4 esquives
+[Lv 9]: 220 Sec, 5 esquives
+[Lv 10]: 240 Sec, 5 esquives
+#
+NJ_NINPOU#
+Ninja Mastery
+MAX Lv : 10
+Type de skill:Passif
+Description: Augmente
+la vitesse de récupération
+des SP grâce à l'entraînement
+Ninja. Le nombre de SP récupérés
+dépend du Max SP du lanceur.
+[Lv 1]: +3 SP/10 Sec.
+[Lv 2]: +6 SP/10 Sec.
+[Lv 3]: +9 SP/10 Sec.
+[Lv 4]: +12 SP/10 Sec.
+[Lv 5]: +15 SP/10 Sec.
+[Lv 6]: +18 SP/10 Sec.
+[Lv 7]: +21 SP/10 Sec.
+[Lv 8]: +24 SP/10 Sec.
+[Lv 9]: +27 SP/10 Sec.
+[Lv 10]: +30 SP/10 Sec.
+#
+NJ_KOUENKA#
+Flaming Petals
+MAX Lv : 10
+Skill Requirements : Ninja Mastery 1
+Type de skill:Offensif(Fire)
+Description: Inflige des
+dégâts d'élément Fire à la
+cible en lui lançant des pétales
+enflammés. Le Level de ce skill
+influe sur le nombre de coups
+portés, et chacun d'entre eux
+cause des dégâts équivalant à
+90% de la Matk du lanceur.
+#
+NJ_KAENSIN#
+Blaze Shield
+MAX Lv : 10
+Skill Requirements : Flaming Petals 5
+Type de skill:Offensif(Fire)
+Description: Invoque
+un souffle ardent dans une zone
+de 5*5 cellules autour du lanceur
+qui frapperont les adversaires
+dans la zone d'effet du skill.
+Le Blaze Shield durera 20
+secondes, mais prendra
+automatiquement fin après avoir
+infligé le nombre maximum de
+coups. Chaque utilisation comsomme
+1 Flame Stone.
+[Lv 1]: 5 coups
+[Lv 2]: 5 coups
+[Lv 3]: 6 coups
+[Lv 4]: 6 coups
+[Lv 5]: 7 coups
+[Lv 6]: 7 coups
+[Lv 7]: 8 coups
+[Lv 8]: 8 coups
+[Lv 9]: 9 coups
+[Lv 10]: 9 coups
+#
+NJ_BAKUENRYU#
+Exploding Dragon
+MAX Lv : 5
+Skill Requirements : Ninja Mastery 10, Blaze Shield 7
+Type de skill:Offensif(Fire)
+Description: Invoque un
+dragon enflammé qui infligera
+3 coups à chaque adversaire dans
+une zone de 5*5 cellules autour
+de la cellule ciblée. Chaque
+utilisation consomme 1 Flame
+Stone.
+[Lv 1]: +300% Matk
+[Lv 2]: +450% Matk
+[Lv 3]: +600% Matk
+[Lv 4]: +750% Matk
+[Lv 5]: +900% Matk
+#
+NJ_HYOUSENSOU#
+Freezing Spear
+MAX Lv : 10
+Skill Requirements : Ninja Mastery 1
+Type de skill:Offensif(Ice)
+Description: Invoque
+des lances de glace qui
+frapperont l'adversaire
+ciblé plusieurs fois.
+Chaque coup infligera
+des dégâts équivalents
+à 70% de la Matk du
+lanceur.
+[Lv 1]: 3 coups
+[Lv 2]: 4 coups
+[Lv 3]: 5 coups
+[Lv 4]: 6 coups
+[Lv 5]: 7 coups
+[Lv 6]: 8 coups
+[Lv 7]: 9 coups
+[Lv 8]: 10 coups
+[Lv 9]: 11 coups
+[Lv 20]: 12 coups
+#
+NJ_SUITON#
+Watery Evasion
+MAX Lv : 10
+Skill Requirements : Freezing Spear 5
+Type de skill:Support(Ice)
+Description: Crée
+une mare emplie d'eau qui
+touchera les adversaires
+dans sa zone d'effet en
+diminuant leur AGI et leur
+vitesse de déplacement de
+50%. Tous les personnages
+de classe Ninja, y compris
+le lanceur, sont immunisés
+contre ces pénalités. La
+zone ciblée par Water Evasion
+provoquera une augmentation
+des dégâts causés par le
+Skill Freeze Spear, et
+permettra l'utilisation des
+skills Water Ball et Aqua
+Benedicta pour les autres
+joueurs. Chaque lancement
+consomme 1 Ice Stone.
+Portée, durée & réduction
+de l'AGI skill Level	
+[Lv 1]: 3*3 cellules
+15 Sec.
+[Lv 2]: 3*3 cellules
+20 Sec, AGI - 3
+[Lv 3]: 3*3 cellules
+25 Sec, AGI - 3
+[Lv 4]: 5*5 cellules
+30 Sec, AGI - 3
+[Lv 5]: 5*5 cellules
+35 Sec, AGI - 5
+[Lv 6]: 5*5 cellules
+40 Sec, AGI - 5
+[Lv 7]: 7*7 cellules
+45 Sec, AGI - 5
+[Lv 8]: 7*7 cellules
+50 Sec, AGI - 8
+[Lv 9]: 7*7 cellules
+55 Sec, AGI - 8
+[Lv 10]: 9*9 cellules
+60 Sec, AGI - 8
+#
+NJ_HYOUSYOURAKU#
+Snow Flake Draft
+MAX Lv : 5
+Skill Requirements : Ninja Mastery 10, Watery Evasion 7
+Type de skill:Offensif(Ice)
+Description: Invoque
+un météore de glace qui
+infligera des dégâts
+aux adversaires dans une
+zone de 7*7 cellules
+autour du lanceur. Chaque
+utilisation consomme 1
+Ice Stone.
+[Lv 1]: +150% Matk
+20% Chance de Freeze
+[Lv 2]: +200% Matk
+30% Chance de Freeze
+[Lv 3]: +250% Matk
+40% Chance de Freeze
+[Lv 4]: +300% Matk
+50% Chance de Freeze
+[Lv 5]: +350% Matk
+60% Chance de Freeze
+#
+NJ_HUUJIN#
+Wind Blade
+MAX Lv : 10
+Skill Requirements : Ninja Mastery 1
+Type de skill:Offensif(Lightning)
+Description: Lance
+une lame d'air tranchante
+qui infligera des dégâts
+d'élément Wind à l'adversaire
+ciblé.
+[Lv 1]: 1 coup
+[Lv 2]: 2 coups
+[Lv 3]: 2 coups
+[Lv 4]: 3 coups
+[Lv 5]: 3 coups
+[Lv 6]: 4 coups
+[Lv 7]: 4 coups
+[Lv 8]: 5 coups
+[Lv 9]: 5 coups
+[Lv 10]: 6 coups
+#
+NJ_RAIGEKISAI#
+Lightning Jolt
+MAX Lv : 5
+Skill Requirements : Wind Blade
+Type de skill:Offensif(Lightning)
+Description: Invoque
+des éclairs autour du lanceur
+qui infligeront des dégâts
+aux adversaires dans la zone
+d'effet du skill. Chaque
+utilisation comsomme 1 Wind
+Stone.
+Dégâts & portée
+par skill Level
+[Lv 1]: +200% Matk, 5*5 cellules
+[Lv 2]: +240% Matk, 5*5 cellules
+[Lv 3]: +280% Matk, 7*7 cellules
+[Lv 4]: +320% Matk, 7*7 cellules
+[Lv 5]: +360% Matk, 9*9 cellules
+#
+NJ_KAMAITACHI#
+First Wind
+MAX Lv : 5
+Skill Requirements : Ninja Mastery 10, Lightning Jolt 5
+Type de skill:Offensif(Lightning)
+Description: Lance
+une lame d'air tranchante
+qui tailladera tous les
+adversaires entre le
+lanceur et sa cible.
+Chaque utilisation consomme
+1 Wind Stone.
+Dégâts & portée
+par skill Level
+[Lv 1]: +200% Matk, 5 cellules
+[Lv 2]: +300% Matk, 6 cellules
+[Lv 3]: +400% Matk, 7 cellules
+[Lv 4]: +500% Matk, 8 cellules
+[Lv 5]: +600% Matk, 9 cellules
+#
+NJ_NEN#
+Ninja Aura
+MAX Lv : 5
+Skill Requirements : Ninja Mastery 5
+Type de skill:Support(Psychokinesis)
+Description: Concentre
+l'énergie spirituelle pour
+entrer en mode Ninja Aura,
+qui donne au lanceur des
+bonus d'INT et STR. Ce 
+Status permet l'utilisation
+des skills Mirror Image et
+Killing Strike, bien que
+leur utilisation annule le
+Ninja Aura.
+Bonus de STR et d'INT,
+Durée par skill Level
+[Lv 1]: STR, INT +1, 30 Sec.
+[Lv 2]: STR, INT +2, 45 Sec.
+[Lv 3]: STR, INT +3, 60 Sec.
+[Lv 4]: STR, INT +4, 75 Sec.
+[Lv 5]: STR, INT +5, 90 Sec.
+#
+NJ_ISSEN#
+Killing Strike
+MAX Lv : 10
+Skill Requirements : Dagger Throwing Practice 7, Shadow Slash 5, Ninja Aura 1
+Type de skill:Offensif
+Description: Sacrifie
+les HP actuels du lanceur
+pour infliger des dégâts
+dévastateurs à l'adversaire
+ciblé. Le nombre de
+HP influe sur les dégâts
+infligés, et chaque utilisation
+réduira toujours les HP du
+lanceur à 1.
+#
+GS_GLITTERING#
+Coin Flip
+MAX Lv : 5
+Skill Form:Supportive
+Type de skill:Support
+Description: Consomme 1 zeny pour lancer une pièce. Si c'est pile, vous gagnerez une pièce, si c'est face, vous perdez une pièce. Vous pouvez avoir au maximum 10 pièces, l'augmentation du niveau de skill augmente les chances de tomber sur pile. Ces pièces sont affichées comme sphère brillante autour du lanceur.
+#
+GS_FLING#
+Coin Fling
+MAX lv 1
+Skill Requirements : Coin Flip 1
+Type de skill:Offensif
+Description: Lance une pièce sur l'ennemi pour infliger des dégâts et réduire sa défense. Lancer une pièce peut consommer jusqu'a 5 pièces en même temps. Plus il y a de pièces utilisées, plus la défense de l'ennemi diminue.
+#
+GS_TRIPLEACTION#
+Triple Action
+MAX Lv : 1
+Skill Requirements : Chain Action 10, Coin Flip 1
+Type de skill:Offensif
+Description: Utilise une pièce pour lancer une triple attaque sur l'ennemi.
+#
+GS_BULLSEYE#
+Bull's Eye
+MAX Lv : 1
+Skill Requirements : Tracking 10, Coin Flip 5
+Type de skill:Offensif
+Description: Consomme une pièce pour infliger 500% de dégâts sur les monstres de type Demi-Human et Brute. Bull's Eye donne 0.1% de chance d'infliger Coma à tout les ennemis sauf les monstres de type boss.
+#
+GS_MADNESSCANCEL#
+Last Stand
+MAX Lv : 1
+Skill Requirements : Gatling Fever 10, Coin Flip 4
+Type de skill:Support
+Description: Consomme 4 pièces pour activer le skill "Last Stand" ce qui immobilise le lanceur. Mais cela augmente l'attaque de +100et l'aspd de 20%. Last Stand dure 15 secondes et ne peut être utilisé avec Gunslinger's Panic.
+#
+GS_ADJUSTMENT#
+Gunslinger's Panic
+MAX Lv : 1
+Skill Requirements : Disarm 5, Coin Flip 4
+Type de skill:Support
+Description: Consomme 2 pièces pour activer le skill "Gunslinger's Panic" ce qui permet au lancer de gagner +30 Flee et de recevoir 20% de dégâts en mois des attaques à longue portée, mais diminue le Hit de 30. Ce skill dure 20 secondes et ne peut être utilisé en même temps que "Last Stand".
+#
+GS_INCREASING#
+Increase Accuracy
+MAX Lv : 1
+Skill Requirements : Snake Eye 10, Coin Flip 2
+Type de skill:Support
+Description: Consomme 4 pièces pour rajouter 20 en hit, +4 dex et +4 agi pendant 1 minute.
+#
+GS_MAGICALBULLET#
+Magicial Bullet
+MAX Lv : 1
+Skill Requirements : Coin Flip 1
+Type de skill:Support
+Description: Consomme 1 pièce effectuer un tir magique qui n'utilise pas de munition mais inflige des dégâts de type Ghost qui sont égaux à l'atk + Matk.
+#
+GS_CRACKER#
+Cracker
+MAX Lv : 1
+Skill Requirements : Coin Flip 1
+Type de skill:Support
+Description: Consomme 1 pièce effectuer un tir magique qui va étourdir l'ennemi. Plus proche la cible est du lancer, plus il a de chance d'infliger Stun.
+#
+GS_SINGLEACTION#
+Single Action
+MAX Lv : 1
+Type de skill:Passif
+Description: Le skill essentiel du Gunslinger pour tirer plus rapidement avec son arme. Augmenter le niveau du skill augmente la précision et la vitesse de tir.
+[Lv 1]: Accuracy +2, Aspd +1%    
+[Lv 2]: Accuracy +4, Aspd +1%
+[Lv 3]: Accuracy +6, Aspd +2%    
+[Lv 4]: Accuracy +8, Aspd +2%
+[Lv 5]: Accuracy +10, Aspd +3%   
+[Lv 6]: Accuracy +12, Aspd +3%
+[Lv 7]: Accuracy +14, Aspd +4%   
+[Lv 8]: Accuracy +16, Aspd +4%
+[Lv 9]: Accuracy +18, Aspd +5%   
+[Lv 10]: Accuracy +20, Aspd +5%
+#
+GS_SNAKEEYE#
+Snake Eyes
+MAX Lv : 1
+Type de skill:Passif
+Description: Augmente la distance de tir et la précision quand une arme de type gun est équipée.
+[Lv 1]: Accuracy +1, Portée +1
+[Lv 2]: Accuracy +2, Portée +2
+[Lv 3]: Accuracy +3, Portée +3
+[Lv 4]: Accuracy +4, Portée +4
+[Lv 5]: Accuracy +5, Portée +5
+[Lv 6]: Accuracy +6, Portée +6
+[Lv 7]: Accuracy +7, Portée +7
+[Lv 8]: Accuracy +8, Portée +8
+[Lv 9]: Accuracy +9, Portée +9 
+[Lv 10]: Accuracy +10, Portée +10
+#
+GS_CHAINACTION#
+Chain Action
+MAX Lv : 10
+Skill Requirements : Single Action 5
+Type de skill:Passif
+Description: Donne une chance de tirer deux fois en une seule attaque quand une arme de type Pistol est équipée. Augmenter le niveau du skill augmente les chances de tirer deux coups.
+#
+GS_TRACKING#
+Tracking
+MAX Lv : 10
+Skill Requirements : Single Action 5
+Type de skill:Offensif
+Description: Soigneusement alignée sur la cible, cette attaque provoquera des dégâts dévastateurs. Augmenter le skill augmente le temps de cast et les dommages.Une arme de type Pistol ou Rifle est nécessaire pour utiliser cette attaque.
+Dégâts et
+Temps de cas par niveau
+[Lv 1]: 300%, 1.2 sec
+[Lv 2]: 400%, 1.4 sec
+[Lv 3]: 500%, 1.6 sec
+[Lv 4]: 600%, 1.8 sec
+[Lv 5]: 700%, 2 sec
+[Lv 6]: 800%, 2.2 sec
+[Lv 7]: 900%, 2.4 sec
+[Lv 8]: 1000%, 2.6 sec
+[Lv 9]: 1100%, 2.8 sec
+[Lv 10]: 1200%, 3 sec
+#
+GS_DISARM#
+Disarm
+MAX Lv : 5
+Skill Requirements : Tracking 7
+Type de skill:Offensif
+Description: Effectue un tir qui empêche l'ennemi d'attaquer. La chance de succès du skill dépend de son niveau. Quand il est utilisé contre un monstre, cela réduit son attaque de 25%, mais n'affecte pas les monstres de type boss. Disarm a une portée maximum de 7 cases. Une arme de type Pistol ou Rifle est nécessaire pour utiliser cette attaque.
+#
+GS_PIERCINGSHOT#
+Wounding Shot
+MAX Lv : 5
+Skill Requirements : Tracking 5
+Type de skill:Offensif
+Description: Ignore la defense de l'adversaire. A de faible chance d'infliger Bleeding à la cible. Une arme de type Pistol ou Rifle est nécessaire pour utiliser cette attaque.
+Dégâts et chance d'infliger Bleeding par niveau
+[Lv 1]: 120% Atk, 3%
+[Lv 2]: 140% Atk, 6%
+[Lv 3]: 160% Atk, 9%
+[Lv 4]: 180% Atk, 12%
+[Lv 5]: 200% Atk, 15%
+#
+GS_RAPIDSHOWER#
+Trigger Happy Shot
+MAX Lv : 10
+Skill Requirements :  Chain Action 3
+Type de skill:Offensif
+Description: Utilise 5 balles pour lancer une attaque rapide qui touche 5 fois. Une arme de type Pistol doit être équipée.
+[Lv 1]: 550% Atk
+[Lv 2]: 600% Atk
+[Lv 3]: 650% Atk
+[Lv 4]: 700% Atk
+[Lv 5]: 750% Atk
+[Lv 6]: 800% Atk
+[Lv 7]: 850% Atk
+[Lv 8]: 900% Atk
+[Lv 9]: 950% Atk
+[Lv 10]: 1000% Atk
+#
+GS_DESPERADO#
+Desperado
+MAX Lv : 10
+Skill Requirements : Trigger Happy Shot 5
+Type de skill:Offensif
+Description: Utilise 10 balles pour lancer une attaque dévastatrice dans un rayon de 3 cases autour de l'utilisateur. Chaque attaque touche maximum 10 fois et nécessite une arme de type Pistol.
+[Lv 1]: 100% Atk
+[Lv 2]: 150% Atk
+[Lv 3]: 200% Atk
+[Lv 4]: 250% Atk
+[Lv 5]: 300% Atk
+[Lv 6]: 350% Atk
+[Lv 7]: 400% Atk
+[Lv 8]: 450% Atk
+[Lv 9]: 500% Atk
+[Lv 10]: 550% Atk
+#
+GS_GATLINGFEVER#
+Gatling Fever
+MAX Lv : 10
+Skill Requirements : Trigger Happy Shot 7, Desperado 5
+Type de skill:Support
+Description: Augmente temporairement la vitesse d'attaque et les dommages mais réduit l'esquive et la vitesse de déplacement.
+Le skill est annulé lors de la seconde utilisation. Nécessite une Gatling Gun.
+
+[Lv 1]: +30 Atk, +2% Aspd
+-5% Flee, 30 sec. duration
+[Lv 2]: +40 Atk, +4% Aspd
+-10% Flee, 45 sec. duration
+[Lv 3]: +50 Atk, +6% Aspd
+-15% Flee, 60 sec. duration
+[Lv 4]: +60 Atk, +8% Aspd
+-20% Flee, 75 sec. duration
+[Lv 5]: +70 Atk, +10% Aspd
+-25% Flee, 90 sec. duration
+[Lv 6]: +80 Atk, +12% Aspd
+-30% Flee, 105 sec. duration
+[Lv 7]: +90 Atk, +14% Aspd
+-35% Flee, 120 sec. duration
+[Lv 8]: +100 Atk, +16% Aspd
+-40% Flee, 135 sec. duration
+[Lv 9]: +110 Atk, +18% Aspd
+-45% Flee, 150 sec. duration
+[Lv 10]: +120 Atk, +20% Aspd
+-50% Flee, 165 sec. duration
+#
+GS_DUST#
+Crowd Control Shot
+MAX Lv : 10
+Skill Requirements : Single Action 5
+Type de skill:Offensif
+Description: Tir à courte portée qui repousse l'ennemi de 5 cases. Nécessite un Shotgun.
+[Lv 1]: 150% Atk
+[Lv 2]: 200% Atk
+[Lv 3]: 250% Atk
+[Lv 4]: 300% Atk
+[Lv 5]: 350% Atk
+[Lv 6]: 400% Atk
+[Lv 7]: 450% Atk
+[Lv 8]: 500% Atk
+[Lv 9]: 550% Atk
+[Lv 10]: 600% Atk
+#
+GS_FULLBUSTER#
+Full Blast
+MAX Lv : 10
+Skill Requirements : Crowd Control Shot 3
+Type de skill:Offensif
+Description: Inflige des dommages dévastateurs à un ennemi en tirant plusieurs fois d'un coup. Ce skill à une faible chance de causer le status Blind et peut consommer 10 balles d'un coup. Nécessite une arme de type Shotgun.
+Dégâts & Consommation de bullet par niveau
+[Lv 1]: 400% Atk, 2 Bullet
+[Lv 2]: 500% Atk, 2 Bullet
+[Lv 3]: 600% Atk, 4 Bullet
+[Lv 4]: 700% Atk, 4 Bullet
+[Lv 5]: 800% Atk, 6 Bullet
+[Lv 6]: 900% Atk, 6 Bullet
+[Lv 7]: 1000% Atk, 8 Bullet
+[Lv 8]: 1100% Atk, 8 Bullet
+[Lv 9]: 1200% Atk, 10 Bullet 
+[Lv 10]: Atk 1300%, 10 Bullet
+#
+GS_SPREADATTACK#
+Spread Shot
+MAX Lv : 10
+Skill Requirements : Full Blast 5
+Type de skill:Offensif
+Description: Consomme 5 balles pour causer des dommages sur une large zone. Nécessite une arme de type Shotgun.
+[Lv 1]: 100% Atk, 3*3 cases
+[Lv 2]: 120% Atk, 3*3 cases
+[Lv 3]: 140% Atk, 3*3 cases
+[Lv 4]: 160% Atk, 5*5 cases
+[Lv 5]: 180% Atk, 5*5 cases
+[Lv 6]: 200% Atk, 5*5 cases
+[Lv 7]: 220% Atk, 7*7 cases
+[Lv 8]: 240% Atk, 7*7 cases
+[Lv 9]: 260% Atk, 7*7 cases
+[Lv 10]: 280% Atk, 9*9 cases
+#
+GS_GROUNDDRIFT#
+Gunslinger Mine
+MAX Lv : 10
+Skill Requirements : Full Blast 5, Spread Shot 7
+Type de skill:Offensif
+Description: Lance une sphère au sol qui explose à l'approche d'un ennemi. L'explostion sera du type de la sphère utilisée. Nécessite une arme de type Grenade Launcher.
+Bonus d'ATK & Durée de la mine pa niveau
+[Level 1] : Damage 220%, Duration 3sec.
+[Level 2] : Damage 240%, Duration 6sec.
+[Level 3] : Damage 260%, Duration 9sec.
+[Level 4] : Damage 280%, Duration 12sec.
+[Level 5] : Damage 300%, Duration 15sec.
+[Level 6] : Damage 320%, Duration 18sec.
+[Level 7] : Damage 340%, Duration 21sec.
+[Level 8] : Damage 360%, Duration 24sec.
+[Level 9] : Damage 380%, Duration 27sec.
+[Level 10] : Damage 400%, Duration 30sec.
+#
+ALL_INCCARRY#
+Enlarge Weight Limit R
+Niveau Max: 10
+Type de skill:Passif
+Description: Augmente le poids maximum que vous pouvez porter (200 par niveau).
+[Lv 1]: Poids +200
+[Lv 2]: Poids +400
+[Lv 3]: Poids +600
+[Lv 4]: Poids +800
+[Lv 5]: Poids +1000
+[Lv 6]: Poids +1200
+[Lv 7]: Poids +1400
+[Lv 8]: Poids +1600
+[Lv 9]: Poids +1800
+[Lv 10]: Poids +2000
+#
+MS_BASH#
+Bash
+Type de skill : Actif
+Cible: Ennemi
+Description : Touche l'ennemi de toutes ses forces. Si vous apprenez Fatal Blow, vous avez une chance d'infliger le status Stun à l'ennemi à partir du niveau 5.
+[Level 1] : +130% ATK
+[Level 2] : +160% ATK
+[Level 3] : +190% ATK
+[Level 4] : +220% ATK
+[Level 5] : +250% ATK
+[Level 6] : +280% ATK
+[Level 7] : +310% ATK
+[Level 8] : +340% ATK
+[Level 9] : +370% ATK
+[Level 10] : +400% ATK
+#
+MS_MAGNUM#
+Magnum Break
+Type de skill : Active(Feu)
+Cible: Ennemi
+Description : Attaque large utilisant l'élément Feu. 
+Ajoute 20% d'ATK de feu à l'ATK normal pendant 10 secondes. Consomme quelques HP lors de l'utilisation.
+[Level 1] : +120% ATK
+[Level 2] : +140% ATK
+[Level 3] : +160% ATK
+[Level 4] : +180% ATK
+[Level 5] : +200% ATK
+[Level 6] : +220% ATK
+[Level 7] : +240% ATK
+[Level 8] : +260% ATK
+[Level 9] : +280% ATK
+[Level 10] : +300% ATK
+#
+MER_PROVOKE#
+Provoke
+Type de skill : Support
+Cible: Ennemi
+Description : Diminue la défense de l'ennemi tout en augmentant sa force. Inefficace sur les monstres de type Undead.
+[Level 1] : +5% ATK de l'Ennemi, -10% DEF de l'Ennemi
+[Level 2] : +8% ATK de l'Ennemi, -15% DEF de l'Ennemi
+[Level 3] : +11% ATK de l'Ennemi, -20% DEF de l'Ennemi
+[Level 4] : +14% ATK de l'Ennemi, -25% DEF de l'Ennemi
+[Level 5] : +17% ATK de l'Ennemi, -30% DEF de l'Ennemi
+[Level 6] : +20% ATK de l'Ennemi, -35% DEF de l'Ennemi
+[Level 7] : +23% ATK de l'Ennemi, -40% DEF de l'Ennemi
+[Level 8] : +26% ATK de l'Ennemi, -45% DEF de l'Ennemi
+[Level 9] : +29% ATK de l'Ennemi, -50% DEF de l'Ennemi
+[Level 10] : +32% ATK de l'Ennemi, -55% DEF de l'Ennemi
+#
+MER_SIGHT#
+Sight
+Type de skill : Support(Feu)
+Description : Détecte les ennemis cachés à proximité.
+#
+MER_DECAGI#
+Decrease agility
+Type de skill : Support
+Cible : Ennemi
+Description : Diminue la vitesse d'attaque et de déplacement d'un ennemi.
+#
+MA_DOUBLE#
+Double Strafe
+Type de skill : Actif
+Cible : Ennemi
+Description : Touche 2 fois un ennemi en un coup.
+#
+MA_SHOWER#
+Arrow shower
+Type de skill : Actif
+Cible : Ennemi
+Description : Attaque les ennemis à proximité de la cible.
+#
+ML_PIERCE#
+Pierce
+Type de skill : Actif
+Cible : Ennemi 
+Description : Transperce un ennemi avec une lance. Attaque plusieurs fois en fonction de la taille du monstre. Activé seulement avec des armes de la classe Spear.
+[Small] : 1 coup
+[Medium] : 2 coups
+[Large] : 3 coups
+#
+ML_BRANDISHSPEAR#
+Brandish Spear
+Type de skill : Actif
+Cible : Ennemi 
+Description : Transperce violemment si on chevauche un peco peco. Activé seulement avec des armes de la classe Spear et en chevauchant un Peco Peco .
+#
+MER_QUICKEN#
+Weapon Quicken
+Type de skill : Support
+Description : Augmente la vitesse d'attaque avec une épée à 2 mains.Activé seulement avec des armes de type Two-hand Sword.
+[Level 1] : Durée 30Secs
+[Level 2] : Durée 60Secs
+[Level 3] : Durée 1Min 30Secs
+[Level 4] : Durée 2Mins
+[Level 5] : Durée 2Mins 30Secs
+[Level 6] : Durée 3Mins
+[Level 7] : Durée 3Mins 30Secs
+[Level 8] : Durée 4Mins
+[Level 9] : Durée 4Mins 30Secs
+[Level 10] : Durée 5Mins
+#
+MS_BOWLINGBASH#
+Bowling Bash
+Type de skill : Actif
+Cible : Ennemi 
+Description : Attaque un ennemi avec une puissance supérieur le propulsant sur les autres en causant des dégats.
+#
+MER_REGAIN#
+Regain
+Type de skill: Support
+Target: Joueur, Mercenaire
+Description: Annule les status 'Sleep' et 'Stun' de la cible.
+#
+MER_TENDER#
+Tender
+Type de skill: Support
+Target: Joueur, Mercenaire
+Description: Annule les status 'Freeze' et 'Stone' de la cible.
+#
+MER_BENEDICTION#
+Benediction
+Type de skill: Support
+Target: Joueur, Mercenaire
+Description: Annule les status 'Curse' et 'Blind' de la cible.
+#
+MER_RECUPERATE#
+Recuperate
+Type de skill: Support
+Target: Joueur, Mercenaire
+Description: Annule les status 'Silence' et 'Poison' de la cible.
+#
+MER_MENTALCURE#
+Mental Cure
+Type de skill: Support
+Target: Joueur, Mercenaire
+Description: Annule les status 'Confusion' et 'Poison' de la cible.
+#
+MER_COMPRESS#
+Compress
+Type de skill: Support
+Target: Joueur, Mercenaire
+Description: Annule 'Bleeding' de la cible.
+#
+MER_MAGNIFICAT#
+Magnificat
+Type de skill: Support
+Target: Joueur, Mercenaire
+Description: Double le regen SP du casteur ainsi que des membres de la party pendant toute la durée du skill.
+#
+MER_LEXDIVINA#
+Lex Divina
+Type de skill : Exorcisme
+Cible: Ennemi 
+Description : Inflige le statut Silence pendant un certain laps de temps.
+#
+MER_ESTIMATION#
+Monster Property
+Type de skill : Support
+Cible: Monster
+Description : Affiche les caractéristiques d'un monstre.
+#
+MA_SKIDTRAP#
+Skid Trap
+Type de skill : Piège caché
+Cible: Sol
+Description : Installe un piége pour faire glisser un ennemi vers une direction. Nécessite l'item Trap.
+[Level 1] : Glisse de 6 cellules, Durée 300 sec
+[Level 2] : Glisse de 7 cellules, Durée 240 sec
+[Level 3] : Glisse de 8 cellules, Durée 180 sec
+[Level 4] : Glisse de 9 cellules, Durée 120 sec
+[Level 5] : Glisse de 10 cellules, Durée 60 sec
+#
+MA_LANDMINE#
+Land Mine
+Type de skill : Piège caché
+Cible: Sol
+Description : Installe une mine qui explose si un ennemi marche dessus. Nécessite un  1 Trap.
+[Level 1] : ATK 50%, Durée 65 Secs
+[Level 2] : ATK 75%, Durée 50 Secs
+[Level 3] : ATK 100%, Durée 35 Secs
+[Level 4] : ATK 125%, Durée 20 Secs
+[Level 5] : ATK 150%, Durée 5 Secs
+#
+MA_SANDMAN#
+Sandman
+Type de skill : Piège caché
+Cible: Sol
+Description : Installe un piége qui assoupi l'ennemi qui marche dessus ainsi que ceux qui l'entoure. Nécessite  1 Trap.
+[Level 1] : Durée  150 Secs
+[Level 2] : Durée  120 Secs
+[Level 3] : Durée  90 Secs
+[Level 4] : Durée  60 Secs
+[Level 5] : Durée  30 Secs
+#
+MA_FREEZINGTRAP#
+Freezing Trap
+Type de skill : Piége caché
+Cible: Sol
+Description : Installe un piége qui gèle l'ennemi qui marche dessus. Nécessite  2 Traps.
+[Level 1] : Durée  150 Secs
+[Level 2] : Durée  120 Secs
+[Level 3] : Durée  90 Secs
+[Level 4] : Durée  60 Secs
+[Level 5] : Durée  30 Secs
+#
+MA_REMOVETRAP#
+Remove Trap
+Type de skill : Support
+Cible: Piége installé au Sol
+Description : Enléve un piége. Une fois désinstallé, obtention des items Trap.
+#
+MER_CRASH#
+Crash
+Skill Form: Offensif
+Target: Ennemi
+Description: Augmente les dégats causés, chance de 'Stun' l'ennemi.     
+[Lv.1]: Atk 110%, 6% de chance de Stun
+[Lv.2]: Atk 120%, 12% de chance de Stun 
+[Lv.3]: Atk 130%, 18% de chance de Stun
+[Lv.4]: Atk 140%, 24% de chance de Stun 
+[Lv.5]: Atk 150%, 30% de chance de Stun
+#
+MA_CHARGEARROW#
+Charge Arrow
+Type de skill : Actif
+Cible : Ennemi
+Description : Tend un arc à son maximum pour utiliser toute sa puissance. La cible sera projetée de 4 cellules.
+#
+MER_AUTOBERSERK#
+Auto Berserk
+Type de skill : Passif
+Description : Déclenche une furie lorsque le niveau d'HP descend en dessous de 25% du maximum de HP. Le statut du joueur devient alors le même que s'il avait été attaqué par le skill "Provoke de niveau 10". Le skill dure tant que le niveau de HP est en dessous des 25% ou qu'un autre skill annule le statut "Provoke".
+#
+ML_AUTOGUARD#
+Auto Guard
+Type de skill : Support
+Description : Protège des attaques physiques ainsi que diminue la probabilité des attaques à distance. Après utilisation, le joueur ne peut pas se déplacer pendant 0.3 secondes.
+Nécessite un Shield. Lancer ce sort 2 fois de suite l'annule.
+#
+MS_REFLECTSHIELD#
+Reflect Shield
+Type de skill : Support
+Description : Contre-Attaque un ennemi à chacune de ses attaques pendant la durée du sort.
+Utilisable seulement sur les attaques au corps à corps. Nécessite un Shield.
+#
+ML_DEVOTION#
+Devotion
+Type de skill : Actif
+Description : Protège un membre du groupe en recevant tous les coups qui lui sont portés. La différence de niveau doit être de 10 au maximum.
+Si le membre sort de la zone d'influence du skill, le sort est annulé. Les dégats subis par le joueur dépendent du niveau de défense du membre du groupe.
+#
+ML_DEFENDER#
+Defender
+Type de skill : Support
+Description : Réduit les dégats subis par les attaques à distance. Les dégats subis dépendent du niveau de skill, les attaques et les mouvements du joueur sont ralentis pendant la durée du sort.
+Incanter 2 fois de suite ce sort l'annule.
+#
+MS_PARRYING# 
+Parry
+Type de skill : Support
+Description : Bloque une attaque utilisant une épée à 2 mains. En cas de succès, le joueur esquive l'attaque de l'ennemi et en même temps lancer une attaque.
+Nécessite une Two-hand Sword.
+[Level 1] : Bloquer +23%
+[Level 2] : Bloquer +26%
+[Level 3] : Bloquer +29%
+[Level 4] : Bloquer +32%
+[Level 5] : Bloquer +35%
+[Level 6] : Bloquer +38%
+[Level 7] : Bloquer +41%
+[Level 8] : Bloquer +44%
+[Level 9] : Bloquer +47%
+[Level 10] : Bloquer +50%
+#
+MS_BERSERK#
+Berserk
+Type de skill : Support
+Description : Augmente le maximum de HP, la vitesse de déplacement et la force des attaques pendant la durée du sort. Cependant, la capacité d'esquive diminue.
+De plus le joueur ne peut que se déplacer et attaquer.
+Ce skill consomme quelques HP par seconde. Enfin après utilisation la regénération des HP et SP est bloquéee pendant 5 minutes.
+#
+MER_SCAPEGOAT#
+Scapegoat
+Type de skill: Support
+Description: Le mercenaire se sacrifiera pour offrir ses HP à son maître.
+#
+MA_SHARPSHOOTING#
+Sharpshooting
+Type de skill: Offensif
+Description : Tire une flêche avec force.
+La flêche file droit et engendre d'énormes dégats aux ennemis sur sa trajectoire.
+Ce skill augmente le taux de coups critiques de +20
+[Lv.1]: Atk +150%
+[Lv.2]: Atk +200%
+[Lv.3]: Atk +250%
+[Lv.4]: Atk +300%
+[Lv.5]: Atk +350%
+#
+ML_SPIRALPIERCE#
+Spiral Pierce
+Type de skill : Actif
+Description : Envoie des attaques en forme de spiral.
+Le poids de la lance influence la puissance de l'attaque.
+Une fois touché; l'ennmi ne peut pas bougé pendant une seconde.
+Le niveau du skill influence la puissance de l'attaque, mais aussi le temps de l'incantation qui augmente.
+#
+ALL_WEWISH#
+Chantez tous en coeur une chanson de Noël!
+#
+ALL_ODINS_RECALL#
+Odin's Recall
+Description: Téléporte le personnage à son point de sauvegarde avec un debuff de 30 minutes. La skill ne peut pas être utilisée de nouveau tant que le debuff n'a pas disparu.
+#
+ALL_PARTYFLEE#
+Blow Flowerwind
+Type de skill : Actif
+Description : Augmente votre Flee et celui de toute votre équipe de 10 pendant 5 minutes grâce à un tourbillon de fleurs.
+#
+GM_SANDMAN#
+Fais de beau rêve mon grand. (LULLABY)
+Type de skill : Support
+Description Bercez un bébé pour l'endormir pendant une durée déterminée.
+#
+ALL_CATCRY#
+Hurlement de la bête.
+Description Le cri d'un chat qui effrait une souris.
+#

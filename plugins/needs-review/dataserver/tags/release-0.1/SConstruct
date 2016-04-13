@@ -1,0 +1,21 @@
+import os
+
+WIN32 = 0
+
+platform = str(ARGUMENTS.get('OS', Platform()))
+if platform == "cygwin" or platform == "windows":
+	WIN32 = 1
+
+env = Environment(CCFLAGS = ARGUMENTS.get('CFLAGS', '-Wall -g'));
+if platform == "cygwin":
+	env['CCFLAGS'] += ' -mno-cygwin'
+	env['LINKFLAGS'] += ['-mno-cygwin']
+if WIN32:
+	env['CPPDEFINES'] = ['WIN32']
+	env['LIBS'] = ['ws2_32']
+else:
+	env['LINKFLAGS'] += ['-pthread']
+
+
+Export('env WIN32 platform')
+SConscript('main/SConscript')

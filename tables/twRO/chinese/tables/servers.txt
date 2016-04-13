@@ -1,0 +1,145 @@
+﻿# This file contains information about master servers.
+
+#####################
+# Official Taiwan RO Servers
+## http://ro.gameflier.com/
+
+[台灣 - 老朋友伺服器 (免費查爾斯、免費愛麗絲, 免費洛奇)]
+ip 220.130.113.235
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Big5
+charBlockSize 144
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 免費伺服器 (波利、巴風特、月夜貓)]
+ip 220.130.113.221
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Big5
+charBlockSize 144
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 免費伺服器 (彩虹橋)]
+ip 220.130.113.234
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Big5
+charBlockSize 144
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 全區伺服器 (普隆德拉)]
+ip 220.130.113.208
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Big5
+charBlockSize 144
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 幸福伺服器]
+ip 220.130.113.31
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Big5
+charBlockSize 144
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 快樂伺服器]
+ip 220.130.113.252
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Big5
+charBlockSize 144
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets.txt
+addTableFolders twRO
+captcha 0
+
+[台灣 - 測試伺服器: Sakray]
+ip 61.220.62.26
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Big5
+charBlockSize 144
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets_sakray.txt
+addTableFolders twRO
+captcha 0
+
+
+[Malaysia - mRO: Iris1,Iris2,Penril,Odin,Thor]
+ip 202.71.105.25
+port 6900
+master_version 16
+version 211
+serverType twRO
+charBlockSize 144
+serverEncoding Big5
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets.txt
+addTableFolders twRO
+
+[Malaysia - mRO: freyia - carnival]
+ip 220.130.114.212
+port 6900
+master_version 16
+version 211
+serverType twRO
+charBlockSize 144
+serverEncoding Big5
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets.txt
+addTableFolders twRO
+
+
+# this is for XKore 2 client only, it won't affect XKore 2 server
+# configure serverType, serverEncoding, charBlockSize according to your server
+[XKore 2]
+ip localhost
+port 6901
+serverType twRO
+serverEncoding Big5
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets.txt
+addTableFolders twRO
+charBlockSize 116
+clientHash 0123456789abcdef0123456789abcdef

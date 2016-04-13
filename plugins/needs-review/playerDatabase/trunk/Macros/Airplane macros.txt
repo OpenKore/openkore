@@ -1,0 +1,93 @@
+﻿# Airplane
+
+# Definitions of variables
+automacro salaCriada {
+console /Sala de Chat Criada./
+	call {
+	$emSala = 1
+	}
+}
+
+automacro salaFechada {
+console /Você deixou a Sala de Chat./
+	call {
+		$emSala = 0
+	}
+}
+
+# Changes the title of the chat
+automacro mensagemNovoDestino {
+console /The Airship is leaving the ground. Our next destination is (.*)./
+	call {
+		if ($emSala == 0) goto criarSala
+		if ($emSala == 1) goto editarInfos
+		
+		:criarSala
+		log [Criando] Indo: $.lastMatch1 - bROPlayer.com.br
+		do chat create "Indo: $.lastMatch1 - bROPlayer.com.br" 2 0 KeplerBR
+		goto fim
+		
+		:editarInfos
+		log [Ediatando] Indo: $.lastMatch1 - bROPlayer.com.br
+		do chat modify "Indo: $.lastMatch1 - bROPlayer.com.br"
+		
+		:fim
+	}
+}
+
+automacro mensagemIndo {
+console /We are heading to (.*)./
+	call {
+		if ($emSala == 0) goto criarSala
+		if ($emSala == 1) goto editarInfos
+
+		:criarSala
+		log [Criando] Indo: $.lastMatch1 - bROPlayer.com.br
+		do chat create "Indo: $.lastMatch1 - bROPlayer.com.br" 2 0 KeplerBR
+		goto fim
+		
+		:editarInfos
+		log [Ediatando] Indo: $.lastMatch1 - bROPlayer.com.br
+		do chat modify "Indo: $.lastMatch1 - bROPlayer.com.br"
+		
+		:fim
+	}
+}
+
+automacro mensagemBreve {
+console /We will arrive in (.*) shortly./
+	call {
+		if ($emSala == 0) goto criarSala
+		if ($emSala == 1) goto editarInfos
+
+		:criarSala
+		log [Criando] Breve: $.lastMatch1 - bROPlayer.com.br
+		do chat create "Breve: $.lastMatch1 - bROPlayer.com.br" 2 0 KeplerBR
+		goto fim
+
+		:editarInfos
+		log [Ediatando] Breve: $.lastMatch1 - bROPlayer.com.br
+		do chat modify "Breve: $.lastMatch1 - bROPlayer.com.br"
+		
+		:fim
+	}
+}
+
+automacro mensagemChegou {
+console /Welcome to (.*) Have a safe trip./
+	call {
+		if ($emSala == 0) goto criarSala
+		if ($emSala == 1) goto editarInfos
+
+		:criarSala
+		log [Criando] Em: $.lastMatch1 - bROPlayer.com.br
+		do chat create "Em: $.lastMatch1 - bROPlayer.com.br" 2 0 KeplerBR
+		goto fim
+
+		:editarInfos
+		log [Ediatando] Em: $.lastMatch1 - bROPlayer.com.br
+		do chat modify "Em: $.lastMatch1 - bROPlayer.com.br"
+		
+		:fim
+	}
+}

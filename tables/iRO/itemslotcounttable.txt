@@ -1,0 +1,9 @@
+# Please don't modify this file. Make any changes in itemslotcounttable-custom.txt instead.
+
+# Include file from official client.
+!include official/itemslotcounttable.txt
+
+# OpenKore modifications to the official client file go here.
+
+# Include untracked local modifications.
+!include_create_if_missing itemslotcounttable-custom.txt

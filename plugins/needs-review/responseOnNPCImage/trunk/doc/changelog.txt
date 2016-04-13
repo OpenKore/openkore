@@ -1,0 +1,3 @@
+v.2 by ya4epT (26/06/2014)
+- delete file respImageTable.txt
+- settings from the file "respImageTable.txt" transferred to "config.txt" and "responseOnNPCImage.pl"

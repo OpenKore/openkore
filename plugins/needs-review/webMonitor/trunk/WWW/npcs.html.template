@@ -1,0 +1,66 @@
+{{_header.html}}
+
+<script type="application/javascript" defer="defer">
+			function write_input(command) {
+				var ic = document.getElementById("input_command");
+				ic.value = command;
+				ic.focus();
+			}
+
+			function send_command() {
+				var ic = document.getElementById("input_command");
+				window.location.href = '../handler?csrf={csrf}&command=' + ic.value;
+				ic.value = '';
+			}
+
+			function submitenter(e) {
+				var keycode;
+				if (window.event) keycode = window.event.keyCode;
+
+				if (keycode == 13) {
+					send_command();
+				}
+			}
+</script>
+
+        <div class="span9">
+          <div class="row-fluid">
+            <div class="span9">
+			<pre class="log console">{consoleLog}</pre>
+			
+			<select class="span4" id="selection_command" onChange="write_input(this.value)">
+				<option selected value="">Console</option>
+				<option value="talk cont">Continue talking</option>
+				<option value="talk resp">Display the list of available responses</option>
+				<option value="talk resp ">Send a response to an NPC</option>
+				<option value="talk num ">Send a number to NPC</option>
+				<option value="talk text ">Send text</option>
+				<option value="talk no">End or cancel conversation</option>
+			</select>
+			
+			<input class="span7" id="input_command" size="16" type="text" onKeyPress="submitenter(this.event)">&nbsp;<button class="btn btn-small" type="button" value="Send command" onClick="send_command()">Send</button><br>
+			
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Coord.</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody id="listarItens"><!-- {startLoop} -->
+					<tr>
+						<td>{npcNameID}</td>
+						<td>{npcName}</td>
+						<td>{npcLocationX} {npcLocationY}</td>
+						<td>{npcTalkJS}</td>
+					</tr><!-- {endLoop} -->
+				</tbody>
+			</table>
+			
+            </div>
+          </div>
+        </div>
+
+{{_footer.html}}

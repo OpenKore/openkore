@@ -1,0 +1,734 @@
+#Aqui são armazenadas as descrições dos comandos
+#
+#[comando] é o nome do comando
+#A primeira linha é uma descrição rápida
+#<chave de configuração>			descrição
+#
+#opção			descrição, essas opções são divididas por tabs
+#Você pode usar quantos tabs quiser.
+#
+[a]
+Ataca um monstro.
+<índice do monstro>		Ataca o monstro especificado.
+no						Muda attackAuto em config.txt para 1
+yes						Muda attackAuto em config.txt para 2
+
+[ai]
+Ativa/desativa a Inteligência Artificial (IA).
+				Alterna a IA entre on/manual/off
+on				Ativa a IA
+auto			Ativa a IA
+off				Desativa a IA
+manual			Torna a IA manual
+ai_v			Exibe o conteúdo do hash %ai_v, para fins de depuração
+clear			Limpa as sequências da IA
+print			Mostra informações detalhadas sobre as atuais sequências da IA
+
+[aiv]
+Mostra as atuais sequências da Inteligência Artificial.
+
+[al]
+Mostra o status atual da sua loja.
+
+[arrowcraft]
+Cria flechas.
+								Lista os itens disponíveis para a criação de flechas
+use								Usa a habilidade dos arqueiros Fabricar Flechas
+<índice arrowcraft>				Cria flechas usando um item da lista do 'arrowcraft'
+forceuse <índice do item>		Criar flechas imediatamente de um item do inventário, sem usar a habilidade
+
+[as]
+Para de atacar um monstro.
+
+[au]
+Mostra os possíveis comandos para um leilão.
+
+[aua]
+Adiciona um item ao leilão.
+<item do inventário> <quantidade>	Adiciona o item, na quantidade especificada, ao leilão
+
+[aub]
+Faz uma oferta num leilão.
+<id> <preço>	Faz uma oferta num leilão
+
+[auc]
+Cria um leilão.
+<preço atual> <preço de compra instantânea> <horas>	Cria um leilão
+
+[aud]
+Deleta um leilão.
+<índice>			Deleta um leilão
+
+[aue]
+Termina um leilão.
+<índice>			Termina um leilão
+
+[aui]
+Mostra as informações do seu leilão.
+selling			Mostra as informações de venda
+buying			Mostra as informações de compra
+
+[aur]
+Remove item do leilão.
+
+[aus]
+Procura por um leilão de acordo com o critério.
+<tipo> <preço> <texto>	Critério de pesquisa de itens. Tipo: 1-Armadura; 2-Arma; 3-Carta; 4-Miscelância; 5-Por texto; 6-Por preço; 7-Venda; 8-Compra
+
+[auth]
+Autoriza/desautoriza um usuário para usar os comandos de chat do openkore.
+<nome do player> 0		Desautoriza <nome do player>
+<nome do player> 1		Autoriza <nome do player>
+
+[autobuy]
+Inicia a sequência de compra automática.
+
+[autosell]
+Venda automática.
+			Inicia a sequência de venda automática
+simulate	Simula uma lista de itens a serem vendidos
+test		Simula uma lista de itens a serem vendidos
+debug		Simula uma lista de itens a serem vendidos
+
+[autostorage]
+Inicia a sequência de armazenagem automática.
+
+[bangbang]
+Gira o corpo no sentido horário.
+
+[bg]
+Manda uma mensagem no chat de battleground.
+<mensagem>		Envia <mensagem> no chat de battleground
+
+[bingbing]
+Gira o corpo no sentido anti-horário.
+
+[bl]
+Mostra uma lista de lojas de compras (não implementado no bRO).
+
+[booking]
+Interaja com o sistema de reserva de grupo.
+
+[buy]
+Compra um item do NPC lojista atual.
+<índice do item da loja> [<quantidade>]		Compra <quantidade> de itens da lista da loja.
+
+[buyer]
+Vende um item para uma loja de compras (não implementado no bRO).
+<índice loja de compras> [<índice do item> <quantidade>] Vende <quantidade> de itens para a loja de compras.
+
+[bs]
+Mostra status atual da sua loja de compras (não implementado no bRO).
+
+[c]
+Usa o chat público.
+<mensagem>		Manda uma <mensagem> no chat público
+
+[captcha]
+Responde o captcha.
+
+[card]
+Composição de cartas.
+list												Lista as cartas no inventário
+use <índice da carta>								Inicia a composição da carta usando a carta especificada
+mergelist											Lista os itens para fundir com a carta
+mergecancel											Cancela a solicitação da junção da carta
+merge <índice da carta>								Funde a carta com o item e finaliza a composição
+forceuse <índice da carta> <índice do equipamento>	Funde a carta com o item instantaneamente
+
+[cart]
+Administração do carrinho.
+											Lista os itens no carrinho
+add <índice no inventário> [<quantidade>]	Adiciona uma <quantidade> de um item do inventário ao carrinho
+get <índice no carrinho> [<quantidade>]		Obtém uma <quantidade> de um item do carrinho
+desc <índice no carrinho> [<quantidade>]		Mostra uma descrição de um item do carrinho
+release										Dispensa o carrinho
+change <número>								Alterna entre os designs de carrinho
+
+[charselect]
+Pede ao servidor para sair para a tela de seleção de personagens.
+
+[chat]
+Gerenciamento da sala de chat.
+list													Mostra as salas de chat na tela
+join <índice da sala de chat>							Entra numa sala de chat
+info													Mostra informações sobre a sala de chat atual
+leave													Sai da sala de chat atual
+create \"<título>"\ [<limite> <privacidade> <senha>]	Cria uma sala de chat
+modify \"<título>"\ [<limite> <privacidade> <senha>]	Modifica a sala de chat atual
+bestow <índice do usuário>								Dá as funções de administrador para um usuário do chat
+kick <índice do usuário>								Expulsa um jogador da sala de chat
+
+[chist]
+Mostra últimas entradas do chat log.
+			Mostra as últimas 5 entradas do log
+<número>	Mostra as últimas <número> entradas do log
+
+[cil]
+Limpa o item log.
+
+[cl]
+Lista as salas de chat na tela.
+
+[clearlog]
+Limpa o chat log.
+
+[closeshop]
+Fecha a sua loja.
+
+[closebuyshop]
+Fecha a sua loja de compras (não implementado no bRO). 
+
+[conf]
+Muda uma chave de configuração.
+<chave de configuração>							Mostra o valor da <chave de configuração>
+<chave de configuração> <valor>					Configura o valor da <chave de configuração> para o <valor>
+<chave de configuração> none					Torna a <chave de configuração> indefinida
+<label.attribute> <valor>						Define um novo valor para uma chave de configuração especificada através de um label
+<label.attribute> none							Torna indefinida a chave de configuração especificada através de um label
+
+[cook]
+Tenta criar um item alimentício.
+<índice da lista de culinária>		Tenta criar um item alimentício
+
+[damage]
+Reporta o dano levado.
+					Mostra o relatório de danos tomados
+reset				Reseta o relatório de danos tomados
+
+[dead]
+Reporta a quantidade de tempo passado enquanto morto.
+
+[deal]
+Negocia itens com outro player.
+										Aceita um pedido de negociação/finaliza a atual troca/negociação
+<índice do personagem>					Solicita uma negociação com um personagem
+add <índice do item> [<quantidade>]		Adiciona itens à negociação atual
+add z [<quantidade>]					Adiciona uma quantidade de zenys à negociação atual
+no										Nega um pedido de negociação/cancela a negociação atual
+
+[debug]
+Alterna a depuração entre on/off.
+<nível>				Configura o debug para o <nível>
+info				Mostra as informações de depuração
+
+[dl]
+Lista os itens da negociação atual.
+
+[doridori]
+Mexe a cabeça.
+
+[drop]
+Derruba um item do inventário.
+<índice do item> [<quantidade>]	Derruba um item do inventário
+
+[dump]
+Faz dump no buffer de pacotes recebidos atual e sai.
+
+[dumpnow]
+Faz dump no buffer de pacotes recebidos atual sem sair.
+
+[e]
+Mostra um emotion.
+<emotion>			Mostra o emotion especificado (tables\emotions.txt)
+
+[eq]
+Equipa um item.
+<índice do item>					Equipa o item especificado
+<nome do slot> <índice do item> 	Equipa o item especificado no slot especificado
+slots								Lista os nomes dos slots
+
+[eval]
+Avalia uma expressão em Perl.
+<expressão>			Avalia uma expressão em Perl.
+
+[exp]
+Mostra um relatório de experiência.
+					Mostra um relatório de experiência.
+reset				Reseta o relatório de experiência.
+
+[falcon]
+Status do falcão.
+					Mostra o status do falcão
+release				Dispensa o falcão
+
+[follow]
+Segue outro personagem.
+<nome ou índice do personagem>	Segue o personagem especificado
+stop							Para de seguir
+
+[friend]
+Administração de amizades.
+												Lista os amigos
+request <índice ou nome do personagem>			Envia um pedido de amizade para o personagem especificado
+accept											Aceita uma solicitação de amizade
+reject											Rejeita uma solicitação de amizade
+pm <índice do amigo>							Envia uma mensagem particular para um amigo
+remove <índice do amigo>						Remove um amigo da lista de amigos
+
+[g]
+Usa o chat da guilda.
+<mensagem>			Manda uma <mensagem> pelo chat da guilda
+
+[getplayerinfo]
+Obtém o nome do personagem pelo ID especificado.
+<ID da conta>			Mostra o nome do ID especificado (necessita da opção 'debug 2' ativada)
+
+[guild]
+Administração da guilda.
+										Solicitação de informações da guilda
+info									Mostra informação da guilda
+members									Mostra informação de membros da guilda
+request <nome ou índice do personagem>	Solicita a um personagem para entrar na guilda
+join <flag>								Aceita um solicitação para entrar em uma guilda, se <flag> for 1, se <flag> for 0 negará
+leave									Sai da guilda
+
+[help]
+Exibe os comandos.
+					Lista os comandos disponíveis
+<comando>			Mostra informação detalhada sobre o comando especificado
+
+[homun]
+Interaja com o homúnculo.
+s									Mostra os status do homúnculo
+status								Mostra os status do homúnculo
+feed								Alimenta seu homúnculo (Necessário ter comida para o homúnculo)
+rename								Renomeia seu homúnculo
+fire								Deleta seu homúnculo
+delete								Deleta seu homúnculo
+move <x> <y>						Move seu homúnculo
+standby 							Deixa seu homúnculo no modo standby
+aiv 								Mostra a IA atual do homúnculo
+ai									Torna a IA ligada/desligada/manual
+on 									Torna a IA do homúnculo ativada
+auto								Torna a IA do homúnculo ativada
+manual								Torna a IA do homúnculo manual
+off									Torna a IA do homúnculo desativada
+clear								Limpa a IA do homúnculo
+print								Mostra a IA do homúnculo
+skills								Mostra as skills do homúnculo
+skills add <índice da habilidade>	Adiciona um ponto de skill para as skills do homúnculo.
+desc <índice da habilidade>			Mostra uma descrição da uma habilidade específica
+
+[i]
+Mostra os itens do inventário.
+						Mostra os itens do inventário
+eq						Mostra os itens equipados
+neq						Mostra os itens não equipados
+nu						Mostra os itens não utilizáveis
+u						Mostra os itens utilizáveis
+desc <índice do item>	Mostra a descrição do item do inventário especificado 
+
+[identify]
+Identifica um item não identificado.
+							Mostra os items que podem ser identificados
+<índice da identificação>	Identifica um item
+
+[ignore]
+Ignora um player.
+<flag> <nome do personagem>		Ignora o personagem se <flag> for 1, não ignora se <flag> for 0
+<flag> all						Ignora todos os players se <flag> for 1, não ignora todos os players se <flag> for 0
+
+[il]
+Mostra os itens no chão.
+
+[ihist]
+Mostra as últimas entradas do item log.
+				Mostra as últimas 5 entradas
+<número>		Mostra as últimas <número> entradas
+
+[im]
+Usa um item em um monstro.
+<índice do item> <índice do monstro>	Usar item em monstro
+
+[ip]
+Usa um item em um player.
+<índice do item> <índice do personagem>	Usar item em player
+
+[is]
+Usa um item em você mesmo.
+<índice do item>				Usar item em si
+
+[kill]
+Ataca outro personagem [PVP/GVG/WOE apenas].
+<índice do personagem> 		Ataca o personagem especificado
+
+[look]
+Olha para uma localização específica.
+<direção do corpo> [<direção da cabeça>]		Olha para <direção do corpo> (0-7) com a cabeça no <direção da cabeça> (0-2)
+
+[lookp]
+Olha para um determinado player.
+<índice do personagem>		Olha para o player
+
+[m]
+Mostra os comandos de correiro.
+
+[ma]
+correspondência e anexos.
+get <índice da carta>						Pega os itens anexados na correspondência
+add zeny <quantidade>						Anexa zeny na carta
+add item <quantidade> <item no inventário>	Anexa item na carta
+
+[md]
+Deleta uma carta.
+<índice da carta>		Exclui uma carta com um número correspondente da lista de de correio quando você abre sua caixa de correio
+
+[memo]
+Salva a posição atual para um portal.
+
+[merc]
+Interaja com o mercenário.
+s									Mostra o status do mercenário
+status								Mostra o status do mercenário
+fire								Deleta o mercenário
+move <x> <y>						Move o mercenário
+standby								Deixa seu mercenário no modo standby
+aiv									Mostra a IA atual do mercenário
+ai									Alterna a IA do mercenário entre ligada/desligada/manual
+on									Liga a IA do mercenário
+auto								Liga a IA do mercenário
+manual								Torna a IA do mercenário manual
+off									Desliga a IA do mercenário
+clean								Limpa a IA do mercenário
+print								Mostra a IA do mercenário
+skills								Mostra as habilidades do mercenário
+skills add <índice da habilidade>	Adicina um ponto para a skill do mercenário especificada
+desc <índice da habilidade>			Mostra a descrição da habilidade do mercenário especificada
+
+[mi]
+Abre a caixa de correiro.
+
+[ml]
+Lista os monstros que estão na tela.
+
+[mo]
+Abre uma carta.
+<índice da carta>		Abre a carta com o número correspondente à lista de cartas de quando você abre sua caixa de correiro
+
+[move]
+Move seu personagem.
+<x> <y>	[<nome do mapa>] Move para as coordenadas especificadas em um mapa
+<nome do mapa>			Se move para o mapa especificado
+<índice do portal>		Se move para um portal próximo
+stop 					Para todo movimento
+
+[mr]
+Retorna a carta para sua origem.
+<índice da carta>		Retorna a carta com o número correspondente à lista de cartas quando você abre sua caixa de correiro
+
+[ms]
+Envia uma carta.
+<destinatário> <título> <mensagem>	Envia uma carta para o <destinatário>
+
+[mw]
+Interaja com a janela da caixa de correiro.
+0 				Escreve uma carta
+1				Pega os itens anexados de volta
+2				Adiciona zeny
+
+[nl]
+Lista os NPCs que estão na tela.
+
+[openshop]
+Abre sua loja.
+
+[p]
+Usa o chat do grupo.
+<mensagem>		Envia <mensagem> por chat do grupo
+
+[party]
+Administração do grupo.
+								Exibe informações dos membros do grupo
+create \"<nome do grupo>"\		Cria um grupo
+share <flag>					Define o compartilhamento de exp do grupo como igual se a flag é 1, individual se for 0
+request <índice do personagem>	Convida um personagem para entrar no grupo
+join <flag>						Aceita o convite de grupo se a <flag> for 1, nega se for 0
+kick <índice do membro>			Expulsa um membro do grupo
+leave							Sai do grupo
+
+[pause]
+Atrasa o próximo comando do console.
+<segundos>		Atrasa o próximo comando do console por um determinado número de segundos (padrão: 1 seg.)
+
+[pecopeco]
+Status do Peco Peco.
+				Mostra o status do Peco Peco
+release			Dispensa o Peco Peco
+
+[pet]
+Administração do pet.
+s							Mostra o status do pet
+status						Mostra o status do pet
+c <índice do monstro>		Captura um monstro
+capture <índice do monstro>	Captura um monstro
+hatch <índice do ovo>		Choca um ovo de pet, mas antes você deve utilizar o item Incubadora
+info						Envia o menu de pet
+feed						Alimenta seu pet
+performance					Brinca com seu pet
+return						Manda o pet de volta para o ovo
+unequip						Desequipa seu pet
+name <nome>					Muda o nome do pet
+
+[petl]
+Lista os pets na tela.
+
+[pl]
+Lista os players na tela.
+						Lista os players na tela
+<índice do personagem>	Mostra informação detalhada sobre o personagem especificado
+p						Lista os membros do grupo na tela
+g						Lista os membros da guilda na tela
+
+[plugin]
+Controla os plugins.
+									Lista os plugins carregados
+load <nome do arquivo>				Carrega um plugin
+reload <nome ou índice do plugin>	Recarrega um plugin
+unload <nome ou índice do plugin>	Descarrega um plugin
+help								Mostra a ajuda de plugin
+
+[pm]
+Envia uma mensagem privativa.
+<nome do personagem ou índice da lista de PM> <mensagem>	Envia <mensagem> para o personagem especificado através de PM
+
+[pml]
+Lista de players para PM.
+
+[portals]
+Lista os portais na tela.
+
+[quest]
+Administração de quests.
+					Mostra os possíveis comandos para quest
+set <ID da quest> on	Ativa a quest
+set <ID da quest> on	Desativa a quest
+list				Mostra uma lista das quests
+
+[quit]
+Sai do openkore.
+
+[rc]
+Recarrega arquivos da source.
+					Recarrega functions.pl
+<nome dos módulos>	Recarregar arquivos de módulo no <nomes do modulos> separada por espaço
+
+[refine]
+Refina um item (utilizando a habilidade de Mestre Ferreiro).
+refine (<nome do item>|<índice do item>)		Refina um item
+
+[reload]
+Recarrega arquivos de configuração.
+all 				Recarrega todos os arquivos da pasta control e tables
+<nomes>				Recarrega arquivos da pasta control numa lista de <nomes>
+all except <nomes>	Recarrega todos os arquivos exceto os aqueles numa lista de <nomes>
+
+[relog]
+Desconecta e conecta novamente.
+					Desconecta e conecta novamente após 5 segundos
+<segundos>			Desconecta e conecta novamente após <segundos>
+
+[repair]
+Conserta um item (utilizando a habilidade de Ferreiro).
+<índice do item para conserto>	Conserta o item especificado
+
+[respawn]
+Volta para o ponto de retorno.
+
+[s]
+Mostra o status do personagem.
+
+[sell]
+Vende itens para um NPC.
+<índice do item> [<quantidade>]	Coloca itens do inventário na lista de venda
+list							Mostra os itens na lista de venda
+done							Vende tudo na lista de vendas
+cancel							Limpa a lista de vendas
+
+[send]
+Envia um pacote bruto para o servidor.
+<hex string>		Envia um pacote bruto para o servidor conectado
+
+[showeq]
+Ver equipamentos.
+<player>			Solicita informações de equipamentos para um player
+me on				Habilita mostrar equipamentos
+me off				Desabilita mostrar equipamentos
+
+[sit]
+Senta.
+
+[skills]
+Administração de habilidades.
+								Lista as habilidades disponíveis
+add <índice da habilidade>		Adiciona um ponto em uma habilidade
+desc <índice da habilidade>		Mostra a descrição de uma habilidade
+
+[sl]
+Usa uma habilidade em uma localização.
+<índice da habilidade> <x> <y> [<nível>]		Usa uma habilidade em uma localização
+
+[sll]
+Exibe uma lista de slaves em sua área atual.
+
+[sm]
+Usa uma habilidade em um monstro.
+<índice da habilidade> <índice do monstro> [<nível>]		Usa uma habilidade em um monstro
+
+[sp]
+Usa uma habilidade em um player.
+<índice da habilidade> <índice do monstro> [<nível>]		Usa uma habilidade em um player
+
+[spells]
+Lista feitiços de área na tela.
+
+[ss]
+Usa uma habilidade em si mesmo.
+<índice da habilidade> [<nível>]		Usa uma habilidade em si mesmo
+
+[ssl]
+Usa uma habilidade no slave.
+<índice da habilidade> <índice do alvo> <skill nível>	Usa uma habilidade no slave
+
+[ssp]
+Usa uma habilidade em uma área.
+<índice da habilidade> <índice do alvo> [<skill nível>]	Usa uma habilidade em uma área
+
+[st]
+Mostra o status.
+
+[stand]
+Levanta.
+
+[stat_add]
+Adiciona pontos de status.
+str|agi|int|vit|dex|luk		Adiciona pontos ao status especificado
+
+[storage]
+Manipula itens no armazém.
+												Lista os itens no armazém
+eq												Lista os equipamentos no armazém
+nu												Lista os itens não-utilizáveis no armazém
+u												Lista os itens utilizáveis no armazém
+add <índice do item> [<quantidade>]				Adiciona item do inventário ao armazém
+addfromcart <índice no carrinho> [<quantidade>]	Adiciona item do carrinho ao armazém
+get	<índice no armazém> [<quantidade>]			Adiciona item do armazém ao inventário
+gettocart	<índice no armazém> [<quantidade>]	Adiciona item do armazém ao carrinho
+close											Fecha o armazém
+log												Registra os itens do armazém para logs\storage.txt
+
+[store]
+Mostra itens da loja do NPC.
+						Lista da loja itens disponíveis de NPC
+desc <índice na loja>	Mostra a descrição do item da loja de NPC
+
+[swithconf]
+Troca o arquivo de configuração.
+<nome do arquivo>	Troca o arquivo de configuração para <nome do arquivo>
+
+[take]
+Pega um item do chão.
+<índice do item>	Pega o item do chão
+first				Pega o primeiro item do chão
+
+[talk]
+Fala manualmente com um NPC.
+<índice do  NPC>			Fala com um NPC
+cont						Continua falando com o NPC
+resp						Mostra uma lista de respostas para o NPC
+resp <número da resposta>	Seleciona uma resposta para o NPC
+num <número>				Envia um número para um NPC
+text <string>				Envia um texto para um NPC
+no							Cancela a conversa com o NPC
+
+[talknpc]
+Envia uma sequência de respostas para um NPC.
+<x> <y> <códigos de conversação>	Fala com o NPC em <x> <y> usando <códigos conversação>
+
+[tank]
+Tanka para um player.
+<nome ou índice do personagem>	Inicia o modo tank com o personagem especificado como tankModeTarget
+stop							Para de tankar
+
+[tele]
+Teleporta para uma localização randômica.
+
+[testshop]
+Simula o que sua loja venderia.
+
+[timeout]
+Defina um tempo limite.
+<tipo>				Mostra o valor de <tipo>
+<tipo> <segundos>	Define o valor de <tipo> para <segundos>
+
+[top10]
+Mostra o rank do top10.
+top10 (a | alche | alchemist)		Mostra o rank de alquimistas
+top10 (b | black | blacksmith)		Mostra o rank de ferreiros
+top10 (p | pk | pvp)				Mostra o rank do PVP
+top10 (t | tk | taekwon)			Mostra o rank de taekwon
+
+[uneq]
+Desequipa um item.
+<índice do item>			Desequipa o item especificado
+
+[vender]
+Compra itens das lojas de personagens.
+<índice da loja>											Entra na loja
+<índice da loja> <índice do item na loja> [<quantidade>]	Compra itens da loja
+end															Sai da loja atual
+
+[verbose]
+Desliga/liga o verbose.
+
+[version]
+Mostra a versão do openkore.
+
+[vl]
+Lista as lojas próximas.
+
+[vs]
+Mostra o status atual da sua loja.
+
+[warp]
+Abre um portal.
+list								Lista os portais disponíveis
+<índice do portal ou nome do mapa>	Abre um portal para o local especificado
+
+[weight]
+Mostra um relatório sobre o peso dos itens no inventário.
+				Mostra informações sobre o peso atual
+<peso do item>	Calcula quanto mais do item pode ser carregado
+
+[where]
+Mostra sua localização atual.
+
+[who]
+Mostra número de pessoas online.
+
+[whoami]
+Mostra o ID do seu personagem e da conta.
+
+[north]
+Move-se 5 passos para o norte.
+
+[south]
+Move-se 5 passos para o sul.
+
+[east]
+Move-se 5 passos para o leste.
+
+[west]
+Move-se 5 passos para o oeste.
+
+[northeast]
+Move-se 5 passos para o nordeste.
+
+[northwest]
+Move-se 5 passos para o noroeste.
+
+[southeast]
+Move-se 5 passos para o sudeste.
+
+[southwest]
+Move-se 5 passos para o sudoeste.

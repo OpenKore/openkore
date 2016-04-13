@@ -1,0 +1,54 @@
+126 Safety Wall
+127 Fire Wall
+128 Warp Portal Opening
+129 Warp Portal
+130 Holy Communion?
+131 Sanctuary
+132 Magnus Exorcismus
+133 Pneuma
+134 Big Magic
+135 Fire Pillar (standby)
+136 Fire Pillar (detonating)
+140 Talkie Box (hatsudou-chuu)
+141 Ice Wall
+142 Quagmire
+143 Blast Mine
+144 Skid Trap
+145 Ankle Snare
+146 Venom Dust
+147 Land Mine
+148 Shockwave
+149 Sandman
+150 Flasher
+151 Freezing Trap
+152 Claymore
+153 Talkie Box
+154 Volcano
+155 Deluge
+156 Violent Gale
+157 Land Protector
+158 Zeny Mark
+159 Rich Man Mr.Kim
+160 Revolving Green Wheel
+161 Drum Sound on Battlefield
+162 Ring of Nibelungen
+163 Roki's Weil
+164 Into the Abyss
+165 Invulnerable Siegfried
+166 Dissonance
+167 Whistle
+168 Assassin Cross
+169 Poem of Bragi
+170 Apple of Idun
+171 Ugly Dance
+172 Humming
+173 Don't Forget Me
+174 Fortune's Kiss
+175 At Your Service
+176 Graffiti
+177 Demonstration
+178 Pink Warp Portal Wind
+179 Gospel
+180 Basilica
+182 a black cross rises three-dimensionally
+183 Spider Web

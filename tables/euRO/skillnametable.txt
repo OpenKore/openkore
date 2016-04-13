@@ -1,0 +1,621 @@
+//file start
+
+NV_BASIC#Basic_Skill#
+SM_SWORD#Sword_Mastery#
+SM_TWOHAND#Two-Handed_Sword_Mastery#
+SM_RECOVERY#Increase_HP_Recovery#
+SM_BASH#Bash#
+SM_PROVOKE#Provoke#
+SM_MAGNUM#Magnum_Break#
+SM_ENDURE#Endure#
+MG_SRECOVERY#Increase_SP_Recovery#
+MG_SIGHT#Sight#
+MG_NAPALMBEAT#Napalm_Beat#
+MG_SAFETYWALL#Safety_Wall#
+MG_SOULSTRIKE#Soul_Strike#
+MG_COLDBOLT#Cold_Bolt#
+MG_FROSTDIVER#Frost_Diver#
+MG_STONECURSE#Stone_Curse#
+MG_FIREBOLT#Fire_Bolt#
+MG_FIREBALL#Fire_Ball#
+MG_FIREWALL#Fire_Wall#
+MG_LIGHTNINGBOLT#Lightening_Bolt#
+MG_THUNDERSTORM#Thunderstorm#
+AL_DP#Divine_Protection#
+AL_DEMONBANE#Demon_Bane#
+AL_RUWACH#Ruwach#
+AL_PNEUMA#Pneuma#
+AL_TELEPORT#Teleport#
+AL_WARP#Warp_Portal#
+AL_HEAL#Heal#
+AL_INCAGI#Increase_AGI#
+AL_DECAGI#Decrease_AGI#
+AL_HOLYWATER#Aqua_Benedicta#
+AL_CRUCIS#Signum_Crusis#
+AL_ANGELUS#Angelus#
+AL_BLESSING#Blessing#
+AL_CURE#Cure#
+MC_INCCARRY#Enlarge_Weight_Limit#
+MC_DISCOUNT#Discount#
+MC_OVERCHARGE#Overcharge#
+MC_PUSHCART#Pushcart#
+MC_IDENTIFY#Item_Appraisal#
+MC_VENDING#Vending#
+MC_MAMMONITE#Mammonite#
+AC_OWL#Owl's_Eye#
+AC_VULTURE#Vulture's_Eye#
+AC_CONCENTRATION#Improve_Concentration#
+AC_DOUBLE#Double_Strafe#
+AC_SHOWER#Arrow_Shower#
+TF_DOUBLE#Double_Attack#
+TF_MISS#Improve_Dodge#
+TF_STEAL#Steal#
+TF_HIDING#Hiding#
+TF_POISON#Envenom#
+TF_DETOXIFY#Detoxify#
+KN_SPEARMASTERY#Spear_Mastery#
+KN_PIERCE#Pierce#
+KN_BRANDISHSPEAR#Brandish_Spear#
+KN_SPEARSTAB#Spear_Stab#
+KN_SPEARBOOMERANG#Spear_Boomerang#
+KN_TWOHANDQUICKEN#Twohand_Quicken#
+KN_AUTOCOUNTER#Counter_Attack#
+KN_BOWLINGBASH#Bowling_Bash#
+KN_RIDING#Peco_Peco_Ride#
+KN_CAVALIERMASTERY#Cavalier_Mastery#
+PR_MACEMASTERY#Mace_Mastery#
+PR_IMPOSITIO#Impositio_Manus#
+PR_SUFFRAGIUM#Suffragium#
+PR_ASPERSIO#Aspersio#
+PR_BENEDICTIO#B.S_Sacramenti#
+PR_SANCTUARY#Sanctuary#
+PR_STRECOVERY#Status_Recovery#
+PR_SLOWPOISON#Slow_Poison#
+ALL_RESURRECTION#Resurrection#
+PR_KYRIE#Kyrie_Eleison#
+PR_MAGNIFICAT#Magnificat#
+PR_GLORIA#Gloria#
+PR_LEXDIVINA#Lex_Divina#
+PR_TURNUNDEAD#Turn_Undead#
+PR_LEXAETERNA#Lex_Aeterna#
+PR_MAGNUS#Magnus_Exorcismus#
+HT_ANKLESNARE#Ankle_Snare#
+HT_BEASTBANE#Beast_Bane#
+HT_BLASTMINE#Blast_Mine#
+HT_BLITZBEAT#Blitz_Beat#
+HT_CLAYMORETRAP#Claymore_Trap#
+HT_DETECTING#Detect#
+HT_FALCON#Falconry_Mastery#
+HT_FLASHER#Flasher#
+HT_FREEZINGTRAP#Freezing_Trap#
+HT_LANDMINE#Land_Mine#
+HT_REMOVETRAP#Remove_Trap#
+HT_TALKIEBOX#Talkie_Box#
+HT_SANDMAN#Sandman#
+HT_SHOCKWAVE#Shockwave_Trap#
+HT_SKIDTRAP#Skid_Trap#
+HT_SPRINGTRAP#Spring_Trap#
+HT_STEELCROW#Steel_Crow#
+WZ_FIREPILLAR#Fire_Pillar#
+WZ_SIGHTRASHER#Sightrasher#
+WZ_FIREIVY#Fire_Ivy#
+WZ_METEOR#Meteor_Storm#
+WZ_JUPITEL#Jupitel_Thunder#
+WZ_VERMILION#Lord_of_Vermilion#
+WZ_WATERBALL#Water_Ball#
+WZ_ICEWALL#Ice_Wall#
+WZ_FROSTNOVA#Frost_Nova#
+WZ_STORMGUST#Storm_Gust#
+WZ_EARTHSPIKE#Earth_Spike#
+WZ_HEAVENDRIVE#Heaven's_Drive#
+WZ_QUAGMIRE#Quagmire#
+WZ_ESTIMATION#Sense#
+AS_RIGHT#Righthand_Mastery#
+AS_LEFT#Lefthand_Mastery#
+AS_KATAR#Katar_Mastery#
+AS_CLOAKING#Cloaking#
+AS_SONICBLOW#Sonic_Blow#
+AS_GRIMTOOTH#Grimtooth#
+AS_ENCHANTPOISON#Enchant_Poison#
+AS_POISONREACT#Poison_React#
+AS_VENOMDUST#Venom_Dust#
+AS_SPLASHER#Venom_Splasher#
+BS_IRON#Iron_Tempering#
+BS_STEEL#Steel_Tempering#
+BS_ENCHANTEDSTONE#Enchantedstone_Craft#
+BS_ORIDEOCON#Oridecon_Research#
+BS_DAGGER#Smith_Dagger#
+BS_SWORD#Smith_Sword#
+BS_TWOHANDSWORD#Smith_Two-handed_Sword#
+BS_AXE#Smith_Axe#
+BS_MACE#Smith_Mace#
+BS_KNUCKLE#Smith_Knucklebrace#
+BS_SPEAR#Smith_Spear#
+BS_HILTBINDING#Hilt_Binding#
+BS_FINDINGORE#Ore_Discovery#
+BS_WEAPONRESEARCH#Weaponry_Research#
+BS_REPAIRWEAPON#Weapon_Repair#
+BS_SKINTEMPER#Skin_Tempering#
+BS_HAMMERFALL#Hammer_Fall#
+BS_ADRENALINE#Adrenaline_Rush#
+BS_WEAPONPERFECT#Weapon_Perfection#
+BS_OVERTHRUST#Power-Thrust#
+BS_MAXIMIZE#Power_Maximize#
+NV_FIRSTAID#First_Aid#
+SM_MOVINGRECOVERY#HP_Recovery_While_Moving#
+AC_MAKINGARROW#Arrow_Crafting#
+TF_SPRINKLESAND#Sand_Attack#
+MC_CARTREVOLUTION#Cart_Revolution#
+AL_HOLYLIGHT#Holy_Light#
+MG_ENERGYCOAT#Energy_Coat#
+NV_TRICKDEAD#Trickdead#
+SM_FATALBLOW#Fatal_Blow#
+AC_CHARGEARROW#Charged_Arrow#
+TF_BACKSLIDING#Back_Slide#
+MC_CHANGECART#Change_Cart#
+SM_AUTOBERSERK#Auto_Berserk#
+TF_PICKSTONE#Find_Stone#
+TF_THROWSTONE#Stone_Fling#
+MC_LOUD#Crazy_Uproar#
+GD_APPROVAL#Official_Guild_Approval#
+GD_KAFRACONTRACT#Contract_With_Kafra#
+GD_GUARDRESEARCH#Guardian_Research#
+GD_CHARISMA#Charisma#
+GD_EXTENSION#Guild_Extension#
+RG_SNATCHER#Snatcher#
+RG_STEALCOIN#Steal Coin#
+RG_BACKSTAP#Back Stab#
+RG_TUNNELDRIVE#Tunnel Drive#
+RG_RAID#Raid#
+RG_STRIPWEAPON#Strip Weapon#
+RG_STRIPSHIELD#Strip Shield#
+RG_STRIPARMOR#Strip Armor#
+RG_STRIPHELM#Strip Helm#
+RG_INTIMIDATE#Intimidate#
+RG_GRAFFITI#Graffiti#
+RG_FLAGGRAFFITI#Flag Graffiti#
+RG_CLEANER#Cleaner#
+RG_GANGSTER#Gangster's Paradise#
+RG_COMPULSION#Compulsion Discount#
+RG_PLAGIARISM#Plagiarism#
+AM_AXEMASTERY#Axe Mastery#
+AM_LEARNINGPOTION#Learning Potion#
+AM_PHARMACY#Pharmacy#
+AM_DEMONSTRATION#Demonstration#
+AM_ACIDTERROR#Acid Terror#
+AM_POTIONPITCHER#Potion Pitcher#
+AM_CANNIBALIZE#Bio Cannibalize#
+AM_SPHEREMINE#Sphere Mine#
+AM_CP_WEAPON#Chemical Protection Weapon#
+AM_CP_SHIELD#Chemical Protection Shield#
+AM_CP_ARMOR#Chemical Protection Armor#
+AM_CP_HELM#Chemical Protection Helm#
+AM_BIOETHICS#Bioethics#
+AM_BIOTECHNOLOGY#Biotechnology#
+AM_CREATECREATURE#Create Embryo#
+AM_CULTIVATION#Cultivation#
+AM_FLAMECONTROL#Flame Control#
+AM_CALLHOMUN#Call Homunculus#
+AM_REST#Sabbath#
+AM_DRILLMASTER#Drillmaster#
+AM_HEALHOMUN#Heal Homunculus#
+AM_RESURRECTHOMUN#Resurrect Homunculus#
+CR_TRUST#Faith#
+CR_AUTOGUARD#Auto Guard#
+CR_SHIELDCHARGE#Shield Charge#
+CR_SHIELDBOOMERANG#Shield Boomerang#
+CR_REFLECTSHIELD#Reflect Shield#
+CR_HOLYCROSS#Holy Cross#
+CR_GRANDCROSS#Grand Cross#
+CR_DEVOTION#Devotion#
+CR_PROVIDENCE#Providence#
+CR_DEFENDER#Defender#
+CR_SPEARQUICKEN#Spear Quicken#
+MO_IRONHAND#Iron Hand#
+MO_SPIRITSRECOVERY#Spirit Recovery#
+MO_CALLSPIRITS#Call Spirits#
+MO_ABSORBSPIRITS#Absorb Spirit#
+MO_TRIPLEATTACK#Triple Strike#
+MO_BODYRELOCATION#Body Relocation#
+MO_DODGE#Dodge#
+MO_INVESTIGATE#Investigate#
+MO_FINGEROFFENSIVE#Finger Offensive#
+MO_STEELBODY#Steel Body#
+MO_BLADESTOP#Blade Stop#
+MO_EXPLOSIONSPIRITS#Explosion of Spirit#
+MO_EXTREMITYFIST#Extreme Fist#
+MO_CHAINCOMBO#Quadruple Strike#
+MO_COMBOFINISH#Combo Finish#
+SA_ADVANCEDBOOK#Book Mastery#
+SA_CASTCANCEL#Cast Cancel#
+SA_FREECAST#Free Cast#
+SA_SPELLBREAKER#Spell Breaker#
+SA_AUTOSPELL#Auto Cast#
+SA_MAGICROD#Magic Rod#
+SA_VOLCANO#Volcano#
+SA_DELUGE#Deluge#
+SA_VIOLENTGALE#Violent Gale#
+SA_BARRENZONE#Barren Zone#
+SA_LANDPROTECTOR#Land Protector#
+SA_FLAMELAUNCHER#Flame Launcher#
+SA_FROSTWEAPON#Frost Weapon#
+SA_LIGHTNINGLOADER#Lightning Loader#
+SA_SEISMICWEAPON#Seismic Weapon#
+SA_DRAGONOLOGY#Dragonology#
+SA_DISPELL#Dispell#
+SA_ABRACADABRA#Abracadabra#
+SA_MONOCELL#Mono Cell#
+SA_CLASSCHANGE#Class Change#
+SA_SUMMONMONSTER#Summon Monster#
+SA_REVERSEORCISH#Orcish Face#
+SA_DEATH#Death#
+SA_FORTUNE#Fortune#
+SA_TAMINGMONSTER#Monster Taming#
+SA_QUESTION#Questioning#
+SA_GRAVITY#Gravity#
+SA_LEVELUP#Level Up#
+SA_INSTANTDEATH#Instant Death#
+SA_FULLRECOVERY#Full Recovery#
+SA_COMA#Coma#
+BD_ADAPTATION#Adaptation To Circumstances#
+BD_ENCORE#Encore#
+BD_LULLABY#Lullaby#
+BD_RICHMANKIM#Mr. Kim Is A Rich Man#
+BD_ETERNALCHAOS#Eternal Chaos#
+BD_DRUMBATTLEFIELD#The Sound Of a Drum On the Battlefield#
+BD_RINGNIBELUNGEN#The Ring of Nibelungen#
+BD_ROKISWEIL#Loki's Wail#
+BD_INTOABYSS#Into The Abyss#
+BD_SIEGFRIED#Invulnerable Siegfried#
+BD_RAGNAROK#Ragnarok#
+BA_MUSICALLESSON#Musical Lesson#
+BA_MUSICALSTRIKE#Musical Strike#
+BA_DISSONANCE#Dissonance#
+BA_FROSTJOKE#Frost Joke#
+BA_WHISTLE#Whistle#
+BA_ASSASSINCROSS#Assassin Cross of Sunset#
+BA_POEMBRAGI#A Poem of Bragi#
+BA_APPLEIDUN#The Apple of Idun#
+DC_DANCINGLESSON#Dancing Lesson#
+DC_THROWARROW#Throw Arrow#
+DC_UGLYDANCE#Ugly Dance#
+DC_SCREAM#Scream#
+DC_HUMMING#Humming#
+DC_DONTFORGETME#Please Don't Forget Me#
+DC_FORTUNEKISS#Fortune's Kiss#
+DC_SERVICEFORYOU#Service For you#
+
+// ½´ÆÛ³ëºñ½º ¹× ¿þµù °ü·Ã Ãß°¡ ºÎºÐ
+
+WE_MALE#I'll save you, if you are in danger#
+WE_FEMALE#I'll sacrifice myself for you#
+WE_CALLPARTNER#I'm missing you#
+
+// Episode 9.0
+LK_AURABLADE#Aura_Blade#
+LK_PARRYING#Parry#
+LK_CONCENTRATION#Concentration#
+LK_TENSIONRELAX#Tension_Relax#
+LK_BERSERK#Berserk#
+PA_PRESSURE#Pressure#
+PA_SACRIFICE#Sacrifice#
+PA_GOSPEL#Battle_Chant#
+HP_ASSUMPTIO#Assumptio#
+HP_BASILICA#Basilica#
+HP_MEDITATIO#Meditation#
+HW_SOULDRAIN#Soul_Drain#
+HW_MAGICCRASHER#Magic_Crasher#
+HW_MAGICPOWER#Magic_Power#
+CH_PALMSTRIKE#Raging_Palm_Strike#
+CH_TIGERFIST#Tiger_Fist#
+CH_CHAINCRUSH#Chain_Crush_Combo#
+PF_HPCONVERSION#Life_Conversion#
+PF_SOULCHANGE#Soul_Change#
+PF_SOULBURN#Soul_Burn#
+ASC_KATAR#Advanced_Katar_Mastery#
+ASC_BREAKER#Soul_Destroyer#
+SN_SIGHT#True_Sight#
+SN_FALCONASSAULT#Falcon_Assault#
+SN_SHARPSHOOTING#Sharp_Shooting#
+SN_WINDWALK#Wind_Walk#
+WS_MELTDOWN#Melt_Down#
+WS_CREATECOIN#Coin_Craft#
+WS_CREATENUGGET#Nugget_Craft#
+WS_CARTBOOST#Cart_Boost#
+WS_SYSTEMCREATE#Auto_Attacking_Machine_Craft#
+ST_CHASEWALK#Chase_Walk#
+ST_REJECTSWORD#Reject_Sword#
+ST_STEALBACKPACK#Pick_Pocket#
+CR_ALCHEMY#Alchemy#
+CR_SYNTHESISPOTION#Potion_Synthesis#
+CG_ARROWVULCAN#Arrow_Vulcan#
+CG_MOONLIT#Sheltering_Bliss#
+CG_MARIONETTE#Marionette_Control#
+LK_SPIRALPIERCE#Spiral_Pierce#
+LK_HEADCRUSH#Head_Crush#
+LK_JOINTBEAT#Vital_Strike#
+HW_NAPALMVULCAN#Naplam_Vulcan#
+CH_SOULCOLLECT#Zen#
+PF_MINDBREAKER#Mind_Breaker#
+PF_MEMORIZE#Memorize#
+PF_FOGWALL#Fog_Wall#
+PF_SPIDERWEB#Spider_Web#
+ASC_METEORASSAULT#Meteor_Assault#
+ASC_CDP#Create_Deadly_Poison#
+ASC_EDP#Enchant_Deadly_Poison#
+WE_BABY#Mom,_Dad,_I_love_you!#
+WE_CALLPARENT#Mom,_Dad,_I_miss_you!#
+WE_CALLBABY#Come_to_me,_honey~#
+GD_GLORYGUILD#Glory_of_Guild#
+GD_LEADERSHIP#Great_Leadership#
+GD_GLORYWOUNDS#Glorious_Wounds#
+GD_SOULCOLD#Cold_Heart#
+GD_HAWKEYES#Sharp_Gaze#
+GD_BATTLEORDER#Battle_Order#
+GD_REGENERATION#Regeneration#
+GD_RESTORE#Restoration#
+GD_EMERGENCYCALL#Emergency_Call#
+GD_GUARDUP#Strengthen_Guardians#
+GD_DEVELOPMENT#Permenant_Development#
+ST_PRESERVE#Preserve#
+ST_FULLSTRIP#Full_Strip#
+WS_WEAPONREFINE#Upgrade_Weapon#
+CR_SLIMPITCHER#Slim_Pitcher#
+CR_FULLPROTECTION#Full_Chemical_Protection#
+ITM_TOMAHAWK#Tomahawk_Throwing#
+PA_SHIELDCHAIN#Rapid_Smiting#
+HP_MANARECHARGE#Spiritual_Thrift#
+PF_DOUBLECASTING#Double_Bolt#
+HW_GANBANTEIN#Ganbantein#
+HW_GRAVITATION#Gravitational_Field#
+WS_CARTTERMINATION#High_Speed_Cart_Ram#
+WS_OVERTHRUSTMAX#Maximum_Power-Thrust#
+CG_LONGINGFREEDOM#Longing_for_Freedom#
+CG_HERMODE#Hermode's_Rod#
+CG_TAROTCARD#Tarot_Card_of_Fate#
+CR_ACIDDEMONSTRATION#Acid_Bomb#
+CR_CULTIVATION#Cultivate_Plant#
+KN_ONEHAND#One-Hand_Quicken#
+HT_POWER#Beast_Charge#
+HLIF_HEAL#Healing_Hands#
+HLIF_AVOID#Urgent_Escape#
+HLIF_BRAIN#Brain_Surgery#
+HLIF_CHANGE#Mental_Charge#
+HAMI_CASTLE#Castling#
+HAMI_DEFENCE#Amistr_Bulwark#
+HAMI_SKIN#Adamantium_Skin#
+HAMI_BLOODLUST#Blood_Lust#
+HFLI_MOON#Moonlight#
+HFLI_FLEET#Flitting#
+HFLI_SPEED#Accelerated_Flight#
+HFLI_SBR44#S.B.R.44#
+HVAN_CAPRICE#Caprice#
+HVAN_CHAOTIC#Chaotic_Blessings#
+HVAN_INSTRUCT#Instruction_Change#
+HVAN_EXPLOSION#Self-Destruction#
+//EP10.3Added
+TK_RUN#Sprint#				
+TK_READYSTORM#Tornado_Stance#
+TK_STORMKICK#Tornado_Kick#
+TK_READYDOWN#Heel_Drop_Stance#
+TK_DOWNKICK#Heel_Drop#
+TK_READYTURN#Roundhouse_Stance#
+TK_TURNKICK#Roundhouse#
+TK_READYCOUNTER#Counter_Kick_Stance#
+TK_COUNTER#Counter_Kick#
+TK_DODGE#Tumbling#
+TK_JUMPKICK#Flying_Kick#
+TK_HPTIME#Peaceful_Break#
+TK_SPTIME#Happy_Break#
+TK_POWER#Kihop#
+TK_SEVENWIND#Mild_Wind#
+TK_HIGHJUMP#Leap#
+TK_MISSION#Taekwon_Mission#
+SG_FEEL#Solar,_Lunar_and_Stellar_Perception#
+SG_SUN_WARM#Solar_Heat#
+SG_MOON_WARM#Lunar_Heat#
+SG_STAR_WARM#Stellar_Heat#
+SG_SUN_COMFORT#Solar_Protection#
+SG_MOON_COMFORT#Lunar_Protection#
+SG_STAR_COMFORT#Stellar_Protection#
+SG_HATE#Solar,_Lunar_and_Stellar_Opposition#
+SG_SUN_ANGER#Solar_Wrath#
+SG_MOON_ANGER#Lunar_Wrath#
+SG_STAR_ANGER#Stellar_Wrath#
+SG_SUN_BLESS#Solar_Blessings#
+SG_MOON_BLESS#Lunar_Blessings#
+SG_STAR_BLESS#Stellar_Blessings#
+SG_DEVIL#Solar,_Lunar_and_Stellar_Shadow#
+SG_FRIEND#Solar,_Lunar_and_Stellar_Team-up#
+SG_KNOWLEDGE#Solar,_Lunar_and_Stellar_Courier#
+SG_FUSION#Solar,_Lunar_and_Stellar_Union#
+SL_ALCHEMIST#Alchemist_Spirit#
+AM_BERSERKPITCHER#Aid_Berserk_Potion#
+AM_TWILIGHT1#Spiritual_Potion_Creation#
+AM_TWILIGHT2#Spiritual_Potion_Creation#
+AM_TWILIGHT3#Spiritual_Potion_Creation#
+SL_MONK#Monk_Spirit#
+SL_STAR#Fist_Master_Spirit#
+SL_SAGE#Sage_Spirit#
+SL_CRUSADER#Crusader_Spirit#
+SL_SUPERNOVICE#Super_Novice_Spirit#
+SL_KNIGHT#Knight_Spirit#
+SL_WIZARD#Wizard_Spirit#
+SL_PRIEST#Priest_Spirit#
+SL_BARDDANCER#Bard_and_Dancer_Spirits#
+SL_ROGUE#Rogue_Spirit#
+SL_ASSASIN#Assassin_Spirit#
+SL_BLACKSMITH#Blacksmith_Spirit#
+BS_ADRENALINE2#Advanced_Adrenaline_Rush#
+SL_HUNTER#Hunter_Spirit#
+SL_SOULLINKER#Soul_Linker_Spirit#
+SL_HIGH#1st_Transcendent_Spirit#
+BS_ADRENALINE2#Advanced_Adrenaline_Rush#
+SL_KAIZEL#Kaizel#
+SL_KAAHI#Kaahi#
+SL_KAUPE#Kaupe#
+SL_KAITE#Kaite#
+SL_KAINA#Kaina#
+SL_STIN#Estin#
+SL_STUN#Estun#
+SL_SMA#Esma#
+SL_SWOO#Eswoo#
+SL_SKE#Eske#
+SL_SKA#Eska#
+GD_GLORYGUILD#Glory_of_Guild#
+GD_LEADERSHIP#Great_Leadership#
+GD_GLORYWOUNDS#Glorious_Wounds#
+GD_SOULCOLD#Cold_Heart#
+GD_HAWKEYES#Sharp_Gaze#
+GD_BATTLEORDER#Battle_Command#
+GD_REGENERATION#Regeneration#
+GD_RESTORE#Restoration#
+GD_EMERGENCYCALL#Urgent_Call#
+GD_GUARDUP#Strengthen_Guardians#
+GD_DEVELOPMENT#Permanent_Development#
+ST_PRESERVE#Preserve#
+ST_FULLSTRIP#Full_Divestment#
+WS_WEAPONREFINE#Upgrade_Weapon#
+CR_SLIMPITCHER#Aid_Condensed_Potion#
+CR_FULLPROTECTION#Full_Chemical_Protection#
+ITM_TOMAHAWK#Tomahawk_Throwing#
+PA_SHIELDCHAIN#Rapid_Smiting#
+HP_MANARECHARGE#Spiritual_Thrift#
+PF_DOUBLECASTING#Double_Bolt#
+HW_GANBANTEIN#Ganbantein#
+HW_GRAVITATION#Gravitational_Field#
+WS_CARTTERMINATION#High_Speed_Cart_Ram#
+WS_OVERTHRUSTMAX#Maximum_Power-Thrust#
+CG_LONGINGFREEDOM#Longing_for_Freedom#
+CG_HERMODE#Hermode's_Rod#
+CG_TAROTCARD#Tarot_Card_of_Fate#
+CR_ACIDDEMONSTRATION#Acid_Bomb#
+CR_CULTIVATION#Cultivate_Plant#
+KN_ONEHAND#One-Hand_Quicken#
+HT_POWER#Beast_Charge#
+HLIF_HEAL#Healing_Hands#
+HLIF_AVOID#Urgent_Escape#
+HLIF_BRAIN#Brain_Surgery#
+HLIF_CHANGE#Mental_Charge#
+HAMI_CASTLE#Castling#
+HAMI_DEFENCE#Amistr_Bulwark#
+HAMI_SKIN#Adamantium_Skin#
+HAMI_BLOODLUST#Blood_Lust#
+HFLI_MOON#Moonlight#
+HFLI_FLEET#Flitting#
+HFLI_SPEED#Accelerated_Flight#
+HFLI_SBR44#S.B.R.44#
+HVAN_CAPRICE#Caprice#
+HVAN_CHAOTIC#Chaotic_Blessings#
+HVAN_INSTRUCT#Instruction_Change#
+HVAN_EXPLOSION#Self-Destruction#
+KN_CHARGEATK#Charge_Attack#
+CR_SHRINK#Shrink#
+AS_SONICACCEL#Sonic_Acceleration#
+AS_VENOMKNIFE#Venom_Knife#
+RG_CLOSECONFINE#Close_Confine#
+WZ_SIGHTBLASTER#Sight_Blaster#
+SA_CREATECON#Create_Elemental_Converter#
+SA_ELEMENTWATER#Elemental_Change_(Water)#
+SA_ELEMENTGROUND#Elemental_Change_(Earth)#
+SA_ELEMENTFIRE#Elemental_Change_(Fire)#
+SA_ELEMENTWIND#Elemental_Change_(Wind)#
+HT_PHANTASMIC#Phantasmic_Arrow#
+BA_PANGVOICE#Pang_Voice#
+DC_WINKCHARM#Charming_Wink#
+BS_UNFAIRLYTRICK#Dubious_Salesmanship#
+BS_GREED#Greed#
+PR_REDEMPTIO#Redemptio#
+MO_KITRANSLATION#Spiritual_Bestowment#
+MO_BALKYOUNG#Excruciating_Palm#
+// X.4 Hugel - Ninja & Gunslinger
+NJ_TOBIDOUGU#Dagger_Throwing_Practice#
+NJ_SYURIKEN#Throw_Shuriken#
+NJ_KUNAI#Throw_Kunai#
+NJ_HUUMA#Throw_Huuma_Shuriken#
+NJ_ZENYNAGE#Throw_Coins#
+NJ_TATAMIGAESHI#Flip_Tatami#
+NJ_KASUMIKIRI#Haze_Slasher#
+NJ_SHADOWJUMP#Shadow_Leap#
+NJ_KIRIKAGE#Shadow_Slash#
+NJ_UTSUSEMI#Cicada_Skin_Shed#
+NJ_BUNSINJYUTSU#Mirror_Image#
+NJ_NINPOU#Ninja_Mastery#
+NJ_KOUENKA#Flaming_Petals#
+NJ_KAENSIN#Blaze_Shield#
+NJ_BAKUENRYU#Exploding_Dragon#
+NJ_HYOUSENSOU#Freezing_Spear#
+NJ_SUITON#Watery_Evasion#
+NJ_HYOUSYOURAKU#Snow_Flake_Draft#
+NJ_HUUJIN#Wind_Blade#
+NJ_RAIGEKISAI#Lightning_Jolt#
+NJ_KAMAITACHI#First_Wind#
+NJ_NEN#Ninja_Aura#
+NJ_ISSEN#Killing_Stroke#
+GS_GLITTERING#Coin_Flip#
+GS_FLING#Coin_Fling#
+GS_TRIPLEACTION#Triple_Action#
+GS_BULLSEYE#Bull's_Eye#
+GS_MADNESSCANCEL#Last_Stand#
+GS_ADJUSTMENT#Gunslinger's_Panic#
+GS_INCREASING#Increase_Accuracy#
+GS_MAGICALBULLET#Magical_Bullet#
+GS_CRACKER#Cracker#
+GS_SINGLEACTION#Single_Action#
+GS_SNAKEEYE#Snake_Eyes#
+GS_CHAINACTION#Chain_Action#
+GS_TRACKING#Tracking#
+GS_DISARM#Disarm#
+GS_PIERCINGSHOT#Wounding_Shot#
+GS_RAPIDSHOWER#Trigger_Happy_Shot#
+GS_DESPERADO#Desperado#
+GS_GATLINGFEVER#Gatling_Fever#
+GS_DUST#Crowd_Control_Shot#
+GS_FULLBUSTER#Full_Blast#
+GS_SPREADATTACK#Spread_Shot#
+GS_GROUNDDRIFT#Gunslinger_Mine#
+ALL_INCCARRY#Enlarge_Weight_Limit#			
+MS_BASH#Bash#
+MS_MAGNUM#Magnum_Break#
+MS_BOWLINGBASH#Bowling_Bash#
+MS_PARRYING#Parry#
+MS_REFLECTSHIELD#Shield_Reflect#
+MS_BERSERK#Berserk#
+MA_DOUBLE#Double_Strafe#
+MA_SHOWER#Arrow_Shower#
+MA_SKIDTRAP#Skid_Trap#
+MA_LANDMINE#Land_Mine#
+MA_SANDMAN#Sandman#
+MA_FREEZINGTRAP#Freezing_Trap#
+MA_REMOVETRAP#Remove_Trap#
+MA_CHARGEARROW#Arrow_Repel#
+MA_SHARPSHOOTING#Sharp_Shooting#
+ML_PIERCE#Pierce#
+ML_BRANDISH#Brandish_Spear#
+ML_SPIRALPIERCE#Clashing_Spiral#
+ML_DEFENDER#Defending_Aura#
+ML_AUTOGUARD#Guard#
+ML_DEVOTION#Sacrifice#
+MER_MAGNIFICAT#Magnificat#
+MER_QUICKEN#Weapon_Quicken#
+MER_SIGHT#Sight#
+MER_CRASH#Crash#
+MER_REGAIN#Regain#
+MER_TENDER#Tender#
+MER_BENEDICTION#Benediction#
+MER_RECUPERATE#Recuperate#
+MER_MENTALCURE#Mental_Cure#
+MER_COMPRESS#Compress#
+MER_PROVOKE#Provoke#
+MER_AUTOBERSERK#Berserk#
+MER_DECAGI#Decrease_AGI#
+MER_SCAPEGOAT#Scapegoat#
+MER_LEXDIVINA#Lex_Divina#
+MER_ESTIMATION#Sense#
+GD_ITEMEMERGENCYCALL#Urgent_Call#
+//Episode 12
+GM_SANDMAN#Sleep_well,_my_baby#
+ALL_CATCRY#Roar_of_Beast#
+//Christmas Event 2008
+ALL_WEWISH#Oh! Holy Night#
+//file end

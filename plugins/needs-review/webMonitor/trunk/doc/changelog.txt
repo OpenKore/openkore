@@ -1,0 +1,66 @@
+29/10/2012 - BonScott
+- add a lot of skills icons
+- crieated "report" page in beta
+- reload page before "item action" in inventory
+- added "reload config" button
+- added "reload timeouts" button
+
+29/10/2012 - EternalHarvest
+- added Map image API
+
+29/10/2012 - EternalHarvest
+- Use URL which can be opened from terminal etc, instead of warnings about undefined and default options
+
+21/10/2012 - KeplerBR
+- if the WebPort has not been set, uses default port (1025)
+- simple bugfix menu of the inventory
+- "config.html" sent (credits: BonScott)
+
+19/10/2012 - BonScott
+- added icon to favorite easy
+- added username in top bar
+- added time to top bar
+- ADDED PORT CONFIG !!! [webPort in config.txt]
+- changed icons font to iRO database
+- added change lockMap via web
+- tons of rapid actions buttons (reload files, route, autobuy, macros, etc...)
+
+16/10/2012 - BonScott
+- added "free points"
+- button for add atributes and mini-help balloon
+- fix position of "add skill point" button
+- fix map size
+- change layout of inventary to tabbed vision (better and fast)
+
+13/10/2012 - KeplerBR
+- Bugfix in "consoleLog" and "Show skills"
+
+12/10/2012 - BonScott
+- reworked consoleLog, remove richLogWebMonitor
+- show console without iframes
+- auto-scroll work on console (first-time is manual)
+
+12/10/2012 - KeplerBR
+- simple bugfix in the Show skills
+
+11/10/2012 - BonScott
+- add all item icons
+- add new variables
+- fix align of skill names
+- add more skills icons
+
+06/10/2012 - BonScott
+- international release
+
+05/10/2012 - BonScott
+- fix layouts bugs
+- add 2 new vars (sexID e jobID)
+- removed intro page
+
+04/10/2012 - BonScott
+- polished layout
+- added tooltips to bars (hp,sp,base,job,weight)
+
+01/10/2012 - BonScott
+- adjusts in core plugin
+- re-design by BonScott

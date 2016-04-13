@@ -1,0 +1,161 @@
+{{_header.html}}
+
+<script type="application/javascript" defer="defer">
+			function interpret_command(select) {
+				var value = select.options[select.selectedIndex].value;
+
+				if (value == 's') {
+					window.location.href = '../handler?csrf={csrf}&command=homun+s';
+				} else if (value == 'feed') {
+					window.location.href = '../handler?csrf={csrf}&command=homun+feed';
+				} else if (value == 'move') {
+					var ic = document.getElementById("input_command");
+					ic.value = 'homun move <x> <y>';
+					ic.focus();
+				} else if (value == 'rename') {
+					var ic = document.getElementById("input_command");
+					ic.value = 'homun rename <new name>';
+					ic.focus();
+				} else if (value == 'standby') {
+					window.location.href = '../handler?csrf={csrf}&command=homun+standby';
+				} else if (value == 'aiv') {
+					window.location.href = '../handler?csrf={csrf}&command=homun+aiv';
+				} else if (value == 'ai') {
+					window.location.href = '../handler?csrf={csrf}&command=homun+ai';
+				} else if (value == 'auto') {
+					window.location.href = '../handler?csrf={csrf}&command=homun+auto';
+				} else if (value == 'manual') {
+					window.location.href = '../handler?csrf={csrf}&command=homun+manual';
+				} else if (value == 'off') {
+					window.location.href = '../handler?csrf={csrf}&command=homun+off';
+				} else if (value == 'delete') {
+					window.location.href = '../handler?csrf={csrf}&command=homun+delete';
+				}
+			}
+
+			function send_command() {
+				var ic = document.getElementById("input_command");
+				window.location.href = '../handler?csrf={csrf}&command=' + ic.value;
+				ic.value = '';
+			}
+
+			function submitenter(e) {
+				var keycode;
+				if (window.event) keycode = window.event.keyCode;
+
+				if (keycode == 13) {
+					send_command();
+				}
+			}
+</script>
+
+    <div class="span9">
+		<div class="row-fluid">
+		<div class="tabbable">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#status" data-toggle="tab">status</a></li>
+				<li><a href="#skills" data-toggle="tab">skills</a></li>
+				<li><a href="#commands" data-toggle="tab">commands</a></li>
+			</ul>
+			<div class="tab-content">
+			
+			<div class="tab-pane active" id="status">
+			<div class="span9">
+				<div class="span3">
+				<div align="center"><div class="thumbnail job" id="homunculus{homunculusJobId}"></div></div>
+				<strong>{T Name}</strong>
+				<h6 align="left"><span class="value_homunculos_name">{homunculusName}</span></h6>
+				<strong>{T Level}</strong>
+				<h6 align="left"><span class="value_homunculos_level">{homunculusLevel}</span></h6>
+				<strong>{T HP}</strong>
+				<h6 align="right"><span class="value_homunculos_hp">{homunculusHP}</span>/<span class="value_homunculos_hp_max">{homunculusHPMax}</span></h6>
+				<div class="progress progress_homunculos_hp" rel="tooltip" title="{homunculusHPPercent}%"><div class="bar bar-success" style="width: {homunculusHPPercent}%;"></div></div>
+				<strong>{T SP}</strong>
+				<h6 align="right"><span class="value_homunculos_sp">{homunculusSP}</span>/<span class="value_homunculos_sp_max">{homunculusSPMax}</span></h6>
+				<div class="progress progress_homunculos_sp" rel="tooltip" title="{homunculusSPPercent}%"><div class="bar" style="width: {homunculusSPPercent}%;"></div></div>
+				<strong>{T EXP}</strong>
+				<h6 align="right"><span class="value_homunculos_exp">{homunculusEXP}</span>/<span class="value_homunculus_exp_max">{homunculusEXPMax}</span></h6>
+				<div class="progress progress_homunculos_exp" rel="tooltip" title="{homunculusEXPPercent}%"><div class="bar" style="width: {homunculusEXPPercent}%;"></div></div>
+				<strong>{T Hunger}</strong>
+				<h6 align="right"><span class="value_homunculos_hunger">{homunculusHunger}</span>/<span class="value_homunculus_hunger_max">100</span></h6>
+				<div class="progress progress_homunculos_hunger" rel="tooltip" title="{homunculusHunger}%"><div class="bar" style="width: {homunculusHunger}%;"></div></div>
+				</div>
+				<div class="span3">
+					<table class="table-condensed">
+						<tbody>
+							<tr><td class="left">{T Atk}</td><td class="pull-right"><span class="value_homunculos_atk">{homunculusAtk}</span></td></tr>
+							<tr><td class="left">{T Atk Magic}</td><td class="pull-right"><span class="value_homunculos_atkmagic">{homunculusAtkMagic}</span></td></tr>
+							<tr><td class="left">{T Atk Speed}</td><td class="pull-right"><span class="value_homunculos_atckspeed">{homunculusAtkSpeed}</span></td></tr>
+							<tr><td class="left">{T Hit}</td><td class="pull-right"><span class="value_homunculos_hit">{homunculusHit}</span></td></tr>
+							<tr><td class="left">{T Critical}</td><td class="pull-right"><span class="value_homunculos_critical">{homunculusCritical}</span></td></tr>
+							<tr><td class="left">{T Def}</td><td class="pull-right"><span class="value_homunculos_def">{homunculusDef}</span></td></tr>
+							<tr><td class="left">{T MDef}</td><td class="pull-right"><span class="value_homunculos_mdef">{homunculusMDef}</span></td></tr>
+							<tr><td class="left">{T Flee}</td><td class="pull-right"><span class="value_homunculos_flee">{homunculusFlee}</span></td></tr>
+							<br/>
+						</tbody>
+					</table>
+				</div>
+				<div class="span3">
+					<table class="table-condensed">
+						<tbody>
+							<tr><td class="left">{T Intimacy}</td><td class="pull-right"><span class="value_homunculos_intimacy">{homunculusIntimacy}</span></td></tr>
+							<tr><td class="left">{T Accessory}</td><td class="pull-right"><span class="value_homunculos_attack_magic_min">{homunculusAccessory}</span>
+							<tr><td class="left">{T Faith}</td><td class="pull-right"><span class="value_homunculos_hit">{homunculusFaith}</span></td></tr>
+							<br/>
+						</tbody>
+					</table>
+				</div>
+            </div><!--/span-->
+			</div>
+
+			<div class="tab-pane" id="skills">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th></th>
+							<th><div>Level</div></th>
+							<th><div>Name</div></th>
+							<th><div>SP</div></th>
+							<th><div>Use</div></th>
+						</tr>
+					</thead>
+					<tbody id="listarItens"><!-- {startLoop} -->
+						<tr>
+							<td>{homunculusSkillsIco}<div class="iconSkill left"><div class="iconUp right">{homunculusSkillsIcoUp}</div></div></td>
+							<td><div align="center">{homunculusSkillsLevel}</div></td>
+							<td class="left">{homunculusSkillsName}</td>
+							{homunculusSkillsJS}
+						</tr><!-- {endLoop} -->
+						<tr></tr>
+						<tr>{T Skill point}: <span class="badge badge-success"><span class="value_homunculus_points_skill">{homunculusSkillsPoints}</span></span></tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="tab-pane" id="commands">
+				<pre class="log console" style="width:900px">{consoleLog}</pre>
+
+				<div class="input-append" rel="tooltip">
+					<select class="span2" id="selection_command" onChange="interpret_command(this)">
+						<option selected value="">Console</option>
+						<option value="s">Homunculus status</option>
+						<option value="feed">Feed homunculus</option>
+						<option value="move">Moves your homunculus</option>
+						<option value="rename">Rename your homunculus</option>
+						<option value="standby">Makes your homunculus standby</option>
+						<option value="aiv">Display current homunculus AI</option>
+						<option value="ai auto">Turns homunculus AI on</option>
+						<option value="ai manual">Toggles AI manual</option>
+						<option value="ai off">Toggles AI off</option>
+						<option value="delete">Deletes your homunculus</option>
+					</select>
+
+					<input class="span9" id="input_command" type="text" onKeyPress="submitenter(this.event)">
+					<input type="button" class="btn span1" id="button_send" value="Send" disabled onClick="send_command()"/>
+				</div>
+			</div>
+          </div><!--/row-->
+		  
+        </div><!--/span-->
+
+{{_footer.html}}

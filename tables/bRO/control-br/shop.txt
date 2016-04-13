@@ -1,0 +1,31 @@
+#############################################################################################
+# A Codificação do texto está correta?
+# Codificação:  ANSI -> UTF8 Without boom
+# Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
+# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+#############################################################################################
+Minha loja;;Minha loja legal;;Minha boa loja
+
+Jellopy		3
+Carta Andre	200,000	5
+Coco		1,000..2,000	2
+
+# Este ficheiro escolhe os items que serão colocados na loja, quando estiver a vender.
+# Para ativar a venda, configure a opção 'shopAuto' que se encontra no ficheiro config.txt, para ativar #basta escrever 1 à frente.
+#
+#
+# A primeira linha deste ficheiro é onde está o nome da loja. (Poderá ser editado)
+# Para separar o nome do preço e da quantidade utilize a tecla TAB para dar um espaço entre eles.
+# <nome>	<preço>[..<preço máximo>]	[<quantidade>]
+#
+# Importante: Informar o preço máximo é opcional. Caso não seja informado, o item sempre será vendido
+# pelo mesmo preço fornecido no campo "preço". Caso seja informado o preço máximo, será vendido no intervalo
+# entre "preço" e "preço máximo"
+# Importante: Equipamentos (armas, armaduras...) é necessário uma linha para cada item, não é possível #adicionar vários equipamentos na mesma linha.
+#
+# Se o <preço> tiver vírgulas, elas devem ser colocadas.
+# Isto pode ser útil para prevenir a venda automática e acidental de um item
+# que possui os preços incorretos.
+#
+# Nomes aleatórios para a loja:
+#Minha loja;;Minha loja legal;;Minha boa loja

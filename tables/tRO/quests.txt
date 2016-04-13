@@ -1,0 +1,3715 @@
+﻿// วฯฤกฟ๘
+1000# เปลี่ยนไฮคลาส #SG_FEEL#QUE_NOIMAGE#
+เจ้าจะกลายเป็นนักรบได้หลังจากที่ได้อ่าน Book of Ymir. ไปพบ Valkyrie แล้วเจ้าจะกลายเป็นนักรบของ Valkyrie#
+#
+
+1001# เปลี่ยนอาชีพ Acolyte#SG_FEEL#QUE_NOIMAGE#
+คุยกับบาทหลวง Mareusis เพื่อเปลี่ยนเป็น Acolyte เขาจะให้เจ้าไปพบ ^000077 บาทหลวง Rubalkabara ^000000 ที่ออกไปฝึกตน อยู่ทางตะวันออกเฉียงเหนือของเมือง Prontera#
+คุยกับบาทหลวง Rubalkabara#
+
+1002# เปลี่ยนอาชีพ Acolyte#SG_FEEL#QUE_NOIMAGE#
+คุยกับบาทหลวง Mareusis เพื่อเปลี่ยนเป็น Acolyte เขาจะให้เจ้าไปพบ ^000077 แม่ชี Mathilda ^000000 ที่ออกไปฝึกตนอยู่แผนที่ด้านบนเมือง Morroc เมืองที่ตั้งอยู่ทางตะวันตกเฉียงใต้ของ Prontera#
+คุยกับแม่ชี Mathilda#
+
+1003# เปลี่ยนอาชีพ Acolyte#SG_FEEL#QUE_NOIMAGE#
+คุยกับบาทหลวง Mareusis เพื่อเปลี่ยนเป็น Acolyte เขาจะให้เจ้าไปพบ ^000077 บาทหลวง Yosuke ^000000 ที่ออกไปฝึกตนอยู่ใกล้ๆ สะพานของแผนที่ ที่อยู่ทางตะวันตกเฉียงเหนือของเมือง Prontera#
+คุยกับบาทหลวง Yosuke#
+
+1004# เปลี่ยนอาชีพ Archer#SG_FEEL#QUE_NOIMAGE#
+หัวหน้าสมาคม Archer สั่งให้รวบรวม Trunk เพื่อใช้ในการเปลี่ยนอาชีพ Archer Trunk สามารถหาได้จาก 'Willow' #
+รวบรวม Trunks#
+
+1005# เปลี่ยนอาชีพ Mage#SG_FEEL#QUE_NOIMAGE#
+หัวหน้าสมาคม Mage สั่งให้เจ้าผสมน้ำยาหมายเลข 1 เพื่อเปลี่ยนอาชีพ Mage วิธีการทำน้ำยาอ่านรายละเอียดได้ที่ตู้ทางขวา #
+ผสมน้ำยาหมายเลข 1#
+
+1006# เปลี่ยนอาชีพ Mage#SG_FEEL#QUE_NOIMAGE#
+หัวหน้าสมาคม Mage สั่งให้เจ้าผสมน้ำยาหมายเลข 2 เพื่อเปลี่ยนอาชีพ Mage วิธีการทำน้ำยาอ่านรายละเอียดได้ที่ตู้ทางขวา #
+ผสมน้ำยาหมายเลข 2#
+
+1007# เปลี่ยนอาชีพ Mage#SG_FEEL#QUE_NOIMAGE#
+หัวหน้าสมาคม Mage สั่งให้เจ้าผสมน้ำยาหมายเลข 3 เพื่อเปลี่ยนอาชีพ Mage วิธีการทำน้ำยาอ่านรายละเอียดได้ที่ตู้ทางขวา #
+ผสมน้ำยาหมายเลข 3#
+
+1008# เปลี่ยนอาชีพ Mage#SG_FEEL#QUE_NOIMAGE#
+หัวหน้าสมาคม Mage สั่งให้เจ้าผสมน้ำยาหมายเลข 4 เพื่อเปลี่ยนอาชีพ Mage วิธีการทำน้ำยาอ่านรายละเอียดได้ที่ตู้ทางขวา #
+ผสมน้ำยาหมายเลข 4#
+
+1009# เปลี่ยนอาชีพ Merchant#SG_FEEL#QUE_NOIMAGE#
+ได้รับการทดสอบหลังจากจ่ายเงิน 1000 zeny ในการสมัครเข้าสมาคม ในการทดสอบ ผู้เล่นต้องไปรับสินค้าจาก Storehouse และไปที่สมาคม Swordman เก่าในเมือง Prontera และมอบมันให้กับหัวหน้าพนักงานต้อนรับบริษัทคาฟ่าที่เมือง Prontera รหัสในการสั่งสินค้าได้รับจากหัวหน้า Mahnsoo#
+ไปส่งสินค้าที่สมาคมน Swordman เก่าเมือง Prontera#
+
+1010# เปลี่ยนอาชีพ Merchant#SG_FEEL#QUE_NOIMAGE#
+ได้รับการทดสอบหลังจากจ่ายเงิน 1000 zeny ในการสมัครเข้าสมาคม ในการทดสอบ ผู้เล่นต้องไปรับสินค้าจาก Storehouse ไปที่สมาคม Mage ในเมือง Geffen และส่งให้กับพนักงานสมาคม รหัสในการสั่งสินค้าได้รับจากหัวหน้า Mahnsoo#
+ไปส่งสินค้าที่สมาคม Mage ในเมือง Geffen#
+
+1011# เปลี่ยนอาชีพ Merchant#SG_FEEL#QUE_NOIMAGE#
+ได้รับการทดสอบหลังจากจ่ายเงิน 1000 zeny ในการสมัครเข้าสมาคม ในการทดสอบ ผู้เล่นต้องไปรับสินค้าจาก Storehouse ส่งของให้ Java Dullihan ช่างย้อมสีในเมือง Morroc รหัสในการสั่งสินค้าได้รับจากหัวหน้า Mahnsoo#
+ไปส่งสินค้าให้กับช่างย้อมสีเมือง Morroc#
+
+1012# เปลี่ยนอาชีพ Merchant#SG_FEEL#QUE_NOIMAGE#
+ได้รับการทดสอบหลังจากจ่ายเงิน 1000 zeny ในการสมัครเข้าสมาคม ในการทดสอบ ผู้เล่นต้องไปรับสินค้าจาก Storehouse ส่งสินค้าให้กับ Kafra Girl บนเกาะ Byalan รหัสในการสั่งสินค้าได้รับจากหัวหน้า Mahnsoo#
+ส่งสินค้าไปให้สาว Kafra บนเกาะ Byalan#
+
+1013# เปลี่ยนอาชีพ Thief#SG_FEEL#QUE_NOIMAGE#
+ได้รับการทดสอบหลังจากผ่านการสัมภาษณ์จากผู้แนะนำ Thief สำหรับการทดสอบ จำเป็นต้องรวบรวมเห็ดจากฟาร์ม รวบรวมเห็ด 2 ชนิด: ^0000FFOrange Net Mushroom^000000 และ  ^0000FFOrange Gooey Mushroom^000000 เห็ดแต่ละชนิดจะมีคะแนนอยู่ต้องรวบรวมให้ได้คะแนนที่มากพอจึงจะผ่านการทดสอบ ฟาร์มเห็ดจะอยู่ที่ตรงข้าม Pyramids และจะมีคนของสมาคมยืนอยู่#
+รวบรวม Orange Net Mushroom และ Orange Gooey Mushroom#
+
+1014# เปลี่ยนอาชีพ Swordman#SG_FEEL#QUE_NOIMAGE#
+กรอกใบสมัครเรียบร้อย สำหรับการทดสอบ ผู้เล่นจะต้องผ่านสนามทดสอบออกมาให้ได้ #
+ผ่านสนามทดสอบให้ได้ #
+
+// มถนฬมค
+
+2000# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+พวกเราต้องตรวจสอบคุณสมบัติของ Merchants ที่จะสมัครเป็น Blacksmiths การทดสอบแรกไป Einbech และช่วยเหลือสมาชิกสมาคมที่ชื่อ Geschupenschte#
+ไปพบ Geschupenschte, Blacksmith แห่ง Einbech#
+
+2001# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+ขอโทษด้วย เจ้ายังทำได้ไม่ดีพอ เจ้าควรจะต้องเรียนรู้ให้มากกว่านี้ #
+ศึกษาเกี่ยวกับ Blacksmith ให้มากกว่านี้แล้วลองใหม่ #
+
+2002# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+เจ้าทำได้ดีl!! เยี่ยมมาก! ข้าจะให้งานเจ้าทำ! ข้าจะเตรียมตัวก่อน ค่อยกลับมาใหม่ #
+คุยกับ Geschupenschte#
+
+2003# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+ข้าต้องการวัถุดิบนิดหน่อย เจ้าช่วยหาให้หน่อยได้ไหม? นี่เป็นการทดสอบ อย่าได้คิดว่า Blacksmiths เป็นคนจนนะ ฮึ่ม #
+หา Steel 2, Rotten Bandage 1, Blue Gemstone 2 และ Arc Wand จากร้านค้า แล้วกลับไปหา Geschupenschte#
+
+2004# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+ข้าต้องการวัถุดิบนิดหน่อย เจ้าช่วยหาให้หน่อยได้ไหม? นี่เป็นการทดสอบ อย่าได้คิดว่า Blacksmiths เป็นคนจนนะ ฮึ่ม #
+หา Star Dust 2, Skel Bone 1, Zargon 1 และ Gladius จากร้านค้า แล้วกลับไปหา Geschupenschte#
+
+2005# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+ข้าต้องการวัถุดิบนิดหน่อย เจ้าช่วยหาให้หน่อยได้ไหม? นี่เป็นการทดสอบ อย่าได้คิดว่า Blacksmiths เป็นคนจนนะ ฮึ่ม #
+หา Coal 2, Shell 2, Red Blood 2 และ Tsurugi จากร้านค้า แล้วกลับไปหา Geschupenschte#
+
+2006# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+ข้าต้องการวัถุดิบนิดหน่อย เจ้าช่วยหาให้หน่อยได้ไหม? นี่เป็นการทดสอบ อย่าได้คิดว่า Blacksmiths เป็นคนจนนะ ฮึ่ม #
+หา Iron Ore 8, Eye Patch 1, Blue Gemstone 2 และ Arbalest จากร้านค้า แล้วกลับไปหา Geschupenschte#
+
+2007# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+ข้าต้องการวัถุดิบนิดหน่อย เจ้าช่วยหาให้หน่อยได้ไหม? นี่เป็นการทดสอบ อย่าได้คิดว่า Blacksmiths เป็นคนจนนะ ฮึ่ม #
+หา Iron 8, Green Herb 20, Animal's Skin 2 และ Ring Pommel Saber จากร้านค้า แล้วกลับไปหา Geschupenschte#
+
+2008# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+เอาล่ะเรียบร้อย! นำ Arc Wand นี้ไปให้ Baisulist ที่ Geffen และนำใบเสร็จมาให้ข้า #
+ส่ง Arc Wand ให้กับ Baisulist ที่ Geffen#
+
+2009# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+เอาล่ะเรียบร้อย! นำ Gladius นี้ไปให้ Wickebine ที่ Morroc และนำใบเสร็จมาให้ข้า #
+ส่ง Gladius ให้กับ Wickebine ที่ Morroc#
+
+2010# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+เอาล่ะเรียบร้อย! นำ Tsurugi นี้ไปให้ Krongast ที่ Lighthalzen และนำใบเสร็จมาให้ข้า #
+ส่ง Tsurugi ให้กับ Krongast ที่ Lighthalzen#
+
+2011# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+เอาล่ะเรียบร้อย! นำ Arbalest นี้ไปให้ Talpiz ที่ Payon และนำใบเสร็จมาให้ข้า #
+ส่ง Arbalest ให้กับ Talpiz ที่ Payon#
+
+2012# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+เอาล่ะเรียบร้อย! นำ Ring Pommel Saber นี้ไปให้ Bismarc ที่ Hugel และนำใบเสร็จมาให้ข้า #
+ส่ง Ring Pommel Saber ให้กับ Bismarc ที่ Hugel#
+
+2013# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+ดีมาก! เจ้าเป็นพ่อค้าที่เก่งมาก! เอาล่ะกลับไปหา Altiregen ที่ Einbroch!#
+กลับไปหา Altiregen#
+
+2014# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+Blacksmiths บางคนนิสัยไม่ดี ชอบโกงและขายสินค้าเกินราคา พวกเขาทำให้เราต้องอับอายขายหน้า! ดังนั้นเราจึงต้องทำให้การทดสอบนั้นยากขึ้น เจ้าควรเข้าไปข้างในและคุยกับ Guildsman#
+คุยกับ Mitehmaeeuh Guildsman ของ Blacksmith#
+
+2015# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+ยินดีด้วย! เจ้าผ่านการทดสอบขั้นที่สองแล้ว! ข้าจะมอบ Hammer of Blacksmith นี้ให้แก่เจ้าเพื่อเป็นเครื่องยืนยัน #
+กลับไปหา Altiregen#
+
+2016# เปลี่ยนอาชีพ Blacksmith#SG_FEEL#QUE_NOIMAGE#
+ยินดีด้วย! เจ้าผ่านการทดสอบทั้งหมดแล้ว! ข้าอนุญาตให้เจ้าเป็นช่างตีอาวุธได้ #
+#
+
+2017# เปลี่ยนอาชีพ Rogue#SG_FEEL#QUE_NOIMAGE#
+เจ้าผ่านการทดสอบแรกที่จะเปลี่ยนเป็น Rogue แล้ว 'Mr. Smith' จะเป็นคนทดสอบเจ้าในขั้นต่อไป #
+คุยกับ Mr. Smith#
+
+2018# เปลี่ยนอาชีพ Rogue#SG_FEEL#QUE_NOIMAGE#
+มีค่าธรรมเนียมในการเปลี่ยนอาชีพ Rogue นิดหน่อย และก็ของที่ต้องใช้ในการทดสอบ #
+10000zeny, 10 skel bones, 6 blue herbs, 10 decayed nails, 10 horrendous mouths#
+
+2019# เปลี่ยนอาชีพ Rogue#SG_FEEL#QUE_NOIMAGE#
+มีค่าธรรมเนียมในการเปลี่ยนอาชีพ Rogue นิดหน่อย และก็ของที่ต้องใช้ในการทดสอบ #
+10000zeny, 10 green herbs, 10 crab shells, 10 snake scales, 10 garlets#
+
+2020# เปลี่ยนอาชีพ Rogue#SG_FEEL#QUE_NOIMAGE#
+มีค่าธรรมเนียมในการเปลี่ยนอาชีพ Rogue นิดหน่อย และก็ของที่ต้องใช้ในการทดสอบ #
+10000zeny, 10 yellow herbs, 10 shells, 10 grasshopper's legs, 10 bear's foot#
+
+2021# เปลี่ยนอาชีพ Rogue#SG_FEEL#QUE_NOIMAGE#
+10000zeny, 5 chrysalis, 5 empty bottles, 5 iron ores, 5 stone hearts, 5 red herbs, 5 animal's skins, 5 yellow gemstones, 5 teeth of bat, 5 scorpion's tails, 5 yoyo tails, 5 monsters feed, 5 fluff, 5 clovers, 5 feathers of bird, 5 talon, 5 spawn, 10 raccoon leaves!! อย่าได้มาหาข้าจนกว่าจะมีของพวกนี้!!#
+หาไอเทมที่ Mr. Smith ต้องการให้ครบ #
+
+2022# เปลี่ยนอาชีพ Rogue#SG_FEEL#QUE_NOIMAGE#
+ไปพบ Aragham Jr ที่อยู่ทางใต้ของป้อมปราการ Saint darman ไปทางตะวันออกจากที่นี่ รหัสลับคือ: ^0000FF'Aragham ไม่มีวันขโมยเหล็กสกัด'^000000#
+คุยกับ Aragham Jr#
+
+2023# เปลี่ยนอาชีพ Rogue#SG_FEEL#QUE_NOIMAGE#
+ไปพบ Antonio Jr. ที่อยู่ใกล้ๆ ชายหาด Kokomo ใน Comodo รหัสลับคือ: ^0000FF'Antonio ไม่ทำลายวัตถุสกัด'^000000#
+คุยกับ Antonio Jr#
+
+2024# เปลี่ยนอาชีพ Rogue#SG_FEEL#QUE_NOIMAGE#
+ไปหา Hollgrehenn Jr. ที่อยู่ทางใต้ของป้อมปราการ Saint darman อยู่ระหว่างทางไป Morroc จากที่นี่ เขาจะบอกเจ้าเกี่ยวกับการทดสอบ Rogue รหัสลับคือ: ^0000FF'พ่อของข้าไม่ได้ขโมยเหล็กสกัด'^000000#
+คุยกับ Hollgrehenn Jr#
+
+2025# เปลี่ยนอาชีพ Rogue#SG_FEEL#QUE_NOIMAGE#
+ไปหา Hermanthorn Jr. เขาอยู่ที่ประภาคาร Paros โปรดจำไว้อย่าได้พูดถึงเรื่องการสกัดไอเทมต่อหน้าเขา!#
+คุยกับ Hermanthorn Jr#
+
+2026# เปลี่ยนอาชีพ Rogue#SG_FEEL#QUE_NOIMAGE#
+ง่ายๆ เจ้าแค่ไปคุยกับ Rogue Guild ในชั้นใต้ดิน! แต่ข้าไม่รับประกันความปลอดภัยนะ #
+เดินลอดทางใต้ดินไปหา Rogue Guild#
+
+2027# เปลี่ยนอาชีพ Rogue#SG_FEEL#QUE_NOIMAGE#
+ยินดีด้วย! เจ้าได้เปลี่ยนเป็น Rogue แล้ว!#
+#
+
+2028# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+เจ้าจำเป็นต้องมีไอเทมเพื่อจะฝึกเป็น Alchemist#
+7 Berserk Potions#
+
+2029# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+เจ้าจำเป็นต้องมีไอเทมเพื่อจะฝึกเป็น Alchemist#
+100 Mini Furnaces#
+
+2030# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+เจ้าจำเป็นต้องมีไอเทมเพื่อจะฝึกเป็น Alchemist#
+500 Fire Arrows#
+
+2031# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+Raspuchin เรียกหาเจ้าอยู่ ไปหาเขา ข้าไม่ค่อยแน่ใจว่าเค้าจะคุยอะไรกับเจ้า #
+คุยกับ alchemist Raspuchin#
+
+2032# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+ข้าดูก็รู้แล้วว่าเจ้าเป็นคนฉลาด ยอดเยี่ยมมาก ไปหา Darwin เขาจะสอนเกี่ยวกับการทดลองให้เจ้า #
+คุยกับ นักวิจัย Darwin#
+
+2033# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+ข้าจะสอนการทำยาอย่างง่ายให้เจ้า ดังนั้นโปรดหาของเหล่านี้มาให้ข้า #
+3 Medicine Bowls, 3 Empty Bottles, 1 Red Herb, 1 Yellow Herb, 1 White Herb#
+
+2034# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+ตอนนี้เจ้าเป็น Alchemist ได้แล้ว!! ไปที่สมาคมและบอกลาชีวิต Merchant ของเจ้าได้เลย!#
+คุยกับ Master Alchemist#
+
+2035# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+ไปยังห้องถัดไปและคุยกับ Van Helmont เพื่อรับการฝึกขั้นต่อไป #
+คุยกับ นักทดลอง Van Helmont#
+
+2036# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+ข้าจะให้งานเจ้า ไปเรียนรู้แล้วค่อยกลับมา แสดงให้ข้าเห็นวิธีการทำ Counteragent และ Mixture จาก Molgenstein#
+เรียนรู้เกี่ยวกับการทำ Counteragent และ Mixture#
+
+2037# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+เอาล่ะ ตอนนี้เจ้ารู้เรื่องการทดลองแล้ว ไปยังห้องถัดไปและคุยกับ Nicholas เค้าจะฝึกเจ้าต่อ #
+คุยกับ หัวหน้าวิจัย Nicholas#
+
+2038# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+1 Mixture, 5 Burnt Tree, 5 Fine Sand, 3 Rough Oridecon และ 3 Rough Elunium Bain และ Bajin ต้องการของเหล่านี้เพื่อทำการทดลอง #
+คุยกับ Bain และ Bajin#
+
+2039# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+ข้าได้รับข้อความจาก Bain และ Bajin แล้ว เขาบอกข้าว่าเจ้าช่วยเขาได้ดีมาก ตอนนี้เจ้าก็แค่ไปหาหัวหน้าสมาคมที่ชั้น 2! ยินดีด้วย เจ้าจะได้เป็น Alchemist แล้ว!#
+คุยกับ Master Alchemist#
+
+2040# เปลี่ยนอาชีพ Alchemist#SG_FEEL#QUE_NOIMAGE#
+ตอนนี้เจ้าเป็นสมาชิกของเราแล้ว ข้าหวังว่าเจ้าจะได้เรียนรู้หลายสิ่งอีกมากมายและจำไว้ว่าเจ้าคือ Alchemist!#
+#
+
+2041# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+เพื่อจะเข้าร่วมการสอบ เจ้าต้องคุยกับ Professor Claytos เขาอยู่ในห้องทางซ้าย #
+คุยกับ ผู้บันทึกผลการทดลอง Claytos#
+
+2042# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ไม่มีเงินลงทะเบียนหรือ? งั้นข้าจะให้โอกาสเจ้า! ข้าจะคิดแค่ 30,000 zeny ในการลงทะเบียนหากเจ้ามีของพวกนี้มาด้วย หรือจะจ่าย 70,000 zeny ตามกฎหรือจะใช้ Old Magic Book และ Necklace of Wisdom เป็นค่าลงทะเบียนแทนก็ได้ #
+Bring 50 Feathers of Bird, 50 Fluff, 25 Iron Ores และคุยกับ Metheus Sylphe#
+
+2043# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ข้าจะคิดแค่ 30,000 zeny ในการลงทะเบียนหากเจ้ามีของพวกนี้มาด้วย หรือจะจ่าย 70,000 zeny ตามกฎหรือจะใช้ Old Magic Book และ Necklace of Wisdom เป็นค่าลงทะเบียนแทนก็ได้ #
+หาเงิน 30,000zeny, 50 Feathers of Bird, 50 Fluff, 25 Iron Ores และไปคุยกับ Metheus Sylphe#
+
+2044# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ข้าจะคิดแค่ 30,000 zeny ในการลงทะเบียนหากเจ้ามีของพวกนี้มาด้วย หรือจะจ่าย 70,000 zeny ตามกฎหรือจะใช้ Old Magic Book และ Necklace of Wisdom เป็นค่าลงทะเบียนแทนก็ได้ #
+หาเงิน 30,000zeny, 50 Clovers, 50 Feathers, 25 Squid Ink และไปคุยกับ Metheus Sylphe#
+
+2045# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ข้าจะคิดแค่ 30,000 zeny ในการลงทะเบียนหากเจ้ามีของพวกนี้มาด้วย หรือจะจ่าย 70,000 zeny ตามกฎหรือจะใช้ Old Magic Book และ Necklace of Wisdom เป็นค่าลงทะเบียนแทนก็ได้ #
+หาเงิน 30,000zeny, 50 Feathers of Bird, 50 Fluff, 50 Clovers, 50 Feathers และไปคุยกับ Metheus Sylphe#
+
+2046# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ตอนนี้เจ้าผ่านข้อเขียนแล้ว ทำไมไม่ไปหา Professor Hermes และเข้ารับการทดสอบล่ะ?#
+คุยกับ practical tester Hermes#
+
+2047# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ไหนดูซิว่าเจ้าจะสอบปฎิบัติเป็นไงบ้าง อืม...จากคะแนนของเจ้า ข้าแนะนำว่าเจ้าควรไปศึกษาเกี่ยวกับ Yggdrasil ไปช่วย Professor Saphien ที่ห้อง Academic Lecture Room#
+คุยกับ Professor Saphien ในห้อง Academic Lecture Room#
+
+2048# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ไหนดูซิว่าเจ้าจะสอบปฎิบัติเป็นไงบ้าง อืม...จากคะแนนของเจ้า ข้าแนะนำว่าเจ้าควรไปศึกษาเกี่ยวกับมอนเตอร์ที่เกิดขึ้นในโลก ไปช่วย Lucius ใน Monster Museum#
+คุยกับ Professor Lucius ใน Monster Museum#
+
+2049# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ไหนดูซิว่าเจ้าจะสอบปฎิบัติเป็นไงบ้าง อืม...จากคะแนนของเจ้า ข้าแนะนำว่าเจ้าควรไปศึกษาเกี่ยวกับธาตุของเวทมนตร์ ไปช่วย Professor Aebecee ใน Somatology Lab#
+คุยกับ Professor Aebecee ใน Somatology Lab#
+
+2050# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+หาไอเทมที่เกี่ยวกับ Yggdrasil ข้าแนะนำว่าควรจะเป็นเมล็ดหรือผลของมันจะดีกว่า แต่พวกมันจะหายากหน่อยนะ #
+หาของที่เกี่ยวกับ Yggdrasil#
+
+2051# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ครั้งหน้าเจ้าต้องเขียนรายงานด้วย จงเตรียมของพวกนี้ไว้ #
+1 Feather of birds, 1 Animal's skin, 1 Trunk, 1 Squid ink, 1 Empty bottle#
+
+2052# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ถ้าเจ้าเขียนรายงานเสร็จแล้วให้ไปหา Dean ในสมาคม #
+คุยกับ Dean ในสมาคม #
+
+2053# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ข้าคือ Professor Lucius และอย่าลืมว่าวิชาของข้านั้นต้องออกภาคสนาม ดังนั้นข้าต้องการให้เจ้าไปหาของพวกนี้ก่อน #
+5 Tentacle, 5 Single cell, 5 Fish tail#
+
+2054# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ข้าคือ Professor Lucius และอย่าลืมว่าวิชาของข้านั้นต้องออกภาคสนาม ดังนั้นข้าต้องการให้เจ้าไปหาของพวกนี้ก่อน #
+5 Nipper, 5 Clam flesh, 5 Heart of mermaid#
+
+2055# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ข้าคือ Professor Lucius และอย่าลืมว่าวิชาของข้านั้นต้องออกภาคสนาม ดังนั้นข้าต้องการให้เจ้าไปหาของพวกนี้ก่อน #
+5 Tendon, 5 Nipper, 5 Sharp scale#
+
+2056# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+อืม ครั้งนี้เรามาเรียนเรื่องแมลงกันดีกว่าไหม? ข้าจะเริ่มสอนทันทีที่เจ้าได้ของมา #
+รวบรวม 5 Cobweb, 5 Shell, 5 Insect feeler และกลับไปหา Professor Lucius#
+
+2057# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+อืม ครั้งนี้เรามาเรียนเรื่องแมลงกันดีกว่าไหม? ข้าจะเริ่มสอนทันทีที่เจ้าได้ของมา #
+รวบรวม 5 Horn, 5 Snail's shell, 5 Moth dust และกลับไปหา Professor Lucius#
+
+2058# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+อืม ครั้งนี้เรามาเรียนเรื่องแมลงกันดีกว่าไหม? ข้าจะเริ่มสอนทันทีที่เจ้าได้ของมา #
+รวบรวม 5 Mantis scythe, 5 Worm peelings, 5 Rainbow shell และกลับไปหา Professor Lucius#
+
+2059# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+อืม ครั้งนี้เรามาเรียนเรื่องแมลงกันดีกว่าไหม? ข้าจะเริ่มสอนทันทีที่เจ้าได้ของมา #
+รวบรวม 5 Cobweb, 5 Mantis scythe, 5 Solid shell และกลับไปหา Professor Lucius#
+
+2060# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ก่อนจะเริ่มเรียนเจ้าต้องช่วยอะไรข้าก่อน ไม่ใช่เรื่องยาก เจ้าจะช่วยข้าใช่ไหม?#
+รวบรวม 30 stones และกลับไปหา Professor Aebecee#
+
+2061# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+ข้าจะให้หินพวกนี้แก่เจ้า แต่ไม่ใช่ของขวัญนะ! ทำลูกธนูจากหินพวกนี้ ถ้าเจ้ามีเพื่อนเป็นนักธนู เขาอาจช่วยเจ้าได้ #
+รวบรวม 50 Crystal arrows, 50 Stone arrows, 50 Arrow of winds และกลับไปหา Professor Aebecee#
+
+2062# เปลี่ยนอาชีพ Sage#SG_FEEL#QUE_NOIMAGE#
+รวบรวม 1 Holy water สำหรับวิชาต่อไป เจ้ามีเพื่อนเป็น priest หรือเปล่า? ถ้าไม่ก็ต้องหาเอง โฮ่ๆๆๆ #
+รวบรวม 1 Holy water และไปหา Professor Aebecee#
+
+//---The Crow of the Fate---
+2063#The Crow of the Fate#SG_FEEL#QUE_NOIMAGE#
+I accept Benjamin's request to bring the book from Library#
+คุยกับ Library Curator#
+
+2064#The Crow of the Fate#SG_FEEL#QUE_NOIMAGE#
+หาหนังสือที่ Prontera ไม่พบ ต้องลองไปที่ห้องสมุดที่ Juno#
+เดินทางไปห้องสมุดที่ Juno#
+
+2065#The Crow of the Fate#SG_FEEL#QUE_NOIMAGE#
+หนังสือบอกตรงกับเรื่องที่เคยฝันเห็น ต้องลองหาข่าวเกี่ยวกับไฟไหม้จากหนังสือพิมพ์ดู #
+หาข่าวเกี่ยวกับไฟไหม้ #
+
+2066#The Crow of the Fate#SG_FEEL#QUE_NOIMAGE#
+คุณพบว่าเกิดเหตุการณ์ไฟไหม้ห้องทดลองขึ้นจริงๆ คุณตัดสินใจที่จะค้นหา Cave village#
+ค้นหา Cave village ในพื้นที่ของ Schwaltzvalt#
+
+2067#The Crow of the Fate#SG_FEEL#QUE_NOIMAGE#
+Zid บอกให้คุณตื่นจากฝันและใช้ชีวิตเหมือนคนทั่วไป จากการพูดคุยกับ Zid คุณตัดสินใจเดินทางกลับ Morroc และลืมเรื่องทุกอย่างที่เกิดขึ้น #
+คุยกับ Benjamin ใน Morroc#
+
+2068#The Crow of the Fate#SG_FEEL#QUE_NOIMAGE#
+คุณตัดสินใจที่จะอ่านเรื่อง <The Crow of the Fate> ตามที่ Benjamin แนะนำ #
+กลับไปยังห้องสมุดที่ Juno#
+
+2071# คำสาปที่คาดการณ์ไว้ #SG_FEEL#QUE_NOIMAGE#
+Buender Hikeman เกิดความเศร้าเสียใจกับสิ่งที่เขาทำในอดีตและเริ่มร้องไห้ #
+ฟังเรื่องของ Buender Hikeman ต่อไป #
+
+2072# คำสาปที่คาดการณ์ไว้ #SG_FEEL#QUE_NOIMAGE#
+ระหว่างที่คุณเดินออกมาจาก Buender Hikeman เขาได้พูดถึงชื่อ 'Shinokas' และการถล่ม #
+ตามหา Shinokas#
+
+2073# คำสาปที่คาดการณ์ไว้ #SG_FEEL#QUE_NOIMAGE#
+Shinokas บอกความจริงเกี่ยวกับเหมืองถล่มกับคุณ #
+ฟังเรื่องราวของ Shinokas ต่อไป #
+
+2074# คำสาปที่คาดการณ์ไว้ #SG_FEEL#QUE_NOIMAGE#
+Shinokas บอกให้คุณไปบ้านของ Kapellthaines หนึ่งในเศรษฐีของเมืองนี้และค้นหาแร่บางอย่าง #
+ลอบเข้าไปในบ้านของ Kapellthaines#
+
+2075# คำสาปที่คาดการณ์ไว้ #SG_FEEL#QUE_NOIMAGE#
+Shinokas ขอให้คุณไปที่โรงงานซึ่งเป็นสถานที่น่าสงสัยเพื่อตามหาแร ่#
+ค้นหาแร่ในโรงงาน #
+
+2076# คำสาปที่คาดการณ์ไว้ #SG_FEEL#QUE_NOIMAGE#
+Shinokas ขอให้คุณไปค้นหาแร่ใน Einbroch Labatory#
+ลอบเข้าไปหาแร่ใน Einbroch Labatory#
+
+2077# คำสาปที่คาดการณ์ไว้ #SG_FEEL#QUE_NOIMAGE#
+ชายขี้เมาบอกคุณว่าแร่ที่พบใน Einbech คือ piece of Ymir's heart#
+กลับไปหา Shinokas#
+
+2078# คำสาปที่คาดการณ์ไว้ #SG_FEEL#QUE_NOIMAGE#
+เรื่องแร่ได้ถูกเปิดเผยแล้วแต่ Shinokas ได้ถูกทำร้ายโดยบุคคลต้องสงสัย เขาทิ้งข้อความไว้ว่า 'พวกเขา... คือ...." และก็ตาย #
+กลับไปหา Buender Hikeman#
+
+2079# อดีตที่ผิดพลาด #SG_FEEL#QUE_NOIMAGE#
+Kain Himere ลูกเรือของเรือเหาะขอให้คุณช่วยไปส่งของที่ลูกค้าทำหล่นไว้ที่โรงแรมใน Einbroch#
+ส่งของที่หล่นหายไปที่โรงแรมใน Einbroch#
+
+2080# อดีตที่ผิดพลาด #SG_FEEL#QUE_NOIMAGE#
+Elle Cherno คนที่พบในโรงแรมบอกคุณให้ไปที่บ้านที่อยู่ข้างหลังโรงแรมเพื่อพบแม่เธอ #
+ไปพบ Tarsha Cherno#
+
+2081# อดีตที่ผิดพลาด #SG_FEEL#QUE_NOIMAGE#
+Tarsha Cherno บอกว่าเธอคิดถึงพ่อของเธอที่เป็นนักขุดแร่ คุณให้สัญญากับเธอว่าจะตามหาพ่อของเธอให้ #
+ตามหาพ่อของ Tarsha Cherno#
+
+2082# อดีตที่ผิดพลาด #SG_FEEL#QUE_NOIMAGE#
+คุณจำเป็นต้องหาหลักฐานเพื่อพิสูจน์ว่า Tarsha และ Kain เป็นครอบครัวเดียวกัน Kain Himere บอกคุณว่าไดอารี่ของแม่เธอจะเป็นหลักฐานได้ #
+หาไดอารี่แม่ของ Tarsha#
+
+2083# อดีตที่ผิดพลาด #SG_FEEL#QUE_NOIMAGE#
+หลังจากที่ตรวจสอบไดอารี่ของแม่เธอแล้วคุณก็เอาไปให้เธอ #
+คุยกับ Tarsha Cherno#
+
+2084# อดีตที่ผิดพลาด #SG_FEEL#QUE_NOIMAGE#
+Tarsha Cherno ขอบคุณคุณที่ช่วยเหลือและอนุญาตให้คุณใช้เครื่องซ่อมได้ฟรีและบอกให้คุณไปพบลูกสาวเธออีกครั้ง #
+ไปพบ Elle Cherno#
+
+2085# อดีตที่ผิดพลาด #SG_FEEL#QUE_NOIMAGE#
+คุณได้รับรูปและจดหมายที่ Elle Cherno เตรียมไว้ให้ปู่ของเธอ #
+กลับไปหา Kain Hemere#
+
+2086# บริษัท #SG_FEEL#QUE_NOIMAGE#
+คุณได้ยินเสียงและภาพหลอนแต่คุณยังไม่มั่นใจมากนัก #
+ตรวจสอบเกี่ยวกับเสียงและภาพหลอน #
+
+2087# บริษัท #SG_FEEL#QUE_NOIMAGE#
+จากความช่วยเหลือของชายแก่ คุณพบว่าวิญญาณแปลกๆ นั้นต้องการให้คุณไปที่ Rekenber Corporation#
+เข้าไปที่ Rekenber Corporation#
+
+2088# บริษัท #SG_FEEL#QUE_NOIMAGE#
+คุณได้รับข้อมูลจากพนักงานต้อนรับของบริษัท Rekenber ว่าคุณสามารถเช็คประวัติของ Rekenber ได้ในห้องสมุด #
+คุยกับบรรณารักษ์ในห้องสมุดของ Rekenber#
+
+2089# บริษัท #SG_FEEL#QUE_NOIMAGE#
+คุณพบข้อมูลเกี่ยวกับประวัติ Rekenber จากสมุดและบรรณารักษ์ #
+หาข้อมูลเพิ่มเกี่ยวกับ Rekenber#
+
+2090# บริษัท #SG_FEEL#QUE_NOIMAGE#
+Wolfchev นักวิจัยใน Rekenber บอกว่าเขาต้องการอะไรที่มันกลมๆ และมีประกาย #
+หาสิ่งที่ Wolfchev ต้องการและคุยกับเขา #
+
+2091# บริษัท #SG_FEEL#QUE_NOIMAGE#
+คุณได้รับเครื่องประดับเก่าๆ ที่ยังไม่ได้ถูกเปิดซึ่งมีความเกี่ยวข้องกับ Rekenber#
+หาวิธีเปิดเครื่องประดับอันนั้น #
+
+2092# บริษัท #SG_FEEL#QUE_NOIMAGE#
+ชายแก่ขอไอเทมบางอย่างจากคุณเพื่อล้างคำสาปบนเครื่องประดับ #
+หา 5 Holy Water และ 1 Bouquet ให้ชายแก่ #
+
+2093# บริษัท #SG_FEEL#QUE_NOIMAGE#
+ด้วยความช่วยเหลือของชายแก่ คุณสามารถเปิดเครื่องประดับนั้นได้และเห็นภาพของเด็กสาวนั่งอยู่บนเก้าอี้และเด็กผู้ชายที่เหมือนพี่ของเธอ #
+หาเจ้าของเครื่องประดับนี้ #
+
+2094# บริษัท #SG_FEEL#QUE_NOIMAGE#
+คุณสรุปได้ว่าสาเหตุที่เกิดขึ้นและคำสาปเกิดจาก Rekenber และตัดสินใจไปที่ Rekenber อีกครั้งเพื่อค้นหาความจริง #
+คุยกับเจ้าหน้าที่ของ Rekenber#
+
+2095# บริษัท #SG_FEEL#QUE_NOIMAGE#
+Sueii Slierre เลขานุการของ Rekenber บอกว่า Wolfchev ได้ลาออกแล้วและคดีก็ปิดไปแล้ว #
+ยืนยันว่า Wolfchev ได้ลาออกแล้ว #
+
+2109# จอมเวทย์ในถ้ำน้ำแข็ง #SG_FEEL#QUE_NOIMAGE#
+Urstialla ใน Rachel ขอให้คุณไปพบ จอมเวทย์ในถ้ำน้ำแข็ง ที่มีสร้อยขอซึ่งเป็นเครื่องบรรณาการแด่องค์ Freya#
+ไปพบจอมเวทย์ในถ้ำน้ำแข็ง ที่ทางเหนือของ Rachel#
+
+2110# จอมเวทย์ในถ้ำน้ำแข็ง #SG_FEEL#QUE_NOIMAGE#
+นักเวทย์ Maheo ขอให้คุณไปพบหัวหน้าของเขาที่น้ำพุแห่ง Freya ใน Rachel และขอให้เขาช่วย #
+ไปคุยกับหัวหน้าของ Maheo#
+
+2111# จอมเวทย์ในถ้ำน้ำแข็ง #SG_FEEL#QUE_NOIMAGE#
+Hamion หัวหน้าของ Maheo ขอให้คุณหาของเพื่อคลายเวทย์ #
+หาไอเทมให้ Hamion 1 hammer, 5 Rough Winds และ 1 Scroll#
+
+2112# จอมเวทย์ในถ้ำน้ำแข็ง #SG_FEEL#QUE_NOIMAGE#
+คุณได้รับ Hammer of Wind จาก Hamion เพื่อคลายเวทย์ #
+กลับไปหานักเวทย์ในถ้ำน้ำแข็ง #
+
+2113# จอมเวทย์ในถ้ำน้ำแข็ง #SG_FEEL#QUE_NOIMAGE#
+นักเวทย์ Maheo ผนึกเวทย์ลงไปในสร้อยคอของ Urstialla#
+นำสร้อยคอกลับไปให้ Urstialla ใน Rachel#
+
+2114# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+High Priest Zhed wants you to ภบ ด็ฝลภฬ ค่ายใน Thor Volcanoธฆ ภแภิวฯฑๆ นูถ๕ดูดย ถๆภป นเศ๗ธ็, ลไธฃ ศญป๊ภบ บ๔ตๅ ด๋ฝลฐภฬ ฐธฎวฯฐํ ภึดูฐํ วฯฟดดู. #
+บ๔ตๅ ด๋ฝลฐภว ผญภ็ฟกผญ ลไธฃ ศญป๊ ฑโม๖ภว ดผญ รฃฑโ #
+
+2115# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ด็ฝลภบ บ๔ตๅ ด๋ฝลฐภว ผญภ็ฟกผญ วั ผญท๙รถภป น฿ฐ฿ว฿ดู. #
+High Priest Zhedฟกฐิ ตนพฦฐกฑโ #
+
+2116# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ผญท๙รถภว มึผาธฆ ต๛ถ๓ บฃภฮฝบถ๓ดย ป็ธทตตฝรฟกผญ ม๖ม๚วะภฺธฆ รฃพฦบธฑโทฮ ว฿ดู. #
+ม๖ม๚วะภฺฟอ ด๋ศญ #
+
+2117# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ม๖ม๚วะภฺ ม๖ฟภดย ภฺฝลภว มฟกผญ ฟยตตฐ่ฟอ บธฐํผญ พ็ฝฤภป ฐกม๖ฐํ ธธ๐ตศ ลไธฃศญป๊ภว ม๖ฟชภว ฟยตตธฆ ร๘มควุ ดถ๓ฐํ วฯฟดดู. #
+ลไธฃ ศญป๊ภว ม๖วฅ ฟยตตธฆ ร๘มค #
+
+2118# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ด็ฝลภบ รนน๘ยฐ ม๖วฅภว ฟยตตธฆ ร๘มควฯฟดดู. #
+ตฮน๘ยฐ ลไธฃ ศญป๊ภว ม๖วฅ ฟยตต ร๘มค #
+
+2119# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ด็ฝลภบ ตฮน๘ยฐ ม๖วฅภว ฟยตตธฆ ร๘มควฯฟดดู. #
+ผผน๘ยฐ ลไธฃ ศญป๊ภว ฟยตต ร๘มค #
+
+2120# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ด็ฝลภบ ผผน๘ยฐ ม๖วฅภว ฟยตตธฆ ร๘มควฯฟดดู. #
+ลไธฃ ศญป๊ ฑโม๖ฟก บธฐํผญ มฆรโ #
+
+2121# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ป็ว์ต๐ธฆ ธฺม๖ฐิ ผำภฮ ด็ฝลภบ ด็ด็วฯฐิ ฑโม๖พศภป ป์ฦ์บผ ผ๖ ภึฐิ ตวพ๚ดู. #
+ค่ายใน Thor Volcano ฒฤฒฤศ๗ ป์ฦ์บธฑโ #
+
+2122# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ธทนซฐกณปภว บ๑ลไ ด๋ทษภบ บฯยสภว ฦฤภฬวม ม๖ด๋ฟกผญ ฑโฑโธฆ มกฐหวฯฐํ ฟภถ๓ฐํ วฯฟดดู. #
+ฦฤภฬวม ม๖ด๋ มกฐหวฯฐํ ตนพฦฟภฑโ #
+
+2123# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ด็ฝลภบ บ๑ลไ ด๋ทษภว ม๖ฝรฟก ต๛ถ๓ วใผ๖พฦบ๑ฟกฐิ ผ๖ตตฤกฑโธฆ ฝรตตว฿ดู. #
+วใผ๖พฦบ๑ฟก ผ๖ตตฤกฑโ 10ศธ #
+
+2124# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+บ๑ลไ ด๋ทษฟกฐิผญ ฐฃฝลศ๗ บมฎณชฟย ด็ฝลภบ ฑโม๖ธฆ มป ด๕ ตัทฏบป ตฺฟก ป็ว์ต๐ฟกฐิ ตนพฦฐกฑโทฮ วฯฟดดู. #
+ฑโม๖ ป์ฦ์บธฑโ #
+
+2125# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ฑโม๖ธฆ รๆบะศ๗ ป์ฦ์บธพาดู ปฐขตศ ด็ฝลภบ ป็ว์ต๐ฟกฐิ ตนพฦฐกฑโทฮ ว฿ดู. #
+ป็ว์ต๐ฟอ ด๋ศญ #
+
+2126# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ป็ว์ต๐ดย ด็ฝลภว ฐลมธปฟก ฐจยสฐฐภฬ ผำพฦ ศ๏บะวฯฐํ ภึดู. ด็ฝลภบ ฑโม๖ธฆ ภฏภฏศ๗ บมฎณชฟอ ม๖ม๚วะภฺฟกฐิ ตนพฦฐกฑโทฮ ว฿ดู. #
+ม๖ม๚วะภฺ ม๖ฟภฟอ ด๋ศญ #
+
+2127# ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ม๖ม๚วะภฺ ม๖ฟภดย ด็ฝลฟกฐิ บธดไภธทฮ ภฺฝลภว นๆฟก ม๘ฟญตศ ป๓ภฺ ผำ นฐฐวภป มึฐฺณ๋ถ๓ฐํ วฯฟดดู.#
+ม๖ฟภภว นๆภธทฮ ตนพฦฐกฑโ #
+
+2128#ค่ายใน Thor Volcano#SG_FEEL#QUE_NOIMAGE#
+ลไธฃ ศญป๊ฟก ฐวั รๆบะวั มคบธธฆ พ๒ภบ ด็ฝลภบ High Priest Zhedฟกฐิ ตนพฦฐกฑโทฮ ว฿ดู.#
+High Priest Zhedฐ๚ ด๋ศญ #
+
+// Guild Dungeon
+
+2143#Guild Dungeon Event#SG_FEEL#QUE_NOIMAGE#
+คุณฟังคำทักทายของ Gergoth#
+หลังจากนั้นให้คุยกับ Pierrot Piel#
+
+2144#Guild Dungeon Event#SG_FEEL#QUE_NOIMAGE#
+คุณรับคำยอร้องจาก Morestone และเขาแนะนำสถานที่ลึกลับที่เขาพบให้กับคุณ #
+
+
+// EP13
+2147# สำรวจโลกใหม่ #SG_FEEL#QUE_NOIMAGE#
+Rumis Block นักสัตววิทยาเลิกที่จะทำการวิจัยตั้งแต่เขากลัว Nepenthes#
+กำจัด Nepenthes และนำ strong bine มาให้เขาดู #
+
+2148# สำรวจโลกใหม่ #SG_FEEL#QUE_NOIMAGE#
+Rumis อยากให้คุณหาวัสดุสำหรับทำตัวอย่างทดลองให้เขา #
+หา 1 Empty Bottle, 5 Holy Water และ 30 Sticky Mucus ให้เขา #
+
+2149# สำรวจโลกใหม่ #SG_FEEL#QUE_NOIMAGE#
+Rumis ขอให้คุณเอาตัวอย่างทดลองไปให้พี่ชายเขา Teris ที่อยู่ทางตะวันออกของค่าย #
+ไปคุยกับ Teris นักพฤษศาสตร์ #
+
+2150# สำรวจโลกใหม่ #SG_FEEL#QUE_NOIMAGE#
+Teris ขอให้คุณลองไปดูเด็กสาวที่ทางฝั่งซ้ายของสะพาน #
+กำจัดมอนเตอร์ที่รูปร่างคล้ายเด็กสาว 30 ตัว #
+
+2151# สำรวจโลกใหม่ #SG_FEEL#QUE_NOIMAGE#
+Teris ขอให้คุณกำจัดมอนเตอร์ที่มาทำลายอุปกรณ์ของเขา #
+กำจัด 10 Cornus #
+
+2152# สำรวจโลกใหม่ #SG_FEEL#QUE_NOIMAGE#
+Teris ขอให้คุณเอาลำต้นที่ตายแล้วไปที่เครื่องฟื้นสภาพแวดล้อมที่อยู่ติดกับสะพานฝั่งซ้าย #
+คุยกับ Teris ที่หน้าเครื่องฟื้นสภาพแวดล้อมที่มีลักษณะคล้ายเห็ด #
+
+2153# สำรวจโลกใหม่ #SG_FEEL#QUE_NOIMAGE#
+Teris อยากให้คุณกลับไปหา Rumis และบอกเขาเกี่ยวกับการค้นพบ #
+ไปคุยกับ Rumis#
+
+2154# สำรวจโลกใหม่ #SG_FEEL#QUE_NOIMAGE#
+Rumis อยากให้คุณร่วมมือเพื่อศึกษามอนเตอร์ชนิดใหม่และไปพบเขาที่แผนที่ด้านขวาของสะพาน #
+ไปที่ man_fild01#
+
+2155# สำรวจโลกใหม่ #SG_FEEL#QUE_NOIMAGE#
+Rumis ขอให้คุณรวบรวม Horns of Hillsrion ในขณะที่เขากำลังศึกษาพฤติกรรมมัน #
+รวบรวม 20 horns of Hillsrion#
+
+2156# สำรวจโลกใหม่ #SG_FEEL#QUE_NOIMAGE#
+Rumis ต้องการจะคุยกับคุณในค่าย #
+คุยกับ Rumis#
+
+2157# สำรวจโลกใหม่ #SG_FEEL#QUE_NOIMAGE#
+Rumis อยากให้คุณตรวจสอบว่ามอนเตอร์ที่มี tricorn hat เป็นมิตรหรือศัตรู #
+กำจัดมอนเตอร์ที่เป็นเจ้าของหมวก 10 ตัว #
+
+2158# ตามหาภูติ #SG_FEEL#QUE_NOIMAGE#
+คุณพบภูติตัวเล็กในพุ่มไม้ คุณพบสิ่งมีชีวิตใหม่ คุณควรรีบไปรายงานให้กองกำลังทราบ #
+คุยกับหัวหน้ารักษาการณ์ของกองกำลัง Midgard #
+
+2159# ตามหายักษ์ #SG_FEEL#QUE_NOIMAGE#
+คุณพบต้นไม้ยักษ์ คุณพบสิ่งมีชีวิตใหม่ คุณควรรีบไปรายงานให้กองกำลังทราบ #
+คุยกับหัวหน้ารักษาการณ์ของกองกำลัง Midgard#
+
+2179#Continuous Research#SG_FEEL#QUE_NOIMAGE#
+ธถดฉลฉภว ฐ๚วะภฺ ธฎฦไฐกตๅดย นฬตๅฐกธฃตๅภว ฑคผฎภป ฟ๘วฯธ็, ฑืฐอภบ ลฝป๖ฑโธฆ ล๋วุ ท้ นฬตๅฐกร๗ ฟีฑนภว นฆธฃดา ป๊ธฦฟกผญ น฿ฐ฿วา ผ๖ ภึดูฐํ วฯฟดดู. #
+มคมฆตวม๖ พสภบ ฑคผฎ 20ฐณ #
+
+2180#Continuous Research#SG_FEEL#QUE_NOIMAGE#
+ธถดฉลฉภว ฐ๚วะภฺ ธฎฦไฐกตๅดย นฬตๅฐกธฃตๅภว ฑคผฎภป ฟ๘วฯธ็, ฑืฐอภบ ลฝป๖ฑโธฆ ล๋วุ ฝดน฿ร๗ น฿ตๅภว ฟ๋ต้ภฬ ป็ดย ฐ๗ มึบฏฟกผญ น฿ฐ฿วา ผ๖ ภึดูฐํ วฯฟดดู. #
+มคมฆตวม๖ พสภบ ฑคผฎ 5ฐณ #
+
+2181#Continuous Research#SG_FEEL#QUE_NOIMAGE#
+ธถดฉลฉภว ฐ๚วะภฺ ธฎฦไฐกตๅดย นฬตๅฐกธฃตๅภว ฑคผฎภป ฟ๘วฯธ็, ฑืฐอภบ ลฝป๖ฑโธฆ ล๋วุ พฦท็ณชฦ็ร๗ภว ลไธฃ ศญป๊ มึบฏฟกผญ น฿ฐ฿วา ผ๖ ภึดูฐํ วฯฟดดู. #
+มคมฆตวม๖ พสภบ ฑคผฎ 5ฐณ #
+
+2182#Continuous Research#SG_FEEL#QUE_NOIMAGE#
+ฐ๚วะภฺ ธฎฦไฐกตๅดย ด็ฝลฟกฐิ ฐจป็ธฆ วฅวฯธ็ พีภธทฮตต ธนภบ ตตฟ๒ภป นูถ๕ดูฐํ ภว฿ดู. #
+#
+
+2183#Perfume#SG_FEEL#QUE_NOIMAGE#
+ฑืท็ดฉภฬดย วรถ๓ฟ๖ธฎทฮบฮลอ พหวมว์ภำ ฒษพพธฆ นพฦ ศฏฐๆมคศญ ภๅฤกธฆ ล๋วุ ฒษภป ววฟ๖ฟภถ๓ฐํ ว฿ดู. #
+ฑืท็ดฉภฬฟกฐิ พหวมว์ภำภว ฒษ ภด#
+
+2184#Perfume#SG_FEEL#QUE_NOIMAGE#
+ฑืท็ดฉภฬดย Perfumeธฆ ธธต้ฐฺณ๋ถ๓ธ็ ภแฝร ฑโดูทม ดถ๓ฐํ ว฿ดู. #
+#
+
+2185#Perfume#SG_FEEL#QUE_NOIMAGE#
+ฑืท็ดฉภฬดย Perfumeธฆ ฐวณืธ็ บดป็ต้ภป ฤกทแวฯฐํ ฐแฐ๚ธฆ พหทมดถ๓ ธปว฿ดู. #
+ม๖รฤภึดย ภล๕บด 5ธํฟกฐิ Perfume ป็ฟ ๋ #
+
+2186#Perfume#SG_FEEL#QUE_NOIMAGE#
+ฝบวรถ๛ต๐ตๅภว ฑืท็ดฉภฬดย ด็ฝลฟกฐิ ฐจป็ธฆ วฅว฿ดู. #
+#
+
+// ฑ่ภบตฟ
+
+3000# เปลี่ยนอาชีพ Bard - Beautiful Song#SG_FEEL#QUE_NOIMAGE#
+คุณพบกับ Bard ผู้ร้องเพลงได้เพราะมาก คุณต้องการจะเป็น Bard...คุณควรจะถามเขาเกี่ยวกับการเป็น Bard จริงไหม?#
+ #
+
+3001# เปลี่ยนอาชีพ Bard - Pay by Flower?#SG_FEEL#QUE_NOIMAGE#
+Bard Lalo ให้คุณหาดอกไม้เพื่อเป็นค่าจ้างในการสอนร้องเพลง แต่เขาต้องการดอกไม้ที่พิเศษ #
+หาดอกไม้พิเศษมาให้ Lalo#
+
+3002# เปลี่ยนอาชีพ Bard - The first step of becoming a Bard#SG_FEEL#QUE_NOIMAGE#
+Bard Lalo ขอให้คุณไปคุยกับมนุษย์หิมะที่เมือง Lutie และรับของขวัญมาจากเขา #
+ #
+
+3003# เปลี่ยนอาชีพ Bard - Following a song#SG_FEEL#QUE_NOIMAGE#
+Bard Lalo ให้คุณร้องเพลงตามเขา ถ้าทำได้ก็จะสามารถเปลี่ยนเป็น Bard ได้ #
+ #
+
+3004# เปลี่ยนอาชีพ Bard - Final test#SG_FEEL#QUE_NOIMAGE#
+Bard Lalo ขอให้รวบรวม 60 Trunks สำหรับการทดสอบขั้นสุดท้าย ถ้าหามาได้คุณก็จะได้เป็น bard และได้รับของที่ระลึกจากเขา #
+รวบรวม 60 Trunks#
+
+3006# เปลี่ยนอาชีพ Crusader - Qualification#SG_FEEL#QUE_NOIMAGE#
+"คุณถูกทดสอบคุณสมบัติ คุณต้องรวบรวม ^3355FFDecayed Nail, Stinky Scale, Worn Out Prison Uniform, Daenggie^000000"#
+10 Decayed Nail, 10 Stinky Scale, 10 Worn Out Prison Uniform, 10 Daenggie#
+
+3007# เปลี่ยนอาชีพ Crusader - Qualification#SG_FEEL#QUE_NOIMAGE#
+"คุณถูกทดสอบคุณสมบัติ คุณต้องรวบรวม ^3355FFSkel Bone, Orc Claw, Manacles, Short Daenggie^000000"#
+10 Skel Bone, 10 Orc Claw, 10 Manacles, 10 Short Daenggie#
+
+3008# เปลี่ยนอาชีพ Crusader - Qualification#SG_FEEL#QUE_NOIMAGE#
+"คุณถูกทดสอบคุณสมบัติ คุณต้องรวบรวม ^3355FFHorrendous Mouth, Rotten Bandage, Lantern, Pumpkin Head^000000"#
+10 Horrendous Mouth, 10 Rotten Bandage, 10 Lantern, 10 Pumpkin Head#
+
+3009# เปลี่ยนอาชีพ Crusader - Moorenak Miyol#SG_FEEL#QUE_NOIMAGE#
+"คุณมีคุณสมบัติพอที่จะเป็น crusader ไปพบ ^0000FFMoorenak Miyol^000000 เขาอยู่ที่คุกชั้นใต้ดินของปราสาท Prontera ไปคุยกับเขา" #
+ #
+
+3010# เปลี่ยนอาชีพ Crusader - Test of endurance#SG_FEEL#QUE_NOIMAGE#
+"การเป็น crusader ความอดทนเป็นสิ่งสำคัญ คุณต้องวิ่งผ่านทางที่โหดร้ายไปให้ได้ โดยไม่ฆ่ามอนเตอร์สักตัวแม้มันจะโจมตีคุณ" #
+ #
+
+3011# เปลี่ยนอาชีพ Crusader - Continue to Test#SG_FEEL#QUE_NOIMAGE#
+"ไปพบ Gabriel Valentine ที่โบสถ์เมือง Prontera เธอจะทดสอบคุณในขั้นต่อไป...ไปเดี๋ยวนี้" #
+	#
+
+3012# เปลี่ยนอาชีพ Crusader - Knowledge Test#SG_FEEL#QUE_NOIMAGE#
+"เจ้าต้องมีความรู้พอจึงจะเปลี่ยนอาชีพได้ แต่ดูเหมือนคุณยังขาดความรู้จำเป็นต้องศึกษาเพิ่มเติมแล้วค่อยลองใหม่" #
+  #
+
+3013# เปลี่ยนอาชีพ Crusader - Continue to Test2#SG_FEEL#QUE_NOIMAGE#
+"คุณทำได้ดีให้ไปการทดสอบต่อไปได้ ไปที่ปราสาท Prontera และไปพบ Bliant Piyord เพื่อรับการทดสอบขั้นต่อไป" #
+  #
+
+3014# เปลี่ยนอาชีพ Crusader - Final test#SG_FEEL#QUE_NOIMAGE#
+"นี่เป็นการทดสอบสุดท้ายของคุณ การทดสอบสุดท้ายคือการต่อสู้ เฉพาะคนที่เก่งกาจเท่านั้นจึงจะได้เป็น crusaders หา 1 Holy Water มาให้ก่อนที่จะเริ่มการทดสอบ" #
+1 Holy Water#
+
+3015# เปลี่ยนอาชีพ Crusader - Finish the test#SG_FEEL#QUE_NOIMAGE#
+"ยินดีด้วย คุณผ่านการทดสอบหมดแล้ว ไปพบหัวหน้าข้างใน ตอนนี้เจ้าพร้อมแล้วที่จะเข้าสู่สงครามศักดิ์สิทธิ์" #
+  #
+
+// - The first step of becoming a Monk
+3016# เปลี่ยนอาชีพ Monk - The first step of becoming a Monk#SG_FEEL#QUE_NOIMAGE#
+"เจ้าต้องการเป็น Monk หรือ? เข้าไปข้างในและคุยกับบาทหลวง ^0000FFMoohae^000000 เขาจะเป็นคนแนะนำเจ้า"#
+  #
+
+// - Qualification and Preparation
+3017# เปลี่ยนอาชีพ Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"คุณถูกทดสอบคุณสมบัติ คุณต้องรวบรวม ^3355FFSticky Mucus, Earthworm Peeling, Green Herb^000000"#
+5 Sticky Mucus, 10 Earthworm Peeling, 20 Green Herb#
+
+3018# เปลี่ยนอาชีพ Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"คุณถูกทดสอบคุณสมบัติ คุณต้องรวบรวม ^3355FFYoyo Tail, Iron Ore, Blue Herb^000000"#
+20 Yoyo Tail, 5 Iron Ore, 3 Blue Herb#
+
+3019# เปลี่ยนอาชีพ Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"คุณถูกทดสอบคุณสมบัติ คุณต้องรวบรวม ^3355FFStem, Jellopy, Worm Peelings^000000"#
+30 Stem, 5 Jellopy, 10 Worm Peelings#
+
+3020# เปลี่ยนอาชีพ Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"คุณถูกทดสอบคุณสมบัติ คุณต้องรวบรวม ^3355FFSolid Shell, Shell, Zargon^000000"#
+5 Solid Shell, 20 Shell, 5 Zargon#
+
+3021# เปลี่ยนอาชีพ Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"คุณถูกทดสอบคุณสมบัติ คุณต้องรวบรวม ^3355FFCyfar, White Herb, Yellow Herb^000000"#
+5 Cyfar, 10 White Herb, 10 Yellow Herb#
+
+3022# เปลี่ยนอาชีพ Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"คุณถูกทดสอบคุณสมบัติ คุณต้องรวบรวม ^3355FFTooth of Bat, Bear's Footskin, Poison Spore^000000"#
+10 Tooth of Bat, 5 Bear's Footskin, 20 Poison Spore#
+
+3023# เปลี่ยนอาชีพ Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"คุณถูกทดสอบคุณสมบัติ คุณต้องรวบรวม ^3355FFPorcupine Quill, Cobweb, Bug Leg^000000"#
+5 Porcupine Quill, 20 Cobweb, 10 Bug Leg#
+
+3024# เปลี่ยนอาชีพ Monk - Meet 'Touha'#SG_FEEL#QUE_NOIMAGE#
+"ให้ไปพบนักบวชคนต่อไป...ใช่แล้ว! ไปพบ 'Touha'. ไปทางเหนือจากที่นี่ คุณจะพบเธอที่สุสาน" #
+  #
+
+3025# เปลี่ยนอาชีพ Monk - Dogma Test#SG_FEEL#QUE_NOIMAGE#
+"คุณได้รับการสอนเกี่ยวกับการเป็น monk -- มุมมองและหลักศาสนาสำคัญมาก คุณต้องจำหลักคำสอนต่างๆ ที่เธอสอนให้ได้ คุณพร้อมหรือยัง?" #
+  #
+
+3026# เปลี่ยนอาชีพ Monk - Meet 'Boohae'#SG_FEEL#QUE_NOIMAGE#
+" ดีมาก!! สมบูรณ์แบบ! คุณผ่านการทดสอบแล้วแต่ยังมีการทดสอบอื่นๆ รออยู่ไปพบ Sir 'Boohae' โชคดี!" #
+  #
+
+3027# เปลี่ยนอาชีพ Monk - Gathering Mushroom#SG_FEEL#QUE_NOIMAGE#
+"การเก็บเห็นเป็นการฝึกความอดทน ไปที่ใจกลางของสถานที่แห่งนี้" #
+  #
+
+3028# เปลี่ยนอาชีพ Monk - Marathon#SG_FEEL#QUE_NOIMAGE#
+"การวิ่งมาราธอนเป็นการข้ามขีดจำกัดของตัวคุณ ไปที่ใจกลางของสถานที่แห่งนี้ คุณจำเป็นต้องวิ่งหลายรอบหน่อยนะ" #
+  #
+
+3029# เปลี่ยนอาชีพ Monk - Final test#SG_FEEL#QUE_NOIMAGE#
+"ยินดีด้วย!! ตอนนี้ไปพบ 'Tomoon' เขาอยู่ข้างในสุดของสิ่งก่อสร้างที่ตั้งอยู่ใจกลางแผนที่นี้" #
+  #
+
+3031# เปลี่ยนอาชีพ Monk - Spiritual Training#SG_FEEL#QUE_NOIMAGE#
+"การทดสอบสุดท้ายคือการทดสอบจิตใจ! โจมตีและกำจัดศัตรูที่ขวางทางเจ้า! ตอนนี้! เตรียมตัวให้พร้อม! ยืนขึ้น! ได้เวลาแล้ว!" #
+  #
+
+3032# เปลี่ยนอาชีพ Monk - Become a Monk#SG_FEEL#QUE_NOIMAGE#
+"ทำได้ดีมาก!! ตอนนี้คุณได้รับโพชั่นพิเศษ ถ้าคุณดื่ม คุณจะมีพลังเพิ่มขึ้นและสามารถเปลี่ยนเป็น monk ได้! กลับไปพบบาทหลวง 'Moohae'! #
+  #
+
+// ===================== Memorial Baphomet   ========================
+3040# คำสาปของ Baphomet - Fatigue of Grave#SG_FEEL#QUE_NOIMAGE#
+"คุณไม่สามารถกลับเข้าไปได้เพราะว่าคำสาปของ Baphomet ยังคงหลงเหลืออยู่ คำสาปนี้จะหายไปหลังจากที่คุณเคยเข้าไปแล้ว 12 ชั่วโมง" #
+ #
+
+3041# คำสาปของ Baphomet - Dearth of magical power#SG_FEEL#QUE_NOIMAGE#
+คุณไม่สามารถใช้ถ่ายพลังเวทย์ได้อีกเป็นเวลา 3 นาทีเพราะคุณใช้พลังไปเยอะแล้ว" #
+ #
+
+3042# ความสำคัญของ Cursed Baphomet Doll#SG_FEEL#QUE_NOIMAGE#
+Friar Patrick แนะนำให้คุณไปพบ Rust Blackhand ผู้ซึ่งอยู่ใกล้ๆ กับโบสถ์ขนาดใหญ่ เขาบอกว่า Rust Blackhand จะทำให้ Cursed Baphomet Doll กลายเป็นของที่มีคุณค่า #
+ #
+
+3043#The true Gigantic Magestic Goat#SG_FEEL#QUE_NOIMAGE#
+Rust Blackhand บอกว่าเขาสามารถทำให้ Magestic Goat แสดงพลังที่แท้จริงออกมาได้ ถ้าคุณนำวัสดุที่เขาต้องการมาให้ได้ #
+Cursed Baphomet Doll, Magestic Goat, 30 Dark Crystal, 50 Dark Debris, และ 990000Zeny#
+
+//===== 12.1 Resurrection of Satan Morroc
+3050#Resurrection of Satan Morroc - News about Morroc Village#SG_FEEL#QUE_NOIMAGE#
+"Satan Morroc ได้คืนชีพและทำลายหมู่บ้าน Morroc และตอนนี้มันได้หนีไปอยู่ที่ Sograt Desert ถ้าคิดว่าคุณกล้าหาญพอให้ไปพบ Chief Balrog แห่งกองกำลังรักษาดินแดนที่หมู่บ้าน Morroc" #
+ #
+
+3051#Resurrection of Satan Morroc - Test of Qualification#SG_FEEL#QUE_NOIMAGE#
+"ถ้าคุณต้องการจะเข้าร่วมกองทัพ คุณต้องพิสูจน์ความสามารถ รวบรวม 30 Live Coals!"#
+30 Live Coals#
+
+//Test of Qualification2
+3052#Resurrection of Satan Morroc - Test of Qualification2#SG_FEEL#QUE_NOIMAGE#
+"คุณยังพิสูจน์ตัวเองไม่พอที่จะเข้าร่วมได้ ถ้าคุณยังไม่ล้มเลิกความตั้งใจให้รวบรวบ 50 Glacial Hearts"#
+50 Glacial Hearts#
+
+//Joining Continental Guard
+3053#Resurrection of Satan Morroc - Joining Continental Guard#SG_FEEL#QUE_NOIMAGE#
+"คุณได้รับคำชมในเรื่องความเก่งกาจและความกล้าหาย คุณได้เข้าร่วมกองกำลังรักษาดินแดนแล้ว คุณพร้อมที่จะสู้เพื่อสันติภาพของโลกนี้หรือยัง?" #
+ #
+
+//Defeating Satan Morroc
+3054#Resurrection of Satan Morroc - Defeating Satan Morroc!#SG_FEEL#QUE_NOIMAGE#
+Satan Morroc ได้ถูกขับไล่ออกไปจาก Rune-Midgards และหนีเข้าไปอยู่ในมิติกาลเวลา คุณสามารถมองเห็นแสงสว่างเจิดจ้าไปทั่วที่มิติกาลเวลานั้น #
+ #
+
+//Time-Space Gap
+3055#Resurrection of Satan Morroc - Time-Space Gap#SG_FEEL#QUE_NOIMAGE#
+คุณล้วงมือไปหยิบของบางอย่างออกมา มันคือ Satan Morroc's skin สิ่งนี้เป็นหลักฐานแสดงว่าคุณได้เอาชนะ Satan Morroc แล้ว #
+ #
+
+//Rewards
+3056#Resurrection of Satan Morroc - Rewards#SG_FEEL#QUE_NOIMAGE#
+"ยินดีด้วยทหาร คุณพึ่งจะช่วยเหลือโลกนี้และผู้คนให้รอดพ้นจากสิ่งชั่วร้ายและความน่ากลัว มีของให้คุณเลือก 3 อย่าง คุณจะเลือกอันไหน?" #
+ #
+
+//--------------------บฃภฮฝบภว ณฒธล---------------------------------
+3060# เด็กน้อยใน Veins - น้องสาวอยู่ไหน?#SG_FEEL#QUE_NOIMAGE#
+เด็กที่ชื่อ Karyn ได้พลัดหลงกับน้องสาวระหว่างทางที่จะไป Thor Volcano ในเมือง Veins คุณต้องช่วยเหลือเธอตามหาน้องสาว Curdie#
+ #
+
+3061# เด็กน้อยใน Veins - หาวิธีไขโซ่?#SG_FEEL#QUE_NOIMAGE#
+น้องสาวของ Karyn ถูกล่ามเอาไว้ คุณต้องกลับไปที่เมือง Veins เพื่อหาวิธีช่วยเหลือเธอ #
+ #
+
+3062# เด็กน้อยใน Veins - ตามหาช่างกุญแจ!#SG_FEEL#QUE_NOIMAGE#
+น้องสาวของ Karyn ถูกล่ามเอาไว้ คุณต้องกลับไปที่เมือง Veins เพื่อหาวิธีช่วยเหลือเธอ #
+ #
+
+3063# เด็กน้อยใน Veins - Mr.Lockenlock?#SG_FEEL#QUE_NOIMAGE#
+ตามหาผู้เชี่ยวชาญที่ชื่อ Locksmith Lockenlock Mr. Lockenlock น่าจะนั่งดื่มอยู่ที่ตลาดข้างถนน คุณควรจะต้องมี 1 Yellow Potion ไว้ด้วย #
+ #
+
+3064# เด็กน้อยใน Veins - Organic Chamelepu Soap#SG_FEEL#QUE_NOIMAGE#
+Mr. Lockenlock บอกว่าเขาต้องการ Chamelepu Soap เพื่อใช้ทำพิมพ์กุญแจ  คุณสามารถซื้อสบู่ได้จาก Ms. Ivory ที่ตลาด #
+ #
+
+3065# เด็กน้อยใน Veins - วัสดุทำสบู่ #SG_FEEL#QUE_NOIMAGE#
+Chamelepu Soap ได้ถูกขายหมดแล้ว แต่เธอสามารถทำให้คุณใหม่ได้หากคุณมีวัสดุครบ #
+ 10 Milk, 100 Green Herbs, 50 Jellopies, 5 Empty Bottles#
+
+3066# เด็กน้อยใน Veins - ทำ Chamelepu Soap#SG_FEEL#QUE_NOIMAGE#
+ไปพบ Mr. Saraman เจ้าของฟาร์มอูฐพร้อมกับวัสดุพวกนี้ เขาจะบอกเจ้าว่าจะต้องทำยังไง ไปได้แล้ว! #
+ #
+
+3067# เด็กน้อยใน Veins - เลี้ยงอาหารอูฐ #SG_FEEL#QUE_NOIMAGE#
+วิธีการที่จะได้มูลอูฐ คุณต้องให้อาหารมันด้วยอาหารที่ถูกต้อง! #
+ 5 Monster's Feed, 1 Unripe Apple, 1 Yellow Potion, 1 Empty Bottle#
+
+3068# เด็กน้อยใน Veins - ได้รับมูลอูฐ #SG_FEEL#QUE_NOIMAGE#
+คุณทำให้อูฐถ่ายได้สำเร็จ คุณรวบรวมมูลอูฐได้ 5 ก้อน #
+ #
+
+3069# เด็กน้อยใน Veins - Silk Sand Camel อยู่ไหน?#SG_FEEL#QUE_NOIMAGE#
+แปลก...อูฐไม่สนใจที่จะกินอาหาร กลับไปหา Mr. Saraman และดูว่าทำไมจึงไม่สำเร็จ #
+ #
+
+3070# เด็กน้อยใน Veins - Silk Sand Camel หายไป #SG_FEEL#QUE_NOIMAGE#
+Silk Sand Camel ได้หนีหายออกไปจากฟาร์ม ให้ออกตามหา Silk Sand Camel ให้กับ Mr. Saraman และรวบรวม 5 มูลอูฐ อูฐคงไม่ได้ไปไกลนัก #
+ #
+
+3071# เด็กน้อยใน Veins - พบ Silk Sand Camel!#SG_FEEL#QUE_NOIMAGE#
+ในที่สุดก็พบ Silk Sand Camel รวบรวมมูลอูฐ 5 ก้อนกันเลย มูลแต่ละก้อนต้องใช้ส่วนผสมต่างกัน #
+ 2 Milk, 20 Green Herbs, 10 Jellopies, 1 Empty Bottle#
+
+3072# เด็กน้อยใน Veins - ได้ 1 มูลอูฐแล้ว #SG_FEEL#QUE_NOIMAGE#
+คุณมี 1 ก้อนมูลของ Silk Sand Camel คุณต้องการอีก 4 ก้อน มูลแต่ละก้อนต้องใช้ส่วนผสมต่างกัน #
+  2 Milk, 20 Green Herbs, 10 Jellopies, 1 Empty Bottle#
+
+3073# เด็กน้อยใน Veins - ได้ 2 มูลอูฐแล้ว #SG_FEEL#QUE_NOIMAGE#
+คุณมี 2 ก้อนมูลของ Silk Sand Camel คุณต้องการอีก 3 ก้อน มูลแต่ละก้อนต้องใช้ส่วนผสมต่างกัน #
+  2 Milk, 20 Green Herbs, 10 Jellopies, 1 Empty Bottle#
+
+3074# เด็กน้อยใน Veins - ได้ 3 มูลอูฐแล้ว #SG_FEEL#QUE_NOIMAGE#
+คุณมี 3 ก้อนมูลของ Silk Sand Camel คุณต้องการอีก 2 ก้อน มูลแต่ละก้อนต้องใช้ส่วนผสมต่างกัน #
+  2 Milk, 20 Green Herbs, 10 Jellopies, 1 Empty Bottle#
+
+3075# เด็กน้อยใน Veins - ได้ 4 มูลอูฐแล้ว #SG_FEEL#QUE_NOIMAGE#
+คุณมี 4 ก้อนมูลของ Silk Sand Camel คุณต้องการอีก 1 ก้อน มูลแต่ละก้อนต้องใช้ส่วนผสมต่างกัน #
+  2 Milk, 20 Green Herbs, 10 Jellopies, 1 Empty Bottle#
+
+3076# เด็กน้อยใน Veins - ได้ 5 มูลอูฐแล้ว #SG_FEEL#QUE_NOIMAGE#
+ในที่สุดก็รวบรวมมูลอูฐได้ครบแล้ว กลับไปหา Mr. Saraman และบอกเขาว่าอูฐนั้นอยู่ที่ไหน #
+  #
+
+3077# เด็กน้อยใน Veins - ไปหา Ms. Ivory#SG_FEEL#QUE_NOIMAGE#
+คุณบอก Mr. Saraman ว่าอูฐอยู่ไหน ตอนนี้กลับไปหา Ms. Ivory#
+  #
+
+3078# เด็กน้อยใน Veins - Chamalepu Soap เสร็จแล้ว #SG_FEEL#QUE_NOIMAGE#
+ไปหา Mr. Lockenlock พร้อมกับ Chamalepu Soap#
+  #
+
+3079# เด็กน้อยใน Veins - สร้างแบบกุญแจ #SG_FEEL#QUE_NOIMAGE#
+Mr. Lockenlock สอนวิธีที่จะสร้างแม่พิมพ์กุญแจ คุณเทสบู่ลงไปในรูกุญแจและเทกลับมาในขวด เขาจะสามารถทำกุญแจให้จากแบบนั้นได้ ไปต่อกันเลย! #
+  #
+
+3080# เด็กน้อยใน Veins - เอาแบบกุญแจไปส่ง #SG_FEEL#QUE_NOIMAGE#
+สาวน้อย Curdie ยังคงถูกล่ามไว้และเธอก็ไม่มีแรง คุณต้องกลับไปหา Mr. Lockenlock พร้อมกับแม่พิมพ์โดยเร็วที่สุด แล้วเขาจะทำกุญแจให้คุณได้ #
+  #
+
+3081# เด็กน้อยใน Veins - คุณต้องการ Steel#SG_FEEL#QUE_NOIMAGE#
+Mr. Lockenlock ขอ 1 Steel เพื่อใช้ทำกุญแจ #
+1 Steel#
+
+3082# เด็กน้อยใน Veins - Tกุญแจทำเสร็จแล้ว #SG_FEEL#QUE_NOIMAGE#
+คุณได้รับกุญแจหลังจากที่นั่งฟังเรื่องราวเกี่ยวกับกุญแจมากมาย คุณต้องไปช่วยเหลือ Curdie และก็ทำลายกุญแจนั้นซะ #
+  #
+
+3083# เด็กน้อยใน Veins - กุญแจของ Mr. Lockenlock#SG_FEEL#QUE_NOIMAGE#
+Curdie กลับเมืองมาอย่างปลอดภัย อะไรก็ช่างสถานที่นั้นซ่อนบางสิ่งไว้ บางสิ่งที่เกี่ยวข้องกับกองทัพเมือง Rachel กลับเมืองไปหาเด็กก่อนดีกว่า #
+  #
+
+
+
+//--------------------------------------------------------------------EP13
+3085# รายงานถึงดินแดนหลัก - ผู้บังคับบัญชาเรียกหา #SG_FEEL#QUE_NOIMAGE#
+Abidal ผู้ช่วยเจ้าหน้าที่มีบางอย่างจะบอกคุณ ดูเหมือนผู้บังคับบัญชาจะมีภารกิจสำคัญจะให้ทำ...#
+ #
+
+3086# รายงานถึงดินแดนหลัก - ภารกิจของผู้บังคับบัญชา #SG_FEEL#QUE_NOIMAGE#
+เขาต้องการให้คุณส่งรายงานการสำรวจไปยัง 3 ประเทศของไตรภาคี คุณจำเป็นต้องตอบรับภารกิจกับผู้บังคับบัญชาอีกครั้ง #
+ #
+
+3087# รายงานถึงดินแดนหลัก - ภารกิจของผู้บังคับบัญชา #SG_FEEL#QUE_NOIMAGE#
+คุณได้ตกลงรับภารกิจแล้ว คุณต้องไปคุยกับคนส่งสารที่ประตูมิติและเตรียมที่จะไปส่งรายงาน #
+ #
+
+3088# รายงานถึงดินแดนหลัก - อุบัติเหตุ!#SG_FEEL#QUE_NOIMAGE#
+คุณได้ถูกโจมตีที่ประตูมิติและสูญเสียรายงานไป คุณควรกลับไปหาผู้บังคับบัญชาและอธิบายเหตุการณ์ที่เกิดขึ้นให้เขาฟัง #
+ #
+
+3089# รายงานถึงดินแดนหลัก - ทำใหม่ #SG_FEEL#QUE_NOIMAGE#
+ผู้บังคับบัญชาสั่งให้คุณและ Abidal ช่วยกันทำรายงานขึ้นมาใหม่อีกครั้ง คุณจำเป็นต้องทำงานร่วมกับ Abidal#
+ #
+
+3090# รายงานถึงดินแดนหลัก - ตามหารายงาน #SG_FEEL#QUE_NOIMAGE#
+คุณพยายามที่จะค้นหาแผ่นรายงานที่กระจายอยู่ในโลกอื่น มันอาจเป็นไปได้ว่ามอนเตอร์จะกินเข้าไป คุณอาจจะหามันได้จากทีมสำรวจและได้รับข้อมูลบางอย่างจากพวกเขา #
+ #
+
+3091# รายงานถึงดินแดนหลัก - ตามหารายงาน #SG_FEEL#QUE_NOIMAGE#
+คุณพยายามที่จะค้นหาแผ่นรายงานที่กระจายอยู่ในโลกอื่น มันอาจเป็นไปได้ว่ามอนเตอร์จะกินเข้าไป คุณควรกลับมาหาพวกเขาใหม่หลังจากที่พวกเขาทำการสำรวจเสร็จ #
+ #
+
+3092# รายงานถึงดินแดนหลัก - ทำใหม่เสร็จแล้ว!#SG_FEEL#QUE_NOIMAGE#
+ในที่สุดคุณก็ทำรายงานการสำรวจร่วมกับ Abidal สำเร็จ คุณควรกลับไปหาผู้บังคับบัญชาเพื่อรายงานให้เขาทราบ #
+ #
+
+3093# รายงานถึงดินแดนหลัก - รายงานไปยังแผ่นดินหลัก #SG_FEEL#QUE_NOIMAGE#
+คุณควรจะไปส่งรายงาน 3 ฉบับที่ 3 ประเทศ ผู้รับคือ Laur ใน Prontera, Nuria ใน Rachel และ Gerhart ใน Schwaltzwald#
+ #
+
+3094# รายงานถึงดินแดนหลัก - กลับไปยังกองกำลังสำรวจ #SG_FEEL#QUE_NOIMAGE#
+คุณเสร็จสิ้นการส่งรายงาน ตอนนี้คุณควรกลับไปแจ้งให้ผู้บังคับบัญชาทราบ #
+ #
+
+
+3100# หนี้ก้อนโต - สัญญาเงินกู้หายไป #SG_FEEL#QUE_NOIMAGE#
+Muff ที่อยู่ Comodo กำลังมองหาคนช่วยหาสัญญาเงินกู้ของเขา เขาทำหายที่ Papuchicha Forest ใกล้ๆ กับแม่น้ำ #
+  #
+
+3101# หนี้ก้อนโต - ขยะเปื้อนดิน #SG_FEEL#QUE_NOIMAGE#
+คุณพบขยะบางอย่างที่เปื้อนดิน! ลองดูให้ดีๆ #
+  #
+
+3102# หนี้ก้อนโต - เจอสัญญาเงินกู้แล้ว แต่ว่า...#SG_FEEL#QUE_NOIMAGE#
+คุณพบสัญญาเงินกู้แล้วแต่ว่ามันทั้งเปียกและใช้การไม่ได้ อย่างไรก็ควรเอากลับไปให้ Muff ก่อนละกัน #
+  #
+
+3103# หนี้ก้อนโต - นักประดิษฐ์ Dorian#SG_FEEL#QUE_NOIMAGE#
+นักประดิษฐ์ Dorian ใน Izlude อาจจะซ่อมแซมสัญญาเงินกู้ได้โดยใช้เครื่อง Magic Dryer#
+  #
+
+3104# หนี้ก้อนโต - ซ่อมแซม Magic Dryer#SG_FEEL#QUE_NOIMAGE#
+Dorian บอกให้คุณซ่อมเครื่องเสียก่อนหากคุณต้องการใช้งาน #
+  20 Rusty Screws, 10 Iron Ores, 5 Steel, 2 Rubies, 10 Red Gemstones#
+
+3105# หนี้ก้อนโต - ซ่อมแซม Magic Dryer#SG_FEEL#QUE_NOIMAGE#
+Dorian บอกวิธีซ่อมเครื่องกับคุณ ดูเหมือนมันยากเอาการ...#
+  #
+
+3106# หนี้ก้อนโต - ซ่อมแซม Magic Dryer ล้มเหลว #SG_FEEL#QUE_NOIMAGE#
+การซ่อมล้มเหลว ควรไปบอกให้ Dorian รู้ #
+  #
+
+3107# หนี้ก้อนโต - ซ่อมแซม Magic Dryer สำเร็จ #SG_FEEL#QUE_NOIMAGE#
+การซ่อมแซมสำเร็จ ควรไปบอกให้ Dorian รู้ #
+  #
+
+3108# หนี้ก้อนโต - ใช้งาน Magic Dryer#SG_FEEL#QUE_NOIMAGE#
+ซ่อมแซมสัญญาเงินกู้โดยใช้เครื่อง Magic Dryer#
+  #
+
+3109# หนี้ก้อนโต - ซ่อมแซมสัญญาเงินกู้ #SG_FEEL#QUE_NOIMAGE#
+สัญญาเงินกู้ซ่อมเสร็จแล้วนำกลับไปให้ Muff#
+  #
+
+
+
+3110# เพชรถูกขโมย - ร่องรอยของเพชร #SG_FEEL#QUE_NOIMAGE#
+ก่อนอื่นตามหาเพชร คุณต้องไปหา Jhonnita ที่ Alberta, Kimeunbang ที่ Payon, และ Leblo ที่ Geffen พวกเขาอาจจะมีเบาะแส #
+  #
+
+3111#Stolen Diamond - เพชรถูกขโมย - คำขอของ Leblo#SG_FEEL#QUE_NOIMAGE#
+ทำข้อตกลงกับเขา คุณช่วยเอายามาให้เขาและเขาจะให้ข้อมูลกับคุณ ไปหา Wola ที่ Payon#
+  #
+
+3112# เพชรถูกขโมย - Wola the Doctor#SG_FEEL#QUE_NOIMAGE#
+คุณต้องช่วยซ่อมหม้อยา เพื่อใช้ในการปรุงยา #
+  20 Fine Sands, 10 Brigans, 10 Soft Leaf, 5 Empty Bottles#
+
+3113# เพชรถูกขโมย - Wola the Doctor#SG_FEEL#QUE_NOIMAGE#
+ซ่อมแซมหม้อยาเสร็จแล้ว คุณต้องการอะไรล่ะ? #
+  #
+
+3114# เพชรถูกขโมย - Wola the Doctor#SG_FEEL#QUE_NOIMAGE#
+Leblo... ผู้ชายที่อยู่ Geffen งั้นหรือ? ยาได้ถูกเตรียมเรียบร้อยแล้วและจะส่งไปให้เขาเร็วๆ นี้ #
+  #
+
+3115# เพชรถูกขโมย - ข้อมูลของ Leblo#SG_FEEL#QUE_NOIMAGE#
+อาจเป็นไปได้ที่ Z Gang จะเป็นคนขโมยเพชร หาข้อมูลเกี่ยวกับ Z Gang ที่สมาคม Rogue#
+  #
+
+3116# เพชรถูกขโมย - ข้อมูลจากนักสืบสวน Rogue#SG_FEEL#QUE_NOIMAGE#
+คุณให้เงินกับเขาและคุณได้ข้อมูลที่ซ่อนเก่าของ Z Gang ว่าอยู่ที่ Comodo ลองไปตรวจสอบดู! #
+  #
+
+3117# เพชรถูกขโมย - สวิตช์แปลกๆ #SG_FEEL#QUE_NOIMAGE#
+ระหว่างที่ตรวจสอบโกดังใน Comodo คุณพบสวิตช์แปลกๆ ลองสำรวจดูเพิ่มเติม #
+  #
+
+3118# เพชรถูกขโมย - เจอเพชรแล้ว!#SG_FEEL#QUE_NOIMAGE#
+คุณพบ Diamond of Destruction ของ Ibrahim หวังจากที่กดกลไกบางอย่างในโกดัง รีบนำกลับไปให้ Ibrahim#
+  #
+
+3119# ประกาศจับ Z Gang - ประกาศจับ #SG_FEEL#QUE_NOIMAGE#
+หน่วยงานรักษาความมั่นคงของอาณาจักร Rune-Midgards จะให้รางวัลกับคนที่จับ Z Gang ได้ ลองดูหน่อยเป็นไง? ลองรวบรวมข้อมูลดู #
+  #
+
+3120# ประกาศจับ Z Gang - เกี่ยวกับ Z Gang#SG_FEEL#QUE_NOIMAGE#
+สมาชิกมีทั้งหมด 3 คน: Louis Von Silokens a.k.a. Louis, Martha Hertizan a.k.a. Martha, และ Catfoii a.k.a. Catfoii จะต้องถูกจับ! คุณสามารถหาข้อมูลเพิ่มได้จากอัศวินที่ชื่อ Valdes#
+  #
+
+3121# ประกาศจับ Z Gang - คำขอของ Valdes#SG_FEEL#QUE_NOIMAGE#
+คุณพบ Valdes แต่เขาเมามาก เขาขอให้คุณหา Morroc Fruit Wine 5 ขวดให้เขา ไม่งั้นเขาจะไม่ให้ข้อมูลกับคุณ #
+ Morroc Fruit Wine 5 ขวด #
+
+3122# ประกาศจับ Z Gang - ข้อมูลจาก Valdes#SG_FEEL#QUE_NOIMAGE#
+เขาแนะนำให้คุณตามรอยคนของสมาคม Rogue ตามลำดับเพื่อหาข้อมูลของ Z Gang คุณจะต้องหา Marybell ซึ่งเป็นสายและขอข้อมูล รหัสที่ต้องบอกเธอคือ "^3355FF-รุ่งอรุณยังมาไม่ถึง-^000000#
+  #
+
+3123# ประกาศจับ Z Gang - การทดสอบของ Marybell#SG_FEEL#QUE_NOIMAGE#
+Marybell ต้องการจะทดสอบคุณ เธอจะไว้ใจหากคุณได้จดหมายแนะนำตัวมาจากยอดนักพนันในตำนานที่ชื่อ Moonho Ahn ที่ Payon#
+  #
+
+3124# ประกาศจับ Z Gang - ท้าประลอง Moonho Ahn#SG_FEEL#QUE_NOIMAGE#
+Moonho Ahn บอกให้คุณกลับมาใหม่เมื่อพร้อมจะประลองกับเขา คุณต้องชนะเขาเพื่อจะได้จดหมายแนะนำตัว #
+  #
+
+3125# ประกาศจับ Z Gang - ท้าประลอง Moonho Ahn#SG_FEEL#QUE_NOIMAGE#
+คุณเอาชนะ Moonho Ahn ได้แล้ว กลับไปหา Marybell พร้อมจดหมายแนะนำตัว #
+  #
+
+3126# ประกาศจับ Z Gang - ข้อมูลจาก Marybell#SG_FEEL#QUE_NOIMAGE#
+Z Gang เป็นตัวการสำคัญที่ก่อให้เกิดเรื่องวุ่นวายไปทั่ว คุณจะต้องหาสายของ Z Gang Z Gang กำลังรับคนเข้าเป็นสมาชิกอย่างลับๆ ที่ Morroc#
+  #
+
+3127# ประกาศจับ Z Gang - การโจมตีของ Z Gang#SG_FEEL#QUE_NOIMAGE#
+คุณถูกโจมตีจากใครบางคนขณะที่รวบรวมข้อมูลที่ Morroc เขาหนีไปไหนนะ?...ดูเหมือนคนนี้จะเกี่ยวข้องกับ Z Gang ตามรอยเขาไป!#
+  #
+
+3128# ประกาศจับ Z Gang - การโจมตีของ Z Gang#SG_FEEL#QUE_NOIMAGE#
+คุณพบสายของ Z Gang ฐานของ Z Gang ดูเหมือนจะอยู่แถวๆ ทะเลทราย Morroc... กลับไปหา Marybell#
+  #
+
+3129# ประกาศจับ Z Gang - จดหมายประหลาด #SG_FEEL#QUE_NOIMAGE#
+Marybell ได้รับจดหมายเปล่าที่ดูเหมือนเข้ารหัสเอาไว้จากสายของ Z Gang ให้ไปถาม Gooho Ahn นักถอดรหัสที่ Payon เพื่อถอดรหัสดังกล่าว #
+  #
+
+3130# ประกาศจับ Z Gang - ถอดรหัสจดหมาย...#SG_FEEL#QUE_NOIMAGE#
+มันดูเหมือนกระดาษเปล่า แต่ถ้าคุณใช้ความร้อน คุณก็จะอ่านมันได้ คุณต้องหาวัสดุพวกนี้ #
+  ^0000ff20 Live Coals, 1 Matchstick, 2 Alcohol, 10 Burning Hearts^000000#
+
+3131# ประกาศจับ Z Gang - ถอดรหัสได้แล้ว!#SG_FEEL#QUE_NOIMAGE#
+ตามที่ Gooho Ahn นักภาษาศาสตร์ได้เขียนในกระดาษ รหัสคือ ^0000ffWeii arr prowd Z G gna^000000 ^0000ffAynoen hwo sspotp uys^000000 ^0000ffwlil eb kckide on htier ssa!^000000#
+  #
+
+3132# ประกาศจับ Z Gang - หาฐานลับของ Z Gang#SG_FEEL#QUE_NOIMAGE#
+คุณพบว่าทางเข้าฐานของ Z Gang อยู่ที่ทะเลทรายทางใต้ของ Morroc บางทีรหัสจาก Gooho Ahn อาจจะจำเป็น..#
+  ^0000ffWeii arr prowd Z G gna^000000 ^0000ffAynoen hwo sspotp uys^000000 ^0000ffwlil eb kckide on htier ssa!^000000#
+
+3133# ประกาศจับ Z Gang - พบฐานลับแล้ว!#SG_FEEL#QUE_NOIMAGE#
+งั้นที่นี่คือฐานลับซินะ? ตามหาสมาชิกของ Z Gang และจัดการซะ! #
+  #
+
+3134# ประกาศจับ Z Gang - กวาดล้าง Z Gang#SG_FEEL#QUE_NOIMAGE#
+คุณจับกุม Z Gang และได้รับ Book of Forbidden Mystery กลับไปหาอัศวินที่ลาออกแล้วที่ Prontera#
+  #
+
+3135# ผผฐ่ผ๖ภว ผีป๓ - ตีม๖ภว พศมคศญ #SG_FEEL#QUE_NOIMAGE#
+ดฯตๅศฃฑืภว ฑืธฒภฺทฮ ภฮวุ ภฬฑืตๅถ๓ฝว ณชนซดย ฝฑฐิ ณดม๖ พสภป ป๓รณธฆ พ๒พ๚ดู. ผผฐ่ผ๖ภว ภฺมคดษทยภบ พเ 3ภฯตฟพศ ม๖ผำ ตษ ฟนมคภฬดู. #
+  #
+
+// ฟภณฒฐๆ
+//----------------------วๅลอภม๗------------------------------
+4000#Sherin's Job Interview#SG_FEEL#QUE_NOIMAGE#
+คุณผ่านการทดสอบของ Sherin แล้วไปทดสอบขั้นต่อไปได้ #
+#
+
+4001# เปลี่ยนอาชีพ Hunter#SG_FEEL#QUE_NOIMAGE#
+ไปพบหัวหน้าสมาคม Hunter เพื่อทดสอบขั้นต่อไป #
+#
+
+4002# เปลี่ยนอาชีพ Hunter - รวบรวมไอเทม #SG_FEEL#QUE_NOIMAGE#
+สะสมไอเทมที่ Demon Hunter บอก - 5 Claw of Desert Wolf, 5 Trunk, 3 White Herb#
+#
+
+4003# เปลี่ยนอาชีพ Hunter - รวบรวมไอเทม #SG_FEEL#QUE_NOIMAGE#
+สะสมไอเทมที่ Demon Hunter บอก - 3 Bill of Birds, 5 Skel-bone, 3 Green Herbs#
+#
+
+4004# เปลี่ยนอาชีพ Hunter - รวบรวมไอเทม #SG_FEEL#QUE_NOIMAGE#
+สะสมไอเทมที่ Demon Hunter บอก - 3 Venom Canine, 3 Animal Skin, 5 Red Herb#
+#
+
+4005# เปลี่ยนอาชีพ Hunter - รวบรวมไอเทม #SG_FEEL#QUE_NOIMAGE#
+สะสมไอเทมที่ Demon Hunter บอก - 3 Dokkaebi Horn, 3 Pieces of Egg Shell, 10 Fluff#
+#
+
+4006# เปลี่ยนอาชีพ Hunter - รวบรวมไอเทม #SG_FEEL#QUE_NOIMAGE#
+สะสมไอเทมที่ Demon Hunter บอก - 9 Shell, 9 Worm Peeling, 9 Yellow Herb#
+#
+
+4007# เปลี่ยนอาชีพ Hunter - รวบรวมไอเทม #SG_FEEL#QUE_NOIMAGE#
+สะสมไอเทมที่ Demon Hunter บอก - 3 Tooth of Bat, 1 Sticky Mucus, 1 Bear's Footskin#
+#
+
+4008# เปลี่ยนอาชีพ Hunter - รวบรวมไอเทม #SG_FEEL#QUE_NOIMAGE#
+สะสมไอเทมที่ Demon Hunter บอก - 2 Porcupine Quill, 1 Yoyo Tail, 1 Acorn#
+#
+
+4009# เปลี่ยนอาชีพ Hunter#SG_FEEL#QUE_NOIMAGE#
+ไปหาหัวหน้าสมาคมซึ่งอยู่ในพระราชวัง Payon#
+#
+
+4010# เปลี่ยนอาชีพ Hunter#SG_FEEL#QUE_NOIMAGE#
+ไปหาหัวหน้าสมาคมซึ่งอยู่ในสมาคม Archer#
+#
+
+4011# เปลี่ยนอาชีพ Hunter - Test#SG_FEEL#QUE_NOIMAGE#
+กำจัดมอนเตอร์ที่ชื่อ ^ff0000Job change monsters^000000 และไปกดสวิทซ์ ทำลายสวิทซ์และหนีออกทาง 12 นาฬิกา #
+#
+
+4012# เปลี่ยนอาชีพ Hunter#SG_FEEL#QUE_NOIMAGE#
+กลับไปรายงานหัวหน้าสมาคม Hunter ว่าคุณผ่านการทดสอบแล้ว #
+#
+
+4013# เปลี่ยนอาชีพ Hunter#SG_FEEL#QUE_NOIMAGE#
+กลับไปรายงานหัวหน้าสมาคม Hunter ว่าคุณผ่านการทดสอบแล้ว #
+สิ้นสุดภารกิจ #
+
+
+//--------------------ฑนฟีผฑรโ--------------------------------
+4015# เป็นผู้ตรวจสอบคุณสมบัติ #SG_FEEL##
+ไปพบผู้ตรวจสอบของทางการและสมัครเป็นผู้ตรวจสอบคุณสมบัติ ##
+
+4016# พิสูจน์คุณสมบัติ #SG_FEEL##
+แสดงฝีมือด้วยการรวบรวม 2 Reins##
+
+4017# การทดสอบ #SG_FEEL##
+ผ่านการทดสอบความรู้เพื่อแสดงให้เห็นถึงคุณสมบัติที่ครบถ้วน ##
+
+4018# เตรียมพบกับเจ้าชาย #SG_FEEL##
+ไปคุยกับผู้ตรวจสอบและเตรียมพร้อมที่จะพบเจ้าชาย ##
+
+4020# สัมภาษณ์เจ้าชาย #SG_FEEL##
+คุยกับเจ้าชายจากตระกูล Gaebolg##
+
+4021# สัมภาษณ์เจ้าชาย #SG_FEEL##
+คุยกับเจ้าชายจากตระกูล Walter##
+
+4022# สัมภาษณ์เจ้าชาย #SG_FEEL##
+คุยกับเจ้าชายจากตระกูล Rechard##
+
+4023# สัมภาษณ์เจ้าชาย #SG_FEEL##
+คุยกับเจ้าชายจากตระกูล Heine##
+
+4024# สัมภาษณ์เจ้าชาย #SG_FEEL##
+คุยกับเจ้าชายจากตระกูล Wigner##
+
+4025# สัมภาษณ์เจ้าชาย #SG_FEEL##
+คุยกับเจ้าชายจากตระกูล Roewenburg##
+
+4026# สัมภาษณ์เจ้าชาย #SG_FEEL##
+คุยกับเจ้าชายจากตระกูล Nerius##
+
+4027# สัมภาษณ์เจ้าชาย #SG_FEEL##
+ฟังเรื่องราวอีกหน่อย ##
+
+4028# คำขอของเจ้าชาย Peter#SG_FEEL##
+หาเด็กสาวที่เขียนจดหมายส่งให้เจ้าชาย Peter และมอบดอกไม้ให้เธอ ##
+
+4029# คำขอของเด็กสาว #SG_FEEL##
+ส่งดอกไม้จากเด็กสาวให้กับเจ้าชาย Peter##
+
+4030# เรื่องราวของ Ahrum และ Ernst#SG_FEEL##
+ฟังเรื่องราว Ahrum และ Ernst##
+
+4031# เรื่องราวของ Ahrum และ Ernst#SG_FEEL##
+คุณได้ยินข่าวเกี่ยวกับคนของตระกูล Walter มานี่ มาได้ยังไง? ##
+
+4032# ความขัดแย้งระหว่างสองตระกูล#SG_FEEL##
+มีความขัดแย้งกันระหว่างตระกูล Walter และ Rechard คุณต้องรีบไปรายงานใครบางคน ##
+
+4033# การตายของ Ahrum#SG_FEEL##
+เจ้าชาย Ahrum ถูกฆ่าโดย Ernst คุณต้องรีบรายงานโดยเร็วที่สุด ##
+
+
+// ฑวฟภนฮ
+
+
+
+//ลยฑวภม๗
+
+6000# เปลี่ยนอาชีพ Taekwon#SG_FEEL#QUE_NOIMAGE#
+คุณเลือกที่จะเปลี่ยนอาชีพเป็น Taekwon คุณต้องเพิ่ม base level ของคุณแล้วกลับมาคุยกับ Phoenix#
+#
+
+6001# เปลี่ยนอาชีพ Taekwon#SG_FEEL#QUE_NOIMAGE#
+คุณเลือกที่จะเปลี่ยนอาชีพเป็น Taekwon คุณต้องเข้ารับการสอบจาก Phoenix ก่อน #
+#
+
+6002# เปลี่ยนอาชีพ Taekwon#SG_FEEL#QUE_NOIMAGE#
+คุณกำลังจะได้เป็น Taekwon แล้ว แค่คุยกับ Phoenix#
+#
+
+
+
+
+//ผาฟ๏ธตฤฟภม๗
+
+6005# เปลี่ยนอาชีพ Soul-Linker#SG_FEEL#QUE_NOIMAGE#
+ถ้าคุณต้องการที่จะครอบครองพลัง คุณจำเป็นต้องใช้วัสดุพวกนี้ คุณต้องรวบรวม 1 Witherless Rose, 3 Carat Diamond และ 1 Immortal Heart#
+1 Witherless Rose, 3 Carat Diamond, 1 Immortal Heart#
+
+6006# เปลี่ยนอาชีพ Soul-Linker#SG_FEEL#QUE_NOIMAGE#
+คุณต้องแสดงความสามารถให้ Maia#
+#
+
+6007# เปลี่ยนอาชีพ Soul-Linker#SG_FEEL#QUE_NOIMAGE#
+Maia อยากให้คุณรับรู้ถึงพลังธรรมชาติ #
+#
+
+6008# เปลี่ยนอาชีพ Soul-Linker#SG_FEEL#QUE_NOIMAGE#
+พลังแห่งธรรมชาติยังคงอยู่ในร่างกายคุณ คุยกับ Maia again#
+#
+
+
+
+
+//ฝดณ๋
+6010# เปลี่ยนอาชีพ Super Novice#SG_FEEL#QUE_NOIMAGE#
+ถ้าคุณต้องการที่จะเป็น Novice ในตำนาน คุณต้องรวบรวม 2 ไอเทมในตำนานเสียก่อน #
+30 Sticky Mucus, 30 Resin#
+
+
+
+
+//ดัภฺ
+6015# คำขอร้องจาก Couga#SG_FEEL#QUE_NOIMAGE#
+ตามหา Wildcat Joe ใน Einbroch และคุยกับเขา #
+#
+
+6016# คำขอของชายประหลาด #SG_FEEL#QUE_NOIMAGE#
+ผ่านประตูทางทิศใต้ของเมือง Einbroch ค้นหา Seal ที่อยู่ใกล้ๆ ต้นไม้สีแดงทางตะวันตกตรงสะพาน #
+#
+
+6017#Red Leopard Joe's Reply#SG_FEEL#QUE_NOIMAGE#
+กลับไปหา Cougar พร้อมกับจดหมายแนะนำ Red Leopard Joe#
+#
+
+6018#Cougar คลั่ง #SG_FEEL#QUE_NOIMAGE#
+รีบหา 5 Cyfars และ 1 Phracon ไปให้ Cougar#
+#
+
+
+
+
+//ฐวฝฝธตฐล
+6020# จดหมายของ Miller#SG_FEEL#QUE_NOIMAGE#
+นำจดหมายไปให้ Mr. Wise Bull Horn ใน Payon#
+#
+
+6021# เอกสารจาก Wise Bull Horn#SG_FEEL#QUE_NOIMAGE#
+"คุณต้องหาไอเทมมาให้เขาเพื่อทำเอกสารแนะนำตัวไปให้กับหัวหน้า Gunslinger"#
+3 Zargons, 10 Shells, 3 Fluffs, 1 Trunk, 3 Rainbow Shells, 3 Green Herbs#
+
+6022# การทำเอกสาร #SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนจะต้องใช้เวลาอีกหน่อย ค่อยมาคุยกับเขาอีกที #
+#
+
+6023# คำขอของ Wise Bull Horn#SG_FEEL#QUE_NOIMAGE#
+"ดูเหมือนเขาจะคอแห้ง อยากจะได้ Milk สักขวด คุณช่วยหาให้เขาได้ไหม?"#
+#
+
+6024# เปลี่ยนอาชีพ Gunslinger!#SG_FEEL#QUE_NOIMAGE#
+"Eeh~Yeah~Eeh~Hooom, Maaaaarrraaa Neeey~ Yippee Yippee Yai Yocaiyay~ เอานี่ไปให้ Miller ฉายา Black Fox"#
+#
+
+6025# เข้าร่วม KVM#SG_FEEL#QUE_NOIMAGE#
+ได้รับอนุญาตให้เข้าร่วม KVM จะมีผลอยู่ 5 นาที การเข้าร่วมใหม่จะทำได้หลังจาก 5 นาที #
+เข้าร่วมใหม่จะทำได้หลังจาก 5 นาที #
+
+
+// น่วทษ
+//-------ดํผญภม๗ บฮบะ---------------
+
+// Fill out the Application!
+7000# เปลี่ยนอาชีพ Dancer! Fill out the Application!#SG_FEEL#QUE_NOIMAGE#
+คุณไปที่โรงเรียนสอนเต้นรำที่ Comodo เพื่อจะเปลี่ยนเป็น Dancer คุณได้กรอกใบสมัครเรียบร้อยแล้ว #
+คุยกับ Aile#
+
+// Let's be prepared!
+7001# เปลี่ยนอาชีพ Dancer! เตรียมตัวกันก่อน!#SG_FEEL#QUE_NOIMAGE#
+คุณต้องเตรียมของบางอย่างก่อนที่จะเริ่มทดสอบ ยืนยันสิ่งของเหล่านี้กับ Aile#
+ค่าสอน 10,000 Zeny, 20 Sticky Mucus, 5 Red Potions, 3 Jellopy, 1 Shoes#
+
+// Let's be prepared!
+7002# เปลี่ยนอาชีพ Dancer! เตรียมตัวกันก่อน!#SG_FEEL#QUE_NOIMAGE#
+คุณต้องเตรียมของบางอย่างก่อนที่จะเริ่มทดสอบ ยืนยันสิ่งของเหล่านี้กับ Aile#
+ค่าสอน 10,000 Zeny, 5 Earthworm Peelings, 1 Boots#
+
+// Let's be prepared!
+7003# เปลี่ยนอาชีพ Dancer! เตรียมตัวกันก่อน!#SG_FEEL#QUE_NOIMAGE#
+คุณต้องเตรียมของบางอย่างก่อนที่จะเริ่มทดสอบ ยืนยันสิ่งของเหล่านี้กับ Aile#
+ค่าสอน 10,000 Zeny, 2 Clam Shells, 5 Yellow Potions, 20 Jellopy, 10 Black Hairs, Sandals#
+
+// A Job Interview!
+7004# เปลี่ยนอาชีพ Dancer! สอบสัมภาษณ์!#SG_FEEL#QUE_NOIMAGE#
+เตรียมของให้พร้อม การสอบสัมภาษณ์กับ Bijou รอคุณอยู่! คุณต้องผ่านการสัมภาษณ์ให้ได้! #
+สัมภาษณ์กับ Bijou#
+
+// Finally on the Stage!
+7005# เปลี่ยนอาชีพ Dancer! ได้เวลาโชว์!#SG_FEEL#QUE_NOIMAGE#
+ในที่สุดก็ถึงเวลาเต้นแล้ว! คุณต้องเต้นตามคำสั่งให้ถูกต้องตามเวลาที่กำหนด ไม่ต้องคิดมาก!#
+มาเต้นกันเถอะ! #
+
+// Successful Debut!
+7006# เปลี่ยนอาชีพ Dancer! การแสดงสำเร็จ!#SG_FEEL#QUE_NOIMAGE#
+คุณเต้นได้พริ้วมาก! ผู้คุมสอบ Bijou จะต้องประทับใจมาก ลองไปดูว่าเค้าคิดยังไงดีกว่า #
+คุยกับ Bijou#
+
+//------ ฑวผบ ภม๗
+7007#Warrior of the Sun, the Moon, and the Stars#SG_FEEL#QUE_NOIMAGE#
+คุณสามารถหา 'Moogang' ได้ที่ Comodo ที่ที่ใกล้ที่สุดกับท้องฟ้า #
+คุยกับ 'Moogang'#
+
+7008#Warrior of the Sun, the Moon, and the Stars - Nature#SG_FEEL#QUE_NOIMAGE#
+รวบรวมแร่ธาตุทั้งสี่ที่มีอยู่บนโลกนี้ หาชิ้นส่วนของแร่ลม, ดิน, น้ำแข็งและไฟ #
+Rough Wind, Great Nature, Mystic Frozen, Flame Heart#
+
+7009#Warrior of the Sun, the Moon, and the Stars - the Altar#SG_FEEL#QUE_NOIMAGE#
+"คุณได้รับการแนะนำให้ไปยังสถานที่ที่ติดต่อกับ Daru ได้ ซึ่งเป็นคนที่จะทดสอบขั้นต่อไป หลังจากจบการทดสอบแล้วให้กลับมาหาเขาใหม่" #
+Altar of the Sun, Moon and Stars#
+
+7010#Warrior of the Sun, the Moon, and the Stars - Stars?#SG_FEEL#QUE_NOIMAGE#
+"รวบรวม piece of a star และ sand of a star..."#
+A piece of a star, the sand of a star#
+
+7011#Warrior of the Sun, the Moon, and the Stars#SG_FEEL#QUE_NOIMAGE#
+ถ้าคุณทำทุกอย่างเรียบร้อยแล้วให้กลับไปหา 'Moogang'#
+คุยกับ 'Moogang'#
+
+//---ฟกววผาตๅ 13.1 ดตจธฎฟยภว ภวทฺ 2บฮ ธ๐ทฮลฉ ร฿ภ๛ (ep13_moc2.sc)
+
+7012#Morroc และ Dandelion - งานง่ายๆ #SG_FEEL#QUE_NOIMAGE#
+..คุยกับ Echinacea ซึ่งดูเหมือนเธอจะพูดอยู่ฝ่ายเดียว อย่างไรก็ตามคุณต้องไปหา Kidd..#
+ไปคุยกับ Kidd#
+
+7013#Morroc และ Dandelion - งานง่ายๆ #SG_FEEL#QUE_NOIMAGE#
+..คุณรู้สึกไม่อยากจะทำงานน่าเบื่อนี้ Kidd บอกให้คุณไปคุยกับ Echinacea ว่าคุณไม่ต้องการงานนี้ #
+ไปคุยกับ Echinacea#
+
+
+7014#Morroc และ Dandelion - งานง่ายๆ #SG_FEEL#QUE_NOIMAGE#
+..ดูเหมือนจะเถียงสู้ Echinacea ไม่ได้ คุณควรกลับไปหา Kidd และช่วยเหลือเขาจะดีกว่า #
+ไปคุยกับ Kidd#
+
+
+7015#Morroc และ Dandelion - งานง่ายๆ #SG_FEEL#QUE_NOIMAGE#
+Kidd ขอให้คุณทำงานง่ายกว่าที่คิด ให้ไปพบ Rin ที่ห้องใต้ดินของทางตะวันตกใน Morroc#
+ไปคุยกับ Rin#
+
+7016#Morroc และ Dandelion - งานง่ายๆ?!#SG_FEEL#QUE_NOIMAGE#
+คุณต้องไปสำรวจบริเวณที่ Rin ได้รับบาดเจ็บ สถานที่นั้นอยู่ทางตะวันตกของ Abyss Lake...#
+ลองสำรวจแผนที่ทางตะวันตกของ Abyss Lake#
+
+7017#Morroc และ Dandelion - งานง่ายๆ?!#SG_FEEL#QUE_NOIMAGE#
+คุณพบ Bloody Crystal of the Darkness บริเวณป่าของ Hugel คุณควรรีบกลับไปบอกให้ Rin รู้ #
+บอกให้ Rin รู้ #
+
+7018#Morroc และ Dandelion - งานง่ายๆ?!#SG_FEEL#QUE_NOIMAGE#
+คุณได้รับสมุดบันทึกและผลึกจาก Rin งานของคุณคือเอาไปให้ Kidd!#
+ส่งสมุดบันทึกและผลึกไปให้ Kidd#
+
+7019#Morroc และ Dandelion - งานเสร็จแล้วแต่ว่า...#SG_FEEL#QUE_NOIMAGE#
+คุณได้ส่งสมุดบันทึกและผลึกให้ Kidd แต่คุณยังไม่ค่อยเข้าใจคำพูดสุดท้ายของ Kidd#
+#
+
+7020#Morroc และ Dandelion - งานเสร็จแล้วแต่ว่า...#SG_FEEL#QUE_NOIMAGE#
+ทันใดนั้น คุณก็เริ่มรู้สึกถึงอันตรายและเลี่ยงไม่ได้ที่ต้องกำจัดพวกศัตรู #
+กำจัดพวก Dandelions#
+
+7021#Morroc และ Dandelion - ม้วนกระดาษเวทมนตร์ #SG_FEEL#QUE_NOIMAGE#
+คุณพบม้วนกระดาษจากศพของพวก Dandelion ดูเหมือนว่าจะเป็นของสำคัญ #
+รายงานให้ Kidd รู้ #
+
+7022#Morroc และ Dandelion - ม้วนกระดาษเวทมนตร์ #SG_FEEL#QUE_NOIMAGE#
+คุณจำเป็นต้องไขปริศนาม้วนกระดาษเวทย์อันนี้ ดูเหมือนว่า Echinacea จะรู้จักคนที่จะช่วยได้..#
+ไปคุยกับ Echinacea#
+
+7023#Morroc และ Dandelion - ม้วนกระดาษเวทมนตร์ #SG_FEEL#QUE_NOIMAGE#
+Echinacea แนะนำให้ไปหานักวิชาการที่ชื่อ 'Defaria' แต่เขาอยู่ไหนล่ะ? หรือเขาจะเป็นคนที่กำลังเผามันหวาน?#
+ไปคุยกับ Defaria#
+
+7024#Morroc และ Dandelion - ม้วนกระดาษเวทมนตร์ #SG_FEEL#QUE_NOIMAGE#
+นักวิชาการแก่ Defaria ขอไอเทมบางอย่างเพื่อใช้คลายผนึกม้วนกระดาษ #
+Holy Water, Rune of the Darkness, Bloody Rune อย่างละ 30#
+
+7025#Morroc และ Dandelion - ม้วนกระดาษเวทมนตร์ #SG_FEEL#QUE_NOIMAGE#
+คุณต้องหาไอเทมที่ Defaria ต้องการ #
+ไปคุยกับ Defaria#
+
+7026#Morroc และ Dandelion - ม้วนกระดาษเวทมนตร์ #SG_FEEL#QUE_NOIMAGE#
+คลายผนึกม้วนกระดาษได้แล้ว ม้วนกระดาษนี้ถูกใช้สำหรับ ^4d4dffนัดหมายสมาชิก^000000 เขาบอกให้ใช้มันตอนนี้ แต่น่าจะไปหา Kidd ก่อน #
+#
+
+7027#Morroc และ Dandelion - สอดแนม #SG_FEEL#QUE_NOIMAGE#
+คุณได้ยินเรื่องประหลายในระหว่างที่กำลังสำรวจสถานที่ที่คุณไปถึงโดยใช้ม้วนกระดาษ คุณได้ยินพวก Dandelions กำลังสู้กันเอง..#
+Report to Kidd#
+
+7028#Morroc และ Dandelion - สอดแนม #SG_FEEL#QUE_NOIMAGE#
+บอกคิด Kidd เกี่ยวกับสิ่งที่คุณได้ยินจากฐานทัพในบ้านล่างใกล้ๆ เขตชายแดน พวกเขากำลังมีปัญหาภายในและเป็นเวลาที่ดีที่จะจัดการพวกเขา #
+สำรวจบ้านร้างใกล้ๆ เขตชายแดน #
+
+7029#Morroc และ Dandelion - Rayan ถูกจับ #SG_FEEL#QUE_NOIMAGE#
+Rayan Moore ได้ถูกจับ Rin จะเป็นคนสอบสวน ลองสอบถามรายละเอียดจาก Kidd#
+ไปคุยกับ Kidd#
+
+7030#Morroc และ Dandelion - Rayan ถูกจับ #SG_FEEL#QUE_NOIMAGE#
+Kidd บอกให้ เอา ^4d4dffสมุดบันทึกไปให้ Rin^000000 นี่จะเป็นงานสุดท้ายจากเขา #
+ส่งสมุดบันทึกไปให้ Rin #
+
+7031#Morroc และ Dandelion - Rayan หลบหนี #SG_FEEL#QUE_NOIMAGE#
+Rayan ได้หลบหนีไป หรือว่า Satan Morroc เอาตัวเขาไป? คุณต้องรีบเอารหัสคลื่นความถี่เวทมนตร์ไปบอก Echinacea พร้อมกับสมุดบันทึก #
+[SDHF92F-SDF]#
+
+7032#Morroc และ Dandelion - Rayan หลบหนี #SG_FEEL#QUE_NOIMAGE#
+Rayan ได้หลบหนีไป หรือว่า Satan Morroc เอาตัวเขาไป? คุณต้องรีบเอารหัสคลื่นความถี่เวทมนตร์ไปบอก Echinacea พร้อมกับสมุดบันทึก #
+[VWNM94GVWN90]#
+
+7033#Morroc และ Dandelion - Rayan หลบหนี #SG_FEEL#QUE_NOIMAGE#
+Rayan ได้หลบหนีไป หรือว่า Satan Morroc เอาตัวเขาไป? คุณต้องรีบเอารหัสคลื่นความถี่เวทมนตร์ไปบอก Echinacea พร้อมกับสมุดบันทึก #
+[CM3-TRDFGHE0]#
+
+7034#Morroc และ Dandelion - Rayan หลบหนี #SG_FEEL#QUE_NOIMAGE#
+Echinacea ได้เดินเรื่องตรวจสอบเกี่ยวกับคลื่นความถี่...#
+#
+
+7035#Morroc และ Dandelion - Rayan หลบหนี #SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนผลการตรวจสอบจะเรียบร้อยแล้ว คุณต้องไปพบหัวหน้าของกองตรวจสอบเวทมนตร์และถามเกี่ยวกับผล! #
+#
+
+7036#Morroc และ Dandelion - Rayan หลบหนี #SG_FEEL#QUE_NOIMAGE#
+หัวหน้าบอกให้คุณกลับไปรายงาน Echinacea ว่าพวกเขาไม่พบร่องรอยของเป้าหมายเลย แต่ว่าเขายังมีชีวิตอยู่ #
+รายงานให้ Echinacea รู้ #
+
+7037#Dandelion และพวกเรา #SG_FEEL#QUE_NOIMAGE#
+ตอนนี้คดีปิดแล้ว แต่ยังมีอะไรค้างคาอยู่ในหัวของคุณ? คุณควรจะไปถามใครสักคน Echinacea ดูเหมือนจะไม่อยากช่วย #
+#
+
+7038# ความชอบที่จะเผามันหวาน #SG_FEEL#QUE_NOIMAGE#
+คุณได้มาปรึกษา Defaria แต่คุณกับได้รับงานให้ไปหาของเพื่อมาทำมันหวานเผา...#
+20 Sweet Potatoes และ 30 Logs#
+
+7039#Outstanding Dodge Skill 1#SG_FEEL#QUE_NOIMAGE#
+คุณถาม Defaria หลายต่อหลายครั้งจนดูเหมือนเขาจะเริ่มพูดถึงบางอย่างเกี่ยวกับ Dandelion แต่อย่างไรก็ตามคุณก็ได้งานไปส่งมันหวานเพิ่ม...#
+ส่ง 2 sweet potatoes ให้ Kidd#
+
+7040#Outstanding Dodge Skill 2#SG_FEEL#QUE_NOIMAGE#
+ครั้งนี้ เขาเริ่มพูดละเอียดมากขึ้น แต่ว่าลงท้ายคุณก็ได้งานไปส่งมันหวานอีกรอบ...!#
+ส่ง 2 sweet potatoes ให้ Echinacea#
+
+7041# การเมืองมีไว้ให้นักการเมือง #SG_FEEL#QUE_NOIMAGE#
+คุณจะต้องถูกจับหากเปิดเผยเรื่อง Dandelions ออกไป คุณคงไม่มีทางชนะในสิ่งที่ Echinacea เคยบอกไว้ บาปของพวกเขาจะไม่ถูกยกโทษให้ แต่พวกเราจะไม่ทำอะไรโง่ๆ เพื่อแก้แค้นและจบด้วยการนองเลือด!#
+#
+
+
+//----- EP 13
+//---- ฤทวมภว ป็ภฐป็
+7042# คนเลี้ยงมอนเตอร์ - ให้อาหาร Tatacho#SG_FEEL#QUE_NOIMAGE#
+รวบรวม 50 Fresh Fish เพื่อให้เป็นอาหารกับ Tatachoes อาหารจะหมดแล้วต้องรีบสะสมไว้ คุณสามารถหามันได้จาก Tatachoes ในแผนที่ #
+50 Fresh Fish#
+
+7043# คนเลี้ยงมอนเตอร์ - ให้อาหาร Cornus#SG_FEEL#QUE_NOIMAGE#
+อาหารสำหรับ Cornuses กำลังจะหมด คุณต้องรวบรวม ^4d4dff30 Great Leaves และ 30 Brown Roots^000000? คุณสามารหามันได้จาก Pinguiculas ในแผนที่ #
+#
+
+7044# คนเลี้ยงมอนเตอร์ - ให้อาหาร Hillsrion ชุด1#SG_FEEL#QUE_NOIMAGE#
+อาหารสำหรับ Hillsrions กำลังจะหมด นักวิชาการคิดว่าพวกนี้เป็นตระกูลเดียวกับแมว เค้าได้ลองให้อาหารมันหลายๆ อย่าง.. ครั้งนี้เขาอยากจะลอง Monster Feed เขาขอให้คุณช่วยหา ^4d4dff20 Monster Feeds และ 30 Pet Foods^000000#
+20 Monster Feeds และ 30 Pet Foods#
+
+7045# คนเลี้ยงมอนเตอร์ - ให้อาหาร Hillsrion ชุด2#SG_FEEL#QUE_NOIMAGE#
+ตอนนี้เป็นเวลาที่เหมาะมากที่จะลองให้อาหารใหม่กับ Hillsrions เขาเคยลอง Monster Feed แล้ว แต่ไม่รู้ว่าพวกมันชอบหรือเปล่า เขาขอให้คุณช่วยหา ^4d4dff50 Meats และ 30 Pet Foods^000000#
+50 Meats และ 30 Pet Foods#
+
+7046# คนเลี้ยงมอนเตอร์ - พรมสำหรับพื้น #SG_FEEL#QUE_NOIMAGE#
+เขาอยากจะได้อะไรหนาๆ มาทำพื้นให้อุ่นๆ สำหรับสิ่งมีชีวิตพวกนี้ เขาขอให้คุณหา ^4d4dff30 Fur^000000#
+30 Fur#
+
+7047# คนเลี้ยงมอนเตอร์ - นี่ล่ะหนึ่งวัน!#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนว่าวันนี้จะเสร็จงานแล้ว คุณจะได้พักผ่อนแล้ว.. อย่างน้อยก็ 5 ชั่วโมง..#
+#
+//----------------EP 13----------------------------------
+//-ลธณชลไฝบลธฟ๖ 080702
+7048# หอคอย Thanatos - คำขอของ Burled#SG_FEEL#QUE_NOIMAGE#
+Burled อยากรู้ว่าทำไม Rekenber ถึงอยากจะศึกษาหอคอยนั้นมากนัก บางทีมันอาจจะมีผนึกที่คุณจะหาร่องรอยได้ #
+สำรวจผนึกข้างในหอคอย #
+
+7049# หอคอย Thanatos - ผนึกของหอคอย #SG_FEEL#QUE_NOIMAGE#
+คุณได้รับ red key ระหว่างที่กำลังสำรวจ Rune Device ข้อความที่คุณเห็นตอนที่เปิดผนึกยังคงฝังอยู่ในหัว ดูเหมือนจะยังมีอีกสองสามที่ #
+หา Rune devices ข้างในหอคอย #
+
+7050# หอคอย Thanatos - ผนึกของหอคอย #SG_FEEL#QUE_NOIMAGE#
+คุณพบกุญแจดอกที่สองของผนึก ดูเหมือนจะเหลืออีกที่เดียว คุณต้องลองมองหารูปทรงอินทรีย์ที่ชั้น 5#
+ลองมองหารูปทรงอินทรีย์ที่ชั้น 5#
+
+7051# หอคอย Thanatos - ผนึกของหอคอย #SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนหอคอย Thanatos จะเคยถูกใช้โดยเหล่าปีศาจเพื่อเป็นประตูมิติ คุณรู้สึกได้ว่าน่าจะมีผนึกอยู่อีก #
+ตรวจสอบในหอคอย #
+
+7052# หอคอย Thanatos - ผนึกของหอคอย #SG_FEEL#QUE_NOIMAGE#
+คุณพบกุญแจดอกที่ 4 ดูเหมือนพวกที่มาจากแดนปีศาจจะมาถึงที่ไหนสักแห่ง บางที่อาจจะต้องทำอะไรบางอย่างกับพวกนางฟ้านี้ #
+ลองหาผนึกอื่นในหอคอย #
+
+7053# หอคอย Thanatos - What they want is..#SG_FEEL#QUE_NOIMAGE#
+เมื่อคุณพบกุญแจดอกที่ 4 คุณได้พบสมุดบันทึกของ Varmunt บางทีสมุดบันทึกนี้อาจจะเป็นสิ่งที่ Rekenber กำลังค้นหา! ข้าต้องไปบอก Burled เกี่ยวกับเรื่องนี้ #
+นำสมุดบันทึกของ Varmunt ไปให้ Burled #
+
+//--- ฝลฑิธ๐ภฺ มฆภ 2008ณโ ฐํพ็ภฬน฿ธำธฎวษ
+
+7054# คำขอของ Mue - สั่งสอนพวกมัน!#SG_FEEL#QUE_NOIMAGE#
+คุณได้รับภารกิจให้สั่งสอน Kobold Archer เพื่อปกป้องบ้านของ Wild Rose#
+กำจัด 1000 Kobold Archers#
+
+7055# คำขอของ Mue - ห้ามตีแมว!#SG_FEEL#QUE_NOIMAGE#
+Mue ขอร้องให้คุณช่วยอีกเรื่อง! ระหว่างที่ปกป้อง Wild Rose คุณต้องไม่โจมตี Wild Rose....#
+ห้ามโจมตี Wild Rose!#
+
+//--- ep13.2 [ธฝลภ๚]
+
+7056# ผู้ส่งสาร - คำขอของ Arch#SG_FEEL#QUE_NOIMAGE#
+ที่เผ่าของ Raffine ที่เรียกว่า 'Splendide' คุณพบ Raffine ที่ชื่อ 'Arch' ซึ่งเขาขอให้คุณตามหาเพื่อนเขา 'Terra' เขาบอกว่า Terra มักจะทิ้งฟางข้าวไว้เป็นร่อยรอยของเขา #
+ตามหาร่องรอยของ Terra#
+
+7057# ผู้ส่งสาร - คำขอของ Arch#SG_FEEL#QUE_NOIMAGE#
+คุณพบร่องรอยใกล้ๆ กับ Splendide ดูเหมือนร่องรอยจะมุ่งไปทางใต้ ลองตามไปดูต่อละกัน #
+ตามหาร่องรอยของ Terra#
+
+7058# ผู้ส่งสาร - คำขอของ Arch#SG_FEEL#QUE_NOIMAGE#
+คุณตกลงไปในที่ระหว่างรากของต้นไม้ยก คุณพบเผ่ายักษ์ที่ชื่อ 'Sapa' แข็งเหมือนหินและตัวใหญ่เหมือนภูเขา ดูเหมือนจะไม่มีร่องรอยของ Terra แล้ว #
+บอกให้ Arch รู้ #
+
+7059# ผู้ส่งสาร - Terra อยู่ไหน #SG_FEEL#QUE_NOIMAGE#
+Arch กังวลว่า Terra จะออกไปกับ Bradium จากห้องทดลองโดยไม่ได้รับอนุญาต Terra อาจจะไปที่ 'Sapa' ข้างใน 'ถ้ำนั้น' กับ Bradium#
+ตามหา Terra..#
+
+7060# ผู้ส่งสาร - Terra อยู่ไหน #SG_FEEL#QUE_NOIMAGE#
+เมื่อคุณมาถึง Sapa Terra ได้เดินทางไปนานแล้ว มีละอองขาวสว่างกระจายไปทั่วร่างของยักษ์ นั่นจะต้องเป็นละอองจาก Bradium แน่นอน #
+ถ้า Bradium เกี่ยวข้อง.. หรือจะเป็น Sapa? #
+
+7061# ผู้ส่งสาร - Terra อยู่ไหน #SG_FEEL#QUE_NOIMAGE#
+ในเมืองของ 'Sapa' คุณได้ยินบางอย่างที่ 'Manuk' เกี่ยวกับจับตัว 'Raffine' ได้ #
+คุณต้องตามหา Raffine ที่ถูกจับ #
+
+7062# ผู้ส่งสาร - Terra อยู่ไหน #SG_FEEL#QUE_NOIMAGE#
+คุณได้ยินว่า Raffine ที่ถูกจับใน Manuk บาดเจ็บ บางทีคุณอาจจะได้พบเธอหากมียารักษา #
+สอบถาม Arch#
+
+7063# ผู้ส่งสาร - Terra อยู่ไหน #SG_FEEL#QUE_NOIMAGE#
+คุณพบว่า 'Yggdrasil berry' เป็นยารักษาที่ดีที่สุดสำหรับ Raffine คุณควรรวบรวม Yggdrasil berries รอบๆ ต้นไม้ยักษ์ #
+รวบรวม 6 Yggdrasil berries#
+
+7064# ผู้ส่งสาร - Terra อยู่ไหน #SG_FEEL#QUE_NOIMAGE#
+คุณเก็บ Yggdrasil berry ได้ครบแล้ว คุณต้องเอาไปให้ Snorren ที่ Manuk#
+เอา Yggdrasil berries ไปให้ Snorren#
+
+7065# ผู้ส่งสาร - Terra อยู่ไหน #SG_FEEL#QUE_NOIMAGE#
+คุณคุยกับ Raffine ที่ถูกจับไว้ผ่านการช่วยเหลือของ Snorren คุณต้องแปลการสนทนากับ Raffine ให้ Snorren และ Luik#
+ไปคุยกับ Raffine#
+
+7066# ผู้ส่งสาร - พิสูจน์ความจริง #SG_FEEL#QUE_NOIMAGE#
+Luik สงสัยเกี่ยวกับเรื่องราวของ Terra เกี่ยวกับการสำรวจถ้ำยักษ์ข้างในรากของต้นไม้ยักษ์และ Sapa ที่กำลังจะตาย Snorren สงสัยว่า Sapa คนนั้นอาจจะเป็นเพื่อนเขา 'Ogen' เขาจึงขอให้หาหลักฐาน #
+กลับไปที่ถ้ำเพื่อหาหลักฐาน #
+
+7067# ผู้ส่งสาร - พิสูจน์ความจริง #SG_FEEL#QUE_NOIMAGE#
+คุณได้รับ 'Bradium's  fragments' จากร่างของ Sapa และ 'Shabby Muffler' สิ่งนี้ต้องใช้ได้แน่! #
+เอาหลักฐานไปให้ Luik และ Snorren#
+
+7068# ผู้ส่งสาร - พิสูจน์ความจริง #SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนว่า 'Shabby Muffler' จะเป็นของของเพื่อน Snorren และมันยังพิสูจน์ได้ว่า Terra ได้พยายามจะช่วยชีวิต 'Ogen' ด้วย 'Bradium's fragments' คุณและ Snorren ตัดสินใจที่จะไปช่วย Ogen#
+ไปหา Ogen ก่อนที่จะสาย #
+
+7069# ผู้ส่งสาร - สายเกินไป!#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนคุณจะมาช้าเกินกว่าจะช่วย Ogen ได้ทัน Snorren ได้หันหลังและเดินกลับไปยังเมือง คุณควรจะไปรับ Terra#
+#
+
+7070# ผู้ส่งสาร - Terra กลับมาแล้ว #SG_FEEL#QUE_NOIMAGE#
+คุณได้ยินจาก Snorren ว่า Terra ได้ถูกปล่อยตัวแล้ว #
+#
+
+7071# ผู้ส่งสาร - Invitation#SG_FEEL#QUE_NOIMAGE#
+Arch ชวนคุณไปที่พักของ Terra เพื่อคุยรายละเอียด บ้านของ Terra มี Yai เป็นร้อยแขวนอยู่ ตั้งอยู่ทางตะวันออกเฉียงใต้ของเสา #
+ไปบ้านของ Terra#
+
+// ภฬฐๆผ๗
+//--------------------พ๎ฝ๊ฝลภม๗--------------------------------
+8000# ยกเลิกการเปลี่ยนอาชีพ Assassin#SG_FEEL#QUE_NOIMAGE#
+ยกเลิกการเปลี่ยนอาชีพเป็น Assassin และเดินทางกลับเมือง #
+ยกเลิกการเปลี่ยนอาชีพ Assassin#
+
+8001# สมัครเพื่อเปลี่ยนอาชีพ Assassin#SG_FEEL#QUE_NOIMAGE#
+กรอกแบบฟอร์มสมัครเป็น Assassin และเข้ารับการทดสอบ #
+กรอกใบสมัครเพื่อเปลี่ยนอาชีพ Assassin#
+
+8002# ข้อเขียนสำหรับเปลี่ยนอาชีพ Assassin#SG_FEEL#QUE_NOIMAGE#
+คุณต้องตอบให้ได้อย่างน้อย 9 ใน 10 คำถามเพื่อจะผ่านการทดสอบ #
+สอบข้อเขียนเพื่อเปลี่ยนอาชีพ Assassin#
+
+8003# การฝึกสำหรับเปลี่ยนอาชีพ Assassin#SG_FEEL#QUE_NOIMAGE#
+กำจัด 6 'Sample for Job Test' เพื่อผ่านการทดสอบ #
+กำจัด 6 Sample for Job Test!#
+
+8004# การฝึกสำหรับเปลี่ยนอาชีพ Assassin#SG_FEEL#QUE_NOIMAGE#
+ทดสอบความสามารถ Hiding คุณต้องใช้ความสามารถในการหลบซ่อนเพื่อไปให้ถึงที่หมายโดยไม่มีการกำจัดมอนเตอร์ #
+ห้ามกำจัดมอนเตอร์ #
+
+8005# การฝึกสำหรับเปลี่ยนอาชีพ Assassin#SG_FEEL#QUE_NOIMAGE#
+ไปที่ห้องทดสอบสุดท้าย #
+ไปที่ห้องทดสอบสุดท้าย #
+
+8006# ตามหา Guild Master!#SG_FEEL#QUE_NOIMAGE#
+คุณต้องเดินผ่านเขาวงกตไปหาหัวหน้าสมาคม#
+ไปหาหัวหน้าสมาคม!#
+
+8007# การยอมรับจาก Guild Master#SG_FEEL#QUE_NOIMAGE#
+นำ Necklace จากหัวหน้าสมาคมไปให้กับ Assassin Expert 'Huey'#
+ส่ง nacklace จากหัวหน้าสมาคม #
+
+8008# เปลี่ยนอาชีพ Assassin#SG_FEEL#QUE_NOIMAGE#
+คุณได้เป็น Assassin แล้ว!!#
+เปลี่ยนอาชีพ Assassin#
+
+
+//วมธฎฝบฦฎ ภม๗
+
+8009# สมัครเพื่อเปลี่ยนอาชีพ Priest#SG_FEEL#QUE_NOIMAGE#
+ยอมรับเงื่อนไขที่จะเปลี่ยนอาชีพเป็น Priest#
+ยืนใบสมัครเพื่อจะเปลี่ยนเป็น Priest#
+
+8010# การทดสอบแรก แสวงบุญ #SG_FEEL#QUE_NOIMAGE#
+คุณต้องออกเดินทางแสวงบุญ #
+อย่างแรกไปพบ Rubalkabara ที่อยู่ทางตะวันออกเฉียงเหนือของ Prontera อย่างที่สอง ไปเยี่ยมแม่ชี Mathilda ที่อยู่แผนที่ทางเหนือของ Morroc, ตะวันตกเฉียงใต้ของ Prontera สุดท้ายไปหาบาทหลวง Yosuke ที่ตะวันตกเฉียงเหนือของ Prontera#
+การทดสอบครั้งที่หนึ่ง การแสวงบุญ #
+
+8011# การทดสอบที่สอง ทดสอบจิตใจ #SG_FEEL#QUE_NOIMAGE#
+ไปยังสถานที่ทดสอบจิตใจ คุยกับ Peter S. Alberto#
+การทดสอบครั้งที่สอง ทดสอบจิตใจ #
+
+8012# การทดสอบที่สอง ทดสอบจิตใจ #SG_FEEL#QUE_NOIMAGE#
+เริ่มการทดสอบ กำจัดมอนเตอร์! แสดงให้เห็นว่าเราไม่ปราณีต่อสิ่งชั่วร้าย! #
+การทดสอบครั้งที่สอง ทดสอบจิตใจ #
+
+8013# เปลี่ยนอาชีพ Priest#SG_FEEL#QUE_NOIMAGE#
+คุณผ่านการทดสอบจิตใจเรียบร้อยแล้ว! ไปพบ Sister Cecilia#
+ทดสอบการเปลี่ยนอาชีพ Priest#
+
+
+8014# การทดสอบที่สาม เสียสละเพื่อพระเจ้า #SG_FEEL#QUE_NOIMAGE#
+แสดงว่าตนเองจะยอมเสียสละเพื่อพระเจ้า #
+การทดสอบครั้งที่สาม เสียสละเพื่อพระเจ้า #
+
+
+8015# ลงทะเบียนเพื่อเปลี่ยนอาชีพ Priest#SG_FEEL#QUE_NOIMAGE#
+คุณได้ผ่านภารกิจ 3 อย่างที่แสดงว่าคุณเหมาะสมที่จะเป็น Priest แล้ว กลับไปหา Bishop Paul#
+สิ้นสุดการทดสอบ Priest#
+
+
+8016# เปลี่ยนอาชีพ Priest#SG_FEEL#QUE_NOIMAGE#
+คุณได้เปลี่ยนเป็น Priest แล้ว!!#
+คุณได้เปลี่ยนเป็น Priest แล้ว!!#
+
+// พฦภฮบ๊ทฮลฉ ฐ๘ภๅ ฤ๙ฝบฦฎ
+
+8017# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+ถ้าต้องการ โปรดตรวจสอบเครื่องควบคุมที่สองดูเหมือนจะมีบางอย่างเสียหาย..#
+ตรวจสอบเครื่องควบคุมที่สอง #
+
+8018# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนจะพังทั้งหมด : น็อตหาย, ฝาเหล็กพัง, สายไฟพันกันยุ่งเหยิง #
+รายงานสถานะการณ์ให้กับ Zelmeto#
+
+8019# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+มีเครื่องควบคุมแรงดัน 3 ตัว ที่ควบคุมฆ้อนที่ตอกลงไปบนแผ่นเหล็ก แต่ดูเหมือนหนึ่งในนั้นมีปัญหา #
+ตรวจสอบเครื่องควบคุมแรงดัน #
+
+8020# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนจะมีเสียงแปลกๆ เกิดขึ้น น็อตสองสามตัวคงหายไป #
+รายงานสถานะการณ์ให้กับ Zelmeto#
+
+8021# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+คุณต้องไปตรวจสอบ ^FF0000เครื่องควบคุม^000000 เหมือนกับเครื่องควบคุมที่คุณเคยตรวจแต่มันใหญ่กว่า #
+ตรวจสอบเครื่องควบคุม #
+
+8022# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+หลังจากที่ตรวจสอบคุณพบว่าวัสดุบางส่วนขาดหายไป...#
+รายงานสถานะการณ์ให้กับ Zelmeto#
+
+8023# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+ต่อไปอยากให้คุณไปตรวจสอบเครื่องลำเลียงอันเล็ก แม้ว่าจะมีอันใหม่ที่ขนาดใหญ่กว่าแล้วก็ตาม #
+ตรวจสอบเครื่องลำเลียงอันเล็ก #
+
+8024# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนเครื่องยนต์ทำงานไม่ดี น็อตขึ้นสนิม #
+รายงานสถานะการณ์ให้กับ Zelmeto#
+
+8025# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+ตรวจสอบท่อน้ำใกล้ๆ เครื่องหลอมเหล็ก คุณจะหามันได้ไม่ยาก #
+ตรวจสอบท่อน้ำ #
+
+8026# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนแรงดันจะเกิดกว่าที่กำหนดไว้ หวังว่ามันจะไม่ระเบิดตอนนี้นะ #
+รายงานสถานะการณ์ให้กับ Zelmeto#
+
+8027# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+สิ่งสุดท้ายตรวจสอบ ^FF0000เครื่องลำเลียงขนาดใหญ่^000000 เหมือนกับอันก่อนที่ตรวจสอบแต่มันใหญ่กว่า #
+ตรวจสอบเครื่องลำเลียงอันใหญ่ #
+
+8028# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนจะมีปัญหาเดียวกันกับอันเล็ก ฝืดและทำงานไม่เต็มประสิทธิภาพ น็อตทั้งหมดขึ้นสนิมหมดแล้ว #
+รายงานสถานะการณ์ให้กับ Zelmeto#
+
+8029# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+ขอบคุณมากในความช่วยเหลือ เขาต้องตรวจสอบอีกรอบเพื่อความปลอดภัย อย่างแรกเขาคงต้องรีบของบในการซ่อมบำรุงโรงงาน #
+ขอเพิ่มงบประมาณในการปรับปรุงโรงงาน #
+
+8030# โรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE#
+อะไร...? งบซ่อมแซมโรงงาน? ไม่มีทาง! เสียเงินทำไม? ดูเหมือนทุกอย่างเรียบร้อยดี! จะต้องไปเสียเงินเพิ่มทำไม? #
+คำขอถูกยกเลิก #
+
+8031# งานซ่อมแซมโรงงานใน Einbroch#SG_FEEL#QUE_NOIMAGE #
+พวกเราต้องการ 20 ^FF0000Flexible Tubes^000000, 10 ^FF0000Rusty Screw^000000 และ 10 ^FF0000Used Iron Plate^000000 เพื่อซ่อมโรงงาน #
+20 Flexible Tubes, 10 Rusty Screw, 10 Used Iron Plate#
+
+
+
+// ธฎศ๗ลธธฃมจ : บ๑ฐ๘มค ฤ๙ฝบฦฎ
+
+8032# คำขอของ Tarlock#SG_FEEL#QUE_NOIMAGE#
+เขามีน้องชายที่ไม่ได้พบมานานแล้ว เขาเป็นกัปตันเรือเหาะต้องเดินทางตลอดเวลา ช่วยนำจดหมายไปให้ Ferlock ได้ไหม? และช่วยส่งคำตอบกลับมาด้วยได้ไหม?#
+ส่งจดหมาย Tarlock ไปให้น้องชายเขา #
+
+8033# คำขอของ Ferlock#SG_FEEL#QUE_NOIMAGE#
+พี่ชายเขาอยากได้ของบางอย่างจากเขาคืนแต่เขาทำหายไปได้...ถ้าคุณอยากช่วย ให้ช่วยรวบรวม^FF00002 Will of the Darkness^000000 และ ^FF00002 Prickly Fruit^000000 ไปให้เขาได้ไหม?#
+รวบรวม 2 Will of the Darkness และ Prickly Fruit กลับไปให้ Ferlock#
+
+8034# คำขอของ Ferlock#SG_FEEL#QUE_NOIMAGE#
+ช่วยฝากคำตอบไปให้ Tarlock แทนเขาได้ไหม?#
+ส่งจดหมายจาก Ferlock ไปให้พี่ชายเขา Tarlock#
+
+8035# ส่งจดหมายให้ Tarlock#SG_FEEL#QUE_NOIMAGE#
+คุณได้ส่งจดหมายเรียบร้อยแล้วใช่ไหม? ดีเลย แล้วได้คำตอบมาไหม คุณอ่านข้อความจากน้องชายเขาให้ฟัง #
+ #
+
+
+// ธฎศ๗ลธธฃมจ : ภฏป็ ภฬนฬธฃ ฤ๙ฝบฦฎ
+
+8036# คำขอร้องของ Hallen#SG_FEEL#QUE_NOIMAGE#
+ช่วยไปพบ Kaci และส่งจดหมายแทนเขาได้ไหม? มันมาจากคนที่ชื่อ Mr. Mawong เขาเรียกกันว่าอย่างนั้น #
+ส่งจดหมายกลับไปให้ Kaci#
+
+8037# ส่งจดหมายให้ Kaci#SG_FEEL#QUE_NOIMAGE#
+โอ้ Hallen ขอให้คุณช่วยส่งของให้หน่อย เขาควรต้องทำเองนะไม่ใช่มาขอให้ลูกค้าทำให้! ถ้าสงสัยอะไรก็ถามมาได้นะ?#
+ #
+
+8038# ส่งจดหมายให้ Kaci#SG_FEEL#QUE_NOIMAGE#
+อีกอย่าง ถ้าน้องชาย Hallen ขอให้คุณช่วยอีก ให้ปฎิเสธเข้าใจไหม? ข้าไม่อยากให้เขาโดนตามใจมาก! โหๆๆๆ~#
+ #
+
+8039# ความลับของเรือเหาะ #SG_FEEL#QUE_NOIMAGE#
+เรือเหาะลำนี้มีขนาดใหญ่และหนัก และไม่อยากเชื่อเลยว่ามันจะบินได้ มันเป็นไปได้ไง? คุณช่วยหาเหตุผลให้หน่อยได้ไหม #
+ #
+
+8040# ความลับของเรือเหาะ #SG_FEEL#QUE_NOIMAGE#
+จริงเหรอ...? พูดจริงหรือเปล่า? แค่เศษเสี้ยวของ Ymir's Heart เหมือนเคยได้ยินที่ไหนมาก่อนนะ? ขอคิดก่อน... #
+ #
+
+8041# ความลับของเรือเหาะ #SG_FEEL#QUE_NOIMAGE#
+Kaci บอกเกี่ยวกับขี้เมาที่พูดถึงเกี่ยวกับ Ymir's Heart ตลอดเวลา เวลาที่เขาเล่นทอยเต๋าเพื่อเอา Apples!#
+ #
+
+8042# ความลับของเรือเหาะ #SG_FEEL#QUE_NOIMAGE#
+เขาพบชายคนนั้นตอนที่ไปช่วย Shinokas เขาเคยเป็นผู้อำนวยการห้องทดลองที่ Einbroch Laboratory และมีชิ้นส่วนของ Ymir's Heart มันมีค่าสำหรับการค้นคว้ามาก..#
+ #
+
+8043# ความลับของเรือเหาะ #SG_FEEL#QUE_NOIMAGE#
+คุณถูกถามเกี่ยวกับกลไกการทำงานของเรือเหาะ ซึ่งคุณไม่ใช่พนักงาน...คุณควรออกไปจากที่นี่ดีกว่า ยามรักษาการณ์แน่นหนาคุณอาจถูกไล่ได้ ไว้ว่างๆ แวะมาที่เรือเหาะใหม่ละกัน? ตอนนี้ไปได้แล้ว! #
+คุณต้องกลับไปหา Ferlock#
+
+
+// ศึฐึ : พเ ฑธวฯฑโ ฤ๙ฝบฦฎ
+
+8044# คู่หมั้นของ Euslan#SG_FEEL#QUE_NOIMAGE#
+...คุณจะออกตามหา Thierry ให้ฉันใช่ไหม? โอ้ ขอบใจมาก! คุณไม่รู้หรอกว่ามันมีความหมายแค่ไหนต่อเขา Thierry ออกเดินทางไปกับเรือเหาะ Airships เพื่อหายามารักษาอาการป่วยของฉัน #
+ #
+
+8045# คำแนะนำจาก Kaci#SG_FEEL#QUE_NOIMAGE#
+อ่ารู้แล้ว! คุณน่าจะขอให้กัปตันเรือเหาะช่วยเหลือ: เขามีรายชื่อผู้โดยสารและปลายทางที่จะไป #
+ตรวจสอบรายชื่อผู้โดยสารกับกัปตัน #
+
+8046# รายชื่อผู้โดยสารของ Ferlock#SG_FEEL#QUE_NOIMAGE#
+ตามเอกสารเขาบินไปที่ Hugel มีรายละเอียดแค่นี้แหละ #
+ #
+
+8047# คำขอร้องของ Euslan#SG_FEEL#QUE_NOIMAGE#
+ถ้าคุณมีโอกาสลองไปหา Eukran ที่ Hugel ดู และสอบถามเขาว่า Thierry อาจจะไปไหนได้บ้าง #
+ #
+
+8048# ข้อมูลจาก Eukran#SG_FEEL#QUE_NOIMAGE#
+คุณได้รู้ว่า Thierry มาที่นี่เมื่อประมาณเดือนก่อนและบอกว่าจะไปที่วิหาร Odin แต่ตอนนี้ไม่แน่ใจว่ายังอยู่ไหม แต่เขาพยายามที่จะช่วยพี่สาวเขา #
+ #
+
+8049# คำขอร้องของ Thierry#SG_FEEL#QUE_NOIMAGE#
+คุณไม่ค่อยแน่ใจในรายละเอียดเท่าไหร่ แต่คุณต้องหาทางรักษาโรคของ Euslan ดูเหมือนมันแก้ด้วยยาทั่วไปไม่ได้..#
+ #
+
+8050# อันตรายกำลังเข้าใกล้ Thierry#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือน Thierry จะติดอยู่กับปัญหาอะไรบางอย่าง นั่นเป็นเหตุให้เค้าค้นคว้าช้าลง คุณควรช่วยเขาก่อนที่มันจะสายเกินไป #
+ #
+
+8051# ยาของ Euslan#SG_FEEL#QUE_NOIMAGE#
+ไม่ว่าจะเกิดอะไรขึ้นกับคุณ แต่คุณต้องช่วยชีวิต Euslan คุณต้องการเพียงแค่ 5 Runes of the Darkness เพื่อใช้ทำยา..#
+รวบรวม 5 Runes of the Darkness#
+
+8052# คำขอร้องของ Thierry#SG_FEEL#QUE_NOIMAGE#
+โปรดเข้าใจว่าเขาต้องการเจอพี่สาวโดยเร็วที่สุด แต่เขาต้องรอให้สายลับ Rekenber หยุดตามหาเขาก่อน นำยานี้ไปให้ Euslan โดยเร็วที่สุด: ชีวิตเธอขึ้นอยู่กับยานี้ #
+เอายาไปให้ Euslan#
+
+
+// ศึฐึ : พเรส ฤ๙ฝบฦฎ (hg_herv.sc)
+
+8053#Allen Schuwell#SG_FEEL#QUE_NOIMAGE#
+เขาอยากให้ตามหาลูกชายที่ชื่อ Postell และบอกให้เขาเอายากลับมา! โปรดไปทางตะวันออกของเมืองและคุณจะพบ Postell#
+ #
+
+8054# ข้อความจาก Postell#SG_FEEL#QUE_NOIMAGE#
+เขาก็อยากจะกลับไปหาพ่อ แต่อยากจะให้คุณช่วยคุยให้หน่อยว่าพ่อเขาจะไม่ว่าอะไรเขา #
+กลับไปหา Allen#
+
+8055# ดูแล Allen#SG_FEEL#QUE_NOIMAGE#
+ถ้าเกิดมีแผลเพิ่มขึ้นก่อนที่ Postell จะนำยากลับมาจะเกิดอะไรขึ้น?! เขาอาจจะไม่รอด! เขาขอให้คุณอยู่ดูแลจนกว่าลูกชายจะกลับมาได้ไหม?#
+ดูแล Allen#
+
+8056# ของตอบแทนเล็กน้อย #SG_FEEL#QUE_NOIMAGE#
+ลองดูในลิ้นชักยา และลองช่วยเขาดู~#
+ดูในลิ้นชักยา #
+
+
+// ศึฐึ : ร฿พ๏ ฤ๙ฝบฦฎ (hg_memo.sc)
+
+8057#Grumbling Manainne#SG_FEEL#QUE_NOIMAGE#
+ต้นไม้นี้มีความหมายกับทุกคนในเมืองมากและมีความทรงจำพิเศษเกิดขึ้นที่นี่ แต่ว่า El Schatt วางแผนจะตัดมันเพื่อมาทำร้านขายของ..#
+ #
+
+8058# ไปคุยกับ El Schatt#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนจะมีความทรงจำดีๆ มากมายเกิดขึ้นกับเขาที่นี่ แต่ว่าคุณรู้อะไรไหม? เขาได้ตัดสินใจที่จะลืมมันก่อนที่จะยากเกินกว่าจะลืม พ่อเขาอยากจะเปิดร้านที่นี่มานานแล้ว เขาคิดว่าแค่รอเวลาที่เหมาะสม #
+ #
+
+8059# ไปคุยกับ Perfitz#SG_FEEL#QUE_NOIMAGE#
+เขาดีใจที่ลูกชายเริ่มหันมาสนใจธุรกิจ มันตลกมาก...เขาเคยคัดค้านที่จะเปิดร้านตรงที่ที่ต้นไม้นี้ขึ้นอยู่ เขารู้สึกแปลกๆ ดูเหมือนเขาจะตื่นเต้นกับการที่จะตัดมัน บางทีมันอาจเป็นแค่ความขี้สงสัยของชายแก่~#
+ #
+
+8060#Stubborn El Schatt#SG_FEEL#QUE_NOIMAGE#
+เขายอมรับว่าเคยไม่เห็นด้วย...เขาปกป้องต้นไม้นี้เท่าชีวิต แต่ว่านั่นมันเรื่องในอดีตเราควรจะลืมๆ มันซะ #
+ #
+
+8061#Grumbling Manainne#SG_FEEL#QUE_NOIMAGE#
+ตอนนี้ El Schatt ไม่มีน้ำใจแล้ว เห็นแก่เงิน...! เขาเปลี่ยนไปมาก วิญญาณของพี่สาวจะต้องเสียใจมากแน่..#
+ #
+
+8062#Kanainne's spirit#SG_FEEL#QUE_NOIMAGE#
+เธอจะยืมร่างของน้องสาว? ถ้าเธอร่วมมือ...มันอาจจะสำเร็จ เธอจะทำอะไรบางอย่างกับเขา ก่อนที่เขาจะเจ็บปวดมากไปกว่านี้..#
+กลับไป Hugel#
+
+8063#Kanainne meets El Schatt#SG_FEEL#QUE_NOIMAGE#
+...El Schatt... เธอร้องเรียกให้มองดูเธอว่าเธอคือ Kanainne และก็ร้องเพลงที่เขาแต่งขึ้นให้ก่อนเธอตายให้ฟัง ซึ่งเพลงนั้นยังไม่ทันแต่งเสร็จเธอก็ตายแล้ว #
+ #
+
+
+// ศึฐึ : ฟภตญ ฤ๙ฝบฦฎ (hg_odeng.sc)
+
+8064#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+รับอาหาร Fish Cake Soup แล้วไปส่งให้ Neha เธอดีใจที่ Neha เป็นลูกค้าประจำ #
+ส่งอาหารไปให้ Neha#
+
+8065#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+รับอาหาร Fish Cake Soup แล้วไปส่งให้ Maewan ลูกค้าประจำอีกรายหนึ่ง #
+ส่งอาหารไปให้ Maewan#
+
+8066#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+นำอาหารไปให้ Layoma เพื่อนร่วมห้องของเธอ แต่ระวังหน่อยเธอเป็นพวกตรงต่อเวลา..#
+ส่งอาหารไปให้ Layoma#
+
+8067#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+เร็วเข้า ส่งอาหาร Fish Paste Soup ไปให้ Erjan แต่ระวังไว้เพราะเขาเป็นคนเรื่องมาก..#
+ส่งอาหารไปให้ Erjan#
+
+8068#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+คุณมาสาย! ไม่รู้หรือไงว่าซุปต้องกินตอนร้อนๆ? แต่ว่า... คุณน่าตาดีจึงได้รับการยกโทษ...แต่มีเงื่อนไขว่าจะเอา ^FF00001 Whip^000000 มาให้แทน #
+หา 1 Whip ไปให้ Neha#
+
+8069#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+เธอพอใจมาก เธอจะไปบอกหัวหน้า Celette ว่าคุณทำงานได้ดี...หวังว่าคุณจะกลับมาช่วยเธออีก~#
+คุณได้ส่ง Fish Soup เรียบร้อยแล้ว #
+
+8070#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+คุณมาช้า! นี่มันผิดใช่ไหม? เขาจะยกโทษให้หากคุณช่วยเขาสะสมของที่เขาชอบ หา 1 Bookclip in Memory ให้เขา ได้ไหม?#
+หา 1 Bookclip in Memory ให้กับ  Maewan#
+
+8071#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+ขอบใจมาก~ #
+คุณได้ส่ง Fish Soup เรียบร้อยแล้ว #
+
+8072#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+คุณจะเป็นคนส่งของให้ Cellette ไม่ได้จนกว่าจะพิสูจน์ตัวเองให้เธอรู้ หา ^FF00001 Mushroom Spore^000000 ให้เธอแล้วเธอจะยกโทษให้ #
+หา 1 Mushroom Spore ให้ Layoma#
+
+8073#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+เธอยอมรับคุณให้ทำงานส่งอาหารให้กับ Cellette ได้นานขึ้น #
+คุณได้ส่ง Fish Soup เรียบร้อยแล้ว #
+
+8074#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+ต้องส่ง ^FF0000Fish Cake Soup^000000 พร้อมกับ ^FF00001 China^000000 เธอถึงจะยอมรับ #
+หา 1 China ให้ Erjan#
+
+8075#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+คุณหมดหน้าที่แล้วไปได้แล้ว กลับไปหา Cellette และฝากขอบคุณเธอด้วย #
+คุณได้ส่ง Fish Soup เรียบร้อยแล้ว #
+
+
+// พฦภฮบ๊ทฮลฉ : ฟฌภฮ ฤ๙ฝบฦฎ (ein_ryu.sc)
+
+8076#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+เขารู้ว่าเขาทำอะไรปัญญาอ่อน แต่เขายอมให้ทุกอย่างเพื่อจะได้พบ Calla... และอย่าเข้าใจผิด เขาแค่ตกหลุมรักคนผิด ก็แค่นั้น...#
+ #
+
+8077#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+เธอบอกว่าเธอคงไม่เจอเขาไม่ได้ แต่ช่วยนำไวโอลินเธอไปให้ Klitzer แทนได้ไหม? เธอเคยเล่นไวโอลินนี้ให้เขาฟังบ่อยๆ..#
+นำ Calla's Violin ไปให้ Klitzer#
+
+8078#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+นั่นมันไวโอลินของลูกสาวเขา เขาให้เธอตอนเธออายุ 16 ปี... คุณทำผิดพลาดแล้ว! คุณถูกยามไล่ออกมา!#
+Calla ไวโอลิน ถูกแย่งไป #
+
+8079#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+คุณต้องนำ ^FF00001 Flower^000000 ไปให้เธอ เขาไม่มีเงินและไม่เป็นที่ต้อนรับที่ Kapellthaine Manor#
+นำ 1 Flower ไปให้ Calla#
+
+8080#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+ช่วยฝากคำขอบคุณไปให้ Klitzer ที่ Einbroch และบอกเขาว่าเธอคิดถึงเขามาก #
+ส่งข้อความของ Calla ไปให้ Klitzer#
+
+8081#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+เขารู้สึกดีขึ้นแล้ว เขาขอให้คุณไปพบแม่ของเขา? แม่ของเขาอยากพบเพื่อนเขาเสมอ #
+ไปพบแม่ของ Klitzer#
+
+8082#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+เธอบอกว่าระยะทางระหว่างเมืองสองเมืองนี้ไม่มีทางขวางความรักของลูกชายของเธอได้..#
+ #
+
+8083#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+เธอขอให้คุณช่วยหา ^990000Coals^000000 ให้เขา #
+นำ Coals ไปให้ Satra#
+
+8084#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+เธอเคยพยายามจะใช้มันหลายครั้งแต่ไม่ได้ผล เธอไม่รู้ว่าใช้มันอย่างไร!#
+คุณต้องเอา Coals ไปให้ Satra#
+
+8085#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+เธอฝากบอก Klitzer ให้มาเยี่ยมเธอบ้างและแต่งตัวให้มันดูดีหน่อย โฮ่ๆๆๆ~!#
+ส่งข้อความไปให้ Klitzer#
+
+8086#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+เอ่อ...?  เขาถามเพื่อความแน่ใจว่าแม่ของ Calla อยากดื่มน้ำชากับเขาหรือ? พระเจ้า...!!#
+ #
+
+8087#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+เธอขอบคุณที่ช่วยเหลือลูกชายเธอ Klitzer แต่แย่หน่อยที่เขาไม่รู้แม้กระทั่งจะต้องแต่งตัวอย่างไร Formal Suit หรือ Tuxedo สำหรับงานพิเศษแบบนี้ #
+หาชุดดีๆ ให้ Klitzer#
+
+8088#Klitzer และ Calla#SG_FEEL#QUE_NOIMAGE#
+เขาเริ่มตาสว่างแล้ว เขาจะพยายามทำให้ครอบครัวของ Calla ยอมรับและเห็นคุณค่าความรักของ Calla#
+ #
+
+
+// ถ๓ว๏ : ภ฿ธ๘ตศ ฝษบฮธง ฤ๙ฝบฦฎ (rachel_wonjumin.sc)
+
+8089# ขโมยเพชร #SG_FEEL#QUE_NOIMAGE#
+เขาไม่มีหลักฐานแต่เขาสงสัย Phobe คนรับใช้ที่หายตัวไปพร้อมกับช่วงที่เพชรหายไป คุณควรจะไปสอบถามคนรับใช้คนนั้นดู #
+สอบถามข้อมูลกับ Phobe#
+
+8090# ขโมยเพชร #SG_FEEL#QUE_NOIMAGE#
+ความจริงคือเขาไม่รู้อะไรเลยตั้งแต่ทำงานที่นั่น ทำไมคุณไม่ลองไปหาหัวหน้าลูกจ้างดูล่ะ? ลองถาม Mr. Manson ข้างในแมนชั่นดู #
+ไปหา Mr. Manson#
+
+8091# ขโมยเพชร #SG_FEEL#QUE_NOIMAGE#
+คนสวนที่ชื่อ Jenny คือคนที่เขาแนะนำ เขาทำงานให้กับ Sir Zhed มานานและเธอรักเด็ก ถ้าอยากรู้ข้อมูลเกี่ยวกับเด็กเพิ่มต้องไปถาม Jenny#
+ไปหา Jenny#
+
+8092# ขโมยเพชร #SG_FEEL#QUE_NOIMAGE#
+คุณต้องลองไปสอบถามคนที่ตลอดดู #
+ไปที่ตลาด #
+
+8093# ขโมยเพชร #SG_FEEL#QUE_NOIMAGE#
+เขาถูกจ้างมาให้ส่งข้อความให้กับคนที่ตามหา Phobe เขาฝากบอกให้ไปที่ 'ice cave' และหาคนชื่อ... Logan? Nogan? อะไรสักอย่าง #
+ไปที่ถ้ำน้ำแข็ง #
+
+8094# ขโมยเพชร #SG_FEEL#QUE_NOIMAGE#
+Vincent บอกว่าทุกคนที่ถามถึง Rogan ถูกฆ่าหมด ชื่อที่เขาตั้งขึ้น ดูเหมือนจะแกล้งเรา ถ้ารู้ก่อนคงจะไม่ปล่อยให้เกิดขึ้น #
+กลับไปหา Vincent #
+
+8095# ขโมยเพชร #SG_FEEL#QUE_NOIMAGE#
+คุณจะไม่พบปัญหาใดๆ หากหาเพชรและ Phobe เจอก่อนที่ Sir Zhed จะกลับมา เขาก็จะช่วยคุณหาอีกแรง #
+ตามหา Phobe#
+
+8096# ขโมยเพชร #SG_FEEL#QUE_NOIMAGE#
+เขาไม่ต้องการที่จะกลับบ้าน! ไม่มีข้อต่อรองใดๆ แค่กลับไปบอกพ่อแม้เขาว่าเขาสบายดีก็พอ #
+กลับไปหา Vincent#
+
+8097# ขโมยเพชร #SG_FEEL#QUE_NOIMAGE#
+เขาจะเอาเพชรไปคืน แต่ฝากคุณไปบอก Jenny เกี่ยวกับเด็กแทนได้ไหม? เธอคงเป็นห่วงเขามาก..#
+บอกข่าวเกี่ยวกับลูกชายให้ Jenny รู้ #
+
+8098# ขโมยเพชร #SG_FEEL#QUE_NOIMAGE#
+เธอกล่าวขอบคุณที่คุณให้ความช่วยเหลือ~#
+กลับไปหา Vincent#
+
+8099# ขโมยเพชร #SG_FEEL#QUE_NOIMAGE#
+คุณได้รับจดหมายแนะนำตัว ให้นำไปให้กับ Sir Zhed โดยเร็วที่สุด เขาขอบคุณสำหรับความช่วยเหลือทุกอย่าง #
+ไปพบ Sir Zhed#
+
+
+// ถ๓ว๏ : ฝลฐ ฤ๙ฝบฦฎ (rachel_ma1.sc)
+
+8100# จดหมายแนะนำตัวจาก High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
+เขาจะทำการเขียนจดหมายแนะนำให้แต่การจะไปยังสำนักงานใหญ่นั้นต้องมี 40 Glacial Hearts#
+รวบรวม 40 Glacial Hearts และไปพบ Pope#
+
+8101# จดหมายแนะนำตัวจาก High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
+เขาขอบคุณที่คุณมาพบและหวังว่าจะได้พบกันอีก..#
+กลับไปหา Zhed#
+
+8102# จดหมายแนะนำตัวจาก High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
+เขายังไม่ว่างพอที่จะคุยด้วย คุณคงต้องรออีกสักพัก #
+ #
+
+8103# จดหมายแนะนำตัวจาก High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
+เขาแนะนำว่าอย่าเข้าใกล้ High Priest Zhed มากนัก คุณอาจจะมีปัญหาได้..#
+กลับไปหา Zhed#
+
+8104# จดหมายแนะนำตัวจาก High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
+เขาเตือนคุณว่าอย่าเข้าไปใกล้ ^FF0000Holy Ground^000000 ย้ำอีกครั้งอย่าเข้าไปใกล้ Holy Ground#
+ #
+
+8105# จดหมายแนะนำตัวจาก High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
+เขาเตือน Bekento ไม่ให้สร้างปัญหาให้กับคุณ แต่ดูเหมือนคุณจะสร้างปัญหาให้เขา โปรดทำความเข้าใจ: ผู้บุกรุกส่วนใหญ่จะได้รับการลงโทษ แต่เพราะเป็นเพื่อนกับ Bekento เขาจึงปล่อยคุณไป..#
+กลับไปหา Zhed#
+
+
+// ถ๓ว๏ : ฐณรดวฯม๖ ธ๘วั ฟ๎ธํ ฤ๙ฝบฦฎ (rachel_ryu.sc)
+
+8106#Bruspett อยู่ไหน #SG_FEEL#QUE_NOIMAGE#
+เขาพบว่าลูกสาวสุดที่รักของเขาออกไปกับใครบางคน เขาออกไปเมืองอื่นเพื่อผู้ชาย และก็ไม่ได้ยินข่าวของเธออีกเลย! บางทีอาจจะเป็นการเดินทางเพื่อความรักก็เป็นได้ #
+ไปพบ Lachellen#
+
+8107# คำพูดของ Lachellen#SG_FEEL#QUE_NOIMAGE#
+โอ้ เธอรู้สึกอิจฉา Bruspetti มาก! เธอใช้เวลาอยู่กับแฟนของเธอตลอด... แต่เธอก็ไม่ได้บอกว่าเขาชื่ออะไร...เขาโตที่ Lighthalzen มั้ง? เธอรู้เพียงเท่านี้ #
+หาคนต่างด้าวในเมือง #
+
+8108# คนต่างถิ่น Katinshuell#SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่าเขารู้จักคุณ คุณคือคนที่คอยช่วยแก้ไขปัญหาไปทั่ว แต่เขาว่าปัญหานี้คุณแก้ไม่ได้แน่ เขาและเธอเลิกกันแล้ว #
+กลับไปหา Mr. Shendar#
+
+8109# กลิ่นของ Bruspetti#SG_FEEL#QUE_NOIMAGE#
+เขาคิดถึงลูกสาวมาก ในบ้านจะมีกลิ่นต่างจากข้างนอก ฉะนั้นกลิ่นของ Bruspetti จะหอมเหมือนกับแม่ของเธอ #
+ตามกลิ่นของ Bruspetti ใน Lighthalzen#
+
+8110# กลิ่นของ Bruspetti#SG_FEEL#QUE_NOIMAGE#
+กลิ่นนี้ช่างหอมจริงๆ! เหมือนกลิ่นดอกกุหลาบ...เดี๋ยวอาจจะเป็นกลิ่นที่พ่อของ Bruspetti พูดถึงก็ได้นะ?#
+กลับไป Rachel และคุยกับ Lachellen#
+
+8111# คำพูดของ Lachellen#SG_FEEL#QUE_NOIMAGE#
+ถ้าเธออยู่ใน Lighthalzen เธออาจจะไปหาข้อมูลเกี่ยวกับแฟนของเธอก็ได้ ลองไปที่ที่เธอกับแฟนของเธอชอบไปดู คุณอาจจะได้ข้อมูลบางอย่าง #
+ค้นหา Freya's Spring#
+
+8112#Freya's Spring#SG_FEEL#QUE_NOIMAGE#
+I'm sorry if I startled you, but the ground that you're standing on is very slippery, you know#
+กลับไปหา Mr. Shendar#
+
+8113# สมุดบันทึกของ Bruspetti#SG_FEEL#QUE_NOIMAGE#
+แม้ว่าพ่อจะรักลูกมาก แต่เขาก็ไม่อยากจะไปเปิดอ่านบันทึกประจำวันของเธอ แม้ว่าเธอจะทิ้งมันไว้ที่ลิ้นชักบนสุด #
+ค้นหาสมุดบันทึกประจำวันที่ลิ้นชัก #
+
+8114# สมุดบันทึกของ Bruspetti#SG_FEEL#QUE_NOIMAGE#
+เขาก็ไม่อยากจะไปเปิดอ่านบันทึกประจำวันของเธอ แม้ว่าเธอจะทิ้งมันไว้ที่ลิ้นชักบนสุด #
+ค้นหาสมุดบันทึกประจำวัน #
+
+8115# สมุดบันทึกของ Bruspetti#SG_FEEL#QUE_NOIMAGE#
+นี่ต้องเป็นสมุดบันทึกประจำวันของ Bruspetti แน่นอน! แต่ว่าการอ่านมันจะเป็นเรื่องเสียมารยาท อย่าอ่านจะดีกว่า #
+ไปพบ Katinshuell#
+
+8116# ชายแปลกหน้า Katinshuell#SG_FEEL#QUE_NOIMAGE#
+อย่างที่บอกไปแล้วเขาพึ่งเลิกกับเธอ ปล่อยให้เขาอยู่คนเดียวจะดีกว่า..#
+ไปพบ Lachellen#
+
+8117# คำพูดของ Lachellen#SG_FEEL#QUE_NOIMAGE#
+Freya's Spring หรือ? เขาชอบที่นั่นมาก! เขารู้จักใครบางคนที่ชื่อ Katinshuell เขาไปที่นั่นบ่อย แต่แปลกที่นั่นส่วนใหญ่ผู้ชายจะไม่ไปคนเดียว..#
+ไปที่ Freya's Spring#
+
+8118#Freya's Spring#SG_FEEL#QUE_NOIMAGE#
+เห็นที่สุดน้ำพุนั่นไหม? ชายหนุ่มจะมาที่นี่บ่อยและไปยืนจ้องมองน้ำอยู่ที่ตรงนั้น และดูเศร้าสร้อย ชายหนุ่มส่วนใหญ่ไม่ค่อยจะเป็นเช่นนั้น #
+กลับไปหา Mr. Shendar #
+
+8119# ไปคุยกับ Mr. Shendar#SG_FEEL#QUE_NOIMAGE#
+เดี๋ยวๆ...มีใครบางคนซ่อนอยู่ตรงนั้น? เดี๋ยว ชายคนนั้นน่าจะเป็นแฟนของ Bruspetti#
+ใช้สมุดบันทึกของ Bruspetti ค้นหา Katinshuell#
+
+8120# ไปคุยกับ Katinshuell#SG_FEEL#QUE_NOIMAGE#
+คุณให้เขาบอกความจริง! ทำไมถึงไม่พูดความจริงต่อกันรู้เรื่อง? #
+คุยกับ Katinshuell#
+
+8121# ไปคุยกับ Katinshuell#SG_FEEL#QUE_NOIMAGE#
+เขายังคงปฎิเสธ จะทำให้เขาพูดความจริงได้อย่างไร? ต้องมีบางอย่างที่ใช้ทำให้เขายอมพูดได้..#
+ #
+
+8122# ไปคุยกับ Katinshuell#SG_FEEL#QUE_NOIMAGE#
+...เขาขออยู่คนเดียว เพราะเขาทำเรื่องโง่ๆ ที่ทำให้เขาต้องเสียคนรักไป..#
+ไปยัง Freya's Spring#
+
+// พฦฟไลธพ฿ : cพ็ฒแ ฤ๙ฝบฦฎ (ayo_tom.sc)
+
+8123# ต้มยำกุ้งอาหารชื่อดังของ Ayotaya#SG_FEEL#QUE_NOIMAGE#
+ใครๆ ก็สามารถทำ Tom Yum Goong ได้ แต่ข้าแนะนำให้เจ้าไปหา ^3131FFMali the Spicy^000000 เธอเป็นแม่ครัวที่เก่งที่สุด ทำไมไม่ลองขอให้เธอทำใหชิมดูล่ะ? #
+ #
+
+8124# ต้มยำกุ้งอาหารชื่อดังของ Ayotaya#SG_FEEL#QUE_NOIMAGE#
+คุณสามารถซื้อกุ้งสดๆ ได้จากชายที่ชื่อว่า '^3131FFThongpool^000000' หา 20 กุ้งเพื่อใช้ทำต้มยำกุ้ง #
+หา 20 กุ้งให้ Mali the Spicy#
+
+8125# ต้มยำกุ้งอาหารชื่อดังของ Ayotaya#SG_FEEL#QUE_NOIMAGE#
+Mali the Spicy รู้มาว่ามีต้นมะนาวดีๆ แถวๆ นี้แต่ว่ามะนาวเหล่านั้นไม่ได้มีไว้ขาย ลองไปสอบถามจากเจ้าของต้นมะนาวดู #
+หา 10 มะนาวให้ Mali the Spicy.#
+
+8126# ต้มยำกุ้งอาหารชื่อดังของ Ayotaya#SG_FEEL#QUE_NOIMAGE#
+คุณต้องหา '^CE0000พริกแดง^000000' และวัตถุดิบอื่นๆ ลองถามพ่อค้าในตลาดเขาสามารถหาให้คุณได้ #
+หา 30 พริกและวัตถุดิบอื่นๆให้ Mali the Spicy#
+
+
+// พฦธถย๊ : ธ๐ธ๐ลธทฮ ฤ๙ฝบฦฎ (japan_momo_q.sc)
+
+8127# การผจญภัยของ Momotaro#SG_FEEL#QUE_NOIMAGE#
+หัวหน้าบอกว่า Dokebi หาเงินได้ 20 ล้าน zeny โดยการขโมยข้อมูลไอดีคนอื่น... ตั้งแต่ชาวเมืองเอาแต่นั่งคุยกัน พวกเราก็ไม่สามารถฆ่า Dokebis ได้เพราะพวกเราเลเวลน้อย...ดังนั้นช่วยพวกเราที #
+กำจัด Dokebi#
+
+8128# การผจญภัยของ Momotaro#SG_FEEL#QUE_NOIMAGE#
+ตอนนี้เรื่องราวของ Momotaro ได้จบลงแล้ว คุณสามารถรับรางวัลได้จากประชาสัมพันธ์หญิงที่คุณพบตอนแรก #
+ #
+
+8129# การผจญภัยของ Momotaro#SG_FEEL#QUE_NOIMAGE#
+..ตอนนี้เขาจะส่งคุณเข้าไป...แต่! เขาได้ให้โอกาสคุณ แต่หากคุณล้มเหลว ^3163FFคุณก็จะไม่สามารถได้รับการท้าทายอีก^000000 อีกอย่างภารกิจก็ค่อนข้างยากมาก #
+ทำภารกิจให้สำเร็จ #
+
+8130# การผจญภัยของ Momotaro#SG_FEEL#QUE_NOIMAGE#
+คุณมีฝีมือดี เขาจะเปิดทางออกให้...อย่าลืมรับรางวัลไปด้วยล่ะ #
+ #
+
+
+// พฦธถย๊ : ด๘ภ รโภิ ฤ๙ฝบฦฎ (japan_mono.sc)
+
+8131# แม่ของจักรพรรดิใน Amatsu#SG_FEEL#QUE_NOIMAGE#
+แม่ของจักรพรรดิพักผ่อนที่นี่ เธอป่วยมานานหลายเดือน นั่นเป็นเหตุให้เธอต้องมาอยู่นี่ #
+ #
+
+8132# แม่ของจักรพรรดิใน Amatsu#SG_FEEL#QUE_NOIMAGE#
+คุณเดินทางมาจาก Rune-Midgard บางทีคุณอาจจะช่วยรักษาโรคของแม่จักรพรรดิให้ได้ จักรพรรดิจะให้รางวัลเจ้า .. แม่ของจักรพรรดิอาศัยอยู่ที่บ้านนอกปราสาท กลับมาหาเขาใหม่เมื่อทำการรักษาเสร็จ #
+Find the treatment to cure the mother of lord.#
+
+8133# บทเพลงของหมาป่า #SG_FEEL#QUE_NOIMAGE#
+บาทหลวงๆ~ หมาป่ากำลังตามข้ามา! ตะโกนไล่อย่างไรก็ไม่ไป! เธอขอให้คุณช่วยเหลือ~ Ralralrah Ralralrah Ralralrahralralrah~~#
+ #
+
+8134# เด็กชายที่วัดทางเหนือ #SG_FEEL#QUE_NOIMAGE#
+ด้วยจิตใจที่เข้มแข็งจะไล่หมาป่าออกจากร่างมนุษย์ได้ แสดงพลังจิตใจที่เข้มแข็ง! #
+ #
+
+8135# ไล่หมาป่าไปแล้ว #SG_FEEL#QUE_NOIMAGE#
+^FF6060เฮ้ย! เฮ้ย! เฮ้ย! มนุษย์! ขับไล่ข้าออกจากร่างนี้ได้ไง! ขอสาปเจ้า! ขอแช่งเจ้า!! ข้าจะสาปแช่งตระกูล Ishida พวกเจ้าระวังให้ดี!^000000#
+กลับไปหาจักรพรรดิ #
+
+
+// ธ๐ฝบฤฺบ๑พฦ : บาป็ฝล ฤฺฝฆภฬ ฤ๙ฝบฦฎ (mos_request.sc)
+
+
+8136# ป่าต้องห้าม #SG_FEEL#QUE_NOIMAGE#
+นักผจญภัยหลายคนสูญหายเข้าไปในป่านั้น แต่ไม่ต้องห่วงเขา เขารู้เส้นทางทีและก็ไม่กลัวมอนเตอร์ #
+ #
+
+8137# ป้ายหลุมศพปริศนาที่ทางแยก #SG_FEEL#QUE_NOIMAGE#
+ถ้าคุณไปทางขวา คุณจะหายสาบสูญ ถ้าคุณไปทางซ้ายคุณจะผิดคำสัญญา ถ้าคุณไปข้างหน้า คุณจะพบมัน #
+ #
+
+8138# คำเตือนจาก Gray Wolf#SG_FEEL#QUE_NOIMAGE#
+... เขาบอกให้คุณกลับไปซะ...ที่นี่ไม่ใช่ที่ของคุณ เขาไม่ต้องการให้มีคนมาเผ่นผ่านในป่านี้  Koshei.. เขาเป็นอมตะและสุดแสนจะชั่วร้าย #
+ #
+
+8139# คำขอของ Gray Wolf#SG_FEEL#QUE_NOIMAGE#
+เขาต้องการคนกล้าเช่นคุณให้มาช่วยเหลือ ที่นี่ไม่ค่อยปลอดภัยเขาขอให้คุณตามเขาไปดูอะไรบางอย่าง #
+ #
+
+8140#Maria Morebna #SG_FEEL#QUE_NOIMAGE#
+ก่อนอื่นต้องช่วยเธอออกมาก่อน เขาเคยได้ยินว่า '^0000ffGolden Key^000000' สามารถไขได้ทุกอย่าง ช่างทำกุญแจอยู่ที่หมู่บ้าน เขาอยากให้คุณตามหาเขาและถามเกี่ยวกับ '^0000ffGolden Key^000000'#
+ตามหาช่างทำกุญแจที่ Moscovia#
+
+8141#Blacksmith ใน Moscovia#SG_FEEL#QUE_NOIMAGE#
+เขาเป็นเพียงคนเดียวที่สามารถทำ ^0000ffGolden Key^000000' ได้ เขาบอกคุณว่า Golden Key ไม่ได้ใช้ง่าย และก็ทำไม่ง่ายเช่นกัน ก่อนอื่นหาวัตถุดิบให้เขาก่อน ^0000ff25 Steels^000000#
+หา 25 Steels ให้เขา #
+
+8142#Golden Key#SG_FEEL#QUE_NOIMAGE#
+คุณต้องหา ^0000ff2 Cursed Ruby, 3 Gold, 1 Red Ring, 2 Lusalka's Hair, 10 Golden Thread^000000 เพื่อใช้ทำกุญแจ #
+หา 2 Cursed Ruby, 3 Gold, 1 Red Ring, 2 Lusalka's Hair, 10 Golden Thread กลับไปให้ช่างตีเหล็กที่ Moscovia#
+
+
+// <ปกฐฃ นม๖ ฤ๙ฝบฦฎ>
+
+8143#Bassili's Red Ring#SG_FEEL#QUE_NOIMAGE#
+เขาให้ Red Ring กับลูกสาวคนเล็กที่ชื่อ Mashenka เป็นของขวัญ แต่เธอได้ตายไปแล้ว...เขายังมีลูกสาวคนโตชื่อ Ryubaba เธอทั้งสวยและฉลาด แต่เขาก็ยังไม่สามารถลืมความเศร้าที่เสียลูกสาวไปไม่ได้..#
+ #
+
+8144#Mashenka อยู่ไหน #SG_FEEL#QUE_NOIMAGE#
+พ่อของเธอได้มอบมันให้กับน้องสาว Mashenka แต่เธอออกไปเดินเล่นและก็หายตัวไปใกล้ๆ บึง พวกเขาได้พยายามตามหาเธอและแหวนแล้วแต่ไม่พบ เธอคิดว่าน้องสาวเธอหนีไปพร้อมกับแหวนนั้น..#
+ #
+
+8145#Mashenka อยู่ไหน #SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่าเขาได้ยินบางอย่างแต่จำไม่ได้.. คุณควรลองเดินไปหาบางอย่างรอบๆ บึงดีไหม? คุณจะพบ Pointed Tree รอบๆ บึง เขาขอให้คุณช่วยรวบรวม ^0000ff50 Pointed Branches^000000#
+รวบรวม 50 Pointed Branches ให้ Shepherdess#
+
+8146#Pointed Wooden Flute#SG_FEEL#QUE_NOIMAGE#
+นี่มันอะไรกัน? น่ากลัวมาก! ทำไมเสียงขลุ่ยถึงเป็นแบบนี้!? เขาบอกว่าไม่เคยเจอมาก่อน! เขารู้สึกไม่ชอบ! จึงมอบให้คุณแทน!#
+ #
+
+8147#Pointed Wooden Flute#SG_FEEL#QUE_NOIMAGE#
+คุณไม่ต้องการสิ่งนี้เพื่อแลกแหวน! คุณจะไปบอกความจริงให้พ่อของเธอรู้! เธอคงต้องถูกลงโทษ!#
+ไปบอก Bassili#
+
+// <ท็ป์ฑ๎ภว ธำธฎฤซถ๔ ฤ๙ฝบฦฎ>
+
+8148# หญิงสาวผู้ผิดหวัง #SG_FEEL#QUE_NOIMAGE#
+เขาถามคุณว่าคุณได้ไปที่บึง Moskovia มาหรือเปล่า? เขาถามว่าคุณเห็นลูกสาวเขาไหม? เขาไม่สนใจว่าเธอจะกลายเป็น Lusalka เขาต้องการจะรู้แค่ว่าเธออยู่ไหน #
+ #
+
+8149# หญิงสาวผู้ผิดหวัง #SG_FEEL#QUE_NOIMAGE#
+'^0000ffHoly Water Favored by God^000000' จะป้องกันคุณจาก Lusalka และ Lusalka จะปรากฎตัวเฉพาะ ^ff000023.00 น. - 5.00 น.^000000 คุณจะพบเธอได้ไม่ยาก เขาขอให้คุณช่วยตามหาลูกสาว #
+ตามหาว่าลูกสาวเขาอยู่ไหน #
+
+8150# คนรักของ Lusalka#SG_FEEL#QUE_NOIMAGE#
+แฟนของเธอบอกว่าจะเดินทางไป Rune Midgards เธอไม่แน่ใจว่าเขาจะยังอยู่ที่นั่นไหม... ชื่อเขาคือ '^0000ffIgor^000000' เธอฝากแหวนให้นำไปให้เขาด้วย #
+ตามหา Igor#
+
+8151# ชายต่างแดน #SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่าอาจจะเป็นคนที่มาจาก Moskovia พร้อมเขา แต่เขาได้ออกเดินทางไปแล้วเมื่อสองสามวันก่อน เขาดูเศร้ามากเพราะไม่อาจลืมคนรักได้ เขาบอกว่าเขาจะไปที่ทะเลทราย..#
+ตามหา Igor#
+
+8152# ชาวบ้านใน Morroc#SG_FEEL#QUE_NOIMAGE#
+เขาถามคุณว่ากำลังตามหาชายที่ดูเศร้าๆ อยู่ใช่ไหม? สำเนียงของเขาบอกให้รู้ว่าเขาไม่ได้มาจาก Rune Midgards... เขาบอกว่าจะไปดูพีระมิด หลังจากนั้นก็ไม่เห็นเขาอีกเลย #
+ตามหา Igor#
+
+8153# ข้อความของ Igor#SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณไปส่งข้อความของเขาให้เธอได้ไหม? ก่อนจันทร์เต็มดวง เขาจะกลับไป Moskovia และไปพบเธอ เขาจะเข้มแข็งและมีความสุขไม่ทำให้เธอต้องเป็นห่วงอีก #
+ #
+
+
+// <ธถทฮม๎ฑ๎ ฤ๙ฝบฦฎ>
+
+8155#Mazroka จ้าวแห่งฤดูหนาว #SG_FEEL#QUE_NOIMAGE#
+ในถ้ำนี้จะมี 'Brazier' และ 'Apple Tree' คุณต้องหนีออกจากถ้ำมาพร้อมกับ ^0000ff100 Well Baked Cookies^000000 จาก Brazier และ ^0000ff100 Apples^000000 จากต้นแอ๊ปเปิ้ล #
+หนีออกจากถ้ำพร้อม Well Baked Cokkies และ Apples#
+
+8156#Mazroka จ้าวแห่งฤดูหนาว #SG_FEEL#QUE_NOIMAGE#
+ตามที่คุณได้รู้ การทำ 'Golden Thread' นั้นยากและใช้เวลามาก ..ตอนนี้อยู่ระหว่างการทำ.. เขาขอให้คุณกลับมาใหม่ภายหลังได้ไหม?#
+ #
+
+8157# การทดสอบของ Mazroka#SG_FEEL#QUE_NOIMAGE#
+Koshei จะต้องเล่นงานคุณแน่เพราะคุณพยายามช่วย Maria เขาถามว่ายังต้องการ golden thread อีกไหม? เขามอบให้กับคุณ! แต่ต้องผ่านการทดสอบ เขาไม่ต้องการให้คุณไปเสียสละเพื่อหมู่บ้านนี้ #
+ #
+
+// <นูนูพ฿ฐกฟอ ศฒฑป๖ ฟญผ่>
+
+8158# ช่างทำกุญแจ #SG_FEEL#QUE_NOIMAGE#
+เขาได้ทำการสืบข้อมูลมาแล้ว! ช่างทำกุญแจที่สามารถทำ Golden Key ได้อาศัยอยู่ที่กระท่อมในป่าลึก ^ff0000-โอมเพี้ยง-^000000 คาถานี้จะปกป้องคุณจาก Babayaga..#
+ #
+
+// <คำขอของ Babayaga : ฑรผ๖ฐ่ฟญ>
+
+8159# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+วัวของเธอหายหาย เธออยากให้คุณตามหาและร่ายคาถา '^ff0000-อาหารโปรดสีส้ม-^000000' เพื่อให้มันกลับมา คุณควรจำเอาไว้ #
+ตามหาวัวของ Babayaga#
+
+8160# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+คุณร่ายเวทย์อย่างรวดเร็วและมีแสงเกิดขึ้นรอบๆ ตัววัวและวัวก็หายไป!!#
+กลับไปหา Babayaga#
+
+// <คำขอของ Babayaga : บนป็ฐ่ฟญ>
+
+8161# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+ข้างหลังบ้านมีโรงศพที่ส่งเสียงดังอยู่ มันส่งเสียงดังจนนอนไม่ได้ จักการพวกเขาซะ #
+กำจัดเสียงรบกวน #
+
+8162# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+.........คุณตักเตือนเขาและขู่ว่าหากส่งเสียงดังอีกจะเจอยิ่งกว่านี้...#
+กลับ Babayaga#
+
+// <คำขอของ Babayaga : ตตตฯฐ่ฟญ>
+
+8163# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+เธอขอให้คุณตามหาช้อนเงินที่ถูกโจรสลัดขโมยไป เธอบอกว่าพวกนั้นน่าจะอยู่ที่ซากเรือจม #
+ตามหาช้อนเงินของ Babayaga#
+
+8164# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+สำรวจผ้าคลุมเตียง #
+ #
+
+8165# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+สำรวจผ้าคลุมเตียง มีบางอย่างสลักไว้ที่กำแพง : เธอ...ระวัง..เพลงของเงือก.. หลับ..ตา..ป้องกัน..กระจก #
+ #
+
+8166# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+สำรวจผ้าคลุมเตียง มีบางอย่างสลักไว้ที่กำแพง : เธอ...ระวัง..เพลงของเงือก.. หลับ..ตา..ป้องกัน..กระจก... ชิ้นส่วนของกุญแจ #
+ #
+
+8167# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+สำรวจผ้าคลุมเตียง มีบางอย่างสลักไว้ที่กำแพง : เธอ...ระวัง..เพลงของเงือก.. หลับ..ตา..ป้องกัน..กระจก... ชิ้นส่วนกุญแจที่เหลือ #
+ทำเป็นกุญแจโดยใช้สองชิ้นต่อเข้าด้วยกัน #
+
+8168# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+คุณใช้กระจกสะท้อนแสงให้กลับไปและกล่องก็เปิดออก!! คุณพบช้อนของ Babayaga#
+กลับไปหา Babayaga#
+
+// <คำขอของ Babayaga : นป็ฐ่ฟญ>
+
+8169# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+เธอขอให้คุณหนังสือเวทมนตร์ให้เขา ซึ่งเป็นของ Momotaro ที่ Amatsu ไปที่นั่นและซื้อมาให้เธอ #
+ซื้อหนังสือเวทมนตร์ให้ Babayaga#
+
+8170# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+ทั้งหมดนี้ใช่ไหมนะ? 'เวทย์ฆ่าเวลา' , 'เรื่องราวบ้านผีทั่วโลก', 'สมุนไพรแปลกๆ ทั่วโลก' หากต้องการหนังสือเพิ่มให้มาหาเขา #
+กลับไปหา Babayaga#
+
+// <คำขอของ Babayaga : ฐหป็ฐ่ฟญ>
+
+8171# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+ไปที่แจกันข้างๆ ตู้ ที่นี่มีผี ไล่มันออกไปจากบ้าน #
+ไล่ผีออกไปจากบ้าน #
+
+8172#	คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+เขาสัญญาว่าจะเป็นคนดี! และคุ้มครองบ้านให้! เขาจะไม่ลืมความใจดีที่คุณยอมเล่นกับเขา #
+กลับไปหา Babayaga#
+
+// <คำขอของ Babayaga : ป๓ภฮฐ่ฟญ, ศฎภๅม๗พ๗ฑบ>
+
+8173# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+ไปหา Broom Grandmother ใน Payon และซื้อไม้กวาด มันเป็นไม้กวาดที่ดีที่สุด #
+ไป Payon และซื้อไม้กวาด #
+
+8174# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+เธอบอกว่าไม่มีไม้กวาดแล้วมันถูกผีขโมยไปหมด เธอไม่ได้ว่าอะไรเพราะว่าผีพวกนั้นเป็นผีที่ดีแต่ว่า... ลูกชายพยายามจะไปเอาคืน แต่ก็ล้มเหลวเพราะว่าโดนพวกนั้นแกล้ง #
+ #
+
+8175# คำขอของ Babayaga#SG_FEEL#QUE_NOIMAGE#
+คุณเอาชนะผีได้ และได้รับไม้กวาดกลับมา #
+กลับไปหา Babayaga#
+
+// <ศฒฑป๖ภว ฟญผ่>
+
+8176# ไปช่วย Maria#SG_FEEL#QUE_NOIMAGE#
+คุณมาได้เวลาพอดี เขาทำ 'Golden Key' เสร็จแล้ว! รีบไปช่วย Maria ระวัง Koshei ให้ดี #
+ไปช่วย Maria#
+
+8177# ปีศาจอมตะ Koshei#SG_FEEL#QUE_NOIMAGE#
+ระหว่างที่เขาช่วยเหลือ Maria คุณต้องรับมือกับ Koshei!!#
+กำจัด Koshei#
+
+8178#Life Water และ Death Water#SG_FEEL#QUE_NOIMAGE#
+เพื่อจะช่วย Maria คุณต้องใช้ Life Water และ Death Water Babayaga รู้วิธีทำ Life Water และ Death Water คุณควรจไปหาเธอ #
+หา Life Water และ Death Water#
+
+8179#Life Water และ Death Water#SG_FEEL#QUE_NOIMAGE#
+'Life Water'... คุณต้องใช้ ^0000ff1 Holy Water^000000 และ ^0000ff2 Yggdrasil Leaf^000000 และ Death Water.. คุณต้องใช้ ^0000ff1 Cursed Water^000000และ ^0000ff10 Hinalle Leaflet^000000#
+หาวัตถุดิบให้ Babayaga#
+
+8180#Life Water และ Death Water#SG_FEEL#QUE_NOIMAGE#
+รับสิ่งนี้และไปช่วย Maria ให้ Death Water กับ Maria เพื่อรักษาบาดแผลและคลายคำสาป แล้วค่อยใช้ Life Water เพื่อทำให้เธอคืนชีพ #
+ไปช่วย Maria#
+
+
+// ฤ๙ฝบฦฎ ฝบลณ : ภงภฺตๅ, ป็ภฬฦฎ บํทกฝบลอ (qskilll_wizard.sc)
+
+8181#Sight Blaster#SG_FEEL#QUE_NOIMAGE#
+สกิลนี้ฟังเหมือนง่ายแต่เรียนยาก Knights มีความเชี่ยวชาญในสกิลที่ทำให้ศัตรูกระเด็น ให้คุณไปหาคนที่สอนอธิบายหลักการของมันที่ Prontera ลองไปทาง 11 นาฬิกาดู #
+ #
+
+8182# หลักการกระเด็น #SG_FEEL#QUE_NOIMAGE#
+คุณได้รู้ถึงหลักการของการกระเด็นแล้วและคุณก็สามารถทำได้ #
+กลับไปหา Meow#
+
+8183#Sight Blaster#SG_FEEL#QUE_NOIMAGE#
+เธออย่างได้ของบางอย่าง! เธอต้องการ ^ff000010 Crystal Blues, 10 Green Lives, 10 Red Bloods, 10 Winds of Verdure^000000!#
+หาวัตถุดิบให้ Meow#
+
+
+// ฤ๙ฝบฦฎ ฝบลณ : ผผภฬม๖, ฟคทนธเลป ฤมน๖ลอ มฆมถ, ฟคทนธเลป รผภฮม๖ (qskilll_sage.sc)
+
+8184#Elemental Converter#SG_FEEL#QUE_NOIMAGE#
+โปรดนำไอเทมที่จำเป็นในการเรียนสกิลมาให้เธอ ^ff00007 Horns, 12 Rainbow Shells, 10 Snail's Shells, 4 Blank Scrolls, 10 Scorpion Tails^000000#
+เอาไอเทมกลับไปให้ Mishuna#
+
+8185#Elemental Change#SG_FEEL#QUE_NOIMAGE#
+ตอนนี้คุณพร้อมจะเรียนสกิล ^ff0000Elemental Change^000000 แล้ว....เธอจำเป็นต้องเตรียมบางอย่าง ไว้ค่อยกลับมาหาเธอใหม่อีกที #
+ #
+
+8186#Fire Elemental Change#SG_FEEL#QUE_NOIMAGE#
+หาไอเทม ^ff000020 Red Bloods, 1 Payon Solution, 1 Morroc Solution^000000 เพื่อใช้ในการเรียน ^ff0000Fire Elemental Change^000000#
+เอาไอเทมกลับไปให้ Mishuna#
+
+8187#Earth Elemental Change#SG_FEEL#QUE_NOIMAGE#
+หาไอเทม ^ff000020 Green Lives, 1 Payon Solution, 1 Morroc Solution^000000 เพื่อใช้ในการเรียน ^ff0000Earth Elemental Change^000000#
+เอาไอเทมกลับไปให้ Mishuna#
+
+8188#Wind Elemental Change#SG_FEEL#QUE_NOIMAGE#
+หาไอเทม ^ff000020 Winds of Verdure, 1 Payon Solution, 1 Morroc Solution^000000 เพื่อใช้ในการเรียน ^ff0000Wind Elemental Change^000000#
+เอาไอเทมกลับไปให้ Mishuna#
+
+8189#Water Elemental Change#SG_FEEL#QUE_NOIMAGE#
+หาไอเทม ^ff000020 Crystal Blues, 1 Payon Solution, 1 Morroc Solution^000000 เพื่อใช้ในการเรียน ^ff0000Water Elemental Change^000000#
+เอาไอเทมกลับไปให้ Mishuna#
+
+
+// ฤ๙ฝบฦฎ ฝบลณ : ดํผญ, ธลศคภว ภฎลฉ (qskilll_dancer.sc)
+
+8190#Charming Wink#SG_FEEL#QUE_NOIMAGE#
+หาไอเทม ^FF00001 Crystal Mirror^0000000! เพื่อมาใช้สำหรับการเรียนสกิล!#
+หา 1 Crystal Mirror ไปให้ Canell#
+
+8191#Charming Advisor#SG_FEEL#QUE_NOIMAGE#
+ตอนนี้คุณได้เรียนรู้เกี่ยวกับความสวย ได้เวลาเรียนเทคนิคขั้นสูง ไปหาแม่ชีที่โบสถ์ Prontera เธอจะเป็นคนสอน #
+ #
+
+8192#Selfish Advisor#SG_FEEL#QUE_NOIMAGE#
+หา ^FF0000Alcohol^000000 และ ^FF00001 Apple, 3 Bananas, 5 Well-Baked Cookies^000000 และ ^FF0000China^000000#
+หา Alcohol และของว่างให้ Aelle#
+
+8193#Selfish Advisor#SG_FEEL#QUE_NOIMAGE#
+สิ่งที่มีเสน่ห์ง่ายๆ สำหรับการแสดงท่าทางก็คือ ^FF0000การขยิบตา^000000 เธอเคยใช้ได้ผลมาแล้วในช่วงวิกฤต #
+ #
+
+8194#Drunken Advisor#SG_FEEL#QUE_NOIMAGE#
+ไปคุยกับ Canell...!..ZzzzzZzZZZzzzZZ..#
+ #
+
+8195#Kind Canell#SG_FEEL#QUE_NOIMAGE#
+ตอนนี้ Dancer ได้เรียนรู้ถึงเสน่ห์ของการขยิบตาแล้ว #
+ #
+
+// ep13 : ป๏ฑน ฟฌวี มถป็ดภว ฐฅต๎ (ep13_1_rhea.sc)
+
+8196# ความขัดแย้งในกลุ่มไตรภาคี #SG_FEEL#QUE_NOIMAGE#
+นักวิจัยพวกนั้นบ่นตลอดเวลา พวกเขาเครียดมากและเขาคิดว่าใครสักคนควรจะรับฟังพวกเขา โดยเฉพาะการรวบรวมเอกสาร #
+ #
+
+8197# ส่งเอกสาร #SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณส่งเอกสารให้กับ Hue และ Hansenne Hue ดูแลเรื่องเอกสารมาจาก Schwartzvalt และ Hansenne มาจาก Arunafeltz เอกสารเกี่ยวกับการนัดประชุม คุณต้องไปหา Hue ก่อน #
+ส่งเอกสารให้ Hue และ Hansenne และกลับมาหา Ryosen#
+
+8198# ส่งเอกสารให้ United Research Official#SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่าเขาจะไปร่วมประชุม ให้เอาเอกสารไปให้ United Research Official ให้ตรงเวลา เขาจะเตรียมตัวประชุม #
+ส่งเอกสารให้ United Research Official#
+
+8199# คำขอของ United Research Official#SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณเข้าร่วมประชุมด้วย! ก่อนอื่นให้คุณไปพบทั้ง 3 คนและดูว่าพวกเขาพร้อมหรือยัง #
+ #
+
+8200# เอกสารที่ Ryosen ขอ#SG_FEEL#QUE_NOIMAGE#
+เขาขอเอกสารไปยังเจ้าหน้าที่ทาง Arunafeltz แต่ยังไม่ได้ เขาจึงขอให้คุณไปหา Hansenne เพื่อเอาเอกสารนั้น #
+ #
+
+8201# เอกสารหายไป #SG_FEEL#QUE_NOIMAGE#
+เขาทำมันหายไปแถวๆ สะพาน เขาบอกว่าแมวที่อยู่ทางตะวันตกเฉียงใต้สามารถสอนคุณตกปลาได้ หากโชคดีคุณอาจจะตกได้เอกสาร #
+กลับไปหา Hansenne พร้อมกับเอกสารที่คุณได้ #
+
+8202# ซ่อมแซมเอกสาร #SG_FEEL#QUE_NOIMAGE#
+คนของ Schwartzvalt มีความสามารถในการซ่อมแซมเอกสาร...เขาบอกให้ลองไปขอให้ Hue ซ่อมแซมให้ #
+ #
+
+8203# ซ่อมแซมเอกสาร #SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณไปหาไอเทมเพื่อมาใช้ในการซ่อมแซมเอกสาร คุณต้องใช้ ^0000ff1 Fan, 1 Old Frying Pan, 1 Flame Stone, 1 Chinese Ink^000000#
+หา 1 Fan, 1 Old Frying Pan, 1 Flame Stone, 1 Chinese Ink#
+
+8204# เอกสารที่ Ryosen ต้องการ #SG_FEEL#QUE_NOIMAGE#
+เอาเอกสารไปให้ Ryosen ก่อนจะสายเกินไป #
+ #
+
+8205# รายงาน United Research Official#SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณไปบอก official ให้รออีกหน่อย เขาต้องเตรียมเอกสารเพิ่ม #
+ #
+
+8206# การประชุมของนักวิจัย #SG_FEEL#QUE_NOIMAGE#
+เข้าร่วมการประชุม #
+ #
+
+8207#Hansenne ไม่ผิด #SG_FEEL#QUE_NOIMAGE#
+เขาอยากให้ทั้งสามเป็นเพื่อนกันได้ แต่มักจะมีปัญหาตลอด เขาขอให้คุณหาวิธีทำให้พวกเขาเป็นเพื่อนกัน #
+ #
+
+8208# คำขอของ Hansenne#SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่าไม่ต้องห่วง Ryosen จะดีขึ้นเอง...ความสัมพันธ์ระหว่าง Ryosen และ Hue ดูไม่ค่อยจะดี ทำไมคุณไม่ลองไปช่วยพวกเขาดูล่ะ?#
+ #
+
+8209# รายงานของ Hue#SG_FEEL#QUE_NOIMAGE#
+รายงานของ Rune-Midgard เขาหยิบติดมือมาจากห้องประชุม..เขาขอให้เอาไปคืน Ryosen#
+ #
+
+8210# รายงาน United Research Official#SG_FEEL#QUE_NOIMAGE#
+เขาจะเตรียมจัดการประชุมขึ้นอีกครั้ง ขอให้คุณไปพบ official แทนเขาเพื่อรายงานให้เขารู้ #
+ #
+
+// ฦฉลไธฎพ๓ ฤ๙ฝบฦฎ : ฐหป็ (tu_sword.sc)
+
+8211# บทเรียนของ Shurank#SG_FEEL#QUE_NOIMAGE#
+เขาบอกให้คุณเรียนสกิล Bash มันเป็นพื้นฐานของนักดาบ #
+เรียนสกิล Bash และกลับไปหา Shurank#
+
+8212# บทเรียนของ Shurank#SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่าคุณยังเรียนพื้นฐานของสกิล Bash ไม่พอ #
+เรียนสกิล Bash และกลับไปหา Shurank#
+
+8213# บทเรียนของ Shurank#SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่าสกิล Bash ของคุณดีขึ้นแต่ยังไม่พอ #
+เรียนสกิล Bash และกลับไปหา Shurank#
+
+8214# บทเรียนของ Shurank#SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่าคุณเรียนรู้สกิล Bash ได้ดีแล้ว สมกับเป็น Swordman#
+ฟังบทเรียนของ Shurank#
+
+8215# บทเรียนของ Shurank#SG_FEEL#QUE_NOIMAGE#
+ตอนนี้เขาเชื่อว่าคุณรู้ดีแล้วเกี่ยวกับสกิล Increase HP Recovery ต่อไปเขาจะสอนคุณเกี่ยวกับสกิล Provoke#
+ฟังบทเรียนของ Shurank#
+
+8216# คำสั่งของ Shurank#SG_FEEL#QUE_NOIMAGE#
+เขาอยากให้คุณไปพบ Knight ที่ชื่อ ^5D478BDequ'ee^000000 ที่ ^5D478BGeffen^000000 และส่งข้อความว่า: ^0000FFเกิดอะไรขึ้นกับฆาตกร?^000000 ^0000FFรู้หรือยังว่าเขาคือใคร? ถ้ารู้แล้วจะทำอะไรกับเขา?^000000#
+ส่งข้อความของ Shurank ไปให้ Dequ'ee ที่ Geffen#
+
+8217# ข้อความของ Dequ'ee#SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่าได้รายชื่อผู้ต้องสงสัยแล้วและจะได้ตัวในไม่ช้า #
+ส่งข้อความของ Dequ'ee ไปให้ Shurank ที่ Izlude#
+
+8218# บทเรียนของ Shurank#SG_FEEL#QUE_NOIMAGE#
+คุณยังไม่ได้เรียนสกิล Provoke เขาขอให้คุณเรียนมันก่อน #
+เรียนสกิล Provoke และกลับไปหา Shurank#
+
+8219# บทเรียนของ Shurank#SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่าคุณยังรู้แค่พื้นฐาน ให้เรียนเพิ่มอีก #
+เรียนสกิล Provoke และกลับไปหา Shurank#
+
+8220# บทเรียนของ Shurank#SG_FEEL#QUE_NOIMAGE#
+คุณเรียนรู้สกิลได้ดีพอแล้ว เขาจะสอนเกี่ยวกับสกิล ^5D478BEndure^000000 เมื่อคุณได้เรียนรู้แล้วค่อยกลับมาหาเขาใหม่ #
+ฟังบทเรียนของ Shurank#
+
+8221# บทเรียนของ Shurank#SG_FEEL#QUE_NOIMAGE#
+เขาสอนให้รู้เกี่ยวกับสกิล Endure และบอกให้คุณเรียนเพิ่มเติม #
+เรียนสกิล Endure และกลับไปหา Shurank#
+
+8222# คำสั่งของ Shurank#SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณไปหา Dequ'ee ที่ Geffen ดูเหมือน Dequ'ee จะมีบางอย่างให้คุณทำ #
+ไปหา Dequ'ee#
+
+8223# คำสั่งของ Dequ'ee#SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณไป Morroc และสอบสวนผู้ต้องสงสัย 4 คน ^5D478BMuetro^000000, ^5D478BGeil^000000, ^5D478BHans^000000 และ ^5D478BBankley^000000 แล้วกลับมาหาเขา #
+กลับไปหา Dequ'ee หลังจากพบหลักฐานที่ Morroc#
+
+8224# เบาะแส #SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่างานดูเหมือนจะยากขึ้นและคงต้องสืบจากเบาะแสเดียวที่มี....#
+ #
+
+8225# เหตุผลของ Dequ'ee#SG_FEEL#QUE_NOIMAGE#
+เขาคิดว่า Bankley เป็นฆาตกร! แม้ว่าจะไม่ 100% แต่หลักฐานชี้ไปที่เขา รีบไป Morroc และจับตาดู Bankley ถ้ามีอะไรผิดปกติให้รีบมาแจ้งเขาทันที #
+จับตาดู Bankley ใน Morroc#
+
+8226# การตายของ Bankley#SG_FEEL#QUE_NOIMAGE#
+Bankley ตายแล้ว ดูเหมือนเขาจะเสียใจ และพึ่งตายได้ไม่นาน เขาถูกแทงที่หน้าอกและมีดก็ยังคงอยู่ในมือเขา #
+รายงานการตายของ Bankley ให้กับ Dequ'ee#
+
+8227# กลับไปหา Shurank#SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่ามันน่าสงสัย สำหรับผู้ต้องสงสัยที่เหลือเขาจะให้คนของสมาคมคอยจับตาดู ดูเหมือนคดีจะปิดแล้ว ให้กลับไปรายงาน Shurank#
+กลับไปหา Shurank#
+
+8228# บทเรียนของ Shurank#SG_FEEL#QUE_NOIMAGE#
+นี่คือบทเรียนสุดท้าย Magnum Break#
+ฟังบทเรียนของ Shurank#
+
+// ฦฉลไธฎพ๓ ฤ๙ฝบฦฎ : ป๓ภฮ (tu_merchant.sc)
+
+8229# บทเรียนของ Guarnien#SG_FEEL#QUE_NOIMAGE#
+คุณจะ Merchant ไม่ได้หากคุณไม่สามารถถือสินค้าไปขายได้ เพิ่มสกิล Increase Weight Limit ให้ถึง Level 4 แล้วค่อยกลับมาคุยเกี่ยวกับ Merchant#
+กลับไปหา Guarnien หลังจากเรียนสกิล Increase Weight Limit#
+
+8230# บทเรียนของ Guarnien#SG_FEEL#QUE_NOIMAGE#
+เรียนรู้สกิล Item Appraisal และต่อด้วยสกิล Mammonite#
+ฟังบทเรียนของ Guarnien#
+
+8231# บทเรียนของ Guarnien#SG_FEEL#QUE_NOIMAGE#
+ตอนนี้เขาจะสอนเกี่ยวกับ ^FF0000Discount^000000#
+ฟังบทเรียนของ Guarnien#
+
+8232# บทเรียนของ Guarnien#SG_FEEL#QUE_NOIMAGE#
+เพื่อจะเป็นพ่อค้าตัวจริงคุณต้องเรียนสกิล Discount ให้ได้ Level 4#
+กลับไปหา Guarnien หลังจากเรียนสกิล  Discount#
+
+8233# บทเรียนของ Guarnien#SG_FEEL#QUE_NOIMAGE#
+เขาหวังว่าภารกิจต่อไปจะเพิ่มความท้าทายให้กับคุณ #
+ฟังบทเรียนของ Guarnien#
+
+8234#Prontera Market Research#SG_FEEL#QUE_NOIMAGE#
+หา NPCs ขาย Red Potions ที่ Prontera ภารกิจคือซื้อให้ถูกที่สุด #
+ซื้อ 10 Red Potion ที่ถูกที่สุดใน Prontera และกลับมาหา Guarnien#
+
+8235# บทเรียนของ Guarnien#SG_FEEL#QUE_NOIMAGE#
+เขาจะสอนเกี่ยวกับ ^871F78Over Charge^000000#
+ฟังบทเรียนของ Guarnien#
+
+8236# บทเรียนของ Guarnien#SG_FEEL#QUE_NOIMAGE#
+Discount, Over Charge สกิลติดตัวอัพได้ถึง Level 10 เขาแนะนำว่าควรจะเรียนสกิลนี้ ภารกิจต่อไปเรียน Over Charge ให้ถึงเลเวล 4#
+กลับไปหา Guarnien หลังจากเรียนสกิล  Over Charge เลเวล 4#
+
+8237# บทเรียนของ Guarnien#SG_FEEL#QUE_NOIMAGE#
+สกิล Push Cart เตรียมเรียนรู้เกี่ยวกับสกิล Push Cart สกิลหนึ่งที่สำคัญของพ่อค้า #
+ฟังบทเรียนของ Guarnien#
+
+8238# บทเรียนของ Guarnien#SG_FEEL#QUE_NOIMAGE#
+ก่อนอื่นต้องเรียนสกิล Increase Weight Limit เลเวล 5 ก่อนจึงจะเรียนสกิล Push Cart ได้ คุณจะสามารถเช่ารถเข็นจากสาว Kafra ได้ ทำไมไม่อัพสกิล Push Cart ให้ถึงเลเวล 4 ล่ะ? #
+กลับไปหา Guarnien หลังจากเรียนสกิล Push Cart#
+
+8239# บทเรียนของ Guarnien#SG_FEEL#QUE_NOIMAGE#
+นี่คือบทเรียนสุดท้ายเกี่ยวกับพ่อค้านั่นคือสกิล ^871F78Vending^000000#
+ฟังบทเรียนของ Guarnien#
+
+8240# บทเรียนของ Guarnien#SG_FEEL#QUE_NOIMAGE#
+บทเรียนสุดท้ายคือเรียนรู้สกิล Vending เลเวล 4 แล้วเขาจะมีรางวัลให้ #
+กลับไปหา Guarnien หลังจากเรียนสกิล Vending#
+
+
+// ep13 : ล๋ฟชฑโ ฤ๙ฝบฦฎ (ep13_2_rhea.sc)
+
+8241# สะสม Red Jewel#SG_FEEL#QUE_NOIMAGE#
+รวบรวม red jewel จากหลุมศพ #
+นำหินเหล่านี้ไปให้นักวิชาการด้านเวทมนตร์ใน Ash-Vacuum#
+
+8242# สะสม blue Jewel#SG_FEEL#QUE_NOIMAGE#
+รวบรวม blue jewel จากหลุมศพ #
+นำหินเหล่านี้ไปให้นักวิชาการด้านเวทมนตร์ใน Ash-Vacuum#
+
+8243# ภาษาของอีกโลก #SG_FEEL#QUE_NOIMAGE#
+มีภาษาพิเศษที่ไม่ได้ใช้กันใน Midgard ทั้งสามประเทศได้ร่วมกันคิดค้นภาษาโดย ^0000ffนักภาษาศาสตร์ใน Arunafeltz^000000 ตอนนี้ยังไม่รู้ว่าคืบหน้าไปแค่ไหน #
+ #
+
+8244# ภูติและต้นไม้ยักษ ์#SG_FEEL#QUE_NOIMAGE#
+ไปพบภูติและต้นไม้ยักษ์ที่ข้างนอก และจำสิ่งที่เขาพูดให้ดี #
+กลับไปหานักภาษาศาสตร์ที่ Arunafeltz#
+
+8245# ตัวอย่างภาษา #SG_FEEL#QUE_NOIMAGE#
+^0000ffนักวิชาการด้านเวทมนตร์จาก Rune-Midgards^000000 บอกว่าเขารู้วิธีตีความ เขาขอให้คุณช่วยอะไรบางอย่าง #
+#
+
+8246# ตัวอย่างภาษา #SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณไปเก็บอัญมณีมาให้ #
+กลับไปหานักวิชาการเวทมนตร์หลังจากได้อัญมณีแล้ว #
+
+8247# ความคืบหน้าของการวิจัย #SG_FEEL#QUE_NOIMAGE#
+เขาอยากให้คุณนำเสียงที่ได้จากอัญมณีไปให้นักภาษาศาสตร์ที่ Arunafeltz และตรวจสอบความคืบหน้าของการวิจัย #
+#
+
+8248# ความคืบหน้าของการวิจัย #SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่ามีปัญหาในเรื่องการทำเครื่องมือที่มีข้อมูลเป็นจำนวนมาก...เขาอยากให้คุณลองไปขอความช่วยเหลือจากวิศวกรที่ Schwartzvald#
+#
+
+8249# เก็บข้อมูล #SG_FEEL#QUE_NOIMAGE#
+ด้วยความสามารถของ Rune-Midgards ข้อมูลทั้งหมดได้ถูกบรรจุลงในอัญมณี...ลองไปขอคำแนะนำจากนักวิชาการเวทมนตร์ที่ Rune-Midgards ดู #
+#
+
+8250# หินจากโลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ข้างนอกของ Ash-Vacuum จะมี ^0000ffหินแปลกๆ ที่ไม่เคยพบที่ Midgard^000000 ไปเก็บมันกลับมา #
+นำหินกลับไปให้นักวิชาการเวทมนตร์ #
+
+8251# การบรรจุเวทย์ #SG_FEEL#QUE_NOIMAGE#
+รอเวลาอีกหน่อยระหว่างการบรรจุเวทย์ลงไปที่อัญมณี..#
+#
+
+8252# อัญมณี #SG_FEEL#QUE_NOIMAGE#
+นำอัญมณีนี้ไปให้วิศวกรที่ Schwartzvald#
+#
+
+8253# อุปกรณ์แปลภาษา #SG_FEEL#QUE_NOIMAGE#
+เขาขอเวลาประมาณหนึ่งชั่วโมงในการทำอุปกรณ์แปลภาษา #
+ประมาณหนึ่งชั่วโมงค่อยกลับไปหาวิศวกรที่ Schwartzvald#
+
+
+// นฺผฑฑธ
+
+//================================ณชภฬฦฎ ภม๗==========================================
+
+//-----------------ว์ธฃธธ------------------------
+
+9000# เปลี่ยนอาชีพ Knight#SG_FEEL#QUE_NOIMAGE#
+หัวหน้าผู้ทรงเกียรติ ชื่อ 'Herman' แสดงฝีมือให้สมาชิกคนอื่นๆ ยอมรับจึงจะได้เป็น Knight#
+คุยกับสมาชิกคนอื่นๆ ของ Chivalry#
+
+//-----------------ฟฃตๅท๙-----------------------
+
+// 1st test - 1
+9001# ความซื่อสัตย์ของ Knight#SG_FEEL#QUE_NOIMAGE#
+การทดสอบแรกโดย Sir Andrew!#
+Elder Pixie's Moustache, Wing of Red Bat, Orcish Voucher, Moth Dust, Reptile Tongue และ Mane อย่างละ 5 ea แล้วนำกลับมาให้ Andrew#
+
+// 1st test - 2
+9002# ความซื่อสัตย์ของ Knight#SG_FEEL#QUE_NOIMAGE#
+การทดสอบแรกโดย Sir Andrew!#
+Bug Leg, Heart of Mermaid, Maneater Blossom, Clam Flesh, Old Frying Pan และ Snail's Shell อย่างละ 5 ea แล้วนำกลับมาให้ Andrew#
+
+// 1st test- Pass
+9003# เกียรติของ Knight#SG_FEEL#QUE_NOIMAGE#
+Sir Andrew ให้คุณไปพบ Sir Siracuse เพื่อทำการทดสอบต่อไป #
+พูดคุยกับ 'Sir Siracuse'#
+
+//----------------มฆภำฝบ--------------------------
+
+// 2nd test
+9004# เกียรติของ Knight#SG_FEEL#QUE_NOIMAGE#
+'James Siracuse' ให้คุณไปพบ Sir Windsor เพื่อทำการทดสอบต่อไป #
+พูดคุยกับ 'Sir Windsor'#
+
+//----------------ภฉภ๚--------------------------
+
+// 3rd test
+9005# ความดื้อดึงของ Knight#SG_FEEL#QUE_NOIMAGE#
+'Sir Windsor' สั่งให้คุณทำตามคำสั่ง...#
+พูดคุยกับ 'Sir Windsor'#
+
+
+// 3rd test
+9006# ความดื้อดึงของ Knight#SG_FEEL#QUE_NOIMAGE#
+'Sir Windsor' สั่งให้คุณกำจัดมอนเตอร์ในห้องทดสอบ #
+กำจัดมอนเตอร์ทั้งหมดภายในเวลา 3 นาที #
+
+
+// 3rd test
+9007# เกียรติของ Knight#SG_FEEL#QUE_NOIMAGE#
+'Sir Windsor' ให้คุณไปพบ 'Amy Beatrice' เพื่อรับการทดสอบขั้นต่อไป #
+พูดคุยกับ 'Amy Beatrice'#
+
+//----------------ฟกภฬนฬ--------------------------
+
+
+// 3rd test
+9008# มารยาทของ Knight#SG_FEEL#QUE_NOIMAGE#
+อัศวินหญิงแห่ง Prontera Chivalry 'Amy' ขอให้คุณตอบคำถามในฐานะ Knight#
+พูดคุยกับ 'Amy Beatrice'#
+
+
+
+// 3rd test
+9009# ชีวิตของ Knight#SG_FEEL#QUE_NOIMAGE#
+'Amy Beatrice' ให้คุณไปพบ 'Sir Edmond' เพื่อรับการทดสอบขั้นต่อไป #
+พูดคุยกับ 'Sir Edmond'#
+
+
+//----------------พึตๅธ๓ตๅ--------------------------
+
+// 4th test
+9010# ความอดทน #SG_FEEL#QUE_NOIMAGE#
+'Sir Edmond' สอนให้คุณรู้จักความอดทน #
+การมีสมาธิ #
+
+// 4th test
+9011# ชีวิตของ Knight#SG_FEEL#QUE_NOIMAGE#
+'Sir Edmond' บอกให้คุณไปพบ 'Sir Gray' เพื่อรับการทดสอบขั้นต่อไป #
+พูดคุยกับ 'Sir Gray'#
+
+//-----------------ฑืทนภฬ----------------------------
+
+// 6th test
+9012# ชื่อเสียงของ Knight!#SG_FEEL#QUE_NOIMAGE#
+'Sir Gray' บอกให้คุณกลับไปหากัปตันเพื่อเปลี่ยนเป็น Knight!#
+พูดคุยกับ 'Sir Gray'#
+
+//=======================มพทแ======================================
+
+
+
+
+//= =====================ภงภฺตๅ ==============================
+
+//---------------------------ฤซฦฎธฐดภ--------------------------------
+9013# เปลี่ยนเป็น Wizard!#SG_FEEL#QUE_NOIMAGE#
+หัวหน้าสมาคม Wizard Catherine จะทดสอบด่านแรกกับคุณโดยให้คุณรวบรวม Gemstones#
+รวบรวม Red, Blue, Yellow Gemstone อย่า่งล่ะ  3 ea#
+
+
+9014# เปลี่ยนเป็น Wizard!#SG_FEEL#QUE_NOIMAGE#
+หัวหน้าสมาคม Wizard Catherine จะทดสอบด่านแรกกับคุณโดยให้คุณรวบรวมหินแร่ธาตุต่างๆ #
+รวบรวม 'Crystal Blue, Green Live, Red Blood, Wind of Verdure' อย่างละ 5 ea#
+
+
+9015#Gloomy Wizard?#SG_FEEL#QUE_NOIMAGE#
+คุณผ่านการทดสอบแรกจาก 'Catherine' เธอบอกให้คุณไปหา Gloomy Wizard#
+ให้ไปคุยกับ 'Gloomy Wizard'#
+
+
+//---------------------------ถ๓ฟ์ทป ( ภฝฤงวั ณฒภฺ )--------------------------------
+
+9016# เข้าใจเกี่ยวกับเวทย์และวัตถุ #SG_FEEL#QUE_NOIMAGE#
+การทดสอบที่สอง ตอบคำถามของ 'Raulel'#
+พูดคุยกับ 'Gloomy Wizard'#
+
+9017# การประยุกต์ใช้ #SG_FEEL#QUE_NOIMAGE#
+การทดสอบด่านที่สาม คุณต้องผ่านสนามเวทมนตร์ทั้งสามด่านให้ได้ #
+ฝึกการใช้เวทย์ทั้ง 3 ธาตุ #
+
+9018# ใบรับรองการเป็น Wizard!#SG_FEEL#QUE_NOIMAGE#
+คุณผ่านการทดสอบทั้งหมดจาก 'Raulel' แล้ว ให้กลับไปหา Catherine เพื่อการทดสอบสุดท้าย!#
+พูดคุยกับ 'Catherine'#
+
+//---------------------------ภภๅ--------------------------------
+2069#Tierra Gorge Battle#SG_FEEL#QUE_NOIMAGE#
+คุณได้รับเครื่องหมายแสดงว่าคุณพึ่งผ่านการสู้รบจาก Tierra กองทัพของ Gorge Guillaume ไม่อนุญาตให้คุณเข้าร่วมได้จนกว่าเครื่องหมายนี้จะหายไป #
+รอจนกว่าเวลาที่สนาม Tierra กำหนดไว้หมดไป #
+
+2070#Flavius Battle#SG_FEEL#QUE_NOIMAGE#
+คุณได้รับเครื่องหมายแสดงว่าคุณพึ่งผ่านการสู้รบจาก Flavius กองทัพของ Croix ไม่อนุญาตให้คุณเข้าร่วมได้จนกว่าเครื่องหมายนี้จะหายไป #
+รอจนกว่าเวลาที่สนาม Flavius กำหนดไว้หมดไป #
+
+//---------------------------Endless tower------------------------------
+12000# สำรวจ Endless tower#SG_FEEL#QUE_NOIMAGE#
+ล้ม Entweihen Crothen ที่ชั้น 100 ของ Endless tower และเก็บกุญแจให้ได้ #
+#
+
+12001# เข้าสู่ชั้นสูงสุดของ Endless tower#SG_FEEL#QUE_NOIMAGE#
+ปราบ Naght Sieger ที่ชั้น 102 ของ Endless tower#
+#
+
+12002# คำสาปของ Endless tower#SG_FEEL#QUE_NOIMAGE#
+คุณได้ตายข้างในหอคอย จะไม่สามารถเข้าไปใหม่ได้จนกว่าคำสาปจะหมดไป #
+#
+
+//---------------------------ฟีภงมถทส--------------------------------
+10000# ไปยังปราสาท Prontera#SG_FEEL#QUE_NOIMAGE#
+ตามที่คนส่งสารแจ้ง ไปยังปราสาท Prontera และคุยกับผู้ตรวจสอบ #
+#
+
+10001# ทดสอบคุณสมบัติ #SG_FEEL#QUE_NOIMAGE#
+รวบรวม 2 Reins ไปให้ผู้ตรวจสอบเพื่อแสดงความสามารถให้เห็น #
+#
+
+10002# สอบสัมภาษณ์ #SG_FEEL#QUE_NOIMAGE#
+ให้ผู้ตรวจสอบตรวจสอบคุณสมบัติของคุณ #
+#
+
+10003# คำแนะนำ #SG_FEEL#QUE_NOIMAGE#
+คุณผ่านการทดสอบแล้วให้สอบถามว่าจะต้องทำอะไรต่อไป #
+#
+
+10004# รายงานผล #SG_FEEL#QUE_NOIMAGE#
+คุณได้คุยกับเจ้าชายทั้ง 7 แล้วกลับไปหาผู้ตรวจสอบเพื่อรายงานผล #
+#
+
+10005# เจ้าชาย Eigen Ahrum#SG_FEEL#QUE_NOIMAGE#
+ไปพบเจ้าชายจากตระกูล Walter และสอบถามเกี่ยวกับตัวเขา #
+#
+
+10006# เจ้าชาย Ernst#SG_FEEL#QUE_NOIMAGE#
+ไปพบเจ้าชายจากตระกูล Gaebolg และสอบถามเกี่ยวกับตัวเขา #
+#
+
+10007# เจ้าชาย Poe#SG_FEEL#QUE_NOIMAGE#
+ไปพบเจ้าชายจากตระกูล Richard และสอบถามเกี่ยวกับตัวเขา #
+#
+
+10008# เจ้าขาย Peter#SG_FEEL#QUE_NOIMAGE#
+ไปพบเจ้าชายจากตระกูล Heine และสอบถามเกี่ยวกับตัวเขา #
+#
+
+10009# เจ้าขาย Urugen#SG_FEEL#QUE_NOIMAGE#
+ไปพบเจ้าชายจากตระกูล Wigner และสอบถามเกี่ยวกับตัวเขา #
+#
+
+10010# เจ้าขาย Helmut#SG_FEEL#QUE_NOIMAGE#
+ไปพบเจ้าชายจากตระกูล Roewenburg และสอบถามเกี่ยวกับตัวเขา #
+#
+
+10011# เจ้าขาย Erich#SG_FEEL#QUE_NOIMAGE#
+ไปพบเจ้าชายจากตระกูล Nerius และสอบถามเกี่ยวกับตัวเขา #
+#
+
+10012# บทสนทนา #SG_FEEL#QUE_NOIMAGE#
+จับตาดูเจ้าชายจากตระกูล Walter และ Gaebolg พูดคุยกัน #
+#
+
+10013# ค้นหาสาวน้อย #SG_FEEL#QUE_NOIMAGE#
+นำดอกไม้ไปให้เด็กสาวที่เมือง Al de Baran เป็นตัวแทนจาก Peter#
+#
+
+10014# กลับไปหา Peter#SG_FEEL#QUE_NOIMAGE#
+กลับไปหา Peter และรายงานเขาว่าได้ทำงานให้เรียบร้อยแล้ว #
+#
+
+10015#Test 15#SG_FEEL#QUE_NOIMAGE#
+Test 15#
+#
+
+10016# แขกจากตระกูล Walter#SG_FEEL#QUE_NOIMAGE#
+ค้นหาแขกจากตระกูล Walter ซึ่งอยู่ที่ไหนสักแห่งในปราสาท #
+#
+
+10017# ความขัดแย้ง #SG_FEEL#QUE_NOIMAGE#
+เล่าเกี่ยวกับความขัดแย้งที่คุณพึ่งได้รู้มา #
+#
+
+10018# ตัวร้าย Ahrum - Poe#SG_FEEL#QUE_NOIMAGE#
+ให้ความสนใจกับการสนทนาของ Ahrum ที่มีต่อ Poe#
+#
+
+10019# ตัวร้าย Ahrum - Peter#SG_FEEL#QUE_NOIMAGE#
+ให้ความสนใจกับการสนทนาของ Ahrum ที่มีต่อ Peter#
+#
+
+10020# ตัวร้าย Ahrum - Erich#SG_FEEL#QUE_NOIMAGE#
+ให้ความสนใจกับการสนทนาของ Ahrum ที่มีต่อ Erich#
+#
+
+10021# ตัวร้าย Ahrum - Urugen#SG_FEEL#QUE_NOIMAGE#
+ให้ความสนใจกับการสนทนาของ Ahrum ที่มีต่อ Urugen#
+#
+
+10022# ตัวร้าย Ahrum - Helmut#SG_FEEL#QUE_NOIMAGE#
+ให้ความสนใจกับการสนทนาของ Ahrum ที่มีต่อ Helmut#
+#
+
+10023#Eigen Ahrum และ Ernst -ก่อน-#SG_FEEL#QUE_NOIMAGE#
+ลองตั้งใจฟังการสนทนาระหว่าง Eigen Ahrum กับ Ernst#
+#
+
+10024#Eigen Ahrum และ Ernst -จดหมาย-#SG_FEEL#QUE_NOIMAGE#
+ทบทวนดูว่าจำบทสนทนาระหว่างเจ้าชายทั้งสองได้หรือไม่ #
+#
+
+10025# ลาก่อน!#SG_FEEL#QUE_NOIMAGE#
+รายงานสิ่งที่ได้รู้มาทั้งหมดกับผู้ตรวจสอบ #
+#
+
+//---------------------------ภฏณ๋ ธลไ ฤ๙--------------------------------
+10026# นักปฎิรูป Meto#SG_FEEL#QUE_NOIMAGE#
+ไปพบ Meto ตามที่ Weigon บอก #
+#
+
+10027# นักปฎิรูป Meto#SG_FEEL#QUE_NOIMAGE#
+ไปพบ Stangle ก่อน Meto เพื่อป้องกันการประชุม #
+#
+
+10028# นักปฎิรูป Meto#SG_FEEL#QUE_NOIMAGE#
+ไปหา Meto เพื่อดูว่าได้ผลเช่นไร #
+#
+
+10029# นักปฎิรูป Meto#SG_FEEL#QUE_NOIMAGE#
+ไปพบ Kapto ก่อน Meto เพื่อไม่ให้เขาได้ความช่วยเหลือ #
+#
+
+10030# นักปฎิรูป Meto#SG_FEEL#QUE_NOIMAGE#
+ไปหา Meto เพื่อดูว่าได้ผลเช่นไร #
+#
+
+10031# นักปฎิรูป Meto#SG_FEEL#QUE_NOIMAGE#
+ไปพบ Shishi ก่อน Meto เพื่อไม่ให้เขาได้ความช่วยเหลือ #
+#
+
+10032# นักปฎิรูป Meto#SG_FEEL#QUE_NOIMAGE#
+ไปหา Meto เพื่อดูว่าได้ผลเช่นไร #
+#
+
+10033# นักปฎิรูป Meto#SG_FEEL#QUE_NOIMAGE#
+ปฎิรูปสำเร็จกลับไปรายงาน Weigon#
+#
+
+//---------------------------ฐ๏ท๛ ย๘วั ภฮฐฃ--------------------------------
+10034# ค้นหามีด #SG_FEEL#QUE_NOIMAGE#
+ตามหามีดของ YunKyoHam#
+#
+
+10035# เอามีดไปคืน #SG_FEEL#QUE_NOIMAGE#
+คุณพบมีดแล้วกลับไปหา YunKyoHam#
+#
+
+//---------------------------ฝบฝร ฟอป็บ๑ ฤ๙--------------------------------
+10036# จัดหาสิ่งของ-Candy#SG_FEEL#QUE_NOIMAGE#
+หา 10 Candies ให้ Magumagu#
+#
+
+10037# จัดหาสิ่งของ-Crap Shells#SG_FEEL#QUE_NOIMAGE#
+หา 10 Crap Shells ให้ Magumagu#
+#
+
+10038# จัดหาสิ่งของ-Conch#SG_FEEL#QUE_NOIMAGE#
+หา 10 Conch ให้ Magumagu#
+#
+
+10039# จัดหาสิ่งของ-Fish Tail#SG_FEEL#QUE_NOIMAGE#
+หา 10 Fish tails ให้ Magumagu#
+#
+
+10040# จัดหาสิ่งของ-White_Platter#SG_FEEL#QUE_NOIMAGE#
+หา 1 White_Platter ให้ Magumagu#
+#
+
+10041# จัดหาสิ่งของ-?#SG_FEEL#QUE_NOIMAGE#
+หา 100 Hearts of Mermaid ให้ Magumagu#
+#
+
+//---------------------------ฐวน รฃฑโ ฤ๙--------------------------------
+10042# ค้นหา Piano Keys-ยังขาดอีก 5#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนอันต่อไปจะอยู่กับคนที่พูดยากๆ #
+#
+
+10043# ค้นหา Piano Keys-ยังขาดอีก 5#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนอันต่อไปจะอยู่กับเจ้าของร้าน #
+#
+
+10044# ค้นหา Piano Keys-ยังขาดอีก 4#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนอันต่อไปจะอยู่กับเจ้าของร้าน #
+#
+
+10045# ค้นหา Piano Keys-ยังขาดอีก 4#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนอันต่อไปจะอยู่กับคนที่พูดยากๆ #
+#
+
+10046# ค้นหา Piano Keys-ยังขาดอีก 3#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนอันต่อไปจะอยู่ที่หลุมศพ #
+#
+
+10047# ค้นหา Piano Keys-ยังขาดอีก 3#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนอันต่อไปจะอยู่ที่หลุมศพ #
+#
+
+10048# ค้นหา Piano Keys-ยังขาดอีก 2#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนอันต่อไปจะอยู่ใกล้ๆ กับที่คุณขุด #
+#
+
+10049# ค้นหา Piano Keys-ยังขาดอีก 2#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนอันต่อไปจะอยู่ใกล้ๆ กับที่คุณขุด #
+#
+
+10050# ค้นหา Piano Keys-ยังขาดอีก 1#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนอันต่อไปจะอยู่ที่หลุมศพ #
+#
+
+10051# ค้นหา Piano Keys-ยังขาดอีก 1#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนอันต่อไปจะอยู่ใกล้ๆ กับที่คุณขุด #
+#
+
+10052# ค้นหา Piano Keys-ไปที่เปียโน#SG_FEEL#QUE_NOIMAGE#
+ไปที่เปียโนและใส่มันลงไป #
+#
+
+10053# ค้นหา Piano Keys-เติมจุดที่ว่าง #SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนจะมีบางอย่างหายไปควรจะใส่อะไรดี #
+ดูเหมือนจะใส่อะไรลงไปก็ได้ #
+
+10054# ทางหนี-Clint Kana#SG_FEEL#QUE_NOIMAGE#
+คุยกับแม่มด Clint Kana เพื่อหนีออกไป #
+#
+
+//---------------------------ฟ์ลบ ร฿ภๅ น๘ฟช ฤ๙--------------------------------
+
+10055# เข้าใจประเพณีของ Utan#SG_FEEL#QUE_NOIMAGE#
+หัวหน้าเผ่า Utan แนะนำให้คุณเรียนรู้ประเพณีของเผ่า Utan#
+ทำไมชาว Utan ต้องใส่หน้ากาก?#
+
+10056# เรียนภาษา Utan#SG_FEEL#QUE_NOIMAGE#
+คุณสามารถเรียนภาษา Utan ได้หากคุณมีไอเทมครบ #
+10 Oil Paper, 5 Slick Paper, 1 Squid Ink, 1 Feather of Birds#
+
+// --------------EP13------------------------------------------
+//---------------------------ภฬฐ่ทฮ ฐกภฺ--------------------------------
+10057# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ทดสอบความแข็งแกร่ง #
+ไปหา promotional staff ที่ Aldebaran#
+
+10058# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ทดสอบความแข็งแกร่ง #
+ไปหา promotional staff ที่ Aldebaran พร้อมกับ 300 Jellopy#
+
+10059# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ทดสอบความแข็งแกร่ง #
+ไปหา promotional staff ที่ Geffen#
+
+10060# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ทดสอบความแข็งแกร่ง #
+ไปหา promotional staff ที่ Geffen พร้อมกับ Emerald#
+
+10061# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ทดสอบความแข็งแกร่ง #
+ไปหา promotional staff ที่ Geffen พร้อมกับ Ruby#
+
+10062# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ทดสอบความแข็งแกร่ง #
+ไปหา promotional staff ที่ Izlude#
+
+10063# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ทดสอบความแข็งแกร่ง #
+เก็บเลเวลให้มากกว่า 70#
+
+10064# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ทดสอบความแข็งแกร่ง #
+กลับไปหาผู้รับสมัครใน Prontera#
+
+10065# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ลงทะเบียนเข้าร่วมไตรภาคี #
+ไปที่ Lighthalzen ในดินแดน Schwaltzvalt#
+
+10066# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+คุณได้ฟังเรื่องราวจากผู้นำกลุ่มไตรภาคี #
+คุยกับ Sigaitz#
+
+10067# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ถามผู้นำกลุ่มไตรภาคี Sigaitz#
+ถาม Sigaitz ต่อไป #
+
+10068# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ได้รับมอบหมายงานจาก Sigaitz#
+ไปพบ alliance manager ที่ Prontera ในอาณาจักร Rune-Midgards#
+
+10069# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+คุณได้คุยกับผู้จัดการเรียบร้อยแล้ว #
+กลับไปหา Sigaitz#
+
+10070# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+คุณได้รู้เรื่องราวเกี่ยวกับกองกำลังไตรภาคี #
+ถามต่อ #
+
+10071# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ตอบรับคำขอของ Sigaitz#
+ไปหา alliance manager ที่ Sessrumnir ใน Rachel#
+
+10072# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+คุณได้คุยกับผู้จัดการเรียบร้อยแล้ว #
+กลับไปหา Sigaitz#
+
+10073# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+คุณได้รับภารกิจต่อไป #
+ลงทะเบียนเข้าร่วมกองกำลังไตรภาคี #
+
+10074# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ตอบรับคำขอของ Sigaitz#
+รายงานเจ้าหน้าที่ที่อยู่ในตึก #
+
+10075# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+คุณรู้แล้วว่าเจ้าหน้าที่อยู่ไหน #
+รายงานพวกเขา #
+
+10076# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+รายงานเรียบร้อยแล้ว #
+กลับไปหารองผู้นำกลุ่มไตรภาคี #
+
+10077# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+เตรียมพร้อมสำหรับภารกิจ #
+คุยกับ Munkenro#
+
+10078# มนุษย์ผู้ไปสู่โลกอื่น #SG_FEEL#QUE_NOIMAGE#
+ผ่านการทดสอบของ Munkenro ให้ได้ #
+ล้มทหารสมาชิกเพื่อไปโลกอื่น #
+
+10079# หนีจากความจริงไปสู่โลกกว้าง #SG_FEEL#QUE_NOIMAGE#
+เธอรู้สึกเป็นห่วงที่ลูกชายของเธอเอาแต่อยู่บ้านทั้งวัน #
+คุยกับ Iromo#
+
+10080# หนีจากความจริงไปสู่โลกกว้าง #SG_FEEL#QUE_NOIMAGE#
+เขาบ่นแต่ว่าไม่สามารถหาอาหารที่ชอบได ้#
+หาคนที่รู้ว่าเขาชอบแบบไหน #
+
+10081# หนีจากความจริงไปสู่โลกกว้าง #SG_FEEL#QUE_NOIMAGE#
+คุณพบเพื่อนเขาแล้ว!#
+คุณควรจะซื้อกล้วยมาจากเพื่อนของ Iromo เพื่อทำเควสต่อ #
+
+10082# หนีจากความจริงไปสู่โลกกว้าง #SG_FEEL#QUE_NOIMAGE#
+เขากิน sweet banana#
+คุยกับเขาอีกครั้ง #
+
+10083# หนีจากความจริงไปสู่โลกกว้าง #SG_FEEL#QUE_NOIMAGE#
+ในที่สุดคุณก็รู้รสชาติที่ Iromo ชอบแล้ว #
+ไปหาเขาพร้อมกับ Monster's Feed และ Red Potion#
+
+10084# หนีจากความจริงไปสู่โลกกว้าง #SG_FEEL#QUE_NOIMAGE#
+ตอนนี้คุณรู้แล้วว่าทำไมเขาถึงเอาแต่อยู่บ้าน #
+ถ้าไม่มี Wild Rose อยู่ใกล้ๆ เขา เขาจะออกไปข้างนอก #
+
+10085# หนีจากความจริงไปสู่โลกกว้าง #SG_FEEL#QUE_NOIMAGE#
+กำจัด wild roses ให้หมด #
+ทำตามคำแนะนำของแม่เขา #
+
+10086# หนีจากความจริงไปสู่โลกกว้าง #SG_FEEL#QUE_NOIMAGE#
+คุณได้ข้อมูลที่น่าจะมีประโยชน์! เขาหวังว่าจะมีพี่น้อง!#
+บอกเรื่องราวของพวกพ้องให้เขาฟัง ถ้าคุณยังไม่รู้ให้ไปหาพี่น้องเขาก่อน #
+
+10087# หนีจากความจริงไปสู่โลกกว้าง #SG_FEEL#QUE_NOIMAGE#
+คุณเล่าเรื่องราวให้เขาฟัง แต่เขาก็ยังไม่พูดไม่จา #
+ได้เวลารักษาแล้ว ทำตามคำแนะนำของแม่เขา #
+
+10088# หนีจากความจริงไปสู่โลกกว้าง #SG_FEEL#QUE_NOIMAGE#
+เขาค่อนข้างมองโลกในแง่ร้ายสำหรับเพื่อน #
+เล่าเรื่องราวเกี่ยวกับเพื่อนให้เขาฟัง หากคุณไม่รู้ก็รีบไปหาประสบการณ์ซะ #
+
+10089# หนีจากความจริงไปสู่โลกกว้าง #SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนเรื่องเพื่อนจะได้ผล #
+บอกเรื่องราวจากประสบการณ์ของคุณให้เขาฟัง #
+
+// ผผภฬ
+// ----------ฟภต๒ฝลภ, ปรผฟฌฑธ, ตตผญฐ, ตนมดยณ๋ภฮ
+11000# ตรวจสอบ Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+ถ้าอยากจะช่วยพวกเขา คุณต้องไปสำรวจที่สถานที่ศักิด์สิทธิ์ โดยคุยกับ Boatman เพื่อเดินทางไปที่นั่น?#
+คุยกับ Alex อีกครั้งหลังจากตรวจสอบสถานที่ศักดิ์สิทธิ์ #
+
+11001# ตรวจสอบ Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+ภารกิจแรกที่คุณได้รับรวบรวม ^3355FF5 Runes of the Darkness^000000 จากสถานที่ศักดิ์สิทธิ์กลับมาให้เขา #
+รวบรวม 5 Runes of Darkness ให้ Alex#
+
+11002# ตรวจสอบ Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+Alex ถูกฆ่าตายโดยผู้หญิงผมสีเทาทันทีที่ได้รับ Runes of Darkness#
+คุณควรจะคุยกับเธอดีไหม?#
+
+11003# ตรวจสอบ Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+ก่อนอื่น คุณต้องไปสำรวจที่สถานที่ศักิด์สิทธิ์ โดยคุยกับ Boatman เพื่อเดินทางไปที่นั่น?#
+คุยกับ Laura หลังจากทำการสำรวจ #
+
+11004# ตรวจสอบ Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+รวบรวม ^3355FF5 Runes of the Darkness^000000 จากสถานที่ศักดิ์สิทธิ์กลับมา #
+รวบรวม 5 Runes of Darkness ให้ Laura#
+
+11005# ตรวจสอบ Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+ภารกิจแรกสำเร็จไปแล้ว แต่เหมือนจะมีงานให้ช่วยต่ออีก?#
+#
+
+11006# ตรวจสอบ Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+Laura กำลังสงสัยว่าพวกผู้ชายที่อยู่ห้องใกล้ๆ ทำอะไรอยู่ #
+ดังฟังการพูดคุยของ Alex และกลับไปหา Laura#
+
+11007# ตรวจสอบ Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+เขาอยากให้คุณเข้าไปเช็คข้างในดินแดนนั้นว่ามีอะไรบ้าง #
+เข้าไปสำรวจข้างใน Odin Shrine ที่ถูกสร้างขึ้นให้ติดกันสองเกาะ #
+
+11008# ตรวจสอบ Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+เขาอยากให้คุณนำข้อมูลนี้ไปยัง Morroc#
+นำข้อมูลนี้ไปให้ Ashe ที่อยู่บริเวณประตูทางทิศใต้ Morroc#
+
+11009# นักวิจัยสิ่งมีชีวิต #SG_FEEL#QUE_NOIMAGE#
+Morriphen กำลังเครียดจัด #
+เขากำลังเครียดมาก ควรจะไปบ้านเขาที่ Hugel และขอยาจากภรรยาเขา Siria#
+
+11010# นักวิจัยสิ่งมีชีวิต #SG_FEEL#QUE_NOIMAGE#
+ยาแก้พึ่งจะหมดไป #
+ไปยัง Lighthalzen และขอยาจากเพื่อนของ Morriphen ที่ชื่อ Dono#
+
+11011# นักวิจัยสิ่งมีชีวิต #SG_FEEL#QUE_NOIMAGE#
+คุณต้องรวบรวม ^3355FF15 Coal, 5 Brigan, 5 Cyfar, 1 Unripe Apple, 3 Detrimindexta, 20 Shells, Red, Blue, Green, White และ Yellow Herb อย่างละ 1 ea^000000#
+รวบรวมวัสดุไปให้ Dono#
+
+11012# นักวิจัยสิ่งมีชีวิต #SG_FEEL#QUE_NOIMAGE#
+มีบางอย่างหายไป ไม่สามารถทำยาได้ #
+ไปหา Makki ข้างในผับที่ริมถนนและขอ ^ff0000Red Plant Stem Powder^000000 มา #
+
+11013# นักวิจัยสิ่งมีชีวิต #SG_FEEL#QUE_NOIMAGE#
+คุณได้รู้มาว่า Morriphen และ Dono เคยทำงานให้กับ Rekenber มาก่อน #
+นำ Red Plant Stem Powder ไปให้ Dono#
+
+11014# นักวิจัยสิ่งมีชีวิต #SG_FEEL#QUE_NOIMAGE#
+ในที่สุดยาก็พร้อมแล้ว! นำกลับไปให้ Morriphen!#
+#
+
+11015# นักวิจัยสิ่งมีชีวิต #SG_FEEL#QUE_NOIMAGE#
+Siria อ่อนแรงลงเพราะไม่มียาด้วยเช่นกัน #
+กลับไป Hugel และนำยาที่เหลือไปให้ Siria#
+
+11016# นักวิจัยสิ่งมีชีวิต #SG_FEEL#QUE_NOIMAGE#
+โชคดีที่ Siria กลับมาเป็นปกต ิ#
+กลับไปหา Morriphen บอกเขาว่า Siria ไม่เป็นไรแล้ว ถาม Morriphen เกี่ยวกับเรื่องที่ Dono หยุดพูดไปกระทันหัน และดูว่าเกิดอะไรขึ้นกับ Siria และ Morriphen#
+
+
+11017# การสำรวจ Juperos#SG_FEEL#QUE_NOIMAGE#
+ให้ลองไปที่ Juperos และนำเอกสารเก่าๆ มาให้เธอดู #
+นำเอกสารบางส่วนจาก Juperos กลับมาให้เธอ #
+
+11018# การสำรวจ Juperos#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนจะมีรอยสลักอยู่ที่รูปปั้น #
+ไปหา Feyruz ที่ข้างในห้องสมุด Juno และถามเธอเกี่ยวกับการถอดรหัส #
+
+11019# การสำรวจ Juperos#SG_FEEL#QUE_NOIMAGE#
+ความหมายของรหัส ''ฟุ่มเฟือยไร้ประโยชน์'' น่าจะหมายถึงนักวิทยาศาสตร์บ้าคนหนึ่งในอดีต แต่ถ้าเป็นเรื่องจริงมันอาจเป็นเครื่องยืนยันแนวความคิดของเธอก็ได้..#
+ลองหาสิ่งที่เป็นประโยชน์ต่อการวิจัยจาก Juperos มาให้เธอดู #
+
+11020# การสำรวจ Juperos#SG_FEEL#QUE_NOIMAGE#
+Fayruz ตรวจสอบ Transparent Plate ที่ได้มาจาก Juperos และเริ่มเล่าเรื่องราวเกี่ยวกับ Juperos#
+หา Transparent Plate แบบอื่น #
+
+11021# การสำรวจ Juperos#SG_FEEL#QUE_NOIMAGE#
+Fayruz ตรวจสอบ Transparent Plate อันที่สองที่ได้มาจาก Juperos และเริ่มเล่าเรื่องราวเกี่ยวกับ Juperos#
+หา Transparent Plate แบบอื่น #
+
+11022# การสำรวจ Juperos#SG_FEEL#QUE_NOIMAGE#
+Fayruz ตรวจสอบ Transparent Plate อันที่สามที่ได้มาจาก Juperos และเริ่มเล่าเรื่องราวเกี่ยวกับ Juperos#
+หา Transparent Plate แบบอื่น #
+
+11023# ชายแก่ขี้ตกใจ #SG_FEEL#QUE_NOIMAGE#
+ถ้าคุณหา Absar ไม่พบที่ร้านขายอุปกรณ์ บางทีเขาอาจจะไปอยู่ที่บาร์ก็ได้ #
+ค้นหา Absar เพื่อช่วยเหลือชายแก่คนนี้ #
+
+11024# ชายแก่ขี้ตกใจ #SG_FEEL#QUE_NOIMAGE#
+รวบรวม 5 Maneater Roots, 2 Glacial Hearts และ 5 Steel แล้วรีบกลับมา #
+หาของที่ Absar ต้องการ #
+
+11025# ชายแก่ขี้ตกใจ #SG_FEEL#QUE_NOIMAGE#
+คุณได้รับไอเทมที่ต้องการแล้ว #
+กลับไปหา Zabaroo#
+
+11026# ชายแก่ขี้ตกใจ #SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณช่วยนำหินเหล่านี้ที่เขารวบรวมไว้ไปส่งที่โรงงานในเมืองให้หน่อยได้ไหม? มันอยู่ใกล้ๆ เรือเหาะ #
+ส่งหินเหล่านี้ไปที่โรงงานในเมือง #
+
+11027# ชายแก่ขี้ตกใจ #SG_FEEL#QUE_NOIMAGE#
+นำหินเหล่านี้ไปให้ Bahed ที่ตรงโน้น #
+นำหินไปให้ Bahed#
+
+11028# ชายแก่ขี้ตกใจ #SG_FEEL#QUE_NOIMAGE#
+หินเหล่านี้มีชื่อว่า 'Hetarium' ถูกขายให้กับ Rekenber#
+กลับไปหา Zabaroo#
+
+11029# มุ่งหน้าสู่ Turtle Island..#SG_FEEL#QUE_NOIMAGE#
+ที่นั่นหายากและไปได้ยากมาก เขาถามว่าคุณแน่ใจที่จะไปที่นั่นหรือเปล่า?#
+ลองมองหาชาวประมงแก่ๆ ที่ทางท่าเรือตะวันออกของ Alberta เพื่อหาวิธีไป Turtle Island#
+
+11030#มุ่งหน้าสู่ Turtle Island..#SG_FEEL#QUE_NOIMAGE#
+เบาะแสของที่นั่นอยู่ที่ ^FF3355- tur_dun01  X : 160 . Y : 81 -^000000#
+คุณได้รับ Skull key ดูเหมือนจะต้องใช้มันภายหลัง ตามหาเบาะแสต่อไปดีกว่า #
+
+11031# มุ่งหน้าสู่ Turtle Island..#SG_FEEL#QUE_NOIMAGE#
+เบาะแสของที่นั่นอยู่ที่ ^3355FF- tur_dun02 X : 132 . Y : 251 -^000000 ข้างใต้รากไม้ #
+คุณได้รับ Roots key ตามหาเบาะแสต่อไปดีกว่า #
+
+11032# มุ่งหน้าสู่ Turtle Island..#SG_FEEL#QUE_NOIMAGE#
+ที่นี่... ^3355FF- tur_dun01 X : 203 . Y : 155 -^000000 ใต้หินรูปเต่า #
+คุณได้รับ Security key จากหลุมข้างใต้หิน ตามหาเบาะแสต่อไปดีกว่า #
+
+11033# มุ่งหน้าสู่ Turtle Island..#SG_FEEL#QUE_NOIMAGE#
+ไปที่... ^FF3355- tur_dun02 X : 46 . Y : 125 -^000000 ข้างในกองกระดองเต่า #
+ข้างในกองกระดองเต่ามีบางอย่างซ่อนอยู่ คุณพบ Turtle Crystal key ตามหาเบาะแสต่อไปดีกว่า #
+
+11034# มุ่งหน้าสู่ Turtle Island..#SG_FEEL#QUE_NOIMAGE#
+ไปทางตะวันออก 5 ก้าว 30 ก้าวลงไปทางใต้ รอบๆ ตัว 5 ก้าว....#
+คุณได้รับ Turtle Pillar key ตามหาเบาะแสต่อไปดีกว่า #
+
+11035# มุ่งหน้าสู่ Turtle Island..#SG_FEEL#QUE_NOIMAGE#
+- แสงสว่างของด่านที่สอง -^FF3355B2 . X : 75 . Y : 249^000000#
+คุณใช้ Security key ใส่ลงไปในช่อง ตามหาแสงสว่างของด่านที่สอง #
+
+11036# มุ่งหน้าสู่ Turtle Island..#SG_FEEL#QUE_NOIMAGE#
+- แสงสว่างของด่านที่สาม -^FF3355B2 . X : 118 . Y : 233^000000#
+คุณใช้ Security key ใส่ลงไปในช่อง ตามหาแสงสว่างของด่านที่สาม #
+
+11037# มุ่งหน้าสู่ Turtle Island..#SG_FEEL#QUE_NOIMAGE#
+- ดาวที่ส่องสว่าง -^FF3355B4 . X : 113 . Y : 178^000000#
+คุณใช้ Security key ใส่ลงไปในช่อง ตามหาดาวที่ส่องสว่าง #
+
+11038# พบกับคนตาย #SG_FEEL#QUE_NOIMAGE#
+บอกให้ Elly รู้เกี่ยวกับสิ่งที่เกิดขึ้นเมื่อเดือนก่อน #
+ไปเมืองของคนตายและส่งข้อความของ Erious ให้ Elly#
+
+11039# พบกับคนตาย #SG_FEEL#QUE_NOIMAGE#
+คนที่คุณต้องการพบอยู่ที่นั่น...หวังว่าจะชอบติดต่อกับคนตายนะ...เมืองของคนตายอยู่ทางเหนือของที่นี่ #
+คุณจะพบชายที่ชื่อ 'Feylin' บอกให้เขารู้ว่า Billik แนะนำเจ้ามา เอาดอกกุหลาบไปให้เขาด้วย #
+
+11040# พบกับคนตาย #SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่าคุณมาพบคนผิดแล้ว ขอให้คุณกลับไป #
+ยังเลิกไม่ได้ คุยกับ Feylin ต่อไป #
+
+11041# พบกับคนตาย #SG_FEEL#QUE_NOIMAGE#
+เขาไม่แน่ใจว่าการติดต่อกับคนตายนั้นจะทำได้.... และบอกว่าไม่เคยบอกกับคุณว่าทำได้ และไม่อยากคุยกับคุณต่อ #
+ยังเลิกไม่ได้ คุยกับ Feylin ต่อไป #
+
+11042# พบกับคนตาย #SG_FEEL#QUE_NOIMAGE#
+การเรียก Elly ล้มเหลว #
+กลับไปหา Erious#
+
+11043# พบกับคนตาย #SG_FEEL#QUE_NOIMAGE#
+เธอฝากข้อความและสิ่งของกลับไปให้เขา และบอกว่าให้ลืมเธอซะและใช้ชีวิตอย่างมีความสุข #
+กลับไปหา Erious พร้อมกับข้อความและกล่อง #
+
+11044# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+ไปที่ Tool Shop และเอายามาให้เขา #
+รับยามาจาก Tool Shop#
+
+11045# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+ไปดูที่โกดังว่ายังมียาไหม โกดังอยู่ตรงข้ามตึกนี้ #
+ไปขอยาจาก Jiang Xiayou ที่โกดัง #
+
+11046# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+เธอต้องการเอกสารจากเมืองหลวง ไปที่ตะวันออกจะพบเมืองหลวง เอาเอกสารที่ชื่อ ^ff0000Residence Transfer Application^000000 มาให้เธอ #
+ขอเอกสารให้ Jiang Xiayou#
+
+11047# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+เธอต้องการเอกสารจากเมืองหลวง ไปที่ตะวันออกจะพบเมืองหลวง เอาเอกสารที่ชื่อ ^ff0000Summer SAT Class Application^000000 มาให้เธอ #
+ขอเอกสารให้ Jiang Xiayou#
+
+11048# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+เธอต้องการเอกสารจากเมืองหลวง ไปที่ตะวันออกจะพบเมืองหลวง เอาเอกสารที่ชื่อ ^ff0000Sandy Dust Phenomenon Report^000000 มาให้เธอ #
+ขอเอกสารให้ Jiang Xiayou#
+
+11049# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+เธอต้องการเอกสารจากเมืองหลวง ไปที่ตะวันออกจะพบเมืองหลวง เอาเอกสารที่ชื่อ ^ff0000Communication Proposal^000000 มาให้เธอ #
+ขอเอกสารให้ Jiang Xiayou#
+
+11050# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+ยาที่คุณต้องการอยู่แถวๆ นี้ ให้ลองหาดู #
+หายาที่ต้องการ #
+
+11051# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+ขึ้นไปข้างบนและเจ้าหน้าที่จะให้เอกสารที่คุณต้องการ #
+ขึ้นไปข้างบนเพื่อรับเอกสาร '^ff0000Residence Transfer Application^000000'#
+
+11052# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+ขึ้นไปข้างบนและเจ้าหน้าที่จะให้เอกสารที่คุณต้องการ #
+ขึ้นไปข้างบนเพื่อรับเอกสาร '^ff0000Summer SAT Class Application^000000'#
+
+11053# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+ขึ้นไปข้างบนและเจ้าหน้าที่จะให้เอกสารที่คุณต้องการ #
+ขึ้นไปข้างบนเพื่อรับเอกสาร '^ff0000Sandy Dust Phenomenon Report^000000'#
+
+11054# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+ขึ้นไปข้างบนและเจ้าหน้าที่จะให้เอกสารที่คุณต้องการ #
+ขึ้นไปข้างบนเพื่อรับเอกสาร '^ff0000Communication Proposal^000000'#
+
+11055# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+เขาหาเอกสารที่คุณต้องการได้แล้ว #
+ได้เอกสารแล้วกลับไปหา Jiang Xiayou#
+
+11056# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+#
+คุณได้ยาแล้วกลับไปหาหมอ #
+
+11057# ยาสมุนไพร - เริ่มเป็นผู้ช่วยหมอ #SG_FEEL#QUE_NOIMAGE#
+รวบรวม... ^3355FF2 Leopard Claw^000000, ^3355FF10 Solid Peach^000000, ^3355FF5 Poisonous Toad Skin^000000, ^3355FF20 Brown Root^000000, ^3355FF10 Sprout^000000 และ ^3355FF5 Honey Pot^000000#
+หาไอเทมที่หมอ Hua Tuo ต้องการ #
+
+11058#Mikhail ขี้ขลาด #SG_FEEL#QUE_NOIMAGE#
+ลูกชายเธอ Mikhail ได้ทำ Matroshuca แตก ระหว่างที่เธอไม่อยู่บ้าน เขากลัวจะถูกลงโทษเลยหนีไป #
+ตามหา Mikhail เขาคงจะไม่ออกไปจากหมู่บ้านแน่นอน #
+
+11059#Mikhail ขี้ขลาด #SG_FEEL#QUE_NOIMAGE#
+เขาทั้งโง่และไม่มีเพื่อน แต่ว่า ^3131FFผู้หญิงในโรงแรม 'Sticky Herb Tree'^000000 ชอบเขามาก #
+ไปที่โรงแรม Sticky Herb Tree#
+
+11060#Mikhail ขี้ขลาด #SG_FEEL#QUE_NOIMAGE#
+ถ้าคุณนอนพักหนึ่งคืน เธอถึงจะให้ข้อมูลกับคุณ #
+นอนพักหนึ่งคืนเพื่อแลกกับข้อมูล #
+
+11061#Mikhail ขี้ขลาด #SG_FEEL#QUE_NOIMAGE#
+เขาดูตื่นกลัวและถามหากาว เขาต้องทำบางอย่างแตกแน่ๆ เธอจึงบอกให้เขาลองไปที่บาร์ดู #
+ดูเหมือน Mikhail จะไปที่บาร์ ลองไปตามหาเขาดูที่บาร์ดีกว่า #
+
+11062#Mikhail ขี้ขลาด #SG_FEEL#QUE_NOIMAGE#
+เขาแนะนำ Mikhail ให้ไปหาผู้เชี่ยวชาญเรื่องกาวที่ชื่อ Victor#
+ถาม Victor เกี่ยวกับ Mikhail ว่าเขาอยู่ไหน #
+
+11063#Mikhail ขี้ขลาด #SG_FEEL#QUE_NOIMAGE#
+คุณนั่งดื่มกับเขา #
+ตีสนิทกับ Victor ด้วยการดื่ม #
+
+11064#Mikhail ขี้ขลาด #SG_FEEL#QUE_NOIMAGE#
+ในการทำกาวอย่างดีต้องใช้ของจากบึง แต่เขาไม่คิดว่าเด็กนั่นจะกล้าไป #
+ลองไปที่บึงนั่นดู #
+
+11065#Mikhail ขี้ขลาด #SG_FEEL#QUE_NOIMAGE#
+คุณเห็นบึงที่รู้สึกว่าน่ากลัวและขยะแขยงมาก #
+คุณไม่พบร่องรอยของเขา กลับไปที่บ้านดีกว่า #
+
+11066#Mikhail ขี้ขลาด #SG_FEEL#QUE_NOIMAGE#
+คุณค้นหาในบ้านและพบว่า Mikhail ซ่อนอยู่ในเตา คุณต้องหากาวให้ Mikhail ซ่อม Matroshuca#
+กลับไปถาม Victor ว่าเขาต้องใช้อะไรบ้างในการทำกาว #
+
+11067#Mikhail ขี้ขลาด #SG_FEEL#QUE_NOIMAGE#
+มีเกาะใกล้ๆ Moscovia คุณเข้าไปในป่าจะพบบึงที่มีต้นหญ้าแปลกๆ ขึ้นอยู่ รวบรวม ^3131FF'10 sticky herbs'^000000 และ ^3131FF 1 medicine bowl^000000 มาให้เขา #
+หา 10 sticky herbs และ 1 medicine bowl ให้ Victor!#
+
+11068#Mikhail ขี้ขลาด #SG_FEEL#QUE_NOIMAGE#
+คุณได้กาวเรียบร้อยแล้ว #
+คุณได้กาวแล้วกลับไปหา Mikhail#
+
+11069#Mikhail ขี้ขลาด #SG_FEEL#QUE_NOIMAGE#
+เขาจะเอา Matroshuca กลับไปให้แม่ #
+ในที่สุด Mikhail ก็ออกมาจากเตาและกลับไปหา Gallina#
+
+11070# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+เขาบอกว่าเขาแก่จนไม่สามารถสอนได้อีก ให้ไปพบ ^0000FF'Song Zhi Du'^000000 แทนดีกว่า #
+ตามหา Song Zhi Du ที่ทำงานในสำนักงานหมอและถามเกี่ยวกับการใช้พิษ #
+
+11071# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+เขาไล่คุณ ดูเหมือนเขาจะผิดหวังบางอย่าง...#
+Song Zhi Du ดูเหมือนจะหงุดหงิด คุณน่าจะหาบางอย่างมาให้เขา #
+
+11072# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณช่วยแก้แค้น โดยหา ^0000FF4 Bee Sting, 10 Venom Canine, 10 Empty Potion, 30 Green Potion^000000#
+หาของที่ Song Zhi Du ต้องการ #
+
+11073# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+ที่เหลือก็แค่ทำยาพิษและให้จักรพรรดิของ Louyang ดื่มมัน...#
+ฟังเรื่องราวของเขาและทำตามที่ Song Zhi Du ขอ #
+
+11074# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+คุณได้ของที่ต้องการแล้วกลับไปหา Song Zhi Du#
+คุณได้ของที่ต้องการแล้วกลับไปหา Song Zhi Du#
+
+11075# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+เขาทำไม่สำเร็จและต้องการของต่างๆ ใหม่...#
+เขาต้องการวัตถุดิบเพิ่ม #
+
+11076# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+เขาให้คุณลอบเข้าไปในพระราชวังและเอายานี้วางไว้ที่จักรพรรดิ Bai Long น่าจะอยู่ อย่างไรก็ตามเขาบอกว่าอาจารย์เขาต้องดีใจแน่ๆ ที่เขาทำ ^0000FFพิษที่เขาต้องการจะสร้าง^000000 ได้สำเร็จ! #
+คุณควรจะทำอย่างไรดี?#
+
+11077# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+คุณพบขวดน้ำของจักรพรรดิและใส่ยาพิษลงไปในนั้น #
+คุณได้ทำทุกอย่างที่ Song Zhi Du ขอแล้ว กลับไปดีกว่า #
+
+11078# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+คุณบอก Nagash Arses ว่า Song Zhi Du สร้างพิษนั้นได้อย่างไรและแผนการแก้แค้นของเขา #
+ดูเหมือนเขาต้องการจะอยู่คนเดียว #
+
+11079# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณช่วยเหลือจักรพรรดิ... ขอให้ล้มเลิกแผนการซะ #
+กำจัดขวดน้ำของจักรพรรดิ Bai Long#
+
+11080# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+คุณได้ทำการสลับเปลี่ยนขวดน้ำนั้น #
+คุณทำสำเร็จ กลับไปหา Nagash Arses#
+
+11081# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+เขามอบสมุดบันทึกที่เขียนเรื่องราวความรู้สึกผิดของเขามาตลอด 15 ปีให้กับคุณ เขาขอให้คุณเอาสิ่งนี้ไปให้จักรพรรดิ #
+ส่งสมุดบันทึกของ Nagash Arses ให้จักรพรรดิ #
+
+11082# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+เขาได้มอบสิ่งของให้คุณและขอให้คุณเอาจดหมายไปส่งให้ Nagash และ Song Zhi Du#
+ส่งจดหมายให้ Nagash#
+
+11083# วางยาจักรพรรดิ #SG_FEEL#QUE_NOIMAGE#
+.....ขอบรู้สึกขอบใจเจ้ามาก! #
+ดูเหมือน Nagash Arses จะพอใจ บอกข่าวนี้ให้ Song Zhi Du รู้ #
+
+//-----------EP13-----------------------------------
+11084# ปรับตัวเข้ากับสิ่งใหม่ #SG_FEEL#QUE_NOIMAGE#
+ไปพบ^0000FFInstructor Lugen^000000 เขาจะช่วยเจ้าในการปรับตัว #
+ไปพบเขาที่นั่น #
+
+11085# ปรับตัวเข้ากับสิ่งใหม่ #SG_FEEL#QUE_NOIMAGE#
+ไปลงทะเบียนกับเจ้าหน้าที่ที่ตึกที่อยู่ตรงกลาง #
+ไปลงทะเบียนกับเขา!#
+
+11086# ปรับตัวเข้ากับสิ่งใหม่ #SG_FEEL#QUE_NOIMAGE#
+คุณลงทะเบียนเรียบร้อยแล้วกลับไปหา Instructor Lugen#
+#
+
+11087# ซ่อมแซมที่พัก #SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณไปรวบรวมกิ่งไม้รอบๆ ค่ายพักและหาทำเชือกจาก Nepenthes Vines ที่ทางฝั่งตะวันออก #
+Diego ขอให้คุณหา ^0000FFOrdinary Branch 20, Strong Bine 20^000000#
+
+11088# ซ่อมแซมที่พัก #SG_FEEL#QUE_NOIMAGE#
+Diego ประคองเสาที่พักเอาไว้ คุณต้องช่วยเขาซ่อมแซมมัน #
+ช่วยเหลือเขา #
+
+11089# ซ่อมแซมที่พัก #SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนเสานี้จะเรียบร้อยแล้วให้ไปเสาต้นอื่น #
+เสร็จเรียบร้อยเสานึงแล้ว ซ่อมแซมเสาอื่นต่อ #
+
+11090# ซ่อมแซมที่พัก #SG_FEEL#QUE_NOIMAGE#
+ซ่อมแซมเสาทั้งหมดแล้ว!#
+ซ่อมแซมเสาเสร็จแล้ว ไปคุยกับ Diego#
+
+
+//-------------------EP13---------------------------------------------------------------
+11091# ส่งเสบียง #SG_FEEL#QUE_NOIMAGE#
+เขาขอให้คุณไปพบ ^0000FFMarian ที่อยู่ใกล้ๆ ประตูทางเข้า^000000 และรับเสบียงจากเธอ #
+ไปพบ Marian เพื่อรับเสบียงจากแผ่นดินหลัก #
+
+11092# ส่งเสบียง #SG_FEEL#QUE_NOIMAGE#
+คุณได้รับ Supply Box กลับไปหา Lugen#
+#
+
+11093# ส่งเสบียง #SG_FEEL#QUE_NOIMAGE#
+^0000FFกล่องแรกต้องส่งให้กับ Zan ซึ่งอยู่ทางตะวันตกเฉียงเหนือของค่าย^000000 เธอน่าจะอยู่ใกล้ๆ รั้ว #
+ส่งกล่องแรกให้ Zan#
+
+11094# ส่งเสบียง #SG_FEEL#QUE_NOIMAGE#
+เธอดีใจมากและฝากขอบคุณ Lugen!#
+คุณส่งให้ Zan เรียบร้อยแล้ว กลับไปหา Lugen#
+
+11095# ส่งเสบียง #SG_FEEL#QUE_NOIMAGE#
+^0000FFกล่องที่สองต้องส่งให้ Gerard ที่ออกไปสำรวจดินแดนทางตะวันตกของค่าย^000000#
+ส่งเสบียงกล่องที่สอง #
+
+11096# ส่งเสบียง #SG_FEEL#QUE_NOIMAGE#
+Gerard กำลังยุ่งอยู่กับการทำงาน #
+คุณส่งให้ Gerard เรียบร้อยแล้ว กลับไปหา Lugen#
+
+11097# ส่งเสบียง #SG_FEEL#QUE_NOIMAGE#
+^0000FFกล่องสุดท้ายส่งให้กับ Alberto ที่ออกไปเก็บข้อมูลทางดินแดนตะวันออก^000000 ที่นั่นหนาวมาก เขาจึงขอเสื้อหนาว คุณควรจะรีบไปส่งให้เขา #
+ส่งเสบียงกล่องที่สาม #
+
+11098# ส่งเสบียง #SG_FEEL#QUE_NOIMAGE#
+คุณส่งเสบียงให้ Alberto และเขายังคงมีชีวิตอยู่ #
+ส่งเสบียงให้ Alberto เรียบร้อยแล้วกลับไปหา Lugen#
+
+11099# ถึงเพื่อนของข้า #SG_FEEL#QUE_NOIMAGE#
+^0000FFOtto เป็นเจ้าหน้าที่รักษาความปลอดภัยของด่านทางตะวันตก^000000#
+แวะไปหา Otto และส่งจดหมายของ Lugen ให้เขา #
+
+11100# ถึงเพื่อนของข้า #SG_FEEL#QUE_NOIMAGE#
+Otto บอกว่าเขาสบายดีและจะไปเยี่ยม Lugen เร็วๆ นี้ #
+ส่งจดหมายเขาให้กับ Lugen#
+
+11101# ข้อความลับของ Bazet#SG_FEEL#QUE_NOIMAGE#
+ช่วย Bazet ศึกษาเกี่ยวกับภูติและยักษ์ #
+เริ่มการวิจัยด้วยการเตรียมเครื่องมือ #
+
+11102# ข้อความลับของ Bazet#SG_FEEL#QUE_NOIMAGE#
+ไปวิจัยเกี่ยวกับยักษ์ #
+จดบันทึกหลังจากทำการสำรวจ #
+
+11103# ข้อความลับของ Bazet#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+11104# เวลาพัก #SG_FEEL#QUE_NOIMAGE#
+การสำรวจเสร็จสิ้นแล้ว เขาขอให้คุณพักผ่อนรอการสำรวจครั้งต่อไป #
+พักผ่อน #
+
+11105# หนังของ Tendrilrion#SG_FEEL#QUE_NOIMAGE#
+พวกเขาต้องการหนังเพื่อมาคลุมค่ายพัก คุณหาหนังได้จาก ^0000FFTendrilrion^000000 พวกเขาต้องการ ^0000FF20^000000 ชิ้น #
+หาหนังของ Tendrilion#
+
+// นฺภฯฟ๋
+//---------------ฤฃฑธ, นซฑโฐ๘ฑ------------------------
+12000# เพื่อน:ความไม่ลงรอยกัน #SG_FEEL#QUE_NOIMAGE#
+หาเพื่อนๆ ของ Maku และคุยกับพวกเขา #
+ไปพบเพื่อนๆ ของ Maku#
+
+12001# เพื่อน:ยิ่งใกล้ยิ่งห่าง #SG_FEEL#QUE_NOIMAGE#
+กลับไปคุยกับ Maku#
+กลับไปหา Maku#
+
+12002# เพื่อน:ผู้ส่งสารของความเป็นเพื่อน #SG_FEEL#QUE_NOIMAGE#
+ช่วยเป็นคนส่งสารระหว่าง Maku และ Digotz เพื่อมิตรภาพของทั้งคู่ #
+กลับไปส่งข้อความ #
+
+12003# เพื่อน:เพื่อนอีกคน #SG_FEEL#QUE_NOIMAGE#
+ไปพบ Benkaistein ที่ Yuno#
+ค้นหา Benkaistein#
+
+12004# เพื่อน:สมุดบันทึก #SG_FEEL#QUE_NOIMAGE#
+หาบันทึกประจำวันของ Benkaistein และนำกลับไปให้เขา #
+ค้นหาบันทึกประจำวันของ Benkaistein#
+
+12005# เพื่อน:ความในใจ #SG_FEEL#QUE_NOIMAGE#
+แสดงสมุดบันทึกประจำวันให้กับ Maku และ Digotz ดู #
+แสดงสมุดบันทึกประจำวันให้กับ Maku และ Digotz ดู #
+
+12006# เพื่อน:ความลับชั่วนิรันดร์ #SG_FEEL#QUE_NOIMAGE#
+เตือน Benkaistein ว่า Digotz ถูกหักหลัง #
+ไปหา Benkaistein#
+
+12007# จัดหาอาวุธ-1#SG_FEEL#QUE_NOIMAGE#
+คุยกับ Kazien#
+หา Kazien#
+
+12008# จัดหาอาวุธ-2#SG_FEEL#QUE_NOIMAGE#
+คุณต้องไปคุยกับคนที่ชื่อ Garins ซึ่งทำงานอยู่ในห้องทดลอง Einbroch คุณต้องไม่ให้ใครรู้ว่าคุณกำลังจะทำอะไร ถ้าล้มเหลวต้องกลับไปหา Kazien#
+หา Garins#
+
+12009# จัดหาอาวุธ-Failed#SG_FEEL#QUE_NOIMAGE#
+ดูเหมือนคุณจะล้มเหลว ต้องหาทางทำให้สำเร็จให้ได้ #
+ต้องพยายามต่อไป #
+
+12010# จัดหาอาวุธ-3#SG_FEEL#QUE_NOIMAGE#
+ไปพบ Lyozien เพื่อรับภารกิจต่อไปบนเรือเหาะ #
+ไปพบ Lyozien #
+
+12011# จัดหาอาวุธ-4#SG_FEEL#QUE_NOIMAGE#
+ทำภารกิจให้สำเร็จโดยไปคุยกับ Mr. Ahman ที่ท่าเรือเหาะ Izlude และกับไปหา Lyozien#
+ไปพบ Mr. Ahman#
+
+12012# จัดหาอาวุธ-5#SG_FEEL#QUE_NOIMAGE#
+คุณได้รับมอบหมายภารกิจพิเศษนำของไปส่งให้ Kazien คุณต้องปกป้องมันไว้ให้ได้ #
+ป้องกันสินค้า #
+
+12013# จัดหาอาวุธ-6#SG_FEEL#QUE_NOIMAGE#
+ตรวจสอบดูว่าสินค้านี่ใช่ที่ Lyozien พูดถึงหรือไม่ #
+ตรวจสอบสินค้า #

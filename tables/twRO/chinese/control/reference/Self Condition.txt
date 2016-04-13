@@ -1,0 +1,79 @@
+# 自身條件 Self Condition
+# 適用於: attackComboSlot, attackSkillSlot, buyAuto, doCommand, equipAuto, monsterSkill, partySkill, useSelf_item, useSelf_skill
+# 所有數字條件均可使用 大於 [>] 小於 [<] 等於 [= 或 直接輸入數字]
+#	hp
+#   	HP 範圍 實際血量 或 百分比 例如:hp < 50% 或 hp < 5000
+#	sp
+#   	SP 範圍 實際血量 或 百分比 例如:sp < 50% 或 sp < 5000
+#	homunculus_hp
+#   	人工生命體 HP 範圍
+#	homunculus_sp
+#   	人工生命體 SP 範圍
+#	homunculus_dead
+#   	人工生命體死亡時 〔1 = 死亡時觸發〕
+#	mercenary_hp
+#		傭兵 HP 範圍
+# 	mercenary_sp
+#		傭兵 SP 範圍
+# 	mercenary_whenStatusActive
+#		當傭兵「在」這個狀態時
+# 	mercenary_whenStatusInactive
+#	當傭兵「不在」這個狀態時
+#	onAction
+#   	當 AI 為 ... 時 〔請參考指令 ai print〕
+#	whenStatusActive
+#   	當人物「在」這個狀態時
+#	whenStatusInactive
+#   	當人物「不在」這個狀態時
+#   whenFollowing
+#   	當跟隨時 〔主人名稱〕
+#	spirit
+#   	氣彈數範圍 〔適用於所有可疊狀態球 包括 槍手錢幣, 修羅系氣彈, 影朧符咒〕
+#	amuletType
+#		影朧符咒屬性 〔水/地/火/風〕〔非影朧請留空〕
+#	aggressives
+#   	被魔物圍攻的隻數
+#	partyAggressives
+#		隊友被魔物圍攻的隻數
+#   monsters
+#   	限定針對哪些魔物使用
+#   notMonsters
+#   	限定不對哪些魔物使用
+#	monstersCount
+#		視野來魔物數量 〔不包含notMonsters設置之魔物〕
+#	defendMonsters
+#		限定被哪些怪物攻擊時使用
+#   stopWhenHit
+#   	被攻擊時是否停止使用
+#	whenGround
+#		當人物站在這個範圍技能時
+#	whenNotGround
+#		當人物不是站在這個範圍技能時
+#	inLockOnly
+#   	是否只在鎖定地圖使用
+#	notWhileSitting
+#   	是否不在坐下時使用
+#	notInTown
+#   	是否不在城鎮中使用
+#	timeout
+#   	每次使用的間隔時間（秒）
+#	 	假設此項設定30秒，那麼從施放開始30秒內都不會再施放
+#   inMap
+#   	僅在此地圖上使用 英文地圖名稱
+#	inCart
+#		當手推車內有某項物品，大於或小於某數量時 〔inCart 枯樹枝 < 10〕
+#	inInventory
+#   	當身上有某項物品，大於或小於某數量時 〔inInventory 枯樹枝 < 10〕
+#	zeny
+#		身上zeny量
+#	whenEquipped
+#		當人物裝備了這裝備時
+#	whenNotEquipped
+#		當人物沒有裝備了這裝備時
+#	devotees
+#		當犧牲技能連結達到這數字時
+#	disabled
+#   	是否停用本區塊 〔1 = 停用〕
+#	manualAI
+#   	是否只在 AI 為 manual 手動模式時使用
+# }

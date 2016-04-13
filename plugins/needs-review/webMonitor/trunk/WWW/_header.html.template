@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>{characterName} - {characterLevel}/{characterJobLevel} - {brand}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="icon" type="image/png" href="img/favicon.png" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/webMonitor.css">
+	<style type="text/css">
+		/*<![CDATA[*/
+			{consoleColors}
+		/*]]>*/
+	</style>
+	<script type="application/javascript" src="js/jquery.min.js"></script>
+	<script type="application/javascript" src="js/bootstrap.min.js"></script>
+	<script type="application/javascript" src="js/webMonitor.js"></script>
+	<script type="application/javascript">
+		//<![CDATA[
+			window.CONFIG = {
+				socketHost: window.location.host.replace(/:.*/, ''),
+				socketPort: {socketPort},
+			};
+		//]]>
+	</script>
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+<div class="navbar">
+	<div class="navbar-inner">
+		<a class="brand">{brand}</a>
+
+		<ul class="nav">
+			<li class="active"><a>{characterName}</a></li>
+			<li><a>Base Level: <span class="value_char_lv">{characterLevel}</span></a></li>
+			<li><a>Job Level: <span class="value_char_lv_job">{characterJobLevel}</span></a></li>
+			<li><a>userAccount: {userAccount}</a></li>
+			<li><a>Time: {time}</a></li>
+		</ul>
+
+		<a href="/handler?csrf={csrf}&command=quit" class="btn btn-danger btn-mini pull-right"><i class="icon-off icon-white"></i> OFF</a>
+	</div>
+</div>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span2">
+			<div class="well sidebar-nav">
+				<ul class="nav nav-list">
+					{menu}
+				</ul>
+			</div>
+		</div>

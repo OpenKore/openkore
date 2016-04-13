@@ -1,0 +1,33 @@
+#############################################################################
+# Response base on image table file
+# 
+# Syntax:
+# <image name> <response>
+# 
+# <image name>	if you got following message 
+#              	[responseOnNPCImage] Image name >> "????"
+#		then the ???? is a <image name>.
+#
+# <response>	Any text that contained in NPC response choice(s) or number.
+#
+
+# Some server use image name as a response.
+# imageNameEqual < num | text | resp | or leave blank for disable >
+imageNameEqual
+
+cbot_1 poring
+cbot_2 lunatic
+cbot_3 fabre
+cbot_4 drops
+
+29028246 1
+29029000 2
+29029754 3
+29030508 4
+29031262 5
+29032016 6
+
+one 1
+two 2
+three 3
+four 4

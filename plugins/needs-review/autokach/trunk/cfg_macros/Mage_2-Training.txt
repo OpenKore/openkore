@@ -1,0 +1,621 @@
+#Mage_2-Training.txt
+#manticora
+#Тренировка магов. У меня апнулось с 12/1 до 17/10,
+#плюс дают халявную Wand [2]
+#При наличии стартового капитала в 1400 зенег продолжаем квест,
+#получаем в награду: 8000 зенег, Silk Robe, а также 19/12.
+#
+
+macro MageTrainingStart {
+[
+	log Начинаем тренировку Магов
+	do conf include off Mage_1
+	do conf lockMap geffen
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	do conf QuestPart MageTraining0
+]
+}
+
+
+automacro MageTraining0 {
+	class Mage
+	location geffen
+	eval $::config{QuestPart} eq "MageTraining0"
+	run-once 1
+	call MageTraining0M
+}
+macro MageTraining0M {
+	log Нужная для начала квеста непись где-то рядом
+	do conf lockMap none
+	pause @rand(2,4)
+	do move geffen @rand(68,75) @rand(176,184)
+	log Говорим и получаем джоб
+	pause @rand(2,4)
+	do talknpc 67 180 c c r0 c c c c c c
+	do conf QuestPart MageTraining1
+	# You are now job level 2
+	# You gained a job level!
+	# Exp gained: 360/29 (73.47%/67.44%)	
+}
+
+automacro MageTraining1 {
+	class Mage
+	location geffen
+	eval $::config{QuestPart} eq "MageTraining1"
+	run-once 1
+	call MageTraining1M
+}
+macro MageTraining1M {
+	log Ведем разговор про элементы подробно, получаем кучу лвл и джобов
+	pause @rand(2,4)
+	do talknpc 67 180 c c c r0 c c c c c c c r1 c c c c c c r2 c c c c c c r3 c c c c c c c r4 c c c c c r5 c r1 
+	do conf QuestPart MageTraining2
+	# You are now level 13
+	# You gained a level!
+	# You are now job level 3
+	# You gained a job level!
+	# Exp gained: 0/13 (0.00%/22.41%)
+	# You are now job level 4
+	# You gained a job level!
+	# Exp gained: 150/12 (25.64%/15.79%)
+	# You are now job level 5
+	# You gained a job level!
+	# Exp gained: 150/0 (25.64%/0.00%)
+	# Auto-adding stat int
+	# You are now job level 6
+	# You gained a job level!
+	# Exp gained: 150/0 (25.64%/0.00%)
+	# You are now level 14
+	# You gained a level!
+	# Exp gained: 0/70 (0.00%/38.89%)
+}
+
+automacro MageTraining2 {
+	class Mage
+	location geffen
+	eval $::config{QuestPart} eq "MageTraining2"
+	run-once 1
+	call MageTraining2M
+}
+macro MageTraining2M {
+	log Разговор про скилы, получаем задание набить на севере 10 личинок с пупы
+	pause @rand(2,4)
+	do talknpc 67 180 c c c c c c c c c c c c c
+	do conf QuestPart MageTraining3
+	# You are now job level 7
+	# You gained a job level!
+	# Exp gained: 400/20 (57.14%/9.09%)
+}
+
+automacro MageTraining3 {
+	class Mage
+	location geffen
+	eval $::config{QuestPart} eq "MageTraining3"
+	run-once 1
+	call MageTraining3M
+}
+macro MageTraining3M {
+	log Идем бить пуп. Бьем только пуп и порингов, ибо они лутеры
+	do mconf all 1
+	do mconf Pupa 1 0 0
+	do mconf Poring 1 0 0
+	do mconf Chonchon 0 0 0
+	do mconf Fabre 0 0 0
+	do mconf Green Plant 0 0 0
+	do mconf Roda Frog 0 0 0
+	do mconf Creamy 0 0 0
+	log Собираем всё, что попадется, а также личинки (надо 10 штук)
+	do pconf all 1
+	do pconf Chrysalis 2
+	do iconf Chrysalis 10 0 0
+	log Идем тусоваться к северу от геффена
+	do conf lockMap gef_fild04
+	do conf attackAuto 2
+	do conf route_randomWalk 1
+}
+
+automacro MageTrainingCreamy {
+	class Mage
+	location gef_fild04
+	eval $::config{QuestPart} eq "MageTraining3"
+	console /Monster Pupa.*is casting Metamorphosis.*/
+	call MageTrainingCreamyM
+}
+macro MageTrainingCreamyM {
+	log Стоп! А не наша ли пупа в Крими превращается?
+	do as
+	pause 3
+}
+
+automacro MageTraining3a {
+	class Mage
+	location geffen, gef_fild04
+	eval $::config{QuestPart} eq "MageTraining3"
+	inventory "Chrysalis" >= 10
+	run-once 1
+	call MageTraining3aM
+}
+macro MageTraining3aM {
+[
+	log Мы насобирали 10 личинок! Идем в геффен.
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do conf lockMap geffen
+	do conf QuestPart MageTraining4
+	do move geffen
+]
+}
+
+automacro MageTraining4 {
+	class Mage
+	location geffen
+	eval $::config{QuestPart} eq "MageTraining4"
+	inventory "Chrysalis" >= 10
+	run-once 1
+	call MageTraining4M
+}
+macro MageTraining4M {
+	log Мы насобирали 10 личинок! Надо показать их неписи.
+	do conf lockMap none
+	pause @rand(2,4)
+	do move geffen @rand(68,75) @rand(176,184)
+	log Показываем личинки, получаем лвл и джоб
+	pause @rand(2,4)
+	do talknpc 67 180 c c 
+	do iconf Chrysalis 0 0 1
+	do pconf Chrysalis 1
+	do conf QuestPart MageTraining5
+	# You are now level 15
+	# You gained a level!
+	# You are now job level 8
+	# You gained a job level!
+	# Exp gained: 0/0 (0.00%/0.00%)
+}
+
+
+automacro MageTraining5 {
+	class Mage
+	location geffen
+	eval $::config{QuestPart} eq "MageTraining5"
+	run-once 1
+	call MageTraining5M
+}
+macro MageTraining5M {
+	log Говорим о серьезных вещах. лвл и джоб. Wand [2]
+	pause @rand(2,4)
+	do talknpc 67 180 c r0 c c r1 c c r2 c c r3 c c c r4 c c r5 c c c c c r6 c c r7 c
+	do conf autoSwitch_default_rightHand Wand [2]
+	do eq Wand [2]
+	log Квест: Тренировка магов завершен (халявная часть).
+	log Результат - куча левелов и джобов, Wand [2]
+	log Попробуем продолжить квест, нам для этого нужны зеньги. Пробуем.
+	do conf QuestPart MageTraining6a
+	#do conf @config(QuestDone) MageTraining6
+	# Exp gained: 300/100 (36.14%/36.76%)
+	# You are now level 16
+	# You gained a level!
+	# You are now job level 9
+	# You gained a job level!
+	# Auto-adding stat dex
+	# Exp gained: 0/0 (0.00%/0.00%)
+	# Exp gained: 300/100 (30.93%/29.76%)
+	# Exp gained: 300/100 (30.93%/29.76%)
+	# You are now level 17
+	# You gained a level!
+	# You are now job level 10
+	# You gained a job level!
+	# Exp gained: 0/0 (0.00%/0.00%)
+}
+#Пытаемся раздобыть зенег.
+#1. Смотрим карманы на наличие зенег.
+#2. Продаем лут из рюкзака.
+#3. Если ничего не помогает, запоминаем на каком шаге остановились и отправляемся кач,
+#	когда-нибудь потом мы вспомним, что у нас остался непройденный до конца квест...
+
+#Зеньги в кармане есть? Да - продолжаем квест. Нет - продаем лут.
+automacro MageTraining6a {
+	class Mage
+	location geffen
+	eval $::config{QuestPart} eq "MageTraining6a"
+	run-once 1
+	call MageTraining6aM
+}
+macro MageTraining6aM {
+	if ($.zeny < 1400) goto nozeny
+		log нам хватает зенег (зенег: $.zeny), собираем вещи для квеста
+#		do conf lockMap morocc
+#		do conf route_randomWalk 0
+#		do conf attackAuto 0
+#		do conf QuestPart ThiefTraining8
+	goto end
+	:nozeny
+		log Нам не хватает денег, продадим лут
+		do conf storageAuto 1
+		do conf storageAuto_npc geffen 120 62
+		#Торговец городскими мечами
+		do conf sellAuto 1
+		do conf sellAuto_npc geffen_in 22 171
+		do conf sellAuto_standpoint none
+		do conf sellAuto_distance 5
+		do autosell
+		do conf QuestPart MageTraining6b
+	:end
+}
+
+#Мы продали лут. Появилось ли достаточно зенег?
+automacro MageTraining6b {
+	class Mage
+	location geffen, geffen_in
+	eval $::config{QuestPart} eq "MageTraining6b"
+	run-once 1
+	call MageTraining6bM
+}
+macro MageTraining6bM {
+	if ($.zeny < 1400) goto nozeny
+		log Мы продали лут и нам хватило этого ($.zeny) для продолжения квеста
+		do conf QuestPart MageTraining6
+	goto end
+	:nozeny
+		log мы продали лут, но денег всеравно не хватает. 
+		log Прерываем прохождение квеста. 
+		log Квест продолжится автоматом, когда: мы в геффене и у нас 1400 зенег.
+		log Отправляемся на кач.
+		$s = @config(QuestDone)
+		do conf QuestDone $s MageTraining6
+		do conf QuestPart Kach2
+	:end
+}
+
+
+
+
+#########ЛЕГКАЯ ЧАСТЬ ЗАКОНЧИЛАСЬ##############
+###СЛЕДЫ БОЯ. МОРОКК###########################
+
+automacro MageTrainingContinue {
+	class Mage
+	zeny > 1400
+	location geffen, geffen_in
+	eval ($::config{QuestPart} eq "Kach2") and ($::config{QuestDone} =~ m/MageTraining6/)
+	run-once 1
+	call MageTrainingContinueM
+}
+macro MageTrainingContinueM {
+	[
+	log Когда-то давно вмы прервали прохождение квеста "Тренировка первых проф: Маги"
+	log потому что у нас не хватало на это зенег. Теперь зеньги у нас есть и мы продолжаем
+	log прохождение квеста.
+	log ...
+	log Требования: Пройденная первая часть, не менее 1400 зенег в кармане.
+	do conf lockMap none
+	do conf route_randomWalk 0
+	do conf attackAuto 0
+	]
+	#Стираем пометку, что мы прошли пол-квеста.
+	$s = @config(QuestDone)
+	do eval $::Macro::Data::varStack{s} =~ s/MageTraining6//
+	do conf QuestDone $s
+	do conf QuestPart MageTraining6
+}
+
+automacro MageTraining6 {
+	class Mage
+	zeny > 1400
+	location geffen, geffen_in
+	eval $::config{QuestPart} eq "MageTraining6"
+	run-once 1
+	call MageTraining6M
+}
+macro MageTraining6M {
+	log Идем покупать синие гемы (поменяем на 1 красный гем)
+	do conf lockMap none
+	pause @rand(2,4)
+	do move geffen_in 70 161
+	pause @rand(2,4)
+	do talknpc 77 173 b b0,2 e
+	do iconf Blue Gemstone 2 0 0
+	pause @rand(2,4)
+	do talknpc 77 167 b b6,2 e
+	do iconf Green Potion 2 0 0
+	do conf QuestPart MageTraining7
+}
+
+#Косим траву справа от геффена
+automacro MageTraining7 {
+	class Mage
+	location geffen, geffen_in
+	eval $::config{QuestPart} eq "MageTraining7"
+	run-once 1
+	call MageTraining7M
+}
+macro MageTraining7M {
+	log Идем бить зеленую траву, надо будет для квеста
+	do conf route_avoidWalls 0
+	do conf attackAuto 2
+	do conf route_randomWalk 0
+	do mconf all 0 0 0 
+	do mconf Green Plant 1 0 0
+	do iconf Green Herb 20 0 0
+	do pconf Green Herb 1
+	do conf lockMap gef_fild00
+	do conf lockMap_x 55
+	do conf lockMap_y 214
+	do conf lockMap_randX 7
+	do conf lockMap_randY 7
+}
+
+#Ходим наверх и вниз, меняем полянки с травой каждые 3 минуты.
+automacro MageTraining7a {
+	location gef_fild00
+	class Mage
+	eval $::config{QuestPart} eq "MageTraining7"
+	timeout 180
+	call MageTraining7aM
+}
+macro MageTraining7aM {
+	if (@config(lockMap_y) == 214) goto vniz
+		do conf lockMap_y 214
+	goto end
+	:vniz
+		do conf lockMap_y 187
+	:end
+}
+
+#Хватит косить траву, го в Геффен.
+automacro MageTraining7b {
+	class Mage
+	location gef_fild00
+	inventory "Green Herb" >= 20
+	eval $::config{QuestPart} eq "MageTraining7"
+	run-once 1
+	exclusive 1
+	call MageTraining7bM
+}
+macro MageTraining7bM {
+	log Набили зеленой травы, идем в пайон менять гемы.
+	do conf route_avoidWalls 1
+	do conf lockMap geffen
+	do conf attackAuto 0
+	do conf route_randomWalk 0
+	do mconf all 1 0 0 
+	do mconf Green Plant 0 0 0
+	do conf lockMap_x none
+	do conf lockMap_y none
+	do conf lockMap_randX none
+	do conf lockMap_randY none
+	do conf QuestPart MageTraining9
+}
+
+#Трава накошена, гемы куплены. Надо поменять гемы.
+automacro MageTraining9 {
+	class Mage
+	location geffen
+	eval $::config{QuestPart} eq "MageTraining9"
+	run-once 1
+	call MageTraining9M
+}
+macro MageTraining9M {
+	log Пусть нас варпнут в Морокк!
+	do conf lockMap none
+	pause @rand(2,4)
+	do move geffen @rand(68,75) @rand(176,184)
+	log Мы хотим лететь в Морокк, продолжать квест!
+	pause @rand(2,4)
+	do talknpc 67 180 c c c r0 c
+}
+
+
+automacro MageTraining9m {
+	class Mage
+	location morocc
+	eval $::config{QuestPart} eq "MageTraining9"
+	run-once 1
+	call MageTraining9mM
+}
+macro MageTraining9mM {
+	log Мы в Морокке, но нам надо сходить в Пайон, обменять два наших синих камня на красный!
+	do conf lockMap none
+	do conf storageAuto 0
+	pause @rand(2,4)
+	call savetown
+	call conftown
+	do conf sellAuto 0
+	do conf storageAuto 0
+	log Сохранились на всякий случай в Морокке, а теперь идем в Пай.
+	pause @rand(2,4)
+	do conf lockMap payon
+}
+
+
+automacro MageTraining9p {
+	class Mage
+	location payon
+	eval $::config{QuestPart} eq "MageTraining9"
+	run-once 1
+	call MageTraining9pM
+}
+macro MageTraining9pM {
+	log Мы в Пайоне, меняемся камешками
+	pause @rand(2,4)
+	do move @rand(177,180) @rand(237,243)
+	pause @rand(2,4)
+	do talknpc 173 238 c r0 c r1 c d1
+	do iconf Blue Gemstone 0 1 0
+	do iconf Red Gemstone 1 0 0
+	do conf lockMap moc_ruins
+	do conf QuestPart MageTraining10
+	log Возвращаемся с нужным лутом в Морокк для продолжения квеста!
+}
+
+
+#######################
+#Ингридиенты собраны, мона приступать к прохождению "Следов боя".
+automacro MageTraining10 {
+	class Mage
+	location moc_ruins
+	eval $::config{QuestPart} eq "MageTraining10"
+	run-once 1
+	call MageTraining10M
+}
+macro MageTraining10M {
+	if (@invamount(Red Gemstone) < 1) goto notok
+	if (@invamount(Green Herb) < 20) goto notok
+	if (@invamount(Green Potion) < 2) goto notok
+		log Все ингридиенты в сборе, можно начинать "Следы боя".
+		do conf itemsGatherAuto 0
+		do conf sellAuto 0
+		do conf storageAuto 0
+		do move moc_ruins @rand(60,69) @rand(159,161)
+		pause @rand(2,4)
+		do talknpc 66 164 c r0 c c c c
+		pause @rand(2,4)
+		do conf QuestPart SledyBoja11_1
+		do conf lockMap moc_fild12
+		goto end
+	:notok
+		log Странно, после всей беготни чего-то не хватает.
+	:end
+}
+#Квест Следы боя находится в отдельном файле ибо одинаков с воровским квестом
+#Quest_1-SledyBoja.txt
+#
+#
+#
+#
+#
+#Квест "Следы боя" пройден, отправляемся к Ирхану и сдаем квест.
+automacro MageTraining29 {
+	class Mage
+	location moc_ruins
+	eval $::config{QuestPart} eq "SledyBoja29"
+	run-once 1
+	call MageTraining29M
+}
+macro MageTraining29M {
+	do conf lockMap none
+	pause @rand(2,4)
+	do move moc_ruins @rand(60,69) @rand(159,161)
+	pause @rand(2,4)
+	do talknpc 66 164 c r2 c c c c c c c 
+	log Нам в Морокке делать больше нефиг, 
+	log идем в Геффен, к последнему нпц
+	do conf lockMap geffen
+	do conf QuestPart MageTraining30
+
+# Тренер воров#T: [Ирхан]
+# Тренер воров#T: Задание выполнено?
+# Тренер воров#T: Я знаю, это нелегкая миссия.
+# Тренер воров#T: Type 'talk cont' to continue talking
+# talk cont
+# ----------Responses-----------
+# #  Response
+# 0  Я в процессе.
+# 1  Еще нет.
+# 2  Да, сделано.
+# 3  Cancel Chat
+# -------------------------------
+# Тренер воров#T: Type 'talk resp #' to choose a response.
+# talk resp 2
+# Тренер воров#T: [Ирхан]
+# Тренер воров#T: О, сделано! Я готов выслушать вас.
+# Тренер воров#T: Наконец-то дождался этого момента.
+# Тренер воров#T: Type 'talk cont' to continue talking
+# talk cont
+# Тренер воров#T: Вы рассказываете ему все, что
+# Тренер воров#T: удалось узнать, и показываете лоскут ткани, найденный в процессе выполнения задания.
+# Тренер воров#T: Type 'talk cont' to continue talking
+# talk cont
+# Тренер воров#T: [Ирхан]
+# Тренер воров#T: Ага, вижу.
+# Тренер воров#T: Дайте мне лоскут.
+# Тренер воров#T: Type 'talk cont' to continue talking
+# talk cont
+# Тренер воров#T: Вы даете ему лоскут ткани.
+# Тренер воров#T: Type 'talk cont' to continue talking
+# talk cont
+# Тренер воров#T: [Ирхан]
+# Тренер воров#T: Это не?..
+# Тренер воров#T: Да... Да...
+# Тренер воров#T: Вы проделали большую работу.
+# Тренер воров#T: Принесенная вами информация очень важна для меня.
+# Тренер воров#T: Type 'talk cont' to continue talking
+# talk cont
+# Тренер воров#T: [Ирхан]
+# Тренер воров#T: Посмотрите, узор на ткани - это
+# Тренер воров#T: один из специальных ассасинских
+# Тренер воров#T: кодов. Этот узор похож на тот,
+# Тренер воров#T: который используется посвященными высших ступеней.
+# Тренер воров#T: Type 'talk cont' to continue talking
+# talk cont
+# Тренер воров#T: [Ирхан]
+# Тренер воров#T: Учитывая это, я могу восстановить
+# Тренер воров#T: последовательность событий той
+# Тренер воров#T: ночи. Благодарю вас.
+# Тренер воров#T: Type 'talk cont' to continue talking
+# talk cont
+# Тренер воров#T: [Ирхан]
+# Тренер воров#T: Я очень благодарен вам за помощь.
+# Тренер воров#T: Я пошлю Мане сообщение о том, что
+# Тренер воров#T: вы успешно справились с заданием. Берегите себя.
+# You gained 5,000 zeny.
+# You are now level 18
+# You gained a level!
+# You are now job level 11
+# You gained a job level!
+# Auto-adding stat dex
+# Exp gained: 588/323 (46.67%/53.48%)
+# Тренер воров#T: Done talking
+}
+
+automacro MageTraining30 {
+	class Mage
+	location geffen
+	eval $::config{QuestPart} eq "MageTraining30"
+	run-once 1
+	call MageTraining30M
+}
+macro MageTraining30M {
+	log Нужная для окончания квеста непись где-то рядом
+	do conf lockMap none
+	pause @rand(2,4)
+	do move geffen @rand(68,75) @rand(176,184)
+	log Говорим и получаем шмотку
+	pause @rand(2,4)
+	do talknpc 67 180 c c c
+	pause @rand(2,4)
+	#Силка распознанная?
+	do eq Silk Robe 
+	do conf itemsGatherAuto 2
+	$s = @config(QuestDone) MageTraining
+	do conf QuestDone $s
+	do conf QuestPart none
+	# Мана#M: [Мана]
+	# Мана#M: Да, вы хорошо справились со своим заданием.
+	# Мана#M: Type 'talk cont' to continue talking
+	# talk cont
+	# Мана#M: [Мана]
+	# Мана#M: Это, кажется, проблема двух
+	# Мана#M: организаций с их вечными
+	# Мана#M: секретами... Я думаю, они поссорились...
+	# Мана#M: Type 'talk cont' to continue talking
+	# talk cont
+	# Мана#M: [Мана]
+	# Мана#M: Но, кажется, они связаны сильнее,
+	# Мана#M: чем мне казалось... Увы, многое
+	# Мана#M: вне нашей компетенции...
+	# Мана#M: Спасибо вам за помощь.
+	# Мана#M: Type 'talk cont' to continue talking
+	# talk cont
+	# Мана#M: [Мана]
+	# Мана#M: Я вознагражу вас за вашу помощь.
+	# Item added to inventory: Silk Robe (19) x 1 - Armour
+	# You gained 3,000 zeny.
+	# You are now level 19
+	# You gained a level!
+	# You are now job level 12
+	# You gained a job level!
+	# Exp gained: 140/84 (9.86%/12.02%)
+	# Мана#M: Done talking
+}
+

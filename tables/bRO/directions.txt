@@ -1,0 +1,9 @@
+﻿0 Norte
+1 Noroeste
+2 Oeste
+3 Sudoeste
+4 Sul
+5 Sudeste
+6 Leste
+7 Nordeste
+8 Norte

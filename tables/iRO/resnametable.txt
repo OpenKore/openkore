@@ -1,0 +1,24 @@
+# Please don't modify this file. Make any changes in resnametable-custom.txt instead.
+
+# Include file from official client.
+!include official/resnametable.txt
+
+# OpenKore modifications to the official client file go here.
+
+# After the Izlude Academy went in, the Izlude map changed.
+izlude.gat#izlude_a.gat#
+izlude_a.gat#izlude_a.gat#
+izlude_b.gat#izlude_a.gat#
+izlude_c.gat#izlude_a.gat#
+izlude_d.gat#izlude_a.gat#
+pvp_y_1-2.gat#izlude_a.gat#
+pvp_y_2-2.gat#izlude_a.gat#
+pvp_y_3-2.gat#izlude_a.gat#
+pvp_y_4-2.gat#izlude_a.gat#
+pvp_y_5-2.gat#izlude_a.gat#
+pvp_y_6-2.gat#izlude_a.gat#
+pvp_y_7-2.gat#izlude_a.gat#
+pvp_y_8-2.gat#izlude_a.gat#
+
+# Include untracked local modifications.
+!include_create_if_missing resnametable-custom.txt

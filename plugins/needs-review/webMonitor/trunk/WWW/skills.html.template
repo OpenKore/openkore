@@ -1,0 +1,34 @@
+{{_header.html}}
+
+        <div class="span9">
+          <div class="row-fluid">
+            <div class="span9">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th></th>
+						<th><div>Level</div></th>
+						<th><div>Name</div></th>
+						<th><div>SP</div></th>
+						<th><div>Use</div></th>
+					</tr>
+				</thead>
+				<tbody id="listarItens"><!-- {startLoop} -->
+					<tr>
+						<td>{skillsIco}<div class="iconSkill left"><div class="iconUp right">{skillsIcoUp}</div></div></td>
+						<td><div align="center">{skillsLevel}</div></td>
+						<td class="left">{skillsName}</td>
+						{skillsJS}
+					</tr><!-- {endLoop} -->
+					<tr></tr>
+					<tr>{T Skill point}: <span class="badge badge-success"><span class="value_char_points_skill">{characterSkillPoints}</span></span></tr>
+				</tbody>
+			</table>
+
+            </div>
+
+          </div>
+		  
+        </div>
+
+{{_footer.html}}

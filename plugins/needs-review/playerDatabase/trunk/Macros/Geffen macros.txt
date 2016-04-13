@@ -1,0 +1,31 @@
+# Route from Geffen
+# Journey time: approximately 2 minutes and 10 seconds
+
+automacro loop1 {
+hp > 1
+run-once 1
+call move_auto
+}
+
+macro move_auto {
+log Passo 1
+do move geffen 120 37
+log Passo 2
+do move geffen @rand(133,140) 47
+log Passo 3
+do move geffen 119 57
+log Passo 4
+do move geffen @rand(133,140) @rand(117,121)
+log Passo 5
+do move geffen @rand(208,195) @rand(125,117)
+log Passo 6
+do move geffen @rand(110,120) @rand(200,190)
+log Passo 7
+do move geffen @rand(35,45) @rand(121,118)
+log Passo 8
+do move geffen 119 57
+log Passo 9
+do move geffen @rand(100,106) 47
+log Restarting
+call move_auto
+}

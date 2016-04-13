@@ -1,0 +1,151 @@
+#############################################################################################
+# A Codificação do texto está correta?
+# Codificação:  ANSI -> UTF8 Without boom
+# Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
+# Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+#############################################################################################
+# Você não precisa necessáriamente modificar essas variaveis
+# Se voce realmente quer bagunçar completamente seu bot, continue em frente ;)
+#
+# O valor de cada variavel tem referencial como "x".
+
+# Tempo para se conectar ao servidor
+master 12
+gamelogin 12
+charlogin 12
+maplogin 12
+play 40
+# Quando desconectado, esperar x segundos antes de reconectar novamente
+reconnect 30
+
+# Espera x segundos por uma resposta do poseidon antes de desconectar-se
+# Ignore esta linha se você não usa Poseidon Server
+poseidon_wait_reply 15
+
+# Ativar AI antes de x segundos antes do mapa carregado
+ai 2
+
+ai_move_retry 0.25
+ai_move_giveup 1.5
+
+# Envia o pacote "ataque" a cada x segundos, se o pacote já não foi enviado
+ai_attack 1
+ai_homunculus_attack 1
+
+# Verifica todos os monstros para atacar a cada x segundos
+ai_attack_auto 0.5
+
+# Desiste de atacar um monstro se ele não pode ser atacado dentro de x segundos
+ai_attack_giveup 12
+
+# Se você acabou de matar um monstro, e não tem nenhum monstro agressivo,
+# e voce não esta pegando nenhum item, esperar x segundos antes de fazer
+# qualquer coisa.
+ai_attack_waitAfterKill 0.7
+ai_attack_unstuck 2.75
+ai_attack_unfail 5
+
+# Pausar por um número de segundos específico depois de pegar alguma coisa,
+# isso aumenta o intervalo entre pegar vários itens e entre
+# pegar o último item e continuar as ações.
+ai_items_take_delay 1.4
+
+# Quando seu monstro morrer, começar a procurar por loot depois de x segundos
+ai_items_take_start 0.4
+
+# Parar de procurar por loot por x segundos depois de ter começado a procurar
+ai_items_take_end 1.2
+
+# Quando parado próximo a um item, enviar o pacote "pegar" a cada x segundos até
+# o item ser pego.
+ai_take .4
+
+# Desistir se for incapaz de pegar o item depois de x segundos
+ai_take_giveup 3
+ai_items_gather_giveup 3
+
+# A cada x segundos, verificar itens a serem coletados
+ai_items_gather_auto .3
+
+# Apenas coletar itens que estão mais de x segundos na tela
+ai_items_gather_start .3
+
+ai_follow_lost_end 10
+ai_getInfo 1
+ai_thanks_set 8
+ai_dealAuto 3
+ai_dealAutoCancel 5
+ai_partyAutoDeny 3
+ai_guildAutoDeny 3
+ai_dead_respawn 4
+ai_wipe_old 200
+ai_wipe_check 30
+
+# A cada x segundos, checar a fome do pet afim de alimentá-lo
+ai_petFeed 60
+
+# Enviar o pacote "sentar/levantar" (sit/stand) sempre a cada x segundos
+ai_sit 1
+# Sentar depois de ficar ocioso por x segundos
+ai_sit_idle 10
+# Levantar depois de x segundos, depois de ter digitado o comando "stand"
+ai_stand_wait 0
+# Sentar depois de x segundos, depois de ter digitado o comando "sit"
+ai_sit_wait 0
+# Se tiver jogadores que não são do grupo próximo e você está em pé devido ao
+# hp/sp
+
+
+ai_skill_use 0.75
+ai_skill_use_giveup 1
+ai_item_use_auto 0.5
+ai_item_equip_auto 0.75
+ai_equipAuto_skilluse_giveup 5
+ai_equip_giveup 2
+
+ai_teleport 1
+ai_teleport_away 3
+ai_teleport_idle 4
+ai_teleport_portal 2
+ai_teleport_hp 3
+ai_teleport_safe_force 120
+ai_teleport_search 3
+
+ai_teleport_retry 0.5
+ai_teleport_delay 0.5
+
+# Você provavelmente jamais precisará mudar os tempos seguintes
+ai_route_calcRoute 1ai_route_calcRoute 1
+ai_route_npcTalk 10
+
+ai_buyAuto 5
+ai_buyAuto_giveup 15
+ai_buyAuto_wait 2
+ai_buyAuto_wait_buy 5
+
+ai_sellAuto 2
+ai_sellAuto_giveup 15
+ai_storageAuto 2
+ai_storageAuto_giveup 15
+# atraso entre o envio dos pacotes "adicionar/pegar item do carrinho" (cart item add/get)
+ai_cartAuto 0.15
+
+# atraso entre entre a verificação da necessidade de usar qualquer função do cartAuto
+ai_cartAutoCheck 3
+ai_avoidcheck 0.5
+ai_shop 4
+ai_shop_useskill_delay 5
+
+# atraso entre repairAuto
+ai_repair 4
+
+# atraso antes do início da sequência de fuga
+ai_route_escape 8
+
+# Não mude os tempos abaixo!!
+ai_sync 12
+
+injectSync 5
+injectKeepAlive 12
+welcomeText 4
+patchserver 120

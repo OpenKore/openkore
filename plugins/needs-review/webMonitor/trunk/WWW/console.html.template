@@ -1,0 +1,48 @@
+{{_header.html}}
+<script type="application/javascript" defer="defer">
+			function send_command() {
+				var ic = document.getElementById("input_command");
+				var sc = document.getElementById("selection_command");
+				window.location.href = '../handler?csrf={csrf}&command=' + sc.options[sc.selectedIndex].value + ic.value;
+				ic.value = '';
+			}
+
+			function submitenter(e) {
+				var keycode;
+				if (window.event) keycode = window.event.keyCode;
+
+				if (keycode == 13) {
+					send_command();
+				}
+			}
+</script>
+
+<div class="span9">
+	<div class="row-fluid">
+		<div class="span9">
+			<h3>{T Console}</h3>
+
+			<div>
+				<pre class="log console">{consoleLog}</pre>
+			</div>
+
+			<div class="input-append" rel="tooltip">
+				<select class="span2" id="selection_command">
+					<option selected value="">Console</option>
+					<option value="c ">Chat</option>
+					<option value="p ">Party</option>
+					<option value="g ">Guild</option>
+				</select>
+
+				<input class="span9" id="input_command" type="text" onKeyPress="submitenter(this.event)">
+				<input type="button" class="btn span2" id="button_send" value="Send" disabled onClick="send_command()"/>
+			</div>
+
+			</br>
+		</div>
+
+		{{_sidebar.html}}
+	</div>
+</div>
+
+{{_footer.html}}
