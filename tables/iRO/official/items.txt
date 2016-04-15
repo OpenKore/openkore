@@ -6484,7 +6484,6 @@
 17356#Spooktober_Lucky_Box#
 17363#January_Groove_Pack#
 17364#March_Groove_Pack#
-17365#Dexterous_Weapon_Shadow_Box#
 17366#Vital_Shield_Shadow_Box#
 17367#Athletic_Shoes_Shadow_Box#
 17368#Resist_Spell_Power_Pendant_Shadow_Box#
@@ -8508,3 +8507,4 @@
 20031#Costume_Bunny_Head_Dress#
 20011#Costume_Lightning_Speed#
 17506#Paddys_Costume_Pack#
+17365#April_Adventure_Box#
