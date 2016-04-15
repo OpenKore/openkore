@@ -1421,6 +1421,9 @@ nguild_gef.gnd#gefg_cas01.gnd#
 삯샺샎엍웤샌붺\map\ordeal_1-4.bmp#삯샺샎엍웤샌붺\map\ordeal_a04.bmp#
 삯샺샎엍웤샌붺\map\ordeal_2-4.bmp#삯샺샎엍웤샌붺\map\ordeal_a04.bmp#
 삯샺샎엍웤샌붺\map\ordeal_3-4.bmp#삯샺샎엍웤샌붺\map\ordeal_a04.bmp#
+삯샺샎엍웤샌붺\map\egld2_aldl.bmp#삯샺샎엍웤샌붺\map\egld2_aldl.bmp#
+삯샺샎엍웤샌붺\map\emal_dun01h.bmp#삯샺샎엍웤샌붺\map\emal_dun01h.bmp#
+
 job_sage.rsw#job_wiz.rsw#
 job_sage.gat#job_wiz.gat#
 job_sage.gnd#job_wiz.gnd#
