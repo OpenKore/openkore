@@ -1,10 +1,10 @@
 ﻿#######################################################
-# 新增完成日期為 2010/12/2 ,最後修改日期為 2011/2/23  #
-# 新增海洞6                                           #
-# Try71023僅發表於月光論壇                            #
+#最後修改日期為 2016/4/17  by Shun                    #
 #                                                     #
-# 最後修改日期為 2012/3/1                             #
-# 新增綿綿島路徑.飛空艇路徑                           #
+#來源 月光論壇  Try71023                              #
+#          --------------------                       #
+# 		                                      #
+#             	-----------------------		      #
 #######################################################
 
 #飛空艇(國內線)
@@ -346,12 +346,32 @@ prt_fild07 17 145 gef_fild02 380 156
 prt_fild07 385 186 prt_fild08 16 187
 prt_fild07 383 239 prt_fild08 16 239
 prt_fild07 248 376 prt_fild05 255 14
-prt_fild08 371 212 izlude 30 78
+prt_fild08 371 212 izlude 24 98
+prt_fild08a 371 212 izlude_a 24 98
+prt_fild08b 371 212 izlude_b 24 98
+prt_fild08c 371 212 izlude_c 24 98
+prt_fild08d 371 212 izlude_d 24 98
 prt_fild08 55 21 moc_fild01 56 384
 prt_fild08 233 16 moc_fild01 239 382
+prt_fild08a 233 16 moc_fild01 239 382
+prt_fild08b 233 16 moc_fild01 239 382
+prt_fild08c 233 16 moc_fild01 239 382
+prt_fild08d 233 16 moc_fild01 239 382
 prt_fild08 16 239 prt_fild07 383 239
+prt_fild08a 16 239 prt_fild07 383 239
+prt_fild08b 16 239 prt_fild07 383 239
+prt_fild08c 16 239 prt_fild07 383 239
+prt_fild08d 16 239 prt_fild07 383 239
 prt_fild08 16 187 prt_fild07 385 186
+prt_fild08a 16 187 prt_fild07 385 186
+prt_fild08b 16 187 prt_fild07 385 186
+prt_fild08c 16 187 prt_fild07 385 186
+prt_fild08d 16 187 prt_fild07 385 186
 prt_fild08 170 378 prontera 156 22
+prt_fild08a 170 378 prontera 156 22
+prt_fild08b 170 378 prontera 156 22
+prt_fild08c 170 378 prontera 156 22
+prt_fild08d 170 378 prontera 156 22
 prt_fild09 14 124 prt_fild10 339 126
 prt_fild09 14 139 prt_fild10 339 126
 prt_fild09 383 251 moc_fild01 22 242
@@ -414,6 +434,10 @@ izlude 52 172 izlude_in 74 161
 izlude_in 65 84 izlude 112 179
 izlude_in 74 158 izlude 52 168
 izlude 20 98 prt_fild08 367 212
+izlude_a 20 98 prt_fild08a 367 212
+izlude_b 20 98 prt_fild08b 367 212
+izlude_c 20 98 prt_fild08c 367 212
+izlude_d 20 98 prt_fild08d 367 212
 #學院
 izlude 125 257 iz_ac01 99 29
 izlude 135 257 iz_ac01 99 29
@@ -3277,15 +3301,22 @@ moc_fild07 380 202 moc_fild20 208 207 0 c c r1 c n
 #moc_fild13 32 171 moc_fild20 208 207 0 c c r1 c n
 #moc_fild16 333 380 moc_fild20 208 207 0 c c r1 c n
 #moc_fild16 124 381 moc_fild20 208 207 0 c c r1 c n
-moc_fild20 349 179 moc_fild22b 37 196 0 c c c r0 n
-moc_fild20 354 183 morocc 160 61 0 c r1 c c c c c r1 c c r1 n
-moc_fild20 354 174 morocc 160 61 0 c r1 c c c c c r1 c c r1 n
-moc_fild20 38 174 morocc 160 61 0 c r1 c c c c c r1 c c r1 n
-moc_fild20 38 183 morocc 160 61 0 c r1 c c c c c r1 c c r1 n
-moc_fild20 203 336 morocc 160 61 0 c r1 c c c c c r1 c c r1 n
-moc_fild20 215 336 morocc 160 61 0 c r1 c c c c c r1 c c r1 n
-moc_fild22b 37 196 moc_fild20 349 179 0 c c c r0 n
-moc_fild22b 230 197 mid_camp 210 291 0 c r0 c c n
+##NEW 裂縫傳點
+moc_fild20 38 183 morocc 160 61 0 c r2 n
+moc_fild20 38 174 morocc 160 61 0 c r2 n
+moc_fild20 354 183 moc_fild13 41 171 0 c r2 n
+moc_fild20 354 174 moc_fild13 41 171 0 c r2 n
+moc_fild20 203 336 prt_fild10 263 34 0 c r2 n
+moc_fild20 215 336 prt_fild10 263 34 0 c r2 n
+moc_fild20 349 179 moc_fild22b 40 196 c c c r0 n
+moc_fild22b 37 196 moc_fild20 342 179 c c c r0 n
+moc_fild13 32 171 morocc 160 61 0 c r3 n
+moc_fild13 32 171 moc_fild20 208 207 0 c r2 n
+prt_fild10 263 23 morocc 160 61 0 c r3 n
+prt_fild10 263 23 moc_fild20 208 207 0 c r2 n
+prt_fild10 263 23 moc_fild07 377 209 0 c r4 n
+moc_fild07 380 202 moc_fild20 208 207 0 c r2 n
+moc_fild07 380 202 prt_fild10 263 34 0 c r3 n
 ##############################################################
 #自動新增未分類列表
 
@@ -3368,3 +3399,24 @@ dic_dun02 102 148 dic_dun01 290 99
 malangdo 219 86 izlude 194 180 0 c c r0
 malangdo 219 86 alberta 192 150 0 c c r1
 alberta 200 151 malangdo 217 85 0 c r1 c c r0
+
+#考古
+verus04 44 267 verus03 44 20
+verus03 44 17 verus04 44 264
+verus04 121 267 verus03 121 20
+verus03 122 17 verus04 121 264
+verus03 52 253 verus01 243 62 
+verus01 247 58 verus03 55 251
+verus01 123 181 un_bunker 98 91 c r0 c 
+un_bunker 98 85 verus01 115 190
+un_bunker 69 118 un_bunker 53 117
+un_bunker 56 118 un_bunker 72 117
+un_bunker 47 135 un_bunker 37 134
+un_bunker 40 135 un_bunker 50 134
+un_bunker 57 118 un_bunker 72 117
+un_bunker 60 183 un_bunker 75 235
+un_bunker 75 128 un_bunker 276 196
+un_bunker 300 203 un_bunker 298 224
+un_bunker 71 236 un_bunker 57 182
+un_bunker 21 375 un_bunker 32 193
+un_bunker 31 196 un_bunker 22 378
