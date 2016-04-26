@@ -22,6 +22,17 @@
 1078#Voucher_3487372#
 1079#Voucher_3318702#
 1080#Voucher_3543625#
+1617#Survivor's_Rod_(Dex)#
+1618#Survivor's_Rod_(Dex)#
+1619#Survivor's_Rod_(Int)#
+1620#Survivor's_Rod_(Int)#
+2634#Wedding_Ring_(Groom)#
+2635#Wedding_Ring_(Bride)#
+6030#Glittering_Paper_(Fake)#
+6031#Glittering_Paper_(Real)#
+6087#Spiritual_Crystal_(Blue)#
+6088#Spiritual_Crystal_(Red)#
+6746#Steel_Artifact_(Imperfect)#
 7352#Transparent_Plate_(Green)#
 7353#Transparent_Plate_(Red)#
 7354#Transparent_Plate_(Orange)#
@@ -72,6 +83,8 @@
 12115#Elemental_Converter_(Water)#
 12116#Elemental_Converter_(Earth)#
 12117#Elemental_Converter_(Wind)#
+13412#Twin_Edge_of_Naght_Sieger_(Blue)#
+13413#Twin_Edge_of_Naght_Sieger_(Red)#
 
 # Include untracked local modifications.
 !include_create_if_missing items-custom.txt
