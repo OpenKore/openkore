@@ -72571,3 +72571,14 @@ When opened contains one of the following:
 1x Safe to 7 Weapon Armor Certificate 
 1x Safe to 7 Headgear Armor Certificate
 #
+
+20099#
+This fairy loves to bless adventurers with good luck!
+^ff0000Obtained from a sales event that is running from 4/15/2016-4/30/2016^000000
+Class : ^777777Costume Gear^000000 
+Defense : ^7777770^000000
+Location : ^777777Upper ^000000
+Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
