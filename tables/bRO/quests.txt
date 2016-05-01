@@ -4801,7 +4801,7 @@ Um aspirane precisa esperar 10 minutos antes de entrar novamente em uma sala de 
 
 
 3250#Pedidos! #SG_FEEL #QUE_NOIMAGE #
-Derrote 10 Múmias na Pirâmide e colete 20 Bandagens Estragadas. #
+Derrote 30 Múmias na Pirâmide e colete 20 Bandagens Estragadas. #
 #
 
 3251#Pedidos! #SG_FEEL #QUE_NOIMAGE #
@@ -5345,7 +5345,7 @@ Colete 10 Caudas, 10 Avelãs e 10 Folhas de Fumacento #
 
 8278#Missões de Coleta #SG_FEEL #QUE_NOIMAGE #
 Colete os itens do Cookie e do Presente da Fábrica de Presentes. #
-Colete 10 Biscoitos de Gengibre e 1 Pedaço de Bolo #
+Colete 5 Biscoitos de Gengibre e 1 Pedaço de Bolo #
 
 8279#Missões de Coleta #SG_FEEL #QUE_NOIMAGE #
 Colete os itens do Martir na Mina de Carvão. #
@@ -10917,3 +10917,21 @@ Colete 7 bonecas, customize-as e leve-as ao Jakk.#
 9434#Uma de cada vez#SG_FEEL#QUE_NOIMAGE#
 Você só pode fazer essa quest uma vez por dia.#
 Volte amanhã.#
+
+// 2016 Festival do Polvo
+11452#Caça aos Polvos#SG_FEEL#QUE_NOIMAGE#
+Traga 16 Gelatinas Pegajosas que são obtidas derrotando os monstros Polvo Rei e Tentáculo de Polvo nos mapas de campos.#
+Colete Gelatinas Pegajosas#
+
+11453#Consideração do Mr.One#SG_FEEL#QUE_NOIMAGE#
+O Evento do Festival do Polvo está terminado! Porfavor, volte amanhã.#
+Amanhã tem mais!#
+
+//-Horror Toy Factory
+12330#Catherine Jet Johnson#SG_FEEL#QUE_NOIMAGE#
+Ouça a história da garota com a aparência estranha.#
+Converse com a NPC Catherine Jet Johnson#
+
+12331#Recesso dos Brinquedos#SG_FEEL#QUE_NOIMAGE#
+Os brinquedos estão passando por reparos. A acesso à fábrica estará disponível após 23 horas.#
+Recesso dos Brinquedos#

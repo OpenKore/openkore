@@ -1695,7 +1695,7 @@ AB_SILENTIUM#
 80#
 @
 
-//¿ö·Ï
+//워록
 WL_WHITEIMPRISON#
 50#
 55#
@@ -1833,7 +1833,7 @@ WL_RELEASE#
 3#
 20#
 @
-//·¹ÀÎÁ®
+//레인져
 RA_ARROWSTORM#
 30#
 32#
@@ -1880,7 +1880,7 @@ RA_WUGBITE#
 50#
 @
 
-//±æ·ÎÆ¾ Å©·Î½º
+//길로틴 크로스
 GC_VENOMIMPRESS#
 12#
 16#
