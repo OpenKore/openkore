@@ -343,6 +343,20 @@ bat_room 169 211 bat_room 154 150
 #(chatroom) bat_room 169 205 bat_c01 147 56
 bat_c01 148 54 bat_room 154 150 0 c
 
+# iRO custom novice version of prt_fild08
+izlude 20 98 prt_fild08a 367 212
+moc_fild01 239 382 prt_fild08a 233 16
+moc_fild01 56 384 prt_fild08a 55 21
+prontera 156 22 prt_fild08a 170 378
+prt_fild07 383 239 prt_fild08a 16 239
+prt_fild07 385 186 prt_fild08a 16 187
+prt_fild08a 16 187 prt_fild07 385 186
+prt_fild08a 16 239 prt_fild07 383 239
+prt_fild08a 55 21 moc_fild01 56 384
+prt_fild08a 170 378 prontera 156 22
+prt_fild08a 233 16 moc_fild01 239 382
+prt_fild08a 371 212 izlude 24 98
+
 alb_ship 26 166 alberta 170 170
 alb_ship 37 174 alb_ship 68 99
 alb_ship 41 163 alberta 178 165

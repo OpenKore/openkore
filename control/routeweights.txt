@@ -33,4 +33,7 @@ NPC 200
 bat_room 10000
 moc_para01 10000
 
+# Avoid trying to route through prt_fild08a (which may not even exist) unless required to do so.
+prt_fild08a 10000
+
 # Add your map weights here. Format: <mapname> <weight>
