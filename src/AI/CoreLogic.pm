@@ -2666,6 +2666,9 @@ sub processAutoEquip {
 
 ##### AUTO-ATTACK #####
 sub processAutoAttack {
+	# Don't even think about attacking if attackAuto is -1.
+	return if $config{attackAuto} && $config{attackAuto} eq -1;
+
 	# The auto-attack logic is as follows:
 	# 1. Generate a list of monsters that we are allowed to attack.
 	# 2. Pick the "best" monster out of that list, and attack it.
