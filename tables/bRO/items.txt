@@ -314,7 +314,6 @@
 6108#Gelatina de Maçã#
 6135#Ticket de Ninfa Perversa#
 6136#Ticket de Medusa#
-5416#Caneca de Guaraná#
 10038#Protetor de Chifre#
 6377#Licença_de_Atacado#
 12548#Licença Falsa_Atacado#
@@ -1703,7 +1702,6 @@
 12018#Fogo_de_Artifício#
 //----2005 XMAS ------
 //5136#Gorro_Mágico_de_Papai_Noel#
-12132#Bolsa do Papai Noel#
 7174#Laço_para_presente#
 7175#Papel_de_presente#
 664#Caixa_de_Presente_1#
@@ -2485,10 +2483,10 @@
 // -------------- Additional Skill Item --------------
 1771#Faca Envenenada#
 7419#Guia de Criação de Embriões#
-12114#Conversor Elemental#
-12115#Conversor Elemental#
-12116#Conversor Elemental#
-12117#Conversor Elemental#
+12114#Conversor Elemental Fogo#
+12115#Conversor Elemental Água#
+12116#Conversor Elemental Terra#
+12117#Conversor Elemental Vento#
 12118#Poção Anti-Fogo#
 12119#Poção Anti-Água#
 12120#Poção Anti-Terra#
@@ -4071,7 +4069,7 @@
 1569#Livro da Mãe Terra#
 1570#Livro do Sol Ardente#
 1571#Livro do Golpe de Vento#
-1309#Machado Orc#
+1309#Machado dos Orcs#
 1114#Cimitarra#
 1538#Clava com Espetos#
 13030#Matadora de Dragão#
@@ -5256,7 +5254,6 @@
 //---------2011 halloween event
 5475#Sorriso_Maligno#
 18656#Poderoso_Chapéu_de_Bruxa#
-12490#Notação Mágica#
 
 //---------2011 november items
 
@@ -5643,9 +5640,6 @@
 4824#Espírito_do_Lutador_9#
 4825#Espírito_do_Lutador_10#
 4827#Pedra_de_Encantamento_6#
-4828#Pedra_de_Encantamento_7#
-4829#Pedra_de_Encantamento_8#
-4830#Pedra_de_Encantamento_9#
 4831#Pedra_de_Encantamento_10#
 4832#Pedra_da_Mira_Apurada_1#
 4837#Pedra_da_Mira_Apurada_6#
@@ -6194,9 +6188,9 @@
 18910#Orelhas Azuis de Fiera#
 18918#Balão de Polvo#
 
-4869#Vel. Ataque 2#
-4872#Vel. Ataque 3#
-4873#Vel. Ataque 4# 
+4869#Anti-Atraso 1#
+4872#Anti-Atraso 2#
+4873#Anti-Atraso 3# 
 4863#Crítico 1#
 4864#Crítico 2#
 4865#Crítico 3#
@@ -6215,11 +6209,16 @@
 5874#Diadema de Kriemhild#
 12790#Cartão de Troca de Nome#
 
+
 //--2014-02-04
+
 4624#Carta Tao Gunka Selada#
 5875#Diadema de Bruenhild#
+
 18897#Diadema do Cisne#
+
 19777#Estrelinha Lumma#
+
 4482#Carta_Egnigem_Cenia_Selada#
 
 //-------------------------------------------------------------------
@@ -6856,7 +6855,7 @@
 20703#Manteau TE#
 20704#Manteau Mágico TE#
 21006#Espada de Duas Mãos TE#
-2950#Anel Rúnico#
+2950#Anel de Rune#
 2951#Anel de Kvasir(Azul)#
 2952#Anel de Kvasir(Vermelho)#
 2953#Anel de Kvasir(Verde)#
@@ -6873,10 +6872,10 @@
 12881#Lágrima de Fada (Silêncio)#
 12882#Lágrima de Fada (Cegueira)#
 12888#Caixa de Suprimentos TE#
-15067#Manto Rúnico#
+15067#Manto de Rune#
 18755#Boina Alada#
 19585#Boina Alada Visual#
-20709#Manteua de Mana#
+20709#Manteau de Mana#
 22012#Botas de Mana#
 12399#Baú do Tesouro TE#
 //*****************************************************
@@ -7038,4 +7037,53 @@
 //------------Aplicar em 2015-02-23--------------------
 //*****************************************************
 22540#Runa Luxanima#
+//*****************************************************
+//------------Aplicar em 2016-03-08--------------------
+//*****************************************************
+20405#Cachecol do Eremes#
+//*****************************************************
+//------------Aplicar em 2016-03-29--------------------
+//*****************************************************
+20154#Folhas Outonais#
+19936#Gorro de Lã do Ioxi#
+//*****************************************************
+//------------Aplicar em 2016-04-05--------------------
+//*****************************************************
+20317#Fones de Ouvido Nekomimi#
+//*****************************************************
+//-------- Festival do Polvo----2016-04-12-------------
+//*****************************************************
+20468#Máscara da Gorila Chita#
+25169#Gelatina Pegajosa#
+//*****************************************************
+//------------ TOY FACTORY ----------------------------
+//*****************************************************
+12490#Letra de Música Natalina#
+2486#Passo das Sombras#
+2976#Lampião das Trevas#
+11563#Chá Quente#
+11564#Biscoito Melado#
+7640#Fivela de Borboleta#
+2977#Coração Partido#
+13442#Guarda-Chuva Atinquado#
+18848#Presilha de Rosas#
+19686#Tiara de Papai Noel#
+7642#Moeda Sangrenta#
+19687#Presilha Perfumada#
+7643#Carta Ensanguentada#
+7644#Rascunho de Carta#
+19701#Capuz Vermelho#
+2978#Coração Bondoso#
+18849#Laço da Celine#
+22534#Caixa de Ferramentas Fechada#
+16029#Cruz Nobre#
+2980#Luva dos Espíritos Malignos#
+22516#Gota das Trevas#
+6683#Flor Abandonada#
+4828#Pedra de Encantamento 7#
+4829#Pedra de Encantamento 8#
+4830#Pedra de Encantamento 9#
+4825#Espírito do Lutador 10#
+4881#Anti-Atraso 4#
+20006#Máscara do Chefão do Mal#
 //file end

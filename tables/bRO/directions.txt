@@ -1,4 +1,4 @@
-﻿0 Norte
+0 Norte
 1 Noroeste
 2 Oeste
 3 Sudoeste

@@ -3,8 +3,8 @@
 7608#
 Ticket promocional criado pela Corporação Kafra.
 Troque-o por um item aleatório no NPC Máquina de Promoções, encontrado em Prontera nas coordenadas 141 226.
-Esta promoção está disponível apenas até o dia 14/03, então troque-o agora mesmo!
-^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 15/03. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
+Esta promoção está disponível apenas até o dia 18/04, então troque-o agora mesmo!
+^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 19/04. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
 Peso: ^7777771^000000
 #
 7558#
@@ -23,10 +23,10 @@ Peso: ^7777770^000000
 #
 //Ticket dos Gatos
 //7608#
-//Um Ticket criado pelo Prefeito Thomas, Ex-almirante de uma embarcação da Corporação da Pata de Gato.
-//Trocando-o no NPC de Promoções Especiais (Prontera, coordenadas 141, 226), você tem a chance de conseguir Frutas dos Gatos ou Ira do Deus do Mar.
-//^ff0000ATENÇÃO: este Ticket será removido durante a manutenção do dia 02/03/16. O item obtido na troca com a NPC é aleatório! Boa sorte!^000000
-//Peso: ^7777771^000000
+Um Ticket criado pelo Prefeito Thomas, Ex-almirante de uma embarcação da Corporação da Pata de Gato.
+Trocando-o no NPC de Promoções Especiais (Prontera, coordenadas 141, 226), você tem a chance de conseguir Frutas dos Gatos ou Ira do Deus do Mar.
+^ff0000ATENÇÃO: este Ticket será removido durante a manutenção do dia 02/03/16. O item obtido na troca com a NPC é aleatório! Boa sorte!^000000
+Peso: ^7777771^000000
 //----------------------------------------------------------
 501#
 Poção feita de ervas vermelhas. Recupera ^000088cerca de 45 HP^000000, dependendo da sua vitalidade. ^0000FFDê um clique duplo neste item para recuperar uma quantia de HP.^000000
@@ -2402,7 +2402,7 @@ Adaga do algoz.
 Classe: ^777777Adaga^000000
 Força de Ataque: ^777777125^000000
 Peso: ^77777760^000000
-Propriedade: ^777777Sombras^000000
+Propriedade: ^777777Sombrio^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777736^000000
 Classes que utilizam: ^777777Mercenário^000000
@@ -3655,7 +3655,7 @@ Classes que utilizam: ^777777Sacerdote / Monge^000000
 #
 1813#
 Garra abençoada por Zefir, o Deus do Vento.
-^0000ffConcede +5% de dano contra monstros da propriedade Morto-Vivo e +10% contra monstros das propriedades Fogo, Água, Vento e Terra.^000000
+^0000ffConcede +5% de dano contra monstros da propriedade Maldito e +10% contra monstros das propriedades Fogo, Água, Vento e Terra.^000000
 Classe: ^777777Garra^000000
 Força de Ataque: ^777777110^000000
 Peso: ^77777745^000000
@@ -5802,7 +5802,7 @@ Combina com: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4007#
-^0000ffAdiciona 20% ao dano causado a monstros da raça Amorfos.^000000
+^0000ffAdiciona 20% ao dano causado a monstros da raça Amorfo.^000000
 Combine com um item para utilizar sua propriedade. 
 Classe: ^777777Carta^000000
 Combina com: ^777777Armamento^000000
@@ -6047,7 +6047,7 @@ Combina com: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4042#
-^0000ffDEF +2, 10% de resistência contr ataques de propriedade de Vento.^000000
+^0000ffDEF +2, 10% de resistência contra ataques de propriedade de Vento.^000000
 Combine com um item para utilizar sua propriedade. 
 Classe: ^777777Carta^000000
 Combina com: ^777777Vestimenta^000000
@@ -6250,7 +6250,7 @@ Combina com: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4071#
-^0000ffConcede 30% de resistência contra ataques da Propriedade Morto-Vivo, Esquiva +5.^000000
+^0000ffConcede 30% de resistência contra ataques da Propriedade Maldito, Esquiva +5.^000000
 Combine com um item para utilizar sua propriedade. 
 Classe: ^777777Carta^000000
 Combina com: ^777777Capa^000000
@@ -12179,7 +12179,7 @@ Peso: ^7777771^000000
 #
 4312#
 ^0000ffPrecisão +10, Taxa de Esquiva +3.
-Se usada por personagens da Classe Noviço e suas evoluções, adiciona +9 ao Ataque Crítico contra monstros do tipo Demônio e Morto-Vivo.^000000
+Se usada por personagens da Classe Noviço e suas evoluções, adiciona +9 ao Ataque Crítico contra monstros do tipo Demônio e Maldito.^000000
 Combine com um item para utilizar sua propriedade. 
 Classe: ^777777Carta^000000
 Utilização: ^777777Arma^000000
@@ -12830,7 +12830,7 @@ Tem uma pequena chance de causar o efeito Maldição nos inimigos em batalha.
 Tipo: ^777777Katar^000000
 Força de Ataque: ^77777795^000000
 Peso: ^777777125^000000
-Propriedade: ^777777Escuridão^000000
+Propriedade: ^777777Sombrio^000000
 Nível da Arma: ^7777774^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Mercenário^000000
@@ -13237,7 +13237,7 @@ Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
 #
 2115#
 Um escudo usado por Gna, mensageira de Freyja, quando ela serviu como uma Valquíria.
-^0000ffAdiciona 20% de resistência contra as propriedades Água, Fogo, Morto-Vivo e Escuridão. 
+^0000ffAdiciona 20% de resistência contra as propriedades Água, Fogo, Maldito e Sombrio. 
 DEFM +5.
 Se o usuário também estiver equipado com a Bênção de Odin e a Diadema de Fricca, este escudo adiciona DEF +2 e DEFM + 5. 
 Adiciona 1 em DEFM a cada aprimoramento do Escudo das Valquírias e da Diadema de Fricca.
@@ -14105,7 +14105,7 @@ Peso: ^77777720^000000
 // -------------- Additional Skill Item --------------
 1771#
 Uma faca de arremesso embebida em toxina que pode Envenenar os inimigos.
-Tipo: ^777777Adaga^000000
+Tipo: ^777777Munição^000000
 Dano: ^77777730^000000
 Peso: ^7777770.5^000000	
 Propriedade: ^777777Neutro^000000
@@ -17794,6 +17794,7 @@ Um martelo forte
 e resistente, que
 carrega o poder do vento.
 ^ffffff_^000000
+Peso: ^7777770^000000
 #
 7570#
 Um bilhete de loteria que
@@ -18688,7 +18689,7 @@ Peso: ^77777715^000000
 #
 12132#
 Uma pequena bolsa mágica vermelha.
-Permite o uso de uma ^000088Roupa de Natal^000000por 10 minutos.
+Permite o uso de uma ^000088Roupa de Natal^000000 por 10 minutos.
 ^ffffff_^000000
 Peso: ^77777720^000000
 #
@@ -23434,7 +23435,7 @@ Recebe 10% a mais de dano de monstros Humanoides.
 Tipo de Arma: ^777777Espada de Duas Mãos^000000
 Força de Ataque: ^777777155^000000
 Peso: ^777777220^000000
-Propriedade: ^777777Sombra^000000
+Propriedade: ^777777Sombrio^000000
 Nv. da Arma: ^7777774^000000
 Nv. Necessário: ^77777748^000000
 Classe Aplicável: ^777777Espadachim^000000
@@ -23467,7 +23468,7 @@ Aumenta ligeiramente a Velocidade de Ataque.
 Tipo de Arma: ^777777Adaga^000000
 Força de Ataque: ^777777140^000000
 Peso: ^77777760^000000
-Propriedade: ^777777Sombra^000000
+Propriedade: ^777777Sombrio^000000
 Nv. da Arma: ^7777774^000000
 Nv. Necessário: ^77777736^000000
 Classe Aplicável: ^777777Mercenário^000000
@@ -24576,7 +24577,7 @@ Classes que utilizam: ^777777Classes T. 2-1 e 2-2^000000
 Livro que contém habilidades básicas para Clérigos. 
 Recuperação de HP e SP + 3%. INT + 1.
 Quando equipada com a Vara Sagrada, aumenta em 20% o dano com a habilidade 'Magnus Exorcismus'.
-Acidiona a chance de invocar a habilidade 'Esconjurar'quando o usuário receber dano físico.
+Acidiona a chance de invocar a habilidade 'Esconjurar' quando o usuário receber dano físico.
 Tipo: ^777777Escudo^000000
 Defesa: ^77777780^000000
 Peso: ^77777760^000000
@@ -25231,7 +25232,7 @@ Classes que utilizam:  ^777777Desordeiro^000000
 Um mecânico nascido sob uma maldição criou este colar para se proteger. Ele é encantado com vários feitiços mágicos para selar o poder da maldição.
 DES + 2, SOR - 1, DEFM + 3
 Quando equipado, consome 50 HP a cada 10 segundos, e 300 HP quando retirado. 
-Ao sofrer ataque físico a distância, há 2% de chance de amaldiçoar o inimigo.  Quando equipado com Lira Amaldiçoada, dá ATQ + 25 e mais 2% de chance de amaldiçoar.
+Ao sofrer ataque físico a distância, há 2% de chance de amaldiçoar o inimigo.  Quando equipado com o Mentiroso Maldito, dá ATQ + 25 e mais 2% de chance de amaldiçoar.
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777720^000000
@@ -26578,7 +26579,7 @@ Classes que utilizam: ^777777Todas^000000
 #
 5471#
 Essa tiara é um presente da Valquíria Reginleif, cujo nome significa “Herança dos Deuses”. Ela caiu em desgraça aos olhos de Odin, e agora tenta se redimir diante dele ajudando os humanos e adiando o dia do Ragnarök.
-Concede 3% de resistência contra as propriedades Água, Fogo, Sombrio e Morto-Vivo.
+Concede 3% de resistência contra as propriedades Água, Fogo, Sombrio e Maldito.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
 Equipa em: ^777777Centro^000000
@@ -29032,7 +29033,7 @@ Ignora 10% da DEF de monstros dos tipos Humano e Bruto.
 FOR + 1, DEFM + 3
 Tipo: ^777777Armadura^000000    Defesa: ^77777760^000000
 Peso: ^777777100^000000
-Nível necessário: ^77777785^000000
+Nível necessário: ^7777771^000000
 Classes que utilizam:  ^777777Evoluções de Gatuno T., Espadachim T. e Mercador T.^000000
 #
 
@@ -29106,6 +29107,7 @@ Ao usar Cura em um alvo, há chance de usar também Benção, no nível aprendid
 Tipo: ^777777Cajado^000000
 Ataque: ^77777730^000000
 Peso: ^77777750^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam:  ^777777Transcendentais de Noviço^000000
 #
@@ -29148,6 +29150,7 @@ Há uma pequena chance de recuperar 200 SP ao usar 'Cura'. ATQM + 1% para cada n
 Tipo: ^777777Cajado de Duas Mãos^000000
 Ataque: ^77777730^000000
 Peso: ^777777100^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam:  ^777777Transcendentais de Noviço^000000
 #
@@ -33165,18 +33168,6 @@ Uma deliciosa gelatina de maçã verde. As Medusas adoram isso!
 Classe: ^777777Comida para Bicho de Estimação^000000
 Peso: ^7777771^000000
 #
-5416#
-Uma caneca cheia de refrigerante de guaraná, produzido a partir dos melhores frutos de Brasilis. Perfeito para lhe refrescar enquanto você enfrenta qualquer desafio, garantindo uma melhor recuperação graças aos seus poderes energéticos.
-^0000ffPrecisão -10, Crítico +5, Esquiva Perfeita +5.
-Aumenta os danos críticos em +7%.
-Adiciona +10% de resistência ao efeito [Congelamento].^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777774^000000
-Equipa em: ^777777Topo^000000
-Peso: ^77777760^000000
-Nível necessário: ^77777718^000000
-Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
-#
 10038#
 Um protetor de chifre. Faz com que o Imp fique ainda mais forte e resistente.
 Classe: ^777777Acessório para Bicho de Estimação^000000
@@ -34698,7 +34689,7 @@ Classe : ^777777Todas as classes^000000
 2844#
 ^ff0000Este item não pode ser trocado entre personagens.^000000
 Um broche feito para ser semelhante ao símbolo da cidade El Dicastes.
-Permite o teleporte para a Capital Manuk em El Discastes sempre que desejar.
+Permite o teleporte para a Capital El Discastes sempre que desejar.
 Tipo : ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso : ^77777710^000000
@@ -34707,11 +34698,11 @@ Classe : ^777777Todas as classes^000000
 #
 4760#
 ATQM+1%
-Diminui tempo de conjuração em 1%
+Diminui tempo de conjuração fixa em 1%
 #
 4761#	
 ATQM +2%,
-Diminui tempo de conjuração em 1%
+Diminui tempo de conjuração fixa em 1%
 #
 4762
 #Esquiva+6
@@ -34942,7 +34933,8 @@ Classe : ^777777Terceiras Classes^000000
 Um par de luvas brancas criadas pelo Alquimista Federal, Roy Ford, especialmente para magias de fogo. Dizem que com elas você será capaz de lançar bolas de fogo com um simples estalar de dedos!
 INT + 1, DEFM + 2.
 Aumentam em 10% os ataques mágicos de propriedade Fogo.
-Existe uma pequena chance de acionar Bola de Fogo Lv 5 a cada ataque realizado.
+Existe uma pequena chance de acionar [Bolas de Fogo] Nv 5 a cada ataque físico realizado.
+Chance de acionar [Lanças de Fogo] Nv 5 a cada ataque mágico.
 Diminui a resistência a ataques mágicos de propriedade Água em 20%.
 Diminui a resistência a ataques físicos de propriedade Água em 30%.
 Tipo : ^777777Acessório^000000 
@@ -36057,7 +36049,7 @@ ATQM +18, Diminui tempo de conjuração em 10%
 #
 
 4806#
-ATQM +3%, Diminui tempo de conjuração em 1%
+ATQM +3%, Diminui tempo de conjuração Fixa em 1%
 #
 
 9051#
@@ -37419,15 +37411,6 @@ ATQ +50, Precisão +15.
 4827#
 ATQM +21, Diminui Tempo de Conjuração em 10%.
 #
-4828#
-ATQM +24, Diminui Tempo de Conjuração em 10%.
-#
-4829#
-ATQM +27, Diminui Tempo de Conjuração em 10%.
-#
-4830#
-ATQM +30, Diminui Tempo de Conjuração em 10%.
-#
 4831#
 ATQM +50, Diminui Tempo de Conjuração em 20%.
 #
@@ -38744,7 +38727,7 @@ Classe: ^777777Arcebispo^000000
 #
 2569#
 Esquiva Perfeita +5
-Tem a chance de conjurar Renovatio nv. 1 enquanto ataca fisica ou magicamente.
+Tem a chance de conjurar Renovatio nv. 1 ao receber ataques físicos e mágicos.
 Tipo : ^777777Capa^000000
 Defesa: ^77777712^000000
 Peso : ^77777730^000000
@@ -38787,7 +38770,7 @@ Um cajado que irradia a preocupação com o Bem-estar alheio.
 Adiciona 10% de bônus na Cura.
 ATQM + 160, INT + 2.
 Se usado em conjunto com a Túnica, Sapatos e Xale da Afeição aumenta o bônus de Cura em 25% e o consumo de SP de Cura em 20.
-Diminui em 2 segundos o tempo de conjuração de Sacramento, Lauda Agnus e Lauda Ramus
+Diminui em 2 segundos o tempo de conjuração de Sacramentum, Lauda Agnus e Lauda Ramus
 Tipo : ^777777Cajado^000000
 Ataque : ^77777730^000000
 Peso : ^77777750^000000
@@ -41274,13 +41257,13 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 4869#
-Diminuição de tempo entre ataques em 4%
+Diminui 4% o tempo entre ataques
 #
 4872#
-Diminuição de tempo entre ataques em 6%
+Diminui 6% o tempo entre ataques
 #
 4873#
-Diminuição de tempo entre ataques em 8%
+Diminui 8% o tempo entre ataques
 # 
 4863#
 Dano Crítico +4%, Crítico +1
@@ -41750,7 +41733,7 @@ Tecido leve e delicado, perfeito para confecção de roupas tradicionais coreana
 Peso : ^7777771^000000
 #
 12646#
-Polvo assado muito saboroso, feito em Malangdo para a comemoração da chegada do Ano do Cavalo.
+Polvo assado muito saboroso, feito em Malangdo para a comemoração da chegada do Ano do Macaco.
 SOR + 10, ATQ + 20, ATQM + 20 por 10 minutos.
 ^ff0000O buff desaparece caso você receba um mesmo buff que seja maior. O item desaparecerá após o fim do evento^000000
 Peso : ^7777773^000000
@@ -43427,7 +43410,7 @@ Classe : ^777777Todas^000000
 2921#
 Uma luva que melhora de acordo com os atributos do usuário.
 HP Máximo + 100, SP Máximo + 20
-HIT + 1 a cada 10 pontos de DES.
+Precisão + 1 a cada 10 pontos de DES.
 Ataque a Distância + 1% quando a DES do usuário for maior ou igual a 110.
 Tipo : ^777777Acessório^000000
 Defesa : ^7777770^000000
@@ -43493,7 +43476,7 @@ Classe : ^777777Todas^000000
 2927#
 Uma luva que melhora de acordo com os atributos do usuário.
 HP Máximo + 100, SP Máximo + 20
-HIT + 1 a cada 10 pontos de DES.
+Precisão + 1 a cada 10 pontos de DES.
 Ataque a Distância + 1% quando a DES do usuário for maior ou igual a 110.
 Tipo : ^777777Acessório^000000
 Defesa : ^7777770^000000
@@ -44232,7 +44215,7 @@ Classes que utilizam: ^777777Todas^000000
 //**************************************
 2189#
 Um coelho fofinho e macabro que pertenceu à Piamette. Ele ainda carrega parte da essência de sua antiga dona.
-Aumenta a resistência a todos as propriedades em 5%.
+Aumenta a resistência a todas as propriedades em 5%.
 DEFM +6, DES +1.
 Tipo: ^777777Escudo^000000
 Defesa: ^77777740^000000
@@ -44290,7 +44273,7 @@ Chapéu mágico usado pelas aprendizes de Bruxa.
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
-Peso: ^7777770^000000
+Peso: ^77777710^000000
 Nível Necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -44492,6 +44475,8 @@ Required Level : ^77777730 ^000000
 Classes: ^777777Todas ^000000
 #
 19686#
+Uma divertida tiara com um bonequinho do Papai Noel. Parece até que ele está saindo ou entrando em uma chaminé. Ou no caso, na sua cabeça.
+Possui a chance de ser transformar em Antonio ao realizar ataques físicos e mágicos.
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Topo ^000000
@@ -45678,7 +45663,7 @@ Peso : ^77777710^000000
 ^000088Item de aluguel^000000
 ^ff0000Não pode ser negociado.^000000
 Criado especialmente para ajudar os membros do clã a evoluir, esse traje especial cria ondas que aumentam a EXP recebida em 10%.
-Quando equipado em conjunto com Anel Rúnico, Manto Rúnico, Manteau de Mana e Botas de Mana, aumenta EXP recebida em 30%. 
+Quando equipado em conjunto com Anel de Rune, Manto de Rune, Manteau de Mana e Botas de Mana, aumenta EXP recebida em 30%. 
 Tipo: ^777777Vestimenta^000000 Def: ^7777770^000000
 Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
@@ -46466,4 +46451,260 @@ Pode ser reusado para transferir mais efeitos rúnicos na ordem que foi recebido
 Duração: 1 minuto.
 Peso: ^77777710^000000
 #
+//*****************************************************
+//------------Aplicar em 2016-03-08--------------------
+//*****************************************************
+20405#
+Esse cachecol vermelho pertencia ao Algoz Eremes, quando ele ainda era vivo. Vítima dos bizarros experimentos da Corporação Rekenber, o espírito de Eremes é hoje um dos grandes desafios que assombram o Laboratório de Somatologia.
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+//*****************************************************
+//------------Aplicar em 2016-03-29--------------------
+//*****************************************************
+20154#
+Se você adora quando as árvores ficam douradas no outono e as folhas secas caem, carregue essa sensação com você o ano inteiro com essas belas folhas encantadas.
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+19936#
+Dizem que esse gorro de lã quentinho foi feito em homenagem ao Ferus que acompanhava o famoso cavaleiro Mario. Que Mario? Aquele que te upou como templário. 
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+//*****************************************************
+//------------Aplicar em 2016-04-05--------------------
+//*****************************************************
+20317#
+Esses fones de ouvido tecnológicos só podiam ter sido inventados no oriente. Ou talvez em Malangdo! Capazes de ler seu usuário, os fones fazem as orelhas de gatinho se moverem de acordo com suas emoções!
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+//*****************************************************
+//-------- Festival do Polvo----2016-04-12-------------
+//*****************************************************
+20468#
+Essa máscara é baseada no famoso romance que conta a história de Chita, a Rainha da Selva de Pedra, uma macaquinha órfã criada por um bando de humanos na cidade e que acaba se apaixonando por um Choco selvagem chamado Jano.
+HP Máximo +16% e aumento na quantidade de recuperação de HP do item Banana.
+^000088Os efeitos desse item serão removidos com o término do evento.^000000
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+25169#
+Gelatina muito pegajosa que pode ser obtida derrotando o Polvo Rei e o Tentáculo de Polvo.
+É utilizada como material principal para criar a máscara utilizada no Festival do Polvo.
+^000088Ao termino do evento o item desaparecerá^000000
+Peso: ^7777770^000000
+//*****************************************************
+//------------ TOY FACTORY ----------------------------
+//*****************************************************
+#
+2486#
+Estas botas das sombras são feitas com forças das trevas. Seu criador colocou um feitiço para proteger o usuário do perigo.
+Quando atingido por ataque mágico, há chance de lançar automaticamente Furtividade em nível 2.
+Se o jogador tiver Furtividade em nível maior, o nível possuído pelo jogador será usado.
+DEFM + 10 
+Tipo: ^777777Calçado^000000 
+Defesa: ^7777770^000000
+Peso: ^777777200^000000
+Nível Necessário: ^77777775^000000
+Classes: ^777777Todas as classes Transcendentais, exceto Aprendizes^000000
+#
+2976#
+Um assustador lampião que emana escuridão.
+SP Máximo - 300. Permite o uso da Habilidade Chama Reveladora nv.1.
+Adiciona a chance de derrubar Álcool, Detrimindexta e Karvodailnirol ao derrotar monstros.
+Tipo: ^777777Acessório^000000 
+Defesa: ^7777770^000000
+Peso: ^77777720^000000
+Nível Necessário: ^777777100^000000
+Classes: ^777777Todas as Classes^000000
+#
+11563#
+Delicioso chá quente. Recupera aproximadamente 100 de SP.
+Peso: ^7777772^000000
+#
+11564#
+Um delicioso biscoito de mel. Cai muito bem com um chá quente. Recupera aproximadamente 1000 de HP.
+Peso: ^7777772^000000
+#
+7640#
+Fivela de cabelo em forma de borboleta. Ideal para prender cabelos longos e exibir toda a sua feminilidade.
+Peso: ^7777771^000000
+#
+2977#
+Uma gema despedaçada que contém um antigo poder mágico.
+SP Máx. +200. Permite a utilização da habilidade [Escândalo] nv.3.
+Se equipado com o Coração Bondoso, desperta a tristeza de Celine Kimi:
+^000088Ao realizar ataques físicos, chance de conjurar [Congelar] nv. 10 e [Onda Psíquica] nv. 1;
+Ao realizar ataques mágicos, chance de conjurar [Amplificação Mística] nv. 1.^000000
+Tipo: ^777777Acessório^000000 
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível Necessário: ^777777110^000000
+Classes: ^777777Todas^000000
+#
+13442#
+Um guarda-chuva muito velho e desgastado, mas que emana um grande poder mágico.
+ATQM + 80. 
+Adiciona ATQM +10 a cada refinamento.
+Permite o uso da habilidade [Espíritos Anciões] nv. 10.
+Tipo: ^777777Espada^000000 
+Ataque: ^777777120^000000
+Peso: ^77777750^000000
+Nível da Arma: ^7777773^000000
+Nível Necessário: ^77777780^000000
+Classes: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
+#
+18848#
+Uma bela presilha enfeitada com rosas encantadas e sem espinhos.
+ATQM +20.
+Adiciona +5 de ATQM a cada refinamento.
+Recupera 100 HP a cada monstro derrotado por ataques mágicos.
+Perde 50 HP a cada 5 segundos.
+Tipo: ^777777Equipamento para a Cabeça^000000 
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^77777720^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+7642#
+Uma moeda tão impregnada com sangue que não é possível determinar sua idade.
+^FF0000O item não pode ser derrubado, negociado e nem colocado no carrinho, mas pode ser colocado na Kafra^000000
+Peso: ^7777770^000000
+#
+19687#
+Uma bela rosa que ninguém sabe quando foi colhida, mas que permanece eternamente fresca e perfumada.
+Tipo: ^777777Visual^000000 
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+7643#
+Um antigo papel de carta amassado e com algumas manchas de sangue. Ainda é possível ler parte da escrita: “Talvez eu esteja criando algo maravilhoso. O que eu criei parece mais ser minha filha do que uma boneca. Quando você receber esta carta, já terei terminado meu trabalho. Gostaria de mostrar minha última criação – não – minha filha, pra você.”
+Peso: ^7777771^000000
+#
+7644#
+Uma carta limpa que não foi selada e nem parece ter sido enviada.
+“Eu continuo conversando com esta boneca, porque não consigo suportar o fato de que ela será a última boneca que eu farei. Justo minha milionésima boneca. Haha, estou me tornando um velho tolo. Você entende como me sinto, velho amigo?”
+Peso: ^7777770^000000
+#
+19701#
+Uma espécie de capuz usado por nobres, especialmente por aqueles que gostam de beber chá preto.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000 
+Peso: ^7777770^000000
+Nível Necessário: ^7777770^000000
+Classes: ^777777Todas^000000
+#
+2978#
+Uma gema encantada com uma suave magia benéfica que emana uma luz calorosa.
+HP Máx. +500. Recupera 300 HP a cada 10 segundos.
+Se equipado com o Coração Partido, desperta a alegria de Celine Kimi:
+^000088Ao realizar ataques físicos, chance de conjurar [Congelar] nv. 10 e [Onda Psíquica] nv. 1;
+Ao realizar ataques mágicos, chance de conjurar [Amplificação Mística] nv. 1.^000000
+Tipo: ^777777Acessório^000000 
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível Necessário: ^777777110^000000
+Classes: ^777777Todas^000000
+#
+18849#
+Um laço luxuoso bordado com fios de ouro. Foi feito com muito carinho para Kimi pelo artesão de bonecas que a criou.
+DES + 3, ATQM + 40.
+Adiciona +7 de ATQM a cada refinamento.
+Recupera 200 HP a cada monstro derrotado por ataques mágicos.
+Perde 50 HP a cada 5 segundos.
+Tipo: ^777777Equipamento para a cabeça^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^77777720^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+22534#
+Caixa fechada criada pela terrível solidão da Celine Kimi.
+Peso: ^777777100^000000
+#
+16029#
+Uma arma de concussão forjada como uma cruz sagrada para carregar as bênçãos divinas e reforçar a força da convicção.
+Possui pequena chance de conjurar automaticamente a habilidade Esconjurar  nv.6 em um inimigo quando atacar.
+Recupera 1 SP a cada dano físico em mortos-vivos.
+Recupera 12 SP ao derrotar mortos-vivos em ataques físicos.
+ATQM + 150.
+Tipo: ^777777Maça^000000 
+Ataque: ^777777195^000000
+Peso: ^777777150^000000
+Propriedade: ^777777Sagrado^000000
+Nível da Arma: ^7777774^000000
+Nível Necessário: ^77777740^000000
+Classes: ^777777Transcendentais de Noviço^000000
+#
+2980#
+Uma luva carregada de poder sombrio. Permite mover bonecas como se estivessem vivas através dos fios de tecido mágico costurados na ponta de seus dedos.
+SP Máx. +200, HP Máx. +500.
+Permite o uso da habilidade [Prisão da Teia] nv. 1.
+Ao realizar ataques físicos, chance de conjurar [Congelar] nv. 10 e [Onda Psíquica] nv. 1;
+Ao realizar ataques mágicos, chance de conjurar [Amplificação Mística] nv. 1.
+Ao receber ataques físicos e mágicos, chance de conjurar [Escândalo] nv. 1
+Tipo: ^777777Acessório^000000 
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível Necessário: ^777777110^000000
+Classes: ^777777Todas^000000
+#
+22516#
+Parece até uma gota de sangue solidificada. Muitos poderiam confundi-la com uma bela gema vermelha, a não ser que olhassem com mais atenção. Emana um poder ameaçador.
+Peso: ^7777771^000000
+#
+6683#
+Uma flor completamente seca e murcha. Você tem a sensação de que ela irá se esfarelar e virar pó se tocá-la.
+Peso: ^7777771^000000
+#
+4828#
+ATQM + 24. Diminui tempo de conjuração em 10%.
+#
+4829#
+ATQM + 27. Diminui tempo de conjuração em 10%.
+#
+4830#
+ATQM + 30. Diminui tempo de conjuração em 10%.
+#
+4825#ATQ + 50, HIT + 15.
+#
+4881#
+Diminui 10% o tempo entre ataques
+# 
+20006#
+Se você planeja dominar o mundo ou escravizar a humanidade, essa é a máscara perfeita pra fazer isso com estilo! Vai até parecer que você é o chefão final de um jogo ou o inimigo principal da história.
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+# 
 //file end

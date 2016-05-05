@@ -265,7 +265,7 @@ Velocidade de Ataque#
 Servidor Superpopulado.#
 Configuração#
 Servidor Indisponível. Por favor, tente novamente em alguns minutos.#
-Senha incorreta.#
+Senha incorreta. Certifique-se que sua senha esteja correta e/ou o Cadeado Level Up liberado.#
 Escolha o penteado#
 Atq.#
 Def.#
@@ -915,7 +915,7 @@ Você não pode refinar %s pois não possui nível suficiente em refinamento de 
 Você não pode refinar isto pois não possui um %s, item necessário.#
 Remoção Completa não está funcionando por que o Revestimento é perfeito.#
 Você não pode adotar um personagem casado.#
-O nome é similar ao nome do seu amigo mas não está na lista. Por favor confirme a identidade dele.#
+ATENÇÃO! Este jogador não é seu amigo, ele apenas possui um Nickname semelhante ao de um de seus contatos. Não informe seus dados pessoais e não transfira itens para ele sob hipótese alguma. Certifique-se de que não se trata de uma tentativa de se passar por um amigo seu.#
 /hi ou /hi sentença : Dizer oi para todos os personagens na sua lista de amigos.#
 O nome é similar ao nome do seu companheiro de Clã mas esta pessoa não é do seu Clã. Por favor confirme a identidade dele.#
 ATENÇÃO! Este item será vendido por 99.99 Milhões de Zeny!#
@@ -1451,7 +1451,7 @@ Efeito de [Vipera] aplicado à arma#
 Apenas pode ser usado ao Planar#
 Necessita de um Detonador#
 Necessita de um Reconfigurador#
-Necessita de uma toxina de Sicário#
+Necessita de uma Toxina de Sicário#
 Necessita de um Termoregulador#
 Necessita de um Gerador de Magnetismo#
 Necessita de um Gerador de Barreira#
@@ -1885,7 +1885,7 @@ Número de identificação incorreto, tente novamente#
 Algo errado com o serviço, tente novamente mais tarde#
 Impossível atacar neste modo#
 Impossível conjurar neste modo#
-Número de Pin deveria ter 4~6 caracteres#
+Número de Pin deve ter 4 caracteres#
 Log-in realizado com sucesso#
 Segunda senha inserida com sucesso#
 Segunda senha deletada#
@@ -2013,7 +2013,7 @@ LEVEL#
 MAPA#
 CLASSE#
 Não disponível #
-[guardian's protection] If it is max level, you cannot use it.#
+[Anjo Guardião] Se você estiver no nível máximo, não poderá usar isso.#
 Are you sure to move?#
 Character slot movement has been failed.#
 Character name is wrong.#
@@ -2024,7 +2024,7 @@ Para que você consiga mudar o nome do seu personagem, é necessário que você 
 Para que você consiga mudar o nome do seu personagem, é necessário que você deixe seu grupo.#
 O nome do personagem não pode ser alterado devido a um erro desconhecido.#
 Você já pode trocar o nome deste personagem. Vá até a tela de Seleção de Personagens.(%d)#
-Already it is possible to change the character name.(%d)#
+Você já está pronto para trocar o nome. Verifique a tela de Seleção de Personagens.(%d)#
 the length of the name you are trying to change is exceeded maximum length, so it has failed to change the name.#
 there is a word you cannot use included, therefore it has failed to change the character's name change.#
 Você não pode mais trocar o nome deste personagem. a troca de nome falhou.#
@@ -2062,8 +2062,8 @@ has denied to join the party.#
 has accept to join the party.#
 It is already gathering parties.#
 it is the same condition as previous search.#
-Possible to use after leave the guild.#
-Possible to use after leave the party.#
+Só pode ser usado após seu personagem sair da guilda.#
+Só pode ser usado após seu personagem sair do grupo.#
 Summoned user is in the map you cannot summon.#
 It is not possible to summon in current party leader location.#
 Summoning is denied.#
@@ -2262,29 +2262,29 @@ Navigation help#
  possible to change as [Result window] <-> [Navigation info window].#
 Level:%d (boss)#
 Level:%d (normal)#
-Water%d#
-Ground%d#
-Fire%d#
-Wind%d#
-Poison%d#
-Saint%d#
-Darkness%d#
+Água%d#
+Terra%d#
+Fogo%d#
+Vento%d#
+Veneno%d#
+Sagrado%d#
+Sombrio%d#
 Telekinesis%d#
-Undead%d#
-Nothing%d#
-Medium#
-Large#
-Small#
-Undead#
-Animal#
-Plant#
-Insect#
-Fish#
-Demon#
-Human#
-Angel#
-Dragon#
-Nothing#
+Maldito%d#
+Neutro%d#
+Médio#
+Grande#
+Pequeno#
+Morto-vivo#
+Bruto#
+Planta#
+Inseto#
+Peixe#
+Demônio#
+Humanóide#
+Anjo#
+Dragão#
+Amorfo#
 Ciick to move %s #
 Use NPC move service#
 NPC click#
