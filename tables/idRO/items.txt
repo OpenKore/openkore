@@ -6228,7 +6228,6 @@
 5422#Linguistic_Book_Cap#
 
 //--------------- Update Cashitem 20140917 ---------------
-5918#Gambler_Seal#
 5920#Medical_Boots#
 18934#Fox_Ears_Bell_Ribbon#
 2597#Scarlet_Poncho#
@@ -6702,3 +6701,28 @@
 2195#Lian_Shield#
 20753#Lian_Robe#
 17674#Splash_Rainbow_Lucky_Egg#
+
+//--------------- Update Animal Costume Scroll 20160413---------------
+17517#Animal Costume Scroll#
+19842#C_Puppy_Hat#
+20190#C_Chicken_Hat#
+20191#C_Black_Cat_Ears_Beret#
+20192#Green_Foxtail#
+20193#C_Foxtail#
+20194#C_Lion_Mask#
+20196#C_Leopard_Ear_Hat#
+20197#C_Amistr_Beret#
+20198#C_Misty_Ears#
+
+//--------------- Update Limited Elemental Shield 20160427---------------
+28906#Shield_Of_Flame [1]#
+28907#Shield_Of_Gust [1]#
+28908#Shield_Of_Water [1]#
+28909#Shield_Of_Earth [1]#
+2998#Shining_Trapezohedron#
+
+//--------------- Update Midgard Lucky Scroll 20160504---------------
+5918#Gambler_Seal#
+20404#C_Blessing_Of_Angels#
+20407#C_Subject_Aura_Red#
+17681#Midgard_Lucky_Scroll#
