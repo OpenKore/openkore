@@ -9769,5 +9769,164 @@ Keterangan:^777777 Menyebabkan status [Deep Sleep], dan dapat menyebabkan orang 
 [LV 4]^777777 5x5 kotak^000000
 [LV 5]^777777 7x7 kotak^000000
 #
+GC_DARKCROW#
+DARK CROW
+MAX Lv : 5
+^777777Required Skill : Dark Illusion 5 ^000000
+Type : ^777777  Active / Damage - Special  ^000000
+Description : ^777777  Meninggalkan painful claw marks pada target. marks akan berakhir dalam 5 detik, Meningkatkan Melee Physical damage pada target.^000000
+[Level 1] : ^777777 Damage 100%. Meningkatkan marks damage 1.3 kali.^000000
+[Level 2] : ^777777 Damage 200%. Meningkatkan marks damage 1.6 kali.^000000
+[Level 3] : ^777777 Damage 300%. Meningkatkan marks damage 1.9 kali.^000000
+[Level 4] : ^777777 Damage 400%. Meningkatkan marks damage 2.2 kali.^000000
+[Level 5] : ^777777 Damage 500%. Meningkatkan marks damage 2.5 kali.^000000
+#
+RA_UNLIMIT#
+UNLIMIT
+MAX Lv : 5
+^777777Required Skill : Fear Breeze 5^000000
+Type : ^777777 Active / Buff  ^000000
+Description : ^777777  Dengan kekuatan dewa pemburu & pemanah Ullr. Meningkatkan kekuatan serangan , tetapi pertahanan akan berkurang selama durasi skill.^000000
+[Level 1] : ^777777 Kekuatan serangan fisik jarak jauh x1.5 untuk 1 menit.^000000
+[Level 2] : ^777777 Kekuatan serangan fisik jarak jauh x2 untuk 1 menit. ^000000
+[Level 3] : ^777777 Kekuatan serangan fisik jarak jauh x2.5 untuk 1 menit.^000000
+[Level 4] : ^777777 Kekuatan serangan fisik jarak jauh x3 untuk 1 menit.^000000
+[Level 5] : ^777777 Kekuatan serangan fisik jarak jauh x3.5 untuk 1 menit.^000000
+#
+LG_KINGS_GRACE#
+KINGS GRACE
+MAX Lv : 5
+^777777Required Skill : Reflect Damage 5 ^000000
+Type : ^777777  Active / Buff ^000000
+Description : ^777777Memanggil King Grace untuk menyembuhkan hampir semua efek status abnormal dan mengurangi serangan yang diterima temanmu dan diri sendiri.^000000
+^777777karakter pemain akan sulit dikendalikan ketika menggunakan skill ini. Ketika pvp hanya akan berpengaruh pada karakter pemain dan anggota partymu.^000000
+^777777Efek yang disembuhkan : Poison, Blind, Petrification, Stun, Sleep, Bleeding, Curse, Confusion, Hallucination, Silence, Burning, Frozen, Freezing, Deep Sleep, Fear, Mandragora Howling. ^000000
+[Level 1] : ^777777 Menyembuhkan efek abnormal status pada teman selama 5 detik. Memulihkan 4% HP per detik.  ^000000
+[Level 2] : ^777777 Menyembuhkan efek abnormal status pada teman selama 5 detik. Memulihkan 5% HP per detik.  ^000000
+[Level 3] : ^777777 Menyembuhkan efek abnormal status pada teman selama 5 detik. Memulihkan 6% HP per detik.  ^000000
+[Level 4] : ^777777 Menyembuhkan efek abnormal status pada teman selama 5 detik. Memulihkan 7% HP per detik.  ^000000
+[Level 5] : ^777777 Menyembuhkan efek abnormal status pada teman selama 5 detik. Memulihkan 8% HP per detik. ^000000
+#
+RK_DRAGONBREATH_WATER#
+Dragon Breath WATER
+MAX Lv :  10
+^777777Required Skill : Dragon Training 2^000000
+Type : ^777777Range Damage^000000
+Description : ^777777Memerintahkan nagamu melakukan semburan es, Berkesempatan mengurangi kecepatan gerak lawan, Serangan dragon breath tergantung kondisi hp.^000000
+#
+NC_MAGMA_ERUPTION#
+MAGMA ERUPTION
+MAX Lv : 5
+^777777Required Skill : Fire Earth Research 1  ^000000
+Type : ^777777  Active ^000000
+Description : ^777777 Membuatmu menghantam ke tanah dan membuat erupsi lava. .^000000
+^777777 Ketika skill ini digunakan, akan memberikan efek stun dan damage ke area 7x7 kotak disekitar. Area ledakan lava akan bertahan selama 5 detik, dan tidak dapat di buat lebih dari 3 area.^000000
+[Level 1] : ^777777 Lava zone: mengakibatkan 1,000 fixed damage per 0.5 detik. 10% Burning chance ^000000
+[Level 2] : ^777777 Lava zone: mengakibatkan 1,200 fixed damage per 0.5 detik. 20% Burning chance. ^000000
+[Level 3] : ^777777 Lava zone: mengakibatkan 1,400 fixed damage per 0.5 detik. 30% Burning chance. ^000000
+[Level 4] : ^777777 Lava zone: mengakibatkan 1,600 fixed damage per 0.5 detik. 40% Burning chance. 40% ^000000
+[Level 5] : ^777777 Lava zone: mengakibatkan 1,800 fixed damage per 0.5 detik. 50% Burning chance. ^000000
+#
+WM_FRIGG_SONG#
+FRIGG'S SONG
+MAX Lv : 5
+^777777Required Skill : Lesson 2 ^000000
+Type : ^777777  Active / Buff ^000000
+Description : ^777777 Instrument / Whip only. Meningkatkan MHP Untuk semua allies dan recover sejumlah HP untuk mereka selama 60 detik. Mengkonsumsi 1 Heartbroken Tears..^000000
+^777777 Efek skill hanya untuk player dan party dalam PvP dan Siege modes.^000000
+[Level 1] : ^777777 Jarak efektif - 7x7 kotak disekitarmu. MHP 5% Recover 100 HP perdetik.^000000
+[Level 2] : ^777777 Jarak efektif - 9x9 kotak disekitarmu. MHP 10% Recover 120 HP perdetik. ^000000
+[Level 3] : ^777777 Jarak efektif - 11x11 kotak disekitarmu. MHP 15% Recover 140 HP perdetik.^000000
+[Level 4] : ^777777 Jarak efektif - 13x13 kotak disekitarmu. MHP 20% Recover 160 HP perdetik.^000000
+[Level 5] : ^777777 Jarak efektif - 15x15 kotak disekitarmu. MHP 25% Recover 180 HP perdetik.^000000
+#
+SO_ELEMENTAL_SHIELD#
+ELEMENTAL SHIELD
+MAX Lv : 5
+^777777Required Skill : Spirit Control 3^000000
+Type : ^777777Aktif/Support ^000000
+Target : ^777777Ground^000000
+Description : ^777777Meledakan kekuatan Spirit untuk membuat magic barrier bersamaan dengan Pneuma disekitar dirimu dan party berdiri. Magic barrier dan Pneuma memiliki durasi. Dan akan hilang ketika durasi mencapai 0 atau sudah habis.^000000 
+^777777Barrier menjangkau satu layar disekitar mu, Dan Spirit yang kamu panggil akan menghilang. .^000000 
+^777777Mengkonsumsi 1 Blue Gemstone.^000000 
+#
+SR_FLASHCOMBO#
+Flash combo
+MAX Lv : 5
+^777777Required Skill : Dragon Combo 3 / Fallen Empire 3 / Tiger Cannon 1 / Sky Blow 1^000000
+Type : ^777777  Active / Connection ^000000
+Description : ^777777  Dengan kecepatan tinggi menggunakan 4 skill bersamaan (Dragon combo, Fallen Empire, Tiger Cannon and sky blow). Skill level yang dipakai adalah level tertinggi yang telah dipelajari.^000000
+Description : ^777777  Once it uses 4 skills, you cannot use other skill or items. ^000000
+[Level 1] : ^777777Mengkonsumsi 5 Spirit Sphere dan Meningkatkan ATK 40 untuk 4 detik^000000
+[Level 2] : ^777777Mengkonsumsi 5 Spirit Sphere dan Meningkatkan ATK 60 untuk 4 detik.^000000
+[Level 3] : ^777777Mengkonsumsi 4 Spirit Sphere dan Meningkatkan ATK 80 untuk 4 detik.^000000
+[Level 4] : ^777777Mengkonsumsi 4 Spirit Sphere dan Meningkatkan ATK 100 untuk 4 detik.^000000
+[Level 5] : ^777777Mengkonsumsi 3 Spirit Sphere dan Meningkatkan ATK 120 untuk 4 detik.^000000
+#
+SC_ESCAPE#
+Urgent ESCAPE
+MAX Lv : 5
+^777777Required Skill : Triangle Shot 2 ^000000
+Type : ^777777  Active / Sub ^000000
+Description : ^777777Ketika digunakan akan membuatmu memasang trap pada spotmu dan mundur untuk menghindari musuh. Skill ini tidak dapat digunakan jika dibelakangmu terdapat petak yang tak bisa diakses, hanya akan memindahkan mu ke depan petak yg tak bisa diakses. Hanya akan memindahkanmu ke depan petak yg tak bisa diakses.^000000
+^777777 Mengkonsumsi 1 Booby Trap/Special Alloy Trap.^000000
+[Level 1] : ^777777 Jarak Hindaran - 5 kotak^000000
+[Level 2] : ^777777 Jarak Hindaran - 6 kotak^000000
+[Level 3] : ^777777 Jarak Hindaran - 7 kotak^000000
+[Level 4] : ^777777 Jarak Hindaran - 8 kotak^000000
+[Level 5] : ^777777 Jarak Hindaran - 9 kotak^000000
+#
+AB_OFFERTORIUM#
+OFFERTORIUM
+MAX Lv : 5
+^777777Required Skill : Highness Heal 2^000000
+Type : ^777777Active / Buff^000000
+Description : ^777777Menyanyikan Consecration song untuk meningkatkan efektifitas healing skill dan dan menghilangkan dari hampir semua efek status abnormal.^000000
+^777777 Skill ini tidak bisa digunakan bersamaan dengan magnificat yang menambah SP recorvery.^000000
+^777777 Efek yang disembuhkan : Blind, Curse, Poison, Hallucination, Chaos, Bleeding, Burning, Freezing, Frozen, Mandragora Howling, GC Poison^000000
+^777777 Healing Skill yg diaplikasikan : Heal, Sanctuary, Coluseo Heal, Highness Heal ^000000
+[Level 1] : ^777777 Efektifitas healing x1.3 untuk 90 detik. Konsumsi SP x2.2 Untuk penggunaan semua skill. ^000000
+[Level 2] : ^777777 Efektifitas healing x1.6 untuk 90 detik. Konsumsi SP x2.4 Untuk penggunaan semua skill. ^000000
+[Level 3] : ^777777 Efektifitas healing x1.9 untuk 90 detik. Konsumsi SP x2.6 Untuk penggunaan semua skill.  ^000000
+[Level 4] : ^777777 Efektifitas healing x2.2 untuk 90 detik. Konsumsi SP x2.7 Untuk penggunaan semua skill. ^000000
+[Level 5] : ^777777 Efektifitas healingx2.5 untuk 90 detik. Konsumsi SP x3 Untuk penggunaan semua skill. ^000000
+#
+WL_TELEKINESIS_INTENSE#
+TELEKINESIS INTENSE
+MAX LV 5 
+^777777Required Skill : Soul Expansion 5  ^000000
+Type : ^777777 Active / Buff ^000000
+Description : ^777777 Memberikan Telekinetis magic kedalam tubuhmu, Membuat casting magic lebih cepat. . ^000000
+^777777 This status cannot be released with Dispell, Clearance. ^000000
+[Level 1] : ^777777 Telekinetic Magic damage x1.4 untuk 1 menit. -10% Floating Casting. -10% Konsumsi SP untuk menggunakan Telekinetic spells. ^000000
+[Level 2] : ^777777 Telekinetic Magic damage x1.8 untuk 1 menit. -10% Floating Casting. -20% Konsumsi SP untuk menggunakan Telekinetic spells.^000000
+[Level 3] : ^777777 Telekinetic Magic damage x2.2 untuk 1 menit. -10% Floating Casting. -30% Konsumsi SP untuk menggunakan Telekinetic spells.  ^000000
+[Level 4] : ^777777 Telekinetic Magic damage x2.6 untuk 1 menit. -10% Floating Casting. -40% Konsumsi SP untuk menggunakan Telekinetic spells. ^000000
+[Level 5] : ^777777 Telekinetic Magic damage x3 untuk 1 menit. -10% Floating Casting. -50% Konsumsi SP untuk menggunakan Telekinetic spells. ^000000
+#
+ALL_FULL_THROTTLE#
+FULL THROTTLE
+MAX Lv : 5
+^777777Required Skill : 3rd jobs  ^000000
+Description : ^777777 Mengkonsumsi MSP dari karakter untuk mendapatkan kekuatan luar biasa dalam jangka waktu yang singkat . Skill ini dapat membuat karakter kalian lelah setelah pemakaiannya.. ^000000
+^777777 mengembalikan HP penuh dan meningkatkan Movement Speed (Kecepatan Gerak) ??dengan waktu yang terbatas. Semua status meningkat 20%. Skill ini tidak dapat dibatalkan dengan Dispel dan Clearance. ^000000
+[Level 1] : ^777777 Berlangsung selama 10 detik. Mengkonsumsi 6% MSP per detik ^000000
+[Level 2] : ^777777 Berlangsung selama 15 detik. Mengkonsumsi 4% MSP per detik. ^000000
+[Level 3] : ^777777 Berlangsung selama 20 detik. Mengkonsumsi 3% MSP per detik. ^000000
+[Level 4] : ^777777 Berlangsung selama 25 detik. Mengkonsumsi 2% MSP per detik. ^000000
+[Level 5] : ^777777 Berlangsung selama 30 detik. Mengkonsumsi 1% MSP per detik. ^000000
+#
+GN_ILLUSIONDOPING#
+ILLUSION DOPING
+MAX Lv : 5
+^777777Required Skill : Special Pharmacy  1 ^000000
+Type : ^777777  Special / Debuff ^000000
+Description : ^777777 Melemparkan bottle berisi alcohol yang mengakibatkan Ilusi dan mengurangi hit pada target dan musuh disekitarnya. Mengkonsumsi 1 Alcohol.^000000
+[Level 1] : ^777777 Damage 100% pada target dan 9x9 kotak disekitarnya^000000
+[Level 2] : ^777777 Damage 100% pada target dan 11x11 kotak disekitarnya. ^000000
+[Level 3] : ^777777 Damage 100% pada target dan 13x13 kotak disekitarnya. ^000000
+[Level 4] : ^777777 Damage 100% pada target dan 15X15 kotak disekitarnya. ^000000
+[Level 5] : ^777777 Damage 100% pada target dan satu layar disekitarnya. ^000000
+#
 
 //file end

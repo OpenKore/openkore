@@ -17109,7 +17109,7 @@ Letak : ^777777Helmet^000000
 Berat: ^7777771^000000
 #
 4365#
-[Belum di implementasikan] Meningkatkan waktu casting sebesar 10%, dan mengurangi SP recovery sebesar 100%, tetapi serangan 
+Meningkatkan waktu casting sebesar 10%, dan mengurangi SP recovery sebesar 100%, tetapi serangan 
 player akan mengabaikan MDEF dari monster biasa. Mengurangi 2000 SP ketika helm dilepas.
 Jenis : ^777777Kartu^000000             
 Letak : ^777777Helmet^000000
@@ -36991,7 +36991,7 @@ Berat : ^7777771^000000
 #
 4534#
 MHP + 12%.
-Bisa menggunakan [Water Ball] 5Lv
+Dapat menggunakan [Water Ball] 5Lv
 Kelas : ^777777Card^000000
 Equip : ^777777Armor^000000
 Berat : ^7777771^000000
@@ -40853,19 +40853,6 @@ Job : ^777777Semua^000000
 #
 
 //--------------- Update Cashitem 20140917 ---------------
-5918#
-Gambler Seal yang luar biasa. Hanya orang-orang yang sangat beruntung yang bisa mendapatkannya.
-CRI +3.
-Serangan kritikal meningkat 3%. Serangan yang diterima dari skill Arrow Storm  dan Gate Of Hell berkurang sebesar 10%.
-Setiap 10 poin murni DEX, akan menurunkan serangan kritikal sebesar 2%
-Setiap 10 poin murni LUK, maka CRI +1, ATK +2, MATK +2.
-Ketika poin murni LUK lebih dari 108, maka CRI +5, serangan kritikal meningkat 10%
-Ketika poin murni LUK lebih dari 120, maka CRI +10, serangan kritikal meningkat 10%, serangan yang diterima dari skill Arrow Storm dan Gate Of Hell berkurang 30%.
-Jenis : ^777777Helm^000000 Tk Def : ^7777770^000000
-Dikenakan di : ^777777Tengah ^000000Berat : ^77777750^000000
-Minimum Lv : ^77777770^000000
-Job : ^777777Semua^000000
-#
 5920#
 Sepatu yang meningkatkan kemampuan peyembuhan
 Saat menggunakan [Heal], [Sanctuary], [Potion Pitcher], [Highness Heal], [Coluseo Heal], tingkat penyembuhan meningkat 10%.
@@ -42457,13 +42444,6 @@ Profesi : ^777777Semua Profesi^000000
 Topi penyihir untuk menyambut perayaan Halloween
 Jenis : ^777777Costume^000000 Pertahanan : ^7777770^000000
 Lokasi : ^777777Upper ^000000 Berat : ^7777770^000000
-Lv Minimum : ^7777771^000000
-Profesi : ^777777Semua Profesi^000000
-#
-20195#
-Kucing yang lucu, bukankah begitu????
-Jenis : ^777777Costume^000000Pertahanan : ^7777770^000000
-Lokasi : ^777777Mid-Lower ^000000 Berat : ^7777770^000000
 Lv Minimum : ^7777771^000000
 Profesi : ^777777Semua Profesi^000000
 #
@@ -44193,5 +44173,174 @@ Equip : ^777777All Class^000000
 17674#
 Splash Rainbow Lucky Egg
 Kamu bisa mendapatkan Lian Shield, Lian Shoes, Lian Robe, Camellia Hair Pin & item item spesial lain nya.
+Weight : ^7777771^000000
+#
+
+//--------------- Update Animal Costume Scroll 20160413--------------
+17517#
+You will never know what item inside this Scroll, but there is something amazing.
+^ff0000It cannot be traded with other accounts.^000000
+Weight : ^7777771^000000
+#
+19842#
+It looks cute that brown puppy sitting on.
+Class : ^777777Costume equipment^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20190#
+Comfy Hen hat.
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20191#
+Beret that has kitty ear.
+Class : ^777777Costume equipment^000000 Defense : ^7777775^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20192#
+A grass that looks like puppy tail. It keep moving like tail. Smell like nature.
+
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Bottom ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20193#
+Great item for wanderer.
+
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Bottom ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20194#
+A headgear looks like lion.
+Class : ^777777Costume equipment^000000Defense : ^7777770^000000
+Location : ^777777Upper-mid ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20195#
+Cat shaped mask that scratch your face
+Class : ^777777Costume equipment^000000Defense : ^7777770^000000
+Location : ^777777Mid-bottom ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20196#
+Leopard patterned ear in the hat
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20197#
+A beret that is from Amistr's ear
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20198#
+Brown cat ear hairband
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+
+//--------------- Update Limited Elemental Shield 20160427--------------
+28906#
+Toleransi serangan Element Api -25%
+Saat Tingkat tempa +5, ASPD +1
+Saat tingkat tempa +7, ASPD +1
+Jika dipakai bersamaan dengan Shining Trapezohedron
+Serangan Jauh +10%
+Series : ^777777Shield^000000 Defense : ^77777780^000000
+Weight : ^77777750^000000
+Required Lv. : ^77777790^000000
+Equip : ^777777All class^000000
+#
+28907#
+Toleransi serangan Element Angin  -25%
+Saat Tingkat tempa +5, ASPD +1
+Saat tingkat tempa +7, ASPD +1
+Jika dipakai bersamaan dengan Shining Trapezohedron
+akan meningkatkan kecepatan gerak
+Series : ^777777Shield^000000 Defense : ^77777780^000000
+Weight : ^77777750^000000
+Required Lv. : ^77777790^000000
+Equip : ^777777All class^000000
+#
+28908#
+Toleransi serangan Element Air -25%
+Saat Tingkat tempa +5, ASPD +1
+Saat tingkat tempa +7, ASPD +1
+Jika dipakai bersamaan dengan Shining Trapezohedron
+Delay skill -10%
+Series : ^777777Shield^000000 Defense : ^77777780^000000
+Weight : ^77777750^000000
+Required Lv. : ^77777790^000000
+Equip : ^777777All class^000000
+#
+28909#
+Toleransi serangan Element Tanah -25%
+Saat Tingkat tempa +5, ASPD +1
+Saat tingkat tempa +7, ASPD +1
+Jika dipakai bersamaan dengan Shining Trapezohedron
+SP consumption -10% dan Max SP +10%
+Series : ^777777Shield^000000 Defense : ^77777780^000000
+Weight : ^77777750^000000
+Required Lv. : ^77777790^000000
+Equip : ^777777All class^000000
+#
+2998#
+shining trapezohedron Sebuah benda misterius yang dibuat didunia ini. 
+Ini mungkin dibuat untuk memanggil Roh 
+Meningkatkan toleransi dari Serangan Holy  +10 % 
+Series : ^777777Accessory^000000 Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Lv. : ^77777790^000000
+Equip : ^777777All classes^000000
+#
+
+//--------------- Update Midgard Lucky Scroll 201604504--------------
+5918#
+Segel berbentuk aneh. Hanya yang mendekati kebenaran yang bisa mendapatkannya.
+CRI +3.
+Meningkatkan serangan kritikal sebesar 3%. Mengurangi serangan [Arrow Storm] sebesar 10%, Mengurangi serangan [Hell Gate] sebesar 10%.
+Serangan kritikal berkurang 2% tiap pure 10 Dex.
+CRI +1, ATK +2, MATK +2 tiap pure LUK 10
+CRI +5, meningkatkan serangan kritikal 10% jika pure LUK diatas 108
+Jika pure LUK diatas 120, CRI +10, serangan kritikal bertambah sebesar 17%, Mengurangi serangan [Arrow Storm] sebesar 30%, Mengurangi serangan [Hell Gate] sebesar 30%. 
+Series : ^777777Helmet^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000Weight : ^77777750^000000
+Required Lv. : ^77777770^000000
+Equip : ^777777All classes^000000
+#
+20404#
+Kostum malaikat yang bercahaya
+Cahayanya terasa sangat nyaman
+Series : ^777777Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Equip : ^777777All classes^000000
+#
+20407#
+Tubuh seperti terselimuti kekuatan misterius.
+Series : ^777777Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Bottom ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Equip : ^777777All classes^000000
+#
+17681#
+Midgard Lucky Egg.
+Kamu bisa mendapatkan Gambler Seal, Costume Subject Aura Red, Costume Blessing Of Angels & item item spesial lain nya
 Weight : ^7777771^000000
 #
