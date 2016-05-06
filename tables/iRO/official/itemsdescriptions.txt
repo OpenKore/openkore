@@ -72582,3 +72582,52 @@ Weight : ^7777770^000000
 Required Lv : ^7777771^000000
 Job : ^777777All Jobs^000000
 #
+
+24082#
+Shoes worn on top of normal shoes for additional DEF. Can be equipped alone but needs a set to have any effect. Max HP+1%. If refined to +7 or greater, increases Max HP by 1%.
+If the set consisting of Malicious Shield Shadow, Malicious Armor Shadow, and Malicious Shoes Shadow is worn together,
+enables 4% chance of gaining 2% of DMG inflicted upon an enemy as HP with each physical attack.
+Increases additional 1% of DMG inflicted upon an enemy as HP per every 5 refine level of all three items in the set.
+Class : Shadow Equipment
+Location : Footwear
+Required Level : 1
+Jobs : All Jobs
+#
+
+24083#
+A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
+HP regeneration+5%.
+If refined to +7 or greater, increases additional HP regeneration by 5%.
+If the set consisting of Malicious Shield Shadow, Malicious Armor Shadow, and Malicious Shoes Shadow is worn together, enables 4% chance of gaining 2% of DMG inflicted upon an enemy as HP with each physical attack.
+Increases additional 1% of DMG inflicted upon an enemy as HP per every 5 refine level of all three items in the set.
+Class : Shadow Equipment
+Location : Shield
+Required Level : 1
+Jobs : All Jobs
+#
+
+24081#
+An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
+HP+100.
+If refined to +7 or greater, increases Max HP by 1%.
+If the set consisting of Malicious Shield Shadow, Malicious Armor Shadow, and Malicious Shoes Shadow is worn together, enables 4% chance of gaining 2% of DMG inflicted upon an enemy as HP with each physical attack.
+Increases additional 1% of DMG inflicted upon an enemy as HP per every 5 refine level of all three items in the set.
+Class : Shadow Equipment
+Location : Armor
+Required Level : 1
+Jobs : All Jobs
+#
+
+17367#
+Get your groove on with this may groove pack.
+When opened always gives 1 Safe to 7 Chance Box
+
+Will also award one of the following by random chance
+Kafra Blossom Card
+Malicious Shadow Shoes
+Malicious Shadow Armor
+Malicious Shadow Shield
++20 Food Box
+HE Bubble Gum x 2
+KVM Badge x 100
+#

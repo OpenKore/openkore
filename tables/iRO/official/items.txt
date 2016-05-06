@@ -6484,7 +6484,6 @@
 17356#Spooktober_Lucky_Box#
 17363#January_Groove_Pack#
 17364#March_Groove_Pack#
-17367#Athletic_Shoes_Shadow_Box#
 17368#Resist_Spell_Power_Pendant_Shadow_Box#
 17369#Rapid_Pendant_Shadow_Box#
 17370#Caster_Pendant_Shadow_Box#
@@ -8510,3 +8509,8 @@
 
 17366#Safe_to_7_Sale_Box#
 20099#Costume:_Ljosalfar#
+
+24082#Malicious_Shadow_Shoes#
+24083#Malicious_Shadow_Shield#
+24081#Malicious_Shadow_Armor#
+17367#May_Groove_Pack_2016#
