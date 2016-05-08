@@ -1496,7 +1496,7 @@ sub system_chat {
 		($color, $message) = $message =~ /^micc.*\0\0([0-9a-fA-F]{6})(.*)/;
 		$prefix = T('[S]');
 	} elsif ($message =~ /^micc.{12,24}([0-9a-fA-F]{6})(.*)/) {
-		($color, $message) = $message =~ /^micc.*([0-9a-fA-F]{6})(.*)/;
+		($color, $message) = $message =~ /^micc.*?([0-9a-fA-F]{6})(.*)/;
 		$prefix = T('[S]');
 	} elsif ($message =~ s/^blue//g) {  # forces color blue
 		$prefix = T('[S]');
