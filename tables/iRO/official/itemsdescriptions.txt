@@ -72631,3 +72631,13 @@ Malicious Shadow Shield
 HE Bubble Gum x 2
 KVM Badge x 100
 #
+
+20458#
+Two monsters became a team! To loot your heart!
+Type : ^777777Costume^000000 
+DEF : ^7777770^000000
+Location : ^777777Upper^000000 
+Weight : ^7777770^000000
+Lv. req. : ^7777771^000000
+Class : ^777777All classes^000000
+#
