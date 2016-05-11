@@ -1,0 +1,2474 @@
+Apa kamu Setuju?.#
+Hubungan ke Server Gagal.#
+Terputus dari Server.#
+Terputus dari Server.#
+Server Ditutup.#
+Seseorang masuk dengan ID ini.#
+ID atau password yang kamu masukkan salah#
+Password salah. Cobalah lagi.#
+ID ini sudah kadaluarsa#
+Terputus dari server.#
+Nama Karakter ini sudah dipakai.#
+Pembuatan Karakter ditolak#
+Penghapusan Karakter ditolak#
+Silahkan masukan nama Ruangan.#
+Penggunaan kata-kata kasar terdeteksi.#
+Silahkan masukan Password#
+Silahkan Masukkan Password. Password minimal terdiri dari 4 karakter#
+Apakah kamu yakin mau keluar?#
+Password minimal 4 karakter. Silahkan coba lagi.#
+Apakah kamu yakin mau menghapus karakter ini?#
+Penggunaan kata-kata kasar terdeteksi.#
+Nama Karakter minimal 4 huruf#
+Daftar Perintah: /h#
+Effect On#
+Effect Off#
+Volume Suara#
+Volume BGM#
+Sound Effect On#
+Sound Effect Off#
+Frame Skip On#
+Frame Skip Off#
+BGM On#
+BGM Off#
+/h atau /help: Menunjukkan daftar perintah#
+#
+/bgm: Mengatur BGM On atau Off#
+/sound: Mengatur Sound Effects On atau Off#
+/effect: Effect On atau Off#
+/Where: Menunjukkan lokasimu saat ini#
+/skip: Mengatur Frame Skip On atau Off#
+/v(0~127): Mengatur  volume dari Sound Effect #
+/bv(0~127): Mengatur volume BGM#
+/ex (Nama Karakter): Memblok whisper dari karakter tersebut#
+/ex: Melihat daftar karakter yang kamu blok#
+/in (Nama Karakter): Mengijinkan karakter melakukan Whisper#
+/inall: Mengijinkan siapa saja melakukan Whisper#
+/exall: Memblok Whisper dari siapa saja#
+Klik kanan pada karakter lain dan pilih [Daftarkan sebagai Teman] untuk menambah nama pemain ke dalam daftar teman kamu.#
+F12 adalah Hotkey yang bisa kamu gunakan dengan drag & drop barang, equipment, dan skill untuk diakses lebih cepat.#
+Kamu tidak bisa mengetik kata-kata yang sama sebanyak 3 kali.#
+Proses terganggu karena bahasa kasar#
+Kamu tidak bisa melebihi batas satu barang di kolom ini#
+Kamu tidak bisa memiliki barang-barang lagi karena kelebihan berat#
+Kamu tidak bisa mengambil item ini.#
+Transaksi Berhasil#
+Kamu tidak memiliki cukup uang#
+Kamu melewati batas berat#
+Transaksi Gagal#
+Kamu memblok Whisper dari siapa saja#
+Kamu gagal memblok whisper dari siapa saja#
+Kamu mengijinkan siapa saja melakukan Whisper#
+Kamu gagal mengijinkan siapa saja melakukan Whisper#
+Kamu tidak memiliki daftar blok#
+ -Daftar Karakter yang diblok-#
+Ruang berhasil dibuat#
+Melebihi batas ruang#
+Ruang yang sama sudah ada#
+Ruang sudah penuh#
+Kamu dikeluarkan dari ruang ini#
+Transaksi ditolak#
+Kamu terlalu jauh dari orang yang mau diajak transaksi#
+Karakter tidak online saat ini atau tidak ada#
+Orang ini sedang dalam transaksi lain#
+Orang ini kelebihan berat, kamu tidak bisa bertansaksi#
+Transaksi dibatalkan#
+Transaksi Berhasil#
+Transaksi Gagal#
+Grup berhasil dibuat#
+Nama Grup ini sudah dipakai#
+Karakter ini sudah berada dalam grup#
+Karakter ini sudah bergabung dengan grup lain#
+Permintaan untuk grup ditolak#
+Permintaan untuk grup diterima#
+Grup kelebihan kapasitas#
+Kamu meninggalkan grup#
+Kirim ke umum#
+Kirim ke grup#
+Bertransaksi dengan karakter#
+Tanya %s untuk bergabung ke grup kamu#
+Pri:#
+Pub:#
+Tekan `Restart' untuk kembali ke tempat simpan posisi atau tekan `Exit' untuk memilih karakter lain#
+Silahkan pilih jenis transaksi#
+ mengajak transaksi#
+ mengundang kamu untuk bergabung dengan grup ini. Mau bergabung?#
+Perintah salah#
+Meninggalkan grup#
+Dikeluarkan dari grup#
+Kirim pesan#
+Pembicaraan 1:1#
+Informasi#
+Pengaturan grup#
+Teman#
+Grup#
+Equipment#
+Status#
+Persediaan#
+/organize 'Nama Grup': Untuk membuat Grup. Gunakan [/leave] untuk meninggalkan grup#
+Kalau kamu adalah pemimpin grup, kamu bisa mengajak orang untuk bergabung dengan grup kamu#
+Sembuh#
+Serangan#
+Support#
+Seluruh#
+Senjata#
+Defense#
+Air#
+Tanah#
+Api#
+Angin#
+Harap hindari pembelian 2 barang yang sama pada saat yang sama#
+Silahkan rubah kedlaman warna desktopmu menjadi 16-bit saat menjalankan Ragnarok di mode window.#
+Tunggu Sebentar yach . . .#
+Tunggu Sebentar yach . . .#
+Tunggu Sebentar yach . . .#
+Tunggu Sebentar yach . . .#
+Membuat Ruang#
+Ubah setting Ruang#
+Mengusir karakter keluar#
+menyerahkan hak kepemimpinan ruang#
+Melihat Informasi#
+Ruang Chating#
+Pemain#
+/sit: Membuatmu duduk. Jika kamu sedang duduk, maka akan membuatmu berdiri#
+/stand: Membuatmu berdiri. Jika kamu sedang duduk, maka akan membuatmu berdiri#
+/chat: Membuat Ruang Chating#
+/q: Meninggalkan Ruang Chating#
+/deal [Nama Karakter]: Mengajak karakter bertransaksi#
+/organize 'Nama Grup': Membuat Grup#
+/leave: Meninggalkan Grup#
+/expel [Nama Karakter]: Mengeluarkan karakter dari grup kamu#
+[Alt] + [End]: Mengatur kotak HP/SP On atau Off#
+[Alt] + [Home]: Mengatur kursor di tanah On atau Off#
+[Insert]: Membuatmu duduk atau berdiri. (Hotkey /sit atau /stand)#
+Selamat! Kamu adalah MVP!! Hadiahnya adalah#
+ !!#
+Selamat! Kamu adalah MVP!! Exp spesial untukmu adalah#
+ !!#
+Kamu adalah MVP, tapi kamu tidak bisa mendapatkan hadiahnya karena kamu kelebihan berat#
+Tidak ada karakter dengan nama itu#
+Tidak mau menerima pesan kamu#
+Sedang tidak mau berbicara dengan siapapun#
+Bunuh berhasil#
+Bunuh gagal#
+%s yang kamu dapat adalah %d  #
+[Alt] + [=]: Membetulkan kesalahan jarak antara huruf-huruf.#
+[F10]: Untuk mengatur kotak chating [Alt] + [F10] :kotak chating On Off#
+Cara untuk Whisper: Masukkan Nama Karakter di bagian kiri kotak chating. Tombol Tab akan membantu untuk memindahkan kamu di antara kotak-kotak ini.#
+/!,/?,/ho,/lv,/lv2,/swt,/ic,/an,/ag,/$,/...,/thx,/wah,/sry,/heh,/swt2,/hmm,/no1,/??,/omg,/oh,/X,/hp,/go,/sob,/gg,/kis,/kis2,/pif,/ok,/ire,/hgr,/cm,/vex,/sh,/prs,/sp,/dr,/cm,/ywn,/cg,/whp; Ekspresi : Alt + (1~9), Ctrl + (- = \), Ctrl + 2#
+Cara berbicara dengan grup : Tambahkan % selalu di depan pesan#
+Kamu belum cukup skill untuk transaksi.#
+Kamu belum cukup skill untuk berekspresi.#
+Kamu belum cukup skill untuk duduk.#
+Kamu belum cukup skill untuk membuat ruang chating.#
+Kamu belum cukup skill untuk grup.#
+Kamu belum cukup skill untuk berteriak#
+Kamu belum cukup Skill untuk melakukan PK#
+Barang yang dibeli#
+Toko Barang#
+Barang yang dijual#
+Persediaan Barang#
+ dipakai#
+ dilepas#
+Untuk menambah nama di daftar Whisper#
+Cara mengambil screen shots: Tekan [Print Screen] atau [Scroll Lock]#
+Tip Hari ini#
+^3850a0Tahukah kamu bahwa... ^000000  //^709fed#
+Buka jika RO dimulai#
+/tip: membuka `Tip Hari ini'#
+Ada %d Pemain yang terhubung.#
+(%s) masuk#
+(%s) keluar#
+(%s) dikeluarkan#
+%d buah#
+%s : %d buah#
+%s %s : %d buah#
+Barang yang bisa dijual#
+Toko barang#
+Area tidak diketahui#
+Program klien yang kamu pakai berbeda bahasa dengan Server#
+Harap melepaskan barangnya dulu. Kamu bisa mengambil barangnya hanya dari kolom persediaan#
+Kami hanya menyediakan bahasa Indonesia#
+Ini belum diimplementasikan#
+Tidak ada daftar Whisper#
+ : Whisper dari karakter ini diblok.#
+ : Permintaan untuk memblok whisper karakter ini gagal.#
+ : Permintaan untuk memblok whisper karakter ini gagal.(daftar penuh)#
+ : Membuka kembali whisper dari karakter ini.#
+ : Permintaan untuk membuka kembali whisper dari karakter ini gagal#
+ : Permintaan untuk membuka kembali whisper dari karakter ini gagal (daftar penuh)#
+Kamu tidak boleh menggunakan spasi di depan atau belakang nama.#
+Privat#
+Publik#
+Tidak cukup SP#
+Tidak cukup HP#
+Skill gagal#
+Steal gagal#
+Dengan#
+Evenom gagal#
+Kamu tidak bisa menggunakan ID ini di server ini#
+Speed naik#
+Speed turun#
+/Memo: Untuk mengingat suatu tempat sebagai Warp Point (Kalau kamu Acolyte)#
+Area Random#
+Pilih area untuk Warp#
+Skill Lv tidak cukup#
+Tidak ada tempat yang diingat#
+Kamu belum mempelajari Warp#
+Tersimpan sebagai Warp Point.#
+Batal#
+Akan ada kelambatan setelah menggunakan skill#
+Kamu tidak bisa mengambil barang ini karena kelebihan berat.#
+Melebihi kapasitas maksimum#
+Barang dalam Cart#
+Lepas Cart#
+Membuka toko jalanan#
+Silahkan namakan tokomu#
+Tokoku#
+Toko Merchant#
+Barang yang dibeli#
+%s Pembelian gagal %s#
+Stok Habis.#
+%s sebanyak %d buah terjual.#
+Barang yang bisa dimasukkan ke toko#
+Skill gagal karena kamu tidak mempunyai cukup Zeny.#
+Pilih target#
+/pk on: PK On. /pk off: PK Off.#
+Toko#
+Barang dalam Cart [Alt+W]#
+Informasi Dasar#
+Skill tidak bisa digunakan dengan senjata ini.#
+Pembelian %s gagal. Stok habis. Stok saat ini %d.#
+Kamu terputus karena perbedaan waktu antara kamu dan server.#
+Silahkan pakaikan anak panah terlebih dahulu.#
+Kamu tidak bisa menyerang atau menggunakan skill karena kelebihan berat.#
+Kamu tidak bisa menggunakan skill karena kelebihan berat.#
+Anak panah telah dipakai.#
+Red Gemstone diperlukan#
+Blue Gemstone diperlukan#
+Strength#
+Agility#
+Vitality#
+Intelligence#
+Dexterity#
+Luck#
+Serangan#
+DEF#
+Tingkat Akurasi#
+Serangan Kritikal#
+Nama Guild#
+Jumlah point yang bisa digunakan untuk meningkatkan stat#
+Serangan Magic#
+Defense Magic#
+Tingkat Penghindaran#
+Kecepatan serangan#
+Hubungan ke server gagal#
+Option#
+ID kamu diblok, untuk penjelasan, silahkan login di www.ragnarok.co.id#
+ID atau password yang kamu masukkan salah #
+Pilih gaya rambut#
+Hit Point#
+DEF#
+Serangan Snap On#
+Serangan Snap Off#
+Skill Snap On#
+Skill Snap Off#
+/snap: Mengatur snap on/off untuk menyerang, /skillsnap: Mengatur snap on/off untuk skill. /itemsnap: Mengatur snap on/off untuk barang yang ada di tanah.#
+Barang Snap On#
+Barang Snap Off#
+Snap#
+Kamu tidak bisa membawa barang yang sama, lebih dari 3000.#
+Kamu tidak bisa menghapus karakter yang levelnya lebih dari 30. Kalau kamu mau menghapus karakter ini, silahkan kontak tim GM.#
+Selagi bertransaksi, kamu tidak bisa menggunakan toko NPC#
+Nama Toko#
+Pohon Skill#
+Skill Point : %d#
+Skill gagal#
+Pasif#
+Masing-masing#
+Sama rata#
+Masing-masing#
+Pembagian grup#
+Pengaturan grup#
+Bagaimana pembagian EXP#
+Bagaimana pengambilan barang#
+Hanya ketua grup yang bisa mengubah aturan ini.#
+Jangan tanyakan jumlahnya#
+Karakter akan dihapus setelah ^ff0000%d^000000 detik. Silahkan tekan batal untuk keluar#
+Kamu tidak bisa bertransaksi lebih dari 10 tipe barang per transaksi#
+Kamu dibawah umur.#
+Masukkan Email atau kode pribadi#
+Masukkan Email atau kode pribadi#
+Penghapusan karakter gagal karena kamu salah memasukkan Email.#
+#
+Penghapusan karakter gagal karena kamu salah memasukkan SSN.#
+Kamu tidak bisa menjual lebih dari 15 jenis barang sekaligus#
+Kamu dibawah umur, kamu tidak bisa bergabung ke server ini.#
+HP/SP tidak bisa beregenerasi jika beratmu melebihi 50%.#
+Kamu tidak bisa menyerang atau menggunakan skill jika beratmu melebihi 90%.#
+Sekarang HP/SP akan beregenerasi seperti semula.#
+Serangan dan Skill sekarang bisa dilakukan#
+File Game's Exe kamu bukan yang terbaru.#
+Barang sudah terjual habis.#
+Simpan pembicaraan sebagai Text File#
+/Savechat: Menyimpan pembicaraan#
+Daftar#
+Tolak Whisper#
+Mengijinkan Whisper#
+Perlihatkan 'Miss'#
+Perlihatkan 'Miss'#
+Kamera Zoom On#
+Kamera Zoom Off#
+/camera: Kamera Zoom On atau Off. /miss: Perlihatkan 'Miss' On atau Off#
+Lihat info skill#
+Ubah Skill#
+Resolusi Sprite#
+Resolusi Tekstur#
+Atur Detail#
+Kamu mendapat % Zeny#
+Nama Guild#
+Lvl Guild#
+Pemimpin Guild#
+Anggota Guild#
+Lv rata-rata anggota Guild#
+Wilayah#
+Kecenderungan#
+EXP#
+Lambang#
+Point Pajak#
+Sekutu#
+Lawan#
+Info Guild#
+Info Anggota Guild#
+Posisi#
+Skill Guild#
+Riwayat#
+Pengumuman Guild#
+Seluruh Daftar Guild#
+Daftar Whisper#
+Buka Kolom whisper#
+Cara membuka daftar whisper: Tekan [Alt] + [H]#
+Buka daftar whisper secara otomatis#
+Hapus#
+Tutup sejak#
+Waktu terakhir loggin#
+IP terakhir loggin#
+Pengaturan Teman#
+Apakah kamu yakin mau menghapus ?#
+Apakah kamu yakin mau pergi ?#
+Daftarkan sebagai teman#
+Buka Pembicaraan 1:1 dengan teman#
+Buka Pembicaraan 1:1#
+Buka pembicaraan 1:1 bukan dengan teman#
+Alarm saat kamu menerima pembicaraan 1:1#
+Apakah kamu yakin mau mengeluarkan?#
+%s meninggalkan guild#
+Alasan pengunduran diri: %s#
+Kamu gagal membubarkan Guild#
+Alasan pembubaran: %s#
+ID ini sudah dihapus#
+Harga :#
+%s dikeluarkan dari Guild#
+Alasan pengeluaran: %s#
+Kamu tidak bisa memakai barang ini#
+Kamu tidak bisa memodifikasi setup grup#
+Guild telah dibuat.#
+Kamu sudah bergabung dengan Guild#
+Nama Guild ini sudah dipakai#
+ Guild mengundang kamu untuk bergabung. Kamu mau bergabung?#
+Sudah didalam Guild.#
+Tawaran Ditolak#
+Tawaran Diterima#
+Guild kamu penuh#
+Meminta (%s) untuk bergabung dalam Guild#
+Kamu belum cukup Skill untuk menilai#
+Penilaian sudah dilakukan#
+Kamu sudah memakai point kamu untuk hari ini#
+Belum satu bulan sejak kamu menilai orang ini.#
+Kamu mendapat nilai baik dari %s#
+Kamu mendapat nilai buruk dari %s#
+Mengurangi waktu pemblokan chating#
+Menambahkan waktu pemblokan chating#
+Mengajak transaksi dengan (%s)#
+Meminta (%s) untuk bergabung dalam Grup#
+Guild mengajak kamu untuk bersekutu dengan mereka. Terima ?#
+Sudah setuju untuk bersekutu dengan mereka#
+Kamu Menolak Tawarannya#
+Kamu Menerima Tawarannya#
+Mereka mempunyai terlalu banyak sekutu.#
+Kamu mempunyai terlalu banyak sekutu.#
+Permintaan setuju untuk bersekutu dengan#
+Guild berhasil dibubarkan#
+Kamu gagal membubarkan Guild karena SSN kamu salah#
+Kamu gagal membubarkan Guild karena masih ada anggota Guild yang tertinggal#
+Tandakan Guild ini sebagai lawan#
+Pilih Warna Rambut#
+Kamu membutuhkan barang yang diperlukan untuk membuat Guild#
+Info Monster#
+Nama#
+Lvl#
+HP#
+Jenis#
+Tipe#
+MDEF#
+Unsur#
+Netral#
+Air#
+Tanah#
+Api#
+Angin#
+Poison#
+Holy#
+Dark#
+Ghost#
+Undead#
+Kamu tidak bisa membuat barang saat ini#
+Daftar barang yang bisa kamu buat#
+ akan dibuat#
+ membutuhkan bahan#
+ Pembuatan barang gagal.#
+ Pembuat barang berhasil.#
+Pembuatan barang %s gagal.#
+Pembuat barang %s berhasil.#
+Level kamu tidak cukup tinggi.#
+level kamu terlalu tinggi.#
+Profesi kamu tidak cocok#
+Simpan pesan dalam Talkie Box#
+Silahkan ketik pesan dalam kotak Talkie#
+Kirim ke Guild#
+Kamu belum membayar ID ini. Apakah kamu mau membayarnya sekarang?#
+Hubungan ke server gagal#
+Server masih mengenali login terakhir kamu. Cobalah beberapa menit lagi.#
+Lepaskan Falcon#
+Turun dari Pecopeco#
+Kecil#
+Sedang#
+Besar#
+Double#
+Triple#
+Kwartet#
+Kamu dilarang login sampai %s.#
+'s#
+'s Api#
+'s Es#
+'s Angin#
+'s Tanah#
+202.43.167.66#
+6900#
+http://www.ragnarok.co.id#
+Bunuh %s#
+Sangat Kuat#
+Sangat sangat kuat#
+Sangat sangat sangat kuat#
+Alasan pengeluaran#
+Kecepatan serangan naik.#
+Kecepatan serangan turun.#
+Serangan senjata ditingkatkan#
+Serangan senjata dikurangi#
+Waktu proses skill dikurangi#
+Waktu proses skill kembali ke normal#
+Senjata sudah dimasuki Poison#
+Senjata sudah dimasuki Holy Ghost#
+Senjata sudah kembali ke normal#
+Armor sudah dimasuki Holy Ghost#
+Armor telah kembali menjadi normal.#
+Barrier diaktifkan.#
+Barrier selesai.#
+Weapon perfection dilakukan.#
+Weapon perfection selesai.#
+Power-Thrust dilakukan.#
+Power-Thrust selesai.#
+Maximize-Power dilakukan.#
+Maximize-Power dibatalkan.#
+[Server Baru]#
+(%d)#
+(Dalam perawatan)#
+Anggota Guild %s telah terhubung.#
+Anggota Guild %s telah keluar.#
+Kamu mendapat %s Base EXP#
+Kamu mendapat %s Job EXP#
+Kamu meninggalkan Guild#
+Kamu dikeluarkan dari Guild#
+Spesifikasi barang sukses#
+Spesifikasi barang gagal#
+Compounding berhasil#
+Compounding gagal#
+Status Lawan sudah di set.#
+Guild memiliki terlalu banyak lawan.#
+Sudah di set menjadi Lawan#
+Upgrade berhasil#
+Upgrade gagal#
+Area tidak bisa digunakan untuk teleport#
+Area tidak bisa digunakan untuk teleport#
+Kamu tidak bisa keluar. Cobalah lagi setidaknya setelah 10 detik#
+Posisi#
+Profesi#
+Note#
+Setia#
+Pajak#
+Meninggalkan Guild#
+Keluar#
+Rank#
+Gelar#
+undang#
+hukum#
+% Exp#
+Judul#
+Isi#
+Nama Guild#
+Lvl Guild#
+Anggota Guild#
+Ranking#
+Spesifikasi barang#
+Masukkan Kartu#
+Silahkan masukkan alasan pengunduran diri#
+Silahkan masukkan alasan pengeluaran#
+Silahkan Tutup Toko.#
+Nama Skill#
+Nama Barang#
+http://ragnarok.lytogame.com/default.asp#
+Kapasitas IP ini penuh.  Apa kamu ingin membayar jalur pribadi?#
+Kamu sudah melewati batas waktu yang kamu bayarkan. Permainan akan dimatikan secara otomatis.#
+Nama terlalu panjang. Silakkan masukkan nama 23 kata panjangnya#
+#
+Kamu melakukan pembayaran dengan jalur pribadi.#
+Kamu membayar jalur pribadi. Waktu tersisa xx hrs xx mins xx secs.#
+Gratis!#
+Kamu bebas untuk mencoba, waktumu tersedia xx hrs xx mins xx secs.#
+Kamu melakukan pembayaran jalur umum. Waktu yang tersedia xx hrs xx mins xx secs.#
+Kamu membayar akses dengan batas waktu. Waktu tersedia xx hrs xx mins xx secs.#
+Kamu bebas mencoba akses internet.#
+Kamu bebas memakai akses internet.#
+Kamu membayar batas waktu di website.#
+Daftar Ekspresi#
+/emo#
+/!#
+/?#
+/ho#
+/lv#
+/lv2#
+/swt#
+/ic#
+/an#
+/ag#
+/$#
+/...#
+/thx#
+/wah#
+/sry#
+/heh#
+/swt2#
+/hmm#
+/no1#
+/??#
+/omg#
+/oh#
+/X#
+/hp#
+/go#
+/sob#
+/gg#
+/kis#
+/kis2#
+/pif#
+/ok#
+Daftar Shortcut#
+ID anda telah di blok#
+Hubungan ke server gagal. Silahkan mencoba lagi#
+Hubungan ke server gagal karena login dari IP yang tidak sesuai.#
+Hubungan ke server gagal.#
+Kamu dipaksa untuk disconnect  oleh Game Master#
+Kamu tidak dapat menggunakan skill karena terlalu berat#
+Tidak bernama#
+Selamat! Ranking %s telah naik menjadi %d#
+Sayang sekali! ranking %s turun ke %d#
+Info Peliharaan#
+Lapar#
+Relasi#
+Harap tidak membuka ruang chatting saat berjualan#
+buah#
+Kamu telah kalah %s.#
+Kamu baru saja dikalahkan oleh %s.#
+Makanan - `%s' tidak tersedia#
+Memberi Makan Peliharaan#
+Performa#
+Kembali ke Telur#
+Lepas Aksesoris#
+Lihat info peliharaan#
+Aksesoris#
+Dipakai#
+Daftar Peliharaan#
+Dilepas#
+Apakah kamu yakin mau memberi makan peliharaan ?#
+Hanya angka(0~9) yang tersedia#
+Kamu tidak bisa menjual barang yang belum dispesifikasi.#
+Barang pada posisi 0 Zeny muncul. Lanjutkan ?#
+[Daftar Ekspresi]#
+xx6#
+xx7#
+Karakter dari account yang sama sudah bergabung.#
+ - diatas 18 tahun#
+Provoke dilakukan.#
+Provoke selesai.#
+Endure dilakukan.#
+Endure selesai.#
+Improve Concentration dilakukan.#
+Improve Concentration selesai.#
+Hiding dilakukan.#
+Hiding selesai.#
+Cloacking dilakukan.#
+Cloacking selesai.#
+Poison React dilakukan.#
+Poison React selesai.#
+Speed diturunkan#
+Quagmire selesai.#
+Defense ditingkatkan#
+Angelus selesai.#
+Blessing dilakukan.#
+Blessing selesai.#
+Signum Crusis dilakukan.#
+Signum Crusis selesai.#
+Slow Poison dilakukan.#
+Slow Poison selesai.#
+Regenerasi HP/SP ditingkatkan#
+Magnificat selesai.#
+Luck ditingkatkan#
+Gloria selesai.#
+Serangan ganda untuk satu pukulan dilakukan#
+Lex Eterna selesai.#
+Kecepatan serangan ditingkatkan#
+Kecepatan serangan diturunkan#
+Kamu menaiki Peco Peco#
+Kamu turun dari Peco Peco#
+Kamu membawa Falcon#
+Kamu melepas Falcon#
+Play Dead dilakukan.#
+Play Dead selesai.#
+STR ditingkatkan#
+STR kembali ke normal#
+Energy Coat dilakukan.#
+Energy Coat selesai.#
+Armor hancur#
+Armor baru saja dibetulkan#
+Senjata hancur.#
+Senjata baru saja dibetulkan#
+Invisibility dilakukan.#
+Invisibility selesai.#
+N/A#
+Lepaskan Arrow/Bullet/Shuriken dahulu#
+Daftar Anak Panah#
+Daftar Cart#
+Kamu harus menggunakan Cart#
+Kamu tidak bisa membuat ruang Chating#
+N/A#
+Kamu tidak bisa menggunakan barang ini selagi duduk#
+Waktu yang tersisa atas pemblokkan chating dan skill oleh GM adalah %d menit.#
+Pemblokan atas chating dan skill sudah dilepas#
+- [Kosong],#
+Sangat Lapar#
+Lapar#
+Normal#
+Kenyang#
+Sangat Kenyang#
+Kurang Akrab#
+Malu-malu#
+Akrab#
+Setia#
+Unkown#
+Kamu telah terhubung selama %hari %djam %dmenit.#
+ID ini sedang dimainkan saat ini. Cobalah beberapa saat lagi.#
+Kamu telah bermain selama %djam %dmenit.#
+ID kamu tidak memiliki voucer bermain.#
+ID ini tidak dapat terhubung ke server Sakray.#
+Nama peliharaanmu harus kurang dari 24 huruf#
+Kamu hanya bisa merubah nama peliharaanmu sekali saja. Nama peliharaanmu akan berubah menjadi ^0000ff^0000ff %s^000000^000000.  Lanjutkan ?#
+/font#
+Guild kamu kekurangan zeny untuk melakukan hal ini.#
+Batas Zeny guild kamu membuatmu tidak bisa melakukan hal ini.#
+Efek sihir diaktifkan#
+Efek sihir tidak diaktifkan#
+Biaya yang diperlukan#
+Jika kamu ingin menjatuhkan barang, kamu harus membuka kolom persedianmu terlebih dahulu (alt+e)#
+Internet Cafe Time Plan has been ended. Would you like to continue the game with your personal play time?#
+No Msg#
+No Msg#
+Jumlah zeny kamu kurang atau batas uang kamu membuatmu melakukan hal ini.#
+Karakter kamu sudah mati. Tekan ESC untuk menu.#
+  yang kamu dapat adalah %d#
+Daftar sihir#
+/minimize#
+Barang ini sudah rusak.#
+/noshift : Kamu bisa menggunakan kemampuan sihir untuk menyerang monster (cth: heal) tanpa menekan tombol shift. ON/OFF#
+[no shift] sudah diaktifkan. [ON]#
+[no shift] Dinonaktifkan. [OFF]#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+ /aura: Efek aura On atau Off#
+Efek Aura akan ditampilkan#
+Efek Aura akan dihilangkan#
+Block Chat sudah %d kali#
+Daftar Block chat#
+/showname : merubah tipe tampilan nama#
+/noctrl : Memukul terus tanpa menekan Ctrl#
+Memukul terus tanpa menekan Ctrl [Auto attack ON]#
+Memukul terus dengan menekan Ctrl [Auto attack OFF]#
+Berikan Block Chat#
+Block Chat dinonaktifkan dan hapus lognya#
+Mengurangi waktu pemblokan chating (tapi log tidak dihapus)#
+Huruf menjadi normal [showname tipe 1]#
+Huruf menjadi tipis dan nama grup akan ditampilkan [showname tipe 2]#
+/doridori : Menggerakan kepala#
+Warnet ini membayar sekarang#
+Voucher kamu masih berlaku sampai dengan %d hari %d jam %d menit lagi. \n Batas waktu Voucher kamu masih berlaku sampai dengan %d hari %d jam %d menit lagi.#
+/bingbing : Memutar tubuh karakter#
+/bangbang : Memutar tubuh karakter ke arah sebaliknya#
+/skillfail : Menghilangkan tulisan merah saat skill gagal ON atau OFF#
+Menampilkan tulisan 'Skill Gagal' [Display ON]#
+Menghilangkan tulisan 'Skill Gagal' [Display OFF]#
+/notalkmsg : Pembicaraan tidak akan ditampilkan di kotak chat [ON atau OFF]#
+Pembicaraan ditampilkan dalam kotak chat [ON]#
+Pembicaraan tidak ditampilkan dalam kotak chat [OFF]#
+/set1 : /noctrl + /showname + /skillfail#
+/fog : FOG efek On atau Off#
+Kamu mendapat lamaran untuk pernikahan, apakah kamu mau menerimanya?#
+Bagaimana Pembagian Barang#
+Masing-masing#
+Pembagian Grup#
+nProtect KeyCrypt#
+Program virtual keyboard terdeteksi.\n\nApakah kamu ingin menginstal program keyboard virtual ?   \n\n(sistem akan direstart setelah penginstalan)#
+Penginstallan sudah selesai.  \n\nSistem akan direstart sekarang.#
+Proses penginstallan gagal#
+Virtual keyboard akan dilewatkan#
+Beberapa file untuk virtual keyboard tidak ada atau error.  \n\n(npkeyc.vxd, npkeyc.sys, npkeycs.sys)#
+Keyboard USB terdeteksi. \n\nApakah kamu ingin menginstal program USB keyboard ?    \n\n(sistem akan direstart setelah penginstalan)#
+http://www.ragnarok.co.id#
+Program keamanan tidak terinstall dengan baik.#
+Program keamanan tidak terinstall dengan baik. Program Ragnarok Online tidak dapat dinyalakan#
+Program keamanan sudah terinstall tetapi belum dibersihkan. Program Ragnarok Online tidak dapat dinyalakan#
+NPX.DLL register error atau file sistem keamanan hilang dan error.#
+Erorr ditemukan silakan untuk menghubungi pihak support kami#
+Apakah kamu yakin ingin keluar ?#
+Kamu tidak dapat terhubung dengan server untuk pemeriksaan keamanan, cobalah beberapa saat lagi atau mgnhubungi pihak support kami.#
+Sayangku#
+/report : Menyimpan file chat#
+File ini akan digunakan untuk melaporkan suatu kejadian#
+Aku Cinta Kamu!#
+Layar atau efek terlalu terang, harap atur brightness dari monitormu#
+Jika full screen mode gagal, silahkan tekan alt+tab atau ctrl+esc untuk mematikan program Ragnarok dan mencoba menyalakannya lagi.#
+(%d Pemain) - Server Komersial#
+(%d Pemain) - Server Gratis#
+Pemain Server Gratis tidak bisa masuk ke Server Komersial.#
+Klik kanan pada mouse bisa digunakan untuk skill yang tersimpan di F9 [/q1 ON]#
+Skill tidak bisa digunakan dengan klik kanan pada mouse [/q1 OFF]#
+/quickspell  : Klik kanan pada mouse bisa digunakan untuk skill yang tersimpan di F9 On Off#
+Scroll pada mouse bisa digunakan untuk skill yang tersimpan di F7 dan F8 [/q2 ON]#
+Skill tidak bisa digunakan dengan Scroll mouse [/q2 OFF]#
+/quickspell2 : Scroll pada mouse bisa digunakan untuk skill yang tersimpan di F7 dan F8 On Off#
+/q3 : /quickspell (/q1) + /quickspell2 (/q2)#
+/ire#
+/hgr#
+/lov#
+/vex#
+/sh#
+/prs#
+/sp#
+/dr#
+/cm#
+/ywn#
+/cg#
+/whp#
+/Emotion : menunjukkan daftar ekspresi yang bisa digunakan.#
+Skill pada kolom hotkey 1, 2, 3 bisa digunakan dengan keyboard. [/bm ON]#
+Skill pada kolom hotkey 1, 2, 3 tidak bisa digunakan dengan keyboard. [/bm OFF]#
+/battlemode : dengan menekan Q ~ O, kamu bisa menggunakan skill yang ada di kolom hotkey 2.#
+              dengan menekan A ~ L, kamu bisa menggunakan skill yang ada di kolom hotkey 3.#
+Saat memainkan Ragnarok, kecepatan game akan menurun jika ada program yang sedang aktif.#
+malaikat, bisakah kamu mendengarku? ^^;#
+aku adalah#
+ si SUPER NOVICE~#
+berikan aku kekuatan super#
+  Mereka ingin mengadopsi, apakah kamu menginginkannya??#
+                     Dengan menekan Z ~ >, kamu bisa menggunakan skill yang ada pada kolom hotkey 1. On Off#
+                    Kamu bisa berbicara dengan menekan tombol spasi/Enter satu kali sebelum mengetik.#
+File Game guard tidak ditemukan atau telah diubah. Kamu harus menginstall kembali file Game Guard.#
+Beberapa file system dari Window ada yang rusak. Install kembali internet explorer.#
+Instalasi game guard tidak sepenuhnya berhasil. Kamu harus menginstall kembali.#
+Beberapa program tidak dikenal terdeteksi. Matikan program lainnya sebelum log in kembali.#
+Update game guard dibatalkan. Jika ada kesulitan dalam hubungan, silahkan periksa koneksi internet dan firewall kamu.#
+Hubungan ke server game guard untuk update gagal. silahkan periksa koneksi internet dan firewall kamu.#
+Update game guard belum selesai. Hal ini diperlukan untuk memeriksa virus atau memulai game setelah sesuai dengan settingan program administrator.#
+/notrade : Ajakan transaksi secara otomatis akan ditolak (On Off)#
+Aplikasi transaksi secara otomatis akan ditolak [/nt ON]#
+Aplikasi transaksi akan berjalan seperti biasanya [/nt OFF]#
+Barang yang sama tidak bisa dibeli lebih dari 30.000 pada saat yang bersamaan.#
+Bahannya tidak lengkap.#
+Informasi ID kamu yang tersisa adalah %s#
+ID kamu diblok untuk pemeriksaan hacking. Silahkan kirimkan email ke gamemaster@ragnarok.co.id #
+ID kamu diblok untuk pemeriksaan bugs.#
+Barang yang dapat diperbaiki#
+Barang sudah diperbaiki.#
+Perbaikan barang gagal. (Silahkan cek kembali bahan yang dibutuhkan dan jarak kamu)#
+Pengecekan status sistem dimulai. [GM mode][/sc ON]#
+Pengecekan status sistem dihentikan. [GM mode][/sc OFF]#
+/systemcheck: Pengecekan sistem status. [GM mode]#
+(%s) ingin menjadi temanmu. Apakah kamu menerimanya?#
+Kamu tidak dapat menambahkan teman lagi ke dalam list.#
+(%s) tidak dapat menambah jumlah teman lagi.#
+(%s) adalah temanmu sekarang.#
+(%s) menolak tawaran untuk menjadi teman.#
+Karakter error karena client RO kamu. e-mail gamemaster@ragnarok.co.id #
+Barang akan dijual dengan harga 99,990,000 zeny meskipun kamu menaruh lebih dari 99,990,000 zeny.#
+(Di bawah sekali)#
+(Di bawah)#
+(Sedang)#
+(Di atas)#
+(Di atas sekali)#
+GM telah memblok chat kamu karena kelakuan buruk yang kamu lakukan.#
+Blok chat akan selesai dalam % menit.#
+Blok chat telah selesai.#
+GM memberikan Blok Spam Message, kamu tidak dapat melakukan chat secara otomatis.#
+Blok Spam Message akan selesai dalam %d menit.#
+Blok Spam Message telah selesai. Jangan mengulang pesan yang sama secara terus menerus.#
+%s dan %s telah bercerai.#
+%s telah dipilih sebagai Sun Place dari Taekwon Master %s.#
+%s telah dipilih sebagai Moon Place dari Taekwon Master %s.#
+%s telah dipilih sebagai Star Place of Taekwon Master %s.#
+Sun Place dari Taekwon Master  %s adalah  %s.#
+Moon Place dari Taekwon Master  %s adalah %s.#
+Star Place dari Taekwon Master %s adalah  %s.#
+Taekwon Master, %s telah memilih  %s sebagai Sun Monster.#
+Taekwon Master, %s telah memilih  %s sebagai Lunar Monster.#
+Taekwon Master, %s telah memilih  %s sebagai Stellar Monster.#
+Sun Place dariTaekwon Master %s  adalah %s.#
+Lunar Place dariTaekwon Master %s  adalah %s.#
+Stellar Place dariTaekwon Master %s  adalah %s.#
+/window: untuk merapikan dan melekatkan kolom informasi.#
+Apabila kolom informasi digerakkan, kolom informasi akan tetap melekat. [/wi ON] #
+Apabila kolom informasi digerakkan, kolom informasi tidak melekat.[/wi OFF]#
+/pvpinfo: kamu dapat melihat catatan dan nilai PvP kamu.#
+Saat ini, %d Menang, %d Kalah, PvP point kamu sekarang %d.#
+Manner Point telah diberikan.#
+PK dapat dilakukan di tempat ini. Persiapkan diri kamu untuk pertarungan.#
+Game Guard gagal di-update. Silahkan un-install Spyware dan Anti Virus sebelum kamu login.#
+Game dihentikan karena permasalahan kompatibilitas dengan Windows.#
+Kamu tidak dapat chatting, menggunakan skill dan menggunakan item sekarang.#
+Kamu tidak dapat login sekarang karena sedang dilakukan pemindahan karakter.#
+Karena penghapusan karakter pasangan kamu, saat ini kamu tidak dapat login.#
+Novice#
+Swordman#
+Magician#
+Archer#
+Acolyte#
+Merchant#
+Thief#
+Knight#
+Priest#
+Wizard#
+Blacksmith#
+Hunter#
+Assassin#
+Novice#
+Swordman#
+Magician#
+Archer#
+Acolyte#
+Merchant#
+Thief#
+Knight#
+Priest#
+Wizard#
+Blacksmith#
+Hunter#
+Assassin#
+Apakah kamu setuju untuk diadopsi (%s)#
+Kamu tidak bisa menaikkan status lebih dari 80 dan SP,HP kamu juga lebih kecil ketika kamu menjadi seorang anak#
+Semua status negatif sudah selesai#
+Kamu dilindungi dari segala status selama 1 menit#
+Maximum HP kamu meningkat selama 1 menit#
+Maximum SP kamu meningkat selama 1 menit#
+Skill kamu meningkat selama 1 menit#
+Senjata kamu dimasuki kekuatan holy selama 1 menit#
+Armor kamu dimasuki kekuatan holy selama 1 menit#
+Tingkat pertahanan naik selama 10 detik#
+Serangan meningkat selama 1 menit#
+Akurasi dan penghindaran meningkat selama 1 menit#
+Kamu tidak bisa mengadopsi seorang anak lebih dari 1#
+Kamu harus minimal level 70 untuk mengadopsi seorang anak#
+[POINT] Blacksmith Point kamu naik sebesar %d. sekarang kamu memiliki %d point.#
+[POINT] Alchemist Point kamu naik sebesar %d. sekarang kamu memiliki %d point.#
+Wahai peri keadilan, bisakah kamu mendengar suaraku?#
+Saya adalah#
+Super Novice~#
+Aku membutuhkan~ Bantuanmu~ T_T#
+/notalkmsg : menampilkan atau menghilangkan tulisan dalam chat box#
+Menampilkan tulisan dalam chat box [Chat ON]#
+Menghilangkan tulisan dalam chat box [Chat OFF]#
+Item ini dapat di upgrade#
+Upgrade Senjata : %s#
+Upgrade Senjata : %s#
+Kamu tidak cukup skill untuk melakukan refine %s.#
+Kamu tidak bisa melakukan refine barang yang dibutuhkan tidak lengkap, (%s).#
+Strip gagal karena perlenkapan sudah dilindungi.#
+Kamu tidak bisa mengadopsi karakter yang sudah menikah#
+Nama ini mirip dengan nama didaftar temanmu, Hati-hati terhadap penipuan mengunakan nama yang mirip#
+/hi atau /hi pesan : Memberikan salam kepada semua karater yang ada di daftar teman#
+Nama ini mirip dengan nama diguild kamu, Hati-hati terhadap penipuan mengunakan nama yang mirip#
+Barang ini akan dijual sebesar 99 juta walapun kamu memasukkan angka Barang akan dijual dengan harga 99,990,000 zeny meskipun kamu menaruh lebih dari 99,990,000 zeny.#
+Bila teman kamu whisp maka akan muncul [ Friend ] dan bila member guild kamu whisp maka akan muncul [ Member ].#
+( From ChracterName : ) Whisper ini bukan berasal dari teman ataupun guild member.#
+/blacksmith : Menunjukkan rangking dari job blacksmith.#
+/alchemist : Menunjukkan rangking dari job alchemist.#
+ALT+Y : Menampilkan perintah lain di window.#
+[POINT] Misi taekwon telah meningkat oleh %d. Totalnya adalah %d points.#
+[Taekwon Mission] Sasaran monster : %s (%d%%)#
+Error - Tidak bisa terhubung dengan GameGuard : %lu#
+Speed Hack terdeteksi.#
+Illegal program, (%s) Terdeteksi#
+Program Game atau Gameguard ada kerusakan#
+Proses Gameguard sedang berjalan. Tunggu sebentar dan restart game.#
+Proses Gameguard sedang berjalan. Tunggu sebentar dan restart game.#
+GameGuard tidak terdeteksi, cobalah restart program.#
+Gagal untuk membaca program scan dan gameguard karena memory terlalu rendah atau ada error pada komputer.#
+Homunculus informasi#
+Homunculus daftar Skill#
+Nama dari homunculus maximal adalah 23 huruf atau kurang#
+Kamu bisa merubahnya hanya satu kali saja only once. nama homunculus kamu akan menjadi^0000ff^0000ff %s^000000^000000. Apakah ini sudah benar?#
+AFK = Away From Keyboard#
+[Auto Msg] #
+Menyalakan Pesan otomatis ketika kamu tidak ada ditempat#
+Mematikan Pesan otomatis ketika kamu tidak ada ditempat#
+Silakan ketik pesan otomatis kamu#
+/bling#
+/spin#
+/sigh#
+/twnk#
+/noisy#
+/OTL#
+/dice#
+/pk : Menampilkan 10 pemain dengan point PK tertinggi#
+[POINT] Point PK Ranking telah naik sebesar %d. Point PK kamu sekarang adalah %d point.#
+Perubahan dapat dilakukan#
+^ff0000^ff0000Homonculus kamu akan hilang^000000^000000 Jika kamu membuangnya, semua informasi tentang homonculus juga akan hilang. Apakah kau mau melanjutkannya ?#
+Data status homonculus akan disimpan#
+Data status homonculus akan tidak akan disimpan#
+Defender#
+Monk#
+Sage#
+Rogue#
+Alchemist#
+Bard#
+Defender#
+Monk#
+Sage#
+Rogue#
+Alchemist#
+Dancer#
+Novice High#
+Swordman High#
+Magician High#
+Archer High#
+Acolyte High#
+Merchant High#
+Thief High#
+Novice High#
+Swordman High#
+Magician High#
+Archer High#
+Acolyte High#
+Merchant High#
+Thief High#
+Lord Knight#
+High Priest#
+High Wizard#
+Master Smith#
+Sniper#
+Assassin Cross#
+Lord Knight#
+High Priest#
+High Wizard#
+Master Smith#
+Sniper#
+Assassin Cross#
+Paladin#
+Champion#
+Scholar#
+Stalker#
+Biochemist#
+Minstrel#
+Paladin#
+Champion#
+Scholar#
+Stalker#
+Biochemist#
+Gypsy#
+Kamu belum melakukan registrasi. Apakah kamu ingin melakukan registrasi dahulu ?#
+Kamu telah melakukan 3 kali kesalahan menuliskan password. Tuliskan passwordmu dengan benar.#
+Kamu telah gagal untuk mengganti password.#
+password harus lebih dari 4 huruf dan harus kurang dari 8 digit.#
+Password#
+Password baru#
+Ulangi Password kamu#
+Password kamu sudah berubah#
+Kedua password itu tidak sama#
+Silakan masukan Password#
+Homunculus milikmu kelaparan! Dia akan pergi jika kamu tidak memberinya makan.#
+EXP#
+[EVENT] Selamat kamu telah memenangkan hadiah dari event.#
+Tidak kenal#
+Musuh#
+Homunculus's akan dikontrol oleh pemain AI.#
+Homunculus's akan dikontrol otomatis AI.#
+Kotak Surat#
+Tulis Surat#
+Baca Surat#
+Registrasi ini hanya bisa dilakukan satu kali dan tidak bisa diubah (permanen). apakah kamu melanjutkannya ?#
+Mendapatkan Mail Item.#
+Gagal mendapatkan Mail item.#
+Mail kamu sudah terkirim.#
+Mail gagal di kirimkan karena ada item yang tidak diketahui.#
+[Angel of Sun, Moon, dan Star] Tempat registrasi akan dikembalikan seperti semula!#
+Gagal mendapatkan list item dari pelelangan.#
+Pilih item untuk dilelang yang ada di list.#
+Pelelangan telah di buka.#
+Tidak di izinkan membatalkan pelelangan jika sudah melakukan penawaran.#
+mail sudah di hapus.#
+gagal menghapus mail.#
+Senjata jarak jauh telah dipakai.#
+%s Telah logged in.#
+%s telah logged out.#
+/loginout : Tunjukan informasi jika teman atau anggota guild terhubung. on off#
+Tunjukan informasi jika teman atau anggota guild terhubung. [/li ON]#
+Jangan Tunjukan informasi jika teman atau anggota guild terhubung. [/li OFF]#
+Program sedang berjalan.#
+program ilegal terdeteksi.#
+program ilegal terdeteksi.#
+program ilegal terdeteksi.#
+program ilegal terdeteksi.#
+program ilegal terdeteksi.#
+(Thai)You have logged in by using iCafe Billing System.#
+Sebelumnya#
+Selanjutnya#
+Lelang#
+Melihat Daftar Item#
+Mendaftarkan Item#
+Penjualan berlangsung#
+Pembelian berlangsung#
+Gambar#
+Nama Item#
+harga/harga max#
+Penjual#
+Penawar#
+Durasi#
+%m %d %H#
+Set waktu#
+Biaya#
+Tidak ada Lelang saat ini#
+Tidak ada list Penjualan#
+tidak ada list Pembelian#
+Informasi Lelang Salah#
+Informasi Item tidak bisa ditampilkan#
+Sudah melakukan pendaftaran lelang#
+Harga sekarang#
+Tawaranmu#
+Beli Harga Max#
+Zeny kamu#
+Tawaran tertinggi#
+Tawaran sebelumnya#
+Tawaran selanjutnya#
+Apakah kamu ingin membeli item ini ?#
+Apakah kamu ingin menjual item ini#
+Penawaran#
+Beli Harga Max#
+Lelang Selesai#
+Tawaran lain#
+Kamu memenangkan Pelelangan#
+Kamu gagal dalam lelang#
+Kamu tidak punya cukup zeny#
+Armor#
+Kartu#
+DLL#
+No.Lelang#
+Cari#
+Kamu mengakhiri pelelangan#
+Kamu tidak bisa mengakhiri lelang#
+Angka penawaran salah#
+Untuk#
+Judul#
+Kamu menerima Mail Baru#
+Loading...#
+Kamu tidak bisa melakukan Lelang item 5 kali dalam waktu bersamaan#
+Kamu tidak bisa melakukan penawaran 5 kali dalam waktu bersamaan#
+Harap mengambil semua item sebelum mendelete mail#
+Kamu harus memasukkan Judul#
+/shopping : klik nama toko untuk melihat barang dagangan dan klik kanan untuk membatalkannya. On Off#
+Dengan mengunakan klik kiri kamu dapat melihat toko dan klik kanan untuk menutup toko. [/sh ON]#
+Toko akan terbuka dengan mengunakan double klik pada nama toko. [/sh OFF]#
+Silakan masukan zeny untuk mengirimkan pesan ini.#
+Zeny kamu tidak cukup untuk membayar biaya lelang.#
+Status#
+Memberi Makan#
+Bersiaga#
+Super Novice#
+Super Novice#
+Taekwon Boy#
+Taekwon Girl#
+Taekwon Master#
+Taekwon Master#
+Soul Linker#
+Soul Linker#
+Silakan periksa koneksi kamu ada 2 account yang terhubung bersamaan.#
+ID kamu diregis bulanan. (tersisa: %d hari)#
+ID kamu diregis dengan hitungan jam. (sisa waktu adalah : %d jam % menit % detik)#
+Kamu tidak bisa memasukan item ini dalam pesan.#
+Kamu tidak bisa menerima item lagi. item yang lain akan berada dalam pesan.#
+Laki-laki#
+Wanita#
+Kamu adalah pemain baru#
+Silakan masukkan kode dengan benar untuk menghapus karakter.#
+Silakan gunakan dengan format yang benar.#
+Silakan gunakan kunci ini#
+Silakan masukkan kode kartu password dengan benar.#
+PT Information#
+PT_ID is %s#
+NUM_ID is %s#
+Jangan melupakan hal ini.#
+1001#
+1002#
+1003#
+1004#
+1006#
+1007#
+1008#
+1009#
+1012#
+1013#
+1014#
+1015#
+1019#
+1020#
+1021#
+1023#
+1024#
+1025#
+1027#
+1028#
+10#
+20#
+40#
+50#
+60#
+70#
+80#
+90#
+100#
+110#
+Apakah kamu ingin menerima 30 point?#
+30 poin(5 jam) sudah dimasukkan#
+Kamu tidak bisa membuat daftar barang (useable item).#
+Kamu tidak bisa membuat daftar barang yang belum diidentifikasi.#
+Silakan tutup window cart kamu terlebih dahulu.#
+Silakan tutup window mail kamu terlebih dahulu.#
+Peluru telah terpasang.#
+Surat telah di kirim kembali ke pengirim.#
+Tidak ada surat.#
+Dalam beberapa waktu, lebih dari 30 pemain memiliki alamat IP yang sama, terhubung ke dalam game. Silahkan periksa masalah ini.#
+Dalam beberapa waktu, lebih dari 10 koneksi memiliki alamat IP yang sama, telah dibuat. Silahkan periksa masalah ini.#
+Silahkan restart game.#
+Bodyguard Info. - Archer Type#
+Bodyguard Info. - Swordman Type#
+Bodyguard Info. - Spearman Type#
+Waktu#
+Loyalitas#
+Summon#
+Bunuh#
+Kamu bisa merasakan kemarahan dari pet karena tidak memberikan dia makan.#
+[POINT] Taming Mission Ranking Poin telah meningkat %d. The total ialah %d poin.#
+[Taming Mission] Target Monster : %s#
+/hunting : kamu dapat memeriksa daftar hunting.#
+[Angel's Question] Tolong beritahu saya. Berapa banyak %s skill yang kamu miliki?#
+[Angel's Question] Tolong beritahu saya. Berapa banyak jika kamu membagi zeny milikmu menjadi 100000?#
+[Angel's Question] Tolong beritahu saya. Tanggal berapa hari ini?#
+[Angel's Question] Tolong beritahu saya. Berapa banyak %s yang kamu miliki?#
+[Angel's Question] A adalah 1 dan Z adalah 26. berapakah jika kamu menambahkan semua alphabet dari nama 'SiYeon's.# 
+[Angel's Question] A adalah 1 dan Z adalah 26. berapakah jika kamu menambahkan semua alphabet dari 'Munak'? Dia adalah salah satu dari monster yang populer.#
+[Angel's Question] A adalah 1 dan Z adalah 26. berapakah jika kamu menambahkan semua alphabet dari 'Bongun'? Saya sangat menyukainya.#
+[Angel's Question] A adalah 1 dan Z adalah 26. berapakah jika kamu menambahkan semua alphabet dari 'Ragnarok', dunia dimana kita tinggal?#
+[Angel's Question] A adalah 1 dan Z adalah 26. Online angel telah sangat membantu kita. Apa yang akan terjadi jika kamu menambahkan semua alphabets 'Online'?#
+[Angel's Question] A adalah 1 dan Z adalah 26. Apa yang akan terjadi jika kamu menambahkan semua alphabets dari kata 'Death' yang melambangkan Knight yang berani menghadapi Death?#
+[Angel's Question] A adalah 1 dan Z adalah 26. Oh~Saya pikir knight sangat menarik. Apa yang akan terjadi jika kamu menambahkan semua alphabets dari kata 'Knight'?#
+[Angel's Question] A adalah 1 dan Z adalah 26. Apakah yang akan terjadi jika kamu menambahkan semua alphabet dari kata 'Gravity'?#
+[Angel's Question] A adalah 1 dan Z adalah 26. Sangatlah penting untuk tetap hidup tenang dalam kegelapan. Apa yang akan terjadi jika kamu menambahkan semua alphabet dari kata 'Dark'?#
+[Angel's Question] A adalah 1 dan Z adalah 26. Apa yang akan terjadi jika kamu menambahkan semua alphabet dari kata 'Collector' yang suka mengumpulkan sesuatu?#
+[Angel's Answer] Terima kasih karena telah memberitahu saya informasinya.#
+[Angel's Answer] Kamu adalah orang yang penuh cinta. Saya sangat senang.#
+[Angel's Answer] Saya sangat kecewa dengan kamu.#
+[POINT] Ranking Point telah meningkat %d. Jumlahnya adalah %d points.#
+[%s] Koin: %d Koin#
+Karakter yang tidak dipilih akan dihapus. Lanjutkan?#
+Kamu tidak dapat memilih lebih dari 8.#
+Apakah kamu ingin mengubah namamu menjadi '%s'?#
+Nama karakter telah diganti dengan sukses.#
+Pengubahan nama karakter gagal.#
+Kamu hanya dapat membeli satu jenis item.#
+Karakter belum terpilih. Kamu harus memilih minimal satu karakter.#
+Nama karakter telah diganti sebelumnya. Kamu tidak dapat mengganti nama lebih dari satu kali.#
+Informasi pemain masih belum benar.#
+Pemain lain telah menggunakan nama karakter tersebut. Silahkan gunakan nama yang lain.#
+Anggota grup tidak dapat ikut karena kamu bukan ketua grup.#
+Tidak anggota grup yang ikut di peta ini.#
+Kamu tidak dapat menemukan MVP Monster di map ini.#
+Boss Monster, '%s' akan muncul %02d:%02d lagi.#
+Lokasi MVP Monster, '%s' akan muncul di minimap.#
+Apakah kamu ingin membuka '%s'? untuk membuka item ini, silakan kosongkan inventori karaktermu. Efek item tidak akan akumulatif jika dipakai lebih dari 1 kali.#
+NPC tidak ada. Pembelian telah gagal.#
+Membuka Kafra shop.#
+Kamu tidak membeli item jika kamu sedang transaksi.#
+Kafra shop dibatalkan. karena ada suatu kesalahan.#
+STR meningkat.#
+STR kembali ke normal.#
+AGI meningkat.#
+AGI kembali ke normal.#
+VIT meningkat.#
+VIT kembali ke normal.#
+INT meningkat.#
+INT kembali ke normal.#
+DEX meningkat.#
+DEX kembali ke normal.#
+LUK meningkat.#
+LUK kembali ke normal.#
+Flee Rate meningkat.#
+Flee kembali ke normal.#
+Accuracy meningkat.#
+Accuracy kembali ke normal.#
+Kemungkinan serangan kritikal meningkat.#
+Kemungkinan serangan kritikal kembali normal.#
+EXP point meningkat sebesar 1.5 kali selama 30 menit.#
+Karakter kamu tidak terkena penalti kehilangan EXP saat tewas selama 30 menit hanya untuk 1 kali#
+Drop item meningkat sebesar 2 kali selama 30 menit.#
+Informasi Boss Monster akan muncul selama 10 menit.#
+Apakah kamu akan membeli? dibutuhkan %d koin untuk item ini.#
+Kamu tidak memiliki cukup koin.#
+^ff0000Tanggal expired: %s^000000#
+'%s' akan hilang dalam %s.#
+Setelah 1 menit, item '%s' akan dihilangkan dari inventori.#
+item '%s' telah hilang dari inventori.#
+Jumlah#
+%m-%d %H:%M# 
+Boss Monster '%s' akan muncul dalam 1 menit.#
+Daftar skill Mercenary#
+Mantera membutuhkan 1 Black Gemstone dan 1,000,000 zeny. Apa kamu ingin melanjutkan?#
+[POINT] Ranking Point telah meningkat %d. Total point sekarang adalah %d .#
+[Collector Ranking] Target Item : %s#
+Tugas Bodyguard telah berakhir.#
+Bodyguard telah terbunuh.#
+Bodyguard telah dibuang.#
+Bodyguard telah meninggalkanmu.#
+Item '%s' akan menghilang dalam %d detik.#
+IP Bonus : EXP/JEXP %d%%, Death Penalty %d%%, Item Drop %d%%#
+Silahkan coba lagi setelah 24 jam.#
+Bodyguard akan bersiaga sesuai modifikasi AI.#
+Bodyguard akan bersiaga sesuai standar AI.#
+ %s's#
+%s telah mendapatkan %s.#
+Chat Publik#
+Whisper#
+Chat Party#
+Chat Guild#
+Pesan Item dapat/jatuh#
+Pesan Equipment On/Off#
+Pesan Status#
+Pesan item (Party)#
+Pesan Status (Party)#
+Pesan Penggunaan Skill#
+Pesan Konfigurasi (Grup)#
+Pesan kerusakan perlengkapan#
+Battle Message#
+[%s] Coin : %d Coin#
+Publik#
+Battle#
+Mobile Authentication#
+Baca#
+Baca Otomatis#
+Menandai Buku#
+Sebelumnya#
+Selanjutnya#
+Tutup#
+%s Equiptment telah rusak.#
+%s %s rusak.#
+Senjata#
+Armor#
+Level Skill tidak cukup. Tidak dapat gabung Party#
+[%s] Free Koin : %d Koin#
+Gunakan Free Koin : #
+Koin#
+http://ragnarok.lytogame.com/#
+Kamu harus menyetujui ketentuan untuk dapat menggunakan layanan.#
+Kamu harus menyetujui Persetujuan User untuk dapat menggunakan fasilitas.#
+ID salah atau tidak terdaftar dalam game.#
+Kamu sungguh ingin membeli '%s'? %d Koin Reguler dan %d Koin Free akan digunakan.#
+%d jam telah berlalu.#
+%d jam %d menit telah berlalu.#
+Silahkan berhenti sejenak. Exp dan fitur lainnya akan dirubah menjadi 50%.#
+Kamu telah berhasil melewati waktu yang riskan. Tolong kamu berhenti bermain. Exp dan lainnya akan dand other features will be fixed to 0%.#
+Daftar Quest#
+RO SHOP#
+Battle Dungeon, '%s' sedang digunakan.#
+Gagal menggunakan Battle Dungeon, '%s'.#
+Battle Dungeon, '%s' sedang digunakan.#
+Battle Dungeon, '%s' telah dibuka.\n Silahkan masuk dalam waktu 5 menit.#
+Gagal membuat Battle Dungeon, '%s'.\n Silahkan coba lagi.#
+Karakter menolak undangan party.#
+Block semua undangan party.#
+Buka semua undangan party.#
+Ketika di equip, akan menjadi milik karakter milikmu secara permanen. Equip?#
+Barang, %s akan menjadi milik karakter kamu secara permanen.#
+Koin kamu tidak cukup. Silahkan mengisikannya terlebih dahulu.#
+Permintaan bergabung ke grup#
+Tampilan WoE Information Message#
+Pemesanan Battle Dungeon '%s' telah dibatalkan.#
+Gagal untuk membuka Battle Dungeon '%s'. Silahkan coba lagi.#
+Tidak dapat menggunakan skill pada area ini.#
+Tidak dapat menggunakan barang pada area ini.#
+Battle Dungeon#
+%s bersiaga#
+%s penerimaan tersedia#
+%s masuk#
+Pintu masuk belum terbuka. Battle Dungeon telah hilang.#
+Silahkan mengulanginya dari awal.#
+Masih dalam antrian : ^ff0000%d^000000#
+Dungeon akan hilang jika kamu tidak masuk ^ff0000%s^000000#
+Batas waktu untuk Dungeon Mission : #
+Pemesanan Battle Dungeon telah dibatalkan.#
+Batas waktu Battle Dungeon telah habis.#
+Batas waktu untuk memasuki Battle Dungeon telah habis.#
+Battle Dungeon telah di reset.#
+Telah terjadi error dalam Battle Dungeon. Silahkan log in kembali.#
+Kamu tidak dapat menggunakan slot yang dipilih.#
+Base Level kamu telah melebihi 15.#
+Job level kamu telah melebihi 15.#
+Kamu tidak dapat memainkan karakter class merchant dari slot yang dipilih.#
+Karakter kamu memiliki lebih dari 50,000 zeny.#
+Kamu tidak dapat membuat karakter dari slot yang dipilih.#
+Kamu tidak dapat menghapus karakter yang dipilih.#
+Kamu tidak dapat melihat Equip karakter tersebut karena Equip Window dinonaktifkan.#
+Equip. Window tidak akan diperlihatkan ke pemain lain.#
+Equip. Window akan diperlihatkan ke pemain lain.#
+Melihat %s's Equip. Window#
+%s's Equipped items#
+On/off#
+Silahkan gunakan premium service.#
+Free user hanya dapat memiliki sampai 50000 Zeny.#
+Menu chat Battlefield menjadi on.#
+Menu chat Battlefield menjadi off.#
+Bodyguard info. - Monster type#
+Melihat peta keseluruhan#
+Battle Dungeon telah ditutup.#
+^ff0000^ff0000Bodyguard akan dibuang.^000000^000000 Semua catatan akan hilang ketika dibuang. Lanjutkan?#
+Battle Dungeon telah dibuka.#
+Account diatas tidak dapat terhubung ke communication safety key. Silahkan log-in setelah melepaskan the safety key.#
+Jumlah user dengan IP yang sama telah melebihi batasnya.#
+Kamu menerima Quest baru.#
+^777777Syarat penerimaan : #
+Info Skill.#
+Skill Point yang telah terpakai tidak dapat dikembalikan. Apakah kamu mau menggunakan skill point?#
+JOB1#
+JOB2&3#
+Account ini telah menggunakan program illegal ataupun program hacking sejenisnya.            Waktu Blok : %s#
+Kemungkinan dari pengguna program illegal, infeksi dari PC virus atau program hack terdeteksi. Silahkan menggunakan Client yang terlisensi. Team kami sedang membangun lingkungan yang terbaik bagi para pemain Ragnarok.#
+Kamu sedang bermain didalam lingkungan yang terbaik. Silahkan menikmati game Ragnarok.#
+Job exp point yang didapatkan dari membunuh monster meningkat menjadi 1.5 kali selama 30 menit.#
+Exp point yang didapatkan dari membunuh monster meningkat menjadi 1.25 kali selama 30 menit.#
+EXP point yang didapatkan dari membunuh monster meningkat menjadi  2 kali selama 30 menit.#
+EXP point yang didapatkan dari membunuh monster meningkat menjadi  1.5 kali selama 60 menit.#
+Tidak dapat membuat grup di map ini.#
+(%s) sedang berada dalam daerah yang terlarang untuk bergabung dalam grub.#
+Item Shop#
+Koin : %d Koin#
+RoK Poin : %d RoK Poin#
+Free Cash : %d Cash#
+Tidak bisa login kedalam Server#
+Silahkan mencoba login kembali#
+JOB4#
+Target tidak sesuai dengan skill ini#
+Tidak bisa memakai skill karena Ancilla yang melebihi batas#
+Membutuhkan Holy Water#
+membutuhkan Ancilla#
+Tidak bisa ditiru dalam jarak tertentu#
+Untuk menggunakan skill ini, dibutuhkan skill lainnya#
+Chat tidak diijinkan di lokasi ini#
+3 Jam telah berlalu#
+5 Jam telah berlalu#
+Deteksi Game guard gagal atau versi game guard sebelumnya teristall. Silahkan install ulang dan coba kembali#
+Salah satu file .ini telah hilang atau diubah. Install ulang game untuk memperbaiki masalah#
+Ditemukan program lain yang tidak sesuai dengan game guard#
+Program ilegal terdeteksi.. Silahkan menggunakan standard client.#
+Silahkan melakukan validasi data informasi terlebih dahulu.#
+Gagal melakukan validasi data informasi.#
+Skill gabungan belum bisa digunakan.#
+Skill hanya bisa digunakan pada arah tertentu.#
+Skill gagal.#
+Tidak cukup sphere untuk menggunakan skill.#
+Tidak ada copy skill yang bisa digunakan.#
+Skill tidak bisa diulang.#
+Gagal menggunakan skill.#
+Tidak bisa membawa item melebihi batasannya.#
+Kamu tidak memiliki ijin. Hanya Administrator yang bisa menjalankannya.#
+nProtect KeyCrypt tidak sama. Silahkan restart program dan komputer terlebih dahulu.#
+Saat ini memakai WindowXP Compatibility Mode. Program sekarang menghilangkan Compatibility Mode. Silahkan melakukan restart program.#
+PS/2 Keylogger Tersedia#
+Kemungkinan Hacking melalui USB Keyboard telah terdeteksi.#
+Perangkat HHD Monitoring terdeteksi.#
+Paintbrush diperlukan.#
+Surface paint diperlukan.#
+Tidak bisa menggunakan skill didalam area yang ditandai.#
+Tidak cukup SP.#
+Kamu hanya bisa membuat 9 character!!(Temporary)#
+Membutuhkan throat pastilles#
+Membutuhkan pitiful tears#
+Membutuhkan throat protective pastilles#
+Hanya bisa dipakai untuk skill weapon blocking#
+Membutuhkan senjata yang dilapisi poison dari guillotine cross#
+Hanya bisa diapakai untuk Magic Armor#
+Membutuhkan Vulcan Bullet#
+Membutuhkan Magic Gear fuel#
+Membutuhkan Liquid Condensed Bullet#
+Mengisi Cannon Ball#
+Letakkan di Magic Gear accelerating device#
+Letakkan di Hovering Booster#
+Efek [Toxin] Poison diberikan ke senjata#
+Efek [Paralyze] Poison diberikan ke senjata#
+Efek [Venom Bleed] Poison diberikan ke senjata#
+Efek [Magic Mushroom] Poison diberikan ke senjata#
+Efek [Dex Heart] Poison diberikan ke senjata#
+Efek [pyrexia] Poison diberikan ke senjata#
+Efek [Oblibian cuz] Poison diberikan ke senjata#
+Efek [Rich end] Poison diberikan ke senjata#
+Hanya bisa digunakan dalam status hovering#
+Letakkan di Suicidal Device#
+Letakkan di Shape Shifter#
+Membutuhkan Guillotine Poison#
+Letakkan di Cooling Device#
+Letakkan di Magnetic Field Generator#
+Letakkan di Barrier Builder#
+Letakkan di Camouflage Generator#
+Letakkan di Repair Kit#
+Membutuhkan Monkey Wrench#
+[%s] Skill tidak bisa dipakai#
+Penghapusan tidak bisa untuk level diatas %d#
+Tidak bisa dipakai bersama Magic Armor#
+Dragon telah dilepas#
+Magic Armor telah dilepas#
+Item#
+Item Mall#
+Armor#
+Senjata#
+Ammo#
+Kartu#
+Dll#
+Respon Client mengalami delay jadi koneksi dibatalkan#
+Versi hack shield tidak sama. Silahkan install ulang Client#
+Membutuhkan Magic Book#
+Merasa ngantuk sejak Magic Book begitu sulit dimengerti#
+Tidak cukup point#
+Gagal mempelajari Magin Book#
+Membutuhkan Face Paint#
+Membutuhkan Makeover Brush#
+Delay waktu berakhir. Silahkan login kembali#
+Account yang sama sedang dipakai. Silahkan login kembali setelah mengganti password#
+Account yang sama sedang dipakai. Silahkan login kembali setelah mengganti password#
+Pengaturan window#
+Pengaturan Graphic#
+Pengaturan Suara#
+Tekan tombol baru untuk mengganti. "ESC" untuk menghapus tombol yang sudah ada.#
+Tombol yang dipilih tidak sesuai#
+Tombol tidak bisa dipilih#
+Tombol sudah dipakai dalam %s. Apa ingin menggantinya?#
+Penyimpanan tombol shortcut akan dilakukan. Apa ingin melanjutkan?#
+Skill Hotkey#
+Window Interface#
+Shortcut#
+Pengaturan Tombol Shortcut#
+BGM#
+Effect#
+Skin#
+Sound Effect on#
+Sound Effect off#
+/tingonly : Hanya Suara masuk chat Room : On#
+/rock#
+/scissors#
+/paper#
+/love#
+/mobile#
+/mail#
+/antenna0#
+/antenna1#
+/antenna2#
+/antenna3#
+/hum#
+/abs#
+/oops#
+/spit#
+/ene#
+/panic#
+/whisp#
+Kosong#
+Berguna jika saat digabungkan dengan Kartu#
+Membutuhkan [Thron seed]#
+Membutuhkan [Bloodsucking plant seed]#
+Gagal menggunakan skill#
+Membutuhkan [Bomb Mushroom Spore]#
+Membutuhkan [Fire Bottle]#
+Membutuhkan [Oil Bottle]#
+Membutuhkan [Explosive Powder]#
+Membutuhkan [Smokescreen Powder]#
+Membutuhkan [Tear Gas]#
+Membutuhkan [Acid Bottle]#
+Membutuhkan [MenEater Plant Bottle]#
+Membutuhkan [Mandragora Flowerpot]#
+Memberi Kepemimpinan Grup#
+Apa Kamu ingin mengganti kepemimpinan Grup?#
+Gagal mengganti kepemimpinan.#
+Tidak bisa diubah#
+[%s] Memerlukan %d#
+Point latihan telah berkurang#
+Untuk bisa digunakan perlu ditaruh dalam [%s]#
+Pengaturan masuk Battlefield#
+% Kamu belum diijinkan memasuki Battlefield, jadi permintaan dibatalkan#
+#
+% Pemindahan ke area Battlefield ditunda. Menunggu pemain lain#
+#
+Klik Ok untuk membatalkan permintaan Battlefield. Klik pada tombol dibawah#
+Memasuki Battlefield telah dibatalkan#
+Kamu akan segera dipindah ke %s Battlefield.#
+Battlefield Arena#
+Kamu yakin ingin kembali?#
+Mencari pesan anggota grup#
+Mencari pesan anggota grup dinonaktifkan#
+10 detik delay untuk effek pendukung grup#
+Party represent is '%s'#
+Tidak bisa bergabung karena kesalahan sistem#
+Tidak bisa bergabung karena terlalu lama#
+Permintaan sudah dibuat#
+Registrasi dibatalkan karena terlalu lama#
+Registrasi dibatalkan karena tidak sesuai ketentuan#
+Registrasi gagal karena kesalahan#
+Skill terikat pada [%s]#
+Skill terikat pada skill tertentu#
+Membutuhkan %d Spirit Sphere#
+Membutuhkan Spirit Sphere#
+Tidak bisa membuat Runstone melebihi batasannya#
+Belum bisa menerima daftar Battlefield. Silahkan periksa kembali#
+Level belum mencukupi#
+Habiskan %d job poin skill profesi 1 dahulu#
+Habiskan %d job poin skill profesi 1 dan 2 dahulu#
+Item yang tidak bisa dikonversi#
+Item untuk dikonversi#
+Kombinasi yang tidak bisa dikonversi#
+Berat inventory terlalu banyak#
+Sisakan beberapa ruang dalam inventory#
+Bahan tidak ada#
+Berhasil#
+Gagal#
+Akibat gagal semua bahan telah hilang#
+Tidak bisa diganti, karena nama di tab terlalu panjang#
+Tidak bisa menambah lagi#
+Gagal mengenali#
+Bot Check#
+Item tidak bisa dipakai sebagai bahan#
+Tidak ada akses tersedia dari IP yang dipakai#
+Akses ditutup sementara akibat 6 kali kesalahan password#
+Akan dipakai dalam sintesis item. Ingin dilanjutkan?#
+Masukkan huruf dan angka disebelah kiri#
+Informasi Battlefield#
+Akan segera masuk, bersiap!#
+Bantuan informasi dalam memasuki Battlefield#
+Maaf. Tidak bisa memilih karakter untuk test#
+Semua peralatan dilepas#
+Mini icon#
+Battle A:  Battle B#
+Antrian#
+Pesan pembatalan untuk Battlefield#
+Jumlah pemain yang dibutuhkan dalam Battlefield#
+Persiapan di Battlefield A#
+Persiapan di Battlefield B#
+be on call situation of myself: %d Battlefield A#
+be on call situation of myself: %d Battlefield b#
+Perlihatkan icon Battlefield.#
+Jangan memperlihatkan icon Battlefield.#
+Berpindah lokasi ke Battlefield#
+Posisi memasuki Battlefield#
+Seseorang#
+[%s] memberikanmu '%d' serangan.#
+[%s] mendapatkan serangan dari [%s] selama '%d'.#
+[%s] menerima serangan sebesar '%d'.#
+[%s] memberikan [%s] serangan dari '%d'.#
+%s %d buah jatuh#
+Mengalahkan [%s] monster dari [%s] quest. (%d/%d)#
+%s Quest telah dihapus.#
+[%s] dimiliki#
+%d' EXP point#
+%d' Job EXP point#
+Mendapat#
+Kehilangan#
+[%s] telah mencuri '%d' coin darimu.#
+Pesan pertempuran#
+Pesan pertempuran anggota grup#
+EXP didapat#
+EXP yang didapat anggota grup#
+Informasi Quest diperlihatkan#
+Informasi Battlefield diperlihatkan#
+Menyerang [%s] #
+menggunakan skill [%s].#
+Fungsi nonaktif#
+Fungsi aktif#
+[%s] memberikan [%s] '%s'.#
+Swordman#
+Magician#
+Archer#
+Acolyte#
+Merchant#
+Thief#
+Knight#
+Priest#
+Wizard#
+BlackSmith#
+Hunter#
+Assassin#
+Defender#
+Monk#
+Sage#
+Rogue#
+Alchemist#
+Bard#
+Dancer#
+Rune Knight#
+Warlock#
+Ranger#
+Arch Bishop#
+Mechanic#
+Guillotine Cross#
+Royal Guard#
+Socerer#
+Joker#
+Wanderer#
+Gladiator#
+Genetic#
+Shadow Chaser#
+Swordman High#
+Magician High#
+Archer High#
+Acolyte High#
+Merchant High#
+Thief High#
+Lord Knight#
+High Priest#
+High Wizard#
+White Smith#
+Sniper#
+Assassin Cross#
+Paladin#
+Champion#
+Professor#
+Stalker#
+Creator#
+Clown#
+Gypsy#
+Novice#
+High Novice#
+Super Novice#
+Gunslinger#
+Ninja#
+Taekwon Boy/Girl#
+Taekwon Master#
+Soul Linker#
+Party wanted#
+Daftar Pencari Grup#
+Merekrut Grup#
+[Bow] telah dipakai.#
+[Musical instrument/Whip] telah dipakai.#
+Hanya huruf dan angka yang diijinkan.#
+Pesan#
+Pembelian item gagal.#
+Bisa dibuang dari jendela inventory.#
+Waktu#
+Map#
+Tidak bisa memakai, menggunakan atau melepas saat berdagang.#
+Belum diidentifikasi#
+/stateinfo : Menampilkan status icon. On Off#
+State Info On : Menampilkan keterangan status icon#
+State Info Off : Menghilangkan keterangan status icon#
+Tidak bisa membeli item yang sama lebih dari %d buah pada saat bersamaan.#
+Tidak bisa menjual item yang sama lebih dari %d buah pada saat bersamaan.#
+Total jumlah item yang dibeli adalah %d buah.#
+Pengaturan akan disimpan ke [%s\\%s] ketika keluar game secara normal.#
+[%s] tidak bisa melakukan transaksi untuk sementara.#
+RO_HELP#
+Anvil tidak tersedia#
+Tidak bisa melakukan whisper sebelum mencapai level 10.#
+attack#
+defense#
+recovery#
+Support#
+Daftar perintah untuk grup#
+Gagal mendaftarkan sebagai guild aliansi#
+Gagal mendaftarkan sebagai quild musuh#
+Gagal memasukkan ke daftar teman#
+Membuka kios#
+Harga beli#
+Uang yang dibawa#
+Batas uang pembelian#
+Item yang dijual belum didaftarkan. Silahkan daftarkan item terlebih dahulu#
+Masukan harga %s item#
+Masukan harga %s item dibawah 99990000 Zeny#
+masukkan jumlah %s item#
+Jumlah yang dimiliki dan item yang dijual melebihi 9999. Masukkan jumlah dibawah 9999#
+Terdapat item yang sama#
+Masukkan batas harga#
+Jumlah uang yang kamu miliki tidak sesuai dengan jumlah yang kamu masukan. Coba kembali#
+%s  :  %s  Zeny => %s buah#
+Daftar item yang bisa dibeli#
+Kios pribadi#
+Batas harga: %s Zeny#
+%s %s Zeny %d jumlah#
+Kios pembelian#
+list item yang bisa dijual#
+jumlah item yang dipilih dalah %d#
+Tidak bisa menjual karena harga melebihi batas#
+Gagal membuka toko#
+jumlah item melebihi. Silahkan periksa kembali#
+Kamu membeli semua item tanpa batasan harga#
+Semua item telah dibeli#
+Transaksi dibatalkan#
+Kamu menjual $s $d item dengan harga $dz#
+$s item tidak bisa dijual karena daftar melebihi#
+Gagal memanggil spirit#
+Ini adalah server khusus untuk battle#
+OPT mempunyai 6 passcode#
+Tidak ada informasi OTP. silahkan hubungi administrator#
+Gagal mengenali OTP#
+Berhasil membuat iklan grup#
+Pencarian anggota grup telah di iklankan#
+Tugas#
+Profesi 1#
+Profesi 2#
+Profesi 4-1#
+Profesi 4-2#
+Profesi 1 high#
+Profesi 3#
+Profesi lain#
+Ajak#
+Mengundang anggota grup#
+Mencari#
+Semua#
+Kamu harus mengundanng setidaknya 1 job#
+Kamu mesti memilih profesi minimal#
+Kamu memilih %d daftar profesi. kamu bisa memilih hingga 6 profesi#
+hanya dapat mengisi angka di bagian level#
+Masukkan level dari 1 sampai 150#
+Tidak ada daftar di peta yang dipilih#
+Belum bisa memilki item di level sekarang#
+Belum bisa memakai item di level sekarang#
+Mode Chat On|Off#
+Tidak bisa ditambah karena jumlah tap melebihi#
+Informasi window#
+Dijual#
+Membeli#
+Mencari kios#
+Nama kios#
+Jumlah#
+Harga#
+Hasil terlalu banyak. Silahkan masukkan kembali kata pencarian#
+Apa kamu ingin membuka kios?#
+Gagal mengenali SSO#
+Gagal memindahkan area yang dipakai#
+Mencari item berdasarkan kata#
+Pemain menurun#
+Tidak setuju memainkan game#
+Username yang dimasukkan tidak ada#
+Hanya tersedia 12 di dalam game#
+Dalam status block untuk pemeriksaan program ilegal dalam game#
+Dalam status block untuk pemeriksaan bug#
+Meningkatkan base, jop exp hingga 75% selama 30 menit#
+Meningkatkan base, jop exp hingga 50% selama 30 menit#
+Tidak ada informasi penjulan(pembelian)#
+Pencarian tidak bisa dilakukan lagi#
+Item yang dicari tidak ada#
+Pencarian belum bisa#
+Masukkan nama kartu atau awalan(akhiran)#
+Pencarian ke : %d kali#
+Pencarian Kios tidak ditemukan#
+diluar harga barang#
+Utama#
+Kostum#
+Menit#
+Detik#
+Masukkan nama item#
+Item yang dimaksud tidak ada#
+Tidak ada map yang dipilih#
+Nama yang dipilih tidak tersedia baik awalan(akhiran)#
+Kamu bisa membeli hingga 10#
+Beberapa item gagal dibeli#
+Masukkan tanggal lahir(contoh:801122)#
+Terjadi error yang tidak diketahui#
+Terjadi kesalahan dalam database#
+Keluar terlebih dahulu dari guild untuk menghapus karakter#
+Keluar terlebih dahulu dari grup untuk menghapus karakter#
+Tidak bisa menghapus karena setting sistem#
+Tidak bisa menghapus saat ini#
+Tanggal lahir tidak cocok#
+Level yang dimiliki belum mencukupi#
+Hanya tersedia pada mode bertarung#
+hanya untuk pergantian gaya mengenggap pada Mode Novice#
+Pendaftaran grup gagal#
+Tidak ada daftar yang ditemukan dalam pencarian#
+Penghapusan daftar gagal#
+Daftar tidak memenuhi syarat, jadi pencarian dibatalkan#
+Kamu tidak memiliki informasi pembayaran#
+Mengambil screenshot saat bertransaksi#
+[Trade_%s]#
+New Insurance Package akan terpakai secara otomatis saat karakter kamu mati#
+percakapan#
+tidak bisa digunakan secara bersamaan#
+ada batas penggunaan#
+saat ini tidak ada batasan penggunaan#
+gagal terhubung karena alasan yang tidak dikertahui.#
+gagal mengkonfirmasi info sambungan#
+ID belum terdaftar.#
+tidak dapat terhubung karena batasan usia#
+membeli#
+kosongkan keranjang belanjaan#
+halaman pertama#
+halaman terakhir#
+baru#
+populer#
+Terbatas#
+rental equipment#
+equipment permanen#
+buff#
+penyembuhan#
+dll#
+harga#
+jumlah#
+sejumlah#
+Bebas biaya : %s C#
+Koin : %s Koin#
+Tidak bisa memanggil monster ditempat ini#
+melebihi total bebas biaya#
+set info akan disimpan di [SaveData_ExMacro%d]#
+bisa digunakan lagi setelah %d detik#
+Harus menggunakan [spear]#
+hanya bisa digunakan ketika menunggangi dragon#
+tidak bisa melanjutkan karena melibihi kapasitas#
+Memerlukan nama asli. Kinjungi halaman konfirmasi#
+pilih slot kamu untuk menyimpan#
+Selamat %s,  mendapatkan '%s' !#
+Tidak bisa digunakan dalam keadaan gloomy#
+Melebihi total harga barang yang dibeli#
+Tidak bisa mendaftarkan grup di map ini#
+Tidak bisa membatalkan grup di map ini#
+TIdak bisa membubarkan grup di map ini#
+Nama Asli#
+Nomor identitas#
+email#
+Salah memasukan data#
+Gagal membayar zeny#
+Ini tidak sesuai dengan job#
+Ini tidak sesuai dengan jenis kelamin#
+Berhasil mengidentifikasi informasi pemain#
+Nama tidak sesuai, silakan coba lagi#
+Nomor identitas tidak sesuai, sialakan coba lagi#
+Layanan sedang tidak berfungsi, silakan coba beberapa saat lagi#
+Tidak dapat menyerang saat dalam mode riding#
+Tidak dapat melakukan cast skill saat dalam mode riding#
+Nomor pin harus berjumlah 4~6#
+Berhasil login#
+Berhasil membuat password kedua#
+Hapus password kedua#
+Password kedua cocok#
+Gagal login#
+Gagal membuat Password kedua#
+Gagal menghapus password kedua#
+Password kedua tidak cocok#
+Tidak bisa menggunakan angka yang tidak sesuai dalam password kedua#
+Tidak bisa menggunakan nomor pendaftaran penduduk#
+password sudah ditetapkan#
+Kode Keamanan#
+tambahan pengaturan nomor pin direkomendasikan untuk keamanan #
+kode keamanan tidak digunakan #
+gagal untuk mengatur penggunaan kode keamanan #
+kode keamanan diaktifkan. akan diterapkan dari waktu berikutnya #
+gagal untuk mengatur penggunaan kode keamanan #
+untuk menetapkan nomor pin tambahan untuk keamanan #
+klik 4 angka di bawah ini mengunakan mouse#
+akan ditutup karena nomor pin yang salah masukan untuk 3 kali #
+ITEM#
+SKILL#
+TAKTIK#
+Etc#
+BERTEMPUR#
+DAMAI#
+BUFF#
+MENGENAKAN SECARA OTOMATIS#
+SERANGAN PERTAMA#
+SERANG#
+Waktu menyerang selanjutnya : #
+Ketika mati#
+Ketika diundang kedalam grup#
+Mengambil item#
+Berat lebih dari 85%#
+Silahkan kamu selesaikan langkah pertama dulu kemudian cobalah lagi.(Dialog, Refine, etc,) #
+Jumlah Job EXP dari monster akan meningkat %.2f lipat selama %d min#
+SaveData_ExMacro%d#
+Konfigurasimu akan disimpan di [%s]#
+Tingkat keamanan#
+Silahkan kamu keluarkan dari grup dan guild terlebih dulu untuk menghapus karakter ini.#
+Kamu hanya dapat menggunakan skill ini disekitar tembok.#
+%s : Level %d %s sedang mencari grup#
+Tidak dapat menggunakan [Boarding_Halter] saat kamu sedang menunggang.#
+Kamu membutuhkan 1% dari EXP untuk menggunakan skill ini.#
+E   X   P : #
+Drop rate : #
+Death Pinalti : #
+%d%% (PC cafe %d%% + TPLUS %d%% + premium %d%% + %s server %d%%)#
+Jumlah SP anggota grup kamu tidak mencukupi untuk menggunakan [Battle Chant]#
+Kamu tidak dapat melakukan transaksi karena jenis item yang kamu bawa terlalu banyak#
+Kamu tidak dapat melakukan transaksi karena beban yang kamu bawa terlalu banyak.#
+Beban yang kamu bawa terlalu berat.#
+Menunggu antrian pendaftaran.#
+Silahkan kirim file pada text dibawah ini ke \r\n customer care center.\r\n#
+eror ini terjadi pada sistem pembayaran(%d)#
+Kamu tidak bisa membeli item ini. Runes yang kamu miliki terlalu banyak.#
+Kamu tidak bisa membeli item ini. Jumlah item yang kamu pilih melebihi batas.#
+Kamu tidak bisa membeli item ini. Terjadi error yang tidak diketahui.#
+Silakan coba lagi nanti.#
+Kamu harus memakai [Kunai] untuk menggunakan skill ini.#
+Masukan minimum batas level.#
+Kamu tidak dapat memperoleh item dari NPC Zonda. Kurangi jumlah barang di inventorimu terlebih dahulu.#
+Skill ini hanya bisa digunakan di map WOE.#
+Skill ini hanya dapat digunakan kepada pemain.#
+Kamu tidak bisa melepaskannya sekarang.#
+Kamu tidak bisa menggunakan [chat room] ataupun [Vending] di sini.#
+Batas waktu: %d:%d:%d / %d:%d:%d#
+Speed : X 1/4 #
+Speed : X 1/2 #
+Speed : X 1   #
+Speed : X 2   #
+Speed : X 4   #
+Speed : X 8   #
+Speed : X 16  #
+Speed : Tidak diketahui#
+Service Info : %s#
+Nama Karakter : %s#
+Nama Map : %s#
+Waktu Rekam: %d-%01d-%01d %d: %02d: %02d#
+Waktu Bermain: %02d: %02d: %02d#
+Tidak ada file Replay.#
+Kesalahan Server#
+Pengaturan Replay#
+Silahkan masukan nama file.#
+Mengatur Replay Penyimpan Data#
+Mengatur Rec#
+%.1f %% Pos¢Ñ:%d:%d:%d#
+%.1f %% Pos¢Ñ:tidak dapat bergerak#
+Mulai#
+Berhenti#
+Masukan Nama File -> Mulai#
+Buka#
+Tutup#
+Selesai#
+Waktu#
+Grup &Teman#
+Chatting#
+Hotkey#
+Pembuatan nama file otomatis#
+Overwriting check#
+Ada nama file yang sama#
+Record Start#
+ telah disimpan.#
+Berat : %3d / %3d#
+Total : %s Koin#
+Kamu harus memakai [Shuriken] untuk menggunakan skill ini.#
+Base Lv. %d#
+Job Lv. %d#
+Zeny : %s#
+Trilinear#
+attack#
+skill#
+item#
+NoCtrl#
+Arena Pertempuran#
+(Karakter/Total Slot)#
+Layanan Premium#
+Premium #
+Service#
+Layanan Pembayaran#
+Pembayaran #
+Daftar Perintah#
+LEVEL#
+MAP#
+JOB#
+Tidak Tersedia#
+[guardian's protection] Jika tingkat max, Kamu tidak dapat menggunakannya.#
+Apakah Kamu yakin untuk bergerak?#
+Pergerakan slot karakter telah gagal.#
+Nama Karakter salah.#
+Quest window#
+Permainan akan terbatas pada usia di bawah 16 selama 0 ~ 06:00 oleh hukum.#
+Menurut hukum Korea, pemain di bawah usia 16 akan^ff0000dibatasi pada 12 malam sampai 6 pagi^000000dan permainan akan ditutup.#
+untuk mengganti nama karakter, Kamu harus meninggalkan guild.#
+untuk mengganti nama karakter, Kamu harus meninggalkan party.#
+Nama Karakter tidak berubah karena kesalahan yang tidak diketahui.#
+kamu dapat mengubah karakter slot.(%d)#
+kamu dapat mengubah karakter slot.(%d)#
+Nama karakter kamu terlalu panjang, sehingga gagal untuk mengganti nama karakter.#
+Kamu mengunakan kata yang tidak boleh di gunakan, gagal menganti nama karakter.#
+Kamu dilarang untuk mengubah nama, karena perubahan nama karakter telah gagal#
+Berhasil#
+EXP %d%% meningkat selama  %d menit.#
+It is %02d sec left to summon.#
+Party leader memmangilmu ke %s (%s). Ketika Kamu dipanggil, %d akan mengkonsumsi beberapa Zeny.#
+Target Muncul#
+Block list#
+Untuk menambah iklan party %d akan mengkonsumsi beberapa Zeny.#
+Kamu belum cukup zeny untuk menambahkan iklan party.#
+Setuju ) Pendaftaran Party#
+Batalkan ) Pendaftaran Party#
+Melihat )'s Equip window#
+Kemungkinan untuk mengetik 18 karakter di Kor, 36 karakter dalam alfabet#
+Terapkan#
+1:1 conversation#
+Block#
+Kamu belum cukup zeny untuk dipanggil oleh ketua party.#
+Silahkan Menuliskan grup kedalam Memo.#
+Hanya ketua grup yang dapat menambahkan iklan grup.#
+Hal ini sudah ditambahkan kedalam iklan grup.#
+isi#
+Equip#
+Fav#
+Lock Item#
+Notifikasi untuk mencari bagian grup#
+Mengorganisasikan sebuah grup#
+Keluar grup#
+Undangan grup#
+Registrasi nama grup#
+Nama karakter yang ingin diundang#
+Undangan party telah dikirim ke.#
+Telah menolak undangan grup.#
+Telah menerima undangan grup.#
+Ini sedang mengumpulkan grup.#
+Ini sama dengan konsidi pencarian sebelumnya.#
+Kemungkinan untuk digunakan setelah meninggalkan guild.#
+Kemungkinan untuk digunakan setelah meninggalkan grup.#
+Orang yang anda panggil sedang berada dimap yang tidak bisa dipanggil.#
+Hal ini tidak mungkin untuk memanggil di lokasi pemimpin grup saat ini.#
+Panggilan ditolak.#
+Hal ini tidak mungkin untuk memanggil.#
+Undangan grup hanya tersedia bagi ketua grup saja.#
+Masukan Nama Item :#
+Kamu harus memasukkan nama karakter.#
+Kamu harus memasukkan nama grup.#
+Guild helper#
+Anda tidak bergabung kedalam guild manapun.#
+mengorganisasikan sebuah guild#
+Nama Guild yang anda ciptakan#
+Kata bantuan penciptaan guild#
+Apa sistem guild#
+Kamu harus memasukkan nama guild.#
+Anda telah ditolak dari grup yang anda terapkan.#
+Pilih layanan.#
+Lokasi yang mustahil untuk melarikan diri.#
+Replay daftar file#
+Informasi file#
+Daftar file#
+%s Barang tidak bisa ditransaksikan.#
+Membubarkan guild#
+Nama guild yang dibubarkan#
+Karakter tersebut sedang tidak login atau tidak ada.#
+Pemanggilan falcon telah gagal.#
+%d%% (Basic 100%% + Premium %d%% + %sServer %d%% )#
+Karakter sedang bergabung kedalam perang.#
+Hal ini tidak memungkinkan untuk mengganti ketua grup di map yang sama.#
+Hal ini tidak memungkinkan untuk mengganti ketua grup di wilayah saat ini.#
+Bawah gryphon#
+%d/%d %d:%d:%d#
+Anda tidak bisa diundang kedalam guild karena sedang berada dipertempuran.#
+Anda diminta untuk menunggu untuk memasuki wilayah pertempuran.#
+Jumlah maksimum telah terlampaui.#
+Nama pertempuran tidak didefinisi.#
+Tipe permintaan tidak didefinisi.#
+Jumlah maksimum pengguna telah terlampaui.#
+Level anda tidak cocok untuk masuk.#
+Permintaan telah diduplikasi.#
+Silahkan mengakses dan mendaftar kembali.#
+Job tidak sesuai.#
+Hanya anggota grup atau ketua guild yang dapat mendaftar.#
+ada anggota team yang sedang berada dimedan pertempuran, tidak mungkin untuk mendaftar.#
+Menunggu untuk memasuki medan pertempuran telah dibatalkan.#
+Nama medan pertempuran salah.#
+Anda tidak masuk dalam daftar tunggu untuk memasuki medan perang.#
+Medan pertempuran tidak tersedia, sehingga waktu menunggu dibatalkan.#
+Memasuki medan pertempuran telah dibatalkan.#
+Apakah anda ingin memasuki medan pertempuran?#
+Memasuki sistem registrasi medan pertempuran#
+Tidak mungkin untuk mendaftar dan pindah ke medan perang#
+1. Tidak bisa mendaftar di beberapa medan pertempuran pada waktu yang sama.#
+2. Tidak bisa mendaftar di medan pertempuran untuk single/grup/guild pada waktu yang sama.#
+3. grup medan pertempuran hanya bisa didaftarkan oleh ketua party,#
+Anggota party yang offline dilewatkan dari daftar tunggu.#
+4. Pendaftaran medan pertempuran bisa dilakukan dari mana saja kecuali dari peta medan pertempuran,#
+Akan tetapi jika lokasi masuk bukan kota, field atau dungeon biasa, karakter akan dipindahkan kekoordinat yang aman ketika kembali.#
+5. Hadiah dari medan pertempuran atau layanan lainnya bisa didapatkan melalui recruit officer yang berada pada ruang tunggu battle ground.#
+Masukkan kata bantuan pendaftaran Battle Ground#
+%s battle ground akan dimulai.#
+Apakah kamu ingin dipindahkan ke battle ground?#
+[Note]#
+Jika lokasi saat ini bukan kota, field atau dungeon biasa#
+Anda akan dipindahkan ketitik yang disimpan#
+setelah pertempuran selesai.#
+Menunggu permintaan hasil lainnya.#
+Permintaan memasuki battle ground#
+Menunggu waktu untuk menerima:%d sec#
+Menunggu status untuk masuk#
+The battle ground title: %s#
+Memerlukan nomor untuk pertempuran: %d#
+Nomor tunggu saya: %d#
+Title :#
+Target :#
+Pengorganisasian anggota dalam pertempuran :#
+Kondisi untuk bergabung :#
+Hadiah(menang) :#
+Hadiah(seri) :#
+Hadiah(kalah) :#
+Anda mendaftar kedalam pertempuran solo. apakah benar?#
+Anda mendaftar kedalam pertempuran party. apakah benar?#
+Anda mendaftar kedalam pertempuran guild. apakah benar?#
+Daftar battle ground#
+%d VS %d#
+Base LV bawah %d #
+Base LV atas %d #
+Base LV %d ~ %d#
+Tanpa batasan#
+[Tidak mungkin untuk mendaftar dari peta saat ini.]#
+[Kamu perlu menunggu 1 menit untuk mendaftar ulang ke battle ground.]#
+[Anda harus bergabung kedalam grup.]#
+[Hanya ketua party yang bisa mendaftar.]#
+[Terlalu banyak anggota grup yang login.]#
+[Anda harus bergabung kedalam guild.]#
+[hanya ketua guild yang bisa mendaftar.]#
+[terlalu banyak anggota guild yang login.]#
+Move character slot#
+Move#
+Ubah nama karakter#
+Membuat karakter#
+http://ro.tahadi.com/en/game-guide#
+%s Server#
+Gabung item(Untuk memilih semua:Ctrl+Click)#
+Pilih minimal 2 item dari jenis yang sama.#
+Penggabungan item berhasil.#
+Penggabungan item hanya dapat bekerja untuk satu jenis barang sekali saja.#
+Jumlah item lebih dari 30000 buah.#
+Turn on left#
+Turn on right#
+Lihat server info sebelumnya (%s)#
+Server info sebelumnya#
+^ff0000Previous server : ^0000ff#
+^ff0000Previous Nama karakter : ^0000ff#
+HP untuk menyerang monster akan ditampilkan.#
+HP untuk menyerang monster tidak akan ditampilkan.#
+Tak satupun dari item dapat digabungkan.#
+Tak satupun dari item dapat digabungkan.#
+Progress#
+Delay#
+Rekomendasi#
+Episode#
+Local#
+Event#
+New#
+Hunting monsters#
+Reward items#
+Required items#
+Limited time#
+Closing time#
+Pencarian #
+Mengarah ketarget#
+Info jalan#
+Info pencarian#
+Mengubah mode#
+Mengubah warna navigasi#
+Tutup#
+Ubah ke UI dasar#
+Ubah ke UI mudah#
+Kata bantuan#
+ALL#
+Map#
+Npc#
+Mob#
+Mengatur kata pencarian (Ex: kata kata ...#
+Scroll#
+Dapat menggunakan dungeon move scroll#
+Layanan#
+Memungkinkan layanan pada lokasi gerak#
+Pesawat#
+Mendaftar perpindahan dengan Airship#
+>> Tidak bisa membaca info sasaran!#
+<< noticing >>#
+<< Mencari... >>#
+-----------#
+Navigasi#
+== Hasil pencarian(%d)==#
+Npc)%s:%s#
+Mob)%s:%s#
+Map)%s#
+======== Info pencarian ==========#
+Jarak   : %d Jual %d WarpMove#
+Map Target: %s(%s)#
+Target   : %s(%d, %d)#
+Boss#
+normal#
+Target   : %s(%s)#
+Target: (%d, %d)#
+======= Navigation info =======#
+%2d) Item:%s => %s use#
+%2d) %s(%d,%d)=>(%d,%d)#
+E%2d) %s(%d,%d)=>(%d,%d)#
+E%2d) %s#
+Sedang dinavigasi, Anda ingin tutup?#
+Bantuan navigasi#
+------------------- command --------------------#
+1. /navigation      /navi#
+  ex)/navi prontera 100/100 -> map name, 100/100#
+  Basic command are zeny, ariship search.#
+2. /navigation2      /navi2#
+  ex) /navi2 prontera 100/100 1/1/1#
+-> nama map, lokasi(100/100), scrool/zeny/plane (1:use 0: not use)#
+3. $$all   Tunjukkan semua daftar (tampilkan daftar tipe, memungkinkan untuk dibagi.)#
+4. $$lv30   Tampilkan monster pada level ini#
+5. $$lv20~30  Tampilkan monster pada kisaran level#
+-------------------  description  --------------------#
+1.Tipe pencarian adalah semua, map, NPC, Monsters.#
+2.Search with the commend. Aturan yang menunjukkan semua informasi termasuk teks pencarian.#
+  ex) pron kaf ->akan menunjukkan semua kafra prontera's didalam hasil pencarian.#
+3.Jika anda klik dari daftar, informasi akan ditampilkan.#
+  ijika ada target yang Anda inginkan dan klik naviating yang, ia akan menampilkan jalan ke target.#
+4.adalah mungkin untuk memimpin jalan cepat dengan memeriksa scrool/ zeny/ plane box.#
+5.jika tombol navigasi diklik, jendela hasil akan berubah menjadi daftar navigasi window.#
+6.Dengan menggunakan tombol di bawah untuk mencari daftar window#
+ possible to change as [Hasil window] <-> [Info navigasi window].#
+Level:%d (boss)#
+Level:%d (normal)#
+Water%d#
+Ground%d#
+Fire%d#
+Wind%d#
+Poison%d#
+Saint%d#
+Darkness%d#
+Telekinesis%d#
+Undead%d#
+Nothing%d#
+Medium#
+Large#
+Small#
+Undead#
+Animal#
+Plant#
+Insect#
+Fish#
+Demon#
+Human#
+Angel#
+Dragon#
+Nothing#
+Klik untuk bergerak %s #
+Use NPC move service#
+NPC click#
+%s move#
+bergerak melalui airship#
+Menggunakan warp#
+Titik kedatangan : ( %d %d )#
+Hal ini tidak tersedia untuk memberikan navigasi di daerah ini.#
+Anda sedang mencari target yang tidak jelas.#
+it is not matched map.#
+Gagal untuk menetapkan area keberangkatan#
+Gagal untuk menetapkan area kedatangan!#
+Gagal menemukan jalan#
+Gagal menemukan lokasi player#
+Tidak ada informasi dalam navigasi.#
+peta ini tidak memberikan sistem navigasi.#
+Silahkan pilih sasaran.#
+tiba.#
+Navigasi dimulai.#
+Ini adalah peta yang memiliki monster yang Anda cari.#
+Ini adalah map yang anda cari.#
+Silahkan transfer dengan menggunakan item.#
+Silakan pindah ke lokasi yang telah ditunjukkan.#
+Anda telah tiba ditempat tujuan.#
+Anda telah tiba dimap yang memiliki NPC yang anda cari. Silahkan bergerak kedekat NPC.#
+Ini adalah peta dimana monster hidup.#
+Ini adalah sasaran yang sama seperti sebelumnya.#
+Silahkan pergi kearah yang ditunjuk.#
+Ini adalah target.#
+Navigasi >: %s#
+Navigasi >: Dengan menggunakan  %s#
+Navigasi >: Silahkan pindah ke map(%s)#
+Navigasi >: Silahkan pindah dengan memilih map(%s)#
+Navigasi >: Silahkan pindah ke Airship#
+Navigasi >: Silahkan pindah ke lokasi selanjutnya dengan menggunakan warp.#
+Item: #
+$$#
+$$lv#
+~#
+$$all#
+Bukti pembelian#
+harga total dari item yang Anda pilih adalah#
+Zeny.#
+Apakah Anda ingin membeli?#
+%.3f%% (PC bang %.3f%% + TPLUS %.3f%% + premium %.3f%% + %sserver %.3f%%)#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+Webbrowser#
+1#
+UAEURL#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+https://gfb.gameflier.com/Billing/ingame/index_new.asp?#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+BlackSmith#
+Alchemist#
+Taekwon#
+Killer#
+7 vs 7#
+RuneKnight#
+Warlock#
+Ranger#
+Mechanic#
+GuillotineCross#
+Archbishop#
+RoyalGuard#
+Sorcerer#
+Minstrel#
+Wanderer#
+Genetic#
+ShadowChaser#
+Sura#
+Kagerou#
+Oboro#
+Select Ranking Type#
+Ranking Type#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1 vs 1#
+1#
+1#
+(%s) %d / %d#
+%s-%s(%d/%d)#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+%d%% ( BASE 100%% + PC CAFE %d%% + PREMIUM %d%% + %sSERVER %d%% )#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+%d%% ( Basic 100%% + Premium %d%% + PCCafe %d%% + %s Server %d%% )#
+1#
+1#
+/monsterhp : Menunjukkan Informasi HP Monster yang diserang. On Off#
