@@ -5790,9 +5790,13 @@ sub msg_string {
 
 sub skill_msg {
 	my ($self, $args) = @_;
-	message TF("id: %s msgid: %s\n", $args->{id}, $args->{msgid}), "info";
 
-	#	'07E6' => ['skill_msg', 'v V', [qw(id msgid)]], #TODO: PACKET_ZC_MSG_SKILL     **msgtable
+	if ($msgTable[++$args->{msgid}]) { # show message from msgstringtable.txt -> [<Skill_Name>] <Message>
+		my $skill = new Skill(idn => $args->{id});
+		message "[".$skill->getName."] $msgTable[$args->{msgid}]\n", "info";
+	} else {
+		warning TF("Unknown skill_msg msgid:%d skill:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{msgid}, $args->{id});
+	}
 }
 
 sub quest_all_list2 {
