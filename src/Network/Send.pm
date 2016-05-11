@@ -940,6 +940,20 @@ sub sendCharDelete2 {
 	debug "Sent sendCharDelete2\n", "sendPacket", 2;
 }
 
+##
+# switch: 0x0829,12: '0829' => ['char_delete2_accept', 'a4 a6', [qw(charID code)]], # 12
+# switch: 0x098F,-1: '098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+sub sendCharDelete2Accept {
+	my ($self, $charID, $code) = @_;
+
+	$self->sendToServer($self->reconstruct({switch => 'char_delete2_accept', charID => $charID, code => $code}));
+}
+
+sub reconstruct_char_delete2_accept {
+	my ($self, $args) = @_;
+	debug "Sent sendCharDelete2Accept. CharID: $args->{CharID}, Code: $args->{code}\n", "sendPacket", 2;
+}
+
 # 0x082B,6
 sub sendCharDelete2Cancel {
 	my ($self, $charID) = @_;

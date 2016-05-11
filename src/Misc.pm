@@ -1171,7 +1171,11 @@ sub charSelectScreen {
 
 		my $messageDeleteDate;
 		if ($chars[$num]{deleteDate}) {
-			$messageDeleteDate = TF("\n     -> It will be deleted lefting %s!", $chars[$num]{deleteDate});
+			if (int(time) > $chars[$num]{deleteDateTimestamp}) {
+				$messageDeleteDate = TF("\n     -> Deleting is possible since %s.", $chars[$num]{deleteDate});
+			} else {
+				$messageDeleteDate = TF("\n     -> It will be deleted lefting %s!", $chars[$num]{deleteDate});
+			}
 		}
 		
 		push @charNames, TF("Slot %d: %s (%s, level %d/%d)%s",
@@ -1198,9 +1202,16 @@ sub charSelectScreen {
 	return $plugin_args{return} if ($plugin_args{return});
 
 	if ($plugin_args{autoLogin} && @chars && $config{char} ne "" && $chars[$config{char}]) {
-		$messageSender->sendCharLogin($config{char});
-		$timeout{charlogin}{time} = time;
-		return 1;
+		if ($chars[$config{char}]{deleteDate}) {
+			error TF("Cannot select character \"%s\" that requested for deletion.\n", $chars[$config{char}]{name});
+			configModify("char",'');
+			relog(10);
+			return 0;
+		} else {
+			$messageSender->sendCharLogin($config{char});
+			$timeout{charlogin}{time} = time;
+			return 1;
+		}
 	}
 
 	my @choices = @charNames;
@@ -1229,11 +1240,16 @@ sub charSelectScreen {
 		return 0;
 
 	} elsif ($choice < @charNames) {
-		# Character chosen
-		configModify('char', $charNameIndices[$choice], 1);
-		$messageSender->sendCharLogin($config{char});
-		$timeout{charlogin}{time} = time;
-		return 1;
+		if ($chars[$charNameIndices[$choice]]{deleteDate}) {
+			error TF("Cannot select character \"%s\" that requested for deletion.\n", $chars[$charNameIndices[$choice]]{name});
+			goto TOP;
+		} else {
+			# Character chosen
+			configModify('char', $charNameIndices[$choice], 1);
+			$messageSender->sendCharLogin($config{char});
+			$timeout{charlogin}{time} = time;
+			return 1;
+		}
 
 	} elsif ($choice == @charNames) {
 		# 'Create character' chosen
@@ -1282,12 +1298,45 @@ sub charSelectScreen {
 		my $charIndex = @charNameIndices[$choice];
 
 		if ($charDeleteVersion) {
-		$messageSender->{char_delete_slot} = $charIndex;
+			$messageSender->{char_delete_slot} = $charIndex;
 
 			if ($chars[$charIndex]{deleteDate}) {
-				$messageSender->sendCharDelete2Cancel($chars[$charIndex]{charID});
+				my $confirm = $interface->showMenu(
+					TF("Are you ABSOLUTELY SURE you want to delete:\n%s", $charNames[$choice]),
+					[T("No, don't delete"), T("Cancel delete request"), T("Yes, delete")],
+					title => T("Confirm delete"));
+
+				if ($confirm == 0) {
+					goto TOP;
+				} elsif ($confirm == 1) { # Request cancel
+					$chars[$charIndex]{deleteDate} = undef;
+					$chars[$charIndex]{deleteDateTimestamp} = undef;
+					message TF("Canceling delete request for character %s...\n", $chars[$charIndex]{name}), "connection";
+					$messageSender->sendCharDelete2Cancel($chars[$charIndex]{charID});
+				} elsif ($confirm == 2 && int(time) > $chars[$charIndex]{deleteDateTimestamp}) {
+					my $code = $interface->query("Enter your birthdate or deletion code.");
+					if (!defined($code)) {
+						goto TOP;
+					}
+
+					my $confirmation = $interface->showMenu(
+						TF("Are you ABSOLUTELY SURE you want to delete:\n%s", $charNames[$choice]),
+						[T("No, don't delete"), T("Yes, delete")],
+						title => T("Confirm delete"));
+					if ($confirmation != 1) {
+						goto TOP;
+					}
+
+					$messageSender->sendCharDelete2Accept($chars[$charIndex]{charID}, $code);
+					message TF("Request deletion date for character %s...\n", $chars[$charIndex]{name}), "connection";
+					$AI::temp::delIndex = $charIndex;
+					$timeout{charlogin}{time} = time;
+				} else {
+					message TF("Character %s cannot be deleted yet. Please wait until %s\n", $chars[$charIndex]{name}, $chars[$charIndex]{deleteDate}), "info";
+					goto TOP;
+				}
 			} else {
-				$messageSender->sendCharDelete2($chars[$charIndex]{charID});
+				$messageSender->sendCharDelete2($chars[$charIndex]{charID}); # Request date deletion.
 			}
 		} else {
 			my $email = $interface->query("Enter your email address.");

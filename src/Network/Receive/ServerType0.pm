@@ -502,6 +502,7 @@ sub new {
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
 		'0824' => ['buying_store_fail', 'v2', [qw(result itemID)]],
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
+		'082A' => ['char_delete2_accept_result', 'V V', [qw(charID result)]], # 10
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'082D' => ['received_characters', 'x2 C5 x20 a*', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
 		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
@@ -4421,7 +4422,11 @@ sub received_characters {
 		$chars[$slot]{luk} = $luk;
 		$chars[$slot]{sex} = $accountSex2;
 
-		$chars[$slot]{deleteDate} = getFormattedDate($deleteDate) if ($deleteDate);
+		if ($deleteDate) {
+			$deleteDate = int(time) + $deleteDate;
+			$chars[$slot]{deleteDate} = getFormattedDate($deleteDate);
+			$chars[$slot]{deleteDateTimestamp} = $deleteDate;
+		}
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 	}

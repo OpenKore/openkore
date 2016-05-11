@@ -1569,10 +1569,12 @@ sub char_delete2_result {
 	my $deleteDate = $args->{deleteDate};
 
 	if ($result && $deleteDate) {
-		$deleteDate = getFormattedDate($deleteDate);
+		my $deleteDateTimestamp = int(time) + $deleteDate;
+		$deleteDate = getFormattedDate($deleteDateTimestamp);
 
 		message TF("Your character will be delete, left %s\n", $deleteDate), "connection";
 		$chars[$messageSender->{char_delete_slot}]{deleteDate} = $deleteDate;
+		$chars[$messageSender->{char_delete_slot}]{deleteDateTimestamp} = $deleteDateTimestamp;
 	} elsif ($result == 0) {
 		error T("That character already planned to be erased!\n");
 	} elsif ($result == 3) {
@@ -1586,6 +1588,56 @@ sub char_delete2_result {
 	}
 
 	charSelectScreen;
+}
+
+# 082A,10
+sub char_delete2_accept_result {
+	my ($self, $args) = @_;
+	my $charID = $args->{charID};
+	my $result = $args->{result};
+
+	if ($result == 1) { # Success
+		if (defined $AI::temp::delIndex) {
+			message TF("Character %s (%d) deleted.\n", $chars[$AI::temp::delIndex]{name}, $AI::temp::delIndex), "info";
+			delete $chars[$AI::temp::delIndex];
+			undef $AI::temp::delIndex;
+			for (my $i = 0; $i < @chars; $i++) {
+				delete $chars[$i] if ($chars[$i] && !scalar(keys %{$chars[$i]}))
+			}
+		} else {
+			message T("Character deleted.\n"), "info";
+		}
+
+		if (charSelectScreen() == 1) {
+			$net->setState(3);
+			$firstLoginMap = 1;
+			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+			$sentWelcomeMessage = 1;
+		}
+		return;
+	} elsif ($result == 0) {
+		error T("Enter your 6-digit birthday (YYMMDD) (e.g: 801122).\n");
+	} elsif ($result == 2) {
+		error T("Due to system settings, can not be deleted.\n");
+	} elsif ($result == 3) {
+		error T("A database error has occurred.\n");
+	} elsif ($result == 4) {
+		error T("You cannot delete this character at the moment.\n");
+	} elsif ($result == 5) {
+		error T("Your entered birthday does not match.\n");
+	} elsif ($result == 7) {
+		error T("Character Deletion has failed because you have entered an incorrect e-mail address.\n");
+	} else {
+		error TF("An unknown error has occurred. Error number %d\n", $result);
+	}
+
+	undef $AI::temp::delIndex;
+	if (charSelectScreen() == 1) {
+		$net->setState(3);
+		$firstLoginMap = 1;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+		$sentWelcomeMessage = 1;
+	}
 }
 
 # 082C,14
