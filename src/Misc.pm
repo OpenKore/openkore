@@ -201,7 +201,8 @@ our @EXPORT = (
 	openShop
 	closeShop
 	inLockMap
-	parseReload/
+	parseReload
+	setCharDeleteDate/
 	);
 
 
@@ -4506,6 +4507,30 @@ sub buyingstoreitemdelete {
 	$item->{amount} -= $amount;
 	$char->inventory->remove($item) if ($item->{amount} <= 0);
 	$itemChange{$item->{name}} -= $amount;
+}
+
+
+# There are 2 types of clients that receive deletion timestamp 'deleteDate'
+# 0: As when char can be deleted
+# 1: As remaining time
+#    -> kRO 2013 clients
+#    -> idRO since 2016-04-06
+sub setCharDeleteDate {
+	my ($slot, $deleteDate) = @_;
+
+	return if (!$deleteDate);
+
+	if (!defined $chars[$slot]) {
+		error TF("Invalid char in specified slot %d\n", $slot);
+		return;
+	}
+
+	if ($masterServer->{charDeleteDateType} == 1) { # New clients receive deleteTime as 'time remaining'
+		$deleteDate = int(time) + $deleteDate;
+	}
+
+	$chars[$slot]{deleteDate} = getFormattedDate($deleteDate);
+	$chars[$slot]{deleteDateTimestamp} = $deleteDate;
 }
 
 return 1;

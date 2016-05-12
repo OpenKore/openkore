@@ -1569,12 +1569,8 @@ sub char_delete2_result {
 	my $deleteDate = $args->{deleteDate};
 
 	if ($result && $deleteDate) {
-		my $deleteDateTimestamp = int(time) + $deleteDate;
-		$deleteDate = getFormattedDate($deleteDateTimestamp);
-
-		message TF("Your character will be delete, left %s\n", $deleteDate), "connection";
-		$chars[$messageSender->{char_delete_slot}]{deleteDate} = $deleteDate;
-		$chars[$messageSender->{char_delete_slot}]{deleteDateTimestamp} = $deleteDateTimestamp;
+		setCharDeleteDate($messageSender->{char_delete_slot}, $deleteDate);
+		message TF("Your character will be delete, left %s\n", $chars[$messageSender->{char_delete_slot}]{deleteDate}), "connection";
 	} elsif ($result == 0) {
 		error T("That character already planned to be erased!\n");
 	} elsif ($result == 3) {

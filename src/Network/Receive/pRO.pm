@@ -139,11 +139,7 @@ sub received_characters {
 		$chars[$slot]{luk} = $luk;
 		$chars[$slot]{sex} = $accountSex2;
 
-		if ($deleteDate) {
-			$deleteDate = int(time) + $deleteDate;
-			$chars[$slot]{deleteDate} = getFormattedDate($deleteDate);
-			$chars[$slot]{deleteDateTimestamp} = $deleteDate;
-		}
+		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 	}
