@@ -72641,3 +72641,399 @@ Weight : ^7777770^000000
 Lv. req. : ^7777771^000000
 Class : ^777777All classes^000000
 #
+
+
+
+15110#
+^808080This mechanical device uses the power of science to optimize your strength. You can combine it with other variants for a synergetic effect.^000000
+^FFFFFF_^000000
+Type: Armor
+Defense: 80
+Property: Neutral
+Weight: 200
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+ATK + 5%
+ATK + 1% per 4 upgrade levels of the item.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Supplement Part Agi^000000
+^008080Supplement Part Str^000000
+ATK + 30
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Supplement Part Con^000000
+^008080Supplement Part Str^000000
+Increases the damage of ^0000FFAxe Tornado^000000 by 25%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Supplement Part Dex^000000
+^008080Supplement Part Str^000000
+Increases the damage of ^0000FFAxe Boomerang^000000 by 100%.
+#
+2995#
+^808080This mechanical device promotes the precise and timely execution of spells.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 10
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+Cast Delay - 10%
+Variable Casting Time - 10%
+Reduces the cooldown of ^0000FFAxe Boomerang^000000 by 2 seconds.
+Reduces the SP cost of skills by 10%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Supplement Part Dex^000000
+^008080Supplement Part Str^000000
+Increases the damage of ^0000FFAxe Boomerang^000000 by 100%.
+#
+20732#
+^808080This mechanical device heals wounds and rejuvenates your body.^000000
+^FFFFFF_^000000
+Type: Garment
+Defense: 20
+Weight: 50
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+Max HP + 6%
+Max HP + 1% per 2 upgrade levels of the item.
+^FFFFFF_^000000
+If upgrade level is +9 or higher,
+HP Recovery + 50%
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Supplement Part Con^000000
+^008080Supplement Part Str^000000
+Increases the damage of ^0000FFAxe Tornado^000000 by 25%.
+#
+22043#
+^808080Mechanical boots that keep you light on your feet. They are much lighter than they look.^000000
+^FFFFFF_^000000
+Type: Shoes
+Defense: 25
+Weight: 35
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+ASPD + 6%
+Max HP + 1% per 2 upgrade levels of the item.
+^FFFFFF_^000000
+If upgrade level is +4 or higher,
+ASPD + 1%
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Supplement Part Agi^000000
+^008080Supplement Part Str^000000
+ATK + 30
+#
+15111#
+^808080Designed to be worn over the frames of Madogears for enhanced Defense, this part is easy to assemble and disassemble.^000000
+^FFFFFF_^000000
+Type: Armor
+Defense: 110
+Property: Neutral
+Weight: 300
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+Reduces damage taken from Small, Medium size attackers by 10%.
+This item is indestructible in battle.
+^FFFFFF_^000000
+If upgrade level is +7 or higher,
+Reduces damage taken from Large size attackers by 10%.
+^FFFFFF_^000000
+If upgrade level is +9 or higher,
+Reduces damage taken from Small, Medium size attackers by 5%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Upgrade_Part - Booster^000000
+^008080Upgrade_Part - Engine^000000
+^008080Upgrade_Part - Gun Barrel^000000
+^008080Upgrade_Part - Plate^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 50%.
+#
+2996#
+^808080Designed to strengthen the gun barrels of Madogears for enhanced firepower, this part is easy to assemble and disassemble.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 50
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+ATK + 4%
+HIT + 10
+Increases the damage of ^0000FFKnuckle Boost^000000 by 25%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Upgrade_Part - Booster^000000
+^008080Upgrade_Part - Engine^000000
+^008080Upgrade_Part - Gun Barrel^000000
+^008080Upgrade_Part - Plate^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 50%.
+#
+20733#
+^808080Designed to maximize the outputs of Madogears, this part is easy to assemble and disassemble.^000000
+^FFFFFF_^000000
+Type: Garment
+Defense: 25
+Weight: 150
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+Cast Delay - 10%
+^FFFFFF_^000000
+If upgrade level is +7 or higher,
+Reduces damage taken from Neutral property attacks by 10%.
+^FFFFFF_^000000
+If upgrade level is +9 or higher,
+Cast Delay - 10%
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Upgrade_Part - Booster^000000
+^008080Upgrade_Part - Engine^000000
+^008080Upgrade_Part - Gun Barrel^000000
+^008080Upgrade_Part - Plate^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 50%.
+#
+22044#
+^808080Designed to significantly improve Movement Speed, this Madogear part is easy to assemble and disassemble.^000000
+^FFFFFF_^000000
+Type: Shoes
+Defense: 23
+Weight: 100
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+Reduces the SP cost of ^0000FFHover^000000 by 15.
+^FFFFFF_^000000
+If upgrade level is +7 or higher,
+Reduces the SP cost of ^0000FFAcceleration^000000 by 20.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Upgrade_Part - Booster^000000
+^008080Upgrade_Part - Engine^000000
+^008080Upgrade_Part - Gun Barrel^000000
+^008080Upgrade_Part - Plate^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 50%.
+#
+28101#
+^808080Its name is coined from the shape of the blade.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Two-Handed Axe
+Attack: 320
+Property: Wind
+Weight: 400
+Weapon Level: 4
+Required Level: 100
+Required Job: Rune Knight, Royal Guard, Mechanic, Geneticist
+^FFFFFF_^000000
+Reduces the cooldown of ^0000FFAxe Tornado^000000 by 1 second.
+#
+21011#
+^808080A gigantic blade with a makeshift hilt.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Two-Handed Sword
+Attack: 300
+Property: Neutral
+Weight: 500
+Weapon Level: 4
+Required Level: 130
+Required Job: Rune Knight, Royal Guard
+^FFFFFF_^000000
+ASPD - 15%
+Increases critical damage on targets by 1% per upgrade level of the item.
+This item is indestructible in battle.
+^FFFFFF_^000000
+If base STR is 110 or lower,
+ATK - 250
+#
+4933#
+Reduces damage taken from Neutral property attacks by 1%.
+^FFFFFFEnchantment^000000
+#
+4934#
+Reduces damage taken from Neutral property attacks by 2%.
+^FFFFFFEnchantment^000000
+#
+4935#
+Reduces damage taken from Neutral property attacks by 3%.
+^FFFFFFEnchantment^000000
+#
+6748#
+^808080The Artnard Excavation Team's daily report on its exploration and excavation of Phantasmagorika.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+6749#
+^808080All the machines found in Phantasmagorika have this component installed in the center of their mechanisms. The Excavation Team has named it the Power Control Device.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+6750#
+^808080A broken engine. Maybe it can be refurbished.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
+#
+6751#
+^808080A dented iron plate. Maybe it can be flattened and reusable.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
+#
+6752#
+^808080A burnt Charleston component. Take it to Mass Charleston. Maybe some of its parts can be salvaged.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+6753#
+^808080The Doom Prayers carry this token with them.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+6754#
+^808080A herb with wound-healing properties.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+22611#
+^808080Often found in the Excavation Site, this envelope activates a random effect for 30 seconds when opened.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
+#
+16030#
+^808080This upgraded version of Pile Bunker is lighter in weight, allowing the user to move more quickly.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Mace
+Attack: 400
+Property: Neutral
+Weight: 300
+Weapon Level: 4
+Required Level: 130
+Required Job: Mechanic
+^FFFFFF_^000000
+Cast Delay - 1% per 2 upgrade levels of the item.
+#
+16031#
+^808080This upgraded version of Pile Bunker provides more destructive power.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Mace
+Attack: 450
+Property: Neutral
+Weight: 400
+Weapon Level: 4
+Required Level: 130
+Required Job: Mechanic
+^FFFFFF_^000000
+ATK + 5 per upgrade level of the item.
+#
+16032#
+^808080This upgraded version of Pile Bunker facilitates the application of Special abilities.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Mace
+Attack: 400
+Property: Neutral
+Weight: 350
+Weapon Level: 4
+Required Level: 130
+Required Job: Mechanic
+^FFFFFF_^000000
+Reduces the SP cost of skills by 1% per upgrade level of the item.
+#
+16033#
+^808080Kick and Kick's severed arm that works as effectively as any standard-issue weapon.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Mace
+Attack: 195
+Property: Neutral
+Weight: 300
+Weapon Level: 4
+Required Level: 130
+Required Job: Rune Knight, Royal Guard, Mechanic, Geneticist, Arch Bishop, Sura
+^FFFFFF_^000000
+CRIT + 20
+This item is indestructible in battle.
+#
+6756#
+^808080Specially enriched energy found from Verus City location. Maybe this could help us reveal the secret of Verus City power core..?^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+6757#
+^808080Unique record found from Verus City ruin. You can have a peak of old Verus City life or some historical cases.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+12291#
+^808080A New Year Cat's present. Having a description in small letters: "Royal mineral water made of Prontera aquifer water"^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+Required Level: 1
+Required Job: All
+^FFFFFF_^000000
+Restores 5% SP.
+Casts ^0000FFLevel 5 Increase AGI^000000.
+#
+12377#
+^808080The second new item of Mysterious PET Bottle. Blue ocean flavor. Due to its smell, the ocean spreads right in front of one's eyes.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+Required Level: 1
+Required Job: All
+^FFFFFF_^000000
+Restores 3% SP.
+Casts ^0000FFLevel 1 Magnificat^000000.
+#
+12290#
+^808080A New Year Cat's present. Having a description in small letters: "A premium can for cats containing tuna 45%"^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+Required Level: 1
+Required Job: All
+^FFFFFF_^000000
+Restores 5% HP.
+Casts ^0000FFLevel 5 Blessing^000000.
+#
+12376#
+^808080The second new item of Mysterious Can. Fresh mackerel flavor. Best nutrition for children in the growing period.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+Required Level: 1
+Required Job: All
+^FFFFFF_^000000
+Restores 3% SP.
+Casts ^0000FFLevel 2 Gloria^000000.
+#
