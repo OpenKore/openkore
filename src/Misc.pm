@@ -1304,7 +1304,7 @@ sub charSelectScreen {
 			if ($chars[$charIndex]{deleteDate}) {
 				my $confirm = $interface->showMenu(
 					TF("Are you ABSOLUTELY SURE you want to delete:\n%s", $charNames[$choice]),
-					[T("No, don't delete"), T("Cancel delete request"), T("Yes, delete")],
+					[T("Back"), T("No, don't delete"), T("Yes, delete")],
 					title => T("Confirm delete"));
 
 				if ($confirm == 0) {
@@ -1329,7 +1329,7 @@ sub charSelectScreen {
 					}
 
 					$messageSender->sendCharDelete2Accept($chars[$charIndex]{charID}, $code);
-					message TF("Request deletion date for character %s...\n", $chars[$charIndex]{name}), "connection";
+					message TF("Deleting character %s...\n", $chars[$charIndex]{name}), "connection";
 					$AI::temp::delIndex = $charIndex;
 					$timeout{charlogin}{time} = time;
 				} else {

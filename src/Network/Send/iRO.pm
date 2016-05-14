@@ -26,6 +26,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
@@ -41,6 +42,7 @@ sub new {
 		skill_use_location 0366
 		party_setting 07D7
 		buy_bulk_vender 0801
+		char_delete2_accept 098f
 		send_equip 0998
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -48,11 +50,18 @@ sub new {
 	return $self;
 }
 
-sub sendCharDelete {
-	my ($self, $charID, $email) = @_;
-	my $msg = pack("C*", 0xFB, 0x01) .
-			$charID . pack("a50", stringToBytes($email));
-	$self->sendToServer($msg);
+sub reconstruct_char_delete2_accept {
+	my ($self, $args) = @_;
+	# length = [packet:2] + [length:2] + [charid:4] + [code_length]
+	$args->{length} = 8 + length($args->{code});
+	debug "Sent sendCharDelete2Accept. CharID: $args->{CharID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
 }
+
+#sub sendCharDelete {
+#	my ($self, $charID, $email) = @_;
+#	my $msg = pack("C*", 0xFB, 0x01) .
+#			$charID . pack("a50", stringToBytes($email));
+#	$self->sendToServer($msg);
+#}
 
 1;

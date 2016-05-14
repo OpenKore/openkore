@@ -109,6 +109,7 @@ patchserver ropatch1.gravityus.com
 patchpath /patch02
 addTableFolders iRO
 charBlockSize 144
+charDeleteDateType 1
 
 [International - iRO: Sakray]
 # http://playragnarok.com

@@ -941,8 +941,8 @@ sub sendCharDelete2 {
 }
 
 ##
-# switch: 0x0829,12: '0829' => ['char_delete2_accept', 'a4 a6', [qw(charID code)]], # 12
-# switch: 0x098F,-1: '098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+# switch: 0x0829,12: '0829' => ['char_delete2_accept', 'a4 a6', [qw(charID code)]], # 12     -> kRO
+# switch: 0x098F,-1: '098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]], -> idRO, iRO Renewal
 sub sendCharDelete2Accept {
 	my ($self, $charID, $code) = @_;
 
