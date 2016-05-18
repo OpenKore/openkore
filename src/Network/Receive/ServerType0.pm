@@ -526,6 +526,9 @@ sub new {
 		'08CB' => ['rates_info', 's4 a*', [qw(len exp death drop detail)]],
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]],
+		'08D5' => ['char_move_slot_reply', 'v3', [qw(unknown reply moveCount)]],
+		'08E3' => ['char_renamed', 'a4 x74 a*', [qw(charID charInfo)]],
+		'08FD' => ['char_rename_result', 'v x', [qw(result)]],
 		'08FF' => ['actor_status_active', 'a4 v V4', [qw(ID type tick unknown1 unknown2 unknown3)]],
 		'0900' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0901' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
@@ -2845,7 +2848,8 @@ sub received_characters {
 		# TODO: What would be the $unknown ?
 		my ($cID,$exp,$zeny,$jobExp,$jobLevel, $opt1, $opt2, $option, $stance, $manner, $statpt,
 			$hp,$maxHp,$sp,$maxSp, $walkspeed, $jobId,$hairstyle, $weapon, $level, $skillpt,$headLow, $shield,$headTop,$headMid,$hairColor,
-			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename, $unknown, $mapname, $deleteDate) =
+			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename, $unknown, $mapname, $deleteDate,
+			$robe, $moveCount, $rename2, $charSex) =
 			unpack($unpack_string, substr($args->{RAW_MSG}, $i));
 		$chars[$slot] = new Actor::You;
 
@@ -2887,6 +2891,10 @@ sub received_characters {
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 		$chars[$slot]{map_name} = $mapname;
 		$chars[$slot]{map_name} =~ s/\.gat//g;
+		$chars[$slot]{robe} = $robe;
+		$chars[$slot]{moveCount} = $moveCount;
+		$chars[$slot]{rename} = $rename2;
+		$chars[$slot]{charSex} = $charSex;
 	}
 
 	# FIXME better support for multiple received_characters packets

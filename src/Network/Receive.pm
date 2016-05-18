@@ -235,13 +235,14 @@ sub received_characters_unpackString {
 	for ($masterServer && $masterServer->{charBlockSize}) {
 		# unknown purpose (0 = disabled, otherwise displays "Add-Ons" sidebar) (from rA)
 		# change $hairstyle
-		return 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V x4 x4 x4 x1' if $_ == 147;
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4 C' if $_ == 145;
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4' if $_ == 144;
+		return 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V4 C' if $_ == 147;
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V4 C' if $_ == 145;
+		# rename char
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V4' if $_ == 144;
 		# change slot feature
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4' if $_ == 140;
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V3' if $_ == 140;
 		# robe
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4' if $_ == 136;
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V2' if $_ == 136;
 		# delete date
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V' if $_ == 132;
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16' if $_ == 128;
@@ -251,6 +252,32 @@ sub received_characters_unpackString {
 		return 'a4 V9 v V2 v14 Z24 C6 v2' if $_ == 112;
 		return 'a4 V9 v17 Z24 C6 v2' if $_ == 108;
 		return 'a4 V9 v17 Z24 C6 v' if $_ == 106 || !$_;
+		die "Unknown charBlockSize: $_";
+	}
+}
+
+# Just like received_characters_unpackString, just only from name block
+sub received_characters_unpackString_Min {
+	for ($masterServer && $masterServer->{charBlockSize}) {
+		# unknown purpose (0 = disabled, otherwise displays "Add-Ons" sidebar) (from rA)
+		# change $hairstyle, last char is $charSex
+		return 'Z24 C8 v Z16 V4 C' if $_ == 147;
+		return 'Z24 C8 v Z16 V4 C' if $_ == 145;
+		# rename char
+		return 'Z24 C8 v Z16 V4' if $_ == 144;
+		# change slot feature
+		return 'Z24 C8 v Z16 V3' if $_ == 140;
+		# robe
+		return 'Z24 C8 v Z16 V2' if $_ == 136;
+		# delete date
+		return 'Z24 C8 v Z16 V' if $_ == 132;
+		return 'Z24 C8 v Z16' if $_ == 128;
+		# bRO (bitfrost update)
+		return 'Z24 C8 v Z12' if $_ == 124;
+		return 'Z24 C6 v2 x4' if $_ == 116; # TODO: (missing 2 last bytes)
+		return 'Z24 C6 v2' if $_ == 112;
+		return 'Z24 C6 v2' if $_ == 108;
+		return 'Z24 C6 v' if $_ == 106 || !$_;
 		die "Unknown charBlockSize: $_";
 	}
 }
@@ -4137,6 +4164,138 @@ sub deal_add_you {
 	$currentDeal{you}{$item->{nameID}}{nameID} = $item->{nameID};
 	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
 	inventoryItemRemoved($item->{binID}, $currentDeal{lastItemAmount});
+}
+
+##
+# 08D5 <unknown>.W <Reply>.W <MoveCountLeft>.W
+# @author [Cydh]
+##
+sub char_move_slot_reply {
+	my ($self, $args) = @_;
+	if ($args->{reply} == 0) {
+		if (defined $AI::temp::moveIndex) {
+			message TF("Character %s moved from %d to %d.\n", $chars[$AI::temp::moveIndex]{name}, $AI::temp::moveIndex, $AI::temp::moveToIndex), "info";
+			my $movedChar = $chars[$AI::temp::moveIndex]; # Save temp
+			$chars[$AI::temp::moveIndex] = $chars[$AI::temp::moveToIndex];
+			$chars[$AI::temp::moveToIndex] = $movedChar;
+			$chars[$AI::temp::moveToIndex]{moveCount} = $args->{moveCount};
+			undef $AI::temp::moveIndex;
+			undef $AI::temp::moveToIndex;
+		} else {
+			message T("Character moved.\n"), "info";
+			relog(10);
+			return;
+		}
+	} else {
+		if (defined $AI::temp::moveIndex) {
+			message TF("Failed to move character %s from %d to %d.\n", $chars[$AI::temp::moveIndex]{name}, $AI::temp::moveIndex, $AI::temp::moveToIndex), "info";
+			undef $AI::temp::moveIndex;
+			undef $AI::temp::moveToIndex;
+		} else {
+			message T("Failed to move a character slot.\n"), "info";
+		}
+	}
+
+	if (charSelectScreen() == 1) {
+		$net->setState(3);
+		$firstLoginMap = 1;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+		$sentWelcomeMessage = 1;
+	}
+	debug "char_move_slot_reply unknown:$args->{unknown}, reply:$args->{reply}, moveCount:$args->{moveCount}\n", "parseMsg";
+}
+
+##
+# 08E3 <charID>.L <unknown>.74B <CharInfo>.66B
+# CharInfo: 'Z24 C8 v Z16 V4'
+# @author [Cydh]
+##
+sub char_renamed {
+	my ($self, $args) = @_;
+
+	if (defined $AI::temp::charRenameIndex) {
+		my $charIndex = $AI::temp::charRenameIndex;
+		message TF("Character \"%s\" renamed to \"%s\"\n", $chars[$charIndex]{name}, $AI::temp::charRenameName), "info";
+		my $unpack_string = $self->received_characters_unpackString_Min;
+		my ($name, $str, $agi, $vit, $int, $dex, $luk, $slot, $rename, $unknown, $mapname, $deleteDate,
+			$robe, $moveCount, $rename2,$charSex) =
+			unpack($unpack_string, $args->{charInfo});
+
+		if ($name ne $AI::temp::charRenameName) {
+			error TF("Name mismatch! %s <-> %s\n", $name, $AI::temp::charRenameName), "info";
+		}
+
+		$chars[$charIndex]{name} = $name;
+		$chars[$charIndex]{str} = $str;
+		$chars[$charIndex]{agi} = $agi;
+		$chars[$charIndex]{vit} = $vit;
+		$chars[$charIndex]{int} = $int;
+		$chars[$charIndex]{dex} = $dex;
+		$chars[$charIndex]{luk} = $luk;
+		setCharDeleteDate($charIndex, $deleteDate) if $deleteDate;
+		$chars[$charIndex]{name} = bytesToString($chars[$charIndex]{name});
+		$chars[$charIndex]{robe} = $robe;
+		$chars[$charIndex]{moveCount} = $moveCount;
+		$chars[$charIndex]{rename} = $rename2;
+		$chars[$charIndex]{charSex} = $charSex;
+
+		undef $AI::temp::charRenameIndex;
+		undef $AI::temp::charRenameName;
+
+		if (charSelectScreen() == 1) {
+			$net->setState(3);
+			$firstLoginMap = 1;
+			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+			$sentWelcomeMessage = 1;
+		}
+	} else {
+		message T("Character renamed.\n"), "info";
+		relog(10);
+		return;
+	}
+
+	debug "char_renamed result:$args->{result}\n", "parseMsg";
+}
+
+##
+# 08FD <Result>.W <unknown>.W
+# @author [Cydh]
+##
+sub char_rename_result {
+	my ($self, $args) = @_;
+
+	# 0: Success
+	if ($args->{result} == 0 && defined $AI::temp::charRenameIndex) {
+		my $charIndex = $AI::temp::charRenameIndex;
+		message TF("Character \"%s\" renamed to \"%s\"\n", $chars[$charIndex]{name}, $AI::temp::charRenameName), "info";
+		return;
+	# 4: Fail already exists
+	} elsif ($args->{result} == 4) {
+		error TF("Cannot rename character to \"%s\". Name is already exists.\n", $AI::temp::charRenameName);
+	# 5: Fail in guild
+	} elsif ($args->{result} == 5) {
+		error TF("To rename a character you must withdraw from the guild.\n");
+	# 5: Fail in party
+	} elsif ($args->{result} == 6) {
+		error TF("To rename a character you must withdraw from the party.\n");
+	# 9: Invalid name
+	} elsif ($args->{result} == 9) {
+		error TF("Invalid new name \"%s\".\n", $AI::temp::charRenameName);
+	} else {
+		error TF("Unknown rename result occured:%d\n", $args->{result});
+	}
+
+	debug "char_rename_result result:$args->{result}\n", "parseMsg";
+
+	undef $AI::temp::charRenameIndex;
+	undef $AI::temp::charRenameName;
+
+	if (charSelectScreen() == 1) {
+		$net->setState(3);
+		$firstLoginMap = 1;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+		$sentWelcomeMessage = 1;
+	}
 }
 
 1;
