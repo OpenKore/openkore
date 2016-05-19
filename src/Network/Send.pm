@@ -31,7 +31,7 @@ use Carp::Assert;
 use Digest::MD5;
 use Math::BigInt;
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers);
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers @mergeItemList);
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
@@ -1154,6 +1154,44 @@ sub sendDealAddItem {
 		amount => $amount
 	}));
 	debug sprintf("Sent Deal Add Item: %s, $amount\n", unpack('v', $ID)), "sendPacket", 2;
+}
+
+##
+# Request to merge item
+# 096E <size>.W { <index>.W }*
+# @author [Cydh]
+##
+sub sendMergeItemRequest {
+	my ($self, $num, $items) = @_;
+	my $len = ($num * 4) + 12;
+	$self->sendToServer($self->reconstruct({
+		switch => 'merge_item_request',
+		len => $len,
+		items => $items,
+	}));
+	debug "Sent merge item request: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$items)."\n", "sendPacket";
+	undef @mergeItemList;
+}
+
+sub reconstruct_merge_item_request {
+	my ($self, $args) = @_;
+	$args->{itemList} = pack '(a2)*', map { pack 'v2', @{$_}{qw(itemIndex)} } @{$args->{items}};
+}
+
+##
+# Request to cancel merge item
+# 0974
+# @author [Cydh]
+##
+sub sendMergeItemCancel {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'merge_item_cancel' }));
+	debug "Cancel Merge item\n", "sendPacket";
+	undef @mergeItemList;
+}
+
+# sub reconstruct_merge_item_cancel {
+#	my ($self, $args) = @_;
 }
 
 1;

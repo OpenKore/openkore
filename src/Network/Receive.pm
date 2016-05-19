@@ -4139,4 +4139,48 @@ sub deal_add_you {
 	inventoryItemRemoved($item->{binID}, $currentDeal{lastItemAmount});
 }
 
+##
+# 096D <size>.W { <index>.W }*
+# @author [Cydh]
+##
+sub merge_item_open {
+	my ($self, $args) = @_;
+	my $num = ($args->{length} - 4) / 2;
+	message TF("Received %d items to be merged. Use 'merge' to continue\n", $num), "info";
+}
+
+sub parse_merge_item_open {
+	my ($self, $args) = @_;
+	@mergeItemList = map {{ itemIndex => unpack('v', $_) }} unpack '(a2)*', $args->{itemList};
+	debug "Merging items ".length(@mergeItemList).". itemList: ".(join ', ', map {"$_->{itemIndex}"} @mergeItemList)."\n";
+}
+
+##
+# 096F <index>.W <total>.W <result>.B
+# @author [Cydh]
+##
+sub merge_item_result {
+	my ($self, $args) = @_;
+	undef @mergeItemList;
+	if ($args->{result} == 0) {
+		# now update inventory data
+		my $item = $char->inventory->getByServerIndex($args->{itemIndex});
+		message T("Items were merged successfully!\n"), "info";
+		if ($item) {
+			my $oldAmount = $item->{amount};
+			$item->{amount} = $args->{total};
+			message TF("Updated amount of item %s (%d): %d -> %d\n", $item->{name}, $item->{invIndex}, $oldAmount, $item->{amount});
+		} else {
+			error TF("Item was moved during merging process. Index: %d. New amount: %d\n", $args->{itemIndex}, $args->{total});
+		}
+	} elsif ($args->{result} == 1) {
+		error T("Items cannot be merged.\n");
+	} elsif ($args->{result} == 2) {
+		error T("The amount of merged item will be exceed stack limit.\n");
+	} else {
+		error TF("An error occured to merge item. Error:%d\n", $args->{result});
+	}
+	debug "Merge item result: index:$args->{itemIndex} total:$args->{total} result:$args->{result}\n";
+}
+
 1;

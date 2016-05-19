@@ -238,7 +238,10 @@ sub initHandlers {
 	northwest			=> \&cmdManualMove,
 	southeast			=> \&cmdManualMove,
 	southwest			=> \&cmdManualMove,
-	captcha			   => \&cmdAnswerCaptcha
+	captcha			   => \&cmdAnswerCaptcha,
+
+	# Merge Item [Cydh]
+	merge				=> \&cmdMergeItem,
 	);
 }
 
@@ -6615,6 +6618,93 @@ sub cmdCancelTransaction {
 	} else {
 		error T("You are not on a sell or store npc interaction.\n");
 	}
+}
+
+##
+# 'merge' Merge Item
+# @author [Cydh]
+##
+sub cmdMergeItem {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	if (not defined @mergeItemList) {
+		error T("You cannot use thos command yet. Only available after talk with Mergician-like NPC!\n");
+		return;
+	}
+
+	my ($switch, $args) = @_;
+	my ($mode) = $args =~ /^(\w+)/;
+
+	if ($mode eq "" || $mode eq "list") {
+		my $title = TF("Available Items for Merger");
+		my $msg = center(' '. $title . ' ', 50, '-') ."\n".
+					T ("#   Item Name                                 \n");
+		foreach my $it (@mergeItemList) {
+			my $item = $char->inventory->getByServerIndex($it->{itemIndex});
+			if ($item) {
+				my $display = "$item->{name} x $item->{amount}";
+				$it->{item} = $item;
+				$it->{invIndex} = $item->{invIndex};
+				$msg .= swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$item->{invIndex}, $display]);
+			}
+		}
+		$msg .= ('-'x50) . "\n";
+		message $msg, "list";
+		message T("Usages: merge <item #>,<item #>[,<item #>,<item #>,...]\n"), "info";
+		return;
+
+	} elsif ($mode eq "cancel") {
+		$messageSender->sendMergeItemCancel();
+		message TF("Merge Item is canceled.\n"), "info";
+		return;
+	}
+
+	# Merging process
+	my @list = split(/,/, $args);
+	my @items = ();
+    
+	@list = grep(!/^$/, @list); # Remove empty entries
+	foreach (@list) {
+		my ($invIndex) = $_ =~ /^(\d+)/;
+		my $found = 0;
+		my $i = 0;
+		foreach my $it (@mergeItemList) {
+			if ($it->{invIndex} == $invIndex) {
+				$found = 1;
+				last;
+			}
+		} continue {
+			$i++;
+		}
+		if ($found != 1) {
+			error TF("Please type 'merge info' to see available items.\n");
+			return;
+		}
+		my $item = $mergeItemList[$i]->{item};
+		if ($item) {
+			push(@items,{itemIndex => $item->{index}, amount => $item->{amount}, itemName => $item->{name}});
+		} else {
+			warning TF("Item in index '%d' is not exists.\n", $invIndex);
+		}
+	}
+	if (@items > 1) {
+		my $num = scalar @items;
+		message T("Number of selected items\n"), "info";
+		message T("======== Merge Item List ========\n");
+		map {message "$_->{itemName} $_->{amount}x ($_->{itemIndex})\n"} @items;
+		message "==============================\n";
+		undef @mergeItemList;
+		$messageSender->sendMergeItemRequest($num, \@items);
+		return;
+	}
+
+	error T("No item was selected or at least need 2 same items.\n");
+	error T("Usages: merge <item #>,<item #>[,<item #>,<item #>,...]\n");
 }
 
 1;
