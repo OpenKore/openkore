@@ -514,17 +514,15 @@ pinCode 1
 # clientside: ? (2010-01-26aRagexeRE.exe)
 # serverside: ?
 [KoreRO]
-dead 1
-ip kronos.sca-gaming.net
-port 6900
 private 1
-master_version 20
-version 23
-serverType kRO_RagexeRE_2010_07_14a
+ip 103.211.27.157
+port 6900
+master_version 0
+version 45
+serverType KoreRO
+charBlockSize 144
 serverEncoding Western
-charBlockSize 112
-chatLangCode 1
-addTableFolders pserver/KoreRO;eA;kRO/RagexeRE_2010_07_14a;translated/kRO_english;kRO
+addTableFolders iRO
 
 # clientside: ? (2010-07-30aRagexeRE.exe)
 # serverside: ?
