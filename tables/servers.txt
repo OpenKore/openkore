@@ -522,7 +522,7 @@ version 45
 serverType KoreRO
 charBlockSize 144
 serverEncoding Western
-addTableFolders iRO
+addTableFolders pserver/KoreRO;iRO
 
 # clientside: ? (2010-07-30aRagexeRE.exe)
 # serverside: ?
