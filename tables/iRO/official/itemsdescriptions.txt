@@ -2,682 +2,912 @@
 
 501#
 ^808080A potion made from ground Red Herbs.^000000
-
+^FFFFFF_^000000
 Type: Consumable
-Class: HP Recovery
+Class: Recovery
 Weight: 7
-Required Level: 1
-
-Base Heal Value ^00800045^000000 to ^00800065^000000HP
+^FFFFFF_^000000
+Restores ^00800045^000000 to ^00800065^000000 HP.
 #
 
 502#
 ^808080A potion made from ground Red and Yellow Herbs.^000000
-
+^FFFFFF_^000000
 Type: Consumable
-Class: HP Recovery
+Class: Recovery
 Weight: 10
-Required Level: 1
-
-Base Heal Value ^008000105^000000 to ^008000145^000000HP
+^FFFFFF_^000000
+Restores ^008000105^000000 to ^008000145^000000 HP.
 #
 
 503#
 ^808080A potion made from ground Yellow Herbs.^000000
-
+^FFFFFF_^000000
 Type: Consumable
-Class: HP Recovery
+Class: Recovery
 Weight: 13
-Required Level: 1
-
-Base Heal Value ^008000175^000000 to ^008000235^000000HP
+^FFFFFF_^000000
+Restores ^008000175^000000 to ^008000235^000000 HP.
 #
 
 504#
 ^808080A potion made from ground White Herbs.^000000
-
+^FFFFFF_^000000
 Type: Consumable
-Class: HP Recovery
+Class: Recovery
 Weight: 15
-Required Level: 1
-
-Base Heal Value ^008000325^000000 to ^008000405^000000HP
+^FFFFFF_^000000
+Restores ^008000325^000000 to ^008000405^000000 HP.
 #
 
 505#
 ^808080A potion made from ground Blue Herbs.^000000
-
+^FFFFFF_^000000
 Type: Consumable
-Class: SP Recovery
+Class: Recovery
 Weight: 15
-Required Level: 1
-
-Base Heal Value ^00800040^000000 to ^00800060^000000SP
+^FFFFFF_^000000
+Restores ^00800040^000000 to ^00800060^000000 SP.
 #
 
 506#
 ^808080A potion made from ground Green Herbs.^000000
-
+^FFFFFF_^000000
 Type: Consumable
-Class: Status Recovery
+Class: Recovery
 Weight: 7
-Required Level: 1
-
-Cures ^008000Poison^000000, ^008000Silence^000000, ^008000Blind^000000 and ^008000Chaos^000000 status effects.
-
+^FFFFFF_^000000
+Cures ^008000Blind^000000, ^008000Curse^000000, ^008000Poison^000000, ^008000Silence^000000.
 #
+
 507#
 ^808080Reddish herbs found in the wild. Often from monsters just slain. For some reason Midgardians still have no problem eating these.^000000
-
+^FFFFFF_^000000
 Type: Consumable
-Class: HP Recovery
+Class: Recovery
 Weight: 3
-Required Level: 1
-
-Base Heal Value ^00800018^000000 to ^00800028^000000HP
-
-Can be used in Potion Crafting.
+^FFFFFF_^000000
+Restores ^00800018^000000 to ^00800028^000000 HP.
 #
+
 508#
 ^808080Yellow herbs found in the wild. These give a slightly stronger hit than Red Herbs.^000000
-
+^FFFFFF_^000000
 Type: Consumable
-Class: HP Recovery
+Class: Recovery
 Weight: 5
-Required Level: 1
-
-Base Heal Value ^00800038^000000 to ^00800058^000000HP
-
-Can be used in Potion Crafting.
+^FFFFFF_^000000
+Restores ^00800038^000000 to ^00800058^000000 HP.
 #
+
 509#
 ^808080White herbs found in the wild. Any alchemist can tell you... this is the good stuff.^000000
-
+^FFFFFF_^000000
 Type: Consumable
-Class: HP Recovery
+Class: Recovery
 Weight: 7
-Required Level: 1
-
-Base Heal Value ^00800075^000000 to ^008000115^000000HP
-
-Can be used in Potion Crafting.
+^FFFFFF_^000000
+Restores ^00800075^000000 to ^008000115^000000 HP.
 #
+
 510#
 ^808080Blue herbs found in the wild. May be habit forming. Please consult your biochemist before use.^000000
-
+^FFFFFF_^000000
 Type: Consumable
-Class: SP Recovery
+Class: Recovery
 Weight: 7
-Required Level: 1
-
-Base Heal Value ^00800015^000000 to ^00800030^000000SP
-
-Can be used in Potion Crafting.
+^FFFFFF_^000000
+Restores ^00800015^000000 to ^00800030^000000 SP.
 #
+
 511#
-^000088Status Recovery Item^000000
-^000088Potion Crafting Item^000000
-A valuable medicinal
-herb which ^000088counteracts
-the effects of poison^000000.
-^ffffff_^000000
-Weight : ^7777773^000000
+^808080A valuable medicinal herb which counteracts the effects of poison.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 3
+^FFFFFF_^000000
+Cures ^008000Poison^000000.
 #
+
 512#
-^000088HP Recovery Item^000000
-A round, edible fruit that, when eaten once a day, keeps the doctor away.
-^000088Recovers a small amount of HP^000000.
-^ffffff_^000000
-Weight : ^7777772^000000
+^808080A round, edible fruit that, when eaten once a day, keeps the doctor away.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^00800016^000000 to ^00800022^000000 HP.
 #
+
 513#
-^000088HP Recovery Item^000000
-A sweet tasting tropical fruit made famous by its use in slapstick comedy and practical jokes.
-^000088Recovers a small amount of HP^000000.
-^ffffff_^000000
-Weight : ^7777772^000000
+^808080A sweet tasting tropical fruit made famous by its use in slapstick comedy and practical jokes.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^00800017^000000 to ^00800021^000000 HP.
 #
+
 514#
-^000088SP Recovery Item^000000
-Clustered berries with smooth skin that can be fermented to make wine.
-^000088Recovers a small amount of SP^000000.
-^ffffff_^000000
-Weight : ^7777772^000000
+^808080Clustered berries with smooth skin that can be fermented to make wine.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^00800010^000000 to ^00800015^000000 SP.
 #
+
 515#
-^000088HP Recovery Item^000000
-An orange root that
-is supposedly good
-for your vision. Despite the Beta Carotene, kids don't care much for it.
-^000088Recovers a small
-amount of HP^000000.
-^ffffff_^000000
-Weight : ^7777772^000000
+^808080An orange root that is supposedly good for your vision. Despite the Beta Carotene, kids don't care much for it.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^00800018^000000 to ^00800020^000000 HP.
 #
+
 516#
-^000088HP Recovery Item^000000
-A tuber that can be
-fried, baked, boiled
-mashed, even eaten.
-^000088Recovers a small
-amount of HP^000000.
-^ffffff_^000000
-Weight : ^7777772^000000
+^808080A tuber that can be fried, baked, boiled mashed, even eaten.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^00800015^000000 to ^00800023^000000 HP.
 #
+
 517#
-^000088HP Recovery Item^000000
-A leg of meat
-that's been cooked
-to near perfection.
-^000088Recovers a small
-amount of HP^000000.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080A leg of meat that's been cooked to near perfection.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 15
+^FFFFFF_^000000
+Restores ^00800070^000000 to ^008000100^000000 HP.
 #
+
 518#
-^000088HP Recovery Item^000000
-^000088SP Recovery Item^000000
-A sweet product made
-by bees that is endowed with yummy flavor and
-medicinal uses.
-^000088Recovers a small
-amount of HP and SP^000000.
-^ffffff_^000000
-Weight : ^77777710^000000
+^808080A sweet product made by bees that is endowed with yummy flavor and medicinal uses.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+^FFFFFF_^000000
+Restores ^00800070^000000 to ^008000100^000000 HP and ^00800020^000000 to ^00800040^000000 SP.
 #
+
 519#
-^000088HP Recovery Item^000000
-Pasteurized and bottled cow milk that is chock full of bovine goodness.
-^000088Recovers a small
-amount of HP^000000.
-^ffffff_^000000
-Weight : ^7777773^000000
+^808080Pasteurized and bottled cow milk that is chock full of bovine goodness.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 3
+^FFFFFF_^000000
+Restores ^00800027^000000 to ^00800037^000000 HP.
 #
+
 520#
-^000088HP Recovery Item^000000
-Leaf cut from a Hinalle Plant which has a cool, fresh scent. It can ease pain and reinvigorate.
-^000088Recovers a suitable
-amount of HP^000000.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Leaf cut from a Hinalle Plant which has a cool, fresh scent. It can ease pain and reinvigorate.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 1
+^FFFFFF_^000000
+Restores ^008000175^000000 to ^008000235^000000 HP.
 #
+
 521#
-^000088HP Recovery Item^000000
-Leaf cut from an Aloe plant.
-^000088Recovers a suitable amount of HP^000000.
-^ffffff_^000000
-Weight : ^7777772^000000
+^808080Leaf cut from an Aloe plant.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 3
+^FFFFFF_^000000
+Restores ^008000325^000000 to ^008000405^000000 HP.
 #
+
 522#
-^000088HP Recovery Item^000000
-A shiny, purple fruit picked from the boughs of the Mastela tree.
-^000088Recovers a great amount of HP^000000.
-^ffffff_^000000
-Weight : ^7777773^000000
+^808080A shiny, purple fruit picked from the boughs of the Mastela tree.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 3
+^FFFFFF_^000000
+Restores ^008000400^000000 to ^008000600^000000 HP.
 #
+
 523#
-^000088Status Recovery Item^000000
-Blessed water used
-in sacred ceremonies.
-^000088Cures Cursed status^000000.
-^ffffff_^000000
-Weight : ^7777773^000000
-#
+^808080Blessed water used in sacred ceremonies.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 3
+^FFFFFF_^000000
+Cures ^008000Curse^000000.
+
 525#
-^000088Status Recovery Item^000000
-A mystic remedy
-for all illnesses.
-^000088Cures every
-abnormal status^000000.
-^ffffff_^000000
-Weight : ^77777710^000000
+^808080A mystic remedy for all illnesses.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+^FFFFFF_^000000
+Cures ^008000Blind^000000, ^008000Curse^000000, ^008000Confusion^000000, ^008000Poison^000000, ^008000Silence^000000.
 #
+
 526#
-^000088HP Recovery Item^000000
-^000088Status Recovery Item^000000
-Highly nutritious jelly secreted from honeybees that they only feed to larvae and future queens.
-^000088Cures every abnormal status^000000; ^000088Recovers 250 HP^000000.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080Highly nutritious jelly secreted from honeybees that they only feed to larvae and future queens.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 15
+^FFFFFF_^000000
+Restores ^008000325^000000 to ^008000405^000000 HP and ^00800040^000000 to ^00800060^000000 SP.
+Cures ^008000Blind^000000, ^008000Curse^000000, ^008000Confusion^000000, ^008000Poison^000000, ^008000Silence^000000.
 #
+
 528#
-^000088HP Recovery Item^000000
-Processed food that is normally fed to monsters.
-^000088Recovers a small
-amount of  HP^000000.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080Processed food that is normally fed to monsters.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 15
+^FFFFFF_^000000
+Restores ^00800072^000000 to ^008000108^000000 HP.
 #
+
 529#
-^000088HP Recovery Item^000000
-A confection of sugar, chocolate and other flavorings. Kids love it!
-^000088Recovers 45 HP^000000.
-^ffffff_^000000
-Weight : ^7777773^000000
+^808080A confection of sugar, chocolate and other flavorings. Kids love it!^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 3
+^FFFFFF_^000000
+Restores ^00800045^000000 to ^00800065^000000 HP.
 #
+
 530#
-^000088HP Recovery Item^000000
-A striped cane of
-peppermint candy.
-Sugar daddies love it!
-^000088Recovers 105 HP^000000.
-^ffffff_^000000
-Weight : ^7777774^000000
+^808080A striped cane of peppermint candy. Sugar daddies love it!^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 4
+^FFFFFF_^000000
+Restores ^008000105^000000 to ^008000145^000000 HP.
 #
+
 531#
-^000088HP Recovery Item^000000
-Bottled apple juice
-that's easy to digest.
-^000088Recovers a suitable
-amount of HP^000000.
-Also used to feed Little Poring pets
-^ffffff_^000000
-Weight : ^7777774^000000
+^808080Bottled apple juice that's easy to digest.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 4
+^FFFFFF_^000000
+Restores ^00800025^000000 to ^00800035^000000 HP.
 #
+
 532#
-^000088HP Recovery Item^000000
-Bottled banana juice
-that's easy to digest.
-^000088Recovers a suitable
-amount of HP^000000.
-^ffffff_^000000
-Weight : ^7777774^000000
-#
+^808080Bottled banana juice that's easy to digest.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 4
+^FFFFFF_^000000
+Restores ^00800026^000000 to ^00800034^000000 HP.
+
 533#
-^000088SP Recovery Item^000000
-Bottled grape juice
-that's easy to digest.
-^000088Recovers a suitable
-amount of SP^000000.
-^ffffff_^000000
-Weight : ^7777774^000000
+^808080Bottled grape juice that's easy to digest.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 4
+^FFFFFF_^000000
+Restores ^00800015^000000 to ^00800025^000000 SP.
 #
+
 534#
-^000088HP Recovery Item^000000
-Bottled carrot juice
-that's easy to digest.
-^000088Recovers a suitable
-amount of HP^000000.
-^ffffff_^000000
-Weight : ^7777774^000000
+^808080Bottled carrot juice that's easy to digest.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 4
+^FFFFFF_^000000
+Restores ^00800027^000000 to ^00800033^000000 HP.
 #
+
 535#
-^000088HP Recovery Item^000000
-A large orange fruit
-grown from a vine that's used in baking pies and
-a few other dishes.
-^000088Recovers a small
-amount of HP^000000.
-^ffffff_^000000
-Weight : ^7777772^000000
+^808080A large orange fruit grown from a vine that's used in baking pies and a few other dishes.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^00800019^000000 to ^00800019^000000 HP.
 #
+
 536#
-^000088HP Recovery Item^000000
-Deliciously frosty ice cream that can cause
-brain freeze if you eat too much too quickly.
-^000088Recovers a suitable
-amount of HP^000000.
-^ffffff_^000000
-Weight : ^7777778^000000
+^808080Deliciously frosty ice cream that can cause brain freeze if you eat too much too quickly.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 8
+^FFFFFF_^000000
+Adds a 25% chance of inflicting ^800000Frozen^000000 to the user when using this item.
+Restores ^008000105^000000 to ^008000145^000000 HP.
 #
+
 537#
-^000088HP Recovery Item^000000
-Sterilized food that has been fortified with vitamins and minerals. Some Cute Pets will feed on this.
-^000088Restores about 50 HP^000000
-Weight : ^7777771^000000
+^808080Sterilized food that has been fortified with vitamins and minerals. Some Cute Pets will feed on this.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 1
+^FFFFFF_^000000
+Restores ^00800050^000000 to ^00800090^000000 HP.
 #
+
 538#
-^000088HP Recovery Item^000000
-A warm, scrumptious cookie. Restores a suitable amount of HP.
-^000088Restores about 160 HP^000000
-Weight : ^7777773^000000
+^808080A warm, scrumptious cookie. Restores a suitable amount of HP.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 3
+^FFFFFF_^000000
+Restores ^008000160^000000 to ^008000200^000000 HP.
 #
+
 539#
-^000088HP Recovery Item^000000
-A sweet slice of cake covered in icing and topped with a cherry. Recovers a suitable amount of HP.
-^000088Restores about 270 HP^000000
-Weight : ^77777710^000000
+^808080A sweet slice of cake covered in icing and topped with a cherry. Restores a suitable amount of HP.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+^FFFFFF_^000000
+Restores ^008000270^000000 to ^008000330^000000 HP.
 #
+
 540#
-^000088HP Recovery Item^000000
-Food intended for Falcons, but it's actually tasty enough for humans to eat.
-^000088Restores about 185 HP^000000
-Weight : ^7777775^000000
+^808080Food intended for Falcons, but it's actually tasty enough for humans to eat.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 5
+^FFFFFF_^000000
+Restores ^008000185^000000 to ^008000225^000000 HP.
 #
+
 541#
-^000088HP Recovery Item^000000
-Food manufactured to feed Peco Pecos, but will suffice for desperately hungry humans as well.
-^000088Restores about 325 HP^000000
-Weight : ^7777775^000000
+^808080Food manufactured to feed Peco Pecos, but will suffice for desperately hungry humans as well.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 5
+^FFFFFF_^000000
+Restores ^008000325^000000 to ^008000405^000000 HP.
 #
+
 542#
-Festive_Cookie
+Unimplimented Item
 #
+
 543#
-Festive_Rainbow_Cake
+Unused Item
 #
+
 544#
-^000088HP Recovery Item^000000
-A raw, fresh fish.
-^000088Restores about 25 HP^000000
-Weight : ^7777773^000000
+^808080A raw, fresh fish.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 3
+^FFFFFF_^000000
+Restores ^00800025^000000 to ^00800060^000000 HP.
 #
+
 545#
-^000088HP Recovery Item^000000
-A condensed Red Potion that weighs significantly less.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A condensed Red Potion that weighs significantly less.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 1
+^FFFFFF_^000000
+Restores ^00800045^000000 to ^00800065^000000 HP.
 #
+
 546#
-^000088HP Recovery Item^000000
-A condensed Yellow Potion  that weighs significantly less.
-^ffffff_^000000
-Weight : ^7777772^000000
+^808080A condensed Yellow Potion that weighs significantly less.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^008000175^000000 to ^008000235^000000 HP.
 #
+
 547#
-^000088HP Recovery Item^000000
-A condensed White Potion  that weighs significantly less.
-^ffffff_^000000
-Weight : ^7777772^000000
+^808080A condensed White Potion that weighs significantly less.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 3
+^FFFFFF_^000000
+Restores ^008000325^000000 to ^008000405^000000 HP.
 #
 548#
-^000088SP Recovery Item^000000
-A palatable food with a unique scent that restores a small amount of SP.
-^ffffff_^000000
-Weight : ^7777775^000000
+^808080A palatable food with a unique scent that restores a small amount of SP.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 5
+^FFFFFF_^000000
+Restores ^00800010^000000 to ^00800015^000000 SP.
 #
+
 549#
-^000088HP Recovery Item^000000
-A kind of plant root used as food that restores a great amount of HP. It's advised to eat this slowly with water, or to bake it beforehand.
-^ffffff_^000000
-Weight : ^7777778^000000
+^808080A kind of plant root used as food that restores a great amount of HP. It's advised to eat this slowly with water, or to bake it beforehand.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 8
+^FFFFFF_^000000
+Restores ^00800050^000000 to ^008000100^000000 HP.
 #
+
 550#
-^000088HP Recovery Item^000000
-A snack made out of rice that doesn't contain any fat. Some women love having this snack.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A snack made out of rice that doesn't contain any fat. Some women love having this snack.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 1
+^FFFFFF_^000000
+Restores ^00800010^000000 to ^00800015^000000 HP.
 #
+
 551#
-^000088HP Recovery Item^000000
-An Eastern delicacy, in which various types of raw fish is placed on top of rice.
-The rice is marinated in vinegar then wrapped in dried seaweed.
-^000088Restores about 50 HP^000000
-Weight : ^7777775^000000
+^808080An Eastern delicacy, in which various types of raw fish is placed on top of rice. The rice is marinated in vinegar then wrapped in dried seaweed.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 5
+^FFFFFF_^000000
+Restores ^00800050^000000 to ^00800060^000000 HP.
 #
+
 552#
-^000088HP Recovery Item^000000
-A type of food that is usually eaten by people in a country after their abstinence ceremony.
-^000088Restores about 70 HP^000000
-Weight : ^7777771^000000
+^808080A type of food that is usually eaten by people in a country after their abstinence ceremony.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 1
+^FFFFFF_^000000
+Restores ^00800070^000000 to ^00800090^000000 HP.
 #
+
 553#
-^000088HP Recovery Item^000000
-A type of dough that is filled with ground meat, usually served hot.
-People living in eastern countries have enjoyed eating this food for a long time.
-^000088Restores about 35 HP^000000
-Weight : ^7777775^000000
+^808080A type of dough that is filled with ground meat, usually served hot. People living in eastern countries have enjoyed eating this food for a long time.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 5
+^FFFFFF_^000000
+Restores ^00800035^000000 to ^00800070^000000 HP.
 #
+
 554#
-^000088HP Recovery Item^000000
-A tasty rice cake made for celebrating the Lunar New Year.	
-^000088Restores about 105 HP^000000					
-Class : ^777777Food^000000
-Weight : ^7777778^000000
+^808080A tasty rice cake made for celebrating the Lunar New Year.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 8
+^FFFFFF_^000000
+Restores ^008000105^000000 to ^008000145^000000 HP.
 #
+
 555#
-A type of food that is made of rice powder. There are many recipes to make this food, all of them absolutely delicious.
-^ffffff_^000000
-Weight : ^7777772^000000
+^808080A type of food that is made of rice powder. There are many recipes to make this food, all of them absolutely delicious.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 2
 #
+
 556#
-A thin stick of rice cake which is moist and sticky.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A thin stick of rice cake which is moist and sticky.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 557#
-A bag of sliced rice cake. Can be cooked in various ways.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A bag of sliced rice cake. Can be cooked in various ways.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 558#
-Fried and ground Cacao that is solidified with Milk and cacao paste. Delicious and bittersweet.
-^ffffff_^000000
-Weight : ^7777772^000000
+^808080Fried and ground Cacao that is solidified with Milk and cacao paste. Delicious and bittersweet.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 2
 #
+
 559#
-A collection of chocolates that are gathered and arranged to make a beautiful item. This is often used in courtship, and sometimes even used effectively. 
-^ffffff_^000000
-Weight : ^7777778^000000
+^808080A collection of chocolates that are gathered and arranged to make a beautiful item. This is often used in courtship, and sometimes even used effectively. ^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 8
 #
+
 560#
-White chocolate which is used to propose to a girl by a boy during White Day.
-^ffffff_^000000
-Weight : ^7777778^000000
+^808080White chocolate which is used to propose to a girl by a boy during White Day.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 8
 #
+
 561#
-A white cacao.
-^ffffff_^000000
-Weight : ^7777778^000000
+^808080A white cacao.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 8
 #
+
 562#
-kRO event item.
-^ffffff_^000000
-Weight : ^77777715^000000
-#
-563#
-kRO event item.
-^ffffff_^000000
-Weight : ^77777715^000000
-#
-564#
-A lump of rice which can be eaten for lunch.
-^ffffff_^000000
-Weight : ^7777773^000000
-#
-565#
-^000088HP Recovery Item^000000
-kRO event item.
-Restores 142 ~ 274 HP
-Weight : ^77777710^000000
-#
-566#
-^000088HP/SP Recovery Item^000000
-A type of soup wich is regarded as one of the three famous soups in the world.
-It has a spicy, sweet and sour taste with shrimp, lemons and chiles.
-^000088Restores 244 ~ 350 HP and 10 ~ 30 SP^000000.
-Weight : ^77777715^000000
-#
-567#
-^000088HP Recovery Item^000000
-A shellfish which has a long tail and many legs.
-When cooked, the color of the body turns red and its flesh is very tasty with a unique scent.
-^000088Restores 117 ~ 192 HP^000000
-Weight : ^7777774^000000
-#
-568#
-^000088SP Recovery Item^000000
-A bright yellow fruit with very sour juice and a fresh scent.
-^000088Restores 10 ~ 20 SP^000000
-Weight : ^7777774^000000
-#
-569#
-^000088HP Recovery Item^000000
-An exclusive red potion for Novices!
-^000088Restores 22 ~ 33 HP^000000
-Weight : ^7777770^000000
-#
-570#
-^000088HP Recovery Item^000000
-A candy which is rumored to bring luck to whomever eats it.
-^000088Restores 45 ~ 65 HP^000000
-Weight : ^7777773^000000
-#
-571#
-^000088HP Recovery Item^000000
-A candy cane which is rumored to bring luck to whomever eats it.
-^000088Restores 105 ~ 145 HP^000000
-Weight : ^7777774^000000
-#
-572#
-^000088HP Recovery Item^000000
-A cookie which is rumored to bring luck to whomever eats it.
-^000088Restores 160 ~ 200 HP^000000
-Weight : ^7777773^000000
-#
-573#
-^000088HP/SP Recovery Item^000000
-A kind of drink made from chocolate and milk from one of the Royal Court Dessert Specialist's recipes.
-Although the Dessert Chef wishes for people to drink this treat elegantly, it's usually gulped down, enjoyed with hands sloppily placed on the waist.
-^000088Restores 330 ~ 410 HP^000000
-^000088Restores 45 ~ 65 SP^000000
-Weight : ^77777715^000000
-#
-574#
-^000088HP Recovery Item^000000
-An egg from a bird. It's full of nutrition, making it an ideal food for growing children.
-^000088Restores 33 ~ 42 HP^000000
-Weight : ^7777773^000000
-#
-575#
-^000088HP Recovery Item^000000
-A big, tasty slice of cake made in celebration of Ragnarok's second anniversary.
-^000088Restores 270 ~ 330 HP^000000
-Weight : ^77777710^000000
-#
-576#
-^000088HP/SP Recovery Item^000000
-A freshly scented, thorny fruit from a tree.
-^000088Restores 130 ~ 300 HP and 20 ~ 30 SP^000000
-Weight : ^7777776^000000
-#
-577#
-^000088HP Recovery Item^000000
-Dried grains that are commonly used in the cuisines of many countries.
-^000088Restores a small amount of HP.^000000
-Weight : ^7777772^000000
-#
-578#
-^000088SP Recovery Item^000000
-A red berry that is renown for its slightly sweet and sour taste, and is best eaten fresh.
-^000088Restores a small amount of SP.^000000
-Weight : ^7777772^000000
-#
-579#
-^000088HP Recovery Item^000000
-A fresh fish that can be cooked in a variety of ways.
-^000088Restores a small amount of HP.^000000
-^FFFFFF ^000000
-Weight : ^7777772^000000
-#
-580#
-^000088HP Recovery Item^000000
-Freshly leavened bread that gives off a wholesome scent.
-^000088Restores a small amount of HP.^000000
-^FFFFFF ^000000
-Weight : ^7777772^000000
-#
-581#
-^000088HP Recovery Item^000000
-An edible mushroom that can be eaten raw or cooked.
-^000088Restores a small amount of HP.^000000
-^FFFFFF ^000000
-Weight : ^7777772^000000
-#
-582#
-^000088HP Recovery Item^000000
-A sweet citrus fruit that can be eaten raw, juiced, or cooked as a jam.
-^000088Restores a small amount of HP and SP.^000000
-^FFFFFF ^000000
-Weight : ^7777772^000000
-#
-//--------------------------------------------------------------------------
-584#
-^000088HP Recovery Item^000000
-A bowl filled with hot, hearty fish broth and a generous helping of fish cake.
-Weight : ^7777776^000000
-#
-//--------------------------------------------------------------------------
-587#
-^000088HP/SP Recovery Item^000000
-A freshly scented, thorny fruit from a tree that restores a small amount of HP and SP.
-Weight : ^7777774^000000
-#
-//--------------------------------------------------------------------------
-589#
-^000088HP Recovery Item^000000
-A delicious snack food that is a favorite of Teenagers everywhere.
-Heals a moderate amount of HP.
+^808080kRO event item.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
 Weight: 15
 #
+
+563#
+^808080kRO event item.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 15
+#
+
+564#
+^808080A lump of rice which can be eaten for lunch.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 3
+#
+
+565#
+^808080kRO event item.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+^FFFFFF_^000000
+Restores ^008000142^000000 to ^008000274^000000 HP.
+#
+
+566#
+^808080A type of soup which is regarded as one of the three famous soups in the world. It has a spicy, sweet and sour taste with shrimp, lemons and chiles.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 15
+^FFFFFF_^000000
+Restores ^008000142^000000 to ^008000274^000000 HP and ^00800010^000000 to ^00800030^000000 SP.
+#
+
+567#
+^808080A shellfish which has a long tail and many legs. When cooked, the color of the body turns red and its flesh is very tasty with a unique scent.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 5
+^FFFFFF_^000000
+Restores ^008000117^000000 to ^008000192^000000 HP.
+#
+
+568#
+^808080A bright yellow fruit with very sour juice and a fresh scent.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 4
+^FFFFFF_^000000
+Restores ^00800010^000000 to ^00800020^000000 SP.
+#
+
+569#
+^808080An exclusive red potion for Novices!^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 0
+^FFFFFF_^000000
+Restores ^00800022^000000 to ^00800033^000000 HP.
+#
+
+570#
+^808080A candy which is rumored to bring luck to whomever eats it.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 3
+^FFFFFF_^000000
+Restores ^00800045^000000 to ^00800065^000000 HP.
+#
+
+571#
+^808080A candy cane which is rumored to bring luck to whomever eats it.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 4
+^FFFFFF_^000000
+Restores ^008000105^000000 to ^008000145^000000 HP.
+#
+
+572#
+^808080A cookie which is rumored to bring luck to whomever eats it.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 3
+^FFFFFF_^000000
+Restores ^008000160^000000 to ^008000200^000000 HP.
+#
+
+573#
+^808080A kind of drink made from chocolate and milk from one of the Royal Court Dessert Specialist's recipes. Although the Dessert Chef wishes for people to drink this treat elegantly, it's usually gulped down, enjoyed with hands sloppily placed on the waist.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 15
+^FFFFFF_^000000
+Restores ^008000330^000000 to ^008000410^000000 HP and ^00800045^000000 to ^00800065^000000 SP.
+#
+
+574#
+^808080An egg from a bird. It's full of nutrition, making it an ideal food for growing children.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 3
+^FFFFFF_^000000
+Restores ^00800033^000000 to ^00800042^000000 HP.
+#
+
+575#
+^808080A big, tasty slice of cake made in celebration of Ragnarok's second anniversary.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+^FFFFFF_^000000
+Restores ^008000270^000000 to ^008000330^000000 HP.
+#
+
+576#
+^808080A freshly scented, thorny fruit from a tree.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 6
+^FFFFFF_^000000
+Restores ^008000130^000000 to ^008000300^000000 HP and ^00800020^000000 to ^00800030^000000 SP.
+#
+
+577#
+^808080Dried grains that are commonly used in the cuisines of many countries.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^00800060^000000 to ^00800070^000000 HP.
+#
+
+578#
+^808080A red berry that is renown for its slightly sweet and sour taste, and is best eaten fresh.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^00800016^000000 to ^00800028^000000 SP.
+#
+
+579#
+^808080A fresh fish that can be cooked in a variety of ways.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^008000100^000000 to ^008000150^000000 HP.
+#
+
+580#
+^808080Freshly leavened bread that gives off a wholesome scent.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^00800050^000000 to ^00800090^000000 HP.
+#
+
+581#
+^808080An edible mushroom that can be eaten raw or cooked.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^00800020^000000 to ^00800030^000000 HP.
+#
+
+582#
+^808080A sweet citrus fruit that can be eaten raw, juiced, or cooked as a jam.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^00800010^000000 to ^00800020^000000 HP and ^00800010^000000 to ^00800020^000000 SP.
+#
+
+//--------------------------------------------------------------------------
+
+583#
+Unimplimented Item
+#
+
+584#
+^808080A bowl filled with hot, hearty fish broth and a generous helping of fish cake.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 6
+^FFFFFF_^000000
+Restores ^00800040^000000 to ^00800070^000000 HP.
+#
+
+585#
+Unimplimented Item
+#
+
+586#
+Unimplimented Item
+#
+
+//--------------------------------------------------------------------------
+
+587#
+^808080A freshly scented, thorny fruit from a tree that restores a small amount of HP and SP.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 4
+^FFFFFF_^000000
+Restores ^008000270^000000 to ^008000330^000000 HP and ^00800020^000000 to ^00800030^000000 SP.
+#
+
+//--------------------------------------------------------------------------
+
+589#
+^808080A delicious snack food that is a favorite of Teenagers everywhere.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 15
+^FFFFFF_^000000
+Restores ^008000375^000000 to ^008000445^000000 HP.
+#
+
 590#
-Brezel_
+Unimplimented Item
 #
+
 591#
-^000088HP/SP Recovery Item^000000
-^000088Status Recovery Item^000000
-A pancake topped with caviar. Average people have trouble telling the difference between fine caviar and common frog spawn eggs.
-^000088Cures all abnormal statuses^000000,
-^000088recovers HP and SP^000000.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080A pancake topped with caviar. Average people have trouble telling the difference between fine caviar and common frog spawn eggs.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 15
+^FFFFFF_^000000
+Restores ^008000325^000000 to ^008000405^000000 HP and ^00800040^000000 to ^00800060^000000 SP.
+Cures ^008000Blind^000000, ^008000Curse^000000, ^008000Confusion^000000, ^008000Poison^000000, ^008000Silence^000000.
 #
+
 592#
-^000088HP/SP Recovery Item^000000
-^000088Status Recovery Item^000000
-A pancake topped with strawberry jam. This looks much more delicious than plain strawberries alone.
-^000088Cures all abnormal statuses^000000, ^000088recovers HP and SP^000000.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080A pancake topped with strawberry jam. This looks much more delicious than plain strawberries alone.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 15
+^FFFFFF_^000000
+Restores ^008000325^000000 to ^008000405^000000 HP and ^00800040^000000 to ^00800060^000000 SP.
+Cures ^008000Blind^000000, ^008000Curse^000000, ^008000Confusion^000000, ^008000Poison^000000, ^008000Silence^000000.
 #			
+
 593#
-^000088HP/SP Recovery Item^000000
-^000088Status Recovery Item^000000
-A very sweet pancake topped with honey.
-^000088Cures all abnormal statuses^000000, ^000088recovers HP and SP^000000.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080A very sweet pancake topped with honey.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 15
+^FFFFFF_^000000
+Restores ^008000325^000000 to ^008000405^000000 HP and ^00800040^000000 to ^00800060^000000 SP.
+Cures ^008000Blind^000000, ^008000Curse^000000, ^008000Confusion^000000, ^008000Poison^000000, ^008000Silence^000000.
 #
+
 594#
-^000088HP/SP Recovery Item^000000
-^000088Status Recovery Item^000000
-A pancake in which sour cream is one of the main ingredients. Biting into just once will make your eyes water.
-^000088Cures all abnormal statuses^000000, ^000088recovers HP and SP^000000.
-Weight : ^77777715^000000
+^808080A pancake in which sour cream is one of the main ingredients. Biting into just once will make your eyes water.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 15
+^FFFFFF_^000000
+Restores ^008000325^000000 to ^008000405^000000 HP and ^00800040^000000 to ^00800060^000000 SP.
+Cures ^008000Blind^000000, ^008000Curse^000000, ^008000Confusion^000000, ^008000Poison^000000, ^008000Silence^000000.
 #			
+
 595#
-^000088HP/SP Recovery Item^000000
-^000088Status Recovery Item^000000
-A pancake made with mushrooms that has a light taste that everyone seems to like.
-^000088Cures all abnormal statuses^000088,
-^000088recovers HP and SP^000000.
-Weight : ^77777715^000000
+^808080A pancake made with mushrooms that has a light taste that everyone seems to like.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 15
+^FFFFFF_^000000
+Restores ^008000325^000000 to ^008000405^000000 HP and ^00800040^000000 to ^00800060^000000 SP.
+Cures ^008000Blind^000000, ^008000Curse^000000, ^008000Confusion^000000, ^008000Poison^000000, ^008000Silence^000000.
 #
+
 596#
-^000088SP Recovery Item^000000
-A strawberry that is supposed to be covered in a smooth layer of chocolate, but whoever made this botched it up.
-It's not perfect, but this was made with love, if not skill.
-^000088Restores 1 ~ 100 SP^000000
-Weight : ^77777710^000000
+^808080A strawberry that is supposed to be covered in a smooth layer of chocolate, but whoever made this botched it up. It's not perfect, but this was made with love, if not skill.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+^FFFFFF_^000000
+Restores ^0080001^000000 to ^008000100^000000 SP.
 #
+
 597#
-^000088HP Recovery Item^000000
-A tart covered in a smooth layer of rich chocolate that is the perfect dessert for romantic dinners.
-^000088Restores 10 ~ 400 HP^000000
-Weight : ^77777710^000000
+^808080A tart covered in a smooth layer of rich chocolate that is the perfect dessert for romantic dinners.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+^FFFFFF_^000000
+Restores ^00800010^000000 to ^008000400^000000 HP.
 #
+
 598#
-^000088HP Recovery Item^000000
-A red potion that has been condensed to reduce its weight and increase its effectiveness.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A red potion that has been condensed to reduce its weight and increase its effectiveness.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 1
+^FFFFFF_^000000
+Restores ^00800045^000000 to ^00800065^000000 HP.
 #
+
 599#
-^000088HP Recovery Item^000000
-An orange potion that has been condensed to reduce its weight and increase its effectiveness.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080An orange potion that has been condensed to reduce its weight and increase its effectiveness.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 1
+^FFFFFF_^000000
+Restores ^008000105^000000 to ^008000145^000000 HP.
 #
+
+600#
+Unimplimented Item
+#
+
 601#
 ^000088Spell Scroll Item^000000
 An enchanted fly's wing that instantly sends its user to a random spot
@@ -72581,4 +72811,459 @@ Location : ^777777Upper ^000000
 Weight : ^7777770^000000
 Required Lv : ^7777771^000000
 Job : ^777777All Jobs^000000
+#
+
+24082#
+Shoes worn on top of normal shoes for additional DEF. Can be equipped alone but needs a set to have any effect. Max HP+1%. If refined to +7 or greater, increases Max HP by 1%.
+If the set consisting of Malicious Shield Shadow, Malicious Armor Shadow, and Malicious Shoes Shadow is worn together,
+enables 4% chance of gaining 2% of DMG inflicted upon an enemy as HP with each physical attack.
+Increases additional 1% of DMG inflicted upon an enemy as HP per every 5 refine level of all three items in the set.
+Class : Shadow Equipment
+Location : Footwear
+Required Level : 1
+Jobs : All Jobs
+#
+
+24083#
+A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
+HP regeneration+5%.
+If refined to +7 or greater, increases additional HP regeneration by 5%.
+If the set consisting of Malicious Shield Shadow, Malicious Armor Shadow, and Malicious Shoes Shadow is worn together, enables 4% chance of gaining 2% of DMG inflicted upon an enemy as HP with each physical attack.
+Increases additional 1% of DMG inflicted upon an enemy as HP per every 5 refine level of all three items in the set.
+Class : Shadow Equipment
+Location : Shield
+Required Level : 1
+Jobs : All Jobs
+#
+
+24081#
+An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
+HP+100.
+If refined to +7 or greater, increases Max HP by 1%.
+If the set consisting of Malicious Shield Shadow, Malicious Armor Shadow, and Malicious Shoes Shadow is worn together, enables 4% chance of gaining 2% of DMG inflicted upon an enemy as HP with each physical attack.
+Increases additional 1% of DMG inflicted upon an enemy as HP per every 5 refine level of all three items in the set.
+Class : Shadow Equipment
+Location : Armor
+Required Level : 1
+Jobs : All Jobs
+#
+
+17367#
+Get your groove on with this may groove pack.
+When opened always gives 1 Safe to 7 Chance Box
+
+Will also award one of the following by random chance
+Kafra Blossom Card
+Malicious Shadow Shoes
+Malicious Shadow Armor
+Malicious Shadow Shield
++20 Food Box
+HE Bubble Gum x 2
+KVM Badge x 100
+#
+
+20458#
+Two monsters became a team! To loot your heart!
+Type : ^777777Costume^000000 
+DEF : ^7777770^000000
+Location : ^777777Upper^000000 
+Weight : ^7777770^000000
+Lv. req. : ^7777771^000000
+Class : ^777777All classes^000000
+#
+
+
+
+15110#
+^808080This mechanical device uses the power of science to optimize your strength. You can combine it with other variants for a synergetic effect.^000000
+^FFFFFF_^000000
+Type: Armor
+Defense: 80
+Property: Neutral
+Weight: 200
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+ATK + 5%
+ATK + 1% per 4 upgrade levels of the item.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Supplement Part Agi^000000
+^008080Supplement Part Str^000000
+ATK + 30
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Supplement Part Con^000000
+^008080Supplement Part Str^000000
+Increases the damage of ^0000FFAxe Tornado^000000 by 25%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Supplement Part Dex^000000
+^008080Supplement Part Str^000000
+Increases the damage of ^0000FFAxe Boomerang^000000 by 100%.
+#
+2995#
+^808080This mechanical device promotes the precise and timely execution of spells.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 10
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+Cast Delay - 10%
+Variable Casting Time - 10%
+Reduces the cooldown of ^0000FFAxe Boomerang^000000 by 2 seconds.
+Reduces the SP cost of skills by 10%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Supplement Part Dex^000000
+^008080Supplement Part Str^000000
+Increases the damage of ^0000FFAxe Boomerang^000000 by 100%.
+#
+20732#
+^808080This mechanical device heals wounds and rejuvenates your body.^000000
+^FFFFFF_^000000
+Type: Garment
+Defense: 20
+Weight: 50
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+Max HP + 6%
+Max HP + 1% per 2 upgrade levels of the item.
+^FFFFFF_^000000
+If upgrade level is +9 or higher,
+HP Recovery + 50%
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Supplement Part Con^000000
+^008080Supplement Part Str^000000
+Increases the damage of ^0000FFAxe Tornado^000000 by 25%.
+#
+22043#
+^808080Mechanical boots that keep you light on your feet. They are much lighter than they look.^000000
+^FFFFFF_^000000
+Type: Shoes
+Defense: 25
+Weight: 35
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+ASPD + 6%
+Max HP + 1% per 2 upgrade levels of the item.
+^FFFFFF_^000000
+If upgrade level is +4 or higher,
+ASPD + 1%
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Supplement Part Agi^000000
+^008080Supplement Part Str^000000
+ATK + 30
+#
+15111#
+^808080Designed to be worn over the frames of Madogears for enhanced Defense, this part is easy to assemble and disassemble.^000000
+^FFFFFF_^000000
+Type: Armor
+Defense: 110
+Property: Neutral
+Weight: 300
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+Reduces damage taken from Small, Medium size attackers by 10%.
+This item is indestructible in battle.
+^FFFFFF_^000000
+If upgrade level is +7 or higher,
+Reduces damage taken from Large size attackers by 10%.
+^FFFFFF_^000000
+If upgrade level is +9 or higher,
+Reduces damage taken from Small, Medium size attackers by 5%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Upgrade_Part - Booster^000000
+^008080Upgrade_Part - Engine^000000
+^008080Upgrade_Part - Gun Barrel^000000
+^008080Upgrade_Part - Plate^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 50%.
+#
+2996#
+^808080Designed to strengthen the gun barrels of Madogears for enhanced firepower, this part is easy to assemble and disassemble.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 50
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+ATK + 4%
+HIT + 10
+Increases the damage of ^0000FFKnuckle Boost^000000 by 25%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Upgrade_Part - Booster^000000
+^008080Upgrade_Part - Engine^000000
+^008080Upgrade_Part - Gun Barrel^000000
+^008080Upgrade_Part - Plate^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 50%.
+#
+20733#
+^808080Designed to maximize the outputs of Madogears, this part is easy to assemble and disassemble.^000000
+^FFFFFF_^000000
+Type: Garment
+Defense: 25
+Weight: 150
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+Cast Delay - 10%
+^FFFFFF_^000000
+If upgrade level is +7 or higher,
+Reduces damage taken from Neutral property attacks by 10%.
+^FFFFFF_^000000
+If upgrade level is +9 or higher,
+Cast Delay - 10%
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Upgrade_Part - Booster^000000
+^008080Upgrade_Part - Engine^000000
+^008080Upgrade_Part - Gun Barrel^000000
+^008080Upgrade_Part - Plate^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 50%.
+#
+22044#
+^808080Designed to significantly improve Movement Speed, this Madogear part is easy to assemble and disassemble.^000000
+^FFFFFF_^000000
+Type: Shoes
+Defense: 23
+Weight: 100
+Required Level: 100
+Required Job: Mechanic
+^FFFFFF_^000000
+Reduces the SP cost of ^0000FFHover^000000 by 15.
+^FFFFFF_^000000
+If upgrade level is +7 or higher,
+Reduces the SP cost of ^0000FFAcceleration^000000 by 20.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Upgrade_Part - Booster^000000
+^008080Upgrade_Part - Engine^000000
+^008080Upgrade_Part - Gun Barrel^000000
+^008080Upgrade_Part - Plate^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 50%.
+#
+28101#
+^808080Its name is coined from the shape of the blade.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Two-Handed Axe
+Attack: 320
+Property: Wind
+Weight: 400
+Weapon Level: 4
+Required Level: 100
+Required Job: Rune Knight, Royal Guard, Mechanic, Geneticist
+^FFFFFF_^000000
+Reduces the cooldown of ^0000FFAxe Tornado^000000 by 1 second.
+#
+21011#
+^808080A gigantic blade with a makeshift hilt.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Two-Handed Sword
+Attack: 300
+Property: Neutral
+Weight: 500
+Weapon Level: 4
+Required Level: 130
+Required Job: Rune Knight, Royal Guard
+^FFFFFF_^000000
+ASPD - 15%
+Increases critical damage on targets by 1% per upgrade level of the item.
+This item is indestructible in battle.
+^FFFFFF_^000000
+If base STR is 110 or lower,
+ATK - 250
+#
+4933#
+Reduces damage taken from Neutral property attacks by 1%.
+^FFFFFFEnchantment^000000
+#
+4934#
+Reduces damage taken from Neutral property attacks by 2%.
+^FFFFFFEnchantment^000000
+#
+4935#
+Reduces damage taken from Neutral property attacks by 3%.
+^FFFFFFEnchantment^000000
+#
+6748#
+^808080The Artnard Excavation Team's daily report on its exploration and excavation of Phantasmagorika.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+6749#
+^808080All the machines found in Phantasmagorika have this component installed in the center of their mechanisms. The Excavation Team has named it the Power Control Device.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+6750#
+^808080A broken engine. Maybe it can be refurbished.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
+#
+6751#
+^808080A dented iron plate. Maybe it can be flattened and reusable.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
+#
+6752#
+^808080A burnt Charleston component. Take it to Mass Charleston. Maybe some of its parts can be salvaged.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+6753#
+^808080The Doom Prayers carry this token with them.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+6754#
+^808080A herb with wound-healing properties.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+22611#
+^808080Often found in the Excavation Site, this envelope activates a random effect for 30 seconds when opened.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
+#
+16030#
+^808080This upgraded version of Pile Bunker is lighter in weight, allowing the user to move more quickly.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Mace
+Attack: 400
+Property: Neutral
+Weight: 300
+Weapon Level: 4
+Required Level: 130
+Required Job: Mechanic
+^FFFFFF_^000000
+Cast Delay - 1% per 2 upgrade levels of the item.
+#
+16031#
+^808080This upgraded version of Pile Bunker provides more destructive power.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Mace
+Attack: 450
+Property: Neutral
+Weight: 400
+Weapon Level: 4
+Required Level: 130
+Required Job: Mechanic
+^FFFFFF_^000000
+ATK + 5 per upgrade level of the item.
+#
+16032#
+^808080This upgraded version of Pile Bunker facilitates the application of Special abilities.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Mace
+Attack: 400
+Property: Neutral
+Weight: 350
+Weapon Level: 4
+Required Level: 130
+Required Job: Mechanic
+^FFFFFF_^000000
+Reduces the SP cost of skills by 1% per upgrade level of the item.
+#
+16033#
+^808080Kick and Kick's severed arm that works as effectively as any standard-issue weapon.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Mace
+Attack: 195
+Property: Neutral
+Weight: 300
+Weapon Level: 4
+Required Level: 130
+Required Job: Rune Knight, Royal Guard, Mechanic, Geneticist, Arch Bishop, Sura
+^FFFFFF_^000000
+CRIT + 20
+This item is indestructible in battle.
+#
+6756#
+^808080Specially enriched energy found from Verus City location. Maybe this could help us reveal the secret of Verus City power core..?^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+6757#
+^808080Unique record found from Verus City ruin. You can have a peak of old Verus City life or some historical cases.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+12291#
+^808080A New Year Cat's present. Having a description in small letters: "Royal mineral water made of Prontera aquifer water"^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+Required Level: 1
+Required Job: All
+^FFFFFF_^000000
+Restores 5% SP.
+Casts ^0000FFLevel 5 Increase AGI^000000.
+#
+12377#
+^808080The second new item of Mysterious PET Bottle. Blue ocean flavor. Due to its smell, the ocean spreads right in front of one's eyes.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+Required Level: 1
+Required Job: All
+^FFFFFF_^000000
+Restores 3% SP.
+Casts ^0000FFLevel 1 Magnificat^000000.
+#
+12290#
+^808080A New Year Cat's present. Having a description in small letters: "A premium can for cats containing tuna 45%"^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+Required Level: 1
+Required Job: All
+^FFFFFF_^000000
+Restores 5% HP.
+Casts ^0000FFLevel 5 Blessing^000000.
+#
+12376#
+^808080The second new item of Mysterious Can. Fresh mackerel flavor. Best nutrition for children in the growing period.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 10
+Required Level: 1
+Required Job: All
+^FFFFFF_^000000
+Restores 3% SP.
+Casts ^0000FFLevel 2 Gloria^000000.
 #

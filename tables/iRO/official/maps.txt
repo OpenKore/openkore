@@ -916,3 +916,11 @@ moro_cav.rsw#Flame cave#
 1@glast.rsw#Old Glastheim#
 1@air1.rsw#Aircraft#
 1@air2.rsw#Aircraft#
+
+// ep15.1 웇언붺뢶냭뢮쒫
+ver_eju.rsw#Yuperos Eastern Ruin#
+ver_tunn.rsw#Verus Outter tunnel#
+verus04.rsw#Verus Findspot#
+verus03.rsw#Verus Center Square#
+
+1@mcd.rsw#Charlston Factory#
