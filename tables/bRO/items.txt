@@ -1816,7 +1816,7 @@
 7525#Vale-Prêmio#
 
 //V8.1
-// ----- ÅÂ±¹·ÎÄÃ¶óÀÌÂ¡ -----
+// ----- 엂놹럎쓃뛳샌슡 -----
 
 7285#Linha_Sagrada#
 7286#Pimenta_Vermelha#
@@ -1834,7 +1834,7 @@
 7923#Krathong#
 685#Ramadan#
 
-// ----- 4·¹º§¹«±âÄù½ºÆ® -----
+// ----- 4랹몧릫뇢쓹붺욮 -----
 
 7289#Cristal_de_Peridoto#
 7290#Flogopita#
@@ -1848,7 +1848,7 @@
 
 
 //V8.2
-// ----- Áß±¹·ÎÄÃ¶óÀÌÂ¡ -----
+// ----- 쇟놹럎쓃뛳샌슡 -----
 7262#Leque_Fantasma#
 7263#Olho_de_Gato#
 7264#Areia_Seca#
@@ -1859,7 +1859,7 @@
 7269#Babador#
 7270#Mamadeira#
 
-// ----- ¸Ó¸®¾ÆÀÌÅÛ -----
+// ----- 룓뢮뻆샌엛 -----
 5057#Orelhas_de_Gato_Preto#
 5058#Chapéu_de_Gatinho_Dorminhoco#
 5059#Chapéu_de_Ursinho#
@@ -1899,10 +1899,10 @@
 5093#Chapéu_de_Freira#
 5094#Elmo_de_Orc_Herói#
 
-//-------ÀÚ¿ÍÀÌ----------
+//-------샚뿍샌----------
 681#Álbum_de_Fotos_de_Casamento#
 
-// --------- ºÎÈ°Àý ÀÌº¥Æ® ---------
+// --------- 뫎좰샽 샌몥욮 ---------
 
 574#Ovo#
 12019#Ovo_Sagrado#
@@ -2648,7 +2648,7 @@
 
 // --- Cash Item
 
-// ------------------ Ä³½¬ ¾ÆÀÌÅÛ -------------------
+// ------------------ 쒳붬 뻆샌엛 -------------------
 12202#Língua no Vapor#
 12203#Escorpião no Vapor#
 12204#Coquetel Sopro do Dragão#
@@ -3927,7 +3927,7 @@
 7773#Emblema de Guerra#
 
 // ------------- Ep. 12 ---------------
-// ------------- ÀüÀå º¸»ó ¾ÆÀÌÅÛ ---------------
+// ------------- 샼샥 몸믳 뻆샌엛 ---------------
 5518#Chifres Místicos de Bafomé#
 13036#Damascus Mercenária A#
 13037#Damascus Mercenária B#
@@ -3988,17 +3988,17 @@
 13859#Envelope de Ordem Oficial A#
 13860#Envelope de Ordem Oficial B#
 
-// ------------ ¸Þ¸ð¸®¾ó ´øÀü º¸»óÅÛ ----------------
+// ------------ 룞룰뢮뻳 듸샼 몸믳엛 ----------------
 13412#Lâmina Gêmea de Naght Sieger#
 13413#Lâmina Gêmea de Naght Sieger#
 1636#Cajado de Espinhos da Escuridão#
 1185#Terror Violeta#
 2542#Manteau de Chamas de Naght Sieger#
 
-//¸ð·ÎÅ© ÄÁÆ¼³ÙÅ» °¡µå ÀÎÁõ¼­
+//룰럎얩 쓁욼동얻 낡뗥 샎쇵벭
 7826#Papel da Guarda Continental#
 
-// ------------ ¸¶¿Õ ¸ð·ÎÅ© ----------------
+// ------------ 뢶뿕 룰럎얩 ----------------
 2536#Pele de Ventus#
 2537#Manteau de Diabolus#
 2728#Mão Maldita#
@@ -4011,7 +4011,7 @@
 2375#Armadura de Diabolus#
 2433#Botas de Diabolus#
 
-// ---------- ÇÒÂ¦ Å×½ºÆ® -----------
+// ---------- 쟒슦 엗붺욮 -----------
 2129#Bíblia de Exorcismo#
 2130#Escudo Cruzado#
 2131#Bíblia da Magia, Vol. 1#
@@ -4040,23 +4040,23 @@
 1572#Princípios da Magia#
 1573#Magia Antiga#
 
-// ------------- ÀüÀå ÈÖÀå ---------------
+// ------------- 샼샥 죖샥 ---------------
 7828#Emblema de Bravura#
 7829#Emblema de Valor#
 
-// -------- ºÀÀÎÀÇ ½ÅÀü ¾ÆÀÌÅÛ ------------
+// -------- 뫀샎샇 뷅샼 뻆샌엛 ------------
 6001#Essência de Fogo#
 6002#Medalhão do Apóstolo#
 6003#Pingente do Espírito#
 
-// ----------------- ¸¶·ÂÀÌ ±êµç ¹ÙÆ÷¸ÞÆ® ÀÎÇü -----------------
+// ----------------- 뢶럂샌 뇪뗧 맙웷룞욮 샎쟼 -----------------
 6004#Boneco de Bafomé Maldito#
 
-// ------------------- 12.1 Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
+// ------------------- 12.1 쓹붺욮 뻆샌엛 ----------------------
 7798#Fragmento da Escuridão#
 7799#Cristal da Escuridão#
 
-// ------------------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------------
+// ------------------- 샌몥욮 뻆샌엛 ------------------
 6000#Cinzas da Escuridão#
 //-- Ep12 Add-------------------------------------------
 7820#Pele do Imperador Morroc#
@@ -4064,7 +4064,7 @@
 7795#Álbum de Fotos de Mammi#
 7796#Autógrafo do Autor#
 7797#Bilhete do Autor#
-// ------------------ ÇÏ¾Ç Å×½ºÆ® (¼ÒÄÏ)----------------
+// ------------------ 쟏뻇 엗붺욮 (볒쓏)----------------
 1568#Livro das Ondas#
 1569#Livro da Mãe Terra#
 1570#Livro do Sol Ardente#
@@ -4104,7 +4104,7 @@
 2128#Spiritus Sancti#
 5353#Coroa do Deus-Sol#
 
-//----¸ð½ºÄÚºñ¾Æ 2Â÷---------- ·¯½Ã¾Æ ºÒ»ç½Å ÄÚ½¦ÀÌ ¾ÆÀÌÅÛ ---------------
+//----룰붺쓚뫱뻆 2싷---------- 랯뷃뻆 뫒믧뷅 쓚붦샌 뻆샌엛 ---------------
 7876#Chave Dourada#
 7877#Anel Vermelho#
 7878#Cabelo de Lusalka#
@@ -4126,7 +4126,7 @@
 7947#Anel de Prata do Dia dos Namorados#
 5817#Anel do Dia dos Namorados#
 //Ep13
-// ---------- ¿¡ÇÇ¼Òµå 13 Äù½ºÆ® ¾ÆÀÌÅÛ ------------
+// ---------- 뾡쟇볒뗥 13 쓹붺욮 뻆샌엛 ------------
 6027#Cristal Sangrento da Escuridão#
 6028#Pergaminho Selado#
 6029#Registro da Perseguição#
@@ -4140,7 +4140,7 @@
 6035#Caule Murcho#
 14596#Caixa do Tesouro de Pierre#
 
-// ----------- 20080521 ¿¡ÇÇ¼Òµå 13 Äù½ºÆ® ¾ÆÀÌÅÛ -----------
+// ----------- 20080521 뾡쟇볒뗥 13 쓹붺욮 뻆샌엛 -----------
 6036#Convite para Reunião#
 6037#Arquivo Estragado#
 6038#Arquivo Limpo#
@@ -4161,10 +4161,10 @@
 12321#Sanduíche do Deserto de Arunafeltz#
 12322#Chocolate Puro#
 
-// ----------- ¿¡ÇÇ¼Òµå 13 ppl ¾ÆÀÌÅÛ -----------
+// ----------- 뾡쟇볒뗥 13 ppl 뻆샌엛 -----------
 6051#Mineral Cinza#
 
-// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ ----------
+// ---------- 얩뢮냅 몸믳 뻆샌엛 ----------
 13416#Flamberge Gloriosa#
 13417#Florete Glorioso#
 13418#Vingadora Sagrada Gloriosa#
@@ -4198,7 +4198,7 @@
 2549#Sobrepeliz Gloriosa#
 2772#Anel Glorioso#
 
-// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ Ãß°¡ ¹æ¾î±¸ ----------
+// ---------- 얩뢮냅 몸믳 뻆샌엛 쏟낡 맦뻮놸 ----------
 2445#Sapatos Gloriosos Industrializados#
 2446#Sapatos Gloriosos Baratos#
 2395#Túnica Gloriosa Industrializada#
@@ -4206,17 +4206,17 @@
 2773#Anel Glorioso Industrializado#
 2774#Anel Glorioso Barato#
 
-// ----------- ¿¡ÇÇ¼Òµå 13 ³¬½Ã ------------
+// ----------- 뾡쟇볒뗥 13 뎬뷃 ------------
 2775#Isca#
 2550#Sobrepeliz de Pescador#
 
-// ----------- ¿¡ÇÇ¼Òµå 13 ÀâÅÛ ------------
+// ----------- 뾡쟇볒뗥 13 샢엛 ------------
 6020#Pêlo#
 6021#Chapéu Pontudo#
 6022#Pele Dura#
 6023#Chifre Místico#
 
-// --------- EP13 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ---------------
+// --------- EP13 뷅뇔 샥뫱 뻆샌엛 ---------------
 5398#Capacete de Crânio#
 5399#Chapéu de Mandrágora#
 2386#Armadura Camaleão#
@@ -4255,7 +4255,7 @@
 1925#Violoncelo#
 1926#Harpa de Nepenthes#
 
-// ----------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------
+// ----------- 샌몥욮 뻆샌엛 ------------
 2443#Botas de Pescador#
 2764#Vara de Pescar Pequena#
 6048#Mineral Não Identificado#
@@ -7086,4 +7086,18 @@
 4825#Espírito do Lutador 10#
 4881#Anti-Atraso 4#
 20006#Máscara do Chefão do Mal#
+//*****************************************************
+//------------Aplicar em 2016-05-03--------------------
+//*****************************************************
+20278#Cabeleira do Rei do Rock#
+20287#Cabeleira do Rei do Rock Saiadim#
+//*****************************************************
+//------------Aplicar em 2016-05-17--------------------
+//*****************************************************
+20407#Aura da Fúria#
+20132#Aura Fantasmagórica#
+//*****************************************************
+//------------Aplicar em 2016-05-31--------------------
+//*****************************************************
+20315#Visor Holográfico#
 //file end
