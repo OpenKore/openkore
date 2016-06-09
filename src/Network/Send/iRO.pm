@@ -44,6 +44,8 @@ sub new {
 		send_equip 0998
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
+	$self->{sell_mode} = 0;
 	
 	return $self;
 }
@@ -53,6 +55,21 @@ sub sendCharDelete {
 	my $msg = pack("C*", 0xFB, 0x01) .
 			$charID . pack("a50", stringToBytes($email));
 	$self->sendToServer($msg);
+}
+
+sub sendMove {
+	my $self = shift;
+
+	# The server won't let us move until we send the sell complete packet.
+	$self->sendSellComplete if $self->{sell_mode};
+
+	$self->SUPER::sendMove(@_);
+}
+
+sub sendSellComplete {
+	my ($self) = @_;
+	$messageSender->sendToServer(pack 'C*', 0xD4, 0x09);
+	$self->{sell_mode} = 0;
 }
 
 1;
