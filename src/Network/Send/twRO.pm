@@ -42,6 +42,8 @@ sub new {
 		item_drop 0363
 		storage_item_add 0364
 		storage_item_remove 0365
+		storage_item_add 09E1
+		storage_item_remove 09E2
 		skill_use_location 0366
 		actor_info_request 0368
 		actor_name_request 0369

@@ -548,10 +548,15 @@ sub new {
 		'0999' => ['equip_item', 'v V v C', [qw(index type viewID success)]], #11
 		'099A' => ['unequip_item', 'v V C', [qw(index type success)]],#9
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
+		'09D2' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'09D3' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
+		'09BB' => ['storage_opened', 'v2', [qw(items items_max)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
+		'09BD' => ['storage_item_removed', 'v V', [qw(index amount)]],
+		'09BF' => ['storage_closed'],
 		'09CD' => ['message_string', 'v V', [qw(msg_id para1)]], #8
 		'09CF' => ['gameguard_request'],
 		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
@@ -958,6 +963,8 @@ sub items_nonstackable {
 	} elsif ($args->{switch} eq '0992' # inventory
 		|| $args->{switch} eq '0994' # cart
 		|| $args->{switch} eq '0996' # storage
+		|| $args->{switch} eq '09D3' # guild storage
+		|| $args->{switch} eq '001E' # guild storage
 		|| $args->{switch} eq '0997' # other player
 	) {
 		return $items->{type6};
@@ -999,6 +1006,8 @@ sub items_stackable {
 	} elsif ($args->{switch} eq '0991' # inventory
 		|| $args->{switch} eq '0993' # cart
 		|| $args->{switch} eq '0995' # storage
+		|| $args->{switch} eq '09D2' # guild storage
+		|| $args->{switch} eq '0009' # guild storage
 	) {
 		return $items->{type6};
 	} else {
