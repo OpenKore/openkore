@@ -4900,7 +4900,7 @@
 12391#RWC_Groove_Pack#
 12403#RWC_Groove_Pack_2#
 12493#Groovy_Dragon_Box#
-12545#Fortune_Eggꖴ#
+12545#Fortune_Egg¥´#
 12577#Rideword_Hat_Box#
 12595#Incarnation_Of_Morocc_Doll_Box#
 12641#New_Recruit_Pack#
@@ -7607,7 +7607,7 @@
 12404#Energizing_Potion#
 12405#Unripe_Yggdrasil_Seed#
 12406#Psychic_Armor_Scroll#
-12413#PC Cafe_Coupon_Boxꖱ#
+12413#PC Cafe_Coupon_Box¥±#
 12415#Siege_Teleport_Scroll_Silver#
 12530#Fruit_Of_Mastela#
 12534#Yggdrasil_Seed_Box#
@@ -7637,9 +7637,9 @@
 12768#Worldcup_Hat_of_Fight_Box#
 12769#Worldcup_Hat_of_Victory_Box#
 12770#Worldcup_Hat_of_Honor_Box#
-12771#Worldcup_Hat_of_Passion_Boxꖱ#
-12772#Worldcup_Hat_of_Fight_Boxꖱ#
-12773#Worldcup_Hat_of_Victory_Boxꖱ#
+12771#Worldcup_Hat_of_Passion_Box¥±#
+12772#Worldcup_Hat_of_Fight_Box¥±#
+12773#Worldcup_Hat_of_Victory_Box¥±#
 12774#Empty_Vial#
 12787# Diabolic Scroll#
 12796#Red_Booster#
@@ -8488,13 +8488,13 @@
 4949#After_Skill_Delay_Lv2#
 4950#After_Skill_Delay_Lv3#
 6803#Shard_of_Gigantes#
-19914#Felrockꆮs_Hat#
-15116#Airshipꆮs_Armor#
-20743#Airshipꆮs_Cloak#
-22046#Airshipꆮs_Boots#
-15117#Felrockꆮs_Armor#
-20744#Felrockꆮs_Cloak#
-22047#Felrockꆮs_Boots#
+19914#Felrock¡®s_Hat#
+15116#Airship¡®s_Armor#
+20743#Airship¡®s_Cloak#
+22046#Airship¡®s_Boots#
+15117#Felrock¡®s_Armor#
+20744#Felrock¡®s_Cloak#
+22047#Felrock¡®s_Boots#
 19526#Costume:_Helm#
 20217#Costume_Veil#
 20218#Costume_Spell_Circuit#
@@ -8550,3 +8550,5 @@
 12377#Mysterious_PET_Bottle_Ocean_Flavor#
 12290#Mysterious_Can#
 12376#Mysterious_Can_Mackerel_Flavor#
+31052#Costume_Alchemist_Mask#
+23164#Granpa_Speed_potion#
