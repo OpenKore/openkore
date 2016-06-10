@@ -264,6 +264,9 @@ sub fix_unicode {
 
     $str = join "\n", map {
 
+        # Eat trailing whitespace.
+        s/\s+$//os;
+
         # UCS-2 mode: Convert sequences of Hangul until we run out of them.
         # This only triggers if there are at least two consecutive Hangul
         # characters in the line, to avoid accidentally converting CP-1252
