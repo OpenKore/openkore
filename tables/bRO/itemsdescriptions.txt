@@ -9820,7 +9820,7 @@ Peso: ^7777771^000000
 #
 
 // V8.1
-// ------Áß±¹·ÎÄÃ¶óÀÌÂ¡------
+// ------쇟놹럎쓃뛳샌슡------
 7262#
 Um leque que é muito útil no verão.
 ^ffffff_^000000
@@ -9867,7 +9867,7 @@ Leite engarrafado para bebês.
 Peso: ^7777771^000000
 #
 
-// ------2004 ¸Ó¸(r)3/4ÆÀÌÅÛ ´ë*(r) 3/4÷µ¥ÀÌÆ(r)------
+// ------2004 룓련r)3/4움쳅
 5057#
 Uma faixa de cabelo com orelhinhas pretas. É uma cópia da faixa de Wichebain em Morroc.
 Classe: ^777777Equipamento para a cabeça^000000
@@ -10213,7 +10213,7 @@ Nível necessário: ^77777755^000000
 Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
 #
 
-//-----------ÀÚ¿ÍÀÌ---------------------
+//-----------샚뿍샌---------------------
 681#
 Um álbum de fotografias com lembranças de um casamento ou de uma lua-de-mel. (Apenas para pessoas casadas)
 ^ffffff_^000000
@@ -10221,7 +10221,7 @@ Peso: ^7777771^000000
 #
 
 //V8.2
-// ------ÅÂ±¹·ÎÄÃ¶óÀÌÂ¡------
+// ------엂놹럎쓃뛳샌슡------
 7285#
 Uma meada de linhas que possuem um poder sagrado. 
 ^ffffff_^000000
@@ -10258,7 +10258,7 @@ Um  maciço e lindo anel de noivado, com a frase 'Escravo do Amor' gravada.
 Peso: ^7777771^000000
 #
 
-// ------4·¹º§¹"±âÄù1/2ºÆ(r)------
+// ------4랹몧뤢뇢쓹1/2뫆(r)------
 7289#
 Uma pedra preciosa também chamada de 'Olivina'. Simboliza paz de espírito e sabedoria.
 ^ffffff_^000000
@@ -10305,7 +10305,7 @@ Uma mica escura comum. Simboliza apoio espiritual.
 Peso: ^77777710^000000
 #
 
-// ------ÅÂ±¹·ÎÄÃ¶óÀÌÂ¡2------
+// ------엂놹럎쓃뛳샌슡2------
 7298#
 Vestimentas auxiliares feitas com duas folhas gigantes. 
 ^ffffff_^000000
@@ -10342,7 +10342,7 @@ Uma palavra que significa 'Setembro' em um país deserto e um mês de lua sagrad
 Peso: ^77777730^000000
 #
 
-// ------Å¥ÆêÃß°¡------
+// ------얥웪쏟낡------
 9026#
 Ovo contendo uma Jirtas de estimação. Deve ser chocado por uma Incubadora.
 ^0000ffCom lealdade normal/alta: Aumenta o ATQ e ATQM contra raça Humanoide em 2%.^000000
@@ -10362,7 +10362,7 @@ Uma poção vermelha exclusiva para Aprendizes!
 Peso: ^7777771^000000
 #
 
-// ------- ºÎÈ°ÀýÀÌº¥Æ® --------
+// ------- 뫎좰샽샌몥욮 --------
 574#
 Ovo de pássaro. Muito nutritivo. As crianças adoram! ^000088Recupera uma pequena quantidade de HP^000000.
 ^ffffff_^000000
@@ -10709,7 +10709,7 @@ Um minério de Mythril, que pode ser purificado para fazer Mythril.
 Peso: ^77777715^000000
 #
 
-/ ------±æµå¸±*¹ÀÌ Äù1/2ºÆ(r) 3/4ÆÀÌÅÛ------
+/ ------뇦뗥뢱*맀찠쓹1/2뫆(r) 3/4움쳅
 7234#
 Uma estátua que representa a camaradagem dos companheiros de guilda.
 ^ffffff_^000000
@@ -17726,10 +17726,10 @@ Classes que utilizam: ^777777Todas^000000
 #
 
 
-// ------------------- 2006 »ó¹Ý±â ½Å±ÔÄ«µå Ãß°¡.-----------------------
-//¿µ¹®±Ç 11.1 ¿¡¼­ ¾÷µ¥ÀÌÆ® Á¦¿ÜÇÏ±â·Î ÇÕ´Ï´Ù.
+// ------------------- 2006 믳망뇢 뷅뇔쒫뗥 쏟낡.-----------------------
+//뾵릮뇇 11.1 뾡벭 뻷떥샌욮 솦뿜쟏뇢럎 쟕듏듙.
 
-// ------------- ¾Æ·ç³ª »ó¹Ý±â -----------
+// ------------- 뻆럧뎪 믳망뇢 -----------
 
 7561#
 Um coração congelado que
@@ -17844,7 +17844,7 @@ Nível necessário: ^77777740^000000
 Classes que utilizam: ^777777Mago, Noviço e Evoluções / Espiritualista^000000
 #
 
-//----------------------20060610 ½Å±ÔÃß°¡¾ÆÀÌÅÛ-------------------------
+//----------------------20060610 뷅뇔쏟낡뻆샌엛-------------------------
 5169#
 Uma máscara branca com maquiagem vermelha que
 é usada pelo ator que interpreta a noiva no teatro Coreano.
@@ -17964,7 +17964,7 @@ Nível necessário: ^77777740^000000
 Classes que utilizam: ^777777Todas^000000
 #
 
-// -------------- 2006 Ãß°¡¾ÆÀÌÅÛ -------------
+// -------------- 2006 쏟낡뻆샌엛 -------------
 
 12183#
 Um aljava contendo
@@ -22621,6 +22621,7 @@ Negociação: ^777777Pode ser colocado na Kafra mas não pode ser negociado, nem
 #
 554#
 Bolinho doce japonês feito de arroz batido. ^000099Recupera parte de seu HP^000000.
+^FF0000Atenção! O item não podem ser negociado, vendido em NPCs, colocados no carrinho ou Kafra nem jogado ao chão.^000000
 Pode causar os status Cegueira e Atordoamento.
 ^ffffff_^000000
 Peso: ^7777778^000000
@@ -22638,6 +22639,7 @@ Peso: ^77777720^000000
 #
 13974#
 Utilize-o para receber um item aleatório.
+^FF0000Atenção! Alguns itens dados pelo pergaminho supresa não podem ser negociados, vendidos em NPCs, colocados no carrinho e jogados ao chão.^000000
 Peso: 1
 #
 5421#
@@ -23160,7 +23162,7 @@ Os efeitos são anulados quando o personagem é nocauteado.
 Peso: ^7777778^000000
 #
 
-// ------------------- 12.1 Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
+// ------------------- 12.1 쓹붺욮 뻆샌엛 ----------------------
 7798#
 Um fragmento sombrio, imbuído com um espírito melancólico. Quando você olha para ele, pode se sentir absorto.
 ^ffffff_^000000
@@ -23174,7 +23176,7 @@ Peso: ^7777771^000000
 #
 
 
-// ------------------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------------
+// ------------------- 샌몥욮 뻆샌엛 ------------------
 6000#
 Cinzas imbuídas com um poder mágico misterioso e sombrio.
 ^ffffff_^000000
@@ -23211,7 +23213,7 @@ Madrasta - Karma de uma vida anterior? "
 Peso: ^7777771^000000
 #
 
-// ------------------ ÇÏ¾Ç Å×½ºÆ® (¼ÒÄÏ)----------------
+// ------------------ 쟏뻇 엗붺욮 (볒쓏)----------------
 1568#
 Um livro encantado com a Propriedade Água. 
 Tipo: ^777777Livro^000000
@@ -23690,7 +23692,7 @@ Um emblema indicando que o usuário participa atualmente da guerra. Retirado dos
 #
 
 // ------------- Ep. 12 ---------------
-// ------------- ÀüÀå º¸»ó ¾ÆÀÌÅÛ ---------------
+// ------------- 샼샥 몸믳 뻆샌엛 ---------------
 5518#
 Um equipamento para a cabeça feito a partir dos chifres de um Bafomé. Possui um forte significado místico.
 Concede 12% de resistência a monstros da raça Humanoide.
@@ -24394,7 +24396,7 @@ Envelope selado que parece conter uma mensagem importante.
 Peso: ^7777771^000000
 #
 
-// ------------ ¸Þ¸ð¸®¾ó ´øÀü º¸»óÅÛ ----------------
+// ------------ 룞룰뢮뻳 듸샼 몸믳엛 ----------------
 13412#
 Uma das lâminas gêmeas do Naght Sieger. Ela foi criada com um belo e misterioso metal azul.
 ^0000ffSempre que causar dano físico há uma pequena chance de ignorar a DEF do alvo durante 5 segundos.
@@ -24454,7 +24456,7 @@ Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas as classes T. e suas evoluções exceto Aprendizes^000000
 #
 
-//¸ð·ÎÅ© ÄÁÆ¼³ÙÅ» °¡µå ÀÎÁõ¼­
+//룰럎얩 쓁욼동얻 낡뗥 샎쇵벭
 7826#
 Certifica que o aventureiro que o carrega possui coragem suficiente para ser considerado membro da Guarda Continental.
 ^ffffff_^000000
@@ -24463,7 +24465,7 @@ Assinado: Chefe Balrog.
 Peso: ^7777770^000000
 #
 
-// ------------ ¸¶¿Õ ¸ð·ÎÅ© ----------------
+// ------------ 뢶뿕 룰럎얩 ----------------
 2536#
 Pele amaldiçoada em linguagem demoníaca.
 DEFM + 2, HP Máx + 200, Esquiva + 10
@@ -24572,7 +24574,7 @@ Peso: ^77777725^000000
 Classes que utilizam: ^777777Classes T. 2-1 e 2-2^000000
 #
 
-// ---------- ÇÒÂ¦ Å×½ºÆ® -----------
+// ---------- 쟒슦 엗붺욮 -----------
 2129#
 Livro que contém habilidades básicas para Clérigos. 
 Recuperação de HP e SP + 3%. INT + 1.
@@ -24872,7 +24874,7 @@ Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Sacerdote, Sábio e evoluções; Mestre Taekwon^000000
 #
 
-// ------------- ÀüÀå ÈÖÀå ---------------
+// ------------- 샼샥 죖샥 ---------------
 7828#
 Insígnia fornecida para os combatentes que lutaram bravamente no Campo de Batalha.
 ^ffffff_^000000
@@ -24884,7 +24886,7 @@ Insígnia fornecida para os combatentes que lutaram bravamente no Campo de Batal
 Peso: ^7777770^000000
 #
 
-// -------- ºÀÀÎÀÇ ½ÅÀü ¾ÆÀÌÅÛ ------------
+// -------- 뫀샎샇 뷅샼 뻆샌엛 ------------
 6001#
 Essência de fogo que contém o puro espírito de Thor, Deus do Trovão. Ela possui poderes misteriosos de combate às trevas.
 ^ffffff_^000000
@@ -24901,7 +24903,7 @@ Pendente usado para aprisionar almas andarilhas de lugares desconhecidos.
 Peso: ^7777771^000000
 #
 
-// ----------------- ¸¶·ÂÀÌ ±êµç ¹ÙÆ÷¸ÞÆ® ÀÎÇü -----------------
+// ----------------- 뢶럂샌 뇪뗧 맙웷룞욮 샎쟼 -----------------
 6004#
 Uma boneca que possui a Maldição de Bafomé. Ela parece estar unida a algo.
 ^ffffff_^000000
@@ -25036,7 +25038,7 @@ Um belo e longo chifre com muito poder mágico. Pode ser vendido a um NPC mercad
 Peso: ^7777771^000000
 #
 
-// --------- EP13 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ---------------
+// --------- EP13 뷅뇔 샥뫱 뻆샌엛 ---------------
 5398#
 Capacete feito com um crânio de dragão. Tão duro que não pode ser quebrado facilmente.
 FOR + 2. DEFM + 5.
@@ -25600,7 +25602,7 @@ Um pedaço do mais puro chocolate. A aparência não é muito boa, mas o gosto �
 ^ffffff_^000000
 Peso: ^77777730^000000
 
-// ----------- ¿¡ÇÇ¼Òµå 13 ppl ¾ÆÀÌÅÛ -----------
+// ----------- 뾡쟇볒뗥 13 ppl 뻆샌엛 -----------
 6051#
 Mineral desconhecido, não encontrado em Midgard. Parece guardar um poder mágico desconhecido.
 ^ffffff_^000000
@@ -25702,7 +25704,7 @@ Uma útil ferramenta voltada para fins de trabalho. Mas cuidado pois ela pode se
 Peso: ^7777771^000000
 #
 
-// ---------- Å©¸®°Å º¸" ó ¾ÆÀÌÅÛ ----------
+// ---------- 얩뢮냅 몸" 뻆샌엛 ----------
 13416#
 75% de aumento no Ataque Físico contra monstros Humanoides.
 Ignora 20% da Defesa Física de monstros Humanoides.
@@ -26241,7 +26243,7 @@ Nível necessário: ^77777781^000000
 Classes que utilizam:  ^777777Todas exceto Aprendiz e Evolução^000000
 #
 
-// ---------- Å©¸®°Å º¸" ó ¾ÆÀÌÅÛ Ãß°¡ Defense±¸ ----------
+// ---------- 얩뢮냅 몸" 뻆샌엛 쏟낡 Defense놸 ----------
 2445#
 HP e SP + 5%
 Tipo: ^777777Calçado^000000
@@ -26288,7 +26290,7 @@ Peso: ^7777770^000000
 Classes que utilizam:  ^777777Todas exceto Aprendiz e Evolução^000000
 #
 
-// ----------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------
+// ----------- 샌몥욮 뻆샌엛 ------------
 2443#
 Botas à prova d'água.
 Reduz o tempo de lançamento de pesca em 2 segundos.
@@ -33634,7 +33636,7 @@ Classes que utilizam: ^777777Todas^000000
 Uma coroa rara e de aparência única, feita com camadas de penas do lendário pássaro divino, Garuda.
 Reduz o dano de todas as raças de monstros em 5%. Esta redução não é válida em PvP ou na Guerra do Emperium.
 SOR + 5, DEFM + 3, Precisão + 10, Reduz o intervalo de conjuração em 5%.
-Quando aprimorado acima de 7, a uma chance de obter Mastela ao atacar monstros. Para cada refino adicional, a chance é aumentada em 1%.
+Quando aprimorado acima de 7, a uma chance de obter Mastela ao derrotar monstros. Para cada refino adicional, a chance é aumentada em 1%.
 Tipo : ^777777Equipamento para a cabeça ^000000
 Defesa: ^7777774^000000
 Equipa em : ^777777Topo^000000
@@ -34154,6 +34156,7 @@ Classe : ^777777Todas^000000
 2168#
 Um exótico escudo retangular. Nele há uma gema mágica, encantada para defender contra ataques físicos.
 Se refinado acima de +5 dará 1% em redução de dano 'Neutro' a cada nível de refinamento.
+Se refinado acima do +9 aumenta a tolerância contra Fogo, Água, Terra e Vento.
 Este bônus funcionará até +12 de refinamento.
 Tipo : ^777777Escudo^000000 
 Defesa: ^77777755^000000
@@ -36309,24 +36312,6 @@ Defesa: ^7777772^000000
 Equipa em : ^777777Topo^000000
 Peso : ^77777710^000000
 Nível Necessário : ^77777730^000000
-Classes : ^777777Todas as Classes^000000
-#
-
-18575#
-Pode parecer ridículo, mas essa simples caixa de papelão é o disfarce supremo do famoso sicário espião conhecido como Solid Sorrateiro, perito em infiltração e sabotagem.
-Você não tem certeza de como Sorrateiro fazia pra se esconder com isso. Pelo contrário, essa caixa na sua cabeça apenas chama ainda mais a atenção!
-Felizmente parece que você sempre consegue tirar alguma habilidade útil de dentro dela.
-Por algum motivo que não consegue explicar, sempre que passa ao lado de um Oficial do Éden você escuta um estranho sinal de alerta e fica com os pelos da nuca arrepiados.
-DEFM + 10.	
-Ataques Físicos em curta distância possuem a chance de invocar uma habilidade aleatória.
-Quando equipado com Anel Elemental Menor, possui a chance de invocar Manejo Perfeito Nível 02.
-Aumenta as chances quando equipado com dois Aneis Elementais Menores.
-Não pode ser refinado.
-Tipo : ^777777Equipamento para Cabeça^000000
-Defesa: ^77777710^000000
-Equipa em : ^777777Topo, Meio e Baixo^000000
-Peso : ^77777750^000000
-Nível Necessário : ^77777720^000000
 Classes : ^777777Todas as Classes^000000
 #
 
@@ -38774,7 +38759,7 @@ Diminui em 2 segundos o tempo de conjuração de Sacramentum, Lauda Agnus e Laud
 Tipo : ^777777Cajado^000000
 Ataque : ^77777730^000000
 Peso : ^77777750^000000
-Arma Nível : ^7777773^000000
+Nível da Arma : ^7777773^000000
 Nível Necessário : ^777777100^000000
 Classe: ^777777Arcebispo^000000
 #
@@ -38787,7 +38772,7 @@ Aumenta o dano de Adoramus em 200% e aumenta o custo de SP de Adoramus em 30.
 Tipo: ^777777Maça^000000
 Ataque : ^777777170^000000
 Peso : ^777777120^000000
-Arma Nível : ^7777773^000000
+Nível da Arma : ^7777773^000000
 Nível Necessário : ^777777100^000000
 Classe: ^777777Arcebispo^000000
 #
@@ -43283,7 +43268,7 @@ Nível Necessário : ^77777765^000000
 Classe : ^777777Espadachim e Evoluções^000000
 #
 18774#
-Máscara usada para esconter a identidade de um famoso executor. Nunca se soube sua verdadeira identidade, pois não era possível encontrá-lo duas vezes!
+Máscara usada para esconder a identidade de um famoso executor. Nunca se soube sua verdadeira identidade, pois não era possível encontrá-lo duas vezes!
 CRIT +1, Dano crítico +1%
 Tipo : ^777777Equipamento para Cabeça^000000
 Defesa : ^7777771^000000
@@ -46707,4 +46692,55 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 # 
+20278#
+Você curte chiclete de Tutti frutti, gosta de ouvir rock na Prisão de Glast Heim e prefere um pouco menos conversa e mais ação? Então vai adorar ficar com o mesmo visual do maior bardo do rock, El Vispretzel, com a ajuda desse topete rebelde!
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+20287#
+Há quem diga que ele não é deste planeta e há quem diga que ele não morreu. Mas sempre que precisou vencer qualquer duelo musical, o grande bardo do rock, El Vispretzel, sempre conseguiu aumentar seu ki para se tornar o Rei do Rock Saiadim, deixando seu topete dourado e sua melodia muito mais poderosa!
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+//*****************************************************
+//------------Aplicar em 2016-05-17--------------------
+//*****************************************************
+20407#
+Talvez seja porque foi criado por um dragão. Talvez porque seu ki esteja transbordando. Ou talvez seja porque você é muito cabeça quente, mas é possível ver sua fúria de longe!
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+20132#
+Alguma coisa estranha aconteceu... Você não se recorda muito bem, mas... Será que você sonhou que havia virado uma cobaia no Laboratório de Somatologia? Espero que tenha sido um sonho...
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+//*****************************************************
+//------------Aplicar em 2016-05-31--------------------
+//*****************************************************
+20315#
+Criado pelo famoso mecânico Dony Starku, esse equipamento foi feito para ajudar os aventureiros que querem explorar os mistérios das Ruínas de Juperos.
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 //file end
