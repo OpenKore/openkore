@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 
-use Date::Manip;
 use Encode;
 use File::Copy;
 use Getopt::Long;
@@ -23,7 +22,7 @@ my $opt = get_options(
         list_url          => 'http://patch.1.online.ragnarok.warpportal.net/patch02/patch2.txt',
         download_base_url => 'ftp://ropatch2.gravityus.com/patch',
         git_dir           => "$ENV{HOME}/git/openkore/tables/iRO/official",
-        download_dir      => "$ENV{HOME}/patches",
+        download_dir      => "$ENV{HOME}/patches/iRO",
     }, {
         'allow_url=s'         => 'the "is patching currently allowed" URL',
         'check_files'         => 'force re-check of previously downloaded files',
@@ -130,12 +129,13 @@ mkdir $extract_dir if !-d $extract_dir;
 foreach ( sort keys %$latest ) {
     next if !/\.txt$/;
 
-    next if $extracted->{$_} && $latest->{$_} eq $extracted->{$_};
     my ( $base ) = m{([^/\\]+)$};
+    next if $extracted->{$_} && $latest->{$_} eq $extracted->{$_} && -f "$extract_dir/$base";
+
     system 'grf_extract', "$opt->{download_dir}/$latest->{$_}", $_ => "$extract_dir/$base";
 
     # GRF files typically have a screwed up mix of UCS-2 and UTF-8. Fix them.
-    fix_unicode( "$extract_dir/$base" );
+    fix_unicode_file( "$extract_dir/$base" );
 
     $extracted->{$_} = $latest->{$_};
 }
@@ -168,7 +168,7 @@ sub ftp {
     our $ftp;
     if ( !$ftp ) {
         my $uri = URI->new( $opt->{download_base_url} );
-        $ftp = Net::FTP->new( $uri->host, Passive => 1 );
+        $ftp = Net::FTP->new( $uri->host, Debug => 1, Passive => 1 );
         $ftp->login;
         $ftp->binary;
         $ftp->cwd( $uri->path );
@@ -201,13 +201,35 @@ sub backticks {
     $output;
 }
 
-sub fix_unicode {
+sub fix_unicode_file {
     my ( $file ) = @_;
 
-    # Regular expressions to match the full UTF-8 spec and the UCS-2 part of UTF-16BE.
+    # Read the GRF file.
+    local $/;
+    open FP, '<', $file;
+    binmode FP;
+    my $data = <FP>;
+    close FP;
+
+    $data = fix_unicode( $data );
+
+    # Ensure exactly one trailing newline.
+    $data =~ s/\n*$/\n/os;
+
+    # Write the file out.
+    open FP, '>', $file;
+    binmode( FP, ':utf8' );
+    print FP $data;
+    close FP;
+}
+
+sub fix_unicode {
+    my ( $str ) = @_;
+
+    # Regular expressions to match the full UTF-8 spec and the Hangul part of the UCS-2 part of UTF-16BE.
     my $ascii = qr/[\x00-\x7E]/;
     my $utf8  = qr/
-          [\x09\x0A\x0D\x20-\x7E]            # ASCII
+          [\x00-\x7E]                        # ASCII
         | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
         |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
         | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
@@ -219,30 +241,51 @@ sub fix_unicode {
     my $ucs2 = qr/
           [\x7F-\xD7\xE0-\xFF][\x00-\xFF]    # 2-byte
     /x;
-
-    # Read the GRF file.
-    local $/;
-    open FP, '<', $file;
-    my $data = <FP>;
-    close FP;
+    my $ucs2_hangul = qr/
+          [\xAC-\xD7][\x00-\xFF]    # 2-byte
+    /x;
+    my $cp1252 = qr/
+          #[\xA0\B0\xBA\xC0-\xD6\xD9-\xDD\xE0-\xF6\xF9-\xFF] # commonly used diacriticals, this overlaps with Hangul (U+AC00 to U+D7A3)
+          [\x80-\xFF]
+    /x;
+    my $iso8859 = qr/
+          #[\xA0\B0\xBA\xC0-\xD6\xD9-\xDD\xE0-\xF6\xF9-\xFF] # commonly used diacriticals, this overlaps with Hangul (U+AC00 to U+D7A3)
+          [\xA0-\xFF]
+    /x;
 
     # Eat the leading BOM, if any.
-    $data =~ s/^[\xFF\xFE]{2}//gos;
+    $str =~ s/^[\xFF\xFE]{2}//gos;
 
     # Convert CRLF to just LF.
-    $data =~ s/\r\n/\n/gos;
+    $str =~ s/\r\n/\n/gos;
 
-    # Convert data from mixed UTF-8 and UTF-16BE to just UTF-8.
-    $data = join "\n", map { s/($ascii*)($ucs2+)/Encode::decode('UTF-8', "$1").Encode::decode('UTF-16BE', "$2")/egos;$_; } split "\n", $data;
+    # Convert bare CR to LF.
+    $str =~ s/\r/\n/gos;
 
-    # Ensure exactly one trailing newline.
-    $data =~ s/\n*$/\n/os;
+    $str = join "\n", map {
 
-    # Write the file out.
-    open FP, '>', $file;
-    binmode( FP, ':utf8' );
-    print FP $data;
-    close FP;
+        # UCS-2 mode: Convert sequences of Hangul until we run out of them.
+        # This only triggers if there are at least two consecutive Hangul
+        # characters in the line, to avoid accidentally converting CP-1252
+        # data.
+        if ( /^$utf8*((?!$utf8)$ucs2_hangul*$utf8*)*(?!$utf8)$ucs2_hangul{2}/os ) {
+            my $out = '';
+            while ( /\G(?=.)($ascii*)($ucs2*)/gos ) {
+                $out .= Encode::encode( 'utf8', Encode::decode( 'UTF-8', "$1" ) . Encode::decode( 'UTF-16BE', "$2" ) );
+            }
+            $_ = $out;
+        }
+
+        # Windows Code Page 1252 mode: Convert CP-1252 until we run out of it.
+        if ( /^$utf8*(?!$utf8)$cp1252/os ) {
+            while ( s/(^$utf8*)(?!$utf8)($cp1252+)/Encode::encode( 'utf8', Encode::decode( 'UTF-8', "$1" ) . Encode::decode( 'cp1252', "$2" ) )/eos ) { }
+        }
+
+        $_;
+    } split "\n", $str;
+
+
+    Encode::decode('UTF-8', $str);
 }
 
 sub get_options {
