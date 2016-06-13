@@ -71,7 +71,7 @@ sub system_chat {
 
 	if ($message =~ s/^ssss//g) {  # forces color yellow, or WoE indicator?
 		$prefix = T('[WoE]');
-	} elsif ($message =~ /^micc.{23}\x00([0-9A-Fa-f]{6})(.*)/) { #appears in idRO: [micc][23_chars_name][\x00\x00][color][name][blablabla][message]
+	} elsif ($message =~ /^micc.{24}([0-9A-Fa-f]{6})(.*)/) { #appears in idRO: [micc][23_chars_name][\x00\x00][color][name][blablabla][message]
 		$color = $1;
 		$message = $2;
 		$prefix = T('[S]');
