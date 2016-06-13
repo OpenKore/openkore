@@ -1,4 +1,4 @@
-//EP.15 
+//EP.15
 1@mcd.gnd#1@mcd.gnd#
 1@mcd.gat#1@mcd.gat#
 1@mcd.rsw#1@mcd.rsw#
@@ -491,7 +491,7 @@ prt_fild08a.gnd#prt_fild08.gnd#
 prt_fild08a.gat#prt_fild08.gat#
 prt_fild08a.rsw#prt_fild08.rsw#
 삯샺샎엍웤샌붺\map\prt_fild08a.bmp#삯샺샎엍웤샌붺\map\prt_fild08.bmp#
-                 
+
 iz_ac02_d.gnd#iz_ac02.gnd#
 iz_ac02_d.gat#iz_ac02.gat#
 iz_ac02_d.rsw#iz_ac02.rsw#
@@ -926,7 +926,7 @@ que_moon.gat#job_star.gat#
 que_moon.rsw#job_star.rsw#
 삯샺샎엍웤샌붺\map\que_moon.bmp#삯샺샎엍웤샌붺\map\job_star.bmp#
 
-//---------------------------------2007돢 6뿹 30샏 샌샼샇 떥샌엍---------------------------							
+//---------------------------------2007돢 6뿹 30샏 샌샼샇 떥샌엍---------------------------
 
 new_1-1.gnd#new_zone01.gnd#
 new_2-1.gnd#new_zone01.gnd#
@@ -1980,7 +1980,7 @@ dali02.rsw#dali.rsw#
 1@def01.rsw#1@def01.rsw#
 삯샺샎엍웤샌붺\map\1@def01.bmp#삯샺샎엍웤샌붺\map\1@def01.bmp#
 
-//14.3 2싷
+//14.3 2Â÷
 1@eom.gnd#1@eom.gnd#
 1@eom.gat#1@eom.gat#
 1@eom.rsw#1@eom.rsw#
