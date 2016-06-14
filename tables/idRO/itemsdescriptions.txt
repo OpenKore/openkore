@@ -1,4 +1,4 @@
-﻿501#
+501#
 Potion yang memberikan ^000088sejumlah HP^000000,terbuat dari Red herb.
 ^ffffff_^000000
 Berat : ^7777777^000000
@@ -14659,7 +14659,7 @@ Berat: ^77777710^000000
 Telur dari campuran biskuit,  cukup aneh tapi ini sangat spesial. Dapat ditetaskan dengan [Pet incubator] 
 Jika tingkat relasi setia, 
 Meningkatkan ketahanan terhadap serangan Netral sebesar 1%, MHP - 1%.
-Jenis : ^777777Monster’s Egg^000000
+Jenis : ^777777Monster뭩 Egg^000000
 #
  
 7613#
@@ -16860,7 +16860,7 @@ posisi : ^777777Upper^000000    berat : ^77777720^000000
 profesi : ^777777All^000000
 #
  
-// ------------------- 2006 »ó¹Ý±E½Å±ÔÄ«µEÃß°¡.----------------------- 
+// ------------------- 2006 상반콅E신규카탛E추가.----------------------- 
  
 4332#
 ATK +5, INT +1 
@@ -17423,7 +17423,7 @@ Letak : ^777777Weapon^000000
 Berat: ^7777771^000000
 #
  
-// ------------- Ã¥ÀÐ±E---------------------- 
+// ------------- 책읽콅E---------------------- 
 11000#
 Sebuah buku tentang sejarah dari Prontera. Terdapat bab khusus yang didedikasikan untuk Tristam III.
 ^ffffff_^000000
@@ -17477,7 +17477,7 @@ Edisi kedua dari seri petualangan Assassin yang ditulis oleh Mihir, Seorang penu
 Berat: ^7777771^000000
 #
  
-// ----------------------- Åä¸£È­»EÄù½ºÆ® ¾ÆÀÌÅÛ ---------------------- 
+// ----------------------- 토르화퍊E퀘스트 아이템 ---------------------- 
 7704#
 Sebuah alat yang dapat mengukur suhu permukaan tanah. Tetapi sepertinya tidak terlalu akurat.
 ^ffffff_^000000
@@ -17494,7 +17494,7 @@ Sebuah catatan yang ditulis oleh seorang ahli geologi.
 Berat: ^7777770^000000
 #
  
-// ---------------------- Åä¸£È­»E½Å±Ô ÀåºE¾ÆÀÌÅÛ ---------------------- 
+// ---------------------- 토르화퍊E신규 장틒E아이템 ---------------------- 
 1370#
 Sebuah kapak yang sangat besar dan berat dan membutuhkan tenaga yang besar untuk dapat menggunakannya dengan baik.
 Mengurangi kecepatan serangan 40%, dan meningkatkan konsumsi SP sebesar 2 kali lipat untuk penggunaan skill. Jika base STR 95 
@@ -20329,7 +20329,7 @@ Sebuah kotak yang berisi 1 Unholy Touch. Hati-hati dalam memakainya!
 Berat : ^7777771^000000
 #
 13778#
-Sebuah kotak yang berisi 1 Orc Hero’s Helm. Hati-hati dalam memakainya! 
+Sebuah kotak yang berisi 1 Orc Hero뭩 Helm. Hati-hati dalam memakainya! 
 ^ffffff_^000000
 Berat : ^7777771^000000
 #
@@ -20926,7 +20926,7 @@ Berat : ^7777770^000000
 #
  
 // ------------- Ep. 12 --------------- 
-// ------------- ÀEEº¸»E¾ÆÀÌÅÛ --------------- 
+// ------------- 픸E갋보퍊E아이템 --------------- 
 13036#
 Sebuah Belati yang dinuat spesial untuk membunuh.
 STR + 1, AGI + 1 
@@ -21582,7 +21582,7 @@ Sebuah amplop yang di segel. Sepertinya terdapat pesan yang penting didalamnya.
 Berat: ^7777771^000000
 #
  
-// ------------ ¸Þ¸ð¸®¾E´øÀEº¸»óÅÛ ---------------- 
+// ------------ 메모리푳E던픸E보상템 ---------------- 
 13412#
 Salah satu Pedang Naght Sieger. Mata Pedang yang berwarna biru mewakilkan ketajaman dari Pedang ini.
 Kemungkinan kecil untuk mengabaikan tingkat defense, saat melakukan serangan fisik.
@@ -21634,7 +21634,7 @@ Level Persyaratan : ^77777770^000000
 Profesi: ^777777Semua job 3 kecuali Novice^000000
 #
  
-//¸ð·ÎÅ© ÄÁÆ¼³ÙÅ» °¡µEÀÎÁõ¼­ 
+//모로크 컨티넨탈 가탛E인증서 
 7826#
 Menandakan petualang ini mempunyai kekuatan dan keberanian yang cukup untuk menjadi anggota Continental Guard.
 ^ffffff_^000000
@@ -21643,7 +21643,7 @@ Continental Guard. Baloq.
 Berat: ^7777770^000000
 #
  
-// ------------ ¸¶¿Õ ¸ð·ÎÅ© ---------------- 
+// ------------ 마왕 모로크 ---------------- 
 2536#
 Kulit Iblis, dikutuk dengan bahasa kegelapan.
 Terlihat sangat lusuh. MDEF +2, Maks HP +200, FLEE +10.
@@ -21738,7 +21738,7 @@ Berat: ^77777725^000000
 Profesi: ^777777Job High Keatas^000000
 #
  
-// ---------- ÇÒÂ¦ Å×½ºÆ® ----------- 
+// ---------- 할짝 테스트 ----------- 
 2129#
 Sebuah buku tebal yang memuat keterampilan dasar untuk Priest.
 Menambah regenerasi HP dan SP 3%. INT +1.
@@ -21983,8 +21983,8 @@ Level Persyaratan : ^77777760^000000
 Jobs : ^777777Priest, Sage, Taekwon Master^000000
 #
 1573#
-Sebuah buku dengan frase yang sangat mengesankan dibagian covernya ¡°Tidak ada jalan mudah untuk belajar¡±.
-¡°Praktek membuat sempurna, jika kamu terus mencobannya, kamu pasti menjadi ahli sebelum kamu menyadarinya¡±.
+Sebuah buku dengan frase yang sangat mengesankan dibagian covernya “Tidak ada jalan mudah untuk belajar”.
+“Praktek membuat sempurna, jika kamu terus mencobannya, kamu pasti menjadi ahli sebelum kamu menyadarinya”.
 MATK +140, MDEF +8, Maks SP +10%, INT +4 ketika dipakai bersama dengan Mage Coat.
 Jenis : ^777777Buku^000000      Serangan : ^77777730^000000
 Berat : ^77777770^000000      Elemen: ^777777Neutral^000000
@@ -21993,7 +21993,7 @@ Level Persyaratan : ^77777770^000000
 Jobs : ^777777Priest, Sage, Taekwon Master^000000
 #
  
-// ------------- ÀEEÈÖÀE--------------- 
+// ------------- 픸E갋휘픸E--------------- 
 7828#
 Sebuah lencana yang di berikan pada pahlawan di medang perang.
 ^ffffff_^000000
@@ -22003,7 +22003,7 @@ Sebuah lencana yang di berikan pada pahlawan di medang perang.
 ^ffffff_^000000
 #
  
-// -------- ºÀÀÎÀÇ ½ÅÀE¾ÆÀÌÅÛ ------------ 
+// -------- 봉인의 신픸E아이템 ------------ 
 6001#
 Sebuah inti sari api yang mengandung jiwa dari Thor, Dewa Petir.
 Mengendung kekuatan misterius untuk menyegel kekuatan jahat dan gelap.
@@ -22021,14 +22021,14 @@ Sebuah liontin yang pernah digunakan untuk mengurung arwah penasaran dari tempat
 Berat: ^7777771^000000
 #
  
-// ----------------- ¸¶·ÂÀÌ ±EE¹ÙÆ÷¸ÞÆ® ÀÎ?E----------------- 
+// ----------------- 마력이 콅E갋바포메트 인?E----------------- 
 6004#
 Boneka yang mengandung kutukan Baphomet. Sepertinya dibuat dengan sesuatu yang lain.
 ^ffffff_^000000
 Berat: ^7777771^000000
 #
  
-// ------------------- 12.1 Äù½ºÆ® ¾ÆÀÌÅÛ ---------------------- 
+// ------------------- 12.1 퀘스트 아이템 ---------------------- 
 7798#
 Sebuah A dark fragment dengan cahaya yang menyilaukan. Saat kamu menatapnya, kamu merasa akan terhisap olehnya.
 ^ffffff_^000000
@@ -22041,7 +22041,7 @@ Kamu mungkin akan merasa sangat kuat dengan kristal ini. Saat kamu menggenggamny
 Berat: ^7777771^000000
 #
  
-// --------------- ÇÊ¸®ÇÉ ÀÚÃ¼Á¦ÀÛ Åõ±¸ 7Á¾ ---- 
+// --------------- 필리핀 자체제작 투구 7종 ---- 
 5374#
 Sebuah topi sihir yang terbuat dari tanduk kambing.
 Memberikan tambahan 12% serangan pada monster jenis demihuman.
@@ -22051,7 +22051,7 @@ Dipakai di: ^777777Upper^000000    Berat: ^77777780^000000
 Profesi: ^777777Semua Jobs^000000
 #
  
-// ------------------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------------ 
+// ------------------- 이벤트 아이템 ------------------ 
 6000#
 Sebuah abu hitam yang mengandung kekuatan sihir dan kegelapan yang misterius.
 ^ffffff_^000000
@@ -22088,7 +22088,7 @@ Ibu Tiri - Karma dari jiwa sebelumnya? "
 Berat: ^7777771^000000
 #
  
-// ------------------ ÇÏ¾Ç Å×½ºÆ® (¼ÒÄÏ)---------------- 
+// ------------------ 하악 테스트 (소켓)---------------- 
 1568#
 Buku sihir yang memiliki elemen Air.
 Class : ^777777Buku^000000      Attack Strength : ^77777790^000000
@@ -24319,7 +24319,7 @@ Berat : ^7777771^000000
 #
  
 //------------ Update Epi 13.1 ------------ 
-// ----------- ¿¡ÇÇ¼ÒµE13 ÀâÅÛ ------------ 
+// ----------- 에피소탛E13 잡템 ------------ 
 6020#
 Bulu indah berwarna yang cantik bisa dijual ke NPC pedagang dengan harga yang tinggi.
 ^ffffff_^000000
@@ -24344,7 +24344,7 @@ Bentuk panjang yang indah, tanduk berwarna putih dan mempunyai kekuatan sihir ya
 Berat : ^7777771^000000
 #
  
-// --------- EP13 ½Å±Ô ÀåºE¾ÆÀÌÅÛ --------------- 
+// --------- EP13 신규 장틒E아이템 --------------- 
 5398#
 Aksesoris kepala ynag terbuat dari tengkorak naga. Begitu keras hingga membuatnya tidak mudah pecah.
 STR + 2. MDEF + 5.
@@ -24975,14 +24975,14 @@ Sebuah kue yang dilapisi coklat manis. Terlihat tidak begitu menarik namun rasan
 Berat : ^77777730^000000
 #
  
-// ----------- ¿¡ÇÇ¼ÒµE13 ppl ¾ÆÀÌÅÛ ----------- 
+// ----------- 에피소탛E13 ppl 아이템 ----------- 
 6051#
 Sebuah bahan yang tidak pernah ditemui di Rune Midgard. Kelihatannya bahan ini seperti berisi kekuatan sihir yang tidak diketahui didalamnya.
 ^ffffff_^000000
 Berat : ^7777771^000000
 #
  
-// ---------- Å©¸®°Å º¸»E¾ÆÀÌÅÛ ---------- 
+// ---------- 크리거 보퍊E아이템 ---------- 
 13042#
 Meningkatkan kekuatan serangan ke monster Demihuman sebesar 75%..
 Mengabaikan 20% defense fisik dari monster Demihuman.
@@ -25574,7 +25574,7 @@ Level Persyaratan : ^77777780^000000
 Profesi : ^777777Swordman Class^000000
 #
  
-// ---------- Å©¸®°Å º¸»E¾ÆÀÌÅÛ Ãß°¡ Defense±¸ ---------- 
+// ---------- 크리거 보퍊E아이템 추가 Defense구 ---------- 
 2445#
 HP, SP + 5% 
 Jenis : ^777777Shoes^000000     
@@ -25626,7 +25626,7 @@ Berat : ^7777770^000000
 Profesi : ^777777Semua profesi kecuali Novice^000000
 #
  
-// ----------- ¿¡ÇÇ¼ÒµE13 ³¬½Ã ------------ 
+// ----------- 에피소탛E13 낚시 ------------ 
 2775#
 Aksesoris yang dibuat dari ikan yang memikat.
 Mengurangi waktu cast untuk memancing selama 1 detik.
@@ -25636,7 +25636,7 @@ Berat : ^77777710^000000
 Profesi : ^777777Semua Profesi^000000
 #
  
-// ----------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------ 
+// ----------- 이벤트 아이템 ------------ 
 2443#
 Sebuah sepatu yang tahan Air.
 Mengurangi waktu cast untuk memancing selama 2 detik.
@@ -33680,7 +33680,7 @@ Berat : ^7777771^000000
 ^ff0000Item ini tidak dapat ditransaksikan.^000000
 Box yang berisi 1 RWC 2012 pendant.
 ^ffffff_^000000
-Yang memiliki kekuatan luar biasa untuk merayakan 'RWC 2012'. goldÀÇ pendant.
+Yang memiliki kekuatan luar biasa untuk merayakan 'RWC 2012'. gold의 pendant.
 MATK + 1%.
 Ketika digunakan bersama RWC 2012 ring, ATK + 4%, MATK + 4%.
 Jenis : ^777777Accessory^000000 Tk.Defense : ^7777770^000000
@@ -34718,7 +34718,7 @@ Amore Egg Sebuah Lucky Egg yang melambangkan cinta sejati dan keabadian dalam me
 Berat : ^7777771^000000
 #
 //=====14.1
-//------------14.1 Ãß°¡ ¾ÆÀÌÅÛ----------
+//------------14.1 추가 아이템----------
 2156#
 Sebuah buku kuno yang berisi lagu suci yang diturunkan dari katedral. Dikatakan bahwa buku ini sangat laku, diterbitkan sebagai salah satu seri.
 Memungkinkan pengguna untuk menggunakan Odin Power Level 1.
@@ -37070,7 +37070,7 @@ Flee + 3.
 Jika ditempa lebih dari lv 5, Flee + 5.
 Jika ditempa lebih dari lv 7, Flee + 2, AGI + 2
 Kelas : ^777777Helm^000000 Pertahanan : ^7777772^000000
-À§Ä¡: ^777777Middle high ^000000 Berat : ^77777750^000000
+위치: ^777777Middle high ^000000 Berat : ^77777750^000000
 Membutuhkan Lv : ^7777771^000000
 Job : ^777777All Jobs^000000
 
@@ -37799,7 +37799,7 @@ Sebuah telur legendaris yang berisikan bermacam-macam hadiah didalamnya, ketika 
 Berat : ^7777771^000000
 #
 
-//¼ÒÄÏ ¾ÆÀÌÅÛ µ¥ÀÌÅÍ 
+//소켓 아이템 데이터 
 1317#
 Kapak, yang disediakan oleh  Academy
 Serangan meningkat hingga  5%.(Mengurangi waktu tunda setelah serangan hingga 5%)
@@ -37987,7 +37987,7 @@ Required Lv : ^777777100^000000
 Job : ^777777Knight/Crusader^000000
 #
 
-//»ýÃ¼´øÀü
+//생체던전
 
 1290#
 Katar yang digunakan Assasin yang tidak pernah kehilangan targetnya dalam situasi apapun. Dia menggunakan Luck nya untuk fokus pada target
@@ -38206,7 +38206,7 @@ Dibutuhkan Level : ^777777100^000000
 Profesi : ^777777For 3rd Profesi only/Kagerou/Oboro^000000
 #
 
-//µîÀå½Ä
+//등장식
 
 20725#
 Ketika dipakai bersama Mad Bunny, berubah menjadi monster Piamat untuk 10 detik dengan kemungkinan tertentu
@@ -39339,7 +39339,7 @@ Dibutuhkan Lv : ^77777730^000000
 Job : ^777777All^000000
 #
 
-//-- ³«¿ø´Ü»ó±Þ¼ö·Ã
+//-- 낙원단상급수련
 1197#
 ^ff0000Tidak dapat di transaksikan.^000000
 Pedang dua tangan yang dibuat oleh Eden Group. Sangat cocok untuk mereka yang memiliki pengalaman lebih, dalam menggunakan pedang dua tangan.
@@ -40299,7 +40299,7 @@ Minimum Level : ^7777771^000000
 Job : ^777777Semua^000000
 #
 
-//´ÑÀÚ»óÀ§Á÷ ¾ÆÀÌÅÛ
+//닌자상위직 아이템
 2171#
 Armguard dengan gambar rubah yang menawan. Anda merasa cepat saat mengenakan ini.
 FLEE + 5.
@@ -40394,7 +40394,7 @@ Applicable Job : ^777777Ninja Class^000000
 Kunai khusus dirancang untuk menahan mesiu dalam menangani ledakan pada target dan sekitarnya. Penanganan hati-hati diperlukan!
 Class : ^777777Throwing Weapon^000000
 Atk : ^77777750^000000
-Weight : ^7777773^000000      Property : ^777777¹«^000000
+Weight : ^7777773^000000      Property : ^777777무^000000
 Level Limit : ^777777100^000000
 #
 13311#
@@ -40915,7 +40915,7 @@ Minimum Lv : ^77777740^000000
 Job : ^777777Semua kecuali Novice^000000
 #
 
-//------ ½É¿¬ÀÇÈ¸¶û Abyss gate
+//------ 심연의회랑 Abyss gate
 1293#
 *Status berlaku selama WoE & PVP
 Meningkatkan DEF/MDEF untuk 5 detik ketika diaktifkan tetapi tidak mempengaruhi serangan skill.
@@ -42639,7 +42639,7 @@ Weight : ^7777771^000000
 1299#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Bleeding
 Job: ^777777Katar^000000 Serangan: ^777777120^000000
@@ -42652,7 +42652,7 @@ Job: ^777777Assassin Job^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 Tidak dapat dihancurkan.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Freezing
 Job: ^777777Kapak Satu Tangan^000000 Serangan : ^777777100^000000
@@ -42665,7 +42665,7 @@ Job: ^777777Novice/Swordsman Job/Merchant Job/Thief Job^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 Tidak dapat dihancurkan.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Stun.
 Job : ^777777Two-handed Axe^000000 Serangan : ^777777150^000000
@@ -42677,7 +42677,7 @@ Job: ^777777Swordsman Job/Merchant Job^000000
 1437#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Curse.
 Job: ^777777One-handed Spear^000000 Serangan : ^777777100^000000
@@ -42689,7 +42689,7 @@ Job: ^777777Swordsman Job^000000
 1495#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Blind.
 Job: ^777777Tombak Dua Tangan^000000 Serangan : ^777777150^000000
@@ -42701,7 +42701,7 @@ Job: ^777777Swordsman Job^000000
 1591#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan Magic meningkat sebesar +5% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Blind.
@@ -42716,7 +42716,7 @@ Job: ^777777Priest Job/Sage Job/Taekwon Master^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 Serangan Magic + 100.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan Magic meningkat sebesar +10% untuk pemain.
 Serangan magic memiliki kemungkinan besar menghasilkan Blind.
 Jumlah Pemulihan meningkat sebesar +5%.
@@ -42729,7 +42729,7 @@ Job: ^777777Novice Job/Mage Job/Acolyte Job/Soul Linker^000000
 1834#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Freezing
 Job: ^777777Knuckle^000000 Serangan : ^777777150^000000
@@ -42741,7 +42741,7 @@ Job: ^777777Priest Job/Monk Job^000000
 1932#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Physical attacks have a high Poisoning chance.
 Job: ^777777Instrumen Musik^000000 Serangan: ^777777100^000000
@@ -42753,7 +42753,7 @@ Job : ^777777Bard Job^000000
 1987#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Blind.
 Job: ^777777Cambuk^000000 Serangan: ^777777100^000000
@@ -42766,7 +42766,7 @@ Job: ^777777Dancer Job^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 Serangan Magic + 130.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan Magic meningkat sebesar 20% untuk pemain.
 Serangan Magic memiliki kemungkinan besar menghasilkan Stun.
 Jumlah Pemulihan meningkat sebesar +5%.
@@ -42793,7 +42793,7 @@ Job: ^777777Warlock^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 15.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 MAXHP + 100, MAXSP + 100.
 Serangan diterima dari karakter lain berkurang sebesar -15%.
 Job : ^777777Shield^000000 Pertahanan : ^77777715^000000
@@ -42805,7 +42805,7 @@ Job : ^777777Semua^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 5.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 MAXHP + 200.
 Serangan diterima dari karakter lain berkurang sebesar -20%.
 Job : ^777777Shield^000000 Pertahanan : ^77777725^000000
@@ -42817,7 +42817,7 @@ Job : ^777777Swordsman Job/Merchant Job^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 25.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 MAXSP + 200.
 Serangan diterima dari karakter lain berkurang sebesar -10%.
 Job : ^777777Shield^000000 Pertahanan : ^7777775^000000
@@ -42842,7 +42842,7 @@ Job: ^777777Job ke-3^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 5.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 MAXHP + 150, MAXSP + 150.
 Serangan Fisik/Magic meningkat sebesar +5% untuk pemain.
 Frost Resistance +25%.
@@ -42854,7 +42854,7 @@ Job : ^777777Semua^000000
 2497#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 MAXHP + 200, MAXSP + 100.
 Serangan fisik bertambah sebesar 10% untuk pemain.
 Frost Resistance +25%.
@@ -42867,7 +42867,7 @@ Job : ^777777Swordsman Job/Merchant Job^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 5.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 MAXHP + 100, MAXSP + 200.
 Serangan Magic meningkat sebesar +5% untuk pemain.
 Frost Resistance +25%.
@@ -42879,7 +42879,7 @@ Job : ^777777Novice Job/Mage Job/Acolyte Job/Soul Linker^000000
 2944#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 MAXHP + 100.
 Serangan diterima dari pemain lain berkurang sebesar 5%.
 Job: ^777777Aksesoris^000000 Pertahanan: ^7777770^000000
@@ -42890,7 +42890,7 @@ Job : ^777777Semua^000000
 2945#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan Fisik/Magic meningkat sebesar +5% untuk pemain.
 Job: ^777777Aksesoris^000000 Pertahanan: ^7777770^000000
 Berat : ^7777770^000000
@@ -42901,7 +42901,7 @@ Job : ^777777Semua^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 5.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan diterima dari pemain lain berkurang sebesar 5%.
 Job: ^777777Aksesoris^000000 Pertahanan: ^7777770^000000
 Berat : ^7777770^000000
@@ -42987,7 +42987,7 @@ Berat : ^77777710^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 Serangan Magic + 100.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Silence.
 Job: ^777777Dagger^000000 Serangan: ^777777100^000000
@@ -42999,7 +42999,7 @@ Job: ^777777Novice/Swordsman Job/Mage Job/Archer Job/Merchant Job/Thief Job/Soul
 13117#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Curse.
 Job: ^777777Gun^000000 Serangan: ^77777760^000000
@@ -43011,7 +43011,7 @@ Job: ^777777Gunslinger^000000
 13184#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Silence.
 Job: ^777777Rifle^000000 Serangan: ^77777780^000000
@@ -43023,7 +43023,7 @@ Job : ^777777Gunslinger^000000
 13185#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Stun.
 Job: ^777777Gatling Gun^000000 Serangan: ^777777100^000000
@@ -43035,7 +43035,7 @@ Job : ^777777Gunslinger^000000
 13186#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Poison.
 Job: ^777777Shotgun^000000 Serangan: ^777777100^000000
@@ -43047,7 +43047,7 @@ Job : ^777777Gunslinger^000000
 13187#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Blind.
 Job: ^777777Grenade Launcher^000000 Serangan: ^777777100^000000
@@ -43060,7 +43060,7 @@ Job : ^777777Gunslinger^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 Serangan Magic + 100.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Bleeding
 Job: ^777777Magic Shuriken^000000 Serangan: ^77777780^000000
@@ -43073,7 +43073,7 @@ Job: ^777777Ninja^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 Serangan Magic + 100.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Poison.
 Job: ^777777Sword^000000 Serangan: ^777777120^000000
@@ -43086,7 +43086,7 @@ Job : ^777777Novice/Swordsman Job/Merchant Job/Thief Job^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 15.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 MAXHP + 250, MAXSP + 250.
 Serangan diterima dari pemain lain berkurang sebesar 10%.
 Frost Resistance +25%.
@@ -43099,7 +43099,7 @@ Job : ^777777Semua^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 5.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 MAXHP + 450, MAXSP + 50.
 Serangan diterima dari pemain lain berkurang sebesar 15%.
 Frost Resistance +25%.
@@ -43112,7 +43112,7 @@ Job : ^777777Swordsman Job/Merchant Job^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 25.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 MAXHP + 200, MAXSP + 300.
 Serangan diterima dari pemain lain berkurang sebesar 5%.
 Frost Resistance +25%.
@@ -43125,7 +43125,7 @@ Job : ^777777Novice Job/Mage Job/Acolyte Job/Soul Linker^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 Tidak dapat dihancurkan.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Freezing
 Jumlah Pemulihan meningkat sebesar +5%.
@@ -43138,7 +43138,7 @@ Job: ^777777Novice/Swordsman Job/Acolyte Job/Merchant Job^000000
 18118#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Curse.
 Job: ^777777Bow^000000 Serangan: ^777777120^000000
@@ -43151,7 +43151,7 @@ Job: ^777777Archer Job/Thief/Rogue Job^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 5.
-¡Ø Additional TE Siege options
+※ Additional TE Siege options
 Serangan + 5, Serangan Magic + 5.
 Serangan Fisik/Magic meningkat sebesar +10% untuk pemain.
 Frost Resistance +25%.
@@ -43163,7 +43163,7 @@ Job : ^777777Semua^000000
 18733#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡ØAdditional TE Siege options
+※Additional TE Siege options
 Serangan + 10.
 Serangan fisik bertambah sebesar +20% untuk pemain.
 Frost Resistance +25%.
@@ -43176,7 +43176,7 @@ Job : ^777777Swordsman Job/Merchant Job^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 5.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan Magic + 10.
 Serangan Magic meningkat sebesar 20% untuk pemain.
 Frost Resistance +25%.
@@ -43195,7 +43195,7 @@ Job : ^777777Semua^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 5.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan Fisik/Magic meningkat sebesar +5% untuk pemain.
 Frost Resistance +25%.
 Job : ^777777Garment^000000 Pertahanan : ^7777775^000000
@@ -43206,7 +43206,7 @@ Job : ^777777Semua^000000
 20703#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar 10% untuk pemain.
 Frost Resistance +25%.
 Job : ^777777Garment^000000 Pertahanan : ^77777710^000000
@@ -43218,7 +43218,7 @@ Job : ^777777Swordsman Job/Merchant Job^000000
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
 MDEF + 5.
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan Magic meningkat sebesar +10% untuk pemain.
 Frost Resistance +25%.
 Job : ^777777Garment^000000 Pertahanan : ^7777775^000000
@@ -43229,7 +43229,7 @@ Job : ^777777Novice Job/Mage Job/Acolyte Job/Soul Linker^000000
 21006#
 ^ff0000Tidak dapat ditransaksikan.^000000
 ^000088Barang Sewaan^000000
-¡Ø Opsi tambahan tersedia di area WoE TE
+※ Opsi tambahan tersedia di area WoE TE
 Serangan fisik bertambah sebesar +40% untuk pemain.
 Serangan fisik memiliki kemungkinan besar menghasilkan Bleeding
 Job: ^777777Two-handed Sword^000000 Serangan: ^777777150^000000
@@ -44111,7 +44111,7 @@ Job : ^777777All Jobs^000000
 #
 20047#
 A good-luck charm with cherry blossom on it.
-All state +1£¬Acquired EXP +10%.
+All state +1，Acquired EXP +10%.
 Class : ^777777Costume Gear^000000
 Location : ^777777Middle ^000000Weight : ^7777770^000000
 Required Lv : ^7777771^000000
@@ -44342,5 +44342,193 @@ Equip : ^777777All classes^000000
 17681#
 Midgard Lucky Egg.
 Kamu bisa mendapatkan Gambler Seal, Costume Subject Aura Red, Costume Blessing Of Angels & item item spesial lain nya
+Weight : ^7777771^000000
+#
+
+//--------------- Update Shapeshifter Costume scroll 20160517--------------
+14735#
+^ff0000Scroll yang berisi kostum headgear binatang lucu dan menarik.^000000
+Weight : ^7777771^000000
+#
+19827#
+Topi menyerupai homonculus Amistr.
+Class : ^777777Costume Gear^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+19831#
+Topi menyerupai homonculus Filir.
+Class : ^777777Costume Gear^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+19835#
+Topi menyerupai homonculus Lif 
+Class : ^777777Costume Gear^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+19839#
+Topi menyerupai homonculus Vanilmirth.
+Class : ^777777Costume Gear^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+19853#
+Hiasan kepala lucu yang menyerupai sayap dari homonculus Filir.
+Tambahan EXP 5% setiap mengalahkan monster.
+Class : ^777777Costume Gear^000000
+Location : ^777777Middle ^000000 Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20065#
+Hiasan kepala dengan decorasi menarik yang terbuat dari bulu Grandpeco 
+Class : ^777777Costume Gear^000000Defense : ^7777770^000000
+Location : ^777777상Middle ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20066#
+Hiasan kepala yang membuat pemakainya seperti memiliki sayap pecopeco ditubuhnya.
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20069#
+iasan kepala yang menyerupai sayap milik Gryphon.
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20070#
+Topi ini akan membuatmu seperti Alpaca.
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20071#
+Ini akan membuatmu seperti ibu dari anak serigala 
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+
+//--------------- Update Feather Costume scroll 20160531--------------
+17493#
+Don't know what is in the scroll but something special will be given when you open it.
+^ff0000Non-tradable item.^000000
+Weight : ^7777771^000000
+#
+20075#
+a little feather hat that hunters and adventurers are used to wear.
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20076#
+It has youth and vitality, and it blessed by Idun's wife
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20077#
+Cool sunglasses with feather-looking frame.
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20078#
+Beret decorated with white feather.
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20079#
+Wing hairband
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20080#
+Shaman's pink feather hair accessory
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20098#
+Vampire hairband
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20100#
+A little and light feather hat
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+20101#
+Decoration copied after Bragi's wing
+Class : ^777777Costume Gear^000000 Defense : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Lv : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+
+//--------------- Update Blessing Scarlet scroll 20160607--------------
+20405#
+Ripped red scarf
+It seems like Eremes Guile's who is observed in biological engineering lab.
+Series : ^777777Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Bottom ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Equip : ^777777All class^000000
+#
+20406#
+Commandments Of Chain
+Series : ^777777Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Equip : ^777777All class^000000
+#
+19109#
+MaxSP + 50.
+Ketika melakukan serangan fisik, ada kemungkinan kecil auto spell Lv.10 [Safety Wall] 
+Series : ^777777Helmet^000000 Defense : ^7777772^000000
+Location : ^777777Mid ^000000Weight : ^77777730^000000
+Required Lv. : ^77777770^000000
+Equip : ^777777All class^000000
+#
+19111#
+DEX+2, Serangan fisik jarak jauh +10%.
+Ketika melakukan serangan fisik, ada kemungkinan untuk berubah menjadi Cecil.
+Kemungkinan berubah akan bertambah besar seiring tingkat tempa.
+Saat berubah menjadi Cecil, Delay skill berkurang 100% serta ada kemungkinan mengaktifkan Lv.2 Falcon Eyes
+Saat melakukan serangan fisik jarak jauh, ada kemungkinan auto spell Lv.1 Lex Aeterna.
+Series : ^777777Helmet^000000 Defense : ^7777775^000000
+Location : ^777777Top ^000000Weight : ^77777740^000000
+Required Lv. : ^777777100^000000
+Equip : ^777777All class^000000
+#
+17692#
+Blessing Scarlet Lucky Egg
+Kamu bisa mendapatkan Eremes Scard, Valhalla Idol, Laser of Eagle dan banyak item berharga lainnya.
 Weight : ^7777771^000000
 #
