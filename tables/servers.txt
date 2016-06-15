@@ -539,3 +539,30 @@ serverEncoding Western
 charBlockSize 112
 chatLangCode 0
 addTableFolders pserver/AegisRO;eA;kRO/RagexeRE_2010_07_14a;translated/kRO_english;kRO
+
+[2012-04-10a]
+ip localhost
+port 6900
+private 1
+master_version 1
+version 30
+charBlockSize 144
+chatLangCode 1
+recvpackets recvpackets_2012_04_10a.txt
+serverType kRO_RagexeRE_2012_04_10a
+serverEncoding Western
+addTableFolders translated/kRO_english;kRO
+
+
+[2014-10-22b]
+ip localhost
+port 6900
+private 1
+master_version 1
+version 51
+charBlockSize 147
+chatLangCode 1
+recvpackets recvpackets_2014_10_22b.txt
+serverType kRO_Ragexe_2014_10_22b
+serverEncoding Western
+addTableFolders translated/kRO_english;kRO
