@@ -287,7 +287,7 @@ sub getVenderID {
 # get inventory item ids
 # checked and ok
 sub getInventoryIDs {
-	return unless $char->inventory->size();
+	return unless $char->inventory->isReady();
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->inventory->getItems}) {
@@ -323,11 +323,11 @@ sub getItemPrice {
 # get storage array index
 # returns -1 if no matching items in storage
 sub getStorageIDs {
-	my $item = lc($_[0]);
+	return unless $char->storage->isOpenedThisSession();
+	my $find = lc($_[0]);
 	my @ids;
-	for (my $id = 0; $id < @storageID; $id++) {
-		next unless $storageID[$id];
-		if (lc($storage{$storageID[$id]}{name}) eq $item) {push @ids, $id}
+	foreach my $item (@{$char->storage->getItems}) {
+		if (lc($item->name) eq $find) {push @ids, $item->{invIndex}}
 	}
 	unless (@ids) {push @ids, -1}
 	return @ids
@@ -347,6 +347,7 @@ sub getSoldOut {
 # get amount of an item in inventory
 sub getInventoryAmount {
 	my $arg = lc($_[0]);
+	return -1 unless ($char->inventory->isReady());
 	my $amount = 0;
 	foreach my $item (@{$char->inventory->getItems}) {
 		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
@@ -357,11 +358,10 @@ sub getInventoryAmount {
 # get amount of an item in cart
 sub getCartAmount {
 	my $arg = lc($_[0]);
-	return 0 unless $cart{'inventory'};
+	return -1 unless ($char->cart->isReady());
 	my $amount = 0;
-	for (my $id = 0; $id < @{$cart{'inventory'}}; $id++) {
-		next unless $cart{'inventory'}[$id];
-		if (lc($cart{'inventory'}[$id]{'name'}) eq $arg) {$amount += $cart{'inventory'}[$id]{amount}}
+	foreach my $item (@{$char->cart->getItems}) {
+		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
 	}
 	return $amount
 }
@@ -381,11 +381,10 @@ sub getShopAmount {
 # returns -1 if the storage is closed
 sub getStorageAmount {
 	my $arg = lc($_[0]);
-	return -1 unless $::storage{opened};
+	return -1 unless ($char->storage->isOpenedThisSession());
 	my $amount = 0;
-	for (my $id = 0; $id < @storageID; $id++) {
-		next unless $storageID[$id];
-		if (lc($storage{$storageID[$id]}{name}) eq $arg) {$amount += $storage{$storageID[$id]}{amount}}
+	foreach my $item (@{$char->storage->getItems}) {
+		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
 	}
 	return $amount
 }

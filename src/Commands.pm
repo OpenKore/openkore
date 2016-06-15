@@ -854,70 +854,186 @@ sub cmdCart {
 			"You do not have a cart.\n");
 		return;
 
-	} elsif (!defined $cart{'inventory'}) {
+	} elsif (!$char->cart->isReady()) {
 		error T("Cart inventory is not available.\n");
 		return;
 
-	} elsif ($arg1 eq "") {
-		my $msg = center(T(" Cart "), 50, '-') ."\n".
-			T("#  Name\n");
-		for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
-			next if (!$cart{'inventory'}[$i] || !%{$cart{'inventory'}[$i]});
-			my $display = "$cart{'inventory'}[$i]{'name'} x $cart{'inventory'}[$i]{'amount'}";
-			$display .= T(" -- Not Identified") if !$cart{inventory}[$i]{identified};
-			$msg .= sprintf("%-2d %-34s\n", $i, $display);
-		}
-		$msg .= TF("\nCapacity: %d/%d  Weight: %d/%d\n",
-			int($cart{'items'}), int($cart{'items_max'}), int($cart{'weight'}), int($cart{'weight_max'}));
-		$msg .= ('-'x50) . "\n";
-		message $msg, "list";
-
+	} elsif ($arg1 eq "" || $arg1 eq "eq" || $arg1 eq "nu" || $arg1 eq "u") {
+		cmdCart_list($arg1);
+		
 	} elsif ($arg1 eq "desc") {
-		if (!($arg2 =~ /\d+/)) {
-			error TF("Syntax Error in function 'cart desc' (Show Cart Item Description)\n" .
-				"'%s' is not a valid cart item number.\n", $arg2);
-		} elsif (!$cart{'inventory'}[$arg2]) {
-			error TF("Error in function 'cart desc' (Show Cart Item Description)\n" .
-				"Cart Item %s does not exist.\n", $arg2);
-		} else {
-			printItemDesc($cart{'inventory'}[$arg2]{'nameID'});
-		}
+		cmdCart_desc($arg2);
+		
+	} elsif (($arg1 eq "add" || $arg1 eq "get" || $arg1 eq "release" || $arg1 eq "change") && (!$net || $net->getState() != Network::IN_GAME)) {
+		error TF("You must be logged in the game to use this command '%s'\n", 'cart ' .$arg1);
+			return;
 
 	} elsif ($arg1 eq "add") {
-		if (!$net || $net->getState() != Network::IN_GAME) {
-			error TF("You must be logged in the game to use this command '%s'\n", 'cart ' .$arg1);
-			return;
-		}
 		cmdCart_add($arg2);
 
 	} elsif ($arg1 eq "get") {
-		if (!$net || $net->getState() != Network::IN_GAME) {
-			error TF("You must be logged in the game to use this command '%s'\n", 'cart ' .$arg1);
-			return;
-		}
 		cmdCart_get($arg2);
 
 	} elsif ($arg1 eq "release") {
-		if (!$net || $net->getState() != Network::IN_GAME) {
-			error TF("You must be logged in the game to use this command '%s'\n", 'cart ' .$arg1);
-			return;
-		}
 		$messageSender->sendCompanionRelease();
 		message T("Trying to released the cart...\n");
+	
 	} elsif ($arg1 eq "change") {
-		if (!$net || $net->getState() != Network::IN_GAME) {
-			error TF("You must be logged in the game to use this command '%s'\n", 'cart ' .$arg1);
-			return;
-		}
 		if ($arg2 =~ m/^[1-5]$/) {
 			$messageSender->sendChangeCart($arg2);
 		} else {
 			error T("Usage: cart change <1-5>\n");
 		}
+	
 	} else {
 		error TF("Error in function 'cart'\n" .
 			"Command '%s' is not a known command.\n", $arg1);
 	}
+}
+
+sub cmdCart_desc {
+	my $arg = shift;
+	if (!($arg =~ /\d+/)) {
+		error TF("Syntax Error in function 'cart desc' (Show Cart Item Description)\n" .
+			"'%s' is not a valid cart item number.\n", $arg);
+	} else {
+		my $item = $char->cart->get($arg);
+		if (!$item) {
+			error TF("Error in function 'cart desc' (Show Cart Item Description)\n" .
+				"Cart Item %s does not exist.\n", $arg);
+		} else {
+			printItemDesc($item->{nameID});
+		}
+	}
+}
+
+sub cmdCart_list {
+	my $type = shift;
+	message "$type\n";
+
+	my @useable;
+	my @equipment;
+	my @non_useable;
+	my ($i, $display, $index);
+	
+	foreach my $item (@{$char->cart->getItems()}) {
+		if ($item->usable) {
+			push @useable, $item->{invIndex};
+		} elsif ($item->equippable) {
+			my %eqp;
+			$eqp{index} = $item->{index};
+			$eqp{binID} = $item->{invIndex};
+			$eqp{name} = $item->{name};
+			$eqp{amount} = $item->{amount};
+			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
+			$eqp{type} = $itemTypes_lut{$item->{type}};
+			push @equipment, \%eqp;
+		} else {
+			push @non_useable, $item->{invIndex};
+		}
+	}
+
+	my $msg = center(T(" Cart "), 50, '-') ."\n".
+			T("#  Name\n");
+
+	if (!$type || $type eq 'u') {
+		$msg .= T("-- Usable --\n");
+		for (my $i = 0; $i < @useable; $i++) {
+			$index = $useable[$i];
+			my $item = $char->cart->get($index);
+			$display = $item->{name};
+			$display .= " x $item->{amount}";
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$index, $display]);
+		}
+	}
+
+	if (!$type || $type eq 'eq') {
+		$msg .= T("\n-- Equipment --\n");
+		foreach my $item (@equipment) {
+			## altered to allow for Arrows/Ammo which will are stackable equip.
+			$display = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
+			$display .= " x $item->{amount}" if $item->{amount} > 1;
+			$display .= $item->{identified};
+			$msg .= sprintf("%-57s\n", $display);
+		}
+	}
+
+	if (!$type || $type eq 'nu') {
+		$msg .= T("\n-- Non-Usable --\n");
+		for (my $i = 0; $i < @non_useable; $i++) {
+			$index = $non_useable[$i];
+			my $item = $char->cart->get($index);
+			$display = $item->{name};
+			$display .= " x $item->{amount}";
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$index, $display]);
+		}
+	}
+
+	$msg .= TF("\nCapacity: %d/%d  Weight: %d/%d\n",
+			$char->cart->items, $char->cart->items_max, $char->cart->weight, $char->cart->weight_max).
+			('-'x50) . "\n";
+	message $msg, "list";
+}
+
+sub cmdCart_add {
+	my ($name) = @_;
+
+	if (!defined $name) {
+		error T("Syntax Error in function 'cart add' (Add Item to Cart)\n" .
+			"Usage: cart add <item>\n");
+		return;
+	}
+
+	my $amount;
+	if ($name =~ /^(.*?) (\d+)$/) {
+		$name = $1;
+		$amount = $2;
+	}
+
+	my $item = Match::inventoryItem($name);
+
+	if (!$item) {
+		error TF("Error in function 'cart add' (Add Item to Cart)\n" .
+			"Inventory Item %s does not exist.\n", $name);
+		return;
+	}
+
+	if (!$amount || $amount > $item->{amount}) {
+		$amount = $item->{amount};
+	}
+	$messageSender->sendCartAdd($item->{index}, $amount);
+}
+
+sub cmdCart_get {
+	my ($name) = @_;
+
+	if (!defined $name) {
+		error T("Syntax Error in function 'cart get' (Get Item from Cart)\n" .
+			"Usage: cart get <cart item>\n");
+		return;
+	}
+
+	my $amount;
+	if ($name =~ /^(.*?) (\d+)$/) {
+		$name = $1;
+		$amount = $2;
+	}
+
+	my $item = Match::cartItem($name);
+	if (!$item) {
+		error TF("Error in function 'cart get' (Get Item from Cart)\n" .
+			"Cart Item %s does not exist.\n", $name);
+		return;
+	}
+
+	if (!$amount || $amount > $item->{amount}) {
+		$amount = $item->{amount};
+	}
+	$messageSender->sendCartGet($item->{index}, $amount);
 }
 
 sub cmdCash {
@@ -1020,63 +1136,6 @@ sub cmdCash {
 		error T("Syntax Error in function 'cash' (Cash shop)\n" .
 			"Usage: cash <buy|points|list>\n");
 	}
-}
-
-sub cmdCart_add {
-	my ($name) = @_;
-
-	if (!defined $name) {
-		error T("Syntax Error in function 'cart add' (Add Item to Cart)\n" .
-			"Usage: cart add <item>\n");
-		return;
-	}
-
-	my $amount;
-	if ($name =~ /^(.*?) (\d+)$/) {
-		$name = $1;
-		$amount = $2;
-	}
-
-	my $item = Match::inventoryItem($name);
-
-	if (!$item) {
-		error TF("Error in function 'cart add' (Add Item to Cart)\n" .
-			"Inventory Item %s does not exist.\n", $name);
-		return;
-	}
-
-	if (!$amount || $amount > $item->{amount}) {
-		$amount = $item->{amount};
-	}
-	$messageSender->sendCartAdd($item->{index}, $amount);
-}
-
-sub cmdCart_get {
-	my ($name) = @_;
-
-	if (!defined $name) {
-		error T("Syntax Error in function 'cart get' (Get Item from Cart)\n" .
-			"Usage: cart get <cart item>\n");
-		return;
-	}
-
-	my $amount;
-	if ($name =~ /^(.*?) (\d+)$/) {
-		$name = $1;
-		$amount = $2;
-	}
-
-	my $item = Match::cartItem($name);
-	if (!$item) {
-		error TF("Error in function 'cart get' (Get Item from Cart)\n" .
-			"Cart Item %s does not exist.\n", $name);
-		return;
-	}
-
-	if (!$amount || $amount > $item->{amount}) {
-		$amount = $item->{amount};
-	}
-	$messageSender->sendCartGet($item->{index}, $amount);
 }
 
 sub cmdCharSelect {
@@ -2945,8 +3004,13 @@ sub cmdInventory {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (.+)/;
-
-	if (!$char || $char->inventory->size() == 0) {
+	
+	if (!$char || !$char->inventory->isReady()) {
+		error "Inventory is not available\n";
+		return;
+	}
+	
+	if ($char->inventory->size() == 0) {
 		error T("Inventory is empty\n");
 		return;
 	}
@@ -4585,26 +4649,32 @@ sub cmdStatus {
 }
 
 sub cmdStorage {
-	if ($storage{opened} || $storage{openedThisSession}) {
+	if ($char->storage->isOpenedThisSession()) {
 		my (undef, $args) = @_;
 
 		my ($switch, $items) = split(' ', $args, 2);
 		if (!$switch || $switch eq 'eq' || $switch eq 'u' || $switch eq 'nu') {
 			cmdStorage_list($switch);
-		} elsif ($switch eq 'add' && $storage{opened}) {
-			cmdStorage_add($items);
-		} elsif ($switch eq 'addfromcart'  && $storage{opened}) {
-			cmdStorage_addfromcart($items);
-		} elsif ($switch eq 'get'  && $storage{opened}) {
-			cmdStorage_get($items);
-		} elsif ($switch eq 'gettocart'  && $storage{opened}) {
-			cmdStorage_gettocart($items);
-		} elsif ($switch eq 'close'  && $storage{opened}) {
-			cmdStorage_close();
 		} elsif ($switch eq 'log') {
 			cmdStorage_log();
 		} elsif ($switch eq 'desc') {
 			cmdStorage_desc($items);
+		} elsif ($switch eq 'add' || $switch eq 'addfromcart' || $switch eq 'get' || $switch eq 'gettocart' || $switch eq 'close') {
+			if ($char->storage->isOpened()) {
+				if ($switch eq 'add') {
+					cmdStorage_add($items);
+				} elsif ($switch eq 'addfromcart') {
+					cmdStorage_addfromcart($items);
+				} elsif ($switch eq 'get') {
+					cmdStorage_get($items);
+				} elsif ($switch eq 'gettocart') {
+					cmdStorage_gettocart($items);
+				} elsif ($switch eq 'close') {
+					cmdStorage_close();
+				}
+			} else {
+				error T("Cannot get/add/close storage because storage is not opened\n");
+			}
 		} else {
 			error T("Syntax Error in function 'storage' (Storage Functions)\n" .
 				"Usage: storage [<eq|u|nu>]\n" .
@@ -4668,7 +4738,9 @@ sub cmdStorage_get {
 	for my $name (@names) {
 		if ($name =~ /^(\d+)\-(\d+)$/) {
 			for my $i ($1..$2) {
-				push @items, $storage{$storageID[$i]} if ($storage{$storageID[$i]});
+				my $item = $char->storage->get($i);
+				#push @items, $item->{index} if ($item);
+				push @items, $item if ($item);
 			}
 
 		} else {
@@ -4677,6 +4749,7 @@ sub cmdStorage_get {
 				error TF("Storage Item '%s' does not exist.\n", $name);
 				next;
 			}
+			#push @items, $item->{index};
 			push @items, $item;
 		}
 	}
@@ -5905,23 +5978,22 @@ sub cmdStorage_list {
 	my @useable;
 	my @equipment;
 	my @non_useable;
-
-	for (my $i = 0; $i < @storageID; $i++) {
-		next if ($storageID[$i] eq "");
-		my $item = $storage{$storageID[$i]};
+	my ($i, $display, $index);
+	
+	foreach my $item (@{$char->storage->getItems()}) {
 		if ($item->usable) {
-			push @useable, $item;
+			push @useable, $item->{invIndex};
 		} elsif ($item->equippable) {
 			my %eqp;
-			$eqp{binID} = $i;
+			$eqp{index} = $item->{index};
+			$eqp{binID} = $item->{invIndex};
 			$eqp{name} = $item->{name};
-			$eqp{type} = $itemTypes_lut{$item->{type}};
-			## Add amt so we can give quantities for ammo.
 			$eqp{amount} = $item->{amount};
 			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
+			$eqp{type} = $itemTypes_lut{$item->{type}};
 			push @equipment, \%eqp;
 		} else {
-			push @non_useable, $item;
+			push @non_useable, $item->{invIndex};
 		}
 	}
 
@@ -5930,13 +6002,13 @@ sub cmdStorage_list {
 	if (!$type || $type eq 'u') {
 		$msg .= T("-- Usable --\n");
 		for (my $i = 0; $i < @useable; $i++) {
-			my $item = $useable[$i];
-			my $binID = $item->{binID};
-			my $display = $item->{name};
+			$index = $useable[$i];
+			my $item = $char->storage->get($index);
+			$display = $item->{name};
 			$display .= " x $item->{amount}";
 			$msg .= swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$binID, $display]);
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$index, $display]);
 		}
 	}
 
@@ -5944,30 +6016,27 @@ sub cmdStorage_list {
 		$msg .= T("\n-- Equipment --\n");
 		foreach my $item (@equipment) {
 			## altered to allow for Arrows/Ammo which will are stackable equip.
-			my $line = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
-			if ($item->{amount} > 1) {
-				$line .= " x $item->{amount}";
-			} else {
-				$line .= $item->{identified};
-			}
-			$msg .= $line . "\n";
+			$display = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
+			$display .= " x $item->{amount}" if $item->{amount} > 1;
+			$display .= $item->{identified};
+			$msg .= sprintf("%-57s\n", $display);
 		}
 	}
 
 	if (!$type || $type eq 'nu') {
 		$msg .= T("\n-- Non-Usable --\n");
 		for (my $i = 0; $i < @non_useable; $i++) {
-			my $item = $non_useable[$i];
-			my $binID = $item->{binID};
-			my $display = $item->{name};
+			$index = $non_useable[$i];
+			my $item = $char->storage->get($index);
+			$display = $item->{name};
 			$display .= " x $item->{amount}";
 			$msg .= swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$binID, $display]);
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$index, $display]);
 		}
 	}
 
-	$msg .= TF("\nCapacity: %d/%d\n", $storage{items}, $storage{items_max}) .
+	$msg .= TF("\nCapacity: %d/%d\n", $char->storage->items, $char->storage->items_max) .
 			('-'x50) . "\n";
 	message $msg, "list";
 }

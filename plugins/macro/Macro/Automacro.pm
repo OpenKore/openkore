@@ -229,27 +229,27 @@ sub checkPercent {
 		else {return cmpr($char->{$what}, $cond, $amount)}
 	}
 	elsif ($what eq 'cweight') {
-		return 0 unless (defined $cart{weight} && defined $cart{weight_max});
-		if ($amount =~ /^\s*(?:\d+|\d+\s*\.{2}\s*\d+)%$/ && $cart{weight_max}) {
+		return 0 unless (defined $char->cart->weight && defined $char->cart->weight_max);
+		if ($amount =~ /^\s*(?:\d+|\d+\s*\.{2}\s*\d+)%$/ && $char->cart->weight_max) {
 			$amount =~ s/%$//;
-			return cmpr(($cart{weight} / $cart{weight_max} * 100), $cond, $amount)
+			return cmpr(($char->cart->weight / $char->cart->weight_max * 100), $cond, $amount)
 		}
 		elsif ($amount =~ /^\s*\$/) {
 			my ($var, $percent) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)(%)?\s*/;
 			return 0 unless defined $var;
-			if ((defined $percent || $percent eq "%") && defined $cart{weight_max}) {
+			if ((defined $percent || $percent eq "%") && defined $char->cart->weight_max) {
 				if (exists $varStack{$var}) {
 					$amount = $varStack{$var};
-					return cmpr(($cart{weight} / $cart{weight_max} * 100), $cond, $amount)
+					return cmpr(($char->cart->weight / $char->cart->weight_max * 100), $cond, $amount)
 				}
 			} else {
 				if (exists $varStack{$var}) {
 					$amount = $varStack{$var};
-					return cmpr($cart{weight}, $cond, $amount)
+					return cmpr($char->cart->weight, $cond, $amount)
 				}
 			}
 		}
-		else {return cmpr($cart{weight}, $cond, $amount)}
+		else {return cmpr($char->cart->weight, $cond, $amount)}
 	}
 	return 0
 }
@@ -290,12 +290,10 @@ sub checkItem {
 		else {return 0}
 	}
 	my $what;
-	if ($where eq 'inv')  {$what = getInventoryAmount($item)}
-	if ($where eq 'cart') {$what = getCartAmount($item)}
-	if ($where eq 'inv')  {return 0 unless (time > $ai_v{'inventory_time'}); $what = getInventoryAmount($item);};
-	if ($where eq 'cart') {return 0 unless (time > $ai_v{'cart_time'}); $what = getCartAmount($item)};
+	if ($where eq 'inv')  {return 0 unless ($char->inventory->isReady()); $what = getInventoryAmount($item);};
+	if ($where eq 'cart') {return 0 unless ($char->cart->isReady()); $what = getCartAmount($item)};
 	if ($where eq 'shop') {return 0 unless $shopstarted; $what = getShopAmount($item)}
-	if ($where eq 'stor') {return 0 unless $::storage{opened}; $what = getStorageAmount($item)}
+	if ($where eq 'stor') {return 0 unless ($char->storage->isOpened()); $what = getStorageAmount($item)}
 
 	return cmpr($what, $cond, $amount)?1:0
 }
