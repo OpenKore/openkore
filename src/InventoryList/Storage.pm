@@ -1,10 +1,3 @@
-#########################################################################
-#  OpenKore - Player actor object
-#  Copyright (c) 2005 OpenKore Team
-#
-#	TEST BY HENRYBK
-#
-#########################################################################
 package InventoryList::Storage;
 
 use strict;
@@ -14,7 +7,7 @@ use base qw(InventoryList);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new('Storage');
+	my $self = $class->SUPER::new;
 	$self->{openedThisSession} = 0;
 	$self->{opened} = 0;
 	$self->{items} = 0;
@@ -38,7 +31,7 @@ sub open {
 	$self->{items_max} = $args->{items_max};
 	if (!$self->{opened}) {
 		$self->{opened} = 1;
-		$self->{openedThisSession} = 1 if (!$self->{openedThisSession});
+		$self->{openedThisSession} = 1;
 		Plugins::callHook('packet_storage_open');
 	}
 }
@@ -51,6 +44,16 @@ sub close {
 sub checkFull {
 	my ($self) = @_;
 	return $self->{items} >= $self->{items_max};
+}
+
+sub items {
+	my ($self) = @_;
+	return $self->{items};
+}
+
+sub items_max {
+	my ($self) = @_;
+	return $self->{items_max};
 }
 
 1;

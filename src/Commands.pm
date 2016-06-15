@@ -974,7 +974,7 @@ sub cmdCart_list {
 	}
 
 	$msg .= TF("\nCapacity: %d/%d  Weight: %d/%d\n",
-			$char->cart->{items}, $char->cart->{items_max}, $char->cart->{weight}, $char->cart->{weight_max}).
+			$char->cart->items, $char->cart->items_max, $char->cart->weight, $char->cart->weight_max).
 			('-'x50) . "\n";
 	message $msg, "list";
 }
@@ -6036,7 +6036,7 @@ sub cmdStorage_list {
 		}
 	}
 
-	$msg .= TF("\nCapacity: %d/%d\n", $char->storage->{items}, $char->storage->{items_max}) .
+	$msg .= TF("\nCapacity: %d/%d\n", $char->storage->items, $char->storage->items_max) .
 			('-'x50) . "\n";
 	message $msg, "list";
 }

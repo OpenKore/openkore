@@ -597,7 +597,7 @@ sub send_inventory {
 	my $data = undef;
 	# Send cart information includeing the items
 	if (!$client->{session}{dummy} && $char->cartActive && $RunOnce) {
-		$data = pack('C2 v2 V2', 0x21, 0x01, $char->cart->{items}, $char->cart->{items_max}, ($char->cart->{weight} * 10), ($char->cart->{weight_max} * 10));
+		$data = pack('C2 v2 V2', 0x21, 0x01, $char->cart->items, $char->cart->items_max, ($char->cart->weight * 10), ($char->cart->weight_max * 10));
 		$client->send($data);
 		
 		my @stackable;

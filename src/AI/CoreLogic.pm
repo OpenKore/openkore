@@ -993,14 +993,9 @@ sub processStorageGet {
 sub processCartAdd {
 	if (AI::action eq "cartAdd" && timeOut(AI::args)) {
 		my $item = AI::args->{items}[0];
-		my $index = $item->{index};
-		my $amount = $item->{amount};
-		my $invItem = $char->inventory->getByServerIndex($index);
+		my $invItem = $char->inventory->get($item->{index});
 		if ($invItem) {
-			if (!$amount || $amount > $invItem->{amount}) {
-				$amount = $invItem->{amount};
-			}
-			$messageSender->sendCartAdd($index, $amount);
+			$messageSender->sendCartAdd($invItem->{index}, min($invItem->{amount}, $item->{amount} || $invItem->{amount}));
 		}
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
@@ -1013,14 +1008,10 @@ sub processCartAdd {
 sub processCartGet {
 	if (AI::action eq "cartGet" && timeOut(AI::args)) {
 		my $item = AI::args->{items}[0];
-		my $index = $item->{index};
 		my $amount = $item->{amount};
-		my $cartItem = $char->cart->getByServerIndex($index);
+		my $cartItem = $char->cart->get($item->{index});
 		if ($cartItem) {
-			if (!$amount || $amount > $cartItem->{amount}) {
-				$amount = $cartItem->{amount};
-			}
-			$messageSender->sendCartGet($index, $amount);
+			$messageSender->sendCartGet($cartItem->{index}, min($cartItem->{amount}, $item->{amount} || $cartItem->{amount}));
 		}
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
@@ -1781,14 +1772,14 @@ sub processAutoCart {
 			my @getItems;
 			my $max;
 
-			if ($config{cartMaxWeight} && $char->cart->{weight} < $config{cartMaxWeight}) {
+			if ($config{cartMaxWeight} && $char->cart->weight < $config{cartMaxWeight}) {
 				foreach my $invItem (@{$char->inventory->getItems()}) {
 					next if ($invItem->{broken} && $invItem->{type} == 7); # dont auto-cart add pet eggs in use
 					next if ($invItem->{equipped});
 					my $control = items_control($invItem->{name});
 					if ($control->{cart_add} && $invItem->{amount} > $control->{keep}) {
 						my %obj;
-						$obj{index} = $invItem->{index};
+						$obj{index} = $invItem->{invIndex};
 						$obj{amount} = $invItem->{amount} - $control->{keep};
 						push @addItems, \%obj;
 						debug "Scheduling $invItem->{name} ($invItem->{invIndex}) x $obj{amount} for adding to cart\n", "ai_autoCart";
@@ -1813,7 +1804,7 @@ sub processAutoCart {
 				}
 				if ($amount > 0) {
 					my %obj;
-					$obj{index} = $cartItem->{index};
+					$obj{index} = $cartItem->{invIndex};
 					$obj{amount} = $amount;
 					push @getItems, \%obj;
 					debug "Scheduling $cartItem->{name} ($cartItem->{index}) x $obj{amount} for getting from cart\n", "ai_autoCart";

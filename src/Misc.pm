@@ -3194,7 +3194,7 @@ sub writeStorageLog {
 			print $f "$display\n";
 		}
 		# Translation Comment: Storage Capacity
-		print $f TF("\nCapacity: %d/%d\n", $char->storage->{items}, $char->storage->{items_max});
+		print $f TF("\nCapacity: %d/%d\n", $char->storage->items, $char->storage->items_max);
 		print $f "-------------------------------\n";
 		close $f;
 
