@@ -52,11 +52,14 @@ eval {
 #
 # Create a new TextReader and open the given file for reading.
 sub new {
-	my ($class, $file) = @_;
+	my ($class, $file, $options) = @_;
 
 	my $self = bless {}, $class;
 	$self->{files} = [];
 	$self->add( $file );
+	$self->{process_includes} = defined $options->{process_includes} ? $options->{process_includes} : 1;
+	$self->{hide_includes} = defined $options->{hide_includes} ? $options->{hide_includes} : 1;
+	$self->{hide_comments} = defined $options->{hide_comments} ? $options->{hide_comments} : 1;
 
 	$self;
 }
@@ -72,6 +75,11 @@ sub DESTROY {
 # Add a file to the list of files to be processed. Files are processed in a LIFO manner.
 sub add {
 	my ( $self, $file, $options ) = @_;
+
+	if ( @{ $self->{files} } ) {
+		my ( $vol, $dir ) = File::Spec->splitpath( $self->{files}->[-1]->{file} );
+		$file = File::Spec->catpath( $vol, $dir, $file );
+	}
 
 	if ( grep { $_->{file} eq $file } @{ $self->{files} } ) {
 		IOException->throw( TF( 'File [%s] cannot include itself.', $file ) );
@@ -89,6 +97,10 @@ sub add {
 	}
 
 	push @{ $self->{files} }, { file => $file, line => 0, handle => $handle };
+}
+
+sub currentFile {
+	$_[0]->{files}->[-1]->{file};
 }
 
 ##
@@ -152,18 +164,17 @@ sub readLine {
 	$line =~ s/\x{FEFF}//g;
 
 	# Handle "!include".
-	if ( $line =~ /^\s*!include\s+(.*?)\s*$/os ) {
-		my $file = $1;
-		my ( $vol, $dir ) = File::Spec->splitpath( $self->{files}->[-1]->{file} );
-		$file = File::Spec->catpath( $vol, $dir, $file );
-		$self->add( $file );
-		$line = $self->readLine;
+	if ( $self->{process_includes} && $line =~ /^\s*!include\s+(.*?)\s*$/os ) {
+		$self->add( "$1" );
+		$line = $self->readLine if $self->{hide_includes};
 	}
-	if ( $line =~ /^\s*!include_create_if_missing\s+(.*?)\s*$/os ) {
-		my $file = $1;
-		my ( $vol, $dir ) = File::Spec->splitpath( $self->{files}->[-1]->{file} );
-		$file = File::Spec->catpath( $vol, $dir, $file );
-		$self->add( $file, { create_if_missing => 1 } );
+	if ( $self->{process_includes} && $line =~ /^\s*!include_create_if_missing\s+(.*?)\s*$/os ) {
+		$self->add( "$1", { create_if_missing => 1 } );
+		$line = $self->readLine if $self->{hide_includes};
+	}
+
+	# Hide comments and blank lines.
+	if ( $self->{hide_comments} && $line =~ /^\s*(#|$)/os ) {
 		$line = $self->readLine;
 	}
 

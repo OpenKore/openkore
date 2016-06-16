@@ -716,7 +716,7 @@ sub parseRODescLUT {
 	undef %{$r_hash};
 	my $ID;
 	my $IDdesc;
-	my $reader = Utils::TextReader->new($file);
+	my $reader = Utils::TextReader->new($file, { hide_comments => 0 });
 	until ($reader->eof) {
 		$_ = $reader->readLine;
 		s/\r//g;
@@ -765,7 +765,7 @@ sub parseROQuestsLUT {
 	
 	undef %{$r_hash};
 	my ($data, $flag);
-	my $reader = Utils::TextReader->new($file);
+	my $reader = Utils::TextReader->new($file, { hide_comments => 0 });
 	until ($reader->eof) {
 		$_ = $reader->readLine;
 		s/\r//g;
@@ -1114,59 +1114,35 @@ sub writeDataFile {
 sub writeDataFileIntact {
 	my $file = shift;
 	my $r_hash = shift;
-	my $no_undef = shift; # ?
 	# following args for recursive call (!include)
-	my $blocks = shift || {};
-	my $diffs = shift || {};
-	my $readOnly = shift;
+	my $blocks = {};
+	my $diffs = {};
 
-	my (%data, @lines, $key, $value, $inBlock, $commentBlock);
-	my $reader = new Utils::TextReader($file);
+	my (@lines, $key, $value, $inBlock, $commentBlock);
+	my $reader = new Utils::TextReader($file, { hide_includes => 0, hide_comments => 0 });
 	while (!$reader->eof()) {
-		my $lines = $reader->readLine();
-		$lines =~ s/\x{FEFF}//g;
+		my $current_file = $reader->currentFile;
+		my $lines = $reader->readLine;
 		$lines =~ s/[\r\n]//g;	# Remove line endings
-		if ($lines =~ /^[\s\t]*#/ || $lines =~ /^[\s\t]*$/ || $lines =~ /^\!include( |$)/) {
-			push @lines, $lines;
-			
-			if ($lines =~ /^\!include( |$)/) {
-				($key, $value) = $lines =~ /^(.*?) (.*)/;
-				my $f = $value;
-				if (!File::Spec->file_name_is_absolute($value) && $value !~ /^\//) {
-					if ($file =~ /[\/\\]/) {
-						$f = $file;
-						$f =~ s/(.*)[\/\\].*/$1/;
-						$f = File::Spec->catfile($f, $value);
-					} else {
-						$f = $value;
-					}
-				}
-				if (-f $f) {
-					my $ret = writeDataFileIntact($f, $r_hash, 1, $blocks, $diffs, 1);
-					return $ret unless $ret;
-				} else {
-					error Translation::TF("%s: Include file not found: %s\n", $file, $f);
-					return 0;
-				}
-			}
-			
+		if ($lines =~ /^[\s\t]*#/ || $lines =~ /^[\s\t]*$/ || $lines =~ /^\s*\!include( |$)/) {
+			push @lines, $lines if $current_file eq $file;
 			next;
 		}
 		$lines =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
 		$lines =~ s/\s+$//g;	# Remove trailing whitespace
 
 		if (!defined $commentBlock && $lines =~ /^\/\*/) {
-			push @lines, "$lines";
+			push @lines, "$lines" if $current_file eq $file;
 			$commentBlock = 1;
 			next;
 
 		} elsif ($lines =~ m/\*\/$/) {
-			push @lines, "$lines";
+			push @lines, "$lines" if $current_file eq $file;
 			undef $commentBlock;
 			next;
 
 		} elsif ($commentBlock) {
-			push @lines, "$lines";
+			push @lines, "$lines" if $current_file eq $file;
 			next;
 
 		} elsif (!defined $inBlock && $lines =~ /{$/) {
@@ -1188,12 +1164,12 @@ sub writeDataFileIntact {
 
 			my $line = $key;
 			$line .= " $r_hash->{$inBlock}" if ($r_hash->{$inBlock} ne '');
-			push @lines, "$line {";
+			push @lines, "$line {" if $current_file eq $file;
 
 		} elsif (defined $inBlock && $lines eq "}") {
 			# End of block
 			undef $inBlock;
-			push @lines, "}";
+			push @lines, "}" if $current_file eq $file;
 
 		} else {
 			# Option
@@ -1206,28 +1182,23 @@ sub writeDataFileIntact {
 				my $realKey = "${inBlock}_${key}";
 				my $line = "\t$key";
 				$line .= " $r_hash->{$realKey}" if ($r_hash->{$realKey} ne '');
-				push @lines, $line;
+				push @lines, $line if $current_file eq $file;
 			} else {
 				my $line = $key;
 				$line .= " $r_hash->{$key}" if ($r_hash->{$key} ne '');
-				push @lines, $line;
-				
-				$diffs->{$key} = $r_hash->{$key} if $readOnly && $r_hash->{$key} ne $value;
-				$data{$key} = 1;
+				push @lines, $line if $current_file eq $file;
+				$diffs->{$key} = 1 if $current_file ne $file && $r_hash->{$key} ne $value;
+				delete $diffs->{$key} if $current_file eq $file || $r_hash->{$key} eq $value;
 			}
 		}
 	}
 	close FILE;
 
-	return 1 if $readOnly;
 	debug TF("Saving %s...\n", $file), 'writeFile';
 
 	# options that are different in memory and file data, but defined in !include'd (read only) files
-	%$diffs = map { $_ => $diffs->{$_} } grep { !$data{$_} } keys %$diffs;
-	if (%$diffs) {
-		push @lines, map { $diffs->{$_} ne '' ? "$_ $r_hash->{$_}" : "$_" } keys %$diffs;
-		debug TF("Creating overrides for %s\n", (join ', ', keys %$diffs)), 'writeFile';
-		$diffs = {};
+	foreach (sort keys %$diffs) {
+		push @lines, $r_hash->{$_} ne '' ? "$_ $r_hash->{$_}" : "$_";
 	}
 
 	open FILE, ">:utf8", $file;

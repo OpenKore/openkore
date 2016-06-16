@@ -7,13 +7,44 @@ use Test::More;
 use Utils::TextReader;
 
 sub start {
-	my $reader = Utils::TextReader->new( 'data/parent.txt' );
 	subtest '!include support' => sub {
+		my $reader = Utils::TextReader->new( 'data/parent.txt' );
+
 		is( $reader->readLine, "parent A\n" );
 		is( $reader->readLine, "child\n" );
 		is( $reader->readLine, "parent B\n" );
 		is( $reader->readLine, "a\n" );
 		is( $reader->readLine, "child\n" );
+		is( $reader->readLine, "parent C\n" );
+		is( $reader->readLine, undef );
+
+		is( $reader->eof, 1 );
+	};
+
+	subtest 'hide_includes=0' => sub {
+		my $reader = Utils::TextReader->new( 'data/parent.txt', { hide_includes => 0 } );
+
+		is( $reader->readLine, "parent A\n" );
+		is( $reader->readLine, "!include child.txt\n" );
+		is( $reader->readLine, "child\n" );
+		is( $reader->readLine, "parent B\n" );
+		is( $reader->readLine, "!include child/a.txt\n" );
+		is( $reader->readLine, "a\n" );
+		is( $reader->readLine, "!include ../child.txt\n" );
+		is( $reader->readLine, "child\n" );
+		is( $reader->readLine, "parent C\n" );
+		is( $reader->readLine, undef );
+
+		is( $reader->eof, 1 );
+	};
+
+	subtest 'process_includes=0' => sub {
+		my $reader = Utils::TextReader->new( 'data/parent.txt', { process_includes => 0 } );
+
+		is( $reader->readLine, "parent A\n" );
+		is( $reader->readLine, "!include child.txt\n" );
+		is( $reader->readLine, "parent B\n" );
+		is( $reader->readLine, "!include child/a.txt\n" );
 		is( $reader->readLine, "parent C\n" );
 		is( $reader->readLine, undef );
 
