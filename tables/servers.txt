@@ -523,7 +523,7 @@ serverType KoreRO
 serverEncoding Western
 charBlockSize 144
 chatLangCode 1
-addTableFolders pserver/KoreRO;translated/kRO_english;iRO
+addTableFolders pserver/KoreRO;translated/kRO_english;kRO
 
 # clientside: ? (2010-07-30aRagexeRE.exe)
 # serverside: ?

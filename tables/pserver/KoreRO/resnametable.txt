@@ -1,0 +1,18 @@
+# Include file from kRO folder
+!include ../../kRO/resnametable.txt
+
+# After the Izlude Academy went in, the Izlude map changed.
+# Copied from iRO/resnametable.txt
+izlude.gat#izlude_a.gat#
+izlude_a.gat#izlude_a.gat#
+izlude_b.gat#izlude_a.gat#
+izlude_c.gat#izlude_a.gat#
+izlude_d.gat#izlude_a.gat#
+pvp_y_1-2.gat#izlude_a.gat#
+pvp_y_2-2.gat#izlude_a.gat#
+pvp_y_3-2.gat#izlude_a.gat#
+pvp_y_4-2.gat#izlude_a.gat#
+pvp_y_5-2.gat#izlude_a.gat#
+pvp_y_6-2.gat#izlude_a.gat#
+pvp_y_7-2.gat#izlude_a.gat#
+pvp_y_8-2.gat#izlude_a.gat#
