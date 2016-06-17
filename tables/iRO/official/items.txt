@@ -6485,7 +6485,7 @@
 17363#January_Groove_Pack#
 17364#March_Groove_Pack#
 17368#Resist_Spell_Power_Pendant_Shadow_Box#
-17369#Rapid_Pendant_Shadow_Box#
+17369#13th_Anniversa-box#
 17370#Caster_Pendant_Shadow_Box#
 17371#Hard_Earring_Shadow_Box#
 17372#Wise_Earring_Shadow_Box#
@@ -8550,5 +8550,5 @@
 12377#Mysterious_PET_Bottle_Ocean_Flavor#
 12290#Mysterious_Can#
 12376#Mysterious_Can_Mackerel_Flavor#
-31052#Costume_Alchemist_Mask#
-23164#Granpa_Speed_potion#
+20100#Costume:Volume_Feather_Hat#
+20197#Costume:Amistr_Beret#
