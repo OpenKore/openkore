@@ -2035,626 +2035,740 @@ Weight: 1
 Type: Miscellaneous
 Weight: 10
 #
+
 751#
-A doll made to resemble Osiris, king of darkness. Without a doubt, it is a dollmaker's masterpiece.
-^ffffff_^000000
-Weight : ^77777710^000000
+^808080A doll made to resemble Osiris, king of darkness. Without a doubt, it is a doll maker's masterpiece.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 10
 #
+
 752#
-A doll made to resemble Rocker, the grasshopper that loves to play its violin in the fields.
-^ffffff_^000000
-Weight : ^77777710^000000
+^808080A doll made to resemble Rocker, the grasshopper that loves to play its violin in the fields.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 10
 #
+
 753#
-A doll made to resemble one of the Yoyos. These intelligent monkeys live in groups and are very familiar with humans.
-^ffffff_^000000
-Weight : ^77777710^000000
+^808080A doll made to resemble one of the Yoyos. These intelligent monkeys live in groups and are very familiar with humans.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 10
 #
+
 754#
-A doll made to resemble Smokie, the racoon that ^333333possibly^000000 has the power of invisibility.
-^ffffff_^000000
-Weight : ^77777710^000000
+^808080A doll made to resemble Smokie, the raccoon that possibly has the power of invisibility.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 10
 #
+
 //--------------------------------------------------------------------------
+
 756#
-^000088Crafting Item^000000
-Raw ore that
-mostly consists
-of Oridecon metal.
-^ffffff_^000000
-Can be combined to create 1 Oridecon used to refine Level 3 & 4 Weapons
-Weight : ^77777720^000000
+^808080Raw ore that mostly consists of Oridecon metal.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 20
 #
+
 757#
-^000088Crafting Item^000000
-Raw ore that
-mostly consists
-of Elunium metal.
-^ffffff_^000000
-Can be combined to create 1 Elunium used to refine Armor
-Weight : ^77777720^000000
+^808080Raw ore that mostly consists of Elunium metal.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 20
 #
+
 //--------------------------------------------------------------------------
+
 901#
-A braided pigtail that
-has been cut from the
-head of a young girl.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A braided pigtail that has been cut from the head of a young girl.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 902#
-Some roots from trees can be used as medicine, but most of them are fibrous enough to be used as rope.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Some roots from trees can be used as medicine, but most of them are fibrous enough to be used as rope.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 903#
-Merely a severed
-reptile's tongue.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Merely a reptile's severed tongue.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 904#
-A tail severed
-from a scorpion.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A tail severed from a scorpion.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 905#
-Some stems from plants
-can be used to in making certain medicines.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Some stems from plants can be used to in making certain medicines.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 906#
-A single scale from
-a Worm Tail monster.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A single scale from a Worm Tail monster.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 907#
-A viscous plant substance used in the production of certain types of goods.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A viscous plant substance used in the production of certain types of goods.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 908#
-Frog eggs.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Frog eggs.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 909#
-A small crystallization created by some monsters.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A small crystallization created by some monsters.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 910#
-A small crystallization created by some monsters.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A small crystallization created by some monsters.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 911#
-A small crystallization created by some monsters.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A small crystallization created by some monsters.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 912#
-A small crystallization created by some monsters.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A small crystallization created by some monsters.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 913#
-Farmiliar's sharpened tooth.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Farmiliar's sharp tooth.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 914#
-A clump of monster fur
-and fuzz that can be used to make thread and fabric.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A clump of monster fur and fuzz that can be used to make thread and fabric.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 915#
-Skin from a larva that has been shed or peeled off.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Skin from a larva that has been shed or peeled off.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 916#
-A bird's feather that
-can be used in decor
-or in fabric creation.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A bird's feather that can be used in decor or in fabric creation.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 917#
-A sharp talon
-from a bird's foot.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A sharp talon from a bird's foot.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 918#
-A webbed foot cut from
-a monster's hind leg.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A webbed foot cut from a monster's hind leg.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 919#
-Animal hide that can be used in making clothes, coverings or beddings.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Animal hide that can be used in making clothes, coverings, or bedding.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 920#
-A claw severed
-from a wolf's paw.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A claw severed from a wolf's paw.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 921#
-A spore discharged
-from a mushroom.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A spore discharged from a mushroom.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 922#
-A cuspid wrenched out of from a gruesome Orc's jaw.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A cuspid wrenched out of from a gruesome Orc's jaw.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 923#
-Baphomet's horn is a symbol representing evil.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Baphomet's horn is a symbol of evil.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 924#
-Butterfly wing powder
-that sparkles with the
-power of fantasy.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Butterfly wing powder that sparkles with the power of fantasy.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 925#
-A bird's beak.
-Waste not want not.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A bird's beak. Waste not want not.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 926#
-Scales from a snake that can be used to make some rather flamboyant clothes.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Scales from a snake that can be used to make some rather flamboyant clothes.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 //--------------------------------------------------------------------------
+
 928#
-Antennae that serve as sense organs for insects.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Antennae that serve as sense organs for insects.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 929#
-A heart which will
-never stop beating.
-It contains some sort
-of dreadful power.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A heart which will never stop beating. It contains some sort of dreadful power.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 930#
-Old, dirty bandage
-that's so soiled, it's
-almost worthless.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Old, dirty bandage that's so soiled, it's almost worthless.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 931#
-A small sculpture that
-serves as the token for
-every true Orc Warrior.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A small sculpture that serves as the token for every true Orc Warrior.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 932#
-A bone taken from
-an Undead skeleton.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A bone taken from an undead skeleton.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 //--------------------------------------------------------------------------
+
 934#
-A box that is buried with the dead. It contains gems and someone's mementos...
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A box that is buried with the dead. It contains gems and someone's mementos....^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 935#
-A hard shell that used
-to protect a monster.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A hard shell that used to protect a monster.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 936#
-A shell-like piece of
-tough monster skin that is covered with hard scales.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A shell-like piece of tough monster skin that is covered with hard scales.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 937#
-A sharp, poisonous
-fang from a monster.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A sharp, poisonous fang from a monster.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 938#
-Mysteriously
-sticky liquid.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Mysteriously sticky liquid.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 939#
-A stinger from
-a hornet or bee.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A stinger from a hornet or bee.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 940#
-A Rocker's hind leg.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A Rocker's hind leg.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 941#
-A ring placed in a cow's nose so that it can be steered more easily.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A ring placed in a cow's nose so that it can be steered more easily.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 942#
-A prehensile
-tail from a Yoyo.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A prehensile tail from a Yoyo.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 943#
-A solid, durable shell taken from a monster.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A solid, durable shell taken from a monster.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 944#
-A ''U'' shaped piece of iron fitted on a horse's hoof for its protection.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A 'U' shaped piece of iron fitted on a horse's hoof for its protection.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 945#
-A leaf that gives Smokies the power to change form and become invisible.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A leaf that gives Smokies the power to change form and become invisible.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 946#
-A hard, spiral shaped shell used by Snails.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A hard, spiral shaped shell used by Snails.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 947#
-Hard and sharp horn
-from a monster's head.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Hard and sharp horn from a monster's head.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 948#
-A lazy bear's foot that supposedly has a unique flavor and the power to restore male vigor.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A lazy bear's foot that supposedly has a unique flavor and the power to restore male vigor.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 949#
-A feather that boasts full, lustrous barbs used for making clothes of the highest quality.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A feather that boasts full, lustrous barbs used for making clothes of the highest quality.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 950#
-The heart of
-a mermaid.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080The heart of a mermaid.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 951#
-A fish monster's fin.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A fish monster's fin.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 952#
-A sharp needle from a
-Muka cactus monster.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A sharp needle from a Muka cactus monster.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 953#
-A heart constructed
-entirely out of stone.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A heart constructed entirely out of stone.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 954#
-A shimmering,
-reflective scale.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A shimmering, reflective scale.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 955#
-Shed skin from
-worms and insects.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Shed skin from worms and insects.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 956#
-Part of a fish's
-breathing apparatus.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Part of a fish's breathing apparatus.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 957#
-A putrid, incredibly
-pungent corpse's nail.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A putrid, incredibly pungent corpse's nail.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 958#
-A complete set of
-corpse's teeth. Well, as complete as it can get.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A complete set of corpse's teeth. Well, as complete as it can get.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 959#
-A nasty scale with a horribly offensive odor.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A nasty scale with a horribly offensive odor.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 960#
-A crustacean's claw.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A crustacean's claw.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 961#
-The shell of a
-marine mollusk.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080The shell of a marine mollusk.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 962#
-A flexible, prehensile and boneless appendage.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A flexible, prehensile, and boneless appendage.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 963#
-A scale that is much sharper than a razor.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A scale that is much sharper than a razor.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 964#
-A hard crab shell that smells horrible.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A hard crab shell that smells horrible.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 965#
-A hard shell taken
-from a dead clam.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A hard shell taken from a dead clam.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 966#
-Muscular and fatty clam tissue that can be cooked in all sorts of ways.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080Muscular and fatty clam tissue that can be cooked in all sorts of ways.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 967#
-A hard shell that
-obviously failed
-to protect a turtle.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A hard shell that obviously failed to protect a turtle.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 968#
-An emblem given to
-an Orc Warrior that is
-proof of his heroism.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080An emblem given to an Orc Warrior that is proof of his heroism.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
+
 969#
-A valuable metal in bullion form. It's used
-to make coins, jewelry
-and gaudy false teeth.
-^ffffff_^000000
-Weight : ^77777720^000000
+^808080A valuable metal in bullion form. It's used to make coins, jewelry, and gaudy false teeth.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 20
 #
+
 970#
-This colorless liquid
-is the secret behind the addictiveness of beers
-and wine. 200 Proof.
-^ffffff_^000000
-Weight : ^7777773^000000
+^808080This colorless liquid is the secret behind the addictiveness of beers and wine. 200 Proof.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 3
 #
+
 971#
-A liquid with unique scientific properties.
-It's difficult to mix in water and is normally diluted in a solution.
-^ffffff_^000000
-Weight : ^7777773^000000
+^808080A liquid with unique scientific properties. It's difficult to mix in water and is normally diluted in a solution.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 3
 #
+
 972#
-A liquid with interesting characteristics and many possible applications.
-^ffffff_^000000
-Weight : ^7777773^000000
+^808080A liquid with interesting characteristics and many possible applications.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 3
 #
+
 973#
-A mixture of chemical substances that can only be produced by geniuses.
-^ffffff_^000000
-Weight : ^7777777^000000
+^808080A mixture of chemical substances that can only be produced by geniuses.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 7
 #
+
 974#
-A special compound that has applications that can only be understood by keen minds schooled in science.
-^ffffff_^000000
-Weight : ^7777777^000000
+^808080A special compound that has applications that can only be understood by keen minds schooled in science.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 7
 #
+
 975#
-Red colored dye
-that is made from
-ground Red Herbs.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080Red colored dye that is made from ground Red Herbs.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 15
 #
+
 976#
-Yellow colored dye
-that is made out of
-ground Yellow Herbs.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080Yellow colored dye that is made out of ground Yellow Herbs.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 15
 #
+
 //--------------------------------------------------------------------------
+
 978#
-Blue colored dye
-that is made from
-ground Blue Herbs.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080Blue colored dye that is made from ground Blue Herbs.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 15
 #
+
 979#
-Green colored dye
-that is made out of
-ground Green Herbs.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080Green colored dye that is made out of ground Green Herbs.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 15
 #
+
 980#
-Orange colored dye that was made from grinding Red and Yellow Herbs together.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080Orange colored dye that was made from grinding Red and Yellow Herbs together.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 15
 #
+
 981#
-Purpled colored dye
-that is made by grinding Blue and Red Herbs.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080Purple colored dye that is made by grinding Blue and Red Herbs.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 15
 #
+
 982#
-White colored dye
-that is made out of
-ground White Herbs.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080White colored dye that is made out of ground White Herbs.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 15
 #
+
 983#
-Black colored dye
-made from various
-ground herbs.
-^ffffff_^000000
-Weight : ^77777715^000000
+^808080Black colored dye made from various ground herbs.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 15
 #
+
 984#
-^000088Crafting Item^000000
-Pure Oridecon metal.
-Widely known as the
-Blessed Metal, it can
-increase the damage of
-weapons once welded to
-them. Used to temper
-^000088Level 3 and 4 weapons^000000.
-^ffffff_^000000
-Weight : ^77777720^000000
+^808080Pure Oridecon metal. Widely known as the Blessed Metal, it can increase the damage of weapons once welded to them.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 20
+^FFFFFF_^000000
+When attempting to upgrade Level 3 and 4 weapons, this is consumed.
 #
+
 985#
-^000088Crafting Item^000000
-A very light, non-toxic metal used for refining and toughening ^000088Armor^000000.
-^ffffff_^000000
-Weight : ^77777720^000000
+^808080A very light, non-toxic metal used for refining and toughening armor.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 20
+^FFFFFF_^000000
+When attempting to upgrade armor, this is consumed.
 #
 
 986#
-^000088Crafting Item^000000
-A smithing tool on which heated metals are placed so that they can be shaped by hammering. Used in the making of common products.
-^ffffff_^000000
-Weight : ^77777750^000000
+^808080A smithing tool on which heated metals are placed so that they can be shaped by hammering. Used in the making of common products.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 50
 #
+
 987#
-^000088Crafting Item^000000
-An anvil, made of pure
-Oridecon, that's used
-to make quality goods.
-^ffffff_^000000
-Weight : ^77777770^000000
+^808080An anvil, made of pure Oridecon, that's used to make quality goods.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 70
 #
+
 988#
-^000088Crafting Item^000000
-An anvil, made of pure Gold, that's used in the manufacture of high quality products.
-^ffffff_^000000
-Weight : ^77777790^000000
+^808080An anvil, made of pure Gold, that's used in the manufacture of high quality products.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 90
 #
+
 989#
-^000088Crafting Item^000000
-An anvil, made of pure Emperium, that's used to manufacture products of the highest quality.
-^ffffff_^000000
-Weight : ^777777100^000000
+^808080An anvil, made of pure Emperium, that's used to manufacture products of the highest quality.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 100
 #
+
 990#
-^000088Crafting Item^000000
-A vivid red ore that glows from inside with an orange yellow light. Possesses the Fire property and can form the enchanted stone, Flame Heart, when refined.
-^ffffff_^000000
-Weight : ^7777775^000000
+^808080A vivid red ore that glows from inside with an orange yellow light. Possesses the Fire property and can form the enchanted stone, Flame Heart, when refined.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 5
 #
+
 991#
-^000088Crafting Item^000000
-A sky colored ore that
-glows with the light of the deep ocean depths. Possesses the ^6996ADWater^000000 property and forms the enchanted stone, Mystic Frozen, when refined.
-^ffffff_^000000
-Weight : ^7777775^000000
+^808080A sky colored ore that glows with the light of the deep ocean depths. Possesses the Water property and forms the enchanted stone, Mystic Frozen, when refined.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 5
 #
+
 992#
-^000088Crafting Item^000000
-A lemon colored ore that contains a pale, greenish light. Possesses the Wind property and forms the enchanted stone, Rough Wind, when refined.
-^ffffff_^000000
-Weight : ^7777775^000000
+^808080A lemon colored ore that contains a pale, greenish light. Possesses the Wind property and forms the enchanted stone, Rough Wind, when refined.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 5
 #
+
 993#
-^000088Crafting Item^000000
-A blue-green ore imbued with a faint, mesmerizing light. Possesses the Earth property and forms the enchanted stone, Great Nature, when refined.
-^ffffff_^000000
-Weight : ^7777775^000000
+^808080A blue-green ore imbued with a faint, mesmerizing light. Possesses the Earth property and forms the enchanted stone, Great Nature, when refined.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 5
 #
+
 994#
-^000088Crafting Item^000000
-A dark red, heart
-shaped stone enchanted with the Fire property.
-^ffffff_^000000
-Weight : ^77777730^000000
+A dark red, heart shaped stone enchanted with the Fire property.
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 30
 #
+
 995#
-^000088Crafting Item^000000
-A light blue, crystal
-stone enchanted with
-the ^6996ADWater^000000 property.
-^ffffff_^000000
-Weight : ^77777730^000000
+^808080A light blue, crystal stone enchanted with the Water property.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 30
 #
+
 996#
-^000088Crafting Item^000000
-A pale green, lightning bolt shaped stone imbued with the Wind property.
-^ffffff_^000000
-Weight : ^77777730^000000
+^808080A pale green, lightning bolt shaped stone imbued with the Wind property.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 30
 #
+
 997#
-^000088Crafting Item^000000
-A citrus colored, bud
-shaped stone enchanted with the Earth property.
-^ffffff_^000000
-Weight : ^77777730^000000
+^808080A citrus colored, bud shaped stone enchanted with the Earth property.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 30
 #
+
 998#
-^000088Crafting Item^000000
-Malleable, silver-white metal that's very light weight and easy to temper. Commonly used to create arms and other goods.
-^ffffff_^000000
-Weight : ^7777775^000000
+^808080A malleable, silver-white metal that's very light weight and easy to temper. Commonly used to create arms and other goods.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 5
 #
+
 999#
-^000088Crafting Item^000000
-An iron and carbon alloy known for its structural durability and usually used in the crafting of high-quality arms.
-^ffffff_^000000
-Weight : ^77777710^000000
+^808080An iron and carbon alloy known for its structural durability and usually used in the crafting of high-quality arms.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 10
 #
+
 1000#
-^000088Crafting Item^000000
-A small stellar crystal, fallen from the heavens, which can be used to craft strengthened weapons.
-Weight : ^77777710^000000
+^808080A small stellar crystal, fallen from the heavens, which can be used to craft strengthened weapons.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 10
 #
 1001#
 ^000088Crafting Item^000000
@@ -73454,15 +73568,26 @@ Restores 3% SP.
 Casts ^0000FFLevel 2 Gloria^000000.
 #
 
-31052#
-A protective mask that was used by Alchemists to protect from poisonous gas.
-Type : ^777777Costume^000000 Armor : ^7777770^000000
-Location : ^777777Upper/Mid/Lower ^000000Weight : ^7777770^000000
-Req. level : ^7777771^000000
-Job : ^777777All Jobs^000000
+17369#
+For our 13th Anniversary Celebration, the Kafra corporation has devised a extra-special Lucky Box with some never-before seen items!
+
+Contains one of the following by chance
+6x Battle Manual X3
+6x Bloody Branch
+7x HE Bubble Gum
+Costume: Amistr Beret
+2000x Prize Medal
+Costume: Butterfly Hairpin
+Costume: Volume Fhat
+Tam[1]
+3d Glasses
+Droopy Turtle Hat
+Bloody Butterfly[1]
 #
-23164#
-A potion created and distributed by 13th anniversary NPC Granpa Boxter.
-No matter who you race with, you will pass everyone.
-Weight : ^7777771^000000
+
+20100#
+A costume of the Volumne FHat Item! Wear it with pride.
+#
+20197#
+A beret decked out to resemble a cute amistr
 #
