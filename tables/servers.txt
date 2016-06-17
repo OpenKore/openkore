@@ -514,15 +514,16 @@ pinCode 1
 # clientside: ? (2010-01-26aRagexeRE.exe)
 # serverside: ?
 [KoreRO]
-private 1
-ip 103.211.27.157
+ip 107.160.168.119
 port 6900
-master_version 0
+private 1
+master_version 31
 version 45
 serverType KoreRO
-charBlockSize 144
 serverEncoding Western
-addTableFolders pserver/KoreRO;iRO
+charBlockSize 144
+chatLangCode 1
+addTableFolders pserver/KoreRO;translated/kRO_english;iRO
 
 # clientside: ? (2010-07-30aRagexeRE.exe)
 # serverside: ?
