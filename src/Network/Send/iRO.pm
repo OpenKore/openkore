@@ -46,8 +46,25 @@ sub new {
 		send_equip 0998
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
+	$self->{sell_mode} = 0;
 	
 	return $self;
+}
+
+sub sendMove {
+	my $self = shift;
+
+	# The server won't let us move until we send the sell complete packet.
+	$self->sendSellComplete if $self->{sell_mode};
+
+	$self->SUPER::sendMove(@_);
+}
+
+sub sendSellComplete {
+	my ($self) = @_;
+	$messageSender->sendToServer(pack 'C*', 0xD4, 0x09);
+	$self->{sell_mode} = 0;
 }
 
 sub reconstruct_char_delete2_accept {

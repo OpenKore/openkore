@@ -1441,13 +1441,13 @@
 2748#Cursed_Star#
 2749#Linen_Glove#
 2764#Small_Fishing_Rod#
-2765#Novice_Figure#		
-2766#Swordman_Figure#		
-2767#Acolyte_Figure#		
-2768#Mage_Figure#		
-2769#Archer_Figure#		
-2770#Thief_Figure#		
-2771#Merchant_Figure#		
+2765#Novice_Figure#
+2766#Swordman_Figure#
+2767#Acolyte_Figure#
+2768#Mage_Figure#
+2769#Archer_Figure#
+2770#Thief_Figure#
+2771#Merchant_Figure#
 2772#Glorious_Ring#
 2773#Glorious_Popularized_Ring#
 2774#Glorious_Mass-Production_Ring#
@@ -2227,7 +2227,7 @@
 5141#Marionette_Doll#
 5142#Crescent_Helm#
 5143#Kabuki_Mask#
-5147#Baseball_Cap#			
+5147#Baseball_Cap#
 5151#Note_Headphone#
 5152#Chinese_Crown#
 5157#Orc_Helm#
@@ -2265,7 +2265,7 @@
 5196#Orange_Ribbon#
 5197#White_Ribbon#
 5198#Evolved_Drooping_Bunny#
-5202#Fantastic_Pumpkin-Head#	
+5202#Fantastic_Pumpkin-Head#
 5203#Smiling_Mask#
 5204#Rudolph's_Nose#
 5206#Romantic_White_Flower#
@@ -2411,9 +2411,9 @@
 5377#Gentleman's_Pipe#
 5378#Bunny_Top_Hat#
 5379#Tam#
-5380#Fish_Head_Hat#				
-5381#Santa_Poring_Hat#				
-5382#Bell_Ribbon#				
+5380#Fish_Head_Hat#
+5381#Santa_Poring_Hat#
+5382#Bell_Ribbon#
 5383#Hunting_Cap#
 5384#Twin_Pom_Santa#
 5385#Yoyo_Hat#
@@ -2445,7 +2445,7 @@
 5415#Poring_Cake_Hat#
 5416#Beer_Hat#
 5418#Soldier_Hat#
-5420#Ifrit_Mask#	
+5420#Ifrit_Mask#
 5421#Ifrit's_Ears#
 5430#Promethean_Crown#
 5431#Chicken_Hat#
@@ -2656,7 +2656,7 @@
 6002#Token_of_Apostle#
 6003#Pendant_of_Spirit#
 6004#Cursed_Baphomet_Doll#
-6009#Big_Fan_Of_Magic#	
+6009#Big_Fan_Of_Magic#
 6010#Hoe#
 6020#Fur#
 6021#Peaked_Hat#
@@ -3266,22 +3266,22 @@
 7523#Wind_Stone#
 7524#Shadow_Orb#
 7526#Manuscript_Paper#
-7530#Travel_Brochure_[Amatsu]#			
-7531#Travel_Brochure_[Kunlun]#			
-7532#Travel_Brochure_[Louyang]#			
-7533#Travel_Brochure_[Ayothaya]#			
-7534#Amatsu_Completed_Photo_Album#			
-7535#Kunlun_Completed_Photo_Album#			
-7536#Louyang_Completed_Photo_Album#			
-7537#Ayothaya_Completed_Photo_Album#			
-7539#Poring_Coin#		
-7540#Lotto_Ball_39#	
-7541#Lotto_Ball_40#	
-7542#Lotto_Ball_41#	
-7543#Lotto_Ball_42#	
-7544#Lotto_Ball_43#	
-7545#Lotto_Ball_44#	
-7546#Lotto_Ball_45#	
+7530#Travel_Brochure_[Amatsu]#
+7531#Travel_Brochure_[Kunlun]#
+7532#Travel_Brochure_[Louyang]#
+7533#Travel_Brochure_[Ayothaya]#
+7534#Amatsu_Completed_Photo_Album#
+7535#Kunlun_Completed_Photo_Album#
+7536#Louyang_Completed_Photo_Album#
+7537#Ayothaya_Completed_Photo_Album#
+7539#Poring_Coin#
+7540#Lotto_Ball_39#
+7541#Lotto_Ball_40#
+7542#Lotto_Ball_41#
+7543#Lotto_Ball_42#
+7544#Lotto_Ball_43#
+7545#Lotto_Ball_44#
+7546#Lotto_Ball_45#
 7561#Glacial_Heart#
 7562#Ice_Scale#
 7563#Bloody_Rune#
@@ -3299,10 +3299,10 @@
 7575#Red_Jewel#
 7576#Blue_Jewel#
 7577#Yellow_Jewel#
-7604#Flour#		
+7604#Flour#
 7605#Chicken_Egg#
 7606#Token_of_the_Ox#
-7609#Pumpkin_Mojo#	
+7609#Pumpkin_Mojo#
 7613#Small_Rice_Cake_Dough#
 7619#Old_Enriched_Elunium#
 7620#Old_Enriched_Oridecon#
@@ -3314,10 +3314,10 @@
 7635#Incense_Bag#
 7704#Broken_Thermometer#
 7705#Note_of_Geologist#
-7715#Hand-made_Chocolate_Recipe#		
-7716#Chocolate_Strawberry_Recipe#		
-7717#Chocolate_Tart_Recipe#		
-7718#Cacao_Bean#		
+7715#Hand-made_Chocolate_Recipe#
+7716#Chocolate_Strawberry_Recipe#
+7717#Chocolate_Tart_Recipe#
+7718#Cacao_Bean#
 7720#Gold_Coin#
 7721#Treasure_Box#
 7722#Debt_Note#
@@ -3350,7 +3350,7 @@
 7764#High_Strength_Adhesive#
 7765#Baba_Yaga's_Secret_Medicine#
 7766#Bok_Choy#
-7770#Sweet_Rice#				
+7770#Sweet_Rice#
 7773#War_Badge#
 7776#Gym_Pass#
 7782#Episode_13.1_Poporing_Key#
@@ -3391,7 +3391,7 @@
 7839#Crystal_Key#
 7840#Valkyrie's_Gift#
 7840#Valkyrie's_Gift#
-7869#Rice_Pouch#				
+7869#Rice_Pouch#
 7875#Pirate_Treasure#
 7876#Golden_Key#
 7877#Red_Ring#
@@ -3402,13 +3402,13 @@
 7882#Sharp_Branch#
 7883#Wooden_Flute#
 7906#Poppy_Wreath#
-7908#Louise's_Beauty_Coupon#			
-7909#Stolen_Cookie#			
-7910#Stolen_Candy#			
-7911#Yulia's_Hat#	
-7912#Portable_Snowman_Machine#	
+7908#Louise's_Beauty_Coupon#
+7909#Stolen_Cookie#
+7910#Stolen_Candy#
+7911#Yulia's_Hat#
+7912#Portable_Snowman_Machine#
 7915#Shred_Of_Evidence#
-7916#Silver_Coin#		
+7916#Silver_Coin#
 7919#Festival_Ticket#
 7923#Krathong#
 7941#Halloween_Ticket#
@@ -3747,7 +3747,7 @@
 12300#Wild_Rose_Contract#
 12301#Doppelganger_Contract#
 12302#Egnigem_Cenia_Contract#
-12310#Spray_Of_Flowers#	
+12310#Spray_Of_Flowers#
 12311#Huge_Spray_Of_Flowers#
 12312#Thick_Battle_Manual#
 12317#Snow_Powder#
@@ -3833,8 +3833,8 @@
 12491#Curious_Snowball#
 12554#Asprika_Piece_Box#
 12555#Brynhild_Piece_Box#
-12702#Old_Navy_Box#	
-12715#Black_Treasure_Chest#	
+12702#Old_Navy_Box#
+12715#Black_Treasure_Chest#
 12742#Valentine_Gift_Box#
 12743#Valentine_Gift_Box#
 12744#Chocolate_Box#
@@ -4900,7 +4900,7 @@
 12391#RWC_Groove_Pack#
 12403#RWC_Groove_Pack_2#
 12493#Groovy_Dragon_Box#
-12545#Fortune_Eggꖴ#
+12545#Fortune_Egg¥´#
 12577#Rideword_Hat_Box#
 12595#Incarnation_Of_Morocc_Doll_Box#
 12641#New_Recruit_Pack#
@@ -4927,7 +4927,7 @@
 18601#Red_Pom_Band#
 18603#Black_Devil's_Mask#
 
-// --------- Dewata (Indonesia Localizing) -------------	
+// --------- Dewata (Indonesia Localizing) -------------
 15032#Tidung#
 18520#Jaty_Crown#
 13067#Keris#
@@ -5621,7 +5621,7 @@
 19413#Classic_Red_Framed_Glasses_Box#
 19414#Classic_Evolved_Pipe_Box#
 
-//----------뷉뾬샇좸뛻 쏟낡 뻆샌엛--------- 
+//----------뷉뾬샇좸뛻 쏟낡 뻆샌엛---------
 1293#Bellum_Jamadhar#
 1294#Bellum_Scale#
 1395#Bellum_Buster#
@@ -6484,7 +6484,6 @@
 17356#Spooktober_Lucky_Box#
 17363#January_Groove_Pack#
 17364#March_Groove_Pack#
-17367#Athletic_Shoes_Shadow_Box#
 17368#Resist_Spell_Power_Pendant_Shadow_Box#
 17369#Rapid_Pendant_Shadow_Box#
 17370#Caster_Pendant_Shadow_Box#
@@ -7608,7 +7607,7 @@
 12404#Energizing_Potion#
 12405#Unripe_Yggdrasil_Seed#
 12406#Psychic_Armor_Scroll#
-12413#PC Cafe_Coupon_Boxꖱ#
+12413#PC Cafe_Coupon_Box¥±#
 12415#Siege_Teleport_Scroll_Silver#
 12530#Fruit_Of_Mastela#
 12534#Yggdrasil_Seed_Box#
@@ -7638,9 +7637,9 @@
 12768#Worldcup_Hat_of_Fight_Box#
 12769#Worldcup_Hat_of_Victory_Box#
 12770#Worldcup_Hat_of_Honor_Box#
-12771#Worldcup_Hat_of_Passion_Boxꖱ#
-12772#Worldcup_Hat_of_Fight_Boxꖱ#
-12773#Worldcup_Hat_of_Victory_Boxꖱ#
+12771#Worldcup_Hat_of_Passion_Box¥±#
+12772#Worldcup_Hat_of_Fight_Box¥±#
+12773#Worldcup_Hat_of_Victory_Box¥±#
 12774#Empty_Vial#
 12787# Diabolic Scroll#
 12796#Red_Booster#
@@ -8489,13 +8488,13 @@
 4949#After_Skill_Delay_Lv2#
 4950#After_Skill_Delay_Lv3#
 6803#Shard_of_Gigantes#
-19914#Felrockꆮs_Hat#
-15116#Airshipꆮs_Armor#
-20743#Airshipꆮs_Cloak#
-22046#Airshipꆮs_Boots#
-15117#Felrockꆮs_Armor#
-20744#Felrockꆮs_Cloak#
-22047#Felrockꆮs_Boots#
+19914#Felrock¡®s_Hat#
+15116#Airship¡®s_Armor#
+20743#Airship¡®s_Cloak#
+22046#Airship¡®s_Boots#
+15117#Felrock¡®s_Armor#
+20744#Felrock¡®s_Cloak#
+22047#Felrock¡®s_Boots#
 19526#Costume:_Helm#
 20217#Costume_Veil#
 20218#Costume_Spell_Circuit#
@@ -8510,3 +8509,46 @@
 
 17366#Safe_to_7_Sale_Box#
 20099#Costume:_Ljosalfar#
+
+24082#Malicious_Shadow_Shoes#
+24083#Malicious_Shadow_Shield#
+24081#Malicious_Shadow_Armor#
+17367#May_Groove_Pack_2016#
+20458#Costume_Wild_Poring_Rider#
+
+
+
+15110#Supplement_Part_Str#
+2995#Supplement_Part_Dex#
+20732#Supplement_Part_Con#
+22043#Supplement_Part_Agi#
+15111#Upgrade_Part_-_Plate#
+2996#Upgrade_Part_-_Gun_Barrel#
+20733#Upgrade_Part_-_Engine#
+22044#Upgrade_Part_-_Booster#
+28101#Tornado_Axe#
+21011#Gigant_Blade#
+4933#Neutral_Resistance_Lv1#
+4934#Neutral_Resistance_Lv2#
+4935#Neutral_Resistance_Lv3#
+6748#Excavator_Report#
+6749#Power_Control_Device#
+6750#Broken_Engine#
+6751#Dented_Iron_Plate#
+6752#Charleston_Component#
+6753#Doom_Token#
+6754#Gathered_Herb#
+22611#Packing_Envelope#
+16030#Pilebuncker_S#
+16031#Pilebuncker_P#
+16032#Pilebuncker_T#
+16033#Robot's_Arm#
+6756#Enriched_Energy#
+6757#Memory_Record#
+
+12291#Mysterious_PET_Bottle#
+12377#Mysterious_PET_Bottle_Ocean_Flavor#
+12290#Mysterious_Can#
+12376#Mysterious_Can_Mackerel_Flavor#
+31052#Costume_Alchemist_Mask#
+23164#Granpa_Speed_potion#

@@ -63,6 +63,15 @@ sub received_characters_info {
 	$self->received_characters($args);
 }
 
+sub npc_store_begin {
+	my $self = shift;
+
+	# The server won't let us move until we send the sell complete packet.
+	$messageSender->{sell_mode} = 1;
+
+	$self->SUPER::npc_store_begin(@_);
+}
+
 *parse_quest_update_mission_hunt = *Network::Receive::parse_quest_update_mission_hunt_v2;
 *reconstruct_quest_update_mission_hunt = *Network::Receive::reconstruct_quest_update_mission_hunt_v2;
 

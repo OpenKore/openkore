@@ -859,7 +859,7 @@ morocc_mem.rsw#Memory of Morroc#
 payon_mem.rsw#Memory of Payon#
 moc_paraup.rsw#Inside of Paradise Group Building in Morroc 2nd floor#
 
-//냸벺샼 TE 몹믧룊 
+//냸벺샼 TE 몹믧룊
 te_prt_gld.rsw#Gloria#
 te_prtcas01.rsw#Gaebolg#
 te_prtcas02.rsw#Richard#
@@ -916,3 +916,11 @@ moro_cav.rsw#Flame cave#
 1@glast.rsw#Old Glastheim#
 1@air1.rsw#Aircraft#
 1@air2.rsw#Aircraft#
+
+// ep15.1 웇언붺뢶냭뢮쒫
+ver_eju.rsw#Yuperos Eastern Ruin#
+ver_tunn.rsw#Verus Outter tunnel#
+verus04.rsw#Verus Findspot#
+verus03.rsw#Verus Center Square#
+
+1@mcd.rsw#Charlston Factory#

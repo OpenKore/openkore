@@ -1,3 +1,105 @@
+//EP.15
+1@mcd.gnd#1@mcd.gnd#
+1@mcd.gat#1@mcd.gat#
+1@mcd.rsw#1@mcd.rsw#
+삯샺샎엍웤샌붺\map\1@mcd.bmp#삯샺샎엍웤샌붺\map\1@mcd.bmp#
+
+//뾾뇛랡붺욮쟬샓 룞룰뢮뻳 룊몹믧
+1@gl_kh.gnd#1@gl_k.gnd#
+1@gl_kh.gat#1@gl_k.gat#
+1@gl_kh.rsw#1@gl_k.rsw#
+삯샺샎엍웤샌붺\map\1@gl_kh.bmp#삯샺샎엍웤샌붺\map\1@gl_k.bmp#
+
+2@gl_kh.gnd#2@gl_k.gnd#
+2@gl_kh.gat#2@gl_k.gat#
+2@gl_kh.rsw#2@gl_k.rsw#
+삯샺샎엍웤샌붺\map\2@gl_kh.bmp#삯샺샎엍웤샌붺\map\2@gl_k.bmp#
+
+new_1-1_evt.gnd#new_1-1.gnd#
+new_1-1_evt.gat#new_1-1.gat#
+new_1-1_evt.rsw#new_1-1.rsw#
+삯샺샎엍웤샌붺\map\new_1-1_evt.bmp#삯샺샎엍웤샌붺\map\new_1-1.bmp#
+
+new_1-2_evt.gnd#new_1-2.gnd#
+new_1-2_evt.gat#new_1-2.gat#
+new_1-2_evt.rsw#new_1-2.rsw#
+삯샺샎엍웤샌붺\map\new_1-2_evt.bmp#삯샺샎엍웤샌붺\map\new_1-2.bmp#
+
+air_evt.gnd#airplane.gnd#
+air_evt.gat#airplane.gat#
+air_evt.rsw#airplane.rsw#
+삯샺샎엍웤샌붺\map\air_evt.bmp#삯샺샎엍웤샌붺\map\airplane.bmp#
+
+silk_lair.gnd#1@cash.gnd#
+silk_lair.gat#1@cash.gat#
+silk_lair.rsw#1@cash.rsw#
+삯샺샎엍웤샌붺\map\silk_lair.bmp#삯샺샎엍웤샌붺\map\1@cash.bmp#
+
+//좣랯 샥뎭남 냸샥
+1@xm_d.gnd#1@xm_d.gnd#
+1@xm_d.gat#1@xm_d.gat#
+1@xm_d.rsw#1@xm_d.rsw#
+삯샺샎엍웤샌붺\map\1@xm_d.bmp#삯샺샎엍웤샌붺\map\1@xm_d.bmp#
+
+
+//룳붺엍뿾샌뫪
+1@def03.gnd#1@def03.gnd#
+1@def03.gat#1@def03.gat#
+1@def03.rsw#1@def03.rsw#
+삯샺샎엍웤샌붺\map\1@def03.bmp#삯샺샎엍웤샌붺\map\1@def03.bmp#
+
+
+//샌몥욮룊(죞냖몹믧)
+e_hugel.gnd#hugel.gnd#
+e_hugel.gat#hugel.gat#
+e_hugel.rsw#hugel.rsw#
+삯샺샎엍웤샌붺\map\e_hugel.bmp#삯샺샎엍웤샌붺\map\hugel.bmp#
+
+
+evt_swar_b.gnd#moc_ruins.gnd#
+evt_swar_b.gat#moc_ruins.gat#
+evt_swar_b.rsw#moc_ruins.rsw#
+삯샺샎엍웤샌붺\map\evt_swar_b.bmp#삯샺샎엍웤샌붺\map\moc_ruins.bmp#
+
+evt_swar_r.gnd#moc_ruins.gnd#
+evt_swar_r.gat#moc_ruins.gat#
+evt_swar_r.rsw#moc_ruins.rsw#
+삯샺샎엍웤샌붺\map\evt_swar_r.bmp#삯샺샎엍웤샌붺\map\moc_ruins.bmp#
+
+evt_swar_s.gnd#moc_ruins.gnd#
+evt_swar_s.gat#moc_ruins.gat#
+evt_swar_s.rsw#moc_ruins.rsw#
+삯샺샎엍웤샌붺\map\evt_swar_s.bmp#삯샺샎엍웤샌붺\map\moc_ruins.bmp#
+
+evt_swar_t.gnd#moc_ruins.gnd#
+evt_swar_t.gat#moc_ruins.gat#
+evt_swar_t.rsw#moc_ruins.rsw#
+삯샺샎엍웤샌붺\map\evt_swar_t.bmp#삯샺샎엍웤샌붺\map\moc_ruins.bmp#
+
+evt_swar_d.gnd#moc_ruins.gnd#
+evt_swar_d.gat#moc_ruins.gat#
+evt_swar_d.rsw#moc_ruins.rsw#
+삯샺샎엍웤샌붺\map\evt_swar_d.bmp#삯샺샎엍웤샌붺\map\moc_ruins.bmp#
+
+//뾡닸뛳쇪
+
+ecl_hub01.gnd#ecl_hub01.gnd#
+ecl_hub01.gat#ecl_hub01.gat#
+ecl_hub01.rsw#ecl_hub01.rsw#
+삯샺샎엍웤샌붺\map\ecl_hub01.bmp#삯샺샎엍웤샌붺\map\ecl_hub01.bmp#
+
+job_ko.gnd#job_ko.gnd#
+job_ko.gat#job_ko.gat#
+job_ko.rsw#job_ko.rsw#
+삯샺샎엍웤샌붺\map\job_ko.bmp#삯샺샎엍웤샌붺\map\job_ko.bmp#
+
+job3_gen01.gnd#job3_gen01.gnd#
+job3_gen01.gat#job3_gen01.gat#
+job3_gen01.rsw#job3_gen01.rsw#
+삯샺샎엍웤샌붺\map\job3_gen01.bmp#삯샺샎엍웤샌붺\map\job3_gen01.bmp#
+
+
+
 ethana_boss.gnd#thana_boss.gnd#
 ethana_boss.gat#thana_boss.gat#
 ethana_boss.rsw#thana_boss.rsw#
@@ -389,7 +491,7 @@ prt_fild08a.gnd#prt_fild08.gnd#
 prt_fild08a.gat#prt_fild08.gat#
 prt_fild08a.rsw#prt_fild08.rsw#
 삯샺샎엍웤샌붺\map\prt_fild08a.bmp#삯샺샎엍웤샌붺\map\prt_fild08.bmp#
-                 
+
 iz_ac02_d.gnd#iz_ac02.gnd#
 iz_ac02_d.gat#iz_ac02.gat#
 iz_ac02_d.rsw#iz_ac02.rsw#
@@ -824,7 +926,7 @@ que_moon.gat#job_star.gat#
 que_moon.rsw#job_star.rsw#
 삯샺샎엍웤샌붺\map\que_moon.bmp#삯샺샎엍웤샌붺\map\job_star.bmp#
 
-//---------------------------------2007돢 6뿹 30샏 샌샼샇 떥샌엍---------------------------							
+//---------------------------------2007돢 6뿹 30샏 샌샼샇 떥샌엍---------------------------
 
 new_1-1.gnd#new_zone01.gnd#
 new_2-1.gnd#new_zone01.gnd#
@@ -1878,7 +1980,7 @@ dali02.rsw#dali.rsw#
 1@def01.rsw#1@def01.rsw#
 삯샺샎엍웤샌붺\map\1@def01.bmp#삯샺샎엍웤샌붺\map\1@def01.bmp#
 
-//14.3 2싷
+//14.3 2Â÷
 1@eom.gnd#1@eom.gnd#
 1@eom.gat#1@eom.gat#
 1@eom.rsw#1@eom.rsw#
