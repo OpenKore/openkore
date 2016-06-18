@@ -115,6 +115,7 @@ our $dead_log_file;
 our $interface;
 our $lockdown;
 our $starting_ai;
+our $command;
 our $no_connect;
 
 
@@ -181,6 +182,7 @@ sub parseArguments {
 		'interface=s',        \$interface,
 		'lockdown',           \$lockdown,
 		'ai=s',               \$starting_ai,
+		'command=s',          \$command,
 		'help',	              \$options{help},
 		'version|v',          \$options{version},
 
@@ -294,6 +296,7 @@ sub getUsageText {
 		--interface=NAME          Which interface to use at startup.
 		--lockdown                Disable potentially insecure features.
 		--ai                      Starting AI mode (on, manual, off) (default: on)
+		--command=COMMAND         Initial command to place on the AI queue
 		--help                    Displays this help message.
 		--version                 Displays the program version.
 

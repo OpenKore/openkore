@@ -65,6 +65,11 @@ sub mainLoop {
 	}
 
 
+	if ($state == STATE_INITIALIZED && $Settings::command) {
+		Commands::run($Settings::command);
+		$Settings::command = undef;
+	}
+
 	if ($state == STATE_INITIALIZED) {
 		Plugins::callHook('mainLoop_pre');
 		mainLoop_initialized();
