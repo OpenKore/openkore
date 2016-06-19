@@ -8,13 +8,12 @@ use Log qw(message debug error);
 use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
 
 
-return unless
 Plugins::register('raiseStat', 'automatically raise character stats', \&on_unload);
 
 my $base_hooks = Plugins::addHooks(
-	['start3', \&checkConfig],
+	['start3',        \&checkConfig],
 	['postloadfiles', \&checkConfig],
-    ['configModify', \&on_configModify]
+    ['configModify',  \&on_configModify]
    );
 
 my @stats_to_add;
@@ -41,7 +40,7 @@ sub deactivate {
 
 sub activate {
 	$active_hooks = Plugins::addHooks(
-		['map_loaded', \&endMapChange],
+		['map_loaded',           \&endMapChange],
 		['packet/sendMapLoaded', \&endMapChange]
 	);
 	$active = 1;
@@ -54,10 +53,8 @@ sub getNextStat {
 	my $amount;
 	foreach my $step (@stats_to_add) {
 		$amount = $char->{$step->{'stat'}};
-		$amount += $char->{"$step->{'stat'}_bonus"} unless $config{statsAddAuto_dontUseBonus};
-		if ($amount >= $step->{'value'}) {
-			next;
-		} else {
+		$amount += $char->{"$step->{'stat'}_bonus"} unless $config{statsAddAuto_dontUseBonus};	
+		if ($amount < $step->{'value'}) {
 			$next_stat = $step->{'stat'};
 			return;
 		}
@@ -82,20 +79,15 @@ sub canRaise {
 sub raiseStat {
 	if (timeOut($time_sent,1)) {
 		$time_sent = time;
-		if (!canRaise()) {
-			Plugins::delHook($adding_hook);
-			undef $time_sent;
-		} else {
-			message "Auto-adding stat ".$next_stat." to ".($char->{$next_stat}+1)."\n";
-			$messageSender->sendAddStatusPoint({
-				str => STATUS_STR,
-				agi => STATUS_AGI,
-				vit => STATUS_VIT,
-				int => STATUS_INT,
-				dex => STATUS_DEX,
-				luk => STATUS_LUK,
-			}->{$next_stat});
-		}
+		message "Auto-adding stat ".$next_stat." to ".($char->{$next_stat}+1)."\n";
+		$messageSender->sendAddStatusPoint({
+			str => STATUS_STR,
+			agi => STATUS_AGI,
+			vit => STATUS_VIT,
+			int => STATUS_INT,
+			dex => STATUS_DEX,
+			luk => STATUS_LUK,
+		}->{$next_stat});
 	}
 }
 
@@ -103,10 +95,10 @@ sub endMapChange {
 	if (!$next_stat) {
 		getNextStat();
 	} else {
-		if (canRaise()) {
+		if (canRaise() && !$adding_hook) {
 			$adding_hook = Plugins::addHooks(
-				['packet_charStats', \&stat_changed],
-				['AI_pre',		\&raiseStat]
+				['packet_charStats',  \&stat_changed],
+				['AI_pre',            \&raiseStat]
 			);
 		}
 	}
