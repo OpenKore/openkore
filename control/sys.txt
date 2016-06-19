@@ -49,7 +49,7 @@ loadPlugins 2
 # loadPlugins_list <list>
 #   if loadPlugins is set to 2, this comma-separated list of plugin names (filename without the extension)
 #   specifies which plugin files to load at startup or when the "plugin load all" command is used.
-loadPlugins_list macro,profiles
+loadPlugins_list macro,profiles,raiseStat
 
 # skipPlugins_list <list>
 #   if loadPlugins is set to 3, this comma-separated list of plugin names (filename without the extension)

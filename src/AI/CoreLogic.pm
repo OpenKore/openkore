@@ -147,9 +147,6 @@ sub iterate {
 
 	Benchmark::begin("AI (part 3.2)") if DEBUG;
 	processLockMap();
-	#processAutoStatsRaise(); moved to a task
-	#processAutoSkillsRaise(); moved to a task
-	#processTask("skill_raise");
 	processRandomWalk();
 	processFollow();
 	Benchmark::end("AI (part 3.2)") if DEBUG;
@@ -1877,108 +1874,6 @@ sub processLockMap {
 		}
 	}
 }
-
-=pod moved to task
-##### AUTO STATS RAISE #####
-sub processAutoStatsRaise {
-	if (!$statChanged && $config{statsAddAuto}) {
-		# Split list of stats/values
-		my @list = split(/ *,+ */, $config{"statsAddAuto_list"});
-		my $statAmount;
-		my ($num, $st);
-
-		foreach my $item (@list) {
-			# Split each stat/value pair
-			($num, $st) = $item =~ /(\d+) (str|vit|dex|int|luk|agi)/i;
-			$st = lc $st;
-			# If stat needs to be raised to match desired amount
-			$statAmount = $char->{$st};
-			$statAmount += $char->{"${st}_bonus"} if (!$config{statsAddAuto_dontUseBonus});
-
-			if ($statAmount < $num && ($char->{$st} < 99 || $config{statsAdd_over_99})) {
-				# If char has enough stat points free to raise stat
-				if ($char->{points_free} &&
-				    $char->{points_free} >= $char->{"points_$st"}) {
-					my $ID;
-					if ($st eq "str") {
-						$ID = 0x0D;
-					} elsif ($st eq "agi") {
-						$ID = 0x0E;
-					} elsif ($st eq "vit") {
-						$ID = 0x0F;
-					} elsif ($st eq "int") {
-						$ID = 0x10;
-					} elsif ($st eq "dex") {
-						$ID = 0x11;
-					} elsif ($st eq "luk") {
-						$ID = 0x12;
-					}
-
-					$char->{$st} += 1;
-					# Raise stat
-					message TF("Auto-adding stat %s\n", $st);
-					$messageSender->sendAddStatusPoint($ID);
-					# Save which stat was raised, so that when we received the
-					# "stat changed" packet (00BC?) we can changed $statChanged
-					# back to 0 so that kore will start checking again if stats
-					# need to be raised.
-					# This basically prevents kore from sending packets to the
-					# server super-fast, by only allowing another packet to be
-					# sent when $statChanged is back to 0 (when the server has
-					# replied with a a stat change)
-					$statChanged = $st;
-					# After we raise a stat, exit loop
-					last;
-				}
-				# If stat needs to be changed but char doesn't have enough stat points to raise it then
-				# don't raise it, exit loop
-				last;
-			}
-		}
-	}
-}
-=cut
-
-=pod moved to task
-##### AUTO SKILLS RAISE #####
-sub processAutoSkillsRaise {
-	if (!$skillChanged && $config{skillsAddAuto}) {
-		# Split list of skills and levels
-		my @list = split / *,+ */, lc($config{skillsAddAuto_list});
-
-		foreach my $item (@list) {
-			# Split each skill/level pair
-			my ($sk, undef, $num) = $item =~ /^(.*?)( (\d+))?$/;
-			$num = 1 if (!defined $num);
-			my $skill = new Skill(auto => $sk);
-
-			if (!$skill->getIDN()) {
-				error TF("Unknown skill '%s'; disabling skillsAddAuto\n", $sk);
-				$config{skillsAddAuto} = 0;
-				last;
-			}
-
-			my $handle = $skill->getHandle();
-
-			# If skill needs to be raised to match desired amount && skill points are available
-			if ($skill->getIDN() && $char->{points_skill} > 0 && $char->getSkillLevel($skill) < $num) {
-				# raise skill
-				$messageSender->sendAddSkillPoint($skill->getIDN());
-				message TF("Auto-adding skill %s\n", $skill->getName());
-
-				# save which skill was raised, so that when we received the
-				# "skill changed" packet (010F?) we can changed $skillChanged
-				# back to 0 so that kore will start checking again if skills
-				# need to be raised.
-				# this basically does what $statChanged does for stats
-				$skillChanged = $handle;
-				# after we raise a skill, exit loop
-				last;
-			}
-		}
-	}
-}
-=cut
 
 ##### RANDOM WALK #####
 sub processRandomWalk {

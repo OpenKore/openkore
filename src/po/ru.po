@@ -10628,26 +10628,6 @@ msgstr "Нет прямой видимости от %s (%s,%s) до портал
 msgid "%s tried too long to move"
 msgstr "%s слишком долго пытался пойти"
 
-#: ../../src/Task/RaiseSkill.pm:57
-#, perl-format
-msgid "Unknown skill '%s'; disabling skillsAddAuto %s\n"
-msgstr "Непонятное умение '%s'; отключение skillsAddAuto %s.\n"
-
-#: ../../src/Task/RaiseSkill.pm:76
-#, perl-format
-msgid "Auto-adding skill %s to %s\n"
-msgstr "Авто-прокачка умения %s до %s уровня.\n"
-
-#: ../../src/Task/RaiseStat.pm:55
-#, perl-format
-msgid "Unknown stat '%s'; disabling statsAddAuto\n"
-msgstr "Непонятный стат '%s'; отключение statsAddAuto\n"
-
-#: ../../src/Task/RaiseStat.pm:84
-#, perl-format
-msgid "Auto-adding stat %s to %s\n"
-msgstr "Авто-прокачка стата %s до %s\n"
-
 #: ../../src/Task/Route.pm:230
 #, perl-format
 msgid "%s reached the destination.\n"
