@@ -6,9 +6,6 @@ FollowActor.pm
 Function.pm
 MapRoute.pm
 Move.pm
-Raise.pm
-RaiseSkill.pm
-RaiseStat.pm
 Route.pm
 SitStand.pm
 TalkNPC.pm

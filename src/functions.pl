@@ -493,11 +493,6 @@ sub finalInitialization {
 	$totalJobExp = 0;
 	$startTime_EXP = time;
 	$taskManager = new TaskManager();
-	# run 'permanent' tasks
-	for (qw/Task::RaiseStat Task::RaiseSkill/) {
-		eval "require $_";
-		$taskManager->add($_->new);
-	}
 
 	if (DEBUG) {
 		# protect various stuff from autovivification

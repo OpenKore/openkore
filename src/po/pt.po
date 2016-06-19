@@ -5887,26 +5887,6 @@ msgstr "Sem LOS de %s (%s,%s) ao Portal em (%s,%s).\n"
 msgid "%s tried too long to move"
 msgstr "%s não está mais mudo\n"
 
-#: ../Task/RaiseSkill.pm:57
-#, fuzzy, perl-format
-msgid "Unknown skill '%s'; disabling skillsAddAuto %s\n"
-msgstr "Habilidade desconhecida '%s'; desabilitando skillsAddAuto.\n"
-
-#: ../Task/RaiseSkill.pm:76
-#, fuzzy, perl-format
-msgid "Auto-adding skill %s to %s\n"
-msgstr "Adicionando habilidade %s automaticamente.\n"
-
-#: ../Task/RaiseStat.pm:55
-#, fuzzy, perl-format
-msgid "Unknown stat '%s'; disabling statsAddAuto\n"
-msgstr "Habilidade desconhecida '%s'; desabilitando skillsAddAuto.\n"
-
-#: ../Task/RaiseStat.pm:84
-#, fuzzy, perl-format
-msgid "Auto-adding stat %s to %s\n"
-msgstr "Adicionando habilidade %s automaticamente.\n"
-
 #: ../Task/Route.pm:230
 #, fuzzy, perl-format
 msgid "%s reached the destination.\n"

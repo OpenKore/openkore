@@ -5832,26 +5832,6 @@ msgstr "Tidak ada LOS dari %s (%s,%s) ke Portal di (%s,%s).\n"
 msgid "%s tried too long to move"
 msgstr "%s tidak lagi dibisukan."
 
-#: ../Task/RaiseSkill.pm:57
-#, perl-format
-msgid "Unknown skill '%s'; disabling skillsAddAuto %s\n"
-msgstr "Skill tidak diketahui '%s'; menonaktifkan skillsAddAuto %s\n"
-
-#: ../Task/RaiseSkill.pm:76
-#, perl-format
-msgid "Auto-adding skill %s to %s\n"
-msgstr "Menambahkan secara otomatis skill %s menjadi %s\n"
-
-#: ../Task/RaiseStat.pm:55
-#, perl-format
-msgid "Unknown stat '%s'; disabling statsAddAuto\n"
-msgstr "Stat tidak diketahui '%s'; menonaktifkan statsAddAuto\n"
-
-#: ../Task/RaiseStat.pm:84
-#, perl-format
-msgid "Auto-adding stat %s to %s\n"
-msgstr "Menambahkan secara otomatis stat %s menjadi %s\n"
-
 #: ../Task/Route.pm:230
 #, fuzzy, perl-format
 msgid "%s reached the destination.\n"

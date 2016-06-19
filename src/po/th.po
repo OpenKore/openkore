@@ -5827,26 +5827,6 @@ msgstr "ไม่มี LOS จาก %s (%s,%s) ไปยัง Portal ที�
 msgid "%s tried too long to move"
 msgstr "%s ถูกปลดจากการห้ามพูดคุยและใช้สกิลแล้ว\n"
 
-#: ../Task/RaiseSkill.pm:57
-#, fuzzy, perl-format
-msgid "Unknown skill '%s'; disabling skillsAddAuto %s\n"
-msgstr "ไม่รู้จักสกิลนี้ '%s'; ยกเลิกการอัพสกิลอัตโนมัติ (skillsAddAuto)\n"
-
-#: ../Task/RaiseSkill.pm:76
-#, fuzzy, perl-format
-msgid "Auto-adding skill %s to %s\n"
-msgstr "กำลังอัพ skill %s ให้โดยอัตโนมัติ\n"
-
-#: ../Task/RaiseStat.pm:55
-#, fuzzy, perl-format
-msgid "Unknown stat '%s'; disabling statsAddAuto\n"
-msgstr "ไม่รู้จักสกิลนี้ '%s'; ยกเลิกการอัพสกิลอัตโนมัติ (skillsAddAuto)\n"
-
-#: ../Task/RaiseStat.pm:84
-#, fuzzy, perl-format
-msgid "Auto-adding stat %s to %s\n"
-msgstr "กำลังอัพ skill %s ให้โดยอัตโนมัติ\n"
-
 #: ../Task/Route.pm:230
 #, fuzzy, perl-format
 msgid "%s reached the destination.\n"
