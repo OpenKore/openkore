@@ -17,11 +17,17 @@ my $base_hooks = Plugins::addHooks(
    );
 
 my @stats_to_add;
-my $active;
 my $active_hooks;
 my $adding_hook;
 my $next_stat;
 my $time_sent;
+my $status;
+
+use constant {
+	INACTIVE => 0,
+	ACTIVE => 1,
+	ADDING => 2
+};
 
 sub on_unload {
    Plugins::delHook($base_hooks);
@@ -30,9 +36,9 @@ sub on_unload {
 }
 
 sub deactivate {
-	Plugins::delHook($active_hooks) if ($active_hooks);
-	Plugins::delHook($adding_hook) if ($adding_hook);
-	$active = 0;
+	Plugins::delHook($active_hooks) if ($status == ACTIVE);
+	Plugins::delHook($adding_hook) if ($status == ADDING);
+	$status = INACTIVE;
 	undef $time_sent;
 	undef $next_stat;
 	undef @stats_to_add;
@@ -43,7 +49,7 @@ sub activate {
 		['map_loaded',           \&endMapChange],
 		['packet/sendMapLoaded', \&endMapChange]
 	);
-	$active = 1;
+	$status = ACTIVE;
 	if ($char) {
 		getNextStat();
 	}
@@ -65,11 +71,19 @@ sub getNextStat {
 
 sub stat_changed {
 	getNextStat();
+	if (!canRaise() && $status == ADDING) {
+		Plugins::delHook($adding_hook);
+		$active_hooks = Plugins::addHooks(
+			['map_loaded',           \&endMapChange],
+			['packet/sendMapLoaded', \&endMapChange]
+		);
+		$status = ACTIVE;
+	}
 }
 
 sub canRaise {
-	return 0 if (!$active);
-	if ($char->{points_free} >= $char->{"points_".$next_stat}) {
+	return 0 if ($status == INACTIVE);
+	if ($char->{points_free} && $char->{"points_".$next_stat} && $char->{points_free} >= $char->{"points_".$next_stat}) {
 		return 1;
 	} else {
 		return 0;
@@ -79,6 +93,15 @@ sub canRaise {
 sub raiseStat {
 	if (timeOut($time_sent,1)) {
 		$time_sent = time;
+		if (!canRaise()) {
+			Plugins::delHook($adding_hook);
+			$active_hooks = Plugins::addHooks(
+				['map_loaded',           \&endMapChange],
+				['packet/sendMapLoaded', \&endMapChange]
+			);
+			$status = ACTIVE;
+			return;
+		}
 		message "Auto-adding stat ".$next_stat." to ".($char->{$next_stat}+1)."\n";
 		$messageSender->sendAddStatusPoint({
 			str => STATUS_STR,
@@ -95,11 +118,14 @@ sub endMapChange {
 	if (!$next_stat) {
 		getNextStat();
 	} else {
-		if (canRaise() && !$adding_hook) {
+		if (canRaise() && $status == ACTIVE) {
+			message "adding hooks\n","system";
 			$adding_hook = Plugins::addHooks(
 				['packet_charStats',  \&stat_changed],
 				['AI_pre',            \&raiseStat]
 			);
+			Plugins::delHook($active_hooks);
+			$status = ADDING;
 		}
 	}
 }
@@ -155,7 +181,8 @@ sub checkSteps {
 			return;
 		}
 	}
-	unless ($active) {
+	getNextStat();
+	if ($status == INACTIVE) {
 		activate();
 	}
 }
