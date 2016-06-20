@@ -10,6 +10,9 @@ use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_
 
 Plugins::register('raiseStat', 'automatically raise character stats', \&on_unload);
 
+################################################################
+#  Hooks used to activate the plugin during initialization
+#  and on config change events.
 my $base_hooks = Plugins::addHooks(
 	['start3',        \&checkConfig],
 	['postloadfiles', \&checkConfig],
@@ -35,6 +38,17 @@ sub on_unload {
    message "raiseStat plugin unloading or reloading\n", 'success';
 }
 
+################################################################
+#  changeStatus() is the function responsible for adding
+#  and deleting hooks when changing plugin status.
+#  During status == 0 the plugin will be inactive and won't
+#  look for opportunities to raise stats.
+#  During status == 1 the plugin will be active and will
+#  have 'speculative' hooks added to try to look for
+#  opportunities to raise stats.
+#  During status == 2 the plugin will be active and will
+#  have 'AI_pre' hook active, on each AI call the plugin
+#  will try to raise stats if possible.
 sub changeStatus {
 	my $new_status = shift;
 	Plugins::delHook($active_hooks) if ($status == ACTIVE);
@@ -56,6 +70,12 @@ sub changeStatus {
 	$status = $new_status;
 }
 
+################################################################
+#  getNextStat() is the function responsible for deciding
+#  which stat we need to raise next, according to
+#  '@stats_to_add', if we still have stats to raise, set it
+#  to '$next_stat' and return 1, if we have no stats to raise
+#  return 0.
 sub getNextStat {
 	my $amount;
 	foreach my $step (@stats_to_add) {
@@ -70,15 +90,27 @@ sub getNextStat {
 	return 0;
 }
 
+################################################################
+#  canRaise() is the function responsible for checking if
+#  we have enough free points to raise '$next_stat'.
 sub canRaise {
 	return 1 if ($status != INACTIVE && $char->{points_free} && $char->{"points_".$next_stat} && $char->{points_free} >= $char->{"points_".$next_stat});
 	return 0;
 }
 
+################################################################
+#  on_possible_raise_chance() is the function called by
+#  our 'speculative' hooks to try to look for
+#  opportunities to raise stats. It changes the plugin status
+#  to 'ADDING' (2).
 sub on_possible_raise_chance {
 	changeStatus(ADDING) if ($status == ACTIVE);
 }
 
+################################################################
+#  on_ai_pre() is called by 'AI_pre' (duh) when status is
+#  'ADDING' (2), it checks if we can raise our stats, and
+#  if we can't, change plugin status, otherwise calls raiseStat()
 sub on_ai_pre {
 	return if !$char;
 	return if $net->getState != Network::IN_GAME;
@@ -89,6 +121,9 @@ sub on_ai_pre {
 	raiseStat();
 }
 
+################################################################
+#  raiseStat() sends to the server our stat raise request and
+#  prints it on console.
 sub raiseStat {
 	message "Auto-adding stat ".$next_stat." to ".($char->{$next_stat}+1)."\n";
 	$messageSender->sendAddStatusPoint({
@@ -101,21 +136,30 @@ sub raiseStat {
 	}->{$next_stat});
 }
 
+################################################################
+#  on_configModify() is called whenever config is changed, it
+#  checks if something important to us was changed, and can 
+#  change plugin status.
 sub on_configModify {
 	my (undef, $args) = @_;
-	if ($args->{key} eq 'statsAddAuto') {
-		return changeStatus(ACTIVE) if ($args->{val} && $config{statsAddAuto_list} && validateSteps($config{statsAddAuto_list}));
-	} elsif ($args->{key} eq 'statsAddAuto_list') {
-		return changeStatus(ACTIVE) if ($args->{val} && $config{statsAddAuto} && validateSteps($args->{val}));
-	}
-	return changeStatus(INACTIVE);
+	return changeStatus(ACTIVE) if ($args->{key} eq 'statsAddAuto' && $args->{val} && $config{statsAddAuto_list} && validateSteps($config{statsAddAuto_list}));
+	return changeStatus(ACTIVE) if ($args->{key} eq 'statsAddAuto_list' && $args->{val} && $config{statsAddAuto} && validateSteps($args->{val}));
+	return changeStatus(INACTIVE) if ($args->{key} eq 'statsAddAuto_list' || $args->{key} eq 'statsAddAuto');
 }
 
+################################################################
+#  checkConfig() is called after config is re(loaded), it
+#  checks our configuration on config.txt and changes plugin
+#  status.
 sub checkConfig {
 	return changeStatus(ACTIVE) if ($config{statsAddAuto} && $config{statsAddAuto_list} && validateSteps($config{statsAddAuto_list}));
 	return changeStatus(INACTIVE);
 }
 
+################################################################
+#  validateSteps() is the function responsible for validating 
+#  '$config{statsAddAuto_list}', return 0 if errors are found
+#  and 1 if everything is okay.
 sub validateSteps {
 	my $list = shift;
 	my @steps = split(/\s*,+\s*/, $list);
