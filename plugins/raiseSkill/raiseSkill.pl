@@ -1,14 +1,14 @@
-package raiseStat;
+package raiseSkill;
 
 use strict;
 use Plugins;
 use Utils;
+use Skill;
 use Globals qw(%config $net $char $messageSender);
 use Log qw(message debug error);
-use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
 
 
-Plugins::register('raiseStat', 'automatically raise character stats', \&on_unload);
+Plugins::register('raiseSkill', 'automatically raise character skills', \&on_unload);
 
 ################################################################
 #  Hooks used to activate the plugin during initialization
@@ -19,10 +19,10 @@ my $base_hooks = Plugins::addHooks(
     ['configModify',  \&on_configModify]
    );
 
-my @stats_to_add;
+my @skills_to_add;
 my $active_hooks;
 my $adding_hook;
-my $next_stat;
+my $next_skill;
 my $status;
 my $timeout = { time => 0, timeout => 1 };
 
@@ -35,32 +35,32 @@ use constant {
 sub on_unload {
    Plugins::delHook($base_hooks);
    changeStatus(INACTIVE);
-   message "raiseStat plugin unloading or reloading\n", 'success';
+   message "raiseSkill plugin unloading or reloading\n", 'success';
 }
 
 ################################################################
 #  changeStatus() is the function responsible for adding
 #  and deleting hooks when changing plugin status.
 #  During status == 0 the plugin will be inactive and won't
-#  look for opportunities to raise stats.
+#  look for opportunities to raise skills.
 #  During status == 1 the plugin will be active and will
 #  have 'speculative' hooks added to try to look for
-#  opportunities to raise stats.
+#  opportunities to raise skills.
 #  During status == 2 the plugin will be active and will
 #  have 'AI_pre' hook active, on each AI call the plugin
-#  will try to raise stats if possible.
+#  will try to raise skills if possible.
 sub changeStatus {
 	my $new_status = shift;
 	Plugins::delHook($active_hooks) if ($status == ACTIVE);
 	Plugins::delHook($adding_hook) if ($status == ADDING);
 	if ($new_status == INACTIVE) {
-		undef $next_stat;
-		undef @stats_to_add;
+		undef $next_skill;
+		undef @skills_to_add;
 	} elsif ($new_status == ACTIVE) {
 		$active_hooks = Plugins::addHooks(
 			['map_loaded',           \&on_possible_raise_chance],
 			['packet/sendMapLoaded', \&on_possible_raise_chance],
-			['base_level_changed', \&on_possible_raise_chance]
+			['job_level_changed', \&on_possible_raise_chance]
 		);
 	} else {
 		$adding_hook = Plugins::addHooks(
@@ -71,38 +71,35 @@ sub changeStatus {
 }
 
 ################################################################
-#  getNextStat() is the function responsible for deciding
-#  which stat we need to raise next, according to
-#  '@stats_to_add', if we still have stats to raise, set it
-#  to '$next_stat' and return 1, if we have no stats to raise
+#  getNextSkill() is the function responsible for deciding
+#  which skill we need to raise next, according to
+#  '@skills_to_add', if we still have skills to raise, set it
+#  to '$next_skill' and return 1, if we have no skills to raise
 #  return 0.
-sub getNextStat {
-	my $amount;
-	foreach my $step (@stats_to_add) {
-		$amount = $char->{$step->{'stat'}};
-		$amount += $char->{"$step->{'stat'}_bonus"} unless $config{statsAddAuto_dontUseBonus};	
-		if ($amount < $step->{'value'}) {
-			$next_stat = $step->{'stat'};
+sub getNextSkill {
+	foreach my $skill (@skills_to_add) {
+		my $char_skill_level = $char->getSkillLevel($skill);
+		my $wanted_skill_level = $skill->getLevel;
+		if ($char_skill_level < $wanted_skill_level) {
+			$next_skill = $skill;
 			return 1;
 		}
 	}
-	message "raiseStat has no more stats to raise; disabling statsAddAuto\n", 'success';
+	message "raiseSkill has no more skills to raise; disabling skillsAddAuto\n", 'success';
 	return 0;
 }
 
 ################################################################
 #  canRaise() is the function responsible for checking if
-#  we have enough free points to raise '$next_stat'.
+#  we have free skill points.
 sub canRaise {
-    $char->{points_free} and
-    $char->{"points_".$next_stat} and
-    $char->{points_free} >= $char->{"points_".$next_stat};
+	$char->{points_skill};
 }
 
 ################################################################
 #  on_possible_raise_chance() is the function called by
 #  our 'speculative' hooks to try to look for
-#  opportunities to raise stats. It changes the plugin status
+#  opportunities to raise skills. It changes the plugin status
 #  to 'ADDING' (2).
 sub on_possible_raise_chance {
 	changeStatus(ADDING) if ($status == ACTIVE);
@@ -110,31 +107,24 @@ sub on_possible_raise_chance {
 
 ################################################################
 #  on_ai_pre() is called by 'AI_pre' (duh) when status is
-#  'ADDING' (2), it checks if we can raise our stats, and
-#  if we can't, change plugin status, otherwise calls raiseStat()
+#  'ADDING' (2), it checks if we can raise our next skill, and
+#  if we can't, change plugin status, otherwise calls raiseSkill()
 sub on_ai_pre {
 	return if !$char;
 	return if $net->getState != Network::IN_GAME;
 	return if !timeOut( $timeout );
 	$timeout->{time} = time;
-	return changeStatus(INACTIVE) unless (getNextStat());
+	return changeStatus(INACTIVE) unless (getNextSkill());
 	return changeStatus(ACTIVE) unless (canRaise());
-	raiseStat();
+	raiseSkill();
 }
 
 ################################################################
-#  raiseStat() sends to the server our stat raise request and
+#  raiseSkill() sends to the server our skill raise request and
 #  prints it on console.
-sub raiseStat {
-	message "Auto-adding stat ".$next_stat." to ".($char->{$next_stat}+1)."\n";
-	$messageSender->sendAddStatusPoint({
-		str => STATUS_STR,
-		agi => STATUS_AGI,
-		vit => STATUS_VIT,
-		int => STATUS_INT,
-		dex => STATUS_DEX,
-		luk => STATUS_LUK,
-	}->{$next_stat});
+sub raiseSkill {
+	message "Auto-adding skill ".$next_skill->getName." to ".($char->getSkillLevel($next_skill)+1)."\n";
+	$messageSender->sendAddSkillPoint($next_skill->getIDN);
 }
 
 ################################################################
@@ -143,9 +133,9 @@ sub raiseStat {
 #  change plugin status.
 sub on_configModify {
 	my (undef, $args) = @_;
-	return changeStatus(ACTIVE) if ($args->{key} eq 'statsAddAuto' && $args->{val} && $config{statsAddAuto_list} && validateSteps($config{statsAddAuto_list}));
-	return changeStatus(ACTIVE) if ($args->{key} eq 'statsAddAuto_list' && $args->{val} && $config{statsAddAuto} && validateSteps($args->{val}));
-	return changeStatus(INACTIVE) if ($args->{key} eq 'statsAddAuto_list' || $args->{key} eq 'statsAddAuto');
+	return changeStatus(ACTIVE) if ($args->{key} eq 'skillsAddAuto' && $args->{val} && $config{skillsAddAuto_list} && validateSteps($config{skillsAddAuto_list}));
+	return changeStatus(ACTIVE) if ($args->{key} eq 'skillsAddAuto_list' && $args->{val} && $config{skillsAddAuto} && validateSteps($args->{val}));
+	return changeStatus(INACTIVE) if ($args->{key} eq 'skillsAddAuto_list' || $args->{key} eq 'skillsAddAuto');
 }
 
 ################################################################
@@ -153,29 +143,25 @@ sub on_configModify {
 #  checks our configuration on config.txt and changes plugin
 #  status.
 sub checkConfig {
-	return changeStatus(ACTIVE) if ($config{statsAddAuto} && $config{statsAddAuto_list} && validateSteps($config{statsAddAuto_list}));
+	return changeStatus(ACTIVE) if ($config{skillsAddAuto} && $config{skillsAddAuto_list} && validateSteps($config{skillsAddAuto_list}));
 	return changeStatus(INACTIVE);
 }
 
 ################################################################
 #  validateSteps() is the function responsible for validating 
-#  '$config{statsAddAuto_list}', return 0 if errors are found
+#  '$config{skillsAddAuto_list}', return 0 if errors are found
 #  and 1 if everything is okay.
 sub validateSteps {
 	my $list = shift;
 	my @steps = split(/\s*,+\s*/, $list);
-	undef @stats_to_add;
+	undef @skills_to_add;
 	foreach my $step (@steps) {
-		if ($step =~ /^(\d+)\s+(str|vit|dex|int|luk|agi)$/) {
-			my $value = $1;
-			my $stat = $2;
-			if ($value > 99 && !$config{statsAdd_over_99}) {
-				error "Stat '".$step."' is more then 99 and 'statsAdd_over_99' is disabled; disabling statsAddAuto\n";
-				return 0;
-			}
-			push(@stats_to_add, {'value' => $value, 'stat' => $stat});
+		my ($sk, undef, $level) = $step =~ /^(.*?)(\s+(\d+))?$/;
+		my $skill = new Skill(auto => $sk, level => (defined $level) ? $level : 1);
+		if ($skill->getIDN) {
+			push(@skills_to_add, $skill);
 		} else {
-			error "Unknown stat ".$step."; disabling statsAddAuto\n";
+			error "Unknown skill '".$sk."' in '".$step."'; disabling skillsAddAuto\n";
 			return 0;
 		}
 	}
