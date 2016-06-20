@@ -20,8 +20,8 @@ my @stats_to_add;
 my $active_hooks;
 my $adding_hook;
 my $next_stat;
-my $time_sent;
 my $status;
+my $timeout = { time => 0, timeout => 1 };
 
 use constant {
 	INACTIVE => 0,
@@ -31,28 +31,29 @@ use constant {
 
 sub on_unload {
    Plugins::delHook($base_hooks);
-   deactivate();
+   changeStatus(INACTIVE);
    message "raiseStat plugin unloading or reloading\n", 'success';
 }
 
-sub deactivate {
+sub changeStatus {
+	my $new_status = shift;
 	Plugins::delHook($active_hooks) if ($status == ACTIVE);
 	Plugins::delHook($adding_hook) if ($status == ADDING);
-	$status = INACTIVE;
-	undef $time_sent;
-	undef $next_stat;
-	undef @stats_to_add;
-}
-
-sub activate {
-	$active_hooks = Plugins::addHooks(
-		['map_loaded',           \&endMapChange],
-		['packet/sendMapLoaded', \&endMapChange]
-	);
-	$status = ACTIVE;
-	if ($char) {
-		getNextStat();
+	if ($new_status == INACTIVE) {
+		undef $next_stat;
+		undef @stats_to_add;
+	} elsif ($new_status == ACTIVE) {
+		$active_hooks = Plugins::addHooks(
+			['map_loaded',           \&on_possible_raise_chance],
+			['packet/sendMapLoaded', \&on_possible_raise_chance],
+			['base_level_changed', \&on_possible_raise_chance]
+		);
+	} else {
+		$adding_hook = Plugins::addHooks(
+			['AI_pre',            \&on_ai_pre]
+		);
 	}
+	$status = $new_status;
 }
 
 sub getNextStat {
@@ -62,107 +63,61 @@ sub getNextStat {
 		$amount += $char->{"$step->{'stat'}_bonus"} unless $config{statsAddAuto_dontUseBonus};	
 		if ($amount < $step->{'value'}) {
 			$next_stat = $step->{'stat'};
-			return;
+			return 1;
 		}
 	}
 	message "raiseStat has no more stats to raise; disabling statsAddAuto\n", 'success';
-	deactivate();
-}
-
-sub stat_changed {
-	getNextStat();
-	if (!canRaise() && $status == ADDING) {
-		Plugins::delHook($adding_hook);
-		$active_hooks = Plugins::addHooks(
-			['map_loaded',           \&endMapChange],
-			['packet/sendMapLoaded', \&endMapChange]
-		);
-		$status = ACTIVE;
-	}
+	return 0;
 }
 
 sub canRaise {
-	return 0 if ($status == INACTIVE);
-	if ($char->{points_free} && $char->{"points_".$next_stat} && $char->{points_free} >= $char->{"points_".$next_stat}) {
-		return 1;
-	} else {
-		return 0;
-	}
+	return 1 if ($status != INACTIVE && $char->{points_free} && $char->{"points_".$next_stat} && $char->{points_free} >= $char->{"points_".$next_stat});
+	return 0;
+}
+
+sub on_possible_raise_chance {
+	changeStatus(ADDING) if ($status == ACTIVE);
+}
+
+sub on_ai_pre {
+	return if !$char;
+	return if $net->getState != Network::IN_GAME;
+	return if !timeOut( $timeout );
+	$timeout->{time} = time;
+	return changeStatus(INACTIVE) unless (getNextStat());
+	return changeStatus(ACTIVE) unless (canRaise());
+	raiseStat();
 }
 
 sub raiseStat {
-	if (timeOut($time_sent,1)) {
-		$time_sent = time;
-		if (!canRaise()) {
-			Plugins::delHook($adding_hook);
-			$active_hooks = Plugins::addHooks(
-				['map_loaded',           \&endMapChange],
-				['packet/sendMapLoaded', \&endMapChange]
-			);
-			$status = ACTIVE;
-			return;
-		}
-		message "Auto-adding stat ".$next_stat." to ".($char->{$next_stat}+1)."\n";
-		$messageSender->sendAddStatusPoint({
-			str => STATUS_STR,
-			agi => STATUS_AGI,
-			vit => STATUS_VIT,
-			int => STATUS_INT,
-			dex => STATUS_DEX,
-			luk => STATUS_LUK,
-		}->{$next_stat});
-	}
-}
-
-sub endMapChange {
-	if (!$next_stat) {
-		getNextStat();
-	} else {
-		if (canRaise() && $status == ACTIVE) {
-			message "adding hooks\n","system";
-			$adding_hook = Plugins::addHooks(
-				['packet_charStats',  \&stat_changed],
-				['AI_pre',            \&raiseStat]
-			);
-			Plugins::delHook($active_hooks);
-			$status = ADDING;
-		}
-	}
+	message "Auto-adding stat ".$next_stat." to ".($char->{$next_stat}+1)."\n";
+	$messageSender->sendAddStatusPoint({
+		str => STATUS_STR,
+		agi => STATUS_AGI,
+		vit => STATUS_VIT,
+		int => STATUS_INT,
+		dex => STATUS_DEX,
+		luk => STATUS_LUK,
+	}->{$next_stat});
 }
 
 sub on_configModify {
 	my (undef, $args) = @_;
 	if ($args->{key} eq 'statsAddAuto') {
-		if ($args->{val} == 0) {
-			deactivate();
-		} elsif ($args->{val} == 1) {
-			checkSteps();
-		} else {
-			error "Unknown value set to 'statsAddAuto'; disabling statsAddAuto\n";
-			deactivate();
-		}
+		return changeStatus(ACTIVE) if ($args->{val} && $config{statsAddAuto_list} && validateSteps($config{statsAddAuto_list}));
 	} elsif ($args->{key} eq 'statsAddAuto_list') {
-		checkSteps($args->{val});
+		return changeStatus(ACTIVE) if ($args->{val} && $config{statsAddAuto} && validateSteps($args->{val}));
 	}
+	return changeStatus(INACTIVE);
 }
 
 sub checkConfig {
-	if ($config{statsAddAuto}) {
-		if ($config{statsAddAuto_list}) {
-			checkSteps($config{statsAddAuto_list});
-		} else {
-			deactivate();
-		}
-	} else {
-		deactivate();
-	}
+	return changeStatus(ACTIVE) if ($config{statsAddAuto} && $config{statsAddAuto_list} && validateSteps($config{statsAddAuto_list}));
+	return changeStatus(INACTIVE);
 }
 
-sub checkSteps {
+sub validateSteps {
 	my $list = shift;
-	if (!$list) {
-		$list = $config{statsAddAuto_list};
-	}
 	my @steps = split(/\s*,+\s*/, $list);
 	undef @stats_to_add;
 	foreach my $step (@steps) {
@@ -171,20 +126,15 @@ sub checkSteps {
 			my $stat = $2;
 			if ($value > 99 && !$config{statsAdd_over_99}) {
 				error "Stat '".$step."' is more then 99 and 'statsAdd_over_99' is disabled; disabling statsAddAuto\n";
-				deactivate();
-				return;
+				return 0;
 			}
 			push(@stats_to_add, {'value' => $value, 'stat' => $stat});
 		} else {
 			error "Unknown stat ".$step."; disabling statsAddAuto\n";
-			deactivate();
-			return;
+			return 0;
 		}
 	}
-	getNextStat();
-	if ($status == INACTIVE) {
-		activate();
-	}
+	return 1;
 }
 
 
