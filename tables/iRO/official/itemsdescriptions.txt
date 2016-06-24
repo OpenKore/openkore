@@ -73591,3 +73591,36 @@ A costume of the Volumne FHat Item! Wear it with pride.
 20197#
 A beret decked out to resemble a cute amistr
 #
+
+20763#
+Until August 5th, 2016 Costume Amistr Bag will have the following effects:
+
+SP + 10
+HP + 150
+HP Recovery + 5
+SP Recovery + 3
+
+Class : ^777777Costume^000000
+Location : ^777777Garment ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+
+#
+
+17709#
+Contains 1 Costume Amistr Bag
+#
+
+31052#
+A protective mask that was used by Alchemists to protect from poisonous gas.
+Type : ^777777Costume^000000 Armor : ^7777770^000000
+Location : ^777777Upper/Mid/Lower ^000000Weight : ^7777770^000000
+Req. level : ^7777771^000000
+Job : ^777777All Jobs^000000
+#
+23164#
+A potion created and distributed by 13th anniversary NPC Granpa Boxter.
+No matter who you race with, you will pass everyone.
+Weight : ^7777771^000000
+#

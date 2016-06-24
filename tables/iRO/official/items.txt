@@ -8552,3 +8552,7 @@
 12376#Mysterious_Can_Mackerel_Flavor#
 20100#Costume:Volume_Feather_Hat#
 20197#Costume:Amistr_Beret#
+17709#Costume_Amistr_Bag_Box#
+20763#Costume_Amistr_Bag#
+31052#Costume_Alchemist_Mask#
+23164#Granpa_Speed_potion#
