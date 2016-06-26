@@ -20,7 +20,7 @@ my $base_hooks = Plugins::addHooks(
    );
 
 my @stats_to_add;
-my $active_hooks;
+my $waiting_hooks;
 my $adding_hook;
 my $next_stat;
 my $status;
@@ -28,14 +28,14 @@ my $timeout = { time => 0, timeout => 1 };
 
 use constant {
 	INACTIVE => 0,
-	ACTIVE => 1,
+	AWAITING_CHANCE_OR_ANSWER => 1,
 	ADDING => 2
 };
 
 sub on_unload {
    Plugins::delHook($base_hooks);
    changeStatus(INACTIVE);
-   message "raiseStat plugin unloading or reloading\n", 'success';
+   message "[raiseStat] Plugin unloading or reloading\n", 'success';
 }
 
 ################################################################
@@ -45,29 +45,47 @@ sub on_unload {
 #  look for opportunities to raise stats.
 #  During status == 1 the plugin will be active and will
 #  have 'speculative' hooks added to try to look for
-#  opportunities to raise stats.
+#  opportunities to raise stats, during this phase plugin
+#  will also be awaiting for an answer after we sent a
+#  raise request to server.
 #  During status == 2 the plugin will be active and will
 #  have 'AI_pre' hook active, on each AI call the plugin
 #  will try to raise stats if possible.
 sub changeStatus {
 	my $new_status = shift;
-	Plugins::delHook($active_hooks) if ($status == ACTIVE);
+	Plugins::delHook($waiting_hooks) if ($status == AWAITING_CHANCE_OR_ANSWER);
 	Plugins::delHook($adding_hook) if ($status == ADDING);
 	if ($new_status == INACTIVE) {
 		undef $next_stat;
 		undef @stats_to_add;
-	} elsif ($new_status == ACTIVE) {
-		$active_hooks = Plugins::addHooks(
-			['map_loaded',           \&on_possible_raise_chance],
-			['packet/sendMapLoaded', \&on_possible_raise_chance],
-			['base_level_changed', \&on_possible_raise_chance]
+		debug "[raiseStat] Plugin stage changed to 'INACTIVE'\n";
+	} elsif ($new_status == AWAITING_CHANCE_OR_ANSWER) {
+		$waiting_hooks = Plugins::addHooks(
+			['packet/stats_added', \&on_possible_raise_chance_or_answer],
+			['packet/stats_info', \&on_possible_raise_chance_or_answer],
+			['packet/stat_info', \&on_possible_raise_chance_or_answer] # 9 is points_free
 		);
-	} else {
+		debug "[raiseStat] Plugin stage changed to 'AWAITING_CHANCE_OR_ANSWER'\n";
+	} elsif ($new_status == ADDING) {
 		$adding_hook = Plugins::addHooks(
 			['AI_pre',            \&on_ai_pre]
 		);
+		debug "[raiseStat] Plugin stage changed to 'ADDING'\n";
 	}
 	$status = $new_status;
+}
+
+################################################################
+#  on_possible_raise_chance_or_answer() is the function called by
+#  our 'speculative' hooks to try to look for
+#  opportunities to raise stats or server answers to our raise
+#  requests. It changes the plugin status to 'ADDING' (2).
+sub on_possible_raise_chance_or_answer {
+	my $hookName = shift;
+	my $args = shift;
+	return if ($hookName eq 'packet/stat_info' && $args && $args->{type} != 9);
+	debug "[raiseStat] Received a raise chance or answer\n";
+	changeStatus(ADDING);
 }
 
 ################################################################
@@ -83,10 +101,11 @@ sub getNextStat {
 		$amount += $char->{"$step->{'stat'}_bonus"} unless $config{statsAddAuto_dontUseBonus};	
 		if ($amount < $step->{'value'}) {
 			$next_stat = $step->{'stat'};
+			debug "[raiseStat] Decided next stat to raise: '".$next_stat."'\n";
 			return 1;
 		}
 	}
-	message "raiseStat has no more stats to raise; disabling statsAddAuto\n", 'success';
+	message "[raiseStat] No more stats to raise; disabling statsAddAuto\n", 'success';
 	return 0;
 }
 
@@ -100,15 +119,6 @@ sub canRaise {
 }
 
 ################################################################
-#  on_possible_raise_chance() is the function called by
-#  our 'speculative' hooks to try to look for
-#  opportunities to raise stats. It changes the plugin status
-#  to 'ADDING' (2).
-sub on_possible_raise_chance {
-	changeStatus(ADDING) if ($status == ACTIVE);
-}
-
-################################################################
 #  on_ai_pre() is called by 'AI_pre' (duh) when status is
 #  'ADDING' (2), it checks if we can raise our stats, and
 #  if we can't, change plugin status, otherwise calls raiseStat()
@@ -118,15 +128,20 @@ sub on_ai_pre {
 	return if !timeOut( $timeout );
 	$timeout->{time} = time;
 	return changeStatus(INACTIVE) unless (getNextStat());
-	return changeStatus(ACTIVE) unless (canRaise());
+	unless (canRaise()) {
+		debug "[raiseStat] Not enough free points to raise '".$next_stat."'\n";
+		return changeStatus(AWAITING_CHANCE_OR_ANSWER);
+	}
+	debug "[raiseStat] We have enough free points to raise '".$next_stat."'\n";
 	raiseStat();
+	changeStatus(AWAITING_CHANCE_OR_ANSWER);
 }
 
 ################################################################
 #  raiseStat() sends to the server our stat raise request and
 #  prints it on console.
 sub raiseStat {
-	message "Auto-adding stat ".$next_stat." to ".($char->{$next_stat}+1)."\n";
+	message "[raiseStat] Auto-adding stat ".$next_stat." to ".($char->{$next_stat}+1)."\n";
 	$messageSender->sendAddStatusPoint({
 		str => STATUS_STR,
 		agi => STATUS_AGI,
@@ -143,8 +158,8 @@ sub raiseStat {
 #  change plugin status.
 sub on_configModify {
 	my (undef, $args) = @_;
-	return changeStatus(ACTIVE) if ($args->{key} eq 'statsAddAuto' && $args->{val} && $config{statsAddAuto_list} && validateSteps($config{statsAddAuto_list}));
-	return changeStatus(ACTIVE) if ($args->{key} eq 'statsAddAuto_list' && $args->{val} && $config{statsAddAuto} && validateSteps($args->{val}));
+	return changeStatus(ADDING) if ($args->{key} eq 'statsAddAuto' && $args->{val} && $config{statsAddAuto_list} && validateSteps($config{statsAddAuto_list}));
+	return changeStatus(ADDING) if ($args->{key} eq 'statsAddAuto_list' && $args->{val} && $config{statsAddAuto} && validateSteps($args->{val}));
 	return changeStatus(INACTIVE) if ($args->{key} eq 'statsAddAuto_list' || $args->{key} eq 'statsAddAuto');
 }
 
@@ -153,7 +168,7 @@ sub on_configModify {
 #  checks our configuration on config.txt and changes plugin
 #  status.
 sub checkConfig {
-	return changeStatus(ACTIVE) if ($config{statsAddAuto} && $config{statsAddAuto_list} && validateSteps($config{statsAddAuto_list}));
+	return changeStatus(ADDING) if ($config{statsAddAuto} && $config{statsAddAuto_list} && validateSteps($config{statsAddAuto_list}));
 	return changeStatus(INACTIVE);
 }
 
@@ -179,6 +194,7 @@ sub validateSteps {
 			return 0;
 		}
 	}
+	debug "[raiseStat] Configuration set in config.txt is valid\n";
 	return 1;
 }
 

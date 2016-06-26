@@ -20,7 +20,7 @@ my $base_hooks = Plugins::addHooks(
    );
 
 my @skills_to_add;
-my $active_hooks;
+my $waiting_hooks;
 my $adding_hook;
 my $next_skill;
 my $status;
@@ -28,14 +28,14 @@ my $timeout = { time => 0, timeout => 1 };
 
 use constant {
 	INACTIVE => 0,
-	ACTIVE => 1,
+	AWAITING_CHANCE_OR_ANSWER => 1,
 	ADDING => 2
 };
 
 sub on_unload {
    Plugins::delHook($base_hooks);
    changeStatus(INACTIVE);
-   message "raiseSkill plugin unloading or reloading\n", 'success';
+   message "[raiseSkill] Plugin unloading or reloading\n", 'success';
 }
 
 ################################################################
@@ -45,29 +45,47 @@ sub on_unload {
 #  look for opportunities to raise skills.
 #  During status == 1 the plugin will be active and will
 #  have 'speculative' hooks added to try to look for
-#  opportunities to raise skills.
+#  opportunities to raise skills, during this phase plugin
+#  will also be awaiting for an answer after we sent a
+#  raise request to server.
 #  During status == 2 the plugin will be active and will
 #  have 'AI_pre' hook active, on each AI call the plugin
 #  will try to raise skills if possible.
 sub changeStatus {
 	my $new_status = shift;
-	Plugins::delHook($active_hooks) if ($status == ACTIVE);
+	Plugins::delHook($waiting_hooks) if ($status == AWAITING_CHANCE_OR_ANSWER);
 	Plugins::delHook($adding_hook) if ($status == ADDING);
 	if ($new_status == INACTIVE) {
 		undef $next_skill;
 		undef @skills_to_add;
-	} elsif ($new_status == ACTIVE) {
-		$active_hooks = Plugins::addHooks(
-			['map_loaded',           \&on_possible_raise_chance],
-			['packet/sendMapLoaded', \&on_possible_raise_chance],
-			['job_level_changed', \&on_possible_raise_chance]
+		debug "[raiseSkill] Plugin stage changed to 'INACTIVE'\n";
+	} elsif ($new_status == AWAITING_CHANCE_OR_ANSWER) {
+		$waiting_hooks = Plugins::addHooks(
+			['packet_charSkills', \&on_possible_raise_chance_or_answer],
+			['packet_homunSkills', \&on_possible_raise_chance_or_answer],
+			['packet/stat_info', \&on_possible_raise_chance_or_answer], # 12 is points_skill
 		);
-	} else {
+		debug "[raiseSkill] Plugin stage changed to 'AWAITING_CHANCE_OR_ANSWER'\n";
+	} elsif ($new_status == ADDING) {
 		$adding_hook = Plugins::addHooks(
 			['AI_pre',            \&on_ai_pre]
 		);
+		debug "[raiseSkill] Plugin stage changed to 'ADDING'\n";
 	}
 	$status = $new_status;
+}
+
+################################################################
+#  on_possible_raise_chance_or_answer() is the function called by
+#  our 'speculative' hooks to try to look for
+#  opportunities to raise skills or server answers to our raise
+#  requests. It changes the plugin status to 'ADDING' (2).
+sub on_possible_raise_chance_or_answer {
+	my $hookName = shift;
+	my $args = shift;
+	return if ($hookName eq 'packet/stat_info' && $args && $args->{type} != 12);
+	debug "[raiseSkill] Received a raise chance or answer\n";
+	changeStatus(ADDING);
 }
 
 ################################################################
@@ -82,10 +100,11 @@ sub getNextSkill {
 		my $wanted_skill_level = $skill->getLevel;
 		if ($char_skill_level < $wanted_skill_level) {
 			$next_skill = $skill;
+			debug "[raiseSkill] Decided next skill to raise: '".$next_skill."'\n";
 			return 1;
 		}
 	}
-	message "raiseSkill has no more skills to raise; disabling skillsAddAuto\n", 'success';
+	message "[raiseSkill] No more skills to raise; disabling skillsAddAuto\n", 'success';
 	return 0;
 }
 
@@ -94,15 +113,6 @@ sub getNextSkill {
 #  we have free skill points.
 sub canRaise {
 	$char->{points_skill};
-}
-
-################################################################
-#  on_possible_raise_chance() is the function called by
-#  our 'speculative' hooks to try to look for
-#  opportunities to raise skills. It changes the plugin status
-#  to 'ADDING' (2).
-sub on_possible_raise_chance {
-	changeStatus(ADDING) if ($status == ACTIVE);
 }
 
 ################################################################
@@ -115,8 +125,13 @@ sub on_ai_pre {
 	return if !timeOut( $timeout );
 	$timeout->{time} = time;
 	return changeStatus(INACTIVE) unless (getNextSkill());
-	return changeStatus(ACTIVE) unless (canRaise());
+	unless (canRaise()) {
+		debug "[raiseSkill] We don't have any free skill point\n";
+		return changeStatus(AWAITING_CHANCE_OR_ANSWER);
+	}
+	debug "[raiseSkill] We have free skill points\n";
 	raiseSkill();
+	changeStatus(AWAITING_CHANCE_OR_ANSWER);
 }
 
 ################################################################
@@ -133,8 +148,8 @@ sub raiseSkill {
 #  change plugin status.
 sub on_configModify {
 	my (undef, $args) = @_;
-	return changeStatus(ACTIVE) if ($args->{key} eq 'skillsAddAuto' && $args->{val} && $config{skillsAddAuto_list} && validateSteps($config{skillsAddAuto_list}));
-	return changeStatus(ACTIVE) if ($args->{key} eq 'skillsAddAuto_list' && $args->{val} && $config{skillsAddAuto} && validateSteps($args->{val}));
+	return changeStatus(ADDING) if ($args->{key} eq 'skillsAddAuto' && $args->{val} && $config{skillsAddAuto_list} && validateSteps($config{skillsAddAuto_list}));
+	return changeStatus(ADDING) if ($args->{key} eq 'skillsAddAuto_list' && $args->{val} && $config{skillsAddAuto} && validateSteps($args->{val}));
 	return changeStatus(INACTIVE) if ($args->{key} eq 'skillsAddAuto_list' || $args->{key} eq 'skillsAddAuto');
 }
 
@@ -143,7 +158,7 @@ sub on_configModify {
 #  checks our configuration on config.txt and changes plugin
 #  status.
 sub checkConfig {
-	return changeStatus(ACTIVE) if ($config{skillsAddAuto} && $config{skillsAddAuto_list} && validateSteps($config{skillsAddAuto_list}));
+	return changeStatus(ADDING) if ($config{skillsAddAuto} && $config{skillsAddAuto_list} && validateSteps($config{skillsAddAuto_list}));
 	return changeStatus(INACTIVE);
 }
 
@@ -165,6 +180,7 @@ sub validateSteps {
 			return 0;
 		}
 	}
+	debug "[raiseSkill] Configuration set in config.txt is valid\n";
 	return 1;
 }
 
