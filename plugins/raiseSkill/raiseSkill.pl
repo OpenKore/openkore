@@ -109,9 +109,9 @@ sub getNextSkill {
 }
 
 ################################################################
-#  canRaise() is the function responsible for checking if
+#  hasFreeSkillPoint() is the function responsible for checking if
 #  we have free skill points.
-sub canRaise {
+sub hasFreeSkillPoint {
 	$char->{points_skill};
 }
 
@@ -125,13 +125,29 @@ sub on_ai_pre {
 	return if !timeOut( $timeout );
 	$timeout->{time} = time;
 	return changeStatus(INACTIVE) unless (getNextSkill());
-	unless (canRaise()) {
+	unless (hasFreeSkillPoint()) {
 		debug "[raiseSkill] We don't have any free skill point\n";
 		return changeStatus(AWAITING_CHANCE_OR_ANSWER);
 	}
 	debug "[raiseSkill] We have free skill points\n";
+	unless (canRaiseFurther()) {
+		debug "[raiseSkill] Skill '".$next_skill->getName."' cannot be raised further\n";
+		return changeStatus(INACTIVE);
+	}
+	debug "[raiseSkill] We can raise '".$next_skill->getName."' further\n";
 	raiseSkill();
 	changeStatus(AWAITING_CHANCE_OR_ANSWER);
+}
+
+sub canRaiseFurther {
+	if (!$char->{skills}{$next_skill->getHandle()}) {
+		error "[raiseSkill] Skill '".$next_skill->getName."' does not exist in your skill tree; disabling skillsAddAuto\n";
+		return 0;
+	} elsif ($char->{skills}{$next_skill->getHandle()}{up} == 0) {
+		error "[raiseSkill] Skill '".$next_skill->getName."' reached its maximum level or prerequisite not reached; disabling skillsAddAuto\n";
+		return 0;
+	}
+	return 1;
 }
 
 ################################################################
