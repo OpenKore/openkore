@@ -333,3 +333,7 @@
 0228 gameguard_sync
 020D Homunculus Feed
 02AF Message ID Encryption Initialized
+0827 Char Delete
+0829 Char Delete Accept
+098F Char Delete Accept
+082B Char Delete Cancel
