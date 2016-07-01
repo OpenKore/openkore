@@ -5505,7 +5505,6 @@
 20161#Rental_Saharic_Saber#
 20162#Rental_Saharic_Gladius#
 20163#Rental_Saharic_Chain#
-20164#Rental_Saharic_Book#
 20165#Rental_Saharic_Hypnotist's_Staff#
 20166#Rental_Saharic_Knuckle_Duster#
 20167#Rental_Saharic_Lute#
@@ -8556,3 +8555,4 @@
 20763#Costume_Amistr_Bag#
 31052#Costume_Alchemist_Mask#
 23164#Granpa_Speed_potion#
+20164#Costume:_Duneyrr_Helm#
