@@ -2035,3 +2035,14 @@ dali02.rsw#dali.rsw#
 1@air1.gat#1@air1.gat#
 1@air1.rsw#1@air1.rsw#
 삯샺샎엍웤샌붺\map\1@air1.bmp#삯샺샎엍웤샌붺\map\1@air1.bmp#
+
+
+epay_dun00l.gnd#pay_dun00.gnd#
+epay_dun00l.gat#pay_dun00.gat#
+epay_dun00l.rsw#pay_dun00.rsw#
+삯샺샎엍웤샌붺\map\epay_dun00l.bmp#삯샺샎엍웤샌붺\map\pay_dun00.bmp#
+
+emos_dun02h.gnd#mosk_dun02.gnd#
+emos_dun02h.gat#mosk_dun02.gat#
+emos_dun02h.rsw#mosk_dun02.rsw#
+삯샺샎엍웤샌붺\map\emos_dun02h.bmp#삯샺샎엍웤샌붺\map\mosk_dun02.bmp#
