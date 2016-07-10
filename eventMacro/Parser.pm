@@ -12,7 +12,7 @@ our @EKSPORT_OK = qw(parseCmd);
 use Globals;
 use Utils qw/existsInList/;
 use List::Util qw(max min sum);
-use Log qw(message warning error);
+use Log qw(message error warning debug);
 use Text::Balanced qw/extract_bracketed/;
 
 

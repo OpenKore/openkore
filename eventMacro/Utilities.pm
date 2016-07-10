@@ -8,12 +8,12 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(ai_isIdle q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord callMacro getArgFromList getListLenght sameParty processCmd);
+	getWord call_macro getArgFromList getListLenght sameParty processCmd);
 
 use Utils;
 use Globals;
 use AI;
-use Log qw(warning error);
+use Log qw(message error warning debug);
 
 use eventMacro::Core;
 use eventMacro::Data;
@@ -25,31 +25,31 @@ our ($rev) = q$Revision: 6812 $ =~ /(\d+)/;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
-	return 1 if $eventMacro->{macro_runner}->overrideAI;
+	return 1 if $eventMacro->{Macro_Runner}->overrideAI;
 
 	# now check for orphaned script object
 	# may happen when messing around with "ai clear" and stuff.
-	if (defined $eventMacro->{macro_runner} && !AI::inQueue('macro')) {
-		my $method = $eventMacro->{macro_runner}->orphan;
+	if (defined $eventMacro->{Macro_Runner} && !AI::inQueue('macro')) {
+		my $method = $eventMacro->{Macro_Runner}->orphan;
 
 		# 'terminate' undefs the macro object and returns "ai is not idle"
 		if ($method eq 'terminate') {
-			undef $eventMacro->{macro_runner};
+			undef $eventMacro->{Macro_Runner};
 			return 0
 		# 'reregister' re-inserts "macro" in ai_queue at the first position
 		} elsif ($method eq 'reregister') {
-			$eventMacro->{macro_runner}->register;
+			$eventMacro->{Macro_Runner}->register;
 			return 1
 		# 'reregister_safe' waits until AI is idle then re-inserts "macro"
 		} elsif ($method eq 'reregister_safe') {
 			if (AI::isIdle || AI::is('deal')) {
-				$eventMacro->{macro_runner}->register;
+				$eventMacro->{Macro_Runner}->register;
 				return 1
 			}
 			return 0
 		} else {
 			error "unknown 'orphan' method. terminating macro\n", "macro";
-			undef $eventMacro->{macro_runner};
+			undef $eventMacro->{Macro_Runner};
 			return 0
 		}
 	}
@@ -470,26 +470,26 @@ sub processCmd {
 	if (defined $_[0]) {
 		if ($_[0] ne '') {
 			unless (Commands::run($command)) {
-				my $errorMsg = sprintf("[macro] %s failed with %s\n", $eventMacro->{macro_runner}->name, $command);
+				my $errorMsg = sprintf("[macro] %s failed with %s\n", $eventMacro->{Macro_Runner}->name, $command);
 				
 				my $hookArgs = {
 					'message' => $errorMsg,
-					'name' => $eventMacro->{macro_runner}->name,
+					'name' => $eventMacro->{Macro_Runner}->name,
 					'error' => 'Commands::run failed',
 				};
 				Plugins::callHook ('macro/error', $hookArgs);
 				return $hookArgs->{continue} if $hookArgs->{return};
 				
 				error $errorMsg, "macro";
-				undef $eventMacro->{macro_runner};
+				undef $eventMacro->{Macro_Runner};
 				return
 			}
 		}
-		$eventMacro->{macro_runner}->ok;
-		if (defined $eventMacro->{macro_runner} && $eventMacro->{macro_runner}->finished) {undef $eventMacro->{macro_runner}}
+		$eventMacro->{Macro_Runner}->ok;
+		if (defined $eventMacro->{Macro_Runner} && $eventMacro->{Macro_Runner}->finished) {undef $eventMacro->{Macro_Runner}}
 	} else {
-		my $name = (defined $eventMacro->{macro_runner}->{subcall}) ? $eventMacro->{macro_runner}->{subcall}->name : $eventMacro->{macro_runner}->name;
-		my $error = $eventMacro->{macro_runner}->error;
+		my $name = (defined $eventMacro->{Macro_Runner}->{subcall}) ? $eventMacro->{Macro_Runner}->{subcall}->name : $eventMacro->{Macro_Runner}->name;
+		my $error = $eventMacro->{Macro_Runner}->error;
 		my $errorMsg = sprintf(
 			"[macro] %s error: %s\n",
 			$name =~ /^tempMacro\d+$/ && $eventMacro->is_var_defined('.caller') ? $eventMacro->get_var('.caller').'.call' : $name,
@@ -505,7 +505,7 @@ sub processCmd {
 		return $hookArgs->{continue} if $hookArgs->{return};
 		
 		error $errorMsg, "macro";
-		undef $eventMacro->{macro_runner};
+		undef $eventMacro->{Macro_Runner};
 		return
 	}
 	

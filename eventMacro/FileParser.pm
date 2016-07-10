@@ -12,7 +12,7 @@ use Globals;
 use Utils;
 use Utils::Exceptions;
 use List::Util qw(max min sum);
-use Log qw(message warning error);
+use Log qw(message error warning debug);
 use Text::Balanced qw/extract_bracketed/;
 
 use eventMacro::Core;

@@ -4,28 +4,43 @@ use strict;
 use Settings;
 use Globals;
 
-use Log qw(message error warning);
+use Log qw(message error warning debug);
 
 use eventMacro::Data;
 use eventMacro::Utilities qw(between cmpr match getArgs refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount callMacro sameParty);
+	getStorageAmount call_macro sameParty);
 
 sub new {
 	my ($class, $condition_code) = @_;
 	my $self = bless {}, $class;
 	
-	$self->{name} = 'job_level';
-	$self->{variables} = [];
-	$self->{code_level} = undef;
-	$self->{code_condition} = undef;
-	return undef unless ($self->parse_sintax($condition_code));
+	$self->{Name} = 'job_level';
+	$self->{Variables} = [];
+	$self->{Code_Level} = undef;
+	$self->{Code_Condition} = undef;
+	return undef unless ($self->parse_syntax($condition_code));
 	
-	$self->{isUniqueCondition} = 0;
-	$self->{isFulfilled} = 0;
-	$self->{hooks} = ['packet/sendMapLoaded', 'packet/stat_info'];
+	$self->{is_Unique_Condition} = 0;
+	$self->{is_Fulfilled} = 0;
+	$self->{Hooks} = ['packet/sendMapLoaded', 'packet/stat_info'];
 
 	return $self;
+}
+
+sub get_hooks {
+	my ($self) = @_;
+	return $self->{Hooks};
+}
+
+sub get_variables {
+	my ($self) = @_;
+	return $self->{Variables};
+}
+
+sub get_name {
+	my ($self) = @_;
+	return $self->{Name};
 }
 
 sub validate_condition_status {
@@ -34,33 +49,33 @@ sub validate_condition_status {
 	return if ($event_name eq 'packet/stat_info' && $args && $args->{type} != 55);
 	
 	if ($event_name eq 'variable_event') {
-		$self->{isFulfilled} = cmpr($char->{lv_job}, $self->{code_condition}, $args->{'variable_value'});
+		$self->{is_Fulfilled} = cmpr($char->{lv_job}, $self->{Code_Condition}, $args->{'variable_value'});
 	} else {
-		if (@{$self->{variables}} > 0) {
-			my $variable_value = $eventMacro->get_var($self->{code_level});
+		if (@{$self->{Variables}} > 0) {
+			my $variable_value = $eventMacro->get_var($self->{Code_Level});
 			if (defined $variable_value) {
-				$self->{isFulfilled} = cmpr($char->{lv_job}, $self->{code_condition}, $variable_value);
+				$self->{is_Fulfilled} = cmpr($char->{lv_job}, $self->{Code_Condition}, $variable_value);
 			} else {
-				$self->{isFulfilled} = 0;
+				$self->{is_Fulfilled} = 0;
 			}
 		} else {
-			$self->{isFulfilled} = cmpr($char->{lv_job}, $self->{code_condition}, $self->{code_level});
+			$self->{is_Fulfilled} = cmpr($char->{lv_job}, $self->{Code_Condition}, $self->{Code_Level});
 		}
 	}
 }
 
-sub parse_sintax {
+sub parse_syntax {
 	my ($self, $condition_code) = @_;
 	if ($condition_code =~ /([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*|\d+|\d+\s*\.{2}\s*\d+)\s*$/) {
-		$self->{code_condition} = $1;
+		$self->{Code_Condition} = $1;
 		my $code_level = $2;
 		if ($code_level =~ /^\s*\$/) {
 			my ($var) = $code_level =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
 			return 0 unless defined $var;
-			$self->{code_level} = $var;
-			push (@{$self->{variables}}, $var);
+			$self->{Code_Level} = $var;
+			push (@{$self->{Variables}}, $var);
 		} else {
-			$self->{code_level} = $code_level;
+			$self->{Code_Level} = $code_level;
 		}
 		return 1;
 	}
@@ -69,12 +84,12 @@ sub parse_sintax {
 
 sub is_unique_condition {
 	my ($self) = @_;
-	return $self->{isUniqueCondition};
+	return $self->{is_Unique_Condition};
 }
 
 sub is_fulfilled {
 	my ($self) = @_;
-	return $self->{isFulfilled};
+	return $self->{is_Fulfilled};
 }
 
 1;

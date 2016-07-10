@@ -26,7 +26,7 @@ sub add {
 	my $listIndex = $self->SUPER::add($member);
 	$member->{listIndex} = $listIndex;
 
-	my $indexSlot = $self->getNameIndexSlot($member->{name});
+	my $indexSlot = $self->getNameIndexSlot($member->get_name());
 	push @{$indexSlot}, $listIndex;
 
 	return $listIndex;
@@ -47,7 +47,7 @@ sub remove {
 
 	my $result = $self->SUPER::remove($member);
 	if ($result) {
-		my $indexSlot = $self->getNameIndexSlot($member->{name});
+		my $indexSlot = $self->getNameIndexSlot($member->get_name());
 		for (my $i = 0; $i < @{$indexSlot}; $i++) {
 			if ($indexSlot->[$i] == $member->{listIndex}) {
 				splice(@{$indexSlot}, $i, 1);
@@ -55,7 +55,7 @@ sub remove {
 			}
 		}
 		if (@{$indexSlot} == 0) {
-			delete $self->{nameIndex}{lc($member->{name})};
+			delete $self->{nameIndex}{lc($member->get_name())};
 		}
 	}
 	return $result;
@@ -83,7 +83,7 @@ sub checkValidity {
 	my ($self) = @_;
 	$self->SUPER::checkValidity();
 	foreach my $k (keys %{$self->{nameIndex}}) {
-		should(lc($self->getByName($k)->{name}), $k);
+		should(lc($self->getByName($k)->get_name()), $k);
 		should(lc $k, $k);
 	}
 }

@@ -8,7 +8,7 @@ use Settings;
 use Globals;
 use Utils;
 use Misc;
-use Log qw(message error warning);
+use Log qw(message error warning debug);
 
 use eventMacro::Core;
 use eventMacro::Data;
@@ -29,7 +29,7 @@ my $file_handle;
 my $file;
 
 sub Unload {
-	message "[eventMacro] Plugin unloading\n", 'success';
+	message "[eventMacro] Plugin unloading\n", "system";
 	Settings::removeFile($file_handle) if defined $file_handle;
 	undef $file_handle;
 	undef $file;
@@ -41,7 +41,7 @@ sub Unload {
 }
 
 sub onstart3 {
-	message "[eventMacro] Loading start\n","system";
+	debug "[eventMacro] Loading start\n", "eventMacro", 2;
 	&checkConfig;
 	$file_handle = Settings::addControlFile($file,loader => [\&parseAndHook], mustExist => 0);
 	Settings::loadByHandle($file_handle);
@@ -70,9 +70,9 @@ sub parseAndHook {
 	}
 	$eventMacro = new eventMacro::Core($file);
 	if (defined $eventMacro) {
-		message "[eventMacro] Loading success\n","system";
+		debug "[eventMacro] Loading success\n", "eventMacro", 2;
 	} else {
-		message "[eventMacro] Loading error\n","system";
+		debug "[eventMacro] Loading error\n", "eventMacro", 2;
 	}
 }
 

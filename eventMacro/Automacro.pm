@@ -2,60 +2,75 @@ package eventMacro::Automacro;
 
 use strict;
 use Globals;
-use Log qw(message error warning);
+use Log qw(message error warning debug);
 
 sub new {
 	my ($class, $name, $conditions, $parameters) = @_;
 	my $self = bless {}, $class;
 	
-	$self->{name} = $name;
-	$self->{isFulfilled} = 0;
+	$self->{Name} = $name;
+	$self->{is_Fulfilled} = 0;
 	
 	$self->{conditionList} = new eventMacro::Lists;
-	$self->{hooks} = {};
-	$self->{variables} = {};
-	$self->create_conditions_list($conditions);
+	$self->{Hooks} = {};
+	$self->{Variables} = {};
+	$self->create_conditions_list( $conditions );
 	
-	$self->{parameters} = {};
-	$self->set_parameters($parameters);
+	$self->{Parameters} = {};
+	$self->set_parameters( $parameters );
 	
 	return $self;
 }
 
+sub get_hooks {
+	my ($self) = @_;
+	return $self->{Hooks};
+}
+
+sub get_variables {
+	my ($self) = @_;
+	return $self->{Variables};
+}
+
+sub get_name {
+	my ($self) = @_;
+	return $self->{Name};
+}
+
 sub set_timeout_time {
 	my ($self, $time) = @_;
-	$self->{parameters}{time} = $time;
+	$self->{Parameters}{time} = $time;
 }
 
 sub disable {
 	my ($self) = @_;
-	$self->{parameters}{disabled} = 1;
-	message "[eventMacro] Disabling ".$self->{name}."\n","success";
+	$self->{Parameters}{disabled} = 1;
+	debug "[eventMacro] Disabling ".$self->get_name()."\n", "eventMacro", 2;
 	return 1;
 }
 
 sub enable {
 	my ($self) = @_;
-	$self->{parameters}{disabled} = 0;
-	message "[eventMacro] Enabling ".$self->{name}."\n","success";
+	$self->{Parameters}{disabled} = 0;
+	debug "[eventMacro] Enabling ".$self->get_name()."\n", "eventMacro", 2;
 	return 1;
 }
 
 sub is_disabled {
 	my ($self) = @_;
-	return $self->{parameters}{disabled};
+	return $self->{Parameters}{disabled};
 }
 
 sub is_timed_out {
 	my ($self) = @_;
-	return 1 unless $self->{parameters}{'timeout'};
-	return 1 if (timeOut(timeout => $self->{parameters}{'timeout'}, time => $self->{parameters}{time}));
+	return 1 unless ( $self->{Parameters}{'timeout'} );
+	return 1 if ( timeOut( timeout => $self->{Parameters}{'timeout'}, time => $self->{Parameters}{time} ) );
 	return 0;
 }
 
 sub get_parameter {
 	my ($self, $parameter) = @_;
-	return $self->{parameters}{$parameter};
+	return $self->{Parameters}{$parameter};
 }
 
 sub set_parameters {
@@ -63,53 +78,53 @@ sub set_parameters {
 	foreach (keys %{$parameters}) {
 		my $key = $_;
 		my $value = $parameters->{$_};
-		$self->{parameters}{$key} = $value;
+		$self->{Parameters}{$key} = $value;
 	}
 	#all parameters must be defined
-	if (!defined $self->{parameters}{'timeout'})  {
-		$self->{parameters}{'timeout'} = 0;
+	if (!defined $self->{Parameters}{'timeout'})  {
+		$self->{Parameters}{'timeout'} = 0;
 	}
-	if (!defined $self->{parameters}{'delay'})  {
-		$self->{parameters}{'delay'} = 0;
+	if (!defined $self->{Parameters}{'delay'})  {
+		$self->{Parameters}{'delay'} = 0;
 	}
-	if (!defined $self->{parameters}{'run-once'})  {
-		$self->{parameters}{'run-once'} = 0;
+	if (!defined $self->{Parameters}{'run-once'})  {
+		$self->{Parameters}{'run-once'} = 0;
 	}
-	if (!defined $self->{parameters}{'disabled'})  {
-		$self->{parameters}{'disabled'} = 0;
+	if (!defined $self->{Parameters}{'disabled'})  {
+		$self->{Parameters}{'disabled'} = 0;
 	}
-	if (!defined $self->{parameters}{'overrideAI'})  {
-		$self->{parameters}{'overrideAI'} = 0;
+	if (!defined $self->{Parameters}{'overrideAI'})  {
+		$self->{Parameters}{'overrideAI'} = 0;
 	}
-	if (!defined $self->{parameters}{'orphan'})  {
-		$self->{parameters}{'orphan'} = $config{macro_orphans};
+	if (!defined $self->{Parameters}{'orphan'})  {
+		$self->{Parameters}{'orphan'} = $config{macro_orphans};
 	}
-	if (!defined $self->{parameters}{'macro_delay'})  {
-		$self->{parameters}{'macro_delay'} = $timeout{eventMacro_delay}{timeout};
+	if (!defined $self->{Parameters}{'macro_delay'})  {
+		$self->{Parameters}{'macro_delay'} = $timeout{eventMacro_delay}{timeout};
 	}
-	if (!defined $self->{parameters}{'priority'})  {
-		$self->{parameters}{'priority'} = 0;
+	if (!defined $self->{Parameters}{'priority'})  {
+		$self->{Parameters}{'priority'} = 0;
 	}
-	if (!defined $self->{parameters}{'exclusive'})  {
-		$self->{parameters}{'exclusive'} = 0;
+	if (!defined $self->{Parameters}{'exclusive'})  {
+		$self->{Parameters}{'exclusive'} = 0;
 	}
-	$self->{parameters}{time} = 0;
+	$self->{Parameters}{time} = 0;
 }
 
 sub create_conditions_list {
 	my ($self, $conditions) = @_;
 	foreach (keys %{$conditions}) {
 		my $module = $_;
-		my @conditionsText = @{$conditions->{$_}};
+		my $conditionsText = $conditions->{$_};
 		eval "use $module";
-		foreach my $newConditionText (@conditionsText) {
-			my $cond = $module->new($newConditionText);
-			$self->{conditionList}->add($cond);
-			foreach my $hook (@{$cond->{hooks}}) {
-				push (@{$self->{hooks}{$hook}}, $cond->{listIndex});
+		foreach my $newConditionText ( @{$conditionsText} ) {
+			my $cond = $module->new( $newConditionText );
+			$self->{conditionList}->add( $cond );
+			foreach my $hook ( @{ $cond->get_hooks() } ) {
+				push ( @{ $self->{Hooks}{$hook} }, $cond->{listIndex} );
 			}
-			foreach my $variable (@{$cond->{variables}}) {
-				push (@{$self->{variables}{$variable}}, $cond->{listIndex});
+			foreach my $variable ( @{ $cond->get_variables() } ) {
+				push ( @{ $self->{Variables}{$variable} }, $cond->{listIndex} );
 			}
 		}
 	}
@@ -117,23 +132,22 @@ sub create_conditions_list {
 
 sub validate_automacro_status {
 	my ($self) = @_;
-	message "[eventMacro] Validating value of automacro ".$self->{name}." \n","success";
-	foreach my $condition (@{$self->{conditionList}->getItems()}) {
-		message "[eventMacro] Checking confition ".$condition->{name}." index ".$condition->{listIndex}." \n","success";
+	debug "[eventMacro] Validating value of automacro ".$self->get_name()." \n", "eventMacro", 2;
+	foreach my $condition ( @{ $self->{conditionList}->getItems() } ) {
+		debug "[eventMacro] Checking confition ".$condition->get_name()." index ".$condition->{listIndex}." \n", "eventMacro", 2;
 		next if ($condition->is_fulfilled());
-		message "[eventMacro] Not fulfilled \n","success";
-		$self->{isFulfilled} = 0;
+		debug "[eventMacro] Not fulfilled \n", "eventMacro", 2;
+		$self->{is_Fulfilled} = 0;
 		return;
 	}
-	message "[eventMacro] Successfully fulfilled \n","success";
-	$self->{isFulfilled} = 1;
+	debug "[eventMacro] Successfully fulfilled \n", "eventMacro", 2;
+	$self->{is_Fulfilled} = 1;
 }
 
-use Log qw(message error warning);
 sub are_conditions_fulfilled {
 	my ($self) = @_;
-	#message "[eventMacro] are_conditions_fulfilled called in Automacro ".$self->{name}.", value is ".$self->{isFulfilled}." \n","success";
-	return $self->{isFulfilled};
+	#debug "[eventMacro] are_conditions_fulfilled called in Automacro ".$self->get_name().", value is ".$self->{is_Fulfilled}." \n", "eventMacro", 2;
+	return $self->{is_Fulfilled};
 }
 
 1;

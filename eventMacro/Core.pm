@@ -2,7 +2,7 @@ package eventMacro::Core;
 
 use strict;
 use Globals;
-use Log qw(message error warning);
+use Log qw(message error warning debug);
 use Utils;
 
 use eventMacro::Core;
@@ -14,8 +14,6 @@ use eventMacro::Macro;
 use eventMacro::Utilities qw(ai_isIdle processCmd);
 use eventMacro::Runner;
 use eventMacro::Parser;
-
-use Data::Dumper;
 
 use constant {
 	CHECKING => 0,
@@ -34,77 +32,77 @@ sub new {
 	my $parse_result = parseMacroFile($file, 0);
 	return undef unless ($parse_result);
 	
-	$self->{macro_list} = new eventMacro::Lists;
+	$self->{Macro_List} = new eventMacro::Lists;
 	$self->create_macro_list($parse_result->{macros});
 	
-	$self->{automacro_list} = new eventMacro::Lists;
+	$self->{Automacro_List} = new eventMacro::Lists;
 	$self->create_automacro_list($parse_result->{automacros});
 	
-	$self->{status} = CHECKING;
-	$self->{paused} = NOT_PAUSED;
+	$self->{Status} = CHECKING;
+	$self->{Paused} = NOT_PAUSED;
 	
-	$self->{index_priority_list} = [];
+	$self->{Index_Priority_List} = [];
 	$self->create_priority_list();
 	
-	$self->{event_related_variables} = {};
-	$self->{event_related_hooks} = {};
-	$self->{hook_handles} = [];
+	$self->{Event_Related_Variables} = {};
+	$self->{Event_Related_Hooks} = {};
+	$self->{Hook_Handles} = [];
 	$self->create_callbacks();
 	
-	$self->{macro_runner} = undef;
-	$self->{mainLoop_hook_handle} = undef;
+	$self->{Macro_Runner} = undef;
+	$self->{mainLoop_Hook_Handle} = undef;
 	
-	$self->{variable_list_hash} = {};
+	$self->{Variable_List_Hash} = {};
 	
 	return $self;
 }
 
 sub unload {
 	my ($self) = @_;
-	$self->clearQueue();
-	$self->cleanHooks();
+	$self->clear_queue();
+	$self->clean_hooks();
 }
 
-sub cleanHooks {
+sub clean_hooks {
 	my ($self) = @_;
-	foreach (@{$self->{hook_handles}}) {Plugins::delHook($_)}
+	foreach (@{$self->{Hook_Handles}}) {Plugins::delHook($_)}
 }
 
 sub is_paused {
 	my ($self) = @_;
-	return ( $self->{paused} ? 1 : 0 );
+	return ( $self->{Paused} ? 1 : 0 );
 }
 
 sub is_executing {
 	my ($self) = @_;
-	return ( $self->{status} ? 1 : 0 );
+	return ( $self->{Status} ? 1 : 0 );
 }
 
 sub pause {
 	my ($self) = @_;
-	$self->{paused} = PAUSED;
+	$self->{Paused} = PAUSED;
 }
 
 sub unpause {
 	my ($self) = @_;
-	$self->{paused} = NOT_PAUSED;
+	$self->{Paused} = NOT_PAUSED;
 }
 
 sub create_priority_list {
 	my ($self) = @_;
 	
 	my %priority_hash;
-	foreach my $automacro (@{$self->{automacro_list}->getItems()}) {
+	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
 		$priority_hash{$automacro->{listIndex}} = $automacro->get_parameter('priority');
 	}
-	@{$self->{index_priority_list}} = sort { $priority_hash{$a} <=> $priority_hash{$b} } keys %priority_hash;
+	@{$self->{Index_Priority_List}} = sort { $priority_hash{$a} <=> $priority_hash{$b} } keys %priority_hash;
 }
 
 sub create_macro_list {
 	my ($self, $macro) = @_;
 	while (my ($name,$lines) = each %{$macro}) {
 		my $currentMacro = new eventMacro::Macro($name, $lines);
-		$self->{macro_list}->add($currentMacro);
+		$self->{Macro_List}->add($currentMacro);
 	}
 }
 
@@ -118,7 +116,7 @@ sub create_automacro_list {
 		#####No Conditions Check
 		####################################
 		if (!exists $value->{'conditions'} || !@{$value->{'conditions'}}) {
-			print AUTO "Ignoring automacro '$name' (munch, munch, no condition set)\n";
+			error "Ignoring automacro '$name'. There are no conditions set it in\n";
 			next AUTOMACRO;
 		}
 	
@@ -126,7 +124,7 @@ sub create_automacro_list {
 		#####No Parameters Check
 		####################################
 		if (!exists $value->{'parameters'} || !@{$value->{'parameters'}}) {
-			print AUTO "Ignoring automacro '$name' (munch, munch, no parameter set)\n";
+			error "Ignoring automacro '$name'. There are no parameters set in it\n";
 			next AUTOMACRO;
 		}
 		
@@ -138,48 +136,48 @@ sub create_automacro_list {
 				next AUTOMACRO;
 			}
 			###Parameter: call
-			if ($parameter->{'key'} eq "call" && !$self->{macro_list}->getByName($parameter->{'value'})) {
+			if ($parameter->{'key'} eq "call" && !$self->{Macro_List}->getByName($parameter->{'value'})) {
 				warning "Ignoring automacro '$name' (call '".$parameter->{'value'}."' is not a valid macro name)\n";
 				next AUTOMACRO;
 			
 			###Parameter: delay
 			} elsif ($parameter->{'key'} eq "delay" && $parameter->{'value'} !~ /\d+/) {
-				print AUTO "Ignoring automacro '$name' (delay parameter should be a number)\n";
+				error "Ignoring automacro '$name' (delay parameter should be a number)\n";
 				next AUTOMACRO;
 			
 			###Parameter: run-once
 			} elsif ($parameter->{'key'} eq "run-once" && $parameter->{'value'} !~ /[01]/) {
-				print AUTO "Ignoring automacro '$name' (run-once parameter should be '0' or '1')\n";
+				error "Ignoring automacro '$name' (run-once parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 			
 			###Parameter: disabled
 			} elsif ($parameter->{'key'} eq "disabled" && $parameter->{'value'} !~ /[01]/) {
-				print AUTO "Ignoring automacro '$name' (disabled parameter should be '0' or '1')\n";
+				error "Ignoring automacro '$name' (disabled parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 			
 			###Parameter: overrideAI
 			} elsif ($parameter->{'key'} eq "overrideAI" && $parameter->{'value'} !~ /[01]/) {
-				print AUTO "Ignoring automacro '$name' (overrideAI parameter should be '0' or '1')\n";
+				error "Ignoring automacro '$name' (overrideAI parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 			
 			###Parameter: exclusive
 			} elsif ($parameter->{'key'} eq "exclusive" && $parameter->{'value'} !~ /[01]/) {
-				print AUTO "Ignoring automacro '$name' (exclusive parameter should be '0' or '1')\n";
+				error "Ignoring automacro '$name' (exclusive parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 			
 			###Parameter: priority
 			} elsif ($parameter->{'key'} eq "priority" && $parameter->{'value'} !~ /\d+/) {
-				print AUTO "Ignoring automacro '$name' (priority parameter should be a number)\n";
+				error "Ignoring automacro '$name' (priority parameter should be a number)\n";
 				next AUTOMACRO;
 			
 			###Parameter: macro_delay
 			} elsif ($parameter->{'key'} eq "macro_delay" && $parameter->{'value'} !~ /(\d+|\d+\.\d+)/) {
-				print AUTO "Ignoring automacro '$name' (macro_delay parameter should be a number (decimals are accepted))\n";
+				error "Ignoring automacro '$name' (macro_delay parameter should be a number (decimals are accepted))\n";
 				next AUTOMACRO;
 			
 			###Parameter: orphan
 			} elsif ($parameter->{'key'} eq "orphan" && $parameter->{'value'} !~ /(terminate|reregister|reregister_safe)/) {
-				print AUTO "Ignoring automacro '$name' (orphan parameter should be 'terminate', 'reregister' or 'reregister_safe')\n";
+				error "Ignoring automacro '$name' (orphan parameter should be 'terminate', 'reregister' or 'reregister_safe')\n";
 				next AUTOMACRO;
 			} else {
 				$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
@@ -200,7 +198,7 @@ sub create_automacro_list {
 			$autoModule = "eventMacro::Condition::".ucfirst($condition->{'key'});
 			if (!exists $modulesLoaded{$autoModule}) {
 				undef $@;
-				message "[Macro] Loading module $autoModule\n";
+				debug "[Macro] Loading module $autoModule\n", "eventMacro", 2;
 				eval "use $autoModule";
 				if ($@ =~ /^Can't locate /s) {
 					FileNotFoundException->throw("Cannot load automacro module ".$autoModule." for condition ".$condition->{'key'}.". Ignoring automacro ".$name.".");
@@ -221,68 +219,73 @@ sub create_automacro_list {
 		#####Automacro Object Creation
 		####################################
 		$currentAutomacro = new eventMacro::Automacro($name, \%currentConditions, \%currentParameters);
-		$self->{automacro_list}->add($currentAutomacro);
+		$self->{Automacro_List}->add($currentAutomacro);
 	}
 }
 
 sub create_callbacks {
 	my ($self) = @_;
 	
-	foreach my $automacro (@{$self->{automacro_list}->getItems()}) {
+	debug "[eventMacro] create_callback called\n", "eventMacro", 2;
+	
+	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
+	
+		debug "[eventMacro] Creating callback for automacro '".$automacro->get_name()."'\n", "eventMacro", 2;
+		
 		my $automacro_index = $automacro->{listIndex};
 		
-		foreach my $hook_name (keys %{$automacro->{hooks}}) {
-			my $conditions_indexes = $automacro->{hooks}->{$hook_name};
+		foreach my $hook_name (keys %{$automacro->{Hooks}}) {
+			my $conditions_indexes = $automacro->{Hooks}->{$hook_name};
 			foreach my $condition_index (@{$conditions_indexes}) {
-				push (@{$self->{event_related_hooks}{$hook_name}{$automacro_index}}, $condition_index);
+				push (@{$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}}, $condition_index);
 			}
 		}
 		
-		foreach my $variable_name (keys %{$automacro->{variables}}) {
-			my $conditions_indexes = $automacro->{variables}->{$variable_name};
+		foreach my $variable_name (keys %{$automacro->{Variables}}) {
+			my $conditions_indexes = $automacro->{Variables}->{$variable_name};
 			foreach my $condition_index (@{$conditions_indexes}) {
-				push (@{$self->{event_related_variables}{$variable_name}{$automacro_index}}, $condition_index);
+				push (@{$self->{Event_Related_Variables}{$variable_name}{$automacro_index}}, $condition_index);
 			}
 		}
 		
 	}
 	
 	my $ai_sub = sub { $self->AI_pre_checker(); };
-	push( @{ $self->{hook_handles} }, Plugins::addHook( 'AI_pre', $ai_sub, undef ) );
+	push( @{ $self->{Hook_Handles} }, Plugins::addHook( 'AI_pre', $ai_sub, undef ) );
 	
 	
 	my $event_sub = sub { $self->manage_event_callbacks(shift, shift); };
-	foreach my $hook_name (keys %{$self->{event_related_hooks}}) {
-		push( @{ $self->{hook_handles} }, Plugins::addHook( $hook_name, $event_sub, undef ) );
+	foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
+		push( @{ $self->{Hook_Handles} }, Plugins::addHook( $hook_name, $event_sub, undef ) );
 	}
 }
 
 sub get_var {
 	my ($self, $variable_name) = @_;
-	return $self->{variable_list_hash}{$variable_name} if (exists $self->{variable_list_hash}{$variable_name});
+	return $self->{Variable_List_Hash}{$variable_name} if (exists $self->{Variable_List_Hash}{$variable_name});
 	return undef;
 }
 
 sub set_var {
 	my ($self, $variable_name, $variable_value) = @_;
 	if ($variable_value eq 'undef') {
-		$self->{variable_list_hash}{$variable_name} = undef;
+		$self->{Variable_List_Hash}{$variable_name} = undef;
 	} else {
-		$self->{variable_list_hash}{$variable_name} = $variable_value;
+		$self->{Variable_List_Hash}{$variable_name} = $variable_value;
 	}
-	if (exists $self->{event_related_variables}{$variable_name}) {
+	if (exists $self->{Event_Related_Variables}{$variable_name}) {
 		$self->manage_event_callbacks("variable_event", {variable_name => $variable_name, variable_value => $variable_value});
 	}
 }
 
 sub is_var_defined {
 	my ($self, $variable_name) = @_;
-	return (defined $self->{variable_list_hash}{$variable_name});
+	return (defined $self->{Variable_List_Hash}{$variable_name});
 }
 
 sub exists_var {
 	my ($self, $variable_name) = @_;
-	return (exists $self->{variable_list_hash}{$variable_name});
+	return (exists $self->{Variable_List_Hash}{$variable_name});
 }
 
 sub manage_event_callbacks {
@@ -290,19 +293,20 @@ sub manage_event_callbacks {
 	my $event_name = shift;
 	my $args = shift;
 	
-	message "[eventMacro] Event Happenned '".$event_name."'\n","system";
+	debug "[eventMacro] Event Happenned '".$event_name."'\n", "eventMacro", 2;
+	
 	my $check_list_hash;
 	
 	if ($event_name eq 'variable_event') {
-		$check_list_hash = $self->{'event_related_variables'}{$args->{'variable_name'}};
+		$check_list_hash = $self->{'Event_Related_Variables'}{$args->{'variable_name'}};
 	} else {
-		$check_list_hash = $self->{'event_related_hooks'}{$event_name};
+		$check_list_hash = $self->{'Event_Related_Hooks'}{$event_name};
 	}
 	
 	foreach my $automacro_index (keys %{$check_list_hash}) {
-		my ($automacro, $conditions_indexes_array, $need_to_check) = ($self->{automacro_list}->get($automacro_index), $check_list_hash->{$automacro_index}, 0);
+		my ($automacro, $conditions_indexes_array, $need_to_check) = ($self->{Automacro_List}->get($automacro_index), $check_list_hash->{$automacro_index}, 0);
 		
-		message "[eventMacro] automacro index: '".$automacro_index."' name: '".$automacro->{name}."'\n","system";
+		debug "[eventMacro] automacro index: '".$automacro_index."' name: '".$automacro->get_name()."'\n", "eventMacro", 2;
 		
 		foreach my $condition_index (@{$conditions_indexes_array}) {
 			my $condition = $automacro->{conditionList}->get($condition_index);
@@ -310,7 +314,7 @@ sub manage_event_callbacks {
 			#Does this actually change cpu use?
 			my $pre_check_status = $condition->is_fulfilled();
 			
-			message "[eventMacro] Checking condition '".$condition->{name}."' index '".$condition->{listIndex}."'\n","system";
+			debug "[eventMacro] Checking condition '".$condition->get_name()."' index '".$condition->{listIndex}."'\n", "eventMacro", 2;
 			
 			$condition->validate_condition_status($event_name,$args);
 			
@@ -333,15 +337,15 @@ sub AI_pre_checker {
 	
 	#should AI_pre only be hooked when we are sure there are automacros with conditions fulfilled?
 	
-	#message "[eventMacro] AI PRE 11\n","system";
+	#debug "[eventMacro] AI PRE 11\n", "eventMacro", 2;
 	
-	return if (defined $self->{macro_runner} && !$self->{macro_runner}->interruptible());
+	return if (defined $self->{Macro_Runner} && !$self->{Macro_Runner}->interruptible());
 	
-	#message "[eventMacro] AI PRE 22\n","system";
+	#debug "[eventMacro] AI PRE 22\n", "eventMacro", 2;
 	
-	foreach my $index (@{$self->{index_priority_list}}) {
+	foreach my $index (@{$self->{Index_Priority_List}}) {
 	
-		my $automacro = $self->{automacro_list}->get($index);
+		my $automacro = $self->{Automacro_List}->get($index);
 		
 		next if $automacro->is_disabled();
 		
@@ -349,9 +353,9 @@ sub AI_pre_checker {
 		
 		next unless $automacro->are_conditions_fulfilled();
 		
-		message "[eventMacro] Conditions met for automacro '".$automacro->{name}."', calling macro '".$automacro->get_parameter('call')."'\n","system";
+		message "[eventMacro] Conditions met for automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
 		
-		$self->callMacro($automacro);
+		$self->call_macro($automacro);
 		
 		return;
 	}
@@ -361,67 +365,63 @@ sub AI_pre_checker {
 #		
 #}
 
-sub callMacro {
+sub call_macro {
 	my ($self, $automacro) = @_;
 	
-	if (defined $self->{macro_runner}) {
-		$self->clearQueue();
+	if (defined $self->{Macro_Runner}) {
+		$self->clear_queue();
 	}
-	
-	message "[eventMacro] automacro '".$automacro->{name}."', status pre: '".$automacro->is_disabled()."'\n","system";
 	
 	$automacro->set_timeout_time(time);
 	$automacro->disable() if $automacro->get_parameter('run-once');
 	
-	message "[eventMacro] automacro '".$automacro->{name}."', status pos: '".$automacro->is_disabled()."'\n","system";
+	$self->{Macro_Runner} = new eventMacro::Runner($automacro->get_parameter('call'));
 	
-	$self->{macro_runner} = new eventMacro::Runner($automacro->get_parameter('call'));
-	
-	if (defined $self->{macro_runner}) {
-		$self->{macro_runner}->overrideAI($automacro->get_parameter('overrideAI'));
-		$self->{macro_runner}->interruptible($automacro->get_parameter('exclusive') ? 0 : 1);#inversed
-		$self->{macro_runner}->orphan($automacro->get_parameter('orphan'));
-		$self->{macro_runner}->timeout($automacro->get_parameter('delay'));
-		$self->{macro_runner}->setMacro_delay($automacro->get_parameter('macro_delay'));
-		$self->set_var('.caller', $automacro->{name});
+	if (defined $self->{Macro_Runner}) {
+		$self->{Macro_Runner}->overrideAI($automacro->get_parameter('overrideAI'));
+		$self->{Macro_Runner}->interruptible($automacro->get_parameter('exclusive') ? 0 : 1);#inversed
+		$self->{Macro_Runner}->orphan($automacro->get_parameter('orphan'));
+		$self->{Macro_Runner}->timeout($automacro->get_parameter('delay'));
+		$self->{Macro_Runner}->setMacro_delay($automacro->get_parameter('macro_delay'));
+		$self->set_var('.caller', $automacro->get_name());
 		$self->unpause();
-		my $iterateMacro_sub = sub { $self->iterateMacro(); };
-		$self->{mainLoop_hook_handle} = Plugins::addHook( 'mainLoop_pre', $iterateMacro_sub, undef );
+		my $iterate_macro_sub = sub { $self->iterate_macro(); };
+		$self->{mainLoop_Hook_Handle} = Plugins::addHook( 'mainLoop_pre', $iterate_macro_sub, undef );
 	} else {
 		error "unable to create macro queue.\n"
 	}
 }
 
 # macro/script
-sub iterateMacro {
+sub iterate_macro {
 	my $self = shift;
-	if ( !defined $self->{macro_runner} ) {
-		message "[eventMacro] Macro '".$self->{macro_runner}->{name}."' was finished in a bad way\n","system";
-		$self->clearQueue();
+	if ( !defined $self->{Macro_Runner} ) {
+		debug "[eventMacro] Macro was finished in a bad way\n", "eventMacro", 2;
+		$self->clear_queue();
 		return;
-	} elsif ($self->{macro_runner}->finished) {
-		message "[eventMacro] Macro '".$self->{macro_runner}->{name}."' was finished successfully\n","system";
-		$self->clearQueue();
+	} elsif ($self->{Macro_Runner}->finished) {
+		debug "[eventMacro] Macro '".$self->{Macro_Runner}->get_name()."' was finished successfully\n", "eventMacro", 2;
+		$self->clear_queue();
 		return;
 	}
 	return if $self->is_paused();
-	my %tmptime = $self->{macro_runner}->timeout;
-	unless ($self->{macro_runner}->registered || $self->{macro_runner}->overrideAI) {
-		if (timeOut(\%tmptime)) {$self->{macro_runner}->register}
+	my %tmptime = $self->{Macro_Runner}->timeout;
+	unless ($self->{Macro_Runner}->registered || $self->{Macro_Runner}->overrideAI) {
+		if (timeOut(\%tmptime)) {$self->{Macro_Runner}->register}
 		else {return}
 	}
 	if (timeOut(\%tmptime) && ai_isIdle()) {
 		do {
-			last unless processCmd $self->{macro_runner}->next;
-			Plugins::callHook ('macro/callMacro/process');
-		} while $self->{macro_runner} && !$self->is_paused() && $self->{macro_runner}->macro_block;
+			last unless processCmd $self->{Macro_Runner}->next;
+			Plugins::callHook ('macro/call_macro/process');
+		} while $self->{Macro_Runner} && !$self->is_paused() && $self->{Macro_Runner}->macro_block;
 		
 =pod
-		# crashes when error inside macro_block encountered and $self->{macro_runner} becomes undefined
-		my $command = $self->{macro_runner}->next;
-		if ($self->{macro_runner}->macro_block) {
-			while ($self->{macro_runner}->macro_block) {
-				$command = $self->{macro_runner}->next;
+		# crashes when error inside macro_block encountered and $self->{Macro_Runner} becomes undefined
+		my $command = $self->{Macro_Runner}->next;
+		if ($self->{Macro_Runner}->macro_block) {
+			while ($self->{Macro_Runner}->macro_block) {
+				$command = $self->{Macro_Runner}->next;
 				processCmd($command)
 			}
 		} else {
@@ -431,12 +431,12 @@ sub iterateMacro {
 	}
 }
 
-sub clearQueue {
+sub clear_queue {
 	my ($self) = @_;
-	message "[eventMacro] Clearing queue\n","system";
-	$self->{macro_runner} = undef;
-	Plugins::delHook($self->{mainLoop_hook_handle}) if (defined $self->{mainLoop_hook_handle});
-	$self->{mainLoop_hook_handle} = undef;
+	debug "[eventMacro] Clearing queue\n", "eventMacro", 2;
+	$self->{Macro_Runner} = undef;
+	Plugins::delHook($self->{mainLoop_Hook_Handle}) if (defined $self->{mainLoop_Hook_Handle});
+	$self->{mainLoop_Hook_Handle} = undef;
 }
 
 
