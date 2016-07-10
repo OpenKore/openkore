@@ -49,7 +49,7 @@ sub new {
 			repeat => $repeat,
 			subcall => undef,
 			error => undef,
-			orphan => $::config{macro_orphans},
+			orphan => $config{eventMacro_orphans},
 			interruptible => 1,
 			macro_block => 0
 

@@ -257,18 +257,24 @@ sub create_callbacks {
 		
 		my $automacro_index = $automacro->{listIndex};
 		
-		foreach my $hook_name (keys %{$automacro->{Hooks}}) {
+		foreach my $hook_name ( keys %{ $automacro->get_hooks() } ) {
+		
 			my $conditions_indexes = $automacro->{Hooks}->{$hook_name};
+			
 			foreach my $condition_index (@{$conditions_indexes}) {
 				push (@{$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}}, $condition_index);
 			}
+			
 		}
 		
-		foreach my $variable_name (keys %{$automacro->{Variables}}) {
+		foreach my $variable_name ( keys %{ $automacro->get_variables() } ) {
+		
 			my $conditions_indexes = $automacro->{Variables}->{$variable_name};
+			
 			foreach my $condition_index (@{$conditions_indexes}) {
 				push (@{$self->{Event_Related_Variables}{$variable_name}{$automacro_index}}, $condition_index);
 			}
+			
 		}
 		
 	}

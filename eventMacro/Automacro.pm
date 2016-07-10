@@ -97,7 +97,7 @@ sub set_parameters {
 		$self->{Parameters}{'overrideAI'} = 0;
 	}
 	if (!defined $self->{Parameters}{'orphan'})  {
-		$self->{Parameters}{'orphan'} = $config{macro_orphans};
+		$self->{Parameters}{'orphan'} = $config{eventMacro_orphans};
 	}
 	if (!defined $self->{Parameters}{'macro_delay'})  {
 		$self->{Parameters}{'macro_delay'} = $timeout{eventMacro_delay}{timeout};
