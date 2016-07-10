@@ -36,6 +36,7 @@ sub new {
 	$self->create_macro_list($parse_result->{macros});
 	
 	$self->{Automacro_List} = new eventMacro::Lists;
+	$self->{Condition_Modules_Loaded} = {};
 	$self->create_automacro_list($parse_result->{automacros});
 	
 	$self->{Status} = CHECKING;
@@ -116,7 +117,7 @@ sub create_automacro_list {
 		#####No Conditions Check
 		####################################
 		if (!exists $value->{'conditions'} || !@{$value->{'conditions'}}) {
-			error "Ignoring automacro '$name'. There are no conditions set it in\n";
+			error "[eventMacro] Ignoring automacro '$name'. There are no conditions set it in\n";
 			next AUTOMACRO;
 		}
 	
@@ -124,7 +125,7 @@ sub create_automacro_list {
 		#####No Parameters Check
 		####################################
 		if (!exists $value->{'parameters'} || !@{$value->{'parameters'}}) {
-			error "Ignoring automacro '$name'. There are no parameters set in it\n";
+			error "[eventMacro] Ignoring automacro '$name'. There are no parameters set in it\n";
 			next AUTOMACRO;
 		}
 		
@@ -132,52 +133,52 @@ sub create_automacro_list {
 		
 			###Check Duplicate Parameter
 			if (exists $currentParameters{$parameter->{'key'}}) {
-				warning "Ignoring automacro '$name' (parameter ".$parameter->{'key'}." duplicate)\n";
+				warning "[eventMacro] Ignoring automacro '$name' (parameter ".$parameter->{'key'}." duplicate)\n";
 				next AUTOMACRO;
 			}
 			###Parameter: call
 			if ($parameter->{'key'} eq "call" && !$self->{Macro_List}->getByName($parameter->{'value'})) {
-				warning "Ignoring automacro '$name' (call '".$parameter->{'value'}."' is not a valid macro name)\n";
+				warning "[eventMacro] Ignoring automacro '$name' (call '".$parameter->{'value'}."' is not a valid macro name)\n";
 				next AUTOMACRO;
 			
 			###Parameter: delay
 			} elsif ($parameter->{'key'} eq "delay" && $parameter->{'value'} !~ /\d+/) {
-				error "Ignoring automacro '$name' (delay parameter should be a number)\n";
+				error "[eventMacro] Ignoring automacro '$name' (delay parameter should be a number)\n";
 				next AUTOMACRO;
 			
 			###Parameter: run-once
 			} elsif ($parameter->{'key'} eq "run-once" && $parameter->{'value'} !~ /[01]/) {
-				error "Ignoring automacro '$name' (run-once parameter should be '0' or '1')\n";
+				error "[eventMacro] Ignoring automacro '$name' (run-once parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 			
 			###Parameter: disabled
 			} elsif ($parameter->{'key'} eq "disabled" && $parameter->{'value'} !~ /[01]/) {
-				error "Ignoring automacro '$name' (disabled parameter should be '0' or '1')\n";
+				error "[eventMacro] Ignoring automacro '$name' (disabled parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 			
 			###Parameter: overrideAI
 			} elsif ($parameter->{'key'} eq "overrideAI" && $parameter->{'value'} !~ /[01]/) {
-				error "Ignoring automacro '$name' (overrideAI parameter should be '0' or '1')\n";
+				error "[eventMacro] Ignoring automacro '$name' (overrideAI parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 			
 			###Parameter: exclusive
 			} elsif ($parameter->{'key'} eq "exclusive" && $parameter->{'value'} !~ /[01]/) {
-				error "Ignoring automacro '$name' (exclusive parameter should be '0' or '1')\n";
+				error "[eventMacro] Ignoring automacro '$name' (exclusive parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 			
 			###Parameter: priority
 			} elsif ($parameter->{'key'} eq "priority" && $parameter->{'value'} !~ /\d+/) {
-				error "Ignoring automacro '$name' (priority parameter should be a number)\n";
+				error "[eventMacro] Ignoring automacro '$name' (priority parameter should be a number)\n";
 				next AUTOMACRO;
 			
 			###Parameter: macro_delay
 			} elsif ($parameter->{'key'} eq "macro_delay" && $parameter->{'value'} !~ /(\d+|\d+\.\d+)/) {
-				error "Ignoring automacro '$name' (macro_delay parameter should be a number (decimals are accepted))\n";
+				error "[eventMacro] Ignoring automacro '$name' (macro_delay parameter should be a number (decimals are accepted))\n";
 				next AUTOMACRO;
 			
 			###Parameter: orphan
 			} elsif ($parameter->{'key'} eq "orphan" && $parameter->{'value'} !~ /(terminate|reregister|reregister_safe)/) {
-				error "Ignoring automacro '$name' (orphan parameter should be 'terminate', 'reregister' or 'reregister_safe')\n";
+				error "[eventMacro] Ignoring automacro '$name' (orphan parameter should be 'terminate', 'reregister' or 'reregister_safe')\n";
 				next AUTOMACRO;
 			} else {
 				$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
@@ -186,7 +187,7 @@ sub create_automacro_list {
 		
 		###Recheck Parameter call
 		if (!exists $currentParameters{'call'}) {
-			warning "Ignoring automacro '$name' (all automacros must have a macro call)\n";
+			warning "[eventMacro] Ignoring automacro '$name' (all automacros must have a macro call)\n";
 			next AUTOMACRO;
 		}
 		
@@ -194,25 +195,33 @@ sub create_automacro_list {
 		#####Conditions Check
 		####################################
 		CONDITION: foreach my $condition (@{$value->{'conditions'}}) {
-			my ($conditionObject, $autoModule);
-			$autoModule = "eventMacro::Condition::".ucfirst($condition->{'key'});
-			if (!exists $modulesLoaded{$autoModule}) {
-				undef $@;
-				debug "[Macro] Loading module $autoModule\n", "eventMacro", 2;
-				eval "use $autoModule";
-				if ($@ =~ /^Can't locate /s) {
-					FileNotFoundException->throw("Cannot load automacro module ".$autoModule." for condition ".$condition->{'key'}.". Ignoring automacro ".$name.".");
-					next AUTOMACRO;
-				} elsif ($@) {
-					ModuleLoadException->throw("An error occured while loading the automacro condition ".$condition->{'key'}.":".$@.". Ignoring automacro ".$name.".");
+		
+			my ($condition_object, $condition_module);
+			
+			$condition_module = "eventMacro::Condition::".$condition->{'key'};
+			
+			if (!exists $self->{Condition_Modules_Loaded}{$condition_module}) {
+				unless ($self->load_condition_module($condition_module)) {
+					warning "[eventMacro] Ignoring automacro '".$name."' (could not load condition module)\n";
 					next AUTOMACRO;
 				}
-				$modulesLoaded{$autoModule} = 1;
 			}
-			$conditionObject = $autoModule->new($condition->{'value'});
-			next AUTOMACRO if (!$conditionObject);
-			next AUTOMACRO if (exists $currentConditions{$autoModule} && $conditionObject->is_unique_condition());
-			push(@{$currentConditions{$autoModule}}, $condition->{'value'});
+			
+			$condition_object = $condition_module->new($condition->{'value'});
+			
+			unless (defined $condition_object) {
+				warning "[eventMacro] Ignoring automacro '$name' (bad condition syntax)\n";
+				next AUTOMACRO;
+			}
+			
+			if (exists $currentConditions{$condition_module} && $condition_object->is_unique_condition()) {
+				error "[eventMacro] Condition '".$condition->{'key'}."' cannot be used more than once in an automacro. It was used twice (or more) in automacro '".$name."'\n";
+				warning "[eventMacro] Ignoring automacro '$name' (multiple unique condition)\n";
+				next AUTOMACRO;
+			}
+			
+			push( @{ $currentConditions{$condition_module} }, $condition->{'value'} );
+			
 		}
 		
 		####################################
@@ -220,6 +229,20 @@ sub create_automacro_list {
 		####################################
 		$currentAutomacro = new eventMacro::Automacro($name, \%currentConditions, \%currentParameters);
 		$self->{Automacro_List}->add($currentAutomacro);
+	}
+}
+
+sub load_condition_module {
+	my ($self, $condition_module) = @_;
+	undef $@;
+	debug "[Macro] Loading module $condition_module\n", "eventMacro", 2;
+	eval "use $condition_module";
+	if ($@ =~ /^Can't locate /s) {
+		FileNotFoundException->throw("Cannot locate automacro module ".$condition_module.".");
+	} elsif ($@) {
+		ModuleLoadException->throw("An error occured while loading condition module ".$condition_module.":".$@.".");
+	} else {
+		$self->{Condition_Modules_Loaded}{$condition_module} = 1;
 	}
 }
 

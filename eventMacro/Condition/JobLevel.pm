@@ -1,4 +1,4 @@
-package eventMacro::Condition::Job_level;
+package eventMacro::Condition::JobLevel;
 
 use strict;
 use Settings;
@@ -15,7 +15,7 @@ sub new {
 	my ($class, $condition_code) = @_;
 	my $self = bless {}, $class;
 	
-	$self->{Name} = 'job_level';
+	$self->{Name} = 'JobLevel';
 	$self->{Variables} = [];
 	$self->{Code_Level} = undef;
 	$self->{Code_Condition} = undef;
@@ -71,7 +71,10 @@ sub parse_syntax {
 		my $code_level = $2;
 		if ($code_level =~ /^\s*\$/) {
 			my ($var) = $code_level =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
-			return 0 unless defined $var;
+			unless (defined $var) {
+				error "[eventMacro] Bad syntax in condition '".$self->get_name()."': '".$condition_code."'\n";
+				return 0
+			}
 			$self->{Code_Level} = $var;
 			push (@{$self->{Variables}}, $var);
 		} else {
@@ -79,6 +82,7 @@ sub parse_syntax {
 		}
 		return 1;
 	}
+	error "[eventMacro] Bad syntax in condition '".$self->get_name()."': '".$condition_code."'\n";
 	return 0;
 }
 
