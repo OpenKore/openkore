@@ -3,6 +3,7 @@ package eventMacro::Automacro;
 use strict;
 use Globals;
 use Log qw(message error warning debug);
+use eventMacro::Condition;
 
 sub new {
 	my ($class, $name, $conditions, $parameters) = @_;

@@ -14,6 +14,7 @@ use eventMacro::Macro;
 use eventMacro::Utilities qw(ai_isIdle processCmd);
 use eventMacro::Runner;
 use eventMacro::Parser;
+use eventMacro::Condition;
 
 use constant {
 	CHECKING => 0,
