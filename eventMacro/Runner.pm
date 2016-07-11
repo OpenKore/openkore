@@ -6,6 +6,7 @@ use strict;
 require Exporter;
 our @ISA = qw(Exporter);
 
+use Time::HiRes qw( &time );
 use Utils;
 use Globals;
 use AI;
