@@ -9,6 +9,7 @@ use Globals;
 use Utils;
 use Misc;
 use Log qw(message error warning debug);
+use Translation qw( T TF );
 
 use eventMacro::Core;
 use eventMacro::Data;
@@ -99,13 +100,18 @@ sub commandHandler {
 	my ($arg, @params) = split(/\s+/, $_[1]);
 	### parameter: list
 	if ($arg eq 'list') {
-		message(sprintf("The following macros are available:\n%smacros%s\n","-"x10,"-"x9), "list");
-		foreach my $macro (@{$eventMacro->{Macro_List}->getItems()}) {message $macro->get_name()."\n"}
-		message(sprintf("%sautomacros%s\n", "-"x8, "-"x7), "list");
-		foreach my $automacro (@{$eventMacro->{Automacro_List}->getItems()}) {message $automacro->get_name()."\n"}
-		message(sprintf("%sPerl Sub%s\n", "-"x9, "-"x8), "list");
-		foreach my $s (@perl_name) {message "$s\n"}
-		message(sprintf("%s\n","-"x25), "list");
+		message( "The following macros are available:\n" );
+
+		message( center( T( ' Macros ' ), 25, '-' ) . "\n", 'list' );
+		message( $_->get_name . "\n" ) foreach sort { $a->get_name cmp $b->get_name } @{ $eventMacro->{Macro_List}->getItems };
+
+		message( center( T( ' Auto Macros ' ), 25, '-' ) . "\n", 'list' );
+		message( $_->get_name . "\n" ) foreach sort { $a->get_name cmp $b->get_name } @{ $eventMacro->{Automacro_List}->getItems };
+
+		message( center( T( ' Perl Subs ' ), 25, '-' ) . "\n", 'list' );
+		message( "$_\n" ) foreach sort @perl_name;
+
+		message( center( '', 25, '-' ) . "\n", 'list' );
 	### parameter: status
 	} elsif ($arg eq 'status') {
 			message(sprintf("paused: %s\n", $eventMacro->is_paused()?"yes":"no"));
