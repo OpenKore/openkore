@@ -418,7 +418,7 @@ sub call_macro {
 		my $iterate_macro_sub = sub { $self->iterate_macro(); };
 		$self->{mainLoop_Hook_Handle} = Plugins::addHook( 'mainLoop_pre', $iterate_macro_sub, undef );
 	} else {
-		error "unable to create macro queue.\n"
+		error "[eventMacro] unable to create macro queue.\n"
 	}
 }
 
