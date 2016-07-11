@@ -29,7 +29,6 @@ sub new {
 sub validate_condition_status {
 	my ($self, $event_name, $args) = @_;
 	
-	return unless (defined $eventMacro);
 	return if ($event_name eq 'packet/stat_info' && $args && $args->{type} != 55);
 	
 	$self->{is_Fulfilled} = validate_code_number_operator_compare_number_or_variable($char->{lv_job}, $self->{Code_Operator}, $self->{Code_Level}, (@{$self->{Variables}} > 0 ? 1 : 0));

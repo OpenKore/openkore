@@ -29,7 +29,6 @@ sub new {
 sub validate_condition_status {
 	my ($self, $event_name, $args) = @_;
 	
-	return unless (defined $eventMacro);
 	return if ($event_name eq 'packet/stat_info' && $args && $args->{type} != 7);
 	return if ($event_name eq 'packet/hp_sp_changed' && $args && $args->{type} != 7);
 	
