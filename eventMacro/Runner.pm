@@ -16,7 +16,7 @@ use eventMacro::Core;
 use eventMacro::Parser qw(parseCmd);
 use eventMacro::FileParser qw(isNewCommandBlock);
 use eventMacro::Utilities qw(cmpr);
-use eventMacro::Automacro qw(enable disable);
+use eventMacro::Automacro;
 
 our ($rev) = q$Revision: 6782 $ =~ /(\d+)/;
 
