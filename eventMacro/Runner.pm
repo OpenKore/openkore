@@ -21,7 +21,8 @@ use eventMacro::Automacro;
 
 our ($rev) = q$Revision: 6782 $ =~ /(\d+)/;
 
-my %macro;
+our %macro;
+our @EXPORT_OK = qw( %macro );
 
 # constructor
 sub new {
@@ -105,7 +106,7 @@ sub setMacro_delay {
 # sets or gets timeout for next command
 sub timeout {
 	if (defined $_[1]) {$_[0]->{timeout} = $_[1]}
-	return (time => $_[0]->{time}, timeout => $_[0]->{timeout})
+	return { time => $_[0]->{time}, timeout => $_[0]->{timeout} };
 }
 
 # sets or gets override AI value
@@ -193,9 +194,9 @@ sub next {
 	if (defined $self->{subcall}) {
 		my $command = $self->{subcall}->next;
 		if (defined $command) {
-			my %tmptime = $self->{subcall}->timeout;
-			$self->{timeout} = $tmptime{timeout};
-			$self->{time} = $tmptime{time};
+			my $tmptime = $self->{subcall}->timeout;
+			$self->{timeout} = $tmptime->{timeout};
+			$self->{time} = $tmptime->{time};
 			if ($self->{subcall}->finished) {
 				if ($self->{subcall}->{repeat} == 0) {$self->{finished} = 1}
 				undef $self->{subcall};
@@ -555,7 +556,7 @@ sub next {
 			if (defined $times && $times =~ /\d+/) { $calltimes = $times; }; # do we have a valid repeat value?
 		}
 		
-		$self->{subcall} = new Macro::Script($name, $calltimes, undef, undef, $self->{interruptible});
+		$self->{subcall} = eventMacro::Runner->new($name, $calltimes, undef, undef, $self->{interruptible});
 		
 		unless (defined $self->{subcall}) {
 			$self->{error} = "$errtpl: failed to call script";

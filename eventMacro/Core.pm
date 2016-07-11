@@ -435,12 +435,12 @@ sub iterate_macro {
 		return;
 	}
 	return if $self->is_paused();
-	my %tmptime = $self->{Macro_Runner}->timeout;
+	my $tmptime = $self->{Macro_Runner}->timeout;
 	unless ($self->{Macro_Runner}->registered || $self->{Macro_Runner}->overrideAI) {
-		if (timeOut(\%tmptime)) {$self->{Macro_Runner}->register}
+		if (timeOut($tmptime)) {$self->{Macro_Runner}->register}
 		else {return}
 	}
-	if (timeOut(\%tmptime) && ai_isIdle()) {
+	if (timeOut($tmptime) && ai_isIdle()) {
 		do {
 			last unless processCmd $self->{Macro_Runner}->next;
 			Plugins::callHook ('macro/call_macro/process');

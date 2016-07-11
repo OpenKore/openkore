@@ -4,6 +4,7 @@ use lib $Plugins::current_plugin_folder;
 
 use strict;
 use Getopt::Long qw( GetOptionsFromArray );
+use Time::HiRes qw( &time );
 use Plugins;
 use Settings;
 use Globals;
@@ -18,6 +19,7 @@ use eventMacro::Lists;
 use eventMacro::Automacro;
 use eventMacro::FileParser;
 use eventMacro::Macro;
+use eventMacro::Runner qw( %macro );
 
 
 Plugins::register('eventMacro', 'allows usage of eventMacros', \&Unload);
@@ -115,17 +117,22 @@ sub commandHandler {
 		message( center( '', 25, '-' ) . "\n", 'list' );
 	### parameter: status
 	} elsif ($arg eq 'status') {
-			message(sprintf("paused: %s\n", $eventMacro->is_paused()?"yes":"no"));
-		if (defined $eventMacro->{Macro_Runner}) {
-			message(sprintf("macro %s\n", $eventMacro->{Macro_Runner}->name), "list");
-			message(sprintf("status: %s\n", $eventMacro->{Macro_Runner}->registered?"running":"waiting"));
-			my %tmp = $eventMacro->{Macro_Runner}->timeout;
-			message(sprintf("delay: %ds\n", $tmp{timeout}));
-			message(sprintf("line: %d\n", $eventMacro->{Macro_Runner}->line));
-			message(sprintf("override AI: %s\n", $eventMacro->{Macro_Runner}->overrideAI?"yes":"no"));
-			message(sprintf("finished: %s\n", $eventMacro->{Macro_Runner}->finished?"yes":"no"));
+		my $macro = $eventMacro->{Macro_Runner};
+		if ( $macro ) {
+			message( sprintf( "macro %s\n", $macro->name ), "list" );
+			message( sprintf( "status: %s\n", $macro->registered ? "running" : "waiting" ) );
+			message( sprintf( "paused: %s\n", $eventMacro->is_paused ? "yes" : "no" ) );
+			for ( my $m = $macro ; $m ; $m = $m->{subcall} ) {
+				my @flags = ();
+				my $t     = $m->timeout->{time} + $m->timeout->{timeout};
+				push @flags, sprintf( 'delay=%.1fs (%s)', $t - time, scalar localtime( $t ) ) if $t > time;
+				push @flags, 'ai_overridden' if $m->overrideAI;
+				push @flags, 'finished'      if $m->finished;
+				message( sprintf( "%s (line %d) : %s\n", $m->name, $m->line, $macro{ $m->name }->[ $m->line - 1 ] ) );
+				message( sprintf( "  %s\n", "@flags" ) ) if @flags;
+			}
 		} else {
-			message "There's no macro currently running.\n"
+			message "There's no macro currently running.\n";
 		}
 	### parameter: stop
 	} elsif ($arg eq 'stop') {
