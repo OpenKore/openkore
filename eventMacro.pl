@@ -3,6 +3,7 @@ package eventMacro;
 use lib $Plugins::current_plugin_folder;
 
 use strict;
+use Getopt::Long qw( GetOptionsFromArray );
 use Plugins;
 use Settings;
 use Globals;
@@ -97,7 +98,7 @@ sub commandHandler {
 			"eventMacro reset [automacro]: resets run-once status for all or given automacro(s)\n";
 		return
 	}
-	my ($arg, @params) = split(/\s+/, $_[1]);
+	my ( $arg, @params ) = parseArgs( $_[1] );
 	### parameter: list
 	if ($arg eq 'list') {
 		message( "The following macros are available:\n" );
@@ -160,57 +161,33 @@ sub commandHandler {
 		} continue {
 			$counter++;
 		}
-	### parameter: probably a macro
+	} elsif ( !$eventMacro->{Macro_List}->getByName( $arg ) ) {
+		error "[eventMacro] Macro $arg not found\n";
+	} elsif ( $eventMacro->{Macro_Runner} ) {
+		warning "[eventMacro] A macro is already running. Wait until the macro has finished or call 'eventMacro stop'\n";
+		return;
 	} else {
-		if (defined $eventMacro->{Macro_Runner}) {
-			warning "[eventMacro] A macro is already running. Wait until the macro has finished or call 'eventMacro stop'\n";
-			return;
+		my $opt = {};
+		GetOptionsFromArray( \@params, $opt, 'repeat|r=i', 'override_ai', 'exclusive', 'macro_delay=f', 'orphan=s' );
+
+		# TODO: Determine if this is reasonably efficient for macro sets which define a lot of variables. (A regex is slow.)
+		foreach my $variable_name ( keys %{ $eventMacro->{Variable_List_Hash} } ) {
+			next if $variable_name !~ /^\.param\d+$/o;
+			$eventMacro->set_var( $variable_name, undef );
 		}
-		my ($repeat, $oAI, $exclusive, $mdelay, $orphan) = (1, 0, 0, undef, undef);
-		my $cparms;
-		for (my $idx = 0; $idx <= @params; $idx++) {
-			if ($params[$idx] eq '-repeat') {$repeat += $params[++$idx]}
-			if ($params[$idx] eq '-overrideAI') {$oAI = 1}
-			if ($params[$idx] eq '-exclusive') {$exclusive = 1}
-			if ($params[$idx] eq '-macro_delay') {$mdelay = $params[++$idx]}
-			if ($params[$idx] eq '-orphan') {$orphan = $params[++$idx]}
-			if ($params[$idx] =~ /^--/) {$cparms = substr(join(' ', map { "$_" } @params), 2); last}
-		}
-		
-		foreach my $variable_name (keys %{$eventMacro->{Variable_List_Hash}}) {
-			if ($variable_name =~ /^\.param\d+$/) {
-				$eventMacro->set_var($variable_name, undef);
-			}
-		}
-		
-		if ($cparms) {
-			#parse macro parameters
-			my @new_params = $cparms =~ /"[^"]+"|\S+/g;
-			foreach my $p (1..@new_params) {
-				$eventMacro->set_var((".param".$p), ($new_params[$p-1]));
-				if ($eventMacro->get_var(".param".$p) =~ /^".*"$/) {
-					$eventMacro->set_var((".param".$p), (substr($eventMacro->get_var(".param".$p), 1, -1)));
-				}
-			}
-		}
-		
-		unless ($eventMacro->{Macro_List}->getByName($arg)) {
-			error "[eventMacro] Macro $arg not found\n";
-			return;
-		}
-		
-		$eventMacro->{Macro_Runner} =  new eventMacro::Runner($arg, $repeat);
-		
-		if (defined $eventMacro->{Macro_Runner}) {
-			if ($oAI) {$eventMacro->{Macro_Runner}->overrideAI(1)}
-			if ($exclusive) {$eventMacro->{Macro_Runner}->interruptible(0)}
-			if (defined $mdelay) {$eventMacro->{Macro_Runner}->setMacro_delay($mdelay)}
-			if (defined $orphan) {$eventMacro->{Macro_Runner}->orphan($orphan)}
-			$eventMacro->unpause();
-			my $iterate_macro_sub = sub {$eventMacro->iterate_macro(); };
-			$eventMacro->{mainLoop_Hook_Handle} = Plugins::addHook( 'mainLoop_pre', $iterate_macro_sub, undef );
+		$eventMacro->set_var( ".param$_", $params[ $_ - 1 ] ) foreach 1 .. @params;
+
+		$eventMacro->{Macro_Runner} = eventMacro::Runner->new( $arg, $opt->{repeat} );
+
+		if ( defined $eventMacro->{Macro_Runner} ) {
+			if ( defined $opt->{override_ai} ) { $eventMacro->{Macro_Runner}->overrideAI( 1 ); }
+			if ( defined $opt->{exclusive} )   { $eventMacro->{Macro_Runner}->interruptible( 0 ); }
+			if ( defined $opt->{macro_delay} ) { $eventMacro->{Macro_Runner}->setMacro_delay( $opt->{macro_delay} ); }
+			if ( defined $opt->{orphan} )      { $eventMacro->{Macro_Runner}->orphan( $opt->{orphan} ); }
+			$eventMacro->unpause;
+			$eventMacro->{mainLoop_Hook_Handle} = Plugins::addHook( 'mainLoop_pre', sub { $eventMacro->iterate_macro }, undef );
 		} else {
-			error "[eventMacro] unable to create macro queue.\n"
+			error "[eventMacro] unable to create macro queue.\n";
 		}
 	}
 }
