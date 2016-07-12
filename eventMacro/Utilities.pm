@@ -534,7 +534,7 @@ sub validate_code_number_operator_compare_number_or_variable {
 	my ($compare_number, $code_operator, $code_number, $is_variable) = @_;
 	
 	if ($is_variable) {
-		my $variable_value = $eventMacro->get_var($code_number);
+		my $variable_value = $eventMacro && $eventMacro->get_var($code_number);
 		if (defined $variable_value) {
 			return cmpr($compare_number, $code_operator, $variable_value);
 		} else {
