@@ -2,12 +2,19 @@ package eventMacro::Condition;
 
 use strict;
 
+# Import the validators so our child classes do not have to.
+use eventMacro::Validator::NumericComparison;
+
 sub new {
-	my ($class) = @_;
+	my ($class, $condition_code) = @_;
 	my $self = bless {}, $class;
 	
+	$self->{Name} = ($class =~ /([^:]+)$/)[0];
 	$self->{Variables} = [];
-	$self->{is_Fulfilled} = 0;
+
+	$self->{Hooks} = [ @{ $self->_hooks } ];
+
+	return if !$self->_parse_syntax( $condition_code );
 
 	return $self;
 }
@@ -35,6 +42,16 @@ sub is_unique_condition {
 sub is_fulfilled {
 	my ($self) = @_;
 	return $self->{is_Fulfilled};
+}
+
+# Default: No hooks.
+sub _hooks {
+	[];
+}
+
+# Default: No syntax parsing, always succeed.
+sub _parse_syntax {
+	1;
 }
 
 1;

@@ -45,7 +45,7 @@ our $macroKeywords =
 	"arg"          . "|" .
 	"listitem"     . "|" .
    	"nick"         . "|" .
-	"listlenght"
+	"listlength"
 ;
 
 1;

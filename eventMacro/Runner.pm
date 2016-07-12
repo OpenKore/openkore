@@ -38,7 +38,7 @@ sub new {
 			lastname => undef,
 			registered => 0,
 			submacro => 0,
-			macro_delay => $timeout{macro_delay}{timeout},
+			macro_delay => $timeout{eventMacro_delay}{timeout},
 			timeout => 0,
 			mainline_delay => undef,
 			subline_delay => undef,
@@ -89,7 +89,7 @@ sub get_name {
 
 # destructor
 sub DESTROY {
-	AI::clear('macro') if (AI::inQueue('macro') && !$_[0]->{submacro})
+	AI::clear('eventMacro') if (AI::inQueue('eventMacro') && !$_[0]->{submacro})
 }
 
 # declares current macro to be a submacro
@@ -99,7 +99,7 @@ sub regSubmacro {
 
 # registers to AI queue
 sub register {
-	AI::queue('macro') unless $_[0]->{overrideAI};
+	AI::queue('eventMacro') unless $_[0]->{overrideAI};
 	$_[0]->{registered} = 1
 }
 
@@ -797,13 +797,13 @@ sub newThen {
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 			if (defined $ptimes && $ptimes =~ /^\d+$/) {
 				if ($ptimes > 0) {
-					$self->{subcall} = new Macro::Script($name, $ptimes, $self->{Name}, $self->{line}, $self->{interruptible})
+					$self->{subcall} = new eventMacro::Runner($name, $ptimes, $self->{Name}, $self->{line}, $self->{interruptible})
 				}
-				else {$self->{subcall} = new Macro::Script($name, 0, undef, undef, $self->{interruptible})}
+				else {$self->{subcall} = new eventMacro::Runner($name, 0, undef, undef, $self->{interruptible})}
 			}
 			else {$self->{error} = "$errtpl: $ptimes must be numeric"}
 		}
-		else {$self->{subcall} = new Macro::Script($tmp, 1, undef, undef, $self->{interruptible})}
+		else {$self->{subcall} = new eventMacro::Runner($tmp, 1, undef, undef, $self->{interruptible})}
 		unless (defined $self->{subcall}) {$self->{error} = "$errtpl: failed to call script"}
 		else {
 			$self->{subcall}->regSubmacro;
@@ -935,9 +935,9 @@ sub extracted {
 	my @save;
 	my @w = split(//, $text);
 
-	my $txt_lenght = scalar(@w);
+	my $txt_length = scalar(@w);
 
-	for (my $i = 0; $i < $txt_lenght; $i++) {
+	for (my $i = 0; $i < $txt_length; $i++) {
 		if ($i == $brkt[1]) {push @save, $brkt[0]; next}
 		next if $i > $brkt[1] && $i <= $brkt[2];
 		push @save, $w[$i];
