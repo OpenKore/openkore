@@ -11,7 +11,7 @@ sub _hooks {
 }
 
 sub _get_val {
-    $char->{lv};
+    $char->{lv_job};
 }
 
 sub validate_condition_status {

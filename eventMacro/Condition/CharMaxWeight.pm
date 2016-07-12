@@ -11,7 +11,7 @@ sub _hooks {
 }
 
 sub _get_val {
-	$char->{weight};
+	$char->{weight_max};
 }
 
 sub validate_condition_status {
