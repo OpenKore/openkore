@@ -73,7 +73,7 @@ sub get_name {
 
 # destructor
 sub DESTROY {
-	AI::clear('macro') if (AI::inQueue('macro') && !$_[0]->{submacro})
+	AI::clear('eventMacro') if (AI::inQueue('eventMacro') && !$_[0]->{submacro})
 }
 
 # declares current macro to be a submacro
@@ -83,7 +83,7 @@ sub regSubmacro {
 
 # registers to AI queue
 sub register {
-	AI::queue('macro') unless $_[0]->{overrideAI};
+	AI::queue('eventMacro') unless $_[0]->{overrideAI};
 	$_[0]->{registered} = 1
 }
 

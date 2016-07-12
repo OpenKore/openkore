@@ -29,18 +29,18 @@ sub ai_isIdle {
 
 	# now check for orphaned script object
 	# may happen when messing around with "ai clear" and stuff.
-	if (defined $eventMacro->{Macro_Runner} && !AI::inQueue('macro')) {
+	if (defined $eventMacro->{Macro_Runner} && !AI::inQueue('eventMacro')) {
 		my $method = $eventMacro->{Macro_Runner}->orphan;
 
 		# 'terminate' undefs the macro object and returns "ai is not idle"
 		if ($method eq 'terminate') {
 			$eventMacro->clear_queue();
 			return 0
-		# 'reregister' re-inserts "macro" in ai_queue at the first position
+		# 'reregister' re-inserts "eventMacro" in ai_queue at the first position
 		} elsif ($method eq 'reregister') {
 			$eventMacro->{Macro_Runner}->register;
 			return 1
-		# 'reregister_safe' waits until AI is idle then re-inserts "macro"
+		# 'reregister_safe' waits until AI is idle then re-inserts "eventMacro"
 		} elsif ($method eq 'reregister_safe') {
 			if (AI::isIdle || AI::is('deal')) {
 				$eventMacro->{Macro_Runner}->register;
@@ -48,12 +48,12 @@ sub ai_isIdle {
 			}
 			return 0
 		} else {
-			error "unknown 'orphan' method. terminating macro\n", "macro";
+			error "[eventMacro] Unknown 'orphan' method. terminating macro\n", "macro";
 			$eventMacro->clear_queue();
 			return 0
 		}
 	}
-	return AI::is('macro', 'deal')
+	return AI::is('eventMacro', 'deal')
 }
 
 sub between {
