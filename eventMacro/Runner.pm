@@ -37,7 +37,7 @@ sub new {
 			lastname => undef,
 			registered => 0,
 			submacro => 0,
-			macro_delay => $timeout{macro_delay}{timeout},
+			macro_delay => $timeout{eventMacro_delay}{timeout},
 			timeout => 0,
 			mainline_delay => undef,
 			subline_delay => undef,
@@ -781,13 +781,13 @@ sub newThen {
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 			if (defined $ptimes && $ptimes =~ /^\d+$/) {
 				if ($ptimes > 0) {
-					$self->{subcall} = new Macro::Script($name, $ptimes, $self->{Name}, $self->{line}, $self->{interruptible})
+					$self->{subcall} = new eventMacro::Runner($name, $ptimes, $self->{Name}, $self->{line}, $self->{interruptible})
 				}
-				else {$self->{subcall} = new Macro::Script($name, 0, undef, undef, $self->{interruptible})}
+				else {$self->{subcall} = new eventMacro::Runner($name, 0, undef, undef, $self->{interruptible})}
 			}
 			else {$self->{error} = "$errtpl: $ptimes must be numeric"}
 		}
-		else {$self->{subcall} = new Macro::Script($tmp, 1, undef, undef, $self->{interruptible})}
+		else {$self->{subcall} = new eventMacro::Runner($tmp, 1, undef, undef, $self->{interruptible})}
 		unless (defined $self->{subcall}) {$self->{error} = "$errtpl: failed to call script"}
 		else {
 			$self->{subcall}->regSubmacro;
