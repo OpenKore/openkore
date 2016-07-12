@@ -61,6 +61,7 @@ sub unload {
 	my ($self) = @_;
 	$self->clear_queue();
 	$self->clean_hooks();
+	Plugins::delHook($self->{AI_pre_Hook_Handle}) if ($self->{AI_pre_Hook_Handle});
 }
 
 sub clean_hooks {
