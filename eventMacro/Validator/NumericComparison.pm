@@ -3,7 +3,6 @@ package eventMacro::Validator::NumericComparison;
 use strict;
 use base 'eventMacro::Validator';
 use eventMacro::Data;
-use eventMacro::Utilities qw( cmpr );
 
 my $number_qr   = qr/-?\d+(?:\.\d+)?/;
 my $variable_qr = qr/[a-zA-Z]\w*/;

@@ -148,7 +148,7 @@ sub parseCmd {
 		elsif ($kw eq 'arg')        {$ret = getWord($arg)}
 		elsif ($kw eq 'eval')       {$ret = eval($arg) unless $Settings::lockdown}
 		elsif ($kw eq 'listitem')   {$ret = getArgFromList($arg)}
-		elsif ($kw eq 'listlenght') {$ret = getListLenght($arg)}
+		elsif ($kw eq 'listlength') {$ret = getListLenght($arg)}
 		elsif ($kw eq 'nick')       {$arg = subvars($targ, 1); $ret = q4rx2($arg)}
 		return unless defined $ret;
 		return $cmd if $ret eq '_%_';
