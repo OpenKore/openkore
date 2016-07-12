@@ -34,7 +34,7 @@ sub ai_isIdle {
 
 		# 'terminate' undefs the macro object and returns "ai is not idle"
 		if ($method eq 'terminate') {
-			undef $eventMacro->{Macro_Runner};
+			$eventMacro->clear_queue();
 			return 0
 		# 'reregister' re-inserts "macro" in ai_queue at the first position
 		} elsif ($method eq 'reregister') {
@@ -49,7 +49,7 @@ sub ai_isIdle {
 			return 0
 		} else {
 			error "unknown 'orphan' method. terminating macro\n", "macro";
-			undef $eventMacro->{Macro_Runner};
+			$eventMacro->clear_queue();
 			return 0
 		}
 	}
@@ -481,12 +481,12 @@ sub processCmd {
 				return $hookArgs->{continue} if $hookArgs->{return};
 				
 				error $errorMsg, "macro";
-				undef $eventMacro->{Macro_Runner};
+				$eventMacro->clear_queue();
 				return
 			}
 		}
 		$eventMacro->{Macro_Runner}->ok;
-		if (defined $eventMacro->{Macro_Runner} && $eventMacro->{Macro_Runner}->finished) {undef $eventMacro->{Macro_Runner}}
+		if (defined $eventMacro->{Macro_Runner} && $eventMacro->{Macro_Runner}->finished) {$eventMacro->clear_queue()}
 	} else {
 		my $name = (defined $eventMacro->{Macro_Runner}->{subcall}) ? $eventMacro->{Macro_Runner}->{subcall}->name : $eventMacro->{Macro_Runner}->name;
 		my $error = $eventMacro->{Macro_Runner}->error;
@@ -505,7 +505,7 @@ sub processCmd {
 		return $hookArgs->{continue} if $hookArgs->{return};
 		
 		error $errorMsg, "macro";
-		undef $eventMacro->{Macro_Runner};
+		$eventMacro->clear_queue();
 		return
 	}
 	
