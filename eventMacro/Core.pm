@@ -40,9 +40,8 @@ sub new {
 	$self->{Index_Priority_List} = [];
 	$self->create_priority_list();
 	
-	$self->{AI_pre_Hook_Handle} = undef;
-	$self->{Automacros_Checking_Status} = undef;
-	$self->set_automacro_checking_status(CHECKING_AUTOMACROS);
+	$self->{AI_pre_Hook_Handle} = Plugins::addHook( 'AI_pre', sub { $self->AI_pre_checker(); }, undef );
+	$self->{Automacros_Checking_Status} = CHECKING_AUTOMACROS;
 	
 	
 	$self->{Event_Related_Variables} = {};
@@ -72,16 +71,11 @@ sub clean_hooks {
 sub set_automacro_checking_status {
 	my ($self, $status) = @_;
 	
-	return if ($self->{Automacros_Checking_Status} == $status);
-	
 	if ($self->{Automacros_Checking_Status} == CHECKING_AUTOMACROS) {
-	
 		Plugins::delHook($self->{AI_pre_Hook_Handle});
 		$self->{AI_pre_Hook_Handle} = undef;
-		
 	} elsif ($status == CHECKING_AUTOMACROS) {
-		my $ai_sub = sub { $self->AI_pre_checker(); };
-		$self->{AI_pre_Hook_Handle} = Plugins::addHook( 'AI_pre', $ai_sub, undef );
+		$self->{AI_pre_Hook_Handle} = Plugins::addHook( 'AI_pre', sub { $self->AI_pre_checker(); }, undef );
 	}
 	
 	$self->{Automacros_Checking_Status} = $status;
