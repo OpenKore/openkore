@@ -445,7 +445,6 @@ sub iterate_macro {
 	if (timeOut($tmptime) && ai_isIdle()) {
 		do {
 			last unless processCmd $self->{Macro_Runner}->next;
-			Plugins::callHook ('macro/call_macro/process');
 		} while $self->{Macro_Runner} && !$self->is_paused() && $self->{Macro_Runner}->macro_block;
 		
 =pod
