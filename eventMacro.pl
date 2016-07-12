@@ -187,10 +187,10 @@ sub commandHandler {
 		my $status = $eventMacro->get_automacro_checking_status();
 		if ($status == 0) {
 			message "Automacros won't be checked anymore.\n";
-			$eventMacro->set_automacro_checking_status(2);
+			$eventMacro->set_automacro_checking_status(eventMacro::Core::PAUSED_BY_USER);
 		} elsif ($status == 1) {
 			message "Automacros were not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->get_name()."'). Now they won't return to being checked when this macro ends (caution)\n";
-			$eventMacro->set_automacro_checking_status(2);
+			$eventMacro->set_automacro_checking_status(eventMacro::Core::PAUSED_BY_USER);
 		} else {
 			message "Automacros checking is already paused.\n";
 		}
@@ -201,10 +201,10 @@ sub commandHandler {
 			message "Automacros are already being checked.\n";
 		} elsif ($status == 1) {
 			message "Automacros were not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->get_name()."'). Now they will start being checked again (caution)\n";
-			$eventMacro->set_automacro_checking_status(0);
+			$eventMacro->set_automacro_checking_status(eventMacro::Core::CHECKING_AUTOMACROS);
 		} else {
 			message "Automacros will now start being checked again.\n";
-			$eventMacro->set_automacro_checking_status(0);
+			$eventMacro->set_automacro_checking_status(eventMacro::Core::CHECKING_AUTOMACROS);
 		}
 	### parameter: reset
 	} elsif ($arg eq 'reset') {
@@ -251,9 +251,14 @@ sub commandHandler {
 
 		if ( defined $eventMacro->{Macro_Runner} ) {
 			if ( defined $opt->{override_ai} ) { $eventMacro->{Macro_Runner}->overrideAI( 1 ); }
-			if ( defined $opt->{exclusive} )   { $eventMacro->{Macro_Runner}->interruptible( 0 ); }
+			if ( defined $opt->{exclusive} )   {
+				$eventMacro->{Macro_Runner}->interruptible( 0 );
+				message "[eventMacro] Calling uninterruptible macro '".$arg."'. Automacro checking will be paused until it ends.\n";
+				$eventMacro->set_automacro_checking_status(eventMacro::Core::PAUSED_BY_EXCLUSIVE_MACRO);
+			}
 			if ( defined $opt->{macro_delay} ) { $eventMacro->{Macro_Runner}->setMacro_delay( $opt->{macro_delay} ); }
 			if ( defined $opt->{orphan} )      { $eventMacro->{Macro_Runner}->orphan( $opt->{orphan} ); }
+			
 			$eventMacro->{mainLoop_Hook_Handle} = Plugins::addHook( 'mainLoop_pre', sub { $eventMacro->iterate_macro }, undef );
 		} else {
 			error "[eventMacro] unable to create macro queue.\n";
