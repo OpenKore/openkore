@@ -8,7 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(ai_isIdle q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord call_macro getArgFromList getListLenght sameParty processCmd parse_syntax_condition_operator_plus_number_or_variable validate_code_number_operator_compare_number_or_variable);
+	getWord call_macro getArgFromList getListLenght sameParty processCmd);
 
 use Utils;
 use Globals;
@@ -441,7 +441,7 @@ sub getArgFromList {
 	}
 }
 
-# returns the lenght of a comma separated list
+# returns the length of a comma separated list
 sub getListLenght {
 	my $list = $_[0];
 	my @items = split(/,\s*/, $list);
@@ -510,39 +510,6 @@ sub processCmd {
 	}
 	
 	return 1;
-}
-
-sub parse_syntax_condition_operator_plus_number_or_variable {
-	my ($condition_code, $code_operator_ref, $code_number_ref, $variables_ref) = @_;
-	if ($condition_code =~ /([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*|\d+|\d+\s*\.{2}\s*\d+)\s*$/) {
-		$$code_operator_ref = $1;
-		my $code_level = $2;
-		if ($code_level =~ /^\s*\$/) {
-			my ($var) = $code_level =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
-			return 0 unless (defined $var);
-			$$code_number_ref = $var;
-			push (@{$variables_ref}, $var);
-		} else {
-			$$code_number_ref = $code_level;
-		}
-		return 1;
-	}
-	return 0;
-}
-
-sub validate_code_number_operator_compare_number_or_variable {
-	my ($compare_number, $code_operator, $code_number, $is_variable) = @_;
-	
-	if ($is_variable) {
-		my $variable_value = $eventMacro->get_var($code_number);
-		if (defined $variable_value) {
-			return cmpr($compare_number, $code_operator, $variable_value);
-		} else {
-			return 0;
-		}
-	} else {
-		return cmpr($compare_number, $code_operator, $code_number);
-	}
 }
 
 1;

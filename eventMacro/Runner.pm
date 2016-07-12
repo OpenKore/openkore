@@ -919,9 +919,9 @@ sub extracted {
 	my @save;
 	my @w = split(//, $text);
 
-	my $txt_lenght = scalar(@w);
+	my $txt_length = scalar(@w);
 
-	for (my $i = 0; $i < $txt_lenght; $i++) {
+	for (my $i = 0; $i < $txt_length; $i++) {
 		if ($i == $brkt[1]) {push @save, $brkt[0]; next}
 		next if $i > $brkt[1] && $i <= $brkt[2];
 		push @save, $w[$i];
