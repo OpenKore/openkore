@@ -34,6 +34,7 @@ sub new {
 	$macro{$name} = $eventMacro->{Macro_List}->getByName($name)->get_lines();
 	my $self = {
 			Name => $name,
+			Paused => 0,
 			lastname => undef,
 			registered => 0,
 			submacro => 0,
@@ -64,6 +65,21 @@ sub new {
 		
 	bless ($self, $class);
 	return $self
+}
+
+sub pause {
+	my ($self) = @_;
+	$self->{Paused} = 1;
+}
+
+sub unpause {
+	my ($self) = @_;
+	$self->{Paused} = 0;
+}
+
+sub is_paused {
+	my ($self) = @_;
+	return $self->{Paused};
 }
 
 sub get_name {

@@ -34,6 +34,10 @@ sub ai_isIdle {
 
 		# 'terminate' undefs the macro object and returns "ai is not idle"
 		if ($method eq 'terminate') {
+			if ( !$eventMacro->{Macro_Runner}->interruptible && $eventMacro->get_automacro_checking_status() == 1 ) {
+				message "[eventMacro] Uninterruptible macro '".$eventMacro->{Macro_Runner}->get_name()."' ended. Automacros will return to being checked.\n";
+				$eventMacro->set_automacro_checking_status(0);
+			}
 			undef $eventMacro->{Macro_Runner};
 			return 0
 		# 'reregister' re-inserts "macro" in ai_queue at the first position
@@ -49,6 +53,10 @@ sub ai_isIdle {
 			return 0
 		} else {
 			error "unknown 'orphan' method. terminating macro\n", "macro";
+			if ( !$eventMacro->{Macro_Runner}->interruptible && $eventMacro->get_automacro_checking_status() == 1 ) {
+				message "[eventMacro] Uninterruptible macro '".$eventMacro->{Macro_Runner}->get_name()."' ended. Automacros will return to being checked.\n";
+				$eventMacro->set_automacro_checking_status(0);
+			}
 			undef $eventMacro->{Macro_Runner};
 			return 0
 		}
@@ -481,6 +489,10 @@ sub processCmd {
 				return $hookArgs->{continue} if $hookArgs->{return};
 				
 				error $errorMsg, "macro";
+				if ( !$eventMacro->{Macro_Runner}->interruptible && $eventMacro->get_automacro_checking_status() == 1 ) {
+					message "[eventMacro] Uninterruptible macro '".$eventMacro->{Macro_Runner}->get_name()."' ended. Automacros will return to being checked.\n";
+					$eventMacro->set_automacro_checking_status(0);
+				}
 				undef $eventMacro->{Macro_Runner};
 				return
 			}
@@ -505,6 +517,10 @@ sub processCmd {
 		return $hookArgs->{continue} if $hookArgs->{return};
 		
 		error $errorMsg, "macro";
+		if ( !$eventMacro->{Macro_Runner}->interruptible && $eventMacro->get_automacro_checking_status() == 1 ) {
+			message "[eventMacro] Uninterruptible macro '".$eventMacro->{Macro_Runner}->get_name()."' ended. Automacros will return to being checked.\n";
+			$eventMacro->set_automacro_checking_status(0);
+		}
 		undef $eventMacro->{Macro_Runner};
 		return
 	}

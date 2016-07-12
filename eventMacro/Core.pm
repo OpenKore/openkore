@@ -17,13 +17,9 @@ use eventMacro::Parser;
 use eventMacro::Condition;
 
 use constant {
-	CHECKING => 0,
-	EXECUTING => 1
-};
-
-use constant {
-	NOT_PAUSED => 0,
-	PAUSED => 1
+	CHECKING_AUTOMACROS => 0,
+	PAUSED_BY_EXCLUSIVE_MACRO	=> 1,
+	PAUSED_BY_USER	=> 2
 };
 
 sub new {
@@ -40,19 +36,22 @@ sub new {
 	$self->{Condition_Modules_Loaded} = {};
 	$self->create_automacro_list($parse_result->{automacros});
 	
-	$self->{Status} = CHECKING;
-	$self->{Paused} = NOT_PAUSED;
 	
 	$self->{Index_Priority_List} = [];
 	$self->create_priority_list();
+	
+	$self->{AI_pre_Hook_Handle} = undef;
+	$self->{Automacros_Checking_Status} = undef;
+	$self->set_automacro_checking_status(CHECKING_AUTOMACROS);
+	
 	
 	$self->{Event_Related_Variables} = {};
 	$self->{Event_Related_Hooks} = {};
 	$self->{Hook_Handles} = [];
 	$self->create_callbacks();
 	
-	$self->{Macro_Runner} = undef;
 	$self->{mainLoop_Hook_Handle} = undef;
+	$self->{Macro_Runner} = undef;
 	
 	$self->{Variable_List_Hash} = {};
 	
@@ -70,24 +69,27 @@ sub clean_hooks {
 	foreach (@{$self->{Hook_Handles}}) {Plugins::delHook($_)}
 }
 
-sub is_paused {
-	my ($self) = @_;
-	return ( $self->{Paused} ? 1 : 0 );
+sub set_automacro_checking_status {
+	my ($self, $status) = @_;
+	
+	return if ($self->{Automacros_Checking_Status} == $status);
+	
+	if ($self->{Automacros_Checking_Status} == CHECKING_AUTOMACROS) {
+	
+		Plugins::delHook($self->{AI_pre_Hook_Handle});
+		$self->{AI_pre_Hook_Handle} = undef;
+		
+	} elsif ($status == CHECKING_AUTOMACROS) {
+		my $ai_sub = sub { $self->AI_pre_checker(); };
+		$self->{AI_pre_Hook_Handle} = Plugins::addHook( 'AI_pre', $ai_sub, undef );
+	}
+	
+	$self->{Automacros_Checking_Status} = $status;
 }
 
-sub is_executing {
+sub get_automacro_checking_status {
 	my ($self) = @_;
-	return ( $self->{Status} ? 1 : 0 );
-}
-
-sub pause {
-	my ($self) = @_;
-	$self->{Paused} = PAUSED;
-}
-
-sub unpause {
-	my ($self) = @_;
-	$self->{Paused} = NOT_PAUSED;
+	return $self->{Automacros_Checking_Status};
 }
 
 sub create_priority_list {
@@ -280,10 +282,6 @@ sub create_callbacks {
 		
 	}
 	
-	my $ai_sub = sub { $self->AI_pre_checker(); };
-	push( @{ $self->{Hook_Handles} }, Plugins::addHook( 'AI_pre', $ai_sub, undef ) );
-	
-	
 	my $event_sub = sub { $self->manage_event_callbacks(shift, shift); };
 	foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
 		push( @{ $self->{Hook_Handles} }, Plugins::addHook( $hook_name, $event_sub, undef ) );
@@ -367,12 +365,6 @@ sub AI_pre_checker {
 	
 	#should AI_pre only be hooked when we are sure there are automacros with conditions fulfilled?
 	
-	#debug "[eventMacro] AI PRE 11\n", "eventMacro", 2;
-	
-	return if (defined $self->{Macro_Runner} && !$self->{Macro_Runner}->interruptible());
-	
-	#debug "[eventMacro] AI PRE 22\n", "eventMacro", 2;
-	
 	foreach my $index (@{$self->{Index_Priority_List}}) {
 	
 		my $automacro = $self->{Automacro_List}->get($index);
@@ -414,7 +406,12 @@ sub call_macro {
 		$self->{Macro_Runner}->timeout($automacro->get_parameter('delay'));
 		$self->{Macro_Runner}->setMacro_delay($automacro->get_parameter('macro_delay'));
 		$self->set_var('.caller', $automacro->get_name());
-		$self->unpause();
+		
+		if ($automacro->get_parameter('exclusive')) {
+			message "[eventMacro] Calling uninterruptible macro '".$automacro->get_parameter('call')."'. Automacro checking will be paused until it ends.\n";
+			$self->set_automacro_checking_status(1);
+		}
+		
 		my $iterate_macro_sub = sub { $self->iterate_macro(); };
 		$self->{mainLoop_Hook_Handle} = Plugins::addHook( 'mainLoop_pre', $iterate_macro_sub, undef );
 	} else {
@@ -434,7 +431,7 @@ sub iterate_macro {
 		$self->clear_queue();
 		return;
 	}
-	return if $self->is_paused();
+	return if $self->{Macro_Runner}->is_paused();
 	my $tmptime = $self->{Macro_Runner}->timeout;
 	unless ($self->{Macro_Runner}->registered || $self->{Macro_Runner}->overrideAI) {
 		if (timeOut($tmptime)) {$self->{Macro_Runner}->register}
@@ -444,7 +441,7 @@ sub iterate_macro {
 		do {
 			last unless processCmd $self->{Macro_Runner}->next;
 			Plugins::callHook ('macro/call_macro/process');
-		} while $self->{Macro_Runner} && !$self->is_paused() && $self->{Macro_Runner}->macro_block;
+		} while $self->{Macro_Runner} && !$self->{Macro_Runner}->is_paused() && $self->{Macro_Runner}->macro_block;
 		
 =pod
 		# crashes when error inside macro_block encountered and $self->{Macro_Runner} becomes undefined
