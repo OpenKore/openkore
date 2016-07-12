@@ -461,6 +461,10 @@ sub iterate_macro {
 sub clear_queue {
 	my ($self) = @_;
 	debug "[eventMacro] Clearing queue\n", "eventMacro", 2;
+	if ( defined $self->{Macro_Runner} && !$self->{Macro_Runner}->interruptible && $self->get_automacro_checking_status() == 1 ) {
+		message "[eventMacro] Uninterruptible macro '".$eventMacro->{Macro_Runner}->get_name()."' ended. Automacros will return to being checked.\n";
+		$eventMacro->set_automacro_checking_status(0);
+	}
 	$self->{Macro_Runner} = undef;
 	Plugins::delHook($self->{mainLoop_Hook_Handle}) if (defined $self->{mainLoop_Hook_Handle});
 	$self->{mainLoop_Hook_Handle} = undef;
