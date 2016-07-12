@@ -367,11 +367,7 @@ sub AI_pre_checker {
 	
 	#should AI_pre only be hooked when we are sure there are automacros with conditions fulfilled?
 	
-	#debug "[eventMacro] AI PRE 11\n", "eventMacro", 2;
-	
 	return if (defined $self->{Macro_Runner} && !$self->{Macro_Runner}->interruptible());
-	
-	#debug "[eventMacro] AI PRE 22\n", "eventMacro", 2;
 	
 	foreach my $index (@{$self->{Index_Priority_List}}) {
 	
