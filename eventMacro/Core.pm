@@ -423,10 +423,12 @@ sub call_macro {
 sub iterate_macro {
 	my $self = shift;
 	if ( !defined $self->{Macro_Runner} ) {
+		#Something used undef in $self->{Macro_Runner} without unregistering it
 		debug "[eventMacro] Macro was finished in a bad way\n", "eventMacro", 2;
 		$self->clear_queue();
 		return;
 	} elsif ($self->{Macro_Runner}->finished) {
+		#Actually it should never get here, eventMacro::Runner should clear queue when macro finishes
 		debug "[eventMacro] Macro '".$self->{Macro_Runner}->get_name()."' was finished successfully\n", "eventMacro", 2;
 		$self->clear_queue();
 		return;
