@@ -75,21 +75,6 @@ sub new {
 	return $self
 }
 
-sub pause {
-	my ($self) = @_;
-	$self->{Paused} = 1;
-}
-
-sub unpause {
-	my ($self) = @_;
-	$self->{Paused} = 0;
-}
-
-sub is_paused {
-	my ($self) = @_;
-	return $self->{Paused};
-}
-
 sub get_name {
 	my ($self) = @_;
 	return $self->{Name};
