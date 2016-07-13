@@ -443,19 +443,6 @@ sub iterate_macro {
 			last unless processCmd $self->{Macro_Runner}->next;
 			Plugins::callHook ('macro/call_macro/process');
 		} while $self->{Macro_Runner} && !$self->is_paused() && $self->{Macro_Runner}->macro_block;
-		
-=pod
-		# crashes when error inside macro_block encountered and $self->{Macro_Runner} becomes undefined
-		my $command = $self->{Macro_Runner}->next;
-		if ($self->{Macro_Runner}->macro_block) {
-			while ($self->{Macro_Runner}->macro_block) {
-				$command = $self->{Macro_Runner}->next;
-				processCmd($command)
-			}
-		} else {
-			processCmd($command)
-		}
-=cut
 	}
 }
 
