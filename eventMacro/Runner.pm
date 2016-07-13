@@ -66,11 +66,8 @@ sub new {
 		$self->{lastline} = undef;
 	}
 	
-	if (defined $interruptible && $interruptible =~ /^[01]$/) {
-		$self->{interruptible} = $interruptible
-	} else {
-		$self->{interruptible} = 1;
-	}
+	$self->{interruptible} = 1;
+	$self->interruptible($interruptible) if (defined $interruptible && $interruptible == /^[01]$/);
 
 	return $self
 }
@@ -97,7 +94,9 @@ sub get_name {
 
 # destructor
 sub DESTROY {
-	AI::clear('eventMacro') if (AI::inQueue('eventMacro') && !$_[0]->{submacro})
+	my ($self) = @_;
+	AI::clear('eventMacro') if (AI::inQueue('eventMacro') && !$self->{submacro});
+	$eventMacro->clear_queue() unless ($self->{submacro});
 }
 
 # declares current macro to be a submacro
@@ -141,7 +140,23 @@ sub overrideAI {
 
 # sets or get interruptible flag
 sub interruptible {
-	if (defined $_[1]) {$_[0]->{interruptible} = $_[1]}
+	my ($self, $interruptible) = @_;
+	
+	if (defined $interruptible) {
+		
+		#Turn macro into exclusive
+		if ($self->{interruptible} == 1 && $interruptible == 0 && $eventMacro->get_automacro_checking_status() == CHECKING_AUTOMACROS) {
+			debug "[eventMacro] Macro '".$self->{Name}."' is now exclusive. Automacro checking will be paused until it ends.\n", "eventMacro", 2;
+			$eventMacro->set_automacro_checking_status(PAUSED_BY_EXCLUSIVE_MACRO);
+		
+		#Turn macro into not exclusive
+		} elsif ($self->{interruptible} == 0 && $interruptible == 1 && $eventMacro->get_automacro_checking_status() == PAUSED_BY_EXCLUSIVE_MACRO) {
+			debug "[eventMacro] Macro '".$self->{Name}."' stopped being exclusive. Automacros will return to being checked.\n", "eventMacro", 2;
+			$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
+		}
+		
+		$self->{interruptible} = $interruptible;
+	}
 	return $_[0]->{interruptible}
 }
 
@@ -223,6 +238,10 @@ sub next {
 			$self->{time} = $tmptime->{time};
 			if ($self->{subcall}->finished) {
 				if ($self->{subcall}->{repeat} == 0) {$self->{finished} = 1}
+				if ($self->{subcall}->interruptible != $self->interruptible) {
+					debug "[eventMacro] Submacro '".$self->{subcall}->{Name}."' had a different exclusive value than it's father, returning to father exclusive state.\n", "eventMacro", 2;
+					$self->{subcall}->interruptible($self->interruptible);
+				}
 				undef $self->{subcall};
 				# $self->{line}++
 			}
@@ -580,7 +599,7 @@ sub next {
 			if (defined $times && $times =~ /\d+/) { $calltimes = $times; }; # do we have a valid repeat value?
 		}
 		
-		$self->{subcall} = eventMacro::Runner->new($name, $calltimes, undef, undef, $self->{interruptible});
+		$self->{subcall} = new eventMacro::Runner($name, $calltimes, undef, undef, $self->{interruptible});
 		
 		unless (defined $self->{subcall}) {
 			$self->{error} = "$errtpl: failed to call script";
@@ -608,7 +627,7 @@ sub next {
 			} elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {
 				$self->{overrideAI} = $val
 			} elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {
-				$self->{interruptible} = $val?0:1
+				$self->interruptible($val?0:1);
 			} elsif ($var eq 'orphan' && $val =~ /^(?:terminate|reregister(?:_safe)?)$/) {
 				$self->{orphan} = $val
 			} else {

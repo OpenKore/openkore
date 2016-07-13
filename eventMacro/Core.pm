@@ -16,12 +16,6 @@ use eventMacro::Runner;
 use eventMacro::Parser;
 use eventMacro::Condition;
 
-use constant {
-	CHECKING_AUTOMACROS => 0,
-	PAUSED_BY_EXCLUSIVE_MACRO	=> 1,
-	PAUSED_BY_USER	=> 2
-};
-
 sub new {
 	my ($class, $file) = @_;
 	my $self = bless {}, $class;
@@ -72,12 +66,17 @@ sub clean_hooks {
 sub set_automacro_checking_status {
 	my ($self, $status) = @_;
 	
-	return if ($self->{Automacros_Checking_Status} == $status);
+	if ($self->{Automacros_Checking_Status} == $status) {
+		debug "[eventMacro] automacro checking status is already $status.\n", "eventMacro", 2;
+		return;
+	}
 	
 	if ($self->{Automacros_Checking_Status} == CHECKING_AUTOMACROS) {
+		debug "[eventMacro] Automacros checking stopped.\n", "eventMacro", 2;
 		Plugins::delHook($self->{AI_pre_Hook_Handle});
 		$self->{AI_pre_Hook_Handle} = undef;
 	} elsif ($status == CHECKING_AUTOMACROS) {
+		debug "[eventMacro] Automacros checking activated.\n", "eventMacro", 2;
 		$self->{AI_pre_Hook_Handle} = Plugins::addHook( 'AI_pre', sub { $self->AI_pre_checker(); }, undef );
 	}
 	
@@ -404,11 +403,6 @@ sub call_macro {
 		$self->{Macro_Runner}->setMacro_delay($automacro->get_parameter('macro_delay'));
 		$self->set_var('.caller', $automacro->get_name());
 		
-		if ($automacro->get_parameter('exclusive')) {
-			message "[eventMacro] Calling uninterruptible macro '".$automacro->get_parameter('call')."'. Automacro checking will be paused until it ends.\n";
-			$self->set_automacro_checking_status(PAUSED_BY_EXCLUSIVE_MACRO);
-		}
-		
 		my $iterate_macro_sub = sub { $self->iterate_macro(); };
 		$self->{mainLoop_Hook_Handle} = Plugins::addHook( 'mainLoop_pre', $iterate_macro_sub, undef );
 	} else {
@@ -460,8 +454,8 @@ sub iterate_macro {
 sub clear_queue {
 	my ($self) = @_;
 	debug "[eventMacro] Clearing queue\n", "eventMacro", 2;
-	if ( defined $self->{Macro_Runner} && !$self->{Macro_Runner}->interruptible && $self->get_automacro_checking_status() == 1 ) {
-		message "[eventMacro] Uninterruptible macro '".$eventMacro->{Macro_Runner}->get_name()."' ended. Automacros will return to being checked.\n";
+	if ( defined $self->{Macro_Runner} && $self->get_automacro_checking_status() == PAUSED_BY_EXCLUSIVE_MACRO ) {
+		debug "[eventMacro] Uninterruptible macro '".$eventMacro->{Macro_Runner}->get_name()."' ended. Automacros will return to being checked.\n", "eventMacro", 2;
 		$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
 	}
 	$self->{Macro_Runner} = undef;
