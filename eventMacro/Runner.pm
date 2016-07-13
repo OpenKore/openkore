@@ -30,39 +30,48 @@ sub new {
 
 	return undef unless ($eventMacro->{Macro_List}->getByName($name));
 	
-	$repeat = 0 unless ($repeat && $repeat =~ /^\d+$/);
 	$macro{$name} = $eventMacro->{Macro_List}->getByName($name)->get_lines();
-	my $self = {
-			Name => $name,
-			lastname => undef,
-			registered => 0,
-			submacro => 0,
-			macro_delay => $timeout{eventMacro_delay}{timeout},
-			timeout => 0,
-			mainline_delay => undef,
-			subline_delay => undef,
-			result => undef,
-			time => time,
-			finished => 0,
-			overrideAI => 0,
-			line => 0,
-			lastline => undef,
-			label => {scanLabels($macro{$name})},
-			repeat => $repeat,
-			subcall => undef,
-			error => undef,
-			orphan => $config{eventMacro_orphans},
-			interruptible => 1,
-			macro_block => 0
-
-	};
+	my $self = bless {}, $class;
+	
+	$self->{Name} = $name;
+	$self->{Paused} = 0;
+	$self->{registered} = 0;
+	$self->{submacro} = 0;
+	$self->{macro_delay} = $timeout{eventMacro_delay}{timeout};
+	$self->{timeout} = 0;
+	$self->{mainline_delay} = undef;
+	$self->{subline_delay} = undef;
+	$self->{result} = undef;
+	$self->{time} = time;
+	$self->{finished} = 0;
+	$self->{overrideAI} = 0;
+	$self->{line} = 0;
+	$self->{label} = {scanLabels($macro{$name})};
+	$self->{subcall} = undef;
+	$self->{error} = undef;
+	$self->{orphan} = $config{eventMacro_orphans};
+	$self->{macro_block} = 0;
+	
+	if (defined $repeat && $repeat =~ /^\d+$/) {
+		$self->{repeat} = $repeat;
+	} else {
+		$self->{repeat} = 0;
+	}
+	
 	if (defined $lastname && defined $lastline) {
 		$self->{lastname} = $lastname;
 		$self->{lastline} = $lastline
+	} else {
+		$self->{lastname} = undef;
+		$self->{lastline} = undef;
 	}
-	if (defined $interruptible) {$self->{interruptible} = $interruptible}
-		
-	bless ($self, $class);
+	
+	if (defined $interruptible && $interruptible =~ /^[01]$/) {
+		$self->{interruptible} = $interruptible
+	} else {
+		$self->{interruptible} = 1;
+	}
+
 	return $self
 }
 
