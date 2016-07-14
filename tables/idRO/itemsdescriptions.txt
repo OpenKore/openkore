@@ -38925,7 +38925,7 @@ Jubah Loyalis.
 STR + 2, MHP + 10%.
 Anti knucked back
 ketika mengunakan item ini serangan yang diterima dari musuh berelemen apapun akan bertambah sebesar 20%.
-Jenis : ^777777Costume^000000 Defense : ^77777730^000000
+Jenis : ^777777Armor^000000 Defense : ^77777730^000000
 Berat : ^77777720^000000
 Digunakan Lv. : ^77777780^000000
 Profesi : ^777777Semua Profesi^000000
@@ -44531,4 +44531,67 @@ Equip : ^777777All class^000000
 Blessing Scarlet Lucky Egg
 Kamu bisa mendapatkan Eremes Scard, Valhalla Idol, Laser of Eagle dan banyak item berharga lainnya.
 Weight : ^7777771^000000
+#
+
+//--------------- Update limited item Mall June 20160621--------------
+5917#
+Syal kuning dari orang yang meneriakkan perdamaian.
+Aku bisa merasakan pemikiran yang kuat terhadap perdamaian.
++ 3% Tolerance untuk serangan jarak jauh.
+Tolerance serangan jarak jauh akan berkurang 10% begitu kamu menggunakan Long Mace.
+Series : ^777777Helmet^000000 Defense : ^7777770^000000
+Location : ^777777Bottom ^000000Weight : ^77777710^000000
+Required Lv. : ^77777790^000000
+Equip : ^777777All class^000000
+#
+28410#
+DEX+5, LUK+5, INT+5.
+Serangan skill [Spore Explosion] meningkat 5% setiap 20 Base Level.
+Floating Casting [Acid Bomb] berkurang 1% setiap 4 Base Level.
+Setiap 2 poin skill [Aid Condensed Potion] DEX+1, LUK+1, INT+1, MATK+20.
+Series : ^777777Accessory^000000 Defense : ^7777773^000000
+Weight : ^77777750^000000
+Required Lv. : ^77777750^000000
+Equip : ^777777All class^000000
+#
+28411#
+DEX+5,  AGI+5, INT+5.
+Serangan skill [Arrow Vulcan], [Slinging Arrow],
+[Musical Strike] meningkat 1% untuk setiap 1 base level.
+Serangan skill [Metalic Sound] meningkat 2% setiap 5 Base level.
+Setiap 2 poin skill [Lesson] Floating Casting [Metalic Sound] berkurang 1% 
+DEX+1,  AGI+1,  INT+1,  MATK +20.
+Series : ^777777Accessory^000000 Defense : ^7777773^000000
+Weight : ^77777750^000000
+Required Lv. : ^77777750^000000
+Equip : ^777777All class^000000
+#
+28358#
+Cursed lucky clover. Kita tidak pernah tau ini pertanda baik atau buruk.
+Flee +3, LUK +2.
+Kamu akan terkena curse dengan kemungkinan kecil ketika melakukan serangan fisik.
+dapat menggunakan skill [cloacking] Lv1.Jika digunakan bersamaan dengan Lucky Clover.
+Series : ^777777Accessory^000000 Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Lv. : ^777777100^000000
+Equip : ^777777All class^000000
+#
+18575#
+Sebuah Box yang tidak diketahui.
+Tidak dapat di refine.
+MDEF + 10.
+Random skill akan keluar otomatis saat melakukan serangan jarak dekat.
+Series : ^777777Helmet^000000 Defense : ^77777710^000000
+Location : ^777777All ^000000Weight : ^77777750^000000
+Required Lv. : ^77777720^000000
+Equip : ^777777All class^000000
+#
+18521#
+A verdant four-leaf clover 
+It might bring me a luck.
+LUK + 1, MSP + 20.
+Series : ^777777Helmet^000000 Defense : ^7777770^000000
+Location: ^777777Bottom ^000000 Weight : ^77777710^000000
+Required Lv. : ^77777750^000000
+Equip : ^777777All class^000000
 #

@@ -6758,3 +6758,11 @@
 19109#Valhalla Idol#
 19111#Laser of Eagle#
 17692#Blessing Scarlet Egg#
+
+//--------------- Update Limited Item Mall June 20160621---------------
+5917#Yellow_Scarf#
+28410#Sapphire_Wrist#
+28411#Emerald_Earring#
+28358#Cursed_Lucky_Clover#
+18575#Wunderkammer#
+18521#Lucky_Clover#
