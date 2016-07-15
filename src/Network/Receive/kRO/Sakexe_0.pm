@@ -1528,39 +1528,6 @@ sub guild_members_list {
 
 }
 
-sub guild_members_title_list {
-	my ($self, $args) = @_;
-
-	my $newmsg;
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-
-	$self->decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
-	$msg = substr($msg, 0, 4) . $newmsg;
-	my $gtIndex;
-	for (my $i = 4; $i < $msg_size; $i+=28) {
-		$gtIndex = unpack('V', substr($msg, $i, 4));
-		$guild{positions}[$gtIndex]{title} = bytesToString(unpack('Z24', substr($msg, $i + 4, 24)));
-	}
-}
-
-sub guild_name {
-	my ($self, $args) = @_;
-
-	my $guildID = $args->{guildID};
-	my $emblemID = $args->{emblemID};
-	my $mode = $args->{mode};
-	my $guildName = bytesToString($args->{guildName});
-	$char->{guild}{name} = $guildName;
-	$char->{guildID} = $guildID;
-	$char->{guild}{emblem} = $emblemID;
-
-	$messageSender->sendGuildMasterMemberCheck();	# Is this necessary?? (requests for guild info packet 014E)
-	$messageSender->sendGuildRequestInfo(0);	#requests for guild info packet 01B6 and 014C
-	$messageSender->sendGuildRequestInfo(1);	#requests for guild member packet 0166 and 0154
-	debug "guild name: $guildName\n";
-}
-
 sub guild_notice {
 	my ($self, $args) = @_;
 	stripLanguageCode(\$args->{subject});
@@ -1580,31 +1547,6 @@ sub guild_notice {
 	$messageSender->sendGuildRequestInfo(0);
 	# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 	$messageSender->sendGuildRequestInfo(1);
-}
-
-sub guild_request {
-	my ($self, $args) = @_;
-
-	# Guild request
-	my $ID = $args->{ID};
-	my $name = bytesToString($args->{name});
-	message TF("Incoming Request to join Guild '%s'\n", $name);
-	$incomingGuild{'ID'} = $ID;
-	$incomingGuild{'Type'} = 1;
-	$timeout{'ai_guildAutoDeny'}{'time'} = time;
-}
-
-sub identify {
-	my ($self, $args) = @_;
-	if ($args->{flag} == 0) {
-		my $item = $char->inventory->getByServerIndex($args->{index});
-		$item->{identified} = 1;
-		$item->{type_equip} = $itemSlots_lut{$item->{nameID}};
-		message TF("Item Identified: %s (%d)\n", $item->{name}, $item->{invIndex}), "info";
-	} else {
-		message T("Item Appraisal has failed.\n");
-	}
-	undef @identifyID;
 }
 
 sub identify_list {
