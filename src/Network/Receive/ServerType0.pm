@@ -1697,56 +1697,6 @@ sub friend_list {
 	}
 }
 
-sub friend_removed {
-	my ($self, $args) = @_;
-
-	# Friend removed
-	my $friendAccountID =  $args->{friendAccountID};
-	my $friendCharID =  $args->{friendCharID};
-	for (my $i = 0; $i < @friendsID; $i++) {
-		if ($friends{$i}{'accountID'} eq $friendAccountID && $friends{$i}{'charID'} eq $friendCharID) {
-			message TF("%s is no longer your friend\n", $friends{$i}{'name'});
-			binRemove(\@friendsID, $i);
-			delete $friends{$i};
-			last;
-		}
-	}
-}
-
-sub friend_response {
-	my ($self, $args) = @_;
-
-	# Response to friend request
-	my $type = $args->{type};
-	my $name = bytesToString($args->{name});
-	if ($type) {
-		message TF("%s rejected to be your friend\n", $name);
-	} else {
-		my $ID = @friendsID;
-		binAdd(\@friendsID, $ID);
-		$friends{$ID}{accountID} = substr($args->{RAW_MSG}, 4, 4);
-		$friends{$ID}{charID} = substr($args->{RAW_MSG}, 8, 4);
-		$friends{$ID}{name} = $name;
-		$friends{$ID}{online} = 1;
-		message TF("%s is now your friend\n", $name);
-	}
-}
-
-sub homunculus_food {
-	my ($self, $args) = @_;
-	if ($args->{success}) {
-		message TF("Fed homunculus with %s\n", itemNameSimple($args->{foodID})), "homunculus";
-	} else {
-		error TF("Failed to feed homunculus with %s: no food in inventory.\n", itemNameSimple($args->{foodID})), "homunculus";
-		# auto-vaporize
-		if ($char->{homunculus} && $char->{homunculus}{hunger} <= 11 && timeOut($char->{homunculus}{vaporize_time}, 5)) {
-			$messageSender->sendSkillUse(244, 1, $accountID);
-			$char->{homunculus}{vaporize_time} = time;
-			error "Critical hunger level reached. Homunculus is put to rest.\n", "homunculus";
-		}
-	}
-}
-
 # 029B
 sub mercenary_init {
 	my ($self, $args) = @_;
@@ -1835,40 +1785,6 @@ sub homunculus_state_handler {
 			message T("Your Homunculus was resurrected!\n"), 'homunculus';
 		}
 	}
-}
-
-# TODO: wouldn't it be better if we calculated these only at (first) request after a change in value, if requested at all?
-sub slave_calcproperty_handler {
-	my ($slave, $args) = @_;
-	# so we don't devide by 0
-	# wtf
-=pod
-	$slave->{hp_max}       = ($args->{hp_max} > 0) ? $args->{hp_max} : $args->{hp};
-	$slave->{sp_max}       = ($args->{sp_max} > 0) ? $args->{sp_max} : $args->{sp};
-=cut
-
-	$slave->{attack_speed}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
-	$slave->{hpPercent}    = $slave->{hp_max} ? ($slave->{hp} / $slave->{hp_max}) * 100 : undef;
-	$slave->{spPercent}    = $slave->{sp_max} ? ($slave->{sp} / $slave->{sp_max}) * 100 : undef;
-	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : undef;
-}
-
-sub gameguard_grant {
-	my ($self, $args) = @_;
-
-	if ($args->{server} == 0) {
-		error T("The server Denied the login because GameGuard packets where not replied " .
-			"correctly or too many time has been spent to send the response.\n" .
-			"Please verify the version of your poseidon server and try again\n"), "poseidon";
-		return;
-	} elsif ($args->{server} == 1) {
-		message T("Server granted login request to account server\n"), "poseidon";
-	} else {
-		message T("Server granted login request to char/map server\n"), "poseidon";
-		# FIXME
-		change_to_constate25 if ($config{'gameGuard'} eq "2");
-	}
-	$net->setState(1.3) if ($net->getState() == 1.2);
 }
 
 sub gameguard_request {
