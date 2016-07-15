@@ -2657,4 +2657,55 @@ sub deal_cancelled {
 	message T("Deal Cancelled\n"), "deal";
 }
 
+sub deal_complete {
+	undef %outgoingDeal;
+	undef %incomingDeal;
+	undef %currentDeal;
+	message T("Deal Complete\n"), "deal";
+}
+
+sub deal_finalize {
+	my ($self, $args) = @_;
+	if ($args->{type} == 1) {
+		$currentDeal{other_finalize} = 1;
+		message TF("%s finalized the Deal\n", $currentDeal{name}), "deal";
+
+	} else {
+		$currentDeal{you_finalize} = 1;
+		# FIXME: shouldn't we do this when we actually complete the deal?
+		$char->{zeny} -= $currentDeal{you_zeny};
+		message T("You finalized the Deal\n"), "deal";
+	}
+}
+
+sub deal_request {
+	my ($self, $args) = @_;
+	my $level = $args->{level} || 'Unknown'; # TODO: store this info
+	my $user = bytesToString($args->{user});
+
+	$incomingDeal{name} = $user;
+	$timeout{ai_dealAutoCancel}{time} = time;
+	message TF("%s (level %s) Requests a Deal\n", $user, $level), "deal";
+	message T("Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"), "deal";
+}
+
+sub devotion {
+	my ($self, $args) = @_;
+	my $msg = '';
+	my $source = Actor::get($args->{sourceID});
+
+	undef $devotionList->{$args->{sourceID}};
+	for (my $i = 0; $i < 5; $i++) {
+		my $ID = substr($args->{targetIDs}, $i*4, 4);
+		last if unpack("V", $ID) == 0;
+		$devotionList->{$args->{sourceID}}->{targetIDs}->{$ID} = $i;
+		my $actor = Actor::get($ID);
+		#FIXME: Need a better display
+		$msg .= skillUseNoDamage_string($source, $actor, 0, 'devotion');
+	}
+	$devotionList->{$args->{sourceID}}->{range} = $args->{range};
+
+	message "$msg", "devotion";
+}
+
 1;
