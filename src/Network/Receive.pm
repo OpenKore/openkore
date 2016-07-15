@@ -2372,4 +2372,24 @@ sub login_error_game_login_server {
 	$net->serverDisconnect();
 }
 
+sub character_deletion_successful {
+	if (defined $AI::temp::delIndex) {
+		message TF("Character %s (%d) deleted.\n", $chars[$AI::temp::delIndex]{name}, $AI::temp::delIndex), "info";
+		delete $chars[$AI::temp::delIndex];
+		undef $AI::temp::delIndex;
+		for (my $i = 0; $i < @chars; $i++) {
+			delete $chars[$i] if ($chars[$i] && !scalar(keys %{$chars[$i]}))
+		}
+	} else {
+		message T("Character deleted.\n"), "info";
+	}
+
+	if (charSelectScreen() == 1) {
+		$net->setState(3);
+		$firstLoginMap = 1;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+		$sentWelcomeMessage = 1;
+	}
+}
+
 1;
