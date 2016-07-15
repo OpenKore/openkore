@@ -85,24 +85,9 @@ sub subvars {
 	
 	# variables
 	$pre =~ s/(?:^|(?<=[^\\]))\$(\.?[a-z][a-z\d]*)/$eventMacro->is_var_defined($1) ? $eventMacro->get_var($1) : ''/gei;
-=pod
-	while (($var) = $pre =~ /(?:^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
-		$tmp = $eventMacro->is_var_defined($var) ? $eventMacro->get_var($var):"";
-		$var = q4rx $var;
-		$pre =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g;
-		last if defined $nick
-	}
-=cut
 	
 	# doublevars
 	$pre =~ s/\$\{(.*?)\}/$eventMacro->is_var_defined("#$1") ? $eventMacro->get_var("#$1") : ''/gei;
-=pod
-	while (($var) = $pre =~ /\$\{(.*?)\}/i) {
-		$tmp = ($eventMacro->is_var_defined("#$var"))?$eventMacro->get_var("#$var"):"";
-		$var = q4rx $var;
-		$pre =~ s/\$\{$var\}/$tmp/g
-	}
-=cut
 
 	return $pre
 }
