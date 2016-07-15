@@ -1130,17 +1130,6 @@ sub character_creation_successful {
 	}
 }
 
-sub character_deletion_failed {
-	error T("Character cannot be deleted. Your e-mail address was probably wrong.\n");
-	undef $AI::temp::delIndex;
-	if (charSelectScreen() == 1) {
-		$net->setState(3);
-		$firstLoginMap = 1;
-		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-		$sentWelcomeMessage = 1;
-	}
-}
-
 sub character_moves {
 	my ($self, $args) = @_;
 
