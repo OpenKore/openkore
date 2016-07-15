@@ -1569,28 +1569,6 @@ sub identify_list {
 	message TF("Received Possible Identify List (%s item(s)) - type 'identify'\n", $num), 'info';
 }
 
-sub ignore_all_result {
-	my ($self, $args) = @_;
-	if ($args->{type} == 0) {
-		message T("All Players ignored\n");
-	} elsif ($args->{type} == 1) {
-		if ($args->{error} == 0) {
-			message T("All players unignored\n");
-		}
-	}
-}
-
-sub ignore_player_result {
-	my ($self, $args) = @_;
-	if ($args->{type} == 0) {
-		message T("Player ignored\n");
-	} elsif ($args->{type} == 1) {
-		if ($args->{error} == 0) {
-			message T("Player unignored\n");
-		}
-	}
-}
-
 sub inventory_item_added {
 	my ($self, $args) = @_;
 

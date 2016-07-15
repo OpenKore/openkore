@@ -1959,30 +1959,6 @@ sub identify_list {
 	message TF("Received Possible Identify List (%s item(s)) - type 'identify'\n", $num), 'info';
 }
 
-# TODO: store this state
-sub ignore_all_result {
-	my ($self, $args) = @_;
-	if ($args->{type} == 0) {
-		message T("All Players ignored\n");
-	} elsif ($args->{type} == 1) {
-		if ($args->{error} == 0) {
-			message T("All players unignored\n");
-		}
-	}
-}
-
-# TODO: store list of ignored players
-sub ignore_player_result {
-	my ($self, $args) = @_;
-	if ($args->{type} == 0) {
-		message T("Player ignored\n");
-	} elsif ($args->{type} == 1) {
-		if ($args->{error} == 0) {
-			message T("Player unignored\n");
-		}
-	}
-}
-
 sub whisper_list {
 	my ($self, $args) = @_;
 
