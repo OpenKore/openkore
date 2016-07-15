@@ -1573,99 +1573,6 @@ sub character_creation_successful {
 	}
 }
 
-sub chat_join_result {
-	my ($self, $args) = @_;
-
-	if ($args->{type} == 1) {
-		message T("Can't join Chat Room - Incorrect Password\n");
-	} elsif ($args->{type} == 2) {
-		message T("Can't join Chat Room - You're banned\n");
-	}
-}
-
-sub chat_modified {
-	my ($self, $args) = @_;
-
-	my $title;
-	$self->decrypt(\$title, $args->{title});
-	$title = bytesToString($title);
-
-	my ($ownerID, $ID, $limit, $public, $num_users) = @{$args}{qw(ownerID ID limit public num_users)};
-
-	if ($ownerID eq $accountID) {
-		$chatRooms{new}{title} = $title;
-		$chatRooms{new}{ownerID} = $ownerID;
-		$chatRooms{new}{limit} = $limit;
-		$chatRooms{new}{public} = $public;
-		$chatRooms{new}{num_users} = $num_users;
-	} else {
-		$chatRooms{$ID}{title} = $title;
-		$chatRooms{$ID}{ownerID} = $ownerID;
-		$chatRooms{$ID}{limit} = $limit;
-		$chatRooms{$ID}{public} = $public;
-		$chatRooms{$ID}{num_users} = $num_users;
-	}
-	message T("Chat Room Properties Modified\n");
-}
-
-sub chat_newowner {
-	my ($self, $args) = @_;
-
-	my $user = bytesToString($args->{user});
-	if ($args->{type} == 0) {
-		if ($user eq $char->{name}) {
-			$chatRooms{$currentChatRoom}{ownerID} = $accountID;
-		} else {
-			my $players = $playersList->getItems();
-			my $player;
-			foreach my $p (@{$players}) {
-				if ($p->{name} eq $user) {
-					$player = $p;
-					last;
-				}
-			}
-
-			if ($player) {
-				my $key = $player->{ID};
-				$chatRooms{$currentChatRoom}{ownerID} = $key;
-			}
-		}
-		$chatRooms{$currentChatRoom}{users}{$user} = 2;
-	} else {
-		$chatRooms{$currentChatRoom}{users}{$user} = 1;
-	}
-}
-
-sub chat_user_join {
-	my ($self, $args) = @_;
-
-	my $user = bytesToString($args->{user});
-	if ($currentChatRoom ne "") {
-		binAdd(\@currentChatRoomUsers, $user);
-		$chatRooms{$currentChatRoom}{users}{$user} = 1;
-		$chatRooms{$currentChatRoom}{num_users} = $args->{num_users};
-		message TF("%s has joined the Chat Room\n", $user);
-	}
-}
-
-sub chat_user_leave {
-	my ($self, $args) = @_;
-
-	my $user = bytesToString($args->{user});
-	delete $chatRooms{$currentChatRoom}{users}{$user};
-	binRemove(\@currentChatRoomUsers, $user);
-	$chatRooms{$currentChatRoom}{num_users} = $args->{num_users};
-	if ($user eq $char->{name}) {
-		binRemove(\@chatRoomsID, $currentChatRoom);
-		delete $chatRooms{$currentChatRoom};
-		undef @currentChatRoomUsers;
-		$currentChatRoom = "";
-		message T("You left the Chat Room\n");
-	} else {
-		message TF("%s has left the Chat Room\n", $user);
-	}
-}
-
 sub chat_users {
 	my ($self, $args) = @_;
 
@@ -1716,33 +1623,6 @@ sub cast_cancelled {
 	delete $source->{casting};
 }
 
-sub chat_removed {
-	my ($self, $args) = @_;
-
-	binRemove(\@chatRoomsID, $args->{ID});
-	delete $chatRooms{ $args->{ID} };
-}
-
-sub deal_add_other {
-	my ($self, $args) = @_;
-
-	if ($args->{nameID} > 0) {
-		my $item = $currentDeal{other}{ $args->{nameID} } ||= {};
-		$item->{amount} += $args->{amount};
-		$item->{nameID} = $args->{nameID};
-		$item->{identified} = $args->{identified};
-		$item->{broken} = $args->{broken};
-		$item->{upgrade} = $args->{upgrade};
-		$item->{cards} = $args->{cards};
-		$item->{name} = itemName($item);
-		message TF("%s added Item to Deal: %s x %s\n", $currentDeal{name}, $item->{name}, $args->{amount}), "deal";
-	} elsif ($args->{amount} > 0) {
-		$currentDeal{other_zeny} += $args->{amount};
-		my $amount = formatNumber($args->{amount});
-		message TF("%s added %s z to Deal\n", $currentDeal{name}, $amount), "deal";
-	}
-}
-
 sub deal_add_you {
 	my ($self, $args) = @_;
 
@@ -1771,44 +1651,6 @@ sub deal_add_you {
 	$currentDeal{you_items}++;
 	$args->{item} = $item;
 	$char->inventory->remove($item) if ($item->{amount} <= 0);
-}
-
-sub deal_begin {
-	my ($self, $args) = @_;
-
-	if ($args->{type} == 0) {
-		error T("That person is too far from you to trade.\n"), "deal";
-	} elsif ($args->{type} == 2) {
-		error T("That person is in another deal.\n"), "deal";
-	} elsif ($args->{type} == 3) {
-		if (%incomingDeal) {
-			$currentDeal{name} = $incomingDeal{name};
-			undef %incomingDeal;
-		} else {
-			my $ID = $outgoingDeal{ID};
-			my $player;
-			$player = $playersList->getByID($ID) if (defined $ID);
-			$currentDeal{ID} = $ID;
-			if ($player) {
-				$currentDeal{name} = $player->{name};
-			} else {
-				$currentDeal{name} = T('Unknown #') . unpack("V", $ID);
-			}
-			undef %outgoingDeal;
-		}
-		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
-	} elsif ($args->{type} == 5) {
-		error T("That person is opening storage.\n"), "deal";
-	} else {
-		error TF("Deal request failed (unknown error %s).\n", $args->{type}), "deal";
-	}
-}
-
-sub deal_cancelled {
-	undef %incomingDeal;
-	undef %outgoingDeal;
-	undef %currentDeal;
-	message T("Deal Cancelled\n"), "deal";
 }
 
 sub deal_complete {
