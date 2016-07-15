@@ -2303,4 +2303,73 @@ sub forge_list {
 	message "=========================\n";
 }
 
+sub login_error {
+	my ($self, $args) = @_;
+
+	$net->serverDisconnect();
+	if ($args->{type} == REFUSE_INVALID_ID) {
+		error TF("Account name [%s] doesn't exist\n", $config{'username'}), "connection";
+		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
+			my $username = $interface->query(T("Enter your Ragnarok Online username again."));
+			if (defined($username)) {
+				configModify('username', $username, 1);
+				$timeout_ex{master}{time} = 0;
+				$conState_tries = 0;
+			} else {
+				quit();
+				return;
+			}
+		}
+	} elsif ($args->{type} == REFUSE_INVALID_PASSWD) {
+		error TF("Password Error for account [%s]\n", $config{'username'}), "connection";
+		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
+			my $password = $interface->query(T("Enter your Ragnarok Online password again."), isPassword => 1);
+			if (defined($password)) {
+				configModify('password', $password, 1);
+				$timeout_ex{master}{time} = 0;
+				$conState_tries = 0;
+			} else {
+				quit();
+				return;
+			}
+		}
+	} elsif ($args->{type} == ACCEPT_ID_PASSWD) {
+		error T("The server has denied your connection.\n"), "connection";
+	} elsif ($args->{type} == REFUSE_NOT_CONFIRMED) {
+		$interface->errorDialog(T("Critical Error: Your account has been blocked."));
+		$quit = 1 unless ($net->clientAlive());
+	} elsif ($args->{type} == REFUSE_INVALID_VERSION) {
+		my $master = $masterServer;
+		error TF("Connect failed, something is wrong with the login settings:\n" .
+			"version: %s\n" .
+			"master_version: %s\n" .
+			"serverType: %s\n", $master->{version}, $master->{master_version}, $masterServer->{serverType}), "connection";
+		relog(30);
+	} elsif ($args->{type} == REFUSE_BLOCK_TEMPORARY) {
+		error TF("The server is temporarily blocking your connection until %s\n", $args->{date}), "connection";
+	} elsif ($args->{type} == REFUSE_USER_PHONE_BLOCK) { #Phone lock
+		error T("Please dial to activate the login procedure.\n"), "connection";
+		Plugins::callHook('dial');
+		relog(10);
+	} elsif ($args->{type} == ACCEPT_LOGIN_USER_PHONE_BLOCK) {
+		error T("Mobile Authentication: Max number of simultaneous IP addresses reached.\n"), "connection";
+	} else {
+		error TF("The server has denied your connection for unknown reason (%d).\n", $args->{type}), 'connection';
+	}
+
+	if ($args->{type} != REFUSE_INVALID_VERSION && $versionSearch) {
+		$versionSearch = 0;
+		writeSectionedFileIntact(Settings::getTableFilename("servers.txt"), \%masterServers);
+	}
+}
+
+sub login_error_game_login_server {
+	error T("Error logging into Character Server (invalid character specified)...\n"), 'connection';
+	$net->setState(1);
+	undef $conState_tries;
+	$timeout_ex{master}{time} = time;
+	$timeout_ex{master}{timeout} = $timeout{'reconnect'}{'timeout'};
+	$net->serverDisconnect();
+}
+
 1;
