@@ -2435,4 +2435,40 @@ sub character_moves {
 	}
 }
 
+sub character_name {
+	my ($self, $args) = @_;
+	my $name; # Type: String
+
+	$name = bytesToString($args->{name});
+	debug "Character name received: $name\n";
+}
+
+sub character_status {
+	my ($self, $args) = @_;
+
+	my $actor = Actor::get($args->{ID});
+
+	if ($args->{switch} eq '028A') {
+		$actor->{lv} = $args->{lv}; # TODO: test if it is ok to use this piece of information
+		$actor->{opt3} = $args->{opt3};
+	} elsif ($args->{switch} eq '0229' || $args->{switch} eq '0119') {
+		$actor->{opt1} = $args->{opt1};
+		$actor->{opt2} = $args->{opt2};
+	}
+
+	$actor->{option} = $args->{option};
+
+	setStatus($actor, $args->{opt1}, $args->{opt2}, $args->{option});
+}
+
+sub chat_created {
+	my ($self, $args) = @_;
+
+	$currentChatRoom = $accountID;
+	$chatRooms{$accountID} = {%createdChatRoom};
+	binAdd(\@chatRoomsID, $accountID);
+	binAdd(\@currentChatRoomUsers, $char->{name});
+	message T("Chat Room Created\n");
+}
+
 1;
