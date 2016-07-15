@@ -1653,19 +1653,6 @@ sub deal_add_you {
 	$char->inventory->remove($item) if ($item->{amount} <= 0);
 }
 
-sub egg_list {
-	my ($self, $args) = @_;
-	my $msg = center(T(" Egg Hatch Candidates "), 38, '-') ."\n";
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
-		my $index = unpack("v", substr($args->{RAW_MSG}, $i, 2));
-		my $item = $char->inventory->getByServerIndex($index);
-		$msg .=  "$item->{invIndex} $item->{name}\n";
-	}
-	$msg .= ('-'x38) . "\n".
-			T("Ready to use command 'pet [hatch|h] #'\n");
-	message $msg, "list";
-}
-
 sub emoticon {
 	my ($self, $args) = @_;
 	my $emotion = $emotions_lut{$args->{type}}{display} || "<emotion #$args->{type}>";
