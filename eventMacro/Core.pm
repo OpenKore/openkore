@@ -56,6 +56,10 @@ sub new {
 	
 	$self->{Variable_List_Hash} = {};
 	
+	if ($char && $net && $net->getState() == Network::IN_GAME) {
+		$self->check_all_conditions();
+	}
+	
 	return $self;
 }
 
@@ -287,6 +291,16 @@ sub create_callbacks {
 	my $event_sub = sub { $self->manage_event_callbacks(shift, shift); };
 	foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
 		push( @{ $self->{Hook_Handles} }, Plugins::addHook( $hook_name, $event_sub, undef ) );
+	}
+}
+
+sub check_all_conditions {
+	my ($self) = @_;
+	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
+		foreach my $condition (@{$automacro->{conditionList}->getItems()}) {
+			$condition->validate_condition_status();
+		}
+		$automacro->validate_automacro_status();
 	}
 }
 
