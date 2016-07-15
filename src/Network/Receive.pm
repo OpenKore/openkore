@@ -2721,4 +2721,69 @@ sub egg_list {
 	message $msg, "list";
 }
 
+sub emoticon {
+	my ($self, $args) = @_;
+	my $emotion = $emotions_lut{$args->{type}}{display} || "<emotion #$args->{type}>";
+
+	if ($args->{ID} eq $accountID) {
+		message "$char->{name}: $emotion\n", "emotion";
+		chatLog("e", "$char->{name}: $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
+
+	} elsif (my $player = $playersList->getByID($args->{ID})) {
+		my $name = $player->name;
+
+		#my $dist = "unknown";
+		my $dist = distance($char->{pos_to}, $player->{pos_to});
+		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+
+		# Translation Comment: "[dist=$dist] $name ($player->{binID}): $emotion\n"
+		message TF("[dist=%s] %s (%d): %s\n", $dist, $name, $player->{binID}, $emotion), "emotion";
+		chatLog("e", "$name".": $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
+
+		my $index = AI::findAction("follow");
+		if ($index ne "") {
+			my $masterID = AI::args($index)->{ID};
+			if ($config{'followEmotion'} && $masterID eq $args->{ID} &&
+			       distance($char->{pos_to}, $player->{pos_to}) <= $config{'followEmotion_distance'})
+			{
+				my %args = ();
+				$args{timeout} = time + rand (1) + 0.75;
+
+				if ($args->{type} == 30) {
+					$args{emotion} = 31;
+				} elsif ($args->{type} == 31) {
+					$args{emotion} = 30;
+				} else {
+					$args{emotion} = $args->{type};
+				}
+
+				AI::queue("sendEmotion", \%args);
+			}
+		}
+	} elsif (my $monster = $monstersList->getByID($args->{ID}) || $slavesList->getByID($args->{ID})) {
+		my $dist = distance($char->{pos_to}, $monster->{pos_to});
+		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+
+		# Translation Comment: "[dist=$dist] $monster->name ($monster->{binID}): $emotion\n"
+		message TF("[dist=%s] %s %s (%d): %s\n", $dist, $monster->{actorType}, $monster->name, $monster->{binID}, $emotion), "emotion";
+
+	} else {
+		my $actor = Actor::get($args->{ID});
+		my $name = $actor->name;
+
+		my $dist = T("unknown");
+		if (!$actor->isa('Actor::Unknown')) {
+			$dist = distance($char->{pos_to}, $actor->{pos_to});
+			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+		}
+
+		message TF("[dist=%s] %s: %s\n", $dist, $actor->nameIdx, $emotion), "emotion";
+		chatLog("e", "$name".": $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
+	}
+	Plugins::callHook('packet_emotion', {
+		emotion => $emotion,
+		ID => $args->{ID}
+	});
+}
+
 1;
