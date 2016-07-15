@@ -2982,4 +2982,63 @@ sub gameguard_grant {
 	$net->setState(1.3) if ($net->getState() == 1.2);
 }
 
+sub guild_allies_enemy_list {
+	my ($self, $args) = @_;
+
+	# Guild Allies/Enemy List
+	# <len>.w (<type>.l <guildID>.l <guild name>.24B).*
+	# type=0 Ally
+	# type=1 Enemy
+
+	# This is the length of the entire packet
+	my $msg = $args->{RAW_MSG};
+	my $len = unpack("v", substr($msg, 2, 2));
+
+	# clear $guild{enemy} and $guild{ally} otherwise bot will misremember alliances -zdivpsa
+	$guild{enemy} = {}; $guild{ally} = {};
+
+	for (my $i = 4; $i < $len; $i += 32) {
+		my ($type, $guildID, $guildName) = unpack('V2 Z24', substr($msg, $i, 32));
+		$guildName = bytesToString($guildName);
+		if ($type) {
+			# Enemy guild
+			$guild{enemy}{$guildID} = $guildName;
+		} else {
+			# Allied guild
+			$guild{ally}{$guildID} = $guildName;
+		}
+		debug "Your guild is ".($type ? 'enemy' : 'ally')." with guild $guildID ($guildName)\n", "guild";
+	}
+}
+
+sub guild_ally_request {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID}; # is this a guild ID or account ID? Freya calls it an account ID
+	my $name = bytesToString($args->{guildName}); # Type: String
+
+	message TF("Incoming Request to Ally Guild '%s'\n", $name);
+	$incomingGuild{ID} = $ID;
+	$incomingGuild{Type} = 2;
+	$timeout{ai_guildAutoDeny}{time} = time;
+}
+
+sub guild_broken {
+	my ($self, $args) = @_;
+	my $flag = $args->{flag};
+
+	if ($flag == 2) {
+		error T("Guild can not be undone: there are still members in the guild\n");
+	} elsif ($flag == 1) {
+		error T("Guild can not be undone: invalid key\n");
+	} elsif ($flag == 0) {
+		message T("Guild broken.\n");
+		undef %{$char->{guild}};
+		undef $char->{guildID};
+		undef %guild;
+	} else {
+		error TF("Guild can not be undone: unknown reason (flag: %s)\n", $flag);
+	}
+}
+
 1;
