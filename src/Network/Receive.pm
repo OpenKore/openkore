@@ -2471,4 +2471,32 @@ sub chat_created {
 	message T("Chat Room Created\n");
 }
 
+sub chat_info {
+	my ($self, $args) = @_;
+
+	my $title;
+	$self->decrypt(\$title, $args->{title});
+	$title = bytesToString($title);
+
+	my $chat = $chatRooms{$args->{ID}};
+	if (!$chat || !%{$chat}) {
+		$chat = $chatRooms{$args->{ID}} = {};
+		binAdd(\@chatRoomsID, $args->{ID});
+	}
+	$chat->{title} = $title;
+	$chat->{ownerID} = $args->{ownerID};
+	$chat->{limit} = $args->{limit};
+	$chat->{public} = $args->{public};
+	$chat->{num_users} = $args->{num_users};
+
+	Plugins::callHook('packet_chatinfo', {
+	  chatID => $args->{ID},
+	  ownerID => $args->{ownerID},
+	  title => $title,
+	  limit => $args->{limit},
+	  public => $args->{public},
+	  num_users => $args->{num_users}
+	});
+}
+
 1;
