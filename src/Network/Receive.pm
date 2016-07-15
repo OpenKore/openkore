@@ -2786,4 +2786,116 @@ sub emoticon {
 	});
 }
 
+sub errors {
+	my ($self, $args) = @_;
+
+	Plugins::callHook('disconnected') if ($net->getState() == Network::IN_GAME);
+	if ($net->getState() == Network::IN_GAME &&
+		($config{dcOnDisconnect} > 1 ||
+		($config{dcOnDisconnect} &&
+		$args->{type} != 3 &&
+		$args->{type} != 10))) {
+		error T("Auto disconnecting on Disconnect!\n");
+		chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
+		$quit = 1;
+	}
+
+	$net->setState(1);
+	undef $conState_tries;
+
+	$timeout_ex{'master'}{'time'} = time;
+	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+	if (($args->{type} != 0)) {
+		$net->serverDisconnect();
+	}
+	if ($args->{type} == 0) {
+		# FIXME BAN_SERVER_SHUTDOWN is 0x1, 0x0 is BAN_UNFAIR
+		if ($config{'dcOnServerShutDown'} == 1) {
+			error T("Auto disconnecting on ServerShutDown!\n");
+			chatLog("k", T("*** Server shutting down , auto disconnect! ***\n"));
+			$quit = 1;
+		} else {
+			error T("Server shutting down\n"), "connection";
+		}
+	} elsif ($args->{type} == 1) {
+		if($config{'dcOnServerClose'} == 1) {
+			error T("Auto disconnecting on ServerClose!\n");
+			chatLog("k", T("*** Server is closed , auto disconnect! ***\n"));
+			$quit = 1;
+		} else {
+			error T("Error: Server is closed\n"), "connection";
+		}
+	} elsif ($args->{type} == 2) {
+		if ($config{'dcOnDualLogin'} == 1) {
+			error (TF("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
+				"%s will now immediately 	disconnect.\n", $Settings::NAME));
+			chatLog("k", T("*** DualLogin, auto disconnect! ***\n"));
+			quit();
+		} elsif ($config{'dcOnDualLogin'} >= 2) {
+			error T("Critical Error: Dual login prohibited - Someone trying to login!\n");
+			message TF("Reconnecting, wait %s seconds...\n", $config{'dcOnDualLogin'}), "connection";
+			$timeout_ex{'master'}{'timeout'} = $config{'dcOnDualLogin'};
+		} else {
+			error T("Critical Error: Dual login prohibited - Someone trying to login!\n"), "connection";
+		}
+
+	} elsif ($args->{type} == 3) {
+		error T("Error: Out of sync with server\n"), "connection";
+	} elsif ($args->{type} == 4) {
+		# fRO: "Your account is not validated, please click on the validation link in your registration mail."
+		error T("Error: Server is jammed due to over-population.\n"), "connection";
+	} elsif ($args->{type} == 5) {
+		error T("Error: You are underaged and cannot join this server.\n"), "connection";
+	} elsif ($args->{type} == 6) {
+		$interface->errorDialog(T("Critical Error: You must pay to play this account!\n"));
+		$quit = 1 unless ($net->version == 1);
+	} elsif ($args->{type} == 8) {
+		error T("Error: The server still recognizes your last connection\n"), "connection";
+	} elsif ($args->{type} == 9) {
+		error T("Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?\n"), "connection";
+	} elsif ($args->{type} == 10) {
+		error T("Error: You are out of available time paid for\n"), "connection";
+	} elsif ($args->{type} == 15) {
+		error T("Error: You have been forced to disconnect by a GM\n"), "connection";
+	} elsif ($args->{type} == 101) {
+		error T("Error: Your account has been suspended until the next maintenance period for possible use of 3rd party programs\n"), "connection";
+	} elsif ($args->{type} == 102) {
+		error T("Error: For an hour, more than 10 connections having same IP address, have made. Please check this matter.\n"), "connection";
+	} else {
+		error TF("Unknown error %s\n", $args->{type}), "connection";
+	}
+}
+
+sub friend_logon {
+	my ($self, $args) = @_;
+
+	# Friend In/Out
+	my $friendAccountID = $args->{friendAccountID};
+	my $friendCharID = $args->{friendCharID};
+	my $isNotOnline = $args->{isNotOnline};
+
+	for (my $i = 0; $i < @friendsID; $i++) {
+		if ($friends{$i}{'accountID'} eq $friendAccountID && $friends{$i}{'charID'} eq $friendCharID) {
+			$friends{$i}{'online'} = 1 - $isNotOnline;
+			if ($isNotOnline) {
+				message TF("Friend %s has disconnected\n", $friends{$i}{name}), undef, 1;
+			} else {
+				message TF("Friend %s has connected\n", $friends{$i}{name}), undef, 1;
+			}
+			last;
+		}
+	}
+}
+
+sub friend_request {
+	my ($self, $args) = @_;
+
+	# Incoming friend request
+	$incomingFriend{'accountID'} = $args->{accountID};
+	$incomingFriend{'charID'} = $args->{charID};
+	$incomingFriend{'name'} = bytesToString($args->{name});
+	message TF("%s wants to be your friend\n", $incomingFriend{'name'});
+	message TF("Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n", $incomingFriend{'name'});
+}
+
 1;
