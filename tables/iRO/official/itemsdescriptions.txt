@@ -73623,3 +73623,378 @@ Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
+
+
+20278#
+^808080A hat resembles the man's hairdo who always looks for someone to fight with.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20279#
+^808080A cheering whistle. Only blowing makes you feel vitalized.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Lower)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20280#
+^808080A pencil having several teeth-marks due to being bitten all the way.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Lower)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20281#
+^808080A magical hat which protects kids' head from a pool of radiant summer sunlight.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20282#
+^808080A white crude hat usually worn by the leader of students.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20283#
+^808080A hat having a story that a father left it to his son. You can feel how much he loved his son from its stout design.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20284#
+^808080A vernal hat taken after the petal of a cherry blossom. A swinging flower decoration looks very cute.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20285#
+^808080Petals of cherry blossoms are failling gently. The petals dance beautifully as if they inform you that spring has come.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Lower)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20286#
+^808080Glasses rimmed under the lens only. They fit any types of coordination nicely either cool or cute.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Lower)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20287#
+^808080A hat resembles the man's hairdo who always looks for someone to fight with.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20293#
+^808080A hat taken after the monster Sleeper living in Juno fields.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20294#
+^808080A hat commemorating the inauguration of 29th head of Maximilian family among the babe of the babes. It symbolize courage against the big as one of the small.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20295#
+^808080Sunglasses with the lenses modeled after Poring. An essential item for drawing everybody's attention.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Middle)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20296#
+^808080A hat modeled after mischievous monkey monster Yoyo.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20297#
+^808080A hat taken after Muka of Sograt Desert.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20298#
+^808080Droopy Lunatic ears. Cutely garnished with clover flower bouquets.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Middle)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20301#
+^808080A Savage Babe doll dyed with gold. It is a pretty doll but makes you feel hunger when you look at it.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20302#
+^808080A crown taken after Beelzebub known for exposing its existence from a depth of Nameless Island. A crown exduing elegance.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20299#
+^808080A mask made up with a pie to bury one's head in a party. It makes wearer's face dirty, but the liberally spread cream tastes sweet and delicious.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Middle, Lower)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20300#
+^808080A mask resembles a head of Hill Wind inhabiting in Rachel fields. Surprisingly, this complicated expression seems to be popular.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Middle, Lower)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20311#
+^808080A tool amplifying the wearer's magical ability by controlling brainwave. It also has a voice recognition function and is said to resonate some types of equipment.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Middle)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20312#
+^808080An eye patch modeled after the evil eye of Demon Baron.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Middle)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20313#
+^808080It feels that a lot of data in CDs flow into the brain through the mouth.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Lower)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20314#
+^808080Sunglasses feel like a futuristic design.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Middle)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20315#
+^808080An item developed by fusing uncharted technology and magic power of Juperos Ruin. When you wear as if it is overlapped on eyes, an image is projected right in front of the eyes. Its principle is not fully explained yet.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Lower)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20316#
+^808080A helm features the decorations describe a shield and the wings symbolize a Cerub. Especially, it was designed to suit Royal Guards well.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20317#
+^808080A headphone with cat ears.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20318#
+^808080A costume item resembles a decoration of the robot Charleston's body in Verus. It is said to be an antenna having a receiving function, but the details are unknown.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Middle)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+20319#
+^808080A booster features its red color. The design looks like a manical booster, but the purpose of its development is unknown.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Middle)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+31091#
+^808080Thoughts of zeny cloud the mind.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 1
+Required Level: 1
+Required Job: All Jobs
+#
+22739#
+^808080500 spheres having lightning property are in it.^000000
+^FF0000If the ammunition in your inventory exceeds over 30,000, it can be lost.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 35
+#
+22740#
+^808080500 spheres having darkness property are in it.^000000
+^FF0000If the ammunition in your inventory exceeds over 30,000, it can be lost.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 35
+#
+22741#
+^808080500 spheres having poison property are in it.^000000
+^FF0000If the ammunition in your inventory exceeds over 30,000, it can be lost.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 35
+#
+22742#
+^808080500 spheres having freezing property are in it.^000000
+^FF0000If the ammunition in your inventory exceeds over 30,000, it can be lost.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 35
+#
+
+
+17714#
+From the famous animator, Akiba Kurokawa comes this Amatsumation themed random pack.
+
+Each Groove Pack includes 1x Battle Manualx3 and 1x Kitcoin
+Includes one of the following at random:
+2x Battle ManualX3
+Costume: Nekomimi Headphones
+Antler Fedora
+Long Wolf's Ears
+Haunted Armor Helm
+3x HE Bubble Gum
+10x Fencer Mercenary Scroll
+Costume: Eremes Scarf
+Costume: Secret Zipper
+#
+
+17585#
+When opened contains one Costume: New Wave Sunglasses
+#
+
+17581#
+When opened contains one Costume: Analyzing Eye Box
+#
+
+17571#
+When opened contains one Costume: Hill Wind Mask Box
+#
+
+17370#
+When opened contains one Costume: Man's Pride Box
+#
+
+17371#
+When opened contains one Costume: Charleston's Antenna Box
+#
+
+20266#
+Odd and secretive zip.
+Some sort of Rabbit creature was seen from the zip.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Can be exchanged with costume enchant stone box.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+20405#
+A Scarf of some kind. Lost by an old hero...
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20018#
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+20038#
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
