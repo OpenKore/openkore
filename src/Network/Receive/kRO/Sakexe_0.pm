@@ -1485,22 +1485,6 @@ sub guild_chat {
 	});
 }
 
-sub guild_create_result {
-	my ($self, $args) = @_;
-	my $type = $args->{type};
-
-	my %types = (
-		0 => T("Guild create successful.\n"),
-		2 => T("Guild create failed: Guild name already exists.\n"),
-		3 => T("Guild create failed: Emperium is needed.\n")
-	);
-	if ($types{$type}) {
-		message $types{$type};
-	} else {
-		message TF("Guild create: Unknown error %s\n", $type);
-	}
-}
-
 sub guild_expulsionlist {
 	my ($self, $args) = @_;
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 88) {
@@ -1510,59 +1494,6 @@ sub guild_expulsionlist {
 		$guild{expulsion}{$acc}{name} = bytesToString($name);
 		$guild{expulsion}{$acc}{cause} = bytesToString($cause);
 	}
-}
-
-sub guild_info {
-	my ($self, $args) = @_;
-	# Guild Info
-	foreach (qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up name master castles_string)) {
-		$guild{$_} = $args->{$_};
-	}
-	$guild{name} = bytesToString($args->{name});
-	$guild{master} = bytesToString($args->{master});
-	$guild{members}++; # count ourselves in the guild members count
-}
-
-sub guild_invite_result {
-	my ($self, $args) = @_;
-
-	my $type = $args->{type};
-
-	my %types = (
-		0 => T('Target is already in a guild.'),
-		1 => T('Target has denied.'),
-		2 => T('Target has accepted.'),
-		3 => T('Your guild is full.')
-	);
-	if ($types{$type}) {
-	    message TF("Guild join request: %s\n", $types{$type});
-	} else {
-	    message TF("Guild join request: Unknown %s\n", $type);
-	}
-}
-
-sub guild_location {
-	# FIXME: not implemented
-	my ($self, $args) = @_;
-	unless ($args->{x} > 0 && $args->{y} > 0) {
-		# delete locator for ID
-	} else {
-		# add/replace locator for ID
-	}
-}
-
-sub guild_leave {
-	my ($self, $args) = @_;
-
-	message TF("%s has left the guild.\n" .
-		"Reason: %s\n", bytesToString($args->{name}), bytesToString($args->{message})), "schat";
-}
-
-sub guild_expulsion {
-	my ($self, $args) = @_;
-
-	message TF("%s has been removed from the guild.\n" .
-		"Reason: %s\n", bytesToString($args->{name}), bytesToString($args->{message})), "schat";
 }
 
 # TODO: test optimized unpacking
@@ -1595,31 +1526,6 @@ sub guild_members_list {
 		$c++;
 	}
 
-}
-
-sub guild_member_online_status {
-	my ($self, $args) = @_;
-
-	foreach my $guildmember (@{$guild{member}}) {
-		if ($guildmember->{charID} eq $args->{charID}) {
-			if ($guildmember->{online} = $args->{online}) {
-				message TF("Guild member %s logged in.\n", $guildmember->{name}), "guildchat";
-			} else {
-				message TF("Guild member %s logged out.\n", $guildmember->{name}), "guildchat";
-			}
-			last;
-		}
-	}
-}
-
-sub misc_effect {
-	my ($self, $args) = @_;
-
-	my $actor = Actor::get($args->{ID});
-	message sprintf(
-		$actor->verb(T("%s use effect: %s\n"), T("%s uses effect: %s\n")),
-		$actor, defined $effectName{$args->{effect}} ? $effectName{$args->{effect}} : T("Unknown #")."$args->{effect}"
-	), 'effect'
 }
 
 sub guild_members_title_list {
