@@ -54,4 +54,9 @@ sub _parse_syntax {
 	1;
 }
 
+# Default: No event_only
+sub is_event_only {
+	0;
+}
+
 1;
