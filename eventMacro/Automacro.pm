@@ -3,6 +3,7 @@ package eventMacro::Automacro;
 use strict;
 use Globals;
 use Log qw(message error warning debug);
+use Utils;
 use eventMacro::Condition;
 
 sub new {
@@ -65,7 +66,7 @@ sub is_disabled {
 sub is_timed_out {
 	my ($self) = @_;
 	return 1 unless ( $self->{Parameters}{'timeout'} );
-	return 1 if ( timeOut( timeout => $self->{Parameters}{'timeout'}, time => $self->{Parameters}{time} ) );
+	return 1 if ( timeOut( { timeout => $self->{Parameters}{'timeout'}, time => $self->{Parameters}{time} } ) );
 	return 0;
 }
 
