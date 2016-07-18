@@ -3534,4 +3534,105 @@ sub job_equipment_hair_change {
 
 }
 
+# Leap, Snap, Back Slide... Various knockback
+sub high_jump {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+	my $actor = Actor::get ($args->{ID});
+	if (!defined $actor) {
+		$actor = new Actor::Unknown;
+		$actor->{appear_time} = time;
+		$actor->{nameID} = unpack ('V', $args->{ID});
+	} elsif ($actor->{pos_to}{x} == $args->{x} && $actor->{pos_to}{y} == $args->{y}) {
+		message TF("%s failed to instantly move\n", $actor->nameString), 'skill';
+		return;
+	}
+
+	$actor->{pos} = {x => $args->{x}, y => $args->{y}};
+	$actor->{pos_to} = {x => $args->{x}, y => $args->{y}};
+
+	message TF("%s instantly moved to %d, %d\n", $actor->nameString, $actor->{pos_to}{x}, $actor->{pos_to}{y}), 'skill', 2;
+
+	$actor->{time_move} = time;
+	$actor->{time_move_calc} = 0;
+}
+
+sub hp_sp_changed {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+	my $type = $args->{type};
+	my $amount = $args->{amount};
+	if ($type == 5) {
+		$char->{hp} += $amount;
+		$char->{hp} = $char->{hp_max} if ($char->{hp} > $char->{hp_max});
+	} elsif ($type == 7) {
+		$char->{sp} += $amount;
+		$char->{sp} = $char->{sp_max} if ($char->{sp} > $char->{sp_max});
+	}
+}
+
+# The difference between map_change and map_changed is that map_change
+# represents a map change event on the current map server, while
+# map_changed means that you've changed to a different map server.
+# map_change also represents teleport events.
+sub map_change {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
+	my ($map) = $args->{map} =~ /([\s\S]*)\./;
+	my $map_noinstance;
+	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
+
+	checkAllowedMap($map_noinstance);
+	if (!$field || $map ne $field->name()) {
+		eval {
+			$field = new Field(name => $map);
+		};
+		if (my $e = caught('FileNotFoundException', 'IOException')) {
+			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
+			undef $field;
+		} elsif ($@) {
+			die $@;
+		}
+	}
+
+	if ($ai_v{temp}{clear_aiQueue}) {
+		AI::clear;
+		AI::SlaveManager::clear();
+	}
+
+	main::initMapChangeVars();
+	for (my $i = 0; $i < @ai_seq; $i++) {
+		ai_setMapChanged($i);
+	}
+	AI::SlaveManager::setMapChanged ();
+	if ($net->version == 0) {
+		$ai_v{portalTrace_mapChanged} = time;
+	}
+
+	my %coords = (
+		x => $args->{x},
+		y => $args->{y}
+	);
+	$char->{pos} = {%coords};
+	$char->{pos_to} = {%coords};
+	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $char->{pos}{x}, $char->{pos}{y}), "connection";
+	if ($net->version == 1) {
+		ai_clientSuspend(0, 10);
+	} else {
+		$messageSender->sendMapLoaded();
+		# $messageSender->sendSync(1);
+		$timeout{ai}{time} = time;
+	}
+
+	Plugins::callHook('Network::Receive::map_changed', {
+		oldMap => $oldMap,
+	});
+
+	$timeout{ai}{time} = time;
+}
+
 1;
