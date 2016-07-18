@@ -378,8 +378,8 @@ sub manage_event_callbacks {
 		$automacro->validate_automacro_status() if ($need_to_check);
 		
 		if (
-		  (!defined $self->{Macro_Runner} || $self->{Macro_Runner}->interruptible()) &&
 		  defined $event_only_index &&
+		  (!defined $self->{Macro_Runner} || $self->{Macro_Runner}->interruptible()) &&
 		  $automacro->are_conditions_fulfilled() &&
 		  !$automacro->is_disabled() &&
 		  $automacro->is_timed_out() &&
