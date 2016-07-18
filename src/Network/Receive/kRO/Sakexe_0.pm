@@ -1638,63 +1638,6 @@ sub inventory_item_added {
 	}
 }
 
-sub item_used {
-	my ($self, $args) = @_;
-
-	my ($index, $itemID, $ID, $remaining, $success) =
-		@{$args}{qw(index itemID ID remaining success)};
-	my %hook_args = (
-		serverIndex => $index,
-		itemID => $itemID,
-		userID => $ID,
-		remaining => $remaining,
-		success => $success
-	);
-
-	if ($ID eq $accountID) {
-		my $item = $char->inventory->getByServerIndex($index);
-		if ($item) {
-			if ($success == 1) {
-				my $amount = $item->{amount} - $remaining;
-				$item->{amount} -= $amount;
-
-				message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{invIndex},
-					$amount, $remaining), "useItem", 1;
-				$itemChange{$item->{name}}--;
-				if ($item->{amount} <= 0) {
-					$char->inventory->remove($item);
-				}
-
-				$hook_args{item} = $item;
-				$hook_args{invIndex} = $item->{invIndex};
-				$hook_args{name} => $item->{name};
-				$hook_args{amount} = $amount;
-
-			} else {
-				message TF("You failed to use item: %s (%d)\n", $item ? $item->{name} : "#$itemID", $remaining), "useItem", 1;
-			}	
- 		} else {
-			if ($success == 1) {
-				message TF("You used unknown item #%d - %d left\n", $itemID, $remaining), "useItem", 1;
-			} else {
-				message TF("You failed to use unknown item #%d - %d left\n", $itemID, $remaining), "useItem", 1;
-			}
-		}
-	} else {
-		my $actor = Actor::get($ID);
-		my $itemDisplay = itemNameSimple($itemID);
-		message TF("%s used Item: %s - %s left\n", $actor, $itemDisplay, $remaining), "useItem", 2;
-	}
-	Plugins::callHook('packet_useitem', \%hook_args);
-}
-
-sub married {
-	my ($self, $args) = @_;
-
-	my $actor = Actor::get($args->{ID});
-	message TF("%s got married!\n", $actor);
-}
-
 # TODO: test extracted unpack string
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
@@ -1778,65 +1721,6 @@ sub inventory_items_nonstackable {
 
 	$ai_v{'inventory_time'} = time + 1;
 	$ai_v{'cart_time'} = time + 1;
-}
-
-sub inventory_items_stackable {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-
-	$self->_items_list({
-		class => 'Actor::Item',
-		hook => 'packet_inventory',
-		debug_str => 'Stackable Inventory Item',
-		items => [$self->parse_items_stackable($args)],
-		getter => sub { $char->inventory->getByServerIndex($_[0]{index}) },
-		adder => sub { $char->inventory->add($_[0]) },
-		callback => sub {
-			my ($local_item) = @_;
-
-			if (defined $char->{arrow} && $local_item->{index} == $char->{arrow}) {
-				$local_item->{equipped} = 32768;
-				$char->{equipment}{arrow} = $local_item;
-			}
-		}
-	});
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
-sub item_appeared {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-
-	my $item = $itemsList->getByID($args->{ID});
-	my $mustAdd;
-	if (!$item) {
-		$item = new Actor::Item();
-		$item->{appear_time} = time;
-		$item->{amount} = $args->{amount};
-		$item->{nameID} = $args->{nameID};
-		$item->{identified} = $args->{identified};
-		$item->{name} = itemName($item);
-		$item->{ID} = $args->{ID};
-		$mustAdd = 1;
-	}
-	$item->{pos}{x} = $args->{x};
-	$item->{pos}{y} = $args->{y};
-	$item->{pos_to}{x} = $args->{x};
-	$item->{pos_to}{y} = $args->{y};
-	$itemsList->add($item) if ($mustAdd);
-
-	# Take item as fast as possible
-	if ($AI == AI::AUTO && pickupitems(lc($item->{name})) == 2
-	 && ($config{'itemsTakeAuto'} || $config{'itemsGatherAuto'})
-	 && (percent_weight($char) < $config{'itemsMaxWeight'})
-	 && distance($item->{pos}, $char->{pos_to}) <= 5) {
-		$messageSender->sendTake($args->{ID});
-	}
-
-	message TF("Item Appeared: %s (%d) x %d (%d, %d)\n", $item->{name}, $item->{binID}, $item->{amount}, $args->{x}, $args->{y}), "drop", 1;
-
 }
 
 sub item_exists {
