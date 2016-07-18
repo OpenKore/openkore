@@ -311,6 +311,7 @@ sub check_all_conditions {
 	my ($self) = @_;
 	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
 		foreach my $condition (@{$automacro->{conditionList}->getItems()}) {
+			next if ($condition->is_event_only());
 			$condition->validate_condition_status();
 		}
 		$automacro->validate_automacro_status();
