@@ -58,6 +58,75 @@ use constant {
 	NPC_ELEMENTAL_TYPE => 0xa
 };
 
+use constant {
+	REFUSE_INVALID_ID => 0x0,
+	REFUSE_INVALID_PASSWD => 0x1,
+	REFUSE_ID_EXPIRED => 0x2,
+	ACCEPT_ID_PASSWD => 0x3,
+	REFUSE_NOT_CONFIRMED => 0x4,
+	REFUSE_INVALID_VERSION => 0x5,
+	REFUSE_BLOCK_TEMPORARY => 0x6,
+	REFUSE_BILLING_NOT_READY => 0x7,
+	REFUSE_NONSAKRAY_ID_BLOCKED => 0x8,
+	REFUSE_BAN_BY_DBA => 0x9,
+	REFUSE_EMAIL_NOT_CONFIRMED => 0xa,
+	REFUSE_BAN_BY_GM => 0xb,
+	REFUSE_TEMP_BAN_FOR_DBWORK => 0xc,
+	REFUSE_SELF_LOCK => 0xd,
+	REFUSE_NOT_PERMITTED_GROUP => 0xe,
+	REFUSE_WAIT_FOR_SAKRAY_ACTIVE => 0xf,
+	REFUSE_NOT_CHANGED_PASSWD => 0x10,
+	REFUSE_BLOCK_INVALID => 0x11,
+	REFUSE_WARNING => 0x12,
+	REFUSE_NOT_OTP_USER_INFO => 0x13,
+	REFUSE_OTP_AUTH_FAILED => 0x14,
+	REFUSE_SSO_AUTH_FAILED => 0x15,
+	REFUSE_NOT_ALLOWED_IP_ON_TESTING => 0x16,
+	REFUSE_OVER_BANDWIDTH => 0x17,
+	REFUSE_OVER_USERLIMIT => 0x18,
+	REFUSE_UNDER_RESTRICTION => 0x19,
+	REFUSE_BY_OUTER_SERVER => 0x1a,
+	REFUSE_BY_UNIQUESERVER_CONNECTION => 0x1b,
+	REFUSE_BY_AUTHSERVER_CONNECTION => 0x1c,
+	REFUSE_BY_BILLSERVER_CONNECTION => 0x1d,
+	REFUSE_BY_AUTH_WAITING => 0x1e,
+	REFUSE_DELETED_ACCOUNT => 0x63,
+	REFUSE_ALREADY_CONNECT => 0x64,
+	REFUSE_TEMP_BAN_HACKING_INVESTIGATION => 0x65,
+	REFUSE_TEMP_BAN_BUG_INVESTIGATION => 0x66,
+	REFUSE_TEMP_BAN_DELETING_CHAR => 0x67,
+	REFUSE_TEMP_BAN_DELETING_SPOUSE_CHAR => 0x68,
+	REFUSE_USER_PHONE_BLOCK => 0x69,
+	ACCEPT_LOGIN_USER_PHONE_BLOCK => 0x6a,
+	ACCEPT_LOGIN_CHILD => 0x6b,
+	REFUSE_IS_NOT_FREEUSER => 0x6c,
+	REFUSE_INVALID_ONETIMELIMIT => 0x6d,
+	REFUSE_CHANGE_PASSWD_FORCE => 0x6e,
+	REFUSE_OUTOFDATE_PASSWORD => 0x6f,
+	REFUSE_NOT_CHANGE_ACCOUNTID => 0xf0,
+	REFUSE_NOT_CHANGE_CHARACTERID => 0xf1,
+	REFUSE_SSO_AUTH_BLOCK_USER => 0x1394,
+	REFUSE_SSO_AUTH_GAME_APPLY => 0x1395,
+	REFUSE_SSO_AUTH_INVALID_GAMENUM => 0x1396,
+	REFUSE_SSO_AUTH_INVALID_USER => 0x1397,
+	REFUSE_SSO_AUTH_OTHERS => 0x1398,
+	REFUSE_SSO_AUTH_INVALID_AGE => 0x1399,
+	REFUSE_SSO_AUTH_INVALID_MACADDRESS => 0x139a,
+	REFUSE_SSO_AUTH_BLOCK_ETERNAL => 0x13c6,
+	REFUSE_SSO_AUTH_BLOCK_ACCOUNT_STEAL => 0x13c7,
+	REFUSE_SSO_AUTH_BLOCK_BUG_INVESTIGATION => 0x13c8,
+	REFUSE_SSO_NOT_PAY_USER => 0x13ba,
+	REFUSE_SSO_ALREADY_LOGIN_USER => 0x13bb,
+	REFUSE_SSO_CURRENT_USED_USER => 0x13bc,
+	REFUSE_SSO_OTHER_1 => 0x13bd,
+	REFUSE_SSO_DROP_USER => 0x13be,
+	REFUSE_SSO_NOTHING_USER => 0x13bf,
+	REFUSE_SSO_OTHER_2 => 0x13c0,
+	REFUSE_SSO_WRONG_RATETYPE_1 => 0x13c1,
+	REFUSE_SSO_EXTENSION_PCBANG_TIME => 0x13c2,
+	REFUSE_SSO_WRONG_RATETYPE_2 => 0x13c3,
+};
+
 ######################################
 ### CATEGORY: Class methods
 ######################################
@@ -2977,7 +3046,7 @@ sub gameguard_grant {
 	} else {
 		message T("Server granted login request to char/map server\n"), "poseidon";
 		# FIXME
-		change_to_constate25 if ($config{'gameGuard'} eq "2");
+		change_to_constate25() if ($config{'gameGuard'} eq "2");
 	}
 	$net->setState(1.3) if ($net->getState() == 1.2);
 }
@@ -3401,6 +3470,68 @@ sub item_upgrade {
 		message TF("Item %s has been upgraded to +%s\n", $item->{name}, $upgrade), "parseMsg/upgrade";
 		$item->setName(itemName($item));
 	}
+}
+
+sub job_equipment_hair_change {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+	my $actor = Actor::get($args->{ID});
+	assert(UNIVERSAL::isa($actor, "Actor")) if DEBUG;
+
+	if ($args->{part} == 0) {
+		# Job change
+		$actor->{jobID} = $args->{number};
+ 		message TF("%s changed job to: %s\n", $actor, $jobs_lut{$args->{number}}), "parseMsg/job", ($actor->isa('Actor::You') ? 0 : 2);
+
+	} elsif ($args->{part} == 3) {
+		# Bottom headgear change
+ 		message TF("%s changed bottom headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->isa('Actor::You');
+		$actor->{headgear}{low} = $args->{number} if ($actor->isa('Actor::Player') || $actor->isa('Actor::You'));
+
+	} elsif ($args->{part} == 4) {
+		# Top headgear change
+ 		message TF("%s changed top headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->isa('Actor::You');
+		$actor->{headgear}{top} = $args->{number} if ($actor->isa('Actor::Player') || $actor->isa('Actor::You'));
+
+	} elsif ($args->{part} == 5) {
+		# Middle headgear change
+ 		message TF("%s changed middle headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->isa('Actor::You');
+		$actor->{headgear}{mid} = $args->{number} if ($actor->isa('Actor::Player') || $actor->isa('Actor::You'));
+
+	} elsif ($args->{part} == 6) {
+		# Hair color change
+		$actor->{hair_color} = $args->{number};
+ 		message TF("%s changed hair color to: %s (%s)\n", $actor, $haircolors{$args->{number}}, $args->{number}), "parseMsg/hairColor", ($actor->isa('Actor::You') ? 0 : 2);
+	}
+
+	#my %parts = (
+	#	0 => 'Body',
+	#	2 => 'Right Hand',
+	#	3 => 'Low Head',
+	#	4 => 'Top Head',
+	#	5 => 'Middle Head',
+	#	8 => 'Left Hand'
+	#);
+	#if ($part == 3) {
+	#	$part = 'low';
+	#} elsif ($part == 4) {
+	#	$part = 'top';
+	#} elsif ($part == 5) {
+	#	$part = 'mid';
+	#}
+	#
+	#my $name = getActorName($ID);
+	#if ($part == 3 || $part == 4 || $part == 5) {
+	#	my $actor = Actor::get($ID);
+	#	$actor->{headgear}{$part} = $items_lut{$number} if ($actor);
+	#	my $itemName = $items_lut{$itemID};
+	#	$itemName = 'nothing' if (!$itemName);
+	#	debug "$name changes $parts{$part} ($part) equipment to $itemName\n", "parseMsg";
+	#} else {
+	#	debug "$name changes $parts{$part} ($part) equipment to item #$number\n", "parseMsg";
+	#}
+
 }
 
 1;
