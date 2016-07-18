@@ -116,7 +116,9 @@ sub create_automacro_list {
 	my ($self, $automacro) = @_;
 	my %modulesLoaded;
 	AUTOMACRO: while (my ($name,$value) = each %{$automacro}) {
-		my ($currentAutomacro, %currentConditions, %currentParameters);
+		my ($currentAutomacro, %currentConditions, %currentParameters, $eventOnly, $eventOnlyName);
+		$eventOnly = 0;
+		$eventOnlyName = undef;
 		
 		####################################
 		#####No Conditions Check
@@ -225,6 +227,17 @@ sub create_automacro_list {
 				next AUTOMACRO;
 			}
 			
+			if ($condition_object->is_event_only()) {
+				if ($eventOnly) {
+					error "[eventMacro] Conditions '".$condition->{'key'}."' and '".$eventOnlyName."' are of the event only type and can only be used once per automacro.\n";
+					warning "[eventMacro] Ignoring automacro '$name' (multiple event only condition)\n";
+					next AUTOMACRO;
+				} else {
+					$eventOnly = 1;
+					$eventOnlyName = $condition->{'key'};
+				}
+			}
+			
 			push( @{ $currentConditions{$condition_module} }, $condition->{'value'} );
 			
 		}
@@ -298,6 +311,7 @@ sub check_all_conditions {
 	my ($self) = @_;
 	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
 		foreach my $condition (@{$automacro->{conditionList}->getItems()}) {
+			next if ($condition->is_event_only());
 			$condition->validate_condition_status();
 		}
 		$automacro->validate_automacro_status();
@@ -337,6 +351,9 @@ sub manage_event_callbacks {
 	my $event_name = shift;
 	my $args = shift;
 	
+	my $event_only_automacro_call_index;
+	my $event_only_automacro_call_priority;
+	
 	debug "[eventMacro] Event Happenned '".$event_name."'\n", "eventMacro", 2;
 	
 	my $check_list_hash;
@@ -348,17 +365,21 @@ sub manage_event_callbacks {
 	}
 	
 	foreach my $automacro_index (keys %{$check_list_hash}) {
-		my ($automacro, $conditions_indexes_array, $need_to_check) = ($self->{Automacro_List}->get($automacro_index), $check_list_hash->{$automacro_index}, 0);
+		my ($automacro, $conditions_indexes_array, $need_to_check, $event_only_index) = ($self->{Automacro_List}->get($automacro_index), $check_list_hash->{$automacro_index}, 0, undef);
 		
 		debug "[eventMacro] automacro index: '".$automacro_index."' name: '".$automacro->get_name()."'\n", "eventMacro", 2;
 		
 		foreach my $condition_index (@{$conditions_indexes_array}) {
 			my $condition = $automacro->{conditionList}->get($condition_index);
 			
+			debug "[eventMacro] Checking condition '".$condition->get_name()."' index '".$condition->{listIndex}."' in automacro '".$automacro->get_name()."'\n", "eventMacro", 2;
+			if ($condition->is_event_only()) {
+				$event_only_index = $condition_index;
+				$need_to_check = 1;
+				next;
+			}
 			#Does this actually change cpu use?
 			my $pre_check_status = $condition->is_fulfilled();
-			
-			debug "[eventMacro] Checking condition '".$condition->get_name()."' index '".$condition->{listIndex}."'\n", "eventMacro", 2;
 			
 			$condition->validate_condition_status($event_name,$args);
 			
@@ -370,6 +391,28 @@ sub manage_event_callbacks {
 		
 		#same here (if check)
 		$automacro->validate_automacro_status() if ($need_to_check);
+		
+		if (
+		  defined $event_only_index &&
+		  (!defined $self->{Macro_Runner} || $self->{Macro_Runner}->interruptible()) &&
+		  $automacro->are_conditions_fulfilled() &&
+		  !$automacro->is_disabled() &&
+		  $automacro->is_timed_out() &&
+		  $automacro->{conditionList}->get($event_only_index)->validate_condition_status($event_name,$args) &&
+		  (!defined $event_only_automacro_call_priority || $event_only_automacro_call_priority >= $automacro->get_parameter('priority'))
+		) {
+			$event_only_automacro_call_index = $automacro_index;
+			$event_only_automacro_call_priority = $automacro->get_parameter('priority');
+		}
+	}
+	
+	if (defined $event_only_automacro_call_index) {
+	
+		my $automacro = $self->{Automacro_List}->get($event_only_automacro_call_index);
+		
+		message "[eventMacro] Hook '".$event_name."' activated automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
+		
+		$self->call_macro($automacro);
 	}
 }
 
@@ -387,6 +430,8 @@ sub AI_pre_checker {
 	
 		my $automacro = $self->{Automacro_List}->get($index);
 		
+		next if $automacro->has_event_only_condition();
+		
 		next if $automacro->is_disabled();
 		
 		next unless $automacro->is_timed_out();
@@ -400,10 +445,6 @@ sub AI_pre_checker {
 		return;
 	}
 }
-
-#sub hook_dependent_automacro_checker {
-#		
-#}
 
 sub call_macro {
 	my ($self, $automacro) = @_;
