@@ -386,7 +386,6 @@ sub manage_event_callbacks {
 		  $automacro->{conditionList}->get($event_only_index)->validate_condition_status($event_name,$args) &&
 		  (!defined $event_only_automacro_call_priority || $event_only_automacro_call_priority >= $automacro->get_parameter('priority'))
 		) {
-			message "[eventTest]5555\n";
 			$event_only_automacro_call_index = $automacro_index;
 			$event_only_automacro_call_priority = $automacro->get_parameter('priority');
 		}
