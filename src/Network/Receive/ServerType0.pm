@@ -2067,64 +2067,6 @@ sub inventory_items_nonstackable {
 	$ai_v{'cart_time'} = time + 1;
 }
 
-sub item_exists {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-
-	my $item = $itemsList->getByID($args->{ID});
-	my $mustAdd;
-	if (!$item) {
-		$item = new Actor::Item();
-		$item->{appear_time} = time;
-		$item->{amount} = $args->{amount};
-		$item->{nameID} = $args->{nameID};
-		$item->{ID} = $args->{ID};
-		$item->{identified} = $args->{identified};
-		$item->{name} = itemName($item);
-		$mustAdd = 1;
-	}
-	$item->{pos}{x} = $args->{x};
-	$item->{pos}{y} = $args->{y};
-	$item->{pos_to}{x} = $args->{x};
-	$item->{pos_to}{y} = $args->{y};
-	$itemsList->add($item) if ($mustAdd);
-
-	message TF("Item Exists: %s (%d) x %d\n", $item->{name}, $item->{binID}, $item->{amount}), "drop", 1;
-}
-
-sub item_disappeared {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-
-	my $item = $itemsList->getByID($args->{ID});
-	if ($item) {
-		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($item->{name})) > 0) {
-			foreach my Actor::Monster $monster (@{$monstersList->getItems()}) { # attack looter code
-				if (my $control = mon_control($monster->name,$monster->{nameID})) {
-					next if ( ($control->{attack_auto}  ne "" && $control->{attack_auto} == -1)
-						|| ($control->{attack_lvl}  ne "" && $control->{attack_lvl} > $char->{lv})
-						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-						|| ($control->{attack_hp}   ne "" && $control->{attack_hp} > $char->{hp})
-						|| ($control->{attack_sp}   ne "" && $control->{attack_sp} > $char->{sp})
-						);
-				}
-				if (distance($item->{pos}, $monster->{pos}) == 0) {
-					attack($monster->{ID});
-					message TF("Attack Looter: %s looted %s\n", $monster->nameIdx, $item->{name}), "looter";
-					last;
-				}
-			}
-		}
-
-		debug "Item Disappeared: $item->{name} ($item->{binID})\n", "parseMsg_presence";
-		my $ID = $args->{ID};
-		$items_old{$ID} = $item->deepCopy();
-		$items_old{$ID}{disappeared} = 1;
-		$items_old{$ID}{gone_time} = time;
-		$itemsList->removeByID($ID);
-	}
-}
-
 sub item_skill {
 	my ($self, $args) = @_;
 
@@ -2149,18 +2091,6 @@ sub item_skill {
 		level => $skillLv,
 		name => $skillName
 	});
-}
-
-sub item_upgrade {
-	my ($self, $args) = @_;
-	my ($type, $index, $upgrade) = @{$args}{qw(type index upgrade)};
-
-	my $item = $char->inventory->getByServerIndex($index);
-	if ($item) {
-		$item->{upgrade} = $upgrade;
-		message TF("Item %s has been upgraded to +%s\n", $item->{name}, $upgrade), "parseMsg/upgrade";
-		$item->setName(itemName($item));
-	}
 }
 
 sub job_equipment_hair_change {
