@@ -477,7 +477,6 @@ sub processCmd {
 					'name' => $eventMacro->{Macro_Runner}->name,
 					'error' => 'Commands::run failed',
 				};
-				Plugins::callHook ('macro/error', $hookArgs);
 				return $hookArgs->{continue} if $hookArgs->{return};
 				
 				error $errorMsg, "macro";
@@ -501,7 +500,6 @@ sub processCmd {
 			'name' => $name,
 			'error' => $error,
 		};
-		Plugins::callHook ('macro/error', $hookArgs);
 		return $hookArgs->{continue} if $hookArgs->{return};
 		
 		error $errorMsg, "macro";

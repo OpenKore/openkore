@@ -3,6 +3,7 @@ package eventMacro::Automacro;
 use strict;
 use Globals;
 use Log qw(message error warning debug);
+use Utils;
 use eventMacro::Condition;
 
 sub new {
@@ -13,6 +14,8 @@ sub new {
 	$self->{is_Fulfilled} = 0;
 	
 	$self->{conditionList} = new eventMacro::Lists;
+	$self->{has_event_only_condition} = 0;
+	$self->{event_only_condition_index} = undef;
 	$self->{Hooks} = {};
 	$self->{Variables} = {};
 	$self->create_conditions_list( $conditions );
@@ -65,7 +68,7 @@ sub is_disabled {
 sub is_timed_out {
 	my ($self) = @_;
 	return 1 unless ( $self->{Parameters}{'timeout'} );
-	return 1 if ( timeOut( timeout => $self->{Parameters}{'timeout'}, time => $self->{Parameters}{time} ) );
+	return 1 if ( timeOut( { timeout => $self->{Parameters}{'timeout'}, time => $self->{Parameters}{time} } ) );
 	return 0;
 }
 
@@ -127,6 +130,10 @@ sub create_conditions_list {
 			foreach my $variable ( @{ $cond->get_variables() } ) {
 				push ( @{ $self->{Variables}{$variable} }, $cond->{listIndex} );
 			}
+			if ($cond->is_event_only()) {
+				$self->{has_event_only_condition} = 1;
+				$self->{event_only_condition_index} = $cond->{listIndex};
+			}
 		}
 	}
 }
@@ -136,6 +143,7 @@ sub validate_automacro_status {
 	debug "[eventMacro] Validating value of automacro ".$self->get_name()." \n", "eventMacro", 2;
 	foreach my $condition ( @{ $self->{conditionList}->getItems() } ) {
 		debug "[eventMacro] Checking confition ".$condition->get_name()." index ".$condition->{listIndex}." \n", "eventMacro", 2;
+		next if ($condition->is_event_only());
 		next if ($condition->is_fulfilled());
 		debug "[eventMacro] Not fulfilled \n", "eventMacro", 2;
 		$self->{is_Fulfilled} = 0;
@@ -148,6 +156,16 @@ sub validate_automacro_status {
 sub are_conditions_fulfilled {
 	my ($self) = @_;
 	return $self->{is_Fulfilled};
+}
+
+sub has_event_only_condition {
+	my ($self) = @_;
+	return $self->{has_event_only_condition};
+}
+
+sub get_event_only_condition_index {
+	my ($self) = @_;
+	return $self->{event_only_condition_index};
 }
 
 1;
