@@ -143,12 +143,6 @@ sub macro_block {
 	
 	return $_[1];
 }
-=pod
-sub macro_block {
-	if (defined $_[1]) {$_[0]->{macro_block} = $_[1]}
-	return $_[0]->{macro_block}
-}
-=cut
 
 # returns whether or not the macro finished
 sub finished {

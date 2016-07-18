@@ -56,6 +56,10 @@ sub new {
 	
 	$self->{Variable_List_Hash} = {};
 	
+	if ($char && $net && $net->getState() == Network::IN_GAME) {
+		$self->check_all_conditions();
+	}
+	
 	return $self;
 }
 
@@ -303,6 +307,16 @@ sub create_callbacks {
 	}
 }
 
+sub check_all_conditions {
+	my ($self) = @_;
+	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
+		foreach my $condition (@{$automacro->{conditionList}->getItems()}) {
+			$condition->validate_condition_status();
+		}
+		$automacro->validate_automacro_status();
+	}
+}
+
 sub get_var {
 	my ($self, $variable_name) = @_;
 	return $self->{Variable_List_Hash}{$variable_name} if (exists $self->{Variable_List_Hash}{$variable_name});
@@ -481,21 +495,7 @@ sub iterate_macro {
 	if (timeOut($tmptime) && ai_isIdle()) {
 		do {
 			last unless processCmd $self->{Macro_Runner}->next;
-			Plugins::callHook ('macro/call_macro/process');
 		} while $self->{Macro_Runner} && !$self->is_paused() && $self->{Macro_Runner}->macro_block;
-		
-=pod
-		# crashes when error inside macro_block encountered and $self->{Macro_Runner} becomes undefined
-		my $command = $self->{Macro_Runner}->next;
-		if ($self->{Macro_Runner}->macro_block) {
-			while ($self->{Macro_Runner}->macro_block) {
-				$command = $self->{Macro_Runner}->next;
-				processCmd($command)
-			}
-		} else {
-			processCmd($command)
-		}
-=cut
 	}
 }
 
