@@ -44595,3 +44595,35 @@ Location: ^777777Bottom ^000000 Weight : ^77777710^000000
 Required Lv. : ^77777750^000000
 Equip : ^777777All class^000000
 #
+
+//--------------- Update limited item mall July 20160719--------------
+20268#
+Costume with sleeping Lunatic and Eclipse rag doll
+It makes you feel sleepy since it warms your head
+series : ^777777Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Top^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Equip : ^777777All class^000000
+#
+20240#
+Gift of Snow
+series : ^777777Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Bottom ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Equip : ^777777All class^000000
+#
+20285#
+Windblown cherry blossoms are surrounding bodies.
+You can enjoy cherry blossoms for a year with it.
+series : ^777777Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Bottom ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Equip : ^777777All class^000000
+#
+20312#
+Eye patch copied of Mine Baron's  saddle
+series : ^777777Equipment^000000 Defense : ^7777770^000000
+Location : ^777777stop ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Equip : ^777777All class^000000
+#

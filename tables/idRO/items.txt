@@ -6766,3 +6766,9 @@
 28358#Cursed_Lucky_Clover#
 18575#Wunderkammer#
 18521#Lucky_Clover#
+
+//--------------- Update limited item mall July 20160719---------------
+20268#C_Sleep_Eclipse_Family#
+20240#C_Gift_Of_Snow#
+20285#C_Blossom_Fluttering#
+20312#C_Baron_Evil_Eye#
