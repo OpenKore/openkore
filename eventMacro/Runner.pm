@@ -129,12 +129,12 @@ sub overrideAI {
 		#if the value is not defined we must assume it's the value in which AI is not registered so we can change it further down
 		$self->{overrideAI} = 1 if (!defined $self->{overrideAI});
 		
-		#Turn macro into exclusive
+		#Makes macro register itself to AI
 		if ($self->{overrideAI} == 1 && $overrideAI == 0 && !$self->registered) {
 			debug "[eventMacro] Macro '".$self->{Name}."' is now registered to AI queue.\n", "eventMacro", 2;
 			$self->register;
 		
-		#Turn macro into not exclusive
+		#Makes macro override AI and clear itself from it
 		} elsif ($self->{overrideAI} == 0 && $overrideAI == 1 && $self->registered) {
 			debug "[eventMacro] Macro '".$self->{Name}."' is now not registered anymore to AI queue.\n", "eventMacro", 2;
 			$self->unregister;
