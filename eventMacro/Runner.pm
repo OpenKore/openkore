@@ -96,7 +96,6 @@ sub get_name {
 sub DESTROY {
 	my ($self) = @_;
 	AI::clear('eventMacro') if (AI::inQueue('eventMacro') && !$self->{submacro});
-	$eventMacro->clear_queue() unless ($self->{submacro});
 }
 
 # declares current macro to be a submacro
