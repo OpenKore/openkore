@@ -16,16 +16,6 @@ use eventMacro::Runner;
 use eventMacro::Parser;
 use eventMacro::Condition;
 
-use constant {
-	CHECKING => 0,
-	EXECUTING => 1
-};
-
-use constant {
-	NOT_PAUSED => 0,
-	PAUSED => 1
-};
-
 sub new {
 	my ($class, $file) = @_;
 	my $self = bless {}, $class;
@@ -40,19 +30,21 @@ sub new {
 	$self->{Condition_Modules_Loaded} = {};
 	$self->create_automacro_list($parse_result->{automacros});
 	
-	$self->{Status} = CHECKING;
-	$self->{Paused} = NOT_PAUSED;
 	
 	$self->{Index_Priority_List} = [];
 	$self->create_priority_list();
+	
+	$self->{AI_pre_Hook_Handle} = Plugins::addHook( 'AI_pre', sub { $self->AI_pre_checker(); }, undef );
+	$self->{Automacros_Checking_Status} = CHECKING_AUTOMACROS;
+	
 	
 	$self->{Event_Related_Variables} = {};
 	$self->{Event_Related_Hooks} = {};
 	$self->{Hook_Handles} = [];
 	$self->create_callbacks();
 	
-	$self->{Macro_Runner} = undef;
 	$self->{mainLoop_Hook_Handle} = undef;
+	$self->{Macro_Runner} = undef;
 	
 	$self->{Variable_List_Hash} = {};
 	
@@ -67,6 +59,7 @@ sub unload {
 	my ($self) = @_;
 	$self->clear_queue();
 	$self->clean_hooks();
+	Plugins::delHook($self->{AI_pre_Hook_Handle}) if ($self->{AI_pre_Hook_Handle});
 }
 
 sub clean_hooks {
@@ -74,24 +67,29 @@ sub clean_hooks {
 	foreach (@{$self->{Hook_Handles}}) {Plugins::delHook($_)}
 }
 
-sub is_paused {
-	my ($self) = @_;
-	return ( $self->{Paused} ? 1 : 0 );
+sub set_automacro_checking_status {
+	my ($self, $status) = @_;
+	
+	if ($self->{Automacros_Checking_Status} == $status) {
+		debug "[eventMacro] automacro checking status is already $status.\n", "eventMacro", 2;
+		return;
+	}
+	
+	if ($self->{Automacros_Checking_Status} == CHECKING_AUTOMACROS) {
+		debug "[eventMacro] Automacros checking stopped.\n", "eventMacro", 2;
+		Plugins::delHook($self->{AI_pre_Hook_Handle});
+		$self->{AI_pre_Hook_Handle} = undef;
+	} elsif ($status == CHECKING_AUTOMACROS) {
+		debug "[eventMacro] Automacros checking activated.\n", "eventMacro", 2;
+		$self->{AI_pre_Hook_Handle} = Plugins::addHook( 'AI_pre', sub { $self->AI_pre_checker(); }, undef );
+	}
+	
+	$self->{Automacros_Checking_Status} = $status;
 }
 
-sub is_executing {
+sub get_automacro_checking_status {
 	my ($self) = @_;
-	return ( $self->{Status} ? 1 : 0 );
-}
-
-sub pause {
-	my ($self) = @_;
-	$self->{Paused} = PAUSED;
-}
-
-sub unpause {
-	my ($self) = @_;
-	$self->{Paused} = NOT_PAUSED;
+	return $self->{Automacros_Checking_Status};
 }
 
 sub create_priority_list {
@@ -297,10 +295,6 @@ sub create_callbacks {
 		
 	}
 	
-	my $ai_sub = sub { $self->AI_pre_checker(); };
-	push( @{ $self->{Hook_Handles} }, Plugins::addHook( 'AI_pre', $ai_sub, undef ) );
-	
-	
 	my $event_sub = sub { $self->manage_event_callbacks(shift, shift); };
 	foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
 		push( @{ $self->{Hook_Handles} }, Plugins::addHook( $hook_name, $event_sub, undef ) );
@@ -394,7 +388,7 @@ sub manage_event_callbacks {
 		
 		if (
 		  defined $event_only_index &&
-		  (!defined $self->{Macro_Runner} || $self->{Macro_Runner}->interruptible()) &&
+		  $self->get_automacro_checking_status == CHECKING_AUTOMACROS &&
 		  $automacro->are_conditions_fulfilled() &&
 		  !$automacro->is_disabled() &&
 		  $automacro->is_timed_out() &&
@@ -423,8 +417,6 @@ sub AI_pre_checker {
 	#would using a binary heap to extract and add members to above said list benefit cpu use?
 	
 	#should AI_pre only be hooked when we are sure there are automacros with conditions fulfilled?
-	
-	return if (defined $self->{Macro_Runner} && !$self->{Macro_Runner}->interruptible());
 	
 	foreach my $index (@{$self->{Index_Priority_List}}) {
 	
@@ -465,7 +457,7 @@ sub call_macro {
 		$self->{Macro_Runner}->timeout($automacro->get_parameter('delay'));
 		$self->{Macro_Runner}->setMacro_delay($automacro->get_parameter('macro_delay'));
 		$self->set_var('.caller', $automacro->get_name());
-		$self->unpause();
+		
 		my $iterate_macro_sub = sub { $self->iterate_macro(); };
 		$self->{mainLoop_Hook_Handle} = Plugins::addHook( 'mainLoop_pre', $iterate_macro_sub, undef );
 	} else {
@@ -487,7 +479,7 @@ sub iterate_macro {
 		$self->clear_queue();
 		return;
 	}
-	return if $self->is_paused();
+	return if $self->{Macro_Runner}->is_paused();
 	my $tmptime = $self->{Macro_Runner}->timeout;
 	unless ($self->{Macro_Runner}->registered || $self->{Macro_Runner}->overrideAI) {
 		if (timeOut($tmptime)) {$self->{Macro_Runner}->register}
@@ -496,13 +488,17 @@ sub iterate_macro {
 	if (timeOut($tmptime) && ai_isIdle()) {
 		do {
 			last unless processCmd $self->{Macro_Runner}->next;
-		} while $self->{Macro_Runner} && !$self->is_paused() && $self->{Macro_Runner}->macro_block;
+		} while $self->{Macro_Runner} && !$self->{Macro_Runner}->is_paused() && $self->{Macro_Runner}->macro_block;
 	}
 }
 
 sub clear_queue {
 	my ($self) = @_;
 	debug "[eventMacro] Clearing queue\n", "eventMacro", 2;
+	if ( defined $self->{Macro_Runner} && $self->get_automacro_checking_status() == PAUSED_BY_EXCLUSIVE_MACRO ) {
+		debug "[eventMacro] Uninterruptible macro '".$eventMacro->{Macro_Runner}->get_name()."' ended. Automacros will return to being checked.\n", "eventMacro", 2;
+		$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
+	}
 	$self->{Macro_Runner} = undef;
 	Plugins::delHook($self->{mainLoop_Hook_Handle}) if (defined $self->{mainLoop_Hook_Handle});
 	$self->{mainLoop_Hook_Handle} = undef;

@@ -155,7 +155,6 @@ sub validate_automacro_status {
 
 sub are_conditions_fulfilled {
 	my ($self) = @_;
-	#debug "[eventMacro] are_conditions_fulfilled called in Automacro ".$self->get_name().", value is ".$self->{is_Fulfilled}." \n", "eventMacro", 2;
 	return $self->{is_Fulfilled};
 }
 
