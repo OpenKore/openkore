@@ -58,6 +58,7 @@ sub onstart3 {
 
 sub checkConfig {
 	$timeout{eventMacro_delay}{timeout} = 1 unless defined $timeout{eventMacro_delay};
+	$config{eventMacro_orphans} = 'terminate' unless defined $config{eventMacro_orphans};
 	$file = (defined $config{eventMacro_file}) ? $config{eventMacro_file} : "eventMacros.txt";
 	return 1;
 }
@@ -254,22 +255,27 @@ sub commandHandler {
 	} else {
 		my $opt = {};
 		GetOptionsFromArray( \@params, $opt, 'repeat|r=i', 'override_ai', 'exclusive', 'macro_delay=f', 'orphan=s' );
-
+		
 		# TODO: Determine if this is reasonably efficient for macro sets which define a lot of variables. (A regex is slow.)
 		foreach my $variable_name ( keys %{ $eventMacro->{Variable_List_Hash} } ) {
 			next if $variable_name !~ /^\.param\d+$/o;
 			$eventMacro->set_var( $variable_name, undef );
 		}
 		$eventMacro->set_var( ".param$_", $params[ $_ - 1 ] ) foreach 1 .. @params;
-
-		$eventMacro->{Macro_Runner} = new eventMacro::Runner( $arg, $opt->{repeat} );
+		
+		$eventMacro->{Macro_Runner} = new eventMacro::Runner(
+			$arg,
+			defined $opt->{repeat} ? $opt->{repeat} : undef,
+			undef,
+			undef,
+			defined $opt->{exclusive} ? $opt->{exclusive} ? 0 : 1 : undef,
+			defined $opt->{override_ai} ? $opt->{override_ai} : undef,
+			defined $opt->{orphan} ? $opt->{orphan} : undef,
+			undef,
+			defined $opt->{macro_delay} ? $opt->{macro_delay} : undef
+		);
 
 		if ( defined $eventMacro->{Macro_Runner} ) {
-			if ( defined $opt->{override_ai} ) { $eventMacro->{Macro_Runner}->overrideAI( 1 ); }
-			if ( defined $opt->{exclusive} )   { $eventMacro->{Macro_Runner}->interruptible( 0 ); }
-			if ( defined $opt->{macro_delay} ) { $eventMacro->{Macro_Runner}->setMacro_delay( $opt->{macro_delay} ); }
-			if ( defined $opt->{orphan} )      { $eventMacro->{Macro_Runner}->orphan( $opt->{orphan} ); }
-			
 			$eventMacro->{mainLoop_Hook_Handle} = Plugins::addHook( 'mainLoop_pre', sub { $eventMacro->iterate_macro }, undef );
 		} else {
 			error "[eventMacro] unable to create macro queue.\n";
