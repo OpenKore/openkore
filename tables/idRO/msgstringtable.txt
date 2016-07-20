@@ -32,7 +32,7 @@ Frame Skip Off#
 BGM On#
 BGM Off#
 /h atau /help: Menunjukkan daftar perintah#
-#
+1#
 /bgm: Mengatur BGM On atau Off#
 /sound: Mengatur Sound Effects On atau Off#
 /effect: Effect On atau Off#
@@ -300,7 +300,7 @@ Kamu dibawah umur.#
 Masukkan Email atau kode pribadi#
 Masukkan Email atau kode pribadi#
 Penghapusan karakter gagal karena kamu salah memasukkan Email.#
-#
+1#
 Penghapusan karakter gagal karena kamu salah memasukkan SSN.#
 Kamu tidak bisa menjual lebih dari 15 jenis barang sekaligus#
 Kamu dibawah umur, kamu tidak bisa bergabung ke server ini.#
@@ -530,7 +530,7 @@ http://ragnarok.lytogame.com/default.asp#
 Kapasitas IP ini penuh.  Apa kamu ingin membayar jalur pribadi?#
 Kamu sudah melewati batas waktu yang kamu bayarkan. Permainan akan dimatikan secara otomatis.#
 Nama terlalu panjang. Silakkan masukkan nama 23 kata panjangnya#
-#
+1#
 Kamu melakukan pembayaran dengan jalur pribadi.#
 Kamu membayar jalur pribadi. Waktu tersisa xx hrs xx mins xx secs.#
 Gratis!#
@@ -1539,9 +1539,9 @@ Point latihan telah berkurang#
 Untuk bisa digunakan perlu ditaruh dalam [%s]#
 Pengaturan masuk Battlefield#
 % Kamu belum diijinkan memasuki Battlefield, jadi permintaan dibatalkan#
-#
+1#
 % Pemindahan ke area Battlefield ditunda. Menunggu pemain lain#
-#
+1#
 Klik Ok untuk membatalkan permintaan Battlefield. Klik pada tombol dibawah#
 Memasuki Battlefield telah dibatalkan#
 Kamu akan segera dipindah ke %s Battlefield.#
