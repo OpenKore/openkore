@@ -130,19 +130,43 @@ sub overrideAI {
 		$self->{overrideAI} = 1 if (!defined $self->{overrideAI});
 		
 		#Makes macro register itself to AI
-		if ($self->{overrideAI} == 1 && $overrideAI == 0 && !$self->registered) {
-			debug "[eventMacro] Macro '".$self->{Name}."' is now registered to AI queue.\n", "eventMacro", 2;
-			$self->register;
+		if ($overrideAI == 0) {
+			if (!AI::inQueue('eventMacro')) {
+				debug "[eventMacro] Macro '".$self->{Name}."' is now registered to AI queue.\n", "eventMacro", 2;
+				$self->register;
+			} else {
+				debug "[eventMacro] Macro '".$self->{Name}."' cannot be registered to AI queue because it is alredy registered.\n", "eventMacro", 2;
+			}
 		
 		#Makes macro override AI and clear itself from it
-		} elsif ($self->{overrideAI} == 0 && $overrideAI == 1 && $self->registered) {
-			debug "[eventMacro] Macro '".$self->{Name}."' is now not registered anymore to AI queue.\n", "eventMacro", 2;
-			$self->unregister;
+		} elsif ($overrideAI == 1) {
+			if (AI::inQueue('eventMacro')) {
+				debug "[eventMacro] Macro '".$self->{Name}."' is now not registered anymore to AI queue.\n", "eventMacro", 2;
+				$self->unregister;
+			} else {
+				debug "[eventMacro] Macro '".$self->{Name}."' cannot be deleted from AI queue because it is not registered.\n", "eventMacro", 2;
+			}
 		}
 		
-		$self->{overrideAI} = $overrideAI
+		debug "[eventMacro] Macro '".$self->{Name}."' overrideAI is already '".$overrideAI."'.\n", "eventMacro", 2 if ($self->{overrideAI} == $overrideAI);
+		
+		$self->{overrideAI} = $overrideAI;
 	}
 	return $self->{overrideAI};
+}
+
+# registers to AI queue
+sub register {
+	my ($self) = @_;
+	AI::queue('eventMacro');
+	$self->{registered} = 1;
+}
+
+# unregisters from AI queue
+sub unregister {
+	my ($self) = @_;
+	AI::clear('eventMacro');
+	$self->{registered} = 0;
 }
 
 # sets or gets method for orphaned macros
@@ -164,20 +188,6 @@ sub macro_delay {
 	my ($self, $macro_delay) = @_;
 	if (defined $macro_delay) {$self->{macro_delay} = $macro_delay}
 	return $self->{macro_delay};
-}
-
-# registers to AI queue
-sub register {
-	my ($self) = @_;
-	AI::queue('eventMacro');
-	$self->{registered} = 1;
-}
-
-# unregisters from AI queue
-sub unregister {
-	my ($self) = @_;
-	AI::clear('eventMacro');
-	$self->{registered} = 0;
 }
 
 # checks register status
