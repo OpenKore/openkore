@@ -94,8 +94,9 @@ sub commandHandler {
 			"eventMacro list: list available macros\n".
 			"eventMacro stop: stops current macro\n".
 			"eventMacro status [macro|automacro]: shows current status of automacro, macro or both\n".
-			"eventMacro resume [macro|automacro]: resumes automacro, macro or both\n".
-			"eventMacro pause [macro|automacro]: pauses automacro, macro or both\n".
+			"eventMacro unpause: unpauses running macro\n".
+			"eventMacro pause: pauses running macro\n".
+			"eventMacro automacro [force_stop|force_start|resume]: Sets the state of automacros checking\n".
 			"eventMacro variables_value: show list of variables and their values\n".
 			"eventMacro reset [automacro]: resets run-once status for all or given automacro(s)\n";
 		return
@@ -142,75 +143,41 @@ sub commandHandler {
 		}
 		if (!defined $params[0] || $params[0] eq 'automacro') {
 			my $status = $eventMacro->get_automacro_checking_status();
-			if ($status == 0) {
+			if ($status == CHECKING_AUTOMACROS) {
 				message "Automacros are being checked.\n";
-			} elsif ($status == 1) {
+			} elsif ($status == PAUSED_BY_EXCLUSIVE_MACRO) {
 				message "Automacros are not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->get_name()."').\n";
+			} elsif ($status == PAUSE_FORCED_BY_USER) {
+				message "Automacros are not being checked because the user forced it to stop.\n";
 			} else {
-				message "Automacros are not being checked because the user stopped it.\n";
+				message "Automacros are being checked because the user forced it to.\n";
 			}
 		}
 	### parameter: pause
 	} elsif ($arg eq 'pause') {
-		if (defined $params[0] && $params[0] ne 'macro' && $params[0] ne 'automacro') {
-			message "[eventMacro] '".$params[0]."' is not a valid option\n";
-			return;
-		}
-		if (!defined $params[0] || $params[0] eq 'macro') {
-			my $macro = $eventMacro->{Macro_Runner};
-			if ( $macro ) {
-				if ($macro->is_paused()) {
-					message "Macro '".$eventMacro->{Macro_Runner}->get_name()."' is already paused.\n";
-				} else {
-					message "Pausing macro '".$eventMacro->{Macro_Runner}->get_name()."'.\n";
-					$eventMacro->{Macro_Runner}->pause();
-				}
+		my $macro = $eventMacro->{Macro_Runner};
+		if ( $macro ) {
+			if ($macro->is_paused()) {
+				message "Macro '".$eventMacro->{Macro_Runner}->get_name()."' is already paused.\n";
 			} else {
-				message "There's no macro currently running.\n";
+				message "Pausing macro '".$eventMacro->{Macro_Runner}->get_name()."'.\n";
+				$eventMacro->{Macro_Runner}->pause();
 			}
+		} else {
+			message "There's no macro currently running.\n";
 		}
-		if (!defined $params[0] || $params[0] eq 'automacro') {
-			my $status = $eventMacro->get_automacro_checking_status();
-			if ($status == 0) {
-				message "Automacros won't be checked anymore.\n";
-				$eventMacro->set_automacro_checking_status(PAUSED_BY_USER);
-			} elsif ($status == 1) {
-				message "Automacros were not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->get_name()."'). Now they won't return to being checked when this macro ends (caution)\n";
-				$eventMacro->set_automacro_checking_status(PAUSED_BY_USER);
+	### parameter: unpause
+	} elsif ($arg eq 'unpause') {
+		my $macro = $eventMacro->{Macro_Runner};
+		if ( $macro ) {
+			if ($macro->is_paused()) {
+				message "Unpausing macro '".$eventMacro->{Macro_Runner}->get_name()."'.\n";
+				$eventMacro->{Macro_Runner}->unpause();
 			} else {
-				message "Automacros checking is already paused.\n";
+				message "Macro '".$eventMacro->{Macro_Runner}->get_name()."' is not paused.\n";
 			}
-		}
-	### parameter: resume
-	} elsif ($arg eq 'resume') {
-		if (defined $params[0] && $params[0] ne 'macro' && $params[0] ne 'automacro') {
-			message "[eventMacro] '".$params[0]."' is not a valid option\n";
-			return;
-		}
-		if (!defined $params[0] || $params[0] eq 'macro') {
-			my $macro = $eventMacro->{Macro_Runner};
-			if ( $macro ) {
-				if ($macro->is_paused()) {
-					message "Unpausing macro '".$eventMacro->{Macro_Runner}->get_name()."'.\n";
-					$eventMacro->{Macro_Runner}->unpause();
-				} else {
-					message "Macro '".$eventMacro->{Macro_Runner}->get_name()."' is not paused.\n";
-				}
-			} else {
-				message "There's no macro currently running.\n";
-			}
-		}
-		if (!defined $params[0] || $params[0] eq 'automacro') {
-			my $status = $eventMacro->get_automacro_checking_status();
-			if ($status == 0) {
-				message "Automacros are already being checked.\n";
-			} elsif ($status == 1) {
-				message "Automacros were not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->get_name()."'). Now they will start being checked again (caution)\n";
-				$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
-			} else {
-				message "Automacros will now start being checked again.\n";
-				$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
-			}
+		} else {
+			message "There's no macro currently running.\n";
 		}
 	### parameter: stop
 	} elsif ($arg eq 'stop') {
@@ -221,6 +188,7 @@ sub commandHandler {
 		} else {
 			message "There's no macro currently running.\n";
 		}
+	#TODO: only enable macros which haven't 'disable 1' in eventMacros.txt
 	### parameter: reset
 	} elsif ($arg eq 'reset') {
 		if (!defined $params[0]) {
@@ -238,6 +206,56 @@ sub commandHandler {
 				$automacro->enable();
 			}
 		}
+	### parameter: automacro
+	} elsif ($arg eq 'automacro') {
+		if (!defined $params[0] || (defined $params[0] && $params[0] ne 'force_stop' && $params[0] ne 'force_start' && $params[0] ne 'resume')) {
+			message "usage: eventMacro automacro [force_stop|force_start|resume]\n", "list";
+			message 
+				"eventMacro automacro force_stop: forces the stop of automacros checking\n".
+				"eventMacro automacro force_start: forces the start of automacros checking\n".
+				"eventMacro automacro resume: return automacros checking to the normal state\n";
+			return;
+		}
+		my $status = $eventMacro->get_automacro_checking_status();
+		debug "[eventMacro] Command 'eventMacro automacro' used with parameter '".$params[0]."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Previous automacro status '".$status."'.\n", "eventMacro", 2;
+		if ($params[0] eq 'force_stop') {
+			if ($status == CHECKING_AUTOMACROS) {
+				message "[eventMacro] Automacros checking forcely stopped.\n";
+				$eventMacro->set_automacro_checking_status(PAUSE_FORCED_BY_USER);
+			} elsif ($status == PAUSED_BY_EXCLUSIVE_MACRO) {
+				message "[eventMacro] Automacros were not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->get_name()."').".
+				        "Now they will be forcely stopped even after macro ends (caution).\n";
+				$eventMacro->set_automacro_checking_status(PAUSE_FORCED_BY_USER);
+			} elsif ($status == PAUSE_FORCED_BY_USER) {
+				message "[eventMacro] Automacros checking is already forcely stopped.\n";
+			} else {
+				message "[eventMacro] Automacros checking is forcely active, now it will be forcely stopped.\n";
+				$eventMacro->set_automacro_checking_status(PAUSE_FORCED_BY_USER);
+			}
+		} elsif ($params[0] eq 'force_start') {
+			if ($status == CHECKING_AUTOMACROS) {
+				message "[eventMacro] Automacros are already being checked, now it will be forcely kept this way.\n";
+				$eventMacro->set_automacro_checking_status(CHECKING_FORCED_BY_USER);
+			} elsif ($status == PAUSED_BY_EXCLUSIVE_MACRO) {
+				message "[eventMacro] Automacros were not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->get_name()."').".
+				        "Now automacros checking will be forcely activated (caution).\n";
+				$eventMacro->set_automacro_checking_status(CHECKING_FORCED_BY_USER);
+			} elsif ($status == PAUSE_FORCED_BY_USER) {
+				message "[eventMacro] Automacros checking is forcely stopped, now it will be forcely activated.\n";
+				$eventMacro->set_automacro_checking_status(CHECKING_FORCED_BY_USER);
+			} else {
+				message "[eventMacro] Automacros checking is already forcely active.\n";
+			}
+		} else {
+			if ($status == CHECKING_AUTOMACROS || PAUSED_BY_EXCLUSIVE_MACRO) {
+				message "[eventMacro] Automacros checking is not forced by the user to be able to resume.\n";
+			} else {
+				message "[eventMacro] Automacros checking is forcely ".$status == PAUSE_FORCED_BY_USER ? 'stopped' : 'active'.", now it will resume to normal state.\n";
+				$eventMacro->set_automacro_checking_status(CHECKING_FORCED_BY_USER);
+			}
+		}
+	### parameter: variables_value
 	} elsif ($arg eq 'variables_value') {
 		message "[eventMacro] Varstack List\n", "menu";
 		my $counter = 1;
@@ -246,6 +264,7 @@ sub commandHandler {
 		} continue {
 			$counter++;
 		}
+	### if nothing triggered until here it's probably a macro name
 	} elsif ( !$eventMacro->{Macro_List}->getByName( $arg ) ) {
 		error "[eventMacro] Macro $arg not found\n";
 	} elsif ( $eventMacro->{Macro_Runner} ) {
