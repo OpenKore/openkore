@@ -2249,6 +2249,8 @@ ra_fild07 168 353 ra_fild02 171 45
 ra_fild02 168 36 ra_fild07 168 349
 ra_fild02 373 275 ra_fild03 28 294
 ra_fild03 23 294 ra_fild02 367 270
+ra_temple 119 180 ra_temin 169 23
+ra_temin 28 319 ra_san01 139 139
 ra_san02 213 280 ra_san01 140 19
 ra_san03 123 283 ra_san01 140 19
 ra_san04 119 104 ra_san01 140 19
