@@ -272,7 +272,8 @@ sub commandHandler {
 			defined $opt->{override_ai} ? $opt->{override_ai} : undef,
 			defined $opt->{orphan} ? $opt->{orphan} : undef,
 			undef,
-			defined $opt->{macro_delay} ? $opt->{macro_delay} : undef
+			defined $opt->{macro_delay} ? $opt->{macro_delay} : undef,
+			0
 		);
 
 		if ( defined $eventMacro->{Macro_Runner} ) {

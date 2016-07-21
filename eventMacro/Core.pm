@@ -457,7 +457,8 @@ sub call_macro {
 		$automacro->get_parameter('overrideAI'),
 		$automacro->get_parameter('orphan'),
 		$automacro->get_parameter('delay'),
-		$automacro->get_parameter('macro_delay')
+		$automacro->get_parameter('macro_delay'),
+		0
 	);
 	
 	if (defined $self->{Macro_Runner}) {

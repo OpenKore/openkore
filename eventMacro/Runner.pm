@@ -26,7 +26,7 @@ our @EXPORT_OK = qw( %macro );
 
 # constructor
 sub new {
-	my ($class, $name, $repeat, $lastname, $lastline, $interruptible, $overrideAI, $orphan, $delay, $macro_delay) = @_;
+	my ($class, $name, $repeat, $lastname, $lastline, $interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
 
 	return undef unless ($eventMacro->{Macro_List}->getByName($name));
 	
@@ -91,6 +91,8 @@ sub new {
 	} else {
 		$self->macro_delay($timeout{eventMacro_delay}{timeout});
 	}
+	
+	$self->regSubmacro() if ($is_submacro);
 
 	return $self
 }
@@ -672,7 +674,7 @@ sub next {
 			if (defined $times && $times =~ /\d+/) { $calltimes = $times; }; # do we have a valid repeat value?
 		}
 		
-		$self->{subcall} = new eventMacro::Runner($name, $calltimes, undef, undef, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay);
+		$self->{subcall} = new eventMacro::Runner($name, $calltimes, undef, undef, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
 		
 		unless (defined $self->{subcall}) {
 			$self->{error} = "$errtpl: failed to call script";
@@ -682,8 +684,6 @@ sub next {
 				$eventMacro->set_var(".param".$p,$new_params[$p-1]);
 				$eventMacro->set_var(".param".$p,substr($eventMacro->get_var(".param".$p), 1, -1)) if ($eventMacro->get_var(".param".$p) =~ /^".*"$/);
 			}
-			
-			$self->{subcall}->regSubmacro;
 			$self->{line}++; # point to the next line to be executed in the caller
 			$self->timeout($self->macro_delay);
 		}
@@ -897,16 +897,15 @@ sub newThen {
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 			if (defined $ptimes && $ptimes =~ /^\d+$/) {
 				if ($ptimes > 0) {
-					$self->{subcall} = new eventMacro::Runner($name, $ptimes, $self->{Name}, $self->{line}, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay);
+					$self->{subcall} = new eventMacro::Runner($name, $ptimes, $self->{Name}, $self->{line}, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
 				}
-				else {$self->{subcall} = new eventMacro::Runner($name, 0, undef, undef, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay)}
+				else {$self->{subcall} = new eventMacro::Runner($name, 0, undef, undef, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1)}
 			}
 			else {$self->{error} = "$errtpl: $ptimes must be numeric"}
 		}
-		else {$self->{subcall} = new eventMacro::Runner($tmp, 1, undef, undef, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay)}
+		else {$self->{subcall} = new eventMacro::Runner($tmp, 1, undef, undef, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1)}
 		unless (defined $self->{subcall}) {$self->{error} = "$errtpl: failed to call script"}
 		else {
-			$self->{subcall}->regSubmacro;
 			$self->timeout($self->macro_delay)
 		}
 	}
