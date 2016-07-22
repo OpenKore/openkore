@@ -78,10 +78,11 @@ our @EXPORT = qw(
 sub parseArrayFile {
 	my $file = shift;
 	my $r_array = shift;
+	my $options = shift;
 	undef @{$r_array};
 
 	my @lines;
-	my $reader = new Utils::TextReader($file);
+	my $reader = new Utils::TextReader($file, $options);
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
 		$line =~ s/[\r\n\x{FEFF}]//g;
