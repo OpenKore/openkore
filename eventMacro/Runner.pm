@@ -26,7 +26,7 @@ our @EXPORT_OK = qw( %macro );
 
 # constructor
 sub new {
-	my ($class, $name, $repeat, $lastname, $lastline, $interruptible) = @_;
+	my ($class, $name, $repeat, $lastname, $lastline, $interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
 
 	return undef unless ($eventMacro->{Macro_List}->getByName($name));
 	
@@ -36,26 +36,33 @@ sub new {
 	$self->{Name} = $name;
 	$self->{Paused} = 0;
 	$self->{registered} = 0;
-	$self->{submacro} = 0;
-	$self->{macro_delay} = $timeout{eventMacro_delay}{timeout};
-	$self->{timeout} = 0;
 	$self->{mainline_delay} = undef;
 	$self->{subline_delay} = undef;
 	$self->{result} = undef;
 	$self->{time} = time;
 	$self->{finished} = 0;
-	$self->{overrideAI} = 0;
 	$self->{line} = 0;
 	$self->{label} = {scanLabels($macro{$name})};
 	$self->{subcall} = undef;
 	$self->{error} = undef;
-	$self->{orphan} = $config{eventMacro_orphans};
 	$self->{macro_block} = 0;
 	
-	if (defined $repeat && $repeat =~ /^\d+$/) {
-		$self->{repeat} = $repeat;
+	$self->{last_subcall_overrideAI} = undef;
+	$self->{last_subcall_interruptible} = undef;
+	$self->{last_subcall_orphan} = undef;
+	
+	debug "[eventMacro] Macro object '".$self->{Name}."' created.\n", "eventMacro", 2;
+	
+	if ($is_submacro) {
+		$self->{submacro} = 1;
 	} else {
-		$self->{repeat} = 0;
+		$self->{submacro} = 0;
+	}
+	
+	if (defined $repeat && $repeat =~ /^\d+$/) {
+		$self->repeat($repeat);
+	} else {
+		$self->repeat(0);
 	}
 	
 	if (defined $lastname && defined $lastline) {
@@ -66,10 +73,226 @@ sub new {
 		$self->{lastline} = undef;
 	}
 	
-	$self->{interruptible} = 1;
-	$self->interruptible($interruptible) if (defined $interruptible && $interruptible == /^[01]$/);
+	if (defined $interruptible && $interruptible =~ /^[01]$/) {
+		$self->interruptible($interruptible);
+	} else {
+		$self->interruptible(1);
+	}
+	
+	if (defined $overrideAI && $overrideAI =~ /^[01]$/) {
+		$self->overrideAI($overrideAI);
+	} else {
+		$self->overrideAI(0);
+	}
+	
+	if (defined $orphan && $orphan =~ /^(?:terminate(?:_last_call)?|reregister(?:_safe)?)$/) {
+		$self->orphan($orphan);
+	} else {
+		$self->orphan($config{eventMacro_orphans});
+	}
+	
+	if (defined $delay && $delay =~ /^[\d\.]*\d+$/) {
+		$self->timeout($delay);
+	} else {
+		$self->timeout(0);
+	}
+	
+	if (defined $macro_delay && $macro_delay =~ /^[\d\.]*\d+$/) {
+		$self->macro_delay($macro_delay);
+	} else {
+		$self->macro_delay($timeout{eventMacro_delay}{timeout});
+	}
 
 	return $self
+}
+
+sub last_subcall_overrideAI {
+	my ($self, $overrideAI) = @_;
+	if (defined $overrideAI) {$self->{last_subcall_overrideAI} = $overrideAI}
+	return $self->{last_subcall_overrideAI};
+}
+	
+sub last_subcall_interruptible {
+	my ($self, $interruptible) = @_;
+	if (defined $interruptible) {$self->{last_subcall_interruptible} = $interruptible}
+	return $self->{last_subcall_interruptible};
+}
+	
+sub last_subcall_orphan {
+	my ($self, $orphan) = @_;
+	if (defined $orphan) {$self->{last_subcall_orphan} = $orphan}
+	return $self->{last_subcall_orphan};
+}
+
+# sets or get interruptible flag
+sub interruptible {
+	my ($self, $interruptible) = @_;
+	
+	if (defined $interruptible) {
+		
+		if (defined $self->{interruptible} && $self->{interruptible} == $interruptible) {
+			debug "[eventMacro] Macro '".$self->{Name}."' interruptible state is already '".$interruptible."'.\n", "eventMacro", 2;
+		} else {
+			debug "[eventMacro] Now macro '".$self->{Name}."' interruptible state is '".$interruptible."'.\n", "eventMacro", 2;
+			$self->{interruptible} = $interruptible;
+		}
+		
+		if (!defined $self->{subcall}) {
+			debug "[eventMacro] Since this macro is the last in the macro tree we will validate automacro checking to interruptible.\n", "eventMacro", 2;
+			$self->validate_automacro_checking_to_interruptible($interruptible);
+		}
+		
+	}
+	return $self->{interruptible};
+}
+
+sub validate_automacro_checking_to_interruptible {
+	my ($self, $interruptible) = @_;
+	
+	my $checking_status = $eventMacro->get_automacro_checking_status();
+	
+	if (!$self->{submacro}) {
+		$self->last_subcall_interruptible($interruptible);
+	} else {
+		$eventMacro->{Macro_Runner}->last_subcall_interruptible($interruptible);
+	}
+	
+	if (($checking_status == CHECKING_AUTOMACROS && $interruptible == 1) || ($checking_status == PAUSED_BY_EXCLUSIVE_MACRO && $interruptible == 0)) {
+		debug "[eventMacro] No need to change automacro checking status because it already is compatible with this macro.\n", "eventMacro", 2;
+		return;
+	}
+	
+	if ($checking_status != CHECKING_AUTOMACROS && $checking_status != PAUSED_BY_EXCLUSIVE_MACRO) {
+		debug "[eventMacro] Macro '".$self->{Name}."' cannot change automacro checking state because the user forced it into another state.\n", "eventMacro", 2;
+		return;
+	}
+	
+	if ($interruptible == 0) {
+		debug "[eventMacro] Macro '".$self->{Name}."' is now stopping automacro checking..\n", "eventMacro", 2;
+		$eventMacro->set_automacro_checking_status(PAUSED_BY_EXCLUSIVE_MACRO);
+	
+	} elsif ($interruptible == 1) {
+		debug "[eventMacro] Macro '".$self->{Name}."' is now starting automacro checking..\n", "eventMacro", 2;
+		$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
+	}
+}
+
+# sets or gets override AI value
+sub overrideAI {
+	my ($self, $overrideAI) = @_;
+	
+	if (defined $overrideAI) {
+		
+		if (defined $self->{overrideAI} && $self->{overrideAI} == $overrideAI) {
+			debug "[eventMacro] Macro '".$self->{Name}."' overrideAI state is already '".$overrideAI."'.\n", "eventMacro", 2;
+		} else {
+			debug "[eventMacro] Now macro '".$self->{Name}."' overrideAI state is '".$overrideAI."'.\n", "eventMacro", 2;
+			$self->{overrideAI} = $overrideAI;
+		}
+		
+		if (!defined $self->{subcall}) {
+			debug "[eventMacro] Since this macro is the last in the macro tree we will validate AI queue to overrideAI.\n", "eventMacro", 2;
+			$self->validate_AI_queue_to_overrideAI($overrideAI);
+		}
+		
+	}
+	return $self->{overrideAI};
+}
+
+sub validate_AI_queue_to_overrideAI {
+	my ($self, $overrideAI) = @_;
+	
+	my $is_in_AI_queue = AI::inQueue('eventMacro');
+	
+	if (!$self->{submacro}) {
+		$self->last_subcall_overrideAI($overrideAI);
+	} else {
+		$eventMacro->{Macro_Runner}->last_subcall_overrideAI($overrideAI);
+	}
+	
+	if (($is_in_AI_queue && $overrideAI == 0) || (!$is_in_AI_queue && $overrideAI == 1)) {
+		debug "[eventMacro] No need to add/clear AI_queue because it already is compatible with this macro.\n", "eventMacro", 2;
+		return;
+	}
+	
+	if ($overrideAI == 0) {
+		$self->register;
+		
+	} elsif ($overrideAI == 1) {
+		$self->unregister;
+	}
+}
+
+# registers to AI queue
+sub register {
+	my ($self) = @_;
+	debug "[eventMacro] Macro '".$self->{Name}."' is now registering itself to AI queue.\n", "eventMacro", 2;
+	AI::queue('eventMacro');
+	$self->{registered} = 1;
+}
+
+# unregisters from AI queue
+sub unregister {
+	my ($self) = @_;
+	debug "[eventMacro] Macro '".$self->{Name}."' is now deleting itself from AI queue.\n", "eventMacro", 2;
+	AI::clear('eventMacro');
+	$self->{registered} = 0;
+}
+
+# sets or gets method for orphaned macros
+sub orphan {
+	my ($self, $orphan) = @_;
+	
+	if (defined $orphan) {
+		
+		if (defined $self->{orphan} && $self->{orphan} eq $orphan) {
+			debug "[eventMacro] Macro '".$self->{Name}."' orphan method is already '".$orphan."'.\n", "eventMacro", 2;
+		} else {
+			debug "[eventMacro] Now macro '".$self->{Name}."' orphan method is '".$orphan."'.\n", "eventMacro", 2;
+			$self->{orphan} = $orphan;
+		}
+		
+		if (!defined $self->{subcall}) {
+			if (!$self->{submacro}) {
+				$self->last_subcall_orphan($orphan);
+			} else {
+				$eventMacro->{Macro_Runner}->last_subcall_orphan($orphan);
+			}
+		}
+	}
+	return $self->{orphan};
+}
+
+# sets or gets timeout for next command
+sub timeout {
+	my ($self, $timeout) = @_;
+	if (defined $timeout) {$self->{timeout} = $timeout}
+	return { time => $self->{time}, timeout => $self->{timeout} };
+}
+
+# sets macro_delay timeout for this macro
+sub macro_delay {
+	my ($self, $macro_delay) = @_;
+	if (defined $macro_delay) {$self->{macro_delay} = $macro_delay}
+	return $self->{macro_delay};
+}
+
+# checks register status
+sub registered {
+	my ($self) = @_;
+	return $self->{registered};
+}
+
+sub repeat {
+	my ($self, $repeat) = @_;
+	if (defined $repeat) {$self->{repeat} = $repeat}
+	return $self->{repeat};
+}
+
+sub restart {
+	my ($self) = @_;
+	$self->repeat($self->repeat-1);
+	$self->{line} = 0;
 }
 
 sub pause {
@@ -92,71 +315,35 @@ sub get_name {
 	return $self->{Name};
 }
 
+sub clear_subcall {
+	my ($self) = @_;
+	debug "[eventMacro] Clearing submacro '".$self->{subcall}->{Name}."' from macro '".$self->{Name}."'.\n", "eventMacro", 2;
+	$self->validate_automacro_checking_to_interruptible($self->interruptible);
+	$self->validate_AI_queue_to_overrideAI($self->overrideAI);
+	#since we do not need a validate_orphan function we do it here
+	if ($self->{subcall}->orphan ne $self->orphan) {
+		debug "[eventMacro] Returning orphan method from '".$self->{subcall}->orphan."' to '".$self->orphan."'.\n", "eventMacro", 2;
+		if (!$self->{submacro}) {
+			$self->last_subcall_orphan($self->orphan);
+		} else {
+			$eventMacro->{Macro_Runner}->last_subcall_orphan($self->orphan);
+		}
+	} else {
+		debug "[eventMacro] No need to change orphan method because it already is compatible with this macro.\n", "eventMacro", 2;
+	}
+	undef $self->{subcall};
+}
+
+sub create_subcall {
+	my ($self, $name, $repeat, $lastname, $lastline) = @_;
+	debug "[eventMacro] Creating submacro '".$name."' on macro '".$self->{Name}."'.\n", "eventMacro", 2;
+	$self->{subcall} = new eventMacro::Runner($name, $repeat, $lastname, $lastline, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
+}
+
 # destructor
 sub DESTROY {
 	my ($self) = @_;
-	AI::clear('eventMacro') if (AI::inQueue('eventMacro') && !$self->{submacro});
-}
-
-# declares current macro to be a submacro
-sub regSubmacro {
-	$_[0]->{submacro} = 1
-}
-
-# registers to AI queue
-sub register {
-	AI::queue('eventMacro') unless $_[0]->{overrideAI};
-	$_[0]->{registered} = 1
-}
-
-# checks register status
-sub registered {
-	return $_[0]->{registered}
-}
-
-# sets or gets method for orphaned macros
-sub orphan {
-	if (defined $_[1]) {$_[0]->{orphan} = $_[1]}
-	return $_[0]->{orphan}
-}
-
-# sets macro_delay timeout for this macro
-sub setMacro_delay {
-	$_[0]->{macro_delay} = $_[1]
-}
-
-# sets or gets timeout for next command
-sub timeout {
-	if (defined $_[1]) {$_[0]->{timeout} = $_[1]}
-	return { time => $_[0]->{time}, timeout => $_[0]->{timeout} };
-}
-
-# sets or gets override AI value
-sub overrideAI {
-	if (defined $_[1]) {$_[0]->{overrideAI} = $_[1]}
-	return $_[0]->{overrideAI}
-}
-
-# sets or get interruptible flag
-sub interruptible {
-	my ($self, $interruptible) = @_;
-	
-	if (defined $interruptible) {
-		
-		#Turn macro into exclusive
-		if ($self->{interruptible} == 1 && $interruptible == 0 && $eventMacro->get_automacro_checking_status() == CHECKING_AUTOMACROS) {
-			debug "[eventMacro] Macro '".$self->{Name}."' is now exclusive. Automacro checking will be paused until it ends.\n", "eventMacro", 2;
-			$eventMacro->set_automacro_checking_status(PAUSED_BY_EXCLUSIVE_MACRO);
-		
-		#Turn macro into not exclusive
-		} elsif ($self->{interruptible} == 0 && $interruptible == 1 && $eventMacro->get_automacro_checking_status() == PAUSED_BY_EXCLUSIVE_MACRO) {
-			debug "[eventMacro] Macro '".$self->{Name}."' stopped being exclusive. Automacros will return to being checked.\n", "eventMacro", 2;
-			$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
-		}
-		
-		$self->{interruptible} = $interruptible;
-	}
-	return $_[0]->{interruptible}
+	$self->unregister if (AI::inQueue('eventMacro') && !$self->{submacro});
 }
 
 # sets or gets macro block flag
@@ -227,15 +414,11 @@ sub next {
 		my $command = $self->{subcall}->next;
 		if (defined $command) {
 			my $tmptime = $self->{subcall}->timeout;
-			$self->{timeout} = $tmptime->{timeout};
+			$self->timeout($tmptime->{timeout});
 			$self->{time} = $tmptime->{time};
 			if ($self->{subcall}->finished) {
-				if ($self->{subcall}->{repeat} == 0) {$self->{finished} = 1}
-				if ($self->{subcall}->interruptible != $self->interruptible) {
-					debug "[eventMacro] Submacro '".$self->{subcall}->{Name}."' had a different exclusive value than it's father, returning to father exclusive state.\n", "eventMacro", 2;
-					$self->{subcall}->interruptible($self->interruptible);
-				}
-				undef $self->{subcall};
+				if ($self->{subcall}->repeat == 0) {$self->{finished} = 1}
+				$self->clear_subcall;
 				# $self->{line}++
 			}
 			return $command
@@ -248,7 +431,7 @@ sub next {
 	my $line = ${$macro{$self->{Name}}}[$self->{line}];
 	if (!defined $line) {
 		if (defined $self->{lastname} && defined $self->{lastline}) {
-			if ($self->{repeat} > 1) {$self->{repeat}--; $self->{line} = 0}
+			if ($self->repeat > 1) {$self->restart}
 			else {
 				$self->{line} = $self->{lastline} + 1;
 				$self->{Name} = $self->{lastname};
@@ -258,7 +441,7 @@ sub next {
 			$line = ${$macro{$self->{Name}}}[$self->{line}]
 		}
 		else {
-			if ($self->{repeat} > 1) {$self->{repeat}--; $self->{line} = 0}
+			if ($self->repeat > 1) {$self->restart}
 			else {$self->{finished} = 1}
 			return ""
 		}
@@ -278,7 +461,7 @@ sub next {
 			$line =~ s/\s+if\s*\(.*\)$//;
 		} else {
 			$self->{line}++;
-			$self->{timeout} = 0;
+			$self->timeout(0);
 			return "";
 		}
 	}
@@ -289,14 +472,14 @@ sub next {
 		my ($tmp) = $line =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)/;
 		if (exists $self->{label}->{$tmp}) {$self->{line} = $self->{label}->{$tmp}}
 		else {$self->{error} = "$errtpl: cannot find label $tmp"}
-		$self->{timeout} = 0
+		$self->timeout(0);
 	##########################################
 	# declare block ending: end label
 	} elsif ($line =~ /^end\s/) {
 		my ($tmp) = $line =~ /^end\s+(.*)/;
 		if (exists $self->{label}->{$tmp}) {$self->{line} = $self->{label}->{$tmp}}
 		else {$self->{error} = "$errtpl: cannot find block start for $tmp"}
-		$self->{timeout} = 0
+		$self->timeout(0);
 	##########################################
 	# macro block: begin
 	} elsif ($line eq '[') {
@@ -306,7 +489,7 @@ sub next {
 	# macro block: end
 	} elsif ($line eq ']') {
 		$self->{macro_block} = 0;
-		$self->{timeout} = 0;
+		$self->timeout(0);
 		$self->{line}++
 	##########################################
 	# if statement: if (foo = bar) goto label?
@@ -344,7 +527,7 @@ sub next {
 			}
 		}
 		$self->{line}++;
-		$self->{timeout} = 0
+		$self->timeout(0)
 
 	##########################################
 	# If arriving at a line 'else', 'elsif' or 'case', it should be skipped -
@@ -362,7 +545,7 @@ sub next {
 			}
 		}
 
-		$self->{timeout} = 0
+		$self->timeout(0)
 
 	##########################################
 	# switch statement:
@@ -408,13 +591,13 @@ sub next {
 		}
 		
 		$self->{line}++;
-		$self->{timeout} = 0
+		$self->timeout(0)
 	
 	##########################################
 	# end block of "if" or "switch"
 	} elsif ($line eq '}') {
 		$self->{line}++;
-		$self->{timeout} = 0
+		$self->timeout(0)
 
 	##########################################
 	# while statement: while (foo <= bar) as label
@@ -427,7 +610,7 @@ sub next {
 			$self->{line} = $self->{label}->{"end ".$label};
 		}
 		$self->{line}++;
-		$self->{timeout} = 0
+		$self->timeout(0)
 	##########################################
 	# set variable: $variable = value
 	} elsif ($line =~ /^\$[a-z]/i) {
@@ -458,21 +641,21 @@ sub next {
 				}
 			} else {$self->{error} = "$errtpl: unrecognized assignment"}
 		$self->{line}++;
-		$self->{timeout} = 0 unless defined $self->{mainline_delay} && defined $self->{subline_delay};
+		$self->timeout(0) unless defined $self->{mainline_delay} && defined $self->{subline_delay};
 		return $self->{result} if $self->{result}
 		}
 	##########################################
 	# label definition: :label
 	} elsif ($line =~ /^:/) {
 		$self->{line}++;
-		$self->{timeout} = 0
+		$self->timeout(0)
 	##########################################
 	# returns command: do whatever
 	} elsif ($line =~ /^do\s/) {
 		if ($line =~ /;/ && $line =~ /^do eval/ eq "") {
 			run_sublines($line, $self);
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-			unless (defined $self->{mainline_delay} && defined $self->{subline_delay}) {$self->{timeout} = $self->{macro_delay}; $self->{line}++}
+			unless (defined $self->{mainline_delay} && defined $self->{subline_delay}) {$self->timeout($self->macro_delay); $self->{line}++}
 			if ($self->{result}) {return $self->{result}}
 		}
 		else {
@@ -489,7 +672,7 @@ sub next {
 			my $result = parseCmd($tmp, $self);
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 			unless (defined $result) {$self->{error} = "$errtpl: command $tmp failed";return}
-			$self->{timeout} = $self->{macro_delay};
+			$self->timeout($self->macro_delay);
 			$self->{line}++;
 			return $result
 		}
@@ -505,7 +688,7 @@ sub next {
 			else {message "[eventmacro log] $result\n", "eventMacro";}
 		}
 		$self->{line}++;
-		$self->{timeout} = $self->{macro_delay} unless defined $self->{mainline_delay} && defined $self->{subline_delay};
+		$self->timeout($self->macro_delay) unless defined $self->{mainline_delay} && defined $self->{subline_delay};
 		return $self->{result} if $self->{result}
 	##########################################
 	# pause command
@@ -513,7 +696,7 @@ sub next {
 		if ($line =~ /;/) {
 			run_sublines($line, $self);
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-			$self->{timeout} = $self->{macro_delay} unless defined $self->{mainline_delay} && defined $self->{subline_delay}
+			$self->timeout($self->macro_delay) unless defined $self->{mainline_delay} && defined $self->{subline_delay}
 		}
 		else {
 			my ($tmp) = $line =~ /^pause\s*(.*)/;
@@ -521,9 +704,9 @@ sub next {
 				my $result = parseCmd($tmp, $self);
 				if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 				unless (defined $result) {$self->{error} = "$errtpl: $tmp failed"}
-				else {$self->{timeout} = $result}
+				else {$self->timeout($result)}
 			}
-			else {$self->{timeout} = $self->{macro_delay}}
+			else {$self->timeout($self->macro_delay)}
 		}
 		$self->{line}++;
 		return $self->{result} if $self->{result}
@@ -546,7 +729,7 @@ sub next {
 			}
 		}
 		$self->{line}++;
-		$self->{timeout} = 0 unless defined $self->{mainline_delay} && defined $self->{subline_delay};
+		$self->timeout(0) unless defined $self->{mainline_delay} && defined $self->{subline_delay};
 		return $self->{result} if $self->{result}
 	##########################################
 	# lock command
@@ -563,7 +746,7 @@ sub next {
 			}
 		}
 		$self->{line}++;
-		$self->{timeout} = 0 unless defined $self->{mainline_delay} && defined $self->{subline_delay};
+		$self->timeout(0) unless defined $self->{mainline_delay} && defined $self->{subline_delay};
 		return $self->{result} if $self->{result}
 	##########################################
 	# call command
@@ -592,7 +775,7 @@ sub next {
 			if (defined $times && $times =~ /\d+/) { $calltimes = $times; }; # do we have a valid repeat value?
 		}
 		
-		$self->{subcall} = new eventMacro::Runner($name, $calltimes, undef, undef, $self->{interruptible});
+		$self->create_subcall($name, $calltimes, undef, undef);
 		
 		unless (defined $self->{subcall}) {
 			$self->{error} = "$errtpl: failed to call script";
@@ -602,10 +785,8 @@ sub next {
 				$eventMacro->set_var(".param".$p,$new_params[$p-1]);
 				$eventMacro->set_var(".param".$p,substr($eventMacro->get_var(".param".$p), 1, -1)) if ($eventMacro->get_var(".param".$p) =~ /^".*"$/);
 			}
-			
-			$self->{subcall}->regSubmacro;
 			$self->{line}++; # point to the next line to be executed in the caller
-			$self->{timeout} = $self->{macro_delay};
+			$self->timeout($self->macro_delay);
 		}
 	##########################################
 	# set command
@@ -614,21 +795,21 @@ sub next {
 		else {
 			my ($var, $val) = $line =~ /^set\s+(\w+)\s+(.*)$/;
 			if ($var eq 'macro_delay' && $val =~ /^[\d\.]*\d+$/) {
-				$self->{macro_delay} = $val
+				$self->macro_delay($val);
 			} elsif ($var eq 'repeat' && $val =~ /^\d+$/) {
-				$self->{repeat} = $val
+				$self->repeat($val);
 			} elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {
-				$self->{overrideAI} = $val
+				$self->overrideAI($val);
 			} elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {
 				$self->interruptible($val?0:1);
 			} elsif ($var eq 'orphan' && $val =~ /^(?:terminate|reregister(?:_safe)?)$/) {
-				$self->{orphan} = $val
+				$self->orphan($val);
 			} else {
 				$self->{error} = "$errtpl: unrecognized key or wrong value"
 			}
 		}
 		$self->{line}++;
-		$self->{timeout} = 0 unless defined $self->{mainline_delay} && defined $self->{subline_delay};
+		$self->timeout(0) unless defined $self->{mainline_delay} && defined $self->{subline_delay};
 		return $self->{result} if $self->{result}
 	##########################################
 	# sub-routine command, still figuring out how to include unclever/fail sub-routine into the error msg
@@ -639,7 +820,7 @@ sub next {
 		}
 		if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 		$self->{line}++;
-		$self->{timeout} = 0 unless defined $self->{mainline_delay} && defined $self->{subline_delay};
+		$self->timeout(0) unless defined $self->{mainline_delay} && defined $self->{subline_delay};
 		return $self->{result} if $self->{result}
 	##########################################
 	# unrecognized line
@@ -661,7 +842,7 @@ sub run_sublines {
 		next if $e eq "";
 		if (defined $self->{subline_delay} && $i < $self->{subline_delay}) {$i++; next}
 		if (defined $self->{subline_delay} && $i == $self->{subline_delay}) {
-			$self->{timeout} = 0;
+			$self->timeout(0);
 			($self->{mainline_delay}, $self->{subline_delay}, $self->{result}) = undef;
 			$i++; next
 		}
@@ -701,11 +882,11 @@ sub run_sublines {
 		
 		# set command
 		} elsif (($var, $val) = $e =~ /^set\s+(\w+)\s+(.*)$/) {
-			if ($var eq 'macro_delay' && $val =~ /^[\d\.]*\d+$/) {$self->{macro_delay} = $val}
-			elsif ($var eq 'repeat' && $val =~ /^\d+$/) {$self->{repeat} = $val}
-			elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {$self->{overrideAI} = $val}
-			elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {$self->{interruptible} = $val?0:1}
-			elsif ($var eq 'orphan' && $val =~ /^(?:terminate|reregister(?:_safe)?)$/) {$self->{orphan} = $val}
+			if ($var eq 'macro_delay' && $val =~ /^[\d\.]*\d+$/) {$self->macro_delay($val)}
+			elsif ($var eq 'repeat' && $val =~ /^\d+$/) {$self->repeat($val)}
+			elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {$self->overrideAI($val)}
+			elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {$self->interruptible($val)?0:1}
+			elsif ($var eq 'orphan' && $val =~ /^(?:terminate(?:_last_call)?|reregister(?:_safe)?)$/) {$self->orphan($val)}
 			else {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: unrecognized key or wrong value in ($e)"; last}
 				
 		# lock command
@@ -738,9 +919,9 @@ sub run_sublines {
 				my $result = parseCmd($tmp, $self);
 				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: $self->{error}"; last}
 				unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: $tmp failed in ($e)"; last}
-				else {$self->{timeout} = $result}
+				else {$self->timeout($result)}
 			}
-			else {$self->{timeout} = $self->{macro_delay}}
+			else {$self->timeout($self->macro_delay)}
 			$self->{mainline_delay} = $real_num;
 			$self->{subline_delay} = $i;
 			last
@@ -752,7 +933,7 @@ sub run_sublines {
 			if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: $self->{error}"; last}
 			unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: $tmp failed in ($e)"; last}
 			else {message "[eventMacro log] $result\n", "eventMacro"}
-			$self->{timeout} = $self->{macro_delay};
+			$self->timeout($self->macro_delay);
 			$self->{mainline_delay} = $real_num;
 			$self->{subline_delay} = $i;
 			last
@@ -774,7 +955,7 @@ sub run_sublines {
 			my $result = parseCmd($tmp, $self);
 			if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: $self->{error}"; last}
 			unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: command $tmp failed"; last}
-			$self->{timeout} = $self->{macro_delay};
+			$self->timeout($self->macro_delay);
 			$self->{mainline_delay} = $real_num;
 			$self->{subline_delay} = $i;
 			$self->{result} = $result;
@@ -817,17 +998,16 @@ sub newThen {
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 			if (defined $ptimes && $ptimes =~ /^\d+$/) {
 				if ($ptimes > 0) {
-					$self->{subcall} = new eventMacro::Runner($name, $ptimes, $self->{Name}, $self->{line}, $self->{interruptible})
+					$self->create_subcall($name, $ptimes, $self->{Name}, $self->{line});
 				}
-				else {$self->{subcall} = new eventMacro::Runner($name, 0, undef, undef, $self->{interruptible})}
+				else {$self->create_subcall($name, 0, undef, undef)}
 			}
 			else {$self->{error} = "$errtpl: $ptimes must be numeric"}
 		}
-		else {$self->{subcall} = new eventMacro::Runner($tmp, 1, undef, undef, $self->{interruptible})}
+		else {$self->create_subcall($tmp, 1, undef, undef)}
 		unless (defined $self->{subcall}) {$self->{error} = "$errtpl: failed to call script"}
 		else {
-			$self->{subcall}->regSubmacro;
-			$self->{timeout} = $self->{macro_delay}
+			$self->timeout($self->macro_delay)
 		}
 	}
 	elsif ($then eq "stop") {$self->{finished} = 1}

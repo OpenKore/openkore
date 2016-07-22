@@ -25,30 +25,53 @@ our ($rev) = q$Revision: 6812 $ =~ /(\d+)/;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
-	return 1 if $eventMacro->{Macro_Runner}->overrideAI;
+	return 1 if $eventMacro->{Macro_Runner}->last_subcall_overrideAI;
 
 	# now check for orphaned script object
 	# may happen when messing around with "ai clear" and stuff.
 	if (defined $eventMacro->{Macro_Runner} && !AI::inQueue('eventMacro')) {
-		my $method = $eventMacro->{Macro_Runner}->orphan;
-
-		# 'terminate' undefs the macro object and returns "ai is not idle"
+		my $method = $eventMacro->{Macro_Runner}->last_subcall_orphan;
+		message "[eventMacro] Orphaned macro script running, orphan method is '".$method."'.\n";
+		# 'terminate' undefs the whole macro tree and returns "ai is not idle"
 		if ($method eq 'terminate') {
 			$eventMacro->clear_queue();
 			return 0
+		# 'terminate_last_call' undefs only the specific macro call that got orphaned, keeping the rest of the macro call tree.
+		} elsif ($method eq 'terminate_last_call') {
+			my $macro = $eventMacro->{Macro_Runner};
+			if (defined $macro->{subcall}) {
+				while (defined $macro->{subcall}) {
+					#cheap way of stopping on the second to last subcall
+					last if (!defined $macro->{subcall}->{subcall});
+					$macro = $macro->{subcall};
+				}
+				$macro->clear_subcall;
+			} else {
+				#since there was no subcall we delete all macro tree
+				$eventMacro->clear_queue();
+			}
+			return 0;
 		# 'reregister' re-inserts "eventMacro" in ai_queue at the first position
 		} elsif ($method eq 'reregister') {
-			$eventMacro->{Macro_Runner}->register;
+			my $macro = $eventMacro->{Macro_Runner};
+			while (defined $macro->{subcall}) {
+				$macro = $macro->{subcall};
+			}
+			$macro->register;
 			return 1
 		# 'reregister_safe' waits until AI is idle then re-inserts "eventMacro"
 		} elsif ($method eq 'reregister_safe') {
 			if (AI::isIdle || AI::is('deal')) {
-				$eventMacro->{Macro_Runner}->register;
+				my $macro = $eventMacro->{Macro_Runner};
+				while (defined $macro->{subcall}) {
+					$macro = $macro->{subcall};
+				}
+				$macro->register;
 				return 1
 			}
 			return 0
 		} else {
-			error "[eventMacro] Unknown 'orphan' method. terminating macro\n", "macro";
+			error "[eventMacro] Unknown orphan method '".$method."'. terminating whole macro tree\n", "macro";
 			$eventMacro->clear_queue();
 			return 0
 		}
