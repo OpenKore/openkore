@@ -182,8 +182,8 @@ sub create_automacro_list {
 				next AUTOMACRO;
 			
 			###Parameter: orphan
-			} elsif ($parameter->{'key'} eq "orphan" && $parameter->{'value'} !~ /(terminate|reregister|reregister_safe)/) {
-				error "[eventMacro] Ignoring automacro '$name' (orphan parameter should be 'terminate', 'reregister' or 'reregister_safe')\n";
+			} elsif ($parameter->{'key'} eq "orphan" && $parameter->{'value'} !~ /(terminate|terminate_last_call|reregister|reregister_safe)/) {
+				error "[eventMacro] Ignoring automacro '$name' (orphan parameter should be 'terminate', 'terminate_last_call', 'reregister' or 'reregister_safe')\n";
 				next AUTOMACRO;
 			} else {
 				$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
@@ -448,14 +448,20 @@ sub call_macro {
 	$automacro->set_timeout_time(time);
 	$automacro->disable() if $automacro->get_parameter('run-once');
 	
-	$self->{Macro_Runner} = new eventMacro::Runner($automacro->get_parameter('call'));
+	$self->{Macro_Runner} = new eventMacro::Runner(
+		$automacro->get_parameter('call'),
+		0,
+		undef,
+		undef,
+		$automacro->get_parameter('exclusive') ? 0 : 1,
+		$automacro->get_parameter('overrideAI'),
+		$automacro->get_parameter('orphan'),
+		$automacro->get_parameter('delay'),
+		$automacro->get_parameter('macro_delay'),
+		0
+	);
 	
 	if (defined $self->{Macro_Runner}) {
-		$self->{Macro_Runner}->overrideAI($automacro->get_parameter('overrideAI'));
-		$self->{Macro_Runner}->interruptible($automacro->get_parameter('exclusive') ? 0 : 1);#inversed
-		$self->{Macro_Runner}->orphan($automacro->get_parameter('orphan'));
-		$self->{Macro_Runner}->timeout($automacro->get_parameter('delay'));
-		$self->{Macro_Runner}->setMacro_delay($automacro->get_parameter('macro_delay'));
 		$self->set_var('.caller', $automacro->get_name());
 		
 		my $iterate_macro_sub = sub { $self->iterate_macro(); };
