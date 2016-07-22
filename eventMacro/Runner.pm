@@ -36,7 +36,6 @@ sub new {
 	$self->{Name} = $name;
 	$self->{Paused} = 0;
 	$self->{registered} = 0;
-	$self->{submacro} = 0;
 	$self->{mainline_delay} = undef;
 	$self->{subline_delay} = undef;
 	$self->{result} = undef;
@@ -47,6 +46,18 @@ sub new {
 	$self->{subcall} = undef;
 	$self->{error} = undef;
 	$self->{macro_block} = 0;
+	
+	$self->{last_subcall_overrideAI} = undef;
+	$self->{last_subcall_interruptible} = undef;
+	$self->{last_subcall_orphan} = undef;
+	
+	debug "[eventMacro] Macro object '".$self->{Name}."' created.\n", "eventMacro", 2;
+	
+	if ($is_submacro) {
+		$self->{submacro} = 1;
+	} else {
+		$self->{submacro} = 0;
+	}
 	
 	if (defined $repeat && $repeat =~ /^\d+$/) {
 		$self->repeat($repeat);
@@ -74,7 +85,7 @@ sub new {
 		$self->overrideAI(0);
 	}
 	
-	if (defined $orphan && $orphan =~ /^(?:terminate|reregister(?:_safe)?)$/) {
+	if (defined $orphan && $orphan =~ /^(?:terminate(?:_last_call)?|reregister(?:_safe)?)$/) {
 		$self->orphan($orphan);
 	} else {
 		$self->orphan($config{eventMacro_orphans});
@@ -91,10 +102,26 @@ sub new {
 	} else {
 		$self->macro_delay($timeout{eventMacro_delay}{timeout});
 	}
-	
-	$self->regSubmacro() if ($is_submacro);
 
 	return $self
+}
+
+sub last_subcall_overrideAI {
+	my ($self, $overrideAI) = @_;
+	if (defined $overrideAI) {$self->{last_subcall_overrideAI} = $overrideAI}
+	return $self->{last_subcall_overrideAI};
+}
+	
+sub last_subcall_interruptible {
+	my ($self, $interruptible) = @_;
+	if (defined $interruptible) {$self->{last_subcall_interruptible} = $interruptible}
+	return $self->{last_subcall_interruptible};
+}
+	
+sub last_subcall_orphan {
+	my ($self, $orphan) = @_;
+	if (defined $orphan) {$self->{last_subcall_orphan} = $orphan}
+	return $self->{last_subcall_orphan};
 }
 
 # sets or get interruptible flag
@@ -103,23 +130,51 @@ sub interruptible {
 	
 	if (defined $interruptible) {
 		
-		#if the value is not defined we must assume it's the value in which AI is not changed so we can change it further down
-		$self->{interruptible} = 1 if (!defined $self->{interruptible});
-		
-		#Turn macro into exclusive
-		if ($self->{interruptible} == 1 && $interruptible == 0 && $eventMacro->get_automacro_checking_status() == CHECKING_AUTOMACROS) {
-			debug "[eventMacro] Macro '".$self->{Name}."' is now exclusive. Automacro checking will be paused until it ends.\n", "eventMacro", 2;
-			$eventMacro->set_automacro_checking_status(PAUSED_BY_EXCLUSIVE_MACRO);
-		
-		#Turn macro into not exclusive
-		} elsif ($self->{interruptible} == 0 && $interruptible == 1 && $eventMacro->get_automacro_checking_status() == PAUSED_BY_EXCLUSIVE_MACRO) {
-			debug "[eventMacro] Macro '".$self->{Name}."' stopped being exclusive. Automacros will return to being checked.\n", "eventMacro", 2;
-			$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
+		if (defined $self->{interruptible} && $self->{interruptible} == $interruptible) {
+			debug "[eventMacro] Macro '".$self->{Name}."' interruptible state is already '".$interruptible."'.\n", "eventMacro", 2;
+		} else {
+			debug "[eventMacro] Now macro '".$self->{Name}."' interruptible state is '".$interruptible."'.\n", "eventMacro", 2;
+			$self->{interruptible} = $interruptible;
 		}
 		
-		$self->{interruptible} = $interruptible;
+		if (!defined $self->{subcall}) {
+			debug "[eventMacro] Since this macro is the last in the macro tree we will validate automacro checking to interruptible.\n", "eventMacro", 2;
+			$self->validate_automacro_checking_to_interruptible($interruptible);
+		}
+		
 	}
 	return $self->{interruptible};
+}
+
+sub validate_automacro_checking_to_interruptible {
+	my ($self, $interruptible) = @_;
+	
+	my $checking_status = $eventMacro->get_automacro_checking_status();
+	
+	if (!$self->{submacro}) {
+		$self->last_subcall_interruptible($interruptible);
+	} else {
+		$eventMacro->{Macro_Runner}->last_subcall_interruptible($interruptible);
+	}
+	
+	if (($checking_status == CHECKING_AUTOMACROS && $interruptible == 1) || ($checking_status == PAUSED_BY_EXCLUSIVE_MACRO && $interruptible == 0)) {
+		debug "[eventMacro] No need to change automacro checking status because it already is compatible with this macro.\n", "eventMacro", 2;
+		return;
+	}
+	
+	if ($checking_status != CHECKING_AUTOMACROS && $checking_status != PAUSED_BY_EXCLUSIVE_MACRO) {
+		debug "[eventMacro] Macro '".$self->{Name}."' cannot change automacro checking state because the user forced it into another state.\n", "eventMacro", 2;
+		return;
+	}
+	
+	if ($interruptible == 0) {
+		debug "[eventMacro] Macro '".$self->{Name}."' is now stopping automacro checking..\n", "eventMacro", 2;
+		$eventMacro->set_automacro_checking_status(PAUSED_BY_EXCLUSIVE_MACRO);
+	
+	} elsif ($interruptible == 1) {
+		debug "[eventMacro] Macro '".$self->{Name}."' is now starting automacro checking..\n", "eventMacro", 2;
+		$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
+	}
 }
 
 # sets or gets override AI value
@@ -128,38 +183,50 @@ sub overrideAI {
 	
 	if (defined $overrideAI) {
 		
-		#if the value is not defined we must assume it's the value in which AI is not registered so we can change it further down
-		$self->{overrideAI} = 1 if (!defined $self->{overrideAI});
-		
-		#Makes macro register itself to AI
-		if ($overrideAI == 0) {
-			if (!AI::inQueue('eventMacro')) {
-				debug "[eventMacro] Macro '".$self->{Name}."' is now registered to AI queue.\n", "eventMacro", 2;
-				$self->register;
-			} else {
-				debug "[eventMacro] Macro '".$self->{Name}."' cannot be registered to AI queue because it is alredy registered.\n", "eventMacro", 2;
-			}
-		
-		#Makes macro override AI and clear itself from it
-		} elsif ($overrideAI == 1) {
-			if (AI::inQueue('eventMacro')) {
-				debug "[eventMacro] Macro '".$self->{Name}."' is now not registered anymore to AI queue.\n", "eventMacro", 2;
-				$self->unregister;
-			} else {
-				debug "[eventMacro] Macro '".$self->{Name}."' cannot be deleted from AI queue because it is not registered.\n", "eventMacro", 2;
-			}
+		if (defined $self->{overrideAI} && $self->{overrideAI} == $overrideAI) {
+			debug "[eventMacro] Macro '".$self->{Name}."' overrideAI state is already '".$overrideAI."'.\n", "eventMacro", 2;
+		} else {
+			debug "[eventMacro] Now macro '".$self->{Name}."' overrideAI state is '".$overrideAI."'.\n", "eventMacro", 2;
+			$self->{overrideAI} = $overrideAI;
 		}
 		
-		debug "[eventMacro] Macro '".$self->{Name}."' overrideAI is already '".$overrideAI."'.\n", "eventMacro", 2 if ($self->{overrideAI} == $overrideAI);
+		if (!defined $self->{subcall}) {
+			debug "[eventMacro] Since this macro is the last in the macro tree we will validate AI queue to overrideAI.\n", "eventMacro", 2;
+			$self->validate_AI_queue_to_overrideAI($overrideAI);
+		}
 		
-		$self->{overrideAI} = $overrideAI;
 	}
 	return $self->{overrideAI};
+}
+
+sub validate_AI_queue_to_overrideAI {
+	my ($self, $overrideAI) = @_;
+	
+	my $is_in_AI_queue = AI::inQueue('eventMacro');
+	
+	if (!$self->{submacro}) {
+		$self->last_subcall_overrideAI($overrideAI);
+	} else {
+		$eventMacro->{Macro_Runner}->last_subcall_overrideAI($overrideAI);
+	}
+	
+	if (($is_in_AI_queue && $overrideAI == 0) || (!$is_in_AI_queue && $overrideAI == 1)) {
+		debug "[eventMacro] No need to add/clear AI_queue because it already is compatible with this macro.\n", "eventMacro", 2;
+		return;
+	}
+	
+	if ($overrideAI == 0) {
+		$self->register;
+		
+	} elsif ($overrideAI == 1) {
+		$self->unregister;
+	}
 }
 
 # registers to AI queue
 sub register {
 	my ($self) = @_;
+	debug "[eventMacro] Macro '".$self->{Name}."' is now registering itself to AI queue.\n", "eventMacro", 2;
 	AI::queue('eventMacro');
 	$self->{registered} = 1;
 }
@@ -167,6 +234,7 @@ sub register {
 # unregisters from AI queue
 sub unregister {
 	my ($self) = @_;
+	debug "[eventMacro] Macro '".$self->{Name}."' is now deleting itself from AI queue.\n", "eventMacro", 2;
 	AI::clear('eventMacro');
 	$self->{registered} = 0;
 }
@@ -174,7 +242,24 @@ sub unregister {
 # sets or gets method for orphaned macros
 sub orphan {
 	my ($self, $orphan) = @_;
-	if (defined $orphan) {$self->{orphan} = $orphan}
+	
+	if (defined $orphan) {
+		
+		if (defined $self->{orphan} && $self->{orphan} eq $orphan) {
+			debug "[eventMacro] Macro '".$self->{Name}."' orphan method is already '".$orphan."'.\n", "eventMacro", 2;
+		} else {
+			debug "[eventMacro] Now macro '".$self->{Name}."' orphan method is '".$orphan."'.\n", "eventMacro", 2;
+			$self->{orphan} = $orphan;
+		}
+		
+		if (!defined $self->{subcall}) {
+			if (!$self->{submacro}) {
+				$self->last_subcall_orphan($orphan);
+			} else {
+				$eventMacro->{Macro_Runner}->last_subcall_orphan($orphan);
+			}
+		}
+	}
 	return $self->{orphan};
 }
 
@@ -230,15 +315,35 @@ sub get_name {
 	return $self->{Name};
 }
 
+sub clear_subcall {
+	my ($self) = @_;
+	debug "[eventMacro] Clearing submacro '".$self->{subcall}->{Name}."' from macro '".$self->{Name}."'.\n", "eventMacro", 2;
+	$self->validate_automacro_checking_to_interruptible($self->interruptible);
+	$self->validate_AI_queue_to_overrideAI($self->overrideAI);
+	#since we do not need a validate_orphan function we do it here
+	if ($self->{subcall}->orphan ne $self->orphan) {
+		debug "[eventMacro] Returning orphan method from '".$self->{subcall}->orphan."' to '".$self->orphan."'.\n", "eventMacro", 2;
+		if (!$self->{submacro}) {
+			$self->last_subcall_orphan($self->orphan);
+		} else {
+			$eventMacro->{Macro_Runner}->last_subcall_orphan($self->orphan);
+		}
+	} else {
+		debug "[eventMacro] No need to change orphan method because it already is compatible with this macro.\n", "eventMacro", 2;
+	}
+	undef $self->{subcall};
+}
+
+sub create_subcall {
+	my ($self, $name, $repeat, $lastname, $lastline) = @_;
+	debug "[eventMacro] Creating submacro '".$name."' on macro '".$self->{Name}."'.\n", "eventMacro", 2;
+	$self->{subcall} = new eventMacro::Runner($name, $repeat, $lastname, $lastline, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
+}
+
 # destructor
 sub DESTROY {
 	my ($self) = @_;
 	$self->unregister if (AI::inQueue('eventMacro') && !$self->{submacro});
-}
-
-# declares current macro to be a submacro
-sub regSubmacro {
-	$_[0]->{submacro} = 1
 }
 
 # sets or gets macro block flag
@@ -313,11 +418,7 @@ sub next {
 			$self->{time} = $tmptime->{time};
 			if ($self->{subcall}->finished) {
 				if ($self->{subcall}->repeat == 0) {$self->{finished} = 1}
-				if ($self->{subcall}->interruptible != $self->interruptible) {
-					debug "[eventMacro] Submacro '".$self->{subcall}->{Name}."' had a different exclusive value than it's father, returning to father exclusive state.\n", "eventMacro", 2;
-					$self->{subcall}->interruptible($self->interruptible);
-				}
-				undef $self->{subcall};
+				$self->clear_subcall;
 				# $self->{line}++
 			}
 			return $command
@@ -674,7 +775,7 @@ sub next {
 			if (defined $times && $times =~ /\d+/) { $calltimes = $times; }; # do we have a valid repeat value?
 		}
 		
-		$self->{subcall} = new eventMacro::Runner($name, $calltimes, undef, undef, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
+		$self->create_subcall($name, $calltimes, undef, undef);
 		
 		unless (defined $self->{subcall}) {
 			$self->{error} = "$errtpl: failed to call script";
@@ -785,7 +886,7 @@ sub run_sublines {
 			elsif ($var eq 'repeat' && $val =~ /^\d+$/) {$self->repeat($val)}
 			elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {$self->overrideAI($val)}
 			elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {$self->interruptible($val)?0:1}
-			elsif ($var eq 'orphan' && $val =~ /^(?:terminate|reregister(?:_safe)?)$/) {$self->orphan($val)}
+			elsif ($var eq 'orphan' && $val =~ /^(?:terminate(?:_last_call)?|reregister(?:_safe)?)$/) {$self->orphan($val)}
 			else {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: unrecognized key or wrong value in ($e)"; last}
 				
 		# lock command
@@ -897,13 +998,13 @@ sub newThen {
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 			if (defined $ptimes && $ptimes =~ /^\d+$/) {
 				if ($ptimes > 0) {
-					$self->{subcall} = new eventMacro::Runner($name, $ptimes, $self->{Name}, $self->{line}, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
+					$self->create_subcall($name, $ptimes, $self->{Name}, $self->{line});
 				}
-				else {$self->{subcall} = new eventMacro::Runner($name, 0, undef, undef, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1)}
+				else {$self->create_subcall($name, 0, undef, undef)}
 			}
 			else {$self->{error} = "$errtpl: $ptimes must be numeric"}
 		}
-		else {$self->{subcall} = new eventMacro::Runner($tmp, 1, undef, undef, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1)}
+		else {$self->create_subcall($tmp, 1, undef, undef)}
 		unless (defined $self->{subcall}) {$self->{error} = "$errtpl: failed to call script"}
 		else {
 			$self->timeout($self->macro_delay)

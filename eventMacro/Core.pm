@@ -182,8 +182,8 @@ sub create_automacro_list {
 				next AUTOMACRO;
 			
 			###Parameter: orphan
-			} elsif ($parameter->{'key'} eq "orphan" && $parameter->{'value'} !~ /(terminate|reregister|reregister_safe)/) {
-				error "[eventMacro] Ignoring automacro '$name' (orphan parameter should be 'terminate', 'reregister' or 'reregister_safe')\n";
+			} elsif ($parameter->{'key'} eq "orphan" && $parameter->{'value'} !~ /(terminate|terminate_last_call|reregister|reregister_safe)/) {
+				error "[eventMacro] Ignoring automacro '$name' (orphan parameter should be 'terminate', 'terminate_last_call', 'reregister' or 'reregister_safe')\n";
 				next AUTOMACRO;
 			} else {
 				$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
