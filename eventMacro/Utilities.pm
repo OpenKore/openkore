@@ -71,7 +71,7 @@ sub ai_isIdle {
 			}
 			return 0
 		} else {
-			error "[eventMacro] Unknown orphan method '".$method."'. terminating whole macro tree\n", "macro";
+			error "[eventMacro] Unknown orphan method '".$method."'. terminating whole macro tree\n", "eventMacro";
 			$eventMacro->clear_queue();
 			return 0
 		}
@@ -88,7 +88,7 @@ sub cmpr {
 	my ($a, $cond, $b) = @_;
 	unless (defined $a && defined $cond && defined $b) {
 		# this produces a warning but that's what we want
-		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n", "macro";
+		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n", "eventMacro";
 		return 0
 	}
 
@@ -100,7 +100,7 @@ sub cmpr {
 				return between($a1, $b, $a2)
 			}
 		}
-		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n--> ($b) <-- maybe should be numeric?\n", "macro";
+		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n--> ($b) <-- maybe should be numeric?\n", "eventMacro";
 		return 0
 	}
 
@@ -112,7 +112,7 @@ sub cmpr {
 				return between($b1, $a, $b2)
 			}
 		}
-		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n--> ($a) <-- maybe should be numeric?\n", "macro";
+		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n--> ($a) <-- maybe should be numeric?\n", "eventMacro";
 		return 0
 	}
 
@@ -158,7 +158,7 @@ sub match {
 
 	unless (defined $text && defined $kw) {
 		# this produces a warning but that's what we want
-		error "match: wrong # of arguments ($text) ($kw)\n", "macro";
+		error "match: wrong # of arguments ($text) ($kw)\n", "eventMacro";
 		return 0
 	}
 
@@ -441,7 +441,7 @@ sub getRandom {
 	}
 	pop @items;
 	unless (@items) {
-		warning "[macro] wrong syntax in \@random\n", "macro";
+		warning "[eventMacro] wrong syntax in \@random\n", "eventMacro";
 		return
 	}
 	return $items[rand $id-1]
@@ -453,13 +453,13 @@ sub getArgFromList {
 	my ($listID, $list) = split(/, \s*/, $_[0]);
 	my @items = split(/,\s*/, $list);
 	unless (@items) {
-		warning "[macro] wrong syntax in \@listItem\n", "macro";
+		warning "[eventMacro] wrong syntax in \@listItem\n", "eventMacro";
 		return -1
 	}
 	if ($items[$listID]) {
 	return $items[$listID]
 		} else {
-		warning "[macro] the $listID number item does not exist in the list\n", "macro";
+		warning "[eventMacro] the $listID number item does not exist in the list\n", "eventMacro";
 		return -1
 	}
 }
@@ -490,12 +490,13 @@ sub getRandomRange {
 
 sub processCmd {
 	my $command = $_[0];
+	my $macro_name = $eventMacro->{Macro_Runner}->last_subcall_name;
 	if (defined $_[0]) {
 		if ($_[0] ne '') {
 			unless (Commands::run($command)) {
-				my $errorMsg = sprintf("[macro] %s failed with %s\n", $eventMacro->{Macro_Runner}->name, $command);
+				my $errorMsg = sprintf("[eventMacro] %s failed with %s\n", $macro_name, $command);
 				
-				error $errorMsg, "macro";
+				error $errorMsg, "eventMacro";
 				$eventMacro->clear_queue();
 				return;
 			}
@@ -505,15 +506,14 @@ sub processCmd {
 			$eventMacro->clear_queue();
 		}
 	} else {
-		my $name = (defined $eventMacro->{Macro_Runner}->{subcall}) ? $eventMacro->{Macro_Runner}->{subcall}->name : $eventMacro->{Macro_Runner}->name;
 		my $error = $eventMacro->{Macro_Runner}->error;
 		my $errorMsg = sprintf(
-			"[macro] %s error: %s\n",
-			$name =~ /^tempMacro\d+$/ && $eventMacro->is_var_defined('.caller') ? $eventMacro->get_var('.caller').'.call' : $name,
+			"[eventMacro] %s error: %s\n",
+			$macro_name,
 			$error
 		);
 		
-		error $errorMsg, "macro";
+		error $errorMsg, "eventMacro";
 		$eventMacro->clear_queue();
 		return;
 	}

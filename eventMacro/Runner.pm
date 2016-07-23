@@ -952,31 +952,32 @@ sub next {
 
 
 sub run_sublines {
-	my ($self, $real_line) = @_;
-	my ($i, $real_num, @sub_line) = (0, $self->{line_number}, undef);
-	my @split = split(/\s*;\s*/, $real_line);
-	my ($dvar, $var, $val, $list);
+	my ($self, $original_line) = @_;
+	my $line_index = $self->line_number;
+	my $subline_index = 0;
+	my @sublines = split(/\s*;\s*/, $original_line);
+	my ($var, $val);
 	
-	foreach my $e (@split) {
-		next if $e eq "";
-		if (defined $self->{subline_delay} && $i < $self->{subline_delay}) {
-			$i++;
+	foreach my $subline (@sublines) {
+		next if $subline eq "";
+		if (defined $self->{subline_delay} && $subline_index < $self->{subline_delay}) {
+			$subline_index++;
 			next;
 		}
-		if (defined $self->{subline_delay} && $i == $self->{subline_delay}) {
+		if (defined $self->{subline_delay} && $subline_index == $self->{subline_delay}) {
 			$self->timeout(0);
 			($self->{mainline_delay}, $self->{subline_delay}, $self->{result}) = undef;
-			$i++;
+			$subline_index++;
 			next;
 		}
 		
 
 		# set variable: $variable = value
-		if ($e =~ /^\$[a-z]/i) {
-			if (($var, $val) = $e =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
+		if ($subline =~ /^\$[a-z]/i) {
+			if (($var, $val) = $subline =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
 				my $pval = $self->parseCmd($val);
 				if (defined $self->error) {
-					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: ".$self->error);
+					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: ".$self->error);
 					last;
 				}
 				if (defined $pval) {
@@ -986,10 +987,10 @@ sub run_sublines {
 						$eventMacro->set_var($var,$pval)
 					}
 				} else {
-					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: $e failed");
+					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: $subline failed");
 					last;
 				}
-			} elsif (($var, $val) = $e =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
+			} elsif (($var, $val) = $subline =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
 				if ($val eq '++') {
 					if ($eventMacro->is_var_defined($var)) {
 						$eventMacro->set_var($var, ($eventMacro->get_var($var)+1));
@@ -1004,18 +1005,18 @@ sub run_sublines {
 					}
 				}
 			} else {
-				$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: unrecognized assignment in ($e)");
+				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: unrecognized assignment in ($subline)");
 				last;
 			}
-			$i++;
+			$subline_index++;
 			next;
 		# stop command
-		} elsif ($e eq "stop") {
+		} elsif ($subline eq "stop") {
 			$self->{finished} = 1;
 			last;
 		
 		# set command
-		} elsif (($var, $val) = $e =~ /^set\s+(\w+)\s+(.*)$/) {
+		} elsif (($var, $val) = $subline =~ /^set\s+(\w+)\s+(.*)$/) {
 			if ($var eq 'macro_delay' && $val =~ /^[\d\.]*\d+$/) {
 				$self->macro_delay($val);
 			} elsif ($var eq 'repeat' && $val =~ /^\d+$/) {
@@ -1027,20 +1028,20 @@ sub run_sublines {
 			} elsif ($var eq 'orphan' && $val =~ /^(?:terminate(?:_last_call)?|reregister(?:_safe)?)$/) {
 				$self->orphan($val);
 			} else {
-				$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: unrecognized key or wrong value in ($e)");
+				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: unrecognized key or wrong value in ($subline)");
 				last;
 			}
 				
 		# lock command
-		} elsif ($e =~ /^lock\s+/) {
-			my ($tmp) = $e =~ /^lock\s+(.*)/;
+		} elsif ($subline =~ /^lock\s+/) {
+			my ($tmp) = $subline =~ /^lock\s+(.*)/;
 			my $automacro = $eventMacro->{Automacro_List}->getByName($self->parseCmd($tmp));
 			if (!$automacro) {
 				if (defined $self->error) {
-					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: ".$self->error);
+					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: ".$self->error);
 					last;
 				}
-				$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: locking $tmp failed in ($e)");
+				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: locking $tmp failed in ($subline)");
 				last;
 			} else {
 				$automacro->disable();
@@ -1048,31 +1049,31 @@ sub run_sublines {
 			
 				
 		# release command
-		} elsif ($e =~ /^release\s+/) {
-			my ($tmp) = $e =~ /^release\s+(.*)/;
+		} elsif ($subline =~ /^release\s+/) {
+			my ($tmp) = $subline =~ /^release\s+(.*)/;
 			my $automacro = $eventMacro->{Automacro_List}->getByName($self->parseCmd($tmp));
 			if (!$automacro) {
 				if (defined $self->error) {
-					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: ".$self->error);
+					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: ".$self->error);
 					last;
 				}
-				$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: releasing $tmp failed in ($e)");
+				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: releasing $tmp failed in ($subline)");
 				last;
 			} else {
 				$automacro->enable();
 			}
 		
 		# pause command
-		} elsif ($e =~ /^pause/) {
-			my ($tmp) = $e =~ /^pause\s*(.*)/;
+		} elsif ($subline =~ /^pause/) {
+			my ($tmp) = $subline =~ /^pause\s*(.*)/;
 			if (defined $tmp) {
 				my $result = $self->parseCmd($tmp);
 				if (defined $self->error) {
-					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: ".$self->error);
+					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: ".$self->error);
 					last;
 				}
 				unless (defined $result) {
-					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: $tmp failed in ($e)");
+					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: $tmp failed in ($subline)");
 					last;
 				} else {
 					$self->timeout($result);
@@ -1080,81 +1081,81 @@ sub run_sublines {
 			} else {
 				$self->timeout($self->macro_delay);
 			}
-			$self->{mainline_delay} = $real_num;
-			$self->{subline_delay} = $i;
+			$self->{mainline_delay} = $line_index;
+			$self->{subline_delay} = $subline_index;
 			last;
 		
 		# log command
-		} elsif ($e =~ /^log\s+/) {
-			my ($tmp) = $e =~ /^log\s+(.*)/;
+		} elsif ($subline =~ /^log\s+/) {
+			my ($tmp) = $subline =~ /^log\s+(.*)/;
 			my $result = $self->parseCmd($tmp);
 			if (defined $self->error) {
-				$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i:".$self->error);
+				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index:".$self->error);
 				last;
 			}
 			unless (defined $result) {
-				$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: $tmp failed in ($e)");
+				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: $tmp failed in ($subline)");
 				last;
 			} else {
 				message "[eventMacro log] $result\n", "eventMacro"
 			}
 			$self->timeout($self->macro_delay);
-			$self->{mainline_delay} = $real_num;
-			$self->{subline_delay} = $i;
+			$self->{mainline_delay} = $line_index;
+			$self->{subline_delay} = $subline_index;
 			last
 		}
 		
 		# do command
-		elsif ($e =~ /^do\s/) {
-			my ($tmp) = $e =~ /^do\s+(.*)/;
+		elsif ($subline =~ /^do\s/) {
+			my ($tmp) = $subline =~ /^do\s+(.*)/;
 			if ($tmp =~ /^macro\s+/) {
 				my ($arg) = $tmp =~ /^macro\s+(.*)/;
 				if ($arg =~ /^reset/) {
-					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: use 'release' instead of 'macro reset'")
+					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: use 'release' instead of 'macro reset'")
 				} elsif ($arg eq 'pause' || $arg eq 'resume') {
-					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: do not use 'macro pause' or 'macro resume' within a macro")
+					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: do not use 'macro pause' or 'macro resume' within a macro")
 				} elsif ($arg =~ /^set\s/) {
-					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: do not use 'macro set'. Use \$foo = bar")
+					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: do not use 'macro set'. Use \$foo = bar")
 				} elsif ($arg eq 'stop') {
-					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: use 'stop' instead")
+					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: use 'stop' instead")
 				} elsif ($arg !~ /^(?:list|status)$/) {
-					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: use 'call $arg' instead of 'macro $arg'")
+					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: use 'call $arg' instead of 'macro $arg'")
 				}
 			} elsif ($tmp =~ /^eval\s+/) {
-				$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: do not mix eval in the sub-line")
+				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: do not mix eval in the sub-line")
 			} elsif ($tmp =~ /^ai\s+clear$/) {
-				$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: do not mess around with ai in macros")
+				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: do not mess around with ai in macros")
 			}
 			my $result = $self->parseCmd($tmp);
 			if (defined $self->error) {
-				$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: ".$self->error);
+				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: ".$self->error);
 				last;
 			}
 			unless (defined $result) {
-				$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: command $tmp failed");
+				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: command $tmp failed");
 				last;
 			}
 			$self->timeout($self->macro_delay);
-			$self->{mainline_delay} = $real_num;
-			$self->{subline_delay} = $i;
+			$self->{mainline_delay} = $line_index;
+			$self->{subline_delay} = $subline_index;
 			$self->{result} = $result;
 			last
 							
 		# "call", "[", "]", ":", "if", "while", "end" and "goto" commands block
-		} elsif ($e =~ /^(?:call|\[|\]|:|if|end|goto|while)\s*/i) {
-			$self->error("Line $real_num sub-line $i\n[Reason:] Use saperate line for HERE --> $e <-- HERE");
+		} elsif ($subline =~ /^(?:call|\[|\]|:|if|end|goto|while)\s*/i) {
+			$self->error("Line $line_index sub-line $subline_index\n[Reason:] Use saperate line for HERE --> $subline <-- HERE");
 			last
 		# sub-routine
-		} elsif (my ($sub) = $e =~ /^(\w+)\s*\(.*?\)$/) {
-			$self->parseCmd($e);
-			$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: ".$self->error) if defined $self->error;
+		} elsif (my ($sub) = $subline =~ /^(\w+)\s*\(.*?\)$/) {
+			$self->parseCmd($subline);
+			$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: ".$self->error) if defined $self->error;
 			last;
 		
 		##################### End ##################
 		} else {
-			message "Error in $self->{line_number}: $real_line\nWarning: Ignoring Unknown Command in sub-line $i: ($e)\n", "menu";
+			message "Error in $self->{line_number}: $original_line\nWarning: Ignoring Unknown Command in sub-line $subline_index: ($subline)\n", "menu";
 		}
-		$i++
+		$subline_index++
 	}
 }
 

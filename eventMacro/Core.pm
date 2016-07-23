@@ -268,7 +268,7 @@ sub create_automacro_list {
 sub load_condition_module {
 	my ($self, $condition_module) = @_;
 	undef $@;
-	debug "[Macro] Loading module $condition_module\n", "eventMacro", 2;
+	debug "[eventMacro] Loading module '".$condition_module."'\n", "eventMacro", 2;
 	eval "use $condition_module";
 	if ($@ =~ /^Can't locate /s) {
 		FileNotFoundException->throw("Cannot locate automacro module ".$condition_module.".");
