@@ -101,9 +101,8 @@ sub set_automacro_checking_status {
 				$self->{AI_pre_Hook_Handle} = Plugins::addHook( 'AI_pre', sub { $self->AI_pre_checker(); }, undef );
 			}
 		}
+		$self->{Automacros_Checking_Status} = $status;
 	}
-	
-	$self->{Automacros_Checking_Status} = $status;
 }
 
 sub get_automacro_checking_status {
