@@ -110,25 +110,33 @@ sub new {
 
 sub last_subcall_overrideAI {
 	my ($self, $overrideAI) = @_;
-	if (defined $overrideAI) {$self->{last_subcall_overrideAI} = $overrideAI}
+	if (defined $overrideAI) {
+		$self->{last_subcall_overrideAI} = $overrideAI;
+	}
 	return $self->{last_subcall_overrideAI};
 }
 	
 sub last_subcall_interruptible {
 	my ($self, $interruptible) = @_;
-	if (defined $interruptible) {$self->{last_subcall_interruptible} = $interruptible}
+	if (defined $interruptible) {
+		$self->{last_subcall_interruptible} = $interruptible;
+	}
 	return $self->{last_subcall_interruptible};
 }
 	
 sub last_subcall_orphan {
 	my ($self, $orphan) = @_;
-	if (defined $orphan) {$self->{last_subcall_orphan} = $orphan}
+	if (defined $orphan) {
+		$self->{last_subcall_orphan} = $orphan;
+		}
 	return $self->{last_subcall_orphan};
 }
 
 sub last_subcall_name {
 	my ($self, $name) = @_;
-	if (defined $name) {$self->{last_subcall_name} = $name}
+	if (defined $name) {
+		$self->{last_subcall_name} = $name;
+	}
 	return $self->{last_subcall_name};
 }
 
@@ -274,14 +282,18 @@ sub orphan {
 # sets or gets timeout for next command
 sub timeout {
 	my ($self, $timeout) = @_;
-	if (defined $timeout) {$self->{timeout} = $timeout}
+	if (defined $timeout) {
+		$self->{timeout} = $timeout;
+	}
 	return { time => $self->{time}, timeout => $self->{timeout} };
 }
 
 # sets macro_delay timeout for this macro
 sub macro_delay {
 	my ($self, $macro_delay) = @_;
-	if (defined $macro_delay) {$self->{macro_delay} = $macro_delay}
+	if (defined $macro_delay) {
+		$self->{macro_delay} = $macro_delay;
+	}
 	return $self->{macro_delay};
 }
 
@@ -293,7 +305,9 @@ sub registered {
 
 sub repeat {
 	my ($self, $repeat) = @_;
-	if (defined $repeat) {$self->{repeat} = $repeat}
+	if (defined $repeat) {
+		$self->{repeat} = $repeat;
+	}
 	return $self->{repeat};
 }
 
@@ -382,7 +396,9 @@ sub finished {
 # returns and/or set the current line number
 sub line_number {
 	my ($self, $line_number) = @_;
-	if (defined $line_number) {$self->{line_number} = $line_number}
+	if (defined $line_number) {
+		$self->{line_number} = $line_number;
+	}
 	return $self->{line_number};
 }
 
@@ -404,7 +420,9 @@ sub error {
 
 sub error_message {
 	my ($self, $error) = @_;
-	if (defined $error) {$self->{error_message} = "[eventMacro] Error in line '".$self->line_number."': '".$error."'.\n"}
+	if (defined $error) {
+		$self->{error_message} = "[eventMacro] Error in line '".$self->line_number."': '".$error."'.\n";
+	}
 	return $self->{error_message};
 }
 
@@ -447,7 +465,9 @@ sub next {
 			$self->timeout($subcall_timeout->{timeout});
 			$self->{time} = $subcall_timeout->{time};
 			if ($self->{subcall}->finished) {
-				if ($self->{subcall}->repeat == 0) {$self->{finished} = 1}
+				if ($self->{subcall}->repeat == 0) {
+					$self->{finished} = 1;
+				}
 				$self->clear_subcall;
 			}
 			return $subcall_return;
@@ -596,7 +616,7 @@ sub next {
 			}
 		}
 
-		$self->timeout(0)
+		$self->timeout(0);
 
 	##########################################
 	# switch statement:
@@ -642,13 +662,13 @@ sub next {
 		}
 		
 		$self->next_line;
-		$self->timeout(0)
+		$self->timeout(0);
 	
 	##########################################
 	# end block of "if" or "switch"
 	} elsif ($current_line eq '}') {
 		$self->next_line;
-		$self->timeout(0)
+		$self->timeout(0);
 
 	##########################################
 	# while statement: while (foo <= bar) as label
@@ -661,7 +681,7 @@ sub next {
 			$self->line_number($self->{label}->{"end ".$label});
 		}
 		$self->next_line;
-		$self->timeout(0)
+		$self->timeout(0);
 	##########################################
 	# set variable: $variable = value
 	} elsif ($current_line =~ /^\$[a-z]/i) {
@@ -699,9 +719,9 @@ sub next {
 			} else {
 				$self->error("unrecognized assignment");
 			}
-		$self->next_line;
-		$self->timeout(0) unless defined $self->{mainline_delay} && defined $self->{subline_delay};
-		return $self->{result} if $self->{result}
+			$self->next_line;
+			$self->timeout(0) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
+			return $self->{result} if ($self->{result});
 		}
 	##########################################
 	# label definition: :label
@@ -766,17 +786,16 @@ sub next {
 			}
 		}
 		$self->next_line;
-		$self->timeout($self->macro_delay) unless defined $self->{mainline_delay} && defined $self->{subline_delay};
-		return $self->{result} if $self->{result}
+		$self->timeout($self->macro_delay) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
+		return $self->{result} if ($self->{result});
 	##########################################
 	# pause command
 	} elsif ($current_line =~ /^pause/) {
 		if ($current_line =~ /;/) {
 			$self->run_sublines($current_line);
 			return if (defined $self->error);
-			$self->timeout($self->macro_delay) unless defined $self->{mainline_delay} && defined $self->{subline_delay}
-		}
-		else {
+			$self->timeout($self->macro_delay) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
+		} else {
 			my ($tmp) = $current_line =~ /^pause\s*(.*)/;
 			if (defined $tmp) {
 				my $result = $self->parseCmd($tmp);
@@ -791,11 +810,13 @@ sub next {
 			}
 		}
 		$self->next_line;
-		return $self->{result} if $self->{result}
+		return $self->{result} if ($self->{result});
+		
 	##########################################
 	# stop command
 	} elsif ($current_line eq "stop") {
-		$self->{finished} = 1
+		$self->{finished} = 1;
+		
 	##########################################
 	# release command
 	} elsif ($current_line =~ /^release\s+/) {
@@ -813,8 +834,9 @@ sub next {
 			}
 		}
 		$self->next_line;
-		$self->timeout(0) unless defined $self->{mainline_delay} && defined $self->{subline_delay};
-		return $self->{result} if $self->{result}
+		$self->timeout(0) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
+		return $self->{result} if ($self->{result});
+		
 	##########################################
 	# lock command
 	} elsif ($current_line =~ /^lock\s+/) {
@@ -832,8 +854,9 @@ sub next {
 			}
 		}
 		$self->next_line;
-		$self->timeout(0) unless defined $self->{mainline_delay} && defined $self->{subline_delay};
-		return $self->{result} if $self->{result}
+		$self->timeout(0) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
+		return $self->{result} if ($self->{result});
+		
 	##########################################
 	# call command
 	} elsif ($current_line =~ /^call\s+/) {
@@ -874,6 +897,7 @@ sub next {
 			$self->next_line; # point to the next line to be executed in the caller
 			$self->timeout($self->macro_delay);
 		}
+		
 	##########################################
 	# set command
 	} elsif ($current_line =~ /^set\s+/) {
@@ -897,8 +921,9 @@ sub next {
 			}
 		}
 		$self->next_line;
-		$self->timeout(0) unless defined $self->{mainline_delay} && defined $self->{subline_delay};
-		return $self->{result} if $self->{result}
+		$self->timeout(0) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
+		return $self->{result} if ($self->{result});
+		
 	##########################################
 	# sub-routine command, still figuring out how to include unclever/fail sub-routine into the error msg
 	} elsif ($current_line =~ /^(?:\w+)\s*\(.*?\)/) {
@@ -909,8 +934,9 @@ sub next {
 		}
 		return if (defined $self->error);
 		$self->next_line;
-		$self->timeout(0) unless defined $self->{mainline_delay} && defined $self->{subline_delay};
-		return $self->{result} if $self->{result}
+		$self->timeout(0) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
+		return $self->{result} if ($self->{result});
+		
 	##########################################
 	# unrecognized line
 	} else {
