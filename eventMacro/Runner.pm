@@ -7,15 +7,19 @@ require Exporter;
 our @ISA = qw(Exporter);
 
 use Time::HiRes qw( &time );
-use Utils;
 use Globals;
 use AI;
 use Log qw(message error warning debug);
+use Text::Balanced qw/extract_bracketed/;
+use Utils qw/existsInList/;
+use List::Util qw(max min sum);
 
 use eventMacro::Data;
 use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
-use eventMacro::Utilities qw(cmpr);
+use eventMacro::Utilities qw(cmpr refreshGlobal getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
+	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
+	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght);
 use eventMacro::Automacro;
 
 our ($rev) = q$Revision: 6782 $ =~ /(\d+)/;
