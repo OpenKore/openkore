@@ -495,20 +495,15 @@ sub processCmd {
 			unless (Commands::run($command)) {
 				my $errorMsg = sprintf("[macro] %s failed with %s\n", $eventMacro->{Macro_Runner}->name, $command);
 				
-				my $hookArgs = {
-					'message' => $errorMsg,
-					'name' => $eventMacro->{Macro_Runner}->name,
-					'error' => 'Commands::run failed',
-				};
-				return $hookArgs->{continue} if $hookArgs->{return};
-				
 				error $errorMsg, "macro";
 				$eventMacro->clear_queue();
-				return
+				return;
 			}
 		}
 		$eventMacro->{Macro_Runner}->ok;
-		if (defined $eventMacro->{Macro_Runner} && $eventMacro->{Macro_Runner}->finished) {$eventMacro->clear_queue()}
+		if (defined $eventMacro->{Macro_Runner} && $eventMacro->{Macro_Runner}->finished) {
+			$eventMacro->clear_queue();
+		}
 	} else {
 		my $name = (defined $eventMacro->{Macro_Runner}->{subcall}) ? $eventMacro->{Macro_Runner}->{subcall}->name : $eventMacro->{Macro_Runner}->name;
 		my $error = $eventMacro->{Macro_Runner}->error;
@@ -518,16 +513,9 @@ sub processCmd {
 			$error
 		);
 		
-		my $hookArgs = {
-			'message' => $errorMsg,
-			'name' => $name,
-			'error' => $error,
-		};
-		return $hookArgs->{continue} if $hookArgs->{return};
-		
 		error $errorMsg, "macro";
 		$eventMacro->clear_queue();
-		return
+		return;
 	}
 	
 	return 1;

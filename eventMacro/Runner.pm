@@ -387,7 +387,7 @@ sub line_number {
 }
 
 sub next_line {
-	my ($self);
+	my ($self) = @_;
 	$self->{line_number}++;
 }
 
@@ -510,7 +510,7 @@ sub next {
 	if ($current_line =~ /^goto\s/) {
 		my ($tmp) = $current_line =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)/;
 		if (exists $self->{label}->{$tmp}) {
-			$self->{line_number} = $self->{label}->{$tmp}
+			$self->line_number($self->{label}->{$tmp});
 		} else {
 			$self->error("cannot find label $tmp");
 			return;
@@ -658,7 +658,7 @@ sub next {
 		return if (defined $self->error);
 		my $savetxt = $self->particle($text);
 		if (!$self->multi($savetxt)) {
-			$self->{line_number} = $self->{label}->{"end ".$label};
+			$self->line_number($self->{label}->{"end ".$label});
 		}
 		$self->next_line;
 		$self->timeout(0)
@@ -714,10 +714,14 @@ sub next {
 		if ($current_line =~ /;/ && $current_line =~ /^do eval/ eq "") {
 			$self->run_sublines($current_line);
 			return if (defined $self->error);
-			unless (defined $self->{mainline_delay} && defined $self->{subline_delay}) {$self->timeout($self->macro_delay); $self->next_line}
-			if ($self->{result}) {return $self->{result}}
-		}
-		else {
+			unless (defined $self->{mainline_delay} && defined $self->{subline_delay}) {
+				$self->timeout($self->macro_delay);
+				$self->next_line;
+			}
+			if ($self->{result}) {
+				return $self->{result};
+			}
+		} else {
 			my ($tmp) = $current_line =~ /^do\s+(.*)/;
 			if ($tmp =~ /^macro\s+/) {
 				my ($arg) = $tmp =~ /^macro\s+(.*)/;
@@ -743,7 +747,7 @@ sub next {
 			}
 			$self->timeout($self->macro_delay);
 			$self->next_line;
-			return $result
+			return $result;
 		}
 	##########################################
 	# log command
@@ -922,7 +926,7 @@ sub next {
 
 
 sub run_sublines {
-	my ($real_line, $self) = @_;
+	my ($self, $real_line) = @_;
 	my ($i, $real_num, @sub_line) = (0, $self->{line_number}, undef);
 	my @split = split(/\s*;\s*/, $real_line);
 	my ($dvar, $var, $val, $list);
