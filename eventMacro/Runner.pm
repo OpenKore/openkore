@@ -55,8 +55,10 @@ sub new {
 	
 	if ($is_submacro) {
 		$self->{submacro} = 1;
+		$eventMacro->{Macro_Runner}->last_subcall_name($self->get_name);
 	} else {
 		$self->{submacro} = 0;
+		$self->last_subcall_name($self->get_name);
 	}
 	
 	if (defined $repeat && $repeat =~ /^\d+$/) {
@@ -122,6 +124,12 @@ sub last_subcall_orphan {
 	my ($self, $orphan) = @_;
 	if (defined $orphan) {$self->{last_subcall_orphan} = $orphan}
 	return $self->{last_subcall_orphan};
+}
+
+sub last_subcall_name {
+	my ($self, $name) = @_;
+	if (defined $name) {$self->{last_subcall_name} = $name}
+	return $self->{last_subcall_name};
 }
 
 # sets or get interruptible flag
@@ -330,6 +338,11 @@ sub clear_subcall {
 		}
 	} else {
 		debug "[eventMacro] No need to change orphan method because it already is compatible with this macro.\n", "eventMacro", 2;
+	}
+	if ($self->{submacro}) {
+		$eventMacro->{Macro_Runner}->last_subcall_name($self->get_name);
+	} else {
+		$self->last_subcall_name($self->get_name);
 	}
 	undef $self->{subcall};
 }

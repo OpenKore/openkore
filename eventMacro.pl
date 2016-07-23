@@ -147,7 +147,7 @@ sub commandHandler {
 			if ($status == CHECKING_AUTOMACROS) {
 				message "Automacros are being checked normally.\n";
 			} elsif ($status == PAUSED_BY_EXCLUSIVE_MACRO) {
-				message "Automacros are not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->get_name()."').\n";
+				message "Automacros are not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->last_subcall_name."').\n";
 			} elsif ($status == PAUSE_FORCED_BY_USER) {
 				message "Automacros checking is stopped because the user forced it.\n";
 			} else {
@@ -159,9 +159,9 @@ sub commandHandler {
 		my $macro = $eventMacro->{Macro_Runner};
 		if ( $macro ) {
 			if ($macro->is_paused()) {
-				message "Macro '".$eventMacro->{Macro_Runner}->get_name()."' is already paused.\n";
+				message "Macro '".$eventMacro->{Macro_Runner}->last_subcall_name."' is already paused.\n";
 			} else {
-				message "Pausing macro '".$eventMacro->{Macro_Runner}->get_name()."'.\n";
+				message "Pausing macro '".$eventMacro->{Macro_Runner}->last_subcall_name."'.\n";
 				$eventMacro->{Macro_Runner}->pause();
 			}
 		} else {
@@ -172,10 +172,10 @@ sub commandHandler {
 		my $macro = $eventMacro->{Macro_Runner};
 		if ( $macro ) {
 			if ($macro->is_paused()) {
-				message "Unpausing macro '".$eventMacro->{Macro_Runner}->get_name()."'.\n";
+				message "Unpausing macro '".$eventMacro->{Macro_Runner}->last_subcall_name."'.\n";
 				$eventMacro->{Macro_Runner}->unpause();
 			} else {
-				message "Macro '".$eventMacro->{Macro_Runner}->get_name()."' is not paused.\n";
+				message "Macro '".$eventMacro->{Macro_Runner}->last_subcall_name."' is not paused.\n";
 			}
 		} else {
 			message "There's no macro currently running.\n";
@@ -184,7 +184,7 @@ sub commandHandler {
 	} elsif ($arg eq 'stop') {
 		my $macro = $eventMacro->{Macro_Runner};
 		if ( $macro ) {
-			message "Stopping macro '".$eventMacro->{Macro_Runner}->get_name()."'.\n";
+			message "Stopping macro '".$eventMacro->{Macro_Runner}->last_subcall_name."'.\n";
 			$eventMacro->clear_queue();
 		} else {
 			message "There's no macro currently running.\n";
@@ -225,7 +225,7 @@ sub commandHandler {
 				message "[eventMacro] Automacros checking forcely stopped.\n";
 				$eventMacro->set_automacro_checking_status(PAUSE_FORCED_BY_USER);
 			} elsif ($status == PAUSED_BY_EXCLUSIVE_MACRO) {
-				message "[eventMacro] Automacros were not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->get_name()."').".
+				message "[eventMacro] Automacros were not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->last_subcall_name."').".
 				        "Now they will be forcely stopped even after macro ends (caution).\n";
 				$eventMacro->set_automacro_checking_status(PAUSE_FORCED_BY_USER);
 			} elsif ($status == PAUSE_FORCED_BY_USER) {
@@ -239,7 +239,7 @@ sub commandHandler {
 				message "[eventMacro] Automacros are already being checked, now it will be forcely kept this way.\n";
 				$eventMacro->set_automacro_checking_status(CHECKING_FORCED_BY_USER);
 			} elsif ($status == PAUSED_BY_EXCLUSIVE_MACRO) {
-				message "[eventMacro] Automacros were not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->get_name()."').".
+				message "[eventMacro] Automacros were not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}->last_subcall_name."').".
 				        "Now automacros checking will be forcely activated (caution).\n";
 				$eventMacro->set_automacro_checking_status(CHECKING_FORCED_BY_USER);
 			} elsif ($status == PAUSE_FORCED_BY_USER) {
@@ -259,7 +259,7 @@ sub commandHandler {
 					message "[eventMacro] Since there's a macro in execution, and it is interruptible, automacros will resume to being normally checked.\n";
 					$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
 				} elsif ($eventMacro->{Macro_Runner}->last_subcall_interruptible == 0) {
-					message "[eventMacro] Since there's a macro in execution ('".$eventMacro->{Macro_Runner}->get_name."') , and it is not interruptible, automacros won't resume to being checked until it ends.\n";
+					message "[eventMacro] Since there's a macro in execution ('".$eventMacro->{Macro_Runner}->last_subcall_name."') , and it is not interruptible, automacros won't resume to being checked until it ends.\n";
 					$eventMacro->set_automacro_checking_status(PAUSED_BY_EXCLUSIVE_MACRO);
 				}
 			}

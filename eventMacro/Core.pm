@@ -520,7 +520,7 @@ sub clear_queue {
 	my ($self) = @_;
 	debug "[eventMacro] Clearing queue\n", "eventMacro", 2;
 	if ( defined $self->{Macro_Runner} && $self->get_automacro_checking_status() == PAUSED_BY_EXCLUSIVE_MACRO ) {
-		debug "[eventMacro] Uninterruptible macro '".$eventMacro->{Macro_Runner}->get_name()."' ended. Automacros will return to being checked.\n", "eventMacro", 2;
+		debug "[eventMacro] Uninterruptible macro '".$eventMacro->{Macro_Runner}->last_subcall_name."' ended. Automacros will return to being checked.\n", "eventMacro", 2;
 		$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
 	}
 	$self->{Macro_Runner} = undef;

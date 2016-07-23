@@ -31,7 +31,7 @@ sub ai_isIdle {
 	# may happen when messing around with "ai clear" and stuff.
 	if (defined $eventMacro->{Macro_Runner} && !AI::inQueue('eventMacro')) {
 		my $method = $eventMacro->{Macro_Runner}->last_subcall_orphan;
-		message "[eventMacro] Orphaned macro script running, orphan method is '".$method."'.\n";
+		message "[eventMacro] Running macro '".$eventMacro->{Macro_Runner}->last_subcall_name."' got orphaned, its orphan method is '".$method."'.\n";
 		# 'terminate' undefs the whole macro tree and returns "ai is not idle"
 		if ($method eq 'terminate') {
 			$eventMacro->clear_queue();
