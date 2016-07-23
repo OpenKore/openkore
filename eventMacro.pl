@@ -19,7 +19,7 @@ use eventMacro::Lists;
 use eventMacro::Automacro;
 use eventMacro::FileParser;
 use eventMacro::Macro;
-use eventMacro::Runner qw( %macro );
+use eventMacro::Runner;
 
 
 Plugins::register('eventMacro', 'allows usage of eventMacros', \&Unload);
@@ -135,7 +135,7 @@ sub commandHandler {
 					push @flags, sprintf( 'delay=%.1fs (%s)', $t - time, scalar localtime( $t ) ) if $t > time;
 					push @flags, 'ai_overridden' if $m->overrideAI;
 					push @flags, 'finished'      if $m->finished;
-					message( sprintf( "%s (line %d) : %s\n", $m->name, $m->line, $macro{ $m->name }->[ $m->line - 1 ] ) );
+					message( sprintf( "%s (line %d) : %s\n", $m->name, $m->line_number, $m->line_script($m->line_number) ) );
 					message( sprintf( "  %s\n", "@flags" ) ) if @flags;
 				}
 			} else {

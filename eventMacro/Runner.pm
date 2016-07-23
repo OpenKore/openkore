@@ -38,8 +38,7 @@ sub new {
 	$self->{finished} = 0;
 	$self->{lines_array} = $eventMacro->{Macro_List}->getByName($name)->get_lines();
 	$self->{line_number} = 0;
-	$self->{line_script} = undef;
-	$self->{label} = {scanLabels($macro{$name})};
+	$self->{label} = {scanLabels($self->{lines_array})};
 	$self->{subcall} = undef;
 	$self->{error} = undef;
 	$self->{macro_block} = 0;
@@ -379,7 +378,7 @@ sub finished {
 # returns and/or set the current line number
 sub line_number {
 	my ($self, $line_number) = @_;
-	if (defined $line) {$self->{line_number} = $line_number}
+	if (defined $line_number) {$self->{line_number} = $line_number}
 	return $self->{line_number};
 }
 
@@ -390,8 +389,7 @@ sub next_line {
 
 sub line_script {
 	my ($self, $line_number) = @_;
-	if (defined $line_number) {$self->{line_script} = @{$self->{lines_array}}[$line_number]}
-	return $self->{line_script};
+	return @{$self->{lines_array}}[$line_number];
 }
 
 sub error {
@@ -466,19 +464,23 @@ sub next {
 	#TODO discover wtf does this do
 	if (!defined $current_line) {
 		if (defined $self->{lastname} && defined $self->{lastline}) {
-			if ($self->repeat > 1) {$self->restart}
-			else {
+			if ($self->repeat > 1) {
+				$self->restart;
+			} else {
 				$self->line_number($self->{lastline} + 1);
 				$self->{Name} = $self->{lastname};
+				$self->{lines_array} = $eventMacro->{Macro_List}->getByName($self->{Name})->get_lines();
 				($self->{lastline}, $self->{lastname}) = undef;
-				$self->{finished} = 1
+				$self->{finished} = 1;
 			}
-			$current_line = ${$macro{$self->{Name}}}[$self->{line_number}]
-		}
-		else {
-			if ($self->repeat > 1) {$self->restart}
-			else {$self->{finished} = 1}
-			return ""
+			$current_line = $self->line_script($self->line_number);
+		} else {
+			if ($self->repeat > 1) {
+				$self->restart;
+			} else {
+				$self->{finished} = 1;
+			}
+			return "";
 		}
 	}
 	
@@ -553,7 +555,7 @@ sub next {
 			my $countBlockIf = 1;
 			while ($countBlockIf) {
 				$self->next_line;
-				my $searchEnd = ${$macro{$self->{Name}}}[$self->{line_number}];
+				my $searchEnd = $self->line_script($self->line_number);
 				
 				if ($searchEnd =~ /^if.*{$/) {
 					$countBlockIf++;
@@ -581,7 +583,7 @@ sub next {
 		my $countCommandBlock = 1;
 		while ($countCommandBlock) {
 			$self->next_line;
-			my $searchEnd = ${$macro{$self->{Name}}}[$self->{line_number}];
+			my $searchEnd = $self->line_script($self->line_number);
 			
 			if (isNewCommandBlock($searchEnd)) {
 				$countCommandBlock++;
@@ -600,7 +602,7 @@ sub next {
 		my $countBlocks = 1;
 		while ($countBlocks) {
 			$self->next_line;
-			my $searchNextCase = ${$macro{$self->{Name}}}[$self->{line_number}];
+			my $searchNextCase = $self->line_script($self->line_number);
 			
 			if ($searchNextCase =~ /^else/) {
 				my ($then) = $searchNextCase =~ /^else\s*(.*)/;
@@ -624,7 +626,7 @@ sub next {
 				my $countCommandBlock = 1;
 				while ($countCommandBlock) {
 					$self->next_line;
-					my $searchEnd = ${$macro{$self->{Name}}}[$self->{line_number}];
+					my $searchEnd = $self->line_script($self->line_number);
 					
 					if (isNewCommandBlock($searchEnd)) {
 						$countCommandBlock++;
@@ -940,7 +942,7 @@ sub run_sublines {
 			if (($var, $val) = $e =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
 				my $pval = $self->parseCmd($val);
 				if (defined $self->error) {
-					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: ".$self->error.);
+					$self->error("Error in line $real_num: $real_line\n[macro] $self->{Name} error in sub-line $i: ".$self->error);
 					last;
 				}
 				if (defined $pval) {
