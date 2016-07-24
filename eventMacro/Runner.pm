@@ -836,43 +836,11 @@ sub next {
 	##########################################
 	# call command
 	} elsif ($current_line =~ /^call\s+/) {
-		my ($tmp) = $current_line =~ /^call\s+(.*)/;
-		my $name = $tmp;
-		my $args;
-		my $cparms;
-		
-		my $calltimes = 1;
-		
-		if ($tmp =~ /\s/) {
-			($name, $args) = $tmp =~ /^(\S+?)\s+(.+)/;
-			my ($times);
-			if ($args =~ /(\d+)\s+(--.*)/) {
-				($times, $cparms) = $args =~ /(\d+)?\s+?(--.*)?/;
-				$times = $self->parse_command($args);
-				$cparms = $self->parse_command($args);
-			} elsif ($args =~ /^\d+/) {
-				$times = $self->parse_command($args);
-			}  elsif ($args =~ /^--.*/) {
-				$cparms = $self->parse_command($args);
-			}
-
-			return if (defined $self->error);
-			if (defined $times && $times =~ /\d+/) { $calltimes = $times; }; # do we have a valid repeat value?
-		}
-		
-		$self->create_subcall($name, $calltimes);
-		
-		unless (defined $self->{subcall}) {
-			$self->error("failed to call script");
-		} else {
-			my @new_params = substr($cparms, 2) =~ /"[^"]+"|\S+/g;
-			foreach my $p (1..@new_params) {
-				$eventMacro->set_var(".param".$p,$new_params[$p-1]);
-				$eventMacro->set_var(".param".$p,substr($eventMacro->get_var(".param".$p), 1, -1)) if ($eventMacro->get_var(".param".$p) =~ /^".*"$/);
-			}
-			$self->next_line; # point to the next line to be executed in the caller
-			$self->timeout($self->macro_delay);
-		}
+		my ($call_command) = $current_line =~ /^call\s+(.*)/;
+		$self->parse_call($call_command);
+		return if (defined $self->error);
+		$self->next_line;
+		$self->timeout($self->macro_delay);
 		
 	##########################################
 	# set command
@@ -1160,47 +1128,61 @@ sub newThen {
 		}
 		
 	} elsif ($then =~ /^call\s+/) {
-		my ($macro_name) = $then =~ /^call\s+(.*)/;
-		my $repeat_times;
-		
-		if ($macro_name =~ /\s/) {
-			($macro_name, $repeat_times) = $macro_name =~ /(.*?)\s+(.*)/;
-			my $parsed_repeat_times = $self->parse_command($repeat_times);
-			return if (defined $self->error);
-			if (!defined $parsed_repeat_times) {
-				$self->error("repeat value could not be defined");
-			} elsif ($parsed_repeat_times !~ /^\d+$/) {
-				$self->error("repeat value '$parsed_repeat_times' must be numeric");
-			} elsif ($parsed_repeat_times <= 0) {
-				$self->error("repeat value '$parsed_repeat_times' must be bigger than 0");
-			}
-			return if (defined $self->error);
-			$repeat_times = $parsed_repeat_times;
-		} else {
-			$repeat_times = 1;
-		}
-		
-		my $parsed_macro_name = $self->parse_command($macro_name);
-		return if (defined $self->error);
-		
-		if (!defined $parsed_macro_name) {
-			$self->error("macro name could not be defined");
-		} elsif (!defined $eventMacro->{Macro_List}->getByName($parsed_macro_name)) {
-			$self->error("could not find macro with name '$parsed_macro_name'");
-		}
-		return if (defined $self->error);
-		
-		$self->create_subcall($parsed_macro_name, $repeat_times);
-		
-		unless (defined $self->{subcall}) {
-			$self->error("failed to call script");
-		} else {
-			$self->timeout($self->macro_delay);
-		}
+		my ($call_command) = $then =~ /^call\s+(.*)/;
+		$self->parse_call($call_command);
 		
 	} elsif ($then eq "stop") {
 		$self->{finished} = 1;
 	}
+}
+
+sub parse_call {
+	my ($self, $call_command) = @_;
+	
+	my $repeat_times;
+	my $macro_name;
+	
+	if ($call_command =~ /\s/) {
+		($macro_name, $repeat_times) = $call_command =~ /(.*?)\s+(.*)/;
+		my $parsed_repeat_times = $self->parse_command($repeat_times);
+		return if (defined $self->error);
+		if (!defined $parsed_repeat_times) {
+			$self->error("repeat value could not be defined");
+		} elsif ($parsed_repeat_times !~ /^\d+$/) {
+			$self->error("repeat value '$parsed_repeat_times' must be numeric");
+		} elsif ($parsed_repeat_times <= 0) {
+			$self->error("repeat value '$parsed_repeat_times' must be bigger than 0");
+		}
+		return if (defined $self->error);
+		$repeat_times = $parsed_repeat_times;
+	} else {
+		$macro_name = $call_command;
+		$repeat_times = 1;
+	}
+		
+	my $parsed_macro_name = $self->parse_command($macro_name);
+	return if (defined $self->error);
+		
+	if (!defined $parsed_macro_name) {
+		$self->error("macro name could not be defined");
+	} elsif (!defined $eventMacro->{Macro_List}->getByName($parsed_macro_name)) {
+		$self->error("could not find macro with name '$parsed_macro_name'");
+	}
+	return if (defined $self->error);
+		
+	$self->create_subcall($parsed_macro_name, $repeat_times);
+		
+	unless (defined $self->{subcall}) {
+		$self->error("failed to create subcall '$parsed_macro_name'");
+	} else {
+		$self->timeout($self->macro_delay);
+	}
+	
+	#my @new_params = substr($cparms, 2) =~ /"[^"]+"|\S+/g;
+	#foreach my $p (1..@new_params) {
+	#	$eventMacro->set_var(".param".$p,$new_params[$p-1]);
+	#	$eventMacro->set_var(".param".$p,substr($eventMacro->get_var(".param".$p), 1, -1)) if ($eventMacro->get_var(".param".$p) =~ /^".*"$/);
+	#}
 }
 
 
