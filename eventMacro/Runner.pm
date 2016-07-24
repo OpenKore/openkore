@@ -1382,28 +1382,8 @@ sub bracket {
 	return 0
 }
 
-sub parseKw {
-	my @full = $_[0] =~ /@($macroKeywords)s*((s*(.*?)s*).*)$/i;
-	my @pair = ($full[0]);
-	my ($bracketed) = extract_bracketed ($full[1], '()');
-	return unless $bracketed;
-	push @pair, substr ($bracketed, 1, -1);
-
-	return unless @pair;
-	if ($pair[0] eq 'arg') {
-		return $_[0] =~ /\@(arg)\s*\(\s*(".*?",\s*(\d+|\$[a-zA-Z][a-zA-Z\d]*))\s*\)/
-	} elsif ($pair[0] eq 'random') {
-		return $_[0] =~ /\@(random)\s*\(\s*(".*?")\s*\)/
-	}
-	while ($pair[1] =~ /\@($macroKeywords)\s*\(/) {
-		@pair = parseKw ($pair[1])
-	}
-	return @pair
-}
-
 # parses all macro perl sub-routine found in the macro script
 sub parseSub {
-	#Taken from sub parseKw :D
 	my @full = $_[0] =~ /(?:^|\s+)(\w+)s*((s*(.*?)s*).*)$/i;
 	my @pair = ($full[0]);
 	my ($bracketed) = extract_bracketed ($full[1], '()');
@@ -1427,70 +1407,144 @@ sub subvars {
 	
 	# variables
 	$pre =~ s/(?:^|(?<=[^\\]))\$(\.?[a-z][a-z\d]*)/$eventMacro->is_var_defined($1) ? $eventMacro->get_var($1) : ''/gei;
-	
-	# doublevars
-	$pre =~ s/\$\{(.*?)\}/$eventMacro->is_var_defined("#$1") ? $eventMacro->get_var("#$1") : ''/gei;
 
 	return $pre
+}
+
+sub parseKw {
+	my @full = $_[0] =~ /@($macroKeywords)s*((s*(.*?)s*).*)$/i;
+	my @pair = ($full[0]);
+	my ($bracketed) = extract_bracketed ($full[1], '()');
+	return unless $bracketed;
+	push @pair, substr ($bracketed, 1, -1);
+
+	return unless @pair;
+	if ($pair[0] eq 'arg') {
+		return $_[0] =~ /\@(arg)\s*\(\s*(".*?",\s*(\d+|\$[a-zA-Z][a-zA-Z\d]*))\s*\)/
+	} elsif ($pair[0] eq 'random') {
+		return $_[0] =~ /\@(random)\s*\(\s*(".*?")\s*\)/
+	}
+	while ($pair[1] =~ /\@($macroKeywords)\s*\(/) {
+		@pair = parseKw ($pair[1])
+	}
+	return @pair
 }
 
 # command line parser for macro
 # returns undef if something went wrong, else the parsed command or "".
 sub parseCmd {
-	my ($self, $cmd) = @_;
-	return "" unless defined $cmd;
-	my ($kw, $arg, $targ, $ret, $sub, $val);
+	my ($self, $command) = @_;
+	return "" unless defined $command;
+	my ($keyword, $inside_brackets, $parsed, $result, $sub, $val);
 
 	# refresh global vars only once per command line
 	refreshGlobal();
 	
-	while (($kw, $targ) = parseKw($cmd)) {
-		$ret = "_%_";
-		# first parse _then_ substitute. slower but more safe
-		$arg = subvars($targ) unless $kw eq 'nick';
+	while (($keyword, $inside_brackets) = parseKw($command)) {
+		$result = "_%_";
+		# first parse _then_ substitute. slower but safer
+		$parsed = subvars($inside_brackets) unless $keyword eq 'nick';
 		my $randomized = 0;
 
-		if ($kw eq 'npc')           {$ret = getnpcID($arg)}
-		elsif ($kw eq 'cart')       {($ret) = getItemIDs($arg, $::cart{'inventory'})}
-		elsif ($kw eq 'Cart')       {$ret = join ',', getItemIDs($arg, $::cart{'inventory'})}
-		elsif ($kw eq 'inventory')  {($ret) = getInventoryIDs($arg)}
-		elsif ($kw eq 'Inventory')  {$ret = join ',', getInventoryIDs($arg)}
-		elsif ($kw eq 'store')      {($ret) = getItemIDs($arg, \@::storeList)}
-		elsif ($kw eq 'storage')    {($ret) = getStorageIDs($arg)}
-		elsif ($kw eq 'Storage')    {$ret = join ',', getStorageIDs($arg)}
-		elsif ($kw eq 'player')     {$ret = getPlayerID($arg)}
-		elsif ($kw eq 'monster')    {$ret = getMonsterID($arg)}
-		elsif ($kw eq 'vender')     {$ret = getVenderID($arg)}
-		elsif ($kw eq 'venderitem') {($ret) = getItemIDs($arg, \@::venderItemList)}
-		elsif ($kw eq 'venderItem') {$ret = join ',', getItemIDs($arg, \@::venderItemList)}
-		elsif ($kw eq 'venderprice'){$ret = getItemPrice($arg, \@::venderItemList)}
-		elsif ($kw eq 'venderamount'){$ret = getVendAmount($arg, \@::venderItemList)}
-		elsif ($kw eq 'random')     {$ret = getRandom($arg); $randomized = 1}
-		elsif ($kw eq 'rand')       {$ret = getRandomRange($arg); $randomized = 1}
-		elsif ($kw eq 'invamount')  {$ret = getInventoryAmount($arg)}
-		elsif ($kw eq 'cartamount') {$ret = getCartAmount($arg)}
-		elsif ($kw eq 'shopamount') {$ret = getShopAmount($arg)}
-		elsif ($kw eq 'storamount') {$ret = getStorageAmount($arg)}
-		elsif ($kw eq 'config')     {$ret = getConfig($arg)}
-		elsif ($kw eq 'arg')        {$ret = getWord($arg)}
-		elsif ($kw eq 'eval')       {$ret = eval($arg) unless $Settings::lockdown}
-		elsif ($kw eq 'listitem')   {$ret = getArgFromList($arg)}
-		elsif ($kw eq 'listlength') {$ret = getListLenght($arg)}
-		elsif ($kw eq 'nick')       {$arg = subvars($targ, 1); $ret = q4rx2($arg)}
-		return unless defined $ret;
-		return $cmd if $ret eq '_%_';
-		$targ = q4rx $targ;
+		if ($keyword eq 'npc') {
+			$result = getnpcID($parsed);
+			
+		} elsif ($keyword eq 'cart') {
+			$result = getItemIDs($parsed, $::cart{'inventory'});
+			
+		} elsif ($keyword eq 'Cart') {
+			$result = join ',', getItemIDs($parsed, $::cart{'inventory'});
+			
+		} elsif ($keyword eq 'inventory') {
+			$result = getInventoryIDs($parsed);
+			
+		} elsif ($keyword eq 'Inventory') {
+			$result = join ',', getInventoryIDs($parsed);
+			
+		} elsif ($keyword eq 'store') {
+			$result = getItemIDs($parsed, \@::storeList);
+			
+		} elsif ($keyword eq 'storage') {
+			($result) = getStorageIDs($parsed);
+			
+		} elsif ($keyword eq 'Storage') {
+			$result = join ',', getStorageIDs($parsed);
+			
+		} elsif ($keyword eq 'player') {
+			$result = getPlayerID($parsed);
+			
+		} elsif ($keyword eq 'monster') {
+			$result = getMonsterID($parsed);
+			
+		} elsif ($keyword eq 'vender') {
+			$result = getVenderID($parsed);
+			
+		} elsif ($keyword eq 'venderitem') {
+			($result) = getItemIDs($parsed, \@::venderItemList);
+			
+		} elsif ($keyword eq 'venderItem') {
+			$result = join ',', getItemIDs($parsed, \@::venderItemList);
+			
+		} elsif ($keyword eq 'venderprice') {
+			$result = getItemPrice($parsed, \@::venderItemList);
+			
+		} elsif ($keyword eq 'venderamount') {
+			$result = getVendAmount($parsed, \@::venderItemList);
+			
+		} elsif ($keyword eq 'random') {
+			$result = getRandom($parsed); $randomized = 1;
+			
+		} elsif ($keyword eq 'rand') {
+			$result = getRandomRange($parsed); $randomized = 1;
+			
+		} elsif ($keyword eq 'invamount') {
+			$result = getInventoryAmount($parsed);
+			
+		} elsif ($keyword eq 'cartamount') {
+			$result = getCartAmount($parsed);
+			
+		} elsif ($keyword eq 'shopamount') {
+			$result = getShopAmount($parsed);
+			
+		} elsif ($keyword eq 'storamount') {
+			$result = getStorageAmount($parsed);
+			
+		} elsif ($keyword eq 'config') {
+			$result = getConfig($parsed);
+			
+		} elsif ($keyword eq 'arg') {
+			$result = getWord($parsed);
+			
+		} elsif ($keyword eq 'eval') {
+			$result = eval($parsed) unless $Settings::lockdown;
+			
+		} elsif ($keyword eq 'listitem') {
+			$result = getArgFromList($parsed);
+			
+		} elsif ($keyword eq 'listlength') {
+			$result = getListLenght($parsed);
+			
+		} elsif ($keyword eq 'nick') {
+			$parsed = subvars($inside_brackets, 1);
+			$result = q4rx2($parsed);
+		}
+		
+		return unless defined $result;
+		return $command if ($result eq '_%_');
+		
+		$inside_brackets = q4rx($inside_brackets);
+		
 		unless ($randomized) {
-			$cmd =~ s/\@$kw\s*\(\s*$targ\s*\)/$ret/g
+			$command =~ s/\@$keyword\s*\(\s*$inside_brackets\s*\)/$result/g
 		} else {
-			$cmd =~ s/\@$kw\s*\(\s*$targ\s*\)/$ret/
+			$command =~ s/\@$keyword\s*\(\s*$inside_brackets\s*\)/$result/
 		}
 	}
 	
 	unless ($Settings::lockdown) {
 		# any round bracket(pair) found after parseKw sub-routine were treated as macro perl sub-routine
-		undef $ret; undef $arg;
-		while (($sub, $val) = parseSub($cmd)) {
+		undef $result; undef $parsed;
+		while (($sub, $val) = parseSub($command)) {
 			my $sub_error = 1;
 			foreach my $e (@perl_name) {
 				if ($e eq $sub) {
@@ -1501,17 +1555,17 @@ sub parseCmd {
 				$self->error("Unrecognized --> $sub <-- Sub-Routine");
 				return "";
 			}
-			$arg = subvars($val);
-			my $sub1 = $sub."(".$arg.")";
-			$ret = eval($sub1);
-			return unless defined $ret;
+			$parsed = subvars($val);
+			my $sub1 = $sub."(".$parsed.")";
+			$result = eval($sub1);
+			return unless defined $result;
 			$val = q4rx $val;		
-			$cmd =~ s/$sub\s*\(\s*$val\s*\)/$ret/g
+			$command =~ s/$sub\s*\(\s*$val\s*\)/$result/g
 		}
 	}
 
-	$cmd = subvars($cmd);
-	return $cmd
+	$command = subvars($command);
+	return $command;
 }
 
 1;
