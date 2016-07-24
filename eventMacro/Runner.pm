@@ -442,28 +442,6 @@ sub scanLabels {
 sub next {
 	my $self = $_[0];
 	
-	#We must finish the sbucall before returning to this macro
-	if (defined $self->{subcall}) {
-		my $subcall_return = $self->{subcall}->next;
-		if (defined $subcall_return) {
-			my $subcall_timeout = $self->{subcall}->timeout;
-			$self->timeout($subcall_timeout->{timeout});
-			$self->{time} = $subcall_timeout->{time};
-			if ($self->{subcall}->finished) {
-				$self->clear_subcall;
-			}
-			return $subcall_return;
-		} else {
-			#if subcall->next returned undef an error was set
-			$self->error($self->{subcall}->error);
-			return;
-		}
-	}
-	
-	if (defined $self->{mainline_delay} && defined $self->{subline_delay}) {
-		$self->line_number($self->{mainline_delay});
-	}
-
 	#Checks if we reached the end of the script
 	if ( $self->{line_number} == scalar (@{$self->{lines_array}}) ) {
 		debug "[eventMacro] Macro '".$self->{Name}."' got to the end of its script.\n", "eventMacro", 2;
@@ -476,6 +454,13 @@ sub next {
 			debug "[eventMacro] Macro '".$self->{Name}."' finished.\n", "eventMacro", 2;
 			return "";
 		}
+	}
+	
+	#We must finish the subcall before returning to this macro
+	return $self->manage_subcall() if (defined $self->{subcall});
+	
+	if (defined $self->{mainline_delay} && defined $self->{subline_delay}) {
+		$self->line_number($self->{mainline_delay});
 	}
 	
 	#get next line script
@@ -896,6 +881,23 @@ sub next {
 	}
 }
 
+sub manage_subcall {
+	my ($self) = @_;
+	my $subcall_return = $self->{subcall}->next;
+	if (defined $subcall_return) {
+		my $subcall_timeout = $self->{subcall}->timeout;
+		$self->timeout($subcall_timeout->{timeout});
+		$self->{time} = $subcall_timeout->{time};
+		if ($self->{subcall}->finished) {
+			$self->clear_subcall;
+		}
+		return $subcall_return;
+	} else {
+		#if subcall->next returned undef an error was set
+		$self->error($self->{subcall}->error);
+		return;
+	}
+}
 
 sub run_sublines {
 	my ($self, $original_line) = @_;
