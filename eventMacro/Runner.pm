@@ -298,6 +298,7 @@ sub registered {
 sub repeat {
 	my ($self, $repeat) = @_;
 	if (defined $repeat) {
+		debug "[eventMacro] Now macro '".$self->{Name}."' will repeat itself '".$repeat."' times.\n", "eventMacro", 2;
 		$self->{repeat} = $repeat;
 	}
 	return $self->{repeat};
@@ -390,18 +391,7 @@ sub line_number {
 
 sub next_line {
 	my ($self) = @_;
-	
-	#Checks if we reached the end of the script
-	if ( ($self->{line_number} + 1) == scalar (@{$self->{lines_array}}) ) {
-		if ($self->{repeat} > 1) {
-			$self->{repeat}--;
-			$self->{line_number} = 0;
-		} else {
-			$self->{finished} = 1;
-		}
-	} else {
-		$self->{line_number}++;
-	}
+	$self->{line_number}++;
 }
 
 sub line_script {
@@ -452,8 +442,6 @@ sub scanLabels {
 sub next {
 	my $self = $_[0];
 	
-	return if ($self->{finished});
-	
 	#We must finish the sbucall before returning to this macro
 	if (defined $self->{subcall}) {
 		my $subcall_return = $self->{subcall}->next;
@@ -474,6 +462,20 @@ sub next {
 	
 	if (defined $self->{mainline_delay} && defined $self->{subline_delay}) {
 		$self->line_number($self->{mainline_delay});
+	}
+
+	#Checks if we reached the end of the script
+	if ( $self->{line_number} == scalar (@{$self->{lines_array}}) ) {
+		debug "[eventMacro] Macro '".$self->{Name}."' got to the end of its script.\n", "eventMacro", 2;
+		if ($self->{repeat} > 1) {
+			$self->{repeat}--;
+			$self->{line_number} = 0;
+			debug "[eventMacro] Repeating macro '".$self->{Name}."'. Remaining repeats: '".$self->{repeat}."'.\n", "eventMacro", 2;
+		} else {
+			$self->{finished} = 1;
+			debug "[eventMacro] Macro '".$self->{Name}."' finished.\n", "eventMacro", 2;
+			return "";
+		}
 	}
 	
 	#get next line script

@@ -112,6 +112,9 @@ sub set_parameters {
 	if (!defined $self->{Parameters}{'exclusive'})  {
 		$self->{Parameters}{'exclusive'} = 0;
 	}
+	if (!defined $self->{Parameters}{'repeat'})  {
+		$self->{Parameters}{'repeat'} = 1;
+	}
 	$self->{Parameters}{time} = 0;
 }
 

@@ -202,6 +202,10 @@ sub create_automacro_list {
 			} elsif ($parameter->{'key'} eq "orphan" && $parameter->{'value'} !~ /(terminate|terminate_last_call|reregister|reregister_safe)/) {
 				error "[eventMacro] Ignoring automacro '$name' (orphan parameter should be 'terminate', 'terminate_last_call', 'reregister' or 'reregister_safe')\n";
 				next AUTOMACRO;
+			###Parameter: repeat
+			} elsif ($parameter->{'key'} eq "repeat" && $parameter->{'value'} !~ /\d+/) {
+				error "[eventMacro] Ignoring automacro '$name' (repeat parameter should be a number)\n";
+				next AUTOMACRO;
 			} else {
 				$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
 			}
@@ -467,7 +471,7 @@ sub call_macro {
 	
 	$self->{Macro_Runner} = new eventMacro::Runner(
 		$automacro->get_parameter('call'),
-		1,
+		$automacro->get_parameter('repeat'),
 		$automacro->get_parameter('exclusive') ? 0 : 1,
 		$automacro->get_parameter('overrideAI'),
 		$automacro->get_parameter('orphan'),

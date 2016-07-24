@@ -27,6 +27,7 @@ our %parameters = (
 	'macro_delay' => 1,  # option: default macro delay
 	'priority' => 1,     # option: automacro priority
 	'exclusive' => 1,    # option: is macro interruptible
+	'repeat' => 1,       # option: the number of times the called macro will repeat itself
 );
 
 our $macroKeywords =
