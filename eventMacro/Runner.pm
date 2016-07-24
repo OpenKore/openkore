@@ -419,11 +419,9 @@ sub error {
 }
 
 sub error_message {
-	my ($self, $error) = @_;
-	if (defined $error) {
-		$self->{error_message} = "[eventMacro] Error in line '".$self->line_number."': '".$error."'.\n";
-	}
-	return $self->{error_message};
+	my ($self) = @_;
+	my $error_message = "[eventMacro] Error in line '".$self->line_number."': '".$self->error."'.\n";
+	return $error_message;
 }
 
 # re-sets the timer
@@ -977,7 +975,7 @@ sub run_sublines {
 			if (($var, $val) = $subline =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
 				my $pval = $self->parseCmd($val);
 				if (defined $self->error) {
-					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: ".$self->error);
+					$self->error($self->get_subline_error($subline, $subline_index, $self->error));
 					last;
 				}
 				if (defined $pval) {
@@ -987,7 +985,7 @@ sub run_sublines {
 						$eventMacro->set_var($var,$pval)
 					}
 				} else {
-					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: $subline failed");
+					$self->error($self->get_subline_error($subline, $subline_index, $self->error));
 					last;
 				}
 			} elsif (($var, $val) = $subline =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
@@ -1005,7 +1003,7 @@ sub run_sublines {
 					}
 				}
 			} else {
-				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: unrecognized assignment in ($subline)");
+				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
 				last;
 			}
 			$subline_index++;
@@ -1028,20 +1026,21 @@ sub run_sublines {
 			} elsif ($var eq 'orphan' && $val =~ /^(?:terminate(?:_last_call)?|reregister(?:_safe)?)$/) {
 				$self->orphan($val);
 			} else {
-				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: unrecognized key or wrong value in ($subline)");
+				$self->error($self->get_subline_error($subline, $subline_index, 'unrecognized key or wrong value'));
 				last;
 			}
 				
 		# lock command
 		} elsif ($subline =~ /^lock\s+/) {
-			my ($tmp) = $subline =~ /^lock\s+(.*)/;
-			my $automacro = $eventMacro->{Automacro_List}->getByName($self->parseCmd($tmp));
+			my ($automacro_name) = $subline =~ /^lock\s+(.*)/;
+			my $parsed_automacro_name = $self->parseCmd($automacro_name);
+			if (defined $self->error) {
+				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
+				last;
+			}
+			my $automacro = $eventMacro->{Automacro_List}->getByName($parsed_automacro_name);
 			if (!$automacro) {
-				if (defined $self->error) {
-					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: ".$self->error);
-					last;
-				}
-				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: locking $tmp failed in ($subline)");
+				$self->error($self->get_subline_error($subline, $subline_index, "locking '".$parsed_automacro_name."' failed"));
 				last;
 			} else {
 				$automacro->disable();
@@ -1050,33 +1049,34 @@ sub run_sublines {
 				
 		# release command
 		} elsif ($subline =~ /^release\s+/) {
-			my ($tmp) = $subline =~ /^release\s+(.*)/;
-			my $automacro = $eventMacro->{Automacro_List}->getByName($self->parseCmd($tmp));
+			my ($automacro_name) = $subline =~ /^release\s+(.*)/;
+			my $parsed_automacro_name = $self->parseCmd($automacro_name);
+			if (defined $self->error) {
+				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
+				last;
+			}
+			my $automacro = $eventMacro->{Automacro_List}->getByName($parsed_automacro_name);
 			if (!$automacro) {
-				if (defined $self->error) {
-					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: ".$self->error);
-					last;
-				}
-				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: releasing $tmp failed in ($subline)");
+				$self->error($self->get_subline_error($subline, $subline_index, "releasing '".$parsed_automacro_name."' failed"));
 				last;
 			} else {
-				$automacro->enable();
+				$automacro->disable();
 			}
 		
 		# pause command
 		} elsif ($subline =~ /^pause/) {
-			my ($tmp) = $subline =~ /^pause\s*(.*)/;
-			if (defined $tmp) {
-				my $result = $self->parseCmd($tmp);
+			my ($delay) = $subline =~ /^pause\s*(.*)/;
+			if (defined $delay) {
+				my $parsed_delay = $self->parseCmd($delay);
 				if (defined $self->error) {
-					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: ".$self->error);
+					$self->error($self->get_subline_error($subline, $subline_index, $self->error));
 					last;
 				}
-				unless (defined $result) {
-					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: $tmp failed in ($subline)");
+				unless (defined $parsed_delay) {
+					$self->error($self->get_subline_error($subline, $subline_index, "could not parse 'pause' value"));
 					last;
 				} else {
-					$self->timeout($result);
+					$self->timeout($parsed_delay);
 				}
 			} else {
 				$self->timeout($self->macro_delay);
@@ -1087,76 +1087,87 @@ sub run_sublines {
 		
 		# log command
 		} elsif ($subline =~ /^log\s+/) {
-			my ($tmp) = $subline =~ /^log\s+(.*)/;
-			my $result = $self->parseCmd($tmp);
+			my ($log) = $subline =~ /^log\s+(.*)/;
+			my $parsed_log = $self->parseCmd($log);
 			if (defined $self->error) {
-				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index:".$self->error);
+				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
 				last;
 			}
-			unless (defined $result) {
-				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: $tmp failed in ($subline)");
+			unless (defined $parsed_log) {
+				$self->error($self->get_subline_error($subline, $subline_index, "could not parse 'log' value"));
 				last;
 			} else {
-				message "[eventMacro log] $result\n", "eventMacro"
+				message "[eventMacro log] $parsed_log\n", "eventMacro"
 			}
 			$self->timeout($self->macro_delay);
 			$self->{mainline_delay} = $line_index;
 			$self->{subline_delay} = $subline_index;
-			last
+			last;
 		}
 		
 		# do command
 		elsif ($subline =~ /^do\s/) {
-			my ($tmp) = $subline =~ /^do\s+(.*)/;
-			if ($tmp =~ /^macro\s+/) {
-				my ($arg) = $tmp =~ /^macro\s+(.*)/;
-				if ($arg =~ /^reset/) {
-					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: use 'release' instead of 'macro reset'")
-				} elsif ($arg eq 'pause' || $arg eq 'resume') {
-					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: do not use 'macro pause' or 'macro resume' within a macro")
-				} elsif ($arg =~ /^set\s/) {
-					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: do not use 'macro set'. Use \$foo = bar")
-				} elsif ($arg eq 'stop') {
-					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: use 'stop' instead")
-				} elsif ($arg !~ /^(?:list|status)$/) {
-					$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: use 'call $arg' instead of 'macro $arg'")
-				}
-			} elsif ($tmp =~ /^eval\s+/) {
-				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: do not mix eval in the sub-line")
-			} elsif ($tmp =~ /^ai\s+clear$/) {
-				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: do not mess around with ai in macros")
-			}
-			my $result = $self->parseCmd($tmp);
+			my ($command) = $subline =~ /^do\s+(.*)/;
+			
+			my $parsed_command = $self->parseCmd($command);
+			
 			if (defined $self->error) {
-				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: ".$self->error);
+				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
 				last;
 			}
-			unless (defined $result) {
-				$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: command $tmp failed");
+			
+			unless (defined $parsed_command) {
+				$self->error($self->get_subline_error($subline, $subline_index, "could not parse 'do' value"));
 				last;
 			}
+			
+			if ($parsed_command =~ /^macro\s+/) {
+				my ($arg) = $parsed_command =~ /^macro\s+(.*)/;
+				if ($arg =~ /^reset/) {
+					$self->error($self->get_subline_error($subline, $subline_index, "use 'release' instead of 'macro reset'"));
+				} elsif ($arg eq 'pause' || $arg eq 'resume') {
+					$self->error($self->get_subline_error($subline, $subline_index, "use 'macro pause' or 'macro resume' within a macro"));
+				} elsif ($arg =~ /^set\s/) {
+					$self->error($self->get_subline_error($subline, $subline_index, "do not use 'macro set'. Use \$foo = bar"));
+				} elsif ($arg eq 'stop') {
+					$self->error($self->get_subline_error($subline, $subline_index, "use 'stop' instead"));
+				} elsif ($arg !~ /^(?:list|status)$/) {
+					$self->error($self->get_subline_error($subline, $subline_index, "use 'call $arg' instead of 'macro $arg'"));
+				}
+			} elsif ($parsed_command =~ /^eval\s+/) {
+				$self->error($self->get_subline_error($subline, $subline_index, "do not mix eval in the sub-line"));
+			} elsif ($parsed_command =~ /^ai\s+clear$/) {
+				$self->error($self->get_subline_error($subline, $subline_index, "do not mess around with ai in macros"));
+			}
+			
 			$self->timeout($self->macro_delay);
 			$self->{mainline_delay} = $line_index;
 			$self->{subline_delay} = $subline_index;
-			$self->{result} = $result;
-			last
+			$self->{result} = $parsed_command;
+			last;
 							
 		# "call", "[", "]", ":", "if", "while", "end" and "goto" commands block
 		} elsif ($subline =~ /^(?:call|\[|\]|:|if|end|goto|while)\s*/i) {
-			$self->error("Line $line_index sub-line $subline_index\n[Reason:] Use saperate line for HERE --> $subline <-- HERE");
+			$self->error($self->get_subline_error($subline, $subline_index, "Use saperate line for 'call|if|end|goto|while'"));;
 			last
 		# sub-routine
 		} elsif (my ($sub) = $subline =~ /^(\w+)\s*\(.*?\)$/) {
 			$self->parseCmd($subline);
-			$self->error("Error in line $line_index: $original_line\n[macro] $self->{Name} error in sub-line $subline_index: ".$self->error) if defined $self->error;
+			$self->error($self->get_subline_error($subline, $subline_index, $self->error)) if defined $self->error;
 			last;
 		
 		##################### End ##################
 		} else {
-			message "Error in $self->{line_number}: $original_line\nWarning: Ignoring Unknown Command in sub-line $subline_index: ($subline)\n", "menu";
+			$self->error($self->get_subline_error($subline, $subline_index, "Unknown Command in sub-line"));
 		}
 		$subline_index++
 	}
+}
+
+sub get_subline_error {
+	my ($self, $subline, $subline_index, $error) = @_;
+	my $subline_error_message = "Error in sub-line '".$subline."' of index '".$subline_index."' : '".$error."'";
+	return $subline_error_message;
 }
 
 sub newThen {
@@ -1305,7 +1316,7 @@ sub txtPosition {
 		$i++
 	}
 
-	$self->error("You probably missed 1 or more closing round-\nbracket ')' in the statement.") if !defined $last;
+	$self->error("You probably missed 1 or more closing round-\nbracket ')' in the statement") if !defined $last;
 
 	$new[0] = join('', @save);
 	$new[1] = $first;

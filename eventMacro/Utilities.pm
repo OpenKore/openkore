@@ -494,9 +494,9 @@ sub processCmd {
 	if (defined $_[0]) {
 		if ($_[0] ne '') {
 			unless (Commands::run($command)) {
-				my $errorMsg = sprintf("[eventMacro] %s failed with %s\n", $macro_name, $command);
+				my $error_message = sprintf("[eventMacro] %s failed with %s\n", $macro_name, $command);
 				
-				error $errorMsg, "eventMacro";
+				error $error_message, "eventMacro";
 				$eventMacro->clear_queue();
 				return;
 			}
@@ -506,14 +506,9 @@ sub processCmd {
 			$eventMacro->clear_queue();
 		}
 	} else {
-		my $error = $eventMacro->{Macro_Runner}->error;
-		my $errorMsg = sprintf(
-			"[eventMacro] %s error: %s\n",
-			$macro_name,
-			$error
-		);
+		my $error_message = $eventMacro->{Macro_Runner}->error_message;
 		
-		error $errorMsg, "eventMacro";
+		error $error_message, "eventMacro";
 		$eventMacro->clear_queue();
 		return;
 	}
