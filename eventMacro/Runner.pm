@@ -438,22 +438,27 @@ sub scanLabels {
 	return %labels
 }
 
+sub manage_script_end {
+	my ($self) = @_;
+	debug "[eventMacro] Macro '".$self->{Name}."' got to the end of its script.\n", "eventMacro", 2;
+	if ($self->{repeat} > 1) {
+		$self->{repeat}--;
+		$self->{line_number} = 0;
+		debug "[eventMacro] Repeating macro '".$self->{Name}."'. Remaining repeats: '".$self->{repeat}."'.\n", "eventMacro", 2;
+	} else {
+		$self->{finished} = 1;
+		debug "[eventMacro] Macro '".$self->{Name}."' finished.\n", "eventMacro", 2;
+	}
+}
+
 # processes next line
 sub next {
 	my $self = $_[0];
 	
 	#Checks if we reached the end of the script
 	if ( $self->{line_number} == scalar (@{$self->{lines_array}}) ) {
-		debug "[eventMacro] Macro '".$self->{Name}."' got to the end of its script.\n", "eventMacro", 2;
-		if ($self->{repeat} > 1) {
-			$self->{repeat}--;
-			$self->{line_number} = 0;
-			debug "[eventMacro] Repeating macro '".$self->{Name}."'. Remaining repeats: '".$self->{repeat}."'.\n", "eventMacro", 2;
-		} else {
-			$self->{finished} = 1;
-			debug "[eventMacro] Macro '".$self->{Name}."' finished.\n", "eventMacro", 2;
-			return "";
-		}
+		$self->manage_script_end();
+		return "" if ($self->{finished});
 	}
 	
 	#We must finish the subcall before returning to this macro
@@ -463,7 +468,7 @@ sub next {
 		$self->line_number($self->{mainline_delay});
 	}
 	
-	#get next line script
+	#get next script line
 	my $current_line = $self->line_script($self->line_number);
 	
 	# TODO: separate line advancing and timeout setting
