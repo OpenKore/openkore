@@ -511,7 +511,7 @@ sub next {
 	# "If" postfix control
 	if ($current_line =~ /.+\s+if\s*\(.*\)$/) {
 		my ($text) = $current_line =~ /.+\s+if\s*\(\s*(.*)\s*\)$/;
-		$text = $self->parseCmd($text);
+		$text = $self->parse_command($text);
 		return if (defined $self->error);
 		my $savetxt = $self->particle($text);
 		if ($self->multi($savetxt)) {
@@ -567,7 +567,7 @@ sub next {
 		my ($text, $then) = $current_line =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop|{|)\s*/;
 
 		# The main trick is parse all the @special keyword and vars 1st,
-		$text = $self->parseCmd($text);
+		$text = $self->parse_command($text);
 		return if (defined $self->error);
 		my $savetxt = $self->particle($text);
 		if ($self->multi($savetxt)) {
@@ -586,7 +586,7 @@ sub next {
 				} elsif ($searchEnd =~ /^}\s*elsif\s+\(\s*(.*)\s*\).*{$/ && $countBlockIf == 1) {
 					# If the condition of 'elsif' is true, the commands of your block will be executed,
 					#  if false, will not run.
-					$text = $self->parseCmd($1);
+					$text = $self->parse_command($1);
 					return if (defined $self->error);
 					$savetxt = $self->particle($text);
 					if ($self->multi($savetxt)) {
@@ -637,7 +637,7 @@ sub next {
 			next if (!$secondPartCondition);
 			
 			my $completCondition = $firstPartCondition . ' ' . $secondPartCondition;
-			my $text = $self->parseCmd($completCondition);
+			my $text = $self->parse_command($completCondition);
 			return if (defined $self->error);
 			my $savetxt = $self->particle($text);
 			if ($self->multi($savetxt)) {
@@ -672,7 +672,7 @@ sub next {
 	# while statement: while (foo <= bar) as label
 	} elsif ($current_line =~ /^while\s/) {
 		my ($text, $label) = $current_line =~ /^while\s+\(\s*(.*)\s*\)\s+as\s+(.*)/;
-		my $text = $self->parseCmd($text);
+		my $text = $self->parse_command($text);
 		return if (defined $self->error);
 		my $savetxt = $self->particle($text);
 		if (!$self->multi($savetxt)) {
@@ -689,7 +689,7 @@ sub next {
 			return if (defined $self->error);
 		} else {
 			if (($var, $val) = $current_line =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
-				my $pval = $self->parseCmd($val);
+				my $pval = $self->parse_command($val);
 				return if (defined $self->error);
 				if (defined $pval) {
 					if ($pval =~ /^\s*(?:undef|unset)\s*$/i && $eventMacro->exists_var($var)) {
@@ -757,7 +757,7 @@ sub next {
 			} elsif ($tmp =~ /^ai\s+clear$/) {
 				$self->error("do not mess around with ai in macros");
 			}
-			my $result = $self->parseCmd($tmp);
+			my $result = $self->parse_command($tmp);
 			return if (defined $self->error);
 			unless (defined $result) {
 				$self->error("command $tmp failed");
@@ -775,7 +775,7 @@ sub next {
 			return if (defined $self->error);
 		} else {
 			my ($tmp) = $current_line =~ /^log\s+(.*)/;
-			my $result = $self->parseCmd($tmp);
+			my $result = $self->parse_command($tmp);
 			return if (defined $self->error);
 			unless (defined $result) {
 				$self->error = ("$tmp failed");
@@ -796,7 +796,7 @@ sub next {
 		} else {
 			my ($tmp) = $current_line =~ /^pause\s*(.*)/;
 			if (defined $tmp) {
-				my $result = $self->parseCmd($tmp);
+				my $result = $self->parse_command($tmp);
 				return if (defined $self->error);
 				unless (defined $result) {
 					$self->error("$tmp failed");
@@ -823,7 +823,7 @@ sub next {
 			return if (defined $self->error);
 		} else {
 			my ($tmp) = $current_line =~ /^release\s+(.*)/;
-			my $automacro = $eventMacro->{Automacro_List}->getByName($self->parseCmd($tmp));
+			my $automacro = $eventMacro->{Automacro_List}->getByName($self->parse_command($tmp));
 			if (!$automacro) {
 				return if (defined $self->error);
 				$self->error("releasing $tmp failed");
@@ -843,7 +843,7 @@ sub next {
 			return if (defined $self->error);
 		} else {
 			my ($tmp) = $current_line =~ /^lock\s+(.*)/;
-			my $automacro = $eventMacro->{Automacro_List}->getByName($self->parseCmd($tmp));
+			my $automacro = $eventMacro->{Automacro_List}->getByName($self->parse_command($tmp));
 			if (!$automacro) {
 				return if (defined $self->error);
 				$self->error("locking $tmp failed");
@@ -870,12 +870,12 @@ sub next {
 			my ($times);
 			if ($args =~ /(\d+)\s+(--.*)/) {
 				($times, $cparms) = $args =~ /(\d+)?\s+?(--.*)?/;
-				$times = $self->parseCmd($args);
-				$cparms = $self->parseCmd($args);
+				$times = $self->parse_command($args);
+				$cparms = $self->parse_command($args);
 			} elsif ($args =~ /^\d+/) {
-				$times = $self->parseCmd($args);
+				$times = $self->parse_command($args);
 			}  elsif ($args =~ /^--.*/) {
-				$cparms = $self->parseCmd($args);
+				$cparms = $self->parse_command($args);
 			}
 
 			return if (defined $self->error);
@@ -928,7 +928,7 @@ sub next {
 		if ($current_line =~ /;/) {
 			$self->run_sublines($current_line);
 		} else {
-			$self->parseCmd($current_line);
+			$self->parse_command($current_line);
 		}
 		return if (defined $self->error);
 		$self->next_line;
@@ -973,7 +973,7 @@ sub run_sublines {
 		# set variable: $variable = value
 		if ($subline =~ /^\$[a-z]/i) {
 			if (($var, $val) = $subline =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
-				my $pval = $self->parseCmd($val);
+				my $pval = $self->parse_command($val);
 				if (defined $self->error) {
 					$self->error($self->get_subline_error($subline, $subline_index, $self->error));
 					last;
@@ -1033,7 +1033,7 @@ sub run_sublines {
 		# lock command
 		} elsif ($subline =~ /^lock\s+/) {
 			my ($automacro_name) = $subline =~ /^lock\s+(.*)/;
-			my $parsed_automacro_name = $self->parseCmd($automacro_name);
+			my $parsed_automacro_name = $self->parse_command($automacro_name);
 			if (defined $self->error) {
 				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
 				last;
@@ -1050,7 +1050,7 @@ sub run_sublines {
 		# release command
 		} elsif ($subline =~ /^release\s+/) {
 			my ($automacro_name) = $subline =~ /^release\s+(.*)/;
-			my $parsed_automacro_name = $self->parseCmd($automacro_name);
+			my $parsed_automacro_name = $self->parse_command($automacro_name);
 			if (defined $self->error) {
 				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
 				last;
@@ -1067,7 +1067,7 @@ sub run_sublines {
 		} elsif ($subline =~ /^pause/) {
 			my ($delay) = $subline =~ /^pause\s*(.*)/;
 			if (defined $delay) {
-				my $parsed_delay = $self->parseCmd($delay);
+				my $parsed_delay = $self->parse_command($delay);
 				if (defined $self->error) {
 					$self->error($self->get_subline_error($subline, $subline_index, $self->error));
 					last;
@@ -1088,7 +1088,7 @@ sub run_sublines {
 		# log command
 		} elsif ($subline =~ /^log\s+/) {
 			my ($log) = $subline =~ /^log\s+(.*)/;
-			my $parsed_log = $self->parseCmd($log);
+			my $parsed_log = $self->parse_command($log);
 			if (defined $self->error) {
 				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
 				last;
@@ -1109,7 +1109,7 @@ sub run_sublines {
 		elsif ($subline =~ /^do\s/) {
 			my ($command) = $subline =~ /^do\s+(.*)/;
 			
-			my $parsed_command = $self->parseCmd($command);
+			my $parsed_command = $self->parse_command($command);
 			
 			if (defined $self->error) {
 				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
@@ -1152,7 +1152,7 @@ sub run_sublines {
 			last
 		# sub-routine
 		} elsif (my ($sub) = $subline =~ /^(\w+)\s*\(.*?\)$/) {
-			$self->parseCmd($subline);
+			$self->parse_command($subline);
 			$self->error($self->get_subline_error($subline, $subline_index, $self->error)) if defined $self->error;
 			last;
 		
@@ -1184,7 +1184,7 @@ sub newThen {
 		my ($tmp) = $then =~ /^call\s+(.*)/;
 		if ($tmp =~ /\s/) {
 			my ($name, $times) = $tmp =~ /(.*?)\s+(.*)/;
-			my $ptimes = $self->parseCmd($times);
+			my $ptimes = $self->parse_command($times);
 			return if (defined $self->error);
 			if (defined $ptimes && $ptimes =~ /^\d+$/) {
 				if ($ptimes > 0) {
@@ -1215,8 +1215,8 @@ sub statement {
 	if (!defined $first || !defined $cond || !defined $last) {
 		$self->error("syntax error in if statement");
 	} else {
-		my $pfirst = $self->parseCmd(refined_macroKeywords($first));
-		my $plast = $self->parseCmd(refined_macroKeywords($last));
+		my $pfirst = $self->parse_command(refined_macroKeywords($first));
+		my $plast = $self->parse_command(refined_macroKeywords($last));
 		return if (defined $self->error);
 		unless (defined $pfirst && defined $plast) {
 			$self->error("either '$first' or '$last' has failed");
@@ -1354,9 +1354,9 @@ sub refined_macroKeywords {
 	my @pair = $_[0] =~ /\@($macroKeywords)\s*\(\s*(.*)\s*\)/i;
 	return $_[0] unless @pair;
 
-	$pair[1] = parseCmd($pair[1]);
-	my $new = "@".$pair[0]."(".$pair[1].")";	#sorry! cheap code ;p
-	return $new
+	$pair[1] = parse_command($pair[1]);
+	my $new = "@".$pair[0]."(".$pair[1].")";
+	return $new;
 }
 
 sub bracket {
@@ -1368,22 +1368,25 @@ sub bracket {
 	while ($text =~ /(\@)?($macroKeywords)?\s*\(\s*([^\)]+)\s*/g) {
 		my ($first, $second, $third) = ($1, $2, $3);
 		unless (defined $first && defined $second && !bracket($third, 1)) {
-			message "Bracket Detected: $text <-- HERE\n", "menu" if $dbg;
-			$brkt[$i] = 1
+			message "Bracket Detected: $text <-- HERE\n", "menu" if ($dbg);
+			$brkt[$i] = 1;
+		} else {
+			$brkt[$i] = 0;
 		}
-		else {$brkt[$i] = 0}
-		$i++
+		$i++;
 	}
 
 	foreach my $e (@brkt) {
-		if ($e == 1) {return 1}
+		if ($e == 1) {
+			return 1;
+		}
 	}
 
-	return 0
+	return 0;
 }
 
 # parses all macro perl sub-routine found in the macro script
-sub parseSub {
+sub parse_perl_subs {
 	my @full = $_[0] =~ /(?:^|\s+)(\w+)s*((s*(.*?)s*).*)$/i;
 	my @pair = ($full[0]);
 	my ($bracketed) = extract_bracketed ($full[1], '()');
@@ -1393,25 +1396,23 @@ sub parseSub {
 	return unless @pair;
 
 	while ($pair[1] =~ /(?:^|\s+)(\w+)\s*\(/) {
-		@pair = parseSub ($pair[1])
+		@pair = parse_perl_subs ($pair[1])
 	}
 
 	return @pair
 }
 
 # substitute variables
-sub subvars {
-# should be working now
-	my ($pre, $nick) = @_;
-	my ($var, $tmp);
+sub substitue_variables {
+	my ($received) = @_;
 	
 	# variables
-	$pre =~ s/(?:^|(?<=[^\\]))\$(\.?[a-z][a-z\d]*)/$eventMacro->is_var_defined($1) ? $eventMacro->get_var($1) : ''/gei;
+	$received =~ s/(?:^|(?<=[^\\]))\$(\.?[a-z][a-z\d]*)/$eventMacro->is_var_defined($1) ? $eventMacro->get_var($1) : ''/gei;
 
-	return $pre
+	return $received;
 }
 
-sub parseKw {
+sub parse_keywords {
 	my @full = $_[0] =~ /@($macroKeywords)s*((s*(.*?)s*).*)$/i;
 	my @pair = ($full[0]);
 	my ($bracketed) = extract_bracketed ($full[1], '()');
@@ -1425,14 +1426,14 @@ sub parseKw {
 		return $_[0] =~ /\@(random)\s*\(\s*(".*?")\s*\)/
 	}
 	while ($pair[1] =~ /\@($macroKeywords)\s*\(/) {
-		@pair = parseKw ($pair[1])
+		@pair = parse_keywords ($pair[1])
 	}
 	return @pair
 }
 
 # command line parser for macro
 # returns undef if something went wrong, else the parsed command or "".
-sub parseCmd {
+sub parse_command {
 	my ($self, $command) = @_;
 	return "" unless defined $command;
 	my ($keyword, $inside_brackets, $parsed, $result, $sub, $val);
@@ -1440,10 +1441,10 @@ sub parseCmd {
 	# refresh global vars only once per command line
 	refreshGlobal();
 	
-	while (($keyword, $inside_brackets) = parseKw($command)) {
+	while (($keyword, $inside_brackets) = parse_keywords($command)) {
 		$result = "_%_";
 		# first parse _then_ substitute. slower but safer
-		$parsed = subvars($inside_brackets) unless $keyword eq 'nick';
+		$parsed = substitue_variables($inside_brackets) unless ($keyword eq 'nick');
 		my $randomized = 0;
 
 		if ($keyword eq 'npc') {
@@ -1525,7 +1526,7 @@ sub parseCmd {
 			$result = getListLenght($parsed);
 			
 		} elsif ($keyword eq 'nick') {
-			$parsed = subvars($inside_brackets, 1);
+			$parsed = substitue_variables($inside_brackets);
 			$result = q4rx2($parsed);
 		}
 		
@@ -1542,9 +1543,9 @@ sub parseCmd {
 	}
 	
 	unless ($Settings::lockdown) {
-		# any round bracket(pair) found after parseKw sub-routine were treated as macro perl sub-routine
+		# any round bracket(pair) found after parse_keywords sub-routine were treated as macro perl sub-routine
 		undef $result; undef $parsed;
-		while (($sub, $val) = parseSub($command)) {
+		while (($sub, $val) = parse_perl_subs($command)) {
 			my $sub_error = 1;
 			foreach my $e (@perl_name) {
 				if ($e eq $sub) {
@@ -1555,7 +1556,7 @@ sub parseCmd {
 				$self->error("Unrecognized --> $sub <-- Sub-Routine");
 				return "";
 			}
-			$parsed = subvars($val);
+			$parsed = substitue_variables($val);
 			my $sub1 = $sub."(".$parsed.")";
 			$result = eval($sub1);
 			return unless defined $result;
@@ -1564,7 +1565,7 @@ sub parseCmd {
 		}
 	}
 
-	$command = subvars($command);
+	$command = substitue_variables($command);
 	return $command;
 }
 
