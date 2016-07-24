@@ -501,12 +501,17 @@ sub processCmd {
 				return;
 			}
 		}
-		$eventMacro->{Macro_Runner}->ok;
 		if (defined $eventMacro->{Macro_Runner} && $eventMacro->{Macro_Runner}->finished) {
 			$eventMacro->clear_queue();
+		} else {
+			$eventMacro->{Macro_Runner}->ok;
 		}
 	} else {
-		my $error_message = $eventMacro->{Macro_Runner}->error_message;
+		my $macro = $eventMacro->{Macro_Runner};
+		while (defined $macro->{subcall}) {
+			$macro = $macro->{subcall};
+		}
+		my $error_message = $macro->error_message;
 		
 		error $error_message, "eventMacro";
 		$eventMacro->clear_queue();

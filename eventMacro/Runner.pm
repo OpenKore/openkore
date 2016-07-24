@@ -26,7 +26,7 @@ our ($rev) = q$Revision: 6782 $ =~ /(\d+)/;
 
 # constructor
 sub new {
-	my ($class, $name, $repeat, $lastname, $lastline, $interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
+	my ($class, $name, $repeat, $interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
 
 	return undef unless ($eventMacro->{Macro_List}->getByName($name));
 	
@@ -64,15 +64,7 @@ sub new {
 	if (defined $repeat && $repeat =~ /^\d+$/) {
 		$self->repeat($repeat);
 	} else {
-		$self->repeat(0);
-	}
-	
-	if (defined $lastname && defined $lastline) {
-		$self->{lastname} = $lastname;
-		$self->{lastline} = $lastline
-	} else {
-		$self->{lastname} = undef;
-		$self->{lastline} = undef;
+		$self->repeat(1);
 	}
 	
 	if (defined $interruptible && $interruptible =~ /^[01]$/) {
@@ -311,12 +303,6 @@ sub repeat {
 	return $self->{repeat};
 }
 
-sub restart {
-	my ($self) = @_;
-	$self->repeat($self->repeat-1);
-	$self->line_number(0);
-}
-
 sub pause {
 	my ($self) = @_;
 	$self->{Paused} = 1;
@@ -362,9 +348,9 @@ sub clear_subcall {
 }
 
 sub create_subcall {
-	my ($self, $name, $repeat, $lastname, $lastline) = @_;
+	my ($self, $name, $repeat) = @_;
 	debug "[eventMacro] Creating submacro '".$name."' on macro '".$self->{Name}."'.\n", "eventMacro", 2;
-	$self->{subcall} = new eventMacro::Runner($name, $repeat, $lastname, $lastline, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
+	$self->{subcall} = new eventMacro::Runner($name, $repeat, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
 }
 
 # destructor
@@ -404,7 +390,18 @@ sub line_number {
 
 sub next_line {
 	my ($self) = @_;
-	$self->{line_number}++;
+	
+	#Checks if we reached the end of the script
+	if ( ($self->{line_number} + 1) == scalar (@{$self->{lines_array}}) ) {
+		if ($self->{repeat} > 1) {
+			$self->{repeat}--;
+			$self->{line_number} = 0;
+		} else {
+			$self->{finished} = 1;
+		}
+	} else {
+		$self->{line_number}++;
+	}
 }
 
 sub line_script {
@@ -420,7 +417,7 @@ sub error {
 
 sub error_message {
 	my ($self) = @_;
-	my $error_message = "[eventMacro] Error in line '".$self->line_number."': '".$self->error."'.\n";
+	my $error_message = "[eventMacro] Error in macro '".$self->{Name}."', line ".($self->line_number + 1).", line script '".$self->line_script($self->line_number)."': '".$self->error."'.\n";
 	return $error_message;
 }
 
@@ -455,6 +452,8 @@ sub scanLabels {
 sub next {
 	my $self = $_[0];
 	
+	return if ($self->{finished});
+	
 	#We must finish the sbucall before returning to this macro
 	if (defined $self->{subcall}) {
 		my $subcall_return = $self->{subcall}->next;
@@ -463,9 +462,6 @@ sub next {
 			$self->timeout($subcall_timeout->{timeout});
 			$self->{time} = $subcall_timeout->{time};
 			if ($self->{subcall}->finished) {
-				if ($self->{subcall}->repeat == 0) {
-					$self->{finished} = 1;
-				}
 				$self->clear_subcall;
 			}
 			return $subcall_return;
@@ -482,29 +478,6 @@ sub next {
 	
 	#get next line script
 	my $current_line = $self->line_script($self->line_number);
-	
-	#TODO discover wtf does this do
-	if (!defined $current_line) {
-		if (defined $self->{lastname} && defined $self->{lastline}) {
-			if ($self->repeat > 1) {
-				$self->restart;
-			} else {
-				$self->line_number($self->{lastline} + 1);
-				$self->{Name} = $self->{lastname};
-				$self->{lines_array} = $eventMacro->{Macro_List}->getByName($self->{Name})->get_lines();
-				($self->{lastline}, $self->{lastname}) = undef;
-				$self->{finished} = 1;
-			}
-			$current_line = $self->line_script($self->line_number);
-		} else {
-			if ($self->repeat > 1) {
-				$self->restart;
-			} else {
-				$self->{finished} = 1;
-			}
-			return "";
-		}
-	}
 	
 	# TODO: separate line advancing and timeout setting
 
@@ -680,6 +653,7 @@ sub next {
 		}
 		$self->next_line;
 		$self->timeout(0);
+		
 	##########################################
 	# set variable: $variable = value
 	} elsif ($current_line =~ /^\$[a-z]/i) {
@@ -721,11 +695,13 @@ sub next {
 			$self->timeout(0) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
 			return $self->{result} if ($self->{result});
 		}
+		
 	##########################################
 	# label definition: :label
 	} elsif ($current_line =~ /^:/) {
 		$self->next_line;
 		$self->timeout(0)
+		
 	##########################################
 	# returns command: do whatever
 	} elsif ($current_line =~ /^do\s/) {
@@ -767,6 +743,7 @@ sub next {
 			$self->next_line;
 			return $result;
 		}
+		
 	##########################################
 	# log command
 	} elsif ($current_line =~ /^log\s+/) {
@@ -786,6 +763,7 @@ sub next {
 		$self->next_line;
 		$self->timeout($self->macro_delay) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
 		return $self->{result} if ($self->{result});
+		
 	##########################################
 	# pause command
 	} elsif ($current_line =~ /^pause/) {
@@ -882,7 +860,7 @@ sub next {
 			if (defined $times && $times =~ /\d+/) { $calltimes = $times; }; # do we have a valid repeat value?
 		}
 		
-		$self->create_subcall($name, $calltimes, undef, undef);
+		$self->create_subcall($name, $calltimes);
 		
 		unless (defined $self->{subcall}) {
 			$self->error("failed to call script");
@@ -1174,35 +1152,52 @@ sub newThen {
 	my ($self, $then) = @_;
 
 	if ($then =~ /^goto\s/) {
-		my ($tmp) = $then =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)$/;
-		if (exists $self->{label}->{$tmp}) {
-			$self->{line_number} = $self->{label}->{$tmp}
+		my ($label) = $then =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)$/;
+		if (exists $self->{label}->{$label}) {
+			$self->{line_number} = $self->{label}->{$label}
 		} else {
-			$self->error("cannot find label $tmp");
+			$self->error("cannot find label $label");
 		}
+		
 	} elsif ($then =~ /^call\s+/) {
-		my ($tmp) = $then =~ /^call\s+(.*)/;
-		if ($tmp =~ /\s/) {
-			my ($name, $times) = $tmp =~ /(.*?)\s+(.*)/;
-			my $ptimes = $self->parse_command($times);
+		my ($macro_name) = $then =~ /^call\s+(.*)/;
+		my $repeat_times;
+		
+		if ($macro_name =~ /\s/) {
+			($macro_name, $repeat_times) = $macro_name =~ /(.*?)\s+(.*)/;
+			my $parsed_repeat_times = $self->parse_command($repeat_times);
 			return if (defined $self->error);
-			if (defined $ptimes && $ptimes =~ /^\d+$/) {
-				if ($ptimes > 0) {
-					$self->create_subcall($name, $ptimes, $self->{Name}, $self->{line_number});
-				} else {
-					$self->create_subcall($name, 0, undef, undef);
-				}
-			} else {
-				$self->error("$ptimes must be numeric");
+			if (!defined $parsed_repeat_times) {
+				$self->error("repeat value could not be defined");
+			} elsif ($parsed_repeat_times !~ /^\d+$/) {
+				$self->error("repeat value '$parsed_repeat_times' must be numeric");
+			} elsif ($parsed_repeat_times <= 0) {
+				$self->error("repeat value '$parsed_repeat_times' must be bigger than 0");
 			}
+			return if (defined $self->error);
+			$repeat_times = $parsed_repeat_times;
 		} else {
-			$self->create_subcall($tmp, 1, undef, undef);
+			$repeat_times = 1;
 		}
+		
+		my $parsed_macro_name = $self->parse_command($macro_name);
+		return if (defined $self->error);
+		
+		if (!defined $parsed_macro_name) {
+			$self->error("macro name could not be defined");
+		} elsif (!defined $eventMacro->{Macro_List}->getByName($parsed_macro_name)) {
+			$self->error("could not find macro with name '$parsed_macro_name'");
+		}
+		return if (defined $self->error);
+		
+		$self->create_subcall($parsed_macro_name, $repeat_times);
+		
 		unless (defined $self->{subcall}) {
 			$self->error("failed to call script");
 		} else {
 			$self->timeout($self->macro_delay);
 		}
+		
 	} elsif ($then eq "stop") {
 		$self->{finished} = 1;
 	}

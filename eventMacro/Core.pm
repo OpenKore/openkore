@@ -467,9 +467,7 @@ sub call_macro {
 	
 	$self->{Macro_Runner} = new eventMacro::Runner(
 		$automacro->get_parameter('call'),
-		0,
-		undef,
-		undef,
+		1,
 		$automacro->get_parameter('exclusive') ? 0 : 1,
 		$automacro->get_parameter('overrideAI'),
 		$automacro->get_parameter('orphan'),

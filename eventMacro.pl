@@ -292,9 +292,7 @@ sub commandHandler {
 		
 		$eventMacro->{Macro_Runner} = new eventMacro::Runner(
 			$arg,
-			defined $opt->{repeat} ? $opt->{repeat} : undef,
-			undef,
-			undef,
+			defined $opt->{repeat} ? $opt->{repeat} : 1,
 			defined $opt->{exclusive} ? $opt->{exclusive} ? 0 : 1 : undef,
 			defined $opt->{override_ai} ? $opt->{override_ai} : undef,
 			defined $opt->{orphan} ? $opt->{orphan} : undef,
