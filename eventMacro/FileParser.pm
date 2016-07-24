@@ -213,7 +213,7 @@ sub sub_execute {
 	Commands::run($run);		# exporting sub to the &main::sub, becarefull on your sub name
 					# dont name your new sub equal to any &main::sub, you should take
 					# the risk yourself.
-	message "[macro] registering sub $name ...\n", "menu";
+	message "[eventMacro] registering sub '".$name."'.\n", "menu";
 }
 
 # check if on the line there commands that open new command blocks
