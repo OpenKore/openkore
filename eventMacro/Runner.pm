@@ -1,4 +1,3 @@
-# $Id: Script.pm r6782 2009-07-24 16:36:00Z ezza $
 package eventMacro::Runner;
 
 use strict;
@@ -22,9 +21,6 @@ use eventMacro::Utilities qw(cmpr refreshGlobal getnpcID getItemIDs getItemPrice
 	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght);
 use eventMacro::Automacro;
 
-our ($rev) = q$Revision: 6782 $ =~ /(\d+)/;
-
-# constructor
 sub new {
 	my ($class, $name, $repeat, $interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
 
@@ -35,18 +31,20 @@ sub new {
 	$self->{Name} = $name;
 	$self->{Paused} = 0;
 	$self->{registered} = 0;
-	$self->{mainline_delay} = undef;
-	$self->{subline_delay} = undef;
-	$self->{result} = undef;
-	$self->{time} = time;
 	$self->{finished} = 0;
-	$self->{lines_array} = $eventMacro->{Macro_List}->getByName($name)->get_lines();
-	$self->{line_number} = 0;
-	$self->{label} = {scanLabels($self->{lines_array})};
-	$self->{subcall} = undef;
-	$self->{error} = undef;
 	$self->{macro_block} = 0;
 	
+	$self->{subline_index} = undef;
+	$self->{sublines_array} = [];
+	$self->{lines_array} = $eventMacro->{Macro_List}->getByName($name)->get_lines();
+	$self->{line_index} = 0;
+	
+	$self->{label} = {scanLabels($self->{lines_array})};
+	
+	$self->{time} = time;
+	
+	$self->{subcall} = undef;
+	$self->{error} = undef;
 	$self->{last_subcall_overrideAI} = undef;
 	$self->{last_subcall_interruptible} = undef;
 	$self->{last_subcall_orphan} = undef;
@@ -380,37 +378,6 @@ sub finished {
 	return $self->{finished}
 }
 
-# returns and/or set the current line number
-sub line_number {
-	my ($self, $line_number) = @_;
-	if (defined $line_number) {
-		$self->{line_number} = $line_number;
-	}
-	return $self->{line_number};
-}
-
-sub next_line {
-	my ($self) = @_;
-	$self->{line_number}++;
-}
-
-sub line_script {
-	my ($self, $line_number) = @_;
-	return @{$self->{lines_array}}[$line_number];
-}
-
-sub error {
-	my ($self, $error) = @_;
-	if (defined $error) {$self->{error} = $error}
-	return $self->{error};
-}
-
-sub error_message {
-	my ($self) = @_;
-	my $error_message = "[eventMacro] Error in macro '".$self->{Name}."', line ".($self->line_number + 1).", line script '".$self->line_script($self->line_number)."': '".$self->error."'.\n";
-	return $error_message;
-}
-
 # re-sets the timer
 sub ok {
 	my ($self) = @_;
@@ -443,7 +410,7 @@ sub manage_script_end {
 	debug "[eventMacro] Macro '".$self->{Name}."' got to the end of its script.\n", "eventMacro", 2;
 	if ($self->{repeat} > 1) {
 		$self->{repeat}--;
-		$self->{line_number} = 0;
+		$self->{line_index} = 0;
 		debug "[eventMacro] Repeating macro '".$self->{Name}."'. Remaining repeats: '".$self->{repeat}."'.\n", "eventMacro", 2;
 	} else {
 		$self->{finished} = 1;
@@ -451,12 +418,107 @@ sub manage_script_end {
 	}
 }
 
+sub manage_subcall {
+	my ($self) = @_;
+	my $subcall_return = $self->{subcall}->next;
+	if (defined $subcall_return) {
+		my $subcall_timeout = $self->{subcall}->timeout;
+		$self->timeout($subcall_timeout->{timeout});
+		$self->{time} = $subcall_timeout->{time};
+		if ($self->{subcall}->finished) {
+			$self->clear_subcall;
+		}
+		return $subcall_return;
+	} else {
+		#if subcall->next returned undef an error was set
+		$self->error($self->{subcall}->error);
+		return;
+	}
+}
+
+# returns and/or set the current line number
+sub line_index {
+	my ($self, $line_index) = @_;
+	if (defined $line_index) {
+		$self->{line_index} = $line_index;
+	}
+	return $self->{line_index};
+}
+
+# returns and/or set the current subline number
+sub subline_index {
+	my ($self, $subline_index) = @_;
+	if (defined $subline_index) {
+		$self->{subline_index} = $subline_index;
+	}
+	return $self->{subline_index};
+}
+
+# Gets the script of the given line
+sub line_script {
+	my ($self, $line_index) = @_;
+	return @{$self->{lines_array}}[$line_index];
+}
+
+# Advances a line or a subline
+sub next_line {
+	my ($self) = @_;
+	if (defined $self->{subline_index}) {
+		$self->{subline_index}++;
+	} else {
+		$self->{line_index}++;
+	}
+}
+
+# Gets the script of the given subline
+sub subline_script {
+	my ($self, $subline_index) = @_;
+	return @{$self->{sublines_array}}[$subline_index];
+}
+
+# Defines the sublines variables
+sub create_sublines {
+	my ($self) = @_;
+	debug "[eventMacro] Line '".$self->{current_line}."' of index '".$self->line_index."' has sublines.\n", "eventMacro", 2;
+	@{$self->{sublines_array}} = split(/\s*;\s*/, $self->{current_line});
+	$self->subline_index(0);
+}
+
+# Undefines the sublines variables
+sub end_of_sublines {
+	my ($self) = @_;
+	debug "[eventMacro] Finished all sublines of line '".$self->line_script($self->line_index)."' of index '".$self->line_index."', continuing with next line.\n", "eventMacro", 2;
+	undef $self->{sublines_array};
+	undef $self->{subline_index};
+	$self->next_line;
+}
+
+# Sets the error message
+sub error {
+	my ($self, $error) = @_;
+	if (defined $error) {
+		if (defined $self->subline_index) {
+			$self->{error} = "Error in sub-line '".$self->subline_script($self->subline_index)."' of index  '".$self->subline_index."': '".$error."'";
+		} else {
+			$self->{error} = $error;
+		}
+	}
+	return $self->{error};
+}
+
+# Returns a more informative error message
+sub error_message {
+	my ($self) = @_;
+	my $error_message = "[eventMacro] Error in macro '".$self->{Name}."', index ".$self->line_index.", line script '".$self->line_script($self->line_index)."': '".$self->error."'.\n";
+	return $error_message;
+}
+
 # processes next line
 sub next {
 	my $self = $_[0];
 	
 	#Checks if we reached the end of the script
-	if ( $self->{line_number} == scalar (@{$self->{lines_array}}) ) {
+	if ( $self->{line_index} == scalar (@{$self->{lines_array}}) ) {
 		$self->manage_script_end();
 		return "" if ($self->{finished});
 	}
@@ -464,23 +526,47 @@ sub next {
 	#We must finish the subcall before returning to this macro
 	return $self->manage_subcall() if (defined $self->{subcall});
 	
-	if (defined $self->{mainline_delay} && defined $self->{subline_delay}) {
-		$self->line_number($self->{mainline_delay});
+	#End of subline script
+	if (defined $self->subline_index && $self->subline_index == scalar(@{$self->{sublines_array}})) {
+		$self->end_of_sublines;
+		
+		#End of subline script and end of macro script
+		if ( $self->{line_index} == scalar (@{$self->{lines_array}}) ) {
+			$self->manage_script_end();
+			return "" if ($self->{finished});
+		}
+		
+		$self->{current_line} = $self->line_script($self->line_index);
+	
+	#Inside subline script
+	} elsif (defined $self->subline_index) {
+		$self->{current_line} = $self->subline_script($self->subline_index);
+		
+	#Normal script
+	} else {
+		$self->{current_line} = $self->line_script($self->line_index);
 	}
 	
-	#get next script line
-	my $current_line = $self->line_script($self->line_number);
+	#Start of subline script
+	if ($self->{current_line} =~ /;/) {
+		$self->create_sublines;
+		$self->{current_line} = $self->subline_script($self->subline_index);
+	}
+	
+	debug "[eventMacro] Executing macro '".$self->{Name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '').".\n", "eventMacro", 2;
+	debug "[eventMacro] ".(defined $self->subline_index ? "Subline" : 'Line')." script '".$self->{current_line}."'.\n", "eventMacro", 2;
+	
 	
 	# TODO: separate line advancing and timeout setting
 
 	# "If" postfix control
-	if ($current_line =~ /.+\s+if\s*\(.*\)$/) {
-		my ($text) = $current_line =~ /.+\s+if\s*\(\s*(.*)\s*\)$/;
+	if ($self->{current_line} =~ /.+\s+if\s*\(.*\)$/) {
+		my ($text) = $self->{current_line} =~ /.+\s+if\s*\(\s*(.*)\s*\)$/;
 		$text = $self->parse_command($text);
 		return if (defined $self->error);
 		my $savetxt = $self->particle($text);
 		if ($self->multi($savetxt)) {
-			$current_line =~ s/\s+if\s*\(.*\)$//;
+			$self->{current_line} =~ s/\s+if\s*\(.*\)$//;
 		} else {
 			$self->next_line;
 			$self->timeout(0);
@@ -490,10 +576,10 @@ sub next {
 	
 	##########################################
 	# jump to label: goto label
-	if ($current_line =~ /^goto\s/) {
-		my ($tmp) = $current_line =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)/;
+	if ($self->{current_line} =~ /^goto\s/) {
+		my ($tmp) = $self->{current_line} =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)/;
 		if (exists $self->{label}->{$tmp}) {
-			$self->line_number($self->{label}->{$tmp});
+			$self->line_index($self->{label}->{$tmp});
 		} else {
 			$self->error("cannot find label $tmp");
 			return;
@@ -502,10 +588,10 @@ sub next {
 	
 	##########################################
 	# declare block ending: end label
-	} elsif ($current_line =~ /^end\s/) {
-		my ($tmp) = $current_line =~ /^end\s+(.*)/;
+	} elsif ($self->{current_line} =~ /^end\s/) {
+		my ($tmp) = $self->{current_line} =~ /^end\s+(.*)/;
 		if (exists $self->{label}->{$tmp}) {
-			$self->line_number($self->{label}->{$tmp});
+			$self->line_index($self->{label}->{$tmp});
 		} else {
 			$self->error("cannot find block start for $tmp");
 			return;
@@ -514,13 +600,13 @@ sub next {
 		
 	##########################################
 	# macro block: begin
-	} elsif ($current_line eq '[') {
+	} elsif ($self->{current_line} eq '[') {
 		$self->{macro_block} = 1;
 		$self->next_line;
 		
 	##########################################
 	# macro block: end
-	} elsif ($current_line eq ']') {
+	} elsif ($self->{current_line} eq ']') {
 		$self->{macro_block} = 0;
 		$self->timeout(0);
 		$self->next_line;
@@ -528,8 +614,8 @@ sub next {
 	##########################################
 	# if statement: if (foo = bar) goto label?
 	# Unlimited If Statement by: ezza @ http://forums.openkore.com/
-	} elsif ($current_line =~ /^if\s/) {
-		my ($text, $then) = $current_line =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop|{|)\s*/;
+	} elsif ($self->{current_line} =~ /^if\s/) {
+		my ($text, $then) = $self->{current_line} =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop|{|)\s*/;
 
 		# The main trick is parse all the @special keyword and vars 1st,
 		$text = $self->parse_command($text);
@@ -542,7 +628,7 @@ sub next {
 			my $countBlockIf = 1;
 			while ($countBlockIf) {
 				$self->next_line;
-				my $searchEnd = $self->line_script($self->line_number);
+				my $searchEnd = $self->line_script($self->line_index);
 				
 				if ($searchEnd =~ /^if.*{$/) {
 					$countBlockIf++;
@@ -561,16 +647,16 @@ sub next {
 			}
 		}
 		$self->next_line;
-		$self->timeout(0)
+		$self->timeout(0);
 
 	##########################################
 	# If arriving at a line 'else', 'elsif' or 'case', it should be skipped -
 	#  it will never be activated if coming from a false 'if' or a previous 'case' has not been called
-	} elsif ($current_line =~ /^}\s*else\s*{/ || $current_line =~ /^}\s*elsif.*{$/ || $current_line =~ /^case/ || $current_line =~ /^else/) {
+	} elsif ($self->{current_line} =~ /^}\s*else\s*{/ || $self->{current_line} =~ /^}\s*elsif.*{$/ || $self->{current_line} =~ /^case/ || $self->{current_line} =~ /^else/) {
 		my $countCommandBlock = 1;
 		while ($countCommandBlock) {
 			$self->next_line;
-			my $searchEnd = $self->line_script($self->line_number);
+			my $searchEnd = $self->line_script($self->line_index);
 			
 			if (isNewCommandBlock($searchEnd)) {
 				$countCommandBlock++;
@@ -583,13 +669,13 @@ sub next {
 
 	##########################################
 	# switch statement:
-	} elsif ($current_line =~ /^switch.*{$/) {
-		my ($firstPartCondition) = $current_line =~ /^switch\s*\(\s*(.*)\s*\)\s*{$/;
+	} elsif ($self->{current_line} =~ /^switch.*{$/) {
+		my ($firstPartCondition) = $self->{current_line} =~ /^switch\s*\(\s*(.*)\s*\)\s*{$/;
 
 		my $countBlocks = 1;
 		while ($countBlocks) {
 			$self->next_line;
-			my $searchNextCase = $self->line_script($self->line_number);
+			my $searchNextCase = $self->line_script($self->line_index);
 			
 			if ($searchNextCase =~ /^else/) {
 				my ($then) = $searchNextCase =~ /^else\s*(.*)/;
@@ -613,7 +699,7 @@ sub next {
 				my $countCommandBlock = 1;
 				while ($countCommandBlock) {
 					$self->next_line;
-					my $searchEnd = $self->line_script($self->line_number);
+					my $searchEnd = $self->line_script($self->line_index);
 					
 					if (isNewCommandBlock($searchEnd)) {
 						$countCommandBlock++;
@@ -629,206 +715,163 @@ sub next {
 	
 	##########################################
 	# end block of "if" or "switch"
-	} elsif ($current_line eq '}') {
+	} elsif ($self->{current_line} eq '}') {
 		$self->next_line;
 		$self->timeout(0);
 
 	##########################################
 	# while statement: while (foo <= bar) as label
-	} elsif ($current_line =~ /^while\s/) {
-		my ($text, $label) = $current_line =~ /^while\s+\(\s*(.*)\s*\)\s+as\s+(.*)/;
+	} elsif ($self->{current_line} =~ /^while\s/) {
+		my ($text, $label) = $self->{current_line} =~ /^while\s+\(\s*(.*)\s*\)\s+as\s+(.*)/;
 		my $text = $self->parse_command($text);
 		return if (defined $self->error);
 		my $savetxt = $self->particle($text);
 		if (!$self->multi($savetxt)) {
-			$self->line_number($self->{label}->{"end ".$label});
+			$self->line_index($self->{label}->{"end ".$label});
 		}
 		$self->next_line;
 		$self->timeout(0);
 		
 	##########################################
 	# set variable: $variable = value
-	} elsif ($current_line =~ /^\$[a-z]/i) {
+	} elsif ($self->{current_line} =~ /^\$[a-z]/i) {
 		my ($var, $val);
-		if ($current_line =~ /;/) {
-			$self->run_sublines($current_line);
+		if (($var, $val) = $self->{current_line} =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
+			my $pval = $self->parse_command($val);
 			return if (defined $self->error);
-		} else {
-			if (($var, $val) = $current_line =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
-				my $pval = $self->parse_command($val);
-				return if (defined $self->error);
-				if (defined $pval) {
-					if ($pval =~ /^\s*(?:undef|unset)\s*$/i && $eventMacro->exists_var($var)) {
-						$eventMacro->set_var($var, 'undef');
-					} else {
-						$eventMacro->set_var($var, $pval);
-					}
+			if (defined $pval) {
+				if ($pval =~ /^\s*(?:undef|unset)\s*$/i && $eventMacro->exists_var($var)) {
+					$eventMacro->set_var($var, 'undef');
 				} else {
-					$self->error("$val failed");
-				}
-			} elsif (($var, $val) = $current_line =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
-				if ($val eq '++') {
-					if ($eventMacro->is_var_defined($var)) {
-						$eventMacro->set_var($var, ($eventMacro->get_var($var)+1));
-					} else {
-						$eventMacro->set_var($var, 1);
-					}
-				} else {
-					if ($eventMacro->is_var_defined($var)) {
-						$eventMacro->set_var($var, ($eventMacro->get_var($var)-1));
-					} else {
-						$eventMacro->set_var($var, -1);
-					}
+					$eventMacro->set_var($var, $pval);
 				}
 			} else {
-				$self->error("unrecognized assignment");
+				$self->error("$val failed");
 			}
-			$self->next_line;
-			$self->timeout(0) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
-			return $self->{result} if ($self->{result});
+		} elsif (($var, $val) = $self->{current_line} =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
+			if ($val eq '++') {
+				if ($eventMacro->is_var_defined($var)) {
+					$eventMacro->set_var($var, ($eventMacro->get_var($var)+1));
+				} else {
+					$eventMacro->set_var($var, 1);
+				}
+			} else {
+				if ($eventMacro->is_var_defined($var)) {
+					$eventMacro->set_var($var, ($eventMacro->get_var($var)-1));
+				} else {
+					$eventMacro->set_var($var, -1);
+				}
+			}
+		} else {
+			$self->error("unrecognized assignment");
 		}
+		$self->next_line;
+		$self->timeout(0);
 		
 	##########################################
 	# label definition: :label
-	} elsif ($current_line =~ /^:/) {
+	} elsif ($self->{current_line} =~ /^:/) {
 		$self->next_line;
 		$self->timeout(0)
 		
 	##########################################
 	# returns command: do whatever
-	} elsif ($current_line =~ /^do\s/) {
-		if ($current_line =~ /;/ && $current_line =~ /^do eval/ eq "") {
-			$self->run_sublines($current_line);
-			return if (defined $self->error);
-			unless (defined $self->{mainline_delay} && defined $self->{subline_delay}) {
-				$self->timeout($self->macro_delay);
-				$self->next_line;
+	} elsif ($self->{current_line} =~ /^do\s/) {
+		my ($tmp) = $self->{current_line} =~ /^do\s+(.*)/;
+		if ($tmp =~ /^macro\s+/) {
+			my ($arg) = $tmp =~ /^macro\s+(.*)/;
+			if ($arg =~ /^reset/) {
+				$self->error("use 'release' instead of 'macro reset'");
+			} elsif ($arg eq 'pause' || $arg eq 'resume') {
+				$self->error("do not use 'macro pause' or 'macro resume' within a macro");
+			} elsif ($arg =~ /^set\s/) {
+				$self->error("do not use 'macro set'. Use \$foo = bar");
+			} elsif ($arg eq 'stop') {
+				$self->error("use 'stop' instead");
+			} elsif ($arg !~ /^(?:list|status)$/) {
+				$self->error("use 'call $arg' instead of 'macro $arg'");
 			}
-			if ($self->{result}) {
-				return $self->{result};
-			}
-		} else {
-			my ($tmp) = $current_line =~ /^do\s+(.*)/;
-			if ($tmp =~ /^macro\s+/) {
-				my ($arg) = $tmp =~ /^macro\s+(.*)/;
-				if ($arg =~ /^reset/) {
-					$self->error("use 'release' instead of 'macro reset'");
-				} elsif ($arg eq 'pause' || $arg eq 'resume') {
-					$self->error("do not use 'macro pause' or 'macro resume' within a macro");
-				} elsif ($arg =~ /^set\s/) {
-					$self->error("do not use 'macro set'. Use \$foo = bar");
-				} elsif ($arg eq 'stop') {
-					$self->error("use 'stop' instead");
-				} elsif ($arg !~ /^(?:list|status)$/) {
-					$self->error("use 'call $arg' instead of 'macro $arg'");
-				}
-			} elsif ($tmp =~ /^ai\s+clear$/) {
-				$self->error("do not mess around with ai in macros");
-			}
-			my $result = $self->parse_command($tmp);
-			return if (defined $self->error);
-			unless (defined $result) {
-				$self->error("command $tmp failed");
-				return;
-			}
-			$self->timeout($self->macro_delay);
-			$self->next_line;
-			return $result;
+		} elsif ($tmp =~ /^ai\s+clear$/) {
+			$self->error("do not mess around with ai in macros");
 		}
+		my $result = $self->parse_command($tmp);
+		return if (defined $self->error);
+		unless (defined $result) {
+			$self->error("command $tmp failed");
+			return;
+		}
+		$self->timeout($self->macro_delay);
+		$self->next_line;
+		return $result;
 		
 	##########################################
 	# log command
-	} elsif ($current_line =~ /^log\s+/) {
-		if ($current_line =~ /;/) {
-			$self->run_sublines($current_line);
-			return if (defined $self->error);
+	} elsif ($self->{current_line} =~ /^log\s+/) {
+		my ($tmp) = $self->{current_line} =~ /^log\s+(.*)/;
+		my $result = $self->parse_command($tmp);
+		return if (defined $self->error);
+		unless (defined $result) {
+			$self->error("$tmp failed");
 		} else {
-			my ($tmp) = $current_line =~ /^log\s+(.*)/;
-			my $result = $self->parse_command($tmp);
-			return if (defined $self->error);
-			unless (defined $result) {
-				$self->error = ("$tmp failed");
-			} else {
-				message "[eventmacro log] $result\n", "eventMacro";
-			}
+			message "[eventmacro log] $result\n", "eventMacro";
 		}
 		$self->next_line;
-		$self->timeout($self->macro_delay) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
-		return $self->{result} if ($self->{result});
+		$self->timeout($self->macro_delay);
 		
 	##########################################
 	# pause command
-	} elsif ($current_line =~ /^pause/) {
-		if ($current_line =~ /;/) {
-			$self->run_sublines($current_line);
+	} elsif ($self->{current_line} =~ /^pause/) {
+		my ($tmp) = $self->{current_line} =~ /^pause\s*(.*)/;
+		if (defined $tmp) {
+			my $result = $self->parse_command($tmp);
 			return if (defined $self->error);
-			$self->timeout($self->macro_delay) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
-		} else {
-			my ($tmp) = $current_line =~ /^pause\s*(.*)/;
-			if (defined $tmp) {
-				my $result = $self->parse_command($tmp);
-				return if (defined $self->error);
-				unless (defined $result) {
-					$self->error("$tmp failed");
-				} else {
-					$self->timeout($result);
-				}
+			unless (defined $result) {
+				$self->error("$tmp failed");
 			} else {
-				$self->timeout($self->macro_delay);
+				$self->timeout($result);
 			}
+		} else {
+			$self->timeout($self->macro_delay);
 		}
 		$self->next_line;
-		return $self->{result} if ($self->{result});
 		
 	##########################################
 	# stop command
-	} elsif ($current_line eq "stop") {
+	} elsif ($self->{current_line} eq "stop") {
 		$self->{finished} = 1;
 		
 	##########################################
 	# release command
-	} elsif ($current_line =~ /^release\s+/) {
-		if ($current_line =~ /;/) {
-			$self->run_sublines($current_line);
+	} elsif ($self->{current_line} =~ /^release\s+/) {
+		my ($tmp) = $self->{current_line} =~ /^release\s+(.*)/;
+		my $automacro = $eventMacro->{Automacro_List}->getByName($self->parse_command($tmp));
+		if (!$automacro) {
 			return if (defined $self->error);
+			$self->error("releasing $tmp failed");
 		} else {
-			my ($tmp) = $current_line =~ /^release\s+(.*)/;
-			my $automacro = $eventMacro->{Automacro_List}->getByName($self->parse_command($tmp));
-			if (!$automacro) {
-				return if (defined $self->error);
-				$self->error("releasing $tmp failed");
-			} else {
-				$automacro->enable();
-			}
+			$automacro->enable();
 		}
 		$self->next_line;
-		$self->timeout(0) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
-		return $self->{result} if ($self->{result});
+		$self->timeout(0);
 		
 	##########################################
 	# lock command
-	} elsif ($current_line =~ /^lock\s+/) {
-		if ($current_line =~ /;/) {
-			$self->run_sublines($current_line);
+	} elsif ($self->{current_line} =~ /^lock\s+/) {
+		my ($tmp) = $self->{current_line} =~ /^lock\s+(.*)/;
+		my $automacro = $eventMacro->{Automacro_List}->getByName($self->parse_command($tmp));
+		if (!$automacro) {
 			return if (defined $self->error);
+			$self->error("locking $tmp failed");
 		} else {
-			my ($tmp) = $current_line =~ /^lock\s+(.*)/;
-			my $automacro = $eventMacro->{Automacro_List}->getByName($self->parse_command($tmp));
-			if (!$automacro) {
-				return if (defined $self->error);
-				$self->error("locking $tmp failed");
-			} else {
-				$automacro->disable();
-			}
+			$automacro->disable();
 		}
 		$self->next_line;
-		$self->timeout(0) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
-		return $self->{result} if ($self->{result});
+		$self->timeout(0);
 		
 	##########################################
 	# call command
-	} elsif ($current_line =~ /^call\s+/) {
-		my ($call_command) = $current_line =~ /^call\s+(.*)/;
+	} elsif ($self->{current_line} =~ /^call\s+/) {
+		my ($call_command) = $self->{current_line} =~ /^call\s+(.*)/;
 		$self->parse_call($call_command);
 		return if (defined $self->error);
 		$self->next_line;
@@ -836,42 +879,31 @@ sub next {
 		
 	##########################################
 	# set command
-	} elsif ($current_line =~ /^set\s+/) {
-		if ($current_line =~ /;/) {
-			$self->run_sublines($current_line);
-			return if (defined $self->error);
+	} elsif ($self->{current_line} =~ /^set\s+/) {
+		my ($var, $val) = $self->{current_line} =~ /^set\s+(\w+)\s+(.*)$/;
+		if ($var eq 'macro_delay' && $val =~ /^[\d\.]*\d+$/) {
+			$self->macro_delay($val);
+		} elsif ($var eq 'repeat' && $val =~ /^\d+$/) {
+			$self->repeat($val);
+		} elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {
+			$self->overrideAI($val);
+		} elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {
+			$self->interruptible($val?0:1);
+		} elsif ($var eq 'orphan' && $val =~ /^(?:terminate|reregister(?:_safe)?)$/) {
+			$self->orphan($val);
 		} else {
-			my ($var, $val) = $current_line =~ /^set\s+(\w+)\s+(.*)$/;
-			if ($var eq 'macro_delay' && $val =~ /^[\d\.]*\d+$/) {
-				$self->macro_delay($val);
-			} elsif ($var eq 'repeat' && $val =~ /^\d+$/) {
-				$self->repeat($val);
-			} elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {
-				$self->overrideAI($val);
-			} elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {
-				$self->interruptible($val?0:1);
-			} elsif ($var eq 'orphan' && $val =~ /^(?:terminate|reregister(?:_safe)?)$/) {
-				$self->orphan($val);
-			} else {
-				$self->error("unrecognized key or wrong value");
-			}
+			$self->error("unrecognized key or wrong value");
 		}
 		$self->next_line;
-		$self->timeout(0) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
-		return $self->{result} if ($self->{result});
+		$self->timeout(0);
 		
 	##########################################
 	# sub-routine command, still figuring out how to include unclever/fail sub-routine into the error msg
-	} elsif ($current_line =~ /^(?:\w+)\s*\(.*?\)/) {
-		if ($current_line =~ /;/) {
-			$self->run_sublines($current_line);
-		} else {
-			$self->parse_command($current_line);
-		}
+	} elsif ($self->{current_line} =~ /^(?:\w+)\s*\(.*?\)/) {
+		$self->parse_command($self->{current_line});
 		return if (defined $self->error);
 		$self->next_line;
-		$self->timeout(0) unless (defined $self->{mainline_delay} && defined $self->{subline_delay});
-		return $self->{result} if ($self->{result});
+		$self->timeout(0);
 		
 	##########################################
 	# unrecognized line
@@ -886,252 +918,13 @@ sub next {
 	}
 }
 
-sub manage_subcall {
-	my ($self) = @_;
-	my $subcall_return = $self->{subcall}->next;
-	if (defined $subcall_return) {
-		my $subcall_timeout = $self->{subcall}->timeout;
-		$self->timeout($subcall_timeout->{timeout});
-		$self->{time} = $subcall_timeout->{time};
-		if ($self->{subcall}->finished) {
-			$self->clear_subcall;
-		}
-		return $subcall_return;
-	} else {
-		#if subcall->next returned undef an error was set
-		$self->error($self->{subcall}->error);
-		return;
-	}
-}
-
-sub run_sublines {
-	my ($self, $original_line) = @_;
-	my $line_index = $self->line_number;
-	my $subline_index = 0;
-	my @sublines = split(/\s*;\s*/, $original_line);
-	my ($var, $val);
-	
-	foreach my $subline (@sublines) {
-		next if $subline eq "";
-		if (defined $self->{subline_delay} && $subline_index < $self->{subline_delay}) {
-			$subline_index++;
-			next;
-		}
-		if (defined $self->{subline_delay} && $subline_index == $self->{subline_delay}) {
-			$self->timeout(0);
-			($self->{mainline_delay}, $self->{subline_delay}, $self->{result}) = undef;
-			$subline_index++;
-			next;
-		}
-		
-
-		# set variable: $variable = value
-		if ($subline =~ /^\$[a-z]/i) {
-			if (($var, $val) = $subline =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
-				my $pval = $self->parse_command($val);
-				if (defined $self->error) {
-					$self->error($self->get_subline_error($subline, $subline_index, $self->error));
-					last;
-				}
-				if (defined $pval) {
-					if ($pval =~ /^\s*(?:undef|unset)\s*$/i && $eventMacro->exists_var($var)) {
-						$eventMacro->set_var($var, 'undef')
-					} else {
-						$eventMacro->set_var($var,$pval)
-					}
-				} else {
-					$self->error($self->get_subline_error($subline, $subline_index, $self->error));
-					last;
-				}
-			} elsif (($var, $val) = $subline =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
-				if ($val eq '++') {
-					if ($eventMacro->is_var_defined($var)) {
-						$eventMacro->set_var($var, ($eventMacro->get_var($var)+1));
-					} else {
-						$eventMacro->set_var($var, 1);
-					}
-				} else {
-					if ($eventMacro->is_var_defined($var)) {
-						$eventMacro->set_var($var, ($eventMacro->get_var($var)-1));
-					} else {
-						$eventMacro->set_var($var, -1);
-					}
-				}
-			} else {
-				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
-				last;
-			}
-			$subline_index++;
-			next;
-		# stop command
-		} elsif ($subline eq "stop") {
-			$self->{finished} = 1;
-			last;
-		
-		# set command
-		} elsif (($var, $val) = $subline =~ /^set\s+(\w+)\s+(.*)$/) {
-			if ($var eq 'macro_delay' && $val =~ /^[\d\.]*\d+$/) {
-				$self->macro_delay($val);
-			} elsif ($var eq 'repeat' && $val =~ /^\d+$/) {
-				$self->repeat($val);
-			} elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {
-				$self->overrideAI($val);
-			} elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {
-				$self->interruptible($val)?0:1;
-			} elsif ($var eq 'orphan' && $val =~ /^(?:terminate(?:_last_call)?|reregister(?:_safe)?)$/) {
-				$self->orphan($val);
-			} else {
-				$self->error($self->get_subline_error($subline, $subline_index, 'unrecognized key or wrong value'));
-				last;
-			}
-				
-		# lock command
-		} elsif ($subline =~ /^lock\s+/) {
-			my ($automacro_name) = $subline =~ /^lock\s+(.*)/;
-			my $parsed_automacro_name = $self->parse_command($automacro_name);
-			if (defined $self->error) {
-				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
-				last;
-			}
-			my $automacro = $eventMacro->{Automacro_List}->getByName($parsed_automacro_name);
-			if (!$automacro) {
-				$self->error($self->get_subline_error($subline, $subline_index, "locking '".$parsed_automacro_name."' failed"));
-				last;
-			} else {
-				$automacro->disable();
-			}
-			
-				
-		# release command
-		} elsif ($subline =~ /^release\s+/) {
-			my ($automacro_name) = $subline =~ /^release\s+(.*)/;
-			my $parsed_automacro_name = $self->parse_command($automacro_name);
-			if (defined $self->error) {
-				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
-				last;
-			}
-			my $automacro = $eventMacro->{Automacro_List}->getByName($parsed_automacro_name);
-			if (!$automacro) {
-				$self->error($self->get_subline_error($subline, $subline_index, "releasing '".$parsed_automacro_name."' failed"));
-				last;
-			} else {
-				$automacro->disable();
-			}
-		
-		# pause command
-		} elsif ($subline =~ /^pause/) {
-			my ($delay) = $subline =~ /^pause\s*(.*)/;
-			if (defined $delay) {
-				my $parsed_delay = $self->parse_command($delay);
-				if (defined $self->error) {
-					$self->error($self->get_subline_error($subline, $subline_index, $self->error));
-					last;
-				}
-				unless (defined $parsed_delay) {
-					$self->error($self->get_subline_error($subline, $subline_index, "could not parse 'pause' value"));
-					last;
-				} else {
-					$self->timeout($parsed_delay);
-				}
-			} else {
-				$self->timeout($self->macro_delay);
-			}
-			$self->{mainline_delay} = $line_index;
-			$self->{subline_delay} = $subline_index;
-			last;
-		
-		# log command
-		} elsif ($subline =~ /^log\s+/) {
-			my ($log) = $subline =~ /^log\s+(.*)/;
-			my $parsed_log = $self->parse_command($log);
-			if (defined $self->error) {
-				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
-				last;
-			}
-			unless (defined $parsed_log) {
-				$self->error($self->get_subline_error($subline, $subline_index, "could not parse 'log' value"));
-				last;
-			} else {
-				message "[eventMacro log] $parsed_log\n", "eventMacro"
-			}
-			$self->timeout($self->macro_delay);
-			$self->{mainline_delay} = $line_index;
-			$self->{subline_delay} = $subline_index;
-			last;
-		}
-		
-		# do command
-		elsif ($subline =~ /^do\s/) {
-			my ($command) = $subline =~ /^do\s+(.*)/;
-			
-			my $parsed_command = $self->parse_command($command);
-			
-			if (defined $self->error) {
-				$self->error($self->get_subline_error($subline, $subline_index, $self->error));
-				last;
-			}
-			
-			unless (defined $parsed_command) {
-				$self->error($self->get_subline_error($subline, $subline_index, "could not parse 'do' value"));
-				last;
-			}
-			
-			if ($parsed_command =~ /^macro\s+/) {
-				my ($arg) = $parsed_command =~ /^macro\s+(.*)/;
-				if ($arg =~ /^reset/) {
-					$self->error($self->get_subline_error($subline, $subline_index, "use 'release' instead of 'macro reset'"));
-				} elsif ($arg eq 'pause' || $arg eq 'resume') {
-					$self->error($self->get_subline_error($subline, $subline_index, "use 'macro pause' or 'macro resume' within a macro"));
-				} elsif ($arg =~ /^set\s/) {
-					$self->error($self->get_subline_error($subline, $subline_index, "do not use 'macro set'. Use \$foo = bar"));
-				} elsif ($arg eq 'stop') {
-					$self->error($self->get_subline_error($subline, $subline_index, "use 'stop' instead"));
-				} elsif ($arg !~ /^(?:list|status)$/) {
-					$self->error($self->get_subline_error($subline, $subline_index, "use 'call $arg' instead of 'macro $arg'"));
-				}
-			} elsif ($parsed_command =~ /^eval\s+/) {
-				$self->error($self->get_subline_error($subline, $subline_index, "do not mix eval in the sub-line"));
-			} elsif ($parsed_command =~ /^ai\s+clear$/) {
-				$self->error($self->get_subline_error($subline, $subline_index, "do not mess around with ai in macros"));
-			}
-			
-			$self->timeout($self->macro_delay);
-			$self->{mainline_delay} = $line_index;
-			$self->{subline_delay} = $subline_index;
-			$self->{result} = $parsed_command;
-			last;
-							
-		# "call", "[", "]", ":", "if", "while", "end" and "goto" commands block
-		} elsif ($subline =~ /^(?:call|\[|\]|:|if|end|goto|while)\s*/i) {
-			$self->error($self->get_subline_error($subline, $subline_index, "Use saperate line for 'call|if|end|goto|while'"));;
-			last
-		# sub-routine
-		} elsif (my ($sub) = $subline =~ /^(\w+)\s*\(.*?\)$/) {
-			$self->parse_command($subline);
-			$self->error($self->get_subline_error($subline, $subline_index, $self->error)) if defined $self->error;
-			last;
-		
-		##################### End ##################
-		} else {
-			$self->error($self->get_subline_error($subline, $subline_index, "Unknown Command in sub-line"));
-		}
-		$subline_index++
-	}
-}
-
-sub get_subline_error {
-	my ($self, $subline, $subline_index, $error) = @_;
-	my $subline_error_message = "Error in sub-line '".$subline."' of index '".$subline_index."' : '".$error."'";
-	return $subline_error_message;
-}
-
 sub newThen {
 	my ($self, $then) = @_;
 
 	if ($then =~ /^goto\s/) {
 		my ($label) = $then =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)$/;
 		if (exists $self->{label}->{$label}) {
-			$self->{line_number} = $self->{label}->{$label}
+			$self->{line_index} = $self->{label}->{$label}
 		} else {
 			$self->error("cannot find label $label");
 		}
