@@ -497,11 +497,7 @@ sub end_of_sublines {
 sub error {
 	my ($self, $error) = @_;
 	if (defined $error) {
-		if (defined $self->subline_index) {
-			$self->{error} = "Error in sub-line '".$self->subline_script($self->subline_index)."' of index  '".$self->subline_index."': '".$error."'";
-		} else {
-			$self->{error} = $error;
-		}
+		$self->{error} = $error;
 	}
 	return $self->{error};
 }
@@ -509,7 +505,16 @@ sub error {
 # Returns a more informative error message
 sub error_message {
 	my ($self) = @_;
-	my $error_message = "[eventMacro] Error in macro '".$self->{Name}."', index ".$self->line_index.", line script '".$self->line_script($self->line_index)."': '".$self->error."'.\n";
+	my $error_message = 
+	  "[eventMacro] Error in macro '".$self->{Name}."'\n".
+	  "[eventMacro] Line index of the error '".$self->line_index."'\n".
+	  "[eventMacro] Script of the line '".$self->line_script($self->line_index)."'\n";
+	if (defined $self->subline_index) {
+		$error_message .= 
+		  "[eventMacro] Subline index of the error '".$self->subline_index."'\n".
+		  "[eventMacro] Script of the subline '".$self->subline_script($self->subline_index)."'\n";
+	}
+	$error_message .= "[eventMacro] Error message '".$self->error."'\n";
 	return $error_message;
 }
 
@@ -807,84 +812,56 @@ sub next {
 	##########################################
 	# log command
 	} elsif ($self->{current_line} =~ /^log\s+/) {
-		my ($tmp) = $self->{current_line} =~ /^log\s+(.*)/;
-		my $result = $self->parse_command($tmp);
-		return if (defined $self->error);
-		unless (defined $result) {
-			$self->error("$tmp failed");
-		} else {
-			message "[eventmacro log] $result\n", "eventMacro";
-		}
-		$self->next_line;
-		$self->timeout($self->macro_delay);
+		my ($log_command) = $self->{current_line} =~ /^log\s+(.*)/;
+		$self->parse_log($log_command);
 		
 	##########################################
 	# pause command
 	} elsif ($self->{current_line} =~ /^pause/) {
 		my ($pause_command) = $self->{current_line} =~ /^pause\s*(.*)/;
 		$self->parse_pause($pause_command);
-		return if (defined $self->error);
 		
 	##########################################
 	# stop command
 	} elsif ($self->{current_line} eq "stop") {
-		$self->{finished} = 1;
 		
 	##########################################
 	# release command
 	} elsif ($self->{current_line} =~ /^release\s+/) {
 		my ($release_command) = $self->{current_line} =~ /^release\s+(.*)/;
 		$self->parse_release_and_lock($release_command, 2);
-		return if (defined $self->error);
 		
 	##########################################
 	# lock command
 	} elsif ($self->{current_line} =~ /^lock\s+/) {
 		my ($lock_command) = $self->{current_line} =~ /^lock\s+(.*)/;
 		$self->parse_release_and_lock($lock_command, 1);
-		return if (defined $self->error);
 		
 	##########################################
 	# call command
 	} elsif ($self->{current_line} =~ /^call\s+/) {
 		my ($call_command) = $self->{current_line} =~ /^call\s+(.*)/;
 		$self->parse_call($call_command);
-		return if (defined $self->error);
 		
 	##########################################
 	# set command
 	} elsif ($self->{current_line} =~ /^set\s+/) {
-		my ($var, $val) = $self->{current_line} =~ /^set\s+(\w+)\s+(.*)$/;
-		if ($var eq 'macro_delay' && $val =~ /^[\d\.]*\d+$/) {
-			$self->macro_delay($val);
-		} elsif ($var eq 'repeat' && $val =~ /^\d+$/) {
-			$self->repeat($val);
-		} elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {
-			$self->overrideAI($val);
-		} elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {
-			$self->interruptible($val?0:1);
-		} elsif ($var eq 'orphan' && $val =~ /^(?:terminate|reregister(?:_safe)?)$/) {
-			$self->orphan($val);
-		} else {
-			$self->error("unrecognized key or wrong value");
-		}
-		$self->next_line;
-		$self->timeout(0);
+		my ($parameter, $new_value) = $self->{current_line} =~ /^set\s+(\w+)\s+(.*)$/;
+		$self->parse_set($parameter, $new_value);
 		
 	##########################################
 	# sub-routine command, still figuring out how to include unclever/fail sub-routine into the error msg
 	} elsif ($self->{current_line} =~ /^(?:\w+)\s*\(.*?\)/) {
-		$self->parse_command($self->{current_line});
-		return if (defined $self->error);
-		$self->next_line;
-		$self->timeout(0);
+		$self->parse_perl_sub;
 		
 	##########################################
 	# unrecognized line
 	} else {
-		$self->error("syntax error");
+		$self->error("Unrecognized macro command");
 	}
 	
+	##########################################
+	# For some reason returning undef is an error while returning an empty string is fine.
 	if (defined $self->error) {
 		return;
 	} else {
@@ -910,6 +887,74 @@ sub newThen {
 	} elsif ($then eq "stop") {
 		$self->{finished} = 1;
 	}
+}
+
+sub parse_log {
+	my ($self, $log_command) = @_;
+	my $parsed_log = $self->parse_command($log_command);
+	return if (defined $self->error);
+	
+	unless (defined $parsed_log) {
+		$self->error("Could not define log value");
+	} else {
+		message "[eventmacro log] $parsed_log\n", "eventMacro";
+	}
+	$self->timeout($self->macro_delay);
+	$self->next_line;
+}
+
+sub parse_perl_sub {
+	my ($self) = @_;
+	$self->parse_command($self->{current_line});
+	return if (defined $self->error);
+	$self->timeout(0);
+	$self->next_line;
+}
+
+sub parse_set {
+	my ($self, $parameter, $new_value) = @_;
+	if ($parameter eq 'macro_delay') {
+		if ($new_value !~ /^[\d\.]*\d+$/) {
+			$self->error("macro_delay parameter should be a number (decimals are accepted). Given value: '$new_value'");
+		} else {
+			$self->macro_delay($new_value);
+		}
+	} elsif ($parameter eq 'repeat') {
+		if ($new_value !~ /^\d+$/) {
+			$self->error("repeat parameter should be a number. Given value: '$new_value'");
+		} else {
+			$self->repeat($new_value);
+		}
+	} elsif ($parameter eq 'overrideAI') {
+		if ($new_value !~ /^[01]$/) {
+			$self->error("overrideAI parameter should be '0' or '1'. Given value: '$new_value'");
+		} else {
+			$self->overrideAI($new_value);
+		}
+	} elsif ($parameter eq 'exclusive') {
+		if ($new_value !~ /^[01]$/) {
+			$self->error("exclusive parameter should be '0' or '1'. Given value: '$new_value'");
+		} else {
+			$self->interruptible($new_value?0:1);
+		}
+	} elsif ($parameter eq 'orphan') {
+		if ($new_value !~ /(terminate|terminate_last_call|reregister|reregister_safe)/) {
+			$self->error("orphan parameter should be 'terminate', 'terminate_last_call', 'reregister' or 'reregister_safe'. Given value: '$new_value'");
+		} else {
+			$self->orphan($new_value);
+		}
+	} else {
+		$self->error("Unrecognized parameter (supported parameters: 'macro_delay', 'repeat', 'overrideAI', 'exclusive', 'orphan')");
+	}
+	return if (defined $self->error);
+	$self->timeout(0);
+	$self->next_line;
+}
+
+sub stop_command {
+	my ($self) = @_;
+	debug "[eventMacro] Stopping macro '".$self->{Name}."' because of stop command in macro script.\n", "eventMacro", 2;
+	$self->{finished} = 1;
 }
 
 sub parse_pause {
