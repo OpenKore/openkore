@@ -21,6 +21,7 @@ use eventMacro::Utilities qw(cmpr refreshGlobal getnpcID getItemIDs getItemPrice
 	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght);
 use eventMacro::Automacro;
 
+# Creates the object
 sub new {
 	my ($class, $name, $repeat, $interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
 
@@ -98,6 +99,7 @@ sub new {
 	return $self
 }
 
+# Sets/Gets the overrideAI value of the last subcall
 sub last_subcall_overrideAI {
 	my ($self, $overrideAI) = @_;
 	if (defined $overrideAI) {
@@ -105,7 +107,8 @@ sub last_subcall_overrideAI {
 	}
 	return $self->{last_subcall_overrideAI};
 }
-	
+
+# Sets/Gets the interruptible value of the last subcall
 sub last_subcall_interruptible {
 	my ($self, $interruptible) = @_;
 	if (defined $interruptible) {
@@ -113,7 +116,8 @@ sub last_subcall_interruptible {
 	}
 	return $self->{last_subcall_interruptible};
 }
-	
+
+# Sets/Gets the orphan method of the last subcall
 sub last_subcall_orphan {
 	my ($self, $orphan) = @_;
 	if (defined $orphan) {
@@ -122,6 +126,7 @@ sub last_subcall_orphan {
 	return $self->{last_subcall_orphan};
 }
 
+# Sets/Gets the name of the last subcall
 sub last_subcall_name {
 	my ($self, $name) = @_;
 	if (defined $name) {
@@ -130,7 +135,7 @@ sub last_subcall_name {
 	return $self->{last_subcall_name};
 }
 
-# sets or get interruptible flag
+# Sets/Gets the current interruptible flag
 sub interruptible {
 	my ($self, $interruptible) = @_;
 	
@@ -152,6 +157,7 @@ sub interruptible {
 	return $self->{interruptible};
 }
 
+# Makes sure the automacro checking state is compatible with this macro interruptible
 sub validate_automacro_checking_to_interruptible {
 	my ($self, $interruptible) = @_;
 	
@@ -183,7 +189,7 @@ sub validate_automacro_checking_to_interruptible {
 	}
 }
 
-# sets or gets override AI value
+# Sets/Gets the current override AI value
 sub overrideAI {
 	my ($self, $overrideAI) = @_;
 	
@@ -205,6 +211,7 @@ sub overrideAI {
 	return $self->{overrideAI};
 }
 
+# Makes sure the AI queue state is compatible with this macro overrideAI
 sub validate_AI_queue_to_overrideAI {
 	my ($self, $overrideAI) = @_;
 	
@@ -229,7 +236,7 @@ sub validate_AI_queue_to_overrideAI {
 	}
 }
 
-# registers to AI queue
+# Registers to AI queue
 sub register {
 	my ($self) = @_;
 	debug "[eventMacro] Macro '".$self->{Name}."' is now registering itself to AI queue.\n", "eventMacro", 2;
@@ -237,7 +244,7 @@ sub register {
 	$self->{registered} = 1;
 }
 
-# unregisters from AI queue
+# Unregisters from AI queue
 sub unregister {
 	my ($self) = @_;
 	debug "[eventMacro] Macro '".$self->{Name}."' is now deleting itself from AI queue.\n", "eventMacro", 2;
@@ -245,7 +252,7 @@ sub unregister {
 	$self->{registered} = 0;
 }
 
-# sets or gets method for orphaned macros
+# Sets/Gets the current orphan method
 sub orphan {
 	my ($self, $orphan) = @_;
 	
@@ -269,7 +276,7 @@ sub orphan {
 	return $self->{orphan};
 }
 
-# sets or gets timeout for next command
+# Sets/Gets the current timeout
 sub timeout {
 	my ($self, $timeout) = @_;
 	if (defined $timeout) {
@@ -278,7 +285,7 @@ sub timeout {
 	return { time => $self->{time}, timeout => $self->{timeout} };
 }
 
-# sets macro_delay timeout for this macro
+# Sets/Gets the current macro delay
 sub macro_delay {
 	my ($self, $macro_delay) = @_;
 	if (defined $macro_delay) {
@@ -287,12 +294,13 @@ sub macro_delay {
 	return $self->{macro_delay};
 }
 
-# checks register status
+# Returns true if the macro is registered to AI queue
 sub registered {
 	my ($self) = @_;
 	return $self->{registered};
 }
 
+# Sets/Gets the current repeat count
 sub repeat {
 	my ($self, $repeat) = @_;
 	if (defined $repeat) {
@@ -302,26 +310,31 @@ sub repeat {
 	return $self->{repeat};
 }
 
+# Pauses the macro
 sub pause {
 	my ($self) = @_;
 	$self->{Paused} = 1;
 }
 
+# Unpauses the macro
 sub unpause {
 	my ($self) = @_;
 	$self->{Paused} = 0;
 }
 
+# Returns true if the macro is paused
 sub is_paused {
 	my ($self) = @_;
 	return $self->{Paused};
 }
 
+# Returns the macro name
 sub get_name {
 	my ($self) = @_;
 	return $self->{Name};
 }
 
+# Deletes the subcall object
 sub clear_subcall {
 	my ($self) = @_;
 	debug "[eventMacro] Clearing submacro '".$self->{subcall}->{Name}."' from macro '".$self->{Name}."'.\n", "eventMacro", 2;
@@ -346,6 +359,7 @@ sub clear_subcall {
 	undef $self->{subcall};
 }
 
+# Creates a subcall object
 sub create_subcall {
 	my ($self, $name, $repeat) = @_;
 	debug "[eventMacro] Creating submacro '".$name."' on macro '".$self->{Name}."'.\n", "eventMacro", 2;
@@ -358,6 +372,7 @@ sub DESTROY {
 	$self->unregister if (AI::inQueue('eventMacro') && !$self->{submacro});
 }
 
+# TODO: Check this
 # sets or gets macro block flag
 sub macro_block {
 	my $script = $_[0];
@@ -372,19 +387,22 @@ sub macro_block {
 	return $_[1];
 }
 
+# TODO: Check this
 # returns whether or not the macro finished
 sub finished {
 	my ($self) = @_;
 	return $self->{finished}
 }
 
+# TODO: Check this
 # re-sets the timer
 sub ok {
 	my ($self) = @_;
 	$self->{time} = time
 }
 
-# scans the script for labels
+# TODO: Check this
+# Scans the script for labels
 sub scanLabels {
 	my $script = $_[0];
 	my %labels;
@@ -405,6 +423,7 @@ sub scanLabels {
 	return %labels
 }
 
+# Decides what to do when we get to the end of a macro script
 sub manage_script_end {
 	my ($self) = @_;
 	debug "[eventMacro] Macro '".$self->{Name}."' got to the end of its script.\n", "eventMacro", 2;
@@ -418,6 +437,7 @@ sub manage_script_end {
 	}
 }
 
+# Makes sure the subcall is over before continuing with this macro
 sub manage_subcall {
 	my ($self) = @_;
 	my $subcall_return = $self->{subcall}->next;
@@ -436,7 +456,7 @@ sub manage_subcall {
 	}
 }
 
-# returns and/or set the current line number
+# Sets/Gets the current line index
 sub line_index {
 	my ($self, $line_index) = @_;
 	if (defined $line_index) {
@@ -445,7 +465,13 @@ sub line_index {
 	return $self->{line_index};
 }
 
-# returns and/or set the current subline number
+# Gets the script of the given line
+sub line_script {
+	my ($self, $line_index) = @_;
+	return @{$self->{lines_array}}[$line_index];
+}
+
+# Sets/Gets the current subline index
 sub subline_index {
 	my ($self, $subline_index) = @_;
 	if (defined $subline_index) {
@@ -454,10 +480,27 @@ sub subline_index {
 	return $self->{subline_index};
 }
 
-# Gets the script of the given line
-sub line_script {
-	my ($self, $line_index) = @_;
-	return @{$self->{lines_array}}[$line_index];
+# Gets the script of the given subline
+sub subline_script {
+	my ($self, $subline_index) = @_;
+	return @{$self->{sublines_array}}[$subline_index];
+}
+
+# Defines the sublines variables
+sub sublines_start {
+	my ($self) = @_;
+	debug "[eventMacro] Line '".$self->{current_line}."' of index '".$self->line_index."' has sublines.\n", "eventMacro", 2;
+	@{$self->{sublines_array}} = split(/\s*;\s*/, $self->{current_line});
+	$self->subline_index(0);
+}
+
+# Undefines the sublines variables
+sub sublines_end {
+	my ($self) = @_;
+	debug "[eventMacro] Finished all sublines of line '".$self->line_script($self->line_index)."' of index '".$self->line_index."', continuing with next line.\n", "eventMacro", 2;
+	undef $self->{sublines_array};
+	undef $self->{subline_index};
+	$self->next_line;
 }
 
 # Advances a line or a subline
@@ -470,30 +513,7 @@ sub next_line {
 	}
 }
 
-# Gets the script of the given subline
-sub subline_script {
-	my ($self, $subline_index) = @_;
-	return @{$self->{sublines_array}}[$subline_index];
-}
-
-# Defines the sublines variables
-sub create_sublines {
-	my ($self) = @_;
-	debug "[eventMacro] Line '".$self->{current_line}."' of index '".$self->line_index."' has sublines.\n", "eventMacro", 2;
-	@{$self->{sublines_array}} = split(/\s*;\s*/, $self->{current_line});
-	$self->subline_index(0);
-}
-
-# Undefines the sublines variables
-sub end_of_sublines {
-	my ($self) = @_;
-	debug "[eventMacro] Finished all sublines of line '".$self->line_script($self->line_index)."' of index '".$self->line_index."', continuing with next line.\n", "eventMacro", 2;
-	undef $self->{sublines_array};
-	undef $self->{subline_index};
-	$self->next_line;
-}
-
-# Sets the error message
+# Sets/Gets the error message
 sub error {
 	my ($self, $error) = @_;
 	if (defined $error) {
@@ -502,7 +522,7 @@ sub error {
 	return $self->{error};
 }
 
-# Returns a more informative error message
+# Returns an informative error message
 sub error_message {
 	my ($self) = @_;
 	my $error_message = 
@@ -518,7 +538,7 @@ sub error_message {
 	return $error_message;
 }
 
-# processes next line
+# Processes next line of macro script
 sub next {
 	my $self = $_[0];
 	
@@ -533,7 +553,7 @@ sub next {
 	
 	#End of subline script
 	if (defined $self->subline_index && $self->subline_index == scalar(@{$self->{sublines_array}})) {
-		$self->end_of_sublines;
+		$self->sublines_end;
 		
 		#End of subline script and end of macro script
 		if ( $self->{line_index} == scalar (@{$self->{lines_array}}) ) {
@@ -554,7 +574,7 @@ sub next {
 	
 	#Start of subline script
 	if ($self->{current_line} =~ /;/) {
-		$self->create_sublines;
+		$self->sublines_start;
 		$self->{current_line} = $self->subline_script($self->subline_index);
 	}
 	
@@ -853,7 +873,7 @@ sub next {
 	##########################################
 	# sub-routine command, still figuring out how to include unclever/fail sub-routine into the error msg
 	} elsif ($self->{current_line} =~ /^(?:\w+)\s*\(.*?\)/) {
-		$self->parse_perl_sub;
+		$self->perl_sub_command;
 		
 	##########################################
 	# unrecognized line
@@ -890,6 +910,7 @@ sub newThen {
 	}
 }
 
+#From here functions are intended to parse/execute macro commands
 sub parse_log {
 	my ($self, $log_command) = @_;
 	my $parsed_log = $self->parse_command($log_command);
@@ -904,7 +925,7 @@ sub parse_log {
 	$self->next_line;
 }
 
-sub parse_perl_sub {
+sub perl_sub_command {
 	my ($self) = @_;
 	$self->parse_command($self->{current_line});
 	return if (defined $self->error);
@@ -1056,6 +1077,7 @@ sub parse_call {
 }
 
 
+#From here functions are meant to parse code and check order (I haven't even looked at them yet)
 sub statement {
 	my ($self, $temp_multi) = @_;
 	my ($first, $cond, $last) = $temp_multi =~ /^\s*"?(.*?)"?\s+([<>=!~]+?)\s+"?(.*?)"?\s*$/;
