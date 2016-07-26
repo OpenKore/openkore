@@ -824,6 +824,7 @@ sub next {
 	##########################################
 	# stop command
 	} elsif ($self->{current_line} eq "stop") {
+		$self->stop_command();
 		
 	##########################################
 	# release command
