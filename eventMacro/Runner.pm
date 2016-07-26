@@ -821,19 +821,9 @@ sub next {
 	##########################################
 	# pause command
 	} elsif ($self->{current_line} =~ /^pause/) {
-		my ($tmp) = $self->{current_line} =~ /^pause\s*(.*)/;
-		if (defined $tmp) {
-			my $result = $self->parse_command($tmp);
-			return if (defined $self->error);
-			unless (defined $result) {
-				$self->error("$tmp failed");
-			} else {
-				$self->timeout($result);
-			}
-		} else {
-			$self->timeout($self->macro_delay);
-		}
-		$self->next_line;
+		my ($pause_command) = $self->{current_line} =~ /^pause\s*(.*)/;
+		$self->parse_pause($pause_command);
+		return if (defined $self->error);
 		
 	##########################################
 	# stop command
@@ -843,30 +833,16 @@ sub next {
 	##########################################
 	# release command
 	} elsif ($self->{current_line} =~ /^release\s+/) {
-		my ($tmp) = $self->{current_line} =~ /^release\s+(.*)/;
-		my $automacro = $eventMacro->{Automacro_List}->getByName($self->parse_command($tmp));
-		if (!$automacro) {
-			return if (defined $self->error);
-			$self->error("releasing $tmp failed");
-		} else {
-			$automacro->enable();
-		}
-		$self->next_line;
-		$self->timeout(0);
+		my ($release_command) = $self->{current_line} =~ /^release\s+(.*)/;
+		$self->parse_release_and_lock($release_command, 2);
+		return if (defined $self->error);
 		
 	##########################################
 	# lock command
 	} elsif ($self->{current_line} =~ /^lock\s+/) {
-		my ($tmp) = $self->{current_line} =~ /^lock\s+(.*)/;
-		my $automacro = $eventMacro->{Automacro_List}->getByName($self->parse_command($tmp));
-		if (!$automacro) {
-			return if (defined $self->error);
-			$self->error("locking $tmp failed");
-		} else {
-			$automacro->disable();
-		}
-		$self->next_line;
-		$self->timeout(0);
+		my ($lock_command) = $self->{current_line} =~ /^lock\s+(.*)/;
+		$self->parse_release_and_lock($lock_command, 1);
+		return if (defined $self->error);
 		
 	##########################################
 	# call command
@@ -874,8 +850,6 @@ sub next {
 		my ($call_command) = $self->{current_line} =~ /^call\s+(.*)/;
 		$self->parse_call($call_command);
 		return if (defined $self->error);
-		$self->next_line;
-		$self->timeout($self->macro_delay);
 		
 	##########################################
 	# set command
@@ -938,6 +912,51 @@ sub newThen {
 	}
 }
 
+sub parse_pause {
+	my ($self, $pause_command) = @_;
+	if (defined $pause_command) {
+		my $parsed_pause_command = $self->parse_command($pause_command);
+		return if (defined $self->error);
+		if (!defined $parsed_pause_command) {
+			$self->error("pause value could not be defined");
+		} elsif ($parsed_pause_command !~ /^\d+$/) {
+			$self->error("pause value '$parsed_pause_command' must be numeric");
+		} else {
+			$self->timeout($parsed_pause_command);
+		}
+	} else {
+		$self->timeout($self->macro_delay);
+	}
+	$self->next_line;
+}
+
+#Type 1 is lock
+#Type 2 is release
+sub parse_release_and_lock {
+	my ($self, $release_command, $type) = @_;
+
+	my $parsed_automacro_name = $self->parse_command($release_command);
+	return if (defined $self->error);
+		
+	if (!defined $parsed_automacro_name) {
+		$self->error("automacro name could not be defined");
+	} elsif (!defined $eventMacro->{Automacro_List}->getByName($parsed_automacro_name)) {
+		$self->error("could not find automacro with name '$parsed_automacro_name'");
+	}
+	return if (defined $self->error);
+	
+	my $automacro = $eventMacro->{Automacro_List}->getByName($parsed_automacro_name);
+	
+	if ($type == 1) {
+		$automacro->disable();
+	} else {
+		$automacro->enable();
+	}
+	
+	$self->timeout(0);
+	$self->next_line;
+}
+
 sub parse_call {
 	my ($self, $call_command) = @_;
 	
@@ -976,9 +995,12 @@ sub parse_call {
 		
 	unless (defined $self->{subcall}) {
 		$self->error("failed to create subcall '$parsed_macro_name'");
-	} else {
-		$self->timeout($self->macro_delay);
+		return;
 	}
+	
+	$self->timeout($self->macro_delay);
+	$self->next_line;
+	
 	
 	#my @new_params = substr($cparms, 2) =~ /"[^"]+"|\S+/g;
 	#foreach my $p (1..@new_params) {
