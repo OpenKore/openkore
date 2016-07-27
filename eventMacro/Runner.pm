@@ -803,32 +803,9 @@ sub next {
 	##########################################
 	# returns command: do whatever
 	} elsif ($self->{current_line} =~ /^do\s/) {
-		my ($tmp) = $self->{current_line} =~ /^do\s+(.*)/;
-		if ($tmp =~ /^macro\s+/) {
-			my ($arg) = $tmp =~ /^macro\s+(.*)/;
-			if ($arg =~ /^reset/) {
-				$self->error("use 'release' instead of 'macro reset'");
-			} elsif ($arg eq 'pause' || $arg eq 'resume') {
-				$self->error("do not use 'macro pause' or 'macro resume' within a macro");
-			} elsif ($arg =~ /^set\s/) {
-				$self->error("do not use 'macro set'. Use \$foo = bar");
-			} elsif ($arg eq 'stop') {
-				$self->error("use 'stop' instead");
-			} elsif ($arg !~ /^(?:list|status)$/) {
-				$self->error("use 'call $arg' instead of 'macro $arg'");
-			}
-		} elsif ($tmp =~ /^ai\s+clear$/) {
-			$self->error("do not mess around with ai in macros");
-		}
-		my $result = $self->parse_command($tmp);
-		return if (defined $self->error);
-		unless (defined $result) {
-			$self->error("command $tmp failed");
-			return;
-		}
-		$self->timeout($self->macro_delay);
-		$self->next_line;
-		return $result;
+		my ($do_command) = $self->{current_line} =~ /^do\s+(.*)/;
+		my $result = $self->parse_do($do_command);
+		return $result if (defined $result);
 		
 	##########################################
 	# log command
@@ -909,6 +886,35 @@ sub newThen {
 	} elsif ($then eq "stop") {
 		$self->{finished} = 1;
 	}
+}
+
+sub parse_do {
+	my ($self, $do_command) = @_;
+	my $parsed_command = $self->parse_command($do_command);
+	return if (defined $self->error);
+	
+	unless (defined $parsed_command) {
+		$self->error("Could not define do command");
+		return;
+	}
+	
+	if ($parsed_command =~ /^eventMacro\s+/) {
+		my ($arg) = $parsed_command =~ /^eventMacro\s+(.*)/;
+		if ($arg =~ /^reset/) {
+			$self->error("use macro command 'release' instead of 'eventMacro reset'");
+		} elsif ($arg eq 'pause' || $arg eq 'unpause') {
+			$self->error("do not use 'eventMacro pause' or 'eventMacro unpause' inside macros");
+		} elsif ($arg eq 'stop') {
+			$self->error("use macro command 'stop' instead of 'eventMacro stop'");
+		} elsif ($arg !~ /^(?:list|status|automacro\s+.*|variables_value)$/) {
+			$self->error("use macro command 'call ".$arg."' instead of 'eventMacro ".$arg."'");
+		}
+	} elsif ($parsed_command =~ /^ai\s+clear$/) {
+		$self->error("do not use 'ai clear' inside macros");
+	}
+	return if (defined $self->error);
+	$self->timeout($self->macro_delay);
+	$self->next_line;
 }
 
 #From here functions are intended to parse/execute macro commands
