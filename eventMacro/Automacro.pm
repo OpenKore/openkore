@@ -145,7 +145,7 @@ sub validate_automacro_status {
 	my ($self) = @_;
 	debug "[eventMacro] Validating value of automacro ".$self->get_name()." \n", "eventMacro", 2;
 	foreach my $condition ( @{ $self->{conditionList}->getItems() } ) {
-		debug "[eventMacro] Checking confition ".$condition->get_name()." index ".$condition->{listIndex}." \n", "eventMacro", 2;
+		debug "[eventMacro] Checking condition ".$condition->get_name()." index ".$condition->{listIndex}." \n", "eventMacro", 2;
 		next if ($condition->is_event_only());
 		next if ($condition->is_fulfilled());
 		debug "[eventMacro] Not fulfilled \n", "eventMacro", 2;
