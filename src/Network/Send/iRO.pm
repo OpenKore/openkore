@@ -81,4 +81,20 @@ sub reconstruct_char_delete2_accept {
 #	$self->sendToServer($msg);
 #}
 
+sub sendTop10Alchemist {
+	shift->sendToServer( pack 'vv', 0x097C, 1 );
+}
+
+sub sendTop10Blacksmith {
+	shift->sendToServer( pack 'vv', 0x097C, 0 );
+}
+
+sub sendTop10PK {
+	shift->sendToServer( pack 'vv', 0x097C, 3 );
+}
+
+sub sendTop10Taekwon {
+	shift->sendToServer( pack 'vv', 0x097C, 2 );
+}
+
 1;
