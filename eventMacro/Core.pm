@@ -510,13 +510,6 @@ sub iterate_macro {
 	
 	my $macro_timeout = $self->{Macro_Runner}->timeout;
 	
-	unless ($self->{Macro_Runner}->registered || $self->{Macro_Runner}->overrideAI) {
-		if (timeOut($macro_timeout)) {
-			$self->{Macro_Runner}->register;
-		} else {
-			return;
-		}
-	}
 	if (timeOut($macro_timeout) && ai_isIdle()) {
 		do {
 			last unless ( processCmd($self->{Macro_Runner}->next) );
