@@ -44,6 +44,7 @@ sub new {
 	
 	$self->{time} = time;
 	
+	$self->{current_line} = undef;
 	$self->{subcall} = undef;
 	$self->{error} = undef;
 	$self->{last_subcall_overrideAI} = undef;
