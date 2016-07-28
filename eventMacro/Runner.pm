@@ -587,11 +587,11 @@ sub next {
 
 	# "If" postfix control
 	if ($self->{current_line} =~ /.+\s+if\s*\(.*\)$/) {
-		my ($text) = $self->{current_line} =~ /.+\s+if\s*\(\s*(.*)\s*\)$/;
-		$text = $self->parse_command($text);
+		my ($condition_text) = $self->{current_line} =~ /.+\s+if\s*\(\s*(.*)\s*\)$/;
+		my $result = $self->parse_and_check_condition_text($condition_text);
 		return if (defined $self->error);
-		my $savetxt = $self->particle($text);
-		if ($self->multi($savetxt)) {
+		
+		if ($result) {
 			$self->{current_line} =~ s/\s+if\s*\(.*\)$//;
 		} else {
 			$self->next_line;
@@ -643,11 +643,9 @@ sub next {
 	} elsif ($self->{current_line} =~ /^if\s/) {
 		my ($text, $then) = $self->{current_line} =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop|{|)\s*/;
 
-		# The main trick is parse all the @special keyword and vars 1st,
-		$text = $self->parse_command($text);
 		return if (defined $self->error);
-		my $savetxt = $self->particle($text);
-		if ($self->multi($savetxt)) {
+		
+		if ($result) {
 			$self->newThen($then);
 			return if (defined $self->error);
 		} elsif ($then eq "{") { # If the condition is false because "if" this is not using the command block
@@ -661,12 +659,8 @@ sub next {
 				} elsif (($searchEnd eq '}') || ($searchEnd =~ /^}\s*else\s*{$/ && $countBlockIf == 1)) {
 					$countBlockIf--;
 				} elsif ($searchEnd =~ /^}\s*elsif\s+\(\s*(.*)\s*\).*{$/ && $countBlockIf == 1) {
-					# If the condition of 'elsif' is true, the commands of your block will be executed,
-					#  if false, will not run.
-					$text = $self->parse_command($1);
 					return if (defined $self->error);
-					$savetxt = $self->particle($text);
-					if ($self->multi($savetxt)) {
+					if ($result) {
 						$countBlockIf--;
 					}
 				}
@@ -714,10 +708,11 @@ sub next {
 			next if (!$secondPartCondition);
 			
 			my $completCondition = $firstPartCondition . ' ' . $secondPartCondition;
-			my $text = $self->parse_command($completCondition);
+			
+			my $result = $self->parse_and_check_condition_text($completCondition);
 			return if (defined $self->error);
-			my $savetxt = $self->particle($text);
-			if ($self->multi($savetxt)) {
+			
+			if ($result) {
 				$self->newThen($then);
 				return if (defined $self->error);
 				last;
@@ -748,11 +743,12 @@ sub next {
 	##########################################
 	# while statement: while (foo <= bar) as label
 	} elsif ($self->{current_line} =~ /^while\s/) {
-		my ($text, $label) = $self->{current_line} =~ /^while\s+\(\s*(.*)\s*\)\s+as\s+(.*)/;
-		my $text = $self->parse_command($text);
+		my ($condition_text, $label) = $self->{current_line} =~ /^while\s+\(\s*(.*)\s*\)\s+as\s+(.*)/;
+		
+		my $result = $self->parse_and_check_condition_text($condition_text);
 		return if (defined $self->error);
-		my $savetxt = $self->particle($text);
-		if (!$self->multi($savetxt)) {
+			
+		if (!$result) {
 			$self->line_index($self->{label}->{"end ".$label});
 		}
 		$self->next_line;
@@ -868,6 +864,21 @@ sub next {
 	}
 }
 
+sub parse_and_check_condition_text {
+	my ($self, $condition_text) = @_;
+	
+	my $parsed_text = $self->parse_command($condition_text);
+	return if (defined $self->error);
+	
+	my $particle_text = $self->particle($parsed_text);
+	
+	if ($self->multi($particle_text)) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
 sub newThen {
 	my ($self, $then) = @_;
 
@@ -915,6 +926,7 @@ sub parse_do {
 	return if (defined $self->error);
 	$self->timeout($self->macro_delay);
 	$self->next_line;
+	return $parsed_command;
 }
 
 #From here functions are intended to parse/execute macro commands
