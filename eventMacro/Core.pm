@@ -202,6 +202,10 @@ sub create_automacro_list {
 			} elsif ($parameter->{'key'} eq "orphan" && $parameter->{'value'} !~ /(terminate|terminate_last_call|reregister|reregister_safe)/) {
 				error "[eventMacro] Ignoring automacro '$name' (orphan parameter should be 'terminate', 'terminate_last_call', 'reregister' or 'reregister_safe')\n";
 				next AUTOMACRO;
+			###Parameter: repeat
+			} elsif ($parameter->{'key'} eq "repeat" && $parameter->{'value'} !~ /\d+/) {
+				error "[eventMacro] Ignoring automacro '$name' (repeat parameter should be a number)\n";
+				next AUTOMACRO;
 			} else {
 				$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
 			}
@@ -467,9 +471,7 @@ sub call_macro {
 	
 	$self->{Macro_Runner} = new eventMacro::Runner(
 		$automacro->get_parameter('call'),
-		0,
-		undef,
-		undef,
+		$automacro->get_parameter('repeat'),
 		$automacro->get_parameter('exclusive') ? 0 : 1,
 		$automacro->get_parameter('overrideAI'),
 		$automacro->get_parameter('orphan'),
@@ -488,30 +490,30 @@ sub call_macro {
 	}
 }
 
-# macro/script
+# Function responsible for actually running the macro script
 sub iterate_macro {
 	my $self = shift;
+	
+	# These two cheks are actually not necessary, but they can prevent future code bugs.
 	if ( !defined $self->{Macro_Runner} ) {
-		#Something used undef in $self->{Macro_Runner} without unregistering it
-		debug "[eventMacro] Macro was finished in a bad way\n", "eventMacro", 2;
+		debug "[eventMacro] For some reason the running macro object got undefined, clearing queue to prevent errors.\n", "eventMacro", 2;
 		$self->clear_queue();
 		return;
 	} elsif ($self->{Macro_Runner}->finished) {
-		#Actually it should never get here, eventMacro::Runner should clear queue when macro finishes
-		debug "[eventMacro] Macro '".$self->{Macro_Runner}->get_name()."' was finished successfully\n", "eventMacro", 2;
+		debug "[eventMacro] For some reason macro '".$self->{Macro_Runner}->get_name()."' finished but 'processCmd' did not clear it, clearing queue to prevent errors.\n", "eventMacro", 2;
 		$self->clear_queue();
 		return;
 	}
+	
+	# In future versions this should not be necessary since the only way to pause a macro is by a console command, and this command should unhook 'mainLoop_pre', making this unnecessary.
 	return if $self->{Macro_Runner}->is_paused();
-	my $tmptime = $self->{Macro_Runner}->timeout;
-	unless ($self->{Macro_Runner}->registered || $self->{Macro_Runner}->overrideAI) {
-		if (timeOut($tmptime)) {$self->{Macro_Runner}->register}
-		else {return}
-	}
-	if (timeOut($tmptime) && ai_isIdle()) {
+	
+	my $macro_timeout = $self->{Macro_Runner}->timeout;
+	
+	if (timeOut($macro_timeout) && ai_isIdle()) {
 		do {
-			last unless processCmd $self->{Macro_Runner}->next;
-		} while $self->{Macro_Runner} && !$self->{Macro_Runner}->is_paused() && $self->{Macro_Runner}->macro_block;
+			last unless ( processCmd($self->{Macro_Runner}->next) );
+		} while ($self->{Macro_Runner} && !$self->{Macro_Runner}->is_paused() && $self->{Macro_Runner}->macro_block);
 	}
 }
 

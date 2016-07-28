@@ -489,10 +489,10 @@ sub getRandomRange {
 }
 
 sub processCmd {
-	my $command = $_[0];
+	my ($command) = @_;
 	my $macro_name = $eventMacro->{Macro_Runner}->last_subcall_name;
-	if (defined $_[0]) {
-		if ($_[0] ne '') {
+	if (defined $command) {
+		if ($command ne '') {
 			unless (Commands::run($command)) {
 				my $error_message = sprintf("[eventMacro] %s failed with %s\n", $macro_name, $command);
 				
@@ -501,12 +501,17 @@ sub processCmd {
 				return;
 			}
 		}
-		$eventMacro->{Macro_Runner}->ok;
 		if (defined $eventMacro->{Macro_Runner} && $eventMacro->{Macro_Runner}->finished) {
 			$eventMacro->clear_queue();
+		} else {
+			$eventMacro->{Macro_Runner}->ok;
 		}
 	} else {
-		my $error_message = $eventMacro->{Macro_Runner}->error_message;
+		my $macro = $eventMacro->{Macro_Runner};
+		while (defined $macro->{subcall}) {
+			$macro = $macro->{subcall};
+		}
+		my $error_message = $macro->error_message;
 		
 		error $error_message, "eventMacro";
 		$eventMacro->clear_queue();

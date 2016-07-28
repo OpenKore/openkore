@@ -126,17 +126,36 @@ sub commandHandler {
 		if (!defined $params[0] || $params[0] eq 'macro') {
 			my $macro = $eventMacro->{Macro_Runner};
 			if ( $macro ) {
-				message( sprintf( "macro %s\n", $macro->get_name ), "list" );
-				message( sprintf( "status: %s\n", $macro->registered ? "registered to AI queue" : "not registered to AI queue" ) );
-				message( sprintf( "paused: %s\n", $macro->is_paused ? "yes" : "no" ) );
-				for ( my $m = $macro ; $m ; $m = $m->{subcall} ) {
-					my @flags = ();
-					my $t     = $m->timeout->{time} + $m->timeout->{timeout};
-					push @flags, sprintf( 'delay=%.1fs (%s)', $t - time, scalar localtime( $t ) ) if $t > time;
-					push @flags, 'ai_overridden' if $m->overrideAI;
-					push @flags, 'finished'      if $m->finished;
-					message( sprintf( "%s (line %d) : %s\n", $m->get_name, $m->line_number, $m->line_script($m->line_number) ) );
-					message( sprintf( "  %s\n", "@flags" ) ) if @flags;
+				message( "There's a macro currently running\n", "list" );
+				message( sprintf( "Paused: %s\n", $macro->is_paused ? "yes" : "no" ) );
+				
+				my $macro_tree_message = "Macro tree: '".$macro->get_name."'";
+				my $submacro = $macro;
+				while (defined $submacro->{subcall}) {
+					$submacro = $submacro->{subcall};
+					$macro_tree_message .= " --> '".$submacro->get_name."'";
+				}
+				$macro_tree_message .= ".\n";
+				message( $macro_tree_message, "list" );
+				
+				while () {
+					message( center( " Macro ", 25, '-' ) . "\n", 'list' );
+					message( sprintf( "Macro name: %s\n", $macro->get_name ), "list" );
+					message( sprintf( "averrideAI: %s\n", $macro->overrideAI ), "list" );
+					message( sprintf( "interruptible: %s\n", $macro->interruptible ), "list" );
+					message( sprintf( "orphan method: %s\n", $macro->orphan ), "list" );
+					message( sprintf( "remaining repeats: %s\n", $macro->repeat ), "list" );
+					message( sprintf( "macro delay: %s\n", $macro->macro_delay ), "list" );
+					
+					message( sprintf( "current command: %s\n", $macro->{current_line} ), "list" );
+					
+					my $time_until_next_command = (($macro->timeout->{time} + $macro->timeout->{timeout}) - time);
+					message( sprintf( "time until next command: %s\n", $macro->macro_delay ), "list" ) if ($time_until_next_command > 0);
+					
+					message "\n";
+					
+					last if (!defined $macro->{subcall});
+					$macro = $macro->{subcall};
 				}
 			} else {
 				message "There's no macro currently running.\n";
@@ -292,9 +311,7 @@ sub commandHandler {
 		
 		$eventMacro->{Macro_Runner} = new eventMacro::Runner(
 			$arg,
-			defined $opt->{repeat} ? $opt->{repeat} : undef,
-			undef,
-			undef,
+			defined $opt->{repeat} ? $opt->{repeat} : 1,
 			defined $opt->{exclusive} ? $opt->{exclusive} ? 0 : 1 : undef,
 			defined $opt->{override_ai} ? $opt->{override_ai} : undef,
 			defined $opt->{orphan} ? $opt->{orphan} : undef,
