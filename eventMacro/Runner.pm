@@ -544,7 +544,7 @@ sub error_message {
 sub define_current_line {
 	my ($self) = @_;
 	
-	#Checks if we reached the end of the script
+	#End of script
 	if ( $self->{line_index} == scalar (@{$self->{lines_array}}) ) {
 		$self->manage_script_end();
 		if ($self->{finished}) {
@@ -552,24 +552,17 @@ sub define_current_line {
 			return;
 		}
 		$self->define_current_line;
-		
-	#End of subline script
-	} elsif (defined $self->subline_index && $self->subline_index == scalar(@{$self->{sublines_array}})) {
-		$self->sublines_end;
-		
-		#End of subline script and end of macro script
-		if ( $self->{line_index} == scalar (@{$self->{lines_array}}) ) {
-			$self->manage_script_end();
-			if ($self->{finished}) {
-				$self->{current_line} = undef;
-				return;
-			}
-		}
-		$self->define_current_line;
 	
 	#Inside subline script
 	} elsif (defined $self->subline_index) {
-		$self->{current_line} = $self->subline_script($self->subline_index);
+	
+		#End of subline script
+		if ($self->subline_index == scalar(@{$self->{sublines_array}})) {
+			$self->sublines_end;
+			$self->define_current_line;
+		} else {
+			$self->{current_line} = $self->subline_script($self->subline_index);
+		}
 		
 	#Start of subline script
 	} elsif ($self->line_script($self->line_index) =~ /;/) {
