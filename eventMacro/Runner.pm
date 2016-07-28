@@ -643,6 +643,7 @@ sub next {
 	} elsif ($self->{current_line} =~ /^if\s/) {
 		my ($text, $then) = $self->{current_line} =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop|{|)\s*/;
 
+		my $result = $self->parse_and_check_condition_text($text);
 		return if (defined $self->error);
 		
 		if ($result) {
@@ -659,6 +660,7 @@ sub next {
 				} elsif (($searchEnd eq '}') || ($searchEnd =~ /^}\s*else\s*{$/ && $countBlockIf == 1)) {
 					$countBlockIf--;
 				} elsif ($searchEnd =~ /^}\s*elsif\s+\(\s*(.*)\s*\).*{$/ && $countBlockIf == 1) {
+					$result = $self->parse_and_check_condition_text($1);
 					return if (defined $self->error);
 					if ($result) {
 						$countBlockIf--;
