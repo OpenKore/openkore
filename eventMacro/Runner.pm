@@ -490,8 +490,9 @@ sub subline_script {
 # Defines the sublines variables
 sub sublines_start {
 	my ($self) = @_;
-	debug "[eventMacro] Line '".$self->{current_line}."' of index '".$self->line_index."' has sublines.\n", "eventMacro", 2;
-	@{$self->{sublines_array}} = split(/\s*;\s*/, $self->{current_line});
+	my $full_line = $self->line_script($self->line_index);
+	debug "[eventMacro] Line '".$full_line."' of index '".$self->line_index."' has sublines.\n", "eventMacro", 2;
+	@{$self->{sublines_array}} = split(/\s*;\s*/, $full_line);
 	$self->subline_index(0);
 }
 
@@ -539,45 +540,58 @@ sub error_message {
 	return $error_message;
 }
 
-# Processes next line of macro script
-sub next {
-	my $self = $_[0];
+# Decides the next script to be read
+sub define_current_line {
+	my ($self) = @_;
 	
 	#Checks if we reached the end of the script
 	if ( $self->{line_index} == scalar (@{$self->{lines_array}}) ) {
 		$self->manage_script_end();
-		return "" if ($self->{finished});
-	}
-	
-	#We must finish the subcall before returning to this macro
-	return $self->manage_subcall() if (defined $self->{subcall});
-	
+		if ($self->{finished}) {
+			$self->{current_line} = undef;
+			return;
+		}
+		$self->define_current_line;
+		
 	#End of subline script
-	if (defined $self->subline_index && $self->subline_index == scalar(@{$self->{sublines_array}})) {
+	} elsif (defined $self->subline_index && $self->subline_index == scalar(@{$self->{sublines_array}})) {
 		$self->sublines_end;
 		
 		#End of subline script and end of macro script
 		if ( $self->{line_index} == scalar (@{$self->{lines_array}}) ) {
 			$self->manage_script_end();
-			return "" if ($self->{finished});
+			if ($self->{finished}) {
+				$self->{current_line} = undef;
+				return;
+			}
 		}
-		
-		$self->{current_line} = $self->line_script($self->line_index);
+		$self->define_current_line;
 	
 	#Inside subline script
 	} elsif (defined $self->subline_index) {
+		$self->{current_line} = $self->subline_script($self->subline_index);
+		
+	#Start of subline script
+	} elsif ($self->line_script($self->line_index) =~ /;/) {
+		$self->sublines_start();
 		$self->{current_line} = $self->subline_script($self->subline_index);
 		
 	#Normal script
 	} else {
 		$self->{current_line} = $self->line_script($self->line_index);
 	}
+}
+
+# Processes next line of macro script
+sub next {
+	my $self = $_[0];
 	
-	#Start of subline script
-	if ($self->{current_line} =~ /;/) {
-		$self->sublines_start;
-		$self->{current_line} = $self->subline_script($self->subline_index);
-	}
+	#We must finish the subcall before returning to this macro
+	return $self->manage_subcall() if (defined $self->{subcall});
+	
+	#Get next script line
+	$self->define_current_line;
+	return "" if ($self->{finished});
 	
 	debug "[eventMacro] Executing macro '".$self->{Name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '').".\n", "eventMacro", 2;
 	debug "[eventMacro] ".(defined $self->subline_index ? "Subline" : 'Line')." script '".$self->{current_line}."'.\n", "eventMacro", 2;
@@ -649,21 +663,32 @@ sub next {
 		if ($result) {
 			$self->newThen($then);
 			return if (defined $self->error);
-		} elsif ($then eq "{") { # If the condition is false because "if" this is not using the command block
-			my $countBlockIf = 1;
-			while ($countBlockIf) {
+		} elsif ($then eq "{") {
+			my $block_count = 1;
+			while ($block_count > 0) {
 				$self->next_line;
-				my $searchEnd = $self->line_script($self->line_index);
+				$self->define_current_line;
+				if ($self->{finished}) {
+					$self->{finished} = 0;
+					$self->error("All 'if' blocks must be closed before the end of the macro)");
+					return;
+				}
 				
-				if ($searchEnd =~ /^if.*{$/) {
-					$countBlockIf++;
-				} elsif (($searchEnd eq '}') || ($searchEnd =~ /^}\s*else\s*{$/ && $countBlockIf == 1)) {
-					$countBlockIf--;
-				} elsif ($searchEnd =~ /^}\s*elsif\s+\(\s*(.*)\s*\).*{$/ && $countBlockIf == 1) {
+				#Start of another if block
+				if ( $self->{current_line} =~ /^if.*{$/ ) {
+					$block_count++;
+					
+				#End of an if block or start of else block
+				} elsif ( ($self->{current_line} eq '}') || ($self->{current_line} =~ /^}\s*else\s*{$/ && $block_count == 1) ) {
+					$block_count--;
+					
+				#Elsif check
+				} elsif ( $self->{current_line} =~ /^}\s*elsif\s+\(\s*(.*)\s*\).*{$/ && $block_count == 1 ) {
 					$result = $self->parse_and_check_condition_text($1);
 					return if (defined $self->error);
+					
 					if ($result) {
-						$countBlockIf--;
+						$block_count--;
 					}
 				}
 			}
