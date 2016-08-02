@@ -43,95 +43,96 @@ sub new {
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
-		'022D' => ['sync_request_ex'],
-		'0281' => ['sync_request_ex'],
-		'02C4' => ['sync_request_ex'],
-		'035F' => ['sync_request_ex'],
-		'0360' => ['sync_request_ex'],
-		'0364' => ['sync_request_ex'],
-		'0368' => ['sync_request_ex'],
-		'0438' => ['sync_request_ex'],
-		'07E4' => ['sync_request_ex'],
+		'094D' => ['sync_request_ex'],
+		'0819' => ['sync_request_ex'],
 		'0817' => ['sync_request_ex'],
-		'0835' => ['sync_request_ex'],
-		'085B' => ['sync_request_ex'],
-		'085E' => ['sync_request_ex'],
-		'0862' => ['sync_request_ex'],
-		'0863' => ['sync_request_ex'],
+		'0923' => ['sync_request_ex'],
 		'0867' => ['sync_request_ex'],
-		'0869' => ['sync_request_ex'],
-		'086A' => ['sync_request_ex'],
-		'086F' => ['sync_request_ex'],
-		'0871' => ['sync_request_ex'],
-		'0877' => ['sync_request_ex'],
-		'087B' => ['sync_request_ex'],
-		'087E' => ['sync_request_ex'],
-		'087F' => ['sync_request_ex'],
-		'0881' => ['sync_request_ex'],
-		'0882' => ['sync_request_ex'],
-		'0884' => ['sync_request_ex'],
-		'0885' => ['sync_request_ex'],
-		'088A' => ['sync_request_ex'],
-		'088C' => ['sync_request_ex'],
-		'0891' => ['sync_request_ex'],
-		'0896' => ['sync_request_ex'],
-		'0898' => ['sync_request_ex'],
-		'089A' => ['sync_request_ex'],
-		'089C' => ['sync_request_ex'],
-		'089D' => ['sync_request_ex'],
-		'089E' => ['sync_request_ex'],
-		'089F' => ['sync_request_ex'],
-		'08A1' => ['sync_request_ex'],
-		'08A3' => ['sync_request_ex'],
-		'08A5' => ['sync_request_ex'],
-		'08A6' => ['sync_request_ex'],
-		'08A8' => ['sync_request_ex'],
-		'08A9' => ['sync_request_ex'],
-		'08AD' => ['sync_request_ex'],
-		'0919' => ['sync_request_ex'],
-		'091C' => ['sync_request_ex'],
-		'0922' => ['sync_request_ex'],
 		'0924' => ['sync_request_ex'],
-		'0925' => ['sync_request_ex'],
-		'0926' => ['sync_request_ex'],
-		'0927' => ['sync_request_ex'],
-		'0929' => ['sync_request_ex'],
-		'092B' => ['sync_request_ex'],
-		'092E' => ['sync_request_ex'],
-		'0930' => ['sync_request_ex'],
-		'0933' => ['sync_request_ex'],
-		'0934' => ['sync_request_ex'],
-		'0936' => ['sync_request_ex'],
-		'0937' => ['sync_request_ex'],
-		'0938' => ['sync_request_ex'],
-		'0939' => ['sync_request_ex'],
-		'093C' => ['sync_request_ex'],
-		'093D' => ['sync_request_ex'],
-		'093E' => ['sync_request_ex'],
-		'093F' => ['sync_request_ex'],
-		'0940' => ['sync_request_ex'],
-		'0943' => ['sync_request_ex'],
-		'0947' => ['sync_request_ex'],
-		'094E' => ['sync_request_ex'],
-		'0951' => ['sync_request_ex'],
+		'087B' => ['sync_request_ex'],
+		'0A5A' => ['sync_request_ex'],
+		'088B' => ['sync_request_ex'],
+		'088A' => ['sync_request_ex'],
+		'08A2' => ['sync_request_ex'],
+		'086B' => ['sync_request_ex'],
+		'0366' => ['sync_request_ex'],
+		'089D' => ['sync_request_ex'],
+		'0281' => ['sync_request_ex'],
+		'085C' => ['sync_request_ex'],
+		'0897' => ['sync_request_ex'],
+		'0957' => ['sync_request_ex'],
+		'0871' => ['sync_request_ex'],
 		'0952' => ['sync_request_ex'],
-		'0956' => ['sync_request_ex'],
-		'095A' => ['sync_request_ex'],
+		'0944' => ['sync_request_ex'],
+		'0893' => ['sync_request_ex'],
+		'0939' => ['sync_request_ex'],
+		'0863' => ['sync_request_ex'],
+		'093A' => ['sync_request_ex'],
+		'093C' => ['sync_request_ex'],
+		'0919' => ['sync_request_ex'],
+		'0873' => ['sync_request_ex'],
 		'095B' => ['sync_request_ex'],
-		'095C' => ['sync_request_ex'],
-		'095F' => ['sync_request_ex'],
-		'0960' => ['sync_request_ex'],
-		'0962' => ['sync_request_ex'],
+		'08A0' => ['sync_request_ex'],
+		'085A' => ['sync_request_ex'],
+		'0876' => ['sync_request_ex'],
+		'0926' => ['sync_request_ex'],
+		'087E' => ['sync_request_ex'],
+		'0811' => ['sync_request_ex'],
+		'092D' => ['sync_request_ex'],
+		'0922' => ['sync_request_ex'],
+		'0946' => ['sync_request_ex'],
+		'07E4' => ['sync_request_ex'],
+		'0955' => ['sync_request_ex'],
+		'085E' => ['sync_request_ex'],
+		'086E' => ['sync_request_ex'],
+		'094F' => ['sync_request_ex'],
+		'0935' => ['sync_request_ex'],
+		'0872' => ['sync_request_ex'],
+		'0367' => ['sync_request_ex'],
+		'0927' => ['sync_request_ex'],
+		'0966' => ['sync_request_ex'],
+		'0950' => ['sync_request_ex'],
+		'08A9' => ['sync_request_ex'],
+		'088D' => ['sync_request_ex'],
 		'0963' => ['sync_request_ex'],
-		'0964' => ['sync_request_ex'],
-		'0969' => ['sync_request_ex'],
-		'0A69' => ['sync_request_ex'],
-		'0A6E' => ['sync_request_ex']
+		'0937' => ['sync_request_ex'],
+		'087D' => ['sync_request_ex'],
+		'0947' => ['sync_request_ex'],
+		'02C4' => ['sync_request_ex'],
+		'0933' => ['sync_request_ex'],
+		'093D' => ['sync_request_ex'],
+		'091F' => ['sync_request_ex'],
+		'08AD' => ['sync_request_ex'],
+		'0925' => ['sync_request_ex'],
+		'0959' => ['sync_request_ex'],
+		'0360' => ['sync_request_ex'],
+		'0881' => ['sync_request_ex'],
+		'092E' => ['sync_request_ex'],
+		'0A68' => ['sync_request_ex'],
+		'087C' => ['sync_request_ex'],
+		'0921' => ['sync_request_ex'],
+		'0896' => ['sync_request_ex'],
+		'087A' => ['sync_request_ex'],
+		'023B' => ['sync_request_ex'],
+		'0875' => ['sync_request_ex'],
+		'0882' => ['sync_request_ex'],
+		'093E' => ['sync_request_ex'],
+		'091C' => ['sync_request_ex'],
+		'0945' => ['sync_request_ex'],
+		'0890' => ['sync_request_ex'],
+		'0931' => ['sync_request_ex'],
+		'089C' => ['sync_request_ex'],
+		'086F' => ['sync_request_ex'],
+		'0866' => ['sync_request_ex'],
+		'0869' => ['sync_request_ex'],
+		'0956' => ['sync_request_ex'],
+		'094C' => ['sync_request_ex'],
 	);
 
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
+
 	$self->{nested} = {
 		items_nonstackable => { # EQUIPMENTITEM_EXTRAINFO
 			type6 => {
@@ -157,106 +158,100 @@ sub new {
 		received_characters 099D
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
-	$self->{sync_ex_reply} = {	
-		'022D' => '0879',
-		'0281' => '0866',
-		'02C4' => '088E',
-		'035F' => '0953',
-		'0360' => '0967',
-		'0364' => '089B',
-		'0368' => '0887',
-		'0438' => '095E',
-		'07E4' => '085D',
-		'0817' => '095D',
-		'0835' => '085C',
-		'085B' => '0815',
-		'085E' => '0944',
-		'0862' => '0819',
-		'0863' => '0861',
-		'0867' => '0876',
-		'0869' => '0957',
-		'086A' => '0948',
-		'086F' => '0955',
-		'0871' => '088F',
-		'0877' => '0875',
-		'087B' => '093B',
-		'087E' => '0838',
-		'087F' => '0961',
-		'0881' => '08AA',
-		'0882' => '0A6C',
-		'0884' => '093A',
-		'0885' => '0883',
-		'088A' => '091D',
-		'088C' => '085F',
-		'0891' => '0880',
-		'0896' => '0A5C',
-		'0898' => '0362',
-		'089A' => '0966',
-		'089C' => '0872',
-		'089D' => '086E',
-		'089E' => '086D',
-		'089F' => '085A',
-		'08A1' => '08AC',
-		'08A3' => '0888',
-		'08A5' => '0811',
-		'08A6' => '094B',
-		'08A8' => '0369',
+
+	$self->{sync_ex_reply} = {
+		'094D' => '0877',
+		'0819' => '0874',
+		'0817' => '0942',
+		'0923' => '0938',
+		'0867' => '088C',
+		'0924' => '0202',
+		'087B' => '087F',
+		'0A5A' => '0365',
+		'088B' => '093B',
+		'088A' => '0885',
+		'08A2' => '0361',
+		'086B' => '07EC',
+		'0366' => '096A',
+		'089D' => '086A',
+		'0281' => '0941',
+		'085C' => '094A',
+		'0897' => '0895',
+		'0957' => '095A',
+		'0871' => '093F',
+		'0952' => '0920',
+		'0944' => '092A',
+		'0893' => '0368',
+		'0939' => '0A69',
+		'0863' => '0369',
+		'093A' => '08AB',
+		'093C' => '092F',
+		'0919' => '091D',
+		'0873' => '0967',
+		'095B' => '022D',
+		'08A0' => '085F',
+		'085A' => '091B',
+		'0876' => '0954',
+		'0926' => '0962',
+		'087E' => '0879',
+		'0811' => '035F',
+		'092D' => '0887',
+		'0922' => '08A3',
+		'0946' => '0362',
+		'07E4' => '0918',
+		'0955' => '0969',
+		'085E' => '088F',
+		'086E' => '089A',
+		'094F' => '092B',
+		'0935' => '0A6C',
+		'0872' => '0880',
+		'0367' => '0364',
+		'0927' => '0438',
+		'0966' => '0862',
+		'0950' => '0936',
 		'08A9' => '0965',
-		'08AD' => '07EC',
-		'0919' => '08A7',
-		'091C' => '0946',
-		'0922' => '0365',
-		'0924' => '0361',
-		'0925' => '0367',
-		'0926' => '096A',
-		'0927' => '0954',
-		'0929' => '094D',
-		'092B' => '0437',
-		'092E' => '0942',
-		'0930' => '091B',
-		'0933' => '0892',
-		'0934' => '0A5A',
-		'0936' => '08A2',
-		'0937' => '0802',
-		'0938' => '023B',
-		'0939' => '0917',
-		'093C' => '0873',
-		'093D' => '0860',
-		'093E' => '094F',
-		'093F' => '086C',
-		'0940' => '0366',
-		'0943' => '08A4',
-		'0947' => '091A',
-		'094E' => '0886',
-		'0951' => '0870',
-		'0952' => '0436',
-		'0956' => '0897',
-		'095A' => '0864',
-		'095B' => '0865',
-		'095C' => '088D',
-		'095F' => '0889',
-		'0960' => '094C',
-		'0962' => '08AB',
-		'0963' => '094A',
-		'0964' => '0874',
-		'0969' => '092A',
-		'0A69' => '0A68',
-		'0A6E' => '0890'
+		'088D' => '0883',
+		'0963' => '083C',
+		'0937' => '086D',
+		'087D' => '0949',
+		'0947' => '0892',
+		'02C4' => '0960',
+		'0933' => '0864',
+		'093D' => '0802',
+		'091F' => '0437',
+		'08AD' => '085B',
+		'0925' => '0815',
+		'0959' => '08A6',
+		'0360' => '0951',
+		'0881' => '0878',
+		'092E' => '092C',
+		'0A68' => '0961',
+		'087C' => '0884',
+		'0921' => '0865',
+		'0896' => '0889',
+		'087A' => '0943',
+		'023B' => '0363',
+		'0875' => '091E',
+		'0882' => '08AC',
+		'093E' => '0860',
+		'091C' => '0891',
+		'0945' => '0A5C',
+		'0890' => '0894',
+		'0931' => '086C',
+		'089C' => '095E',
+		'086F' => '0932',
+		'0866' => '0930',
+		'0869' => '089F',
+		'0956' => '094B',
+		'094C' => '0940',
 	};
+
 	return $self;
 }
 
 *parse_quest_update_mission_hunt = *Network::Receive::parse_quest_update_mission_hunt_v2;
 *reconstruct_quest_update_mission_hunt = *Network::Receive::reconstruct_quest_update_mission_hunt_v2;
 
-sub gameguard_request {
-	my ($self, $args) = @_;
-
-	$ai_v{temp}{gameguard} = 1;
-	$timeout{gameguard_request}{time} = time;
-	message T ("Receive Gameguard!\n");
-}
 sub sync_received_characters {
 	my ($self, $args) = @_;
 	if (exists $args->{sync_Count}) {
@@ -282,6 +277,7 @@ sub received_characters_info {
 
 	$timeout{charlogin}{time} = time;
 }
+
 sub items_nonstackable {
 	my ($self, $args) = @_;
 
@@ -312,6 +308,7 @@ sub items_stackable {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}
 }
+
 sub parse_items_nonstackable {
 	my ($self, $args) = @_;
 	$self->parse_items($args, $self->items_nonstackable($args), sub {
@@ -345,5 +342,46 @@ sub parse_items_stackable {
 			message T ("Warning: unknown flag!\n");
 		}
 	})
+}
+
+sub vending_start {
+	my ($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = unpack("v1",substr($msg, 2, 2));
+
+	#started a shop.
+	message TF("Shop '%s' opened!\n", $shop{title}), "success";
+	@articles = ();
+	# FIXME: why do we need a seperate variable to track how many items are left in the store?
+	$articles = 0;
+
+	# FIXME: Read the packet the server sends us to determine
+	# the shop title instead of using $shop{title}.
+	my $display = center(" $shop{title} ", 79, '-') . "\n" .
+		T("#  Name                                   Type            Amount          Price\n");
+	for (my $i = 8; $i < $msg_size; $i += 47) {
+		my $number = unpack("v1", substr($msg, $i + 4, 2));
+		my $item = $articles[$number] = {};
+		$item->{nameID} = unpack("v1", substr($msg, $i + 9, 2));
+		$item->{quantity} = unpack("v1", substr($msg, $i + 6, 2));
+		$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
+		$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
+		$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
+		$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
+		$item->{cards} = substr($msg, $i + 14, 8);
+		$item->{price} = unpack("V1", substr($msg, $i, 4));
+		$item->{name} = itemName($item);
+		$articles++;
+
+		debug ("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
+
+		$display .= swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<  @>>>>  @>>>>>>>>>>>z",
+			[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{quantity}), formatNumber($item->{price})]);
+	}
+	$display .= ('-'x79) . "\n";
+	message $display, "list";
+	$shopEarned ||= 0;
 }
 1;
