@@ -77366,3 +77366,11 @@ LUK+1
 4861#
 MHP + 1%.
 #
+17372#
+^808080Thoughts of zeny cloud the mind.^000000
+Adds the chance of gaining a certain amount of Zeny each time a monster is killed.
+
+Created to celebrate the launch of Ragnarok Clicker! http://goo.gl/gmmiZI
+
+Give one Costume:Show Me The Zeny when opened!
+#

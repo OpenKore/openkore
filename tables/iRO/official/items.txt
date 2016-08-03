@@ -6487,7 +6487,6 @@
 17369#13th_Anniversa-box#
 17370#Caster_Pendant_Shadow_Box#
 17371#Hard_Earring_Shadow_Box#
-17372#Wise_Earring_Shadow_Box#
 17373#Athena_Earring_Shadow_Box#
 17374#Cranial_Shield_Shadow_Box#
 17375#Safeguard_Shield_Shadow_Box#
@@ -8645,3 +8644,5 @@
 4740#VIT+1#
 4750#LUK+1#
 4861#MHP+1%#
+
+17372#Costume_Show_Me_The_Zeny_Box#
