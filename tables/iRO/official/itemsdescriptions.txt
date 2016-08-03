@@ -76937,6 +76937,10 @@ Required Job: All Jobs
 #
 31091#
 ^808080Thoughts of zeny cloud the mind.^000000
+Adds the chance of gaining a certain amount of Zeny each time a monster is killed.
+
+Created to celebrate the launch of Ragnarok Clicker! http://goo.gl/gmmiZI
+
 ^FF0000Account Bound^000000
 ^FFFFFF_^000000
 Type: Costume
@@ -77046,4 +77050,327 @@ Class : ^777777Costume^000000 Def : ^7777770^000000
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
+#
+
+
+20273#
+Cutie Sheep Hat. You don't want to hit his head.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box6.^000000
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20242#
+A costume hat modeled after the snowman called Snownow keeping the town Lutie.
+Surprisingly, snow falls on your head when you wear it.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box6.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20762#
+Wing of Great Devel, the famous.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box6.^000000
+Class : ^777777Costume^000000
+Location : ^777777Garment ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20239#
+Large Ribbon Meffler
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box6.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20071#
+It seem he love his mother.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box6.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19954#
+A mysterious glasses which shows objects in 3-dimentional.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box6.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+4992#
+Absorb 1% of damage dealt to enemy into HP with 1% chance.
+#
+4993#
+Absorb 1% of damage dealt to enemy into SP with 1% chance.
+#
+6963#
+A stone with HP absorption ability.
+Gives below stats on Costume Mantle's slot.
+Absorb 1% of damage dealt to enemy into HP with 1% chance.
+^ffffff<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+Weight : ^77777710^000000
+#
+6964#
+A stone with SP absorption ability.
+Gives below stats on Costume Mantle's slot.
+Absorb 1% of damage dealt to enemy into SP with 1% chance.
+^ffffff<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+Weight : ^77777710^000000
+#
+22905#
+A box that contains enchantment stones for costume equipment. Opening this will give you one of the following enchantment stones:
+HP absorption Stone(Garment), SP absorption Stone(Garment) and other stones from Costume Enchantment Stone Box5
+Weight : ^7777771^000000
+#
+25000#
+A stone with SP absorption ability.
+Gives below stats on Costume upper slot.
+Absorb 1% of damage dealt to enemy into SP with 1% chance.
+^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
+Weight : ^77777710^000000
+#
+6943#
+A stone with Physical attack power.
+Gives below stats on Costume upper slot.
+ATK + 1%.
+^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
+Weight : ^77777710^000000
+#
+6944#
+A stone with Magical attack power.
+Gives below stats on Costume upper slot.
+MATK + 1%.
+^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
+Weight : ^77777710^000000
+#
+6945#
+A stone with strength.
+Gives below stats to Costume Middle slot.
+STR + 1.
+^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
+Weight : ^77777710^000000
+#
+6946#
+A stone with Intelligence.
+Gives below stats to Costume middle slot.
+INT + 1.
+^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
+Weight : ^77777710^000000
+#
+6947#
+A stone with AGI.
+Gives below stats to Costume middle slot.
+AGI + 1.
+^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
+Weight : ^77777710^000000
+#
+6948#
+A stone with DEX.
+Gives below stats to Costume middle slot.
+DEX + 1.
+^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
+Weight : ^77777710^000000
+#
+6949#
+A stone with VIT.
+Gives below stats to Costume middle slot.
+VIT + 1.
+^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
+Weight : ^77777710^000000
+#
+6950#
+A stone with Luck
+Gives below stats to Costume middle slot.
+LUK + 1.
+^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
+Weight : ^77777710^000000
+#
+6951#
+A stone increase your Max HP
+Gives below stats to Costume lower slot.
+MaxHP + 1%
+^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
+Weight : ^77777710^000000
+#
+22868#
+A box that contains enchantment stones for costume equipment. Opening this will give you one of the following enchantment stones:
+ASPD Stone (Garment), ATK Stone (Slot 1), MATK Stone (Slot 1), ATK Stone (Slot 2), MATK Stone (Slot 2), STR Stone (Slot 1), INT Stone (Slot 1), AGI Stone (Slot 1), DEX Stone (Slot 1), VIT Stone (Slot 1), LUK Stone (Slot 1), STR Stone (Slot 2), INT Stone (Slot 2), AGI Stone (Slot 2), DEX Stone (Slot 2), VIT Stone (Slot 2), LUK Stone (Slot 2), HP Stone (Slot 2), SP Stone (Slot 2), HP Stone (Slot 3), Big Stone (Slot 1), Medium Stone (Slot 1), Small Stone (Slot 1), Recovery Stone (Slot 1), Recovery Skill Stone (Slot 1), Recovery Stone (Slot 2), Recovery Stone (Slot 3), HIT Stone (Slot 3), FLEE Stone (Slot 3)
+Take the enchantment stone inside and bring it to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
+Weight : ^7777771^000000
+#
+19643#
+Wickebine's one of favorite ear cap. Cute and¡¦ just cute.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box5.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20199#
+A dark marching hat worn by members of an undead band from Niffleheim.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box5.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20200#
+Hat with rabbit ears.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box5.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20201#
+Kiss of Banshee Master. It could give the powerful force.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box5.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20202#
+Hellium Ballon shaped like deviruchi.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box5.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20761#
+A wing for happy mood.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box5.^000000
+Class : ^777777Costume^000000
+Location : ^777777Garment ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20132#
+Unknown aura that wrapped your body.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box5.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20130#
+A long hat modeled after the shape of monster Whisper.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box5.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20133#
+A hat inspired by the adorable Poring.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box5.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20230#
+A mask that showing the deep sorrows for losing everything.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box6.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20231#
+A hat that is a constant reminder of the Winter season.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box6.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20232#
+A luxurious ribbon with golden border. Had been abandoned by Kimi.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box6.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20233#
+Statue of peeing baby angel. It's a bit embarrassing to wear it.
+^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
+^b4b4b4Exchangeable for Costume Enchantment Stone Box6.^000000
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+29032#
+Absorb 1% of damage dealt to enemy into SP with 1% chance.
+#
+29028#
+ATK + 1%.
+Gives ATK + 2%, if ATK + 1% effect on Costume middle and lower slot.
+#
+29030#
+MATK + 1%.
+Gives MATK + 2%, if MATK + 1% effect on Costume middle and lower slot.
+#
+4700#
+STR+1
+^ffffff_^000000
+#
+4710#
+INT+1
+^ffffff_^000000
+#
+4730#
+AGI+1
+^ffffff_^000000
+#
+4720#
+DEX+1
+^ffffff_^000000
+#
+4740#
+VIT+1
+^ffffff_^000000
+#
+4750#
+LUK+1
+^ffffff_^000000
+#
+4861#
+MHP + 1%.
+#
+17372#
+^808080Thoughts of zeny cloud the mind.^000000
+Adds the chance of gaining a certain amount of Zeny each time a monster is killed.
+
+Created to celebrate the launch of Ragnarok Clicker! http://goo.gl/gmmiZI
+
+Give one Costume:Show Me The Zeny when opened!
 #
