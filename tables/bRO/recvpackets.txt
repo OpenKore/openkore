@@ -1,967 +1,761 @@
-# http://openkore-brasil.com 
-# http://revok.com.br/ 
-# RO packet extractor v0 Revok [11:40 (UTC -03:00) 25-03-2014] 
-# Unpacked or Unknown .exe Packer 
-# Target: 2014-03-25aRagexe.exe 
-# MD5: ?  CRC32: ? 
-# MID Encryption keys are K: 1593005323 M: 341802953 A: 378471902
-# PIN addfactor: 0x881234 and multfactor: 0x3498
-# Storage Encryption keys are K: 050B6F79, 0202C179, 0E20120, 04FA43E3, 0179B6C8, 05973DF2, 07D8D6B, 08CB9ED9
-
-# Packet ID | Packet Length | Packet Min Length | Repeat Factor | Packet Description
-0369 7 7 0		send::actor_action
-083C 10 10 0	send::skill_use
-0437 5 5 0		send::character_move
-035F 6 6 0		send::sync
-092E 5 5 0		send::actor_look_at
-07E4 6 6 0		send::item_take
-0362 6 6 0		send::item_drop
-07EC 8 8 0		send::storage_item_add
-0364 8 8 0		send::storage_item_remove
-0438 10 10 0	send::skill_use_location
-0366 90 90 0	send::skill_use_with_text
-0202 6 6 0		send::actor_info_request
-0368 6 6 0		send::actor_name_request
-0838 12 12 0	CZ_SSILIST_ITEM_CLICK
-0835 2 2 0		PACKET_CZ_SEARCH_STORE_INFO_NEXT_PAGE
-0819 -1 15 0	PACKET_CZ_SEARCH_STORE_INFO
-0811 -1 12 0
-0360 6 6 0
-023B 2 2 0
-0815 -1 89 0
-0365 18 18 0
-0363 8 8 0
-0281 -1 12 0	PACKET_CZ_ITEMLISTWIN_RES
-086E 19 19 0	send::map_login
-0802 26 26 0	send::party_join_request_by_name
-0436 4 4 0
-096A 26 26 0	friend request?
-0888 5 5 0		send::homunculus_command
-0817 36 36 0	send::storage_packet
-0367 2 2 0		receive::sync_request_ex
-085A 2 2 0		receive::sync_request_ex
-085B 2 2 0		receive::sync_request_ex
-085C 2 2 0		receive::sync_request_ex
-085D 2 2 0		receive::sync_request_ex
-085E 2 2 0		receive::sync_request_ex
-085F 2 2 0		receive::sync_request_ex
-0860 2 2 0		receive::sync_request_ex
-0861 2 2 0		receive::sync_request_ex
-0862 2 2 0		receive::sync_request_ex
-0863 2 2 0		receive::sync_request_ex
-0864 2 2 0		receive::sync_request_ex
-0865 2 2 0		receive::sync_request_ex
-0866 2 2 0		receive::sync_request_ex
-0867 2 2 0		receive::sync_request_ex
-0868 2 2 0		receive::sync_request_ex
-0869 2 2 0		receive::sync_request_ex
-086A 2 2 0		receive::sync_request_ex
-086B 2 2 0		receive::sync_request_ex
-086C 2 2 0		receive::sync_request_ex
-0940 2 2 0		receive::sync_request_ex
-086D 2 2 0		receive::sync_request_ex
-086F 2 2 0		receive::sync_request_ex
-0870 2 2 0		receive::sync_request_ex
-0871 2 2 0		receive::sync_request_ex
-0872 2 2 0		receive::sync_request_ex
-0873 2 2 0		receive::sync_request_ex
-0874 2 2 0		receive::sync_request_ex
-0875 2 2 0		receive::sync_request_ex
-0876 2 2 0		receive::sync_request_ex
-0877 2 2 0		receive::sync_request_ex
-0878 2 2 0		receive::sync_request_ex
-0879 2 2 0		receive::sync_request_ex
-087A 2 2 0		receive::sync_request_ex
-087B 2 2 0		receive::sync_request_ex
-087C 2 2 0		receive::sync_request_ex
-087D 2 2 0		receive::sync_request_ex
-087E 2 2 0		receive::sync_request_ex
-087F 2 2 0		receive::sync_request_ex
-0880 2 2 0		receive::sync_request_ex
-0881 2 2 0		receive::sync_request_ex
-0882 2 2 0		receive::sync_request_ex
-0883 2 2 0		receive::sync_request_ex
-0917 2 2 0		receive::sync_request_ex
-0918 2 2 0		receive::sync_request_ex
-0919 2 2 0		receive::sync_request_ex
-091A 2 2 0		receive::sync_request_ex
-091B 2 2 0		receive::sync_request_ex
-091C 2 2 0		receive::sync_request_ex
-091D 2 2 0		receive::sync_request_ex
-091E 2 2 0		receive::sync_request_ex
-091F 2 2 0		receive::sync_request_ex
-0920 2 2 0		receive::sync_request_ex
-0921 2 2 0		receive::sync_request_ex
-0922 2 2 0		receive::sync_request_ex
-0923 2 2 0		receive::sync_request_ex
-0924 2 2 0		receive::sync_request_ex
-0925 2 2 0		receive::sync_request_ex
-0926 2 2 0		receive::sync_request_ex
-0927 2 2 0		receive::sync_request_ex
-0928 2 2 0		receive::sync_request_ex
-0929 2 2 0		receive::sync_request_ex
-092A 2 2 0		receive::sync_request_ex
-092B 2 2 0		receive::sync_request_ex
-092C 2 2 0		receive::sync_request_ex
-092D 2 2 0		receive::sync_request_ex
-0361 2 2 0		receive::sync_request_ex
-092F 2 2 0		receive::sync_request_ex
-0930 2 2 0		receive::sync_request_ex
-0931 2 2 0		receive::sync_request_ex
-0932 2 2 0		receive::sync_request_ex
-0933 2 2 0		receive::sync_request_ex
-0934 2 2 0		receive::sync_request_ex
-0935 2 2 0		receive::sync_request_ex
-0936 2 2 0		receive::sync_request_ex
-0937 2 2 0		receive::sync_request_ex
-0938 2 2 0		receive::sync_request_ex
-0939 2 2 0		receive::sync_request_ex
-093A 2 2 0		receive::sync_request_ex
-093B 2 2 0		receive::sync_request_ex
-093C 2 2 0		receive::sync_request_ex
-093D 2 2 0		receive::sync_request_ex
-093E 2 2 0		receive::sync_request_ex
-093F 2 2 0		receive::sync_request_ex
-02C4 2 2 0		send::sync_ex_question_reply
-0884 2 2 0		send::sync_ex_question_reply
-0885 2 2 0		send::sync_ex_question_reply
-0886 2 2 0		send::sync_ex_question_reply
-0887 2 2 0		send::sync_ex_question_reply
-022D 2 2 0		send::sync_ex_question_reply
-0889 2 2 0		send::sync_ex_question_reply
-088A 2 2 0		send::sync_ex_question_reply
-088B 2 2 0		send::sync_ex_question_reply
-088C 2 2 0		send::sync_ex_question_reply
-088D 2 2 0		send::sync_ex_question_reply
-088E 2 2 0		send::sync_ex_question_reply
-088F 2 2 0		send::sync_ex_question_reply
-0890 2 2 0		send::sync_ex_question_reply
-0891 2 2 0		send::sync_ex_question_reply
-0892 2 2 0		send::sync_ex_question_reply
-0893 2 2 0		send::sync_ex_question_reply
-0894 2 2 0		send::sync_ex_question_reply
-0895 2 2 0		send::sync_ex_question_reply
-0896 2 2 0		send::sync_ex_question_reply
-0897 2 2 0		send::sync_ex_question_reply
-0898 2 2 0		send::sync_ex_question_reply
-0899 2 2 0		send::sync_ex_question_reply
-089A 2 2 0		send::sync_ex_question_reply
-089B 2 2 0		send::sync_ex_question_reply
-089C 2 2 0		send::sync_ex_question_reply
-089D 2 2 0		send::sync_ex_question_reply
-089E 2 2 0		send::sync_ex_question_reply
-089F 2 2 0		send::sync_ex_question_reply
-08A0 2 2 0		send::sync_ex_question_reply
-08A1 2 2 0		send::sync_ex_question_reply
-08A2 2 2 0		send::sync_ex_question_reply
-08A3 2 2 0		send::sync_ex_question_reply
-08A4 2 2 0		send::sync_ex_question_reply
-08A5 2 2 0		send::sync_ex_question_reply
-08A6 2 2 0		send::sync_ex_question_reply
-08A7 2 2 0		send::sync_ex_question_reply
-08A8 2 2 0		send::sync_ex_question_reply
-08A9 2 2 0		send::sync_ex_question_reply
-08AA 2 2 0		send::sync_ex_question_reply
-08AB 2 2 0		send::sync_ex_question_reply
-08AC 2 2 0		send::sync_ex_question_reply
-08AD 2 2 0		send::sync_ex_question_reply
-0941 2 2 0		send::sync_ex_question_reply
-0942 2 2 0		send::sync_ex_question_reply
-0943 2 2 0		send::sync_ex_question_reply
-0944 2 2 0		send::sync_ex_question_reply
-0945 2 2 0		send::sync_ex_question_reply
-0946 2 2 0		send::sync_ex_question_reply
-0947 2 2 0		send::sync_ex_question_reply
-0948 2 2 0		send::sync_ex_question_reply
-0949 2 2 0		send::sync_ex_question_reply
-094A 2 2 0		send::sync_ex_question_reply
-094B 2 2 0		send::sync_ex_question_reply
-094C 2 2 0		send::sync_ex_question_reply
-094D 2 2 0		send::sync_ex_question_reply
-094E 2 2 0		send::sync_ex_question_reply
-094F 2 2 0		send::sync_ex_question_reply
-0950 2 2 0		send::sync_ex_question_reply
-0951 2 2 0		send::sync_ex_question_reply
-0952 2 2 0		send::sync_ex_question_reply
-0953 2 2 0		send::sync_ex_question_reply
-0954 2 2 0		send::sync_ex_question_reply
-0955 2 2 0		send::sync_ex_question_reply
-0956 2 2 0		send::sync_ex_question_reply
-0957 2 2 0		send::sync_ex_question_reply
-0958 2 2 0		send::sync_ex_question_reply
-0959 2 2 0		send::sync_ex_question_reply
-095A 2 2 0		send::sync_ex_question_reply
-095B 2 2 0		send::sync_ex_question_reply
-095C 2 2 0		send::sync_ex_question_reply
-095D 2 2 0		send::sync_ex_question_reply
-095E 2 2 0		send::sync_ex_question_reply
-095F 2 2 0		send::sync_ex_question_reply
-0960 2 2 0		send::sync_ex_question_reply
-0961 2 2 0		send::sync_ex_question_reply
-0962 2 2 0		send::sync_ex_question_reply
-0963 2 2 0		send::sync_ex_question_reply
-0964 2 2 0		send::sync_ex_question_reply
-0965 2 2 0		send::sync_ex_question_reply
-0966 2 2 0		send::sync_ex_question_reply
-0967 2 2 0		send::sync_ex_question_reply
-0968 2 2 0		send::sync_ex_question_reply
-0969 2 2 0		send::sync_ex_question_reply
+#Packet extractor by lututui
+#Date: Tue Aug  2 13:15:22 2016
 0187 6 6 0
 0081 3 3 0
-01C6 4 4 0		PACKET_CS_REQ_ENCRYPTION
-01C7 2 2 1		PACKET_SC_ACK_ENCRYPTION
-0064 55 55 0	send::master_login (PACKET_CA_LOGIN)
-0069 -1 47 0	receive::account_server_info (PACKET_AC_ACCEPT_LOGIN)
-006A 23 23 0	receive::login_error (PACKET_AC_REFUSE_LOGIN)
-01DB 2 2 0		send::secure_login_key_request (PACKET_CA_REQ_HASH)
-01DC -1 4 0		receive::secure_login_key (PACKET_AC_ACK_HASH)
-01DD 47 47 0	send::master_login (PACKET_CA_LOGIN2)
-01FA 48 48 0	send::master_login (PACKET_CA_LOGIN3)
-0204 18 18 0	send::client_hash (PACKET_CA_EXE_HASHCHECK)
-01F1 -1 4 0		PACKET_AC_NOTIFY_ERROR
-0200 26 26 0	PACKET_CA_CONNECT_INFO_CHANGED
-01BE 2 2 0		PACKET_AC_ASK_PNGAMEROOM
-01BF 3 3 0		PACKET_CA_REPLY_PNGAMEROOM
-0065 17 17 0	send::game_login (PACKET_CH_ENTER)
-0066 3 3 0		send::char_login (PACKET_CH_SELECT_CHAR)
-0067 37 37 0	send::char_create (PACKET_CH_MAKE_CHAR)
+01C6 4 4 0
+01C7 2 2 1
+0064 55 55 0
+0069 -1 47 0
+006A 23 23 0
+01DB 2 2 0
+01DC -1 4 0
+01DD 47 47 0
+01FA 48 48 0
+0204 18 18 0
+01F1 -1 4 0
+0200 26 26 0
+01BE 2 2 0
+01BF 3 3 0
+0065 17 17 0
+0066 3 3 0
+0067 37 37 0
 0970 31 31 0
-020D -1 4 0		PACKET_HC_BLOCK_CHARACTER
-006B -1 4 0		receive::received_characters (PACKET_HC_ACCEPT_ENTER_NEO_UNION)
-006C 3 3 0		receive::login_error_game_login_server (PACKET_HC_REFUSE_ENTER)
-006D 126 126 0	receive::character_creation_successful (PACKET_HC_ACCEPT_MAKECHAR_NEO_UNION)
-006E 3 3 0		receive::character_creation_failed (PACKET_HC_REFUSE_MAKECHAR)
-0071 28 28 0	receive::received_character_ID_and_Map (PACKET_HC_NOTIFY_ZONESVR)
-0068 46 46 0	send::char_delete (PACKET_CH_DELETE_CHAR)
-01FB 56 56 0	PACKET_CH_DELETE_CHAR2
-006F 2 2 0		receive::character_deletion_successful (PACKET_HC_ACCEPT_DELETECHAR)
-0070 3 3 0		receive::character_deletion_failed (PACKET_HC_REFUSE_DELETECHAR)
-02CA 3 3 0		receive::login_error_game_login_server (PACKET_HC_REFUSE_SELECTCHAR)
-0072 19 19 0	send::map_login (PACKET_CZ_ENTER)
-0082 2 2 0		PACKET_CZ_REQUEST_QUIT
-0085 5 5 0		send::character_move (PACKET_CZ_REQUEST_MOVE)
-0089 7 7 0		send::actor_action (PACKET_CZ_REQUEST_ACT)
-008C -1 4 0		send::public_chat (PACKET_CZ_REQUEST_CHAT)
-007E 6 6 0		send::sync (PACKET_CZ_REQUEST_TIME)
-007D 2 2 0		send::map_loaded (PACKET_CZ_NOTIFY_ACTORINIT)
-0090 7 7 0		PACKET_CZ_CONTACTNPC
-0099 -1 4 0		PACKET_CZ_BROADCAST
-019C -1 4 0		PACKET_CZ_LOCALBROADCAST
-009B 5 5 0		send::actor_look_at (PACKET_CZ_CHANGE_DIRECTION)
-00CC 6 6 0		PACKET_CZ_DISCONNECT_CHARACTER
-00CE 2 2 0		PACKET_CZ_DISCONNECT_ALL_CHARACTER
-009F 6 6 0		send::item_take (PACKET_CZ_ITEM_PICKUP)
-00A2 6 6 0		send::item_drop (PACKET_CZ_ITEM_THROW)
-00A7 8 8 0		PACKET_CZ_USE_ITEM
-00A9 6 6 0		PACKET_CZ_REQ_WEAR_EQUIP
-00AB 4 4 0		PACKET_CZ_REQ_TAKEOFF_EQUIP
-00B8 7 7 0		PACKET_CZ_CHOOSE_MENU
-00B9 6 6 0		PACKET_CZ_REQ_NEXT_SCRIPT
-00B2 3 3 0		send::restart (PACKET_CZ_RESTART)
-00BA 2 2 0		PACKET_CZ_REQ_STATUS
-00BB 5 5 0		PACKET_CZ_STATUS_CHANGE
-00BF 3 3 0		PACKET_CZ_REQ_EMOTION
-00C1 2 2 0		PACKET_CZ_REQ_USER_COUNT
-00C5 7 7 0		PACKET_CZ_ACK_SELECT_DEALTYPE
-00C8 -1 4 0		PACKET_CZ_PC_PURCHASE_ITEMLIST
-00C9 -1 4 0		PACKET_CZ_PC_SELL_ITEMLIST
-0096 -1 28 0	send::private_message (PACKET_CZ_WHISPER)
-00CF 27 27 0	PACKET_CZ_SETTING_WHISPER_PC
-00D0 3 3 0		PACKET_CZ_SETTING_WHISPER_STATE
-00D3 2 2 0		PACKET_CZ_REQ_WHISPER_LIST
-00D5 -1 15 0	PACKET_CZ_CREATE_CHATROOM
-00D9 14 14 0	PACKET_CZ_REQ_ENTER_ROOM
-00DE -1 15 0	PACKET_CZ_CHANGE_CHATROOM
-00E0 30 30 0	PACKET_CZ_REQ_ROLE_CHANGE
-00E2 26 26 0	PACKET_CZ_REQ_EXPEL_MEMBER
-00E3 2 2 0		PACKET_CZ_EXIT_ROOM
-00E4 6 6 0		PACKET_CZ_REQ_EXCHANGE_ITEM
-00E6 3 3 0		PACKET_CZ_ACK_EXCHANGE_ITEM
-00E8 8 8 0		PACKET_CZ_ADD_EXCHANGE_ITEM
-00EB 2 2 0		PACKET_CZ_CONCLUDE_EXCHANGE_ITEM
-00ED 2 2 0		PACKET_CZ_CANCEL_EXCHANGE_ITEM
-00EF 2 2 0		PACKET_CZ_EXEC_EXCHANGE_ITEM
-00F3 8 8 0		send::storage_item_add (PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_STORE)
-00F5 8 8 0		send::storage_item_remove (PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_BODY)
-00F7 2 2 0		PACKET_CZ_CLOSE_STORE
-00F9 26 26 0	PACKET_CZ_MAKE_GROUP
-01E8 28 28 0	PACKET_CZ_MAKE_GROUP2
-00FC 6 6 0		PACKET_CZ_REQ_JOIN_GROUP
-00FF 10 10 0	PACKET_CZ_JOIN_GROUP
-0102 6 6 0		send::party_setting (PACKET_CZ_CHANGE_GROUPEXPOPTION)
-0100 2 2 0		PACKET_CZ_REQ_LEAVE_GROUP
-0103 30 30 0	PACKET_CZ_REQ_EXPEL_GROUP_MEMBER
-0108 -1 4 0		send::party_chat (PACKET_CZ_REQUEST_CHAT_PARTY)
-0112 4 4 0		PACKET_CZ_UPGRADE_SKILLLEVEL
-0113 10 10 0	send::skill_use (PACKET_CZ_USE_SKILL)
-0116 10 10 0	send::skill_use_location (PACKET_CZ_USE_SKILL_TOGROUND)
-0118 2 2 0		PACKET_CZ_CANCEL_LOCKON
-011B 20 20 0	send::warp_tele (PACKET_CZ_SELECT_WARPPOINT)
-011D 2 2 0		PACKET_CZ_REMEMBER_WARPPOINT
-0126 8 8 0		PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART
-0127 8 8 0		PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY
-0128 8 8 0		PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_CART
-0129 8 8 0		PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE
-012A 2 2 0		PACKET_CZ_REQ_CARTOFF
-012E 2 2 0		send::shop_close (PACKET_CZ_REQ_CLOSESTORE)
-012F -1 84 0	PACKET_CZ_REQ_OPENSTORE
-01B2 -1 85 0	send::shop_open (PACKET_CZ_REQ_OPENSTORE2)
-0134 -1 8 0		send::buy_bulk_vender (PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC)
-0130 6 6 0		PACKET_CZ_REQ_BUY_FROMMC
-0138 3 3 0		PACKET_CZ_PKMODE_CHANGE
-013F 26 26 0	PACKET_CZ_ITEM_CREATE
-0140 22 22 0	PACKET_CZ_MOVETO_MAP
-0143 10 10 0	PACKET_CZ_INPUT_EDITDLG
-0146 6 6 0		PACKET_CZ_CLOSE_DIALOG
-0178 4 4 0		PACKET_CZ_REQ_ITEMIDENTIFY
-017A 4 4 0		PACKET_CZ_REQ_ITEMCOMPOSITION_LIST
-017C 6 6 0		PACKET_CZ_REQ_ITEMCOMPOSITION
-01FD 15 15 0	PACKET_CZ_REQ_ITEMREPAIR
-018A 4 4 0		send::quit_request (PACKET_CZ_REQ_DISCONNECT)
-018E 10 10 0	PACKET_CZ_REQMAKINGITEM
-0190 90 90 0	PACKET_CZ_USE_SKILL_TOGROUND_WITHTALKBOX
-0197 4 4 0		PACKET_CZ_RESET
-0198 8 8 0		PACKET_CZ_CHANGE_MAPTYPE
-01AE 4 4 0		PACKET_CZ_REQ_MAKINGARROW
-025B 6 6 0		PACKET_CZ_REQ_MAKINGITEM
-01AF 4 4 0		PACKET_CZ_REQ_CHANGECART
-01B9 6 6 1		receive::cast_cancelled (PACKET_ZC_DISPEL)
-01CD 30 30 1	receive::sage_autospell (PACKET_ZC_AUTOSPELLLIST)
-01CE 6 6 0		PACKET_CZ_SELECTAUTOSPELL
-0443 8 8 0		send::skill_select (PACKET_CZ_SKILL_SELECT_RESPONSE)
-01CF 28 28 1	receive::devotion (PACKET_ZC_DEVOTIONLIST)
-01D0 8 8 1		receive::revolving_entity (PACKET_ZC_SPIRITS)
-01E1 8 8 1		receive::revolving_entity (PACKET_ZC_SPIRITS2)
-01D1 14 14 1	receive::blade_stop (PACKET_ZC_BLADESTOP)
-01D2 10 10 1	receive::combo_delay (PACKET_ZC_COMBODELAY)
-0094 6 6 0		send::actor_info_request (PACKET_CZ_REQNAME)
-0095 30 30 1	receive::actor_info (PACKET_ZC_ACK_REQNAME)
-0195 102 102 1	receive::actor_info (PACKET_ZC_ACK_REQNAMEALL)
-0193 6 6 0		send::actor_name_request (PACKET_CZ_REQNAME_BYGID)
-0175 6 6 0		PACKET_CZ_REQ_GUILD_MEMBER_INFO
-0176 106 106 0	PACKET_ZC_ACK_GUILD_MEMBER_INFO
-0079 53 53 1	receive::actor_connected (PACKET_ZC_NOTIFY_NEWENTRY)
-019D 6 6 0		PACKET_CZ_CHANGE_EFFECTSTATE
-014C -1 4 1		receive::guild_allies_enemy_list (PACKET_ZC_MYGUILD_BASIC_INFO)
-014D 2 2 0		send::guild_check (PACKET_CZ_REQ_GUILD_MENUINTERFACE)
-014E 6 6 1		receive::guild_master_member (PACKET_ZC_ACK_GUILD_MENUINTERFACE)
-014F 6 6 0		send::guild_info_request (PACKET_CZ_REQ_GUILD_MENU)
-0150 110 110 1	PACKET_ZC_GUILD_INFO
-01B6 114 114 1	receive::guild_info (PACKET_ZC_GUILD_INFO2)
-0151 6 6 0		send::guild_emblem_request (PACKET_CZ_REQ_GUILD_EMBLEM_IMG)
-0152 -1 12 1	receive::guild_emblem (PACKET_ZC_GUILD_EMBLEM_IMG)
-0153 -1 4 0		PACKET_CZ_REGISTER_GUILD_EMBLEM_IMG
-0154 -1 4 1		receive::guild_members_list (PACKET_ZC_MEMBERMGR_INFO)
-0166 -1 4 1		receive::guild_members_title_list (PACKET_ZC_POSITION_ID_NAME_INFO)
-0155 -1 4 0		PACKET_CZ_REQ_CHANGE_MEMBERPOS
-0156 -1 4 1		receive::guild_member_position_changed (PACKET_ZC_ACK_REQ_CHANGE_MEMBERS)
-0157 6 6 0		PACKET_CZ_REQ_OPEN_MEMBER_INFO
-0159 54 54 0	PACKET_CZ_REQ_LEAVE_GUILD
-015A 66 66 1	receive::guild_leave (PACKET_ZC_ACK_LEAVE_GUILD)
-015B 54 54 0	PACKET_CZ_REQ_BAN_GUILD
-015C 90 90 1	receive::guild_expulsion (PACKET_ZC_ACK_BAN_GUILD)
-015D 42 42 0	PACKET_CZ_REQ_DISORGANIZE_GUILD
-015E 6 6 1		receive::guild_broken (PACKET_ZC_ACK_DISORGANIZE_GUILD_RESULT)
-015F 42 42 1	PACKET_ZC_ACK_DISORGANIZE_GUILD
-0160 -1 4 1		receive::guild_member_setting_list (PACKET_ZC_POSITION_INFO)
-0161 -1 4 0		PACKET_CZ_REG_CHANGE_GUILD_POSITIONINFO
-0162 -1 6 1		receive::guild_skills_list (PACKET_ZC_GUILD_SKILLINFO)
-0163 -1 4 1		receive::guild_expulsionlist (PACKET_ZC_BAN_LIST)
-0164 -1 4 1		PACKET_ZC_OTHER_GUILD_LIST
-0165 30 30 0	PACKET_CZ_REQ_MAKE_GUILD
-0167 3 3 1		receive::guild_create_result (PACKET_ZC_RESULT_MAKE_GUILD)
-0168 14 14 0	PACKET_CZ_REQ_JOIN_GUILD
-0169 3 3 1		receive::guild_invite_result (PACKET_ZC_ACK_REQ_JOIN_GUILD)
-016A 30 30 1	receive::guild_request (PACKET_ZC_REQ_JOIN_GUILD)
-016B 10 10 0	PACKET_CZ_JOIN_GUILD
-0149 9 9 0		send::alignment (PACKET_CZ_REQ_GIVE_MANNER_POINT)
-014A 6 6 1		receive::manner_message (PACKET_ZC_ACK_GIVE_MANNER_POINT)
-014B 27 27 1	receive::GM_silence (PACKET_ZC_NOTIFY_MANNER_POINT_GIVEN)
-016E 186 186 0	PACKET_CZ_GUILD_NOTICE
-016F 182 182 1	receive::guild_notice (PACKET_ZC_GUILD_NOTICE)
-017E -1 4 0		send::guild_chat (PACKET_CZ_GUILD_CHAT)
-017F -1 4 1		receive::guild_chat (PACKET_ZC_GUILD_CHAT)
-0165 30 30 0	PACKET_CZ_REQ_MAKE_GUILD
-0166 -1 4 1		receive::guild_members_title_list (PACKET_ZC_POSITION_ID_NAME_INFO)
-0167 3 3 1		receive::guild_create_result (PACKET_ZC_RESULT_MAKE_GUILD)
-0168 14 14 0	PACKET_CZ_REQ_JOIN_GUILD
-0169 3 3 1		receive::guild_invite_result (PACKET_ZC_ACK_REQ_JOIN_GUILD)
-016A 30 30 1	receive::guild_request (PACKET_ZC_REQ_JOIN_GUILD)
-016B 10 10 0	PACKET_CZ_JOIN_GUILD
-016C 43 43 1	receive::guild_name (PACKET_ZC_UPDATE_GDID)
-016C 43 43 1	receive::guild_name (PACKET_ZC_UPDATE_GDID)
-016D 14 14 1	receive::guild_member_online_status (PACKET_ZC_UPDATE_CHARSTAT)
-01F2 20 20 1	receive::guild_member_online_status (PACKET_ZC_UPDATE_CHARSTAT2)
-0170 14 14 0	PACKET_CZ_REQ_ALLY_GUILD
-0171 30 30 1	receive::guild_ally_request (PACKET_ZC_REQ_ALLY_GUILD)
-0172 10 10 0	PACKET_CZ_ALLY_GUILD
-0173 3 3 1		receive::guild_alliance (PACKET_ZC_ACK_REQ_ALLY_GUILD)
-0174 -1 4 1		receive::guild_position_changed (PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO)
-0180 6 6 0		PACKET_CZ_REQ_HOSTILE_GUILD
-0181 3 3 1		receive::guild_opposition_result (PACKET_ZC_ACK_REQ_HOSTILE_GUILD)
-0182 106 106 1	receive::guild_member_add (PACKET_ZC_MEMBER_ADD)
-0183 10 10 0	PACKET_CZ_REQ_DELETE_RELATED_GUILD
-0184 10 10 1	receive::guild_unally (PACKET_ZC_DELETE_RELATED_GUILD)
-0185 34 34 1	receive::guild_alliance_added (PACKET_ZC_ADD_RELATED_GUILD)
-019E 2 2 1		receive::pet_capture_process (PACKET_ZC_START_CAPTURE)
-019F 6 6 0		PACKET_CZ_TRYCAPTURE_MONSTER
-01A0 3 3 1		receive::pet_capture_result (PACKET_ZC_TRYCAPTURE_MONSTER)
-01A1 3 3 0		PACKET_CZ_COMMAND_PET
-01A2 37 37 1	receive::pet_info (PACKET_ZC_PROPERTY_PET)
-01A3 5 5 1		receive::pet_food (PACKET_ZC_FEED_PET)
-01A4 11 11 1	receive::pet_info2 (PACKET_ZC_CHANGESTATE_PET)
-01A5 26 26 0	PACKET_CZ_RENAME_PET
-01A6 -1 4 1		receive::egg_list (PACKET_ZC_PETEGG_LIST)
-01A7 4 4 0		PACKET_CZ_SELECT_PETEGG
-01A8 4 4 0		PACKET_CZ_PETEGG_INFO
-01A9 6 6 0		PACKET_CZ_PET_ACT
-01AA 10 10 1	receive::pet_emotion (PACKET_ZC_PET_ACT)
-01CA 3 3 0		PACKET_CZ_REQMAKINGHOMUN
-01B0 11 11 1	receive::monster_typechange (PACKET_ZC_NPCSPRITE_CHANGE)
-01B1 7 7 1		PACKET_ZC_SHOWDIGIT
-01BA 26 26 0	PACKET_CZ_REMOVE_AID
-01BB 26 26 0	PACKET_CZ_SHIFT
-01BC 26 26 0	PACKET_CZ_RECALL
-01BD 26 26 0	PACKET_CZ_RECALL_GID
-01C0 2 2 0		PACKET_CZ_REQ_REMAINTIME
-01C1 14 14 1	PACKET_ZC_REPLY_REMAINTIME
-01C2 10 10 0	PACKET_ZC_INFO_REMAINTIME
-01D3 35 35 0	receive::sound_effect (PACKET_ZC_SOUND)
-01D5 -1 8 0		PACKET_CZ_INPUT_EDITDLGSTR
-01D4 6 6 0		receive::npc_talk_text (PACKET_ZC_OPEN_EDITDLGSTR)
-01DF 6 6 0		PACKET_CZ_REQ_ACCOUNTNAME
-01F3 10 10 0	receive::misc_effect (PACKET_ZC_NOTIFY_EFFECT2)
-0284 14 14 0	receive::GANSI_RANK (PACKET_ZC_NOTIFY_EFFECT3)
-01FF 10 10 0	receive::high_jump (PACKET_ZC_HIGHJUMP)
-01ED 2 2 0		PACKET_CZ_CHOPOKGI
-01E7 2 2 0		PACKET_CZ_DORIDORI
-01B7 6 6 0		PACKET_CZ_GUILD_ZENY
-01F7 14 14 0	PACKET_CZ_JOIN_BABY
-01E3 14 14 0	PACKET_CZ_JOIN_COUPLE
-01CB 9 9 0		PACKET_CZ_MONSTER_TALK
-01F9 6 6 0		PACKET_CZ_REQ_JOIN_BABY
-01E5 6 6 0		PACKET_CZ_REQ_JOIN_COUPLE
-0201 -1 4 0		receive::friend_list (PACKET_ZC_FRIENDS_LIST)
-0203 10 10 0	PACKET_CZ_DELETE_FRIENDS
-0205 26 26 0	receive::divorced (PACKET_ZC_DIVORCE)
-0206 11 11 0	receive::friend_logon (PACKET_ZC_FRIENDS_STATE)
-0207 34 34 0	receive::friend_request (PACKET_ZC_REQ_ADD_FRIENDS)
-0208 14 14 0	send::friend_response (PACKET_CZ_ACK_REQ_ADD_FRIENDS)
-0209 36 36 0	receive::friend_response (PACKET_ZC_ADD_FRIENDS_LIST)
-020A 10 10 0	receive::friend_removed (PACKET_ZC_DELETE_FRIENDS)
-020E 32 32 0	receive::taekwon_packets (PACKET_ZC_STARSKILL)
-0212 26 26 0	PACKET_CZ_REQ_GIVE_MANNER_BYNAME
-0213 26 26 0	PACKET_CZ_REQ_STATUS_GM
-0214 42 42 0	PACKET_ZC_ACK_STATUS_GM
-0215 6 6 0		receive::gospel_buff_aligned (PACKET_ZC_SKILLMSG)
-0216 6 6 0		receive::adopt_reply (PACKET_ZC_BABYMSG)
-0217 2 2 0		PACKET_CZ_BLACKSMITH_RANK
-0218 2 2 0		PACKET_CZ_ALCHEMIST_RANK
-0225 2 2 0		PACKET_CZ_TAEKWON_RANK
-0219 282 282 0	receive::top10_blacksmith_rank (PACKET_ZC_BLACKSMITH_RANK)
-021A 282 282 0	receive::top10_alchemist_rank (PACKET_ZC_ALCHEMIST_RANK)
-0226 282 282 0	receive::top10_taekwon_rank (PACKET_ZC_TAEKWON_RANK)
-0282 284 284 0	PACKET_ZC_GANGSI_RANK
-021B 10 10 0	receive::blacksmith_points (PACKET_ZC_BLACKSMITH_POINT)
-021C 10 10 0	receive::alchemist_point (PACKET_ZC_ALCHEMIST_POINT)
-0224 10 10 0	receive::taekwon_rank (PACKET_ZC_TAEKWON_POINT)
-0280 12 12 0	PACKET_ZC_GANGSI_POINT
-0285 6 6 0		PACKET_ZC_DEATH_QUESTION
-0286 4 4 0		PACKET_CZ_DEATH_QUESTION
-021D 6 6 0		send::less_effect (PACKET_CZ_LESSEFFECT)
-021E 6 6 0		PACKET_ZC_LESSEFFECT
-021F 66 66 0	PACKET_ZC_NOTIFY_PKINFO
-0222 6 6 0		PACKET_CZ_REQ_WEAPONREFINE
-0221 -1 4 0		receive::upgrade_list (PACKET_ZC_NOTIFY_WEAPONITEMLIST)
-0220 10 10 0	PACKET_ZC_NOTIFY_CRAZYKILLER
-0223 8 8 0		receive::upgrade_message (PACKET_ZC_ACK_WEAPONREFINE)
-0073 11 11 0	receive::map_loaded (PACKET_ZC_ACCEPT_ENTER)
-0074 3 3 0		PACKET_ZC_REFUSE_ENTER
-0075 -1 11 0	receive::changeToInGameState (PACKET_ZC_NOTIFY_INITCHAR)
-0076 9 9 0		PACKET_ZC_NOTIFY_UPDATECHAR
-0077 5 5 0		receive::changeToInGameState (PACKET_ZC_NOTIFY_UPDATEPLAYER)
-0078 55 55 0	receive::actor_exists (PACKET_ZC_NOTIFY_STANDENTRY)
-007A 58 58 0	receive::changeToInGameState (PACKET_ZC_NOTIFY_ACTENTRY)
-007B 60 60 0	receive::actor_moved (PACKET_ZC_NOTIFY_MOVEENTRY)
-007C 44 44 0	receive::actor_spawned (PACKET_ZC_NOTIFY_STANDENTRY_NPC)
-007F 6 6 0		receive::received_sync (PACKET_ZC_NOTIFY_TIME)
-0080 7 7 0		receive::actor_died_or_disappeared (PACKET_ZC_NOTIFY_VANISH)
-0083 2 2 0		PACKET_ZC_ACCEPT_QUIT
-0084 2 2 0		PACKET_ZC_REFUSE_QUIT
-0086 16 16 0	receive::actor_display (PACKET_ZC_NOTIFY_MOVE)
-0087 12 12 0	receive::character_moves (PACKET_ZC_NOTIFY_PLAYERMOVE)
-0088 10 10 0	receive::actor_movement_interrupted (PACKET_ZC_STOPMOVE)
-08CD 10 10 0
-008A 29 29 0	receive::actor_action (PACKET_ZC_NOTIFY_ACT)
-008B 23 23 0	PACKET_ZC_NOTIFY_ACT_POSITION
-008D -1 8 0		receive::public_chat (PACKET_ZC_NOTIFY_CHAT)
-008E -1 4 0		receive::self_chat (PACKET_ZC_NOTIFY_PLAYERCHAT)
-0091 22 22 0	receive::map_change (PACKET_ZC_NPCACK_MAPMOVE)
-0092 28 28 0	receive::map_changed (PACKET_ZC_NPCACK_SERVERMOVE)
-0093 2 2 0		PACKET_ZC_NPCACK_ENABLE
-0097 -1 32 0	receive::private_message (PACKET_ZC_WHISPER)
-0098 3 3 0		receive::private_message_sent (PACKET_ZC_ACK_WHISPER)
-009A -1 4 0		receive::system_chat (PACKET_ZC_BROADCAST)
-009C 9 9 0		receive::actor_look_at (PACKET_ZC_CHANGE_DIRECTION)
-009D 17 17 0	receive::item_exists (PACKET_ZC_ITEM_ENTRY)
-009E 17 17 0	receive::item_appeared (PACKET_ZC_ITEM_FALL_ENTRY)
-00A0 23 23 0	receive::inventory_item_added (PACKET_ZC_ITEM_PICKUP_ACK)
-00A1 6 6 0		receive::item_disappeared (PACKET_ZC_ITEM_DISAPPEAR)
-00A3 -1 4 0		receive::inventory_items_stackable (PACKET_ZC_NORMAL_ITEMLIST)
-00A4 -1 4 0		receive::inventory_items_nonstackable (PACKET_ZC_EQUIPMENT_ITEMLIST)
-00A5 -1 4 0		receive::storage_items_stackable (PACKET_ZC_STORE_NORMAL_ITEMLIST)
-00A6 -1 4 0		receive::storage_items_nonstackable (PACKET_ZC_STORE_EQUIPMENT_ITEMLIST)
-00A8 7 7 0		receive::use_item (PACKET_ZC_USE_ITEM_ACK)
-00AA 9 9 0		receive::equip_item (PACKET_ZC_REQ_WEAR_EQUIP_ACK)
-00AC 7 7 0		receive::unequip_item (PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK)
-00AE -1 4 0
-00AF 6 6 0		receive::inventory_item_removed (PACKET_ZC_ITEM_THROW_ACK)
-00B0 8 8 0		receive::stat_info (PACKET_ZC_PAR_CHANGE)
-00B1 8 8 0		receive::stat_info (PACKET_ZC_LONGPAR_CHANGE)
-00B3 3 3 0		receive::switch_character (PACKET_ZC_RESTART_ACK)
-00B4 -1 8 0		receive::npc_talk (PACKET_ZC_SAY_DIALOG)
-00B5 6 6 0		receive::npc_talk_continue (PACKET_ZC_WAIT_DIALOG)
-00B6 6 6 0		receive::npc_talk_close (PACKET_ZC_CLOSE_DIALOG)
-00B7 -1 8 0		receive::npc_talk_responses (PACKET_ZC_MENU_LIST)
-00BC 6 6 0		receive::stats_added (PACKET_ZC_STATUS_CHANGE_ACK)
-00BD 44 44 0	receive::stats_info (PACKET_ZC_STATUS)
-00BE 5 5 0		receive::stat_info (PACKET_ZC_STATUS_CHANGE)
-00C0 7 7 0		receive::emoticon (PACKET_ZC_EMOTION)
-00C2 6 6 0		receive::users_online (PACKET_ZC_USER_COUNT)
-00C3 8 8 0		receive::job_equipment_hair_change (PACKET_ZC_SPRITE_CHANGE)
-00C4 6 6 0		receive::npc_store_begin (PACKET_ZC_SELECT_DEALTYPE)
-00C6 -1 4 0		receive::npc_store_info (PACKET_ZC_PC_PURCHASE_ITEMLIST)
-00C7 -1 4 0		receive::npc_sell_list (PACKET_ZC_PC_SELL_ITEMLIST)
-00CA 3 3 0		receive::buy_result (PACKET_ZC_PC_PURCHASE_RESULT)
-00CB 3 3 0		receive::sell_result (PACKET_ZC_PC_SELL_RESULT)
-00CD 3 3 0		PACKET_ZC_ACK_DISCONNECT_CHARACTER
-00D1 4 4 0		receive::ignore_player_result (PACKET_ZC_SETTING_WHISPER_PC)
-00D2 4 4 0		receive::ignore_all_result (PACKET_ZC_SETTING_WHISPER_STATE)
-00D4 -1 4 0		receive::whisper_list (PACKET_ZC_WHISPER_LIST)
-00D6 3 3 0		receive::chat_created (PACKET_ZC_ACK_CREATE_CHATROOM)
-00D7 -1 17 0	receive::chat_info (PACKET_ZC_ROOM_NEWENTRY)
-00D8 6 6 0		receive::chat_removed (PACKET_ZC_DESTROY_ROOM)
-00DA 3 3 0		receive::chat_join_result (PACKET_ZC_REFUSE_ENTER_ROOM)
-00DB -1 8 0		receive::chat_users (PACKET_ZC_ENTER_ROOM)
-00DC 28 28 0	receive::chat_user_join (PACKET_ZC_MEMBER_NEWENTRY)
-00DD 29 29 0	receive::chat_user_leave (PACKET_ZC_MEMBER_EXIT)
-00DF -1 17 0	receive::chat_modified (PACKET_ZC_CHANGE_CHATROOM)
-00E1 30 30 0	receive::chat_newowner (PACKET_ZC_ROLE_CHANGE)
-00E5 26 26 0	receive::deal_request (PACKET_ZC_REQ_EXCHANGE_ITEM)
-00E7 3 3 0		receive::deal_begin (PACKET_ZC_ACK_EXCHANGE_ITEM)
-00E9 19 19 0	receive::deal_add_other (PACKET_ZC_ADD_EXCHANGE_ITEM)
-00EA 5 5 0		receive::deal_add_you (PACKET_ZC_ACK_ADD_EXCHANGE_ITEM)
-00EC 3 3 0		receive::deal_finalize (PACKET_ZC_CONCLUDE_EXCHANGE_ITEM)
-00EE 2 2 0		receive::deal_cancelled (PACKET_ZC_CANCEL_EXCHANGE_ITEM)
-00F0 3 3 0		receive::deal_complete (PACKET_ZC_EXEC_EXCHANGE_ITEM)
-00F1 2 2 0		PACKET_ZC_EXCHANGEITEM_UNDO
-00F2 6 6 0		receive::storage_opened (PACKET_ZC_NOTIFY_STOREITEM_COUNTINFO)
-00F4 21 21 0	receive::storage_item_added (PACKET_ZC_ADD_ITEM_TO_STORE)
-00F6 8 8 0		receive::storage_item_removed (PACKET_ZC_DELETE_ITEM_FROM_STORE)
-00F8 2 2 0		receive::storage_closed (PACKET_ZC_CLOSE_STORE)
-00FA 3 3 0		receive::party_organize_result (PACKET_ZC_ACK_MAKE_GROUP)
-00FB -1 28 0	receive::party_users_info (PACKET_ZC_GROUP_LIST)
-00FD 27 27 0	receive::party_invite_result (PACKET_ZC_ACK_REQ_JOIN_GROUP)
-00FE 30 30 0	receive::party_invite (PACKET_ZC_REQ_JOIN_GROUP)
-0101 6 6 0		receive::party_exp (PACKET_ZC_GROUPINFO_CHANGE)
-0104 79 79 0	receive::party_join (PACKET_ZC_ADD_MEMBER_TO_GROUP)
-0105 31 31 0	receive::party_leave (PACKET_ZC_DELETE_MEMBER_FROM_GROUP)
-0106 10 10 0	receive::party_hp_info (PACKET_ZC_NOTIFY_HP_TO_GROUPM)
-0107 10 10 0	receive::party_location (PACKET_ZC_NOTIFY_POSITION_TO_GROUPM)
-0109 -1 8 0		receive::party_chat (PACKET_ZC_NOTIFY_CHAT_PARTY)
-010A 4 4 0		receive::mvp_item (PACKET_ZC_MVP_GETTING_ITEM)
-010B 6 6 0		receive::mvp_you (PACKET_ZC_MVP_GETTING_SPECIAL_EXP)
-010C 6 6 0		receive::mvp_other (PACKET_ZC_MVP)
-010D 2 2 0		PACKET_ZC_THROW_MVPITEM
-010E 11 11 0	receive::skill_update (PACKET_ZC_SKILLINFO_UPDATE)
-010F -1 4 0		receive::skills_list (PACKET_ZC_SKILLINFO_LIST)
-02B1 -1 8 0		receive::quest_all_list (PACKET_ZC_ALL_QUEST_LIST)
-02B2 -1 8 0		receive::quest_all_mission (PACKET_ZC_ALL_QUEST_MISSION)
-02B5 -1 6 0		receive::quest_update_mission_hunt (PACKET_ZC_UPDATE_MISSION_HUNT)
-0110 10 10 0	receive::skill_use_failed (PACKET_ZC_ACK_TOUSESKILL)
-0111 39 39 0	receive::skill_add (PACKET_ZC_ADD_SKILL)
-0114 31 31 0	receive::skill_use (PACKET_ZC_NOTIFY_SKILL)
-0115 35 35 0	PACKET_ZC_NOTIFY_SKILL_POSITION
-0117 18 18 0	receive::skill_use_location (PACKET_ZC_NOTIFY_GROUNDSKILL)
-0119 13 13 0	receive::character_status (PACKET_ZC_STATE_CHANGE)
-0229 15 15 0	receive::character_status (PACKET_ZC_STATE_CHANGE3)
-011A 15 15 0	receive::skill_used_no_damage (PACKET_ZC_USE_SKILL)
-011C 68 68 0	receive::warp_portal_list (PACKET_ZC_WARPLIST)
-011E 3 3 0		receive::memo_success (PACKET_ZC_ACK_REMEMBER_WARPPOINT)
-011F 16 16 0	receive::area_spell (PACKET_ZC_SKILL_ENTRY)
-0120 6 6 0		receive::area_spell_disappears (PACKET_ZC_SKILL_DISAPPEAR)
-0121 14 14 0	receive::cart_info (PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO)
-0122 -1 4 0		receive::cart_items_nonstackable (PACKET_ZC_CART_EQUIPMENT_ITEMLIST)
-0123 -1 4 0		receive::cart_items_stackable (PACKET_ZC_CART_NORMAL_ITEMLIST)
-0124 21 21 0	receive::cart_item_added (PACKET_ZC_ADD_ITEM_TO_CART)
-0125 8 8 0		receive::cart_item_removed (PACKET_ZC_DELETE_ITEM_FROM_CART)
-012B 2 2 0		receive::cart_off (PACKET_ZC_CARTOFF)
-012C 3 3 0		receive::cart_add_failed (PACKET_ZC_ACK_ADDITEM_TO_CART)
-012D 4 4 0		receive::shop_skill (PACKET_ZC_OPENSTORE)
-0131 86 86 0	receive::vender_found (PACKET_ZC_STORE_ENTRY)
-0132 6 6 0		receive::vender_lost (PACKET_ZC_DISAPPEAR_ENTRY)
-0133 -1 8 0		receive::vender_items_list (PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC)
-0135 7 7 0		receive::vender_buy_fail (PACKET_ZC_PC_PURCHASE_RESULT_FROMMC)
-0136 -1 8 0		receive::vending_start (PACKET_ZC_PC_PURCHASE_MYITEMLIST)
-0137 6 6 0		receive::shop_sold (PACKET_ZC_DELETEITEM_FROM_MCSTORE)
-0139 16 16 0	receive::monster_ranged_attack (PACKET_ZC_ATTACK_FAILURE_FOR_DISTANCE)
-013A 4 4 0		receive::attack_range (PACKET_ZC_ATTACK_RANGE)
-013B 4 4 0		receive::arrow_none (PACKET_ZC_ACTION_FAILURE)
-013C 4 4 0		receive::arrow_equipped (PACKET_ZC_EQUIP_ARROW)
-013D 6 6 0		receive::hp_sp_changed (PACKET_ZC_RECOVERY)
-013E 24 24 0	receive::skill_cast (PACKET_ZC_USESKILL_ACK)
-0141 14 14 0	receive::stat_info2 (PACKET_ZC_COUPLESTATUS)
-0142 6 6 0		receive::npc_talk_number (PACKET_ZC_OPEN_EDITDLG)
-0144 23 23 0	receive::minimap_indicator (PACKET_ZC_COMPASS)
-0145 19 19 0	PACKET_ZC_SHOW_IMAGE
-0147 39 39 0	receive::item_skill (PACKET_ZC_AUTORUN_SKILL)
-0148 8 8 0		receive::resurrection (PACKET_ZC_RESURRECTION)
-0177 -1 4 0		receive::identify_list (PACKET_ZC_ITEMIDENTIFY_LIST)
-0179 5 5 0		receive::identify (PACKET_ZC_ACK_ITEMIDENTIFY)
-017B -1 4 0		receive::card_merge_list (PACKET_ZC_ITEMCOMPOSITION_LIST)
-017D 7 7 0		receive::card_merge_status (PACKET_ZC_ACK_ITEMCOMPOSITION)
-0188 8 8 0		receive::item_upgrade (PACKET_ZC_ACK_ITEMREFINING)
-0189 4 4 0		receive::no_teleport (PACKET_ZC_NOTIFY_MAPINFO)
-018B 4 4 0		receive::quit_response (PACKET_ZC_ACK_REQ_DISCONNECT)
-018C 29 29 0	receive::sense_result (PACKET_ZC_MONSTER_INFO)
-018D -1 4 0		receive::forge_list (PACKET_ZC_MAKABLEITEMLIST)
-018F 6 6 0		receive::refine_result (PACKET_ZC_ACK_REQMAKINGITEM)
-0191 86 86 0	receive::talkie_box (PACKET_ZC_TALKBOX_CHATCONTENTS)
-0192 24 24 0	receive::map_change_cell (PACKET_ZC_UPDATE_MAPINFO)
-0194 30 30 0	receive::character_name (PACKET_ZC_ACK_REQNAME_BYGID)
-0196 9 9 0		receive::actor_status_active (PACKET_ZC_MSG_STATE_CHANGE)
-028A 18 18 0	receive::character_status (PACKET_ZC_NPC_SHOWEFST_UPDATE)
-0199 4 4 0		receive::map_property (PACKET_ZC_NOTIFY_MAPPROPERTY)
-019A 14 14 0	receive::pvp_rank (PACKET_ZC_NOTIFY_RANKING)
-019B 10 10 0	receive::unit_levelup (PACKET_ZC_NOTIFY_EFFECT)
-01AB 12 12 0	receive::stat_info (PACKET_ZC_PAR_CHANGE_USER)
-01AC 6 6 0		receive::actor_trapped (PACKET_ZC_SKILL_UPDATE)
-01AD -1 4 0		receive::arrowcraft_list (PACKET_ZC_MAKINGARROW_LIST)
-025A -1 4 0		receive::cooking_list (PACKET_ZC_MAKINGITEM_LIST)
-01B3 67 67 0	receive::npc_image (PACKET_ZC_SHOW_IMAGE2)
-01B4 12 12 0	receive::guild_emblem_update (PACKET_ZC_CHANGE_GUILD)
-01B5 18 18 0	receive::account_payment_info (PACKET_SC_BILLING_INFO)
-01B8 3 3 0		PACKET_ZC_GUILD_ZENY_ACK
-01C3 -1 16 0	receive::local_broadcast (PACKET_ZC_BROADCAST2)
-01C4 22 22 0	receive::storage_item_added (PACKET_ZC_ADD_ITEM_TO_STORE2)
-01C5 22 22 0	receive::cart_item_added (PACKET_ZC_ADD_ITEM_TO_CART2)
-01C8 13 13 0	receive::item_used (PACKET_ZC_USE_ITEM_ACK2)
-01C9 97 97 0	receive::area_spell (PACKET_ZC_SKILL_ENTRY2)
-01CC 9 9 0		PACKET_ZC_MONSTER_TALK
-01D6 4 4 0		receive::map_property2 (PACKET_ZC_NOTIFY_MAPPROPERTY2)
-01D7 11 11 0	receive::player_equipment (PACKET_ZC_SPRITE_CHANGE2)
-01D8 54 54 0	receive::actor_exists (PACKET_ZC_NOTIFY_STANDENTRY2)
-022A 58 58 0	receive::actor_exists (PACKET_ZC_NOTIFY_STANDENTRY3)
-01D9 53 53 0	receive::actor_connected (PACKET_ZC_NOTIFY_NEWENTRY2)
-022B 57 57 0	receive::actor_connected (PACKET_ZC_NOTIFY_NEWENTRY3)
-01DA 60 60 0	receive::actor_moved (PACKET_ZC_NOTIFY_MOVEENTRY2)
-022C 65 65 0	receive::actor_moved (PACKET_ZC_NOTIFY_MOVEENTRY3)
-01DE 33 33 0	receive::skill_use (PACKET_ZC_NOTIFY_SKILL2)
-01E0 30 30 0	receive::GM_req_acc_name (PACKET_ZC_ACK_ACCOUNTNAME)
-01E2 34 34 0	PACKET_ZC_REQ_COUPLE
-01E4 2 2 0		PACKET_ZC_START_COUPLE
-01E6 26 26 0	receive::marriage_partner_name (PACKET_ZC_COUPLENAME)
-01E9 81 81 0	receive::party_join (PACKET_ZC_ADD_MEMBER_TO_GROUP2)
-01EA 6 6 0		receive::married (PACKET_ZC_CONGRATULATION)
-01EB 10 10 0	receive::guild_location (PACKET_ZC_NOTIFY_POSITION_TO_GUILDM)
-01EC 26 26 0	receive::guild_member_map_change (PACKET_ZC_GUILD_MEMBER_MAP_CHANGE)
-01EE -1 4 0		receive::inventory_items_stackable (PACKET_ZC_NORMAL_ITEMLIST2)
-01EF -1 4 0		receive::cart_items_stackable (PACKET_ZC_CART_NORMAL_ITEMLIST2)
-01F0 -1 4 0		receive::storage_items_stackable (PACKET_ZC_STORE_NORMAL_ITEMLIST2)
-01F4 32 32 0	receive::deal_request (PACKET_ZC_REQ_EXCHANGE_ITEM2)
-01F5 9 9 0		receive::deal_begin (PACKET_ZC_ACK_EXCHANGE_ITEM2)
-01F6 34 34 0	receive::adopt_request (PACKET_ZC_REQ_BABY)
-0253 3 3 0		PACKET_ZC_STARPLACE
-0254 3 3 0		PACKET_CZ_AGREE_STARPLACE
-01F8 2 2 0		PACKET_ZC_START_BABY
-01FC -1 4 0		receive::repair_list (PACKET_ZC_REPAIRITEMLIST)
-01FE 5 5 0		receive::repair_result (PACKET_ZC_ACK_ITEMREPAIR)
-0227 18 18 0	receive::gameguard_request (PACKET_ZC_GAME_GUARD)
-0228 18 18 0	PACKET_CZ_ACK_GAME_GUARD
-0232 9 9 0		send::actor_move (PACKET_CZ_REQUEST_MOVENPC)
-0233 11 11 0	PACKET_CZ_REQUEST_ACTNPC
-0234 6 6 0		PACKET_CZ_REQUEST_MOVETOOWNER
-0230 12 12 0	receive::homunculus_info (PACKET_ZC_CHANGESTATE_MER)
-022E 71 71 0	receive::homunculus_property (PACKET_ZC_PROPERTY_HOMUN)
-027D 62 62 0	PACKET_ZC_PROPERTY_MERCE
-0235 -1 4 0		receive::skills_list
-0239 11 11 0	receive::skill_update
-022F 5 5 0		receive::homunculus_food
-0231 26 26 0	PACKET_CZ_RENAME_MER
-0237 2 2 0		PACKET_CZ_KILLER_RANK
-0238 282 282 0	receive::top10_pk_rank
-0236 10 10 0
-023A 4 4 0		receive::storage_password_request (PACKET_ZC_REQ_STORE_PASSWORD)
-023C 6 6 0		receive::storage_password_result (PACKET_ZC_RESULT_STORE_PASSWORD)
-023D 6 6 0		PACKET_AC_EVENT_RESULT
-023E 8 8 0		receive::storage_password_request (PACKET_HC_REQUEST_CHARACTER_PASSWORD)
-023F 2 2 0		PACKET_CZ_MAIL_GET_LIST
-0240 -1 8 0		receive::mail_refreshinbox (PACKET_ZC_MAIL_REQ_GET_LIST)
-0241 6 6 0		PACKET_CZ_MAIL_OPEN
-0242 -1 99 0	receive::mail_read (PACKET_ZC_MAIL_REQ_OPEN)
-0243 6 6 0		PACKET_CZ_MAIL_DELETE
-0257 8 8 0		receive::mail_delete (PACKET_ZC_ACK_MAIL_DELETE)
-0244 6 6 0		PACKET_CZ_MAIL_GET_ITEM
-0245 3 3 0		receive::mail_getattachment (PACKET_ZC_MAIL_REQ_GET_ITEM)
-0246 4 4 0		PACKET_CZ_MAIL_RESET_ITEM
-0247 8 8 0		PACKET_CZ_MAIL_ADD_ITEM
-0248 -1 68 0	PACKET_CZ_MAIL_SEND
-0249 3 3 0		receive::mail_send (PACKET_ZC_MAIL_REQ_SEND)
-024A 70 70 0	receive::mail_new (PACKET_ZC_MAIL_RECEIVE)
-024B 4 4 0		PACKET_CZ_AUCTION_CREATE
-024C 8 8 0		PACKET_CZ_AUCTION_ADD_ITEM
-024D 12 12 0	PACKET_CZ_AUCTION_ADD
-024E 6 6 0		PACKET_CZ_AUCTION_ADD_CANCEL
-024F 10 10 0	PACKET_CZ_AUCTION_BUY
-0250 3 3 0		receive::auction_result (PACKET_ZC_AUCTION_RESULT)
-0251 34 34 0	PACKET_CZ_AUCTION_ITEM_SEARCH
-0252 -1 12 0	receive::auction_item_request_search (PACKET_ZC_AUCTION_ITEM_REQ_SEARCH)
-0255 5 5 0		receive::mail_setattachment (PACKET_ZC_ACK_MAIL_ADD_ITEM)
-0256 5 5 0		receive::auction_add_item (PACKET_ZC_ACK_AUCTION_ADD_ITEM)
-0258 2 2 0		PACKET_CA_REQ_GAME_GUARD_CHECK
-0259 3 3 0		receive::gameguard_grant (PACKET_AC_ACK_GAME_GUARD)
-025C 4 4 0		PACKET_CZ_AUCTION_REQ_MY_INFO
-025D 6 6 0		receive::auction_my_sell_stop (PACKET_CZ_AUCTION_REQ_MY_SELL_STOP)
-025E 4 4 0		PACKET_ZC_AUCTION_ACK_MY_SELL_STOP
-025F 6 6 0		receive::auction_windows (PACKET_ZC_AUCTION_WINDOWS)
-0260 6 6 0		receive::mail_window (PACKET_ZC_MAIL_WINDOWS)
-0261 11 11 0	PACKET_AC_REQ_LOGIN_OLDEKEY
-0262 11 11 0	PACKET_AC_REQ_LOGIN_NEWEKEY
-0263 11 11 0	PACKET_AC_REQ_LOGIN_CARDPASS
-0264 20 20 0	PACKET_CA_ACK_LOGIN_OLDEKEY
-0265 20 20 0	PACKET_CA_ACK_LOGIN_NEWEKEY
-0266 30 30 0	PACKET_CA_ACK_LOGIN_CARDPASS
-0267 4 4 0		PACKET_AC_ACK_EKEY_FAIL_NOTEXIST
-0268 4 4 0		PACKET_AC_ACK_EKEY_FAIL_NOTUSESEKEY
-0269 4 4 0		PACKET_AC_ACK_EKEY_FAIL_NOTUSEDEKEY
-026A 4 4 0		PACKET_AC_ACK_EKEY_FAIL_AUTHREFUSE
-026B 4 4 0		PACKET_AC_ACK_EKEY_FAIL_INPUTEKEY
-026C 4 4 0		PACKET_AC_ACK_EKEY_FAIL_NOTICE
-026D 4 4 0		PACKET_AC_ACK_EKEY_FAIL_NEEDCARDPASS
-026F 2 2 0		PACKET_AC_ACK_FIRST_LOGIN
-0270 2 2 0		PACKET_AC_REQ_LOGIN_ACCOUNT_INFO
-0271 40 40 0	PACKET_CA_ACK_LOGIN_ACCOUNT_INFO
-0272 44 44 0	PACKET_AC_ACK_PT_ID_INFO
-0273 30 30 0	PACKET_CZ_REQ_MAIL_RETURN
-0274 8 8 0		receive::mail_return (PACKET_ZC_ACK_MAIL_RETURN)
-0275 37 37 0	send::game_login (PACKET_CH_ENTER2)
-0276 -1 51 0	PACKET_AC_ACCEPT_LOGIN2
-0277 84 84 0	PACKET_CA_LOGIN_PCBANG
-0278 2 2 0		PACKET_ZC_NOTIFY_PCBANG
-0279 2 2 0		PACKET_CZ_HUNTINGLIST
-027A -1 4 0		PACKET_ZC_HUNTINGLIST
-027B 14 14 0	receive::premium_rates_info (PACKET_ZC_PCBANG_EFFECT)
-027C 60 60 0	PACKET_CA_LOGIN4
-027E -1 6 0		PACKET_ZC_SHANDA_PROTECT
-027F 8 8 0		PACKET_CA_CLIENT_TYPE
-0283 6 6 0		receive::account_id (PACKET_ZC_AID)
-0287 -1 8 0		receive::cash_dealer (PACKET_ZC_PC_CASH_POINT_ITEMLIST)
-0288 6 6 0		PACKET_CZ_PC_BUY_CASH_POINT_ITEM
-0289 8 8 0		receive::cash_buy_fail (PACKET_ZC_PC_CASH_POINT_UPDATE)
-0444 -1 8 0		receive::cash_item_list (PACKET_ZC_SIMPLE_CASH_POINT_ITEMLIST)
-0445 6 6 0		PACKET_CZ_SIMPLE_BUY_CASH_POINT_ITEM
+020D -1 4 0
+006B -1 4 0
+006C 3 3 0
+006D 126 126 0
+006E 3 3 0
+0071 28 28 0
+0068 46 46 0
+01FB 56 56 0
+006F 2 2 0
+0070 3 3 0
+02CA 3 3 0
+0072 19 19 0
+0082 2 2 0
+0085 5 5 0
+0089 7 7 0
+008C -1 4 0
+007E 6 6 0
+007D 2 2 0
+0090 7 7 0
+0099 -1 4 0
+019C -1 4 0
+009B 5 5 0
+00CC 6 6 0
+00CE 2 2 0
+009F 6 6 0
+00A2 6 6 0
+00A7 8 8 0
+00A9 6 6 0
+00AB 4 4 0
+00B8 7 7 0
+00B9 6 6 0
+00B2 3 3 0
+00BA 2 2 0
+00BB 5 5 0
+00BF 3 3 0
+00C1 2 2 0
+00C5 7 7 0
+00C8 -1 4 0
+00C9 -1 4 0
+0096 -1 28 0
+00CF 27 27 0
+00D0 3 3 0
+00D3 2 2 0
+00D5 -1 15 0
+00D9 14 14 0
+00DE -1 15 0
+00E0 30 30 0
+00E2 26 26 0
+00E3 2 2 0
+00E4 6 6 0
+00E6 3 3 0
+00E8 8 8 0
+00EB 2 2 0
+00ED 2 2 0
+00EF 2 2 0
+00F3 8 8 0
+00F5 8 8 0
+00F7 2 2 0
+00F9 26 26 0
+01E8 28 28 0
+00FC 6 6 0
+00FF 10 10 0
+0102 6 6 0
+0100 2 2 0
+0103 30 30 0
+0108 -1 4 0
+0112 4 4 0
+0113 10 10 0
+0116 10 10 0
+0118 2 2 0
+011B 20 20 0
+011D 2 2 0
+0126 8 8 0
+0127 8 8 0
+0128 8 8 0
+0129 8 8 0
+012A 2 2 0
+012E 2 2 0
+012F -1 84 0
+01B2 -1 85 0
+0134 -1 8 0
+0130 6 6 0
+0138 3 3 0
+013F 26 26 0
+0140 22 22 0
+0143 10 10 0
+0146 6 6 0
+0178 4 4 0
+017A 4 4 0
+017C 6 6 0
+01FD 15 15 0
+018A 4 4 0
+018E 10 10 0
+0190 90 90 0
+0197 4 4 0
+0198 8 8 0
+01AE 4 4 0
+025B 6 6 0
+01AF 4 4 0
+01B9 6 6 1
+01CD 30 30 1
+01CE 6 6 0
+0443 8 8 0
+01CF 28 28 1
+01D0 8 8 1
+01E1 8 8 1
+01D1 14 14 1
+01D2 10 10 1
+0094 6 6 0
+0095 30 30 1
+0195 102 102 1
+0193 6 6 0
+0175 6 6 0
+0176 106 106 0
+0079 53 53 1
+019D 6 6 0
+014C -1 4 1
+014D 2 2 0
+014E 6 6 1
+014F 6 6 0
+0150 110 110 1
+01B6 114 114 1
+0151 6 6 0
+0152 -1 12 1
+0153 -1 4 0
+0154 -1 4 1
+0166 -1 4 1
+0155 -1 4 0
+0156 -1 4 1
+0157 6 6 0
+0159 54 54 0
+015A 66 66 1
+015B 54 54 0
+015C 90 90 1
+015D 42 42 0
+015E 6 6 1
+015F 42 42 1
+0160 -1 4 1
+0161 -1 4 0
+0162 -1 6 1
+0163 -1 4 1
+0164 -1 4 1
+0165 30 30 0
+0167 3 3 1
+0168 14 14 0
+0169 3 3 1
+016A 30 30 1
+016B 10 10 0
+0149 9 9 0
+014A 6 6 1
+014B 27 27 1
+016E 186 186 0
+016F 182 182 1
+017E -1 4 0
+017F -1 4 1
+0165 30 30 0
+0166 -1 4 1
+0167 3 3 1
+0168 14 14 0
+0169 3 3 1
+016A 30 30 1
+016B 10 10 0
+016C 43 43 1
+016C 43 43 1
+016D 14 14 1
+01F2 20 20 1
+0170 14 14 0
+0171 30 30 1
+0172 10 10 0
+0173 3 3 1
+0174 -1 4 1
+0180 6 6 0
+0181 3 3 1
+0182 106 106 1
+0183 10 10 0
+0184 10 10 1
+0185 34 34 1
+019E 2 2 1
+019F 6 6 0
+01A0 3 3 1
+01A1 3 3 0
+01A2 37 37 1
+01A3 5 5 1
+01A4 11 11 1
+01A5 26 26 0
+01A6 -1 4 1
+01A7 4 4 0
+01A8 4 4 0
+01A9 6 6 0
+01AA 10 10 1
+01CA 3 3 0
+01B0 11 11 1
+01B1 7 7 1
+01BA 26 26 0
+01BB 26 26 0
+01BC 26 26 0
+01BD 26 26 0
+01C0 2 2 0
+01C1 14 14 1
+01C2 10 10 1
+01D3 35 35 1
+01D5 -1 8 0
+01D4 6 6 1
+01DF 6 6 0
+01F3 10 10 1
+0284 14 14 1
+01FF 10 10 1
+01ED 2 2 0
+01E7 2 2 0
+01B7 6 6 0
+01F7 14 14 0
+01E3 14 14 0
+01CB 9 9 0
+01F9 6 6 0
+01E5 6 6 0
+0201 -1 4 1
+0203 10 10 0
+0205 26 26 1
+0206 11 11 1
+0207 34 34 1
+0208 14 14 0
+0209 36 36 1
+020A 10 10 1
+020E 32 32 1
+0212 26 26 0
+0213 26 26 0
+0214 42 42 1
+0215 6 6 1
+0216 6 6 1
+0217 2 2 0
+0218 2 2 0
+0225 2 2 0
+0219 282 282 1
+021A 282 282 1
+0226 282 282 1
+0282 284 284 1
+021B 10 10 1
+021C 10 10 1
+0224 10 10 1
+0280 12 12 1
+0285 6 6 1
+0286 4 4 0
+021D 6 6 0
+021E 6 6 0
+021F 66 66 1
+0222 6 6 0
+0221 -1 4 1
+0220 10 10 1
+0223 8 8 1
+0073 11 11 1
+0074 3 3 0
+0075 -1 11 1
+0076 9 9 1
+0077 5 5 1
+0078 55 55 1
+007A 58 58 1
+007B 60 60 1
+007C 44 44 1
+007F 6 6 1
+0080 7 7 1
+0083 2 2 1
+0084 2 2 1
+0086 16 16 1
+0087 12 12 1
+0088 10 10 1
+08CD 10 10 1
+008A 29 29 1
+008B 23 23 1
+008D -1 8 1
+008E -1 4 1
+0091 22 22 1
+0092 28 28 1
+0093 2 2 1
+0097 -1 32 1
+0098 3 3 1
+009A -1 4 1
+009C 9 9 1
+009D 17 17 1
+009E 17 17 1
+00A0 23 23 1
+00A1 6 6 1
+00A3 -1 4 1
+00A4 -1 4 1
+00A5 -1 4 1
+00A6 -1 4 1
+00A8 7 7 1
+00AA 9 9 1
+00AC 7 7 1
+00AE -1 4 1
+00AF 6 6 1
+00B0 8 8 1
+00B1 8 8 1
+00B3 3 3 0
+00B4 -1 8 1
+00B5 6 6 1
+00B6 6 6 1
+00B7 -1 8 1
+00BC 6 6 1
+00BD 44 44 1
+00BE 5 5 1
+00C0 7 7 1
+00C2 6 6 1
+00C3 8 8 1
+00C4 6 6 1
+00C6 -1 4 1
+00C7 -1 4 1
+00CA 3 3 1
+00CB 3 3 1
+00CD 3 3 1
+00D1 4 4 1
+00D2 4 4 1
+00D4 -1 4 1
+00D6 3 3 1
+00D7 -1 17 1
+00D8 6 6 1
+00DA 3 3 1
+00DB -1 8 1
+00DC 28 28 1
+00DD 29 29 1
+00DF -1 17 1
+00E1 30 30 1
+00E5 26 26 1
+00E7 3 3 1
+00E9 19 19 1
+00EA 5 5 1
+00EC 3 3 1
+00EE 2 2 1
+00F0 3 3 1
+00F1 2 2 1
+00F2 6 6 1
+00F4 21 21 1
+00F6 8 8 1
+00F8 2 2 1
+00FA 3 3 1
+00FB -1 28 1
+00FD 27 27 1
+00FE 30 30 1
+0101 6 6 1
+0104 79 79 1
+0105 31 31 1
+0106 10 10 1
+0107 10 10 1
+0109 -1 8 1
+010A 4 4 1
+010B 6 6 1
+010C 6 6 1
+010D 2 2 1
+010E 11 11 1
+010F -1 4 1
+02B1 -1 8 1
+02B2 -1 8 1
+02B5 -1 6 1
+0110 10 10 1
+0111 39 39 1
+0114 31 31 1
+0115 35 35 1
+0117 18 18 1
+0119 13 13 1
+0229 15 15 1
+011A 15 15 1
+011C 68 68 1
+011E 3 3 1
+011F 16 16 1
+0120 6 6 1
+0121 14 14 1
+0122 -1 4 1
+0123 -1 4 1
+0124 21 21 1
+0125 8 8 1
+012B 2 2 1
+012C 3 3 1
+012D 4 4 1
+0131 86 86 1
+0132 6 6 1
+0133 -1 8 1
+0135 7 7 1
+0136 -1 8 1
+0137 6 6 1
+0139 16 16 1
+013A 4 4 1
+013B 4 4 1
+013C 4 4 1
+013D 6 6 1
+013E 24 24 1
+0141 14 14 1
+0142 6 6 1
+0144 23 23 1
+0145 19 19 1
+0147 39 39 1
+0148 8 8 1
+0177 -1 4 1
+0179 5 5 1
+017B -1 4 1
+017D 7 7 1
+0188 8 8 1
+0189 4 4 1
+018B 4 4 0
+018C 29 29 1
+018D -1 4 1
+018F 6 6 1
+0191 86 86 1
+0192 24 24 1
+0194 30 30 1
+0196 9 9 1
+028A 18 18 1
+0199 4 4 1
+019A 14 14 1
+019B 10 10 1
+01AB 12 12 1
+01AC 6 6 1
+01AD -1 4 1
+025A -1 4 1
+01B3 67 67 1
+01B4 12 12 1
+01B5 18 18 0
+01B8 3 3 1
+01C3 -1 16 1
+01C4 22 22 1
+01C5 22 22 1
+01C8 13 13 1
+01C9 97 97 1
+01CC 9 9 1
+01D6 4 4 1
+01D7 11 11 1
+01D8 54 54 1
+022A 58 58 1
+01D9 53 53 1
+022B 57 57 1
+01DA 60 60 1
+022C 65 65 1
+01DE 33 33 1
+01E0 30 30 1
+01E2 34 34 1
+01E4 2 2 1
+01E6 26 26 1
+01E9 81 81 1
+01EA 6 6 1
+01EB 10 10 1
+01EC 26 26 1
+01EE -1 4 1
+01EF -1 4 1
+01F0 -1 4 1
+01F4 32 32 1
+01F5 9 9 1
+01F6 34 34 1
+0253 3 3 1
+0254 3 3 0
+01F8 2 2 1
+01FC -1 4 1
+01FE 5 5 1
+0227 18 18 0
+0228 18 18 0
+0232 9 9 0
+0233 11 11 0
+0234 6 6 0
+0230 12 12 1
+022E 71 71 1
+027D 62 62 0
+0235 -1 4 1
+0239 11 11 1
+022F 5 5 1
+0231 26 26 0
+0237 2 2 0
+0238 282 282 1
+0236 10 10 1
+023A 4 4 0
+023C 6 6 0
+023D 6 6 0
+023E 8 8 0
+023F 2 2 0
+0240 -1 8 1
+0241 6 6 0
+0242 -1 99 1
+0243 6 6 0
+0257 8 8 1
+0244 6 6 0
+0245 3 3 1
+0246 4 4 0
+0247 8 8 0
+0248 -1 68 0
+0249 3 3 1
+024A 70 70 1
+024B 4 4 0
+024C 8 8 0
+024D 12 12 0
+024E 6 6 0
+024F 10 10 0
+0250 3 3 1
+0251 34 34 0
+0252 -1 12 1
+0255 5 5 1
+0256 5 5 1
+0258 2 2 0
+0259 3 3 0
+025C 4 4 0
+025D 6 6 1
+025E 4 4 0
+025F 6 6 1
+0260 6 6 1
+0261 11 11 0
+0262 11 11 0
+0263 11 11 0
+0264 20 20 0
+0265 20 20 0
+0266 30 30 0
+0267 4 4 0
+0268 4 4 0
+0269 4 4 0
+026A 4 4 0
+026B 4 4 0
+026C 4 4 0
+026D 4 4 0
+026F 2 2 0
+0270 2 2 0
+0271 40 40 0
+0272 44 44 0
+0273 30 30 0
+0274 8 8 1
+0275 37 37 0
+0276 -1 51 0
+0277 84 84 0
+0278 2 2 0
+0279 2 2 0
+027A -1 4 1
+027B 14 14 0
+027C 60 60 0
+027E -1 6 0
+027F 8 8 0
+0283 6 6 1
+0287 -1 8 1
+0288 6 6 0
+0289 8 8 1
+0444 -1 8 1
+0445 6 6 0
 028B -1 4 0
-028C 46 46 0	PACKET_CH_SELECT_CHAR_GOINGTOBEUSED
-028D 34 34 0	PACKET_CH_REQ_IS_VALID_CHARNAME
-028E 4 4 0		PACKET_HC_ACK_IS_VALID_CHARNAME
-028F 6 6 0		PACKET_CH_REQ_CHANGE_CHARNAME
-0290 4 4 0		PACKET_HC_ACK_CHANGE_CHARNAME
-0291 4 4 0		receive::message_string (PACKET_ZC_MSG)
-0292 2 2 0		PACKET_CZ_STANDING_RESURRECTION
-0293 70 70 0	receive::boss_map_info (PACKET_ZC_BOSS_INFO)
-0294 10 10 0	receive::book_read (PACKET_ZC_READ_BOOK)
-0295 -1 4 0		receive::inventory_items_nonstackable (PACKET_ZC_EQUIPMENT_ITEMLIST2)
-0296 -1 4 0		receive::storage_items_nonstackable (PACKET_ZC_STORE_EQUIPMENT_ITEMLIST2)
-0297 -1 4 0		receive::cart_items_nonstackable (PACKET_ZC_CART_EQUIPMENT_ITEMLIST2)
-0298 8 8 0		receive::rental_time (PACKET_ZC_CASH_TIME_COUNTER)
-0299 6 6 0		receive::rental_expired (PACKET_ZC_CASH_ITEM_DELETE)
-029A 27 27 0	receive::inventory_item_added (PACKET_ZC_ITEM_PICKUP_ACK2)
-029B 80 80 0	receive::mercenary_init (PACKET_ZC_MER_INIT)
-029C 66 66 0	PACKET_ZC_MER_PROPERTY
-029D -1 4 0		receive::skills_list (PACKET_ZC_MER_SKILLINFO_LIST)
-029E 11 11 0	PACKET_ZC_MER_SKILLINFO_UPDATE
-029F 3 3 0		PACKET_CZ_MER_COMMAND
-02A2 8 8 0		receive::stat_info (PACKET_ZC_MER_PAR_CHANGE)
-02A5 8 8 0		PACKET_CZ_KSY_EVENT
-02A6 -1 10 0	receive::gameguard_request
+028C 46 46 0
+028D 34 34 0
+028E 4 4 0
+028F 6 6 0
+0290 4 4 0
+0291 4 4 1
+0292 2 2 0
+0293 70 70 1
+0294 10 10 1
+0295 -1 4 1
+0296 -1 4 1
+0297 -1 4 1
+0298 8 8 1
+0299 6 6 1
+029A 27 27 1
+029B 80 80 1
+029C 66 66 0
+029D -1 4 1
+029E 11 11 1
+029F 3 3 0
+02A2 8 8 1
+02A5 8 8 0
+02A6 -1 10 0
 02A7 -1 10 0
-02AA 4 4 0		receive::cash_password_request (PACKET_ZC_REQ_CASH_PASSWORD)
-02AB 36 36 0	PACKET_CZ_ACK_CASH_PASSWORD
-02AC 6 6 0		receive::cash_password_result (PACKET_ZC_RESULT_CASH_PASSWORD)
-02AD 8 8 0		receive::login_pin_code_request (PACKET_AC_REQUEST_SECOND_PASSWORD)
-02B0 85 85 0	send::master_login (PACKET_CA_LOGIN_HAN)
-02B8 22 22 0	receive::party_show_picker (PACKET_ZC_ITEM_PICKUP_PARTY)
-02BB 8 8 0		PACKET_ZC_EQUIPITEM_DAMAGED
-02B9 191 191 0	receive::hotkeys (PACKET_ZC_SHORTCUT_KEY_LIST)
-02BA 11 11 0	PACKET_CZ_SHORTCUT_KEY_CHANGE
-02BC 6 6 0		PACKET_ZC_NOTIFY_PCBANG_PLAYING_TIME
-02B3 107 107 0	receive::quest_add (PACKET_ZC_ADD_QUEST)
-02B4 6 6 0		receive::quest_delete (PACKET_ZC_DEL_QUEST)
-02B6 7 7 0		PACKET_CZ_ACTIVE_QUEST
-02B7 7 7 0		receive::quest_active (PACKET_ZC_ACTIVE_QUEST)
-02C1 -1 12 0	PACKET_ZC_NPC_CHAT
-02C2 -1 6 0		PACKET_ZC_FORMATSTRING_MSG
-02C5 30 30 0	receive::party_invite_result (PACKET_ZC_PARTY_JOIN_REQ_ACK)
-02C8 3 3 0		PACKET_CZ_PARTY_CONFIG
-02C9 3 3 0		receive::party_allow_invite (PACKET_ZC_PARTY_CONFIG)
-02C6 30 30 0	receive::party_invite (PACKET_ZC_PARTY_JOIN_REQ)
-02C7 7 7 0		PACKET_CZ_PARTY_JOIN_REQ_ACK
-02CB 65 65 0	receive::instance_window_start (PACKET_ZC_MEMORIALDUNGEON_SUBSCRIPTION_INFO)
-02CC 4 4 0		receive::instance_window_queue (PACKET_ZC_MEMORIALDUNGEON_SUBSCRIPTION_NOTIFY)
-02CD 71 71 0	receive::instance_window_join (PACKET_ZC_MEMORIALDUNGEON_INFO)
-02CE 10 10 0	receive::instance_window_leave (PACKET_ZC_MEMORIALDUNGEON_NOTIFY)
-02CF 6 6 0		PACKET_CZ_MEMORIALDUNGEON_COMMAND
-02D5 2 2 0		receive::ISVR_DISCONNECT (PACKET_ZC_ISVR_DISCONNECT)
-02D0 -1 4 0		receive::inventory_items_nonstackable (PACKET_ZC_EQUIPMENT_ITEMLIST3)
-02D1 -1 4 0		receive::storage_items_nonstackable (PACKET_ZC_STORE_EQUIPMENT_ITEMLIST3)
-02D2 -1 4 0		receive::cart_items_nonstackable (PACKET_ZC_CART_EQUIPMENT_ITEMLIST3)
-02D3 4 4 0		PACKET_ZC_NOTIFY_BIND_ON_EQUIP
-02D4 29 29 0	receive::inventory_item_added (PACKET_ZC_ITEM_PICKUP_ACK3)
-02D6 6 6 0		PACKET_CZ_EQUIPWIN_MICROSCOPE
-02D7 -1 43 0	receive::show_eq (PACKET_ZC_EQUIPWIN_MICROSCOPE)
-02D8 10 10 0	PACKET_CZ_CONFIG
-02D9 10 10 0	receive::show_eq_msg_other (PACKET_ZC_CONFIG)
-02DA 3 3 0		receive::show_eq_msg_self (PACKET_ZC_CONFIG_NOTIFY)
-02DB -1 4 0		PACKET_CZ_BATTLEFIELD_CHAT
-02DC -1 32 0	receive::battleground_message (PACKET_ZC_BATTLEFIELD_CHAT)
-02DD 32 32 0	receive::battleground_emblem (PACKET_ZC_BATTLEFIELD_NOTIFY_CAMPINFO)
-02DE 6 6 0		receive::battleground_score (PACKET_ZC_BATTLEFIELD_NOTIFY_POINT)
-02DF 36 36 0	receive::battleground_position (PACKET_ZC_BATTLEFIELD_NOTIFY_POSITION)
-02E0 34 34 0	receive::battleground_hp (PACKET_ZC_BATTLEFIELD_NOTIFY_HP)
-02E1 33 33 0	receive::actor_action (PACKET_ZC_NOTIFY_ACT2)
+02AA 4 4 0
+02AB 36 36 0
+02AC 6 6 0
+02AD 8 8 0
+02B0 85 85 0
+02B8 22 22 1
+02BB 8 8 1
+02B9 191 191 1
+02BA 11 11 0
+02BC 6 6 0
+02B3 107 107 1
+02B4 6 6 1
+02B6 7 7 0
+02B7 7 7 1
+02C1 -1 12 1
+02C2 -1 6 1
+02C5 30 30 1
+02C8 3 3 0
+02C9 3 3 1
+02C6 30 30 1
+02C7 7 7 0
+02CB 65 65 1
+02CC 4 4 1
+02CD 71 71 1
+02CE 10 10 1
+02CF 6 6 0
+02D5 2 2 1
+02D0 -1 4 1
+02D1 -1 4 1
+02D2 -1 4 1
+02D3 4 4 1
+02D4 29 29 1
+02D6 6 6 0
+02D7 -1 43 1
+02D8 10 10 0
+02D9 10 10 1
+02DA 3 3 1
+02DB -1 4 0
+02DC -1 32 1
+02DD 32 32 1
+02DE 6 6 1
+02DF 36 36 1
+02E0 34 34 1
+02E1 33 33 1
 02E2 8 8 0
 02E3 10 10 0
 02E4 6 6 0
 02E5 5 5 0
-02E6 6 6 0		PACKET_CZ_BOT_CHECK
-02E7 -1 6 0		receive::map_property (PACKET_ZC_MAPPROPERTY)
-02E8 -1 4 0		receive::inventory_items_stackable (PACKET_ZC_NORMAL_ITEMLIST3)
-02E9 -1 4 0		receive::cart_items_stackable (PACKET_ZC_CART_NORMAL_ITEMLIST3)
-02EA -1 4 0		receive::storage_items_stackable (PACKET_ZC_STORE_NORMAL_ITEMLIST3)
-02EB 13 13 0	receive::map_loaded (PACKET_ZC_ACCEPT_ENTER2)
-02EC 67 67 0	receive::actor_exists (PACKET_ZC_NOTIFY_MOVEENTRY4)
-02ED 59 59 0	receive::actor_connected (PACKET_ZC_NOTIFY_NEWENTRY4)
-02EE 60 60 0	receive::actor_moved (PACKET_ZC_NOTIFY_STANDENTRY4)
-02EF 8 8 0		receive::font (PACKET_ZC_NOTIFY_FONT)
-02F0 10 10 0	receive::progress_bar (PACKET_ZC_PROGRESS)
-02F1 2 2 0		PACKET_CZ_PROGRESS
-02F2 2 2 0		receive::progress_bar_stop (PACKET_ZC_PROGRESS_CANCEL)
-035C 2 2 0		PACKET_CZ_OPEN_SIMPLE_CASHSHOP_ITEMLIST
-035D -1 16 0	PACKET_ZC_SIMPLE_CASHSHOP_POINT_ITEMLIST
-035E 2 2 0		PACKET_CZ_CLOSE_WINDOW
-03DD 18 18 0	PACKET_AHC_GAME_GUARD
-03DE 18 18 0	PACKET_CAH_ACK_GAME_GUARD
-0439 8 8 0		PACKET_CZ_USE_ITEM2
-043D 8 8 0		receive::skill_post_delay (PACKET_ZC_SKILL_POSTDELAY)
-043E -1 4 0		receive::skill_post_delaylist (PACKET_ZC_SKILL_POSTDELAY_LIST)
-043F 25 25 0	receive::actor_status_active (PACKET_ZC_MSG_STATE_CHANGE2)
-0440 10 10 0	receive::millenium_shield (PACKET_ZC_MILLENNIUMSHIELD)
-0441 4 4 0		receive::skill_delete (PACKET_ZC_SKILLINFO_DELETE)
-0442 -1 8 0		receive::sage_autospell (PACKET_ZC_SKILL_SELECT_REQUEST)
-0443 8 8 0		send::skill_select (PACKET_CZ_SKILL_SELECT_RESPONSE)
-0446 14 14 0	receive::minimap_indicator (PACKET_ZC_QUEST_NOTIFY_EFFECT)
-0448 -1 4 0		PACKET_HC_CHARACTER_LIST
-0449 4 4 0		receive::hack_shield_alarm (PACKET_ZC_HACKSH_ERROR_MSG)
-044A 6 6 0		PACKET_CZ_CLIENT_VERSION
-044B 2 2 0		PACKET_CZ_CLOSE_SIMPLECASH_SHOP
-0447 2 2 0		PACKET_CZ_BLOCKING_PLAY_CANCEL
-07D7 8 8 0		send::party_setting (PACKET_CZ_GROUPINFO_CHANGE_V2)
-07D8 8 8 0		receive::party_exp (PACKET_ZC_REQ_GROUPINFO_CHANGE_V2)
-07D9 268 268 0	receive::hotkeys (PACKET_ZC_SHORTCUT_KEY_LIST_V2)
-07DA 6 6 0		PACKET_CZ_CHANGE_GROUP_MASTER
-07DB 8 8 0		receive::stat_info (PACKET_ZC_HO_PAR_CHANGE)
-07DC 6 6 0		PACKET_CZ_SEEK_PARTY
-07DD 54 54 0	PACKET_ZC_SEEK_PARTY
-07DE 30 30 0	PACKET_CZ_SEEK_PARTY_MEMBER
-07DF 54 54 0	PACKET_ZC_SEEK_PARTY_MEMBER
-07E0 58 58 0	PACKET_ZC_ES_NOTI_MYINFO
-07E1 15 15 0	receive::skill_update (PACKET_ZC_SKILLINFO_UPDATE2)
-07E2 8 8 0		receive::msg_string (PACKET_ZC_MSG_VALUE)
-07E3 6 6 0		receive::skill_exchange_item (PACKET_ZC_ITEMLISTWIN_OPEN)
-07E6 8 8 0		receive::skill_msg (PACKET_ZC_MSG_SKILL)
-07E5 4 4 0		PACKET_CH_ENTER_CHECKBOT
-07E8 -1 4 0		receive::captcha_image (PACKET_HC_CHECKBOT)
-07E7 32 32 0	PACKET_CH_CHECKBOT
-07E9 5 5 0		receive::captcha_answer (PACKET_HC_CHECKBOT_RESULT)
-07EA 2 2 0		PACKET_CZ_BATTLE_FIELD_LIST
-07EB -1 8 0		PACKET_ZC_BATTLE_FIELD_LIST
-07ED 10 10 0	PACKET_ZC_JOIN_BATTLE_FIELD
-07EE 6 6 0		PACKET_CZ_CANCEL_BATTLE_FIELD
-07EF 8 8 0		PACKET_ZC_CANCEL_BATTLE_FIELD
-07F0 6 6 0		PACKET_CZ_REQ_BATTLE_STATE_MONITOR
-07F1 18 18 0	PACKET_ZC_ACK_BATTLE_STATE_MONITOR
-07F2 8 8 0		PACKET_ZC_BATTLE_NOTI_START_STEP
-07F3 6 6 0		PACKET_ZC_BATTLE_JOIN_NOTI_DEFER
-07F4 3 3 0		PACKET_ZC_BATTLE_JOIN_DISABLE_STATE
-07F5 6 6 0		PACKET_CZ_GM_FULLSTRIP
-07F6 14 14 0	receive::exp (PACKET_ZC_NOTIFY_EXP)
-07F7 -1 69 0	receive::actor_exists (PACKET_ZC_NOTIFY_MOVEENTRY7)
-07F8 -1 62 0	receive::actor_connected (PACKET_ZC_NOTIFY_NEWENTRY5)
-07F9 -1 63 0	receive::actor_moved (PACKET_ZC_NOTIFY_STANDENTRY5)
-07FA 8 8 0		receive::inventory_item_removed (PACKET_ZC_DELETE_ITEM_FROM_BODY)
-07FB 25 25 0	receive::skill_cast (PACKET_ZC_USESKILL_ACK2)
-07FC 10 10 0	receive::party_leader (PACKET_ZC_CHANGE_GROUP_MASTER)
-07FD -1 7 0		receive::special_item_obtain
-07FE 26 26 0	receive::sound_effect (PACKET_ZC_PLAY_NPC_BGM)
-0800 -1 12 0	receive::vender_items_list (PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC2)
-0801 -1 12 0	send::buy_bulk_vender (PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC2)
-0803 4 4 0		receive::booking_register_request (PACKET_ZC_PARTY_BOOKING_ACK_REGISTER)
-0804 14 14 0	send::booking_search (PACKET_CZ_PARTY_BOOKING_REQ_SEARCH)
-0805 -1 5 0		receive::booking_search_request (PACKET_ZC_PARTY_BOOKING_ACK_SEARCH)
-0806 2 2 0		send::booking_delete (PACKET_CZ_PARTY_BOOKING_REQ_DELETE)
-0807 4 4 0		receive::booking_delete_request (PACKET_ZC_PARTY_BOOKING_ACK_DELETE)
-0808 14 14 0	send::booking_update (PACKET_CZ_PARTY_BOOKING_REQ_UPDATE)
-0809 50 50 0	receive::booking_insert (PACKET_ZC_PARTY_BOOKING_NOTIFY_INSERT)
-080A 18 18 0	receive::booking_update (PACKET_ZC_PARTY_BOOKING_NOTIFY_UPDATE)
-080B 6 6 0		receive::booking_delete (PACKET_ZC_PARTY_BOOKING_NOTIFY_DELETE)
-080C 2 2 0		PACKET_CZ_SIMPLE_CASH_BTNSHOW
-080D 3 3 0		PACKET_ZC_SIMPLE_CASH_BTNSHOW
-080E 14 14 0	receive::party_hp_info (PACKET_ZC_NOTIFY_HP_TO_GROUPM_R2)
-080F 20 20 0	receive::deal_add_other (PACKET_ZC_ADD_EXCHANGE_ITEM2)
-0810 3 3 0		receive::open_buying_store (PACKET_ZC_OPEN_BUYING_STORE)
-0812 8 8 0		receive::open_buying_store_fail (PACKET_ZC_FAILED_OPEN_BUYING_STORE_TO_BUYER)
-0813 -1 12 0	receive::open_buying_store_item_list (PACKET_ZC_MYITEMLIST_BUYING_STORE)
-0814 86 86 0	receive::buying_store_found (PACKET_ZC_BUYING_STORE_ENTRY)
-0816 6 6 0		receive::buying_store_lost (PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY)
-0818 -1 16 0	receive::buying_store_items_list (PACKET_ZC_ACK_ITEMLIST_BUYING_STORE)
-081A 4 4 0		PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_BUYER
-0824 6 6 0		receive::buying_store_fail (PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER)
-081B 10 10 0	receive::buying_store_update (PACKET_ZC_UPDATE_ITEM_FROM_BUYING_STORE)
-081C 10 10 0	receive::buying_store_item_delete (PACKET_ZC_ITEM_DELETE_BUYING_STORE)
-081D 22 22 0	PACKET_ZC_EL_INIT
-081E 8 8 0		receive::stat_info (PACKET_ZC_EL_PAR_CHANGE)
-081F -1 9 0		PACKET_ZC_BROADCAST4
-0820 11 11 0	PACKET_ZC_COSTUME_SPRITE_CHANGE
-0821 2 2 0		PACKET_AC_OTP_USER
-0822 9 9 0		PACKET_CA_OTP_AUTH_REQ
-0823 -1 6 0		PACKET_AC_OTP_AUTH_ACK
-0825 -1 65 0	PACKET_CA_SSO_LOGIN_REQ
-0826 4 4 0		PACKET_AC_SSO_LOGIN_ACK
-0836 -1 7 0		PACKET_ZC_SEARCH_STORE_INFO_ACK
-0837 3 3 0		PACKET_ZC_SEARCH_STORE_INFO_FAILED
-0839 66 66 0	receive::guild_expulsion (PACKET_ZC_ACK_BAN_GUILD_SSO)
-083A 5 5 0		PACKET_ZC_OPEN_SEARCH_STORE_INFO
-083B 2 2 0		PACKET_CZ_CLOSE_SEARCH_STORE_INFO
-083D 6 6 0		PACKET_ZC_SSILIST_ITEM_CLICK_ACK
-083E 26 26 0	receive::login_error (PACKET_AC_REFUSE_LOGIN_R2)
+02E6 6 6 0
+02E7 -1 6 1
+02E8 -1 4 1
+02E9 -1 4 1
+02EA -1 4 1
+02EB 13 13 1
+02EC 67 67 1
+02ED 59 59 1
+02EE 60 60 1
+02EF 8 8 1
+02F0 10 10 1
+02F1 2 2 0
+02F2 2 2 1
+035C 2 2 0
+035D -1 16 0
+035E 2 2 0
+03DD 18 18 0
+03DE 18 18 0
+0439 8 8 0
+043D 8 8 1
+043E -1 4 1
+043F 25 25 1
+0440 10 10 1
+0441 4 4 1
+0442 -1 8 1
+0443 8 8 0
+0446 14 14 1
+0448 -1 4 0
+0449 4 4 0
+044A 6 6 0
+044B 2 2 0
+0447 2 2 0
+07D7 8 8 0
+07D8 8 8 1
+07D9 268 268 1
+07DA 6 6 0
+07DB 8 8 1
+07DC 6 6 0
+07DD 54 54 1
+07DE 30 30 0
+07DF 54 54 0
+07E0 58 58 0
+07E1 15 15 1
+07E2 8 8 1
+07E3 6 6 1
+07E6 8 8 1
+07E5 4 4 0
+07E8 -1 4 0
+07E7 32 32 0
+07E9 5 5 0
+07EA 2 2 0
+07EB -1 8 1
+07ED 10 10 1
+07EE 6 6 0
+07EF 8 8 1
+07F0 6 6 0
+07F1 18 18 1
+07F2 8 8 1
+07F3 6 6 1
+07F4 3 3 0
+07F5 6 6 0
+07F6 14 14 1
+07F7 -1 69 1
+07F8 -1 62 1
+07F9 -1 63 1
+07FA 8 8 1
+07FB 25 25 1
+07FC 10 10 1
+07FD -1 7 1
+07FE 26 26 1
+0800 -1 12 1
+0801 -1 12 0
+0803 4 4 1
+0804 14 14 0
+0805 -1 5 1
+0806 2 2 0
+0807 4 4 1
+0808 14 14 0
+0809 50 50 1
+080A 18 18 1
+080B 6 6 1
+080C 2 2 0
+080D 3 3 1
+080E 14 14 1
+080F 20 20 1
+0810 3 3 1
+0812 8 8 1
+0813 -1 12 1
+0814 86 86 1
+0816 6 6 1
+0818 -1 16 1
+081A 4 4 1
+0824 6 6 1
+081B 10 10 1
+081C 10 10 1
+081D 22 22 1
+081E 8 8 1
+081F -1 9 1
+0820 11 11 0
+0821 2 2 0
+0822 9 9 0
+0823 -1 6 0
+0825 -1 65 0
+0826 4 4 0
+0836 -1 7 0
+0837 3 3 0
+0839 66 66 1
+083A 5 5 0
+083B 2 2 0
+083D 6 6 0
+083E 26 26 0
 0840 -1 4 0
-0841 4 4 0		PACKET_CH_SELECT_ACCESSIBLE_MAPNAME
-0827 6 6 0		send::char_delete2 (PACKET_CH_DELETE_CHAR3_RESERVED)
-0828 14 14 0	receive::char_delete2_result (PACKET_HC_DELETE_CHAR3_RESERVED)
-0829 12 12 0	PACKET_CH_DELETE_CHAR3
-082A 10 10 0	PACKET_HC_DELETE_CHAR3
-082B 6 6 0		send::char_delete2_cancel (PACKET_CH_DELETE_CHAR3_CANCEL)
-082C 10 10 0	receive::char_delete2_cancel_result (PACKET_HC_DELETE_CHAR3_CANCEL)
-0842 6 6 0		PACKET_CZ_RECALL_SSO
-0843 6 6 0		PACKET_CZ_REMOVE_AID_SSO
-0844 2 2 0		send::cash_shop_open
-0845 6 6 0		receive::cash_shop_open_result (PACKET_ZC_SE_CASHSHOP_OPEN)
+0841 4 4 0
+0827 6 6 0
+0828 14 14 0
+0829 12 12 0
+082A 10 10 0
+082B 6 6 0
+082C 10 10 0
+0842 6 6 0
+0843 6 6 0
+0844 2 2 0
+0845 6 6 0
 0846 4 4 0
 0847 -1 6 0
-0848 -1 6 0		send::cash_shop_buy_items
-0849 12 12 0	receive::cash_shop_buy_result (PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT)
-084A 2 2 0		send::cash_shop_close
-084B 19 19 0	receive::item_appeared (PACKET_ZC_ITEM_FALL_ENTRY4)
+0848 -1 6 0
+0849 12 12 0
+084A 2 2 0
+084B 19 19 1
 084C 10 10 0
 084D 10 10 0
 084E 5 5 0
@@ -972,12 +766,12 @@
 0852 2 2 0
 0853 -1 4 0
 0854 -1 4 0
-0856 -1 71 0	receive::actor_moved
-0857 -1 65 0	receive::actor_exists
-0858 -1 64 0	receive::actor_connected
-0859 -1 45 0	receive::show_eq
+0856 -1 71 1
+0857 -1 65 1
+0858 -1 64 1
+0859 -1 45 1
 08B1 -1 4 0
-082D -1 29 0	receive::received_characters
+082D -1 29 0
 08B2 -1 6 0
 08AF 10 10 0
 08B0 17 17 0
@@ -989,10 +783,10 @@
 02F4 3 3 0
 02F5 7 7 0
 02F6 7 7 0
-08B8 10 10 0	send::send_pin_password
-08B9 12 12 0	receive::login_pin_code_request
-08BA 10 10 0	send::new_pin_password
-08BB 8 8 0		receive::login_pin_new_code_result
+08B8 10 10 0
+08B9 12 12 0
+08BA 10 10 0
+08BB 8 8 0
 08BC 10 10 0
 08BD 8 8 0
 08BE 14 14 0
@@ -1004,87 +798,87 @@
 08C0 -1 10 0
 08C1 2 2 0
 08C2 2 2 0
-08C7 -1 19 0	receive::area_spell
-08C8 34 34 0	receive::actor_action
-08C9 2 2 0		send::request_cashitems
-08CA -1 8 0		receive::cash_shop_list (PACKET_ZC_ACK_SCHEDULER_CASHITEM)
-08CB -1 10 0	receive::rates_info
+08C7 -1 19 1
+08C8 34 34 1
+08C9 2 2 0
+08CA -1 8 0
+08CB -1 10 0
 097B -1 16 0
 08CC 109 109 0
 08CE 2 2 0
-08CF 10 10 0	receive::revolving_entity
-08D0 9 9 0
-08D1 7 7 0
-08D2 10 10 0	receive::high_jump
+08CF 10 10 0
+08D0 9 9 1
+08D1 7 7 1
+08D2 10 10 1
 08D3 10 10 0
 08D4 8 8 0
 08D5 -1 8 0
 08D6 6 6 0
-08D7 28 28 0
-08D8 27 27 0
-08D9 30 30 0
-08DA 26 26 0
-08DB 27 27 0
-08DC 26 26 0
-08DD 27 27 0
-08DE 27 27 0
-08DF 50 50 0
-08E0 51 51 0
-08E1 51 51 0
+08D7 28 28 1
+08D8 27 27 1
+08D9 30 30 1
+08DA 26 26 1
+08DB 27 27 1
+08DC 26 26 1
+08DD 27 27 1
+08DE 27 27 1
+08DF 50 50 1
+08E0 51 51 1
+08E1 51 51 1
 08E2 27 27 0
 08E3 126 126 0
 08E4 6 6 0
 08FC 30 30 0
 08FD 6 6 0
-08FE -1 4 0
-08FF 24 24 0	receive::actor_status_active2
-0900 -1 4 0		receive::inventory_items_stackable
-0901 -1 4 0		receive::inventory_items_nonstackable
-0902 -1 4 0		receive::cart_items_stackable
-0903 -1 4 0		receive::cart_items_nonstackable
-0904 -1 4 0
-0905 -1 4 0
-0906 -1 45 0
+08FE -1 4 1
+08FF 24 24 1
+0900 -1 4 1
+0901 -1 4 1
+0902 -1 4 1
+0903 -1 4 1
+0904 -1 4 1
+0905 -1 4 1
+0906 -1 45 1
 0907 5 5 0
-0908 5 5 0
-090A 26 26 0
-090D -1 10 0
+0908 5 5 1
+090A 26 26 1
+090D -1 10 1
 090E 2 2 0
-0910 10 10 0
-0911 30 30 0
-0912 10 10 0
-0913 30 30 0
-0914 -1 80 0
-090F -1 73 0
-0915 -1 74 0
-0916 26 26 0	PACKET_CZ_REQ_JOIN_GUILD2
-096B 4 4 0
-096C 6 6 0
-096D -1 4 0
-096E -1 4 0
-096F 7 7 0
-0971 6 6 0
-0972 -1 9 0
-0973 7 7 0
-0974 2 2 0
-0975 -1 28 0	receive::storage_items_stackable
-0976 -1 28 0	receive::storage_items_nonstackable
-0977 14 14 0	receive::monster_hp_info
+0910 10 10 1
+0911 30 30 1
+0912 10 10 1
+0913 30 30 1
+0914 -1 80 1
+090F -1 73 1
+0915 -1 74 1
+0916 26 26 1
+096B 4 4 1
+096C 6 6 1
+096D -1 4 1
+096E -1 4 1
+096F 7 7 1
+0971 6 6 1
+0972 -1 9 1
+0973 7 7 1
+0974 2 2 1
+0975 -1 28 1
+0976 -1 28 1
+0977 14 14 1
 0978 6 6 0
 0979 50 50 0
-097A -1 8 0		receive::quest_all_list2
+097A -1 8 1
 097C 4 4 0
-097D 288 288 0
-097E 12 12 0
-097F -1 8 0
-0980 7 7 0
+097D 288 288 1
+097E 12 12 1
+097F -1 8 1
+0980 7 7 1
 0981 -1 12 0
 0982 7 7 0
-0983 29 29 0
-0984 28 28 0
-0985 -1 4 0
+0983 29 29 1
+0984 28 28 1
+0985 -1 4 1
 0986 10 10 0
-0987 -1 41 0	send::master_login
+0987 -1 41 0
 0988 6 6 0
 0989 2 2 0
 098A -1 74 0
@@ -1093,24 +887,24 @@
 098B 2 2 0
 098C 4 4 0
 098F -1 8 0
-0990 31 31 0
-0991 -1 4 0
-0992 -1 4 0
-0993 -1 4 0
-0994 -1 4 0
-0995 -1 28 0
-0996 -1 28 0
-0997 -1 45 0
-0998 8 8 0
-0999 11 11 0
-099A 9 9 0
-099B 8 8 0		receive::map_property3 (PACKET_ZC_MAPPROPERTY_R2)
+0990 31 31 1
+0991 -1 4 1
+0992 -1 4 1
+0993 -1 4 1
+0994 -1 4 1
+0995 -1 28 1
+0996 -1 28 1
+0997 -1 45 1
+0998 8 8 1
+0999 11 11 1
+099A 9 9 1
+099B 8 8 1
 099C 6 6 0
-099D -1 4 0		receive::received_characters
+099D -1 4 0
 099E 12 12 0
-099F -1 22 0	receive::area_spell_multiple2
-09A0 6 6 0		receive::sync_received_characters
-09A1 2 2 0		send::sync_received_characters
+099F -1 22 1
+09A0 6 6 0
+09A1 2 2 0
 09A2 6 6 0
 09A3 -1 8 0
 09A4 18 18 0
@@ -1150,45 +944,379 @@
 09C7 18 18 0
 09C8 -1 13 0
 09C9 -1 4 0
-09CA -1 23 0
-09CB 17 17 0
+09CA -1 23 1
+09CB 17 17 1
 09CC -1 4 0
-09CD 8 8 0
-09CE 102 102 0
-09CF -1 4 0		receive::gameguard_request
-09D0 -1 4 0		send::gameguard_reply
-09D1 14 14 0
+09CD 8 8 1
+09CE 102 102 1
+09CF -1 4 0
+09D0 -1 4 0
+09D1 14 14 1
 09D2 -1 28 0
 09D3 -1 28 0
 09D4 2 2 0
-09D5 -1 4 0
-09D6 -1 4 0
-09D8 2 2 0
-09D7 -1 5 0
+09D5 -1 4 1
+09D6 -1 4 1
+09D8 2 2 1
+09D7 -1 5 1
 09D9 4 4 0
 09DA -1 8 0
-09DB -1 84 0
-09DC -1 77 0
-09DD -1 78 0
-09DE -1 33 0
-09DF 7 7 0
+09DB -1 84 1
+09DC -1 77 1
+09DD -1 78 1
+09DE -1 33 1
+09DF 7 7 1
 09E0 -1 40 0
-09E1 8 8 0
-09E2 8 8 0
-09E3 8 8 0
-09E4 8 8 0
-09E5 18 18 0
-09E6 22 22 0
-09E7 2 2 0
-09E8 10 10 0
-09E9 2 2 0
-09EE 11 11 0
-09EF 11 11 0
-09F0 -1 7 0
-09F5 11 11 0
-09F6 11 11 0
-09EA 11 11 0
-09EB 23 23 0
-09F7 75 75 0
-09EC -1 65 0
-09ED 3 3 0
+09E1 8 8 1
+09E2 8 8 1
+09E3 8 8 1
+09E4 8 8 1
+09E5 18 18 1
+09E6 22 22 1
+09E7 3 3 1
+09E8 11 11 1
+09E9 2 2 1
+09EE 11 11 1
+09EF 11 11 1
+09F0 -1 7 1
+0A7D -1 7 1
+09F5 11 11 1
+09F6 11 11 1
+09EA 11 11 1
+09EB -1 24 1
+09F7 75 75 1
+09EC -1 64 1
+09ED 3 3 1
+09F3 11 11 1
+09F4 12 12 1
+09F1 11 11 1
+09F2 12 12 1
+0A04 6 6 1
+0A05 53 53 1
+0A06 6 6 1
+0A07 9 9 1
+0A03 2 2 1
+0A08 26 26 1
+0A12 27 27 1
+0A13 26 26 1
+0A14 10 10 1
+0A51 34 34 1
+0A32 2 2 0
+09F8 -1 8 1
+09F9 143 143 1
+09FA -1 6 1
+09FB -1 6 0
+09FC 6 6 1
+09FD -1 86 1
+09FE -1 79 1
+09FF -1 80 1
+0A00 269 269 1
+0A01 3 3 0
+0A02 4 4 1
+0A09 45 45 1
+0A0A 47 47 1
+0A0B 47 47 1
+0A0C 56 56 1
+0A0D -1 4 1
+0A0F -1 4 1
+0A10 -1 28 1
+0A11 -1 28 1
+0A0E 14 14 1
+0A15 12 12 1
+0A16 26 26 0
+0A17 6 6 1
+0A18 14 14 1
+0A19 2 2 1
+0A1A 23 23 1
+0A1B 2 2 1
+0A1C -1 8 1
+0A1D 2 2 1
+0A1E 3 3 1
+0A1F 2 2 1
+0A20 21 21 1
+0A21 3 3 1
+0A22 5 5 1
+0A23 -1 22 1
+0A24 66 66 1
+0A25 6 6 1
+0A26 7 7 1
+0A27 8 8 1
+0A28 3 3 1
+0A29 6 6 0
+0A2A 6 6 0
+0A2B 10 10 0
+0A2C 12 12 0
+0A2D -1 45 0
+0A2E 6 6 1
+0A2F 7 7 1
+0A30 106 106 1
+0A31 -1 6 0
+0A33 7 7 0
+0A34 6 6 0
+0A35 4 4 0
+0A36 7 7 1
+0A37 57 57 1
+0A38 3 3 1
+0A68 3 3 1
+0A39 36 36 1
+0A3A 12 12 1
+0A3B -1 12 1
+0A3C -1 18 0
+0A3D 18 18 0
+0A3E -1 16 0
+0A3F 9 9 0
+0A40 11 11 0
+0A41 18 18 0
+0A42 43 43 0
+0A43 85 85 0
+0A44 -1 28 0
+0A46 14 14 0
+0A47 3 3 0
+0A48 2 2 0
+0A49 22 22 0
+0A4A 6 6 0
+0A4B 22 22 0
+0A4C 28 28 0
+0A4D -1 63 0
+0A79 -1 67 0
+0A4E 4 4 0
+0A70 2 2 0
+0A4F -1 6 0
+0A50 4 4 0
+0A52 20 20 0
+0A53 10 10 0
+0A54 -1 8 0
+0A55 2 2 0
+0A56 6 6 0
+0A57 6 6 0
+0A58 8 8 0
+0A59 -1 8 0
+0A5A 2 2 0
+0A5B 7 7 0
+0A5C 18 18 0
+0A5D 6 6 0
+0A69 6 6 0
+0A6A 12 12 0
+0A6B -1 8 0
+0A6C 7 7 0
+0A6D -1 4 0
+0A6E -1 68 1
+0A6F -1 10 1
+0A71 -1 5 0
+0A72 61 61 0
+0A73 2 2 0
+0A74 8 8 0
+0A76 80 80 0
+0A77 15 15 0
+0A78 15 15 0
+0A7B -1 4 0
+0A7C -1 4 0
+0A7E 4 4 1
+0A80 2 2 1
+0A7F -1 89 1
+0A82 46 46 1
+0A83 46 46 1
+0A84 94 94 1
+0A85 82 82 1
+0A86 82 82 0
+0A87 4 4 1
+0A88 2 2 0
+0A8B 2 2 0
+0A8E 2 2 0
+0369 7 7 0
+083C 10 10 0
+0437 5 5 0
+035F 6 6 0
+0202 5 5 0
+07E4 6 6 0
+0362 6 6 0
+07EC 8 8 0
+0364 8 8 0
+0438 10 10 0
+0366 90 90 0
+096A 6 6 0
+0368 6 6 0
+0838 12 12 0
+0835 2 2 0
+0819 -1 15 0
+0811 -1 12 0
+0360 6 6 0
+0817 2 2 0
+0815 -1 89 0
+0365 18 18 0
+0363 8 8 0
+0281 -1 12 0
+022D 19 19 0
+0802 26 26 0
+0436 4 4 0
+023B 26 26 0
+0361 5 5 0
+08A7 36 36 0
+0367 2 2 0
+085A 2 2 0
+085B 2 2 0
+085C 2 2 0
+085D 2 2 0
+085E 2 2 0
+085F 2 2 0
+0860 2 2 0
+0861 2 2 0
+0862 2 2 0
+0863 2 2 0
+0864 2 2 0
+0865 2 2 0
+0866 2 2 0
+0867 2 2 0
+0868 2 2 0
+0869 2 2 0
+086A 2 2 0
+086B 2 2 0
+086C 2 2 0
+086D 2 2 0
+086E 2 2 0
+086F 2 2 0
+0870 2 2 0
+0871 2 2 0
+0872 2 2 0
+0873 2 2 0
+0874 2 2 0
+0875 2 2 0
+0876 2 2 0
+0877 2 2 0
+0878 2 2 0
+0879 2 2 0
+087A 2 2 0
+087B 2 2 0
+087C 2 2 0
+087D 2 2 0
+087E 2 2 0
+087F 2 2 0
+0880 2 2 0
+0881 2 2 0
+0882 2 2 0
+0883 2 2 0
+0917 2 2 0
+0918 2 2 0
+0919 2 2 0
+091A 2 2 0
+091B 2 2 0
+091C 2 2 0
+091D 2 2 0
+091E 2 2 0
+091F 2 2 0
+0920 2 2 0
+0921 2 2 0
+0922 2 2 0
+0923 2 2 0
+0924 2 2 0
+0925 2 2 0
+0926 2 2 0
+0927 2 2 0
+0928 2 2 0
+0929 2 2 0
+092A 2 2 0
+092B 2 2 0
+092C 2 2 0
+092D 2 2 0
+092E 2 2 0
+092F 2 2 0
+0930 2 2 0
+0931 2 2 0
+0932 2 2 0
+0933 2 2 0
+0934 2 2 0
+0935 2 2 0
+0936 2 2 0
+0937 2 2 0
+0938 2 2 0
+0939 2 2 0
+093A 2 2 0
+093B 2 2 0
+093C 2 2 0
+093D 2 2 0
+093E 2 2 0
+093F 2 2 0
+02C4 2 2 0
+0884 2 2 0
+0885 2 2 0
+0886 2 2 0
+0887 2 2 0
+0888 2 2 0
+0889 2 2 0
+088A 2 2 0
+088B 2 2 0
+088C 2 2 0
+088D 2 2 0
+088E 2 2 0
+088F 2 2 0
+0890 2 2 0
+0891 2 2 0
+0892 2 2 0
+0893 2 2 0
+0894 2 2 0
+0895 2 2 0
+0896 2 2 0
+0897 2 2 0
+0898 2 2 0
+0899 2 2 0
+089A 2 2 0
+089B 2 2 0
+089C 2 2 0
+089D 2 2 0
+089E 2 2 0
+089F 2 2 0
+08A0 2 2 0
+08A1 2 2 0
+08A2 2 2 0
+08A3 2 2 0
+08A4 2 2 0
+08A5 2 2 0
+0940 2 2 0
+08A6 2 2 0
+08A8 2 2 0
+08A9 2 2 0
+08AA 2 2 0
+08AB 2 2 0
+08AC 2 2 0
+08AD 2 2 0
+0941 2 2 0
+0942 2 2 0
+0943 2 2 0
+0944 2 2 0
+0945 2 2 0
+0946 2 2 0
+0947 2 2 0
+0948 2 2 0
+0949 2 2 0
+094A 2 2 0
+094B 2 2 0
+094C 2 2 0
+094D 2 2 0
+094E 2 2 0
+094F 2 2 0
+0950 2 2 0
+0951 2 2 0
+0952 2 2 0
+0953 2 2 0
+0954 2 2 0
+0955 2 2 0
+0956 2 2 0
+0957 2 2 0
+0958 2 2 0
+0959 2 2 0
+095A 2 2 0
+095B 2 2 0
+095C 2 2 0
+095D 2 2 0
+095E 2 2 0
+095F 2 2 0
+0960 2 2 0
+0961 2 2 0
+0962 2 2 0
+0963 2 2 0
+0964 2 2 0
+0965 2 2 0
+0966 2 2 0
+0967 2 2 0
+0968 2 2 0
+0969 2 2 0
