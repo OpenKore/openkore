@@ -559,6 +559,7 @@ sub new {
 		'09CF' => ['gameguard_request'],
 		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
+		'0A3B' => ['misc_effect', 'v a4 C v', [qw(len ID flag effect)]],
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
