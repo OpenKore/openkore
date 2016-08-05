@@ -130,23 +130,15 @@ sub new {
 		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08C9' => ['request_cashitems'],#2
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
+		'0970' => ['char_create', 'a24 C v2', [qw(name, slot, hair_style, hair_color)]],
 		'0998' => ['send_equip', 'v V', [qw(index type)]],#8
 		'09A1' => ['sync_received_characters'],
 		'09D0' => ['gameguard_reply'],
+		'09D4' => ['complete_selling'],
 		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
-	# # it would automatically use the first available if not set
-	# my %handlers = qw(
-	# 	master_login 0064
-	# 	game_login 0065
-	# 	map_login 0072
-	# 	character_move 0085
-	# 	buy_bulk_vender 0134
-	# );
-	# $self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 

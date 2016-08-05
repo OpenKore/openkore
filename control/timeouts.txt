@@ -137,6 +137,12 @@ ai_repair 4
 # delay before starting escape sequence
 ai_route_escape 8
 
+# N-Protect related
+NProtect_relog_second 3
+NProtect_relog_delay 5
+
+
+
 # Don't change the following timeouts!
 ai_sync 12
 
@@ -144,3 +150,4 @@ injectSync 5
 injectKeepAlive 12
 welcomeText 4
 patchserver 120
+

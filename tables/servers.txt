@@ -1,8 +1,8 @@
 ﻿[台灣 - GNJoy]
-ip 218.32.4.151
+ip 218.32.4.218
 port 6900
 master_version 5
-version 211
+version 1
 serverType twRO
 serverEncoding Big5
 charBlockSize 144
@@ -11,3 +11,6 @@ PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x0597
 recvpackets recvpackets.txt
 addTableFolders twRO
 captcha 0
+shuffle 1
+crypt 1
+sync 1

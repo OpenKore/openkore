@@ -9,8 +9,8 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#  $Revision$
-#  $Id$
+#  $Revision: 9024 $
+#  $Id: Send.pm 9024 2016-02-19 23:31:46Z allanon $
 #
 #########################################################################
 ##
@@ -194,7 +194,7 @@ sub encryptMessageID {
 			$$r_message = pack("v", $messageID) . substr($$r_message, 2);
 
 			# Debug Log	
-			debug (sprintf("Encrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $messageID, $oldKey, ($self->{encryption}->{crypt_key} >> 16) & 0x7FFF), "sendPacket", 0) if $config{debugPacket_sent};
+			debug (sprintf("[encryptMessageID] Encrypted MID: [%04X]->[%04X] / KEY: [0x%04X]->[0x%04X]\n", $oldMID, $messageID, $oldKey, ($self->{encryption}->{crypt_key} >> 16) & 0x7FFF), "sendPacket", 0) if $config{debugPacket_sent};
 		}
 	} else {
 		use bytes;
@@ -380,8 +380,8 @@ sub parse_master_login {
 	}
 
 	if (exists $args->{password_rijndael}) {
-		my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
-		my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
+		my $key = pack('C24', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06, 0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B));
+		my $chain = pack('C24', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41, 0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30));
 		my $in = pack('a24', $args->{password_rijndael});
 		my $rijndael = Utils::Rijndael->new;
 		$rijndael->MakeKey($key, $chain, 24, 24);
@@ -404,8 +404,8 @@ sub reconstruct_master_login {
 			$args->{password_md5_hex} = $_->hexdigest;
 		}
 
-		my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
-		my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
+		my $key = pack('C24', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06, 0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B));
+		my $chain = pack('C24', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41, 0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30));
 		my $in = pack('a24', $args->{password});
 		my $rijndael = Utils::Rijndael->new;
 		$rijndael->MakeKey($key, $chain, 24, 24);
@@ -1206,5 +1206,17 @@ sub sendProduceMix {
 	$self->sendToServer($msg);
 	debug "Sent Forge, Produce Item: $ID\n" , 2;
 }
+
+sub sendSellComplete { 
+	my ($self) = @_; 
+	
+	#TESTING
+	#$self->sendToServer($self->reconstruct({switch => 'complete_selling',}));
+	my $msg = pack ('C*', 0xD4, 0x09);
+	$self->sendToServer($msg);
+	
+	debug "Sent complete selling flag\n", "sendPacket", 2;
+	
+} 
 
 1;

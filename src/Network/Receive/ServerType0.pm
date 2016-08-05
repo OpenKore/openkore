@@ -435,8 +435,6 @@ sub new {
 		'02DE' => ['battleground_score', 'v2', [qw(score_lion score_eagle)]],
 		'02DF' => ['battleground_position', 'a4 Z24 v3', [qw(ID name job x y)]],
 		'02E0' => ['battleground_hp', 'a4 Z24 v2', [qw(ID name hp max_hp)]],
-		# 02E1 packet unsure of dual_wield_damage needs more testing
-		# a4 a4 a4 V3 v C V ?
 		#'02E1' => ['actor_action', 'a4 a4 a4 V2 v x2 v x2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'02E1' => ['actor_action', 'a4 a4 a4 V3 v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'02E7' => ['map_property', 'v2 a*', [qw(len type info_table)]],

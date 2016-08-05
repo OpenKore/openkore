@@ -2324,3 +2324,5 @@ logToFile_Warnings
 
 showTime 0
 # debug訊息內是否在每句訊息開首加上時間
+
+NProtect 1
