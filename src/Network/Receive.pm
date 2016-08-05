@@ -2303,4 +2303,49 @@ sub forge_list {
 	message "=========================\n";
 }
 
+# Parse 0A3B with structure
+# '0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]],
+# Unpack effect info into HatEFID
+# @author [Cydh]
+sub parse_hat_effect {
+	my ($self, $args) = @_;
+	@{$args->{effects}} = map {{ HatEFID => unpack('v', $_) }} unpack '(a2)*', $args->{effect};
+	debug "Hat Effect. Flag: ".$args->{flag}." HatEFIDs: ".(join ', ', map {$_->{HatEFID}} @{$args->{effects}})."\n";
+}
+
+# Display information for player's Hat Effects
+# @author [Cydh]
+sub hat_effect {
+	my ($self, $args) = @_;
+
+	my $actor = Actor::get($args->{ID});
+	my $hatName;
+	my $i = 0;
+
+	#TODO: Stores the hat effect into actor for single player's information
+	for my $hat (@{$args->{effects}}) {
+		my $hatHandle;
+		$hatName .= ", " if ($i);
+		if (defined $hatEffectHandle{$hat->{HatEFID}}) {
+			$hatHandle = $hatEffectHandle{$hat->{HatEFID}};
+			$hatName .= defined $hatEffectName{$hatHandle} ? $hatEffectName{$hatHandle} : $hatHandle;
+		} else {
+			$hatName .= T("Unknown #").$hat->{HatEFID};
+		}
+		$i++;
+	}
+
+	if ($args->{flag} == 1) {
+		message sprintf(
+			$actor->verb(T("%s use effect: %s\n"), T("%s uses effect: %s\n")),
+			$actor, $hatName
+		), 'effect';
+	} else {
+		message sprintf(
+			$actor->verb(T("%s are no longer: %s\n"), T("%s is no longer: %s\n")),
+			$actor, $hatName
+		), 'effect';
+	}
+}
+
 1;
