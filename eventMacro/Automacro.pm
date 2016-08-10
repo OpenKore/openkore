@@ -11,14 +11,17 @@ sub new {
 	my $self = bless {}, $class;
 	
 	$self->{Name} = $name;
-	$self->{is_Fulfilled} = 0;
 	
 	$self->{conditionList} = new eventMacro::Lists;
-	$self->{has_event_only_condition} = 0;
 	$self->{event_only_condition_index} = undef;
-	$self->{Hooks} = {};
-	$self->{Variables} = {};
+	$self->{hooks} = {};
+	$self->{variables} = {};
 	$self->create_conditions_list( $conditions );
+	
+	$self->{number_of_false_conditions} = $self->{conditionList}->size;
+	if (defined $self->{event_only_condition_index}) {
+		$self->{number_of_false_conditions}--;
+	}
 	
 	$self->{Parameters} = {};
 	$self->set_parameters( $parameters );
@@ -28,12 +31,12 @@ sub new {
 
 sub get_hooks {
 	my ($self) = @_;
-	return $self->{Hooks};
+	return $self->{hooks};
 }
 
 sub get_variables {
 	my ($self) = @_;
-	return $self->{Variables};
+	return $self->{variables};
 }
 
 sub get_name {
@@ -58,18 +61,6 @@ sub enable {
 	$self->{Parameters}{disabled} = 0;
 	debug "[eventMacro] Enabling ".$self->get_name()."\n", "eventMacro", 2;
 	return 1;
-}
-
-sub is_disabled {
-	my ($self) = @_;
-	return $self->{Parameters}{disabled};
-}
-
-sub is_timed_out {
-	my ($self) = @_;
-	return 1 unless ( $self->{Parameters}{'timeout'} );
-	return 1 if ( timeOut( { timeout => $self->{Parameters}{'timeout'}, time => $self->{Parameters}{time} } ) );
-	return 0;
 }
 
 sub get_parameter {
@@ -128,47 +119,81 @@ sub create_conditions_list {
 			my $cond = $module->new( $newConditionText );
 			$self->{conditionList}->add( $cond );
 			foreach my $hook ( @{ $cond->get_hooks() } ) {
-				push ( @{ $self->{Hooks}{$hook} }, $cond->{listIndex} );
+				push ( @{ $self->{hooks}{$hook} }, $cond->{listIndex} );
 			}
 			foreach my $variable ( @{ $cond->get_variables() } ) {
-				push ( @{ $self->{Variables}{$variable} }, $cond->{listIndex} );
+				push ( @{ $self->{variables}{$variable} }, $cond->{listIndex} );
 			}
 			if ($cond->is_event_only()) {
-				$self->{has_event_only_condition} = 1;
 				$self->{event_only_condition_index} = $cond->{listIndex};
 			}
 		}
 	}
 }
 
-sub validate_automacro_status {
-	my ($self) = @_;
-	debug "[eventMacro] Validating value of automacro ".$self->get_name()." \n", "eventMacro", 2;
-	foreach my $condition ( @{ $self->{conditionList}->getItems() } ) {
-		debug "[eventMacro] Checking condition ".$condition->get_name()." index ".$condition->{listIndex}." \n", "eventMacro", 3;
-		next if ($condition->is_event_only());
-		next if ($condition->is_fulfilled());
-		debug "[eventMacro] Not fulfilled \n", "eventMacro", 3;
-		$self->{is_Fulfilled} = 0;
-		return;
-	}
-	debug "[eventMacro] Successfully fulfilled \n", "eventMacro", 3;
-	$self->{is_Fulfilled} = 1;
-}
-
-sub are_conditions_fulfilled {
-	my ($self) = @_;
-	return $self->{is_Fulfilled};
-}
-
 sub has_event_only_condition {
 	my ($self) = @_;
-	return $self->{has_event_only_condition};
+	return defined $self->{event_only_condition_index};
 }
 
 sub get_event_only_condition_index {
 	my ($self) = @_;
 	return $self->{event_only_condition_index};
+}
+
+sub check_normal_condition {
+	my ($self, $condition_index, $event_name, $args) = @_;
+	
+	my $condition = $self->{conditionList}->get($condition_index);
+	
+	my $pre_check_status = $condition->is_fulfilled;
+	
+	$condition->validate_condition_status($event_name,$args);
+	
+	my $pos_check_status = $condition->is_fulfilled;
+	
+	debug "[eventMacro] Checking condition '".$condition->get_name()."' of index '".$condition->{listIndex}."' in automacro '".$self->{Name}."', fulfilled value before: '".$pre_check_status."', fulfilled value after: '".$pos_check_status."'.\n", "eventMacro", 3;
+	
+	if ($pre_check_status == 1 && $condition->is_fulfilled == 0) {
+		$self->{number_of_false_conditions}++;
+	} elsif ($pre_check_status == 0 && $condition->is_fulfilled == 1) {
+		$self->{number_of_false_conditions}--;
+	}
+}
+
+sub check_event_only_condition {
+	my ($self, $event_name, $args) = @_;
+	
+	my $condition = $self->{conditionList}->get($self->{event_only_condition_index});
+	
+	my $return = $condition->validate_condition_status($event_name, $args);
+	
+	debug "[eventMacro] Checking event only condition '".$condition->get_name()."' of index '".$condition->{listIndex}."' in automacro '".$self->{Name}."', fulfilled value: '".$return."'.\n", "eventMacro", 3;
+
+	return $return;
+}
+
+sub are_conditions_fulfilled {
+	my ($self) = @_;
+	$self->{number_of_false_conditions} == 0;
+}
+
+sub is_disabled {
+	my ($self) = @_;
+	return $self->{Parameters}{disabled};
+}
+
+sub is_timed_out {
+	my ($self) = @_;
+	return 1 unless ( $self->{Parameters}{'timeout'} );
+	return 1 if ( timeOut( { timeout => $self->{Parameters}{'timeout'}, time => $self->{Parameters}{time} } ) );
+	return 0;
+}
+
+sub can_be_run {
+	my ($self) = @_;
+	return 1 if ($self->are_conditions_fulfilled && !$self->is_disabled && $self->is_timed_out);
+	return 0;
 }
 
 1;
