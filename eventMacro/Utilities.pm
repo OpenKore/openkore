@@ -5,7 +5,7 @@ use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(ai_isIdle q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
+our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
 	getWord call_macro getArgFromList getListLenght sameParty processCmd);
@@ -20,64 +20,6 @@ use eventMacro::Data;
 use eventMacro::Lists;
 use eventMacro::Automacro;
 use eventMacro::FileParser;
-
-our ($rev) = q$Revision: 6812 $ =~ /(\d+)/;
-
-# own ai_Isidle check that excludes deal
-sub ai_isIdle {
-	return 1 if $eventMacro->{Macro_Runner}->last_subcall_overrideAI;
-
-	# now check for orphaned script object
-	# may happen when messing around with "ai clear" and stuff.
-	if (defined $eventMacro->{Macro_Runner} && !AI::inQueue('eventMacro')) {
-		my $method = $eventMacro->{Macro_Runner}->last_subcall_orphan;
-		message "[eventMacro] Running macro '".$eventMacro->{Macro_Runner}->last_subcall_name."' got orphaned, its orphan method is '".$method."'.\n";
-		# 'terminate' undefs the whole macro tree and returns "ai is not idle"
-		if ($method eq 'terminate') {
-			$eventMacro->clear_queue();
-			return 0
-		# 'terminate_last_call' undefs only the specific macro call that got orphaned, keeping the rest of the macro call tree.
-		} elsif ($method eq 'terminate_last_call') {
-			my $macro = $eventMacro->{Macro_Runner};
-			if (defined $macro->{subcall}) {
-				while (defined $macro->{subcall}) {
-					#cheap way of stopping on the second to last subcall
-					last if (!defined $macro->{subcall}->{subcall});
-					$macro = $macro->{subcall};
-				}
-				$macro->clear_subcall;
-			} else {
-				#since there was no subcall we delete all macro tree
-				$eventMacro->clear_queue();
-			}
-			return 0;
-		# 'reregister' re-inserts "eventMacro" in ai_queue at the first position
-		} elsif ($method eq 'reregister') {
-			my $macro = $eventMacro->{Macro_Runner};
-			while (defined $macro->{subcall}) {
-				$macro = $macro->{subcall};
-			}
-			$macro->register;
-			return 1
-		# 'reregister_safe' waits until AI is idle then re-inserts "eventMacro"
-		} elsif ($method eq 'reregister_safe') {
-			if (AI::isIdle || AI::is('deal')) {
-				my $macro = $eventMacro->{Macro_Runner};
-				while (defined $macro->{subcall}) {
-					$macro = $macro->{subcall};
-				}
-				$macro->register;
-				return 1
-			}
-			return 0
-		} else {
-			error "[eventMacro] Unknown orphan method '".$method."'. terminating whole macro tree\n", "eventMacro";
-			$eventMacro->clear_queue();
-			return 0
-		}
-	}
-	return AI::is('eventMacro', 'deal')
-}
 
 sub between {
 	if ($_[0] <= $_[1] && $_[1] <= $_[2]) {return 1}
@@ -486,39 +428,6 @@ sub sameParty {
 sub getRandomRange {
 	my ($low, $high) = split(/,\s*/, $_[0]);
 	return int(rand($high-$low+1))+$low if (defined $high && defined $low)
-}
-
-sub processCmd {
-	my ($command) = @_;
-	my $macro_name = $eventMacro->{Macro_Runner}->last_subcall_name;
-	if (defined $command) {
-		if ($command ne '') {
-			unless (Commands::run($command)) {
-				my $error_message = sprintf("[eventMacro] %s failed with %s\n", $macro_name, $command);
-				
-				error $error_message, "eventMacro";
-				$eventMacro->clear_queue();
-				return;
-			}
-		}
-		if (defined $eventMacro->{Macro_Runner} && $eventMacro->{Macro_Runner}->finished) {
-			$eventMacro->clear_queue();
-		} else {
-			$eventMacro->{Macro_Runner}->ok;
-		}
-	} else {
-		my $macro = $eventMacro->{Macro_Runner};
-		while (defined $macro->{subcall}) {
-			$macro = $macro->{subcall};
-		}
-		my $error_message = $macro->error_message;
-		
-		error $error_message, "eventMacro";
-		$eventMacro->clear_queue();
-		return;
-	}
-	
-	return 1;
 }
 
 1;

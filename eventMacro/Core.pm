@@ -11,7 +11,6 @@ use eventMacro::Lists;
 use eventMacro::Automacro;
 use eventMacro::FileParser;
 use eventMacro::Macro;
-use eventMacro::Utilities qw(ai_isIdle processCmd);
 use eventMacro::Runner;
 use eventMacro::Condition;
 
@@ -510,19 +509,117 @@ sub iterate_macro {
 	
 	my $macro_timeout = $self->{Macro_Runner}->timeout;
 	
-	if (timeOut($macro_timeout) && ai_isIdle()) {
+	if (timeOut($macro_timeout) && $self->ai_is_eventMacro) {
 		do {
-			last unless ( processCmd($self->{Macro_Runner}->next) );
+			last unless ( $self->processCmd( $self->{Macro_Runner}->next ) );
 		} while ($self->{Macro_Runner} && !$self->{Macro_Runner}->is_paused() && $self->{Macro_Runner}->macro_block);
 	}
+}
+
+sub ai_is_eventMacro {
+	my $self = shift;
+	return 1 if $self->{Macro_Runner}->last_subcall_overrideAI;
+
+	# now check for orphaned script object
+	# may happen when messing around with "ai clear" and stuff.
+	$self->enforce_orphan if (defined $self->{Macro_Runner} && !AI::inQueue('eventMacro'));
+	
+	return AI::is('eventMacro', 'deal')
+}
+
+sub enforce_orphan {
+	my $self = shift;
+	my $method = $self->{Macro_Runner}->last_subcall_orphan;
+	message "[eventMacro] Running macro '".$self->{Macro_Runner}->last_subcall_name."' got orphaned, its orphan method is '".$method."'.\n";
+	
+	# 'terminate' undefs the whole macro tree and returns "ai is not idle"
+	if ($method eq 'terminate') {
+		$self->clear_queue();
+		return 0;
+		
+	# 'terminate_last_call' undefs only the specific macro call that got orphaned, keeping the rest of the macro call tree.
+	} elsif ($method eq 'terminate_last_call') {
+		my $macro = $self->{Macro_Runner};
+		if (defined $macro->{subcall}) {
+			while (defined $macro->{subcall}) {
+				#cheap way of stopping on the second to last subcall
+				last if (!defined $macro->{subcall}->{subcall});
+				$macro = $macro->{subcall};
+			}
+			$macro->clear_subcall;
+		} else {
+			#since there was no subcall we delete all macro tree
+			$self->clear_queue();
+		}
+		return 0;
+		
+	# 'reregister' re-inserts "eventMacro" in ai_queue at the first position
+	} elsif ($method eq 'reregister') {
+		my $macro = $self->{Macro_Runner};
+		while (defined $macro->{subcall}) {
+			$macro = $macro->{subcall};
+		}
+		$macro->register;
+		return 1;
+		
+	# 'reregister_safe' waits until AI is idle then re-inserts "eventMacro"
+	} elsif ($method eq 'reregister_safe') {
+		if (AI::isIdle || AI::is('deal')) {
+			my $macro = $self->{Macro_Runner};
+			while (defined $macro->{subcall}) {
+				$macro = $macro->{subcall};
+			}
+			$macro->register;
+			return 1
+		}
+		return 0;
+		
+	} else {
+		error "[eventMacro] Unknown orphan method '".$method."'. terminating whole macro tree\n", "eventMacro";
+		$self->clear_queue();
+		return 0;
+	}
+}
+
+sub processCmd {
+	my ($self, $command) = @_;
+	my $macro_name = $self->{Macro_Runner}->last_subcall_name;
+	if (defined $command) {
+		if ($command ne '') {
+			unless (Commands::run($command)) {
+				my $error_message = sprintf("[eventMacro] %s failed with %s\n", $macro_name, $command);
+				
+				error $error_message, "eventMacro";
+				$self->clear_queue();
+				return;
+			}
+		}
+		if (defined $self->{Macro_Runner} && $self->{Macro_Runner}->finished) {
+			$self->clear_queue();
+		} else {
+			$self->{Macro_Runner}->ok;
+		}
+	} else {
+		my $macro = $self->{Macro_Runner};
+		while (defined $macro->{subcall}) {
+			$macro = $macro->{subcall};
+		}
+		my $error_message = $macro->error_message;
+		
+		error $error_message, "eventMacro";
+		$self->clear_queue();
+		return;
+	}
+	
+	return 1;
 }
 
 sub clear_queue {
 	my ($self) = @_;
 	debug "[eventMacro] Clearing queue\n", "eventMacro", 2;
 	if ( defined $self->{Macro_Runner} && $self->get_automacro_checking_status() == PAUSED_BY_EXCLUSIVE_MACRO ) {
-		debug "[eventMacro] Uninterruptible macro '".$eventMacro->{Macro_Runner}->last_subcall_name."' ended. Automacros will return to being checked.\n", "eventMacro", 2;
-		$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
+		debug "[eventMacro] Uninterruptible macro '".$self->{Macro_Runner}->last_subcall_name."' ended. Automacros will return to being checked.\n", "eventMacro", 2;
+		$self->set_automacro_checking_status(CHECKING_AUTOMACROS);
 	}
 	$self->{Macro_Runner} = undef;
 	Plugins::delHook($self->{mainLoop_Hook_Handle}) if (defined $self->{mainLoop_Hook_Handle});
