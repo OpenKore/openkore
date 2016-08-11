@@ -44653,3 +44653,68 @@ Kamu bisa mendapatkan Red Baby Dragon, Excelion Leg dan banyak item berharga lai
 ^ff0000Tidak dapat di transaksikan ke karakter lain^000000
 Weight : ^7777771^000000
 #
+
+//--------------- Update August Costume Scroll 20160809--------------
+17523#
+Mystical Costume Scroll
+Scroll yang berisi kostum headgear lucu dan menarik.
+^ff0000Tidak dapat ditransaksikan.^000000
+Weight : ^7777771^000000
+#
+19615#
+Kostum topeng yang berasal dari Loki's Whisper
+Class : ^777777Costume equipment^000000
+Location : ^777777Mid-bottom ^000000 Weight : ^7777770^000000
+Required Lv. : ^77777720^000000
+Job : ^777777All jobs^000000
+#
+20213#
+Kostum hasil replika dari Sirt Evil Eye, ketika dipakai akan merasakan Api dimatanya.
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20214#
+Topi Marching dengan Warna Gelap.
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20215#
+Kostum dengan bentuk yang aneh yang menutupi setengah wajah. Jangan khawatir ini tidak menutupi mata.
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20216#
+Sebuah topi yang terlihat seperti buku sihir yang jahat.
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20217#
+Arabian Veil.
+Sebuah Topi yang memberikan tambahan all stat 1 dan memberikan exp 5% setiap mengalahkan mosnter 
+Class : ^777777Costume equipment^000000Defense : ^7777770^000000
+Location : ^777777상Bottom ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20219#
+Topi Marching dengan sayap malaikat
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20221#
+Pemakainya akan susah untuk membuka matanya, karena cahaya yang dipancarkannya.
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#

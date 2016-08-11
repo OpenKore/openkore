@@ -6777,3 +6777,14 @@
 19116#Red Baby Dragon#
 22103#Excelion Leg#
 14805#Almighty Lucky Egg#
+
+//--------------- Update August Costume Scroll 20160809--------------
+17523#Mystical Costume Scroll#
+19615#C_Loki_Mask#
+20213#C_Sirt_Evil_Eye#
+20214#C_Evil_Marcher_Hat#
+20215#C_Black_Devil_Mask#
+20216#C_Rideword_Hat#
+20217#C_Arabian_Veil#
+20219#C_Angel_Marcher_Hat#
+20221#C_Eyes_Of_Ifrit#
