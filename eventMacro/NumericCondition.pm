@@ -7,7 +7,7 @@ use base 'eventMacro::Condition';
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	my $v = $self->{validator} = eventMacro::Validator::NumericComparison->new( $condition_code );
-	push @{ $self->{Variables} }, $v->variables;
+	push @{ $self->{variables} }, $v->variables;
 	$v->parsed;
 }
 

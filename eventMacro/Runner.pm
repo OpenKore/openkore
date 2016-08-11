@@ -29,7 +29,7 @@ sub new {
 	
 	my $self = bless {}, $class;
 	
-	$self->{Name} = $name;
+	$self->{name} = $name;
 	$self->{Paused} = 0;
 	$self->{registered} = 0;
 	$self->{finished} = 0;
@@ -51,7 +51,7 @@ sub new {
 	$self->{last_subcall_interruptible} = undef;
 	$self->{last_subcall_orphan} = undef;
 	
-	debug "[eventMacro] Macro object '".$self->{Name}."' created.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro object '".$self->{name}."' created.\n", "eventMacro", 2;
 	
 	if ($is_submacro) {
 		$self->{submacro} = 1;
@@ -143,9 +143,9 @@ sub interruptible {
 	if (defined $interruptible) {
 		
 		if (defined $self->{interruptible} && $self->{interruptible} == $interruptible) {
-			debug "[eventMacro] Macro '".$self->{Name}."' interruptible state is already '".$interruptible."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Macro '".$self->{name}."' interruptible state is already '".$interruptible."'.\n", "eventMacro", 2;
 		} else {
-			debug "[eventMacro] Now macro '".$self->{Name}."' interruptible state is '".$interruptible."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Now macro '".$self->{name}."' interruptible state is '".$interruptible."'.\n", "eventMacro", 2;
 			$self->{interruptible} = $interruptible;
 		}
 		
@@ -176,16 +176,16 @@ sub validate_automacro_checking_to_interruptible {
 	}
 	
 	if ($checking_status != CHECKING_AUTOMACROS && $checking_status != PAUSED_BY_EXCLUSIVE_MACRO) {
-		debug "[eventMacro] Macro '".$self->{Name}."' cannot change automacro checking state because the user forced it into another state.\n", "eventMacro", 2;
+		debug "[eventMacro] Macro '".$self->{name}."' cannot change automacro checking state because the user forced it into another state.\n", "eventMacro", 2;
 		return;
 	}
 	
 	if ($interruptible == 0) {
-		debug "[eventMacro] Macro '".$self->{Name}."' is now stopping automacro checking..\n", "eventMacro", 2;
+		debug "[eventMacro] Macro '".$self->{name}."' is now stopping automacro checking..\n", "eventMacro", 2;
 		$eventMacro->set_automacro_checking_status(PAUSED_BY_EXCLUSIVE_MACRO);
 	
 	} elsif ($interruptible == 1) {
-		debug "[eventMacro] Macro '".$self->{Name}."' is now starting automacro checking..\n", "eventMacro", 2;
+		debug "[eventMacro] Macro '".$self->{name}."' is now starting automacro checking..\n", "eventMacro", 2;
 		$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
 	}
 }
@@ -197,9 +197,9 @@ sub overrideAI {
 	if (defined $overrideAI) {
 		
 		if (defined $self->{overrideAI} && $self->{overrideAI} == $overrideAI) {
-			debug "[eventMacro] Macro '".$self->{Name}."' overrideAI state is already '".$overrideAI."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Macro '".$self->{name}."' overrideAI state is already '".$overrideAI."'.\n", "eventMacro", 2;
 		} else {
-			debug "[eventMacro] Now macro '".$self->{Name}."' overrideAI state is '".$overrideAI."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Now macro '".$self->{name}."' overrideAI state is '".$overrideAI."'.\n", "eventMacro", 2;
 			$self->{overrideAI} = $overrideAI;
 		}
 		
@@ -240,7 +240,7 @@ sub validate_AI_queue_to_overrideAI {
 # Registers to AI queue
 sub register {
 	my ($self) = @_;
-	debug "[eventMacro] Macro '".$self->{Name}."' is now registering itself to AI queue.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro '".$self->{name}."' is now registering itself to AI queue.\n", "eventMacro", 2;
 	AI::queue('eventMacro');
 	$self->{registered} = 1;
 }
@@ -248,7 +248,7 @@ sub register {
 # Unregisters from AI queue
 sub unregister {
 	my ($self) = @_;
-	debug "[eventMacro] Macro '".$self->{Name}."' is now deleting itself from AI queue.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro '".$self->{name}."' is now deleting itself from AI queue.\n", "eventMacro", 2;
 	AI::clear('eventMacro');
 	$self->{registered} = 0;
 }
@@ -260,9 +260,9 @@ sub orphan {
 	if (defined $orphan) {
 		
 		if (defined $self->{orphan} && $self->{orphan} eq $orphan) {
-			debug "[eventMacro] Macro '".$self->{Name}."' orphan method is already '".$orphan."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Macro '".$self->{name}."' orphan method is already '".$orphan."'.\n", "eventMacro", 2;
 		} else {
-			debug "[eventMacro] Now macro '".$self->{Name}."' orphan method is '".$orphan."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Now macro '".$self->{name}."' orphan method is '".$orphan."'.\n", "eventMacro", 2;
 			$self->{orphan} = $orphan;
 		}
 		
@@ -305,7 +305,7 @@ sub registered {
 sub repeat {
 	my ($self, $repeat) = @_;
 	if (defined $repeat) {
-		debug "[eventMacro] Now macro '".$self->{Name}."' will repeat itself '".$repeat."' times.\n", "eventMacro", 2;
+		debug "[eventMacro] Now macro '".$self->{name}."' will repeat itself '".$repeat."' times.\n", "eventMacro", 2;
 		$self->{repeat} = $repeat;
 	}
 	return $self->{repeat};
@@ -332,13 +332,13 @@ sub is_paused {
 # Returns the macro name
 sub get_name {
 	my ($self) = @_;
-	return $self->{Name};
+	return $self->{name};
 }
 
 # Deletes the subcall object
 sub clear_subcall {
 	my ($self) = @_;
-	debug "[eventMacro] Clearing submacro '".$self->{subcall}->{Name}."' from macro '".$self->{Name}."'.\n", "eventMacro", 2;
+	debug "[eventMacro] Clearing submacro '".$self->{subcall}->{name}."' from macro '".$self->{name}."'.\n", "eventMacro", 2;
 	$self->validate_automacro_checking_to_interruptible($self->interruptible);
 	$self->validate_AI_queue_to_overrideAI($self->overrideAI);
 	#since we do not need a validate_orphan function we do it here
@@ -363,7 +363,7 @@ sub clear_subcall {
 # Creates a subcall object
 sub create_subcall {
 	my ($self, $name, $repeat) = @_;
-	debug "[eventMacro] Creating submacro '".$name."' on macro '".$self->{Name}."'.\n", "eventMacro", 2;
+	debug "[eventMacro] Creating submacro '".$name."' on macro '".$self->{name}."'.\n", "eventMacro", 2;
 	$self->{subcall} = new eventMacro::Runner($name, $repeat, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
 }
 
@@ -427,14 +427,14 @@ sub scanLabels {
 # Decides what to do when we get to the end of a macro script
 sub manage_script_end {
 	my ($self) = @_;
-	debug "[eventMacro] Macro '".$self->{Name}."' got to the end of its script.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro '".$self->{name}."' got to the end of its script.\n", "eventMacro", 2;
 	if ($self->{repeat} > 1) {
 		$self->{repeat}--;
 		$self->{line_index} = 0;
-		debug "[eventMacro] Repeating macro '".$self->{Name}."'. Remaining repeats: '".$self->{repeat}."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Repeating macro '".$self->{name}."'. Remaining repeats: '".$self->{repeat}."'.\n", "eventMacro", 2;
 	} else {
 		$self->{finished} = 1;
-		debug "[eventMacro] Macro '".$self->{Name}."' finished.\n", "eventMacro", 2;
+		debug "[eventMacro] Macro '".$self->{name}."' finished.\n", "eventMacro", 2;
 	}
 }
 
@@ -528,7 +528,7 @@ sub error {
 sub error_message {
 	my ($self) = @_;
 	my $error_message = 
-	  "[eventMacro] Error in macro '".$self->{Name}."'\n".
+	  "[eventMacro] Error in macro '".$self->{name}."'\n".
 	  "[eventMacro] Line index of the error '".$self->line_index."'\n".
 	  "[eventMacro] Script of the line '".$self->line_script($self->line_index)."'\n";
 	if (defined $self->subline_index) {
@@ -589,10 +589,10 @@ sub define_next_valid_command {
 		if ($check_need) {
 			$self->define_current_line;
 			return "" if ($self->{finished});
-			debug "[eventMacro] Checking macro '".$self->{Name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '')." for a macro command.\n", "eventMacro", 3;
+			debug "[eventMacro] Checking macro '".$self->{name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '')." for a macro command.\n", "eventMacro", 3;
 			debug "[eventMacro] Script '".$self->{current_line}."'.\n", "eventMacro", 3;
 		} else {
-			debug "[eventMacro] Rechecking macro '".$self->{Name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '')." for a macro command after it was cleaned.\n", "eventMacro", 3;
+			debug "[eventMacro] Rechecking macro '".$self->{name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '')." for a macro command after it was cleaned.\n", "eventMacro", 3;
 			debug "[eventMacro] New cleaned script '".$self->{current_line}."'.\n", "eventMacro", 3;
 			$check_need = 1;
 		}
@@ -963,7 +963,7 @@ sub next {
 	return "" if ($self->{finished});
 	
 	#Some debug messages
-	debug "[eventMacro] Executing macro '".$self->{Name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '').".\n", "eventMacro", 2;
+	debug "[eventMacro] Executing macro '".$self->{name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '').".\n", "eventMacro", 2;
 	debug "[eventMacro] ".(defined $self->subline_index ? "Subline" : 'Line')." script '".$self->{current_line}."'.\n", "eventMacro", 2;
 		
 	##########################################
@@ -1180,7 +1180,7 @@ sub parse_set {
 
 sub stop_command {
 	my ($self) = @_;
-	debug "[eventMacro] Stopping macro '".$self->{Name}."' because of stop command in macro script.\n", "eventMacro", 2;
+	debug "[eventMacro] Stopping macro '".$self->{name}."' because of stop command in macro script.\n", "eventMacro", 2;
 	$self->{finished} = 1;
 }
 
