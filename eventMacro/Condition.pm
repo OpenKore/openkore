@@ -9,7 +9,7 @@ sub new {
 	my ($class, $condition_code) = @_;
 	my $self = bless {}, $class;
 	
-	$self->{Name} = ($class =~ /([^:]+)$/)[0];
+	$self->{name} = ($class =~ /([^:]+)$/)[0];
 	$self->{variables} = [];
 
 	$self->{hooks} = [ @{ $self->_hooks } ];
@@ -31,7 +31,7 @@ sub get_variables {
 
 sub get_name {
 	my ($self) = @_;
-	return $self->{Name};
+	return $self->{name};
 }
 
 sub is_unique_condition {

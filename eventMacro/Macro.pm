@@ -6,7 +6,7 @@ sub new {
 	my ($class, $name, $lines) = @_;
 	my $self = bless {}, $class;
 	
-	$self->{Name} = $name;
+	$self->{name} = $name;
 	$self->{Lines} = $lines;
 	
 	return $self;
@@ -19,7 +19,7 @@ sub get_lines {
 
 sub get_name {
 	my ($self) = @_;
-	return $self->{Name};
+	return $self->{name};
 }
 
 1;
