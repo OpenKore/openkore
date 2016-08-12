@@ -129,7 +129,7 @@ charBlockSize 144
 [International - iRO: Loki Classic]
 # http://playragnarok.com
 title International - iRO: Classic.Loki
-ip 128.241.92.163
+ip 128.241.92.203
 port 6900
 master_version 1
 version 18
