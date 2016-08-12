@@ -77129,11 +77129,6 @@ Absorb 1% of damage dealt to enemy into SP with 1% chance.
 ^ffffff<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
 Weight : ^77777710^000000
 #
-22905#
-A box that contains enchantment stones for costume equipment. Opening this will give you one of the following enchantment stones:
-HP absorption Stone(Garment), SP absorption Stone(Garment) and other stones from Costume Enchantment Stone Box5
-Weight : ^7777771^000000
-#
 25000#
 A stone with SP absorption ability.
 Gives below stats on Costume upper slot.
@@ -77373,4 +77368,91 @@ Adds the chance of gaining a certain amount of Zeny each time a monster is kille
 Created to celebrate the launch of Ragnarok Clicker! http://goo.gl/gmmiZI
 
 Give one Costume:Show Me The Zeny when opened!
+#
+
+
+20113#
+^808080.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+17373#
+When Opened Gives one of the following
+5cnt Battle Manual x 3
+5cnt HE Bubble Gum
+4cnt Bloody Dead Branch
+100cnt Magic Power Scroll
+30cnt Mental Potion
+Costume Iron Cain
+Costume Over Protector
+Costume Star Reading Hat
+Costume Red Under Rim Glasses
+Heroic Backpack
+#
+
+17374#
+Always Contains 1 Safe to 10 Certification.
+
+Contains 5 2016 August Lucky Boxes which when opened Gives one of the following
+5cnt Battle Manual x 3
+5cnt HE Bubble Gum
+4cnt Bloody Dead Branch
+100cnt Magic Power Scroll
+30cnt Mental Potion
+Costume Iron Cain
+Costume Over Protector
+Costume Star Reading Hat
+Costume Red Under Rim Glasses
+Heroic Backpack
+#
+
+
+22905#
+A box that contains enchantment stones for costume equipment. Opening this will give you one of the following enchantment stones:
+STR_Stone(slot_1)
+INT_Stone(slot_1)
+AGI_Stone(slot_1)
+DEX_Stone(slot_1)
+VIT_Stone(slot_1)
+LUK_Stone(slot_1)
+ATK_Stone(slot_2)
+MATK_Stone(slot_2)
+HIT_Stone(slot_3)
+FLEE_Stone(slot_3)
+Recovery_Stone(slot_1)
+Recovery_Skill_Stone(slot_1)
+Recovery_Stone(slot_2)
+HP+1%_Stone(slot_2)
+SP_Stone(slot_2)
+Recovery_Stone(slot_3)
+Bing_Stone(slot_1)
+Medium_Stone(slot_1)
+Small_Stone(slot_1)
+ASPD_Stone(Garment)
+ATK_Stone(Upper)
+MATK_Stone(Upper)
+STR_Stone(Middle)
+INT_Stone(Middle)
+AGI_Stone(Middle)
+DEX_Stone(Middle)
+VIT_Stone(Middle)
+LUK_Stone(Middle)
+HP_Stone(Lower)
+HP_Absorption_Stone(Garment)
+SP_Absorption_Stone(Garment)
+Weight : ^7777771^000000
+#
+
+19528#
+Specialized face armor
+that protects the jaw
+and teeth in battle.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Lower^000000
+Weight : ^77777730^000000
 #
