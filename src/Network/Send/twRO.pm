@@ -36,55 +36,55 @@ sub new {
  
 	#Getting new patch
 	my %shuffle = (
-		'091B' => '0089', #['actor_action', 'a4 C', [qw(targetID type)]], 
-		'0898' => '0113', #['skill_use', 'v2 a4', [qw(lv skillID targetID)]], 
-		'085D' => '0085', #['character_move', 'a3', [qw(coords)]], 
-		'0838' => '007E', #['sync', 'V', [qw(time)]], 
-		'0863' => '009B', #['actor_look_at', 'v C', [qw(head body)]], 
-		'0362' => '009F', #['item_take', 'a4', [qw(ID)]], 
-		'0363' => '00A2', #['item_drop', 'v2', [qw(index amount)]], 
-		'0889' => '00F3', #['storage_item_add', 'v V', [qw(index amount)]], 
-		'08A8' => '00F5', #['storage_item_remove', 'v V', [qw(index amount)]], 
-		'0938' => '0116', #['skill_use_location', 'v4', [qw(lv skillID x y)]], 
-		'08A2' => '0094', #['actor_info_request', 'a4', [qw(ID)]], 
-		'08A5' => '0193', #['actor_name_request', 'a4', [qw(ID)]], 
-		'092B' => '0819', #['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], 
-		'0365' => '0817', #['buy_bulk_request', 'a4', [qw(ID)]], 
-		'0948' => '0815', #['buy_bulk_closeShop'], 
-		'0870' => '0811', #['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], 
-		'0281' => '0802', #['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]], 
-		'0956' => '0072', #['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]], 
-		'0930' => '02C4', #['party_join_request_by_name', 'Z24', [qw(partyName)]], 
-		'08A6' => '0202', #['friend_request', 'a*', [qw(username)]], 
-		'0964' => '022D', #['homunculus_command', 'v C', [qw(commandType, commandID)]], 
-		'0940' => '023B', #['storage_password'], 
+		'085C' => '0089', #['actor_action', 'a4 C', [qw(targetID type)]], 
+		'0817' => '0113', #['skill_use', 'v2 a4', [qw(lv skillID targetID)]], 
+		'0887' => '0085', #['character_move', 'a3', [qw(coords)]], 
+		'08A0' => '007E', #['sync', 'V', [qw(time)]], 
+		'095E' => '009B', #['actor_look_at', 'v C', [qw(head body)]], 
+		'088B' => '009F', #['item_take', 'a4', [qw(ID)]], 
+		'0897' => '00A2', #['item_drop', 'v2', [qw(index amount)]], 
+		'08A7' => '00F3', #['storage_item_add', 'v V', [qw(index amount)]], 
+		'095C' => '00F5', #['storage_item_remove', 'v V', [qw(index amount)]], 
+		'0919' => '0116', #['skill_use_location', 'v4', [qw(lv skillID x y)]], 
+		'0926' => '0094', #['actor_info_request', 'a4', [qw(ID)]], 
+		'0864' => '0193', #['actor_name_request', 'a4', [qw(ID)]], 
+		'0871' => '0819', #['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], 
+		'0881' => '0817', #['buy_bulk_request', 'a4', [qw(ID)]], 
+		'088E' => '0815', #['buy_bulk_closeShop'], 
+		'0925' => '0811', #['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], 
+		'0880' => '0802', #['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]], 
+		'08AB' => '0072', #['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]], 
+		'091B' => '02C4', #['party_join_request_by_name', 'Z24', [qw(partyName)]], 
+		'095F' => '0202', #['friend_request', 'a*', [qw(username)]], 
+		'0A5A' => '022D', #['homunculus_command', 'v C', [qw(commandType, commandID)]], 
+		'092D' => '023B', #['storage_password'], 
 	); 
 	$self->{packet_list}{$_} = $self->{packet_list}{$shuffle{$_}} for keys %shuffle; 
 	 
 	 #Getting new patch
 	my %handlers = qw( 
-		actor_action 091B
-		skill_use 0898
-		character_move 085D
-		sync 0838
-		actor_look_at 0863
-		item_take 0362
-		item_drop 0363
-		storage_item_add 0889
-		storage_item_remove 08A8
-		skill_use_location 0938
-		actor_info_request 08A2
-		actor_name_request 08A5
-		buy_bulk_buyer 092B
-		buy_bulk_request 0365
-		buy_bulk_closeShop 0948
-		buy_bulk_openShop 0870
-		booking_register 0281
-		map_login 0956
-		party_join_request_by_name 0930
-		friend_request 08A6
-		homunculus_command 0964
-		storage_password 0940
+		actor_action 085C
+		skill_use 0817
+		character_move 0887
+		sync 08A0
+		actor_look_at 095E
+		item_take 088B
+		item_drop 0897
+		storage_item_add 08A7
+		storage_item_remove 095C
+		skill_use_location 0919
+		actor_info_request 0926
+		actor_name_request 0864
+		buy_bulk_buyer 0871
+		buy_bulk_request 0881
+		buy_bulk_closeShop 088E
+		buy_bulk_openShop 0925
+		booking_register 0880
+		map_login 08AB
+		party_join_request_by_name 091B
+		friend_request 095F
+		homunculus_command 0A5A
+		storage_password 092D
 		
 		party_setting 07D7
 		buy_bulk_vender 0801
@@ -93,7 +93,7 @@ sub new {
 	); 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers; 
  
-	$self->cryptKeys(0x78AE74D7, 0x02C200E5, 0x723B36E8);
+	$self->cryptKeys(0x7FC31494, 0x48027E59, 0x523D3C37);
  
 	return $self; 
 } 
