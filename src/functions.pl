@@ -273,6 +273,8 @@ sub loadDataFiles {
 	Settings::addTableFile('quests.txt', loader => [\&parseROQuestsLUT, \%quests_lut], mustExist => 0);
 	Settings::addTableFile('effects.txt', loader => [\&parseDataFile2, \%effectName], mustExist => 0);
 	Settings::addTableFile('msgstringtable.txt', loader => [\&parseArrayFile, \@msgTable, { hide_comments => 0 }], mustExist => 0);
+	Settings::addTableFile('hateffect_id_handle.txt', loader => [\&parseDataFile2, \%hatEffectHandle]);
+	Settings::addTableFile('hateffect_name.txt', loader => [\&parseDataFile2, \%hatEffectName], mustExist => 0);
 
 	use utf8;
 
