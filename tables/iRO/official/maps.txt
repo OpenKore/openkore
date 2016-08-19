@@ -924,3 +924,12 @@ verus04.rsw#Verus Findspot#
 verus03.rsw#Verus Center Square#
 
 1@mcd.rsw#Charlston Factory#
+
+// ep15.2 웇언붺뢶냭뢮쒫
+verus01.rsw#Lab-OPTATIO#
+verus02.rsw#R&D-WISH#
+un_bk_q.rsw#Under Bunker#
+un_bunker.rsw#Under Bunker#
+un_myst.rsw#Under Tunnel#
+1@uns.rsw#The Last Room#
+1@lab.rsw#Center Lab#
