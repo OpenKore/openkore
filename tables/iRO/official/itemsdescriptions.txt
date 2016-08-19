@@ -77456,3 +77456,576 @@ Defense : ^7777770^000000
 Location : ^777777Lower^000000
 Weight : ^77777730^000000
 #
+
+
+
+21015#
+^808080A two-handed sword emitting a red aura.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Two-Handed Sword
+Attack: 170
+Property: Neutral
+Weight: 170
+Weapon Level: 3
+Required Level: 1
+Required Job: Swordman Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+MATK + (Upgrade Level * Upgrade Level) / 2 up to a maximum Upgrade Level of 15.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+1498#
+^808080A two-handed spear emitting a red aura.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Two-Handed Spear
+Attack: 175
+Property: Neutral
+Weight: 175
+Weapon Level: 3
+Required Level: 1
+Required Job: Swordman Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+28106#
+^808080A two-handed axe emitting a red aura.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Two-Handed Axe
+Attack: 200
+Property: Neutral
+Weight: 200
+Weapon Level: 3
+Required Level: 1
+Required Job: Swordman Jobs, Merchant Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+This item is indestructible in battle.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+2025#
+^808080A two-handed staff emitting a red aura.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Two-Handed Staff
+Attack: 100
+Property: Neutral
+Weight: 100
+Weapon Level: 3
+Required Level: 1
+Required Job: Wizard Jobs, Soul Linker
+^FFFFFF_^000000
+INT + 5
+MATK + 150
+MATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+This item is indestructible in battle.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, MATK + 5.
+#
+28007#
+^808080A katar emitting a red aura.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Katar
+Attack: 130
+Property: Neutral
+Weight: 130
+Weapon Level: 3
+Required Level: 1
+Required Job: Assassin Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+13327#
+^808080A wind shuriken emitting a red aura.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Huuma
+Attack: 100
+Property: Neutral
+Weight: 100
+Weapon Level: 3
+Required Level: 1
+Required Job: Ninja Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+MATK + (Upgrade Level * Upgrade Level) / 2 up to a maximum Upgrade Level of 15.
+This item is indestructible in battle.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+18130#
+^808080A bow emitting a red aura.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Bow
+Attack: 130
+Property: Neutral
+Weight: 130
+Weapon Level: 3
+Required Level: 1
+Required Job: Thief, Rogue Jobs, Archer Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+13127#
+^808080A pistol emitting a red aura.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Pistol
+Attack: 100
+Property: Neutral
+Weight: 100
+Weapon Level: 3
+Required Level: 1
+Required Job: Gunslinger Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+28705#
+^808080A dagger with a reddish radiance.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Dagger
+Attack: 55
+Property: Neutral
+Weight: 55
+Weapon Level: 3
+Required Level: 1
+Required Job: Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+MATK + (Upgrade Level * Upgrade Level) / 2 up to a maximum Upgrade Level of 15.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+13454#
+^808080A one-handed sword with a reddish radiance.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Sword
+Attack: 85
+Property: Neutral
+Weight: 85
+Weapon Level: 3
+Required Level: 1
+Required Job: Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+1443#
+^808080A one-handed spear with a reddish radiance.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Sword
+Attack: 90
+Property: Neutral
+Weight: 90
+Weapon Level: 3
+Required Level: 1
+Required Job: Swordman Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+16040#
+^808080A mace with a reddish radiance.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Mace
+Attack: 80
+Property: Neutral
+Weight: 80
+Weapon Level: 3
+Required Level: 1
+Required Job: Novice Jobs, Swordman Jobs, Merchant Jobs, Acolyte Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+This item is indestructible in battle.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+1680#
+^808080A one-handed staff with a reddish radiance.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 60
+Property: Neutral
+Weight: 60
+Weapon Level: 3
+Required Level: 1
+Required Job: Novice Jobs, Acolyte Jobs, Mage Jobs, Soul Linker
+^FFFFFF_^000000
+INT + 4
+MATK + 70
+MATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+This item is indestructible in battle.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, MATK + 5.
+#
+1839#
+^808080A knuckle with a reddish radiance.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Knuckle
+Attack: 100
+Property: Neutral
+Weight: 100
+Weapon Level: 3
+Required Level: 1
+Required Job: Priest Jobs, Monk Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+1939#
+^808080An instrument with a reddish radiance.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Instrument
+Attack: 80
+Property: Neutral
+Weight: 80
+Weapon Level: 3
+Required Level: 1
+Required Job: Bard Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+1995#
+^808080A whip with a reddish radiance.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Whip
+Attack: 80
+Property: Neutral
+Weight: 80
+Weapon Level: 3
+Required Level: 1
+Required Job: Dancer Jobs
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+28604#
+^808080A book with a reddish radiance.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Book
+Attack: 45
+Property: Neutral
+Weight: 45
+Weapon Level: 3
+Required Level: 1
+Required Job: Priest Jobs, Sage Jobs, Taekwon Master
+^FFFFFF_^000000
+ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
+MATK + (Upgrade Level * Upgrade Level) / 2 up to a maximum Upgrade Level of 15.
+^FFFFFF_^000000
+If the user's base level is 70 or higher,
+For every 10 base levels, ATK + 5.
+#
+18997#
+^808080It feels like being controlled by an unknown machine.^000000
+^FFFFFF_^000000
+Type: Headgear
+Position: Upper
+Defense: 0
+Weight: 30
+Required Level: 100
+Required Job: All Jobs
+^FFFFFF_^000000
+Max SP - 50%
+HIT + 50
+FLEE + 50
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Broken Chip 1 [1]^000000
+^008080Broken Chip 2 [1]^000000
+^008080Riot Chip [1]^000000
+ATK + 50
+MATK + 50
+Movement Speed + 40%
+^FFFFFF_^000000
+If ^008080Riot Chip [1]^000000 upgrade level is +9 or higher,
+Max HP + 10%
+Max SP + 50%
+#
+28326#
+^808080It seems to have been broken in half during the uproar.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 10
+Required Level: 100
+Required Job: All Jobs
+^FFFFFF_^000000
+STR + 4
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Broken Chip 1 [1]^000000
+^008080Broken Chip 2 [1]^000000
+STR + 8
+INT + 8
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Broken Chip 1 [1]^000000
+^008080Broken Chip 2 [1]^000000
+^008080Riot Chip [1]^000000
+ATK + 50
+MATK + 50
+Movement Speed + 40%
+^FFFFFF_^000000
+If ^008080Riot Chip [1]^000000 upgrade level is +9 or higher,
+Max HP + 10%
+Max SP + 50%
+#
+28327#
+^808080It seems to have been broken in half during the uproar.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 10
+Required Level: 100
+Required Job: All Jobs
+^FFFFFF_^000000
+INT + 4
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Broken Chip 1 [1]^000000
+^008080Broken Chip 2 [1]^000000
+STR + 8
+INT + 8
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Broken Chip 1 [1]^000000
+^008080Broken Chip 2 [1]^000000
+^008080Riot Chip [1]^000000
+ATK + 50
+MATK + 50
+Movement Speed + 40%
+^FFFFFF_^000000
+If ^008080Riot Chip [1]^000000 upgrade level is +9 or higher,
+Max HP + 10%
+Max SP + 50%
+#
+6963#
+^808080A stone with HP absorption ability.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Garment
+^FFFFFF_^000000
+Adds a 1% chance of restoring 1% of damage as HP when performing a physical attack.
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+6964#
+^808080A stone with SP absorption ability.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Garment
+^FFFFFF_^000000
+Adds a 1% chance of restoring 1% of damage as SP when performing a physical attack.
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+22905#
+^808080A box that contains enchantment stones for costume equipment.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Box
+Weight: 1
+^FFFFFF_^000000
+This box contains one of the following at random:
+^008080ATK Stone (Upper)^000000 x1
+^008080MATK Stone (Upper)^000000 x1
+^008080STR Stone (Middle)^000000 x1
+^008080INT Stone (Middle)^000000 x1
+^008080AGI Stone (Middle)^000000 x1
+^008080DEX Stone (Middle)^000000 x1
+^008080VIT Stone (Middle)^000000 x1
+^008080LUK Stone (Middle)^000000 x1
+^008080HP Stone (Lower)^000000 x1
+^008080HP Absorption Stone (Garment)^000000 x1
+^008080SP Absorption Stone (Garment)^000000 x1
+^008080SP Absorption Stone (Upper)^000000 x1
+#
+25000#
+^808080A stone with SP absorption ability.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Headgear (Upper)
+^FFFFFF_^000000
+Adds a 1% chance of restoring 1% of damage as SP when performing a physical attack.
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+6943#
+^808080A stone with physical attack power.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Headgear (Upper)
+^FFFFFF_^000000
+ATK + 1%
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+6944#
+^808080A stone with magical attack power.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Headgear (Upper)
+^FFFFFF_^000000
+MATK + 1%
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+6945#
+^808080A stone with strength.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Headgear (Middle)
+^FFFFFF_^000000
+STR + 1
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+6946#
+^808080A stone with intelligence.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Headgear (Middle)
+^FFFFFF_^000000
+INT + 1
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+6947#
+^808080A stone with agility.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Headgear (Middle)
+^FFFFFF_^000000
+AGI + 1
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+6948#
+^808080A stone with dexterity.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Headgear (Middle)
+^FFFFFF_^000000
+DEX + 1
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+6949#
+^808080A stone with vitality.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Headgear (Middle)
+^FFFFFF_^000000
+VIT + 1
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+6950#
+^808080A stone with luck.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Headgear (Middle)
+^FFFFFF_^000000
+LUK + 1
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+6945#
+^808080A stone with health.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Headgear (Lower)
+^FFFFFF_^000000
+Max HP + 1%
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+22868#
+^808080A box that contains enchantment stones for costume equipment.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Box
+Weight: 1
+^FFFFFF_^000000
+This box contains one of the following at random:
+^008080ATK Stone (Upper)^000000 x1
+^008080MATK Stone (Upper)^000000 x1
+^008080STR Stone (Middle)^000000 x1
+^008080INT Stone (Middle)^000000 x1
+^008080AGI Stone (Middle)^000000 x1
+^008080DEX Stone (Middle)^000000 x1
+^008080VIT Stone (Middle)^000000 x1
+^008080LUK Stone (Middle)^000000 x1
+^008080HP Stone (Lower)^000000 x1
+^008080SP Absorption Stone (Upper)^000000 x1
+#
