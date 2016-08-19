@@ -127,7 +127,7 @@ my $extracted = eval { YAML::Syck::LoadFile( "$opt->{download_dir}/extracted_fil
 my $extract_dir = "$opt->{download_dir}/extracted_files";
 mkdir $extract_dir if !-d $extract_dir;
 foreach ( sort keys %$latest ) {
-    next if !/\.txt$/;
+    next if !/\.(txt|lua)$/;
 
     my ( $base ) = m{([^/\\]+)$};
     next if $extracted->{$_} && $latest->{$_} eq $extracted->{$_} && -f "$extract_dir/$base";
@@ -139,7 +139,21 @@ foreach ( sort keys %$latest ) {
 
     $extracted->{$_} = $latest->{$_};
 }
+# The hat effect data source file is only in the kRO grf file. Grab a copy from github.
+my $hat_url = 'https://raw.githubusercontent.com/ROClientSide/kRO-RAW-Mains/master/data/luafiles514/lua%20files/hateffectinfo/hateffectinfo.lua';
+my $hat_data = $ua->get( $hat_url );
+if ( $hat_data && $hat_data->is_success && $hat_data->content ) {
+	open FP, '>', "$extract_dir/hateffectinfo.lua";
+	print FP $hat_data->content;
+	close FP;
+	$extracted->{'data\luafiles514\lua files\hateffectinfo\hateffectinfo.lua'} = $hat_url;
+}
 YAML::Syck::DumpFile( "$opt->{download_dir}/extracted_files.yml", $extracted );
+
+# Convert the hat effect data into the files we need for OpenKore.
+if ( -f "$extract_dir/hateffectinfo.lua" ) {
+	convert_hat_effect_file( "$extract_dir/hateffectinfo.lua", "$extract_dir/hateffect_id_handle.txt", "$extract_dir/hateffect_name.txt" );
+}
 
 # Copy the files into the git directory.
 my $map = {
@@ -150,10 +164,42 @@ my $map = {
     'quests.txt'                     => 'quests.txt',
     'resnametable.txt'               => 'resnametable.txt',
     'skillnametable.txt'             => 'skillnametable.txt',
+    'hateffect_id_handle.txt'        => '../../hateffect_id_handle.txt',
+    'hateffect_name.txt'             => '../../hateffect_name.txt',
 };
 foreach ( sort keys %$map ) {
     printf "Copying [%s] to [%s].\n", $_, $map->{$_};
     File::Copy::cp "$extract_dir/$_" => "$opt->{git_dir}/$map->{$_}";
+}
+
+sub convert_hat_effect_file {
+	my ( $lua_file, $id_file, $name_file ) = @_;
+
+	return if !open FP, '<', $lua_file;
+	local $/;
+	binmode FP;
+	my $data = <FP>;
+	close FP;
+
+	# Parse out the ids.
+	my ( $enum_block ) = $data =~ /HatEFID = \{(.*?)\}/os;
+	return if !$enum_block;
+	my $ids = {};
+	$ids->{$1} = $2 while $enum_block =~ /(\w+)\s*=\s*(\d+)/g;
+
+    # Write the hat effect id file.
+	open FP, '>', $id_file;
+	print FP "$ids->{$_} $_\n" foreach sort { $ids->{$a} <=> $ids->{$b} } keys %$ids;
+	close FP;
+
+    # Also write a default name file, which is just the effect id without HAT_EF.
+	open FP, '>', $name_file;
+	foreach ( sort { $ids->{$a} <=> $ids->{$b} } keys %$ids ) {
+	    my $name = $_;
+	    $name =~ s/HAT_EF_//os;
+	    print FP "$_ $name\n";
+	}
+	close FP;
 }
 
 sub patch_allowed {
