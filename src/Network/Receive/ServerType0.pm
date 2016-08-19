@@ -557,6 +557,14 @@ sub new {
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CD' => ['message_string', 'v V', [qw(msg_id para1)]], #8
 		'09CF' => ['gameguard_request'],
+		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
+		'0A0A' => ['storage_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
+		'0A0B' => ['cart_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
+		'0A0C' => ['inventory_item_added', 'v3 C3 a8 V C2 a4 v a25', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
+		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0A2D' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
 		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
@@ -594,6 +602,11 @@ sub new {
 				len => 31,
 				types => 'v2 C V2 C a8 l v2 C',
 				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+			},
+			type7 => {
+				len => 57,
+				types => 'v2 C V2 C a8 l v2 C a25 C',
+				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
 			},
 		},
 		items_stackable => {
@@ -964,6 +977,12 @@ sub items_nonstackable {
 		|| $args->{switch} eq '0997' # other player
 	) {
 		return $items->{type6};
+	} elsif ($args->{switch} eq '0A0D' # inventory
+		|| $args->{switch} eq '0A0F' # cart
+		|| $args->{switch} eq '0A10' # storage
+		|| $args->{switch} eq '0A2D' # other player
+	) {
+		return $items->{type7};
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
