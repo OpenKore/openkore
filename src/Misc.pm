@@ -1900,6 +1900,17 @@ sub itemName {
 		} sort { cardName($a) cmp cardName($b) } keys %cards);
 	}
 
+	my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_;{ type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
+	foreach ( @options ) {
+		if ( $_->{type} == 175 ) {
+			# Neutral element.
+		} elsif ( $_->{type} >= 176 && $_->{type} <= 184 ) {
+			$suffix = join ':', sort $elements_lut{ $_->{type} - 175 }, split ':', $suffix;
+		} else {
+			$suffix = join ':', sort "Option($_->{type},$_->{value},$_->{param})", split ':', $suffix;
+		}
+	}
+
 	my $numSlots = $itemSlotCount_lut{$item->{nameID}} if ($prefix eq "");
 
 	my $display = "";

@@ -1467,6 +1467,7 @@ sub cart_item_added {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{type} = $args->{type} if (exists $args->{type});
 		$item->{name} = itemName($item);
 	}
@@ -1883,6 +1884,7 @@ sub deal_add_other {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{name} = itemName($item);
 		message TF("%s added Item to Deal: %s x %s\n", $currentDeal{name}, $item->{name}, $args->{amount}), "deal";
 	} elsif ($args->{amount} > 0) {
@@ -2860,6 +2862,7 @@ sub inventory_item_added {
 			} elsif ($args->{switch} eq '02D4') {
 				$item->{expire} = $args->{expire} if (exists $args->{expire}); #a4 or V1 unpacking?
 			}
+			$item->{options} = $args->{options};
 			$item->{name} = itemName($item);
 			$char->inventory->add($item);
 		} else {
@@ -5736,6 +5739,7 @@ sub storage_item_added {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{name} = itemName($item);
 		$item->{binID} = binFind(\@storageID, $index);
 	}
