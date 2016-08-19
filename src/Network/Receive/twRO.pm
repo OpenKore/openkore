@@ -33,7 +33,6 @@ sub new {
 		'082D' => ['received_characters_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
-		'0A3B' => ['misc_effect', 'v a4 C v', [qw(len ID flag effect)]],
 	);
 
 	foreach my $switch (keys %packets) {
