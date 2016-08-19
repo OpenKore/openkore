@@ -77468,7 +77468,7 @@ Attack: 170
 Property: Neutral
 Weight: 170
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Swordman Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77486,7 +77486,7 @@ Attack: 175
 Property: Neutral
 Weight: 175
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Swordman Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77503,7 +77503,7 @@ Attack: 200
 Property: Neutral
 Weight: 200
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Swordman Jobs, Merchant Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77521,7 +77521,7 @@ Attack: 100
 Property: Neutral
 Weight: 100
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Wizard Jobs, Soul Linker
 ^FFFFFF_^000000
 INT + 5
@@ -77541,7 +77541,7 @@ Attack: 130
 Property: Neutral
 Weight: 130
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Assassin Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77558,7 +77558,7 @@ Attack: 100
 Property: Neutral
 Weight: 100
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Ninja Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77577,7 +77577,7 @@ Attack: 130
 Property: Neutral
 Weight: 130
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Thief, Rogue Jobs, Archer Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77594,7 +77594,7 @@ Attack: 100
 Property: Neutral
 Weight: 100
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Gunslinger Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77611,7 +77611,7 @@ Attack: 55
 Property: Neutral
 Weight: 55
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77629,7 +77629,7 @@ Attack: 85
 Property: Neutral
 Weight: 85
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77646,7 +77646,7 @@ Attack: 90
 Property: Neutral
 Weight: 90
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Swordman Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77663,7 +77663,7 @@ Attack: 80
 Property: Neutral
 Weight: 80
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Novice Jobs, Swordman Jobs, Merchant Jobs, Acolyte Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77681,7 +77681,7 @@ Attack: 60
 Property: Neutral
 Weight: 60
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Novice Jobs, Acolyte Jobs, Mage Jobs, Soul Linker
 ^FFFFFF_^000000
 INT + 4
@@ -77701,7 +77701,7 @@ Attack: 100
 Property: Neutral
 Weight: 100
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Priest Jobs, Monk Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77718,7 +77718,7 @@ Attack: 80
 Property: Neutral
 Weight: 80
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Bard Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77735,7 +77735,7 @@ Attack: 80
 Property: Neutral
 Weight: 80
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Dancer Jobs
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
@@ -77752,7 +77752,7 @@ Attack: 45
 Property: Neutral
 Weight: 45
 Weapon Level: 3
-Required Level: 1
+Required Level: 70
 Required Job: Priest Jobs, Sage Jobs, Taekwon Master
 ^FFFFFF_^000000
 ATK + (Upgrade Level * Upgrade Level) up to a maximum Upgrade Level of 15.
