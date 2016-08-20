@@ -20,8 +20,10 @@ use base qw(Network::Receive::kRO::RagexeRE_2013_08_07a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+	
 	my %packets = (
 		'0A18' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
+		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
 	);
 
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
