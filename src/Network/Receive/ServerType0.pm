@@ -557,8 +557,15 @@ sub new {
 		'09BF' => ['storage_closed'],
 		'09CD' => ['message_string', 'v V', [qw(msg_id para1)]], #8
 		'09CF' => ['gameguard_request'],
+		'0A0A' => ['storage_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]],
+		'0A0B' => ['cart_item_added', 'v V v C x26 C2 a8', [qw(index amount nameID identified broken upgrade cards)]],
+		'0A0C' => ['inventory_item_added', 'v3 C3 a8 V C2 V v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire bindOnEquipType)]],#31
+		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
+		'0A3B' => ['misc_effect', 'v a4 C v', [qw(len ID flag effect)]],
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
@@ -595,6 +602,11 @@ sub new {
 				types => 'v2 C V2 C a8 l v2 C',
 				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
 			},
+			type7 => {
+				len => 57,
+				types => 'v2 C V2 C a8 l v2 C a25 C',
+				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options flag)],
+			},
 		},
 		items_stackable => {
 			type1 => {
@@ -620,7 +632,7 @@ sub new {
 			type6 => {
 				len => 24,
 				types => 'v2 C v V a8 l C',
-				keys => [qw(index nameID type amount type_equip cards expire identified)],
+				keys => [qw(index nameID type amount type_equip cards expire flag)],
 			},
 		},
 	};
@@ -958,6 +970,7 @@ sub items_nonstackable {
 		|| $args->{switch} eq '0906' # other player
 	) {
 		return $items->{type5};
+		
 	} elsif ($args->{switch} eq '0992' # inventory
 		|| $args->{switch} eq '0994' # cart
 		|| $args->{switch} eq '0996' # storage
@@ -966,6 +979,13 @@ sub items_nonstackable {
 		|| $args->{switch} eq '0997' # other player
 	) {
 		return $items->{type6};
+		
+	} elsif ($args->{switch} eq '0A0D' # inventory
+		|| $args->{switch} eq '0A0F' # cart
+		|| $args->{switch} eq '0A10'	# storage
+	) {
+		return $items->{type7};
+		
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -1000,7 +1020,7 @@ sub items_stackable {
 		|| $args->{switch} eq '0902' # cart
 	) {
 		return $items->{type5};
-
+		
 	} elsif ($args->{switch} eq '0991' # inventory
 		|| $args->{switch} eq '0993' # cart
 		|| $args->{switch} eq '0995' # storage
@@ -1008,6 +1028,7 @@ sub items_stackable {
 		|| $args->{switch} eq '0009' # guild storage
 	) {
 		return $items->{type6};
+		
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -1042,16 +1063,18 @@ sub parse_items_nonstackable {
 
 	$self->parse_items($args, $self->items_nonstackable($args), sub {
 		my ($item) = @_;
-
-		#$item->{placeEtcTab} = $item->{identified} & (1 << 2);
-
-		# Non stackable items now have no amount normally given in the
-		# packet, so we must assume one.  We'll even play it safe, and
-		# not change the amount if it's already a non-zero value.
 		$item->{amount} = 1 unless ($item->{amount});
-		$item->{broken} = $item->{identified} & (1 << 1) unless exists $item->{broken};
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
-	})
+		if ($item->{flag} == 0) {
+			$item->{broken} = $item->{identified} = 0;
+		} elsif ($item->{flag} == 1 || $item->{flag} == 5) {
+			$item->{broken} = 0;
+			$item->{identified} = 1;
+		} elsif ($item->{flag} == 3 || $item->{flag} == 7) {
+			$item->{broken} = $item->{identified} = 1;
+		} else {
+			message T ("Warning: unknown flag!\n");
+		}
+	});
 }
 
 sub parse_items_stackable {
@@ -1059,10 +1082,16 @@ sub parse_items_stackable {
 
 	$self->parse_items($args, $self->items_stackable($args), sub {
 		my ($item) = @_;
-
-		#$item->{placeEtcTab} = $item->{identified} & (1 << 1);
+		
 		$item->{idenfitied} = $item->{identified} & (1 << 0);
-	})
+		if ($item->{flag} == 0) {
+			$item->{identified} = 0;
+		} elsif ($item->{flag} == 1 || $item->{flag} == 3) {
+			$item->{identified} = 1;
+		} else {
+			message T ("Warning: unknown flag!\n");
+		}
+	});
 }
 
 sub _items_list {
@@ -1451,6 +1480,7 @@ sub cart_item_added {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{type} = $args->{type} if (exists $args->{type});
 		$item->{name} = itemName($item);
 	}
@@ -1867,6 +1897,7 @@ sub deal_add_other {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{name} = itemName($item);
 		message TF("%s added Item to Deal: %s x %s\n", $currentDeal{name}, $item->{name}, $args->{amount}), "deal";
 	} elsif ($args->{amount} > 0) {
@@ -2844,6 +2875,7 @@ sub inventory_item_added {
 			} elsif ($args->{switch} eq '02D4') {
 				$item->{expire} = $args->{expire} if (exists $args->{expire}); #a4 or V1 unpacking?
 			}
+			$item->{options} = $args->{options};
 			$item->{name} = itemName($item);
 			$char->inventory->add($item);
 		} else {
@@ -5711,6 +5743,7 @@ sub storage_item_added {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{name} = itemName($item);
 		$item->{binID} = binFind(\@storageID, $index);
 	}

@@ -1982,6 +1982,7 @@ sub sync_request_ex {
 	my $PacketID = $args->{switch};
 	
 	# Getting Sync Ex Reply ID from Table
+	
 	my $SyncID = $self->{sync_ex_reply}->{$PacketID};
 	
 	# Cleaning Leading Zeros

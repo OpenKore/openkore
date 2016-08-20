@@ -37,6 +37,14 @@ sub new {
 	$self->{packet_list}{$_} = $self->{packet_list}{$npShuffles{$_}{original}} for keys %npShuffles; #Shuffle handle header ID
 	$self->{packet_lut}{$npShuffles{$_}{function}} = $_ for keys %npShuffles; #Shuffle reconstruct ID
 	
+	my %handlers = qw( 
+		party_setting 07D7
+		buy_bulk_vender 0801
+		char_create 0970
+		send_equip 0998
+	); 
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers; 
+	
 	my %packets = ( 
 		'0064' => ['master_login', 'V Z24 a24 C', [qw(version username password_rijndael master_version)]], 
 	); 

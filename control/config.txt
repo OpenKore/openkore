@@ -1829,7 +1829,7 @@ partyAutoShareItemDiv 1
 guildAutoDeny 1
 # 是否自動拒絕受邀加入公會
 
-ignoreAll 0
+ignoreAll 1
 # 是否對所有人關閉密頻
 
 #════════════

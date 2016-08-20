@@ -454,23 +454,26 @@ sub parse_pre {
 	}->{$mode} or return;
 	my ($title, $config_suffix, $desc_key, $hook) = @$values;
 	
-	if ($config{'debugPacket_'.$config_suffix} && !existsInList($config{'debugPacket_exclude'}, $switch) ||
-		$config{'debugPacket_include_dumpMethod'} && existsInList($config{'debugPacket_include'}, $switch))
+	if ($config{'debugPacket_'.$config_suffix} && 
+	(!existsInList($config{'debugPacket_exclude'}, $switch) ||
+		existsInList($config{'debugPacket_include'}, $switch)))
 	{
 		#my $label = $packetDescriptions{$desc_key}{$switch} ? " - $packetDescriptions{$desc_key}{$switch}" : '';
 		my $label = $rpackets{$switch}{function}?" - ".$rpackets{$switch}{function}:($packetDescriptions{$desc_key}{$switch} ? " - $packetDescriptions{$desc_key}{$switch}" : '');
+		
 		if ($config{'debugPacket_'.$config_suffix} == 1) {
 			debug sprintf("%-24s %-4s%s [%2d bytes]%s\n", $title, $switch, $label, length($msg)), 'parseMsg', 0;
 		} elsif ($config{'debugPacket_'.$config_suffix} == 2) {
 			Misc::visualDump($msg, sprintf('%-24s %-4s%s', $title, $switch, $label));
 		}
+		
 		if ($config{debugPacket_include_dumpMethod} == 1) {
 			debug sprintf("%-24s %-4s%s\n", $title, $switch, $label), "parseMsg", 0;
 		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
 			Misc::visualDump($msg, sprintf('%-24s %-4s%s', $title, $switch, $label));
 		} elsif ($config{debugPacket_include_dumpMethod} == 3) {
 			Misc::dumpData($msg, 1);
-		} elsif ($config{debugPacket_include_dumpMethod} == 4) {
+		} elsif ($config{debugPacket_include_dumpMethod} == 4 && existsInList($config{'debugPacket_include'}, $switch)) {
 			open my $dump, '>>', 'DUMP_LINE.txt';
 			print $dump unpack('H*', $msg) . "\n";
 		} elsif ($config{debugPacket_include_dumpMethod} == 5) {

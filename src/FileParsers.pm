@@ -60,6 +60,7 @@ our @EXPORT = qw(
 	parseSectionedFile
 	parseShopControl
 	parseSkillsSPLUT
+	parseSync
 	parseTimeouts
 	parseWaypoint
 	processUltimate
@@ -402,6 +403,27 @@ sub parseList {
 		chomp($line);
 		$r_hash->{$line} = 1;
 	}
+	return 1;
+}
+
+sub parseSync {
+	my ($file, $r_hash) = @_;
+	
+	%{$r_hash} = ();
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		next if (length($line) == 0);
+		
+		my ($requestID,$replyID) = split /\s+/, $line, 2;
+		$requestID =~ s/^(0x[0-9a-f]+)$/hex $1/e;
+		$replyID =~ s/^(0x[0-9a-f]+)$/hex $1/e;
+		$r_hash->{$requestID} = $replyID;
+	}
+	close FILE;
+	
 	return 1;
 }
 

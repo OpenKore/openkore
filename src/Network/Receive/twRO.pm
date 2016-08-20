@@ -28,51 +28,26 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
-	my %npSync;
-	my $loadShuffles = Settings::addTableFile('sync.txt',loader => [\&parseSync,\%npSync], mustExist => 1);
+	my %npSync = {};
+	my $loadShuffles = Settings::addTableFile('sync.txt',loader => [\&FileParsers::parseDataFile2,\%npSync], mustExist => 1);
 	Settings::loadByHandle($loadShuffles);
 
 	$self->{packet_list}{$_} = ['sync_request_ex'] for keys %npSync; #Shuffle Sync
-	$self->{sync_ex_reply} = %npSync; #Shuffle Sync request-reply hash
+	$self->{sync_ex_reply} = {};
+	while (my ($key, $value) = each %npSync) {
+		$self->{sync_ex_reply}{$key} = $value;
+	}
+	#$self->{sync_ex_reply}{$_} = $npSync->{$_} && print $_ for keys %npSync; #Shuffle Sync request-reply hash
+	
 	
 	#new packets
-	my %packets = (
+	my %packets = ( #unique packets
 		'006D' => ['character_creation_successful', 'a4 V9 v V2 v14 Z24 C6 v2 Z*', [qw(charID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag mapname)]],
 		'0097' => ['private_message', 'v Z28 Z*', [qw(len privMsgUser privMsg)]],
 		'082D' => ['received_characters_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
-		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
-		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
-		'0A3B' => ['misc_effect', 'v a4 C v', [qw(len ID flag effect)]],
-		'0A0C' => ['inventory_item_added', 'v3 C3 a8 V C2 V v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire bindOnEquipType)]],#31
-		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
-		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
-		'0A0A' => ['storage_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]],
-		'0A0B' => ['cart_item_added', 'v V v C x26 C2 a8', [qw(index amount nameID identified broken upgrade cards)]],
-		'0993' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
-		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
-		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
-		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
-	#New item type6
-	$self->{nested} = {
-		items_nonstackable => { # EQUIPMENTITEM_EXTRAINFO
-			type6 => {
-				len => 57,
-				types => 'v2 C V2 C a8 l v2 x26 C',
-				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id flag)],
-			},
-		},
-		items_stackable => { # ITEMLIST_NORMAL_ITEM
-			type6 => {
-				len => 24,
-				types => 'v2 C v V a8 l C',
-				keys => [qw(index nameID type amount type_equip cards expire flag)],
-			},
-		},
-	};
-	
+
 	return $self;
 }
 
@@ -135,39 +110,10 @@ sub received_characters_info {
 	$timeout{charlogin}{time} = time;
 }
 
-sub items_nonstackable {
-	my ($self, $args) = @_;
-	my $items = $self->{nested}->{items_nonstackable};
-
-	if ($args->{switch} eq '0A0D' ||# inventory
-		$args->{switch} eq '0A0F' ||# cart
-		$args->{switch} eq '0A10'	# storage
-	) {
-		return $items->{type6} ;
-	}
-	#Exception
-	warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
-}
-
-sub items_stackable {
-	my ($self, $args) = @_;
-	my $items = $self->{nested}->{items_stackable};
-
-	if ($args->{switch} eq '0991' ||# inventory
-		$args->{switch} eq '0993' ||# cart
-		$args->{switch} eq '0995'	# storage
-	) {
-		return $items->{type6};
-	}
-	#Exception
-	warning "items_stackable: unsupported packet ($args->{switch})!\n";
-}
-
 sub parse_items_nonstackable {
 	my ($self, $args) = @_;
 	$self->parse_items($args, $self->items_nonstackable($args), sub {
 		my ($item) = @_;
-		
 		$item->{amount} = 1 unless ($item->{amount});
 		if ($item->{flag} == 0) {
 			$item->{broken} = $item->{identified} = 0;
@@ -198,25 +144,71 @@ sub parse_items_stackable {
 	});
 }
 
-sub parseSync {
-	my ($file, $r_hash) = @_;
-	
-	%{$r_hash} = ();
-	my $reader = new Utils::TextReader($file);
-	while (!$reader->eof()) {
-		my $line = $reader->readLine();
-		next if ($line =~ /^#/);
-		$line =~ s/[\r\n]//g;
-		next if (length($line) == 0);
-		
-		my ($requestID,$replyID) = split /\s+/, $line, 2;
-		$requestID =~ s/^(0x[0-9a-f]+)$/hex $1/e;
-		$replyID =~ s/^(0x[0-9a-f]+)$/hex $1/e;
-		$r_hash->{$requestID} = $replyID;
+sub vender_items_list {
+	my ($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $headerlen;
+
+	$headerlen = 12;
+
+	undef @venderItemList;
+	undef $venderID;
+	undef $venderCID;
+	$venderID = $args->{venderID};
+	$venderCID = $args->{venderCID} if exists $args->{venderCID};
+	my $player = Actor::get($venderID);
+
+	message TF("%s\n" .
+		"#   Name                                      Type        Amount          Price\n",
+		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), ($config{showDomain_Shop}?$config{showDomain_Shop}:"list");
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=47) {
+		my $item = {};
+		my $index;
+
+		($item->{price},
+		$item->{amount},
+		$index,
+		$item->{type},
+		$item->{nameID},
+		$item->{identified}, # should never happen
+		$item->{broken}, # should never happen
+		$item->{upgrade},
+		$item->{cards},
+		$item->{options})	= unpack('V v2 C v C3 a8 a25', substr($args->{RAW_MSG}, $i, 47));
+
+		$item->{name} = itemName($item);
+		$venderItemList[$index] = $item;
+
+		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
+
+		Plugins::callHook('packet_vender_store', {
+			venderID => $venderID,
+			number => $index,
+			name => $item->{name},
+			amount => $item->{amount},
+			price => $item->{price},
+			upgrade => $item->{upgrade},
+			cards => $item->{cards},
+			type => $item->{type},
+			id => $item->{nameID},
+			options => $item->{options}
+		});
+
+		message(swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
+			[$index, itemName($item), $itemTypes_lut{$item->{type}}, formatNumber($item->{amount}), formatNumber($item->{price})]),
+			($config{showDomain_Shop}?$config{showDomain_Shop}:"list"));
 	}
-	close FILE;
-	
-	return 1;
+	message("-------------------------------------------------------------------------------\n", ($config{showDomain_Shop}?$config{showDomain_Shop}:"list"));
+
+	Plugins::callHook('packet_vender_store2', {
+		venderID => $venderID,
+		itemList => \@venderItemList
+	});
 }
+
+
 
 1;
