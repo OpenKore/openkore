@@ -557,6 +557,7 @@ sub new {
 		'09BF' => ['storage_closed'],
 		'09CD' => ['message_string', 'v V', [qw(msg_id para1)]], #8
 		'09CF' => ['gameguard_request'],
+		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
 		'0A0A' => ['storage_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]],
 		'0A0B' => ['cart_item_added', 'v V v C x26 C2 a8', [qw(index amount nameID identified broken upgrade cards)]],
 		'0A0C' => ['inventory_item_added', 'v3 C3 a8 V C2 V v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire bindOnEquipType)]],#31
@@ -6421,7 +6422,7 @@ sub rates_info2 {
 	# get details
 	for (my $offset = 0; $offset < length($args->{detail}); $offset += 13) {
 		my ($type, $exp, $death, $drop) = unpack("C V3", substr($args->{detail}, $offset, 13));
-		$rates{exp}{$type} = $exp; $rates{death}{$type} = $death; $rates{drop}{$type} = $drop;
+		$rates{exp}{$type} = $exp/(100*10); $rates{death}{$type} = $death/(100*10); $rates{drop}{$type} = $drop/(100*10);
 	}
 
 	# we have 4 kinds of detail:

@@ -33,12 +33,7 @@ sub new {
 	Settings::loadByHandle($loadShuffles);
 
 	$self->{packet_list}{$_} = ['sync_request_ex'] for keys %npSync; #Shuffle Sync
-	$self->{sync_ex_reply} = {};
-	while (my ($key, $value) = each %npSync) {
-		$self->{sync_ex_reply}{$key} = $value;
-	}
-	#$self->{sync_ex_reply}{$_} = $npSync->{$_} && print $_ for keys %npSync; #Shuffle Sync request-reply hash
-	
+	$self->{sync_ex_reply}{$_} = $npSync{value} for keys %npSync; #Sync Reply
 	
 	#new packets
 	my %packets = ( #unique packets

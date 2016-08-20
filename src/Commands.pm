@@ -4841,11 +4841,11 @@ sub cmdTalk {
 		}
 		error TF("Error in function 'talk resp' (Respond to NPC)\n" .
 			"No match was found on responses with regex %s .\n", $regex);
-	} elsif ($arg1 eq "resp" && $arg2 ne "" && $talk{'responses'}[$arg2] eq "") {
+	} elsif (($arg1 eq "resp" || $arg1 eq "r") && $arg2 ne "" && $talk{'responses'}[$arg2] eq "") {
 		error TF("Error in function 'talk resp' (Respond to NPC)\n" .
 			"Response %s does not exist.\n", $arg2);
 
-	} elsif ($arg1 eq "resp" && $arg2 ne "") {
+	} elsif (($arg1 eq "resp" || $arg1 eq "r") && $arg2 ne "") {
 		if ($talk{'responses'}[$arg2] eq T("Cancel Chat")) {
 			$arg2 = 255;
 		} else {
@@ -4853,18 +4853,18 @@ sub cmdTalk {
 		}
 		$messageSender->sendTalkResponse($talk{'ID'}, $arg2);
 
-	} elsif ($arg1 eq "num" && $arg2 eq "") {
+	} elsif (($arg1 eq "num" || $arg1 eq "n") && $arg2 eq "") {
 		error T("Error in function 'talk num' (Respond to NPC)\n" .
 			"You must specify a number.\n");
 
-	} elsif ($arg1 eq "num" && !($arg2 =~ /^-?\d+$/)) {
+	} elsif (($arg1 eq "num" || $arg1 eq "n") && !($arg2 =~ /^-?\d+$/)) {
 		error TF("Error in function 'talk num' (Respond to NPC)\n" .
 			"%s is not a valid number.\n", $arg2);
 
-	} elsif ($arg1 eq "num" && $arg2 =~ /^-?\d+$/) {
+	} elsif (($arg1 eq "num" || $arg1 eq "n") && $arg2 =~ /^-?\d+$/) {
 		$messageSender->sendTalkNumber($talk{'ID'}, $arg2);
 
-	} elsif ($arg1 eq "text") {
+	} elsif ($arg1 eq "text" || $arg1 eq "t") {
 		if ($args eq "") {
 			error T("Error in function 'talk text' (Respond to NPC)\n" .
 				"You must specify a string.\n");
@@ -4872,11 +4872,11 @@ sub cmdTalk {
 			$messageSender->sendTalkText($talk{'ID'}, $args);
 		}
 
-	} elsif ($arg1 eq "cont" && !%talk) {
+	} elsif (($arg1 eq "cont" || $arg1 eq "c") && !%talk) {
 		error T("Error in function 'talk cont' (Continue Talking to NPC)\n" .
 			"You are not talking to any NPC.\n");
 
-	} elsif ($arg1 eq "cont") {
+	} elsif ($arg1 eq "cont" || $arg1 eq "c") {
 		$messageSender->sendTalkContinue($talk{'ID'});
 
 	} elsif ($arg1 eq "no") {
@@ -4884,9 +4884,13 @@ sub cmdTalk {
 			error T("You are not talking to any NPC.\n");
 		} elsif ($ai_v{npc_talk}{talk} eq 'select') {
 			$messageSender->sendTalkResponse($talk{ID}, 255);
+		} elsif ($ai_v{npc_talk}{talk} eq 'buy') {
+			$messageSender->sendSellComplete;
+			message TF("Sell canceled\n"), "npc";
 		} elsif (!$talk{canceled}) {
 			$messageSender->sendTalkCancel($talk{ID});
 			$talk{canceled} = 1;
+
 		}
 
 	} else {
