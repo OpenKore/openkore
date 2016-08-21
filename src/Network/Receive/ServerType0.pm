@@ -3081,7 +3081,10 @@ sub item_disappeared {
 
 	my $item = $itemsList->getByID($args->{ID});
 	if ($item) {
-		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($item->{name})) > 0 && $args->{ID} eq $ai_v{itemtakeid}) {
+		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($item->{name})) > 0 
+			&& (($args->{ID} eq $ai_v{itemtakeid} && $config{'itemsTakeAuto'} > 1)
+					|| ($args->{ID} eq $ai_v{itemgatherID} && $config{'itemsGatherAuto'} > 1) 
+					||  !AI::is("attack") || pickupitems(lc($item->{name})) > 1)) {
 			foreach my Actor::Monster $monster (@{$monstersList->getItems()}) { # attack looter code
 				if (my $control = mon_control($monster->name,$monster->{nameID})) {
 					next if ( ($control->{attack_auto}  ne "" && $control->{attack_auto} == -1)
@@ -3091,15 +3094,17 @@ sub item_disappeared {
 						|| ($control->{attack_sp}   ne "" && $control->{attack_sp} > $char->{sp})
 						);
 				}
-				if (distance($item->{pos}, $monster->{pos_to}) == 0) {
+				if (distance($item->{pos}, $monster->{pos_to}) == 0 && $ai_v{lastAttackLooter} ne $monster->{ID}) {
 					attack($monster->{ID});
 					message TF("Attack Looter: %s looted %s\n", $monster->nameIdx, $item->{name}), "looter";
-					delete $ai_v{itemtakeid};
+					delete $ai_v{itemtakeID};
+					delete $ai_v{itemgatherID};
+					$ai_v{lastAttackLooter} = $monster->{ID};
 					last;
 				}
 			}
 		}
-
+		
 		debug "Item Disappeared: $item->{name} ($item->{binID})\n", "parseMsg_presence";
 		my $ID = $args->{ID};
 		$items_old{$ID} = $item->deepCopy();
