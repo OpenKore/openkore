@@ -3081,7 +3081,7 @@ sub item_disappeared {
 
 	my $item = $itemsList->getByID($args->{ID});
 	if ($item) {
-		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($item->{name})) > 0) {
+		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($item->{name}) && $args->{ID} eq $ai_v{itemtakeid}) > 0) {
 			foreach my Actor::Monster $monster (@{$monstersList->getItems()}) { # attack looter code
 				if (my $control = mon_control($monster->name,$monster->{nameID})) {
 					next if ( ($control->{attack_auto}  ne "" && $control->{attack_auto} == -1)
@@ -3094,6 +3094,7 @@ sub item_disappeared {
 				if (distance($item->{pos}, $monster->{pos}) == 0) {
 					attack($monster->{ID});
 					message TF("Attack Looter: %s looted %s\n", $monster->nameIdx, $item->{name}), "looter";
+					delete $ai_v{itemtakeid};
 					last;
 				}
 			}
