@@ -38,6 +38,7 @@ partychat brown
 selfchat green
 schat yellow
 list white
+looter yellow
 info white
 equip grey
 teleport yellow
