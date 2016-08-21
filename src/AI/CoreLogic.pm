@@ -2853,7 +2853,7 @@ sub processItemsTake {
 			AI::args->{ai_items_take_end}{time} = time;
 			AI::args->{started} = 1;
 			AI::args->{ai_items_take_delay}{time} = time;
-			$ai_v{itemtakeid} = $foundID;
+			$ai_v{itemtakeID} = $foundID;
 			take($foundID);
 		} elsif (AI::args->{started} || timeOut(AI::args->{ai_items_take_end})) {
 			$timeout{'ai_attack_auto'}{'time'} = 0;
@@ -2881,7 +2881,7 @@ sub processItemsAutoGather {
 			if (!positionNearPlayer($items{$item}{pos}, 12) &&
 			    !positionNearPortal($items{$item}{pos}, 10)) {
 				message TF("Gathering: %s (%s)\n", $items{$item}{name}, $items{$item}{binID});
-				$ai_v{itemtakeid} = $item;
+				$ai_v{itemgatherID} = $item;
 				gather($item);
 				last;
 			}
