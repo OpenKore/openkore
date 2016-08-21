@@ -3091,7 +3091,7 @@ sub item_disappeared {
 						|| ($control->{attack_sp}   ne "" && $control->{attack_sp} > $char->{sp})
 						);
 				}
-				if (distance($item->{pos}, $monster->{pos}) == 0) {
+				if (distance($item->{pos}, $monster->{pos_to}) == 0) {
 					attack($monster->{ID});
 					message TF("Attack Looter: %s looted %s\n", $monster->nameIdx, $item->{name}), "looter";
 					delete $ai_v{itemtakeid};
