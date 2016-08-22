@@ -7034,7 +7034,7 @@
 19533#placeholder#
 19535#placeholder#
 19536#Costume:_Rose_Corsage#
-19541#placeholder#
+19541#Costume:_White_Romantic_Flower#
 19542#Costume:_Devil_Whisper#
 19544#Costume:_Tare_Neko_Cru#
 19566#Costume:_Samurai_Mask#
@@ -7143,7 +7143,7 @@
 19956#placeholder#
 19957#placeholder#
 19958#placeholder#
-19959#placeholder#
+19959#Costume:_Drooping_Argiope#
 19960#placeholder#
 19984#placeholder#
 19994#saLUsalo_Hat#
@@ -8684,3 +8684,8 @@
 1939#Crimson_Violin#
 1995#Crimson_Wire#
 28604#Crimson_Bible#
+20106#Costume:_Classic_Hat#
+20190#Costume:_Chicken_Hat#
+7772#String#
+7768#Squid#
+7769#Egg_Yolk#
