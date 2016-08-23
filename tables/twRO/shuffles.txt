@@ -1,24 +1,24 @@
-# Client Date <20160812>
+# Client Date <20160822>
 # PacketExtractor by BryanWai
-085C 0089 actor_action
-0817 0113 skill_use
-0887 0085 character_move
-08A0 007E sync
-095E 009B actor_look_at
-088B 009F item_take
-0897 00A2 item_drop
-08A7 00F3 storage_item_add
-095C 00F5 storage_item_remove
-0919 0116 skill_use_location
-0926 0094 actor_info_request
-0864 0193 actor_name_request
-0871 0819 buy_bulk_buyer
-0881 0817 buy_bulk_request
-088E 0815 buy_bulk_closeShop
-0925 0811 buy_bulk_openShop
-0880 0802 booking_register
-08AB 0072 map_login
-091B 02C4 party_join_request_by_name
-095F 0202 friend_request
-0A5A 022D homunculus_command
-092D 023B storage_password
+0817 0089 actor_action
+0889 0113 skill_use
+094B 0085 character_move
+0364 007E sync
+0877 009B actor_look_at
+0961 009F item_take
+08A8 00A2 item_drop
+0368 00F3 storage_item_add
+0959 00F5 storage_item_remove
+093D 0116 skill_use_location
+0892 0094 actor_info_request
+0885 0193 actor_name_request
+0940 0819 buy_bulk_buyer
+0896 0817 buy_bulk_request
+0862 0815 buy_bulk_closeShop
+0917 0811 buy_bulk_openShop
+0951 0802 booking_register
+0895 0072 map_login
+0934 02C4 party_join_request_by_name
+085D 0202 friend_request
+088E 022D homunculus_command
+0899 023B storage_password
