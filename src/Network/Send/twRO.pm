@@ -51,7 +51,7 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets; 
 	 
  
-	$self->cryptKeys(0x7FC31494, 0x48027E59, 0x523D3C37);
+	$self->cryptKeys(0x51A862E8, 0x2F880049, 0x636218A2);
  
 	return $self; 
 } 
