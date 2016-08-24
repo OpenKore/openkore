@@ -25,7 +25,7 @@ sub new {
 		'08AA' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'023B' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'093B' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'08AD' => ['actor_look_at', 'v C', [qw(head body)]],#5
+		'08AD' => ['actor_look_at', 'v C', [qw(head body)]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
