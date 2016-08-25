@@ -401,9 +401,9 @@ recvpackets recvpackets_sakray.txt
 addTableFolders twRO
 captcha 0
 
-## www.ragnarok.in.th/
-[Thailand - tRO Main server (Norse)]
-ip 122.155.11.240
+## ro.exe.in.th
+[Thailand - tRO Main server (EXE)]
+ip 103.55.55.12
 port 6900
 master_version 7
 version 24
@@ -411,45 +411,13 @@ serverType tRO
 secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
+patchserver cdn.exe.in.th
+patchpath /ragnarok/patchfile/
 serverEncoding Thai
 addTableFolders tRO
-charBlockSize 112
+charBlockSize 144
 gameguard 1
-
-[Thailand - tRO Free life server (Alice(new), Poring)]
-ip 122.155.11.242
-port 6900
-master_version 7
-version 24
-serverType tRO
-secureLogin 3
-secureLogin_type 0
-secureLogin_account 0
-pauseCharServer 1
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
-addTableFolders tRO
-charBlockSize 112
-gameguard 1
-
-[Thailand - tRO Free life server (Yoyo, Picky)]
-ip 122.155.11.241
-port 6900
-master_version 7
-version 24
-serverType tRO
-secureLogin 3
-secureLogin_type 0
-secureLogin_account 0
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
-addTableFolders tRO
-charBlockSize 112
-gameguard 1
+pinCode 1
 
 ## http://ro.kunlun.com/
 [cRO - China]
