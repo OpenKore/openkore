@@ -9,8 +9,6 @@
 #  also distribute the source code. 
 #  See http://www.gnu.org/licenses/gpl.html for the full license. 
 ######################################################################### 
-# tRO (Thai) for 2008-09-16Ragexe12_Th 
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType 
 package Network::Send::twRO; 
  
 use strict; 
@@ -33,9 +31,17 @@ sub new {
 	my %npShuffles;
 	my $loadShuffles = Settings::addTableFile('shuffles.txt',loader => [\&parseShuffles,\%npShuffles], mustExist => 1);
 	Settings::loadByHandle($loadShuffles);
+	
+	# Keys
+	my @npKeys;
+	my $loadKeys = Settings::addTableFile('keys.txt',loader => [\&parseKeys,\@npKeys], mustExist => 1);
+	Settings::loadByHandle($loadKeys);
 
 	$self->{packet_list}{$_} = $self->{packet_list}{$npShuffles{$_}{original}} for keys %npShuffles; #Shuffle handle header ID
 	$self->{packet_lut}{$npShuffles{$_}{function}} = $_ for keys %npShuffles; #Shuffle reconstruct ID
+
+	$self->cryptKeys($npKeys[0], $npKeys[1], $npKeys[2]);
+	
 	
 	my %handlers = qw( 
 		party_setting 07D7
@@ -51,7 +57,7 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets; 
 	 
  
-	$self->cryptKeys(0x51A862E8, 0x2F880049, 0x636218A2);
+	
  
 	return $self; 
 } 
@@ -134,6 +140,23 @@ sub parseShuffles {
 	}
 	close FILE;
 	
+	return 1;
+}
+
+sub parseKeys {
+	my ($file, $keys) = @_;
+	
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		next if (length($line) == 0);
+
+		push @$keys, hex($line);
+	}
+	close FILE;
+
 	return 1;
 }
  

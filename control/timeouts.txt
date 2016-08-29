@@ -144,7 +144,7 @@ NProtect_relog_delay 5
 
 
 # Don't change the following timeouts!
-ai_sync 12
+ai_sync 30
 
 injectSync 5
 injectKeepAlive 12

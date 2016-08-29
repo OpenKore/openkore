@@ -204,6 +204,36 @@ sub vender_items_list {
 	});
 }
 
+sub vending_start {
+	my ($self, $args) = @_;
 
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = unpack("v1",substr($msg, 2, 2));
+
+	#started a shop.
+	message TF("Shop '%s' opened!\n", $shop{title}), "success";
+	@articles = ();
+	# FIXME: why do we need a seperate variable to track how many items are left in the store?
+	$articles = 0;
+
+	my $display = center(" $shop{title} ", 79, '-') . "\n" .
+		T("#  Name                                       Type        Amount          Price\n");
+	for (my $i = 8; $i < $msg_size; $i += 47) {
+	    my $item = {};
+	    @$item{qw( price number quantity type nameID identified broken upgrade cards options )} = unpack 'V v v C v C C C a8 a25', substr $msg, $i, 47;
+		$item->{name} = itemName($item);
+	    $articles[delete $item->{number}] = $item;
+		$articles++;
+
+		debug ("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
+
+		$display .= swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
+			[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{quantity}), formatNumber($item->{price})]);
+	}
+	$display .= ('-'x79) . "\n";
+	message $display, "list";
+	$shopEarned ||= 0;
+}
 
 1;

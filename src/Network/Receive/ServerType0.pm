@@ -565,6 +565,7 @@ sub new {
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
+		'0A28' => ['vending_confirm', 'C', [qw(success)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
 		'0A3B' => ['misc_effect', 'v a4 C v', [qw(len ID flag effect)]],
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
@@ -7479,6 +7480,12 @@ sub senbei_amount {
 	my ($self, $args) = @_;
 	
 	$char->{senbei} = $args->{senbei};
+}
+
+sub vending_confirm {
+	my ($self, $args) = @_;
+	
+	debug "Vending shop started\n", 'parseMsg';
 }
 
 1;

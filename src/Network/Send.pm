@@ -171,6 +171,7 @@ sub encrypt {
 sub encryptMessageID {
 	my ($self, $r_message) = @_;
 	my $messageID = unpack("v", $$r_message);
+	return if (sprintf("%04X",$messageID) eq "0000");
 	
 	if ($self->{encryption}->{crypt_key_3}) {
 		if (sprintf("%04X",$messageID) eq $self->{packet_lut}{map_login}) {
@@ -323,6 +324,7 @@ sub sendToServer {
 
 	# encrypt(\$msg, $msg);
 
+	return if $messageID eq "0000";
 	# Packet Prefix Encryption Support
 	$self->encryptMessageID(\$msg);
 
