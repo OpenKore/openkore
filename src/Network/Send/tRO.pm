@@ -33,6 +33,7 @@ sub new {
 		'0970' => ['char_create', 'a24 C v2', [qw(name, slot, hair_style, hair_#color)]],
 		'00A7' => ['sendItemUse'],		
 		'0A76' => ['master_login', 'V Z24 a50 C C', [qw(version username password_md5_hex master_version clientInfo)]],
+		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
