@@ -60,6 +60,7 @@ sub new {
 		master_login 0A76
 		ban_check 0187
 		map_login 0436
+		sync 0360
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
