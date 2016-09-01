@@ -20,16 +20,16 @@ sub new {
 	
 	my %packets = (
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-        '0361' => ['actor_look_at', 'v C', [qw(head body)]],
+        	'0361' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0362' => ['item_take', 'a4', [qw(ID)]],
-        '0363' => ['item_drop', 'v2', [qw(index amount)]],
-        '023B' => ['storage_password'],
-        '0364' => ['storage_item_add', 'v V', [qw(index amount)]],
-        '0365' => ['storage_item_remove', 'v V', [qw(index amount)]],
-        '0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-        '0368' => ['actor_info_request', 'a4', [qw(ID)]],
-        '022D' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
-        '0802' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+        	'0363' => ['item_drop', 'v2', [qw(index amount)]],
+		'023B' => ['storage_password'],
+        	'0364' => ['storage_item_add', 'v V', [qw(index amount)]],
+        	'0365' => ['storage_item_remove', 'v V', [qw(index amount)]],
+        	'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+        	'0368' => ['actor_info_request', 'a4', [qw(ID)]],
+        	'022D' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+        	'0802' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'0970' => ['char_create', 'a24 C v2', [qw(name, slot, hair_style, hair_#color)]],
 		'00A7' => ['sendItemUse'],		
 		'0A76' => ['master_login', 'V Z24 a50 C C', [qw(version username password_md5_hex master_version clientInfo)]],
@@ -42,7 +42,7 @@ sub new {
 		actor_action 0089
 		party_join_request_by_name 022D
 		storage_password 023B
-        game_login 0275
+        	game_login 0275
 		character_move 035F
 		actor_look_at 0361
 		item_take 0362
