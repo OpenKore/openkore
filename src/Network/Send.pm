@@ -441,8 +441,7 @@ sub sendMasterLogin {
 	}
 	if( ($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '0') )
 	{
-		my $login_packet = $config{login_packet};
-		$msg = pack("H*", $login_packet);	
+		$msg = pack("H*", $config{login_packet});	
 	}
 	$self->sendToServer($msg);
 	debug "Sent sendMasterLogin\n", "sendPacket", 2;
