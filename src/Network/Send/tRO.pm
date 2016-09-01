@@ -26,6 +26,8 @@ sub new {
 		'00F7' => ['sendStorageClose'],
 		'0130' => ['sendEnteringVender'],
 		'0112' => ['sendAddSkillPoint'],
+		'00C5' => ['sendGetSellList'],
+		'00C9' => ['sendSell'],
 		'0A76' => ['master_login', 'V Z24 a50 C C', [qw(version username password_md5_hex master_version clientInfo)]],
 		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 	);
