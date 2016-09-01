@@ -217,20 +217,7 @@ sub parse {
 
 	$lastSwitch = Network::MessageTokenizer::getMessageID($msg);
 	my $handler = $self->{packet_list}{$lastSwitch};
-	if($masterServer->{serverType} eq 'tRO')
-	{
-		my $h2int = hex($lastSwitch); #แปลง hex string เป็นตัวเลข
-		if(( $h2int >= 2129 && $h2int <= 2635) && (!$net->getState(Network::CONNECTED_TO_LOGIN_SERVER))) #ถ้า Unknow Packet มีค่าตั้งแต่ 0851 - 0A4B หรือแปลงเป็นตัวเลขได้ตั้งแต่ 2138 - 2635 ให้ทำงานในบล็อคด้านล่าง
-		{
-			$messageSender->sendReplySyncRequestEx($h2int+42); #นำตัวเลขมา + 42 แล้วจัดการส่งพวก Unknow กลับหลุม #42 มีค่าเท่ากับ 2A เมื่อแปลงเป็น hex string 
-			my $int2h1 = sprintf("%04X", $h2int);
-			my $int2h2 = sprintf("%04X", $h2int+42);
-			Globals::UnknowLog("recv:".$int2h1);
-			Globals::UnknowLog("send:".$int2h2);
-			return; #สั่งให้กลับ ไม่ต้องขึ้นบอก Unknow
-		}	
-		#Globals::UnknowRecv ($msg->{switch},length($msg->{RAW_MSG}));
-	}
+
 	unless ($handler) {
 		warning "Packet Parser: Unknown switch: $lastSwitch\n";
 		return undef;
@@ -500,7 +487,7 @@ sub unknownMessage {
 	if($masterServer->{serverType} eq 'tRO')
 	{
 		my $h2int = hex($args->{switch}); #แปลง hex string เป็นตัวเลข
-		if(( $h2int >= 2129 && $h2int <= 2635) && (!$net->getState(Network::CONNECTED_TO_LOGIN_SERVER))) #ถ้า Unknow Packet มีค่าตั้งแต่ 0851 - 0A4B หรือแปลงเป็นตัวเลขได้ตั้งแต่ 2138 - 2635 ให้ทำงานในบล็อคด้านล่าง
+		if(( $h2int >= 2129 && $h2int <= 2635) && ($net->getState() == Network::IN_GAME)) #ถ้า Unknow Packet มีค่าตั้งแต่ 0851 - 0A4B หรือแปลงเป็นตัวเลขได้ตั้งแต่ 2138 - 2635 ให้ทำงานในบล็อคด้านล่าง
 		{
 			$messageSender->sendReplySyncRequestEx($h2int+42); #นำตัวเลขมา + 42 แล้วจัดการส่งพวก Unknow กลับหลุม #42 มีค่าเท่ากับ 2A เมื่อแปลงเป็น hex string 
 			my $int2h1 = sprintf("%04X", $h2int);
