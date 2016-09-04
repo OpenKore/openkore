@@ -200,7 +200,7 @@ sub unhandledMessage {}
 
 sub unknownMessage {
 	my ($self, $args) = @_;	
-	if( (grep { $args->{switch} eq $_ } qw( 0A76 0A7C )) && ($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '3') )
+	if( (grep { $args->{switch} ne $_ } qw( 0A76 0A7C )) && ($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '3') )
 	{
 		Globals::UnknowSend ($args->{switch},length($args->{RAW_MSG}));
 	}
