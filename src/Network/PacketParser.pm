@@ -487,7 +487,7 @@ sub unknownMessage {
 	my $h2int = hex($args->{switch});
 	if($masterServer->{serverType} eq 'tRO')
 	{
-		if( ( $h2int >= 2138 && $h2int <= 2448) && ($net->getState() == Network::IN_GAME) )
+		if( ( $h2int >= 2138 && $h2int <= 2179) && ( $h2int >= 2327 && $h2int <= 2448) && ($net->getState() == Network::IN_GAME))
 		{
 			if($config{'XKore'} eq '0')
 			{
