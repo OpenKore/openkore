@@ -55,12 +55,51 @@ sub new {
 		'0064' => ['master_login', 'V Z24 a24 C', [qw(version username password_rijndael master_version)]], 
 	); 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets; 
-	 
- 
-	
- 
+
 	return $self; 
 } 
+ 
+sub parse_master_login {
+	my ($self, $args) = @_;
+	
+	if (exists $args->{password_md5_hex}) {
+		$args->{password_md5} = pack 'H*', $args->{password_md5_hex};
+	}
+
+	if (exists $args->{password_rijndael}) {
+		my $key = pack('C24', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06, 0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B));
+		my $chain = pack('C24', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41, 0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30));
+		my $in = pack('a24', $args->{password_rijndael});
+		my $rijndael = Utils::Rijndael->new;
+		$rijndael->MakeKey($key, $chain, 24, 24);
+		$args->{password} = unpack("Z24", $rijndael->Decrypt($in, undef, 24, 0));
+	}
+}
+
+sub reconstruct_master_login {
+	my ($self, $args) = @_;
+	
+	$args->{ip} = '192.168.0.2' unless exists $args->{ip}; # gibberish
+	$args->{mac} = '111111111111' unless exists $args->{mac}; # gibberish
+	$args->{mac_hyphen_separated} = join '-', $args->{mac} =~ /(..)/g;
+	$args->{isGravityID} = 0 unless exists $args->{isGravityID};
+	
+	if (exists $args->{password}) {
+		for (Digest::MD5->new) {
+			$_->add($args->{password});
+			$args->{password_md5} = $_->clone->digest;
+			$args->{password_md5_hex} = $_->hexdigest;
+		}
+
+		my $key = pack('C24', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06, 0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B));
+		my $chain = pack('C24', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41, 0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30));
+		my $in = pack('a24', $args->{password});
+		my $rijndael = Utils::Rijndael->new;
+		$rijndael->MakeKey($key, $chain, 24, 24);
+		$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 24, 0);
+	}
+}
+ 
  
 sub sell_result { 
 	my ($self, $args) = @_; 
