@@ -53,31 +53,41 @@ sub gameguard_request {
 	my ($self, $args) = @_;
 
 	debug "NProtect request received\n", "NProtect";
-	return if ($config{NProtect} && $config{NProtect} == 0);
-
-	if ($config{NProtect} == 1 || !$config{NProtect}) { #Re-log
-		my $relogSecond = $timeout{'NProtect_relog_second'}{'timeout'} || 3; # 1 - 3 seconds
-		error TF("NProtect check request received. Re-loging in %s seconds.\n", $relogSecond), 'info';
-		
-		#Re-logging in after random sec
-		$taskManager->add(
-			new Task::Chained(tasks => [
-				new Task::Wait(seconds => rand(int($timeout{'NProtect_relog_delay'}{'timeout'})) + 1 || 5),
-				new Task::Function(function => sub {relog(rand($relogSecond) + 1);$_[0]->setDone;})
-			])
-		);
-	} elsif ($config{NProtect} == 2) {
-		my $relogSecond = $timeout{'NProtect_relog_second'}{'timeout'} || 3; # 1 - 3 seconds
-		error TF("NProtect check request received. Char-selecting in %s seconds.\n", $relogSecond), 'info';
-		
-		#Re-logging in after random sec
-		$taskManager->add(
-			new Task::Chained(tasks => [
-				new Task::Wait(seconds => rand(int($timeout{'NProtect_relog_delay'}{'timeout'})) + 1 || 5),
-				new Task::Function(function => sub {$messageSender->sendRestart(1);$_[0]->setDone;})
-			])
-		);
+	return if ($config{NProtect} && $config{NProtect} == 0); #Disabled
+	return if ($taskManager->countTasksByName('NProtect')); #Found task
+	
+	my $task; #Initialise
+	my $relogDelay = int(rand(int($timeout{'NProtect_relog_delay'}{'timeout'})) + 1) || 300;
+	my $relogSecond = int(rand($timeout{'NProtect_relog_second'}{'timeout'}) + 1) || 10;
+	error TF("NProtect check request received. Re-loging in %s seconds.\n", $relogDelay), 'info';
+	
+	if ($config{NProtect} == 1) {
+		$task = new Task::Chained(
+			name => 'NProtect',
+			tasks => [
+				new Task::Wait(seconds => $relogDelay),
+				new Task::Function(function => sub {
+					relog($relogSecond);
+					if ($net->getState() != Network::IN_GAME) {
+						$_[0]->setDone;
+					}
+				})
+		]);
+	} else {
+		$task = new Task::Chained(
+			name => 'NProtect',
+			tasks => [
+				new Task::Wait(seconds => $relogDelay),
+				new Task::Function(function => sub {
+					$messageSender->sendRestart(1);
+					if ($net->getState() != Network::IN_GAME) {
+						$_[0]->setDone;
+					}
+				})
+		]);
 	}
+	
+	$taskManager->add($task);
 }
 
 sub sync_received_characters {

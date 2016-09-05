@@ -138,8 +138,8 @@ ai_repair 4
 ai_route_escape 8
 
 # N-Protect related
-NProtect_relog_second 3
-NProtect_relog_delay 5
+NProtect_relog_second 10
+NProtect_relog_delay 300
 
 
 
