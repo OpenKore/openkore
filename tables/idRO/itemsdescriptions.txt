@@ -24310,7 +24310,7 @@ Indonesia
 Berat : ^7777770^000000
 #
 7958#
-ke 70 
+ke 71 
 Berat : ^7777770^000000
 #
 16266#
@@ -44717,4 +44717,111 @@ Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
 Location : ^777777Mid ^000000Weight : ^7777770^000000
 Required Lv. : ^7777771^000000
 Job : ^777777All jobs^000000
+#
+
+//--------------- Update September Lucky Scroll 20160831--------------
+19139#
+Orb yang bisa membantu melindungi pemiliknya
+
+Memungkinkan untuk Hiding 1Lv.
+Serangan fisik +2% 
+Matk +2%
+Waktu cast -3%
+
+Jenis : ^777777Helmet^000000 Tk Def : ^7777770^000000
+Posisi : ^777777Bottom ^000000Berat : ^77777730^000000
+Min Lv : ^77777750^000000
+Job : ^777777Semua Job^000000
+#
+22106#
+Sepatu yang dibuat dengan motif raksasa dari kuil kuno
+
+Tolerance +1%,
+MaxHP +2%, MaxSP +2%
+Jika tingkat refine lebih dari 5,
+Deffense bertambah 2%,
+MaxHP +4%, MaxSP +4%
+Jika tingkat refine lebih dari 7,
+Deffense bertambah 2%,
+MaxHP +4%, MaxSP +4%
+
+Jika kamu menggunakan Giant Shield,
+maka kamu tidak akan terkalahkan
+
+Jika tingkat refine lebih dari 7,
+Daya tahan tambahan:
+Serangan dari monster besar -2% 
+Serangan dari boss -2% 
+
+Jika tingkat refine lebih dari 9,
+Daya tahan tambahan:
+Serangan dari monster besar -2% 
+Serangan dari boss -2% 
+Jenis : ^777777Shoes^000000 Tk Def : ^77777713^000000
+Berat : ^77777750^000000
+Min Lv : ^77777785^000000
+Job : ^777777Semua Job^000000
+#
+20815#
+Muffler yang digunakan oleh Priest jahat.
+Memiliki kekuatan cahaya dan kegelapan
+
+MaxHP +10%
+Serangan magic tipe netral +5%
+
+Jika tingkat refine lebih dari 7,
+Daya tahan terhadap element Shadow +20%
+Daya tahan terhadap element Holy  +20%
+Serangan magic +10%
+
+Jika tingkat refine lebih dari 9,
+Daya tahan Darkness +10%
+Daya tahan Saint +10%
+Casting berkurang 5%
+
+Jika kamu mempelajari lebih dari [Faith]Lv.1
+sekaligus maka kamu bisa mengupgrade setiap level dengan
+Serangan dari berelement Holy +3%
+Jenis : ^777777Robe^000000 Tk Def : ^77777718^000000
+Berat : ^77777730^000000
+Min Lv : ^77777790^000000
+Job : ^777777Semua Job^000000
+#
+19140#
+Squirrel Hat
+Begitu digunakan, kamu bisa menghindari serangan lebih mudah.
+
+ASPD +1
+jika kamu melakukan serangan jarak jauh, CRI +5
+Serangan kritikal +10%
+Mengabaikan 10% segala macam pertahanan fisik
+
+Jika tingkat refine lebih dari 5,
+Tambahan ASPD +1
+jika kamu melakukan serangan jarak jauh, CRI +10
+Serangan kritikal +2%
+Mengabaikan 20% segala macam pertahanan fisik
+
+Jika tingkat refine lebih dari 7,
+Tambahan ASPD +1
+jika kamu melakukan serangan jarak jauh, CRI +15
+Serangan kritikal +6%
+Mengabaikan 30% segala macam pertahanan fisik
+
+Jika tingkat refine lebih dari 9,
+Tambahan ASPD +1
+Jika kamu melakukan serangan jarak jauh, CRI +20
+Serangan kritikal +12%
+Mengabaikan 40% segala macam pertahanan fisik
+Dengan (7%) kemungkinan selama 5 detik,
+Serangan kritikal +100%
+
+Jenis : ^777777Helmet^000000 Tk Def : ^77777710^000000
+Posisi : ^777777Top ^000000Berat : ^77777720^000000
+Min Lv : ^777777100^000000
+Job : ^777777Semua Job^000000
+#
+23196#
+Shining Blue Lucky Egg
+Berat : ^7777771^000000
 #
