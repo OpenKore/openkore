@@ -30,6 +30,7 @@ sub new {
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
 		'082D' => ['received_characters_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'099D' => ['received_characters', 'x2 a*', [qw(charInfo)]],
+		'0A3B' => ['misc_effect', 'v a4 C v', [qw(len ID flag effect)]],
 	);
 
 	foreach my $switch (keys %packets) {
