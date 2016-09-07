@@ -6788,3 +6788,10 @@
 20217#C_Arabian_Veil#
 20219#C_Angel_Marcher_Hat#
 20221#C_Eyes_Of_Ifrit#
+
+//--------------- Update September Lucky Scroll 20160831--------------
+19139#SurviveOrb#
+22106#Giant_Boots#
+20815#SeraphimRobe#
+19140#Squirrel_Ear_Hat#
+23196#Shining_Blue_Lucky_Egg#
