@@ -1159,7 +1159,7 @@ sub map_loaded {
 	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
 	$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw( bRO tRO )); # tested at bRO 2013.11.30, request for cashitemslist + tRO
 	$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
-	$messageSender->SendEAC() if( ($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '0') );
+	$messageSender->SendEAC() if (($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '0'));
 }
 
 sub actor_look_at {
