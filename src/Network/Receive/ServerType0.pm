@@ -5896,6 +5896,14 @@ sub storage_password_request {
 				if (!defined($input)) {
 					return;
 				}
+				if (!$config{storagePassword_notNumeric} && $input !~ m/^\d*$/ {
+					error T("Non-numeric password is not allowed.\n");
+					return;
+				}
+				if (!$config{storagePassword_noLengthLimit} && $input !~ m/^\d{4,8}$/) {
+					error T("Password must be in length of 4 to 8.\n");
+					return;
+				}
 				configModify('storageAuto_password', $input, 1);
 				message TF("Storage password set to: %s\n", $input), "success";
 			}

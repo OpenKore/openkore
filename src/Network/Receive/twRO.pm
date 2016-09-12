@@ -53,7 +53,7 @@ sub gameguard_request {
 	my ($self, $args) = @_;
 
 	debug "NProtect request received\n", "NProtect";
-	return if ($config{NProtect} && $config{NProtect} == 0); #Disabled
+	return if ($config{NProtect} == 0); #Disabled
 	return if ($taskManager->countTasksByName('NProtect')); #Found task
 	
 	my $task; #Initialise
