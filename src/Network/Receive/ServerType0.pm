@@ -5896,7 +5896,7 @@ sub storage_password_request {
 				if (!defined($input)) {
 					return;
 				}
-				if (!$config{storagePassword_notNumeric} && $input !~ m/^\d*$/ {
+				if (!$config{storagePassword_notNumeric} && $input !~ m/^\d*$/) {
 					error T("Non-numeric password is not allowed.\n");
 					return;
 				}
