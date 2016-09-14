@@ -57,8 +57,8 @@ sub gameguard_request {
 	return if ($taskManager->countTasksByName('NProtect')); #Found task
 	
 	my $task; #Initialise
-	my $relogDelay = int(rand(int($timeout{'NProtect_relog_delay'}{'timeout'})) + 1) || 300;
-	my $relogSecond = int(rand($timeout{'NProtect_relog_second'}{'timeout'}) + 1) || 10;
+	my $relogDelay = int(rand(int($timeout{'NProtect_relog_delay'}{'timeout'})) + 1) + 300 || 300;
+	my $relogSecond = int(rand($timeout{'NProtect_relog_second'}{'timeout'}) + 1) + 30 || 30;
 	error TF("NProtect check request received. Re-loging in %s seconds.\n", $relogDelay), 'info';
 	
 	if ($config{NProtect} == 1) {
@@ -80,7 +80,7 @@ sub gameguard_request {
 				new Task::Wait(seconds => $relogDelay),
 				new Task::Function(function => sub {
 					$messageSender->sendRestart(1);
-					if ($net->getState() != Network::IN_GAME) {
+					if ($net->getState() != Network::IN_GAME) {					
 						$_[0]->setDone;
 					}
 				})
