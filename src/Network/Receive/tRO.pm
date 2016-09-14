@@ -45,6 +45,4 @@ sub new {
 	);
 	return $self;
 }
-sub EAC{
-}
 1;
