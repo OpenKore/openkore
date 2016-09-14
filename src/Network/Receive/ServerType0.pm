@@ -1127,27 +1127,27 @@ sub map_loaded {
 		main::initMapChangeVars();
 	} else {
 
-		$messageSender->sendSync(1) if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.26 - revok
-		if( ($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '0') )
-		{
-			$messageSender->sendMapLoaded();
-			$messageSender->sendSync(1);
-		}
-		$messageSender->sendGuildMasterMemberCheck();
+		#$messageSender->sendSync(1) if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.26 - revok
+		#if( ($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '0') )
+		#{
+		#	$messageSender->sendMapLoaded();
+		#	$messageSender->sendSync(1);
+		#}
+		#$messageSender->sendGuildMasterMemberCheck();
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		$messageSender->sendGuildRequestInfo(0);
+		#$messageSender->sendGuildRequestInfo(0);
 
-		$messageSender->sendGuildRequestInfo(0) if (grep { $masterServer->{serverType} eq $_ } qw( bRO tRO )); # tested at bRO 2013.11.26, this is sent two times and i don't know why - revok + tRO
+		#$messageSender->sendGuildRequestInfo(0) if (grep { $masterServer->{serverType} eq $_ } qw( bRO tRO )); # tested at bRO 2013.11.26, this is sent two times and i don't know why - revok + tRO
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		$messageSender->sendGuildRequestInfo(1);
-		message(T("You are now in the game\n"), "connection");
-		Plugins::callHook('in_game');
-		if ($masterServer->{serverType} ne 'tRO')
-		{
-			$messageSender->sendMapLoaded();
-		}
+		#$messageSender->sendGuildRequestInfo(1);
+		#message(T("You are now in the game\n"), "connection");
+		#Plugins::callHook('in_game');
+		#if ($masterServer->{serverType} ne 'tRO')
+		#{
+		#	$messageSender->sendMapLoaded();
+		#}
 		$timeout{'ai'}{'time'} = time;
 	}
 
@@ -1156,10 +1156,10 @@ sub map_loaded {
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 
-	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
-	$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw( bRO tRO )); # tested at bRO 2013.11.30, request for cashitemslist + tRO
-	$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
-	$messageSender->SendEAC() if (($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '0'));
+	#$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
+	#$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw( bRO tRO )); # tested at bRO 2013.11.30, request for cashitemslist + tRO
+	#$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
+	#$messageSender->SendEAC() if (($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '0'));
 }
 
 sub actor_look_at {
@@ -7495,5 +7495,23 @@ sub senbei_amount {
 	
 	$char->{senbei} = $args->{senbei};
 }
-
+sub EAC{
+	$net->setState(Network::IN_GAME);
+	undef $conState_tries;
+	$char = $chars[$config{char}];
+	return unless changeToInGameState();
+	$messageSender->sendMapLoaded();
+	$messageSender->sendSync(1);
+	$messageSender->sendGuildMasterMemberCheck();
+	$messageSender->sendGuildRequestInfo(0);
+	$messageSender->sendGuildRequestInfo(0);
+	$messageSender->sendGuildRequestInfo(1);
+	message(T("You are now in the game\n"), "connection");
+	Plugins::callHook('in_game');
+	
+	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
+	$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw( bRO tRO )); # tested at bRO 2013.11.30, request for cashitemslist + tRO
+	$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
+	$messageSender->SendEAC();	# if (($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '0'));
+}
 1;
