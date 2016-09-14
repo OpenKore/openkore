@@ -78029,3 +78029,121 @@ This box contains one of the following at random:
 ^008080HP Stone (Lower)^000000 x1
 ^008080SP Absorption Stone (Upper)^000000 x1
 #
+
+
+
+
+28901#
+A rag doll that Piamette is using for both attack and defense?
+It looks so real and alive!
+ASPD +3.
+ATK +5%, MATK +5%.
+Reflect 10% of close physical attack damage.
+10% chance to reflect magic damage. Reflect magic damage for 2 seconds chanced by 60%.
+Refined to +7, increase ATK +5 and MATK +5.
+Refined to +9, increase ATK +15 and MATK +15
+Refined to +12, Skill casting can not be interrupted and CRI +10.
+Class : ^777777Shield^000000 Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+28902#
+A rag doll that Piamette is using for both attack and defense?
+It looks so real and alive!
+ATK +5%, MATK +5%.
+Reflect 10% of close physical attack damage.
+10% chance to reflect magic damage. Reflect magic damage for 2 seconds chanced by 60%.
+Refined to +7, increase ATK +5 and MATK +5.
+Refined to +9, increase ATK +15 and MATK +15
+Refined to +12, Skill casting can not be interrupted and CRI +10.
+Class : ^777777Shield^000000 Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+
+17728#
+When opened gives the user 100 HD Oridecon
+8 Mad Bunny Scrolls
+#
+
+17729#
+When opened gives the user 100 HD Elunium
+8 Mad Bunny Scrolls
+#
+
+17730#
+When opened gives the user 100 Enriched Oridecon
+24 Mad Bunny Scrolls
+#
+
+17731#
+When opened gives the user 100 Enriched Elunium
+24 Mad Bunny Scrolls
+#
+
+17732#
+When opened gives the user 100 HD Carnium
+12 Mad Bunny Scrolls
+#
+
+17733#
+When opened gives the user 100 HD Bradiums
+12 Mad Bunny Scrolls
+#
+
+22702#
+Take 1 STR point back to Status Point.
+Not able to use if STR is 1.
+Weight : ^7777770^000000
+#
+22703#
+Take 1 AGI point back to Status Point.
+Not able to use if AGI is 1.
+Weight : ^7777770^000000
+#
+22704#
+Take 1 VIT point back to Status Point.
+Not able to use if VIT is 1.
+Weight : ^7777770^000000
+#
+22705#
+Take 1 INT point back to Status Point.
+Not able to use if INT is 1.
+Weight : ^7777770^000000
+#
+22706#
+Take 1 DEX point back to Status Point.
+Not able to use if DEX is 1.
+Weight : ^7777770^000000
+#
+22707#
+Take 1 LUK point back to Status Point.
+Not able to use if LUK is 1.
+Weight : ^7777770^000000
+#
+22971#
+
+Limited time offer.
+When opened gives the user one of the following
+Mad Bunny Special[0]
+Safe to 7 Armor Certificate
+Safe to 7 Headgear Certificate
+Safe to 7 Weapon Certificate
+Safe to 10 Certificate
+Str Soul Potion
+Agi Soul Potion
+Vit Soul Potion
+Int Soul Potion
+Dex Soul Potion
+Luk Soul Potion
+(Soul Potions reset 1 stat point)
+Blacksmith's Blessing (Save it for later!)
+Weight : ^7777771^000000
+
+#
+
+6635#
+Currently has no known use. However you feel like you should save it for later, as it appears to have some value.
+#
