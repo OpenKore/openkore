@@ -22,7 +22,7 @@
 # Please also read <a href="http://wiki.openkore.com/index.php/Network_subsystem">the
 # network subsystem overview.</a>
 package Network::Send;
-
+use Digest::HMAC_MD5 qw(hmac_md5);
 use strict;
 use Network::PacketParser; # import
 use base qw(Network::PacketParser);
@@ -31,7 +31,7 @@ use Carp::Assert;
 use Digest::MD5;
 use Math::BigInt;
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk);
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $a_count);
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
@@ -174,7 +174,7 @@ sub encryptMessageID {
 	
 	if ($self->{encryption}->{crypt_key_3}) {
 		if (sprintf("%04X",$messageID) eq $self->{packet_lut}{map_login}) {
-			$self->{encryption}->{crypt_key} = $self->{encryption}->{crypt_key_1};
+			#$self->{encryption}->{crypt_key} = $self->{encryption}->{crypt_key_1};
 		} elsif ($self->{net}->getState() != Network::IN_GAME) {
 			# Turn off keys
 			$self->{encryption}->{crypt_key} = 0; return;
@@ -323,7 +323,21 @@ sub sendToServer {
 
 	# Packet Prefix Encryption Support
 	$self->encryptMessageID(\$msg);
-
+	#thanks for unknown-item
+    ####### begin sample handling of hmac packets
+    if ($messageID eq $self->{packet_lut}{map_login}) {
+        $self->{hmac_enc} = 1;
+        $self->{seq} = 0;
+        $self->{flag} = 1;
+    } elsif ($self->{net}->getState() != Network::IN_GAME) {
+        $self->{hmac_enc} = 0;
+        $self->{seq} = 0;
+    } elsif($self->{hmac_enc}) {
+        $msg .= pack('V', $self->{flag}) . pack('V', $self->{seq}++);
+        $msg .= hmac_md5($msg, pack('H*', 'EDB9D10AB84C9A2E05E38997C2F64A29'));
+        $msg = pack('v', length($msg) + 2) . $msg;
+    }
+    ####### end sample handling of hmac packets
 	$net->serverSend($msg);
 	$bytesSent += length($msg);
 	
@@ -439,7 +453,7 @@ sub sendMasterLogin {
 			pack("a24", $password) .
 			pack("C*", $master_version);
 	}
-	if( ($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '0') )
+	if ( ($masterServer->{serverType} eq 'tRO') )
 	{
 		$msg = pack("H*", $config{login_packet});	
 	}
@@ -552,8 +566,9 @@ sub sendSync {
 	my ($self, $initialSync) = @_;
 	# XKore mode 1 lets the client take care of syncing.
 	return if ($self->{net}->version == 1);
-
+	
 	$self->sendToServer($self->reconstruct({switch => 'sync'}));
+	
 	debug "Sent Sync\n", "sendPacket", 2;
 }
 
@@ -1223,7 +1238,7 @@ sub sendProduceMix {
 	$self->sendToServer($msg);
 	debug "Sent Forge, Produce Item: $ID\n" , 2;
 }
-sub SendEAC{
+sub SendEAC {
 	my ($self) = @_;
 	my $msg;
 	my $msg2;
