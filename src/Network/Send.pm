@@ -334,7 +334,7 @@ sub sendToServer {
         $self->{seq} = 0;
     } elsif($self->{hmac_enc}) {
         $msg .= pack('V', $self->{flag}) . pack('V', $self->{seq}++);
-        $msg .= hmac_md5($msg, pack('H*', 'EDB9D10AB84C9A2E05E38997C2F64A29'));
+        $msg .= hmac_md5($msg, pack('H*', 'AE7AEE43215F3B442010CEE2AB647FBA'));
         $msg = pack('v', length($msg) + 2) . $msg;
     }
     ####### end sample handling of hmac packets
