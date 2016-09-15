@@ -484,7 +484,20 @@ sub parse_pre {
 
 sub unknownMessage {
 	my ($self, $args) = @_;
-	
+	my $h2int = hex($args->{switch});
+	if (($h2int >= 2138 && $h2int <= 2448) && ($net->getState() == Network::IN_GAME))
+	{
+		if ($config{'XKore'} eq '0')
+		{
+			$messageSender->sendReplySyncRequestEx($h2int+42);
+			my $int2h1 = sprintf("%04X", $h2int);
+			my $int2h2 = sprintf("%04X", $h2int+42);
+			Globals::UnknowLog("recv:".$int2h1);
+			Globals::UnknowLog("send:".$int2h2);
+			return;
+		}
+		Globals::UnknowRecv ($args->{switch},length($args->{RAW_MSG}));
+	}	
 	# Unknown message - ignore it
 	unless (existsInList($config{debugPacket_exclude}, $args->{switch})) {
 		warning TF("Packet Tokenizer: Unknown switch: %s\n", $args->{switch}), 'connection';
