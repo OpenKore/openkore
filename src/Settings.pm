@@ -75,12 +75,12 @@ use enum qw(CONTROL_FILE_TYPE TABLE_FILE_TYPE);
 
 # Translation Comment: Strings for the name and version of the application
 our $NAME = 'OpenKore';
-our $VERSION = 'what-will-become-2.1';
+our $VERSION = '';
 # Translation Comment: Version String
 #our $SVN = T(" (SVN Version) ");
 our $WEBSITE = 'http://www.openkore.com/';
 # Translation Comment: Version String
-our $versionText = "*** $NAME ${VERSION} ( version " . (getGitRevision() || '?') . ' ) - ' . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
+our $versionText = "*** $NAME ${VERSION} ( version " . (getGitRevision() || 'Freebot.ROEXE') . ' ) - ' . T("https://www.facebook.com/freebot.roexe/") . " ***\n***   $WEBSITE   ***\n";
 our $welcomeText = TF("Welcome to %s.", $NAME);
 
 
@@ -218,7 +218,7 @@ sub parseArguments {
 		if ($ENV{OPENKORE_DEFAULT_INTERFACE} && $ENV{OPENKORE_DEFAULT_INTERFACE} ne "") {
 			$interface = $ENV{OPENKORE_DEFAULT_INTERFACE};
 		} else {
-			$interface = "Console"
+			$interface = "Wx"
 		}
 	}
 	if ($starting_ai) {

@@ -1,14 +1,24 @@
-# Please Read the Users Manual
+﻿# Please Read the Users Manual
 # The Manual is located at http://wiki.openkore.com/index.php?title=Manual
 
 ######## Login options and server-specific options ########
 
-master
-server
-username
-password
-loginPinCode
-char
+master Thailand - tRO Main server (EXE)
+server 
+username #
+password #
+loginPinCode 
+char 
+
+
+################################################
+hmac_key 
+################################################
+
+################################################
+login_packet 
+################################################
+
 
 # Poseidon Settings (http://wiki.openkore.com/index.php/PoseidonServer)
 # They must be the same as Query Server config in Poseidon.txt
@@ -36,7 +46,7 @@ XKore_ID
 
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
-adminPassword
+adminPassword jearajot
 callSign
 commandPrefix ;
 callSignGM 0
@@ -52,6 +62,21 @@ whenInGame_requestCashPoints 0
 
 message_length_max 80
 
+######## หลบสกิล ต่างๆ  ########
+#   Methods (choose one)
+#   0 - สุ่มเดิน
+#   1 - เดินกลับ
+#   2 - เดินไกล้ๆมอนเตอร์
+#   3 - วิง
+#   4 - ตี (ใช้กับมอน)
+#   5 - ใช้สกิล (ใช้กับมอน)
+
+avoidSkill 1
+
+avoidSkill Warp Portal {
+	method 3
+}
+
 ######## Main configuration ########
 
 alias_heal sp 28
@@ -59,6 +84,7 @@ alias_heal sp 28
 allowedMaps
 allowedMaps_reaction 1
 
+attackKillSteal 0 	# 1=เปิด // 0=ปิด .. (สำหรับคนโดเนท)
 attackAuto 2
 attackAuto_party 1
 attackAuto_onlyWhenSafe 0
@@ -220,8 +246,8 @@ shopAuto_open 0
 shop_random 0
 shop_useSkill 1
 
-sitAuto_hp_lower 40
-sitAuto_hp_upper 100
+sitAuto_hp_lower 0
+sitAuto_hp_upper 0
 sitAuto_sp_lower 0
 sitAuto_sp_upper 0
 sitAuto_follow 0
@@ -253,7 +279,7 @@ teleportAuto_onlyWhenSafe 0
 teleportAuto_maxDmg 500
 teleportAuto_maxDmgInLock 0
 teleportAuto_deadly 1
-teleportAuto_useSkill 3
+teleportAuto_useSkill 0
 teleportAuto_useChatCommand
 teleportAuto_allPlayers 0
 teleportAuto_notPlayers
@@ -285,7 +311,7 @@ verbose 1
 showDomain 0
 showDomain_NPC parseMsg_presence
 showDomain_Shop list
-squelchDomains
+squelchDomains skill,xkore,parseMsg,parseMsg_presence,sendPacket,route,parseMsg_damage,parseMsg_move,move,parseMsg_presence/player,drop,emotion,ai_attack,route/path,list
 verboseDomains
 beepDomains
 beepDomains_notInTown
@@ -341,84 +367,6 @@ status_mapType 0
 removeActorWithDistance
 monster_filter
 
-######## Mercenary Support ########
-
-mercenary_attackAuto 2
-mercenary_attackAuto_party 1
-mercenary_attackAuto_notInTown 1
-mercenary_attackAuto_onlyWhenSafe 0
-mercenary_attackDistance 1.5
-mercenary_attackMaxDistance 2.5
-mercenary_attackMaxRouteTime 4
-mercenary_attackCanSnipe 0
-mercenary_attackCheckLOS 0
-mercenary_attackNoGiveup 0
-mercenary_attackChangeTarget 1
-
-mercenary_followDistanceMax 10
-mercenary_followDistanceMin 3
-
-mercenary_route_step 15
-
-mercenary_tankMode 0
-mercenary_tankModeTarget
-
-mercenary_teleportAuto_hp 10
-mercenary_teleportAuto_maxDmg 500
-mercenary_teleportAuto_maxDmgInLock 0
-mercenary_teleportAuto_deadly 1
-mercenary_teleportAuto_unstuck 0
-mercenary_teleportAuto_dropTarget 0
-mercenary_teleportAuto_dropTargetKS 0
-mercenary_teleportAuto_totalDmg 0
-mercenary_teleportAuto_totalDmgInLock 0
-mercenary_teleportAuto_attackedWhenSitting 0
-
-######## Homunculus Support ########
-
-homunculus_attackAuto 2
-homunculus_attackAuto_party 1
-homunculus_attackAuto_notInTown 1
-homunculus_attackAuto_onlyWhenSafe 0
-homunculus_attackDistance 1.5
-homunculus_attackMaxDistance 2.5
-homunculus_attackMaxRouteTime 4
-homunculus_attackCanSnipe 0
-homunculus_attackCheckLOS 0
-homunculus_attackNoGiveup 0
-homunculus_attackChangeTarget 1
-
-homunculus_followDistanceMax 10
-homunculus_followDistanceMin 3
-
-homunculus_route_step 15
-
-homunculus_tankMode 0
-homunculus_tankModeTarget
-
-homunculus_runFromTarget 0
-homunculus_runFromTarget_dist 6
-
-homunculus_StandByAuto 0
-homunculus_teleportAuto_hp 10
-homunculus_teleportAuto_maxDmg 500
-homunculus_teleportAuto_maxDmgInLock 0
-homunculus_teleportAuto_deadly 1
-homunculus_teleportAuto_unstuck 0
-homunculus_teleportAuto_dropTarget 0
-homunculus_teleportAuto_dropTargetKS 0
-homunculus_teleportAuto_totalDmg 0
-homunculus_teleportAuto_totalDmgInLock 0
-homunculus_teleportAuto_attackedWhenSitting 0
-
-# Turn on/off homunculus autofeeding
-homunculus_autoFeed 1
-# Feed homunculus when meet the hunger value (homunculus_hunger > homunculus_return)
-homunculus_hunger 15
-# Return homunculus when meet the hunger value
-homunculus_return 11
-# In Wich maps should we allow feeding? (leave empty for any map)
-homunculus_autoFeedAllowedMaps
 
 # Turn on/off pet autofeeding
 pet_autoFeed 1
@@ -677,7 +625,7 @@ useSelf_item {
 	inLockOnly 0
 	notWhileSitting 0
 	notInTown 0
-	timeout
+	timeout 0
 	disabled 0
 	inInventory
 	manualAI 0
@@ -738,3 +686,11 @@ logToFile_Errors
 logToFile_Messages
 logToFile_Warnings
 history_max 50
+
+
+##### Macro #####
+macro_readmanual red/chili
+macro_nowarn 1
+macro_orphans terminate
+macro_debug 2
+macro_file macros.txt

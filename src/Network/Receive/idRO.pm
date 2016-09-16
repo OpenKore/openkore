@@ -15,13 +15,12 @@ package Network::Receive::idRO;
 
 use strict;
 use base qw(Network::Receive::ServerType0);
-use Globals qw(%config $messageSender %timeout);
-use I18N qw(bytesToString);
-use Log qw(debug message);
-use Misc qw(chatLog monsterName stripLanguageCode);
+use Globals qw($messageSender %timeout);
+use Log qw(debug);
+use Misc qw(monsterName);
+use Utils qw(timeOut);
+
 use Time::HiRes qw(time);
-use Translation;
-use Utils qw(getHex timeOut);
 
 sub new {
 	my ($class) = @_;
@@ -61,42 +60,6 @@ sub received_characters_info {
 	$timeout{charlogin}{time} = time;
 
 	$self->received_characters($args);
-}
-
-sub system_chat {
-	my ($self, $args) = @_;
-	my $message = bytesToString($args->{message});
-	my $prefix;
-	my $color;
-
-	if ($message =~ s/^ssss//g) {  # forces color yellow, or WoE indicator?
-		$prefix = T('[WoE]');
-	} elsif ($message =~ /^micc.{24}([0-9A-Fa-f]{6})(.*)/) { #appears in idRO: [micc][23_chars_name][\x00\x00][color][name][blablabla][message]
-		$color = $1;
-		$message = $2;
-		$prefix = T('[S]');
-	} elsif ($message =~ s/^blue//g) {  # forces color blue
-		$prefix = T('[S]');
-	} elsif ($message =~ /^tool([0-9a-fA-F]{6})(.*)/) {
-		$color = $1;
-		$message = $2;
-		$prefix = T('[S]');
-	} else {
-		$prefix = T('[S]');
-	}
-	$message =~ s/\000//g; # remove null charachters
-	$message =~ s/^ +//g; $message =~ s/ +$//g; # remove whitespace in the beginning and the end of $message
-	stripLanguageCode(\$message);
-	chatLog("s", "$message\n") if ($config{logSystemChat});
-	# Translation Comment: System/GM chat
-	message "$prefix $message\n", "schat";
-	ChatQueue::add('gm', undef, undef, $message) if ($config{callSignGM});
-
-	Plugins::callHook('packet_sysMsg', {
-		Msg => $message,
-		MsgColor => $color,
-		MsgUser => undef # TODO: implement this value, we can get this from "micc" messages by regex.
-	});
 }
 
 *parse_quest_update_mission_hunt = *Network::Receive::parse_quest_update_mission_hunt_v2;

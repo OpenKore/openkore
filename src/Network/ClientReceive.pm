@@ -11,7 +11,7 @@ use strict;
 use Modules 'register';
 use Time::HiRes qw(time);
 
-use Globals qw($packetParser $incomingMessages %config $char %ai_v %timeout $shopstarted $firstLoginMap $sentWelcomeMessage @lastpm %lastpm);
+use Globals qw($packetParser $incomingMessages %config $char %ai_v %timeout $shopstarted $firstLoginMap $sentWelcomeMessage @lastpm %lastpm $masterServer);
 use Misc qw(configModify visualDump);
 use Log qw(message debug warning);
 use Translation;
@@ -199,14 +199,16 @@ sub shop_close {
 sub unhandledMessage {}
 
 sub unknownMessage {
-	my ($self, $args) = @_;
-	
+	my ($self, $args) = @_;	
+	if( (grep { $args->{swittch} eq $_ } qw( 0A76 0A7C )) && ($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '3') )
+	{
+		Globals::UnknowSend ($args->{switch},length($args->{RAW_MSG}));
+	}
 	# Unknown message - ignore it
 	unless (existsInList($config{debugPacket_exclude}, $args->{switch})) {
 		debug TF("Packet Tokenizer: Unknown outgoing switch: %s\n", $args->{switch}), 'outgoing';
 		visualDump($args->{RAW_MSG}, "<< Outgoing unknown packet") if $config{debugPacket_unparsed};
 	}
-	
 	# Pass it along to the server, whatever it is
 }
 
