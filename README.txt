@@ -1,3 +1,13 @@
+========================================
+Free Bot Ragnarok Thailand - Openkoreth
+========================================
+-สามารถแก้ hmac_key ใน config ได้เลย
+-เพิ่ม Avoid Skill plugin
+-แก้ ตัวบอทให้เป็น ภาษาอังกฤษ สำหรับคนที่ชอบใช้ macro
+-เพิ่ม macro แก้ you tried long to move by openkore.in
+
+
+
 =========================
 ### OpenKore what-will-become-2.1
 =========================
