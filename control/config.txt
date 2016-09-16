@@ -311,7 +311,7 @@ verbose 1
 showDomain 0
 showDomain_NPC parseMsg_presence
 showDomain_Shop list
-squelchDomains skill,xkore,parseMsg,parseMsg_presence,sendPacket,route,parseMsg_damage,parseMsg_move,move,parseMsg_presence/player,drop,emotion,ai_attack,route/path,list
+squelchDomains looter
 verboseDomains
 beepDomains
 beepDomains_notInTown
