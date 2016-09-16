@@ -2,6 +2,7 @@
 Free Bot Ragnarok Thailand - Openkoreth
 ========================================
 -สามารถแก้ hmac_key ใน config ได้เลย
+-สามารถเปิดบอท x0 พร้อมเล่นเกมได้ โดยการเข้าเกมส์ปกติก่อน แล้วเปิดบอท x0 ตาม by openkore.in
 -เพิ่ม Avoid Skill plugin
 -แก้ ตัวบอทให้เป็น ภาษาอังกฤษ สำหรับคนที่ชอบใช้ macro
 -เพิ่ม macro แก้ you tried long to move by openkore.in
