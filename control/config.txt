@@ -96,7 +96,7 @@ attackDistanceAuto 0
 attackMaxDistance 2.5
 attackMaxRouteDistance 100
 attackMaxRouteTime 4
-attackMinPlayerDistance 2
+attackMinPlayerDistance 0
 attackMinPortalDistance 4
 attackUseWeapon 1
 attackNoGiveup 0
