@@ -1,5 +1,5 @@
 ========================================
-Free Bot Ragnarok Thailand - Openkoreth
+Free Bot Ragnarok Thailand - Openkoreth (X0)
 ========================================
 -สามารถแก้ hmac_key ใน config ได้เลย
 -สามารถเปิดบอท x0 พร้อมเล่นเกมได้ โดยการเข้าเกมส์ปกติก่อน แล้วเปิดบอท x0 ตาม by openkore.in
