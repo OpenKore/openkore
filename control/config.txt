@@ -65,7 +65,7 @@ message_length_max 80
 ######## หลบสกิล ต่างๆ  ########
 #   Methods (choose one)
 #   0 - สุ่มเดิน
-#   1 - เดินกลับ
+#   1 - เดินกลับหลัง 
 #   2 - เดินไกล้ๆมอนเตอร์
 #   3 - วิง
 #   4 - ตี (ใช้กับมอน)
@@ -74,6 +74,7 @@ message_length_max 80
 avoidSkill 1
 
 avoidSkill Warp Portal {
+	step 10
 	method 3
 }
 
