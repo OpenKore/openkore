@@ -54,6 +54,7 @@ use Interface;
 use Utils qw(dataWaiting timeOut);
 use Utils::Exceptions;
 use Translation;
+use Digest::HMAC_MD5 qw(hmac_md5);
 
 ##
 # Network::DirectConnection->new([wrapper])
