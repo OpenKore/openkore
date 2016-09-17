@@ -341,9 +341,13 @@ sub sendToServer {
 		}
 	}
 	if ($config{'XKore'} eq '3') {
-		if ($self->{net}->getState() != Network::IN_GAME) {
-			$self->{hmac_enc} = 0;		
+		if ($messageID eq $self->{packet_lut}{map_login}) {
+			$self->{hmac_enc} = 1;
+			$self->{seq} = 0;
 			$self->{flag} = 1;
+		} elsif ($self->{net}->getState() != Network::IN_GAME) {
+			$self->{hmac_enc} = 0;
+			$self->{seq} = 0;
 		} elsif ($messageID eq '007D') {
 			$self->{seq} = 0;
 			$msg .= pack('V', $self->{flag}) . pack('V', $self->{seq});
