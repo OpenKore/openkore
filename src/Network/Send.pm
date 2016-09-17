@@ -323,21 +323,76 @@ sub sendToServer {
 
 	# Packet Prefix Encryption Support
 	$self->encryptMessageID(\$msg);
-	#thanks for unknown-item
+		#thanks to unknown-item
     ####### begin sample handling of hmac packets
-    if ($messageID eq $self->{packet_lut}{map_login}) {
-        $self->{hmac_enc} = 1;
-        $self->{seq} = 0;
-        $self->{flag} = 1;
-    } elsif ($self->{net}->getState() != Network::IN_GAME) {
-        $self->{hmac_enc} = 0;
-        $self->{seq} = 0;
-    } elsif($self->{hmac_enc}) {
-        $msg .= pack('V', $self->{flag}) . pack('V', $self->{seq}++);
-        $msg .= hmac_md5($msg, pack('H*', 'AE7AEE43215F3B442010CEE2AB647FBA'));
-        $msg = pack('v', length($msg) + 2) . $msg;
-    }
-    ####### end sample handling of hmac packets
+	my $hmac_key = $config{hmac_key};	
+	if ($config{'XKore'} eq '0') {
+		if ($messageID eq $self->{packet_lut}{map_login}) {
+			$self->{hmac_enc} = 1;
+			$self->{seq} = 0;
+			$self->{flag} = 1;
+		} elsif ($self->{net}->getState() != Network::IN_GAME) {
+			$self->{hmac_enc} = 0;
+			$self->{seq} = 0;
+		} elsif($self->{hmac_enc}) {
+			$msg .= pack('V', $self->{flag}) . pack('V', $self->{seq}++);
+			$msg .= hmac_md5($msg, pack('H*', $hmac_key));
+			$msg = pack('v', length($msg) + 2) . $msg;
+		}
+	}
+	if ($config{'XKore'} eq '3') {
+		if ($self->{net}->getState() != Network::IN_GAME) {
+			$self->{hmac_enc} = 0;		
+			$self->{flag} = 1;
+		} elsif ($messageID eq '007D') {
+			$self->{seq} = 0;
+			$msg .= pack('V', $self->{flag}) . pack('V', $self->{seq});
+			$msg .= hmac_md5($msg, pack('H*', $hmac_key));
+			$msg = pack('v', length($msg) + 2) . $msg;
+		} elsif ($messageID eq '0360' && $self->{seq} == 0) {
+			$self->{seq} = 1;
+			$msg .= pack('V', $self->{flag}) . pack('V', $self->{seq});
+			$msg .= hmac_md5($msg, pack('H*', $hmac_key));
+			$msg = pack('v', length($msg) + 2) . $msg;
+		} elsif ($messageID eq '014D' && $self->{seq} == 1) {
+			$msg .= pack('V', $self->{flag}) . pack('V', 2);
+			$msg .= hmac_md5($msg, pack('H*', $hmac_key));
+			$msg = pack('v', length($msg) + 2) . $msg;
+			$self->{hmac_enc} = 1;
+			$self->{seq} = 3;
+		} elsif ($messageID eq '0A7C') {
+			$msg .= pack('V', $self->{flag}) . pack('V', 7);
+			$msg .= hmac_md5($msg, pack('H*', $hmac_key));
+			$msg = pack('v', length($msg) + 2) . $msg;
+			$self->{seq} = 7;
+		} elsif ($self->{hmac_enc}) {
+			$msg .= pack('V', $self->{flag}) . pack('V', $self->{seq}++);
+			$msg .= hmac_md5($msg, pack('H*', $hmac_key));
+			$msg = pack('v', length($msg) + 2) . $msg;
+		}
+		my $messageID2 = uc(unpack("H12", substr($msg, 0, 6)));
+		if ($messageID2 eq 'F800DE007C0A') {
+			$msg = pack("H*", uc(unpack("H444", substr($msg, 2, 222))));
+		}
+		my $messageID3 = uc(unpack("H8", substr($msg, 6, 4)));
+		if ($messageID3 eq '01000000') {
+			my $messageID4 = uc(unpack("H2", substr($msg, 5, 1))) . uc(unpack("H2", substr($msg, 4, 1)));
+			my $h2int = hex($messageID4);
+			if (($h2int >= 2138 && $h2int <= 2448) && ($net->getState() == Network::IN_GAME))
+			{
+				my $int2h1 = sprintf("%04X", $h2int-42);
+				my $int2h2 = sprintf("%04X", $h2int);				
+				$msg = pack("C C", hex(substr($int2h2, 2, 2)), hex(substr($int2h2, 0, 2)));
+				$msg .= pack('V', $self->{flag}) . pack('V', $self->{seq}-1);
+				$msg .= hmac_md5($msg, pack('H*', $hmac_key));
+				$msg = pack('v', length($msg) + 2) . $msg;
+				Globals::UnknowLog("PacketX3:".uc(unpack("H*", $msg)));
+				Globals::UnknowLog("recvX3:".$int2h1);
+				Globals::UnknowLog("sendX3:".$int2h2);
+			}	
+		}
+	}
+   ######### end sample handling of hmac packets
 	$net->serverSend($msg);
 	$bytesSent += length($msg);
 	
