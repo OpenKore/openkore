@@ -110,67 +110,144 @@ sub getBuffer {
 # - UNKNOWN_MESSAGE - This is an unknown message, i.e. we don't know its length.
 # - ACCOUNT_ID - This is an account ID.
 # `l`
+#thanks to beerdrumers
+sub getMessageIDNew {
+    uc join '', unpack '@3H2 @2H2', $_[0]
+}
+
 sub readNext {
-	my ($self, $type) = @_;
-	my $buffer = \$self->{buffer};
+    my ($self, $type) = @_;
+    my $buffer = \$self->{buffer};
 
-	return undef if (length($$buffer) < 2);
+    return undef if (length($$buffer) < 2);
 
-	my $switch = getMessageID($$buffer);
-	my $rpackets = $self->{rpackets};
-	my $size = $rpackets->{$switch}{length};
-	
-	my $result;
-	
-	#Log::warning sprintf("Packet %s %d %d \n", $switch, $rpackets->{$switch}{length}, $size);
+    my $switch = getMessageID($$buffer);
+    my $rpackets = $self->{rpackets};
+    my $size = $rpackets->{$switch}{length};
 
-	my $nextMessageMightBeAccountID = $self->{nextMessageMightBeAccountID};
-	$self->{nextMessageMightBeAccountID} = undef;
+    my $result;
 
-	if ($nextMessageMightBeAccountID) {
-		if (length($$buffer) >= 4) {
-			
-		$result = substr($$buffer, 0, 4);
-		if (unpack("V1",$result) == unpack("V1",$Globals::accountID)) {
-				substr($$buffer, 0, 4, '');
-				$$type = ACCOUNT_ID;
-			} else {
-				# Account ID is "hidden" in a packet (0283 is one of them)
-				return $self->readNext($type);
-			}
-		
-		} else {
-			$self->{nextMessageMightBeAccountID} = $nextMessageMightBeAccountID;
-		}
+    #Log::warning sprintf("Packet %s %d %d \n", $switch, $rpackets->{$switch}{length}, $size);
 
-	} elsif ($size > 1) {
-		# Static length message.
-		if (length($$buffer) >= $size) {
-			$result = substr($$buffer, 0, $size);
-			substr($$buffer, 0, $size, '');
-			$$type = KNOWN_MESSAGE;
-		}
+    my $nextMessageMightBeAccountID = $self->{nextMessageMightBeAccountID};
+    $self->{nextMessageMightBeAccountID} = undef;
 
-	} elsif (
-		defined($size)
-		and $size == 0 # old Kore convention
-		|| $size == -1 # packet extractor v3
-	) {
-		# Variable length message.
-		if (length($$buffer) >= 4) {
-			$size = unpack("v", substr($$buffer, 2, 2));
-			if (length($$buffer) >= $size) {
-				$result = substr($$buffer, 0, $size, '');
-				$$type = KNOWN_MESSAGE;
-			}
-		}
+    if ($nextMessageMightBeAccountID) {
+        if (length($$buffer) >= 4) {
 
-	} else {
-		$result = $$buffer;
-		$self->{buffer} = '';
-		$$type = UNKNOWN_MESSAGE;
-	}
-	return $result;
+        $result = substr($$buffer, 0, 4);
+        if (unpack("V1",$result) == unpack("V1",$Globals::accountID)) {
+                substr($$buffer, 0, 4, '');
+                $$type = ACCOUNT_ID;
+            } else {
+                # Account ID is "hidden" in a packet (0283 is one of them)
+                return $self->readNext($type);
+            }
+
+        } else {
+            $self->{nextMessageMightBeAccountID} = $nextMessageMightBeAccountID;
+        }
+
+    } elsif ($size > 1) {
+        # Static length message.
+        if (length($$buffer) >= $size) {
+            $result = substr($$buffer, 0, $size);
+            substr($$buffer, 0, $size, '');
+            $$type = KNOWN_MESSAGE;
+        }
+
+    } elsif (
+        defined($size)
+        and $size == 0 # old Kore convention
+        || $size == -1 # packet extractor v3
+    ) {
+        # Variable length message.
+        if (length($$buffer) >= 4) {
+            # check is HMAC or not
+            if ($switch eq "00DE" && length($$buffer) >= 4)
+            {
+                my $newSwitch = getMessageIDNew($$buffer);
+                # check is EAC response or not
+                if ($newSwitch eq "0A7C")
+                {
+                    $size = $rpackets->{$newSwitch}{length};
+                    my $hmacSize = $size + 26;
+
+                    if ($size > 1) {
+                        # Static length message.
+                        if (length($$buffer) >= $hmacSize) {
+                            # sub string only 0A7C packet
+                            $result = substr($$buffer, 2, $size);
+                            # but clear buffer with 0A7C HMAC format
+                            substr($$buffer, 0, $hmacSize, '');
+                            $$type = KNOWN_MESSAGE;
+                        }
+                    } elsif (
+                        defined($size)
+                        and $size == 0 # old Kore convention
+                        || $size == -1 # packet extractor v3
+                    ) {
+                        # Variable length message.
+                        if (length($$buffer) >= 4) {
+                            $size = unpack("v", substr($$buffer, 2, 2));
+                            $hmacSize = $size + 26;
+                            if (length($$buffer) >= $hmacSize) {
+                                $result = substr($$buffer, 2, $size);
+                                substr($$buffer, 0, $hmacSize, '');
+                                $$type = KNOWN_MESSAGE;
+                            }
+                        }
+                    } else {
+                        $result = $$buffer;
+                        $self->{buffer} = '';
+                        $$type = UNKNOWN_MESSAGE;
+                    }
+                }
+            }
+            else{
+                $size = unpack("v", substr($$buffer, 2, 2));
+                if (length($$buffer) >= $size) {
+                    $result = substr($$buffer, 0, $size, '');
+                    $$type = KNOWN_MESSAGE;
+                }
+            }
+        }
+
+    } else {
+        # all send by client that is HMAC format
+        $switch = getMessageIDNew($$buffer) if (length($$buffer) >= 4);
+        $size = $rpackets->{$switch}{length};
+        my $hmacSize = $size + 26;
+
+        if ($size > 1) {
+            # Static length message.
+            if (length($$buffer) >= $hmacSize) {
+                $result = substr($$buffer, 2, $size);
+                substr($$buffer, 0, $hmacSize, '');
+                $$type = KNOWN_MESSAGE;
+            }
+        } elsif (
+            defined($size)
+            and $size == 0 # old Kore convention
+            || $size == -1 # packet extractor v3
+        ) {
+            # Variable length message.
+            if (length($$buffer) >= 4) {
+                $size = unpack("v", substr($$buffer, 2, 2));
+                $hmacSize = $size + 26;
+                if (length($$buffer) >= $hmacSize) {
+                    $result = substr($$buffer, 2, $size);
+                    substr($$buffer, 0, $hmacSize, '');
+                    $$type = KNOWN_MESSAGE;
+                }
+            }
+        } else {
+            $result = $$buffer;
+            $self->{buffer} = '';
+            $$type = UNKNOWN_MESSAGE;
+        }
+    }
+    return $result;
 }
 
 # ragnarok servers
