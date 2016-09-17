@@ -10,8 +10,7 @@ password
 loginPinCode
 char
 login_packet 
-#example# 
-#login_packet 760a1800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+hmac_key AE7AEE43215F3B442010CEE2AB647FBA
 
 # Poseidon Settings (http://wiki.openkore.com/index.php/PoseidonServer)
 # They must be the same as Query Server config in Poseidon.txt
