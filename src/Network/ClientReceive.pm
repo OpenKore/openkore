@@ -200,13 +200,7 @@ sub unhandledMessage {}
 
 sub unknownMessage {
 	my ($self, $args) = @_;	
-	if (($masterServer->{serverType} eq 'tRO'))
-	{
-		if (($args->{switch} ne '0A76') && ($args->{switch} ne '0A7C'))
-		{
-			Globals::UnknowSend ($args->{switch},length($args->{RAW_MSG}));
-		}	
-	}
+
 	# Unknown message - ignore it
 	unless (existsInList($config{debugPacket_exclude}, $args->{switch})) {
 		debug TF("Packet Tokenizer: Unknown outgoing switch: %s\n", $args->{switch}), 'outgoing';
