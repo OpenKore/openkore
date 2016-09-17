@@ -389,7 +389,7 @@ sub sendToServer {
 				$msg .= pack('V', $self->{flag}) . pack('V', $self->{seq}-1);
 				$msg .= hmac_md5($msg, pack('H*', $hmac_key));
 				$msg = pack('v', length($msg) + 2) . $msg;
-				Globals::UnknowLog("PacketX3:".uc(unpack("H*", $msg)));
+				#Globals::UnknowLog("PacketX3:".uc(unpack("H*", $msg)));
 				Globals::UnknowLog("recvX3:".$int2h1);
 				Globals::UnknowLog("sendX3:".$int2h2);
 			}	
