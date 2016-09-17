@@ -496,7 +496,6 @@ sub unknownMessage {
 			Globals::UnknowLog("send:".$int2h2);
 			return;
 		}
-		Globals::UnknowRecv ($args->{switch},length($args->{RAW_MSG}));
 	}	
 	# Unknown message - ignore it
 	unless (existsInList($config{debugPacket_exclude}, $args->{switch})) {
