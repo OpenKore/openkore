@@ -492,8 +492,8 @@ sub unknownMessage {
 			$messageSender->sendReplySyncRequestEx($h2int+42);
 			my $int2h1 = sprintf("%04X", $h2int);
 			my $int2h2 = sprintf("%04X", $h2int+42);
-			Globals::UnknowLog("recv:".$int2h1);
-			Globals::UnknowLog("send:".$int2h2);
+			Globals::UnknowLog("recvX0:".$int2h1);
+			Globals::UnknowLog("sendX0:".$int2h2);
 			return;
 		}
 	}	
