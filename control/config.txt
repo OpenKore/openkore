@@ -5,8 +5,8 @@
 
 master
 server 0	############# 0 Iris / 1 Chaos / 2 Odin / 3 Loki / 4 Thor #############
-username
-password
+username 0000
+password 0000
 loginPinCode
 char
 login_packet 
