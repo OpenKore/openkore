@@ -22,7 +22,7 @@
 # Please also read <a href="http://wiki.openkore.com/index.php/Network_subsystem">the
 # network subsystem overview.</a>
 package Network::Send;
-use Digest::HMAC_MD5 qw(hmac_md5);
+
 use strict;
 use Network::PacketParser; # import
 use base qw(Network::PacketParser);
