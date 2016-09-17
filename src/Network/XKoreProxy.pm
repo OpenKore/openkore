@@ -447,6 +447,23 @@ sub modifyPacketIn {
 			$accountInfo = substr($msg, 0, 47);
 			$serverInfo = substr($msg, 47, length($msg));
 		}
+		if ($config{server} eq '0')
+		{
+			$accountInfo = substr($msg, 0, 51);
+			$serverInfo = substr($msg, 51, length($msg));
+		} elsif ($config{server} eq '1') {
+			$accountInfo = substr($msg, 0, 83);
+			$serverInfo = substr($msg, 83, length($msg));
+		} elsif ($config{server} eq '2') {
+			$accountInfo = substr($msg, 0, 115);
+			$serverInfo = substr($msg, 115, length($msg));
+		} elsif ($config{server} eq '3') {
+			$accountInfo = substr($msg, 0, 147);
+			$serverInfo = substr($msg, 147, length($msg));
+		} elsif ($config{server} eq '4') {
+			$accountInfo = substr($msg, 0, 179);
+			$serverInfo = substr($msg, 179, length($msg));
+		}
 		my $newServers = '';
 		my $serverCount = 0;
 		
