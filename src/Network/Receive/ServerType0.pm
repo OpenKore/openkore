@@ -7500,18 +7500,20 @@ sub EAC{
 	undef $conState_tries;
 	$char = $chars[$config{char}];
 	return unless changeToInGameState();
+	if ($config{'XKore'} eq '0') {
 	$messageSender->sendMapLoaded();
 	$messageSender->sendSync(1);
 	$messageSender->sendGuildMasterMemberCheck();
 	$messageSender->sendGuildRequestInfo(0);
 	$messageSender->sendGuildRequestInfo(0);
-	$messageSender->sendGuildRequestInfo(1);
-	message(T("You are now in the game\n"), "connection");
-	Plugins::callHook('in_game');
-	
+	$messageSender->sendGuildRequestInfo(1);	
 	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
 	$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw( bRO tRO )); # tested at bRO 2013.11.30, request for cashitemslist + tRO
 	$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
-	$messageSender->SendEAC();	# if (($masterServer->{serverType} eq 'tRO') && ($config{'XKore'} eq '0'));
+	$messageSender->SendEAC();
+	}
+	message(T("You are now in the game\n"), "connection");
+	Plugins::callHook('in_game');
 }
+
 1;
