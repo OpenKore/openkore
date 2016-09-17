@@ -38,7 +38,7 @@
 
 
 # All items not mentioned in this file will be automatically stored in storage.
-all 0 1 0
+All 0 1 0
 
 
 ##### HEAL/SUPPORT ITEMS #####

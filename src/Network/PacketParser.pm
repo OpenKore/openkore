@@ -484,7 +484,20 @@ sub parse_pre {
 
 sub unknownMessage {
 	my ($self, $args) = @_;
-	
+	if($masterServer->{serverType} eq 'tRO')
+	{
+		my $h2int = hex($args->{switch}); #แปลง hex string เป็นตัวเลข
+		if(( $h2int >= 2138 && $h2int <= 2448) && ($net->getState() == Network::IN_GAME)) #ถ้า Unknow Packet มีค่าตั้งแต่ 085A - 0990 หรือแปลงเป็นตัวเลขได้ตั้งแต่ 2138 - 2448 ให้ทำงานในบล็อคด้านล่างบล็อคด้านล่าง
+		{
+			$messageSender->sendReplySyncRequestEx($h2int+42); #นำตัวเลขมา + 42 แล้วจัดการส่งพวก Unknow กลับหลุม #42 มีค่าเท่ากับ 2A เมื่อแปลงเป็น hex string 
+			my $int2h1 = sprintf("%04X", $h2int);
+			my $int2h2 = sprintf("%04X", $h2int+42);
+			Globals::UnknowLog("recv:".$int2h1);
+			Globals::UnknowLog("send:".$int2h2);
+			return; #สั่งให้กลับ ไม่ต้องขึ้นบอก Unknow
+		}	
+		Globals::UnknowRecv ($args->{switch},length($args->{RAW_MSG}));
+	}	
 	# Unknown message - ignore it
 	unless (existsInList($config{debugPacket_exclude}, $args->{switch})) {
 		warning TF("Packet Tokenizer: Unknown switch: %s\n", $args->{switch}), 'connection';

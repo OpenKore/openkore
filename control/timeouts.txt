@@ -144,3 +144,6 @@ injectSync 5
 injectKeepAlive 12
 welcomeText 4
 patchserver 120
+
+##### Macro Delay #####
+macro_delay 0.5

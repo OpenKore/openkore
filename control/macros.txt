@@ -1,0 +1,34 @@
+﻿automacro unstuck {
+   timeout 3
+   exclusive 1
+   console /(No LOS|Stuck|calculate|reach or damage target|tried too long to move)/i
+   call {
+      $escape = @random("Clear AI","ChangeDirection","Move Random Blocks")
+      if ($escape = "Clear AI") goto clear
+      if ($escape = "ChangeDirection") goto change
+      if ($escape = "Move Random Blocks") goto move
+      
+      :clear
+      log Bot is stuck.
+      log Trying to unstuck by Clearing AI.
+      log Bot successfully unstuck.
+      do eval AI::clear
+      stop
+      
+      :change
+      log Bot is stuck.
+      log Trying to unstuck by Changing Direction.
+      do @random("north","northeast","east","southeast","south","southwest","west","northwest") 1
+      log Bot successfully unstuck.
+      stop
+      
+      :move
+      log Bot is stuck.
+      log Trying to unstuck by Moving Random Blocks.
+      $x = @eval (return $::char->{pos}{x})
+      $y = @eval (return $::char->{pos}{y})
+      do move @eval($x + @rand(-1,1)) @eval($y + @rand(-1,1))
+      log Bot successfully unstuck.
+      stop
+   }
+}
