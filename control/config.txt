@@ -3,7 +3,7 @@
 
 ######## Login options and server-specific options ########
 
-master
+master Thailand - tRO (EXE)
 server 0	############# 0 Iris / 1 Chaos / 2 Odin / 3 Loki / 4 Thor #############
 username 0000
 password 0000
