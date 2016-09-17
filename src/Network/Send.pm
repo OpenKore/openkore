@@ -349,7 +349,6 @@ sub sendToServer {
 			$self->{hmac_enc} = 0;
 			$self->{seq} = 0;
 		} elsif ($messageID eq '007D') {
-			$self->{seq} = 0;
 			$msg .= pack('V', $self->{flag}) . pack('V', $self->{seq});
 			$msg .= hmac_md5($msg, pack('H*', $hmac_key));
 			$msg = pack('v', length($msg) + 2) . $msg;
