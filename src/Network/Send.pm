@@ -404,12 +404,12 @@ sub reconstruct_master_login {
 			$args->{password_md5_hex} = $_->hexdigest;
 		}
 
-		my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
-		my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
-		my $in = pack('a24', $args->{password});
+		my $key = pack('C32', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06, 0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06));
+		my $chain = pack('C32', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41, 0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41));
+		my $in = pack('a32', $args->{password});
 		my $rijndael = Utils::Rijndael->new;
-		$rijndael->MakeKey($key, $chain, 24, 24);
-		$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 24, 0);
+		$rijndael->MakeKey($key, $chain, 32, 32);
+		$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 32, 0);
 	}
 }
 
@@ -438,10 +438,6 @@ sub sendMasterLogin {
 			pack("a24", $username) .
 			pack("a24", $password) .
 			pack("C*", $master_version);
-	}
-	if ( ($masterServer->{serverType} eq 'tRO') )
-	{
-		$msg = pack("H*", $config{login_packet});	
 	}
 	$self->sendToServer($msg);
 	debug "Sent sendMasterLogin\n", "sendPacket", 2;
