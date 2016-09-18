@@ -9,7 +9,6 @@ username 0000
 password 0000
 loginPinCode
 char
-login_packet 
 hmac_key AE7AEE43215F3B442010CEE2AB647FBA
 
 # Poseidon Settings (http://wiki.openkore.com/index.php/PoseidonServer)
