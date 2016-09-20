@@ -1695,3 +1695,9 @@ pvp_y_6-5.rsw#PvP : 夢羅克#
 pvp_y_7-5.rsw#PvP : 夢羅克#
 pvp_y_8-5.rsw#PvP : 夢羅克#
 pvp_2vs2.rsw#PvP : 活動競賽場#
+verus01.rsw#研究洞-OPTATIO#
+verus02.rsw#研究洞-WISH#
+verus03.rsw#貝魯茲中央廣場#
+verus04.rsw#貝魯茲考古地#
+ver_tunn.rsw#貝魯茲 外圍隧道#
+ver_eju.rsw#優配擂斯東邊廢墟#
