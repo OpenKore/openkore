@@ -373,6 +373,7 @@ sub new {
 		'0260' => ['mail_window', 'v', [qw(flag)]],
 		'0274' => ['mail_return', 'V v', [qw(mailID fail)]],
 		# mail_return packet: '0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		'0276' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		'027B' => ['premium_rates_info', 'V3', [qw(exp death drop)]],
 		# tRO new packets, need some work on them
 		'0283' => ['account_id', 'a4', [qw(accountID)]],
@@ -551,23 +552,29 @@ sub new {
 		'0999' => ['equip_item', 'v V v C', [qw(index type viewID success)]], #11
 		'099A' => ['unequip_item', 'v V C', [qw(index type success)]],#9
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
+		'09D2' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'09D3' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
+		'09BB' => ['storage_opened', 'v2', [qw(items items_max)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
+		'09BD' => ['storage_item_removed', 'v V', [qw(index amount)]],
+		'09BF' => ['storage_closed'],
 		'09CD' => ['message_string', 'v V', [qw(msg_id para1)]], #8
 		'09CF' => ['gameguard_request'],
 		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
 		'0A0A' => ['storage_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
 		'0A0B' => ['cart_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
 		'0A0C' => ['inventory_item_added', 'v3 C3 a8 V C2 a4 v a25', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
-		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
-		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
-		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 		'0A2D' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
 		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
+		'0A28' => ['vending_confirm', 'C', [qw(success)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
-		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
+		'0A3B' => ['misc_effect', 'v a4 C v', [qw(len ID flag effect)]],
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
@@ -607,7 +614,7 @@ sub new {
 			type7 => {
 				len => 57,
 				types => 'v2 C V2 C a8 l v2 C a25 C',
-				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
+				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options flag)],
 			},
 		},
 		items_stackable => {
@@ -634,7 +641,7 @@ sub new {
 			type6 => {
 				len => 24,
 				types => 'v2 C v V a8 l C',
-				keys => [qw(index nameID type amount type_equip cards expire identified)],
+				keys => [qw(index nameID type amount type_equip cards expire flag)],
 			},
 		},
 	};
@@ -972,18 +979,23 @@ sub items_nonstackable {
 		|| $args->{switch} eq '0906' # other player
 	) {
 		return $items->{type5};
+		
 	} elsif ($args->{switch} eq '0992' # inventory
 		|| $args->{switch} eq '0994' # cart
 		|| $args->{switch} eq '0996' # storage
+		|| $args->{switch} eq '09D3' # guild storage
+		|| $args->{switch} eq '001E' # guild storage
 		|| $args->{switch} eq '0997' # other player
 	) {
 		return $items->{type6};
+		
 	} elsif ($args->{switch} eq '0A0D' # inventory
 		|| $args->{switch} eq '0A0F' # cart
 		|| $args->{switch} eq '0A10' # storage
 		|| $args->{switch} eq '0A2D' # other player
 	) {
 		return $items->{type7};
+		
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -1018,12 +1030,15 @@ sub items_stackable {
 		|| $args->{switch} eq '0902' # cart
 	) {
 		return $items->{type5};
-
+		
 	} elsif ($args->{switch} eq '0991' # inventory
 		|| $args->{switch} eq '0993' # cart
 		|| $args->{switch} eq '0995' # storage
+		|| $args->{switch} eq '09D2' # guild storage
+		|| $args->{switch} eq '0009' # guild storage
 	) {
 		return $items->{type6};
+		
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -1058,16 +1073,18 @@ sub parse_items_nonstackable {
 
 	$self->parse_items($args, $self->items_nonstackable($args), sub {
 		my ($item) = @_;
-
-		#$item->{placeEtcTab} = $item->{identified} & (1 << 2);
-
-		# Non stackable items now have no amount normally given in the
-		# packet, so we must assume one.  We'll even play it safe, and
-		# not change the amount if it's already a non-zero value.
 		$item->{amount} = 1 unless ($item->{amount});
-		$item->{broken} = $item->{identified} & (1 << 1) unless exists $item->{broken};
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
-	})
+		if ($item->{flag} == 0) {
+			$item->{broken} = $item->{identified} = 0;
+		} elsif ($item->{flag} == 1 || $item->{flag} == 5) {
+			$item->{broken} = 0;
+			$item->{identified} = 1;
+		} elsif ($item->{flag} == 3 || $item->{flag} == 7) {
+			$item->{broken} = $item->{identified} = 1;
+		} else {
+			message T ("Warning: unknown flag!\n");
+		}
+	});
 }
 
 sub parse_items_stackable {
@@ -1075,10 +1092,16 @@ sub parse_items_stackable {
 
 	$self->parse_items($args, $self->items_stackable($args), sub {
 		my ($item) = @_;
-
-		#$item->{placeEtcTab} = $item->{identified} & (1 << 1);
+		
 		$item->{idenfitied} = $item->{identified} & (1 << 0);
-	})
+		if ($item->{flag} == 0) {
+			$item->{identified} = 0;
+		} elsif ($item->{flag} == 1 || $item->{flag} == 3) {
+			$item->{identified} = 1;
+		} else {
+			message T ("Warning: unknown flag!\n");
+		}
+	});
 }
 
 sub _items_list {
@@ -1467,6 +1490,7 @@ sub cart_item_added {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{type} = $args->{type} if (exists $args->{type});
 		$item->{name} = itemName($item);
 	}
@@ -1883,6 +1907,7 @@ sub deal_add_other {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{name} = itemName($item);
 		message TF("%s added Item to Deal: %s x %s\n", $currentDeal{name}, $item->{name}, $args->{amount}), "deal";
 	} elsif ($args->{amount} > 0) {
@@ -2860,6 +2885,7 @@ sub inventory_item_added {
 			} elsif ($args->{switch} eq '02D4') {
 				$item->{expire} = $args->{expire} if (exists $args->{expire}); #a4 or V1 unpacking?
 			}
+			$item->{options} = $args->{options};
 			$item->{name} = itemName($item);
 			$char->inventory->add($item);
 		} else {
@@ -4444,7 +4470,7 @@ sub received_characters {
 		$chars[$slot]{luk} = $luk;
 		$chars[$slot]{sex} = $accountSex2;
 
-		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
+		$chars[$slot]{deleteDate} = getFormattedDate($deleteDate) if ($deleteDate);
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 	}
@@ -5736,6 +5762,7 @@ sub storage_item_added {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{name} = itemName($item);
 		$item->{binID} = binFind(\@storageID, $index);
 	}
@@ -5884,6 +5911,14 @@ sub storage_password_request {
 			if ($config{storageAuto_password} eq '') {
 				my $input = $interface->query(T("Please enter your storage password."), isPassword => 1);
 				if (!defined($input)) {
+					return;
+				}
+				if (!$config{storagePassword_notNumeric} && $input !~ m/^\d*$/) {
+					error T("Non-numeric password is not allowed.\n");
+					return;
+				}
+				if (!$config{storagePassword_noLengthLimit} && $input !~ m/^\d{4,8}$/) {
+					error T("Password must be in length of 4 to 8.\n");
 					return;
 				}
 				configModify('storageAuto_password', $input, 1);
@@ -6429,7 +6464,7 @@ sub rates_info2 {
 	# get details
 	for (my $offset = 0; $offset < length($args->{detail}); $offset += 13) {
 		my ($type, $exp, $death, $drop) = unpack("C V3", substr($args->{detail}, $offset, 13));
-		$rates{exp}{$type} = $exp; $rates{death}{$type} = $death; $rates{drop}{$type} = $drop;
+		$rates{exp}{$type} = $exp/(100*10); $rates{death}{$type} = $death/(100*10); $rates{drop}{$type} = $drop/(100*10);
 	}
 
 	# we have 4 kinds of detail:
@@ -7486,6 +7521,12 @@ sub senbei_amount {
 	my ($self, $args) = @_;
 	
 	$char->{senbei} = $args->{senbei};
+}
+
+sub vending_confirm {
+	my ($self, $args) = @_;
+	
+	debug "Vending shop started\n", 'parseMsg';
 }
 
 1;
