@@ -1,0 +1,218 @@
+﻿###############################################################################
+# File name: SERVER STRUCTURE.txt
+# Created By: The Uniform Server Development Team
+# 31-7-2016
+# Note: Structure depends on modules installed.
+###############################################################################
+
+----------------
+Server Structure
+----------------
+
+UniServerZ\
+  UniController.exe         - Runs unicontroller program. Start and Stop server
+
+UniServerZ\cgi-bin          - Perl scripts
+  test_xx.pl                - Perl test scripts
+
+UniServerZ\core
+   Folder containing main server components
+
+UniServerZ\core\apache2
+  Apache2 folder.
+
+UniServerZ\core\apache2\bin
+  Apache2 binaries.
+
+UniServerZ\core\apache2\conf
+  Apache2 configuration files. (see httpd.conf)
+
+UniServerZ\core\apache2\conf\extra
+  Additional Apache2 configuration files.
+
+UniServerZ\core\apache2\conf\extra_us
+  Additional Apache2 configuration files.
+  PHP Specific Apache configuration 
+
+UniServerZ\core\apache2\icons
+  Apache2 icons.
+
+UniServerZ\core\apache2\logs
+  Apache2 logs.
+
+UniServerZ\core\apache2\modules
+
+UniServerZ\core\apache2\server_certs
+  Server SSL certificate ssl.crt - Created by running cert gen
+  Server SSL Key ssl.key         - Created by running cert gen
+  Note: sub.class1.server.ca.pem and ca.pem are specific to StartSSL.com
+
+UniServerZ\core\msmtp
+  SMTP mail client required used by PHP
+    Contains executable and configuration file.
+
+UniServerZ\core\mysql
+  Contains MySQL or MariaDB server
+
+
+UniServerZ\core\openssl
+  Contains openssl files for generating server certificates.
+    Generate_server_cert_and_key.bat - Gen self signed certificate
+    View_cert_details.bat            - View cert details
+    Apache_enable_ssl.bat            - Enable SSL in Apache config
+    Apache_disable_ssl.bat           - Disable SSL in Apache config
+
+UniServerZ\core\php53
+  Contains PHP program and configuration files:
+    php_development.ini
+    php_production.ini
+    php_test.ini
+    php-cli.ini
+UniServerZ\core\php53\extensions
+  Contains supported extensions
+
+UniServerZ\core\php54
+  Contains PHP program and configuration files:
+    php_development.ini
+    php_production.ini
+    php_test.ini
+    php-cli.ini
+UniServerZ\core\php54\extensions
+  Contains supported extensions
+
+UniServerZ\core\php55
+  Contains PHP program and configuration files:
+    php_development.ini
+    php_production.ini
+    php_test.ini
+    php-cli.ini
+UniServerZ\core\php55\extensions
+  Contains supported extensions
+
+UniServerZ\core\php56
+  Contains PHP program and configuration files:
+    php_development.ini
+    php_production.ini
+    php_test.ini
+    php-cli.ini
+UniServerZ\core\php56\extensions
+  Contains supported extensions
+
+UniServerZ\core\php70
+  Contains PHP program and configuration files:
+    php_development.ini
+    php_production.ini
+    php_test.ini
+    php-cli.ini
+UniServerZ\core\php70\extensions
+  Contains supported extensions
+
+UniServerZ\core\php71
+  Contains PHP program and configuration files:
+    php_development.ini
+    php_production.ini
+    php_test.ini
+    php-cli.ini
+UniServerZ\core\php71\extensions
+  Contains supported extensions
+
+UniServerZ\service_back_ap
+  Contains Apache service backup files when Apache installed as service
+
+UniServerZ\service_back_my
+  Contains MySQL service backup files when MySQL installed as service
+
+UniServerZ\db_backup_restore
+  Contains MySQL backup files
+
+UniServerZ\docs
+  Change logs
+
+UniServerZ\docs\licenses
+  Single location for all licenses
+
+UniServerZ\docs\manual
+  Uniform Server Documentation (/us_docs/)
+
+UniServerZ\home
+  Server home folder.
+
+UniServerZ\home\install_perl
+  ActivePerl installer
+  For details see Read_me.txt
+
+UniServerZ\home\us_access
+ Contains dummy html page to test server access
+
+UniServerZ\home\us_config      - Server configuration
+  us_config.ini   - Server configuration
+  us_user.ini     - User configuration
+  us_clean_up.ini - List of file and folders to delete clean-up
+
+UniServerZ\home\us_cron
+  Contains cron coniguration and log.
+
+UniServerZ\home\us_dtns
+  Contains configuration file for dtdns
+
+UniServerZ\home\us_extra
+  Users information pages: 
+  APC, eAccelerator, MySQL, xcache, PHPinfo
+  and Zend Optimizer Plus
+
+UniServerZ\home\us_opt1
+  Contains phpMyAdmin
+
+UniServerZ\home\us_opt2
+  Contains Adminer 
+
+UniServerZ\home\us_opt3
+  Contains phpMyBackUpPro or Sypex Dumper
+
+UniServerZ\home\us_pac
+  Contains proxy.pac file required for resolving Apache Vhosts 
+
+UniServerZ\home\us_splash
+  Optional initial opening page (/us_splash/) 
+  Reference page us_zero_ref.html
+
+UniServerZ\htpasspwd
+  Uniform Server HTPASSWD dirctory
+    By default: Contains corresponding dirs for mysql, ssl, webdav and www
+                these each contain a password file .htpasswd 
+
+UniServerZ\ssl  - Document root (/).
+  By default contains:
+   index.php
+   favicon.ico
+   .htaccess     - Note do not remove
+
+UniServerZ\tmp
+  Temporally folder.
+
+UniServerZ\utils
+  Server utilities:
+   EdHost.exe
+
+UniServerZ\www  - Document root (/).
+  Folder for your web sites.
+  By default contains:
+   index.php
+   favicon.ico
+   .htaccess     - Note do not remove
+
+UniServerZ\www\images
+  Images directory
+
+UniServerZ\www\css
+  Common css files
+
+
+-------------------------------------------------------------------------------
+         Copyright 2002-2016 The Uniform Server Development Team
+                        All rights reserved.
+
+The authors were trying to make the best product so they cannot be held responsible
+for any type of damage or problems caused by using this or another software.
+
+                                 ---o0o---

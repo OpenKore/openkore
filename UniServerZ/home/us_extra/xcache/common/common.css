@@ -1,0 +1,191 @@
+* {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+body {
+	background: white;
+	color: black;
+	margin: 0;
+	padding: 0;
+	font-family: arial;
+	font-size: 12pt;
+}
+form {
+	margin: 0;
+	padding: 0;
+}
+a:link
+, a:visited {
+	color: #0066CC;
+}
+a:link:hover
+, a:visited:hover {
+	color: #BB0000;
+}
+a:link:active
+, a:visited:active {
+	color: red;
+}
+#header {
+	background: #5084D5;
+	position: relative;
+	height: 51px;
+	color: #d0d0d0;
+}
+h1, h2, h3, h4, h5, h6 {
+	margin-bottom: 2px;
+}
+#header #banner {
+	font: 32px/51px "arial", serif;
+	color: white;
+}
+#header #banner a {
+	color: white;
+}
+#header #banner #logo {
+	border: 0;
+	display: block;
+	float: left;
+	margin-right: 5px;
+	background: white;
+}
+#header #mainnav {
+	top: 3px;
+	right: 5px;
+	font-size: 16px;
+	line-height: 16px;
+	position: absolute;
+}
+#header #mainnav a {
+	font-size: 14px;
+}
+#header #subnav {
+	bottom: 0;
+	right: 5px;
+	position: absolute;
+	font-size: 28px;
+	line-height: 28px;
+}
+#header #subnav a {
+	font-size: 24px;
+}
+#header #nav {
+	font-family: "arial", serif;
+}
+#header #mainnav a:link, #header #mainnav a:visited {
+	color: black;
+}
+#header #mainnav a:active, #header #mainnav a:hover {
+	color: red;
+}
+#header #mainnav a {
+	padding: 0 8px 0 8px;
+}
+#headerbase {
+	background: #1163BC;
+	border: 1px solid #334C66;
+	border-width: 1px 0 1px 0;
+	margin-bottom: 10px;
+	font: 12px/12px serif;
+}
+#main table {
+	font-size: 12px;
+	border: 1px solid #334C66;
+	border-top-width: 0;
+}
+#main table caption {
+	background: #1163BC;
+	color: white;
+	line-height: 20px;
+	border: 1px solid #334C66;
+	border-bottom-width: 0;
+	padding: 0;
+}
+#main table tfoot {
+	background: #1163BC;
+}
+#main table th {
+	background: #E7E7FF;
+	color: black;
+}
+#main table td {
+	vertical-align: top;
+}
+#main {
+	margin: 20px;
+}
+#note {
+	font-size: 11.9px;
+}
+#footer {
+	bottom: 0px;
+	background: #E7E7FF;
+	border-top: 1px solid gray;
+}
+#poweredBy {
+	overflow: hidden;
+}
+#footer {
+	clear: both;
+	height: 40px;
+	position: relative;
+}
+#footer img {
+	margin-top: 2px;
+	margin-left: 2px;
+	border: 0;
+}
+#poweredBy h3 {
+	float: right;
+	margin-right: 20px;
+	margin-top: 20px;
+}
+#poweredBy h3 {
+	margin: 0;
+	font-size: 12px;
+	position: absolute;
+	bottom: 8px;
+	right: 8px;
+}
+.phpinfo table { border: 1px solid #334C66; margin-bottom: 1px; }
+.phpinfo table th, .phpinfo table td { border: 1px solid #334C66; }
+.phpinfo table th { font-weight: bold; }
+.phpinfo .e {background: #81BBF2; font-weight: bold; color: #000000;}
+#main .phpinfo .h th {background: #5084D5; font-weight: bold; color: #000000;}
+.phpinfo .v {color: #000000;}
+.button { }
+span.sortarrow { color: white; text-decoration: none; }
+table.cycles { border: 1px solid #334C66; margin-bottom: 5px; }
+table.cycles .col1 { background: #f5f5f5; }
+table.cycles .col2 { background: #e0e0e0; }
+table.cycles th, table.cycles td { border: 1px solid #334C66; font-family: monospace; }
+#main table.cycles caption { color: white; font-weight: bold; height: 24px; line-height: 24px; font-family: serif; }
+#main table.cycles th { background: #81BBF2; color: #334C66; font-weight: bold; height: 20px; line-height: 20px; font-family: serif; }
+#main table.cycles th.h { background: #5084D5; }
+th.h a:visited
+, th.h a:link { color: black; }
+th.h a:hover { color: #BB0000; }
+th.h a:active { color: red; }
+th a { font-weight: bold; display: block; width: 100%; height: 100%; }
+th { font-size: 12px; }
+input, table { font-family: sans-serif; }
+input { font-size: 12px; }
+table { border-collapse: collapse; font-size: 11px; margin: 0; }
+table caption {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+a {
+	text-decoration: none;
+}
+#main table td {
+	vertical-align: middle;
+}
+.switcher a { color: black; padding: 1px 8px 1px 8px; border: 1px solid white; }
+.switcher a { border-color: white; border-bottom-color: #334C66; }
+#nav .switcher a { border-color: #5084D5; border-bottom-color: #334C66; }
+#nav .switcher a.active, .switcher a.active { color: white; background: #1163BC; border-color: #334C66; border-bottom-color: #1163BC; }
+#nav .switcher a:hover.active, .switcher a:hover.active { background: #81BBF2; }
+.switcher a:hover { background: #81BBF2; }
+#nav .switcher a:active, .switcher a:active { background: #81BBF2; }

@@ -1,0 +1,40 @@
+﻿################################################################################
+# File name: CHANGE LOG CONTROLLER.txt
+# Created By: The Uniform Server Development Team
+################################################################################
+
+ --------------------------------------------
+ Uniform Server ZeroXIII Controller Change Log
+ --------------------------------------------
+
+ 2.2.0  - Added support for PHP 7.1.*
+          Removed support for Plua and Lua cgi.
+ 
+ 2.1.1  - Corrected Bug: Main form not displayed after displaying
+          ZoneAlarm warning message.
+        - Added configuration parameter ZoneAlarmCheck to general section of
+          configuration file us_config.ini values false/true false=disable check. 
+
+ 2.1.0  - Corrected Bug: When ports already inuse the controller was hidden
+                         preventing user changing these ports from controller.
+ 2.0.0  - Initial release.
+
+
+ ----
+ Note
+ ----
+ 
+ Uniform Server ZeroXIII Controller is based on the Uniform Server ZeroXII. 
+ Uniform Server ZeroXII Controller is based on the Uniform Server ZeroXI.
+
+ -----------------------------------------------------------------------------
+
+  The authors were trying to make the best product so they cannot be held
+  responsible for any type of damage or problems caused by using this or
+  another software.
+
+ --------------------------------------o0o------------------------------------
+            Copyright 2002-2016 The Uniform Server Development Team
+                            All rights reserved.
+
+

@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Multi-Servers</title>
+  <meta name="Multi-Servers" content="Multi-servers enable you to run more than one copy (instance) of The Uniform Server Zero (Apache and MySQL) on the same PC. This requires moving servers to different ports, renaming their executables and the controller executable. Changing the ports also allows you to run The Uniform Server Zero alongside other servers such as IIS. This page details the changes required" />
+  <meta name="Keywords" content="Multi-servers,controller,Apache,MySQL,server,executable,name,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p1000">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/multi_servers_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Multi-Servers</h1>
+</tr>
+</table>
+
+<p>Multi-servers enable you to run more than one copy (instance) of The Uniform Server Zero (Apache and MySQL) on the same PC. This requires moving servers to different ports, renaming their executables and the controller executable. Changing the ports also allows you to run The Uniform Server Zero alongside other servers such as IIS. This page details the changes required.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Preliminary" >Preliminary</a></li>
+   <li><a href="#Controller" >Controller</a></li>
+   <li><a href="#Change controller name" >&nbsp;&nbsp;Change controller name</a></li>
+   <li><a href="#Change Icon" >&nbsp;&nbsp;Change Icon</a></li>
+   <li><a href="#Apache Server" >Apache Server</a></li>
+   <li><a href="#Change Apache server executable" >&nbsp;&nbsp;Change Apache server executable</a></li>
+   <li><a href="#Change Apache server ports" >&nbsp;&nbsp;Change Apache server ports</a></li>
+
+   <li><a href="#MySQL Server" >MySQL Server</a></li>
+   <li><a href="#Change MySQL server executable" >&nbsp;&nbsp;Change MySQL server executable</a></li>
+   <li><a href="#Change MySQL server port" >&nbsp;&nbsp;Change MySQL server port</a></li>
+
+   </ul>
+ </div>
+</div>
+
+<a name="Preliminary"></a>
+<h2>Preliminary</h2>
+
+<p>You need to decide if you want to clone an existing WAMP server or create a new one.</p> 
+
+<p>A) To create a clone, copy an existing server. Copy the folder UniServerZ and all its content to a new folder. For example create a new folder named New_UniServer and copy folder UniServerZ to it.</p>
+
+<p>B) To create a new WAMP server first create a new folder New_UniServer and follow these instruction:</p>
+
+<ol>
+  <li> Create a new folder c:\<b>New_UniServer</b></li>
+  <li> Download and save the latest controller file (ZeroXIII_controller_2_2_0.exe) to folder New_UniServer</li>
+  <li> The file is a self-extracting archive, double click on above file to run the extrater.</li>
+  <li> A new folder C:\New_UniServer\<b>UniServerZ</b> is created containing the controller application UniController.exe and support folders and files.</li>
+  <li> Download the following plugins and save to folder C:\New_UniServer\<b>UniServerZ</b>.
+       <ul>
+         <li>ZeroXIII_apache_2_4_23_h.exe - Apache server</li>
+         <li>ZeroXIII_mysql_5_6_31.exe - MySQL server</li>
+         <li>ZeroXIII_php_7_0_8.exe - PHP</li>
+         <li>ZeroXIII_phpmyadmin_4_6_3.exe - Admin for MySQL server</li>
+       </ul>
+   </li>
+  <li> For each of the above installation files double click to run the extracter.</li>
+  <li> If prompted allow overwriting of existing files. </li>
+  <li> If you wish; delete the installation files, they are no longer required. </li>
+</ol>
+
+<p>Note: Remainder of this documentation assumes you are using folder New_UniSever substitute this for the folder name you are using.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Controller"></a>
+<h2>Controller</h2>
+
+<p>You cannot run two instances of UniController.exe the executable name must be unique.</p>
+
+<a name="Change controller name"></a>
+<p><b><i>Change controller name</i>:</b><br />
+Example:<br />
+Rename file C:\New_UniServer\UniServerZ\<b>UniController.exe</b> to C:\New_UniServer\UniServerZ\<b>UniController1.exe</b><br />
+Note: You can use a different name so long as the name is unique and has the file extension  .exe</p>
+
+<a name="Change Icon"></a>
+<p><b><i>Change Icon</i>:</b></p>
+
+<p>To distinguish between instances of Uniform Server Zero the tray icon requires changing.<br />
+The following parameters in configuration file C:\New_UniServer\UniServerZ\home\us_config\<b> us_config.ini </b> allow you to change icon and hover text:</p>
+
+ <ul>
+   <li><b>ServerType</b> - Set Server type valid values WAMP0 to WAMP3 sets icon - Default WAMP0</li> 
+   <li><b>ServerTypeText1</b> - First line of hover text - Default "Uniform Server Zero"</li> 
+   <li><b>ServerTypeText2</b> - Second line of over text - Default "Portable WAMP Server"</li>
+ </ul>
+
+<table>
+  <tr>
+    <td>
+      Icons are shown on the right: Icons left to right WAMP0,WAMP1,WAMP2 and WAMP3
+    </td>
+    <td>
+  <img src="images/C11_icons_us.gif" alt="WAMP Icons" />
+    </td>
+  </tr>
+</table>
+
+<p><b>Example:</b></p>
+
+<table>
+  <tr>
+    <td>
+<p>For this example edit file: C:\New_UniServer\UniServerZ\home\us_config\<b> us_config.ini </b> <br /> 
+Change the following lines:</p>
+<pre>
+ServerType=WAMP0
+ServerTypeText1=Uniform Server Zero
+ServerTypeText2=Portable WAMP Server
+</pre>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+<p>To:</p>
+<pre>
+ServerType=WAMP1
+ServerTypeText1=Uniform Server Zero
+ServerTypeText2=Portable WAMP Server 1
+</pre>
+    </td>
+  </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Apache Server"></a>
+<h2>Apache Server</h2>
+<p>To avoid conflicts when running multi-servers requires the Apache executable to be renamed and the server ports to be changed.</p>
+
+<a name="Change Apache server executable"></a>
+<p><b><i>Change Apache server executable</i>:</b></p>
+
+  <ul>
+   <li>Navigate to folder C:\New_UniServer\UniServerZ\core\apache2\<b>bin</b></li>
+   <li>Rename Apache executable file from httpd_z.exe to <b>httpd_z1.exe</b></li>
+      <ul>
+        <li>The file name must start with httpd_ followed by any unique string and terminated with file extension .exe</li>
+        <li>For convenience it is easier just to increment the digit.</li>
+      </ul>
+  </ul>
+
+
+<a name="Change Apache server ports"></a>
+<p><b><i>Change Apache server ports</i>:</b></p>
+
+  <ul>
+   <li>Start UniController1.exe</li>
+   <li>Change standard port from 80 to 81: </li>
+     <ul>
+       <li>Apache > Change Apache ports > Change Apache port</li>
+       <li>Enter 81 and click OK</li>
+       <li>Note: Again it is easier just to increment, however you can enter a different unique port.</li>
+     </ul>
+   <li>Change ssl port from 443 to 444: </li>
+     <ul>
+       <li>Apache > Change Apache ports > Change Apache SSL port</li>
+       <li>Enter 444 and click OK</li>
+       <li>Note: Again it is easier just to increment, however you can enter a different unique port.</li>
+     </ul>
+  </ul>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="MySQL Server"></a>
+<h2>MySQL Server</h2>
+<p>To avoid conflicts when running multi-servers requires the MySQL executable to be renamed and the server port to be changed.</p>
+
+
+<a name="Change MySQL server executable"></a>
+<p><b><i>Change MySQL server executable</i>:</b></p>
+
+  <ul>
+   <li>Navigate to folder C:\New_UniServer\UniServerZ\core\mysql\<b>bin</b></li>
+   <li>Rename MySQL executable file from mysqld_z.exe to <b>mysqld_z1.exe</b></li>
+      <ul>
+        <li>The file name must start with mysqld_ followed by any unique string and terminated with file extension .exe</li>
+        <li>For convenience it is easier just to increment the digit.</li>
+      </ul>
+  </ul>
+
+
+<a name="Change MySQL server port"></a>
+<p><b><i>Change MySQL server port</i>:</b></p>
+
+  <ul>
+   <li>Start UniController1.exe</li>
+   <li>Change standard port from 3306 to 3307:</li>
+     <ul>
+       <li>MySQL > Change MySQL port</li>
+       <li>Enter 3307 and click OK</li>
+       <li>Note: Again it is easier just to increment, however you can enter a different unique port.</li>
+     </ul>
+  </ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Summary"></a>
+<h2>Summary</h2>
+<p>With the above modifications you can run up to four seperate servers.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

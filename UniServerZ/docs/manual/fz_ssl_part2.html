@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>FileZilla ssl part 2</title>
+  <meta name="Description" content="The following covers passive mode and the added complication of running a FTP server behind a wireless router with NAT" />
+  <meta name="Keywords" content="FTP,server,behind,wireless,router,NAT,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<style type="text/css">
+/*****************************************/
+.heading {
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #ffffff;
+ background-color:  #2F2F76;
+ font-size: 13px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.td_sub{
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #000000;
+ background-color:  #f0f0f0;
+ font-size: 12px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+/*****************************************/
+</style>
+
+
+<body id="p1830">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+<script language="javascript" src="common/portable_filezilla_server_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>FileZilla SSL part 2</h1>
+</tr>
+</table>
+
+<p>The <a href="fz_ssl_part1.html">previous page</a> covered securing a local FTP server. This page expands on that for securing an FTP server to run over the internet. Before proceeding ensure you have configured and tested as explained on the previous page. There are two transfer modes active or passive, configuring an FTP server for internet use the user (FTP client) is given priority. Everything is geared to make it easier for the client hence your server must support passive mode. The following covers this mode and the added complication of running a FTP server behind a wireless router with NAT.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#FTP Basics">FTP Basics</a></li>
+   <li><a href="#Passive FTP">&nbsp;&nbsp;Passive FTP</a></li>
+   <li><a href="#Active FTP">&nbsp;&nbsp;Active FTP</a></li>
+   <li><a href="#Summary">&nbsp;&nbsp;Summary</a></li>
+
+   <li><a href="#Configure Passive Mode">Configure Passive Mode</a></li>
+   <li><a href="#Configure NAT Router">Configure NAT Router</a></li>
+   <li><a href="#Summary2">Summary</a></li>
+
+   </ul>
+ </div>
+</div>
+
+<a name="FTP Basics"></a>
+<h2>FTP Basics</h2>
+
+<p>FTP uses two ports, a <b>command</b> (control) port and <b>data</b> port traditionally these are assigned ports <b>21</b> and <b>20</b> respectively. Depending on the operating mode, the data port is not always on port 20. </p>
+
+
+<a name="Passive_FTP"></a>
+<h3>Passive_FTP</h3>
+<p>  Most browsers use passive mode for connection this mode changes the data port as follows.<br />
+In passive mode a client initiates both connections to the server. A client first opens two consecutive random unprivileged ports (ports above 1023). The first port contacts the server on port 21, and issues the <b>PASV</b> command. In response the server opens a random unprivileged port and sends the <b>PORT P</b> command back to the client. The client then initiates the connection from it’s second port to transfer data.</p>
+
+<p>A secure FTP server follows the above procedure with one minor difference the command port used is reserved port <b>990</b>.<br />
+What’s important when using a NAT device is the need to <b>forward ports</b> 20, 21, 990 and all unprivileged ports. In reality unprivileged ports are restricted to a small range for example 50000 to 50100.</p>
+
+<p>During a data transfer the FTP server needs to send its <b>visible IP address</b> back to a client. Because of address translation through a NAT device the FTP server has no way of determining this IP address. It needs to be set during FTP server configuration, not a problem if you have a fixed IP address however a dynamic IP is problematic. The FileZilla team neatly resolves this issue by providing a <b>dynamic IP address resolution</b> service.</p>
+
+
+<a name="Active_FTP"></a>
+<h3>Active_FTP</h3>
+
+<p>If you have ever set-up an FTP client behind a NAT (Network Address Translation) router you will have been forced to changed mode from active to passive. Reason for this, active FTP will not work behind a NAT device. </p>
+
+<a name="Summary"></a>
+<h3>Summary</h3>
+<p>The above is intended to explain why you need to twiddle certain settings and how to choose options for your installation. All settings for passive mode are on a single page making the whole set-up process easier.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Configure Passive Mode"></a>
+<h2>Configure Passive Mode</h2>
+
+<ul>
+ <li>Start UniServer FileZilla Controller: Double click on <i>UniFzController.bat</i> </li>
+ <li>Start FileZilla Server: Click <i>Start FZ Server</i> </li>
+ <li>Start FileZilla Interface: Click on <i>Start Interface</i></li>
+ <li> Select <b>Edit &gt; Settings</b></li>
+</ul>
+
+
+<table>
+ <tr valign="top">
+  <td>
+
+<ol>
+
+  <li> <b>A)</b> Select <b>Passive mode settings</b></li>
+  <li> <b>B)</b> <b>Default</b>: Select this if directly connected to the Internet.</li>
+  <li> <b>C)</b> <b>Use the following IP</b>: If connected to the Internet via a NAT router and you have a fixed IP address enter it here.</li>
+  <li> <b>D)</b> <b>Retrieve external IP address from</b>: If connected to the Internet via a NAT router and you have a dynamic IP address select this radio button. Enables  FileZilla’s dynamic IP address resolution service</li>
+  <li> <b>E)</b> <b>Don’t use external IP for local connection</b>. Default is checked, no need to change this.</li>
+
+  <li> <b>F)</b> <b>Use custom port range</b>: Check this box to enable, we do need to restrict the range of random ports. This also restricts (minimises) the ports that require forwarding in the router.
+  <ul>
+    <li> <b>Enter range</b> of ports you want to allow, 50000-50100 is reasonable. Allows 100 ports consider reducing this if you do not  expect a high number of simultaneous connections.   
+</li>
+  </ul>
+</li>
+
+<li> <b>G)</b> Click<b> OK</b> 
+</li></ol>
+
+  </td>
+<td>
+  <img src="images/filezilla/fz_ssl_passive_a.png" alt="Configure passive mode" />
+</td>
+
+ </tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Configure NAT Router"></a>
+<h2>Configure NAT Router</h2>
+
+<table>
+ <tr valign="top">
+  <td>
+
+<p>You need to forward ports 20, 21, 990 and the range (50000-50100) to your PC’s IP address (for example 192.168.1.6)<br />
+Replace the value in brackets with your own IP address.</p>
+
+
+<p>There is a vast range of routers hence I have not provided any detailed set-up instructions.</p>
+
+<p>Again I point you to <a target="_blank" href="http://portforward.com/">PortForwrd</a> a website dedicated to this topic with detailed instructions how to forward ports on most routers.
+</p>
+
+<p>The example shown on the right is for a DrayTek Vigor 2800G router hopefully this will provide a clue what to look for when configuring your own router.</p>
+ </td>
+
+<td>
+  <img src="images/filezilla/fz_ssl_passive_b.png" alt="Config Nat router" />
+</td>
+
+ </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Summary2"></a>
+<h2>Summary</h2>
+
+<p>That concludes this two part secure FTP configuration guide. You now have a fully working secure FTP server that will transfer files locally or over the Internet. </p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

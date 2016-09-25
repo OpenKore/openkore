@@ -1,0 +1,541 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Batch Files</title>
+  <meta name="Description" content="A batch file is a text file with a .bat file extension. It contains a series of commands to be executed by the command line interpreter. You can run a batch file from a command prompt by navigating to its containing folder and typing its name or just double click on the file."/>
+  <meta name="Keywords" content="Batch,files,The Uniform Server,MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<style type="text/css">
+/*****************************************/
+.heading {
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #ffffff;
+ background-color:  #2F2F76;
+ font-size: 13px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.td_sub{
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #000000;
+ background-color:  #f0f0f0;
+ font-size: 12px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+/*****************************************/
+</style>
+
+
+<body id="p1900">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+<script language="javascript" src="common/batch_files_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Batch Files</h1>
+</tr>
+</table>
+
+<p>A batch file is a text file with a .bat file extension. It contains a series of commands to be executed by the command line interpreter. You can run a batch file from a command prompt by navigating to its containing folder and typing its name or just double click on the file. Unless stated otherwise examples on this page are run by double clicking on the file name which automatically opens a command prompt and runs the script.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Background">Background</a></li>
+   <li><a href="#Basic batch file template">Basic batch file template</a></li>
+   <li><a href="#Folder hierarchy – Moving around ">Folder hierarchy </a> – Moving around</li>
+   <li><a href="#Folders and Files">Folders and Files</a> – Create, delete and redirection operator.</li>
+   <li><a href="#IF and IF ELSE command">IF and IF ELSE command</a></li>
+   <li><a href="#Set /p command">Set /p command</a> - user and file input</li>
+   <li><a href="#Set/Delete variable">&nbsp;&nbsp;Set/Delete variable</a></li>
+   <li><a href="#Prompt for user input">&nbsp;&nbsp;Prompt for user inputy</a></li>
+   <li><a href="#Set from text file">&nbsp;&nbsp;Set from text file</a></li>
+   <li><a href="#Alternative Set from text file">&nbsp;&nbsp;Alternative Set from text file</a></li>
+   <li><a href="#Summary">Summary</a></li>
+   </ul>
+ </div>
+</div>
+
+
+<a name="Background"></a>
+<h2>Background</h2>
+
+<p>Reason for writing this section is to provide enough information for writing batch scripts to run the various command line utilities found in Uniform Server. After reading this section you will be able to understand how some of the included batch scripts work.</p>
+
+<p><i>Note</i>: The directory and folder are interchangeable. Directory comes from the early days of DOS  programming.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Basic batch file template"></a>
+<h2>Basic batch file template</h2>
+
+<p>Uniform Server is portable and does not change the host environment. For portability each batch file must be located in the root folder UniServerZ or a folder below this. Ideally each file should be autonomous meaning it can be run by another batch file or application. The following template meets this requirement.</p>
+
+<p>In folder UniServerZ create a new file named test1.bat with the following content:</p>
+
+
+<table>
+ <tr valign="top">
+   <td>
+<b><i>Comments</i></b>
+<p>A) Batch file command "@echo off" prevents displaying of command lines.</p>
+
+<p>B) Batch file command "rem " allows you to add comments to document the script.</p>
+
+<p>C) The batch file command pair "pushd %~dp0" and "popd" apart from saving and resorting a callers location forces current working directory to the location of the file containing the command pair.</p>
+
+<p>D) Command "echo" outputs the string that follows to the screen.<br />
+The special command "echo." outputs a blank line. Note there is no space between echo and the full stop </p>
+
+<p>E) The command "pause" Halts execution allowing you to read the screen. This command is generally used for test purposes
+without it the screen (command prompt) closes.</p>
+   </td>
+
+   <td>&nbsp;</td>
+
+   <td>
+<b><i>test1.bat</i></b>
+<pre>
+
+@echo off
+rem ### working directory current folder 
+pushd %~dp0
+
+echo This is test script 1
+echo.
+
+rem ### restore original working directory
+popd
+
+pause
+
+
+
+</pre>
+   </td>
+ </tr>
+</table>
+
+<p><b><i>Test</i></b> <br />
+Run the batch file by double clicking on file test1.bat:
+
+<ul>
+  <li>A command window opens.   </li>
+  <li>The string "This is test script 1" without the quotes is displayed.  </li>
+  <li>The message displayed "Press any key to continue . . ." is the result of the pause command.  </li>
+  <li> Pressing any key closes the window.  </li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Folder hierarchy – Moving around"></a>
+<h2>Folder hierarchy – Moving around</h2>
+
+<p>Knowing where you are in the folder hierarchy is extremely important. The current working directory is provided by a top-level environment variable %CD% a copy is passed to the command prompt. Value contained in this variable is that of the calling application. Our template forces this to the location of our script. Within our batch file we can use the command "CD" to change this environment variable. It is unfortunate the command and  environment variable have identical names "CD" however, the commend "CD" means change directory and environment variable %CD% means current working directory. </p>
+
+<p>In folder UniServerZ create a new file named test2.bat with the following content:</p>
+
+
+<table>
+ <tr valign="top">
+   <td>
+<b><i>Comments</i></b>
+
+<p>The set command is used for creating environment variables. The  environment variable name is assigned a value, this value can be another environment variable. To use environment variables you must enclose their name between %'s for example %var_name%. Note to echo a % use %%.</p>
+
+
+<p>A) The line set HOME=%CD% creates a new environment variable HOME and sets it to the current working directory using environment variable %CD%. <br/>
+Line "echo Command used was HOME=%%CD%%" Prints the text "Command used was HOME=%CD%" <br />
+Next two lines prints the variables %HOME% and %CD% Note: The paths displayed are identical.</p>
+
+<p>B) Command "CD www" changes the working directory to folder www</p>
+
+<p>C) Command "CD ..\..\" Relative paths can be used ..\..\ means move up two folder levels. Changes the working directory to this new folder.</p>
+
+<p>D) Command "CD %HOME%\core\apache2" changes the working directory to folder apache2. The path is constructed using the HOME environment variable and appending folders to create the full path to apache2.</p> 
+
+<b><i>Notes</i>:</b>
+<p>Generally there is no need to change the working directory however there are applications that specifically require you to set the working directory to their binary folder otherwise they will run. After running this type of application the HOME variable allows you to return to your scripts home folder.</p>
+
+<p><b><i>Test</i></b> <br />
+Run the batch file by double clicking on file test2.bat:
+
+<ul>
+  <li>Each test is displayed and paused.</li>
+  <li>Check the full paths displayed correspond to expected results.</li>
+</ul>
+
+   </td>
+
+   <td>&nbsp;</td>
+
+   <td>
+<b><i>test2.bat</i></b>
+<pre>
+@echo off
+rem ### working directory current folder 
+pushd %~dp0
+
+rem #------Test code -----------
+set HOME=%CD%
+echo A) Command used was HOME=%%CD%%
+echo Environment varailbe HOME is %HOME%
+echo The current working directory is %CD%
+echo.
+pause
+
+CD www
+echo B) Command used was CD www
+echo Environment varailbe HOME is %HOME%
+echo The current working directory is %CD%
+echo.
+pause
+
+CD ..\..\
+echo C) Command used was ..\..\
+echo Environment varailbe HOME is %HOME%
+echo The current working directory is %CD%
+echo.
+pause
+
+CD %HOME%\core\apache2
+echo D) Command used was CD %%HOME%%\core\apache2
+echo Environment varailbe HOME is %HOME%
+echo The current working directory is %CD%
+echo.
+pause
+
+rem #------ End test code ------
+
+rem ### restore original working directory
+popd
+
+pause
+
+
+
+</pre>
+   </td>
+ </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Folders and Files"></a>
+<h2>Folders and Files – Create, delete and redirection operator</h2>
+
+<p>This section covers basic commands,  <b>md</b> make directory, <b>rd</b> remove directory, <b>mov</b> move file, <b>copy</b> copy file, <b>ren</b> rename files, <b>del</b> deleted file, direction operator <b>&gt;</b> to create a file and the direction operator <b>&gt;&gt;</b> for appending to a file. </p>
+
+<p>In folder UniServerZ create a new file named test3.bat with the following content:</p>
+
+
+<table>
+ <tr valign="top">
+   <td>
+<b><i>Comments</i></b>
+
+<p>A) The command <b>IF NOT EXIST</b> checks the named folder does not exist before attempting to create it. If the folder does not exist it is create using  command <b>md</b> (make directory)</p>
+
+
+<p>B) The <b>echo</b> command and redirection operator <b>&gt;</b> writes text to the named file. The named file is either created if it does not exist or overwrites an existing file. The redirection operators <b>&gt;&gt;</b> append text to an existing file. The special command <b>echo.</b> (note no space between echo and the full stop) allows an empty file to be create (a file with not content).</p>
+
+<p>C) Command <b>move</b> moves a file to different location, <b>copy</b> copies a file to a specified location and <b>ren</b> renames an existing file.</p>
+  <ul> 
+    <li>move source_path_file_name  destination_path_file_name</li>
+    <li>copy source_path_file_name  destination_path_file_name</li>
+    <li>ren  path_file_name new_name</li>
+  </ul>
+<p>Note: Commands <b>move</b> and <b>copy</b> output confirmation text. This text can be suppressed by redirecting output to the null folder using the redirection operator <b>&gt;&gt;null</b>.</p>
+
+<p>D) E) The command <b>rd</b> (remove directory) deletes the named folder. Before a folder can be deleted it must be empty, delete any files and folders in may contain.</p>
+
+<br /><br /><br />
+<p><b><i>Test</i></b> <br />
+Run the batch file by double clicking on file test3.bat:
+
+<ul>
+  <li>Follow instructions displayed.</li>
+  <li>Check results at each step against the script.</li>
+</ul>
+
+   </td>
+
+   <td>&nbsp;</td>
+
+   <td>
+<b><i>test3.bat</i></b>
+<pre>
+@echo off
+rem ### working directory current folder 
+pushd %~dp0
+
+rem #------Test code -----------
+set HOME=%CD%
+
+echo A) Creating folders
+IF NOT EXIST aaa md aaa
+IF NOT EXIST bbb\ccc md bbb\ccc
+echo Check folders created
+pause
+echo. 
+
+echo B) Creating files in folder aaa
+echo. > aaa\z_test1.txt
+echo Line 1 &gt; aaa\z_test2.txt
+echo Line 2 &gt;&gt; aaa\z_test2.txt
+echo Check files created
+pause
+echo. 
+
+echo C) Moving, copying and renaming files
+move aaa\z_test1.txt bbb\ccc\z_test1.txt 
+copy aaa\z_test2.txt bbb\ccc\z_test2.txt >null
+ren  aaa\z_test2.txt z_test3.txt
+echo Check files moved, copied and renamed
+pause
+echo. 
+
+echo D) Deleting folders
+rd   aaa
+rd   bbb\ccc
+echo Fails because folders not empty
+pause
+echo. 
+
+echo E) Empty folders and delete
+del aaa\z_test3.txt
+del bbb\ccc\z_test1.txt
+del bbb\ccc\z_test2.txt
+rd   aaa
+rd   bbb\ccc
+rd   bbb
+echo Folders aaa and bbb deleted
+pause
+echo. 
+
+rem #------ End test code ------
+
+rem ### restore original working directory
+popd
+
+pause
+</pre>
+   </td>
+ </tr>
+</table>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="IF and IF ELSE command"></a>
+<h2>IF and IF ELSE command</h2>
+
+<p>Perform conditional processing in batch programs.</p>
+
+
+<p>The basic <b>IF</b> command syntax is shown below.</p>
+ 
+<pre>
+IF [NOT] ERRORLEVEL number command
+IF [NOT] string1==string2 command
+IF [NOT] EXIST filename command
+
+If (condition) (command1)
+If (condition) (command1) Else (command2) 
+</pre>
+
+<p>The <b>IF</b> command can use compound commands statements, a single command is replaced with several commands seperated by the <b>&</b> character as follows:</p>
+<pre>
+If (condition) (command1 & command2)
+If (condition) (command1 & command2 ) Else (command3 & command4 )
+</pre>
+
+<p>The <b>&</b> operator is required only if you write the code on one line as show. However the <b>&</b> operator is not required when the code is written in a block. The following two examples demonstrate this:</p>
+
+
+<p>A) "IF" written on single line:</p>
+<pre>
+IF EXIST z_test4.txt (echo File z_test4.txt exist deleting & DEL z_test4.txt) ELSE (echo file does not exist creating file & echo Line 1 &gt; z_test4.txt)
+</pre>
+
+<p>B) "IF" written as a block:</p>
+<pre>
+IF EXIST z_test4.txt (
+  echo File z_test4.txt exist deleting
+  DEL z_test4.txt
+) ELSE (
+  echo file does not exist creating file
+  echo Line 1 &gt; z_test4.txt
+)
+</pre>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Set /p command"></a>
+<h2>Set /p command - user and file input</h2>
+
+<p>The SET command displays, sets, or removes environment variables. Changes made with SET will remain only for the duration of the current script session. </p>
+<p>In folder UniServerZ create a new file named test4.bat with the following content:</p>
+
+<table>
+ <tr valign="top">
+   <td>
+<b><i>Comments</i></b>
+
+<a name="Set/Delete variable"></a>
+<p>A) <b>Set/Delete variable:</b> <br />
+The command format <b>set some_variable = some_value</b> Sets the environment variable to a new value string or to an existing environment variable name. The command format "<b>set some_variable =</b>" removes (deletes) the variable.</p>
+
+<a name="Prompt for user input"></a>
+<p>B) <b>Prompt for user input:</b> <br />
+The <b>/P</b> switch allows you to set a variable equal to a line of input entered by the user. The Prompt string is displayed before the user input is read. Note the prompt string can be empty.<br />
+If a user just presses return the variable will be unchanged and a errorlevel will be set.</p>
+
+<p>The test code can be changed as follows,  it uses the goto command to execute different code.</p>
+
+<pre>
+Set /P UserInput=Please enter yes or no  || Set UserInput=NothingEntered
+If "%UserInput%"=="NothingEntered" goto sub_1
+If /i "%UserInput%"=="no" goto sub_2
+If /i "%UserInput%"=="yes" goto sub_3
+</pre>
+
+<a name="Set from text file"></a>
+<p>C) <b>Set from text file:</b> <br />
+The redirection operator &lt; reads the first line of a specified text file and puts it into the environment variable. It uses the following command format:</p>
+<pre>
+Set /P Some_Var=&lt;Path_Some_text_file_name.txt
+</pre>
+
+<a name="Alternative Set from text file"></a>
+<p>D) <b>Alternative Set from text file:</b> <br />
+The content of a file can be read using the FOR /F command as shown below:</p>
+<pre>
+FOR /F %%G IN (%PWD_FILE1%) DO set MYSQL_PWD2=%%G
+</pre>
+<p>The content of file PWD_FILE1 is read into into memory and processed. The first line is assigned to variable %%G. This variable is used to set the variable MYSQL_PWD2 which comletes the command.</p>
+
+
+<p><b><i>Test</i></b> <br />
+Run the batch file by double clicking on file test4.bat:
+
+<ul>
+  <li>Follow instructions displayed.</li>
+  <li>Check results at each step against the script.</li>
+</ul>
+
+
+   </td>
+
+   <td>&nbsp;</td>
+
+   <td>
+<b><i>test4.bat</i></b>
+<pre>
+@echo off
+rem ### working directory current folder 
+pushd %~dp0
+
+rem #------Test code -----------
+set HOME=%CD%
+
+echo A) Setting password file path
+set PWD_FILE1=%HOME%\htpasswd\mysql\passwd.txt
+set PWD_FILE2=%HOME%\htpasswd\mysql\passwd.txt
+set PWD_FILE2=
+echo Password file %%PWD_FILE1%% is %PWD_FILE1%
+echo Password file %%PWD_FILE2%% removed ..%PWD_FILE2%..
+pause
+echo.
+
+echo B) Prompt for user input
+Set /P UserInput=Please enter yes or no  || Set UserInput=NothingEntered
+If "%UserInput%"=="NothingEntered" Exit
+If /i "%UserInput%"=="no" Exit
+If /i "%UserInput%"=="yes" echo OK next test
+pause
+echo.
+
+echo C) Getting MySQL password from file
+set /p MYSQL_PWD=&lt;%PWD_FILE1%
+echo MySQL Password = %MYSQL_PWD%
+echo.
+pause
+
+echo D) Alternative get MySQL password from file
+FOR /F %%G IN (%PWD_FILE1%) DO set MYSQL_PWD2=%%G
+echo MySQL Password = %MYSQL_PWD2%
+echo.
+pause
+
+rem #------ End test code ------
+
+rem ### restore original working directory
+popd
+
+<br /><br /><br /><br /><br /><br /><br /><br />
+</pre>
+   </td>
+ </tr>
+</table>
+
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Summary"></a>
+<h2>Summary</h2>
+
+<p>The above has introduced you to the main commands used in batch files. At the least you now know what to search for on the Internet.</p>
+
+<p>There is one command (FOR /F) that is extremely useful and is worth expanding in details this is covered on page 
+. it allows you to easily pass parameters between batch files and applications run from a batch file.</p>
+
+
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

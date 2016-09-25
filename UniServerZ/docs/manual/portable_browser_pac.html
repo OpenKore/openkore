@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Portable Browser PAC</title>
+  <meta name="Description" content="You can create independent websites and serve these from the same Apache server using Apache’s virtual hosting. Local testing requires resolving their domain names to the local PC. This is achieved by inserting an ip/domain-name pair in the local machine's Hosts file. Unfortunately resolving domain-names with this method is not portable because you are required to edit the new target PC’s Hosts file. This page looks at resolving this issue using a PAC file and a portable browser. This combination makes the server completely portable." />
+  <meta name="Keywords" content="Portable,Browser,PAC,Hosts,file,resolving,domain,names,Local,PC,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<style type="text/css">
+/*****************************************/
+.td_sub{
+ font-size: 12px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+/*****************************************/
+</style>
+
+<body id="p1410">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/portable_browser_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Portable browser - PAC</h1>
+</tr>
+</table>
+
+<p>You can create independent websites and serve these from the same Apache server using Apache’s virtual hosting. Local testing requires resolving their domain names to the local PC. This is achieved by inserting an ip/domain-name pair in the local machine's Hosts file.</p>
+
+<p>Unfortunately resolving domain-names with this method is not portable because you are required to edit the new target PC’s Hosts file. This page looks at resolving this issue using a PAC file and a portable browser. This combination makes the server completely portable.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Background">Background</a></li>
+   <li><a href="#PAC file" >PAC file</a></li>
+   <li><a href="#Compare function - shExpMatch">Compare function - shExpMatch</a></li>
+   <li><a href="#Complete PAC file" >Complete PAC file</a></li>
+   <li><a href="#Hosts file emulation with a PAC file" >Hosts file emulation with a PAC file</a></li>
+   <li><a href="#Summary" >Summary</a></li>
+   </ul>
+ </div>
+</div>
+
+
+<a name="Background"></a>
+<h2>Background</h2>
+
+<p>Testing multi-web sites is relatively easy. First create a virtual host section for each site in the Apache configuration file. Use the hosts file on your machine to resolve the web site names to IP address. That’s it; finished. Suppose you do not have access to the host file. What alternatives are there? </p>
+
+<p>If you use only relative links on your site, you can use the Apache alias and re-map. However if your sites are using absolute or root-relative links, this method will fail.</p> 
+
+<p>So what other methods are there for resolving IP addresses? A local DNS server would do nicely, even allow you to enter MX records. That seems a bit of overkill, since all we want to do is convince our browser to pick up pages from a different server masquerading as the real server. Enter the world of proxy servers.</p> 
+
+<script language="javascript" src="common/top.js"></script>
+<a name="PAC"></a>
+<h2>PAC</h2>
+
+<p>Web browsers can be configured to use a proxy server, allowing the use of files or other resources available on a different server.</p> 
+
+<p>This process is automated with a <b>Proxy Auto-Configuration</b> (PAC) file. Sounds complicated! Not really. The PAC file is a simple text file containing a few instructions. Just tell your browser where to find it by setting the appropriate options. Your browser reads this file when it is re-started and whenever it needs to resolve an IP address.</p>
+ 
+<p>Any special instructions are executed <b>before</b> your browser attempts to resolve an IP address. This is why PAC is so powerful. PAC allows you to simulate a DNS server locally, with one line per CNAME entry. Unlike the hosts file it is dynamic. PAC is a standard and uses a single file that is supported by all modern browsers.</p>
+
+
+<a name="PAC file"></a>
+<h2>PAC file</h2>
+
+<table>
+<tr valign="top">
+<td>
+<p>The PAC file is a JavaScript consisting of a single function. This function receives two parameters (<b>url</b> and <b>host</b>).
+Parameters are automatically provided by a browser.</p>
+
+<p>Internally your browser calls this function using the following line: <code>ret = FindProxyForURL(url, host)</code></p>
+</td>
+<td>
+<b><i>PAC file</i>:</b>
+<pre>
+function FindProxyForURL(url, host)
+{
+  ...
+} 
+</pre>
+</td>
+</tr>
+</table>
+
+<br />
+
+<table cellpadding="2">
+<tr valign="top">
+  <td><b>url</b></td>
+  <td>&nbsp;</td>
+  <td class="td_sub">The full URL being accessed e.g.: http://wiki.uniformserver.com/index.php/Main_Page</td>
+</tr> 
+
+<tr valign="top">
+  <td><b>host</b></td>
+  <td>&nbsp;</td>
+  <td class="td_sub">The hostname extracted from the URL. It is the string between :// and the first (: or /) for example<br />
+      http://<b>wiki.uniformserver.com</b>/index.php/Main_Page <br />
+      Note: The port number is not included. If required, it can be extracted from the URL
+  </td>
+</tr> 
+
+<tr valign="top">
+  <td><b>ret</b></td>
+  <td>&nbsp;</td>
+  <td class="td_sub">The return value is a string describing the configuration.</td>
+</tr> 
+</table>
+
+<p><b><i>Return Value</i>:</b> <br />
+The JavaScript function must return a single string. If the string is null, no proxies will be used. The string can contain any of the following:</p>
+
+<table cellpadding="2">
+<tr valign="top">
+  <td><b>DIRECT</b></td>
+  <td>&nbsp;</td>
+  <td class="td_sub">Connections should be made directly, without any proxies. </td>
+</tr> 
+
+<tr valign="top">
+  <td><b>PROXY host:port</b></td>
+  <td>&nbsp;</td>
+  <td class="td_sub">The specified proxy should be used. <i>It's this return value we are interested in</i></td>
+</tr> 
+
+<tr valign="top">
+  <td><b>SOCKS host:port</b></td>
+  <td>&nbsp;</td>
+  <td class="td_sub">The specified SOCKS server should be used. </td>
+</tr> 
+</table>
+
+<p><i>Note:</i> <br />In the FindProxyForURL function you can use a number of predefined functions. We are interested in only two: <b>shExpMatch</b> and <b>dnsDomainIs</b>.<br />
+If these do not suit your needs, you can easily find more information on the Internet.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Compare function - shExpMatch"></a>
+<h2>Compare function - shExpMatch</h2>
+
+<p>The function <b>shExpMatch(str, shexp)</b> compares two strings:</p>
+
+<table cellpadding="2">
+<tr valign="top">
+  <td><b>str</b></td>
+  <td>&nbsp;</td>
+  <td class="td_sub">Any string to be compared for example the <b>url</b> or the <b>host</b>. </td>
+</tr> 
+
+<tr valign="top">
+  <td><b>shexp</b></td>
+  <td>&nbsp;</td>
+  <td class="td_sub">The expression to compare against. This expression can contain wildcard characters:
+
+<table>
+<tr valign="top"><td>*</td>         <td class="td_sub">matches anything</td></tr>
+<tr valign="top"><td>?</td>         <td class="td_sub">matches one character</td></tr>
+<tr valign="top"><td>\</td>         <td class="td_sub">will escape a special character</td></tr>
+<tr valign="top"><td>$</td>         <td class="td_sub">matches the end of the string</td></tr>
+<tr valign="top"><td>[abc]</td>     <td class="td_sub">matches one occurrence of a, b, or c. The only character that needs <br />
+                                        to be escaped in this is ], all others are not special.</td></tr>
+<tr valign="top"><td>[a-z]</td>     <td class="td_sub">matches any character between a and z<br />
+<tr valign="top"><td>[^az]</td>     <td class="td_sub">matches any character except a or z</td></tr>
+<tr valign="top"><td>~</td>         <td class="td_sub">followed by another shell expression will remove any pattern<br />
+                                        matching the shell expression from the match list</td></tr>
+<tr valign="top"><td>(foo|bar)</td> <td class="td_sub">will match either the substring foo, or the substring bar.<br />
+                                        These can be shell expressions as well.</td></tr>
+</table>
+</td>
+</tr> 
+</table>
+
+<p>The function returns true if the string matches the specified expression.</p>
+
+<p><b><i>Examples</i>:</b></p>
+<ul>
+  <li>Example 1:  <code>shExpMatch("http://home.unicenter.com/site1/index.html", "*site1*")</code> returns true.</li>
+  <li>Example 2:  <code>shExpMatch("http://home.unicenter.com/site2/index.html", "*site1*")</code> returns false</li>
+  <li>Example 3:  <code>shExpMatch("http://home.unicenter.com/site1/index.html", "*unicenter.com*")</code> returns true.</li>
+  <li>Example 4:  <code>shExpMatch("http://home.unicenter.com/site2/index.html", "*unicenter.com*")</code> returns true.</li>
+</ul>
+
+<p>The above is just an example. Replace the fixed string with a variable such as the url or host, for example:</p>
+<ul>
+  <li>Example 5:  <code>shExpMatch("url", "*site1*")</code> Any url passed to the function containing the string site1 (anywhere) returns true.</li>
+  <li>Example 6:  <code>shExpMatch("url", "*unicenter.com*")</code> Any url passed to the function containing the string unicenter.com (anywhere) returns true.</li>
+  <li>Example 7:  <code>shExpMatch("host", "unicenter.com")</code> A host passed to the function containing the string unicenter.com returns true.</li>
+  <li>Example 8:  <code>shExpMatch("host", "*unicenter.com")</code> A host passed to the function containing the string unicenter.com returns true. This includes a sub-host such as wiki.unicenter.com</li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Complete PAC file"></a>
+<h2>Complete PAC file</h2>
+
+<p>Add the above filter to the PAC function and we have our very own DNS resolver, with the ability to define any CNAME that we wish.</p>
+<p>The PAC file shown below currently resolves localhost, like the host file it maps localhost to IP address 127.0.0.1</p>
+
+<table>
+<tr valign="top">
+<td>
+<p><b>Note:</b> If any of the shExpMatch functions do not find a match function FindProxyForURL returns a null value. In this situation to resolve the host name a browser needs to do a little more work. It checks the hosts file, then any local DNS server, and as a last resort puts a request onto the Internet to a DNS server.</p>
+ 
+</td>
+<td>
+<pre>
+function FindProxyForURL(url, host){
+if (shExpMatch(host, "*localhost*")) return "PROXY 127.0.0.1:80";
+...Other shExpMatch statments ....
+...Other shExpMatch statments ....
+return "";}
+</pre>
+</td>
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Hosts file emulation with a PAC file"></a>
+<h2>Hosts file emulation with a PAC file</h2>
+
+<p>Local testing requires an entry in the Windows hosts. Typical entries contained in this  hosts file is show below:</p>
+
+<table>
+<tr valign="top">
+<td>
+<b>Windows host:</b>
+<p>For local testing the host file maps a domain name to IP address (127.0.0.1).<br />
+If the domain includes sub-domains for example www.fred.com and wiki.fred.com<br />
+they each requires a separate entry in the hosts file.</p>
+<p>This is one limitation of the hosts file.</p> 
+</td>
+<td>
+<b>Hosts</b> file:
+<pre>
+ 127.0.0.1 localhost
+ 127.0.0.1 www.ric.com
+ 127.0.0.1 fred.com
+ 127.0.0.1 www.fred.com
+ 127.0.0.1 wiki.fred.com
+</pre>
+</td>
+</tr>
+</table>
+
+<p>With a PAC file, specific strings can be targeted. We are interested in resolving domain names (host) and not what is typed into a browser (url). There are only three domains to resolve: <b>localhost</b>, <b>www.ric.com</b> and <b>fred.com</b> hence our PAC file requires only three enteries as follows:</p>
+
+<table>
+<tr valign="top">
+<td>
+<b>PAC:</b>
+<p>The domain <b>fred.com</b> is resolved using the wildcard star (*) operator. This picks<br />
+out fred.com's sub-domains <b>www</b> and <b>wiki</b>  </p> 
+</td>
+<td>
+<b>proxy.pac</b> file:
+<pre>
+function FindProxyForURL(url, host){
+ if (shExpMatch(host, "*localhost")) return "PROXY 127.0.0.1:80";
+ if (shExpMatch(host, "www.ric.com")) return "PROXY 127.0.0.1:80";
+ if (shExpMatch(host, "*fred.com")) return "PROXY 127.0.0.1:80";
+return "DIRECT";}
+</pre>
+</td>
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Summary"></a>
+<h2>Summary</h2>
+
+
+<table>
+<tr valign="top">
+<td>
+<b>Uniform Server PAC:</b>
+<p>The above was just a quick introduction to the PAC file; it is much more powerful and worth further investigation. Search the Internet for more information. I have only covered what is need for the Uniform Server proxy.pac file.</p> 
+
+</td>
+<td>
+<b>proxy.pac</b> file:
+<pre>
+function FindProxyForURL(url, host){
+ if (shExpMatch(host, "*localhost")) return "PROXY 127.0.0.1:80";
+ ... Other shExpMatch statements automatically added and deleted ....
+return "DIRECT";}
+</pre>
+</td>
+</tr>
+</table>
+<p>The basic structure is shown on the right and is about as complex as it gets.</p>
+
+<p>Note: Creating an Apache Vhost automatically adds its domain name to the proxy.pac file. Deleting a Vhost also deletes its corresponding domain name entry in the PAC file.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

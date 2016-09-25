@@ -1,0 +1,266 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-02 00:52+0800\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: edit.tpl.php:8
+#, php-format
+msgid "Editing Variable %s"
+msgstr "正在编辑变量 %s"
+
+#: edit.tpl.php:13
+#, php-format
+msgid "Set %s in config to enable"
+msgstr "請在配置文件中設置 %s 啟用本功能"
+
+#: index.php:187 index.php:213
+msgid "Total"
+msgstr "总共"
+
+#: index.php:263
+msgid "Summary"
+msgstr "簡要訊息"
+
+#: index.php:264
+msgid "List PHP"
+msgstr "列出PHP"
+
+#: index.php:265
+msgid "List Var Data"
+msgstr "列變數資料"
+
+#: listentries.tpl.php:11
+msgid "php Cached"
+msgstr "快取的 PHP 指令"
+
+#: listentries.tpl.php:11
+msgid "var Cached"
+msgstr "快取的變數"
+
+#: listentries.tpl.php:15
+msgid "php Deleted"
+msgstr "待刪 PHP 指令快取"
+
+#: listentries.tpl.php:15
+msgid "var Deleted"
+msgstr "待刪變數快取"
+
+#: sub/entrylist.tpl.php:14
+msgid "entry.id"
+msgstr "Id|"
+
+#: sub/entrylist.tpl.php:19
+msgid "entry.remove"
+msgstr "移除|"
+
+#: sub/entrylist.tpl.php:24
+msgid "entry.name"
+msgstr "項目名稱/檔案名稱|項目名稱或者檔案名稱"
+
+#: sub/entrylist.tpl.php:25
+msgid "entry.hits"
+msgstr "命中|該項目被命中的次數 (從共享記憶體區載入)"
+
+#: sub/entrylist.tpl.php:26
+msgid "entry.size"
+msgstr "大小|項目在共享記憶體裡佔用位元數"
+
+#: sub/entrylist.tpl.php:31
+msgid "entry.refcount"
+msgstr "引用數|項目依然被其他程序佔用的引用次數"
+
+#: sub/entrylist.tpl.php:32
+msgid "entry.phprefcount"
+msgstr "共享|與本項目相同 PHP 內容的个數"
+
+#: sub/entrylist.tpl.php:33
+msgid "entry.class_cnt"
+msgstr "类|类个数"
+
+#: sub/entrylist.tpl.php:34
+msgid "entry.function_cnt"
+msgstr "函数|函数个数"
+
+#: sub/entrylist.tpl.php:35
+msgid "entry.file_size"
+msgstr "源大小|原始檔案大小"
+
+#: sub/entrylist.tpl.php:36
+msgid "entry.file_mtime"
+msgstr "修改|原始檔案最後修改時間"
+
+#: sub/entrylist.tpl.php:39
+msgid "entry.file_device"
+msgstr "dev|原始檔案所在設備ID"
+
+#: sub/entrylist.tpl.php:40
+msgid "entry.file_inode"
+msgstr "ino|原始檔案的inode"
+
+#: sub/entrylist.tpl.php:44
+msgid "entry.hash"
+msgstr "Hash|Hash"
+
+#: sub/entrylist.tpl.php:45
+msgid "entry.atime"
+msgstr "存取|最後存取該項目的時間"
+
+#: sub/entrylist.tpl.php:46
+msgid "entry.ctime"
+msgstr "建立|該項目被建立於共享內的時間"
+
+#: sub/entrylist.tpl.php:51
+msgid "entry.delete"
+msgstr "移除|該項目被移除於共享內的時間"
+
+#: sub/entrylist.tpl.php:149
+msgid "Remove Selected"
+msgstr "移除所选"
+
+#: sub/moduleinfo.tpl.php:1
+msgid "Module Info"
+msgstr "組元訊息"
+
+#: sub/summary.tpl.php:3
+msgid "Caches"
+msgstr "快取"
+
+#: sub/summary.tpl.php:6
+msgid "cache.cache"
+msgstr "快取|"
+
+#: sub/summary.tpl.php:7
+msgid "cache.slots"
+msgstr "槽|Hash 槽個數，對應 php.ini 裡的設置"
+
+#: sub/summary.tpl.php:8
+msgid "cache.size"
+msgstr "大小|共享記憶體區大小，單位：位元"
+
+#: sub/summary.tpl.php:9
+msgid "cache.avail"
+msgstr "剩餘|可用記憶體，對應共享記憶體區的剩餘記憶體位元數"
+
+#: sub/summary.tpl.php:10
+msgid "cache.blocksgraph"
+msgstr "百分比图|條狀顯示可用記憶體的比例"
+
+#: sub/summary.tpl.php:11
+msgid "cache.operations"
+msgstr "操作|點擊按鈕清除對應共享記憶體區的資料"
+
+#: sub/summary.tpl.php:12
+msgid "cache.status"
+msgstr ""
+"狀態|狀態標記. 當共享內存區正在編譯 PHP 腳本時標記為 \"編譯中\". 當共享內存區"
+"暫停使用時標記為 \"禁用\""
+
+#: sub/summary.tpl.php:13
+msgid "cache.hits"
+msgstr "命中|共享記憶體命中次數，命中=從該共享記憶體載入 PHP 或者變數"
+
+#: sub/summary.tpl.php:14
+msgid "cache.hits_graph"
+msgstr "24H 分布|24 小时命中分布图. 图表现是最后 24 小时的命中次数"
+
+#: sub/summary.tpl.php:15
+msgid "cache.hits_avg_h"
+msgstr "命中/H|每小时命中次数. 只统计最后 24 小时"
+
+#: sub/summary.tpl.php:16
+msgid "cache.hits_avg_s"
+msgstr "命中/S|每秒命中次数. 只统计最后 5 秒"
+
+#: sub/summary.tpl.php:17
+msgid "cache.updates"
+msgstr "更新|共享記憶更新過次數"
+
+#: sub/summary.tpl.php:18
+msgid "cache.skips"
+msgstr ""
+"跳過|跳過更新次數，跳過=XCache 自動判斷阻塞的共享記憶體區自動跳過阻塞等待，直"
+"接使用编译不存储方式繼續處理請求"
+
+#: sub/summary.tpl.php:19
+msgid "cache.ooms"
+msgstr ""
+"記憶體不足|記憶體不足次數，顯示需要儲存新資料但是共享記憶體區記憶體不足的次"
+"數. 如果出現太頻繁請考慮加大配置中的 xcache.size 或者 xcache.var_size"
+
+#: sub/summary.tpl.php:20
+msgid "cache.errors"
+msgstr ""
+"错误|编译错误, 显示您的脚本被编译时出错的次数. 如果您发现这个数字不断增长, 您"
+"应该检查什么脚本产生错误. 参考 說明 获取更多信息"
+
+#: sub/summary.tpl.php:21
+msgid "cache.readonly_protected"
+msgstr "保护|顯示該 Cache 是否支援並啟用 readonly_protection. 参考 說明"
+
+#: sub/summary.tpl.php:22
+msgid "cache.cached"
+msgstr "快取|共享記憶體於該共享記憶體區的項目個數"
+
+#: sub/summary.tpl.php:23
+msgid "cache.deleted"
+msgstr "待刪|共享記憶體區內將要刪除的項目 (已經刪除但是還被某些程序佔用)"
+
+#: sub/summary.tpl.php:24
+msgid "cache.gc_timer"
+msgstr "GC|垃圾回收的倒數計時"
+
+#: sub/summary.tpl.php:30
+msgid "Clear"
+msgstr "清除"
+
+#: sub/summary.tpl.php:31
+msgid "Disabled"
+msgstr "禁用"
+
+#: sub/summary.tpl.php:32
+msgid "Disable"
+msgstr "禁用"
+
+#: sub/summary.tpl.php:33
+msgid "Enable"
+msgstr "啟用"
+
+#: sub/summary.tpl.php:34
+msgid "Compiling"
+msgstr "編譯中"
+
+#: sub/summary.tpl.php:35
+msgid "Normal"
+msgstr "正常"
+
+#: sub/summary.tpl.php:36 sub/testcoredump.tpl.php:3
+msgid "Sure?"
+msgstr "確認?"
+
+#: sub/summary.tpl.php:132
+msgid "Legends:"
+msgstr "图例:"
+
+#: sub/summary.tpl.php:134
+msgid "% Free"
+msgstr "% 剩余"
+
+#: sub/summary.tpl.php:134
+msgid "% Used"
+msgstr "% 已用"
+
+#: sub/summary.tpl.php:136
+msgid "Free Blocks"
+msgstr "未用块"
+
+#: sub/summary.tpl.php:136
+msgid "Used Blocks"
+msgstr "已用块"
+
+#: sub/summary.tpl.php:138
+msgid "Hits"
+msgstr "命中"

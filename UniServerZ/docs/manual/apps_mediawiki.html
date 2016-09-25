@@ -1,0 +1,348 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>MediaWiki</title>
+  <meta name="Description" content=" the following page provides detailed information for installing on Uniform Server Zero XIII" />
+  <meta name="Keywords" content="MediaWiki,Create,Database,User,phpMyAdmin,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p1520">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/apps_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>MediaWiki</h1>
+</tr>
+</table>
+
+<p>MediaWiki is a free and open source wiki software, used to power wiki websites. It is based on PHP and MySQL the following page provides detailed information for installing on Uniform Server Zero XIII.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+
+   <li><a href="#Step 1: Download and Extract">Step 1: Download and Extract</a></li>
+   <li><a href="#Step 2: Create the Database and a User using phpMyAdmin">Step 2: Create the Database and a User using phpMyAdmin</a></li>
+   <li><a href="#Step 3: Upload the files">Step 3: Upload the files</a></li>
+   <li><a href="#In the Root Directory">&nbsp;&nbsp;In the Root Directory</a></li>
+   <li><a href="#In a Subdirectory">&nbsp;&nbsp;In a Subdirectory</a></li>
+   <li><a href="#Step 4: Wiki Installation">Step 4: Wiki Installation</a></li>
+
+   <li><a href="#Portability">Portability</a></li>
+   <li><a href="#MySQL Security">MySQL Security</a></li>
+
+   </ul>
+ </div>
+</div>
+
+<p><b><i>Note</i> 1:</b> At step 4 you are required to enter your e-mail address this can be the e-mail address you set as <b>default</b> when configuring MSMTP, for details see <a href="general_msmtp_intro.html#Edit MSMTP Configuration">Edit MSMTP Configuration</a></p>
+
+
+<p><b><i>Note</i> 2:</b> We will follow MediaWiki's recommendation and use 7-Zip to extract the files, since Windows cannot do this. </p>
+
+<ul>
+  <li>7-Zip's download site: <a href="http://sourceforge.net/projects/sevenzip/files/7-Zip/"> Sourceforge.net</a></li>
+  <li>Download the latest version and install it.</li>
+</ul>
+
+
+
+<a name="Step 1: Download and Extract"></a>
+<h2>Step 1: Download and Extract</h2>
+<p>Download and extract the MediaWiki package.</p>
+
+<ul>
+ <li>Download the latest version of MediaWiki from <a href="http://www.mediawiki.org/wiki/Download" > here</a>. currently 1.27.0</li>
+ <li>Save the downloaded file mediawiki-1.27.0.tar.gz to a temporary folder for example C:\mediawiki_temp</li>
+
+ <li>Extract the downloaded file (mediawiki-1.27.0.tar.gz) with 7-Zip. This will create folder mediawiki-1.27.0.tar</li>
+ <li>Inside this folder extract the file (mediawiki-1.27.0.tar) with 7-Zip. This will create folder mediawiki-1.27.0</li>
+ <li>Rename the folder <b>mediawiki-1.27.0</b> to <b>wiki</b></li>
+</ul>
+
+<p>Before MediaWiki can be installed a MySQL user and database are required for details see step2.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Step 2: Create the Database and a User using phpMyAdmin"></a>
+<h2>Step 2: Create the Database and a User using phpMyAdmin</h2>
+
+<p>Follow these instructions to create your MediaWiki username and database using phpMyAdmin.</p>
+
+<p><i><b>Note:</b> These instructions are written for phpMyAdmin 4.6.3; the phpMyAdmin user interface can vary slightly between versions.</i></p>
+
+<ul>
+  <li>Start UniController.</li>
+  <li>Start Apache and MySQL servers.</li>
+  <li>Click phpMyAdmin button - Opens phpMyAdmin in default browser.</li>
+</ul>
+
+
+<ol>
+  <li> If a MediaWiki database does not already exist in the <b>Database list</b> on the left, create one:
+     <ol>
+       <li> Click <b>Databases</b> button top left menu bar.</li>
+       <li> Choose a name for your MediaWiki database ('<tt>mediawiki</tt>' or '<tt>wiki</tt>' are good), enter it in the <b>Create database</b> field, and click <b>Create</b>.<br />Note: Database name added to list on the left.</li>
+     </ol>
+ </li>
+
+  <li> Click the <b>Privileges</b> button top menu bar. If a user relating to MediaWiki does not already exist in the list of users, create one:
+     <ol>
+       <li> Click <b>Add user</b> this opens the add user menu, navigate to the Login Information section:</li>
+       <li> Choose a username for MediaWiki ('<tt>mediawiki</tt>' is good) and enter it in the <b>User name</b> field. (Be sure <b>Use text field:</b> is selected from the dropdown.)</li>
+
+       <li> From the <b>Host</b> dropdown select <b>Use text field:</b> in the Host field enter 127.0.0.1 </li>
+
+       <li> Choose a difficult-to-guess password (ideally containing a combination of upper- and lower-case letters, numbers, and symbols), and enter it in the <b>Password</b> field. (Be sure <b>Use text field:</b> is selected from the dropdown.) Re-enter the password in the <b>Re-type</b> field.</li>
+
+       <li> Write down the username and password you chose.</li>
+       <li> Click <b>Go</b>.</li>
+       <li> Leave all options under <b>Database for user</b> and <b>Global privileges</b> at their defaults.</li>
+      <li> Click <b>Go</b>.</li>
+    </ol>
+ </li>
+</ol>
+
+<p><b>Note:</b> Other parts of this documentation assume you have set the following: MediaWiki database name = <b>mediawiki</b> Username for MediaWiki = <b>mediawiki</b> Password = <b>fred123</b> remember to replace these with the values you have set in the above.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Step 3: Upload the files"></a>
+<h2>Step 3: Upload the files</h2>
+
+<p>Now you will need to decide where on your domain you'd like your MediaWiki-powered site to appear:</p>
+  <ul>
+    <li> In the root directory of your web site. (For example, <tt>http://example.com/</tt>)</li>
+    <li> In a subdirectory of your web site. (For example, <tt>http://example.com/wiki/</tt>)</li>
+  </ul>
+
+<p><b>Note:</b><br />
+The location of your root web directory <b>www</b> will vary depending where Uniform Server was installed.<br />
+A default installation assumes the following path C:\UniServerZ\<b>www</b></p>
+
+
+<a name="In the Root Directory"></a>
+<h3>In the Root Directory</h3>
+
+<p>Copy all the <i>contents</i> of the <tt>wiki</tt> directory (but not the directory itself) into the root directory of your web site.</p>
+
+<ul>
+   <li> Copy all the <i>contents</i> of folder C:\mediawiki_temp\mediawiki-1.27.0.tar\mediawiki-1.27.0\<b>wiki</b> to folder C:\UniServerZ\<b>www</b> </li>
+</ul>
+
+<a name="In a Subdirectory"></a>
+<h3>In a Subdirectory</h3>
+
+<p>Optional rename the <tt>wiki</tt> directory to your desired name, then copy the directory to your desired location within the root directory of your web site</p>
+
+<ul>
+  <li> Optional rename folder C:\mediawiki_temp\mediawiki-1.27.0.tar\mediawiki-1.27.0\<b>wiki</b> to C:\mediawiki_temp\mediawiki-1.27.0.tar\mediawiki-1.27.0\<b>desired name</b> </li>
+  <li> In this example we will not change folder <b>wiki</b>.<br />
+  Copy folder C:\mediawiki_temp\mediawiki-1.27.0.tar\mediawiki-1.27.0\<b>wiki</b> to folder C:\UniServerZ\<b>www</b> </li>
+</ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Step 4: Wiki Installation"></a>
+<h2>Step 4: Wiki Installation</h2>
+
+<ol>
+  <li>Type the following into your browser address bar: <b>http://localhost/wiki/</b> This will redirect to the installation page.</li>
+  <li>Click the link: Please <b>set up the wiki</b> first.  This starts the following configuration sequence.
+  </li>
+</ol>
+
+
+<p>A) <i><b>MediaWiki &lt;version&gt; installation</b></i></p>
+
+<table style="width: 50%;" border="0" cellpadding="3" cellspacing="1">
+  <tr bgcolor="#F4F4F4">
+    <td style="text-align: right; width: 150px;">Your Language: </td>
+    <td >en-gb - English</td>
+  </tr>
+  <tr bgcolor="#F4F4F4">
+     <td style="text-align: right;" >Wiki Language: </td>
+     <td>en-gb - English</td>
+  </tr>
+</table>
+<p><b>Continue</b> to the next page.</p>
+
+
+<p>B) <i><b>Environmental checks</b></i>
+</p><p>While you may receive warnings here, there should be no errors.  Continue to the next page.</p>
+
+
+<p>C) <i><b>Connect to database</b></i>
+</p>
+<table style="width: 50%;" border="0" cellpadding="3" cellspacing="1">
+
+<tr bgcolor="#F4F4F4"><td style="text-align: right; width: 150px;">Database type:</td><td>(radio button) <b>MySQL</b> is selected</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Database host: </td><td><b>127.0.0.1</b></td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Database name: </td><td><b>mediawiki</b> (The name of the database you created.)</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Database table prefix: </td><td>leave blank</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">DB username: </td><td><b>mediawiki</b> (the new restricted MySQL user account)</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">DB password confirm: </td><td><b>fred123</b> (the password for the account)</td></tr>
+</table>
+<p><b>Continue</b> to the next page.</p>
+
+
+<p>D) <i><b>Database settings</b></i></p>
+ <table style="width: 50%;" border="0" cellpadding="3" cellspacing="1">
+  <tr bgcolor="#F4F4F4">
+    <td style="text-align: right; ">Database account for web access:</td>
+    <td>Use the same account as for installation</td>
+  </tr>
+  <tr bgcolor="#F4F4F4">
+    <td style="text-align: right;">Storage engine: </td>
+    <td>(radio button) <b>InnoDB</b></td>
+  </tr>
+  <tr bgcolor="#F4F4F4">
+    <td style="text-align: right;">Database character set: </td>
+    <td>(radio button) select <b>Binary</b></td>
+   </tr>
+ </table>
+<p><b>Continue</b> to the next page.</p>
+
+<p>E) <i><b>Name</b></i></p>
+
+<table style="width: 50%;" border="0" cellpadding="3" cellspacing="1">
+ <tr bgcolor="#F4F4F4">
+   <td style="text-align: right; width: 200px;">Name of Wiki:</td>
+   <td><b>MediaWiki on ZeroXIII</b> (whatever you like)</td>
+ </tr>
+ <tr bgcolor="#F4F4F4">
+   <td style="text-align: right;">Project namespace: </td>
+   <td>(radio button)<b> Same as the wiki name </b></td>
+ </tr>
+ <tr bgcolor="#F4F4F4">
+    <td style="text-align: right;">Your name: </td>
+    <td><b>WikiSysop</b></td>
+ </tr>
+ <tr bgcolor="#F4F4F4">
+    <td style="text-align: right;">Password: </td>
+    <td><b>admin429</b> (whatever you like)</td>
+  </tr>
+  <tr bgcolor="#F4F4F4">
+   <td style="text-align: right;">Password confirm: </td>
+   <td><b>admin429</b> (same as above)</td>
+  </tr>
+ <tr bgcolor="#F4F4F4">
+   <td style="text-align: right;">Contact e-mail: </td>
+   <td>admin@localhost.org</td>
+  </tr>
+  <tr bgcolor="#F4F4F4">
+    <td style="text-align: right;">Ask more questions: </td>
+    <td>Selected</td>
+   </tr>
+</table>
+
+<p>Note that the email address must be valid.<br>
+<b>Continue</b> to the next page.</p>
+
+
+<p>F) <i><b>Options</b></i></p>
+<table style="width: 60%;" border="0" cellpadding="3" cellspacing="1">
+<tr bgcolor="#F4F4F4"><td style="text-align: right;width: 230px;">User rights profile: </td><td>(radio button) select  <b>Authorised editors only</b></td></tr>
+
+
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Copyright and license: </td><td>(radio button) select No license footer</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Enable outbound e-mail: </td><td>Checked</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Return e-mail address: </td><td>(e-mail of WikiSysop)</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Enable user-to-user e-mail: </td><td>Unchecked</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Enable user talk page notification:</td><td>Unchecked</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Enable watchlist notification:</td><td>Unchecked</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Enable e-mail authentication: </td><td>Checked</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Extensions: </td><td>All unchecked</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Enable file uploads: </td><td>Checked</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">Settings for object caching: </td><td>(radio button) select <b>No caching</b></td></tr>
+</table>
+<p><b>Continue</b> to the next page.</p>
+
+<p>G) <i><b>Install</b></i></p>
+<p>Finally, all questions are answered. <b>Click Continue</b> following is displayed:</p>
+
+<ul><li>Setting up database... done</li>
+<li>Creating tables... done</li>
+<li>Creating database user... done</li>
+<li>Populating default interwiki table... done</li>
+<li>Initialising statistics... done</li>
+<li>Generating secret keys... done</li>
+<li>Creating administrator user account... done</li>
+<li>Creating main page with default content... done</li>
+</ul>
+
+<p><b>Click Continue</b></p>
+<p><b>Note:</b> When requested save the download file.</p>
+
+
+<p>H) <i><b>Complete</b></i></p>
+
+<p>After a while the following is displayed:</p>
+
+<div style="border: solid 2px green;">
+  <p><b>Congratulations!</b> You have successfully installed MediaWiki.<br />
+  The installer has generated a <code>LocalSettings.php</code> file. It contains all your configuration.</p>
+  <p>You will need to download it and put it in the base of your wiki installation (the same directory as index.php). The download should have started automatically.</p>
+ <p>If the download was not offered, or if you cancelled it, you can restart the download by clicking the link below:....</p>
+ <p><b>Note:</b> If you do not do this now, this generated configuration file will not be available to you later if you exit the installation without downloading it.<br />
+ When that has been done, you can <b><a href="http://localhost/wiki/index.php">enter your wiki</a></b>.</p>
+</div>
+
+
+<p>Navigate to your download folder and copy file <b>LocalSettings.php</b> to folder C:\UniServerZ\www\<b>wiki</b><br />
+Now click the above link (enter your wiki)</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Portability"></a>
+<h2>Portability</h2>
+
+<p>If you want a portable version of MediaWiki, copy the folder <b>UniServerZ</b> and all its content to your USB memory stick. Don’t expect fantastic speeds, but it is usable.</p>
+
+<p>The Uniform Server uses the standard ports (Apache port 80 and MySQL port 3306). If a host PC is currently running another program on these ports, this will prevent The Uniform Server from running. To resolve this situation, either stop the other program or better yet move The Uniform Server ZeroXIII to different ports by using the appropriate menu option for Apache and MySQL.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="MySQL Security"></a>
+<h2>MySQL Security</h2>
+
+<p>This installation guide is intended to get the application up and running purely for testing.  The configuration options should be reviewed if you are intending to put the application online. Be sure to read any security advice from MediaWiki and check their web site. Specifically, you may be interested in reading <a href="http://www.mediawiki.org/wiki/Manual:Security">MediaWiki's Manual:Security</a> articles.</p>
+
+
+<p>Importantly, the above installation reduces the security risk by creating a restricted MySQL user in step 2. However if you have not already done so it is imperative that you set a new MySQL root password for details see section <a href="mysql.html#Change MySQL root password"> Change MySQL root password </a>. Only use the default password <b>root</b> on a test server.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

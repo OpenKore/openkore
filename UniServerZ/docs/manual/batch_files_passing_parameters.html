@@ -1,0 +1,978 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Batch Files Passing parameters</title>
+  <meta name="Description" content="Passing parameters between batch files and command line applications (scripted in PHP or Perl) is relatively easy. Passing parameters from the parent application to a child application you can use either environment variables or include parameters in the command line that runs the application. "/>
+  <meta name="Keywords" content="Batch,files,Passing,parameters,The Uniform Server,MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<style type="text/css">
+/*****************************************/
+
+.token{
+font-family: monospace;
+ background-color:  #93EDE7;
+}
+
+.delim{
+font-family: monospace;
+ background-color:  #ED9399;
+}
+
+
+.heading {
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #ffffff;
+ background-color:  #2F2F76;
+ font-size: 13px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.td_sub{
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #000000;
+ background-color:  #f0f0f0;
+ font-size: 12px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+/*****************************************/
+</style>
+
+
+<body id="p1910">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+<script language="javascript" src="common/batch_files_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Batch Files- Passing parameters</h1>
+</tr>
+</table>
+
+<p>Passing parameters between batch files and command line applications (scripted in PHP or Perl) is relatively easy. Passing parameters from the parent application to a child application you can use either environment variables or include parameters in the command line that runs the application. Passing parameters from a child to a parent either use an intermediary file or use the batch command "FOR /F" to process the output text from the child.</p>
+
+<p>This page covers the above and provides examples that can be used in Uniform Server batch files. </p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Background">Background</a></li>
+   <li><a href="#Passing variables to a child">Passing variables to a child</a></li>
+   <li><a href="#FOR /F overview">FOR /F overview</a></li>
+   <li><a href="#FOR /F Passing LiteralString">FOR /F Passing LiteralString</a></li>
+   <li><a href="#FOR /F Passing filenameset -1">FOR /F Passing filenameset</a> -1</li>
+   <li><a href="#Extract MySQL password using SET command">&nbsp;&nbsp;Extract MySQL password using SET command</a></li>
+   <li><a href="#Extract MySQL password using FOR command">&nbsp;&nbsp;Extract MySQL password using FOR command</a></li>
+   <li><a href="#Extract password from name/password file">&nbsp;&nbsp;Extract password from name/password file</a></li>
+
+   <li><a href="#FOR /F Passing filenameset -2">FOR /F Passing filenameset</a> -2</li>
+   <li><a href="#Display all lines that will be processed">&nbsp;&nbsp;Display all lines that will be processed</a></li>
+   <li><a href="#Extract user configuration parameters">&nbsp;&nbsp;Extract user configuration parameters</a></li>
+
+   <li><a href="#FOR /F Passing command">FOR /F Passing command</a></li>
+   <li><a href="#Run batch command - display all lines">&nbsp;&nbsp;Run batch command - display all lines</a></li>
+   <li><a href="#Run PHP code directely - display all lines">&nbsp;&nbsp;Run PHP code directely - display all lines</a></li>
+   <li><a href="#Run PHP code - extract and assign variables">Run PHP code - extract and assign variables</a></li>
+   <li><a href="#Perl passing parameters">Perl passing parameters</a></li>
+   </ul>
+ </div>
+</div>
+
+
+<a name="Background"></a>
+<h2>Background</h2>
+
+<p>A parent process passes its environment to a child process. A child  inherits only a copy (snapshot of the current environment) of the parents environment. This means a child cannot change the original environment.</p>
+
+<p>Although a child process can access and change inherited environment variables, it requires a mechanism to pass any changes back to the parent. Writing new or modified variables to a file is one solution. A parent reads this file and makes changes as required.</p>
+
+<p>An alternative is for the child to output variables to the standard stream (for example print or echo uses the standard stream to output to the screen), allow the parent to intercept and process this data. Sound complicated however the command FOR /F has this functionality built in hence is easy to implement.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Passing variables to a child"></a>
+<h2>Passing variables to a child</h2>
+
+<p>This example demonstrates passing by environment variables and program (application) parameters. Although only one environment variable and one program parameter is used in the demonstration you are not limited to the number you can pass to an application.</p>
+
+<p>In folder UniServerZ create two new files named testp1.bat and testp1.php with the following content:</p>
+
+<table>
+ <tr valign="top">
+   <td>
+<b><i>Comments</i></b>
+<p>Code outside the two test lines are the reference template batch script.</p>
+<pre>
+rem #------Test code -----------
+rem #----End test code ---------
+</pre>
+
+
+
+<p>A) The batch command "set var1=school1" sets the environment vailable <b>var1</b> to value of <b>school1</b>.<br />
+The php script testp1.php is run with parameter <b>school2</b></p>
+
+<p><b><i>Test</i></b> <br />
+Run the batch file by double clicking on file test1p.bat, a command window opens. </p>
+
+ <ul>
+ <li> Confirm the php script outputs and displays the environment varialble (school1).</li>
+ <li> Confirm the php script outputs and displays the parameter (school2).</li>
+ </ul>
+
+<p><b>Note 1:</b> The output from the PHP script is displayed but not captured hence<br />
+ cannot be used in the batch file. This will be resolved later using FOR /F command.</p>
+
+<p><b>Note 2:</b> The PHP script is relatively short and can be run directly as a one liner<br />
+ from the batch file removing the need for a script:</p>
+
+<p>Replace the following line:</p>
+<pre>
+%US_PHP_EXE% -n -f testp1.php school2
+</pre>
+
+<p>With this line:</p>
+<pre>
+%US_PHP_EXE% -n -r  "print(getenv('var1') . PHP_EOL . $argv[1] . PHP_EOL);" school2
+</pre>
+
+   </td>
+
+   <td>&nbsp;</td>
+
+   <td>
+<b><i>testp1.bat</i></b>
+<pre>
+@echo off
+rem ### working directory current folder 
+pushd %~dp0
+
+rem ### set variables
+set HOME=%cd%
+set US_ROOTF=%HOME%
+set US_ROOTF=%US_ROOTF:\=/%
+set US_PHP_EXE=%HOME%\core\php54\php.exe
+
+rem #------Test code -----------
+
+rem ### Set environment variable var1
+rem ### Run PHP script with parameter school2
+echo Test A)
+set var1=school1
+%US_PHP_EXE% -n -f testp1.php school2
+
+rem #----End test code ---------
+
+rem ### restore original working directory
+popd
+
+pause
+</pre>
+<b><i>testp1.php</i></b>
+<pre>
+&lt;?php
+$a = getenv('var1');   // Get environment variable
+print ($a . PHP_EOL);  // Output this variable 
+$b = $argv[1];         // Get argument1 
+print ($b . PHP_EOL);  // Output argument1 
+?&gt;
+
+
+</pre>
+   </td>
+ </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="FOR /F overview"></a>
+<h2>FOR /F overview</h2>
+
+<p>The <b>FOR</b> command has many options fortunately only the <b>/F</b> option is required to extract variables/parameters from an application.<br />
+ There are three command line formats for this option as follows:</p>
+
+<table CELLPADDING=4>
+
+<tr>
+<td valign="top">
+<p><b>Note:</b> The following definitions:-<br />
+<b><i>tokens</i>:</b>  Are strings separated by delimiters. They are strings you are trying to match. Example tokens shown in green.</p> 
+<p><b><i>delims</i>:</b>  A character/s separating tokens. Example delimiters shown in red.</p>
+</td>
+
+<td>
+<p><span class="token">token</span><span class="delim"> </span><span class="token">space delimited</span><span class="delim"> </span><span class="token">token</span></p>
+<p><span class="token">more tokens</span><span class="delim">,</span><span class="token">comma delimited</span><span class="delim">,</span><span class="token">12Z</span></p>
+<p><span class="token">123</span><span class="delim">=</span><span class="token">ABC</span><span class="delim">,</span><span class="token">mixed</span><span class="delim">#</span><span class="token">delimiters</span></p>
+</td>
+
+</tr>
+
+<tr valign="top">
+ <td class="td_sub">
+<p><b>filenameset</b> is one or more file names. Each file is opened, read, and processed before going on to the next file in filenameset.</p>
+
+<p>Processing consists of reading the file one line at a time and then breaking the line up into individual items of data or 'tokens'. The DO command is then executed with the parameter(s) set to the token(s) found.</p>
+
+<p>By default, /F passes the first blank separated token from each line of each file. Blank lines are skipped. </p>
+ </td>
+ <td>
+<pre>
+FOR /F ["options"] %%variable IN (filenameset)     DO command [command-parameters]
+</pre>
+ </td>
+</tr>
+
+<tr valign="top">
+ <td class="td_sub">
+<p><b>LiteralString</b> A string of text will be treated just like a single line of input from a command.<br />
+Processing of a LiteralString consists of breaking the line up into individual items of data or 'tokens'. The DO command is then executed with the parameter(s) set to the token(s) found.<br />
+The string must be enclosed in double quotes.</p>
+
+ </td>
+ <td>
+<pre>
+FOR /F ["options"] %%variable IN ("LiteralString") DO command [command-parameters]
+</pre>
+ </td>
+</tr>
+
+<tr valign="top">
+ <td class="td_sub">
+<p><b>command</b> The named command along with any parameters is executed. Processing of a command consists of reading the output from the command one line at a time and then breaking the line up into individual items of data or 'tokens'. The DO command is then executed with the parameter(s) set to the token(s) found.</p>
+ </td>
+ <td>
+<pre>
+FOR /F ["options"] %%variable IN ('command')       DO command [command-parameters]
+</pre>
+ </td>
+</tr>
+
+</table>
+
+<p>You can override the default parsing behavior by specifying the optional <b>options</b> parameter. This is a quoted string that contains one or more keywords to specify different parsing options. The keywords are:</p>
+
+
+<table CELLPADDING=4>
+<tr valign="top"><td class="heading">Keyword </td><td class="heading"> Description </td></tr>
+
+<tr valign="top"><td class="td_sub">eol=c </td><td class="td_sub"> Specifies an end of line comment character (just one character) default "<b>;</b>"</td></tr>
+
+<tr valign="top"><td class="td_sub">skip=n </td><td class="td_sub"> Specifies the number of lines to skip at the beginning of the file.</td></tr>
+
+<tr valign="top"><td class="td_sub">delims=xxx </td><td class="td_sub"> Specifies a delimiter set. This replaces the default delimiter set of <b>space</b> and <b>tab</b>.</td></tr>
+
+<tr valign="top"><td class="td_sub">tokens=x,y,m-n </td><td class="td_sub"> Specifies which tokens from each line are to be passed to the for body for each iteration. As a result, additional variable names are allocated. The m-n form is a range, specifying the mth through the nth tokens. If the last character in the tokens= string is an asterisk (*), an additional variable is allocated and receives the remaining text on the line after the last token that is parsed.</td></tr>
+
+<tr valign="top"><td class="td_sub">usebackq </td><td class="td_sub"> Specifies that you can use quotation marks to quote file names in filenameset, a back quoted string is executed as a command, and a single quoted string is a literal string command.</td></tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="FOR /F Passing LiteralString"></a>
+<h2>FOR /F Passing LiteralString</h2>
+
+<p>String processing for the three FOR /F command line formats <b>filenameset</b>, <b>LiteralString</b> and <b>command</b> are identical. This section provides examples using the LiteralString format primarily because you can see the text is being processed and requires only a single file making it easier to experiment with the format command options.</p>
+
+<p>In folder UniServerZ create a new file named testp2.bat:</p>
+
+<table>
+ <tr valign="top">
+   <td>
+<b><i>Comments</i></b>
+
+<p>Each test section A) to G) have the following structure:</p>
+<ul>
+  <li>Character identification, followed by a short description.  </li> 
+  <li>Display the command line used.  </li>
+  <li>Display result expected.  </li>
+  <li>Actual FOR /F command line run, displays results using the captured tokens.  </li>
+</ul>
+<p><i>Note</i> 1: The echo format ..%%A..%%B..%%C.. outputs assigned variables %%A, %%B and %%C enclosed between two full stops on either side. These full stops are included for testing apart from visually separating thevariables they allow you to see any unexpected characters captured.</p>
+
+
+<p><i>Note</i> 2: Variables in a FOR /F command require a starting character for example (%%A) from this starting point additional letters are assigned in sequence as required by the FOR command. A variable is created for each token captured and assigned the tokens value. If you specify a variable in the DO section that has not been created and assigned a value its name is output instead.</p>
+
+<p><i>Note</i> 3: The LiteralString format requires a string to be enclosed in quotes. You can use environment variables again these must be enclosed in quotes.</p>
+
+<p><i>Note</i> 4: In the ["options"] section you can place the options in any order however it is recommend you place delims at the end because it make specifying a space easier for example "tokens=1* delims=, "</p>
+
+
+<p><b><i>Test</i></b> <br>
+Run the batch file by double clicking on file test2p.bat, a command window opens. </p>
+
+ <ul>
+ <li> Confirm Expected: and Result: are identical.</li>
+ </ul>
+
+   </td>
+
+   <td>&nbsp;</td>
+
+   <td>
+<b><i>testp2.bat</i></b>
+<pre>
+@echo off
+rem ### working directory current folder 
+pushd %~dp0
+
+rem ### set variables
+set HOME=%cd%
+set US_ROOTF=%HOME%
+set US_ROOTF=%US_ROOTF:\=/%
+set US_PHP_EXE=%HOME%\core\php54\php.exe
+
+rem #------Test code -----------
+
+echo A) No token specified defaults to 1 hence only %%%%A assigned
+echo FOR /F %%%%A IN ("123 456 xyz") DO echo Result:  ..%%%%A..%%%%B..%%%%C..
+echo Expected ..123..%%B..%%C..
+FOR /F %%A IN ("123 456 xyz") DO echo Result:  ..%%A..%%B..%%C..
+
+echo.
+echo B) Token 1 and 3 specified. Each match is assigned
+echo    the next letter in sequence starting from A then B etc.
+echo    note %%%%C is never assigned because only two tokens specified
+echo FOR /F "tokens=1,3" %%%%A IN ("aaa bbb ccc") DO echo Result:  ..%%%%A..%%%%B..%%%%C..
+echo Expected ..aaa..ccc..%%C..  
+FOR /F "tokens=1,3" %%A IN ("aaa bbb ccc") DO echo Result:  ..%%A..%%B..%%C..
+
+echo.
+echo C) Token 1-3 range specified. Each match is assigned
+echo    a letter in sequence starting from A then B then C.
+echo FOR /F "tokens=1-3" %%%%A IN ("123 456 xyz") DO echo Result:  ..%%%%A..%%%%B..%%%%C..
+echo Expected ..123..456..xyz.. 
+FOR /F "tokens=1-3" %%A IN ("123 456 xyz") DO echo Result:  ..%%A..%%B..%%C..
+
+
+echo.
+echo D) Token 1-3 specified. Multi spaces are treated as a single space.
+echo FOR /F "tokens=1-3" %%%%A IN ("123   456 xyz  ") DO echo Result:  ..%%%%A..%%%%B..%%%%C
+echo Expected ..123..456..xyz.. 
+FOR /F "tokens=1-3" %%A IN ("123   456 xyz  ") DO echo Result:  ..%%A..%%B..%%C..
+
+
+echo.
+echo E) Token 1-3 specified. delims specifies a comma and space
+echo FOR /F "tokens=1-3 delims=, " %%%%A IN ("a,Z  x") DO echo Result: ..%%%%A..%%%%B..%%%%C
+echo Expected..a..Z..x..
+FOR /F "tokens=1-3 delims=, " %%A IN ("a,Z  x") DO echo Result: ..%%A..%%B..%%C..
+echo.
+
+
+echo F) Token 1* specified. 1 match first delim, then * match reset of line
+echo FOR /F "tokens=1* delims=, " %%%%A IN ("s,z2  p") DO echo Result:  ..%%%%A..%%B..%%%%C
+echo Expected ..s..z2  p..%%C.. 
+FOR /F "tokens=1* delims=, " %%A IN ("s,z2  p") DO echo Result:  ..%%A..%%B..%%C..
+
+echo.
+echo G) Token 1* specified.
+echo use an environment variable for the string.
+set str=php54\php.exe
+echo set str=\php54\php.exe
+echo FOR /F "tokens=1* delims=\" %%A IN ("%str%") DO echo Result:  ..%%A..%%B..
+echo Expected ..php54..php.exe.. 
+FOR /F "tokens=1-3 delims=\" %%A IN ("%str%") DO echo Result:  ..%%A..%%B..
+echo.
+rem #----End test code ---------
+
+rem ### restore original working directory
+popd
+
+pause
+
+</pre>
+
+   </td>
+ </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="FOR /F Passing filenameset -1"></a>
+<h2>FOR /F Passing filenameset -1</h2>
+
+<p>Extracting a single parameter as the first line of a file such as the MySQL password is achieved using either the SET command with redirection operator or using the FOR /F command with <b>filenameset</b> format. For comparison an example of both is shown. Folders (ssl and www) can be protected with allowed user names and password pairs contained in a file. A users password can be extracted with a  FOR /F command.</p>
+
+<p>In folder UniServerZ create a new file named testp3.bat:</p>
+
+<table>
+ <tr valign="top">
+   <td>
+<b><i>Comments</i></b>
+
+
+<a name="Extract MySQL password using SET command"></a>
+<p><b><i>Extract MySQL password using SET command</i></b>:<br />
+A) The SET command with the /p parameter waits for user input. This input is provided from a file using the redirection < operator. A single line of text from the file sets the named environment variable.</p>
+<ul>
+ <li>set /p variable_name=&lt;full_path_of_text_file</li>
+</ul>
+
+<a name="Extract MySQL password using FOR command"></a>
+<p><b><i>Extract MySQL password using FOR command</i></b>:<br />
+B) Alternative to the above is to use a FOR /F command general format as follows:</p>
+
+<ul>
+ <li>FOR /F %%G IN (full_path_of_text_file) DO set variable_name=%%G</li>
+</ul>
+<p>No options specified, default are used. Assign the first token and assign it to variable.</p>
+
+<a name="Extract password from name/password file"></a>
+<p><b><i>Extract password from name/password file</i></b>:<br />
+Using the FOR /F command a specific name can be targeted and the password extracted. We do not have a file to use, for this example we create a name:password file pwd_file.txt using the redirection operator. File content shown below:</p>
+<pre>
+mike:abc123
+john:abc124
+fred:abc125
+</pre>
+
+<p>D) The following code extracts the password for john:</p>
+<pre>
+FOR /F "tokens=1,2 delims=:" %%G IN (pwd_file.txt) DO (
+IF %%G==john echo Result:   Johns password=%%H)
+</pre>
+
+<ul>
+  <li>The for loop reads each line intern.  </li>
+  <li><b>Delims=:</b> splits a line at every occurrence of : creating tokens.  </li>
+  <li>These tokens are assigned to variables,  user name assigned to %%G and password to %%H  </li>
+  <li> The variable %%G is tested using the <b>IF command</b>, if the variable is equal to string <b>john</b> the vaiable %%H (password) is echoed to the screen. If no match the next line is read.  </li>
+</ul>
+
+
+<p><b><i>Test</i></b> <br>
+Run the batch file by double clicking on file test3p.bat, a command window opens. </p>
+
+ <ul>
+ <li> Confirm Expected: and Result: are identical.</li>
+ </ul>
+
+   </td>
+
+   <td>&nbsp;</td>
+
+   <td>
+<b><i>testp3.bat</i></b>
+<pre>
+@echo off
+rem ### working directory current folder 
+pushd %~dp0
+
+rem ### set variables
+set HOME=%cd%
+set US_ROOTF=%HOME%
+set US_ROOTF=%US_ROOTF:\=/%
+set US_PHP_EXE=%HOME%\core\php54\php.exe
+
+rem #------Test code -----------
+
+echo A) Directely read password from file using set command
+echo set /p passw=^<%%HOME%%\htpasswd\mysql\passwd.txt
+echo Expected: Password=root
+set /p passw=&lt;%HOME%\htpasswd\mysql\passwd.txt
+echo Result:   Password=%passw%
+
+FOR /F %%G IN (%PWD_FILE1%) DO set MYSQL_PWD2=%%G
+
+echo.
+echo B) Directely read password from file using FOR /F command
+echo FOR /F %%%%G IN (%%HOME%%\htpasswd\mysql\passwd.txt) DO set passw2=%%%%G
+echo Expected: Password=root
+FOR /F %%G IN (%HOME%\htpasswd\mysql\passwd.txt) DO set passw2=%%G
+echo Result:   Password=%passw2%
+
+rem ### Create name:password pairs in a test file
+echo mike:abc123  &gt; pwd_file.txt
+echo john:abc124 &gt;&gt; pwd_file.txt
+echo fred:abc125 &gt;&gt; pwd_file.txt
+
+echo.
+echo C) Display contents of file using FOR /F command
+echo FOR /F "tokens=1,2 delims=:" %%%%G IN (pwd_file.txt) DO echo %%%%G %%%%H
+echo Expected:
+echo mike abc123
+echo john abc124
+echo fred abc125
+echo Result:
+FOR /F "tokens=1,2 delims=:" %%G IN (pwd_file.txt) DO echo %%G %%H
+
+echo.
+echo D) From the above file extract password for john
+echo FOR /F "tokens=1,2 delims=:" %%%%G IN (pwd_file.txt) DO (
+echo IF %%%%G==john echo Result:   Johns password=%%%%H)
+echo Expected: Johns password=abc124
+
+FOR /F "tokens=1,2 delims=:" %%G IN (pwd_file.txt) DO (
+IF %%G==john echo Result:   Johns password=%%H)
+
+echo.
+rem #----End test code ---------
+
+rem ### restore original working directory
+popd
+
+pause
+
+</pre>
+
+   </td>
+ </tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="FOR /F Passing filenameset -2"></a>
+<h2>FOR /F Passing filenameset -2</h2>
+
+<p>This page is about passing parameters between scripts. For completeness this section covers passing parameters using an intermediary file. The Uniform Server saves user configuration data to a file, this file can be considered an intermediary file. Data in this file is extracted using the FOR /F command with the <b>filenameset</b> format.</p>
+
+
+<p>In folder UniServerZ create a new file named testp4.bat:</p>
+
+<table>
+ <tr valign="top">
+   <td>
+<b><i>Comments</i></b>
+
+
+<a name="Display all lines that will be processed"></a>
+<p><b><i>Display all lines that will be processed</i></b>:<br />
+A) Before writing code you can preview all lines that will be processed with the following command line:</p>
+<pre>
+ FOR /F "tokens=*" %%A IN (file_path) DO echo %%A
+</pre>
+
+<p>It uses the * operator to match all text on a line. The end of line character default is <b>;</b> this matches the user configuration line comments. However files such as Apache and MySQL use character #. You can change this default behaviour using the eol parameter for example:</p>
+<pre>
+ FOR /F "tokens=* eol=#" %%A IN (file_path) DO echo %%A
+</pre>
+
+
+<a name="Extract user configuration parameters"></a>
+<p><b><i>Extract user configuration parameters</i></b>:<br />
+Each line in the user configuration file has the following format:
+<pre>
+parameter=value
+</pre>
+
+<p>B) Using the FOR /F command we can extract one or more parameters from this file. For example extract parameters PHP_SELECT and PHP_INI_SELECT then set corresponding environment variables.</p>
+<pre>
+FOR /F "TOKENS=1,2 delims=="  %%A IN (%US_USER_INI%) DO (
+If %%A==PHP_SELECT Set PHP_SELECT=%%B
+If %%A==PHP_INI_SELECT Set PHP_INI_SELECT=%%B
+)
+echo Result:   PHP_SELECT     = %PHP_SELECT%
+echo Result:   PHP_INI_SELECT = %PHP_INI_SELECT%
+</pre>
+
+<p><b><i>Test</i></b> <br>
+Run the batch file by double clicking on file test4p.bat, a command window opens. </p>
+
+ <ul>
+ <li> Confirm Expected: and Result: are identical.</li>
+ </ul>
+</td>
+
+<td>
+<b><i>testp4.bat</i></b>
+<pre>
+@echo off
+rem ### working directory current folder 
+pushd %~dp0
+
+rem ### set variables
+set HOME=%cd%
+set US_ROOTF=%HOME%
+set US_ROOTF=%US_ROOTF:\=/%
+set US_PHP_EXE=%HOME%\core\php54\php.exe
+set US_USER_INI=%HOME%\home\us_config\us_user.ini
+
+rem #------Test code -----------
+
+echo A) Read lines from config file that will be processed
+echo FOR /F %%%%G IN (%%HOME%%\htpasswd\mysql\passwd.txt) DO echo %%%%A
+echo.
+echo #------ Lines that will be processed ------------
+FOR /F "tokens=*" %%A IN (%US_USER_INI%) DO echo %%A
+echo #---- End lines that will be processed ----------
+
+echo.
+echo B) Read parameters PHP_SELECT and PHP_INI_SELECT and set environment variables.
+echo FOR /F "TOKENS=1,2 delims=="  %%%%A IN (%%US_USER_INI%%) DO (
+echo If %%%%A==PHP_SELECT Set PHP_SELECT=%%%%B
+echo If %%%%A==PHP_INI_SELECT Set PHP_INI_SELECT=%%%%B
+echo )
+echo echo PHP_SELECT     = %%PHP_SELECT%%
+echo echo PHP_INI_SELECT = %%PHP_INI_SELECT%%
+echo.
+echo Expected: PHP_SELECT     = php54
+echo Expected: PHP_INI_SELECT = php_production.ini
+
+
+FOR /F "TOKENS=1,2 delims=="  %%A IN (%US_USER_INI%) DO (
+If %%A==PHP_SELECT Set PHP_SELECT=%%B
+If %%A==PHP_INI_SELECT Set PHP_INI_SELECT=%%B
+)
+echo Result:   PHP_SELECT     = %PHP_SELECT%
+echo Result:   PHP_INI_SELECT = %PHP_INI_SELECT%
+echo.
+rem #----End test code ---------
+
+rem ### restore original working directory
+popd
+
+pause
+</pre>
+
+   </td>
+ </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="FOR /F Passing command"></a>
+<h2>FOR /F Passing command</h2>
+
+<p>The FOR /F with <b>command</b> format, allows you to run a command line script and capture its output to memory. When the script terminates memory content is read and is processed line-by-line. This allows you to pass parameters from a child process to the parents process. Following examples provide an introduction to its capability.</p>
+
+
+<p>In folder UniServerZ create a new file named testp5.bat:</p>
+
+<table>
+ <tr valign="top">
+   <td>
+<b><i>Comments</i></b>
+
+
+<a name="Run batch command - display all lines"></a>
+<p><b><i>Run batch command - display all lines</i></b>:<br />
+A) Before writing code you can preview all lines that will be processed. The following example code uses the <b>dir</b> command with parameters <b>htpasswd /b /s</b>: </p>
+<pre>
+ FOR /F "tokens=*" %%A IN ('dir htpasswd /b /s') DO echo %%A
+</pre>
+
+<p><i>Note 1</i>: The command name and parameters are enclosed in <b>single quotes</b>.<br />
+<i>Note 2</i>: If the command line becomes too long you can use the alternative format:</p>
+<pre>
+FOR /F "tokens=*" %%A IN (
+'dir htpasswd /b /s'
+) DO echo %%A
+</pre>
+
+
+<a name="Run PHP code directely - display all lines"></a>
+<p><b><i>Run PHP code directely - display all lines</i></b>:<br />
+B) Before writing code you can preview all lines that will be processed. This example runs PHP code directely using the following format:
+
+<pre>
+FOR /F "tokens=*" %%A IN (
+'php.exe -n -r  "print('name=fred'.PHP_EOL.'address=myspace');"'
+) DO echo %%A
+</pre>
+<p>This outputs the following two lines:</p>
+<pre>
+name=fred
+address=myspace
+</pre>
+
+
+<a name="Run PHP code - extract and assign variables"></a>
+<p><b><i>Run PHP code - extract and assign variables</i></b>:<br />
+C) This example shows how to split the above lines, extract each parameter and assign result to environment variables:
+
+<pre>
+FOR /F "tokens=1,2 delims==" %%A IN (
+'php.exe -n -r  "print('name=fred'.PHP_EOL.'address=myspace');"'
+) DO (
+If %%A==name Set name=%%B
+If %%A==address Set address=%%B
+)
+echo Result:   Name is %name% and address is %address%
+</pre>
+<p>The PHP code is run and the lines processed. Each line is split into tokens at the equals character using delims==. The tokens are assigned to variables A%% and B%% using tokens=1,2. These assigned variables are used to create and set the environment variable. Finally the  environment variable are displayed using echo.</p>
+
+
+<p><b><i>Test</i></b> <br>
+Run the batch file by double clicking on file test5p.bat, a command window opens. </p>
+
+ <ul>
+ <li>A) and B) Confirm "Lines that will be processed" blocks are displayed.</li>
+ <li>C) Confirm Expected: and Result: are identical.</li>
+ </ul>
+
+
+</td>
+
+</td>
+
+<td>
+<b><i>testp5.bat</i></b>
+<pre>
+@echo off
+rem ### working directory current folder 
+pushd %~dp0
+
+rem ### set variables
+set HOME=%cd%
+set US_ROOTF=%HOME%
+set US_ROOTF=%US_ROOTF:\=/%
+
+rem ### Get PHP version selected
+set CFGF=%HOME%\home\us_config\us_user.ini
+FOR /F "TOKENS=1,2 delims=="  %%A IN (%CFGF%) DO (
+If %%A==PHP_SELECT Set PHP_SELECT=%%B
+)
+
+rem ### Set path to php.exe
+set Path=%HOME%\core\%PHP_SELECT%;%Path%
+
+rem #------Test code -----------
+
+echo A) Run batch command - display all lines
+echo FOR /F %%%%G IN ('dir htpasswd /b /s') DO echo %%%%A
+echo.
+echo #------ Lines that will be processed ------------
+FOR /F "tokens=*" %%A IN ('dir htpasswd /b /s') DO echo %%A
+echo #---- End lines that will be processed ----------
+
+echo.
+echo B) Run PHP code directely - display all lines
+echo FOR /F "tokens=*" %&&%A IN (
+echo 'php.exe -n -r  "print('name fred'.PHP_EOL.'address myspace');"'
+echo ) DO echo %%%%A
+
+echo.
+echo #------ Lines that will be processed ------------
+FOR /F "tokens=*" %%A IN (
+'php.exe -n -r  "print('name=fred'.PHP_EOL.'address=myspace');"'
+) DO echo %%A
+echo #---- End lines that will be processed ----------
+
+echo.
+echo c) Run PHP code - extract and assign variables
+echo FOR /F "tokens=1,2 delims==" %%%%A IN (
+echo 'php.exe -n -r  "print('name=fred'.PHP_EOL.'address=myspace');"'
+echo ) DO (
+echo If %%%%A==name Set name=%%%%B
+echo If %%%%A==address Set address=%%%%B
+echo )
+echo Result:   Name is %%name%% and address is %%address%%
+echo.
+echo Expected: Name is fred and address is myspace 
+
+
+FOR /F "tokens=1,2 delims==" %%A IN (
+'php.exe -n -r  "print('name=fred'.PHP_EOL.'address=myspace');"'
+) DO (
+If %%A==name Set name=%%B
+If %%A==address Set address=%%B
+)
+echo Result:   Name is %name% and address is %address%
+
+echo.
+rem #----End test code ---------
+
+rem ### restore original working directory
+popd
+pause
+
+</pre>
+
+   </td>
+ </tr>
+</table>
+
+<p><b><i>Note</i>:</b> Generally your PHP code would be run from a script see <a href="/php_cli.html#PHP Command-line - run scripts">PHP CLI</a> for detals. You would replace the following line:</p>
+<pre>
+'php.exe -n -r  "print('name=fred'.PHP_EOL.'address=myspace');"'
+</pre>
+
+<p>With one of the following options:</p>
+<pre>
+'php test1.php'
+'php -n test1.php'
+'php -c core\php54\my_cli.ini test1.php'
+</pre>
+
+<p>Note: You must enclose the command in single quotes.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Perl passing parameters"></a>
+<h2>Perl passing parameters</h2>
+<p>Perl is another powerful scripting language that you can run as CLI from a batch file, additional information see <a href="perl_cli.html">Perl CLI</a> page. Passing parameters is similar to PHP. This section provides an example using the above techniques to pass environment variables and parameters between a batch file and a Perl script.</p>
+
+<p>Uniform server is portable, it does not make any changes to a host PC configuration. This means the path to the Perl interpretor is undefined and must be added to the environment path before a Perl script is run from a batch file.</p> 
+
+<p>In folder UniServerZ create two new files named testp6.bat and testp6.pl with the following content:</p>
+
+<table>
+ <tr valign="top">
+   <td>
+<b><i>Comments</i></b>
+<p>Code outside the two test lines are the reference template batch script.</p>
+<pre>
+rem #------Test code -----------
+rem #----End test code ---------
+</pre>
+
+<p>Common environment variables are initially set.</p>
+<pre>
+set HOME=%cd%
+set PERL_PATH=%HOME%\core\perl\bin
+set PERL_EXE=%HOME%\core\perl\bin\perl.exe
+
+IF NOT EXIST %PERL_EXE% (echo Perl not installed! & goto END)
+set Path=%PERL_PATH%;%Path%
+</pre>
+
+<p>If the Perl executable does not exits it is assumed the Perl module has not been installed and a error message is displayed before exiting. If the executable exists the path to Perl binaries is added to the environment path variable.</p>
+
+<p><b><i>Test code</i></b> <br />
+Two environment variables perl_var1  and perl_var2 are created, the Perl script will modify these and return new values. These variables can be existing variables.</p>
+<pre>
+rem -- Set environment vars for Perl script
+set perl_var1=pvar1
+set perl_var2=pvar2
+</pre>
+
+<p>The Perl script is run using the following line, note two parameters pvar3 and pvar4 are passed on the command line. Raw output from the script is displayed.</p>
+<pre>
+perl test6.pl pvar3 pvar4
+</pre>
+
+<p>A <b>For /F</b> loop runs the Perl script a second time. No output displayed, instead output is captured and processed by the For /F loop, which extracts and sets the two variables perl_var1 and perl_var2. </p>
+
+<pre>
+FOR /F "tokens=1,2 delims==" %%A IN (
+'perl test6.pl pvar3 pvar4'
+) DO (
+If %%A==perl_var1 Set perl_var1=%%B
+If %%A==perl_var2 Set perl_var2=%%B
+)
+</pre>
+
+<p>Finally the two variables are displayed (echoed) allowing you to confirm variables have been changed.</p>
+<pre>
+echo perl_var1=%perl_var1%
+echo perl_var2=%perl_var2%
+</pre>
+
+<p><b><i>Test</i></b> <br>
+Run the batch file by double clicking on file test6p.bat, a command window opens. Confirm the above is displayed. </p>
+
+   </td>
+
+   <td>&nbsp;</td>
+
+   <td>
+<b><i>testp6.bat</i></b>
+<pre>
+@echo off
+rem ### working directory current folder 
+pushd %~dp0
+
+rem ### set variables
+set HOME=%cd%
+set PERL_PATH=%HOME%\core\perl\bin
+set PERL_EXE=%HOME%\core\perl\bin\perl.exe
+
+IF NOT EXIST %PERL_EXE% (echo Perl not installed! & goto END)
+set Path=%PERL_PATH%;%Path%
+
+rem #------Test code -----------
+
+rem -- Set environment vars for Perl script
+set perl_var1=pvar1
+set perl_var2=pvar2
+
+rem -- run script with parameters
+rem -- display output from script
+perl test6.pl pvar3 pvar4
+
+echo.
+echo Script is run for second time however this run uses
+echo a FOR /F loop to extract and set variables perl_var1 and perl_var2
+echo.
+
+FOR /F "tokens=1,2 delims==" %%A IN (
+'perl test6.pl pvar3 pvar4'
+) DO (
+If %%A==perl_var1 Set perl_var1=%%B
+If %%A==perl_var2 Set perl_var2=%%B
+)
+
+echo Display values that were updated by script:
+echo.
+echo perl_var1=%perl_var1%
+echo perl_var2=%perl_var2%
+
+echo.
+
+rem #----End test code ---------
+
+:END
+rem ### restore original working directory
+popd
+
+pause
+</pre>
+<b><i>testp6.pl</i></b>
+<pre>
+print "--------- Output from Perl script ----------\n";
+print "Environment variable perl_var1   =".$ENV{"perl_var1"}."\n";
+print "Environment variable perl_var2   =".$ENV{"perl_var2"}."\n";
+print "Parameter 1 passed by commandline="."@ARGV[0]\n";
+print "Parameter 2 passed by commandline="."@ARGV[1]\n";
+print "Change and return Environment variables\n";
+print "perl_var1=pvar1xxxxx\n"; 
+print "perl_var2=pvar2zzzzz\n";
+print "------- End output from Perl script ---------\n";
+
+</pre>
+   </td>
+ </tr>
+</table>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

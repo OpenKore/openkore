@@ -1,0 +1,273 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-02 00:52+0800\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: edit.tpl.php:8
+#, php-format
+msgid "Editing Variable %s"
+msgstr ""
+
+#: edit.tpl.php:13
+#, php-format
+msgid "Set %s in config to enable"
+msgstr ""
+
+#: index.php:187 index.php:213
+msgid "Total"
+msgstr ""
+
+#: index.php:263
+msgid "Summary"
+msgstr ""
+
+#: index.php:264
+msgid "List PHP"
+msgstr ""
+
+#: index.php:265
+msgid "List Var Data"
+msgstr ""
+
+#: listentries.tpl.php:11
+msgid "php Cached"
+msgstr "PHP Cached"
+
+#: listentries.tpl.php:11
+msgid "var Cached"
+msgstr "Variable Cached"
+
+#: listentries.tpl.php:15
+msgid "php Deleted"
+msgstr "PHP Deleted"
+
+#: listentries.tpl.php:15
+msgid "var Deleted"
+msgstr "Variable Deleted"
+
+#: sub/entrylist.tpl.php:14
+msgid "entry.id"
+msgstr "Id|"
+
+#: sub/entrylist.tpl.php:19
+msgid "entry.remove"
+msgstr "Remove|"
+
+#: sub/entrylist.tpl.php:24
+msgid "entry.name"
+msgstr "Entry name|The entry name or filename"
+
+#: sub/entrylist.tpl.php:25
+msgid "entry.hits"
+msgstr "Hits|Hit times of this entry (loaded from this cache)"
+
+#: sub/entrylist.tpl.php:26
+msgid "entry.size"
+msgstr "Size|Size in bytes of this entry in the cache"
+
+#: sub/entrylist.tpl.php:31
+msgid "entry.refcount"
+msgstr "Refs|Reference count of this entry is holded by a php request"
+
+#: sub/entrylist.tpl.php:32
+msgid "entry.phprefcount"
+msgstr "Shares|Count of entry sharing this php data"
+
+#: sub/entrylist.tpl.php:33
+msgid "entry.class_cnt"
+msgstr "Cls.|Count of classes"
+
+#: sub/entrylist.tpl.php:34
+msgid "entry.function_cnt"
+msgstr "Funcs|Count of functions"
+
+#: sub/entrylist.tpl.php:35
+msgid "entry.file_size"
+msgstr "Src Size|Size of the source file"
+
+#: sub/entrylist.tpl.php:36
+msgid "entry.file_mtime"
+msgstr "Modified|Last modified time of the source file"
+
+#: sub/entrylist.tpl.php:39
+msgid "entry.file_device"
+msgstr "dev|device number of the source file"
+
+#: sub/entrylist.tpl.php:40
+msgid "entry.file_inode"
+msgstr "ino|inode number of the source file"
+
+#: sub/entrylist.tpl.php:44
+msgid "entry.hash"
+msgstr "Hash|Hash value of this entry"
+
+#: sub/entrylist.tpl.php:45
+msgid "entry.atime"
+msgstr "Access|Last time when this entry is accessed"
+
+#: sub/entrylist.tpl.php:46
+msgid "entry.ctime"
+msgstr "Create|The time when this entry is stored"
+
+#: sub/entrylist.tpl.php:51
+msgid "entry.delete"
+msgstr "Delete|The time when this entry is deleted"
+
+#: sub/entrylist.tpl.php:149
+msgid "Remove Selected"
+msgstr ""
+
+#: sub/moduleinfo.tpl.php:1
+msgid "Module Info"
+msgstr ""
+
+#: sub/summary.tpl.php:3
+msgid "Caches"
+msgstr "Caches"
+
+#: sub/summary.tpl.php:6
+msgid "cache.cache"
+msgstr "Cache|"
+
+#: sub/summary.tpl.php:7
+msgid "cache.slots"
+msgstr "Slots|Number of hash slots. the setting from your php.ini"
+
+#: sub/summary.tpl.php:8
+msgid "cache.size"
+msgstr "Size|Cache Size, Size of the cache (or cache chunk), in bytes"
+
+#: sub/summary.tpl.php:9
+msgid "cache.avail"
+msgstr "Avail|Available Memory, free memory in bytes of this cache"
+
+#: sub/summary.tpl.php:10
+msgid "cache.blocksgraph"
+msgstr ""
+"Percent Graph|Shows how much memory available in percent, and memory blocks "
+"status in graph"
+
+#: sub/summary.tpl.php:11
+msgid "cache.operations"
+msgstr "Operations|Press the clear button to clean this cache"
+
+#: sub/summary.tpl.php:12
+msgid "cache.status"
+msgstr ""
+"Status|Compiling flag, \"Compiling\" if the cache is busy compiling php "
+"script. \"Disabled\" if cache is disabled"
+
+#: sub/summary.tpl.php:13
+msgid "cache.hits"
+msgstr "Hits|Cache Hits, hit=a var/php is loaded from this cache"
+
+#: sub/summary.tpl.php:14
+msgid "cache.hits_graph"
+msgstr "Hits*24H|Hits graph of last 24 hours"
+
+#: sub/summary.tpl.php:15
+msgid "cache.hits_avg_h"
+msgstr "Hits/H|Average Hits per Hour. Only last 24 hours is logged"
+
+#: sub/summary.tpl.php:16
+msgid "cache.hits_avg_s"
+msgstr "Hits/S|Average Hits per Second. Only last 5 seconds is logged"
+
+#: sub/summary.tpl.php:17
+msgid "cache.updates"
+msgstr "Updates|Cache Updates"
+
+#: sub/summary.tpl.php:18
+msgid "cache.skips"
+msgstr ""
+"Skips|Skips. Skip=updates are needed but skipped for some reason. e.g.: "
+"other process/thread is busy compiling on this cache"
+
+#: sub/summary.tpl.php:19
+msgid "cache.ooms"
+msgstr ""
+"OOMs|Out Of Memory, how many times a new item should be stored but there "
+"isn't enough memory in the cache, think of increasing the xcache.size or "
+"xcache.var_size"
+
+#: sub/summary.tpl.php:20
+msgid "cache.errors"
+msgstr ""
+"Errs|Compiler errors, how many times your script(s) failed to be compiled by "
+"PHP. You should really check what is happening if you see this value "
+"increase. (See Help for more information)"
+
+#: sub/summary.tpl.php:21
+msgid "cache.readonly_protected"
+msgstr ""
+"Protected|Whether readonly_protection is available and enable on this cache "
+"(See help for more information)"
+
+#: sub/summary.tpl.php:22
+msgid "cache.cached"
+msgstr "Cached|Number of entries stored in this cache"
+
+#: sub/summary.tpl.php:23
+msgid "cache.deleted"
+msgstr ""
+"Deleted|Number of entries is pending in delete list (expired but referenced)"
+
+#: sub/summary.tpl.php:24
+msgid "cache.gc_timer"
+msgstr "GC|Seconds count down of Garbage Collection"
+
+#: sub/summary.tpl.php:30
+msgid "Clear"
+msgstr ""
+
+#: sub/summary.tpl.php:31
+msgid "Disabled"
+msgstr ""
+
+#: sub/summary.tpl.php:32
+msgid "Disable"
+msgstr ""
+
+#: sub/summary.tpl.php:33
+msgid "Enable"
+msgstr ""
+
+#: sub/summary.tpl.php:34
+msgid "Compiling"
+msgstr ""
+
+#: sub/summary.tpl.php:35
+msgid "Normal"
+msgstr ""
+
+#: sub/summary.tpl.php:36 sub/testcoredump.tpl.php:3
+msgid "Sure?"
+msgstr ""
+
+#: sub/summary.tpl.php:132
+msgid "Legends:"
+msgstr ""
+
+#: sub/summary.tpl.php:134
+msgid "% Free"
+msgstr ""
+
+#: sub/summary.tpl.php:134
+msgid "% Used"
+msgstr ""
+
+#: sub/summary.tpl.php:136
+msgid "Free Blocks"
+msgstr ""
+
+#: sub/summary.tpl.php:136
+msgid "Used Blocks"
+msgstr ""
+
+#: sub/summary.tpl.php:138
+msgid "Hits"
+msgstr ""

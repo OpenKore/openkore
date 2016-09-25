@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Unix Shebang on Windows</title>
+  <meta name="Description" content="This page covers running Perl scripts with Unix Shebang unmodified on Windows." />
+  <meta name="Keywords" content="Perl,Unix,Shebang,Windows,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<style type="text/css">
+/*****************************************/
+.heading {
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #ffffff;
+ background-color:  #2F2F76;
+ font-size: 13px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.td_sub{
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #000000;
+ background-color:  #f0f0f0;
+ font-size: 12px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+
+/*****************************************/
+</style>
+
+<body id="p920">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/perl_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Unix Shebang on Windows</h1>
+</tr>
+</table>
+
+<p>This page covers running Perl scripts with Unix Shebang unmodified on Windows. It allows you to easily transfer scripts between Windows and Unix systems and to run scripts from third parties that use a Unix Shebang.</p>
+
+<p>Note: The implementation is for a fixed installation of Uniform Server running either as a standard program or as a service on  a modern version of Windows that supports symbolic links this excludes Windows XP.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Shebang interpreter directive" >Shebang interpreter directive</a></li>
+   <li><a href="#Symbolic link" >Symbolic link</a></li>
+   <li><a href="#Path difference" >&nbsp;&nbsp;Path difference</a></li>
+   <li><a href="#Link redirection" >&nbsp;&nbsp;Link redirection</a></li>
+   <li><a href="#mklink syntax" >&nbsp;&nbsp;mklink syntax</a></li>
+   <li><a href="#Creating a symbolic link to access the Perl executable" >Creating a symbolic link to access the Perl executable</a></li>
+   <li><a href="#Server relocation" >&nbsp;&nbsp;Server relocation</a></li>
+   <li><a href="#Batch files" >&nbsp;&nbsp;Batch files</a></li>
+   <li><a href="#Test 1 - Apache running as a standard program" >&nbsp;&nbsp;Test 1 - Apache running as a standard program</a></li>
+   <li><a href="#Test 2 - Apache running as a service" >&nbsp;&nbsp;Test 2 - Apache running as a service</a></li>
+   <li><a href="#Move Server" >Move Server</a></li>
+   </ul>
+ </div>
+</div>
+
+<a name="Shebang interpreter directive"></a>
+<h2>Shebang interpreter directive</h2>
+
+<p>The syntax of a shebang (interpreter directive) is as follows: <b>#! interpreter [optional-arg]</b><br /> 
+<b><i>Note</i>:</b> The #! means "use the following command/interpreter to run this script". Generally the command/interpreter is the absolute path to an executable for example:</p>
+
+Unix format:
+<pre>#!/usr/bin/perl</pre>
+<p>Note: The forward slash is shorthand meaning top-level of the current drive. For example to find the perl.exe executable on C drive, start at the top-level of <b>C:</b> drive, look in in folder <b>usr</b> and then folder <b>bin</b> for the perl.exe executable.</p>
+
+Default installation of Uniform Server executable path is:
+<pre>#!C:/UniServerZ/core/perl/bin/perl.exe</pre>
+
+<p>For a default instalation of Uniform Server on C drive. Start at the top-level of <b>C:</b> drive, navigate the folder tree UniServerZ, core, perl finally look in in folder <b>bin</b> a for the perl.exe executable.</p>
+
+<p>Note: In both cases the .exe extension is optional, generally the Unix Shebang excludes this extension. </p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Symbolic link"></a>
+<h2>Symbolic link</h2>
+
+<p>From the above example a Unix Shebang will not find the perl.exe executable on a default installation of Uniform Server. The path <b>/usr/bin/perl</b> does not exist what is required is to map the Unix Shebang to the real path <b>C:/UniServerZ/core/perl/bin/perl.exe</b> this is achieved using a symbolic link.</p>
+
+<a name="Path difference"></a>
+<p><b>Path difference</b><br />
+The following shows the two paths one above the other for comparison.</p>
+<pre>
+                 C:/usr/bin/perl.exe  - Unix path
+C:/UniServerZ/core/perl/bin/perl.exe  - Uniform Server path
+</pre>
+
+<p>Starting from right to left remove common elements to give:</p>
+<pre>
+                 C:/usr  - Unix path
+C:/UniServerZ/core/perl  - Uniform Server path
+</pre>
+
+<a name="Link redirection"></a>
+<p><b>Link redirection</b><br />
+
+When searching for perl.exe, Unix Shebang directs the search to folder <b>usr</b>. Instead of folders in <b>usr</b> it finds a link and follows this. At the end of the link redirection path it appends folder <b>bin</b> and looks for perl.exe The link redirection is referred to as a symbolic link, it contains a real path for example "C:/UniServerZ/core/perl"</p>
+
+<table cellspacing="4">
+
+<tr>
+  <td colspan="2">
+<a name="mklink syntax"></a>
+<p><b>mklink syntax</b><br />
+A symbolic link is created with the Microsoft DOS command <b>mklink</b>. It has the following syntax:</p>
+
+<pre>mklink /d Link Target</pre>
+  </td>
+</tr>
+
+ <tr valign="top">
+  <td class="heading"><b>Parameter</b></td>
+  <td class="heading"><b>Description</b></td>
+</tr>
+
+<tr valign="top">
+  <td class="td_sub">/d</td>
+  <td class="td_sub">Creates a directory symbolic link.  Default is a file symbolic link.</td>
+</tr>
+
+<tr valign="top">
+  <td class="td_sub">Link</td>
+  <td class="td_sub">Specifies the name of the new symbolic link that is being created.</td>
+</tr>
+
+<tr valign="top">
+  <td class="td_sub">Target</td>
+  <td class="td_sub">Specifies the path (relative or absolute) that the new symbolic link refers to.</td>
+</tr>
+
+</table>
+
+<p>Note 1: The mklink command is an internal command that is available in the following operating systems:</p>
+
+<ul>
+  <li>Windows 7</li> 
+  <li>Windows Vista</li> 
+  <li>Windows 8</li> 
+  <li>Windows 10</li> 
+</ul>
+
+<p>Note 2: The mklink command requires an elevated command prompt.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Creating a symbolic link to access the Perl executable"></a>
+<h2>Creating a symbolic link to access the Perl executable</h2>
+
+<p>The above looks complex in reality is is quite simple, all that is required is to map folder <b>usr</b> to folder path <b>C:/UniServerZ/core/perl.</b> using the following command line:</p>
+<pre>
+mklink /D usr C:\UniServerZ\core\perl
+</pre>
+
+
+<a name="Server relocation"></a>
+<b><i>Server relocation</i></b>
+
+<p>Uniform Server is portable and can be moved to a different location either to a different folder or hard drive by copying folder UniServerZ and all its content to the desired location. However you must remember to adjust the path accordingly in the symbolic link. This inconvenience is avoided by using two batch files.</p>
+
+
+<a name="Batch files"></a>
+<b><i>Batch files</i></b>
+<p>The following two batch files allow you to easily create and delete a symbolic link to access the Perl executable.<br />
+ Create and test these batch files as follow:</p>
+
+<p>Create two new files <b>link_create.bat</b> and <b>link_delete.bat</b>  in folder <b>UniServerZ</b> with the following content:</p>
+
+<table>
+<tr valign="top">
+
+<td>
+<b>link_create.bat</b>
+<pre>
+@echo off
+rem working directory current folder
+pushd %~dp0
+
+rem save us path
+set us_path=%cd%
+
+rem change to top level
+cd \
+
+rem create link
+mklink /D usr %us_path%\core\perl
+
+rem restore original
+popd
+pause
+</pre>
+</td>
+
+<td>&nbsp;&nbsp;</td>
+
+<td>
+<b>link_delete.bat</b>
+<pre>
+@echo off
+rem working directory current folder
+pushd %~dp0
+
+rem save us path
+set us_path=%cd%
+
+rem change to top level
+cd \
+
+rem delete link
+rd usr
+
+rem restore original
+popd
+rem pause
+</pre>
+</td>
+
+
+<td valign="middle">
+<ul>
+  <li>pushd %~dp0: Saves return address and current location of the batch file.</li>
+  <li>us_path: The variable us_path is set to the current working directory. Full path of batch file location.</li>
+  <li>cd \: Change working directory to top-level of disk drive.</li>
+  <li>mklink /D usr %us_path%\core\perl:
+    <ul>
+      <li>usr: A link folder <b>usr</b> is created at the top-level of the disk drive</li>
+      <li>%us_path%\core\perl: Sets the link path for example<br /> C:/UniServerZ/core/perl </li>
+    </ul>
+  </li>
+  <li>popd: Restore calling address and returns.</li>
+
+</ul>
+</td>
+
+
+<tr>
+</table>
+
+<a name="Test 1 - Apache running as a standard program"></a>
+<p><b>Test 1 - Apache running as a standard program</b></p>
+
+<ul>
+ <li>Run link_create.bat (right click on file link_create.bat and run as <b>administrator</b>) allow program to make changes. This creates a symbolic link to the Perl executable.</li>
+ <li>Start UniController. From the Perl tab run <b>Force Unix Shebang</b> you only need to perform this once.</li>
+ <li>From UniController start Apache and check your Perl scripts run.</li>
+ <li>Close Apache and UniController.</li>
+</ul>
+
+<a name="Test 2 - Apache running as a service"></a>
+<p><b>Test 2 - Apache running as a service</b></p>
+
+<ul>
+ <li>Start UniService install and run Apache.</li>
+ <li>Again check your Perl scripts run.</li>
+</ul>
+
+<p>Note: To remove the link double click on file <b>link_delete.bat</b></p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Move Server"></a>
+<h2>Move Server</h2>
+
+<p>You can move Uniform Server to a new location. First run <b>link_delete.bat</b> to remove the symbolic link. Move folder UniServerZ and all its content to the new location. Run <b>link_create.bat</b> (right click file link_create.bat run as administrator) to create the symbolic link. You can now start the servers either as a standard program or service.</p>
+
+
+<hr />
+<div align="center">--oOo--</div>
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Extra Utilities</title>
+  <meta name="Description" content="The UniController Extra menu groups additional utilities that do not easily fit into other categories" />
+  <meta name="Keywords" content="Extra,DtDNS,menu,PC-Win,start-up,Cron,Edit,Win,hosts,file,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p500">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/extra_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Extra Utilities</h1>
+</tr>
+</table>
+
+<p>The UniController <b>Extra</b> menu groups additional utilities that do not easily fit into other categories.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+
+   <table border="0">
+       <tr><td><a href="#extra_dtdns" >DtDNS</a></td>                      <td>- Convert a dynamic IP address to a static IP address using DtDNS service</td></tr>
+       <tr><td><a href="#PC-Win start-up" >PC-Win start-up</a></td>        <td>- Automatically run UniController and servers (Apache, MySQL) at start-up</td></tr>
+       <tr><td><a href="#extra_cron" >Cron</a></td>                        <td>- Cron is a job scheduler allowing scripts to be run automatically.</td></tr>
+       <tr><td><a href="#Edit Win hosts file" >Edit Win hosts file</a></td><td>- View or edit Windows host file.</td></tr>
+   </table>
+
+ </div>
+</div>
+
+<a name="extra_dtdns"></a>
+<h2>DtDNS</h2>
+
+<p>The Uniform Server Zero supports the DtDNS service by integrating a simple function to automatically update hostname IP address at DtDNS. The function is configurable, allowing you to update all five free hostnames. The function can optionally be run by Cron, making the whole task transparent.</p>
+
+
+<table>
+<tr valign="top">
+
+<td>
+<p>Add or edit DtDNS service account. Open the DtDNS Controller and add or modify your DtDNS account as follows:</p>
+<p class="access">Extra &gt; DtDNS</p>
+
+<ul>
+  <li>1) Enter upto five domain names as configuraed at DtDNS.
+   <ul><li>Minimum of one domain name is required.</li></ul>
+  </li>
+  <li>2) Enter your DtDNS account password.</li>
+  <li>3) Click <b>Save Changes</b>.
+    <ul><li>Data entered is saved to a configuration file.</li></ul>
+  </li>
+  <li>6) Check the <b>Auto-run</b> check box.
+    <ul>
+        <li>Checked. Automatically update DtDNS accounts when UniCotroller is started. Disables Accounts section</li>
+        <li>UnChecked. Disable automatic DtDNS update and enable Accounts section.</li>
+   </ul>
+  </li>
+</ul>
+
+<p><b><i>Note</i> 1:</b>  With configured accounts initially opening the DtDNS updater client buttons are greyed out until the refresh button is clicked. This forces user to manually refresh.</p>
+
+<p><b><i>Note</i> 2:</b> Full DtDNS details; see pages
+ <a href="extra_dtdns.html">DtDNS</a> and 
+ <a href="extra_dtdns_account.html">Create DtDNS Account</a></p>
+
+
+</td>
+<td>
+<img src="images/C11_dtdns_controller.gif" alt="DtDNS controller">
+</td>
+</tr>
+</table>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="PC-Win start-up"></a>
+<h2>PC-Win start-up</h2>
+
+<p>This menu option is the only one that writes data to the registry hence is not truly portable. It allows you to automatically run UniController and optionally Apache and MySQL servers when you start your computer.</p>
+
+<p>Open PC-Win start-up menu and configure as follows:</p>
+<table>
+<tr valign="top">
+
+<td>
+<p class="access">Extra &gt; PC-Win start-up</p>
+<ul>
+ <li>1) <b>Apache server</b> check box enables/disables running Apache server at start-up.</li>
+ <li>2) <b>MySQL server</b> check box enables/disables running MySQL server at start-up</li>
+ <li>3) <b>Run at start-up</b> check box enables/disables auto run at start-up 
+   <ul>
+     <li>Checked - Option enabled</li>
+     <li>UnChecked - Option disabled</li>
+   </ul>
+  </li>
+</ul>
+<p><b>Note:</b> UniController is automatically run when <b>Run at start-up</b> is enabled while items 1) and 2) are optional enable/disable as desired.</p>
+
+</td>
+<td>
+<img src="images/C11_pc_win_start_up.gif" alt="PC-Win start-up">
+</td>
+</tr>
+</table>
+
+<p>The above uses command line parameter pc_win_start to automatically control the servers. UniController supports other command line parameters see page <a  href="command_line_parameters.html">Command Line Parameters.html</a> for details.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Manual Alternative"></a>
+<h3>Manual Alternative</h3>
+
+<p>The following are manual instructions that replicate option 3) above.</p>
+
+<p><b><i>Enable run at start-up</i></b></p>
+<ol>
+  <li>Right-click <b>Start</b>, and then click <b>Explore</b>. Windows Explorer opens and displays your Start menu.</li>
+  <li>In the left pane, navigate to the folder C:\<b>UniServerZ</b>.
+    <ul>
+      <li> Left click on this folder to open it in the right pane.</li>
+    </ul>
+   </li>
+  <li>In the right pane:
+   <ul>
+     <li>Right-click on the program <b>UniController.exe</b></li>
+     <li>In the pop-up click <b>Copy</b>.</li>
+   </ul>
+  </li>
+  <li>In the left pane, navigate to folder Startup Menu/Programs/<b>Startup</b> and left click folder <b>Startup</b>.</li>
+  <li>In the right pane, right-click anywhere and then click <b>Paste Shortcut</b>.</li>
+  <li>Still in the right pane, right click the <b>UniControlder</b> shortcut
+    <ul>
+      <li>In the pop-up slect properties.</li>
+    <li>In the Target field add a parameter to the end of the path as shown below<br />
+      C:\UniserverZ\UniController.exe <b>pc_win_start</b></li>
+    </ul>
+  </li>
+</ol>
+
+<p><b><i>Dsable run at start-up</i></b></p>
+
+<ol>
+  <li>Right-click <b>Start</b>, and then click <b>Explore</b>. Windows Explorer opens and displays your Start menu.</li>
+  <li>In the left pane, left click on folder Startup Menu/Programs/<b>Startup</b>.</li>
+  <li>In the right pane, right click on the <b>UniControlder</b> shortcut in the pop-up click <b>Delete</b></li>
+</ol>
+
+<p>The following are manual instructions that replicate options 1) and 2).</p>
+<p>Edit file: C:\UniServerZ\home\us_config\<b>us_config.ini</b> and change the following section as appropriate:</p>
+<pre>
+[PCSTARTUP]
+RunAtPcStartUpEnabled=false
+RunApacheAtStartUp=false
+RunMysqlAtStartUp=false
+</pre>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="extra_cron"></a>
+<h2>Cron</h2>
+
+<p>The Uniform Servers portable Cron plugin has been integrated into Uniform Server Zero. Cron's configuration file has been pre-populated with various scripts to be run. These are essentially four-line templates that require enabling to run the appropriate applications from the Cron script.</p>
+
+<ul>
+  <li>Full Cron details; see <a href="extra_cron.html">Cron</a> page which includes:
+  <ul>
+    <li>Cron <a href="extra_cron.html#Configuration file">Configuration file</a></li>
+    <li>Cron <a href="extra_cron.html#Cron Controller">Controller</a></li>
+  </ul>
+ </li>
+</ul>
+<p>Page also includes additional information and test scripts.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Edit Win hosts file"></a>
+<h2>Edit Win hosts file</h2>
+
+<p>This menu option allows you to directly run the Uniform Server edit Windows hosts file utility C:\UniServerZ\utils\<b>EdHost.exe</b> </p>
+
+<p class="access">Extra &gt; Edit Win hosts file</p>
+
+<p><b>Note:</b> Win 7 and 8 users, at the User Account Control pop-up click <b>Yes</b> to allow changes to this computer.</p>
+
+<table>
+<tr valign="top">
+
+<td>
+<p><b>A)</b> Add <i>IP address/Domain name</i> pair as follows:</p>
+
+<ul>
+  <li>1) Enter a domain name (host name) for example <b>fred.com</b></li>
+  <li>2) IP Address no need to change this leave as 127.0.0.1</li>
+  <li>3) Click <b>Add</b> button. Adds entry to the hosts file. 
+  <ul>
+    <li>Also updates displayed host list on right.</li>
+  </ul>
+  </li>
+  <li>Note: Reset button 4) resets the host name field.</li>
+</ul>
+
+<p><b>B)</b> Delete <i>IP address/Domain name</i> pair as follows:</p>
+
+<ul>
+  <li>5) Select <i>IP address/Domain name</i> pair to delete.</li>
+  <li>6) Click <b>Delete</b> button. Deletes pair from the hosts file.
+  <ul>
+    <li>Also updates displayed host list on right.</li>
+  </ul>
+  </li>
+  <li>Note: Reset button 7) resets the form to its default state.</li>
+</ul>
+
+
+</td>
+<td>
+<img src="images/C11_edit_hosts.gif" alt="Edit Windows host file">
+</td>
+</tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

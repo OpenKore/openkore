@@ -1,0 +1,577 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>PHP CLI</title>
+  <meta name="Description" content="PHP scripts are executed in one of two ways; through a web sever where the output is sent to a browser, or through the command-line interface. Main difference between the two methods is the format of new lines" />
+  <meta name="Keywords" content="PHP,CLI,command-line,interface,configuration,file,Running,scripts,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p860">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/php_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>PHP CLI</h1>
+</tr>
+</table>
+
+<p>PHP scripts are executed in one of two ways; through a web sever where the output is sent to a browser, or through the command-line interface. Main difference between the two methods is the format of new lines. Output to a browser requires the HTML line break  &lt;br /&gt; while the output to a command-window requires \n. This page provides a basic introduction to PHP CLI (command line interface).</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Overview" >Overview</a></li>
+   <li><a href="#Command-window" >Command-window</a></li>
+   <li><a href="#PHP Command-line - run code directely" >PHP Command-line</a> - run code directely</li>
+   <li><a href="#Code examples" >&nbsp;&nbsp;Code examples</a></li>
+   <li><a href="#PHP Command-line - run scripts" >PHP Command-line</a> - run code from file (PHP scripts)</li>
+
+
+   <li><a href="#CLI configuration file" >CLI configuration file</a></li>
+   <li><a href="#Default Configuration file" >&nbsp;&nbsp;Default Configuration file</a></li>
+   <li><a href="#User Configuration file" >&nbsp;&nbsp;User Configuration file</a></li>
+
+   <li><a href="#Additional information" >Additional information</a></li>
+   <li><a href="#Minimum requirements" >&nbsp;&nbsp;Minimum requirements</a></li>
+   <li><a href="#Reduce footprint" >&nbsp;&nbsp;Reduce footprint</a></li>
+   <li><a href="#Emulate UniController command console" >Emulate UniController command console</a></li>
+   <li><a href="#Passing parameters" >Passing parameters</a></li>
+   </ul>
+ </div>
+</div>
+
+
+<a name="Overview"></a>
+<h2>Overview</h2>
+
+<p>Uniform Server is portable, it does not make changes to your PC. As a consequence the standard <a href="server_utils_server_console.html#How to run a standard command window">command prompt</a> (console window) cannot be used to run PHP CLI code. The path to php.exe along with other environment variables are undefined. To run PHP CLI code on Uniform Server use the <a href="server_utils.html#Server Console">Server Console</a>. </p> 
+
+<p>The <b>Server Console</b> button opens a command window (command prompt) with environment variables preset and paths configured for Uniform Server utilities including the PHP interpreter. Apart from cosmetics, it is identical to a standard command prompt.</p> 
+
+<p>PHP code is run from the command prompt either directly by typing lines of code or indirectly using code saved in a script file.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Command-window"></a>
+<h2>Command-window</h2>
+
+<p>Running scripts via a command-line is performed using the CLI interpreter php.exe this program is located in folder C:\UniServerZ\core\php70 note UniController automatically tracks the installation and changes this path accordingly. In addition UniController sets several environment variables that are required for portability.</p>
+
+<table>
+ <tr>
+   <td>
+<b><i>Check functionality</i>:</b>
+ <ul>
+   <li>Start UniController by double clicking on file UniController.exe</li>
+   <li>Start a command-window by clicking the <b>Server Console</b> button.</li> 
+ </ul>
+
+
+<p>Type the following into the command-window and press enter:</p>
+<pre>
+php.exe -n -r "print phpversion();"
+</pre>
+<p>Displays PHP version number, see image on right for example.</p>
+  </td>
+
+<td>&nbsp;</td>
+
+   <td>
+   <img src="images/C11_php_cli_1.gif" alt="PHP CLI intro">
+   </td>
+ </tr>
+</table>
+
+
+<p>Note 1: You can clear the command-window by typing CLS  <br />
+Note 2: For help type <b>php --help</b>.<br />
+Note 3: You can open more than one command-window.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="PHP Command-line - run code directely"></a>
+<h2>PHP Command-line - run code directely</h2>
+
+<p>The above demonstrates running PHP code directly using the CLI interpreter php.exe Example code repeated below:</p>
+<pre>
+php.exe -n -r "print phpversion();"
+</pre>
+<p>The interpreter program takes a number of parameters who’s function are follows:</p>
+
+<table>
+ <tr> <td><code>php.exe</code>                      </td>  <td>CLI interpreter program php.exe If a file extension is not provided Windows will assume .exe hence you can use just <b>php</b></td> </tr>
+ <tr> <td><code>-n</code>                           </td>  <td>Do not use a PHP configuration file </td> </tr>
+ <tr> <td><code>-r</code>                           </td>  <td>Run the following PHP code directely </td> </tr>
+ <tr> <td><code>"print phpversion();"</code> &nbsp; </td>  <td>PHP code to run. <i>Note</i>: Windows requires the code to be <b>enclosed within quotes</b>.   </td> </tr>
+</table>
+
+<p>Note: If your code contains quotes to avoid problems these must be <b>escaped</b> using a backslash for example:</p>
+
+<pre>
+php -r "print \"test\n\n\";"      //-Print test and two new lines \n
+</pre>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Code examples"></a>
+<h3>Code examples</h3>
+<p>The following provide examples that you can cut and past into the command-window:</p>
+
+<table>
+ <tr>
+  <td>
+<b><i>Examples 1</i>:</b>
+<pre>
+php -n -r "echo 'test1';"             //-Display literal
+php -n -r "echo \"test2\";"           //-Escape the quotes
+php -n -r "$a=5; $b=6; print \"$a\n\"; print \"$b\n\"; print \"$a+$b\";"
+php -n -r "$foo = get_defined_constants(); var_dump($foo);"
+</pre>
+  </td>
+<td>&nbsp;</td>
+  <td>
+<b><i>Examples 2</i>:</b>
+<pre>
+php -n -r "print phpversion();"          //-- Display version
+php -n -r "phpinfo();"                   //-- Display information
+php -n -r "phpinfo();"|more              //-- Display a page
+php -r "print(php_ini_loaded_file ());"  //-- Display path to ini
+</pre>
+  </td>
+ </tr>
+</table>
+
+<p>With one exception all above examples are forced not to use a configuration file by using the parameter –n.<br />
+The last example does not include this parameter and prints the default configuration file loaded. Details see <a href="#CLI configuration file">CLI configuration file</a> section. </p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="PHP Command-line - run scripts"></a>
+<h2>PHP Command-line - run scripts</h2>
+
+<p>Entering code directly is ideal for short scripts, however for scripts containing several lines of code it is preferable to save these to a file and run this file from the Server Console.</p> 
+
+<p>The following example shows how to run a PHP script with and without a PHP configuration file. If using a configuration file you have the option to use either the default or your own specific file.</p>
+
+<table>
+ <tr valign="top">
+  <td>
+<b>Create script:</b>
+<p>Create a test script shown on the right and save to<br />
+ root folder UniServerZ with name test1.php</p>
+  </td>
+<td>&nbsp;</td>
+  <td>
+<b>test1.php</b>
+<pre>
+&lt;?php
+ print "Example script\n";
+ print "Configuration file used:\n";
+ print(php_ini_loaded_file () . "\n");
+ print "End example script.\n";
+?&gt; 
+</pre>
+  </td>
+ </tr>
+
+ <tr valign="top">
+  <td>
+<b>Run script:</b>
+<p>Run the script by typing the following into a command-window:</p>
+<pre>
+php -n test1.php
+</pre>
+<p>Note: No configuration loaded, because we used -n.</p>
+  </td>
+<td>&nbsp;</td>
+  <td>
+<b>Result1</b>
+<pre>
+K:\UniServerZ>php test1.php
+Example script
+Configuration file used:
+
+End example script.
+
+K:\UniServerZ>
+</pre>
+  </td>
+ </tr>
+
+
+ <tr valign="top">
+  <td>
+<b>Run script:</b>
+<p>Run the script by typing the following into a command-window:</p>
+<pre>
+php test1.php
+</pre>
+<p>Note: Default configuration is loaded.</p>
+  </td>
+<td>&nbsp;</td>
+  <td>
+<b>Result2</b>
+<pre>
+K:\UniServerZ>php test1.php
+Example script
+Configuration file used:
+K:\UniServerZ\core\php54\php-cli.ini
+End example script.
+
+K:\UniServerZ>
+</pre>
+  </td>
+ </tr>
+
+
+ <tr valign="top">
+  <td>
+<b>Run script:</b>
+<p>Run the script by typing the following into a command-window:</p>
+<pre>
+php -c core\php54\my_cli.ini test1.php
+</pre>
+<p>Note: Configuration file my_cli.ini is loaded.</p>
+  </td>
+<td>&nbsp;</td>
+  <td>
+<b>Result3</b>
+<pre>
+
+K:\UniServerZ>php -c core\php54\my_cli.ini test1.php
+Example script
+Configuration file used:
+K:\UniServerZ\core\php54\my_cli.ini
+End example script.
+
+K:\UniServerZ>
+
+</pre>
+  </td>
+ </tr>
+
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="CLI configuration file"></a>
+<h2>CLI configuration file</h2>
+
+<p>You can choose to run the PHP interpretor with or without a configuration file. When running with a configuration file you have two options, either use the default configuration file or  use your own configuration file. These are defined by parameters as follows:</p>
+
+<ul>
+  <li><b>-n</b> Do not us a configuration file </li>
+  <li><b>-c file</b> Use the following user configure file.</li>
+  <li>If -n and -c not specified use default configuration file <b>php-cli.ini</b></li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Default Configuration file"></a>
+<p><b><i>Default Configuration file</i>:</b></p>
+<p>Default configuration file <b>php-cli.ini</b> has been configured specifically for Uniform Server. You can add to this file, however make sure you do not make changes to the existing configuration.</p>
+
+<p>Note: The default configuration file used is dependent on the PHP version selected (see <a href="php.html#Select PHP version">Select PHP version</a>) and will be one of the following:</p>
+<ul>
+  <li>K:\UniServerZ\core\php53\php-cli.ini</li>
+  <li>K:\UniServerZ\core\php54\php-cli.ini</li>
+  <li>K:\UniServerZ\core\php55\php-cli.ini</li>
+  <li>K:\UniServerZ\core\php56\php-cli.ini</li>
+  <li>K:\UniServerZ\core\php70\php-cli.ini</li>
+  <li>K:\UniServerZ\core\php71\php-cli.ini</li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="User Configuration file"></a>
+<p><b><i>User Configuration file</i>:</b></p>
+
+<p>To avoid issues at a later date it is probably wise to use your own configuration file for example my_cli.ini this can be a name of your own choice. Create this file by making a copy of <b>php-cli.ini</b> in the same folder and rename it <b>my_cli.ini</b> make changes to this file as required.</p>
+
+<p>To force the CLI interpreter php.exe to use a different configuration file use the parameter –c followed by the full or relative path to the configuration file my_cli.ini for example:</p>
+
+<pre>
+php -c K:\UniServerZ\core\php70\my_cli.ini
+php -c core\php70\my_cli.ini
+</pre>
+
+<p>A problem with the above paths, they are not portable or PHP switchable. Moving folder UniServerZ to a different location the first will fail because of the path change. Switching the PHP version for example to php53 both fail because of the folder change and php53 selection. A solution is to use the environment variable <b>PHP_SELECT</b> as follows:</p>
+
+<pre>
+php -c core\%PHP_SELECT%\my_cli.ini
+</pre>
+
+<p>To confirm the file is being picked-up correctly by PHP type the following <b><code>-r "print(php_ini_loaded_file ());"</code></b> after parameter –c for example:</p>
+
+<pre>
+K:\UniServerZ>php -c core\%PHP_SELECT%\my_cli.ini -r "print(php_ini_loaded_file ());"
+K:\UniServerZ\core\php54\my_cli.ini
+K:\UniServerZ>
+</pre>
+
+<p><b><i>Summary</i>:</b><br />
+Use one of the following lines to load your configuration file:</p>
+<pre>
+php -c core\php53\my_cli.ini           //Fixed PHP
+php -c core\php54\my_cli.ini           //Fixed PHP
+php -c core\php55\my_cli.ini           //Fixed PHP
+php -c core\php56\my_cli.ini           //Fixed PHP
+php -c core\php70\my_cli.ini           //Fixed PHP
+php -c core\php71\my_cli.ini           //Fixed PHP
+php -c core\%PHP_SELECT%\my_cli.ini    //Switchable PHP
+</pre>
+
+<p>Note: An alternative, although not PHP switchable, is to locate the configuration file in the root folder UniServerZ. Give the configuration file an appropriate name for example my_cli_53.ini, my_cli_54.ini, my_cli_55.ini, my_cli_56.ini,  my_cli_70.ini or  my_cli_71.ini This reduces amount of typing and the files are fully portable, use the one that matches the PHP selected.</p> 
+<pre>
+php -c my_cli_53.ini
+php -c my_cli_54.ini
+php -c my_cli_55.ini
+php -c my_cli_56.ini
+php -c my_cli_70.ini
+php -c my_cli_71.ini
+</pre>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Additional information"></a>
+<h2>Additional information</h2>
+
+<p>This section is included for completeness. Information provided above is for a preconfigured server however for experimentation there is no reason to use a fully blown server. The following describes a minimum PHP installation which may be more suitable:</p>
+
+<a name="Minimum requirements"></a>
+<p><b><i>Minimum requirements</i></b><br />
+To run PHP CLI scripts minimum of two Uniform Server ZeroXIII modules are required. A controller ZeroXIII_controller_2_2_0.exe and one of the PHP modules for example ZeroXIII_php_5_4_45_h.exe</p>
+
+<p>The above combination is fully portable with a footprint of 53MB if you wish this can be pruned down see section <a href="#Reduce footprint">Reduce footprint</a>.</p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Reduce footprint"></a>
+<p><b><i>Reduce footprint</i></b><br />
+Although the footprint is 52MB for ZeroXIII_controller_2_2_0.exe and ZeroXIII_php_5_4_45_h.exe it contains a full version of PHP and some additional utilities. You can reduce this footprint as follows:</p>
+
+<p>A) If you are <b>not</b> using the Internationalization extension (php_intl.dll) you can delete the following:</p>
+<pre>
+Files:
+K:\UniServerZ\core\php54\extensions\php_intl.dll
+K:\UniServerZ\core\php54\icudt55.dll
+K:\UniServerZ\core\php54\icuin55.dll
+K:\UniServerZ\core\php54\icuio55.dll
+K:\UniServerZ\core\php54\icule55.dll
+K:\UniServerZ\core\php54\iculx55.dll
+K:\UniServerZ\core\php54\icutu55.dll
+K:\UniServerZ\core\php54\icuuc55.dll
+K:\UniServerZ\core\apache2\conf\extra_us\php54.conf
+</pre>
+<p>The above achieves a significant reduction of 24MB</p>
+
+
+<p>B) If you are <b>not</b> using the PHP mail function disable this in the configuration files php-cli.ini and my_cli.ini by commenting (add ; to beginning of line) the line as shown below:</p>
+<pre>
+;sendmail_path = "${US_ROOTF}/core/msmtp/msmtp.exe --file=${US_ROOTF}/core/msmtp/msmtprc.ini  -t"
+</pre>
+<p>Delete folder K:\UniServerZ\core\<b>msmtp</b> saves 2.89MB</p>
+
+
+<p>C) You can further reduce the footprint by deleting extensions and any corresponding dependency this is left to your discretion as to what is deleted. However check the following dependency information before deleting an extension and or its corresponding dependency dll:</p>
+
+<table>
+<tr valign="top">
+
+<td>
+<pre>
+Dependency information:
+Module: php_couchbase.dll
+===========================
+	libcouchbase.dll
+
+Module: php_curl.dll
+===========================
+	libeay32.dll
+	ssleay32.dll
+
+Module: php_excel.dll
+===========================
+	libxl.dll
+
+Module: php_ffmpeg.dll
+===========================
+	avcodec-52.dll
+	avformat-52.dll
+	avutil-50.dll
+	swscale-0.dll
+
+Module: php_imagick.dll
+===========================
+	core_rl_wand_.dll
+	core_rl_magick_.dll
+
+Module: php_intl.dll
+===========================
+	icuuc51.dll
+	icuin51.dll
+
+
+</pre>
+</td>
+
+<td>
+<pre>
+Dependency information:
+Module: php_ldap.dll
+===========================
+	libsasl.dll
+	ssleay32.dll
+	libeay32.dll
+
+Module: php_oauth.dll
+===========================
+	libeay32.dll
+	ssleay32.dll
+
+Module: php_openssl.dll
+===========================
+	ssleay32.dll
+	libeay32.dll
+
+Module: php_pdflib.dll
+===========================
+	pdflib.dll
+
+Module: php_pgsql.dll
+===========================
+	libpq.dll
+
+Module: php_pspell.dll
+===========================
+	aspell-15.dll
+
+Module: php_pthreads.dll
+===========================
+	pthreadvc2.dll
+</pre>
+</td>
+
+<td>
+<pre>
+Dependency information:
+
+Module: php_snmp.dll
+===========================
+	libeay32.dll
+
+Module: php_sockets.dll
+===========================
+	iphlpapi.dll
+
+Module: php_sqlsrv.dll
+===========================
+	msvcp90.dll
+
+Module: php_ssh2.dll
+===========================
+	libeay32.dll
+
+Module: php_stomp.dll
+===========================
+	ssleay32.dll
+
+Module: php_sybase_ct.dll
+===========================
+	libsybcs.dll
+	libsybct.dll
+
+Module: php_couchdb.dll
+===========================
+	libeay32.dll
+	ssleay32.dll
+
+</pre>
+</td>
+
+<td>
+<pre>
+Dependency information:
+Module: php_enchant.dll
+===========================
+	libenchant.dll
+
+Module: php_win32ps.dll
+===========================
+	psapi.dll
+
+Module: php_crypto.dll
+===========================
+	libeay32.dll
+
+Module: php_http.dll
+===========================
+	libeay32.dll
+	ssleay32.dll
+
+Module: php_pdo_pgsql.dll
+===========================
+	libpq.dll
+
+Module: php_pdo_sqlsrv.dll
+===========================
+	msvcp90.dll
+
+Module: php_solr.dll
+===========================
+	libeay32.dll
+	ssleay32.dll
+
+
+</pre>
+</td>
+
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Emulate UniController command console"></a>
+<h2>Emulate UniController command console</h2>
+
+<p>Although the UniController command console is ideal for running PHP scripts it has one disadvantage, to open the command console requires you to run UniController first. An alternative is to emulate UniController using a batch file this is covered on page <a href="batch_files_emulate_server_console.html">Batch Files- Emulate Server Console</a>.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Passing parameters"></a>
+<h2>Passing parameters</h2>
+<p>You can pass parameters between scripts such as a batch file and PHP for details see page <a href="batch_files_passing_parameters.html">Batch Files- Passing parameters</a>.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

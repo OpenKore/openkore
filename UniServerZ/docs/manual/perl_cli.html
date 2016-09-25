@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Perl CLI</title>
+  <meta name="Description" content="Perl scripts are executed in one of two ways; through a web sever where the output is sent to a browser, or through the command-line interface. Main difference between the two methods is the format of new lines." />
+  <meta name="Keywords" content="Perl,CLI,command-line,interface,configuration,file,Running,scripts,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p930">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/perl_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Perl CLI</h1>
+</tr>
+</table>
+
+<p>Perl scripts are executed in one of two ways; through a web sever where the output is sent to a browser, or through the command-line interface. Main difference between the two methods is the format of new lines. Output to a browser requires the HTML line break  &lt;br /&gt; while the output to a command-window requires \n. This page provides a basic introduction to Perl CLI (command line interface).</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Overview" >Overview</a></li>
+   <li><a href="#Command-window" >Command-window</a></li>
+   <li><a href="#Perl Command-line - run code directely" >Perl Command-line</a> - run code directely</li>
+   <li><a href="#Code examples" >&nbsp;&nbsp;Code examples</a></li>
+   <li><a href="#Perl Command-line - run scripts" >Perl Command-line</a> - run code from file (Perl scripts)</li>
+   <li><a href="#Run basic Perl script" >&nbsp;&nbsp;Run basic Perl script</a></li>
+   <li><a href="#Pass arguments to script" >&nbsp;&nbsp;Pass arguments to script</a></li>
+   <li><a href="#Environment variables - Read and display" >&nbsp;&nbsp;Environment variables - Read and display</a></li>
+   <li><a href="#Passing parameters" >Passing parameters</a></li>
+   </ul>
+ </div>
+</div>
+
+
+<a name="Overview"></a>
+<h2>Overview</h2>
+
+<p><i>Note</i>: It is assumed you have installed one of the perl modules such as ZeroXIII_strawberry_perl_5_22_1_1.exe or <a href="perl_install.html#Download ActivePerl">ActivePerl</a></p>
+
+<p>Uniform Server is portable, it does not make changes to your PC. As a consequence the standard <a href="server_utils_server_console.html#How to run a standard command window">command prompt</a> (console window) cannot be used to run Perl CLI code. The path to perl.exe along with other environment variables are undefined. To run Perl CLI code on Uniform Server use the <a href="server_utils.html#Server Console">Server Console</a>. </p> 
+
+<p>The <b>Server Console</b> button opens a command window (command prompt) with environment variables preset and paths configured for Uniform Server utilities including the Perl interpreter. Apart from cosmetics, it is identical to a standard command prompt.</p> 
+
+<p>Perl code is run from the command prompt either directly by typing lines of code or indirectly using code saved in a script file.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Command-window"></a>
+<h2>Command-window</h2>
+
+<p>Running scripts via a command-line is performed using the CLI interpreter perl.exe this program is located in folder C:\UniServerZ\core\perl\bin note UniController automatically tracks the installation and changes this path accordingly. In addition UniController sets several environment variables that are required for portability.</p>
+
+<table>
+ <tr>
+   <td>
+<b><i>Check functionality</i>:</b>
+ <ul>
+   <li>Start UniController by double clicking on file UniController.exe</li>
+   <li>Start a command-window by clicking the <b>Server Console</b> button.</li> 
+ </ul>
+
+
+<p>Type the following into the command-window and press enter:</p>
+<pre>
+perl.exe -v
+</pre>
+<p>Displays Perl version number, see image on right for example.</p>
+
+<p>Note 1: You can clear the command-window by typing CLS  <br />
+Note 2: For help type <b>perl -h</b>.<br />
+Note 3: You can open more than one command-window.</p>
+  </td>
+
+<td>&nbsp;</td>
+
+   <td>
+   <img src="images/C11_perl_cli_1.gif" alt="Perl CLI intro">
+   </td>
+ </tr>
+</table>
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Perl Command-line - run code directely"></a>
+<h2>Perl Command-line - run code directely</h2>
+
+<p>The above demonstrates running Perl code directly using the CLI interpreter perl.exe the following example prints hello world:</p>
+<pre>
+perl.exe -e "print \"hello world\n\""
+</pre>
+<p>The interpreter program takes a number of parameters who’s function is:</p>
+
+<table>
+ <tr> <td><code>perl.exe</code>                     </td>  <td>CLI interpreter program perl.exe If a file extension is not provided Windows will assume .exe hence you can use just <b>perl</b></td> </tr>
+ <tr> <td><code>-e</code>                           </td>  <td>Parameter -e informs Perl, not to expect a file, next thing on the command-line is actual Perl code</td> </tr>
+ <tr> <td><code>"print \"hello world\n\""</code> &nbsp; </td>  <td>Perl code to run. <i>Note</i>: Windows requires the code to be <b>enclosed within quotes</b>.   </td> </tr>
+</table>
+
+<p>Note: If your code contains quotes to avoid problems these must be <b>escaped</b> using a backslash for example:</p>
+
+<pre>
+perl.exe -e "print <span style="background-color:green">\"</span>hello world\n<span style="background-color:green">\"</span>"
+</pre>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Code examples"></a>
+<h3>Code examples</h3>
+<p>The following provide examples that you can cut and past into the command-window:</p>
+
+<table>
+ <tr>
+  <td>
+<b><i>Examples 1</i>:</b>
+<pre>
+perl -e "print 'Hello World!'" #Basic print
+perl -e "print 'Hello World!'.\"\n\""  #Escape quotes
+perl -e "print 'First line'.\"\n\";print 'Second line'"  #Run multi-lines
+perl -e "$x = 1;$y = 4;print $x+$y" #Example calulation
+perl -e "foreach $key (keys(%ENV)) {printf(\"%-24.24s: $ENV{$key}\n\", $key);}" #Print environment variables
+perl -e "print $^X" #Full path to perl.exe location
+</pre>
+  </td> 
+ </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Perl Command-line - run scripts"></a>
+<h2>Perl Command-line - run scripts</h2>
+
+<p>Entering code directly is ideal for short scripts, however for scripts containing several lines of code it is preferable to save these to a file and run this file from the Server Console.</p> 
+
+<p>The following examples shows how to run Perl scripts</p>
+
+<a name="Run basic Perl script"></a>
+<p><b><i>Run basic Perl script</i>:</b></p>
+<table>
+ <tr valign="top">
+  <td>
+<b>Create script:</b>
+<p>Create a test script shown on the right and save to<br />
+ root folder UniServerZ with name test1.pl</p>
+  </td>
+<td>&nbsp;</td>
+  <td>
+<b>test1.pl</b>
+<pre>
+print "hello world\n";
+</pre>
+  </td>
+ </tr>
+
+
+ <tr valign="top">
+  <td>
+<b>Run script:</b>
+<p>Run the script by typing the following into a command-window:</p>
+<pre>
+perl test1.pl
+</pre>
+  </td>
+<td>&nbsp;</td>
+  <td>
+<b>Result1</b>
+<pre>
+C:\UniServerZ>perl test1.pl
+hello world
+
+C:\UniServerZ>
+</pre>
+  </td>
+ </tr>
+
+</table>
+
+
+<a name="Pass arguments to script"></a>
+<p><b><i>Pass arguments to script</i>:</b></p>
+<table>
+ <tr valign="top">
+  <td>
+<b>Create script:</b>
+<p>Create a test script shown on the right and save to<br />
+ root folder UniServerZ with name test2.pl</p>
+  </td>
+<td>&nbsp;</td>
+  <td>
+<b>test2.pl</b>
+<pre>
+print "$_\n" for @ARGV;
+print "@ARGV[0]\n";
+print "@ARGV[1]\n";
+print "@ARGV[2]\n";
+</pre>
+  </td>
+ </tr>
+
+
+ <tr valign="top">
+  <td>
+<b>Run script:</b>
+<p>Run the script by typing the following into a command-window:</p>
+<pre>
+perl test2.pl aaa bbb bbb
+</pre>
+<ul>
+  <li>print "$_\n" for @ARGV; - Prints all arguments passed to script</li>
+  <li>@ARGV[0] - Prints first argument passed to script</li>
+  <li>@ARGV[1] - Prints second argument passed to script</li>
+  <li>@ARGV[2] - Prints third argument passed to script</li>
+</ul>
+  </td>
+<td>&nbsp;</td>
+  <td>
+<b>Result2</b>
+<pre>
+
+C:\UniServerZ>perl test2.pl aaa bbb cccc
+aaa
+bbb
+cccc
+aaa
+bbb
+cccc
+
+C:\UniServerZ>
+</pre>
+  </td>
+ </tr>
+
+</table>
+
+
+
+<a name="Environment variables - Read and display"></a>
+<p><b><i>Environment variables - Read and display</i>:</b></p>
+<table>
+ <tr valign="top">
+  <td>
+<b>Create script:</b>
+<p>Create a test script shown on the right and save to<br />
+ root folder UniServerZ with name test3.pl</p>
+  </td>
+<td>&nbsp;</td>
+  <td>
+<b>test3.pl</b>
+<pre>
+foreach $key (keys(%ENV)) {
+    printf("%-24.24s: $ENV{$key}\n", $key);
+}
+
+print "\n\n";
+print "Environment variable PHP_INI_SELECT=".$ENV{"PHP_INI_SELECT"}."\n";
+print "Environment variable PHP_SELECT=".$ENV{"PHP_SELECT"};
+
+</pre>
+  </td>
+ </tr>
+
+
+ <tr valign="top">
+  <td>
+<b>Run script:</b>
+<p>Run the script by typing the following into a command-window:</p>
+<pre>
+perl test3.pl
+</pre>
+
+<p>All environment variables are displayed using:</p>
+<pre>
+ foreach $key (keys(%ENV)) {
+    printf("%-24.24s: $ENV{$key}\n", $key);
+} 
+</pre>
+
+
+<P>Individual environment variables PHP_INI_SELECT and PHP_SELECT are displayed using:</p>
+<pre>
+print "Environment variable PHP_INI_SELECT=".$ENV{"PHP_INI_SELECT"}."\n";
+print "Environment variable PHP_SELECT=".$ENV{"PHP_SELECT"};
+</pre>
+
+  </td>
+<td>&nbsp;</td>
+  <td>
+<b>Result3</b>
+<pre>
+PROCESSOR_REVISION      : 3a09
+FP_NO_HOST_CHECK        : NO
+PROGRAMFILES            : C:\Program Files (x86)
+PROGRAMDATA             : C:\ProgramData
+WINDIR                  : C:\WINDOWS
+AP_SSL_PORT             : 443
+SYSTEMDRIVE             : C:
+US_ROOTF_WWW            : C:/UniServerZ/www
+US_SERVERNAME           : localhost
+PHP_INI_SELECT          : php_production.ini
+ONLINESERVICES          : Online Services
+TMP                     : C:\Users\Mike\AppData\Local\Temp
+PROGRAMFILES(X86)       : C:\Program Files (x86)
+USERDOMAIN_ROAMINGPROFIL: MPG
+---- All variables and the following: ---------
+
+Environment variable PHP_INI_SELECT=php_production.ini
+Environment variable PHP_SELECT=php54
+C:\UniServerZ>
+</pre>
+  </td>
+ </tr>
+
+</table>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Passing parameters"></a>
+<h2>Passing parameters</h2>
+<p>You can pass parameters between scripts such as a batch file and Perl for details see page <a href="batch_files_passing_parameters.html#Perl passing parameters">Perl passing parameters</a>.</p>
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

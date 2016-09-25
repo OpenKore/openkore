@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>General</title>
+  <meta name="Description" content="The UniController General menu groups items that do not easily fit into other categories" />
+  <meta name="Keywords" content="Server,Internet,status,Mail,utility,msmtp,Edit,UniServer,PAC,file,Portable,default,browser,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p400">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/general_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>General</h1>
+</tr>
+</table>
+
+
+<p>The UniController <b>General</b> menu groups items that do not easily fit into other categories.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+
+   <table border="0">
+       <tr><td><a href="#Server Internet status" >Server Internet status</a></td>    <td>- IP address. Servers accessible. Current version</td></tr>
+       <tr><td><a href="#Mail utility msmtp" >Mail utility msmtp</a></td>            <td>- Configure utility. Send test e-mail</td></tr>
+       <tr><td><a href="#Edit UniServer PAC file" >Edit UniServer PAC file</a></td>    <td>- Crete PAC file. Edit existing PAC file</td></tr>
+       <tr><td><a href="#Clean-up delete logs" >Clean-up delete logs</a></td>  <td>- Delete folders and files defined e.g. Server logs</td></tr>
+       <tr><td><a href="#Portable and defalt browser" >Portable browser</a></td>  <td>- Swith to portable browser</td></tr>
+       <tr><td><a href="#Portable and defalt browser" >Default browser</a></td>   <td>- Swith to default browser</td></tr>
+   </table>
+
+ </div>
+</div>
+
+
+<a name="Server Internet status"></a>
+<h2>Server Internet status</h2>
+
+<p>The "Server Internet Status" menu opens a pop-up displaying current accessibility. It provides your IP address as seen from the Internet and confirms whether your server is accessible.</p>
+
+
+<p><b><i>Server Internet status</i></b></p>
+<p class="access">General &gt; Server Internet status</p>
+<table>
+<tr valign="top">
+<td>
+ <ul>
+  <li>Servers must be running and connected to Internet</li>
+  <li>Run Server Internet status.</li>
+  <li>IP address displayed confirms connection to Internet. </li>
+  <li>Server Status = <b>Accessible from internet</b> confirms server is accessible<br />
+      Note: Your server, if accessible, will pass this test even if you have restricted access to local access only.</li>
+  <li>The pre-configured server version section provides information for current and actual server build. The newest version (Current server information) is obtained directly from Uniform Server’s web site. The installed server is shown by “This server version” if the server was user-assembled it will have a value of 13.x.x</li>
+ </ul>
+</td>
+<td>
+  <img src="images/C11_server_internet_status.gif" alt="Server Internet status" />
+</td>
+</tr>
+</table>
+<p>If you have put your servers on-line, any user on the Internet now has access to your server by typing the following into their browser address bar:
+<b> http://xxx.xxx.xxx.xxx/</b> (replace the x's with your IP address)</p>
+
+<p><b><i>Possible Problems</i></b></p>
+
+<ul>
+  <li><b><i>IP Address</i>:</b></li>
+    <ul>
+      <li>No ip address. Your PC is not connected to the Internet!</li>
+    </ul>
+  <li><b><i>Access</i>:</b></li>
+    <ul>
+      <li>Must be connected to Internet and an IP address displayed.</li>
+      <li>Your PC is connected to a router. You must forward port 80 in the router settings.</li>
+      <li>For Windows 7 and Vista, check the firewall for public access to the servers.</li> 
+      <li>Still no access? Is your service provider blocking port 80?</li>
+    </ul>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Mail utility msmtp"></a>
+<h2>Mail utility msmtp</h2>
+<p>Although the email utility msmtp is primarily included to support the PHP mail function it is independent in its own right. This allows you to send test e-mails without having PHP installed.</p>
+
+<table>
+<tr valign="top">
+<td>
+<p><b><i>Mail utility msmtp</i></b></p>
+<p>Mail utility is configured and tested using this menu option. In addition displays the email log file content.</p>
+<p class="access">General &gt; Mail utility msmtp</p>
+  <ul>
+   <li>1) Edit msmtp configuration file. You must change or edit at least one account and assign it as the default.</li>
+   <li>2) If you configure more than one account you can use the drop-down menu to set the default email account to use.</li>
+   <li>3) to 6) You can send test emails to the selected default account. This allows you to quickly confirm all accounts configured function correctly. </li>
+   <li>7) Displays the transaction log. This should be your first port of call if you are having problems sending emails. </li>
+  </ul>
+</td>
+
+<td>
+<img src="images/C11_msmtp_1.gif" alt="MSMTP Utility">
+</td>
+</tr>
+</table>
+
+<p><b><i>Note</i>:</b> Full msmtp details; see pages
+ <a href="general_msmtp_intro.html">MSMTP - Introduction</a> and 
+ <a href="general_msmtp_detail.html">MSMTP - Detail</a></p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Edit UniServer PAC file"></a>
+<h2>Edit UniServer PAC file</h2>
+
+<p>This menu option allows you to edit the UniServer PAC file UniController\home\us_pac\proxy.pac Menu button is enabled when an Apache module is installed for example ZeroXIII_apache_2_4_23.exe</p>
+<p>Note: Creating an Apache Vhost automatically adds an entry to the PAC file. Entries in the PAC file <a href="apache_basic_configuration.html#Server Name">resolve domain names</a> to local host allowing testing without the need for a DNS entry or Windows host file entry.</p>
+
+<p class="access">General &gt; Edit UniServer PAC file</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Clean-up delete logs"></a>
+<h2>Clean-up delete logs</h2>
+
+<p>Over time log files and access files become large this menu items provides a convenient way to delete these files.<br />
+ You can add other files and folders to delete or folders to clean as follows:</p>
+
+<p class="access">General &gt; Clean-up delete logs</p>
+
+<table>
+ <tr valign="top">
+  <td>
+<b>Configuration file:</b>
+<p>A configuration file UniServerZ\home\us_config\<b>us_clean_up.ini</b> allows you to define files and folders to delete and folders to clean (delete content only).</p>
+
+<p>List files and folders under the appropriate section [FILES], [FOLDERS] and [FOLDERS_CONTENT].</p>
+
+<ul>
+ <li> [FILES]           List all individual files to delete. </li>
+ <li> [FOLDERS]         List all folders to delete.</li>
+ <li> [FOLDERS_CONTENT] List all folders who's content you wish to delete. Note: Folder is not deleted</li>
+</ul>
+
+
+<p>Paths are relative to root folder <b><i>UniServerZ\</i></b> for example to delete file UniServerZ\<b>core\msmtp\msmtp.log</b> specify the path shown in bold under section [FILES].</p>
+<p>Another example, to delete folder UniServerZ\<b>www\css</b> specify the path shown in bold under section [FOLDERS].</p>
+
+  </td>
+  <td>
+<b>us_clean_up.ini</b> - Default settings
+<pre>
+;################################
+;# Name: us_clean_up.ini
+;# Example of configuration file
+;#################################
+
+[FILES]
+;Delete following files:
+core\mysql\data\mysql.err
+core\msmtp\msmtp.log
+
+[FOLDERS]
+;Delete following folders and all their content: 
+
+
+[FOLDERS_CONTENT]
+;Delete following folders content. Folder not deleted.
+core\apache2\logs
+tmp
+
+</pre>
+  </td>
+ </tr>
+</table>
+<p><b>Note:</b> If a file or folder does not exist no action is taken and the next item in the configuration file is processed.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Portable and defalt browser"></a>
+<h2>Portable and defalt browser</h2>
+
+<p>Menu items provide browser selction:</p>
+
+<p class="access">General &gt; Portable browser</p>
+<p class="access">General &gt; Default browser</p>
+
+<p><b>Portable browser</b> and <b>Default browser</b> menu items are initially disabled and UniController defaults to using a user’s default browser. 
+After installing a portable browser module for example ZeroXIII_palemoon_26_3_3.exe UniController defaults to using that browser.</p>
+
+<p>Installing a portable browser module enables the two menu items. These allow you to select the default browser in preference to the installed portable browser. In addition you can switch between the two browsers as required.</p>
+
+<p>Note 1: Restarting UniController with a portable browser module installed always defaults to the portable browser. <br />
+Note 2:  To the left of each menu button is a check mark indicating the current selection.</p>
+
+
+<hr />
+<div align="center">--oOo--</div>
+
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

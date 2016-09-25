@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Deploying PAC file</title>
+  <meta name="Description" content="Deploying the Uniform Server proxy.pac file is straightforward. The steps on this page show how to manually configure the most popular browsers by their proxy settings. First we take a look at how to configure Apache to serve the PAC file." />
+  <meta name="Keywords" content="Deploying,PAC,file,Portable,Pale,Moon,browser,Firefox,Internet,Explorer,Google,Chrome,OperaThe Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p1420">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/portable_browser_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Deploying PAC file</h1>
+</tr>
+</table>
+
+<p>Deploying the Uniform Server proxy.pac file is straightforward. The steps on this page show how to manually configure the most popular browsers by their proxy settings. First we take a look at how to configure Apache to serve the PAC file.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Apache Web Server">Apache Web Server</a> - Configuration and PAC file location</li>
+   <li><a href="#Portable Pale Moon browser">Portable Pale Moon browser</a> - Pre-configured module</li>
+   <li><a href="#Firefox">Firefox</a></li>
+   <li><a href="#Pale Moon">Pale Moon</a></li>
+   <li><a href="#Internet Explorer">Internet Explorer</a></li>
+   <li><a href="#Safari">Safari</a></li>
+   <li><a href="#Google Chrome">Google Chrome</a></li>
+   <li><a href="#Opera">Opera</a></li>
+
+   </ul>
+ </div>
+</div>
+
+<a name="Apache Web Server"></a>
+<h2>Apache Web Server</h2>
+
+<p>Before covering PAC file deployment the following shows how to configure Apache to serve the proxy.pac file:</p>
+
+<table>
+ <tr valign="top">
+<td>
+<b>PAC file location:</b>
+<p>The <b>proxy.pac</b> file is located in folder UniServerZ\home\<b>us_pac</b>. This folder has been mapped into Apache'sconfiguration file 
+UniServerZ\core\apache2\conf\<b>httpd.conf</b> as shown on the right.</p>
+
+<p><b>Note: </b>One of the following URL's is used to load the PAC file:</p>
+<ul>
+ <li>http://127.0.0.1/us_pac/proxy.pac - All browsers</li>
+ <li>file:///C:/UniServerZ/home/us_pac/proxy.pac  - Pale Moon, FF</li>
+ <li>file://C:/UniServerZ/home/us_pac/proxy.pac - IE, Opera</li>
+</ul>
+
+</td>
+<td>
+<b>Apache httpd.conf</b>
+<pre>
+Alias /us_pac  "${US_ROOTF}/home/us_pac/"
+
+#== PAC - Location to serve proxy.pac
+&lt;Directory "${US_ROOTF}/home/us_pac/"&gt;
+  Options Indexes Includes
+  AllowOverride All
+  Require all granted
+&lt;/Directory&gt;
+
+# PAC files e.g proxy.pac
+AddType application/x-ns-proxy-autoconfig .pac
+</pre>
+</td>
+ </tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Portable Pale Moon browser"></a>
+<h2>Portable Pale Moon browser</h2>
+<p>The core component of the Uniform Server Zero module (Zero_palemoon_20_3) is the portable Pale Moon browser.<br />
+The Pale Moon browser is an <b>optimised</b> version of the Firefox browser.</p>
+
+<table>
+<tr valign="top">
+<td>
+<b>Information:</b>
+
+<p>Uniform Server Zero module (Portable Pale Moon) has been pre-configured to use the proxy.pac file.</p>
+
+<p>The following entries in UniServerZ\core\palemoon\<b>User.ini</b> enable loading of proxy.pac as a file:</p>
+</td>
+
+<td>
+<b>User.ini:</b>
+<pre>
+; ========================================
+; 		** User preferences **
+; ========================================
+
+;(US- Enable proxy to use PAC file)
+network.proxy.type=2
+
+;(US- Set PAC file either url or path defined by environment variable US_PAC )
+network.proxy.autoconfig_url=%US_PAC%|"/
+</pre>
+</td>
+</tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Firefox"></a>
+<h2>Firefox</h2>
+
+<ol>
+ <li>Open Firefox.</li>
+ <li>Select <strong>Tools </strong>from the application menu, click <strong>Options</strong>.</li>
+ <li>Click the <strong>Advanced </strong>section, click <strong>Settings </strong>under <strong>Connection</strong>.</li>
+ <li>Select <strong>Automatic proxy configuration URL</strong>.</li>
+ <li>Enter the URL for the PAC file in the text box, click <strong>OK</strong>.</li>
+</ol>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Pale Moon"></a>
+<h2>Pale Moon</h2>
+<p>Pale Moon is an optimised version of the Firefox browser. Hence follow the instructions for Firefox.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Internet Explorer"></a>
+<h2>Internet Explorer</h2>
+
+<ol>
+  <li>Open Internet Explorer.</li>
+  <li>Select <strong>Tools </strong>from the application menu, click <strong>Internet Options</strong>.</li>
+  <li>Click the <strong>Connections </strong>tab, click the <strong>LAN settings</strong> button.</li>
+  <li>Check <strong>Use automatic configuration script</strong>, click <strong>OK</strong>.</li>
+  <li>Enter the URL for the PAC file in the <strong>Address</strong> text box, click <strong>OK</strong>.</li>
+</ol>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Safari"></a>
+<h2>Safari</h2>
+<p>Safari utilizes the Windows proxy settings as used in Internet Explorer. Hence follow the instructions for Internet Explorer.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Google Chrome"></a>
+<h2>Google Chrome</h2>
+<p>Like Safari, Chrome utilizes the Windows proxy settings as used in Internet Explorer. Hence follow the instructions for Internet Explorer.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Opera"></a>
+<h2>Opera</h2>
+ 
+<ol>
+  <li>Open Opera.</li>
+  <li>Click the <strong>Opera</strong> button.</li>
+  <li>Click <strong>Settings &gt; Preferences</strong>section.</li>
+  <li>Click <strong>Advanced</strong>, select <strong>Network</strong>, and click <strong>Proxy Servers</strong>.</li>
+  <li>Select <strong>Use automatic proxy configuration</strong>.</li>
+  <li>Enter the URL for the PAC file in the text box, click <strong>OK</strong>.</li>
+</ol>
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

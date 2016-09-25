@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Perl</title>
+  <meta name="Description" content=" The ActivePerl Community License precludes distribution with The Uniform Server Zero XL; you will need to download this yourself and use The Uniform Server Zero's built-in installation batch file script" />
+  <meta name="Keywords" content="Perl,Install,Force,Windows,Shebang,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p900">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/perl_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Perl</h1>
+</tr>
+</table>
+
+<p>Perl is a very powerful scripting language and is fully supported by The Uniform Server Zero XIII. You can install one of two distributions, either Portable Strawberry Perl  via a Uniform Server Zero XIII <a href="plugins_detail.html" >Plugin</a> or Active Perl. The ActivePerl Community License precludes distribution with The Uniform Server Zero XIII; you will need to download this yourself and use The Uniform Server Zero's built-in installation batch file script. Rmainder of this page; covers UniControllers Perl control menu.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Overview">Overview</a></li>
+   <li><a href="#Shebang" >Shebang</a></li>
+   <li><a href="#Apache – Running as standard program" >&nbsp;&nbsp;Apache – Running as standard program</a></li>
+   <li><a href="#Apache – Running as service" >&nbsp;&nbsp;Apache – Running as service</a></li>
+   <li><a href="#Shebang Help" >Shebang Help</a></li>
+   <li><a href="#Force Windows Shebang" >Force Windows Shebang</a></li>
+   <li><a href="#Force Unix Shebang" >Force Unix Shebang</a></li>
+   <li><a href="#Force Unix Shebang" >Force Unix Shebang</a></li>
+   <li><a href="#Where to next" >Where to next</a></li>
+
+   </ul>
+ </div>
+</div>
+
+<a name="Overview"></a>
+<h2>Overview</h2>
+
+<p>Install Perl as explained on this page <a href="perl_install.html">Installing Perl</a></p>
+
+<p>The Uniform Server XIII automatically detects the presence of Perl and enables UniController. If Perl is not installed, the Perl menu is greyed out.</p>
+
+<p>Place your Perl scripts in folder UniServerZ\<b>cgi-bin</b> and any sub-folders as appropriate. Each script requires a Shebang. This must be an absolute path to the Perl executable. For example:</p>
+
+<pre>#!C:/UniServerZ/core/perl/bin/perl.exe</pre>
+Or (Unix format)
+<pre>#!/usr/bin/perl</pre>
+
+<p><b><i>Note</i>:</b> The #! means "use the following command/interpreter to run this script". Generally the command/interpreter is the absolute path to an executable</p>
+
+
+<p>Next section covers the Shebang in more detail.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Shebang"></a>
+<h2>Shebang</h2>
+
+<p>The Shebang format you use is dependent on a number of factors such as on how the Apache server is run (either as a standard program or as a service) and the operating system. </p>
+
+<a name="Apache – Running as standard program"></a>
+<h3>Apache – <i>Running as standard program</i></h3>
+<p>When Apache is started from UniController it is run as a standard program and is fully portable.<br />
+For portability absolute paths cannot be used, instead the Perl executable is located by using the local environment path. The Shebang used for Windows is shown below:</p>
+
+<pre>#!perl</pre>
+
+<p>Moving UniServer Zero to another location automatically updates the path environment variable.</p>
+
+<p><b><i>Tip</i>:</b> When writing Perl scripts for Windows always use <b>#!perl</b> for the shebang.</p>
+
+<p><i><b>Important:</b></i>
+When you place a third party Perl script in cgi-bin, you must always run <b>Force Windows Shebang</b> using UniController this converts the Unix Shebang to the Windows format. Alternatively, you can manually edit each file and replace the Unix Shebang "#!/usr/bin/perl" with the Windows Shebang "#!perl".</p>
+
+<a name="Apache – Running as service"></a>
+<h3>Apache – <i>Running as service</i></h3>
+<p>When Apache is started from UniService it is run as a service and is no-longer portable.
+Running as a service requires the Shebang to be an absolute path for example:</p>
+
+<pre>#!C:/UniServerZ/core/perl/bin/perl.exe</pre>
+
+<p>You need to edit each file and replace the Shebang with "#!C:/UniServerZ/core/perl/bin/perl.exe", if you installed Uniform Server in a different location adjust the path as appropriate. Although inconvenient it is a relatively easy task to search all files in cgi-bin and replace the Shebang.</p>
+
+<p>Note 1: The above runs on any Windows OS from XP to Win 10.<br />
+
+Note 2: With the exception of Windows XP that must use the above there is a more elegant solution see <a href="perl_unix_windows_shebang.html">Unix Shebang on Windows</a> for details.<p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Shebang Help"></a>
+<h2>Shebang Help</h2>
+
+<p class="access">Perl &gt; Shebang Help</p>
+
+<p>The Perl "Shebang Help" menu displays the following:</p>
+
+<p><b><i>Shebang Help</i>:</b></p>
+
+  <ul>
+    <li>Perl scripts developed on Unix will not run on a Window machine <br />
+    the Shebang requires conversion to a Windows format.</li>
+  </ul>
+
+  <ul>
+     <li>The Shabang allows Apache to find the Perl interpreter <br />
+         Windows Shebang - First line of a Perl script: <b>#!perl</b></li>
+  </ul>
+
+  <ul>
+     <li>Note 1: After installing third-party scripts to the cgi-bin folder.<br />
+  Force a Windows shebang update by running "Force Windows Shebang".<br />
+  from the Perl drop-down menu.</li>
+  </ul>
+
+  <ul>
+     <li>  Note 2: Before uploading scripts from the cgi-bin folder to a Unix server.<br />
+  Force a Unix shebang update by running "Force Unix Shebang"<br />
+  from the Perl drop-down menu.</li>
+  </ul>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Force Windows Shebang"></a>
+<h2>Force Windows Shebang</h2>
+
+<p>After installing third-party scripts to the cgi-bin folder. Force a Windows shebang update by running <b>Force Windows Shebang</b> from the Perl drop-down menu.</p>
+
+<p class="access">Perl &gt; Force Windows Shebang</p>
+
+<p>This updates all files with the following file extensions in folder cgi-bin and any sub-folders</p>
+<ul>
+  <li>*.pl</li>
+  <li>*.pm</li>
+  <li>*.cgi</li>
+</ul>
+<p>Replaces the current shebang with <b>#!perl</b></p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Force Unix Shebang"></a>
+<h2>Force Unix Shebang</h2>
+
+
+<p>Perl scripts developed on Windows will not run on a Unix machine. They require conversion to Unix format. Force a format update by running <b>Force Unix Shebang</b> from the Perl drop-down menu.</p>
+
+<p class="access">Perl &gt; Force Unix Shebang</p>
+
+<p>This updates all files with the following file extensions in folder cgi-bin and any sub-folders</p>
+<ul>
+  <li>*.pl</li>
+  <li>*.pm</li>
+  <li>*.cgi</li>
+</ul>
+<p>Replaces the current shebang with <b>#!/usr/bin/perl</b></p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="View test.pl"></a>
+<h2>View test.pl</h2>
+
+<p> View test.pl runs test script: UniServerZ\cgi-bin\<b>test.pl</b></p>
+
+<p class="access">Perl &gt; View test.pl</p>
+
+<p><b>test.pl</b></p>
+<pre>
+#!perl
+
+print &lt;&lt;END_of_HTML;
+Content-type: text/html
+
+&lt;HTML&gt;
+ &lt;HEAD&gt;
+  &lt;TITLE&gt;Perl Test Page&lt;/TITLE&gt;
+ &lt;/HEAD&gt;
+
+ &lt;BODY&gt;
+ &lt;H1&gt;Perl test page&lt;/H1&gt;
+  &lt;P&gt;Basic Perl test pages.&lt;/P&gt;
+  &lt;ul&gt;
+     &lt;li&gt;&lt;a href="http://localhost/cgi-bin/test_1.pl/" target="_blank"&gt;test_1.pl - Display Perl environment&lt;/a&gt;&lt;/i&gt;
+     &lt;li&gt;&lt;a href="http://localhost/cgi-bin/test_2.pl/" target="_blank"&gt;test_2.pl - Basic "Hello world" uses here-doc &lt;&lt;END statement:&lt;/a&gt;&lt;/i&gt;
+     &lt;li&gt;&lt;a href="http://localhost/cgi-bin/test_3.pl/" target="_blank"&gt;test_3.pl - Basic "Hello world" uses use CGI qw(:standard)&lt;/a&gt;&lt;/i&gt;
+     &lt;li&gt;&lt;a href="http://localhost/cgi-bin/test_4.pl/" target="_blank"&gt;test_4.pl - Basic user input form 1&lt;/a&gt;&lt;/i&gt;
+     &lt;li&gt;&lt;a href="http://localhost/cgi-bin/test_5.pl/" target="_blank"&gt;test_5.pl - Basic user input form 2&lt;/a&gt;&lt;/i&gt;
+  &lt;/ul&gt;
+
+&lt;p&gt;The above test pages are located in folder &lt;b&gt;UniServerZ\\cgi-bin&lt;/b&gt; after testing these pages can be deleted:&lt;br /&gt;
+Main Test page test.pl and pages test_1.pl to test_5.pl&lt;/p&gt;
+
+ &lt;/BODY&gt;
+
+&lt;/HTML&gt;
+END_of_HTML
+
+</pre>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Where to next"></a>
+<h2>Where to go next</h2>
+
+<p><a href="perl_install.html">Installing Perl</a>  - Covers installing ActivePerl and Strawberry Perl</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

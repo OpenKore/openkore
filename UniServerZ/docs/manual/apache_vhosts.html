@@ -1,0 +1,516 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Apache Vhosts</title>
+  <meta name="Description" content="Apache Vhosts Create Apache Vhost -Detail" />
+  <meta name="Keywords" content="Create,Apache,Vhost,Detail,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p670">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/apache_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Apache Vhosts</h1>
+</tr>
+</table>
+
+<p>The Uniform Server Zero XIII is configured for name-based virtual hosting. This allows you to run any number of web sites from a single IP address. Each domain-name you host must first be registered and an "A" record created on a DNS server. This "A" record translates the domain-name to your IP address.</p>
+<p><b><i>Note</i></b>: For testing, "A" records are simulated using Uniform Server's PAC file (and or PC's hosts files) for details see <a href="apache_basic_configuration.html#Server Name"> Server Name</a>.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Overview" >Overview</a></li>
+   <li><a href="#Inform Apache to use Vhosts" >&nbsp;&nbsp;Inform Apache to use Vhosts</a></li>
+   <li><a href="#Adding a Vhost" >&nbsp;&nbsp;Adding a Vhost</a></li>
+   <li><a href="#Vhost additional Apache directives" >&nbsp;&nbsp;Vhost additional Apache directives</a></li>
+   <li><a href="#Hosts file automatic update" >&nbsp;&nbsp;Hosts file automatic update</a></li>
+   <li><a href="#Create Apache Vhost -Detail" >Create Apache Vhost -Detail</a></li>
+   <li><a href="#Internet access" >&nbsp;&nbsp;Internet access</a></li>
+   <li><a href="#Delete Apache Vhost -Detail" >Delete Apache Vhost -Detail</a></li>
+   </ul>
+ </div>
+</div>
+
+
+<h2>Features</h2>
+<p>The main features of The Uniform Server’s Vhost configuration menu are:</p>
+<ul>
+ <li>Include separate log files and server alias</li>
+ <li>Auto enable when first vhost created</li>
+ <li>Auto disable when last vhost deleted</li>
+ <li>Port tracking follows main server port (defaults to port 80)</li>
+ <li>Writes host name to Uniform Server's PAC file when vhost created</li>
+ <li>Deletes host name from Uniform Server's PAC when vhost deleted</li>
+ <li>If option enabled writes host name to PCs hosts when vhost created</li>
+ <li>If option enabled deletes host name from PCs hosts when vhost deleted</li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Overview"></a>
+<h2>Overview</h2>
+
+<p>Vhosts are configured using a separate configuration file UniServerZ\core\apache2\conf\extra\<b>httpd-vhosts.conf</b>.<br /> This file requires enabling in Apache’s main configuration file UniServerZ\core\apache2\conf\<b>httpd.conf</b></p>
+
+<table>
+ <tr>
+  <td>
+    <p>Search this file for the following line:</p>
+    <pre>#Include conf/extra/httpd-vhosts.conf </pre>
+  </td>
+  <td>&nbsp;</td>
+  <td>
+    <p>Remove the hash "#" to enable as shown below:</p>
+    <pre>Include conf/extra/httpd-vhosts.conf</pre>
+ </td>
+ </tr>
+</table>
+
+<p>Note: The above is automatically performed when using The Uniform Server Zero’s Vhost configuration menu.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Inform Apache to use Vhosts"></a>
+<h3>Inform Apache to use Vhosts</h3>
+
+<p>Apache requires the directive <b>&lt;VirtualHost address:port&gt;</b> which instructs it to use virtual hosts and resolve an address on the specified port. The Uniform Server Zero uses <b>*:${AP_PORT}</b>, where the * is a wildcard meaning use all addresses and ${AP_PORT} is an environment variable that defaults to port 80. If you change the main server port using <i>Apache &gt; Change Apache Ports &gt; Change Apache Port</i> all Vhosts using ${AP_PORT} are automatically moved to this new port.</p>
+
+<p> Port 80 is the standard web server listening port. This can be changed if required, for example, to port 8080 replace <b>*:${AP_PORT}</b> with <b>*:8080</b>. You need to manually edit the configuration file httpd-vhosts.conf</p>
+
+<p>A separate <b>VirtualHost</b> directive is required for each Vhost used. If a diferent port is specified e.g. *:8080 a seperate Listen directive must be included.</p>
+
+<table>
+ <tr>
+  <td>
+<pre>
+ Listen 8080
+</pre>
+  </td>
+  <td>&nbsp;</td>
+  <td>
+    <p>The main configuration file (httpd.conf) does not contain a Listen 8080 directive it is required and added to this vhost configuration </p>
+ </td>
+ </tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Adding a Vhost"></a>
+<h3>Adding a Vhost</h3>
+
+<p>Each virtual host requires a separate configuration block. These blocks inherit their configuration from the main configuration file <b>httpd.conf</b>. Specifying an Apache directive in a Vhost block overrides that of the main configuration file. The advantage of this inheritance is to reduce number of Apache directives required for each Vhost. The absolute minimum required is to specify a <b>DocumentRoot</b> and <b>ServerName</b>. </p>
+
+<p>Apache resolves a Vhost by matching its port and ServerName. On finding a match, the server's content is fetched from the folder specified by DocumentRoot. If it cannot find a match, it uses the first Vhost defined (the default). Note: to avoid conflicts, Apache uses a  <b>_default_</b> directive for the address of this first virtual host.</p>
+
+<p>Example: to add a virtual host for fred.com on port 8080 and to serve content from folder UniServerZ\vhosts\fred, the minimum configuration required is:</p>
+
+
+<table>
+ <tr>
+  <td>
+<pre>
+ Listen 8080
+&lt;VirtualHost _default_:${AP_PORT}&gt;
+  DocumentRoot ${US_ROOTF_WWW}
+  ServerName ${US_SERVERNAME}
+  ErrorLog "logs/error.log"
+  CustomLog "logs/access.log" common
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:8080&gt;
+ DocumentRoot ${US_ROOTF}/vhosts/fred123
+ ServerName fred.com
+&lt;/VirtualHost&gt;
+</pre>
+
+  </td>
+  <td>&nbsp;</td>
+  <td>
+ <p>The default Vhost maps to The Uniform Server’s folder www using environment variable ${US_ROOTF_WWW}. If you wish, this can be changed as well as the server name.</p>
+
+ <p>The new Vhost fred.com maps to folder UniServerZ\vhosts\fred. This can be any folder you wish. All vhost root folders are created in the folder <b>vhosts</b>. This is not a strict requirment, but it is provided for portability (as when using a USB memory stick).
+</p>
+
+ <p>Note: Port 8080 is shown as an example. Generally all Vhosts would use the standard port 80 using environment variable ${AP_PORT} (As mentioned above this is the main server port).  </p>
+ </td>
+ </tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Vhost additional Apache directives"></a>
+<h3>Vhost additional Apache directives</h3>
+
+ <p>Other Apache directives can be included in a Vhost block. Common directives are shown in this example block:<br />
+Note: These are manually added by editing the VHost configuration file.</p>
+<table>
+ <tr>
+  <td>
+<pre>
+&lt;VirtualHost *:${AP_PORT}&gt;
+ ServerAdmin webmaster@fred.com
+ DocumentRoot ${US_ROOTF}/vhosts/fred123
+ ServerName fred.com
+ ServerAlias www.fred.com *.fred.com
+ ErrorLog logs/fred.com-error.log
+ CustomLog logs/fred.com-access.log common
+ &lt;Directory "${HOME}\vhosts\fred123"&gt;
+   Options Indexes Includes 
+   AllowOverride All   
+   Require all granted 
+ &lt;/Directory&gt; 
+&lt;/VirtualHost&gt;
+</pre>
+
+  </td>
+  <td>&nbsp;</td>
+  <td>
+<p><b>ServerAlias</b> Allows you to access the server using sub-domains. Each sub-domain <b>must</b> have a corresponding DNS entry.</p>
+
+<p>Each Vhost can have a separate <b>ErrorLog</b> and <b>CustomLog</b> log file. If you do not specify these log files, the main server log files are used.</p>
+<p><b><i>Note</i></b>: Separate log files will eat into your file allocation resources, depending on the total number of Vhosts you wish to host. This may become an issue .</p>
+ </td>
+ </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Hosts file automatic update"></a>
+<h3>Hosts file automatic update</h3>
+
+<p>To test your web site without being connected to the Internet the default operation of Uniform Server Zero XIII is to add an entry to your PC’s hosts file. However this is not consistent with portability. This functionality is disabled as follows:</p>
+
+<ul> 
+ <li> Edit file C:\UniServerZ\home\us_config\us_config.ini </li>
+ <li> Locate section [HOSTS] </li>
+ <li> Change the following line: EditHostsFileEnabled=True To: EditHostsFileEnabled=False </li>
+</ul>
+
+<p>The following assumes default operation hosts file automatic update enabled.</p>
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Create Apache Vhost -Detail"></a>
+<h2>Create Apache Vhost -Detail</h2>
+
+<p>The following sub-menu allows you to quickly create a virtual host.</p>
+<p class="access">Apache &gt; Apache Vhosts &gt; Create Apache Vhost</p>
+
+<p>This example creates a Vhost for <b>fred.com</b> and its corresponding root folder <b>fred123</b>:</p>
+
+<table>
+<tr valign="top">
+<td>
+
+<ul>
+<li><b>A)</b> Enter root folder name <b>fred123</b>. </li>
+    <ul>
+     <li>The folder you wish to use as your server root folder.</li>
+    </ul>
+
+<li><b>B)</b> Enter server name <b>fred.com</b>. </li>
+    <ul>
+     <li>This is the domain name you registered with a registrar. It is the name you enter in a browser to access your web site excluding the <b>http://</b> part.</li>
+    </ul>
+
+<li><b>C)</b> Click <b>Create Vhost</b> button to create your virtual host.</li>
+    <ul>
+     <li>Win 7 and 8 users, at the User Account Control pop-up click <b>Yes</b> to allow changes to this computer.</li>
+    </ul>
+<li><i>Note</i>: For new configuration to be recognised you <b>must restart</b> your Apache server.</li>
+</ul>
+<p>The following actions are taken:</p>
+</td>
+<td>
+<img src="images/C11_vhost_create.gif" alt="Create Vhost">
+</td>
+</tr>
+
+<tr>
+  <td>
+     <ol>
+       <li>The Apache configuration file httpd.conf is checked and the Vhost include file section is enabled as shown on right. If already enabled no action is taken.</li>
+     </ol>
+  </td>
+  <td>
+    <pre>
+##====== VIRTUAL HOST ===========
+#To enable uncomment next line
+Include conf/extra/httpd-vhosts.conf
+    </pre>
+  </td>
+</tr>
+
+
+<tr>
+  <td>
+    <ol start="2">
+     <li>A new document root folder is created full path shown on right. If folder already exists no action is taken.</li>
+    </ol>
+ </td>
+  <td>
+    <pre>
+     C:\UniserverZ\vhosts\fred123
+    </pre>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <ol start="3">
+     <li>Files shown on the right are copied to root folder fred123.  If they already exists no action is taken.</li>
+    </ol>
+  </td>
+  <td>
+<pre>
+.htaccess
+favicon.ico
+</pre>
+  </td>
+</tr>
+
+
+<tr valign="top">
+  <td>
+    <ol start="4">
+     <li>A new Vhost block as shown on the right is added to the Apache Vhost configuration file UniServerZ\core\apache2\conf\extra\<b>httpd-        vhosts.conf</b><br /><br />
+      If Vhost block already exists no action is taken.</li>
+     </ol>
+  </td>
+  <td>
+<pre>
+&lt;VirtualHost *:${AP_PORT}&gt;
+ ServerAdmin webmaster@fred.com
+ DocumentRoot ${US_ROOTF}/vhosts/fred123
+ ServerName fred.com
+ ServerAlias www.fred.com *.fred.com
+ ErrorLog logs/fred.com-error.log
+ CustomLog logs/fred.com-access.log common
+ &lt;Directory "${HOME}\vhosts\fred123"&gt;
+   Options Indexes Includes 
+   AllowOverride All   
+   Require all granted 
+ &lt;/Directory&gt; 
+&lt;/VirtualHost&gt;
+</pre>
+  </td>
+</tr>
+
+<tr valign="top">
+  <td>
+    <ol start="5">
+      <li>An entry as shown on the right is added to Uniform Server's PAC file.<br />
+      For PAC file (proxy.pac) details and alternative see <a href="apache_basic_configuration.html#Server Name">Server Name</a></li>
+    </ol>
+  </td>
+  <td>
+
+    <pre>
+
+if (shExpMatch(host, "*fred.com")) return "PROXY 127.0.0.1:80";
+
+    </pre>
+  </td>
+</tr>
+
+
+<tr valign="top">
+  <td>
+    <ol start="6">
+      <li>If option enabled an entry as shown on the right is added to PCs hosts file.<br />
+      Win 7 and 8 users, at the User Account Control pop-up click Yes to allow changes to this computer.</li>
+    </ol>
+  </td>
+  <td>
+
+    <pre>
+
+127.0.0.1 fred.com
+
+    </pre>
+  </td>
+</tr>
+
+</table>
+
+
+<table cellpadding="4">
+ <tr valign="top">
+<td>
+<a name="Internet access"></a>
+<p><b>Note: <i>Internet access</i></b> <br />
+
+The .htaccess file created in the new root folder (C:\UniserverZ\vhosts\fred123)<br />
+restricts access to local host. To allow others on the Internet to access your<br />
+website this file requires editing as shown on right: </p>
+
+</td>
+
+  <td>
+<p><i>Locate these lines</i>:</p>
+<pre>
+Order Deny,Allow
+Deny from all
+Allow from 127.0.0.1
+Allow from ::1
+</pre>
+  </td>
+  <td>
+<p><i>Comment out the lines as shown</i>:</p>
+<pre>
+#Order Deny,Allow
+#Deny from all
+#Allow from 127.0.0.1
+#Allow from ::1
+</pre>
+  </td>
+ </tr>
+</table>
+
+
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Delete Apache Vhost -Detail"></a>
+<h2>Delete Apache Vhost -Detail</h2>
+
+<p>The following sub-menu allows you to quickly delete a virtual host.</p>
+<p class="access">Apache &gt; Apache Vhosts &gt; Delete Apache Vhost</p>
+
+<p>This example deletes the Vhost <b>fred.com</b> and its corresponding root folder <b>fred123</b>:</p>
+
+<table>
+<tr valign="top">
+<td>
+
+ <ul>
+  <li><b>A)</b> From the list select <b>fred.com </b> the Vhost you wish to delete.</li>
+  <li><b>B)</b> Click <b>Delete Vhost</b> button. </li>
+    <ul>
+     <li>Win 7 and 8 users, at the User Account Control pop-up click <b>Yes</b> to allow changes to this computer.</li>
+    </ul>
+  <li><b>C)</b> Note: To cancel click <b>Cancel Selection </b> button.</li>
+ </ul>
+<p>The following actions are taken:</p>
+</td>
+<td>
+<img src="images/C11_vhost_delete.gif" alt="Delete Vhost">
+</td>
+</tr>
+
+
+<tr valign="top">
+  <td>
+    <ol >
+     <li>The Vhost block shown on the right is deleted from the Apache Vhost configuration file UniServerZ\core\apache2\conf\extra\<b>httpd-        vhosts.conf</b><br /><br />
+      If Vhost block already deleted no action is taken.</li>
+     </ol>
+  </td>
+  <td>
+<pre>
+&lt;VirtualHost *:${AP_PORT}&gt;
+ ServerAdmin webmaster@fred.com
+ DocumentRoot ${US_ROOTF}/vhosts/fred123
+ ServerName fred.com
+ ServerAlias www.fred.com *.fred.com
+ ErrorLog logs/fred.com-error.log
+ CustomLog logs/fred.com-access.log common
+ &lt;Directory "${HOME}\vhosts\fred123"&gt;
+   Options Indexes Includes 
+   AllowOverride All   
+   Require all granted 
+ &lt;/Directory&gt; 
+&lt;/VirtualHost&gt;
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <ol start="2">
+     <li>A pop-up is displayed requesting confirmation to delete the root folder and all its content. Clicking Yes the folder as shown on the right and all its content are deleted. If No was clicked or window closed no action is taken.</li>
+    </ol>
+ </td>
+  <td>
+    <pre>
+
+C:\UniserverZ\vhosts\fred123
+    </pre>
+  </td>
+</tr>
+
+<tr valign="top">
+  <td>
+    <ol start="3">
+      <li>The entry as shown on the right is deleted from Uniform Server's PAC file.</li>
+    </ol>
+  </td>
+  <td>
+    <pre>
+if (shExpMatch(host, "*fred.com")) return "PROXY 127.0.0.1:80";
+</pre>
+  </td>
+</tr>
+
+<tr valign="top">
+  <td>
+    <ol start="4">
+      <li>If option enabled the entry as shown on the right is deleted from PCs hosts file.<br />
+      Win 7 and 8 users, at the User Account Control pop-up click Yes to allow changes to this computer.</li>
+    </ol>
+  </td>
+  <td>
+
+    <pre>
+
+127.0.0.1 fred.com
+
+    </pre>
+  </td>
+</tr>
+
+</table>
+
+
+
+<hr />
+<div align="center">--oOo--</div>
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

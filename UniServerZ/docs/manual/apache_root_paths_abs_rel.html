@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Document Root Paths</title>
+  <meta name="Description" content="Document Root Paths,Absolute and Relative path formats" />
+  <meta name="Keywords" content="Absolute,Relative,path,formats,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<style type="text/css">
+/*****************************************/
+.heading {
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #ffffff;
+ background-color:  #2F2F76;
+ font-size: 13px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.td_sub{
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #000000;
+ background-color:  #f0f0f0;
+ font-size: 12px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+/*****************************************/
+</style>
+
+
+<body id="p635">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/apache_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Document root paths (Absolute vs Relative)</h1>
+</tr>
+</table>
+
+<p>Apache serves pages from document root folders located anywhere on the filing system. The Uniform Server ZeroXIII has two pre-defined root folders <b>www</b>  and <b>ssl</b> located within The Uniform Server file hierarchy specifically for portability. There are no restrictions on these root folders you can use a different name and or location. This page details various options for the document root folder.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Overview" >Overview</a></li>
+   <li><a href="#Absolute and Relative path formats" >Absolute and Relative path formats</a></li>
+   <li><a href="#Configuration file us_user.ini" >Configuration file us_user.ini</a></li>
+   </ul>
+ </div>
+</div>
+
+
+<a name="Overview"></a>
+<h2>Overview</h2>
+
+<p>The Uniform Server allows you to select (details see <a href="apache.html#Change Apache Root-folders">Change Apache Root-folders</a> ) any folder to use as a root folder. The folder path selected is analysed and converted to either an absolute or relative path format. This converted path is saved to a configuration file (UniServerZ\home\us_config\us_user.ini). Starting Apache this configuration file is read. Apache requires absolute paths, a relative path read from the configuration file is converted to a absolute path.</p>
+
+<p><b>Note:</b> Relative to absolute path conversion is performed at run-time and uses the basepath (path to UniController.exe) for conversion making the server portable. </p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Absolute and Relative path formats"></a>
+<h2>Absolute and Relative path formats</h2>
+
+<p>The Uniform Server ZeroXIII supports the following Absolute and Relative path formats:</p>
+
+<table>
+ <tr><td class="heading">Symbol</td> <td class="heading">Function</td> <td class="heading">Type</td> <td class="heading">Example</td></tr>
+ <tr><td class="td_sub">D: </td> <td class="td_sub">Drive                     </td> <td class="td_sub">Absolute</td>
+ <td class="td_sub">d:/somefolder/www  On a different drive not the current drive</td>   </tr>
+
+ <tr><td class="td_sub">/  </td> <td class="td_sub">Root of the current disk  </td> <td class="td_sub">Absolute/(Relative)</td>
+ <td class="td_sub">/somefolder/www    Starting from top level of current drive</td>   </tr>
+
+ <tr><td class="td_sub">.  </td> <td class="td_sub">Current directory         </td> <td class="td_sub">Relative</td>
+ <td class="td_sub">./somefolder/www   Starting at UniServerZ gives UniServerZ/somefolder/www</td></tr>
+
+ <tr><td class="td_sub">.. </td> <td class="td_sub">Parent directory          </td> <td class="td_sub">Relative</td> 
+ <td class="td_sub">../../www Two levels up from folder UniServerZ</td></tr>
+</table>
+
+<p><b>Note:</b> Although '/' is an absolute path it is also relative! For example the folder location say on a USB memory stick when copied to an identical location on a hard is accessible by Apache on that hard drive. No changes are required to the Apache configuration file directives.</p>
+
+<table>
+<tr valign="top">
+<td>
+
+</td>
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Configuration file us_user.ini"></a>
+<h2>Configuration file us_user.ini</h2>
+
+<table>
+<tr>
+<td>
+<p>Document root folder paths are stored in configuration file UniServerZ\home\us_config\<b>us_user.ini</b><br />
+ the two parameters used are shown on the right with their default values.</p>
+</td>
+<td>
+<pre>
+US_ROOTF_WWW=./www
+US_ROOTF_SSL=./ssl
+</pre>
+</td>
+</tr>
+</table>
+
+<p>You can edit this file and change the parameters however remember that UniController <a href="apache.html#Change Apache Root-folders">Change Apache Root-folders</a> will overwrite these parameters.</p>
+
+
+
+<hr />
+<div align="center">--oOo--</div>
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

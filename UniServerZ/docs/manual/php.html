@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>PHP</title>
+  <meta name="Description" content="A UniController sub-menu allows you to easily switch PHP between the three configurations test, production and development." />
+  <meta name="Keywords" content="PHP,Select,version,configuration,file,Edit,Basic,Modules,Accelerators,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p800">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/php_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>PHP</h1>
+</tr>
+</table>
+
+<p><b>PHP</b> is a general-purpose scripting language designed for creating dynamic web pages. The Apache server uses a PHP processor module to generate the final web page being served. It interprets code embedded into HTML documents. PHP has been pre-configured for test, production and development. A UniController sub-menu allows you to easily switch between the three configurations. This page covers configuration and additional features for maintaining PHP.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+
+   <table border="0">
+       <tr>
+         <td><a href="#View phpInfo" >View phpInfo</a></td>
+         <td>- Runs PHP function phpinfo()</td>
+       </tr>
+       <tr>
+         <td><a href="#Select PHP version" >Select PHP version</a></td>
+         <td>- Versions 53, 54, 55, 56, 70 or 71</td>
+       </tr>
+       <tr>
+         <td><a href="#Select PHP configuration file" >Select PHP configuration file</a> </td>
+         <td>- php_test.ini, php_development.ini or php_production.ini </td>
+       </tr>
+       <tr>
+         <td><a href="#Edited selected configuration file" >Edited selected configuration file</a></td>
+         <td>- Edit file in Note Pad</td>
+       </tr>
+        <tr>
+         <td><a href="#Edit Basic and Modules" >Edit Basic and Modules</a></td>
+         <td>- Edit Basic Configuration and Enable/Disable PHP Modules</td>
+       </tr>
+
+        <tr>
+         <td><a href="#PHP Accelerators" >PHP Accelerators</a></td>
+         <td>- Enable/Disable eAccelerator, APC, XCache or Zend OpCache</td>
+       </tr>
+
+        <tr>
+         <td><a href="#View PHP Accelerator control panel" >View PHP Accelerator control panel</a></td>
+         <td>- View control panel and screen shots for selected PHP Accelerator</td>
+       </tr>
+
+   </table>
+
+ </div>
+</div>
+
+<p><b>Note 1:</b> A default installation of Uniform Server ZeroXIII installs PHP as an Apache module.<br />
+<b>Note 2:</b> PHP Net decided to skip PHP version 6.0</p>
+
+<a name="View phpInfo"></a>
+<h2>View phpInfo</h2>
+
+<p class="access">PHP &gt; View phpInfo</p>
+
+<p>This menu button opens a page in the default browser, that runs the PHP function phpinfo() displaying a wealth of information relating to PHP. The page provides very detailed information, and a menu splits this into smaller sections, making it easier to read.</p>
+
+<ul>
+ <li>url=http://localhost:80/us_extra/phpinfo.php - Page displayed</li>
+ <li>Location: C:\UniServerZ\home\us_extra\phpinfo.php</li>
+</ul>
+
+<p>PHP Info Menu</p>
+<ul>
+ <li>Configuration - Displays PHP Core configuration.</li>
+ <li>Enviroment - PHP current environment</li>
+ <li>Modules - List all modules</li>
+ <li>Extensions - Overview and details (includes functions) for all loaded extensions.</li>
+
+ <li>Variables - List all currently available PHP variables.</li>
+ <li>General - Intro information </li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Select PHP version"></a>
+<h2>Select PHP version</h2>
+
+<p>The Uniform Server Zero XIII provides switching between PHP versions 5.3, 5.4, 5.5, 5.6, 7.0 or 7.1 to achieve this you need to download a suitable PHP plugin for each version (for example ZeroXIII_php_5_3_29_h.exe, ZeroXIII_php_5_4_45_h.exe, ZeroXIII_php_5_5_37_h.exe, ZeroXIII_php_5_6_23_h.exe, ZeroXIII_php_7_0_8_h.exe and ZeroXIII_php_7_1_0_h.exe).</p>
+
+<p class="access">PHP &gt; Select PHP version</p>
+
+<p><i>Note</i>: While Apache is running to prevent problems menu option is disabled (greyed out).</p>
+
+
+<table>
+  <tr valign="top">
+    <td>
+<p><b><i>Selection</i>:</b></p>
+      <ul>
+        <li>Click version you wish to use A), B), C), D), E) or F).</li>
+        <li>Previous selection is deselected and new selection enabled.</li>
+        <li>Selected PHP version is indicated by a check marker for example E).</li>
+      </ul>
+
+<p>Note 1: For the new settings to become effective you must restart the Apache server.<br />
+   Note 2: Greyed out menu button indicates that PHP version plugin is not installed.</p>
+
+    </td>
+    <td>
+         <img src="images/C11_php_version_switching.gif" alt="PHP switching" />
+    </td>
+ </tr>
+</table>
+<p><b><i>Note</i>:</b> Full menu details; see <a href="php_version_switching.html">PHP Version Switching</a> page.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Select PHP configuration file"></a>
+<h2>Select PHP configuration file</h2>
+
+<p>The Uniform Server Zero XIII provides switching between PHP configuration files php_test.ini, php_development.ini and  php_production.ini</p>
+
+<p class="access">PHP &gt; PHP configuration file</p>
+
+<p><i>Note</i>: While Apache is running to prevent problems menu option is disabled (greyed out).</p>
+
+<table>
+  <tr valign="top">
+    <td>
+<p><b><i>Selection</i>:</b></p>
+      <ul>
+        <li>Click configuration file you wish to use A), B) or C).</li>
+        <li>Previous selection is deselected and new selection enabled.</li>
+        <li>Selected configuration file is indicated by a check marker for example C).</li>
+      </ul>
+<p>Note 1: For the new settings to become effective you must restart the Apache server.</p>
+    </td>
+    <td>
+         <img src="images/C11_php_config_switching.gif" alt="PHP switching" />
+    </td>
+ </tr>
+</table>
+
+
+<p>Note:<br />
+In the following <b>xxx</b> represents the PHP series selected either php53, php54, php55, php56, php70 or php71 (covered above). </p>
+<p><b>Test Configuration file</b></p>
+
+<p class="access">PHP &gt; Select PHP configuration file &gt; php_test.ini</p>
+  <ul>
+    <li>File path: UniServerZ\core\xxx\<b>php_test.ini</b></li>
+    <li>This configuration file is pre-configured and can be modified for testing before making changes to the other two configuration files. </li>
+    <li><b>Note 1:</b> In a default installation of The Uniform Server Zero, the current configuration is a copy of this file (php_test.ini = php_production.ini).</li>
+  </ul>
+
+<p><b>Production Configuration file</b></p>
+
+<p class="access">PHP &gt; Select PHP configuration file &gt; php_production.ini</p>
+
+  <ul>
+    <li>File path: UniServerZ\core\xxx\<b>php_production.ini</b></li>
+    <li>This configuration file is pre-configured for production use. </li>
+    <li><b>Note 1:</b> Errors are not displayed; these are directed to Apache's log file.</li>
+  </ul>
+
+
+<p><b>Development Configuration file</b></p>
+
+<p class="access">PHP &gt; Select PHP configuration file &gt; php_development.ini</p>
+
+  <ul>
+    <li>File path: UniServer\core\xxx\<b>php_development.ini</b></li>
+    <li>This configuration file is pre-configured for development. </li>
+    <li><b>Note 1:</b> Errors are displayed in a user's browser and also directed to log file</li>
+  </ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Edited selected configuration file"></a>
+<h2>Edited selected configuration file</h2>
+
+<p>The following menu allows you to edit the <b>currently selected</b> (covered above) PHP configuration file in notepad.<br />
+<i>Note</i>: While Apache is running to prevent problems menu option is disabled (greyed out).</p>
+
+<p class="access">PHP &gt; Edited selected configuration file</p>
+  <ul>
+    <li>Note: This configuration file is the <b>active configuration</b>. When Apache is started, the contents of this file will configure PHP. </li>
+  </ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Edit Basic and Modules"></a>
+<h2>Edit Basic and Modules</h2>
+
+<p><b><i>Edit Basic Configuration</i></b></p>
+
+<p class="access">PHP &gt; Edit Basic and Modules &gt; Edit Basic Configuration </p>
+
+<table>
+ <tbody><tr valign="top">
+  <td>
+This menu item allows you to change commonly configured PHP options.<br />
+
+<i>Note</i>: While Apache is running to prevent problems menu option is disabled (greyed out).
+
+<ol>
+  <li><b>Test:</b> Before changing either development or production use this file for temporary testing.</li>
+  <li><b>Development:</b> Configuration file used for development. Errors will be written to the screen. You can enable other parameters for testing.</li>
+  <li><b>Production:</b> Configuration file for production ini file. Prevents errors being written to screen. The initial settings tighten security. For example, globals are off by default. Any changes you wish to be permanent should be made in this file.</li>
+</ol>
+
+  </td>
+
+  <td>
+   <img src="images/C11_php_basic_config_1.gif" alt="PHP Basic configuration">
+  </td>
+ </tr>
+</tbody></table>
+
+<p><b>Note 1:</b> After making changes, click the corresponding update button. This writes the modified data to the associated configuration file.<br />
+<b>Note 2:</b> Changes to the current configuration are used next time the servers are started.<br />
+<b>Note 3:</b> For test, development and production configuration files to become effective, you need to <a href="#Select PHP configuration file">select</a> the appropriate file  see  and restart Apache.<br>
+<b>Note 4:</b> Do not enable <b>short open tags</b>. Doing so will conflict with other languages such as XML’s open tag.  For detailed information, and the exception, see <a href="php_short_open_tags.html">Short open tags</a>
+
+
+<table>
+ <tr valign="top">
+  <td>
+<p><b><i>PHP Modules Enable/Disable</i></b></p>
+
+<p>The following sub-menu allows you to enable or disable PHP extensions for the<br />
+<b>currently selected</b> PHP configuration file:</p>
+<p class="access">PHP &gt; Edit Basic and Modules &gt; PHP Modules Enable/Disable</p>
+
+<p><i>Note</i>: While Apache is running to prevent problems menu option is disabled (greyed out).</p>
+<ul>
+ <li>Checkbox un-checked Extension disabled</li>
+ <li>Checkbox checked Extension enabled</li>
+</ul>
+<p><b>Note:</b> After changing state you must <b>restart</b> the Apache server<br />
+ for the new configuration to be recognised.</p>
+<p><b>File modified:</b><br />
+File modified is the currently selected PHP configuration.</p>
+
+<ul>
+   <li>Current selected config is shown at the top for example:</li>
+   <li>PHP Version: <b>php54</b></li>
+   <li>Config File: <b>php_production.ini</b></li>
+</ul>
+   </td>
+
+   <td>
+<img src="images/C11_php_extensions_1.gif" alt="PHP Extentions enable disable">
+   </td>
+ </tr><tr>
+</tr></table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="PHP Accelerators"></a>
+<h2>PHP Accelerators</h2>
+
+<p>The Uniform Server Zero XIII provides support for four PHP accelerators: eAccelerator, APC, Xcache and Zend OpCache. The following UniController sub-menu allows you to enable or disable these accelerators.</p>
+
+<p class="access">PHP &gt; PHP Accelerators </p>
+
+<p><i>Note</i>: While Apache is running to prevent problems menu option is disabled (greyed out).</p>
+
+<table>
+ <tr valign="top">
+
+  <td>
+<p><b><i>Selection</i>:</b></p>
+      <ul>
+        <li>Click PHP Accelerator you wish to use A), B), C) or D).</li>
+        <li>Previous selection is deselected and new selection enabled.</li>
+        <li>Selected PHP Accelerator is indicated by a check marker for example D).</li>
+      </ul>
+<p>Note 1: For the new settings to become effective you must restart the Apache server.</p>
+<p>Note 2: A greyed out menu option indicates the accelerator is unavailable.</p>
+
+<ul>
+  <li>A) enables or disables eAccelerator. With the box checked, eAccelerator is enabled.</li>
+  <li>B) enables or disables APC. With the box checked, APC is enabled.</li>
+  <li>C) enables or disables Xcache. With the box checked, Xcache is enabled.</li>
+  <li>D) enables or disables Zend OptCache. With the box checked, Zend OptCache is enabled.</li>
+</ul>
+
+  </td>
+
+  <td>
+   <img src="images/C11_php_select_accelerator.gif" alt="PHP Accelerators" />
+  </td>
+ </tr>
+</table>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="View PHP Accelerator control panel"></a>
+<h2>View PHP Accelerator control panel</h2>
+
+<p>The Uniform Server Zero provides support for four PHP accelerators: eAccelerator, APC, Xcache and Zend OpCache. The following UniController sub-menu allows you to display the <b>currently selected</b> accelerator's controller in your default browser.</p>
+
+<p class="access">PHP &gt; View PHP Accelerator control panel</p>
+<p>Note: View PHP Accelerator control panel menu button greyed out indicates Apache and MySQL not running. The button is enabled when Apache and MySQL are running and PHP installed.</p>
+
+<h3>Accelerator control panel screen shots:</h3>
+
+<table>
+ <tr valign="top">
+  <td>
+
+<b><i>eAccelerator control panel</i>:</b>
+<p>eAccelerator is a free open-source PHP accelerator and optimizer. It increases the performance of PHP scripts by caching them in their compiled state, so that the overhead of compiling is almost completely eliminated.</p>
+
+<p>The Uniform Server Zero default installation has eAccelerator <b>disabled</b>.</p>
+
+<p>The eAccelerator control panel is shown on the right.</p>
+
+  </td>
+
+  <td>
+   <img src="images/C11_php_eaccelerator_con_1.gif" alt="eAccelerator control panel" />
+  </td>
+ </tr>
+</table>
+
+
+<table>
+ <tr valign="top">
+  <td>
+
+<b><i>APC control panel</i>:</b>
+<p>The Alternative PHP Cache (APC) is a free and open opcode cache for PHP. It is a robust framework for caching and optimizing PHP intermediate code.</p>
+<p>The Uniform Server Zero default installation has APC <b>disabled</b>.</p>
+<p>The APC control panel is shown on the right.</p>
+
+  </td>
+
+  <td>
+   <img src="images/C11_php_apc_con_1.gif" alt="APC control panel" />
+  </td>
+ </tr>
+</table>
+
+
+<table>
+ <tr valign="top">
+  <td>
+
+<b><i>Zend OptCache</i>:</b>
+<p>Zend OptCache provides faster PHP execution through opcode caching and optimization. It improves PHP performance by storing precompiled script
+bytecode in the shared memory.</p>
+<p>The Uniform Server Zero default installation has Zend OptCache <b>disabled</b>.</p>
+
+<p>The Zend OptCache control panel is shown on the right.</p>
+
+  </td>
+
+  <td>
+   <img src="images/C11_php_zend_opcache.gif" alt="Zend OpCache control panel" />
+  </td>
+ </tr>
+</table>
+
+
+<hr />
+<div align="center">--oOo--</div>
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

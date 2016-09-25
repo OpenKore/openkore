@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Apache - Free Server Certificate</title>
+  <meta name="Description" content="Free Server Certificate Install certificates" />
+  <meta name="Keywords" content="Install,certificates,Register,domain,name,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p660">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/apache_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Apache - Free Server Certificate</h1>
+</tr>
+</table>
+
+
+<p>A free server certificate using the service from http://www.startssl.com/ is a better choice than a self-signed certificate. Please note that The Uniform Server developers have no relation or affiliation with this site. The material is included here only to provide a better alternative to a self-signed certificate. Other choices likely are available.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Register a domain name" >Register a domain name</a></li>
+   <li><a href="#Create an account at StartSSL" >Create an account at StartSSL</a></li>
+   <li><a href="#Creating a certificate signing request (CSR)" >Creating a certificate signing request (CSR)</a></li>
+   <li><a href="#Sign certificate at StartSSL" >Sign certificate at StartSSL</a></li>
+   <li><a href="#Download StartCom CA Certificates - Information" >Download StartCom CA Certificates - Information</a></li>
+   <li><a href="#Install certificates" >Install certificates</a></li>
+   <li><a href="#Edit SSL Configuration file" >Edit SSL Configuration file</a></li>
+   <li><a href="#Local Test" >Local Test</a></li>
+
+  <li><a href="#Where to next" >Where to next</a></li>
+
+   </ul>
+ </div>
+</div>
+
+<p>StartSSL (StartCom) is a public certification authority providing digital certificates for free! They have their root certificate in all major browsers, which means that certificates issued by StartSSL are trusted by default. Major browsers include Firefox, Internet Explorer, Gogole Chrome, Safari and Opera. The term free means just that, no hidden catches or trials, so The Uniform Server support now includes support for StartCom.</p>
+   
+<p>Obtaining a free server certificate requires a number of steps. First you need to have a registered domain name, then you create a certificate-signing request and obtain a personal ID certificate by registering with StartCom. With this in place, you can login to StartCom and have your certificate signed. Finally you install this certificate on your server. This page covers each step in more detail.</p> 
+
+
+<a name="Register a domain name"></a>
+<h2>Register a domain name</h2>
+
+<p>Register a domain name with a registrar of your choice. The information you supply pertains to the domain you are registering. Of importance for obtaining a free certificate is the contact e-mail address you supply. I am referring to the address where a registrar can contact you. This e-mail address will be used by StartCom to verify who you are (domain name). Alternatively, if your domain name is active (site has a mail-server) the site email address can be used for verification.</p>
+
+<p><b><i>Note</i>:</b> Your registrar <b><i>contact e-mail address</i></b> allows you to obtain a signed certificate before making your site live. This allows you to test your site locally with a signed certificate and confirm that Apache’s SSL Vhost server verification chain works.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Create an account at StartSSL"></a>
+<h2>Create an account at StartSSL</h2>
+<p>Creating an account at StartSSL can be done in advance. You are asked for certain details that identify you. This information is used for creating a personal identification (ID) certificate that is installed into your browser. One purpose of this certificate is to automatically log you into your StartSSL account.</p>
+
+<ol>
+<li>Go to <a href="https://www.startssl.com/?app=12/" >https://www.startssl.com/?app=12/</a> website</li>
+<li>Click <b>Sign up</b></li>
+<li>Fill in all fields in the sign up form and click Continue</li>
+<li>An authentication code will be e-mailed to you.</li>
+<li>Copy and paste it into the Complete Registration form. Click Continue</li>
+<li>Choose the level of security required and click Continue</li>
+<li>Allow the pop up to install security certificate into your browser</li>
+<li>Click Install</li>
+<li>If prompted by your firewall, allow outside access. (Certificate authority)</li>
+<li>Click Finish</li>
+</ol>
+
+<p><b>Note:</b> Backup your client certificates! <a href="https://www.startssl.com/?app=25#4" target="_blank">Check this link</a> and follow the instructions appropriate for your browser.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Creating a certificate signing request (CSR)"></a>
+<h2>Creating a certificate signing request (CSR)</h2>
+
+<p>Generating a certificate-signing request is similar to generating a self-signed certificate. The only difference is to change Hostname from localhost to your registered domain name. For a free StartCom certificate, this field is the only one that is part of the certificate. If you change any of the other fields, the class of the certificate changes as well as its cost, and will require further validation.  These instructions cover only the free certificate.</p>
+
+<table>
+<tr valign="top">
+<td>
+<p class="access">Apache &gt; Apache SSL &gt; Server Certificate and Key generator</p>
+
+
+<ul>
+  <li>This opens the <b>Server Certificate and Key generator</b> menu shown at right</li>
+  <li>A) Change Common Name (CN) to your registered domain name; for example, fred.com</li>
+  <li>D) Click <b>Run Generate</b>. After a short time, a confirmation pop-up is displayed.</li>
+</ul>
+<p>This generates your new server key (server.key) and CSR (server.csr)</p>
+<p>It's important to save these files to a safe and secure location (example: UniServer\certs) as follows:</p>
+<ul>
+  <li>Save UniServerZ\core\openssl\<b>server.csr</b> to folder UniServerZ\certs  </li>
+  <li>Save UniServerZ\core\apache2\server_certs\server.key to folder UniServerZ\certs  </li>
+  <li>Create a new text document named <b>server.crt</b> in folder UniServerZ\certs  </li>
+</ul>
+</td>
+
+<td>
+   <img src="images/C11_apache_cert_gen_1.gif" alt="Start as program"  />
+</td>
+</tr>
+</table>
+<p>Note 1: The empty file server.crt is where you will copy your signed certificate. Folder UniServerZ\certs is used only to store your original certificates. It keeps them as a separate group.    </p> 
+<p>Note 2: Folder UniServerZ\<b>certs</b> is just an example. Ideally you would save its final content to a pen drive, writable CD or another PC for safekeeping.</p> 
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Sign certificate at StartSSL"></a>
+<h2>Sign certificate at StartSSL</h2>
+
+<p>Login to StartSSL</p>
+<ul>
+<li>Go to <a href="https://www.startssl.com/?app=12/" >https://www.startssl.com/?app=12/</a> website</li>
+<li>Click <b>Authenticate</b></li>
+<li>Click <b>Control Panel</b></li>
+</ul>
+
+<p>Validation Wizard</p>
+
+<ol>
+<li>Click <b>Validations Wizard</b> tab (top menu)</li>
+<li>From drop-down menu choose  <b>Domain Name Validation </b>. -- Click continue</li>
+<li>Enter the <b>URL of your domain name</b> to be validated</li>
+<li>Select an e-mail from the list (select last entry).  Note: The last entry is your registrar contact e-mail address. -- Click continue button.</li>
+<li>An authentication code is sent to the selected e-mail address.</li>
+<li>Copy this authentication code and paste it into <b>Verification Code:</b> Box. -- Click continue button.</li>
+<li>Click Finish</li>
+</ol>
+
+<p>Certificates Wizard</p>
+
+<ol>
+<li>Now click the <b>Certificates Wizard</b> tab</li>
+<li>From the Certificate Target dropdown menu select <b>Webserver SSL/TLS Certificate</b> -- Click continue button.</li>
+<li><b>Generate Private Key</b> form displayed. Click <b>Skip</b> - We are using our own key.</li>
+
+<li><b>Submit Certificate Request (CSR)</b> form opens <br />
+Open file UniServerZ\certs\<b>server.csr</b><br />
+Copy and past its content into the box displayed. <br />
+Click continue button.</li>
+
+<li>Message displayed <b>Certificate Request Received </b> -- Click continue button.</li>
+
+<li>Select your domain name (from dropdown list) and use www as the subdomain.<br />
+Your signed certificate is generated and displayed.<br />
+Copy the displayed content and save it to file <br />
+UniServerZ\certs\<b>server.crt</b></li>
+</ol>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Download StartCom CA Certificates - Information"></a>
+<h2>Download StartCom CA Certificates - Information</h2>
+
+
+<p>Note: This section is for information only. The required certificates are preinstalled. A signed certificate requires a verification chain. To implement this on Apache, two additional certificates are required. Download these from StartSSL</p>
+<ul>
+<li> At StartSSL, log into your control panel.</li> 
+<li> Download <a href="http://www.startssl.com/certs/ca.pem">ca.pem</a> Save to folder UniServer\certs.</li> 
+<li> Download <a href="http://www.startssl.com/certs/sub.class1.server.ca.pem">sub.class1.server.ca.pem</a>  Save to folder UniServer\certs.</li> 
+</ul>
+<p>Note: If you have a higher validated server certificate you need to use the <i>class2</i> or <i>class3</i> intermediate CA certificate.</p>
+
+														
+<script language="javascript" src="common/top.js"></script>
+<a name="Install certificates"></a>
+<h2>Install certificates</h2>
+
+<p>Copy the two files server.key and server.crt to Apache folder server_certs</p>
+<ul>
+<li>Copy UniServerZ\certs\server.key to folder UniServerZ\core\apache2\server_certs </li> 
+<li>Copy UniServerZ\certs\server.crt to folder UniServerZ\core\apache2\server_certs </li> 
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Edit SSL Configuration file"></a>
+<h2>Edit SSL Configuration file</h2>
+
+<p>Two lines require enabling in Apache’s SSL configuration file as follows:</p>
+<p>Edit file: UniServerZ\core\apache2\conf\extra\<b>ssl.conf</b></p>
+
+<p>Locate these two lines:</p>
+<pre>
+#SSLCertificateChainFile ${US_ROOTF}/core/apache2/server_certs/sub.class1.server.ca.pem
+#SSLCACertificateFile    ${US_ROOTF}/core/apache2/server_certs/ca.pem
+</pre>
+
+<p>Remove the # to enable as shown below:</p>
+<pre>
+#SSLCertificateChainFile ${US_ROOTF}/core/apache2/server_certs/sub.class1.server.ca.pem
+#SSLCACertificateFile    ${US_ROOTF}/core/apache2/server_certs/ca.pem
+</pre>
+
+<p>Note: The environoment variable ${US_ROOTF} is automaticaly set to the Uniform Server Zero top-level folder for example C:/UniServerZ </p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Local Test"></a>
+<h2>Local Test</h2>
+<p>Before going live with your secure server you can test it locally. To do this your domain name (example fred.com) must resolve to an IP address.</p>
+
+<p>Refer to this page <a href="apache_basic_configuration.html#Server Name"> Server Name</a> for details use either option 1 or option 2</p>
+
+<p>Option 1: Is assumed. Entry automatically made in Uniform Server's PAC file</p>
+<ul>
+  <li>Start the Apache server</li>
+  <li>Click <b>View ssl</b> button</li>
+  <li>The secure test page should be displayed with no alerts.</li>
+</ul>
+
+<p><b>Note</b>: Replace fred.com with the hostname you used when creating your CSR. Be sure to remove this line when you are ready to go live.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Where to next"></a>
+<h2>Where to next</h2>
+
+<p><a href="apache_ssl.html">Apache SSL</a> Introduction and overview.</p>
+<p><a href="apache_server_cert_self_signed.html">Self-signed</a> Self-signed test certificate details.</p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

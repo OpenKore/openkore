@@ -1,0 +1,25 @@
+td, th { white-space: pre; }
+
+.percent { height: 3px; margin-bottom: 1px; border: 1px solid gray; }
+.percent div { float: left; height: 100%; }
+.pvalue { background: limegreen; }
+
+.blocksgraph { height: 13px; }
+.blocksgraph div { float: left; height: 3px; width: 4px; border: 0 solid gray; border-width: 0 0 1px 0; }
+.blocksgraph { border: 1px solid gray; border-bottom: 0; }
+.percent *, .blocksgraph *, .hitsgraph * { font-size: 1px; line-height: 1px; }
+
+.hitsgraph { margin: auto; }
+.hitsgraph a { display: block; float: left; border: 0 solid gray; }
+.hitsgraph a { width: 2px; height: 20px; border-top-width: 1px; border-bottom-width: 1px; } /* update this along with index.php */
+.hitsgraph a * { display: block; }
+.hitsgraph a.active { border-top-color: yellow; }
+.hitsgraph a:hover { background: gray; }
+
+dl { overflow: hidden; }
+dt { font-weight: bold; clear: both; float: left; width: 100px; text-align: right; margin: 0; }
+dd { margin: 0; }
+.blockarea { overflow: hidden; width: 400px; }
+.legends { padding-bottom: 8px; }
+div.legend { float: left; border: 1px solid gray; font: 12px/12px monospace; }
+div.legendtitle { float: left; padding: 2px; padding-right: 10px; font: 12px/12px monospace; }

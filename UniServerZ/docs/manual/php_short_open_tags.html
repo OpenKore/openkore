@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>PHP Short Open Tags</title>
+  <meta name="Description" content="Do not use the short form (<?   ?>) of PHP open tag" />
+  <meta name="Keywords" content="PHP,Short,Open,Tags,Testing,convert,older,scripts,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p850">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/php_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>PHP Short Open Tags</h1>
+</tr>
+</table>
+
+<h2>Warning</h2>
+
+<ul>
+<li>Do not use the short form (&lt;? &nbsp; ?&gt;) of PHP open tag.
+<li>Use the long form of PHP open tag (&lt;?php &nbsp; ?&gt;).
+<li>Always switch "short form open tags" to "off" in the PHP configuration file.
+</ul>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Why" >Why</a></li>
+   <li><a href="#Testing older scripts" >Testing older scripts</a></li>
+   <li><a href="#Convert older scripts as follows" >Convert older scripts as follows</a></li>
+
+   </ul>
+ </div>
+</div>
+
+<a name="Why"></a>
+<h2>Why</h2>
+<p>Using short tags is discouraged because they are in conflict with XML's open tag - '&lt;?xml'. If the file is actually XML, the PHP interpreter will process everything after the '&lt;?' as PHP code, resulting in a parsing error.</p>
+
+<p>Another reason to always use full PHP opening tags is to avoid the unknown. For example, a hosting provider that doesn't allow short open tags (&lt;? &nbsp; ?&gt;) on their servers.</p>  
+
+<a name="Testing older scripts"></a>
+<h2>Testing older scripts</h2>
+
+<p>For testing older scripts, you can switch short open tags "on" temporarily.  
+After testing, be sure to switch short form open tags "off" and retest the scripts</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Convert older scripts as follows"></a>
+<h2>Convert older scripts as follows:</h2>
+<p>
+Replace all occurrences of (&lt;? &nbsp; ?&gt;) with (&lt;?php &nbsp; ?&gt;)<br />
+Replace all occurrences of (&lt;?=) with  (&lt;?php echo)<br />
+Replace all occurrences of (&lt;% &nbsp; %&gt;) with (&lt;?php &nbsp; ?&gt;)<br />
+</p>
+
+<p>
+There's a similar issue with ASP-like &lt;% %&gt; tags. The Uniform Server Zero default is  asp_tags = Off  <br />
+Replace all occurrences of (&lt;% &nbsp; %&gt;) with (&lt;?php &nbsp; ?&gt;)<br />
+</p>
+
+
+<hr>
+<div align="center">--oOo--</div>
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

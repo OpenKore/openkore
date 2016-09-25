@@ -1,0 +1,149 @@
+/* Left menu */
+
+#lcontop {
+  width:200px;
+  padding-bottom:10px;
+}
+
+
+#lcon1 {
+  width:200px;
+  padding-bottom:10px;
+}
+
+.lmen1 {
+  font-size: 13px;
+  padding: 0px;
+  margin:0;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  line-height: 18px;
+}
+.lmen1 li {
+  list-style: none;
+  margin-bottom: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.lmen1 li a:link, .lmen1 li a:visited {
+  display: block;
+  font-size: 12px;
+  width: 100%;
+  width: auto;
+  text-decoration: none;
+  background-color:  #4F4F96;
+  color: #eeeeee;
+  padding-left:5px;
+  border-top:    1px solid #4F4F96;
+  border-bottom: 1px solid #444444;
+}
+
+.lmen1 li a:hover {
+  color: #ffff00;
+  background-color:  #2F2F76;
+  border-top:    1px solid #222222;
+  border-bottom: 1px solid #aaaaaa;
+}
+
+/* Highlight side menus current page top menu*/
+#p100  #lcontop .p100   a,
+#p200  #lcontop .p200   a,
+#p300  #lcontop .p300  a,
+#p400  #lcontop .p400  a,
+#p500  #lcontop .p500  a,
+#p600  #lcontop .p600  a,
+#p700  #lcontop .p700  a,
+#p800  #lcontop .p800  a,
+#p900  #lcontop .p900  a,
+#p1000 #lcontop .p1000 a,
+#p1100 #lcontop .p1100 a,
+#p1200 #lcontop .p1200 a,
+#p1300 #lcontop .p1300 a,
+#p1400 #lcontop .p1400 a,
+#p1500 #lcontop .p1500 a,
+#p1600 #lcontop .p1600 a,
+#p1700 #lcontop .p1700 a,
+#p1800 #lcontop .p1800 a,
+#p1900 #lcontop .p1900 a,
+#p2200 #lcontop .p2200 a
+{
+color: #ffffff;
+background-color:#222222;
+}
+
+/* Highlight side menus current page sub-menu*/
+
+#p110  #lcon1 .p110   a,
+#p115  #lcon1 .p115   a,
+#p120  #lcon1 .p120   a,
+#p122  #lcon1 .p122   a,
+#p210  #lcon1 .p210   a,
+#p220  #lcon1 .p220   a,
+#p230  #lcon1 .p230   a,
+#p240  #lcon1 .p240   a,
+#p250  #lcon1 .p250   a,
+#p310  #lcon1 .p310  a,
+#p320  #lcon1 .p320  a,
+#p330  #lcon1 .p330  a,
+#p340  #lcon1 .p340  a,
+#p410  #lcon1 .p410  a,
+#p420  #lcon1 .p420  a,
+#p430  #lcon1 .p430  a,
+#p440  #lcon1 .p440  a,
+#p450  #lcon1 .p450  a,
+#p510  #lcon1 .p510  a,
+#p520  #lcon1 .p520  a,
+#p530  #lcon1 .p530  a,
+#p540  #lcon1 .p540  a,
+#p550  #lcon1 .p550  a,
+#p610  #lcon1 .p610  a,
+#p620  #lcon1 .p620  a,
+#p630  #lcon1 .p630  a,
+#p635  #lcon1 .p635  a,
+#p640  #lcon1 .p640  a,
+#p650  #lcon1 .p650  a,
+#p660  #lcon1 .p660  a,
+#p670  #lcon1 .p670  a,
+#p680  #lcon1 .p680  a,
+#p710  #lcon1 .p710  a,
+#p720  #lcon1 .p720  a,
+#p730  #lcon1 .p730  a,
+#p740  #lcon1 .p740  a,
+#p750  #lcon1 .p750  a,
+#p760  #lcon1 .p760  a,
+#p810  #lcon1 .p810  a,
+#p820  #lcon1 .p820  a,
+#p830  #lcon1 .p830  a,
+#p840  #lcon1 .p840  a,
+#p850  #lcon1 .p850  a,
+#p860  #lcon1 .p860  a,
+#p910  #lcon1 .p910  a,
+#p920  #lcon1 .p920  a,
+#p930  #lcon1 .p930  a,
+#p1010 #lcon1 .p1010 a,
+#p1210 #lcon1 .p1210 a,
+#p1220 #lcon1 .p1220 a,
+#p1230 #lcon1 .p1230 a,
+#p1240 #lcon1 .p1240 a,
+#p1250 #lcon1 .p1250 a,
+#p1260 #lcon1 .p1260 a,
+#p1310 #lcon1 .p1310 a,
+#p1320 #lcon1 .p1320 a,
+#p1330 #lcon1 .p1330 a,
+#p1410 #lcon1 .p1410 a,
+#p1420 #lcon1 .p1420 a,
+#p1430 #lcon1 .p1420 a,
+#p1510 #lcon1 .p1510 a,
+#p1520 #lcon1 .p1520 a,
+#p1530 #lcon1 .p1530 a,
+#p1710 #lcon1 .p1710 a,
+#p1810 #lcon1 .p1810 a,
+#p1820 #lcon1 .p1820 a,
+#p1830 #lcon1 .p1830 a,
+#p1910 #lcon1 .p1910 a,
+#p1920 #lcon1 .p1920 a
+{
+color: #ffffff;
+background-color:#222222;
+}
+

@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Standalone Servers</title>
+  <meta name="Description" content="Uniform Server Zeros modular architecture allows each server (Apache and MySQL) to be run independently from the main WAMP server. This requires renaming the server and controller executables." />
+  <meta name="Keywords" content="Standalone,Servers,modular,architecture,Apache,MySQL,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p1010">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/multi_servers_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Standalone Servers</h1>
+</tr>
+</table>
+
+
+<p>Uniform Server Zeros modular architecture allows each server (Apache and MySQL) to be run independently from the main WAMP server. This requires renaming the server and controller executables. Optionally moving servers to different ports, allows you to run these servers alongside The Uniform Server Zero and IIS. This page details the changes required.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Apache" >Apache</a></li>
+   <li><a href="#Apache preliminary" >&nbsp;&nbsp;Preliminary</a></li>
+   <li><a href="#Apache Change controller name" >&nbsp;&nbsp;Change controller name</a></li>
+   <li><a href="#Apache Change Icon" >&nbsp;&nbsp;Change Icon</a></li>
+   <li><a href="#Change Apache server executable" >&nbsp;&nbsp;Change Apache server executable</a></li>
+   <li><a href="#Change Apache server ports" >&nbsp;&nbsp;Change Apache server ports</a></li>
+
+
+   <li><a href="#MySQL" >MySQL</a></li>
+   <li><a href="#MySQL preliminary" >&nbsp;&nbsp;Preliminary</a></li>
+   <li><a href="#MySQL Change controller name" >&nbsp;&nbsp;Change controller name</a></li>
+   <li><a href="#MySQL Change Icon" >&nbsp;&nbsp;Change Icon</a></li>
+   <li><a href="#Change MySQL server executable" >&nbsp;&nbsp;Change MySQL server executable</a></li>
+   <li><a href="#Change MySQL server port" >&nbsp;&nbsp;Change MySQL server port</a></li>
+
+   </ul>
+ </div>
+</div>
+
+<a name="Apache"></a>
+<h2>Apache</h2>
+
+<p>You can run Apache as an independent server running on standard ports. Alternatively run independently on none-standard ports catering for a multi-server environment. The following details configuration and modifictions required.</p>
+
+<a name="Apache preliminary"></a>
+<h3>Apache preliminary</h3>
+
+
+<p>Create individual Apache server as follows:</p>
+
+<ol>
+  <li> Create a new folder c:\<b>New_UniServer2</b></li>
+  <li> Download and save the latest controller file (ZeroXIII_controller_2_2_0.exe) to folder New_UniServer2</li>
+  <li> The file is a self-extracting archive, double click on above file to run the extrater.</li>
+  <li> A new folder C:\New_UniServer2\<b>UniServerZ</b> is created containing the controller application UniController.exe and support folders and files.</li>
+  <li> Download the following plugins and save to folder C:\New_UniServer2\<b>UniServerZ</b>.
+       <ul>
+         <li>ZeroXIII_apache_2_4_23_h.exe - Apache server</li>
+       </ul>
+   </li>
+  <li> Installation, double click the plugin file to run the extracter.</li>
+  <li> If prompted allow overwriting of existing files. </li>
+  <li> If you wish; delete the installation files, they are no longer required. </li>
+</ol>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Apache Change controller name"></a>
+<h3>Apache Change controller name</h3>
+
+<p>You cannot run two instances of UniController.exe the executable name must be unique.</p>
+
+<ul>
+  <li>Rename file C:\New_UniServer2\UniServerZ\<b>UniController.exe</b> to C:\New_UniServer2\UniServerZ\<b>UniController2.exe</b></li>
+    <ul>
+      <li>Note: You can use a different name so long as the name is unique and has the file extension <b>.exe</b></li>
+    </ul>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Apache Change Icon"></a>
+<h3>Apache Change Icon</h3>
+
+<p>To distinguish between server instances the tray icon requires changing.<br />
+The following parameters in configuration file C:\New_UniServer2\UniServerZ\home\us_config\<b>us_config.ini</b> allow you to change icon and hover text:</p>
+
+ <ul>
+   <li><b>ServerType</b> - Set Server type valid values APS0 to APS3 sets icon - For this example use APS1</li> 
+   <li><b>ServerTypeText1</b> - First line of hover text - For this example use "Uniform Server Portable"</li> 
+   <li><b>ServerTypeText2</b> - Second line of over text - For this example use "Apache Standalone server 1"</li>
+ </ul>
+
+<table>
+  <tr>
+    <td>
+      Icons are shown on the right: Icons left to right APS0,APS1,APS2 and APS3
+    </td>
+    <td>
+  <img src="images/C11_icons_apache.gif" alt="Apache Icons" />
+    </td>
+  </tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Change Apache server executable"></a>
+<h2>Change Apache server executable</h2>
+<p>To avoid conflicts when running multi-servers requires the Apache executable to be renamed.</p>
+
+  <ul>
+   <li>Navigate to folder C:\New_UniServer2\UniServerZ\core\apache2\<b>bin</b></li>
+   <li>Rename Apache executable file from httpd_z.exe to <b>httpd_z2.exe</b></li>
+      <ul>
+        <li>The file name must start with httpd_ followed by any unique string and terminated with file extension .exe</li>
+        <li>For convenience it is easier just to increment the digit.</li>
+      </ul>
+  </ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Change Apache server ports"></a>
+<p><b><i>Change Apache server ports</i>:</b></p>
+<p>To avoid conflicts when running multi-servers requires the Apache server ports to be changed. If this is the only instance of Apache skip port change and allow server to run on default standard ports.</p>
+
+  <ul>
+   <li>Start UniController2.exe</li>
+   <li>Change standard port from 80 to 82: </li>
+     <ul>
+       <li>Apache > Change Apache ports > Change Apache port</li>
+       <li>Enter 81 and click OK</li>
+       <li>Note: Again it is easier just to increment, however you can enter a different unique port.</li>
+     </ul>
+   <li>Change ssl port from 443 to 445: </li>
+     <ul>
+       <li>Apache > Change Apache ports > Change Apache SSL port</li>
+       <li>Enter 445 and click OK</li>
+       <li>Note: Again it is easier just to increment, however you can enter a different unique port.</li>
+     </ul>
+  </ul>
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="MySQL"></a>
+<h2>MySQL</h2>
+
+<p>You can run MySQL as an independent server running on standard ports. Alternatively run independently on none-standard ports catering for a multi-server environment. The following details configuration and modifictions required.</p>
+
+<a name="MySQL preliminary"></a>
+<h3>MySQL preliminary</h3>
+
+
+<p>Create individual MySQL server as follows:</p>
+
+<ol>
+  <li> Create a new folder c:\<b>New_UniServer3</b></li>
+  <li> Download and save the latest controller file (ZeroXIII_controller_2_2_0.exe) to folder New_UniServer3</li>
+  <li> The file is a self-extracting archive, double click on above file to run the extrater.</li>
+  <li> A new folder C:\New_UniServer3\<b>UniServerZ</b> is created containing the controller application UniController.exe and support folders and files.</li>
+  <li> Download the following plugin and save to folder C:\New_UniServer3\<b>UniServerZ</b>.
+       <ul>
+         <li>ZeroXIII_mysql_5_6_31.exe - MySQL server</li>
+       </ul>
+   </li>
+  <li> Installation, double click the plugin file to run the extracter.</li>
+  <li> If prompted allow overwriting of existing files. </li>
+  <li> If you wish; delete the installation files, they are no longer required. </li>
+</ol>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="MySQL Change controller name"></a>
+<h3>MySQL Change controller name</h3>
+
+<p>You cannot run two instances of UniController.exe the executable name must be unique.</p>
+
+<ul>
+  <li>Rename file C:\New_UniServer3\UniServerZ\<b>UniController.exe</b> to C:\New_UniServer3\UniServerZ\<b>UniController3.exe</b></li>
+    <ul>
+      <li>Note: You can use a different name so long as the name is unique and has the file extension <b>.exe</b></li>
+    </ul>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="MySQL Change Icon"></a>
+<h3>MySQL Change Icon</h3>
+
+<p>To distinguish between server instances the tray icon requires changing.<br />
+The following parameters in configuration file C:\New_UniServer3\UniServerZ\home\us_config\<b>us_config.ini</b> allow you to change icon and hover text:</p>
+
+ <ul>
+   <li><b>ServerType</b> - Set Server type valid values MYS0 to MYS3 sets icon - For this example use MYS1</li> 
+   <li><b>ServerTypeText1</b> - First line of hover text - For this example use "Uniform Server Portable"</li> 
+   <li><b>ServerTypeText2</b> - Second line of over text - For this example use "MySQL Standalone server 1"</li>
+ </ul>
+
+<table>
+  <tr>
+    <td>
+      Icons are shown on the right: Icons left to right MYS0,MYS1,MYS2 and MYS3
+    </td>
+    <td>
+  <img src="images/C11_icons_mysql.gif" alt="Apache Icons" />
+    </td>
+  </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Change MySQL server executable"></a>
+<h2>Change MySQL server executable</h2>
+<p>To avoid conflicts when running multi-servers requires the MySQL executable to be renamed.</p>
+
+
+  <ul>
+   <li>Navigate to folder C:\New_UniServer3\UniServerZ\core\mysql\<b>bin</b></li>
+   <li>Rename MySQL executable file from mysqld_z.exe to <b>mysqld_z3.exe</b></li>
+      <ul>
+        <li>The file name must start with mysqld_ followed by any unique string and terminated with file extension .exe</li>
+        <li>For convenience it is easier just to increment the digit.</li>
+      </ul>
+  </ul>
+
+
+<a name="Change MySQL server port"></a>
+<p><b><i>Change MySQL server port</i>:</b></p>
+<p>To avoid conflicts when running multi-servers requires the MySQL server port to be changed. If this is the only instance of MySQL skip port change and allow server to run on default standard port.</p>
+
+
+  <ul>
+   <li>Start UniController3.exe</li>
+   <li>Change standard port from 3306 to 3308:</li>
+     <ul>
+       <li>MySQL > Change MySQL port</li>
+       <li>Enter 3308 and click OK</li>
+       <li>Note: Again it is easier just to increment, however you can enter a different unique port.</li>
+     </ul>
+  </ul>
+
+
+<h2>Summary</h2>
+<p>With the above modifications you can run Apache and MySQL as seperate servers.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

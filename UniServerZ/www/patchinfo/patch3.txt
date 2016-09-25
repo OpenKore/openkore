@@ -1,0 +1,33 @@
+// thailand 2nd
+13 2016-07-09ro_eac_th.rgz
+14 2016-07-10data_sc_th.gpf
+15 2016-07-14data_em_th.gpf
+	//16 2016-07-14aRagexe.rgz
+17 2016-07-16data_em_th.gpf
+	//18 2016-07-16aRagexe.rgz
+19 2016-07-16data_xml_th.gpf
+20 2016-07-21data_th.gpf
+	//21 2016-07-21data_msg_th.gpf
+	//22 2016-07-21aRagexe.rgz
+	//23 2016-07-16aRagexe.rgz
+24 2016-07-21data_msg2_th.gpf
+	//25 2016-07-21bRagexe.rgz
+26 2016-07-28data_sc_th.gpf
+27 2016-08-02aRagexe.rgz
+28 2016-08-02ro_ht_th.rgz
+29 2016-08-04data_dsit_th.gpf
+30 2016-08-11-data_qst_th.gpf
+31 2016-08-180data_des_th.gpf
+32 2016-08-18data_ls_th.gpf
+33 2016-08-25data_des_th.gpf
+34 2016-08-26data_man_th.gpf
+35 2016-09-01data_itrs_th.gpf
+36 2016-09-08data_itls_th.gpf
+37 2016-09-13data_mf.gpf
+38 2016-09-13data_mf2.gpf
+39 2016-09-13aRagexe.rgz
+40 2016-09-13ro_ht_th.rgz
+41 2016-09-13data_mf3.gpf
+42 2016-09-13ro_ht_th2.rgz
+43 2016-09-15ro_trm_th.gpf
+44 2016-09-22_MA.gpf

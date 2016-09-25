@@ -1,0 +1,267 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-02 00:52+0800\n"
+"Language: zh\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: edit.tpl.php:8
+#, php-format
+msgid "Editing Variable %s"
+msgstr "正在编辑变量 %s"
+
+#: edit.tpl.php:13
+#, php-format
+msgid "Set %s in config to enable"
+msgstr "请在配置文件中设置 %s 启用本功能"
+
+#: index.php:187 index.php:213
+msgid "Total"
+msgstr "总共"
+
+#: index.php:263
+msgid "Summary"
+msgstr "摘要信息"
+
+#: index.php:264
+msgid "List PHP"
+msgstr "列出PHP"
+
+#: index.php:265
+msgid "List Var Data"
+msgstr "列变量数据"
+
+#: listentries.tpl.php:11
+msgid "php Cached"
+msgstr "缓存的 PHP 脚本"
+
+#: listentries.tpl.php:11
+msgid "var Cached"
+msgstr "缓存的变量"
+
+#: listentries.tpl.php:15
+msgid "php Deleted"
+msgstr "待删 PHP 脚本缓存"
+
+#: listentries.tpl.php:15
+msgid "var Deleted"
+msgstr "待删变量缓存"
+
+#: sub/entrylist.tpl.php:14
+msgid "entry.id"
+msgstr "Id|"
+
+#: sub/entrylist.tpl.php:19
+msgid "entry.remove"
+msgstr "删除|"
+
+#: sub/entrylist.tpl.php:24
+msgid "entry.name"
+msgstr "项目名/文件名|项目名或者文件名"
+
+#: sub/entrylist.tpl.php:25
+msgid "entry.hits"
+msgstr "命中|该项目被命中的次数 (从缓存区载入)"
+
+#: sub/entrylist.tpl.php:26
+msgid "entry.size"
+msgstr "大小|项目在缓存里占用字节数"
+
+#: sub/entrylist.tpl.php:31
+msgid "entry.refcount"
+msgstr "引用数|项目依然被其他进程占据的引用次数"
+
+#: sub/entrylist.tpl.php:32
+msgid "entry.phprefcount"
+msgstr "共享数|与本项目相同 PHP 代码的个数"
+
+#: sub/entrylist.tpl.php:33
+msgid "entry.class_cnt"
+msgstr "类|类个数"
+
+#: sub/entrylist.tpl.php:34
+msgid "entry.function_cnt"
+msgstr "函数|函数个数"
+
+#: sub/entrylist.tpl.php:35
+msgid "entry.file_size"
+msgstr "源大小|源文件大小"
+
+#: sub/entrylist.tpl.php:36
+msgid "entry.file_mtime"
+msgstr "修改|源文件最后修改时间"
+
+#: sub/entrylist.tpl.php:39
+msgid "entry.file_device"
+msgstr "dev|源文件所在设备ID"
+
+#: sub/entrylist.tpl.php:40
+msgid "entry.file_inode"
+msgstr "ino|源文件的 inode"
+
+#: sub/entrylist.tpl.php:44
+msgid "entry.hash"
+msgstr "哈希|该项目的哈希值"
+
+#: sub/entrylist.tpl.php:45
+msgid "entry.atime"
+msgstr "访问|最后访问该项目的时间"
+
+#: sub/entrylist.tpl.php:46
+msgid "entry.ctime"
+msgstr "创建|该项目被创建于缓存区内的时间"
+
+#: sub/entrylist.tpl.php:51
+msgid "entry.delete"
+msgstr "删除|该项目被决定删除的时间"
+
+#: sub/entrylist.tpl.php:149
+msgid "Remove Selected"
+msgstr "删除所选"
+
+#: sub/moduleinfo.tpl.php:1
+msgid "Module Info"
+msgstr "模块信息"
+
+#: sub/summary.tpl.php:3
+msgid "Caches"
+msgstr "缓存区"
+
+#: sub/summary.tpl.php:6
+msgid "cache.cache"
+msgstr "缓存|"
+
+#: sub/summary.tpl.php:7
+msgid "cache.slots"
+msgstr "槽|Hash 槽个数, 对应 php.ini 里的设置"
+
+#: sub/summary.tpl.php:8
+msgid "cache.size"
+msgstr "大小|共享内存区大小, 单位: 字节"
+
+#: sub/summary.tpl.php:9
+msgid "cache.avail"
+msgstr "剩余|可用内存, 对应缓存区的剩余内存字节数"
+
+#: sub/summary.tpl.php:10
+msgid "cache.blocksgraph"
+msgstr "百分比图|条状显示可用内存的比例, 以及显示分配块状态"
+
+#: sub/summary.tpl.php:11
+msgid "cache.operations"
+msgstr "操作|点击按钮清除对应缓存区的数据"
+
+#: sub/summary.tpl.php:12
+msgid "cache.status"
+msgstr ""
+"状态|状态标记. 当缓存区正在编译 PHP 脚本时标记为 \"编译中\". 当缓存区暂停使用"
+"时标记为 \"禁用\""
+
+#: sub/summary.tpl.php:13
+msgid "cache.hits"
+msgstr "命中|缓存命中次数, 命中=从该缓存载入 PHP 或者变量"
+
+#: sub/summary.tpl.php:14
+msgid "cache.hits_graph"
+msgstr "24H 分布|24 小时命中分布图. 图表现是最后 24 小时的命中次数"
+
+#: sub/summary.tpl.php:15
+msgid "cache.hits_avg_h"
+msgstr "命中/H|每小时命中次数. 只统计最后 24 小时"
+
+#: sub/summary.tpl.php:16
+msgid "cache.hits_avg_s"
+msgstr "命中/S|每秒命中次数. 只统计最后 5 秒"
+
+#: sub/summary.tpl.php:17
+msgid "cache.updates"
+msgstr "更新|缓存更新次数"
+
+#: sub/summary.tpl.php:18
+msgid "cache.skips"
+msgstr ""
+"跳过|跳过更新次数, 跳过=XCache 自动判断阻塞的缓存区自动跳过阻塞等待, 直接使用"
+"编译不缓存方式继续处理请求"
+
+#: sub/summary.tpl.php:19
+msgid "cache.ooms"
+msgstr ""
+"内存不足|内存不足次数, 显示需要存储新数据但是缓存区内存不足的次数. 如果出现太"
+"频繁请考虑加大配置中的 xcache.size 或者 xcache.var_size"
+
+#: sub/summary.tpl.php:20
+msgid "cache.errors"
+msgstr ""
+"错误|编译错误, 显示您的脚本被编译时出错的次数. 如果您发现这个数字不断增长, 您"
+"应该检查什么脚本产生错误. 参考 帮助 获取更多信息"
+
+#: sub/summary.tpl.php:21
+msgid "cache.readonly_protected"
+msgstr ""
+"保护|显示该 Cache 是否支持并启用 readonly_protection. 参考 帮助 获取更多信息"
+
+#: sub/summary.tpl.php:22
+msgid "cache.cached"
+msgstr "缓存|缓存于该缓存区的项目条数"
+
+#: sub/summary.tpl.php:23
+msgid "cache.deleted"
+msgstr "待删|缓存区内将要删除的项目 (已经删除但是还被某些进程占用)"
+
+#: sub/summary.tpl.php:24
+msgid "cache.gc_timer"
+msgstr "GC|垃圾回收的倒计时"
+
+#: sub/summary.tpl.php:30
+msgid "Clear"
+msgstr "清除"
+
+#: sub/summary.tpl.php:31
+msgid "Disabled"
+msgstr "禁用"
+
+#: sub/summary.tpl.php:32
+msgid "Disable"
+msgstr "禁用"
+
+#: sub/summary.tpl.php:33
+msgid "Enable"
+msgstr "启用"
+
+#: sub/summary.tpl.php:34
+msgid "Compiling"
+msgstr "编译中"
+
+#: sub/summary.tpl.php:35
+msgid "Normal"
+msgstr "正常"
+
+#: sub/summary.tpl.php:36 sub/testcoredump.tpl.php:3
+msgid "Sure?"
+msgstr "确认?"
+
+#: sub/summary.tpl.php:132
+msgid "Legends:"
+msgstr "图例:"
+
+#: sub/summary.tpl.php:134
+msgid "% Free"
+msgstr "% 剩余"
+
+#: sub/summary.tpl.php:134
+msgid "% Used"
+msgstr "% 已用"
+
+#: sub/summary.tpl.php:136
+msgid "Free Blocks"
+msgstr "未用块"
+
+#: sub/summary.tpl.php:136
+msgid "Used Blocks"
+msgstr "已用块"
+
+#: sub/summary.tpl.php:138
+msgid "Hits"
+msgstr "命中"

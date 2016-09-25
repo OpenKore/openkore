@@ -1,0 +1,12 @@
+#diagnosisResult .info {
+	background: #C0FFC0;
+}
+#diagnosisResult .warning {
+	background: #FFF0FF;
+}
+#diagnosisResult .error {
+	background: #FFA0A0;
+}
+#main #diagnosisResult td {
+	vertical-align: top;
+}
