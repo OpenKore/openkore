@@ -234,96 +234,96 @@ sub injectSync {
 sub checkConnection {
 	my $self = shift;
 
-	if ($timeout{play}{time} && timeOut($timeout{play}) && $conState ==5) {
-		$self->setState(Network::NOT_CONNECTED);
-		error T("Timeout on Map Server, "), "connection";
-		Plugins::callHook('disconnected');
-		if ($config{dcOnDisconnect}) {
-			error T("Auto disconnecting on Disconnect!\n");
-			chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
-			$quit = 1;
-		} else {
-			error "waiting actions for the Ragnarok Online client\n";
-		}
-	}
+#	if ($timeout{play}{time} && timeOut($timeout{play}) && $conState ==5) {
+#		$self->setState(Network::NOT_CONNECTED);
+#		error T("Timeout on Map Server, "), "connection";
+#		Plugins::callHook('disconnected');
+#		if ($config{dcOnDisconnect}) {
+#			error T("Auto disconnecting on Disconnect!\n");
+#			chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
+#			$quit = 1;
+#		} else {
+#			error "waiting actions for the Ragnarok Online client\n";
+#		}
+#	}
 
 	return if ($self->serverAlive);
 	
 	# (Re-)initialize X-Kore if necessary
 	$self->setState(Network::NOT_CONNECTED);
-	my $pid;
+#	my $pid;
 	# Wait until the RO client has started
 
-	my $loop = 1;
-	my @list;
+#	my $loop = 1;
+#	my @list;
 
-	message TF("Please start the Ragnarok Online client (%s)\n", $config{XKore_exeName}), "startup";
-	Plugins::callHook('XKore_start');
-	while ($loop) {
-		undef @list;
-		my @z = Utils::Win32::listProcesses();
+#	message TF("Please start the Ragnarok Online client (%s)\n", $config{XKore_exeName}), "startup";
+#	Plugins::callHook('XKore_start');
+#	while ($loop) {
+#		undef @list;
+#		my @z = Utils::Win32::listProcesses();
 
-		foreach (@z) {
-			if (lc($_->{'exe'}) eq lc($config{XKore_exeName})) {
-				push @list, {exe => $_->{'exe'}, pid => $_->{'pid'}};
-			}
-		}
+#		foreach (@z) {
+#			if (lc($_->{'exe'}) eq lc($config{XKore_exeName})) {
+#				push @list, {exe => $_->{'exe'}, pid => $_->{'pid'}};
+#			}
+#		}
 
-		if (@list == 0) {
+#		if (@list == 0) {
 			# no process, wait for start
-			usleep 20000;
-			next;
-		}
+#			usleep 20000;
+#			next;
+#		}
 
 		# automatically attach if one process found and config allows it
-		if (@list == 1 && $config{XKore_autoAttachIfOneExe}) {
-			$pid = $list[0]->{'pid'};
-			message TF("Ragnarok Online client found, pid = %i\n", $pid), "startup";
+#		if (@list == 1 && $config{XKore_autoAttachIfOneExe}) {
+#			$pid = $list[0]->{'pid'};
+#			message TF("Ragnarok Online client found, pid = %i\n", $pid), "startup";
 
-			$loop = 0;
-			last;
-		}
+#			$loop = 0;
+#			last;
+#		}
 
 		# several exes, make choice
-		message T("Found Ragnarok Online client(s), select one: (enter to rescan, quit to quit)\n"), "startup";
-		my $qr;
-		my $i = 0;
-		foreach (@list) {
-			$qr = $qr . TF("[%i] pid = %i (%s)\n", $i, $_->{'pid'}, $_->{'exe'});
-			$i++;
-		}
-		my $input = $interface->query($qr, title => "Select Ragnarok Online client");
-		if ($input eq "quit") {
-			$quit = 1;
-			$loop = 0;
-			last;
-		} elsif ($input eq "r" || !defined($input) || $input eq '' || $input !~ /^\d+$/) {
-			next;
-		} else {
-			if ($input < 0 || $input >= @list) {
-				error TF("Please enter a number between 0 and %i\n", @list - 1);
-					next;
-			}
-			$pid = $list[$input]->{'pid'};
-			message TF("Selected pid = %i\n", $pid), "startup";
-			$loop = 0;
-			last;
-		}
-	}
+#		message T("Found Ragnarok Online client(s), select one: (enter to rescan, quit to quit)\n"), "startup";
+#		my $qr;
+#		my $i = 0;
+#		foreach (@list) {
+#			$qr = $qr . TF("[%i] pid = %i (%s)\n", $i, $_->{'pid'}, $_->{'exe'});
+#			$i++;
+#		}
+#		my $input = $interface->query($qr, title => "Select Ragnarok Online client");
+#		if ($input eq "quit") {
+#			$quit = 1;
+#			$loop = 0;
+#			last;
+#		} elsif ($input eq "r" || !defined($input) || $input eq '' || $input !~ /^\d+$/) {
+#			next;
+#		} else {
+#			if ($input < 0 || $input >= @list) {
+#				error TF("Please enter a number between 0 and %i\n", @list - 1);
+#					next;
+#			}
+#			$pid = $list[$input]->{'pid'};
+#			message TF("Selected pid = %i\n", $pid), "startup";
+#			$loop = 0;
+#			last;
+#		}
+#	}
 
-	return if $quit;
+#	return if $quit;
 
-	sleep 1;
+#	sleep 1;
 
 	# Inject DLL
-	if (!$self->inject($pid)) {
+#	if (!$self->inject($pid)) {
 		# Failed to inject
-		$interface->errorDialog($@);
-		exit 1;
-	}
+#		$interface->errorDialog($@);
+#		exit 1;
+#	}
 	
 	# Patch client
-	$self->hackClient($pid) if ($config{XKore_bypassBotDetection});
+#	$self->hackClient($pid) if ($config{XKore_bypassBotDetection});
 
 	# Wait until the RO client has connected to us
 	$self->waitForClient;
