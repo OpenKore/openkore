@@ -11,3 +11,562 @@
 all 1
 # jellopy 0
 # fluff 0
+#######Byalan######
+Fin Helm 2
+Saint's Robe [1] 2
+Shield [1] 2
+Necklace of Wisdom 2
+Witherless Rose 2
+############## Card ##############
+Poring Card 2
+Fabre Card 2
+Pupa Card 2
+Drops Card 2
+Santa Poring Card 2
+Lunatic Card 2
+Pecopeco Egg Card 2
+Picky Card 2
+Chonchon Card 2
+Willow Card 2
+Picky Egg Card 2
+Thiefbug Egg Card 2
+Andre Egg Card 2
+Roda Frog Card 2
+Condor Card 2
+Thief Bug Card 2
+Savage Bebe Card 2
+Andre Larva Card 2
+Hornet Card 2
+Familiar Card 2
+Rocker Card 2
+Spore Card 2
+Baby Desertwolf Card 2
+Plankton Card 2
+Skeleton Card 2
+Female Thiefbug Card 2
+Kukre Card 2
+Tarou Card 2
+Wolf Card 2
+Mandragora Card 2
+Pecopeco Card 2
+Ambernite Card 2
+PoPoring Card 2
+Wormtail Card 2
+Hydra Card 2
+Muka Card 2
+Snake Card 2
+Zombie Card 2
+Stainer Card 2
+Creamy Card 2
+Coco Card 2
+Steel Chonchon Card 2
+Andre Card 2
+Smokie Card 2
+Horn Card 2
+Martin Card 2
+Ghostring Card 2
+Poison Spore Card 2
+Vadon Card 2
+Male Thiefbug Card 2
+Yoyo Card 2
+Elder Willow Card 2
+Vitata Card 2
+Angeling Card 2
+Marina Card 2
+Dustiness Card 2
+Metaller Card 2
+Thara Frog Card 2
+Soldier Andre Card 2
+Goblin Card 2
+Cornutus Card 2
+Anacondaq Card 2
+Caramel Card 2
+Zerom Card 2
+Kaho Card 2
+Orc Warrior Card 2
+Megalodon Card 2
+Scorpion Card 2
+Drainliar Card 2
+Eggyra Card 2
+Orc Zombie Card 2
+Golem Card 2
+Pirate Skel Card 2
+Bigfoot Card 2
+Argos Card 2
+Magnolia Card 2
+Phen Card 2
+Savage Card 2
+Mantis Card 2
+Flora Card 2
+Hode Card 2
+Desert Wolf Card 2
+Rafflesia Card 2
+Marine Sphere Card 2
+Orc Skeleton Card 2
+Soldier Skeleton Card 2
+Giearth Card 2
+Frilldora Card 2
+Swordfish Card 2
+Munak Card 2
+Kobold Card 2
+Skel Worker Card 2
+Obeaune Card 2
+Archer Skeleton Card 2
+Marse Card 2
+Zenorc Card 2
+Matyr Card 2
+Dokebi Card 2
+Pasana Card 2
+Sohee Card 2
+Sandman Card 2
+Whisper Card 2
+Horong Card 2
+Requiem Card 2
+Marc Card 2
+Mummy Card 2
+Verit Card 2
+Myst Card 2
+Jakk Card 2
+Ghoul Card 2
+Strouf Card 2
+Marduk Card 2
+Marionette Card 2
+Argiope Card 2
+Hunter Fly Card 2
+Isis Card 2
+Sidewinder Card 2
+Earth Petite Card 2
+Bathory Card 2
+Sky Petite Card 2
+Phreeoni Card 2
+Deviruchi Card 2
+Eddga Card 2
+Medusa Card 2
+Deviace Card 2
+Minorous Card 2
+Nightmare Card 2
+Golden Thiefbug Card 2
+Bapho Jr. Card 2
+Scorpion King Card 2
+Moonlight Flower Card 2
+Mistress Card 2
+Raydric Card 2
+Dracula Card 2
+Orc Lord Card 2
+Khalitzburg Card 2
+Drake Card 2
+Anubis Card 2
+Joker Card 2
+Abysmal Knight Card 2
+Evil Druid Card 2
+Doppelganger Card 2
+Orc Hero Card 2
+Osiris Card 2
+Berzebub Card 2
+Maya Card 2
+Baphomet Card 2
+Pharaoh Card 2
+Gargoyle Card 2
+Goat Card 2
+Gajomart Card 2
+Galapago Card 2
+Crab Card 2
+Rice Cake Boy Card 2
+Goblin Leader Card 2
+Goblin Steamrider Card 2
+Goblin Archer Card 2
+Sky Deleter Card 2
+Nine Tail Card 2
+Firelock Soldier Card 2
+Grand Peco Card 2
+Grizzly Card 2
+Gryphon Card 2
+Gullinbursti Card 2
+Gig Card 2
+Nightmare Terror Card 2
+Nereid Card 2
+Dark Lord Card 2
+Dark Illusion Card 2
+Dark Frame Card 2
+Dark Priest Card 2
+The Paper Card 2
+Demon Pungus Card 2
+Deviling Card 2
+Poisonous Toad Card 2
+Dullahan Card 2
+Dryad Card 2
+Dragon Tail Card 2
+Dragon Fly Card 2
+Driller Card 2
+Disguise Card 2
+Diabolic Card 2
+Vagabond Wolf Card 2
+Lava Golem Card 2
+Rideword Card 2
+Raggler Card 2
+Raydric Archer Card 2
+Leib Olmai Card 2
+Wraith Dead Card 2
+Wraith Card 2
+Loli Ruri Card 2
+Rotar Zairo Card 2
+Lude Card 2
+Rybio Card 2
+ศรีนวล Card 2
+Marin Card 2
+Mastering Card 2
+Maya Purple Card 2
+Merman Card 2
+Megalith Card 2
+Majoruros Card 2
+Cat Official Card 2
+Mutant Dragonoid Card 2
+Mini Demon Card 2
+Mimic Card 2
+Myst Case Card 2
+Mysteltainn Card 2
+Miyabi Doll Card 2
+Violi Card 2
+Wander Man Card 2
+Vocal Card 2
+Bongun Card 2
+Brilight Card 2
+Bloody Murderer Card 2
+Blazzer Card 2
+Sasquatch Card 2
+Enchanted Peach Tree Card 2
+Succubus Card 2
+Sage Worm Card 2
+Solider Card 2
+Skeleton General Card 2
+Skel Prisoner Card 2
+Stalactic Golem Card 2
+Stem Worm Card 2
+Stone Shooter Card 2
+Sting Card 2
+Spring Rabbit Card 2
+Sleeper Card 2
+Clock Tower Manager Card 2
+Shinobi Card 2
+Enchanted Soil Card 2
+Wild Ginseng Card 2
+Baby Leopard Card 2
+Anolian Card 2
+Cookie Xmas Card 2
+Amon Ra Card 2
+Owl Duke Card 2
+Owl Baron Card 2
+Iron Fist Card 2
+Arclouse Card 2
+Arch Angeling Card 2
+Apocalipse Card 2
+Antonio Card 2
+Alarm Card 2
+Am Mut Card 2
+Assulter Card 2
+Aster Card 2
+Ancient Mummy Card 2
+Ancient Worm Card 2
+Executioner Card 2
+Elder Card 2
+Alligator Card 2
+Alice Card 2
+Ogretooth Card 2
+Orc Lady Card 2
+Orc Archer Card 2
+Wild Rose Card 2
+Evil Nymph Card 2
+Wooden Golem Card 2
+Wootan Shooter Card 2
+Wootan Fighter Card 2
+Cloud Hermit Card 2
+Incantation Samurai Card 2
+Wind Ghost Card 2
+Tiger Guised Fiend Card 2
+Eclipse Card 2
+Explosion Card 2
+Injustice Card 2
+Incubus Card 2
+Giant Spider Card 2
+Giant Hornet Card 2
+Dancing Dragon Card 2
+Shell Fish Card 2
+Zombie Master Card 2
+Zombie Prisoner Card 2
+Lord of The Dead Card 2
+Zherlthsh Card 2
+Gibbet Card 2
+Earth Deleter Card 2
+Geographer Card 2
+Zipper Bear Card 2
+Tengu Card 2
+Greatest General Card 2
+Chepet Card 2
+Choco Card 2
+Karakasa Card 2
+Kapha Card 2
+Carat Card 2
+Caterpillar Card 2
+Cat O' Nine Tails Card 2
+Kobold Leader Card 2
+Kobold Archer Card 2
+Cookie Card 2
+Quve Card 2
+กระหัง Card 2
+Cramp Card 2
+Cruiser Card 2
+Creamy Fear Card 2
+Clock Card 2
+Chimera Card 2
+Killer Mantis Card 2
+Tao Gunka Card 2
+Whisper Boss Card 2
+Turtle General Card 2
+Toad Card 2
+Beetle Card 2
+Tri Joint Card 2
+Parasite Card 2
+Panzer Goblin Card 2
+Permeter Card 2
+Fur Seal Card 2
+Punk Card 2
+Penomena Card 2
+Pest Card 2
+Fake Angel Card 2
+Mobster Card 2
+Stormy Knight Card 2
+Freezer Card 2
+Bloody Knight Card 2
+Hylozoist Card 2
+High Orc Card 2
+Garm Bebe Card 2
+Garm Card 2
+Harpy Card 2
+Sea-Otter Card 2
+Blood Butterfly Card 2
+Hyegun Card 2
+Phendark Card 2
+Dark Snake Lord Card 2
+Heater Card 2
+Blue A Card 2
+Blue E Card 2
+Blue F Card 2
+Blue H Card 2
+Blue L Card 2
+Blue N Card 2
+Blue O Card 2
+Blue P Card 2
+Blue U Card 2
+Blue W Card 2
+Blue Y Card 2
+Commemorative Travel Card 2
+Membership Card 2
+Yellow Key Card 2
+Blue Key Card 2
+Red Key Card 2
+Toy Key Card 2
+Black Key Card 2
+Luxurious Key Card 2
+Green Key Card 2
+Kafra Card 2
+Blue G Card 2
+Blue I Card 2
+Blue D Card 2
+Blue K Card 2
+Blue S Card 2
+Blue R Card 2
+Waste Stove Card 2
+Venomous Card 2
+Noxious Card 2
+Pitman Card 2
+Ungoliant Card 2
+Porcellio Card 2
+Obsidian Card 2
+Mineral Card 2
+Teddy Bear Card 2
+Metaling Card 2
+RSX-0806 Card 2
+Holden Card 2
+Anopheles Card 2
+Hill Wind Card 2
+Egnigem Cenia Card 2
+Armeyer Dinze Card 2
+Wickebine Tres Card 2
+Errende Ebecee Card 2
+Laurell Weinder Card 2
+Kavach Icarus Card 2
+Boss Egnigem Card 2
+Remover Card 2
+Gemini-S58 Card 2
+Gremlin Card 2
+Beholder Card 2
+Lord Knight Card 2
+Seyren Windsor Card 2
+Assassin Cross Card 2
+Eremes Guile Card 2
+MasterSmith Card 2
+Howard Alt-Eisen Card 2
+High Priest Card 2
+Margaretha Sorin Card 2
+High Wizard Card 2
+Kathryne Keyron Card 2
+Sniper Card 2
+Cecil Damon Card 2
+Venatu Card 2
+Dimik Card 2
+Archdam Card 2
+White Lady Card 2
+Green Maiden Card 2
+Vesper Card 2
+Orc Baby Card 2
+Lady Tanee Card 2
+Grove Card 2
+Gold Acidus Card 2
+Blue Acidus Card 2
+Red Ferus Card 2
+Green Ferus Card 2
+Yellow Novus Card 2
+Red Novus Card 2
+Hydrolancer Card 2
+Dragon Egg Card 2
+Detardeurus Card 2
+Ancient Mimic Card 2
+Death Word Card 2
+Plasma Card 2
+Breeze Card 2
+Baroness of Retribution Card 2
+Dame of Sentinel Card 2
+Mistress of Shelter Card 2
+Lady Solace Card 2
+Maero of Thanatos Card 2
+Odium of Thanatos Card 2
+Despero of Thanatos Card 2
+Dolor of Thanatos Card 2
+Memory of Thanatos Card 2
+Aliza Card 2
+Alicel Card 2
+Aliot Card 2
+Kiel-D-01 Card 2
+Skogul Card 2
+Frus Card 2
+Skeggiold Card 2
+Randgris Card 2
+Gym Membership Card 2
+Gloom Under Night Card 2
+Agav Card 2
+Echio Card 2
+Vanberk Card 2
+Isilla Card 2
+Hodremlin Card 2
+Seeker Card 2
+Snowier Card 2
+Siroma Card 2
+Ice Titan Card 2
+Gazeti Card 2
+Ktullanux Card 2
+Muscipular Card 2
+Drosera Card 2
+Roween Card 2
+Galion Card 2
+Stapo Card 2
+Atroce Card 2
+Byorgue Card 2
+Sword Guardian Card 2
+Bow Guardian Card 2
+Salamander Card 2
+Ifrit Card 2
+Kasa Card 2
+Magmaring Card 2
+Imp Card 2
+Knocker Card 2
+Zombie Slaughter Card 2
+Ragged Zombie Card 2
+Hell Poodle Card 2
+Banshee Card 2
+Flame Skull Card 2
+Necromancer Card 2
+Fallen Bishop Card 2
+Gym Membership Card 2
+Tatacho Card 2
+Aqua Elemental Card 2
+Draco Card 2
+Luciola Vespa Card 2
+Centipede Card 2
+Cornus Card 2
+Dark Shadow Card 2
+Banshee Master Card 2
+Ant Buyanne Card 2
+Centipede Larva Card 2
+Hilsrion Card 2
+Val Kiwi Card 2
+Val Kiwi Card 2
+Blue C Card 2
+Blue 2 Card 2
+Blue 0 Card 2
+Blue 1 Card 2
+Blue W Card 2
+Blue R Card 2
+Sedora Card 2
+Sropho Card 2
+Pot Dofle Card 2
+King Dramoh Card 2
+Kraken Card 2
+Nidhogg Shadow Card 2
+Naght Sieger Card 2
+Duneyrr Card 2
+Rata Card 2
+Rhyncho Card 2
+Phylla Card 2
+Hardrock Mammoth Card 2
+Tendrillion Card 2
+Aunoe Card 2
+Fanat Card 2
+Beholder Master Card 2
+Heavy Metaling Card 2
+Dark Pinguicula Card 2
+Naga Card 2
+Nepenthes Card 2
+Draco Egg Card 2
+Bradium Golem Card 2
+Ancient Tree Card 2
+Zakudam Card 2
+Cobalt Mineral Card 2
+Pinguicula Card 2
+Hell Apocalypse Card 2
+Sealed Kiel Card 2
+Sealed Ktullanux Card 2
+Sealed Boss Ygnizem Card 2
+Sealed Dracula Card 2
+Sealed Mistress Card 2
+Sealed Gloom Card 2
+Sealed Berzebub Card 2
+Sealed Ifrit Card 2
+Sealed Dark Lord Card 2
+Sealed Pharaoh Card 2
+Sealed Moonlight Flower Card 2
+Sealed Sniper Card 2
+Sealed Orc Hero Card 2
+Sealed Tao Gunka Card 2
+Sealed Turtle General Card 2
+Sealed Amon Ra Card 2
+Sealed Drake Card 2
+Sealed Knight of Windstorm Card 2
+Sealed Samurai Card 2
+Sealed Orc Lord Card 2
+Sealed High Priest Card 2
+Sealed MasterSmith Card 2
+Sealed Vesper Card 2
+Sealed Eddga Card 2
+Slot Moving Card 2
+Change Name Card 2
+Odd Coelacanth Card 2
+Black Coelacanth Card 2
+Mutant Coelacanth Card 2
+Cruel Coelacanth Card 2
+Siorava Card 2
+Red Eruma Card 2
+Wild Rider Card 2
+Mini Octopus Card 2
+Giant Octopus Card 2
+Sealed Fallen Bishop Card 2
+Sealed White Lady Card 2

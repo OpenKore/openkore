@@ -39,23 +39,26 @@
 
 # All items not mentioned in this file will be automatically stored in storage.
 all 0 1 0
-
-
+Pecopeco Hariband 1 0 0
 ##### HEAL/SUPPORT ITEMS #####
 # Adjust these to your needs
-
-Butterfly Wing 10 1 0
+Butterfly Wing 100 1 0
 Fly Wing 100 1 0
-
-Blue Potion 0 1 0
-Condensed Red Potion 50 1 0
-Condensed White Potion 50 1 0
-Condensed Yellow Potion 50 1 0
-Green Potion 0 1 0
-Red Potion 25 1 0
-Orange Potion 25 1 0
-White Potion 25 1 0
-Yellow potion 25 1 0
+Meat 100 1 0
+Monster's Feed 100 1 0
+Red Herb 100 1 0
+White Herb 100 1 0
+Concentration Potion 100 1 0
+Awakening Potion 100 1 0
+Blue Potion 200 1 0
+Condensed Red Potion 200 1 0
+Condensed White Potion 200 1 0
+Condensed Yellow Potion 200 1 0
+Green Potion 200 1 0
+Red Potion 200 1 0
+Orange Potion 200 1 0
+White Potion 200 1 0
+Yellow potion 200 1 0
 
 ##### ARROWS #####
 # You may want to modify these if you're an archer/hunter
@@ -564,6 +567,14 @@ Yoyo Tail 0 0 1
 Zenorc's Fang 0 0 1
 
 ##### UNSTORAGEABLE ITEMS #####
+
+Free Ticket for Kafra Storage 900 0 0
+Free Ticket for Kafra Transportation 900 0 0
+Novice Potion 900 0 0
+Novice Fly Wing 900 0 0
+Novice Butterfly Wing 900 0 0
+Novice_Adventurer's_Suit 1 0 0
+
 
 "Bowman Scroll 1" 0 0 0
 "Bowman Scroll 2" 0 0 0
