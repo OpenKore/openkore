@@ -50,3 +50,6 @@ after "ragexe.exe" is running there will be messagebox popup tell you about the 
 8. do repeat step 4. - 7. if you want more bot.
 
 Happy botting
+
+p.s. you must check the patch server too. if there any update.
+since this will redirect cdn.exe.in.th to localhost
