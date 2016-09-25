@@ -1,0 +1,33 @@
+
+
+
+
+
+
+
+*** This patch is just a proof of concept. It probably won't work for you! ***
+
+
+
+
+
+
+1. You need to modify a system dll which will be used by ragexe (eg. d2d1 or audioses) in System32 (or SysWoW64 if your system is 64bit)
+2. Using tools like cff explorer or stud_pe, add import function FuckEAC from hooktest.dll, then put my 2 dlls into your Ragnarok folder.
+3. I bypassed that dumb "OpenCore" check in my dll, they can't even spell it right, how can they block it? LOL.
+4. Revert all previous hmac changes, we are now using EAC against itself in XKore 1 mode.
+5. Start game and it should work, if it breaks, you can fix it yourself or be patient and wait.
+
+
+
+Some researches on the new EAC,
+they are using a changed MD5 algorithm now, for example, they changed one byte in MD5 IVs
+from 01234567 89ABCDEF FEDCBA98 76543210 (standard) to 01234567 89BACDEF FEDCBA98 76543210
+and MD5Transform is changed too, I don't list all the variables here.
+
+Also the sequence seems to be starting from a random value instead of 0, hmac key is from that extra 0x80 bytes from 0A7B packet.
+If I have time I will try to reverse engineer it, but right now I just take a shortcut with its own code.
+
+Update:
+
+I've improved and bypassed their new attemps to block/detect it.
