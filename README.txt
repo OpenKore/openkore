@@ -24,9 +24,9 @@ it should return 127.0.0.1 to you.
 this mean you modify hosts file correctly
 
 2. run UniServerZ/UniController.exe and
-start apache you should see popup windows pointing to this
+2.1 Apache -> Apache SSL -> Server Certificate and Key generator
+2.2 start apache you should see popup windows pointing to this
 http://localhost/index.php
-
 
 3. copy all dll in folder Client_Side into your ro folder (hooktest.dll, NetRedirect.dll)
 and following how-to.txt guide.
