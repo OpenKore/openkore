@@ -39,9 +39,11 @@ or you can use UniController.exe -> Extra -> Edit Win hosts file
 "View www" and "View ssl" would clickable
 2.3 copy "prevent_update/wow64.bin" into "ROEXEOpenkore\UniServerZ\ssl\eac\82\"
 
-3. copy all dll in folder "to_rag_folder&inject yourself" into "your ro folder" (hooktest.dll, NetRedirect.dll)
 ********** CRITICAL STEP **********
 ********** FAIL TO FOLLOW THIS YOU MAY GET DETECTED BY EAC ****************
+3. copy all dll in folder "to_syswow64&inject yourself" into "C:\Windows\SysWOW64" if x64 or "C:\Windows\System32" if your system is x32 (hooktest.dll, NetRedirect.dll)
+* remove (hooktest.dll, NetRedirect.dll) in ragnarok folder if you had it.
+
 3.1 go download CFF Explorer from here "http://www.ntcore.com/exsuite.php"
 and get - "CFF Explorer (x86 Version, stand-alone, Zip Archive) "
 3.2 for "x64" goto "C:\Windows\SysWOW64" or "x32" goto "C:\Windows\System32"
@@ -55,24 +57,28 @@ Select "Administrators" and then click "Allow" at "Full control" -> "OK" ->"OK"
 3.5 Do backup of "AudioSes.dll" e.g. copy and rename it to "AudioSes_original.dll"
 3.5 copy that "AudioSes.dll" out of system folder
 3.6 open the "AudioSes.dll" that you had been copy it with "CFF Explorer"
-Select "Import Adder" -> "Add" Browse to "hooktest.dll" in "ro folder"
+Select "Import Adder" -> "Add" Browse to "hooktest.dll" in "C:\Windows\SysWOW64" if x64 or "C:\Windows\System32" if your system is x32
+
 Select "00000001-_FuckEAC@0" -> "Import By Name" -> "Rebuild Import Table" -> "Save" and close it
 3.7 replace edited  "AudioSes.dll" into "C:\Windows\SysWOW64" or "C:\Windows\System32"
 
 #note: if in doubt try rename the "AudioSes.dll" before copy it back.
-*************************************************************************************
-now you are fine with it...
+
+
 
 4. Start "ragnarok.exe" patcher normally
 after "ragexe.exe" is running there will be messagebox popup tell you about the port 2xxx 
+don't run any openkore before this step.
 
-5. goto "control/config.txt" and change "XKore_port" to any port you got.
+5. run "start.exe" or "wxstart.exe" as "other user" and enter Xkoreport you got.
 
-6. run "start.exe" or "wxstart.exe"
 
-7. do login the game
+*************************************************************************************
+now you are fine with it...
 
-8. do repeat step 4. - 7. if you want more bot.
+6. do login the game
+
+7. do repeat step 4. - 7. if you want more bot.
 
 Happy botting
 
