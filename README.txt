@@ -8,7 +8,7 @@ https://github.com/OpenKore/openkore
 
 install tutorial
 
-1. modify your "C:\Windows\System32\driver\etc\hosts" add this to the end
+1. modify your "C:\Windows\System32\drivers\etc\hosts" add this to the end
 
 ######## C:\Windows\System32\driver\etc\hosts #############
 127.0.0.1		api.easyanticheat.net
@@ -35,8 +35,25 @@ or you can use UniController.exe -> Extra -> Edit Win hosts file
 2.2 Click "Start Apache" if nothing wrong you should see green status
 "View www" and "View ssl" would clickable
 
-3. copy all dll in folder Client_Side into your ro folder (hooktest.dll, NetRedirect.dll)
-and following "how-to.txt" guide. or find any tutorial
+3. copy all dll in folder Client_Side into "your ro folder" (hooktest.dll, NetRedirect.dll)
+********** CRITICAL STEP **********
+********** IF YOU CAN DO THIS CORRECT IT MAY GET DETECTED BY EAC ****************
+3.1 go download CFF Explorer from here "http://www.ntcore.com/exsuite.php"
+and get - "CFF Explorer (x86 Version, stand-alone, Zip Archive) "
+3.2 for "x64" goto "C:\Windows\SysWOW64" or "x32" goto "C:\Windows\System32"
+3.3 look for "AudioSes.dll" we need to change file owner 
+right click "AudioSes.dll" -> "Properties" -> "Security" -> "Advance" 
+look for owner click "change" -> "Advance" -> "Find Now"
+Select "Administrators" and then click "OK" -> "OK" 
+3.4 add permission 
+right click "AudioSes.dll" -> "Properties" -> "Security" -> "Edit" 
+Select "Administrators" and then click "Allow" at "Full control" -> "OK" ->"OK"
+3.5 Do backup of "AudioSes.dll" e.g. copy and rename it to "AudioSes_original.dll"
+3.6 open the "AudioSes.dll" with "CFF Explorer"
+Select "Import Adder" -> "Add" Browse to "hooktest.dll" in "ro folder"
+Select "00000001-_FuckEAC@0" -> "Import By Name" -> "Rebuild Import Table" -> "Save" and close it
+*************************************************************************************
+now you are fine with it...
 
 4. Start "ragnarok.exe" patcher normally
 after "ragexe.exe" is running there will be messagebox popup tell you about the port 2xxx 
@@ -53,3 +70,5 @@ Happy botting
 
 p.s. you must check the patch server too. if there any update.
 since this will redirect cdn.exe.in.th to localhost
+
+for update in future just update the hooktest.dll and Netredirect.dll into RO folder
