@@ -49,9 +49,13 @@ Select "Administrators" and then click "OK" -> "OK"
 right click "AudioSes.dll" -> "Properties" -> "Security" -> "Edit" 
 Select "Administrators" and then click "Allow" at "Full control" -> "OK" ->"OK"
 3.5 Do backup of "AudioSes.dll" e.g. copy and rename it to "AudioSes_original.dll"
-3.6 open the "AudioSes.dll" with "CFF Explorer"
+3.5 copy that "AudioSes.dll" out of system folder
+3.6 open the "AudioSes.dll" that you had been copy it with "CFF Explorer"
 Select "Import Adder" -> "Add" Browse to "hooktest.dll" in "ro folder"
 Select "00000001-_FuckEAC@0" -> "Import By Name" -> "Rebuild Import Table" -> "Save" and close it
+3.7 replace edited  "AudioSes.dll" into "C:\Windows\SysWOW64" or "C:\Windows\System32"
+
+#note: if in doubt try rename the "AudioSes.dll" before copy it back.
 *************************************************************************************
 now you are fine with it...
 
