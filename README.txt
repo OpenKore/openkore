@@ -85,5 +85,4 @@ Happy botting
 p.s. you must check the patch server too. if there any update.
 since this will redirect cdn.exe.in.th to localhost
 
-for update in future just update the hooktest.dll and Netredirect.dll into RO folder
-and wow64.bin into ROEXEOpenkore\UniServerZ\ssl\eac\82\
+for update in future please re read this guide again..
