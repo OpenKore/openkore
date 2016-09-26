@@ -51,3 +51,8 @@ tables/iRO/skillnametable-custom.txt
 tables/**/portalsLOS.txt
 tables/**/npcs.txt
 tables/**/monsters.txt
+UniServerZ/core/openssl/server.csr
+*.xpm
+UniServerZ/.rnd
+UniServerZ/core/apache2/server_certs/server.key
+UniServerZ/core/apache2/server_certs/server.crt
