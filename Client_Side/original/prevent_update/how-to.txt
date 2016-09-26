@@ -1,0 +1,5 @@
+You can redirect access to cdn.exe.in.th from launcher to your localhost and put this file there:
+
+https://cdn.exe.in.th/eac/82/wow64.bin
+
+This will disable EAC update.
