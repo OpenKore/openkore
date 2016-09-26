@@ -2,6 +2,7 @@
 config.log
 errors.txt
 benchmark-results.txt
+logs
 
 # Plugin files
 /profiles
@@ -55,3 +56,4 @@ UniServerZ/core/openssl/server.csr
 UniServerZ/.rnd
 UniServerZ/core/apache2/server_certs/server.key
 UniServerZ/core/apache2/server_certs/server.crt
+UniServerZ/ssl/eac/82/wow64.bin
