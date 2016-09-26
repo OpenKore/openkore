@@ -37,7 +37,7 @@ or you can use UniController.exe -> Extra -> Edit Win hosts file
 
 3. copy all dll in folder Client_Side into "your ro folder" (hooktest.dll, NetRedirect.dll)
 ********** CRITICAL STEP **********
-********** IF YOU CAN DO THIS CORRECT IT MAY GET DETECTED BY EAC ****************
+********** FAIL TO FOLLOW THIS YOU MAY GET DETECTED BY EAC ****************
 3.1 go download CFF Explorer from here "http://www.ntcore.com/exsuite.php"
 and get - "CFF Explorer (x86 Version, stand-alone, Zip Archive) "
 3.2 for "x64" goto "C:\Windows\SysWOW64" or "x32" goto "C:\Windows\System32"
