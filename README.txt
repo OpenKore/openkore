@@ -6,6 +6,9 @@ https://github.com/OpenKore/openkore
 
 ###########################
 
+we do not provide the EAC module just search in TRO mega thread... 
+https://github.com/OpenKore/openkore/issues/221
+
 install tutorial
 
 1. modify your "C:\Windows\System32\drivers\etc\hosts" add this to the end
@@ -34,8 +37,9 @@ or you can use UniController.exe -> Extra -> Edit Win hosts file
 
 2.2 Click "Start Apache" if nothing wrong you should see green status
 "View www" and "View ssl" would clickable
+2.3 copy "prevent_update/wow64.bin" into "ROEXEOpenkore\UniServerZ\ssl\eac\82\"
 
-3. copy all dll in folder Client_Side into "your ro folder" (hooktest.dll, NetRedirect.dll)
+3. copy all dll in folder "to_rag_folder&inject yourself" into "your ro folder" (hooktest.dll, NetRedirect.dll)
 ********** CRITICAL STEP **********
 ********** FAIL TO FOLLOW THIS YOU MAY GET DETECTED BY EAC ****************
 3.1 go download CFF Explorer from here "http://www.ntcore.com/exsuite.php"
@@ -76,3 +80,4 @@ p.s. you must check the patch server too. if there any update.
 since this will redirect cdn.exe.in.th to localhost
 
 for update in future just update the hooktest.dll and Netredirect.dll into RO folder
+and wow64.bin into ROEXEOpenkore\UniServerZ\ssl\eac\82\
