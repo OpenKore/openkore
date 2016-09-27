@@ -146,8 +146,7 @@ sub readNext {
 	} elsif ($size > 1) {
 		# Static length message.
 		if (length($$buffer) >= $size) {
-			$result = substr($$buffer, 0, $size);
-			substr($$buffer, 0, $size, '');
+			$result = substr($$buffer, 0, $size, '');
 			$$type = KNOWN_MESSAGE;
 		}
 

@@ -68,6 +68,36 @@ sub new {
 	my %self;
 
 	$self{remote_socket} = new IO::Socket::INET;
+	my $port;
+	$port = $interface->query(T("Please enter Client Port"));
+	if (!defined($port)) {
+		$quit = 1;
+		return;
+	}
+	if ($port < 1 || $port > 65535) {
+		error TF("Please enter a number between 0 and 65535\n");
+		$quit = 1;
+		return;
+	}
+	my $host2;
+	$host2 = $interface->query(T("Please enter Client IP"));
+	if (!defined($host2)) {
+		$quit = 1;
+		return;
+	}
+	
+	#my $host2 = '127.0.0.1';
+	$self{xkore_socket} = new IO::Socket::INET(
+			LocalAddr	=> $config{bindIp} || undef,
+			PeerAddr	=> $host2,
+			#PeerPort	=> $config{XKore_port} || 2350,
+			PeerPort	=> $port,
+			Proto		=> 'tcp',
+			Timeout		=> 4);
+	($self{xkore_socket} && inet_aton($self{xkore_socket}->peerhost()) eq inet_aton($host2)) ?
+		message T("XKore 0.5 connected\n"), "connection" :
+		error(TF("couldn't connect XKore 0.5: %s (error code %d)\n", "$!", int($!)), "connection");
+	
 	if ($wrapper) {
 		$self{wrapper} = $wrapper;
 		Scalar::Util::weaken($self{wrapper});
@@ -145,6 +175,7 @@ sub serverConnect {
 	});
 	return if ($return);
 
+	$self->{xkore_socket}->send(pack('v', 0));
 	message TF("Connecting (%s:%s)... ", $host, $port), "connection";
 	$self->{remote_socket} = new IO::Socket::INET(
 			LocalAddr	=> $config{bindIp} || undef,
@@ -173,7 +204,20 @@ sub serverSend {
 			Plugins::callHook("Network::serverSend/pre", { msg => \$msg });
 		}
 		if (defined $msg) {
-			$self->{remote_socket}->send($msg);
+			$self->{xkore_socket}->send(pack('v', length($msg)) . $msg);
+			my $msg2;
+			$self->{xkore_socket}->recv($msg2, 2);
+			if (defined $msg2 && length($msg2)) {
+				my $newSize = unpack('v', $msg2);
+				if($newSize == 0) {
+					$self->{remote_socket}->send($msg);
+				} else {
+					$self->{xkore_socket}->recv($msg2, $newSize);
+					if (defined $msg2 && length($msg2)) {
+						$self->{remote_socket}->send(pack('v', length($msg2) + 2) . $msg2);
+					}
+				}
+			}
 			if (Plugins::hasHook("Network::serverSend")) {
 				Plugins::callHook("Network::serverSend", { msg => $msg });
 			}

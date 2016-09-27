@@ -14,10 +14,13 @@ package Network::Receive::tRO;
 use strict;
 use Time::HiRes;
 
+use Globals;
 use base qw(Network::Receive::ServerType0);
 use Log qw(message debug warning);
-#use LWP::Simple;
-use Globals;
+use Network::MessageTokenizer;
+use Misc;
+use Utils;
+use Translation;
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
@@ -36,98 +39,96 @@ sub new {
 		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
-		'0A7B' => ['gameguard_request', 'H*', [qw(eac_key)]],
-		'0840' => ['escape_map_select', 'v a*', [qw(len mapInfo)]],
-		'09A5' => ['server_full'],
-		'085A' => ['tro_sync_request_ex'],
-		'085B' => ['tro_sync_request_ex'],
-		'085C' => ['tro_sync_request_ex'],
-		'085D' => ['tro_sync_request_ex'],
-		'085E' => ['tro_sync_request_ex'],
-		'085F' => ['tro_sync_request_ex'],
-		'0860' => ['tro_sync_request_ex'],
-		'0861' => ['tro_sync_request_ex'],
-		'0862' => ['tro_sync_request_ex'],
-		'0863' => ['tro_sync_request_ex'],
-		'0864' => ['tro_sync_request_ex'],
-		'0865' => ['tro_sync_request_ex'],
-		'0866' => ['tro_sync_request_ex'],
-		'0867' => ['tro_sync_request_ex'],
-		'0868' => ['tro_sync_request_ex'],
-		'0869' => ['tro_sync_request_ex'],
-		'086A' => ['tro_sync_request_ex'],
-		'086B' => ['tro_sync_request_ex'],
-		'086C' => ['tro_sync_request_ex'],
-		'086D' => ['tro_sync_request_ex'],
-		'086E' => ['tro_sync_request_ex'],
-		'086F' => ['tro_sync_request_ex'],
-		'0870' => ['tro_sync_request_ex'],
-		'0871' => ['tro_sync_request_ex'],
-		'0872' => ['tro_sync_request_ex'],
-		'0873' => ['tro_sync_request_ex'],
-		'0874' => ['tro_sync_request_ex'],
-		'0875' => ['tro_sync_request_ex'],
-		'0876' => ['tro_sync_request_ex'],
-		'0877' => ['tro_sync_request_ex'],
-		'0878' => ['tro_sync_request_ex'],
-		'0879' => ['tro_sync_request_ex'],
-		'087A' => ['tro_sync_request_ex'],
-		'087B' => ['tro_sync_request_ex'],
-		'087C' => ['tro_sync_request_ex'],
-		'087D' => ['tro_sync_request_ex'],
-		'087E' => ['tro_sync_request_ex'],
-		'087F' => ['tro_sync_request_ex'],
-		'0880' => ['tro_sync_request_ex'],
-		'0881' => ['tro_sync_request_ex'],
-		'0882' => ['tro_sync_request_ex'],
-		'0883' => ['tro_sync_request_ex'],
-		'0917' => ['tro_sync_request_ex'],
-		'0918' => ['tro_sync_request_ex'],
-		'0919' => ['tro_sync_request_ex'],
-		'091A' => ['tro_sync_request_ex'],
-		'091B' => ['tro_sync_request_ex'],
-		'091C' => ['tro_sync_request_ex'],
-		'091D' => ['tro_sync_request_ex'],
-		'091E' => ['tro_sync_request_ex'],
-		'091F' => ['tro_sync_request_ex'],
-		'0920' => ['tro_sync_request_ex'],
-		'0921' => ['tro_sync_request_ex'],
-		'0922' => ['tro_sync_request_ex'],
-		'0923' => ['tro_sync_request_ex'],
-		'0924' => ['tro_sync_request_ex'],
-		'0925' => ['tro_sync_request_ex'],
-		'0926' => ['tro_sync_request_ex'],
-		'0927' => ['tro_sync_request_ex'],
-		'0928' => ['tro_sync_request_ex'],
-		'0929' => ['tro_sync_request_ex'],
-		'092A' => ['tro_sync_request_ex'],
-		'092B' => ['tro_sync_request_ex'],
-		'092C' => ['tro_sync_request_ex'],
-		'092D' => ['tro_sync_request_ex'],
-		'092E' => ['tro_sync_request_ex'],
-		'092F' => ['tro_sync_request_ex'],
-		'0930' => ['tro_sync_request_ex'],
-		'0931' => ['tro_sync_request_ex'],
-		'0932' => ['tro_sync_request_ex'],
-		'0933' => ['tro_sync_request_ex'],
-		'0934' => ['tro_sync_request_ex'],
-		'0935' => ['tro_sync_request_ex'],
-		'0936' => ['tro_sync_request_ex'],
-		'0937' => ['tro_sync_request_ex'],
-		'0938' => ['tro_sync_request_ex'],
-		'0939' => ['tro_sync_request_ex'],
-		'093A' => ['tro_sync_request_ex'],
-		'093B' => ['tro_sync_request_ex'],
-		'093C' => ['tro_sync_request_ex'],
-		'093D' => ['tro_sync_request_ex'],
-		'093E' => ['tro_sync_request_ex'],
-		'093F' => ['tro_sync_request_ex'],
-		'0940' => ['tro_sync_request_ex']
+		'0A7B' => ['gameguard_request', 'v a*', [qw(len data)]],#-1
+		'085A' => ['sync_request_ex'],
+		'085B' => ['sync_request_ex'],
+		'085C' => ['sync_request_ex'],
+		'085D' => ['sync_request_ex'],
+		'085E' => ['sync_request_ex'],
+		'085F' => ['sync_request_ex'],
+		'0860' => ['sync_request_ex'],
+		'0861' => ['sync_request_ex'],
+		'0862' => ['sync_request_ex'],
+		'0863' => ['sync_request_ex'],
+		'0864' => ['sync_request_ex'],
+		'0865' => ['sync_request_ex'],
+		'0866' => ['sync_request_ex'],
+		'0867' => ['sync_request_ex'],
+		'0868' => ['sync_request_ex'],
+		'0869' => ['sync_request_ex'],
+		'086A' => ['sync_request_ex'],
+		'086B' => ['sync_request_ex'],
+		'086C' => ['sync_request_ex'],
+		'086D' => ['sync_request_ex'],
+		'086E' => ['sync_request_ex'],
+		'086F' => ['sync_request_ex'],
+		'0870' => ['sync_request_ex'],
+		'0871' => ['sync_request_ex'],
+		'0872' => ['sync_request_ex'],
+		'0873' => ['sync_request_ex'],
+		'0874' => ['sync_request_ex'],
+		'0875' => ['sync_request_ex'],
+		'0876' => ['sync_request_ex'],
+		'0877' => ['sync_request_ex'],
+		'0878' => ['sync_request_ex'],
+		'0879' => ['sync_request_ex'],
+		'087A' => ['sync_request_ex'],
+		'087B' => ['sync_request_ex'],
+		'087C' => ['sync_request_ex'],
+		'087D' => ['sync_request_ex'],
+		'087E' => ['sync_request_ex'],
+		'087F' => ['sync_request_ex'],
+		'0880' => ['sync_request_ex'],
+		'0881' => ['sync_request_ex'],
+		'0882' => ['sync_request_ex'],
+		'0883' => ['sync_request_ex'],
+		'0917' => ['sync_request_ex'],
+		'0918' => ['sync_request_ex'],
+		'0919' => ['sync_request_ex'],
+		'091A' => ['sync_request_ex'],
+		'091B' => ['sync_request_ex'],
+		'091C' => ['sync_request_ex'],
+		'091D' => ['sync_request_ex'],
+		'091E' => ['sync_request_ex'],
+		'091F' => ['sync_request_ex'],
+		'0920' => ['sync_request_ex'],
+		'0921' => ['sync_request_ex'],
+		'0922' => ['sync_request_ex'],
+		'0923' => ['sync_request_ex'],
+		'0924' => ['sync_request_ex'],
+		'0925' => ['sync_request_ex'],
+		'0926' => ['sync_request_ex'],
+		'0927' => ['sync_request_ex'],
+		'0928' => ['sync_request_ex'],
+		'0929' => ['sync_request_ex'],
+		'092A' => ['sync_request_ex'],
+		'092B' => ['sync_request_ex'],
+		'092C' => ['sync_request_ex'],
+		'092D' => ['sync_request_ex'],
+		'092E' => ['sync_request_ex'],
+		'092F' => ['sync_request_ex'],
+		'0930' => ['sync_request_ex'],
+		'0931' => ['sync_request_ex'],
+		'0932' => ['sync_request_ex'],
+		'0933' => ['sync_request_ex'],
+		'0934' => ['sync_request_ex'],
+		'0935' => ['sync_request_ex'],
+		'0936' => ['sync_request_ex'],
+		'0937' => ['sync_request_ex'],
+		'0938' => ['sync_request_ex'],
+		'0939' => ['sync_request_ex'],
+		'093A' => ['sync_request_ex'],
+		'093B' => ['sync_request_ex'],
+		'093C' => ['sync_request_ex'],
+		'093D' => ['sync_request_ex'],
+		'093E' => ['sync_request_ex'],
+		'093F' => ['sync_request_ex'],
+		'0940' => ['sync_request_ex']
 	);
-						
-	#foreach my $key (keys %{$self->{sync_ex_reply}}) { $packets{$key} = ['sync_request_ex']; }
-	
-	foreach my $switch (keys %packets) {$self->{packet_list}{$switch} = $packets{$switch};	}
+
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
 	$self->{nested} = {
 		items_nonstackable => { # EQUIPMENTITEM_EXTRAINFO
 			type6 => {
@@ -153,15 +154,7 @@ sub new {
 		received_characters 099D
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-
-	return $self;
-}
-
-*parse_quest_update_mission_hunt = *Network::Receive::ServerType0::parse_quest_update_mission_hunt_v2;
-*reconstruct_quest_update_mission_hunt = *Network::Receive::ServerType0::reconstruct_quest_update_mission_hunt_v2;
-
-sub tro_sync_request_ex {
-	my ($self, $args) = @_;
+	
 	$self->{sync_ex_reply} = {
 		'085A' => '0884',
 		'085B' => '0885',
@@ -248,24 +241,26 @@ sub tro_sync_request_ex {
 		'093F' => '0969',
 		'0940' => '096A'
 	};
+	return $self;
+}
+
+*parse_quest_update_mission_hunt = *Network::Receive::parse_quest_update_mission_hunt_v2;
+*reconstruct_quest_update_mission_hunt = *Network::Receive::reconstruct_quest_update_mission_hunt_v2;
+
+sub gameguard_request {
+	my ($self, $args) = @_;
+
+	message T ("Receive Gameguard!\n");
+	my $msg = pack('v*', length($args->{data}) + 4, 0xA7B, $args->{len}) . $args->{data};
+	$self->{net}->{xkore_socket}->send($msg);
+	my $msg2;
+	$self->{net}->{xkore_socket}->recv($msg2, 2);
+	my $newSize = unpack('v', $msg2);
+	$self->{net}->{xkore_socket}->recv($msg2, $newSize);
 	
-	# Computing Sync Ex - By Fr3DBr
-	my $PacketID = $args->{switch};
+	$messageSender->sendToServer($msg2);
+	#$messageSender->sendToServer(pack('H*', 'this for your remote 0A7C gen'));
 	
-	# Getting Sync Ex Reply ID from Table
-	my $SyncID = $self->{sync_ex_reply}->{$PacketID};
-	
-	# Cleaning Leading Zeros
-	$PacketID =~ s/^0+//;	
-	
-	# Cleaning Leading Zeros	
-	$SyncID =~ s/^0+//;
-	#message ("Received Ex Packet ID : " . $PacketID . " => " . $SyncID . "\n");
-	# Converting ID to Hex Number
-	$SyncID = hex($SyncID);
-	# Dispatching Sync Ex Reply
-	$messageSender->sendReplySyncRequestEx($SyncID);
-	$args->{mangle} = 2;
 }
 
 sub received_characters_info {

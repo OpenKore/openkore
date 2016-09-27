@@ -12,21 +12,30 @@
 # tRO (Thai)
 package Network::Send::tRO;
 use strict;
+use Globals;
+use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
+use Log qw(error debug);
+use I18N qw(stringToBytes);
+use Utils qw(getTickCount getHex getCoordString);
+use Math::BigInt;
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+	$self->{char_create_version} = 1;
+	$self->{flag} = 1;
+	$self->{seq} = 0;
 	
 	my %packets = (
 		'0A76' => ['master_login', 'V Z40 a32 C', [qw(version username password_rijndael master_version)]],
-		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
-		'0A7C' => ['gameguard_reply'],
+		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]]
 		);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	
 	my %handlers = qw(
+		map_login 0436
 		master_login 0A76
 		game_login 0275
 		character_move 035F
@@ -50,5 +59,4 @@ sub new {
 	#$self->cryptKeys(0x0, 0x0, 0x0);
 	return $self;
 }
-
 1;
