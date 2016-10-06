@@ -73113,9 +73113,13 @@ Jobs : ^777777All^000000
 #
 5464#
 Zaha doll hat which resembles angel of Zaha. It looks great on your head.
-INT+2
-Able to use Lv.3 [Magnificat].
-Can't be refined.
+INT + 3. MDEF + 9.
+Increases Magic Damage versus undead by 10%
+When using Magic attacks or attacked by Magic jas a chance to transform the wearer into the White Lady for a short period of time.
+During the transformation does the following.
+-Increases MAtk by 30 * Refine Level (Minimum 30)
+-Reduces Fixed Cast Time by 80 miliseconds * Refine Level (Minimum 80)
+-Drains 10 sp/sec from the wearer
 Item Class : ^777777Headgear^000000    Defense : ^7777771^000000
 Location : ^777777Upper ^000000    Weight : ^7777770^000000
 Jobs : ^777777All^000000
@@ -74394,7 +74398,7 @@ Job : ^777777All Jobs^000000
 #
 20154#
 Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Mid ^000000Weight : ^7777770^000000
+Location : ^777777Bottom ^000000Weight : ^7777770^000000
 Required Lv. : ^7777771^000000
 Job : ^777777All Jobs^000000
 #
@@ -76289,7 +76293,6 @@ Required Level: 100
 Required Job: Mechanic
 ^FFFFFF_^000000
 ASPD + 6%
-Max HP + 1% per 2 upgrade levels of the item.
 ^FFFFFF_^000000
 If upgrade level is +4 or higher,
 ASPD + 1%
@@ -78146,4 +78149,144 @@ Weight : ^7777771^000000
 
 6635#
 Currently has no known use. However you feel like you should save it for later, as it appears to have some value.
+#
+
+
+4652#
+Increase magic damage against Shadow and Undead monsters by 50%
+Increase magic damage against Demon and Undead race monsters by 50%
+
+Class : ^777777Card^000000
+Compound on : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+4653#
+Reduce damage from Brute and Undead monsters by 20%
+
+Class : ^777777Card^000000
+Compound on : ^777777Shield^000000
+Weight : ^7777771^000000
+#
+4654#
+Increase magical damage against Brute and Undead monster by 5%
+
+When equipped with equip compounded with Nightmare Arclouse card
+Reduce damage from Brute and Undead monsters by 5%
+Ignore 50% magic defense of Brute and Undead monsters
+
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4655#
+Increase physical damage against Brute and Undead monster by 10%
+
+When equipped with equip compounded with Nightmare Arclouse card
+Reduce damage from Brute and Undead monsters by 5%
+Ignore 50% physical defense of Brute and Undead monsters
+
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4656#
+When physically and magically attacked,
+chance to cause Sleep to all targets on 11x11 cells.
+
+When equipped with equip compounded with Nightmare Ancient Mummy card
+Increase the probability of causing Sleep
+
+Class : ^777777Card^000000
+Compound on : ^777777Footwear^000000
+Weight : ^7777771^000000
+#
+4657#
+Reduce damage from Neutral property by 15%
+Every refine of garment increase magical Fire damage by 3%
+
+When equipped with equip compounded with Nightmare Mummy card
+Increase resistance against Neutral property attack by 5%
+
+Class : ^777777Card^000000
+Compound on : ^777777Garment^000000
+Weight : ^7777771^000000
+#
+4658#
+MATK + 5%
+When refined to +7, increase magical damage inflicted by 3%
+When refined to +9, increase magical damage inflicted by 2%
+
+Class : ^777777Card^000000
+Compound on : ^777777Footwear^000000
+Weight : ^7777771^000000
+#
+
+
+4625#
+MATK+ 20%.
+Increase SP consumption of skills by 10%.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4626#
+Increase magical damage against Formless and Demon races by 5%.
+When equipped with a shield compounded to Neo Punk Card:
+ignores 50% of Formless and Demon monster's Magic Defense Rate.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4627#
+Increase physical damage against Formless and Demon races by 10%.
+When equipped with a shield compounded to Neo Punk Card:
+ignores 50% of Formless and Demon monster's Defense Rate.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4628#
+Reduce damage taken from Formless and Demon races by 20%.
+When equipped with a weapon compounded to Big Ben Card:
+further reduce damage taken from Formless and Demon races by 5%.
+When equipped with a weapon compounded to Big Bell Card:
+further reduce damage taken from Formless and Demon races by 5%.
+Class : ^777777Card^000000
+Compound on : ^777777Shield^000000
+Weight : ^7777771^000000
+#
+4629#
+Increase resistance against Neutral property attack by 15%.
+Increases damage of Earth property magic by 3% per refine.
+When equipped with a shoes compounded to Time Keeper Card:
+further increase resistance against Neutral property attack by 5%.
+Class : ^777777Card^000000
+Compound on : ^777777Garment^000000
+Weight : ^7777771^000000
+#
+4630#
+Has a chance of inflicting the Curse status to all enemy in 11x11 around the wearer when attack.
+When equipped with a garment compounded with Arc Elder Card:
+the chance is further increased.
+Class : ^777777Card^000000
+Compound on : ^777777Footwear^000000
+Weight : ^7777771^000000
+#
+4631#
+ASPD +3%
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+4632#
+Add a chance of auto casting Level 1 Whirlwind when dealing physical attack.
+If the user has mastered the skill at Level 5, it will cast Level 5 instead.
+When equipped with an accessory compounded to Owl Viscount Card:
+add a chance of auto casting level 1 Lord of Vermilion when dealing physical attack.
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+17375#
+When opened this box gives you the Zaha Doll Hat!
 #

@@ -6487,7 +6487,7 @@
 17369#13th_Anniversa-box#
 17370#Caster_Pendant_Shadow_Box#
 17371#Hard_Earring_Shadow_Box#
-17375#Safeguard_Shield_Shadow_Box#
+17375#Zaha_Doll_Hat_Box#
 17376#Brutal_Shield_Shadow_Box#
 17377#Gargantua_Shield_Shadow_Box#
 17378#Homers_Shield_Shadow_Box#
@@ -8705,3 +8705,18 @@
 22706#DEX_Soul_Potion#
 22707#LUK_Soul_Potion#
 22971#Mad_Bunny_Scroll#
+4652#Nightmare_Amon_Ra_Card#
+4653#Nightmare_Arclouse_Card#
+4654#Nightmare_Mimic_Card#
+4655#Nightmare_Minorous_Card#
+4656#Nightmare_Mummy_Card#
+4657#Nightmare_Ancient_Mummy_Card#
+4658#Nightmare_Verit_Card#
+4625#Time_Holder_Card#
+4626#Big_Ben_Card#
+4627#Big_Bell_Card#
+4628#Neo_Punk_Card#
+4629#Arc_Elder_Card#
+4630#Timer_Keeper_Card#
+4631#Owl_Viscount_Card#
+4632#Owl_Marquees_Card#
