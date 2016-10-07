@@ -6,10 +6,13 @@ https://github.com/OpenKore/openkore
 
 ###########################
 
-we do not provide the EAC module just search in TRO mega thread... 
+we do not provide the EAC module
+just search in TRO mega thread... 
 https://github.com/OpenKore/openkore/issues/221
 
-install tutorial
+install tutorial * XKore 0.5 *
+******** You need 2 PC or VMware(Run RO in VM) ***********
+EAC Detect Openkore in ring1
 
 1. modify your "C:\Windows\System32\drivers\etc\hosts" add this to the end
 
@@ -41,48 +44,67 @@ or you can use UniController.exe -> Extra -> Edit Win hosts file
 
 ********** CRITICAL STEP **********
 ********** FAIL TO FOLLOW THIS YOU MAY GET DETECTED BY EAC ****************
-3. copy all dll in folder "to_syswow64&inject yourself" into "C:\Windows\SysWOW64" if x64 or "C:\Windows\System32" if your system is x32 (hooktest.dll, NetRedirect.dll)
+3. copy "hooktest.dll" in folder "to_syswow64&inject yourself" to...
+if x64
+"C:\Windows\SysWOW64" 
+if x32
+"C:\Windows\System32"
 * remove (hooktest.dll, NetRedirect.dll) in ragnarok folder if you had it.
 
-3.1 go download CFF Explorer from here "http://www.ntcore.com/exsuite.php"
-and get - "CFF Explorer (x86 Version, stand-alone, Zip Archive) "
-3.2 for "x64" goto "C:\Windows\SysWOW64" or "x32" goto "C:\Windows\System32"
-3.3 look for "AudioSes.dll" we need to change file owner 
-right click "AudioSes.dll" -> "Properties" -> "Security" -> "Advance" 
-look for owner click "change" -> "Advance" -> "Find Now"
-Select "Administrators" and then click "OK" -> "OK" 
-3.4 add permission 
-right click "AudioSes.dll" -> "Properties" -> "Security" -> "Edit" 
-Select "Administrators" and then click "Allow" at "Full control" -> "OK" ->"OK"
-3.5 Do backup of "AudioSes.dll" e.g. copy and rename it to "AudioSes_original.dll"
-3.5 copy that "AudioSes.dll" out of system folder
-3.6 open the "AudioSes.dll" that you had been copy it with "CFF Explorer"
-Select "Import Adder" -> "Add" Browse to "hooktest.dll" in "C:\Windows\SysWOW64" if x64 or "C:\Windows\System32" if your system is x32
+3.1 Download CFF Explorer "http://www.ntcore.com/exsuite.php"
+get "CFF Explorer (x86 Version, stand-alone, Zip Archive)"
 
-Select "00000001-_FuckEAC@0" -> "Import By Name" -> "Rebuild Import Table" -> "Save" and close it
-3.7 replace edited  "AudioSes.dll" into "C:\Windows\SysWOW64" or "C:\Windows\System32"
+3.2 look for "AudioSes.dll"
+if x64
+goto "C:\Windows\SysWOW64"
+if x32
+goto "C:\Windows\System32"
+
+3.3  we need to change file owner 
+ - right click "AudioSes.dll" -> "Properties" -> "Security" -> "Advance" 
+ - look for "Owner:" then click "Change" -> "Advance" -> "Find Now"
+ - Select "Administrators" and click "OK" -> "OK" 
+3.4 add permission
+ - right click "AudioSes.dll" -> "Properties" -> "Security" -> "Edit" 
+ - Select "Administrators" and click "Allow" at "Full control" -> "OK" ->"OK"
+ 
+3.5 Do backup of "AudioSes.dll" 
+e.g. copy and rename it to "AudioSes_original.dll"
+
+3.5 copy "AudioSes.dll" out of system folder
+
+3.6 Open the "AudioSes.dll" that you had been copy it with "CFF Explorer"
+ - Select "Import Adder" -> "Add" Browse to "hooktest.dll" in 
+ 
+if x64
+goto "C:\Windows\SysWOW64"
+if x32
+goto "C:\Windows\System32"
+
+ - Select "00000001-_FuckEAC@0" -> "Import By Name" -> "Rebuild Import Table" -> "Save" and close it
+3.7 replace edited  "AudioSes.dll" into 
+
+if x64
+goto "C:\Windows\SysWOW64"
+if x32
+goto "C:\Windows\System32"
 
 #note: if in doubt try rename the "AudioSes.dll" before copy it back.
 
-
-
 4. Start "ragnarok.exe" patcher normally
-after "ragexe.exe" is running there will be messagebox popup tell you about the port 2xxx 
-don't run any openkore before this step.
-
-5. run "start.exe" or "wxstart.exe" as "other user" and enter Xkoreport you got.
-
+after zombie "ragexe.exe" is running there will be messagebox popup tell you about the port 2xxx 
 
 *************************************************************************************
 now you are fine with it...
 
-6. do login the game
+5. run "start.exe" or "wxstart.exe" at other PC or outside Vmware and enter "IP Address of RO Client PC" and "XKoreport" you got from zombie client.
 
-7. do repeat step 4. - 7. if you want more bot.
+6. do repeat step 4 and 5. if you want more bot.
 
 Happy botting
 
 p.s. you must check the patch server too. if there any update.
 since this will redirect cdn.exe.in.th to localhost
+we do not need NetRedirect.dll anymore...
 
 for update in future please re read this guide again..
