@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Networking subsystem
+#  opencore - Networking subsystem
 #  This module contains functions for sending packets to the server.
 #
 #  This software is open source, licensed under the GNU General Public
@@ -24,7 +24,7 @@
 # The submodule @MODULE(Network::Send) contains functions for sending all
 # kinds of messages to the RO server.
 #
-# Please also read <a href="http://wiki.openkore.com/index.php/Network_subsystem">the
+# Please also read <a href="http://wiki.opencore.com/index.php/Network_subsystem">the
 # network subsystem overview.</a>
 #
 # This implementation establishes a direct connection to the RO server.
@@ -210,11 +210,21 @@ sub serverSend {
 			if (defined $msg2 && length($msg2)) {
 				my $newSize = unpack('v', $msg2);
 				if($newSize == 0) {
+					Misc::visualDump($msg);
 					$self->{remote_socket}->send($msg);
 				} else {
 					$self->{xkore_socket}->recv($msg2, $newSize);
 					if (defined $msg2 && length($msg2)) {
+						Misc::visualDump($msg2);
 						$self->{remote_socket}->send(pack('v', length($msg2) + 2) . $msg2);
+						my $msg3;
+						$self->{xkore_socket}->recv($msg3, 2);
+						my $newSize2 = unpack('v', $msg3);
+						if($newSize2 != 0) {
+							$self->{xkore_socket}->recv($msg3, $newSize2);
+							Misc::visualDump($msg3);
+							$messageSender->sendToServer($msg3);
+						}
 					}
 				}
 			}

@@ -36,6 +36,7 @@ sub new {
 	
 	my %handlers = qw(
 		map_login 0436
+		item_use 0439
 		master_login 0A76
 		game_login 0275
 		character_move 035F
