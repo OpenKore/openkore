@@ -57,7 +57,7 @@ sub new {
 	undef $@;
 	$self->{server} = new IO::Socket::INET->new(
 		Listen		=> 5,
-		LocalAddr	=> 'localhost',
+		LocalAddr	=> '0.0.0.0',
 		LocalPort	=> $port,
 		Proto		=> 'tcp');
 	if (!$self->{server}) {
