@@ -1941,6 +1941,64 @@ sub login_pin_code_request {
 	$timeout{master}{time} = time;
 }
 
+sub login_pin_code_request2 {
+	my ($self, $args) = @_;
+	# flags:
+	# 0 - correct - RMS
+	# 1 - requested (already defined) - RMS
+	# 3 - expired - RMS(?)
+	# 4 - requested (not defined) - RMS
+	# 7 - correct - RMS
+	# 8 - incorrect - RMS
+	if ($args->{flag} == 7) { # removed check for seed 0, eA/rA/brA sends a normal seed.
+		message T("PIN code is correct.\n"), "success";
+		# call charSelectScreen
+		if (charSelectScreen(1) == 1) {
+			$firstLoginMap = 1;
+			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+			$sentWelcomeMessage = 1;
+		}
+	} elsif ($args->{flag} == 1) {
+		# PIN code query request.
+		$accountID = $args->{accountID};
+		debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
+
+		message T("Server requested PIN password in order to select your character.\n"), "connection";
+		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
+		$messageSender->sendLoginPinCode($args->{seed}, 0);
+	} elsif ($args->{flag} == 4) {
+		# PIN code has never been set before, so set it.
+		warning T("PIN password is not set for this account.\n"), "connection";
+		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
+
+		while ((($config{loginPinCode} =~ /[^0-9]/) || (length($config{loginPinCode}) != 4)) &&
+		  !($self->queryAndSaveLoginPinCode("Your PIN should never contain anything but exactly 4 numbers.\n"))) {
+			error T("Your PIN should never contain anything but exactly 4 numbers.\n");
+		}
+		$messageSender->sendLoginPinCode($args->{seed}, 1);
+	} elsif ($args->{flag} == 3) {
+		# should we use the same one again? is it possible?
+		warning T("PIN password expired.\n"), "connection";
+		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
+
+		while ((($config{loginPinCode} =~ /[^0-9]/) || (length($config{loginPinCode}) != 4)) &&
+		  !($self->queryAndSaveLoginPinCode("Your PIN should never contain anything but exactly 4 numbers.\n"))) {
+			error T("Your PIN should never contain anything but exactly 4 numbers.\n");
+		}
+		$messageSender->sendLoginPinCode($args->{seed}, 1);
+	} elsif ($args->{flag} == 8) {
+		# PIN code incorrect.
+		error T("PIN code is incorrect.\n");
+		#configModify('loginPinCode', '', 1);
+		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code."))));
+		$messageSender->sendLoginPinCode($args->{seed}, 0);
+	} else {
+		debug("login_pin_code_request: unknown flag $args->{flag}\n");
+	}
+
+	$timeout{master}{time} = time;
+}
+
 sub login_pin_new_code_result {
 	my ($self, $args) = @_;
 
@@ -3633,6 +3691,51 @@ sub map_change {
 	});
 
 	$timeout{ai}{time} = time;
+}
+
+# Parse 0A3B with structure
+# '0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]],
+# Unpack effect info into HatEFID
+# @author [Cydh]
+sub parse_hat_effect {
+	my ($self, $args) = @_;
+	@{$args->{effects}} = map {{ HatEFID => unpack('v', $_) }} unpack '(a2)*', $args->{effect};
+	debug "Hat Effect. Flag: ".$args->{flag}." HatEFIDs: ".(join ', ', map {$_->{HatEFID}} @{$args->{effects}})."\n";
+}
+
+# Display information for player's Hat Effects
+# @author [Cydh]
+sub hat_effect {
+	my ($self, $args) = @_;
+
+	my $actor = Actor::get($args->{ID});
+	my $hatName;
+	my $i = 0;
+
+	#TODO: Stores the hat effect into actor for single player's information
+	for my $hat (@{$args->{effects}}) {
+		my $hatHandle;
+		$hatName .= ", " if ($i);
+		if (defined $hatEffectHandle{$hat->{HatEFID}}) {
+			$hatHandle = $hatEffectHandle{$hat->{HatEFID}};
+			$hatName .= defined $hatEffectName{$hatHandle} ? $hatEffectName{$hatHandle} : $hatHandle;
+		} else {
+			$hatName .= T("Unknown #").$hat->{HatEFID};
+		}
+		$i++;
+	}
+
+	if ($args->{flag} == 1) {
+		message sprintf(
+			$actor->verb(T("%s use effect: %s\n"), T("%s uses effect: %s\n")),
+			$actor, $hatName
+		), 'effect';
+	} else {
+		message sprintf(
+			$actor->verb(T("%s are no longer: %s\n"), T("%s is no longer: %s\n")),
+			$actor, $hatName
+		), 'effect';
+	}
 }
 
 1;

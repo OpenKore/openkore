@@ -10,30 +10,30 @@
 authS Agora você é admin, %$cmd_user. Aproveite! ^^
 authF Você já é um admin, %$cmd_user!
 
-confS1 Essa variavel %$key é...%$value
+confS1 Essa variável %$key é...%$value
 confS2 *beep*
 confS2 *boop*
 confS2 Tudo certo.
 confF1 Hein?
-confF2 Eu não vejo essa variavel de configuração
+confF2 Eu não vejo essa variável de configuração
 confF3 Oh, bela tentativa %$cmd_user
 confF3 Acho que não ein
 
 dateS Já chega de Ragnarok %$cmd_user.  Já são %$date
-dateS O que eu sou? um relógio?? (BTW it's %$date)
+dateS O que eu sou? um relógio?? (BTW são %$date)
 
 expS Tempo boteando : %$time\nBaseExp      : %$bExp %$percentBExp\nJobExp       : %$jExp %$percentJExp\nBaseExp/Hour : %$bExpPerHour %$percentBExpPerHour\nJobExp/Hour  : %$jExpPerHour %$percentJExpPerHour\nBase Levelup Time Estimation : %$bLvlUp\nJob Levelup Time Estimation  : %$jLvlUp\nDied : %$numDeaths
 expF Hein?
 expMonsterS1 No  Nome                      Mortos
 expMonsterS2 %$killedMonsters
-expMonsterS3 Numero total de monstros mortos: %$numKilledMonsters
+expMonsterS3 Número total de monstros mortos: %$numKilledMonsters
 expItemS1 Nome                                    Mortos
 expItemS2 %$gotItems
 
 followS É pra já!
 followS Liberdade!
 followS Sim sinhô!
-followF Não faço idéia do que você está falando, %$user
+followF Não faço ideia do que você está falando, %$user
 followF Isso não faz sentido ><
 
 followStopS Saquei...
@@ -93,12 +93,12 @@ thankS De nada
 thankS Sempre um prazer, mano %$cmd_user
 thankS ^^
 
-timeoutS1 Acho que timeout %$key é %$value
+timeoutS1 Acho que o timeout de %$key é %$value
 timeoutS2 *beep*
 timeoutS2 *boop*
 timeoutS2 Tudo certo.
 timeoutF1 Hein?
-timeoutF2 Eu não vejo esse Timeout
+timeoutF2 Eu não vejo esse timeout
 
 verboseOnS Ah, finalmente.
 verboseOnS *gasp* Ah, valeu cara...lh..o.

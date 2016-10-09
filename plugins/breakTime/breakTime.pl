@@ -1,7 +1,7 @@
 package autoBreakTime;
 use strict;
 
-use Globals qw/%config $net/;
+use Globals qw/%config $net %timeout_ex/;
 use Log qw/message debug/;
 use Misc qw/relog chatLog/;
 use Translation qw/T TF/;
@@ -29,8 +29,10 @@ sub mainLoop_pre {
 		my ($now, $start, $stop) = map { sub { ($_[0]*60 + $_[1])*60 } ->(@$_) } [$hour, $min], map {[split /:/]} (
 			$config{"${prefix}_startTime"}, $config{"${prefix}_stopTime"}
 		);
+		$stop += 86400 if $stop < $start;
+		$start -= 86400, $stop -= 86400 if $start > $now;
 		
-		if ($now >= $start && ($now < $stop xor $stop < $start)) {
+		if ($now >= $start && $now < $stop) {
 			my $duration = ($stop - $now) % (60*60*24);
 			
 			if ($net && $net->getState != Network::NOT_CONNECTED) {
@@ -41,7 +43,13 @@ sub mainLoop_pre {
 					$config{"${prefix}_startTime"}, $config{"${prefix}_stopTime"}
 				));
 			}
-			
+
+			# Do not shorten relog times. This is particularly important
+			# when the user explicitly logged out for a long time, but also
+			# prevents overlapping autoBreakTimes from changing the relog
+			# time back and forth. The longer autoBreakTime should win.
+			next if $timeout_ex{master}{time} + $timeout_ex{master}{timeout} >= time + $duration;
+
 			relog $duration, 'SILENT';
 			last
 		}

@@ -2046,3 +2046,14 @@ emos_dun02h.gnd#mosk_dun02.gnd#
 emos_dun02h.gat#mosk_dun02.gat#
 emos_dun02h.rsw#mosk_dun02.rsw#
 삯샺샎엍웤샌붺\map\emos_dun02h.bmp#삯샺샎엍웤샌붺\map\mosk_dun02.bmp#
+
+////EP.15.2
+1@uns.gnd#1@uns.gnd#
+1@uns.gat#1@uns.gat#
+1@uns.rsw#1@uns.rsw#
+삯샺샎엍웤샌붺\map\1@uns.bmp#삯샺샎엍웤샌붺\map\1@uns.bmp#
+
+1@lab.gnd#1@lab.gnd#
+1@lab.gat#1@lab.gat#
+1@lab.rsw#1@lab.rsw#
+삯샺샎엍웤샌붺\map\1@lab.bmp#삯샺샎엍웤샌붺\map\1@lab.bmp#

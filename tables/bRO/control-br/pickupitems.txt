@@ -13,9 +13,7 @@
 #               1 para pegar o item,
 #               2 para pegar o item o mais rápido que puder.
 #
-# Use o <nome do item> "all" para definir ao Kore pegar ou não pegar todos os itens
-# por padrão.
- 
+# Use o <nome do item> "all" para definir ao Kore pegar ou não pegar todos os itens por padrão.
 all 1
-jellopy 0
-plumas 0
+# jellopy 0
+# plumas 0
