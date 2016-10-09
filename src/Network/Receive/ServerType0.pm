@@ -502,6 +502,7 @@ sub new {
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit - not implemented in Kore
 		'0824' => ['buying_store_fail', 'v2', [qw(result itemID)]],
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
+		'082A' => ['char_delete2_accept_result', 'V V', [qw(charID result)]], # 10
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'082D' => ['received_characters', 'x2 C5 x20 a*', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
 		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
@@ -537,6 +538,8 @@ sub new {
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'097A' => ['quest_all_list2', 'v3 a*', [qw(len count unknown message)]],
 		'097B' => ['rates_info2', 's V3 a*', [qw(len exp death drop detail)]],
+		'097D' => ['top10', 'v a*', [qw(type message)]],
+		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
 		'0990' => ['inventory_item_added', 'v3 C3 a8 V C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
 		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
@@ -554,8 +557,17 @@ sub new {
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CD' => ['message_string', 'v V', [qw(msg_id para1)]], #8
 		'09CF' => ['gameguard_request'],
+		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
+		'0A0A' => ['storage_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
+		'0A0B' => ['cart_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
+		'0A0C' => ['inventory_item_added', 'v3 C3 a8 V C2 a4 v a25', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
+		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0A2D' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
 		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
+		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
@@ -591,6 +603,11 @@ sub new {
 				len => 31,
 				types => 'v2 C V2 C a8 l v2 C',
 				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+			},
+			type7 => {
+				len => 57,
+				types => 'v2 C V2 C a8 l v2 C a25 C',
+				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
 			},
 		},
 		items_stackable => {
@@ -961,6 +978,12 @@ sub items_nonstackable {
 		|| $args->{switch} eq '0997' # other player
 	) {
 		return $items->{type6};
+	} elsif ($args->{switch} eq '0A0D' # inventory
+		|| $args->{switch} eq '0A0F' # cart
+		|| $args->{switch} eq '0A10' # storage
+		|| $args->{switch} eq '0A2D' # other player
+	) {
+		return $items->{type7};
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -4421,7 +4444,7 @@ sub received_characters {
 		$chars[$slot]{luk} = $luk;
 		$chars[$slot]{sex} = $accountSex2;
 
-		$chars[$slot]{deleteDate} = getFormattedDate($deleteDate) if ($deleteDate);
+		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 	}
@@ -4520,6 +4543,15 @@ sub refine_result {
 	} else {
 		message TF("You tried to refine a weapon (ID %s); result: unknown %s\n", $args->{nameID}, $args->{fail});
 	}
+}
+
+sub rank_points {
+	my ( $self, $args ) = @_;
+
+	$self->blacksmith_points( $args ) if $args->{type} == 0;
+	$self->alchemist_point( $args )   if $args->{type} == 1;
+	$self->taekwon_rank( { rank => $args->{total} } ) if $args->{type} == 2;
+	message "Unknown rank type %s.\n", $args->{type} if $args->{type} > 2;
 }
 
 sub blacksmith_points {
@@ -5941,6 +5973,22 @@ sub initialize_message_id_encryption {
 		my $w = ($c[6]<<12) + ($c[4]<<8) + ($c[7]<<4) + $c[1];
 		$enc_val1 = ($c[2]<<12) + ($c[3]<<8) + ($c[5]<<4) + $c[8];
 		$enc_val2 = (((($enc_val1 ^ 0x0000F3AC) + $w) << 16) | (($enc_val1 ^ 0x000049DF) + $w)) ^ $args->{param2};
+	}
+}
+
+sub top10 {
+	my ( $self, $args ) = @_;
+
+	if ( $args->{type} == 0 ) {
+		$self->top10_blacksmith_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
+	} elsif ( $args->{type} == 1 ) {
+		$self->top10_alchemist_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
+	} elsif ( $args->{type} == 2 ) {
+		$self->top10_taekwon_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
+	} elsif ( $args->{type} == 3 ) {
+		$self->top10_pk_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
+	} else {
+		message "Unknown top10 type %s.\n", $args->{type};
 	}
 }
 

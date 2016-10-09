@@ -1780,6 +1780,8 @@ sub exp_zeny_info {
 		} elsif ($change < 0) {
 			message TF("You lost %s zeny.\n", formatNumber(-$change));
 		}
+		$char->{zeny} = $args->{val};
+		debug "zeny: $args->{val}\n", "parseMsg";
 		Plugins::callHook('zeny_change', {
 			zeny	=> $args->{val},
 			change	=> $change,
@@ -1790,8 +1792,6 @@ sub exp_zeny_info {
 			chatLog("k", T("*** You have no money, auto disconnect! ***\n"));
 			quit();
 		}
-		$char->{zeny} = $args->{val};
-		debug "zeny: $args->{val}\n", "parseMsg";
 	} elsif ($args->{type} == 22) {
 		$char->{exp_max_last} = $char->{exp_max};
 		$char->{exp_max} = $args->{val};
@@ -3997,7 +3997,7 @@ sub received_characters {
 		$chars[$slot]{luk} = $luk;
 		$chars[$slot]{sex} = $accountSex2;
 
-		$chars[$slot]{deleteDate} = getFormattedDate($deleteDate) if ($deleteDate);
+		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 	}

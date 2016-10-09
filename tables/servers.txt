@@ -68,7 +68,7 @@ dead_message euRO was closed on September 30, 2010. There used to be transfers t
 ## http://www.ragnarokeurope.com/
 [France - fRO]
 title France - fRO (ragnarokeurope.com): Chaos
-ip 62.23.0.18
+ip 164.132.152.34
 port 6900
 master_version 31
 version 1
@@ -93,6 +93,7 @@ serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
 addTableFolders idRO
 charBlockSize 144
+charDeleteDateType 1
 
 # Renewal
 [International - iRO: Ymir/Yggdrasil/Valkyrie]
@@ -108,6 +109,7 @@ patchserver ropatch1.gravityus.com
 patchpath /patch02
 addTableFolders iRO
 charBlockSize 144
+charDeleteDateType 1
 
 [International - iRO: Sakray]
 # http://playragnarok.com
@@ -127,7 +129,7 @@ charBlockSize 144
 [International - iRO: Loki Classic]
 # http://playragnarok.com
 title International - iRO: Classic.Loki
-ip 128.241.92.163
+ip 128.241.92.203
 port 6900
 master_version 1
 version 18
