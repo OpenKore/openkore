@@ -2254,7 +2254,8 @@ sub forge_list {
 	}
 	message "=========================\n";
 }
- sub storage_opened {
+ 
+sub storage_opened {
 	my ($self, $args) = @_;
 	$char->storage->open($args);
 }
