@@ -1569,10 +1569,8 @@ sub char_delete2_result {
 	my $deleteDate = $args->{deleteDate};
 
 	if ($result && $deleteDate) {
-		$deleteDate = getFormattedDate($deleteDate);
-
-		message TF("Your character will be delete, left %s\n", $deleteDate), "connection";
-		$chars[$messageSender->{char_delete_slot}]{deleteDate} = $deleteDate;
+		setCharDeleteDate($messageSender->{char_delete_slot}, $deleteDate);
+		message TF("Your character will be delete, left %s\n", $chars[$messageSender->{char_delete_slot}]{deleteDate}), "connection";
 	} elsif ($result == 0) {
 		error T("That character already planned to be erased!\n");
 	} elsif ($result == 3) {
@@ -1586,6 +1584,56 @@ sub char_delete2_result {
 	}
 
 	charSelectScreen;
+}
+
+# 082A,10
+sub char_delete2_accept_result {
+	my ($self, $args) = @_;
+	my $charID = $args->{charID};
+	my $result = $args->{result};
+
+	if ($result == 1) { # Success
+		if (defined $AI::temp::delIndex) {
+			message TF("Character %s (%d) deleted.\n", $chars[$AI::temp::delIndex]{name}, $AI::temp::delIndex), "info";
+			delete $chars[$AI::temp::delIndex];
+			undef $AI::temp::delIndex;
+			for (my $i = 0; $i < @chars; $i++) {
+				delete $chars[$i] if ($chars[$i] && !scalar(keys %{$chars[$i]}))
+			}
+		} else {
+			message T("Character deleted.\n"), "info";
+		}
+
+		if (charSelectScreen() == 1) {
+			$net->setState(3);
+			$firstLoginMap = 1;
+			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+			$sentWelcomeMessage = 1;
+		}
+		return;
+	} elsif ($result == 0) {
+		error T("Enter your 6-digit birthday (YYMMDD) (e.g: 801122).\n");
+	} elsif ($result == 2) {
+		error T("Due to system settings, can not be deleted.\n");
+	} elsif ($result == 3) {
+		error T("A database error has occurred.\n");
+	} elsif ($result == 4) {
+		error T("You cannot delete this character at the moment.\n");
+	} elsif ($result == 5) {
+		error T("Your entered birthday does not match.\n");
+	} elsif ($result == 7) {
+		error T("Character Deletion has failed because you have entered an incorrect e-mail address.\n");
+	} else {
+		error TF("An unknown error has occurred. Error number %d\n", $result);
+	}
+
+	undef $AI::temp::delIndex;
+	if (charSelectScreen() == 1) {
+		$net->setState(3);
+		$firstLoginMap = 1;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+		$sentWelcomeMessage = 1;
+	}
 }
 
 # 082C,14
@@ -1811,6 +1859,64 @@ sub login_pin_code_request {
 			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 			$sentWelcomeMessage = 1;
 		}
+	} elsif ($args->{flag} == 8) {
+		# PIN code incorrect.
+		error T("PIN code is incorrect.\n");
+		#configModify('loginPinCode', '', 1);
+		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code."))));
+		$messageSender->sendLoginPinCode($args->{seed}, 0);
+	} else {
+		debug("login_pin_code_request: unknown flag $args->{flag}\n");
+	}
+
+	$timeout{master}{time} = time;
+}
+
+sub login_pin_code_request2 {
+	my ($self, $args) = @_;
+	# flags:
+	# 0 - correct - RMS
+	# 1 - requested (already defined) - RMS
+	# 3 - expired - RMS(?)
+	# 4 - requested (not defined) - RMS
+	# 7 - correct - RMS
+	# 8 - incorrect - RMS
+	if ($args->{flag} == 7) { # removed check for seed 0, eA/rA/brA sends a normal seed.
+		message T("PIN code is correct.\n"), "success";
+		# call charSelectScreen
+		if (charSelectScreen(1) == 1) {
+			$firstLoginMap = 1;
+			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+			$sentWelcomeMessage = 1;
+		}
+	} elsif ($args->{flag} == 1) {
+		# PIN code query request.
+		$accountID = $args->{accountID};
+		debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
+
+		message T("Server requested PIN password in order to select your character.\n"), "connection";
+		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
+		$messageSender->sendLoginPinCode($args->{seed}, 0);
+	} elsif ($args->{flag} == 4) {
+		# PIN code has never been set before, so set it.
+		warning T("PIN password is not set for this account.\n"), "connection";
+		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
+
+		while ((($config{loginPinCode} =~ /[^0-9]/) || (length($config{loginPinCode}) != 4)) &&
+		  !($self->queryAndSaveLoginPinCode("Your PIN should never contain anything but exactly 4 numbers.\n"))) {
+			error T("Your PIN should never contain anything but exactly 4 numbers.\n");
+		}
+		$messageSender->sendLoginPinCode($args->{seed}, 1);
+	} elsif ($args->{flag} == 3) {
+		# should we use the same one again? is it possible?
+		warning T("PIN password expired.\n"), "connection";
+		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
+
+		while ((($config{loginPinCode} =~ /[^0-9]/) || (length($config{loginPinCode}) != 4)) &&
+		  !($self->queryAndSaveLoginPinCode("Your PIN should never contain anything but exactly 4 numbers.\n"))) {
+			error T("Your PIN should never contain anything but exactly 4 numbers.\n");
+		}
+		$messageSender->sendLoginPinCode($args->{seed}, 1);
 	} elsif ($args->{flag} == 8) {
 		# PIN code incorrect.
 		error T("PIN code is incorrect.\n");
@@ -2459,6 +2565,51 @@ sub inventory_items_stackable {
 			}
 		}
 	});
+}
+
+# Parse 0A3B with structure
+# '0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]],
+# Unpack effect info into HatEFID
+# @author [Cydh]
+sub parse_hat_effect {
+	my ($self, $args) = @_;
+	@{$args->{effects}} = map {{ HatEFID => unpack('v', $_) }} unpack '(a2)*', $args->{effect};
+	debug "Hat Effect. Flag: ".$args->{flag}." HatEFIDs: ".(join ', ', map {$_->{HatEFID}} @{$args->{effects}})."\n";
+}
+
+# Display information for player's Hat Effects
+# @author [Cydh]
+sub hat_effect {
+	my ($self, $args) = @_;
+
+	my $actor = Actor::get($args->{ID});
+	my $hatName;
+	my $i = 0;
+
+	#TODO: Stores the hat effect into actor for single player's information
+	for my $hat (@{$args->{effects}}) {
+		my $hatHandle;
+		$hatName .= ", " if ($i);
+		if (defined $hatEffectHandle{$hat->{HatEFID}}) {
+			$hatHandle = $hatEffectHandle{$hat->{HatEFID}};
+			$hatName .= defined $hatEffectName{$hatHandle} ? $hatEffectName{$hatHandle} : $hatHandle;
+		} else {
+			$hatName .= T("Unknown #").$hat->{HatEFID};
+		}
+		$i++;
+	}
+
+	if ($args->{flag} == 1) {
+		message sprintf(
+			$actor->verb(T("%s use effect: %s\n"), T("%s uses effect: %s\n")),
+			$actor, $hatName
+		), 'effect';
+	} else {
+		message sprintf(
+			$actor->verb(T("%s are no longer: %s\n"), T("%s is no longer: %s\n")),
+			$actor, $hatName
+		), 'effect';
+	}
 }
 
 1;
