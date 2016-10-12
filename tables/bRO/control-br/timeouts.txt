@@ -81,10 +81,8 @@ ai_dead_respawn 4
 ai_wipe_old 200
 ai_wipe_check 30
 
-# A cada x segundos, checar a fome do pet a fim de alimentá-lo
+# A cada x segundos, checar a fome do pet afim de alimentá-lo
 ai_petFeed 60
-# A cada x segundos, checar a fome do homúnculo a fim de alimentá-lo.
-ai_homunFeed 60
 
 # Enviar o pacote "sentar/levantar" (sit/stand) sempre a cada x segundos
 ai_sit 1
@@ -94,9 +92,9 @@ ai_sit_idle 10
 ai_stand_wait 0
 # Sentar depois de x segundos, depois de ter digitado o comando "sit"
 ai_sit_wait 0
-# Se tiver jogadores que não são do grupo próximo e você está para levantar-se devido à
-# suficiência de hp/sp, apenas levanta-se quando x segundos passarem
-ai_safe_stand_up 2
+# Se tiver jogadores que não são do grupo próximo e você está em pé devido ao
+# hp/sp
+
 
 ai_skill_use 0.75
 ai_skill_use_giveup 1
@@ -111,12 +109,13 @@ ai_teleport_idle 4
 ai_teleport_portal 2
 ai_teleport_hp 3
 ai_teleport_safe_force 120
+ai_teleport_search 3
 
 ai_teleport_retry 0.5
 ai_teleport_delay 0.5
 
 # Você provavelmente jamais precisará mudar os tempos seguintes
-ai_route_calcRoute 1
+ai_route_calcRoute 1ai_route_calcRoute 1
 ai_route_npcTalk 10
 
 ai_buyAuto 5

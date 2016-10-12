@@ -8,9 +8,9 @@
 # quais serão vendidos em NPC, ou deixados no inventário.
 #
 # Sintaxe:
-# (nome do item) (mínimo) (auto-armazém) (auto-venda) [por no carrinho] [pegar do carrinho]
+# (nome do item) (minimo) (auto-armazém) (auto-venda) [por no carrinho] [pegar do carrinho]
 # nome do item          : Nome do item (Digite i no console do openkore para saber o nome correto.)
-# mínimo                        : Quantidade mínima desse item que deseja manter no inventário.
+# minimo                        : Quantidade minima desse item que deseja manter no inventário.
 # auto-armazém         : Coloque 1 para voltar ao NPC da Kafra e adicionar esse item ao armazém.
 # auto-venda            : Coloque 1 para vender esse item em NPC.
 # por no carrinho       : Coloque 1 para adicionar esse item automaticamente no carrinho.
@@ -18,13 +18,13 @@
 #
 # No exemplo abaixo, vai ser vendido todos os jellopys, armazenar todas as facas e colocar
 # todas as flores no carrinho:
-#	Jellopy 0 0 1
-#	Faca 0 1 0
-#	Flor 0 0 0 1
+#       Jellopy 0 0 1
+#       Faca 0 1 0
+#       Flor 0 0 0 1
 #
 # Neste exemplo, será coletado Poções Vermelhas do carrinho se você tiver menos que 25
 # deste item em seu inventário:
-# 	Poção Vermelha 25 0 0 0 1
+#       Poção Vermelha 25 0 0 0 1
 #
 # O nome do item não é diferenciado por letras maiúsculas ou minúsculas. Apenas os itens encontrados
 # neste arquivo serão armazenados ou vendidos.
@@ -41,18 +41,18 @@
 #
 # As listas de auto-venda e auto-armazém são padronizadas. Modifique-as
 # como achar melhor.
-
-
+ 
+ 
 # Todos os itens não mencionados nesse arquivo serão automaticamente adicionados no armazém.
 all 0 1 0
-
-
+ 
+ 
 ##### ITENS DE SUPORTE E CURA #####
 # Configure-os conforme sua necessidade.
-
+ 
 Asas de Borboleta 10 1 0
 Asas de Mosca 100 1 0
-
+ 
 Poção Azul 0 1 0
 Poção Vermelha Compacta 50 1 0
 Poção Branca Compacta 50 1 0
@@ -62,22 +62,22 @@ Poção Vermelha 25 1 0
 Poção Laranja 25 1 0
 Poção Branca 25 1 0
 Poção Amarela 25 1 0
-
+ 
 ##### FLECHAS #####
 # Você pode precisar modificar esta linha se você é um arqueiro/caçador.
-
+ 
 Flecha 3000 1 0
-
-
-
+ 
+ 
+ 
 #########################
 ##### ITENS À VENDA #####
 #########################
-
-
+ 
+ 
 ##### EQUIPAMENTOS INÚTEIS #####
 # Equipamentos inúteis que serão vendidos por padrão.
-
+ 
 Anel de Caveira 0 0 1
 Anel de Diamante 0 0 1
 Anel de Flor 0 0 1
@@ -138,11 +138,11 @@ Traje de Gatuno 0 0 1
 Túnica 0 0 1
 Turbante 0 0 1
 Vembrassa 0 0 1
-
-
+ 
+ 
 ##### ARMAS INÚTEIS #####
 # Armas inúteis que serão vendidas por padrão.
-
+ 
 Açoite [2] 0 0 1
 Açoite [3] 0 0 1
 Adaga [2] 0 0 1
