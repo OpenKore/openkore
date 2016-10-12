@@ -58,6 +58,7 @@ sub map_login {
 		$args->{sex} = $config{sex};
 		$args->{mangle} = 1;
 	}
+	$args->{mangle} = 2;
 }
 
 sub map_loaded {

@@ -1,0 +1,614 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Apache</title>
+  <meta name="Description" content="Apache Menu options" />
+  <meta name="Keywords" content="Change,Apache,ports,Edit,Configuration,Vhosts,Files,The Uniform Server,MPG,Mike Gleaves,Ric,UniServer,Olajide,BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+
+<body id="p600">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/apache_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Apache</h1>
+</tr>
+</table>
+
+<p><b>Apache HTTP Server</b> is an open-source web server platform. It is one of the main components of The Uniform Server. Apache has been pre-configured to run as a local web server. There are several configuration options allowing the server to be accessed from an Intranet or the Internet. The Uniform Server Zero provides an easy-to-use control interface, UniController, allowing you to run servers as a standard program. UniController contains a menu specifically targeting Apache. From this menu you can put your server on-line, change ports or create a server certificate. This page covers all the menu options.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+
+   <table border="0">
+       <tr><td><a href="#Change Apache ports" >Change Apache ports</a></td>                   <td>- Change standard and ssl ports</td></tr>
+       <tr><td><a href="#Change Apache Root-folders" >Change Apache Root-folders</a></td>     <td>- www or ssl</td></tr>
+       <tr><td><a href="#Edit Configuration Files" >Edit Configuration Files</a></td>         <td>- httpd.conf or httpd-ssl.conf</td></tr>
+       <tr><td><a href="#Edit Basic and Modules" >Edit Basic and Modules</a></td>             <td>- Basic Configuration and Modules Enable/Disable</td></tr>
+       <tr><td><a href="#Access and Passwords" >Access and Passwords</a></td>                 <td>- Put servers on-line</td></tr>
+       <tr><td><a href="#Apache SSL" >Apache SSL</a></td>                                     <td>- Server Certificate and Key generator. SSL enable/disable</td></tr>
+       <tr><td><a href="#Apache Vhosts" >Apache Vhosts</a></td>                               <td>- Create and delete Vhost</td></tr>
+       <tr><td><a href="#Apache server Info - Status" >Apache server Info - Status</a></td>   <td>- Apache server information and status</td></tr>
+       <tr><td><a href="#Apache Logs" >Apache Logs</a></td>                                   <td>- View and delete logs</td></tr>
+       <tr><td><a href="#Apache Syntax Check -t" >Apache Syntax Check -t</a></td>             <td>- Check Apache config for errors</td></tr>
+       <tr><td><a href="#Start-up pages" >Start-up pages</a></td>                             <td>- Enable/Disable pages at start-up. Select pages</td></tr>
+   </table>
+
+ </div>
+</div>
+
+
+<a name="Change Apache ports"></a>
+<h2>Change Apache ports</h2>
+
+<p>The "Change Apache ports" menu allows you to specify the Apache standard and secure ports. Two sub-menus "Change Apache port" and "Change Apache SSL port" are provided to set the standard and secure ports respectively:</p>
+
+<p><b><i>Change Apache port</i></b></p>
+<p class="access">Apache &gt; Change Apache ports &gt; Change Apache port</p>
+<table>
+<tr valign="top">
+<td>
+ <ul>
+  <li>Current port setting is displayed.  </li>
+  <li>Change the port to required value. </li>
+  <li>Click the corresponding <b>Ok</b> button. </li>
+ </ul>
+</td>
+<td>
+  <img src="images/C11_change_apache_port.gif" alt="Change Apache Port" />
+</td>
+</tr>
+</table>
+
+
+<p><b><i>Change Apache SSL port</i></b></p>
+<p class="access">Apache &gt; Change Apache ports &gt; Change Apache SSL port</p>
+<table>
+<tr valign="top">
+<td>
+<ul>
+  <li>Current port setting is displayed.  </li>
+  <li>Change the port to required value. </li>
+  <li>Click the corresponding <b>Ok</b> button. </li>
+</ul>
+
+</td>
+
+<td>
+  <img src="images/C11_change_apache_ssl_port.gif" alt="Change Apache Port" />
+</td>
+</tr>
+
+</table>
+
+<p><b>Note 1:</b> For new port to become effective you must restart the servers.</p>
+
+<p><i>General Notes</i>:</p>
+<p>The Uniform Server Zero XIII sets port environment variables AP_PORT and AP_SSL_PORT and updates the user configuration file user_configuration.bat. Environment variables are used in the following Apache configuration files:</p>
+
+<p><b><i>Apache standard port</i></b> <code>${AP_PORT}</code></p>
+<ul>
+  <li>UniServerZ\core\apache2\conf\<b>httpd.conf</b>  </li>
+  <li>UniServerZ\core\apache2\conf\extra\<b>httpd-vhosts.conf</b> </li>
+</ul>
+
+<p><b><i>Apache ssl port</i></b> <code>${AP_SSL_PORT}</code></p>
+<ul>
+  <li>UniServerZ\core\apache2\conf\extra\<b>ssl.conf</b> </li>
+</ul>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Change Apache Root-folders"></a>
+<h2>Change Apache Root-folders</h2>
+
+<p>All public pages are served from a root folder; Uniform Server Zero XIII default is folder UniServerZ\<b>www</b> (Note also known as <b>htdocs</b> in a Unix environment). This root folder is the main servers root folder, Vhosts have their own unique root folder not covered here.</p>
+
+<p>The Uniform Server has a predefined folder (ssl root folder) that is reserved for https access. Secure pages are pages served from this root folder.</p>
+
+<p>Apache menu "Change Apache Root-folders" provides two sub-menus "Select new server Root-Folder (www)" and "Select new server Root-Folder (ssl)" for assigning a new folder to the main root folder and secure root folder respectively.</p>
+
+
+<p><b><i>Select new server Root-Folder (www)</i></b></p>
+<p class="access">Apache &gt; Change Apache Root-folders &gt; Select new server Root-Folder (www)</p>
+
+ <ul>
+   <li>Opens "Brows for Folder" dialog window. The current root folder is high lighted.
+   <li>Navigate to required new root folder. Note For a portable server ensure the root folder is below the main folder UniServerZ. </li>
+   <li>Highlight the required folder by clicking on it.  </li>
+   <li>Click OK button. A confirmation pop-up is displayed. </li>
+ </ul>
+
+
+<p><b><i>Select new server Root-Folder (ssl)</i></b></p>
+<p class="access">Apache &gt; Change Apache Root-folders &gt; Select new server Root-Folder (ssl)</p>
+
+ <ul>
+   <li>Opens "Brows for Folder" dialog window. The current root folder is high lighted.
+   <li>Navigate to required new root folder. Note For a portable server ensure the root folder is below the main folder UniServerZ. </li>
+   <li>Highlight the required folder by clicking on it.  </li>
+   <li>Click OK button. A confirmation pop-up is displayed. </li>
+ </ul>
+
+<p><b>Note 1:</b> For a new root folder to become effective you must restart the servers.</p>
+<p><b>Note 2:</b> The root path of a selected folder is internally stored either in a absolute or relative format.<br />
+ Full menu details; see <a href="apache_root_paths_abs_rel.html">Document root paths (Absolute vs Relative)</a> page.</p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Edit Configuration Files"></a>
+<h2>Edit Configuration Files</h2>
+
+<p><b><i>Edit httpd.conf</i></b></p>
+<p class="access">Apache &gt; Edit Configuration Files &gt; Edit httpd.conf</p>
+<p>Opens the configuration file in notepad, allowing you to directly edit the file.<br />
+<b>File:</b> UniServerZ\core\apache2\conf\<b>httpd.conf</b></p>
+
+<p><b><i>Edit httpd-ssl.conf</i></b></p>
+<p class="access">Apache &gt; Edit Configuration Files &gt; Edit httpd-ssl.conf</p>
+<p>Opens the configuration file in notepad, allowing you to directly edit the file.<br />
+<b>File:</b> UniServerZ\core\apache2\conf\extra\<b>httpd-ssl.conf</b></p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Edit Basic and Modules"></a>
+<h2>Edit Basic and Modules</h2>
+
+<p><b><i>Edit Basic Configuration</i></b></p>
+<p>This menu allows you to change commonly configured Apache options.<br />
+<b><i>Note</i>:</b> Full menu details; see <a href="apache_basic_configuration.html">Apache basic configuration</a> page.</p>
+
+<p><b><i>Apache Modules Enable/Disable</i></b></p>
+
+<table>
+ <tr valign="top">
+   <td>
+<p>This menu allows you to enable or disable Apache Modules.</p> 
+
+<p><b>NOTE: improper use can totally disable your server!</b>  Be sure you know what a module does before you enable or disable it.</p>  
+<p class="access">Apache &gt; Edit Basic and Modules &gt; Apache Modules Enable/Disable</p>
+
+<ul>
+ <li>If checkbox is unchecked: Module disabled</li>
+ <li>If checkbox is checked: Module enabled</li>
+</ul>
+<p><b>Note:</b> After changing state you must <b>restart</b> the Apache server for the new configuration to be recognised.</p>
+<p>This modifies the file<br /> UniServerZ\core\apache2\conf\<b>httpd.conf</b></p>
+   </td>
+
+   <td>
+<img src="images/C11_apache_modules_1.gif" alt="Apache modules enable disable" />
+   </td>
+ <tr>
+</table>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Access and Passwords"></a>
+<h2>Access and Passwords</h2>
+
+<p>How to put the servers on-line for public or intranet access and optionally restrict access using a name and password is covered in details on the following pages:</p>
+
+ <ul>
+   <li><a href="apache_access_www.html">Root folder www access and passwords</a> </li>
+   <li><a href="apache_access_ssl.html">Root folder ssl access and passwords</a> </li>
+ </ul>
+
+<p><b><i>Note</i>:</b> Both menu options require a <b>.htaccess</b> file in the root folder. If this file does not exist; user is informed accordingly and given the option to create one.</p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Apache SSL"></a>
+<h2>Apache SSL</h2>
+<p>Secure Sockets Layer (SSL) offers privacy for client-server communication. SSL establishes an encrypted tunnel using cryptography algorithms and keys through which other protocols such as HTTP are transported.</p>
+
+<p>By default, The Uniform Server Zero XIII installation has SSL disabled, for the reason of security. A certificate/key pair are required and must be unique to the particular server. After creating a new server certificate/key pair, SSL is automatically enabled in Apache's configuration file.</p>
+
+<p><b><i>Server Certificate and Key generator</i></b></p>
+<p class="access">Apache &gt; Apache SSL &gt; Server Certificate and Key generator</p>
+
+<p>Creating a Server Certificate and Key has been split and covered in detail on the following three pages:</p>
+
+ <ul>
+   <li><a href="apache_ssl.html">Apache - SSL</a> </li>
+   <li><a href="apache_server_cert_self_signed.html">Apache - Server Certificate Self-Signed</a> </li>
+   <li><a href="apache_free_server_cert.html">Apache - Free Server Certificate</a> </li>
+ </ul>
+
+<p><b><i>Enable SSL</i></b></p>
+<p class="access">Apache &gt; Apache SSL &gt; Enable SSL (Currently Disabled)</p>
+<table>
+  <tr>
+    <td>
+<p>After creating a self-signed certificate SSL is automatically enabled. However for testing you may wish to temporally disable ssl this sub-menu allows you to toggle ssl on and off.</p>
+      <ul>
+        <li><b>B)</b> Menu option toggles between:</li>
+          <ul>
+            <li>Enable SSL (Currently Disabled)</li>
+            <li>Disable SSL (Currently Enabled)</li>
+          </ul>
+      </ul>
+<p>After changing state the Apache server must be restarted.</p>
+    </td>
+    <td>
+      <img src="images/C11_apache_ssl_enable.gif" alt="Apache SSL Enable/Disablemodules enable disable" />
+    </td>
+  </tr>
+</table>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Apache Vhosts"></a>
+<h2>Apache Vhosts</h2>
+<p>The Uniform Server Zero XIII is configured for name-based virtual hosting. This allows you to run any number of web sites from a single IP address. </p>
+
+<p><b><i>Create Apache Vhost</i>:</b></p>
+<p>This sub-menu allows you to quickly create a virtual host.</p>
+<p class="access">Apache &gt; Apache Vhosts &gt; Create Apache Vhost</p>
+
+<p>Creating a Vhost requires only two form entries, a server root folder and a host name. If the root folder does not exist clicking the Create Vhost button creates it in the main vhosts folder UniServerZ\<b>vhosts</b>. A Vhost section is created in the Vhost configuration file (httpd-vhosts.conf), an entry is written UniServer's PAC file and a IP address domain name pair is written to the Windows host file if this option is enabled. A .htaccess and favicon.ico file are created in the new root folder. Here is a summary of the steps:</p>
+
+<table>
+<tr valign="top">
+<td>
+
+<ul>
+<li><b>A)</b> Enter a folder name you wish to use as your server root folder.</li>
+
+<li><b>B)</b> Enter your server name (host name). This is the domain name you registered with a registrar, for example <b>fred.com</b>. It is the name you enter in a browser to access your web site (excluding the <b>http://</b> part).</li>
+
+<li><b>C)</b> Click <b>Create Vhost</b> button to create your virtual host.</li>
+</ul>
+<p><i>Note</i>: For new configuration to be recognised you <b>must restart</b> your Apache server.</p>
+
+</td>
+<td>
+<img src="images/C11_vhost_create.gif" alt="Create Vhost">
+</td>
+</tr>
+</table>
+
+
+<table cellpadding="4">
+ <tr valign="top">
+<td>
+<p><b>Note: <i>Internet access</i></b> <br />
+
+The .htaccess file created in the new root folder restricts access to local host.<br />
+To allow others on the Internet to access your website this file requires<br />
+editing as shown on right: </p>
+
+</td>
+
+  <td>
+<p><i>Locate these lines</i>:</p>
+<pre>
+Order Deny,Allow
+Deny from all
+Allow from 127.0.0.1
+Allow from ::1
+</pre>
+  </td>
+  <td>
+<p><i>Comment out the lines as shown</i>:</p>
+<pre>
+#Order Deny,Allow
+#Deny from all
+#Allow from 127.0.0.1
+#Allow from ::1
+</pre>
+  </td>
+ </tr>
+</table>
+
+
+
+<p><b><i>Delete Apache Vhost</i>:</b></p>
+
+<table>
+<tr valign="top">
+<td>
+
+
+This sub-menu allows you to quickly delete a virtual host.<br />
+<p class="access">Apache &gt; Apache Vhosts &gt; Delete Apache Vhost</p>
+
+<ul>
+<li><b>A)</b> From the list select a Vhost you wish to delete.</li>
+<li><b>B)</b> Click <b>Delete Vhost</b> button. </li>
+<li><b>C)</b> To cancel click <b>Cancel Selection </b> button.</li>
+</ul>
+<p>Note: Deleting a Vhost does not delete its root folder this requires user confirmation. A pop-up is displayed informing user the Vhost was delete and to confirm if the root folder should be deleted.</p>
+
+</td>
+<td>
+<img src="images/C11_vhost_delete.gif" alt="Delete Vhost">
+</td>
+</tr>
+</table>
+
+<p><i>Note</i> 1: Deleting a Vhost removes its corresponding entry in UniServer's PAC file and PC hosts file.<br />
+<i>Note</i> 2: For detailed information see <a href="apache_vhosts.html">Apache Vhosts</a></p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Apache server Info - Status"></a>
+<h2>Apache server Info - Status</h2>
+
+<p>These sub-menu options provide convenient short cuts that allow you to view the server status and other important information. They are shown along with a small extract of each file. Each menu option redirects your browser to the appropriate page. You can also type this address directly into your browser.</p>
+
+
+<table>
+
+<tr valign="top">
+<td>
+  <p><b><i>Apache server-info</i>:</b><br />
+  This sub-menu allows you to quickly view server information<br />
+  <p class="access">Apache &gt; Apache server Info - Status &gt; Apache server information</p>
+  <p>Menu item <b>URL:</b> http://localhost/server-info</p>
+</td>
+
+<td>
+<pre>
+Server Settings
+Server Version: Apache/2.4.23 (Win32) PHP/7.0.8 OpenSSL/1.0.2h
+Apache Lounge VC14 Server built: Jul 1 2016 11:09:37
+Server loaded APR Version: 1.5.2
+Compiled with APR Version: 1.5.2
+Server loaded APU Version: 1.5.4
+Compiled with APU Version: 1.5.4
+Module Magic Number: 20120211:61
+Hostname/port: localhost:80
+Timeouts: connection: 60    keep-alive: 5
+MPM Name: WinNT
+MPM Information: Max Daemons: 64 Threaded: yes Forked: no
+Server Architecture: 32-bit
+</pre>
+</td>
+</tr>
+
+
+<tr valign="top">
+<td>
+  <p><b><i>Apache server-status</i>:</b><br />
+  This sub-menu allows you to quickly view server status<br />
+  <p class="access">Apache &gt; Apache server Info - Status &gt; Apache server status</p>
+  <p>Menu item <b>URL:</b> http://localhost/server-status</p>
+</td>
+
+<td>
+<pre>
+Apache Server Status for localhost (via ::1)
+
+Server Version: Apache/2.4.23 (Win32) PHP/7.0.8 OpenSSL/1.0.2h
+Server MPM: WinNT
+Apache Lounge VC14 Server built: Jul 1 2016 11:09:37
+
+Current Time: Saturday, 30-Jul-2016 10:39:15 GMT Summer Time
+Restart Time: Saturday, 30-Jul-2016 10:35:00 GMT Summer Time
+Parent Server Config. Generation: 1
+Parent Server MPM Generation: 0
+Server uptime: 4 minutes 14 seconds
+Server load: -1.00 -1.00 -1.00
+Total accesses: 11 - Total Traffic: 81 kB
+.0433 requests/sec - 326 B/second - 7.4 kB/request
+1 requests currently being processed, 149 idle workers
+</pre>
+</td>
+</tr>
+
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Apache Logs"></a>
+<h2>Apache Logs</h2>
+
+<p>The following sub-menu options provide convenient short cuts allowing you to view server log files. If you are experiencing problems with the server, these should be your first port of call; they may shed light on a particular issue.</p>  
+
+<p>Below are the paths to each log file along with a small extract:</p>
+
+<table>
+<tr valign="top">
+<td>
+  <p><b><i>View Apache Error Log</i>:</b><br />
+  This sub-menu allows you to quickly view server status<br />
+  <p class="access">Apache &gt; Apache Logs &gt; View Apache Error Log</p>
+  <p>Location:UniServer\core\apache2\logs\<b>error.log</b></p>
+</td>
+
+<td>
+<pre>
+[Sat Jul 30 10:35:00.512616 2016] [mpm_winnt:notice] [pid 420:tid 356] AH00455:
+[Sat Jul 30 10:35:00.512616 2016] [core:notice] [pid 420:tid 356] AH00094: Command line:
+[Sat Jul 30 10:35:00.512616 2016] [mpm_winnt:notice] [pid 420:tid 356] AH00418: Parent:
+[Sat Jul 30 10:35:02.208754 2016] [mpm_winnt:notice] [pid 3068:tid 396] AH00354: Child:
+</pre>
+</td>
+</tr>
+
+<tr valign="top">
+<td>
+  <p><b><i>View Apache Access Log</i>:</b><br />
+  This sub-menu allows you to quickly view server status<br />
+  <p class="access">Apache &gt; Apache Logs &gt; View Apache Access Log</p>
+  <p>Location:UniServer\core\apache2\logs\<b>access.log</b></p>
+</td>
+
+<td>
+<pre>
+::1 - - [30/Jul/2016:10:35:02 +0100] "GET /index.php HTTP/1.1" 200 1227 "-" 
+::1 - - [30/Jul/2016:10:35:02 +0100] "GET /css/style.css HTTP/1.1" 200 735 
+::1 - - [30/Jul/2016:10:35:02 +0100] "GET /images/padlock2.gif HTTP/1.1" 200 1144 
+::1 - - [30/Jul/2016:10:35:02 +0100] "GET /images/logo.png HTTP/1.1" 200 28212 
+::1 - - [30/Jul/2016:10:35:02 +0100] "GET /images/branding_bg.png HTTP/1.1" 200 2889 
+</pre>
+</td>
+</tr>
+
+<tr valign="top">
+<td>
+  <p><b><i>View Apache SSL Error Log</i>:</b><br />
+  This sub-menu allows you to quickly view server status<br />
+  <p class="access">Apache &gt; Apache Logs &gt; View Apache SSL Error Log</p>
+  <p>Location:UniServer\core\apache2\logs\<b></b>error_ssl.log</p>
+</td>
+
+<td>
+<pre>
+
+</pre>
+</td>
+</tr>
+
+<tr valign="top">
+<td>
+  <p><b><i>View Apache SSL Access Log</i>:</b><br />
+  This sub-menu allows you to quickly view server status<br />
+  <p class="access">Apache &gt; Apache Logs &gt; View Apache SSL Access Log</p>
+  <p>Location:UniServer\core\apache2\logs\<b>access_ssl.log</b></p>
+</td>
+
+<td>
+<pre>
+::1 - - [30/Jul/2016:10:49:05 +0100] "GET / HTTP/1.1" 200 1247
+::1 - - [30/Jul/2016:10:49:05 +0100] "GET /css/style.css HTTP/1.1" 200 735
+::1 - - [30/Jul/2016:10:49:05 +0100] "GET /images/padlock.gif HTTP/1.1" 200 1029
+::1 - - [30/Jul/2016:10:49:05 +0100] "GET /images/logo.png HTTP/1.1" 200 28212
+::1 - - [30/Jul/2016:10:49:05 +0100] "GET /images/branding_bg.png HTTP/1.1" 200 2889
+::1 - - [30/Jul/2016:10:49:05 +0100] "GET /favicon.ico HTTP/1.1" 200 584
+</pre>
+</td>
+</tr>
+
+</table>
+
+<p><b><i>Delete above logs</i>:</b></p>
+<p>This sub-menu allows you to quickly delete the above log files.</p>
+<p class="access">Apache &gt; Apache Logs &gt; Delete above logs</p>
+<p><i>Note</i>: Alternative to "Delete above logs" is to use <a href="general.html#Clean-up delete logs">Clean-up delete logs</a> you can add additional files and folder content to delete.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Apache Syntax Check -t"></a>
+<h2>Apache Syntax Check -t</h2>
+
+<p>The <b>Apache Syntax Check</b> menu button initiates a syntax check on Apache's configuration files.</p>
+<p class="access">Apache &gt; Apache Syntax Check -t</p>
+
+<p> The results are displayed in a pop-up message box. Any errors found require correction before the Apache server will start.<br />
+ The check is equivalent to the following manual procedure:</p>
+
+<ol>
+<li> Start Server Console: - Opens a command window</li>
+  <li>In the console window type: <b>httpd_z.exe -t</b>  </li>
+</ol>
+<p><b>Note:</b> If you previously changed the Apache binary name use this name instead of httpd_z.exe in step 2. </p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Start-up pages"></a>
+<h2>Start-up pages</h2>
+
+<p>This menu option enables or disables displaying of two predefined pages at Apache start-up.<br />
+Sub-menu option "Dispaly pageN at start-up" toggles between displaying and not displaying pre-selected page at start-up<br />
+Sub-menu option "Select pageN to display" opens a file selection menu allowing you to select (redefine) a page to display.<br />
+
+<table>
+ <tr valign="top">
+  <td>
+<p><b><i>Display page1 at start-up</i></b></p>
+
+<p class="access">Apache &gt; Start-up pages &gt; Display page1 at start-up</p>
+<p>This toggle sub-menu enables or disables page1 display at<br />
+ Apache server start-up.</p>
+
+<p>Check marker indicates option selected and display page at start-up.</p>
+
+  </td>
+  <td>
+<p><b><i>Select page1 to display</i></b></p>
+<p class="access">Apache &gt; Start-up pages &gt; Select page1 to display</p>
+<p> This sub-menu item opens a file select dialog.<br />
+    Select a web-page to display at Apache server start-up.</p>
+  <ul>
+    <li>Note: Selection is restricted to server-root folders<br /> and aliased folders mapped in Apache server.</li>
+    <li>Default: splash page  (folder home)</li>
+  </ul>
+  </td>
+ </tr>
+
+ <tr valign="top">
+  <td>
+<p><b><i>Display page2 at start-up</i></b></p>
+<p class="access">Apache &gt; Start-up pages &gt; Display page2 at start-up</p>
+<p>This toggle sub-menu enables or disables page2 display at<br />
+Apache server start-up.</p>
+
+<p>Check marker indicates option selected and display page at start-up.</p>
+
+  </td>
+  <td>
+<p><b><i>Select page2 to display</i></b></p>
+<p class="access">Apache &gt; Start-up pages &gt; Select page2 to display</p>
+<p> This sub-menu item opens a file select dialog.<br />
+    Select a web-page to display at Apache server start-up.</p>
+  <ul>
+    <li>Note: Selection is restricted to server-root folders<br /> and aliased folders mapped in Apache server.</li>
+    <li>Default: index.php  (root-folder www)</li>
+  </ul>
+  </td>
+ </tr>
+
+</table>
+
+<p><b><i>Note</i>:</b></p>
+<p>If not already running the default browser is automatically started and an enabled page is displayed. <br />
+Alternatively if portable browsers module installed and not already running is automatically started and an enabled page is displayed. </p>
+
+<hr />
+<div align="center">--oOo--</div>
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

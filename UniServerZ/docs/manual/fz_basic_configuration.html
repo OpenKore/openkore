@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>FileZilla basic configuration</title>
+  <meta name="Description" content="This page covers creating, deleting and modifying FileZilla Server user accounts although written specificity for Uniform Server the same principals apply equally to a standard installation of FileZilla" />
+  <meta name="Keywords" content="creating,deleting,modifying,FileZilla,Server,user,accounts,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<style type="text/css">
+/*****************************************/
+.heading {
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #ffffff;
+ background-color:  #2F2F76;
+ font-size: 13px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.td_sub{
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #000000;
+ background-color:  #f0f0f0;
+ font-size: 12px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+/*****************************************/
+</style>
+
+
+<body id="p1810">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+<script language="javascript" src="common/portable_filezilla_server_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>FileZilla basic configuration</h1>
+</tr>
+</table>
+
+<p>This page covers creating, deleting and modifying FileZilla Server user accounts although written specificity for Uniform Server the same principals apply equally to a standard installation of FileZilla.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Run FileZilla - Portable mode">Run FileZilla - Portable mode</a></li>
+   <li><a href="#Stop and uninstall service">&nbsp;Stop and uninstall service</a></li>
+   <li><a href="#Start Portable FileZilla and Interface">&nbsp;Start Portable FileZilla and administration Interface</a></li>
+
+   <li><a href="#FileZilla Admin Interface Sections">FileZilla Admin Interface Sections</a></li>
+   <li><a href="#Delete a User">Delete a User</a></li>
+   <li><a href="#Add a User">Add a User</a></li>
+
+   <li><a href="#Quick Test">Quick Test</a></li>
+   <li><a href="#Local network access">&nbsp;&nbsp;Local network access</a></li>
+   <li><a href="#Internet access">&nbsp;&nbsp;Internet access</a></li>
+
+
+   <li><a href="#Problems">Problems</a></li>
+   <li><a href="#FTP Clients">FTP Clients</a></li>
+   <li><a href="#"></a></li>
+
+   </ul>
+ </div>
+</div>
+
+
+<a name="Run FileZilla - Portable mode"></a>
+<h2>Run FileZilla - Portable mode</h2>
+
+<p>To configure The FileZilla server always run the server in portable mode. If the server is currently running as a service stop and uninstall the FileZilla service as follows:</p>
+
+<a name="Stop and uninstall service"></a>
+<h3>Stop and uninstall service</h3>
+
+      <ul>
+        <li>Navigate to the folder \fz_server\<b>fz_portable</b></li>
+        <li>Locate file <b>zilla_service_stop.bat</b></li>
+
+        <li>Windows Vista, Windows 7, Windows 8 or Windows 10</li>
+        <ul>
+          <li>Require enhanced administration rights:</li>
+          <li><b>Right click</b> on file <b>zilla_service_start.bat</b> select <b>zilla_service_stop.bat</b></li>
+        </ul>
+        <li>Displays "Service stopped and uninstalled" press any key, closes command window.</li>
+      </ul>
+
+
+<a name="Start Portable FileZilla and administration Interface"></a>
+<h3>Start Portable FileZilla and administration Interface</h3>
+
+
+<table>
+<tr valign="top">
+<td>
+
+
+
+ <ul>
+   <li>Run FZ Controller:</li>
+     <ul>
+       <li>Navigate to the folder \<b>fz_server</b>.</li>
+       <li>Locate the file <b>UniFzController.exe</b> and double click.</li>
+       <li>Opens UniServer FileZilla Controller shown on the right.</li>
+     </ul>
+  <li><b>A)</b> Run FileZilla Server: Click <i>Start FZ Server</i> button runs server in background.</li>
+  <li><b>B)</b> Run FileZilla Interface: Click <i>Sart Interface</i> button. Opens the FileZilla administration Interface.</li>
+ </ul>
+
+</td>
+
+<td>
+   <img src="images/filezilla/fz_controller.png" alt="FileZilla Controller" />
+</td>
+</tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="FileZilla Admin Interface Sections"></a>
+<h2>FileZilla Admin Interface Sections</h2>
+
+<p>The admin interface provides access to three server sections <i>setting</i>, <i>users</i> and <i>groups</i>. Two methods are available to select these, either via the drop down menu or the top row of icons.
+</p>
+
+<table>
+ <tr>
+  <td>
+
+<ul>
+  <li>A) <b>Settings</b>: dropdown menu</li>
+  <li>B) <b>Users</b>: dropdown menu  </li>
+  <li>C) <b>Groups</b>: dropdown menu </li>
+</ul>
+  </td>
+<td>
+  <img src="images/filezilla/fz_admin_sections_a.png" alt="FileZilla Admin Sections A" />
+</td>
+
+<td>
+<ul>
+  <li>A1) <b>Settings</b>: Top row icon </li>
+  <li>B1) <b>Users</b>: Top row icon    </li>
+  <li>C1) <b>Groups</b>:  Top row icon  </li>
+</ul>
+  </td>
+
+<td>
+<img src="images/filezilla/fz_admin_sections_b.png" alt="FileZilla Admin Sections B" />
+</td>
+
+ </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Delete a User"></a>
+<h2>Delete a User</h2>
+
+<table>
+ <tr valign="top">
+  <td>
+
+<p>If you wish you can delete the pre-configured user. The following shows how to delete any user. </p>
+
+<ul>
+  <li><b>B)</b> Select Users <b>Edit &gt; Users</b></li>
+  <li><b>D)</b> Select User to delete (ensure user is highlighted)</li>
+  <li><b>E)</b> Click <b>Remove</b> button. Deletes selected user.</li>
+</ul>
+
+<p><b><i>Note</i>:</b> Although you can delete the pre-configured user it is recommended to leave it. Once the password   has been changed it is save to use.</p>
+
+  </td>
+<td>
+  <img src="images/filezilla/fz_admin_delete_user.png" alt="FileZilla Delete A User" />
+</td>
+
+ </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Add a User"></a>
+<h2>Add a User</h2>
+
+<table>
+ <tr valign="top">
+  <td>
+
+<p> To add a new user we first create a new user and set a password.</p>
+
+
+<p><b><i>Create a user</i>:</b></p>
+<ul>
+  <li><b>B)</b> Select Users <b>Edit &gt; Users</b></li>
+  <li><b>F)</b> Select menu item <b>General</b> note selected by default</li>
+
+  <li><b>G)</b> Click <b>Add</b> button. The <i>Add user account</i> pop-up displayed</li>
+  <li><b>H)</b> Enter a new user name.</li>
+  <li><b>I)</b> Click OK button, pop-up closes.</li>
+</ul>
+
+<ul>
+  <li><b>J)</b> Click <b>Enable account</b> check box  - selected by default</li>
+  <li><b>K)</b> Click <b>Password</b> check box </li> 
+  <li><b>L)</b> Enter a password for that user.</li>
+</ul>
+
+  </td>
+<td>
+  <img src="images/filezilla/fz_admin_add_user.png" alt="FileZilla Add A User" />
+</td>
+</tr>
+
+<tr valign="top">
+<td>
+
+<p>After creating a user you must assign a home folder (directory) to that user.</p>
+<p><b><i>Assign a folder to user</i>:</b></p>
+
+
+<ul>
+  <li> <b>M)</b> Click <b>Shared folders</b> </li>
+  <li> <b>N)</b> Ensure <b>required user</b> is selected</li>
+  <li> <b>O)</b> Click <b>Add</b> button.
+    <ul>
+      <li>In the pop-up window select a folder to share.</li>
+    </ul>
+
+
+  <li> <b>P)</b> The folder selected is displayed.</li>
+    <ul>
+      <li>To the left of this make sure <b>“H”</b> is displayed</li>
+      <li><b>Q)</b> If not clcik <b>Set as home dir</b></li>
+    </ul>
+
+  <li><b>R)</b> Select file privileges you wish to allow</li>
+  <li><b>S)</b> Select directory privileges you wish to allow</li>
+  <li><b>T)</b> Click <b>OK</b> button to finish. </li>
+</ul>
+
+
+
+  </td>
+<td>
+  <img src="images/filezilla/fz_admin_add_user_2.png" alt="FileZilla Add A User" />
+</td>
+
+ </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Quick Test"></a>
+<h2>Quick Test</h2>
+
+<p>Assuming you are running the server on your <b>local machine</b> you can quickly test the account.<br />
+Type the following into your browser:</p>
+
+<ul>
+  <li><b>ftp://localhost/</b>  a pop-up is displayed enter name <b>fred</b> and password you entered in step <b>L)</b> above.</li>
+  <li>A page is displayed showing files and folders contained in your shared folder <b>P)</b>.</li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Local network access"></a>
+<h3>Local network access</h3>
+
+<p>Anyone on your local network can access the ftp server by typing <b>ftp://your_ip_address</b> into their browser; they will be challenged for a user name and password.</p>
+
+<p>To find your IP address use a command prompt:</p>
+ <ul>
+   <li> Open command prompt start &gt; run &gt; type in cmd &gt; clik OK</li>
+   <li> In the command window type <b>ipconfig /all</b></li>
+   <li> Look for your IP address. If you are using a wireless network the address will be similar to this <b>192.168.1.6</b> </li>
+   <li> While in the command window look for <b>Host Name</b> (my PC name is mpg2) the name of your PC<br>(note sometimes this is not set-up)</li>
+</ul>
+
+<p>A user can use either HostName or IP address to access your FTP server for example:<br />
+A user on your network would then type <b>ftp://192.168.1.6/</b> Or <b>ftp://mpg2/</b>
+</p>
+
+
+<p>Neither of the above is very easy on the eye an alternative is to get each user to add a memorable name to their <b>hosts file</b>.<br />
+ For example under localhost add a line as shown below:</p>
+
+<p>127.0.0.1 localhost<br>
+<b>192.168.1.6 my_ftp_server</b>
+</p><p>They must substitute 192.168.1.6 for your IP address and replace <b>my_ftp_server</b> with a <b>memorable name</b>.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Internet access"></a>
+<h3>Internet access</h3>
+
+<p>To access your FTP server from the Internet a user would type the following into a browser:<br />
+<b>ftp://your_domain_name/</b> alternatively <b>ftp://your_external_ip_address</b> </p>
+
+
+<p><b><i>On-line help</i>:</b><br />
+Testing an FTP server for online access can be problematic however there are two useful online services that can help:</p>
+
+ <ul>
+   <li>To find your external IP address use:  <a target="_blank" href="http://whatsmyip.org/">Whatsmyip</a></li>
+   <li>To test FTP access use: <a target="_blank"  href="http://www.g6ftpserver.com/en/ftptest">Gene6 FTP Server Test</a>, its free for anyone to use.</li>
+ </ul>
+
+
+<p><b><i>Ports</i>:</b><br />
+If you have a direct Internet connection there should be no problems with access.<br>However if you are using a router you need to <b>forward</b> ports <b>20 and 21</b> every router is different hence pay a visit to <a  target="_blank" href="http://portforward.com/">PortForwrd</a> for detailed instructions.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Problems"></a>
+<h2>Problems</h2>
+
+<p>You may be unlucky and have a service provider that blocks the common FTP ports. In this event try changing the ports. Do not allow your  firewall to block Internet access otherwise you will need to manually enable access.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="FTP Clients"></a>
+<h2>FTP Clients</h2>
+
+<p>Using a browser allows for quick testing however an FTP client offers more flexibility my personal favourite is FireFTP running on Firefox and
+ <a target="_blank" href="http://portableapps.com/news/2014-09-09--filezilla-portable-3.9.0.5-released">FileZilla Portable Client</a>. It’s a personal taste hence choose one that suits your needs.</p>
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

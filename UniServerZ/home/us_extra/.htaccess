@@ -1,0 +1,16 @@
+#------------------------------------------------------------------------------
+# This file provides server security limiting access to the localhost only.
+# Comment next four lines to deactivate. (Allows external access)
+#------------------------------------------------------------------------------
+
+Order Deny,Allow
+Deny from all
+Allow from 127.0.0.1
+Allow from ::1
+
+#------------------------------------------------------------------------------
+# To allow execution of cgi scripts in this directory uncomment next two lines.
+#------------------------------------------------------------------------------.
+
+AddHandler cgi-script .bat .exe .pl .cgi
+Options +ExecCGI +FollowSymLinks

@@ -1,0 +1,12 @@
+#--------------------------------------------------------------------------
+# Uniform Server Splash page .htaccess
+# This file provides server security limiting access to the localhost only.
+# Comment next four lines to deactivate. (Allows external access)
+#--------------------------------------------------------------------------
+
+Order Deny,Allow
+Deny from all
+Allow from 127.0.0.1
+Allow from ::1
+
+Options +FollowSymLinks

@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Apache Basic Config</title>
+  <meta name="Description" content="Apache Basic Config" />
+  <meta name="Keywords" content="Module,Host,Name,Resolution,Order,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p610">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/apache_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Apache Basic Configuration</h1>
+</tr>
+</table>
+
+<p>This menu allows you to change commonly configured Apache options.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Overview" >Overview</a></li>
+   <li><a href="#Server Name" > Server Name</a></li>
+   <li><a href="#Host Name Resolution Order" > &nbsp;&nbsp;Host Name Resolution Order</a></li>
+   <li><a href="#Server Admin Email" > Server Admin Email</a></li>
+   <li><a href="#Directory Index Files" > Directory Index Files</a></li>
+   <li><a href="#Server Side Includes" > Server Side Includes</a></li>
+   <li><a href="#Server Signature" > Server Signature</a></li>
+   <li><a href="#Listen Port" > Listen Port</a></li>
+   </ul>
+ </div>
+</div>
+
+<a name="Overview"></a>
+<h2>Overview</h2>
+
+<p>The Uniform Server Zero's default installation configures the main server with the values shown at right.</p>
+<p class="access">Apache &gt; Edit Basic and Modules &gt; Edit Basic Configuration</p>
+
+
+<table>
+<tr>
+<td>
+
+<ul>
+  <li>1) <b>Server Name</b> sets the hostname of your server; for example, fred.com</li>
+  <li>2) <b>Admin E-mail</b> Use a real e-mail address for users to contact; for example, admin@fred.com </li>
+  <li>3) <b>Directory Index Files</b> This list is searched when a client requests an index page without explicitly specifying it. If a match is found that index page is served. </li>
+
+  <li>4) Apache processes files with the extensions listed; any SSI <b>Server Side Includes</b> directives found in these files are executed. </li>
+
+  <li>5) <b>Server Signature</b> This allows Apache to add a footer line for server-generated documents (Value is On or Off). </li>
+
+  <li>6) <b>Listen Port</b> This tells Apache to listen to a specific port and to accept incoming requests only on that specified port. </li>
+
+  <li>7) <b>Update Configuration</b> button applies the changes.</li>
+</ul>
+<p>Note 1: For the new settings to become effective you must restart the server.<br />
+</td>
+<td>
+   <img src="images/C11_apache_basic_config_1.gif" alt="Apache basic config">
+</td>
+</tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Server Name"></a>
+<h2>Server Name</h2>
+
+<p>Server Name sets the hostname of your server. (This is used when creating redirection URLs).<br />
+If you put your server online, change this to your web address. For example, if you registered the domain <b>www.fred.com</b>, then use that.</p>
+
+<p>UniServer Zero XIII does not directly change the server name in configuration files. It first sets the environment variable US_SERVERNAME which is picked-up by configuration files using ${US_SERVERNAME}. Both the main configuration file httpd.conf and httpd-vhosts.conf use this variable. It is the default host in the Vhost configuration file.</p>
+
+<p>To test your web site without being connected to the Internet and to prevent your browser complaining that the "Server cannot be found", you need to use one of the following options. UniServer Zero XIII by default uses both option 1 and option2.</p>
+
+
+<p><b><i>Option</i> 1:</b> To test your web site without being connected to the Internet Uniform Server Zero XIII uses a PAC file. For the above example, the following line is automatically added to this file: &nbsp;&nbsp;<code>if (shExpMatch(host, "*www.fred.com")) return "PROXY 127.0.0.1:80";</code></p>
+
+<ul>
+  <li> Changing the server name using Apache Basic Configuration menu the PAC file is automatically updated.</li>
+  <li> If you are using the Portable Browser module, PAC file support is enabled by default.</li>
+  <li> However if you are using the PCs default browser, you need to enable PAC file support see page <a href="portable_browser_deploying_pac_file.html">Deploying PAC</a> for details.</li>
+</ul>
+
+
+<p><b><i>Option</i> 2:</b> To test your web site without being connected to the Internet Uniform Server Zero XIII adds an entry to your PC’s hosts file. For the above example, the following line is automatically added to this file: <code>127.0.0.1 www.fred.com</code></p>
+
+<p>Note: This option is not portable for portability use option 1. However before changing Server Name or creating a Vhost disable option 2 as follows:</p>
+
+
+<ul>
+  <li> Edit file C:\UniServerZ\home\us_config\<b>us_config.ini</b></li>
+  <li> Locate section [HOSTS]</li>
+  <li> Change the following line: EditHostsFileEnabled=True To: EditHostsFileEnabled=False</li>
+</ul>
+
+
+<p><i>General note:</i><br />
+ If you decide at a latter date to add an entry to the hosts file either use the Uniform Server edit hosts file <a href="extra.html#Edit Win hosts file">utility</a> or manually enter the IP address/name pair as follows:</p>
+
+<ul>
+  <li> Navigate to folder: <b>C:\WINDOWS\system32\drivers\etc</b></li>
+  <li> Open the file <b>hosts</b></li>
+  <li> At the end of this file, add: <b>127.0.0.1 www.fred.com</b> (use your own domain)</li>
+  <li> Save this file. Now when you type <b>http://www.fred.com</b> (your domain) into your browser address bar you will be able to view your web site.</li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Host Name Resolution Order"></a>
+<h3>Host Name Resolution Order</h3>
+
+<p>The following is a general sequence for host name resolution:</p>
+<ol>
+  <li> Browser checks to see if the name already resolved.</li>
+  <li> Not resolved  searches a local PAC file </li>
+  <li> Not resolved searches a local hosts file </li>
+  <li> Not resolved Domain Name System (DNS) servers are queried.</li> 
+  <li> Still not resolved, NetBIOS name resolution sequence is used.</li>
+</ol>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Server Admin Email"></a>
+<h2>Server Admin Email</h2>
+
+<p>The Server Admin Email address is included with some automatically generated error pages sent to a client (user). Use a real e-mail address for users to contact you in case problems are encountered.</p>
+
+<p>Note: To eliminate common typing errors the e-mail address format is checked. The following are examples of correct format:  example@example.co.uk, example@fred.com and example@example.eu Error checking is a complex procedure and it is possible your valid e-mail address will be rejected. In this situation you  need to edit the configuration files UniServerZ\core\apache2\conf\httpd.conf and or UniServerZ\core\apache2\conf\extra\httpd-vhosts.conf as appropriate.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Directory Index Files"></a>
+<h2>Directory Index Files</h2>
+
+<p>When a client requests an index page without explicitly specifying it (for example <b>www.fred.com</b>) the list of <b>index pages</b> specified in <b>Direct Index Files</b> is searched in the order left to right. If a match is found, that index page is served. The first one that matches is served and any others that may be in the same folder are ignored. </p>
+
+<p><b>Default list:</b> index.html index.shtml index.html.var index.htm index.php3 index.php index.pl index.cgi</p>
+
+
+<p>The Uniform Server’s default installation uses index.php, which is found in the root folder <b>www</b>. If you insert your own <b>index.html</b> page, this will be picked up first, overriding <b>index.php</b></p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Server Side Includes"></a>
+<h2>Server Side Includes</h2>
+
+<p>SSI is a server side scripting language allowing you to include the contents of a file into another using SSI commands.</p>
+
+<p>To insert these commands, a special comment tag is used; for example:</p>
+
+<table>
+<tr>
+
+<td>
+<pre>
+&lt;!--#include file="external.htm"--&gt;
+&lt;!--#include virtual="/external.htm"--&gt;
+</pre>
+</td>
+
+<td>
+The first command assumes that the file is located in the same directory as the document containing it, while the second syntax uses an absolute reference to "external.htm", starting from your root HTML directory.
+</td>
+
+</tr>
+</table>
+
+<p>You can insert these into an html file, but in order to process them, Apache needs to know which files types to use. The standard file extensions are:
+<ul>
+<li> .shtml .shtm .sht</li>
+</ul>
+<p>You can specify any file extension you like, even .htm and .html, but there is a small processing hit for each file accessed.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Server Signature"></a>
+<h2>Server Signature</h2>
+
+<p>This allows Apache to add a footer line for server-generated documents. It contains the server version number, server name, and creates a 
+"mailto:" reference to ServerAdmin.</p>
+
+<p>For security reasons, this information is normally not displayed except for testing and the default is set to <b>off</b>.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Listen Port"></a>
+<h2>Listen Port</h2>
+
+<p>This tells Apache to listen to a specific port and to accept incoming requests only on that port. Web page servers and all web browsers default to this standard port (80), which is reserverd for World Wide Web traffic (WWW). When a user types an address into a browser, the port is automatically assumed unless overridden, as explained later.</p>
+
+<p>Similar to the server name UniServer Zero XIII does not directly change the server port  in configuration files. It first sets the environment variable AP_PORT which is picked-up by configuration files using ${AP_PORT}. Both the main configuration file httpd.conf and httpd-vhosts.conf use this variable.</p>
+
+
+<p><b>Port 80 already in use</b></p>
+
+<p>If another program is using port 80, you will want to change the listening port to avoid conflicts, or your Apache server will not start. Before changing the Apache port, be aware that this makes the server non-standard. A preferable solution is to change the port of the conflicting program.</p>
+
+<p><b>Apache already running</b></p>
+
+<p>You can change the port while the server is running, but you must restart the servers after making any changes.  The new settings will then be picked up by Apache.</p>
+
+<p><b>General Note</b></p>
+
+<p>After changing Apache's listing port, in order to display a file you must include this port number in the host name. For example suppose you have changed the port to 8080.</p>
+
+<p>To view your home page you enter the following address <b>http://localhost:8080/</b> into your browser address bar. Likewise to view any other page in your root folder <b>www</b> you would enter <b>http://localhost:8080/mypage.html</b> to display that page.</p>
+
+<p><b>Note 1:</b><br /> When the server starts, the correct port number is automatically added to the address and redirection takes place to the splash page. Using the above port, you will see <b>http://localhost:8080/us_splash/index.php</b> displayed in the address bar.</p>
+
+<p><b>Note 2:</b><br /> Alternative to the above for changing port see <a href="apache.html#Change Apache ports">Change Apache ports</a></p>
+
+<hr />
+<div align="center">--oOo--</div>
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

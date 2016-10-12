@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>PHP Version Switching</title>
+  <meta name="Description" content="The Uniform Server Zero XIII provides switching between PHP versions 5.3, 5.4, 5.5, 5.6, 7.0 and 7.1 to achieve this you need to download a suitable PHP plugin for each version" />
+  <meta name="Keywords" content="PHP,Version,Switching,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p840">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/php_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>PHP Version Switching</h1>
+</tr>
+</table>
+
+<p>The Uniform Server Zero XIII provides switching between PHP versions 5.3, 5.4, 5.5, 5.6, 7.0 and 7.1 to achieve this you need to download a suitable PHP plugin for each version (for example ZeroXIII_php_5_3_29.exe, ZeroXIII_php_5_4_45.exe, ZeroXIII_php_5_5_37.exe, ZeroXIII_php_5_6_23.exe, ZeroXIII_php_7_0_8.exe and ZeroXIII_php_7_1_0.exe) explained below.</p>
+
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Switching overview" >Switching overview</a></li>
+   <li><a href="#UniController PHP Switching" >UniController PHP Switching</a></li>
+   <li><a href="#Installing a PHP plugin" >Installing a PHP plugin</a></li>
+   <li><a href="#Important information" >Important information</a></li>
+
+   </ul>
+ </div>
+</div>
+<p>Note: PHP Net decided to skip PHP version 6.0</p>
+<a name="Switching overview"></a>
+<h2>Switching overview</h2>
+
+<table>
+  <tr valign="top">
+   <td>
+<p><b><i>PHP Switching</i></b></p>
+
+<p>In order to switch between PHP versions environoment variable <b>PHP_SELECT</b> is set to the selected PHP version. Valid values are php53, php54, php55, php56, php70 and php71.</p>
+
+<p>To ensure correct PHP configuration file is used environoment variable <b>PHP_INI_SELECT</b> is set to the selected PHP configuration file. Valid values are php_test.ini, php_development.ini and php_production.ini.</p>
+
+<p>The <b>PHP_SELECT</b> environment variable is used in the Apache configuration file httpd.conf to select the appropriate configuration block that inturn selects a configuration file (php53.conf - php71.conf).</p>
+
+<p> Within the selected configuration file (php53.conf - php71.conf) environment variable <b>PHP_INI_SELECT</b> selects the PHP configuration file to use.
+ 
+<p>The Apache configuration code for PHP switching is shown on the right.</p> 
+
+
+<p>Note: Configuration file (php53.conf - php71.conf) is installed when a corresponding PHP module is installed.</p>
+
+<p><b><i>PHP Plugins</i></b></p>
+<p>Related to PHP switching, when installing a plugin for an existing PHP series (PHP 53, 54, 55, 56, 70 or 71) it is assumed you want to use it instead of the one currently installed. This allows you to revert back to an older version number within the same PHP series.</p>
+
+ <td>
+<p>Apache configuration file: UniServerZ\core\apache2\conf\httpd.conf</p>
+
+<pre>
+# Environment variable ${PHP_SELECT} has a value of php52,
+# php53, php54, php55 or php56. It is used in the following
+# five define statements to select a PHP version to
+# load as a module.
+Define ${PHP_SELECT}
+
+&lt;IfDefine php53&gt;
+   Include ${US_ROOTF}/core/apache2/conf/extra_us/php53.conf
+&lt;/IfDefine&gt;
+
+&lt;IfDefine php54&gt;
+   Include ${US_ROOTF}/core/apache2/conf/extra_us/php54.conf
+&lt;/IfDefine&gt;
+
+&lt;IfDefine php55&gt;
+   Include ${US_ROOTF}/core/apache2/conf/extra_us/php55.conf
+&lt;/IfDefine&gt;
+
+&lt;IfDefine php56&gt;
+   Include ${US_ROOTF}/core/apache2/conf/extra_us/php56.conf
+&lt;/IfDefine&gt;
+
+&lt;IfDefine php70&gt;
+   Include ${US_ROOTF}/core/apache2/conf/extra_us/php70.conf
+&lt;/IfDefine&gt;
+
+&lt;IfDefine php71&gt;
+   Include ${US_ROOTF}/core/apache2/conf/extra_us/php71.conf
+&lt;/IfDefine&gt;
+
+</pre>
+
+<p>Apache config file: UniServerZ\core\apache2\conf\extra_us\php53.conf</p>
+
+<pre>
+  LoadFile ${US_ROOTF}/core/php53/libsasl.dll
+  LoadFile ${US_ROOTF}/core/php53/icudt55.dll
+  LoadFile ${US_ROOTF}/core/php53/icuin55.dll
+  LoadFile ${US_ROOTF}/core/php53/icuio55.dll
+  LoadFile ${US_ROOTF}/core/php53/icule55.dll
+  LoadFile ${US_ROOTF}/core/php53/iculx55.dll
+  LoadFile ${US_ROOTF}/core/php53/icutu55.dll
+  LoadFile ${US_ROOTF}/core/php53/icuuc55.dll
+
+ # Load PHP module and add handler
+  LoadModule php5_module "${US_ROOTF}/core/php53/php5apache2_4.dll"
+  AddHandler application/x-httpd-php .php
+ # Configure the path to php.ini
+  PHPIniDir "${US_ROOTF}/core/php53/${PHP_INI_SELECT}"
+</pre>
+
+
+<p>Apache config file: UniServerZ\core\apache2\conf\extra_us\php54.conf</p>
+
+<pre>
+  LoadFile ${US_ROOTF}/core/php54/libsasl.dll
+  LoadFile ${US_ROOTF}/core/php54/icudt55.dll
+  LoadFile ${US_ROOTF}/core/php54/icuin55.dll
+  LoadFile ${US_ROOTF}/core/php54/icuio55.dll
+  LoadFile ${US_ROOTF}/core/php54/icule55.dll
+  LoadFile ${US_ROOTF}/core/php54/iculx55.dll
+  LoadFile ${US_ROOTF}/core/php54/icutu55.dll
+  LoadFile ${US_ROOTF}/core/php54/icuuc55.dll
+
+ # Load PHP module and add handler
+  LoadModule php5_module "${US_ROOTF}/core/php54/php5apache2_4.dll"
+  AddHandler application/x-httpd-php .php
+ # Configure the path to php.ini
+  PHPIniDir "${US_ROOTF}/core/php54/${PHP_INI_SELECT}"
+</pre>
+
+<p>Apache config file: UniServerZ\core\apache2\conf\extra_us\php55.conf</p>
+
+<pre>
+  LoadFile ${US_ROOTF}/core/php55/libsasl.dll
+  LoadFile ${US_ROOTF}/core/php55/icudt55.dll
+  LoadFile ${US_ROOTF}/core/php55/icuin55.dll
+  LoadFile ${US_ROOTF}/core/php55/icuio55.dll
+  LoadFile ${US_ROOTF}/core/php55/icule55.dll
+  LoadFile ${US_ROOTF}/core/php55/iculx55.dll
+  LoadFile ${US_ROOTF}/core/php55/icutu55.dll
+  LoadFile ${US_ROOTF}/core/php55/icuuc55.dll
+
+ # Load PHP module and add handler
+  LoadModule php5_module "${US_ROOTF}/core/php55/php5apache2_4.dll"
+  AddHandler application/x-httpd-php .php
+ # Configure the path to php.ini
+  PHPIniDir "${US_ROOTF}/core/php55/${PHP_INI_SELECT}"
+</pre>
+
+
+<p>Apache config file: UniServerZ\core\apache2\conf\extra_us\php56.conf</p>
+
+<pre>
+  LoadFile ${US_ROOTF}/core/php56/libsasl.dll
+  LoadFile ${US_ROOTF}/core/php56/icudt54.dll
+  LoadFile ${US_ROOTF}/core/php56/icuin54.dll
+  LoadFile ${US_ROOTF}/core/php56/icuio54.dll
+  LoadFile ${US_ROOTF}/core/php56/icule54.dll
+  LoadFile ${US_ROOTF}/core/php56/iculx54.dll
+  LoadFile ${US_ROOTF}/core/php56/icutest54.dll
+  LoadFile ${US_ROOTF}/core/php56/icutu54.dll
+  LoadFile ${US_ROOTF}/core/php56/icuuc54.dll
+
+ # Load PHP module and add handler
+  LoadModule php5_module "${US_ROOTF}/core/php56/php5apache2_4.dll"
+  AddHandler application/x-httpd-php .php
+ # Configure the path to php.ini
+  PHPIniDir "${US_ROOTF}/core/php56/${PHP_INI_SELECT}"
+</pre>
+
+
+<p>Apache config file: UniServerZ\core\apache2\conf\extra_us\php70.conf</p>
+
+<pre>
+  LoadFile ${US_ROOTF}/core/php70/libsasl.dll
+  LoadFile ${US_ROOTF}/core/php70/icudt56.dll
+  LoadFile ${US_ROOTF}/core/php70/icuin56.dll
+  LoadFile ${US_ROOTF}/core/php70/icuio56.dll
+  LoadFile ${US_ROOTF}/core/php70/icule56.dll
+  LoadFile ${US_ROOTF}/core/php70/icuuc56.dll
+
+ # Load PHP module and add handler
+  LoadModule php7_module "${US_ROOTF}/core/php70/php7apache2_4.dll"
+  AddHandler application/x-httpd-php .php
+ # Configure the path to php.ini
+  PHPIniDir "${US_ROOTF}/core/php70/${PHP_INI_SELECT}"
+</pre>
+
+<p>Apache config file: UniServerZ\core\apache2\conf\extra_us\php71.conf</p>
+
+<pre>
+  LoadFile ${US_ROOTF}/core/php71/libsasl.dll
+  LoadFile ${US_ROOTF}/core/php71/icudt57.dll
+  LoadFile ${US_ROOTF}/core/php71/icuin57.dll
+  LoadFile ${US_ROOTF}/core/php71/icuio57.dll
+  LoadFile ${US_ROOTF}/core/php71/icule57.dll
+  LoadFile ${US_ROOTF}/core/php71/iculx57.dll
+  LoadFile ${US_ROOTF}/core/php71/icuuc57.dll
+
+ # Load PHP module and add handler
+  LoadModule php7_module "${US_ROOTF}/core/php71/php7apache2_4.dll"
+  AddHandler application/x-httpd-php .php
+ # Configure the path to php.ini
+  PHPIniDir "${US_ROOTF}/core/php71/${PHP_INI_SELECT}"
+</pre>
+
+
+  </td>
+ </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="UniController PHP Switching"></a>
+<h2>UniController PHP Switching</h2>
+
+<table>
+ <tr valign="top">
+  <td>
+<b>PHP Switching</b>
+      <ul>
+        <li>Click version you wish to use A), B), C), D), E) or F).</li>
+        <li>Previous selection is deselected and new selection enabled.</li>
+        <li>Selected PHP version is indicated by a check marker for example E).</li>
+      </ul>
+<p>Note 1: For the new settings to become effective you must restart the Apache server.<br />
+   Note 2: A greyed out button indicates that version is unavailable and you need to <br />
+           install an appropriate plugin.</p>
+  
+  </td>
+
+  <td>
+    <img src="images/C11_php_version_switching.gif" alt="PHP Switching">
+  </td>
+ </tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Installing a PHP plugin"></a>
+<h2>Installing a PHP plugin</h2>
+
+<p>Installing is a misnomer! Nothing is installed to your PCs registry all files are extracted to their appropriate location within the UniServer folder structure.</p> 
+
+<p>The extraction procedure is identical for all plugin versions, proceed as follows:</p>
+
+<table>
+ <tr valign="top">
+  <td>
+<p><b>Install PHP plugin</b></p>
+
+<ul>
+  <li> If running, stop Apache and MySQL servers. Close Unicontroller. </li>
+  <li> Download required <a href="plugins_detail.html">plugin</a> installation file.<br />
+       For example ZeroXIII_php_5_4_45.exe installs PHP 5.4.45. </li>
+  <li> Save the downloaded file to folder <b>UniServerZ</b>. </li>
+  <li> Double click on the above installation file.  This runs the self extracting archive. </li>
+  <li> If prompted allow overwriting of existing files. </li>
+  <li> If you wish, delete the installation file, it is no longer required. </li>
+</ul>
+
+<td>
+<p><b>Clean Install</b></p>
+
+<p>There are situations where you want to start from a known<br />
+   clean installation. If the series (53, 54, 55, 56, 70 or 71) you wish<br />
+   to install already exists navigate to the core folder and<br />
+   delete the appropriate folders then proceed with the<br />
+   extraction process.</p>
+
+<p>For example to completely remove 5.4.45 delete folders<br />
+   C:\UniServerZ\core\<b>php54</b><br />
+   C:\UniServerZ\core\apache2\conf\extra_us\php45.conf
+</p>
+
+
+</td>
+</tr>
+
+<tr valign="top">
+ <td>
+<p><b>Enable The PHP plugin</b><br>
+<p>Before the plugin is recognised it requires selecting as follows:</p>
+  <ul>
+     <li>Click version you wish to use  A), B), C), D), E) or F).</li>
+     <li>Previous selection is deselected and new selection enabled.</li>
+     <li>Selected PHP version is indicated by a check marker for example E).</li>
+     <li>Start Apache and the new version of PHP is recognised. </li>
+   </ul>
+  </td>
+
+  <td>
+    <img src="images/C11_php_version_switching.gif" alt="UniTray PHP Switching">
+  </td>
+ </tr>
+</table>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Important information"></a>
+<h2>Important information</h2>
+
+<p>Following lists important information that may catch you out:</p>
+
+
+<p>1) Over writing an existing series will replace all configuration files. If you have made changes to the configuration files save these files before installing a new version of the same series.</p>
+
+<p>2) Extension artefacts! When installing over an existing series there may be some extensions that are not included with the existing version. These extensions are not deleted and may be incompatible with the new version. It is recommended to perform a clean install as mentioned above.</p> 
+
+<hr>
+<div align="center">--oOo--</div>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

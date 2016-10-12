@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>FileZilla ssl part 1</title>
+  <meta name="Description" content="You can run a unsecured FTP server over the Internet however it is strongly recommend that all FTP communication be encrypted using SSL" />
+  <meta name="Keywords" content="FTP,server,encrypted,SSL,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<style type="text/css">
+/*****************************************/
+.heading {
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #ffffff;
+ background-color:  #2F2F76;
+ font-size: 13px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.td_sub{
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #000000;
+ background-color:  #f0f0f0;
+ font-size: 12px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+/*****************************************/
+</style>
+
+
+<body id="p1820">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+<script language="javascript" src="common/portable_filezilla_server_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>FileZilla SSL part 1</h1>
+</tr>
+</table>
+
+<p>You can run a  unsecured FTP server over the Internet however it is strongly recommend that all FTP communication be encrypted using SSL. Although initially intimidating it is relatively easy to configure a secure FTP server. Procedure is incremental allowing you to test each stage, first create a server certificate ensure it runs on a local network and finally configure for Internet access.  
+This procedure has been split over two pages covering each distinct area in detail.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Create Server certificate">Create Server certificate</a></li>
+   <li><a href="#Enable SSL support">&nbsp;&nbsp;Enable SSL support</a></li>
+   <li><a href="#Fill in certificate details">&nbsp;&nbsp;Fill in certificate details</a></li>
+   <li><a href="#Force SSL for user login">&nbsp;&nbsp;Force SSL for user login</a></li>
+
+   <li><a href="#FileZilla portable client">FileZilla portable client</a></li>
+   <li><a href="#FileZilla Server Local test">&nbsp;&nbsp;FileZilla Server Local test</a></li>
+   <li><a href="#FileZilla Server Local network test">&nbsp;&nbsp;FileZilla Server Local network test</a></li>
+   <li><a href="#Summary">Summary</a></li>
+
+   </ul>
+ </div>
+</div>
+
+
+<a name="Create Server certificate"></a>
+<h2>Create Server certificate</h2>
+
+<p>FileZilla has a built in certificate generator making this process very easy</p>
+
+
+<table>
+ <tr valign="top">
+  <td>
+<a name="Enable SSL support"></a>
+<h3>Enable SSL support</h3>
+
+<ol>
+ <li>Start UniServer FileZilla Controller: Double click on <i>UniFzController.bat</i> </li>
+ <li>Start FileZilla Server: Click <i>Start FZ Server</i> </li>
+ <li>Start FileZilla Interface: Click on <i>Start Interface</i></li>
+
+ <li> Select <b>Edit &gt; Settings</b></li>
+ <li> <b>A)</b> From the left menu <b>clcik</b> on <b>SSL/TLS settings</b></li>
+ <li> <b>B)</b>  Check <b>Enable SSL/TSL support</b></li>
+ <li> <b>C)</b> Default <b>Allow explicit FTP over TLS</b></li>
+ <li> <b>D</b> Checks <b>Disallow plain unencrypted FTP</b></li>
+ <li> <b>E</b> Default Listen for SSL/TLS connections on the following ports <b>990</b></li>
+ <li> <b>F</b> Click <b>Generate new certificate</b></li>
+</ol>
+
+<p><b><i>Note</i>:</b> No need to fill in <i>Private key</i> or <i>Certificate file</i> paths, these are automatically filled in after the certificate is generated. We are not going to password protect the certificate, leave <i>Key password</i> blank.</p>
+
+  </td>
+<td>
+  <img src="images/filezilla/fz_ssl_cert_a.png" alt="FileZilla Enable SSl" />
+</td>
+
+
+ <tr valign="top">
+  <td>
+<a name="Fill in certificate details"></a>
+<h3>Fill in certificate details</h3>
+
+<ol start="11">
+  <li> <b>G)</b> Seclect Key size <b>4096 bit</b></li>
+  <li> <b>H)</b> Insert 2-Digit <b>country code</b></li>
+  <li> <b>a-e</b>Fill in real or dummy information</li>
+  <li> <b>I)</b> Fill in <b>Common name</b> Use <b>localhost</b> or your real domain name</li>
+  <li> <b>J)</b> Use browse and navigate to folder<br />
+ C:\UniServerZ\fz_server\<b>fz_portable</b><br />
+  this is where the certificate will be saved.</li>
+  <li> <b>K)</b>  Click <b>Generate certificate</b> button, this will take a while.
+    <ul>
+      <li>The certificate generator window closes</li>
+      <li>Check <b>Private key</b> and <b>Certificate file</b> paths have been filled in and contain<br /> C:\UniServerZ\fz_server\fz_portable\<b>certificate.crt</b></li>
+    </ul>
+   </li>
+  <li> <b>L)</b> When complete click <b>OK</b> button.</li>
+</ol>
+
+
+<p><b><i>Note</i>:</b> Check folder C:\UniServerZ\fz_server\fz_portable contains your new server certificate <b>certificate.crt</b></p>
+
+
+
+  </td>
+<td>
+  <img src="images/filezilla/fz_ssl_cert_b.png" alt="FileZilla Cert details" />
+</td>
+ </tr>
+
+
+ <tr valign="top">
+  <td>
+<a name="Force SSL for user login"></a>
+<h3>Force SSL for user login</h3>
+
+<ol start="18">
+<li> From  FileZilla Interface select <b>Edit &gt; Users</b></li>
+<li> <b>M)</b> Select a user account for example <b>us_user</b></li>
+<li> <b>N)</b> Check <b>Bypass</b></li>
+<li> <b>O)</b> Check <b>Force SSL</b> for user login</li>
+<li> <b>P)</b> Click <b>OK</b></li>
+<li> <b>Restart server</b></li>
+</ol>
+
+
+  </td>
+<td>
+  <img src="images/filezilla/fz_ssl_cert_c.png" alt="Enable use to use SSL" />
+</td>
+ </tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="FileZilla portable client"></a>
+<h2>FileZilla portable client</h2>
+
+<p>The FileZilla portable client is ideal for testing and highly recommended as your main FTP client. It is assumed you have downloaded and saved this to folder ftp_client. If not this quick how to be of use:</p>
+
+<ul>
+  <li>Create a new folder c:\<b>fz_client</b></li>
+  <li>Download client from <a href="http://sourceforge.net/projects/portableapps/files/FileZilla%20Portable/FileZillaPortable_3.9.0.5.paf.exe">SourceForge</a></li>
+  <li>Save downloded file <b>FileZillaPortable_3.9.0.5.paf.exe</b> to folder c:\<b>fz_client</b></li>
+  <li>Double click file <i>FileZillaPortable_3.9.0.5.paf.exe</i>, extracts client. No need to change any parameters.</li>
+  <li>To run client, navigate to folder C:\fz_client\FileZillaPortable and double click file <b>FileZillaPortable.exe</b></li>
+</ul>
+<p>Note: FileZilla client <b>FileZillaPortable_3.9.0.1.paf.exe</b> last version to run on XP</p>
+
+
+<a name="FileZilla Server Local test"></a>
+<h3>FileZilla Server Local test</h3>
+
+<p>Using the FileZilla client makes testing our secure FTP server very easy. Testing server with client on same PC (Local testing), proceed as follows:</p>
+
+<table>
+ <tr valign="top">
+  <td>
+
+
+<ol>
+ <li>Start FileZilla server </li>
+ <li>Start FileZilla client, shown on right </li>
+ <li><b>Q)</b> Enter host: <b>ftps://localhost</b> </li>
+ <li><b>R)</b> Enter username: <b>us_user</b> </li>
+ <li><b>S)</b> Enter password: <b>us_user123</b>  </li>
+ <li><b>T)</b> Click <b>Quickconnect</b><br />
+ Unknown Certificate pop-up is displayed</li>
+ <li><b>U)</b> Check box <b>Always trust...</b></li>
+ <li><b>V)</b> Click <b>OK</b></li>
+</ol>
+
+ <img  src="images/filezilla/fz_ssl_client_b.png" alt="FileZilla Client" />
+
+  </td>
+<td>
+  <img src="images/filezilla/fz_ssl_client_a.png" alt="FileZilla Client" />
+<p>Result: The remote site window (on the right) will show the content of root folder www (or root folder of the user configured).</p>
+</td>
+
+ </tr>
+
+ <tr valign="top">
+  <td>
+<a name="FileZilla Server Local network test"></a>
+<h3>FileZilla Server Local network test</h3>
+
+<p>On another PC connected to your network copy the FileZilla client and repeat the above steps 2-8 note only step 3 is different:</p>
+
+<ol>
+ <li><b>Q)</b> Enter host: <b>ftps://192.168.1.12</b> </li>
+</ol>
+
+  </td>
+<td>
+
+<h3>FileZilla Server Local network test result</h3>
+
+<p>The IP address (192.168.1.12) must match the PC your are running the FTP server on.</p>
+
+<p>Result: Identical to that for Local Test; the remote site window (on the right) will show the content of root folder www (or root folder of the user configured).</p>
+</td>
+
+ </tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Summary"></a>
+<h2>Summary</h2>
+
+<p>The above has shown how to secure an FTP server on a local network. If you are running a wireless network, data can be intercepted by sniffing the radio signals. Should your basic wireless security be compromised FTP encryption will provide another hurdle making it more difficult for that data to be accessed.</p>
+
+<p>You also need the above security when FTPing data across the Internet. Before proceeding to <a href="fz_ssl_part2.html" > FileZilla SSL part 2</a> make sure you can securely FTP locally.
+</p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

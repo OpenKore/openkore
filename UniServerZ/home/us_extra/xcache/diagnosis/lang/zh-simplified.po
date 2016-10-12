@@ -1,0 +1,383 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-02 00:52+0800\n"
+"Language: zh\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: diagnosis.tpl.php:4
+msgid "Diagnosis Result"
+msgstr "诊断结果"
+
+#: diagnosis.tpl.php:8
+msgid "Item"
+msgstr "项目"
+
+#: diagnosis.tpl.php:11
+msgid "Level"
+msgstr "级别"
+
+#: diagnosis.tpl.php:14
+msgid "Result"
+msgstr "结果"
+
+#: diagnosis.tpl.php:17
+msgid "Explanation/Suggestion"
+msgstr "解释/建议"
+
+#: index.php:77
+msgid "XCache extension"
+msgstr "XCache extension"
+
+#: index.php:81
+#, php-format
+msgid "Add extension=xcache.so (or xcache.dll) in %s"
+msgstr "在 %s 增加 extension=xcache.so (或 xcache.dll)"
+
+#: index.php:84
+#, php-format
+msgid ""
+"Please put a php.ini in %s and add extension=xcache.so (or xcache.dll) in it"
+msgstr ""
+"请在 %s 里放个 php.ini 并且在文件内写入 extension=xcache.so (或 xcache.dll)"
+
+#: index.php:87
+msgid "Cannot detect php.ini location"
+msgstr "无法检测 php.ini 位置"
+
+#: index.php:89
+msgid "(See above)"
+msgstr "(参见上面)"
+
+#: index.php:90
+msgid "Not loaded"
+msgstr "未载入"
+
+#: index.php:90 index.php:129 index.php:135 index.php:183 index.php:285
+#: index.php:303 index.php:368 index.php:391 index.php:394
+msgid "error"
+msgstr "错误"
+
+#: index.php:93
+msgid "Loaded"
+msgstr "已载入"
+
+#: index.php:93 index.php:141 index.php:158 index.php:175 index.php:189
+#: index.php:200 index.php:216 index.php:248 index.php:264 index.php:273
+#: index.php:291 index.php:309 index.php:332 index.php:347 index.php:373
+#: index.php:379 index.php:385 index.php:399
+msgid "info"
+msgstr "信息"
+
+#: index.php:124
+msgid "Enabling PHP Cacher"
+msgstr "启用 PHP 缓存器"
+
+#: index.php:126 index.php:146 index.php:149 index.php:163 index.php:166
+#: index.php:180 index.php:207 index.php:253 index.php:270 index.php:300
+#: index.php:318 index.php:338
+msgid "skipped"
+msgstr "跳过"
+
+#: index.php:130 index.php:184 index.php:274
+msgid "Not enabled"
+msgstr "尚未启用"
+
+#: index.php:131
+msgid ""
+"Your PHP pages is not accelerated by XCache. Set xcache.size to non-zero, "
+"set xcache.cacher = On"
+msgstr ""
+"XCache 并未对您的 PHP 网页起到加速作用. 设置 xcache.size 为非 0, 设置 xcache."
+"cacher = On"
+
+#: index.php:136
+msgid "No php script cached"
+msgstr "未缓存任何 PHP 脚本"
+
+#: index.php:137
+msgid "Your PHP pages is not accelerated by XCache. Set xcache.cacher = On"
+msgstr "XCache 并未对您的 PHP 网页起到加速作用. 设置 xcache.cacher = On"
+
+#: index.php:141 index.php:189 index.php:292 index.php:310 index.php:342
+msgid "Enabled"
+msgstr "已启用"
+
+#: index.php:144
+msgid "PHP Compile Time Error"
+msgstr "PHP 编译时错误"
+
+#: index.php:152 index.php:169 index.php:193 index.php:210 index.php:234
+#: index.php:242 index.php:256 index.php:324 index.php:341
+msgid "warning"
+msgstr "警告"
+
+#: index.php:153
+msgid "Error happened when compiling at least one of your PHP code"
+msgstr "至少在编译其中一个您的 PHP 代码时发生编译错误"
+
+#: index.php:154
+msgid ""
+"This usually means there is syntax error in your PHP code. Enable PHP "
+"error_log to see what parser error is it, fix your code"
+msgstr ""
+"这通常意味着您的 PHP 代码有语法错误. 请启用 error_log 调查具体错误原因并修复"
+"您的代码"
+
+#: index.php:158
+msgid "No error happened"
+msgstr "未发生过错误"
+
+#: index.php:161
+msgid "Busy Compiling"
+msgstr "忙着编译"
+
+#: index.php:170
+msgid "Cache marked as busy for compiling"
+msgstr "编译中, 缓存标记为忙"
+
+#: index.php:171
+msgid ""
+"It's ok if this status don't stay for long. Otherwise, it could be a sign of "
+"PHP crash/coredump, report to XCache devs"
+msgstr ""
+"这个状态如果持续不就则无影响. 否则可能标志着 PHP 曾经发生异常退出, 如果是的话"
+"请报告给 XCache 开发组"
+
+#: index.php:175 index.php:264 index.php:332
+msgid "Idle"
+msgstr "空闲"
+
+#: index.php:178
+msgid "Enabling VAR Cacher"
+msgstr "启用 VAR 缓存器"
+
+#: index.php:185
+msgid ""
+"PHP code that use XCache caching backend have to use other caching backend "
+"instead. Set xcache.var_size to non-zero"
+msgstr ""
+"使用 XCache 作为数据缓存器的 PHP 代码将不得不采用其他缓存器代替. 设置 xcache."
+"var_size 为非 0"
+
+#: index.php:191
+msgid "Using VAR Cacher"
+msgstr "使用 VAR 缓存器"
+
+#: index.php:194
+msgid "No variable data cached"
+msgstr "未缓存任何变量数据"
+
+#: index.php:195
+msgid ""
+"Var Cacher won't work simply by enabling it. PHP code must call XCache APIs "
+"like xcache_set() to use it as cache backend. 3rd party web apps may come "
+"with XCache support, config it to use XCache as caching backend"
+msgstr ""
+"只启用变量数据缓存器并无法将其利用起来. 必须通过 PHP 代码去调用 XCache API 接"
+"口(如 xcache_set() 函数) 将 XCache 作为缓存器. 第三方网页软件可能带有 XCache "
+"支持, 留意其中的设置启用 XCache 作为缓存器"
+
+#: index.php:200
+msgid "Cache in use"
+msgstr "缓存使用中"
+
+#: index.php:205
+msgid "Cache Size"
+msgstr "缓存大小"
+
+#: index.php:211
+msgid "Out of memory happened when trying to write to cache"
+msgstr "存入缓存时发生内存不足"
+
+#: index.php:212
+msgid "Increase xcache.size and/or xcache.var_size"
+msgstr "加大 xcache.size 或 xcache.var_size"
+
+#: index.php:216
+msgid "Enough"
+msgstr "充足"
+
+#: index.php:219
+msgid "Hash Slots"
+msgstr "哈希槽"
+
+#: index.php:235
+msgid "Slots value too big"
+msgstr "哈希槽设定太大"
+
+#: index.php:236
+#, php-format
+msgid ""
+"A very small value is set to %s value and leave %s value is too big.\n"
+"Decrease %s if small cache is really what you want"
+msgstr ""
+"设置给 %s 的值很小, 却采用过大的 %s. 如果您的确想要配置占用很少内存的缓存器, "
+"可减少 %s"
+
+#: index.php:243
+msgid "Slots value too small"
+msgstr "哈希槽设定太小"
+
+#: index.php:244
+#, php-format
+msgid "So many item are cached. Increase %s to a more proper value"
+msgstr "相当多的项目缓存了. 请适量加大 %s"
+
+#: index.php:248 index.php:373 index.php:385 index.php:399
+msgid "Looks good"
+msgstr "看起来还行"
+
+#: index.php:251
+msgid "Cache Status"
+msgstr "缓存状态"
+
+#: index.php:257
+msgid "At least one of the caches is disabled. "
+msgstr "至少一个缓存器是禁止状态"
+
+#: index.php:258
+msgid "Enable the cache."
+msgstr "启用已禁止的缓存器."
+
+#: index.php:259
+msgid ""
+"It was disabled by PHP crash/coredump handler or you disabled it manually."
+msgstr "可能是在 PHP 异常退出时自动标记为禁止了, 或者您手工禁止了"
+
+#: index.php:259
+msgid "You disabled it manually."
+msgstr "您手工禁止了"
+
+#: index.php:260
+msgid "If it was caused by PHP crash/coredump, report to XCache devs"
+msgstr "如果是由于 PHP 异常退出造成, 请报告给 XCache 开发组"
+
+#: index.php:268
+msgid "Coredump Directory"
+msgstr "Coredump 目录"
+
+#: index.php:275
+msgid ""
+"Enable coredump to save debugging information in case when PHP crash. It can "
+"also be enabled in other module like php-fpm beside XCache"
+msgstr ""
+"启用 coredump 设置. 这样万一发生 PHP 异常退出时可保存调试信息. 这个功能也可以"
+"在其他地方启用, 如 php-fpm"
+
+#: index.php:286
+msgid "Core files found:\n"
+msgstr "发现 core 文件:\n"
+
+#: index.php:287
+msgid ""
+"Disable XCache PHP Cacher (set xcache.size=0), remove the core file(s), then "
+"restart PHP. If core file appears again, report call stack backtrace in the "
+"core to XCache devs"
+msgstr ""
+"禁止 XCache 缓存器 (设置 xcache.size=0), 删除 Core 文件, 再重启 PHP. 如果不"
+"用 XCache 时不出现 Core, 请从 Core 中取得 call stack back trace 信息报告回 "
+"XCache 开发组"
+
+#: index.php:293
+#, php-format
+msgid "You can see core files if PHP crash in %s if PHP crash"
+msgstr "如果 PHP 异常退出, 您可以在 %s 目录看到 Core 文件"
+
+#: index.php:298
+msgid "Readonly Protection"
+msgstr "只读保护"
+
+#: index.php:304
+msgid "Set to enabled but not available"
+msgstr "设置为启用, 但目前不可用"
+
+#: index.php:305
+msgid "Use xcache.mmap_path other than /dev/zero"
+msgstr "设置 xcache.mmap_path 使用 /dev/zero 以外的值"
+
+#: index.php:310 index.php:347
+msgid "Disabled"
+msgstr "已禁止"
+
+#: index.php:311
+msgid ""
+"Enable readonly_protection == --performance & ++stability. Disable "
+"readonly_protection == ++performance & --stability"
+msgstr ""
+"启用 readonly_protection == --性能 & ++稳定性. 禁用 readonly_protection == +"
+"+性能 & --稳定性"
+
+#: index.php:316
+msgid "XCache modules"
+msgstr "XCache 模块"
+
+#: index.php:326
+msgid ""
+"Acceptable. Module(s) listed are built into XCache but not for production "
+"server.\n"
+"Leave it as is if you're feeling good.\n"
+"Re-configure XCache with the module(s) disabled if you're strict with server "
+"security."
+msgstr ""
+"可接受. 以上列出的模块已编译入 XCache, 但这些模块并非用于产业服务器.\n"
+"如果您觉得没大碍, 就保持现状.\n"
+"如果您对稳定性/安全性要求极其严格, 建议重新编译 XCache 不启用这些模块\n"
+
+#: index.php:336
+msgid "XCache test setting"
+msgstr "XCache 测试设置"
+
+#: index.php:343
+msgid "xcache.test is for testing only, not for server. set it to off"
+msgstr "xcache.test 仅用于开发测试用, 不用于服务器. 将它设置为 off"
+
+#: index.php:350
+msgid "PHP Version"
+msgstr "PHP 版本"
+
+#: index.php:369
+msgid "The version of PHP you're using is known to be unstable: "
+msgstr "您所使用的 PHP 版本, 是众所周知的不稳定版本: "
+
+#: index.php:370
+msgid "Upgrade to new version of PHP"
+msgstr "升级到更新的 PHP 版本"
+
+#: index.php:376
+msgid "Extension Compatibility"
+msgstr "Extension 兼容性"
+
+#: index.php:380
+msgid "Zend Optimizer loaded"
+msgstr "Zend Optimizer 载入了"
+
+#: index.php:381
+msgid ""
+"Optimizer feature of 'Zend Optimizer' is disabled by XCache due to "
+"compatibility reason; the Loader of it is still available, encoded files are "
+"still supported"
+msgstr ""
+"由于兼容性问题, 'Zend Optimizer' 的优化器已被 XCache 禁止; 其加载器依然可用, "
+"可继续使用 Zend 加密的文件"
+
+#: index.php:388
+#, fuzzy
+msgid "SAPI Compatibility"
+msgstr "Extension 兼容性"
+
+#: index.php:391
+msgid "CGI is not supported"
+msgstr ""
+
+#: index.php:391
+msgid "Use FastCGI or FPM instead"
+msgstr ""
+
+#: index.php:396
+msgid ""
+"PHP_FCGI_CHILDREN should be >= 1 and use 1 group of parent/childs model. See "
+"http://xcache.lighttpd.net/wiki/Faq"
+msgstr ""

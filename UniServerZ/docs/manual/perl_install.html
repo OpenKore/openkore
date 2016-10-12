@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Installing Perl</title>
+  <meta name="Description" content="This page covers installing Strawberry Perl and Active Perl. If you have previously installed Strawberry Perl and upgrading to a newer version or replacing it with Active Perl, first delete the old version by deleting the following folder and all its content" />
+  <meta name="Keywords" content="Installing,Strawberry,Active,Perl,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p910">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/perl_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Installing Perl</h1>
+</tr>
+</table>
+
+
+<p>This page covers installing Strawberry Perl and Active Perl. If you have previously installed Strawberry Perl and upgrading to a newer version or replacing it with Active Perl, first delete the old version by deleting the following folder and all its content:</p>
+
+<ul>
+ <li>C:\UniServerZ\core\<b>perl</b></li>
+</ul>
+
+<p><b><i>Note</i>:</b> Deleting this folder returns the server to a default state, completely removes Perl. </p> 
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Installing Strawberry Perl" >Installing Strawberry Perl</a></li>
+   <li><a href="#Installing Active Perl" >Installing Active Perl</a></li>
+   <li><a href="#Download ActivePerl" >&nbsp;&nbsp;Download ActivePerl</a></li>
+   <li><a href="#Install ActivePerl" >&nbsp;&nbsp;Install ActivePerl</a></li>
+   <li><a href="#Background" >&nbsp;&nbsp;Background</a></li>
+   </ul>
+ </div>
+</div>
+
+<a name="Installing Strawberry Perl"></a>
+<h2>Installing Strawberry Perl</h2>
+
+<p>Installing is a misnomer! Nothing is installed to your PCs registry all files are extracted to their appropriate location within the UniServer folder structure.</p> 
+
+<p>The extraction procedure is identical for all plugin versions, proceed as follows:</p>
+
+<ol>
+  <li> Download Perl-plugin installation file e.g ZeroXIII_strawberry_perl_5_22_1_1.exe <br />
+       See <a href="plugins_detail.html">Plugins page</a> for download details.</li>
+  <li> Save to folder UniServerZ. </li>
+  <li> If running, stop Apache and MySQL servers and also exit UniController. </li>
+  <li> Double click on the above installation file.<br />
+   This runs the self extracting archive. </li>
+  <li> If prompted allow overwriting of existing files. </li>
+  <li> If you wish, delete the installation file, it is no longer required. </li>
+</ol>
+
+
+<p>Note: ZeroXIII_strawberry_perl_5_22_1_1.exe installs full verson of Strawberry Perl 5.22.1.1 portable.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Installing Active Perl"></a>
+<h2>Installing Active Perl</h2>
+
+<p>ActivePerl is considered to be the de facto standard. However the ActivePerl Community License restricts the way the package can be distributed. Since this is inconsistent with The Uniform Server's license, ActivePerl is not included with The Uniform Server, nor is it available as a plug-in. On the other hand, you are free to download, install and use a personal copy of ActivePerl Community Edition. If you need to make it portable, it must be installed first and then integrated into The Uniform Server’s file structure.</p>
+
+<p>This process is a bit tedious because ActivePerl is distributed only in msi format. Although the files are extractable without actually performing an installation, they do require relocating. The Uniform Server XL automates much of the installation process as explained below.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Download ActivePerl"></a>
+<h3>Download ActivePerl</h3>
+<p>First download the latest version of ActivePerl Community Edition from <a href="http://www.activestate.com/activeperl/downloads">ActiveState</a> (http://www.activestate.com/activeperl/downloads)</p>
+
+<ul>
+ <li>As of December 2015, the current version is 5.20.2 file (ActivePerl-5.20.2.2002-MSWin32-x86-64int-299195.msi)</li>
+ <li>Save the downloaded file to folder UniServerZ\<b>tmp</b></li>
+</ul>
+
+<p><b>Note:</b> If you wish, save a copy of the downloaded file for archiving. After completing the installation, the file is automatically deleted.<p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Install ActivePerl"></a>
+<h2>Install ActivePerl</h2>
+
+<p>Install ActivePerl using Uniform Server Zero's batch file as follows:</p>
+
+<p><b><i>Extract and Install</i></b></p>
+
+   <ul>
+     <li><b>1)</b> Navigate to folder: UniControllerZ\home\<b>install_perl</b></li>
+     <li><b>2)</b> To extract and install, double click on the batch file: <b>extract_install_perl.bat</b></li>
+       <ul>
+         <li>For a fresh install, the process is automatic and does not require any user input.</li>
+         <li>
+            If ActivePerl is already installed you will be prompted to delete this and<br />
+            install new version. Press enter to delete and install. Entering anything<br />
+            other than "Yes" terminates installation.</li>
+       </ul>
+
+     <li> On completion the installation file is deleted.</li>
+   </ul>
+
+<p><b><i>Test</i></b></p>
+<ul>
+  <li> Run UniController. </li>
+  <li> Run test script: Perl > View test.pl </li>
+  <li> Confirm pages displayed.</li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Background"></a>
+<h3>Background</h3>
+<p>Files within a MSI installer file are easily extracted using a batch file.</p>
+<pre>
+Use the following batch command to perform extraction:
+
+  msiexec /a "Full path to MSI file" /qb TARGETDIR="Full path to target folder"
+
+  msiexec               - Batch command
+  /a                    - Forces all files to be reinstalled.
+  Full path to MSI file - Package name of the Windows Installer package file
+  /qb                   - Displays a basic user interface.
+  TARGETDIR=            - Folder where etracted files will be saved
+
+Example:  
+
+  msiexec /a C:\UniServerZ\test\ActivePerl-5.20.2.2002-MSWin32-x86-64int-299195.msi /qb TARGETDIR=C:\UniServerZ\test
+</pre>
+
+<p>These files can then be copied to the desired location.</p>
+
+<p>Note: The above code is integrated into Uniform Server Zero's batch file.</p>
+
+<hr />
+<div align="center">--oOo--</div>
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

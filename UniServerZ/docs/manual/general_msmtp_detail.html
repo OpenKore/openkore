@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>MSMTP Detail</title>
+  <meta name="Description" content="This page covers the configuration sub-menu which allows you to configure and test the msmtp client" />
+  <meta name="Keywords" content="msmtp,client,Google,Hotmail ,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p420">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/general_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>MSMTP - Detail</h1>
+</tr>
+</table>
+
+
+<p>The majority of SMTP clients use the Windows registry. These are not suitable for portability. The Uniform Server uses the open source <b>msmtp</b> client. It's flexible, relative easy to set-up, and more importantly it's portable. This page covers the configuration sub-menu which allows you to configure and test the <b>msmtp</b> client.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Background" >Background</a></li>
+   <li><a href="#Integration" >Integration</a></li>
+   <li><a href="#Upgrade" >Upgrade</a></li>
+   <li><a href="#How MSMTP client was integrated" >How MSMTP client was integrated</a></li>
+   </ul>
+ </div>
+</div>
+
+
+<p>While msmtp can be configured to use your ISP’s SMTP server, that again restricts portability. The answer is to create a free account such as Google Mail (<b>gmail</b>) or <b>Hotmail</b> and configure msmtp to use that.</p>
+
+<p>This combination allows any PHP scripts to send e-mail to your account transparently. MSMTP has been integrated into The Uniform Server Zero. All you need to do is configure the account as explained below.</p>
+
+
+<h2>Background</h2>
+<p>SMTP (simple mail transport protocol) was originally designed to be an open relay where an SMTP server would accept any e-mail for forwarding. This quickly became abused by spammers. In retaliation, ISP’s restricted open relaying. This means you cannot use the PHP function to directly send e-mail to a user. You either require your own mail server with all the complication that is associated with it, or you use your ISP’s SMTP server. In either situation you are restricted to a local server on a dedicated line.</p>
+
+<p>Free e-mail accounts such as Google Mail remove these chains by allowing you to relay through their servers. However you must login to their servers before this privilege is granted.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Upgrade"></a>
+<h2>Upgrade</h2>
+
+<p>This section is useful for users who wish to upgrade when a newer version of MSMTP is released.</p>
+
+<p>Download the latest version (currently msmtp-1.4.31-w32.zip) from
+<a href="http://sourceforge.net/projects/msmtp/files/"> http://sourceforge.net/projects/msmtp/files/</a></p>
+
+<ul>
+  <li> Unzip to any folder.</li>
+  <li> Copy file: msmtp-1.4.31-w32\msmtp-1.4.310-w32\<b>msmtp.exe</b></li>
+  <li> To folder: UniServerZ\core\<b>msmtp</b></li>
+</ul>
+
+<p>That is all there is to an upgrade.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="How MSMTP client was integrated"></a>
+<h2>How MSMTP client was integrated</h2>
+
+<p>If you are interested in how msmtp integrates into The Uniform Server’s architecture, read on.</p>
+
+<p>There are three requirements for integration:</p>
+<ul>
+  <li> Inform PHP where to find the msmtp executable.</li> 
+  <li> Inform msmtp where to find its configuration file.</li> 
+  <li> Finally inform msmtp where its log file is to be located.</li> 
+</ul>
+
+<table>
+ <tr valign="top">
+
+  <td style="background-color: rgb(245, 245, 245);">
+<p><b>msmtp configuration file:</b></p>
+
+<p>Path and name UniServerZ\core\msmtp\<b>msmtprc.ini</b><p>
+  </td>
+
+  <td>&nbsp;&nbsp; </td>
+
+  <td style="background-color: rgb(245, 245, 245);">
+<p><b>log file location:</b></p>
+
+<p>THe configuration file <b>msmtprc.ini</b> contains the log file path.<br />
+This path is specified as an absolute path.<br />
+For example: "C:/some_folder/UniServerZ/core/msmtp/msmtp.log"<br />
+The line: <b>logfile ~/msmtp.log</b> contains a tidle this gets expanded to full path.<br />
+<b><i>Note</i>:</b> When the servers are moved, this path is automatically updated.</p>
+  </td>
+
+ </tr>
+
+</table>
+
+<p><b>php.ini configuration</b></p>
+
+<p>A single line placed in php.ini configuration file resolves the first two requirements. For example the line has the following format:</p>
+
+<pre>
+sendmail_path = "C:/some_folder/UniServerZ/core/msmtp/msmtp.exe --file=C:/some_folder/UniServerZ/core/msmtp/msmtprc.ini  -t"
+</pre>
+
+<p>However for portability environment variable ${US_ROOTF} is used for paths. The actual line is shown below:</p>
+<pre>
+sendmail_path = "${US_ROOTF}/core/msmtp/msmtp.exe --file=${US_ROOTF}/core/msmtp/msmtprc.ini  -t"
+</pre>
+
+<p><b>Note:</b> Absolute paths with forward slashes are used. The first part instructs PHP where to find the msmtp executable, and the second part instructs msmtp where to find its configuration file.
+</p>
+
+
+<p><b>Extract from PHP configuration file php.ini</b></p>
+
+<pre>
+[mail function]
+; For Win32 only.
+; http://php.net/smtp
+;SMTP = localhost
+; http://php.net/smtp-port
+;smtp_port = 25
+
+; For Win32 only.
+; http://php.net/sendmail-from
+;sendmail_from = me@example.com
+
+; For Unix only.  You may supply arguments as well (default: "sendmail -t -i").
+; http://php.net/sendmail-path
+;sendmail_path =
+sendmail_path = "${US_ROOTF}/core/msmtp/msmtp.exe --file=${US_ROOTF}/core/msmtp/msmtprc.ini  -t"
+
+; Force the addition of the specified parameters to be passed as extra parameters
+; to the sendmail binary. These parameters will always replace the value of
+; the 5th parameter to mail(), even in safe mode.
+;mail.force_extra_parameters =
+
+; Add X-PHP-Originating-Script: that will include uid of the script followed by the filename
+mail.add_x_header = On
+
+; The path to a log file that will log all mail() calls. Log entries include
+; the full path of the script, line number, To address and headers.
+;mail.log =
+; Log mail to syslog (Event Log on NT, not valid in Windows 95).
+;mail.log = syslog
+
+</pre>
+
+<p><b><i>Note</i>:</b> If you wish msmtp can be run from the Server console.</p>
+
+<hr />
+<div align="center">--oOo--</div>
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>MySQL Edit Restricted User</title>
+  <meta name="Description" content="There are three methods for editing a restricted user; you can use UniController, phpMyAdmin or MySQL Prompt. UniController provides a convenient menu option described bellow. To use this option ensure the MySQL server is running otherwise a warning message is produced." />
+  <meta name="Keywords" content="MySQL,Edit,Restricted,User,phpMyAdmin,Prompt,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p750">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/mysql_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>MySQL Edit Restricted User</h1>
+</tr>
+</table>
+
+<p>There are three methods for editing a restricted user; you can use UniController, phpMyAdmin or MySQL Prompt. UniController provides a convenient menu option described bellow. To use this option ensure the MySQL server is running otherwise a warning message is produced.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Edit Restricted MySQL User using UniController" >Edit Restricted MySQL User using UniController</a></li>
+   <li><a href="#Edit Restricted MySQL User using phpMyAdmin" >Edit Restricted MySQL User using phpMyAdmin</a></li>
+   <li><a href="#Edit Restricted MySQL User using MySQL Prompt" >Edit Restricted MySQL User using MySQL Prompt</a></li>
+   <li><a href="#Related topics" >Related topics</a></li>
+  </ul>
+ </div>
+</div>
+
+<a name="Edit Restricted MySQL User using UniController"></a>
+<h2>Edit Restricted MySQL User using UniController</h2>
+
+
+<p class="access">MySQL &gt; Edit restricted MySQL User</p>
+
+<table>
+ <tr>
+   <td>
+
+<p><b><i>Edit Restricted User</i></b></p>
+<ul>
+ <li>1) Select the user to edit from the list. This populates the form.</li>
+ <li>3) Enter the current or a new password for the user</li>
+ <li>5) Select or deselect user privileges as required</li>
+ <li>6) Click "Update User" button</li>
+</ul>
+
+<p><b><i>Delete Restricted User</i></b></p>
+<ul>
+ <li>1) Select the user to be deleted from list.</li>
+ <li>7) Click "Delete" button</li>
+</ul>
+
+<p><br />Note 1: Cancel (8) clears only the edit fields.<br />
+Note 2: Cancel (9) clears only the selected user.<br />
+
+   </td>
+   <td>
+<img src="images/C11_mysql_edit_restricted_u.gif" alt="Edit Restricted MySQL User" />
+   </td>
+ <tr>
+</table>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Edit Restricted MySQL User using phpMyAdmin"></a>
+<h2>Edit Restricted MySQL User using phpMyAdmin</h2>
+
+<p>Start Controller and start both servers, then click phpMyAmin button. To edit a restricted user, proceed as follows:</p>
+
+<p>Note: Assume the user <b>fred</b> has already been created.</p>
+
+<table>
+ <tr valign="top">
+   <td>
+<p>When first started the phpMyAdmin home page is displayed; you can<br /> always return to this page by clicking the home icon (1)</p>
+    <ul>
+     <li>1) If not at the home page, click <b>home icon</b> </li>
+     <li>2) From the top menu bar, select <b>Privileges</b></li>
+     <li>3) Under "Action", Click <b>Edit Privileges</b></li>
+     </ul>
+The <b>Edit Privileges: User 'fred'@'127.0.0.1'</b> page is displayed.<br />
+From this page you can change the user privileges, the database(s)<br /> 
+the user is assigned to and privileges, password and login information.
+   </td>
+   <td>
+    <img src="images/C11_mysql_eru_phpmyadmin1.gif" alt="Edit restricted user using phpMyAdmin" />
+   </td>
+ <tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Edit Restricted MySQL User using MySQL Prompt"></a>
+<h2>Edit Restricted MySQL User using MySQL Prompt</h2>
+
+<p>Editing an existing user with restricted privileges can be performed using the MySQL Client.</p>
+
+<p>You can use REVOKE to remove some or all privileges or alternatively use GRANT to add additional privileges. This example assumes a user <b>fred</b> has been created with the privileges GRANT SELECT, INSERT, UPDATE, DELETE assigned on database <b>wordpress</b>.</p>
+
+You can revoke (remove) privileges; for example, the following command removes  INSERT, UPDATE and DELETE.
+<ul>
+ <li><code>REVOKE INSERT, UPDATE, DELETE ON wordpress.* FROM 'fred'@'127.0.0.1' ;</code></li>
+</ul>
+
+You can grant (add) privileges; for example, the following command adds  INSERT and UPDATE.
+<ul>
+ <li><code>GRANT INSERT, UPDATE ON wordpress.* TO 'fred'@'127.0.0.1' ;</code></li>
+</ul>
+
+You can display the grants assigned with the following command:
+<ul>
+ <li><code>SHOW GRANTS FOR 'fred'@'127.0.0.1';</code></li>
+</ul>
+
+<p>Example for the above commands. Open MySQL prompt window click <b>MySQL Console</b> button. Then enter the following commands:</p>
+
+ <ul>
+  <li><code>SHOW GRANTS FOR 'fred'@'127.0.0.1';</code></li>
+  <li><code>REVOKE INSERT, UPDATE, DELETE ON wordpress.* FROM 'fred'@'127.0.0.1' ;</code></li>
+  <li><code>SHOW GRANTS FOR 'fred'@'127.0.0.1';</code></li>
+  <li><code>GRANT INSERT, UPDATE ON wordpress.* TO 'fred'@'127.0.0.1' ;</code></li>
+  <li><code>SHOW GRANTS FOR 'fred'@'127.0.0.1';</code></li>
+  <li><code>exit</code></li>
+ </ul>
+
+The results are shown below.
+<pre>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 26
+Server version: 5.5.33 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2013, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+
+mysql> SHOW GRANTS FOR 'fred'@'127.0.0.1';
++-------------------------------------------------------------------------------------------------------------+
+| Grants for fred@127.0.0.1                                                                                   |
++-------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'fred'@'127.0.0.1' IDENTIFIED BY PASSWORD '*F5F0B28BD93FCF0C77FD96BB97BBC745ED8EA6BC' |
+| GRANT SELECT, INSERT, UPDATE, DELETE ON `wordpress`.* TO 'fred'@'127.0.0.1'                                 |
++-------------------------------------------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> REVOKE INSERT, UPDATE, DELETE ON wordpress.* FROM 'fred'@'127.0.0.1' ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW GRANTS FOR 'fred'@'127.0.0.1';
++-------------------------------------------------------------------------------------------------------------+
+| Grants for fred@127.0.0.1                                                                                   |
++-------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'fred'@'127.0.0.1' IDENTIFIED BY PASSWORD '*F5F0B28BD93FCF0C77FD96BB97BBC745ED8EA6BC' |
+| GRANT SELECT ON `wordpress`.* TO 'fred'@'127.0.0.1'                                                         |
++-------------------------------------------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> GRANT INSERT, UPDATE ON wordpress.* TO 'fred'@'127.0.0.1' ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW GRANTS FOR 'fred'@'127.0.0.1';
++-------------------------------------------------------------------------------------------------------------+
+| Grants for fred@127.0.0.1                                                                                   |
++-------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'fred'@'127.0.0.1' IDENTIFIED BY PASSWORD '*F5F0B28BD93FCF0C77FD96BB97BBC745ED8EA6BC' |
+| GRANT SELECT, INSERT, UPDATE ON `wordpress`.* TO 'fred'@'127.0.0.1'                                         |
++-------------------------------------------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> exit
+Bye
+
+C:\UniServerZ\core\mysql\bin>
+</pre>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Related topics"></a>
+<h2>Related topics</h2>
+
+<p><a href="mysql_prompt.html">MySQL Prompt</a> </p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

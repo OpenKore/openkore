@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Apache - Server Certificate Self-signed</title>
+  <meta name="Description" content="Apache Server Certificate Self-signed" />
+  <meta name="Keywords" content="Server,Certificate,Self,signed,Run,batch,file,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p650">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/apache_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Apache - Server Certificate Self-Signed</h1>
+</tr>
+</table>
+
+
+<p>This covers how to enable SSL on The Uniform Server Zero XIII.</p> 
+
+<p>The Uniform Server Zero does not include a test server certificate/key pair, so a default installation has SSL disabled. The reason is one of security. A certificate/key pair must be unique to each server. After creating a new server certificate/key pair, SSL is automatically enabled in Apache's configuration file.</p> 
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Creating a self-signed certificate" >Creating a self-signed certificate</a></li>
+   <li><a href="#Alternative scripts" >Alternative Scripts</a></li>
+   <li><a href="#Generate_server_cert_and_key.bat" >&nbsp;&nbsp;Generate_server_cert_and_key.bat</a></li>
+   <li><a href="# Signed certificate" > Signed certificate</a></li>
+   <li><a href="#Where to next" >Where to next</a></li>
+
+   </ul>
+ </div>
+</div>
+
+<a name="Creating a self-signed certificate"></a>
+<h2>Creating a self-signed certificate</h2>
+
+<p>Generating a self-signed certificate requires only a few mouse clicks. The "Server Certificate and Key generator" form has been pre-configured for a self-signed certificate there is no need to change these values just click "Run Generate" However if you wish you can change any of the defaults.</p>
+
+<table>
+<tr valign="top">
+<td>
+<p class="access">Apache &gt; Apache SSL &gt; Server Certificate and Key generator</p>
+
+<ul>
+  <li>This opens the <b>Server Certificate and Key generator</b> menu shown at right</li>
+  <li>D) Click <b>Run Generate</b> After a short time, a confirmation pop-up is displayed.</li>
+  <li>For the new configuration to become effective, you must <b>restart Apache server</b>.</li>
+</ul>
+<p>The above generates a self-signed certificate.</p>
+
+<p>Note 1: A) If you have changed the server name using <a href="apache_basic_configuration.html">Apache basic configuration</a> menu, that name will be displayed instead of localhost.</p>
+<p>Note 2: B) C) Are dropdown menus.</p>
+<p>Note 3: C) 2048 Bits provide high-grade encryption; no need to change this.</p>
+
+</td>
+<td>
+   <img src="images/C11_apache_cert_gen_1.gif" alt="Start as program"  />
+</td>
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Alternative Script"></a>
+<h2>Alternative Script</h2>
+
+The Uniform Server Zero provides an alternative for generating a server certificate and key pair.
+
+<a name="Generate_server_cert_and_key.bat"></a>
+<p>Run the batch file UniServerZ\core\openssl\<b>Generate_server_cert_and_key.bat</b></p>
+
+<p>This script generates a self-signed server certificate and key pair. It assumes you have not changed the server name from its default of localhost. This allows the certificate and key to be automatically generated and installed without any user input.</p>
+
+<p><b>Note:</b> The certificate signing request (server.csr) is not required and is deleted.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Signed certificate"></a>
+<h2>Signed certificate</h2>
+
+<p>If you are intending to purchase a signed certificate a certificate-signing request (server.csr) is required. Run "Server Certificate and Key generator"; which does not delete the server.csr</p>
+
+<p class="access">Apache &gt; Apache SSL &gt; Server Certificate and Key generator</p>
+
+ <ul>
+   <li>Fill in all appropriate form fields.</li>
+   <li>Click Run Generate.</li>
+   <li>The certificate-signing request <b>server.csr</b> is generated and located in folder UniServerZ\core\openssl.</li>
+   <li>You will open this file and post the contents for signing by the certificate authority. </li>
+   <li>When you receive the signed certificate, you will replace the self-signed certificate with it.</li>
+ </ul>
+
+<p><b>Note 1:</b> Copy both the server key, UniServerZ\core\apache2\server_certs\ssl.key\server.key, and the returned signed certificate to a writable CD or USB memory stick for safekeeping.</p>
+
+<p><b>Note 2:</b> For a free signed certificate check out the following page: <a href="apache_free_server_cert.html">Free server certificate</a> </p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Where to next"></a>
+<h2>Where to next</h2>
+
+<p><a href="apache_ssl.html">Apache SSL</a> Introduction and overview.</p>
+<p><a href="apache_free_server_cert.html">Free server certificate</a> How to obtain and install a free server certificate from StartCom</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

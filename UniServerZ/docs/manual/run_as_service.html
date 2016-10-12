@@ -1,0 +1,469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Run as a service</title>
+  <meta name="Description" content="After installing module ZeroXIII_uniservice_2_2_0 folder UniServerZ contains a file UniService.exe running this file opens the Uniform Server Service application. This application allows you to install and run The Uniform Server as a service." />
+  <meta name="Keywords" content="Run,service,Uniform,Server,install,run,stop,application,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p1600">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Run as a service</h1>
+</tr>
+</table>
+
+<p>After installing module ZeroXIII_uniservice_2_2_0 folder UniServerZ contains a file <b>UniService.exe</b> running this file opens the Uniform Server Service application. This application allows you to install and run The Uniform Server as a service.</p>
+
+<p><b>NOTE:</b> For Win7 and Win8, admin privileges are required. When prompted click <b>yes</b> <i>allow changes to this computer</i>.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Install module (plugin)">Install module (plugin)</a></li>
+   <li><a href="#Warning">Warning</a></li>
+   <li><a href="#Uniform Server Service application">Uniform Server Service application</a></li>
+   <li><a href="#Apache service test">Apache service test</a></li>
+   <li><a href="#Operation overview">Operation overview</a></li>
+   <li><a href="#Install service">&nbsp;&nbsp;Install service</a></li>
+   <li><a href="#Run service">&nbsp;&nbsp;Run service</a></li>
+   <li><a href="#Stop service">&nbsp;&nbsp;Stop service</a></li>
+   <li><a href="#Uninstall service">&nbsp;&nbsp;Uninstall service</a></li>
+   <li><a href="#Change service names">Change service names</a></li>
+   </ul>
+ </div>
+</div>
+
+<a name="Install module (plugin)"></a>
+<h2>Install module (plugin)</h2>
+<p>Install The Uniform Server service plugin as follows:</p>
+
+ <ol>
+  <li> Download ZeroXIII_uniservice_2_2_0.exe module (plugin) </li>
+  <li> Copy ZeroXIII_uniservice_2_2_0.exe module (plugin) to folder UniServerZ </li>
+  <li> Double click on the downloaded module </li>
+  <li> This starts the extraction process </li>
+  <li> If requested allow overwriting of existing files. </li>
+  <li> If you wish to save space delete file  ZeroXIII_uniservice_2_2_0.exe </li>
+ </ol>
+
+ <ul>
+   <li>Folder UniServerZ now contains two new files:</li>
+    <ul>
+       <li>  UniService.exe - Service Application</li>
+       <li>  ZeroXIII_unservice_read_me.txt - Contains additional informs </li>
+     </ul>
+  </ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Warning"></a>
+<h2>Warning</h2>
+
+<p>The Uniform Server Service application and UniController are independent applications this means there is no interaction between the two.  Use only one or other to control the servers as follows:</p>
+
+ <ul>
+  <li>Very important.</li>
+    <ul>
+      <li>Ensure servers have been configured correctly and correct operation has been confirmed by running as a standard application using Unicontroller.</li>
+    </ul>
+
+  <li>Before installing and running servers as a service.</li>
+    <ul>
+     <li> Ensure servers are stopped and UniController is closed.</li> 
+    </ul>
+
+  <li>After installing and running servers as a service do not use UniController to control servers.</li>
+    <ul>
+      <li> Before using UniController stop and uninstall services.</li>
+    </ul>
+ </ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Uniform Server Service application"></a>
+<h2>Uniform Server Service application</h2>
+
+<p>When using this application, you install the servers as services; it adds data to your operating system’s registry. The advantages of running as a service, when you restart your PC, servers’ will automatically re-start. You can install and run services from a USB memory stick however, you must remember to stop and uninstall services before removing your USB stick.</p>
+
+<p>Buttons (A,B) and (C,D) provide independent control of Apache and MySQL servers respectively.</p>
+
+<table>
+<tr>
+ <td>
+
+  <ul>
+     <li><b>Install and Run services</b></li>
+       <ul>
+          <li>To install <b>Apache</b> service click button A). Run service by clicking button B).  </li>
+          <li>To install <b>MySQL</b> service click button C). Run service by clicking button C).  </li>
+       </ul>
+Buttons A and C toggle to display uninstall. Indicators change from red to green when services have been installed and are running.
+  </ul>
+
+Note: Servers now use absolute paths and are no longer portable.
+  <ul>
+     <li><b>Stop and Uninstall services</b></li>
+       <ul>
+          <li>To stop <b>Apache</b> service click button B). Uninstall service click button A).  </li>
+          <li>To stop <b>MySQL</b> service click button D). Uninstall service click button C).  </li>
+       </ul>
+This stops and uninstalls both servers. Service application returns to initial state as shown at right.
+  </ul>
+
+Note: Servers are now portable and can be moved.
+ </td>
+ <td>
+   <img src="images/C11_run_as_service.gif" alt="Start as service" />
+ </td>
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Apache service test"></a>
+<h2>Apache service test</h2>
+
+ <p>Errors in Apache configuration files will prevent Apache running as a service.
+ After making changes to configuration files ensure the servers function
+ correctly when run as a standard program. After testing stop servers, close
+ UniController and start UniService.  Click Apache service test button E).</p>   
+
+<p> Apache service test performs the following:</p>
+  <ul>
+    <li> 1) Open a command window                   </li>
+    <li> 2) Check configuration files exist         </li>
+    <li> 3) Create back-up folder and copy files    </li>
+    <li> 4) Check all back-up files exist           </li>
+    <li> 5) Replace variables with absolute paths.  </li>
+    <li> 6) Install Apache service                  </li>
+    <li> 7) Performs Apache configuration test      </li>
+    <li> 8) Uninstall Apache service.               </li>
+    <li> 9) Restore original files from back-up.    </li>
+    <li> 10) Delete back-up files and folder.       </li>
+  </ul>
+<p> Closing above command window returns to the Service Utility UniService.</p>
+
+<p> Errors reported must be corrected before the service can be installed and
+ started from the UniServer Service Utility.</p>
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Operation overview"></a>
+<h2>Operation overview</h2>
+
+<p>The following provides an operation overview of the service application:</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Install service"></a>
+<h3>Install service</h3>
+
+<p><b>Apache</b></p>
+ <ul>
+   <li>Clicking button A initiates a backup of the following configuration files:</li>
+     <ul>
+       <li>httpd.conf</li>
+       <li>httpd-autoindex.conf</li>
+       <li>httpd-dav.conf</li>
+       <li>httpd-default.conf</li>
+       <li>httpd-deflate.conf</li>
+       <li>httpd-info.conf</li>
+       <li>httpd-languages.conf</li>
+       <li>httpd-manual.conf</li>
+       <li>httpd-mpm.conf</li>
+       <li>httpd-multilang-errordoc.conf</li>
+       <li>httpd-proxy-html.conf</li>
+       <li>httpd-sni.conf</li>
+       <li>httpd-ssl.conf</li>
+       <li>httpd-userdir.conf</li>
+       <li>httpd-vhosts.conf</li>
+       <li>php_production.ini - <i>Selected configuration file</i></li>
+       <li>php-cli.ini</li>
+       <li>proxy-html.conf</li>
+     </ul>
+   <li>A backup folder C:\UniServerZ\core\service_back_ap is created if it does not exist and the above configuration files copied to it.</li>
+   <li>Relative paths within original configuration files are converted to absolute paths.</li>
+      <ul>
+         <li>Note: Because servers now use absolute paths they are no longer portable.</li>
+      </ul>
+
+    <li>Following command line is executed installing the Apache service:</li>
+      <ul>
+         <li>Button A: C:\UniServerZ\core\apache2\bin\httpd_z.exe -k install -n "us_apache_1"</li>
+      </ul>
+
+     <li>Button text toggle state:</li>
+      <ul>
+         <li>Button A: Text <i>Install service</i> changes to UnInstall service.</li>
+      </ul> 
+
+       <li>Indicator toggles state:</li>
+      <ul>
+         <li>Changes from red (not installed as service) to green (installed as service).</li>
+      </ul>
+
+     <li>Button B <i>Run service</i> is enabled.</li> 
+ </ul>
+
+
+<p><b>MySQL</b></p>
+
+<ul>
+   <li>Clicking button C initiates a backup of the following configuration file:</li>
+     <ul>
+       <li>my.ini</li>
+     </ul>
+   <li>A backup folder C:\UniServerZ\core\service_back_my is created if it does not exist and the above configuration file copied to it.</li>
+   <li>Relative paths within original configuration file are converted to absolute paths.</li>
+      <ul>
+         <li>Note: Because servers now use absolute paths they are no longer portable.</li>
+      </ul>
+
+    <li>Following command line is executed installing the MySQL service:</li>
+      <ul>
+         <li>Button C: C:\UniServerZ\core\mysql\bin\bin\mysqld_z.exe --install "us_mysql_1" --defaults-file=C:/UniServerZ/core/mysql/my.ini</li>
+      </ul>
+
+     <li>Button text toggle state:</li>
+      <ul>
+         <li>Button C: Text <i>Install service</i> changes to UnInstall service.</li>
+      </ul> 
+
+       <li>Indicator toggles state:</li>
+      <ul>
+         <li>Changes from red (not installed as service) to green (installed as service).</li>
+      </ul>
+
+     <li>Button D <i>Run service</i> is enabled.</li> 
+ </ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Run service"></a>
+<h3>Run service</h3>
+
+<p><b>Apache</b></p>
+
+ <ul>
+   <li>Clicking enabled button B runs the service by executing the following command line:</li>
+      <ul>
+         <li>Button B: C:\UniServerZ\core\apache2\bin\httpd_z.exe -k start -n "us_apache_1"</li>
+      </ul>
+
+     <li>Button text toggle state:</li>
+      <ul>
+         <li>Button B: Text <i>Run service</i> changes to Stop service.</li>
+      </ul> 
+
+       <li>Indicator toggles state:</li>
+      <ul>
+         <li>Changes from red (service not running) to green (service running).</li>
+      </ul>
+
+     <li>Buttons A <i>UnInstall service</i> is disabled.</li> 
+ </ul>
+
+<p><b>MySQL</b></p>
+
+ <ul>
+   <li>Clicking enabled button D runs the service by executing the following command line:</li>
+      <ul>
+         <li>Button D: sc.exe start "us_mysql_1"</li>
+      </ul>
+
+     <li>Button text toggles state:</li>
+      <ul>
+         <li>Button D: Text <i>Run service</i> changes to Stop service.</li>
+      </ul> 
+
+       <li>Indicator toggle state:</li>
+      <ul>
+         <li>Changes from red (service not running) to green (service running).</li>
+      </ul>
+
+     <li>Buttons C <i>UnInstall service</i> is disabled.</li> 
+ </ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Stop service"></a>
+<h3>Stop service</h3>
+
+<p><b>Apache </b></p>
+ <ul>
+   <li>Clicking enabled button B stops the service by executing the following command line:</li>
+      <ul>
+         <li>Button B: C:\UniServerZ\core\apache2\bin\httpd_z.exe -k stop -n "us_apache_1"</li>
+      </ul>
+
+     <li>Button text toggles state:</li>
+      <ul>
+         <li>Button B: Text <i>Stop service</i> changes to Run service.</li>
+      </ul> 
+
+       <li>Indicator toggles state:</li>
+      <ul>
+         <li>Changes from green (service running) to red (service not running).</li>
+      </ul>
+
+     <li>Buttons A <i>UnInstall service</i> is enabled.</li> 
+ </ul>
+
+
+<p><b>MySQL</b></p>
+
+
+ <ul>
+   <li>Clicking enabled buttons D stops the service by executing the following command line:</li>
+      <ul>
+         <li>Button D: sc.exe stop "us_mysql_1"</li>
+      </ul>
+
+     <li>Button text toggles state:</li>
+      <ul>
+         <li>Button D: Text <i>Stop service</i> changes to Run service.</li>
+      </ul> 
+
+       <li>Indicator toggles state:</li>
+      <ul>
+         <li>Changes from green (service running) to red (service not running).</li>
+      </ul>
+
+     <li>Buttons C <i>UnInstall service</i> is enabled.</li> 
+ </ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Uninstall service"></a>
+<h3>Uninstall service</h3>
+
+<p><b>Apache</b></p>
+ <ul>
+    <li>Clicking button A the following command line is executed uninstalling the service:</li>
+      <ul>
+         <li>Button A: C:\UniServerZ\core\apache2\bin\httpd_z.exe -k uninstall -n "us_apache_1"</li>
+      </ul>
+
+     <li>Button text toggles state:</li>
+      <ul>
+         <li>Button A: Text <i>UnInstall service</i> changes to Install service.</li>
+      </ul> 
+
+       <li>Indicators toggle state:</li>
+      <ul>
+         <li>Changes from green (installed as service) to red (not installed as service).</li>
+      </ul>
+
+     <li>Buttons B <i>Run service</i> is disabled.</li> 
+
+   <li>Following configuration files are restored to their original location:</li>
+     <ul>
+       <li>httpd.conf</li>
+       <li>httpd-autoindex.conf</li>
+       <li>httpd-dav.conf</li>
+       <li>httpd-default.conf</li>
+       <li>httpd-deflate.conf</li>
+       <li>httpd-info.conf</li>
+       <li>httpd-languages.conf</li>
+       <li>httpd-manual.conf</li>
+       <li>httpd-mpm.conf</li>
+       <li>httpd-multilang-errordoc.conf</li>
+       <li>httpd-proxy-html.conf</li>
+       <li>httpd-sni.conf</li>
+       <li>httpd-ssl.conf</li>
+       <li>httpd-userdir.conf</li>
+       <li>httpd-vhosts.conf</li>
+       <li>php_production.ini - <i>Selected configuration file</i></li>
+       <li>php-cli.ini</li>
+       <li>proxy-html.conf</li>
+     </ul>
+   <li>Backup folder C:\UniServerZ\core\service_back_ap is deleted. </li>
+   <li>Note: Original configuration files use relative paths. Servers are now portable and can be moved.</li>
+ </ul>
+
+<p><b>MySQL</b></p>
+
+
+ <ul>
+
+    <li>Clicking buttons C following command line is executed uninstalling the MySQL service:</li>
+      <ul>
+         <li>Button C: C:\UniServerZ\core\mysql\bin\bin\mysqld_z.exe  --remove "us_mysql_1"</li>
+      </ul>
+
+     <li>Button text toggles state:</li>
+      <ul>
+         <li>Button C: Text <i>UnInstall service</i> changes to Install service.</li>
+      </ul> 
+
+       <li>Indicator toggles state:</li>
+      <ul>
+         <li>Changes from green (installed as service) to red (not installed as service).</li>
+      </ul>
+
+     <li>Button D <i>Run service</i> is disabled.</li> 
+
+
+   <li>Following configuration file is restored to its original location:</li>
+     <ul>
+       my.ini
+     </ul>
+   <li>Backup folder C:\UniServerZ\core\service_back_my is deleted. </li>
+   <li>Note: Original configuration files use relative paths. Servers are now portable and can be moved.</li>
+ </ul>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Change service names"></a>
+<h3>Change service names</h3>
+
+<p>Service names are changeable by editing file C:\UniServerZ\home\us_config\us_config.ini</p>
+
+<ul>
+ <li>Locate section [SERVICE]</li>
+ <li>Change the following lines as appropriate:</li>
+  <ul>
+    <li>MySQLServiceName=us_mysql</li>
+    <li>ApacheServiceName=us_apache</li>
+  </ul>
+Note: The AppNumber is appended to the service name to give its full name for example us_mysql_1
+</ul>
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

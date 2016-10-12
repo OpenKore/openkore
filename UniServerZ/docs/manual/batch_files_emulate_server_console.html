@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Batch Files emulate server console</title>
+  <meta name="Description" content="The UniController command console opens a command window with environment variables preconfigured. This command window allows you to run PHP scripts without specifying the full path to php.exe If you find this command window too restrictive an alternative is to create your own. "/>
+  <meta name="Keywords" content="Batch,files,The Uniform Server,MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<style type="text/css">
+/*****************************************/
+.heading {
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #ffffff;
+ background-color:  #2F2F76;
+ font-size: 13px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.td_sub{
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #000000;
+ background-color:  #f0f0f0;
+ font-size: 12px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+/*****************************************/
+</style>
+
+
+<body id="p1920">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+<script language="javascript" src="common/batch_files_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Batch Files- Emulate Server Console</h1>
+</tr>
+</table>
+
+<p>The UniController command console opens a command window with environment variables preconfigured. This command window allows you to run PHP scripts without specifying the full path to php.exe If you find this command window too restrictive an alternative is to create your own. The following page covers emulating UniController to open a command console using a batch file. Although specific to Uniform Server some of the code snippets are applicable to other applications.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Background">Background</a></li>
+   <li><a href="#Overview">Overview</a></li>
+   <li><a href="#Basic batch file">Basic batch file</a> - Emulates Server Console</li>
+
+   </ul>
+ </div>
+</div>
+
+
+
+
+<a name="Background"></a>
+<h2>Background</h2>
+
+<p>Opening a standard command prompt (for details see <a href="server_utils_server_console.html#How to run a standard command window">How to run a standard command window</a>) has one major disadvantage, its environment is inherited. If the inherited environment is missing environment variables a application requires, that application will fail. This is true for Uniform Server which is portable and does not change the host environment.</p>
+
+<p>A standard command prompt inherits all top-level variables. These can be created or changed by a user performing specific operating system tasks. This process is made difficult on purpose to prevent inadvertent changes and to avoid variable clutter. The inherited environment is a copy and  easily changeable.  At the command prompt you can add new environment variables and change inherited ones to create a new environment. This new environment is passed to applications started from the command prompt. Similarly an application can create a new environment and pass it to other applications it runs.</p>
+<p><b><i>Important note</i>:</b>  A child process (application) cannot change a parents environment variables. A child process can change only the copy (snapshot of the current environment) it inherits from a parent.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Overview"></a>
+<h2>Overview</h2>
+
+<p>To emulate UniControllers command console we can use the above to our advantage. The following lists basic requirements:</p>
+ 
+<ul>
+  <li>Run a batch file – Inherits environment.  </li>
+    <ul>
+      <li>Locate batch file in folder UniServerZ. - Suitable location for portability and reference.</li>
+      <li>Allow batch file execution from another application for example another batch file.</li>
+    </ul>
+  <li>Manipulate the inherited environment.  </li>
+    <ul>
+      <li><b>Path</b> environment variable. Add full path to folder containing <b>php.exe</b> file. </li>
+      <li>Path environment variable. Add other full paths as required. </li>
+    </ul>
+  <li>Set new environment variables.  </li>
+    <ul>
+      <li><b>HOME</b> environment variable. Full path to folder UniServerZ - Folder separator back slash</li>
+      <li><b>US_ROOTF</b> environment variable. Full path to folder UniServerZ - Folder separator forward slash</li>
+      <li>Set any other new environment variables as required.  </li>
+    </ul>
+  <li>Open a new command window – Inherits our new environment.  </li>
+    <ul>
+      <li>Runs batch file command cmd.</li>
+    </ul>
+  <li>Close batch file.  </li>
+</ul>
+
+<p><i>Note</i>: Highlighted elements allow running of PHP CLI scripts.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Basic batch file"></a>
+<h2>Basic batch file</h2>
+
+<p>In folder UniServerZ create a new file named run_cmd.bat with the following content:</p>
+
+<table>
+ <tr valign="top">
+   <td>
+<b><i>Comments</i></b>
+<p>A) The batch file command "@echo off" prevents displaying of command lines.</p>
+
+<p>B) The batch file command pair "pushd %~dp0" and "popd" apart from saving and resorting a callers location forces current working directory to the location of the file containing the command pair.</p>
+
+<p>C) The HOME environment variable is set to the current working directory.<br />
+D) The US_ROOTF environment variable is set to the current working directory (%HOME%).<br />
+E) The line “set US_ROOTF=%US_ROOTF:\=/%” converts backslashes to forward slashes.</p>
+
+<p>F) The FOR IN DO loop reads the user configuration file us_user.ini and obtains the selected PHP version and sets environment variable PHP_SELECT.<br />
+G) The "Path" environment variable is modified to include path to php.exe</p>
+
+<p>H) Command prompt is opened by "cmd". The parameter "/k" keeps the command prompt window open. Commands "cls" clears the window content, "title" sets the window title name and "color" sets the background colour.</p>
+
+
+   </td>
+
+   <td>&nbsp;</td>
+
+   <td>
+<b><i>run_cmd.bat</i></b>
+<pre>
+
+@echo off
+rem ### working directory current folder 
+pushd %~dp0
+
+rem ### set variables
+set HOME=%cd%
+set US_ROOTF=%HOME%
+set US_ROOTF=%US_ROOTF:\=/%
+set CFGF=%HOME%\home\us_config\us_user.ini
+
+rem ### Get PHP version selected
+FOR /F "TOKENS=1,2 delims=="  %%A IN (%CFGF%) DO If %%A==PHP_SELECT Set PHP_SELECT=%%B
+
+rem ### Set path to php.exe
+set Path=%HOME%\core\%PHP_SELECT%;%Path% 
+
+
+rem ### open command prompt
+cmd.exe /k "cls & title Uniserver emulated console & COLOR B0"
+
+:END
+rem ### restore original working directory
+popd
+
+
+
+
+
+
+</pre>
+   </td>
+ </tr>
+</table>
+
+<p><b><i>Test</i></b> <br />
+Run the batch file by double clicking on file run_cmd.bat, a command window opens. Type "set" without the quotes into this window.</p>
+
+ <ul>
+ <li> Inherited environment variables are displayed.</li>
+ <li> Confirm new variables HOME and US_ROOTF show full path to folder UniServerZ and file separators are back slashes and forward slashes respectively.</li>
+ <li> Chack path displays full path to php.exe and original path is appended.</li>
+ </ul>
+
+<p><i>Note</i>: Variables  HOME and  US_ROOTF are used in Uniform Server PHP configuration files (for example php-cli.ini).</p>
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

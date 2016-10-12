@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>MySQL Create delete Database</title>
+  <meta name="Description" content="There are three methods for creating or deleting a database; you can use UniController, phpMyAdmin, or Server Command Console. UniTray provides a convenient menu option described bellow. To use this option ensure the MySQL server is running otherwise the button remains greyed out" />
+  <meta name="Keywords" content="MySQL,Create,delete,Database,UniController,phpMyAdmin,Server,Command,Console,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p730">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/mysql_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>MySQL Create delete Database</h1>
+</tr>
+</table>
+<p>There are three methods for creating or deleting a database; you can use UniController, phpMyAdmin, or Server Command Console. UniTray provides a convenient menu option described bellow. To use this option ensure the MySQL server is running otherwise the button remains greyed out.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Create Delete Database using UniController" >Create Delete Database using UniController</a></li>
+   <li><a href="#Create Delete Database using phpMyAdmin" >Create Delete Database using phpMyAdmin</a></li>
+   <li><a href="#Create Delete Database using Server Console" >Create Delete Database using Server Console</a></li>
+   <li><a href="#MySQL utility - mysqladmin" >&nbsp;&nbsp;MySQL utility - mysqladmin</a></li>
+   <li><a href="#MySQL utility - mysql Client" >&nbsp;&nbsp;MySQL utility - mysql Client</a></li>
+   <li><a href="#Related topics" >Related topics</a></li>
+  </ul>
+ </div>
+</div>
+
+<a name="Create Delete Database using UniController"></a>
+<h2>Create Delete Database using UniController</h2>
+
+<p class="access">MySQL &gt; Database create-delete</p>
+
+<table>
+ <tr>
+   <td>
+<p><b><i>Create Database</i></b></p>
+<ul>
+ <li>1) Enter a database name, e.g mydb</li>
+ <li>2 Click the "Create Database" button</li>
+</ul>
+
+<p><b><i>Delete Database</i></b></p>
+<ul>
+ <li>3) Select a database to delete</li>
+ <li>5) Click the "Delete Database" button</li>
+</ul>
+
+<p>Note 1:<br />
+4) Clear entry and selection.<br />
+Deletes the name entered in 1) and any database selected in 3).<br />
+
+   </td>
+   <td>
+<img src="images/C11_mysql_create_delete_db.gif" alt="Create delete Database" />
+   </td>
+ <tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Create Delete Database using phpMyAdmin"></a>
+<h2>Create Delete Database using phpMyAdmin</h2>
+<p>Start Controller and click phpMyAmin button. To create or delete a database proceed as follows:</p>
+
+<p><b><i>Create Database</i></b></p>
+
+<table>
+ <tr valign="top">
+   <td>
+<p>When first started, the phpMyAdmin home page is displayed. You can always return to this page by clicking the home icon (1)</p>
+    <ul>
+     <li>1) If not at the home page, click <b>home icon</b> </li>
+     <li>2) From the top menu bar select <b>Databases</b></li>
+     <li>3) Enter name of database to create; for example, "wordpress"</li>
+     <li>4) Optionally select a collation from the dropdown. No selection default is used (see note).</li>
+     <li>5) Click <b>Create</b> button, a created confirmation is displayed.</li>
+    </ul>
+Note: On the home page the default collection is set to <b>utf8_general_ci</b>
+   </td>
+   <td>
+    <img src="images/C11_mysql_cdb_phpmyadmin3.gif" alt="Create delete Database phpMyAdmin" />
+   </td>
+ <tr>
+</table>
+
+<p><b><i>Delete Database</i></b></p>
+
+<table>
+ <tr valign="top">
+   <td>
+<p>When first started, the phpMyAdmin home page is displayed. You can always return to this page by clicking the home icon (1)</p>
+    <ul>
+     <li>1) If not at the home page, click <b>home icon</b> </li>
+     <li>2) From top menu bar select <b>Databases</b></li>
+     <li>3) Select database to delete (drop); for example, "wordpress"</li>
+     <li>4) Click <b>Drop</b> button; an alert box is displayed.</li>
+     <li>5) Click <b>Yes</b> on alert box "You are about to DESTROY a complete database!"</li>
+     <li>6) A confirmation is displayed "1 databases have been dropped successfully."</li>
+    </ul>
+
+   </td>
+   <td>
+    <img src="images/C11_mysql_cdb_phpmyadmin4.gif" alt="Create delete Database phpMyAdmin" />
+   </td>
+ <tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Create Delete Database using Server Console"></a>
+<h2>Create Delete Database using Server Console</h2>
+
+<p>Start the MySQL server, now open a command window by clciking the <b>Server Console</b> button. You can use either of the MySQL utilities, Client or Admin, to create and delete a database as follows:</p>
+ 
+
+<a name="MySQL utility - mysqladmin"></a>
+<h3>MySQL utility - mysqladmin</h3>
+
+<p><b><i>Create a database</i></b></p>
+
+<p>To create a database named <b>joomla</b>, enter the following command into the window:</p>
+<ul>
+  <li><code>mysqladmin.exe  --host=127.0.0.1 --user=root --password=root create joomla</code></li>
+</ul>
+
+<p><b><i>Delete a database</i></b></p>
+
+<p>To delete a database named <b>joomla</b>, enter the following command into the window:</p>
+<ul>
+  <li><code>mysqladmin.exe  --host=127.0.0.1 --user=root --password=root --force drop joomla</code></li>
+</ul>
+
+<p>Note: You can specify the MySQL port to use:</p>
+<ul>
+  <li><code>mysqladmin.exe --host=127.0.0.1 --port=3306 --user=root --password=root create joomla</code></li>
+  <li><code>mysqladmin.exe --host=127.0.0.1 --port=3306 --user=root --password=root --force drop joomla</code></li>
+</ul>
+
+<a name="MySQL utility - mysql Client"></a>
+<h3>MySQL utility - mysql Client</h3>
+<p>Note: Although the following uses the "Server Console" you can as an alternative use the <b>MySQL Console</b><br />
+ this saves having to type the first line (<code>mysql -h127.0.0.1 -uroot -proot</code>)</p>
+
+<table>
+ <tr>
+  <td>
+<p><b><i>Create a database</i></b></p>
+To create a database named <b>wordpress</b>, enter the following commands into the window:
+<ul>
+  <li><code>mysql -h127.0.0.1 -uroot -proot</code></li>
+  <li>At the mysql prompt type: <code>CREATE DATABASE wordpress;</code></li>
+  <li>At the mysql prompt type: <code>exit</code></li>
+</ul>
+  </td>
+
+  <td>
+<pre>
+
+C:\UniServerZ\core\mysql\bin>mysql -h127.0.0.1 -uroot -proot
+
+mysql> CREATE DATABASE wordpress;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> exit
+Bye
+
+</pre>
+  </td>
+
+ </tr>
+</table>
+
+<table>
+ <tr>
+  <td>
+<p><b><i>Delete a database</i></b></p>
+To delete a database named <b>wordpress</b>, enter the following commands into the window:
+
+<ul>
+  <li><code>mysql -h127.0.0.1 -uroot -proot</code> </li>
+  <li>At the mysql prompt type: <code>DROP DATABASE wordpress;</code></li>
+  <li>At the mysql prompt type: <code>exit</code></li>
+</ul>
+  </td>
+
+  <td>
+<pre>
+
+C:\UniServerZ\core\mysql\bin>mysql -h127.0.0.1 -uroot -proot
+
+mysql> DROP DATABASE wordpress;
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> exit
+Bye
+
+</pre>
+  </td>
+
+ </tr>
+</table>
+
+
+<p><b>Note:</b> If you have changed the MySQL root password, remember to substitute (-p<b>root</b>) <b>root</b> with your password in the above.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Related topics"></a>
+<h2>Related topics</h2>
+
+<p><a href="mysql_prompt.html">MySQL Prompt</a> <br />
+<a href="server_utils.html#Server Console">How to run a standard command window</a> <br />
+<a href="server_utils.html#MySQL Console">MySQL prompt command window short cut</a> </p>
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

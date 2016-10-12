@@ -1,0 +1,503 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Quick Start Guide</title>
+  <meta name="Description" content="The Uniform Server’s default configuration is set to allow only local access; users on your network or the Internet cannot access your server. This allows you to develop and view your website locally in a secure environment. This guide shows you how to install and run the servers as standard programs. When run as standard programs, nothing is installed to the Windows registry. The servers are therefore fully portable." />
+  <meta name="Keywords" content="Quick,Start,Guide,Pre-configured,server,Install,UniController,Control,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p200">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+<script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/quick_start_menu.js"></script>
+
+</td>
+
+<td id="td_spacer" >
+</td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Quick Start Guide</h1>
+</tr>
+</table>
+
+
+<p>The Uniform Server’s default configuration is set to allow only local access; users on your network or the Internet cannot access your server. This allows you to develop and view your website locally in a secure environment.</p>
+
+<p>This guide shows you how to install and run the servers as standard programs. When run as standard programs, nothing is installed to the Windows registry. The servers are therefore fully portable. </p> 
+
+
+<table>
+<tr>
+<td>
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Pre-configured server" >Pre-configured server</a></li>
+
+   <li><a href="#Install - UniController" >Install - UniController</a></li>
+   <li><a href="#Server Paths" >&nbsp;&nbsp;Server Paths</a></li>
+   <li><a href="#Install - Plugins" >Install - Plugins</a></li>
+   <li><a href="#Install WAMP components" >Install WAMP components</a></li>
+   <li><a href="#Installing your Website or Test pages" >Installing your Website or Test pages</a></li>
+   <li><a href="#Server Control" >Server Control</a></li>
+   <li><a href="#Run servers as a Program" >&nbsp;&nbsp; Run servers as a Program</a></li>
+   <li><a href="#Stop the Servers" >&nbsp;&nbsp; Stop the Servers</a></li>
+   <li><a href="#Set New MySQL root password" >Set New MySQL root password</a></li>
+
+  <li><a href="#Root folder www - Test" >Root folder www - Test</a></li>
+
+   <li><a href="#View pages" >View pages</a></li>
+ 
+   <li><a href="#Where to next" >Where to next</a></li>
+   </ul>
+ </div>
+</div>
+</td>
+<td>&nbsp;</td>
+<td>
+<img src="images/C11_unisevrer_zero.gif" alt="UniServer Zero" />
+</td>
+</tr>
+</table>
+
+<a name="Pre-configured server"></a>
+<h2>Pre-configured server</h2>
+
+<table>
+<tr valign="top">
+<td>
+
+<p>If your are using Uniform Server Zero with pre-installed ZeroModules install as follows: </p>
+
+<ul>
+  <li> Download and save the latest server file (for example 13_0_0_ZeroXIII.exe) to drive C:</li>
+  <li> The file is a self-extracting archive, double click to run the  extractor.</li>
+  <li> A new folder <b>UniServerZ</b> is created containing UniController.exe and support folders and files.</li>
+  <li> That completes installation jump to <a href="#Installing your Website or Test pages">Installing your Website or Test pages</a>.</li>
+</ul>
+
+
+<p>Alternatively if your are installing a bespoke server follow the next three <b>Install</b> sections and proceed to <a href="#Installing your Website or Test pages">Installing your Website or Test pages</a>.</p>
+
+</td>
+<td>&nbsp;</td>
+<td>
+<img src="images/C11_unisevrer_zero.gif" alt="UniServer Zero" />
+
+</td>
+</tr>
+</table>
+
+
+<a name="Install - UniController"></a>
+<h2>Install - UniController</h2>
+
+<table>
+<tr>
+<td valign="top">
+
+<p>The Uniform Server Zeros <b>base component</b> is the controller application. Download and extract this base component first.</p>
+
+<ul>
+  <li> Download and save the latest controller file (ZeroXIII_controller_2_2_0.exe) to drive C:</li>
+  <li> The file is a self-extracting archive, double click to run the  extractor.</li>
+  <li> The installation (extraction) defaults to creating folder C:\<b>UniServerZ</b>, with the folder <br />
+       structure as shown on the right.</li>
+  <li> Once extracted add plugins as required see <a href="#Install - Plugins" >next section</a> for details</li>
+
+</ul>
+
+</td>
+
+<td>
+  <img src="images/C11_top_level_folders.gif" alt="US Folder structure" />
+</td>
+
+</tr>
+</table>
+
+
+<a name="Server Paths"></a>
+<h3>Server Paths</h3>
+
+<p>You can install The Uniform Server Zero in nearly any location, with the exception that the <u>path to folder <b>UniServerZ</b> must not contain spaces</u>. Do not use "C:\Program Files", for example (which has other problems as well, such as restricted permissions and system restore inconsistencies). We recommend installing to the drive root, such as "C:\" or "D:\" for simplicity, but other locations, such as "C:\test1\appserver" work just as well. </p>
+
+<p><b><i>Note</i>:</b> The space character restriction is generic and applies to other WAMP stacks as well. Many applications that will be hosted on the server do not tolerate spaces in paths.  The system restore issue applies mainly to individual component installs.</p>
+
+<p>If the current installation is on a faulty path, the situation can eaily be resolved by just moving the UniServerZ directory to a proper location.  You do not have to delete the directory and reinstall.  For example, just rename "D:\bad path\UniServer" to "D:\good_loc\UniServerZ".</p>  
+
+<table>
+<tr valign="top">
+<td>
+<p><i>General note</i>:</p>
+<p>UniController on its own allows you to send test e-mails using the email utility msmtp. This utility provides support for PHP plugins allowing the PHP mail function to send emails.</p>
+<p>In addition the controller provides a menu option to edit or view the UniServer PAC file. Creating an Apache Vhost automatically adds an entry to this file. Entries in the PAC file resolve domain names to local host allowing testing without the need for a DNS entry or writing an entry in the Windows hosts file.</p>
+
+<p>The controller also provides a menu option to edit or view the Windows hosts file. Creating an Apache Vhost automatically adds an entry to this file if that user option is enabled (enabled by default).  Entries in the hosts file resolve domain names to local host allowing testing without the need for a DNS entry.</p>
+
+
+<p>Greyed out controller menu options and buttons indicate that option is unavailable until either the appropriate plugin is installed or the servers (Apache and MySQL) are running.</p>
+
+</td>
+<td>&nbsp;</td>
+<td>
+<img src="images/C11_unisevrer_zero_2.gif" alt="UniServer Zero" />
+</td>
+</tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Install - Plugins"></a>
+<h2>Install - Plugins</h2>
+
+<p>The Uniform Server Zero is designed for portability, emphasis is given to reducing code size. The Uniform Server Zero achieves this through a modular implementation. Install only plugins you require these are listed on the <a href="plugins_detail.html">plugins page</a>, plugins avoid the dreaded bloat-ware scenario.
+
+<p><i>Installing a plugin</i></p>
+
+<ul>
+  <li>Close running servers and <b>close UniController</b>.</li>
+  <li>Dounload and save required plugin file (ZeroXIII_x_x_x.exe) to folder UniServerZ. </li>
+  <li>Execute the downloaded file (ZeroXIII_x_x_x.exe). Once extracted, the plugin is ready to run </li>
+  <li>If you wish; delete the installation file. </li>
+</ul>
+
+<p>After extraction plugins have additional documentation in the form of a xxx_read_me.txt file located in folder UniServerZ.</p>
+
+
+<a name="Install WAMP components"></a>
+<h2>Install WAMP components</h2>
+<p>The following provides a complete guide for installing a  WAMP (Windows Apache MySQL and PHP) server. Installing is a misnomer! Nothing is installed to your PCs registry all files are extracted to their appropriate location within the UniServer
+folder structure.</p>
+
+<p>To install a WAMP server proceed as follows:</p> 
+
+<ol>
+  <li> Download and save the latest controller file (ZeroXIII_controller_2_2_0.exe) to drive c:</li>
+  <li> The file is a self-extracting archive, double click on above file to run the extractor.</li>
+  <li> A new folder C:\<b>UniServerZ</b> is created containing the controller application UniController.exe and support folders and files.</li>
+  <li> Download the following plugins (or latest version) and save to folder <b>UniServerZ</b>.
+       <ul>
+         <li>ZeroXIII_apache_2_4_23_h.exe - Apache server</li>
+         <li>ZeroXIII_mysql_5_6_31.exe - MySQL server</li>
+         <li>ZeroXIII_php_7_0_8_h.exe - PHP (Use PHP modules from the Default list)</li>
+         <li>ZeroXIII_phpmyadmin_4_6_3.exe - Admin for MySQL server</li>
+       </ul>
+   </li>
+  <li> For each of the above installation files double click to run the extractor.</li>
+  <li> If prompted allow overwriting of existing files. </li>
+  <li> If you wish; delete the installation files, they are no longer required. </li>
+</ol>
+
+<p><b><i>Note</i> 1:</b> Each plugin contains a read-me file providing any additional instructions this is located in folder UniServerZ. </p>
+
+<p><b><i>Note</i> 2:</b> Clean module install</p>
+
+<table>
+<tr valign="top">
+<td>
+<b>Initial installation:</b>
+<p>First time installation of modules<br />
+   requires nothing special proceed as above.</p>
+
+<b>Already installed modules: </b>
+<p>Modules that have already been installed<br />
+   first delete the corresponding module folder<br />
+   and then proceed as above.</p>
+
+<p>Module name and folder to delete<br />
+   are listed on the right:</p>
+
+</td>
+<td>
+ <table>
+   <tr><td><b>Module</b> </td>                            <td> <b>Folder</b> <td></tr>
+   <tr><td> ZeroXIII_apache_2_4_x.exe  </td>                 <td> UniServerZ\core\apache2 <td></tr>
+
+   <tr><td> ZeroXIII_mariadb_5_5_x.exe</td>                <td> UniServerZ\core\mysql <td></tr>
+   <tr><td> ZeroXIII_mariadb_10_x_x.exe</td>                 <td> UniServerZ\core\mysql <td></tr>
+   <tr><td> ZeroXIII_mysql_5_x_x.exe </td>                  <td> UniServerZ\core\mysql <td></tr>
+
+   <tr><td> ZeroXIII_php_5_3_x.exe</td>                    <td> UniServerZ\core\php53 <td></tr>
+   <tr><td> ZeroXIII_php_5_4_x.exe</td>                     <td> UniServerZ\core\php54 <td></tr>
+   <tr><td> ZeroXIII_php_5_5_x.exe</td>                     <td> UniServerZ\core\php55 <td></tr>
+   <tr><td> ZeroXIII_php_5_6_x.exe</td>                <td> UniServerZ\core\php56 <td></tr>
+
+   <tr><td> ZeroXIII_phpmyadmin_4_x_x.exe  </td>             <td> UniServerZ\home\us_opt1 <td></tr>
+   <tr><td> ZeroXIII_adminer_4_x_x.exe  </td>                <td> UniServerZ\home\us_opt2 <td></tr>
+   <tr><td> ZeroXIII_phpmybackuppro_2_4.exe  </td>           <td> UniServerZ\home\us_opt3 <td></tr>
+   <tr><td> ZeroXIII_sypex_dumper_2_x_x.exe  </td>          <td> UniServerZ\home\us_opt3 <td></tr>
+
+
+   <tr><td> ZeroXIII_strawberry_perl_5_x_x_x.exe</td>        <td> UniServerZ\home\perl <td></tr>
+   <tr><td> ZeroXIII_strawberry_perl_mini_5_x_x_x.exe</td>   <td> UniServerZ\home\perl <td></tr>
+
+ </table>
+</td>
+</tr>
+</table>
+
+<p><i>General note</i>:</p>
+<p>The instructions that follow assume you have installed the above WAMP server or a pre-configured server.</p> 
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Installing your Website or Test pages"></a>
+<h2>Installing your Website or Test pages</h2>
+
+<table>
+ <tr>
+  <td>
+<p><i>Server root folder</i>:</p>
+    <ul>
+     <li><b>B)</b> Web pages are served from folder UniServerZ\<b>www</b> , which is commonly referred to as the <b>server root</b> folder.</li>
+     <li>Simply copy your Website into this root folder. </li>
+    </ul>
+<p>The root folder <b>www</b> already contains a very simple web-site consisting of a single page named index.php<br />
+including its associated folders css and images. Its purpose is to provide a test page, allowing you to<br />
+confirm that the server is functioning properly.</p>
+ </td>
+ <td>
+  <img src="images/C11_top_level_folders.gif" alt="US Folder structure" />
+ </td>
+</table>
+
+
+<p>Before installing your Website, you can delete the index.php file and folders css and images.<br />
+Don't delete the <b>.htaccess</b> and <b>favicon.ico</b> files. They have the following purposes: 
+
+<ul>
+<li><b>.htaccess</b> - This file is part of the server security and should <b>not</b> be deleted.</li>
+<li><b>favicon.ico</b> - This is a small image file displayed in a browser next to a Web page name.<br />
+ You can replace this with your own file, but use the name <b>favicon.ico</b> so browsers will display it properly.</li>
+</ul>
+<p>Note: Having a favicon image is not a requirement, but modern browsers attempt to load this image by default. If your server does not contain one, an error is logged in Apache's log file.</p>
+
+<p><i>General notes</i>:</p>
+
+<p><i>Note 1:</i> Unix installations use a root folder named <b>htdocs.</b> When using an application installation guide that refers to htdocs, use folder <b>www</b> instead.<br />
+<i>Note 2:</i> The file structure is not static. For example, running Vhost creates the new folder UniServerZ\vhosts containing Vhost root folders.</p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Server Control"></a>
+<h2>Server Control</h2>
+
+<p>The UniServerZ folder contains file <b>UniController.exe</b> which opens The Uniform Server's control application for running the servers as a standard program.</p>
+
+<a name="Run servers as a Program"></a>
+<h3>Run servers as a Program</h3>
+
+<p>UniController runs the servers as a standard program. When using UniController nothing is installed to your operating system's registry. This is ideal for a development server, especially when running from a USB memory stick, since you do not have to perform anything special to stop or remove the servers.</p>
+
+<p><i>Run UniController</i>:</p>
+<table>
+  <tr valign="top">
+    <td>
+      The Uniform Server's folder structure is shown on the right.
+      <ul>
+        <li><b>A)</b> Navigate to the folder UniServerZ. </li>
+        <ul>
+          <li>Locate the file <b>UniController.exe</b> and double click</li>
+          <li>This starts the controller application UniController</li>
+        </ul>
+
+        <li>Before UniController is displayed the set MySQL password <a href="#Set New MySQL root password">pop-up</a> is displayed.</li>
+        <ul>
+          <li>You may click "cancel" and set the password later.</li>
+        </ul>
+      </ul>
+    </td>
+
+   <td>
+     <img src="images/C11_top_level_folders.gif" alt="US Zero folder structure" />
+    </td>
+</tr>
+</table>
+
+
+<p><i>Run Servers</i>:</p>
+
+<table>
+<tr valign="top">
+ <td>
+  <ul>
+    <li>UniController is shown on the right.</li>
+    <li><b>A)</b> Click <b>Start Apache</b> button. Starts the Apache server</li>
+    <li><b>B)</b> Click <b>Start MySQL</b> button. Starts the MySQL server</li>
+      <ul>
+         <li>If challenged by your firewall, allow access.</li>
+         <li>Buttons toggle state displaying Stop Apache and Stop MySQL.</li>
+         <li>Indicators <b>i1</b> and <b>i2</b> change from red to green<br />
+             indicating servers are running. </li>
+      </ul>
+    <li>Browser opens, displaying ref, splash and test pages.</li>
+    <li>Greyed buttons are enabled accordingly.</li>
+  </ul>
+
+<p>Note 1: Be aware that the splash page is <b>not</b> the index.php file in www.<br />
+Note 2: Browser is either your default browser or the portable browser (plugin required)</p>
+ </td>
+
+ <td >
+   <img src="images/C11_unicontroller_1.gif" alt="UniController 1" />
+ </td>
+</tr>
+
+</table>
+
+<p><i><b>General note</b></i>:</p>
+<p>There are various start-up conditions. If you receive a message <b><i>unable to connect</i></b> and are provided an option from your browser to try again, wait until all disk activity completes and click the "try again" button. Alternatively, wait a reasonable time to view the initial splash page, and enter the following into your browser: http://localhost/us_splash/index.php </p>
+<p>If you do not have the VC14 library, when you attempt to start the servers, you will get a runtime error popup.  See <a href="index.html#VC14 Libraries" >VC14 Libraries</a> to resolve this.</p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Stop the Servers"></a>
+<h2>Stop the Servers</h2>
+
+<table>
+<tr valign="top">
+ <td>
+UniController
+  <ul>
+    <li>UniController is shown on the right.</li>
+    <li><b>A)</b> Click <b>Stop Apache</b> button. Stops the Apache server</li>
+    <li><b>B)</b> Click <b>Stop MySQL</b> button. Stops the MySQL server</li>
+      <ul>
+         <li>Buttons toggle state displaying Start Apache and Start MySQL.</li>
+         <li>Indicators <b>i1</b> and <b>i2</b> change from green to red<br />
+             indicating servers have stopped. </li>
+      </ul>
+    <li>Active buttons are disabled (greyed) accordingly.</li>
+  </ul>
+
+<p>Note: Stopping the MySQL server attempts to perform a clean shutdown<br />
+ if this fails user is provided the option to forcibly kill the server.</p>
+
+ </td>
+
+ <td >
+   <img src="images/C11_unicontroller_2.gif" alt="UniController 2" />
+ </td>
+</tr>
+</table>
+
+<p>Note: Closing UniController does not change servers’ state. Restarting UniController the current server state is picked up and displayed.</p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Set New MySQL root password"></a>
+<h2>Set New MySQL root password</h2>
+
+<p>When UniController is started although you can skip setting a new MySQL root password,<br />
+ it is highly recommended that you set this password at the first opportunity.<br />
+Well! This is the first opportunity; the pop-up allows you to change the current root password.</p>
+
+<table>
+<tr valign="top">
+ <td>
+<ul>
+ <li>The Set New MySQL Password menu opens (See image on right) </li>
+ <li><b>A)</b> Enter a new password</li>
+ <li><b>B)</b> Click the <b>OK</b> button.</li>
+</ul>
+<p>You can click the cancel button and set the password later.</p>
+  </td>
+  <td>
+<img src="images/C11_change_mysql_password.gif" alt="Set root user MySQL password" />
+  </td>
+ </tr>
+
+</table>
+
+<p><b>Note:</b> You can re-open this menu from UniController as follows:</p>
+
+<p class="access">Click MySQL &gt; Change MySQL root password</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Root folder www - Test"></a>
+<h2>Root folder www - Test</h2>
+
+<p>The root folder www contains a very simple web-site consisting of a single page named index.php and associate folders css and images. </p>
+
+<p>Clicking UniController button <b>View www</b> displays this page confirming that Apache is serving pages from this folder.</p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="View pages"></a>
+<h2>View pages</h2>
+
+<p>The default server name is <b>localhost</b>. Use this to access pages as follows:</p>
+          
+<table>
+<tr valign="top">
+ <td>
+<h3>Index Pages</h3>
+<p>To access index pages (such as index.htm, index.html, index.php) type the following into your browser.</p>
+
+<p class="access">http://localhost/</p>
+
+ </td>
+
+ <td>
+<h3>Specific pages</h3>
+
+<p>Display a specific page by appending its name to the server name. For example, if your test page is named test.php, then type the following into your browser:</p>
+
+<p class="access">http://localhost/test.php</p>
+ </td>
+</tr>
+</table>
+
+<p><i>Note</i>: The Apache server automatically searches for index pages and displays the first one it finds. If it cannot find an index page, a directory listing is displayed instead.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+
+<a name="Where to next"></a>
+<h2>Where to go next</h2>
+
+<p>This quick guide shows how to start and stop the servers and display a test page. You can copy an entire web-site into the root folder www and it will then be served by Apache.</p>
+
+
+<p><a href="apache_access_www.html#Change Access">How to put the servers on-line</a> - Open up your server for public or intranet access and optionally restrict access using a name and password.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

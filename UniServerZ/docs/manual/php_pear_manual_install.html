@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>PHP - PEAR Manual Install</title>
+  <meta name="Description" content="This page covers manual installation of the PEAR core package; it is provided for reference only. Manually installing PEAR provides greater control, flexibility and exposes hidden detail. The following covers Pear instalation along with one of its components (classes) for testing." />
+  <meta name="Keywords" content="PHP,PEAR,repository,core,package,Manually,installing,Manual,Install,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p830">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/php_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>PHP - PEAR Manual Install</h1>
+</tr>
+</table>
+
+<p>This page covers manual installation of the PEAR core package; it is provided for reference only. Manually installing PEAR provides greater control, flexibility and exposes hidden detail. The following covers Pear instalation along with one of its components (classes) for testing. </p> 
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Install PEAR core package" >Install PEAR core package</a></li>
+   <li><a href="#Download and Extract PEAR core package" >&nbsp;&nbsp;Download and Extract PEAR core package</a></li>
+   <li><a href="#Install core package on The Uniform Server" >&nbsp;&nbsp;Install core package on The Uniform Server</a></li>
+   <li><a href="#Installing PEAR packages" >Installing PEAR packages</a></li>
+   <li><a href="#A Quick tour of PEAR repository" >&nbsp;&nbsp;A Quick tour of PEAR repository</a></li>
+   <li><a href="#Installing Dependencies" >&nbsp;&nbsp;Installing Dependencies</a></li>
+   <li><a href="#Installing PEAR Package - QuickForm" >&nbsp;&nbsp;Installing PEAR Package - QuickForm</a></li>
+   <li><a href="#Form - Test Script" >Form - Test Script</a></li>
+   <li><a href="#PEAR Alternate location" >PEAR Alternate location</a></li>
+   <li><a href="#Change include path for PEAR" >&nbsp;&nbsp;Change include path for PEAR</a></li>
+   <li><a href="#Summary" >Summary</a></li>
+
+   <li><a href="#Where to next" >Where to next</a></li>
+   </ul>
+ </div>
+</div>
+
+<a name="Install PEAR core package"></a>
+<h2>Install PEAR core package</h2>
+
+<p>The first requirement is to install the PEAR core package. This core package is used by all other packages to extend their functionality.</p>
+
+<p><b>Note:</b> All PEAR files are distributed using double compression (Unix standard). These have a file extension of tgz. To uncompress these files you can install the file archiver <a href="http://www.7-zip.org/" target="_blank">7-Zip</a>.  Alternatively, you can use the portable version from <a href="http://portableapps.com/apps/utilities/7-zip_portable" target="_blank">Portable Apps</a>.</p>
+
+<a name="Download and Extract PEAR core package"></a>
+<h3>Download and Extract PEAR core package</h3>
+
+<table>
+<tr>
+<td>
+<ul>
+ <li>A) Create a new folder. It can be any name, for example <b>pear_temp</b></li>
+ <li>Download the latest <a href="http://pear.php.net/package/PEAR/download" target="_blank"> PEAR core </a>package currently (PEAR-1.10.1.tgz)<br />
+ Note: The download link is located top right, named <b>Download</b> "<i>For manual installation only</i>")<br />
+ Save the download to folder  <b>pear_temp</b><br /><br />
+ Note: This example uses PEAR-1.9.3.tgz replace as appropriate with latest PEAR core package.</li>
+ <li>A) Start 7-Zip and navigate to folder  <b>pear_temp</b>.</li>
+ <li>A) Highlight file PEAR-1.9.3.tgz (left mouse click), click Extract (top menu button) and click OK in pop-up </li>
+ <li>B) A new folder (PEAR-1.9.3) is created. Navigate into this folder. </li>
+ <li>B) Highlight file PEAR-1.9.3.tar (left mouse click), click Extract and click OK</li>
+ <li>   You can now close 7-Zip.</li>
+</ul>
+ <p>That completes file extraction. You should have a folder structure as shown on the right.</p>
+
+<ul>
+ <li>C) Using explorer, navigate into folder PEAR-1.9.3 (last one in tree with this name).</li>
+ <li>   From this folder, copy files <b>PEAR.php</b> and <b>PEAR5.php</b> to folder PEAR D)  </li>
+</ul>
+</td>
+
+<td>
+   <img src="images/C11_php_pear_manual_install_1.gif" alt="Manual PEAR Install">
+</td>
+</tr>
+</table>
+<p>The PEAR core package is now ready to install on The Uniform Server. </p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Install core package on The Uniform Server"></a>
+<h3>Install core package on The Uniform Server</h3>
+
+
+<p>The Uniform Server has been pre-configured to run PEAR from a specific location  UniServerZ\home\us_pear. With the exception of file .htaccess its contents requires deleting. Install PEAR as follows: <br /><br />
+Note: This example again uses PEAR-1.9.3.tgz replace as appropriate with latest PEAR core package name.</p>
+<table>
+<tr valign="top">
+<td>
+
+<ul>
+ <li> E) Navigate into folder  UniServerZ\home\<b>us_pear</b>. <br /> With the exception of file .htaccess, delete its content. </li> 
+ <li> D) Copy folder pear_temp\PEAR-1.9.3\PEAR-1.9.3\PEAR-1.9.3\<b>PEAR</b><br /> E) to folder   UniServerZ\home\<b>us_pear</b> </li> 
+ <li> Folder structure as show on right </li> 
+</ul>
+</td>
+
+<td>
+   <img src="images/C11_php_pear_manual_install_2.gif" alt="Manual PEAR Install">
+</td>
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Installing PEAR packages"></a>
+<h2>Installing PEAR packages</h2>
+
+<p>Installing PEAR packages is relatively easy. Download and extract the package and install it to the PEAR folder. To confirm our PEAR installation is working and to demonstrate how to install packages we will be using a package named QuickForm.  </p>
+
+<a name="A Quick tour of PEAR repository"></a>
+<h3>A Quick tour of PEAR repository</h3>
+
+
+<ul>
+ <li> First port of call is <a href="http://pear.php.net/packages.php"  target="_blank">List Packages</a> All packages have been grouped into sections. The number to the right of each section title is the total packages in this group. </li> 
+
+ <li>We are interested in the QuickForm package which comes under section <a href="http://pear.php.net/packages.php?catpid=10&catname=HTML"  target="_blank">HTML</a> This page contains a list of all packages in this section.</li> 
+
+ <li> Scrolling down the page you will see enteries HTML_QuickForm, HTML_QuickForm2, HTML_QuickForm_advmultiselect etc. To the right is displayed the current status.</li> 
+
+ <li> Scroll to package <a href="http://pear.php.net/package/HTML_QuickForm"  target="_blank">HTML_QuickForm</a> and click link.</li> 
+
+ <li>Scroll down the page and you will find an important section named <b>Dependencies</b>. For HTML_QuickForm you will see it requires HTML_Common. We do require this because our current installation contains no additional installed packages. The dependencies section provides a quick link; clicking the link <a href="http://pear.php.net/package/HTML_Common/"  target="_blank">HTML_Common</a> will take you to the download page.</li>
+
+ <li>At the top of each package page are the following links, Main, <b>Download</b>, <b>Documentation</b>, Bugs, Trackbacks. Generally you can find examples of how to use a package in the documentation. Alternatively, you can search the Internet. The download link opens a download page where you can download files for manual installation.</li>
+
+</ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Installing Dependencies"></a>
+<h3>Installing Dependencies</h3>
+
+
+
+<table>
+<tr valign="top">
+<td>
+<ul>
+ <li>G) Create a new folder or use existing one; for example <b>pear_temp</b></li>
+ <li>Download latest <a href="http://pear.php.net/package/HTML_Common/download" target="_blank"> HTML_Common </a>package (HTML_Common-1.2.5.tgz top right manual installation only) - Save to folder  <b>pear_temp</b></li>
+ <li>G) Start 7-Zip and navigate to folder  <b>pear_temp</b>.</li>
+ <li>G) Highlight file HTML_Common-1.2.5.tgz (left mouse click), click Extract (top menu button) and click OK in the pop-up </li>
+ <li>H) A new folder (HTML_Common-1.2.5) is created. Navigate into this folder. </li>
+ <li>H) Highlight file HTML_Common-1.2.5.tar (left mouse click), click Extract and click OK</li>
+ <li>   You can now close 7-Zip.</li>
+ <li>I) That completes file extraction. Installation requires installing a single file contained in folder HTML_Common-1.2.5</li>
+</ul>
+</td>
+
+<td>
+ <p>&nbsp; </p>
+   <img src="images/C11_php_pear_manual_install_3.gif" alt="Manual PEAR Install">
+</td>
+</tr>
+</table>
+ <p>Where to install this file? Each distribution contains a file package.xml. Inside this file look for baseinstalldir which tells you the folder to install to. For this package it is HTML (baseinstalldir="HTML")<p>
+
+<ul>
+ <li>F) Using explorer, navigate into folder  UniServerZ\home\us_pear\<b>PEAR</b></li>
+ <li> Create a new folder <b>HTML</b> </li>
+ <li> Using explorer navigate into folder HTML_Common-1.2.5 (last one in tree with this name).</li>
+ <li> From this folder, copy file <b>Common.php</b> to folder  UniServerZ\home\us_pear\PEAR\<b>HTML</b> </li>
+</ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Installing PEAR Package - QuickForm"></a>
+<h3>Installing PEAR Package - QuickForm</h3>
+
+
+<table>
+<tr valign="top">
+<td>
+<ul>
+ <li>J) Create a new folder or use existing one, for example <b>pear_temp</b></li>
+ <li>Download latest <a href="http://pear.php.net/package/HTML_QuickForm/download" target="_blank"> QuickForm </a>package (HTML_QuickForm-3.2.12.tgz top right manual installation only) - Save to folder  <b>pear_temp</b></li>
+ <li>J) Start 7-Zip and navigate to folder  <b>pear_temp</b>.</li>
+ <li>J) Heighlight file HTML_QuickForm-3.2.12.tgz (left mouse click), click Extract (top menu button) and click OK in pop-up </li>
+ <li>K) A new folder (HTML_QuickForm-3.2.12) is created. Navigate into this folder. </li>
+ <li>K) Heighlight file HTML_QuickForm-3.2.12.tar (left mouse click), click Extract and click OK</li>
+ <li>   You can now close 7-Zip.</li>
+ <li>L) That completes file extraction. Installation requires installing content of folder HTML_QuickForm-3.2.12</li>
+</ul>
+</td>
+
+<td>
+ <p>&nbsp; </p>
+   <img src="images/C11_php_pear_manual_install_4.gif" alt="Manual PEAR Install">
+</td>
+</tr>
+</table>
+
+
+
+<table>
+<tr valign="top">
+<td>
+ <p>Where to install this file? Each distribution contains a file package.xml inside this file look for baseinstalldir which tell you the folder to install to. For this package it is HTML (baseinstalldir="HTML" name="/")<p>
+<ul>
+ <li> We have already create the base folder HTML in folder  UniServerZ\home\us_pear\<b>PEAR</b></li>
+ <li> L) Using explorer navigate into folder HTML_QuickForm-3.2.12 (last one in tree with this name).</li>
+ <li> From this folder copy its content to folder  UniServerZ\home\us_pear\PEAR\<b>HTML</b> </li>
+</ul>
+ <p>The Uniform Server's PEAR folder will now look like that shown on the right.<p>
+<td>
+ <p>&nbsp; </p>
+   <img src="images/C11_php_pear_manual_install_5.gif" alt="Manual PEAR Install">
+</td>
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Form - Test Script"></a>
+<h2>Form - Test Script</h2>
+
+<p>Create a new text file named <b>form.php</b> with the following content and save to folder  UniServerZ\<b>www</b></p>
+<pre>
+  &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"&gt;
+  &lt;html&gt;
+  &lt;head&gt;
+      &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+      &lt;title&gt;Pear HTML_QuickForm test&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;?php
+      require_once "HTML/QuickForm.php";
+
+      $form = new HTML_QuickForm('frmTest', 'get');
+      $form->addElement('header', 'MyHeader', 'Testing QuickForm');
+      $form->addElement('text', 'MyTextBox', 'What is your name?');
+      $form->addElement('reset', 'btnClear', 'Clear');
+      $form->addElement('submit', 'btnSubmit', 'Submit');
+      $form->display();
+
+  ?&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;
+</pre>
+
+<table>
+ <tr valign="top">
+  <td>
+Test:
+   <ul>
+     <li>Start The Uniform Server</li>
+     <li>Type follwong into browser: http://localhost/form.php</li>
+     <li>Expected result is shown on right.</li>
+   </ul>
+  </td>
+<td>
+   <img src="images/C11_php_pear_manual_install_6.gif" alt="Form Tet results">
+</td>
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="PEAR Alternate location"></a>
+<h2>PEAR Alternate location</h2>
+
+<p>Although The Uniform Server uses a specific PEAR location, you can install to any location that suits your requirements. <br /> For example, you can copy PEAR folder to folder  UniServerZ\core\<b>phpxx</b> or perform a manual installation directely to this folder.<br />Adding packages to the PEAR folder has been covered in the above sections.</p>
+
+<a name="Change include path for PEAR"></a>
+<h3>Change include path for PEAR</h3>
+
+<p>The include path in PHP’s configuration file php.ini requires changing to new PEAR folder location. There are three files to edit as follows:</p>
+
+<ul>
+<li> UniServerZ\core\phpxx\<b>php_test.ini</b></li>
+<li> UniServerZ\core\phpxx\<b>php_development.ini</b></li>
+<li> UniServerZ\core\phpxx\<b>php_production.ini</b></li>
+</ul>
+
+<p>In each of the above files locate the following line:</p>
+<pre>
+include_path = ".;${US_ROOTF}/home/us_pear/PEAR"
+</pre>
+
+<p>And change to:</p>
+<pre>
+include_path = ".;${US_ROOTF}/core/phpxx/PEAR"
+</pre>
+ 
+<script language="javascript" src="common/top.js"></script>
+<a name="Summary"></a>
+<h2>Summary</h2>
+
+<p>Manual installation was included because there are times where you have no alternative. Installing Pear using <a href="php_pear_auto_install.html"> go-pear</a> is far easier since the process is automated.</p>
+<p>The Uniform Server Zero Pear module <b>ZeroXIII_pear_1_0_0</b> removes any tedium, just install and run the web-interface.</p>
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Where to next"></a>
+<h2>Where to next</h2>
+
+<p><a href="php_pear_auto_install.html">PHP - PEAR Auto Install go-pear</a> - This page covers using go-pear that automats the installation process.</p>
+<p><a href="php_pear.html">PHP PEAR</a> - This page covers the PEAR Front-end.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

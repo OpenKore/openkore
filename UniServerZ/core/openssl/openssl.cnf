@@ -1,0 +1,51 @@
+#######################################################################
+# File name: openssl.cnf
+# Created By: The Uniform Server Development Team
+# Edited Last By: Mike Gleaves (ric) 
+# V 1.0 19-3-2011
+# Uses OpenSSL 
+########################################################################
+#
+# OpenSSL configuration file.
+#
+ 
+# Establish working directory.
+ 
+dir                 = .
+
+[req]
+default_bits                    = 2048          # 512 1024 2048 Size of keys
+default_keyfile                 = key.pem       # name of generated keys
+default_md                      = sha1          # message digest algorithm
+string_mask                     = nombstr       # permitted characters
+distinguished_name              = req_distinguished_name
+req_extensions                  = v3_req
+ 
+[req_distinguished_name]
+#---- Variable name ------    ---------  Prompt string ---------
+countryName                     = Country Name (2 letter code)                      # C  Country
+countryName_min                 = 2
+countryName_max                 = 2
+
+stateOrProvinceName             = State or Province Name (full name)                # ST
+localityName                    = Locality Name (city, district)                    # L
+
+0.organizationName              = Organization Name (company)                       # O  Organization Name
+organizationalUnitName          = Organizational Unit Name (department, division)   # OU Organization Unit
+emailAddress                    = Email Address
+emailAddress_max                = 40
+commonName                      = Common Name (eg, YOUR fqdn)                       # CN Common Name
+commonName_max                  = 64
+ 
+# Default values for the above, requires less typing.
+#----- Variable name ----     ----------- Value ------------
+
+0.organizationName_default      = UniServer
+organizationalUnitName_default	= Secure demo
+localityName_default            = Cambridge
+stateOrProvinceName_default     = Cambs
+countryName_default             = UK
+ 
+[v3_req]
+basicConstraints                = CA:FALSE
+subjectKeyIdentifier            = hash

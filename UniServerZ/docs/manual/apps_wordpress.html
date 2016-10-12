@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>WordPress</title>
+  <meta name="Description" content="The following page provides detailed information for installing WordPress on Uniform Server Zero XIII" />
+  <meta name="Keywords" content="WordPress,installing,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p1510">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/apps_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>WordPress</h1>
+</tr>
+</table>
+
+<p>WordPress is a free and open source application designed primarily for blogging and creating websites. It is a content-management system (CMS) based on PHP and MySQL the following page provides detailed information for installing WordPress on Uniform Server Zero XIII.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+
+   <li><a href="#Step 1: Download and Extract">Step 1: Download and Extract</a></li>
+   <li><a href="#Step 2: Create the Database and a User using phpMyAdmin">Step 2: Create the Database and a User using phpMyAdmin</a></li>
+   <li><a href="#Step 3: Set up wp-config.php">Step 3: Set up wp-config.php</a></li>
+   <li><a href="#Enter your secret key values">&nbsp;&nbsp;Enter your secret key values</a></li>
+   <li><a href="#Step 4: Upload the files">Step 4: Upload the files</a></li>
+   <li><a href="#In the Root Directory">&nbsp;&nbsp;In the Root Directory</a></li>
+   <li><a href="#In a Subdirectory">&nbsp;&nbsp;In a Subdirectory</a></li>
+   <li><a href="#Step 5: Run the Install Script">Step 5: Run the Install Script</a></li>
+   <li><a href="#Finishing installation">&nbsp;&nbsp;Finishing installation</a></li>
+
+   </ul>
+ </div>
+</div>
+
+<p><b><i>Note</i>:</b> At step 5 you are required to enter your e-mail address this is the e-mail address you set as <b>default</b> when configuring MSMTP, for details see <a href="general_msmtp_intro.html#Edit MSMTP Configuration">Edit MSMTP Configuration</a></p>
+
+<a name="Step 1: Download and Extract"></a>
+<h2>Step 1: Download and Extract</h2>
+<p>Download and unzip the WordPress package.</p>
+
+<ul>
+ <li>Download the latest version of Wordpress from <a href="http://wordpress.org/download/" >http://wordpress.org/download/</a>. currently 4.5.3</li>
+ <li>Save the downloaded file wordpress-4.5.3.zip to a temporary folder for example C:\wordpress_temp</li>
+ <li>Extract, right click on file wordpress-4.5.3.zip, select <b>Extract All</b>, click <b>next</b> and <b>next</b> again.</li>
+</ul>
+
+<p>Before Wordpress can be installed a MySQL user and database are required for details see step2.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Step 2: Create the Database and a User using phpMyAdmin"></a>
+<h2>Step 2: Create the Database and a User using phpMyAdmin</h2>
+
+<p>Follow these instructions to create your WordPress username and database using phpMyAdmin.</p>
+
+<p><i><b>Note:</b> These instructions are written for phpMyAdmin 4.6.3; the phpMyAdmin user interface can vary slightly between versions.</i></p>
+
+<ul>
+  <li>Start UniController.</li>
+  <li>Start Apache and MySQL servers.</li>
+  <li>Click phpMyAdmin button - Opens phpMyAdmin in default browser.</li>
+</ul>
+
+
+<ol>
+  <li> If a WordPress database does not already exist in the <b>Database list</b> on the left, create one:
+     <ol>
+       <li> Click <b>Databases</b> button top left menu bar.</li>
+       <li> Choose a name for your WordPress database ('<tt>wordpress</tt>' or '<tt>blog</tt>' are good), enter it in the <b>Create database</b> field, and click <b>Create</b>.<br />Note: Database name added to list on the left.</li>
+     </ol>
+ </li>
+
+  <li> Click the <b>Privileges</b> button top menu bar. If a user relating to WordPress does not already exist in the list of users, create one:
+     <ol>
+       <li> Click <b>Add user account</b> this opens the add user menu, navigate to the Login Information section:</li>
+       <li> Choose a username for WordPress ('<tt>wordpress</tt>' is good) and enter it in the <b>User name</b> field. (Be sure <b>Use text field:</b> is selected from the dropdown.)</li>
+
+       <li> From the <b>Host</b> dropdown select <b>Use text field:</b> in the Host field enter 127.0.0.1 </li>
+
+       <li> Choose a difficult-to-guess password (ideally containing a combination of upper- and lower-case letters, numbers, and symbols), and enter it in the <b>Password</b> field. (Be sure <b>Use text field:</b> is selected from the dropdown.) Re-enter the password in the <b>Re-type</b> field.</li>
+
+       <li> Write down the username and password you chose.</li>
+       <li> Click <b>Go</b>.</li>
+       <li> Leave all options under <b>Database for user</b> and <b>Global privileges</b> at their defaults.</li>
+      <li> Click <b>Go</b>.</li>
+    </ol>
+</li>
+
+
+<li> Check user created.
+  <ol>
+   <li> Click <b>wordpress</b> left menu.</li>
+   <li> Click <b>Edit privileges</b> confirm user name "wordpress" was created.</li>
+
+  </ol>
+</ol>
+
+<p><b>Note:</b> Other parts of this documentation assume you have set the following: WordPress database name = <b>wordpress</b> Username for WordPress = <b>wordpress</b> Password = <b>fred123</b> remember to replace these with the values you have set in the above.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Step 3: Set up wp-config.php"></a>
+<h2>Step 3: Set up wp-config.php</h2>
+
+<p>How to create and edit a new Wordpress configuration file named wp-config.php</p> 
+<ul>
+ <li> Return to where you extracted the WordPress package in Step 1 (folder C:\wordpress_temp\wordpress-4.5.3\wordpress).</li>
+ <li> Rename the file wp-config-sample.php to <b>wp-config.php</b>, and open it in a text editor.</li>
+</ul>
+
+<p>Replace the following using information from Step-2</p>
+<pre>
+// ** MySQL settings - You can get this info from your web host ** //
+/** The name of the database for WordPress */
+define('DB_NAME', 'database_name_here');
+
+/** MySQL database username */
+define('DB_USER', 'username_here');
+
+/** MySQL database password */
+define('DB_PASSWORD', 'password_here');
+
+/** MySQL hostname */
+define('DB_HOST', 'localhost');
+
+/** Database Charset to use in creating database tables. */
+define('DB_CHARSET', 'utf8');
+
+/** The Database Collate type. Don't change this if in doubt. */
+define('DB_COLLATE', '');
+</pre>
+
+<p>To give the following:</p>
+
+<pre>
+// ** MySQL settings - You can get this info from your web host ** //
+/** The name of the database for WordPress */
+define('DB_NAME', 'wordpress');
+
+/** MySQL database username */
+define('DB_USER', 'wordpress');
+
+/** MySQL database password */
+define('DB_PASSWORD', 'fred123');
+
+/** MySQL hostname */
+define('DB_HOST', '127.0.0.1');
+
+/** Database Charset to use in creating database tables. */
+define('DB_CHARSET', 'utf8');
+
+/** The Database Collate type. Don't change this if in doubt. */
+define('DB_COLLATE', '');
+</pre>
+
+
+<a name="Enter your secret key values"></a>
+<h3>Enter your secret key values</h3>
+<p>Replace the following section:</p>
+
+<pre>
+define('AUTH_KEY',         'put your unique phrase here');
+define('SECURE_AUTH_KEY',  'put your unique phrase here');
+define('LOGGED_IN_KEY',    'put your unique phrase here');
+define('NONCE_KEY',        'put your unique phrase here');
+define('AUTH_SALT',        'put your unique phrase here');
+define('SECURE_AUTH_SALT', 'put your unique phrase here');
+define('LOGGED_IN_SALT',   'put your unique phrase here');
+define('NONCE_SALT',       'put your unique phrase here');
+</pre>
+
+<p>With the following example section:</p>
+
+<pre>
+define( 'AUTH_KEY',         't`DK%X:&gt;xy|e-Z(BXb/f(Ur`8#~UzUQG-^_Cs_GHs5U-&amp;Wb?pgn^p8(2@}IcnCa|' );
+define( 'SECURE_AUTH_KEY',  'D&amp;ovlU#|CvJ##uNq}bel+^MFtT&amp;.b9{UvR]g%ixsXhGlRJ7q!h}XWdEC[BOKXssj' );
+define( 'LOGGED_IN_KEY',    'MGKi8Br(&amp;{H*~&amp;0s;{k0&lt;S(O:+f#WM+q|npJ-+P;RDKT:~jrmgj#/-,[hOBk!ry^' );
+define( 'NONCE_KEY',        'FIsAsXJKL5ZlQo)iD-pt??eUbdc{_Cn&lt;4!d~yqz))&amp;B D?AwK%)+)F2aNwI|siOe' );
+define( 'AUTH_SALT',        '7T-!^i!0,w)L#JK@pc2{8XE[DenYI^BVf{L:jvF,hf}zBf883td6D;Vcy8,S)-&amp;G' );
+define( 'SECURE_AUTH_SALT', 'I6`V|mDZq21-J|ihb u^q0F }F_NUcy`l,=obGtq*p#Ybe4a31R,r=|n#=]@]c #' );
+define( 'LOGGED_IN_SALT',   'w&lt;$4c$Hmd%/*]`Oom&gt;(hdXW|0M=X={we6;Mpvtg+V.o&lt;$|#_}qG(GaVDEsn,~*4i' );
+define( 'NONCE_SALT',       'a|#h{c5|P &amp;xWs4IZ20c2&amp;%4!c(/uG}W:mAvy&lt;I44`jAbup]t=]V&lt;`}.py(wTP%%' );
+</pre>
+
+<p><b><i>Note</i>:</b> Do not use the above as is either change these to different unique phrases by changing a few characters in each line (keep the line length the same)
+or use <a href="https://api.wordpress.org/secret-key/1.1/salt/" >the online generator</a>.</p>
+
+<p>Save the wp-config.php file</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Step 4: Upload the files"></a>
+<h2>Step 4: Upload the files</h2>
+
+<p>Now you will need to decide where on your domain you'd like your WordPress-powered site to appear:</p>
+  <ul>
+    <li> In the root directory of your web site. (For example, <tt>http://example.com/</tt>)</li>
+    <li> In a subdirectory of your web site. (For example, <tt>http://example.com/blog/</tt>)</li>
+  </ul>
+
+<p><b>Note:</b><br />
+The location of your root web directory <b>www</b> will vary depending where Uniform Server was installed.<br />
+A default installation assumes the following path C:\UniServerZ\<b>www</b></p>
+
+
+<a name="In the Root Directory"></a>
+<h3>In the Root Directory</h3>
+
+<p>Copy all the <i>contents</i> of the <tt>wordpress</tt> directory (but not the directory itself) into the root directory of your web site.</p>
+
+<ul>
+   <li> Copy all the <i>contents</i> of folder C:\wordpress_temp\wordpress-4.5.3\<b>wordpress</b> to folder C:\UniServerZ\<b>www</b> </li>
+</ul>
+
+<a name="In a Subdirectory"></a>
+<h3>In a Subdirectory</h3>
+
+<p>Rename the <tt>wordpress</tt> directory to your desired name, then copy the directory to your desired location within the root directory of your web site</p>
+
+<ul>
+  <li> Rename folder C:\wordpress_temp\wordpress-4.5.3\<b>wordpress</b> to C:\wordpress_temp\wordpress-4.5.3\<b>blog</b> </li>
+  <li> Copy folder C:\wordpress_temp\wordpress-4.5.3\<b>blog</b> to folder C:\UniServerZ\<b>www</b> </li>
+</ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Step 5: Run the Install Script"></a>
+<h2>Step 5: Run the Install Script</h2>
+
+<p>Point a web browser to start the installation script.</p>
+
+<ul>
+  <li> If you placed the WordPress files in the root directory, you should visit: <tt>http://localhost/wp-admin/install.php</tt></li>
+  <li> If you placed the WordPress files in a subdirectory called <tt>blog</tt>, for example, you should visit: <tt>http://localhost/blog/wp-admin/install.php</tt></li>
+</ul>
+
+
+<a name="Finishing installation"></a>
+<h3>Finishing installation</h3>
+
+<p>Enter language, your site title, your desired user name, your choice of a password (twice) and your e-mail address.  Also displayed is a check-box asking if you would like your blog to appear in search engines like Google.  Leave the box checked if you would like your blog to be visible to everyone, including search engines, and uncheck the box if you want to block search engines, but allow normal visitors.</p>
+
+<p> Note all this information can be changed later in your Administration Panels</p>
+
+<ul>
+  <li>http://localhost/blog/wp-login.php</li>
+</ul>
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

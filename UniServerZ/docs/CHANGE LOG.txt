@@ -1,0 +1,51 @@
+﻿ ################################################################################
+# File name: CHANGE LOG.txt
+# Created By: The Uniform Server Development Team
+################################################################################
+
+ Uniform Server ZeroXIII releases are versions with pre-installed ZeroXImodules
+ producing a standard WAMP (Windows, Apache, MySQL and PHP) server
+ package. After extracting, servers are ready to run either from a
+ USB memory stick or PC. Apart from changing the MySQL password
+ (optional) there is no configuration required.
+
+ The pre-configured versions of Uniform Server ZeroXIII should suite most
+ users! An alternative is to assemble a bespoke server from the available
+ modules provided on the following page:  
+
+ ZeroXIIImodules  (Plugins):
+ http://sourceforge.net/projects/miniserver/files/Uniform%20Server%20ZeroXIII/ZeroXIIImodules/
+
+ --------------------------------
+ Uniform Server ZeroXI Change Log
+ --------------------------------
+
+ 13.1.0   - Updated ZeroXIII_mysql_5_6_32.exe to ZeroXIII_mysql_5_6_33.exe
+          - Updated ZeroXIII_php_7_0_10_h.exe to ZeroXIII_php_7_0_11_i.exe
+          - Updated ZeroXIII_apache_2_4_23_h.exe to ZeroXIII_apache_2_4_23_i.exe
+
+ 13.0.2   - Updated ZeroXIII_phpmyadmin_4_6_3.exe to ZeroXIII_phpmyadmin_4_6_4.exe
+          - Updated ZeroXIII_php_7_0_9_h.exe to ZeroXIII_php_7_0_10_h.exe
+
+ 13.0.1   - Updated ZeroXIII_php_7_0_8_h.exe to ZeroXIII_php_7_0_9_h.exe
+          - Updated ZeroXIII_mysql_5_6_31.exe to ZeroXIII_mysql_5_6_32.exe
+
+ 13.0.0   - First Release. ZeroXIIImodules modules inclued:
+          - ZeroXIII_controller_2_2_0.exe
+          - ZeroXIII_documentation_1_0_0.exe
+          - ZeroXIII_apache_2_4_23_h.exe
+          - ZeroXIII_mysql_5_6_31.exe
+          - ZeroXIII_php_7_0_8_h.exe
+          - ZeroXIII_phpmyadmin_4_6_3.exe
+
+
+ -----------------------------------------------------------------------------
+
+  The authors were trying to make the best product so they cannot be held
+  responsible for any type of damage or problems caused by using this or
+  another software.
+
+ --------------------------------------o0o------------------------------------
+            Copyright 2002-2016 The Uniform Server Development Team
+                            All rights reserved.
+

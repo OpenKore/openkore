@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Home Uniform Server Zero</title>
+  <meta name="Description" content="Welcome to The Uniform Server and this documentation, which is for the Zero XIII series. The Uniform Server is a free and open source Windows Apache-MySQL-PHP-Perl server suite." />
+  <meta name="Keywords" content="Uniform,Server,Zero,XIII,Background,Installation,Controller,Plugins,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p100">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+<script language="javascript" src="common/top_menu.js"></script>
+<script language="javascript" src="common/home_additional_menu.js"></script>
+</td>
+
+<td id="td_spacer" >
+</td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>The Uniform Server Zero XIII</h1>
+</tr>
+</table>
+
+<p>Welcome to The Uniform Server and this documentation, which is for the Zero series. The Uniform Server is a free and open source Windows Apache-MySQL-PHP-Perl server suite. The Uniform Server is an excellent system for both beginning webmasters and experienced developers. It is a full-power web-server suitable for production use, but small enough to carry on a USB memory stick, or even a camera's flash drive. Covered in this document is the pre-configured server (UniServer Zero 13_x_x_ZeroXIII) and modules required to assemble your own bespoke server.</p>
+
+<table>
+<tr>
+<td>
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Background" >Background</a></li>
+   <li><a href="#Installation - pre-configured server" >Installation - pre-configured server</a></li>
+
+   <li><a href="#Installation - bespoke server" >Installation - bespoke server</a></li>
+   <li><a href="#Controller" >&nbsp;&nbsp;Controller</a></li>
+   <li><a href="#Plugins" >&nbsp;&nbsp;Plugins</a></li>
+
+   <li><a href="#Installation Restriction" >Installation Restriction</a></li>
+   <li><a href="#Server Paths" >&nbsp;&nbsp;Server Paths</a></li>
+   <li><a href="#Help" >Help</a></li>
+   <li><a href="#Security" >Security</a></li>
+   <li><a href="#Other Issues" >Other Issues</a></li>
+   <li><a href="#VC14 Libraries" >&nbsp;&nbsp;VC14 Libraries</a></li>
+   <li><a href="#MySQL Access" >&nbsp;&nbsp;MySQL Access</a></li>
+   <li><a href="#Windows 7,8, Vista and UAC" >&nbsp;&nbsp;Windows 7,8, Vista and UAC</a></li>
+   <li><a href="#Firewalls" >&nbsp;&nbsp;Firewalls</a></li>
+   <li><a href="#Skype" >&nbsp;&nbsp;Skype</a></li>
+   <li><a href="#Where to next" >Where to next</a></li>
+   </ul>
+ </div>
+</div>
+</td>
+<td>&nbsp;</td>
+<td>
+<img src="images/C11_unisevrer_zero.gif" alt="UniServer Zero" />
+</td>
+</tr>
+</table>
+
+<a name="Background"></a>
+<h2>Background</h2>
+<p>Uniform Zero takes a fresh look at Apache, MySQL, PHP and Perl portability. Uniform server has been redesigned from the ground up; emphasis is given to reducing code size. This is achieved through a modular implementation using plugins. Install only the plugins you require this avoids the dreaded bloat-ware scenario. Server control is provided by UniController a Pascal application written and compiled using Lazarus.</p>
+
+<p>For new users creating a bespoke server can be daunting to address this UniServer Zero releases 13_x_x_ZeroXIII are versions with pre-installed Zero XIII modules (plugins) producing a standard WAMP (Windows, Apache, MySQL and PHP) server package. This package is fully portable allowing you to run servers from a USB memory stick.</p>
+
+
+<p>In the context of this documentation portability is defined as an application that does not install data in the registry on a host PC. Generally applications ported to Windows from a Unix environment are inherently portable for example Apache, MySQL, PHP and Perl. These require just a few minor tweaks to run them in a portable mode</p>
+
+<p>Applications can be run either as a standard program or as a service Uniform Server Zero supports both methods. Running an application as a standard program requires that application  to be manually restarted  after powering-up a PC and logging in. This disadvantage is resolved by optionally placing an entry in the <a href="extra.html#PC-Win start-up" >start-up menu</a> to provide automatic restarting after logging in. Although not portable it is a small concession for users that require this functionality. In contrast applications <a href="run_as_service.html" >run as a  service</a> automatically start  after powering-up a PC, this is the preferred method when running a production server. Again this is not portable remember to uninstall services before moving servers.</p>
+
+<p>Similarly, editing the Windows hosts file is not a portable operation. That said Uniform Server Zero provides support to <a href="extra.html#Edit Win hosts file" >manually</a> and automatically add and delete entries in this file.</p>
+
+
+<p>We strongly suggest that you check over the points on this page as they provide important information that may help you avoid common problems. The following two sections “installation pre-configured server” and “installation bespoke server” will have you up and running in seconds. A more detailed step-by-step guide is provided on the  quick start guide page.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Installation - pre-configured server"></a>
+<h2>Installation - pre-configured server</h2>
+<p>Installing is a misnomer! Nothing is installed to your PCs registry, all files are extracted to their appropriate location within the UniServer
+folder structure. To install the pre-configured server proceed as follows:</p> 
+
+<table>
+<tr valign="top">
+<td>
+<ul>
+  <li> Download and save the latest server file (for example 13_0_0_ZeroXIII.exe) to drive C:</li>
+  <li> The file is a self-extracting archive, double click to run the  extractor.</li>
+  <li> A new folder <b>UniServerZ</b> is created containing UniController.exe and support folders and files.</li>
+  <li> Start controller by double clicking on file <b>UniController.exe</b> </li>
+
+</ul>
+
+<ul>
+  <li> Click <b>Start Apache</b> button. Indicator changes from red to green when server is running.</li>
+  <li> Click <b>Start MySQL</b> button. Indicator changes from red to green when server is running.</li>
+  <li> Display test page by clicking button <b>View www</b> or type <b>http://localhost</b> into your browser.</li>
+</ul>
+
+  <p> Note 1: Button states toggle to <b>Stop Apache</b> and <b>Stop MySQl</b> click to stop servers.</p>
+  <p> Note 2: Installing your website. With the exception of  file .htaccess delete the contents of folder UniServerZ\<b>www</b> and then copy your site to this folder. If your site uses a database use phpMyAdmin to create it.</p>
+</td>
+<td>&nbsp;</td>
+<td>
+<img src="images/C11_unisevrer_zero.gif" alt="UniServer Zero" />
+
+</td>
+</tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Installation - bespoke server"></a>
+<h2>Installation - bespoke server</h2>
+<p>Again installing is a misnomer! Nothing is installed to your PCs registry all files are extracted to their appropriate location within the UniServer
+folder structure. Unlike a pre-configured server a bespoke server requires more work on your part, it is assembled from individual plugin modules as follows:</p> 
+
+<a name="Controller"></a>
+<h3>Controller</h3>
+
+<p>The Uniform Server Zeros <b>base component</b> is the controller application. Download and extract this base compont first as follows:</p>
+
+<table>
+<tr valign="top">
+<td>
+<i>Install controller:</i>
+<ul>
+  <li> Download and save the latest controller file (ZeroXIII_controller_2_2_0.exe) to either a new folder or top-level of a drive for example C: drive.</li>
+  <li> The file is a self-extracting archive, double click to run the  extractor.</li>
+  <li> A new folder <b>UniServerZ</b> is created containing the controller application UniController.exe and support folders and files.</li>
+  <li> Download and save any plugins (modules) to folder UniServerZ again these are self-extracting archives, double click to run extractor, if prompted allow overwrite.</li>
+  <li> The controller automatically detects installed plugins.</li>
+</ul>
+
+<p>Utility option buttons (opt1-opt3) are initially unassigned. Although MySQL modules have been pre-assigned to these buttons you can change their assignment and button text, however it is recommended you keep the pre-assignments.</p>
+
+</td>
+<td>&nbsp;</td>
+<td>
+<img src="images/C11_unisevrer_zero_2.gif" alt="UniServer Zero" />
+</td>
+</tr>
+</table>
+
+
+<a name="Plugins"></a>
+<h3>Plugins</h3>
+
+<p> The Uniform Server Zero design is modular. Install only the plugins (modules) that you require. Each server requires a controller (covered above), which automatically detects installed plugins.</p>
+
+<p>The extraction procedure is identical for all plugins and applies to both pre-configured and bespoke servers , proceed as follows:</p>
+<p><i>Install plugins:</i></p>
+
+<ul>
+  <li> If running, stop Apache and MySQL servers. <b>Close</b> UniController. </li>
+  <li> Download required plugin installation file. For example ZeroXIII_phpmyadmin_4_6_3.exe installs phpMyAdmin. </li>
+  <li> Save the downloaded file to folder <b>UniServerZ</b>. </li>
+  <li> Double click on the above installation file.  This runs the self extracting archive. </li>
+  <li> If prompted allow overwriting of existing files. </li>
+  <li> If you wish, delete the installation file, it is no longer required. </li>
+</ul>
+
+<p><b><i>Note</i>:</b> Full plugin details refer to <a href="plugins_detail.html">Plugins - Modules</a> page. The default list on this page contains modules for installing PHP an Apache module.</p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Installation Restriction"></a>
+<h2>Installation Restriction</h2>
+
+<p>There is one aspect that needs to be validated.  This is especially true if you have been unable to start the servers.</p>
+
+<a name="Server Paths"></a>
+<h3>Server Paths</h3>
+
+<p>The installation (extraction) defaults to creating "C:\UniServerZ". The documentation examples assume this default. You can install The Uniform Server Zero in nearly any location, with the exception that the path to folder UniServerZ must not contain spaces. Do not use "C:\Program Files", for example (which has other problems as well, such as restricted permissions and system restore inconsistencies). We recommend installing to the drive root, such as "C:\" or "D:\" for simplicity, but other locations, such as "C:\test1\appserver" work just as well. </p>
+
+<p><b><i>Note</i>:</b> The space character restriction is generic and applies to other WAMP stacks as well. Many applications that will be hosted on the server do not tolerate spaces in paths.  The system restore issue applies mainly to individual component installs.</p>
+
+<p>If the current installation is on a faulty path, the situation can eaily be resolved by just moving the UniServerZ directory to a proper location.  You do not have to delete the directory and reinstall.  For example, just rename "D:\bad path\UniServerZ" to "D:\good_loc\UniServerZ".</p>  
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Help"></a>
+<h2>Help</h2>
+<p>Two levels of help are provided, local help as instant pop-up message boxes and detailed help in this documentation directly linked by the  <b>Documentation</b> controller button.</p>
+
+       
+<a name="Security"></a>
+<h2>Security</h2>
+<p>The security of your server is one of our primary concerns and for that reason the default settings are oriented for production. We take this seriously, and ask that if you believe that a setting is not right for production, you send us an email or post it in the forum. We will look into it and see if it should be changed.</p>
+
+<p>In this light, before you can run the servers, several nag screens are presented. Initially you can click "no" to each of these. See the <a href="start_quick_start.html" title="Quick start quide">Quick start</a> guide for further details.</p>
+
+<p>In order to allow access to your server by other users (Internet or Intranet), you must manually enable the required functions. See Apache dropdown menu option <a href="apache.html#Access and Passwords">Access and Passwords</a> </p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Other Issues"></a>
+<h2>Other Issues</h2>
+
+<p>This section covers the basics a new user should be aware of.</p>
+
+<p><b>Note:</b> Uniform Server 13_0_0_ZeroXIII does not run on XP or 2003.</P>
+
+<a name="VC14 Libraries"></a>
+<h3>VC14 Libraries</h3>
+
+<p>Apache and PHP 7.*.* binaries are compiled with VC14 ensure you have installed the Visual C++ Redistributable for Visual Studio 2015 : vc_redist_x64/86.exe<br />
+This can be found at <a href=https://www.microsoft.com/en-us/download/details.aspx?id=49984>Visual C++ Redistributable for Visual Studio 2015 Update 1</a>.<br />
+Be sure to select the package appropriate for your OS and hardware (Select: vc_redist.x86.exe).<br />
+If you do not have the VC14 library, when you attempt to start the servers, you will get a runtime error popup.</p>
+
+
+<a name="MySQL Access"></a>
+<h3>MySQL Access</h3>
+
+<p>The MySQL server supports IPv4 and IPv6; localhost resolves to 127.0.0.1 and ::1 respectively.  
+You can bypass the resolver by using an IP address; for example, you can force an IPv4 address by replacing <b><i>localhost</i></b> with <i><b>127.0.0.1</b></i>. <br />
+During third party application installations for example MediaWiki and Wordpress you are requested to enter a MySQL host name. Use IP address 127.0.0.1</p>
+
+<a name="Windows 7,8, Vista and UAC"></a>
+<h3>Windows 7,8, Vista and UAC</h3>
+
+The startup executables have been marked as requiring Administrator privilege.  When you start these programs, you must authorize this access in order to continue.
+
+<a name="Firewalls"></a>
+<h3>Firewalls</h3>
+
+<p>When you initially start the servers, your firewall will sense the programs' requests for IP access, and (typically) will require your authorization to change the security.  If you have a third-party firewall activated (Symantic, ZoneAlarm, etc.), be sure to set the port access as required, since it may not display a message.</p> 
+
+ <a name="Skype"></a>
+<h3>Skype</h3>
+<p>Apache and Skype both use standard port 80. If you have Skype running it will clash with your local server. To prevent Apache and Skype clashing you need to adjust the Skype settings as follows:</p>
+<ul>
+  <li>Log into your Skype</li>
+  <li>Go to Tools&gt;Options&gt;Advanced&gt;Connect </li>
+  <li>Uncheck the box, which says use Port 80 and 443</li>
+  <li>Click Save</li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Where to next"></a>
+<h2>Where to next</h2>
+
+<p><a href="quick_start_guide.html">Quick Start</a> - This page provides a quick start quide <br />
+<a href="index_main.html">Site Map</a> - Main site index. </p>
+
+<script language="javascript" src="common/top.js"></script>
+
+<!-- Checked xx-xx-xxxx BobS --> 
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Environment variables</title>
+  <meta name="Description" content="The Uniform Server controller automatically detects ZeroXIII modules loaded and sets environment paths and variables as appropriate" />
+  <meta name="Keywords" content="Environment,variables,configuration,sections,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<style type="text/css">
+/*****************************************/
+.heading {
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #ffffff;
+ background-color:  #2F2F76;
+ font-size: 13px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.td_sub{
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #000000;
+ background-color:  #f0f0f0;
+ font-size: 12px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+ul.plugins li{
+ font-size: 12px;
+  font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+
+/*****************************************/
+</style>
+
+<body id="p122">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+<script language="javascript" src="common/top_menu.js"></script>
+<script language="javascript" src="common/home_additional_menu.js"></script>
+</td>
+
+<td id="td_spacer" >
+</td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+    <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Environment variables</h1>
+</tr>
+</table>
+
+<p>The Uniform Server controller automatically detects ZeroXIII modules loaded and sets environment paths and variables as appropriate. Adding additional environment paths and variables for third party modules (programs) Uniform Server provides two configuration sections in configuration file C:\UniServerZ\home\us_config\us_config.ini. This page covers these sections in details.</p>
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Environment path" >Environment %PATH% [ENV_PATHS]</a></li>
+   <li><a href="#Path example" >&nbsp;&nbsp;Path example</a></li>
+   <li><a href="#View environment path" >&nbsp;&nbsp;View environment path</a></li>
+   <li><a href="#Portable path example" >&nbsp;&nbsp;Portable path example</a></li>
+
+   <li><a href="#Environment variables" >Environment variables [ENV_VARS]</a></li>
+   <li><a href="#Variable example" >&nbsp;&nbsp;Variable example</a></li>
+   <li><a href="#View all environment variables" >&nbsp;&nbsp;View all environment variables</a></li>
+
+
+   </ul>
+ </div>
+</div>
+
+<a name="Environment path"></a>
+<h2>Environment %PATH% [ENV_PATHS]</h2>
+
+<p>Path specifies the location where the operating system looks when running a command. The path environment variable %PATH% consists of absolute paths for each folder separated by a semicolon.</p>
+
+
+<p>The Uniform Server controller builds a new environment path as follows:</p>
+ <ul>
+   <li>The paths specified in configuration file are expanded (if required) and concatenated with a semicolon separator.</li>
+   <li>The controller detects installed modules and  concatenates paths as required to the above path, again separated by a semicolon.</li>
+   <li>Finally the environment variable %PATH% passed to the controller is  concatenated with the above path.</li>
+   <li>Finally the environment variable %PATH% is updated with the new path.</li>
+ </ul>
+
+
+<table>
+<tr valign="top">
+ <td>
+<a name="Path example"></a>
+<p><b><i>Path example</i>:</b><br />
+
+ For example suppose we want to add the following two paths C:\UniServerZ\docs and C:\UniServerZ\docs\manual<br />
+ Edit configuration file C:\UniServerZ\home\us_config\<b>us_config.ini</b> and either edit or create a new<br />
+ section [ENV_PATHS] as shown on the right:</p>
+
+</td>
+<td>
+
+<pre>
+[ENV_PATHS]
+path=C:\UniServerZ\docs
+path=C:\UniServerZ\docs\manual
+
+</pre>
+</td>
+</tr>
+
+
+
+<tr valign="top">
+ <td>
+<a name="View environment path"></a>
+<p><b><i>View environment path</i>:</b><br />
+ Start UniController, click Server Console button, type in PATH and press enter. Result is shown on the right<br />
+ Note first two lines after "PATH=" are the paths set in the configuration file.</p>
+</td>
+<td>
+<pre>
+C:\UniServerZ>PATH
+PATH=C:\UniServerZ\docs;
+C:\UniServerZ\docs\manual;
+C:\UniServerZ\core\apache2\bin;...
+</pre>
+</td>
+</tr>
+
+
+<tr valign="top">
+ <td>
+<a name="Portable path example"></a>
+<p><b><i>Portable path example</i>:</b><br />
+
+ Absolute paths were used in the above example which is fine for a fixed installation or required if paths are<br />
+ outside of The Uniform Server folder UniServerZ. For paths below UniServerZ use the  predefined variable<br />
+ <b>%UniConPath%</b> to create a relative path which is portable. Above example using relative paths is shown on right.</p>
+
+</td>
+<td>
+
+<pre>
+[ENV_PATHS]
+path=%UniConPath%\docs
+path=%UniConPath%\docs\manual
+
+</pre>
+</td>
+</tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Environment variables"></a>
+<h2>Environment variables [ENV_VARS]</h2>
+
+<p>The [ENV_VARS] section allows you to defines new environment variables or modify existing variable values. The format is variable_name=variable_value</p>
+
+<table>
+<tr valign="top">
+ <td>
+<a name="Variable example"></a>
+<p><b><i>Variable example</i>:</b><br />
+
+ For example suppose we want to add the following two variables<br />
+ PHP_INI_SCAN_DIR=%UniConPath%\user_php_inis and fred1=22<br />
+ Edit configuration file C:\UniServerZ\home\us_config\<b>us_config.ini</b> and either edit or create a new<br />
+ section [ENV_VARS] as shown on the right:</p>
+
+</td>
+<td>
+
+<pre>
+
+[ENV_VARS]
+PHP_INI_SCAN_DIR=%UniConPath%\user_php_inis
+fred1=22
+
+</pre>
+</td>
+</tr>
+
+
+
+<tr valign="top">
+ <td>
+<a name="View all environment variables"></a>
+<p><b><i>View all environment variables</i>:</b><br />
+ Start UniController, click Server Console button, type in SET and press enter. Result is shown on the right<br />
+ Note For clarity the output was edited to show only the two variables.</p>
+</td>
+<td>
+<pre>
+C:\UniServerZ>set
+fred1=22
+PHP_INI_SCAN_DIR=C:\UniServerZ\user_php_inis
+</pre>
+</td>
+</tr>
+
+
+<tr valign="top">
+ <td>
+<p><b><i>Portable path</i>:</b><br />
+
+ A relative path was specified for the variable PHP_INI_SCAN_DIR value. The predefined variable<br />
+ <b>%UniConPath%</b> is expanded to a full path. Advantage of using relative paths is portablity.
+</p>
+
+</td>
+<td>
+<p>Note: %UniConPath% expanded to C:\UniServerZ</p>
+
+</td>
+</tr>
+</table>
+
+
+<hr />
+<div align="center">--oOo--</div>
+
+
+<script language="javascript" src="common/top.js"></script>
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

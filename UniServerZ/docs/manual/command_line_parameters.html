@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Command line parameters</title>
+  <meta name="Description" content="An option to directly control Apache and MySQL servers is provided by running UniControler with a command line parameter" />
+  <meta name="Keywords" content="UniControler,Command,line,parameters,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<style type="text/css">
+/*****************************************/
+.heading {
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #ffffff;
+ background-color:  #2F2F76;
+ font-size: 13px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.td_sub{
+ margin:0px;
+ padding:4px;
+ padding-left:8px;
+ color: #000000;
+ background-color:  #f0f0f0;
+ font-size: 12px;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+ul.plugins li{
+ font-size: 12px;
+  font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+
+/*****************************************/
+</style>
+
+<body id="p120">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+<script language="javascript" src="common/top_menu.js"></script>
+<script language="javascript" src="common/home_additional_menu.js"></script>
+</td>
+
+<td id="td_spacer" >
+</td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+    <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>Command line parameters</h1>
+</tr>
+</table>
+
+<p>An option to directly control Apache and MySQL servers is provided by running UniControler with a command line parameter. The servers can be controlled individually or both at the same time. UniController is automatically closed after executing a command parameter. </p>
+
+<p>This page covers command parameters supported by UniController.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Parameters" >Parameters</a></li>
+   <li><a href="#Batch file examples" >Batch file examples</a></li>
+   </ul>
+ </div>
+</div>
+
+<a name="Parameters"></a>
+<h2>Parameters</h2>
+
+<p>UniController accepts one of the following parameters:</p>
+
+<table cellspacing="4">
+<tr valign="top">  <td class="heading" ><b>Parameter</b></td>   <td class="heading" ><b>Description</b></td></tr>
+<tr valign="top"> <td class="td_sub"><b>start_apache</b></td>   <td class="td_sub">Start Apache server</td></tr>
+<tr valign="top"> <td class="td_sub"><b>stop_apache</b></td>    <td class="td_sub">Stop Apache server</td></tr>
+<tr valign="top"> <td class="td_sub"><b>start_mysql</b></td>    <td class="td_sub">Start MySQL server</td></tr>
+<tr valign="top"> <td class="td_sub"><b>stop_mysql</b></td>     <td class="td_sub">Stop MySQL server</td></tr>
+<tr valign="top"> <td class="td_sub"><b>start_both</b></td>     <td class="td_sub">Starts Apache and MySQL servers</td></tr>
+<tr valign="top"> <td class="td_sub"><b>stop_both</b></td>      <td class="td_sub">Stops Apache and  MySQL servers</td></tr>
+<tr valign="top"> <td class="td_sub"><b>pc_win_start</b></td>   <td class="td_sub">Automatic start-up Details see note 2</td></tr>
+</table>
+
+<p><b><i>Note 1</i>:</b> Before starting UniCotroller with a parameter first ensure servers have been configured and function correctly. In other words start UniController normally and test the servers.<br />
+
+<b><i>Note 2</i>:</b> With the exception of pc_win_start UniController is closed after executing the command line parameter. 
+Detailed use of pc_win_start is covered in section <a href="extra.html#PC-Win start-up">PC-Win start-up</a> on the "Extra Utilities" page.</p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Batch file examples"></a>
+<h2>Batch file examples</h2>
+
+<p>Create the following batch files shown on the right and place them in folder UniServerZ.</p>
+<p>Run each file pair for example start_apache.bat/stop_apache.bat demonstrates starting and stopping the Apache server.</p>
+<table>
+<tr valign="top">
+
+
+<td>
+<table>
+<tr>
+<td>
+<p><b><i>Note</i>:</b><br /> If the batch files are located outside of folder UniServerZ for example folder UniServerZ and batch files are located at the top-level of C drive adjust path to UniController.exe in each batch file. For example batch files for Apache become:</p>
+</td>
+<td><b>start_apache.bat</b>
+<pre>
+UniController.exe start_apache
+pause
+</pre>
+</td>
+<td><b>stop_apache.bat</b>
+<pre>
+UniController.exe stop_apache
+pause
+</pre>
+</td>
+</tr>
+
+<tr>
+<td>
+<b>start_apache.bat</b>
+<pre>
+C:\UniServerZ\UniController.exe start_apache
+pause
+</pre>
+</td>
+<td><b>start_mysql.bat</b>
+<pre>
+UniController.exe start_mysql
+pause
+</pre>
+</td>
+<td><b>stop_mysql.bat</b>
+<pre>
+UniController.exe stop_mysql
+pause
+</pre>
+</td>
+</tr>
+
+<tr>
+<td>
+<b>stop_apache.bat</b>
+<pre>
+C:\UniServerZ\UniController.exe stop_apache
+pause
+</pre>
+</td>
+<td><b>start_both.bat</b>
+<pre>
+UniController.exe start_both
+pause
+</pre>
+</td>
+<td><b>stop_both.bat</b>
+<pre>
+UniController.exe stop_both
+pause
+</pre>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+<p><i>Note</i>: Although absolute paths are shown (C:\UniServerZ\UniController.exe) if you wish you can use relative paths (UniServerZ\UniController.exe).</p>
+
+
+<hr />
+<div align="center">--oOo--</div>
+
+
+<script language="javascript" src="common/top.js"></script>
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

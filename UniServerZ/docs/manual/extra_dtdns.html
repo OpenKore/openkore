@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>DtDNS</title>
+  <meta name="Description" content=" The Uniform Server Zero XIII has a built-in utility which supports the DtDNS service. This page covers the configuration sub-menu, which allows you to configure and test the DtDNS service" />
+  <meta name="Keywords" content="DtDNS,service,Edit,Update,Accounts,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p510">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/extra_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>DtDNS</h1>
+</tr>
+</table>
+
+<p>The majority of domestic Internet connections are via a dynamic IP address, one that can change every time you connect to the Internet. A web server requires a static IP address. A free dynamic DNS service such as DtDNS provides accounts and tracking software to automatically update your IP address when it changes, creating the effect of a static IP address. The Uniform Server Zero XIII has a built-in utility which supports the DtDNS service. This page covers the configuration sub-menu, which allows you to configure and test the DtDNS service.</p>   
+
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Overview" >Overview</a></li>
+   <li><a href="#Edit DtDNS Accounts" >Edit DtDNS Accounts</a></li>
+   <li><a href="#Force DtDNS Update" >Force DtDNS Update</a></li>
+   <li><a href="#Auto-run" >Auto-run</a></li>
+   <li><a href="#Enable and View Logging" >Enable and View Logging</a></li>
+   <li><a href="#Where to next" >Where to next</a></li>
+   </ul>
+ </div>
+</div>
+
+<a name="Overview"></a>
+<h2>Overview</h2>
+
+<p>DtDNS provide accounts that allow you to obtain a domain name, and provide tracking software to automatically update your IP address when it changes. A big advantage of their free service is that they automatically enable wild cards by default. This means that names like &lt;whatever&gt;.fred.com will be mapped to your IP address.</p>
+
+<p>The Uniform Server Zero XIII supports the DtDNS service by integrating a simple function to automatically update hostname IP address at DtDNS. The function is configurable, allowing you to update all five free hostnames. The function can optionally be run by Cron, making the whole task transparent. </p>
+
+<p>Note: The script is portable, so putting the servers on a USB memory stick means you can have them on-line and accessible within ten minutes (the minimum DNS propagation time). Of course this assumes the PC host machine has been configured to allow Internet server traffic.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Edit DtDNS Accounts"></a>
+<h2>Edit DtDNS Accounts</h2>
+
+<p>Add or edit DtDNS service account. Open the DtDNS Controller and add or modify your DtDNS account as follows:</p>
+
+<table>
+<tr valign="top">
+<td>
+<p class="access">Extra &gt; DtDNS</p>
+
+<ul>
+  <li>1) Enter upto five domain names as configuraed at DtDNS.</li>
+   <ul><li>Minimum of one domain name is required.</li></ul>
+  <li>2) Enter your DtDNS account password.</li>
+  <li>3) Click <b>Save Changes</b>.</li>
+    <ul><li>Data entered is saved to a configuration file.</li></ul>
+</ul>
+
+<p>Alternatively edit the file UniServerZ\home\us_dtdns\<b>dtdns.ini</b> and add domain names and password to the [ACCOUNTS] block.</p>
+
+<pre>
+[ACCOUNTS]
+password=
+domain_name_1=
+domain_name_2=
+domain_name_3=
+domain_name_4=
+domain_name_5=
+</pre>
+</td>
+
+
+<td>
+<img src="images/C11_dtdns_controller.gif" alt="DtDNS controller">
+</td>
+</tr>
+</table>
+
+<p><b>Note:</b> With configured accounts initially opening the DtDNS updater client buttons are greyed out until the refresh button is clicked. This forces user to manually refresh.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Force DtDNS Update"></a>
+<h2>Force DtDNS Update</h2>
+
+<table>
+<tr valign="top">
+
+<td>
+<p>After editing, adding a new domain name or an indicator is red you need to run force update. Open the DtDNS Controller as follows:</p>
+
+<p class="access">Extra &gt; DtDNS</p>
+
+<ul>
+  <li>4) Click <b>Force Update</b> button. (If button greyed out click refresh button)</li>
+</ul>
+
+<b><i>Indicators:</i></b>
+Tri-state indicators to the right of each domain name are updated when the menu is displayed and when a force update is initiated.
+<ul>
+<li><b>Red:</b> Indicates the IP address configured at DtDNS is different from your IP address as seen from the Internet.</li>
+<li><b>Green:</b> Confirms the IP address configured at DtDNS is identical to your IP address as seen from the Internet.</li>
+<li><b>Greyed out:</b> Either the configured address at DtDNS is unobtainable, no domain entered or not connected to Internet.</li>
+</ul>
+
+Note: You are forced to wait 10 minutes between force updates. Clicking the force update button within this period only updates the indicator state.
+
+</td>
+<td>
+<img src="images/C11_dtdns_controller.gif" alt="DtDNS controller">
+</td>
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Auto-run"></a>
+<h2>Auto-run</h2>
+
+<p>Every time you start your PC and reconnect to the Internet (given a new IP address) you need to manually run (force update) the DtDNS updater.</p>
+
+<table>
+<tr valign="top">
+
+<td>
+<p>Remembering to manually run scripts like <b>DtDNS</b> becomes a chore. Uniform Server Zero XIII centralises running this type of script using portable Cron. Cron automatically runs when UniCotroller is started. It periodically executes a list of scripts; the DtDNS script is included and requires enabling as follows:</p>
+
+<p class="access">Extra &gt; DtDNS</p>
+
+<ul>
+  <li>6) <b>Auto-run</b> Check box. -- Check this box to enable DtDNS in Cron.</li>
+</ul>
+
+<p>To prevent undesirable side effects the DtDNS Accounts section is greyed out preventing any additional changes and disables "ForceUpdate"</p>
+
+<p><b><i>Note</i>:</b> If you need to modify Accounts or force an update UnCheck the Auto-run checkbox. Make changes as required and click the Auto-run check box to re-enable auto run.</p>
+
+
+</td>
+<td>
+<img src="images/C11_dtdns_controller.gif" alt="DtDNS controller">
+</td>
+</tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Enable and View Logging"></a>
+<h2>Enable and View Logging</h2>
+
+<p class="access">Extra &gt; DtDNS</p>
+
+<p><b>View Log</b> button displays the DtDNS log file in Notepad. Each updater run produces an entry in the log file. An example of one run is shown on the right.</p>
+<table>
+<tr>
+ <td>
+
+<ul>
+<li>7) Enable disable logging. Cheked enable logging.</li>
+<li>8) "ViewLog" Button displays log in Notepad.</li>
+</ul>
+
+
+ </td>
+
+ <td>
+<pre>
+
+18/08/2013 22:42:18 ### Log Started =========================================
+18/08/2013 22:42:25 Changed IP from: xx.x10.165.92 To xx.x10.160.158 books.dtdns.net
+18/08/2013 22:42:31 Changed IP from: xx.x10.165.92 To xx.x10.160.158 books.effers.com
+18/08/2013 22:42:36 Changed IP from: xx.x10.165.92 To xx.x10.160.158 fredxx.dtdns.net
+18/08/2013 22:42:36 ### Log Ended ===========================================
+
+</pre>
+
+ </td>
+</tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Where to next"></a>
+<h2>Where to go next</h2>
+
+<p><a href="extra_dtdns_account.html">Create DtDNS Account</a></p>
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

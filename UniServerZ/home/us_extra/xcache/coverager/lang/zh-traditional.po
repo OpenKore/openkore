@@ -1,0 +1,36 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-01 14:47+0800\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: coverager.tpl.php:37
+msgid "Directory"
+msgstr ""
+
+#: coverager.tpl.php:38 coverager.tpl.php:100
+msgid "Percent"
+msgstr ""
+
+#: coverager.tpl.php:39 coverager.tpl.php:101
+msgid "Hits"
+msgstr ""
+
+#: coverager.tpl.php:40 coverager.tpl.php:102
+msgid "Lines"
+msgstr ""
+
+#: coverager.tpl.php:41
+msgid "TODO"
+msgstr ""
+
+#: coverager.tpl.php:99
+msgid "File"
+msgstr ""
+
+#: coverager.tpl.php:151
+msgid "root"
+msgstr ""

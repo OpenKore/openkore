@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>PHP - PEAR Auto Install go-pear</title>
+  <meta name="Description" content="This page covers automatic installation of PEAR using go-pear; it is provided for reference only. The following covers Pear instalation along with one of its components (classes) for testing. " />
+  <meta name="Keywords" content="PHP,PEAR,Auto,Install,go-pear,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p820">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/php_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>PHP - PEAR Auto Install go-pear</h1>
+</tr>
+</table>
+
+<p>This page covers automatic installation of PEAR using go-pear; it is provided for reference only. The following covers Pear instalation along with one of its components (classes) for testing. </p> 
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Pre-configured" >Pre-configured</a></li>
+   <li><a href="#File .htaccess" >File .htaccess</a></li>
+   <li><a href="#Install and run go-pear" >Install and run go-pear</a></li>
+   <li><a href="#Summary" >Summary</a></li>
+
+ </div>
+</div>
+
+<a name="Pre-configured"></a>
+<h2>Pre-configured</h2>
+
+<p>Apache and PHP (modules) configuration files have been pre-configured as follows:</p>
+
+<table>
+<tr valign="top">
+<td>
+<p><b>Apache httpd.conf</b></p>
+<p>Contains an Alias and Directory directive<br />
+ to map the folder us_pear into Apache.</p>
+</td>
+
+<td>
+<pre>
+Alias /us_pear "${US_ROOTF}/home/us_pear/"
+</pre>
+<pre>
+&lt;Directory "${US_ROOTF}/home/us_pear/"&gt;
+  Options Indexes Includes
+  AllowOverride All
+  Require all granted
+&lt;/Directory&gt;
+</pre>
+</td>
+</tr>
+
+
+<tr valign="top">
+<td>
+<p><b>PHP config files:</b> <br />php_development.ini, php_production.ini and php_test.ini<br />
+Contain the include path shown on the right.</p>
+</td>
+
+<td>
+<pre>
+
+include_path = ".;${US_ROOTF}/home/us_pear/PEAR"
+
+</pre>
+</td>
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="File .htaccess"></a>
+<h2>File .htaccess </h2>
+<p>Running go-pear.php generates a long list of depreciated warning. These are suppressed using an htaccess file. This htaccess file also restricts access to localhost only. Create the file as follows:</p>
+
+<ul>
+  <li>Copy the .htaccess from folder www into folder UniServerZ\home\us_pear (Windows makes it difficult to create a file named .htaccess hence the copy)</li>
+  <li>Edit this copied file and delete all it’s content and add the following lines:</li>
+</ul>
+
+<table>
+<tr valign="top">
+<td>
+<b>Description .htaccess</b>
+<p>The first three lines restricts access to local host.<br />
+The php_flag display_errors 22527 is the same as setting<br />
+Error_reporting = E_ALL & ~E_DEPRECATED in php.ini <br />
+Suppresses depreciated warnings.<p>
+</td>
+<td>
+UniServerZ\home\us_pear\<b>.htaccess</b>
+<pre>
+Order Deny,Allow
+Deny from all
+Allow from 127.0.0.1
+php_flag display_errors 22527
+</pre>
+</td>
+
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Install and run go-pear"></a>
+<h2>Install and run go-pear</h2>
+<p>The following details how to download, install and run the go-pear installer.
+
+<ol>
+ <li> Create a new folder <b>us_pear</b> in folder UniServerZ\home (Already created).</li>
+ <li> Download the file from <a href="http://pear.php.net/go-pear"> http://pear.php.net/go-pear </a> and save it as <b>go-pear.php</b></li>
+ <li> Save this in folder UniServerZ\home\us_pear (created in step 1)</li>
+ <li> Start UniController from UniController start Apache</li>
+ <li> Type the following into your browser: <b>http://localhost/us_pear/go-pear.php</b></li>
+ <li> Welcome to go-pear 1.1.6 displayed. <b>Click next</b></li>
+ <li> Configuration page displayed
+      <ul>
+        <li>Select MDB2 database abstraction layer</li>
+        <li>Click <b>Install</b></li>
+      </ul>
+ </li>
+ <li> Wait for <b>Installation Completed</b> to be displayed.</li>
+ <li> Click <b>Start Web Frontend of the PEAR Installer</b>. Note: This will produce a 404 error <b>Not Found</b>.</li>
+ <li> The URL http://localhost/us_pear/\index.php is incorrect change this to <b>http://localhost/us_pear/index.php</b>
+   <ul>
+     <li>Note: The above will highlight another error:<br />
+        Warning: Can not find config file, please specify the $pear_user_config variable in /us_pear/index.php</li>
+   </ul>
+  </li>
+
+
+ <li> To resolve the above edit file UniServerZ\home\us_pear\<b>index.php</b> as follows:
+   <ul>
+     <li>Note in addition to resolving the above we take the opportunity to make this configuration file portable.</li>
+   </ul>
+  </li>
+</ol>
+
+<table>
+<tr valign="top">
+<td>
+<b>Change section shown on right:</b>
+
+<p>To correct the above uncomment <br />
+Line //$pear_user_config = ''; and insert the<br />
+correct path.</p>
+
+<p>However with a few extra changes the file is<br />
+ made portable as shown in the next section.</p>
+
+
+</td>
+
+<td>
+<b>UniServerZ\home\us_pear\index.php</b> - Top section
+<pre>
+/**
+ * Put this file in a web-accessible directory as index.php (or similar)
+ * and point your webbrowser to it.
+ */
+
+// $pear_dir must point to a valid PEAR install (=contains PEAR.php)
+$pear_dir = 'C:\UniServerZ\home\us_pear/PEAR'; // default of install
+
+// OPTIONAL: If you have a config file at a non-standard location,
+// uncomment and supply it here:
+//$pear_user_config = '';
+
+// OPTIONAL: If you have protected this webfrontend with a password in a
+// custom way, then uncomment to disable the 'not protected' warning:
+//$pear_frontweb_protected = true;
+</pre>
+</td>
+
+<tr valign="top">
+<td>
+<p><b>To:</b></p>
+
+<p>$us_path = realpath('.') sets the variable to<br />
+ the full path of this document for example:<br />
+C:\UniServerZ\home\us_pear</p>
+
+<p>This variable is used to construct paths: <br />
+$pear_dir = $us_path.'\PEAR';<br />
+$pear_user_config = $us_path.'\pear.conf';</p>
+
+<p>We are using the .htaccess file to restrict<br />
+access hence this line is set to true:<br />
+$pear_frontweb_protected = true;</p>
+
+
+</td>
+<td>
+<pre>
+/**
+ * Put this file in a web-accessible directory as index.php (or similar)
+ * and point your webbrowser to it.
+ */
+
+$us_path = realpath('.'); // Determine full path to this file portability
+
+// $pear_dir must point to a valid PEAR install (=contains PEAR.php)
+$pear_dir = $us_path.'\PEAR'; // default of install
+
+// OPTIONAL: If you have a config file at a non-standard location,
+// uncomment and supply it here:
+$pear_user_config = $us_path.'\pear.conf';
+
+// OPTIONAL: If you have protected this webfrontend with a password in a
+// custom way, then uncomment to disable the 'not protected' warning:
+$pear_frontweb_protected = true;
+</pre>
+</td>
+</tr>
+</table>
+
+<ol start="12">
+
+ <li> Now re-enter the url: http://localhost/us_pear/index.php and the web-front end is displayed. </li> 
+ <li> From the left menu click Configuration link  </li> 
+ <li> Change PEAR configuration file directory: from C:\php\pear\cfg to <b>C:\UniServerZ\home\us_pear</b> </li> 
+ <li>Click <b>Submit</b> button</li>
+</ol>
+
+<p>Note: The above produces configuration file C:\UniServerZ\home\us_pear\<b>pear.conf</b> this file as it stands is NOT portable. When UniController is started it checks the current server location and updates this configuration accordingly. If you need to change paths ensure they are set for the current server location.<p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Summary"></a>
+<h2>Summary</h2>
+
+<p>The pear module was created using the above procedure and once installed is ready to run. To install packages see section <a href="php_pear.html#Using PEAR Frontend">Using PEAR Frontend</a>.</p>  
+
+<p>An alternative to using go-pear for installation is to manully instal Pear convered on page <a href="php_pear_manual_install.html">PEAR Manual Install</a>.</p>
+<script language="javascript" src="common/top.js"></script>
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

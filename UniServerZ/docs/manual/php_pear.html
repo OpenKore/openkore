@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>PHP - PEAR Web Frontend</title>
+  <meta name="Description" content="The PHP Extension and Application Repository (or PEAR for short) contains re-usable code. The PEAR core has been preinstalled (Module ZeroXIII_pear_1_0_2) this page covers the PEAR Web Frontend" />
+  <meta name="Keywords" content="PEAR,Web,Frontend,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p810">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/php_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>PHP - PEAR Web Frontend</h1>
+</tr>
+</table>
+
+<p>The PHP Extension and Application Repository (or PEAR for short) contains re-usable code. The PEAR core has been preinstalled (Module ZeroXIII_pear_1_0_2) this page covers the PEAR Web Frontend</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Open PEAR Web Frontend" >Open PEAR Web Frontend</a></li>
+   <li><a href="#Using PEAR Frontend" >Using PEAR Frontend</a></li>
+   <li><a href="#Update the Channel Management system" >&nbsp;&nbsp;Update the Channel Management system</a></li>
+   <li><a href="#Downloading modules" >&nbsp;&nbsp;Downloading modules</a></li>
+   <li><a href="#Form - Test Script" >Form - Test Script</a></li>
+   <li><a href="#Where to next" >Where to next</a></li>
+   </ul>
+ </div>
+</div>
+
+
+<a name="Open PEAR Web Frontend"></a>
+<h2>Open PEAR Web Frontend</h2>
+
+<p>You can access the web-front-end at any time using either of the following methods:</p>
+
+<table>
+ <tr valign="top">
+
+  <td style="background-color: #f5f5f5;">
+    <p><b>Method 1</b><br /> Run the web-front-end from UniController menu as follows:</p>
+    <p class="access">PHP &gt; View Pear frontend</p>
+  </td>
+
+  <td>&nbsp;&nbsp; </td>
+
+  <td style="background-color: #f5f5f5;">
+    <p><b>Method 2</b><br /> Alternatively enter the following into your browser:</p>
+    <p class="access">http://localhost/us_pear/index.php</p>
+  </td>
+
+ </tr>
+
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Using PEAR Frontend"></a>
+<h2>Using PEAR Frontend</h2>
+<p>Open the PEAR front-end using one of the methods explaind above.</p>
+
+<p>Installing PEAR packages is very easy. To confirm our PEAR installation is working and to demonstrate how to install packages, we will be using a package named <b>HTML_QuickForm</b> <p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Update the Channel Management system"></a>
+<h2>Update the Channel Management system</h2>
+
+<table>
+<tr valign="top">
+
+<td>
+<p>Before downloading any package, <b>update</b> the Channel Management system</p>
+<ul>
+<li>C) Click on <b>Channel Management</b> - Opens Registered Channels page.</li>
+<li>From this page, click on <b>Update All Channels</b></li>
+</ul>
+<p>You will receive something similar this:</p>
+<pre>
+Updating channel "doc.php.net"
+Update of Channel "doc.php.net" succeeded
+Updating channel "pear.php.net"
+Channel "pear.php.net" is up to date
+Updating channel "pecl.php.net"
+Channel "pecl.php.net" is up to date
+</pre>
+</td>
+
+<td>
+   <img src="images/C11_php_pear_frontend_1.gif" alt="Auto PEAR Install">
+</td>
+
+</tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Downloading modules"></a>
+<h2>Downloading modules</h2>
+
+<table>
+<tr valign="top">
+
+<td>
+<p>Downloading a known package (example HTML_QuickForm)</p>
+<ul>
+<li>A) Click on <b>Package Management</b> - Opens management page.</li>
+<li>Scroll down page to <b>Quick-install a package</b></li>
+<li>Enter package name <b>HTML_QuickForm<b/></b></li>
+<li>Click <b>Install</b></li>
+</ul>
+</td>
+<td>
+   <img src="images/C11_php_pear_frontend_2.gif" alt="Auto PEAR Install">
+</td>
+</tr>
+
+<tr valign="top">
+<td>
+<ul>
+<li>After a short time the package is installed.</li>
+<li>Note the Warnings! We know this is an older package but want to use it anyway.</li>
+</ul>
+</td>
+<td>
+   <img src="images/C11_php_pear_frontend_3.gif" alt="Auto PEAR Install">
+</td>
+</tr>
+
+
+<tr valign="top">
+<td>
+<ul>
+<li>A) Click on <b>Package Management</b> - Opens management page.</li>
+<li>New Installed packages are listed.</li>
+</ul>
+<p>Although we intended to only download and install a single package, two were installed. The package HTML_QuickForm will not function without package HTML_Common; it depends on this being in place. In other words, when installing a package, all dependencies that do not exist are also installed.</p>
+</td>
+<td>
+   <img src="images/C11_php_pear_frontend_4.gif" alt="Auto PEAR Install">
+</td>
+</tr>
+
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Form - Test Script"></a>
+<h2>Form - Test Script</h2>
+
+<p>Create a new text file named <b>form.php</b> with the following content and save to folder  UniServerZ\<b>www</b></p>
+<pre>
+  &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"&gt;
+  &lt;html&gt;
+  &lt;head&gt;
+      &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+      &lt;title&gt;Pear HTML_QuickForm test&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;?php
+      require_once "HTML/QuickForm.php";
+
+      $form = new HTML_QuickForm('frmTest', 'get');
+      $form->addElement('header', 'MyHeader', 'Testing QuickForm');
+      $form->addElement('text', 'MyTextBox', 'What is your name?');
+      $form->addElement('reset', 'btnClear', 'Clear');
+      $form->addElement('submit', 'btnSubmit', 'Submit');
+      $form->display();
+
+  ?&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;
+</pre>
+
+<table>
+ <tr valign="top">
+  <td>
+Test:
+   <ul>
+     <li>Start The Uniform Server</li>
+     <li>Type the following into a browser: http://localhost/form.php</li>
+     <li>Expected result is shown on right.</li>
+   </ul>
+  </td>
+<td>
+   <img src="images/C11_php_pear_frontend_5.gif" alt="Form Test results">
+</td>
+</tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Where to next"></a>
+<h2>Where to next</h2>
+
+<p>Background information for installing Pear:</p>
+<p><a href="php_pear_auto_install.html">PHP - PEAR Auto Install go-pear</a> - This page covers using go-pear that automats the installation process.</p>
+<p><a href="php_pear_manual_install.html">PHP - PEAR Manual Install</a> - This page covers manual PEAR installation.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

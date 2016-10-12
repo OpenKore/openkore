@@ -1,0 +1,143 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+body {
+	font: .8em "Lucida Sans", "Trebuchet MS", Verdana, Arial, Sans-Serif;
+	background-color : #4f4f97;
+}
+a {
+	text-decoration: none;
+	color: #4f4f97;
+}
+a:hover {
+	color: #000;
+}
+ul {
+	margin-left:10px;
+}
+img {
+	border: 0px;
+}
+#wrap {
+	margin: 20px auto;
+	width: 550px;
+	padding: 10px;
+	background-color: #fff;
+	border:1px solid #000;
+}
+#header {
+	height : 93px;
+	background-color : #4f4f97;
+	text-align:center;
+	color: #FFF; 
+	padding: 0px;
+        background-image : url(../images/branding_bg.png);
+}
+
+#header_txt {
+        position:relative;
+        left:340px;
+        top:40px;
+	font: 20px Verdana, Arial, Sans-Serif;
+        margin: 0px; padding:0px;
+}
+
+#header h1 {
+	padding-left: 10px;
+	padding-top: 12px;
+	font-size: 25px;
+	color: #31799F;
+}
+#header h1 a {
+	font-size: 25px;
+	color: #31799F;
+	text-decoration: none;
+}
+#header h2 {
+	padding-left: 10px;
+	padding-top: 0px;
+	font-size: 14px;
+	color: #fff;
+}
+#header h3 {
+	padding-left: 10px;
+	padding-top: 0px;
+	font-size: 14px;
+	color: #fff;
+}
+#menu {
+	text-align: center;
+	margin-top: 10px;
+	font-size : 11px;
+	padding: 2px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	border: 0px solid #D8E3EE;
+	background: #F9FCFC;
+}
+#menu a {
+	color : #4f4f97;
+	text-decoration : none;
+	padding: 10px;
+}
+#menu a:hover {
+	color : #000;
+}
+#content {
+	text-align: left;
+	margin-top: 5px;
+	padding: 10px;
+	font-size: 11px;
+}
+
+#content h1 {
+        text-align:center;
+}
+
+
+#content h2 {
+	font-size: 15px;
+	color : #444;
+	padding: 0 0 5px 0;
+}
+#footer {
+	margin-top: 25px;
+	clear: both;
+	text-align: center;
+	color: #000;
+	font-size:10px;
+	background-color:#FFF;
+	padding:2px;
+}
+.meta {
+	padding-bottom:2px;
+	font-size: 10px;
+	color:#999999;
+	font:Arial, Helvetica, sans-serif;
+}
+#bottom {
+	font-size:11px;
+	padding: 10px 0 0 0;
+}
+#bottomleft {
+	width:45%;
+	float:left;
+	background:#fff;
+	padding-bottom:10px;
+	padding-left:5px;
+}
+#bottomright {
+	width:45%;
+	float:right;
+	background:#fff;
+	padding-bottom:10px;
+	padding-right:5px;
+}
+#divider {
+	text-align: center;
+	font-size : 11px;
+	padding:2px;
+	font-weight: bold;
+	font-family:Arial, Helvetica, sans-serif;
+}

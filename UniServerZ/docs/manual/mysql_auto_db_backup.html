@@ -1,0 +1,469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>MySQL Auto DB Backup</title>
+  <meta name="Description" content="The Uniform Server XIII module ZeroXIII_mysql_autoback_1_0_0 allows you to select MySQL databases to automatically backup. These backups are archived in either or both 7z and zip archive formats, each archive is uniquely identified by adding a time stamp. You can select one of two predefined time stamp formats. In addition you have options to FTP archives for external storage and provide e-mail notification." />
+  <meta name="Keywords" content="MySQL,Auto,automatic,DB,Backup,7z,zip,archive,formats,ftp,e-mail,notification,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p1700">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+<script language="javascript" src="common/mysql_auto_back_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>MySQL Auto DB Backup</h1>
+</tr>
+</table>
+
+
+<p>The Uniform Server XIII module <b>ZeroXIII_mysql_autoback_1_0_0</b> allows you to select MySQL databases to automatically backup. These backups are archived in either or both 7z and zip archive formats, each archive is uniquely identified by adding a time stamp. You can select one of two predefined time stamp formats. In addition you have options to FTP archives for external storage and provide e-mail notification. The e-mail notification is a simple page which includes the error log. Archives on a host PC are deleted after a pre-defined number of days, number of days is a selectable option.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Install module (plugin)">Install module (plugin)</a></li>
+   <li><a href="#Warning">Warning</a></li>
+   <li><a href="#Application start up parameters">Application start up parameters</a></li>
+   <li><a href="#User configuration window">User configuration window</a></li>
+   <li><a href="#FTP configuration">FTP configuration</a></li>
+   <li><a href="#E-Mail Notification configuration">E-Mail Notification configuration</a></li>
+   <li><a href="#Testing">Testing</a></li>
+   <li><a href="#Auto DB backup configuration">Auto DB backup configuration</a></li>
+   </ul>
+ </div>
+</div>
+
+<a name="Install module (plugin)"></a>
+<h2>Install module (plugin)</h2>
+<p>Install The Uniform Server <b>MySQL Auto DB Backup</b> plugin as follows:</p>
+
+ <ol>
+  <li> Download ZeroXIII_mysql_autoback_1_0_0.exe module (plugin) </li>
+  <li> Copy ZeroXIII_mysql_autoback_1_0_0.exe module (plugin) to folder UniServerZ </li>
+  <li> Double click on the downloaded module </li>
+  <li> This starts the extraction process </li>
+  <li> If requested allow overwriting of existing files. </li>
+  <li> If you wish to save space delete file  ZeroXIII_mysql_autoback_1_0_0.exe </li>
+ </ol>
+
+ <ul>
+   <li>Folder UniServerZ now contains two new files and one new folder:</li>
+    <ul>
+       <li>  UniDbBackup.bat - Starts the MySQL Auto DB Backup user interface</li>
+       <li>  ZeroXIII_mysql_autoback_1_0_0_read_me.txt - Contains additional informs </li>
+       <li>  db_auto_backup - Folder contains backups and log files.</li>
+     </ul>
+</ul>
+
+ <ul>
+   <li>Folder UniServerZ\utils now contains three new files and one folder:</li>
+    <ul>
+       <li>  start_task_schedule_w7_w8.bat - Short cut to run Windows Task sheduler</li>
+       <li>  UniDbBackup.exe - Uniform Server MySQL Auto DB Backup application</li>
+       <li>  us_7za.exe - Third party application. Renamed 7za.exe to us_7za.exe prevents Win8 clashes. </li>
+       <li>  UniDbBackupConfig - Folder for configuration and tracking</li>
+     </ul>
+  </ul>
+
+ <ul>
+   <li>Folder UniServerZ\utils\UniDbBackupConfig - Configuration and tracking:</li>
+    <ul>
+       <li> us_db_backup_config.ini  - Configuration file for MySQL Auto DB Backup </li>
+       <li> us_db_ref_list.txt       - Tracking, full list of previous DBs, automatically created  </li>
+       <li> us_db_to_exclude.txt     - Tracking, DBs to exclude, automatically created  </li>
+     </ul>
+  </ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Warning"></a>
+<h2>Warning</h2>
+
+<p>The Uniform Server MySQL Auto DB Backup application and UniController are independent applications this means there is no interaction between the two.</p>
+
+ <ul>
+  <li>Very important.</li>
+    <ul>
+      <li>If running from Task Scheduler disable the <b>UniServer_Auto_Backup</b> task or ensure you make changes before the task is timed to run.</li>
+    </ul>
+
+  <li>Databases added or deleted while running the "UniServer Auto Backup" user interface.</li>
+    <ul>
+     <li>To allow new change to be picked up ensure you restart the "UniServer Auto Backup" user interface.</li> 
+    </ul>
+
+ </ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Application start up parameters"></a>
+<h2>Application start up parameters</h2>
+
+<p>The MySQL Auto DB Backup application <b>UniDbBackup.exe</b> is started in one of two modes, these modes are selected by passing a parameter to it at start-up:</p>
+
+ <ul>
+  <li>No Parameter</li>
+    <ul>
+      <li>Starting the application with no parameters for example double clicking on UniDbBackup.bat or UniDbBackup.exe opens the user configuration window.</li>
+      <li>The user configuration window allows you to configure the application and optionally run a database backup manually.</li>
+    </ul>
+
+  <li>Parameter <b>auto</b></li>
+    <ul>
+     <li>Starting the application with parameter set to <b>auto</b> for example using Task Scheduler, runs the application in background mode.</li> 
+     <li>Before running in this mode ensure you have manually run the backup application to confirm correct configuration.</li>
+    </ul>
+
+ </ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="User configuration window"></a>
+<h2>User configuration window</h2>
+
+<p>Start the application by double clicking on file UniServerZ\<b>UniMysqBackup.bat</b> or UniServerZ\utils\<b>UniDbBackup.exe</b> this opens the user interface window.</p>
+<p><i>Note</i>: If <b>Databases to archive</b> and <b>Databases to exclude</b> are blank the MySQL server is not running. Start the MySQL server and restart this application.</p>
+
+
+<table>
+<tr>
+ <td>
+
+  <ul>
+     <li><b>Databases to archive</b></li>
+       <ul>
+          <li>Displays all databases that will be archived. To exclude a database click its name and click the <b>&gt; button</b>.</li>
+       </ul>
+  </ul>
+
+
+  <ul>
+     <li><b>Databases to exclude</b></li>
+       <ul>
+          <li> Displays all databases that will be excluded. To include a database click its name and click the <b>&lt; button</b>.</li>
+       </ul>
+  </ul>
+
+  <ul>
+     <li><b>Select Time Stamp Format</b></li>
+       <ul>
+          <li>Select a time stamp (A or B) you prefer this will be added to all file names and used in log files.</li>
+       </ul>
+  </ul>
+
+
+  <ul>
+     <li><b>Enable/Disable Archive Type</b></li>
+       <ul>
+          <li>With both options unchecked only raw sql backup files are created, these are not compressed.</li>
+          <li>With either option selected all sql files are archived in the selected format and then deleted.</li>
+          <li>Both options selected creates 7z and zip archives. Again all sql files are deleted.</li>
+       </ul>
+  </ul>
+
+  <ul>
+     <li><b>Keep Each Backup Archive for</b></li>
+       <ul>
+          <li>Files are retained for the number of days specified from their creation date. After this date they are deleted. </li>
+       </ul>
+  </ul>
+
+ </td>
+ <td>
+   <img src="images/us_db_back_main.png" alt="Main MySQL Auto back window" />
+ </td>
+</tr>
+</table>
+
+<p>With the above configuration complete you can click <b>Run DB Backup</b> this will create archives as appropriate. These along with the log files are located in folder UniServerZ\<b>db_auto_backup</b>. If you have configured FTP and E-mail notification they will have been executed during the backup process, for details refer to appropriate sections below. Note: This manual backup method is fully portable.</p>
+
+<p><b><i>Note 1</i>:</b>  Preferably use the <b>7z archive</b> option, it has better compression.<br />
+
+<b><i>Note 2</i>:</b>  If the database is large it will take a while to complete, before closing the application wait for the green progress bar to stop.</p>
+
+
+<p><i>Background design notes</i>:</p>
+
+<p>Two files  us_db_ref_list.txt and us_db_to_exclude.txt are automatically generated. They track the previous and current state of databases contained in the MySQL (Mariadb) server.</p>
+
+<p>If the files do not exist they are created,  us_db_ref_list.txt is populated with all current databases that are achievable and us_db_to_exclude.txt is created containing zero files.</p>
+
+<p> A user assigns databases to exclude these are saved to file  us_db_ref_list.txt and the internal display lists, databases to backup and exclude are updated.</p>
+
+<p>Server databases added or deleted are detected next time Uniform Server Auto DB backup is run. The current list of databases is compared to those contained in file us_db_ref_list.txt a difference signals a changed. The file us_db_ref_list.txt is updated to contain the current list of databases, any databases  missing in file us_db_to_exclude.txt are deleted and the file updated. Both display lists are updated to reflect the new state.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="FTP configuration"></a>
+<h2>FTP configuration</h2>
+
+<p> In the event  of a local disk crash, a database backup created locally is of little use. Ideally after creating a backup, copy it to another PC for safe retrieval at a latter date. Uniform Server Auto DB Backup provides an option to FTP archives to another machines automatically. These archives are transferred as soon as they are created.</p>
+
+<p> The following section assumes you have either an FTP account with a service provider or running an FTP server on another machine within your network. In either case, configuring the FTP options is similar as explained below:</p>
+
+<p><b>Use FTP</b> check-box:<br /> Checked enables editing FTP parameters and informs the application to use FTP. Unchecked disables FTP and menu parameter editing.</p>
+
+<table>
+<tr>
+ <td>
+
+  <ul>
+     <li><b> Server address:</b></li>
+       <ul>
+          <li>Enter the FTP server name for example ftp.example.com or server IP address.</li>
+       </ul>
+  </ul>
+
+
+  <ul>
+     <li><b>User Name:</b></li>
+       <ul>
+          <li>Enter user FTP account  name for example: us_user </li>
+       </ul>
+  </ul>
+
+  <ul>
+     <li><b>Password:</b></li>
+       <ul>
+          <li>Enter user FTP account password for example: us_user123</li>
+       </ul>
+  </ul>
+
+
+  <ul>
+     <li><b>Directory/Path</b></li>
+       <ul>
+          <li>Enter folder name on the FTP server. Use / for top-level. If a specific folder, supply its full path for example folder all_backups in folder db_backups use:   /db_backups/all_backups</li>
+
+       </ul>
+  </ul>
+
+  <ul>
+     <li><b>Port</b></li>
+       <ul>
+          <li>The standard port is 21. Valid values are 1-65535</li>
+       </ul>
+  </ul>
+
+
+ </td>
+ <td>
+  <img src="images/us_db_back_ftp.png" alt="MySQL Auto back FTP window" />
+ </td>
+</tr>
+</table>
+
+<p>Configuration parameters are saved either when the FTP test button is clicked or when the menu window is closed.</p>
+
+<p><b>FTP Test</b> button: This button allows you to test the FTP configuration. When clicked two files test_7z.txt and test_zip.txt are created in folder db_auto_backup. These are FTP'ed to the FTP server and deleted. Confirm these files have been transferred to your FTP server, correct any errors.</p>
+
+<p><b><i>Note</i>:</b> Uniform Server provides FTP  modules ZeroXIII_filezilla_server_1_0_0 (for Win 7 and Win 8) and ZeroXIII_filezilla_server_xp_1_0_0 (for Windows xp). These are portable versions of the FileZilla server, however if you wish, they can optionally be run as a service. They allow you to quickly set-up a FTP server on another machine to provide external backups of your database archives. For details see <a href="portable_filezilla_server.html#SA FileZilla Server Control">Portable FileZilla Server</a> page.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="E-Mail Notification configuration"></a>
+<h2>E-Mail Notification configuration</h2>
+
+<p>Uniform Server Auto DB Backup for convenience provides an option to E-mail a notification to a designated e-mail address. The E-Mail notification contains a time stamp in the subject title along with the error log file content. This information will allow you to quickly decide if any action is  required should the backup fail.</p>
+
+
+<p><b>Use E-Mail notification</b> check-box:<br /> Checked enables editing e-mail parameters and informs the application to use E-Mail notification, unchecked disables E-Mail notification and menu parameter editing.</p>
+
+<p><b>Use SMTP authentication</b> check-box:<br /> Checked enables editing authentication parameters and informs the application to use SMTP authentication, unchecked disables SMTP authentication and menu parameter editing.</p>
+
+<table>
+<tr>
+ <td>
+
+  <ul>
+     <li><b>SMTP Server:</b></li>
+       <ul>
+          <li>Enter your ISPs email server SMTP address for example: smtp.tiscali.co.uk</li>
+       </ul>
+  </ul>
+
+
+  <ul>
+     <li><b>From:</b></li>
+       <ul>
+          <li>Enter your ISP email address for example: your.name@tiscali.co.uk</li>
+       </ul>
+  </ul>
+
+  <ul>
+     <li><b>To:</b></li>
+       <ul>
+          <li>If sending to yourself enter your ISP email address for example: your.name@tiscali.co.uk alternatively use another address you own.</li>
+       </ul>
+  </ul>
+
+ Generally when using your service provider for e-mail you do not required authentication. However if this is a requirement enter details as required.
+  <ul>
+     <li><b>User:</b></li>
+       <ul>
+          <li>Enter user name required by your ISP for authentication.</li>
+       </ul>
+  </ul>
+
+  <ul>
+     <li><b>Password:</b></li>
+       <ul>
+          <li>Enter password required by your ISP for authentication.</li>
+       </ul>
+  </ul>
+
+
+ </td>
+ <td>
+  <img src="images/us_db_back_mail.png" alt="MySQL Auto back mail notification" />
+ </td>
+</tr>
+</table>
+
+<p>Configuration parameters are saved either when the E-Mail test button is clicked or when the menu window is closed.</p>
+
+
+<p><b>E-Mail Test</b> button: This button allows you to test the E-Mail notification configuration. When clicked an e-mail is sent to the e-mail address configured.<br />
+The e-mail sent will have a subject titled <i>UniServer Auto DB Backup</i> followed by a time stamp.</p>
+
+<p>Note: You can change the text "UniServer Auto DB Backup" by editing the configuration file us_db_backup_config.ini The test e-mail contains the following content</p>
+
+<ul>
+  <li><i>This test E-Mail confirms UniServer Zero XIII E-Mail notification is correctly configured. More content.....</i></li> 
+</ul>
+<p>Confirm you received the test e-mail.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Testing"></a>
+<h2>Testing</h2>
+
+<p>Before proceeding to auto backup configuration ensure backups are created and you can restore from these backups.</p>
+
+<p> After configuring FTP and E-mail notification perform a manual database backup by clicking Run DB Backup button ensure the following:</p>
+
+<ul>
+  <li>Database archives are created in folder db_auto_backup.  </li>
+  <li>The database archive files have been FTP'ed to your FTP server </li>
+  <li>An e-mail notification was received by checking your e-mail. </li>
+  <li><b><i>Finally and most important use the backups to restore databases to confirm correct operation.</i></b> </li>
+</ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Auto DB backup configuration"></a>
+<h2>Auto DB backup configuration</h2>
+
+<p>Automatic back up is performed using an existing Windows service known as Task Scheduler. This provides a more consistent and reliable implementation and is compatible across all Windows versions. Note using Task Scheduler the servers are no longer portable because changes (entries) are made to the Windows registry.</p>
+
+<p>The Uniform Server MySQL Auto DB Backup application is started with parameter <b>auto</b> which runs the application in the background. This parameter is specified when configuring task Scheduler. The following is a text summary of the steps required to configure Task scheduler. You may prefer a step-by step guide including images see <a  href="scheduled_task_win8.html">Create Scheduled Task</a> page for details.</p>
+
+<p>Note: Sections "Delete a Task" and "Quick Test" are included for completeness</p>
+
+<pre>
+-------------
+Create a Task
+-------------
+
+1) Start Task Scheduler: Navigate to folder C:\UniServerZ\utils and double click on start_task_schedule_w7_w8.bat
+
+2) Task Scheduler:
+   a) Click "Create Basic Task" opens the Create Task window.
+   b) Enter a Name in the Name field. Use "UniServer_Auto_Backup" without the quotes
+   c) Enter a Description in the Description field. Use "Uniform Server MySQL automatic backup" without the quotes
+   d) Click "Next" button
+
+3) Create Basic Task Wizard - Task Trigger:
+   a) Select one of the options: "Daily", "Weekly" or "Monthly" For this example select "Daily" for a daily backup
+   b) Click "Next" button.
+
+4) Create Basic Task Wizard - Daily:
+   a) Set the starting date, start time e.g 28/08/2014 20:00:00 
+   b) Set "Recur every 1 days" makes backup every day
+   c) Click "Next" button.
+
+5) Create Basic Task Wizard - Action
+   a) Select Action to perform, click "Start a program" radio button
+   b) Click "Next" button.
+
+6) Create Basic Task Wizard - Start a Program
+   a) "Program/script" Click "Browse" button.
+      Navigate to application UniDbBackup.exe for example  C:\UniServerZ\utils\UniDbBackup.exe 
+      Click "Open" button.
+   b) Add arguments: Enter "auto"  without the quotes
+   c) Click "Next" button.
+
+7) Create Basic Task Wizard - Summary
+   a) Check Box "Open the Properties dialog for this when I click Finish" click to select.
+   b) Click "Finish" button. New task is created and added to Windows schedule  
+
+8) UniServer_Auto_Backup Properties(Local Computer):
+   This displays task properties shown for completeness.
+   a) Click "OK" button.
+   Click File>Exit
+
+-------------
+Delete a Task
+-------------
+To remove a task, start Task Scheduler, select task from the library list and delete. The following details
+how to remove the Uniform Server UniServer_Auto_Backup task:
+
+9) Task Scheduler: - Delete task:
+   Start Task Scheduler: Navigate to folder C:\UniServerZ\utils and double click on start_task_schedule_w7_w8.bat
+   a) Left menu: Select "Task Scheduler Library"
+   b) Center menu: Select "UniServer_Auto_Backup" ensure it is highlighted
+   c) Right menu: Click "Delete" menu item.
+   d) Pop-up displayed "Do you want to delete this task" click "Yes" button
+   e) Click File>Exit
+
+----------
+Quick Test
+----------
+For testing there is no need to wait for the scheduled time you can instantly run the Task as follows:
+
+10) Task Scheduler: - Run task:
+    a) Start Task Scheduler: Navigate to folder C:\UniServerZ\utils and double click on start_task_schedule_w7_w8.bat
+    b) Left menu: Select "Task Scheduler Library"
+    c) Centre menu: Select "UniServer_Auto_Backup" ensure it is highlighted
+    d) Right menu: Click "Run" forces a run with the parameters set.
+
+
+</pre>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

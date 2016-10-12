@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>OpenCart</title>
+  <meta name="Description" content=" The following page provides detailed information for installing OpenCart on Uniform Server XIII" />
+  <meta name="Keywords" content="OpenCart,Create,Database,User,phpMyAdmin,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p1530">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/apps_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>OpenCart</h1>
+</tr>
+</table>
+
+<p>OpenCart is a free and open source shopping cart application providing an online e-commerce solution. The following page provides detailed information for installing OpenCart on Uniform Server XIII and how to run it with SSL. Also covered is portability allowing OpenCart to run from a USB memory stick or another location.</p>
+
+<p>The following guide assumes you are installing OpenCart in a sub-folder named <b>shop</b>.<br />
+ This is accessible using  http://your.domain.com/shop/  for example test server use (http://localhost/shop/)</p>
+
+<p>Running third party scripts such as OpenCart requires Uniform Server's SSL default behaver to be modified this is covered in section "SSL secure main server."</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#SSL secure main server.">SSL secure main server.</a></li>
+   <li><a href="#Create a self-signed certificate.">Create a self-signed certificate</a></li>
+
+   <li><a href="#Step A: Download and Extract">Step A: Download and Extract</a></li>
+   <li><a href="#Step B: Create the Database and a User using phpMyAdmin">Step B: Create the Database and a User using phpMyAdmin</a></li>
+   <li><a href="#Step C: Upload the files">Step C: Upload the files</a></li>
+   <li><a href="#Step D: OpenCart Installation">Step D: OpenCart Installation</a></li>
+
+   <li><a href="#Enabling SSL in the OpenCart Dashboard">Enabling SSL in the OpenCart Dashboard</a></li>
+   <li><a href="#Enabling SSL in the OpenCart directory - config.php file">Enabling SSL in the OpenCart directory - config.php file</a></li>
+   <li><a href="#Enabling SSL in the OpenCart Admin directory - config.php file">Enabling SSL in the OpenCart Admin directory - config.php file</a></li>
+   <li><a href="#Test">Test</a></li>
+
+   <li><a href="#Portability">Portability</a></li>
+   <li><a href="#Test portability">Test portability</a></li>
+   </ul>
+ </div>
+</div>
+
+<p><b><i>Note</i>:</b> At Step D you are required to enter your e-mail address this is the e-mail address you set as <b>default</b> when configuring MSMTP, for details see <a href="general_msmtp_intro.html#Edit MSMTP Configuration">Edit MSMTP Configuration</a></p>
+
+<a name="SSL secure main server."></a>
+<h2>SSL secure main server.</h2>
+
+<p>A default installation of Uniform Server contains a separate folder (ssl) preconfigured specifically for a personal secure server. To run third party scripts such as OpenCart requires this default behaver to be modified such that SSL secures only the main server.</p>
+
+<p>The Apache SSL configuration must be modified to secure only the main server as follows: </p>
+<ul>
+  <li>Edit file UniServerZ\core\apache2\conf\extra\<b>httpd-ssl.conf</b></li>
+  <li>Locate two instances of <b>${US_ROOTF_SSL}</b> and replace with <b>${US_ROOTF_WWW}</b></li>
+</ul>
+
+<p><b><i>Note</i>:</b> With the above modifications folder ssl becomes redundant and is no longer used.</p> 
+
+
+<a name="Create a self-signed certificate"></a>
+<h2>Create a self-signed certificate</h2>
+<p>Create a self-signed server certificate or see documentation <a href="apache_free_server_cert.html">Apache - Free Server Certificate</a> to obtain and install a certificate issued by a certificate authority.</p>
+<table>
+<tr valign="top">
+<td>
+<p>Generate a self-signed certificate as follows:</p>
+<ul>
+  <li>Start UniController</li>
+  <li>Select Apache &gt; Apache SSL &gt; Server Certificate and Key generator</li>
+  <li>This opens the <b>Server Certificate and Key generator</b> menu shown at right</li>
+  <li>D) Click <b>Run Generate</b> After a short time, a confirmation pop-up is displayed.</li>
+</ul>
+
+<p>After generating server certificate Uniform Server is SSL enabled.</p>
+
+</td>
+<td>
+   <img src="images/C11_apache_cert_gen_1.gif" alt="Start as program">
+</td>
+</tr>
+</table>
+
+
+
+<a name="Step A: Download and Extract"></a>
+<h2>Step A: Download and Extract</h2>
+<p>Download and unzip the OpenCart package.</p>
+
+<ul>
+ <li>Download the latest version of OpenCart from <a href="http://www.opencart.com/?route=download/download" >http://www.opencart.com/?route=download/download</a>. currently v1.5.6.3</li>
+ <li>Save the downloaded file opencart-1.5.6.3.zip to a temporary folder for example C:\opencart_temp</li>
+ <li>Extract, right click on file opencart-1.5.6.3.zip, select <b>Extract All</b>, click <b>next</b> and <b>next</b> again. <br />
+ (For Windows 8: Right click on file opencart-1.5.6.3.zip, select 7-zip <b>Extract files..</b> )</li>
+</ul>
+
+<p>Before OpenCart can be installed a MySQL user and database are required for details see Step B.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Step B: Create the Database and a User using phpMyAdmin"></a>
+<h2>Step B: Create the Database and a User using phpMyAdmin</h2>
+
+<p>Follow these instructions to create your OpenCart username and database using phpMyAdmin.</p>
+
+<p><i><b>Note:</b> These instructions are written for phpMyAdmin 4.1.13; the phpMyAdmin user interface can vary slightly between versions.</i></p>
+
+<ul>
+  <li>Start UniController.</li>
+  <li>Start Apache and MySQL servers.</li>
+  <li>Click phpMyAdmin button - Opens phpMyAdmin in default browser.</li>
+</ul>
+
+
+<ol>
+  <li> If a OpenCart database does not already exist in the <b>Database list</b> on the left, create one:
+     <ol>
+       <li> Click <b>Databases</b> button top left menu bar.</li>
+       <li> Choose a name for your OpenCart database ('<tt>opencart</tt>' or '<tt>cart</tt>' are good), enter it in the <b>Create database</b> field, and click <b>Create</b>.<br />Note: Database name added to list on the left.</li>
+     </ol>
+ </li>
+
+  <li> Click the <b>Users</b> button top menu bar. If a user relating to OpenCart does not already exist in the list of users, create one:
+     <ol>
+       <li> Click <b>Add user</b> this opens the add user menu, navigate to the Login Information section:</li>
+       <li> Choose a username for OpenCart ('<tt>opencart</tt>' is good) and enter it in the <b>User name</b> field. (Be sure <b>Use text field:</b> is selected from the dropdown.)</li>
+
+       <li> From the <b>Host</b> dropdown select <b>Use text field:</b> in the Host field enter 127.0.0.1 </li>
+
+       <li> Choose a difficult-to-guess password (ideally containing a combination of upper- and lower-case letters, numbers, and symbols), and enter it in the <b>Password</b> field. (Be sure <b>Use text field:</b> is selected from the dropdown.) Re-enter the password in the <b>Re-type</b> field.</li>
+
+       <li> Write down the username and password you chose.</li>
+       <li> Click <b>Go</b>.</li>
+       <li> Leave all options under <b>Database for user</b> and <b>Global privileges</b> at their defaults.</li>
+      <li> Click <b>Go</b>.</li>
+    </ol>
+</li>
+
+</ol>
+
+<p><b>Note:</b> Other parts of this documentation assume you have set the following: OpenCart database name = <b>opencart</b> Username for OpenCart = <b>opencart</b> Password = <b>fred123</b> remember to replace these with the values you have set in the above.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Step C: Upload the files"></a>
+<h2>Step C: Upload the files</h2>
+
+<p><b>Note:</b> The location of your root web directory <b>www</b> will vary depending where Uniform Server was installed.<br />
+ A default installation assumes the following path C:\UniServerZ\<b>www</b></p>
+
+<p>Copy the OpenCart <b>upload</b> directory into the root directory of your web site.</p>
+
+<ul>
+  <li> Copy folder C:\opencart_temp\opencart-1.5.6.3\opencart-1.5.6.3\<b>upload</b> to folder C:\UniServerZ\<b>www</b> </li>
+  <li> Rename folder C:\UniServerZ\www\<b>upload</b> to C:\UniServerZ\www\<b>shop</b> </li>
+  <li> Rename file C:\UniServerZ\www\shop\<b>config-dist.php</b> to C:\UniServerZ\www\shop\<b>config.php</b></li>
+  <li> Rename file C:\UniServerZ\www\shop\admin\<b>config-dist.php</b> to C:\UniServerZ\www\shop\admin\<b>config.php</b></li>
+</ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Step D: OpenCart Installation"></a>
+<h2>Step D: OpenCart Installation</h2>
+
+<p>The following assumes you have Apache and MySQL servers running. To start the OpenCart installation:</p>
+
+<ul>
+  <li>Type the following into your browser address bar: <b>http://localhost/shop/</b>  - This will redirect to the installation page.</li>
+</ul>
+
+<p>The installation process consists of  four pages as follows:</p>
+
+<p><i><b>STEP 1 - LICENSE</b></i> <br />
+Explains the GNU General Public. Click <b>Continue</b></p>
+
+<p><i><b>STEP 2 - PRE-INSTALLITION</b></i> <br />
+The following four sections list installation requirements for OpenCart:</p>
+<ol>
+  <li>Please configure your PHP settings to match requirements listed below.</li>
+  <li>Please make sure the PHP extensions listed below are installed.</li>
+  <li>Please make sure you have set the correct permissions on the files list below.</li>
+  <li>Please make sure you have set the correct permissions on the directories list below.</li>
+</ol>
+<p>Uniform Server defaults meet all the above requirements click <b>Continue</b></p>
+
+
+<p><i><b>STEP 3 - CONFIGURATION</b></i> <br />
+Enter parameters in the following two sections:</p>
+
+
+
+<p><i><b>1. Please enter your database connection details.</b></i></p>
+
+<table style="width: 60%;" border="0" cellpadding="3" cellspacing="1">
+<tr bgcolor="#F4F4F4"><td style="text-align: right; width: 150px;"> Database Driver: </td><td>MySQLi           </td><td>- Use default no need to change</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">               Database host:   </td><td><b>127.0.0.1</b> </td><td>- Do not use default <i>localhost</i></td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">               User:            </td><td><b>opencart</b>  </td><td>- Name of the database user you created.</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">               Password:        </td><td><b>fred123</b>   </td><td>- The password you created for the database user</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">               Database Name:   </td><td><b>opencart</b>  </td><td>- The name of the database to use</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">               Database Prefix: </td><td>oc_              </td><td>- Use default no need to change</td></tr>
+</table>
+
+<p><i><b>2. Please enter a username and password for the administration.</b></i></p>
+
+<table style="width: 60%;" border="0" cellpadding="3" cellspacing="1">
+<tr bgcolor="#F4F4F4"><td style="text-align: right; width: 150px;"> Username: </td><td><b>Mike</b>         </td><td>- A name of your choice  for admin</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">               Password: </td><td><b>Mike123</b>      </td><td>- Choose a difficult-to-guess password</td></tr>
+<tr bgcolor="#F4F4F4"><td style="text-align: right;">               E-mail:   </td><td><b>mike@xxx.com</b> </td><td>- Use your real e-mail address.</td></tr>
+
+</table>
+
+<p>That completes configuration click <b>Continue</b>.</p>
+
+<p><i><b>STEP 4 - Finished</b></i> <br />
+Page displays, Congratulations! You have successfully installed OpenCart.</p>
+
+<p><i><b>Login to administration.</b></i></p>
+
+<ul>
+  <li>Click the <b>Login to your Administration</b> button. Login menu is displayed. </li>
+     <ul>
+       <li>Note: To re-login at any time type <b>http://localhost/shop/admin/</b> into your browser.</li>
+     </ul>
+  <li>Enter name and password (Mike Mike123) you set for the administrator. Click <b>Login</b></li>
+  <li>Continue to next section (Enabling SSL in the OpenCart Dashboard)</li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Enabling SSL in the OpenCart Dashboard"></a>
+<h2>Enabling SSL in the OpenCart Dashboard</h2>
+
+<p>The following assumes you are logged into admin, if not see note above. To enable SSL in the OpenCart Dashboard proceed as follows:</p>
+
+<ol> 
+    <li>Go to <b>System  &gt; Settings</b></li>
+    <li>To the right of  “Your Store (Default)” click <b>Edit</b> </li>
+    <li>Click on the <b>Server</b> tab</li>
+    <li>In the <b>Use SSL</b> section check the radio button <b>Yes</b>.</li>
+    <li>Click <b>Save</b></li>
+    <li>Logout</li>
+</ol>
+
+<p>Finally delete folder: C:\UniServerZ\www\<b>shop</b></p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Enabling SSL in the OpenCart directory - config.php file"></a>
+<h2>Enabling SSL in the OpenCart directory - config.php file</h2>
+
+<p>Edit file C:\UniServerZ\www\shop\<b>config.php</b><br />
+Locate these lines:</p>
+<pre>
+// HTTPS
+define('HTTPS_SERVER', 'http://localhost/shop/');
+</pre>
+Change to:
+<pre>
+// HTTPS
+define('HTTPS_SERVER', 'https://localhost/shop/');
+</pre>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Enabling SSL in the OpenCart Admin directory - config.php file"></a>
+<h2>Enabling SSL in the OpenCart Admin directory - config.php file</h2>
+
+<p>Edit file:  UniServerZ\www\shop\admin\<b>config.php</b><br />
+Locate these lines:</p>
+<pre>
+// HTTPS
+define('HTTPS_SERVER', 'http://localhost/shop/admin/');
+define('HTTPS_CATALOG', 'http://localhost/shop/');
+</pre>
+Change to:
+<pre>
+// HTTPS
+define('HTTPS_SERVER', 'https://localhost/shop/admin/');
+define('HTTPS_CATALOG', 'https://localhost/shop/');
+</pre>
+
+<p>That completes installation. Close browser and restart servers.</p>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Test"></a>
+<h2>Test</h2>
+<p>Test the installion as follows:</p>
+<ul>
+  <li>Type the following into browser: <b>http://localhost/shop/</b>  Expected result example cart content is displayed.</li>
+  <li>Add an item to the cart and click checkout. Result your browser is forced to a secure connection and displays closed padlock. If requested by your browser add an exception.</li>
+  <li>Type the following into browser:  <b>http://localhost/shop/admin/</b></li>
+  <li>Enter name and password (Mike Mike123) you set for the administrator. Expected result your browser is again forced to a secure connection and displays closed padlock.</li>
+</ul>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Portability"></a>
+<h2>Portability</h2>
+
+<p>Paths in the two configuration (config.php) files use absolute paths. This restricts the above installation to a fixed location, meaning Uniform Server and OpenCart cannot be moved to a different location. However OpenCart is easily converted for portability allowing the complete server to run from either a USB memory stick or moved to another location.</p>
+
+<p><i>Note</i>: Paths in your config.php files may be different to those shown, however the replacement sections can be used with no modification.</p>
+
+<p>Edit file:  C:\UniServerZ\www\shop\<b>config.php</b><br />
+Locate this section:</p>
+<pre>
+// DIR
+define('DIR_APPLICATION', 'C:\UniServerZ\www\shop/catalog/');
+define('DIR_SYSTEM', 'C:\UniServerZ\www\shop/system/');
+define('DIR_DATABASE', 'C:\UniServerZ\www\shop/system/database/');
+define('DIR_LANGUAGE', 'C:\UniServerZ\www\shop/catalog/language/');
+define('DIR_TEMPLATE', 'C:\UniServerZ\www\shop/catalog/view/theme/');
+define('DIR_CONFIG', 'C:\UniServerZ\www\shop/system/config/');
+define('DIR_IMAGE', 'C:\UniServerZ\www\shop/image/');
+define('DIR_CACHE', 'C:\UniServerZ\www\shop/system/cache/');
+define('DIR_DOWNLOAD', 'C:\UniServerZ\www\shop/download/');
+define('DIR_LOGS', 'C:\UniServerZ\www\shop/system/logs/');
+</pre>
+<p>Replace with:</p>
+<pre>
+// DIR
+$root= substr($_SERVER["DOCUMENT_ROOT"],0,-4);   // Get path
+define('DIR_APPLICATION', $root . '\www\shop/catalog/');
+define('DIR_SYSTEM',      $root . '\www\shop/system/');
+define('DIR_DATABASE',    $root . '\www\shop/system/database/');
+define('DIR_LANGUAGE',    $root . '\www\shop/catalog/language/');
+define('DIR_TEMPLATE',    $root . '\www\shop/catalog/view/theme/');
+define('DIR_CONFIG',      $root . '\www\shop/system/config/');
+define('DIR_IMAGE',       $root . '\www\shop/image/');
+define('DIR_CACHE',       $root . '\www\shop/system/cache/');
+define('DIR_DOWNLOAD',    $root . '\www\shop/download/');
+define('DIR_LOGS',        $root . '\www\shop/system/logs/');
+</pre>
+
+<p>Edit file:  C:\UniServerZ\www\shop\admin\<b>config.php</b><br />
+Locate this section:</p>
+<pre>
+// DIR
+define('DIR_APPLICATION', 'I:\UniServerZ\www\shop/admin/');
+define('DIR_SYSTEM', 'I:\UniServerZ\www\shop/system/');
+define('DIR_DATABASE', 'I:\UniServerZ\www\shop/system/database/');
+define('DIR_LANGUAGE', 'I:\UniServerZ\www\shop/admin/language/');
+define('DIR_TEMPLATE', 'I:\UniServerZ\www\shop/admin/view/template/');
+define('DIR_CONFIG', 'I:\UniServerZ\www\shop/system/config/');
+define('DIR_IMAGE', 'I:\UniServerZ\www\shop/image/');
+define('DIR_CACHE', 'I:\UniServerZ\www\shop/system/cache/');
+define('DIR_DOWNLOAD', 'I:\UniServerZ\www\shop/download/');
+define('DIR_LOGS', 'I:\UniServerZ\www\shop/system/logs/');
+define('DIR_CATALOG', 'I:\UniServerZ\www\shop/catalog/');
+</pre>
+<p>Replace with:</p>
+<pre>
+// DIR
+$root= substr($_SERVER["DOCUMENT_ROOT"],0,-4);   // Get path
+define('DIR_APPLICATION', $root . '\www\shop/admin/');
+define('DIR_SYSTEM',      $root . '\www\shop/system/');
+define('DIR_DATABASE',    $root . '\www\shop/system/database/');
+define('DIR_LANGUAGE',    $root . '\www\shop/admin/language/');
+define('DIR_TEMPLATE',    $root . '\www\shop/admin/view/template/');
+define('DIR_CONFIG',      $root . '\www\shop/system/config/');
+define('DIR_IMAGE',       $root . '\www\shop/image/');
+define('DIR_CACHE',       $root . '\www\shop/system/cache/');
+define('DIR_DOWNLOAD',    $root . '\www\shop/download/');
+define('DIR_LOGS',        $root . '\www\shop/system/logs/');
+define('DIR_CATALOG',     $root . '\www\shop/catalog/');
+</pre>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Test portability"></a>
+<h2>Test portability</h2>
+<p>Test the installion for portability as follows:</p>
+<ul>
+  <li>If running stop servers</li>
+  <li>Close UniController</li>
+  <li>Rename folder C:\<b>UniServerZ</b> to  C:\<b>UniServerZ_opencart</b></li>
+  <li>Start UniController. Then start Apache and MySQL servers</li>
+  <li>Type the following into browser: <b>http://localhost/shop/</b>  Expected result example cart content is displayed.</li>
+  <li>Add an item to the cart and click checkout. Result your browser is forced to a secure connection and displays closed padlock. If requested by your browser add an exception.</li>
+  <li>Type the following into browser:  <b>http://localhost/shop/admin/</b></li>
+  <li>Enter name and password (Mike Mike123) you set for the administrator. Expected result your browser is again forced to a secure connection and displays closed padlock.</li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<hr>
+<div align="center">--oOo--</div>
+
+
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>

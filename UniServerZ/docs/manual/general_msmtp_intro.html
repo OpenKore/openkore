@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>MSMTP</title>
+  <meta name="Description" content=" This page covers the configuration sub-menu which allows you to configure and test the msmtp client" />
+  <meta name="Keywords" content=" msmtp,client,Edit,Configuration,Default,Account,The Uniform Server, MPG, Mike Gleaves, Ric, UniServer, Olajide, BobS " />
+  <link href="common/css/main.css" rel="stylesheet" type="text/css">
+  <link href="common/css/menu.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="p410">
+<!-- Start header -->
+  <script language="javascript" src="common/header.js"></script>
+<!-- End header -->
+
+<table id="main" >
+<tr valign="top">
+
+<td id="td_menu">
+  <script language="javascript" src="common/top_menu.js"></script>
+  <script language="javascript" src="common/general_sub_menu.js"></script>
+</td>
+
+<td id="td_spacer" ></td >
+
+<td id="td_content" >
+<!-- ============ Start Content ========== -->
+
+<table >
+<tr>
+ <td>
+  <img src="common/images/zero_logo4.png" alt="Zero logo" />
+ </td>
+ <td>
+<h1>MSMTP - Introduction</h1>
+</tr>
+</table>
+
+<p>The majority of SMTP clients use the Windows registry. These are not suitable for portability. The Uniform Server XIII uses the open source <b>msmtp</b> client. It's flexible, relative easy to set-up, and more importantly it's portable. This page covers the configuration sub-menu which allows you to configure and test the <b>msmtp</b> client.</p>
+
+<div id="page_links_menu_shadow" >
+ <div id="page_links_menu" >
+  <ul>
+   <li><a href="#Features" >Features</a></li>
+   <li><a href="#Overview" >Overview</a></li>
+   <li><a href="#Edit MSMTP Configuration" >Edit MSMTP Configuration</a></li>
+   <li><a href="#Default Account" >Default Account</a></li>
+   <li><a href="#Send Test E-Mail" >Send Test E-Mail</a></li>
+   <li><a href="#View Log" >View Log</a></li>
+
+   <li><a href="#Where to next" >Where to next</a></li>
+   </ul>
+ </div>
+</div>
+
+<a name="Features"></a>
+<h2>Features</h2>
+
+<ul>
+ <li>MSMTP Integrated client.</li>
+ <li>Pre-configured configuration template file.</li>
+ <li>Controller to set default account - quick switching between accounts.</li>
+ <li>Controller includes simple e-mail form for testing account configuration.</li>
+</ul>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Overview"></a>
+<h2>Overview</h2>
+
+<p>MSMTP has been pre-configured and enabled in the PHP configuration files. MSMTP itself uses a separate configuration file which has been pre-configured with example accounts. Before you can use PHP e-mail functions you need to set-up at least one account. Generally this account is your ISP email account, but for portability, consider setting up a free email account such as Hotmail or Gmail.</p>
+
+<p>Only one account (the default account) is active at any one time. The Uniform Server allows you to easily switch between the accounts you have configured and set one of these as the default account. After selecting an account, you can test it using the builtin email tester.</p>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Edit MSMTP Configuration"></a>
+<h2>Edit MSMTP Configuration</h2>
+
+<p>MSMTP is configured via the <b>msmtprc.ini</b> file. This has been pre-configured with three account skeletons (MyISP, Hotmail and Gmail). You can add as many accounts as you like, but each must have a <b>unique</b> account name. </p>
+
+<p>Open this file either by using UniController or by directly using a text editor.</p>
+
+<p class="access">General &gt; Mail utility msmtp &gt; "Edit Configuration File" Button </p>
+<p>File: UniServerZ\core\msmtp\<b>msmtprc.ini</b></p>
+
+<table>
+  <tr valign="top">
+    <td>
+       <p>There are three pre-configured account skeletons (MyISP, Hotmail and Gmail). You can add as many as you like, but each must have a <b>unique</b> account name.</p>
+
+    <p>The pre-configured accounts are templates. You must change the following for at least one account and assign it as the default.</p>
+
+   <table >
+     <tr>
+      <td><b>1) MyISP</b></td>
+      <td>
+       <ul>
+        <li>Substitute smpt.tiscali.co.uk with your ISP's smpt server</li>
+        <li>Substitute john.doe@tiscali.co.uk with your real email address</li>
+       </ul>
+      </td>
+     </tr>
+
+     <tr>
+       <td><b>2) Hotmail</b> </td>
+       <td>
+        <ul>
+          <li>Substitute john.doe123@hotmail.co.uk with your login email address</li>
+          <li>Substitute fred123 with your login password</li>
+        </ul> 
+        </td>
+     </tr>
+
+     <tr>
+        <td><b>3) Gmail</b></td>
+        <td>
+         <ul>
+           <li>Substitute john.doe777@gmail.com with your login email address</li>
+           <li>Substitute fred999 with your login password </li>
+         </ul> 
+        </td>
+      </tr>
+
+     <tr >
+       <td><b>Default Account</b></td>
+       <td>
+         <ul>
+            <li>Change "account default : <b>Hotmail</b>" with the account name you want to use</li>
+         </ul> 
+        </td>
+      </tr>
+    </table>
+
+ <p><b>Note 1:</b> To relay via Hotmail you will need to regularly sign into your account.</p>
+ <p><b>Note 2:</b> PHP will use whichever account you have assigned as default,  which is currently set to Hotmail. </p> 
+ </td>
+ <td>
+<pre>
+# 1 === Your ISP account ========================
+
+account MyISP
+host smpt.tiscali.co.uk
+from john.doe@tiscali.co.uk
+auth off
+
+# 2 === A freemail account at Hotmail ===========
+
+account Hotmail
+tls on
+tls_certcheck off
+host smtp.live.com
+from john.doe123@hotmail.co.uk
+auth on
+user john.doe123@hotmail.co.uk
+password fred123
+
+# 3 === A freemail account at Google ============
+
+account Gmail
+tls on
+port 587
+tls_certcheck off
+host smtp.gmail.com
+from john.doe777@gmail.com
+auth on
+user john.doe777@gmail.com
+password fred999
+
+#==== Set a default account =====================
+
+account default : Hotmail
+</pre>
+    </td>
+  </tr>
+</table>
+
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Default Account"></a>
+<h2>Default Account</h2>
+
+<p>You can manually edit the configuration file <b>msmtprc.ini</b> and set the default account, or alternatively use UniController’s sub-menu:</p>
+
+<p class="access">General &gt; Mail utility msmtp &gt; "Select Default Account" Drop-down menu </p>
+
+
+<p>This is a dual-purpose menu allowing you to set a default account and send a test email using this account.</p>
+
+<table>
+  <tr valign="top">
+    <td>
+
+<p><b><i>Set Default Account</i></b></p>
+<ul>
+ <li> Click the drop-down menu 2).<br /> This displays all accounts contained in the configuration file. </li>
+ <li> To set a default account, click an account name. </li>
+</ul>
+
+<p><b>Note 1:</b> PHP will use whichever account you have assigned as default,  which is currently set to Hotmail. </p> 
+<p><b>Note 2:</b> With more than one account configured you can easily select a default. </p> 
+<p><b>Note 3:</b>  The drop down menu for selecting a default account lists all accounts in the configuration, so you probably will want to delete any accounts you have not configured.</p> 
+
+
+    </td>
+
+    <td>
+       <img src="images/C11_msmtp_1.gif" alt="msmtp Client default account">
+    </td>
+  </tr>
+</table>
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Send Test E-Mail"></a>
+<h2>Send Test E-Mail</h2>
+
+<p class="access">General &gt; Mail utility msmtp &gt; "MSMTP send test e-mail" Section </p>
+
+<p>This is a dual-purpose menu allowing you to set a default account and send a test email using this account.</p>
+
+<table>
+  <tr valign="top">
+    <td>
+<p><b><i>Send Test Email</i></b></p>
+
+<ul>
+ <li> Enter recipient's email address 3)</li>
+ <li> Optionally enter a subject 4) or use default.</li>
+ <li> Optionally enter a message 5).</li>
+ <li> Click <b>Send Email</b> button 6)</li> 
+</ul>
+
+    </td>
+
+    <td>
+       <img src="images/C11_msmtp_1.gif" alt="msmtp Client send test email">
+    </td>
+  </tr>
+</table>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<a name="View Log"></a>
+<h2>View Log</h2>
+
+<table>
+  <tr valign="top">
+    <td>
+
+<p class="access">General &gt; Mail utility msmtp &gt; "Log file" Section </p>
+
+
+<p>The menu provides a convenient way for you to view the MSMTP log file. If you are experiencing problems sending e-mails, this should be your first port of call; it may shed light on a particular issue.</p>
+
+<p>An example of the log content is shown on right. There are three lines which have been split to fit this web page.</p>
+
+<p>Log file: UniServerZ\core\msmtp\<b>msmtp.log</b></p>
+    </td>
+
+    <td>
+<pre>
+Feb 04 14:07:10 host=smtp.gmail.com tls=on auth=on user=xxx@gmail.com
+from=xxx@gmail.com recipients=my_mail@operamail.com mailsize=117
+smtpstatus=250 smtpmsg='250 2.0.0 OK 1265292428 7sm2124401eyg.17'
+exitcode=EX_OK
+
+Sep 22 14:08:53 host=smpt.tiscali.co.uk tls=off auth=off
+from=xxx@tiscali.co.uk recipients=my_mail@operamail.com mailsize=108
+smtpstatus=250 smtpmsg='250 ok:  Message 497320898 accepted'
+exitcode=EX_OK
+
+Jan 24 11:12:14 host=smtp.live.com tls=on auth=on user=xxx@hotmail.co.uk
+from=xxx@hotmail.co.uk recipients=yyy@tiscali.co.uk mailsize=100
+smtpstatus=250 smtpmsg='250 2.6.0 &lt;BLU0-SMTP9@BLU0-SMTP9.blu0.hotmail.com&gt;
+Queued mail for delivery' exitcode=EX_OK
+</pre>
+    </td>
+  </tr>
+</table>
+
+<script language="javascript" src="common/top.js"></script>
+<a name="Where to next"></a>
+<h2>Where to go next</h2>
+
+<p>See the next page for more details. <a href="general_msmtp_detail.html">msmtp - Detail</a></p>
+
+
+
+<script language="javascript" src="common/top.js"></script>
+<!-- ============ End Content ============ -->
+</td>
+</tr>
+</table>
+
+<!-- Start footer -->
+  <script language="javascript" src="common/footer.js"></script>
+<!-- End footer -->
+
+</body>
+</html>
