@@ -10,6 +10,73 @@ we do not provide the EAC module
 just search in TRO mega thread... 
 https://github.com/OpenKore/openkore/issues/221
 
+**** install tutorial * XKore 1 **** for XKore 0.5 read below ****
+******** You need 2 PC or VMware(Run RO in VM) ***********
+EAC Detect Openkore in ring1
+
+********** CRITICAL STEP **********
+********** FAIL TO FOLLOW THIS YOU MAY GET DETECTED BY EAC ****************
+1. copy "hooktest.dll" + netredirect.dll in folder "to_syswow64&inject yourself" to...
+if x64
+"C:\Windows\SysWOW64" 
+if x32
+"C:\Windows\System32"
+* remove (hooktest.dll, NetRedirect.dll) in ragnarok folder if you had it.
+
+1.1 Download CFF Explorer "http://www.ntcore.com/exsuite.php"
+get "CFF Explorer (x86 Version, stand-alone, Zip Archive)"
+
+1.2 look for "AudioSes.dll"
+if x64
+goto "C:\Windows\SysWOW64"
+if x32
+goto "C:\Windows\System32"
+
+1.3  we need to change file owner 
+ - right click "AudioSes.dll" -> "Properties" -> "Security" -> "Advance" 
+ - look for "Owner:" then click "Change" -> "Advance" -> "Find Now"
+ - Select "Administrators" and click "OK" -> "OK" 
+1.4 add permission
+ - right click "AudioSes.dll" -> "Properties" -> "Security" -> "Edit" 
+ - Select "Administrators" and click "Allow" at "Full control" -> "OK" ->"OK"
+ 
+1.5 Do backup of "AudioSes.dll" 
+e.g. copy and rename it to "AudioSes_original.dll"
+
+1.6 copy "AudioSes.dll" out of system folder
+
+1.7 Open the "AudioSes.dll" that you had been copy it with "CFF Explorer"
+ - Select "Import Adder" -> "Add" Browse to "hooktest.dll" in 
+ 
+if x64
+goto "C:\Windows\SysWOW64"
+if x32
+goto "C:\Windows\System32"
+
+ - Select "00000001-_FuckEAC@0" -> "Import By Name" -> "Rebuild Import Table" -> "Save" and close it
+1.8 replace edited  "AudioSes.dll" into 
+
+if x64
+goto "C:\Windows\SysWOW64"
+if x32
+goto "C:\Windows\System32"
+
+#note: if in doubt try rename the "AudioSes.dll" before copy it back.
+
+2. Start "ragnarok.exe" patcher normally
+"ragexe.exe" is running there will be messagebox popup tell you about the port 2xxx - 4xxx
+take note this port number you need it..
+ 
+
+*************************************************************************************
+now you are fine with it...
+
+3. run "start.exe" or "wxstart.exe" at "another PC" or "outside Vmware" and enter "XKoreport" you got from client.
+
+4. do repeat step 2 and 3. if you want more bot.
+
+#######################################################################
+
 install tutorial * XKore 0.5 *
 ******** You need 2 PC or VMware(Run RO in VM) ***********
 EAC Detect Openkore in ring1
@@ -101,10 +168,10 @@ now you are fine with it...
 
 6. do repeat step 4 and 5. if you want more bot.
 
-Happy botting
-
 p.s. you must check the patch server too. if there any update.
 since this will redirect cdn.exe.in.th to localhost
 we do not need NetRedirect.dll anymore...
 
+#################################################
+Happy botting
 for update in future please re read this guide again..
