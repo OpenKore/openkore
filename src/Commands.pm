@@ -4661,7 +4661,6 @@ sub cmdStorage_addfromcart {
 	if (!defined($amount) || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	
 	$messageSender->sendStorageAddFromCart($item->{index}, $amount);
 }
 
@@ -4705,7 +4704,7 @@ sub cmdStorage_gettocart {
 		$amount = $item->{amount};
 	}
 	
-	if ($char->statusesString =~ /.*?Cart.*?/ig) {
+	if ($char->statusesString !~ /.*?Cart.*?/ig) {
 		error TF("Cart wasn't found.\n");
 		return;
 	}
