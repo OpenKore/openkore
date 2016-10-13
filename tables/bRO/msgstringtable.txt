@@ -1,4 +1,4 @@
-Você concorda?#
+Você deseja assistir o Replay?#
 Não foi possível conectar-se ao servidor.#
 Desconectado do servidor.#
 Desconectado do servidor.#
@@ -1278,7 +1278,7 @@ O Assistente seguirá a AI padrão.#
 Mensagens Públicas#
 Mensagens Particulares#
 Mensagens do Grupo#
-Mensagens do Clã #
+Mensagens do Clã#
 Mensagem de Obter/Jogar item#
 Msg de item Equipado e Retirado#
 Mensagem de Mudança de Status#
@@ -1887,7 +1887,7 @@ Impossível atacar neste modo#
 Impossível conjurar neste modo#
 Número de Pin deve ter 4 caracteres#
 Log-in realizado com sucesso#
-Segunda senha inserida com sucesso#
+PIN cadastrado com sucesso#
 Segunda senha deletada#
 Segunda senha corrigida#
 falha ao logar#
@@ -1897,13 +1897,13 @@ falha ao corrigir segunda senha#
 PIN inválido. Por favor, não use sequências ou números repetidos.#
 Impossível utilizar o número de residência#
 Código de segurança#
-Inserir senha (4~6 caracteres)#
+Inserir senha (4 caracteres)#
 Defina um PIN para sua segurança#
 Código de segurança não está em uso#
 Falha ao definir código de segurança#
 Código de segurança ativado. Será usado na próxima vez#
 Falha ao definir código de segurança#
-Defina um Código PIN para sua segurança#
+Utilize um Código PIN para sua segurança#
 Clique em uma sequência de 4 números#
 Fechando após inserir o PIN incorretamente 3 vezes.#
 ITEM#
@@ -2167,7 +2167,6 @@ Trocar Nome#
 Make Character#
 http://ro.tahadi.com/en/game-guide#
 %s Server#
-Card book#
 Merge items(To select all:Ctrl+Click)#
 Select at least 2 items of the same kind.#
 Item Merging Succeeded.#
@@ -2202,14 +2201,14 @@ Search info#
 Change the mode#
 Change the color of navigation#
 Close#
-Change to basic UI#
-Change to easy UI#
-Help word#
+Maximizar#
+Minimizar#
+Ajuda#
 ALL#
 Map#
 Npc#
 Mob#
-Set the search words (Ex: word word ...#
+Coloque o que você quer procurar (Ex: payon, zumbi...)#
 Scroll#
 Apply to use dungeon move scroll#
 Service#
@@ -2221,38 +2220,38 @@ Apply transferring with Airship#
 << searching... >>#
 -----------#
 Navigation#
-== search result(%d)==#
+== Resultado(%d)==#
 Npc)%s:%s#
 Mob)%s:%s#
 Map)%s#
-======== Result info ==========#
-Distance   : %d Sell %d WarpMove#
-Target map: %s(%s)#
-Target   : %s(%d, %d)#
+======== Resultado ==========#
+Distância   : %d Sell %d WarpMove#
+Destino: %s(%s)#
+Alvo   : %s(%d, %d)#
 Boss#
 normal#
-Target   : %s(%s)#
-Target: (%d, %d)#
-======= Navigation info =======#
+Alvo   : %s(%s)#
+Alvo: (%d, %d)#
+======== Rota ========#
 %2d) Item:%s => %s use#
 %2d) %s(%d,%d)=>(%d,%d)#
 E%2d) %s(%d,%d)=>(%d,%d)#
 E%2d) %s#
-It is navigating, would you like to close?#
+A localização está ativa, você gostaria de fechar o sistema de navegação?#
 Navigation help#
-------------------- command --------------------#
+------------------- Comandos --------------------#
 1. /navigation      /navi#
-  ex)/navi prontera 100/100 -> map name, 100/100#
+  ex)/navi prontera 100/100 -> nome do mapa, 100/100#
   Basic command are zeny, ariship search.#
 2. /navigation2      /navi2#
   ex) /navi2 prontera 100/100 1/1/1#
--> map name, location(100/100), scrool/zeny/plane (1:use 0: not use)#
-3. $$all   show all list (show Type list, possible to divide.)#
-4. $$lv30   show monsters on this level#
-5. $$lv20~30  show the monsters in this level range#
--------------------  description  --------------------#
-1.Search type are All, map, NPC, Monsters.#
-2.Search with the commend. Rules are that shows all information including the search text.#
+-> nome do mapa, loocalização(100/100), scrool/zeny/plane (1:use 0: not use)#
+3. $$all   mostra toda a lista (show Type list, possible to divide.)#
+4. $$lv30   localiza monstros nesse Nível#
+5. $$lv20~30  localiza monstros dentro desse alcance#
+-------------------  Descrição  --------------------#
+1.Opções de Busca são All, Mapa, NPC e Monstros.#
+2.Search with the command. Rules are that shows all information including the search text.#
   ex) pron kaf ->it shows all of prontera's Kafra in search result.#
 3.if you click from the lsit, the information will be shown.#
   if there is a target you want and click the naviating, it will show the road to the target.#
@@ -2260,7 +2259,7 @@ Navigation help#
 5.if the navigation button is clicked, the result window will be changed to navigation list window.#
 6.By using the below button in the search list window#
  possible to change as [Result window] <-> [Navigation info window].#
-Level:%d (boss)#
+Level:%d (MVP)#
 Level:%d (normal)#
 Água%d#
 Terra%d#
@@ -2286,40 +2285,40 @@ Anjo#
 Dragão#
 Amorfo#
 Ciick to move %s #
-Use NPC move service#
+Use o sistema de navegação de NPC#
 NPC click#
 %s move#
-Move through airship#
-Use warp#
-arrival point : ( %d %d )#
-It is not available to provide navigation in this area.#
-You are searching unclear target.#
-it is not matched map.#
-failed to set the departure area#
-failed to set the arrival area!#
-Failed to find a way#
-Failed to find the player's location#
-There is no information in navigation.#
-this map is not providing the navigation system.#
-Please set the target.#
-arrived.#
-the navigation is started.#
-this is the map having the monster you are looking for.#
-This is the map you are looking for.#
-Please transfer by using items.#
-Please move to the location showing.#
-You have arrived to the target map.#
-You have arrived to the map having the NPC you are looking for. Please move near NPC.#
-This is the map where the monsters live.#
-It is the same target as before.#
-Please go to the pointing way.#
-This is the target.#
-Navigation >: %s#
-Navigation >: By using  %s#
-Navigation >: please move to the map(%s)#
-Navigation >: please move by selecting the map(%s)#
-Navigation >: Please move to Airship#
-Navigation >: Please move to next location by using warp.#
+Utilize o Aeroplano#
+Use teleporte#
+Chegada : ( %d %d )#
+Não é possível utilizar o Sistema de Navegação nessa área.#
+Você está procurando por um lugar desconhecido.#
+não é um mapa compatível.#
+falha ao definir a área de saída#
+falha ao definir a área de destino!#
+Falha ao encontrar uma rota#
+Falha o encontrar a localidade do jogador#
+Não há informação no Sistema de Navegação.#
+Esse mapa não está ativo para o Sistema de Navegação.#
+Escolha o destino, por favor.#
+Chegou.#
+a navegação começou.#
+Esse é o mapa que contém os monstros que você estva procurando.#
+Esse é o mapa que você estva procurando.#
+Por favor, se locomova utilizando itens.#
+Por favor, vá para a localização indicada.#
+Você chegou ao mapa desejado.#
+Você chegou ao mapa que contém o NPC que você está procurando. Por favor, se locomova até ele.#
+Esse é o mapa em que os monstros se encontram.#
+Este é o mesmo destino que o anterior.#
+Por favor, vá para o caminho direcionado.#
+Esse é o destino.#
+Navegação >: %s#
+Navegação >: Utilizando  %s#
+Navegação >: Por favor, se direcione até o local (%s)#
+Navegação >: Por favor, utilize a Kafra e selecione a opção (%s)#
+Navegação >: Por favor, vá até o Aeroplano#
+Navegação >: Por favor, vá até ao próximo lugar utilizando um teleporte.#
 Item: #
 $$#
 $$lv#
@@ -2330,3 +2329,587 @@ the total price of the item you select is#
 Zeny.#
 Would you like to purchase?#
 %.3f%% (PC bang %.3f%% + TPLUS %.3f%% + premium %.3f%% + %sserver %.3f%%)#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+%.1f%% ( Basic 100.0%% + Premium %.1f%% + %s %.1f%%)#
