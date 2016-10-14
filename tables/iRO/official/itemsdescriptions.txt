@@ -58007,161 +58007,7 @@ Weapon Level: ^7777773^000000
 Required Level : ^7777771^000000
 Jobs : ^777777Gunslinger^000000
 #
-20361#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A heavy one-handed
-cavalry sword with a
-slightly curved blade.
-^CC0000This item is not Refinable^000000
-Class : ^777777Sword^000000
-Attack Strength: ^777777145^000000
-Weight : ^777777100^000000
-Weapon Level: ^7777773^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman,
-Merchant, and
-Thief Classes^000000
-#
-20362#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A strong dagger that
-is usually crafted by
-traditional artisans.
-^CC0000This item is not Refinable^000000
-Class : ^777777Dagger^000000
-Attack Strength: ^777777140^000000
-Weight : ^77777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman, Mage, Archer, Merchant,
-Thief Classes, Soul Linker, and Ninja^000000
-#
-20363#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A simple flail that
-consists of a thin
-mace attached to
-a chain of iron links.
-^CC0000This item is not Refinable^000000
-Class : ^777777Mace^000000
-Attack Strength: ^777777105^000000
-Weight : ^77777780^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman, Acolyte, and Merchant Classes^000000
-#
-20364#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A book that's been put together sturdily enough to be wielded as a weapon in an emergency situation.
-^CC0000This item is not Refinable^000000
-Class : ^777777Book^000000
-Attack Strength: ^777777106^000000
-Weight : ^77777760^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Priest, Sage, Taekwon Master^000000
-#
-20365#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A staff with a
-hynpotizing effect
-that can even make
-a Novice feel just like   a High Wizard. Sort of.
-Int + 1, MATK + 120
-^CC0000This item is not Refinable^000000
-Class : ^777777Staff^000000
-Attack Strength: ^777777100^000000
-Weight : ^77777750^000000
-Property:^777777Neutral^000000
-Weapon Level: ^7777773^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Novice, Mage,
-Acolyte Classes, and Soul Linker^000000
-#
-20366#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A protective covering
-that shields the back
-of the hand and forearm, and has raised studs for
-offensive purposes.
-^CC0000This item is not Refinable^000000
-Class : ^777777Claw^000000
-Attack Strength: ^77777771^000000
-Weight : ^77777745^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Priest
-and Monk Jobs^000000
-#
-20367#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A classical plucked
-string instrument that
-is incredibly difficult^FFFFFF  ^000000 to tune and adjust.
-^CC0000This item is not Refinable^000000
-Class :^777777Musical Instrument^000000
-Attack Strength: ^777777126^000000
-Weight : ^77777750^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs : ^777777Bard^000000
-#
-20368#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A whip made of a
-flexible wire attached
-to an iron handle.
-^CC0000This item is not Refinable^000000
-Class : ^777777Whip^000000
-Attack Strength: ^777777116^000000
-Weight : ^777777100^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs : ^777777Dancer^000000
-#
-20369#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A straight bladed sword that can be brutally swung just like a baseball bat.
-^CC0000This item is not Refinable^000000
-Class :^777777Two-handed Sword^000000
-Attack Strength: ^777777136^000000
-Weight : ^777777160^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman Class^000000
-#
-20370#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A set of Arabian style blades that are worn on the back of both hands
-or on the forearms.
-^CC0000This item is not Refinable^000000
-Class : ^777777Katar^000000
-Attack Strength: ^777777146^000000
-Weight : ^77777780^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs : ^777777Assassin^000000
-#
+
 20371#
 ^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -73113,9 +72959,13 @@ Jobs : ^777777All^000000
 #
 5464#
 Zaha doll hat which resembles angel of Zaha. It looks great on your head.
-INT+2
-Able to use Lv.3 [Magnificat].
-Can't be refined.
+INT + 3. MDEF + 9.
+Increases Magic Damage versus undead by 10%
+When using Magic attacks or attacked by Magic jas a chance to transform the wearer into the White Lady for a short period of time.
+During the transformation does the following.
+-Increases MAtk by 30 * Refine Level (Minimum 30)
+-Reduces Fixed Cast Time by 80 miliseconds * Refine Level (Minimum 80)
+-Drains 10 sp/sec from the wearer
 Item Class : ^777777Headgear^000000    Defense : ^7777771^000000
 Location : ^777777Upper ^000000    Weight : ^7777770^000000
 Jobs : ^777777All^000000
@@ -74394,7 +74244,7 @@ Job : ^777777All Jobs^000000
 #
 20154#
 Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Mid ^000000Weight : ^7777770^000000
+Location : ^777777Bottom ^000000Weight : ^7777770^000000
 Required Lv. : ^7777771^000000
 Job : ^777777All Jobs^000000
 #
@@ -76289,7 +76139,6 @@ Required Level: 100
 Required Job: Mechanic
 ^FFFFFF_^000000
 ASPD + 6%
-Max HP + 1% per 2 upgrade levels of the item.
 ^FFFFFF_^000000
 If upgrade level is +4 or higher,
 ASPD + 1%
@@ -78146,4 +77995,341 @@ Weight : ^7777771^000000
 
 6635#
 Currently has no known use. However you feel like you should save it for later, as it appears to have some value.
+#
+
+
+4652#
+Increase magic damage against Shadow and Undead monsters by 50%
+Increase magic damage against Demon and Undead race monsters by 50%
+
+Class : ^777777Card^000000
+Compound on : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+4653#
+Reduce damage from Brute and Undead monsters by 20%
+
+Class : ^777777Card^000000
+Compound on : ^777777Shield^000000
+Weight : ^7777771^000000
+#
+4654#
+Increase magical damage against Brute and Undead monster by 5%
+
+When equipped with equip compounded with Nightmare Arclouse card
+Reduce damage from Brute and Undead monsters by 5%
+Ignore 50% magic defense of Brute and Undead monsters
+
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4655#
+Increase physical damage against Brute and Undead monster by 10%
+
+When equipped with equip compounded with Nightmare Arclouse card
+Reduce damage from Brute and Undead monsters by 5%
+Ignore 50% physical defense of Brute and Undead monsters
+
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4656#
+When physically and magically attacked,
+chance to cause Sleep to all targets on 11x11 cells.
+
+When equipped with equip compounded with Nightmare Ancient Mummy card
+Increase the probability of causing Sleep
+
+Class : ^777777Card^000000
+Compound on : ^777777Footwear^000000
+Weight : ^7777771^000000
+#
+4657#
+Reduce damage from Neutral property by 15%
+Every refine of garment increase magical Fire damage by 3%
+
+When equipped with equip compounded with Nightmare Mummy card
+Increase resistance against Neutral property attack by 5%
+
+Class : ^777777Card^000000
+Compound on : ^777777Garment^000000
+Weight : ^7777771^000000
+#
+4658#
+MATK + 5%
+When refined to +7, increase magical damage inflicted by 3%
+When refined to +9, increase magical damage inflicted by 2%
+
+Class : ^777777Card^000000
+Compound on : ^777777Footwear^000000
+Weight : ^7777771^000000
+#
+
+
+4625#
+MATK+ 20%.
+Increase SP consumption of skills by 10%.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4626#
+Increase magical damage against Formless and Demon races by 5%.
+When equipped with a shield compounded to Neo Punk Card:
+ignores 50% of Formless and Demon monster's Magic Defense Rate.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4627#
+Increase physical damage against Formless and Demon races by 10%.
+When equipped with a shield compounded to Neo Punk Card:
+ignores 50% of Formless and Demon monster's Defense Rate.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4628#
+Reduce damage taken from Formless and Demon races by 20%.
+When equipped with a weapon compounded to Big Ben Card:
+further reduce damage taken from Formless and Demon races by 5%.
+When equipped with a weapon compounded to Big Bell Card:
+further reduce damage taken from Formless and Demon races by 5%.
+Class : ^777777Card^000000
+Compound on : ^777777Shield^000000
+Weight : ^7777771^000000
+#
+4629#
+Increase resistance against Neutral property attack by 15%.
+Increases damage of Earth property magic by 3% per refine.
+When equipped with a shoes compounded to Time Keeper Card:
+further increase resistance against Neutral property attack by 5%.
+Class : ^777777Card^000000
+Compound on : ^777777Garment^000000
+Weight : ^7777771^000000
+#
+4630#
+Has a chance of inflicting the Curse status to all enemy in 11x11 around the wearer when attack.
+When equipped with a garment compounded with Arc Elder Card:
+the chance is further increased.
+Class : ^777777Card^000000
+Compound on : ^777777Footwear^000000
+Weight : ^7777771^000000
+#
+4631#
+ASPD +3%
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+4632#
+Add a chance of auto casting Level 1 Whirlwind when dealing physical attack.
+If the user has mastered the skill at Level 5, it will cast Level 5 instead.
+When equipped with an accessory compounded to Owl Viscount Card:
+add a chance of auto casting level 1 Lord of Vermilion when dealing physical attack.
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+17375#
+When opened this box gives you the Zaha Doll Hat!
+#
+
+
+
+20407#
+Unknown aura that wrapped your body.
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+5912#
+Imitated by Loyal servant Devilring. Always be on standby to serve his master.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20357#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20358#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20359#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20360#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20361#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20362#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20363#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20364#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20365#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20366#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20367#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20368#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20369#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20370#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19597#
+A hat that looks like the eyes of a dark mage, which are rumored to blink sometimes.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20430#
+A costume that imitating the protection aura of Devil Morocc.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31087#
+Dwarf's heavy beard.
+You don't need extra scarf.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20340#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20342#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20450#
+A beautiful magician hat with flower on it.
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+17739#
+^ff0000Cannot trade with other accounts.^000000
+Change up your hairstyle, gain a creepy aura, or surround your self with ghosts from this Spooktober Costume Box.
+
+Experience the holiday with us at twitch.tv/warpportal as we scare ourselves trying to survive creepys and crawlies at 5PM PST on Fridays.
+
+
+When opened gives one of the following:
+Costume: Red Test Subject Aura
+Costume: Servant of Devilring
+Costume: Ponytail
+Costume: Twin Ponytails
+Costume: Magic Eyes
+Costume: Servant of Morroc
+
+Costume: Dwarf Beard
+
+Costume: Gram Peony
+
+Weight : ^7777771^000000
 #
