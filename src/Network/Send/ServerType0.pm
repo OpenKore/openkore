@@ -56,10 +56,12 @@ sub new {
 		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'009F' => ['item_take', 'a4', [qw(ID)]],
 		'00A2' => ['item_drop', 'v2', [qw(index amount)]],
+		'00A7' => ['item_use', 'v a4', [qw(index targetID)]],#8
 		'00A9' => ['send_equip', 'v2', [qw(index type)]],#6
 		'00B2' => ['restart', 'C', [qw(type)]],
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
+		'00BB' => ['sendAddStatusPoint'],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00F3' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
