@@ -7439,43 +7439,6 @@ sub skill_msg {
 	#	'07E6' => ['skill_msg', 'v V', [qw(id msgid)]], #TODO: PACKET_ZC_MSG_SKILL     **msgtable
 }
 
-sub quest_all_list2 {
-	my ($self, $args) = @_;
-	$questList = {};
-	my $msg;
-	my ($questID, $active, $time_start, $time, $mission_amount);
-	my $i = 0;
-	my ($mobID, $count, $amount, $mobName);
-	while ($i < $args->{RAW_MSG_SIZE} - 8) {
-		$msg = substr($args->{message}, $i, 15);
-		($questID, $active, $time_start, $time, $mission_amount) = unpack('V C V2 v', $msg);
-		$questList->{$questID}->{active} = $active;
-		debug "$questID $active\n", "info";
-
-		my $quest = \%{$questList->{$questID}};
-		$quest->{time_start} = $time_start;
-		$quest->{time} = $time;
-		$quest->{mission_amount} = $mission_amount;
-		debug "$questID $time_start $time $mission_amount\n", "info";
-		$i += 15;
-
-		if ($mission_amount > 0) {
-			for (my $j = 0 ; $j < $mission_amount ; $j++) {
-				$msg = substr($args->{message}, $i, 32);
-				($mobID, $count, $amount, $mobName) = unpack('V v2 Z24', $msg);
-				my $mission = \%{$quest->{missions}->{$mobID}};
-				$mission->{mobID} = $mobID;
-				$mission->{count} = $count;
-				$mission->{amount} = $amount;
-				$mission->{mobName_org} = $mobName;
-				$mission->{mobName} = bytesToString($mobName);
-				debug "- $mobID $count / $amount $mobName\n", "info";
-				$i += 32;
-			}
-		}
-	}
-}
-
 sub show_script {
 	my ($self, $args) = @_;
 	
