@@ -2831,7 +2831,7 @@ dewata 192 193 moc_para01 31 14 c c r0
 einbroch 250 211 moc_para01 31 14 c c r0
 geffen 132 66 moc_para01 31 14 c c r0
 geffen_in 160 104 moc_para01 31 14 c c r0
-gonryun 162 122 moc_para01 31 14 c c r0
+gonryun 145 120 moc_para01 31 14 c c r0
 hugel 93 153 moc_para01 31 14 c c r0
 izlude 131 148 moc_para01 31 14 c c r0
 izlude_in 68 162 moc_para01 31 14 c c r0
