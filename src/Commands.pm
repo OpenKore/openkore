@@ -4828,7 +4828,7 @@ sub cmdTalk {
 			TF("#  Response\n");
 		for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
 			$msg .= swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+			"@< @*",
 			[$i, $talk{responses}[$i]]);
 		}
 		$msg .= ('-'x40) . "\n";
