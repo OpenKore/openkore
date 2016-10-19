@@ -46,46 +46,46 @@
 #
 # <weight>: Peso dos monstros aggressivos para ativar as funções na config. Suporta números quebrados (ex 1.8237402).
 # Exemplos:
-#	(config.txt)
-#	teleportAuto_minAggressives 6
-#	teleportAuto_minAggressivesInLock 6
+#       (config.txt)
+#       teleportAuto_minAggressives 6
+#       teleportAuto_minAggressivesInLock 6
 #
-#	(mon_control.txt)
-#	Hidra 1 0 0 0 0 0 0 0 0.2
-#	Peixe espada 1 0 0 0 0 0 0 0 2
+#       (mon_control.txt)
+#       Hidra 1 0 0 0 0 0 0 0 0.2
+#       Peixe espada 1 0 0 0 0 0 0 0 2
 #
-#	Se houver cinco hidras e um peixe espada atacando o bot,
-#	ele não vai teleportar pois o valor não é igual ou maior que o teleportAuto_minAggressives (5 * 0,2 + 1 * 2 = 4).
-#	No entanto, três pexies espadas fará o bot teletransportar, pois
-#	0 * 0,2 + 2 * 3 = 6
+# Se houver cinco hidras e um peixe espada atacando o bot,
+# ele não vai teleportar pois o valor não é igual ou maior que o teleportAuto_minAggressives (5 * 0,2 + 1 * 2 = 4).
+# No entanto, três pexies espadas fará o bot teletransportar, pois
+# 0 * 0,2 + 2 * 3 = 6
 #
 #
 # Monstros não especificados neste arquivo terá por padrão:
 # <attack> = 1
-
-
+ 
+ 
 ##### Ovos #####
 Ant's Egg 0 0 0
 PecoPeco's Egg 0 0 0
 Pupa 0 0 0
 Thief Bug's Egg 0 0 0
-
+ 
 ##### Invocados por alquimistas ####
 # Parasita invocada
 1555 0 0 0
-
+ 
 # Flora invocada
 1575 0 0 0
-
+ 
 # Hidra invocada
 1579 0 0 0
-
+ 
 # Mandragora invocada
 1589 0 0 0
-
+ 
 # Planta Carnívora invocada
 1590 0 0 0
-
+ 
 ##### Plantas #####
 Black Mushroom 0 0 0
 Blue Plant 0 0 0
@@ -95,8 +95,8 @@ Red Plant 0 0 0
 Shining Plant 0 0 0
 White Plant 0 0 0
 Yellow Plant 0 0 0
-
-
+ 
+ 
 ##### Homunculus #####
 6001 -1 0 0
 6002 -1 0 0
@@ -114,7 +114,7 @@ Yellow Plant 0 0 0
 6014 -1 0 0
 6015 -1 0 0
 6016 -1 0 0
-
+ 
 ##### Assistentes #####
 6017 -1 0 0
 6018 -1 0 0
@@ -146,7 +146,7 @@ Yellow Plant 0 0 0
 6044 -1 0 0
 6045 -1 0 0
 6046 -1 0 0
-
+ 
 ##### Monstros assistentes #####
 # Mímico (Monstro)
 1191 -1 0 0
@@ -160,7 +160,7 @@ Yellow Plant 0 0 0
 1966 -1 0 0
 # Egnigem Cenia (Versão assistente, M_YGNIZEM)
 1967 -1 0 0
-
+ 
 ##### MVPs e mini-boss #####
 Amon Ra 0 1 0
 Archangeling 0 1 0
