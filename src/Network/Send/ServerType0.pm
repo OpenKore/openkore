@@ -56,10 +56,12 @@ sub new {
 		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'009F' => ['item_take', 'a4', [qw(ID)]],
 		'00A2' => ['item_drop', 'v2', [qw(index amount)]],
+		'00A7' => ['item_use', 'v a4', [qw(index targetID)]],#8
 		'00A9' => ['send_equip', 'v2', [qw(index type)]],#6
 		'00B2' => ['restart', 'C', [qw(type)]],
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
+		'00BB' => ['sendAddStatusPoint'],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00F3' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
@@ -98,6 +100,7 @@ sub new {
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
 		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
+		'02F1' => ['notify_progress_bar_complete'],
 		'035F' => ['character_move', 'a3', [qw(coords)]],
 		'0360' => ['sync', 'V', [qw(time)]],
 		'0361' => ['actor_look_at', 'v C', [qw(head body)]],
@@ -122,6 +125,7 @@ sub new {
 		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0819' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
 		'0827' => ['char_delete2', 'a4', [qw(charID)]], # 6
+		'0829' => ['char_delete2_accept', 'a4 a6', [qw(charID code)]], # 12
 		'082B' => ['char_delete2_cancel', 'a4', [qw(charID)]], # 6
 		'0844' => ['cash_shop_open'],#2
 		'0848' => ['cash_shop_buy_items', 's s V V s', [qw(len count item_id item_amount tab_code)]], #item_id, item_amount and tab_code could be repeated in order to buy multiple itens at once

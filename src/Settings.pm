@@ -114,6 +114,8 @@ our $dead_log_file;
 
 our $interface;
 our $lockdown;
+our $starting_ai;
+our $command;
 our $no_connect;
 
 
@@ -179,6 +181,8 @@ sub parseArguments {
 
 		'interface=s',        \$interface,
 		'lockdown',           \$lockdown,
+		'ai=s',               \$starting_ai,
+		'command=s',          \$command,
 		'help',	              \$options{help},
 		'version|v',          \$options{version},
 
@@ -217,6 +221,11 @@ sub parseArguments {
 			$interface = "Console"
 		}
 	}
+	if ($starting_ai) {
+		$Globals::AI = AI::AUTO()   if $starting_ai =~ /^(on|auto)$/;
+		$Globals::AI = AI::MANUAL() if $starting_ai =~ /^manual$/;
+		$Globals::AI = AI::OFF()    if $starting_ai =~ /^off$/;
+    }
 
 	return 0 if ($options{help});
 	return 0 if ($options{version});
@@ -286,6 +295,8 @@ sub getUsageText {
 		Other options:
 		--interface=NAME          Which interface to use at startup.
 		--lockdown                Disable potentially insecure features.
+		--ai                      Starting AI mode (on, manual, off) (default: on)
+		--command=COMMAND         Initial command to place on the AI queue
 		--help                    Displays this help message.
 		--version                 Displays the program version.
 

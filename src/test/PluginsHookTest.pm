@@ -8,6 +8,8 @@ sub start {
 	print "### Starting PluginsHookTest\n";
 	testAddHook();
 	testAddHooks();
+	testAddDuringCall();
+	testDelDuringCall();
 	testLegacyAPI();
 }
 
@@ -99,6 +101,80 @@ sub testAddHooks {
 	ok(!Plugins::hasHook('hook3'));
 	Plugins::callHook('hook1');
 	is($value, 2);
+}
+
+sub testAddDuringCall {
+	my @called;
+	my @handle;
+
+	# Add a hook which adds more hooks.
+	@handle = ();
+	push @handle, Plugins::addHook(
+		add_during_call => sub {
+			push @called, 0;
+			if ( @handle < 3 ) {
+				my $n = scalar @handle;
+				push @handle, Plugins::addHook( add_during_call => sub { push @called, "1.$n" } );
+			}
+		}
+	);
+
+	# The first time through, only the original hook should be called.
+	@called = ();
+	Plugins::callHook( 'add_during_call' );
+	is( "@called", '0' );
+
+	# After the first call, there should be two handlers.
+	@called = ();
+	Plugins::callHook( 'add_during_call' );
+	is( "@called", '0 1.1' );
+
+	# Then three.
+	@called = ();
+	Plugins::callHook( 'add_during_call' );
+	is( "@called", '0 1.1 1.2' );
+
+	# And stop adding them.
+	@called = ();
+	Plugins::callHook( 'add_during_call' );
+	is( "@called", '0 1.1 1.2' );
+}
+
+sub testDelDuringCall {
+	my @called;
+	my @handle;
+
+	# Add some hooks.
+	@handle = ();
+	push @handle, Plugins::addHook( del_during_call => sub { push @called, 1 } );
+	push @handle, Plugins::addHook( del_during_call => sub { push @called, 2 } );
+	push @handle, Plugins::addHook( del_during_call => sub { push @called, 3;Plugins::delHook( shift @handle ) } );
+	push @handle, Plugins::addHook( del_during_call => sub { push @called, 4 } );
+
+	# The first time through, they should all trigger.
+	@called = ();
+	Plugins::callHook( 'del_during_call' );
+	is( "@called", '1 2 3 4' );
+
+	# The first handle should be deleted.
+	@called = ();
+	Plugins::callHook( 'del_during_call' );
+	is( "@called", '2 3 4' );
+
+	# Then the second.
+	@called = ();
+	Plugins::callHook( 'del_during_call' );
+	is( "@called", '3 4' );
+
+	# Then the third.
+	@called = ();
+	Plugins::callHook( 'del_during_call' );
+	is( "@called", '4' );
+
+	# No more changes since the one which was removing callbacks is gone.
+	@called = ();
+	Plugins::callHook( 'del_during_call' );
+	is( "@called", '4' );
 }
 
 sub testLegacyAPI {

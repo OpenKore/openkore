@@ -4680,7 +4680,7 @@ de AGI e Velocidade de Movimento.
 A área de efeito da Evasão 
 Aquática aumenta^FFFFFF ^777777 o dano causado pela habilidade 
 Lança Congelante e permite o uso de 
-Esfera D’ Água e Aqua Benedicta pelos outros jogadores.^FFFFFF    ^777777 Cada uso consome 1 Pedra de Gelo.^000000 
+Esfera D’Água e Aqua Benedicta pelos outros jogadores.^FFFFFF    ^777777 Cada uso consome 1 Pedra de Gelo.^000000 
 Alcance, Duração e Redução de AGI 
 por Nível da Habilidade	
 [Nv 1]: ^7777773*3 células, 

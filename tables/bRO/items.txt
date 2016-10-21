@@ -314,7 +314,6 @@
 6108#Gelatina de Maçã#
 6135#Ticket de Ninfa Perversa#
 6136#Ticket de Medusa#
-5416#Caneca de Guaraná#
 10038#Protetor de Chifre#
 6377#Licença_de_Atacado#
 12548#Licença Falsa_Atacado#
@@ -1703,7 +1702,6 @@
 12018#Fogo_de_Artifício#
 //----2005 XMAS ------
 //5136#Gorro_Mágico_de_Papai_Noel#
-12132#Bolsa do Papai Noel#
 7174#Laço_para_presente#
 7175#Papel_de_presente#
 664#Caixa_de_Presente_1#
@@ -1818,7 +1816,7 @@
 7525#Vale-Prêmio#
 
 //V8.1
-// ----- ÅÂ±¹·ÎÄÃ¶óÀÌÂ¡ -----
+// ----- 엂놹럎쓃뛳샌슡 -----
 
 7285#Linha_Sagrada#
 7286#Pimenta_Vermelha#
@@ -1836,7 +1834,7 @@
 7923#Krathong#
 685#Ramadan#
 
-// ----- 4·¹º§¹«±âÄù½ºÆ® -----
+// ----- 4랹몧릫뇢쓹붺욮 -----
 
 7289#Cristal_de_Peridoto#
 7290#Flogopita#
@@ -1850,7 +1848,7 @@
 
 
 //V8.2
-// ----- Áß±¹·ÎÄÃ¶óÀÌÂ¡ -----
+// ----- 쇟놹럎쓃뛳샌슡 -----
 7262#Leque_Fantasma#
 7263#Olho_de_Gato#
 7264#Areia_Seca#
@@ -1861,7 +1859,7 @@
 7269#Babador#
 7270#Mamadeira#
 
-// ----- ¸Ó¸®¾ÆÀÌÅÛ -----
+// ----- 룓뢮뻆샌엛 -----
 5057#Orelhas_de_Gato_Preto#
 5058#Chapéu_de_Gatinho_Dorminhoco#
 5059#Chapéu_de_Ursinho#
@@ -1901,10 +1899,10 @@
 5093#Chapéu_de_Freira#
 5094#Elmo_de_Orc_Herói#
 
-//-------ÀÚ¿ÍÀÌ----------
+//-------샚뿍샌----------
 681#Álbum_de_Fotos_de_Casamento#
 
-// --------- ºÎÈ°Àý ÀÌº¥Æ® ---------
+// --------- 뫎좰샽 샌몥욮 ---------
 
 574#Ovo#
 12019#Ovo_Sagrado#
@@ -2485,10 +2483,10 @@
 // -------------- Additional Skill Item --------------
 1771#Faca Envenenada#
 7419#Guia de Criação de Embriões#
-12114#Conversor Elemental#
-12115#Conversor Elemental#
-12116#Conversor Elemental#
-12117#Conversor Elemental#
+12114#Conversor Elemental Fogo#
+12115#Conversor Elemental Água#
+12116#Conversor Elemental Terra#
+12117#Conversor Elemental Vento#
 12118#Poção Anti-Fogo#
 12119#Poção Anti-Água#
 12120#Poção Anti-Terra#
@@ -2650,7 +2648,7 @@
 
 // --- Cash Item
 
-// ------------------ Ä³½¬ ¾ÆÀÌÅÛ -------------------
+// ------------------ 쒳붬 뻆샌엛 -------------------
 12202#Língua no Vapor#
 12203#Escorpião no Vapor#
 12204#Coquetel Sopro do Dragão#
@@ -3929,7 +3927,7 @@
 7773#Emblema de Guerra#
 
 // ------------- Ep. 12 ---------------
-// ------------- ÀüÀå º¸»ó ¾ÆÀÌÅÛ ---------------
+// ------------- 샼샥 몸믳 뻆샌엛 ---------------
 5518#Chifres Místicos de Bafomé#
 13036#Damascus Mercenária A#
 13037#Damascus Mercenária B#
@@ -3990,17 +3988,17 @@
 13859#Envelope de Ordem Oficial A#
 13860#Envelope de Ordem Oficial B#
 
-// ------------ ¸Þ¸ð¸®¾ó ´øÀü º¸»óÅÛ ----------------
+// ------------ 룞룰뢮뻳 듸샼 몸믳엛 ----------------
 13412#Lâmina Gêmea de Naght Sieger#
 13413#Lâmina Gêmea de Naght Sieger#
 1636#Cajado de Espinhos da Escuridão#
 1185#Terror Violeta#
 2542#Manteau de Chamas de Naght Sieger#
 
-//¸ð·ÎÅ© ÄÁÆ¼³ÙÅ» °¡µå ÀÎÁõ¼­
+//룰럎얩 쓁욼동얻 낡뗥 샎쇵벭
 7826#Papel da Guarda Continental#
 
-// ------------ ¸¶¿Õ ¸ð·ÎÅ© ----------------
+// ------------ 뢶뿕 룰럎얩 ----------------
 2536#Pele de Ventus#
 2537#Manteau de Diabolus#
 2728#Mão Maldita#
@@ -4013,7 +4011,7 @@
 2375#Armadura de Diabolus#
 2433#Botas de Diabolus#
 
-// ---------- ÇÒÂ¦ Å×½ºÆ® -----------
+// ---------- 쟒슦 엗붺욮 -----------
 2129#Bíblia de Exorcismo#
 2130#Escudo Cruzado#
 2131#Bíblia da Magia, Vol. 1#
@@ -4042,23 +4040,23 @@
 1572#Princípios da Magia#
 1573#Magia Antiga#
 
-// ------------- ÀüÀå ÈÖÀå ---------------
+// ------------- 샼샥 죖샥 ---------------
 7828#Emblema de Bravura#
 7829#Emblema de Valor#
 
-// -------- ºÀÀÎÀÇ ½ÅÀü ¾ÆÀÌÅÛ ------------
+// -------- 뫀샎샇 뷅샼 뻆샌엛 ------------
 6001#Essência de Fogo#
 6002#Medalhão do Apóstolo#
 6003#Pingente do Espírito#
 
-// ----------------- ¸¶·ÂÀÌ ±êµç ¹ÙÆ÷¸ÞÆ® ÀÎÇü -----------------
+// ----------------- 뢶럂샌 뇪뗧 맙웷룞욮 샎쟼 -----------------
 6004#Boneco de Bafomé Maldito#
 
-// ------------------- 12.1 Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
+// ------------------- 12.1 쓹붺욮 뻆샌엛 ----------------------
 7798#Fragmento da Escuridão#
 7799#Cristal da Escuridão#
 
-// ------------------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------------
+// ------------------- 샌몥욮 뻆샌엛 ------------------
 6000#Cinzas da Escuridão#
 //-- Ep12 Add-------------------------------------------
 7820#Pele do Imperador Morroc#
@@ -4066,12 +4064,12 @@
 7795#Álbum de Fotos de Mammi#
 7796#Autógrafo do Autor#
 7797#Bilhete do Autor#
-// ------------------ ÇÏ¾Ç Å×½ºÆ® (¼ÒÄÏ)----------------
+// ------------------ 쟏뻇 엗붺욮 (볒쓏)----------------
 1568#Livro das Ondas#
 1569#Livro da Mãe Terra#
 1570#Livro do Sol Ardente#
 1571#Livro do Golpe de Vento#
-1309#Machado Orc#
+1309#Machado dos Orcs#
 1114#Cimitarra#
 1538#Clava com Espetos#
 13030#Matadora de Dragão#
@@ -4106,7 +4104,7 @@
 2128#Spiritus Sancti#
 5353#Coroa do Deus-Sol#
 
-//----¸ð½ºÄÚºñ¾Æ 2Â÷---------- ·¯½Ã¾Æ ºÒ»ç½Å ÄÚ½¦ÀÌ ¾ÆÀÌÅÛ ---------------
+//----룰붺쓚뫱뻆 2싷---------- 랯뷃뻆 뫒믧뷅 쓚붦샌 뻆샌엛 ---------------
 7876#Chave Dourada#
 7877#Anel Vermelho#
 7878#Cabelo de Lusalka#
@@ -4128,7 +4126,7 @@
 7947#Anel de Prata do Dia dos Namorados#
 5817#Anel do Dia dos Namorados#
 //Ep13
-// ---------- ¿¡ÇÇ¼Òµå 13 Äù½ºÆ® ¾ÆÀÌÅÛ ------------
+// ---------- 뾡쟇볒뗥 13 쓹붺욮 뻆샌엛 ------------
 6027#Cristal Sangrento da Escuridão#
 6028#Pergaminho Selado#
 6029#Registro da Perseguição#
@@ -4142,7 +4140,7 @@
 6035#Caule Murcho#
 14596#Caixa do Tesouro de Pierre#
 
-// ----------- 20080521 ¿¡ÇÇ¼Òµå 13 Äù½ºÆ® ¾ÆÀÌÅÛ -----------
+// ----------- 20080521 뾡쟇볒뗥 13 쓹붺욮 뻆샌엛 -----------
 6036#Convite para Reunião#
 6037#Arquivo Estragado#
 6038#Arquivo Limpo#
@@ -4163,10 +4161,10 @@
 12321#Sanduíche do Deserto de Arunafeltz#
 12322#Chocolate Puro#
 
-// ----------- ¿¡ÇÇ¼Òµå 13 ppl ¾ÆÀÌÅÛ -----------
+// ----------- 뾡쟇볒뗥 13 ppl 뻆샌엛 -----------
 6051#Mineral Cinza#
 
-// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ ----------
+// ---------- 얩뢮냅 몸믳 뻆샌엛 ----------
 13416#Flamberge Gloriosa#
 13417#Florete Glorioso#
 13418#Vingadora Sagrada Gloriosa#
@@ -4200,7 +4198,7 @@
 2549#Sobrepeliz Gloriosa#
 2772#Anel Glorioso#
 
-// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ Ãß°¡ ¹æ¾î±¸ ----------
+// ---------- 얩뢮냅 몸믳 뻆샌엛 쏟낡 맦뻮놸 ----------
 2445#Sapatos Gloriosos Industrializados#
 2446#Sapatos Gloriosos Baratos#
 2395#Túnica Gloriosa Industrializada#
@@ -4208,17 +4206,17 @@
 2773#Anel Glorioso Industrializado#
 2774#Anel Glorioso Barato#
 
-// ----------- ¿¡ÇÇ¼Òµå 13 ³¬½Ã ------------
+// ----------- 뾡쟇볒뗥 13 뎬뷃 ------------
 2775#Isca#
 2550#Sobrepeliz de Pescador#
 
-// ----------- ¿¡ÇÇ¼Òµå 13 ÀâÅÛ ------------
+// ----------- 뾡쟇볒뗥 13 샢엛 ------------
 6020#Pêlo#
 6021#Chapéu Pontudo#
 6022#Pele Dura#
 6023#Chifre Místico#
 
-// --------- EP13 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ---------------
+// --------- EP13 뷅뇔 샥뫱 뻆샌엛 ---------------
 5398#Capacete de Crânio#
 5399#Chapéu de Mandrágora#
 2386#Armadura Camaleão#
@@ -4257,7 +4255,7 @@
 1925#Violoncelo#
 1926#Harpa de Nepenthes#
 
-// ----------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------
+// ----------- 샌몥욮 뻆샌엛 ------------
 2443#Botas de Pescador#
 2764#Vara de Pescar Pequena#
 6048#Mineral Não Identificado#
@@ -5256,7 +5254,6 @@
 //---------2011 halloween event
 5475#Sorriso_Maligno#
 18656#Poderoso_Chapéu_de_Bruxa#
-12490#Notação Mágica#
 
 //---------2011 november items
 
@@ -5643,9 +5640,6 @@
 4824#Espírito_do_Lutador_9#
 4825#Espírito_do_Lutador_10#
 4827#Pedra_de_Encantamento_6#
-4828#Pedra_de_Encantamento_7#
-4829#Pedra_de_Encantamento_8#
-4830#Pedra_de_Encantamento_9#
 4831#Pedra_de_Encantamento_10#
 4832#Pedra_da_Mira_Apurada_1#
 4837#Pedra_da_Mira_Apurada_6#
@@ -6194,9 +6188,9 @@
 18910#Orelhas Azuis de Fiera#
 18918#Balão de Polvo#
 
-4869#Vel. Ataque 2#
-4872#Vel. Ataque 3#
-4873#Vel. Ataque 4# 
+4869#Anti-Atraso 1#
+4872#Anti-Atraso 2#
+4873#Anti-Atraso 3# 
 4863#Crítico 1#
 4864#Crítico 2#
 4865#Crítico 3#
@@ -6215,11 +6209,16 @@
 5874#Diadema de Kriemhild#
 12790#Cartão de Troca de Nome#
 
+
 //--2014-02-04
+
 4624#Carta Tao Gunka Selada#
 5875#Diadema de Bruenhild#
+
 18897#Diadema do Cisne#
+
 19777#Estrelinha Lumma#
+
 4482#Carta_Egnigem_Cenia_Selada#
 
 //-------------------------------------------------------------------
@@ -6856,7 +6855,7 @@
 20703#Manteau TE#
 20704#Manteau Mágico TE#
 21006#Espada de Duas Mãos TE#
-2950#Anel Rúnico#
+2950#Anel de Rune#
 2951#Anel de Kvasir(Azul)#
 2952#Anel de Kvasir(Vermelho)#
 2953#Anel de Kvasir(Verde)#
@@ -6873,10 +6872,10 @@
 12881#Lágrima de Fada (Silêncio)#
 12882#Lágrima de Fada (Cegueira)#
 12888#Caixa de Suprimentos TE#
-15067#Manto Rúnico#
+15067#Manto de Rune#
 18755#Boina Alada#
 19585#Boina Alada Visual#
-20709#Manteua de Mana#
+20709#Manteau de Mana#
 22012#Botas de Mana#
 12399#Baú do Tesouro TE#
 //*****************************************************
@@ -7038,4 +7037,260 @@
 //------------Aplicar em 2015-02-23--------------------
 //*****************************************************
 22540#Runa Luxanima#
+//*****************************************************
+//------------Aplicar em 2016-03-08--------------------
+//*****************************************************
+20405#Cachecol do Eremes#
+//*****************************************************
+//------------Aplicar em 2016-03-29--------------------
+//*****************************************************
+20154#Folhas Outonais#
+19936#Gorro de Lã do Ioxi#
+//*****************************************************
+//------------Aplicar em 2016-04-05--------------------
+//*****************************************************
+20317#Fones de Ouvido Nekomimi#
+//*****************************************************
+//-------- Festival do Polvo----2016-04-12-------------
+//*****************************************************
+20468#Máscara da Gorila Chita#
+25169#Gelatina Pegajosa#
+//*****************************************************
+//------------ TOY FACTORY ----------------------------
+//*****************************************************
+12490#Letra de Música Natalina#
+2486#Passo das Sombras#
+2976#Lampião das Trevas#
+11563#Chá Quente#
+11564#Biscoito Melado#
+7640#Fivela de Borboleta#
+2977#Coração Partido#
+13442#Guarda-Chuva Antiquado#
+18848#Presilha de Rosas#
+19686#Tiara de Papai Noel#
+7642#Moeda Sangrenta#
+19687#Presilha Perfumada#
+7643#Carta Ensanguentada#
+7644#Rascunho de Carta#
+19701#Capuz Vermelho#
+2978#Coração Bondoso#
+18849#Laço da Celine#
+22534#Caixa de Ferramentas Fechada#
+16029#Cruz Nobre#
+2980#Luva dos Espíritos Malignos#
+22516#Gota das Trevas#
+6683#Flor Abandonada#
+4828#Pedra de Encantamento 7#
+4829#Pedra de Encantamento 8#
+4830#Pedra de Encantamento 9#
+4825#Espírito do Lutador 10#
+4881#Anti-Atraso 4#
+20006#Máscara do Chefão do Mal#
+//*****************************************************
+//------------Aplicar em 2016-05-03--------------------
+//*****************************************************
+20278#Cabeleira do Rei do Rock#
+20287#Cabeleira do Rei do Rock Saiadim#
+//*****************************************************
+//------------Aplicar em 2016-05-17--------------------
+//*****************************************************
+20407#Aura da Fúria#
+20132#Aura Fantasmagórica#
+//*****************************************************
+//------------Aplicar em 2016-05-31--------------------
+//*****************************************************
+20315#Visor Holográfico#
+//*****************************************************
+//------------Aplicar em 2016-06-07--------------------
+//*****************************************************
+20279#Apiutube#
+20280#Lápis do Ansioso#
+20295#Visor de Quartzo-Poring#
+20316#Elmo do Serafim#
+20470#Choco-elmo#
+//*****************************************************
+//------------Aplicar em 2016-06-14--------------------
+//*****************************************************
+20282#Boné do Mario Branco#
+20404#Benção Angelingal#
+//*****************************************************
+//------------Aplicar em 2016-07-05--------------------
+//*****************************************************
+20311#Fone da Ratishune Meeku#
+20319#Fone da Megarine Louca#
+16267#Cx de Enciclopédia de Combate [10]#
+//*****************************************************
+//------------Aplicar em 2016-07-12--------------------
+//*****************************************************
+19871#Ritmo do Momento#
+//*****************************************************
+//------------Aplicar em 2016-07-25--------------------
+//*****************************************************
+20318#Fones do Pikachiu#
+20202#Balão de Deviruchi#
+//*****************************************************
+//------------Aplicar em 2016-08-02--------------------
+//*****************************************************
+20218#Auréola dos Aesir#
+20209#Bolhas de Sabão#
+//*****************************************************
+//------------Aplicar em 2016-08-09--------------------
+//*****************************************************
+20324#Chapéu com Pombo#
+20240#Flocos de Neve#
+//*****************************************************
+//------------Aplicar em 2016-08-16--------------------
+//*****************************************************
+20219#Chapéu da Banda Sagrada#
+20220#Véu da Meia-Noite#
+//*****************************************************
+//-------------EQUIPAMENTOS DE MORA--------------------
+//*****************************************************
+1660#Cajado da Afeição Fortalecido#
+16018#Maça do Julgamento Fortalecida#
+2011#Cajado do Açoite de Ouro Fortalecido#
+2012#Cajado Aquático Fortalecido#
+2013#Cajado Vermelho Fortalecido#
+2014#Cajado Florestal Fortalecido#
+//*****************************************************
+//------------Aplicar em 2016-08-23--------------------
+//*****************************************************
+20217#Véu das Mil e Uma Noites#
+//*****************************************************
+//------------Aplicar em 2016-08-30--------------------
+//*****************************************************
+20286#Óculos da Persona#
+20033#Coroa de Dewata#
+//*****************************************************
+//------------Aplicar em 2016-09-06--------------------
+//*****************************************************
+20325#Aura de Byalan#
+20346#Chapéu de Batedor#
+//*****************************************************
+//------------Aplicar em 2016-09-13--------------------
+//*****************************************************
+20283#Boné Abençoado#
+//*****************************************************
+//-------------Episódio 14.3 The Final-----------------
+//*****************************************************
+22035#Sapatos Relaxantes do Herói#
+22036#Botas de Couro do Herói#
+22037#Botas de Ungoliant do Herói#
+2981#Anel do Herói#
+2988#Anel do Novo Oz#
+2989#Bracelete Floral de Igu#
+2990#Pingente da Harmonia#
+2991#Pingente do Caos#
+2992#Pingente da Voragem#
+15100#Peitoral Congelado#
+15101#Peitoral Tectônico#
+15093#Placas Heroicas#
+15094#Traje Heroico da Magia#
+15095#Traje Heroico do Julgamento#
+15096#Malha Heroica do Comércio#
+15097#Traje Heroico da Ocultação#
+15098#Vestes Heroicas da Precisão#
+18122#Arco Colossal#
+18123#Arco das Tempestades#
+4890#DEFM +1#
+4891#DEFM +3#
+4892#DEFM +5#
+4893#DEF +15#
+4894#ATQ +4%#
+4895#ATQ +5%#
+4896#ATQM +2%#
+4897#ATQM +3%#
+4898#ATQM +4%#
+4899#ATQM +5%#
+4900#HPM +5%#
+4908#Essência de Morroc FOR1#
+4909#Essência de Morroc FOR2#
+4910#Essência de Morroc FOR3#
+4911#Essência de Morroc INT1#
+4912#Essência de Morroc INT2#
+4901#DEFM +7#
+4913#Essência de Morroc INT3#
+4902#DEF +18#
+4914#Essência de Morroc AGI1#
+4903#DEF +21#
+4915#Essência de Morroc AGI2#
+4904#ATQ +6%#
+4916#Essência de Morroc AGI3#
+4905#ATQ +7%#
+4917#Essência de Morroc VIT1#
+4906#ATQM +6%#
+4918#Essência de Morroc VIT2#
+4907#ATQM +7%#
+4919#Essência de Morroc VIT3#
+4920#Essência de Morroc DES1#
+4921#Essência de Morroc DES2#
+4922#Essência de Morroc DES3#
+4923#Essência de Morroc SOR1#
+4924#Essência de Morroc SOR2#
+4925#Essência de Morroc SOR3#
+4559#Carta do Satan Morroc#
+4882#ATQ +1%#
+4883#ATQM +1%#
+6684#Marca do Herói#
+6713#Alma de Ahat#
+6714#Alma de Shenime#
+6715#Pedaço da Alma do Lorde das Trevas#
+6708#Cristal de Mana#
+6719#Dente de Marfim#
+22535#Pergaminho do Construtor#
+22536#Pergaminho da Construtora#
+22537#Prêmio do Herói#
+22566#Cristal Congelado#
+22567#Prêmio de Esquadrão#
+22568#Pergaminho de Invocação de Nidhogg#
+1934#Contrabaixo#
+1989#Fita Rítmica#
+1935#Ukulele do Novo Oz#
+1990#Microfone Floral de Igu#
+6686#Tijolo#
+6687#Corda#
+6688#Madeira#
+6689#Pele de Verme Flamejante#
+6690#Caule Delicioso#
+6691#Pluma Flamejante#
+6692#Memorando da Patrulha#
+6693#Pedra Abençoada#
+6694#Sangue de Monstro#
+6695#Dente de Golem#
+6696#Brasão Flamejante#
+6698#Machado de Madeira#
+6685#Recibo de Morroc#
+//*****************************************************
+//------------Aplicar em 2016-09-20--------------------
+//*****************************************************
+20284#Boina de Cerejeira#
+20285#Aura de Amatsu#
+//*****************************************************
+//------------Aplicar em 2016-09-27--------------------
+//*****************************************************
+20313#CD Labial#
+20314#Óculos da Gaga#
+//*****************************************************
+//------------Aplicar em 2016-10-04--------------------
+//*****************************************************
+20341#Mecha de Cabelo Preto#
+20350#Mecha de Cabelo Loiro#
+20351#Mecha de Cabelo Verde#
+20352#Mecha de Cabelo Roxo#
+20353#Mecha de Cabelo Vermelho#
+20354#Mecha de Cabelo Castanho#
+20355#Mecha de Cabelo Azul#
+20356#Mecha de Cabelo Branco#
+//*****************************************************
+//------------Aplicar em 2016-10-11--------------------
+//*****************************************************
+20340#Rabo de Cavalo Preto#
+20357#Rabo de Cavalo Loiro#
+20358#Rabo de Cavalo Verde#
+20359#Rabo de Cavalo Roxo#
+20360#Rabo de Cavalo Vermelho#
+20361#Rabo de Cavalo Castanho#
+20362#Rabo de Cavalo Azul#
+20363#Rabo de Cavalo Branco#
+20344#Balão Feliz#
 //file end

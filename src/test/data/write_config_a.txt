@@ -1,0 +1,13 @@
+parent_child_unchanged 2
+parent_child_changed 2
+
+# Test: Changed block values in !include files should not be updated.
+block b {
+  test 2
+}
+
+# Test: Value defined in !include and not changed should not be inserted in parent.
+child_unchanged 1
+
+# Test: Value defined in !include and changed should be inserted in parent.
+child_changed 1
