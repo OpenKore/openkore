@@ -530,49 +530,44 @@ sub loadByHandle {
 }
 
 ##
-# void Settings::loadAll(regexp, [Function progressHandler])
+# void Settings::loadByRegexp(regexp, [Function progressHandler])
 #
-# (Re)loads all registered data files whose name matches the given regular expression.
-# This method follows the same contract as
-# Settings::loadByHandle(), so see that method for parameter descriptions
-# and exceptions.
-sub loadByRegexp {	# FIXME: only hook those that match the regexp?
-	my ($regexp, $progressHandler) = @_;
-	
-	Plugins::callHook('preloadfiles', {files => \@{$files->getItems}});
-
-	my $i = 1;
-	foreach my $object (@{$files->getItems()}) {
-		Plugins::callHook('loadfiles', {files => \@{$files->getItems}, current => $i});
-		if ($object->{name} =~ /$regexp/) {
-			loadByHandle($object->{index}, $progressHandler);
-		}
-		$i++;
-	}
-
-	Plugins::callHook('postloadfiles', {files => \@{$files->getItems}});
+# Calls 'loadFiles' with the list of registered data files whose name matches the given regular expression.
+sub loadByRegexp {
+    my ($regexp, $progressHandler) = @_;
+    loadFiles([grep { $_->{name} =~ /$regexp/ } @{$files->getItems}], $progressHandler);
 }
 
 ##
 # void Settings::loadAll([Function progressHandler])
 #
-# (Re)loads all registered data files. This method follows the same contract as
+# Calls 'loadFiles' with the list of all registered data files.
+sub loadAll {
+    my ($progressHandler) = @_;
+    loadFiles($files->getItems, $progressHandler);
+}
+
+##
+# void Settings::loadFiles(files, [Function progressHandler])
+#
+# (Re)loads all registered data files given in 'files'.
+# Use this method to load a specific list of files.
+# This method follows the same contract as
 # Settings::loadByHandle(), so see that method for parameter descriptions
 # and exceptions.
-sub loadAll {
-	my ($progressHandler) = @_;
-	
-	Plugins::callHook('preloadfiles', {files => \@{$files->getItems}});
-	
-	my $i = 1;
-	foreach my $object (@{$files->getItems()}) {
-		Plugins::callHook('loadfiles', {files => \@{$files->getItems}, current => $i});
-		loadByHandle($object->{index}, $progressHandler);
-		return if $Globals::quit;
-		$i++;
-	}
-	
-	Plugins::callHook('postloadfiles', {files => \@{$files->getItems}});
+sub loadFiles {
+    my ($files, $progressHandler) = @_;
+
+    Plugins::callHook('preloadfiles', {files => $files});
+
+    my $i = 1;
+    foreach my $object (@$files) {
+        Plugins::callHook('loadfiles', {files => $files, current => $i});
+        loadByHandle($object->{index}, $progressHandler);
+        $i++;
+    }
+
+    Plugins::callHook('postloadfiles', {files => $files});
 }
 
 ##
