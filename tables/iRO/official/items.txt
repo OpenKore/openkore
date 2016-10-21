@@ -8719,3 +8719,16 @@
 20342#Costume_Twin_Ponytail_Black#
 20450#Costume_Gram_Peony#
 17739#Spooktober_Costume_Box#
+
+
+20398#Costume_Niffleheim_Bunny_Hat#
+20451#Costume_Night_Sky_of_Memory#
+31119#Costume_Blue_Magician_Hat#
+31120#Costume_Vampire_Familiar#
+31121#Costume_Bat_Stole#
+31122#Costume_Bloody_Vicious_Stop_Bandage#
+31123#Costume_£Çhostring_Tall_Hat#
+19915#Costume_Little_Devil_S_Horn#
+31118#Costume_Assassin_Skull_Mask#
+31117#Costume_Hoplite_Helmet#
+17747#Creepy_Costume_Box#
