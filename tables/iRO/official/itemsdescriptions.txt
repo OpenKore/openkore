@@ -78333,3 +78333,82 @@ Costume: Gram Peony
 
 Weight : ^7777771^000000
 #
+
+
+20398#
+A hat from famous Healer of Niflheim, Hylozoist.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20451#
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31119#
+Talented Wizard's magic hat. It looks weird, but works just fine.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31120#
+A costume makes feel like being a Vampire.
+One of most popular halloween item.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31121#
+Bat wing-ed stole. Don't even think to fly with this wings.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31122#
+Tight bandages for wounds of the eyes. It seems that they were already used.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31123#
+Tall hat with flying Ghostring. Cute shabby tall hat.
+Wearing this hat makes feel horrifying. Well¡¦just feeling.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19915#
+Young and growing devil's horn.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31118#
+A mask worn by a group of eastern assassins. It's shaped like a skull to notify targets of their imminent death.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle,Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31117#
+A Helm used in ancient western country that was famous for close formation and tight defense.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper,Middle,Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+17747#
+^ff0000Cannot trade with other accounts.^000000
+Halloween Costume 2016.
+Opening this randomly give you one of the item.
+Weight : ^7777771^000000
+#
