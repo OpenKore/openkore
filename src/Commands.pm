@@ -4705,7 +4705,8 @@ sub cmdStorage_gettocart {
 	}
 	
 	if (!$char->cartActive) {
-		error TF("Cart wasn't found.\n");
+		error T("Error in function 'storage_gettocart' (Cart Management)\n" .
+			"You do not have a cart.\n");
 		return;
 	}
 	$messageSender->sendStorageGetToCart($item->{index}, $amount);
