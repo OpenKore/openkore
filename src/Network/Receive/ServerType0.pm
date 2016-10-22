@@ -456,7 +456,7 @@ sub new {
 		'043E' => ['skill_post_delaylist'],
 		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]],
 		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]],
-		'0441' => ['skill_delete', 'v', [qw(ID)]], #TODO: PACKET_ZC_SKILLINFO_DELETE
+		'0441' => ['skill_delete', 'v', [qw(ID)]],
 		'0442' => ['sage_autospell', 'x2 V a*', [qw(why autoshadowspell_list)]],
 		'0444' => ['cash_item_list', 'v V3 c v', [qw(len cash_point price discount_price type item_id)]], #TODO: PACKET_ZC_SIMPLE_CASH_POINT_ITEMLIST
 		'0446' => ['minimap_indicator', 'a4 v4', [qw(npcID x y effect qtype)]],
@@ -7409,8 +7409,13 @@ sub millenium_shield {
 }
 
 sub skill_delete {
-	my ($self, $args) = @_;
-	my $skill_name = (new Skill(idn => $args->{ID}))->getName;
+	my ( $self, $args ) = @_;
+	my $skill = new Skill( idn => $args->{ID} );
+	return if !$skill;
+	return if !$char->{skills}->{ $skill->getHandle };
+
+	delete $char->{skills}->{ $skill->getHandle };
+	binRemove( \@skillsID, $skill->getHandle );
 }
 
 sub skill_post_delaylist {
