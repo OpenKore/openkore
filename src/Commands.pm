@@ -4704,7 +4704,7 @@ sub cmdStorage_gettocart {
 		$amount = $item->{amount};
 	}
 	
-	if ($char->statusesString !~ /.*?Cart.*?/ig) {
+	if (!$char->cartActive) {
 		error TF("Cart wasn't found.\n");
 		return;
 	}
