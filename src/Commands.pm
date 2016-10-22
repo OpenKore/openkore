@@ -4703,6 +4703,12 @@ sub cmdStorage_gettocart {
 	if (!defined($amount) || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
+	
+	if (!$char->cartActive) {
+		error T("Error in function 'storage_gettocart' (Cart Management)\n" .
+			"You do not have a cart.\n");
+		return;
+	}
 	$messageSender->sendStorageGetToCart($item->{index}, $amount);
 }
 
