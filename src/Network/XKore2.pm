@@ -67,8 +67,7 @@ sub start {
 	};
 	if ( my $e = caught( 'SocketException' ) ) {
 		die "Unable to start the X-Kore proxy ($publicIP:$port): $@\n"
-			. "You can only run one X-Kore session at the same time.\n"
-			. "And make sure no other servers are running on port $port.";
+			. "Make sure no other servers are running on port $port.";
 	} else {
 		die $@;
 	}
