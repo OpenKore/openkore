@@ -78408,7 +78408,15 @@ Job : ^777777All^000000
 #
 17747#
 ^ff0000Cannot trade with other accounts.^000000
-Halloween Costume 2016.
-Opening this randomly give you one of the item.
+When opened gives one of the following:
+Costume Niffleheim Bunny Hat
+Costume Night Sky of Memory
+Costume Blue Magician
+Costume Vampire Familiar
+Costume Bat Stole
+Costume Bloody Vicious Stop Bandage
+Costume Little Devil S Horn
+Costume Assassin Skull Mask
+Costume Costume Hoplite Helmet
 Weight : ^7777771^000000
 #
