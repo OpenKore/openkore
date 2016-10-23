@@ -398,12 +398,18 @@ sub manage_event_callbacks {
 			debug "[eventMacro] Event only condition will now be checked.\n", "eventMacro", 3;
 			if ($automacro->check_event_only_condition($event_name, $args)) {
 				debug "[eventMacro] Event only condition is fulfilled.\n", "eventMacro", 3;
-				if (!defined $event_only_automacro_call_priority || $event_only_automacro_call_priority >= $automacro->get_parameter('priority')) {
-					debug "[eventMacro] Automacro '".$automacro->get_name()."' was added to the top of running queue, if no higher priority event only automacro triggers this one will be activated.\n", "eventMacro", 3;
+				if (!defined $event_only_automacro_call_priority) {
+					debug "[eventMacro] Automacro '".$automacro->get_name."' of priority '".$automacro->get_parameter('priority')."' was added to the top of queue.\n", "eventMacro", 3;
 					$event_only_automacro_call_index = $automacro_index;
 					$event_only_automacro_call_priority = $automacro->get_parameter('priority');
+				
+				} elsif ($event_only_automacro_call_priority >= $automacro->get_parameter('priority')) {
+					debug "[eventMacro] Automacro '".$automacro->get_name."' of priority '".$automacro->get_parameter('priority')."' was added to the top of queue and took place of automacro '".$self->{Automacro_List}->get($event_only_automacro_call_index)->get_name."' which has priority '".$event_only_automacro_call_priority."'.\n", "eventMacro", 3;
+					$event_only_automacro_call_index = $automacro_index;
+					$event_only_automacro_call_priority = $automacro->get_parameter('priority');
+					
 				} else {
-					debug "[eventMacro] Automacro '".$automacro->get_name()."' was not added to running queue because there already is a higher priority event only automacro in it.\n", "eventMacro", 3;
+					debug "[eventMacro] Automacro '".$automacro->get_name()."' was not added to running queue because there already is a higher priority event only automacro in it (automacro '".$self->{Automacro_List}->get($event_only_automacro_call_index)->get_name."' which has priority '".$event_only_automacro_call_priority."').\n", "eventMacro", 3;
 				}
 			} else {
 				debug "[eventMacro] Event only condition was not fulfilled.\n", "eventMacro", 3;
