@@ -5628,11 +5628,9 @@ msgstr "%s 改变鞋子为: %s\n"
 #, perl-format
 msgid ""
 "Unable to start the X-Kore server.\n"
-"You can only run one X-Kore session at the same time.\n"
-"And make sure no other servers are running on port %s.\n"
+"Make sure no other servers are running on port %s.\n"
 msgstr ""
 "无法开始 X-Kore 服务器.\n"
-"你只能运行一个 X-Kore .\n"
 "和端口被占用 %s.\n"
 
 #: ../Network/XKore.pm:67 ../Network/XKoreProxy.pm:82
