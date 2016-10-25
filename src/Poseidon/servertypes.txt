@@ -9,30 +9,12 @@ decrypt_mid_keys 0x616D3B2B 0x37F90801 0x3DCE5588
 charBlockSize 124
 charListPacket 0x82d
 maploginPacket 088F
-[bRO_2016-10-11a]
+[bRO_2016-10-25a]
 decrypt_mid 1
-decrypt_mid_keys 0x42651D48 0x30E060E0 0x16201AE0 # K M A
+decrypt_mid_keys 0x1A04493F 0x7F3B234C 0x52441138
 charBlockSize 124
 charListPacket 0x82d
-maploginPacket 022D
-[bRO_2012-09-19a]
-decrypt_mid 1
-decrypt_mid_keys 0x26977a6f 0x374e3b8e 0x4dba6c1e # K M A
-charBlockSize 116
-charListPacket 0x82d
-maploginPacket 022D
-[bRO_2012-09-26a]
-decrypt_mid 1
-decrypt_mid_keys 0x146f5964 0x76792070 0x1fa30c53 # K M A
-charBlockSize 116
-charListPacket 0x82d
-maploginPacket 088E
-[bRO_2012-10-03a]
-decrypt_mid 1
-decrypt_mid_keys 0x5c18014b 0x503e1282 0x6e6b29c1 # K M A
-charBlockSize 116
-charListPacket 0x82d
-maploginPacket 0366
+maploginPacket 0951
 [tRO_2013-07-09a]
 decrypt_mid 1
 decrypt_mid_keys 0x6441767a 0x71020102 0x48c21f02 # K A M
