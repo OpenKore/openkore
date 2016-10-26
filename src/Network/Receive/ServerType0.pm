@@ -2614,16 +2614,6 @@ sub rank_points {
 	message "Unknown rank type %s.\n", $args->{type} if $args->{type} > 2;
 }
 
-sub blacksmith_points {
-	my ($self, $args) = @_;
-	message TF("[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
-}
-
-sub alchemist_point {
-	my ($self, $args) = @_;
-	message TF("[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
-}
-
 sub repair_list {
 	my ($self, $args) = @_;
 	my $msg = T("--------Repair List--------\n");
@@ -2642,93 +2632,6 @@ sub repair_list {
 	}
 	$msg .= "---------------------------\n";
 	message $msg, "list";
-}
-
-sub repair_result {
-	my ($self, $args) = @_;
-	undef $repairList;
-	my $itemName = itemNameSimple($args->{nameID});
-	if ($args->{flag}) {
-		message TF("Repair of %s failed.\n", $itemName);
-	} else {
-		message TF("Successfully repaired %s.\n", $itemName);
-	}
-}
-
-sub resurrection {
-	my ($self, $args) = @_;
-
-	my $targetID = $args->{targetID};
-	my $player = $playersList->getByID($targetID);
-	my $type = $args->{type};
-
-	if ($targetID eq $accountID) {
-		message T("You have been resurrected\n"), "info";
-		undef $char->{'dead'};
-		undef $char->{'dead_time'};
-		$char->{'resurrected'} = 1;
-
-	} else {
-		if ($player) {
-			undef $player->{'dead'};
-			$player->{deltaHp} = 0;
-		}
-		message TF("%s has been resurrected\n", getActorName($targetID)), "info";
-	}
-}
-
-sub secure_login_key {
-	my ($self, $args) = @_;
-	$secureLoginKey = $args->{secure_key};
-	debug sprintf("Secure login key: %s\n", getHex($args->{secure_key})), 'connection';
-}
-
-sub self_chat {
-	my ($self, $args) = @_;
-	my ($message, $chatMsgUser, $chatMsg); # Type: String
-
-	$message = bytesToString($args->{message});
-
-	($chatMsgUser, $chatMsg) = $message =~ /([\s\S]*?) : ([\s\S]*)/;
-	# Note: $chatMsgUser/Msg may be undefined. This is the case on
-	# eAthena servers: it uses this packet for non-chat server messages.
-
-	if (defined $chatMsgUser) {
-		stripLanguageCode(\$chatMsg);
-		$message = $chatMsgUser . " : " . $chatMsg;
-	}
-
-	chatLog("c", "$message\n") if ($config{'logChat'});
-	message "$message\n", "selfchat";
-
-	Plugins::callHook('packet_selfChat', {
-		user => $chatMsgUser,
-		msg => $chatMsg
-	});
-}
-
-sub sync_request {
-	my ($self, $args) = @_;
-
-	# 0187 - long ID
-	# I'm not sure what this is. In inRO this seems to have something
-	# to do with logging into the game server, while on
-	# oRO it has got something to do with the sync packet.
-	if ($masterServer->{serverType} == 1) {
-		my $ID = $args->{ID};
-		if ($ID == $accountID) {
-			$timeout{ai_sync}{time} = time;
-			$messageSender->sendSync() unless ($net->clientAlive);
-			debug "Sync packet requested\n", "connection";
-		} else {
-			warning T("Sync packet requested for wrong ID\n");
-		}
-	}
-}
-
-sub taekwon_rank {
-	my ($self, $args) = @_;
-	message T("TaeKwon Mission Rank : ".$args->{rank}."\n"), "info";
 }
 
 sub gospel_buff_aligned {
@@ -2757,20 +2660,6 @@ sub gospel_buff_aligned {
      		message T("Your Accuracy and Flee Rate will stay increased for the next minute.\n"), "info";
 	} else {
      		#message T("Unknown buff from Gospel: " . $status . "\n"), "info";
-	}
-}
-
-sub no_teleport {
-	my ($self, $args) = @_;
-	my $fail = $args->{fail};
-
-	if ($fail == 0) {
-		error T("Unavailable Area To Teleport\n");
-		AI::clear(qw/teleport/);
-	} elsif ($fail == 1) {
-		error T("Unavailable Area To Memo\n");
-	} else {
-		error TF("Unavailable Area To Teleport (fail code %s)\n", $fail);
 	}
 }
 
@@ -2814,44 +2703,6 @@ sub map_property2 {
 			pvp => $pvp # 1 PvP, 2 GvG, 3 Battleground
 		});
 	}
-}
-
-sub pvp_rank {
-	my ($self, $args) = @_;
-
-	# 9A 01 - 14 bytes long
-	my $ID = $args->{ID};
-	my $rank = $args->{rank};
-	my $num = $args->{num};;
-	if ($rank != $ai_v{temp}{pvp_rank} ||
-	    $num != $ai_v{temp}{pvp_num}) {
-		$ai_v{temp}{pvp_rank} = $rank;
-		$ai_v{temp}{pvp_num} = $num;
-		if ($ai_v{temp}{pvp}) {
-			message TF("Your PvP rank is: %s/%s\n", $rank, $num), "map_event";
-		}
-	}
-}
-
-sub sense_result {
-	my ($self, $args) = @_;
-	# nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead
-	my @race_lut = qw(Formless Undead Beast Plant Insect Fish Demon Demi-Human Angel Dragon Boss Non-Boss);
-	my @size_lut = qw(Small Medium Large);
-	message TF("=====================Sense========================\n" .
-			"Monster: %-16s Level: %-12s\n" .
-			"Size:    %-16s Race:  %-12s\n" .
-			"Def:     %-16s MDef:  %-12s\n" .
-			"Element: %-16s HP:    %-12s\n" .
-			"=================Damage Modifiers=================\n" .
-			"Ice: %-3s     Earth: %-3s  Fire: %-3s  Wind: %-3s\n" .
-			"Poison: %-3s  Holy: %-3s   Dark: %-3s  Spirit: %-3s\n" .
-			"Undead: %-3s\n" .
-			"==================================================\n",
-			$monsters_lut{$args->{nameID}}, $args->{level}, $size_lut[$args->{size}], $race_lut[$args->{race}],
-			$args->{def}, $args->{mdef}, $elements_lut{$args->{element}}, $args->{hp},
-			$args->{ice}, $args->{earth}, $args->{fire}, $args->{wind}, $args->{poison}, $args->{holy}, $args->{dark},
-			$args->{spirit}, $args->{undead}), "list";
 }
 
 # Your shop has sold an item -- one packet sent per item sold.
