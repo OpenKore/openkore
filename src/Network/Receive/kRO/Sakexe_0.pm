@@ -2300,48 +2300,6 @@ sub skill_use {
 	}
 }
 
-sub skill_use_failed {
-	my ($self, $args) = @_;
-
-	# skill fail/delay
-	my $skillID = $args->{skillID};
-	my $btype = $args->{btype};
-	my $fail = $args->{fail};
-	my $type = $args->{type};
-
-	my %failtype = (
-		0 => T('Basic'),
-		1 => T('Insufficient SP'),
-		2 => T('Insufficient HP'),
-		3 => T('No Memo'),
-		4 => T('Mid-Delay'),
-		5 => T('No Zeny'),
-		6 => T('Wrong Weapon Type'),
-		7 => T('Red Gem Needed'),
-		8 => T('Blue Gem Needed'),
-		9 => TF('%s Overweight', '90%'),
-		10 => T('Requirement'),
-		13 => T('Need this within the water'),
-		19 => T('Full Amulet'),
-		29 => TF('Must have at least %s of base XP', '1%'),
-		83 => T('Location not allowed to create chatroom/market')
-		);
-
-	my $errorMessage;
-	if (exists $failtype{$type}) {
-		$errorMessage = $failtype{$type};
-	} else {
-		$errorMessage = 'Unknown error';
-	}
-
-	warning TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill";
-	Plugins::callHook('packet_skillfail', {
-		skillID     => $skillID,
-		failType    => $type,
-		failMessage => $errorMessage
-	});
-}
-
 sub skill_use_location {
 	my ($self, $args) = @_;
 
@@ -2583,55 +2541,6 @@ sub stats_added {
 		type	=> $args->{type},
 		val	=> $args->{val},
 	});
-}
-
-sub stats_info {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-	$char->{points_free} = $args->{points_free};
-	$char->{str} = $args->{str};
-	$char->{points_str} = $args->{points_str};
-	$char->{agi} = $args->{agi};
-	$char->{points_agi} = $args->{points_agi};
-	$char->{vit} = $args->{vit};
-	$char->{points_vit} = $args->{points_vit};
-	$char->{int} = $args->{int};
-	$char->{points_int} = $args->{points_int};
-	$char->{dex} = $args->{dex};
-	$char->{points_dex} = $args->{points_dex};
-	$char->{luk} = $args->{luk};
-	$char->{points_luk} = $args->{points_luk};
-	$char->{attack} = $args->{attack};
-	$char->{attack_bonus} = $args->{attack_bonus};
-	$char->{attack_magic_min} = $args->{attack_magic_min};
-	$char->{attack_magic_max} = $args->{attack_magic_max};
-	$char->{def} = $args->{def};
-	$char->{def_bonus} = $args->{def_bonus};
-	$char->{def_magic} = $args->{def_magic};
-	$char->{def_magic_bonus} = $args->{def_magic_bonus};
-	$char->{hit} = $args->{hit};
-	$char->{flee} = $args->{flee};
-	$char->{flee_bonus} = $args->{flee_bonus};
-	$char->{critical} = $args->{critical};
-	debug	"Strength: $char->{str} #$char->{points_str}\n"
-		."Agility: $char->{agi} #$char->{points_agi}\n"
-		."Vitality: $char->{vit} #$char->{points_vit}\n"
-		."Intelligence: $char->{int} #$char->{points_int}\n"
-		."Dexterity: $char->{dex} #$char->{points_dex}\n"
-		."Luck: $char->{luk} #$char->{points_luk}\n"
-		."Attack: $char->{attack}\n"
-		."Attack Bonus: $char->{attack_bonus}\n"
-		."Magic Attack Min: $char->{attack_magic_min}\n"
-		."Magic Attack Max: $char->{attack_magic_max}\n"
-		."Defense: $char->{def}\n"
-		."Defense Bonus: $char->{def_bonus}\n"
-		."Magic Defense: $char->{def_magic}\n"
-		."Magic Defense Bonus: $char->{def_magic_bonus}\n"
-		."Hit: $char->{hit}\n"
-		."Flee: $char->{flee}\n"
-		."Flee Bonus: $char->{flee_bonus}\n"
-		."Critical: $char->{critical}\n"
-		."Status Points: $char->{points_free}\n", "parseMsg";
 }
 
 sub stat_info {
