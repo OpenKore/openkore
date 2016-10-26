@@ -3738,4 +3738,173 @@ sub hat_effect {
 	}
 }
 
+sub map_changed {
+	my ($self, $args) = @_;
+	$net->setState(4);
+
+	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
+	my ($map) = $args->{map} =~ /([\s\S]*)\./;
+	my $map_noinstance;
+	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
+
+	checkAllowedMap($map_noinstance);
+	if (!$field || $map ne $field->name()) {
+		eval {
+			$field = new Field(name => $map);
+		};
+		if (my $e = caught('FileNotFoundException', 'IOException')) {
+			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
+			undef $field;
+		} elsif ($@) {
+			die $@;
+		}
+	}
+
+	my %coords = (
+		x => $args->{x},
+		y => $args->{y}
+	);
+	$char->{pos} = {%coords};
+	$char->{pos_to} = {%coords};
+
+	undef $conState_tries;
+	for (my $i = 0; $i < @ai_seq; $i++) {
+		ai_setMapChanged($i);
+	}
+	AI::SlaveManager::setMapChanged ();
+	$ai_v{portalTrace_mapChanged} = time;
+
+	$map_ip = makeIP($args->{IP});
+	$map_port = $args->{port};
+	message(swrite(
+		"---------Map  Info----------", [],
+		"MAP Name: @<<<<<<<<<<<<<<<<<<",
+		[$args->{map}],
+		"MAP IP: @<<<<<<<<<<<<<<<<<<",
+		[$map_ip],
+		"MAP Port: @<<<<<<<<<<<<<<<<<<",
+		[$map_port],
+		"-------------------------------", []),
+		"connection");
+
+	message T("Closing connection to Map Server\n"), "connection";
+	$net->serverDisconnect unless ($net->version == 1);
+
+	# Reset item and skill times. The effect of items (like aspd potions)
+	# and skills (like Twohand Quicken) disappears when we change map server.
+	# NOTE: with the newer servers, this isn't true anymore
+	my $i = 0;
+	while (exists $config{"useSelf_item_$i"}) {
+		if (!$config{"useSelf_item_$i"}) {
+			$i++;
+			next;
+		}
+
+		$ai_v{"useSelf_item_$i"."_time"} = 0;
+		$i++;
+	}
+	$i = 0;
+	while (exists $config{"useSelf_skill_$i"}) {
+		if (!$config{"useSelf_skill_$i"}) {
+			$i++;
+			next;
+		}
+
+		$ai_v{"useSelf_skill_$i"."_time"} = 0;
+		$i++;
+	}
+	$i = 0;
+	while (exists $config{"doCommand_$i"}) {
+		if (!$config{"doCommand_$i"}) {
+			$i++;
+			next;
+		}
+
+		$ai_v{"doCommand_$i"."_time"} = 0;
+		$i++;
+	}
+	if ($char) {
+		delete $char->{statuses};
+		$char->{spirits} = 0;
+		delete $char->{permitSkill};
+		delete $char->{encoreSkill};
+	}
+	$cart{exists} = 0;
+	undef %guild;
+
+	Plugins::callHook('Network::Receive::map_changed', {
+		oldMap => $oldMap,
+	});
+	$timeout{ai}{time} = time;
+}
+
+sub memo_success {
+	my ($self, $args) = @_;
+	if ($args->{fail}) {
+		warning T("Memo Failed\n");
+	} else {
+		message T("Memo Succeeded\n"), "success";
+	}
+}
+
+sub mercenary_off {
+	$slavesList->removeByID($char->{mercenary}{ID});
+	delete $char->{slaves}{$char->{mercenary}{ID}};
+	delete $char->{mercenary};
+}
+
+# not only for mercenaries, this is an all purpose packet !
+sub message_string {
+	my ($self, $args) = @_;
+
+	if ($msgTable[++$args->{msg_id}]) { # show message from msgstringtable.txt
+		warning "$msgTable[$args->{msg_id}]\n";
+		$self->mercenary_off() if ($args->{msg_id} >= 1267 && $args->{msg_id} <= 1270);
+	} else {
+		warning TF("Unknown message_string: %s. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{msg_id});
+	}
+}
+
+sub monster_ranged_attack {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	my $range = $args->{range};
+
+	my %coords1;
+	$coords1{x} = $args->{sourceX};
+	$coords1{y} = $args->{sourceY};
+	my %coords2;
+	$coords2{x} = $args->{targetX};
+	$coords2{y} = $args->{targetY};
+
+	my $monster = $monstersList->getByID($ID);
+	$monster->{pos_attack_info} = {%coords1} if ($monster);
+	$char->{pos} = {%coords2};
+	$char->{pos_to} = {%coords2};
+	debug "Received attack location - monster: $coords1{x},$coords1{y} - " .
+		"you: $coords2{x},$coords2{y}\n", "parseMsg_move", 2;
+}
+
+sub mvp_item {
+	my ($self, $args) = @_;
+	my $display = itemNameSimple($args->{itemID});
+	message TF("Get MVP item %s\n", $display);
+	chatLog("k", TF("Get MVP item %s\n", $display));
+}
+
+sub mvp_other {
+	my ($self, $args) = @_;
+	my $display = Actor::get($args->{ID});
+	message TF("%s become MVP!\n", $display);
+	chatLog("k", TF("%s become MVP!\n", $display));
+}
+
+sub mvp_you {
+	my ($self, $args) = @_;
+	my $msg = TF("Congratulations, you are the MVP! Your reward is %s exp!\n", $args->{expAmount});
+	message $msg;
+	chatLog("k", $msg);
+}
+
 1;
