@@ -4562,4 +4562,148 @@ sub sense_result {
 			$args->{spirit}, $args->{undead}), "list";
 }
 
+# TODO:
+# Add 'dispose' support
+sub skill_cast {
+	my ($self, $args) = @_;
+
+	return unless changeToInGameState();
+	my $sourceID = $args->{sourceID};
+	my $targetID = $args->{targetID};
+	my $x = $args->{x};
+	my $y = $args->{y};
+	my $skillID = $args->{skillID};
+	my $type = $args->{type};
+	my $wait = $args->{wait};
+	my ($dist, %coords);
+
+	# Resolve source and target
+	my $source = Actor::get($sourceID);
+	my $target = Actor::get($targetID);
+	my $verb = $source->verb('are casting', 'is casting');
+
+	Misc::checkValidity("skill_cast part 1");
+
+	my $skill = new Skill(idn => $skillID);
+	$source->{casting} = {
+		skill => $skill,
+		target => $target,
+		x => $x,
+		y => $y,
+		startTime => time,
+		castTime => $wait
+	};
+	# Since we may have a circular reference, weaken this reference
+	# to prevent memory leaks.
+	Scalar::Util::weaken($source->{casting}{target});
+
+	my $targetString;
+	if ($x != 0 || $y != 0) {
+		# If $dist is positive we are in range of the attack?
+		$coords{x} = $x;
+		$coords{y} = $y;
+		$dist = judgeSkillArea($skillID) - distance($char->{pos_to}, \%coords);
+			$targetString = "location ($x, $y)";
+		undef $targetID;
+	} else {
+		$targetString = $target->nameString($source);
+	}
+
+	# Perform trigger actions
+	if ($sourceID eq $accountID) {
+		$char->{time_cast} = time;
+		$char->{time_cast_wait} = $wait / 1000;
+		delete $char->{cast_cancelled};
+	}
+	countCastOn($sourceID, $targetID, $skillID, $x, $y);
+
+	Misc::checkValidity("skill_cast part 2");
+
+	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
+	my $disp = skillCast_string($source, $target, $x, $y, $skill->getName(), $wait);
+	message $disp, $domain, 1;
+
+	Plugins::callHook('is_casting', {
+		sourceID => $sourceID,
+		targetID => $targetID,
+		source => $source,
+		target => $target,
+		skillID => $skillID,
+		skill => $skill,
+		time => $source->{casting}{time},
+		castTime => $wait,
+		x => $x,
+		y => $y
+	});
+
+	Misc::checkValidity("skill_cast part 3");
+
+	# Skill Cancel
+	my $monster = $monstersList->getByID($sourceID);
+	my $control;
+	$control = mon_control($monster->name,$monster->{nameID}) if ($monster);
+	if ($AI == AI::AUTO && $control->{skillcancel_auto}) {
+		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
+			message TF("Monster Skill - switch Target to : %s (%d)\n", $monster->name, $monster->{binID});
+			$char->sendAttackStop;
+			AI::dequeue;
+			attack($sourceID);
+		}
+
+		# Skill area casting -> running to monster's back
+		my $ID;
+		if ($dist > 0 && AI::action eq "attack" && ($ID = AI::args->{ID}) && (my $monster2 = $monstersList->getByID($ID))) {
+			# Calculate X axis
+			if ($char->{pos_to}{x} - $monster2->{pos_to}{x} < 0) {
+				$coords{x} = $monster2->{pos_to}{x} + 3;
+			} else {
+				$coords{x} = $monster2->{pos_to}{x} - 3;
+			}
+			# Calculate Y axis
+			if ($char->{pos_to}{y} - $monster2->{pos_to}{y} < 0) {
+				$coords{y} = $monster2->{pos_to}{y} + 3;
+			} else {
+				$coords{y} = $monster2->{pos_to}{y} - 3;
+			}
+
+			my (%vec, %pos);
+			getVector(\%vec, \%coords, $char->{pos_to});
+			moveAlongVector(\%pos, $char->{pos_to}, \%vec, distance($char->{pos_to}, \%coords));
+			ai_route($field->baseName, $pos{x}, $pos{y},
+				maxRouteDistance => $config{attackMaxRouteDistance},
+				maxRouteTime => $config{attackMaxRouteTime},
+				noMapRoute => 1);
+			message TF("Avoid casting Skill - switch position to : %s,%s\n", $pos{x}, $pos{y}), 1;
+		}
+
+		Misc::checkValidity("skill_cast part 4");
+	}
+}
+
+# TODO: use $args->{type} if present
+sub skill_update {
+	my ($self, $args) = @_;
+
+	my ($ID, $lv, $sp, $range, $up) = ($args->{skillID}, $args->{lv}, $args->{sp}, $args->{range}, $args->{up});
+
+	my $skill = new Skill(idn => $ID);
+	my $handle = $skill->getHandle();
+	my $name = $skill->getName();
+	$char->{skills}{$handle}{lv} = $lv;
+	$char->{skills}{$handle}{sp} = $sp;
+	$char->{skills}{$handle}{range} = $range;
+	$char->{skills}{$handle}{up} = $up;
+
+	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType(), Skill::OWNER_CHAR);
+
+	Plugins::callHook('packet_charSkills', {
+		ID => $ID,
+		handle => $handle,
+		level => $lv,
+		upgradable => $up,
+	});
+
+	debug "Skill $name: $lv\n", "parseMsg";
+}
+
 1;
