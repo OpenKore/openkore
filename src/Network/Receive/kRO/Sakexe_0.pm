@@ -2905,53 +2905,6 @@ sub mail_refreshinbox {
 	message($msg . "\n", "list");
 }
 
-sub mail_read {
-	my ($self, $args) = @_;
-
-	my $item = {};
-	$item->{nameID} = $args->{nameID};
-	$item->{upgrade} = $args->{upgrade};
-	$item->{cards} = $args->{cards};
-	$item->{broken} = $args->{broken};
-	$item->{name} = itemName($item);
-
-	my $msg;
-	$msg .= center(" " . T("Mail") . " ", 79, '-') . "\n";
-	$msg .= swrite(TF("Title: \@%s Sender: \@%s", ('<'x39), ('<'x24)),
-			[bytesToString($args->{title}), bytesToString($args->{sender})]);
-	$msg .= TF("Message: %s\n", bytesToString($args->{message}));
-	$msg .= ("%s\n", ('-'x79));
-	$msg .= TF( "Item: %s %s\n" .
-				"Zeny: %sz\n",
-				$item->{name}, ($args->{amount}) ? "x " . $args->{amount} : "", formatNumber($args->{zeny}));
-	$msg .= sprintf("%s\n", ('-'x79));
-
-	message($msg, "info");
-}
-
-sub mail_getattachment {
-	my ($self, $args) = @_;
-	if (!$args->{fail}) {
-		message T("Successfully added attachment to inventory.\n"), "info";
-	} elsif ($args->{fail} == 2) {
-		error T("Failed to get the attachment to inventory due to your weight.\n"), "info";
-	} else {
-		error T("Failed to get the attachment to inventory.\n"), "info";
-	}
-}
-
-sub mail_send {
-	my ($self, $args) = @_;
-	($args->{fail}) ?
-		error T("Failed to send mail, the recipient does not exist.\n"), "info" :
-		message T("Mail sent succesfully.\n"), "info";
-}
-
-sub mail_new {
-	my ($self, $args) = @_;
-	message TF("New mail from sender: %s titled: %s.\n", bytesToString($args->{sender}), bytesToString($args->{title})), "info";
-}
-
 sub mail_setattachment {
 	my ($self, $args) = @_;
 	# todo, maybe we need to store this index into a var which we delete the item from upon succesful mail sending
@@ -2959,67 +2912,6 @@ sub mail_setattachment {
 		message TF("Failed to attach %s.\n", ($args->{index}) ? T("item: ").$char->inventory->getByServerIndex($args->{index}) : T("zeny")), "info";
 	} else {
 		message TF("Succeeded to attach %s.\n", ($args->{index}) ? T("item: ").$char->inventory->getByServerIndex($args->{index}) : T("zeny")), "info";
-	}
-}
-
-sub mail_delete {
-	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		message TF("Failed to delete mail with ID: %s.\n", $args->{mailID}), "info";
-	}
-	else {
-		message TF("Succeeded to delete mail with ID: %s.\n", $args->{mailID}), "info";
-	}
-}
-
-sub mail_window {
-	my ($self, $args) = @_;
-	if ($args->{flag}) {
-		message T("Mail window is now closed.\n"), "info";
-	}
-	else {
-		message T("Mail window is now opened.\n"), "info";
-	}
-}
-
-sub mail_return {
-	my ($self, $args) = @_;
-	($args->{fail}) ?
-		error TF("The mail with ID: %s does not exist.\n", $args->{mailID}), "info" :
-		message TF("The mail with ID: %s is returned to the sender.\n", $args->{mailID}), "info";
-}
-
-sub premium_rates_info {
-	my ($self, $args) = @_;
-	message TF("Premium rates: exp %+i%%, death %+i%%, drop %+i%%.\n", $args->{exp}, $args->{death}, $args->{drop}), "info";
-}
-
-sub auction_result {
-	my ($self, $args) = @_;
-	my $flag = $args->{flag};
-
-	if ($flag == 0) {
-     	message T("You have failed to bid into the auction.\n"), "info";
-	} elsif ($flag == 1) {
-		message T("You have successfully bid in the auction.\n"), "info";
-	} elsif ($flag == 2) {
-		message T("The auction has been canceled.\n"), "info";
-	} elsif ($flag == 3) {
-		message T("An auction with at least one bidder cannot be canceled.\n"), "info";
-	} elsif ($flag == 4) {
-		message T("You cannot register more than 5 items in an auction at a time.\n"), "info";
-	} elsif ($flag == 5) {
-		message T("You do not have enough Zeny to pay the Auction Fee.\n"), "info";
-	} elsif ($flag == 6) {
-		message T("You have won the auction.\n"), "info";
-	} elsif ($flag == 7) {
-		message T("You have failed to win the auction.\n"), "info";
-	} elsif ($flag == 8) {
-		message T("You do not have enough Zeny.\n"), "info";
-	} elsif ($flag == 9) {
-		message T("You cannot place more than 5 bids at a time.\n"), "info";
-	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
 	}
 }
 
@@ -3080,41 +2972,6 @@ sub auction_item_request_search {
 	message($msg, "list");
 }
 
-sub auction_my_sell_stop {
-	my ($self, $args) = @_;
-	my $flag = $args->{flag};
-
-	if ($flag == 0) {
-     	message T("You have ended the auction.\n"), "info";
-	} elsif ($flag == 1) {
-		message T("You cannot end the auction.\n"), "info";
-	} elsif ($flag == 2) {
-		message T("Bid number is incorrect.\n"), "info";
-	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
-	}
-}
-
-sub auction_windows {
-	my ($self, $args) = @_;
-	if ($args->{flag}) {
-		message T("Auction window is now closed.\n"), "info";
-	}
-	else {
-		message T("Auction window is now opened.\n"), "info";
-	}
-}
-
-sub auction_add_item {
-	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		message TF("Failed (note: usable items can't be auctioned) to add item with index: %s.\n", $args->{index}), "info";
-	}
-	else {
-		message TF("Succeeded to add item with index: %s.\n", $args->{index}), "info";
-	}
-}
-
 # this info will be sent to xkore 2 clients
 sub hotkeys {
 	my ($self, $args) = @_;
@@ -3138,58 +2995,6 @@ sub hotkeys {
 	}
 	$msg .= sprintf("%s\n", ('-'x79));
 	debug($msg, "list");
-}
-
-sub hack_shield_alarm {
-	error T("Error: You have been forced to disconnect by a Hack Shield.\n Please check Poseidon.\n"), "connection";
-	Commands::run('relog 100000000');
-}
-
-sub guild_alliance {
-	my ($self, $args) = @_;
-	if ($args->{flag} == 0) {
-		message T("Already allied.\n"), "info";
-	} elsif ($args->{flag} == 1) {
-		message T("You rejected the offer.\n"), "info";
-	} elsif ($args->{flag} == 2) {
-		message T("You accepted the offer.\n"), "info";
-	} elsif ($args->{flag} == 3) {
-		message T("They have too any alliances\n"), "info";
-	} elsif ($args->{flag} == 4) {
-		message T("You have too many alliances.\n"), "info";
-	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
-	}
-}
-
-sub talkie_box {
-	my ($self, $args) = @_;
-	message TF("%s's talkie box message: %s.\n", Actor::get($args->{ID})->nameString(), $args->{message}), "info";
-}
-
-sub manner_message {
-	my ($self, $args) = @_;
-	if ($args->{flag} == 0) {
-		message T("A manner point has been successfully aligned.\n"), "info";
-	} elsif ($args->{flag} == 3) {
-		message T("Chat Block has been applied by GM due to your ill-mannerous action.\n"), "info";
-	} elsif ($args->{flag} == 4) {
-		message T("Automated Chat Block has been applied due to Anti-Spam System.\n"), "info";
-	} elsif ($args->{flag} == 5) {
-		message T("You got a good point.\n"), "info";
-	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
-	}
-}
-
-sub GM_silence {
-	my ($self, $args) = @_;
-	if ($args->{flag}) {
-		message TF("You have been: muted by %s.\n", bytesToString($args->{name})), "info";
-	}
-	else {
-		message TF("You have been: unmuted by %s.\n", bytesToString($args->{name})), "info";
-	}
 }
 
 # TODO test if we must use ID to know if the packets are meant for us.
