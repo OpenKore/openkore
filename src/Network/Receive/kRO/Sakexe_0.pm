@@ -1855,65 +1855,6 @@ sub npc_talk {
 	message "$name: $talk{msg}\n", "npc";
 }
 
-sub npc_talk_close {
-	my ($self, $args) = @_;
-	# 00b6: long ID
-	# "Close" icon appreared on the NPC message dialog
-	my $ID = $args->{ID};
-	my $name = getNPCName($ID);
-
-	message TF("%s: Done talking\n", $name), "npc";
-
-	# I noticed that the RO client doesn't send a 'talk cancel' packet
-	# when it receives a 'npc_talk_closed' packet from the server'.
-	# But on pRO Thor (with Kapra password) this is required in order to
-	# open the storage.
-	#
-	# UPDATE: not sending 'talk cancel' breaks autostorage on iRO.
-	# This needs more investigation.
-	if (!$talk{canceled}) {
-		$messageSender->sendTalkCancel($ID);
-	}
-
-	$ai_v{npc_talk}{talk} = 'close';
-	$ai_v{npc_talk}{time} = time;
-	undef %talk;
-
-	Plugins::callHook('npc_talk_done', {ID => $ID});
-}
-
-sub npc_talk_continue {
-	my ($self, $args) = @_;
-	my $ID = substr($args->{RAW_MSG}, 2, 4);
-	my $name = getNPCName($ID);
-
-	$ai_v{npc_talk}{talk} = 'next';
-	$ai_v{npc_talk}{time} = time;
-
-	if ($config{autoTalkCont}) {
-		message TF("%s: Auto-continuing talking\n", $name), "npc";
-		$messageSender->sendTalkContinue($ID);
-		# This time will be reset once the NPC responds
-		$ai_v{npc_talk}{time} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
-	} else {
-		message TF("%s: Type 'talk cont' to continue talking\n", $name), "npc";
-	}
-}
-
-sub npc_talk_number {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-
-	my $name = getNPCName($ID);
-	$ai_v{npc_talk}{talk} = 'number';
-	$ai_v{npc_talk}{time} = time;
-
-	message TF("%s: Type 'talk num <number #>' to input a number.\n", $name), "input";
-	$ai_v{'npc_talk'}{'talk'} = 'num';
-	$ai_v{'npc_talk'}{'time'} = time;
-}
-
 sub npc_talk_responses {
 	my ($self, $args) = @_;
 	# 00b7: word len, long ID, string str
