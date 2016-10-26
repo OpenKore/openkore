@@ -27,7 +27,7 @@ use Carp::Assert;
 use Scalar::Util;
 use Socket qw(inet_aton inet_ntoa);
 
-use AI qw(ai_items_take);
+use AI;
 use Globals;
 #use Settings;
 use Log qw(message warning error debug);
