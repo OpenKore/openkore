@@ -3405,59 +3405,6 @@ sub character_equip {
 	message($msg, "list");
 }
 
-# TODO
-sub storage_password_result {
-	my ($self, $args) = @_;
-
-	# TODO:
-    # STORE_PASSWORD_EMPTY =  0x0
-    # STORE_PASSWORD_EXIST =  0x1
-    # STORE_PASSWORD_CHANGE =  0x2
-    # STORE_PASSWORD_CHECK =  0x3
-    # STORE_PASSWORD_PANALTY =  0x8
-
-	if ($args->{type} == 4) { # STORE_PASSWORD_CHANGE_OK =  0x4
-		message T("Successfully changed storage password.\n"), "success";
-	} elsif ($args->{type} == 5) { # STORE_PASSWORD_CHANGE_NG =  0x5
-		error T("Error: Incorrect storage password.\n");
-	} elsif ($args->{type} == 6) { # STORE_PASSWORD_CHECK_OK =  0x6
-		message T("Successfully entered storage password.\n"), "success";
-	} elsif ($args->{type} == 7) { # STORE_PASSWORD_CHECK_NG =  0x7
-		error T("Error: Incorrect storage password.\n");
-		# disable storageAuto or the Kafra storage will be blocked
-		configModify("storageAuto", 0);
-		my $index = AI::findAction('storageAuto');
-		if (defined $index) {
-			AI::args($index)->{done} = 1;
-			while (AI::action ne 'storageAuto') {
-				AI::dequeue;
-			}
-		}
-	} else {
-		#message "Storage password: unknown type $args->{type}\n";
-	}
-
-	# $args->{val}
-	# unknown, what is this for?
-}
-
-sub initialize_message_id_encryption {
-	my ($self, $args) = @_;
-	if ($masterServer->{messageIDEncryption} ne '0') {
-		$messageSender->sendMessageIDEncryptionInitialized();
-
-		my @c;
-		my $shtmp = $args->{param1};
-		for (my $i = 8; $i > 0; $i--) {
-			$c[$i] = $shtmp & 0x0F;
-			$shtmp >>= 4;
-		}
-		my $w = ($c[6]<<12) + ($c[4]<<8) + ($c[7]<<4) + $c[1];
-		$enc_val1 = ($c[2]<<12) + ($c[3]<<8) + ($c[5]<<4) + $c[8];
-		$enc_val2 = (((($enc_val1 ^ 0x0000F3AC) + $w) << 16) | (($enc_val1 ^ 0x000049DF) + $w)) ^ $args->{param2};
-	}
-}
-
 sub top10 {
 	my ( $self, $args ) = @_;
 
@@ -3471,72 +3418,6 @@ sub top10 {
 		$self->top10_pk_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
 	} else {
 		message "Unknown top10 type %s.\n", $args->{type};
-	}
-}
-
-sub top10_alchemist_rank {
-	my ($self, $args) = @_;
-
-	my $textList = bytesToString(top10Listing($args));
-	message TF("============= ALCHEMIST RANK ================\n" .
-		"#    Name                             Points\n".
-		"%s" .
-		"=============================================\n", $textList), "list";
-}
-
-sub top10_blacksmith_rank {
-	my ($self, $args) = @_;
-
-	my $textList = bytesToString(top10Listing($args));
-	message TF("============= BLACKSMITH RANK ===============\n" .
-		"#    Name                             Points\n".
-		"%s" .
-		"=============================================\n", $textList), "list";
-}
-
-sub top10_pk_rank {
-	my ($self, $args) = @_;
-
-	my $textList = bytesToString(top10Listing($args));
-	message TF("================ PVP RANK ===================\n" .
-		"#    Name                             Points\n".
-		"%s" .
-		"=============================================\n", $textList), "list";
-}
-
-sub top10_taekwon_rank {
-	my ($self, $args) = @_;
-
-	my $textList = bytesToString(top10Listing($args));
-	message TF("=============== TAEKWON RANK ================\n" .
-		"#    Name                             Points\n".
-		"%s" .
-		"=============================================\n", $textList), "list";
-}
-
-sub unequip_item {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{index});
-	delete $item->{equipped};
-
-	if ($args->{type} == 10 || $args->{type} == 32768) {
-		delete $char->{equipment}{arrow};
-		delete $char->{arrow};
-	} else {
-		foreach (%equipSlot_rlut){
-			if ($_ & $args->{type}){
-				next if $_ == 10; #work around Arrow bug
-				next if $_ == 32768;
-				delete $char->{equipment}{$equipSlot_lut{$_}};
-			}
-		}
-	}
-	if ($item) {
-		message TF("You unequip %s (%d) - %s\n",
-			$item->{name}, $item->{invIndex},
-			$equipTypes_lut{$item->{type_equip}}), 'inventory';
 	}
 }
 
@@ -3564,27 +3445,6 @@ sub unit_levelup {
 		message TF("%s unknown unit_levelup effect (%d)\n", $actor, $type);
 	}
 }
-
-sub use_item {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{index});
-	if ($item) {
-		$item->{amount} -= $args->{amount};
-		message TF("You used Item: %s (%d) x %s\n", $item->{name}, $item->{invIndex}, $args->{amount}), "useItem";
-		if ($item->{amount} <= 0) {
-			$char->inventory->remove($item);
-		}
-	}
-}
-
-sub users_online {
-	my ($self, $args) = @_;
-
-	message TF("There are currently %s users online\n", $args->{users}), "info";
-}
-
 
 # You see a vender!  Add them to the visible venders list.
 sub vender_found {
@@ -3665,28 +3525,6 @@ sub vender_items_list {
 		venderID => $venderID,
 		itemList => \@venderItemList
 	});
-}
-
-sub vender_lost {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-	binRemove(\@venderListsID, $ID);
-	delete $venderLists{$ID};
-}
-
-
-# Buy from a vending shop -- failed for one of 2+ reasons
-sub vender_buy_fail {
-	my ($self, $args) = @_;
-
-	if ($args->{fail} == 1) {
-		error TF("Failed to buy %s of item #%s from vender (insufficient zeny).\n", $args->{amount}, $args->{index});
-	} elsif ($args->{fail} == 2) {
-		error TF("Failed to buy %s of item #%s from vender (overweight).\n", $args->{amount}, $args->{index});
-	} else {
-		error TF("Failed to buy %s of item #%s from vender (unknown code %s).\n", $args->{amount}, $args->{index}, $args->{fail});
-	}
 }
 
 # TODO
