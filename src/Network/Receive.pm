@@ -4135,4 +4135,218 @@ sub party_chat {
 	});
 }
 
+sub party_hp_info {
+	my ($self, $args) = @_;
+	my $ID = $args->{ID};
+
+	if ($char->{party}{users}{$ID}) {
+		$char->{party}{users}{$ID}{hp} = $args->{hp};
+		$char->{party}{users}{$ID}{hp_max} = $args->{hp_max};
+	}
+}
+
+sub party_invite {
+	my ($self, $args) = @_;
+	message TF("Incoming Request to join party '%s'\n", bytesToString($args->{name}));
+	$incomingParty{ID} = $args->{ID};
+	$incomingParty{ACK} = $args->{switch} eq '02C6' ? '02C7' : '00FF';
+	$timeout{ai_partyAutoDeny}{time} = time;
+}
+
+sub party_location {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+
+	if ($char->{party}{users}{$ID}) {
+		$char->{party}{users}{$ID}{pos}{x} = $args->{x};
+		$char->{party}{users}{$ID}{pos}{y} = $args->{y};
+		$char->{party}{users}{$ID}{online} = 1;
+		debug "Party member location: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
+	}
+}
+
+sub party_users_info {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+	my $msg;
+	$self->decrypt(\$msg, substr($args->{RAW_MSG}, 28));
+	$msg = substr($args->{RAW_MSG}, 0, 28).$msg;
+	$char->{party}{name} = bytesToString($args->{party_name});
+
+	for (my $i = 28; $i < $args->{RAW_MSG_SIZE}; $i += 46) {
+		my $ID = substr($msg, $i, 4);
+		if (binFind(\@partyUsersID, $ID) eq "") {
+			binAdd(\@partyUsersID, $ID);
+		}
+		$char->{party}{users}{$ID} = new Actor::Party();
+		$char->{party}{users}{$ID}{name} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
+		$char->{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
+		$char->{party}{users}{$ID}{admin} = !(unpack("C1", substr($msg, $i + 44, 1)));
+		$char->{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
+		$char->{party}{users}{$ID}->{ID} = $ID;
+		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
+	}
+	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
+		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
+	}
+}
+
+sub pet_capture_result {
+	my ($self, $args) = @_;
+
+	if ($args->{success}) {
+		message T("Pet capture success\n"), "info";
+	} else {
+		message T("Pet capture failed\n"), "info";
+	}
+}
+
+sub pet_emotion {
+	my ($self, $args) = @_;
+
+	my ($ID, $type) = ($args->{ID}, $args->{type});
+
+	my $emote = $emotions_lut{$type}{display} || "/e$type";
+	if ($pets{$ID}) {
+		message $pets{$ID}->name . " : $emote\n", "emotion";
+	}
+}
+
+sub pet_food {
+	my ($self, $args) = @_;
+	if ($args->{success}) {
+		message TF("Fed pet with %s\n", itemNameSimple($args->{foodID})), "pet";
+	} else {
+		error TF("Failed to feed pet with %s: no food in inventory.\n", itemNameSimple($args->{foodID}));
+	}
+}
+
+sub pet_info {
+	my ($self, $args) = @_;
+	$pet{name} = bytesToString($args->{name});
+	$pet{renameflag} = $args->{renameflag};
+	$pet{level} = $args->{level};
+	$pet{hungry} = $args->{hungry};
+	$pet{friendly} = $args->{friendly};
+	$pet{accessory} = $args->{accessory};
+	$pet{type} = $args->{type} if (exists $args->{type});
+	debug "Pet status: name=$pet{name} name_set=". ($pet{renameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})." type=".($pet{type}||"N/A")."\n", "pet";
+}
+
+sub pet_info2 {
+	my ($self, $args) = @_;
+	my ($type, $ID, $value) = @{$args}{qw(type ID value)};
+
+	# receive information about your pet
+
+	# related freya functions: clif_pet_equip clif_pet_performance clif_send_petdata
+
+	# these should never happen, pets should spawn like normal actors (at least on Freya)
+	# this isn't even very useful, do we want random pets with no location info?
+	#if (!$pets{$ID} || !%{$pets{$ID}}) {
+	#	binAdd(\@petsID, $ID);
+	#	$pets{$ID} = {};
+	#	%{$pets{$ID}} = %{$monsters{$ID}} if ($monsters{$ID} && %{$monsters{$ID}});
+	#	$pets{$ID}{'name_given'} = "Unknown";
+	#	$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
+	#	debug "Pet spawned (unusually): $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
+	#}
+	#if ($monsters{$ID}) {
+	#	if (%{$monsters{$ID}}) {
+	#		objectRemoved('monster', $ID, $monsters{$ID});
+	#	}
+	#	# always clear these in case
+	#	binRemove(\@monstersID, $ID);
+	#	delete $monsters{$ID};
+	#}
+
+	if ($type == 0) {
+		# You own no pet.
+		undef $pet{ID};
+
+	} elsif ($type == 1) {
+		$pet{friendly} = $value;
+		debug "Pet friendly: $value\n";
+
+	} elsif ($type == 2) {
+		$pet{hungry} = $value;
+		debug "Pet hungry: $value\n";
+
+	} elsif ($type == 3) {
+		# accessory info for any pet in range
+		$pet{accessory} = $value;
+		debug "Pet accessory info: $value\n";
+
+	} elsif ($type == 4) {
+		# performance info for any pet in range
+		#debug "Pet performance info: $value\n";
+
+	} elsif ($type == 5) {
+		# You own pet with this ID
+		$pet{ID} = $ID;
+	}
+}
+
+sub private_message {
+	my ($self, $args) = @_;
+	my ($newmsg, $msg); # Type: Bytes
+
+	return unless changeToInGameState();
+
+	# Type: String
+	my $privMsgUser = bytesToString($args->{privMsgUser});
+	my $privMsg = bytesToString($args->{privMsg});
+
+	if ($privMsgUser ne "" && binFind(\@privMsgUsers, $privMsgUser) eq "") {
+		push @privMsgUsers, $privMsgUser;
+		Plugins::callHook('parseMsg/addPrivMsgUser', {
+			user => $privMsgUser,
+			msg => $privMsg,
+			userList => \@privMsgUsers
+		});
+	}
+
+	stripLanguageCode(\$privMsg);
+	chatLog("pm", TF("(From: %s) : %s\n", $privMsgUser, $privMsg)) if ($config{'logPrivateChat'});
+ 	message TF("(From: %s) : %s\n", $privMsgUser, $privMsg), "pm";
+
+	ChatQueue::add('pm', undef, $privMsgUser, $privMsg);
+	Plugins::callHook('packet_privMsg', {
+		privMsgUser => $privMsgUser,
+		privMsg => $privMsg,
+		MsgUser => $privMsgUser,
+		Msg => $privMsg
+	});
+
+	if ($config{dcOnPM} && $AI == AI::AUTO) {
+		message T("Auto disconnecting on PM!\n");
+		chatLog("k", T("*** You were PM'd, auto disconnect! ***\n"));
+		$messageSender->sendQuit();
+		quit();
+	}
+}
+
+sub private_message_sent {
+	my ($self, $args) = @_;
+	if ($args->{type} == 0) {
+ 		message TF("(To %s) : %s\n", $lastpm[0]{'user'}, $lastpm[0]{'msg'}), "pm/sent";
+		chatLog("pm", "(To: $lastpm[0]{user}) : $lastpm[0]{msg}\n") if ($config{'logPrivateChat'});
+
+		Plugins::callHook('packet_sentPM', {
+			to => $lastpm[0]{user},
+			msg => $lastpm[0]{msg}
+		});
+
+	} elsif ($args->{type} == 1) {
+		warning TF("%s is not online\n", $lastpm[0]{user});
+	} elsif ($args->{type} == 2) {
+		warning TF("Player %s ignored your message\n", $lastpm[0]{user});
+	} else {
+		warning TF("Player %s doesn't want to receive messages\n", $lastpm[0]{user});
+	}
+	shift @lastpm;
+}
+
 1;
