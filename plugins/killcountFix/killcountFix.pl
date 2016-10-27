@@ -82,7 +82,7 @@ sub updateQuestsKillcount {
 	message "[killcountFix] Adding goal of ".$goal." to mobID ".$mobID." in quest ".$questID."\n", "system";
 
 	open REWRITE, ">:utf8", $file;
-	print REWRITE to_json(\%quests_kill_count, {utf8 => 1, pretty => 1, canonical => 1});
+	print REWRITE to_json(\%quests_kill_count, {utf8 => 1, pretty => 1});
 	close(REWRITE);
 }
 
