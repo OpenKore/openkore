@@ -69,7 +69,7 @@ sub start {
 		die "Unable to start the X-Kore proxy ($publicIP:$port): $@\n"
 			. "Make sure no other servers are running on port $port.";
 	} else {
-		die $@;
+		die $@ if $@;
 	}
 	$hooks = Plugins::addHooks(
 		['packet_pre/sync_request_ex', \&sync_request_ex],
