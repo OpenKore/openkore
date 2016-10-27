@@ -1,0 +1,26 @@
+# Test: Value defined here, overridden in !include, and not changed should not be updated.
+parent_child_unchanged 1
+
+# Test: Value defined here, overridden in !include, and changed should be updated, and another copy inserted after the !include.
+parent_child_changed 1
+
+# Test: Changed block values should be updated.
+block a {
+  # Test: Leading whitespace should be replaced with a single tab.
+  test 1
+}
+
+!include write_config_a.txt
+
+# Test: Leading space should be removed.
+ leading space a
+	leading tab a
+
+# Test: Tabs are considered part of the key. (Is this a bug?)
+tab	a
+
+# Test: Keys with no value and not changed should not be updated.
+no_val_unchanged
+
+# Test: Keys with no value and changed should be updated.
+no_val_changed

@@ -1,2 +1,2 @@
-﻿0 Feminino
+0 Feminino
 1 Masculino

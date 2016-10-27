@@ -16,9 +16,6 @@
 #
 # Random shop name:
 # My Shop;;My cool shop;;My nice shop
-# 
-# Example:
-# My Shop;;My cool shop;;My nice shop
 #
 # Jellopy		3
 # Andre Card	200,000		5

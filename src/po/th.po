@@ -5635,11 +5635,9 @@ msgstr "%s เปลี่ยนรองเท้าเป็น %s\n"
 #, perl-format
 msgid ""
 "Unable to start the X-Kore server.\n"
-"You can only run one X-Kore session at the same time.\n"
-"And make sure no other servers are running on port %s.\n"
+"Make sure no other servers are running on port %s.\n"
 msgstr ""
 "ไม่สามารถเริ่มการทำงานของ X-Kore server\n"
-"คุณสามารเชื่อมต่อกับ X-Kore ได้เพียงหนึ่งการเชื่อมต่อเท่านั้น\n"
 "และต้องแน่ใจว่าไม่มี server อื่นๆรันที่ port %s ด้วย\n"
 
 #: ../Network/XKore.pm:67 ../Network/XKoreProxy.pm:82

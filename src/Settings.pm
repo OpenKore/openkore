@@ -54,6 +54,7 @@ use File::Spec;
 use Translation qw(T TF);
 use Utils::ObjectList;
 use Utils::Exceptions;
+use List::MoreUtils qw( uniq );
 
 use enum qw(CONTROL_FILE_TYPE TABLE_FILE_TYPE);
 
@@ -79,7 +80,7 @@ our $VERSION = 'what-will-become-2.1';
 #our $SVN = T(" (SVN Version) ");
 our $WEBSITE = 'http://www.openkore.com/';
 # Translation Comment: Version String
-our $versionText = "*** $NAME ${VERSION} ( r" . (getSVNRevision() || '?') . ' ) - ' . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
+our $versionText = "*** $NAME ${VERSION} ( version " . (getGitRevision() || '?') . ' ) - ' . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
 our $welcomeText = TF("Welcome to %s.", $NAME);
 
 
@@ -113,6 +114,8 @@ our $dead_log_file;
 
 our $interface;
 our $lockdown;
+our $starting_ai;
+our $command;
 our $no_connect;
 
 
@@ -157,9 +160,9 @@ sub parseArguments {
 	undef $interface;
 	undef $lockdown;
 
-	local $SIG{__WARN__} = sub {
-		ArgumentException->throw($_[0]);
-	};
+	# Allow plugins to have their own command line options.
+	Getopt::Long::Configure( 'pass_through' );
+
 	GetOptions(
 		'control=s',          \$options{control},
 		'tables=s',           \$options{tables},
@@ -178,7 +181,10 @@ sub parseArguments {
 
 		'interface=s',        \$interface,
 		'lockdown',           \$lockdown,
+		'ai=s',               \$starting_ai,
+		'command=s',          \$command,
 		'help',	              \$options{help},
+		'version|v',          \$options{version},
 
 		'no-connect',         \$no_connect
 	);
@@ -215,8 +221,14 @@ sub parseArguments {
 			$interface = "Console"
 		}
 	}
+	if ($starting_ai) {
+		$Globals::AI = AI::AUTO()   if $starting_ai =~ /^(on|auto)$/;
+		$Globals::AI = AI::MANUAL() if $starting_ai =~ /^manual$/;
+		$Globals::AI = AI::OFF()    if $starting_ai =~ /^off$/;
+    }
 
 	return 0 if ($options{help});
+	return 0 if ($options{version});
 	if (! -d $logs_folder) {
 		#if (!mkdir($logs_folder)) {
 		if (! make_path($logs_folder)) {
@@ -283,11 +295,25 @@ sub getUsageText {
 		Other options:
 		--interface=NAME          Which interface to use at startup.
 		--lockdown                Disable potentially insecure features.
+		--ai                      Starting AI mode (on, manual, off) (default: on)
+		--command=COMMAND         Initial command to place on the AI queue
 		--help                    Displays this help message.
+		--version                 Displays the program version.
 
 		Developer options:
 		--no-connect              Do not connect to any servers.
 	};
+	my $data = { options => [] };
+	Plugins::callHook( usage => $data );
+	if ( @{ $data->{options} } ) {
+		foreach my $plugin ( uniq sort map { $_->{plugin} || 'unknown' } @{ $data->{options} } ) {
+			$text .= "\nOptions for the '$plugin' plugin:\n";
+			foreach ( grep { $plugin eq ( $_->{plugin} || 'unknown' ) } @{ $data->{options} } ) {
+				$text .= sprintf "%-2s %-22s %s\n", $_->{short} || '', $_->{long} || '', $_->{description} || '';
+			}
+		}
+	}
+	$text =~ s/\n*$/\n/s;
 	$text =~ s/^\n//s;
 	$text =~ s/^\t\t?//gm;
 	return $text;
@@ -504,49 +530,44 @@ sub loadByHandle {
 }
 
 ##
-# void Settings::loadAll(regexp, [Function progressHandler])
+# void Settings::loadByRegexp(regexp, [Function progressHandler])
 #
-# (Re)loads all registered data files whose name matches the given regular expression.
-# This method follows the same contract as
-# Settings::loadByHandle(), so see that method for parameter descriptions
-# and exceptions.
-sub loadByRegexp {	# FIXME: only hook those that match the regexp?
-	my ($regexp, $progressHandler) = @_;
-	
-	Plugins::callHook('preloadfiles', {files => \@{$files->getItems}});
-
-	my $i = 1;
-	foreach my $object (@{$files->getItems()}) {
-		Plugins::callHook('loadfiles', {files => \@{$files->getItems}, current => $i});
-		if ($object->{name} =~ /$regexp/) {
-			loadByHandle($object->{index}, $progressHandler);
-		}
-		$i++;
-	}
-
-	Plugins::callHook('postloadfiles', {files => \@{$files->getItems}});
+# Calls 'loadFiles' with the list of registered data files whose name matches the given regular expression.
+sub loadByRegexp {
+    my ($regexp, $progressHandler) = @_;
+    loadFiles([grep { $_->{name} =~ /$regexp/ } @{$files->getItems}], $progressHandler);
 }
 
 ##
 # void Settings::loadAll([Function progressHandler])
 #
-# (Re)loads all registered data files. This method follows the same contract as
+# Calls 'loadFiles' with the list of all registered data files.
+sub loadAll {
+    my ($progressHandler) = @_;
+    loadFiles($files->getItems, $progressHandler);
+}
+
+##
+# void Settings::loadFiles(files, [Function progressHandler])
+#
+# (Re)loads all registered data files given in 'files'.
+# Use this method to load a specific list of files.
+# This method follows the same contract as
 # Settings::loadByHandle(), so see that method for parameter descriptions
 # and exceptions.
-sub loadAll {
-	my ($progressHandler) = @_;
-	
-	Plugins::callHook('preloadfiles', {files => \@{$files->getItems}});
-	
-	my $i = 1;
-	foreach my $object (@{$files->getItems()}) {
-		Plugins::callHook('loadfiles', {files => \@{$files->getItems}, current => $i});
-		loadByHandle($object->{index}, $progressHandler);
-		return if $Globals::quit;
-		$i++;
-	}
-	
-	Plugins::callHook('postloadfiles', {files => \@{$files->getItems}});
+sub loadFiles {
+    my ($files, $progressHandler) = @_;
+
+    Plugins::callHook('preloadfiles', {files => $files});
+
+    my $i = 1;
+    foreach my $object (@$files) {
+        Plugins::callHook('loadfiles', {files => $files, current => $i});
+        loadByHandle($object->{index}, $progressHandler);
+        $i++;
+    }
+
+    Plugins::callHook('postloadfiles', {files => $files});
 }
 
 ##
@@ -570,6 +591,18 @@ sub getSVNRevision {
 	} else {
 		return;
 	}
+}
+
+##
+# int Settings::getGitRevision()
+#
+# Return OpenKore's Git revision number, or undef if that information cannot be retrieved.
+sub getGitRevision {
+    use Git;
+    my $git = Git::detect_git( $RealBin );
+    return if !$git;
+    my ( $sec, $min, $hour, $day, $month, $year ) = gmtime( $git->{timestamp} );
+    sprintf '%7.7s_%04d-%02d-%02d', $git->{sha}, $year + 1900, $month + 1, $day;
 }
 
 sub loadSysConfig {

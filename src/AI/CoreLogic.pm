@@ -1282,9 +1282,10 @@ sub processAutoStorage {
 					next if $item->{equipped};
 					next if ($item->{broken} && $item->{type} == 7); # dont store pet egg in use
 
-					if (defined($args->{lastInventoryCount}) &&  defined($args->{lastNameID}) &&
+					if (defined($args->{lastInventoryCount}) &&  defined($args->{lastNameID}) && defined($args->{lastAmount}) &&
 					    $args->{lastNameID} == $item->{nameID} &&
-					    $args->{lastInventoryCount} == @{$char->inventory->getItems()}
+					    $args->{lastInventoryCount} == @{$char->inventory->getItems()} &&
+						$args->{lastAmount} == $item->{amount}
 					) {
 						error TF("Unable to store %s.\n", $item->{name});
 						next;
@@ -1303,6 +1304,7 @@ sub processAutoStorage {
 						undef $args->{done};
 						$args->{lastIndex} = $item->{index};
 						$args->{lastNameID} = $item->{nameID};
+						$args->{lastAmount} = $item->{amount};
 						$args->{lastInventoryCount} = scalar(@{$char->inventory->getItems()});
 						$messageSender->sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
 						$timeout{ai_storageAuto}{time} = time;
@@ -2666,6 +2668,9 @@ sub processAutoEquip {
 
 ##### AUTO-ATTACK #####
 sub processAutoAttack {
+	# Don't even think about attacking if attackAuto is -1.
+	return if $config{attackAuto} && $config{attackAuto} eq -1;
+
 	# The auto-attack logic is as follows:
 	# 1. Generate a list of monsters that we are allowed to attack.
 	# 2. Pick the "best" monster out of that list, and attack it.

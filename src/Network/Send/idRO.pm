@@ -24,8 +24,18 @@ use Utils qw(getTickCount getHex getCoordString);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
+	my %packets = (
+		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+	);
+
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	my %handlers = qw(
+		send_equip 00A9
+		storage_password 023B
 		sync 0360
 		character_move 035F
 		actor_info_request 0368
@@ -37,17 +47,18 @@ sub new {
 		skill_use_location 0366
 		party_setting 07D7
 		buy_bulk_vender 0801
+		char_delete2_accept 098f
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
 }
 
-sub sendCharDelete {
-	my ($self, $charID, $email) = @_;
-	my $msg = pack("C*", 0xFB, 0x01) .
-			$charID . pack("a50", stringToBytes($email));
-	$self->sendToServer($msg);
+sub reconstruct_char_delete2_accept {
+	my ($self, $args) = @_;
+	# length = [packet:2] + [length:2] + [charid:4] + [code_length]
+	$args->{length} = 8 + length($args->{code});
+	debug "Sent sendCharDelete2Accept. CharID: $args->{CharID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
 }
 
 1;

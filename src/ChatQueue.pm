@@ -95,7 +95,7 @@ sub processFirst {
 	# If the user is not authorized to use chat commands,
 	# check whether he's trying to authenticate
 	if (( $type eq "pm" || $type eq "p" || $type eq "g" ) && !$overallAuth{$user} && $config{adminPassword}) {
-		if ($msg eq $config{adminPassword}) {
+		if ($msg eq $config{adminPassword} && $config{inGameAuth}) {
 			auth($user, 1);
 			sendMessage($messageSender, "pm", getResponse("authS"), $user);
 		}

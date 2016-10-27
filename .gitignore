@@ -4,6 +4,9 @@ errors.txt
 benchmark-results.txt
 logs
 
+# Plugin files
+/profiles
+
 # Backup files
 *~
 .#*
@@ -41,6 +44,7 @@ tables/iRO/itemsdescriptions-custom.txt
 tables/iRO/itemslotcounttable-custom.txt
 tables/iRO/maps-custom.txt
 tables/iRO/quests-custom.txt
+tables/iRO/resnametable-custom.txt
 tables/iRO/skillnametable-custom.txt
 
 # Auto-generated files.

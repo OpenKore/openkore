@@ -715,7 +715,7 @@ gef_fild08 360 187 gef_fild07 18 191
 gef_fild09 23 56 gef_fild13 380 56
 gef_fild09 225 25 gef_fild10 251 371
 gef_fild09 368 95 gef_fild01 16 102
-gef_fild10 27 219 gef_fild14 371 219
+#gef_fild10 27 219 gef_fild14 371 219 does not exist in bRO
 gef_fild10 63 337 in_orcs01 30 154
 gef_fild10 104 21 gef_fild11 111 364
 gef_fild10 136 331 in_orcs01 124 171
@@ -2820,40 +2820,35 @@ lhz_in02 265 14 lhz_in02 269 82
 lhz_in02 282 79 lighthalzen 194 48
 
 # Eden HQ Entrace
-prontera 124 76 moc_para01 31 14 c c r0
-prontera 38 212 moc_para01 31 14 c c r0
-prontera 162 326 moc_para01 31 14 c c r0
-prontera 271 213 moc_para01 31 14 c c r0
-#morocc 161 97 moc_para01 31 14 c c r0 does not exist in bRO
+alberta 124 67 moc_para01 31 14 c c r0
+alberta_in 75 39 moc_para01 31 14 c c r0
+aldebaran 133 119 moc_para01 31 14 c c r0
+amatsu 100 145 moc_para01 31 14 c c r0
+ayothaya 221 191 moc_para01 31 14 c c r0
+brasilis 191 224 moc_para01 31 14 c c r0
+comodo 202 151 moc_para01 31 14 c c r0
+dewata 192 193 moc_para01 31 14 c c r0
+einbroch 250 211 moc_para01 31 14 c c r0
+geffen 132 66 moc_para01 31 14 c c r0
+geffen_in 160 104 moc_para01 31 14 c c r0
+gonryun 145 120 moc_para01 31 14 c c r0
+hugel 93 153 moc_para01 31 14 c c r0
+izlude 131 148 moc_para01 31 14 c c r0
+izlude_in 68 162 moc_para01 31 14 c c r0
+lighthalzen 164 86 moc_para01 31 14 c c r0
+louyang 224 107 moc_para01 31 14 c c r0
 moc_ruins 68 164 moc_para01 31 14 c c r0
 moc_prydb1 53 126 moc_para01 31 14 c c r0
-amatsu 100 145 moc_para01 31 14 c c r0
-brasilis 194 221 moc_para01 31 14 c c r0
-geffen 132 66 moc_para01 31 14 c c r0
-#geffen 196 147 moc_para01 31 14 c c r0 does not exist in bRO
+morocc 161 97 moc_para01 31 14 c c r0
+moscovia 209 197 moc_para01 31 14 c c r0
 payon 177 111 moc_para01 31 14 c c r0
-aldebaran 133 119 moc_para01 31 14 c c r0
-einbroch 244 200 moc_para01 31 14 c c r0
-moscovia 220 192 moc_para01 31 14 c c r0
-einbroch 55 202 moc_para01 31 14 c c r0
-yuno 144 189 moc_para01 31 14 c c r0
-lighthalzen 167 102 moc_para01 31 14 c c r0
-alberta 124 67 moc_para01 31 14 c c r0
-dewata 194 168 moc_para01 31 14 c c r0
-# comodo 191 153 moc_para01 31 14 c c r0
-# cmd_fild07 139 134 moc_para01 31 14 c c r0
-gonryun 162 122 moc_para01 31 14 c c r0
-#umbala 96 160 moc_para01 31 14 c c r0
-ayothaya 209 169 moc_para01 31 14 c c r0
-hugel 99 167 moc_para01 31 14 c c r0
-rachel 125 144 moc_para01 31 14 c c r0
-veins 214 122 moc_para01 31 14 c c r0
-alberta_in 75 39 moc_para01 31 14 c c r0
-alberta 27 238 moc_para01 31 14 c c r0
-geffen_in 160 104 moc_para01 31 14 c c r0
 payon_in02 58 58 moc_para01 31 14 c c r0
-izlude 134 98 moc_para01 31 14 c c r0
-izlude_in 68 162 moc_para01 31 14 c c r0
+prontera 124 76 moc_para01 31 14 c c r0
+prt_church 103 78 moc_para01 31 14 c c r0
+rachel 125 144 moc_para01 31 14 c c r0
+umbala 105 158 moc_para01 31 14 c c r0
+veins 220 109 moc_para01 31 14 c c r0
+yuno 144 189 moc_para01 31 14 c c r0
 
 # Eden HQ
 moc_para01 47 39 moc_para01 106 14 c r0

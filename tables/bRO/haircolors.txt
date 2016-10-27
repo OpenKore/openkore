@@ -1,4 +1,4 @@
-﻿0 Castanho Escuro
+0 Castanho Escuro
 1 Castanho/Loiro
 2 Roxo
 3 Castanho Claro

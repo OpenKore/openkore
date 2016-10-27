@@ -1321,8 +1321,7 @@ sub cmdCloseBuyShop {
 
 sub cmdConf {
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\w*\.*\w+)/;
-	my ($arg2) = $args =~ /^\w*\.*\w+\s+([\s\S]+)\s*$/;
+	my ($arg1, $arg2) = $args =~ /^(\S+)\s*(.*?)\s*$/;
 
 	# Basic Support for "label" in blocks. Thanks to "piroJOKE"
 	if ($arg1 =~ /\./) {
@@ -1349,6 +1348,13 @@ sub cmdConf {
 	if ($arg1 eq "") {
 		error T("Syntax Error in function 'conf' (Change a Configuration Key)\n" .
 			"Usage: conf <variable> [<value>|none]\n");
+
+	} elsif ($arg1 =~ /\*/) {
+		my $pat = $arg1;
+		$pat =~ s/\*/.*/gso;
+		my @keys = grep {/$pat/i} sort keys %config;
+		error TF( "Config variables matching %s do not exist\n", $arg1 ) if !@keys;
+		message TF( "Config '%s' is %s\n", $_, defined $config{$_} ? $config{$_} : 'not set' ), "info" foreach @keys;
 
 	} elsif (!exists $config{$arg1}) {
 		error TF("Config variable %s doesn't exist\n", $arg1);
@@ -4023,13 +4029,15 @@ sub cmdPortalList {
 	} elsif ($arg =~ /^add (.*)$/) { #Manual adding portals
 		#Command: portals add mora 56 25 bif_fild02 176 162
 		#Command: portals add y_airport 143 43 y_airport 148 51 0 c r0 c r0
-		print $args."TEST\n";
+		debug "Input: $args\n";
 		my ($srcMap, $srcX, $srcY, $dstMap, $dstX, $dstY, $seq) = $args =~ /^add ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3}) ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3})(.*)$/; #CHECKING
 		my $srcfile = $srcMap.'.fld';
 		$srcfile = File::Spec->catfile($Settings::fields_folder, $srcfile) if ($Settings::fields_folder);
+		$srcfile .= ".gz" if (! -f $srcfile); # compressed file
 		my $dstfile = $dstMap.'.fld';
 		$dstfile = File::Spec->catfile($Settings::fields_folder, $dstfile) if ($Settings::fields_folder);
-		print "GOOD\n" if (-f $srcfile && -f $dstfile);
+		$dstfile .= ".gz" if (! -f $dstfile); # compressed file
+		error TF("Files '%s' or '%s' does not exist.\n", $srcfile, $dstfile) if (! -f $srcfile || ! -f $dstfile);
 		if ($srcX > 0 && $srcY > 0 && $dstX > 0 && $dstY > 0
 			&& -f $srcfile && -f $dstfile) { #found map and valid corrdinates	
 			if ($seq) {
@@ -4695,6 +4703,12 @@ sub cmdStorage_gettocart {
 	if (!defined($amount) || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
+	
+	if (!$char->cartActive) {
+		error T("Error in function 'storage_gettocart' (Cart Management)\n" .
+			"You do not have a cart.\n");
+		return;
+	}
 	$messageSender->sendStorageGetToCart($item->{index}, $amount);
 }
 
@@ -4820,7 +4834,7 @@ sub cmdTalk {
 			TF("#  Response\n");
 		for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
 			$msg .= swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+			"@< @*",
 			[$i, $talk{responses}[$i]]);
 		}
 		$msg .= ('-'x40) . "\n";

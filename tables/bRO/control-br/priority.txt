@@ -13,6 +13,7 @@
 # maior prioridade  que todos os monstros não listados neste arquivo, então você
 # atacará Obeaunes antes se for atacado por Obeaunes e qualquer outro
 # monstro que não seja Hidra
-# Exemplo (Remova o # a frente dos nomes caso queira ativa-los)
+#
+# Exemplo (Remova o # a frente dos nomes caso queira ativá-los)
 #Hidra
 #Obeaune

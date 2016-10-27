@@ -417,6 +417,7 @@ sub delHooks {
 # argument: An argument to pass to the hook's callback functions.
 #
 # Call all callback functions which are associated with the hook $hookName.
+# Adding or removing callbacks during callHook will not affect the current call.
 #
 # The hook's callback function is called as follows:
 # <pre class="example">
@@ -428,8 +429,8 @@ sub callHook {
 	my ($hookName, $argument) = @_;
 	my $hookList = $hooks{$hookName};
 	if ($hookList) {
-		my $items = $hookList->getItems();
-		foreach my $entry (@{$items}) {
+		my @items = @{ $hookList->getItems };
+		foreach my $entry (@items) {
 			$entry->[CALLBACK]->($hookName, $argument, $entry->[USER_DATA]);
 		}
 	}
