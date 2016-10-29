@@ -380,7 +380,7 @@ sub manage_event_callbacks {
 	foreach my $automacro_index (keys %{$check_list_hash}) {
 		my ($automacro, $conditions_indexes_array, $check_event_only) = ($self->{Automacro_List}->get($automacro_index), $check_list_hash->{$automacro_index}, 0);
 		
-		debug "[eventMacro] Some conditions will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Normal conditions will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 2;
 		
 		foreach my $condition_index (@{$conditions_indexes_array}) {
 			my $condition = $automacro->{conditionList}->get($condition_index);
@@ -395,9 +395,11 @@ sub manage_event_callbacks {
 		}
 		
 		if ($check_event_only && ($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run) {
-			debug "[eventMacro] Event only condition will now be checked.\n", "eventMacro", 3;
+			debug "[eventMacro] Event only condition will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
+			
 			if ($automacro->check_event_only_condition($event_name, $args)) {
-				debug "[eventMacro] Event only condition is fulfilled.\n", "eventMacro", 3;
+				debug "[eventMacro] Event only condition was fulfilled.\n", "eventMacro", 3;
+				
 				if (!defined $event_only_automacro_call_priority) {
 					debug "[eventMacro] Automacro '".$automacro->get_name."' of priority '".$automacro->get_parameter('priority')."' was added to the top of queue.\n", "eventMacro", 3;
 					$event_only_automacro_call_index = $automacro_index;
@@ -410,12 +412,18 @@ sub manage_event_callbacks {
 					
 				} else {
 					debug "[eventMacro] Automacro '".$automacro->get_name()."' was not added to running queue because there already is a higher priority event only automacro in it (automacro '".$self->{Automacro_List}->get($event_only_automacro_call_index)->get_name."' which has priority '".$event_only_automacro_call_priority."').\n", "eventMacro", 3;
+				
 				}
+				
 			} else {
 				debug "[eventMacro] Event only condition was not fulfilled.\n", "eventMacro", 3;
+				
 			}
-		}
+			
+		} else {
+			debug "[eventMacro] Event only condition will not be checked in automacro '".$automacro->get_name()."' because it is not necessary.\n", "eventMacro", 3;
 		
+		}
 		
 	}
 	

@@ -4,6 +4,7 @@ use strict;
 
 # Import the validators so our child classes do not have to.
 use eventMacro::Validator::NumericComparison;
+use eventMacro::Validator::ListMemberCheck;
 
 sub new {
 	my ($class, $condition_code) = @_;
