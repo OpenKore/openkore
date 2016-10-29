@@ -1631,8 +1631,11 @@ sub parse_command {
 				return "";
 			}
 			$parsed = substitue_variables($val);
-			my $sub1 = $sub."(".$parsed.")";
+			my $sub1 = "main::".$sub."(".$parsed.")";
 			$result = eval($sub1);
+			if ($@) {
+				message "[eventMacro] Error in eval '".$@."'\n";
+			}
 			return unless defined $result;
 			$val = q4rx $val;		
 			$command =~ s/$sub\s*\(\s*$val\s*\)/$result/g
