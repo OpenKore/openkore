@@ -2,7 +2,7 @@ package eventMacro::Condition::CurrentSP;
 
 use strict;
 
-use base 'eventMacro::NumericCondition';
+use base 'eventMacro::Conditiontypes::NumericCondition';
 
 use Globals qw( $char );
 

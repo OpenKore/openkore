@@ -3,7 +3,7 @@ package eventMacro::Condition::AttackEnd;
 use strict;
 use Globals;
 
-use base 'eventMacro::ListCondition';
+use base 'eventMacro::Conditiontypes::ListCondition';
 
 sub _hooks {
 	['attack_end'];

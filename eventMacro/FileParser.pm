@@ -9,7 +9,7 @@ our @EXPORT = qw(parseMacroFile isNewCommandBlock);
 our @EKSPORT_OK = qw(isNewCommandBlock);
 
 use Globals;
-use Utils qw();    # Explicitly import only the functions we use from Utils.
+use Utils qw/existsInList/
 use Utils::Exceptions;
 use List::Util qw(max min sum);
 use Log qw(message error warning debug);

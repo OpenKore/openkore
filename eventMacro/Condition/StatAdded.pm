@@ -2,7 +2,7 @@ package eventMacro::Condition::StatAdded;
 
 use strict;
 
-use base 'eventMacro::ListCondition';
+use base 'eventMacro::Conditiontypes::ListCondition';
 
 my %stat_type = (
 	13 => 'str',
