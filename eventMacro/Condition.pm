@@ -20,6 +20,12 @@ sub new {
 	return $self;
 }
 
+sub validate_condition_status {
+	my ( $self, $result ) = @_;
+	return $result if ($self->is_event_only);
+	$self->{is_Fulfilled} = $result;
+}
+
 sub get_hooks {
 	my ($self) = @_;
 	return $self->{hooks};

@@ -13,9 +13,7 @@ sub _parse_syntax {
 
 sub validate_condition_status {
 	my ( $self ) = @_;
-	my $result = $self->{validator}->validate( $self->_get_val, $self->_get_ref_val );
-	return $result if ($self->is_event_only);
-	$self->{is_Fulfilled} = $result;
+	$self->SUPER::validate_condition_status( $self->{validator}->validate( $self->_get_val, $self->_get_ref_val ) );
 }
 
 # Get the value to compare.

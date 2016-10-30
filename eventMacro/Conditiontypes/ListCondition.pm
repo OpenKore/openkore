@@ -13,9 +13,7 @@ sub _parse_syntax {
 
 sub validate_condition_status {
 	my ( $self, $possible_member ) = @_;
-	my $result = $self->{validator}->validate($possible_member);
-	return $result if ($self->is_event_only);
-	$self->{is_Fulfilled} = $result;
+	$self->SUPER::validate_condition_status( $self->{validator}->validate($possible_member) );
 }
 
 1;
