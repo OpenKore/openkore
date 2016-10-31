@@ -53227,10 +53227,7 @@ Job : ^777777All^000000
 #
 
 
-25005#99_Battle_Manual#
-25006#99_Battle_Manual_Box#
-25007#Beast_Powder#
-25008#Beast_Powder_Box#
+
 17105#
 A box that contains 50 HD Elunium
 Description:
@@ -58671,33 +58668,7 @@ Weapon Level: ^7777772^000000
 Required Level : ^7777771^000000
 Jobs : ^777777Dancer^000000
 #
-20329#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Earth Element Targets^000000
-A straight bladed sword that can be brutally swung just like a baseball bat.
-^CC0000This item is not Refinable^000000
-Class :^777777Two-handed Sword^000000
-Attack Strength: ^777777136^000000
-Weight : ^777777160^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman Class^000000
-#
-20330#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Earth Element Targets^000000
-A set of Arabian style blades that are worn on the back of both hands
-or on the forearms.
-^CC0000This item is not Refinable^000000
-Class : ^777777Katar^000000
-Attack Strength: ^777777146^000000
-Weight : ^77777780^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs : ^777777Assassin^000000
-#
+
 20331#
 ^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -78419,4 +78390,629 @@ Costume Little Devil S Horn
 Costume Assassin Skull Mask
 Costume Costume Hoplite Helmet
 Weight : ^7777771^000000
+#
+
+
+2486#
+^808080A pair of shoes helps the user to melt into the dark easily because it was made up of darkness, the opponent of light. The wizard who made this Shadow Walk imbued a magic to protect the wearer of itself.^000000
+^FFFFFF_^000000
+Type: Shoes
+Defense: 0
+Weight: 200
+Required Level: 75
+Required Job: All Transcendent Jobs except Novice Jobs
+^FFFFFF_^000000
+MDEF + 10
+Adds a X% chance of casting ^0000FFLevel 2 Cloaking^000000 on the user when receiving a magical attack, if a higher level of this skill is known, it will be cast instead.
+#
+2976#
+^808080A spooky red lantern.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 20
+Required Level: 100
+Required Job: All Jobs
+^FFFFFF_^000000
+Max SP - 300
+Enables ^0000FFLevel 1 Sight^000000.
+Adds a X% chance of gaining ^008080Alcohol^000000, ^008080Detrimindexta^000000 or ^008080Karvodailnirol^000000 when a monster is killed.
+#
+11563#
+^808080A warm cup of black tea.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+Restores ^008000100^000000 SP.
+#
+11564#
+^808080A sweet honey biscuit. It is said to be a good match with a cup of tea.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+Restores ^0080001000^000000 HP.
+#
+7640#
+^808080A butterfly-like hairpin. Used for fastening long hair.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
+#
+2977#
+^808080A desperately broken gem bearing both spell power and a grudge.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 10
+Required Level: 110
+Required Job: All Jobs
+^FFFFFF_^000000
+Max SP + 200
+Enables ^0000FFLevel 3 Scream^000000.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Hurt Mind [1]^000000
+^008080Kind Heart [1]^000000
+???
+#
+13442#
+^808080A very old and worn-out parasol. No one knows how old it is, but you can feel magic eminating from it.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Sword
+Attack: 120
+Property: Neutral
+Weight: 50
+Weapon Level: 3
+Required Level: 80
+Required Job: Swordman Jobs, Merchant Jobs, Thief Jobs
+^FFFFFF_^000000
+MATK + 80
+Enables ^0000FFLevel 10 Soul Strike^000000.
+MATK + X per upgrade level of the item.
+#
+18848#
+^808080Nobody knows when this beautiful rose was picked and decorated, but it has still managed to keep its freshness all this time.^000000
+^FFFFFF_^000000
+Type: Headgear
+Position: Upper
+Defense: 0
+Weight: 20
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+MATK + 80
+Restores 100 HP to the user when a monster is killed by a magical attack.
+Drains 50 HP from the user every 5 seconds.
+MATK + X per upgrade level of the item.
+#
+19686#
+^808080A hairband with a Santa motif.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+Adds a X% chance of transforming into Antonio for X TIME when dealing a physical or magical attack.
+#
+7642#
+^808080A coin estimated to be soiled by an old blood stain. It is difficult to guess the age of the stains.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+19687#
+^808080Nobody knows when this beautiful rose was picked and decorated, but it has still managed to keep its freshness all this time.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+7643#
+^808080A sheet of old letter crumpled and bloodstained in places. Managed to recognize the writings. "I may have made my masterpiece, not just some doll. When this letter comes to you, all of my work may be complete. I'd like to show my last work, no, my daughter to you."^000000
+
+Type: Miscellaneous
+Weight: 1
+#
+7644#
+^808080A clean and unsealed letter that was never sent. "I've kept talking to a doll because I cannot stand that this will be the last doll I craft when I started to make the millionth doll. Haha, I'm getting silly as I grow old. Do you understand how I feel, my friend?"^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+19701#
+^808080A hat noblewomen enjoy wearing. It is said the wearers want to drink blacktea.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+2978#
+^808080A gem bearing warm light having cozy and mild spell power in it.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 10
+Required Level: 110
+Required Job: All Jobs
+^FFFFFF_^000000
+Max HP + 500
+Restores 300 HP to the user every 10 seconds.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Hurt Mind [1]^000000
+^008080Kind Heart [1]^000000
+???
+#
+18849#
+^808080A luxurious, gold-rimmed ribbon. It has been with Kimi since it was thrown away by its previous owner.^000000
+^FFFFFF_^000000
+Type: Headgear
+Position: Upper
+Defense: 0
+Weight: 20
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+DEX + 3
+MATK + 40
+Restores 200 HP to the user when a monster is killed by a magical attack.
+Drains 50 HP from the user every 5 seconds.
+MATK + X per upgrade level of the item.
+#
+22534#
+^808080A fast closed small box created by her dreadful loneliness. Now it can be opened.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 100
+#
+16029#
+^808080As a sacred cross-shaped blunt weapon bearing God's blessing, the power for conviction has been reinforced.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Mace
+Attack: 195
+Property: Holy
+Weight: 150
+Weapon Level: 4
+Required Level: 40
+Required Job: Transcendent Acolyte Jobs
+^FFFFFF_^000000
+MATK + 150
+Restores 1 SP to the user when performing a short-ranged attack to Undead race targets.
+Restores 12 SP to the user when a Undead race monster is killed by a short-ranged attack.
+Adds a X% chance of casting ^0000FFLevel 6 Turn Undead^000000 on the target performing a short-ranged attack.
+#
+2980#
+^808080A glove dwelling with dark power. Enables to move dolls vividly by controlling the strands of magical thread connected to the tips of fingers.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 10
+Required Level: 110
+Required Job: All Jobs
+
+Max HP + 500
+Max SP + 200
+Enables ^0000FFLevel 1 Fiber Lock^000000.
+Adds a X% chance of casting ^0000FFLevel X SKILL^000000 on the target when dealing and receiving a physical or magical attack.
+#
+22516#
+^808080The dark red fluid seems to have hardened. It could be mistaken for a beautiful red gem unless you take a closer look. You can feel the ominous power from within.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
+6683#
+^808080A flower with no moisture at all. It would crumble if not handled carefully.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
+#
+20268#
+^808080A sleepy Eclipse with his family. Your head will stay fluffy and warm.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+20255#
+^808080You will feel full of love.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+20329#
+^808080There are no worries in the world when you are wearing this on your head.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+20330#
+^808080A traditional Mexican hat with a wide round brim.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+6999#
+^808080A stone with HP absorption ability.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Upper
+^FFFFFF_^000000
+Adds a 1% chance of restoring 3% of damage as HP when performing a physical attack.
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25016#
+^808080A stone with physical attack power.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Lower
+^FFFFFF_^000000
+ATK + 1%
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25017#
+^808080A stone with magical attack power.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Lower
+^FFFFFF_^000000
+MATK + 1%
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25002#
+^808080A stone that exchanges strength for luck.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+STR - 3
+LUK + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25003#
+^808080A stone that exchanges intelligence for strength.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+STR + 3
+INT - 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25004#
+^808080A stone that exchanges luck for agility.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+AGI + 3
+LUK - 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25005#
+^808080A stone that exchanges dexterity for intelligence.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+INT + 3
+DEX - 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25006#
+^808080A stone that exchanges agility for vitality.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+AGI - 3
+VIT + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25007#
+^808080A stone that exchanges vitality for dexterity.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+VIT - 3
+DEX + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25008#
+^808080A stone that exchanges luck for vitality.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+VIT + 3
+LUK - 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25009#
+^808080A stone that exchanges luck for vitality.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+STR - 3
+AGI + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25010#
+^808080A stone that exchanges agility for dexterity.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+AGI - 3
+DEX + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25011#
+^808080A stone that exchanges intelligence for luck.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+INT - 3
+LUK + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25012#
+^808080A stone that exchanges dexterity for strength.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+STR + 3
+DEX - 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25013#
+^808080A stone that exchanges vitality for intelligence.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+VIT - 3
+INT + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25001#
+^808080A stone with defense.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+DEF + 20
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25014#
+^808080A stone with magical defense.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+MDEF + 4
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25015#
+^808080A stone with experience.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Lower
+^FFFFFF_^000000
+Increases the experience given from monsters by 2%.
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+29013#
+Adds a 1% chance of restoring 3% of damage as HP when performing a physical attack.
+#
+29026#
+DEF + 20
+#
+29024#
+STR - 3
+LUK + 3
+#
+29014#
+STR + 3
+INT - 3
+#
+29022#
+AGI + 3
+LUK - 3
+#
+29016#
+INT + 3
+DEX - 3
+#
+29020#
+AGI - 3
+VIT + 3
+#
+29018#
+VIT - 3
+DEX + 3
+#
+29021#
+VIT + 3
+LUK - 3
+#
+29023#
+STR - 3
+AGI + 3
+#
+29019#
+AGI - 3
+DEX + 3
+#
+29025#
+INT - 3
+LUK + 3
+#
+29015#
+STR + 3
+DEX - 3
+#
+29017#
+VIT - 3
+INT + 3
+#
+29033#
+MDEF + 4
+#
+29027#
+Increases the experience given from monsters by 2%.
+#
+29029#
+ATK + 1%
+#
+29031#
+MATK + 1%
+#
+9101#
+^808080An egg where the cute pet Scatleton is sleeping.^000000
+^FF0000Once the pet egg has been named, it can never be undone. This is marked by a Beloved prefix.^000000
+^FFFFFF_^000000
+Type: Monster Egg
+Weight: 0
+Food Required: ITEM
+^FFFFFF_^000000
+^800080While Summoned^000000
+Increases the recovery rate of ^008080ITEM^000000 consumables by 1031%.
+#
+10040#
+^808080A red necklace with a pretty bell. It will go well with a small animal.^000000
+^FFFFFF_^000000
+Type: Pet Equipment
+Weight: 0
+Required Monster: Scatleton
+#
+20397#
+^808080A helmet that can transform you into Jakk. It is so precise that even Jakk¡®s friends are tricked. The way it is produced is confidential...^000000
+^FFFFFF_^000000
+Type: Headgear
+Position: Middle, Lower
+Defense: 0
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+Adds a 3.1% chance of transforming into Jakk for 10 seconds when receiving a physical or magical attack.
+#
+25245#
+^808080There are small bones that seem to belong to a small animal. Among the bones, there is a necklace with a red bell.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+25133#
+^808080Clean and dry stem. Suitable as a Halloween decoration!^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+11605#
+^808080A sweet chocolate is found inside this cripy butter scented cookie. Take caution as it might fly away.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 5
+#
+
+25132#
+The most important decoration item for Halloween
+A candle inside of pumpkin makes more real Halloween mood.
+Weight : ^7777770^000000
 #
