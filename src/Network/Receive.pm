@@ -2031,6 +2031,48 @@ sub actor_status_active {
 	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
 #	($args->{actor} = Actor::get($ID))->setStatus($status, 1, $tick == 9999 ? undef : $tick, $args->{unknown1}); # need test for '08FF'
 	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick == 9999 ? undef : $tick);
+	#Shield Spell Buffs
+	if ($type == 396) {
+		if ($flag == 0) {
+			if (exists $args->{actor}->{statuses}{$statusHandle{'2014'}}) {
+				$args->{actor}->setStatus($statusHandle{'2014'}, 0);
+			} elsif (exists $args->{actor}->{statuses}{$statusHandle{'2015'}}) {
+				$args->{actor}->setStatus($statusHandle{'2015'}, 0);
+			}
+		} elsif (defined $unknown2) {
+			if ($unknown2 == 2) {
+				if (exists $args->{actor}->{statuses}{$statusHandle{'2015'}}) {
+					$args->{actor}->setStatus($statusHandle{'2015'}, 0);
+				}
+				$args->{actor}->setStatus($statusHandle{'2014'}, $flag, $tick == 9999 ? undef : $tick);
+			} elsif ($unknown2 == 3) {
+				if (exists $args->{actor}->{statuses}{$statusHandle{'2014'}}) {
+					$args->{actor}->setStatus($statusHandle{'2014'}, 0);
+				}
+				$args->{actor}->setStatus($statusHandle{'2015'}, $flag, $tick == 9999 ? undef : $tick);
+			}
+		}
+	} elsif ($type == 398) {
+		if ($flag == 0) {
+			if (exists $args->{actor}->{statuses}{$statusHandle{'2016'}}) {
+				$args->{actor}->setStatus($statusHandle{'2016'}, 0);
+			} elsif (exists $args->{actor}->{statuses}{$statusHandle{'2017'}}) {
+				$args->{actor}->setStatus($statusHandle{'2017'}, 0);
+			}
+		} elsif (defined $unknown2) {
+			if ($unknown2 == 1) {
+				if (exists $args->{actor}->{statuses}{$statusHandle{'2017'}}) {
+					$args->{actor}->setStatus($statusHandle{'2017'}, 0);
+				}
+				$args->{actor}->setStatus($statusHandle{'2016'}, $flag, $tick == 9999 ? undef : $tick);
+			} elsif ($unknown2 == 2) {
+				if (exists $args->{actor}->{statuses}{$statusHandle{'2016'}}) {
+					$args->{actor}->setStatus($statusHandle{'2016'}, 0);
+				}
+				$args->{actor}->setStatus($statusHandle{'2017'}, $flag, $tick == 9999 ? undef : $tick);
+			}
+		}
+	}
 	# Rolling Cutter counters.
 	if ( $type == 0x153 && $char->{spirits} != $unknown1 ) {
 		$char->{spirits} = $unknown1 || 0;
