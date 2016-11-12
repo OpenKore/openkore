@@ -79016,3 +79016,247 @@ The most important decoration item for Halloween
 A candle inside of pumpkin makes more real Halloween mood.
 Weight : ^7777770^000000
 #
+
+
+
+20377#
+Fly high and easy to find dangerous spot.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20378#
+Schwartzvald's pilot helm.
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper/Middle/Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20453#
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20454#
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20761#
+A wing for happy mood.
+Class : ^777777Costume^000000
+Location : ^777777Garment ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31070#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31069#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31068#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31067#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31066#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31065#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31064#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31063#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31092#
+Gothic style bunny hat.
+Elegant and cute stylish hat.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20227#
+^ff0000Cannot trade with other accounts.^000000
+Puppy Hat
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20160#
+PecoPoco Fried Egg
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19980#
+Silver question mark.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19978#
+Silver exclamation mark.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19979#
+Golden question mark.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19977#
+Golden exclamation mark.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19974#
+Camouflage Rabbit Hood? Where this came from?
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19969#
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19939#
+A big Antler
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20341#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20356#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20355#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20354#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20353#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20352#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20351#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20350#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+
+17751#
+Contains one of the following when opened.
+Costume Puppy Hat
+Costume Fried Egg Hat
+Costume Silver Question
+Costume Silver Exclamation
+Costume Golden Question
+Costume Golden Exclamation
+Costume Camouflage RabbitHood
+Costume Blazing Soul
+Costume Antler
+
+#
