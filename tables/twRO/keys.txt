@@ -1,5 +1,5 @@
-# Client Date <20161107>
+# Client Date <20161114>
 # PacketExtractor by BryanWai
-0x1574284F
-0x441B0E81
-0x01B40105
+0x67482172
+0x667315B4
+0x2710443C
