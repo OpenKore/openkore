@@ -8838,3 +8838,4 @@
 20351#Costume_Cowlick_Hairstyle_Green#
 20350#Costume_Cowlick_Hairstyle_Yellow#
 17751#November_Costume_Pack#
+17752#Winter_Wonder_Time_Lucky_Box#
