@@ -78970,7 +78970,7 @@ Weight: 0
 Food Required: ITEM
 ^FFFFFF_^000000
 ^800080While Summoned^000000
-Increases the recovery rate of ^008080ITEM^000000 consumables by 1031%.
+Increases the recovery rate of ^008080ITEM^000000 consumables by 100%.
 #
 10040#
 ^808080A red necklace with a pretty bell. It will go well with a small animal.^000000
@@ -79259,4 +79259,29 @@ Costume Camouflage RabbitHood
 Costume Blazing Soul
 Costume Antler
 
+#
+
+
+17752#
+Winter Wonder time lucky boxes contains one of the following items:
+Common:
+Bloody Dead Branch x 5
+BattlemanualX3 x 6
+HE Bubblegum x 6
+Uncommon:
+Crown of Deceit
+Holy Marching Hat
+CD In Mouth
+Gangster Scarf
+Deviling Hat
+Rare:
+Miniglasses [1]
+Heroic Backpack
+Fallen Angelwing
+Arch Angelwing
+Amistr Bag
+Prize Medal x 2000
+KVM Badge x 200
+Special (extra rare):
+Kafra Blossom Card
 #
