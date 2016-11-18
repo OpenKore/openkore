@@ -130,9 +130,9 @@ sub create_automacro_list {
 	my ($self, $automacro) = @_;
 	my %modulesLoaded;
 	AUTOMACRO: while (my ($name,$value) = each %{$automacro}) {
-		my ($currentAutomacro, %currentConditions, %currentParameters, $eventOnly, $eventOnlyName);
-		$eventOnly = 0;
-		$eventOnlyName = undef;
+		my ($currentAutomacro, %currentConditions, %currentParameters, $event_type_condition, $event_type_name);
+		$event_type_condition = 0;
+		$event_type_name = undef;
 		
 		####################################
 		#####No Conditions Check
@@ -245,14 +245,14 @@ sub create_automacro_list {
 				next AUTOMACRO;
 			}
 			
-			if ($condition_object->is_event_only()) {
-				if ($eventOnly) {
-					error "[eventMacro] Conditions '".$condition->{'key'}."' and '".$eventOnlyName."' are of the event only type and can only be used once per automacro.\n";
-					warning "[eventMacro] Ignoring automacro '$name' (multiple event only condition)\n";
+			if ($condition_object->condition_type == EVENT_TYPE) {
+				if ($event_type_condition) {
+					error "[eventMacro] Conditions '".$condition->{'key'}."' and '".$event_type_name."' are of the event type and can only be used once per automacro.\n";
+					warning "[eventMacro] Ignoring automacro '$name' (multiple event conditions)\n";
 					next AUTOMACRO;
 				} else {
-					$eventOnly = 1;
-					$eventOnlyName = $condition->{'key'};
+					$event_type_condition = 1;
+					$event_type_name = $condition->{'key'};
 				}
 			}
 			
@@ -325,7 +325,7 @@ sub check_all_conditions {
 	my ($self) = @_;
 	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
 		foreach my $condition (@{$automacro->{conditionList}->getItems()}) {
-			next if ($condition->is_event_only());
+			next if ($condition->condition_type == EVENT_TYPE);
 			$automacro->check_normal_condition($condition->{index})
 		}
 	}
@@ -364,8 +364,8 @@ sub manage_event_callbacks {
 	my $event_name = shift;
 	my $args = shift;
 	
-	my $event_only_automacro_call_index;
-	my $event_only_automacro_call_priority;
+	my $event_type_automacro_call_index;
+	my $event_type_automacro_call_priority;
 	
 	debug "[eventMacro] Event Happenned '".$event_name."'\n", "eventMacro", 2;
 	
@@ -378,40 +378,40 @@ sub manage_event_callbacks {
 	}
 	
 	foreach my $automacro_index (keys %{$check_list_hash}) {
-		my ($automacro, $conditions_indexes_array, $check_event_only) = ($self->{Automacro_List}->get($automacro_index), $check_list_hash->{$automacro_index}, 0);
+		my ($automacro, $conditions_indexes_array, $check_event_type) = ($self->{Automacro_List}->get($automacro_index), $check_list_hash->{$automacro_index}, 0);
 		
 		debug "[eventMacro] Normal conditions will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 2;
 		
 		foreach my $condition_index (@{$conditions_indexes_array}) {
 			my $condition = $automacro->{conditionList}->get($condition_index);
 			
-			if ($condition->is_event_only()) {
-				debug "[eventMacro] Skipping condition '".$condition->get_name."' of index '".$condition->{listIndex}."' because it is of event only type.\n", "eventMacro", 3;
-				$check_event_only = 1;
+			if ($condition->condition_type == EVENT_TYPE) {
+				debug "[eventMacro] Skipping condition '".$condition->get_name."' of index '".$condition->{listIndex}."' because it is of the event type.\n", "eventMacro", 3;
+				$check_event_type = 1;
 				next;
 			} else {
 				$automacro->check_normal_condition($condition_index, $event_name, $args);
 			}
 		}
 		
-		if ($check_event_only && ($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run) {
+		if ($check_event_type && ($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run) {
 			debug "[eventMacro] Event only condition will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 			
-			if ($automacro->check_event_only_condition($event_name, $args)) {
+			if ($automacro->check_event_type_condition($event_name, $args)) {
 				debug "[eventMacro] Event only condition was fulfilled.\n", "eventMacro", 3;
 				
-				if (!defined $event_only_automacro_call_priority) {
+				if (!defined $event_type_automacro_call_priority) {
 					debug "[eventMacro] Automacro '".$automacro->get_name."' of priority '".$automacro->get_parameter('priority')."' was added to the top of queue.\n", "eventMacro", 3;
-					$event_only_automacro_call_index = $automacro_index;
-					$event_only_automacro_call_priority = $automacro->get_parameter('priority');
+					$event_type_automacro_call_index = $automacro_index;
+					$event_type_automacro_call_priority = $automacro->get_parameter('priority');
 				
-				} elsif ($event_only_automacro_call_priority >= $automacro->get_parameter('priority')) {
-					debug "[eventMacro] Automacro '".$automacro->get_name."' of priority '".$automacro->get_parameter('priority')."' was added to the top of queue and took place of automacro '".$self->{Automacro_List}->get($event_only_automacro_call_index)->get_name."' which has priority '".$event_only_automacro_call_priority."'.\n", "eventMacro", 3;
-					$event_only_automacro_call_index = $automacro_index;
-					$event_only_automacro_call_priority = $automacro->get_parameter('priority');
+				} elsif ($event_type_automacro_call_priority >= $automacro->get_parameter('priority')) {
+					debug "[eventMacro] Automacro '".$automacro->get_name."' of priority '".$automacro->get_parameter('priority')."' was added to the top of queue and took place of automacro '".$self->{Automacro_List}->get($event_type_automacro_call_index)->get_name."' which has priority '".$event_type_automacro_call_priority."'.\n", "eventMacro", 3;
+					$event_type_automacro_call_index = $automacro_index;
+					$event_type_automacro_call_priority = $automacro->get_parameter('priority');
 					
 				} else {
-					debug "[eventMacro] Automacro '".$automacro->get_name()."' was not added to running queue because there already is a higher priority event only automacro in it (automacro '".$self->{Automacro_List}->get($event_only_automacro_call_index)->get_name."' which has priority '".$event_only_automacro_call_priority."').\n", "eventMacro", 3;
+					debug "[eventMacro] Automacro '".$automacro->get_name()."' was not added to running queue because there already is a higher priority event only automacro in it (automacro '".$self->{Automacro_List}->get($event_type_automacro_call_index)->get_name."' which has priority '".$event_type_automacro_call_priority."').\n", "eventMacro", 3;
 				
 				}
 				
@@ -427,9 +427,9 @@ sub manage_event_callbacks {
 		
 	}
 	
-	if (defined $event_only_automacro_call_index) {
+	if (defined $event_type_automacro_call_index) {
 	
-		my $automacro = $self->{Automacro_List}->get($event_only_automacro_call_index);
+		my $automacro = $self->{Automacro_List}->get($event_type_automacro_call_index);
 		
 		message "[eventMacro] Hook '".$event_name."' activated automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
 		
@@ -449,7 +449,7 @@ sub AI_pre_checker {
 	
 		my $automacro = $self->{Automacro_List}->get($index);
 		
-		next if $automacro->has_event_only_condition();
+		next if $automacro->has_event_type_condition();
 		
 		next unless $automacro->can_be_run;
 		

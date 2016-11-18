@@ -15,13 +15,8 @@ sub validate_condition_status {
 	$self->SUPER::validate_condition_status(lc($monsters_old{$args->{ID}}{'name'}));
 }
 
-sub is_event_only {
-	1;
-}
-
-#should never be called
-sub is_fulfilled {
-	0;
+sub condition_type {
+	EVENT_TYPE;
 }
 
 1;

@@ -13,13 +13,13 @@ sub new {
 	$self->{name} = $name;
 	
 	$self->{conditionList} = new eventMacro::Lists;
-	$self->{event_only_condition_index} = undef;
+	$self->{event_type_condition_index} = undef;
 	$self->{hooks} = {};
 	$self->{variables} = {};
 	$self->create_conditions_list( $conditions );
 	
 	$self->{number_of_false_conditions} = $self->{conditionList}->size;
-	if (defined $self->{event_only_condition_index}) {
+	if (defined $self->{event_type_condition_index}) {
 		$self->{number_of_false_conditions}--;
 	}
 	
@@ -124,21 +124,21 @@ sub create_conditions_list {
 			foreach my $variable ( @{ $cond->get_variables() } ) {
 				push ( @{ $self->{variables}{$variable} }, $cond->{listIndex} );
 			}
-			if ($cond->is_event_only()) {
-				$self->{event_only_condition_index} = $cond->{listIndex};
+			if ($cond->condition_type == EVENT_TYPE) {
+				$self->{event_type_condition_index} = $cond->{listIndex};
 			}
 		}
 	}
 }
 
-sub has_event_only_condition {
+sub has_event_type_condition {
 	my ($self) = @_;
-	return defined $self->{event_only_condition_index};
+	return defined $self->{event_type_condition_index};
 }
 
-sub get_event_only_condition_index {
+sub get_event_type_condition_index {
 	my ($self) = @_;
-	return $self->{event_only_condition_index};
+	return $self->{event_type_condition_index};
 }
 
 sub check_normal_condition {
@@ -161,14 +161,14 @@ sub check_normal_condition {
 	}
 }
 
-sub check_event_only_condition {
+sub check_event_type_condition {
 	my ($self, $event_name, $args) = @_;
 	
-	my $condition = $self->{conditionList}->get($self->{event_only_condition_index});
+	my $condition = $self->{conditionList}->get($self->{event_type_condition_index});
 	
 	my $return = $condition->validate_condition_status($event_name, $args);
 	
-	debug "[eventMacro] Checking event only condition '".$condition->get_name()."' of index '".$condition->{listIndex}."' in automacro '".$self->{name}."', fulfilled value: '".$return."'.\n", "eventMacro", 3;
+	debug "[eventMacro] Checking event type condition '".$condition->get_name()."' of index '".$condition->{listIndex}."' in automacro '".$self->{name}."', fulfilled value: '".$return."'.\n", "eventMacro", 3;
 
 	return $return;
 }
