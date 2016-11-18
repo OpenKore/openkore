@@ -1,6 +1,7 @@
 package eventMacro::Condition;
 
 use strict;
+use Utils;
 
 # Import the validators so our child classes do not have to.
 use eventMacro::Validator::NumericComparison;
@@ -49,6 +50,11 @@ sub is_unique_condition {
 sub is_fulfilled {
 	my ($self) = @_;
 	return $self->{is_Fulfilled};
+}
+
+# Default: No variables.
+sub get_new_variable_list {
+	{};
 }
 
 # Default: No hooks.
