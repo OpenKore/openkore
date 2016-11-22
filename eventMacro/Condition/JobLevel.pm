@@ -20,4 +20,13 @@ sub validate_condition_status {
 	$self->SUPER::validate_condition_status;
 }
 
+sub get_new_variable_list {
+	my ($self) = @_;
+	my $new_variables;
+	
+	$new_variables->{".JobLevelLast"} = $char->{lv_job};
+	
+	return $new_variables;
+}
+
 1;

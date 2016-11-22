@@ -26,11 +26,11 @@ sub get_new_variable_list {
 	
 	my $actor = $monsters_old{$self->{id}};
 	
-	$new_variables->{".lastMonster"} = $actor->{name};
-	$new_variables->{".lastMonsterPos"} = sprintf("%d %d", $actor->{pos_to}{x}, $actor->{pos_to}{y});
-	$new_variables->{".lastMonsterDist"} = sprintf("%.1f",distance(calcPosition($actor), calcPosition($char)));
-	$new_variables->{".lastMonsterID"} = $actor->{binID};
-	$new_variables->{".lastMonsterBinID"} = $actor->{binType};
+	$new_variables->{".AttackEndLastName"} = $actor->{name};
+	$new_variables->{".AttackEndLastPos"} = sprintf("%d %d %s", $actor->{pos_to}{x}, $actor->{pos_to}{y}, $field->baseName);
+	$new_variables->{".AttackEndLastDist"} = sprintf("%.1f",distance(calcPosition($actor), calcPosition($char)));
+	$new_variables->{".AttackEndLastID"} = $actor->{binID};
+	$new_variables->{".AttackEndLastBinID"} = $actor->{binType};
 	
 	return $new_variables;
 }

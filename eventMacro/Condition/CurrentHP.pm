@@ -25,4 +25,14 @@ sub validate_condition_status {
 	$self->SUPER::validate_condition_status;
 }
 
+sub get_new_variable_list {
+	my ($self) = @_;
+	my $new_variables;
+	
+	$new_variables->{".CurrentHPLast"} = $char->{hp};
+	$new_variables->{".CurrentHPLastPercent"} = ($char->{hp} / $char->{hp_max}) * 100;
+	
+	return $new_variables;
+}
+
 1;
