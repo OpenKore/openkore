@@ -74,9 +74,12 @@ sub onconfigModify {
 
 sub parseAndHook {
 	my $file = shift;
+	debug "[eventMacro] Starting to parse file '$file'\n", "eventMacro", 2;
 	if (defined $eventMacro) {
+		debug "[eventMacro] Plugin global variable '\$eventMacro' is already defined, this must be a file reload. Unloading all current config.\n", "eventMacro", 2;
 		$eventMacro->unload();
 		undef $eventMacro;
+		debug "[eventMacro] Plugin global variable '\$eventMacro' was set to undefined.\n", "eventMacro", 2;
 	}
 	$eventMacro = new eventMacro::Core($file);
 	if (defined $eventMacro) {
