@@ -130,9 +130,9 @@ sub create_automacro_list {
 	my ($self, $automacro) = @_;
 	my %modulesLoaded;
 	AUTOMACRO: while (my ($name,$value) = each %{$automacro}) {
-		my ($currentAutomacro, %currentConditions, %currentParameters, $event_type_condition, $event_type_name);
-		$event_type_condition = 0;
-		$event_type_name = undef;
+		my ($currentAutomacro, %currentConditions, %currentParameters, $has_event_type_condition, $event_type_condition_name);
+		$has_event_type_condition = 0;
+		$event_type_condition_name = undef;
 		
 		####################################
 		#####No Conditions Check
@@ -246,13 +246,13 @@ sub create_automacro_list {
 			}
 			
 			if ($condition_object->condition_type == EVENT_TYPE) {
-				if ($event_type_condition) {
-					error "[eventMacro] Conditions '".$condition->{'key'}."' and '".$event_type_name."' are of the event type and can only be used once per automacro.\n";
+				if ($has_event_type_condition) {
+					error "[eventMacro] Conditions '".$condition->{'key'}."' and '".$event_type_condition_name."' are of the event type and can only be used once per automacro.\n";
 					warning "[eventMacro] Ignoring automacro '$name' (multiple event type conditions)\n";
 					next AUTOMACRO;
 				} else {
-					$event_type_condition = 1;
-					$event_type_name = $condition->{'key'};
+					$has_event_type_condition = 1;
+					$event_type_condition_name = $condition->{'key'};
 				}
 			}
 			
