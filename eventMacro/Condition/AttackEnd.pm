@@ -3,6 +3,8 @@ package eventMacro::Condition::AttackEnd;
 use strict;
 use Globals;
 
+use eventMacro::Data;
+
 use base 'eventMacro::Conditiontypes::ListCondition';
 
 my $id;
@@ -34,13 +36,8 @@ sub get_new_variable_list {
 	return $new_variables;
 }
 
-sub is_event_only {
-	1;
-}
-
-#should never be called
-sub is_fulfilled {
-	0;
+sub condition_type {
+	EVENT_TYPE;
 }
 
 1;

@@ -1,4 +1,4 @@
-package eventMacro::Conditiontypes::Conditiontypes::NumericCondition;
+package eventMacro::Conditiontypes::NumericCondition;
 
 use strict;
 
