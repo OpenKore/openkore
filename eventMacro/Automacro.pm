@@ -203,8 +203,8 @@ sub get_new_macro_variables {
 	my %new_variables;
 	foreach my $condition (@{$self->{conditionList}->getItems()}) {
 		my $new_variables = $condition->get_new_variable_list;
-		next unless (defined $new_variables);
-		foreach my $variable_name ( @{ keys %{ $new_variables } } ) {
+		my @variable_names = keys %{ $new_variables };
+		foreach my $variable_name (@variable_names) {
 			my $variable_value = $new_variables->{$variable_name};
 			$new_variables{$variable_name} = $variable_value;
 		}

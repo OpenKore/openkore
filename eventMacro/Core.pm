@@ -474,7 +474,9 @@ sub call_macro {
 	
 	my $new_variables = $automacro->get_new_macro_variables;
 	
-	foreach my $variable_name ( @{ keys %{ $new_variables } } ) {
+	my @variable_names = keys %{ $new_variables };
+	
+	foreach my $variable_name (@variable_names) {
 		my $variable_value = $new_variables->{$variable_name};
 		$self->set_var($variable_name, $variable_value, 0);
 	}

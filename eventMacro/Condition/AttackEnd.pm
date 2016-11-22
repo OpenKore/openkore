@@ -2,12 +2,11 @@ package eventMacro::Condition::AttackEnd;
 
 use strict;
 use Globals;
+use Utils;
 
 use eventMacro::Data;
 
 use base 'eventMacro::Conditiontypes::ListCondition';
-
-my $id;
 
 sub _hooks {
 	['attack_end'];
@@ -16,16 +15,16 @@ sub _hooks {
 sub validate_condition_status {
 	my ( $self, $event_name, $args ) = @_;
 	
-	$id = $args->{ID};
+	$self->{id} = $args->{ID};
 	
-	$self->SUPER::validate_condition_status(lc($monsters_old{$id}{'name'}));
+	$self->SUPER::validate_condition_status(lc($monsters_old{$self->{id}}{'name'}));
 }
 
 sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	my $actor = $monsters_old{$id};
+	my $actor = $monsters_old{$self->{id}};
 	
 	$new_variables->{".lastMonster"} = $actor->{name};
 	$new_variables->{".lastMonsterPos"} = sprintf("%d %d", $actor->{pos_to}{x}, $actor->{pos_to}{y});

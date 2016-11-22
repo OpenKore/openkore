@@ -1,7 +1,6 @@
 package eventMacro::Condition;
 
 use strict;
-use Utils;
 use eventMacro::Data;
 
 # Import the validators so our child classes do not have to.
