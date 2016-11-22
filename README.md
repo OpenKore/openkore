@@ -14,7 +14,7 @@ TODO:
 9 - Pull request this project to openkore offical github so it can be analyzed by openkore community
 
 1.1 - A list of condition I think of creating and their probable condition types:
-Event-Only
+Event-type
 mapchange - inList
 spell - inList
 area_spell - inList
@@ -27,7 +27,7 @@ systemmsg - simple/double regex +- distance
 
 
 
-State-Only
+State-type
 map - inList
 coordinates - Numeric
 location - inList + Numeric

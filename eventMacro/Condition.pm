@@ -1,6 +1,7 @@
 package eventMacro::Condition;
 
 use strict;
+use eventMacro::Data;
 
 # Import the validators so our child classes do not have to.
 use eventMacro::Validator::NumericComparison;
@@ -22,7 +23,7 @@ sub new {
 
 sub validate_condition_status {
 	my ( $self, $result ) = @_;
-	return $result if ($self->is_event_only);
+	return $result if ($self->condition_type == EVENT_TYPE);
 	$self->{is_Fulfilled} = $result;
 }
 
@@ -48,6 +49,10 @@ sub is_unique_condition {
 
 sub is_fulfilled {
 	my ($self) = @_;
+	
+	#Should never happen
+	return 0 if ($self->condition_type == EVENT_TYPE);
+	
 	return $self->{is_Fulfilled};
 }
 
@@ -61,9 +66,10 @@ sub _parse_syntax {
 	1;
 }
 
-# Default: No event_only
-sub is_event_only {
-	0;
+# Default: State type
+sub condition_type {
+	my ($self) = @_;
+	STATE_TYPE;
 }
 
 1;

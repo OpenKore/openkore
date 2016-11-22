@@ -2,6 +2,8 @@ package eventMacro::Condition::StatAdded;
 
 use strict;
 
+use eventMacro::Data;
+
 use base 'eventMacro::Conditiontypes::ListCondition';
 
 my %stat_type = (
@@ -44,13 +46,8 @@ sub validate_condition_status {
 	$self->SUPER::validate_condition_status($stat_type{$args->{type}});
 }
 
-sub is_event_only {
-	1;
-}
-
-#should never be called
-sub is_fulfilled {
-	0;
+sub condition_type {
+	EVENT_TYPE;
 }
 
 1;
