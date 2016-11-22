@@ -248,7 +248,7 @@ sub create_automacro_list {
 			if ($condition_object->condition_type == EVENT_TYPE) {
 				if ($event_type_condition) {
 					error "[eventMacro] Conditions '".$condition->{'key'}."' and '".$event_type_name."' are of the event type and can only be used once per automacro.\n";
-					warning "[eventMacro] Ignoring automacro '$name' (multiple event conditions)\n";
+					warning "[eventMacro] Ignoring automacro '$name' (multiple event type conditions)\n";
 					next AUTOMACRO;
 				} else {
 					$event_type_condition = 1;
@@ -395,10 +395,10 @@ sub manage_event_callbacks {
 		}
 		
 		if ($check_event_type && ($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run) {
-			debug "[eventMacro] Event only condition will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
+			debug "[eventMacro] Condition of event type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 			
 			if ($automacro->check_event_type_condition($event_name, $args)) {
-				debug "[eventMacro] Event only condition was fulfilled.\n", "eventMacro", 3;
+				debug "[eventMacro] Condition of event type was fulfilled.\n", "eventMacro", 3;
 				
 				if (!defined $event_type_automacro_call_priority) {
 					debug "[eventMacro] Automacro '".$automacro->get_name."' of priority '".$automacro->get_parameter('priority')."' was added to the top of queue.\n", "eventMacro", 3;
@@ -416,12 +416,12 @@ sub manage_event_callbacks {
 				}
 				
 			} else {
-				debug "[eventMacro] Event only condition was not fulfilled.\n", "eventMacro", 3;
+				debug "[eventMacro] Condition of event type was not fulfilled.\n", "eventMacro", 3;
 				
 			}
 			
 		} else {
-			debug "[eventMacro] Event only condition will not be checked in automacro '".$automacro->get_name()."' because it is not necessary.\n", "eventMacro", 3;
+			debug "[eventMacro] Condition of event type will not be checked in automacro '".$automacro->get_name()."' because it is not necessary.\n", "eventMacro", 3;
 		
 		}
 		
