@@ -56,6 +56,11 @@ sub is_fulfilled {
 	return $self->{is_Fulfilled};
 }
 
+# Default: No variables.
+sub get_new_variable_list {
+	{};
+}
+
 # Default: No hooks.
 sub _hooks {
 	[];

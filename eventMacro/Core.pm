@@ -345,12 +345,13 @@ sub get_var {
 }
 
 sub set_var {
-	my ($self, $variable_name, $variable_value) = @_;
+	my ($self, $variable_name, $variable_value, $check_callbacks) = @_;
 	if ($variable_value eq 'undef') {
 		$self->{Variable_List_Hash}{$variable_name} = undef;
 	} else {
 		$self->{Variable_List_Hash}{$variable_name} = $variable_value;
 	}
+	return if (defined $check_callbacks && $check_callbacks == 0);
 	if (exists $self->{Event_Related_Variables}{$variable_name}) {
 		$self->manage_event_callbacks("variable_event", {variable_name => $variable_name, variable_value => $variable_value});
 	}
@@ -478,6 +479,15 @@ sub call_macro {
 	$automacro->set_timeout_time(time);
 	$automacro->disable() if $automacro->get_parameter('run-once');
 	
+	my $new_variables = $automacro->get_new_macro_variables;
+	
+	my @variable_names = keys %{ $new_variables };
+	
+	foreach my $variable_name (@variable_names) {
+		my $variable_value = $new_variables->{$variable_name};
+		$self->set_var($variable_name, $variable_value, 0);
+	}
+	
 	$self->{Macro_Runner} = new eventMacro::Runner(
 		$automacro->get_parameter('call'),
 		$automacro->get_parameter('repeat'),
@@ -490,8 +500,6 @@ sub call_macro {
 	);
 	
 	if (defined $self->{Macro_Runner}) {
-		$self->set_var('.caller', $automacro->get_name());
-		
 		my $iterate_macro_sub = sub { $self->iterate_macro(); };
 		$self->{mainLoop_Hook_Handle} = Plugins::addHook( 'mainLoop_pre', $iterate_macro_sub, undef );
 	} else {

@@ -24,4 +24,14 @@ sub validate_condition_status {
 	$self->SUPER::validate_condition_status;
 }
 
+sub get_new_variable_list {
+	my ($self) = @_;
+	my $new_variables;
+	
+	$new_variables->{".CharCurrentWeightLast"} = $char->{weight};
+	$new_variables->{".CharCurrentWeightLastPercent"} = ($char->{weight} / $char->{weight_max}) * 100;
+	
+	return $new_variables;
+}
+
 1;

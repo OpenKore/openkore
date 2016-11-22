@@ -1,6 +1,7 @@
 package eventMacro::Condition::StatAdded;
 
 use strict;
+use Globals;
 
 use eventMacro::Data;
 
@@ -24,8 +25,6 @@ my %possible_values = (
 	'luk' => 1
 );
 
-use Log qw(message error warning debug);
-
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
@@ -43,7 +42,19 @@ sub _hooks {
 sub validate_condition_status {
 	my ( $self, $event_name, $args ) = @_;
 	
-	$self->SUPER::validate_condition_status($stat_type{$args->{type}});
+	$self->{stat} = $stat_type{$args->{type}};
+	
+	$self->SUPER::validate_condition_status($self->{stat});
+}
+
+sub get_new_variable_list {
+	my ($self) = @_;
+	my $new_variables;
+	
+	$new_variables->{".StatAddedLast"} = $self->{stat};
+	$new_variables->{".StatAddedLastQuantity"} = $char->{$self->{stat}};
+	
+	return $new_variables;
 }
 
 sub condition_type {
