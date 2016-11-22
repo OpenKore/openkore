@@ -143,7 +143,7 @@ sub get_event_type_condition_index {
 	return $self->{event_type_condition_index};
 }
 
-sub check_normal_condition {
+sub check_state_type_condition {
 	my ($self, $condition_index, $event_name, $args) = @_;
 	
 	my $condition = $self->{conditionList}->get($condition_index);

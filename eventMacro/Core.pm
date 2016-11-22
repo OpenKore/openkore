@@ -323,11 +323,18 @@ sub create_callbacks {
 
 sub check_all_conditions {
 	my ($self) = @_;
-	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
-		foreach my $condition (@{$automacro->{conditionList}->getItems()}) {
+	debug "[eventMacro] Starting to check all state type conditions\n", "eventMacro", 2;
+	my @automacros = @{ $self->{Automacro_List}->getItems() };
+	foreach my $automacro (@automacros) {
+		debug "[eventMacro] Checking all state type conditions in automacro '".$automacro->get_name."'\n", "eventMacro", 2;
+		my @conditions = @{ $automacro->{conditionList}->getItems() };
+		foreach my $condition (@conditions) {
 			next if ($condition->condition_type == EVENT_TYPE);
-			$automacro->check_normal_condition($condition->{index})
+			debug "[eventMacro] Checking condition of index '".$condition->{listIndex}."' in automacro '".$automacro->get_name."'\n", "eventMacro", 2;
+			$automacro->check_state_type_condition($condition->{listIndex})
+			
 		}
+		
 	}
 }
 
@@ -381,7 +388,7 @@ sub manage_event_callbacks {
 	foreach my $automacro_index (keys %{$check_list_hash}) {
 		my ($automacro, $conditions_indexes_array, $check_event_type) = ($self->{Automacro_List}->get($automacro_index), $check_list_hash->{$automacro_index}, 0);
 		
-		debug "[eventMacro] Normal conditions will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Conditions of state type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 2;
 		
 		foreach my $condition_index (@{$conditions_indexes_array}) {
 			my $condition = $automacro->{conditionList}->get($condition_index);
@@ -391,7 +398,7 @@ sub manage_event_callbacks {
 				$check_event_type = 1;
 				next;
 			} else {
-				$automacro->check_normal_condition($condition_index, $event_name, $args);
+				$automacro->check_state_type_condition($condition_index, $event_name, $args);
 			}
 		}
 		
