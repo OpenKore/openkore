@@ -4,7 +4,9 @@ use strict;
 use Globals;
 use Log qw(message error warning debug);
 use Utils;
+
 use eventMacro::Condition;
+use eventMacro::Data;
 
 sub new {
 	my ($class, $name, $conditions, $parameters) = @_;

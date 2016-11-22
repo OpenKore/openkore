@@ -4,7 +4,7 @@ use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw($eventMacro @perl_name %parameters $macroKeywords CHECKING_AUTOMACROS PAUSED_BY_EXCLUSIVE_MACRO PAUSE_FORCED_BY_USER CHECKING_FORCED_BY_USER);
+our @EXPORT = qw($eventMacro @perl_name %parameters $macroKeywords CHECKING_AUTOMACROS PAUSED_BY_EXCLUSIVE_MACRO PAUSE_FORCED_BY_USER CHECKING_FORCED_BY_USER STATE_TYPE EVENT_TYPE);
 
 our $eventMacro;
 our @perl_name;

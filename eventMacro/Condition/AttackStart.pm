@@ -3,6 +3,8 @@ package eventMacro::Condition::AttackStart;
 use strict;
 use Globals;
 
+use eventMacro::Data;
+
 use base 'eventMacro::Conditiontypes::ListCondition';
 
 sub _hooks {

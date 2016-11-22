@@ -2,6 +2,8 @@ package eventMacro::Condition::StatAdded;
 
 use strict;
 
+use eventMacro::Data;
+
 use base 'eventMacro::Conditiontypes::ListCondition';
 
 my %stat_type = (
