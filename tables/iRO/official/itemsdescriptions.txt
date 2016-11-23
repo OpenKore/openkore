@@ -79285,3 +79285,71 @@ KVM Badge x 200
 Special (extra rare):
 Kafra Blossom Card
 #
+
+
+17376#
+Contains the following:
+5x Winter Wonder Time lucky boxes
+1x Safe to 10 Certificate
+2x Steam Starter Ring Boxes
+
+Winter Wonder Time lucky boxes contains one of the following items:
+Common:
+Bloody Dead Branch x 5
+BattlemanualX3 x 6
+HE Bubblegum x 6
+Uncommon:
+Crown of Deceit
+Holy Marching Hat
+CD In Mouth
+Gangster Scarf
+Deviling Hat
+Rare:
+Miniglasses [1]
+Heroic Backpack
+Fallen Angelwing
+Arch Angelwing
+Amistr Bag
+Prize Medal x 2000
+KVM Badge x 200
+Special (extra rare):
+Kafra Blossom Card
+#
+
+
+
+
+22061#
+Holy spiritual shoes.
+MDefense +3.
+Reduce damage from Holy property attack by 5%.
+Each refine increase MaxHP +1% and MaxSP +1%
+Class : ^777777Shoes^000000 Defense : ^77777712^000000
+Weight : ^77777725^000000
+Required Level : ^77777790^000000
+Job : ^777777All^000000
+#
+
+
+20705#
+Holy spiritual magical Manteau.
+Reduce damage from Holy property monsters by 5%.
+Increase damage from Dragon Race monsters by 5%.
++Lumiere Shield[1], Each refine rate of Lumiere Manteau gives 1% of damage reduction from Dragon Race.
++Lumiere Shield[1], Each refine rate of Lumiere Shield gives 1% additional damage to Holy property monsters.
+Class : ^777777Garment^000000 Defense : ^77777720^000000
+Weight : ^77777770^000000
+Required Level : ^77777765^000000
+Job : ^777777All^000000
+#
+
+
+2174#
+Holy spiritual magical shield.
+Reduce damage from Holy property monsters by 5%.
+Increase damage from Dragon Race monsters by 5%.
+Class : ^777777Shield^000000 Defense : ^77777750^000000
+Weight : ^777777130^000000
+Required Level : ^77777765^000000
+Job : ^777777All^000000
+#
