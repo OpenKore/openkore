@@ -6459,7 +6459,6 @@
 17370#Caster_Pendant_Shadow_Box#
 17371#Hard_Earring_Shadow_Box#
 17375#Zaha_Doll_Hat_Box#
-17376#Brutal_Shield_Shadow_Box#
 17377#Gargantua_Shield_Shadow_Box#
 17378#Homers_Shield_Shadow_Box#
 17379#Dragoon_Shield_Shadow_Box#
@@ -8839,3 +8838,8 @@
 20350#Costume_Cowlick_Hairstyle_Yellow#
 17751#November_Costume_Pack#
 17752#Winter_Wonder_Time_Lucky_Box#
+
+2174#Lumiere_Shield#
+22061#Lumiere_Shoes#
+20705#Lumiere_Manteau#
+17376#Winter_Wonder_Time_Lucky_Crate#
