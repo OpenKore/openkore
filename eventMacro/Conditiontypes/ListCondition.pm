@@ -6,9 +6,9 @@ use base 'eventMacro::Condition';
 
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
-	
 	my $validator = $self->{validator} = eventMacro::Validator::ListMemberCheck->new( $condition_code );
-	return 1;
+	push @{ $self->{variables} }, $validator->variables;
+	$validator->parsed;
 }
 
 sub validate_condition_status {
