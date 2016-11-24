@@ -6,6 +6,7 @@ use eventMacro::Data;
 # Import the validators so our child classes do not have to.
 use eventMacro::Validator::NumericComparison;
 use eventMacro::Validator::ListMemberCheck;
+use eventMacro::Validator::RegexCheck;
 
 sub new {
 	my ($class, $condition_code) = @_;
