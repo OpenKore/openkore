@@ -17,11 +17,11 @@ sub parse {
 	my @list_members = split(/\s*,\s*/, $string_list);
 	
 	foreach my $member (@list_members) {
-		if ($str =~ /^\$($variable_qr)$/) {
+		if ($member =~ /^\$($variable_qr)$/) {
 			push(@{$self->{var}}, $1);
 			push(@{$self->{list}}, {member => $1, member_is_var => 1});
 		} else {
-			push(@{$self->{list}}, {member => lc($member), member_is_var => 0});
+			push(@{$self->{list}}, {member => $member, member_is_var => 0});
 			if ($member =~ /^any$/i) {
 				$has_member_any = 1;
 			}

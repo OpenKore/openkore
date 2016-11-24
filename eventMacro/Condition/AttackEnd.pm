@@ -17,7 +17,7 @@ sub validate_condition_status {
 	
 	$self->{id} = $args->{ID};
 	
-	$self->SUPER::validate_condition_status(lc($monsters_old{$self->{id}}{'name'}));
+	$self->SUPER::validate_condition_status($monsters_old{$self->{id}}{'name'});
 }
 
 sub get_new_variable_list {
