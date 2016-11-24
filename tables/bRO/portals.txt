@@ -2268,6 +2268,8 @@ abyss_02 145 281 abyss_03 116 27
 abyss_03 116 24 abyss_02 145 278
 einbroch 92 280 airplane 224 64
 einbroch 64 234 airport 138 51
+airport 143 43 airport 148 51 1200 c r0 c r0
+airport 143 49 airport 142 40 0 c r0 c r0
 airport 142 61 einbroch 62 246
 airport 124 13 airport 19 21
 airport 19 18 airport 122 16
