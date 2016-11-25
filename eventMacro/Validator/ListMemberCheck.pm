@@ -16,7 +16,11 @@ sub parse {
 	my @list_members = split(/\s*,\s*/, $string_list);
 	
 	foreach my $member (@list_members) {
-		if ($member =~ /^\$($variable_qr)$/) {
+		if (!$member) {
+			$self->{error} = "A list member is undefined (empty)";
+			$self->{parsed} = 0;
+			return;
+		} elsif ($member =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
 			push(@{$self->{var}}, $1);
 			push(@{$self->{list}}, {member => $1, member_is_var => 1});
 		} else {
@@ -30,6 +34,7 @@ sub parse {
 	if ($has_member_any) {
 		# If one list member is 'any' there's no sense in having more members, so return a error
 		if (scalar(@list_members) > 1) {
+			$self->{error} = "If 'any' is member of the list there should be no other list members";
 			$self->{parsed} = 0;
 		} else {
 			$self->{list_is_any} = 1;

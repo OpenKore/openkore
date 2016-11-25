@@ -234,8 +234,11 @@ sub create_automacro_list {
 			
 			$condition_object = $condition_module->new($condition->{'value'});
 			
-			unless (defined $condition_object) {
-				warning "[eventMacro] Ignoring automacro '$name' (bad condition syntax)\n";
+			if (defined $condition_object->error) {
+				warning "[eventMacro] Ignoring automacro '".$name."'\n".
+				        "[eventMacro] Error in condition '".$condition->{'key'}."'\n".
+				        "[eventMacro] Error type: Wrong condition syntax ('".$condition->{'value'}."')\n".
+				        "[eventMacro] Error code: '".$condition_object->error."'.\n";
 				next AUTOMACRO;
 			}
 			
