@@ -4,7 +4,7 @@ use strict;
 use base 'eventMacro::Validator';
 use eventMacro::Data;
 
-my $variable_qr = qr/\.?[a-z][a-z\d]*/i;
+my $variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
 
 sub parse {
 	my ( $self, $regex_code ) = @_;

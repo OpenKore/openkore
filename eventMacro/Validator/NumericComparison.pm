@@ -5,7 +5,7 @@ use base 'eventMacro::Validator';
 use eventMacro::Data;
 
 my $number_qr   = qr/-?\d+(?:\.\d+)?/;
-my $variable_qr = qr/\.?[a-z][a-z\d]*/i;
+my $variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
 
 sub parse {
 	my ( $self, $str ) = @_;
