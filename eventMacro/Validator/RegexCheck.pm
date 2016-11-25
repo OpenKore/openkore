@@ -30,7 +30,7 @@ sub validate {
 	
 	my $current_regex = $self->{regex};
 	foreach my $var (@{$self->{var}}) {
-		$current_regex =~ s/(?:^|(?<=[^\\]))\$$var/$eventMacro->get_var($var)/;
+		$current_regex =~ s/(?:^|(?<=[^\\]))\$$var/$eventMacro->get_var($var)/e;
 	}
 	
 	
