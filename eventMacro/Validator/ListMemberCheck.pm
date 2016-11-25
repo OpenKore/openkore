@@ -17,7 +17,11 @@ sub parse {
 	my @list_members = split(/\s*,\s*/, $string_list);
 	
 	foreach my $member (@list_members) {
-		if ($member =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
+		if (!$member) {
+			$self->{error} = "A list member is undefined (empty)";
+			$self->{parsed} = 0;
+			return;
+		} elsif ($member =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
 			push(@{$self->{var}}, $1);
 			push(@{$self->{list}}, {member => $1, member_is_var => 1});
 		} else {
