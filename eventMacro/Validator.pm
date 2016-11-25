@@ -6,7 +6,7 @@ sub new {
 	my ( $class, $str ) = @_;
 	my $self = bless {}, $class;
 	$self->{var}    = [];
-	$self->{error}  = '';
+	$self->{error}  = undef;
 	$self->{parsed} = 1;
 	$self->parse( $str ) if $str;
 	$self;

@@ -13,7 +13,7 @@ sub new {
 	
 	$self->{name} = ($class =~ /([^:]+)$/)[0];
 	$self->{variables} = [];
-	$self->{error}  = '';
+	$self->{error}  = undef;
 
 	$self->{hooks} = [ @{ $self->_hooks } ];
 
