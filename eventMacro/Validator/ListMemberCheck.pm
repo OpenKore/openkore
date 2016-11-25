@@ -21,13 +21,14 @@ sub parse {
 			$self->{parsed} = 0;
 			return;
 		} elsif ($member =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
+			my $var = $1;
 			if ($var =~ /^\./) {
 				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
 				$self->{parsed} = 0;
 				return;
 			}
-			push(@{$self->{var}}, $1);
-			push(@{$self->{list}}, {member => $1, member_is_var => 1});
+			push(@{$self->{var}}, $var);
+			push(@{$self->{list}}, {member => $var, member_is_var => 1});
 		} else {
 			push(@{$self->{list}}, {member => $member, member_is_var => 0});
 			if ($member =~ /^any$/i) {
