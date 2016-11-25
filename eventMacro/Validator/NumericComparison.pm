@@ -14,6 +14,12 @@ sub parse {
 		$self->{error} = "There was not found a numeric comparison in the condition code";
 		return;
 	}
+	
+	if (($3 && $3 =~ /^\./) || ($5 && $5 =~ /^\./)) {
+		$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
+		$self->{parsed} = 0;
+		return;
+	}
 
 	$self->{op}  = $1 || '==';
 	$self->{min} = $3 || $2;

@@ -14,10 +14,10 @@ sub _get_val {
 	$char->{weight_max};
 }
 
-sub validate_condition_status {
+sub validate_condition {
 	my ( $self, $event_name, $args ) = @_;
 	return if $event_name eq 'packet/stat_info' && $args && $args->{type} != 25;
-	$self->SUPER::validate_condition_status;
+	$self->SUPER::validate_condition;
 }
 
 sub get_new_variable_list {

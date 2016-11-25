@@ -12,12 +12,12 @@ sub _hooks {
 	['attack_end'];
 }
 
-sub validate_condition_status {
+sub validate_condition {
 	my ( $self, $event_name, $args ) = @_;
 	
 	$self->{id} = $args->{ID};
 	
-	$self->SUPER::validate_condition_status($monsters_old{$self->{id}}{'name'});
+	$self->SUPER::validate_condition($monsters_old{$self->{id}}{'name'});
 }
 
 sub get_new_variable_list {

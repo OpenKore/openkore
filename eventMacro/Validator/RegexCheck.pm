@@ -16,11 +16,17 @@ sub parse {
 		my @variables = $self->{regex} =~ /(?:^|(?<=[^\\]))\$($variable_qr)/g;
 		
 		foreach my $var (@variables) {
+			if ($var =~ /^\./) {
+				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
+				$self->{parsed} = 0;
+				return;
+			}
 			push(@{$self->{var}}, $var);
 		}
 		
 		$self->{parsed} = 1;
 	} else {
+		$self->{error} = "There was not found a regex in the condition code";
 		$self->{parsed} = 0;
 	}
 }

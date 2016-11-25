@@ -23,7 +23,7 @@ sub new {
 	return $self;
 }
 
-sub validate_condition_status {
+sub validate_condition {
 	my ( $self, $result ) = @_;
 	return $result if ($self->condition_type == EVENT_TYPE);
 	$self->{is_Fulfilled} = $result;

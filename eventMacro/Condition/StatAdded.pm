@@ -39,12 +39,12 @@ sub _hooks {
 	['packet_charStats'];
 }
 
-sub validate_condition_status {
+sub validate_condition {
 	my ( $self, $event_name, $args ) = @_;
 	
 	$self->{stat} = $stat_type{$args->{type}};
 	
-	$self->SUPER::validate_condition_status($self->{stat});
+	$self->SUPER::validate_condition($self->{stat});
 }
 
 sub get_new_variable_list {

@@ -15,9 +15,9 @@ sub _parse_syntax {
 	$validator->parsed;
 }
 
-sub validate_condition_status {
+sub validate_condition {
 	my ( $self, $possible_member ) = @_;
-	$self->SUPER::validate_condition_status( $self->{validator}->validate($possible_member) );
+	$self->SUPER::validate_condition( $self->{validator}->validate($possible_member) );
 }
 
 1;
