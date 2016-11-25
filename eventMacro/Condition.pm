@@ -13,10 +13,11 @@ sub new {
 	
 	$self->{name} = ($class =~ /([^:]+)$/)[0];
 	$self->{variables} = [];
+	$self->{error}  = '';
 
 	$self->{hooks} = [ @{ $self->_hooks } ];
 
-	return if !$self->_parse_syntax( $condition_code );
+	$self->_parse_syntax( $condition_code );
 
 	return $self;
 }
@@ -54,6 +55,11 @@ sub is_fulfilled {
 	return 0 if ($self->condition_type == EVENT_TYPE);
 	
 	return $self->{is_Fulfilled};
+}
+
+sub error {
+	my ( $self ) = @_;
+	$self->{error};
 }
 
 # Default: No variables.

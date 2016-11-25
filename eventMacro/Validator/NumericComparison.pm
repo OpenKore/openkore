@@ -10,7 +10,10 @@ my $variable_qr = qr/[a-zA-Z]\w*/;
 sub parse {
 	my ( $self, $str ) = @_;
 	$self->{parsed} = $str =~ /^\s*(<|<=|=|==|!=|!|>=|>|)\s*($number_qr%?|\$($variable_qr))(?:\s*\.\.\s*($number_qr%?|\$($variable_qr)))?\s*$/o;
-	return if !$self->{parsed};
+	if (!$self->{parsed}) {
+		$self->{error} = "There was not found a numeric comparison in the condition code";
+		return;
+	}
 
 	$self->{op}  = $1 || '==';
 	$self->{min} = $3 || $2;
