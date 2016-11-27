@@ -26,7 +26,7 @@ sub parse {
 		
 		$self->{parsed} = 1;
 	} else {
-		$self->{error} = "There was not found a regex in the condition code";
+		$self->{error} = "There were found no regex in the condition code";
 		$self->{parsed} = 0;
 	}
 }

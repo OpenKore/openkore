@@ -29,7 +29,10 @@ sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
 	foreach my $member (split(/\s*,\s*/, $condition_code)) {
-		return 0 unless (exists($possible_values{$member}));
+		unless (exists($possible_values{$member})) {
+			$self->{error} = "The list member '".$member."' is not a valid stat";
+			return 0;
+		}
 	}
 	
 	$self->SUPER::_parse_syntax($condition_code);
@@ -40,11 +43,14 @@ sub _hooks {
 }
 
 sub validate_condition {
-	my ( $self, $event_name, $args ) = @_;
+	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
-	$self->{stat} = $stat_type{$args->{type}};
-	
-	$self->SUPER::validate_condition($self->{stat});
+	if ($callback_type eq 'hook') {
+		$self->{stat} = $stat_type{$args->{type}};
+		$self->SUPER::validate_condition($self->{stat});
+	} else {
+		$self->SUPER::update_validator_var($callback_name, $args);
+	}
 }
 
 sub get_new_variable_list {

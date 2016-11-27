@@ -318,7 +318,7 @@ sub create_callbacks {
 		
 	}
 	
-	my $event_sub = sub { $self->manage_event_callbacks(shift, shift); };
+	my $event_sub = sub { $self->manage_event_callbacks('hook', shift, shift); };
 	foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
 		push( @{ $self->{Hook_Handles} }, Plugins::addHook( $hook_name, $event_sub, undef ) );
 	}
@@ -356,7 +356,7 @@ sub set_var {
 	}
 	return if (defined $check_callbacks && $check_callbacks == 0);
 	if (exists $self->{Event_Related_Variables}{$variable_name}) {
-		$self->manage_event_callbacks("variable_event", {variable_name => $variable_name, variable_value => $variable_value});
+		$self->manage_event_callbacks("variable", $variable_name, $variable_value);
 	}
 }
 
@@ -372,20 +372,21 @@ sub exists_var {
 
 sub manage_event_callbacks {
 	my $self = shift;
-	my $event_name = shift;
+	my $callback_type = shift;
+	my $callback_name = shift;
 	my $args = shift;
 	
 	my $event_type_automacro_call_index;
 	my $event_type_automacro_call_priority;
 	
-	debug "[eventMacro] Event Happenned '".$event_name."'\n", "eventMacro", 2;
+	debug "[eventMacro] Callback Happenned, type: '".$callback_type."', name: '".$callback_name."'\n", "eventMacro", 2;
 	
 	my $check_list_hash;
 	
-	if ($event_name eq 'variable_event') {
-		$check_list_hash = $self->{'Event_Related_Variables'}{$args->{'variable_name'}};
+	if ($callback_type eq 'variable') {
+		$check_list_hash = $self->{'Event_Related_Variables'}{$callback_name};
 	} else {
-		$check_list_hash = $self->{'Event_Related_Hooks'}{$event_name};
+		$check_list_hash = $self->{'Event_Related_Hooks'}{$callback_name};
 	}
 	
 	foreach my $automacro_index (keys %{$check_list_hash}) {
@@ -401,14 +402,14 @@ sub manage_event_callbacks {
 				$check_event_type = 1;
 				next;
 			} else {
-				$automacro->check_state_type_condition($condition_index, $event_name, $args);
+				$automacro->check_state_type_condition($condition_index, $callback_type, $callback_name, $args);
 			}
 		}
 		
 		if ($check_event_type && ($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run) {
 			debug "[eventMacro] Condition of event type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 			
-			if ($automacro->check_event_type_condition($event_name, $args)) {
+			if ($automacro->check_event_type_condition($callback_type, $callback_name, $args)) {
 				debug "[eventMacro] Condition of event type was fulfilled.\n", "eventMacro", 3;
 				
 				if (!defined $event_type_automacro_call_priority) {
@@ -442,7 +443,7 @@ sub manage_event_callbacks {
 	
 		my $automacro = $self->{Automacro_List}->get($event_type_automacro_call_index);
 		
-		message "[eventMacro] Hook '".$event_name."' activated automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
+		message "[eventMacro] Event of type '".$callback_type."', and of name '".$callback_name."' activated automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
 		
 		$self->call_macro($automacro);
 	}

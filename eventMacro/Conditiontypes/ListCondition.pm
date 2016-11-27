@@ -20,4 +20,9 @@ sub validate_condition {
 	$self->SUPER::validate_condition( $self->{validator}->validate($possible_member) );
 }
 
+sub update_validator_var {
+	my ( $self, $var_name, $var_value ) = @_;
+	$self->{validator}->update_vars($var_name, $var_value);
+}
+
 1;
