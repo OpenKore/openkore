@@ -4,9 +4,7 @@ use strict;
 use Globals;
 use Utils;
 
-use eventMacro::Data;
-
-use base 'eventMacro::Conditiontypes::ListCondition';
+use base 'eventMacro::Conditiontypes::ListConditionEvent';
 
 sub _hooks {
 	['attack_end'];
@@ -33,10 +31,6 @@ sub get_new_variable_list {
 	$new_variables->{".AttackEndLastBinID"} = $actor->{binType};
 	
 	return $new_variables;
-}
-
-sub condition_type {
-	EVENT_TYPE;
 }
 
 1;

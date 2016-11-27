@@ -1,4 +1,4 @@
-package eventMacro::Conditiontypes::ListCondition;
+package eventMacro::Conditiontypes::ListConditionState;
 
 use strict;
 
