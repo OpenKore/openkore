@@ -3,9 +3,7 @@ package eventMacro::Condition::StatAdded;
 use strict;
 use Globals;
 
-use eventMacro::Data;
-
-use base 'eventMacro::Conditiontypes::ListCondition';
+use base 'eventMacro::Conditiontypes::ListConditionEvent';
 
 my %stat_type = (
 	13 => 'str',
@@ -61,10 +59,6 @@ sub get_new_variable_list {
 	$new_variables->{".StatAddedLastQuantity"} = $char->{$self->{stat}};
 	
 	return $new_variables;
-}
-
-sub condition_type {
-	EVENT_TYPE;
 }
 
 1;

@@ -2,7 +2,7 @@ package eventMacro::Condition::MaxSP;
 
 use strict;
 
-use base 'eventMacro::Conditiontypes::NumericCondition';
+use base 'eventMacro::Conditiontypes::NumericConditionState';
 
 use Globals qw( $char );
 
