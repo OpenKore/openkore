@@ -17,9 +17,14 @@ sub _parse_syntax {
 	$validator->parsed;
 }
 
-sub validate_condition_status {
+sub validate_condition {
 	my ( $self ) = @_;
-	$self->SUPER::validate_condition_status( $self->{validator}->validate( $self->_get_val, $self->_get_ref_val ) );
+	$self->SUPER::validate_condition( $self->{validator}->validate( $self->_get_val, $self->_get_ref_val ) );
+}
+
+sub update_validator_var {
+	my ( $self, $var_name, $var_value ) = @_;
+	$self->{validator}->update_vars($var_name, $var_value);
 }
 
 # Get the value to compare.

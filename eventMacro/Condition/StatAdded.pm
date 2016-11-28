@@ -46,8 +46,9 @@ sub validate_condition {
 	if ($callback_type eq 'hook') {
 		$self->{stat} = $stat_type{$args->{type}};
 		$self->SUPER::validate_condition($self->{stat});
-	} else {
+	} elsif ($callback_type eq 'variable') {
 		$self->SUPER::update_validator_var($callback_name, $args);
+		return 0;
 	}
 }
 

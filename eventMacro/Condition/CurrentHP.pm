@@ -19,9 +19,14 @@ sub _get_ref_val {
 }
 
 sub validate_condition {
-	my ( $self, $event_name, $args ) = @_;
-	return if $event_name eq 'packet/stat_info'     && $args && $args->{type} != 5;
-	return if $event_name eq 'packet/hp_sp_changed' && $args && $args->{type} != 5;
+	my ( $self, $callback_type, $callback_name, $args ) = @_;
+	
+	if ($callback_type eq 'hook') {
+		return if $callback_name eq 'packet/stat_info'     && $args && $args->{type} != 5;
+		return if $callback_name eq 'packet/hp_sp_changed' && $args && $args->{type} != 5;
+	} elsif ($callback_type eq 'variable') {
+		$self->SUPER::update_validator_var($callback_name, $args);
+	}
 	$self->SUPER::validate_condition;
 }
 

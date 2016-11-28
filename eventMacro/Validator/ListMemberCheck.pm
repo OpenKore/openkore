@@ -10,6 +10,7 @@ sub parse {
 	my ( $self, $string_list ) = @_;
 	
 	$self->{list} = [];
+	$self->{var_to_member_index} = {};
 	
 	my $has_member_any = 0;
 	
@@ -27,10 +28,13 @@ sub parse {
 				$self->{parsed} = 0;
 				return;
 			}
+			#During parsing all variables should be undefined
 			push(@{$self->{var}}, $var);
-			push(@{$self->{list}}, {member => $var, member_is_var => 1});
+			push(@{$self->{list}}, undef);
+			#Save this so it will be easier to change later, the other option would be to check all list members for the var
+			$self->{var_to_member_index}{$var} = $#{$self->{list}};
 		} else {
-			push(@{$self->{list}}, {member => $member, member_is_var => 0});
+			push(@{$self->{list}}, $member);
 			if ($member =~ /^any$/i) {
 				$has_member_any = 1;
 			}
@@ -52,15 +56,18 @@ sub parse {
 	}
 }
 
+sub update_vars {
+	my ( $self, $var_name, $var_value ) = @_;
+	@{$self->{list}}[$self->{var_to_member_index}{$var_name}] = $var_value;
+}
+
 sub validate {
 	my ( $self, $possible_member ) = @_;
-
 	return 1 if ($self->{list_is_any});
 	
 	foreach my $list_member (@{$self->{list}}) {
-		my $member = $list_member->{member_is_var} ? $eventMacro->get_var( $list_member->{member} ) : $list_member->{member};
-		next unless (defined $member);
-		return 1 if ($member eq $possible_member);
+		next unless (defined $list_member);
+		return 1 if ($list_member eq $possible_member);
 	}
 	
 	return 0;

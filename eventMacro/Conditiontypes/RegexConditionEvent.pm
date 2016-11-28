@@ -1,4 +1,4 @@
-package eventMacro::Conditiontypes::RegexCondition;
+package eventMacro::Conditiontypes::RegexConditionEvent;
 
 use strict;
 
@@ -18,6 +18,11 @@ sub _parse_syntax {
 sub validate_condition {
 	my ( $self, $possible_member ) = @_;
 	$self->SUPER::validate_condition( $self->{validator}->validate($possible_member) );
+}
+
+sub update_validator_var {
+	my ( $self, $var_name, $var_value ) = @_;
+	$self->{validator}->update_vars($var_name, $var_value);
 }
 
 1;

@@ -15,8 +15,13 @@ sub _get_val {
 }
 
 sub validate_condition {
-	my ( $self, $event_name, $args ) = @_;
-	return if $event_name eq 'packet/stat_info' && $args && $args->{type} != 11;
+	my ( $self, $callback_type, $callback_name, $args ) = @_;
+	
+	if ($callback_type eq 'hook') {
+		return if $callback_name eq 'packet/stat_info' && $args && $args->{type} != 11;
+	} elsif ($callback_type eq 'variable') {
+		$self->SUPER::update_validator_var($callback_name, $args);
+	}
 	$self->SUPER::validate_condition;
 }
 

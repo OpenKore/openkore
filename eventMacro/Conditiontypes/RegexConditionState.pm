@@ -1,4 +1,4 @@
-package eventMacro::Conditiontypes::NumericConditionState;
+package eventMacro::Conditiontypes::RegexConditionState;
 
 use strict;
 
@@ -6,7 +6,7 @@ use base 'eventMacro::Condition';
 
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
-	my $validator = $self->{validator} = eventMacro::Validator::NumericComparison->new( $condition_code );
+	my $validator = $self->{validator} = eventMacro::Validator::RegexCheck->new( $condition_code );
 	if (defined $validator->error) {
 		$self->{error} = $validator->error;
 	} else {
@@ -16,23 +16,14 @@ sub _parse_syntax {
 }
 
 sub validate_condition {
-	my ( $self ) = @_;
-	$self->SUPER::validate_condition( $self->{validator}->validate( $self->_get_val, $self->_get_ref_val ) );
+	my ( $self, $possible_member ) = @_;
+	$self->SUPER::validate_condition( $self->{validator}->validate($possible_member) );
 }
 
 sub update_validator_var {
 	my ( $self, $var_name, $var_value ) = @_;
 	$self->{validator}->update_vars($var_name, $var_value);
-}
-
-# Get the value to compare.
-sub _get_val {
-	1;
-}
-
-# Get the reference value to do percentage comparisons with.
-sub _get_ref_val {
-	undef;
+	$self->validate_condition;
 }
 
 1;

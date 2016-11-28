@@ -2,6 +2,7 @@ package eventMacro::Condition;
 
 use strict;
 use eventMacro::Data;
+use Log qw(message error warning debug);##
 
 # Import the validators so our child classes do not have to.
 use eventMacro::Validator::NumericComparison;
