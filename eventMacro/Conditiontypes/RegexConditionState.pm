@@ -23,7 +23,6 @@ sub validate_condition {
 sub update_validator_var {
 	my ( $self, $var_name, $var_value ) = @_;
 	$self->{validator}->update_vars($var_name, $var_value);
-	$self->validate_condition;
 }
 
 1;

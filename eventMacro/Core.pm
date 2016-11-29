@@ -350,6 +350,7 @@ sub get_var {
 sub set_var {
 	my ($self, $variable_name, $variable_value, $check_callbacks) = @_;
 	if ($variable_value eq 'undef') {
+		undef $variable_value;
 		$self->{Variable_List_Hash}{$variable_name} = undef;
 	} else {
 		$self->{Variable_List_Hash}{$variable_name} = $variable_value;
