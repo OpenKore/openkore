@@ -7,17 +7,22 @@ use base 'eventMacro::Conditiontypes::NumericConditionState';
 use Globals qw( $char );
 
 sub _hooks {
-	['packet/stat_info'];
+	['packet/stat_info','packet_charSkills','packet_homunSkills'];
 }
 
 sub _get_val {
 	$char->{points_skill};
 }
 
-sub validate_condition_status {
-	my ( $self, $event_name, $args ) = @_;
-	return if $event_name eq 'packet/stat_info' && $args && $args->{type} != 12;
-	$self->SUPER::validate_condition_status;
+sub validate_condition {
+	my ( $self, $callback_type, $callback_name, $args ) = @_;
+	
+	if ($callback_type eq 'hook') {
+		return if $callback_name eq 'packet/stat_info' && $args && $args->{type} != 12;
+	} elsif ($callback_type eq 'variable') {
+		$self->SUPER::update_validator_var($callback_name, $args);
+	}
+	$self->SUPER::validate_condition;
 }
 
 sub get_new_variable_list {

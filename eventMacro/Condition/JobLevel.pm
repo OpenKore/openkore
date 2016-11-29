@@ -14,10 +14,15 @@ sub _get_val {
     $char->{lv_job};
 }
 
-sub validate_condition_status {
-	my ( $self, $event_name, $args ) = @_;
-	return if $event_name eq 'packet/stat_info' && $args && $args->{type} != 55;
-	$self->SUPER::validate_condition_status;
+sub validate_condition {
+	my ( $self, $callback_type, $callback_name, $args ) = @_;
+	
+	if ($callback_type eq 'hook') {
+		return if $callback_name eq 'packet/stat_info'     && $args && $args->{type} != 55;
+	} elsif ($callback_type eq 'variable') {
+		$self->SUPER::update_validator_var($callback_name, $args);
+	}
+	$self->SUPER::validate_condition;
 }
 
 sub get_new_variable_list {

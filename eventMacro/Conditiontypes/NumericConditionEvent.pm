@@ -12,24 +12,20 @@ sub _parse_syntax {
 	if (defined $validator->error) {
 		$self->{error} = $validator->error;
 	} else {
-		push @{ $self->{variables} }, $validator->variables;
+		push (@{ $self->{variables} }, @{$validator->variables});
 	}
 	$validator->parsed;
 }
 
-sub validate_condition_status {
-	my ( $self ) = @_;
-	$self->SUPER::validate_condition_status( $self->{validator}->validate( $self->_get_val, $self->_get_ref_val ) );
+sub validate_condition {
+	my ( $self, $value, $ref_value ) = @_;
+	#since it is a event it doesn't make much sense to have the get_val methods
+	$self->SUPER::validate_condition( $self->{validator}->validate( $value, $ref_value ) );
 }
 
-# Get the value to compare.
-sub _get_val {
-	1;
-}
-
-# Get the reference value to do percentage comparisons with.
-sub _get_ref_val {
-	undef;
+sub update_validator_var {
+	my ( $self, $var_name, $var_value ) = @_;
+	$self->{validator}->update_vars($var_name, $var_value);
 }
 
 sub condition_type {

@@ -2,10 +2,12 @@ package eventMacro::Condition;
 
 use strict;
 use eventMacro::Data;
+use Log qw(message error warning debug);##
 
 # Import the validators so our child classes do not have to.
 use eventMacro::Validator::NumericComparison;
 use eventMacro::Validator::ListMemberCheck;
+use eventMacro::Validator::RegexCheck;
 
 sub new {
 	my ($class, $condition_code) = @_;
@@ -14,6 +16,9 @@ sub new {
 	$self->{name} = ($class =~ /([^:]+)$/)[0];
 	$self->{variables} = [];
 	$self->{error}  = undef;
+	
+	#False by default
+	$self->{is_Fulfilled} = 0;
 
 	$self->{hooks} = [ @{ $self->_hooks } ];
 
@@ -22,7 +27,7 @@ sub new {
 	return $self;
 }
 
-sub validate_condition_status {
+sub validate_condition {
 	my ( $self, $result ) = @_;
 	return $result if ($self->condition_type == EVENT_TYPE);
 	$self->{is_Fulfilled} = $result;
@@ -50,9 +55,6 @@ sub is_unique_condition {
 
 sub is_fulfilled {
 	my ($self) = @_;
-	
-	#Should never happen
-	return 0 if ($self->condition_type == EVENT_TYPE);
 	
 	return $self->{is_Fulfilled};
 }

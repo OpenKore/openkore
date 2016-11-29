@@ -144,13 +144,13 @@ sub get_event_type_condition_index {
 }
 
 sub check_state_type_condition {
-	my ($self, $condition_index, $event_name, $args) = @_;
+	my ($self, $condition_index, $callback_type, $callback_name, $args) = @_;
 	
 	my $condition = $self->{conditionList}->get($condition_index);
 	
 	my $pre_check_status = $condition->is_fulfilled;
 	
-	$condition->validate_condition_status($event_name,$args);
+	$condition->validate_condition($callback_type, $callback_name, $args);
 	
 	my $pos_check_status = $condition->is_fulfilled;
 	
@@ -164,11 +164,11 @@ sub check_state_type_condition {
 }
 
 sub check_event_type_condition {
-	my ($self, $event_name, $args) = @_;
+	my ($self, $callback_type, $callback_name, $args) = @_;
 	
 	my $condition = $self->{conditionList}->get($self->{event_type_condition_index});
 	
-	my $return = $condition->validate_condition_status($event_name, $args);
+	my $return = $condition->validate_condition($callback_type, $callback_name, $args);
 	
 	debug "[eventMacro] Checking event type condition '".$condition->get_name()."' of index '".$condition->{listIndex}."' in automacro '".$self->{name}."', fulfilled value: '".$return."'.\n", "eventMacro", 3;
 

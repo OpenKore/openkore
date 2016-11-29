@@ -110,7 +110,7 @@ sub start {
 		ok !$v->validate( 20, 200 );
 		ok !$v->validate( 40, 200 );
 
-		my $v = eventMacro::Validator::NumericComparison->new( '10%..20%' );
+		$v = eventMacro::Validator::NumericComparison->new( '10%..20%' );
 		ok $v->parsed;
 
 		ok !$v->validate( 4.9, 50 );
@@ -137,7 +137,7 @@ sub start {
 		ok $v->validate( 10 );
 		ok !$v->validate( 11 );
 
-		my $v = eventMacro::Validator::NumericComparison->new( '$foo .. $bar' );
+		$v = eventMacro::Validator::NumericComparison->new( '$foo .. $bar' );
 		ok $v->parsed;
 
 		$eventMacro->set_var( 'foo', 10 );

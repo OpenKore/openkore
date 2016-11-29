@@ -182,32 +182,32 @@ sub getConfig {
 sub refreshGlobal {
 	my $var = $_[0];
 
-	$eventMacro->set_var(".time", time);
-	$eventMacro->set_var(".datetime", scalar localtime);
+	$eventMacro->set_var(".time", time, 0);
+	$eventMacro->set_var(".datetime", scalar localtime, 0);
 	my ($sec, $min, $hour) = localtime;
-	$eventMacro->set_var(".second", $sec);
-	$eventMacro->set_var(".minute", $min);
-	$eventMacro->set_var(".hour", $hour);
+	$eventMacro->set_var(".second", $sec, 0);
+	$eventMacro->set_var(".minute", $min, 0);
+	$eventMacro->set_var(".hour", $hour, 0);
 	
 	return unless $net && $net->getState == Network::IN_GAME;
 	
-	$eventMacro->set_var(".map", (defined $field)?$field->baseName:"undef");
+	$eventMacro->set_var(".map", (defined $field)?$field->baseName:"undef", 0);
 	my $pos = calcPosition($char); 
-	$eventMacro->set_var(".pos", sprintf("%d %d", $pos->{x}, $pos->{y}));
+	$eventMacro->set_var(".pos", sprintf("%d %d", $pos->{x}, $pos->{y}), 0);
 	
-	$eventMacro->set_var(".hp", $char->{hp});
-	$eventMacro->set_var(".sp", $char->{sp});
-	$eventMacro->set_var(".lvl", $char->{lv});
-	$eventMacro->set_var(".joblvl", $char->{lv_job});
-	$eventMacro->set_var(".spirits", ($char->{spirits} or 0));
-	$eventMacro->set_var(".zeny", $char->{zeny});
-	$eventMacro->set_var(".weight", $char->{weight});
-	$eventMacro->set_var(".maxweight", $char->{weight_max});
+	$eventMacro->set_var(".hp", $char->{hp}, 0);
+	$eventMacro->set_var(".sp", $char->{sp}, 0);
+	$eventMacro->set_var(".lvl", $char->{lv}, 0);
+	$eventMacro->set_var(".joblvl", $char->{lv_job}, 0);
+	$eventMacro->set_var(".spirits", ($char->{spirits} or 0), 0);
+	$eventMacro->set_var(".zeny", $char->{zeny}, 0);
+	$eventMacro->set_var(".weight", $char->{weight}, 0);
+	$eventMacro->set_var(".maxweight", $char->{weight_max}, 0);
 	$eventMacro->set_var('.status', (join ',',
 		('muted')x!!$char->{muted},
 		('dead')x!!$char->{dead},
 		map { $statusName{$_} || $_ } keys %{$char->{statuses}}
-	) || 'none');
+	) || 'none', 0);
 }
 
 # get NPC array index

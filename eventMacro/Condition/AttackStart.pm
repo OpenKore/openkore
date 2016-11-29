@@ -10,12 +10,16 @@ sub _hooks {
 	['attack_start'];
 }
 
-sub validate_condition_status {
-	my ( $self, $event_name, $args ) = @_;
+sub validate_condition {
+	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
-	$self->{id} = $args->{ID};
-	
-	$self->SUPER::validate_condition_status($monsters{$self->{id}}{'name'});
+	if ($callback_type eq 'hook') {
+		$self->{id} = $args->{ID};
+		$self->SUPER::validate_condition($monsters{$self->{id}}{'name'});
+	} elsif ($callback_type eq 'variable') {
+		$self->SUPER::update_validator_var($callback_name, $args);
+		return 0;
+	}
 }
 
 sub get_new_variable_list {

@@ -12,14 +12,20 @@ sub _parse_syntax {
 	if (defined $validator->error) {
 		$self->{error} = $validator->error;
 	} else {
-		push @{ $self->{variables} }, $validator->variables;
+		push (@{ $self->{variables} }, @{$validator->variables});
 	}
 	$validator->parsed;
 }
 
-sub validate_condition_status {
+sub validate_condition {
 	my ( $self, $possible_member ) = @_;
-	$self->SUPER::validate_condition_status( $self->{validator}->validate($possible_member) );
+	$self->SUPER::validate_condition( $self->{validator}->validate($possible_member) );
+}
+
+sub update_validator_var {
+	my ( $self, $var_name, $var_value ) = @_;
+	$self->{validator}->update_vars($var_name, $var_value);
+	$self->SUPER::validate_condition( 0 );
 }
 
 sub condition_type {

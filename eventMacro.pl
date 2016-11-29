@@ -308,9 +308,9 @@ sub commandHandler {
 		# TODO: Determine if this is reasonably efficient for macro sets which define a lot of variables. (A regex is slow.)
 		foreach my $variable_name ( keys %{ $eventMacro->{Variable_List_Hash} } ) {
 			next if $variable_name !~ /^\.param\d+$/o;
-			$eventMacro->set_var( $variable_name, undef );
+			$eventMacro->set_var( $variable_name, undef, 0 );
 		}
-		$eventMacro->set_var( ".param$_", $params[ $_ - 1 ] ) foreach 1 .. @params;
+		$eventMacro->set_var( ".param$_", $params[ $_ - 1 ], 0 ) foreach 1 .. @params;
 		
 		$eventMacro->{Macro_Runner} = new eventMacro::Runner(
 			$arg,

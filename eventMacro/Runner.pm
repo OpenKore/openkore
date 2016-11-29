@@ -1481,7 +1481,7 @@ sub substitue_variables {
 	my ($received) = @_;
 	
 	# variables
-	$received =~ s/(?:^|(?<=[^\\]))\$(\.?[a-z][a-z\d]*)/$eventMacro->is_var_defined($1) ? $eventMacro->get_var($1) : ''/gei;
+	$received =~ s/(?:^|(?<=[^\\]))\$(\.?[a-z][a-z\d]*)/$eventMacro->get_var($1)/gei;
 
 	return $received;
 }
