@@ -49,3 +49,7 @@ foreach my $module ( @tests ) {
 	}
 	$module->start;
 }
+
+print "Finished !\n";
+
+system("pause");

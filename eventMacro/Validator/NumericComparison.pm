@@ -68,7 +68,9 @@ sub validate {
 
 	my $min = $self->{min_is_pct} ? $self->{min} * $ref_value / 100 : $self->{min};
 	my $max = $self->{max_is_pct} ? $self->{max} * $ref_value / 100 : $self->{max};
-
+	
+	return 0 unless (defined $min && defined $max);
+	
 	return between( $min, $value, $max ) if $self->{op} eq '==';
 	return !between( $min, $value, $max ) if $self->{op} eq '!=';
 	return $value < $min  if $self->{op} eq '<';

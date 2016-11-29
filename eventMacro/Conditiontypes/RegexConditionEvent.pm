@@ -10,7 +10,7 @@ sub _parse_syntax {
 	if (defined $validator->error) {
 		$self->{error} = $validator->error;
 	} else {
-		push @{ $self->{variables} }, $validator->variables;
+		push (@{ $self->{variables} }, @{$validator->variables});
 	}
 	$validator->parsed;
 }

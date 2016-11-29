@@ -16,6 +16,9 @@ sub new {
 	$self->{name} = ($class =~ /([^:]+)$/)[0];
 	$self->{variables} = [];
 	$self->{error}  = undef;
+	
+	#False by default
+	$self->{is_Fulfilled} = 0;
 
 	$self->{hooks} = [ @{ $self->_hooks } ];
 
@@ -52,9 +55,6 @@ sub is_unique_condition {
 
 sub is_fulfilled {
 	my ($self) = @_;
-	
-	#Should never happen
-	return 0 if ($self->condition_type == EVENT_TYPE);
 	
 	return $self->{is_Fulfilled};
 }
