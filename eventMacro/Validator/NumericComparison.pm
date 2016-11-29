@@ -57,9 +57,11 @@ sub update_vars {
 	my ( $self, $var_name, $var_value ) = @_;
 	if ($self->{var_name_min} eq $var_name) {
 		$self->{min} = $var_value;
+		$self->{min_is_pct} = $self->{min} =~ s/%$//;
 	}
 	if ($self->{var_name_max} eq $var_name) {
 		$self->{max} = $var_value;
+		$self->{max_is_pct} = $self->{max} =~ s/%$//;
 	}
 }
 
