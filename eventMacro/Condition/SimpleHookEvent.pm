@@ -1,4 +1,4 @@
-package eventMacro::Conditiontypes::SimpleHookEvent;
+package eventMacro::Condition::SimpleHookEvent;
 
 use strict;
 
@@ -13,7 +13,7 @@ sub _parse_syntax {
 	
 	foreach my $member (split(/\s*,\s*/, $condition_code)) {
 		if ($member =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
-			$self->{error} = "In in condition no variables are accepted";
+			$self->{error} = "In this condition no variables are accepted";
 			return 0;
 		}
 		push (@{$self->{hooks}}, $member);
