@@ -10,12 +10,13 @@ use eventMacro::Validator::ListMemberCheck;
 use eventMacro::Validator::RegexCheck;
 
 sub new {
-	my ($class, $condition_code) = @_;
+	my ($class, $condition_code, $automacro_index) = @_;
 	my $self = bless {}, $class;
 	
 	$self->{name} = ($class =~ /([^:]+)$/)[0];
 	$self->{variables} = [];
 	$self->{error}  = undef;
+	$self->{automacro_index} = $automacro_index;
 	
 	#False by default
 	$self->{is_Fulfilled} = 0;
