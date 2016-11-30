@@ -29,14 +29,19 @@ sub validate_condition {
 	
 	if ($callback_type eq 'hook') {
 		$self->{message} = $args->{Msg};
+		return 0 unless $self->SUPER::validate_condition( 0, $self->{message} );
+		
 		$self->{source} = $args->{MsgUser};
+		return 0 unless $self->SUPER::validate_condition( 1, $self->{source} );
 		
 		foreach my $player (@{$playersList->getItems()}) {
 			next unless ($player->{name} eq $self->{source});
 			$self->{actor} = $player;
 			$self->{dist} = distance($char->{pos_to}, $player->{pos_to});
 		}
-		$self->SUPER::validate_condition( [$self->{message}, $self->{source}, $self->{dist}] );
+		return 0 unless $self->SUPER::validate_condition( 2, $self->{dist} );
+		
+		return 1;
 		
 	} elsif ($callback_type eq 'variable') {
 		$self->SUPER::update_validator_var($callback_name, $args);
@@ -53,13 +58,8 @@ sub get_new_variable_list {
 	$new_variables->{".PubMsgNameDistLastPos"} = sprintf("%d %d %s", $self->{actor}->{pos_to}{x}, $self->{actor}->{pos_to}{y}, $field->baseName);
 	$new_variables->{".PubMsgNameDistLastDist"} = $self->{dist};
 	$new_variables->{".PubMsgNameDistLastID"} = $self->{actor}->{binID};
-	$new_variables->{".PubMsgNameDistLastBinID"} = $self->{actor}->{binType};
 	
 	return $new_variables;
-}
-
-sub condition_type {
-	EVENT_TYPE;
 }
 
 1;

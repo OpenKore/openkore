@@ -71,17 +71,8 @@ sub update_validator_var {
 }
 
 sub validate_condition {
-	my ( $self, $validate_array ) = @_;
-	my $return_true = 1;
-	my $index = 0;
-	foreach (@{$self->{validators}}) {
-		next if (@{$self->{validators}}[$index]->validate(@{$validate_array}[$index]));
-		$return_true = 0;
-		last;
-	} continue {
-		$index++;
-	}
-	$self->SUPER::validate_condition( $return_true );
+	my ( $self, $validator_index, $check ) = @_;
+	return @{$self->{validators}}[$validator_index]->validate($check);
 }
 
 sub condition_type {
