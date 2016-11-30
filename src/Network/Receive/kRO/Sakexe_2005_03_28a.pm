@@ -28,7 +28,7 @@ sub new {
 	my %packets = (
 		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]], # 10 # TODO: test if this gives the right results
 		# 0225 is sent packet
-		'0226' => ['top10_taekwon_rank'], # 282 # TODO: check if len matches the unpacking
+		'0226' => ['top10'], # 282 # TODO: check if len matches the unpacking
 	);
 
 	foreach my $switch (keys %packets) {

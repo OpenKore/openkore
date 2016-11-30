@@ -330,14 +330,14 @@ sub new {
 		'020F' => ['pvp_point', 'V2', [qw(AID GID)]], #TODO: PACKET_CZ_REQ_PVPPOINT
 		'0215' => ['gospel_buff_aligned', 'a4', [qw(ID)]],
 		'0216' => ['adopt_reply', 'V', [qw(type)]],
-		'0219' => ['top10_blacksmith_rank'],
-		'021A' => ['top10_alchemist_rank'],
+		'0219' => ['top10', 'Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 V10', [qw(name1 name2 name3 name4 name5 name6 name7 name8 name9 name10 points1 points2 points3 points4 points5 points6 points7 points8 points9 points10)]],
+		'021A' => ['top10', 'Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 V10', [qw(name1 name2 name3 name4 name5 name6 name7 name8 name9 name10 points1 points2 points3 points4 points5 points6 points7 points8 points9 points10)]],
 		'021B' => ['blacksmith_points', 'V2', [qw(points total)]],
 		'021C' => ['alchemist_point', 'V2', [qw(points total)]],
 		'0221' => ['upgrade_list'],
 		'0223' => ['upgrade_message', 'a4 v', [qw(type itemID)]],
 		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]],
-		'0226' => ['top10_taekwon_rank'],
+		'0226' => ['top10', 'Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 V10', [qw(name1 name2 name3 name4 name5 name6 name7 name8 name9 name10 points1 points2 points3 points4 points5 points6 points7 points8 points9 points10)]],
 		'0227' => ['gameguard_request'],
 		'0229' => ['character_status', 'a4 v2 V C', [qw(ID opt1 opt2 option stance)]],
 		# OLD '022A' => ['actor_exists', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 C v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID emblemID visual_effects stance sex coords act lv)]],
@@ -350,7 +350,7 @@ sub new {
 		'022F' => ['homunculus_food', 'C v', [qw(success foodID)]],
 		'0230' => ['homunculus_info', 'C2 a4 V',[qw(type state ID val)]],
 		'0235' => ['skills_list'], # homunculus skills
-		'0238' => ['top10_pk_rank'],
+		'0238' => ['top10', 'Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 V10', [qw(name1 name2 name3 name4 name5 name6 name7 name8 name9 name10 points1 points2 points3 points4 points5 points6 points7 points8 points9 points10)]],
 		# homunculus skill update
 		'0239' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
 		'023A' => ['storage_password_request', 'v', [qw(flag)]],
@@ -538,7 +538,7 @@ sub new {
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'097A' => ['quest_all_list2', 'v3 a*', [qw(len count unknown message)]],
 		'097B' => ['rates_info2', 's V3 a*', [qw(len exp death drop detail)]],
-		'097D' => ['top10', 'v a*', [qw(type message)]],
+		'097D' => ['top10', 'v Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 Z24 V10', [qw(type name1 name2 name3 name4 name5 name6 name7 name8 name9 name10 points1 points2 points3 points4 points5 points6 points7 points8 points9 points10)]],
 		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
 		'0990' => ['inventory_item_added', 'v3 C3 a8 V C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
 		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
@@ -4711,62 +4711,6 @@ sub initialize_message_id_encryption {
 		$enc_val1 = ($c[2]<<12) + ($c[3]<<8) + ($c[5]<<4) + $c[8];
 		$enc_val2 = (((($enc_val1 ^ 0x0000F3AC) + $w) << 16) | (($enc_val1 ^ 0x000049DF) + $w)) ^ $args->{param2};
 	}
-}
-
-sub top10 {
-	my ( $self, $args ) = @_;
-
-	if ( $args->{type} == 0 ) {
-		$self->top10_blacksmith_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
-	} elsif ( $args->{type} == 1 ) {
-		$self->top10_alchemist_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
-	} elsif ( $args->{type} == 2 ) {
-		$self->top10_taekwon_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
-	} elsif ( $args->{type} == 3 ) {
-		$self->top10_pk_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
-	} else {
-		message "Unknown top10 type %s.\n", $args->{type};
-	}
-}
-
-sub top10_alchemist_rank {
-	my ($self, $args) = @_;
-
-	my $textList = bytesToString(top10Listing($args));
-	message TF("============= ALCHEMIST RANK ================\n" .
-		"#    Name                             Points\n".
-		"%s" .
-		"=============================================\n", $textList), "list";
-}
-
-sub top10_blacksmith_rank {
-	my ($self, $args) = @_;
-
-	my $textList = bytesToString(top10Listing($args));
-	message TF("============= BLACKSMITH RANK ===============\n" .
-		"#    Name                             Points\n".
-		"%s" .
-		"=============================================\n", $textList), "list";
-}
-
-sub top10_pk_rank {
-	my ($self, $args) = @_;
-
-	my $textList = bytesToString(top10Listing($args));
-	message TF("================ PVP RANK ===================\n" .
-		"#    Name                             Points\n".
-		"%s" .
-		"=============================================\n", $textList), "list";
-}
-
-sub top10_taekwon_rank {
-	my ($self, $args) = @_;
-
-	my $textList = bytesToString(top10Listing($args));
-	message TF("=============== TAEKWON RANK ================\n" .
-		"#    Name                             Points\n".
-		"%s" .
-		"=============================================\n", $textList), "list";
 }
 
 sub unequip_item {

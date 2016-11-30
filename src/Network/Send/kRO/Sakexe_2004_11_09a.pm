@@ -24,18 +24,15 @@ use Log qw(message warning error debug);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
-}
-# 0x0217,2,blacksmith,0
-sub sendTop10Blacksmith {
-	$_[0]->sendToServer(pack('v', 0x0217));
-	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
-}
+	my $self = $class->SUPER::new(@_);
 
-# 0x0218,2,alchemist,0
-sub sendTop10Alchemist {
-	$_[0]->sendToServer(pack('v', 0x0218));
-	debug "Sent Top 10 Alchemist request\n", "sendPacket", 2;
+	my %packets = (
+		'0217' => ['blacksmith_rank_request'],
+		'0218' => ['alchemist_rank_request'],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
+	$self;
 }
 
 =pod

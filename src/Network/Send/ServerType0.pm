@@ -89,11 +89,15 @@ sub new {
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
+		'0217' => ['blacksmith_rank_request'],
+		'0218' => ['alchemist_rank_request'],
 		'021D' => ['less_effect'], # TODO
+		'0225' => ['taekwon_rank_request'],
 		'022D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]], # should be called slave_move...
 		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
 		'0234' => ['slave_move_to_master', 'a4', [qw(slaveID)]],
+		'0237' => ['pk_rank_request'],
 		'023B' => ['storage_password'],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
@@ -974,34 +978,6 @@ sub sendOpenWarp {
 	$self->sendToServer($msg);
 }
 =cut
-
-sub sendTop10Alchemist {
-	my $self = shift;
-	my $msg = pack("v", 0x0218);
-	$self->sendToServer($msg);
-	debug "Sent Top 10 Alchemist request\n", "sendPacket", 2;
-}
-
-sub sendTop10Blacksmith {
-	my $self = shift;
-	my $msg = pack("v", 0x0217);
-	$self->sendToServer($msg);
-	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
-}	
-
-sub sendTop10PK {
-	my $self = shift;
-	my $msg = pack("v", 0x0237);
-	$self->sendToServer($msg);
-	debug "Sent Top 10 PK request\n", "sendPacket", 2;	
-}
-
-sub sendTop10Taekwon {
-	my $self = shift;
-	my $msg = pack("v", 0x0225);
-	$self->sendToServer($msg);
-	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
-}
 
 sub sendUnequip {
 	my $self = shift;

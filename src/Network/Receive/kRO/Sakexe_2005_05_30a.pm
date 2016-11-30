@@ -32,7 +32,7 @@ sub new {
 		'022E' => ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]], # 71
 		'0235' => ['skills_list'], # -1 # homunculus skills
 		# 0x0236,10
-		'0238' => ['top10_pk_rank'], #  282
+		'0238' => ['top10'], #  282
 	);
 	
 	foreach my $switch (keys %packets) {

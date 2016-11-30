@@ -127,6 +127,17 @@ use constant {
 	REFUSE_SSO_WRONG_RATETYPE_2 => 0x13c3,
 };
 
+# top10 rank types
+use constant {
+	BLACKSMITH_VERSION => 0x0,
+	ALCHEMIST_VERSION => 0x1,
+	TAEKWON_VERSION => 0x2,
+	KILLER_VERSION => 0x3,
+	GANGSI_VERSION => 0x4,
+	DEATHKNIGHT_VERSION => 0x5,
+	COLLECTOR_VERSION => 0x6,
+};
+
 ######################################
 ### CATEGORY: Class methods
 ######################################
@@ -1290,6 +1301,71 @@ sub actor_info {
 	}
 
 	# TODO: $args->{ID} eq $accountID
+}
+
+# 0x0219
+# 0x021A
+# 0x0226
+# 0x0238
+# 0x097D
+sub parse_top10 {
+	my ($self, $args) = @_;
+
+	unless (defined $args->{type}) {
+		$args->{type} = {
+			'0219' => BLACKSMITH_VERSION,
+			'021A' => ALCHEMIST_VERSION,
+			'0226' => TAEKWON_VERSION,
+			'0238' => KILLER_VERSION,
+		}->{$args->{switch}};
+	}
+
+	$args->{list} = [map { {rank => $_, name => $args->{"name$_"}, points => $args->{"points$_"}} } 1..10];
+}
+
+sub reconstruct_top10 {
+	my ($self, $args) = @_;
+
+	for (1..10) {
+		$args->{"name$_"} = $args->{list}[$_ - 1]{name};
+		$args->{"points$_"} = $args->{list}[$_ - 1]{points};
+	}
+}
+
+sub top10 {
+	my ($self, $args) = @_;
+
+	my $textList = join '', map { swrite(
+		"[@<] @<<<<<<<<<<<<<<<<<<<<<<<<    @>>>>>>>>>>",
+		[@{$_}{qw(rank name points)}]
+	) } @{$args->{list}};
+
+	if ($args->{type} == BLACKSMITH_VERSION) {
+		message TF("============= BLACKSMITH RANK ===============\n" .
+			"#    Name                             Points\n".
+			"%s" .
+			"=============================================\n", $textList), "list";
+	} elsif ($args->{type} == ALCHEMIST_VERSION) {
+		message TF("============= ALCHEMIST RANK ================\n" .
+			"#    Name                             Points\n".
+			"%s" .
+			"=============================================\n", $textList), "list";
+	} elsif ($args->{type} == TAEKWON_VERSION) {
+		message TF("=============== TAEKWON RANK ================\n" .
+			"#    Name                             Points\n".
+			"%s" .
+			"=============================================\n", $textList), "list";
+	} elsif ($args->{type} == KILLER_VERSION) {
+		message TF("================ PVP RANK ===================\n" .
+			"#    Name                             Points\n".
+			"%s" .
+			"=============================================\n", $textList), "list";
+	} else {
+		message TF("=============== UNKNOWN #%s RANK ================\n" .
+			"#    Name                             Points\n".
+			"%s" .
+			"=============================================\n", $args->{type}, $textList), "list";
+	}
 }
 
 use constant QTYPE => (
