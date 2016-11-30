@@ -28,8 +28,8 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".ZennyChangedLastChange"} = $self->{change};
-	$new_variables->{".ZennyChangedLastZennyAfter"} = $self->{zeny};
+	$new_variables->{".".$self->{name}."Last"."Change"} = $self->{change};
+	$new_variables->{".".$self->{name}."Last"."ZennyAfter"} = $self->{zeny};
 	
 	return $new_variables;
 }

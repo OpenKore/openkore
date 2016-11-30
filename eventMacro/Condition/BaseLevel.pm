@@ -29,7 +29,7 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".BaseLevelLast"} = $char->{lv};
+	$new_variables->{".".$self->{name}."Last"} = $char->{lv};
 	
 	return $new_variables;
 }

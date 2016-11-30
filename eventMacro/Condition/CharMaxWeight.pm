@@ -29,7 +29,7 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".CharMaxWeightLast"} = $char->{weight_max};
+	$new_variables->{".".$self->{name}."Last"} = $char->{weight_max};
 	
 	return $new_variables;
 }

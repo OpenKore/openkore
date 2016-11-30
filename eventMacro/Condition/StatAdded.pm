@@ -56,8 +56,8 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".StatAddedLast"} = $self->{stat};
-	$new_variables->{".StatAddedLastQuantity"} = $char->{$self->{stat}};
+	$new_variables->{".".$self->{name}."Last"} = $self->{stat};
+	$new_variables->{".".$self->{name}."Last"."Quantity"} = $char->{$self->{stat}};
 	
 	return $new_variables;
 }

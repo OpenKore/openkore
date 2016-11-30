@@ -18,6 +18,7 @@ sub parse {
 		$self->{defined_var_list} = {};
 		
 		foreach my $var (@variables) {
+			next if (exists $self->{defined_var_list}{$var});
 			if ($var =~ /^\./) {
 				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
 				$self->{parsed} = 0;
@@ -70,6 +71,10 @@ sub validate {
 	}
 	
 	return 0;
+}
+
+sub _get_code_regex {
+	return '\/.*?\/\w?';
 }
 
 1;

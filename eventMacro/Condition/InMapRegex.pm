@@ -26,7 +26,7 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".InMapRegexLast"} = $self->{lastMap};
+	$new_variables->{".".$self->{name}."Last"} = $self->{lastMap};
 	
 	return $new_variables;
 }
