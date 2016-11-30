@@ -16,7 +16,7 @@ sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
 	$self->{validators_index} = {
-		0 => 'eventMacro::Validator::RegexCheck'
+		0 => 'eventMacro::Validator::RegexCheck',
 		1 => 'eventMacro::Validator::NumericComparison'
 	};
 	
