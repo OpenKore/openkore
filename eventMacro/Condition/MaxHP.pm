@@ -29,7 +29,7 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".MaxHPLast"} = $char->{hp_max};
+	$new_variables->{".".$self->{name}."Last"} = $char->{hp_max};
 	
 	return $new_variables;
 }

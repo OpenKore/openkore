@@ -39,7 +39,7 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".SimpleHookEventLast"} = $self->{last_hook};
+	$new_variables->{".".$self->{name}."Last"} = $self->{last_hook};
 	
 	return $new_variables;
 }

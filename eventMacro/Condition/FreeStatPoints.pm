@@ -29,7 +29,7 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".FreeStatPointsLast"} = $char->{points_free};
+	$new_variables->{".".$self->{name}."Last"} = $char->{points_free};
 	
 	return $new_variables;
 }

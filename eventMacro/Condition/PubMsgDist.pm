@@ -1,4 +1,4 @@
-package eventMacro::Condition::PubMsgNameDist;
+package eventMacro::Condition::PubMsgDist;
 
 use strict;
 use Globals;
@@ -16,9 +16,8 @@ sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
 	$self->{validators_index} = {
-		0 => 'eventMacro::Validator::RegexCheck',
-		1 => 'eventMacro::Validator::RegexCheck',
-		2 => 'eventMacro::Validator::NumericComparison'
+		0 => 'eventMacro::Validator::RegexCheck'
+		1 => 'eventMacro::Validator::NumericComparison'
 	};
 	
 	$self->SUPER::_parse_syntax($condition_code);
@@ -32,14 +31,12 @@ sub validate_condition {
 		return 0 unless $self->SUPER::validate_condition( 0, $self->{message} );
 		
 		$self->{source} = $args->{MsgUser};
-		return 0 unless $self->SUPER::validate_condition( 1, $self->{source} );
-		
 		foreach my $player (@{$playersList->getItems()}) {
 			next unless ($player->{name} eq $self->{source});
 			$self->{actor} = $player;
 			$self->{dist} = distance($char->{pos_to}, $player->{pos_to});
 		}
-		return 0 unless $self->SUPER::validate_condition( 2, $self->{dist} );
+		return 0 unless $self->SUPER::validate_condition( 1, $self->{dist} );
 		
 		return 1;
 		

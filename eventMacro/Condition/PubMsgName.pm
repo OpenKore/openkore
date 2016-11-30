@@ -1,4 +1,4 @@
-package eventMacro::Condition::PubMsgNameDist;
+package eventMacro::Condition::PubMsgName;
 
 use strict;
 use Globals;
@@ -17,8 +17,7 @@ sub _parse_syntax {
 	
 	$self->{validators_index} = {
 		0 => 'eventMacro::Validator::RegexCheck',
-		1 => 'eventMacro::Validator::RegexCheck',
-		2 => 'eventMacro::Validator::NumericComparison'
+		1 => 'eventMacro::Validator::RegexCheck'
 	};
 	
 	$self->SUPER::_parse_syntax($condition_code);
@@ -34,13 +33,6 @@ sub validate_condition {
 		$self->{source} = $args->{MsgUser};
 		return 0 unless $self->SUPER::validate_condition( 1, $self->{source} );
 		
-		foreach my $player (@{$playersList->getItems()}) {
-			next unless ($player->{name} eq $self->{source});
-			$self->{actor} = $player;
-			$self->{dist} = distance($char->{pos_to}, $player->{pos_to});
-		}
-		return 0 unless $self->SUPER::validate_condition( 2, $self->{dist} );
-		
 		return 1;
 		
 	} elsif ($callback_type eq 'variable') {
@@ -55,9 +47,6 @@ sub get_new_variable_list {
 	
 	$new_variables->{".".$self->{name}."Last"."Name"} = $self->{source};
 	$new_variables->{".".$self->{name}."Last"."Msg"} = $self->{message};
-	$new_variables->{".".$self->{name}."Last"."Pos"} = sprintf("%d %d %s", $self->{actor}->{pos_to}{x}, $self->{actor}->{pos_to}{y}, $field->baseName);
-	$new_variables->{".".$self->{name}."Last"."Dist"} = $self->{dist};
-	$new_variables->{".".$self->{name}."Last"."ID"} = $self->{actor}->{binID};
 	
 	return $new_variables;
 }
