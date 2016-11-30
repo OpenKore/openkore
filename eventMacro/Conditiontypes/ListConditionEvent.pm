@@ -14,7 +14,6 @@ sub _parse_syntax {
 	} else {
 		push (@{ $self->{variables} }, @{$validator->variables});
 	}
-	$validator->parsed;
 }
 
 sub validate_condition {
