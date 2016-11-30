@@ -5,7 +5,6 @@ use strict;
 use base 'eventMacro::Condition';
 
 use eventMacro::Data;
-use Log qw(warning);
 
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
@@ -36,8 +35,6 @@ sub _parse_syntax {
 		}
 		use strict;
 	} else {
-		warning "regex is '$multi_regex_string'\n";
-		warning "code is '$condition_code'\n";
 		$self->{error} = "Multi validator could not parse condition code";
 		return 0;
 	}
