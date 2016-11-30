@@ -1,4 +1,4 @@
-package eventMacro::Condition::PubMsgDist;
+package eventMacro::Condition::PrivMsgDist;
 
 use strict;
 use Globals;
@@ -9,7 +9,7 @@ use eventMacro::Data;
 use base 'eventMacro::Conditiontypes::MultipleValidatorEvent';
 
 sub _hooks {
-	['packet_pubMsg'];
+	['packet_privMsg'];
 }
 
 sub _parse_syntax {

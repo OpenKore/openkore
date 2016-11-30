@@ -34,12 +34,14 @@ sub validate_condition {
 		$self->{source} = $args->{MsgUser};
 		return 0 unless $self->SUPER::validate_condition( 1, $self->{source} );
 		
+		$self->{dist} = undef;
 		foreach my $player (@{$playersList->getItems()}) {
 			next unless ($player->{name} eq $self->{source});
 			$self->{actor} = $player;
 			$self->{dist} = distance($char->{pos_to}, $player->{pos_to});
 		}
-		return 0 unless $self->SUPER::validate_condition( 2, $self->{dist} );
+		
+		return 0 unless ( defined $self->{dist} && $self->SUPER::validate_condition( 2, $self->{dist} ) );
 		
 		return 1;
 		
