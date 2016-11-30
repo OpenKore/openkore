@@ -123,7 +123,7 @@ sub new {
 		'00B4' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]],
 		'00B5' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'00B6' => ['npc_talk_close', 'a4', [qw(ID)]],
-		'00B7' => ['npc_talk_responses'],
+		'00B7' => ['npc_talk_responses', 'x2 a4 Z*', [qw(ID message)]],
 		'00BC' => ['stats_added', 'v x C', [qw(type val)]], # actually 'v C2', 'type result val'
 		'00BD' => ['stats_info', 'v C12 v14', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical stance manner)]], # (stance manner) actually are (ASPD plusASPD)
 		'00BE' => ['stat_info', 'v C', [qw(type val)]], # was "stats_points_needed"
@@ -2498,49 +2498,6 @@ sub npc_talk_number {
 	message TF("%s: Type 'talk num <number #>' to input a number.\n", $name), "input";
 	$ai_v{'npc_talk'}{'talk'} = 'num';
 	$ai_v{'npc_talk'}{'time'} = time;
-}
-
-sub npc_talk_responses {
-	my ($self, $args) = @_;
-	# 00b7: word len, long ID, string str
-	# A list of selections appeared on the NPC message dialog.
-	# Each item is divided with ':'
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
-	my $msg = substr($args->{RAW_MSG}, 0, 8).$newmsg;
-
-	my $ID = substr($msg, 4, 4);
-	$talk{ID} = $ID;
-	my $talk = unpack("Z*", substr($msg, 8));
-	$talk = substr($msg, 8) if (!defined $talk);
-	$talk = bytesToString($talk);
-
-	my @preTalkResponses = split /:/, $talk;
-	$talk{responses} = [];
-	foreach my $response (@preTalkResponses) {
-		# Remove RO color codes
-		$response =~ s/\^[a-fA-F0-9]{6}//g;
-		if ($response =~ /^\^nItemID\^(\d+)$/) {
-			$response = itemNameSimple($1);
-		}
-
-		push @{$talk{responses}}, $response if ($response ne "");
-	}
-
-	$talk{responses}[@{$talk{responses}}] = T("Cancel Chat");
-
-	$ai_v{'npc_talk'}{'talk'} = 'select';
-	$ai_v{'npc_talk'}{'time'} = time;
-
-	Commands::run('talk resp');
-
-	my $name = getNPCName($ID);
-	Plugins::callHook('npc_talk_responses', {
-						ID => $ID,
-						name => $name,
-						responses => $talk{responses},
-						});
-	message TF("%s: Type 'talk resp #' to choose a response.\n", $name), "npc";
 }
 
 sub npc_talk_text {

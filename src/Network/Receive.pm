@@ -1303,6 +1303,58 @@ sub actor_info {
 	# TODO: $args->{ID} eq $accountID
 }
 
+# 0x00B7
+sub parse_npc_talk_responses {
+	my ($self, $args) = @_;
+	# A list of selections appeared on the NPC message dialog.
+	# Each item is divided with ':'
+	$args->{responses} = [split /:/, bytesToString($args->{message})];
+
+	for my $response ($args->{responses}) {
+		# which easy-accessible NPCs do this?
+		# maybe should be replaced in interface so item icon can be displayed
+		if ($response =~ /^\^nItemID\^(\d+)$/) {
+			$response = itemNameSimple($1);
+		}
+	}
+
+	# FIXME: maybe only last element should be removed?
+	@{$args->{responses}} = grep { $_ ne '' } @{$args->{responses}};
+}
+
+sub reconstruct_npc_talk_responses {
+	my ($self, $args) = @_;
+
+	$args->{message} = stringToBytes(join ':', @{$args->{responses}});
+}
+
+sub npc_talk_responses {
+	my ($self, $args) = @_;
+
+	$talk{ID} = $args->{ID};
+
+	$talk{responses} = $args->{responses};
+	foreach my $response (@{$talk{responses}}) {
+		# Remove RO color codes
+		$response =~ s/\^[a-fA-F0-9]{6}//g;
+	}
+
+	$talk{responses}[@{$talk{responses}}] = T("Cancel Chat");
+
+	$ai_v{'npc_talk'}{'talk'} = 'select';
+	$ai_v{'npc_talk'}{'time'} = time;
+
+	Commands::run('talk resp');
+
+	my $name = getNPCName($args->{ID});
+	Plugins::callHook('npc_talk_responses', {
+						ID => $args->{ID},
+						name => $name,
+						responses => $talk{responses},
+						});
+	message TF("%s: Type 'talk resp #' to choose a response.\n", $name), "npc";
+}
+
 # 0x0219
 # 0x021A
 # 0x0226
