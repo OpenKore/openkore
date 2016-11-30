@@ -118,7 +118,7 @@ sub create_conditions_list {
 		my $conditionsText = $conditions->{$_};
 		eval "use $module";
 		foreach my $newConditionText ( @{$conditionsText} ) {
-			my $cond = $module->new( $newConditionText );
+			my $cond = $module->new( $newConditionText, $self->{listIndex} );
 			$self->{conditionList}->add( $cond );
 			foreach my $hook ( @{ $cond->get_hooks() } ) {
 				push ( @{ $self->{hooks}{$hook} }, $cond->{listIndex} );
