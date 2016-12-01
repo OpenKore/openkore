@@ -16,34 +16,22 @@ sub validate_condition {
 	if ($callback_type eq 'variable') {
 		$self->SUPER::update_validator_var($callback_name, $args);
 	} elsif ($callback_type eq 'hook') {
-		$self->{actor} = $args;
 		
-		if ($callback_name eq 'add_player_list') {
-			if ($self->{is_Fulfilled}) {
-				return 1;
-			} else {
-				if ($self->SUPER::validate_condition($self->{actor}->{name})) {
-					$self->{is_Fulfilled} = 1;
-					return 1;
-				}
+		if ($callback_name eq 'add_player_list' && !$self->{is_Fulfilled} && $self->SUPER::validate_condition($args->{name})) {
+			$self->{fulfilled_actor} = $args;
+			$self->{is_Fulfilled} = 1;
+
+		} elsif ($callback_name eq 'player_disappeared' && $self->{is_Fulfilled} && $args->{player}->{nameID} == $self->{fulfilled_actor}->{nameID}) {
+			#need to check all other player to find another one that matches or not
+			foreach my $player (@{$playersList->getItems()}) {
+				next if ($player->{nameID} == $self->{fulfilled_actor}->{nameID});
+				next unless ($self->SUPER::validate_condition($player->{name}));
+				$self->{fulfilled_actor} = $player;
+				$self->{is_Fulfilled} = 1;
+				return;
 			}
-		} else {
-			if ($self->{is_Fulfilled}) {
-				if ($self->SUPER::validate_condition($self->{actor}->{name})) {
-					#need to check all other player to find another one that matches or not
-					foreach my $player (@{$playersList->getItems()}) {
-						if ($self->SUPER::validate_condition($player->{name})) {
-							$self->{is_Fulfilled} = 1;
-							$self->{actor} = $player;
-							return 1;
-						}
-					}
-					$self->{is_Fulfilled} = 0;
-					return 0;
-				}
-			} else {
-				return 0;
-			}
+			$self->{fulfilled_actor} = undef;
+			$self->{is_Fulfilled} = 0;
 		}
 		
 	}
@@ -53,12 +41,12 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".".$self->{name}."Last"} = $self->{actor}->{name};
-	$new_variables->{".".$self->{name}."Last"."Pos"} = sprintf("%d %d %s", $self->{actor}->{pos_to}{x}, $self->{actor}->{pos_to}{y}, $field->baseName);
-	$new_variables->{".".$self->{name}."Last"."Level"} = $self->{actor}->{lv};
-	$new_variables->{".".$self->{name}."Last"."Job"} = $self->{actor}->job;
-	$new_variables->{".".$self->{name}."Last"."AccountId"} = $self->{actor}->{nameID};
-	$new_variables->{".".$self->{name}."Last"."BinId"} = $self->{actor}->{binID};
+	$new_variables->{".".$self->{name}."Last"} = $self->{fulfilled_actor}->{name};
+	$new_variables->{".".$self->{name}."Last"."Pos"} = sprintf("%d %d %s", $self->{fulfilled_actor}->{pos_to}{x}, $self->{fulfilled_actor}->{pos_to}{y}, $field->baseName);
+	$new_variables->{".".$self->{name}."Last"."Level"} = $self->{fulfilled_actor}->{lv};
+	$new_variables->{".".$self->{name}."Last"."Job"} = $self->{fulfilled_actor}->job;
+	$new_variables->{".".$self->{name}."Last"."AccountId"} = $self->{fulfilled_actor}->{nameID};
+	$new_variables->{".".$self->{name}."Last"."BinId"} = $self->{fulfilled_actor}->{binID};
 	
 	return $new_variables;
 }
