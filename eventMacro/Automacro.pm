@@ -9,7 +9,7 @@ use eventMacro::Condition;
 use eventMacro::Data;
 
 sub new {
-	my ($class, $name, $conditions, $parameters) = @_;
+	my ($class, $name, $parameters) = @_;
 	my $self = bless {}, $class;
 	
 	$self->{name} = $name;
@@ -18,17 +18,19 @@ sub new {
 	$self->{event_type_condition_index} = undef;
 	$self->{hooks} = {};
 	$self->{variables} = {};
-	$self->create_conditions_list( $conditions );
-	
-	$self->{number_of_false_conditions} = $self->{conditionList}->size;
-	if (defined $self->{event_type_condition_index}) {
-		$self->{number_of_false_conditions}--;
-	}
-	
 	$self->{parameters} = {};
 	$self->set_parameters( $parameters );
 	
 	return $self;
+}
+
+sub parse_and_create_conditions {
+	my ($self, $conditions) = @_;
+	$self->create_conditions_list( $conditions );
+	$self->{number_of_false_conditions} = $self->{conditionList}->size;
+	if (defined $self->{event_type_condition_index}) {
+		$self->{number_of_false_conditions}--;
+	}
 }
 
 sub get_hooks {
@@ -118,7 +120,7 @@ sub create_conditions_list {
 		my $conditionsText = $conditions->{$_};
 		eval "use $module";
 		foreach my $newConditionText ( @{$conditionsText} ) {
-			my $cond = $module->new( $newConditionText );
+			my $cond = $module->new( $newConditionText, $self->{listIndex} );
 			$self->{conditionList}->add( $cond );
 			foreach my $hook ( @{ $cond->get_hooks() } ) {
 				push ( @{ $self->{hooks}{$hook} }, $cond->{listIndex} );
