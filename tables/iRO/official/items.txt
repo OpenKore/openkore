@@ -8843,3 +8843,16 @@
 22061#Lumiere_Shoes#
 20705#Lumiere_Manteau#
 17376#Winter_Wonder_Time_Lucky_Crate#
+
+27012#Kick_Step_Card#
+27013#Kick_And_Kick_Card#
+27014#Green_Cenere_Card#
+27015#Repair_Robot_Turbo_Card#
+27016#Exploration_Rover_Turbo_Card#
+27017#Scrap_Robots_Card#
+27018#GC109_Card#
+27019#DR815_Card#
+27020#T_W_O_Card#
+4697#Charleston_Card#
+4698#Step_Card#
+4699#Rock_Step_Card#
