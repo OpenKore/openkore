@@ -27,7 +27,6 @@ sub validate_condition {
 				next if ($player->{nameID} == $self->{fulfilled_actor}->{nameID});
 				next unless ($self->SUPER::validate_condition($player->{name}));
 				$self->{fulfilled_actor} = $player;
-				$self->{is_Fulfilled} = 1;
 				return;
 			}
 			$self->{fulfilled_actor} = undef;

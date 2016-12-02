@@ -22,6 +22,8 @@ sub new {
 	$self->{is_Fulfilled} = 0;
 
 	$self->{hooks} = [ @{ $self->_hooks } ];
+	
+	$self->{dynamic_hooks} = [ @{ $self->_dynamic_hooks } ];
 
 	$self->_parse_syntax( $condition_code );
 
@@ -37,6 +39,14 @@ sub validate_condition {
 sub get_hooks {
 	my ($self) = @_;
 	return $self->{hooks};
+}
+
+# For '$add_or_remove' value '0' is for delete and '1' is for add.
+sub add_or_remove_dynamic_hooks {
+	my ($self, $add_or_remove) = @_;
+	foreach my $hook ( @{$self->{dynamic_hooks}} ) {
+		$eventMacro->manage_dynamic_hook_add_and_delete($hook, $self->{automacro_index}, $self->{listIndex}, $add_or_remove);
+	}
 }
 
 sub get_variables {
@@ -72,6 +82,11 @@ sub get_new_variable_list {
 
 # Default: No hooks.
 sub _hooks {
+	[];
+}
+
+# Default: No hooks.
+sub _dynamic_hooks {
 	[];
 }
 
