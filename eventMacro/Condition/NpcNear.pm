@@ -23,10 +23,10 @@ sub validate_condition {
 			$self->{fulfilled_actor} = $args;
 			$self->{is_Fulfilled} = 1;
 
-		} elsif ($callback_name eq 'npc_disappeared' && $self->{is_Fulfilled} && $args->{npc}->{nameID} == $self->{fulfilled_actor}->{nameID}) {
+		} elsif ($callback_name eq 'npc_disappeared' && $self->{is_Fulfilled} && $args->{npc}->{binID} == $self->{fulfilled_actor}->{binID}) {
 			#need to check all other actor to find another one that matches or not
 			foreach my $actor (@{$npcsList->getItems()}) {
-				next if ($actor->{nameID} == $self->{fulfilled_actor}->{nameID});
+				next if ($actor->{binID} == $self->{fulfilled_actor}->{binID});
 				next unless ($self->SUPER::validate_condition($actor->{name}));
 				$self->{fulfilled_actor} = $actor;
 				return;

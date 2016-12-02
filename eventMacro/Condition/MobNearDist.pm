@@ -52,19 +52,19 @@ sub validate_condition {
 			}
 			
 			$self->{number_of_possible_fulfill_actors}++;
-			$self->{possible_fulfill_actors}{$args->{nameID}} = $args;
+			$self->{possible_fulfill_actors}{$args->{binID}} = $args;
 			
 			if ( !$self->{is_Fulfilled} && $self->SUPER::validate_condition( 1, distance($char->{pos_to}, $args->{pos_to}) ) ) {
 				$self->{fulfilled_actor} = $args;
 				$self->{is_Fulfilled} = 1;
 			}
 
-		} elsif ( $callback_name eq 'monster_disappeared' && exists($self->{possible_fulfill_actors}{$args->{monster}->{nameID}}) ) {
+		} elsif ( $callback_name eq 'monster_disappeared' && exists($self->{possible_fulfill_actors}{$args->{monster}->{binID}}) ) {
 		
 			$self->{number_of_possible_fulfill_actors}--;
-			delete $self->{possible_fulfill_actors}{$args->{monster}->{nameID}};
+			delete $self->{possible_fulfill_actors}{$args->{monster}->{binID}};
 			
-			if ($self->{is_Fulfilled} && $args->{monster}->{nameID} == $self->{fulfilled_actor}->{nameID}) {
+			if ($self->{is_Fulfilled} && $args->{monster}->{binID} == $self->{fulfilled_actor}->{binID}) {
 				$self->search_for_dist_match_on_possible_fulfill_actors_list;
 			}
 			
@@ -81,11 +81,11 @@ sub validate_condition {
 				$actor = $args;
 			}
 			
-			return unless (exists($self->{possible_fulfill_actors}{$actor->{nameID}}));
+			return unless (exists($self->{possible_fulfill_actors}{$actor->{binID}}));
 			
 			if ($self->{is_Fulfilled}) {
 			
-				return unless ($actor->{nameID} == $self->{fulfilled_actor}->{nameID});
+				return unless ($actor->{binID} == $self->{fulfilled_actor}->{binID});
 				return if ( $self->SUPER::validate_condition( 1, distance( $char->{pos_to}, $actor->{pos_to} ) ) );
 				$self->search_for_dist_match_on_possible_fulfill_actors_list;
 				
@@ -142,7 +142,7 @@ sub recheck_all_actor_names {
 	foreach my $actor (@{$monstersList->getItems()}) {
 		next unless ( $self->SUPER::validate_condition(0, $actor->{name}) );
 		$self->{number_of_possible_fulfill_actors}++;
-		$self->{possible_fulfill_actors}{$actor->{nameID}} = $actor;
+		$self->{possible_fulfill_actors}{$actor->{binID}} = $actor;
 		
 		unless ($self->{is_Fulfilled}) {
 			next unless ( $self->SUPER::validate_condition( 1, distance($char->{pos_to}, $actor->{pos_to}) ) );

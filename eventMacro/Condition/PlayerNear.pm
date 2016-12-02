@@ -25,10 +25,10 @@ sub validate_condition {
 			$self->{fulfilled_actor} = $args;
 			$self->{is_Fulfilled} = 1;
 
-		} elsif ($callback_name eq 'player_disappeared' && $self->{is_Fulfilled} && $args->{player}->{nameID} == $self->{fulfilled_actor}->{nameID}) {
+		} elsif ($callback_name eq 'player_disappeared' && $self->{is_Fulfilled} && $args->{player}->{binID} == $self->{fulfilled_actor}->{binID}) {
 			#need to check all other actor to find another one that matches or not
 			foreach my $actor (@{$playersList->getItems()}) {
-				next if ($actor->{nameID} == $self->{fulfilled_actor}->{nameID});
+				next if ($actor->{binID} == $self->{fulfilled_actor}->{binID});
 				next unless ($self->SUPER::validate_condition($actor->{name}));
 				$self->{fulfilled_actor} = $actor;
 				return;
@@ -68,7 +68,7 @@ sub get_new_variable_list {
 	$new_variables->{".".$self->{name}."Last"."Dist"} = distance($char->{pos_to}, $self->{fulfilled_actor}->{pos_to});
 	$new_variables->{".".$self->{name}."Last"."Level"} = $self->{fulfilled_actor}->{lv};
 	$new_variables->{".".$self->{name}."Last"."Job"} = $self->{fulfilled_actor}->job;
-	$new_variables->{".".$self->{name}."Last"."AccountId"} = $self->{fulfilled_actor}->{nameID};
+	$new_variables->{".".$self->{name}."Last"."AccountId"} = $self->{fulfilled_actor}->{binID};
 	
 	return $new_variables;
 }
