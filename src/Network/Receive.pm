@@ -915,14 +915,14 @@ typedef enum <unnamed-tag> {
 		} elsif ($actor->isa('Actor::Pet')) {
 			debug "Pet Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		        Plugins::callHook('pet_moved', $actor);
-                } elsif ($actor->isa('Actor::Slave')) {
+		} elsif ($actor->isa('Actor::Slave')) {
 			debug "Slave Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		        Plugins::callHook('slave_moved', $actor);
-                } elsif ($actor->isa('Actor::Portal')) {
+		} elsif ($actor->isa('Actor::Portal')) {
 			# This can never happen of course.
 			debug "Portal Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		        Plugins::callHook('portal_moved', $actor);
-                } elsif ($actor->isa('Actor::NPC')) {
+		} elsif ($actor->isa('Actor::NPC')) {
 			# Neither can this.
 			debug "NPC Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		        Plugins::callHook('npc_moved', $actor);
