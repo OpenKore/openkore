@@ -1,4 +1,4 @@
-package eventMacro::Condition::PlayerNear;
+package eventMacro::Condition::NpcNear;
 
 use strict;
 use Globals;
@@ -6,10 +6,8 @@ use Utils;
 
 use base 'eventMacro::Conditiontypes::RegexConditionState';
 
-use Globals;
-
 sub _hooks {
-	['packet_mapChange','add_player_list','player_disappeared'];
+	['packet_mapChange','add_npc_list','npc_disappeared'];
 }
 
 sub validate_condition {
@@ -21,13 +19,13 @@ sub validate_condition {
 		
 	} elsif ($callback_type eq 'hook') {
 		
-		if ($callback_name eq 'add_player_list' && !$self->{is_Fulfilled} && $self->SUPER::validate_condition($args->{name})) {
+		if ($callback_name eq 'add_npc_list' && !$self->{is_Fulfilled} && $self->SUPER::validate_condition($args->{name})) {
 			$self->{fulfilled_actor} = $args;
 			$self->{is_Fulfilled} = 1;
 
-		} elsif ($callback_name eq 'player_disappeared' && $self->{is_Fulfilled} && $args->{player}->{nameID} == $self->{fulfilled_actor}->{nameID}) {
+		} elsif ($callback_name eq 'npc_disappeared' && $self->{is_Fulfilled} && $args->{npc}->{nameID} == $self->{fulfilled_actor}->{nameID}) {
 			#need to check all other actor to find another one that matches or not
-			foreach my $actor (@{$playersList->getItems()}) {
+			foreach my $actor (@{$npcsList->getItems()}) {
 				next if ($actor->{nameID} == $self->{fulfilled_actor}->{nameID});
 				next unless ($self->SUPER::validate_condition($actor->{name}));
 				$self->{fulfilled_actor} = $actor;
@@ -50,7 +48,7 @@ sub recheck_all_actor_names {
 	my ($self) = @_;
 	$self->{fulfilled_actor} = undef;
 	$self->{is_Fulfilled} = 0;
-	foreach my $actor (@{$playersList->getItems()}) {
+	foreach my $actor (@{$npcsList->getItems()}) {
 		next unless ($self->SUPER::validate_condition($actor->{name}));
 		$self->{fulfilled_actor} = $actor;
 		$self->{is_Fulfilled} = 1;
@@ -66,9 +64,6 @@ sub get_new_variable_list {
 	$new_variables->{".".$self->{name}."Last"."Pos"} = sprintf("%d %d %s", $self->{fulfilled_actor}->{pos_to}{x}, $self->{fulfilled_actor}->{pos_to}{y}, $field->baseName);
 	$new_variables->{".".$self->{name}."Last"."BinId"} = $self->{fulfilled_actor}->{binID};
 	$new_variables->{".".$self->{name}."Last"."Dist"} = distance($char->{pos_to}, $self->{fulfilled_actor}->{pos_to});
-	$new_variables->{".".$self->{name}."Last"."Level"} = $self->{fulfilled_actor}->{lv};
-	$new_variables->{".".$self->{name}."Last"."Job"} = $self->{fulfilled_actor}->job;
-	$new_variables->{".".$self->{name}."Last"."AccountId"} = $self->{fulfilled_actor}->{nameID};
 	
 	return $new_variables;
 }

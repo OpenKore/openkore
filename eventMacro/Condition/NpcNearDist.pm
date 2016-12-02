@@ -1,4 +1,4 @@
-package eventMacro::Condition::PlayerNearDist;
+package eventMacro::Condition::NpcNearDist;
 
 use strict;
 use Globals;
@@ -7,11 +7,11 @@ use Utils;
 use base 'eventMacro::Conditiontypes::MultipleValidatorState';
 
 sub _hooks {
-	['add_player_list','player_disappeared'];
+	['add_npc_list','npc_disappeared'];
 }
 
 sub _dynamic_hooks {
-	['packet/actor_movement_interrupted','packet/high_jump','packet/character_moves','packet_mapChange','player_moved'];
+	['packet/actor_movement_interrupted','packet/high_jump','packet/character_moves','packet_mapChange','npc_moved'];
 }
 
 sub _parse_syntax {
@@ -45,7 +45,7 @@ sub validate_condition {
 		
 	} elsif ($callback_type eq 'hook') {
 		
-		if ($callback_name eq 'add_player_list' && $self->SUPER::validate_condition(0,$args->{name})) {
+		if ($callback_name eq 'add_npc_list' && $self->SUPER::validate_condition(0,$args->{name})) {
 			
 			if ($self->{number_of_possible_fulfill_actors} == 0) {
 				$self->add_or_remove_dynamic_hooks(1);
@@ -59,12 +59,12 @@ sub validate_condition {
 				$self->{is_Fulfilled} = 1;
 			}
 
-		} elsif ( $callback_name eq 'player_disappeared' && exists($self->{possible_fulfill_actors}{$args->{player}->{nameID}}) ) {
+		} elsif ( $callback_name eq 'npc_disappeared' && exists($self->{possible_fulfill_actors}{$args->{npc}->{nameID}}) ) {
 		
 			$self->{number_of_possible_fulfill_actors}--;
-			delete $self->{possible_fulfill_actors}{$args->{player}->{nameID}};
+			delete $self->{possible_fulfill_actors}{$args->{npc}->{nameID}};
 			
-			if ($self->{is_Fulfilled} && $args->{player}->{nameID} == $self->{fulfilled_actor}->{nameID}) {
+			if ($self->{is_Fulfilled} && $args->{npc}->{nameID} == $self->{fulfilled_actor}->{nameID}) {
 				$self->search_for_dist_match_on_possible_fulfill_actors_list;
 			}
 			
@@ -72,11 +72,11 @@ sub validate_condition {
 				$self->add_or_remove_dynamic_hooks(0);
 			}
 			
-		} elsif ( $callback_name eq 'player_moved' || ($callback_name eq 'packet/actor_movement_interrupted' && Actor::get($args->{ID})->isa('Actor::Player')) || ($callback_name eq 'packet/high_jump' && Actor::get($args->{ID})->isa('Actor::Player')) ) {
+		} elsif ( $callback_name eq 'npc_moved' || ($callback_name eq 'packet/actor_movement_interrupted' && Actor::get($args->{ID})->isa('Actor::NPC')) || ($callback_name eq 'packet/high_jump' && Actor::get($args->{ID})->isa('Actor::NPC')) ) {
 			my $actor;
-			unless  ($callback_name eq 'player_moved') {
+			unless  ($callback_name eq 'npc_moved') {
 				$actor = Actor::get($args->{ID});
-				return unless ($actor->isa('Actor::Player'));
+				return unless ($actor->isa('Actor::NPC'));
 			} else {
 				$actor = $args;
 			}
@@ -139,7 +139,7 @@ sub recheck_all_actor_names {
 	$self->{is_Fulfilled} = 0;
 	$self->{number_of_possible_fulfill_actors} = 0;
 	$self->{possible_fulfill_actors} = {};
-	foreach my $actor (@{$playersList->getItems()}) {
+	foreach my $actor (@{$npcsList->getItems()}) {
 		next unless ( $self->SUPER::validate_condition(0, $actor->{name}) );
 		$self->{number_of_possible_fulfill_actors}++;
 		$self->{possible_fulfill_actors}{$actor->{nameID}} = $actor;
@@ -166,9 +166,6 @@ sub get_new_variable_list {
 	$new_variables->{".".$self->{name}."Last"."Pos"} = sprintf("%d %d %s", $self->{fulfilled_actor}->{pos_to}{x}, $self->{fulfilled_actor}->{pos_to}{y}, $field->baseName);
 	$new_variables->{".".$self->{name}."Last"."BinId"} = $self->{fulfilled_actor}->{binID};
 	$new_variables->{".".$self->{name}."Last"."Dist"} = distance($char->{pos_to}, $self->{fulfilled_actor}->{pos_to});
-	$new_variables->{".".$self->{name}."Last"."Level"} = $self->{fulfilled_actor}->{lv};
-	$new_variables->{".".$self->{name}."Last"."Job"} = $self->{fulfilled_actor}->job;
-	$new_variables->{".".$self->{name}."Last"."AccountId"} = $self->{fulfilled_actor}->{nameID};
 	
 	return $new_variables;
 }
