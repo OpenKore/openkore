@@ -7,7 +7,7 @@ use base 'eventMacro::Conditiontypes::RegexConditionState';
 use Globals;
 
 sub _hooks {
-	['add_player_list','player_disappeared'];
+	['add_player_list','player_disappeared', 'packet_mapChange'];
 }
 
 sub validate_condition {
@@ -15,6 +15,8 @@ sub validate_condition {
 	
 	if ($callback_type eq 'variable') {
 		$self->SUPER::update_validator_var($callback_name, $args);
+		$self->recheck_all_actor_names;
+		
 	} elsif ($callback_type eq 'hook') {
 		
 		if ($callback_name eq 'add_player_list' && !$self->{is_Fulfilled} && $self->SUPER::validate_condition($args->{name})) {
@@ -22,17 +24,34 @@ sub validate_condition {
 			$self->{is_Fulfilled} = 1;
 
 		} elsif ($callback_name eq 'player_disappeared' && $self->{is_Fulfilled} && $args->{player}->{nameID} == $self->{fulfilled_actor}->{nameID}) {
-			#need to check all other player to find another one that matches or not
-			foreach my $player (@{$playersList->getItems()}) {
-				next if ($player->{nameID} == $self->{fulfilled_actor}->{nameID});
-				next unless ($self->SUPER::validate_condition($player->{name}));
-				$self->{fulfilled_actor} = $player;
+			#need to check all other actor to find another one that matches or not
+			foreach my $actor (@{$playersList->getItems()}) {
+				next if ($actor->{nameID} == $self->{fulfilled_actor}->{nameID});
+				next unless ($self->SUPER::validate_condition($actor->{name}));
+				$self->{fulfilled_actor} = $actor;
 				return;
 			}
 			$self->{fulfilled_actor} = undef;
 			$self->{is_Fulfilled} = 0;
 		}
 		
+	} elsif ($callback_name eq 'packet_mapChange') {
+		$self->{fulfilled_actor} = undef;
+		$self->{is_Fulfilled} = 0;
+	} elsif ($callback_type eq 'recheck') {
+		$self->recheck_all_actor_names;
+	}
+}
+
+sub recheck_all_actor_names {
+	my ($self) = @_;
+	$self->{fulfilled_actor} = undef;
+	$self->{is_Fulfilled} = 0;
+	foreach my $actor (@{$playersList->getItems()}) {
+		next unless ($self->SUPER::validate_condition($actor->{name}));
+		$self->{fulfilled_actor} = $actor;
+		$self->{is_Fulfilled} = 1;
+		last;
 	}
 }
 
