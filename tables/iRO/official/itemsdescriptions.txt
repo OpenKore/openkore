@@ -79353,3 +79353,104 @@ Weight : ^777777130^000000
 Required Level : ^77777765^000000
 Job : ^777777All^000000
 #
+
+
+27012#
+MHP + 8%.
+For Mechanic class, decreasing 30% long distance physical damage.
+Class : ^777777Card^000000
+Compound on : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+27013#
+Increasing 10% of [Vulcan Arm] damage.
++10 Refined, 20% additional [Vulcan Arm] damage incaresed.
+Equip with Kick Step Card, no consumes Madogear energy.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+27014#
+MHP + 2%
+Add a chance to recover 1000 HP per second for 5 seconds when the user receiving physical or magical damage.
+Class : ^777777Card^000000
+Compound on : ^777777Footgear^000000
+Weight : ^7777771^000000
+#
+
+27015#
+Increase natural HP and SP regeneration rate by 25%.
+Recover +30 HP and +3 SP each time a monster is killed by Physical Melee Damage.
++ 7 Refined, additional +10 HP and +1 SP each time a monster is killed by Physical Melee Damage.
+Class : ^777777Card^000000
+Compound on : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+27016#
+Critical Rate + 30% on Formless monster.
+Equip with Repair Robot Turbo Card,
+additional Critical Damage +10%.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+
+27017#
+Decreasing 10% physical and magical damage from Formless monster.,
++7 Refined, Reducing 5% physical and magical damage from Formless monster.,
+Has a chance to gain miscellaneous items when a monster is killed.,
+Class : ^777777Card^000000,
+Compound on : ^777777Garment^000000,
+Weight : ^7777771^000000,
+#
+27018#
+Increase attack speed. (After Attack Delay - 1%)
+Base level 90 or higher, increase additional attack speed. (After Attack Delay - 1%)
+Base level 120 or higher, increase additional attack speed. (After Attack Delay - 1%)
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+
+27019#
+HIT + 1.
+Base level 90 or higher, additional HIT + 1.
+Base level 120 or higher, additional HIT + 1.
+Equip with GC109 Card,
+Each short ranged physical attack has a chance to ASPD + 5 for 5 seconds
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+27020#
+ATK + 10%.
+Add a chance to take away 40% MSP within 15*15 cell when short ranged physical attack.
+Increase casting rates for each +3 refined.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4697#
+MSP -300.
+Each short ranged Physical attack has a high chance of destroying an enemy's armor.
+Equip with Kick Step Card, no consumes Madogear energy.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4698#
+Increase 30% of [Axe Boomerang] damage.
+Increase additional 30% of [Axe Boomerang] damage if weapon has +10 refined or higher.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+
+4699#
+Increase 20% of [Arm Cannon] damage.
+Increase additional 20% of [Arm Cannon] damage if weapon has + 10 refined or higher.
+Equip with Kick Step Card, no consumes Madogear energy.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
