@@ -128,11 +128,11 @@ sub start {
 		my $v = eventMacro::Validator::NumericComparison->new( '< $foo' );
 		ok $v->parsed;
 
-		$eventMacro->set_var( 'foo', 10 );
+		$v->update_vars( 'foo', 10 );
 		ok $v->validate( 9 );
 		ok !$v->validate( 10 );
 		ok !$v->validate( 11 );
-		$eventMacro->set_var( 'foo', 11 );
+		$v->update_vars( 'foo', 11 );
 		ok $v->validate( 9 );
 		ok $v->validate( 10 );
 		ok !$v->validate( 11 );
@@ -140,8 +140,8 @@ sub start {
 		$v = eventMacro::Validator::NumericComparison->new( '$foo .. $bar' );
 		ok $v->parsed;
 
-		$eventMacro->set_var( 'foo', 10 );
-		$eventMacro->set_var( 'bar', 20 );
+		$v->update_vars( 'foo', 10 );
+		$v->update_vars( 'bar', 20 );
 		ok !$v->validate( 9 );
 		ok $v->validate( 10 );
 		ok $v->validate( 20 );
