@@ -52,6 +52,8 @@ sub iterate {
 	processMisc();
 	processPortalRecording();
 	Benchmark::end("ai_prepare") if DEBUG;
+	
+	Plugins::callHook('AI_start', {state => $AI});
 
 	return if $AI == AI::OFF;
 	if ($net->clientAlive() && !$sentWelcomeMessage && timeOut($timeout{welcomeText})) {
