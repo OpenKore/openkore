@@ -35,7 +35,7 @@ sub parse_and_create_conditions {
 }
 
 sub get_running_status {
-	my ($self, $new_status) = @_;
+	my ($self) = @_;
 	return $self->{running_status};
 }
 
