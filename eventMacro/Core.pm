@@ -328,9 +328,10 @@ sub check_all_conditions {
 			next if ($condition->condition_type == EVENT_TYPE);
 			debug "[eventMacro] Checking condition of index '".$condition->{listIndex}."' in automacro '".$automacro->get_name."'\n", "eventMacro", 2;
 			$automacro->check_state_type_condition($condition->{listIndex}, 'recheck')
-			
 		}
-		
+		if ($automacro->can_be_added_to_queue) {
+			$self->add_to_triggered_prioritized_automacros_index_list($automacro);
+		}
 	}
 }
 
