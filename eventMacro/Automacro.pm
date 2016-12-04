@@ -19,6 +19,7 @@ sub new {
 	$self->{hooks} = {};
 	$self->{variables} = {};
 	$self->{parameters} = {};
+	$self->{running_status} = 0;
 	$self->set_parameters( $parameters );
 	
 	return $self;
@@ -31,6 +32,19 @@ sub parse_and_create_conditions {
 	if (defined $self->{event_type_condition_index}) {
 		$self->{number_of_false_conditions}--;
 	}
+}
+
+sub running_status {
+	my ($self, $new_status) = @_;
+	if (defined $new_status) {
+		$self->{running_status} = $new_status;
+	}
+	return $self->{running_status};
+}
+
+sub get_index {
+	my ($self) = @_;
+	return $self->{listIndex};
 }
 
 sub get_hooks {
@@ -57,14 +71,12 @@ sub disable {
 	my ($self) = @_;
 	$self->{parameters}{disabled} = 1;
 	debug "[eventMacro] Disabling ".$self->get_name()."\n", "eventMacro", 2;
-	return 1;
 }
 
 sub enable {
 	my ($self) = @_;
 	$self->{parameters}{disabled} = 0;
 	debug "[eventMacro] Enabling ".$self->get_name()."\n", "eventMacro", 2;
-	return 1;
 }
 
 sub get_parameter {
@@ -163,6 +175,7 @@ sub check_state_type_condition {
 	} elsif ($pre_check_status == 0 && $condition->is_fulfilled == 1) {
 		$self->{number_of_false_conditions}--;
 	}
+	return $pos_check_status;
 }
 
 sub check_event_type_condition {
@@ -194,7 +207,13 @@ sub is_timed_out {
 	return 0;
 }
 
-sub can_be_run {
+sub can_be_added_to_queue {
+	my ($self) = @_;
+	return 1 if ($self->are_conditions_fulfilled && !$self->is_disabled && !$self->running_status && !$self->has_event_type_condition);
+	return 0;
+}
+
+sub can_be_run_from_event {
 	my ($self) = @_;
 	return 1 if ($self->are_conditions_fulfilled && !$self->is_disabled && $self->is_timed_out);
 	return 0;

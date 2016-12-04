@@ -1220,9 +1220,9 @@ sub parse_release_and_lock {
 	my $automacro = $eventMacro->{Automacro_List}->getByName($parsed_automacro_name);
 	
 	if ($type == 1) {
-		$automacro->disable();
+		$eventMacro->disable_automacro($automacro);
 	} else {
-		$automacro->enable();
+		$eventMacro->enable_automacro($automacro);
 	}
 	
 	$self->timeout(0);

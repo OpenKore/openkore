@@ -216,9 +216,9 @@ sub commandHandler {
 	} elsif ($arg eq 'reset') {
 		if (!defined $params[0]) {
 			foreach my $automacro (@{$eventMacro->{Automacro_List}->getItems()}) {
-				$automacro->enable();
+				$eventMacro->enable_automacro($automacro);
 			}
-			message "[eventMacro] Automacros run-once cleared.\n";
+			message "[eventMacro] All automacros were enabled.\n";
 			return;
 		}
 		for my $automacro_name (@params) {
@@ -226,7 +226,7 @@ sub commandHandler {
 			if (!$automacro) {
 				error "[eventMacro] Automacro '".$automacro_name."' not found.\n"
 			} else {
-				$automacro->enable();
+				$eventMacro->enable_automacro($automacro);
 			}
 		}
 	### parameter: automacro

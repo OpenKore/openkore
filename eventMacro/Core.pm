@@ -28,13 +28,8 @@ sub new {
 	$self->{Condition_Modules_Loaded} = {};
 	$self->create_automacro_list($parse_result->{automacros});
 	
-	
-	$self->{Index_Priority_List} = [];
-	$self->create_priority_list();
-	
 	$self->{AI_pre_Hook_Handle} = undef;
 	$self->set_automacro_checking_status();
-	
 	
 	$self->{Event_Related_Variables} = {};
 	$self->{Event_Related_Hooks} = {};
@@ -45,6 +40,13 @@ sub new {
 	$self->{Macro_Runner} = undef;
 	
 	$self->{Variable_List_Hash} = {};
+	
+	$self->{number_of_triggered_automacros} = 0;
+	
+	#must add a sorting algorithm here later
+	$self->{triggered_prioritized_automacros_index_list} = [];
+	
+	$self->{automacro_index_to_queue_index} = {};
 	
 	if ($char && $net && $net->getState() == Network::IN_GAME) {
 		$self->check_all_conditions();
@@ -106,16 +108,6 @@ sub set_automacro_checking_status {
 sub get_automacro_checking_status {
 	my ($self) = @_;
 	return $self->{Automacros_Checking_Status};
-}
-
-sub create_priority_list {
-	my ($self) = @_;
-	
-	my %priority_hash;
-	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
-		$priority_hash{$automacro->{listIndex}} = $automacro->get_parameter('priority');
-	}
-	@{$self->{Index_Priority_List}} = sort { $priority_hash{$a} <=> $priority_hash{$b} } keys %priority_hash;
 }
 
 sub create_macro_list {
@@ -336,9 +328,10 @@ sub check_all_conditions {
 			next if ($condition->condition_type == EVENT_TYPE);
 			debug "[eventMacro] Checking condition of index '".$condition->{listIndex}."' in automacro '".$automacro->get_name."'\n", "eventMacro", 2;
 			$automacro->check_state_type_condition($condition->{listIndex}, 'recheck')
-			
 		}
-		
+		if ($automacro->can_be_added_to_queue) {
+			$self->add_to_triggered_prioritized_automacros_index_list($automacro);
+		}
 	}
 }
 
@@ -370,6 +363,60 @@ sub is_var_defined {
 sub exists_var {
 	my ($self, $variable_name) = @_;
 	return (exists $self->{Variable_List_Hash}{$variable_name});
+}
+
+sub add_to_triggered_prioritized_automacros_index_list {
+	my ($self, $automacro) = @_;
+	my $priority = $automacro->get_parameter('priority');
+	my $index = $automacro->get_index;
+	
+	my $list = $self->{triggered_prioritized_automacros_index_list} ||= [];
+
+	# Find where we should insert this item.
+	my $new_index;
+	for ($new_index = 0 ; $new_index < @$list && @$list[$new_index]->{priority} <= $priority ; $new_index++) {}
+
+	# Insert.
+	splice @$list, $new_index, 0, { index => $index, priority => $priority };
+
+	# Update indexes.
+	my $index_hash = $self->{automacro_index_to_queue_index};
+	foreach my $auto_index ($new_index .. $#{$list}) {
+		$index_hash->{$list->[$auto_index]} = $auto_index;
+	}
+
+	debug "[eventMacro] Automacro '".$automacro->get_name()."' met it's conditions. Adding it to running queue in position '".$new_index."'.\n", "eventMacro";
+	
+	# Return the insertion index.
+	return $new_index;
+}
+
+sub remove_from_triggered_prioritized_automacros_index_list {
+	my ($self, $automacro) = @_;
+	my $priority = $automacro->get_parameter('priority');
+	my $index = $automacro->get_index;
+	
+	my $list = $self->{triggered_prioritized_automacros_index_list};
+	
+	my $index_hash = $self->{automacro_index_to_queue_index};
+	
+	# Find from where we should delete this item.
+	my $queue_index = $index_hash->{$index};
+	
+	# remove.
+	splice (@$list, $queue_index, 1);
+	
+	my $size = @$list;
+	
+	# Update indexes.
+	foreach my $auto_index ($queue_index .. $#{$list}) {
+		$index_hash->{$list->[$auto_index]} = $auto_index;
+	}
+	
+	debug "[eventMacro] Automacro '".$automacro->get_name()."' no longer meets it's conditions. Removing it from running queue from position '".$queue_index."'.\n", "eventMacro";
+	
+	# Return the removal index.
+	return $queue_index;
 }
 
 sub manage_event_callbacks {
@@ -407,7 +454,22 @@ sub manage_event_callbacks {
 				next;
 			} else {
 				debug "[eventMacro] Variable value will be updated in condition of state type in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3 if ($callback_type eq 'variable');
-				$automacro->check_state_type_condition($condition_index, $callback_type, $callback_name, $args);
+				
+				my $result = $automacro->check_state_type_condition($condition_index, $callback_type, $callback_name, $args);
+				
+				#add to running queue
+				if (!$result && $automacro->running_status) {
+					my $index = $self->remove_from_triggered_prioritized_automacros_index_list($automacro);
+					$self->{number_of_triggered_automacros}--;
+					$automacro->running_status(0);
+				
+				#remove from running queue
+				} elsif ($result && $automacro->can_be_added_to_queue) {
+					my $index = $self->add_to_triggered_prioritized_automacros_index_list($automacro);
+					$self->{number_of_triggered_automacros}++;
+					$automacro->running_status(1);
+					
+				}
 			}
 		}
 		
@@ -417,7 +479,7 @@ sub manage_event_callbacks {
 				debug "[eventMacro] Variable value will be updated in condition of event type in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 				$automacro->check_event_type_condition($callback_type, $callback_name, $args);
 				
-			} elsif (($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run) {
+			} elsif (($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run_from_event) {
 				debug "[eventMacro] Condition of event type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 				
 				if ($automacro->check_event_type_condition($callback_type, $callback_name, $args)) {
@@ -504,24 +566,33 @@ sub manage_dynamic_hook_add_and_delete {
 sub AI_pre_checker {
 	my ($self) = @_;
 	
-	#maybe we should have a list of fulfilled automacros instead of checking for it each AI_pre cycle
-	#would using a binary heap to extract and add members to above said list benefit cpu use?
+	foreach my $array_member (@{$self->{triggered_prioritized_automacros_index_list}}) {
 	
-	#should AI_pre only be hooked when we are sure there are automacros with conditions fulfilled?
-	
-	foreach my $index (@{$self->{Index_Priority_List}}) {
-	
-		my $automacro = $self->{Automacro_List}->get($index);
+		my $automacro = $self->{Automacro_List}->get($array_member->{index});
 		
-		next if $automacro->has_event_type_condition();
-		
-		next unless $automacro->can_be_run;
+		next unless $automacro->is_timed_out;
 		
 		message "[eventMacro] Conditions met for automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
 		
 		$self->call_macro($automacro);
 		
 		return;
+	}
+}
+
+sub disable_automacro {
+	my ($self, $automacro) = @_;
+	$automacro->disable;
+	if ($automacro->running_status) {
+		$self->remove_from_triggered_prioritized_automacros_index_list($automacro);
+	}
+}
+
+sub enable_automacro {
+	my ($self, $automacro) = @_;
+	$automacro->enable;
+	if ($automacro->can_be_added_to_queue) {
+		$self->add_to_triggered_prioritized_automacros_index_list($automacro);
 	}
 }
 
@@ -533,7 +604,9 @@ sub call_macro {
 	}
 	
 	$automacro->set_timeout_time(time);
-	$automacro->disable() if $automacro->get_parameter('run-once');
+	if ($automacro->get_parameter('run-once')) {
+		$self->disable_automacro($automacro);
+	}
 	
 	my $new_variables = $automacro->get_new_macro_variables;
 	
