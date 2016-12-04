@@ -28,7 +28,8 @@ sub new {
 	$self->{Condition_Modules_Loaded} = {};
 	$self->create_automacro_list($parse_result->{automacros});
 	
-	$self->{AI_start_Hook_Handle} = undef;
+	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
+	$self->{AI_start_Automacros_Check_Hook_Handle} = undef;
 	$self->set_automacro_checking_status();
 	
 	$self->{Event_Related_Variables} = {};
@@ -58,7 +59,7 @@ sub unload {
 	my ($self) = @_;
 	$self->clear_queue();
 	$self->clean_hooks();
-	Plugins::delHook($self->{AI_start_Hook_Handle}) if ($self->{AI_start_Hook_Handle});
+	Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle}) if ($self->{AI_start_Automacros_Check_Hook_Handle});
 }
 
 sub clean_hooks {
@@ -72,7 +73,7 @@ sub set_automacro_checking_status {
 	if (!defined $self->{Automacros_Checking_Status}) {
 		debug "[eventMacro] Initializing automacro checking by default.\n", "eventMacro", 2;
 		$self->{Automacros_Checking_Status} = CHECKING_AUTOMACROS;
-		$self->{AI_start_Hook_Handle} = Plugins::addHook( 'AI_start', sub { $self->AI_start_checker(); }, undef );
+		$self->{AI_start_Automacros_Check_Hook_Handle} = Plugins::addHook( 'AI_start', sub { $self->AI_start_checker(); }, undef );
 		return;
 	} elsif ($self->{Automacros_Checking_Status} == $status) {
 		debug "[eventMacro] automacro checking status is already $status.\n", "eventMacro", 2;
@@ -82,10 +83,10 @@ sub set_automacro_checking_status {
 		  ($self->{Automacros_Checking_Status} == CHECKING_AUTOMACROS || $self->{Automacros_Checking_Status} == CHECKING_FORCED_BY_USER) &&
 		  ($status == PAUSED_BY_EXCLUSIVE_MACRO || $status == PAUSE_FORCED_BY_USER)
 		) {
-			if (defined $self->{AI_start_Hook_Handle}) {
+			if (defined $self->{AI_start_Automacros_Check_Hook_Handle}) {
 				debug "[eventMacro] Deleting AI_start hook.\n", "eventMacro", 2;
-				Plugins::delHook($self->{AI_start_Hook_Handle});
-				$self->{AI_start_Hook_Handle} = undef;
+				Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle});
+				$self->{AI_start_Automacros_Check_Hook_Handle} = undef;
 			} else {
 				error "[eventMacro] Tried to delete AI_start hook and for some reason it is already undefined.\n";
 			}
@@ -93,11 +94,11 @@ sub set_automacro_checking_status {
 		  ($self->{Automacros_Checking_Status} == PAUSED_BY_EXCLUSIVE_MACRO || $self->{Automacros_Checking_Status} == PAUSE_FORCED_BY_USER) &&
 		  ($status == CHECKING_AUTOMACROS || $status == CHECKING_FORCED_BY_USER)
 		) {
-			if (defined $self->{AI_start_Hook_Handle}) {
+			if (defined $self->{AI_start_Automacros_Check_Hook_Handle}) {
 				error "[eventMacro] Tried to add AI_start hook and for some reason it is already defined.\n";
 			} else {
 				debug "[eventMacro] Adding AI_start hook.\n", "eventMacro", 2;
-				$self->{AI_start_Hook_Handle} = Plugins::addHook( 'AI_start', sub { $self->AI_start_checker(); }, undef );
+				$self->{AI_start_Automacros_Check_Hook_Handle} = Plugins::addHook( 'AI_start', sub { $self->AI_start_checker(); }, undef );
 			}
 		}
 		$self->{Automacros_Checking_Status} = $status;
@@ -629,7 +630,7 @@ sub call_macro {
 	
 	if (defined $self->{Macro_Runner}) {
 		my $iterate_macro_sub = sub { $self->iterate_macro(); };
-		$self->{mainLoop_Hook_Handle} = Plugins::addHook( 'mainLoop_pre', $iterate_macro_sub, undef );
+		$self->{AI_start_Macros_Running_Hook_Handle} = Plugins::addHook( 'AI_start', $iterate_macro_sub, undef );
 	} else {
 		error "[eventMacro] unable to create macro queue.\n"
 	}
@@ -650,7 +651,6 @@ sub iterate_macro {
 		return;
 	}
 	
-	# In future versions this should not be necessary since the only way to pause a macro is by a console command, and this command should unhook 'mainLoop_pre', making this unnecessary.
 	return if $self->{Macro_Runner}->is_paused();
 	
 	my $macro_timeout = $self->{Macro_Runner}->timeout;
@@ -768,8 +768,8 @@ sub clear_queue {
 		$self->set_automacro_checking_status(CHECKING_AUTOMACROS);
 	}
 	$self->{Macro_Runner} = undef;
-	Plugins::delHook($self->{mainLoop_Hook_Handle}) if (defined $self->{mainLoop_Hook_Handle});
-	$self->{mainLoop_Hook_Handle} = undef;
+	Plugins::delHook($self->{AI_start_Macros_Running_Hook_Handle}) if (defined $self->{AI_start_Macros_Running_Hook_Handle});
+	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
 }
 
 
