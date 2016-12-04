@@ -28,7 +28,7 @@ sub new {
 	$self->{Condition_Modules_Loaded} = {};
 	$self->create_automacro_list($parse_result->{automacros});
 	
-	$self->{AI_pre_Hook_Handle} = undef;
+	$self->{AI_start_Hook_Handle} = undef;
 	$self->set_automacro_checking_status();
 	
 	$self->{Event_Related_Variables} = {};
@@ -36,7 +36,6 @@ sub new {
 	$self->{Hook_Handles} = {};
 	$self->create_callbacks();
 	
-	$self->{mainLoop_Hook_Handle} = undef;
 	$self->{Macro_Runner} = undef;
 	
 	$self->{Variable_List_Hash} = {};
@@ -59,7 +58,7 @@ sub unload {
 	my ($self) = @_;
 	$self->clear_queue();
 	$self->clean_hooks();
-	Plugins::delHook($self->{AI_pre_Hook_Handle}) if ($self->{AI_pre_Hook_Handle});
+	Plugins::delHook($self->{AI_start_Hook_Handle}) if ($self->{AI_start_Hook_Handle});
 }
 
 sub clean_hooks {
@@ -73,7 +72,7 @@ sub set_automacro_checking_status {
 	if (!defined $self->{Automacros_Checking_Status}) {
 		debug "[eventMacro] Initializing automacro checking by default.\n", "eventMacro", 2;
 		$self->{Automacros_Checking_Status} = CHECKING_AUTOMACROS;
-		$self->{AI_pre_Hook_Handle} = Plugins::addHook( 'AI_pre', sub { $self->AI_pre_checker(); }, undef );
+		$self->{AI_start_Hook_Handle} = Plugins::addHook( 'AI_start', sub { $self->AI_start_checker(); }, undef );
 		return;
 	} elsif ($self->{Automacros_Checking_Status} == $status) {
 		debug "[eventMacro] automacro checking status is already $status.\n", "eventMacro", 2;
@@ -83,22 +82,22 @@ sub set_automacro_checking_status {
 		  ($self->{Automacros_Checking_Status} == CHECKING_AUTOMACROS || $self->{Automacros_Checking_Status} == CHECKING_FORCED_BY_USER) &&
 		  ($status == PAUSED_BY_EXCLUSIVE_MACRO || $status == PAUSE_FORCED_BY_USER)
 		) {
-			if (defined $self->{AI_pre_Hook_Handle}) {
-				debug "[eventMacro] Deleting AI_pre hook.\n", "eventMacro", 2;
-				Plugins::delHook($self->{AI_pre_Hook_Handle});
-				$self->{AI_pre_Hook_Handle} = undef;
+			if (defined $self->{AI_start_Hook_Handle}) {
+				debug "[eventMacro] Deleting AI_start hook.\n", "eventMacro", 2;
+				Plugins::delHook($self->{AI_start_Hook_Handle});
+				$self->{AI_start_Hook_Handle} = undef;
 			} else {
-				error "[eventMacro] Tried to delete AI_pre hook and for some reason it is already undefined.\n";
+				error "[eventMacro] Tried to delete AI_start hook and for some reason it is already undefined.\n";
 			}
 		} elsif (
 		  ($self->{Automacros_Checking_Status} == PAUSED_BY_EXCLUSIVE_MACRO || $self->{Automacros_Checking_Status} == PAUSE_FORCED_BY_USER) &&
 		  ($status == CHECKING_AUTOMACROS || $status == CHECKING_FORCED_BY_USER)
 		) {
-			if (defined $self->{AI_pre_Hook_Handle}) {
-				error "[eventMacro] Tried to add AI_pre hook and for some reason it is already defined.\n";
+			if (defined $self->{AI_start_Hook_Handle}) {
+				error "[eventMacro] Tried to add AI_start hook and for some reason it is already defined.\n";
 			} else {
-				debug "[eventMacro] Adding AI_pre hook.\n", "eventMacro", 2;
-				$self->{AI_pre_Hook_Handle} = Plugins::addHook( 'AI_pre', sub { $self->AI_pre_checker(); }, undef );
+				debug "[eventMacro] Adding AI_start hook.\n", "eventMacro", 2;
+				$self->{AI_start_Hook_Handle} = Plugins::addHook( 'AI_start', sub { $self->AI_start_checker(); }, undef );
 			}
 		}
 		$self->{Automacros_Checking_Status} = $status;
@@ -563,7 +562,7 @@ sub manage_dynamic_hook_add_and_delete {
 	}
 }
 
-sub AI_pre_checker {
+sub AI_start_checker {
 	my ($self) = @_;
 	
 	foreach my $array_member (@{$self->{triggered_prioritized_automacros_index_list}}) {
