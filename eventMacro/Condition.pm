@@ -41,6 +41,11 @@ sub get_hooks {
 	return $self->{hooks};
 }
 
+sub get_index {
+	my ($self) = @_;
+	return $self->{listIndex};
+}
+
 # For '$add_or_remove' value '0' is for delete and '1' is for add.
 sub add_or_remove_dynamic_hooks {
 	my ($self, $add_or_remove) = @_;

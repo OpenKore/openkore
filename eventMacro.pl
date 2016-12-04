@@ -59,6 +59,7 @@ sub onstart3 {
 sub checkConfig {
 	$timeout{eventMacro_delay}{timeout} = 1 unless defined $timeout{eventMacro_delay};
 	$config{eventMacro_orphans} = 'terminate' unless defined $config{eventMacro_orphans};
+	$config{eventMacro_CheckOnAI} = 'auto' unless defined $config{eventMacro_CheckOnAI};
 	$file = (defined $config{eventMacro_file}) ? $config{eventMacro_file} : "eventMacros.txt";
 	return 1;
 }
