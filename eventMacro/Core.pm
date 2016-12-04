@@ -370,42 +370,24 @@ sub add_to_triggered_prioritized_automacros_index_list {
 	my $priority = $automacro->get_parameter('priority');
 	my $index = $automacro->get_index;
 	
-	push( @{ $self->{triggered_prioritized_automacros_index_list} }, { index => $index, priority => $priority } );
-	
-	my $size = scalar @{ $self->{triggered_prioritized_automacros_index_list} };
-	
-	$self->{automacro_index_to_queue_index}{$index} = $size - 1;
-	
+	my $list = $self->{triggered_prioritized_automacros_index_list} ||= [];
+
+	# Find where we should insert this item.
 	my $new_index;
-	
-	if ( $size == 1 ) {
-		$new_index = 0;
-	} else {
-		my $check_index = -1;
-		my $current = @{ $self->{triggered_prioritized_automacros_index_list} }[$check_index];
-		my $next = @{ $self->{triggered_prioritized_automacros_index_list} }[$check_index-1];
-		while ($next->{priority} > $current->{priority}) {
-			@{ $self->{triggered_prioritized_automacros_index_list} }[$check_index] = $next;
-			$self->{automacro_index_to_queue_index}{$next->{index}} = $size + $check_index;
-			
-			@{ $self->{triggered_prioritized_automacros_index_list} }[$check_index-1] = $current;
-			$self->{automacro_index_to_queue_index}{$current->{index}} = $size + $check_index - 1;
-			
-			last if ($size + $check_index == 0);
-			
-		} continue {
-		
-			$check_index--;
-			$current = @{ $self->{triggered_prioritized_automacros_index_list} }[$check_index];
-			$next = @{ $self->{triggered_prioritized_automacros_index_list} }[$check_index-1];
-			
-		}
-		
-		$new_index = ($size + $check_index);
+	for ($new_index = 0 ; $new_index < @$list && @$list[$new_index]->{priority} <= $priority ; $new_index++) {}
+
+	# Insert.
+	splice @$list, $new_index, 0, { index => $index, priority => $priority };
+
+	# Update indexes.
+	my $index_hash = $self->{automacro_index_to_queue_index};
+	foreach my $auto_index ($new_index .. $#{$list}) {
+		$index_hash->{$list->[$auto_index]} = $auto_index;
 	}
-	
+
 	debug "[eventMacro] Automacro '".$automacro->get_name()."' met it's conditions. Adding it to running queue in position '".$new_index."'.\n", "eventMacro";
 	
+	# Return the insertion index.
 	return $new_index;
 }
 
@@ -414,23 +396,26 @@ sub remove_from_triggered_prioritized_automacros_index_list {
 	my $priority = $automacro->get_parameter('priority');
 	my $index = $automacro->get_index;
 	
-	my $queue_index = $self->{automacro_index_to_queue_index}{$index};
+	my $list = $self->{triggered_prioritized_automacros_index_list};
 	
-	splice (@{ $self->{triggered_prioritized_automacros_index_list} }, $queue_index, 1);
+	my $index_hash = $self->{automacro_index_to_queue_index};
 	
-	my $size = scalar @{ $self->{triggered_prioritized_automacros_index_list} };
+	# Find from where we should delete this item.
+	my $queue_index = $index_hash->{$index};
 	
-	unless ($size == 0) {
-		my $current = $queue_index;
-		foreach my $member (@{ $self->{triggered_prioritized_automacros_index_list} }[$queue_index..($size-1)]) {
-			$self->{automacro_index_to_queue_index}{$member->{index}} = $current;
-		} continue {
-			$current++;
-		}
+	# remove.
+	splice (@$list, $queue_index, 1);
+	
+	my $size = @$list;
+	
+	# Update indexes.
+	foreach my $auto_index ($queue_index .. $#{$list}) {
+		$index_hash->{$list->[$auto_index]} = $auto_index;
 	}
 	
 	debug "[eventMacro] Automacro '".$automacro->get_name()."' no longer meets it's conditions. Removing it from running queue from position '".$queue_index."'.\n", "eventMacro";
 	
+	# Return the removal index.
 	return $queue_index;
 }
 
@@ -473,16 +458,16 @@ sub manage_event_callbacks {
 				my $result = $automacro->check_state_type_condition($condition_index, $callback_type, $callback_name, $args);
 				
 				#add to running queue
-				if (!$result && $automacro->get_running_status) {
+				if (!$result && $automacro->running_status) {
 					my $index = $self->remove_from_triggered_prioritized_automacros_index_list($automacro);
 					$self->{number_of_triggered_automacros}--;
-					$automacro->set_running_status(0);
+					$automacro->running_status(0);
 				
 				#remove from running queue
 				} elsif ($result && $automacro->can_be_added_to_queue) {
 					my $index = $self->add_to_triggered_prioritized_automacros_index_list($automacro);
 					$self->{number_of_triggered_automacros}++;
-					$automacro->set_running_status(1);
+					$automacro->running_status(1);
 					
 				}
 			}
@@ -598,7 +583,7 @@ sub AI_pre_checker {
 sub disable_automacro {
 	my ($self, $automacro) = @_;
 	$automacro->disable;
-	if ($automacro->get_running_status) {
+	if ($automacro->running_status) {
 		$self->remove_from_triggered_prioritized_automacros_index_list($automacro);
 	}
 }

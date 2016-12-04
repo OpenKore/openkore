@@ -34,14 +34,12 @@ sub parse_and_create_conditions {
 	}
 }
 
-sub get_running_status {
-	my ($self) = @_;
-	return $self->{running_status};
-}
-
-sub set_running_status {
+sub running_status {
 	my ($self, $new_status) = @_;
-	$self->{running_status} = $new_status;
+	if (defined $new_status) {
+		$self->{running_status} = $new_status;
+	}
+	return $self->{running_status};
 }
 
 sub get_index {
@@ -211,7 +209,7 @@ sub is_timed_out {
 
 sub can_be_added_to_queue {
 	my ($self) = @_;
-	return 1 if ($self->are_conditions_fulfilled && !$self->is_disabled && !$self->get_running_status && !$self->has_event_type_condition);
+	return 1 if ($self->are_conditions_fulfilled && !$self->is_disabled && !$self->running_status && !$self->has_event_type_condition);
 	return 0;
 }
 
