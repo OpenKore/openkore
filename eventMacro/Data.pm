@@ -33,6 +33,7 @@ our %parameters = (
 	'priority' => 1,     # option: automacro priority
 	'exclusive' => 1,    # option: is macro interruptible
 	'repeat' => 1,       # option: the number of times the called macro will repeat itself
+	'CheckOnAI' => 1,    # option: on which AI state the automacro will be checked
 );
 
 our $macroKeywords =

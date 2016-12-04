@@ -22,6 +22,9 @@ sub new {
 	$self->{running_status} = 0;
 	$self->set_parameters( $parameters );
 	
+	$self->{check_on_ai_state} = {};
+	$self->parse_CheckOnAI;
+	
 	return $self;
 }
 
@@ -101,6 +104,9 @@ sub set_parameters {
 	if (!defined $self->{parameters}{'run-once'})  {
 		$self->{parameters}{'run-once'} = 0;
 	}
+	if (!defined $self->{parameters}{'CheckOnAI'})  {
+		$self->{parameters}{'CheckOnAI'} = $config{eventMacro_CheckOnAI};
+	}
 	if (!defined $self->{parameters}{'disabled'})  {
 		$self->{parameters}{'disabled'} = 0;
 	}
@@ -125,6 +131,19 @@ sub set_parameters {
 	$self->{parameters}{time} = 0;
 }
 
+sub parse_CheckOnAI {
+	my ($self) = @_;
+	my @ai_states = split(/\s*,\s*/, $self->{parameters}{'CheckOnAI'});
+	
+	foreach my $state (@ai_states) {
+		if ($state ne 'auto' && $state ne 'manual' && $state ne 'off') {
+			error "[eventMacro] Parameter 'CheckOnAI' on automacro '".$self->{name}."' has a non-valid value '".$state."'. Ignoring it.\n";
+		} else {
+			$self->{check_on_ai_state}{$state} = undef;
+		}
+	}
+}
+
 sub create_conditions_list {
 	my ($self, $conditions) = @_;
 	foreach (keys %{$conditions}) {
@@ -134,14 +153,15 @@ sub create_conditions_list {
 		foreach my $newConditionText ( @{$conditionsText} ) {
 			my $cond = $module->new( $newConditionText, $self->{listIndex} );
 			$self->{conditionList}->add( $cond );
+			my $cond_index = $cond->get_index;
 			foreach my $hook ( @{ $cond->get_hooks() } ) {
-				push ( @{ $self->{hooks}{$hook} }, $cond->{listIndex} );
+				push ( @{ $self->{hooks}{$hook} }, $cond_index );
 			}
 			foreach my $variable ( @{ $cond->get_variables() } ) {
-				push ( @{ $self->{variables}{$variable} }, $cond->{listIndex} );
+				push ( @{ $self->{variables}{$variable} }, $cond_index );
 			}
 			if ($cond->condition_type == EVENT_TYPE) {
-				$self->{event_type_condition_index} = $cond->{listIndex};
+				$self->{event_type_condition_index} = $cond_index;
 			}
 		}
 	}
@@ -168,7 +188,7 @@ sub check_state_type_condition {
 	
 	my $pos_check_status = $condition->is_fulfilled;
 	
-	debug "[eventMacro] Checking condition '".$condition->get_name()."' of index '".$condition->{listIndex}."' in automacro '".$self->{name}."', fulfilled value before: '".$pre_check_status."', fulfilled value after: '".$pos_check_status."'.\n", "eventMacro", 3;
+	debug "[eventMacro] Checking condition '".$condition->get_name()."' of index '".$condition->get_index."' in automacro '".$self->{name}."', fulfilled value before: '".$pre_check_status."', fulfilled value after: '".$pos_check_status."'.\n", "eventMacro", 3;
 	
 	if ($pre_check_status == 1 && $condition->is_fulfilled == 0) {
 		$self->{number_of_false_conditions}++;
@@ -185,7 +205,7 @@ sub check_event_type_condition {
 	
 	my $return = $condition->validate_condition($callback_type, $callback_name, $args);
 	
-	debug "[eventMacro] Checking event type condition '".$condition->get_name()."' of index '".$condition->{listIndex}."' in automacro '".$self->{name}."', fulfilled value: '".$return."'.\n", "eventMacro", 3;
+	debug "[eventMacro] Checking event type condition '".$condition->get_name()."' of index '".$condition->get_index."' in automacro '".$self->{name}."', fulfilled value: '".$return."'.\n", "eventMacro", 3;
 
 	return $return;
 }

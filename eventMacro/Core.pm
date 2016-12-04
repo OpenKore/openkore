@@ -4,6 +4,7 @@ use strict;
 use Globals;
 use Log qw(message error warning debug);
 use Utils;
+use AI;
 
 use eventMacro::Core;
 use eventMacro::Data;
@@ -27,6 +28,9 @@ sub new {
 	$self->{Automacro_List} = new eventMacro::Lists;
 	$self->{Condition_Modules_Loaded} = {};
 	$self->create_automacro_list($parse_result->{automacros});
+	
+	$self->{automacros_index_to_AI_check_state} = {};
+	$self->define_automacro_check_state;
 	
 	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
 	$self->{AI_start_Automacros_Check_Hook_Handle} = undef;
@@ -73,7 +77,7 @@ sub set_automacro_checking_status {
 	if (!defined $self->{Automacros_Checking_Status}) {
 		debug "[eventMacro] Initializing automacro checking by default.\n", "eventMacro", 2;
 		$self->{Automacros_Checking_Status} = CHECKING_AUTOMACROS;
-		$self->{AI_start_Automacros_Check_Hook_Handle} = Plugins::addHook( 'AI_start', sub { $self->AI_start_checker(); }, undef );
+		$self->{AI_start_Automacros_Check_Hook_Handle} = Plugins::addHook( 'AI_start', sub { my $state = $_[1]->{state}; $self->AI_start_checker($state); }, undef );
 		return;
 	} elsif ($self->{Automacros_Checking_Status} == $status) {
 		debug "[eventMacro] automacro checking status is already $status.\n", "eventMacro", 2;
@@ -98,7 +102,7 @@ sub set_automacro_checking_status {
 				error "[eventMacro] Tried to add AI_start hook and for some reason it is already defined.\n";
 			} else {
 				debug "[eventMacro] Adding AI_start hook.\n", "eventMacro", 2;
-				$self->{AI_start_Automacros_Check_Hook_Handle} = Plugins::addHook( 'AI_start', sub { $self->AI_start_checker(); }, undef );
+				$self->{AI_start_Automacros_Check_Hook_Handle} = Plugins::addHook( 'AI_start',  sub { my $state = $_[1]->{state}; $self->AI_start_checker($state); }, undef );
 			}
 		}
 		$self->{Automacros_Checking_Status} = $status;
@@ -162,6 +166,11 @@ sub create_automacro_list {
 			###Parameter: run-once
 			} elsif ($parameter->{'key'} eq "run-once" && $parameter->{'value'} !~ /[01]/) {
 				error "[eventMacro] Ignoring automacro '$name' (run-once parameter should be '0' or '1')\n";
+				next AUTOMACRO;
+			
+			###Parameter: CheckOnAI
+			} elsif ($parameter->{'key'} eq "CheckOnAI" && $parameter->{'value'} !~ /^(auto|off|manual)(\s*,\s*(auto|off|manual))*$/) {
+				error "[eventMacro] Ignoring automacro '$name' (CheckOnAI parameter should be a list containing only the values 'auto', 'manual' and 'off')\n";
 				next AUTOMACRO;
 			
 			###Parameter: disabled
@@ -278,6 +287,17 @@ sub load_condition_module {
 	}
 }
 
+sub define_automacro_check_state {
+	my ($self) = @_;
+	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
+		my $automacro_index = $automacro->get_index;
+		my $parameter = $automacro->{check_on_ai_state};
+		$self->{automacros_index_to_AI_check_state}{$automacro_index}{AI::OFF} = exists $parameter->{'off'} ? 1 : 0;
+		$self->{automacros_index_to_AI_check_state}{$automacro_index}{AI::MANUAL} = exists $parameter->{'manual'} ? 1 : 0;
+		$self->{automacros_index_to_AI_check_state}{$automacro_index}{AI::AUTO} = exists $parameter->{'auto'} ? 1 : 0;
+	}
+}
+
 sub create_callbacks {
 	my ($self) = @_;
 	
@@ -287,7 +307,7 @@ sub create_callbacks {
 	
 		debug "[eventMacro] Creating callback for automacro '".$automacro->get_name()."'\n", "eventMacro", 2;
 		
-		my $automacro_index = $automacro->{listIndex};
+		my $automacro_index = $automacro->get_index;
 		
 		foreach my $hook_name ( keys %{ $automacro->get_hooks() } ) {
 		
@@ -326,8 +346,8 @@ sub check_all_conditions {
 		my @conditions = @{ $automacro->{conditionList}->getItems() };
 		foreach my $condition (@conditions) {
 			next if ($condition->condition_type == EVENT_TYPE);
-			debug "[eventMacro] Checking condition of index '".$condition->{listIndex}."' in automacro '".$automacro->get_name."'\n", "eventMacro", 2;
-			$automacro->check_state_type_condition($condition->{listIndex}, 'recheck')
+			debug "[eventMacro] Checking condition of index '".$condition->get_index."' in automacro '".$automacro->get_name."'\n", "eventMacro", 2;
+			$automacro->check_state_type_condition($condition->get_index, 'recheck')
 		}
 		if ($automacro->can_be_added_to_queue) {
 			$self->add_to_triggered_prioritized_automacros_index_list($automacro);
@@ -449,7 +469,7 @@ sub manage_event_callbacks {
 			my $condition = $automacro->{conditionList}->get($condition_index);
 			
 			if ($condition->condition_type == EVENT_TYPE) {
-				debug "[eventMacro] Skipping condition '".$condition->get_name."' of index '".$condition->{listIndex}."' because it is of the event type.\n", "eventMacro", 3;
+				debug "[eventMacro] Skipping condition '".$condition->get_name."' of index '".$condition->get_index."' because it is of the event type.\n", "eventMacro", 3;
 				$check_event_type = 1;
 				next;
 			} else {
@@ -564,10 +584,12 @@ sub manage_dynamic_hook_add_and_delete {
 }
 
 sub AI_start_checker {
-	my ($self) = @_;
+	my ($self, $state) = @_;
 	
 	foreach my $array_member (@{$self->{triggered_prioritized_automacros_index_list}}) {
-	
+		
+		next unless ($self->{automacros_index_to_AI_check_state}{$array_member->{index}}{$state} == 1);
+		
 		my $automacro = $self->{Automacro_List}->get($array_member->{index});
 		
 		next unless $automacro->is_timed_out;
