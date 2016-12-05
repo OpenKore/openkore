@@ -12,6 +12,7 @@ use Utils;
 use Misc;
 use Log qw(message error warning debug);
 use Translation qw( T TF );
+use AI;
 
 use eventMacro::Core;
 use eventMacro::Data;
@@ -95,20 +96,72 @@ sub commandHandler {
 	if (!defined $_[1]) {
 		message "usage: eventMacro [MACRO|list|status|stop|pause|resume|reset] [automacro]\n", "list";
 		message 
-			"eventMacro MACRO: run macro MACRO\n".
-			"eventMacro list: list available macros\n".
-			"eventMacro stop: stops current macro\n".
-			"eventMacro status [macro|automacro]: shows current status of automacro, macro or both\n".
-			"eventMacro unpause: unpauses running macro\n".
-			"eventMacro pause: pauses running macro\n".
-			"eventMacro automacro [force_stop|force_start|resume]: Sets the state of automacros checking\n".
-			"eventMacro variables_value: show list of variables and their values\n".
-			"eventMacro reset [automacro]: resets run-once status for all or given automacro(s)\n";
+			"eventMacro MACRO: Run macro MACRO\n".
+			"eventMacro auto AUTOMACRO: Get info on an automacro and it's conditions\n".
+			"eventMacro list: Lists available macros, automacros or both\n".
+			"eventMacro status [macro|automacro]: Shows current status of automacro, macro or both\n".
+			"eventMacro check [force_stop|force_start|resume]: Sets the state of automacros checking\n".
+			"eventMacro stop: Stops current running macro\n".
+			"eventMacro pause: Pauses current running macro\n".
+			"eventMacro unpause: Unpauses current running macro\n".
+			"eventMacro var_get: Shows the value of one or all variables\n".
+			"eventMacro var_set: Set the value of a variable\n".
+			"eventMacro enable [automacro]: Enable one or all automacros\n".
+			"eventMacro disable [automacro]: Disable one or all automacros\n";
 		return
 	}
 	my ( $arg, @params ) = parseArgs( $_[1] );
+	
+	if ($arg eq 'auto') {
+		my $automacro = $eventMacro->{Automacro_List}->getByName($params[0]);
+		if (!$automacro) {
+			error "[eventMacro] Automacro '".$params[0]."' not found.\n"
+		} else {
+			my $message = "[eventMacro] Printing information about automacro '".$automacro->get_name."'.\n";
+			my $condition_list = $automacro->{conditionList};
+			my $size = $condition_list->size;
+			my $is_event = $automacro->has_event_type_condition;
+			$message .= "Number of conditions: '".$size."'\n";
+			$message .= "Has event type condition: '". ($is_event ? 'yes' : 'no') ."'\n";
+			$message .= "Number of true conditions: '".($size - $automacro->{number_of_false_conditions} - $is_event)."'\n";
+			$message .= "Number of false conditions: '".$automacro->{number_of_false_conditions}."'\n";
+			$message .= "Is triggered: '".$automacro->running_status."'\n";
+			
+			$message .= "----  Parameters   ----\n";
+			my $counter = 1;
+			foreach my $parameter (keys %{$automacro->{parameters}}) {
+				$message .= $counter." - ".$parameter.": '".$automacro->{parameters}->{$parameter}."'\n";
+			} continue {
+				$counter++;
+			}
+			
+			$message .= "----  Conditions   ----\n";
+			$counter = 1;
+			foreach my $condition (@{$condition_list->getItems}) {
+				if ($condition->condition_type == EVENT_TYPE) {
+					$message .= $counter." - ".$condition->get_name.": event type condition\n";
+				} else {
+					$message .= $counter." - ".$condition->get_name.": '". ($condition->is_fulfilled ? 'true' : 'false') ."'\n";
+				}
+			} continue {
+				$counter++;
+			}
+			
+			
+			my $check_state = $eventMacro->{automacros_index_to_AI_check_state}{$automacro->get_index};
+			$message .= "----  AI check states   ----\n";
+			$message .= "Check on AI off: '". ($check_state->{AI::OFF} ? 'yes' : 'no') ."'\n";
+			$message .= "Check on AI manual: '". ($check_state->{AI::MANUAL} ? 'yes' : 'no') ."'\n";
+			$message .= "Check on AI auto: '". ($check_state->{AI::AUTO} ? 'yes' : 'no') ."'\n";
+			
+			$message .= "----  End   ----\n";
+			
+			message $message;
+		}
+	
+	
 	### parameter: list
-	if ($arg eq 'list') {
+	} elsif ($arg eq 'list') {
 		message( "The following macros are available:\n" );
 
 		message( center( T( ' Macros ' ), 25, '-' ) . "\n", 'list' );
@@ -121,6 +174,8 @@ sub commandHandler {
 		message( "$_\n" ) foreach sort @perl_name;
 
 		message( center( '', 25, '-' ) . "\n", 'list' );
+		
+		
 	### parameter: status
 	} elsif ($arg eq 'status') {
 		if (defined $params[0] && $params[0] ne 'macro' && $params[0] ne 'automacro') {
@@ -177,72 +232,20 @@ sub commandHandler {
 				message "Automacros checking is active because the user forced it.\n";
 			}
 		}
-	### parameter: pause
-	} elsif ($arg eq 'pause') {
-		my $macro = $eventMacro->{Macro_Runner};
-		if ( $macro ) {
-			if ($macro->is_paused()) {
-				message "Macro '".$eventMacro->{Macro_Runner}->last_subcall_name."' is already paused.\n";
-			} else {
-				message "Pausing macro '".$eventMacro->{Macro_Runner}->last_subcall_name."'.\n";
-				$eventMacro->{Macro_Runner}->pause();
-			}
-		} else {
-			message "There's no macro currently running.\n";
-		}
-	### parameter: unpause
-	} elsif ($arg eq 'unpause') {
-		my $macro = $eventMacro->{Macro_Runner};
-		if ( $macro ) {
-			if ($macro->is_paused()) {
-				message "Unpausing macro '".$eventMacro->{Macro_Runner}->last_subcall_name."'.\n";
-				$eventMacro->{Macro_Runner}->unpause();
-			} else {
-				message "Macro '".$eventMacro->{Macro_Runner}->last_subcall_name."' is not paused.\n";
-			}
-		} else {
-			message "There's no macro currently running.\n";
-		}
-	### parameter: stop
-	} elsif ($arg eq 'stop') {
-		my $macro = $eventMacro->{Macro_Runner};
-		if ( $macro ) {
-			message "Stopping macro '".$eventMacro->{Macro_Runner}->last_subcall_name."'.\n";
-			$eventMacro->clear_queue();
-		} else {
-			message "There's no macro currently running.\n";
-		}
-	#TODO: only enable macros which haven't 'disable 1' in eventMacros.txt
-	### parameter: reset
-	} elsif ($arg eq 'reset') {
-		if (!defined $params[0]) {
-			foreach my $automacro (@{$eventMacro->{Automacro_List}->getItems()}) {
-				$eventMacro->enable_automacro($automacro);
-			}
-			message "[eventMacro] All automacros were enabled.\n";
-			return;
-		}
-		for my $automacro_name (@params) {
-			my $automacro = $eventMacro->{Automacro_List}->getByName($automacro_name);
-			if (!$automacro) {
-				error "[eventMacro] Automacro '".$automacro_name."' not found.\n"
-			} else {
-				$eventMacro->enable_automacro($automacro);
-			}
-		}
-	### parameter: automacro
-	} elsif ($arg eq 'automacro') {
+		
+	### parameter: check
+	} elsif ($arg eq 'check') {
 		if (!defined $params[0] || (defined $params[0] && $params[0] ne 'force_stop' && $params[0] ne 'force_start' && $params[0] ne 'resume')) {
-			message "usage: eventMacro automacro [force_stop|force_start|resume]\n", "list";
+			message "usage: eventMacro check [force_stop|force_start|resume]\n", "list";
 			message 
-				"eventMacro automacro force_stop: forces the stop of automacros checking\n".
-				"eventMacro automacro force_start: forces the start of automacros checking\n".
-				"eventMacro automacro resume: return automacros checking to the normal state\n";
+				"eventMacro check force_stop: forces the stop of automacros checking\n".
+				"eventMacro check force_start: forces the start of automacros checking\n".
+				"eventMacro check resume: return automacros checking to the normal state\n";
 			return;
 		}
 		my $status = $eventMacro->get_automacro_checking_status();
-		debug "[eventMacro] Command 'eventMacro automacro' used with parameter '".$params[0]."'.\n", "eventMacro", 2;
-		debug "[eventMacro] Previous automacro status '".$status."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Command 'check' used with parameter '".$params[0]."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Previous checking status '".$status."'.\n", "eventMacro", 2;
 		if ($params[0] eq 'force_stop') {
 			if ($status == CHECKING_AUTOMACROS) {
 				message "[eventMacro] Automacros checking forcely stopped.\n";
@@ -287,15 +290,131 @@ sub commandHandler {
 				}
 			}
 		}
-	### parameter: variables_value
-	} elsif ($arg eq 'variables_value') {
-		message "[eventMacro] Varstack List\n", "menu";
-		my $counter = 1;
-		foreach my $variable_name (keys %{$eventMacro->{Variable_List_Hash}}) {
-			message $counter."- '".$variable_name."' = '".$eventMacro->{Variable_List_Hash}->{$variable_name}."'\n", "menu"
-		} continue {
-			$counter++;
+	
+	
+	### parameter: stop
+	} elsif ($arg eq 'stop') {
+		my $macro = $eventMacro->{Macro_Runner};
+		if ( $macro ) {
+			message "Stopping macro '".$eventMacro->{Macro_Runner}->last_subcall_name."'.\n";
+			$eventMacro->clear_queue();
+		} else {
+			message "There's no macro currently running.\n";
 		}
+		
+		
+	### parameter: pause
+	} elsif ($arg eq 'pause') {
+		my $macro = $eventMacro->{Macro_Runner};
+		if ( $macro ) {
+			if ($macro->is_paused()) {
+				message "Macro '".$eventMacro->{Macro_Runner}->last_subcall_name."' is already paused.\n";
+			} else {
+				message "Pausing macro '".$eventMacro->{Macro_Runner}->last_subcall_name."'.\n";
+				$eventMacro->{Macro_Runner}->pause();
+			}
+		} else {
+			message "There's no macro currently running.\n";
+		}
+		
+		
+	### parameter: unpause
+	} elsif ($arg eq 'unpause') {
+		my $macro = $eventMacro->{Macro_Runner};
+		if ( $macro ) {
+			if ($macro->is_paused()) {
+				message "Unpausing macro '".$eventMacro->{Macro_Runner}->last_subcall_name."'.\n";
+				$eventMacro->{Macro_Runner}->unpause();
+			} else {
+				message "Macro '".$eventMacro->{Macro_Runner}->last_subcall_name."' is not paused.\n";
+			}
+		} else {
+			message "There's no macro currently running.\n";
+		}
+		
+		
+	### parameter: var_get
+	} elsif ($arg eq 'var_get') {
+		if (!defined $params[0]) {
+			my $counter = 1;
+			message "[eventMacro] Printing values off all variables\n", "menu";
+			foreach my $variable_name (keys %{$eventMacro->{Variable_List_Hash}}) {
+				message $counter."- '".$variable_name."' = '".$eventMacro->{Variable_List_Hash}->{$variable_name}."'\n", "menu";
+			} continue {
+				$counter++;
+			}
+			return;
+		} else {
+			my $var = $params[0] =~ s/^\$//;
+			if ($eventMacro->exists_var($var)) {
+				my $value = $eventMacro->get_var($var);
+				if (defined $value) {
+					message "[eventMacro] Variable '".$params[0]."' has value '".$value."'.\n";
+				} else {
+					message "[eventMacro] Variable '".$params[0]."' has an undefined value.\n";
+				}
+			} else {
+				error "[eventMacro] Given variable '".$params[0]."' doesn't exist.\n";
+			}
+		}
+	
+	### parameter: var_set
+	} elsif ($arg eq 'var_set') {
+		if (!defined $params[0] || !defined $params[1]) {
+			message "usage: eventMacro var_set [variable name] [variable value]\n", "list";
+			return;
+		}
+		my $var = $params[0] =~ s/^\$//;
+		my $value = $params[1];
+		if ($var =~ /^\./) {
+			error "[eventMacro] System variables cannot be set by hand (The ones starting with a dot '.')\n";
+			return;
+		}
+		message "[eventMacro] Setting the value of variable '".$params[0]."' to '".$params[1]."'.\n";
+		$eventMacro->set_var($var, $value);
+		
+		
+	### parameter: enable
+	} elsif ($arg eq 'enable') {
+		if (!defined $params[0]) {
+			foreach my $automacro (@{$eventMacro->{Automacro_List}->getItems()}) {
+				message "[eventMacro] Enabled automacro '".$automacro->get_name."'.\n";
+				$eventMacro->enable_automacro($automacro);
+			}
+			message "[eventMacro] All automacros were enabled.\n";
+			return;
+		}
+		for my $automacro_name (@params) {
+			my $automacro = $eventMacro->{Automacro_List}->getByName($automacro_name);
+			if (!$automacro) {
+				error "[eventMacro] Automacro '".$automacro_name."' not found.\n"
+			} else {
+				message "[eventMacro] Enabled automacro '".$automacro_name."'.\n";
+				$eventMacro->enable_automacro($automacro);
+			}
+		}
+		
+
+	### parameter: disable
+	} elsif ($arg eq 'disable') {
+		if (!defined $params[0]) {
+			foreach my $automacro (@{$eventMacro->{Automacro_List}->getItems()}) {
+				message "[eventMacro] Disabled automacro '".$automacro->get_name."'.\n";
+				$eventMacro->disable_automacro($automacro);
+			}
+			message "[eventMacro] All automacros were disabled.\n";
+			return;
+		}
+		for my $automacro_name (@params) {
+			my $automacro = $eventMacro->{Automacro_List}->getByName($automacro_name);
+			if (!$automacro) {
+				error "[eventMacro] Automacro '".$automacro_name."' not found.\n"
+			} else {
+				message "[eventMacro] Disabled automacro '".$automacro_name."'.\n";
+				$eventMacro->disabled_automacro($automacro);
+			}
+		}
+	
 	### if nothing triggered until here it's probably a macro name
 	} elsif ( !$eventMacro->{Macro_List}->getByName( $arg ) ) {
 		error "[eventMacro] Macro $arg not found\n";
