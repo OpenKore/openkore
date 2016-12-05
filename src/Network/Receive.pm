@@ -1741,6 +1741,7 @@ sub arrow_equipped {
 		$item->{equipped} = 32768;
 		$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 		message TF("Arrow/Bullet equipped: %s (%d) x %s\n", $item->{name}, $item->{invIndex}, $item->{amount});
+		Plugins::callHook('equipped_item', {slot => 'arrow', item => $item});
 	}
 }
 
