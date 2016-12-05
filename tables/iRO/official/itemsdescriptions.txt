@@ -53227,10 +53227,7 @@ Job : ^777777All^000000
 #
 
 
-25005#99_Battle_Manual#
-25006#99_Battle_Manual_Box#
-25007#Beast_Powder#
-25008#Beast_Powder_Box#
+
 17105#
 A box that contains 50 HD Elunium
 Description:
@@ -58007,161 +58004,7 @@ Weapon Level: ^7777773^000000
 Required Level : ^7777771^000000
 Jobs : ^777777Gunslinger^000000
 #
-20361#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A heavy one-handed
-cavalry sword with a
-slightly curved blade.
-^CC0000This item is not Refinable^000000
-Class : ^777777Sword^000000
-Attack Strength: ^777777145^000000
-Weight : ^777777100^000000
-Weapon Level: ^7777773^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman,
-Merchant, and
-Thief Classes^000000
-#
-20362#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A strong dagger that
-is usually crafted by
-traditional artisans.
-^CC0000This item is not Refinable^000000
-Class : ^777777Dagger^000000
-Attack Strength: ^777777140^000000
-Weight : ^77777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman, Mage, Archer, Merchant,
-Thief Classes, Soul Linker, and Ninja^000000
-#
-20363#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A simple flail that
-consists of a thin
-mace attached to
-a chain of iron links.
-^CC0000This item is not Refinable^000000
-Class : ^777777Mace^000000
-Attack Strength: ^777777105^000000
-Weight : ^77777780^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman, Acolyte, and Merchant Classes^000000
-#
-20364#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A book that's been put together sturdily enough to be wielded as a weapon in an emergency situation.
-^CC0000This item is not Refinable^000000
-Class : ^777777Book^000000
-Attack Strength: ^777777106^000000
-Weight : ^77777760^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Priest, Sage, Taekwon Master^000000
-#
-20365#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A staff with a
-hynpotizing effect
-that can even make
-a Novice feel just like   a High Wizard. Sort of.
-Int + 1, MATK + 120
-^CC0000This item is not Refinable^000000
-Class : ^777777Staff^000000
-Attack Strength: ^777777100^000000
-Weight : ^77777750^000000
-Property:^777777Neutral^000000
-Weapon Level: ^7777773^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Novice, Mage,
-Acolyte Classes, and Soul Linker^000000
-#
-20366#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A protective covering
-that shields the back
-of the hand and forearm, and has raised studs for
-offensive purposes.
-^CC0000This item is not Refinable^000000
-Class : ^777777Claw^000000
-Attack Strength: ^77777771^000000
-Weight : ^77777745^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Priest
-and Monk Jobs^000000
-#
-20367#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A classical plucked
-string instrument that
-is incredibly difficult^FFFFFF  ^000000 to tune and adjust.
-^CC0000This item is not Refinable^000000
-Class :^777777Musical Instrument^000000
-Attack Strength: ^777777126^000000
-Weight : ^77777750^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs : ^777777Bard^000000
-#
-20368#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A whip made of a
-flexible wire attached
-to an iron handle.
-^CC0000This item is not Refinable^000000
-Class : ^777777Whip^000000
-Attack Strength: ^777777116^000000
-Weight : ^777777100^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs : ^777777Dancer^000000
-#
-20369#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A straight bladed sword that can be brutally swung just like a baseball bat.
-^CC0000This item is not Refinable^000000
-Class :^777777Two-handed Sword^000000
-Attack Strength: ^777777136^000000
-Weight : ^777777160^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman Class^000000
-#
-20370#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Water Element Targets^000000
-A set of Arabian style blades that are worn on the back of both hands
-or on the forearms.
-^CC0000This item is not Refinable^000000
-Class : ^777777Katar^000000
-Attack Strength: ^777777146^000000
-Weight : ^77777780^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs : ^777777Assassin^000000
-#
+
 20371#
 ^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -58825,33 +58668,7 @@ Weapon Level: ^7777772^000000
 Required Level : ^7777771^000000
 Jobs : ^777777Dancer^000000
 #
-20329#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Earth Element Targets^000000
-A straight bladed sword that can be brutally swung just like a baseball bat.
-^CC0000This item is not Refinable^000000
-Class :^777777Two-handed Sword^000000
-Attack Strength: ^777777136^000000
-Weight : ^777777160^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman Class^000000
-#
-20330#
-^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
-^CC0000This Rental Weapon is not Tradable^000000
-^0000CC40% Bonus Attack Damage to Earth Element Targets^000000
-A set of Arabian style blades that are worn on the back of both hands
-or on the forearms.
-^CC0000This item is not Refinable^000000
-Class : ^777777Katar^000000
-Attack Strength: ^777777146^000000
-Weight : ^77777780^000000
-Weapon Level: ^7777772^000000
-Required Level : ^7777771^000000
-Jobs : ^777777Assassin^000000
-#
+
 20331#
 ^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -73113,9 +72930,13 @@ Jobs : ^777777All^000000
 #
 5464#
 Zaha doll hat which resembles angel of Zaha. It looks great on your head.
-INT+2
-Able to use Lv.3 [Magnificat].
-Can't be refined.
+INT + 3. MDEF + 9.
+Increases Magic Damage versus undead by 10%
+When using Magic attacks or attacked by Magic jas a chance to transform the wearer into the White Lady for a short period of time.
+During the transformation does the following.
+-Increases MAtk by 30 * Refine Level (Minimum 30)
+-Reduces Fixed Cast Time by 80 miliseconds * Refine Level (Minimum 80)
+-Drains 10 sp/sec from the wearer
 Item Class : ^777777Headgear^000000    Defense : ^7777771^000000
 Location : ^777777Upper ^000000    Weight : ^7777770^000000
 Jobs : ^777777All^000000
@@ -74394,7 +74215,7 @@ Job : ^777777All Jobs^000000
 #
 20154#
 Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Mid ^000000Weight : ^7777770^000000
+Location : ^777777Bottom ^000000Weight : ^7777770^000000
 Required Lv. : ^7777771^000000
 Job : ^777777All Jobs^000000
 #
@@ -76289,7 +76110,6 @@ Required Level: 100
 Required Job: Mechanic
 ^FFFFFF_^000000
 ASPD + 6%
-Max HP + 1% per 2 upgrade levels of the item.
 ^FFFFFF_^000000
 If upgrade level is +4 or higher,
 ASPD + 1%
@@ -78146,4 +77966,1491 @@ Weight : ^7777771^000000
 
 6635#
 Currently has no known use. However you feel like you should save it for later, as it appears to have some value.
+#
+
+
+4652#
+Increase magic damage against Shadow and Undead monsters by 50%
+Increase magic damage against Demon and Undead race monsters by 50%
+
+Class : ^777777Card^000000
+Compound on : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+4653#
+Reduce damage from Brute and Undead monsters by 20%
+
+Class : ^777777Card^000000
+Compound on : ^777777Shield^000000
+Weight : ^7777771^000000
+#
+4654#
+Increase magical damage against Brute and Undead monster by 5%
+
+When equipped with equip compounded with Nightmare Arclouse card
+Reduce damage from Brute and Undead monsters by 5%
+Ignore 50% magic defense of Brute and Undead monsters
+
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4655#
+Increase physical damage against Brute and Undead monster by 10%
+
+When equipped with equip compounded with Nightmare Arclouse card
+Reduce damage from Brute and Undead monsters by 5%
+Ignore 50% physical defense of Brute and Undead monsters
+
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4656#
+When physically and magically attacked,
+chance to cause Sleep to all targets on 11x11 cells.
+
+When equipped with equip compounded with Nightmare Ancient Mummy card
+Increase the probability of causing Sleep
+
+Class : ^777777Card^000000
+Compound on : ^777777Footwear^000000
+Weight : ^7777771^000000
+#
+4657#
+Reduce damage from Neutral property by 15%
+Every refine of garment increase magical Fire damage by 3%
+
+When equipped with equip compounded with Nightmare Mummy card
+Increase resistance against Neutral property attack by 5%
+
+Class : ^777777Card^000000
+Compound on : ^777777Garment^000000
+Weight : ^7777771^000000
+#
+4658#
+MATK + 5%
+When refined to +7, increase magical damage inflicted by 3%
+When refined to +9, increase magical damage inflicted by 2%
+
+Class : ^777777Card^000000
+Compound on : ^777777Footwear^000000
+Weight : ^7777771^000000
+#
+
+
+4625#
+MATK+ 20%.
+Increase SP consumption of skills by 10%.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4626#
+Increase magical damage against Formless and Demon races by 5%.
+When equipped with a shield compounded to Neo Punk Card:
+ignores 50% of Formless and Demon monster's Magic Defense Rate.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4627#
+Increase physical damage against Formless and Demon races by 10%.
+When equipped with a shield compounded to Neo Punk Card:
+ignores 50% of Formless and Demon monster's Defense Rate.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4628#
+Reduce damage taken from Formless and Demon races by 20%.
+When equipped with a weapon compounded to Big Ben Card:
+further reduce damage taken from Formless and Demon races by 5%.
+When equipped with a weapon compounded to Big Bell Card:
+further reduce damage taken from Formless and Demon races by 5%.
+Class : ^777777Card^000000
+Compound on : ^777777Shield^000000
+Weight : ^7777771^000000
+#
+4629#
+Increase resistance against Neutral property attack by 15%.
+Increases damage of Earth property magic by 3% per refine.
+When equipped with a shoes compounded to Time Keeper Card:
+further increase resistance against Neutral property attack by 5%.
+Class : ^777777Card^000000
+Compound on : ^777777Garment^000000
+Weight : ^7777771^000000
+#
+4630#
+Has a chance of inflicting the Curse status to all enemy in 11x11 around the wearer when attack.
+When equipped with a garment compounded with Arc Elder Card:
+the chance is further increased.
+Class : ^777777Card^000000
+Compound on : ^777777Footwear^000000
+Weight : ^7777771^000000
+#
+4631#
+ASPD +3%
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+4632#
+Add a chance of auto casting Level 1 Whirlwind when dealing physical attack.
+If the user has mastered the skill at Level 5, it will cast Level 5 instead.
+When equipped with an accessory compounded to Owl Viscount Card:
+add a chance of auto casting level 1 Lord of Vermilion when dealing physical attack.
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+17375#
+When opened this box gives you the Zaha Doll Hat!
+#
+
+
+
+20407#
+Unknown aura that wrapped your body.
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+5912#
+Imitated by Loyal servant Devilring. Always be on standby to serve his master.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20357#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20358#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20359#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20360#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20361#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20362#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20363#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20364#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20365#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20366#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20367#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20368#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20369#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20370#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19597#
+A hat that looks like the eyes of a dark mage, which are rumored to blink sometimes.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20430#
+A costume that imitating the protection aura of Devil Morocc.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31087#
+Dwarf's heavy beard.
+You don't need extra scarf.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20340#
+Stylish Wig.
+An extended ponytail that came with different colors.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20342#
+Stylish Wig.
+A hair extension that soft and looks wavy twin tail.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20450#
+A beautiful magician hat with flower on it.
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+17739#
+^ff0000Cannot trade with other accounts.^000000
+Change up your hairstyle, gain a creepy aura, or surround your self with ghosts from this Spooktober Costume Box.
+
+Experience the holiday with us at twitch.tv/warpportal as we scare ourselves trying to survive creepys and crawlies at 5PM PST on Fridays.
+
+
+When opened gives one of the following:
+Costume: Red Test Subject Aura
+Costume: Servant of Devilring
+Costume: Ponytail
+Costume: Twin Ponytails
+Costume: Magic Eyes
+Costume: Servant of Morroc
+
+Costume: Dwarf Beard
+
+Costume: Gram Peony
+
+Weight : ^7777771^000000
+#
+
+
+20398#
+A hat from famous Healer of Niflheim, Hylozoist.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20451#
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31119#
+Talented Wizard's magic hat. It looks weird, but works just fine.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31120#
+A costume makes feel like being a Vampire.
+One of most popular halloween item.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31121#
+Bat wing-ed stole. Don't even think to fly with this wings.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31122#
+Tight bandages for wounds of the eyes. It seems that they were already used.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31123#
+Tall hat with flying Ghostring. Cute shabby tall hat.
+Wearing this hat makes feel horrifying. Well¡¦just feeling.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19915#
+Young and growing devil's horn.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31118#
+A mask worn by a group of eastern assassins. It's shaped like a skull to notify targets of their imminent death.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle,Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31117#
+A Helm used in ancient western country that was famous for close formation and tight defense.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper,Middle,Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+17747#
+^ff0000Cannot trade with other accounts.^000000
+When opened gives one of the following:
+Costume Niffleheim Bunny Hat
+Costume Night Sky of Memory
+Costume Blue Magician
+Costume Vampire Familiar
+Costume Bat Stole
+Costume Bloody Vicious Stop Bandage
+Costume Little Devil S Horn
+Costume Assassin Skull Mask
+Costume Costume Hoplite Helmet
+Weight : ^7777771^000000
+#
+
+
+2486#
+^808080A pair of shoes helps the user to melt into the dark easily because it was made up of darkness, the opponent of light. The wizard who made this Shadow Walk imbued a magic to protect the wearer of itself.^000000
+^FFFFFF_^000000
+Type: Shoes
+Defense: 0
+Weight: 200
+Required Level: 75
+Required Job: All Transcendent Jobs except Novice Jobs
+^FFFFFF_^000000
+MDEF + 10
+Adds a X% chance of casting ^0000FFLevel 2 Cloaking^000000 on the user when receiving a magical attack, if a higher level of this skill is known, it will be cast instead.
+#
+2976#
+^808080A spooky red lantern.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 20
+Required Level: 100
+Required Job: All Jobs
+^FFFFFF_^000000
+Max SP - 300
+Enables ^0000FFLevel 1 Sight^000000.
+Adds a X% chance of gaining ^008080Alcohol^000000, ^008080Detrimindexta^000000 or ^008080Karvodailnirol^000000 when a monster is killed.
+#
+11563#
+^808080A warm cup of black tea.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+Restores ^008000100^000000 SP.
+#
+11564#
+^808080A sweet honey biscuit. It is said to be a good match with a cup of tea.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+Restores ^0080001000^000000 HP.
+#
+7640#
+^808080A butterfly-like hairpin. Used for fastening long hair.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
+#
+2977#
+^808080A desperately broken gem bearing both spell power and a grudge.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 10
+Required Level: 110
+Required Job: All Jobs
+^FFFFFF_^000000
+Max SP + 200
+Enables ^0000FFLevel 3 Scream^000000.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Hurt Mind [1]^000000
+^008080Kind Heart [1]^000000
+???
+#
+13442#
+^808080A very old and worn-out parasol. No one knows how old it is, but you can feel magic eminating from it.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Sword
+Attack: 120
+Property: Neutral
+Weight: 50
+Weapon Level: 3
+Required Level: 80
+Required Job: Swordman Jobs, Merchant Jobs, Thief Jobs
+^FFFFFF_^000000
+MATK + 80
+Enables ^0000FFLevel 10 Soul Strike^000000.
+MATK + X per upgrade level of the item.
+#
+18848#
+^808080Nobody knows when this beautiful rose was picked and decorated, but it has still managed to keep its freshness all this time.^000000
+^FFFFFF_^000000
+Type: Headgear
+Position: Upper
+Defense: 0
+Weight: 20
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+MATK + 80
+Restores 100 HP to the user when a monster is killed by a magical attack.
+Drains 50 HP from the user every 5 seconds.
+MATK + X per upgrade level of the item.
+#
+19686#
+^808080A hairband with a Santa motif.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+Adds a X% chance of transforming into Antonio for X TIME when dealing a physical or magical attack.
+#
+7642#
+^808080A coin estimated to be soiled by an old blood stain. It is difficult to guess the age of the stains.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+19687#
+^808080Nobody knows when this beautiful rose was picked and decorated, but it has still managed to keep its freshness all this time.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+7643#
+^808080A sheet of old letter crumpled and bloodstained in places. Managed to recognize the writings. "I may have made my masterpiece, not just some doll. When this letter comes to you, all of my work may be complete. I'd like to show my last work, no, my daughter to you."^000000
+
+Type: Miscellaneous
+Weight: 1
+#
+7644#
+^808080A clean and unsealed letter that was never sent. "I've kept talking to a doll because I cannot stand that this will be the last doll I craft when I started to make the millionth doll. Haha, I'm getting silly as I grow old. Do you understand how I feel, my friend?"^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+19701#
+^808080A hat noblewomen enjoy wearing. It is said the wearers want to drink blacktea.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+2978#
+^808080A gem bearing warm light having cozy and mild spell power in it.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 10
+Required Level: 110
+Required Job: All Jobs
+^FFFFFF_^000000
+Max HP + 500
+Restores 300 HP to the user every 10 seconds.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Hurt Mind [1]^000000
+^008080Kind Heart [1]^000000
+???
+#
+18849#
+^808080A luxurious, gold-rimmed ribbon. It has been with Kimi since it was thrown away by its previous owner.^000000
+^FFFFFF_^000000
+Type: Headgear
+Position: Upper
+Defense: 0
+Weight: 20
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+DEX + 3
+MATK + 40
+Restores 200 HP to the user when a monster is killed by a magical attack.
+Drains 50 HP from the user every 5 seconds.
+MATK + X per upgrade level of the item.
+#
+22534#
+^808080A fast closed small box created by her dreadful loneliness. Now it can be opened.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Producer
+Weight: 100
+#
+16029#
+^808080As a sacred cross-shaped blunt weapon bearing God's blessing, the power for conviction has been reinforced.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Mace
+Attack: 195
+Property: Holy
+Weight: 150
+Weapon Level: 4
+Required Level: 40
+Required Job: Transcendent Acolyte Jobs
+^FFFFFF_^000000
+MATK + 150
+Restores 1 SP to the user when performing a short-ranged attack to Undead race targets.
+Restores 12 SP to the user when a Undead race monster is killed by a short-ranged attack.
+Adds a X% chance of casting ^0000FFLevel 6 Turn Undead^000000 on the target performing a short-ranged attack.
+#
+2980#
+^808080A glove dwelling with dark power. Enables to move dolls vividly by controlling the strands of magical thread connected to the tips of fingers.^000000
+^FFFFFF_^000000
+Type: Accessory
+Defense: 0
+Weight: 10
+Required Level: 110
+Required Job: All Jobs
+
+Max HP + 500
+Max SP + 200
+Enables ^0000FFLevel 1 Fiber Lock^000000.
+Adds a X% chance of casting ^0000FFLevel X SKILL^000000 on the target when dealing and receiving a physical or magical attack.
+#
+22516#
+^808080The dark red fluid seems to have hardened. It could be mistaken for a beautiful red gem unless you take a closer look. You can feel the ominous power from within.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
+6683#
+^808080A flower with no moisture at all. It would crumble if not handled carefully.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
+#
+20268#
+^808080A sleepy Eclipse with his family. Your head will stay fluffy and warm.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+20255#
+^808080You will feel full of love.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+20329#
+^808080There are no worries in the world when you are wearing this on your head.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+20330#
+^808080A traditional Mexican hat with a wide round brim.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+6999#
+^808080A stone with HP absorption ability.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Upper
+^FFFFFF_^000000
+Adds a 1% chance of restoring 3% of damage as HP when performing a physical attack.
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25016#
+^808080A stone with physical attack power.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Lower
+^FFFFFF_^000000
+ATK + 1%
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25017#
+^808080A stone with magical attack power.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Lower
+^FFFFFF_^000000
+MATK + 1%
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25002#
+^808080A stone that exchanges strength for luck.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+STR - 3
+LUK + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25003#
+^808080A stone that exchanges intelligence for strength.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+STR + 3
+INT - 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25004#
+^808080A stone that exchanges luck for agility.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+AGI + 3
+LUK - 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25005#
+^808080A stone that exchanges dexterity for intelligence.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+INT + 3
+DEX - 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25006#
+^808080A stone that exchanges agility for vitality.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+AGI - 3
+VIT + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25007#
+^808080A stone that exchanges vitality for dexterity.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+VIT - 3
+DEX + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25008#
+^808080A stone that exchanges luck for vitality.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+VIT + 3
+LUK - 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25009#
+^808080A stone that exchanges luck for vitality.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+STR - 3
+AGI + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25010#
+^808080A stone that exchanges agility for dexterity.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+AGI - 3
+DEX + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25011#
+^808080A stone that exchanges intelligence for luck.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+INT - 3
+LUK + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25012#
+^808080A stone that exchanges dexterity for strength.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+STR + 3
+DEX - 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25013#
+^808080A stone that exchanges vitality for intelligence.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+VIT - 3
+INT + 3
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25001#
+^808080A stone with defense.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+DEF + 20
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25014#
+^808080A stone with magical defense.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Middle
+^FFFFFF_^000000
+MDEF + 4
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+25015#
+^808080A stone with experience.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Enchant Stone
+Weight: 10
+Compounds On: Lower
+^FFFFFF_^000000
+Increases the experience given from monsters by 2%.
+^FFFFFF_^000000
+^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+#
+29013#
+Adds a 1% chance of restoring 3% of damage as HP when performing a physical attack.
+#
+29026#
+DEF + 20
+#
+29024#
+STR - 3
+LUK + 3
+#
+29014#
+STR + 3
+INT - 3
+#
+29022#
+AGI + 3
+LUK - 3
+#
+29016#
+INT + 3
+DEX - 3
+#
+29020#
+AGI - 3
+VIT + 3
+#
+29018#
+VIT - 3
+DEX + 3
+#
+29021#
+VIT + 3
+LUK - 3
+#
+29023#
+STR - 3
+AGI + 3
+#
+29019#
+AGI - 3
+DEX + 3
+#
+29025#
+INT - 3
+LUK + 3
+#
+29015#
+STR + 3
+DEX - 3
+#
+29017#
+VIT - 3
+INT + 3
+#
+29033#
+MDEF + 4
+#
+29027#
+Increases the experience given from monsters by 2%.
+#
+29029#
+ATK + 1%
+#
+29031#
+MATK + 1%
+#
+9101#
+^808080An egg where the cute pet Scatleton is sleeping.^000000
+^FF0000Once the pet egg has been named, it can never be undone. This is marked by a Beloved prefix.^000000
+^FFFFFF_^000000
+Type: Monster Egg
+Weight: 0
+Food Required: ITEM
+^FFFFFF_^000000
+^800080While Summoned^000000
+Increases the recovery rate of ^008080ITEM^000000 consumables by 100%.
+#
+10040#
+^808080A red necklace with a pretty bell. It will go well with a small animal.^000000
+^FFFFFF_^000000
+Type: Pet Equipment
+Weight: 0
+Required Monster: Scatleton
+#
+20397#
+^808080A helmet that can transform you into Jakk. It is so precise that even Jakk¡®s friends are tricked. The way it is produced is confidential...^000000
+^FFFFFF_^000000
+Type: Headgear
+Position: Middle, Lower
+Defense: 0
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+^FFFFFF_^000000
+Adds a 3.1% chance of transforming into Jakk for 10 seconds when receiving a physical or magical attack.
+#
+25245#
+^808080There are small bones that seem to belong to a small animal. Among the bones, there is a necklace with a red bell.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+25133#
+^808080Clean and dry stem. Suitable as a Halloween decoration!^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+11605#
+^808080A sweet chocolate is found inside this cripy butter scented cookie. Take caution as it might fly away.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 5
+#
+
+25132#
+The most important decoration item for Halloween
+A candle inside of pumpkin makes more real Halloween mood.
+Weight : ^7777770^000000
+#
+
+
+
+20377#
+Fly high and easy to find dangerous spot.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20378#
+Schwartzvald's pilot helm.
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper/Middle/Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20453#
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20454#
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20761#
+A wing for happy mood.
+Class : ^777777Costume^000000
+Location : ^777777Garment ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31070#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31069#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31068#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31067#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31066#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31065#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31064#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31063#
+Cute hair in a bun
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+31092#
+Gothic style bunny hat.
+Elegant and cute stylish hat.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20227#
+^ff0000Cannot trade with other accounts.^000000
+Puppy Hat
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20160#
+PecoPoco Fried Egg
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19980#
+Silver question mark.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19978#
+Silver exclamation mark.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19979#
+Golden question mark.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19977#
+Golden exclamation mark.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19974#
+Camouflage Rabbit Hood? Where this came from?
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19969#
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+19939#
+A big Antler
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20341#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20356#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20355#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20354#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20353#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20352#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20351#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+20350#
+Stylish Wig.
+A hair extension that looks sharp cowlick.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+
+17751#
+Contains one of the following when opened.
+Costume Puppy Hat
+Costume Fried Egg Hat
+Costume Silver Question
+Costume Silver Exclamation
+Costume Golden Question
+Costume Golden Exclamation
+Costume Camouflage RabbitHood
+Costume Blazing Soul
+Costume Antler
+
+#
+
+
+17752#
+Winter Wonder time lucky boxes contains one of the following items:
+Common:
+Bloody Dead Branch x 5
+BattlemanualX3 x 6
+HE Bubblegum x 6
+Uncommon:
+Crown of Deceit
+Holy Marching Hat
+CD In Mouth
+Gangster Scarf
+Deviling Hat
+Rare:
+Miniglasses [1]
+Heroic Backpack
+Fallen Angelwing
+Arch Angelwing
+Amistr Bag
+Prize Medal x 2000
+KVM Badge x 200
+Special (extra rare):
+Kafra Blossom Card
+#
+
+
+17376#
+Contains the following:
+5x Winter Wonder Time lucky boxes
+1x Safe to 10 Certificate
+2x Steam Starter Ring Boxes
+
+Winter Wonder Time lucky boxes contains one of the following items:
+Common:
+Bloody Dead Branch x 5
+BattlemanualX3 x 6
+HE Bubblegum x 6
+Uncommon:
+Crown of Deceit
+Holy Marching Hat
+CD In Mouth
+Gangster Scarf
+Deviling Hat
+Rare:
+Miniglasses [1]
+Heroic Backpack
+Fallen Angelwing
+Arch Angelwing
+Amistr Bag
+Prize Medal x 2000
+KVM Badge x 200
+Special (extra rare):
+Kafra Blossom Card
+#
+
+
+
+
+22061#
+Holy spiritual shoes.
+MDefense +3.
+Reduce damage from Holy property attack by 5%.
+Each refine increase MaxHP +1% and MaxSP +1%
+Class : ^777777Shoes^000000 Defense : ^77777712^000000
+Weight : ^77777725^000000
+Required Level : ^77777790^000000
+Job : ^777777All^000000
+#
+
+
+20705#
+Holy spiritual magical Manteau.
+Reduce damage from Holy property monsters by 5%.
+Increase damage from Dragon Race monsters by 5%.
++Lumiere Shield[1], Each refine rate of Lumiere Manteau gives 1% of damage reduction from Dragon Race.
++Lumiere Shield[1], Each refine rate of Lumiere Shield gives 1% additional damage to Holy property monsters.
+Class : ^777777Garment^000000 Defense : ^77777720^000000
+Weight : ^77777770^000000
+Required Level : ^77777765^000000
+Job : ^777777All^000000
+#
+
+
+2174#
+Holy spiritual magical shield.
+Reduce damage from Holy property monsters by 5%.
+Increase damage from Dragon Race monsters by 5%.
+Class : ^777777Shield^000000 Defense : ^77777750^000000
+Weight : ^777777130^000000
+Required Level : ^77777765^000000
+Job : ^777777All^000000
+#
+
+
+27012#
+MHP + 8%.
+For Mechanic class, decreasing 30% long distance physical damage.
+Class : ^777777Card^000000
+Compound on : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+27013#
+Increasing 10% of [Vulcan Arm] damage.
++10 Refined, 20% additional [Vulcan Arm] damage incaresed.
+Equip with Kick Step Card, no consumes Madogear energy.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+27014#
+MHP + 2%
+Add a chance to recover 1000 HP per second for 5 seconds when the user receiving physical or magical damage.
+Class : ^777777Card^000000
+Compound on : ^777777Footgear^000000
+Weight : ^7777771^000000
+#
+
+27015#
+Increase natural HP and SP regeneration rate by 25%.
+Recover +30 HP and +3 SP each time a monster is killed by Physical Melee Damage.
++ 7 Refined, additional +10 HP and +1 SP each time a monster is killed by Physical Melee Damage.
+Class : ^777777Card^000000
+Compound on : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+27016#
+Critical Rate + 30% on Formless monster.
+Equip with Repair Robot Turbo Card,
+additional Critical Damage +10%.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+
+27017#
+Decreasing 10% physical and magical damage from Formless monster.,
++7 Refined, Reducing 5% physical and magical damage from Formless monster.,
+Has a chance to gain miscellaneous items when a monster is killed.,
+Class : ^777777Card^000000,
+Compound on : ^777777Garment^000000,
+Weight : ^7777771^000000,
+#
+27018#
+Increase attack speed. (After Attack Delay - 1%)
+Base level 90 or higher, increase additional attack speed. (After Attack Delay - 1%)
+Base level 120 or higher, increase additional attack speed. (After Attack Delay - 1%)
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+
+27019#
+HIT + 1.
+Base level 90 or higher, additional HIT + 1.
+Base level 120 or higher, additional HIT + 1.
+Equip with GC109 Card,
+Each short ranged physical attack has a chance to ASPD + 5 for 5 seconds
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+27020#
+ATK + 10%.
+Add a chance to take away 40% MSP within 15*15 cell when short ranged physical attack.
+Increase casting rates for each +3 refined.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4697#
+MSP -300.
+Each short ranged Physical attack has a high chance of destroying an enemy's armor.
+Equip with Kick Step Card, no consumes Madogear energy.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4698#
+Increase 30% of [Axe Boomerang] damage.
+Increase additional 30% of [Axe Boomerang] damage if weapon has +10 refined or higher.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+
+4699#
+Increase 20% of [Arm Cannon] damage.
+Increase additional 20% of [Arm Cannon] damage if weapon has + 10 refined or higher.
+Equip with Kick Step Card, no consumes Madogear energy.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
 #

@@ -7065,7 +7065,7 @@
 11564#Biscoito Melado#
 7640#Fivela de Borboleta#
 2977#Coração Partido#
-13442#Guarda-Chuva Atinquado#
+13442#Guarda-Chuva Antiquado#
 18848#Presilha de Rosas#
 19686#Tiara de Papai Noel#
 7642#Moeda Sangrenta#
@@ -7100,4 +7100,197 @@
 //------------Aplicar em 2016-05-31--------------------
 //*****************************************************
 20315#Visor Holográfico#
+//*****************************************************
+//------------Aplicar em 2016-06-07--------------------
+//*****************************************************
+20279#Apiutube#
+20280#Lápis do Ansioso#
+20295#Visor de Quartzo-Poring#
+20316#Elmo do Serafim#
+20470#Choco-elmo#
+//*****************************************************
+//------------Aplicar em 2016-06-14--------------------
+//*****************************************************
+20282#Boné do Mario Branco#
+20404#Benção Angelingal#
+//*****************************************************
+//------------Aplicar em 2016-07-05--------------------
+//*****************************************************
+20311#Fone da Ratishune Meeku#
+20319#Fone da Megarine Louca#
+16267#Cx de Enciclopédia de Combate [10]#
+//*****************************************************
+//------------Aplicar em 2016-07-12--------------------
+//*****************************************************
+19871#Ritmo do Momento#
+//*****************************************************
+//------------Aplicar em 2016-07-25--------------------
+//*****************************************************
+20318#Fones do Pikachiu#
+20202#Balão de Deviruchi#
+//*****************************************************
+//------------Aplicar em 2016-08-02--------------------
+//*****************************************************
+20218#Auréola dos Aesir#
+20209#Bolhas de Sabão#
+//*****************************************************
+//------------Aplicar em 2016-08-09--------------------
+//*****************************************************
+20324#Chapéu com Pombo#
+20240#Flocos de Neve#
+//*****************************************************
+//------------Aplicar em 2016-08-16--------------------
+//*****************************************************
+20219#Chapéu da Banda Sagrada#
+20220#Véu da Meia-Noite#
+//*****************************************************
+//-------------EQUIPAMENTOS DE MORA--------------------
+//*****************************************************
+1660#Cajado da Afeição Fortalecido#
+16018#Maça do Julgamento Fortalecida#
+2011#Cajado do Açoite de Ouro Fortalecido#
+2012#Cajado Aquático Fortalecido#
+2013#Cajado Vermelho Fortalecido#
+2014#Cajado Florestal Fortalecido#
+//*****************************************************
+//------------Aplicar em 2016-08-23--------------------
+//*****************************************************
+20217#Véu das Mil e Uma Noites#
+//*****************************************************
+//------------Aplicar em 2016-08-30--------------------
+//*****************************************************
+20286#Óculos da Persona#
+20033#Coroa de Dewata#
+//*****************************************************
+//------------Aplicar em 2016-09-06--------------------
+//*****************************************************
+20325#Aura de Byalan#
+20346#Chapéu de Batedor#
+//*****************************************************
+//------------Aplicar em 2016-09-13--------------------
+//*****************************************************
+20283#Boné Abençoado#
+//*****************************************************
+//-------------Episódio 14.3 The Final-----------------
+//*****************************************************
+22035#Sapatos Relaxantes do Herói#
+22036#Botas de Couro do Herói#
+22037#Botas de Ungoliant do Herói#
+2981#Anel do Herói#
+2988#Anel do Novo Oz#
+2989#Bracelete Floral de Igu#
+2990#Pingente da Harmonia#
+2991#Pingente do Caos#
+2992#Pingente da Voragem#
+15100#Peitoral Congelado#
+15101#Peitoral Tectônico#
+15093#Placas Heroicas#
+15094#Traje Heroico da Magia#
+15095#Traje Heroico do Julgamento#
+15096#Malha Heroica do Comércio#
+15097#Traje Heroico da Ocultação#
+15098#Vestes Heroicas da Precisão#
+18122#Arco Colossal#
+18123#Arco das Tempestades#
+4890#DEFM +1#
+4891#DEFM +3#
+4892#DEFM +5#
+4893#DEF +15#
+4894#ATQ +4%#
+4895#ATQ +5%#
+4896#ATQM +2%#
+4897#ATQM +3%#
+4898#ATQM +4%#
+4899#ATQM +5%#
+4900#HPM +5%#
+4908#Essência de Morroc FOR1#
+4909#Essência de Morroc FOR2#
+4910#Essência de Morroc FOR3#
+4911#Essência de Morroc INT1#
+4912#Essência de Morroc INT2#
+4901#DEFM +7#
+4913#Essência de Morroc INT3#
+4902#DEF +18#
+4914#Essência de Morroc AGI1#
+4903#DEF +21#
+4915#Essência de Morroc AGI2#
+4904#ATQ +6%#
+4916#Essência de Morroc AGI3#
+4905#ATQ +7%#
+4917#Essência de Morroc VIT1#
+4906#ATQM +6%#
+4918#Essência de Morroc VIT2#
+4907#ATQM +7%#
+4919#Essência de Morroc VIT3#
+4920#Essência de Morroc DES1#
+4921#Essência de Morroc DES2#
+4922#Essência de Morroc DES3#
+4923#Essência de Morroc SOR1#
+4924#Essência de Morroc SOR2#
+4925#Essência de Morroc SOR3#
+4559#Carta do Satan Morroc#
+4882#ATQ +1%#
+4883#ATQM +1%#
+6684#Marca do Herói#
+6713#Alma de Ahat#
+6714#Alma de Shenime#
+6715#Pedaço da Alma do Lorde das Trevas#
+6708#Cristal de Mana#
+6719#Dente de Marfim#
+22535#Pergaminho do Construtor#
+22536#Pergaminho da Construtora#
+22537#Prêmio do Herói#
+22566#Cristal Congelado#
+22567#Prêmio de Esquadrão#
+22568#Pergaminho de Invocação de Nidhogg#
+1934#Contrabaixo#
+1989#Fita Rítmica#
+1935#Ukulele do Novo Oz#
+1990#Microfone Floral de Igu#
+6686#Tijolo#
+6687#Corda#
+6688#Madeira#
+6689#Pele de Verme Flamejante#
+6690#Caule Delicioso#
+6691#Pluma Flamejante#
+6692#Memorando da Patrulha#
+6693#Pedra Abençoada#
+6694#Sangue de Monstro#
+6695#Dente de Golem#
+6696#Brasão Flamejante#
+6698#Machado de Madeira#
+6685#Recibo de Morroc#
+//*****************************************************
+//------------Aplicar em 2016-09-20--------------------
+//*****************************************************
+20284#Boina de Cerejeira#
+20285#Aura de Amatsu#
+//*****************************************************
+//------------Aplicar em 2016-09-27--------------------
+//*****************************************************
+20313#CD Labial#
+20314#Óculos da Gaga#
+//*****************************************************
+//------------Aplicar em 2016-10-04--------------------
+//*****************************************************
+20341#Mecha de Cabelo Preto#
+20350#Mecha de Cabelo Loiro#
+20351#Mecha de Cabelo Verde#
+20352#Mecha de Cabelo Roxo#
+20353#Mecha de Cabelo Vermelho#
+20354#Mecha de Cabelo Castanho#
+20355#Mecha de Cabelo Azul#
+20356#Mecha de Cabelo Branco#
+//*****************************************************
+//------------Aplicar em 2016-10-11--------------------
+//*****************************************************
+20340#Rabo de Cavalo Preto#
+20357#Rabo de Cavalo Loiro#
+20358#Rabo de Cavalo Verde#
+20359#Rabo de Cavalo Roxo#
+20360#Rabo de Cavalo Vermelho#
+20361#Rabo de Cavalo Castanho#
+20362#Rabo de Cavalo Azul#
+20363#Rabo de Cavalo Branco#
+20344#Balão Feliz#
 //file end

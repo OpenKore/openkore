@@ -20,22 +20,22 @@ sub new {
 	
 	my %packets = (
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
+		'07E4' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0437' => ['character_move','a3', [qw(coords)]],
 		'035F' => ['sync', 'V', [qw(time)]],
-		'0898' => ['actor_look_at', 'v C', [qw(head body)]],
-		'07E4' => ['item_take', 'a4', [qw(ID)]],
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],
-		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'088D' => ['actor_look_at', 'v C', [qw(head body)]],
+		'094A' => ['item_take', 'a4', [qw(ID)]],
+		'0961' => ['item_drop', 'v2', [qw(index amount)]],
+		'088E' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'0897' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
-		'023B' => ['actor_name_request', 'a4', [qw(ID)]],
-		'0281' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
-		'093A' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
-		'0919' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
-		'0368' => ['storage_password'],
+		'0884' => ['actor_info_request', 'a4', [qw(ID)]],
+		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
+		'083C' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'0932' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0956' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
+		'0886' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
+		'094B' => ['storage_password'],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -48,7 +48,7 @@ sub new {
 	
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	$self->cryptKeys(1962242958, 990194517, 760482201);
+	$self->cryptKeys(29849657, 294544576, 2009669249);
 
 	return $self;
 }

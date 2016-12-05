@@ -52,6 +52,8 @@ sub iterate {
 	processMisc();
 	processPortalRecording();
 	Benchmark::end("ai_prepare") if DEBUG;
+	
+	Plugins::callHook('AI_start', {state => $AI});
 
 	return if $AI == AI::OFF;
 	if ($net->clientAlive() && !$sentWelcomeMessage && timeOut($timeout{welcomeText})) {
@@ -1273,9 +1275,10 @@ sub processAutoStorage {
 					next if $item->{equipped};
 					next if ($item->{broken} && $item->{type} == 7); # dont store pet egg in use
 
-					if (defined($args->{lastInventoryCount}) &&  defined($args->{lastNameID}) &&
+					if (defined($args->{lastInventoryCount}) &&  defined($args->{lastNameID}) && defined($args->{lastAmount}) &&
 					    $args->{lastNameID} == $item->{nameID} &&
-					    $args->{lastInventoryCount} == @{$char->inventory->getItems()}
+					    $args->{lastInventoryCount} == @{$char->inventory->getItems()} &&
+						$args->{lastAmount} == $item->{amount}
 					) {
 						error TF("Unable to store %s.\n", $item->{name});
 						next;
@@ -1294,6 +1297,7 @@ sub processAutoStorage {
 						undef $args->{done};
 						$args->{lastIndex} = $item->{index};
 						$args->{lastNameID} = $item->{nameID};
+						$args->{lastAmount} = $item->{amount};
 						$args->{lastInventoryCount} = scalar(@{$char->inventory->getItems()});
 						$messageSender->sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
 						$timeout{ai_storageAuto}{time} = time;

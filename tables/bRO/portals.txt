@@ -239,10 +239,6 @@ arena_room 105 93 prt_are_in 60 14 0 c r0
 prt_are_in 54 13 arena_room 100 77
 
 # Anthell
-#anthell01 35 267 moc_fild20 161 144
-#anthell02 171 170 moc_fild20 333 315
-#moc_fild20 156 143 anthell01 35 263
-#moc_fild20 337 315 anthell02 168 170
 anthell01 35 267 cmd_fild08 335 355
 anthell02 171 170 cmd_fild08 344 82
 cmd_fild08 335 355 anthell01 35 263
@@ -588,15 +584,11 @@ cmd_fild02 382 269 cmd_fild04 21 275
 cmd_fild03 23 68 cmd_fild01 362 73
 cmd_fild03 23 269 cmd_fild01 362 263
 cmd_fild03 181 17 cmd_fild04 180 372
-cmd_fild03 384 165 cmd_fild05 21 163
 cmd_fild04 21 275 cmd_fild02 382 269
 cmd_fild04 31 92 cmd_fild02 358 95
 cmd_fild04 180 372 cmd_fild03 181 17
 cmd_fild04 376 287 cmd_fild06 21 285
-cmd_fild05 21 163 cmd_fild03 384 165
-cmd_fild05 148 19 cmd_fild06 150 380
 cmd_fild06 21 285 cmd_fild04 376 287
-cmd_fild06 150 380 cmd_fild05 148 19
 cmd_fild06 151 27 cmd_fild07 149 379
 cmd_fild06 368 96 cmd_fild08 15 102
 cmd_fild06 372 359 cmd_fild08 25 355
@@ -670,8 +662,6 @@ ein_fild08 164 380 einbroch 150 28
 ein_fild08 361 129 ein_fild09 37 135
 ein_fild09 71 352 einbech 62 32
 ein_fild09 34 135 ein_fild08 358 130
-ein_fild09 328 344 ein_fild10 28 330
-ein_fild10 25 330 ein_fild09 325 344
 ein_fild10 196 371 ein_fild07 179 46
 gef_dun00 104 103 gef_tower 153 28
 gef_dun00 107 168 gef_dun01 115 240
@@ -710,12 +700,10 @@ gef_fild07 40 19 gef_fild13 41 373
 gef_fild07 64 363 gef_fild05 64 15
 gef_fild07 339 187 geffen 26 119
 gef_fild08 200 355 gef_fild06 218 17
-gef_fild08 215 18 gef_fild12 221 374
 gef_fild08 360 187 gef_fild07 18 191
 gef_fild09 23 56 gef_fild13 380 56
 gef_fild09 225 25 gef_fild10 251 371
 gef_fild09 368 95 gef_fild01 16 102
-gef_fild10 27 219 gef_fild14 371 219
 gef_fild10 63 337 in_orcs01 30 154
 gef_fild10 104 21 gef_fild11 111 364
 gef_fild10 136 331 in_orcs01 124 171
@@ -726,11 +714,6 @@ gef_fild10 251 371 gef_fild09 225 25
 gef_fild10 370 56 gef_fild03 18 52
 gef_fild11 111 364 gef_fild10 104 21
 gef_fild11 377 293 prt_fild11 17 281
-gef_fild12 221 374 gef_fild08 215 18
-gef_fild12 368 180 gef_fild13 25 202
-gef_fild12 373 50 gef_fild13 25 59
-gef_fild13 25 59 gef_fild12 373 50
-gef_fild13 25 202 gef_fild12 368 180
 gef_fild13 41 373 gef_fild07 40 19
 gef_fild13 77 284 gefg_cas03 68 290
 gef_fild13 83 185 gefg_cas03 93 159
@@ -738,14 +721,11 @@ gef_fild13 112 269 gefg_cas03 103 283
 gef_fild13 139 240 gefg_cas03 130 250
 gef_fild13 150 54 gefg_cas01 34 136
 gef_fild13 196 281 gefg_cas04 24 145
-gef_fild13 200 25 gef_fild14 180 360
 gef_fild13 210 75 gefg_cas01 99 178
 gef_fild13 256 57 gefg_cas05 7 134
 gef_fild13 305 83 gefg_cas05 99 204
 gef_fild13 308 244 gefg_cas02 70 147
 gef_fild13 380 56 gef_fild09 23 56
-gef_fild14 180 360 gef_fild13 200 25
-gef_fild14 371 219 gef_fild10 27 219
 gef_tower 38 160 gef_tower 42 86
 gef_tower 42 86 gef_tower 38 160
 gef_tower 42 86 gef_tower 66 156
@@ -1188,7 +1168,6 @@ moc_fild02 350 339 pay_fild04 194 17
 moc_fild02 378 272 pay_gld 16 276
 moc_fild03 17 37 moc_fild13 308 49
 moc_fild03 70 341 moc_fild02 332 19
-moc_fild03 179 16 pay_fild11 38 330
 moc_fild03 303 170 pay_fild01 13 152
 moc_fild07 198 21 morocc 160 297
 moc_fild11 26 161 moc_fild12 289 168
@@ -1333,9 +1312,7 @@ pay_fild01 278 14 pay_fild02 83 386
 pay_fild01 353 14 pay_fild02 167 390
 pay_fild01 379 201 pay_fild07 16 200
 pay_fild01 333 361 payon 122 27
-#pay_fild02 16 175 pay_fild11 297 135
 pay_fild02 83 386 pay_fild01 278 14
-pay_fild02 134 16 pay_fild05 127 378
 pay_fild02 167 390 pay_fild01 353 14
 pay_fild02 284 108 pay_fild03 15 110
 pay_fild03 15 110 pay_fild02 284 108
@@ -1344,9 +1321,6 @@ pay_fild03 313 16 pay_fild06 305 375
 pay_fild03 392 63 alberta 15 234
 pay_fild04 17 165 moc_fild01 379 162
 pay_fild04 194 17 moc_fild02 350 339
-pay_fild05 127 378 pay_fild02 134 16
-pay_fild05 271 284 pay_fild06 28 288
-pay_fild06 28 288 pay_fild05 271 284
 pay_fild06 305 375 pay_fild03 313 16
 pay_fild07 16 200 pay_fild01 379 201
 pay_fild07 164 17 pay_fild03 172 281
@@ -1359,8 +1333,6 @@ pay_fild09 16 91 pay_fild08 262 91
 pay_fild09 112 16 pay_fild10 112 382
 pay_fild10 16 290 pay_fild07 382 290
 pay_fild10 112 382 pay_fild09 112 16
-pay_fild11 38 330 moc_fild03 179 16
-#pay_fild11 297 135 pay_fild02 16 175
 pay_gld 16 276 moc_fild02 378 272
 pay_gld 121 238 payg_cas01 214 44
 pay_gld 140 156 payg_cas04 252 275
@@ -1895,7 +1867,7 @@ tur_dun03 217 71 tur_dun04 100 196
 tur_dun04 100 196 tur_dun03 217 71
 umbala 130 79 um_fild04 215 339
 umbala 129 78 um_fild04 215 340
-umbala 106 285 um_dun01 42 27
+umbala 106 285 yggdrasil01 39 63
 umbala 107 130 um_in 99 63
 umbala 138 129 um_in 99 114
 umbala 125 157 um_in 155 111
@@ -1904,10 +1876,6 @@ umbala 100 203 um_in 163 69
 umbala 107 118 um_in 15 20
 # bungee jump
 #umbala 140 197 nif_in 68 14
-um_dun01 42 27 umbala 106 285
-um_dun01 149 198 um_dun02 52 22
-um_dun02 52 22 um_dun01 149 198
-um_dun02 126 162 yggdrasil01 38 63
 um_fild01 31 374 beach_dun2 258 244
 um_fild01 369 277 um_fild02 22 272
 um_fild01 31 274 beach_dun2 258 244
@@ -1962,9 +1930,7 @@ yuno_fild03 21 162 yuno_fild04 371 147
 yuno_fild04 231 288 yuno 158 13
 yuno_fild04 374 82 yuno_fild03 20 79
 yuno_fild04 374 149 yuno_fild03 21 162
-yuno_fild04 42 370 yuno_fild05 61 33
 yuno_fild04 249 22 ein_fild06 255 358
-yuno_fild05 61 29 yuno_fild04 42 366
 yuno_fild07 73 220 ein_fild06 332 176
 yuno_fild07 179 353 yuno_fild03 179 17
 yuno_fild07 352 292 yuno_fild08 27 275
@@ -2160,7 +2126,6 @@ ra_temsky 99 8 ra_temin 275 231
 ra_temsky 99 135 ra_temsky 99 113
 ra_temsky 137 139 ra_temsky 109 143
 ra_temsky 62 139 ra_temsky 91 143
-rachel 25 125 ra_fild11 353 226
 rachel 275 125 ra_fild12 40 226
 rachel 130 21 ve_fild02 195 377
 que_rachel 130 93 que_rachel 239 258
@@ -2179,12 +2144,8 @@ ra_fild01 306 38 ra_fild04 322 371
 ra_fild04 322 378 ra_fild01 306 43
 ra_fild04 362 351 ra_fild05 39 353
 ra_fild05 33 353 ra_fild04 356 351
-ra_fild05 27 13 ra_fild09 30 337
-ra_fild09 29 343 ra_fild05 31 17
 ra_fild04 263 54 ra_fild08 287 365
 ra_fild08 287 370 ra_fild04 263 60
-ra_fild09 27 238 ra_fild08 360 234
-ra_fild08 368 234 ra_fild09 35 238
 ra_fild04 23 176 ra_fild03 370 172
 ra_fild03 374 168 ra_fild04 29 176
 ra_fild05 348 274 ra_fild06 24 277
@@ -2194,17 +2155,6 @@ lhz_fild01 296 382 ra_fild06 298 25
 ra_fild12 36 225 rachel 270 125
 ra_fild08 165 29 ra_fild12 149 369
 ra_fild12 149 374 ra_fild08 165 36
-ra_fild12 303 27 ra_fild13 295 341
-ra_fild13 295 346 ra_fild12 303 33
-ra_fild11 360 226 rachel 30 125
-ra_fild11 21 290 ra_fild10 379 283
-ra_fild10 384 287 ra_fild11 28 290
-ra_fild11 202 335 ra_fild07 215 32
-ra_fild07 215 27 ra_fild11 201 329
-ra_fild07 168 353 ra_fild02 171 45
-ra_fild02 168 36 ra_fild07 168 349
-ra_fild02 373 275 ra_fild03 28 294
-ra_fild03 23 294 ra_fild02 367 270
 ra_san02 213 280 ra_san01 140 19
 ra_san03 123 283 ra_san01 140 19
 ra_san04 119 104 ra_san01 140 19
@@ -2283,11 +2233,7 @@ veins 218 361 ve_fild06 148 225
 ve_fild06 153 220 veins 218 355
 ve_fild01 366 267 ve_fild02 36 263
 ve_fild01 184 20 ve_fild04 174 334
-ra_fild11 233 27 ve_fild01 243 363
-ve_fild01 243 368 ra_fild11 232 32
 ve_fild01 350 92 ve_fild02 78 133
-ra_fild13 29 308 ve_fild02 380 308
-ve_fild02 385 308 ra_fild13 34 308
 ve_fild02 195 382 rachel 130 25
 ve_fild02 31 263 ve_fild01 361 267
 ve_fild02 73 133 ve_fild01 345 92
@@ -2308,12 +2254,6 @@ yuno_fild06 149 369 hu_fild01 139 37
 hu_fild01 139 35 yuno_fild06 151 369
 hu_fild04 381 187 hu_fild05 34 202
 hu_fild05 32 202 hu_fild04 379 187
-hu_fild05 91 42 hu_fild07 80 369
-hu_fild07 80 371 hu_fild05 91 44
-hu_fild07 56 36 yuno_fild09 47 375
-yuno_fild09 47 377 hu_fild07 56 38
-hu_fild07 226 36 yuno_fild09 220 372
-yuno_fild09 220 374 hu_fild07 226 38
 abbey01 51 9 nameless_n 160 184
 abbey01 87 122 abbey01 13 201
 abbey01 13 204 abbey01 88 118
@@ -2328,6 +2268,8 @@ abyss_02 145 281 abyss_03 116 27
 abyss_03 116 24 abyss_02 145 278
 einbroch 92 280 airplane 224 64
 einbroch 64 234 airport 138 51
+airport 143 43 airport 148 51 1200 c r0 c r0
+airport 143 49 airport 142 40 0 c r0 c r0
 airport 142 61 einbroch 62 246
 airport 124 13 airport 19 21
 airport 19 18 airport 122 16
@@ -2498,30 +2440,16 @@ ein_fild04 343 293 ein_fild05 80 294
 ein_fild05 76 294 ein_fild04 336 292
 ein_fild05 376 183 ein_fild06 47 166
 ein_fild06 42 171 ein_fild05 371 183
-ein_fild02 357 251 yuno_fild04 38 280
-yuno_fild04 33 279 ein_fild02 350 250
-ein_fild01 349 369 yuno_fild05 43 346
-yuno_fild05 41 350 ein_fild01 345 367
-ein_fild01 106 34 ein_fild02 109 358
-ein_fild02 108 364 ein_fild01 106 40
-ein_fild01 234 34 ein_fild02 258 343
-ein_fild02 257 350 ein_fild01 231 40
-ein_fild02 170 29 ein_fild05 172 366
-ein_fild05 172 371 ein_fild02 170 37
+ein_fild01 106 34 ein_fild05 172 371
+ein_fild05 172 371 ein_fild01 106 40
+ein_fild01 28 261 cave 98 22
+cave 98 22 ein_fild01 28 261
 hu_fild01 366 185 hu_fild02 22 168
 hu_fild02 17 168 hu_fild01 361 189
 hu_fild04 47 372 hu_fild02 40 27
 hu_fild02 40 22 hu_fild04 48 368
 hu_fild04 294 379 hu_fild02 280 31
 hu_fild02 283 28 hu_fild04 289 376
-hu_fild05 284 356 hu_fild03 288 26
-hu_fild03 288 19 hu_fild05 276 346
-hu_fild02 374 339 hu_fild03 24 337
-hu_fild03 20 338 hu_fild02 370 339
-hu_fild02 378 162 hu_fild03 30 163
-hu_fild03 25 163 hu_fild02 373 160
-yuno_fild09 377 184 yuno_fild10 44 183
-yuno_fild10 39 183 yuno_fild09 371 184
 ice_dun01 157 10 ra_fild01 233 327
 ice_dun01 146 161 ice_dun02 151 139
 ice_dun02 151 145 ice_dun01 146 157
@@ -2820,40 +2748,35 @@ lhz_in02 265 14 lhz_in02 269 82
 lhz_in02 282 79 lighthalzen 194 48
 
 # Eden HQ Entrace
-prontera 124 76 moc_para01 31 14 c c r0
-prontera 38 212 moc_para01 31 14 c c r0
-prontera 162 326 moc_para01 31 14 c c r0
-prontera 271 213 moc_para01 31 14 c c r0
-#morocc 161 97 moc_para01 31 14 c c r0 does not exist in bRO
+alberta 124 67 moc_para01 31 14 c c r0
+alberta_in 75 39 moc_para01 31 14 c c r0
+aldebaran 133 119 moc_para01 31 14 c c r0
+amatsu 100 145 moc_para01 31 14 c c r0
+ayothaya 221 191 moc_para01 31 14 c c r0
+brasilis 191 224 moc_para01 31 14 c c r0
+comodo 202 151 moc_para01 31 14 c c r0
+dewata 192 193 moc_para01 31 14 c c r0
+einbroch 250 211 moc_para01 31 14 c c r0
+geffen 132 66 moc_para01 31 14 c c r0
+geffen_in 160 104 moc_para01 31 14 c c r0
+gonryun 145 120 moc_para01 31 14 c c r0
+hugel 93 153 moc_para01 31 14 c c r0
+izlude 131 148 moc_para01 31 14 c c r0
+izlude_in 68 162 moc_para01 31 14 c c r0
+lighthalzen 164 86 moc_para01 31 14 c c r0
+louyang 224 107 moc_para01 31 14 c c r0
 moc_ruins 68 164 moc_para01 31 14 c c r0
 moc_prydb1 53 126 moc_para01 31 14 c c r0
-amatsu 100 145 moc_para01 31 14 c c r0
-brasilis 194 221 moc_para01 31 14 c c r0
-geffen 132 66 moc_para01 31 14 c c r0
-#geffen 196 147 moc_para01 31 14 c c r0 does not exist in bRO
+morocc 161 97 moc_para01 31 14 c c r0
+moscovia 209 197 moc_para01 31 14 c c r0
 payon 177 111 moc_para01 31 14 c c r0
-aldebaran 133 119 moc_para01 31 14 c c r0
-einbroch 244 200 moc_para01 31 14 c c r0
-moscovia 220 192 moc_para01 31 14 c c r0
-einbroch 55 202 moc_para01 31 14 c c r0
-yuno 144 189 moc_para01 31 14 c c r0
-lighthalzen 167 102 moc_para01 31 14 c c r0
-alberta 124 67 moc_para01 31 14 c c r0
-dewata 194 168 moc_para01 31 14 c c r0
-# comodo 191 153 moc_para01 31 14 c c r0
-# cmd_fild07 139 134 moc_para01 31 14 c c r0
-gonryun 162 122 moc_para01 31 14 c c r0
-#umbala 96 160 moc_para01 31 14 c c r0
-ayothaya 209 169 moc_para01 31 14 c c r0
-hugel 99 167 moc_para01 31 14 c c r0
-rachel 125 144 moc_para01 31 14 c c r0
-veins 214 122 moc_para01 31 14 c c r0
-alberta_in 75 39 moc_para01 31 14 c c r0
-alberta 27 238 moc_para01 31 14 c c r0
-geffen_in 160 104 moc_para01 31 14 c c r0
 payon_in02 58 58 moc_para01 31 14 c c r0
-izlude 134 98 moc_para01 31 14 c c r0
-izlude_in 68 162 moc_para01 31 14 c c r0
+prontera 124 76 moc_para01 31 14 c c r0
+prt_church 103 78 moc_para01 31 14 c c r0
+rachel 125 144 moc_para01 31 14 c c r0
+umbala 105 158 moc_para01 31 14 c c r0
+veins 220 109 moc_para01 31 14 c c r0
+yuno 144 189 moc_para01 31 14 c c r0
 
 # Eden HQ
 moc_para01 47 39 moc_para01 106 14 c r0
