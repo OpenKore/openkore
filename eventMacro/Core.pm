@@ -391,6 +391,8 @@ sub add_to_triggered_prioritized_automacros_index_list {
 	my $index = $automacro->get_index;
 	
 	my $list = $self->{triggered_prioritized_automacros_index_list} ||= [];
+	
+	my $index_hash = $self->{automacro_index_to_queue_index};
 
 	# Find where we should insert this item.
 	my $new_index;
@@ -400,9 +402,8 @@ sub add_to_triggered_prioritized_automacros_index_list {
 	splice @$list, $new_index, 0, { index => $index, priority => $priority };
 
 	# Update indexes.
-	my $index_hash = $self->{automacro_index_to_queue_index};
-	foreach my $auto_index ($new_index .. $#{$list}) {
-		$index_hash->{$list->[$auto_index]} = $auto_index;
+	foreach my $auto_index_in_queue ($new_index .. $#{$list}) {
+		$index_hash->{$list->[$auto_index_in_queue]->{index}} = $auto_index_in_queue;
 	}
 
 	debug "[eventMacro] Automacro '".$automacro->get_name()."' met it's conditions. Adding it to running queue in position '".$new_index."'.\n", "eventMacro";
@@ -421,16 +422,14 @@ sub remove_from_triggered_prioritized_automacros_index_list {
 	my $index_hash = $self->{automacro_index_to_queue_index};
 	
 	# Find from where we should delete this item.
-	my $queue_index = $index_hash->{$index};
+	my $queue_index = delete $index_hash->{$index};
 	
 	# remove.
 	splice (@$list, $queue_index, 1);
 	
-	my $size = @$list;
-	
 	# Update indexes.
-	foreach my $auto_index ($queue_index .. $#{$list}) {
-		$index_hash->{$list->[$auto_index]} = $auto_index;
+	foreach my $auto_index_in_queue ($queue_index .. $#{$list}) {
+		$index_hash->{$list->[$auto_index_in_queue]->{index}} = $auto_index_in_queue;
 	}
 	
 	debug "[eventMacro] Automacro '".$automacro->get_name()."' no longer meets it's conditions. Removing it from running queue from position '".$queue_index."'.\n", "eventMacro";
