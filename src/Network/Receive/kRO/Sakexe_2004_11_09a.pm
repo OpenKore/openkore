@@ -30,8 +30,8 @@ sub new {
 
 		'0216' => ['adopt_reply', 'V', [qw(type)]], # 6
 
-		'0219' => ['top10_blacksmith_rank'], #282
-		'021A' => ['top10_alchemist_rank'], # 282
+		'0219' => ['top10'], #282
+		'021A' => ['top10'], # 282
 		'021B' => ['blacksmith_points', 'V2', [qw(points total)]], # 10
 		'021C' => ['alchemist_point', 'V2', [qw(points total)]], # 10
 	);

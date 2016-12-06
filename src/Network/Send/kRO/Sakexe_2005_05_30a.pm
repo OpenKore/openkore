@@ -24,13 +24,14 @@ use Log qw(message warning error debug);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
-}
+	my $self = $class->SUPER::new(@_);
 
-# 0x0237,2,rankingpk,0
-sub sendTop10PK {
-	$_[0]->sendToServer(pack('v', 0x0237));
-	debug "Sent Top 10 PK request\n", "sendPacket", 2;	
+	my %packets = (
+		'0237' => ['pk_rank_request'],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
+	$self;
 }
 
 =pod

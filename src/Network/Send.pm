@@ -996,6 +996,27 @@ sub sendClientMD5Hash {
 	}));
 }
 
+# 0x0217
+sub sendTop10Blacksmith {
+	my $self = shift;
+	$self->sendToServer($self->reconstruct({switch => 'blacksmith_rank_request'}));
+	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
+}
+
+# 0x0218
+sub sendTop10Alchemist {
+	my $self = shift;
+	$self->sendToServer($self->reconstruct({switch => 'alchemist_rank_request'}));
+	debug "Sent Top 10 Alchemist request\n", "sendPacket", 2;
+}
+
+# 0x0225
+sub sendTop10Taekwon {
+	my $self = shift;
+	$self->sendToServer($self->reconstruct({switch => 'taekwon_rank_request'}));
+	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
+}
+
 sub parse_actor_move {
 	my ($self, $args) = @_;
 	makeCoordsDir($args, $args->{coords});
@@ -1035,6 +1056,13 @@ sub sendFriendRequest {
 
 	}));
 	debug "Sent Request to be a friend: $name\n", "sendPacket";
+}
+
+# 0x0237
+sub sendTop10PK {
+	my $self = shift;
+	$self->sendToServer($self->reconstruct({switch => 'pk_rank_request'}));
+	debug "Sent Top 10 PK request\n", "sendPacket", 2;
 }
 
 sub sendHomunculusCommand {
