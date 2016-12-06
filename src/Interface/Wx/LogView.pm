@@ -69,6 +69,13 @@ sub new {
 
 	} elsif ($platform eq 'gtk2') {
 		my $enum = new Wx::FontEnumerator;
+
+		# OnFacename() called by EnumerateFacenames() for each match.
+		# EnumerateFacenames() segfaults if OnFacename() is not defined.
+		# Returns true to continue enumeration.
+		local *Wx::FontEnumerator::OnFacename = sub { 1 };
+
+		# EnumerateFacenames(wxFontEncoding encoding, bool fixedWidthOnly)
 		$enum->EnumerateFacenames(wxFONTENCODING_SYSTEM, 1);
 		my @fonts = $enum->GetFacenames;
 
