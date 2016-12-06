@@ -20,12 +20,10 @@ sub setItem {
 	if ($item && $item->{amount}) {
 		my $i;
 		if (-1 == ($i = $self->{list}->FindItemData (-1, $index))) {
-		 	my $listItem = new Wx::ListItem;
-		 	$listItem->SetData ($index);
-			$i = $self->{list}->InsertItem ($listItem);
+			$i = $self->{list}->InsertStringItem($self->{list}->GetItemCount, $index);
+			$self->{list}->SetItemData($i, $index);
 		}
 		
-		$self->{list}->SetItemText ($i, $index);
 		$self->{list}->SetItem ($i, 1, $item->{amount});
 		$self->{list}->SetItem ($i, 2,
 			$item->{name}
