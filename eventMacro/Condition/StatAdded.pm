@@ -15,12 +15,12 @@ my %stat_type = (
 );
 
 my %possible_values = (
-	'str' => 1,
-	'agi' => 1,
-	'vit' => 1,
-	'int' => 1,
-	'dex' => 1,
-	'luk' => 1
+	'str' => undef,
+	'agi' => undef,
+	'vit' => undef,
+	'int' => undef,
+	'dex' => undef,
+	'luk' => undef,
 );
 
 sub _parse_syntax {
