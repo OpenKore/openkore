@@ -325,7 +325,7 @@ sub commandHandler {
 		);
 
 		if ( defined $eventMacro->{Macro_Runner} ) {
-			$eventMacro->{mainLoop_Hook_Handle} = Plugins::addHook( 'mainLoop_pre', sub { $eventMacro->iterate_macro }, undef );
+			$eventMacro->{AI_start_Macros_Running_Hook_Handle} = Plugins::addHook( 'AI_start', sub { $eventMacro->iterate_macro }, undef );
 		} else {
 			error "[eventMacro] unable to create macro queue.\n";
 		}
