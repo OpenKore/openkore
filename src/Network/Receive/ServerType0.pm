@@ -1275,11 +1275,8 @@ sub arrow_none {
 sub arrowcraft_list {
 	my ($self, $args) = @_;
 
-	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	$self->decrypt(\$newmsg, substr($msg, 4));
-	$msg = substr($msg, 0, 4).$newmsg;
 
 	undef @arrowCraftID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
@@ -1332,10 +1329,7 @@ sub card_merge_list {
 
 	# You just requested a list of possible items to merge a card into
 	# The RO client does this when you double click a card
-	my $newmsg;
 	my $msg = $args->{RAW_MSG};
-	$self->decrypt(\$newmsg, substr($msg, 4));
-	$msg = substr($msg, 0, 4).$newmsg;
 	my ($len) = unpack("x2 v", $msg);
 
 	my $index;
@@ -1503,9 +1497,7 @@ sub character_creation_successful {
 sub chat_users {
 	my ($self, $args) = @_;
 
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
-	my $msg = substr($args->{RAW_MSG}, 0, 8).$newmsg;
+	my $msg = $args->{RAW_MSG};
 
 	my $ID = substr($args->{RAW_MSG},4,4);
 	$currentChatRoom = $ID;
@@ -1726,11 +1718,8 @@ sub gameguard_request {
 
 sub guild_member_setting_list {
 	my ($self, $args) = @_;
-	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	$self->decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-	$msg = substr($msg, 0, 4).$newmsg;
 	my $gtIndex;
 	for (my $i = 4; $i < $msg_size; $i += 16) {
 		$gtIndex = unpack("V1", substr($msg, $i, 4));
@@ -1804,11 +1793,9 @@ sub guild_expulsionlist {
 sub guild_members_list {
 	my ($self, $args) = @_;
 
-	my ($newmsg, $jobID);
+	my ($jobID);
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	$self->decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
-	$msg = substr($msg, 0, 4) . $newmsg;
 
 	my $c = 0;
 	delete $guild{member};
@@ -1869,11 +1856,8 @@ sub guild_notice {
 sub identify_list {
 	my ($self, $args) = @_;
 
-	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	$self->decrypt(\$newmsg, substr($msg, 4));
-	$msg = substr($msg, 0, 4).$newmsg;
 
 	undef @identifyID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
@@ -2226,11 +2210,6 @@ sub npc_image {
 sub npc_sell_list {
 	my ($self, $args) = @_;
 	#sell list, similar to buy list
-	if (length($args->{RAW_MSG}) > 4) {
-		my $newmsg;
-		$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-		my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
-	}
 	
 	debug T("You can sell:\n"), "info";
 	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
@@ -2267,9 +2246,7 @@ sub npc_store_begin {
 
 sub npc_store_info {
 	my ($self, $args) = @_;
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
+	my $msg = $args->{RAW_MSG};
 	undef @storeList;
 	my $storeList = 0;
 	undef $talk{'buyOrSell'};
@@ -2308,18 +2285,6 @@ sub npc_talk {
 	$talk{ID} = $args->{ID};
 	$talk{nameID} = unpack 'V', $args->{ID};
 	my $msg = bytesToString ($args->{msg});
-
-=pod
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
-
-	my $msg = substr($args->{RAW_MSG}, 0, 8) . $newmsg;
-	my $ID = substr($msg, 4, 4);
-	my $talkMsg = unpack("Z*", substr($msg, 8));
-	$talk{ID} = $ID;
-	$talk{nameID} = unpack("V1", $ID);
-	$talk{msg} = bytesToString($talkMsg);
-=cut
 
 	# Remove RO color codes
 	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
@@ -2406,9 +2371,7 @@ sub npc_talk_responses {
 	# 00b7: word len, long ID, string str
 	# A list of selections appeared on the NPC message dialog.
 	# Each item is divided with ':'
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
-	my $msg = substr($args->{RAW_MSG}, 0, 8).$newmsg;
+	my $msg = $args->{RAW_MSG};
 
 	my $ID = substr($msg, 4, 4);
 	$talk{ID} = $ID;
@@ -2468,10 +2431,7 @@ sub party_allow_invite {
 
 sub party_chat {
 	my ($self, $args) = @_;
-	my $msg;
-
-	$self->decrypt(\$msg, $args->{message});
-	$msg = bytesToString($msg);
+	my $msg = $args->{message};
 
 	# Type: String
 	my ($chatMsgUser, $chatMsg) = $msg =~ /(.*?) : (.*)/;
@@ -2771,9 +2731,7 @@ sub party_users_info {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 
-	my $msg;
-	$self->decrypt(\$msg, substr($args->{RAW_MSG}, 28));
-	$msg = substr($args->{RAW_MSG}, 0, 28).$msg;
+	my $msg = $args->{RAW_MSG};
 	$char->{party}{name} = bytesToString($args->{party_name});
 
 	for (my $i = 28; $i < $args->{RAW_MSG_SIZE}; $i += 46) {
@@ -2942,7 +2900,6 @@ sub public_chat {
 
 sub private_message {
 	my ($self, $args) = @_;
-	my ($newmsg, $msg); # Type: Bytes
 
 	return unless changeToInGameState();
 
@@ -3883,10 +3840,7 @@ sub skills_list {
 
 	return unless changeToInGameState;
 
-	my ($msg, $newmsg);
-	$msg = $args->{RAW_MSG};
-	$self->decrypt(\$newmsg, substr $msg, 4);
-	$msg = substr ($msg, 0, 4) . $newmsg;
+	my $msg = $args->{RAW_MSG};
 
 	# TODO: per-actor, if needed at all
 	# Skill::DynamicInfo::clear;

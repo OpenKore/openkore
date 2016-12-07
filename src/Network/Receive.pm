@@ -150,99 +150,6 @@ sub parse {
 	return $args;
 }
 
-##
-# Network::Receive->decrypt(r_msg, themsg)
-# r_msg: a reference to a scalar.
-# themsg: the message to decrypt.
-#
-# Decrypts the packets in $themsg and put the result in the scalar
-# referenced by $r_msg.
-#
-# This is an old method used back in the iRO beta 2 days when iRO had encrypted packets.
-# At the moment (December 20 2006) there are no servers that still use encrypted packets.
-#
-# Example:
-# } elsif ($switch eq "ABCD") {
-# 	my $level;
-# 	Network::Receive->decrypt(\$level, substr($msg, 0, 2));
-sub decrypt {
-	use bytes;
-	my ($self, $r_msg, $themsg) = @_;
-	my @mask;
-	my $i;
-	my ($temp, $msg_temp, $len_add, $len_total, $loopin, $len, $val);
-	if ($config{encrypt} == 1) {
-		undef $$r_msg;
-		undef $len_add;
-		undef $msg_temp;
-		for ($i = 0; $i < 13;$i++) {
-			$mask[$i] = 0;
-		}
-		$len = unpack("v1",substr($themsg,0,2));
-		$val = unpack("v1",substr($themsg,2,2));
-		{
-			use integer;
-			$temp = ($val * $val * 1391);
-		}
-		$temp = ~(~($temp));
-		$temp = $temp % 13;
-		$mask[$temp] = 1;
-		{
-			use integer;
-			$temp = $val * 1397;
-		}
-		$temp = ~(~($temp));
-		$temp = $temp % 13;
-		$mask[$temp] = 1;
-		for($loopin = 0; ($loopin + 4) < $len; $loopin++) {
- 			if (!($mask[$loopin % 13])) {
-  				$msg_temp .= substr($themsg,$loopin + 4,1);
-			}
-		}
-		if (($len - 4) % 8 != 0) {
-			$len_add = 8 - (($len - 4) % 8);
-		}
-		$len_total = $len + $len_add;
-		$$r_msg = $msg_temp.substr($themsg, $len_total, length($themsg) - $len_total);
-	} elsif ($config{encrypt} >= 2) {
-		undef $$r_msg;
-		undef $len_add;
-		undef $msg_temp;
-		for ($i = 0; $i < 17;$i++) {
-			$mask[$i] = 0;
-		}
-		$len = unpack("v1",substr($themsg,0,2));
-		$val = unpack("v1",substr($themsg,2,2));
-		{
-			use integer;
-			$temp = ($val * $val * 34953);
-		}
-		$temp = ~(~($temp));
-		$temp = $temp % 17;
-		$mask[$temp] = 1;
-		{
-			use integer;
-			$temp = $val * 2341;
-		}
-		$temp = ~(~($temp));
-		$temp = $temp % 17;
-		$mask[$temp] = 1;
-		for($loopin = 0; ($loopin + 4) < $len; $loopin++) {
- 			if (!($mask[$loopin % 17])) {
-  				$msg_temp .= substr($themsg,$loopin + 4,1);
-			}
-		}
-		if (($len - 4) % 8 != 0) {
-			$len_add = 8 - (($len - 4) % 8);
-		}
-		$len_total = $len + $len_add;
-		$$r_msg = $msg_temp.substr($themsg, $len_total, length($themsg) - $len_total);
-	} else {
-		$$r_msg = $themsg;
-	}
-}
-
-
 #######################################
 ### CATEGORY: Private class methods
 #######################################
@@ -2807,9 +2714,7 @@ sub chat_created {
 sub chat_info {
 	my ($self, $args) = @_;
 
-	my $title;
-	$self->decrypt(\$title, $args->{title});
-	$title = bytesToString($title);
+	my $title = bytesToString($args->{title});
 
 	my $chat = $chatRooms{$args->{ID}};
 	if (!$chat || !%{$chat}) {
@@ -2845,9 +2750,7 @@ sub chat_join_result {
 sub chat_modified {
 	my ($self, $args) = @_;
 
-	my $title;
-	$self->decrypt(\$title, $args->{title});
-	$title = bytesToString($title);
+	my $title = bytesToString($args->{title});
 
 	my ($ownerID, $ID, $limit, $public, $num_users) = @{$args}{qw(ownerID ID limit public num_users)};
 
@@ -3471,12 +3374,9 @@ sub misc_effect {
 sub guild_members_title_list {
 	my ($self, $args) = @_;
 
-	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 
-	$self->decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
-	$msg = substr($msg, 0, 4) . $newmsg;
 	my $gtIndex;
 	for (my $i = 4; $i < $msg_size; $i+=28) {
 		$gtIndex = unpack('V', substr($msg, $i, 4));
