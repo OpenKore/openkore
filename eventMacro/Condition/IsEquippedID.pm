@@ -36,16 +36,6 @@ sub _parse_syntax {
 			$self->{error} = "List member '".$member."' must have a slot and an ID defined";
 			return 0;
 		}
-		
-		unless (exists $equipSlot_rlut{$slot_name}) {
-			$self->{error} = "List member '".$member."' has a equipment slot value '".$slot_name."' not valid";
-			return 0;
-		}
-		
-		unless ($item_id =~ /^\d+$/) {
-			$self->{error} = "List member '".$member."' has a equipment ID value '".$item_id."' not valid";
-			return 0;
-		}
 
 		my $slot_is_var = 0;
 		if ($slot_name =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
@@ -60,6 +50,11 @@ sub _parse_syntax {
 			}
 		}
 		
+		if (!$slot_is_var && !exists $equipSlot_rlut{$slot_name}) {
+			$self->{error} = "List member '".$member."' has a equipment slot value '".$slot_name."' not valid";
+			return 0;
+		}
+		
 		my $id_is_var = 0;
 		if ($item_id =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
 			my $var = $1;
@@ -71,6 +66,11 @@ sub _parse_syntax {
 				push ( @{ $self->{var_to_member_index_item_id}{$var} }, $member_index );
 				$var_exists_hash->{$var} = undef;
 			}
+		}
+		
+		if (!$id_is_var && $item_id !~ /^\d+$/) {
+			$self->{error} = "List member '".$member."' has a equipment ID value '".$item_id."' not valid";
+			return 0;
 		}
 		
 		if ($slot_name eq 'arrow') {
@@ -142,7 +142,7 @@ sub update_vars {
 	}
 	
 	if (!$self->{is_Fulfilled} || $changed_fulfilled_index) {
-		$self->recheck_after_var_update($recheck_index);
+		$self->check_all_equips($recheck_index);
 	}
 }
 
@@ -214,7 +214,10 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".".$self->{name}."Last"} = $self->{lastMap};
+	$new_variables->{".".$self->{name}."LastID"} = $self->{fulfilled_item}->{nameID};
+	$new_variables->{".".$self->{name}."LastName"} = $self->{fulfilled_item}->{name};
+	$new_variables->{".".$self->{name}."LastSlot"} = $self->{fulfilled_slot};
+	$new_variables->{".".$self->{name}."LastListIndex"} = $self->{fulfilled_member_index};
 	
 	return $new_variables;
 }
