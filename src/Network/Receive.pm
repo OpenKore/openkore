@@ -353,9 +353,6 @@ sub account_server_info {
 
 		} elsif ($masterServer->{charServer_ip}) {
 			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';
-
-		} else {
-			message TF("Selected server: %s\n", @servers[$config{server}]->{name}), 'connection';
 		}
 	}
 
