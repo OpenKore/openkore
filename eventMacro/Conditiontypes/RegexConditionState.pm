@@ -14,9 +14,9 @@ sub _parse_syntax {
 	}
 }
 
-sub validate_condition {
+sub validator_check {
 	my ( $self, $possible_member ) = @_;
-	$self->SUPER::validate_condition( $self->{validator}->validate($possible_member) );
+	return $self->{validator}->validate($possible_member);
 }
 
 sub update_validator_var {

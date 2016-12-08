@@ -32,7 +32,7 @@ sub validate_condition {
 	#always true
 	$self->{last_hook} = $callback_name;
 	
-	return 1;
+	$self->SUPER::validate_condition( 1 );
 }
 
 sub get_new_variable_list {

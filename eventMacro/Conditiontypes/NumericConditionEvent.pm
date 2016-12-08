@@ -16,10 +16,9 @@ sub _parse_syntax {
 	}
 }
 
-sub validate_condition {
+sub validator_check {
 	my ( $self, $value, $ref_value ) = @_;
-	#since it is a event it doesn't make much sense to have the get_val methods
-	$self->SUPER::validate_condition( $self->{validator}->validate( $value, $ref_value ) );
+	return $self->{validator}->validate( $value, $ref_value );
 }
 
 sub update_validator_var {

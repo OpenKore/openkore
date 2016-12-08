@@ -37,12 +37,16 @@ sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
 	if ($callback_type eq 'hook') {
+	
 		if ($callback_name eq 'pvp_mode') {
 			$self->{pvp_type} = $pvp_type{$args->{pvp}};
-			$self->SUPER::validate_condition($self->{pvp_type});
+			$self->SUPER::validate_condition( $self->validator_check($self->{pvp_type}) );
+			
 		} elsif ($callback_name eq 'packet_mapChange') {
-			$self->{is_Fulfilled} = 0;
+			$self->SUPER::validate_condition( 0 );
+			
 		}
+		
 	}
 }
 

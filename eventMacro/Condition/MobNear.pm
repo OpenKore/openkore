@@ -14,44 +14,40 @@ sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
 	if ($callback_type eq 'variable') {
-		$self->SUPER::update_validator_var($callback_name, $args);
+		$self->update_validator_var($callback_name, $args);
 		$self->recheck_all_actor_names;
 		
 	} elsif ($callback_type eq 'hook') {
 		
-		if ($callback_name eq 'add_monster_list' && !$self->{is_Fulfilled} && $self->SUPER::validate_condition($args->{name})) {
+		if ($callback_name eq 'add_monster_list' && !defined $self->{fulfilled_actor} && $self->validator_check($args->{name})) {
 			$self->{fulfilled_actor} = $args;
-			$self->{is_Fulfilled} = 1;
 
-		} elsif ($callback_name eq 'monster_disappeared' && $self->{is_Fulfilled} && $args->{monster}->{binID} == $self->{fulfilled_actor}->{binID}) {
+		} elsif ($callback_name eq 'monster_disappeared' && defined $self->{fulfilled_actor} && $args->{monster}->{binID} == $self->{fulfilled_actor}->{binID}) {
 			#need to check all other actor to find another one that matches or not
 			foreach my $actor (@{$monstersList->getItems()}) {
 				next if ($actor->{binID} == $self->{fulfilled_actor}->{binID});
-				next unless ($self->SUPER::validate_condition($actor->{name}));
+				next unless ($self->validator_check($actor->{name}));
 				$self->{fulfilled_actor} = $actor;
 				return;
 			}
 			$self->{fulfilled_actor} = undef;
-			$self->{is_Fulfilled} = 0;
 			
 		} elsif ($callback_name eq 'packet_mapChange') {
 			$self->{fulfilled_actor} = undef;
-			$self->{is_Fulfilled} = 0;
 		}
 		
 	} elsif ($callback_type eq 'recheck') {
 		$self->recheck_all_actor_names;
 	}
+	$self->SUPER::validate_condition( defined $self->{fulfilled_actor} );
 }
 
 sub recheck_all_actor_names {
 	my ($self) = @_;
 	$self->{fulfilled_actor} = undef;
-	$self->{is_Fulfilled} = 0;
 	foreach my $actor (@{$monstersList->getItems()}) {
-		next unless ($self->SUPER::validate_condition($actor->{name}));
+		next unless ($self->validator_check($actor->{name}));
 		$self->{fulfilled_actor} = $actor;
-		$self->{is_Fulfilled} = 1;
 		last;
 	}
 }

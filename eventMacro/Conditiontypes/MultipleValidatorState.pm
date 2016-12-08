@@ -66,7 +66,7 @@ sub update_validator_var {
 	}
 }
 
-sub validate_condition {
+sub validator_check {
 	my ( $self, $validator_index, $check ) = @_;
 	return @{$self->{validators}}[$validator_index]->validate($check);
 }
