@@ -30,12 +30,6 @@ sub new {
 	return $self;
 }
 
-sub validate_condition {
-	my ( $self, $result ) = @_;
-	return $result if ($self->condition_type == EVENT_TYPE);
-	$self->{is_Fulfilled} = $result;
-}
-
 sub get_hooks {
 	my ($self) = @_;
 	return $self->{hooks};
@@ -69,9 +63,17 @@ sub is_unique_condition {
 	return $self->{is_Unique_Condition};
 }
 
+sub validate_condition {
+	my ( $self, $result ) = @_;
+	return $result if ($self->condition_type == EVENT_TYPE);
+	return $self->is_fulfilled($result);
+}
+
 sub is_fulfilled {
-	my ($self) = @_;
-	
+	my ($self, $new_value) = @_;
+	if (defined $new_value) {
+		$self->{is_Fulfilled} = $new_value;
+	}
 	return $self->{is_Fulfilled};
 }
 
