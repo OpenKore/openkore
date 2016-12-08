@@ -3418,11 +3418,12 @@ sub map_property {
 		1 .. List::Util::max $args->{type}, keys %mapPropertyTypeHandle;
 
 		if ($args->{info_table}) {
-			my @info_table = unpack 'C*', $args->{info_table};
-			$char->setStatus(@$_) for map {[
-				defined $mapPropertyInfoHandle{$_} ? $mapPropertyInfoHandle{$_} : "UNKNOWN_MAPPROPERTY_INFO_$_",
-				$info_table[$_],
-			]} 0 .. @info_table-1;
+			my $info_table = unpack('V1',$args->{info_table});
+			for (my $i = 0; $i < 16; $i++) {
+				if ($info_table&(1<<$i)) {
+					$char->setStatus(defined $mapPropertyInfoHandle{$i} ? $mapPropertyInfoHandle{$i} : "UNKNOWN_MAPPROPERTY_INFO_$i",1);
+				}
+			}
 		}
 	}
 	$pvp = {1 => 1, 3 => 2}->{$args->{type}};
