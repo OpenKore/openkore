@@ -1687,6 +1687,7 @@ sub equip_item {
 					next if $_ == 10; # work around Arrow bug
 					next if $_ == 32768;
 					$char->{equipment}{$equipSlot_lut{$_}} = $item;
+					Plugins::callHook('equipped_item', {slot => $equipSlot_lut{$_}, item => $item});
 				}
 			}
 		}
@@ -4744,6 +4745,7 @@ sub unequip_item {
 				next if $_ == 10; #work around Arrow bug
 				next if $_ == 32768;
 				delete $char->{equipment}{$equipSlot_lut{$_}};
+				Plugins::callHook('unequipped_item', {slot => $equipSlot_lut{$_}, item => $item});
 			}
 		}
 	}
