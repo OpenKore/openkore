@@ -65,8 +65,11 @@ sub is_unique_condition {
 
 sub validate_condition {
 	my ( $self, $result ) = @_;
-	return $result if ($self->condition_type == EVENT_TYPE);
-	return $self->is_fulfilled($result);
+	return (defined $result ? $result : 0) if ($self->condition_type == EVENT_TYPE);
+	if (defined $result) {
+		$self->is_fulfilled($result);
+	}
+	return $self->is_fulfilled;
 }
 
 sub is_fulfilled {

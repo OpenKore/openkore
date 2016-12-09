@@ -178,13 +178,11 @@ sub validate_condition {
 	
 	if ($callback_type eq 'hook') {
 		if ($callback_name eq 'equipped_item') {
-			return if (defined $self->{fulfilled_slot});
-			return unless (exists $self->{slot_name_to_member_to_check_array}{$args->{slot}});
+			$self->SUPER::validate_condition if (defined $self->{fulfilled_slot} || !exists $self->{slot_name_to_member_to_check_array}{$args->{slot}});
 			$self->check_slot($args->{slot}, $args->{item})
 
 		} elsif ($callback_name eq 'unequipped_item') {
-			return unless (defined $self->{fulfilled_slot});
-			return unless ($self->{fulfilled_slot} eq $args->{slot});
+			$self->SUPER::validate_condition unless (defined $self->{fulfilled_slot} || $self->{fulfilled_slot} ne $args->{slot});
 			$self->check_all_equips($self->{slot_name_to_member_to_check_array});
 			
 		} elsif ($callback_name eq 'packet_mapChange') {

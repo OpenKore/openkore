@@ -20,7 +20,7 @@ sub validate_condition {
 	my $result = 0;
 	
 	if ($callback_type eq 'hook') {
-		return if $callback_name eq 'packet/stat_info' && $args && $args->{type} != 25;
+		$self->SUPER::validate_condition if $callback_name eq 'packet/stat_info' && $args && $args->{type} != 25;
 	} elsif ($callback_type eq 'variable') {
 		$self->update_validator_var($callback_name, $args);
 	}
