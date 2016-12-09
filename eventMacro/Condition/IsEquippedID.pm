@@ -201,7 +201,6 @@ sub validate_condition {
 	$self->SUPER::validate_condition( (defined $self->{fulfilled_slot} ? 1 : 0) );
 }
 
-#To be implemented
 sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
