@@ -64,10 +64,9 @@ sub update_validator_var {
 	foreach my $update_index ( @{ $self->{var_to_validator_index}{$var_name} } ) {
 		@{$self->{validators}}[$update_index]->update_vars($var_name, $var_value);
 	}
-	$self->SUPER::validate_condition( 0 );
 }
 
-sub validate_condition {
+sub validator_check{
 	my ( $self, $validator_index, $check ) = @_;
 	return @{$self->{validators}}[$validator_index]->validate($check);
 }
