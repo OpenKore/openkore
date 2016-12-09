@@ -587,6 +587,7 @@ sub actor_display {
 
 	#### Step 2: update actor information ####
 	$actor->{ID} = $args->{ID};
+	$actor->{charID} = $args->{charID} if $args->{charID} && $args->{charID} ne "\0\0\0\0";
 	$actor->{jobID} = $args->{type};
 	$actor->{type} = $args->{type};
 	$actor->{lv} = $args->{lv};
