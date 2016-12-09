@@ -75,7 +75,11 @@ sub validate_condition {
 sub is_fulfilled {
 	my ($self, $new_value) = @_;
 	if (defined $new_value) {
-		$self->{is_Fulfilled} = $new_value;
+		if ($new_value == 0 || $new_value == 1) {
+			$self->{is_Fulfilled} = $new_value;
+		} else {
+			error "[eventMacro] For some reason something tried to change the fulfilled state of condition '".$self->{name}."' in automacro '".$self->{Automacro_List}->get($self->{automacro_index})->get_name."' to a value that's neither 0 or 1 ('".$new_value."')\n";
+		}
 	}
 	return $self->{is_Fulfilled};
 }
