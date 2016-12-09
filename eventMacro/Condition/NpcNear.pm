@@ -24,9 +24,10 @@ sub validate_condition {
 
 		} elsif ($callback_name eq 'npc_disappeared' && defined $self->{fulfilled_actor} && $args->{npc}->{binID} == $self->{fulfilled_actor}->{binID}) {
 			#need to check all other actor to find another one that matches or not
+			my $last_bin_id = $self->{fulfilled_actor}->{binID};
 			$self->{fulfilled_actor} = undef;
 			foreach my $actor (@{$npcsList->getItems()}) {
-				next if ($actor->{binID} == $self->{fulfilled_actor}->{binID});
+				next if ($actor->{binID} == $last_bin_id);
 				next unless ($self->validator_check($actor->{name}));
 				$self->{fulfilled_actor} = $actor;
 				last;

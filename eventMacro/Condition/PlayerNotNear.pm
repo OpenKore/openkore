@@ -40,13 +40,14 @@ sub validate_condition {
 
 		} elsif ($callback_name eq 'player_disappeared' && defined $self->{not_fulfilled_actor} && $args->{player}->{binID} == $self->{not_fulfilled_actor}->{binID}) {
 			#need to check all other actor to find another one that matches or not
+			my $last_bin_id = $self->{not_fulfilled_actor}->{binID};
+			$self->{not_fulfilled_actor} = undef;
 			foreach my $actor (@{$playersList->getItems()}) {
-				next if ($actor->{binID} == $self->{not_fulfilled_actor}->{binID});
+				next if ($actor->{binID} == $last_bin_id);
 				next unless ($self->validator_check($actor->{name}));
 				$self->{not_fulfilled_actor} = $actor;
-				return;
+				last;
 			}
-			$self->{not_fulfilled_actor} = undef;
 			
 		} elsif ($callback_name eq 'packet_mapChange') {
 			unless ($self->{is_on_stand_by}) {

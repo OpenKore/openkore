@@ -24,9 +24,10 @@ sub validate_condition {
 
 		} elsif ($callback_name eq 'monster_disappeared' && defined $self->{fulfilled_actor} && $args->{monster}->{binID} == $self->{fulfilled_actor}->{binID}) {
 			#need to check all other actor to find another one that matches or not
+			my $last_bin_id = $self->{fulfilled_actor}->{binID};
 			$self->{fulfilled_actor} = undef;
 			foreach my $actor (@{$monstersList->getItems()}) {
-				next if ($actor->{binID} == $self->{fulfilled_actor}->{binID});
+				next if ($actor->{binID} == $last_bin_id);
 				next unless ($self->validator_check($actor->{name}));
 				$self->{fulfilled_actor} = $actor;
 				last;
