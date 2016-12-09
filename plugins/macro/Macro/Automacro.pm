@@ -5,10 +5,10 @@ use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(releaseAM lockAM automacroCheck consoleCheckWrapper);
+our @EXPORT_OK = qw(releaseAM lockAM automacroCheck consoleCheckWrapper clearTimeoutAM);
 our @EXPORT = qw(checkLocalTime checkVar checkVarVar checkLoc checkPersonGuild checkLevel checkLevel checkClass
 	checkPercent checkStatus checkItem checkPerson checkCond checkCast checkGround checkSpellsID
-	checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange);
+	checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange checkNotMonster);
 	
 use Misc qw(whenGroundStatus getSpellName getActorName);
 use Utils;
@@ -20,6 +20,7 @@ use Macro::Data;
 use Macro::Utilities qw(between cmpr match getArgs refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount callMacro sameParty);
+use Time::HiRes;
 
 our ($rev) = q$Revision: 6760 $ =~ /(\d+)/;
 
@@ -55,6 +56,7 @@ sub checkGround {
 #                           (x2|y2)=(lower right)
 # uses: calcPosition (Utils?)
 sub checkLoc {
+    return 0 if !$field;
 	my $arg = $_[0];
 	if ($arg =~ /,/) {
 		my @locs = split(/\s*,\s*/, $arg);
@@ -63,6 +65,11 @@ sub checkLoc {
 	}
 	my $not = ($arg =~ s/^not +//)?1:0;
 	my ($map, $x1, $y1, $x2, $y2) = split(/ /, $arg);
+
+    # Make sure $x1 <= $x2 and $y1 >= $y2.
+	if ($x1 > $x2) { my $t = $x1; $x1 = $x2; $x2 = $t; }
+	if ($y1 < $y2) { my $t = $y1; $y1 = $y2; $y2 = $t; }
+
 	if ($map =~ /^\s*\$/) {
 		my ($var) = $map =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
 		return 0 unless defined $var;
@@ -189,7 +196,7 @@ sub checkLevel {
 
 # checks for player's jobclass #############################
 sub checkClass {
-	return 0 unless defined $char;
+	return 0 unless defined $char->{jobID};
 	my $class = $_[0];
 	if ($class =~ /^\s*\$/) {
 		my ($var) = $class =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
@@ -206,7 +213,7 @@ sub checkPercent {
 	my ($arg, $what) = @_;
 	my ($cond, $amount) = $arg =~ /([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*%?|\d+%?|\d+\s*\.{2}\s*\d+%?)\s*$/;
 	if ($what =~ /^(?:hp|sp|weight)$/) {
-		return 0 unless (defined $char && defined $char->{$what} && defined $char->{$what."_max"});
+		return 0 unless (defined $char->{$what} && defined $char->{$what."_max"});
 		if ($amount =~ /^\s*(?:\d+|\d+\s*\.{2}\s*\d+)%$/ && $char->{$what."_max"}) {
 			$amount =~ s/%$//;
 			return cmpr(($char->{$what} / $char->{$what."_max"} * 100), $cond, $amount)
@@ -263,7 +270,7 @@ sub checkStatus {
 	}
 
 	my $status = $_[0];
-	return ($status =~ s/^not +//i xor $char->statusActive($status)) if defined $char;
+	return ($status =~ s/^not +//i xor $char->statusActive($status));
 }
 
 # checks for item conditions ##############################
@@ -292,8 +299,6 @@ sub checkItem {
 	my $what;
 	if ($where eq 'inv')  {$what = getInventoryAmount($item)}
 	if ($where eq 'cart') {$what = getCartAmount($item)}
-	if ($where eq 'inv')  {return 0 unless (time > $ai_v{'inventory_time'}); $what = getInventoryAmount($item);};
-	if ($where eq 'cart') {return 0 unless (time > $ai_v{'cart_time'}); $what = getCartAmount($item)};
 	if ($where eq 'shop') {return 0 unless $shopstarted; $what = getShopAmount($item)}
 	if ($where eq 'stor') {return 0 unless $::storage{opened}; $what = getStorageAmount($item)}
 
@@ -306,16 +311,9 @@ sub checkPerson {
 
 	foreach my $player (@{$playersList->getItems()}) {
 		next unless match($player->name, $who);
-		if ($dist > 0 && distance($char->{pos_to}, $player->{pos_to}) >= $dist) {
-			return 0;
+		if ($dist > 0) {
+			return (distance($char->{pos_to}, $player->{pos_to}) <= $dist)?1:0
 		}
-		my $val = sprintf("%d %d %s", $player->{pos_to}{x}, $player->{pos_to}{y}, $field->baseName);
-		$varStack{".lastPlayerName"} = $player->name;
-		$varStack{".lastPlayerPos"} = $val;
-		$varStack{".lastPlayerLevel"} = $player->{lv};
-		$varStack{".lastPlayerJob"} = $player->job;
-		$varStack{".lastPlayerAccountId"} = $player->{nameID};
-		$varStack{".lastPlayerBinId"} = $player->{binID};
 		return 1
 	}
 	return 0
@@ -516,8 +514,7 @@ sub checkSpellsID {
 # checks for monster ...
 sub checkMonster {
 	my $line = $_[0];
-	my $not = $_[1];
-	my ($mercenary, $use, $monsterList, $cond);
+	my ($not, $mercenary, $use, $monsterList, $cond);
 	my $mondist = $config{clientSight} || 20;
 
 	if ($line =~ /^\s*(.*),?\s+([<>=!~]+)\s+(\d+|\d+\s*.{2}\s*\d+)\s*$/) {
@@ -527,7 +524,7 @@ sub checkMonster {
 		$cond = "<="
 	}
 
-	if (!$not && $monsterList =~ /^(not|mercenary)\s+(.*)\s*$/) {
+	if ($monsterList =~ /^(not|mercenary)\s+(.*)\s*$/) {
 		if ($1 eq "not") {$not = 1; $monsterList = $2}
 		else {$mercenary = 1; $use = 1; $monsterList = $2}
 	}
@@ -552,7 +549,6 @@ sub checkMonster {
 			$varStack{".lastMonsterPos"} = $val;
 			$varStack{".lastMonsterDist"} = $dist;
 			$varStack{".lastMonsterID"} = $monsters{$_}->{binID};
-			$varStack{".lastMonsterBinID"} = $monsters{$_}->{binType};
 			return cmpr($dist, $cond, $mondist)
 		} else {
 			if (existsInList($monsterList, $monsters{$_}->{name})) {
@@ -565,7 +561,6 @@ sub checkMonster {
 				$varStack{".lastMonsterPos"} = $val;
 				$varStack{".lastMonsterDist"} = $dist;
 				$varStack{".lastMonsterID"} = $monsters{$_}->{binID};
-				$varStack{".lastMonsterBinID"} = $monsters{$_}->{binType};
 				for (my $i = 0; $i < @::monstersID; $i++) {
 					next if $::monstersID[$i] eq "";
 					my $monster = Actor::get($::monstersID[$i]);
@@ -587,6 +582,29 @@ sub checkMonster {
 		}
 	}
 	return 1 if ($use);
+	return 0
+}
+
+# checks for forbidden monster
+# quick hack, maybe combine it with checkMonster later
+sub checkNotMonster {
+	my $line = $_[0];
+	my $mondist = $config{clientSight};
+	my ($monsterList, $cond);
+	if ($line =~ /^\s*(.*),?\s+([<>=!~]+)\s+(\d+|\d+\s*.{2}\s*\d+)\s*$/) {
+		($monsterList, $cond, $mondist) = ($1, $2, $3)
+	} else {
+		$monsterList = $line;
+		$cond = "<="
+	}
+	foreach (@monstersID) {
+		next unless defined $_;
+		next if existsInList($monsterList, $monsters{$_}->{name});
+		my $mypos = calcPosition($char);
+		my $pos = calcPosition($monsters{$_});
+		my $dist = sprintf("%.1f",distance($pos, $mypos));
+		return cmpr($dist, $cond, $mondist)
+	}
 	return 0
 }
 
@@ -640,6 +658,19 @@ sub checkEval {
 }
 
 
+# clear timeout for an automacro ##################
+sub clearTimeoutAM {
+	if ($_[0] eq 'all') {
+		$_->{time} = 0 foreach values %automacro;;
+		return 1
+	}
+	if (defined $automacro{$_[0]}) {
+		$automacro{$_[0]}->{time} = 0;
+		return 1
+	}
+	return 0
+}
+
 # releases a locked automacro ##################
 sub releaseAM {
 	if ($_[0] eq 'all') {
@@ -670,10 +701,131 @@ sub lockAM {
 	return 0
 }
 
+sub checkAutomacroConditions {
+    my ( $name, $trigger, $args ) = @_;
+
+    my $am = $automacro{$name};
+
+	return if $am->{disabled};
+
+    # If the activation timeout hasn't expired, it doesn't do any good to check.
+    if ( defined $am->{timeout} ) {
+        $am->{time} ||= 0;
+        return unless timeOut( $am );
+    }
+
+	if (defined $am->{call} && !defined $macro{$am->{call}}) {
+		error "automacro $name: macro ".$am->{call}." not found.\n";
+		$am->{disabled} = 1;
+		return;
+	}
+
+	if (defined $am->{hook}) {
+		return unless $trigger eq $am->{hook};
+		# save arguments
+		my $s = 0;
+		foreach my $save (@{$am->{save}}) {
+			if (defined $args->{$save}) {
+				if (ref($args->{$save}) eq 'SCALAR') {
+					$varStack{".hooksave$s"} = ${$args->{$save}}
+				} else {
+					if (!$::config{macro_nowarn} && ref($args->{$save}) ne '') {
+						warning "[macro] \$.hooksave$s is of type ".ref($args->{$save}).". Take care!\n"
+					}
+					$varStack{".hooksave$s"} = $args->{$save}
+				}
+			} else {
+				error "[macro] \$args->{$save} does not exist\n"
+			}
+			$s++
+		}
+	} elsif (defined $am->{console}) {
+		if ($trigger eq 'log') {
+			return unless checkConsole($am->{console}, $args)
+		} else {return}
+	} elsif (defined $am->{spell}) {
+		if ($trigger =~ /^(?:is_casting|packet_skilluse)$/) {
+		return unless checkCast($am->{spell}, $args)
+		} else {return}
+	} elsif (defined $am->{pm}) {
+		if ($trigger eq 'packet_privMsg') {
+		return unless checkMsg(".lastpm", $am->{pm}, $args)
+		} else {return}
+	} elsif (defined $am->{pubm}) {
+		if ($trigger eq 'packet_pubMsg') {
+		return unless checkMsg(".lastpub", $am->{pubm}, $args)
+		} else {return}
+	} elsif (defined $am->{system}) {
+		if ($trigger eq 'packet_sysMsg') {
+		return unless checkMsg(".lastsys", $am->{system}, $args)
+		} else {return}
+	} elsif (defined $am->{party}) {
+		if ($trigger eq 'packet_partyMsg') {
+		return unless checkMsg(".lastparty", $am->{party}, $args)
+		} else {return}
+	} elsif (defined $am->{guild}) {
+		if ($trigger eq 'packet_guildMsg') {
+		return unless checkMsg(".lastguild", $am->{guild}, $args)
+		} else {return}
+	} elsif (defined $am->{mapchange}) {
+		if ($trigger eq 'packet_mapChange') {
+		return unless checkMapChange($am->{mapchange})
+		} else {return}
+	} elsif (defined $am->{playerguild}) {
+		if (($trigger eq 'player') || ($trigger eq 'charNameUpdate')) {
+		return unless checkPersonGuild($am->{playerguild},$trigger,$args)
+		} else {return}
+	} elsif (defined $am->{areaSpell}) {
+		if ($trigger eq 'packet_areaSpell') {
+		return unless checkSpellsID($am->{areaSpell}, $args)
+		} else {return}
+    } else {
+        $am->{checkTime}    ||= 0;
+        $am->{checkTimeout} ||= 1;
+        return unless timeOut( { time => $am->{checkTime}, timeout => $am->{checkTimeout} } );
+        $am->{checkTime} = Time::HiRes::time;
+    }
+
+    # Only "offline" macros can run when offline.
+	return if $conState != 5 && !$am->{offline};
+
+	return if (defined $am->{map}        && $am->{map} ne $field->baseName);
+	return if (defined $am->{class}      && !checkClass($am->{class}));
+	return if (defined $am->{notMonster} && !checkNotMonster($am->{notMonster}));
+	return if (defined $am->{eval}       && !checkEval($am->{eval}));
+	return if (defined $am->{whenGround} && !checkGround($am->{whenGround}));
+	
+	foreach my $i (@{$am->{monster}})    {return unless checkMonster($i)}
+	foreach my $i (@{$am->{aggressives}}){return unless checkAggressives($i)}
+	foreach my $i (@{$am->{location}})   {return unless checkLoc($i)}
+	foreach my $i (@{$am->{localtime}})  {return unless checkLocalTime($i, "")}
+	foreach my $i (@{$am->{var}})        {return unless checkVar($i, "")}
+	foreach my $i (@{$am->{varvar}})     {return unless checkVar($i, "varvar")}
+	foreach my $i (@{$am->{base}})       {return unless checkLevel($i, "lv")}
+	foreach my $i (@{$am->{job}})        {return unless checkLevel($i, "lv_job")}
+	foreach my $i (@{$am->{hp}})         {return unless checkPercent($i, "hp")}
+	foreach my $i (@{$am->{sp}})         {return unless checkPercent($i, "sp")}
+	foreach my $i (@{$am->{spirit}})     {return unless checkCond($char->{spirits} || 0, $i)}
+	foreach my $i (@{$am->{weight}})     {return unless checkPercent($i, "weight")}
+	foreach my $i (@{$am->{cartweight}}) {return unless checkPercent($i, "cweight")}
+	foreach my $i (@{$am->{soldout}})    {return unless checkCond(getSoldOut(), $i)}
+	foreach my $i (@{$am->{zeny}})       {return unless checkCond($char->{zeny}, $i)}
+	foreach my $i (@{$am->{player}})     {return unless checkPerson($i)}
+	foreach my $i (@{$am->{equipped}})   {return unless checkEquip($i)}
+	foreach my $i (@{$am->{status}})     {return unless checkStatus($i)}
+	foreach my $i (@{$am->{inventory}})  {return unless checkItem("inv", $i)}
+	foreach my $i (@{$am->{storage}})    {return unless checkItem("stor", $i)}
+	foreach my $i (@{$am->{shop}})       {return unless checkItem("shop", $i)}
+	foreach my $i (@{$am->{cart}})       {return unless checkItem("cart", $i)}
+
+    return 1;
+}
+
 # parses automacros and checks conditions #################
 sub automacroCheck {
 	my ($trigger, $args) = @_;
-	return unless ($conState == 5 && $char) || $trigger =~ /^(?:charSelectScreen|Network|packet)/;
+	return unless $conState == 5 || $trigger =~ /^(?:charSelectScreen|Network|mainLoop_pre)/;
+	return if !$field;
 
 	# do not run an automacro if there's already a macro running and the running
 	# macro is non-interruptible
@@ -681,113 +833,12 @@ sub automacroCheck {
 
 	refreshGlobal();
 
-	CHKAM:
 	foreach my $am (sort {
 		($automacro{$a}->{priority} or 0) <=> ($automacro{$b}->{priority} or 0)
 	} keys %automacro) {
-		next CHKAM if $automacro{$am}->{disabled};
+        my $match = checkAutomacroConditions( $am, $trigger, $args );
 
-		if (defined $automacro{$am}->{call} && !defined $macro{$automacro{$am}->{call}}) {
-			error "automacro $am: macro ".$automacro{$am}->{call}." not found.\n";
-			$automacro{$am}->{disabled} = 1; return
-		}
-
-		if (defined $automacro{$am}->{timeout}) {
-			$automacro{$am}->{time} = 0 unless $automacro{$am}->{time};
-			my %tmptimer = (timeout => $automacro{$am}->{timeout}, time => $automacro{$am}->{time});
-			next CHKAM unless timeOut(\%tmptimer)
-		}
-
-		if (defined $automacro{$am}->{hook}) {
-			next CHKAM unless $trigger eq $automacro{$am}->{hook};
-			# save arguments
-			my $s = 0;
-			foreach my $save (@{$automacro{$am}->{save}}) {
-				if (defined $args->{$save}) {
-					if (ref($args->{$save}) eq 'SCALAR') {
-						$varStack{".hooksave$s"} = ${$args->{$save}}
-					} else {
-						if (!$::config{macro_nowarn} && ref($args->{$save}) ne '') {
-							warning "[macro] \$.hooksave$s is of type ".ref($args->{$save}).". Take care!\n"
-						}
-						$varStack{".hooksave$s"} = $args->{$save}
-					}
-				} else {
-					error "[macro] \$args->{$save} does not exist\n"
-				}
-				$s++
-			}
-		} elsif (defined $automacro{$am}->{console}) {
-			if ($trigger eq 'log') {
-				next CHKAM unless checkConsole($automacro{$am}->{console}, $args)
-			} else {next CHKAM}
-		} elsif (defined $automacro{$am}->{spell}) {
-			if ($trigger =~ /^(?:is_casting|packet_skilluse)$/) {
-			next CHKAM unless checkCast($automacro{$am}->{spell}, $args)
-			} else {next CHKAM}
-		} elsif (defined $automacro{$am}->{pm}) {
-			if ($trigger eq 'packet_privMsg') {
-			next CHKAM unless checkMsg(".lastpm", $automacro{$am}->{pm}, $args)
-			} else {next CHKAM}
-		} elsif (defined $automacro{$am}->{pubm}) {
-			if ($trigger eq 'packet_pubMsg') {
-			next CHKAM unless checkMsg(".lastpub", $automacro{$am}->{pubm}, $args)
-			} else {next CHKAM}
-		} elsif (defined $automacro{$am}->{system}) {
-			if ($trigger eq 'packet_sysMsg') {
-			next CHKAM unless checkMsg(".lastsys", $automacro{$am}->{system}, $args)
-			} else {next CHKAM}
-		} elsif (defined $automacro{$am}->{party}) {
-			if ($trigger eq 'packet_partyMsg') {
-			next CHKAM unless checkMsg(".lastparty", $automacro{$am}->{party}, $args)
-			} else {next CHKAM}
-		} elsif (defined $automacro{$am}->{guild}) {
-			if ($trigger eq 'packet_guildMsg') {
-			next CHKAM unless checkMsg(".lastguild", $automacro{$am}->{guild}, $args)
-			} else {next CHKAM}
-		} elsif (defined $automacro{$am}->{mapchange}) {
-			if ($trigger eq 'packet_mapChange') {
-			next CHKAM unless checkMapChange($automacro{$am}->{mapchange})
-			} else {next CHKAM}
-		} elsif (defined $automacro{$am}->{playerguild}) {
- 			if (($trigger eq 'player') || ($trigger eq 'charNameUpdate')) {
-			next CHKAM unless checkPersonGuild($automacro{$am}->{playerguild},$trigger,$args)
-			} else {next CHKAM}
-		} elsif (defined $automacro{$am}->{areaSpell}) {
-			if ($trigger eq 'packet_areaSpell') {
-			next CHKAM unless checkSpellsID($automacro{$am}->{areaSpell}, $args)
-			} else {next CHKAM}
-		}
-
-		next CHKAM if (defined $automacro{$am}->{map}    && $automacro{$am}->{map} ne $field->baseName);
-		next CHKAM if (defined $automacro{$am}->{class}  && !checkClass($automacro{$am}->{class}));
-		next CHKAM if (defined $automacro{$am}->{eval} && !checkEval($automacro{$am}->{eval}));
-		next CHKAM if (defined $automacro{$am}->{whenGround} && !checkGround($automacro{$am}->{whenGround}));
-		next CHKAM if (defined $automacro{$am}->{notMonster} && !checkMonster($automacro{$am}->{notMonster}, 1));
-
-		foreach my $i (@{$automacro{$am}->{monster}})    {next CHKAM unless checkMonster($i)}
-		foreach my $i (@{$automacro{$am}->{aggressives}}){next CHKAM unless checkAggressives($i)}
-		foreach my $i (@{$automacro{$am}->{location}})   {next CHKAM unless checkLoc($i)}
-		foreach my $i (@{$automacro{$am}->{localtime}})  {next CHKAM unless checkLocalTime($i, "")}
-		foreach my $i (@{$automacro{$am}->{var}})        {next CHKAM unless checkVar($i, "")}
-		foreach my $i (@{$automacro{$am}->{varvar}})     {next CHKAM unless checkVar($i, "varvar")}
-		foreach my $i (@{$automacro{$am}->{base}})       {next CHKAM unless checkLevel($i, "lv")}
-		foreach my $i (@{$automacro{$am}->{job}})        {next CHKAM unless checkLevel($i, "lv_job")}
-		foreach my $i (@{$automacro{$am}->{hp}})         {next CHKAM unless checkPercent($i, "hp")}
-		foreach my $i (@{$automacro{$am}->{sp}})         {next CHKAM unless checkPercent($i, "sp")}
-		foreach my $i (@{$automacro{$am}->{spirit}})     {next CHKAM unless checkCond($char->{spirits} || 0, $i)}
-		foreach my $i (@{$automacro{$am}->{weight}})     {next CHKAM unless checkPercent($i, "weight")}
-		foreach my $i (@{$automacro{$am}->{cartweight}}) {next CHKAM unless checkPercent($i, "cweight")}
-		foreach my $i (@{$automacro{$am}->{soldout}})    {next CHKAM unless checkCond(getSoldOut(), $i)}
-		foreach my $i (@{$automacro{$am}->{zeny}})       {next CHKAM unless checkCond($char->{zeny}, $i)}
-		foreach my $i (@{$automacro{$am}->{cash}})       {next CHKAM unless checkCond($cashShop{points}->{cash}?$cashShop{points}->{cash}:0, $i)}
-		foreach my $i (@{$automacro{$am}->{player}})     {next CHKAM unless checkPerson($i)}
-		foreach my $i (@{$automacro{$am}->{equipped}})   {next CHKAM unless checkEquip($i)}
-		foreach my $i (@{$automacro{$am}->{status}})     {next CHKAM unless checkStatus($i)}
-		foreach my $i (@{$automacro{$am}->{inventory}})  {next CHKAM unless checkItem("inv", $i)}
-		foreach my $i (@{$automacro{$am}->{storage}})    {next CHKAM unless checkItem("stor", $i)}
-		foreach my $i (@{$automacro{$am}->{shop}})       {next CHKAM unless checkItem("shop", $i)}
-		foreach my $i (@{$automacro{$am}->{cart}})       {next CHKAM unless checkItem("cart", $i)}
+        next if !$match;
 
 		message "[macro] automacro $am triggered.\n", "macro";
 
@@ -795,8 +846,8 @@ sub automacroCheck {
 			warning "[macro] automacro $am: call not defined.\n", "macro"
 		}
 
-		$automacro{$am}->{time} = time  if $automacro{$am}->{timeout};
-		$automacro{$am}->{disabled} = 1 if $automacro{$am}->{'run-once'};
+        $automacro{$am}->{time} = Time::HiRes::time if $automacro{$am}->{timeout};
+        $automacro{$am}->{disabled} = 1 if $automacro{$am}->{'run-once'};
 
 		foreach my $i (@{$automacro{$am}->{set}}) {
 			my ($var, $val) = $i =~ /^(.*?)\s+(.*)/;

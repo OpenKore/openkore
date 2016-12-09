@@ -8,7 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(ai_isIdle q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord callMacro getArgFromList getListLenght sameParty);
+	getWord callMacro getArgFromList getListLenght sameParty $force_pause);
 
 use Utils;
 use Globals;
@@ -17,6 +17,7 @@ use Log qw(warning error);
 use Macro::Data;
 
 our ($rev) = q$Revision: 6812 $ =~ /(\d+)/;
+our $force_pause = 0;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
@@ -229,6 +230,10 @@ sub refreshGlobal {
 	$varStack{".zeny"} = $char->{zeny};
 	$varStack{".weight"} = $char->{weight};
 	$varStack{".maxweight"} = $char->{weight_max};
+	$varStack{".availweight"} = $char->{weight_max} - $char->{weight};
+	$varStack{".cartweight"} = $cart{exists} ? $cart{weight} : 0;
+	$varStack{".maxcartweight"} = $cart{exists} ? $cart{weight_max} : 0;
+	$varStack{".availcartweight"} = $cart{exists} ? $cart{weight_max} - $cart{weight} : 0;
 	$varStack{'.status'} = (join ',',
 		('muted')x!!$char->{muted},
 		('dead')x!!$char->{dead},
@@ -244,18 +249,22 @@ sub getnpcID {
 	if (($a, $b) = $arg =~ /^\s*(\d+) (\d+)\s*$/) {$what = 1}
 	elsif (($a, $b) = $arg =~ /^\s*\/(.+?)\/(\w?)\s*$/) {$what = 2}
 	elsif (($a) = $arg =~ /^\s*"(.*?)"\s*$/) {$what = 3}
+	elsif (($a) = $arg =~ /^\s*(\d+)\s*$/) {$what = 4}
 	else {return -1}
-	
+
+	$a = "(?i:$a)" if $what == 2 && $b eq 'i';
+
 	my @ids;	
 	foreach my $npc (@{$npcsList->getItems()}) {
-		if ($what == 1) {return $npc->{binID} if ($npc->{pos}{x} == $a && $npc->{pos}{y} == $b)}
-		elsif ($what == 2) {
-			if ($npc->{name} =~ /$a/ || ($b eq "i" && $npc->{name} =~ /$a/i)) {push @ids, $npc->{binID}}
-		}
-		else {return $npc->{binID} if $npc->{name} eq $a}
+		next if $what == 1 && ( $npc->{pos}{x} != $a || $npc->{pos}{y} != $b );
+		next if $what == 2 && $npc->{name} !~ /$a/;
+		next if $what == 3 && $npc->{name} ne $a;
+		next if $what == 4 && $npc->{nameID} != $a;
+		push @ids, $npc->{binID};
 	}
-	if (@ids) {return join ',', @ids}
-	return -1
+	return -1 if !@ids;
+
+	join ',', @ids;
 }
 
 # get player array index
@@ -288,10 +297,10 @@ sub getVenderID {
 # checked and ok
 sub getInventoryIDs {
 	return unless $char->inventory->size();
-	my $find = lc($_[0]);
+	my $find = $_[0];
 	my @ids;
 	foreach my $item (@{$char->inventory->getItems}) {
-		if (lc($item->name) eq $find) {push @ids, $item->{invIndex}}
+		if (Utils::existsInList($find, $item->name)) {push @ids, $item->{invIndex}}
 	}
 	unless (@ids) {push @ids, -1}
 	return @ids
@@ -323,11 +332,11 @@ sub getItemPrice {
 # get storage array index
 # returns -1 if no matching items in storage
 sub getStorageIDs {
-	my $item = lc($_[0]);
+	my $item = $_[0];
 	my @ids;
 	for (my $id = 0; $id < @storageID; $id++) {
 		next unless $storageID[$id];
-		if (lc($storage{$storageID[$id]}{name}) eq $item) {push @ids, $id}
+		if (Utils::existsInList($item, $storage{$storageID[$id]}{name})) {push @ids, $id}
 	}
 	unless (@ids) {push @ids, -1}
 	return @ids
@@ -346,10 +355,10 @@ sub getSoldOut {
 
 # get amount of an item in inventory
 sub getInventoryAmount {
-	my $arg = lc($_[0]);
+	my $arg = $_[0];
 	my $amount = 0;
 	foreach my $item (@{$char->inventory->getItems}) {
-		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
+		if (Utils::existsInList($arg, $item->name)) {$amount += $item->{amount}}
 	}
 	return $amount
 }
@@ -380,12 +389,12 @@ sub getShopAmount {
 # get amount of an item in storage
 # returns -1 if the storage is closed
 sub getStorageAmount {
-	my $arg = lc($_[0]);
-	return -1 unless $::storage{opened};
+	my $arg = $_[0];
+	return -1 unless $::storage{opened} || $storage{openedThisSession};
 	my $amount = 0;
 	for (my $id = 0; $id < @storageID; $id++) {
 		next unless $storageID[$id];
-		if (lc($storage{$storageID[$id]}{name}) eq $arg) {$amount += $storage{$storageID[$id]}{amount}}
+		if (Utils::existsInList($arg, $storage{$storageID[$id]}{name})) {$amount += $storage{$storageID[$id]}{amount}}
 	}
 	return $amount
 }
@@ -460,6 +469,7 @@ sub processCmd {
 	my $command = $_[0];
 	if (defined $_[0]) {
 		if ($_[0] ne '') {
+			my $nowait = $command =~ s/^-w\s+//;
 			unless (Commands::run($command)) {
 				my $errorMsg = sprintf("[macro] %s failed with %s\n", $queue->name, $command);
 				
@@ -475,6 +485,18 @@ sub processCmd {
 				undef $queue;
 				return
 			}
+            if ( $nowait ) {
+
+                # If there is now an AI task ahead of this macro, move it down.
+                my @seq;
+                my @args;
+                while ( @AI::ai_seq && $AI::ai_seq[0] ne 'macro' ) {
+                    unshift @seq,  shift @AI::ai_seq;
+                    unshift @args, shift @AI::ai_seq_args;
+                }
+                splice @AI::ai_seq,      1, 0, @seq;
+                splice @AI::ai_seq_args, 1, 0, @args;
+            }
 		}
 		$queue->ok;
 		if (defined $queue && $queue->finished) {undef $queue}
@@ -513,10 +535,11 @@ sub callMacro {
 		else {return}
 	}
 	if (timeOut(\%tmptime) && ai_isIdle()) {
+		$force_pause = 0;
 		do {
 			last unless processCmd $queue->next;
 			Plugins::callHook ('macro/callMacro/process');
-		} while !$onHold && $queue && $queue->macro_block;
+		} while !$onHold && $queue && $queue->macro_block && !$force_pause;
 		
 =pod
 		# crashes when error inside macro_block encountered and $queue becomes undefined

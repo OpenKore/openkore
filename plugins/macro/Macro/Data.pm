@@ -17,6 +17,7 @@ our $onHold;
 our $inBlock;
 
 our %amSingle = (
+	'offline' => 1,      # check: character is offline
 	'map' => 1,          # map check
 	'mapchange' => 1,    # map change check
 	'class' => 1,        # job class check
@@ -25,6 +26,7 @@ our %amSingle = (
 	'run-once' => 1,     # option: run automacro only once
 	'disabled' => 1,     # option: automacro disabled
 	'call' => 1,         # setting: macro to be called
+	'checkTimeout' => 1, # check: minimum time between checks
 	'spell' => 1,        # check: cast sensor
 	'notMonster' => 1,   # check: disallow monsters other than ~
 	'pm' => 1,           # check: private message
@@ -62,7 +64,6 @@ our %amMulti = (
 	'cartweight' => 1,   # check: cart weight
 	'soldout' => 1,      # check: sold out shop slots
 	'zeny' => 1,         # check: player's zeny
-	'cash' => 1,         # check: player's cash
 	'player' => 1,       # check: player name near
 	'equipped' => 1,     # check: equipment
 	'status' => 1,       # check: player's status
@@ -96,7 +97,8 @@ our $macroKeywords =
 	"arg"          . "|" .
 	"listitem"     . "|" .
    	"nick"         . "|" .
-	"listlenght"
+   	"response"     . "|" .
+	"listlength"
 ;
 
 1;
