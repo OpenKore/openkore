@@ -26,7 +26,8 @@ Plugins::register('eventMacro', 'allows usage of eventMacros', \&Unload);
 
 my $hooks = Plugins::addHooks(
 	['configModify', \&onconfigModify, undef],
-	['start3',       \&onstart3, undef]
+	['start3',       \&onstart3, undef],
+	['pos_load_config.txt',       \&checkConfig, undef],
 );
 
 my $chooks = Commands::register(
@@ -51,7 +52,6 @@ sub Unload {
 
 sub onstart3 {
 	debug "[eventMacro] Loading start\n", "eventMacro", 2;
-	&checkConfig;
 	$file_handle = Settings::addControlFile($file,loader => [\&parseAndHook], mustExist => 0);
 	Settings::loadByHandle($file_handle);
 }
