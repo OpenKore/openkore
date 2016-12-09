@@ -323,7 +323,7 @@ sub getItemPrice {
 # get storage array index
 # returns -1 if no matching items in storage
 sub getStorageIDs {
-	return unless $char->storage->isOpenedThisSession();
+	return unless $char->storage->wasOpenedThisSession();
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->storage->getItems}) {
@@ -381,7 +381,7 @@ sub getShopAmount {
 # returns -1 if the storage is closed
 sub getStorageAmount {
 	my $arg = lc($_[0]);
-	return -1 unless ($char->storage->isOpenedThisSession());
+	return -1 unless ($char->storage->wasOpenedThisSession());
 	my $amount = 0;
 	foreach my $item (@{$char->storage->getItems}) {
 		if (lc($item->name) eq $arg) {$amount += $item->{amount}}

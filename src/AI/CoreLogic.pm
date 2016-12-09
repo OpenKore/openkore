@@ -983,7 +983,7 @@ sub processStorageGet {
 		if (!$amount || $amount > $item->{amount}) {
 			$amount = $item->{amount};
 		}
-		$messageSender->sendStorageGet($item->{index}, $amount) if $char->storage->isOpened();
+		$messageSender->sendStorageGet($item->{index}, $amount) if $char->storage->isReady();
 		AI::args->{time} = time;
 		AI::dequeue if !@{AI::args->{items}};
 	}
@@ -1090,7 +1090,7 @@ sub processAutoStorage {
 		Misc::checkValidity("AutoStorage part 1");
 		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
 			next unless ($config{"getAuto_$i"});
-			if ($char->storage->isOpened() && !$char->storage->getByName($config{"getAuto_$i"})) {
+			if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
 				foreach (keys %items_lut) {
 					if ((lc($items_lut{$_}) eq lc($config{"getAuto_$i"})) && ($items_lut{$_} ne $config{"getAuto_$i"})) {
 						configModify("getAuto_$i", $items_lut{$_});
@@ -1108,7 +1108,7 @@ sub processAutoStorage {
 				  $amount < $config{"getAuto_${i}_maxAmount"})
 			    )
 			) {
-				if ($char->storage->isOpened() && !$char->storage->getByName($config{"getAuto_$i"})) {
+				if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
 =pod
 					#This works only for last getAuto item
 					if ($config{"getAuto_${i}_dcOnEmpty"}) {
@@ -1118,7 +1118,7 @@ sub processAutoStorage {
 					}
 =cut
 				} else {
-					if ($char->storage->isOpenedThisSession() && !$char->storage->getByName($config{"getAuto_$i"})) {
+					if ($char->storage->wasOpenedThisSession() && !$char->storage->getByName($config{"getAuto_$i"})) {
 					} else {
 							my $sti = $config{"getAuto_$i"};
 							if ($needitem eq "") {
@@ -1183,7 +1183,7 @@ sub processAutoStorage {
 				$do_route = 1;
 			} else {
 				my $distance_from_char = distance($args->{npc}{pos}, $char->{pos_to});
-				if (($distance_from_char > AI::args->{distance}) && !defined($args->{sentStore}) && !$char->storage->isOpened()) {
+				if (($distance_from_char > AI::args->{distance}) && !defined($args->{sentStore}) && !$char->storage->isReady()) {
 					$do_route = 1;
 				}
 			}
@@ -1242,7 +1242,7 @@ sub processAutoStorage {
 				return;
 			}
 
-			if (!$char->storage->isOpened()) {
+			if (!$char->storage->isReady()) {
 				# NPC talk retry
 				if (timeOut($AI::Timeouts::storageOpening, 40)) {
 					undef $args->{sentStore};
@@ -1261,7 +1261,7 @@ sub processAutoStorage {
 				$args->{done} = 1;
 				
 				# if storage is full disconnect if it says so in conf
-				if($char->storage->isOpenedThisSession() && $char->storage->isFull() && $config{'dcOnStorageFull'}) {
+				if($char->storage->wasOpenedThisSession() && $char->storage->isFull() && $config{'dcOnStorageFull'}) {
 					$messageSender->sendQuit();
 					error T("Auto disconnecting on StorageFull!\n");
 					chatLog("k", T("*** Your storage is full , disconnect! ***\n"));
@@ -1776,7 +1776,7 @@ sub processAutoCart {
 			my @getItems;
 			my $max;
 
-			if ($config{cartMaxWeight} && $char->cart->weight < $config{cartMaxWeight}) {
+			if ($config{cartMaxWeight} && $char->cart->{weight} < $config{cartMaxWeight}) {
 				foreach my $invItem (@{$char->inventory->getItems()}) {
 					next if ($invItem->{broken} && $invItem->{type} == 7); # dont auto-cart add pet eggs in use
 					next if ($invItem->{equipped});

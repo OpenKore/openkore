@@ -1680,7 +1680,7 @@ sub inventory_item_removed {
 
 # 012B
 sub cart_off {
-	$char->cart->release();
+	$char->cart->close;
 	message T("Cart released.\n"), "success";
 }
 

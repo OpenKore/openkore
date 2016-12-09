@@ -15,12 +15,12 @@ sub new {
 	return $self;
 }
 
-sub isOpenedThisSession {
+sub wasOpenedThisSession {
 	my ($self) = @_;
 	return $self->{openedThisSession} == 1;
 }
 
-sub isOpened {
+sub isReady {
 	my ($self) = @_;
 	return $self->{opened} == 1;
 }

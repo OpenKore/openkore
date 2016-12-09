@@ -620,7 +620,7 @@ sub initMapChangeVars {
 		delete $char->{homunculus}{appear_time} if $char->{homunculus};
 		$char->inventory->onMapChange();
 		$char->cart->onMapChange() if ($char->cartActive());
-		$char->storage->close() if ($char->storage->isOpened());
+		$char->storage->close() if ($char->storage->isReady());
 	}
 	$timeout{play}{time} = time;
 	$timeout{ai_sync}{time} = time;

@@ -37,7 +37,7 @@ sub onMapChange {
 	$self->clear();
 }
 
-sub release {
+sub close {
 	my ($self) = @_;
 	$self->{exists} = 0;
 }
@@ -45,16 +45,6 @@ sub release {
 sub changeType {
 	my ($self, $args) = @_;
 	$self->{type} = $args;
-}
-
-sub weight {
-	my ($self) = @_;
-	return $self->{weight};
-}
-
-sub weight_max {
-	my ($self) = @_;
-	return $self->{weight_max};
 }
 
 sub items {

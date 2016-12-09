@@ -974,7 +974,7 @@ sub cmdCart_list {
 	}
 
 	$msg .= TF("\nCapacity: %d/%d  Weight: %d/%d\n",
-			$char->cart->items, $char->cart->items_max, $char->cart->weight, $char->cart->weight_max).
+			$char->cart->items, $char->cart->items_max, $char->cart->{weight}, $char->cart->{weight_max}).
 			('-'x50) . "\n";
 	message $msg, "list";
 }
@@ -4655,7 +4655,7 @@ sub cmdStatus {
 }
 
 sub cmdStorage {
-	if ($char->storage->isOpenedThisSession()) {
+	if ($char->storage->wasOpenedThisSession()) {
 		my (undef, $args) = @_;
 
 		my ($switch, $items) = split(' ', $args, 2);
@@ -4666,7 +4666,7 @@ sub cmdStorage {
 		} elsif ($switch eq 'desc') {
 			cmdStorage_desc($items);
 		} elsif ($switch eq 'add' || $switch eq 'addfromcart' || $switch eq 'get' || $switch eq 'gettocart' || $switch eq 'close') {
-			if ($char->storage->isOpened()) {
+			if ($char->storage->isReady()) {
 				if ($switch eq 'add') {
 					cmdStorage_add($items);
 				} elsif ($switch eq 'addfromcart') {
