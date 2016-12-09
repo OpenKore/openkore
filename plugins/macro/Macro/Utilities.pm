@@ -229,6 +229,9 @@ sub refreshGlobal {
 	$varStack{".zeny"} = $char->{zeny};
 	$varStack{".weight"} = $char->{weight};
 	$varStack{".maxweight"} = $char->{weight_max};
+	$varStack{".cartweight"} = $cart{weight};
+	$varStack{".cartmaxweight"} = $cart{weight_max};
+	$varStack{".cartitems"} = $cart{items};
 	$varStack{'.status'} = (join ',',
 		('muted')x!!$char->{muted},
 		('dead')x!!$char->{dead},
@@ -381,7 +384,6 @@ sub getShopAmount {
 # returns -1 if the storage is closed
 sub getStorageAmount {
 	my $arg = lc($_[0]);
-	return -1 unless $::storage{opened};
 	my $amount = 0;
 	for (my $id = 0; $id < @storageID; $id++) {
 		next unless $storageID[$id];
