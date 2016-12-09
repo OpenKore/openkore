@@ -579,6 +579,7 @@ sub manage_dynamic_hook_add_and_delete {
 			unless (scalar keys %{$self->{Event_Related_Hooks}{$hook_name}}) {
 				delete $self->{Event_Related_Hooks}{$hook_name};
 				Plugins::delHook($self->{Hook_Handles}{$hook_name});
+				delete $self->{Hook_Handles}{$hook_name};
 			}
 		}
 	}

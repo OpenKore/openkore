@@ -17,7 +17,6 @@ sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
 	$self->{is_on_stand_by} = 0;
-	$self->{temporary_is_Fulfilled} = 0;
 	$self->{not_fulfilled_actor} = undef;
 	
 	$self->SUPER::_parse_syntax($condition_code);
@@ -32,11 +31,8 @@ sub validate_condition {
 		
 	} elsif ($callback_type eq 'hook') {
 		
-		if ($callback_name eq 'add_player_list' && (!defined $self->{not_fulfilled_actor} || $self->{is_on_stand_by}) && $self->validator_check($args->{name})) {
+		if ($callback_name eq 'add_player_list' && !defined $self->{not_fulfilled_actor} && $self->validator_check($args->{name})) {
 			$self->{not_fulfilled_actor} = $args;
-			if ($self->{is_on_stand_by}) {
-				$self->{temporary_is_Fulfilled} = 0;
-			}
 
 		} elsif ($callback_name eq 'player_disappeared' && defined $self->{not_fulfilled_actor} && $args->{player}->{binID} == $self->{not_fulfilled_actor}->{binID}) {
 			#need to check all other actor to find another one that matches or not
@@ -50,24 +46,18 @@ sub validate_condition {
 			}
 			
 		} elsif ($callback_name eq 'packet_mapChange') {
-			unless ($self->{is_on_stand_by}) {
-				$self->{not_fulfilled_actor} = undef;
-				$self->{temporary_is_Fulfilled} = 1;
-				$self->{is_on_stand_by} = 1;
-			}
+			$self->{not_fulfilled_actor} = undef;
+			$self->{is_on_stand_by} = 1;
 			
 		} elsif ($callback_name eq 'packet/map_property3') {
-			if ($self->{is_on_stand_by}) {
-				$self->{is_on_stand_by} = 0;
-				$self->{temporary_is_Fulfilled} = 0;
-			}
+			$self->{is_on_stand_by} = 0;
 			
 		}
 		
 	} elsif ($callback_type eq 'recheck') {
 		$self->recheck_all_actor_names;
 	}
-	$self->SUPER::validate_condition( ( (!defined $self->{not_fulfilled_actor} && $self->{is_on_stand_by} == 0) ? 1 : 0 ) );
+	$self->SUPER::validate_condition( ( (defined $self->{not_fulfilled_actor} || $self->{is_on_stand_by} == 1) ? 0 : 1 ) );
 }
 
 sub recheck_all_actor_names {

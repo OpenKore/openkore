@@ -103,6 +103,9 @@ sub validate_condition {
 			}
 			
 		} elsif ($callback_name eq 'packet_mapChange') {
+			if ($self->{number_of_possible_fulfill_actors} > 0) {
+				$self->add_or_remove_dynamic_hooks(0);
+			}
 			$self->{number_of_possible_fulfill_actors} = 0;
 			$self->{possible_fulfill_actors} = {};
 			$self->{fulfilled_actor} = undef;
