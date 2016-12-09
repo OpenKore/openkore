@@ -66,7 +66,7 @@ sub validate_condition {
 	} elsif ($callback_type eq 'recheck') {
 		$self->recheck_all_actor_names;
 	}
-	$self->SUPER::validate_condition( (!defined $self->{not_fulfilled_actor} && $self->{is_on_stand_by} == 0) );
+	$self->SUPER::validate_condition( ( (!defined $self->{not_fulfilled_actor} && $self->{is_on_stand_by} == 0) ? 1 : 0 ) );
 }
 
 sub recheck_all_actor_names {

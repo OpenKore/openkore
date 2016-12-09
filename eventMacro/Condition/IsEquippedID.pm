@@ -162,12 +162,12 @@ sub check_all_equips {
 
 sub check_slot {
 	my ( $self, $slot, $item ) = @_;
-	my @members = keys %{$self->{slot_name_to_member_to_check_array}{$args->{slot}}};
+	my @members = keys %{$self->{slot_name_to_member_to_check_array}{$slot}};
 	foreach my $member_index (@members) {
 		my $member = $self->{members_array}->[$member_index];
-		next unless ($args->{item}->{nameID} == $member->{item_id});
+		next unless ($item->{nameID} == $member->{item_id});
 		$self->{fulfilled_slot} = $member->{slot_name};
-		$self->{fulfilled_item} = $args->{item};
+		$self->{fulfilled_item} = $item;
 		$self->{fulfilled_member_index} = $member_index;
 		last;
 	}
@@ -198,7 +198,7 @@ sub validate_condition {
 	} elsif ($callback_type eq 'variable') {
 		$self->update_vars($callback_name, $args);
 	}
-	$self->SUPER::validate_condition( defined $self->{fulfilled_slot} );
+	$self->SUPER::validate_condition( (defined $self->{fulfilled_slot} ? 1 : 0) );
 }
 
 #To be implemented

@@ -111,7 +111,7 @@ sub validate_condition {
 	} elsif ($callback_type eq 'recheck') {
 		$self->recheck_all_actor_names;
 	}
-	$self->SUPER::validate_condition( defined $self->{fulfilled_actor} );
+	$self->SUPER::validate_condition( (defined $self->{fulfilled_actor} ? 1 : 0) );
 }
 
 sub search_for_dist_match_on_possible_fulfill_actors_list {
