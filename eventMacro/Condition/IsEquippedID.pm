@@ -9,7 +9,7 @@ use base 'eventMacro::Condition';
 my $variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
 
 sub _hooks {
-	['packet_mapChange','equipped_item','unequipped_item'];
+	['packet_mapChange','equipped_item','unequipped_item','packet/inventory_items_stackable','packet/inventory_items_nonstackable'];
 }
 
 #slot_index to index_name: %equipSlot_lut
@@ -26,9 +26,6 @@ sub _parse_syntax {
 	$self->{var_to_member_index_item_id} = {};
 	$self->{var_to_member_index_slot_name} = {};
 	$self->{members_array} = [];
-	
-	my $added_stackable = 0;
-	my $added_unstackable = 0;
 	
 	my $var_exists_hash = {};
 	
@@ -75,18 +72,6 @@ sub _parse_syntax {
 		if (!$id_is_var && $item_id !~ /^\d+$/) {
 			$self->{error} = "List member '".$member."' has a equipment ID value '".$item_id."' not valid";
 			return 0;
-		}
-		
-		if ($slot_name eq 'arrow') {
-			unless ($added_stackable) {
-				$added_stackable = 1;
-				push (@{$self->{hooks}}, 'packet/inventory_items_stackable');
-			}
-		} else {
-			unless ($added_unstackable) {
-				$added_unstackable = 1;
-				push (@{$self->{hooks}}, 'packet/inventory_items_nonstackable');
-			}
 		}
 		
 		if (!$id_is_var && !$slot_is_var) {
@@ -208,8 +193,14 @@ sub validate_condition {
 			$self->{fulfilled_item} = undef;
 			$self->{fulfilled_member_index} = undef;
 			
-		} else {
-			$self->check_all_equips($self->{slot_name_to_member_to_check_array});
+		} elsif ($callback_name eq 'packet/inventory_items_stackable') {
+			if (exists $self->{slot_name_to_member_to_check_array}{arrow}) {
+				$self->check_all_equips($self->{slot_name_to_member_to_check_array});
+			}
+		} elsif ($callback_name eq 'packet/inventory_items_nonstackable') {
+			if (scalar keys %{$self->{slot_name_to_member_to_check_array}} > 1 || !exists $self->{slot_name_to_member_to_check_array}{arrow}) {
+				$self->check_all_equips($self->{slot_name_to_member_to_check_array});
+			}
 			
 		}
 	
