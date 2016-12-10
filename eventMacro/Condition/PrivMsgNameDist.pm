@@ -29,10 +29,10 @@ sub validate_condition {
 	
 	if ($callback_type eq 'hook') {
 		$self->{message} = $args->{Msg};
-		$self->SUPER::validate_condition( 0 ) unless $self->validator_check( 0, $self->{message} );
+		return $self->SUPER::validate_condition( 0 ) unless $self->validator_check( 0, $self->{message} );
 		
 		$self->{source} = $args->{MsgUser};
-		$self->SUPER::validate_condition( 0 ) unless $self->validator_check( 1, $self->{source} );
+		return $self->SUPER::validate_condition( 0 ) unless $self->validator_check( 1, $self->{source} );
 		
 		$self->{dist} = undef;
 		foreach my $player (@{$playersList->getItems()}) {
@@ -41,9 +41,9 @@ sub validate_condition {
 			$self->{dist} = distance($char->{pos_to}, $player->{pos_to});
 		}
 		
-		$self->SUPER::validate_condition( 0 ) unless ( defined $self->{dist} && $self->validator_check( 2, $self->{dist} ) );
+		return $self->SUPER::validate_condition( 0 ) unless ( defined $self->{dist} && $self->validator_check( 2, $self->{dist} ) );
 		
-		$self->SUPER::validate_condition( 1 );
+		return $self->SUPER::validate_condition( 1 );
 		
 	} elsif ($callback_type eq 'variable') {
 		$self->update_validator_var($callback_name, $args);

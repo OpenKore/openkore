@@ -28,12 +28,12 @@ sub validate_condition {
 	
 	if ($callback_type eq 'hook') {
 		$self->{message} = $args->{Msg};
-		$self->SUPER::validate_condition( 0 ) unless $self->validator_check( 0, $self->{message} );
+		return $self->SUPER::validate_condition( 0 ) unless $self->validator_check( 0, $self->{message} );
 		
 		$self->{source} = $args->{MsgUser};
-		$self->SUPER::validate_condition( 0 ) unless $self->validator_check( 1, $self->{source} );
+		return $self->SUPER::validate_condition( 0 ) unless $self->validator_check( 1, $self->{source} );
 		
-		$self->SUPER::validate_condition( 1 );
+		return $self->SUPER::validate_condition( 1 );
 		
 	} elsif ($callback_type eq 'variable') {
 		$self->update_validator_var($callback_name, $args);

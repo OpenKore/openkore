@@ -17,7 +17,7 @@ sub validate_condition {
 		$self->update_validator_var($callback_name, $args);
 	} elsif ($callback_type eq 'hook') {
 		$self->{lastMap} = $field->baseName;
-		$self->SUPER::validate_condition( $self->validator_check($self->{lastMap}) );
+		return $self->SUPER::validate_condition( $self->validator_check($self->{lastMap}) );
 	}
 }
 
