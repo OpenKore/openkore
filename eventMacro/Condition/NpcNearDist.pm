@@ -75,28 +75,28 @@ sub validate_condition {
 			my $actor;
 			unless  ($callback_name eq 'npc_moved') {
 				$actor = Actor::get($args->{ID});
-				$self->SUPER::validate_condition unless ($actor->isa('Actor::NPC'));
+				return $self->SUPER::validate_condition unless ($actor->isa('Actor::NPC'));
 			} else {
 				$actor = $args;
 			}
 			
-			$self->SUPER::validate_condition unless (exists($self->{possible_fulfill_actors}{$actor->{binID}}));
+			return $self->SUPER::validate_condition unless (exists($self->{possible_fulfill_actors}{$actor->{binID}}));
 			
 			if (defined $self->{fulfilled_actor}) {
 			
-				$self->SUPER::validate_condition if ($actor->{binID} != $self->{fulfilled_actor}->{binID} || $self->validator_check( 1, distance( $char->{pos_to}, $actor->{pos_to} ) ));
+				return $self->SUPER::validate_condition if ($actor->{binID} != $self->{fulfilled_actor}->{binID} || $self->validator_check( 1, distance( $char->{pos_to}, $actor->{pos_to} ) ));
 				$self->search_for_dist_match_on_possible_fulfill_actors_list;
 				
 			} else {
 				
-				$self->SUPER::validate_condition unless ( $self->validator_check( 1, distance( $char->{pos_to}, $actor->{pos_to} ) ) );
+				return $self->SUPER::validate_condition unless ( $self->validator_check( 1, distance( $char->{pos_to}, $actor->{pos_to} ) ) );
 				$self->{fulfilled_actor} = $actor;
 				
 			}
 		} elsif ($callback_name eq 'packet/character_moves' || ($callback_name eq 'packet/actor_movement_interrupted' && Actor::get($args->{ID})->isa('Actor::You')) || ($callback_name eq 'packet/high_jump' && Actor::get($args->{ID})->isa('Actor::You'))) {
 			
 			if (defined $self->{fulfilled_actor}) {
-				$self->SUPER::validate_condition if ( $self->validator_check( 1, distance( $char->{pos_to}, $self->{fulfilled_actor}->{pos_to} ) ) );
+				return $self->SUPER::validate_condition if ( $self->validator_check( 1, distance( $char->{pos_to}, $self->{fulfilled_actor}->{pos_to} ) ) );
 				$self->search_for_dist_match_on_possible_fulfill_actors_list;
 			} else {
 				$self->search_for_dist_match_on_possible_fulfill_actors_list;
@@ -114,7 +114,7 @@ sub validate_condition {
 	} elsif ($callback_type eq 'recheck') {
 		$self->recheck_all_actor_names;
 	}
-	$self->SUPER::validate_condition( (defined $self->{fulfilled_actor} ? 1 : 0) );
+	return $self->SUPER::validate_condition( (defined $self->{fulfilled_actor} ? 1 : 0) );
 }
 
 sub search_for_dist_match_on_possible_fulfill_actors_list {

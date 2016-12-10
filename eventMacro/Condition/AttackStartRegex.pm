@@ -17,7 +17,7 @@ sub validate_condition {
 	
 	if ($callback_type eq 'hook') {
 		$self->{id} = $args->{ID};
-		$self->SUPER::validate_condition ( $self->validator_check($monsters{$self->{id}}{'name'}) );
+		return $self->SUPER::validate_condition ( $self->validator_check($monsters{$self->{id}}{'name'}) );
 	} elsif ($callback_type eq 'variable') {
 		$self->update_validator_var($callback_name, $args);
 	}

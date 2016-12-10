@@ -16,7 +16,7 @@ sub validate_condition {
 	if ($callback_type eq 'hook') {
 		$self->{message} = $args->{Msg};
 		$self->{source} = $args->{MsgUser};
-		$self->SUPER::validate_condition( $self->validator_check($self->{message}) );
+		return $self->SUPER::validate_condition( $self->validator_check($self->{message}) );
 	} elsif ($callback_type eq 'variable') {
 		$self->update_validator_var($callback_name, $args);
 	}

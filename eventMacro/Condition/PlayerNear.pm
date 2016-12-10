@@ -42,7 +42,7 @@ sub validate_condition {
 	} elsif ($callback_type eq 'recheck') {
 		$self->recheck_all_actor_names;
 	}
-	$self->SUPER::validate_condition( (defined $self->{fulfilled_actor} ? 1 : 0) );
+	return $self->SUPER::validate_condition( (defined $self->{fulfilled_actor} ? 1 : 0) );
 }
 
 sub recheck_all_actor_names {

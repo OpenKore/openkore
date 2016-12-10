@@ -40,10 +40,10 @@ sub validate_condition {
 	
 		if ($callback_name eq 'pvp_mode') {
 			$self->{pvp_type} = $pvp_type{$args->{pvp}};
-			$self->SUPER::validate_condition( $self->validator_check($self->{pvp_type}) );
+			return $self->SUPER::validate_condition( $self->validator_check($self->{pvp_type}) );
 			
 		} elsif ($callback_name eq 'packet_mapChange') {
-			$self->SUPER::validate_condition( 0 );
+			return $self->SUPER::validate_condition( 0 );
 			
 		}
 		

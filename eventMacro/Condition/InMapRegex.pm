@@ -19,7 +19,7 @@ sub validate_condition {
 	
 	$self->{lastMap} = $field->baseName;
 	
-	$self->SUPER::validate_condition( $self->validator_check($self->{lastMap}) );
+	return $self->SUPER::validate_condition( $self->validator_check($self->{lastMap}) );
 }
 
 sub get_new_variable_list {

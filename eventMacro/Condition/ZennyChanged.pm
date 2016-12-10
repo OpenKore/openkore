@@ -17,7 +17,7 @@ sub validate_condition {
 	if ($callback_type eq 'hook') {
 		$self->{change} = $args->{change};
 		$self->{zeny} = $args->{zeny};
-		$self->SUPER::validate_condition( $self->validator_check( $self->{change}, ($self->{zeny}-$self->{change}) ) );
+		return $self->SUPER::validate_condition( $self->validator_check( $self->{change}, ($self->{zeny}-$self->{change}) ) );
 	} elsif ($callback_type eq 'variable') {
 		$self->update_validator_var($callback_name, $args);
 	}
