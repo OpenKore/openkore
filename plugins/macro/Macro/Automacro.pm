@@ -229,7 +229,7 @@ sub checkPercent {
 		else {return cmpr($char->{$what}, $cond, $amount)}
 	}
 	elsif ($what eq 'cweight') {
-		return 0 unless (defined $char->cart->{weight} && defined $char->cart->{weight_max)};
+		return 0 unless (defined $char->cart->{weight} && defined $char->cart->{weight_max});
 		if ($amount =~ /^\s*(?:\d+|\d+\s*\.{2}\s*\d+)%$/ && $char->cart->{weight_max}) {
 			$amount =~ s/%$//;
 			return cmpr(($char->cart->{weight} / $char->cart->{weight_max} * 100), $cond, $amount)
