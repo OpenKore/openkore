@@ -22,6 +22,7 @@ sub isReady {
 	return $self->{exists};
 }
 
+#TODO: Add a hook call here to be used in places where we need to know exaclty when cart info was received.
 sub info {
 	my ($self, $args) = @_;
 	$self->{items} = $args->{items};
