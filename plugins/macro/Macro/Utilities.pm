@@ -298,7 +298,6 @@ sub getInventoryIDs {
 }
 
 # get item array index
-# works for $cart{'inventory'}, @articles
 sub getItemIDs {
 	my ($item, $pool) = (lc($_[0]), $_[1]);
 	my @ids;
