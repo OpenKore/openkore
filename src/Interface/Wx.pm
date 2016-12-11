@@ -766,7 +766,7 @@ sub createSplitterContent {
 
 	## Inside this splitter is a player/monster/item list, and a dock with map viewer
 
-	my $itemList = $self->{itemList} = new Interface::Wx::ItemList($subSplitter);
+	my $itemList = $self->{itemList} = new Interface::Wx::ItemList($subSplitter, T('Players, Monsters & Items'));
 	$itemList->onActivate(\&onItemListActivate, $self);
 	$self->customizeItemList($itemList) if ($self->can('customizeItemList'));
 	$subSplitter->Initialize($itemList);
