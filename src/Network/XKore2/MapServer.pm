@@ -601,8 +601,9 @@ sub send_inventory {
 		my @stackable;
 		my @nonstackable;
 		my $n = 0;
+		my $i = 0;
 		foreach my $item (@{$char->cart->getItems()}) {
-			$item->{index} = $i;#TEST
+			$item->{index} = $i++;
 			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) {
 				push @stackable, $item;
 			} else {
