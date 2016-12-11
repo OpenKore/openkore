@@ -46,7 +46,7 @@ sub unload {
 sub onInfo {
 	my ($self) = @_;
 
-	if ($char->storage->isOpened) {
+	if ($char->storage->isReady) {
 		if (exists $char->storage->{items_max}) {
 			$self->setStat('count', @{$char->storage}{qw(items items_max)});
 		}
@@ -61,7 +61,7 @@ sub onContextMenu {
 
 	Scalar::Util::weaken($item);
 
-	if ($char->storage->isOpened) {
+	if ($char->storage->isReady) {
 		EVT_MENU($menu, $menu->Append(wxID_ANY, T('Move all to inventory'))->GetId, sub { $self->onListActivate($item) });
 		if ($char->cart->isReady) {
 			EVT_MENU($menu, $menu->Append(wxID_ANY, T('Move all to cart'))->GetId, sub { $self->_onCart($item) });

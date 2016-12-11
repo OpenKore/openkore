@@ -362,17 +362,17 @@ sub request {
 			push @storageUsableID, $item->{nameID};
 			push @storageUsable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @storageUsableAmount, $item->{amount};
-			push @storageUsableGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $item->{invIndex} . '">' . T('Get') . '</a></td><td></td>' if $char->storage->isOpened;
+			push @storageUsableGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $item->{invIndex} . '">' . T('Get') . '</a></td><td></td>' if $char->storage->isReady;
 		} elsif ($item->equippable) {
 			push @storageEquipmentID, $item->{nameID};
 			push @storageEquipment, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @storageEquipmentAmount, $item->{amount};
-			push @storageEquipmentGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $item->{invIndex} . '">' . T('Get') . '</a></td><td></td>' if $char->storage->isOpened;
+			push @storageEquipmentGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $item->{invIndex} . '">' . T('Get') . '</a></td><td></td>' if $char->storage->isReady;
 		} else {
 			push @storageUnusableID, $item->{nameID};
 			push @storageUnusable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @storageUnusableAmount, $item->{amount};
-			push @storageUnusableGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $item->{invIndex} . '">' . T('Get') . '</a></td><td></td>' if $char->storage->isOpened;
+			push @storageUnusableGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $item->{invIndex} . '">' . T('Get') . '</a></td><td></td>' if $char->storage->isReady;
 		}
 	}
 

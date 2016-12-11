@@ -57,7 +57,7 @@ sub onContextMenu {
 
 	if ($char->cart->isReady) {
 		EVT_MENU($menu, $menu->Append(wxID_ANY, T('Move all to inventory'))->GetId, sub { $self->onListActivate($item) });
-		if ($char->storage->isOpened) {
+		if ($char->storage->isReady) {
 			EVT_MENU($menu, $menu->Append(wxID_ANY, T('Move all to storage'))->GetId, sub { $self->_onStorage($item) });
 		}
 	}
