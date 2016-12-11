@@ -10,6 +10,7 @@ use constant {
 	RECV_STAT_INFO2 => 1
 };
 
+#TODO: Add a hook call everytime '$self->{state}' changes from 'MAP_LOADED_OR_NEW' to 'RECV_STAT_INFO2' to be used in places where we need to know exaclty when inventory info was received.
 
 sub new {
 	my ($class) = @_;
