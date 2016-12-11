@@ -27,7 +27,7 @@ use Log qw(message);
 Plugins::register('cartlog', 'writes cart inventory to file.', \&Unload);
 
 my $hook = Commands::register(['cartlog', "print cart contents to file", \&cartLog]);
-            
+
 sub Unload {
 	Commands::unregister($hook)
 }
