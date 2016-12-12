@@ -780,8 +780,7 @@ sub objectIsMovingTowardsPlayer {
 		my %vec;
 		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
 
-		my $players = $playersList->getItems();
-		foreach my $player (@{$players}) {
+		for my $player (@$playersList) {
 			my $ID = $player->{ID};
 			next if (
 			     ($ignore_party_members && $char->{party} && $char->{party}{users}{$ID})
@@ -2250,8 +2249,7 @@ sub positionNearPlayer {
 	my $r_hash = shift;
 	my $dist = shift;
 
-	my $players = $playersList->getItems();
-	foreach my $player (@{$players}) {
+	for my $player (@$playersList) {
 		my $ID = $player->{ID};
 		next if ($char->{party} && $char->{party}{users} &&
 			$char->{party}{users}{$ID});
@@ -2265,8 +2263,7 @@ sub positionNearPortal {
 	my $r_hash = shift;
 	my $dist = shift;
 
-	my $portals = $portalsList->getItems();
-	foreach my $portal (@{$portals}) {
+	for my $portal (@$portalsList) {
 		return 1 if (distance($r_hash, $portal->{pos}) <= $dist);
 	}
 	return 0;
@@ -3234,7 +3231,7 @@ sub writeStorageLog {
 
 	if (open($f, ">:utf8", $Settings::storage_log_file)) {
 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
-		foreach my $item (@{$char->storage->getItems()}) {
+		for my $item (@{$char->storage}) {
 
 			my $display = sprintf "%2d %s x %s", $item->{invIndex}, $item->{name}, $item->{amount};
 			# Translation Comment: Mark to show not identified items
@@ -3541,8 +3538,7 @@ sub percent_weight {
 #######################################
 
 sub avoidGM_near {
-	my $players = $playersList->getItems();
-	foreach my $player (@{$players}) {
+	for my $player (@$playersList) {
 		# skip this person if we dont know the name
 		next if (!defined $player->{name});
 
@@ -3600,8 +3596,7 @@ sub avoidGM_near {
 sub avoidList_near {
 	return if ($config{avoidList_inLockOnly} && $field->baseName ne $config{lockMap});
 
-	my $players = $playersList->getItems();
-	foreach my $player (@{$players}) {
+	for my $player (@$playersList) {
 		my $avoidPlayer = $avoid{Players}{lc($player->{name})};
 		my $avoidID = $avoid{ID}{$player->{nameID}};
 		if (!$net->clientAlive() && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || ($avoidID && $avoidID->{disconnect_on_sight}) )) {
@@ -4015,8 +4010,7 @@ sub checkSelfCondition {
     if (defined $config{$prefix . "_monstersCount"}) {
 		my $nowMonsters = $monstersList->size();
 			if ($nowMonsters > 0 && $config{$prefix . "_notMonsters"}) {
-				my $monsters = $monstersList->getItems();
-				foreach my $monster (@{$monsters}) {
+				for my $monster (@$monstersList) {
 					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}));
                 }
             }

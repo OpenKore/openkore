@@ -661,7 +661,7 @@ sub cmdAutoSell {
 		my @sellItems;
 		my $msg = center(T(" Items to sell (simulation) "), 50, '-') ."\n".
 				T("Amount  Item Name\n");
-		foreach my $item (@{$char->inventory->getItems()}) {
+		for my $item (@{$char->inventory}) {
 			next if ($item->{unsellable});
 			my $control = items_control($item->{name});
 			if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
@@ -818,7 +818,7 @@ sub cmdCard {
 		}
 	} elsif ($arg1 eq "list") {
 		my $msg = center(T(" Card List "), 50, '-') ."\n";
-		foreach my $item (@{$char->inventory->getItems()}) {
+		for my $item (@{$char->inventory}) {
 			if ($item->mergeable) {
 				my $display = "$item->{name} x $item->{amount}";
 				$msg .= swrite(
@@ -916,7 +916,7 @@ sub cmdCart_list {
 	my @non_useable;
 	my ($i, $display, $index);
 	
-	foreach my $item (@{$char->cart->getItems()}) {
+	for my $item (@{$char->cart}) {
 		if ($item->usable) {
 			push @useable, $item->{invIndex};
 		} elsif ($item->equippable) {
@@ -1481,7 +1481,7 @@ sub cmdDeal {
 	my @arg = parseArgs( $args );
 
 	if ( $arg[0] && $arg[0] !~ /^(\d+|no|add)$/ ) {
-		my ( $partner ) = grep { $_->name eq $arg[0] } @{ $playersList->getItems };
+		my ( $partner ) = grep { $_->name eq $arg[0] } @$playersList;
 		if ( !$partner ) {
 			error TF( "Unknown player [%s]. Player not nearby?\n", $arg[0] );
 			return;
@@ -1572,7 +1572,7 @@ sub cmdDeal {
 		if ($currentDeal{you_items} > $max_items) {
 			error T("You can't add any more items to the deal\n"), "deal";
 		}
-		my $items = [ grep { $_ && lc( $_->{name} ) eq lc( $arg[1] ) && !$_->{equipped} } @{ $char->inventory->getItems } ];
+		my $items = [ grep { $_ && lc( $_->{name} ) eq lc( $arg[1] ) && !$_->{equipped} } @$char->inventory ];
 		my $n = $currentDeal{you_items};
 		my $a = $arg[2] || 1;
 		my $c = 0;
@@ -3028,7 +3028,7 @@ sub cmdInventory {
 		my @non_useable;
 		my ($i, $display, $index, $sell);
 
-		foreach my $item (@{$char->inventory->getItems()}) {
+		for my $item (@{$char->inventory}) {
 			if ($item->usable) {
 				push @useable, $item->{invIndex};
 			} elsif ($item->equippable && $item->{type_equip} != 0) {
@@ -3263,8 +3263,7 @@ sub cmdMonsterList {
 		my ($dmgTo, $dmgFrom, $dist, $pos, $name, $monsters);
 		my $msg = center(T(" Monster List "), 79, '-') ."\n".
 			T("#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n");
-		$monsters = $monstersList->getItems() if ($monstersList);
-		foreach my $monster (@{$monsters}) {
+		for my $monster (@$monstersList) {
 			$dmgTo = ($monster->{dmgTo} ne "")
 				? $monster->{dmgTo}
 				: 0;
@@ -3426,8 +3425,7 @@ sub cmdNPCList {
 			return;
 		}
 
-		my $npcs = $npcsList->getItems();
-		foreach my $npc (@{$npcs}) {
+		for my $npc (@$npcsList) {
 			my $pos = "($npc->{pos}{x}, $npc->{pos}{y})";
 			$msg .= swrite(
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
@@ -3738,8 +3736,7 @@ sub cmdPetList {
 	my $msg = center(T(" Pet List "), 68, '-') ."\n".
 		T("#   Name                      Type             Distance  Coordinates\n");
 
-	$pets = $petsList->getItems() if ($petsList);
-	foreach my $pet (@{$pets}) {
+	for my $pet (@$petsList) {
 		$dist = distance($char->{pos_to}, $pet->{pos_to});
 		$dist = sprintf("%.1f", $dist) if (index($dist, '.') > -1);
 		$pos = '(' . $pet->{pos_to}{x} . ', ' . $pet->{pos_to}{y} . ')';
@@ -3758,36 +3755,32 @@ sub cmdPlayerList {
 	my $msg;
 
 	if ($args eq "g") {
-		my $maxpl;
 		my $maxplg;
 		$msg = center(T(" Guild Player List "), 79, '-') ."\n".
 			T("#    Name                                Sex   Lv   Job         Dist Coord\n");
-		if ($playersList) {
-			foreach my $player (@{$playersList->getItems()}) {
-				my ($name, $dist, $pos);
-				$name = $player->name;
+		for my $player (@$playersList) {
+			my ($name, $dist, $pos);
+			$name = $player->name;
 
-				if ($char->{guild}{name} eq ($player->{guild}{name})) {
+			if ($char->{guild}{name} eq ($player->{guild}{name})) {
 
-					if ($player->{guild} && %{$player->{guild}}) {
-						$name .= " [$player->{guild}{name}]";
-					}
-					$dist = distance($char->{pos_to}, $player->{pos_to});
-					$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
-					$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
-
-					$maxplg++;
-
-					$msg .= swrite(
-						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
-						[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
+				if ($player->{guild} && %{$player->{guild}}) {
+					$name .= " [$player->{guild}{name}]";
 				}
-				$maxpl = @{$playersList->getItems()};
+				$dist = distance($char->{pos_to}, $player->{pos_to});
+				$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+				$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
+
+				$maxplg++;
+
+				$msg .= swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
+					[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 			}
 		}
 		$msg .= TF("Total guild players: %s\n",$maxplg) if $maxplg;
-		if ($maxpl ne "") {
-			$msg .= TF("Total players: %s \n",$maxpl);
+		if (my $totalPlayers = $playersList && $playersList->size) {
+			$msg .= TF("Total players: %s \n", $totalPlayers);
 		} else {
 			$msg .= T("There are no players near you.\n");
 		}
@@ -3797,36 +3790,32 @@ sub cmdPlayerList {
 	}
 
 	if ($args eq "p") {
-		my $maxpl;
 		my $maxplp;
 		$msg = center(T(" Party Player List "), 79, '-') ."\n".
 			T("#    Name                                Sex   Lv   Job         Dist Coord\n");
-		if ($playersList) {
-			foreach my $player (@{$playersList->getItems()}) {
-				my ($name, $dist, $pos);
-				$name = $player->name;
+		for my $player (@$playersList) {
+			my ($name, $dist, $pos);
+			$name = $player->name;
 
-				if ($char->{party}{name} eq ($player->{party}{name})) {
+			if ($char->{party}{name} eq ($player->{party}{name})) {
 
-					if ($player->{guild} && %{$player->{guild}}) {
-						$name .= " [$player->{guild}{name}]";
-					}
-					$dist = distance($char->{pos_to}, $player->{pos_to});
-					$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
-					$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
-
-					$maxplp++;
-
-					$msg .= swrite(
-						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
-						[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
+				if ($player->{guild} && %{$player->{guild}}) {
+					$name .= " [$player->{guild}{name}]";
 				}
-				$maxpl = @{$playersList->getItems()};
+				$dist = distance($char->{pos_to}, $player->{pos_to});
+				$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+				$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
+
+				$maxplp++;
+
+				$msg .= swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
+					[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 			}
 		}
 		$msg .= TF("Total party players: %s \n",$maxplp)  if $maxplp;
-		if ($maxpl ne "") {
-			$msg .= TF("Total players: %s \n",$maxpl);
+		if (my $totalPlayers = $playersList && $playersList->size) {
+			$msg .= TF("Total players: %s \n", $totalPlayers);
 		} else {
 			$msg .= T("There are no players near you.\n");
 		}
@@ -3914,27 +3903,23 @@ sub cmdPlayerList {
 	}
 
 	{
-		my $maxpl;
 		$msg = center(T(" Player List "), 79, '-') ."\n".
 		T("#    Name                                Sex   Lv   Job         Dist Coord\n");
-		if ($playersList) {
-			foreach my $player (@{$playersList->getItems()}) {
-				my ($name, $dist, $pos);
-				$name = $player->name;
-				if ($player->{guild} && %{$player->{guild}}) {
-					$name .= " [$player->{guild}{name}]";
-				}
-				$dist = distance($char->{pos_to}, $player->{pos_to});
-				$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
-				$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
-				$maxpl = @{$playersList->getItems()};
-				$msg .= swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
-					[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
+		for my $player (@$playersList) {
+			my ($name, $dist, $pos);
+			$name = $player->name;
+			if ($player->{guild} && %{$player->{guild}}) {
+				$name .= " [$player->{guild}{name}]";
 			}
+			$dist = distance($char->{pos_to}, $player->{pos_to});
+			$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+			$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
+				[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 		}
-		if ($maxpl ne "") {
-			$msg .= TF("Total players: %s \n",$maxpl);
+		if (my $playersTotal = $playersList && $playersList->size) {
+			$msg .= TF("Total players: %s \n", $playersTotal);
 		} else	{$msg .= T("There are no players near you.\n");}
 		$msg .= '-' x 79 . "\n";
 		message $msg, "list";
@@ -4461,8 +4446,7 @@ sub cmdSlaveList {
 	my ($dist, $pos, $name, $slaves);
 	my $msg = center(T(" Slave List "), 79, '-') ."\n".
 		T("#   Name                                   Type         Distance    Coordinates\n");
-	$slaves = $slavesList->getItems() if ($slavesList);
-	foreach my $slave (@{$slaves}) {
+	for my $slave (@$slavesList) {
 		$dist = distance($char->{pos_to}, $slave->{pos_to});
 		$dist = sprintf("%.1f", $dist) if (index($dist, '.') > -1);
 		$pos = '(' . $slave->{pos_to}{x} . ', ' . $slave->{pos_to}{y} . ')';
@@ -5016,7 +5000,7 @@ sub cmdTank {
 
 	} else {
 		my $name;
-		for (@{$playersList->getItems}, @{$slavesList->getItems}) {
+		for (@$playersList, @$slavesList) {
 			if (lc $_->{name} eq lc $arg) {
 				$name = $_->{name};
 				last;
@@ -5992,7 +5976,7 @@ sub cmdStorage_list {
 	my @non_useable;
 	my ($i, $display, $index);
 	
-	foreach my $item (@{$char->storage->getItems()}) {
+	for my $item (@{$char->storage}) {
 		if ($item->usable) {
 			push @useable, $item->{invIndex};
 		} elsif ($item->equippable) {

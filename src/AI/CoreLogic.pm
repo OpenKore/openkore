@@ -1039,7 +1039,7 @@ sub processAutoMakeArrow {
 		}
 		$messageSender->sendArrowCraft(-1) if ($nMake == 0 && $max > 0);
 		if ($nMake == 0 && !$useArrowCraft){
-			foreach my $item (@{$char->inventory->getItems()}) {
+			for my $item (@{$char->inventory}) {
 				if ($arrowcraft_items{lc($item->{name})}) {
 					$useArrowCraft = 1;
 					last;
@@ -1270,14 +1270,14 @@ sub processAutoStorage {
 
 				# inventory to storage
 				$args->{nextItem} = 0 unless $args->{nextItem};
-				for (my $i = $args->{nextItem}; $i < @{$char->inventory->getItems()}; $i++) {
-					my $item = $char->inventory->getItems()->[$i];
+				for (my $i = $args->{nextItem}; $i < $char->inventory->size; $i++) {
+					my $item = $char->inventory->[$i];
 					next if $item->{equipped};
 					next if ($item->{broken} && $item->{type} == 7); # dont store pet egg in use
 
 					if (defined($args->{lastInventoryCount}) &&  defined($args->{lastNameID}) && defined($args->{lastAmount}) &&
 					    $args->{lastNameID} == $item->{nameID} &&
-					    $args->{lastInventoryCount} == @{$char->inventory->getItems()} &&
+					    $args->{lastInventoryCount} == $char->inventory->size &&
 						$args->{lastAmount} == $item->{amount}
 					) {
 						error TF("Unable to store %s.\n", $item->{name});
@@ -1298,7 +1298,7 @@ sub processAutoStorage {
 						$args->{lastIndex} = $item->{index};
 						$args->{lastNameID} = $item->{nameID};
 						$args->{lastAmount} = $item->{amount};
-						$args->{lastInventoryCount} = scalar(@{$char->inventory->getItems()});
+						$args->{lastInventoryCount} = $char->inventory->size;
 						$messageSender->sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{nextItem} = $i;
@@ -1310,8 +1310,8 @@ sub processAutoStorage {
 				# we don't really need to check if we have a cart
 				# if we don't have one it will not find any items to loop through
 				$args->{cartNextItem} = 0 unless $args->{cartNextItem};
-				for (my $i = $args->{cartNextItem}; $i < @{$char->cart->getItems()}; $i++) {
-					my $item = $char->cart->getItems()->[$i];
+				for (my $i = $args->{cartNextItem}; $i < $char->cart->size; $i++) {
+					my $item = $char->cart->[$i];
 					next unless ($item && %{$item});
 
 					my $control = items_control($item->{name});
@@ -1545,7 +1545,7 @@ sub processAutoSell {
 			
 			# Form list of items to sell
 			my @sellItems;
-			foreach my $item (@{$char->inventory->getItems()}) {
+			for my $item (@{$char->inventory}) {
 				next if ($item->{equipped});
 				next if (!$item->{sellable});
 
@@ -1777,7 +1777,7 @@ sub processAutoCart {
 			my $max;
 
 			if ($config{cartMaxWeight} && $char->cart->{weight} < $config{cartMaxWeight}) {
-				foreach my $invItem (@{$char->inventory->getItems()}) {
+				for my $invItem (@{$char->inventory}) {
 					next if ($invItem->{broken} && $invItem->{type} == 7); # dont auto-cart add pet eggs in use
 					next if ($invItem->{equipped});
 					my $control = items_control($invItem->{name});
@@ -1792,7 +1792,7 @@ sub processAutoCart {
 				cartAdd(\@addItems);
 			}
 
-			foreach my $cartItem (@{$char->cart->getItems()}) {
+			for my $cartItem (@{$char->cart}) {
 				my $control = items_control($cartItem->{name});
 				next unless ($control->{cart_get});
 
@@ -2040,7 +2040,7 @@ sub processFollow {
 
 	# if we are not following now but master is in the screen...
 	if (!defined $args->{'ID'}) {
-		foreach my Actor::Player $player (@{$playersList->getItems()}) {
+		for my Actor::Player $player (@$playersList) {
 			if (($player->name eq $config{followTarget}) && !$player->{'dead'}) {
 				$args->{'ID'} = $player->{ID};
 				$args->{'following'} = 1;
@@ -2681,7 +2681,7 @@ sub processAutoAttack {
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 		my $foundTankee;
 		if ($config{'tankMode'}) {
-			for (@{$playersList->getItems}, @{$slavesList->getItems}) {
+			for (@$playersList, @$slavesList) {
 				if (
 					$config{tankModeTarget} eq $_->{name}
 					or $char->{homunculus} && $config{tankModeTarget} eq '@homunculus' && $_->{ID} eq $char->{homunculus}{ID}
@@ -2943,7 +2943,7 @@ sub processAutoTeleport {
 				$ok = 1;
 			}
 		} else {
-			foreach my Actor::Player $player (@{$playersList->getItems()}) {
+			for my Actor::Player $player (@$playersList) {
 				if (!existsInList($config{teleportAuto_notPlayers}, $player->{name}) && !existsInList($config{teleportAuto_notPlayers}, $player->{nameID})) {
 					$ok = 1;
 					last;

@@ -2783,9 +2783,8 @@ sub chat_newowner {
 		if ($user eq $char->{name}) {
 			$chatRooms{$currentChatRoom}{ownerID} = $accountID;
 		} else {
-			my $players = $playersList->getItems();
 			my $player;
-			foreach my $p (@{$players}) {
+			for my $p (@$playersList) {
 				if ($p->{name} eq $user) {
 					$player = $p;
 					last;
@@ -3578,7 +3577,7 @@ sub item_disappeared {
 	my $item = $itemsList->getByID($args->{ID});
 	if ($item) {
 		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($item->{name})) > 0) {
-			foreach my Actor::Monster $monster (@{$monstersList->getItems()}) { # attack looter code
+			for my Actor::Monster $monster (@$monstersList) { # attack looter code
 				if (my $control = mon_control($monster->name,$monster->{nameID})) {
 					next if ( ($control->{attack_auto}  ne "" && $control->{attack_auto} == -1)
 						|| ($control->{attack_lvl}  ne "" && $control->{attack_lvl} > $char->{lv})
