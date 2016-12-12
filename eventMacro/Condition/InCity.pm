@@ -21,7 +21,7 @@ sub _parse_syntax {
 	if ($condition_code =~ /^(0|1)$/) {
 		$self->{wanted_return_isCity} = $1;
 	} else {
-		$self->{error} = "Value '".$member."' Should be '0' or '1'";
+		$self->{error} = "Value '".$condition_code."' Should be '0' or '1'";
 		return 0;
 	}
 	
