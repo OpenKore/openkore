@@ -2,6 +2,8 @@ package InventoryList::Cart;
 
 use strict;
 use Globals;
+use Log qw(message debug);
+use Translation qw(T);
 use InventoryList;
 use base qw(InventoryList);
 
@@ -14,6 +16,13 @@ sub new {
 	$self->{weight_max} = 0;
 	$self->{exists} = 0;
 	$self->{type} = 0;
+
+	Scalar::Util::weaken(my $weak = $self);
+	$self->{hooks} = Plugins::addHooks(
+		['packet_pre/cart_info', sub { $weak->handleInfo(@_) }],
+		['packet_pre/cart_off', sub { $weak->handleClose }],
+	);
+
 	return $self;
 }
 
@@ -23,13 +32,14 @@ sub isReady {
 }
 
 #TODO: Add a hook call here to be used in places where we need to know exaclty when cart info was received.
-sub info {
-	my ($self, $args) = @_;
+sub handleInfo {
+	my ($self, undef, $args) = @_;
 	$self->{items} = $args->{items};
 	$self->{items_max} = $args->{items_max};
 	$self->{weight} = int($args->{weight} / 10);
 	$self->{weight_max} = int($args->{weight_max} / 10);
 	$self->{exists} = 1;
+	debug "[cart_info] received.\n", "parseMsg";
 }
 
 sub onMapChange {
@@ -38,9 +48,10 @@ sub onMapChange {
 	$self->clear();
 }
 
-sub close {
+sub handleClose {
 	my ($self) = @_;
 	$self->{exists} = 0;
+	message T("Cart released.\n"), "success";
 }
 
 sub changeType {

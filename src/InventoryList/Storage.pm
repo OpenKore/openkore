@@ -2,6 +2,8 @@ package InventoryList::Storage;
 
 use strict;
 use Globals;
+use Log qw(message);
+use Translation qw(T);
 use InventoryList;
 use base qw(InventoryList);
 
@@ -12,6 +14,13 @@ sub new {
 	$self->{opened} = 0;
 	$self->{items} = 0;
 	$self->{items_max} = 0;
+
+	Scalar::Util::weaken(my $weak = $self);
+	$self->{hooks} = Plugins::addHooks(
+		['packet_pre/storage_opened', sub { $weak->handleOpen(@_) }],
+		['packet_pre/storage_closed', sub { $weak->handleClose }],
+	);
+
 	return $self;
 }
 
@@ -25,10 +34,11 @@ sub isReady {
 	return $self->{opened} == 1;
 }
 
-sub open {
-	my ($self, $args) = @_;
+sub handleOpen {
+	my ($self, undef, $args) = @_;
 	$self->{items} = $args->{items};
 	$self->{items_max} = $args->{items_max};
+	message T("Storage opened.\n"), "storage";
 	if (!$self->{opened}) {
 		$self->{opened} = 1;
 		$self->{openedThisSession} = 1;
@@ -36,9 +46,11 @@ sub open {
 	}
 }
 
-sub close {
+sub handleClose {
 	my ($self) = @_;
 	$self->{opened} = 0;
+	message T("Storage closed.\n"), "storage";
+	Plugins::callHook('packet_storage_close');
 }
 
 sub isFull {

@@ -1685,8 +1685,7 @@ sub inventory_item_removed {
 
 # 012B
 sub cart_off {
-	$char->cart->close;
-	message T("Cart released.\n"), "success";
+	# Handled by InventoryList::Cart.
 }
 
 # 012D
@@ -2343,14 +2342,11 @@ sub forge_list {
 }
  
 sub storage_opened {
-	my ($self, $args) = @_;
-	$char->storage->open($args);
+	# Handled by InventoryList::Storage.
 }
 
 sub storage_closed {
-	$char->storage->close();
-	message T("Storage closed.\n"), "storage";
-	Plugins::callHook('packet_storage_close');
+	# Handled by InventoryList::Storage.
 
 	# Storage log
 	writeStorageLog(0);
@@ -2507,9 +2503,7 @@ sub cart_item_removed {
 }
 
 sub cart_info {
-	my ($self, $args) = @_;
-	$char->cart->info($args);
-	debug "[cart_info] received.\n", "parseMsg";
+	# Handled by InventoryList::Cart.
 }
 
 sub cart_add_failed {
