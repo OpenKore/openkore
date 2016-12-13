@@ -45,7 +45,7 @@ sub new {
 		'00F5' => ['item_use', 'x4 v x5 a4', [qw(index targetID)]],#17
 		'00F7' => ['sync', 'x4 V', [qw(time)]],
 		'0113' => ['storage_item_add', 'x3 v x5 V', [qw(index amount)]],
-		'0116' => undef,
+		'0116' => ['storage_close'],
 		'0190' => ['storage_item_remove', 'x8 v x10 V', [qw(index amount)]],
 		'0193' => ['actor_action', 'x a4 x C', [qw(targetID type)]],
 	);
@@ -82,11 +82,6 @@ sub sendSkillUseLocInfo {
 
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendStorageClose {
-	$_[0]->sendToServer(pack('v', 0x0116));
-	debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
 1;

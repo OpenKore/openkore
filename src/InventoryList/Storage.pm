@@ -2,7 +2,7 @@ package InventoryList::Storage;
 
 use strict;
 use Globals;
-use Log qw(message);
+use Log qw(message error);
 use Translation qw(T);
 use InventoryList;
 use base qw(InventoryList);
@@ -66,6 +66,17 @@ sub items {
 sub items_max {
 	my ($self) = @_;
 	return $self->{items_max};
+}
+
+# Attempt to close the storage.
+sub close {
+	my ($self) = @_;
+
+	if ($self->isReady) {
+		$messageSender->sendStorageClose();
+	} else {
+		error T("Can't close the storage. It's not open.\n");
+	}
 }
 
 1;

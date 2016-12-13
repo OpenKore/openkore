@@ -61,6 +61,7 @@ sub new {
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'00F3' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'00F7' => ['storage_close'], # len 2
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
@@ -516,11 +517,6 @@ sub sendDealTrade {
 # 0x00f6,8
 
 # 0x00f7,2,closekafra,0
-sub sendStorageClose {
-	$_[0]->sendToServer(pack('v', 0x00F7));
-	debug "Sent Storage Done\n", "sendPacket", 2;
-}
-
 # 0x00f8,2
 
 # 0x00f9,26,createparty,2

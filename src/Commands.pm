@@ -4786,7 +4786,8 @@ sub cmdStorage_gettocart {
 }
 
 sub cmdStorage_close {
-	$messageSender->sendStorageClose();
+	message T("Trying to close the storage...\n");
+	$char->storage->close;
 }
 
 sub cmdStorage_log {

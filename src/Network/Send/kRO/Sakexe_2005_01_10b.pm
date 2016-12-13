@@ -47,7 +47,7 @@ sub new {
 		'0113' => ['skill_use_location', 'x8 v x6 v x2 v x8 v', [qw(lv skillID x y)]],
 		'0116' => ['item_drop', 'x13 v x v', [qw(index amount)]],
 		'0190' => ['actor_action', 'x7 a4 x6 C', [qw(targetID type)]],
-		'0193' => undef,
+		'0193' => ['storage_close'],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -73,11 +73,6 @@ sub sendSkillUseLocInfo {
 	my $msg = pack('v x8 v x6 v x2 v x8 v Z80', 0x007E, $lv, $ID, $x, $y, $moreinfo);
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendStorageClose {
-	$_[0]->sendToServer(pack('v', 0x0193));
-	debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
 1;

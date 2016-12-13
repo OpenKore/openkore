@@ -642,6 +642,12 @@ sub sendStorageGet {
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
 
+sub sendStorageClose {
+	my ($self) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'storage_close'}));
+	debug "Sent Storage Done\n", "sendPacket", 2;
+}
+
 sub sendStoragePassword {
 	my $self = shift;
 	# 16 byte packed hex data

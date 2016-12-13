@@ -65,6 +65,7 @@ sub new {
 		#'00F3' => ['map_login', '', [qw()]],
 		'00F3' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'00F7' => ['storage_close'], # len 2
 		'0102' => ['party_setting', 'V', [qw(exp)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
@@ -902,23 +903,6 @@ sub sendStorageAddFromCart {
 	$msg = pack("C*", 0x29, 0x01) . pack("v*", $index) . pack("V*", $amount);
 	$self->sendToServer($msg);
 	debug "Sent Storage Add From Cart: $index x $amount\n", "sendPacket", 2;
-}
-
-sub sendStorageClose {
-	my ($self) = @_;
-	my $msg;
-	if (($self->{serverType} == 3) || ($self->{serverType} == 5) || ($self->{serverType} == 9) || ($self->{serverType} == 15)) {
-		$msg = pack("C*", 0x93, 0x01);
-	} elsif ($self->{serverType} == 12) {
-		$msg = pack("C*", 0x72, 0x00);
-	} elsif ($self->{serverType} == 14) {
-		$msg = pack("C*", 0x16, 0x01);
-	} else {
-		$msg = pack("C*", 0xF7, 0x00);
-	}
-
-	$self->sendToServer($msg);
-	debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
 sub sendStorageGetToCart {
