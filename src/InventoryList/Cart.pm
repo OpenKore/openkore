@@ -2,7 +2,7 @@ package InventoryList::Cart;
 
 use strict;
 use Globals;
-use Log qw(message debug);
+use Log qw(message error debug);
 use Translation qw(T);
 use InventoryList;
 use base qw(InventoryList);
@@ -77,6 +77,18 @@ sub isFull {
 sub type {
 	my ($self) = @_;
 	return $self->{type};
+}
+
+# Attempt to release the cart.
+sub close {
+	my ($self) = @_;
+
+	# check if we have a cart since the same packet is used for Cart, Falcon and Peco Peco
+	if ($self->isReady) {
+		$messageSender->sendCompanionRelease(); # option_remove
+	} else {
+		error T("Can't release the cart. You don't have one.\n");
+	}
 }
 
 1;

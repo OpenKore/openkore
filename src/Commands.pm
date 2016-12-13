@@ -875,8 +875,8 @@ sub cmdCart {
 		cmdCart_get($arg2);
 
 	} elsif ($arg1 eq "release") {
-		$messageSender->sendCompanionRelease();
 		message T("Trying to released the cart...\n");
+		$char->cart->close;
 	
 	} elsif ($arg1 eq "change") {
 		if ($arg2 =~ m/^[1-5]$/) {

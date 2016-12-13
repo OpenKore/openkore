@@ -69,6 +69,7 @@ sub new {
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'012A' => ['option_remove'], # len 2
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
 		'0146' => ['npc_talk_cancel', 'a4', [qw(ID)]],
@@ -351,12 +352,6 @@ sub sendChatRoomLeave {
 	my $msg = pack("C*", 0xE3, 0x00);
 	$self->sendToServer($msg);
 	debug "Sent Leave Chat Room\n", "sendPacket", 2;
-}
-
-sub sendCompanionRelease {
-	my $msg = pack("C*", 0x2A, 0x01);
-	$_[0]->sendToServer($msg);
-	debug "Sent Companion Release (Cart, Falcon or Pecopeco)\n", "sendPacket", 2;
 }
 
 sub sendCurrentDealCancel {

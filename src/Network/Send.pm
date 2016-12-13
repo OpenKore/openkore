@@ -750,6 +750,12 @@ sub sendSkillUseLoc {
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
+sub sendCompanionRelease {
+	my ($self) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'option_remove'}));
+	debug "Sent Companion Release (Cart, Falcon or Pecopeco)\n", "sendPacket", 2;
+}
+
 sub sendGuildMasterMemberCheck {
 	my ($self, $ID) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'guild_check'}));
