@@ -7,11 +7,12 @@ use base 'eventMacro::Conditiontypes::NumericConditionState';
 use Globals;
 
 sub _hooks {
-	['skill_update','skills_list','skill_add','skill_delete'];
+	['packet/skill_update','packet/skills_list','packet/skill_add','packet/skill_delete'];
 }
 
 sub _get_val {
-    $char->getSkillLevel( new Skill( auto => $self->{wanted_skill_ID_or_handle} ) );
+	my ( $self ) = @_;
+	$char->getSkillLevel( $self->{skill} );
 }
 
 sub _parse_syntax {
@@ -28,10 +29,10 @@ sub _parse_syntax {
 		return 0;
 	}
 	
+	$self->{skill} = new Skill( auto => $self->{wanted_skill_ID_or_handle} );
+	
 	$self->SUPER::_parse_syntax($numeric_condition);
 }
-
-
 
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
@@ -47,7 +48,10 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".".$self->{name}."Last"} = $self->{lastMap};
+	$new_variables->{".".$self->{name}."LastName"} = $self->{skill}->getName;
+	$new_variables->{".".$self->{name}."LastID"} = $self->{skill}->getIDN;
+	$new_variables->{".".$self->{name}."LastHandle"} = $self->{skill}->getHandle;
+	$new_variables->{".".$self->{name}."LastLevel"} = $char->getSkillLevel( $self->{skill} );
 	
 	return $new_variables;
 }

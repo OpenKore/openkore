@@ -85,7 +85,8 @@ sub validate {
 }
 
 sub between {
-	$_[0] <= $_[1] && $_[1] <= $_[2];
+	return 1 if ($_[0] <= $_[1] && $_[1] <= $_[2]);
+	return 0;
 }
 
 sub _get_code_regex {

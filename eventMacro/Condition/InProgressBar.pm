@@ -39,13 +39,4 @@ sub validate_condition {
 	return $self->SUPER::validate_condition( (((exists $char->{progress_bar} && $char->{progress_bar} == 1) == $self->{wanted_progress_bar}) ? 1 : 0) );
 }
 
-sub get_new_variable_list {
-	my ($self) = @_;
-	my $new_variables;
-	
-	$new_variables->{".".$self->{name}."Last"} = $self->{lastMap};
-	
-	return $new_variables;
-}
-
 1;
