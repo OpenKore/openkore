@@ -41,6 +41,11 @@ use enum qw(
 # Mutexes used by this task.
 use constant MUTEXES => ['npc'];
 
+use constant {
+	NOT_STARTED          => 0,
+	TALKING_TO_NPC       => 1
+};
+
 
 ##
 # Task::TalkNPC->new(options...)
@@ -70,6 +75,7 @@ sub new {
 	my %args = @_;
 	my $self = $class->SUPER::new(@_, mutexes => MUTEXES);
 
+	$self->{type} = $args{type};
 	$self->{x} = $args{x};
 	$self->{y} = $args{y};
 	$self->{nameID} = $args{nameID};
@@ -95,7 +101,7 @@ sub activate {
 	my ($self) = @_;
 	$self->SUPER::activate(); # Do not forget to call this!
 	$self->{time} = time;
-	$self->{stage} = 'Not Started';
+	$self->{stage} = NOT_STARTED;
 	$self->{mapChanged} = 0;
 }
 
@@ -106,7 +112,7 @@ sub iterate {
 	return unless ($net->getState() == Network::IN_GAME);
 	my $timeResponse = ($config{npcTimeResponse} >= 5) ? $config{npcTimeResponse}:5;
 	
-	if ($self->{stage} eq 'Not Started') {
+	if ($self->{stage} == NOT_STARTED) {
 		if (!timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
 			# Wait for us to stop moving before talking.
 			return;
@@ -139,7 +145,11 @@ sub iterate {
 			if ($target) {
 				$self->{target} = $target;
 				$self->{ID} = $target->{ID};
-				$self->{steps} = [parseArgs("x $self->{sequence}")];
+				if ($self->{type} eq 'talknpc') {
+					$self->{steps} = [parseArgs("x $self->{sequence}")];
+				} else {
+					push (@{$self->{steps}}, 'x');
+				}
 				undef $ai_v{npc_talk}{time};
 				undef $ai_v{npc_talk}{talk};
 				lookAtPosition($self);
@@ -153,11 +163,15 @@ sub iterate {
 				$self->{target} = Actor::NPC->new;
 				$self->{target}->{appear_time} = time;
 				$self->{target}->{name} = 'Unknown';
-				$self->{steps} = [parseArgs($self->{sequence})];
+				if ($self->{type} eq 'talknpc') {
+					$self->{steps} = [parseArgs($self->{sequence})];
+				} else {
+					push (@{$self->{steps}}, 'x');
+				}
 			}
 
 			if ($target || %talk) {
-				$self->{stage} = 'Talking to NPC';
+				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
 			}
 		}
@@ -177,6 +191,11 @@ sub iterate {
 
 	} elsif (timeOut($ai_v{npc_talk}{time}, 0.25)) {
 		# 0.25 seconds have passed since we last talked to the NPC.
+		
+		if ($self->{type} eq 'talk' && !@{ $self->{steps} }) {
+			#We still doesn't have the next step
+			return;
+		}
 
 		if ($ai_v{npc_talk}{talk} eq 'close' && $self->{steps}[0] =~ /x/i) {
 			undef $ai_v{npc_talk}{talk};
@@ -392,6 +411,11 @@ sub findTarget {
 		}
 	}
 	return undef;
+}
+
+sub nextStep {
+	my ($self, $step) = @_;
+	$self->{steps}[0] = $step;
 }
 
 1;
