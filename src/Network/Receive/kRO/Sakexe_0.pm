@@ -930,86 +930,6 @@ sub card_merge_status {
 	undef $cardMergeIndex;
 }
 
-sub cart_info {
-	my ($self, $args) = @_;
-
-	$cart{items} = $args->{items};
-	$cart{items_max} = $args->{items_max};
-	$cart{weight} = int($args->{weight} / 10);
-	$cart{weight_max} = int($args->{weight_max} / 10);
-	$cart{exists} = 1;
-	debug "[cart_info] received.\n", "parseMsg";
-}
-
-sub cart_add_failed {
-	my ($self, $args) = @_;
-
-	my $reason;
-	if ($args->{fail} == 0) {
-		$reason = T('overweight');
-	} elsif ($args->{fail} == 1) {
-		$reason = T('too many items');
-	} else {
-		$reason = TF("Unknown code %s",$args->{fail});
-	}
-	error TF("Can't Add Cart Item (%s)\n", $reason);
-}
-
-sub cart_items_nonstackable {
-	my ($self, $args) = @_;
-
-	$self->_items_list({
-		# TODO: different classes for inventory/cart/storage items
-		class => 'Actor::Item',
-		hook => 'packet_cart',
-		debug_str => 'Non-Stackable Cart Item',
-		items => [$self->parse_items_nonstackable($args)],
-		getter => sub { $cart{inventory}[$_[0]{index}] },
-		adder => sub { $cart{inventory}[$_[0]{index}] = $_[0] },
-	});
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
-sub cart_items_stackable {
-	my ($self, $args) = @_;
-
-	$self->_items_list({
-		class => 'Actor::Item',
-		hook => 'packet_cart',
-		debug_str => 'Stackable Cart Item',
-		items => [$self->parse_items_stackable($args)],
-		getter => sub { $cart{inventory}[$_[0]{index}] },
-		adder => sub { $cart{inventory}[$_[0]{index}] = $_[0] },
-	});
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
-sub cart_item_added {
-	my ($self, $args) = @_;
-
-	my $item = $cart{inventory}[$args->{index}] ||= Actor::Item->new;
-	if ($item->{amount}) {
-		$item->{amount} += $args->{amount};
-	} else {
-		$item->{index} = $args->{index};
-		$item->{nameID} = $args->{nameID};
-		$item->{amount} = $args->{amount};
-		$item->{identified} = $args->{identified};
-		$item->{broken} = $args->{broken};
-		$item->{upgrade} = $args->{upgrade};
-		$item->{cards} = $args->{cards};
-		$item->{type} = $args->{type} if (exists $args->{type});
-		$item->{name} = itemName($item);
-	}
-	message TF("Cart Item Added: %s (%d) x %s\n", $item->{name}, $args->{index}, $args->{amount});
-	$itemChange{$item->{name}} += $args->{amount};
-	$args->{item} = $item;
-}
-
 sub cash_dealer {
 	my ($self, $args) = @_;
 
@@ -1055,21 +975,6 @@ sub combo_delay {
 	$args->{actor} = Actor::get($args->{ID});
 	my $verb = $args->{actor}->verb('have', 'has');
 	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
-}
-
-sub cart_item_removed {
-	my ($self, $args) = @_;
-
-	my ($index, $amount) = @{$args}{qw(index amount)};
-
-	my $item = $cart{inventory}[$index];
-	$item->{amount} -= $amount;
-	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $index, $amount);
-	$itemChange{$item->{name}} -= $amount;
-	if ($item->{amount} <= 0) {
-		$cart{'inventory'}[$index] = undef;
-	}
-	$args->{item} = $item;
 }
 
 sub change_to_constate25 {
@@ -1702,9 +1607,6 @@ sub inventory_items_nonstackable {
 		Plugins::callHook('packet_inventory', {index => $item->{invIndex}});
 =cut
 	}
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
 }
 
 sub item_skill {
@@ -1824,7 +1726,6 @@ sub map_changed {
 		delete $char->{permitSkill};
 		delete $char->{encoreSkill};
 	}
-	$cart{exists} = 0;
 	undef %guild;
 
 	Plugins::callHook('Network::Receive::map_changed', {
@@ -3782,115 +3683,6 @@ sub stats_points_needed {
 	} elsif ($args->{type} == 37) {
 		$char->{points_luk} = $args->{val};
 		debug "Points needed for Luck: $args->{val}\n", "parseMsg";
-	}
-}
-
-sub storage_closed {
-	message T("Storage closed.\n"), "storage";
-	delete $ai_v{temp}{storage_opened};
-	delete $storage{opened};
-	Plugins::callHook('packet_storage_close');
-
-	# Storage log
-	writeStorageLog(0);
-
-	if ($char->{dcOnEmptyItems} ne "") {
-		message TF("Disconnecting on empty %s!\n", $char->{dcOnEmptyItems});
-		chatLog("k", TF("Disconnecting on empty %s!\n", $char->{dcOnEmptyItems}));
-		quit();
-	}
-}
-
-sub storage_item_added {
-	my ($self, $args) = @_;
-
-	my $index = $args->{index};
-	my $amount = $args->{amount};
-
-	my $item = $storage{$index} ||= Actor::Item->new;
-	if ($item->{amount}) {
-		$item->{amount} += $amount;
-	} else {
-		binAdd(\@storageID, $index);
-		$item->{nameID} = $args->{nameID};
-		$item->{index} = $index;
-		$item->{amount} = $amount;
-		$item->{type} = $args->{type};
-		$item->{identified} = $args->{identified};
-		$item->{broken} = $args->{broken};
-		$item->{upgrade} = $args->{upgrade};
-		$item->{cards} = $args->{cards};
-		$item->{name} = itemName($item);
-		$item->{binID} = binFind(\@storageID, $index);
-	}
-	message TF("Storage Item Added: %s (%d) x %s\n", $item->{name}, $item->{binID}, $amount), "storage", 1;
-	$itemChange{$item->{name}} += $amount;
-	$args->{item} = $item;
-}
-
-sub storage_item_removed {
-	my ($self, $args) = @_;
-
-	my ($index, $amount) = @{$args}{qw(index amount)};
-
-	my $item = $storage{$index};
-	$item->{amount} -= $amount;
-	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $item->{binID}, $amount), "storage";
-	$itemChange{$item->{name}} -= $amount;
-	$args->{item} = $item;
-	if ($item->{amount} <= 0) {
-		delete $storage{$index};
-		binRemove(\@storageID, $index);
-	}
-}
-
-sub storage_items_nonstackable {
-	my ($self, $args) = @_;
-
-	$self->_items_list({
-		class => 'Actor::Item',
-		hook => 'packet_storage',
-		debug_str => 'Non-Stackable Storage Item',
-		items => [$self->parse_items_nonstackable($args)],
-		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
-	});
-
-	$storageTitle = exists $args->{title} ? $args->{title} : undef;
-}
-
-sub storage_items_stackable {
-	my ($self, $args) = @_;
-
-	undef %storage;
-	undef @storageID;
-
-	$self->_items_list({
-		class => 'Actor::Item',
-		hook => 'packet_storage',
-		debug_str => 'Stackable Storage Item',
-		items => [$self->parse_items_stackable($args)],
-		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
-		callback => sub {
-			my ($local_item) = @_;
-
-			$local_item->{amount} = $local_item->{amount} & ~0x80000000;
-		},
-	});
-
-	$storageTitle = exists $args->{title} ? $args->{title} : undef;
-}
-
-sub storage_opened {
-	my ($self, $args) = @_;
-	$storage{items} = $args->{items};
-	$storage{items_max} = $args->{items_max};
-
-	$ai_v{temp}{storage_opened} = 1;
-	if (!$storage{opened}) {
-		$storage{opened} = 1;
-		$storage{openedThisSession} = 1;
-		message defined $storageTitle ? TF("Storage '%s' opened.\n", $storageTitle) : T("Storage opened.\n"), "storage";
-		Plugins::callHook('packet_storage_open');
 	}
 }
 

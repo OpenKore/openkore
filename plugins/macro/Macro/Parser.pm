@@ -302,8 +302,8 @@ sub parseCmd {
 		my $randomized = 0;
 
 		if ($kw eq 'npc')           {$ret = getnpcID($arg)}
-		elsif ($kw eq 'cart')       {($ret) = getItemIDs($arg, $::cart{'inventory'})}
-		elsif ($kw eq 'Cart')       {$ret = join ',', getItemIDs($arg, $::cart{'inventory'})}
+		elsif ($kw eq 'cart')       {($ret) = getItemIDs($arg, $char->cart->getItems)}
+		elsif ($kw eq 'Cart')       {$ret = join ',', getItemIDs($arg, $char->cart->getItems)}
 		elsif ($kw eq 'inventory')  {($ret) = getInventoryIDs($arg)}
 		elsif ($kw eq 'Inventory')  {$ret = join ',', getInventoryIDs($arg)}
 		elsif ($kw eq 'store')      {($ret) = getItemIDs($arg, \@::storeList)}
