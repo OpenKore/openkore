@@ -197,7 +197,9 @@ sub ai_drop {
 
 	if (@{$r_items} == 1) {
 		# Dropping one item; do it immediately
-		Misc::drop($r_items->[0], $max);
+		if (my $item = $char->inventory->get($r_items->[0])) {
+			$item->drop($max);
+		}
 	} else {
 		# Dropping multiple items; queue an AI sequence
 		$seq{items} = \@{$r_items};

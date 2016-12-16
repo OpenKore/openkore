@@ -423,6 +423,20 @@ sub use {
 }
 
 ##
+# drop(amount)
+#
+# Drops $amount of the item. If $amount is not specified or too large, it defaults
+# to the number of items you have.
+sub drop {
+	my ($self, $amount) = @_;
+
+	if (!$amount || $amount > $self->{amount}) {
+		$amount = $self->{amount};
+	}
+	$messageSender->sendDrop($self->{index}, $amount);
+}
+
+##
 # void $ActorItem->equipInSlot(slot dontqueue)
 # slot: where item should be equipped.
 #

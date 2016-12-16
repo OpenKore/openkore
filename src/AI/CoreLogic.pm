@@ -408,10 +408,12 @@ sub processNPCTalk {
 # Drop one or more items from inventory.
 sub processDrop {
 	if (AI::action eq "drop" && timeOut(AI::args)) {
-		my $item = AI::args->{'items'}[0];
+		my $item = $char->inventory->get(AI::args->{'items'}[0]);
 		my $amount = AI::args->{max};
 
-		drop($item, $amount);
+		if ($item) {
+			$item->drop($amount);
+		}
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
 		AI::dequeue if (@{AI::args->{'items'}} <= 0);

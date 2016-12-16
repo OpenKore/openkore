@@ -117,7 +117,6 @@ our @EXPORT = (
 	checkMonsterCleanness
 	createCharacter
 	dealAddItem
-	drop
 	dumpData
 	getEmotionByCommand
 	getIDFromChat
@@ -1578,22 +1577,6 @@ sub dealAddItem {
 
 	$messageSender->sendDealAddItem($item->{index}, $amount);
 	$currentDeal{lastItemAmount} = $amount;
-}
-
-##
-# drop(itemIndex, amount)
-#
-# Drops $amount of the item specified by $itemIndex. If $amount is not specified or too large, it defaults
-# to the number of items you have.
-sub drop {
-	my ($itemIndex, $amount) = @_;
-	my $item = $char->inventory->get($itemIndex);
-	if ($item) {
-		if (!$amount || $amount > $item->{amount}) {
-			$amount = $item->{amount};
-		}
-		$messageSender->sendDrop($item->{index}, $amount);
-	}
 }
 
 sub dumpData {
