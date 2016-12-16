@@ -116,7 +116,6 @@ our @EXPORT = (
 	checkFollowMode
 	checkMonsterCleanness
 	createCharacter
-	deal
 	dealAddItem
 	drop
 	dumpData
@@ -1568,21 +1567,6 @@ sub createCharacter {
 	}
 
 	return 1;
-}
-
-##
-# void deal(Actor::Player player)
-# Requires: defined($player)
-# Ensures: exists $outgoingDeal{ID}
-#
-# Sends $player a deal request.
-sub deal {
-	my $player = $_[0];
-	assert(defined $player) if DEBUG;
-	assert(UNIVERSAL::isa($player, 'Actor::Player')) if DEBUG;
-
-	$outgoingDeal{ID} = $player->{ID};
-	$messageSender->sendDeal($player->{ID});
 }
 
 ##

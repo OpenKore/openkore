@@ -48,4 +48,16 @@ sub job {
 	return $jobs_lut{$self->{jobID}};
 }
 
+##
+# void deal()
+# Ensures: exists $outgoingDeal{ID}
+#
+# Sends this player a deal request.
+sub deal {
+	my ($self) = @_;
+
+	$outgoingDeal{ID} = $self->{ID};
+	$messageSender->sendDeal($self->{ID});
+}
+
 1;

@@ -1502,7 +1502,7 @@ sub cmdDeal {
 		my $ID = $playersID[$arg[0]];
 		my $player = Actor::get($ID);
 		message TF("Attempting to deal %s\n", $player);
-		deal($player);
+		$player->deal;
 
 	} elsif ($arg[0] eq "no" && !%incomingDeal && !%outgoingDeal && !%currentDeal) {
 		error T("Error in function 'deal' (Deal a Player)\n" .
