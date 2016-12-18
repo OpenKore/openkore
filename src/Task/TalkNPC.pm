@@ -102,7 +102,6 @@ sub new {
 	return $self;
 }
 
-use Data::Dumper;
 sub handle_npc_talk {
 	my ($hook_name, $args, $holder) = @_;
 	my $self = $holder->[0];
@@ -218,6 +217,9 @@ sub iterate {
 		my $target = $self->find_and_set_target;
 		$self->{stage} = TALKING_TO_NPC;
 		$self->{time} = time;
+		
+	} elsif ($self->{stage} == TALKING_TO_NPC && $talk{buyOrSell} && (!@{$self->{steps}} || $self->{steps}[0] !~ /^b.*/i)) {
+		$self->conversation_end;
 
 	} elsif (!$ai_v{'npc_talk'}{'time'} && timeOut($self->{time}, $timeResponse)) {
 		# If NPC does not respond before timing out, then by default, it's

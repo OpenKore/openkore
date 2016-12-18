@@ -2230,7 +2230,7 @@ sub npc_sell_list {
 		$item->{unsellable} = 1; # flag this item as unsellable
 	}
 	
-	undef $talk{buyOrSell};
+	undef %talk;
 	message T("Ready to start selling items\n");
 
 	# continue talk sequence now
@@ -2255,7 +2255,7 @@ sub npc_store_info {
 	my $msg = $args->{RAW_MSG};
 	undef @storeList;
 	my $storeList = 0;
-	undef $talk{'buyOrSell'};
+	undef %talk;
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
 		my $price = unpack("V1", substr($msg, $i, 4));
 		my $type = unpack("C1", substr($msg, $i + 8, 1));
