@@ -3844,8 +3844,8 @@ sub npc_talk_close {
 		$messageSender->sendTalkCancel($ID);
 	}
 
-	$ai_v{npc_talk}{talk} = 'close';
-	$ai_v{npc_talk}{time} = time;
+	$ai_v{'npc_talk'}{'talk'} = 'close';
+	$ai_v{'npc_talk'}{'time'} = time;
 	undef %talk;
 
 	Plugins::callHook('npc_talk_done', {ID => $ID});
@@ -3856,14 +3856,14 @@ sub npc_talk_continue {
 	my $ID = substr($args->{RAW_MSG}, 2, 4);
 	my $name = getNPCName($ID);
 
-	$ai_v{npc_talk}{talk} = 'next';
-	$ai_v{npc_talk}{time} = time;
+	$ai_v{'npc_talk'}{'talk'} = 'next';
+	$ai_v{'npc_talk'}{'time'} = time;
 
 	if ($config{autoTalkCont}) {
 		message TF("%s: Auto-continuing talking\n", $name), "npc";
 		$messageSender->sendTalkContinue($ID);
 		# This time will be reset once the NPC responds
-		$ai_v{npc_talk}{time} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
+		$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
 	} else {
 		message TF("%s: Type 'talk cont' to continue talking\n", $name), "npc";
 	}
@@ -3875,12 +3875,10 @@ sub npc_talk_number {
 	my $ID = $args->{ID};
 
 	my $name = getNPCName($ID);
-	$ai_v{npc_talk}{talk} = 'number';
-	$ai_v{npc_talk}{time} = time;
+	$ai_v{'npc_talk'}{'talk'} = 'number';
+	$ai_v{'npc_talk'}{'time'} = time;
 
 	message TF("%s: Type 'talk num <number #>' to input a number.\n", $name), "input";
-	$ai_v{'npc_talk'}{'talk'} = 'num';
-	$ai_v{'npc_talk'}{'time'} = time;
 }
 
 sub npc_talk_responses {
@@ -3931,8 +3929,8 @@ sub npc_talk_text {
 
 	my $name = getNPCName($ID);
 	message TF("%s: Type 'talk text' (Respond to NPC)\n", $name), "npc";
-	$ai_v{npc_talk}{talk} = 'text';
-	$ai_v{npc_talk}{time} = time;
+	$ai_v{'npc_talk'}{'talk'} = 'text';
+	$ai_v{'npc_talk'}{'time'} = time;
 }
 
 1;

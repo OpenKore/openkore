@@ -1997,6 +1997,13 @@ sub npc_store_info {
 
 sub npc_talk {
 	my ($self, $args) = @_;
+	
+	#Auto-create Task::TalkNPC if not active
+	unless (defined %talk) {
+		my $nameID = unpack 'V', $args->{ID};
+		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
+		AI::queue("NPC", new Task::TalkNPC(type => 'autotalk', nameID => $nameID));
+	}
 
 	$talk{ID} = $args->{ID};
 	$talk{nameID} = unpack 'V', $args->{ID};

@@ -4891,81 +4891,88 @@ sub cmdTalk {
 			error "Error in function 'talk' (Talk to NPC)\n" .
 				"You are already talking with an npc\n";
 		} else {
-			AI::clear("route");
-			AI::queue("NPC", new Task::TalkNPC(type => 'talk', nameID => $npcsList->get($arg1)->{nameID}));
+			my $npc = $npcsList->get($arg1);
+			if ($npc) {
+				AI::clear("route");
+				AI::queue("NPC", new Task::TalkNPC(type => 'talk', nameID => $npcsList->get($arg1)->{nameID}));
+			} else {
+				error "Error in function 'talk' (Talk to NPC)\n" .
+					"Given npc not found\n";
+			}
 		}
 
-	} elsif (($arg1 eq "resp" || $arg1 eq "num" || $arg1 eq "text") && !%talk) {
+	} elsif (!%talk) {
 		error TF("Error in function 'talk %s' (Respond to NPC)\n" .
 			"You are not talking to any NPC.\n", $arg1);
 
 	} else {
 		my $task = $char->args;
-		
-		if ($arg1 eq "resp" && $arg2 eq "") {
+		my $step;
+		if ($arg1 eq "resp") {
 			if (!$talk{'responses'}) {
-			error T("Error in function 'talk resp' (Respond to NPC)\n" .
-				"No NPC response list available.\n");
+				error T("Error in function 'talk resp' (Respond to NPC)\n" .
+					"No NPC response list available.\n");
 				return;
-			}
-			my $msg = center(T(" Responses (").getNPCName($talk{ID}).") ", 40, '-') ."\n" .
-				TF("#  Response\n");
-			for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
-				$msg .= swrite(
-				"@< @*",
-				[$i, $talk{responses}[$i]]);
-			}
-			$msg .= ('-'x40) . "\n";
-			message $msg, "list";
-		} elsif ($arg1 eq "resp" && $arg2 =~ /^(\/(.*?)\/(\w?))$/) {
-			my $step = 'r~'.$1;
-			$task->nextStep($step);
-			
-		} elsif ($arg1 eq "resp" && $arg2 ne "" && $talk{'responses'}[$arg2] eq "") {
-			error TF("Error in function 'talk resp' (Respond to NPC)\n" .
+				
+			} elsif ($arg2 eq "") {
+				my $msg = center(T(" Responses (").getNPCName($talk{ID}).") ", 40, '-') ."\n" .
+					TF("#  Response\n");
+				for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
+					$msg .= swrite(
+					"@< @*",
+					[$i, $talk{responses}[$i]]);
+				}
+				$msg .= ('-'x40) . "\n";
+				message $msg, "list";
+				return;
+				
+			} elsif ($arg2 =~ /^(\/(.*?)\/(\w?))$/) {
+				$step = 'r~'.$1;
+				
+			} elsif ($arg2 ne "" && $talk{'responses'}[$arg2] eq "") {
+				error TF("Error in function 'talk resp' (Respond to NPC)\n" .
 				"Response %s does not exist.\n", $arg2);
-
-		} elsif ($arg1 eq "resp" && $arg2 ne "") {
-			my $step = 'r'.$arg2;
-			$task->nextStep($step);
-
-		} elsif ($arg1 eq "num" && $arg2 eq "") {
-			error T("Error in function 'talk num' (Respond to NPC)\n" .
-				"You must specify a number.\n");
-
-		} elsif ($arg1 eq "num" && !($arg2 =~ /^-?\d+$/)) {
-			error TF("Error in function 'talk num' (Respond to NPC)\n" .
-				"%s is not a valid number.\n", $arg2);
-
-		} elsif ($arg1 eq "num" && $arg2 =~ /^-?\d+$/) {
-			my $step = 'd'.$arg2;
-			$task->nextStep($step);
+				return;
+				
+			} elsif ($arg2 ne "") {
+				$step = 'r'.$arg2;
+			}
+			
+		} elsif ($arg1 eq "num") {
+			if ($arg2 eq "") {
+				error T("Error in function 'talk num' (Respond to NPC)\n" .
+					"You must specify a number.\n");
+				return;
+				
+			} elsif ($arg2 !~ /^-?\d+$/) {
+				error TF("Error in function 'talk num' (Respond to NPC)\n" .
+					"%s is not a valid number.\n", $arg2);
+				return;
+				
+			} elsif ($arg2 =~ /^-?\d+$/) {
+				$step = 'd'.$arg2;
+			}
 
 		} elsif ($arg1 eq "text") {
 			if ($args eq "") {
 				error T("Error in function 'talk text' (Respond to NPC)\n" .
 					"You must specify a string.\n");
+				return;
+				
 			} else {
-				my $step = 't='.$arg2;
-				$task->nextStep($step);
+				$step = 't='.$arg2;
 			}
-
-		} elsif ($arg1 eq "cont" && !%talk) {
-			error T("Error in function 'talk cont' (Continue Talking to NPC)\n" .
-				"You are not talking to any NPC.\n");
 
 		} elsif ($arg1 eq "cont") {
-			my $step = 'c';
-			$task->nextStep($step);
+			$step = 'c';
 
 		} elsif ($arg1 eq "no") {
-			if (!%talk) {
-				error T("You are not talking to any NPC.\n");
-			} else {
-				my $step = 'n';
-				$task->nextStep($step);
-			}
+			$step = 'n';
+			
+		}
 
+		if (defined $step) {
+			$task->nextStep($step);
 		} else {
 			error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
 				"Usage: talk <NPC # | cont | resp | num | text | no> [<response #>|<number #>]\n");

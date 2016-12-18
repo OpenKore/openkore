@@ -43,7 +43,8 @@ use constant MUTEXES => ['npc'];
 
 use constant {
 	NOT_STARTED          => 0,
-	TALKING_TO_NPC       => 1
+	TALKING_TO_NPC       => 1,
+	END_OF_CONVERSATION  => 2
 };
 
 
@@ -81,19 +82,40 @@ sub new {
 	$self->{nameID} = $args{nameID};
 	$self->{sequence} = $args{sequence};
 	$self->{sequence} =~ s/^ +| +$//g;
-
-	# Watch for map change events. Pass a weak reference to ourselves in order
-	# to avoid circular references (memory leaks).
+	
 	my @holder = ($self);
 	Scalar::Util::weaken($holder[0]);
-	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, \@holder);
-
+	
+	push @{$self->{hookHandles}}, Plugins::addHooks(
+		['npc_talk',                  \&handle_npc_talk, \@holder],
+		['packet/npc_talk_continue',  \&handle_npc_talk, \@holder],
+		['npc_talk_done',             \&handle_npc_talk, \@holder],
+		['npc_talk_responses',        \&handle_npc_talk, \@holder],
+		['packet/npc_store_begin',    \&handle_npc_talk, \@holder],
+		['packet/npc_store_info',     \&handle_npc_talk, \@holder],
+		['packet/npc_sell_list',      \&handle_npc_talk, \@holder],
+		['packet/npc_talk_number',    \&handle_npc_talk, \@holder],
+		['packet/npc_image',          \&handle_npc_talk, \@holder],
+		['packet/npc_talk_text',      \&handle_npc_talk, \@holder]
+	);
+	
 	return $self;
+}
+
+use Data::Dumper;
+sub handle_npc_talk {
+	my ($hook_name, $args, $holder) = @_;
+	my $self = $holder->[0];
+	if ($hook_name eq 'npc_talk_done') {
+		$self->{stage} = END_OF_CONVERSATION;
+	}
 }
 
 sub DESTROY {
 	my ($self) = @_;
-	Plugins::delHook($self->{mapChangedHook}) if $self->{mapChangedHook};
+	debug "Destroying talknpc object\n", "ai_npcTalk";
+	Plugins::delHooks($_) for @{$self->{hookHandles}};
+	$self->SUPER::DESTROY;
 }
 
 # Overrided method.
@@ -102,7 +124,53 @@ sub activate {
 	$self->SUPER::activate(); # Do not forget to call this!
 	$self->{time} = time;
 	$self->{stage} = NOT_STARTED;
-	$self->{mapChanged} = 0;
+}
+
+sub find_and_set_target {
+	my ($self) = @_;
+	my $target = $self->findTarget($npcsList);
+	if ($target) {
+		debug "Target NPC " . $target->name() . " at ($target->{pos}{x},$target->{pos}{y}) found.\n", "ai_npcTalk";
+	} else {
+		$target = $self->findTarget($monstersList);
+		if ($target) {
+			debug "Target Monster-NPC " . $target->name() . " at ($self->{pos}{x},$self->{pos}{y}) found.\n", "ai_npcTalk";
+		}
+	}
+
+	if ($target && $target->{statuses}->{EFFECTSTATE_BURROW}) {
+		$self->setError(NPC_NOT_FOUND, T("NPC is hidden."));
+		$target = undef;
+	}
+	
+	if (%talk) {
+		if ($self->{type} eq 'talknpc') {
+			$self->{steps} = [parseArgs($self->{sequence})];
+		} else {
+			$self->{steps} = [];
+		}
+	} else {
+		if ($self->{type} eq 'talknpc') {
+			$self->{steps} = [parseArgs("x $self->{sequence}")];
+		} else {
+			push (@{$self->{steps}}, 'x');
+		}
+		undef $ai_v{'npc_talk'}{'time'};
+		undef $ai_v{'npc_talk'}{'talk'};
+	}
+	
+	if ($target) {
+		$self->{target} = $target;
+		$self->{ID} = $target->{ID};
+		lookAtPosition($self);
+	} elsif (%talk && !exists $talk{buyOrSell}) {
+		$self->{ID} = $talk{ID};
+		$self->{target} = Actor::NPC->new;
+		$self->{target}->{appear_time} = time;
+		$self->{target}->{name} = 'Unknown';
+	}
+	
+	return $target;
 }
 
 # Overrided method.
@@ -113,6 +181,12 @@ sub iterate {
 	my $timeResponse = ($config{npcTimeResponse} >= 5) ? $config{npcTimeResponse}:5;
 	
 	if ($self->{stage} == NOT_STARTED) {
+		if ((!%talk || $ai_v{'npc_talk'}{'talk'} eq 'close') && $self->{type} eq 'autotalk') {
+			debug "Conversation ended before openkore could even start TalkNPC task.\n", "ai_npcTalk";
+			$self->conversation_end;
+			return;
+		}
+		
 		if (!timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
 			# Wait for us to stop moving before talking.
 			return;
@@ -127,84 +201,44 @@ sub iterate {
 			}
 
 		} else {
-			my $target = $self->findTarget($npcsList);
-			if ($target) {
-				debug "Target NPC " . $target->name() . " at ($self->{pos}{x},$self->{pos}{y}) found.\n", "ai_npcTalk";
-			} else {
-				$target = $self->findTarget($monstersList);
-				if ($target) {
-					debug "Target Monster-NPC " . $target->name() . " at ($self->{pos}{x},$self->{pos}{y}) found.\n", "ai_npcTalk";
-				}
-			}
-
-			if ($target && $target->{statuses}->{EFFECTSTATE_BURROW}) {
-				$self->setError(NPC_NOT_FOUND, T("NPC is hidden."));
-				$target = undef;
-			}
-
-			if ($target) {
-				$self->{target} = $target;
-				$self->{ID} = $target->{ID};
-				if ($self->{type} eq 'talknpc') {
-					$self->{steps} = [parseArgs("x $self->{sequence}")];
-				} else {
-					push (@{$self->{steps}}, 'x');
-				}
-				undef $ai_v{npc_talk}{time};
-				undef $ai_v{npc_talk}{talk};
-				lookAtPosition($self);
-			}
-
-			# Couldn't find the target, or already in a conversation.
-			# Handles auto-conversation "would you like to change maps?" NPCs.
-			# NPCs drop the conversation automatically after a certain amount of time. Not sure how long. After that, this fails.
-			if (%talk && (!$target || $target->{ID} eq $talk{ID}) && !exists $talk{buyOrSell}) {
-				$self->{ID} = $talk{ID};
-				$self->{target} = Actor::NPC->new;
-				$self->{target}->{appear_time} = time;
-				$self->{target}->{name} = 'Unknown';
-				if ($self->{type} eq 'talknpc') {
-					$self->{steps} = [parseArgs($self->{sequence})];
-				} else {
-					push (@{$self->{steps}}, 'x');
-				}
-			}
+			my $target = $self->find_and_set_target;
 
 			if ($target || %talk) {
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
 			}
 		}
+	
+	} elsif ($self->{stage} == END_OF_CONVERSATION && (!@{$self->{steps}} || $self->{steps}[0] !~ /x/i) && !%talk) {
+		$self->conversation_end;
+	
+	} elsif ($self->{stage} == END_OF_CONVERSATION && (!@{$self->{steps}} || $self->{steps}[0] !~ /x/i) && %talk) {
+		#Finished conversation and instantly got a new npc conversation
+		debug "After we finished talking with hte last npc another one started talking to us faster than we could predict.\n", "ai_npcTalk";
+		my $target = $self->find_and_set_target;
+		$self->{stage} = TALKING_TO_NPC;
+		$self->{time} = time;
 
-	} elsif ($self->{mapChanged} || ($ai_v{npc_talk}{talk} eq 'close' && $self->{steps}[0] !~ /x/i)) {
-		# Cancel conversation only if NPC is still around; otherwise
-		# we could get disconnected.
-		#$messageSender->sendTalkCancel($self->{ID}) if ($npcsList->getByID($self->{ID}));
-		$self->setDone();
-		message TF("Done talking with %s.\n", $self->{target}->name), "ai_npcTalk";
-
-	} elsif (!$ai_v{npc_talk}{time} && timeOut($self->{time}, $timeResponse)) {
+	} elsif (!$ai_v{'npc_talk'}{'time'} && timeOut($self->{time}, $timeResponse)) {
 		# If NPC does not respond before timing out, then by default, it's
 		# a failure.
 		$messageSender->sendTalkCancel($self->{ID});
 		$self->setError(NPC_NO_RESPONSE, T("The NPC did not respond."));
 
-	} elsif (timeOut($ai_v{npc_talk}{time}, 0.25)) {
+	} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
 		# 0.25 seconds have passed since we last talked to the NPC.
-		
-		if ($self->{type} eq 'talk' && !@{ $self->{steps} }) {
-			#We still doesn't have the next step
-			return;
-		}
 
-		if ($ai_v{npc_talk}{talk} eq 'close' && $self->{steps}[0] =~ /x/i) {
-			undef $ai_v{npc_talk}{talk};
+		#Wait for more commands
+		return unless (@{$self->{steps}});
+		
+		if ($ai_v{'npc_talk'}{'talk'} eq 'close' && $self->{steps}[0] =~ /x/i) {
+			undef $ai_v{'npc_talk'}{'talk'};
 		}
 		$self->{time} = time;
 
 		# We give the NPC some time to respond. This time will be reset once
 		# the NPC responds.
-		$ai_v{npc_talk}{time} = time + $timeResponse;
+		$ai_v{'npc_talk'}{'time'} = time + $timeResponse;
 
 		if ($config{autoTalkCont}) {
 			while ($self->{steps}[0] =~ /^c$/i) {
@@ -214,7 +248,7 @@ sub iterate {
 		
 		my @bulkitemlist;
 		my $step = $self->{steps}[0];
-		my $npcTalkType = $ai_v{npc_talk}{talk};
+		my $current_talk_step = $ai_v{'npc_talk'}{'talk'};
 
 		while ( $step =~ /^if~\/(.*?)\/,(.*)/i ) {
 			my ( $regex, $code ) = ( $1, $2 );
@@ -226,22 +260,30 @@ sub iterate {
 			}
 		}
 
-		if ($step =~ /^w(\d+)/i) {
+		if ( $step =~ /^x/i ) {
+			# Initiate NPC conversation.
+			if (!$self->{target}->isa('Actor::Monster')) {
+				$messageSender->sendTalk($self->{ID});
+			} else {
+				$messageSender->sendAction($self->{ID}, 0);
+			}
+			
+		} elsif ($step =~ /^w(\d+)/i) {
 			# Wait x seconds.
 			my $time = $1;
-			$ai_v{npc_talk}{time} = time + $time;
+			$ai_v{'npc_talk'}{'time'} = time + $time;
 			$self->{time} = time + $time;
 			
 		} elsif ( $step =~ /^a=(.*)/i ) {
 			# Run a command.
 			my $command = $1;
-			$ai_v{npc_talk}{time} = time + $timeResponse - 4;
+			$ai_v{'npc_talk'}{'time'} = time + $timeResponse - 4;
 			$self->{time} = time + $timeResponse - 4;
 			Commands::run($command);
 			
 		} elsif ( $step =~ /^c/i ) {
 			# Click Next.
-			if ($npcTalkType eq 'next') {
+			if ($current_talk_step eq 'next') {
 				$messageSender->sendTalkContinue($talk{ID});
 			} else {
 				$self->setError(WRONG_NPC_INSTRUCTIONS,
@@ -250,10 +292,11 @@ sub iterate {
 				$self->cancelTalk();
 			}
 
-		} elsif ( $step !~ /^c/i && $ai_v{npc_talk}{talk} eq 'next') {
+		} elsif ( $step !~ /^c/i && $current_talk_step eq 'next') {
 			debug "Auto-continuing NPC Talk - next detected \n", 'ai_npcTalk';
 			$messageSender->sendTalkContinue($talk{ID});
 			return;
+			
 		} elsif ( $step =~ /^t=(.*)/i ) {
 			# Send NPC talk text.
 			$messageSender->sendTalkText($talk{ID}, $1);
@@ -262,18 +305,25 @@ sub iterate {
 			# Send NPC talk number.
 			$messageSender->sendTalkNumber($talk{ID}, $1);
 
-		} elsif ( $step =~ /^x/i ) {
-			# Initiate NPC conversation.
-			if (!$self->{target}->isa('Actor::Monster')) {
-				$messageSender->sendTalk($self->{ID});
-			} else {
-				$messageSender->sendAction($self->{ID}, 0);
-			}
+		} elsif ( $step =~ /^n/i ) {
+			# Click Close or Cancel.
+			$self->cancelTalk();
+			$ai_v{'npc_talk'}{'time'} = time;
+			$self->{time} = time;
+		
+		} elsif ( $step =~ /^s/i ) {
+			# Get the sell list in a shop.
+			$messageSender->sendNPCBuySellList($talk{ID}, 1);
 
+		} elsif ( $step =~ /^e/i ) {
+			# ? Pretend like the conversation was stopped by the NPC?
+			$ai_v{'npc_talk'}{'talk'} = 'close';
+			$self->conversation_end;
+			
 		} elsif ( $step =~ /^r(?:(\d+)|=(.+)|~\/(.*?)\/(i?))/i ) {
 			# Choose a menu item.
 			my $choice = $1;
-			if ($npcTalkType eq 'select' and $2 || $3) {
+			if ($current_talk_step eq 'select' and $2 || $3) {
 				# Choose a menu item by matching options against a regular expression.
 				my $pattern = $2 ? "^\Q$2\E\$" : $3;
 				my $postCondition = $4;
@@ -290,7 +340,8 @@ sub iterate {
 						"such menu item exists.", $pattern));
 					$self->cancelTalk();
 				}
-			} elsif ($npcTalkType eq 'select') {
+				
+			} elsif ($current_talk_step eq 'select') {
 				if ($choice < $#{$talk{responses}}) {
 					$messageSender->sendTalkResponse($talk{ID}, $choice + 1);
 				} elsif ($choice) {
@@ -309,12 +360,6 @@ sub iterate {
 					"must now be selected, but that's not possible."));
 				$self->cancelTalk();
 			}
-
-		} elsif ( $step =~ /^n/i ) {
-			# Click Close or Cancel.
-			$self->cancelTalk();
-			$ai_v{npc_talk}{time} = time;
-			$self->{time} = time;
 
 		} elsif ( $step =~ /^b.*/i ) {
 			# Get the shop's item list.
@@ -337,26 +382,25 @@ sub iterate {
 				}
 				if (grep(defined, @bulkitemlist)) {
 					$messageSender->sendBuyBulk(\@bulkitemlist);
-					$ai_v{npc_talk}{talk} = 'close' if !$self->{steps}[0];
+					$ai_v{'npc_talk'}{'talk'} = 'close' if !$self->{steps}[0];
 				}
 				# We give some time to get inventory_item_added packet from server.
 				# And skip this itteration.
-				$ai_v{npc_talk}{time} = time + 0.2;
+				$ai_v{'npc_talk'}{'time'} = time + 0.2;
 				$self->{time} = time + 0.2;
 				return;
 			}
 
-		} elsif ( $step =~ /^s/i ) {
-			# Get the sell list in a shop.
-			$messageSender->sendNPCBuySellList($talk{ID}, 1);
-
-		} elsif ( $step =~ /^e/i ) {
-			# ? Pretend like the conversation was stopped by the NPC?
-			$ai_v{npc_talk}{talk} = 'close';
 		}
 
 		shift @{$self->{steps}};
 	}
+}
+
+sub conversation_end {
+	my ($self) = @_;
+	$self->setDone();
+	message TF("Done talking with %s.\n", (defined $self->{target} ? $self->{target}->name : "#".$self->{nameID})), "ai_npcTalk";
 }
 
 ##
@@ -372,18 +416,12 @@ sub target {
 
 sub cancelTalk {
 	my ($self) = @_;
-	if ($ai_v{npc_talk}{talk} eq 'select') {
+	if ($ai_v{'npc_talk'}{'talk'} eq 'select') {
 		$messageSender->sendTalkResponse($self->{ID}, 255);
-	} elsif ($ai_v{npc_talk}{talk} ne 'close' && !$talk{canceled}) {
+	} elsif ($ai_v{'npc_talk'}{'talk'} ne 'close' && !$talk{canceled}) {
 		$messageSender->sendTalkCancel($self->{ID});
 		$talk{canceled} = 1;
 	}
-}
-
-sub mapChanged {
-	my (undef, undef, $holder) = @_;
-	my $self = $holder->[0];
-	$self->{mapChanged} = 1;
 }
 
 # Actor findTarget(ActorList actorList)
@@ -415,7 +453,7 @@ sub findTarget {
 
 sub nextStep {
 	my ($self, $step) = @_;
-	$self->{steps}[0] = $step;
+	push(@{$self->{steps}}, $step);
 }
 
 1;
