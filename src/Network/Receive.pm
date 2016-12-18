@@ -3858,15 +3858,8 @@ sub npc_talk_continue {
 
 	$ai_v{'npc_talk'}{'talk'} = 'next';
 	$ai_v{'npc_talk'}{'time'} = time;
-
-	if ($config{autoTalkCont}) {
-		message TF("%s: Auto-continuing talking\n", $name), "npc";
-		$messageSender->sendTalkContinue($ID);
-		# This time will be reset once the NPC responds
-		$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
-	} else {
-		message TF("%s: Type 'talk cont' to continue talking\n", $name), "npc";
-	}
+	
+	message TF("%s: Type 'talk cont' to continue talking\n", $name), "npc";
 }
 
 sub npc_talk_number {

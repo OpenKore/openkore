@@ -227,25 +227,27 @@ sub iterate {
 		$messageSender->sendTalkCancel($self->{ID});
 		$self->setError(NPC_NO_RESPONSE, T("The NPC did not respond."));
 
-	} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
+	} elsif ($self->{stage} == TALKING_TO_NPC && timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
 		# 0.25 seconds have passed since we last talked to the NPC.
-
-		#Wait for more commands
-		return unless (@{$self->{steps}});
 		
-		if ($ai_v{'npc_talk'}{'talk'} eq 'close' && $self->{steps}[0] =~ /x/i) {
+		if ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont}) {
+			unless ( $self->{steps}[0] =~ /^c/i ) {
+				unshift(@{$self->{steps}}, 'c');
+			}
+			debug "Auto-continuing NPC Talk - next detected \n", 'ai_npcTalk';
+			
+		} elsif ($ai_v{'npc_talk'}{'talk'} eq 'close' && $self->{steps}[0] =~ /x/i) {
 			undef $ai_v{'npc_talk'}{'talk'};
 		}
-		$self->{time} = time;
 
-		# We give the NPC some time to respond. This time will be reset once
-		# the NPC responds.
-		$ai_v{'npc_talk'}{'time'} = time + $timeResponse;
-
-		if ($config{autoTalkCont}) {
-			while ($self->{steps}[0] =~ /^c$/i) {
-				shift @{$self->{steps}};
-			}
+		unless (@{$self->{steps}}) {
+			#Wait for more commands
+			return;
+		} else {
+			# We give the NPC some time to respond. This time will be reset once
+			# the NPC responds.
+			$ai_v{'npc_talk'}{'time'} = time + $timeResponse;
+			$self->{time} = time;
 		}
 		
 		my @bulkitemlist;
@@ -261,7 +263,7 @@ sub iterate {
 				$step = $self->{steps}->[0];
 			}
 		}
-
+		
 		if ( $step =~ /^x/i ) {
 			# Initiate NPC conversation.
 			if (!$self->{target}->isa('Actor::Monster')) {
@@ -293,11 +295,6 @@ sub iterate {
 					"must now be clicked on, but that's not possible."));
 				$self->cancelTalk();
 			}
-
-		} elsif ( $step !~ /^c/i && $current_talk_step eq 'next') {
-			debug "Auto-continuing NPC Talk - next detected \n", 'ai_npcTalk';
-			$messageSender->sendTalkContinue($talk{ID});
-			return;
 			
 		} elsif ( $step =~ /^t=(.*)/i ) {
 			# Send NPC talk text.
