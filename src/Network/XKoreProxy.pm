@@ -313,8 +313,7 @@ sub checkProxy {
 			Proto		=> 'tcp',
 			ReuseAddr   => 1);
 		die "Unable to start the X-Kore proxy ($ip:$port): $@\n" . 
-			"You can only run one X-Kore session at the same time.\n" .
-			"And make sure no other servers are running on port $port." unless $self->{proxy_listen};
+			"Make sure no other servers are running on port $port." unless $self->{proxy_listen};
 
 		# setup master server if necessary
 		getMainServer();

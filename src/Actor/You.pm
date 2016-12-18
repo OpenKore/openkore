@@ -26,6 +26,9 @@ use Globals;
 use Log qw(message);
 use base qw(Actor);
 use InventoryList;
+use InventoryList::Inventory;
+use InventoryList::Storage;
+use InventoryList::Cart;
 use Network::PacketParser;
 use Translation;
 use Utils;
@@ -71,7 +74,9 @@ use Utils;
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new('You');
-	$self->{__inventory} = new InventoryList();
+	$self->{__inventory} = new InventoryList::Inventory();
+	$self->{__storage} = new InventoryList::Storage();
+	$self->{__cart} = new InventoryList::Cart();
 	$self->{configPrefix} = '';
 	$self->{dcOnEmptyItems} = '';
 
@@ -114,6 +119,24 @@ sub getSkillLevel {
 # Get the inventory list for this character.
 sub inventory {
 	return $_[0]->{__inventory};
+}
+
+##
+# InventoryList $char->storage()
+# Ensures: defined(result)
+#
+# Get the storage list for this character.
+sub storage {
+	return $_[0]->{__storage};
+}
+
+##
+# InventoryList $char->cart()
+# Ensures: defined(result)
+#
+# Get the cart list for this character.
+sub cart {
+	return $_[0]->{__cart};
 }
 
 ##

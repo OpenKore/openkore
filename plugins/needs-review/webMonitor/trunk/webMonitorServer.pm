@@ -339,18 +339,16 @@ sub request {
 	my (@cartItemName, @cartItemAmount, @cartItemJS, @cartItemID);
 	my $cartActive = 'disabled';
 	
-	if ($char->cartActive) {
+	if ($char->cart->isReady) {
 		$cartActive = undef;
-		for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
-			next if (!$cart{'inventory'}[$i] || !%{$cart{'inventory'}[$i]});
-			
-			my $itemName = $cart{'inventory'}[$i]{'name'};
-			$itemName .= T(" -- Not Identified") if !$cart{inventory}[$i]{identified};
+		for my $item (@{$char->cart->getItems}) {
+			my $itemName = $item->{name};
+			$itemName .= T(" -- Not Identified") unless $item->{identified};
 			
 			push @cartItemName, $itemName;
-			push @cartItemAmount, $cart{'inventory'}[$i]{'amount'};
-			push @cartItemJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=cart+get+' . $i . '">' . T('Get') . '</a></td>';
-			push @cartItemID, $cart{'inventory'}[$i]{'nameID'};
+			push @cartItemAmount, $item->{amount};
+			push @cartItemJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=cart+get+' . $item->{invIndex} . '">' . T('Get') . '</a></td>';
+			push @cartItemID, $item->{nameID};
 		}
 	}
 
@@ -359,25 +357,22 @@ sub request {
 	my (@storageUnusableAmount, @storageUsableAmount, @storageEquipmentAmount);
 	my (@storageUnusableID, @storageUsableID, @storageEquipmentID);
 	my (@storageUnusableGetButton, @storageUsableGetButton, @storageEquipmentGetButton);
-	for (my $i = 0; $i < @storageID; $i++) {
-		my $item = $storage{$storageID[$i]};
-		next if (!$item);
-		
+	for my $item (@{$char->storage->getItems}) {
 		if ($item->usable) {
 			push @storageUsableID, $item->{nameID};
 			push @storageUsable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @storageUsableAmount, $item->{amount};
-			push @storageUsableGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $i . '">' . T('Get') . '</a></td><td></td>' if ($storage{opened});
+			push @storageUsableGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $item->{invIndex} . '">' . T('Get') . '</a></td><td></td>' if $char->storage->isReady;
 		} elsif ($item->equippable) {
 			push @storageEquipmentID, $item->{nameID};
 			push @storageEquipment, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @storageEquipmentAmount, $item->{amount};
-			push @storageEquipmentGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $i . '">' . T('Get') . '</a></td><td></td>' if ($storage{opened});
+			push @storageEquipmentGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $item->{invIndex} . '">' . T('Get') . '</a></td><td></td>' if $char->storage->isReady;
 		} else {
 			push @storageUnusableID, $item->{nameID};
 			push @storageUnusable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @storageUnusableAmount, $item->{amount};
-			push @storageUnusableGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $i . '">' . T('Get') . '</a></td><td></td>' if ($storage{opened});
+			push @storageUnusableGetButton, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=storage+get+' . $item->{invIndex} . '">' . T('Get') . '</a></td><td></td>' if $char->storage->isReady;
 		}
 	}
 
@@ -538,7 +533,7 @@ sub request {
 			push @selfShopItemName, $item->{name};
 		}
 		$selfShopButton = '<a href="/handler?csrf='.$csrf.'&command=closeshop" class="btn btn-danger btn-mini pull-right"><i class="icon-shopping-cart icon-white"></i> closeshop</a>';
-	} elsif (!$shopstarted && $char->{skills}{MC_VENDING}{lv} && $cart{exists} && $char->cartActive && $shop{title_line}) {
+	} elsif (!$shopstarted && $char->{skills}{MC_VENDING}{lv} && $char->cart->isReady && $shop{title_line}) {
 		$selfShopButton = '<a href="/handler?csrf='.$csrf.'&command=openshop" class="btn btn-success btn-mini pull-right"><i class="icon-shopping-cart icon-white"></i> openshop</a>';
 	} else {
 		$selfShopButton = " "

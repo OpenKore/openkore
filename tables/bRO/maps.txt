@@ -780,7 +780,7 @@ bra_dun02.rsw#Profundezas das Cataratas#
 dewata.rsw#Dewata#
 dew_in01.rsw#Dentro da Vila da Tribo Jaty#
 dew_fild01.rsw#Campos de Dewata - Vila da tribo Jaty#
-dew_dun01.rsw#Vulcão Krakatau Volcano#
+dew_dun01.rsw#Vulcão Krakatau#
 dew_dun02.rsw#Caverna Istana#
 
 // ---- Ep 14.1 -------------
@@ -806,7 +806,6 @@ mal_dun01.rsw#Área de Coral Estrelado#
 1@cash.rsw#Caverna do Polvo#
 1@pump.rsw#Esgotos de malangdo#
 2@pump.rsw#Esgotos de malangdo#
-
 
 //------2013 Abyss and Biolab 4th----------------------
 lhz_dun04.rsw#Laboratório de Somatologia #
@@ -842,6 +841,19 @@ ma_zif08.rsw#Interior de Jeepney#
 ma_zif09.rsw#Interior de Jeepney#
 job_ko.rsw#Lugar Escondido#
 
+//-----------Ep.14.2 Eclage-------------
+ecl_in01.rsw#Praça de Eclage#
+ecl_hub01.rsw#Perímetros de Eclage#
+ecl_in02.rsw#Interior de Eclage 2#
+ecl_in03.rsw#Interior de Eclage 3#
+ecl_in04.rsw#Interior de Eclage 4#
+eclage.rsw#Eclage#
+ecl_fild01.rsw#Campo Florescente#
+ecl_tdun01.rsw#Torre de Bifröst - 1o Piso#
+ecl_tdun02.rsw#Torre de Bifröst - 2o Piso#
+ecl_tdun03.rsw#Torre de Bifröst - 3o Piso#
+ecl_tdun04.rsw#Topo da Torre de Bifröst#
+
 //-----------WOE TE 05-26-2015----------
 te_prt_gld.rsw#Gloria#
 te_prtcas01.rsw#Gaebolg#
@@ -849,15 +861,34 @@ te_prtcas02.rsw#Richard#
 te_prtcas03.rsw#Wigner#
 te_prtcas04.rsw#Heine#
 te_prtcas05.rsw#Nerius#
-teg_dun01.rsw#Guild basement dungeon#
+teg_dun01.rsw#Calabouço da Guilda 2#
 te_alde_gld.rsw#Kafra Garten#
 te_aldecas1.rsw#Sofia#
 te_aldecas2.rsw#Denise#
 te_aldecas3.rsw#Marianne#
 te_aldecas4.rsw#Bianca#
 te_aldecas5.rsw#Deborah#
-teg_dun02.rsw#Guild basement dungeon#
+teg_dun02.rsw#Calabouço da Guilda 1#
+
 //--------christmas event 2015------
 niflxmas.rsw#Deadman's land Niffelheim#
+
+//--------Paramarket-----------
+moc_para01.rsw#Grupo do Éden#
+
 //--------Horror Toy Dungeon 201 03 21-----
-1@xm_d.rsw#Horror Toy Factory#
+1@xm_d.rsw#Fábrica do Terror#
+
+//EP.14.3
+moro_vol.rsw#Círculo de Fogo#
+moro_cav.rsw#Flame Cave#
+1@dth1.rsw#Ilha Bios (1)#
+1@dth2.rsw#Ilha Bios (2)#
+1@dth3.rsw#Ilha Bios (3)#
+1@rev.rsw#Morse's Cave#
+1@eom.rsw#Demon God War#
+1@jtb.rsw#Pesadelo Musical#
+
+//Hero's Trail pt.1, 2
+dali.rsw#Fissura Dimensional (1)#
+dali02.rsw#Fissura Dimensional (2)#

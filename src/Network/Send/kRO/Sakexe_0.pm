@@ -82,6 +82,7 @@ sub new {
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
+		'02F1' => ['notify_progress_bar_complete'],
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
 		'0804' => ['booking_search', 'v3 L s', [qw(level MapID job LastIndex ResultCount)]],
 		'0806' => ['booking_delete'],

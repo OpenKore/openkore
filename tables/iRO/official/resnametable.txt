@@ -2057,3 +2057,15 @@ emos_dun02h.rsw#mosk_dun02.rsw#
 1@lab.gat#1@lab.gat#
 1@lab.rsw#1@lab.rsw#
 삯샺샎엍웤샌붺\map\1@lab.bmp#삯샺샎엍웤샌붺\map\1@lab.bmp#
+
+
+//좣랯 샥뎭남 냸샥
+1@xm_d.gnd#1@xm_d.gnd#
+1@xm_d.gat#1@xm_d.gat#
+1@xm_d.rsw#1@xm_d.rsw#
+삯샺샎엍웤샌붺\map\1@xm_d.bmp#삯샺샎엍웤샌붺\map\1@xm_d.bmp#
+
+emoc_pryd6h.gnd#moc_pryd06.gnd#
+emoc_pryd6h.gat#moc_pryd06.gat#
+emoc_pryd6h.rsw#moc_pryd06.rsw#
+삯샺샎엍웤샌붺\map\emoc_pryd6h.bmp#삯샺샎엍웤샌붺\map\moc_pryd06.bmp#

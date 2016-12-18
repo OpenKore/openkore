@@ -20,6 +20,7 @@ package Network::XKore2;
 use strict;
 use Globals qw(%config %rpackets $masterServer $char);
 use Utils qw(makeCoordsDir makeCoordsXY makeCoordsFromTo calcPosition);
+use Utils::Exceptions;
 use Plugins;
 use Base::Ragnarok::SessionStore;
 use Network;
@@ -36,6 +37,7 @@ our ($hooks, $sessionStore, $accountServer, $charServer, $mapServer ,$mapServerC
 # Start the X-Kore 2 subsystem.
 sub start {
 	my $publicIP = $config{XKore_publicIp} || '127.0.0.1';
+	my $port = $config{XKore_listenPort} || 6900;
 	$sessionStore = new Base::Ragnarok::SessionStore();
 	$mapServer = new Network::XKore2::MapServer(
 		host => $publicIP,
@@ -53,14 +55,22 @@ sub start {
 		sessionStore => $sessionStore,
 		name => $config{XKore_ID}
 	);
-	$accountServer = new Network::XKore2::AccountServer(
-		host => $publicIP,
-		port => $config{XKore_listenPort} || 6900,
-		serverType => $masterServer->{serverType},
-		rpackets => \%rpackets,
-		charServer => $charServer,
-		sessionStore => $sessionStore
-	);
+	eval {
+		$accountServer = new Network::XKore2::AccountServer(
+			host         => $publicIP,
+			port         => $port,
+			serverType   => $masterServer->{serverType},
+			rpackets     => \%rpackets,
+			charServer   => $charServer,
+			sessionStore => $sessionStore
+		);
+	};
+	if ( my $e = caught( 'SocketException' ) ) {
+		die "Unable to start the X-Kore proxy ($publicIP:$port): $@\n"
+			. "Make sure no other servers are running on port $port.";
+	} else {
+		die $@ if $@;
+	}
 	$hooks = Plugins::addHooks(
 		['packet_pre/sync_request_ex', \&sync_request_ex],
 		['packet_pre/map_loaded', \&map_loaded],

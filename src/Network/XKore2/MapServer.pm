@@ -20,7 +20,7 @@ use Globals qw(
 	$portalsList $npcsList $monstersList $playersList $petsList
 	@friendsID %friends %pet @partyUsersID %spells
 	@chatRoomsID %chatRooms @venderListsID %venderLists $hotkeyList
-	%config $questList %cart $incomingMessages $masterServer $messageSender
+	%config $questList $incomingMessages $masterServer $messageSender
 	%cashShop
 );
 use Base::Ragnarok::MapServer;
@@ -111,9 +111,7 @@ sub onClientData {
 sub gameguard_reply {
 	my ($self, $args, $client) = @_;
 	if ($config{gameGuard} == 0) {
-		warning "Enviando reply do XKore2.\n";
-		warning "Se tiver DC's constantes apos esta mensagem poste no forum: \n";
-		error "http://forums.openkore-brasil.com.\n"
+		debug("Replying XKore 2's gameguard query");
 	} else {
 		# mangle, may be unsafe
 		$args->{mangle} = 2;
@@ -516,7 +514,7 @@ sub send_player_info {
 #					$data .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $char->{ID}, 1);
 					if ($statusID == 673) {
 						# for Cart active
-						$data .= pack('C2 v a4 C V4', 0x3F, 0x04, $statusID, $char->{ID}, 1, 9999, $cart{type}, 0, 0);
+						$data .= pack('C2 v a4 C V4', 0x3F, 0x04, $statusID, $char->{ID}, 1, 9999, $char->cart->type, 0, 0);
 					} elsif ($statusID == 622) {
 						# sit
 						$data .= pack('C2 v a4 C V4', 0x3F, 0x04, $statusID, $char->{ID}, 1, 9999, 1, 0, 0);
@@ -597,16 +595,15 @@ sub send_inventory {
 	my $data = undef;
 	# Send cart information includeing the items
 	if (!$client->{session}{dummy} && $char->cartActive && $RunOnce) {
-		$data = pack('C2 v2 V2', 0x21, 0x01, $cart{items}, $cart{items_max}, ($cart{weight} * 10), ($cart{weight_max} * 10));
+		$data = pack('C2 v2 V2', 0x21, 0x01, $char->cart->items, $char->cart->items_max, ($char->cart->{weight} * 10), ($char->cart->{weight_max} * 10));
 		$client->send($data);
 		
 		my @stackable;
 		my @nonstackable;
 		my $n = 0;
-		for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
-			next if (!$cart{'inventory'}[$i] || !%{$cart{'inventory'}[$i]});
-			my $item = $cart{'inventory'}[$i];
-			$item->{index} = $i;
+		my $i = 0;
+		foreach my $item (@{$char->cart->getItems()}) {
+			$item->{index} = $i++;
 			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) {
 				push @stackable, $item;
 			} else {
