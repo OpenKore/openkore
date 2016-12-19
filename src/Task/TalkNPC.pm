@@ -36,6 +36,8 @@ use enum qw(
 	NPC_NO_RESPONSE
 	NO_SHOP_ITEM
 	WRONG_NPC_INSTRUCTIONS
+	NPC_TIMEOUT_AFTER_ASWER
+	STEPS_AFTER_END_OF_CONVERSATION
 );
 
 # Mutexes used by this task.
@@ -82,6 +84,10 @@ sub new {
 	$self->{nameID} = $args{nameID};
 	$self->{sequence} = $args{sequence};
 	$self->{sequence} =~ s/^ +| +$//g;
+	$self->{sent_cancel} = 0;
+	$self->{wait_for_answer} = 0;
+	$self->{error_code} = undef;
+	$self->{error_message} = undef;
 	
 	my @holder = ($self);
 	Scalar::Util::weaken($holder[0]);
@@ -91,11 +97,7 @@ sub new {
 		['packet/npc_talk_continue',  \&handle_npc_talk, \@holder],
 		['npc_talk_done',             \&handle_npc_talk, \@holder],
 		['npc_talk_responses',        \&handle_npc_talk, \@holder],
-		['packet/npc_store_begin',    \&handle_npc_talk, \@holder],
-		['packet/npc_store_info',     \&handle_npc_talk, \@holder],
-		['packet/npc_sell_list',      \&handle_npc_talk, \@holder],
 		['packet/npc_talk_number',    \&handle_npc_talk, \@holder],
-		['packet/npc_image',          \&handle_npc_talk, \@holder],
 		['packet/npc_talk_text',      \&handle_npc_talk, \@holder]
 	);
 	
@@ -107,7 +109,10 @@ sub handle_npc_talk {
 	my $self = $holder->[0];
 	if ($hook_name eq 'npc_talk_done') {
 		$self->{stage} = END_OF_CONVERSATION;
+	} elsif ($self->{sent_cancel}) {
+		$self->{sent_cancel} = 0;
 	}
+	$self->{wait_for_answer} = 0;
 }
 
 sub DESTROY {
@@ -142,7 +147,7 @@ sub find_and_set_target {
 		$target = undef;
 	}
 	
-	if (%talk) {
+	if (exists $talk{nameID}) {
 		if ($self->{type} eq 'talknpc') {
 			$self->{steps} = [parseArgs($self->{sequence})];
 		} else {
@@ -162,7 +167,7 @@ sub find_and_set_target {
 		$self->{target} = $target;
 		$self->{ID} = $target->{ID};
 		lookAtPosition($self);
-	} elsif (%talk && !exists $talk{buyOrSell}) {
+	} elsif (exists $talk{nameID} && !exists $talk{buyOrSell}) {
 		$self->{ID} = $talk{ID};
 		$self->{target} = Actor::NPC->new;
 		$self->{target}->{appear_time} = time;
@@ -208,13 +213,20 @@ sub iterate {
 			}
 		}
 	
-	} elsif ($self->{stage} == END_OF_CONVERSATION && (!@{$self->{steps}} || $self->{steps}[0] !~ /x/i) && !%talk) {
+	} elsif ($self->{stage} == END_OF_CONVERSATION && @{$self->{steps}} && $self->{steps}[0] !~ /x/i && !%talk) {
+		$self->setError(STEPS_AFTER_END_OF_CONVERSATION, "There are still steps to be done but the conversation has already ended.\n");
+	
+	} elsif ($self->{stage} == END_OF_CONVERSATION && !@{$self->{steps}} && !%talk) {
 		$self->conversation_end;
 	
 	} elsif ($self->{stage} == END_OF_CONVERSATION && (!@{$self->{steps}} || $self->{steps}[0] !~ /x/i) && %talk) {
 		#Finished conversation and instantly got a new npc conversation
 		debug "After we finished talking with hte last npc another one started talking to us faster than we could predict.\n", "ai_npcTalk";
 		my $target = $self->find_and_set_target;
+		$self->{stage} = TALKING_TO_NPC;
+		$self->{time} = time;
+		
+	} elsif ($self->{stage} == END_OF_CONVERSATION && (@{$self->{steps}} && $self->{steps}[0] =~ /x/i) && !%talk) {
 		$self->{stage} = TALKING_TO_NPC;
 		$self->{time} = time;
 		
@@ -229,6 +241,23 @@ sub iterate {
 
 	} elsif ($self->{stage} == TALKING_TO_NPC && timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
 		# 0.25 seconds have passed since we last talked to the NPC.
+		
+		#hack to end this task after we send an conversation cancel since the server won't tell us if it worked or not
+		if ($self->{sent_cancel}) {
+			if (defined $self->{error_code}) {
+				$self->setError($self->{error_code}, $self->{error_message});
+			} else {
+				$self->conversation_end;
+			}
+			undef %talk;
+			return;
+			
+		} elsif ($self->{wait_for_answer}) {
+			$self->{error_code} = NPC_TIMEOUT_AFTER_ASWER;
+			$self->{error_message} = "We have waited for too long after we sent a response to the npc.";
+			$self->cancelTalk;
+			return;
+		}
 		
 		if ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont}) {
 			unless ( $self->{steps}[0] =~ /^c/i ) {
@@ -290,9 +319,9 @@ sub iterate {
 			if ($current_talk_step eq 'next') {
 				$messageSender->sendTalkContinue($talk{ID});
 			} else {
-				$self->setError(WRONG_NPC_INSTRUCTIONS,
-					T("According to the given NPC instructions, the Next button " .
-					"must now be clicked on, but that's not possible."));
+				$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
+				$self->{error_message} = T("According to the given NPC instructions, the Next button " .
+					"must now be clicked on, but that's not possible.");
 				$self->cancelTalk();
 			}
 			
@@ -306,9 +335,9 @@ sub iterate {
 
 		} elsif ( $step =~ /^n/i ) {
 			# Click Close or Cancel.
-			$self->cancelTalk();
 			$ai_v{'npc_talk'}{'time'} = time;
 			$self->{time} = time;
+			$self->cancelTalk();
 		
 		} elsif ( $step =~ /^s/i ) {
 			# Get the sell list in a shop.
@@ -333,10 +362,10 @@ sub iterate {
 					# The last response is a fake "Cancel Chat" response.
 					$self->cancelTalk();
 				} else {
-					$self->setError(WRONG_NPC_INSTRUCTIONS,
-						TF("According to the given NPC instructions, a menu " .
+					$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
+					$self->{error_message} = TF("According to the given NPC instructions, a menu " .
 						"item matching '%s' must now be selected, but no " .
-						"such menu item exists.", $pattern));
+						"such menu item exists.", $pattern);
 					$self->cancelTalk();
 				}
 				
@@ -347,16 +376,16 @@ sub iterate {
 					# The last response is a fake "Cancel Chat" response.
 					$self->cancelTalk();
 				} else {
-					$self->setError(WRONG_NPC_INSTRUCTIONS,
-						TF("According to the given NPC instructions, menu item %d must " .
+					$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
+					$self->{error_message} = TF("According to the given NPC instructions, menu item %d must " .
 						"now be selected, but there are only %d menu items.",
-						$choice, @{$talk{responses}} - 1));
+						$choice, @{$talk{responses}} - 1);
 					$self->cancelTalk();
 				}
 			} else {
-				$self->setError(WRONG_NPC_INSTRUCTIONS,
-					T("According to the given NPC instructions, a menu item " .
-					"must now be selected, but that's not possible."));
+				$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
+				$self->{error_message} = T("According to the given NPC instructions, a menu item " .
+					"must now be selected, but that's not possible.");
 				$self->cancelTalk();
 			}
 
@@ -390,8 +419,14 @@ sub iterate {
 				return;
 			}
 
+		} else {
+			$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
+			$self->{error_message} = "According to the given NPC instructions, a npc conversation code " .
+				"should be used (".$step."), but it doesn't exist.";
+			$self->cancelTalk();
 		}
-
+		
+		$self->{wait_for_answer} = 1;
 		shift @{$self->{steps}};
 	}
 }
@@ -417,9 +452,12 @@ sub cancelTalk {
 	my ($self) = @_;
 	if ($ai_v{'npc_talk'}{'talk'} eq 'select') {
 		$messageSender->sendTalkResponse($self->{ID}, 255);
+		$self->{sent_cancel} = 1;
+		
 	} elsif ($ai_v{'npc_talk'}{'talk'} ne 'close' && !$talk{canceled}) {
 		$messageSender->sendTalkCancel($self->{ID});
 		$talk{canceled} = 1;
+		$self->{sent_cancel} = 1;
 	}
 }
 

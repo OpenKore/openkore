@@ -4901,7 +4901,7 @@ sub cmdTalk {
 			}
 		}
 
-	} elsif (!%talk) {
+	} elsif (!exists $talk{nameID}) {
 		error TF("Error in function 'talk %s' (Respond to NPC)\n" .
 			"You are not talking to any NPC.\n", $arg1);
 
