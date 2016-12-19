@@ -1736,7 +1736,7 @@ sub mercenary_init {
 	}
 	$slave->{name} = bytesToString($args->{name});
 
-	slave_calcproperty_handler($slave, $args);
+	Network::Receive::slave_calcproperty_handler($slave, $args);
 
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
@@ -1758,7 +1758,7 @@ sub homunculus_property {
 	}
 	$slave->{name} = bytesToString($args->{name});
 
-	slave_calcproperty_handler($slave, $args);
+	Network::Receive::slave_calcproperty_handler($slave, $args);
 	homunculus_state_handler($slave, $args);
 
 	# ST0's counterpart for ST kRO, since it attempts to support all servers

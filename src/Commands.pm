@@ -517,7 +517,7 @@ sub cmdAI {
 	} elsif ($args eq '') {
 		# Toggle AI
 		if ($AI == AI::AUTO) {
-			undef $AI;
+			$AI = AI::OFF;
 			$AI_forcedOff = 1;
 			message T("AI turned off\n"), "success";
 		} elsif ($AI == AI::OFF) {

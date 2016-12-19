@@ -1355,7 +1355,7 @@ sub mercenary_init {
 	}
 	$slave->{name} = bytesToString($args->{name});
 
-	slave_calcproperty_handler($slave, $args);
+	Network::Receive::slave_calcproperty_handler($slave, $args);
 	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
 }
 
@@ -1370,7 +1370,7 @@ sub homunculus_property {
 	}
 	$slave->{name} = bytesToString($args->{name});
 
-	slave_calcproperty_handler($slave, $args);
+	Network::Receive::slave_calcproperty_handler($slave, $args);
 	homunculus_state_handler($slave, $args);
 }
 
