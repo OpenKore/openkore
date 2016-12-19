@@ -3840,9 +3840,10 @@ sub npc_talk_close {
 	#
 	# UPDATE: not sending 'talk cancel' breaks autostorage on iRO.
 	# This needs more investigation.
-	if (!$talk{canceled}) {
-		$messageSender->sendTalkCancel($ID);
-	}
+	#if (!$talk{canceled}) {
+	#	$messageSender->sendTalkCancel($ID);
+	#}
+	# Now Task::TalkNPC sends this by default
 
 	$ai_v{'npc_talk'}{'talk'} = 'close';
 	$ai_v{'npc_talk'}{'time'} = time;
@@ -3924,6 +3925,53 @@ sub npc_talk_text {
 	message TF("%s: Type 'talk text' (Respond to NPC)\n", $name), "npc";
 	$ai_v{'npc_talk'}{'talk'} = 'text';
 	$ai_v{'npc_talk'}{'time'} = time;
+}
+
+sub npc_store_begin {
+	my ($self, $args) = @_;
+	undef %talk;
+	$talk{ID} = $args->{ID};
+	$ai_v{npc_talk}{talk} = 'buy_or_sell';
+	$ai_v{npc_talk}{time} = time;
+
+	my $name = getNPCName($args->{ID});
+
+	message TF("%s: Type 'store' to start buying, or type 'sell' to start selling\n", $name), "npc";
+}
+
+sub npc_store_info {
+	my ($self, $args) = @_;
+	my $msg = $args->{RAW_MSG};
+	undef @storeList;
+	my $storeList = 0;
+	undef %talk;
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
+		my $price = unpack("V1", substr($msg, $i, 4));
+		my $type = unpack("C1", substr($msg, $i + 8, 1));
+		my $ID = unpack("v1", substr($msg, $i + 9, 2));
+
+		my $store = $storeList[$storeList] = {};
+		# TODO: use itemName() or itemNameSimple()?
+		my $display = ($items_lut{$ID} ne "")
+			? $items_lut{$ID}
+			: T("Unknown ").$ID;
+		$store->{name} = $display;
+		$store->{nameID} = $ID;
+		$store->{type} = $type;
+		$store->{price} = $price;
+		# Real RO client can be receive this message without NPC Information. We should mimic this behavior.
+		$store->{npcName} = (defined $talk{ID}) ? getNPCName($talk{ID}) : T('Unknown') if ($storeList == 0);
+		debug "Item added to Store: $store->{name} - $price z\n", "parseMsg", 2;
+		$storeList++;
+	}
+
+	$ai_v{npc_talk}{talk} = 'store';
+	# continue talk sequence now
+	$ai_v{'npc_talk'}{'time'} = time;
+
+	if (AI::action ne 'buyAuto') {
+		Commands::run('store');
+	}
 }
 
 1;

@@ -22,7 +22,7 @@ use Modules 'register';
 use Task;
 use base qw(Task);
 use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config @storeList $net %talk);
-use Log qw(message debug error);
+use Log qw(message debug error warning);
 use Utils;
 use Commands;
 use Network;
@@ -37,17 +37,19 @@ use enum qw(
 	NO_SHOP_ITEM
 	WRONG_NPC_INSTRUCTIONS
 	NPC_TIMEOUT_AFTER_ASWER
-	STEPS_AFTER_END_OF_CONVERSATION
+	STEPS_AFTER_AFTER_NPC_CLOSE
+	STEPS_AFTER_BUY_OR_SELL
 );
 
 # Mutexes used by this task.
 use constant MUTEXES => ['npc'];
 
-use constant {
-	NOT_STARTED          => 0,
-	TALKING_TO_NPC       => 1,
-	END_OF_CONVERSATION  => 2
-};
+use enum qw(
+	NOT_STARTED
+	TALKING_TO_NPC
+	AFTER_NPC_CLOSE
+	AFTER_NPC_CANCEL
+);
 
 
 ##
@@ -84,7 +86,8 @@ sub new {
 	$self->{nameID} = $args{nameID};
 	$self->{sequence} = $args{sequence};
 	$self->{sequence} =~ s/^ +| +$//g;
-	$self->{sent_cancel} = 0;
+	$self->{trying_to_cancel} = 0;
+	$self->{sent_talk_response_cancel} = 0;
 	$self->{wait_for_answer} = 0;
 	$self->{error_code} = undef;
 	$self->{error_message} = undef;
@@ -108,10 +111,10 @@ sub handle_npc_talk {
 	my ($hook_name, $args, $holder) = @_;
 	my $self = $holder->[0];
 	if ($hook_name eq 'npc_talk_done') {
-		$self->{stage} = END_OF_CONVERSATION;
-	} elsif ($self->{sent_cancel}) {
-		$self->{sent_cancel} = 0;
+		$self->{stage} = AFTER_NPC_CLOSE;
 	}
+	$self->{time} = time;
+	$self->{sent_talk_response_cancel} = 0;
 	$self->{wait_for_answer} = 0;
 }
 
@@ -167,7 +170,7 @@ sub find_and_set_target {
 		$self->{target} = $target;
 		$self->{ID} = $target->{ID};
 		lookAtPosition($self);
-	} elsif (exists $talk{nameID} && !exists $talk{buyOrSell}) {
+	} elsif (exists $talk{nameID} && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {#check if this is really necessary
 		$self->{ID} = $talk{ID};
 		$self->{target} = Actor::NPC->new;
 		$self->{target}->{appear_time} = time;
@@ -212,69 +215,70 @@ sub iterate {
 				$self->{time} = time;
 			}
 		}
-	
-	} elsif ($self->{stage} == END_OF_CONVERSATION && @{$self->{steps}} && $self->{steps}[0] !~ /x/i && !%talk) {
-		$self->setError(STEPS_AFTER_END_OF_CONVERSATION, "There are still steps to be done but the conversation has already ended.\n");
-	
-	} elsif ($self->{stage} == END_OF_CONVERSATION && !@{$self->{steps}} && !%talk) {
-		$self->conversation_end;
-	
-	} elsif ($self->{stage} == END_OF_CONVERSATION && (!@{$self->{steps}} || $self->{steps}[0] !~ /x/i) && %talk) {
-		#Finished conversation and instantly got a new npc conversation
-		debug "After we finished talking with hte last npc another one started talking to us faster than we could predict.\n", "ai_npcTalk";
-		my $target = $self->find_and_set_target;
-		$self->{stage} = TALKING_TO_NPC;
-		$self->{time} = time;
-		
-	} elsif ($self->{stage} == END_OF_CONVERSATION && (@{$self->{steps}} && $self->{steps}[0] =~ /x/i) && !%talk) {
-		$self->{stage} = TALKING_TO_NPC;
-		$self->{time} = time;
-		
-	} elsif ($self->{stage} == TALKING_TO_NPC && $talk{buyOrSell} && (!@{$self->{steps}} || $self->{steps}[0] !~ /^b.*/i)) {
-		$self->conversation_end;
 
+	# This is where things may bug in npcs which have no chat (private healers)
 	} elsif (!$ai_v{'npc_talk'}{'time'} && timeOut($self->{time}, $timeResponse)) {
 		# If NPC does not respond before timing out, then by default, it's
 		# a failure.
 		$messageSender->sendTalkCancel($self->{ID});
 		$self->setError(NPC_NO_RESPONSE, T("The NPC did not respond."));
+	
+	# We arrived at a buy or sell selection, but there are no more steps regarding this, so end the conversation
+	} elsif ($self->{stage} == TALKING_TO_NPC && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' && !@{$self->{steps}}) {
+		$self->conversation_end;
+		
+	# We arrived at a buy or sell selection, but there are more steps that are not for buying or selling, so trow an error
+	} elsif ($self->{stage} == TALKING_TO_NPC && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' && @{$self->{steps}} && $self->{steps}[0] !~ /^(b|s|e)$/i) {
+		$self->setError(STEPS_AFTER_BUY_OR_SELL, T("There are still more conversation steps but we arrived at a buy or sell interaction."));
 
-	} elsif ($self->{stage} == TALKING_TO_NPC && timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
+	} elsif ($self->{stage} == TALKING_TO_NPC && timeOut($ai_v{'npc_talk'}{'time'}, 1.5)) {
 		# 0.25 seconds have passed since we last talked to the NPC.
 		
-		#hack to end this task after we send an conversation cancel since the server won't tell us if it worked or not
-		if ($self->{sent_cancel}) {
+		#In theory after the talk_response_cancel is sent we shouldn't receive anything, so just wait the timer and asume it's over
+		if ($self->{sent_talk_response_cancel}) {
+			undef %talk;
 			if (defined $self->{error_code}) {
+				warning "Task::TalkNPC successfully ended the npc conversation with sequence problems, the error message will be repeated now.\n";
 				$self->setError($self->{error_code}, $self->{error_message});
 			} else {
 				$self->conversation_end;
 			}
-			undef %talk;
 			return;
-			
-		} elsif ($self->{wait_for_answer}) {
+		
+		#This will try to get out of this conversation as much as possible
+		} elsif ($self->{trying_to_cancel}) {
+			$ai_v{'npc_talk'}{'time'} = time + $timeResponse;
+			$self->{time} = time;
+			$self->cancelTalk;
+			return;
+		}
+		
+		#We must always wait for the last sent step to be answered, if it hasn't then cancel this task.
+		if ($self->{wait_for_answer}) {
 			$self->{error_code} = NPC_TIMEOUT_AFTER_ASWER;
 			$self->{error_message} = "We have waited for too long after we sent a response to the npc.";
 			$self->cancelTalk;
 			return;
 		}
 		
+		#This is to make non-autotalkcont sequences compatible with autotalkcont ones
 		if ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont}) {
-			unless ( $self->{steps}[0] =~ /^c/i ) {
+			if ( !@{$self->{steps}} || $self->{steps}[0] !~ /^c/i ) {
 				unshift(@{$self->{steps}}, 'c');
 			}
 			debug "Auto-continuing NPC Talk - next detected \n", 'ai_npcTalk';
 			
+		#This is done to restart the conversation (check if this is necessary)
 		} elsif ($ai_v{'npc_talk'}{'talk'} eq 'close' && $self->{steps}[0] =~ /x/i) {
 			undef $ai_v{'npc_talk'}{'talk'};
 		}
 
+		#Wait for more commands
 		unless (@{$self->{steps}}) {
-			#Wait for more commands
 			return;
+		
+		#We give the NPC some time to respond. This time will be reset once the NPC responds.
 		} else {
-			# We give the NPC some time to respond. This time will be reset once
-			# the NPC responds.
 			$ai_v{'npc_talk'}{'time'} = time + $timeResponse;
 			$self->{time} = time;
 		}
@@ -293,108 +297,136 @@ sub iterate {
 			}
 		}
 		
+		# Initiate NPC conversation.
 		if ( $step =~ /^x/i ) {
-			# Initiate NPC conversation.
 			if (!$self->{target}->isa('Actor::Monster')) {
 				$messageSender->sendTalk($self->{ID});
 			} else {
 				$messageSender->sendAction($self->{ID}, 0);
 			}
 			
+		# Wait x seconds.
 		} elsif ($step =~ /^w(\d+)/i) {
-			# Wait x seconds.
 			my $time = $1;
 			$ai_v{'npc_talk'}{'time'} = time + $time;
 			$self->{time} = time + $time;
 			
+		# Run a command.
 		} elsif ( $step =~ /^a=(.*)/i ) {
-			# Run a command.
 			my $command = $1;
 			$ai_v{'npc_talk'}{'time'} = time + $timeResponse - 4;
 			$self->{time} = time + $timeResponse - 4;
 			Commands::run($command);
-			
-		} elsif ( $step =~ /^c/i ) {
-			# Click Next.
-			if ($current_talk_step eq 'next') {
-				$messageSender->sendTalkContinue($talk{ID});
-			} else {
-				$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
-				$self->{error_message} = T("According to the given NPC instructions, the Next button " .
-					"must now be clicked on, but that's not possible.");
-				$self->cancelTalk();
-			}
-			
-		} elsif ( $step =~ /^t=(.*)/i ) {
-			# Send NPC talk text.
-			$messageSender->sendTalkText($talk{ID}, $1);
-
-		} elsif ( $step =~ /^d(\d+)/i ) {
-			# Send NPC talk number.
-			$messageSender->sendTalkNumber($talk{ID}, $1);
-
-		} elsif ( $step =~ /^n/i ) {
-			# Click Close or Cancel.
-			$ai_v{'npc_talk'}{'time'} = time;
-			$self->{time} = time;
-			$self->cancelTalk();
 		
-		} elsif ( $step =~ /^s/i ) {
-			# Get the sell list in a shop.
-			$messageSender->sendNPCBuySellList($talk{ID}, 1);
-
-		} elsif ( $step =~ /^e/i ) {
-			# ? Pretend like the conversation was stopped by the NPC?
-			$ai_v{'npc_talk'}{'talk'} = 'close';
-			$self->conversation_end;
-			
-		} elsif ( $step =~ /^r(?:(\d+)|=(.+)|~\/(.*?)\/(i?))/i ) {
-			# Choose a menu item.
-			my $choice = $1;
-			if ($current_talk_step eq 'select' and $2 || $3) {
-				# Choose a menu item by matching options against a regular expression.
-				my $pattern = $2 ? "^\Q$2\E\$" : $3;
-				my $postCondition = $4;
-				( $choice ) = grep { $postCondition ? $talk{responses}[$_] =~ /$pattern/i : $talk{responses}[$_] =~ /$pattern/ } 0..$#{$talk{responses}};
-				if (defined $choice && $choice < $#{$talk{responses}}) {
-					$messageSender->sendTalkResponse($talk{ID}, $choice + 1);
-				} elsif (defined $choice) {
-					# The last response is a fake "Cancel Chat" response.
-					$self->cancelTalk();
-				} else {
-					$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
-					$self->{error_message} = TF("According to the given NPC instructions, a menu " .
-						"item matching '%s' must now be selected, but no " .
-						"such menu item exists.", $pattern);
-					$self->cancelTalk();
-				}
+		# Select an answer
+		} elsif ($current_talk_step eq 'select') {
+		
+			if ( $step =~ /^r(?:(\d+)|=(.+)|~\/(.*?)\/(i?))/i ) {
+				my $choice = $1;
 				
-			} elsif ($current_talk_step eq 'select') {
-				if ($choice < $#{$talk{responses}}) {
-					$messageSender->sendTalkResponse($talk{ID}, $choice + 1);
-				} elsif ($choice) {
-					# The last response is a fake "Cancel Chat" response.
-					$self->cancelTalk();
+				# Regex or text match
+				if ($2 || $3) {
+					# Choose a menu item by matching options against a regular expression.
+					my $pattern = $2 ? "^\Q$2\E\$" : $3;
+					my $postCondition = $4;
+					( $choice ) = grep { $postCondition ? $talk{responses}[$_] =~ /$pattern/i : $talk{responses}[$_] =~ /$pattern/ } 0..$#{$talk{responses}};
+					
+					# Found valid response
+					if (defined $choice && $choice < $#{$talk{responses}}) {
+						$messageSender->sendTalkResponse($talk{ID}, $choice + 1);
+						
+					# Found response is fake 'Cancel Chat'
+					} elsif (defined $choice) {
+						$self->{trying_to_cancel} = 1;
+						$self->cancelTalk;
+					
+					# No match was found
+					} else {
+						$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, TF("According to the given NPC instructions, a menu " .
+							"item matching '%s' must now be selected, but no " .
+							"such menu item exists.", $pattern));
+					}
+					
+				#Normal number response
 				} else {
-					$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
-					$self->{error_message} = TF("According to the given NPC instructions, menu item %d must " .
-						"now be selected, but there are only %d menu items.",
-						$choice, @{$talk{responses}} - 1);
-					$self->cancelTalk();
+					
+					#Normal number response is valid
+					if ($choice < $#{$talk{responses}}) {
+						$messageSender->sendTalkResponse($talk{ID}, $choice + 1);
+					
+					#Normal number response is a fake "Cancel Chat" response.
+					} elsif ($choice) {
+						$self->{trying_to_cancel} = 1;
+						$self->cancelTalk;
+					
+					#Normal number response is not valid
+					} else {
+						$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, TF("According to the given NPC instructions, menu item %d must " .
+							"now be selected, but there are only %d menu items.",
+							$choice, @{$talk{responses}} - 1));
+					}
 				}
+			
+			# Wrong sequence
 			} else {
-				$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
-				$self->{error_message} = T("According to the given NPC instructions, a menu item " .
-					"must now be selected, but that's not possible.");
-				$self->cancelTalk();
+				$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("This npc requires a response to be selected, but the given instructions don't match that."));
 			}
-
-		} elsif ( $step =~ /^b.*/i ) {
-			# Get the shop's item list.
-			if ($step =~ /^b$/i) {
+		
+		# Click Next.
+		} elsif ($current_talk_step eq 'next') {
+			if ($step =~ /^c/i) {
+				$messageSender->sendTalkContinue($talk{ID});
+			
+			# Wrong sequence
+			} else {
+				$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("This npc requires the next button to be pressed now, but the given instructions don't match that."));
+			}
+			
+		# Send NPC talk number.
+		} elsif ($current_talk_step eq 'number') {
+			if ( $step =~ /^d(\d+)/i ) {
+				$messageSender->sendTalkNumber($talk{ID}, $1);
+			
+			# Wrong sequence
+			} else {
+				$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("This npc requires a number to be sent now, but the given instructions don't match that."));
+			}
+			
+		# Send NPC talk text.
+		} elsif ($current_talk_step eq 'text') {
+			if ( $step =~ /^t=(.*)/i ) {
+				$messageSender->sendTalkText($talk{ID}, $1);
+			
+			# Wrong sequence
+			} else {
+				$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("This npc requires a text to be sent now, but the given instructions don't match that."));
+			}
+		
+		# Get the sell or buy list in a shop.
+		} elsif ( $current_talk_step eq 'buy_or_sell' ) {
+		
+			# Get the sell list in a shop.
+			if ( $step =~ /^s/i ) {
+				$messageSender->sendNPCBuySellList($talk{ID}, 1);
+				
+			# Get the buy list in a shop.
+			} elsif ($step =~ /^b$/i) {
 				$messageSender->sendNPCBuySellList($talk{ID}, 0);
-			# Bulk buy solution.
-			} elsif ($step =~ /^b(\d+),(\d+)/i) {
+				
+			# Click the cancel button in a shop.
+			} elsif ($step =~ /^e$/i) {
+				$ai_v{'npc_talk'}{'talk'} = 'close';
+				$self->conversation_end;
+			
+			# Wrong sequence
+			} else {
+				$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("This npc requires the sell, buy or cancel button to be pressed, but the given instructions don't match that."));
+			}
+		
+		} elsif ( $current_talk_step eq 'store' ) {
+			
+			# Buy Items
+			if ($step =~ /^b(\d+),(\d+)/i) {
 				while ($self->{steps}[0] =~ /^b(\d+),(\d+)/i){
 					my $index = $1;
 					my $amount = $2;
@@ -417,18 +449,95 @@ sub iterate {
 				$ai_v{'npc_talk'}{'time'} = time + 0.2;
 				$self->{time} = time + 0.2;
 				return;
+				
+			# Click the cancel button in a shop.
+			} elsif ($step =~ /^e$/i) {
+				$ai_v{'npc_talk'}{'talk'} = 'close';
+				$self->conversation_end;
+				
+			# Wrong sequence
+			} else {
+				$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("This npc requires the buy or cancel button to be pressed, but the given instructions don't match that."));
 			}
+		
+		} elsif ( $current_talk_step eq 'sell' ) {
+			$self->conversation_end;
 
 		} else {
-			$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
-			$self->{error_message} = "According to the given NPC instructions, a npc conversation code " .
-				"should be used (".$step."), but it doesn't exist.";
-			$self->cancelTalk();
+			$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("According to the given NPC instructions, a npc conversation code " .
+				"should be used (".$step."), but it doesn't exist."));
 		}
 		
 		$self->{wait_for_answer} = 1;
 		shift @{$self->{steps}};
+	
+	# After a 'npc_talk_done' hook we must always send a 'npc_talk_cancel' after a timeout
+	} elsif ($self->{stage} == AFTER_NPC_CLOSE) {
+		return unless (timeOut($self->{time}, 1));
+		#Now 'n' step is totally unnecessary as we always send it but this must be done for backwards compatibility
+		if ( $self->{steps}[0] =~ /^n/i ) {
+			shift(@{$self->{steps}});
+		}
+		$self->{time} = time;
+		$self->{stage} = AFTER_NPC_CANCEL;
+		$messageSender->sendTalkCancel($self->{ID});
+	
+	# After a 'npc_talk_cancel' and a timeout we decide what to do next
+	} elsif ($self->{stage} == AFTER_NPC_CANCEL) {
+		return unless (timeOut($self->{time}, 1));
+		
+		if (defined $self->{error_code}) {
+			$self->setError($self->{error_code}, $self->{error_message});
+			return;
+		}
+		
+		# No more steps to be sent
+		if (!@{$self->{steps}}) {
+			# Usual end of a conversation
+			if (!%talk) {
+				$self->conversation_end;
+			
+			# No more steps but we still have a defined %talk
+			} else {
+				debug "After we finished talking with hte last npc another one started talking to us faster than we could predict.\n", "ai_npcTalk";
+				my $target = $self->find_and_set_target;
+				$self->{stage} = TALKING_TO_NPC;
+				$self->{time} = time;
+			}
+		
+		# There are more steps
+		} else {
+			# No conversation with npc
+			if (!%talk) {
+				# Usual 'x' step
+				if ($self->{steps}[0] =~ /x/i) {
+					$self->{stage} = TALKING_TO_NPC;
+					$self->{time} = time;
+				
+				# Too many steps
+				} else {
+					$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended.\n");
+				}
+			
+			# We still have steps but we also still have a defined %talk
+			} else {
+				debug "After we finished talking with hte last npc another one started talking to us faster than we could predict.\n", "ai_npcTalk";
+				my $target = $self->find_and_set_target;
+				$self->{stage} = TALKING_TO_NPC;
+				$self->{time} = time;
+			}
+		}
 	}
+}
+
+sub set_error_and_try_to_cancel {
+	my ( $self, $error_code, $error_message ) = @_;
+	$self->{error_code} = $error_code;
+	$self->{error_message} = $error_message;
+	error $self->{error_message}."\n".
+		"Now openkore will try to auto-end this npc conversation.\n";
+	$self->{trying_to_cancel} = 1;
+	$self->cancelTalk;
 }
 
 sub conversation_end {
@@ -448,17 +557,44 @@ sub target {
 	return $self->{target};
 }
 
+#only for testing
+my $default_text = "eye lol";
+my $default_number = 1234;
+
 sub cancelTalk {
 	my ($self) = @_;
+	
+	if ($self->{error_message}) {
+		debug "Trying to auto close the conversation due to error.\n", 'ai_npcTalk';
+	}
+	
 	if ($ai_v{'npc_talk'}{'talk'} eq 'select') {
 		$messageSender->sendTalkResponse($self->{ID}, 255);
-		$self->{sent_cancel} = 1;
+		$self->{sent_talk_response_cancel} = 1;
 		
-	} elsif ($ai_v{'npc_talk'}{'talk'} ne 'close' && !$talk{canceled}) {
-		$messageSender->sendTalkCancel($self->{ID});
-		$talk{canceled} = 1;
-		$self->{sent_cancel} = 1;
+	} elsif ($ai_v{'npc_talk'}{'talk'} eq 'next') {
+		$messageSender->sendTalkContinue($talk{ID});
+		
+	} elsif ($ai_v{'npc_talk'}{'talk'} eq 'number') {
+		$messageSender->sendTalkNumber($talk{ID}, $default_number);
+		
+	} elsif ($ai_v{'npc_talk'}{'talk'} eq 'text') {
+		$messageSender->sendTalkText($talk{ID}, $default_text);
+		
+	} elsif ( $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' ) {
+		$self->conversation_end;
+		$ai_v{'npc_talk'}{'talk'} = 'close';
+	
+	} elsif ( $ai_v{'npc_talk'}{'talk'} eq 'store' ) {
+		$self->conversation_end;
+		$ai_v{'npc_talk'}{'talk'} = 'close';
+		
+	} elsif ( $ai_v{'npc_talk'}{'talk'} eq 'sell' ) {
+		$self->conversation_end;
+		$ai_v{'npc_talk'}{'talk'} = 'close';
+		
 	}
+	
 }
 
 # Actor findTarget(ActorList actorList)

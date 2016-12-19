@@ -4251,7 +4251,7 @@ sub cmdSell {
 	}
 	my @args = parseArgs($_[1]);
 
-	if ($args[0] eq "" && $talk{buyOrSell}) {
+	if ($args[0] eq "" && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell') {
 		$messageSender->sendNPCBuySellList($talk{ID}, 1);
 
 	} elsif ($args[0] eq "list") {
@@ -4809,7 +4809,7 @@ sub cmdStore {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 
-	if ($arg1 eq "" && !$talk{'buyOrSell'}) {
+	if ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {
 		my $msg = center(TF(" Store List (%s) ", $storeList[0]{npcName}), 54, '-') ."\n".
 			T("#  Name                    Type                  Price\n");
 		my $display;
@@ -4823,7 +4823,7 @@ sub cmdStore {
 	$msg .= ('-'x54) . "\n";
 	message $msg, "list";
 
-	} elsif ($arg1 eq "" && $talk{'buyOrSell'}
+	} elsif ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell'
 	 && ($net && $net->getState() == Network::IN_GAME)) {
 		$messageSender->sendNPCBuySellList($talk{'ID'}, 0);
 
@@ -4966,16 +4966,13 @@ sub cmdTalk {
 		} elsif ($arg1 eq "cont") {
 			$step = 'c';
 
-		} elsif ($arg1 eq "no") {
-			$step = 'n';
-			
 		}
 
 		if (defined $step) {
 			$task->nextStep($step);
 		} else {
 			error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
-				"Usage: talk <NPC # | cont | resp | num | text | no> [<response #>|<number #>]\n");
+				"Usage: talk <NPC # | cont | resp | num | text > [<response #>|<number #>]\n");
 		}
 	}
 }
