@@ -5106,6 +5106,7 @@ sub unequip_item {
 				next if $_ == 10; #work around Arrow bug
 				next if $_ == 32768;
 				delete $char->{equipment}{$equipSlot_lut{$_}};
+				Plugins::callHook('unequipped_item', {slot => $equipTypes_lut{$_}, item => $item});
 			}
 		}
 	}
@@ -5113,7 +5114,6 @@ sub unequip_item {
 		message TF("You unequip %s (%d) - %s\n",
 			$item->{name}, $item->{invIndex},
 			$equipTypes_lut{$item->{type_equip}}), 'inventory';
-		Plugins::callHook('unequipped_item', {slot => $equipTypes_lut{$item->{type_equip}}, item => $item});
 	}
 }
 
