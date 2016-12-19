@@ -1227,6 +1227,7 @@ sub equip_item {
 		}
 		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{invIndex},
 			$equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
+		Plugins::callHook('equipped_item', {slot => $equipTypes_lut{$item->{type_equip}}, item => $item});
 	}
 	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 }
