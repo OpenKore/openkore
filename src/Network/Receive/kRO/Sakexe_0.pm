@@ -261,7 +261,7 @@ sub new {
 		'0194' => ['character_name', 'a4 Z24', [qw(ID name)]], # 30
 		'0195' => ['actor_info', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]], # 102
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]], # 9
-		'0199' => ['map_property', 'v', [qw(type)]], #4
+		'0199' => ['map_property', 'v', [qw(map_property_type)]], #4
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]], # 14
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]], # 10
 		'019E' => ['pet_capture_process'], # 2
@@ -300,7 +300,7 @@ sub new {
 		'01D2' => ['combo_delay', 'a4 V', [qw(ID delay)]], # 10
 		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type term ID)]], # 35
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]], # 6
-		'01D6' => ['map_property2', 'v', [qw(type)]], # 4
+		'01D6' => ['map_property', 'v', [qw(map_type)]], # 4
 		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]], # 11 # TODO: inconsistent with C structs
 		'01D8' => ['actor_exists', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]], # 54 # standing
 		'01D9' => ['actor_connected', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 53 # spawning
@@ -2841,46 +2841,6 @@ sub no_teleport {
 		error T("Unavailable Area To Memo\n");
 	} else {
 		error TF("Unavailable Area To Teleport (fail code %s)\n", $fail);
-	}
-}
-
-sub map_property {
-	my ($self, $args) = @_;
-
-	$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
-	grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
-	map {[$_, defined $mapPropertyTypeHandle{$_} ? $mapPropertyTypeHandle{$_} : "UNKNOWN_MAPPROPERTY_TYPE_$_"]}
-	1 .. List::Util::max $args->{type}, keys %mapPropertyTypeHandle;
-
-	if ($args->{info_table}) {
-		my @info_table = unpack 'C*', $args->{info_table};
-		$char->setStatus(@$_) for map {[
-			defined $mapPropertyInfoHandle{$_} ? $mapPropertyInfoHandle{$_} : "UNKNOWN_MAPPROPERTY_INFO_$_",
-			$info_table[$_],
-		]} 0 .. @info_table-1;
-	}
-
-	$pvp = {1 => 1, 3 => 2}->{$args->{type}};
-	if ($pvp) {
-		Plugins::callHook('pvp_mode', {
-			pvp => $pvp # 1 PvP, 2 GvG
-		});
-	}
-}
-
-sub map_property2 {
-	my ($self, $args) = @_;
-
-	$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
-	grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
-	map {[$_, defined $mapTypeHandle{$_} ? $mapTypeHandle{$_} : "UNKNOWN_MAPTYPE_$_"]}
-	0 .. List::Util::max $args->{type}, keys %mapTypeHandle;
-
-	$pvp = {6 => 1, 8 => 2, 19 => 3}->{$args->{type}};
-	if ($pvp) {
-		Plugins::callHook('pvp_mode', {
-			pvp => $pvp # 1 PvP, 2 GvG, 3 Battleground
-		});
 	}
 }
 
