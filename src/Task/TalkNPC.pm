@@ -101,7 +101,10 @@ sub new {
 		['npc_talk_done',             \&handle_npc_talk, \@holder],
 		['npc_talk_responses',        \&handle_npc_talk, \@holder],
 		['packet/npc_talk_number',    \&handle_npc_talk, \@holder],
-		['packet/npc_talk_text',      \&handle_npc_talk, \@holder]
+		['packet/npc_talk_text',      \&handle_npc_talk, \@holder],
+		['packet/npc_store_begin',    \&handle_npc_talk, \@holder],
+		['packet/npc_store_info',     \&handle_npc_talk, \@holder],
+		['packet/npc_sell_list',      \&handle_npc_talk, \@holder]
 	);
 	
 	return $self;
@@ -222,14 +225,6 @@ sub iterate {
 		# a failure.
 		$messageSender->sendTalkCancel($self->{ID});
 		$self->setError(NPC_NO_RESPONSE, T("The NPC did not respond."));
-	
-	# We arrived at a buy or sell selection, but there are no more steps regarding this, so end the conversation
-	} elsif ($self->{stage} == TALKING_TO_NPC && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' && !@{$self->{steps}}) {
-		$self->conversation_end;
-		
-	# We arrived at a buy or sell selection, but there are more steps that are not for buying or selling, so trow an error
-	} elsif ($self->{stage} == TALKING_TO_NPC && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' && @{$self->{steps}} && $self->{steps}[0] !~ /^(b|s|e)$/i) {
-		$self->setError(STEPS_AFTER_BUY_OR_SELL, T("There are still more conversation steps but we arrived at a buy or sell interaction."));
 
 	} elsif ($self->{stage} == TALKING_TO_NPC && timeOut($ai_v{'npc_talk'}{'time'}, 1.5)) {
 		# 0.25 seconds have passed since we last talked to the NPC.
@@ -273,9 +268,16 @@ sub iterate {
 			undef $ai_v{'npc_talk'}{'talk'};
 		}
 
-		#Wait for more commands
-		unless (@{$self->{steps}}) {
-			return;
+		if (!@{$self->{steps}}) {
+		
+			# We arrived at a buy or sell selection, but there are no more steps regarding this, so end the conversation
+			if ($ai_v{'npc_talk'}{'talk'} =~ /^(buy_or_sell|store|sell)$/) {
+				$self->conversation_end;
+			
+			#Wait for more commands
+			} else {
+				return;
+			}
 		
 		#We give the NPC some time to respond. This time will be reset once the NPC responds.
 		} else {

@@ -3931,8 +3931,8 @@ sub npc_store_begin {
 	my ($self, $args) = @_;
 	undef %talk;
 	$talk{ID} = $args->{ID};
-	$ai_v{npc_talk}{talk} = 'buy_or_sell';
-	$ai_v{npc_talk}{time} = time;
+	$ai_v{'npc_talk'}{'talk'} = 'buy_or_sell';
+	$ai_v{'npc_talk'}{'time'} = time;
 
 	my $name = getNPCName($args->{ID});
 
