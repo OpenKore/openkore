@@ -31,7 +31,7 @@ sub onStatInfo2 {
 	my ($self) = @_;
 	if ($self->{state} == MAP_LOADED_OR_NEW) {
 		$self->{state} = RECV_STAT_INFO2;
-		Plugins::callHook('inventory_info_received');
+		Plugins::callHook('inventory_ready');
 	}
 }
 
@@ -46,7 +46,7 @@ sub add {
 	my $invIndex = $self->SUPER::add($item);
 	if ($self->{state} == MAP_LOADED_OR_NEW) {
 		$self->{state} = RECV_STAT_INFO2;
-		Plugins::callHook('inventory_info_received');
+		Plugins::callHook('inventory_ready');
 	}
 	return $invIndex;
 }
