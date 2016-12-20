@@ -1963,6 +1963,15 @@ sub map_property3 {
 		grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
 		map {[$_, defined $mapTypeHandle{$_} ? $mapTypeHandle{$_} : "UNKNOWN_MAPTYPE_$_"]}
 		0 .. List::Util::max $args->{type}, keys %mapTypeHandle;
+
+		if ($args->{info_table}) {
+			my $info_table = unpack('V1',$args->{info_table});
+			for (my $i = 0; $i < 16; $i++) {
+				if ($info_table&(1<<$i)) {
+					$char->setStatus(defined $mapPropertyInfoHandle{$i} ? $mapPropertyInfoHandle{$i} : "UNKNOWN_MAPPROPERTY_INFO_$i",1);
+				}
+			}
+		}
 	}
 
 	$pvp = {6 => 1, 8 => 2, 19 => 3}->{$args->{type}};

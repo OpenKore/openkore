@@ -4387,7 +4387,6 @@ sub makeShop {
 	my $max_items = $char->{skills}{MC_VENDING}{lv} + 2;
 
 	# Iterate through items to be sold
-	findCartItemInit();
 	shuffleArray(\@{$shop{items}}) if ($config{'shop_random'} eq "2");
 	for my $sale (@{$shop{items}}) {
 		my $cart_item = $char->cart->getByName($sale->{name});
