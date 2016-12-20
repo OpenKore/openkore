@@ -557,6 +557,11 @@ sub new {
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CD' => ['message_string', 'v V', [qw(msg_id para1)]], #8
 		'09CF' => ['gameguard_request'],
+		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
+		'09DC' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
+		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
+		'09DE' => ['private_message', 'v V Z25 Z*', [qw(len charID privMsgUser privMsg)]],
+		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
 		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
 		'0A0A' => ['storage_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
 		'0A0B' => ['cart_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
@@ -1389,86 +1394,6 @@ sub card_merge_status {
 	undef $cardMergeIndex;
 }
 
-sub cart_info {
-	my ($self, $args) = @_;
-
-	$cart{items} = $args->{items};
-	$cart{items_max} = $args->{items_max};
-	$cart{weight} = int($args->{weight} / 10);
-	$cart{weight_max} = int($args->{weight_max} / 10);
-	$cart{exists} = 1;
-	debug "[cart_info] received.\n", "parseMsg";
-}
-
-sub cart_add_failed {
-	my ($self, $args) = @_;
-
-	my $reason;
-	if ($args->{fail} == 0) {
-		$reason = T('overweight');
-	} elsif ($args->{fail} == 1) {
-		$reason = T('too many items');
-	} else {
-		$reason = TF("Unknown code %s",$args->{fail});
-	}
-	error TF("Can't Add Cart Item (%s)\n", $reason);
-}
-
-sub cart_items_nonstackable {
-	my ($self, $args) = @_;
-
-	$self->_items_list({
-		# TODO: different classes for inventory/cart/storage items
-		class => 'Actor::Item',
-		hook => 'packet_cart',
-		debug_str => 'Non-Stackable Cart Item',
-		items => [$self->parse_items_nonstackable($args)],
-		getter => sub { $cart{inventory}[$_[0]{index}] },
-		adder => sub { $cart{inventory}[$_[0]{index}] = $_[0] },
-	});
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
-sub cart_items_stackable {
-	my ($self, $args) = @_;
-
-	$self->_items_list({
-		class => 'Actor::Item',
-		hook => 'packet_cart',
-		debug_str => 'Stackable Cart Item',
-		items => [$self->parse_items_stackable($args)],
-		getter => sub { $cart{inventory}[$_[0]{index}] },
-		adder => sub { $cart{inventory}[$_[0]{index}] = $_[0] },
-	});
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
-sub cart_item_added {
-	my ($self, $args) = @_;
-
-	my $item = $cart{inventory}[$args->{index}] ||= Actor::Item->new;
-	if ($item->{amount}) {
-		$item->{amount} += $args->{amount};
-	} else {
-		$item->{index} = $args->{index};
-		$item->{nameID} = $args->{nameID};
-		$item->{amount} = $args->{amount};
-		$item->{identified} = $args->{identified};
-		$item->{broken} = $args->{broken};
-		$item->{upgrade} = $args->{upgrade};
-		$item->{cards} = $args->{cards};
-		$item->{type} = $args->{type} if (exists $args->{type});
-		$item->{name} = itemName($item);
-	}
-	message TF("Cart Item Added: %s (%d) x %s\n", $item->{name}, $args->{index}, $args->{amount});
-	$itemChange{$item->{name}} += $args->{amount};
-	$args->{item} = $item;
-}
-
 sub cash_dealer {
 	my ($self, $args) = @_;
 
@@ -1515,21 +1440,6 @@ sub combo_delay {
 	$args->{actor} = Actor::get($args->{ID});
 	my $verb = $args->{actor}->verb('have', 'has');
 	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
-}
-
-sub cart_item_removed {
-	my ($self, $args) = @_;
-
-	my ($index, $amount) = @{$args}{qw(index amount)};
-
-	my $item = $cart{inventory}[$index];
-	$item->{amount} -= $amount;
-	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $index, $amount);
-	$itemChange{$item->{name}} -= $amount;
-	if ($item->{amount} <= 0) {
-		$cart{'inventory'}[$index] = undef;
-	}
-	$args->{item} = $item;
 }
 
 sub change_to_constate25 {
@@ -2069,9 +1979,6 @@ sub inventory_items_nonstackable {
 			}
 		}
 	});
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
 }
 
 sub item_skill {

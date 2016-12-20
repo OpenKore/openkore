@@ -36,7 +36,7 @@ use base qw(ObjectList);
 # Creates a new InventoryList object.
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
+	my $self = $class->SUPER::new;
 
 	# Hash<String, Array<int>> nameIndex
 	# Maps an item name to a list of item indices. Used for fast
@@ -76,6 +76,7 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
+	Plugins::delHook($self->{hooks}) if $self->{hooks};
 	$self->clear();
 	$self->SUPER::DESTROY();
 }

@@ -353,9 +353,6 @@ sub account_server_info {
 
 		} elsif ($masterServer->{charServer_ip}) {
 			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';
-
-		} else {
-			message TF("Selected server: %s\n", @servers[$config{server}]->{name}), 'connection';
 		}
 	}
 
@@ -590,6 +587,7 @@ sub actor_display {
 
 	#### Step 2: update actor information ####
 	$actor->{ID} = $args->{ID};
+	$actor->{charID} = $args->{charID} if $args->{charID} && $args->{charID} ne "\0\0\0\0";
 	$actor->{jobID} = $args->{type};
 	$actor->{type} = $args->{type};
 	$actor->{lv} = $args->{lv};
@@ -1687,7 +1685,7 @@ sub inventory_item_removed {
 
 # 012B
 sub cart_off {
-	undef $cart{exists};
+	$char->cart->close;
 	message T("Cart released.\n"), "success";
 }
 
@@ -1941,7 +1939,7 @@ sub actor_status_active {
 	my ($type, $ID, $tick, $unknown1, $unknown2, $unknown3, $unknown4) = @{$args}{qw(type ID tick unknown1 unknown2 unknown3 unknown4)};
 	my $flag = (exists $args->{flag}) ? $args->{flag} : 1;
 	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
-	$cart{type} = $unknown1 if ($type == 673 && defined $unknown1 && ($ID eq $accountID)); # for Cart active
+	$char->cart->changeType($unknown1) if ($type == 673 && defined $unknown1 && ($ID eq $accountID)); # for Cart active
 	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
 #	($args->{actor} = Actor::get($ID))->setStatus($status, 1, $tick == 9999 ? undef : $tick, $args->{unknown1}); # need test for '08FF'
 	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick == 9999 ? undef : $tick);
@@ -2342,6 +2340,212 @@ sub forge_list {
 		#my $charID = substr($args->{RAW_MSG}, $i+4, 4);
 	}
 	message "=========================\n";
+}
+ 
+sub storage_opened {
+	my ($self, $args) = @_;
+	$char->storage->open($args);
+}
+
+sub storage_closed {
+	$char->storage->close();
+	message T("Storage closed.\n"), "storage";
+	Plugins::callHook('packet_storage_close');
+
+	# Storage log
+	writeStorageLog(0);
+
+	if ($char->{dcOnEmptyItems} ne "") {
+		message TF("Disconnecting on empty %s!\n", $char->{dcOnEmptyItems});
+		chatLog("k", TF("Disconnecting on empty %s!\n", $char->{dcOnEmptyItems}));
+		quit();
+	}
+}
+
+sub storage_items_stackable {
+	my ($self, $args) = @_;
+
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_storage',
+		debug_str => 'Stackable Storage Item',
+		items => [$self->parse_items_stackable($args)],
+		getter => sub { $char->storage->getByServerIndex($_[0]{index}) },
+		adder => sub { $char->storage->add($_[0]) },
+		callback => sub {
+			my ($local_item) = @_;
+
+			$local_item->{amount} = $local_item->{amount} & ~0x80000000;
+		},
+	});
+
+	$storageTitle = $args->{title} ? $args->{title} : undef;
+}
+
+sub storage_items_nonstackable {
+	my ($self, $args) = @_;
+
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_storage',
+		debug_str => 'Non-Stackable Storage Item',
+		items => [$self->parse_items_nonstackable($args)],
+		getter => sub { $char->storage->getByServerIndex($_[0]{index}) },
+		adder => sub { $char->storage->add($_[0]) },
+	});
+
+	$storageTitle = $args->{title} ? $args->{title} : undef;
+}
+
+sub storage_item_added {
+	my ($self, $args) = @_;
+
+	my $index = $args->{index};
+	my $amount = $args->{amount};
+
+	my $item = $char->storage->getByServerIndex($index);
+	if (!$item) {
+		$item = new Actor::Item();
+		$item->{nameID} = $args->{nameID};
+		$item->{index} = $index;
+		$item->{amount} = $amount;
+		$item->{type} = $args->{type};
+		$item->{identified} = $args->{identified};
+		$item->{broken} = $args->{broken};
+		$item->{upgrade} = $args->{upgrade};
+		$item->{cards} = $args->{cards};
+		$item->{name} = itemName($item);
+		$char->storage->add($item);
+	} else {
+		$item->{amount} += $amount;
+	}
+	my $disp = TF("Storage Item Added: %s (%d) x %d - %s",
+			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
+	message "$disp\n", "storage";
+	
+	$itemChange{$item->{name}} += $amount;
+	$args->{item} = $item;
+}
+
+sub storage_item_removed {
+	my ($self, $args) = @_;
+
+	my ($index, $amount) = @{$args}{qw(index amount)};
+
+	my $item = $char->storage->getByServerIndex($index);
+	
+	if ($item) {
+		Misc::storageItemRemoved($item->{invIndex}, $amount);
+	}
+}
+
+sub cart_items_stackable {
+	my ($self, $args) = @_;
+
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_cart',
+		debug_str => 'Stackable Cart Item',
+		items => [$self->parse_items_stackable($args)],
+		getter => sub { $char->cart->getByServerIndex($_[0]{index}) },
+		adder => sub { $char->cart->add($_[0]) },
+	});
+}
+
+sub cart_items_nonstackable {
+	my ($self, $args) = @_;
+
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_cart',
+		debug_str => 'Non-Stackable Cart Item',
+		items => [$self->parse_items_nonstackable($args)],
+		getter => sub { $char->cart->getByServerIndex($_[0]{index}) },
+		adder => sub { $char->cart->add($_[0]) },
+	});
+}
+
+sub cart_item_added {
+	my ($self, $args) = @_;
+	
+	my $index = $args->{index};
+	my $amount = $args->{amount};
+
+	my $item = $char->cart->getByServerIndex($index);
+	if (!$item) {
+		$item = new Actor::Item();
+		$item->{index} = $args->{index};
+		$item->{nameID} = $args->{nameID};
+		$item->{amount} = $args->{amount};
+		$item->{identified} = $args->{identified};
+		$item->{broken} = $args->{broken};
+		$item->{upgrade} = $args->{upgrade};
+		$item->{cards} = $args->{cards};
+		$item->{type} = $args->{type} if (exists $args->{type});
+		$item->{name} = itemName($item);
+		$char->cart->add($item);
+	} else {
+		$item->{amount} += $args->{amount};
+	}
+	my $disp = TF("Cart Item Added: %s (%d) x %d - %s",
+			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
+	message "$disp\n", "cart";
+	$itemChange{$item->{name}} += $args->{amount};
+	$args->{item} = $item;
+}
+
+sub cart_item_removed {
+	my ($self, $args) = @_;
+
+	my ($index, $amount) = @{$args}{qw(index amount)};
+
+	my $item = $char->cart->getByServerIndex($index);
+	
+	if ($item) {
+		Misc::cartItemRemoved($item->{invIndex}, $amount);
+	}
+}
+
+sub cart_info {
+	my ($self, $args) = @_;
+	$char->cart->info($args);
+	debug "[cart_info] received.\n", "parseMsg";
+}
+
+sub cart_add_failed {
+	my ($self, $args) = @_;
+
+	my $reason;
+	if ($args->{fail} == 0) {
+		$reason = T('overweight');
+	} elsif ($args->{fail} == 1) {
+		$reason = T('too many items');
+	} else {
+		$reason = TF("Unknown code %s",$args->{fail});
+	}
+	error TF("Can't Add Cart Item (%s)\n", $reason);
+}
+
+sub inventory_items_stackable {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_inventory',
+		debug_str => 'Stackable Inventory Item',
+		items => [$self->parse_items_stackable($args)],
+		getter => sub { $char->inventory->getByServerIndex($_[0]{index}) },
+		adder => sub { $char->inventory->add($_[0]) },
+		callback => sub {
+			my ($local_item) = @_;
+
+			if (defined $char->{arrow} && $local_item->{index} == $char->{arrow}) {
+				$local_item->{equipped} = 32768;
+				$char->{equipment}{arrow} = $local_item;
+			}
+		}
+	});
 }
 
 sub login_error {
@@ -3308,31 +3512,6 @@ sub married {
 	message TF("%s got married!\n", $actor);
 }
 
-sub inventory_items_stackable {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-
-	$self->_items_list({
-		class => 'Actor::Item',
-		hook => 'packet_inventory',
-		debug_str => 'Stackable Inventory Item',
-		items => [$self->parse_items_stackable($args)],
-		getter => sub { $char->inventory->getByServerIndex($_[0]{index}) },
-		adder => sub { $char->inventory->add($_[0]) },
-		callback => sub {
-			my ($local_item) = @_;
-
-			if (defined $char->{arrow} && $local_item->{index} == $char->{arrow}) {
-				$local_item->{equipped} = 32768;
-				$char->{equipment}{arrow} = $local_item;
-			}
-		}
-	});
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
 sub item_appeared {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -3736,7 +3915,6 @@ sub map_changed {
 		delete $char->{permitSkill};
 		delete $char->{encoreSkill};
 	}
-	$cart{exists} = 0;
 	undef %guild;
 
 	Plugins::callHook('Network::Receive::map_changed', {
@@ -4705,9 +4883,8 @@ sub stats_info {
 }
 
 sub storage_closed {
+	$char->storage->close();
 	message T("Storage closed.\n"), "storage";
-	delete $ai_v{temp}{storage_opened};
-	delete $storage{opened};
 	Plugins::callHook('packet_storage_close');
 
 	# Storage log
@@ -4726,11 +4903,9 @@ sub storage_item_added {
 	my $index = $args->{index};
 	my $amount = $args->{amount};
 
-	my $item = $storage{$index} ||= Actor::Item->new;
-	if ($item->{amount}) {
-		$item->{amount} += $amount;
-	} else {
-		binAdd(\@storageID, $index);
+	my $item = $char->storage->getByServerIndex($index);
+	if (!$item) {
+		$item = new Actor::Item();
 		$item->{nameID} = $args->{nameID};
 		$item->{index} = $index;
 		$item->{amount} = $amount;
@@ -4740,9 +4915,14 @@ sub storage_item_added {
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
 		$item->{name} = itemName($item);
-		$item->{binID} = binFind(\@storageID, $index);
+		$char->storage->add($item);
+	} else {
+		$item->{amount} += $amount;
 	}
-	message TF("Storage Item Added: %s (%d) x %s\n", $item->{name}, $item->{binID}, $amount), "storage", 1;
+	my $disp = TF("Storage Item Added: %s (%d) x %d - %s",
+			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
+	message "$disp\n", "drop";
+	
 	$itemChange{$item->{name}} += $amount;
 	$args->{item} = $item;
 }
@@ -4752,14 +4932,10 @@ sub storage_item_removed {
 
 	my ($index, $amount) = @{$args}{qw(index amount)};
 
-	my $item = $storage{$index};
-	$item->{amount} -= $amount;
-	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $item->{binID}, $amount), "storage";
-	$itemChange{$item->{name}} -= $amount;
-	$args->{item} = $item;
-	if ($item->{amount} <= 0) {
-		delete $storage{$index};
-		binRemove(\@storageID, $index);
+	my $item = $char->storage->getByServerIndex($index);
+	
+	if ($item) {
+		Misc::storageItemRemoved($item->{invIndex}, $amount);
 	}
 }
 
@@ -4771,24 +4947,23 @@ sub storage_items_nonstackable {
 		hook => 'packet_storage',
 		debug_str => 'Non-Stackable Storage Item',
 		items => [$self->parse_items_nonstackable($args)],
-		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
+		getter => sub { $char->storage->getByServerIndex($_[0]{index}) },
+		adder => sub { $char->storage->add($_[0]) },
 	});
 
-	$storageTitle = exists $args->{title} ? $args->{title} : undef;
+	$storageTitle = $args->{title} ? $args->{title} : undef;
 }
 
 sub storage_items_stackable {
 	my ($self, $args) = @_;
-
-	undef %storage;
-	undef @storageID;
 
 	$self->_items_list({
 		class => 'Actor::Item',
 		hook => 'packet_storage',
 		debug_str => 'Stackable Storage Item',
 		items => [$self->parse_items_stackable($args)],
-		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
+		getter => sub { $char->storage->getByServerIndex($_[0]{index}) },
+		adder => sub { $char->storage->add($_[0]) },
 		callback => sub {
 			my ($local_item) = @_;
 
@@ -4796,21 +4971,12 @@ sub storage_items_stackable {
 		},
 	});
 
-	$storageTitle = exists $args->{title} ? $args->{title} : undef;
+	$storageTitle = $args->{title} ? $args->{title} : undef;
 }
 
 sub storage_opened {
 	my ($self, $args) = @_;
-	$storage{items} = $args->{items};
-	$storage{items_max} = $args->{items_max};
-
-	$ai_v{temp}{storage_opened} = 1;
-	if (!$storage{opened}) {
-		$storage{opened} = 1;
-		$storage{openedThisSession} = 1;
-		message defined $storageTitle ? TF("Storage '%s' opened.\n", $storageTitle) : T("Storage opened.\n"), "storage";
-		Plugins::callHook('packet_storage_open');
-	}
+	$char->storage->open($args);
 }
 
 sub storage_password_request {
