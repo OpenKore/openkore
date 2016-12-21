@@ -29,6 +29,7 @@ poseidonServer 127.0.0.1
 poseidonPort 24390
 
 bindIp
+forceMapIP
 
 # 1 = rodar dentro do cliente do RO, 2 = usar proxy autônomo, proxy = atua como proxy verdadeiro
 # http://wiki.openkore.com/index.php/XKore
@@ -44,17 +45,23 @@ XKore_exeName ragexe.exe
 XKore_listenIp 127.0.0.1
 XKore_listenPort 6901
 XKore_publicIp 127.0.0.1
+XKore_ID
 
 # Não é aconselhável usar secureAdminPassword se você estiver usando Xkore 2
 secureAdminPassword 1
 adminPassword
 callSign
 commandPrefix ;
+callSignGM 0
+inGameAuth 0
 
 pauseCharServer 0
 pauseMapServer 0
 ignoreInvalidLogin 0
 secureLogin_requestCode
+
+# Opening cash shop when connected to map server (recv/ST0)
+whenInGame_requestCashPoints 0
 
 message_length_max 80
 
@@ -70,6 +77,7 @@ attackAuto_party 1
 attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
 attackAuto_inLockOnly 1
+attackAuto_notInTown 1
 attackDistance 1.5
 attackDistanceAuto 0
 attackMaxDistance 2.5
@@ -104,15 +112,15 @@ attackEquip_arrow
 
 #Requer o plugin breakTime: http://wiki.openkore.com/index.php?title=BreakTime
 autoBreakTime {
-        startTime
-        stopTime
+	startTime
+	stopTime
 }
 
 autoConfChange {
-        minTime
-        varTime
-        lvl
-        joblvl
+	minTime
+	varTime
+	lvl
+	joblvl
 }
 
 autoMakeArrows 0
@@ -127,9 +135,12 @@ autoSleepMin 900
 autoSleepSeed 900
 
 autoResponse 0
+autoResponseOnHeal 0
 
 autoSpell
+autoSpell_safe
 
+avoidGM_namePattern
 avoidGM_near 0
 avoidGM_near_inTown 0
 avoidGM_talk 0
@@ -146,6 +157,7 @@ cachePlayerNames_maxSize 100
 
 clientSight 20
 
+dcPause 1
 dcOnDeath 0
 dcOnDualLogin 0
 dcOnDisconnect 0
@@ -158,8 +170,11 @@ dcOnStorageFull 1
 dcOnPlayer 0
 dcOnServerShutDown 0
 dcOnServerClose 0
+dcOnJobLevel
+dcOnLevel
 
 follow 0
+followCheckLOS 0
 followTarget
 followEmotion 1
 followEmotion_distance 4
@@ -180,7 +195,7 @@ itemsMaxWeight_sellOrStore 48
 itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
 itemsTakeAuto_new 0
-
+itemsTakeGreed 0
 
 lockMap
 lockMap_x
@@ -209,6 +224,10 @@ runFromTarget_dist 6
 saveMap
 saveMap_warpToBuyOrSell 1
 saveMap_warpChatCommand
+memo1
+memo2
+memo3
+memo4
 
 shopAuto_open 0
 shop_random 0
@@ -223,7 +242,7 @@ sitAuto_over_50 0
 sitAuto_idle 1
 sitAuto_look
 sitAuto_look_from_wall
-
+sitTensionRelax 0
 
 statsAddAuto 0
 statsAddAuto_list
@@ -264,6 +283,8 @@ teleportAuto_equip_leftAccessory
 teleportAuto_equip_rightAccessory
 teleportAuto_lostHomunculus
 teleportAuto_useItemForRespawn
+teleportAuto_item1
+teleportAuto_item2
 
 dealAuto 1
 dealAuto_names
@@ -275,10 +296,27 @@ guildAutoDeny 1
 
 verbose 1
 showDomain 0
+showDomain_NPC parseMsg_presence
+showDomain_Shop list
 squelchDomains
 verboseDomains
 beepDomains
 beepDomains_notInTown
+friendlyAID
+showTime
+showTimeDomains
+showTimeDomainsFormat
+wx_map_maxAutoSize 300
+wx_map_monsterSticking 1
+wx_map_npcSticking 1
+wx_map_playersSticking 1
+wx_map_portalSticking 5
+wx_map_route
+wx_npcTalk
+wx_captcha
+showAllDamage 0
+manualURL http://wiki.openkore.com/index.php?title=Manual
+forumURL http://forums.openkore.com
 
 logChat 0
 logPrivateChat 1
@@ -288,7 +326,9 @@ logSystemChat 1
 logEmoticons
 logConsole 0
 logAppendUsername 1
-logAppendServer
+logAppendServer 0
+monsterLog 0
+logDead 0
 
 chatTitleOversize 0
 shopTitleOversize 0
@@ -312,6 +352,7 @@ status_mapProperty 0
 status_mapType 0
 
 removeActorWithDistance
+monster_filter
 
 ######## Configurações para Assistente ########
 
@@ -344,6 +385,7 @@ mercenary_teleportAuto_dropTarget 0
 mercenary_teleportAuto_dropTargetKS 0
 mercenary_teleportAuto_totalDmg 0
 mercenary_teleportAuto_totalDmgInLock 0
+mercenary_teleportAuto_attackedWhenSitting 0
 
 ######## Configurações para homunculus ########
 
@@ -367,6 +409,10 @@ homunculus_route_step 15
 homunculus_tankMode 0
 homunculus_tankModeTarget
 
+homunculus_runFromTarget 0
+homunculus_runFromTarget_dist 6
+
+homunculus_StandByAuto 0
 homunculus_teleportAuto_hp 10
 homunculus_teleportAuto_maxDmg 500
 homunculus_teleportAuto_maxDmgInLock 0
@@ -376,27 +422,19 @@ homunculus_teleportAuto_dropTarget 0
 homunculus_teleportAuto_dropTargetKS 0
 homunculus_teleportAuto_totalDmg 0
 homunculus_teleportAuto_totalDmgInLock 0
-
-# intimacyMax/Min define um limite de quando vai alimentar seu homunculus, de acordo com a intimidade
-# Se a intimidade é maior que o mínimo ou menor/igual ao máximo, nós não vamos alimenta-lo.
-homunculus_intimacyMax 999
-homunculus_intimacyMin 911
-
-# Quanto tempo devemos esperar entre a alimentação? Padrão: aleatórios entre 10 e 60 segundos
-homunculus_hungerTimeoutMax 60
-homunculus_hungerTimeoutMin 10
+homunculus_teleportAuto_attackedWhenSitting 0
 
 # Ligar/desligar alimentações automáticas dos homunculus
 homunculus_autoFeed 1
+# Alimenta o homúnculo quando atingir o valor de fome (homunculus_hunger > homunculus_return)
+homunculus_hunger 15
+# Vaporiza o homúnculo quando atingir o valor de fome
+homunculus_return 11
 # Em quais mapas devemos permitir a alitemação? (deixe em branco para qualquer mapa)
 homunculus_autoFeedAllowedMaps
 
-# Alimentar homunculus com a fome entre o hungerMin e hungerMax (exemplo: entre 11 e 24)
-homunculus_hungerMin 11
-homunculus_hungerMax 24
-
 # Liga/Desliga alimentação automática do pet
-pet_autoFeed 1=1
+pet_autoFeed 1
 # Alimentar pet quando alcançar o valor de fome
 pet_hunger 25
 # Retornar pet ao ovo quando atingir o valor de fome
@@ -434,6 +472,7 @@ attackSkillSlot {
 	monstersCount
 	maxAttempts 0
 	maxUses 0
+	target_hp
 	target_whenStatusActive
 	target_whenStatusInactive
 	target_deltaHp
@@ -458,6 +497,7 @@ attackComboSlot {
 	waitBeforeUse
 	dist 1.5
 	isSelfSkill 1
+	target_hp
 	target_deltaHp
 	monsters
 	notMonsters
@@ -492,7 +532,6 @@ doCommand {
 	manualAI 0
 }
 
-
 useSelf_skill {
 	lvl 10
 	maxCastTime 0
@@ -524,6 +563,7 @@ useSelf_skill {
 
 useSelf_skill_smartHeal 1
 
+partySkillDistance 0..8
 
 partySkill {
 	lvl 10
@@ -567,23 +607,30 @@ partySkill {
 	isSelfSkill 0
 }
 
+monsterSkill {
+	target
+	maxUses
+	# Condições de uso de habilidades, incluindo isSelfSkill
+	# Condições Self
+	# Condição para alvo: monstro
+}
 
 autoSwitch_default_rightHand
 autoSwitch_default_leftHand
 autoSwitch_default_arrow
- 
+
 # NOTA: No caso de armas de duas mãos, ou sem escudo,
 #       duplicar o nome da arma para 'rightHand'.
 # Para atacar com as mãos, especifique "[NONE]" (sem as aspas) no rightHand
- 
+
 autoSwitch {
-        rightHand
-        leftHand
-        arrow
-        distance
-        useWeapon
+	rightHand
+	leftHand
+	arrow
+	distance
+	useWeapon
 }
- 
+
 equipAuto {
 	topHead
 	midHead
@@ -648,46 +695,48 @@ useSelf_item {
 	inInventory
 	manualAI 0
 }
- 
+
 ######## Armazenamento Automático/Venda automática ########
- 
+
 buyAuto {
-        npc
-        npc_steps
-        standpoint
-        distance 5
-        price
-        minAmount 2
-        maxAmount 3
+	npc
+	standpoint
+	distance 5
+	price
+	minAmount 2
+	maxAmount 3
+	disabled 0
 }
- 
+
 sellAuto 0
 sellAuto_npc
-sellAuto_npc_steps
 sellAuto_standpoint
 sellAuto_distance 5
- 
+sellAuto_npc_steps s e
+
 storageAuto 0
 storageAuto_npc
 storageAuto_distance 5
 storageAuto_npc_type 1
 storageAuto_npc_steps
 storageAuto_password
+storageEncryptKey
 storageAuto_keepOpen 0
 storageAuto_useChatCommand
-relogAfterStorage 1
+storageAuto_notAfterDeath
+relogAfterStorage 0
 minStorageZeny 50
- 
+
 npcTimeResponse
- 
+
 getAuto {
-        minAmount
-        maxAmount
-        passive
+	minAmount
+	maxAmount
+	passive
 }
- 
+
 ######## Opções de depuração; útil apenas para desenvolvedores ########
- 
+
 debug 0
 debugPacket_unparsed 0
 debugPacket_received 0
@@ -697,3 +746,8 @@ debugPacket_exclude
 debugPacket_include
 debugPacket_include_dumpMethod
 debugDomains
+logToFile_Debug
+logToFile_Errors
+logToFile_Messages
+logToFile_Warnings
+history_max 50

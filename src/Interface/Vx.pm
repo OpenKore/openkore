@@ -1058,9 +1058,6 @@ sub packet {
 	} elsif ($switch eq "0097") {
 		# Private message
 		my $msg_size = length($msg);
-		my $newmsg;
-		main::decrypt(\$newmsg, substr($msg, 28, length($msg)-28));
-		$msg = substr($msg, 0, 28) . $newmsg;
 		my ($privMsgUser) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
 		my $privMsg = substr($msg, 28, $msg_size - 29);
 		$self->pm_add($privMsgUser);

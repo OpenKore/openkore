@@ -517,7 +517,7 @@ sub cmdAI {
 	} elsif ($args eq '') {
 		# Toggle AI
 		if ($AI == AI::AUTO) {
-			undef $AI;
+			$AI = AI::OFF;
 			$AI_forcedOff = 1;
 			message T("AI turned off\n"), "success";
 		} elsif ($AI == AI::OFF) {
@@ -4703,6 +4703,12 @@ sub cmdStorage_gettocart {
 	if (!defined($amount) || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
+	
+	if (!$char->cartActive) {
+		error T("Error in function 'storage_gettocart' (Cart Management)\n" .
+			"You do not have a cart.\n");
+		return;
+	}
 	$messageSender->sendStorageGetToCart($item->{index}, $amount);
 }
 
@@ -4828,7 +4834,7 @@ sub cmdTalk {
 			TF("#  Response\n");
 		for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
 			$msg .= swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+			"@< @*",
 			[$i, $talk{responses}[$i]]);
 		}
 		$msg .= ('-'x40) . "\n";
