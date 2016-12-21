@@ -2423,6 +2423,7 @@ sub storage_item_added {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{name} = itemName($item);
 		$char->storage->add($item);
 	} else {
@@ -2490,6 +2491,7 @@ sub cart_item_added {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{type} = $args->{type} if (exists $args->{type});
 		$item->{name} = itemName($item);
 		$char->cart->add($item);
@@ -2860,6 +2862,7 @@ sub deal_add_other {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{name} = itemName($item);
 		message TF("%s added Item to Deal: %s x %s\n", $currentDeal{name}, $item->{name}, $args->{amount}), "deal";
 	} elsif ($args->{amount} > 0) {

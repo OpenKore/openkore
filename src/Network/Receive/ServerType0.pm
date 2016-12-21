@@ -1910,6 +1910,7 @@ sub inventory_item_added {
 			} elsif ($args->{switch} eq '02D4') {
 				$item->{expire} = $args->{expire} if (exists $args->{expire}); #a4 or V1 unpacking?
 			}
+			$item->{options} = $args->{options};
 			$item->{name} = itemName($item);
 			$char->inventory->add($item);
 		} else {
