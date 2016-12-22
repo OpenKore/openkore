@@ -1560,8 +1560,8 @@ sub deal_add_you {
 
 	return unless $args->{index} > 0;
 
-	$args->{item} = $item;
 	my $item = $char->inventory->getByServerIndex($args->{index});
+	$args->{item} = $item;
 	# FIXME: quickly add two items => lastItemAmount is lost => inventory corruption; see also Misc::dealAddItem
 	# FIXME: what will be in case of two items with the same nameID?
 	# TODO: no info about items is stored

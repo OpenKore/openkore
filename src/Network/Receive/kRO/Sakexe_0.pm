@@ -1091,8 +1091,8 @@ sub deal_add_you {
 
 	return unless $args->{index} > 0;
 
-	$args->{item} = $item;
 	my $item = $char->inventory->getByServerIndex($args->{index});
+	$args->{item} = $item;
 	$currentDeal{you_items}++;
 	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
 	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
