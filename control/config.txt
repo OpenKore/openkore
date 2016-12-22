@@ -289,6 +289,8 @@ squelchDomains
 verboseDomains
 beepDomains
 beepDomains_notInTown
+squelchStatuses EFST_STOP, EFST_POSTDELAY, EFST_ON_PUSH_CART
+squelchStatusesAgain EFST_WEIGHTOVER50, EFST_WEIGHTOVER90
 friendlyAID
 showTime
 showTimeDomains
