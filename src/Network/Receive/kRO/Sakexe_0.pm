@@ -900,10 +900,7 @@ sub card_merge_status {
 			$card->{name}, $item->{name}), "success";
 
 		# Remove one of the card
-		$card->{amount} -= 1;
-		if ($card->{amount} <= 0) {
-			$char->inventory->remove($card);
-		}
+		inventoryItemRemoved($card->{invIndex}, 1);
 
 		# Rename the slotted item now
 		# FIXME: this is unoptimized
@@ -1094,14 +1091,12 @@ sub deal_add_you {
 
 	return unless $args->{index} > 0;
 
-	my $item = $char->inventory->getByServerIndex($args->{index});
-	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
-	$item->{amount} -= $currentDeal{lastItemAmount};
-	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
-	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
-	$currentDeal{you_items}++;
 	$args->{item} = $item;
-	$char->inventory->remove($item) if ($item->{amount} <= 0);
+	my $item = $char->inventory->getByServerIndex($args->{index});
+	$currentDeal{you_items}++;
+	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
+	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
+	inventoryItemRemoved($item->{invIndex}, $currentDeal{lastItemAmount});
 }
 
 sub equip_item {
@@ -3915,11 +3910,8 @@ sub use_item {
 	return unless changeToInGameState();
 	my $item = $char->inventory->getByServerIndex($args->{index});
 	if ($item) {
-		$item->{amount} -= $args->{amount};
 		message TF("You used Item: %s (%d) x %s\n", $item->{name}, $item->{invIndex}, $args->{amount}), "useItem";
-		if ($item->{amount} <= 0) {
-			$char->inventory->remove($item);
-		}
+		inventoryItemRemoved($item->{invIndex}, $args->{amount});
 	}
 }
 

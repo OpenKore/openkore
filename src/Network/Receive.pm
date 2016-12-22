@@ -3473,14 +3473,11 @@ sub item_used {
 		if ($item) {
 			if ($success == 1) {
 				my $amount = $item->{amount} - $remaining;
-				$item->{amount} -= $amount;
 
 				message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{invIndex},
 					$amount, $remaining), "useItem", 1;
-				$itemChange{$item->{name}}--;
-				if ($item->{amount} <= 0) {
-					$char->inventory->remove($item);
-				}
+				
+				inventoryItemRemoved($item->{invIndex}, $amount);
 
 				$hook_args{item} = $item;
 				$hook_args{invIndex} = $item->{invIndex};
