@@ -27,14 +27,11 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	$self->{char_create_version} = 1;
 
-	my %packets = (
-		'0970' => ['char_create', 'a24 C v2', [qw(name, slot, hair_style, hair_color)]],
-		);
-
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
 	my %handlers = qw(
+		character_create 0970
 		character_move 035F
 		sync 0360
 		actor_look_at 0361
@@ -54,15 +51,6 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	return $self;
-}
-
-# 0x0970,31
-sub sendCharCreate {
-	my ($self, $slot, $name, $hair_style, $hair_color) = @_;
-
-	my $msg = pack('C2 a24 C v2', 0x70, 0x09, stringToBytes($name), $slot, $hair_color, $hair_style);
-	$self->sendToServer($msg);
-	debug "Sent sendCharCreate\n", "sendPacket", 2;
 }
 
 1;

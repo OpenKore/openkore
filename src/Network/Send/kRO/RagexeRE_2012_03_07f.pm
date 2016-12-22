@@ -51,7 +51,7 @@ sub new {
 		'0929' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'093B' => ['storage_item_add', 'v V', [qw(index amount)]],#8
 		'0963' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
-		'0970' => ['char_create'],#31
+		'0970' => ['character_create', 'Z24 C v2', [qw(name slot hair_color hair_style)]],#31
 		'0940' => undef,
 		'0817' => ['buy_bulk_closeShop'],#2
 		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
@@ -63,7 +63,7 @@ sub new {
 		actor_look_at 0890
 		buy_bulk_closeShop 0817
 		buy_bulk_openShop 0815
-		char_create 0970
+		character_create 0970
 		friend_request 0369
 		homunculus_command 0863
 		item_drop 02C4
@@ -78,13 +78,6 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	$self;
-}
-
-sub sendCharCreate {
-	my ($self, $slot, $name, $hair_style, $hair_color) = @_;
-	my $msg = pack('v a24 C v2', 0x0970, stringToBytes($name), $slot, $hair_color, $hair_style);
-	$self->sendToServer($msg);
-	debug "Sent sendCharCreate\n", "sendPacket", 2;
 }
 
 sub sendSkillUseLocInfo {

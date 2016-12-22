@@ -40,7 +40,7 @@ sub new {
 		'0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
 		'0065' => ['game_login', 'a4 a4 a4 v C', [qw(accountID sessionID sessionID2 userLevel accountSex)]],
 		'0066' => ['char_login', 'C', [qw(slot)]],
-		'0067' => ['char_create'], # TODO
+		'0067' => ['character_create', 'Z24 C7 v2', [qw(name str agi vit int dex luk slot hair_color hair_style)]],
 		'0068' => ['char_delete'], # TODO
 		'0072' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'007D' => ['map_loaded'], # len 2
@@ -109,14 +109,6 @@ sub new {
 # 0x0066,6
 
 # 0x0067,37
-sub sendCharCreate {
-	my ($self, $slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
-	$hair_color ||= 1;
-
-	my $msg = pack('v a24 C7 v2', 0x0067, stringToBytes($name), $str, $agi, $vit, $int, $dex, $luk, $slot, $hair_color, $hair_style);
-	$self->sendToServer($msg);
-	debug "Sent sendCharCreate\n", "sendPacket", 2;
-}
 
 # 0x0068,46
 sub sendCharDelete {

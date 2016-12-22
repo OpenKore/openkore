@@ -42,7 +42,7 @@ sub new {
 		'0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
 		'0065' => ['game_login', 'a4 a4 a4 v C', [qw(accountID sessionID sessionID2 userLevel accountSex)]],
 		'0066' => ['char_login', 'C', [qw(slot)]],
-		'0067' => ['char_create'], # TODO
+		'0067' => ['character_create', 'Z24 C7 v2', [qw(name str agi vit int dex luk slot hair_color hair_style)]],
 		'0068' => ['char_delete'], # TODO
 		'0072' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'007D' => ['map_loaded'], # len 2
@@ -133,6 +133,7 @@ sub new {
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08C9' => ['request_cashitems'],#2
+		'0970' => ['character_create', 'Z24 C v2', [qw(name slot hair_color hair_style)]],
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
 		'0998' => ['send_equip', 'v V', [qw(index type)]],#8
 		'09A1' => ['sync_received_characters'],
@@ -261,20 +262,6 @@ sub sendCartGet {
 	my $msg = pack("C*", 0x27, 0x01) . pack("v*", $index) . pack("V*", $amount);
 	$self->sendToServer($msg);
 	debug "Sent Cart Get: $index x $amount\n", "sendPacket", 2;
-}
-
-sub sendCharCreate {
-	my ($self, $slot, $name,
-	    $str, $agi, $vit, $int, $dex, $luk,
-		$hair_style, $hair_color) = @_;
-	$hair_color ||= 1;
-	$hair_style ||= 0;
-
-	my $msg = pack("C*", 0x67, 0x00) .
-		pack("a24", stringToBytes($name)) .
-		pack("C*", $str, $agi, $vit, $int, $dex, $luk, $slot) .
-		pack("v*", $hair_color, $hair_style);
-	$self->sendToServer($msg);
 }
 
 sub sendCharDelete {

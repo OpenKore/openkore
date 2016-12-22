@@ -408,6 +408,35 @@ sub sendCharLogin {
 	debug "Sent sendCharLogin\n", "sendPacket", 2;
 }
 
+# 0067, 0970
+sub parse_character_create {
+	my ($self, $args) = @_;
+
+	$args->{name} = bytesToString($args->{name});
+}
+
+sub reconstruct_character_create {
+	my ($self, $args) = @_;
+
+	$args->{name} = stringToBytes($args->{name});
+}
+
+sub sendCharCreate {
+	my $self = shift;
+	my $args = {switch => 'character_create'};
+
+	unless ($self->{char_create_version}) {
+		@{$args}{qw(slot name str agi vit int dex luk hair_style hair_color)} = @_;
+	} else {
+		@{$args}{qw(slot name hair_style hair_color)} = @_;
+	}
+	$args->{hair_color} ||= 1;
+	$args->{hair_style} ||= 0;
+
+	$self->sendToServer($self->reconstruct($args));
+	debug "Sent sendCharCreate\n", "sendPacket", 2;
+}
+
 sub sendMapLogin {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	my $msg;
