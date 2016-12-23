@@ -103,16 +103,16 @@ sub new {
 		'009C' => ['actor_look_at', 'a4 v C', [qw(ID head body)]], # 9
 		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]], # 17
 		'009E' => ['item_appeared', 'a4 v C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]], # 17
-		'00A0' => ['inventory_item_added', 'v3 C3 a8 v C2', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]], # 23
+		'00A0' => ['inventory_item_added', 'a2 v2 C3 a8 v C2', [qw(ID amount nameID identified broken upgrade cards type_equip type fail)]], # 23
 		'00A1' => ['item_disappeared', 'a4', [qw(ID)]], # 6
 		'00A3' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'00A4' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'00A5' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'00A6' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
-		'00A8' => ['use_item', 'v2 C', [qw(index amount success)]], # 7
-		'00AA' => ['equip_item', 'v2 C', [qw(index type success)]], # 7
-		'00AC' => ['unequip_item', 'v2 C', [qw(index type success)]], # 7
-		'00AF' => ['inventory_item_removed', 'v2', [qw(index amount)]], # 6
+		'00A8' => ['use_item', 'a2 v C', [qw(ID amount success)]], # 7
+		'00AA' => ['equip_item', 'a2 v C', [qw(ID type success)]], # 7
+		'00AC' => ['unequip_item', 'a2 v C', [qw(ID type success)]], # 7
+		'00AF' => ['inventory_item_removed', 'a2 v', [qw(ID amount)]], # 6
 		'00B0' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'00B1' => ['exp_zeny_info', 'v V', [qw(type val)]], # 8
 		'00B3' => ['switch_character', 'C', [qw(result)]], # 3
@@ -147,14 +147,14 @@ sub new {
 		'00E5' => ['deal_request', 'Z24', [qw(user)]], # 26
 		'00E7' => ['deal_begin', 'C', [qw(type)]], # 3
 		'00E9' => ['deal_add_other', 'V v C3 a8', [qw(amount nameID identified broken upgrade cards)]], # 19
-		'00EA' => ['deal_add_you', 'v C', [qw(index fail)]], # 5
+		'00EA' => ['deal_add_you', 'a2 C', [qw(ID fail)]], # 5
 		'00EC' => ['deal_finalize', 'C', [qw(type)]], # 3
 		'00EE' => ['deal_cancelled'], # 2
 		'00F0' => ['deal_complete', 'C', [qw(fail)]], # 3
 		'00F1' => ['deal_undo'], # 2
 		'00F2' => ['storage_opened', 'v2', [qw(items items_max)]], # 6
-		'00F4' => ['storage_item_added', 'v V v C3 a8', [qw(index amount nameID identified broken upgrade cards)]], # 21
-		'00F6' => ['storage_item_removed', 'v V', [qw(index amount)]], # 8
+		'00F4' => ['storage_item_added', 'a2 V v C3 a8', [qw(ID amount nameID identified broken upgrade cards)]], # 21
+		'00F6' => ['storage_item_removed', 'a2 V', [qw(ID amount)]], # 8
 		'00F8' => ['storage_closed'], # 2
 		'00FA' => ['party_organize_result', 'C', [qw(fail)]], # 3
 		'00FB' => ['party_users_info', 'x2 Z24', [qw(party_name)]], # -1
@@ -188,21 +188,21 @@ sub new {
 		'0121' => ['cart_info', 'v2 V2', [qw(items items_max weight weight_max)]], # 14
 		'0122' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0123' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
-		'0124' => ['cart_item_added', 'v V v C3 a8', [qw(index amount nameID identified broken upgrade cards)]], # 21
-		'0125' => ['cart_item_removed', 'v V', [qw(index amount)]], # 8
+		'0124' => ['cart_item_added', 'a2 V v C3 a8', [qw(ID amount nameID identified broken upgrade cards)]], # 21
+		'0125' => ['cart_item_removed', 'a2 V', [qw(ID amount)]], # 8
 		'012B' => ['cart_off'], # 2
 		'012C' => ['cart_add_failed', 'C', [qw(fail)]], # 3
 		'012D' => ['shop_skill', 'v', [qw(number)]], # 4
 		'0131' => ['vender_found', 'a4 A80', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
 		'0133' => ['vender_items_list', 'v a4', [qw(len venderID)]], # -1
-		'0135' => ['vender_buy_fail', 'v2 C', [qw(index amount fail)]], # 7
+		'0135' => ['vender_buy_fail', 'a2 v C', [qw(ID amount fail)]], # 7
 		'0136' => ['vending_start'], # -1
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]], # 6
 		'0139' => ['monster_ranged_attack', 'a4 v5', [qw(ID sourceX sourceY targetX targetY range)]], # 16
 		'013A' => ['attack_range', 'v', [qw(type)]], # 4
 		'013B' => ['arrow_none', 'v', [qw(type)]], # 4
-		'013C' => ['arrow_equipped', 'v', [qw(index)]], # 4
+		'013C' => ['arrow_equipped', 'a2', [qw(ID)]], # 4
 		'013D' => ['hp_sp_changed', 'v2', [qw(type amount)]], # 6
 		'013E' => ['skill_cast', 'a4 a4 v3 V2', [qw(sourceID targetID x y skillID type wait)]], # 24
 		'0141' => ['stat_info2', 'V2 l', [qw(type val val2)]], # 14
@@ -240,7 +240,7 @@ sub new {
 		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(len ID mode sameID exp position_name)]], # -1 # FIXME: this is a var len message!!!
 		'0176' => ['guild_member_info', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
 		'0177' => ['identify_list'], # -1
-		'0179' => ['identify', 'v C', [qw(index flag)]], # 5
+		'0179' => ['identify', 'a2 C', [qw(ID flag)]], # 5
 		'017B' => ['card_merge_list'], # -1
 		'017D' => ['card_merge_status', 'v2 C', [qw(item_index card_index fail)]], # 7
 		'017F' => ['guild_chat', 'v Z*', [qw(len message)]], # -1
@@ -250,7 +250,7 @@ sub new {
 		'0185' => ['guild_alliance_added', 'a4 a4 Z24', [qw(opposition alliance_guildID name)]], # 34 # clif_guild_allianceadded
 		# // 0x0186,0
 		'0187' => ['sync_request', 'a4', [qw(ID)]], # 6
-		'0188' => ['item_upgrade', 'v3', [qw(type index upgrade)]], # 8
+		'0188' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]], # 8
 		'0189' => ['no_teleport', 'v', [qw(fail)]], # 4
 		'018B' => ['quit_response', 'v', [qw(fail)]], # 4
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]], # 29
@@ -286,10 +286,10 @@ sub new {
 		'01C1' => ['remaintime_reply', 'V3', [qw(result expire_date remain_time)]], # 14
 		'01C2' => ['remaintime_info', 'V2', [qw(type remain_time)]], # 10
 		'01C3' => ['local_broadcast', 'v V v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
-		'01C4' => ['storage_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]], # 22
-		'01C5' => ['cart_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]], # 22
+		'01C4' => ['storage_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
+		'01C5' => ['cart_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
 		'01C7' => ['encryption_acknowledge'], # 2
-		'01C8' => ['item_used', 'v2 a4 v C', [qw(index itemID ID remaining success)]], # 13
+		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID ID remaining success)]], # 13
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]], # 97
 		# // 0x01ca,0
 		'01CC' => ['monster_talk', 'a4 C3', [qw(ID stateID skillID arg)]], # 9
@@ -338,7 +338,7 @@ sub new {
 		# // 0x020b,0
 		# // 0x020c,0
 		'020D' => ['character_block_info', 'v2 a*', [qw(len unknown)]], # -1 TODO
-		'07FA' => ['inventory_item_removed', 'v3', [qw(reason index amount)]], #//0x07fa,8
+		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason index amount)]], #//0x07fa,8
 		'0803' => ['booking_register_request', 'v', [qw(result)]],
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
@@ -348,8 +348,8 @@ sub new {
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
-		'08D0' => ['equip_item', 'v3 C', [qw(index type viewid success)]],
-		'08D1' => ['unequip_item', 'v2 C', [qw(index type success)]],
+		'08D0' => ['equip_item', 'a2 v2 C', [qw(ID type viewid success)]],
+		'08D1' => ['unequip_item', 'a2 v C', [qw(ID type success)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
@@ -361,60 +361,60 @@ sub new {
 		items_nonstackable => { # EQUIPMENTITEM_EXTRAINFO
 			type1 => {
 				len => 20,
-				types => 'v2 C2 v2 C2 a8',
-				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards)],
+				types => 'a2 v C2 v2 C2 a8',
+				keys => [qw(ID nameID type identified type_equip equipped broken upgrade cards)],
 			},
 			type2 => {
 				len => 24,
-				types => 'v2 C2 v2 C2 a8 l',
-				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards expire)],
+				types => 'a2 v C2 v2 C2 a8 l',
+				keys => [qw(ID nameID type identified type_equip equipped broken upgrade cards expire)],
 			},
 			type3 => {
 				len => 26,
-				types => 'v2 C2 v2 C2 a8 l v',
-				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType)],
+				types => 'a2 v C2 v2 C2 a8 l v',
+				keys => [qw(ID nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType)],
 			},
 			type4 => {
 				len => 28,
-				types => 'v2 C2 v2 C2 a8 l v2',
-				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType sprite_id)],
+				types => 'a2 v C2 v2 C2 a8 l v2',
+				keys => [qw(ID nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType sprite_id)],
 			},
 			type5 => {
 				len => 27,
-				types => 'v2 C v2 C a8 l v2 C',
-				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+				types => 'a2 v C v2 C a8 l v2 C',
+				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
 			},
 			type6 => {
 				len => 31,
-				types => 'v2 C V2 C a8 l v2 C',
-				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+				types => 'a2 v C V2 C a8 l v2 C',
+				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
 			},
 		},
 		items_stackable => {
 			type1 => {
 				len => 10,
-				types => 'v2 C2 v2',
-				keys => [qw(index nameID type identified amount type_equip)], # type_equip or equipped?
+				types => 'a2 v C2 v2',
+				keys => [qw(ID nameID type identified amount type_equip)], # type_equip or equipped?
 			},
 			type2 => {
 				len => 18,
-				types => 'v2 C2 v2 a8',
-				keys => [qw(index nameID type identified amount type_equip cards)],
+				types => 'a2 v C2 v2 a8',
+				keys => [qw(ID nameID type identified amount type_equip cards)],
 			},
 			type3 => {
 				len => 22,
-				types => 'v2 C2 v2 a8 l',
-				keys => [qw(index nameID type identified amount type_equip cards expire)],
+				types => 'a2 v C2 v2 a8 l',
+				keys => [qw(ID nameID type identified amount type_equip cards expire)],
 			},
 			type5 => {
 				len => 22,
-				types => 'v2 C v2 a8 l C',
-				keys => [qw(index nameID type amount type_equip cards expire identified)],
+				types => 'a2 v C v2 a8 l C',
+				keys => [qw(ID nameID type amount type_equip cards expire identified)],
 			},
 			type6 => {
 				len => 24,
-				types => 'v2 C v V a8 l C',
-				keys => [qw(index nameID type amount type_equip cards expire flag)],
+				types => 'a2 v C v V a8 l C',
+				keys => [qw(ID nameID type amount type_equip cards expire flag)],
 			},
 		},
 	};
