@@ -611,9 +611,9 @@ sub sendDrop {
 }
 
 sub sendItemUse {
-	my ($self, $index, $targetID) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'item_use', index => $index, targetID => $targetID}));
-	debug "Item Use: $index\n", "sendPacket", 2;
+	my ($self, $ID, $targetID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'item_use', ID => $ID, targetID => $targetID}));
+	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
 # for old plugin compatibility, use sendRestart instead!

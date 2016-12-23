@@ -664,13 +664,6 @@ sub sendIgnoreListGet {
 	debug "Sent get Ignore List: $flag\n", "sendPacket", 2;
 }
 
-sub sendItemUse {
-	my ($self, $ID, $targetID) = @_;
-	my $msg = pack("C*", 0xA7, 0x00).pack("v*",$ID) .$targetID;
-	$self->sendToServer($msg);
-	debug "Item Use: $ID\n", "sendPacket", 2;
-}
-
 sub sendMemo {
 	my $self = shift;
 	my $msg = pack("C*", 0x1D, 0x01);
