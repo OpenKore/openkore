@@ -167,7 +167,7 @@ sub new {
 		'0105' => ['party_leave', 'a4 Z24 C', [qw(ID name result)]],
 		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]],
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]],
-		'0108' => ['item_upgrade', 'v3', [qw(type index upgrade)]],
+		'0108' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
 		'0109' => ['party_chat', 'x2 a4 Z*', [qw(ID message)]],
 		'0110' => ['skill_use_failed', 'v3 C2', [qw(skillID btype unknown fail type)]],
 		'010A' => ['mvp_item', 'v', [qw(itemID)]],
@@ -242,7 +242,7 @@ sub new {
 		'0184' => ['guild_unally', 'a4 V', [qw(guildID flag)]], # clif_guild_delalliance
 		'0185' => ['guild_alliance_added', 'a4 a4 Z24', [qw(opposition alliance_guildID name)]], # clif_guild_allianceadded
 		'0187' => ['sync_request', 'a4', [qw(ID)]],
-		'0188' => ['item_upgrade', 'v3', [qw(type index upgrade)]],
+		'0188' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
 		'0189' => ['no_teleport', 'v', [qw(fail)]],
 		'018B' => ['quit_response', 'v', [qw(fail)]], # 4 # ported from kRO_Sakexe_0
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]],
@@ -476,7 +476,7 @@ sub new {
 		'07F7' => ['actor_exists', 'v C a4 v3 V v5 a4 v5 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking
 		'07F8' => ['actor_connected', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # spawning
 		'07F9' => ['actor_moved', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # standing
-		'07FA' => ['inventory_item_removed', 'v3', [qw(reason index amount)]], #//0x07fa,8
+		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
 		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait dispose)]],
 		'07FC' => ['party_leader', 'V2', [qw(old new)]],
 		'07FD' => ['special_item_obtain', 'v C v c/Z a*', [qw(len type nameID holder etc)]],
