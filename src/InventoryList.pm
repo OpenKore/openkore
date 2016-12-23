@@ -25,7 +25,8 @@ package InventoryList;
 use strict;
 use Carp::Assert;
 use Utils::ObjectList;
-use base qw(ObjectList);
+use ActorList;
+use base qw(ActorList);
 
 ### CATEGORY: Class InventoryList
 
