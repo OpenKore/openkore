@@ -37,9 +37,9 @@ sub onMapChange {
 
 sub add {
 	my ($self, $item) = @_;
-	my $invIndex = $self->SUPER::add($item);
+	my $binID = $self->SUPER::add($item);
 	$self->{state} = 1;
-	return $invIndex;
+	return $binID;
 }
 
 1;

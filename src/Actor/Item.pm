@@ -95,7 +95,7 @@ sub new {
 	$self->{equipped} = 0;
 	$self->{identified} = 0;
 	$self->{nameID} = 0;
-	$self->{invIndex} = -1;
+	$self->{binID} = -1;
 	return $self;
 }
 
@@ -127,12 +127,12 @@ sub get {
 	} else {
 		my $condition;
 		if ($notEquipped) {
-			# making sure that $skipIndex is defined:  when perl is expecting a number and gets an undef instead, it will transform that value into 0, wich is a possible invIndex here
-			$condition = sub { ($_[0]->{invIndex} != $skipIndex || !defined $skipIndex) && $_[0]->{name} eq $name && !$_[0]->{equipped} };
+			# making sure that $skipIndex is defined:  when perl is expecting a number and gets an undef instead, it will transform that value into 0, wich is a possible binID here
+			$condition = sub { ($_[0]->{binID} != $skipIndex || !defined $skipIndex) && $_[0]->{name} eq $name && !$_[0]->{equipped} };
 		} elsif (!$notEquipped && defined($notEquipped)) {
-			$condition = sub { ($_[0]->{invIndex} != $skipIndex || !defined $skipIndex) && $_[0]->{name} eq $name && $_[0]->{equipped} };
+			$condition = sub { ($_[0]->{binID} != $skipIndex || !defined $skipIndex) && $_[0]->{name} eq $name && $_[0]->{equipped} };
 		} else {
-			$condition = sub { ($_[0]->{invIndex} != $skipIndex || !defined $skipIndex) && $_[0]->{name} eq $name };
+			$condition = sub { ($_[0]->{binID} != $skipIndex || !defined $skipIndex) && $_[0]->{name} eq $name };
 		}
 		return $char->inventory->getByCondition($condition);
 	}
@@ -190,8 +190,8 @@ sub bulkEquip {
 
 		$item->equipInSlot($_);
 		
-		$rightHand = $item->{invIndex} if ($_ eq 'rightHand');
-		$rightAccessory = $item->{invIndex} if ($_ eq 'rightAccessory');
+		$rightHand = $item->{binID} if ($_ eq 'rightHand');
+		$rightAccessory = $item->{binID} if ($_ eq 'rightAccessory');
 	}
 }
 
@@ -292,7 +292,7 @@ sub UnEquipByType {
 # to the RO server.
 # This index does not necessarily equals the inventory index, as stored by OpenKore.
 #
-# See also: $ActorItem->{invIndex}
+# See also: $ActorItem->{binID}
 
 ##
 # int $ActorItem->{amount}
@@ -324,7 +324,7 @@ sub UnEquipByType {
 # Use this in combination with %items_lut to retrieve the item name.
 
 ##
-# int $ActorItem->{invIndex}
+# int $ActorItem->{binID}
 #
 # The index of this item in the inventory data structure, as stored by OpenKore.
 # This index does not necessarily correspond with the index as stored by the RO server.
@@ -347,7 +347,7 @@ sub UnEquipByType {
 # Returns: the item name, in the form of "My Item [number of slots]".
 sub nameString {
 	my $self = shift;
-	return "$self->{name} ($self->{invIndex})";
+	return "$self->{name} ($self->{binID})";
 }
 
 ##

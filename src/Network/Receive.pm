@@ -1645,7 +1645,7 @@ sub arrow_equipped {
 		$char->{equipment}{arrow} = $item;
 		$item->{equipped} = 32768;
 		$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
-		message TF("Arrow/Bullet equipped: %s (%d) x %s\n", $item->{name}, $item->{invIndex}, $item->{amount});
+		message TF("Arrow/Bullet equipped: %s (%d) x %s\n", $item->{name}, $item->{binID}, $item->{amount});
 		Plugins::callHook('equipped_item', {slot => 'arrow', item => $item});
 	}
 }
@@ -1678,8 +1678,8 @@ sub inventory_item_removed {
 	}
 
 	if ($item) {
-		inventoryItemRemoved($item->{invIndex}, $args->{amount});
-		Plugins::callHook('packet_item_removed', {index => $item->{invIndex}});
+		inventoryItemRemoved($item->{binID}, $args->{amount});
+		Plugins::callHook('packet_item_removed', {index => $item->{binID}});
 	}
 }
 
@@ -2420,7 +2420,7 @@ sub storage_item_added {
 		$item->{amount} += $amount;
 	}
 	my $disp = TF("Storage Item Added: %s (%d) x %d - %s",
-			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
+			$item->{name}, $item->{binID}, $amount, $itemTypes_lut{$item->{type}});
 	message "$disp\n", "drop";
 	
 	$itemChange{$item->{name}} += $amount;
@@ -2435,7 +2435,7 @@ sub storage_item_removed {
 	my $item = $char->storage->getByID($index);
 	
 	if ($item) {
-		Misc::storageItemRemoved($item->{invIndex}, $amount);
+		Misc::storageItemRemoved($item->{binID}, $amount);
 	}
 }
 
@@ -2488,7 +2488,7 @@ sub cart_item_added {
 		$item->{amount} += $args->{amount};
 	}
 	my $disp = TF("Cart Item Added: %s (%d) x %d - %s",
-			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
+			$item->{name}, $item->{binID}, $amount, $itemTypes_lut{$item->{type}});
 	message "$disp\n", "drop";
 	$itemChange{$item->{name}} += $args->{amount};
 	$args->{item} = $item;
@@ -2502,7 +2502,7 @@ sub cart_item_removed {
 	my $item = $char->cart->getByID($index);
 	
 	if ($item) {
-		Misc::cartItemRemoved($item->{invIndex}, $amount);
+		Misc::cartItemRemoved($item->{binID}, $amount);
 	}
 }
 
@@ -2955,7 +2955,7 @@ sub egg_list {
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
 		my $index = unpack("a2", substr($args->{RAW_MSG}, $i, 2));
 		my $item = $char->inventory->getByID($index);
-		$msg .=  "$item->{invIndex} $item->{name}\n";
+		$msg .=  "$item->{binID} $item->{name}\n";
 	}
 	$msg .= ('-'x38) . "\n".
 			T("Ready to use command 'pet [hatch|h] #'\n");
@@ -3424,7 +3424,7 @@ sub identify {
 		my $item = $char->inventory->getByID($args->{ID});
 		$item->{identified} = 1;
 		$item->{type_equip} = $itemSlots_lut{$item->{nameID}};
-		message TF("Item Identified: %s (%d)\n", $item->{name}, $item->{invIndex}), "info";
+		message TF("Item Identified: %s (%d)\n", $item->{name}, $item->{binID}), "info";
 	} else {
 		message T("Item Appraisal has failed.\n");
 	}
@@ -3475,7 +3475,7 @@ sub item_used {
 				my $amount = $item->{amount} - $remaining;
 				$item->{amount} -= $amount;
 
-				message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{invIndex},
+				message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{binID},
 					$amount, $remaining), "useItem", 1;
 				$itemChange{$item->{name}}--;
 				if ($item->{amount} <= 0) {
@@ -3483,7 +3483,7 @@ sub item_used {
 				}
 
 				$hook_args{item} = $item;
-				$hook_args{invIndex} = $item->{invIndex};
+				$hook_args{binID} = $item->{binID};
 				$hook_args{name} => $item->{name};
 				$hook_args{amount} = $amount;
 

@@ -56,7 +56,7 @@ sub new {
 	#         for all $i in the array $v:
 	#             defined($i)
 	#             defined(get($i))
-	#             get($i)->{invIndex} == $i
+	#             get($i)->{binID} == $i
 	#             $i is unique in the entire nameIndex.
 	$self->{nameIndex} = {};
 
@@ -87,9 +87,9 @@ sub DESTROY {
 #     defined($item)
 #     defined($item->{name})
 #     $self->find($item) == -1
-# Ensures: $item->{invIndex} == result
+# Ensures: $item->{binID} == result
 #
-# Adds an item to this InventoryList. $item->{invIndex} will automatically be set
+# Adds an item to this InventoryList. $item->{binID} will automatically be set
 # index in which that item is stored in this list.
 #
 # This method overloads $ObjectList->add(), and has a stronger precondition.
@@ -102,15 +102,15 @@ sub add {
 	assert(defined $item->{name}) if DEBUG;
 	assert($self->find($item) == -1) if DEBUG;
 
-	my $invIndex = $self->SUPER::add($item);
-	$item->{invIndex} = $invIndex;
+	my $binID = $self->SUPER::add($item);
+	$item->{binID} = $binID;
 
 	my $indexSlot = $self->getNameIndexSlot($item->{name});
-	push @{$indexSlot}, $invIndex;
+	push @{$indexSlot}, $binID;
 
 	my $eventID = $item->onNameChange->add($self, \&onNameChange);
-	$self->{nameChangeEvents}{$invIndex} = $eventID;
-	return $invIndex;
+	$self->{nameChangeEvents}{$binID} = $eventID;
+	return $binID;
 }
 
 if (DEBUG) {
@@ -120,7 +120,7 @@ if (DEBUG) {
 			my ($self, $index) = @_;
 			my $item = $self->SUPER::get($index);
 			if ($item) {
-				assert(defined $item->{invIndex}, "invIndex must be defined");
+				assert(defined $item->{binID}, "binID must be defined");
 			}
 			return $item;
 		}
@@ -229,7 +229,7 @@ sub remove {
 	if ($result) {
 		my $indexSlot = $self->getNameIndexSlot($item->{name});
 		for (my $i = 0; $i < @{$indexSlot}; $i++) {
-			if ($indexSlot->[$i] == $item->{invIndex}) {
+			if ($indexSlot->[$i] == $item->{binID}) {
 				splice(@{$indexSlot}, $i, 1);
 				last;
 			}
@@ -238,8 +238,8 @@ sub remove {
 			delete $self->{nameIndex}{lc($item->{name})};
 		}
 
-		my $eventID = $self->{nameChangeEvents}{$item->{invIndex}};
-		delete $self->{nameChangeEvents}{$item->{invIndex}};
+		my $eventID = $self->{nameChangeEvents}{$item->{binID}};
+		delete $self->{nameChangeEvents}{$item->{binID}};
 		$item->onNameChange->remove($eventID);
 	}
 	return $result;
@@ -270,9 +270,9 @@ sub removeByName {
 sub doClear {
 	my ($self) = @_;
 	foreach my $item (@{$self->getItems()}) {
-		assert(defined $item->{invIndex}, "invIndex must be defined") if DEBUG;
-		my $eventID = $self->{nameChangeEvents}{$item->{invIndex}};
-		delete $self->{nameChangeEvents}{$item->{invIndex}};
+		assert(defined $item->{binID}, "binID must be defined") if DEBUG;
+		my $eventID = $self->{nameChangeEvents}{$item->{binID}};
+		delete $self->{nameChangeEvents}{$item->{binID}};
 		$item->onNameChange->remove($eventID);
 	}
 	$self->SUPER::doClear();
@@ -293,16 +293,16 @@ sub checkValidity {
 	}
 	
 	my $sum = 0;
-	my %invIndexCount;
+	my %binIDCount;
 	foreach my $v (values %{$self->{nameIndex}}) {
 		assert(defined $v);
 		assert(@{$v} > 0);
 		foreach my $i (@{$v}) {
 			assert(defined $i);
 			assert(defined $self->get($i));
-			assert($self->get($i)->{invIndex} == $i);
-			$invIndexCount{$i}++;
-			should($invIndexCount{$i}, 1);
+			assert($self->get($i)->{binID} == $i);
+			$binIDCount{$i}++;
+			should($binIDCount{$i}, 1);
 		}
 		$sum += @{$v};
 	}
@@ -323,7 +323,7 @@ sub onNameChange {
 
 	my $indexSlot = $self->getNameIndexSlot($args->{oldName});
 	for (my $i = 0; $i < @{$indexSlot}; $i++) {
-		if ($indexSlot->[$i] == $item->{invIndex}) {
+		if ($indexSlot->[$i] == $item->{binID}) {
 			# Delete from old index slot.
 			splice(@{$indexSlot}, $i, 1);
 			if (@{$indexSlot} == 0) {
@@ -332,7 +332,7 @@ sub onNameChange {
 
 			# Add to new index slot.
 			$indexSlot = $self->getNameIndexSlot($item->{name});
-			push @{$indexSlot}, $item->{invIndex};
+			push @{$indexSlot}, $item->{binID};
 			return;
 		}
 	}

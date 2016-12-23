@@ -1372,9 +1372,9 @@ sub processAutoStorage {
 					my $storeItem = $char->storage->getByName($itemName);
 					my $storeAmount = $char->storage->sumByName($itemName);
 					$item{name} = $itemName;
-					$item{inventory}{index} = $invItem ? $invItem->{invIndex} : undef;
+					$item{inventory}{index} = $invItem ? $invItem->{binID} : undef;
 					$item{inventory}{amount} = $invItem ? $invAmount : 0;
-					$item{storage}{index} = $storeItem ? $storeItem->{invIndex} : undef;
+					$item{storage}{index} = $storeItem ? $storeItem->{binID} : undef;
 					$item{storage}{amount} = $storeItem ? $storeAmount : 0;
 					$item{max_amount} = $config{"getAuto_$args->{index}"."_maxAmount"};
 					$item{amount_needed} = $item{max_amount} - $item{inventory}{amount};
@@ -1637,7 +1637,7 @@ sub processAutoBuy {
 			next if ($args->{index_failed}{$i});
 
 			my $item = $char->inventory->getByName($config{"buyAuto_$i"});
-			$args->{invIndex} = $item ? $item->{invIndex} : undef;
+			$args->{binID} = $item ? $item->{binID} : undef;
 			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && (!$item || $item->{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
 				next if (($config{"buyAuto_$i"."_price"} && ($char->{zeny} < $config{"buyAuto_$i"."_price"})) || ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zeny}, $config{"buyAuto_$i"."_zeny"})));
 
@@ -1725,9 +1725,9 @@ sub processAutoBuy {
 
 			# find the item ID if we don't know it yet
 			if ($args->{itemID} eq "") {
-				if ($args->{invIndex} && $char->inventory->get($args->{invIndex})) {
+				if ($args->{binID} && $char->inventory->get($args->{binID})) {
 					# if we have the item in our inventory, we can quickly get the nameID
-					$args->{itemID} = $char->inventory->get($args->{invIndex})->{nameID};
+					$args->{itemID} = $char->inventory->get($args->{binID})->{nameID};
 				} else {
 					# scan the entire items.txt file (this is slow)
 					foreach (keys %items_lut) {
@@ -1759,7 +1759,7 @@ sub processAutoBuy {
 
 			my $maxbuy = ($config{"buyAuto_$args->{index}"."_price"}) ? int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"}) : 30000; # we assume we can buy 30000, when price of the item is set to 0 or undef
 			my $needbuy = $config{"buyAuto_$args->{index}"."_maxAmount"};
-			$needbuy -= $char->inventory->get($args->{invIndex})->{amount} if ($args->{invIndex} ne ""); # we don't need maxAmount if we already have a certain amount of the item in our inventory
+			$needbuy -= $char->inventory->get($args->{binID})->{amount} if ($args->{binID} ne ""); # we don't need maxAmount if we already have a certain amount of the item in our inventory
 			$messageSender->sendBuyBulk([{itemID  => $args->{itemID}, amount => ($maxbuy > $needbuy) ? $needbuy : $maxbuy}]); # TODO: we could buy more types of items at once
 
 			$timeout{ai_buyAuto_wait_buy}{time} = time;
@@ -1783,10 +1783,10 @@ sub processAutoCart {
 					my $control = items_control($invItem->{name});
 					if ($control->{cart_add} && $invItem->{amount} > $control->{keep}) {
 						my %obj;
-						$obj{index} = $invItem->{invIndex};
+						$obj{index} = $invItem->{binID};
 						$obj{amount} = $invItem->{amount} - $control->{keep};
 						push @addItems, \%obj;
-						debug "Scheduling $invItem->{name} ($invItem->{invIndex}) x $obj{amount} for adding to cart\n", "ai_autoCart";
+						debug "Scheduling $invItem->{name} ($invItem->{binID}) x $obj{amount} for adding to cart\n", "ai_autoCart";
 					}
 				}
 				cartAdd(\@addItems);
@@ -1808,7 +1808,7 @@ sub processAutoCart {
 				}
 				if ($amount > 0) {
 					my %obj;
-					$obj{index} = $cartItem->{invIndex};
+					$obj{index} = $cartItem->{binID};
 					$obj{amount} = $amount;
 					push @getItems, \%obj;
 					debug "Scheduling $cartItem->{name} ($cartItem->{ID}) x $obj{amount} for getting from cart\n", "ai_autoCart";

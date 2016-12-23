@@ -109,7 +109,7 @@ sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});
 	if ($args->{success}) {
-		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{invIndex});
+		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
 	} else {
 		$item->{equipped} = $args->{type};
 		if ($args->{type} == 10 || $args->{type} == 32768) {
@@ -124,7 +124,7 @@ sub equip_item {
 				}
 			}
 		}
-		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{invIndex},
+		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID},
 			$equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
 	}
 	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};

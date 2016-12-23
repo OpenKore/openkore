@@ -291,7 +291,7 @@ sub getInventoryIDs {
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->inventory->getItems}) {
-		if (lc($item->name) eq $find) {push @ids, $item->{invIndex}}
+		if (lc($item->name) eq $find) {push @ids, $item->{binID}}
 	}
 	unless (@ids) {push @ids, -1}
 	return @ids
@@ -326,7 +326,7 @@ sub getStorageIDs {
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->storage->getItems}) {
-		if (lc($item->name) eq $find) {push @ids, $item->{invIndex}}
+		if (lc($item->name) eq $find) {push @ids, $item->{binID}}
 	}
 	unless (@ids) {push @ids, -1}
 	return @ids

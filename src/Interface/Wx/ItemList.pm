@@ -79,7 +79,7 @@ sub init {
 
 		# add already existing actors
 		for my $actor (@{$actorList->getItems}) {
-			$self->_onAdd(undef, [$actor, $actor->{binID} // $actor->{invIndex}]);
+			$self->_onAdd(undef, [$actor, $actor->{binID} // $actor->{binID}]);
 		}
 	}
 }
@@ -200,7 +200,7 @@ sub OnGetItemText {
 	my $info = '';
 
 	if ($column == 0) {
-		$info = $actor->{binID} // $actor->{invIndex};
+		$info = $actor->{binID} // $actor->{binID};
 	} elsif ($column == 1) {
 		$info = $actor->name;
 

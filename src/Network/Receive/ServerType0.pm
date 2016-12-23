@@ -1106,7 +1106,7 @@ sub _items_list {
 
 		$args->{adder}($local_item) if $add;
 
-		my $index = ($local_item->{invIndex} >= 0) ? $local_item->{invIndex} : $local_item->{ID};
+		my $index = ($local_item->{binID} >= 0) ? $local_item->{binID} : $local_item->{ID};
 		debug "$args->{debug_str}: $local_item->{name} ($index) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}}\n", 'parseMsg';
 		Plugins::callHook($args->{hook}, {index => $index, item => $local_item});
 	}
@@ -1287,7 +1287,7 @@ sub arrowcraft_list {
 	for (my $i = 4; $i < $msg_size; $i += 2) {
 		my $ID = unpack("v", substr($msg, $i, 2));
 		my $item = $char->inventory->getByNameID($ID);
-		binAdd(\@arrowCraftID, $item->{invIndex});
+		binAdd(\@arrowCraftID, $item->{binID});
 	}
 
 	message T("Received Possible Arrow Craft List - type 'arrowcraft'\n");
@@ -1341,7 +1341,7 @@ sub card_merge_list {
 	for (my $i = 4; $i < $len; $i += 2) {
 		$index = unpack("a2", substr($msg, $i, 2));
 		my $item = $char->inventory->getByID($index);
-		binAdd(\@cardMergeItemsID, $item->{invIndex});
+		binAdd(\@cardMergeItemsID, $item->{binID});
 	}
 
 	Commands::run('card mergelist');
@@ -1581,7 +1581,7 @@ sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});
 	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999")) {
-		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{invIndex});
+		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
 	} else {
 		$item->{equipped} = $args->{type};
 		if ($args->{type} == 10 || $args->{type} == 32768) {
@@ -1596,7 +1596,7 @@ sub equip_item {
 				}
 			}
 		}
-		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{invIndex},
+		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID},
 			$equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
 	}
 	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
@@ -1869,7 +1869,7 @@ sub identify_list {
 	for (my $i = 4; $i < $msg_size; $i += 2) {
 		my $index = unpack("a2", substr($msg, $i, 2));
 		my $item = $char->inventory->getByID($index);
-		binAdd(\@identifyID, $item->{invIndex});
+		binAdd(\@identifyID, $item->{binID});
 	}
 
 	my $num = @identifyID;
@@ -1919,7 +1919,7 @@ sub inventory_item_added {
 
 		$itemChange{$item->{name}} += $amount;
 		my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
-			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
+			$item->{name}, $item->{binID}, $amount, $itemTypes_lut{$item->{type}});
 		message "$disp\n", "drop";
 		$disp .= " (". $field->baseName . ")\n";
 		itemLog($disp);
@@ -1939,7 +1939,7 @@ sub inventory_item_added {
 			# Auto-drop item
 			if (pickupitems(lc($item->{name})) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 				$messageSender->sendDrop($item->{ID}, $amount);
-				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $item->{invIndex}, $amount), "drop";
+				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $item->{binID}, $amount), "drop";
 			}
 		}
 
@@ -4543,7 +4543,7 @@ sub unequip_item {
 	}
 	if ($item) {
 		message TF("You unequip %s (%d) - %s\n",
-			$item->{name}, $item->{invIndex},
+			$item->{name}, $item->{binID},
 			$equipTypes_lut{$item->{type_equip}}), 'inventory';
 	}
 }
@@ -4580,7 +4580,7 @@ sub use_item {
 	my $item = $char->inventory->getByID($args->{ID});
 	if ($item) {
 		$item->{amount} -= $args->{amount};
-		message TF("You used Item: %s (%d) x %s\n", $item->{name}, $item->{invIndex}, $args->{amount}), "useItem";
+		message TF("You used Item: %s (%d) x %s\n", $item->{name}, $item->{binID}, $args->{amount}), "useItem";
 		if ($item->{amount} <= 0) {
 			$char->inventory->remove($item);
 		}
@@ -4837,8 +4837,8 @@ sub mail_setattachment {
 				my $item = $char->inventory->getByID($args->{ID});
 				if ($item) {
 					my $change = min($item->{amount},$AI::temp::mailAttachAmount);
-					inventoryItemRemoved($item->{invIndex}, $change);
-					Plugins::callHook('packet_item_removed', {index => $item->{invIndex}});
+					inventoryItemRemoved($item->{binID}, $change);
+					Plugins::callHook('packet_item_removed', {index => $item->{binID}});
 				}
 				undef $AI::temp::mailAttachAmount;
 			}
@@ -5261,7 +5261,7 @@ sub upgrade_list {
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
 		my ($index, $nameID) = unpack('a2 x6 C', substr($args->{RAW_MSG}, $i, 13));
 		my $item = $char->inventory->getByID($index);
-		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{invIndex}, itemName($item)]);
+		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{binID}, itemName($item)]);
 	}
 	$msg .= sprintf("%s\n", ('-'x79));
 	message($msg, "list");
@@ -5811,9 +5811,9 @@ sub buying_store_item_delete {
 	my $item = $char->inventory->getByID($args->{ID});
 	my $zeny = $args->{amount} * $args->{zeny};
 	if ($item) {
-	#	buyingstoreitemdelete($item->{invIndex}, $args->{amount});
-		inventoryItemRemoved($item->{invIndex}, $args->{amount});
-	#	Plugins::callHook('buying_store_item_delete', {index => $item->{invIndex}});
+	#	buyingstoreitemdelete($item->{binID}, $args->{amount});
+		inventoryItemRemoved($item->{binID}, $args->{amount});
+	#	Plugins::callHook('buying_store_item_delete', {index => $item->{binID}});
 	}
 	message TF("You have sold %s. Amount: %s. Total zeny: %sz\n", $item, $args->{amount}, $zeny);# msgstring 1747
 }

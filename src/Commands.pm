@@ -823,7 +823,7 @@ sub cmdCard {
 				my $display = "$item->{name} x $item->{amount}";
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$item->{invIndex}, $display]);
+					[$item->{binID}, $display]);
 			}
 		}
 		$msg .= ('-'x50) . "\n";
@@ -918,18 +918,18 @@ sub cmdCart_list {
 	
 	foreach my $item (@{$char->cart->getItems()}) {
 		if ($item->usable) {
-			push @useable, $item->{invIndex};
+			push @useable, $item->{binID};
 		} elsif ($item->equippable) {
 			my %eqp;
 			$eqp{index} = $item->{ID};
-			$eqp{binID} = $item->{invIndex};
+			$eqp{binID} = $item->{binID};
 			$eqp{name} = $item->{name};
 			$eqp{amount} = $item->{amount};
 			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
 			$eqp{type} = $itemTypes_lut{$item->{type}};
 			push @equipment, \%eqp;
 		} else {
-			push @non_useable, $item->{invIndex};
+			push @non_useable, $item->{binID};
 		}
 	}
 
@@ -1798,7 +1798,7 @@ sub cmdEquip {
 
 	if (!$item->{type_equip} && $item->{type} != 10 && $item->{type} != 16 && $item->{type} != 17 && $item->{type} != 8) {
 		error TF("Inventory Item %s (%s) can't be equipped.\n",
-			$item->{name}, $item->{invIndex});
+			$item->{name}, $item->{binID});
 		return;
 	}
 	if ($slot) {
@@ -3030,11 +3030,11 @@ sub cmdInventory {
 
 		foreach my $item (@{$char->inventory->getItems()}) {
 			if ($item->usable) {
-				push @useable, $item->{invIndex};
+				push @useable, $item->{binID};
 			} elsif ($item->equippable && $item->{type_equip} != 0) {
 				my %eqp;
 				$eqp{index} = $item->{ID};
-				$eqp{binID} = $item->{invIndex};
+				$eqp{binID} = $item->{binID};
 				$eqp{name} = $item->{name};
 				$eqp{amount} = $item->{amount};
 				$eqp{equipped} = ($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
@@ -3048,7 +3048,7 @@ sub cmdInventory {
 					push @uequipment, \%eqp;
 				}
 			} else {
-				push @non_useable, $item->{invIndex};
+				push @non_useable, $item->{binID};
 			}
 		}
 		# Start header -- Note: Title is translatable.
@@ -3058,7 +3058,7 @@ sub cmdInventory {
 			# Translation Comment: List of equipment items worn by character
 			$msg .= T("-- Equipment (Equipped) --\n");
 			foreach my $item (@equipment) {
-				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? T("Will be sold") : "";
+				$sell = defined(findIndex(\@sellList, "binID", $item->{binID})) ? T("Will be sold") : "";
 				$display = sprintf("%-3d  %s -- %s", $item->{binID}, $item->{name}, $item->{equipped});
 				$msg .= sprintf("%-57s %s\n", $display, $sell);
 			}
@@ -3068,7 +3068,7 @@ sub cmdInventory {
 			# Translation Comment: List of equipment items NOT worn
 			$msg .= T("-- Equipment (Not Equipped) --\n");
 			foreach my $item (@uequipment) {
-				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? T("Will be sold") : "";
+				$sell = defined(findIndex(\@sellList, "binID", $item->{binID})) ? T("Will be sold") : "";
 				$display = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
 				$display .= " x $item->{amount}" if $item->{amount} > 1;
 				$display .= $item->{identified};
@@ -3085,7 +3085,7 @@ sub cmdInventory {
 				$display = $item->{name};
 				$display .= " x $item->{amount}";
 				# Translation Comment: Tell if the item is marked to be sold
-				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? T("Will be sold") : "";
+				$sell = defined(findIndex(\@sellList, "binID", $index)) ? T("Will be sold") : "";
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
 					[$index, $display, $sell]);
@@ -3100,7 +3100,7 @@ sub cmdInventory {
 				my $item = $char->inventory->get($index);
 				$display = $item->{name};
 				$display .= " x $item->{amount}";
-				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? T("Will be sold") : "";
+				$sell = defined(findIndex(\@sellList, "binID", $index)) ? T("Will be sold") : "";
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
 					[$index, $display, $sell]);
@@ -4261,7 +4261,7 @@ sub cmdSell {
 			my $msg = center(T(" Sell List "), 41, '-') ."\n".
 				T("#   Item                           Amount\n");
 			foreach my $item (@sellList) {
-				$msg .= sprintf("%-3d %-30s %d\n", $item->{invIndex}, $item->{name}, $item->{amount});
+				$msg .= sprintf("%-3d %-30s %d\n", $item->{binID}, $item->{name}, $item->{amount});
 			}
 			$msg .= ('-'x41) . "\n";
 			message $msg, "list";
@@ -4292,21 +4292,21 @@ sub cmdSell {
 			foreach my $item (@items) {
 				my %obj;
 
-				if (defined(findIndex(\@sellList, "invIndex", $item->{invIndex}))) {
-					error TF("%s (%s) is already in the sell list.\n", $item->nameString, $item->{invIndex});
+				if (defined(findIndex(\@sellList, "binID", $item->{binID}))) {
+					error TF("%s (%s) is already in the sell list.\n", $item->nameString, $item->{binID});
 					next;
 				}
 
 				$obj{name} = $item->nameString();
 				$obj{index} = $item->{ID};
-				$obj{invIndex} = $item->{invIndex};
+				$obj{binID} = $item->{binID};
 				if (!$args[1] || $args[1] > $item->{amount}) {
 					$obj{amount} = $item->{amount};
 				} else {
 					$obj{amount} = $args[1];
 				}
 				push @sellList, \%obj;
-				message TF("Added to sell list: %s (%s) x %s\n", $obj{name}, $obj{invIndex}, $obj{amount}), "info";
+				message TF("Added to sell list: %s (%s) x %s\n", $obj{name}, $obj{binID}, $obj{amount}), "info";
 			}
 			message T("Type 'sell done' to sell everything in your sell list.\n"), "info";
 
@@ -5152,7 +5152,7 @@ sub cmdUnequip {
 
 	if (!$item->{type_equip} && $item->{type} != 10 && $item->{type} != 16 && $item->{type} != 17) {
 		error TF("Inventory Item %s (%s) can't be unequipped.\n",
-			$item->{name}, $item->{invIndex});
+			$item->{name}, $item->{binID});
 		return;
 	}
 	if ($slot) {
@@ -5994,18 +5994,18 @@ sub cmdStorage_list {
 	
 	foreach my $item (@{$char->storage->getItems()}) {
 		if ($item->usable) {
-			push @useable, $item->{invIndex};
+			push @useable, $item->{binID};
 		} elsif ($item->equippable) {
 			my %eqp;
 			$eqp{index} = $item->{ID};
-			$eqp{binID} = $item->{invIndex};
+			$eqp{binID} = $item->{binID};
 			$eqp{name} = $item->{name};
 			$eqp{amount} = $item->{amount};
 			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
 			$eqp{type} = $itemTypes_lut{$item->{type}};
 			push @equipment, \%eqp;
 		} else {
-			push @non_useable, $item->{invIndex};
+			push @non_useable, $item->{binID};
 		}
 	}
 

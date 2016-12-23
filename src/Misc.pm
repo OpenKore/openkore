@@ -1782,28 +1782,28 @@ sub inInventory {
 	my $item = $char->inventory->getByName($itemIndex);
 	return if !$item;
 	return unless $item->{amount} >= $quantity;
-	return $item->{invIndex};
+	return $item->{binID};
 }
 
 ##
-# inventoryItemRemoved($invIndex, $amount)
+# inventoryItemRemoved($binID, $amount)
 #
-# Removes $amount of $invIndex from $char->{inventory}.
+# Removes $amount of $binID from $char->{inventory}.
 # Also prints a message saying the item was removed (unless it is an arrow you
 # fired).
 sub inventoryItemRemoved {
-	my ($invIndex, $amount) = @_;
+	my ($binID, $amount) = @_;
 
 	return if $amount == 0;
-	my $item = $char->inventory->get($invIndex);
+	my $item = $char->inventory->get($binID);
 	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{ID})) {
 		# This item is not an equipped arrow
-		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
+		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $binID, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
 		if ($char->{arrow} && $char->{arrow} == $item->{ID}) {
-			message TF("Run out of Arrow/Bullet: %s (%d)\n", $item->{name}, $invIndex), "inventory";
+			message TF("Run out of Arrow/Bullet: %s (%d)\n", $item->{name}, $binID), "inventory";
 			delete $char->{equipment}{arrow};
 			delete $char->{arrow};
 		}
@@ -1813,16 +1813,16 @@ sub inventoryItemRemoved {
 }
 
 ##
-# storageItemRemoved($invIndex, $amount)
+# storageItemRemoved($binID, $amount)
 #
-# Removes $amount of $invIndex from $char->{storage}.
+# Removes $amount of $binID from $char->{storage}.
 # Also prints a message saying the item was removed
 sub storageItemRemoved {
-	my ($invIndex, $amount) = @_;
+	my ($binID, $amount) = @_;
 
 	return if $amount == 0;
-	my $item = $char->storage->get($invIndex);
-	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $invIndex, $amount), "storage";
+	my $item = $char->storage->get($binID);
+	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $binID, $amount), "storage";
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
 		$char->storage->remove($item);
@@ -1831,16 +1831,16 @@ sub storageItemRemoved {
 }
 
 ##
-# cartItemRemoved($invIndex, $amount)
+# cartItemRemoved($binID, $amount)
 #
-# Removes $amount of $invIndex from $char->{cart}.
+# Removes $amount of $binID from $char->{cart}.
 # Also prints a message saying the item was removed
 sub cartItemRemoved {
-	my ($invIndex, $amount) = @_;
+	my ($binID, $amount) = @_;
 
 	return if $amount == 0;
-	my $item = $char->cart->get($invIndex);
-	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $invIndex, $amount), "cart";
+	my $item = $char->cart->get($binID);
+	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $binID, $amount), "cart";
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
 		$char->cart->remove($item);
@@ -3236,7 +3236,7 @@ sub writeStorageLog {
 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
 		foreach my $item (@{$char->storage->getItems()}) {
 
-			my $display = sprintf "%2d %s x %s", $item->{invIndex}, $item->{name}, $item->{amount};
+			my $display = sprintf "%2d %s x %s", $item->{binID}, $item->{name}, $item->{amount};
 			# Translation Comment: Mark to show not identified items
 			$display .= " -- " . T("Not Identified") if !$item->{identified};
 			# Translation Comment: Mark to show broken items
@@ -4490,11 +4490,11 @@ sub MODINIT {
 }
 
 sub buyingstoreitemdelete {
-	my ($invIndex, $amount) = @_;
+	my ($binID, $amount) = @_;
 
-	my $item = $char->inventory->get($invIndex);
+	my $item = $char->inventory->get($binID);
 	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{ID})) {
-		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
+		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $binID, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;
 	$char->inventory->remove($item) if ($item->{amount} <= 0);
