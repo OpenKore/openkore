@@ -2370,7 +2370,7 @@ sub storage_items_stackable {
 		hook => 'packet_storage',
 		debug_str => 'Stackable Storage Item',
 		items => [$self->parse_items_stackable($args)],
-		getter => sub { $char->storage->getByServerIndex($_[0]{index}) },
+		getter => sub { $char->storage->getByServerIndex($_[0]{ID}) },
 		adder => sub { $char->storage->add($_[0]) },
 		callback => sub {
 			my ($local_item) = @_;
@@ -2390,7 +2390,7 @@ sub storage_items_nonstackable {
 		hook => 'packet_storage',
 		debug_str => 'Non-Stackable Storage Item',
 		items => [$self->parse_items_nonstackable($args)],
-		getter => sub { $char->storage->getByServerIndex($_[0]{index}) },
+		getter => sub { $char->storage->getByServerIndex($_[0]{ID}) },
 		adder => sub { $char->storage->add($_[0]) },
 	});
 
@@ -2430,7 +2430,7 @@ sub storage_item_added {
 sub storage_item_removed {
 	my ($self, $args) = @_;
 
-	my ($index, $amount) = @{$args}{qw(index amount)};
+	my ($index, $amount) = @{$args}{qw(ID amount)};
 
 	my $item = $char->storage->getByServerIndex($index);
 	
@@ -2447,7 +2447,7 @@ sub cart_items_stackable {
 		hook => 'packet_cart',
 		debug_str => 'Stackable Cart Item',
 		items => [$self->parse_items_stackable($args)],
-		getter => sub { $char->cart->getByServerIndex($_[0]{index}) },
+		getter => sub { $char->cart->getByServerIndex($_[0]{ID}) },
 		adder => sub { $char->cart->add($_[0]) },
 	});
 }
@@ -2460,7 +2460,7 @@ sub cart_items_nonstackable {
 		hook => 'packet_cart',
 		debug_str => 'Non-Stackable Cart Item',
 		items => [$self->parse_items_nonstackable($args)],
-		getter => sub { $char->cart->getByServerIndex($_[0]{index}) },
+		getter => sub { $char->cart->getByServerIndex($_[0]{ID}) },
 		adder => sub { $char->cart->add($_[0]) },
 	});
 }
@@ -2497,7 +2497,7 @@ sub cart_item_added {
 sub cart_item_removed {
 	my ($self, $args) = @_;
 
-	my ($index, $amount) = @{$args}{qw(index amount)};
+	my ($index, $amount) = @{$args}{qw(ID amount)};
 
 	my $item = $char->cart->getByServerIndex($index);
 	
@@ -2535,7 +2535,7 @@ sub inventory_items_stackable {
 		hook => 'packet_inventory',
 		debug_str => 'Stackable Inventory Item',
 		items => [$self->parse_items_stackable($args)],
-		getter => sub { $char->inventory->getByServerIndex($_[0]{index}) },
+		getter => sub { $char->inventory->getByServerIndex($_[0]{ID}) },
 		adder => sub { $char->inventory->add($_[0]) },
 		callback => sub {
 			my ($local_item) = @_;
@@ -2953,7 +2953,7 @@ sub egg_list {
 	my ($self, $args) = @_;
 	my $msg = center(T(" Egg Hatch Candidates "), 38, '-') ."\n";
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
-		my $index = unpack("v", substr($args->{RAW_MSG}, $i, 2));
+		my $index = unpack("a2", substr($args->{RAW_MSG}, $i, 2));
 		my $item = $char->inventory->getByServerIndex($index);
 		$msg .=  "$item->{invIndex} $item->{name}\n";
 	}
@@ -3606,7 +3606,7 @@ sub item_disappeared {
 
 sub item_upgrade {
 	my ($self, $args) = @_;
-	my ($type, $index, $upgrade) = @{$args}{qw(type index upgrade)};
+	my ($type, $index, $upgrade) = @{$args}{qw(type ID upgrade)};
 
 	my $item = $char->inventory->getByServerIndex($index);
 	if ($item) {

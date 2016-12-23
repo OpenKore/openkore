@@ -242,7 +242,7 @@ sub new {
 		'0177' => ['identify_list'], # -1
 		'0179' => ['identify', 'a2 C', [qw(ID flag)]], # 5
 		'017B' => ['card_merge_list'], # -1
-		'017D' => ['card_merge_status', 'v2 C', [qw(item_index card_index fail)]], # 7
+		'017D' => ['card_merge_status', 'a2 a2 C', [qw(item_index card_index fail)]], # 7
 		'017F' => ['guild_chat', 'v Z*', [qw(len message)]], # -1
 		'0181' => ['guild_opposition_result', 'C', [qw(flag)]], # 3 # clif_guild_oppositionack
 		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
@@ -875,7 +875,7 @@ sub card_merge_list {
 
 	my $index;
 	for (my $i = 4; $i < $len; $i += 2) {
-		$index = unpack("v", substr($msg, $i, 2));
+		$index = unpack("a2", substr($msg, $i, 2));
 		my $item = $char->inventory->getByServerIndex($index);
 		binAdd(\@cardMergeItemsID, $item->{invIndex});
 	}
@@ -1450,7 +1450,7 @@ sub identify_list {
 
 	undef @identifyID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
-		my $index = unpack('v', substr($msg, $i, 2));
+		my $index = unpack('a2', substr($msg, $i, 2));
 		my $item = $char->inventory->getByServerIndex($index);
 		binAdd(\@identifyID, $item->{invIndex});
 	}
@@ -1929,7 +1929,7 @@ sub npc_sell_list {
 	
 	debug T("You can sell:\n"), "info";
 	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
-		my ($index, $price, $price_overcharge) = unpack("v L L", substr($args->{itemsdata},$i,($i + 10)));
+		my ($index, $price, $price_overcharge) = unpack("a2 L L", substr($args->{itemsdata},$i,($i + 10)));
 		my $item = $char->inventory->getByServerIndex($index);
 		$item->{sellable} = 1; # flag this item as sellable
 		debug TF("%s x %s for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
@@ -4513,7 +4513,7 @@ sub upgrade_list {
 	$msg .= center(" " . T("Upgrade List") . " ", 79, '-') . "\n";
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
 		#my ($index, $nameID) = unpack('v x6 C', substr($args->{RAW_MSG}, $i, 13));
-		my ($index, $nameID, $upgrade, $cards) = unpack('v2 C a8', substr($args->{RAW_MSG}, $i, 13));
+		my ($index, $nameID, $upgrade, $cards) = unpack('a2 v C a8', substr($args->{RAW_MSG}, $i, 13));
 		my $item = $char->inventory->getByServerIndex($index);
 		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{invIndex}, itemName($item)]);
 	}
