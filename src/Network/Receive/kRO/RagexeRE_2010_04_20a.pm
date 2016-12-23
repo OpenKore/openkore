@@ -81,7 +81,7 @@ sub buying_store_update {
 sub buying_store_item_delete {
 	my($self, $args) = @_;
 	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByServerIndex($args->{ID});
 	my $zeny = $args->{amount} * $args->{zeny};
 	if ($item) {
 	#	buyingstoreitemdelete($item->{invIndex}, $args->{amount});

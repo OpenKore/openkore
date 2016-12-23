@@ -127,7 +127,7 @@ sub parse_items_stackable {
 
 sub inventory_item_favorite {
 	my ($self, $args) = @_;
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByServerIndex($args->{ID});
 	if ($args->{flag}) {
 		message TF("Inventory Item removed from favorite tab: %s\n", $item), "storage";
 	} else {
@@ -144,7 +144,7 @@ sub show_eq {
 			$expire, $bindOnEquipType, $sprite_id, $identified) = unpack($unpack_string, substr($args->{equips_info}, $i));
 
 		my $item = {};
-		$item->{index} = $index;
+		$item->{ID} = $index;
 		$item->{nameID} = $ID;
 		$item->{type} = $type;
 		$item->{identified} = $identified;

@@ -688,7 +688,7 @@ sub sendOpenShop {
 		pack("C*", 0x01);
 
 	foreach my $item (@{$items}) {
-		$msg .= pack("v1", $item->{index}).
+		$msg .= pack("v1", $item->{ID}).
 			pack("v1", $item->{amount}).
 			pack("V1", $item->{price});
 	}
@@ -871,9 +871,9 @@ sub sendRemoveAttachments {
 
 sub sendRepairItem {
 	my ($self, $args) = @_;
-	my $msg = pack("C2 v2 V2 C1", 0xFD, 0x01, $args->{index}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
+	my $msg = pack("C2 v2 V2 C1", 0xFD, 0x01, $args->{ID}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
 	$self->sendToServer($msg);
-	debug ("Sent repair item: ".$args->{index}."\n", "sendPacket", 2);
+	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
 }
 
 sub sendSell {

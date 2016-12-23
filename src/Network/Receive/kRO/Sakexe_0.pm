@@ -648,7 +648,7 @@ sub _items_list {
 
 		$args->{adder}($local_item) if $add;
 
-		my $index = ($local_item->{invIndex} >= 0) ? $local_item->{invIndex} : $local_item->{index};
+		my $index = ($local_item->{invIndex} >= 0) ? $local_item->{invIndex} : $local_item->{ID};
 		debug "$args->{debug_str}: $local_item->{name} ($index) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}}\n", 'parseMsg';
 		Plugins::callHook($args->{hook}, {index => $index, item => $local_item});
 	}
@@ -1092,9 +1092,9 @@ sub deal_add_you {
 		return;
 	}
 
-	return unless $args->{index} > 0;
+	return unless $args->{ID} > 0;
 
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByServerIndex($args->{ID});
 	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
 	$item->{amount} -= $currentDeal{lastItemAmount};
 	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
@@ -1106,7 +1106,7 @@ sub deal_add_you {
 
 sub equip_item {
 	my ($self, $args) = @_;
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByServerIndex($args->{ID});
 	if (!$args->{success}) {
 		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{invIndex});
 	} else {
@@ -1464,14 +1464,14 @@ sub inventory_item_added {
 
 	return unless changeToInGameState();
 
-	my ($index, $amount, $fail) = ($args->{index}, $args->{amount}, $args->{fail});
+	my ($index, $amount, $fail) = ($args->{ID}, $args->{amount}, $args->{fail});
 
 	if (!$fail) {
 		my $item = $char->inventory->getByServerIndex($index);
 		if (!$item) {
 			# Add new item
 			$item = new Actor::Item();
-			$item->{index} = $index;
+			$item->{ID} = $index;
 			$item->{nameID} = $args->{nameID};
 			$item->{type} = $args->{type};
 			$item->{type_equip} = $args->{type_equip};
@@ -1512,7 +1512,7 @@ sub inventory_item_added {
 		if ($AI == AI::AUTO) {
 			# Auto-drop item
 			if (pickupitems(lc($item->{name})) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
-				$messageSender->sendDrop($item->{index}, $amount);
+				$messageSender->sendDrop($item->{ID}, $amount);
 				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $item->{invIndex}, $amount), "drop";
 			}
 		}
@@ -1542,7 +1542,7 @@ sub inventory_items_nonstackable {
 
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 
-		unless($local_item = $char->inventory->getByServerIndex($item->{index})) {
+		unless($local_item = $char->inventory->getByServerIndex($item->{ID})) {
 			$local_item = new Actor::Item();
 			$add = 1;
 		}
@@ -1576,7 +1576,7 @@ sub inventory_items_nonstackable {
 			$item = new Actor::Item();
 			$add = 1;
 		}
-		$item->{index} = $index;
+		$item->{ID} = $index;
 		$item->{nameID} = $ID;
 		$item->{amount} = 1;
 		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
@@ -2702,15 +2702,15 @@ sub repair_list {
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
 		my $item = {};
 
-		($item->{index},
+		($item->{ID},
 		$item->{nameID},
 		$item->{status},	# what is this?
 		$item->{status2},	# what is this?
-		$item->{index}) = unpack('v2 V2 C', substr($args->{RAW_MSG}, $i, 13));
+		$item->{ID}) = unpack('v2 V2 C', substr($args->{RAW_MSG}, $i, 13));
 
-		$repairList->[$item->{index}] = $item;
+		$repairList->[$item->{ID}] = $item;
 		my $name = itemNameSimple($item->{nameID});
-		$msg .= $item->{index} . " $name\n";
+		$msg .= $item->{ID} . " $name\n";
 	}
 	$msg .= "---------------------------\n";
 	message $msg, "list";
@@ -3867,7 +3867,7 @@ sub unequip_item {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByServerIndex($args->{ID});
 	delete $item->{equipped};
 
 	if ($args->{type} == 10 || $args->{type} == 32768) {
@@ -3913,7 +3913,7 @@ sub unit_levelup {
 sub use_item {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByServerIndex($args->{ID});
 	if ($item) {
 		$item->{amount} -= $args->{amount};
 		message TF("You used Item: %s (%d) x %s\n", $item->{name}, $item->{invIndex}, $args->{amount}), "useItem";
@@ -4021,11 +4021,11 @@ sub vender_buy_fail {
 
 	my $reason;
 	if ($args->{fail} == 1) {
-		error TF("Failed to buy %s of item #%s from vender (insufficient zeny).\n", $args->{amount}, $args->{index});
+		error TF("Failed to buy %s of item #%s from vender (insufficient zeny).\n", $args->{amount}, $args->{ID});
 	} elsif ($args->{fail} == 2) {
-		error TF("Failed to buy %s of item #%s from vender (overweight).\n", $args->{amount}, $args->{index});
+		error TF("Failed to buy %s of item #%s from vender (overweight).\n", $args->{amount}, $args->{ID});
 	} else {
-		error TF("Failed to buy %s of item #%s from vender (unknown code %s).\n", $args->{amount}, $args->{index}, $args->{fail});
+		error TF("Failed to buy %s of item #%s from vender (unknown code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
 	}
 }
 
@@ -4162,9 +4162,9 @@ sub mail_setattachment {
 	my ($self, $args) = @_;
 	# todo, maybe we need to store this index into a var which we delete the item from upon succesful mail sending
 	if ($args->{fail}) {
-		message TF("Failed to attach %s.\n", ($args->{index}) ? T("item: ").$char->inventory->getByServerIndex($args->{index}) : T("zeny")), "info";
+		message TF("Failed to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByServerIndex($args->{ID}) : T("zeny")), "info";
 	} else {
-		message TF("Succeeded to attach %s.\n", ($args->{index}) ? T("item: ").$char->inventory->getByServerIndex($args->{index}) : T("zeny")), "info";
+		message TF("Succeeded to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByServerIndex($args->{ID}) : T("zeny")), "info";
 	}
 }
 
@@ -4314,10 +4314,10 @@ sub auction_windows {
 sub auction_add_item {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
-		message TF("Failed (note: usable items can't be auctioned) to add item with index: %s.\n", $args->{index}), "info";
+		message TF("Failed (note: usable items can't be auctioned) to add item with index: %s.\n", $args->{ID}), "info";
 	}
 	else {
-		message TF("Succeeded to add item with index: %s.\n", $args->{index}), "info";
+		message TF("Succeeded to add item with index: %s.\n", $args->{ID}), "info";
 	}
 }
 
@@ -4812,21 +4812,21 @@ sub booking_delete_request {
 sub booking_insert {
 	my ($self, $args) = @_;
 
-	message TF("%s has created a new group booking (index: %s)\n", bytesToString($args->{name}), $args->{index});
+	message TF("%s has created a new group booking (index: %s)\n", bytesToString($args->{name}), $args->{ID});
 }
 
 # 0x80A
 sub booking_update {
 	my ($self, $args) = @_;
 
-	message TF("Reserve index of %s has changed its settings\n", $args->{index});
+	message TF("Reserve index of %s has changed its settings\n", $args->{ID});
 }
 
 # 0x80B
 sub booking_delete {
 	my ($self, $args) = @_;
 
-	message TF("Deleted reserve group index %s\n", $args->{index});
+	message TF("Deleted reserve group index %s\n", $args->{ID});
 }
 
 sub disconnect_character {

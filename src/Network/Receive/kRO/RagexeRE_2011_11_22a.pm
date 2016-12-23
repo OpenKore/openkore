@@ -36,7 +36,7 @@ sub new {
 
 sub inventory_item_favorite {
 	my ($self, $args) = @_;
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByServerIndex($args->{ID});
 	if ($args->{flag}) {
 		message TF("Inventory Item removed from favorite tab: %s\n", $item), "storage";
 	} else {

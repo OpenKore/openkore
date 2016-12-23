@@ -236,7 +236,7 @@ sub OnGetItemAttr {
 
 			# FIXME: InventoryLists have a different interface
 			if ($actorList->can('getByServerIndex')) {
-				if ($actorList->getByServerIndex($actor->{index})) {
+				if ($actorList->getByServerIndex($actor->{ID})) {
 					$attr->SetTextColour($l->{color}) if ($l->{color});
 					last;
 				}

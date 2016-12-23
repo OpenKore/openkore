@@ -157,7 +157,7 @@ sub getByName {
 sub getByServerIndex {
 	my ($self, $serverIndex) = @_;
 	foreach my $item (@{$self->getItems()}) {
-		if ($item->{index} == $serverIndex) {
+		if ($item->{ID} == $serverIndex) {
 			return $item;
 		}
 	}

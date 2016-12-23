@@ -1151,7 +1151,7 @@ sub sendOpenShop {
 	my $length = 0x55 + 0x08 * @{$items};
 	my $msg = pack('v2 a80 C', 0x01B2, $length, stringToBytes($title), 1);
 	foreach my $item (@{$items}) {
-		$msg .= pack('v2 V', $item->{index}, $item->{amount}, $item->{price});
+		$msg .= pack('v2 V', $item->{ID}, $item->{amount}, $item->{price});
 	}
 	$self->sendToServer($msg);
 }
@@ -1344,9 +1344,9 @@ sub SendAdoptRequest {
 # 0x01fd,4,repairitem,2
 sub sendRepairItem {
 	my ($self, $args) = @_;
-	my $msg = pack('C2 v2 V2 C', 0x01FD, $args->{index}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
+	my $msg = pack('C2 v2 V2 C', 0x01FD, $args->{ID}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
 	$self->sendToServer($msg);
-	debug ("Sent repair item: ".$args->{index}."\n", "sendPacket", 2);
+	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
 }
 
 # 0x01fe,5

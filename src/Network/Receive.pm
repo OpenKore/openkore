@@ -1411,7 +1411,7 @@ sub show_eq {
 			$expire) = unpack($unpack_string, substr($args->{equips_info}, $i));
 
 		my $item = {};
-		$item->{index} = $index;
+		$item->{ID} = $index;
 
 		$item->{nameID} = $ID;
 		$item->{type} = $type;
@@ -1637,10 +1637,10 @@ sub char_delete2_cancel_result {
 sub arrow_equipped {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	return unless $args->{index};
-	$char->{arrow} = $args->{index};
+	return unless $args->{ID};
+	$char->{arrow} = $args->{ID};
 
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByServerIndex($args->{ID});
 	if ($item && $char->{equipment}{arrow} != $item) {
 		$char->{equipment}{arrow} = $item;
 		$item->{equipped} = 32768;
@@ -1654,7 +1654,7 @@ sub arrow_equipped {
 sub inventory_item_removed {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByServerIndex($args->{ID});
 	my $reason = $args->{reason};
 
 	if ($reason) {
@@ -2400,14 +2400,14 @@ sub storage_items_nonstackable {
 sub storage_item_added {
 	my ($self, $args) = @_;
 
-	my $index = $args->{index};
+	my $index = $args->{ID};
 	my $amount = $args->{amount};
 
 	my $item = $char->storage->getByServerIndex($index);
 	if (!$item) {
 		$item = new Actor::Item();
 		$item->{nameID} = $args->{nameID};
-		$item->{index} = $index;
+		$item->{ID} = $index;
 		$item->{amount} = $amount;
 		$item->{type} = $args->{type};
 		$item->{identified} = $args->{identified};
@@ -2468,13 +2468,13 @@ sub cart_items_nonstackable {
 sub cart_item_added {
 	my ($self, $args) = @_;
 	
-	my $index = $args->{index};
+	my $index = $args->{ID};
 	my $amount = $args->{amount};
 
 	my $item = $char->cart->getByServerIndex($index);
 	if (!$item) {
 		$item = new Actor::Item();
-		$item->{index} = $args->{index};
+		$item->{ID} = $args->{ID};
 		$item->{nameID} = $args->{nameID};
 		$item->{amount} = $args->{amount};
 		$item->{identified} = $args->{identified};
@@ -2540,7 +2540,7 @@ sub inventory_items_stackable {
 		callback => sub {
 			my ($local_item) = @_;
 
-			if (defined $char->{arrow} && $local_item->{index} == $char->{arrow}) {
+			if (defined $char->{arrow} && $local_item->{ID} == $char->{arrow}) {
 				$local_item->{equipped} = 32768;
 				$char->{equipment}{arrow} = $local_item;
 			}
@@ -3421,7 +3421,7 @@ sub guild_request {
 sub identify {
 	my ($self, $args) = @_;
 	if ($args->{flag} == 0) {
-		my $item = $char->inventory->getByServerIndex($args->{index});
+		my $item = $char->inventory->getByServerIndex($args->{ID});
 		$item->{identified} = 1;
 		$item->{type_equip} = $itemSlots_lut{$item->{nameID}};
 		message TF("Item Identified: %s (%d)\n", $item->{name}, $item->{invIndex}), "info";

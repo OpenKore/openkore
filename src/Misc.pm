@@ -1592,7 +1592,7 @@ sub deal {
 sub dealAddItem {
 	my ($item, $amount) = @_;
 
-	$messageSender->sendDealAddItem($item->{index}, $amount);
+	$messageSender->sendDealAddItem($item->{ID}, $amount);
 	$currentDeal{lastItemAmount} = $amount;
 }
 
@@ -1608,7 +1608,7 @@ sub drop {
 		if (!$amount || $amount > $item->{amount}) {
 			$amount = $item->{amount};
 		}
-		$messageSender->sendDrop($item->{index}, $amount);
+		$messageSender->sendDrop($item->{ID}, $amount);
 	}
 }
 
@@ -1796,13 +1796,13 @@ sub inventoryItemRemoved {
 
 	return if $amount == 0;
 	my $item = $char->inventory->get($invIndex);
-	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
+	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{ID})) {
 		# This item is not an equipped arrow
 		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
-		if ($char->{arrow} && $char->{arrow} == $item->{index}) {
+		if ($char->{arrow} && $char->{arrow} == $item->{ID}) {
 			message TF("Run out of Arrow/Bullet: %s (%d)\n", $item->{name}, $invIndex), "inventory";
 			delete $char->{equipment}{arrow};
 			delete $char->{arrow};
@@ -1980,7 +1980,7 @@ sub storageGet {
 		if (!defined($max) || $max > $item->{amount}) {
 			$max = $item->{amount};
 		}
-		$messageSender->sendStorageGet($item->{index}, $max);
+		$messageSender->sendStorageGet($item->{ID}, $max);
 
 	} else {
 		my %args;
@@ -3156,7 +3156,7 @@ sub useTeleport {
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 		if (timeOut($timeout{ai_teleport})) {
 			Plugins::callHook('teleport_sent', \%args);
-			$messageSender->sendItemUse($item->{index}, $accountID);
+			$messageSender->sendItemUse($item->{ID}, $accountID);
 			$timeout{ai_teleport}{time} = time;
 		}
 		return 1;
@@ -4397,7 +4397,7 @@ sub makeShop {
 
 		my %item;
 		$item{name} = $cart_item->{name};
-		$item{index} = $cart_item->{index};
+		$item{index} = $cart_item->{ID};
 			if ($sale->{priceMax}) {
 				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
 			} else {
@@ -4493,7 +4493,7 @@ sub buyingstoreitemdelete {
 	my ($invIndex, $amount) = @_;
 
 	my $item = $char->inventory->get($invIndex);
-	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
+	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{ID})) {
 		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;

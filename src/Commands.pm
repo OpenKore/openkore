@@ -666,7 +666,7 @@ sub cmdAutoSell {
 			my $control = items_control($item->{name});
 			if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
 				my %obj;
-				$obj{index} = $item->{index};
+				$obj{index} = $item->{ID};
 				$obj{amount} = $item->{amount} - $control->{keep};
 				my $item_name = $item->{name};
 				$item_name .= ' (if unequipped)' if ($item->{equipped});
@@ -784,8 +784,8 @@ sub cmdCard {
 		if ($arg2 =~ /^\d+$/) {
 			my $found = binFind(\@cardMergeItemsID, $arg2);
 			if (defined $found) {
-				$messageSender->sendCardMerge($char->inventory->get($cardMergeIndex)->{index},
-					$char->inventory->get($arg2)->{index});
+				$messageSender->sendCardMerge($char->inventory->get($cardMergeIndex)->{ID},
+					$char->inventory->get($arg2)->{ID});
 			} else {
 				if ($cardMergeIndex ne "") {
 					error TF("Error in function 'card merge' (Finalize card merging onto item)\n" .
@@ -804,7 +804,7 @@ sub cmdCard {
 		if ($arg2 =~ /^\d+$/) {
 			if ($char->inventory->get($arg2)) {
 				$cardMergeIndex = $arg2;
-				$messageSender->sendCardMergeRequest($char->inventory->get($cardMergeIndex)->{index});
+				$messageSender->sendCardMergeRequest($char->inventory->get($cardMergeIndex)->{ID});
 				message TF("Sending merge list request for %s...\n",
 					$char->inventory->get($cardMergeIndex)->{name});
 			} else {
@@ -836,8 +836,8 @@ sub cmdCard {
 			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
 				"You don't have item %s in your inventory.\n"), $arg3;
 		} else {
-			$messageSender->sendCardMerge($char->inventory->get($arg2)->{index},
-				$char->inventory->get($arg3)->{index});
+			$messageSender->sendCardMerge($char->inventory->get($arg2)->{ID},
+				$char->inventory->get($arg3)->{ID});
 		}
 	} else {
 		error T("Syntax Error in function 'card' (Card Compounding)\n" .
@@ -921,7 +921,7 @@ sub cmdCart_list {
 			push @useable, $item->{invIndex};
 		} elsif ($item->equippable) {
 			my %eqp;
-			$eqp{index} = $item->{index};
+			$eqp{index} = $item->{ID};
 			$eqp{binID} = $item->{invIndex};
 			$eqp{name} = $item->{name};
 			$eqp{amount} = $item->{amount};
@@ -1005,7 +1005,7 @@ sub cmdCart_add {
 	if (!$amount || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	$messageSender->sendCartAdd($item->{index}, $amount);
+	$messageSender->sendCartAdd($item->{ID}, $amount);
 }
 
 sub cmdCart_get {
@@ -1033,7 +1033,7 @@ sub cmdCart_get {
 	if (!$amount || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	$messageSender->sendCartGet($item->{index}, $amount);
+	$messageSender->sendCartGet($item->{ID}, $amount);
 }
 
 sub cmdCash {
@@ -2926,7 +2926,7 @@ sub cmdIdentify {
 			error TF("Error in function 'identify' (Identify Item)\n" .
 				"Identify Item %s does not exist\n", $arg1);
 		} else {
-			$messageSender->sendIdentify($char->inventory->get($identifyID[$arg1])->{index});
+			$messageSender->sendIdentify($char->inventory->get($identifyID[$arg1])->{ID});
 		}
 
 	} else {
@@ -3033,7 +3033,7 @@ sub cmdInventory {
 				push @useable, $item->{invIndex};
 			} elsif ($item->equippable && $item->{type_equip} != 0) {
 				my %eqp;
-				$eqp{index} = $item->{index};
+				$eqp{index} = $item->{ID};
 				$eqp{binID} = $item->{invIndex};
 				$eqp{name} = $item->{name};
 				$eqp{amount} = $item->{amount};
@@ -3692,7 +3692,7 @@ sub cmdPet {
 	} elsif ($args[0] eq "h" || $args[0] eq "hatch") {
 		if(my $item = Match::inventoryItem($args[1])) {
 			# beware, you must first use the item "Pet Incubator", else you will get disconnected
-			$messageSender->sendPetHatch($item->{index});
+			$messageSender->sendPetHatch($item->{ID});
 		} else {
 			error TF("Error in function 'pet [hatch|h] #' (Hatch Pet)\n" .
 				"Egg: %s could not be found.\n", $args[1]);
@@ -4298,7 +4298,7 @@ sub cmdSell {
 				}
 
 				$obj{name} = $item->nameString();
-				$obj{index} = $item->{index};
+				$obj{index} = $item->{ID};
 				$obj{invIndex} = $item->{invIndex};
 				if (!$args[1] || $args[1] > $item->{amount}) {
 					$obj{amount} = $item->{amount};
@@ -4715,7 +4715,7 @@ sub cmdStorage_add {
 	if (!defined($amount) || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	$messageSender->sendStorageAdd($item->{index}, $amount);
+	$messageSender->sendStorageAdd($item->{ID}, $amount);
 }
 
 sub cmdStorage_addfromcart {
@@ -4731,7 +4731,7 @@ sub cmdStorage_addfromcart {
 	if (!defined($amount) || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	$messageSender->sendStorageAddFromCart($item->{index}, $amount);
+	$messageSender->sendStorageAddFromCart($item->{ID}, $amount);
 }
 
 sub cmdStorage_get {
@@ -4745,7 +4745,7 @@ sub cmdStorage_get {
 		if ($name =~ /^(\d+)\-(\d+)$/) {
 			for my $i ($1..$2) {
 				my $item = $char->storage->get($i);
-				#push @items, $item->{index} if ($item);
+				#push @items, $item->{ID} if ($item);
 				push @items, $item if ($item);
 			}
 
@@ -4755,7 +4755,7 @@ sub cmdStorage_get {
 				error TF("Storage Item '%s' does not exist.\n", $name);
 				next;
 			}
-			#push @items, $item->{index};
+			#push @items, $item->{ID};
 			push @items, $item;
 		}
 	}
@@ -4782,7 +4782,7 @@ sub cmdStorage_gettocart {
 			"You do not have a cart.\n");
 		return;
 	}
-	$messageSender->sendStorageGetToCart($item->{index}, $amount);
+	$messageSender->sendStorageGetToCart($item->{ID}, $amount);
 }
 
 sub cmdStorage_close {
@@ -5709,7 +5709,7 @@ sub cmdMail {
 			} elsif ($args[1] eq "item" && defined $args[3]) {
 				my $item = Actor::Item::get($args[3]);
 				if ($item) {
-					my $serverIndex = $item->{index};
+					my $serverIndex = $item->{ID};
 					$messageSender->sendMailSetAttach($args[2], $serverIndex);
 				} else {
 					message TF("Item with index or name: %s does not exist in inventory.\n", $args[3]), "info";
@@ -5771,7 +5771,7 @@ sub cmdAuction {
 		unless (defined $args[0] && $args[1] =~ /^\d+$/) {
 			message T("Usage: aua (<item #>|<item name>) <amount>\n"), "info";
 		} elsif (my $item = Actor::Item::get($args[0])) {
-			my $serverIndex = $item->{index};
+			my $serverIndex = $item->{ID};
 			$messageSender->sendAuctionAddItem($serverIndex, $args[1]);
 		}
 	# auction remove item
@@ -5964,7 +5964,7 @@ sub cmdWeaponRefine {
 	}
 	my ($cmd, $arg) = @_;
 	if(my $item = Match::inventoryItem($arg)) {
-		$messageSender->sendWeaponRefine($item->{index});
+		$messageSender->sendWeaponRefine($item->{ID});
 	} else {
 		message TF("Item with name or id: %s not found.\n", $arg), "info";
 	}
@@ -5997,7 +5997,7 @@ sub cmdStorage_list {
 			push @useable, $item->{invIndex};
 		} elsif ($item->equippable) {
 			my %eqp;
-			$eqp{index} = $item->{index};
+			$eqp{index} = $item->{ID};
 			$eqp{binID} = $item->{invIndex};
 			$eqp{name} = $item->{name};
 			$eqp{amount} = $item->{amount};
