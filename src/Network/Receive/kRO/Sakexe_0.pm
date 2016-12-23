@@ -289,7 +289,7 @@ sub new {
 		'01C4' => ['storage_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
 		'01C5' => ['cart_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
 		'01C7' => ['encryption_acknowledge'], # 2
-		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID ID remaining success)]], # 13
+		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]], # 13
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]], # 97
 		# // 0x01ca,0
 		'01CC' => ['monster_talk', 'a4 C3', [qw(ID stateID skillID arg)]], # 9

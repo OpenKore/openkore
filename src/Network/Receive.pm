@@ -3459,7 +3459,7 @@ sub item_used {
 	my ($self, $args) = @_;
 
 	my ($index, $itemID, $ID, $remaining, $success) =
-		@{$args}{qw(index itemID ID remaining success)};
+		@{$args}{qw(ID itemID actorID remaining success)};
 	my %hook_args = (
 		serverIndex => $index,
 		itemID => $itemID,

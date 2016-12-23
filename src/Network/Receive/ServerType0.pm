@@ -279,7 +279,7 @@ sub new {
 		'01C3' => ['local_broadcast', 'v V v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
 		'01C4' => ['storage_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]],
-		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID ID remaining success)]],
+		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]],
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]],
 		'01CD' => ['sage_autospell', 'x2 a*', [qw(autospell_list)]],
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]],
