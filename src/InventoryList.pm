@@ -150,21 +150,6 @@ sub getByName {
 }
 
 ##
-# Actor::Item $InventoryList->getByServerIndex(int serverIndex)
-#
-# Return the first Actor::Item object, whose 'index' field is equal to $serverIndex.
-# If nothing is found, undef is returned.
-sub getByServerIndex {
-	my ($self, $serverIndex) = @_;
-	foreach my $item (@{$self->getItems()}) {
-		if ($item->{ID} == $serverIndex) {
-			return $item;
-		}
-	}
-	return undef;
-}
-
-##
 # Actor::Item $InventoryList->getByNameID(Bytes nameID)
 #
 # Return the first Actor::Item object, whose 'nameID' field is equal to $nameID.

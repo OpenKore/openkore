@@ -876,7 +876,7 @@ sub card_merge_list {
 	my $index;
 	for (my $i = 4; $i < $len; $i += 2) {
 		$index = unpack("a2", substr($msg, $i, 2));
-		my $item = $char->inventory->getByServerIndex($index);
+		my $item = $char->inventory->getByID($index);
 		binAdd(\@cardMergeItemsID, $item->{invIndex});
 	}
 
@@ -894,8 +894,8 @@ sub card_merge_status {
 	if ($fail) {
 		message T("Card merging failed\n");
 	} else {
-		my $item = $char->inventory->getByServerIndex($item_index);
-		my $card = $char->inventory->getByServerIndex($card_index);
+		my $item = $char->inventory->getByID($item_index);
+		my $card = $char->inventory->getByID($card_index);
 		message TF("%s has been successfully merged into %s\n",
 			$card->{name}, $item->{name}), "success";
 
@@ -1094,7 +1094,7 @@ sub deal_add_you {
 
 	return unless $args->{ID} > 0;
 
-	my $item = $char->inventory->getByServerIndex($args->{ID});
+	my $item = $char->inventory->getByID($args->{ID});
 	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
 	$item->{amount} -= $currentDeal{lastItemAmount};
 	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
@@ -1106,7 +1106,7 @@ sub deal_add_you {
 
 sub equip_item {
 	my ($self, $args) = @_;
-	my $item = $char->inventory->getByServerIndex($args->{ID});
+	my $item = $char->inventory->getByID($args->{ID});
 	if (!$args->{success}) {
 		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{invIndex});
 	} else {
@@ -1451,7 +1451,7 @@ sub identify_list {
 	undef @identifyID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
 		my $index = unpack('a2', substr($msg, $i, 2));
-		my $item = $char->inventory->getByServerIndex($index);
+		my $item = $char->inventory->getByID($index);
 		binAdd(\@identifyID, $item->{invIndex});
 	}
 
@@ -1467,7 +1467,7 @@ sub inventory_item_added {
 	my ($index, $amount, $fail) = ($args->{ID}, $args->{amount}, $args->{fail});
 
 	if (!$fail) {
-		my $item = $char->inventory->getByServerIndex($index);
+		my $item = $char->inventory->getByID($index);
 		if (!$item) {
 			# Add new item
 			$item = new Actor::Item();
@@ -1542,7 +1542,7 @@ sub inventory_items_nonstackable {
 
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 
-		unless($local_item = $char->inventory->getByServerIndex($item->{ID})) {
+		unless($local_item = $char->inventory->getByID($item->{ID})) {
 			$local_item = new Actor::Item();
 			$add = 1;
 		}
@@ -1570,7 +1570,7 @@ sub inventory_items_nonstackable {
 =pod
 		my $index = unpack("v1", substr($msg, $i, 2));
 		my $ID = unpack("v1", substr($msg, $i + 2, 2));
-		my $item = $char->inventory->getByServerIndex($index);
+		my $item = $char->inventory->getByID($index);
 		my $add;
 		if (!$item) {
 			$item = new Actor::Item();
@@ -1930,7 +1930,7 @@ sub npc_sell_list {
 	debug T("You can sell:\n"), "info";
 	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
 		my ($index, $price, $price_overcharge) = unpack("a2 L L", substr($args->{itemsdata},$i,($i + 10)));
-		my $item = $char->inventory->getByServerIndex($index);
+		my $item = $char->inventory->getByID($index);
 		$item->{sellable} = 1; # flag this item as sellable
 		debug TF("%s x %s for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
 	}
@@ -3867,7 +3867,7 @@ sub unequip_item {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{ID});
+	my $item = $char->inventory->getByID($args->{ID});
 	delete $item->{equipped};
 
 	if ($args->{type} == 10 || $args->{type} == 32768) {
@@ -3913,7 +3913,7 @@ sub unit_levelup {
 sub use_item {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{ID});
+	my $item = $char->inventory->getByID($args->{ID});
 	if ($item) {
 		$item->{amount} -= $args->{amount};
 		message TF("You used Item: %s (%d) x %s\n", $item->{name}, $item->{invIndex}, $args->{amount}), "useItem";
@@ -4162,9 +4162,9 @@ sub mail_setattachment {
 	my ($self, $args) = @_;
 	# todo, maybe we need to store this index into a var which we delete the item from upon succesful mail sending
 	if ($args->{fail}) {
-		message TF("Failed to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByServerIndex($args->{ID}) : T("zeny")), "info";
+		message TF("Failed to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
 	} else {
-		message TF("Succeeded to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByServerIndex($args->{ID}) : T("zeny")), "info";
+		message TF("Succeeded to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
 	}
 }
 
@@ -4514,7 +4514,7 @@ sub upgrade_list {
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
 		#my ($index, $nameID) = unpack('v x6 C', substr($args->{RAW_MSG}, $i, 13));
 		my ($index, $nameID, $upgrade, $cards) = unpack('a2 v C a8', substr($args->{RAW_MSG}, $i, 13));
-		my $item = $char->inventory->getByServerIndex($index);
+		my $item = $char->inventory->getByID($index);
 		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{invIndex}, itemName($item)]);
 	}
 	$msg .= sprintf("%s\n", ('-'x79));

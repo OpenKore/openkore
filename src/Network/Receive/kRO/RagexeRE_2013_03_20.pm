@@ -107,7 +107,7 @@ sub parse_items_stackable {
 
 sub equip_item {
 	my ($self, $args) = @_;
-	my $item = $char->inventory->getByServerIndex($args->{ID});
+	my $item = $char->inventory->getByID($args->{ID});
 	if ($args->{success}) {
 		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{invIndex});
 	} else {

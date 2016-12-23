@@ -1640,7 +1640,7 @@ sub arrow_equipped {
 	return unless $args->{ID};
 	$char->{arrow} = $args->{ID};
 
-	my $item = $char->inventory->getByServerIndex($args->{ID});
+	my $item = $char->inventory->getByID($args->{ID});
 	if ($item && $char->{equipment}{arrow} != $item) {
 		$char->{equipment}{arrow} = $item;
 		$item->{equipped} = 32768;
@@ -1654,7 +1654,7 @@ sub arrow_equipped {
 sub inventory_item_removed {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{ID});
+	my $item = $char->inventory->getByID($args->{ID});
 	my $reason = $args->{reason};
 
 	if ($reason) {
@@ -2370,7 +2370,7 @@ sub storage_items_stackable {
 		hook => 'packet_storage',
 		debug_str => 'Stackable Storage Item',
 		items => [$self->parse_items_stackable($args)],
-		getter => sub { $char->storage->getByServerIndex($_[0]{ID}) },
+		getter => sub { $char->storage->getByID($_[0]{ID}) },
 		adder => sub { $char->storage->add($_[0]) },
 		callback => sub {
 			my ($local_item) = @_;
@@ -2390,7 +2390,7 @@ sub storage_items_nonstackable {
 		hook => 'packet_storage',
 		debug_str => 'Non-Stackable Storage Item',
 		items => [$self->parse_items_nonstackable($args)],
-		getter => sub { $char->storage->getByServerIndex($_[0]{ID}) },
+		getter => sub { $char->storage->getByID($_[0]{ID}) },
 		adder => sub { $char->storage->add($_[0]) },
 	});
 
@@ -2403,7 +2403,7 @@ sub storage_item_added {
 	my $index = $args->{ID};
 	my $amount = $args->{amount};
 
-	my $item = $char->storage->getByServerIndex($index);
+	my $item = $char->storage->getByID($index);
 	if (!$item) {
 		$item = new Actor::Item();
 		$item->{nameID} = $args->{nameID};
@@ -2432,7 +2432,7 @@ sub storage_item_removed {
 
 	my ($index, $amount) = @{$args}{qw(ID amount)};
 
-	my $item = $char->storage->getByServerIndex($index);
+	my $item = $char->storage->getByID($index);
 	
 	if ($item) {
 		Misc::storageItemRemoved($item->{invIndex}, $amount);
@@ -2447,7 +2447,7 @@ sub cart_items_stackable {
 		hook => 'packet_cart',
 		debug_str => 'Stackable Cart Item',
 		items => [$self->parse_items_stackable($args)],
-		getter => sub { $char->cart->getByServerIndex($_[0]{ID}) },
+		getter => sub { $char->cart->getByID($_[0]{ID}) },
 		adder => sub { $char->cart->add($_[0]) },
 	});
 }
@@ -2460,7 +2460,7 @@ sub cart_items_nonstackable {
 		hook => 'packet_cart',
 		debug_str => 'Non-Stackable Cart Item',
 		items => [$self->parse_items_nonstackable($args)],
-		getter => sub { $char->cart->getByServerIndex($_[0]{ID}) },
+		getter => sub { $char->cart->getByID($_[0]{ID}) },
 		adder => sub { $char->cart->add($_[0]) },
 	});
 }
@@ -2471,7 +2471,7 @@ sub cart_item_added {
 	my $index = $args->{ID};
 	my $amount = $args->{amount};
 
-	my $item = $char->cart->getByServerIndex($index);
+	my $item = $char->cart->getByID($index);
 	if (!$item) {
 		$item = new Actor::Item();
 		$item->{ID} = $args->{ID};
@@ -2499,7 +2499,7 @@ sub cart_item_removed {
 
 	my ($index, $amount) = @{$args}{qw(ID amount)};
 
-	my $item = $char->cart->getByServerIndex($index);
+	my $item = $char->cart->getByID($index);
 	
 	if ($item) {
 		Misc::cartItemRemoved($item->{invIndex}, $amount);
@@ -2535,7 +2535,7 @@ sub inventory_items_stackable {
 		hook => 'packet_inventory',
 		debug_str => 'Stackable Inventory Item',
 		items => [$self->parse_items_stackable($args)],
-		getter => sub { $char->inventory->getByServerIndex($_[0]{ID}) },
+		getter => sub { $char->inventory->getByID($_[0]{ID}) },
 		adder => sub { $char->inventory->add($_[0]) },
 		callback => sub {
 			my ($local_item) = @_;
@@ -2954,7 +2954,7 @@ sub egg_list {
 	my $msg = center(T(" Egg Hatch Candidates "), 38, '-') ."\n";
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
 		my $index = unpack("a2", substr($args->{RAW_MSG}, $i, 2));
-		my $item = $char->inventory->getByServerIndex($index);
+		my $item = $char->inventory->getByID($index);
 		$msg .=  "$item->{invIndex} $item->{name}\n";
 	}
 	$msg .= ('-'x38) . "\n".
@@ -3421,7 +3421,7 @@ sub guild_request {
 sub identify {
 	my ($self, $args) = @_;
 	if ($args->{flag} == 0) {
-		my $item = $char->inventory->getByServerIndex($args->{ID});
+		my $item = $char->inventory->getByID($args->{ID});
 		$item->{identified} = 1;
 		$item->{type_equip} = $itemSlots_lut{$item->{nameID}};
 		message TF("Item Identified: %s (%d)\n", $item->{name}, $item->{invIndex}), "info";
@@ -3469,7 +3469,7 @@ sub item_used {
 	);
 
 	if ($ID eq $accountID) {
-		my $item = $char->inventory->getByServerIndex($index);
+		my $item = $char->inventory->getByID($index);
 		if ($item) {
 			if ($success == 1) {
 				my $amount = $item->{amount} - $remaining;
@@ -3608,7 +3608,7 @@ sub item_upgrade {
 	my ($self, $args) = @_;
 	my ($type, $index, $upgrade) = @{$args}{qw(type ID upgrade)};
 
-	my $item = $char->inventory->getByServerIndex($index);
+	my $item = $char->inventory->getByID($index);
 	if ($item) {
 		$item->{upgrade} = $upgrade;
 		message TF("Item %s has been upgraded to +%s\n", $item->{name}, $upgrade), "parseMsg/upgrade";
