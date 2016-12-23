@@ -28,7 +28,7 @@ sub new {
 		'0202' => undef,
 		'022D' => undef,
 		'023B' => undef,
-		'02C4' => ['item_drop', 'v2', [qw(index amount)]],#6
+		'02C4' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'035F' => undef,
 		'0361' => undef,
 		'0362' => undef,
@@ -49,8 +49,8 @@ sub new {
 		'08A4' => undef,
 # TODO 0x0926,18,bookingregreq,2:4:6
 		'0929' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
-		'093B' => ['storage_item_add', 'v V', [qw(index amount)]],#8
-		'0963' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'093B' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
+		'0963' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
 		'0970' => ['char_create'],#31
 		'0940' => undef,
 		'0817' => ['buy_bulk_closeShop'],#2

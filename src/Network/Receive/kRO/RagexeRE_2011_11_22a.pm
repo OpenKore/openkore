@@ -24,7 +24,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'0908' => ['inventory_item_favorite', 'v C', [qw(index flag)]],#5
+		'0908' => ['inventory_item_favorite', 'a2 C', [qw(ID flag)]],#5
 	);
 
 	foreach my $switch (keys %packets) {

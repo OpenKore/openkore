@@ -21,15 +21,15 @@ sub new {
 	
 	my %packets = (
 		'0891' => undef,
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],#6
+		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'0938' => undef,
 		'07E4' => ['item_take', 'a4', [qw(ID)]],#6
 		'089C' => undef,
 		'023B' => ['friend_request', 'a*', [qw(username)]],#26
 		'086C' => undef,
 		'08A6' => undef,
-		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],#8
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'07EC' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
+		'0364' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
 		'0886' => undef,
 		'035F' => ['sync', 'V', [qw(time)]],#6
 		'0889' => undef,

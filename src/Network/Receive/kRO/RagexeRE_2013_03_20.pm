@@ -26,11 +26,11 @@ sub new {
 	my %packets = (
 		'082D' => ['received_characters_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'084B' => ['item_appeared', 'a4 v2 C v4', [qw(ID nameID unknown1 identified x y unknown2 amount)]], # 19 TODO   provided by try71023, modified sofax222
-		'0999' => ['equip_item', 'v V v C', [qw(index type viewID success)]], #11
-		'099A' => ['unequip_item', 'v V C', [qw(index type success)]],#9
+		'0999' => ['equip_item', 'a2 V v C', [qw(ID type viewID success)]], #11
+		'099A' => ['unequip_item', 'a2 V C', [qw(ID type success)]],#9
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]], #8
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],#6
-		'0990' => ['inventory_item_added', 'v3 C3 a8 V C2 V v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire bindOnEquipType)]],#31
+		'0990' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 V v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire bindOnEquipType)]],#31
 		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0993' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1

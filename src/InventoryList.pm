@@ -13,13 +13,12 @@
 ##
 # MODULE DESCRIPTION: Inventory model
 #
-# <b>Derived from: @CLASS(ObjectList)</b>
+# <b>Derived from: @CLASS(ActorList)</b>
 #
-# The InventoryList class models a character's inventory or a Kapra storage.
+# The InventoryList class models a character's inventory, Kapra storage or cart's inventory.
 #
-# <h3>Differences compared to ObjectList</h3>
-# All items in Inventory are of the same class, and are all a
-# subclass of @CLASS(Actor::Item).
+# <h3>Differences compared to ActorList</h3>
+# All items are @CLASS(Actor::Item).
 package InventoryList;
 
 use strict;
@@ -37,7 +36,7 @@ use base qw(ActorList);
 # Creates a new InventoryList object.
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new;
+	my $self = $class->SUPER::new('Actor::Item');
 
 	# Hash<String, Array<int>> nameIndex
 	# Maps an item name to a list of item indices. Used for fast

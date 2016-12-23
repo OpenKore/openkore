@@ -33,7 +33,7 @@ sub new {
 		'0814' => ['buying_store_found', 'a4 Z*', [qw(ID title)]], #86
 		'081A' => ['buying_buy_fail', 'v', [qw(result)]], #4
 		'081B' => ['buying_store_update', 'v2 V', [qw(itemID count zeny)]], #10
-		'081C' => ['buying_store_item_delete', 'v2 V', [qw(index amount zeny)]], #10
+		'081C' => ['buying_store_item_delete', 'a2 v V', [qw(ID amount zeny)]], #10
 		'0824' => ['buying_store_fail', 'v2', [qw(result itemID)]], #6
 	);
 

@@ -165,7 +165,7 @@ sub new {
 		'0105' => ['party_leave', 'a4 Z24 C', [qw(ID name flag)]], # 31
 		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]], # 10
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]], # 10
-		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v3', [qw(type index upgrade)]],
+		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
 		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]], # -1
 		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]], # 10
 		'010A' => ['mvp_item', 'v', [qw(itemID)]], # 4
@@ -338,7 +338,7 @@ sub new {
 		# // 0x020b,0
 		# // 0x020c,0
 		'020D' => ['character_block_info', 'v2 a*', [qw(len unknown)]], # -1 TODO
-		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason index amount)]], #//0x07fa,8
+		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
 		'0803' => ['booking_register_request', 'v', [qw(result)]],
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
