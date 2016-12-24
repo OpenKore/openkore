@@ -2764,7 +2764,7 @@ hugel 93 153 moc_para01 31 14 c c r0
 izlude 131 148 moc_para01 31 14 c c r0
 izlude_in 68 162 moc_para01 31 14 c c r0
 lighthalzen 164 86 moc_para01 31 14 c c r0
-louyang 224 107 moc_para01 31 14 c c r0
+louyang 227 107 moc_para01 31 14 c c r0
 moc_ruins 68 164 moc_para01 31 14 c c r0
 moc_prydb1 53 126 moc_para01 31 14 c c r0
 morocc 161 97 moc_para01 31 14 c c r0
