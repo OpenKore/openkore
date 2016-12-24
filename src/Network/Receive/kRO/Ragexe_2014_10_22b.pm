@@ -30,6 +30,7 @@ sub new {
        '09DE' => ['private_message', 'v V Z25 Z*', [qw(len charID privMsgUser privMsg)]],
        '09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
        '0A00' => ['hotkeys'],
+	   '08C8' => ['actor_action', 'a4 a4 a4 V3 C v C V', [qw(sourceID targetID tick src_speed dst_speed damage sp_damage div type dual_wield_damage)]],
        );
   
    foreach my $switch (keys %packets) {
