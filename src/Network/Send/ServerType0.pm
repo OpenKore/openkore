@@ -236,31 +236,31 @@ sub sendBuyBulk {
 }
 
 sub sendCardMerge {
-	my ($self, $card_index, $item_index) = @_;
-	my $msg = pack("C*", 0x7C, 0x01) . pack("v*", $card_index, $item_index);
+	my ($self, $card_ID, $item_ID) = @_;
+	my $msg = pack("C*", 0x7C, 0x01) . pack("a2 a2", $card_ID, $item_ID);
 	$self->sendToServer($msg);
-	debug "Sent Card Merge: $card_index, $item_index\n", "sendPacket";
+	debug sprintf("Sent Card Merge: %s, %s\n", unpack('v', $card_ID), unpack('v', $item_ID)), "sendPacket";
 }
 
 sub sendCardMergeRequest {
-	my ($self, $card_index) = @_;
-	my $msg = pack("C*", 0x7A, 0x01) . pack("v*", $card_index);
+	my ($self, $card_ID) = @_;
+	my $msg = pack("C*", 0x7A, 0x01) . pack("a2", $card_ID);
 	$self->sendToServer($msg);
-	debug "Sent Card Merge Request: $card_index\n", "sendPacket";
+	debug sprintf("Sent Card Merge Request: %s\n", unpack('v', $card_ID)), "sendPacket";
 }
 
 sub sendCartAdd {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack("C*", 0x26, 0x01) . pack("v*", $index) . pack("V*", $amount);
+	my ($self, $ID, $amount) = @_;
+	my $msg = pack("C*", 0x26, 0x01) . pack("a2", $ID) . pack("V*", $amount);
 	$self->sendToServer($msg);
-	debug "Sent Cart Add: $index x $amount\n", "sendPacket", 2;
+	debug sprintf("Sent Cart Add: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendCartGet {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack("C*", 0x27, 0x01) . pack("v*", $index) . pack("V*", $amount);
+	my ($self, $ID, $amount) = @_;
+	my $msg = pack("C*", 0x27, 0x01) . pack("a2", $ID) . pack("V*", $amount);
 	$self->sendToServer($msg);
-	debug "Sent Cart Get: $index x $amount\n", "sendPacket", 2;
+	debug sprintf("Sent Cart Get: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendCharCreate {
@@ -401,10 +401,10 @@ sub sendDealCancel {
 }
 
 sub sendDealAddItem {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack("C*", 0xE8, 0x00) . pack("v*", $index) . pack("V*",$amount);
+	my ($self, $ID, $amount) = @_;
+	my $msg = pack("C*", 0xE8, 0x00) . pack("a2", $ID) . pack("V*", $amount);
 	$_[0]->sendToServer($msg);
-	debug "Sent Deal Add Item: $index, $amount\n", "sendPacket", 2;
+	debug sprintf("Sent Deal Add Item: %s, $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendDealFinalize {
@@ -628,10 +628,10 @@ sub sendHomunculusName {
 
 sub sendIdentify {
 	my $self = shift;
-	my $index = shift;
-	my $msg = pack("C*", 0x78, 0x01) . pack("v*", $index);
+	my $ID = shift;
+	my $msg = pack("C*", 0x78, 0x01) . pack("a2", $ID);
 	$self->sendToServer($msg);
-	debug "Sent Identify: $index\n", "sendPacket", 2;
+	debug sprintf("Sent Identify: %s\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendIgnore {
@@ -681,7 +681,7 @@ sub sendOpenShop {
 		pack("C*", 0x01);
 
 	foreach my $item (@{$items}) {
-		$msg .= pack("v1", $item->{ID}).
+		$msg .= pack("a2", $item->{ID}).
 			pack("v1", $item->{amount}).
 			pack("V1", $item->{price});
 	}
@@ -793,10 +793,10 @@ sub sendPetMenu {
 }
 
 sub sendPetHatch {
-	my ($self, $index) = @_;
-	my $msg = pack('v2', 0x01A7, $index);
+	my ($self, $ID) = @_;
+	my $msg = pack('v a2', 0x01A7, $ID);
 	$self->sendToServer($msg);
-	debug "Sent Incubator hatch: $index\n", "sendPacket", 2;
+	debug sprintf("Sent Incubator hatch: $ID\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendPetName {
@@ -864,18 +864,18 @@ sub sendRemoveAttachments {
 
 sub sendRepairItem {
 	my ($self, $args) = @_;
-	my $msg = pack("C2 v2 V2 C1", 0xFD, 0x01, $args->{ID}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
+	my $msg = pack("C2 a2 v V2 C1", 0xFD, 0x01, $args->{ID}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
 	$self->sendToServer($msg);
 	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
 }
 
 sub sendSell {
 	my $self = shift;
-	my $index = shift;
+	my $ID = shift;
 	my $amount = shift;
-	my $msg = pack("C*", 0xC9, 0x00, 0x08, 0x00) . pack("v*", $index, $amount);
+	my $msg = pack("C*", 0xC9, 0x00, 0x08, 0x00) . pack("a2 v", $ID, $amount);
 	$self->sendToServer($msg);
-	debug "Sent sell: $index x $amount\n", "sendPacket", 2;
+	debug sprintf("Sent sell: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendSellBulk {
@@ -884,8 +884,8 @@ sub sendSellBulk {
 	my $sellMsg = "";
 
 	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$sellMsg .= pack("v*", $r_array->[$i]{index}, $r_array->[$i]{amount});
-		debug "Sent bulk sell: $r_array->[$i]{index} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
+		$sellMsg .= pack("a2 v", $r_array->[$i]{ID}, $r_array->[$i]{amount});
+		debug sprintf("Sent bulk sell: %s x $r_array->[$i]{amount}\n", unpack('v', $r_array->[$i]{ID})), "d_sendPacket", 2;
 	}
 
 	my $msg = pack("C*", 0xC9, 0x00) . pack("v*", length($sellMsg) + 4) . $sellMsg;
@@ -894,12 +894,12 @@ sub sendSellBulk {
 
 sub sendStorageAddFromCart {
 	my $self = shift;
-	my $index = shift;
+	my $ID = shift;
 	my $amount = shift;
 	my $msg;
-	$msg = pack("C*", 0x29, 0x01) . pack("v*", $index) . pack("V*", $amount);
+	$msg = pack("C*", 0x29, 0x01) . pack("a2", $ID) . pack("V*", $amount);
 	$self->sendToServer($msg);
-	debug "Sent Storage Add From Cart: $index x $amount\n", "sendPacket", 2;
+	debug sprintf("Sent Storage Add From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendStorageClose {
@@ -921,12 +921,12 @@ sub sendStorageClose {
 
 sub sendStorageGetToCart {
 	my $self = shift;
-	my $index = shift;
+	my $ID = shift;
 	my $amount = shift;
 	my $msg;
-	$msg = pack("C*", 0x28, 0x01) . pack("v*", $index) . pack("V*", $amount);
+	$msg = pack("C*", 0x28, 0x01) . pack("a2", $ID) . pack("V*", $amount);
 	$self->sendToServer($msg);
-	debug "Sent Storage Get From Cart: $index x $amount\n", "sendPacket", 2;
+	debug sprintf("Sent Storage Get From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendSuperNoviceDoriDori {
@@ -998,10 +998,10 @@ sub sendTop10Taekwon {
 
 sub sendUnequip {
 	my $self = shift;
-	my $index = shift;
-	my $msg = pack("v", 0x00AB) . pack("v*", $index);
+	my $ID = shift;
+	my $msg = pack("v", 0x00AB) . pack("a2", $ID);
 	$self->sendToServer($msg);
-	debug "Sent Unequip: $index\n", "sendPacket", 2;
+	debug sprintf("Sent Unequip: %s\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendWho {
@@ -1065,11 +1065,11 @@ sub sendMailOperateWindow {
 sub sendMailSetAttach {
 	my $self = $_[0];
 	my $amount = $_[1];
-	my $index = (defined $_[2]) ? $_[2] : 0;	# 0 for zeny
-	my $msg = pack("v2 V", 0x0247, $index, $amount);
+	my $ID = (defined $_[2]) ? $_[2] : 0;	# 0 for zeny
+	my $msg = pack("v a2 V", 0x0247, $ID, $amount);
 
 	#We must do it or we will lost attachment what was not send.
-	if ($index) {
+	if ($ID) {
 		$self->sendMailOperateWindow(1);
 	} else {
 		$self->sendMailOperateWindow(2);
@@ -1094,8 +1094,8 @@ sub sendAuctionAddItemCancel {
 }
 
 sub sendAuctionAddItem {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack("v2 V", 0x024C, $index, $amount);
+	my ($self, $ID, $amount) = @_;
+	my $msg = pack("v a2 V", 0x024C, $ID, $amount);
 	$self->sendToServer($msg);
 	debug "Sent Auction Add Item.\n", "sendPacket", 2;
 }
@@ -1207,8 +1207,9 @@ sub sendCooking {
 }
 
 sub sendWeaponRefine {
-	my ($self, $index) = @_;
-	my $msg = pack("v V", 0x0222, $index);
+	my ($self, $ID) = @_;
+	# FIXME
+	my $msg = pack("v V", 0x0222, unpack('v', $ID));
 	$self->sendToServer($msg);
 	debug "Sent Weapon Refine.\n", "sendPacket", 2;
 }
