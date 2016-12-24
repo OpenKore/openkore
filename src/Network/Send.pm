@@ -605,15 +605,15 @@ sub sendTake {
 }
 
 sub sendDrop {
-	my ($self, $index, $amount) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'item_drop', index => $index, amount => $amount}));
-	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
+	my ($self, $ID, $amount) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'item_drop', ID => $ID, amount => $amount}));
+	debug sprintf("Sent drop: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'item_use', ID => $ID, targetID => $targetID}));
-	debug "Item Use: $ID\n", "sendPacket", 2;
+	debug sprintf("Item Use: %s\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 # for old plugin compatibility, use sendRestart instead!
@@ -631,15 +631,15 @@ sub sendRestart {
 }
 
 sub sendStorageAdd {
-	my ($self, $index, $amount) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'storage_item_add', index => $index, amount => $amount}));
-	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
+	my ($self, $ID, $amount) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'storage_item_add', ID => $ID, amount => $amount}));
+	debug sprintf("Sent Storage Add: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendStorageGet {
-	my ($self, $index, $amount) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'storage_item_remove', index => $index, amount => $amount}));
-	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
+	my ($self, $ID, $amount) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'storage_item_remove', ID => $ID, amount => $amount}));
+	debug sprintf("Sent Storage Get: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendStoragePassword {
@@ -1102,15 +1102,15 @@ sub sendHomunculusStandBy {
 }
 
 sub sendEquip {
-	my ($self, $index, $type) = @_;
+	my ($self, $ID, $type) = @_;
 	$self->sendToServer($self->reconstruct({
 				switch => 'send_equip',
-				index => $index,
+				ID => $ID,
 				type => $type
 			}
 		)
 	);
-	debug "Sent Equip: $index Type: $type\n" , 2;
+	debug sprintf("Sent Equip: %s Type: $type\n", unpack('v', $ID)), 2;
 }
 
 sub sendProgress {
