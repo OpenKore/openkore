@@ -83,8 +83,8 @@ sub sendSkillUseLocInfo {
 }
 
 sub sendWeaponRefine {
-	my ($self, $index) = @_;
-	my $msg = pack('v V', 0x0222, $index);
+	my ($self, $ID) = @_;
+	my $msg = pack('v a2', 0x0222, $ID);
 	$self->sendToServer($msg);
 	debug "Sent Weapon Refine.\n", "sendPacket", 2;
 }

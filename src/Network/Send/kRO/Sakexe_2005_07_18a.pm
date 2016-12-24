@@ -95,8 +95,8 @@ sub sendMailOperateWindow {
 sub sendMailSetAttach {
 	my $self = $_[0];
 	my $amount = $_[1];
-	my $index = (defined $_[2]) ? $_[2] : 0;	# 0 for zeny
-	my $msg = pack('v2 V', 0x0247, $index, $amount);
+	my $ID = (defined $_[2]) ? $_[2] : 0;	# 0 for zeny
+	my $msg = pack("v a2 V", 0x0247, $ID, $amount);
 	$self->sendToServer($msg);
 	debug "Sent mail set attachment.\n", "sendPacket", 2;
 }
@@ -109,8 +109,8 @@ sub sendMailSend {
 }
 
 sub sendAuctionAddItem {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v2 V', 0x024C, $index, $amount);
+	my ($self, $ID, $amount) = @_;
+	my $msg = pack('v a2 V', 0x024C, $ID, $amount);
 	$self->sendToServer($msg);
 	debug "Sent Auction Add Item.\n", "sendPacket", 2;
 }
