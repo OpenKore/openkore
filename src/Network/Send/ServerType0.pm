@@ -181,10 +181,10 @@ sub sendAlignment {
 }
 
 sub sendArrowCraft {
-	my ($self, $index) = @_;
-	my $msg = pack("C*", 0xAE, 0x01) . pack("v*", $index);
+	my ($self, $nameID) = @_;
+	my $msg = pack("C*", 0xAE, 0x01) . pack("v*", $nameID);
 	$self->sendToServer($msg);
-	debug "Sent Arrowmake: $index\n", "sendPacket", 2;
+	debug "Sent Arrowmake: $nameID\n", "sendPacket", 2;
 }
 
 # 0x0089,7,actionrequest,2:6

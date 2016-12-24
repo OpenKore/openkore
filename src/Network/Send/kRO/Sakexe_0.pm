@@ -1127,10 +1127,10 @@ sub sendPetEmotion{
 
 # 0x01ae,4,selectarrow,2
 sub sendArrowCraft {
-	my ($self, $index) = @_;
-	my $msg = pack('v2', 0x01AE, $index);
+	my ($self, $nameID) = @_;
+	my $msg = pack('v2', 0x01AE, $nameID);
 	$self->sendToServer($msg);
-	debug "Sent Arrowmake: $index\n", "sendPacket", 2;
+	debug "Sent Arrowmake: $nameID\n", "sendPacket", 2;
 }
 
 # 0x01af,4,changecart,2
