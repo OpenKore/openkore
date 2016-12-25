@@ -4983,7 +4983,7 @@ sub cmdTalk {
 sub cmdTalkNPC {
 	my (undef, $args) = @_;
 
-	my ($x, $y, $sequence) = $args =~ /^(\d+) (\d+) (.+)$/;
+	my ($x, $y, $sequence) = $args =~ /^(\d+) (\d+)(?: (.+))?$/;
 	unless (defined $x) {
 		error T("Syntax Error in function 'talknpc' (Talk to an NPC)\n" .
 			"Usage: talknpc <x> <y> <sequence>\n");
