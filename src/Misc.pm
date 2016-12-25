@@ -4392,11 +4392,10 @@ sub makeShop {
 	for my $sale (@{$shop{items}}) {
 		my $cart_item;
 		for my $item (@{$char->cart->getItems}) {
-			if ($item->{name} eq $sale->{name} and !$used_items{$item->{invIndex}}) {
-				$cart_item = $item;
-				$used_items{$item->{invIndex}} = 1;
-				last
-			}
+			next unless $item->{name} eq $sale->{name};
+			next if $used_items{$item->{invIndex}};
+			$cart_item = $used_items{$item->{invIndex}} = $item;
+			last;
 		}
 		next unless ($cart_item);
 
