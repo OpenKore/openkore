@@ -85,8 +85,7 @@ our @EXPORT = (
 	cardName
 	itemName
 	itemNameSimple
-	itemNameToID
-	buyingstoreitemdelete/,
+	itemNameToID/,
 
 	# File Parsing and Writing
 	qw/chatLog
@@ -4499,19 +4498,6 @@ sub parseReload {
 sub MODINIT {
 	OpenKoreMod::initMisc() if (defined(&OpenKoreMod::initMisc));
 }
-
-sub buyingstoreitemdelete {
-	my ($invIndex, $amount) = @_;
-
-	my $item = $char->inventory->get($invIndex);
-	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
-		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
-	}
-	$item->{amount} -= $amount;
-	$char->inventory->remove($item) if ($item->{amount} <= 0);
-	$itemChange{$item->{name}} -= $amount;
-}
-
 
 # There are 2 types of clients that receive deletion timestamp 'deleteDate'
 # 0: As when char can be deleted
