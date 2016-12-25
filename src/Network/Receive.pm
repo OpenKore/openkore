@@ -1963,6 +1963,15 @@ sub map_property3 {
 		grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
 		map {[$_, defined $mapTypeHandle{$_} ? $mapTypeHandle{$_} : "UNKNOWN_MAPTYPE_$_"]}
 		0 .. List::Util::max $args->{type}, keys %mapTypeHandle;
+
+		if ($args->{info_table}) {
+			my $info_table = unpack('V1',$args->{info_table});
+			for (my $i = 0; $i < 16; $i++) {
+				if ($info_table&(1<<$i)) {
+					$char->setStatus(defined $mapPropertyInfoHandle{$i} ? $mapPropertyInfoHandle{$i} : "UNKNOWN_MAPPROPERTY_INFO_$i",1);
+				}
+			}
+		}
 	}
 
 	$pvp = {6 => 1, 8 => 2, 19 => 3}->{$args->{type}};
@@ -2414,6 +2423,7 @@ sub storage_item_added {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{name} = itemName($item);
 		$char->storage->add($item);
 	} else {
@@ -2481,6 +2491,7 @@ sub cart_item_added {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{type} = $args->{type} if (exists $args->{type});
 		$item->{name} = itemName($item);
 		$char->cart->add($item);
@@ -2851,6 +2862,7 @@ sub deal_add_other {
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
 		$item->{name} = itemName($item);
 		message TF("%s added Item to Deal: %s x %s\n", $currentDeal{name}, $item->{name}, $args->{amount}), "deal";
 	} elsif ($args->{amount} > 0) {
@@ -3473,14 +3485,11 @@ sub item_used {
 		if ($item) {
 			if ($success == 1) {
 				my $amount = $item->{amount} - $remaining;
-				$item->{amount} -= $amount;
 
 				message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{binID},
 					$amount, $remaining), "useItem", 1;
-				$itemChange{$item->{name}}--;
-				if ($item->{amount} <= 0) {
-					$char->inventory->remove($item);
-				}
+				
+				inventoryItemRemoved($item->{invIndex}, $amount);
 
 				$hook_args{item} = $item;
 				$hook_args{binID} = $item->{binID};
