@@ -1809,6 +1809,7 @@ sub inventoryItemRemoved {
 		$char->inventory->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
+	Plugins::callHook('inventory_item_removed', {index => $item->{invIndex}, amount => $amount, remaining => $item->{amount}});
 }
 
 ##
@@ -1827,6 +1828,7 @@ sub storageItemRemoved {
 		$char->storage->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
+	Plugins::callHook('storage_item_removed', {index => $item->{invIndex}, amount => $amount, remaining => $item->{amount}});
 }
 
 ##
@@ -1845,6 +1847,7 @@ sub cartItemRemoved {
 		$char->cart->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
+	Plugins::callHook('cart_item_removed', {index => $item->{invIndex}, amount => $amount, remaining => $item->{amount}});
 }
 
 # Resolve the name of a card
