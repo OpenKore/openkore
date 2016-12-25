@@ -357,6 +357,27 @@ prt_fild08a 170 378 prontera 156 22
 prt_fild08a 233 16 moc_fild01 239 382
 prt_fild08a 371 212 izlude 24 98
 
+#################### Criatura Academy ####################
+izlude 125 257 iz_ac01 99 29
+izlude 130 257 iz_ac01 99 29
+iz_ac01 100 24 izlude 127 253
+# Eden Teleport Officer
+iz_ac01 106 36 moc_para01 31 14 0 c r0 c
+# Garden
+iz_ac01 45 80 new_1-3 95 171 0 c r0 c
+new_1-3 96 176 iz_ac01 49 73
+# Second floor
+iz_ac01 78 25 iz_ac02 104 27
+iz_ac01 122 25 iz_ac02 104 27
+iz_ac02 94 27 iz_ac01 78 28
+iz_ac02 113 27 iz_ac01 122 28
+# Free Warps (Kafra)
+iz_ac01 95 46 iz_ac01 97 86 0 c c c r2 c c c r1 r0
+iz_ac01 95 46 iz_ac02 104 179 0 c c c r2 c c c r1 r1
+iz_ac01 95 46 izlude 128 98 0 c c c r2 c c c r1 r2 c r1
+iz_ac02 101 176 iz_ac01 97 86 0 c c c r2 c c c r1 r0
+iz_ac02 101 176 izlude 128 98 0 c c c r2 c c c r1 r2 c r1
+
 alb_ship 26 166 alberta 170 170
 alb_ship 37 174 alb_ship 68 99
 alb_ship 41 163 alberta 178 165
