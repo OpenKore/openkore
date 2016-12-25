@@ -84,9 +84,7 @@ sub buying_store_item_delete {
 	my $item = $char->inventory->getByServerIndex($args->{index});
 	my $zeny = $args->{amount} * $args->{zeny};
 	if ($item) {
-	#	buyingstoreitemdelete($item->{invIndex}, $args->{amount});
 		inventoryItemRemoved($item->{invIndex}, $args->{amount});
-	#	Plugins::callHook('buying_store_item_delete', {index => $item->{invIndex}});
 	}
 	message TF("You have sold %s. Amount: %s. Total zeny: %sz\n", $item, $args->{amount}, $zeny);# msgstring 1747
 

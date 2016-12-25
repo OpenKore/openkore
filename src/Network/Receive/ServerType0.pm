@@ -1364,10 +1364,7 @@ sub card_merge_status {
 			$card->{name}, $item->{name}), "success";
 
 		# Remove one of the card
-		$card->{amount} -= 1;
-		if ($card->{amount} <= 0) {
-			$char->inventory->remove($card);
-		}
+		inventoryItemRemoved($card->{invIndex}, 1);
 
 		# Rename the slotted item now
 		# FIXME: this is unoptimized
@@ -1564,17 +1561,15 @@ sub deal_add_you {
 	return unless $args->{index} > 0;
 
 	my $item = $char->inventory->getByServerIndex($args->{index});
+	$args->{item} = $item;
 	# FIXME: quickly add two items => lastItemAmount is lost => inventory corruption; see also Misc::dealAddItem
 	# FIXME: what will be in case of two items with the same nameID?
 	# TODO: no info about items is stored
+	$currentDeal{you_items}++;
 	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
 	$currentDeal{you}{$item->{nameID}}{nameID} = $item->{nameID};
-	$item->{amount} -= $currentDeal{lastItemAmount};
 	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
-	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
-	$currentDeal{you_items}++;
-	$args->{item} = $item;
-	$char->inventory->remove($item) if ($item->{amount} <= 0);
+	inventoryItemRemoved($item->{invIndex}, $currentDeal{lastItemAmount});
 }
 
 sub equip_item {
@@ -1910,6 +1905,7 @@ sub inventory_item_added {
 			} elsif ($args->{switch} eq '02D4') {
 				$item->{expire} = $args->{expire} if (exists $args->{expire}); #a4 or V1 unpacking?
 			}
+			$item->{options} = $args->{options};
 			$item->{name} = itemName($item);
 			$char->inventory->add($item);
 		} else {
@@ -3325,11 +3321,12 @@ sub map_property {
 		1 .. List::Util::max $args->{type}, keys %mapPropertyTypeHandle;
 
 		if ($args->{info_table}) {
-			my @info_table = unpack 'C*', $args->{info_table};
-			$char->setStatus(@$_) for map {[
-				defined $mapPropertyInfoHandle{$_} ? $mapPropertyInfoHandle{$_} : "UNKNOWN_MAPPROPERTY_INFO_$_",
-				$info_table[$_],
-			]} 0 .. @info_table-1;
+			my $info_table = unpack('V1',$args->{info_table});
+			for (my $i = 0; $i < 16; $i++) {
+				if ($info_table&(1<<$i)) {
+					$char->setStatus(defined $mapPropertyInfoHandle{$i} ? $mapPropertyInfoHandle{$i} : "UNKNOWN_MAPPROPERTY_INFO_$i",1);
+				}
+			}
 		}
 	}
 	$pvp = {1 => 1, 3 => 2}->{$args->{type}};
@@ -4579,11 +4576,8 @@ sub use_item {
 	return unless changeToInGameState();
 	my $item = $char->inventory->getByServerIndex($args->{index});
 	if ($item) {
-		$item->{amount} -= $args->{amount};
 		message TF("You used Item: %s (%d) x %s\n", $item->{name}, $item->{invIndex}, $args->{amount}), "useItem";
-		if ($item->{amount} <= 0) {
-			$char->inventory->remove($item);
-		}
+		inventoryItemRemoved($item->{invIndex}, $args->{amount});
 	}
 }
 
@@ -5811,9 +5805,7 @@ sub buying_store_item_delete {
 	my $item = $char->inventory->getByServerIndex($args->{index});
 	my $zeny = $args->{amount} * $args->{zeny};
 	if ($item) {
-	#	buyingstoreitemdelete($item->{invIndex}, $args->{amount});
 		inventoryItemRemoved($item->{invIndex}, $args->{amount});
-	#	Plugins::callHook('buying_store_item_delete', {index => $item->{invIndex}});
 	}
 	message TF("You have sold %s. Amount: %s. Total zeny: %sz\n", $item, $args->{amount}, $zeny);# msgstring 1747
 }
