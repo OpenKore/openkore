@@ -41,14 +41,4 @@ sub onMapChange {
 	$self->clear();
 }
 
-sub add {
-	my ($self, $item) = @_;
-	my $invIndex = $self->SUPER::add($item);
-	if ($self->{state} == MAP_LOADED_OR_NEW) {
-		$self->{state} = RECV_STAT_INFO2;
-		Plugins::callHook('inventory_ready');
-	}
-	return $invIndex;
-}
-
 1;
