@@ -4406,8 +4406,8 @@ sub makeShop {
 		my $cart_item;
 		for my $item (@{$char->cart->getItems}) {
 			next unless $item->{name} eq $sale->{name};
-			next if $used_items{$item->{invIndex}};
-			$cart_item = $used_items{$item->{invIndex}} = $item;
+			next if $used_items{$item->{binID}};
+			$cart_item = $used_items{$item->{binID}} = $item;
 			last;
 		}
 		next unless ($cart_item);

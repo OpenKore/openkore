@@ -3489,7 +3489,7 @@ sub item_used {
 				message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{binID},
 					$amount, $remaining), "useItem", 1;
 				
-				inventoryItemRemoved($item->{invIndex}, $amount);
+				inventoryItemRemoved($item->{binID}, $amount);
 
 				$hook_args{item} = $item;
 				$hook_args{binID} = $item->{binID};
