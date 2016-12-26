@@ -4401,8 +4401,15 @@ sub makeShop {
 
 	# Iterate through items to be sold
 	shuffleArray(\@{$shop{items}}) if ($config{'shop_random'} eq "2");
+	my %used_items;
 	for my $sale (@{$shop{items}}) {
-		my $cart_item = $char->cart->getByName($sale->{name});
+		my $cart_item;
+		for my $item (@{$char->cart->getItems}) {
+			next unless $item->{name} eq $sale->{name};
+			next if $used_items{$item->{invIndex}};
+			$cart_item = $used_items{$item->{invIndex}} = $item;
+			last;
+		}
 		next unless ($cart_item);
 
 		# Found item to vend
