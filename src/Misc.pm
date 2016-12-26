@@ -85,8 +85,7 @@ our @EXPORT = (
 	cardName
 	itemName
 	itemNameSimple
-	itemNameToID
-	buyingstoreitemdelete/,
+	itemNameToID/,
 
 	# File Parsing and Writing
 	qw/chatLog
@@ -1810,6 +1809,7 @@ sub inventoryItemRemoved {
 		$char->inventory->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
+	Plugins::callHook('inventory_item_removed', {index => $item->{invIndex}, amount => $amount, remaining => $item->{amount}});
 }
 
 ##
@@ -1828,6 +1828,7 @@ sub storageItemRemoved {
 		$char->storage->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
+	Plugins::callHook('storage_item_removed', {index => $item->{invIndex}, amount => $amount, remaining => $item->{amount}});
 }
 
 ##
@@ -1846,6 +1847,7 @@ sub cartItemRemoved {
 		$char->cart->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
+	Plugins::callHook('cart_item_removed', {index => $item->{invIndex}, amount => $amount, remaining => $item->{amount}});
 }
 
 # Resolve the name of a card
@@ -1932,6 +1934,17 @@ sub itemName {
 		$suffix = join(':', map {
 			cardName($_).($cards{$_} > 1 ? "*$cards{$_}" : '')
 		} sort { cardName($a) cmp cardName($b) } keys %cards);
+	}
+
+	my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_;{ type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
+	foreach ( @options ) {
+		if ( $_->{type} == 175 ) {
+			# Neutral element.
+		} elsif ( $_->{type} >= 176 && $_->{type} <= 184 ) {
+			$suffix = join ':', sort $elements_lut{ $_->{type} - 175 }, split ':', $suffix;
+		} else {
+			$suffix = join ':', sort "Option($_->{type},$_->{value},$_->{param})", split ':', $suffix;
+		}
 	}
 
 	my $numSlots = $itemSlotCount_lut{$item->{nameID}} if ($prefix eq "");
@@ -4388,8 +4401,15 @@ sub makeShop {
 
 	# Iterate through items to be sold
 	shuffleArray(\@{$shop{items}}) if ($config{'shop_random'} eq "2");
+	my %used_items;
 	for my $sale (@{$shop{items}}) {
-		my $cart_item = $char->cart->getByName($sale->{name});
+		my $cart_item;
+		for my $item (@{$char->cart->getItems}) {
+			next unless $item->{name} eq $sale->{name};
+			next if $used_items{$item->{invIndex}};
+			$cart_item = $used_items{$item->{invIndex}} = $item;
+			last;
+		}
 		next unless ($cart_item);
 
 		# Found item to vend
@@ -4488,19 +4508,6 @@ sub parseReload {
 sub MODINIT {
 	OpenKoreMod::initMisc() if (defined(&OpenKoreMod::initMisc));
 }
-
-sub buyingstoreitemdelete {
-	my ($invIndex, $amount) = @_;
-
-	my $item = $char->inventory->get($invIndex);
-	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
-		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
-	}
-	$item->{amount} -= $amount;
-	$char->inventory->remove($item) if ($item->{amount} <= 0);
-	$itemChange{$item->{name}} -= $amount;
-}
-
 
 # There are 2 types of clients that receive deletion timestamp 'deleteDate'
 # 0: As when char can be deleted
