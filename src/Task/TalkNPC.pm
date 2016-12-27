@@ -86,6 +86,7 @@ sub new {
 	$self->{nameID} = $args{nameID};
 	$self->{sequence} = $args{sequence};
 	$self->{sequence} =~ s/^ +| +$//g;
+	$self->{steps} = [];
 	$self->{trying_to_cancel} = 0;
 	$self->{sent_talk_response_cancel} = 0;
 	$self->{wait_for_answer} = 0;
@@ -115,6 +116,25 @@ sub handle_npc_talk {
 	my $self = $holder->[0];
 	if ($hook_name eq 'npc_talk_done') {
 		$self->{stage} = AFTER_NPC_CLOSE;
+		message TF("%s: Done talking\n", $self->{target}), "npc";
+	
+	} elsif ($self->noMoreSteps) {
+		if ($hook_name eq 'packet/npc_talk_continue') {
+			message TF("%s: Type 'talk cont' to continue talking\n", $self->{target}), "npc";
+			
+		} elsif ($hook_name eq 'packet/npc_talk_number') {
+			message TF("%s: Type 'talk num <number #>' to input a number.\n", $self->{target}), "npc";
+			
+		} elsif ($hook_name eq 'npc_talk_responses') {
+			message TF("%s: Type 'talk resp #' to choose a response.\n", $self->{target}), "npc";
+			
+		} elsif ($hook_name eq 'packet/npc_store_begin') {
+			message TF("%s: Type 'store' to start buying, or type 'sell' to start selling\n", $self->{target}), "npc";
+			
+		} elsif ($hook_name eq 'packet/npc_talk_text') {
+			message TF("%s: Type 'talk text' (Respond to NPC)\n", $self->{target}), "npc";
+			
+		}
 	}
 	$self->{time} = time;
 	$self->{sent_talk_response_cancel} = 0;
@@ -219,7 +239,8 @@ sub iterate {
 		$self->setError(NPC_NO_RESPONSE, T("The NPC did not respond."));
 
 	} elsif ($self->{stage} == TALKING_TO_NPC && timeOut($ai_v{'npc_talk'}{'time'}, 1.5)) {
-		# 0.25 seconds have passed since we last talked to the NPC.
+		# $config{npcTimeResponse} + 4 seconds have passed since we sent the last conversation step
+		# or 1.5 seconds have passed since the npc answered us.
 		
 		#In theory after the talk_response_cancel is sent we shouldn't receive anything, so just wait the timer and asume it's over
 		if ($self->{sent_talk_response_cancel}) {
@@ -250,7 +271,7 @@ sub iterate {
 		
 		#This is to make non-autotalkcont sequences compatible with autotalkcont ones
 		if ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont}) {
-			if ( !@{$self->{steps}} || $self->{steps}[0] !~ /^c/i ) {
+			if ( $self->noMoreSteps || $self->{steps}[0] !~ /^c/i ) {
 				unshift(@{$self->{steps}}, 'c');
 			}
 			debug "Auto-continuing NPC Talk - next detected \n", 'ai_npcTalk';
@@ -260,7 +281,7 @@ sub iterate {
 			undef $ai_v{'npc_talk'}{'talk'};
 		}
 
-		if (!@{$self->{steps}}) {
+		if ($self->noMoreSteps) {
 		
 			# We arrived at a buy or sell selection, but there are no more steps regarding this, so end the conversation
 			if ($ai_v{'npc_talk'}{'talk'} =~ /^(buy_or_sell|store|sell)$/) {
@@ -486,14 +507,14 @@ sub iterate {
 		}
 		
 		# No more steps to be sent
-		if (!@{$self->{steps}}) {
+		if ($self->noMoreSteps) {
 			# Usual end of a conversation
 			if (!%talk) {
 				$self->conversation_end;
 			
 			# No more steps but we still have a defined %talk
 			} else {
-				debug "After we finished talking with hte last npc another one started talking to us faster than we could predict.\n", "ai_npcTalk";
+				debug "After we finished talking with the last npc another one started talking to us faster than we could predict.\n", "ai_npcTalk";
 				my $target = $self->find_and_set_target;
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
@@ -616,6 +637,11 @@ sub findTarget {
 		}
 	}
 	return undef;
+}
+
+sub noMoreSteps {
+	my ($self) = @_;
+	return (@{$self->{steps}} ? 0 : 1);
 }
 
 sub addSteps {

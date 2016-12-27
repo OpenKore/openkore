@@ -3840,8 +3840,6 @@ sub npc_talk_close {
 	my $ID = $args->{ID};
 	my $name = getNPCName($ID);
 
-	message TF("%s: Done talking\n", $name), "npc";
-
 	# I noticed that the RO client doesn't send a 'talk cancel' packet
 	# when it receives a 'npc_talk_closed' packet from the server'.
 	# But on pRO Thor (with Kapra password) this is required in order to
@@ -3868,8 +3866,6 @@ sub npc_talk_continue {
 
 	$ai_v{'npc_talk'}{'talk'} = 'next';
 	$ai_v{'npc_talk'}{'time'} = time;
-	
-	message TF("%s: Type 'talk cont' to continue talking\n", $name), "npc";
 }
 
 sub npc_talk_number {
@@ -3880,8 +3876,6 @@ sub npc_talk_number {
 	my $name = getNPCName($ID);
 	$ai_v{'npc_talk'}{'talk'} = 'number';
 	$ai_v{'npc_talk'}{'time'} = time;
-
-	message TF("%s: Type 'talk num <number #>' to input a number.\n", $name), "input";
 }
 
 sub npc_talk_responses {
@@ -3922,7 +3916,6 @@ sub npc_talk_responses {
 						name => $name,
 						responses => $talk{responses},
 						});
-	message TF("%s: Type 'talk resp #' to choose a response.\n", $name), "npc";
 }
 
 sub npc_talk_text {
@@ -3931,7 +3924,6 @@ sub npc_talk_text {
 	my $ID = $args->{ID};
 
 	my $name = getNPCName($ID);
-	message TF("%s: Type 'talk text' (Respond to NPC)\n", $name), "npc";
 	$ai_v{'npc_talk'}{'talk'} = 'text';
 	$ai_v{'npc_talk'}{'time'} = time;
 }
@@ -3944,8 +3936,6 @@ sub npc_store_begin {
 	$ai_v{'npc_talk'}{'time'} = time;
 
 	my $name = getNPCName($args->{ID});
-
-	message TF("%s: Type 'store' to start buying, or type 'sell' to start selling\n", $name), "npc";
 }
 
 sub npc_store_info {
