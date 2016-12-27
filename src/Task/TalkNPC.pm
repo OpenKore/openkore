@@ -154,17 +154,9 @@ sub find_and_set_target {
 	}
 	
 	if (exists $talk{nameID}) {
-		if ($self->{type} eq 'talknpc') {
-			$self->{steps} = [parseArgs($self->{sequence})];
-		} else {
-			$self->{steps} = [];
-		}
+		$self->{steps} = [parseArgs($self->{sequence})];
 	} else {
-		if ($self->{type} eq 'talknpc') {
-			$self->{steps} = [parseArgs("x $self->{sequence}")];
-		} else {
-			push (@{$self->{steps}}, 'x');
-		}
+		$self->{steps} = [parseArgs("x $self->{sequence}")];
 		undef $ai_v{'npc_talk'}{'time'};
 		undef $ai_v{'npc_talk'}{'talk'};
 	}
@@ -626,7 +618,7 @@ sub findTarget {
 	return undef;
 }
 
-sub nextStep {
+sub addSteps {
 	my ($self, $step) = @_;
 	push(@{$self->{steps}}, $step);
 }

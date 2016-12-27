@@ -4969,7 +4969,7 @@ sub cmdTalk {
 		}
 
 		if (defined $step) {
-			$task->nextStep($step);
+			$task->addSteps($step);
 		} else {
 			error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
 				"Usage: talk <NPC # | cont | resp | num | text > [<response #>|<number #>]\n");
