@@ -3840,18 +3840,6 @@ sub npc_talk_close {
 	my $ID = $args->{ID};
 	my $name = getNPCName($ID);
 
-	# I noticed that the RO client doesn't send a 'talk cancel' packet
-	# when it receives a 'npc_talk_closed' packet from the server'.
-	# But on pRO Thor (with Kapra password) this is required in order to
-	# open the storage.
-	#
-	# UPDATE: not sending 'talk cancel' breaks autostorage on iRO.
-	# This needs more investigation.
-	#if (!$talk{canceled}) {
-	#	$messageSender->sendTalkCancel($ID);
-	#}
-	# Now Task::TalkNPC sends this by default
-
 	$ai_v{'npc_talk'}{'talk'} = 'close';
 	$ai_v{'npc_talk'}{'time'} = time;
 	undef %talk;

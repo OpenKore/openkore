@@ -487,6 +487,13 @@ sub iterate {
 		shift @{$self->{steps}};
 	
 	# After a 'npc_talk_done' hook we must always send a 'npc_talk_cancel' after a timeout
+	# I noticed that the RO client doesn't send a 'talk cancel' packet
+	# when it receives a 'npc_talk_closed' packet from the server'.
+	# But on pRO Thor (with Kapra password) this is required in order to
+	# open the storage.
+	#
+	# UPDATE: not sending 'talk cancel' breaks autostorage on iRO.
+	# This needs more investigation.
 	} elsif ($self->{stage} == AFTER_NPC_CLOSE) {
 		return unless (timeOut($self->{time}, 1));
 		#Now 'n' step is totally unnecessary as we always send it but this must be done for backwards compatibility
