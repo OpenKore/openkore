@@ -39,6 +39,7 @@ use enum qw(
 	NPC_TIMEOUT_AFTER_ASWER
 	STEPS_AFTER_AFTER_NPC_CLOSE
 	STEPS_AFTER_BUY_OR_SELL
+	WRONG_SINTAX_IN_STEPS
 );
 
 # Mutexes used by this task.
@@ -173,13 +174,6 @@ sub find_and_set_target {
 		$target = undef;
 	}
 	
-	unless (exists $talk{nameID}) {
-		$self->addSteps('x');
-		undef $ai_v{'npc_talk'}{'time'};
-		undef $ai_v{'npc_talk'}{'talk'};
-	}
-	$self->addSteps($self->{sequence});
-	
 	if ($target) {
 		$self->{target} = $target;
 		$self->{ID} = $target->{ID};
@@ -223,6 +217,17 @@ sub iterate {
 
 		} else {
 			my $target = $self->find_and_set_target;
+			
+			unless (exists $talk{nameID}) {
+				$self->addSteps('x');
+				undef $ai_v{'npc_talk'}{'time'};
+				undef $ai_v{'npc_talk'}{'talk'};
+			}
+			
+			unless ($self->addSteps($self->{sequence})) {
+				$self->setError(WRONG_SINTAX_IN_STEPS, T("The given conversation sequence contain sintax error, canceling conversation."));
+				return;
+			}
 
 			if ($target || %talk) {
 				$self->{stage} = TALKING_TO_NPC;
@@ -653,7 +658,19 @@ sub noMoreSteps {
 sub addSteps {
 	my ($self, $steps) = @_;
 	my @new_steps = parseArgs($steps);
+	foreach my $step (@new_steps) {
+		next if ($self->validateStep($step));
+		return 0;
+	}
 	push(@{$self->{steps}}, @new_steps);
+	return 1;
+}
+
+sub validateStep {
+	my ($self, $step) = @_;
+	return 1 if ($step =~ /^(?:c|w\d+|t=.+|d\d+|a=.+|r(?:\d+|=.+|~\/.*?\/i?)|x|s|b|e|b\d+,\d+)$/);
+	error "Error during validation of conversation steps. The given step '".$step."' is not valid, please read the manual.\n";
+	return 0;
 }
 
 1;
