@@ -140,11 +140,11 @@ sub find_and_set_target {
 	my ($self) = @_;
 	my $target = $self->findTarget($npcsList);
 	if ($target) {
-		debug "Target NPC " . $target->name() . " at ($target->{pos}{x},$target->{pos}{y}) found.\n", "ai_npcTalk";
+		debug "Target NPC " . $target . " at ($target->{pos}{x},$target->{pos}{y}) found.\n", "ai_npcTalk";
 	} else {
 		$target = $self->findTarget($monstersList);
 		if ($target) {
-			debug "Target Monster-NPC " . $target->name() . " at ($self->{pos}{x},$self->{pos}{y}) found.\n", "ai_npcTalk";
+			debug "Target Monster-NPC " . $target . " at ($self->{pos}{x},$self->{pos}{y}) found.\n", "ai_npcTalk";
 		}
 	}
 
@@ -537,7 +537,7 @@ sub set_error_and_try_to_cancel {
 sub conversation_end {
 	my ($self) = @_;
 	$self->setDone();
-	message TF("Done talking with %s.\n", (defined $self->{target} ? $self->{target}->name : "#".$self->{nameID})), "ai_npcTalk";
+	message TF("Done talking with %s.\n", $self->{target}), "ai_npcTalk";
 }
 
 ##
