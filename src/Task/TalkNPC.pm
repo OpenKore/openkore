@@ -173,13 +173,12 @@ sub find_and_set_target {
 		$target = undef;
 	}
 	
-	if (exists $talk{nameID}) {
-		$self->{steps} = [parseArgs($self->{sequence})];
-	} else {
-		$self->{steps} = [parseArgs("x $self->{sequence}")];
+	unless (exists $talk{nameID}) {
+		$self->addSteps('x');
 		undef $ai_v{'npc_talk'}{'time'};
 		undef $ai_v{'npc_talk'}{'talk'};
 	}
+	$self->addSteps($self->{sequence});
 	
 	if ($target) {
 		$self->{target} = $target;
@@ -652,8 +651,9 @@ sub noMoreSteps {
 }
 
 sub addSteps {
-	my ($self, $step) = @_;
-	push(@{$self->{steps}}, $step);
+	my ($self, $steps) = @_;
+	my @new_steps = parseArgs($steps);
+	push(@{$self->{steps}}, @new_steps);
 }
 
 1;
