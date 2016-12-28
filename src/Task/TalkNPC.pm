@@ -159,15 +159,11 @@ sub activate {
 
 sub find_and_set_target {
 	my ($self) = @_;
-	my $target = $self->findTarget($npcsList);
+	my $target = $self->findTarget($npcsList) || $self->findTarget($monstersList);
+
 	if ($target) {
-		debug "Target NPC " . $target . " at ($target->{pos}{x},$target->{pos}{y}) found.\n", "ai_npcTalk";
-	} else {
-		$target = $self->findTarget($monstersList);
-		if ($target) {
-			debug "Target Monster-NPC " . $target . " at ($self->{pos}{x},$self->{pos}{y}) found.\n", "ai_npcTalk";
-		}
-	}
+		debug "Talking with $target at ($target->{pos}{x},$target->{pos}{y}), ID ".getHex($target->{ID})."\n", "ai_npcTalk";
+	};
 
 	if ($target && $target->{statuses}->{EFFECTSTATE_BURROW}) {
 		$self->setError(NPC_NOT_FOUND, T("NPC is hidden."));
