@@ -2206,7 +2206,11 @@ sub npc_image {
 	} else {
 		debug "NPC image: $imageName ($args->{type})\n", "parseMsg";
 	}
-	$talk{image} = $imageName;
+	unless ($args->{type} == 255) {
+		$talk{image} = $imageName;
+	} else {
+		delete $talk{image};
+	}
 }
 
 sub npc_sell_list {
