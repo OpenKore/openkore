@@ -315,11 +315,7 @@ sub iterate {
 		
 		# Initiate NPC conversation.
 		if ( $step =~ /^x/i ) {
-			if (!$self->{target}->isa('Actor::Monster')) {
-				$messageSender->sendTalk($self->{ID});
-			} else {
-				$messageSender->sendAction($self->{ID}, 0);
-			}
+			$self->{target}->sendTalk;
 			
 		# Wait x seconds.
 		} elsif ($step =~ /^w(\d+)/i) {
