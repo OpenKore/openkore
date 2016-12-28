@@ -331,8 +331,10 @@ sub iterate {
 		# Run a command.
 		} elsif ( $step =~ /^a=(.*)/i ) {
 			my $command = $1;
-			$ai_v{'npc_talk'}{'time'} = time + $timeResponse - 4;
-			$self->{time} = time + $timeResponse - 4;
+			my $timeout = $timeResponse - 4;
+			$timeout = 0 if $timeout < 0;
+			$ai_v{'npc_talk'}{'time'} = time + $timeout;
+			$self->{time} = time + $timeout;
 			Commands::run($command);
 			shift @{$self->{steps}};
 			return;
