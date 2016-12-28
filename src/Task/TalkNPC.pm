@@ -29,6 +29,7 @@ use Network;
 use Misc;
 use Plugins;
 use Translation qw(T TF);
+use Task::WaitForAnyHook;
 
 # Error codes:
 use enum qw(
@@ -40,6 +41,7 @@ use enum qw(
 	STEPS_AFTER_AFTER_NPC_CLOSE
 	STEPS_AFTER_BUY_OR_SELL
 	WRONG_SYNTAX_IN_STEPS
+	UNKNOWN_ERROR
 );
 
 # Mutexes used by this task.
@@ -81,7 +83,7 @@ use enum qw(
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_, mutexes => MUTEXES);
+	my $self = $class->SUPER::new(@_, mutexes => MUTEXES, autofail => 0);
 
 	$self->{type} = $args{type};
 	$self->{map} = $args{map};
@@ -94,7 +96,6 @@ sub new {
 	$self->{steps} = [];
 	$self->{trying_to_cancel} = 0;
 	$self->{sent_talk_response_cancel} = 0;
-	$self->{wait_for_answer} = 0;
 	$self->{error_code} = undef;
 	$self->{error_message} = undef;
 	
@@ -143,7 +144,6 @@ sub handle_npc_talk {
 	}
 	$self->{time} = time;
 	$self->{sent_talk_response_cancel} = 0;
-	$self->{wait_for_answer} = 0;
 }
 
 sub DESTROY {
@@ -275,15 +275,7 @@ sub iterate {
 			$self->cancelTalk;
 			return;
 		}
-		
-		#We must always wait for the last sent step to be answered, if it hasn't then cancel this task.
-		if ($self->{wait_for_answer}) {
-			$self->{error_code} = NPC_TIMEOUT_AFTER_ASWER;
-			$self->{error_message} = "We have waited for too long after we sent a response to the npc.";
-			$self->cancelTalk;
-			return;
-		}
-		
+
 		#This is to make non-autotalkcont sequences compatible with autotalkcont ones
 		if ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont}) {
 			if ( $self->noMoreSteps || $self->{steps}[0] !~ /^c/i ) {
@@ -516,10 +508,18 @@ sub iterate {
 				"should be used (".$step."), but it doesn't exist."));
 			return;
 		}
-		
-		$self->{wait_for_answer} = 1;
+
 		shift @{$self->{steps}};
-	
+
+		$self->setSubtask(Task::WaitForAnyHook->new(timeout => $timeResponse, hooks => [qw(
+			packet/npc_talk_close
+			packet/npc_talk_continue
+			packet/npc_talk_number
+			packet/npc_talk_responses
+			packet/npc_store_begin
+			packet/npc_talk_text
+		)]));
+
 	# After a 'npc_talk_done' hook we must always send a 'npc_talk_cancel' after a timeout
 	# I noticed that the RO client doesn't send a 'talk cancel' packet
 	# when it receives a 'npc_talk_closed' packet from the server'.
@@ -735,9 +735,24 @@ sub validateStep {
 sub subtaskDone {
 	my ($self, $task) = @_;
 
-	if (!$task->getError()) {
-		$ai_v{'npc_talk'}{'time'} = time;
-		$self->{time} = time;
+	$ai_v{'npc_talk'}{'time'} = time;
+	$self->{time} = time;
+
+	my $error = $task->getError;
+	if ($error) {
+		if ($task->isa('Task::WaitForAnyHook')) {
+			$self->{error_code} = NPC_TIMEOUT_AFTER_ASWER;
+			$self->{error_message} = T("The NPC did not respond in time.");
+			debug "$self->{target} did not respond in time.\n", 'ai_npcTalk';
+			if (%talk) {
+				$self->{trying_to_cancel} = 1;
+			} else {
+				# NPC did not respond at all from the beginning
+				$self->setError($self->{error_code}, $self->{error_message});
+			}
+		} else {
+			$self->setError(UNKNOWN_ERROR, $error->{message});
+		}
 	}
 }
 
