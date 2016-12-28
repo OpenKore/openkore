@@ -144,7 +144,7 @@ sub handle_npc_talk {
 
 sub DESTROY {
 	my ($self) = @_;
-	debug "Destroying talknpc object\n", "ai_npcTalk";
+	debug "$self->{target}: Task::TalkNPC::DESTROY was called\n", "ai_npcTalk";
 	Plugins::delHooks($_) for @{$self->{hookHandles}};
 	$self->SUPER::DESTROY;
 }
@@ -166,7 +166,12 @@ sub find_and_set_target {
 	};
 
 	if ($target && $target->{statuses}->{EFFECTSTATE_BURROW}) {
-		$self->setError(NPC_NOT_FOUND, T("NPC is hidden."));
+		# FIXME: what if NPC initiated the talk by itself?
+		# we should only prevent initiating talks with hidden NPCs
+
+		# TODO: way to override this, globally and in arguments for task
+
+		$self->setError(NPC_NOT_FOUND, T("Talk with a hidden NPC prevented."));
 		$target = undef;
 	}
 	
@@ -193,7 +198,7 @@ sub iterate {
 	
 	if ($self->{stage} == NOT_STARTED) {
 		if ((!%talk || $ai_v{'npc_talk'}{'talk'} eq 'close') && $self->{type} eq 'autotalk') {
-			debug "Conversation ended before openkore could even start TalkNPC task.\n", "ai_npcTalk";
+			debug "Talking was initiated by the other side and finished instantly\n", "ai_npcTalk";
 			$self->conversation_end;
 			return;
 		}
@@ -243,7 +248,7 @@ sub iterate {
 		if ($self->{sent_talk_response_cancel}) {
 			undef %talk;
 			if (defined $self->{error_code}) {
-				warning "Task::TalkNPC successfully ended the npc conversation with sequence problems, the error message will be repeated now.\n";
+				debug "Done talking with $self->{target}, but with conversation sequence errors\n", 'ai_npcTalk';
 				$self->setError($self->{error_code}, $self->{error_message});
 			} else {
 				$self->conversation_end;
@@ -271,7 +276,7 @@ sub iterate {
 			if ( $self->noMoreSteps || $self->{steps}[0] !~ /^c/i ) {
 				unshift(@{$self->{steps}}, 'c');
 			}
-			debug "Auto-continuing NPC Talk - next detected \n", 'ai_npcTalk';
+			debug "$self->{target}: Auto-continuing talking\n", 'ai_npcTalk';
 			
 		#This is done to restart the conversation (check if this is necessary)
 		} elsif ($ai_v{'npc_talk'}{'talk'} eq 'close' && $self->{steps}[0] =~ /x/i) {
@@ -311,11 +316,13 @@ sub iterate {
 		
 		# Initiate NPC conversation.
 		if ( $step =~ /^x/i ) {
+			debug "$self->{target}: Initiating the talk\n", 'ai_npcTalk';
 			$self->{target}->sendTalk;
 			
 		# Wait x seconds.
 		} elsif ($step =~ /^w(\d+)/i) {
 			my $time = $1;
+			debug "$self->{target}: Waiting for $time seconds...\n", 'ai_npcTalk';
 			$ai_v{'npc_talk'}{'time'} = time + $time;
 			$self->{time} = time + $time;
 			
@@ -361,6 +368,7 @@ sub iterate {
 					
 					#Normal number response is valid
 					if ($choice < $#{$talk{responses}}) {
+						debug "$self->{target}: Sending talk response #$choice\n", 'ai_npcTalk';
 						$messageSender->sendTalkResponse($talk{ID}, $choice + 1);
 					
 					#Normal number response is a fake "Cancel Chat" response.
@@ -379,40 +387,45 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("This npc requires a response to be selected, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(T("NPC requires a response to be selected, but the given instructions don't match that."));
 				return;
 			}
 		
 		# Click Next.
 		} elsif ($current_talk_step eq 'next') {
 			if ($step =~ /^c/i) {
+				debug "$self->{target}: Sending talk continue (next)\n", 'ai_npcTalk';
 				$messageSender->sendTalkContinue($talk{ID});
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("This npc requires the next button to be pressed now, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(T("NPC requires the next button to be pressed now, but the given instructions don't match that."));
 				return;
 			}
 			
 		# Send NPC talk number.
 		} elsif ($current_talk_step eq 'number') {
 			if ( $step =~ /^d(\d+)/i ) {
-				$messageSender->sendTalkNumber($talk{ID}, $1);
+				my $number = $1;
+				debug "$self->{target}: Sending the number: $number\n", 'ai_npcTalk';
+				$messageSender->sendTalkNumber($talk{ID}, $number);
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("This npc requires a number to be sent now, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(T("NPC requires a number to be sent now, but the given instructions don't match that."));
 				return;
 			}
 			
 		# Send NPC talk text.
 		} elsif ($current_talk_step eq 'text') {
 			if ( $step =~ /^t=(.*)/i ) {
-				$messageSender->sendTalkText($talk{ID}, $1);
+				my $text = $1;
+				debug "$self->{target}: Sending the text: $text\n", 'ai_npcTalk';
+				$messageSender->sendTalkText($talk{ID}, $text);
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("This npc requires a text to be sent now, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(T("NPC requires a text to be sent now, but the given instructions don't match that."));
 				return;
 			}
 		
@@ -472,7 +485,7 @@ sub iterate {
 				
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("This npc requires the buy or cancel button to be pressed, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(T("NPC requires the buy or cancel button to be pressed, but the given instructions don't match that."));
 				return;
 			}
 		
@@ -504,6 +517,7 @@ sub iterate {
 		}
 		$self->{time} = time;
 		$self->{stage} = AFTER_NPC_CANCEL;
+		debug "$self->{target}: Sending talk cancel after NPC has done talking\n", 'ai_npcTalk';
 		$messageSender->sendTalkCancel($self->{ID});
 	
 	# After a 'npc_talk_cancel' and a timeout we decide what to do next
@@ -523,7 +537,9 @@ sub iterate {
 			
 			# No more steps but we still have a defined %talk
 			} else {
-				debug "After we finished talking with the last npc another one started talking to us faster than we could predict.\n", "ai_npcTalk";
+				debug "Done talking with $self->{target}, but another NPC initiated a talk instantly\n", 'ai_npcTalk';
+				# TODO: maybe better create a new task
+				debug "Continuing the talk within the same task\n", 'ai_npcTalk';
 				my $target = $self->find_and_set_target;
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
@@ -535,17 +551,21 @@ sub iterate {
 			if (!%talk) {
 				# Usual 'x' step
 				if ($self->{steps}[0] =~ /x/i) {
+					debug "$self->{target}: Reinitiating the talk\n", 'ai_npcTalk';
 					$self->{stage} = TALKING_TO_NPC;
 					$self->{time} = time;
 				
 				# Too many steps
 				} else {
+					# TODO: maybe just warn about remaining steps and do not set error flag?
 					$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended.\n");
 				}
 			
 			# We still have steps but we also still have a defined %talk
 			} else {
-				debug "After we finished talking with hte last npc another one started talking to us faster than we could predict.\n", "ai_npcTalk";
+				debug "Done talking with $self->{target}, but another NPC initiated a talk instantly\n", 'ai_npcTalk';
+				# TODO: maybe better create a new task and pass remaining steps to it
+				debug "Continuing the talk within the same task and remaining conversation steps\n", 'ai_npcTalk';
 				my $target = $self->find_and_set_target;
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
@@ -651,7 +671,7 @@ sub cancelTalk {
 # Returns the actor object if it's currently on screen and has a name, undef otherwise.
 #
 # Note: we require that the NPC's name is known, because otherwise talking
-# may fail.
+# may fail (TODO: what's the case exactly?).
 sub findTarget {
 	my ($self, $actorList) = @_;
 	if ($self->{nameID}) {
