@@ -1318,6 +1318,37 @@ sub minimap_indicator {
 	}
 }
 
+# 0x01B3
+sub parse_npc_image {
+	my ($self, $args) = @_;
+
+	$args->{npc_image} = bytesToString($args->{npc_image});
+}
+
+sub reconstruct_npc_image {
+	my ($self, $args) = @_;
+
+	$args->{npc_image} = stringToBytes($args->{npc_image});
+}
+
+sub npc_image {
+	my ($self, $args) = @_;
+
+	if ($args->{type} == 2) {
+		message TF("NPC image: %s\n", $args->{npc_image}), 'npc';
+	} elsif ($args->{type} == 255) {
+		debug "Hide NPC image: $args->{npc_image}\n", "parseMsg";
+	} else {
+		message TF("NPC image: %s (unknown type %s)\n", $args->{npc_image}, $args->{type}), 'npc';
+	}
+
+	unless ($args->{type} == 255) {
+		$talk{image} = $args->{npc_image};
+	} else {
+		delete $talk{image};
+	}
+}
+
 sub local_broadcast {
 	my ($self, $args) = @_;
 	my $message = bytesToString($args->{message});

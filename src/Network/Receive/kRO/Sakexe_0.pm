@@ -1903,18 +1903,6 @@ sub mvp_you {
 	chatLog("k", $msg);
 }
 
-sub npc_image {
-	my ($self, $args) = @_;
-	my ($imageName) = bytesToString($args->{npc_image});
-	if ($args->{type} == 2) {
-		debug "Show NPC image: $imageName\n", "parseMsg";
-	} elsif ($args->{type} == 255) {
-		debug "Hide NPC image: $imageName\n", "parseMsg";
-	} else {
-		debug "NPC image: $imageName ($args->{type})\n", "parseMsg";
-	}
-}
-
 sub npc_sell_list {
 	my ($self, $args) = @_;
 	#sell list, similar to buy list
