@@ -648,7 +648,7 @@ sub initMapChangeVars {
 	undef %incomingParty;
 
 	# FIXME: TalkNPC really should listen to map change by itself
-	AI::clear("NPC") if %talk;
+	AI::clear("NPC") if (AI::is("NPC") && defined $char->args->{ID});
 	undef %talk;
 
 	$ai_v{temp} = {};
