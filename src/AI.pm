@@ -623,14 +623,15 @@ sub cartAdd {
 }
 
 ##
-# ai_talkNPC(x, y, sequence)
+# ai_talkNPC(x, y, sequence, map)
 # x, y: the position of the NPC to talk to.
 # sequence: A string containing the NPC talk sequences.
+# map: the map where NPC resides.
 #
 # Talks to an NPC.
 sub ai_talkNPC {
 	require Task::TalkNPC;
-	AI::queue("NPC", new Task::TalkNPC(type => 'talknpc', x => $_[0], y => $_[1], sequence => $_[2]));
+	AI::queue("NPC", new Task::TalkNPC(type => 'talknpc', map => $_[3], x => $_[0], y => $_[1], sequence => $_[2]));
 }
 
 sub attack { $char->attack(@_) }

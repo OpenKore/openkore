@@ -35,6 +35,8 @@ use I18N;
 use Utils::Benchmark;
 use Utils::HttpReader;
 
+# FIXME: modules with dependency problems
+use Task::MapRoute; # circular dependency with Task::TalkNPC
 
 #######################################
 # PROGRAM INITIALIZATION
@@ -644,10 +646,11 @@ sub initMapChangeVars {
 	undef %items;
 	undef %spells;
 	undef %incomingParty;
-	
+
+	# FIXME: TalkNPC really should listen to map change by itself
+	AI::clear("NPC") if %talk;
 	undef %talk;
-	AI::clear("NPC");
-	
+
 	$ai_v{temp} = {};
 	undef @venderItemList;
 	undef $venderID;

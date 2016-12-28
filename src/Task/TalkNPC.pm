@@ -18,9 +18,9 @@ use Time::HiRes qw(time);
 use Scalar::Util;
 use utf8;
 
+use base qw(Task::WithSubtask);
+
 use Modules 'register';
-use Task;
-use base qw(Task);
 use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config @storeList $net %talk);
 use Log qw(message debug error warning);
 use Utils;
@@ -59,8 +59,10 @@ use enum qw(
 # Create a new Task::TalkNPC object. The following options are allowed:
 # `l
 # - All options allowed in Task->new(), except 'mutexes'.
+# - <tt>map</tt> (optional): The map where the NPC to talk to resides.
 # - <tt>x</tt> (required): The X-coordinate of the NPC to talk to.
 # - <tt>y</tt> (required): The Y-coordinate of the NPC to talk to.
+# - <tt>distance</tt> (optional): The required distance to the NPC to talk.
 # - <tt>nameID</tt> (required): The nameID of the NPC to talk to (you may use this instead of x and y).
 # - <tt>sequence</tt> (required): A string which describes how to talk to the NPC.
 # `l`
@@ -82,8 +84,10 @@ sub new {
 	my $self = $class->SUPER::new(@_, mutexes => MUTEXES);
 
 	$self->{type} = $args{type};
+	$self->{map} = $args{map};
 	$self->{x} = $args{x};
 	$self->{y} = $args{y};
+	$self->{distance} = $args{distance} || 5;
 	$self->{nameID} = $args{nameID};
 	$self->{sequence} = $args{sequence};
 	$self->{sequence} =~ s/^ +| +$//g;
@@ -192,7 +196,7 @@ sub find_and_set_target {
 # Overrided method.
 sub iterate {
 	my ($self) = @_;
-	$self->SUPER::iterate(); # Do not forget to call this!
+	return unless $self->SUPER::iterate;
 	return unless ($net->getState() == Network::IN_GAME);
 	my $timeResponse = ($config{npcTimeResponse} >= 5) ? $config{npcTimeResponse}:5;
 	
@@ -218,18 +222,27 @@ sub iterate {
 
 		} else {
 			my $target = $self->find_and_set_target;
-			
-			unless (exists $talk{nameID}) {
-				$self->addSteps('x');
-				undef $ai_v{'npc_talk'}{'time'};
-				undef $ai_v{'npc_talk'}{'talk'};
-			}
-			
-			return unless $self->addSteps($self->{sequence});
 
 			if ($target || %talk) {
+				unless (exists $talk{nameID}) {
+					$self->addSteps('x');
+					undef $ai_v{'npc_talk'}{'time'};
+					undef $ai_v{'npc_talk'}{'talk'};
+				}
+
+				return unless $self->addSteps($self->{sequence});
+
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
+			} else {
+				debug "No NPC in sight, routing to the specified NPC location\n", 'ai_npcTalk';
+				$self->setSubtask(($self->{map} ? 'Task::MapRoute' : 'Task::Route')->new(
+					actor => $char,
+					map => $self->{map},
+					x => $self->{x},
+					y => $self->{y},
+					distFromGoal => $self->{distance},
+				));
 			}
 		}
 
@@ -717,6 +730,15 @@ sub validateStep {
 	return 1 if ($step =~ /^(?:c|w\d+|t=.+|d\d+|a=.+|r(?:\d+|=.+|~\/.*?\/i?)|x|s|b|e|b\d+,\d+)$/);
 	$self->setError(WRONG_SYNTAX_IN_STEPS, TF("Invalid NPC conversation code: %s.", $step));
 	return 0;
+}
+
+sub subtaskDone {
+	my ($self, $task) = @_;
+
+	if (!$task->getError()) {
+		$ai_v{'npc_talk'}{'time'} = time;
+		$self->{time} = time;
+	}
 }
 
 1;
