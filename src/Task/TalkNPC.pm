@@ -325,6 +325,8 @@ sub iterate {
 			debug "$self->{target}: Waiting for $time seconds...\n", 'ai_npcTalk';
 			$ai_v{'npc_talk'}{'time'} = time + $time;
 			$self->{time} = time + $time;
+			shift @{$self->{steps}};
+			return;
 			
 		# Run a command.
 		} elsif ( $step =~ /^a=(.*)/i ) {
@@ -332,6 +334,8 @@ sub iterate {
 			$ai_v{'npc_talk'}{'time'} = time + $timeResponse - 4;
 			$self->{time} = time + $timeResponse - 4;
 			Commands::run($command);
+			shift @{$self->{steps}};
+			return;
 		
 		# Select an answer
 		} elsif ($current_talk_step eq 'select') {
