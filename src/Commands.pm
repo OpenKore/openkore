@@ -5016,15 +5016,19 @@ sub cmdTalk {
 sub cmdTalkNPC {
 	my (undef, $args) = @_;
 
-	my ($x, $y, $sequence) = $args =~ /^(\d+) (\d+) (.+)$/;
-	unless (defined $x) {
+	my ($map, $x, $y, $sequence) = $args =~ /^(?:(\S+) )?(\d+) (\d+) (.+)$/;
+	unless (defined $y) {
 		error T("Syntax Error in function 'talknpc' (Talk to an NPC)\n" .
 			"Usage: talknpc <x> <y> <sequence>\n");
 		return;
 	}
 
-	message TF("Talking to NPC at (%d, %d) using sequence: %s\n", $x, $y, $sequence);
-	main::ai_talkNPC($x, $y, $sequence);
+	unless ($map) {
+		message TF("Talking to NPC at (%d, %d) using sequence: %s\n", $x, $y, $sequence);
+	} else {
+		message TF("Talking to NPC at %s (%d, %d) using sequence: %s\n", $map, $x, $y, $sequence);
+	}
+	main::ai_talkNPC($x, $y, $sequence, $map);
 }
 
 sub cmdTank {
