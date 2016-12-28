@@ -4878,22 +4878,8 @@ sub cmdTalk {
 		return;
 	}
 	my (undef, $args) = @_;
-	if ($args =~ /^\d+$/) {
-		if (AI::is("NPC")) {
-			error "Error in function 'talk' (Talk to NPC)\n" .
-				"You are already talking with an npc\n";
-		} else {
-			my $npc = $npcsList->get($args);
-			if ($npc) {
-				AI::clear("route");
-				AI::queue("NPC", new Task::TalkNPC(type => 'talk', nameID => $npc->{nameID}));
-			} else {
-				error "Error in function 'talk' (Talk to NPC)\n" .
-					"Given npc not found\n";
-			}
-		}
-		
-	} elsif ($args =~ /^resp$/) {
+	
+	if ($args =~ /^resp$/) {
 		if (!$talk{'responses'}) {
 			error T("Error in function 'talk resp' (Respond to NPC)\n" .
 				"No NPC response list available.\n");
@@ -4911,92 +4897,118 @@ sub cmdTalk {
 			message $msg, "list";
 			return;
 		}
+	}
+	
+	my @steps = split(/\s*,\s*/, $args);
+	my $steps_string = "";
+	my $nameID;
+	foreach my $index (0..$#steps) {
+		my $step = $steps[$index];
+		my $type;
+		my $arg;
+		if ($step =~ /^(cont|text|num|resp|\d+)\s+(\S.*)$/) {
+			$type = $1;
+			$arg = $2;
+		} else {
+			$type = $step;
+		}
 		
-	} else {
-		if (!AI::is("NPC")) {
+		my $current_step;
+		
+		if ($type =~ /^\d+$/) {
+			if (AI::is("NPC")) {
+				error "Error in function 'talk' (Talk to NPC)\n" .
+					"You are already talking with an npc\n";
+				return;
+			
+			} elsif ($index != 0) {
+				error "Error in function 'talk' (Talk to NPC)\n" .
+					"You cannot start a conversation during one\n";
+				return;
+			
+			} else {
+				my $npc = $npcsList->get($args);
+				if ($npc) {
+					$nameID = $npc->{nameID};
+				} else {
+					error "Error in function 'talk' (Talk to NPC)\n" .
+						"Given npc not found\n";
+					return;
+				}
+			}
+		
+		} elsif (!AI::is("NPC") && !defined $nameID) {
 			error "Error in function 'talk' (Talk to NPC)\n" .
 				"You are not talkning to an npc\n";
 			return;
-		}
-		my $task = $char->args;
-		my @steps = split(/\s*,\s*/, $args);
-		my $steps_string = "";
-		foreach my $index (0..$#steps) {
-			my $step = $steps[$index];
-			my $type;
-			my $arg;
-			if ($step =~ /^(cont|text|num|resp)\s+(\S.*)$/) {
-				$type = $1;
-				$arg = $2;
+		
+		} elsif ($type eq "resp") {
+			if ($arg =~ /^(\/(.*?)\/(\w?))$/) {
+				$current_step = 'r~'.$1;
+				
+			} elsif ($arg =~ /^\d+$/) {
+				$current_step = 'r'.$arg;
+			
+			} elsif (!$arg) {
+				error T("Error in function 'talk resp' (Respond to NPC)\n" .
+					"You must specify a response.\n");
+				return;
+			
 			} else {
-				$type = $step;
-			}
-			
-			my $current_step;
-			
-			if ($type eq "resp") {
-				if ($arg =~ /^(\/(.*?)\/(\w?))$/) {
-					$current_step = 'r~'.$1;
-					
-				} elsif ($arg =~ /^\d+$/) {
-					$current_step = 'r'.$arg;
-				
-				} elsif (!$arg) {
-					error T("Error in function 'talk resp' (Respond to NPC)\n" .
-						"You must specify a response.\n");
-					return;
-				
-				} else {
-					error T("Error in function 'talk resp' (Respond to NPC)\n" .
-						"Wrong talk resp sintax.\n");
-					return;
-				}
-				
-			} elsif ($type eq "num") {
-				if ($arg eq "") {
-					error T("Error in function 'talk num' (Respond to NPC)\n" .
-						"You must specify a number.\n");
-					return;
-					
-				} elsif ($arg !~ /^-?\d+$/) {
-					error TF("Error in function 'talk num' (Respond to NPC)\n" .
-						"%s is not a valid number.\n", $arg);
-					return;
-					
-				} elsif ($arg =~ /^-?\d+$/) {
-					$current_step = 'd'.$arg;
-				}
-
-			} elsif ($type eq "text") {
-				if ($args eq "") {
-					error T("Error in function 'talk text' (Respond to NPC)\n" .
-						"You must specify a string.\n");
-					return;
-					
-				} else {
-					$current_step = 't='.$arg;
-				}
-
-			} elsif ($type eq "cont") {
-				$current_step = 'c';
-
-			}
-			
-			if (defined $current_step) {
-				$steps_string .= $current_step;
-				
-			} else {
-				error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
-					"Usage: talk <NPC # | cont | resp | num | text > [<response #>|<number #>]\n");
+				error T("Error in function 'talk resp' (Respond to NPC)\n" .
+					"Wrong talk resp sintax.\n");
 				return;
 			}
 			
-			last if ($index == $#steps);
-			
-		} continue {
-			$steps_string .= " ";
+		} elsif ($type eq "num") {
+			if ($arg eq "") {
+				error T("Error in function 'talk num' (Respond to NPC)\n" .
+					"You must specify a number.\n");
+				return;
+				
+			} elsif ($arg !~ /^-?\d+$/) {
+				error TF("Error in function 'talk num' (Respond to NPC)\n" .
+					"%s is not a valid number.\n", $arg);
+				return;
+				
+			} elsif ($arg =~ /^-?\d+$/) {
+				$current_step = 'd'.$arg;
+			}
+
+		} elsif ($type eq "text") {
+			if ($args eq "") {
+				error T("Error in function 'talk text' (Respond to NPC)\n" .
+					"You must specify a string.\n");
+				return;
+				
+			} else {
+				$current_step = 't='.$arg;
+			}
+
+		} elsif ($type eq "cont") {
+			$current_step = 'c';
+
 		}
-		return unless ($steps_string);
+			
+		if (defined $current_step) {
+			$steps_string .= $current_step;
+			
+		} elsif (!(defined $nameID && $index == 0)) {
+			error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
+				"Usage: talk <NPC # | cont | resp | num | text > [<response #>|<number #>]\n");
+			return;
+		}
+			
+		last if ($index == $#steps);
+			
+	} continue {
+		$steps_string .= " " unless (defined $nameID && $index == 0);
+	}
+	if (defined $nameID) {
+		AI::clear("route");
+		AI::queue("NPC", new Task::TalkNPC(type => 'talk', nameID => $nameID, sequence => $steps_string));
+	} else {
+		my $task = $char->args;
 		$task->addSteps($steps_string);
 	}
 }

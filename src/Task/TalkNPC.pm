@@ -376,7 +376,7 @@ sub iterate {
 						$messageSender->sendTalkResponse($talk{ID}, $choice + 1);
 					
 					#Normal number response is a fake "Cancel Chat" response.
-					} elsif ($choice) {
+					} elsif ($choice == $#{$talk{responses}}) {
 						$self->{trying_to_cancel} = 1;
 						$self->cancelTalk;
 					
