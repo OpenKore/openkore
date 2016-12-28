@@ -361,9 +361,10 @@ sub iterate {
 					
 					# No match was found
 					} else {
-						$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, TF("According to the given NPC instructions, a menu " .
+						$self->manage_wrong_sequence(TF("According to the given NPC instructions, a menu " .
 							"item matching '%s' must now be selected, but no " .
 							"such menu item exists.", $pattern));
+						return;
 					}
 					
 				#Normal number response
@@ -380,15 +381,17 @@ sub iterate {
 					
 					#Normal number response is not valid
 					} else {
-						$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, TF("According to the given NPC instructions, menu item %d must " .
+						$self->manage_wrong_sequence(TF("According to the given NPC instructions, menu item %d must " .
 							"now be selected, but there are only %d menu items.",
 							$choice, @{$talk{responses}} - 1));
+						return;
 					}
 				}
 			
 			# Wrong sequence
 			} else {
-				$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("This npc requires a response to be selected, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(T("This npc requires a response to be selected, but the given instructions don't match that."));
+				return;
 			}
 		
 		# Click Next.
@@ -398,7 +401,8 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("This npc requires the next button to be pressed now, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(T("This npc requires the next button to be pressed now, but the given instructions don't match that."));
+				return;
 			}
 			
 		# Send NPC talk number.
@@ -408,7 +412,8 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("This npc requires a number to be sent now, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(T("This npc requires a number to be sent now, but the given instructions don't match that."));
+				return;
 			}
 			
 		# Send NPC talk text.
@@ -418,7 +423,8 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("This npc requires a text to be sent now, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(T("This npc requires a text to be sent now, but the given instructions don't match that."));
+				return;
 			}
 		
 		# Get the sell or buy list in a shop.
@@ -439,7 +445,8 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("This npc requires the sell, buy or cancel button to be pressed, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(T("This npc requires the sell, buy or cancel button to be pressed, but the given instructions don't match that."));
+				return;
 			}
 		
 		} elsif ( $current_talk_step eq 'store' ) {
@@ -476,15 +483,17 @@ sub iterate {
 				
 			# Wrong sequence
 			} else {
-				$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("This npc requires the buy or cancel button to be pressed, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(T("This npc requires the buy or cancel button to be pressed, but the given instructions don't match that."));
+				return;
 			}
 		
 		} elsif ( $current_talk_step eq 'sell' ) {
 			$self->conversation_end;
 
 		} else {
-			$self->set_error_and_try_to_cancel(WRONG_NPC_INSTRUCTIONS, T("According to the given NPC instructions, a npc conversation code " .
+			$self->manage_wrong_sequence(T("According to the given NPC instructions, a npc conversation code " .
 				"should be used (".$step."), but it doesn't exist."));
+			return;
 		}
 		
 		$self->{wait_for_answer} = 1;
@@ -556,14 +565,37 @@ sub iterate {
 	}
 }
 
-sub set_error_and_try_to_cancel {
-	my ( $self, $error_code, $error_message ) = @_;
-	$self->{error_code} = $error_code;
+sub manage_wrong_sequence {
+	my ( $self, $error_message ) = @_;
+	
+	$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
 	$self->{error_message} = $error_message;
-	error $self->{error_message}."\n".
-		"Now openkore will try to auto-end this npc conversation.\n";
-	$self->{trying_to_cancel} = 1;
-	$self->cancelTalk;
+	error $self->{error_message}."\n";
+	
+	my $method = (defined $config{'npcWrongStepsMethod'} ? $config{'npcWrongStepsMethod'} : 0);
+	warning "Using method '".$method."' defined on config key 'npcWrongStepsMethod' to deal with the error.\n";
+	
+	# Will clean all remaining steps and wait for command
+	if ($method == 0) {
+		warning "Cleaning all remaining conversation steps, please input more steps using commands.\n";
+		$self->{steps} = [];
+	
+	# Will move to the next step
+	} elsif ($method == 1) {
+		warning "Cleaning the current wrong step and moving to the next in queue.\n";
+		shift @{$self->{steps}};
+	
+	# Will try to end the conversation using a custom logic
+	} elsif ($method == 2) {
+		warning "Now openkore will try to auto-end this npc conversation.\n";
+		$self->{trying_to_cancel} = 1;
+		$self->cancelTalk;
+	
+	# Will relog to get out of the npc conversation
+	} elsif ($method == 3) {
+		warning "Now openkore will relog to try to end this conversation.\n";
+		relog();
+	}
 }
 
 sub conversation_end {
@@ -590,7 +622,7 @@ my $default_number = 1234;
 sub cancelTalk {
 	my ($self) = @_;
 	
-	if ($self->{error_message}) {
+	if (defined $self->{error_message}) {
 		debug "Trying to auto close the conversation due to error.\n", 'ai_npcTalk';
 	}
 	
