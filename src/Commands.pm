@@ -4892,7 +4892,32 @@ sub cmdTalk {
 					"Given npc not found\n";
 			}
 		}
+		
+	} elsif ($args =~ /^resp$/) {
+		if (!$talk{'responses'}) {
+			error T("Error in function 'talk resp' (Respond to NPC)\n" .
+				"No NPC response list available.\n");
+			return;
+					
+		} else {
+			my $msg = center(T(" Responses (").getNPCName($talk{ID}).") ", 40, '-') ."\n" .
+				TF("#  Response\n");
+			for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
+				$msg .= swrite(
+				"@< @*",
+				[$i, $talk{responses}[$i]]);
+			}
+			$msg .= ('-'x40) . "\n";
+			message $msg, "list";
+			return;
+		}
+		
 	} else {
+		if (!AI::is("NPC")) {
+			error "Error in function 'talk' (Talk to NPC)\n" .
+				"You are not talkning to an npc\n";
+			return;
+		}
 		my $task = $char->args;
 		my @steps = split(/\s*,\s*/, $args);
 		my $steps_string = "";
@@ -4910,33 +4935,21 @@ sub cmdTalk {
 			my $current_step;
 			
 			if ($type eq "resp") {
-				if (!$talk{'responses'}) {
-					error T("Error in function 'talk resp' (Respond to NPC)\n" .
-						"No NPC response list available.\n");
-					return;
-					
-				} elsif ($arg eq "") {
-					my $msg = center(T(" Responses (").getNPCName($talk{ID}).") ", 40, '-') ."\n" .
-						TF("#  Response\n");
-					for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
-						$msg .= swrite(
-						"@< @*",
-						[$i, $talk{responses}[$i]]);
-					}
-					$msg .= ('-'x40) . "\n";
-					message $msg, "list";
-					return;
-					
-				} elsif ($arg =~ /^(\/(.*?)\/(\w?))$/) {
+				if ($arg =~ /^(\/(.*?)\/(\w?))$/) {
 					$current_step = 'r~'.$1;
 					
-				} elsif ($arg ne "" && $talk{'responses'}[$arg] eq "") {
-					error TF("Error in function 'talk resp' (Respond to NPC)\n" .
-					"Response %s does not exist.\n", $arg);
-					return;
-					
-				} elsif ($arg ne "") {
+				} elsif ($arg =~ /^\d+$/) {
 					$current_step = 'r'.$arg;
+				
+				} elsif (!$arg) {
+					error T("Error in function 'talk resp' (Respond to NPC)\n" .
+						"You must specify a response.\n");
+					return;
+				
+				} else {
+					error T("Error in function 'talk resp' (Respond to NPC)\n" .
+						"Wrong talk resp sintax.\n");
+					return;
 				}
 				
 			} elsif ($type eq "num") {
