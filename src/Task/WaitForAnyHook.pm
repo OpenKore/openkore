@@ -17,17 +17,10 @@ use strict;
 use Time::HiRes qw(time);
 use Scalar::Util;
 
-use base qw(Task);
+use base qw(Task::WaitFor);
 
 use Modules 'register';
 use Plugins;
-use Utils qw(timeOut);
-use Translation qw(T);
-
-# Error codes:
-use enum qw(
-	TOO_MUCH_TIME
-);
 
 ### CATEGORY: Constructor
 
@@ -43,57 +36,57 @@ use enum qw(
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(
+		@_,
+		function => sub { $_[0]->{hookCalled} },
+	);
 
-	$self->{timeout} = {time => time, timeout => $args{timeout}};
+	$self->{hookNames} = $args{hooks};
 
-	my @holder = ($self);
-	Scalar::Util::weaken($holder[0]);
-
-	for my $hook (@{$args{hooks}}) {
-		$self->{hooks}{$hook} = Plugins::addHook($hook, \&onHookCall, \@holder);
-	}
-
-	$self
+	return $self;
 }
 
 sub DESTROY {
 	my ($self) = @_;
 	$self->SUPER::DESTROY;
-	Plugins::delHook($_) for values %{$self->{hooks}};
+	$self->delHooks;
 }
 
-sub interrupt {
+sub delHooks {
 	my ($self) = @_;
-	$self->SUPER::interrupt;
-	$self->{interruptionTime} = time;
+
+	for my $hook (keys %{$self->{hookHandles}}) {
+		Plugins::delHook($self->{hookHandles}{$hook});
+		delete $self->{hookHandles}{$hook};
+	}
 }
 
-sub resume {
+sub activate {
 	my ($self) = @_;
-	$self->SUPER::resume;
-	$self->{timeout}{time} += time - $self->{interruptionTime};
+	$self->SUPER::activate;
+
+	my @holder = ($self);
+	Scalar::Util::weaken($holder[0]);
+	for my $hook (@{$self->{hookNames}}) {
+		$self->{hookHandles}{$hook} = Plugins::addHook($hook, \&onHookCall, \@holder);
+	}
 }
 
 sub iterate {
 	my ($self) = @_;
 	$self->SUPER::iterate;
 
-	if ($self->{done}) {
-		$self->setDone;
-		return;
-	}
-
-	if (timeOut($self->{timeout})) {
-		$self->setError(TOO_MUCH_TIME, "No hook has called in time.")
+	if ($self->getStatus == Task::DONE) {
+		$self->delHooks;
 	}
 }
 
 sub onHookCall {
-	my ($hook_name, $args, $holder) = @_;
+	my (undef, undef, $holder) = @_;
 	my $self = $holder->[0];
 
-	$self->{done} = 1;
+	$self->{hookCalled} = 1;
+	$self->delHooks;
 }
 
 1;

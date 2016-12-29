@@ -23,12 +23,15 @@ resnametable.txt
 RijndaelTest.pm
 server.pl
 SetTest.pm
+ShopTest.pm
 SKILL_id_handle.txt
 skillnametable.txt
 skillssp.txt
 SkillTest.pm
 TaskChainedTest.pm
 TaskManagerTest.pm
+TaskWaitForTest.pm
+TaskWaitForAnyHookTest.pm
 TaskWithSubtaskTest.pm
 unittests.pl
 WhirlpoolTest.pm
