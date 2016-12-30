@@ -21,7 +21,7 @@ use utf8;
 use base qw(Task::WithSubtask);
 
 use Modules 'register';
-use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config @storeList $net %talk);
+use Globals qw($char %timeout $npcsList $monstersList $portalsList %ai_v $messageSender %config @storeList $net %talk);
 use Log qw(message debug error warning);
 use Utils;
 use Commands;
@@ -41,6 +41,7 @@ use enum qw(
 	STEPS_AFTER_AFTER_NPC_CLOSE
 	STEPS_AFTER_BUY_OR_SELL
 	WRONG_SYNTAX_IN_STEPS
+	NO_TALK_AFTER_APPROACH
 	UNKNOWN_ERROR
 );
 
@@ -89,11 +90,13 @@ sub new {
 	$self->{map} = $args{map};
 	$self->{x} = $args{x};
 	$self->{y} = $args{y};
+	$self->{start_type} = $args{start_type} || 'talk';
 	$self->{distance} = $args{distance} || 5;
 	$self->{nameID} = $args{nameID};
 	$self->{sequence} = $args{sequence};
 	$self->{sequence} =~ s/^ +| +$//g;
 	$self->{steps} = [];
+	$self->{approaching} = 0;
 	$self->{trying_to_cancel} = 0;
 	$self->{sent_talk_response_cancel} = 0;
 	$self->{error_code} = undef;
@@ -141,6 +144,14 @@ sub handle_npc_talk {
 			message TF("%s: Type 'talk text' (Respond to NPC)\n", $self->{target}), "npc";
 			
 		}
+	} elsif ($hook_name eq 'npc_talk' && $self->{approaching} == 1 && $talk{nameID} == $self->{target}->{nameID}) {
+		$self->endSubTaskAndResume if ($self->getSubtask);
+		$self->{approaching} = 0;
+		$self->{stage} = TALKING_TO_NPC;
+		
+		debug "$self->{target}: Approaching npc successfully started conversation\n";
+		
+		$self->{time} = time;
 	}
 	$self->{time} = time;
 	$self->{sent_talk_response_cancel} = 0;
@@ -163,7 +174,7 @@ sub activate {
 
 sub find_and_set_target {
 	my ($self) = @_;
-	my $target = $self->findTarget($npcsList) || $self->findTarget($monstersList);
+	my $target = $self->findTarget($npcsList) || $self->findTarget($monstersList) || $self->findTarget($portalsList);
 
 	if ($target) {
 		debug "Talking with $target at ($target->{pos}{x},$target->{pos}{y}), ID ".getHex($target->{ID})."\n", "ai_npcTalk";
@@ -211,6 +222,10 @@ sub iterate {
 			# Wait for us to stop moving before talking.
 			return;
 
+		} elsif ($self->{approaching} == 1) {
+				return unless (timeOut($self->{time}, $timeResponse));
+				$self->setError(NO_TALK_AFTER_APPROACH, TF("Approaching npc %s didn't result in a conversation.\n", $self->{target}));
+
 		} elsif (timeOut($self->{time}, $timeResponse)) {
 			if ($self->{nameID}) {
 				$self->setError(NPC_NOT_FOUND, TF("Could not find an NPC with id (%d).",
@@ -222,8 +237,22 @@ sub iterate {
 
 		} else {
 			my $target = $self->find_and_set_target;
-
-			if ($target || %talk) {
+			
+			
+			if ($target && !%talk && $self->{start_type} eq 'approach') {
+				debug "This NPC requires us to approach it so it can auto start the conversation\n", 'ai_npcTalk';
+				return unless $self->addSteps($self->{sequence});
+				
+				$self->{approaching} = 1;
+				$self->setSubtask(Task::Route->new(
+					actor => $char,
+					map => $self->{map},
+					x => $self->{target}->{pos}->{x},
+					y => $self->{target}->{pos}->{y},
+					distFromGoal => 1,
+				));
+				
+			} elsif ($target || %talk) {
 				unless (exists $talk{nameID}) {
 					$self->addSteps('x');
 					undef $ai_v{'npc_talk'}{'time'};
@@ -231,9 +260,9 @@ sub iterate {
 				}
 
 				return unless $self->addSteps($self->{sequence});
-
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
+				
 			} else {
 				debug "No NPC in sight, routing to the specified NPC location\n", 'ai_npcTalk';
 				$self->setSubtask(($self->{map} ? 'Task::MapRoute' : 'Task::Route')->new(
@@ -688,9 +717,6 @@ sub cancelTalk {
 # Check whether the target as specified in $self->{x} and $self->{y} is in the given
 # actor list. Or if the target as specified in $self->{nameID} is in the given actor list.
 # Returns the actor object if it's currently on screen and has a name, undef otherwise.
-#
-# Note: we require that the NPC's name is known, because otherwise talking
-# may fail (TODO: what's the case exactly?).
 sub findTarget {
 	my ($self, $actorList) = @_;
 	if ($self->{nameID}) {
@@ -700,11 +726,7 @@ sub findTarget {
 	foreach my $actor (@{$actorList->getItems()}) {
 		my $pos = ($actor->isa('Actor::NPC')) ? $actor->{pos} : $actor->{pos_to};
 		if ($pos->{x} == $self->{x} && $pos->{y} == $self->{y}) {
-			if (defined $actor->{name}) {
-				return $actor;
-			} else {
-				return undef;
-			}
+			return $actor;
 		}
 	}
 	return undef;
@@ -753,6 +775,8 @@ sub subtaskDone {
 		} else {
 			$self->setError(UNKNOWN_ERROR, $error->{message});
 		}
+	} elsif ($task->isa('Task::Route') && $self->{approaching} == 1) {
+		warning "$self->{target}: Routing task to approach npc has been completed but no conversation started, kore will wait some time before failing this task\n";
 	}
 }
 
