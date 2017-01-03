@@ -14,7 +14,6 @@ sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
 	$self->{wanted_name} = undef;
-	$self->{check_amount} = undef;
 	
 	if ($condition_code =~ /"(.+)"\s+(\S.*)/) {
 		$self->{wanted_name} = $1;
