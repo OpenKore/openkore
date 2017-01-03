@@ -2358,8 +2358,7 @@ sub storage_opened {
 
 sub storage_closed {
 	$char->storage->close();
-	message T("Storage closed.\n"), "storage";
-	Plugins::callHook('packet_storage_close');
+	message T("Storage closed.\n"), "storage";;
 
 	# Storage log
 	writeStorageLog(0);
