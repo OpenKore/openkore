@@ -73,20 +73,19 @@ sub validate {
 	
 	return 0 unless (defined $min && defined $max);
 	
-	return between( $min, $value, $max ) if $self->{op} eq '==';
-	return !between( $min, $value, $max ) if $self->{op} eq '!=';
-	return $value < $min  if $self->{op} eq '<';
-	return $value <= $max if $self->{op} eq '<=';
-	return $value >= $min if $self->{op} eq '>=';
-	return $value > $max  if $self->{op} eq '>';
+	return (between( $min, $value, $max ) ? 1 : 0) if ($self->{op} eq '==');
+	return (!between( $min, $value, $max ) ? 1 : 0) if ($self->{op} eq '!=');
+	return ($value < $min ? 1 : 0)  if ($self->{op} eq '<');
+	return ($value <= $max ? 1 : 0) if ($self->{op} eq '<=');
+	return ($value >= $min ? 1 : 0) if ($self->{op} eq '>=');
+	return ($value > $max ? 1 : 0)  if ($self->{op} eq '>');
 
     # Unknown op??!
-    0;
+    return 0;
 }
 
 sub between {
-	return 1 if ($_[0] <= $_[1] && $_[1] <= $_[2]);
-	return 0;
+	$_[0] <= $_[1] && $_[1] <= $_[2];
 }
 
 sub _get_code_regex {

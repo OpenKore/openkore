@@ -7,7 +7,7 @@ use base 'eventMacro::Conditiontypes::NumericConditionState';
 use Globals qw( $char );
 
 sub _hooks {
-	['packet_mapChange','inventory_info_received','item_gathered','packet_item_removed'];
+	['packet_mapChange','inventory_ready','item_gathered','inventory_item_removed'];
 }
 
 sub _get_val {
