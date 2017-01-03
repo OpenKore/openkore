@@ -16,8 +16,6 @@ sub _parse_syntax {
 	$self->{wanted_name} = undef;
 	$self->{check_amount} = undef;
 	
-	Log::warning "[test] code is '".$condition_code."'\n";
-	
 	if ($condition_code =~ /"(.+)"\s+(\S.*)/) {
 		$self->{wanted_name} = $1;
 		$condition_code = $2;
@@ -25,8 +23,6 @@ sub _parse_syntax {
 		$self->{error} = "Item name must be inside quotation marks and a numeric comparison must be given";
 		return 0;
 	}
-	
-	Log::warning "[test] code is after '".$condition_code."'\n";
 	
 	$self->{is_on_stand_by} = 0;
 	
