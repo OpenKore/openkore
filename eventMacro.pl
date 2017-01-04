@@ -345,7 +345,8 @@ sub commandHandler {
 			}
 			return;
 		} else {
-			my $var = $params[0] =~ s/^\$//;
+			my $var = $params[0];
+			$var =~ s/^\$//;
 			if ($eventMacro->exists_var($var)) {
 				my $value = $eventMacro->get_var($var);
 				if (defined $value) {
@@ -364,7 +365,8 @@ sub commandHandler {
 			message "usage: eventMacro var_set [variable name] [variable value]\n", "list";
 			return;
 		}
-		my $var = $params[0] =~ s/^\$//;
+		my $var = $params[0];
+		$var =~ s/^\$//;
 		my $value = $params[1];
 		if ($var =~ /^\./) {
 			error "[eventMacro] System variables cannot be set by hand (The ones starting with a dot '.')\n";
