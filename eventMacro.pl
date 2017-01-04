@@ -98,7 +98,7 @@ sub commandHandler {
 		message 
 			"eventMacro MACRO: Run macro MACRO\n".
 			"eventMacro auto AUTOMACRO: Get info on an automacro and it's conditions\n".
-			"eventMacro list: Lists available macros, automacros or both\n".
+			"eventMacro list: Lists available macros and automacros\n".
 			"eventMacro status [macro|automacro]: Shows current status of automacro, macro or both\n".
 			"eventMacro check [force_stop|force_start|resume]: Sets the state of automacros checking\n".
 			"eventMacro stop: Stops current running macro\n".
