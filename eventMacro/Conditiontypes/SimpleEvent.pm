@@ -7,7 +7,7 @@ use base 'eventMacro::Condition';
 use eventMacro::Data;
 
 sub validate_condition {
-	1;
+	return $self->SUPER::validate_condition( 1 );;
 }
 
 sub condition_type {

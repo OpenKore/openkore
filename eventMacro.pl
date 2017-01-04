@@ -26,8 +26,9 @@ use eventMacro::Runner;
 Plugins::register('eventMacro', 'allows usage of eventMacros', \&Unload);
 
 my $hooks = Plugins::addHooks(
-	['configModify', \&onconfigModify, undef],
-	['start3',       \&onstart3, undef]
+	['configModify', \&onConfigModify, undef],
+	['start3',       \&onstart3, undef],
+	['pos_load_config.txt',       \&checkConfig, undef],
 );
 
 my $chooks = Commands::register(
@@ -50,13 +51,6 @@ sub Unload {
 	Commands::unregister($chooks);
 }
 
-sub onstart3 {
-	debug "[eventMacro] Loading start\n", "eventMacro", 2;
-	&checkConfig;
-	$file_handle = Settings::addControlFile($file,loader => [\&parseAndHook], mustExist => 0);
-	Settings::loadByHandle($file_handle);
-}
-
 sub checkConfig {
 	$timeout{eventMacro_delay}{timeout} = 1 unless defined $timeout{eventMacro_delay};
 	$config{eventMacro_orphans} = 'terminate' unless defined $config{eventMacro_orphans};
@@ -65,7 +59,13 @@ sub checkConfig {
 	return 1;
 }
 
-sub onconfigModify {
+sub onstart3 {
+	debug "[eventMacro] Loading start\n", "eventMacro", 2;
+	$file_handle = Settings::addControlFile($file,loader => [\&parseAndHook], mustExist => 0);
+	Settings::loadByHandle($file_handle);
+}
+
+sub onConfigModify {
 	my (undef, $args) = @_;
 	if ($args->{key} eq 'eventMacro_file') {
 		Settings::removeFile($file_handle);

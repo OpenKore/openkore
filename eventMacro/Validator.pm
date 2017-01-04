@@ -8,7 +8,7 @@ sub new {
 	$self->{var}    = [];
 	$self->{error}  = undef;
 	$self->{parsed} = 1;
-	$self->parse( $str ) if $str;
+	$self->parse( $str ) if (defined $str);
 	$self;
 }
 

@@ -405,6 +405,9 @@ sub add_to_triggered_prioritized_automacros_index_list {
 	foreach my $auto_index_in_queue ($new_index .. $#{$list}) {
 		$index_hash->{$list->[$auto_index_in_queue]->{index}} = $auto_index_in_queue;
 	}
+	
+	$self->{number_of_triggered_automacros}++;
+	$automacro->running_status(1);
 
 	debug "[eventMacro] Automacro '".$automacro->get_name()."' met it's conditions. Adding it to running queue in position '".$new_index."'.\n", "eventMacro";
 	
@@ -431,6 +434,9 @@ sub remove_from_triggered_prioritized_automacros_index_list {
 	foreach my $auto_index_in_queue ($queue_index .. $#{$list}) {
 		$index_hash->{$list->[$auto_index_in_queue]->{index}} = $auto_index_in_queue;
 	}
+	
+	$self->{number_of_triggered_automacros}--;
+	$automacro->running_status(0);
 	
 	debug "[eventMacro] Automacro '".$automacro->get_name()."' no longer meets it's conditions. Removing it from running queue from position '".$queue_index."'.\n", "eventMacro";
 	
@@ -478,15 +484,11 @@ sub manage_event_callbacks {
 				
 				#add to running queue
 				if (!$result && $automacro->running_status) {
-					my $index = $self->remove_from_triggered_prioritized_automacros_index_list($automacro);
-					$self->{number_of_triggered_automacros}--;
-					$automacro->running_status(0);
+					$self->remove_from_triggered_prioritized_automacros_index_list($automacro);
 				
 				#remove from running queue
 				} elsif ($result && $automacro->can_be_added_to_queue) {
-					my $index = $self->add_to_triggered_prioritized_automacros_index_list($automacro);
-					$self->{number_of_triggered_automacros}++;
-					$automacro->running_status(1);
+					$self->add_to_triggered_prioritized_automacros_index_list($automacro);
 					
 				}
 			}
@@ -498,7 +500,7 @@ sub manage_event_callbacks {
 				debug "[eventMacro] Variable value will be updated in condition of event type in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 				$automacro->check_event_type_condition($callback_type, $callback_name, $args);
 				
-			} elsif (($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run_from_event) {
+			} elsif (($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run_from_event && $self->{automacros_index_to_AI_check_state}{$automacro_index}{$AI} == 1) {
 				debug "[eventMacro] Condition of event type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 				
 				if ($automacro->check_event_type_condition($callback_type, $callback_name, $args)) {
@@ -577,6 +579,7 @@ sub manage_dynamic_hook_add_and_delete {
 			unless (scalar keys %{$self->{Event_Related_Hooks}{$hook_name}}) {
 				delete $self->{Event_Related_Hooks}{$hook_name};
 				Plugins::delHook($self->{Hook_Handles}{$hook_name});
+				delete $self->{Hook_Handles}{$hook_name};
 			}
 		}
 	}

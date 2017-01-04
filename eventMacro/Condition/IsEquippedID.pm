@@ -9,7 +9,7 @@ use base 'eventMacro::Condition';
 my $variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
 
 sub _hooks {
-	['packet_mapChange','equipped_item','unequipped_item'];
+	['packet_mapChange','equipped_item','unequipped_item','packet/inventory_items_stackable','packet/inventory_items_nonstackable'];
 }
 
 #slot_index to index_name: %equipSlot_lut
@@ -21,6 +21,7 @@ sub _parse_syntax {
 	$self->{fulfilled_slot} = undef;
 	$self->{fulfilled_item} = undef;
 	$self->{fulfilled_member_index} = undef;
+	
 	$self->{slot_name_to_member_to_check_array} = {};
 	$self->{var_to_member_index_item_id} = {};
 	$self->{var_to_member_index_slot_name} = {};
@@ -73,13 +74,10 @@ sub _parse_syntax {
 			return 0;
 		}
 		
-		if ($slot_name eq 'arrow') {
-			push (@{$self->{hooks}}, 'packet/inventory_items_stackable');
-		} else {
-			push (@{$self->{hooks}}, 'packet/inventory_items_nonstackable');
+		if (!$id_is_var && !$slot_is_var) {
+			$self->{slot_name_to_member_to_check_array}{$slot_name}{$member_index} = undef;
 		}
 		
-		$self->{slot_name_to_member_to_check_array}{$slot_name}{$member_index} = undef;
 		push (@{$self->{members_array}}, {slot_name => ($slot_is_var ? undef : $slot_name) , item_id => ($id_is_var ? undef : $item_id)});
 		
 	} continue {
@@ -101,6 +99,9 @@ sub update_vars {
 	foreach my $member_index (@{$self->{var_to_member_index_slot_name}{$var_name}}) {
 		if (defined $self->{members_array}[$member_index]{slot_name} && exists $self->{slot_name_to_member_to_check_array}{$self->{members_array}[$member_index]{slot_name}}{$member_index}) {
 			delete $self->{slot_name_to_member_to_check_array}{$self->{members_array}[$member_index]{slot_name}}{$member_index};
+			unless (scalar keys %{ $self->{slot_name_to_member_to_check_array}{$self->{members_array}[$member_index]{slot_name}} }) {
+				delete $self->{slot_name_to_member_to_check_array}{$self->{members_array}[$member_index]{slot_name}};
+			}
 		}
 		unless (exists $equipSlot_rlut{$var_value}) {
 			$self->{members_array}[$member_index]{slot_name} = undef;
@@ -132,6 +133,9 @@ sub update_vars {
 		if (!defined $member->{item_id} || !defined $member->{slot_name}) {
 			if (defined $member->{slot_name} && exists $self->{slot_name_to_member_to_check_array}{$member->{slot_name}}{$changed_index}) {
 				delete $self->{slot_name_to_member_to_check_array}{$member->{slot_name}}{$changed_index};
+				unless (scalar keys %{$self->{slot_name_to_member_to_check_array}{$member->{slot_name}}}) {
+					delete $self->{slot_name_to_member_to_check_array}{$member->{slot_name}};
+				}
 			}
 		} else {
 			unless (exists $self->{slot_name_to_member_to_check_array}{$member->{slot_name}}{$changed_index}) {
@@ -141,7 +145,7 @@ sub update_vars {
 		}
 	}
 	
-	if (!$self->{is_Fulfilled} || $changed_fulfilled_index) {
+	if (!defined $self->{fulfilled_slot} || $changed_fulfilled_index) {
 		$self->check_all_equips($recheck_index);
 	}
 }
@@ -151,21 +155,24 @@ sub check_all_equips {
 	$self->{fulfilled_slot} = undef;
 	$self->{fulfilled_item} = undef;
 	$self->{fulfilled_member_index} = undef;
-	$self->{is_Fulfilled} = 0;
 	foreach my $slot (keys %{$char->{equipment}}) {
 		next unless (exists $list->{$slot});
-		my @members = keys %{$list->{$slot}};
 		my $equipment = $char->{equipment}{$slot};
-		my $equipment_id = $equipment->{nameID};
-		foreach my $member_index (@members) {
-			my $member = $self->{members_array}->[$member_index];
-			next unless ($equipment_id == $member->{item_id});
-			$self->{fulfilled_slot} = $member->{slot_name};
-			$self->{fulfilled_item} = $equipment;
-			$self->{fulfilled_member_index} = $member_index;
-			$self->{is_Fulfilled} = 1;
-			last;
-		}
+		$self->check_slot($slot, $equipment);
+		last if (defined $self->{fulfilled_slot});
+	}
+}
+
+sub check_slot {
+	my ( $self, $slot, $item ) = @_;
+	my @members = keys %{$self->{slot_name_to_member_to_check_array}{$slot}};
+	foreach my $member_index (@members) {
+		my $member = $self->{members_array}->[$member_index];
+		next unless ($item->{nameID} == $member->{item_id});
+		$self->{fulfilled_slot} = $member->{slot_name};
+		$self->{fulfilled_item} = $item;
+		$self->{fulfilled_member_index} = $member_index;
+		last;
 	}
 }
 
@@ -174,42 +181,39 @@ sub validate_condition {
 	
 	if ($callback_type eq 'hook') {
 		if ($callback_name eq 'equipped_item') {
-			return if ($self->{is_Fulfilled});
-			return unless (exists $self->{slot_name_to_member_to_check_array}{$args->{slot}});
-			
-			my @members = keys %{$self->{slot_name_to_member_to_check_array}{$args->{slot}}};
-			
-			foreach my $member_index (@members) {
-				my $member = $self->{members_array}->[$member_index];
-				next unless ($args->{item}->{nameID} == $member->{item_id});
-				$self->{fulfilled_slot} = $member->{slot_name};
-				$self->{fulfilled_item} = $args->{item};
-				$self->{fulfilled_member_index} = $member_index;
-				$self->{is_Fulfilled} = 1;
-				last;
-			}
+			return $self->SUPER::validate_condition if (defined $self->{fulfilled_slot} || !exists $self->{slot_name_to_member_to_check_array}{$args->{slot}});
+			$self->check_slot($args->{slot}, $args->{item});
 
 		} elsif ($callback_name eq 'unequipped_item') {
-			return unless ($self->{is_Fulfilled});
-			return unless ($self->{fulfilled_slot} eq $args->{slot});
+			return $self->SUPER::validate_condition unless (defined $self->{fulfilled_slot} || $self->{fulfilled_slot} ne $args->{slot});
 			$self->check_all_equips($self->{slot_name_to_member_to_check_array});
 			
 		} elsif ($callback_name eq 'packet_mapChange') {
 			$self->{fulfilled_slot} = undef;
 			$self->{fulfilled_item} = undef;
-			$self->{is_Fulfilled} = 0;
+			$self->{fulfilled_member_index} = undef;
 			
-		} else {
-			$self->check_all_equips($self->{slot_name_to_member_to_check_array});
+		} elsif ($callback_name eq 'packet/inventory_items_stackable') {
+			if (exists $self->{slot_name_to_member_to_check_array}{arrow}) {
+				$self->check_all_equips($self->{slot_name_to_member_to_check_array});
+			}
+		} elsif ($callback_name eq 'packet/inventory_items_nonstackable') {
+			if (scalar keys %{$self->{slot_name_to_member_to_check_array}} > 1 || !exists $self->{slot_name_to_member_to_check_array}{arrow}) {
+				$self->check_all_equips($self->{slot_name_to_member_to_check_array});
+			}
 			
 		}
 	
 	} elsif ($callback_type eq 'variable') {
 		$self->update_vars($callback_name, $args);
+		
+	} elsif ($callback_type eq 'recheck') {
+		$self->check_all_equips($self->{slot_name_to_member_to_check_array});
+		
 	}
+	return $self->SUPER::validate_condition( (defined $self->{fulfilled_slot} ? 1 : 0) );
 }
 
-#To be implemented
 sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;

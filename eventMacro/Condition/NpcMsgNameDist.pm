@@ -29,10 +29,10 @@ sub validate_condition {
 	
 	if ($callback_type eq 'hook') {
 		$self->{message} = $args->{msg};
-		return 0 unless $self->SUPER::validate_condition( 0, $self->{message} );
+		return $self->SUPER::validate_condition( 0 ) unless $self->validator_check( 0, $self->{message} );
 		
 		$self->{source} = $args->{name};
-		return 0 unless $self->SUPER::validate_condition( 1, $self->{source} );
+		return $self->SUPER::validate_condition( 0 ) unless $self->validator_check( 1, $self->{source} );
 		
 		$self->{dist} = undef;
 		foreach my $npc (@{$npcsList->getItems()}) {
@@ -41,13 +41,12 @@ sub validate_condition {
 			$self->{dist} = distance($char->{pos_to}, $npc->{pos_to});
 		}
 		
-		return 0 unless ( defined $self->{dist} && $self->SUPER::validate_condition( 2, $self->{dist} ) );
+		return $self->SUPER::validate_condition( 0 ) unless ( defined $self->{dist} && $self->validator_check( 2, $self->{dist} ) );
 		
-		return 1;
+		return $self->SUPER::validate_condition( 1 );
 		
 	} elsif ($callback_type eq 'variable') {
-		$self->SUPER::update_validator_var($callback_name, $args);
-		return 0;
+		$self->update_validator_var($callback_name, $args);
 	}
 }
 

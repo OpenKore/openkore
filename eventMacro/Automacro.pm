@@ -184,9 +184,7 @@ sub check_state_type_condition {
 	
 	my $pre_check_status = $condition->is_fulfilled;
 	
-	$condition->validate_condition($callback_type, $callback_name, $args);
-	
-	my $pos_check_status = $condition->is_fulfilled;
+	my $pos_check_status = $condition->validate_condition($callback_type, $callback_name, $args);
 	
 	debug "[eventMacro] Checking condition '".$condition->get_name()."' of index '".$condition->get_index."' in automacro '".$self->{name}."', fulfilled value before: '".$pre_check_status."', fulfilled value after: '".$pos_check_status."'.\n", "eventMacro", 3;
 	
