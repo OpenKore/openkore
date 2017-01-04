@@ -932,6 +932,11 @@ sub define_next_valid_command {
 			my ($label) = $self->{current_line} =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)/;
 			if (exists $self->{label}->{$label}) {
 				debug "[eventMacro] Script is a goto flow command.\n", "eventMacro", 3;
+				if (defined $self->{subline_index}) {
+					debug "[eventMacro] Finishing prematurely sublines of line '".$self->line_script($self->line_index)."' of index '".$self->line_index."' because of flow command.\n", "eventMacro", 2;
+					undef $self->{sublines_array};
+					undef $self->{subline_index};
+				}
 				$self->line_index($self->{label}->{$label});
 			} else {
 				$self->error("Cannot find label '$label'");
