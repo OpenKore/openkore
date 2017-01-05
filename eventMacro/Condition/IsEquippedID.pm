@@ -5,8 +5,7 @@ use Globals;
 use Utils;
 
 use base 'eventMacro::Condition';
-
-my $variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
+use eventMacro::Data;
 
 sub _hooks {
 	['packet_mapChange','equipped_item','unequipped_item','packet/inventory_items_stackable','packet/inventory_items_nonstackable'];

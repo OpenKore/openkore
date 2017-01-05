@@ -5,8 +5,7 @@ use strict;
 use base 'eventMacro::Condition';
 
 use Globals;
-
-my $variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
+use eventMacro::Data;
 
 sub _hooks {
 	['configModify','pos_load_config.txt','in_game'];

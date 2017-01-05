@@ -6,8 +6,6 @@ use base 'eventMacro::Condition';
 
 use eventMacro::Data;
 
-my $variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
-
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
