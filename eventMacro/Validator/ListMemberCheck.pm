@@ -4,8 +4,6 @@ use strict;
 use base 'eventMacro::Validator';
 use eventMacro::Data;
 
-my $variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
-
 sub parse {
 	my ( $self, $string_list ) = @_;
 	

@@ -5,8 +5,7 @@ use strict;
 use base 'eventMacro::Condition';
 
 use Globals qw( $char );
-
-my $variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
+use eventMacro::Data;
 
 sub _hooks {
 	['in_game','packet/player_equipment'];
