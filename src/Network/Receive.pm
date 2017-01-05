@@ -865,7 +865,7 @@ sub actor_died_or_disappeared {
 	if ($ID eq $accountID) {
 		message T("You have died\n") if (!$char->{dead});
 		Plugins::callHook('self_died');
-		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || $AI == AI::OFF;
+		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || AI::state == AI::OFF;
 		$char->{deathCount}++;
 		$char->{dead} = 1;
 		$char->{dead_time} = time;
@@ -3543,7 +3543,7 @@ sub item_appeared {
 	$itemsList->add($item) if ($mustAdd);
 
 	# Take item as fast as possible
-	if ($AI == AI::AUTO && pickupitems(lc($item->{name})) == 2
+	if (AI::state == AI::AUTO && pickupitems(lc($item->{name})) == 2
 	 && ($config{'itemsTakeAuto'} || $config{'itemsGatherAuto'})
 	 && (percent_weight($char) < $config{'itemsMaxWeight'})
 	 && distance($item->{pos}, $char->{pos_to}) <= 5) {

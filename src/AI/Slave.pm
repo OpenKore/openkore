@@ -184,7 +184,7 @@ sub iterate {
 				message TF("Found %s!\n", $slave), 'homunculus';
 	
 			# attempt to find homunculus on it's last known coordinates
-			} elsif ($AI == AI::AUTO && !$slave->{lostRoute}) {
+			} elsif (AI::state == AI::AUTO && !$slave->{lostRoute}) {
 				if ($config{homunculus_StandByAuto}) {
 					message TF("Stand By Homun\n", $slave), 'teleport';
 					$slave->sendStandBy;
@@ -223,7 +223,7 @@ sub iterate {
 		# if you are idle, move near the homunculus
 		} elsif (
 			$slave->{actorType} eq 'Homunculus' &&
-			$AI == AI::AUTO && AI::isIdle && !$slave->isIdle
+			AI::state == AI::AUTO && AI::isIdle && !$slave->isIdle
 			&& $config{$slave->{configPrefix}.'followDistanceMax'}
 			&& $slave_dist > $config{$slave->{configPrefix}.'followDistanceMax'}
 		) {
@@ -334,7 +334,7 @@ sub processAttack {
 			monKilled();
 
 			# Pickup loot when monster's dead
-			if ($AI == AI::AUTO && $config{itemsTakeAuto} && $monsters_old{$ID}{dmgFromPlayer}{$slave->{ID}} > 0 && !$monsters_old{$ID}{homunculus_ignore}) {
+			if (AI::state == AI::AUTO && $config{itemsTakeAuto} && $monsters_old{$ID}{dmgFromPlayer}{$slave->{ID}} > 0 && !$monsters_old{$ID}{homunculus_ignore}) {
 				AI::clear("items_take");
 				AI::ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
 					$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});

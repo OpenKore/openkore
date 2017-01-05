@@ -1373,7 +1373,7 @@ sub chatLog_clear {
 sub checkAllowedMap {
 	my $map = shift;
 
-	return unless $AI == AI::AUTO;
+	return unless AI::state == AI::AUTO;
 	return unless $config{allowedMaps};
 	return if existsInList($config{allowedMaps}, $map);
 	return if $config{allowedMaps_reaction} == 0;
@@ -2742,7 +2742,7 @@ sub updateDamageTables {
 				);
 			$monster->{target} = $targetID;
 
-			if ($AI == 2) {
+			if (AI::state == 2) {
 				my $teleport = 0;
 				if (mon_control($monster->{name},$monster->{nameID})->{teleport_auto} == 2 && $damage){
 					message TF("Teleporting due to attack from %s\n",
@@ -2862,7 +2862,7 @@ sub updateDamageTables {
 			$monster->{target} = $targetID;
 			OpenKoreMod::updateDamageTables($monster) if (defined &OpenKoreMod::updateDamageTables);
 
-			if ($AI == AI::AUTO && ($accountID eq $targetID or $char->{slaves} && $char->{slaves}{$targetID})) {
+			if (AI::state == AI::AUTO && ($accountID eq $targetID or $char->{slaves} && $char->{slaves}{$targetID})) {
 				# object under our control
 				my $teleport = 0;
 				if (mon_control($monster->{name},$monster->{nameID})->{teleport_auto} == 2 && $damage){
@@ -3881,11 +3881,11 @@ sub checkSelfCondition {
 	# *_manualAI 1 = manual only
 	# *_manualAI 2 = auto or manual
 	if ($config{$prefix . "_manualAI"} == 0 || !(defined $config{$prefix . "_manualAI"})) {
-		return 0 unless $AI == AI::AUTO;
+		return 0 unless AI::state == AI::AUTO;
 	} elsif ($config{$prefix . "_manualAI"} == 1){
-		return 0 unless $AI == AI::MANUAL;
+		return 0 unless AI::state == AI::MANUAL;
 	} else {
-		return 0 if $AI == AI::OFF;
+		return 0 if AI::state == AI::OFF;
 	}
 
 	if ($config{$prefix . "_hp"}) {

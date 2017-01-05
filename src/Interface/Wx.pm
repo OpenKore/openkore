@@ -880,7 +880,7 @@ sub updateStatusBar {
 	if ($conState == 5) {
 		$xyText = "$char->{pos_to}{x}, $char->{pos_to}{y}";
 
-		if ($AI) {
+		if (AI::state) {
 			if (@ai_seq) {
 				my @seqs = @ai_seq;
 				foreach (@seqs) {
@@ -1027,9 +1027,9 @@ sub onInputEnter {
 
 sub onMenuOpen {
 	my $self = shift;
-	$self->{mPause}->Enable($AI != AI::OFF);
-	$self->{mManual}->Enable($AI != AI::MANUAL);
-	$self->{mResume}->Enable($AI != AI::AUTO);
+	$self->{mPause}->Enable(AI::state != AI::OFF);
+	$self->{mManual}->Enable(AI::state != AI::MANUAL);
+	$self->{mResume}->Enable(AI::state != AI::AUTO);
 	$self->{infoBarToggle}->Check($self->{infoPanel}->IsShown);
 	$self->{chatLogToggle}->Check(defined $self->{notebook}->hasPage(T('Chat Log')) ? 1 : 0);
 	
@@ -1059,15 +1059,15 @@ sub onLoadFiles {
 }
 
 sub onEnableAI {
-	$AI = AI::AUTO;
+	AI::state(AI::AUTO);
 }
 
 sub onManualAI {
-	$AI = AI::MANUAL;
+	AI::state(AI::MANUAL);
 }
 
 sub onDisableAI {
-	$AI = AI::OFF;
+	AI::state(AI::OFF);
 }
 
 sub onCopyLastOutput {

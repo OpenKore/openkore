@@ -669,13 +669,13 @@ sub openMap {
 	}
 
 sub compause {
-	$AI = AI::OFF;
+	AI::state(AI::OFF);
 }
 sub commanual {
-	$AI = AI::MANUAL;
+	AI::state(AI::MANUAL);
 }
 sub comresume {
-	$AI = AI::AUTO;
+	AI::state(AI::AUTO);
 }
 sub comstatus {
 Commands::run("s"); 

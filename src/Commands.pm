@@ -488,44 +488,44 @@ sub cmdAI {
 
 	} elsif ($args eq 'on' || $args eq 'auto') {
 		# Set AI to auto mode
-		if ($AI == AI::AUTO) {
+		if (AI::state == AI::AUTO) {
 			message T("AI is already set to auto mode\n"), "success";
 		} else {
-			$AI = AI::AUTO;
+			AI::state(AI::AUTO);
 			undef $AI_forcedOff;
 			message T("AI set to auto mode\n"), "success";
 		}
 	} elsif ($args eq 'manual') {
 		# Set AI to manual mode
-		if ($AI == AI::MANUAL) {
+		if (AI::state == AI::MANUAL) {
 			message T("AI is already set to manual mode\n"), "success";
 		} else {
-			$AI = AI::MANUAL;
+			AI::state(AI::MANUAL);
 			$AI_forcedOff = 1;
 			message T("AI set to manual mode\n"), "success";
 		}
 	} elsif ($args eq 'off') {
 		# Turn AI off
-		if ($AI == AI::OFF) {
+		if (AI::state == AI::OFF) {
 			message T("AI is already off\n"), "success";
 		} else {
-			$AI = AI::OFF;
+			AI::state(AI::OFF);
 			$AI_forcedOff = 1;
 			message T("AI turned off\n"), "success";
 		}
 
 	} elsif ($args eq '') {
 		# Toggle AI
-		if ($AI == AI::AUTO) {
-			$AI = AI::OFF;
+		if (AI::state == AI::AUTO) {
+			AI::state(AI::OFF);
 			$AI_forcedOff = 1;
 			message T("AI turned off\n"), "success";
-		} elsif ($AI == AI::OFF) {
-			$AI = AI::MANUAL;
+		} elsif (AI::state == AI::OFF) {
+			AI::state(AI::MANUAL);
 			$AI_forcedOff = 1;
 			message T("AI set to manual mode\n"), "success";
-		} elsif ($AI == AI::MANUAL) {
-			$AI = AI::AUTO;
+		} elsif (AI::state == AI::MANUAL) {
+			AI::state(AI::AUTO);
 			undef $AI_forcedOff;
 			message T("AI set to auto mode\n"), "success";
 		}
@@ -539,11 +539,11 @@ sub cmdAI {
 sub cmdAIv {
 	# Display current AI sequences
 	my $on;
-	if ($AI == AI::OFF) {
+	if (AI::state == AI::OFF) {
 		message TF("ai_seq (off) = %s\n", "@ai_seq"), "list";
-	} elsif ($AI == AI::MANUAL) {
+	} elsif (AI::state == AI::MANUAL) {
 		message TF("ai_seq (manual) = %s\n", "@ai_seq"), "list";
-	} elsif ($AI == AI::AUTO) {
+	} elsif (AI::state == AI::AUTO) {
 		message TF("ai_seq (auto) = %s\n", "@ai_seq"), "list";
 	}
 	message T("solution\n"), "list" if (AI::args->{'solution'});
@@ -1680,7 +1680,7 @@ sub cmdDebug {
 			"\$timeout{ai}: %.2f secs ago  (value should be >%s)\n" .
 			"Last AI() call: %.2f secs ago\n" .
 			('-'x56) . "\n",
-		$conState, $connected, $AI, $AI_forcedOff, "@ai_seq", $time, $ai_timeout,
+		$conState, $connected, AI::state, $AI_forcedOff, "@ai_seq", $time, $ai_timeout,
 		$timeout{'ai'}{'timeout'}, $ai_time), "list";
 	}
 }

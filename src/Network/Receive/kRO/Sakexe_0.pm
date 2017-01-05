@@ -1504,7 +1504,7 @@ sub inventory_item_added {
 			$ai_v{'npc_talk'}{'time'} = time;
 		}
 
-		if ($AI == AI::AUTO) {
+		if (AI::state == AI::AUTO) {
 			# Auto-drop item
 			if (pickupitems(lc($item->{name})) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 				$messageSender->sendDrop($item->{index}, $amount);
@@ -2496,7 +2496,7 @@ sub private_message {
 		Msg => $privMsg
 	});
 
-	if ($config{dcOnPM} && $AI == AI::AUTO) {
+	if ($config{dcOnPM} && AI::state == AI::AUTO) {
 		message T("Auto disconnecting on PM!\n");
 		chatLog("k", T("*** You were PM'd, auto disconnect! ***\n"));
 		$messageSender->sendQuit();
@@ -3019,7 +3019,7 @@ sub skill_cast {
 	my $monster = $monstersList->getByID($sourceID);
 	my $control;
 	$control = mon_control($monster->name,$monster->{nameID}) if ($monster);
-	if ($AI == AI::AUTO && $control->{skillcancel_auto}) {
+	if (AI::state == AI::AUTO && $control->{skillcancel_auto}) {
 		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
 			message TF("Monster Skill - switch Target to : %s (%d)\n", $monster->name, $monster->{binID});
 			$char->sendAttackStop;
@@ -3297,7 +3297,7 @@ sub skill_used_no_damage {
 		$timeout{ai_teleport_delay}{time} = time;
 	}
 
-	if ($AI == AI::AUTO && $config{'autoResponseOnHeal'}) {
+	if (AI::state == AI::AUTO && $config{'autoResponseOnHeal'}) {
 		# Handle auto-response on heal
 		my $player = $playersList->getByID($args->{sourceID});
 		if ($player && ($args->{skillID} == 28 || $args->{skillID} == 29 || $args->{skillID} == 34)) {
