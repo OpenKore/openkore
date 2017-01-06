@@ -14,7 +14,7 @@ sub parse {
 		$self->{original_regex} = $1;
 		$self->{case_insensitive} = !!$2;
 		
-		my @variables = $self->{original_regex} =~ /(?:^|(?<=[^\\]))\$($general_variable_qr)/g;
+		my @variables = $self->{original_regex} =~ /(?:^|(?<=[^\\]))(\$$general_variable_qr)/g;
 		
 		$self->{defined_var_list} = {};
 		

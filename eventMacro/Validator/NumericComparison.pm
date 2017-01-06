@@ -10,7 +10,7 @@ my $general_variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*(?:\[\d+\])?/;
 
 sub parse {
 	my ( $self, $str ) = @_;
-	$self->{parsed} = $str =~ /^\s*(<|<=|=|==|!=|!|>=|>|)\s*($number_qr%?|\$$general_variable_qr)(?:\s*\.\.\s*($number_qr%?|$general_variable_qr))?\s*$/o;
+	$self->{parsed} = $str =~ /^\s*(<|<=|=|==|!=|!|>=|>|)\s*($number_qr%?|\$$general_variable_qr)(?:\s*\.\.\s*($number_qr%?|\$$general_variable_qr))?\s*$/o;
 	if (!$self->{parsed}) {
 		$self->{error} = "There were found no numeric comparison in the condition code";
 		return;
@@ -33,17 +33,18 @@ sub parse {
 		$self->{min_is_var} = 0;
 	}
 	
-	if ( !defined $self->{max} ) {
+	if ( !defined $3 ) {
 		$self->{max}        = $self->{min};
 		$self->{max_is_var} = $self->{min_is_var};
 		$self->{max_is_pct} = $self->{min_is_pct};
+		$self->{var_name_max} = $self->{var_name_min};
 	} else {
 		if (my $var = find_variable($3)) {
 			$self->{max} = undef;
 			$self->{var_name_max} = $var->{name};
 			$self->{max_is_pct} = 0;
 			$self->{max_is_var} = 1;
-			push(@{$self->{var}}, $var);
+			push(@{$self->{var}}, $var) unless ($var->{name} eq $self->{var_name_min});
 		} else {
 			$self->{max} = $3;
 			$self->{max_is_pct} = $self->{max} =~ s/%$//;

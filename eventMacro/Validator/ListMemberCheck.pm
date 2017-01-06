@@ -29,7 +29,7 @@ sub parse {
 			#During parsing all variables should be undefined
 			push(@{$self->{var}}, $var) unless (exists $self->{var_to_member_index}{$var->{name}});
 			push(@{$self->{list}}, undef);
-			push(@{$self->{var_to_member_index}{$var}}, $#{$self->{list}});
+			push(@{$self->{var_to_member_index}{$var->{name}}}, $#{$self->{list}});
 		} else {
 			push(@{$self->{list}}, $member);
 			if ($member =~ /^any$/i) {
