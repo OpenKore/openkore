@@ -338,8 +338,8 @@ sub commandHandler {
 		if (!defined $params[0]) {
 			my $counter = 1;
 			message "[eventMacro] Printing values off all variables\n", "menu";
-			foreach my $variable_name (keys %{$eventMacro->{Variable_List_Hash}}) {
-				message $counter."- '".$variable_name."' = '".$eventMacro->{Variable_List_Hash}->{$variable_name}."'\n", "menu";
+			foreach my $variable_name (keys %{$eventMacro->{Scalar_Variable_List_Hash}}) {
+				message $counter."- '".$variable_name."' = '".$eventMacro->{Scalar_Variable_List_Hash}->{$variable_name}."'\n", "menu";
 			} continue {
 				$counter++;
 			}
@@ -347,15 +347,11 @@ sub commandHandler {
 		} else {
 			my $var = $params[0];
 			$var =~ s/^\$//;
-			if ($eventMacro->exists_var($var)) {
-				my $value = $eventMacro->get_var($var);
-				if (defined $value) {
-					message "[eventMacro] Variable '".$params[0]."' has value '".$value."'.\n";
-				} else {
-					message "[eventMacro] Variable '".$params[0]."' has an undefined value.\n";
-				}
+			if ($eventMacro->is_scalar_var_defined($var)) {
+				my $value = $eventMacro->get_scalar_var($var);
+				message "[eventMacro] Variable '".$params[0]."' has value '".$value."'.\n";
 			} else {
-				error "[eventMacro] Given variable '".$params[0]."' doesn't exist.\n";
+				message "[eventMacro] Variable '".$params[0]."' has an undefined value.\n";
 			}
 		}
 	
@@ -373,7 +369,7 @@ sub commandHandler {
 			return;
 		}
 		message "[eventMacro] Setting the value of variable '".$params[0]."' to '".$params[1]."'.\n";
-		$eventMacro->set_var($var, $value);
+		$eventMacro->set_scalar_var($var, $value);
 		
 		
 	### parameter: enable
@@ -428,11 +424,11 @@ sub commandHandler {
 		GetOptionsFromArray( \@params, $opt, 'repeat|r=i', 'override_ai', 'exclusive', 'macro_delay=f', 'orphan=s' );
 		
 		# TODO: Determine if this is reasonably efficient for macro sets which define a lot of variables. (A regex is slow.)
-		foreach my $variable_name ( keys %{ $eventMacro->{Variable_List_Hash} } ) {
+		foreach my $variable_name ( keys %{ $eventMacro->{Scalar_Variable_List_Hash} } ) {
 			next if $variable_name !~ /^\.param\d+$/o;
-			$eventMacro->set_var( $variable_name, undef, 0 );
+			$eventMacro->set_scalar_var( $variable_name, undef, 0 );
 		}
-		$eventMacro->set_var( ".param$_", $params[ $_ - 1 ], 0 ) foreach 1 .. @params;
+		$eventMacro->set_scalar_var( ".param$_", $params[ $_ - 1 ], 0 ) foreach 1 .. @params;
 		
 		$eventMacro->{Macro_Runner} = new eventMacro::Runner(
 			$arg,

@@ -112,7 +112,7 @@ sub match {
 		if ($text =~ /$1/ || ($2 eq 'i' && $text =~ /$1/i)) {
 			if (!defined $cmpr) {
 				no strict;
-				foreach my $idx (1..$#-) {$eventMacro->set_var(".lastMatch$idx",${$idx})}
+				foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
 				use strict;
 			}
 			return 1
@@ -141,7 +141,7 @@ sub getWord {
 	if ($wordno =~ /^\$/) {
 		my ($val) = $wordno =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
 		return "" unless defined $val;
-		if ($eventMacro->exists_var($val) && $eventMacro->get_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_var($val)}
+		if ($eventMacro->get_scalar_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_scalar_var($val)}
 		else {return ""}
 	
 	}
@@ -182,28 +182,28 @@ sub getConfig {
 sub refreshGlobal {
 	my $var = $_[0];
 
-	$eventMacro->set_var(".time", time, 0);
-	$eventMacro->set_var(".datetime", scalar localtime, 0);
+	$eventMacro->set_scalar_var(".time", time, 0);
+	$eventMacro->set_scalar_var(".datetime", scalar localtime, 0);
 	my ($sec, $min, $hour) = localtime;
-	$eventMacro->set_var(".second", $sec, 0);
-	$eventMacro->set_var(".minute", $min, 0);
-	$eventMacro->set_var(".hour", $hour, 0);
+	$eventMacro->set_scalar_var(".second", $sec, 0);
+	$eventMacro->set_scalar_var(".minute", $min, 0);
+	$eventMacro->set_scalar_var(".hour", $hour, 0);
 	
 	return unless $net && $net->getState == Network::IN_GAME;
 	
-	$eventMacro->set_var(".map", (defined $field)?$field->baseName:"undef", 0);
+	$eventMacro->set_scalar_var(".map", (defined $field)?$field->baseName:"undef", 0);
 	my $pos = calcPosition($char); 
-	$eventMacro->set_var(".pos", sprintf("%d %d", $pos->{x}, $pos->{y}), 0);
+	$eventMacro->set_scalar_var(".pos", sprintf("%d %d", $pos->{x}, $pos->{y}), 0);
 	
-	$eventMacro->set_var(".hp", $char->{hp}, 0);
-	$eventMacro->set_var(".sp", $char->{sp}, 0);
-	$eventMacro->set_var(".lvl", $char->{lv}, 0);
-	$eventMacro->set_var(".joblvl", $char->{lv_job}, 0);
-	$eventMacro->set_var(".spirits", ($char->{spirits} or 0), 0);
-	$eventMacro->set_var(".zeny", $char->{zeny}, 0);
-	$eventMacro->set_var(".weight", $char->{weight}, 0);
-	$eventMacro->set_var(".maxweight", $char->{weight_max}, 0);
-	$eventMacro->set_var('.status', (join ',',
+	$eventMacro->set_scalar_var(".hp", $char->{hp}, 0);
+	$eventMacro->set_scalar_var(".sp", $char->{sp}, 0);
+	$eventMacro->set_scalar_var(".lvl", $char->{lv}, 0);
+	$eventMacro->set_scalar_var(".joblvl", $char->{lv_job}, 0);
+	$eventMacro->set_scalar_var(".spirits", ($char->{spirits} or 0), 0);
+	$eventMacro->set_scalar_var(".zeny", $char->{zeny}, 0);
+	$eventMacro->set_scalar_var(".weight", $char->{weight}, 0);
+	$eventMacro->set_scalar_var(".maxweight", $char->{weight_max}, 0);
+	$eventMacro->set_scalar_var('.status', (join ',',
 		('muted')x!!$char->{muted},
 		('dead')x!!$char->{dead},
 		map { $statusName{$_} || $_ } keys %{$char->{statuses}}
@@ -436,7 +436,7 @@ sub find_variable {
 	}
 	
 	if (my $array = find_array_variable($text)) {
-		return ({ name => $array->{name}, type => 'array', index => $array->{index} });
+		return ({ name => $array->{name}, type => 'array', index => $array->{index},  var_name => $array->{var_name} });
 	}
 }
 
@@ -451,7 +451,14 @@ sub find_scalar_variable {
 
 sub find_array_variable {
 	my ($text) = @_;
-	0;
+	if ($text =~ /(?:^|(?<=[^\\]))\$($array_variable_qr)$/) {
+		my $name = $1;
+		if ($name =~ /(\.?[a-zA-Z][a-zA-Z\d]*)\[(\d+)\]/) {
+			my $var_name = $1;
+			my $index = $2;
+			return ({name => $name, var_name => $var_name, index => $index});
+		}
+	}
 }
 
 1;

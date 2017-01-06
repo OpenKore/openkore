@@ -979,26 +979,26 @@ sub next {
 			my $pval = $self->parse_command($val);
 			return if (defined $self->error);
 			if (defined $pval) {
-				if ($pval =~ /^\s*(?:undef|unset)\s*$/i && $eventMacro->exists_var($var)) {
-					$eventMacro->set_var($var, 'undef');
+				if ($pval =~ /^\s*(?:undef|unset)\s*$/i) {
+					$eventMacro->set_scalar_var($var, 'undef');
 				} else {
-					$eventMacro->set_var($var, $pval);
+					$eventMacro->set_scalar_var($var, $pval);
 				}
 			} else {
 				$self->error("$val failed");
 			}
 		} elsif (($var, $val) = $self->{current_line} =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
 			if ($val eq '++') {
-				if ($eventMacro->is_var_defined($var)) {
-					$eventMacro->set_var($var, ($eventMacro->get_var($var)+1));
+				if ($eventMacro->is_scalar_var_defined($var)) {
+					$eventMacro->set_scalar_var($var, ($eventMacro->get_scalar_var($var)+1));
 				} else {
-					$eventMacro->set_var($var, 1);
+					$eventMacro->set_scalar_var($var, 1);
 				}
 			} else {
-				if ($eventMacro->is_var_defined($var)) {
-					$eventMacro->set_var($var, ($eventMacro->get_var($var)-1));
+				if ($eventMacro->is_scalar_var_defined($var)) {
+					$eventMacro->set_scalar_var($var, ($eventMacro->get_scalar_var($var)-1));
 				} else {
-					$eventMacro->set_var($var, -1);
+					$eventMacro->set_scalar_var($var, -1);
 				}
 			}
 		} else {
@@ -1281,8 +1281,8 @@ sub parse_call {
 	
 	#my @new_params = substr($cparms, 2) =~ /"[^"]+"|\S+/g;
 	#foreach my $p (1..@new_params) {
-	#	$eventMacro->set_var(".param".$p,$new_params[$p-1]);
-	#	$eventMacro->set_var(".param".$p,substr($eventMacro->get_var(".param".$p), 1, -1)) if ($eventMacro->get_var(".param".$p) =~ /^".*"$/);
+	#	$eventMacro->set_scalar_var(".param".$p,$new_params[$p-1]);
+	#	$eventMacro->set_scalar_var(".param".$p,substr($eventMacro->get_scalar_var(".param".$p), 1, -1)) if ($eventMacro->get_scalar_var(".param".$p) =~ /^".*"$/);
 	#}
 }
 
@@ -1486,7 +1486,7 @@ sub substitue_variables {
 	my ($received) = @_;
 	
 	# variables
-	$received =~ s/(?:^|(?<=[^\\]))\$(\.?[a-z][a-z\d]*)/$eventMacro->get_var($1)/gei;
+	$received =~ s/(?:^|(?<=[^\\]))\$(\.?[a-z][a-z\d]*)/$eventMacro->get_scalar_var($1)/gei;
 
 	return $received;
 }

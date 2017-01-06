@@ -17,7 +17,8 @@ sub new {
 	$self->{conditionList} = new eventMacro::Lists;
 	$self->{event_type_condition_index} = undef;
 	$self->{hooks} = {};
-	$self->{variables} = {};
+	$self->{scalar_variables} = {};
+	$self->{array_variables} = {};
 	$self->{parameters} = {};
 	$self->{running_status} = 0;
 	$self->set_parameters( $parameters );
@@ -55,9 +56,14 @@ sub get_hooks {
 	return $self->{hooks};
 }
 
-sub get_variables {
+sub get_scalar_variables {
 	my ($self) = @_;
-	return $self->{variables};
+	return $self->{scalar_variables};
+}
+
+sub get_array_variables {
+	my ($self) = @_;
+	return $self->{array_variables};
 }
 
 sub get_name {
@@ -158,12 +164,21 @@ sub create_conditions_list {
 				push ( @{ $self->{hooks}{$hook} }, $cond_index );
 			}
 			foreach my $variable ( @{ $cond->get_variables() } ) {
-				push ( @{ $self->{variables}{$variable->{name}} }, $cond_index );
+				$self->define_var_types($variable,  $cond_index);
 			}
 			if ($cond->condition_type == EVENT_TYPE) {
 				$self->{event_type_condition_index} = $cond_index;
 			}
 		}
+	}
+}
+
+sub define_var_types {
+	my ($self, $variable, $cond_index) = @_;
+	if ($variable->{type} eq 'scalar') {
+		push ( @{ $self->{scalar_variables}{$variable->{name}} }, $cond_index );
+	} elsif ($variable->{type} eq 'array') {
+		push ( @{ $self->{array_variables}{$variable->{var_name}}[$variable->{index}] }, $cond_index );
 	}
 }
 
