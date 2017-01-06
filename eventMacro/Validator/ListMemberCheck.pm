@@ -3,6 +3,7 @@ package eventMacro::Validator::ListMemberCheck;
 use strict;
 use base 'eventMacro::Validator';
 use eventMacro::Data;
+use eventMacro::Utilities qw(find_variable);
 
 sub parse {
 	my ( $self, $string_list ) = @_;
@@ -19,18 +20,17 @@ sub parse {
 			$self->{error} = "A list member is undefined (empty)";
 			$self->{parsed} = 0;
 			return;
-		} elsif ($member =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
-			my $var = $1;
+		} elsif (my $var = find_variable($member)) {
 			if ($var =~ /^\./) {
 				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
 				$self->{parsed} = 0;
 				return;
 			}
 			#During parsing all variables should be undefined
-			push(@{$self->{var}}, $var);
+			push(@{$self->{var}}, $var) unless (exists $self->{var_to_member_index}{$var->{name}});
 			push(@{$self->{list}}, undef);
 			#Save this so it will be easier to change later, the other option would be to check all list members for the var
-			$self->{var_to_member_index}{$var} = $#{$self->{list}};
+			$self->{var_to_member_index}{$var->{name}} = $#{$self->{list}};
 		} else {
 			push(@{$self->{list}}, $member);
 			if ($member =~ /^any$/i) {

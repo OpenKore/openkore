@@ -8,7 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord call_macro getArgFromList getListLenght sameParty processCmd);
+	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable);
 
 use Utils;
 use Globals;
@@ -426,6 +426,32 @@ sub sameParty {
 sub getRandomRange {
 	my ($low, $high) = split(/,\s*/, $_[0]);
 	return int(rand($high-$low+1))+$low if (defined $high && defined $low)
+}
+
+sub find_variable {
+	my ($text) = @_;
+	
+	if (my $scalar = find_scalar_variable($text)) {
+		return ({ name => $scalar, type => 'scalar' });
+	}
+	
+	if (my $array = find_array_variable($text)) {
+		return ({ name => $array->{name}, type => 'array', index => $array->{index} });
+	}
+}
+
+sub find_scalar_variable {
+	my ($text) = @_;
+	if ($text =~ /(?:^|(?<=[^\\]))\$($scalar_variable_qr)$/) {
+		return $1;
+	} else {
+		return;
+	}
+}
+
+sub find_array_variable {
+	my ($text) = @_;
+	0;
 }
 
 1;

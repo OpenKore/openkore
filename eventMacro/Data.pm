@@ -4,12 +4,13 @@ use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw($eventMacro @perl_name $variable_qr %parameters $macroKeywords CHECKING_AUTOMACROS PAUSED_BY_EXCLUSIVE_MACRO PAUSE_FORCED_BY_USER CHECKING_FORCED_BY_USER STATE_TYPE EVENT_TYPE);
+our @EXPORT = qw($eventMacro @perl_name $scalar_variable_qr %parameters $macroKeywords CHECKING_AUTOMACROS PAUSED_BY_EXCLUSIVE_MACRO PAUSE_FORCED_BY_USER CHECKING_FORCED_BY_USER STATE_TYPE EVENT_TYPE);
 
 our $eventMacro;
 our @perl_name;
 
-our $variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
+our $scalar_variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
+our $array_variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]\[\d+\]*/;
 
 use constant {
 	CHECKING_AUTOMACROS => 0,

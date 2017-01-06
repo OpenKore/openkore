@@ -319,8 +319,8 @@ sub create_callbacks {
 			
 		}
 		
-		foreach my $variable_name ( keys %{ $automacro->get_variables() } ) {
-		
+		foreach my $variable ( keys %{ $automacro->get_variables() } ) {
+			my $variable_name = $variable->{name};
 			my $conditions_indexes = $automacro->{variables}->{$variable_name};
 			
 			foreach my $condition_index (@{$conditions_indexes}) {

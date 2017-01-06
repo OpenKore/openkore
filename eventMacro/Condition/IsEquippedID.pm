@@ -6,6 +6,7 @@ use Utils;
 
 use base 'eventMacro::Condition';
 use eventMacro::Data;
+use eventMacro::Utilities qw(find_variable);
 
 sub _hooks {
 	['packet_mapChange','equipped_item','unequipped_item','packet/inventory_items_stackable','packet/inventory_items_nonstackable'];
@@ -38,15 +39,15 @@ sub _parse_syntax {
 		}
 
 		my $slot_is_var = 0;
-		if ($slot_name =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
-			my $var = $1;
+		if (my $var = find_variable($slot_name)) {
 			if ($var =~ /^\./) {
 				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
 				return 0;
 			} else {
 				$slot_is_var = 1;
-				push ( @{ $self->{var_to_member_index_slot_name}{$var} }, $member_index );
-				$var_exists_hash->{$var} = undef;
+				push ( @{ $self->{var_to_member_index_slot_name}{$var->{name}} }, $member_index );
+				push ( @{ $self->{variables} }, $var ) unless (exists $var_exists_hash->{$var->{name}});
+				$var_exists_hash->{$var->{name}} = undef;
 			}
 		}
 		
@@ -56,15 +57,15 @@ sub _parse_syntax {
 		}
 		
 		my $id_is_var = 0;
-		if ($item_id =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
-			my $var = $1;
+		if (my $var = find_variable($item_id)) {
 			if ($var =~ /^\./) {
 				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
 				return 0;
 			} else {
 				$id_is_var = 1;
-				push ( @{ $self->{var_to_member_index_item_id}{$var} }, $member_index );
-				$var_exists_hash->{$var} = undef;
+				push ( @{ $self->{var_to_member_index_item_id}{$var->{name}} }, $member_index );
+				push ( @{ $self->{variables} }, $var ) unless (exists $var_exists_hash->{$var->{name}});
+				$var_exists_hash->{$var->{name}} = undef;
 			}
 		}
 		
@@ -81,10 +82,6 @@ sub _parse_syntax {
 		
 	} continue {
 		$member_index++;
-	}
-	
-	foreach my $var (keys %{$var_exists_hash}) {
-		push ( @{ $self->{variables} }, $var );
 	}
 	
 	return 1;

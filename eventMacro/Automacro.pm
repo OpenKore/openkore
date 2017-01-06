@@ -158,7 +158,7 @@ sub create_conditions_list {
 				push ( @{ $self->{hooks}{$hook} }, $cond_index );
 			}
 			foreach my $variable ( @{ $cond->get_variables() } ) {
-				push ( @{ $self->{variables}{$variable} }, $cond_index );
+				push ( @{ $self->{variables}{$variable->{name}} }, $cond_index );
 			}
 			if ($cond->condition_type == EVENT_TYPE) {
 				$self->{event_type_condition_index} = $cond_index;
