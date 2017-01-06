@@ -29,8 +29,7 @@ sub parse {
 			#During parsing all variables should be undefined
 			push(@{$self->{var}}, $var) unless (exists $self->{var_to_member_index}{$var->{name}});
 			push(@{$self->{list}}, undef);
-			#Save this so it will be easier to change later, the other option would be to check all list members for the var
-			$self->{var_to_member_index}{$var->{name}} = $#{$self->{list}};
+			push(@{$self->{var_to_member_index}{$var}}, $#{$self->{list}});
 		} else {
 			push(@{$self->{list}}, $member);
 			if ($member =~ /^any$/i) {
@@ -56,7 +55,9 @@ sub parse {
 
 sub update_vars {
 	my ( $self, $var_name, $var_value ) = @_;
-	@{$self->{list}}[$self->{var_to_member_index}{$var_name}] = $var_value;
+	foreach my $member_index (@{$self->{var_to_member_index}{$var_name}}) {
+		@{$self->{list}}[$member_index] = $var_value;
+	}
 }
 
 sub validate {

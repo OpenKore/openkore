@@ -36,25 +36,42 @@ sub parse {
 			push(@{$self->{var}}, $var);
 		}
 		
-		$self->{var_to_regex_part_index} = {};
 		$self->{regex_parts} = [];
+		$self->{var_to_regex_part_index} = {};
+		$self->{undefined_vars} = scalar(@{$self->{var}});
+		
+		unless ($self->{undefined_vars}) {
+			$self->{regex} = $self->{original_regex};
+			$self->{parsed} = 1;
+			return;
+		}
+		
 		my $part_index = 0;
-		my $regex = $self->{original_regex};
+		my $remaining_regex = $self->{original_regex};
 		foreach my $var_index (0..$#{$self->{var}}) {
 			my $var = $self->{var}->[$var_index]->{name};
-			my ($before_var, $regex) = $regex =~ /^(.*)$var(.*)/;
+			my ($before_var);
+			if ($remaining_regex =~ /^(.*?)\$$var(.*?)$/) {
+				$before_var = $1;
+				$remaining_regex = $2;
+			} else {
+				$self->{error} = "Could not find detected variable in regex";
+				$self->{parsed} = 0;
+				return;
+			}
 			
-			push (@{$self->{regex_parts}}, $before_var);
-			$part_index++;
+			if ($before_var ne '') {
+				push (@{$self->{regex_parts}}, $before_var);
+				$part_index++;
+			}
 			
 			push (@{$self->{var_to_regex_part_index}{$var}}, $part_index);
 			push (@{$self->{regex_parts}}, undef);
 			$part_index++;
 		}
-		
-		$self->{undefined_vars} = scalar(@{$self->{var}});
-		
-		$self->{regex} = $self->{original_regex};
+		if ($remaining_regex ne '') {
+			push (@{$self->{regex_parts}}, $remaining_regex);
+		}
 		
 		$self->{parsed} = 1;
 	} else {
@@ -74,11 +91,14 @@ sub update_vars {
 		$self->{undefined_vars}++;
 	}
 	
+	foreach my $part_index (@{$self->{var_to_regex_part_index}{$var_name}}) {
+		$self->{regex_parts}->[$part_index] = $var_value;
+ 	}
+	
 	if ($self->{undefined_vars} == 0) {
-		foreach my $part_index (@{$self->{var_to_regex_part_index}{$var_name}}) {
-			$self->{regex_parts}->[$part_index] = $var_value;
-		}
 		$self->{regex} = join('', @{$self->{regex_parts}});
+	} else {
+		$self->{regex} = undef;
 	}
 }
 
