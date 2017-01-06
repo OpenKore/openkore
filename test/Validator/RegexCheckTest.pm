@@ -91,6 +91,7 @@ sub start {
 		$v->update_vars( 'foo', 'oring' );
 		ok (defined $v->{regex});
 		is ($v->{regex}, 'oring');
+		is_deeply ($v->{defined_var_list}, {'foo' => 1});
 		is ($v->{undefined_vars}, 0);
 		
 		ok $v->validate( 'Poring' );
@@ -124,6 +125,7 @@ sub start {
 		ok (defined $v->{regex});
 		is ($v->{regex}, '(Poring|Marin)');
 		is ($v->{undefined_vars}, 0);
+		is_deeply ($v->{defined_var_list}, {'foo' => 1});
 		
 		ok $v->validate( 'Poring' );
 		ok !$v->validate( 'Drops' );
@@ -149,6 +151,7 @@ sub start {
 		
 		$v->update_vars( 'foo', 'hey' );
 		ok (!defined $v->{regex});
+		is_deeply ($v->{defined_var_list}, {'foo' => 1, 'bar' => 0, 'foobar' => 0});
 		is ($v->{undefined_vars}, 2);
 		
 		ok !$v->validate( 'hey there you bot' );
@@ -157,11 +160,13 @@ sub start {
 		
 		$v->update_vars( 'bar', ' there' );
 		ok (!defined $v->{regex});
+		is_deeply ($v->{defined_var_list}, {'foo' => 1, 'bar' => 1, 'foobar' => 0});
 		is ($v->{undefined_vars}, 1);
 		
 		$v->update_vars( 'foobar', 'you' );
 		ok (defined $v->{regex});
 		is ($v->{undefined_vars}, 0);
+		is_deeply ($v->{defined_var_list}, {'foo' => 1, 'bar' => 1, 'foobar' => 1});
 		
 		ok $v->validate( 'hey there you bot' );
 		ok !$v->validate( 'hello you bot' );
@@ -170,6 +175,7 @@ sub start {
 		$v->update_vars( 'foo', 'hell' );
 		ok (defined $v->{regex});
 		is ($v->{undefined_vars}, 0);
+		is_deeply ($v->{defined_var_list}, {'foo' => 1, 'bar' => 1, 'foobar' => 1});
 		
 		ok !$v->validate( 'hey there you bot' );
 		ok !$v->validate( 'hello you bot' );
@@ -178,10 +184,12 @@ sub start {
 		$v->update_vars( 'bar', 'o' );
 		ok (defined $v->{regex});
 		is ($v->{undefined_vars}, 0);
+		is_deeply ($v->{defined_var_list}, {'foo' => 1, 'bar' => 1, 'foobar' => 1});
 		
 		$v->update_vars( 'foobar', 'you' );
 		ok (defined $v->{regex});
 		is ($v->{undefined_vars}, 0);
+		is_deeply ($v->{defined_var_list}, {'foo' => 1, 'bar' => 1, 'foobar' => 1});
 		
 		ok !$v->validate( 'hey there you bot' );
 		ok $v->validate( 'hello you bot' );
@@ -205,6 +213,7 @@ sub start {
 		$v->update_vars( 'foo', '(oring' );
 		ok (!defined $v->{regex});
 		is ($v->{undefined_vars}, 2);
+		is_deeply ($v->{defined_var_list}, {'foo' => 1, 'bar' => 0, 'foobar' => 0});
 		
 		ok !$v->validate( 'poring' );
 		ok !$v->validate( 'poporing' );
@@ -214,10 +223,12 @@ sub start {
 		$v->update_vars( 'bar', '|arin|' );
 		ok (!defined $v->{regex});
 		is ($v->{undefined_vars}, 1);
+		is_deeply ($v->{defined_var_list}, {'foo' => 1, 'bar' => 1, 'foobar' => 0});
 		
 		$v->update_vars( 'foobar', 'rops)' );
 		ok (defined $v->{regex});
 		is ($v->{undefined_vars}, 0);
+		is_deeply ($v->{defined_var_list}, {'foo' => 1, 'bar' => 1, 'foobar' => 1});
 		
 		ok $v->validate( 'poring' );
 		ok $v->validate( 'poporing' );
@@ -227,6 +238,7 @@ sub start {
 		$v->update_vars( 'foo', '(magma' );
 		ok (defined $v->{regex});
 		is ($v->{undefined_vars}, 0);
+		is_deeply ($v->{defined_var_list}, {'foo' => 1, 'bar' => 1, 'foobar' => 1});
 		
 		ok !$v->validate( 'poring' );
 		ok !$v->validate( 'poporing' );
@@ -236,6 +248,7 @@ sub start {
 		$v->update_vars( 'bar', '|oring|' );
 		ok (defined $v->{regex});
 		is ($v->{undefined_vars}, 0);
+		is_deeply ($v->{defined_var_list}, {'foo' => 1, 'bar' => 1, 'foobar' => 1});
 		
 		ok $v->validate( 'poring' );
 		ok $v->validate( 'poporing' );
