@@ -7,15 +7,6 @@ use Test::More;
 use eventMacro::Data;
 use eventMacro::Validator::NumericComparison;
 
-sub test {
-	my ( $pattern, $neg, $zero, $pos ) = @_;
-	my $v = eventMacro::Validator::NumericComparison->new( $pattern );
-	ok $v->parsed;
-	ok !!$neg eq !!$v->validate( -1 );
-	ok !!$zero eq !!$v->validate( 0 );
-	ok !!$pos eq !!$v->validate( 1 );
-}
-
 sub start {
 	
 	subtest 'op checks' => sub {
@@ -106,7 +97,7 @@ sub start {
 		$v = eventMacro::Validator::NumericComparison->new( '< 10' );
 		ok $v->parsed;
 		ok $v->validate( 9 );
-		ok $v->validate( 10 );
+		ok !$v->validate( 10 );
 		ok !$v->validate( 11 );
 	};
 	

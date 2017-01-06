@@ -29,6 +29,7 @@ use Misc;
 
 my @tests = qw(
     Validator::NumericComparisonTest
+	Validator::ListMemberCheckTest
 );
 @tests = @ARGV if @ARGV;
 
