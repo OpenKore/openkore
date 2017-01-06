@@ -323,8 +323,7 @@ sub create_callbacks {
 		
 		#scalars
 		foreach my $variable_name ( keys %{ $automacro->get_scalar_variables() } ) {
-			my $conditions_indexes = $automacro->{variables}->{$variable_name};
-			
+			my $conditions_indexes = $automacro->{scalar_variables}->{$variable_name};
 			foreach my $condition_index (@{$conditions_indexes}) {
 				$self->{Event_Related_Scalar_Variables}{$variable_name}{$automacro_index}{$condition_index} = 1;
 			}
@@ -333,7 +332,7 @@ sub create_callbacks {
 		#arrays
 		foreach my $variable ( keys %{ $automacro->get_array_variables() } ) {
 			my $variable_name = $variable->{var_name};
-			my $array_indexes = $automacro->{variables}->{$variable_name};
+			my $array_indexes = $automacro->{array_variables}->{$variable_name};
 			
 			foreach my $array_index (@{$array_indexes}) {
 				foreach my $condition_index (@{$array_index}) {
