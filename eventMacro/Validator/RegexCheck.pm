@@ -26,12 +26,43 @@ sub parse {
 			push(@{$self->{var}}, $var);
 		}
 		
-		#If we don't do this and we have vars like '$var' and '$var2' we may end up substituting '$var2' for 'var1value+2'
-		@{$self->{var}} = sort { length $a <=> length $b } @{$self->{var}};
 		
+		$self->{regex_parts} = [];
+		$self->{var_to_regex_part_index} = {};
 		$self->{undefined_vars} = scalar(@{$self->{var}});
 		
-		$self->{regex} = $self->{original_regex};
+		unless ($self->{undefined_vars}) {
+			$self->{regex} = $self->{original_regex};
+			$self->{parsed} = 1;
+			return;
+		}
+		
+		my $part_index = 0;
+		my $remaining_regex = $self->{original_regex};
+		foreach my $var_index (0..$#{$self->{var}}) {
+			my $var = $self->{var}->[$var_index];
+			my ($before_var);
+			if ($remaining_regex =~ /^(.*?)\$$var(.*?)$/) {
+				$before_var = $1;
+				$remaining_regex = $2;
+			} else {
+				$self->{error} = "Could not find detected variable in regex";
+				$self->{parsed} = 0;
+				return;
+			}
+			
+			if ($before_var ne '') {
+				push (@{$self->{regex_parts}}, $before_var);
+				$part_index++;
+			}
+			
+			push (@{$self->{var_to_regex_part_index}{$var}}, $part_index);
+			push (@{$self->{regex_parts}}, undef);
+			$part_index++;
+		}
+		if ($remaining_regex ne '') {
+			push (@{$self->{regex_parts}}, $remaining_regex);
+		}
 		
 		$self->{parsed} = 1;
 	} else {
@@ -51,11 +82,14 @@ sub update_vars {
 		$self->{undefined_vars}++;
 	}
 	
+	foreach my $part_index (@{$self->{var_to_regex_part_index}{$var_name}}) {
+		$self->{regex_parts}->[$part_index] = $var_value;
+ 	}
+	
 	if ($self->{undefined_vars} == 0) {
-		$self->{regex} = $self->{original_regex};
-		foreach my $var (@{$self->{var}}) {
-			$self->{regex} =~ s/(?:^|(?<=[^\\]))\$$var/$eventMacro->get_var($var)/e;
-		}
+		$self->{regex} = join('', @{$self->{regex_parts}});
+	} else {
+		$self->{regex} = undef;
 	}
 }
 
