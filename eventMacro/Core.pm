@@ -423,6 +423,67 @@ sub clear_array {
 	}
 }
 
+sub push_array {
+	my ($self, $variable_name, $new_member) = @_;
+	
+	Log::warning "[test] pushed $new_member\n";
+	push(@{$self->{Array_Variable_List_Hash}{$variable_name}}, $new_member);
+	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
+	if (exists $self->{Event_Related_Array_Variables}{$variable_name} && defined $self->{Event_Related_Array_Variables}{$variable_name}[$index]) {
+		$self->manage_event_callbacks("variable", "array", $index, $variable_name, $new_member);
+	}
+	return (scalar @{$self->{Array_Variable_List_Hash}{$variable_name}});
+}
+
+sub pop_array {
+	my ($self, $variable_name) = @_;
+	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
+	my $poped = pop(@{$self->{Array_Variable_List_Hash}{$variable_name}});
+	Log::warning "[test] poped $poped\n";
+	if (exists $self->{Event_Related_Array_Variables}{$variable_name} && defined $self->{Event_Related_Array_Variables}{$variable_name}[$index]) {
+		$self->manage_event_callbacks("variable", "array", $index, $variable_name, undef);
+	}
+	return $poped;
+}
+
+sub shift_array {
+	my ($self, $variable_name) = @_;
+	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
+	
+	my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
+	my $shifted = shift(@{$self->{Array_Variable_List_Hash}{$variable_name}});
+	Log::warning "[test]Shifted $shifted\n";
+	
+	foreach my $member_index (0..$#{$self->{Array_Variable_List_Hash}{$variable_name}}) {
+		my $old_member = $old_array[$member_index];
+		my $member = ${$self->{Array_Variable_List_Hash}{$variable_name}}[$member_index];
+		if ((defined $old_member || defined $member) && defined $self->{Event_Related_Array_Variables}{$variable_name}[$member_index]) {
+			$self->manage_event_callbacks("variable", "array", $member_index, $variable_name, $member);
+		}
+	}
+	
+	$self->manage_event_callbacks("variable", "array", $index, $variable_name, undef);
+	return $shifted;
+}
+
+sub unshift_array {
+	my ($self, $variable_name, $new_member) = @_;
+	
+	Log::warning "[test]unshifted $new_member\n";
+	my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
+	unshift(@{$self->{Array_Variable_List_Hash}{$variable_name}}, $new_member);
+	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
+	
+	foreach my $member_index (0..$index) {
+		my $old_member = $old_array[$member_index];
+		my $member = ${$self->{Array_Variable_List_Hash}{$variable_name}}[$member_index];
+		if ((defined $old_member || defined $member) && defined $self->{Event_Related_Array_Variables}{$variable_name}[$member_index]) {
+			$self->manage_event_callbacks("variable", "array", $member_index, $variable_name, $member);
+		}
+	}
+	return (scalar @{$self->{Array_Variable_List_Hash}{$variable_name}});
+}
+
 sub get_array_var {
 	my ($self, $variable_name, $index) = @_;
 	return $self->{Array_Variable_List_Hash}{$variable_name}[$index] if (exists $self->{Array_Variable_List_Hash}{$variable_name} && defined $self->{Array_Variable_List_Hash}{$variable_name}[$index]);

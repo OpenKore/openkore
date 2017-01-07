@@ -41,29 +41,32 @@ our %parameters = (
 );
 
 our $macroKeywords =
-	"npc"          . "|" .
-	"store"        . "|" .
-	"player"       . "|" .
-	"monster"      . "|" .
-	"venderitem"   . "|" .
-	"venderprice"  . "|" .
-	"venderamount" . "|" .
-	"random"       . "|" .
-	"rand"         . "|" .
-	"invamount"    . "|" .
-	"cartamount"   . "|" .
-	"shopamount"   . "|" .
-	"storamount"   . "|" .
-	"[Ii]nventory" . "|" .
-	"[Ss]torage"   . "|" .
-	"[Cc]art"      . "|" .
-	"vender"       . "|" .
-	"config"       . "|" .
-	"eval"         . "|" .
-	"arg"          . "|" .
-	"listitem"     . "|" .
-   	"nick"         . "|" .
-	"listlength"
+	"\@npc"          . "|" .
+	"\@store"        . "|" .
+	"\@player"       . "|" .
+	"\@monster"      . "|" .
+	"\@venderitem"   . "|" .
+	"\@venderprice"  . "|" .
+	"\@venderamount" . "|" .
+	"\@random"       . "|" .
+	"\@rand"         . "|" .
+	"\@invamount"    . "|" .
+	"\@cartamount"   . "|" .
+	"\@shopamount"   . "|" .
+	"\@storamount"   . "|" .
+	"\@[Ii]nventory" . "|" .
+	"\@[Ss]torage"   . "|" .
+	"\@[Cc]art"      . "|" .
+	"\@vender"       . "|" .
+	"\@config"       . "|" .
+	"\@eval"         . "|" .
+	"\@arg"          . "|" .
+	"\@listitem"     . "|" .
+   	"\@nick"         . "|" .
+	"push"           . "|" .
+	"pop"            . "|" .
+	"unshift"        . "|" .
+	"shift"
 ;
 
 1;
