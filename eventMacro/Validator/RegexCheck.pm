@@ -5,8 +5,6 @@ use base 'eventMacro::Validator';
 use eventMacro::Data;
 use eventMacro::Utilities qw(find_variable);
 
-my $general_variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*(?:\[\d+\])?/;
-
 sub parse {
 	my ( $self, $regex_code ) = @_;
 	

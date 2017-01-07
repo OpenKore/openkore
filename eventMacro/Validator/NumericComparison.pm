@@ -6,7 +6,6 @@ use eventMacro::Data;
 use eventMacro::Utilities qw(find_variable);
 
 my $number_qr = qr/-?\d+(?:\.\d+)?/;
-my $general_variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*(?:\[\d+\])?/;
 
 sub parse {
 	my ( $self, $str ) = @_;

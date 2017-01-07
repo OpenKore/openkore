@@ -18,7 +18,7 @@ use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
 use eventMacro::Utilities qw(cmpr refreshGlobal getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
 	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght);
+	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght find_variable);
 use eventMacro::Automacro;
 
 # Creates the object
@@ -973,33 +973,40 @@ sub next {
 		
 	##########################################
 	# set variable: $variable = value
-	if ($self->{current_line} =~ /^\$[a-z]/i) {
+	if ($self->{current_line} =~ /^\$$general_variable_qr/i) {
 		my ($var, $val);
-		if (($var, $val) = $self->{current_line} =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
+		if (($var, $val) = $self->{current_line} =~ /^(\$$general_variable_qr)\s+=\s+(.*)/i) {
 			my $pval = $self->parse_command($val);
-			return if (defined $self->error);
-			if (defined $pval) {
-				if ($pval =~ /^\s*(?:undef|unset)\s*$/i) {
-					$eventMacro->set_scalar_var($var, 'undef');
-				} else {
-					$eventMacro->set_scalar_var($var, $pval);
-				}
-			} else {
+			my $pvar = find_variable($var);
+			if (defined $self->error) {
+				return;
+			} elsif (!defined $pvar) {
+				$self->error("Could not define variable type");
+				return;
+			} elsif (!defined $pval) {
 				$self->error("$val failed");
+				return;
+			} elsif ($pvar->{type} eq 'scalar') {
+				$eventMacro->set_scalar_var($pvar->{name}, ($pval =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($pval)) );
+			} elsif ($pvar->{type} eq 'array') {
+				$eventMacro->set_array_var($pvar->{var_name}, $pvar->{index}, ($pval =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($pval)) );
 			}
-		} elsif (($var, $val) = $self->{current_line} =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
-			if ($val eq '++') {
-				if ($eventMacro->is_scalar_var_defined($var)) {
-					$eventMacro->set_scalar_var($var, ($eventMacro->get_scalar_var($var)+1));
-				} else {
-					$eventMacro->set_scalar_var($var, 1);
-				}
-			} else {
-				if ($eventMacro->is_scalar_var_defined($var)) {
-					$eventMacro->set_scalar_var($var, ($eventMacro->get_scalar_var($var)-1));
-				} else {
-					$eventMacro->set_scalar_var($var, -1);
-				}
+		} elsif (($var, $val) = $self->{current_line} =~ /^(\$$general_variable_qr)([+-]{2})$/i) {
+			my $pvar = find_variable($var);
+			unless (defined $pvar) {
+				$self->error("Could not define variable type");
+				return;
+			}
+			
+			my $change = (($val eq '++') ? (1) : (-1));
+			
+			if ($pvar->{type} eq 'scalar') {
+				my $old_value = ($eventMacro->is_scalar_var_defined($pvar->{name}) ? ($eventMacro->get_scalar_var($pvar->{name})) : 0);
+				$eventMacro->set_scalar_var($pvar->{name}, ($old_value + $change));
+				
+			} elsif ($pvar->{type} eq 'array') {
+				my $old_value = ($eventMacro->is_array_var_defined($pvar->{var_name}, $pvar->{index}) ? ($eventMacro->get_array_var($pvar->{var_name}, $pvar->{index})) : 0);
+				$eventMacro->set_array_var($pvar->{var_name}, $pvar->{index}, ($old_value + $change));
 			}
 		} else {
 			$self->error("unrecognized assignment");
@@ -1101,16 +1108,7 @@ sub parse_do {
 	}
 	
 	if ($parsed_command =~ /^eventMacro\s+/) {
-		my ($arg) = $parsed_command =~ /^eventMacro\s+(.*)/;
-		if ($arg =~ /^reset/) {
-			$self->error("use macro command 'release' instead of 'eventMacro reset'");
-		} elsif ($arg eq 'pause' || $arg eq 'unpause') {
-			$self->error("do not use 'eventMacro pause' or 'eventMacro unpause' inside macros");
-		} elsif ($arg eq 'stop') {
-			$self->error("use macro command 'stop' instead of 'eventMacro stop'");
-		} elsif ($arg !~ /^(?:list|status|automacro\s+.*|variables_value)$/) {
-			$self->error("use macro command 'call ".$arg."' instead of 'eventMacro ".$arg."'");
-		}
+		$self->error("Do not use command 'eventMacro' inside macros");
 	} elsif ($parsed_command =~ /^ai\s+clear$/) {
 		$self->error("do not use 'ai clear' inside macros");
 	}
@@ -1483,12 +1481,50 @@ sub parse_perl_subs {
 
 # substitute variables
 sub substitue_variables {
-	my ($received) = @_;
+	my ($self, $received) = @_;
 	
-	# variables
-	$received =~ s/(?:^|(?<=[^\\]))\$(\.?[a-z][a-z\d]*)/$eventMacro->get_scalar_var($1)/gei;
+	my $original = $received;
+	
+	my @variables = $received =~ /(?:^|(?<=[^\\]))(\$$general_variable_qr)/g;
+	
+	my $remaining = $original;
+	foreach my $variable (@variables) {
+		Log::warning "var is -- $variable --\n";
+		Log::warning "remaining is -- $remaining --\n";
+		my $var = find_variable($variable);
+		my $var_name = $var->{name};
+		Log::warning "var_name is -- $var_name --\n";
+		my $before_var;
+		my $after_var;
+		if ($var->{type} eq 'scalar') {
+			if ($remaining =~ /^(.*?)\$$var_name(.*?)$/) {
+				$before_var = $1;
+				$after_var = $2;
+			} else {
+				$self->error("Could not find detected variable in code");
+				return;
+			}
+		} elsif ($var->{type} eq 'array') {
+			my $name = $var->{var_name};
+			my $index = $var->{index};
+			if ($remaining =~ /^(.*?)\$$name\[$index\](.*?)$/) {
+				$before_var = $1;
+				$after_var = $2;
+			} else {
+				$self->error("Could not find detected variable in code");
+				return;
+			}
+		}
+		my $var_value;
+		if ($var->{type} eq 'scalar') {
+			$var_value = $eventMacro->get_scalar_var($var->{name});
+		} elsif ($var->{type} eq 'array') {
+			$var_value = $eventMacro->get_array_var($var->{var_name}, $var->{index});
+		}
+		$remaining = $before_var.$var_value.$after_var;
+	}
 
-	return $received;
+	return $remaining;
 }
 
 sub parse_keywords {
@@ -1523,7 +1559,7 @@ sub parse_command {
 	while (($keyword, $inside_brackets) = parse_keywords($command)) {
 		$result = "_%_";
 		# first parse _then_ substitute. slower but safer
-		$parsed = substitue_variables($inside_brackets) unless ($keyword eq 'nick');
+		$parsed = $self->substitue_variables($inside_brackets) unless ($keyword eq 'nick');
 		my $randomized = 0;
 
 		if ($keyword eq 'npc') {
@@ -1605,7 +1641,7 @@ sub parse_command {
 			$result = getListLenght($parsed);
 			
 		} elsif ($keyword eq 'nick') {
-			$parsed = substitue_variables($inside_brackets);
+			$parsed = $self->substitue_variables($inside_brackets);
 			$result = q4rx2($parsed);
 		}
 		
@@ -1635,7 +1671,7 @@ sub parse_command {
 				$self->error("Unrecognized --> $sub <-- Sub-Routine");
 				return "";
 			}
-			$parsed = substitue_variables($val);
+			$parsed = $self->substitue_variables($val);
 			my $sub1 = "main::".$sub."(".$parsed.")";
 			$result = eval($sub1);
 			if ($@) {
@@ -1647,7 +1683,7 @@ sub parse_command {
 		}
 	}
 
-	$command = substitue_variables($command);
+	$command = $self->substitue_variables($command);
 	return $command;
 }
 

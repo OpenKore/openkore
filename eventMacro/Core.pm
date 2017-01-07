@@ -398,7 +398,7 @@ sub is_scalar_var_defined {
 # Arrays
 sub get_array_var {
 	my ($self, $variable_name, $index) = @_;
-	return $self->{Array_Variable_List_Hash}{$variable_name}[$index] if (exists $self->{Array_Variable_List_Hash}{$variable_name} && defined $self->{Scalar_Variable_List_Hash}{$variable_name}[$index]);
+	return $self->{Array_Variable_List_Hash}{$variable_name}[$index] if (exists $self->{Array_Variable_List_Hash}{$variable_name} && defined $self->{Array_Variable_List_Hash}{$variable_name}[$index]);
 	return undef;
 }
 

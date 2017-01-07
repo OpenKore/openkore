@@ -371,6 +371,23 @@ sub commandHandler {
 		message "[eventMacro] Setting the value of variable '".$params[0]."' to '".$params[1]."'.\n";
 		$eventMacro->set_scalar_var($var, $value);
 		
+	### parameter: var_array_set
+	} elsif ($arg eq 'var_array_set') {
+		if (!defined $params[0] || !defined $params[1] || !defined $params[2]) {
+			message "usage: eventMacro var_set [variable name] [index] [variable value]\n", "list";
+			return;
+		}
+		my $var = $params[0];
+		$var =~ s/^\$//;
+		my $index = $params[1];
+		my $value = $params[2];
+		if ($var =~ /^\./) {
+			error "[eventMacro] System variables cannot be set by hand (The ones starting with a dot '.')\n";
+			return;
+		}
+		message "[eventMacro] Setting the value of variable '".$params[0]."[".$params[1]."]' to '".$params[2]."'.\n";
+		$eventMacro->set_array_var($var, $index, $value);
+		
 		
 	### parameter: enable
 	} elsif ($arg eq 'enable') {
