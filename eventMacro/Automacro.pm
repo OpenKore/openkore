@@ -170,7 +170,7 @@ sub define_var_types {
 		push ( @{ $self->{scalar_variables}{$variable->{name}} }, $cond_index );
 		
 	} elsif ($variable->{type} eq 'array') {
-		push ( @{ $self->{array_variables}{$variable->{name}}}, $cond_index );
+		push ( @{ $self->{array_variables}{$variable->{var_name}}}, $cond_index );
 		
 	} elsif ($variable->{type} eq 'accessed_array') {
 		push ( @{ $self->{accessed_array_variables}{$variable->{var_name}}[$variable->{index}] }, $cond_index );

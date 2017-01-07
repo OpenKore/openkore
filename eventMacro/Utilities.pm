@@ -435,12 +435,12 @@ sub find_variable {
 		return ({ name => $scalar, type => 'scalar' });
 	}
 	
-	if (my $scalar = find_array_variable($text)) {
+	if (my $array = find_array_variable($text)) {
 		return ({ name => $array->{name}, type => 'array', var_name => $array->{var_name} });
 	}
 	
-	if (my $array = find_accessed_array_variable($text)) {
-		return ({ name => $array->{name}, type => 'accessed_array', index => $array->{index}, var_name => $array->{var_name} });
+	if (my $accessed_array = find_accessed_array_variable($text)) {
+		return ({ name => $accessed_array->{name}, type => 'accessed_array', index => $accessed_array->{index}, var_name => $accessed_array->{var_name} });
 	}
 }
 
@@ -457,7 +457,7 @@ sub find_array_variable {
 	my ($text) = @_;
 	if ($text =~ /(?:^|(?<=[^\\]))\@($variable_qr)$/) {
 		my $name = $1;
-		return ({name => ('@'.$name), var_name => $name);
+		return ({name => ('@'.$name), var_name => $name});
 	} else {
 		return;
 	}

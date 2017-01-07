@@ -409,6 +409,7 @@ sub set_full_array {
 	my ($self, $variable_name, $list) = @_;
 	$self->clear_array($variable_name);
 	
+	debug "[eventMacro] Setting array '@".$variable_name."'\n", "eventMacro";
 	foreach my $member_index (0..$#{$list}) {
 		my $member = $list->[$member_index];
 		$self->{Array_Variable_List_Hash}{$variable_name}[$member_index] = $member;
@@ -420,6 +421,7 @@ sub set_full_array {
 sub clear_array {
 	my ($self, $variable_name) = @_;
 	if (exists $self->{Array_Variable_List_Hash}{$variable_name}) {
+		debug "[eventMacro] Clearing array '@".$variable_name."'\n", "eventMacro";
 		my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
 		delete $self->{Array_Variable_List_Hash}{$variable_name};
 		if (exists $self->{Event_Related_Accessed_Array_Variables}{$variable_name}) {
@@ -440,7 +442,7 @@ sub push_array {
 	push(@{$self->{Array_Variable_List_Hash}{$variable_name}}, $new_member);
 	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
 	
-	warning "[eventMacro] 'push' was used in array '@".$variable_name."' to add list member '".$new_member."' into position '".$index."'\n";
+	debug "[eventMacro] 'push' was used in array '@".$variable_name."' to add list member '".$new_member."' into position '".$index."'\n", "eventMacro";
 	
 	if (exists $self->{Event_Related_Accessed_Array_Variables}{$variable_name} && defined $self->{Event_Related_Accessed_Array_Variables}{$variable_name}[$index]) {
 		$self->manage_event_callbacks("variable", 'accessed_array', $index, $variable_name, $new_member);
@@ -456,7 +458,7 @@ sub unshift_array {
 	unshift(@{$self->{Array_Variable_List_Hash}{$variable_name}}, $new_member);
 	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
 	
-	warning "[eventMacro] 'unshift' was used in array '@".$variable_name."' to add list member '".$new_member."' into position '0'\n";
+	debug "[eventMacro] 'unshift' was used in array '@".$variable_name."' to add list member '".$new_member."' into position '0'\n", "eventMacro";
 	
 	foreach my $member_index (0..$index) {
 		my $old_member = $old_array[$member_index];
@@ -475,7 +477,7 @@ sub pop_array {
 	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
 	my $poped = pop(@{$self->{Array_Variable_List_Hash}{$variable_name}});
 	
-	warning "[eventMacro] 'pop' was used in array '@".$variable_name."' to remove member '".$poped."' from position '".$index."'\n";
+	debug "[eventMacro] 'pop' was used in array '@".$variable_name."' to remove member '".$poped."' from position '".$index."'\n", "eventMacro";
 	
 	if (exists $self->{Event_Related_Accessed_Array_Variables}{$variable_name} && defined $self->{Event_Related_Accessed_Array_Variables}{$variable_name}[$index]) {
 		$self->manage_event_callbacks("variable", 'accessed_array', $index, $variable_name, undef);
@@ -491,7 +493,7 @@ sub shift_array {
 	my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
 	my $shifted = shift(@{$self->{Array_Variable_List_Hash}{$variable_name}});
 	
-	warning "[eventMacro] 'shift' was used in array '@".$variable_name."' to remove member '".$shifted."' from position '0'\n";
+	debug "[eventMacro] 'shift' was used in array '@".$variable_name."' to remove member '".$shifted."' from position '0'\n", "eventMacro";
 	
 	foreach my $member_index (0..$#{$self->{Array_Variable_List_Hash}{$variable_name}}) {
 		my $old_member = $old_array[$member_index];
@@ -528,10 +530,20 @@ sub set_array_var {
 
 sub array_size_change {
 	my ($self, $variable_name) = @_;
+	my $size = scalar @{$self->{Array_Variable_List_Hash}{$variable_name}};
+	debug "[eventMacro] Size of array '@".$variable_name."' change to '".$size."'\n", "eventMacro";
+	
 	if (exists $self->{Event_Related_Array_Variables}{$variable_name}) {
-		my $size = scalar @{$self->{Array_Variable_List_Hash}{$variable_name}};
 		$self->manage_event_callbacks("variable", 'array', $variable_name, $size);
 	}
+}
+
+sub get_array_size {
+	my ($self, $variable_name) = @_;
+	if (exists $self->{Array_Variable_List_Hash}{$variable_name}) {
+		return (scalar @{$self->{Array_Variable_List_Hash}{$variable_name}});
+	}
+	return 0;
 }
 
 sub is_array_var_defined {

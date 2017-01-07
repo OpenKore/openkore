@@ -973,9 +973,9 @@ sub next {
 		
 	##########################################
 	# set variable: $variable = value
-	if ($self->{current_line} =~ /^$general_variable_qr/i) {
+	if ($self->{current_line} =~ /^\$($variable_qr|$accessed_array_variable_qr)/i) {
 		my ($var, $val);
-		if (($var, $val) = $self->{current_line} =~ /^($general_variable_qr)\s+=\s+(.*)/i) {
+		if (($var, $val) = $self->{current_line} =~ /^(\$(?:$variable_qr:$accessed_array_variable_qr))\s+=\s+(.*)/i) {
 			my $pval = $self->parse_command($val);
 			my $pvar = find_variable($var);
 			if (defined $self->error) {
@@ -1522,12 +1522,12 @@ sub substitue_variables {
 	foreach my $variable (@variables) {
 		my $var = find_variable($variable);
 		my $var_name = $var->{name};
-		my $before_var;
-		my $after_var;
+		my ($var_value, $before_var, $after_var);
 		if ($var->{type} eq 'scalar') {
 			if ($remaining =~ /^(.*?)\$$var_name(.*?)$/) {
 				$before_var = $1;
 				$after_var = $2;
+				$var_value = $eventMacro->get_scalar_var($var->{name});
 			} else {
 				$self->error("Could not find detected variable in code");
 				return;
@@ -1538,16 +1538,21 @@ sub substitue_variables {
 			if ($remaining =~ /^(.*?)\$$name\[$index\](.*?)$/) {
 				$before_var = $1;
 				$after_var = $2;
+				$var_value = $eventMacro->get_array_var($var->{var_name}, $var->{index});
 			} else {
 				$self->error("Could not find detected variable in code");
 				return;
 			}
-		}
-		my $var_value;
-		if ($var->{type} eq 'scalar') {
-			$var_value = $eventMacro->get_scalar_var($var->{name});
-		} elsif ($var->{type} eq 'accessed_array') {
-			$var_value = $eventMacro->get_array_var($var->{var_name}, $var->{index});
+		} elsif ($var->{type} eq 'array') {
+			my $name = $var->{var_name};
+			if ($remaining =~ /^(.*?)\@$name(.*?)$/) {
+				$before_var = $1;
+				$after_var = $2;
+				$var_value = $eventMacro->get_array_size($var->{var_name});
+			} else {
+				$self->error("Could not find detected variable in code");
+				return;
+			}
 		}
 		$remaining = $before_var.$var_value.$after_var;
 	}
@@ -1587,8 +1592,11 @@ sub parse_command {
 	
 	while (($keyword, $inside_brackets) = parse_keywords($command)) {
 		$result = "_%_";
+		
 		# first parse _then_ substitute. slower but safer
-		$parsed = $self->substitue_variables($inside_brackets) unless ($keyword eq 'nick');
+		if ($keyword ne 'nick' && $keyword ne 'push' && $keyword ne 'unshift' && $keyword ne 'pop' && $keyword ne 'shift') {
+			$parsed = $self->substitue_variables($inside_brackets);
+		}
 		my $only_replace_once = 0;
 
 		if ($keyword eq 'npc') {
@@ -1676,7 +1684,7 @@ sub parse_command {
 			$result = q4rx2($parsed);
 		
 		} elsif ($keyword eq 'push' || $keyword eq 'unshift' || $keyword eq 'pop' || $keyword eq 'shift') {
-			$result = $self->manage_array($keyword, $parsed);
+			$result = $self->manage_array($keyword, $inside_brackets);
 			return if (defined $self->error);
 			$only_replace_once = 1;
 		}
@@ -1724,9 +1732,9 @@ sub parse_command {
 }
 
 sub manage_array {
-	my ($self, $keyword, $parsed) = @_;
+	my ($self, $keyword, $inside_brackets) = @_;
 	
-	my @args = split(/\s*,\s*/, $parsed);
+	my @args = split(/\s*,\s*/, $inside_brackets);
 	my ($var_name);
 	if ($args[0] =~ /^\@($variable_qr)/i) {
 		$var_name = $1;
@@ -1734,20 +1742,22 @@ sub manage_array {
 		$self->error("'$args[0]' is not a valid array name");
 		return;
 	}
+	
+	my $parsed = $self->substitue_variables($args[1]);
 		
 	if ($keyword eq 'push') {
 		if (@args != 2) {
 			$self->error("push sintax must be 'push(\@var_name, new_member)'");
 			return;
 		}
-		return $eventMacro->push_array($var_name, $args[1]);
+		return $eventMacro->push_array($var_name, $parsed);
 			
 	} elsif ($keyword eq 'unshift') {
 		if (@args != 2) {
 			$self->error("unshift sintax must be 'unshift(\@var_name, new_member)'");
 			return;
 		}
-		return $eventMacro->unshift_array($var_name, $args[1]);
+		return $eventMacro->unshift_array($var_name, $parsed);
 		
 	} elsif ($keyword eq 'pop') {
 		if (@args != 1) {
