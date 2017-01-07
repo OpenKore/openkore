@@ -38,6 +38,8 @@ sub new {
 	
 	$self->{Event_Related_Scalar_Variables} = {};
 	$self->{Event_Related_Array_Variables} = {};
+	$self->{Event_Related_Accessed_Array_Variables} = {};
+	
 	$self->{Event_Related_Hooks} = {};
 	$self->{Hook_Handles} = {};
 	$self->create_callbacks();
@@ -311,17 +313,16 @@ sub create_callbacks {
 		
 		my $automacro_index = $automacro->get_index;
 		
+		# Hooks
 		foreach my $hook_name ( keys %{ $automacro->get_hooks() } ) {
-		
 			my $conditions_indexes = $automacro->{hooks}->{$hook_name};
-			
 			foreach my $condition_index (@{$conditions_indexes}) {
 				$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index} = undef;
 			}
 			
 		}
 		
-		#scalars
+		# Scalars
 		foreach my $variable_name ( keys %{ $automacro->get_scalar_variables() } ) {
 			my $conditions_indexes = $automacro->{scalar_variables}->{$variable_name};
 			foreach my $condition_index (@{$conditions_indexes}) {
@@ -329,14 +330,22 @@ sub create_callbacks {
 			}
 		}
 		
-		#arrays
+		# Arrays
 		foreach my $variable_name ( keys %{ $automacro->get_array_variables() } ) {
-			my $array_indexes = $automacro->{array_variables}->{$variable_name};
+			my $conditions_indexes = $automacro->{scalar_variables}->{$variable_name};
+			foreach my $condition_index (@{$conditions_indexes}) {
+				$self->{Event_Related_Array_Variables}{$variable_name}{$automacro_index}{$condition_index} = 1;
+			}
+		}
+		
+		# Accessed arrays
+		foreach my $variable_name ( keys %{ $automacro->get_accessed_array_variables() } ) {
+			my $array_indexes = $automacro->{accessed_array_variables}->{$variable_name};
 			foreach my $array_index (0..$#{$array_indexes}) {
 				my $cond_indexes = $array_indexes->[$array_index];
 				next unless (defined $cond_indexes);
 				foreach my $condition_index (@{$cond_indexes}) {
-					$self->{Event_Related_Array_Variables}{$variable_name}[$array_index]{$automacro_index}{$condition_index} = 1;
+					$self->{Event_Related_Accessed_Array_Variables}{$variable_name}[$array_index]{$automacro_index}{$condition_index} = 1;
 				}
 			}
 		}
@@ -403,8 +412,9 @@ sub set_full_array {
 	foreach my $member_index (0..$#{$list}) {
 		my $member = $list->[$member_index];
 		$self->{Array_Variable_List_Hash}{$variable_name}[$member_index] = $member;
-		$self->manage_event_callbacks("variable", "array", $member_index, $variable_name, $member);
+		$self->manage_event_callbacks("variable", 'accessed_array', $member_index, $variable_name, $member);
 	}
+	$self->array_size_change($variable_name);
 }
 
 sub clear_array {
@@ -412,76 +422,87 @@ sub clear_array {
 	if (exists $self->{Array_Variable_List_Hash}{$variable_name}) {
 		my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
 		delete $self->{Array_Variable_List_Hash}{$variable_name};
-		if (exists $self->{Event_Related_Array_Variables}{$variable_name}) {
+		if (exists $self->{Event_Related_Accessed_Array_Variables}{$variable_name}) {
 			foreach my $old_member_index (0..$#old_array) {
 				my $old_member = $old_array[$old_member_index];
-				if (defined $old_member && defined $self->{Event_Related_Array_Variables}{$variable_name}[$old_member_index]) {
-					$self->manage_event_callbacks("variable", "array", $old_member_index, $variable_name, undef);
+				if (defined $self->{Event_Related_Accessed_Array_Variables}{$variable_name}[$old_member_index]) {
+					$self->manage_event_callbacks("variable", 'accessed_array', $old_member_index, $variable_name, undef);
 				}
 			}
 		}
 	}
+	$self->array_size_change($variable_name);
 }
 
 sub push_array {
 	my ($self, $variable_name, $new_member) = @_;
 	
-	Log::warning "[test] pushed $new_member\n";
 	push(@{$self->{Array_Variable_List_Hash}{$variable_name}}, $new_member);
 	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
-	if (exists $self->{Event_Related_Array_Variables}{$variable_name} && defined $self->{Event_Related_Array_Variables}{$variable_name}[$index]) {
-		$self->manage_event_callbacks("variable", "array", $index, $variable_name, $new_member);
+	
+	warning "[eventMacro] 'push' was used in array '@".$variable_name."' to add list member '".$new_member."' into position '".$index."'\n";
+	
+	if (exists $self->{Event_Related_Accessed_Array_Variables}{$variable_name} && defined $self->{Event_Related_Accessed_Array_Variables}{$variable_name}[$index]) {
+		$self->manage_event_callbacks("variable", 'accessed_array', $index, $variable_name, $new_member);
 	}
+	$self->array_size_change($variable_name);
 	return (scalar @{$self->{Array_Variable_List_Hash}{$variable_name}});
-}
-
-sub pop_array {
-	my ($self, $variable_name) = @_;
-	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
-	my $poped = pop(@{$self->{Array_Variable_List_Hash}{$variable_name}});
-	Log::warning "[test] poped $poped\n";
-	if (exists $self->{Event_Related_Array_Variables}{$variable_name} && defined $self->{Event_Related_Array_Variables}{$variable_name}[$index]) {
-		$self->manage_event_callbacks("variable", "array", $index, $variable_name, undef);
-	}
-	return $poped;
-}
-
-sub shift_array {
-	my ($self, $variable_name) = @_;
-	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
-	
-	my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
-	my $shifted = shift(@{$self->{Array_Variable_List_Hash}{$variable_name}});
-	Log::warning "[test]Shifted $shifted\n";
-	
-	foreach my $member_index (0..$#{$self->{Array_Variable_List_Hash}{$variable_name}}) {
-		my $old_member = $old_array[$member_index];
-		my $member = ${$self->{Array_Variable_List_Hash}{$variable_name}}[$member_index];
-		if ((defined $old_member || defined $member) && defined $self->{Event_Related_Array_Variables}{$variable_name}[$member_index]) {
-			$self->manage_event_callbacks("variable", "array", $member_index, $variable_name, $member);
-		}
-	}
-	
-	$self->manage_event_callbacks("variable", "array", $index, $variable_name, undef);
-	return $shifted;
 }
 
 sub unshift_array {
 	my ($self, $variable_name, $new_member) = @_;
 	
-	Log::warning "[test]unshifted $new_member\n";
 	my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
 	unshift(@{$self->{Array_Variable_List_Hash}{$variable_name}}, $new_member);
 	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
 	
+	warning "[eventMacro] 'unshift' was used in array '@".$variable_name."' to add list member '".$new_member."' into position '0'\n";
+	
 	foreach my $member_index (0..$index) {
 		my $old_member = $old_array[$member_index];
 		my $member = ${$self->{Array_Variable_List_Hash}{$variable_name}}[$member_index];
-		if ((defined $old_member || defined $member) && defined $self->{Event_Related_Array_Variables}{$variable_name}[$member_index]) {
-			$self->manage_event_callbacks("variable", "array", $member_index, $variable_name, $member);
+		if (defined $self->{Event_Related_Accessed_Array_Variables}{$variable_name}[$member_index]) {
+			$self->manage_event_callbacks("variable", 'accessed_array', $member_index, $variable_name, $member);
 		}
 	}
+	$self->array_size_change($variable_name);
 	return (scalar @{$self->{Array_Variable_List_Hash}{$variable_name}});
+}
+
+sub pop_array {
+	my ($self, $variable_name) = @_;
+	
+	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
+	my $poped = pop(@{$self->{Array_Variable_List_Hash}{$variable_name}});
+	
+	warning "[eventMacro] 'pop' was used in array '@".$variable_name."' to remove member '".$poped."' from position '".$index."'\n";
+	
+	if (exists $self->{Event_Related_Accessed_Array_Variables}{$variable_name} && defined $self->{Event_Related_Accessed_Array_Variables}{$variable_name}[$index]) {
+		$self->manage_event_callbacks("variable", 'accessed_array', $index, $variable_name, undef);
+	}
+	$self->array_size_change($variable_name);
+	return $poped;
+}
+
+sub shift_array {
+	my ($self, $variable_name) = @_;
+	
+	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
+	my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
+	my $shifted = shift(@{$self->{Array_Variable_List_Hash}{$variable_name}});
+	
+	warning "[eventMacro] 'shift' was used in array '@".$variable_name."' to remove member '".$shifted."' from position '0'\n";
+	
+	foreach my $member_index (0..$#{$self->{Array_Variable_List_Hash}{$variable_name}}) {
+		my $old_member = $old_array[$member_index];
+		my $member = ${$self->{Array_Variable_List_Hash}{$variable_name}}[$member_index];
+		if (defined $self->{Event_Related_Accessed_Array_Variables}{$variable_name}[$member_index]) {
+			$self->manage_event_callbacks("variable", 'accessed_array', $member_index, $variable_name, $member);
+		}
+	}
+	$self->manage_event_callbacks("variable", 'accessed_array', $index, $variable_name, undef);
+	$self->array_size_change($variable_name);
+	return $shifted;
 }
 
 sub get_array_var {
@@ -499,8 +520,17 @@ sub set_array_var {
 		$self->{Array_Variable_List_Hash}{$variable_name}[$index] = $variable_value;
 	}
 	return if (defined $check_callbacks && $check_callbacks == 0);
-	if (exists $self->{Event_Related_Array_Variables}{$variable_name} && defined $self->{Event_Related_Array_Variables}{$variable_name}[$index]) {
-		$self->manage_event_callbacks("variable", "array", $index, $variable_name, $variable_value);
+	if (exists $self->{Event_Related_Accessed_Array_Variables}{$variable_name} && defined $self->{Event_Related_Accessed_Array_Variables}{$variable_name}[$index]) {
+		$self->manage_event_callbacks("variable", 'accessed_array', $index, $variable_name, $variable_value);
+	}
+	$self->array_size_change($variable_name);
+}
+
+sub array_size_change {
+	my ($self, $variable_name) = @_;
+	if (exists $self->{Event_Related_Array_Variables}{$variable_name}) {
+		my $size = scalar @{$self->{Array_Variable_List_Hash}{$variable_name}};
+		$self->manage_event_callbacks("variable", 'array', $variable_name, $size);
 	}
 }
 
@@ -583,9 +613,13 @@ sub manage_event_callbacks {
 			$callback_name = shift;
 			$check_list_hash = $self->{'Event_Related_Scalar_Variables'}{$callback_name};
 		} elsif ($type eq 'array') {
+			$callback_name = shift;
+			$check_list_hash = $self->{'Event_Related_Accessed_Array_Variables'}{$callback_name}[$index];
+			$callback_name = '@'.$callback_name;
+		} elsif ($type eq 'accessed_array') {
 			$index = shift;
 			$callback_name = shift;
-			$check_list_hash = $self->{'Event_Related_Array_Variables'}{$callback_name}[$index];
+			$check_list_hash = $self->{'Event_Related_Accessed_Array_Variables'}{$callback_name}[$index];
 			$callback_name = $callback_name."[".$index."]";
 		}
 	} else {
@@ -594,7 +628,7 @@ sub manage_event_callbacks {
 	}
 	my $args = shift;
 	
-	debug "[eventMacro] Callback Happenned, type: '".$callback_type."' ".($callback_type eq 'variable' ? (", variable type: '".$type."'") : ('')).(($callback_type eq 'variable' && $type eq 'array') ? (", array index: '".$index."'") : ('')).", name: '".$callback_name."'\n", "eventMacro", 2;
+	debug "[eventMacro] Callback Happenned, type: '".$callback_type."' ".($callback_type eq 'variable' ? (", variable type: '".$type."'") : ('')).(($callback_type eq 'variable' && $type eq 'accessed_array') ? (", array index: '".$index."'") : ('')).", name: '".$callback_name."'\n", "eventMacro", 2;
 	
 	my $event_type_automacro_call_index;
 	my $event_type_automacro_call_priority;

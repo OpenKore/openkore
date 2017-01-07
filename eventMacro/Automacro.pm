@@ -19,6 +19,7 @@ sub new {
 	$self->{hooks} = {};
 	$self->{scalar_variables} = {};
 	$self->{array_variables} = {};
+	$self->{accessed_array_variables} = {};
 	$self->{parameters} = {};
 	$self->{running_status} = 0;
 	$self->set_parameters( $parameters );
@@ -54,16 +55,6 @@ sub get_index {
 sub get_hooks {
 	my ($self) = @_;
 	return $self->{hooks};
-}
-
-sub get_scalar_variables {
-	my ($self) = @_;
-	return $self->{scalar_variables};
-}
-
-sub get_array_variables {
-	my ($self) = @_;
-	return $self->{array_variables};
 }
 
 sub get_name {
@@ -177,9 +168,28 @@ sub define_var_types {
 	my ($self, $variable, $cond_index) = @_;
 	if ($variable->{type} eq 'scalar') {
 		push ( @{ $self->{scalar_variables}{$variable->{name}} }, $cond_index );
+		
 	} elsif ($variable->{type} eq 'array') {
-		push ( @{ $self->{array_variables}{$variable->{var_name}}[$variable->{index}] }, $cond_index );
+		push ( @{ $self->{array_variables}{$variable->{name}}}, $cond_index );
+		
+	} elsif ($variable->{type} eq 'accessed_array') {
+		push ( @{ $self->{accessed_array_variables}{$variable->{var_name}}[$variable->{index}] }, $cond_index );
 	}
+}
+
+sub get_scalar_variables {
+	my ($self) = @_;
+	return $self->{scalar_variables};
+}
+
+sub get_array_variables {
+	my ($self) = @_;
+	return $self->{array_variables};
+}
+
+sub get_accessed_array_variables {
+	my ($self) = @_;
+	return $self->{accessed_array_variables};
 }
 
 sub has_event_type_condition {

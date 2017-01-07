@@ -973,9 +973,9 @@ sub next {
 		
 	##########################################
 	# set variable: $variable = value
-	if ($self->{current_line} =~ /^\$$general_variable_qr/i) {
+	if ($self->{current_line} =~ /^$general_variable_qr/i) {
 		my ($var, $val);
-		if (($var, $val) = $self->{current_line} =~ /^(\$$general_variable_qr)\s+=\s+(.*)/i) {
+		if (($var, $val) = $self->{current_line} =~ /^($general_variable_qr)\s+=\s+(.*)/i) {
 			my $pval = $self->parse_command($val);
 			my $pvar = find_variable($var);
 			if (defined $self->error) {
@@ -988,10 +988,10 @@ sub next {
 				return;
 			} elsif ($pvar->{type} eq 'scalar') {
 				$eventMacro->set_scalar_var($pvar->{name}, ($pval =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($pval)) );
-			} elsif ($pvar->{type} eq 'array') {
+			} elsif ($pvar->{type} eq 'accessed_array') {
 				$eventMacro->set_array_var($pvar->{var_name}, $pvar->{index}, ($pval =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($pval)) );
 			}
-		} elsif (($var, $val) = $self->{current_line} =~ /^(\$$general_variable_qr)([+-]{2})$/i) {
+		} elsif (($var, $val) = $self->{current_line} =~ /^($general_variable_qr)([+-]{2})$/i) {
 			my $pvar = find_variable($var);
 			unless (defined $pvar) {
 				$self->error("Could not define variable type");
@@ -1004,7 +1004,7 @@ sub next {
 				my $old_value = ($eventMacro->is_scalar_var_defined($pvar->{name}) ? ($eventMacro->get_scalar_var($pvar->{name})) : 0);
 				$eventMacro->set_scalar_var($pvar->{name}, ($old_value + $change));
 				
-			} elsif ($pvar->{type} eq 'array') {
+			} elsif ($pvar->{type} eq 'accessed_array') {
 				my $old_value = ($eventMacro->is_array_var_defined($pvar->{var_name}, $pvar->{index}) ? ($eventMacro->get_array_var($pvar->{var_name}, $pvar->{index})) : 0);
 				$eventMacro->set_array_var($pvar->{var_name}, $pvar->{index}, ($old_value + $change));
 			}
@@ -1016,9 +1016,9 @@ sub next {
 		
 	##########################################
 	# set array: @variable = (member1, member2, member3, etc)/undef
-	} elsif ($self->{current_line} =~ /^\@$scalar_variable_qr/i) {
+	} elsif ($self->{current_line} =~ /^\@$variable_qr/i) {
 		my ($var, $val);
-		if (($var, $val) = $self->{current_line} =~ /^\@($scalar_variable_qr)\s+=\s+\((.*)\)/i) {
+		if (($var, $val) = $self->{current_line} =~ /^\@($variable_qr)\s+=\s+\((.*)\)/i) {
 			my $pval = $self->parse_command($val);
 			if (defined $self->error) {
 				return;
@@ -1029,13 +1029,21 @@ sub next {
 			my @members = split(/\s*,\s*/, $pval);
 			$eventMacro->set_full_array($var, \@members);
 			
-		} elsif (($var) = $self->{current_line} =~ /^@($scalar_variable_qr)\s+=\s+(?:undef|unset)/i) {
+		} elsif (($var) = $self->{current_line} =~ /^@($variable_qr)\s+=\s+(?:undef|unset)/i) {
 			$eventMacro->clear_array($var);
 		} else {
 			$self->error("unrecognized assignment");
 		}
 		$self->next_line;
 		$self->timeout(0);
+	
+	##########################################
+	# manage array: &push|&unshift|&shift|&pop(@variable[,new_member])
+	} elsif ($self->{current_line} =~ /^&(push|unshift|pop|shift)/i) {
+		$self->parse_command($self->{current_line});
+		return if (defined $self->error);
+		$self->timeout(0);
+		$self->next_line;
 		
 	##########################################
 	# returns command: do whatever
@@ -1508,8 +1516,8 @@ sub substitue_variables {
 	
 	my $original = $received;
 	
-	my @variables = $received =~ /(?:^|(?<=[^\\]))(\$$general_variable_qr)/g;
-	
+	# $scalars/$array[index]/$hash[key] entries
+	my @variables = $received =~ /(?:^|(?<=[^\\]))($general_variable_qr)/g;
 	my $remaining = $original;
 	foreach my $variable (@variables) {
 		my $var = find_variable($variable);
@@ -1524,7 +1532,7 @@ sub substitue_variables {
 				$self->error("Could not find detected variable in code");
 				return;
 			}
-		} elsif ($var->{type} eq 'array') {
+		} elsif ($var->{type} eq 'accessed_array') {
 			my $name = $var->{var_name};
 			my $index = $var->{index};
 			if ($remaining =~ /^(.*?)\$$name\[$index\](.*?)$/) {
@@ -1538,7 +1546,7 @@ sub substitue_variables {
 		my $var_value;
 		if ($var->{type} eq 'scalar') {
 			$var_value = $eventMacro->get_scalar_var($var->{name});
-		} elsif ($var->{type} eq 'array') {
+		} elsif ($var->{type} eq 'accessed_array') {
 			$var_value = $eventMacro->get_array_var($var->{var_name}, $var->{index});
 		}
 		$remaining = $before_var.$var_value.$after_var;
@@ -1549,7 +1557,7 @@ sub substitue_variables {
 
 sub parse_keywords {
 	my ($command) = @_;
-	my @full = $command =~ /($macroKeywords)s*((s*(.*?)s*).*)$/i;
+	my @full = $command =~ /&($macroKeywords)s*((s*(.*?)s*).*)$/i;
 	my @pair = ($full[0]);
 	my ($bracketed) = extract_bracketed ($full[1], '()');
 	return unless $bracketed;
@@ -1557,11 +1565,11 @@ sub parse_keywords {
 
 	return unless @pair;
 	if ($pair[0] eq 'arg') {
-		return $command =~ /\@(arg)\s*\(\s*(".*?",\s*(\d+|\$[a-zA-Z][a-zA-Z\d]*))\s*\)/
+		return $command =~ /&(arg)\s*\(\s*(".*?",\s*(\d+|\$[a-zA-Z][a-zA-Z\d]*))\s*\)/
 	} elsif ($pair[0] eq 'random') {
-		return $command =~ /\@(random)\s*\(\s*(".*?")\s*\)/
+		return $command =~ /&(random)\s*\(\s*(".*?")\s*\)/
 	}
-	while ($pair[1] =~ /($macroKeywords)\s*\(/) {
+	while ($pair[1] =~ /&($macroKeywords)\s*\(/) {
 		@pair = parse_keywords ($pair[1])
 	}
 	return @pair
@@ -1580,153 +1588,97 @@ sub parse_command {
 	while (($keyword, $inside_brackets) = parse_keywords($command)) {
 		$result = "_%_";
 		# first parse _then_ substitute. slower but safer
-		$parsed = $self->substitue_variables($inside_brackets) unless ($keyword eq '@nick');
-		my $randomized = 0;
+		$parsed = $self->substitue_variables($inside_brackets) unless ($keyword eq 'nick');
+		my $only_replace_once = 0;
 
-		if ($keyword eq '@npc') {
+		if ($keyword eq 'npc') {
 			$result = getnpcID($parsed);
 			
-		} elsif ($keyword eq '@cart') {
+		} elsif ($keyword eq 'cart') {
 			$result = getItemIDs($parsed, $::cart{'inventory'});
 			
-		} elsif ($keyword eq '@Cart') {
+		} elsif ($keyword eq 'Cart') {
 			$result = join ',', getItemIDs($parsed, $::cart{'inventory'});
 			
-		} elsif ($keyword eq '@inventory') {
+		} elsif ($keyword eq 'inventory') {
 			$result = getInventoryIDs($parsed);
 			
-		} elsif ($keyword eq '@Inventory') {
+		} elsif ($keyword eq 'Inventory') {
 			$result = join ',', getInventoryIDs($parsed);
 			
-		} elsif ($keyword eq '@store') {
+		} elsif ($keyword eq 'store') {
 			$result = getItemIDs($parsed, \@::storeList);
 			
-		} elsif ($keyword eq '@storage') {
+		} elsif ($keyword eq 'storage') {
 			($result) = getStorageIDs($parsed);
 			
-		} elsif ($keyword eq '@Storage') {
+		} elsif ($keyword eq 'Storage') {
 			$result = join ',', getStorageIDs($parsed);
 			
-		} elsif ($keyword eq '@player') {
+		} elsif ($keyword eq 'player') {
 			$result = getPlayerID($parsed);
 			
-		} elsif ($keyword eq '@monster') {
+		} elsif ($keyword eq 'monster') {
 			$result = getMonsterID($parsed);
 			
-		} elsif ($keyword eq '@vender') {
+		} elsif ($keyword eq 'vender') {
 			$result = getVenderID($parsed);
 			
-		} elsif ($keyword eq '@venderitem') {
+		} elsif ($keyword eq 'venderitem') {
 			($result) = getItemIDs($parsed, \@::venderItemList);
 			
-		} elsif ($keyword eq '@venderItem') {
+		} elsif ($keyword eq 'venderItem') {
 			$result = join ',', getItemIDs($parsed, \@::venderItemList);
 			
-		} elsif ($keyword eq '@venderprice') {
+		} elsif ($keyword eq 'venderprice') {
 			$result = getItemPrice($parsed, \@::venderItemList);
 			
-		} elsif ($keyword eq '@venderamount') {
+		} elsif ($keyword eq 'venderamount') {
 			$result = getVendAmount($parsed, \@::venderItemList);
 			
-		} elsif ($keyword eq '@random') {
-			$result = getRandom($parsed); $randomized = 1;
+		} elsif ($keyword eq 'random') {
+			$result = getRandom($parsed);
+			$only_replace_once = 1;
 			
-		} elsif ($keyword eq '@rand') {
-			$result = getRandomRange($parsed); $randomized = 1;
+		} elsif ($keyword eq 'rand') {
+			$result = getRandomRange($parsed);
+			$only_replace_once = 1;
 			
-		} elsif ($keyword eq '@invamount') {
+		} elsif ($keyword eq 'invamount') {
 			$result = getInventoryAmount($parsed);
 			
-		} elsif ($keyword eq '@cartamount') {
+		} elsif ($keyword eq 'cartamount') {
 			$result = getCartAmount($parsed);
 			
-		} elsif ($keyword eq '@shopamount') {
+		} elsif ($keyword eq 'shopamount') {
 			$result = getShopAmount($parsed);
 			
-		} elsif ($keyword eq '@storamount') {
+		} elsif ($keyword eq 'storamount') {
 			$result = getStorageAmount($parsed);
 			
-		} elsif ($keyword eq '@config') {
+		} elsif ($keyword eq 'config') {
 			$result = getConfig($parsed);
 			
-		} elsif ($keyword eq '@arg') {
+		} elsif ($keyword eq 'arg') {
 			$result = getWord($parsed);
 			
-		} elsif ($keyword eq '@eval') {
+		} elsif ($keyword eq 'eval') {
 			$result = eval($parsed) unless $Settings::lockdown;
 			
-		} elsif ($keyword eq '@listitem') {
+		} elsif ($keyword eq 'listitem') {
 			$result = getArgFromList($parsed);
 			
-		} elsif ($keyword eq '@listlength') {
+		} elsif ($keyword eq 'listlength') {
 			$result = getListLenght($parsed);
 			
-		} elsif ($keyword eq '@nick') {
+		} elsif ($keyword eq 'nick') {
 			$parsed = $self->substitue_variables($inside_brackets);
 			$result = q4rx2($parsed);
 		
-		#Array management
-		} elsif ($keyword eq 'push') {
-			my @args = split(/\s*,\s*/, $parsed);
-			my ($var_name);
-			if (@args != 2) {
-				$self->error("push sintax must be 'push(\@var_name, new_member)'");
-				return;
-			}
-			if ($args[0] =~ /^\@($scalar_variable_qr)/i) {
-				$var_name = $1;
-			} else {
-				$self->error("'$args[0]' is not a valid array name");
-				return;
-			}
-			Log::warning "[test]push\n";
-			$result = $eventMacro->push_array($var_name, $args[1]);
-			
-		} elsif ($keyword eq 'unshift') {
-			my @args = split(/\s*,\s*/, $parsed);
-			my ($var_name);
-			if (@args != 2) {
-				$self->error("unshift sintax must be 'unshift(\@var_name, new_member)'");
-			}
-			if ($args[0] =~ /^\@($scalar_variable_qr)/i) {
-				$var_name = $1;
-			} else {
-				$self->error("'$args[0]' is not a valid array name");
-				return;
-			}
-			Log::warning "[test]unshift\n";
-			$result = $eventMacro->unshift_array($var_name, $args[1]);
-			
-		} elsif ($keyword eq 'pop') {
-			my @args = split(/\s*,\s*/, $parsed);
-			my ($var_name);
-			if (@args != 1) {
-				$self->error("pop sintax must be 'pop(\@var_name)'");
-			}
-			if ($args[0] =~ /^\@($scalar_variable_qr)/i) {
-				$var_name = $1;
-			} else {
-				$self->error("'$args[0]' is not a valid array name");
-				return;
-			}
-			Log::warning "[test]pop\n";
-			$result = $eventMacro->pop_array($var_name);
-			
-		} elsif ($keyword eq 'shift') {
-			my @args = split(/\s*,\s*/, $parsed);
-			my ($var_name);
-			if (@args != 1) {
-				$self->error("shift sintax must be 'shift(\@var_name)'");
-			}
-			if ($args[0] =~ /^\@($scalar_variable_qr)/i) {
-				$var_name = $1;
-			} else {
-				$self->error("'$args[0]' is not a valid array name");
-				return;
-			}
-			Log::warning "[test]shift\n";
-			$result = $eventMacro->shift_array($var_name);
-			
+		} elsif ($keyword eq 'push' || $keyword eq 'unshift' || $keyword eq 'pop' || $keyword eq 'shift') {
+			$result = $self->manage_array($keyword, $parsed);
+			return if (defined $self->error);
+			$only_replace_once = 1;
 		}
 		
 		return unless defined $result;
@@ -1734,10 +1686,10 @@ sub parse_command {
 		
 		$inside_brackets = q4rx($inside_brackets);
 		
-		unless ($randomized) {
-			$command =~ s/$keyword\s*\(\s*$inside_brackets\s*\)/$result/g
+		unless ($only_replace_once) {
+			$command =~ s/&$keyword\s*\(\s*$inside_brackets\s*\)/$result/g
 		} else {
-			$command =~ s/$keyword\s*\(\s*$inside_brackets\s*\)/$result/
+			$command =~ s/&$keyword\s*\(\s*$inside_brackets\s*\)/$result/
 		}
 	}
 	
@@ -1769,6 +1721,48 @@ sub parse_command {
 
 	$command = $self->substitue_variables($command);
 	return $command;
+}
+
+sub manage_array {
+	my ($self, $keyword, $parsed) = @_;
+	
+	my @args = split(/\s*,\s*/, $parsed);
+	my ($var_name);
+	if ($args[0] =~ /^\@($variable_qr)/i) {
+		$var_name = $1;
+	} else {
+		$self->error("'$args[0]' is not a valid array name");
+		return;
+	}
+		
+	if ($keyword eq 'push') {
+		if (@args != 2) {
+			$self->error("push sintax must be 'push(\@var_name, new_member)'");
+			return;
+		}
+		return $eventMacro->push_array($var_name, $args[1]);
+			
+	} elsif ($keyword eq 'unshift') {
+		if (@args != 2) {
+			$self->error("unshift sintax must be 'unshift(\@var_name, new_member)'");
+			return;
+		}
+		return $eventMacro->unshift_array($var_name, $args[1]);
+		
+	} elsif ($keyword eq 'pop') {
+		if (@args != 1) {
+			$self->error("pop sintax must be 'pop(\@var_name)'");
+			return;
+		}
+		return $eventMacro->pop_array($var_name);
+			
+	} elsif ($keyword eq 'shift') {
+		if (@args != 1) {
+			$self->error("shift sintax must be 'shift(\@var_name)'");
+			return;
+		}
+		return $eventMacro->shift_array($var_name);
+	}
 }
 
 1;
