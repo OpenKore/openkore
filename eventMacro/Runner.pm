@@ -1015,6 +1015,29 @@ sub next {
 		$self->timeout(0);
 		
 	##########################################
+	# set array: @variable = (member1, member2, member3, etc)/undef
+	} elsif ($self->{current_line} =~ /^\@$scalar_variable_qr/i) {
+		my ($var, $val);
+		if (($var, $val) = $self->{current_line} =~ /^\@($scalar_variable_qr)\s+=\s+\((.*)\)/i) {
+			my $pval = $self->parse_command($val);
+			if (defined $self->error) {
+				return;
+			} elsif (!defined $pval) {
+				$self->error("$val failed");
+				return;
+			}
+			my @members = split(/\s*,\s*/, $pval);
+			$eventMacro->set_full_array($var, \@members);
+			
+		} elsif (($var) = $self->{current_line} =~ /^@($scalar_variable_qr)\s+=\s+(?:undef|unset)/i) {
+			$eventMacro->clear_array($var);
+		} else {
+			$self->error("unrecognized assignment");
+		}
+		$self->next_line;
+		$self->timeout(0);
+		
+	##########################################
 	# returns command: do whatever
 	} elsif ($self->{current_line} =~ /^do\s/) {
 		my ($do_command) = $self->{current_line} =~ /^do\s+(.*)/;
@@ -1489,11 +1512,8 @@ sub substitue_variables {
 	
 	my $remaining = $original;
 	foreach my $variable (@variables) {
-		Log::warning "var is -- $variable --\n";
-		Log::warning "remaining is -- $remaining --\n";
 		my $var = find_variable($variable);
 		my $var_name = $var->{name};
-		Log::warning "var_name is -- $var_name --\n";
 		my $before_var;
 		my $after_var;
 		if ($var->{type} eq 'scalar') {

@@ -396,6 +396,33 @@ sub is_scalar_var_defined {
 #########
 
 # Arrays
+sub set_full_array {
+	my ($self, $variable_name, $list) = @_;
+	$self->clear_array($variable_name);
+	
+	foreach my $member_index (0..$#{$list}) {
+		my $member = $list->[$member_index];
+		$self->{Array_Variable_List_Hash}{$variable_name}[$member_index] = $member;
+		$self->manage_event_callbacks("variable", "array", $member_index, $variable_name, $member);
+	}
+}
+
+sub clear_array {
+	my ($self, $variable_name) = @_;
+	if (exists $self->{Array_Variable_List_Hash}{$variable_name}) {
+		my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
+		delete $self->{Array_Variable_List_Hash}{$variable_name};
+		if (exists $self->{Event_Related_Array_Variables}{$variable_name}) {
+			foreach my $old_member_index (0..$#old_array) {
+				my $old_member = $old_array[$old_member_index];
+				if (defined $old_member && defined $self->{Event_Related_Array_Variables}{$variable_name}[$old_member_index]) {
+					$self->manage_event_callbacks("variable", "array", $old_member_index, $variable_name, undef);
+				}
+			}
+		}
+	}
+}
+
 sub get_array_var {
 	my ($self, $variable_name, $index) = @_;
 	return $self->{Array_Variable_List_Hash}{$variable_name}[$index] if (exists $self->{Array_Variable_List_Hash}{$variable_name} && defined $self->{Array_Variable_List_Hash}{$variable_name}[$index]);
