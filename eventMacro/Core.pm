@@ -330,12 +330,12 @@ sub create_callbacks {
 		}
 		
 		#arrays
-		foreach my $variable ( keys %{ $automacro->get_array_variables() } ) {
-			my $variable_name = $variable->{var_name};
+		foreach my $variable_name ( keys %{ $automacro->get_array_variables() } ) {
 			my $array_indexes = $automacro->{array_variables}->{$variable_name};
-			
-			foreach my $array_index (@{$array_indexes}) {
-				foreach my $condition_index (@{$array_index}) {
+			foreach my $array_index (0..$#{$array_indexes}) {
+				my $cond_indexes = $array_indexes->[$array_index];
+				next unless (defined $cond_indexes);
+				foreach my $condition_index (@{$cond_indexes}) {
 					$self->{Event_Related_Array_Variables}{$variable_name}[$array_index]{$automacro_index}{$condition_index} = 1;
 				}
 			}
@@ -398,7 +398,7 @@ sub is_scalar_var_defined {
 # Arrays
 sub get_array_var {
 	my ($self, $variable_name, $index) = @_;
-	return $self->{Array_Variable_List_Hash}{$variable_name}[$index] if (defined $self->{Scalar_Variable_List_Hash}{$variable_name}[$index]);
+	return $self->{Array_Variable_List_Hash}{$variable_name}[$index] if (exists $self->{Array_Variable_List_Hash}{$variable_name} && defined $self->{Scalar_Variable_List_Hash}{$variable_name}[$index]);
 	return undef;
 }
 
@@ -411,14 +411,15 @@ sub set_array_var {
 		$self->{Array_Variable_List_Hash}{$variable_name}[$index] = $variable_value;
 	}
 	return if (defined $check_callbacks && $check_callbacks == 0);
-	if (defined $self->{Event_Related_Array_Variables}{$variable_name}[$index]) {
+	if (exists $self->{Event_Related_Array_Variables}{$variable_name} && defined $self->{Event_Related_Array_Variables}{$variable_name}[$index]) {
 		$self->manage_event_callbacks("variable", "array", $index, $variable_name, $variable_value);
 	}
 }
 
 sub is_array_var_defined {
 	my ($self, $variable_name, $index) = @_;
-	return (defined $self->{Array_Variable_List_Hash}{$variable_name}[$index]);
+	return 1 if (exists $self->{Array_Variable_List_Hash}{$variable_name} && defined $self->{Array_Variable_List_Hash}{$variable_name}[$index]);
+	return 0;
 }
 #######
 
@@ -505,7 +506,7 @@ sub manage_event_callbacks {
 	}
 	my $args = shift;
 	
-	debug "[eventMacro] Callback Happenned, type: '".$callback_type."' ".($callback_type eq 'variable' ? ("variable type: ".$type) : ('')).(($callback_type eq 'variable' && $type eq 'array') ? ("array index: ".$index) : ('')).", name: '".$callback_name."'\n", "eventMacro", 2;
+	debug "[eventMacro] Callback Happenned, type: '".$callback_type."' ".($callback_type eq 'variable' ? (", variable type: '".$type."'") : ('')).(($callback_type eq 'variable' && $type eq 'array') ? (", array index: '".$index."'") : ('')).", name: '".$callback_name."'\n", "eventMacro", 2;
 	
 	my $event_type_automacro_call_index;
 	my $event_type_automacro_call_priority;
