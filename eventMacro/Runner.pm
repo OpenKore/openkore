@@ -1038,8 +1038,8 @@ sub next {
 		$self->timeout(0);
 	
 	##########################################
-	# manage array: &push|&unshift|&shift|&pop(@variable[,new_member])
-	} elsif ($self->{current_line} =~ /^&(push|unshift|pop|shift)/i) {
+	# manage array: push|unshift|shift|pop(@variable[,new_member])
+	} elsif ($self->{current_line} =~ /^$macro_keywords_character(push|unshift|pop|shift)/i) {
 		$self->parse_command($self->{current_line});
 		return if (defined $self->error);
 		$self->timeout(0);
@@ -1459,11 +1459,11 @@ sub extracted {
 sub refined_macroKeywords {
 	# To make sure if there is really no more @special keywords
 
-	my @pair = $_[0] =~ /\@($macroKeywords)\s*\(\s*(.*)\s*\)/i;
+	my @pair = $_[0] =~ /$macro_keywords_character($macroKeywords)\s*\(\s*(.*)\s*\)/i;
 	return $_[0] unless @pair;
 
 	$pair[1] = parse_command($pair[1]);
-	my $new = "@".$pair[0]."(".$pair[1].")";
+	my $new = $macro_keywords_character.$pair[0]."(".$pair[1].")";
 	return $new;
 }
 
@@ -1473,7 +1473,7 @@ sub bracket {
 	my ($text, $dbg) = @_;
 	my @brkt; my $i = 0;
 
-	while ($text =~ /(\@)?($macroKeywords)?\s*\(\s*([^\)]+)\s*/g) {
+	while ($text =~ /($macro_keywords_character)?($macroKeywords)?\s*\(\s*([^\)]+)\s*/g) {
 		my ($first, $second, $third) = ($1, $2, $3);
 		unless (defined $first && defined $second && !bracket($third, 1)) {
 			message "Bracket Detected: $text <-- HERE\n", "menu" if ($dbg);
@@ -1562,7 +1562,7 @@ sub substitue_variables {
 
 sub parse_keywords {
 	my ($command) = @_;
-	my @full = $command =~ /&($macroKeywords)s*((s*(.*?)s*).*)$/i;
+	my @full = $command =~ /$macro_keywords_character($macroKeywords)s*((s*(.*?)s*).*)$/i;
 	my @pair = ($full[0]);
 	my ($bracketed) = extract_bracketed ($full[1], '()');
 	return unless $bracketed;
@@ -1570,11 +1570,11 @@ sub parse_keywords {
 
 	return unless @pair;
 	if ($pair[0] eq 'arg') {
-		return $command =~ /&(arg)\s*\(\s*(".*?",\s*(\d+|\$[a-zA-Z][a-zA-Z\d]*))\s*\)/
+		return $command =~ /$macro_keywords_character(arg)\s*\(\s*(".*?",\s*(\d+|\$[a-zA-Z][a-zA-Z\d]*))\s*\)/
 	} elsif ($pair[0] eq 'random') {
-		return $command =~ /&(random)\s*\(\s*(".*?")\s*\)/
+		return $command =~ /$macro_keywords_character(random)\s*\(\s*(".*?")\s*\)/
 	}
-	while ($pair[1] =~ /&($macroKeywords)\s*\(/) {
+	while ($pair[1] =~ /$macro_keywords_character($macroKeywords)\s*\(/) {
 		@pair = parse_keywords ($pair[1])
 	}
 	return @pair
@@ -1695,9 +1695,9 @@ sub parse_command {
 		$inside_brackets = q4rx($inside_brackets);
 		
 		unless ($only_replace_once) {
-			$command =~ s/&$keyword\s*\(\s*$inside_brackets\s*\)/$result/g
+			$command =~ s/$macro_keywords_character$keyword\s*\(\s*$inside_brackets\s*\)/$result/g
 		} else {
-			$command =~ s/&$keyword\s*\(\s*$inside_brackets\s*\)/$result/
+			$command =~ s/$macro_keywords_character$keyword\s*\(\s*$inside_brackets\s*\)/$result/
 		}
 	}
 	

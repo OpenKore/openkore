@@ -44,6 +44,8 @@ sub new {
 	$self->{Hook_Handles} = {};
 	$self->create_callbacks();
 	
+	$self->set_arrays_size_to_zero();
+	
 	$self->{Macro_Runner} = undef;
 	
 	$self->{Scalar_Variable_List_Hash} = {};
@@ -323,7 +325,7 @@ sub create_callbacks {
 		}
 		
 		# Scalars
-		foreach my $variable_name ( keys %{ $automacro->get_scalar_variables() } ) {
+		foreach my $variable_name ( keys %{ $automacro->get_scalar_variables } ) {
 			my $conditions_indexes = $automacro->{scalar_variables}->{$variable_name};
 			foreach my $condition_index (@{$conditions_indexes}) {
 				$self->{Event_Related_Scalar_Variables}{$variable_name}{$automacro_index}{$condition_index} = 1;
@@ -331,15 +333,15 @@ sub create_callbacks {
 		}
 		
 		# Arrays
-		foreach my $variable_name ( keys %{ $automacro->get_array_variables() } ) {
-			my $conditions_indexes = $automacro->{scalar_variables}->{$variable_name};
+		foreach my $variable_name ( keys %{ $automacro->get_array_variables } ) {
+			my $conditions_indexes = $automacro->{array_variables}->{$variable_name};
 			foreach my $condition_index (@{$conditions_indexes}) {
 				$self->{Event_Related_Array_Variables}{$variable_name}{$automacro_index}{$condition_index} = 1;
 			}
 		}
 		
 		# Accessed arrays
-		foreach my $variable_name ( keys %{ $automacro->get_accessed_array_variables() } ) {
+		foreach my $variable_name ( keys %{ $automacro->get_accessed_array_variables } ) {
 			my $array_indexes = $automacro->{accessed_array_variables}->{$variable_name};
 			foreach my $array_index (0..$#{$array_indexes}) {
 				my $cond_indexes = $array_indexes->[$array_index];
@@ -355,6 +357,15 @@ sub create_callbacks {
 	my $event_sub = sub { $self->manage_event_callbacks('hook', shift, shift); };
 	foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
 		$self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
+	}
+}
+
+sub set_arrays_size_to_zero {
+	my ($self) = @_;
+	use Data::Dumper;
+	Log::warning Dumper($self)."\n";
+	foreach my $array_name (keys %{$self->{Event_Related_Array_Variables}}) {
+		$self->array_size_change($array_name);
 	}
 }
 
@@ -413,7 +424,9 @@ sub set_full_array {
 	foreach my $member_index (0..$#{$list}) {
 		my $member = $list->[$member_index];
 		$self->{Array_Variable_List_Hash}{$variable_name}[$member_index] = $member;
-		$self->manage_event_callbacks("variable", 'accessed_array', $member_index, $variable_name, $member);
+		if (exists $self->{Event_Related_Accessed_Array_Variables}{$variable_name} && defined $self->{Event_Related_Accessed_Array_Variables}{$variable_name}[$member_index]) {
+			$self->manage_event_callbacks("variable", 'accessed_array', $member_index, $variable_name, $member);
+		}
 	}
 	$self->array_size_change($variable_name);
 }
@@ -432,8 +445,8 @@ sub clear_array {
 				}
 			}
 		}
+		$self->array_size_change($variable_name);
 	}
-	$self->array_size_change($variable_name);
 }
 
 sub push_array {
@@ -474,6 +487,9 @@ sub unshift_array {
 sub pop_array {
 	my ($self, $variable_name) = @_;
 	
+	return unless (exists $self->{Array_Variable_List_Hash}{$variable_name});
+	return unless (scalar @{$self->{Array_Variable_List_Hash}{$variable_name}} > 0);
+	
 	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
 	my $poped = pop(@{$self->{Array_Variable_List_Hash}{$variable_name}});
 	
@@ -488,6 +504,9 @@ sub pop_array {
 
 sub shift_array {
 	my ($self, $variable_name) = @_;
+	
+	return unless (exists $self->{Array_Variable_List_Hash}{$variable_name});
+	return unless (scalar @{$self->{Array_Variable_List_Hash}{$variable_name}} > 0);
 	
 	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
 	my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
@@ -530,7 +549,7 @@ sub set_array_var {
 
 sub array_size_change {
 	my ($self, $variable_name) = @_;
-	my $size = scalar @{$self->{Array_Variable_List_Hash}{$variable_name}};
+	my $size = ((exists $self->{Array_Variable_List_Hash}{$variable_name}) ? (scalar @{$self->{Array_Variable_List_Hash}{$variable_name}}) : 0);
 	debug "[eventMacro] Size of array '@".$variable_name."' change to '".$size."'\n", "eventMacro";
 	
 	if (exists $self->{Event_Related_Array_Variables}{$variable_name}) {
@@ -626,7 +645,7 @@ sub manage_event_callbacks {
 			$check_list_hash = $self->{'Event_Related_Scalar_Variables'}{$callback_name};
 		} elsif ($type eq 'array') {
 			$callback_name = shift;
-			$check_list_hash = $self->{'Event_Related_Accessed_Array_Variables'}{$callback_name}[$index];
+			$check_list_hash = $self->{'Event_Related_Array_Variables'}{$callback_name};
 			$callback_name = '@'.$callback_name;
 		} elsif ($type eq 'accessed_array') {
 			$index = shift;
