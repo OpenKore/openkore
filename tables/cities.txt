@@ -108,3 +108,5 @@ Hyrule.rsw#Hyrule#
 quiz_00.rsw#Desafio das Perguntas#
 bliss.rsw#Bliss, Hidden Village#
 ra_temsky.rsw#Pope's Room (Sky Garden)#
+lasagna.rsw#Lasagna#
+conch_in.rsw#conch_in#
