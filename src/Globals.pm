@@ -311,6 +311,8 @@ our %jobs_lut = (
 	4211 => 'Kagerou',
 	4212 => 'Oboro',
 
+	4218 => 'Doram',
+	
 	# Homunculus
 	6001 => 'Lif',
 	6002 => 'Amistr',
