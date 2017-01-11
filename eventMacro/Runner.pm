@@ -1744,35 +1744,43 @@ sub manage_array {
 	}
 	
 	my $parsed = $self->substitue_variables($args[1]);
+	
+	my $result;
 		
 	if ($keyword eq 'push') {
 		if (@args != 2) {
 			$self->error("push sintax must be 'push(\@var_name, new_member)'");
 			return;
 		}
-		return $eventMacro->push_array($var_name, $parsed);
+		$result = $eventMacro->push_array($var_name, $parsed);
 			
 	} elsif ($keyword eq 'unshift') {
 		if (@args != 2) {
 			$self->error("unshift sintax must be 'unshift(\@var_name, new_member)'");
 			return;
 		}
-		return $eventMacro->unshift_array($var_name, $parsed);
+		$result = $eventMacro->unshift_array($var_name, $parsed);
 		
 	} elsif ($keyword eq 'pop') {
 		if (@args != 1) {
 			$self->error("pop sintax must be 'pop(\@var_name)'");
 			return;
 		}
-		return $eventMacro->pop_array($var_name);
+		$result = $eventMacro->pop_array($var_name);
 			
 	} elsif ($keyword eq 'shift') {
 		if (@args != 1) {
 			$self->error("shift sintax must be 'shift(\@var_name)'");
 			return;
 		}
-		return $eventMacro->shift_array($var_name);
+		$result = $eventMacro->shift_array($var_name);
+	} else {
+		$self->error("Unknown array keyword used '".$keyword."'");
+		return;
 	}
+	
+	$result = '' unless (defined $result);
+	return $result;
 }
 
 1;
