@@ -975,7 +975,7 @@ sub next {
 	# set variable: $variable = value
 	if ($self->{current_line} =~ /^\$($variable_qr|$accessed_array_variable_qr)/i) {
 		my ($var, $val);
-		if (($var, $val) = $self->{current_line} =~ /^(\$(?:$variable_qr:$accessed_array_variable_qr))\s+=\s+(.*)/i) {
+		if (($var, $val) = $self->{current_line} =~ /^(\$(?:$variable_qr|$accessed_array_variable_qr))\s*=\s*(.*)/i) {
 			my $pval = $self->parse_command($val);
 			my $pvar = find_variable($var);
 			if (defined $self->error) {
