@@ -44,8 +44,6 @@ sub new {
 	$self->{Hook_Handles} = {};
 	$self->create_callbacks();
 	
-	$self->set_arrays_size_to_zero();
-	
 	$self->{Macro_Runner} = undef;
 	
 	$self->{Scalar_Variable_List_Hash} = {};
@@ -57,6 +55,8 @@ sub new {
 	$self->{triggered_prioritized_automacros_index_list} = [];
 	
 	$self->{automacro_index_to_queue_index} = {};
+	
+	$self->set_arrays_size_to_zero();
 	
 	if ($char && $net && $net->getState() == Network::IN_GAME) {
 		$self->check_all_conditions();
@@ -414,15 +414,26 @@ sub is_scalar_var_defined {
 # Arrays
 sub set_full_array {
 	my ($self, $variable_name, $list) = @_;
-	$self->clear_array($variable_name);
+	
+	my @old_array = (exists $self->{Array_Variable_List_Hash}{$variable_name} ? (@{$self->{Array_Variable_List_Hash}{$variable_name}}) : ([]));
+	my $old_last_index = $#old_array;
+	my $new_last_index = $#{$list};
 	
 	debug "[eventMacro] Setting array '@".$variable_name."'\n", "eventMacro";
-	foreach my $member_index (0..$#{$list}) {
+	foreach my $member_index (0..$new_last_index) {
 		my $member = $list->[$member_index];
 		$self->{Array_Variable_List_Hash}{$variable_name}[$member_index] = $member;
 		$self->check_necessity_and_callback('accessed_array', $variable_name, $member, $member_index);
 	}
-	$self->array_size_change($variable_name);
+	if ($new_last_index < $old_last_index) {
+		splice(@{$self->{Array_Variable_List_Hash}{$variable_name}}, ($new_last_index+1));
+		if (exists $self->{Event_Related_Accessed_Array_Variables}{$variable_name}) {
+			foreach my $old_member_index (($new_last_index+1)..$old_last_index) {
+				$self->check_necessity_and_callback('accessed_array', $variable_name, undef, $old_member_index);
+			}
+		}
+	}
+	$self->array_size_change($variable_name) if ($new_last_index != $old_last_index);
 }
 
 sub clear_array {
