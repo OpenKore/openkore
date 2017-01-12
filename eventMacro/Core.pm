@@ -319,35 +319,35 @@ sub create_callbacks {
 		foreach my $hook_name ( keys %{ $automacro->get_hooks() } ) {
 			my $conditions_indexes = $automacro->{hooks}->{$hook_name};
 			foreach my $condition_index (@{$conditions_indexes}) {
-				$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index} = undef;
+				$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index} = 1;
 			}
 			
 		}
 		
 		# Scalars
-		foreach my $variable_name ( keys %{ $automacro->get_scalar_variables } ) {
-			my $conditions_indexes = $automacro->{scalar_variables}->{$variable_name};
+		foreach my $var ( keys %{ $automacro->get_scalar_variables } ) {
+			my $conditions_indexes = $automacro->{scalar_variables}->{$var};
 			foreach my $condition_index (@{$conditions_indexes}) {
-				$self->{Event_Related_Scalar_Variables}{$variable_name}{$automacro_index}{$condition_index} = 1;
+				$self->{Event_Related_Scalar_Variables}{$var}{$automacro_index}{$condition_index} = 1;
 			}
 		}
 		
 		# Arrays
-		foreach my $variable_name ( keys %{ $automacro->get_array_variables } ) {
-			my $conditions_indexes = $automacro->{array_variables}->{$variable_name};
+		foreach my $var ( keys %{ $automacro->get_array_variables } ) {
+			my $conditions_indexes = $automacro->{array_variables}->{$var};
 			foreach my $condition_index (@{$conditions_indexes}) {
-				$self->{Event_Related_Array_Variables}{$variable_name}{$automacro_index}{$condition_index} = 1;
+				$self->{Event_Related_Array_Variables}{$var}{$automacro_index}{$condition_index} = 1;
 			}
 		}
 		
 		# Accessed arrays
-		foreach my $variable_name ( keys %{ $automacro->get_accessed_array_variables } ) {
-			my $array_indexes = $automacro->{accessed_array_variables}->{$variable_name};
+		foreach my $var ( keys %{ $automacro->get_accessed_array_variables } ) {
+			my $array_indexes = $automacro->{accessed_array_variables}->{$var};
 			foreach my $array_index (0..$#{$array_indexes}) {
 				my $cond_indexes = $array_indexes->[$array_index];
 				next unless (defined $cond_indexes);
 				foreach my $condition_index (@{$cond_indexes}) {
-					$self->{Event_Related_Accessed_Array_Variables}{$variable_name}[$array_index]{$automacro_index}{$condition_index} = 1;
+					$self->{Event_Related_Accessed_Array_Variables}{$var}[$array_index]{$automacro_index}{$condition_index} = 1;
 				}
 			}
 		}
@@ -660,6 +660,7 @@ sub manage_event_callbacks {
 		
 		if ($sub_type eq 'scalar') {
 			$check_list_hash = $self->{'Event_Related_Scalar_Variables'}{$callback_name};
+			$callback_name = '$'.$callback_name;
 			
 		} elsif ($sub_type eq 'array') {
 			$check_list_hash = $self->{'Event_Related_Array_Variables'}{$callback_name};
@@ -667,7 +668,7 @@ sub manage_event_callbacks {
 			
 		} elsif ($sub_type eq 'accessed_array') {
 			$check_list_hash = $self->{'Event_Related_Accessed_Array_Variables'}{$callback_name}[$complement];
-			$callback_name = $callback_name."[".$complement."]";
+			$callback_name = '$'.$callback_name."[".$complement."]";
 			$debug_message .= ", array index: '".$complement."'";
 		}
 	} else {

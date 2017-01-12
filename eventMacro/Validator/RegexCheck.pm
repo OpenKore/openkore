@@ -23,7 +23,7 @@ sub parse {
 				$self->{parsed} = 0;
 				return;
 			}
-			my $var_name = $var->{name};
+			my $var_name = $var->{display_name};
 			next if (exists $self->{defined_var_list}{$var_name});
 			if ($var =~ /^\./) {
 				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";

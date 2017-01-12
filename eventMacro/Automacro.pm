@@ -167,13 +167,13 @@ sub create_conditions_list {
 sub define_var_types {
 	my ($self, $variable, $cond_index) = @_;
 	if ($variable->{type} eq 'scalar') {
-		push ( @{ $self->{scalar_variables}{$variable->{name}} }, $cond_index );
+		push ( @{ $self->{scalar_variables}{$variable->{real_name}} }, $cond_index );
 		
 	} elsif ($variable->{type} eq 'array') {
-		push ( @{ $self->{array_variables}{$variable->{var_name}}}, $cond_index );
+		push ( @{ $self->{array_variables}{$variable->{real_name}}}, $cond_index );
 		
 	} elsif ($variable->{type} eq 'accessed_array') {
-		push ( @{ $self->{accessed_array_variables}{$variable->{var_name}}[$variable->{index}] }, $cond_index );
+		push ( @{ $self->{accessed_array_variables}{$variable->{real_name}}[$variable->{index}] }, $cond_index );
 	}
 }
 

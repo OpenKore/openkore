@@ -41,9 +41,9 @@ sub _parse_syntax {
 				return 0;
 			}
 			push(@{$self->{config_keys_member}->{$key}}, {index => $member_counter, value => undef});
-			push(@{$self->{var_name_to_member_index}{$var->{name}}}, {key => $key, index => $#{$self->{config_keys_member}->{$key}}});
-			push(@{$self->{variables}}, $var) unless (exists $var_exists_hash->{$var->{name}});
-			$var_exists_hash->{$var->{name}} = undef;
+			push(@{$self->{var_name_to_member_index}{$var->{display_name}}}, {key => $key, index => $#{$self->{config_keys_member}->{$key}}});
+			push(@{$self->{variables}}, $var) unless (exists $var_exists_hash->{$var->{display_name}});
+			$var_exists_hash->{$var->{display_name}} = undef;
 		} else {
 			push(@{$self->{config_keys_member}->{$key}}, {index => $member_counter, value => $value});
 		}

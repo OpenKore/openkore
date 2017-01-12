@@ -365,38 +365,40 @@ sub commandHandler {
 		
 		} else {
 			if (my $var = find_variable($params[0])) {
-				my $var_name = (exists $var->{var_name} ? $var->{var_name} : $var->{name});
 				if ($var->{type} eq 'scalar') {
-					if (exists $eventMacro->{Scalar_Variable_List_Hash}{$var_name}) {
-						my $var_value = $eventMacro->get_scalar_var($var_name);
+					if (exists $eventMacro->{Scalar_Variable_List_Hash}{$var->{real_name}}) {
+						my $var_value = $eventMacro->get_scalar_var($var->{real_name});
 						$var_value = 'undef' unless (defined $var_value);
-						message "'[eventMacro] '\$".$var_name."' = '".$var_value."'\n", "menu";
+						message "'[eventMacro] '".$var->{display_name}."' = '".$var_value."'\n", "menu";
+						
 					} else {
-						message "[eventMacro] Scalar variable '\$".$var_name."' doesn't exist\n";
+						message "[eventMacro] Scalar variable '".$var->{display_name}."' doesn't exist\n";
 					}
 					
 				} elsif ($var->{type} eq 'accessed_array') {
-					if (exists $eventMacro->{Array_Variable_List_Hash}{$var_name}) {
-						my $var_value = $eventMacro->get_array_var($var_name, $var->{index});
+					if (exists $eventMacro->{Array_Variable_List_Hash}{$var->{real_name}}) {
+						my $var_value = $eventMacro->get_array_var($var->{real_name}, $var->{index});
 						$var_value = 'undef' unless (defined $var_value);
-						message "'[eventMacro] '\$".$var_name."[".$var->{index}."]' = '".$var_value."'\n", "menu";
+						message "'[eventMacro] '".$var->{display_name}."' = '".$var_value."'\n", "menu";
 						
 					} else {
-						message "[eventMacro] Array variable '\@".$var_name."' doesn't exist\n";
+						message "[eventMacro] Array variable '".$var->{display_name}."' doesn't exist\n";
 					}
 					
 				} elsif ($var->{type} eq 'array') {
-					if (exists $eventMacro->{Array_Variable_List_Hash}{$var_name}) {
-						message "[eventMacro] '".$var_name."'\n";
-						foreach my $index (0..$#{$eventMacro->{Array_Variable_List_Hash}{$var_name}}) {
-							my $value = $eventMacro->{Array_Variable_List_Hash}{$var_name}[$index];
+					if (exists $eventMacro->{Array_Variable_List_Hash}{$var->{real_name}}) {
+						message "[eventMacro] '".$var->{display_name}."'\n";
+						
+						foreach my $index (0..$#{$eventMacro->{Array_Variable_List_Hash}{$var->{real_name}}}) {
+							my $value = $eventMacro->{Array_Variable_List_Hash}{$var->{real_name}}[$index];
 							$value = 'undef' unless (defined $value);
-							message "\$".$var_name."[".$index."]' = '".$value."'\n", "menu";
 						}
+						
 					} else {
-						message "[eventMacro] Array variable '\@".$var_name."' doesn't exist\n";
+						message "[eventMacro] Array variable '".$var->{display_name}."' doesn't exist\n";
 					}
 				}
+				
 			} else {
 				message "[eventMacro] '".$params[0]."' is not a valid variable name syntax\n";
 			}
@@ -409,23 +411,23 @@ sub commandHandler {
 			
 		} else {
 			if (my $var = find_variable($params[0])) {
-				my $var_name = (exists $var->{var_name} ? $var->{var_name} : $var->{name});
-				if ($var_name =~ /^\./) {
+				if ($var->{real_name} =~ /^\./) {
 					error "[eventMacro] System variables cannot be set by hand (The ones starting with a dot '.')\n";
 					
 				} elsif ($var->{type} eq 'scalar') {
-					message "[eventMacro] Setting the value of scalar variable '\$".$var_name."' to '".$params[1]."'.\n";
-					$eventMacro->set_scalar_var($var_name, $params[1]);
+					message "[eventMacro] Setting the value of scalar variable '".$var->{display_name}."' to '".$params[1]."'.\n";
+					$eventMacro->set_scalar_var($var->{real_name}, $params[1]);
 					
 				} elsif ($var->{type} eq 'accessed_array') {
-					message "[eventMacro] Setting the value of scalar variable '\$".$var_name."[".$var->{index}."]' to '".$params[1]."'.\n";
-					$eventMacro->set_array_var($var_name, $var->{index}, $params[1]);
+					message "[eventMacro] Setting the value of array variable '".$var->{display_name}."' to '".$params[1]."'.\n";
+					$eventMacro->set_array_var($var->{real_name}, $var->{index}, $params[1]);
 					
 				} elsif ($var->{type} eq 'array') {
 					my $value = join('', @params[1..$#params]);
 					if ($value =~ /^\((.*)\)$/i) {
+						message "[eventMacro] Setting the value of array variable '".$var->{display_name}."' to '".$value."'.\n";
 						my @members = split(/\s*,\s*/, $1);
-						$eventMacro->set_full_array($var_name, \@members);
+						$eventMacro->set_full_array($var->{real_name}, \@members);
 						
 					} else {
 						message "[eventMacro] '".$params[1]."' is not a valid array value syntax. Correct syntax:\n".
