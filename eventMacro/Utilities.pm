@@ -432,22 +432,23 @@ sub find_variable {
 	my ($text) = @_;
 	
 	if (my $scalar = find_scalar_variable($text)) {
-		return ({ name => $scalar, type => 'scalar' });
+		return ({ display_name => $scalar->{display_name}, type => 'scalar', real_name => $scalar->{real_name} });
 	}
 	
 	if (my $array = find_array_variable($text)) {
-		return ({ name => $array->{name}, type => 'array', var_name => $array->{var_name} });
+		return ({ display_name => $array->{display_name}, type => 'array', real_name => $array->{real_name} });
 	}
 	
 	if (my $accessed_array = find_accessed_array_variable($text)) {
-		return ({ name => $accessed_array->{name}, type => 'accessed_array', index => $accessed_array->{index}, var_name => $accessed_array->{var_name} });
+		return ({ display_name => $accessed_array->{display_name}, type => 'accessed_array', real_name => $accessed_array->{real_name}, index => $accessed_array->{index} });
 	}
 }
 
 sub find_scalar_variable {
 	my ($text) = @_;
 	if ($text =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
-		return $1;
+		my $name = $1;
+		return ({display_name => ('$'.$name), real_name => $name});
 	} else {
 		return;
 	}
@@ -457,7 +458,7 @@ sub find_array_variable {
 	my ($text) = @_;
 	if ($text =~ /(?:^|(?<=[^\\]))\@($variable_qr)$/) {
 		my $name = $1;
-		return ({name => ('@'.$name), var_name => $name});
+		return ({display_name => ('@'.$name), real_name => $name});
 	} else {
 		return;
 	}
@@ -468,9 +469,9 @@ sub find_accessed_array_variable {
 	if ($text =~ /(?:^|(?<=[^\\]))\$($accessed_array_variable_qr)$/) {
 		my $name = $1;
 		if ($name =~ /(\.?[a-zA-Z][a-zA-Z\d]*)\[(\d+)\]/) {
-			my $var_name = $1;
+			my $name = $1;
 			my $index = $2;
-			return ({name => $name, var_name => $var_name, index => $index});
+			return ({display_name => ('$'.$name), real_name => $name, index => $index});
 		}
 	}
 }

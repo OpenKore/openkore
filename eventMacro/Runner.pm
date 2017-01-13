@@ -987,9 +987,9 @@ sub next {
 				$self->error("$val failed");
 				return;
 			} elsif ($pvar->{type} eq 'scalar') {
-				$eventMacro->set_scalar_var($pvar->{name}, ($pval =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($pval)) );
+				$eventMacro->set_scalar_var($pvar->{real_name}, ($pval =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($pval)) );
 			} elsif ($pvar->{type} eq 'accessed_array') {
-				$eventMacro->set_array_var($pvar->{var_name}, $pvar->{index}, ($pval =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($pval)) );
+				$eventMacro->set_array_var($pvar->{real_name}, $pvar->{index}, ($pval =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($pval)) );
 			}
 		} elsif (($var, $val) = $self->{current_line} =~ /^($general_variable_qr)([+-]{2})$/i) {
 			my $pvar = find_variable($var);
@@ -1001,12 +1001,12 @@ sub next {
 			my $change = (($val eq '++') ? (1) : (-1));
 			
 			if ($pvar->{type} eq 'scalar') {
-				my $old_value = ($eventMacro->is_scalar_var_defined($pvar->{name}) ? ($eventMacro->get_scalar_var($pvar->{name})) : 0);
-				$eventMacro->set_scalar_var($pvar->{name}, ($old_value + $change));
+				my $old_value = ($eventMacro->is_scalar_var_defined($pvar->{real_name}) ? ($eventMacro->get_scalar_var($pvar->{real_name})) : 0);
+				$eventMacro->set_scalar_var($pvar->{real_name}, ($old_value + $change));
 				
 			} elsif ($pvar->{type} eq 'accessed_array') {
-				my $old_value = ($eventMacro->is_array_var_defined($pvar->{var_name}, $pvar->{index}) ? ($eventMacro->get_array_var($pvar->{var_name}, $pvar->{index})) : 0);
-				$eventMacro->set_array_var($pvar->{var_name}, $pvar->{index}, ($old_value + $change));
+				my $old_value = ($eventMacro->is_array_var_defined($pvar->{real_name}, $pvar->{index}) ? ($eventMacro->get_array_var($pvar->{real_name}, $pvar->{index})) : 0);
+				$eventMacro->set_array_var($pvar->{real_name}, $pvar->{index}, ($old_value + $change));
 			}
 		} else {
 			$self->error("unrecognized assignment");
@@ -1521,40 +1521,28 @@ sub substitue_variables {
 	my $remaining = $original;
 	foreach my $variable (@variables) {
 		my $var = find_variable($variable);
-		my $var_name = $var->{name};
-		my ($var_value, $before_var, $after_var);
-		if ($var->{type} eq 'scalar') {
-			if ($remaining =~ /^(.*?)\$$var_name(.*?)$/) {
-				$before_var = $1;
-				$after_var = $2;
-				$var_value = $eventMacro->get_scalar_var($var->{name});
-			} else {
-				$self->error("Could not find detected variable in code");
-				return;
+		
+		my $regex_name = (($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array') ? ("\\".$var->{display_name}) : ($var->{display_name}));
+		if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
+			my $before_var = $1;
+			my $after_var = $2;
+			my $var_value;
+			if ($var->{type} eq 'scalar') {
+				$var_value = $eventMacro->get_scalar_var($var->{real_name});
+				
+			} elsif ($var->{type} eq 'accessed_array') {
+				$var_value = $eventMacro->get_array_var($var->{real_name}, $var->{index});
+				
+			} elsif ($var->{type} eq 'array') {
+				$var_value = $eventMacro->get_array_size($var->{real_name});
 			}
-		} elsif ($var->{type} eq 'accessed_array') {
-			my $name = $var->{var_name};
-			my $index = $var->{index};
-			if ($remaining =~ /^(.*?)\$$name\[$index\](.*?)$/) {
-				$before_var = $1;
-				$after_var = $2;
-				$var_value = $eventMacro->get_array_var($var->{var_name}, $var->{index});
-			} else {
-				$self->error("Could not find detected variable in code");
-				return;
-			}
-		} elsif ($var->{type} eq 'array') {
-			my $name = $var->{var_name};
-			if ($remaining =~ /^(.*?)\@$name(.*?)$/) {
-				$before_var = $1;
-				$after_var = $2;
-				$var_value = $eventMacro->get_array_size($var->{var_name});
-			} else {
-				$self->error("Could not find detected variable in code");
-				return;
-			}
+			
+			$remaining = $before_var.$var_value.$after_var;
+			
+		} else {
+			$self->error("Could not find detected variable in code");
+			return;
 		}
-		$remaining = $before_var.$var_value.$after_var;
 	}
 
 	return $remaining;

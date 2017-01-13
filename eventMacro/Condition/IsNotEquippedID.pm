@@ -45,9 +45,9 @@ sub _parse_syntax {
 				return 0;
 			} else {
 				$slot_is_var = 1;
-				push ( @{ $self->{var_to_member_index_slot_name}{$var->{name}} }, $member_index );
-				push ( @{ $self->{variables} }, $var ) unless (exists $var_exists_hash->{$var->{name}});
-				$var_exists_hash->{$var->{name}} = undef;
+				push ( @{ $self->{var_to_member_index_slot_name}{$var->{display_name}} }, $member_index );
+				push ( @{ $self->{variables} }, $var ) unless (exists $var_exists_hash->{$var->{display_name}});
+				$var_exists_hash->{$var->{display_name}} = undef;
 			}
 		}
 		
@@ -63,9 +63,9 @@ sub _parse_syntax {
 				return 0;
 			} else {
 				$id_is_var = 1;
-				push ( @{ $self->{var_to_member_index_item_id}{$var->{name}} }, $member_index );
-				push ( @{ $self->{variables} }, $var ) unless (exists $var_exists_hash->{$var->{name}});
-				$var_exists_hash->{$var->{name}} = undef;
+				push ( @{ $self->{var_to_member_index_item_id}{$var->{display_name}} }, $member_index );
+				push ( @{ $self->{variables} }, $var ) unless (exists $var_exists_hash->{$var->{display_name}});
+				$var_exists_hash->{$var->{display_name}} = undef;
 			}
 		}
 		

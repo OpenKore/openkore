@@ -55,13 +55,13 @@ sub start {
 		my $v = eventMacro::Validator::ListMemberCheck->new( '$foo' );
 		ok $v->parsed;
 		is_deeply($v->{list}, [undef]);
-		is_deeply($v->{var_to_member_index}, {'foo' => [0]});
+		is_deeply($v->{var_to_member_index}, {'$foo' => [0]});
 		
 		ok !$v->validate( 'Poring' );
 		ok !$v->validate( 'Drops' );
 		ok !$v->validate( 'poring' );
 		
-		$v->update_vars( 'foo', 'Poring' );
+		$v->update_vars( '$foo', 'Poring' );
 		is_deeply($v->{list}, ['Poring']);
 		
 		ok $v->validate( 'Poring' );
@@ -71,12 +71,12 @@ sub start {
 		$v = eventMacro::Validator::ListMemberCheck->new( '$foo' );
 		ok $v->parsed;
 		is_deeply($v->{list}, [undef]);
-		is_deeply($v->{var_to_member_index}, {'foo' => [0]});
+		is_deeply($v->{var_to_member_index}, {'$foo' => [0]});
 		
 		ok !$v->validate( 'geffen' );
 		ok !$v->validate( 'prt_fild10' );
 		
-		$v->update_vars( 'foo', 'prt_fild10' );
+		$v->update_vars( '$foo', 'prt_fild10' );
 		is_deeply($v->{list}, ['prt_fild10']);
 		
 		ok !$v->validate( 'geffen' );
@@ -87,7 +87,7 @@ sub start {
 		my $v = eventMacro::Validator::ListMemberCheck->new( '$foo, $bar, $foobar' );
 		ok $v->parsed;
 		is_deeply($v->{list}, [undef, undef, undef]);
-		is_deeply($v->{var_to_member_index}, {'foo' => [0], 'bar' => [1],'foobar' => [2]});
+		is_deeply($v->{var_to_member_index}, {'$foo' => [0], '$bar' => [1],'$foobar' => [2]});
 		
 		ok !$v->validate( 'Poring' );
 		ok !$v->validate( 'Drops' );
@@ -95,7 +95,7 @@ sub start {
 		ok !$v->validate( 'Marin' );
 		
 		
-		$v->update_vars( 'foo', 'Poring' );
+		$v->update_vars( '$foo', 'Poring' );
 		is_deeply($v->{list}, ['Poring', undef, undef]);
 		
 		ok $v->validate( 'Poring' );
@@ -103,7 +103,7 @@ sub start {
 		ok !$v->validate( 'poring' );
 		ok !$v->validate( 'Marin' );
 		
-		$v->update_vars( 'foobar', 'poring' );
+		$v->update_vars( '$foobar', 'poring' );
 		is_deeply($v->{list}, ['Poring', undef, 'poring']);
 		
 		ok $v->validate( 'Poring' );
@@ -111,7 +111,7 @@ sub start {
 		ok $v->validate( 'poring' );
 		ok !$v->validate( 'Marin' );
 		
-		$v->update_vars( 'bar', 'Drops' );
+		$v->update_vars( '$bar', 'Drops' );
 		is_deeply($v->{list}, ['Poring', 'Drops', 'poring']);
 		
 		ok $v->validate( 'Poring' );

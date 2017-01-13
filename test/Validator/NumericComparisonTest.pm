@@ -299,9 +299,9 @@ sub start {
 		ok (!defined $v->{max});
 		ok ($v->{min_is_var});
 		ok ($v->{max_is_var});
-		is ($v->{var_name_min}, 'foo');
+		is ($v->{var_name_min}, '$foo');
 		
-		$v->update_vars( 'foo', 10 );
+		$v->update_vars( '$foo', 10 );
 		
 		is ($v->{min}, 10);
 		is ($v->{max}, 10);
@@ -309,7 +309,7 @@ sub start {
 		ok $v->validate( 9 );
 		ok !$v->validate( 10 );
 		ok !$v->validate( 11 );
-		$v->update_vars( 'foo', 11 );
+		$v->update_vars( '$foo', 11 );
 		ok $v->validate( 9 );
 		ok $v->validate( 10 );
 		ok !$v->validate( 11 );
@@ -322,11 +322,11 @@ sub start {
 		ok ($v->{min_is_var});
 		ok ($v->{max_is_var});
 		
-		is ($v->{var_name_min}, 'foo');
-		is ($v->{var_name_max}, 'bar');
+		is ($v->{var_name_min}, '$foo');
+		is ($v->{var_name_max}, '$bar');
 		
-		$v->update_vars( 'foo', 10 );
-		$v->update_vars( 'bar', 20 );
+		$v->update_vars( '$foo', 10 );
+		$v->update_vars( '$bar', 20 );
 		
 		is ($v->{min}, 10);
 		is ($v->{max}, 20);
@@ -339,22 +339,22 @@ sub start {
 		$v = eventMacro::Validator::NumericComparison->new( '10..$bar' );
 		ok $v->parsed;
 		
-		$v->update_vars( 'bar', 9 );
+		$v->update_vars( '$bar', 9 );
 		ok !$v->validate( 9 );
 		ok !$v->validate( 10 );
 		ok !$v->validate( 11 );
 		
-		$v->update_vars( 'bar', 10 );
+		$v->update_vars( '$bar', 10 );
 		ok !$v->validate( 9 );
 		ok $v->validate( 10 );
 		ok !$v->validate( 11 );
 		
-		$v->update_vars( 'bar', 11 );
+		$v->update_vars( '$bar', 11 );
 		ok !$v->validate( 9 );
 		ok $v->validate( 10 );
 		ok $v->validate( 11 );
 		
-		$v->update_vars( 'bar', 100 );
+		$v->update_vars( '$bar', 100 );
 		ok !$v->validate( 9 );
 		ok $v->validate( 10 );
 		ok $v->validate( 50 );
@@ -365,22 +365,22 @@ sub start {
 		$v = eventMacro::Validator::NumericComparison->new( '$foo..20' );
 		ok $v->parsed;
 		
-		$v->update_vars( 'foo', 30 );
+		$v->update_vars( '$foo', 30 );
 		ok !$v->validate( 9 );
 		ok !$v->validate( 10 );
 		ok !$v->validate( 11 );
 		
-		$v->update_vars( 'foo', 10 );
+		$v->update_vars( '$foo', 10 );
 		ok !$v->validate( 9 );
 		ok $v->validate( 10 );
 		ok $v->validate( 11 );
 		
-		$v->update_vars( 'foo', 20 );
+		$v->update_vars( '$foo', 20 );
 		ok !$v->validate( 19 );
 		ok $v->validate( 20 );
 		ok !$v->validate( 21 );
 		
-		$v->update_vars( 'foo', 5 );
+		$v->update_vars( '$foo', 5 );
 		ok !$v->validate( 4 );
 		ok $v->validate( 5 );
 		ok $v->validate( 10 );
@@ -397,8 +397,8 @@ sub start {
 		ok ($v->{max_is_var});
 		ok (!$v->{max_is_pct});
 		
-		$v->update_vars( 'foo', '50' );
-		$v->update_vars( 'bar', '10%' );
+		$v->update_vars( '$foo', '50' );
+		$v->update_vars( '$bar', '10%' );
 		
 		ok (!$v->{min_is_pct});
 		ok ($v->{max_is_pct});
@@ -417,8 +417,8 @@ sub start {
 		ok $v->validate( 50, 20000 );
 		ok $v->validate( 51, 20000 );
 		
-		$v->update_vars( 'foo', '20%' );
-		$v->update_vars( 'bar', '10000' );
+		$v->update_vars( '$foo', '20%' );
+		$v->update_vars( '$bar', '10000' );
 		
 		ok ($v->{min_is_pct});
 		ok (!$v->{max_is_pct});
@@ -440,7 +440,7 @@ sub start {
 
 		ok (!$v->{min_is_pct});
 		
-		$v->update_vars( 'foo', '10%' );
+		$v->update_vars( '$foo', '10%' );
 		
 		ok ($v->{min_is_pct});
 		
@@ -457,8 +457,8 @@ sub start {
 		ok (!$v->{min_is_pct});
 		ok (!$v->{max_is_pct});
 		
-		$v->update_vars( 'foo', '10%' );
-		$v->update_vars( 'bar', '20%' );
+		$v->update_vars( '$foo', '10%' );
+		$v->update_vars( '$bar', '20%' );
 		
 		ok ($v->{min_is_pct});
 		ok ($v->{max_is_pct});

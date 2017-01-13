@@ -22,7 +22,7 @@ sub parse {
 	
 	if (my $var = find_variable($2)) {
 		$self->{min} = undef;
-		$self->{var_name_min} = $var->{name};
+		$self->{var_name_min} = $var->{display_name};
 		$self->{min_is_pct} = 0;
 		$self->{min_is_var} = 1;
 		push(@{$self->{var}}, $var);
@@ -40,10 +40,10 @@ sub parse {
 	} else {
 		if (my $var = find_variable($3)) {
 			$self->{max} = undef;
-			$self->{var_name_max} = $var->{name};
+			$self->{var_name_max} = $var->{display_name};
 			$self->{max_is_pct} = 0;
 			$self->{max_is_var} = 1;
-			push(@{$self->{var}}, $var) unless ($var->{name} eq $self->{var_name_min});
+			push(@{$self->{var}}, $var) unless ($var->{display_name} eq $self->{var_name_min});
 		} else {
 			$self->{max} = $3;
 			$self->{max_is_pct} = $self->{max} =~ s/%$//;
