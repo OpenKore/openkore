@@ -6,6 +6,7 @@ use base 'eventMacro::Condition';
 
 use Globals qw( $char );
 use eventMacro::Data;
+use eventMacro::Utilities qw(find_variable);
 
 sub _hooks {
 	['in_game','packet/player_equipment'];
@@ -16,8 +17,7 @@ sub _parse_syntax {
 	
 	$self->{wanted_id} = undef;
 	
-	if ($condition_code =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
-		my $var = $1;
+	if (my $var = find_variable($condition_code)) {
 		if ($var =~ /^\./) {
 			$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
 			return 0;

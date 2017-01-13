@@ -4,12 +4,15 @@ use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw($eventMacro @perl_name $variable_qr %parameters $macroKeywords CHECKING_AUTOMACROS PAUSED_BY_EXCLUSIVE_MACRO PAUSE_FORCED_BY_USER CHECKING_FORCED_BY_USER STATE_TYPE EVENT_TYPE);
+our @EXPORT = qw($eventMacro @perl_name $general_variable_qr $variable_qr $accessed_array_variable_qr $macro_keywords_character %parameters $macroKeywords CHECKING_AUTOMACROS PAUSED_BY_EXCLUSIVE_MACRO PAUSE_FORCED_BY_USER CHECKING_FORCED_BY_USER STATE_TYPE EVENT_TYPE);
 
 our $eventMacro;
 our @perl_name;
 
+our $general_variable_qr = qr/(?:\$|@)\.?[a-zA-Z][a-zA-Z\d]*(?:\[\d+\])?/;
 our $variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
+our $accessed_array_variable_qr = qr/\.?[a-zA-Z][a-zA-Z\d]*\[\d+\]/;
+our $macro_keywords_character = '&';
 
 use constant {
 	CHECKING_AUTOMACROS => 0,
@@ -61,7 +64,10 @@ our $macroKeywords =
 	"arg"          . "|" .
 	"listitem"     . "|" .
    	"nick"         . "|" .
-	"listlength"
+	"push"           . "|" .
+	"pop"            . "|" .
+	"unshift"        . "|" .
+	"shift"
 ;
 
 1;

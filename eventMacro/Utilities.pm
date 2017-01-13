@@ -8,7 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord call_macro getArgFromList getListLenght sameParty processCmd);
+	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable);
 
 use Utils;
 use Globals;
@@ -112,7 +112,7 @@ sub match {
 		if ($text =~ /$1/ || ($2 eq 'i' && $text =~ /$1/i)) {
 			if (!defined $cmpr) {
 				no strict;
-				foreach my $idx (1..$#-) {$eventMacro->set_var(".lastMatch$idx",${$idx})}
+				foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
 				use strict;
 			}
 			return 1
@@ -141,7 +141,7 @@ sub getWord {
 	if ($wordno =~ /^\$/) {
 		my ($val) = $wordno =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
 		return "" unless defined $val;
-		if ($eventMacro->exists_var($val) && $eventMacro->get_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_var($val)}
+		if ($eventMacro->get_scalar_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_scalar_var($val)}
 		else {return ""}
 	
 	}
@@ -182,28 +182,28 @@ sub getConfig {
 sub refreshGlobal {
 	my $var = $_[0];
 
-	$eventMacro->set_var(".time", time, 0);
-	$eventMacro->set_var(".datetime", scalar localtime, 0);
+	$eventMacro->set_scalar_var(".time", time, 0);
+	$eventMacro->set_scalar_var(".datetime", scalar localtime, 0);
 	my ($sec, $min, $hour) = localtime;
-	$eventMacro->set_var(".second", $sec, 0);
-	$eventMacro->set_var(".minute", $min, 0);
-	$eventMacro->set_var(".hour", $hour, 0);
+	$eventMacro->set_scalar_var(".second", $sec, 0);
+	$eventMacro->set_scalar_var(".minute", $min, 0);
+	$eventMacro->set_scalar_var(".hour", $hour, 0);
 	
 	return unless $net && $net->getState == Network::IN_GAME;
 	
-	$eventMacro->set_var(".map", (defined $field)?$field->baseName:"undef", 0);
+	$eventMacro->set_scalar_var(".map", (defined $field)?$field->baseName:"undef", 0);
 	my $pos = calcPosition($char); 
-	$eventMacro->set_var(".pos", sprintf("%d %d", $pos->{x}, $pos->{y}), 0);
+	$eventMacro->set_scalar_var(".pos", sprintf("%d %d", $pos->{x}, $pos->{y}), 0);
 	
-	$eventMacro->set_var(".hp", $char->{hp}, 0);
-	$eventMacro->set_var(".sp", $char->{sp}, 0);
-	$eventMacro->set_var(".lvl", $char->{lv}, 0);
-	$eventMacro->set_var(".joblvl", $char->{lv_job}, 0);
-	$eventMacro->set_var(".spirits", ($char->{spirits} or 0), 0);
-	$eventMacro->set_var(".zeny", $char->{zeny}, 0);
-	$eventMacro->set_var(".weight", $char->{weight}, 0);
-	$eventMacro->set_var(".maxweight", $char->{weight_max}, 0);
-	$eventMacro->set_var('.status', (join ',',
+	$eventMacro->set_scalar_var(".hp", $char->{hp}, 0);
+	$eventMacro->set_scalar_var(".sp", $char->{sp}, 0);
+	$eventMacro->set_scalar_var(".lvl", $char->{lv}, 0);
+	$eventMacro->set_scalar_var(".joblvl", $char->{lv_job}, 0);
+	$eventMacro->set_scalar_var(".spirits", ($char->{spirits} or 0), 0);
+	$eventMacro->set_scalar_var(".zeny", $char->{zeny}, 0);
+	$eventMacro->set_scalar_var(".weight", $char->{weight}, 0);
+	$eventMacro->set_scalar_var(".maxweight", $char->{weight_max}, 0);
+	$eventMacro->set_scalar_var('.status', (join ',',
 		('muted')x!!$char->{muted},
 		('dead')x!!$char->{dead},
 		map { $statusName{$_} || $_ } keys %{$char->{statuses}}
@@ -426,6 +426,54 @@ sub sameParty {
 sub getRandomRange {
 	my ($low, $high) = split(/,\s*/, $_[0]);
 	return int(rand($high-$low+1))+$low if (defined $high && defined $low)
+}
+
+sub find_variable {
+	my ($text) = @_;
+	
+	if (my $scalar = find_scalar_variable($text)) {
+		return ({ display_name => $scalar->{display_name}, type => 'scalar', real_name => $scalar->{real_name} });
+	}
+	
+	if (my $array = find_array_variable($text)) {
+		return ({ display_name => $array->{display_name}, type => 'array', real_name => $array->{real_name} });
+	}
+	
+	if (my $accessed_array = find_accessed_array_variable($text)) {
+		return ({ display_name => $accessed_array->{display_name}, type => 'accessed_array', real_name => $accessed_array->{real_name}, index => $accessed_array->{index} });
+	}
+}
+
+sub find_scalar_variable {
+	my ($text) = @_;
+	if ($text =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
+		my $name = $1;
+		return ({display_name => ('$'.$name), real_name => $name});
+	} else {
+		return;
+	}
+}
+
+sub find_array_variable {
+	my ($text) = @_;
+	if ($text =~ /(?:^|(?<=[^\\]))\@($variable_qr)$/) {
+		my $name = $1;
+		return ({display_name => ('@'.$name), real_name => $name});
+	} else {
+		return;
+	}
+}
+
+sub find_accessed_array_variable {
+	my ($text) = @_;
+	if ($text =~ /(?:^|(?<=[^\\]))\$($accessed_array_variable_qr)$/) {
+		my $name = $1;
+		if ($name =~ /(\.?[a-zA-Z][a-zA-Z\d]*)\[(\d+)\]/) {
+			my $name = $1;
+			my $index = $2;
+			return ({display_name => ('$'.$name), real_name => $name, index => $index});
+		}
+	}
 }
 
 1;

@@ -6,6 +6,7 @@ use base 'eventMacro::Condition';
 
 use Globals;
 use eventMacro::Data;
+use eventMacro::Utilities qw(find_variable);
 
 sub _hooks {
 	['configModify','pos_load_config.txt','in_game'];
@@ -20,6 +21,8 @@ sub _parse_syntax {
 	$self->{config_keys_member} = {};
 	$self->{var_name_to_member_index} = {};
 	
+	my $var_exists_hash = {};
+	
 	my $member_counter = 0;
 	my @members = split(/\s*,\s*/, $condition_code);
 	foreach my $member (@members) {
@@ -32,14 +35,15 @@ sub _parse_syntax {
 			return 0;
 		}
 		
-		if ($value =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
-			my $var = $1;
+		if (my $var = find_variable($value)) {
 			if ($var =~ /^\./) {
 				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
 				return 0;
 			}
 			push(@{$self->{config_keys_member}->{$key}}, {index => $member_counter, value => undef});
-			push(@{$self->{var_name_to_member_index}{$var}}, {key => $key, index => $#{$self->{config_keys_member}->{$key}}});
+			push(@{$self->{var_name_to_member_index}{$var->{display_name}}}, {key => $key, index => $#{$self->{config_keys_member}->{$key}}});
+			push(@{$self->{variables}}, $var) unless (exists $var_exists_hash->{$var->{display_name}});
+			$var_exists_hash->{$var->{display_name}} = undef;
 		} else {
 			push(@{$self->{config_keys_member}->{$key}}, {index => $member_counter, value => $value});
 		}
@@ -53,7 +57,6 @@ sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
 	if ($callback_type eq 'variable') {
-		$self->update_validator_var($callback_name, $args);
 		
 		my $changed_indexes = {};
 		foreach my $member_hash (@{$self->{var_name_to_member_index}{$callback_name}}) {
