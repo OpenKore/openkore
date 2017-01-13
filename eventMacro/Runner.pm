@@ -1522,8 +1522,8 @@ sub substitue_variables {
 	foreach my $variable (@variables) {
 		my $var = find_variable($variable);
 		
-		my $display_name = $var->{display_name};
-		if ($remaining =~ /^(.*?)$display_name(.*?)$/) {
+		my $regex_name = (($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array') ? ("\\".$var->{display_name}) : ($var->{display_name}));
+		if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
 			my $before_var = $1;
 			my $after_var = $2;
 			my $var_value;
@@ -1536,6 +1536,7 @@ sub substitue_variables {
 			} elsif ($var->{type} eq 'array') {
 				$var_value = $eventMacro->get_array_size($var->{real_name});
 			}
+			
 			$remaining = $before_var.$var_value.$after_var;
 			
 		} else {

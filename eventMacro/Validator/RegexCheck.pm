@@ -46,10 +46,11 @@ sub parse {
 		
 		my $part_index = 0;
 		my $remaining_regex = $self->{original_regex};
-		foreach my $var_index (0..$#{$self->{var}}) {
-			my $var = $self->{var}->[$var_index]->{name};
+		foreach my $var (@{$self->{var}}) {
+			my $var_name = $var->{display_name};
+			my $regex_name = (($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array') ? ("\\".$var_name) : ($var_name));
 			my ($before_var);
-			if ($remaining_regex =~ /^(.*?)\$$var(.*?)$/) {
+			if ($remaining_regex =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
 				$before_var = $1;
 				$remaining_regex = $2;
 			} else {
@@ -63,7 +64,7 @@ sub parse {
 				$part_index++;
 			}
 			
-			push (@{$self->{var_to_regex_part_index}{$var}}, $part_index);
+			push (@{$self->{var_to_regex_part_index}{$var_name}}, $part_index);
 			push (@{$self->{regex_parts}}, undef);
 			$part_index++;
 		}
