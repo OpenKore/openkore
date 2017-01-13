@@ -23,7 +23,7 @@ bindist:
 	bash makedist.sh --bin
 
 test:
-	perl openkore.pl --control=../control --tables=../tables --fields=../fields $$ARGS
+	cd src/test && ./unittests.pl
 
 doc:
 	cd src/doc && ./createdoc.pl
