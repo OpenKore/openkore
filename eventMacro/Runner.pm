@@ -973,9 +973,9 @@ sub next {
 		
 	##########################################
 	# set variable: $variable = value
-	if ($self->{current_line} =~ /^\$($variable_qr|$accessed_array_variable_qr)/i) {
+	if ($self->{current_line} =~ /^(?:$scalar_variable_qr|$accessed_array_variable_qr)/i) {
 		my ($var, $val);
-		if (($var, $val) = $self->{current_line} =~ /^(\$(?:$variable_qr|$accessed_array_variable_qr))\s*=\s*(.*)/i) {
+		if (($var, $val) = $self->{current_line} =~ /^($scalar_variable_qr|$accessed_array_variable_qr)\s*=\s*(.*)/i) {
 			my $pval = $self->parse_command($val);
 			my $pvar = find_variable($var);
 			if (defined $self->error) {
@@ -1016,21 +1016,32 @@ sub next {
 		
 	##########################################
 	# set array: @variable = (member1, member2, member3, etc)/undef
-	} elsif ($self->{current_line} =~ /^\@$variable_qr/i) {
-		my ($var, $val);
-		if (($var, $val) = $self->{current_line} =~ /^\@($variable_qr)\s+=\s+\((.*)\)/i) {
-			my $pval = $self->parse_command($val);
+	} elsif ($self->{current_line} =~ /^$array_variable_qr/i) {
+		my ($var, $val, $undef);
+		if (($var, $val, $undef) = $self->{current_line} =~ /^($array_variable_qr)\s+=\s+(?:\((.*)\)|(undef|unset))/i) {
+			my $pvar = find_variable($var);
 			if (defined $self->error) {
 				return;
-			} elsif (!defined $pval) {
-				$self->error("$val failed");
+			} elsif (!defined $pvar) {
+				$self->error("Could not define variable type");
 				return;
 			}
-			my @members = split(/\s*,\s*/, $pval);
-			$eventMacro->set_full_array($var, \@members);
 			
-		} elsif (($var) = $self->{current_line} =~ /^@($variable_qr)\s+=\s+(?:undef|unset)/i) {
-			$eventMacro->clear_array($var);
+			if (defined $undef) {
+				$eventMacro->clear_array($pvar->{real_name});
+				
+			} elsif (defined $val) {
+				my $pval = $self->parse_command($val);
+				if (defined $self->error) {
+					return;
+				} elsif (!defined $pval) {
+					$self->error("$val failed");
+					return;
+				}
+				my @members = split(/\s*,\s*/, $pval);
+				$eventMacro->set_full_array($pvar->{real_name}, \@members);
+			}
+			
 		} else {
 			$self->error("unrecognized assignment");
 		}
@@ -1723,9 +1734,16 @@ sub manage_array {
 	my ($self, $keyword, $inside_brackets) = @_;
 	
 	my @args = split(/\s*,\s*/, $inside_brackets);
-	my ($var_name);
-	if ($args[0] =~ /^\@($variable_qr)/i) {
-		$var_name = $1;
+	my ($var);
+	
+	if ($args[0] =~ /^($array_variable_qr)/i) {
+		$var = find_variable($1);
+		if (defined $self->error) {
+			return;
+		} elsif (!defined $var) {
+			$self->error("Could not define variable type in array manage");
+			return;
+		}
 	} else {
 		$self->error("'$args[0]' is not a valid array name");
 		return;
@@ -1734,34 +1752,34 @@ sub manage_array {
 	my $parsed = $self->substitue_variables($args[1]);
 	
 	my $result;
-		
+	
 	if ($keyword eq 'push') {
 		if (@args != 2) {
 			$self->error("push sintax must be 'push(\@var_name, new_member)'");
 			return;
 		}
-		$result = $eventMacro->push_array($var_name, $parsed);
+		$result = $eventMacro->push_array($var->{real_name}, $parsed);
 			
 	} elsif ($keyword eq 'unshift') {
 		if (@args != 2) {
 			$self->error("unshift sintax must be 'unshift(\@var_name, new_member)'");
 			return;
 		}
-		$result = $eventMacro->unshift_array($var_name, $parsed);
+		$result = $eventMacro->unshift_array($var->{real_name}, $parsed);
 		
 	} elsif ($keyword eq 'pop') {
 		if (@args != 1) {
 			$self->error("pop sintax must be 'pop(\@var_name)'");
 			return;
 		}
-		$result = $eventMacro->pop_array($var_name);
+		$result = $eventMacro->pop_array($var->{real_name});
 			
 	} elsif ($keyword eq 'shift') {
 		if (@args != 1) {
 			$self->error("shift sintax must be 'shift(\@var_name)'");
 			return;
 		}
-		$result = $eventMacro->shift_array($var_name);
+		$result = $eventMacro->shift_array($var->{real_name});
 	} else {
 		$self->error("Unknown array keyword used '".$keyword."'");
 		return;
