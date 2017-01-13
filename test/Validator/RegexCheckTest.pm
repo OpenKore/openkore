@@ -196,50 +196,6 @@ sub start {
 		ok !$v->validate( 'I will kill you bot' );
 	};
 	
-	subtest 'repeated var' => sub {
-		my $v = eventMacro::Validator::RegexCheck->new( '/$foo is $foo, also $foo is big/i' );
-		ok $v->parsed;
-		ok (!defined $v->{regex});
-		is ($v->{original_regex}, '$foo is $foo, also $foo is big');
-		ok ($v->{case_insensitive});
-		is_deeply ($v->{defined_var_list}, {'$foo' => 0});
-		is ($v->{undefined_vars}, 1);
-		ok !$v->validate( '1 is 1, also 1 is big' );
-		ok !$v->validate( '5 is 5, also 5 is big' );
-		ok !$v->validate( '6 is 6, also 6 is big' );
-		ok !$v->validate( 'he is he, also he is big' );
-		
-		$v->update_vars( '$foo', '5' );
-		ok (defined $v->{regex});
-		is_deeply ($v->{defined_var_list}, {'$foo' => 1});
-		is ($v->{undefined_vars}, 0);
-		
-		ok !$v->validate( '1 is 1, also 1 is big' );
-		ok $v->validate( '5 is 5, also 5 is big' );
-		ok !$v->validate( '6 is 6, also 6 is big' );
-		ok !$v->validate( 'he is he, also he is big' );
-		
-		$v->update_vars( '$foo', '6' );
-		ok (defined $v->{regex});
-		is_deeply ($v->{defined_var_list}, {'$foo' => 1});
-		is ($v->{undefined_vars}, 0);
-		
-		ok !$v->validate( '1 is 1, also 1 is big' );
-		ok !$v->validate( '5 is 5, also 5 is big' );
-		ok $v->validate( '6 is 6, also 6 is big' );
-		ok !$v->validate( 'he is he, also he is big' );
-		
-		$v->update_vars( '$foo', 'he' );
-		ok (defined $v->{regex});
-		is_deeply ($v->{defined_var_list}, {'$foo' => 1});
-		is ($v->{undefined_vars}, 0);
-		
-		ok !$v->validate( '1 is 1, also 1 is big' );
-		ok !$v->validate( '5 is 5, also 5 is big' );
-		ok !$v->validate( '6 is 6, also 6 is big' );
-		ok $v->validate( 'he is he, also he is big' );
-	};
-	
 	subtest 'multiple variable with regex code' => sub {
 		my $v = eventMacro::Validator::RegexCheck->new( '/$foo$bar$foobar/i' );
 		ok $v->parsed;

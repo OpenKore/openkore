@@ -15,7 +15,6 @@ sub parse {
 		my @variables = $self->{original_regex} =~ /(?:^|(?<=[^\\]))($general_variable_qr)/g;
 		
 		$self->{defined_var_list} = {};
-		$self->{var_count_list} = {};
 		
 		foreach my $variable (@variables) {
 			my $var = find_variable($variable);
@@ -25,7 +24,6 @@ sub parse {
 				return;
 			}
 			my $var_name = $var->{display_name};
-			$self->{var_count_list}{$var_name}++;
 			next if (exists $self->{defined_var_list}{$var_name});
 			if ($var =~ /^\./) {
 				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
@@ -49,28 +47,26 @@ sub parse {
 		my $part_index = 0;
 		my $remaining_regex = $self->{original_regex};
 		foreach my $var (@{$self->{var}}) {
-			foreach (1..$self->{var_count_list}{$var->{display_name}}) {
-				my $var_name = $var->{display_name};
-				my $regex_name = (($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array') ? ("\\".$var_name) : ($var_name));
-				my ($before_var);
-				if ($remaining_regex =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
-					$before_var = $1;
-					$remaining_regex = $2;
-				} else {
-					$self->{error} = "Could not find detected variable in regex";
-					$self->{parsed} = 0;
-					return;
-				}
-				
-				if ($before_var ne '') {
-					push (@{$self->{regex_parts}}, $before_var);
-					$part_index++;
-				}
-				
-				push (@{$self->{var_to_regex_part_index}{$var_name}}, $part_index);
-				push (@{$self->{regex_parts}}, undef);
+			my $var_name = $var->{display_name};
+			my $regex_name = (($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array') ? ("\\".$var_name) : ($var_name));
+			my ($before_var);
+			if ($remaining_regex =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
+				$before_var = $1;
+				$remaining_regex = $2;
+			} else {
+				$self->{error} = "Could not find detected variable in regex";
+				$self->{parsed} = 0;
+				return;
+			}
+			
+			if ($before_var ne '') {
+				push (@{$self->{regex_parts}}, $before_var);
 				$part_index++;
 			}
+			
+			push (@{$self->{var_to_regex_part_index}{$var_name}}, $part_index);
+			push (@{$self->{regex_parts}}, undef);
+			$part_index++;
 		}
 		if ($remaining_regex ne '') {
 			push (@{$self->{regex_parts}}, $remaining_regex);
