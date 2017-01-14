@@ -449,8 +449,6 @@ sub commandHandler {
 			message "usage: eventMacro var_set [variable name] [variable value]\n", "list";
 			
 		} else {
-			use Data::Dumper;
-			Log::warning "[test]-- ".Dumper($eventMacro)."\n";
 			if (my $var = find_variable($params[0])) {
 				if ($var->{real_name} =~ /^\./) {
 					error "[eventMacro] System variables cannot be set by hand (The ones starting with a dot '.')\n";
@@ -507,7 +505,6 @@ sub commandHandler {
 			} else {
 				message "[eventMacro] '".$params[0]."' is not a valid variable name syntax\n";
 			}
-			Log::warning "[test]-- ".Dumper($eventMacro)."\n";
 		}
 		
 		
